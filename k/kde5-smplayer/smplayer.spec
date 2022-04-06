@@ -6,7 +6,7 @@
 %define XDE KDE5
 %define xapp kf5
 Name: %xde-%rname
-Version: 21.8.0
+Version: 22.2.0
 Release: alt1
 
 %define qt_bin_dir %_qt5_bindir
@@ -170,6 +170,9 @@ done
 
 
 %changelog
+* Wed Apr 06 2022 Sergey V Turchin <zerg@altlinux.org> 22.2.0-alt1
+- new version
+
 * Thu Sep 23 2021 Sergey V Turchin <zerg@altlinux.org> 21.8.0-alt1
 - new version
 
