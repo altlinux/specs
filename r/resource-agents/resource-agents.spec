@@ -4,7 +4,7 @@
 
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
-Version: 4.10.0
+Version: 4.11.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
@@ -176,7 +176,9 @@ export PYTHON=%__python3
 %autoreconf
 %configure	\
 		--with-version=%version \
-		--with-systemdsystemunitdir=%_unitdir \
+		SYSTEMD_UNIT_DIR=%_unitdir \
+		SYSTEMD_TMPFILES_DIR=%_tmpfilesdir \
+		--with-rsctmpdir=/run/resource-agents \
 		--with-initdir=%_initdir \
 		--with-ras-set=all
 
@@ -189,8 +191,6 @@ export PYTHON=%__python3
 ## tree fixup
 # remove docs (there is only one and they should come from doc sections in files)
 rm -rf %buildroot/usr/share/doc/resource-agents
-
-mkdir -p %buildroot%_var/run/resource-agents
 
 # Use drbd.sh and drbd.metadata from drbd-utils-rgmanager package:
 rm -f %buildroot%_datadir/cluster/drbd.*
@@ -240,7 +240,6 @@ rm -f %buildroot%_datadir/cluster/drbd.*
 %if_with cluster_glue
 %_man8dir/sfex_init.8*
 %endif
-%dir %attr (1755, root, root)	%_runtimedir/resource-agents
 
 # For compatability with pre-existing agents
 %dir %_sysconfdir/ha.d
@@ -355,6 +354,9 @@ rm -f %buildroot%_datadir/cluster/drbd.*
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Wed Apr 06 2022 Andrew A. Vasilyev <andy@altlinux.org> 4.11.0-alt1
+- 4.11.0
+
 * Wed Nov 03 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.10.0-alt1
 - 4.10.0
 
