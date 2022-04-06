@@ -5,8 +5,8 @@
 %endif
 
 Name: kde5-virtual
-Version: 5.23.0
-Release: alt2
+Version: 5.23.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: Virtual packages for KDE 5
@@ -85,6 +85,16 @@ Provides: kde5-video-player-smplayer = %EVR
 Requires: kf5-filesystem
 Requires: kde5-smplayer
 %description -n kde5-video-player-4-smplayer
+%summary
+
+%package -n kde5-video-player-5-haruna
+Group: Graphical desktop/KDE
+Summary: Haruna video player
+Provides: kde5-video-player = %EVR
+Provides: kde5-video-player-haruna = %EVR
+Requires: kf5-filesystem
+Requires: kde5-haruna
+%description -n kde5-video-player-5-haruna
 %summary
 
 %package -n kde5-volume-control-0-dummy
@@ -263,6 +273,7 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm
 %files -n kde5-video-player-2-dragon
 %files -n kde5-video-player-3-kaffeine
 %files -n kde5-video-player-4-smplayer
+%files -n kde5-video-player-5-haruna
 
 %files -n kde5-volume-control-0-dummy
 %files -n kde5-volume-control-2-kmix
@@ -290,6 +301,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm
 %files -n kde5-display-manager-5-sddm
 
 %changelog
+* Wed Apr 06 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.1-alt1
+- add kde5-video-player-haruna
+
 * Mon Feb 21 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.0-alt2
 - using not_qt5_qtwebengine_arches macro
 
