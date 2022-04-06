@@ -1,5 +1,5 @@
 Name: libspnav
-Version: 0.3
+Version: 1.0
 Release: alt1
 Summary: Open source alternative to 3DConnextion drivers
 
@@ -8,6 +8,7 @@ Group: System/Libraries
 URL: http://spacenav.sourceforge.net/
 Vcs: https://github.com/FreeSpacenav/libspnav
 Source: %name-%version.tar
+Patch1: %name-fix-linkig.patch
 
 BuildRequires:  libX11-devel
 
@@ -30,13 +31,12 @@ Development files for %name.
 
 %prep
 %setup -q
-#patch0 -p1
+%patch1 -p1
 
 %build
 # Set libdir properly
 sed -i "s/libdir=lib/libdir=%_lib/g" configure
 %configure 
-sed -i "s/CFLAGS =/CFLAGS +=/g" Makefile
 %make_build
 
 %install
@@ -53,8 +53,12 @@ rm -f %buildroot%_libdir/%name.a
 %doc examples
 %_libdir/*.so
 %_includedir/*.h
+%_datadir/pkgconfig/*.pc
 
 %changelog
+* Tue Apr 05 2022 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
+- New version.
+
 * Mon Feb 14 2022 Andrey Cherepanov <cas@altlinux.org> 0.3-alt1
 - New version.
 - Build from upstream git tag.
