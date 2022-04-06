@@ -1,14 +1,13 @@
-%define ver_major 3.8
+%define ver_major 42
 
 Name: gnome-nettool
-Version: %ver_major.1
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 
 Summary: GNOME interface for various networking tools
-License: %gpl2only
+License: GPL-2.0-only
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -22,55 +21,40 @@ Requires: bind-utils
 Requires: nmap
 Requires: whois
 
-BuildPreReq: rpm-build-gnome >= 0.6 gnome-common
-BuildPreReq: rpm-build-licenses
-BuildPreReq: desktop-file-utils >= 0.8
-
-# From configure.in
-BuildPreReq: intltool >= 0.40.1
-BuildPreReq: libgtk+3-devel >= 2.99.2
-BuildPreReq: libgio-devel libgtop-devel
-BuildRequires: yelp-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson yelp-tools desktop-file-utils %_bindir/appstream-util
+BuildRequires: libgtk+3-devel >= 2.99.2
+BuildRequires: libgio-devel libgtop-devel
 
 %description
 GNOME Nettool is a set of front-ends to various networking command-line
 tools, like ping, netstat, ifconfig, whois, traceroute, finger.
 
 %prep
-%setup -q
-
-# don't run gtk_update_icon_cache
-subst '/install-data-hook: update-icon-cache/d' pixmaps/icons/Makefile.in
+%setup
+sed -E -i "s/\('(desktop|appdata)'\,/(/" data/meson.build
 
 %build
-%configure \
-	--disable-scrollkeeper
-
-#	--disable-schemas-compile
-
-%make_build
+%meson
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
-
+%meson_install
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_bindir/*
-%_desktopdir/*
-%_datadir/%name
-%config %_datadir/glib-2.0/schemas/*.xml
-
-#icons
-%_iconsdir/hicolor/16x16/apps/%name.png
-%_iconsdir/hicolor/22x22/apps/%name.png
-%_iconsdir/hicolor/24x24/apps/%name.png
-%_iconsdir/hicolor/32x32/apps/%name.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
-
+%_bindir/%name
+%_desktopdir/%name.desktop
+%_datadir/%name/
+%_datadir/glib-2.0/schemas/*.xml
+%_iconsdir/hicolor/*/apps/%{name}*
+%_datadir/metainfo/%name.appdata.xml
 %doc README NEWS TODO ChangeLog
 
 %changelog
+* Wed Apr 06 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0 (ported to Meson build system)
+
 * Tue Sep 12 2017 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt3
 - rebuilt against libgtop-2.0.so.11
 
