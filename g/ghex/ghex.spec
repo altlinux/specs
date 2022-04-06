@@ -1,17 +1,18 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 4
-%define beta .beta.1
-%define api_ver 4
-%define libname gtkhex-%api_ver
+%define ver_major 42
+%define beta %nil
+%define api_ver_major 4
+%define api_ver %api_ver_major.0
+%define libname gtkhex-%api_ver_major
 %define xdg_name org.gnome.GHex
 
 %def_enable introspection
 %def_disable check
 
 Name: ghex
-Version: %ver_major
-Release: alt0.5%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Binary editor for GNOME
 Group: Development/Tools
@@ -99,6 +100,8 @@ GObject introspection devel data for the GtkGHex library.
 %doc NEWS README*
 
 %files -n libgtkhex
+%dir %_libdir/gtkhex-%api_ver
+%_libdir/gtkhex-%api_ver/libhex-buffer-mmap.so
 %_libdir/lib%libname.so.*
 
 %files -n libgtkhex-devel
@@ -108,13 +111,16 @@ GObject introspection devel data for the GtkGHex library.
 
 %if_enabled introspection
 %files -n libgtkhex-gir
-%_typelibdir/Hex-%api_ver.typelib
+%_typelibdir/Hex-%api_ver_major.typelib
 
 %files -n libgtkhex-gir-devel
-%_girdir/Hex-%api_ver.gir
+%_girdir/Hex-%api_ver_major.gir
 %endif
 
 %changelog
+* Wed Apr 06 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0 (ported to GTK4)
+
 * Tue Mar 08 2022 Yuri N. Sedunov <aris@altlinux.org> 4-alt0.5.beta.1
 - 4.beta.1
 
