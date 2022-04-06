@@ -5,7 +5,7 @@
 %def_without static
 
 Name: qalculate
-Version: 4.1.0
+Version: 4.1.1
 Release: alt1
 Summary: A very versatile desktop calculator
 Group: Office
@@ -114,6 +114,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Wed Apr 06 2022 Sergey V Turchin <zerg@altlinux.org> 4.1.1-alt1
+- Updated to upstream version 4.1.1.
+
 * Fri Apr 01 2022 Sergey V Turchin <zerg@altlinux.org> 4.1.0-alt1
 - Updated to upstream version 4.1.0.
 
