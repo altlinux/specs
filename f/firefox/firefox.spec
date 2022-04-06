@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        98.0.2
+Version:        99.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -11,8 +11,6 @@ URL:            http://www.mozilla.org/projects/firefox/
 Packager:       Alexey Gladkov <legion@altlinux.ru>
 
 Source0:        firefox-source.tar
-Source2:        searchplugins.tar
-Source3:        cbindgen-vendor.tar
 Source4:        firefox-mozconfig
 Source5:        distribution.ini
 Source6:        firefox.desktop
@@ -41,6 +39,13 @@ Patch013: 0013-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch014: 0014-ALT-fix-double_t-redefinition.patch
 Patch015: 0015-build-Disable-Werror.patch
 Patch016: 0016-Prevent-discrimination-of-Russian-services.patch
+Patch017: 0017-Bug-1615974-avoid-memmapping-CRLite-filters-in-cert_.patch
+Patch018: 0018-Bug-1758579-land-NSS-be8a62f85be7-UPGRADE_NSS_RELEAS.patch
+Patch019: 0019-Bug-1756061-PSM-changes-corresponding-to-mozilla-pki.patch
+Patch020: 0020-Bug-1758579-land-NSS-NSS_3_77_BETA1-UPGRADE_NSS_RELE.patch
+Patch021: 0021-Bug-1088140-support-RSA-PSS-signatures-on-certificat.patch
+Patch022: 0022-Bug-1761438-Stop-using-8.3-names-in-PSM.-r-keeler.patch
+Patch023: 0023-Bug-1758579-land-NSS-NSS_3_77_RTM-UPGRADE_NSS_RELEAS.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -48,12 +53,12 @@ Patch016: 0016-Prevent-discrimination-of-Russian-services.patch
 
 %define gst_version   1.0
 %define nspr_version  4.33
-%define nss_version   3.76
+%define nss_version   3.77
 %define rust_version  1.59.0
 %define cargo_version 1.59.0
 %define llvm_version  12.0
 
-#ExcludeArch: ppc64le
+ExcludeArch: ppc64le
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-firefox
@@ -67,6 +72,7 @@ BuildRequires: libstdc++-devel
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
 BuildRequires: rust-cargo >= %cargo_version
+BuildRequires: cbindgen
 BuildRequires: node
 BuildRequires: nasm yasm
 BuildRequires: zip unzip
@@ -196,7 +202,6 @@ Most likely you don't need to use this package.
 
 cd mozilla
 
-tar -xf %SOURCE2
 tar -xf %SOURCE11
 
 cp -f %SOURCE4 .mozconfig
@@ -236,10 +241,6 @@ rm -rf -- third_party/python/setuptools/setuptools*
 
 
 %build
-# compile cbindgen
-CBINDGEN_HOME="$PWD/cbindgen"
-CBINDGEN_BINDIR="$CBINDGEN_HOME/bin"
-
 %add_findprov_lib_path %firefox_prefix
 
 export MOZ_BUILD_APP=browser
@@ -275,7 +276,6 @@ export ALTWRAP_LLVM_VERSION="%llvm_version"
 
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export SHELL=/bin/sh
-export PATH="$CBINDGEN_BINDIR:$PATH"
 
 export RUST_BACKTRACE=1
 %ifarch armh %{ix86}
@@ -287,23 +287,6 @@ export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=2"
 #export WASM_SANDBOXED_LIBRARIES=graphite,ogg
 #export WASM_CC="$CC --target=wasm32-wasi"
 #export WASM_CXX="$CXX --target=wasm32-wasi"
-
-if [ ! -x "$CBINDGEN_BINDIR/cbindgen" ]; then
-	mkdir -p -- "$CBINDGEN_HOME"
-
-	tar --strip-components=1 -C "$CBINDGEN_HOME" --overwrite -xf %SOURCE3
-
-	cat > "$CBINDGEN_HOME/config" <<-EOF
-		[source.crates-io]
-		replace-with = "vendored-sources"
-
-		[source.vendored-sources]
-		directory = "$CBINDGEN_HOME"
-	EOF
-
-	env CARGO_HOME="$CBINDGEN_HOME" \
-		cargo install cbindgen
-fi
 
 # compile firefox
 cd mozilla
@@ -465,6 +448,23 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Apr 05 2022 Alexey Gladkov <legion@altlinux.ru> 99.0-alt1
+- New release (99.0).
+- Stop shipping user-installed search plugins (MOZ#1643679, MOZ#1203167).
+- Exclude arch ppc64le.
+- Security fixes:
+  + CVE-2022-1097: Use-after-free in NSSToken objects
+  + CVE-2022-28281: Out of bounds write due to unexpected WebAuthN Extensions
+  + CVE-2022-28282: Use-after-free in DocumentL10n::TranslateDocument
+  + CVE-2022-28283: Missing security checks for fetching sourceMapURL
+  + CVE-2022-28284: Script could be executed via svg's use element
+  + CVE-2022-28285: Incorrect AliasSet used in JIT Codegen
+  + CVE-2022-28286: iframe contents could be rendered outside the border
+  + CVE-2022-28287: Text Selection could crash Firefox
+  + CVE-2022-24713: Denial of Service via complex regular expressions
+  + CVE-2022-28289: Memory safety bugs fixed in Firefox 99 and Firefox ESR 91.8
+  + CVE-2022-28288: Memory safety bugs fixed in Firefox 99
+
 * Thu Mar 24 2022 Alexey Gladkov <legion@altlinux.ru> 98.0.2-alt1
 - New release (98.0.2).
 
