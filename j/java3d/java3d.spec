@@ -1,3 +1,6 @@
+# new libs.req stunt
+%add_findreq_skiplist %_libdir/libj3dcore-ogl.so
+
 #ExclusiveArch: %{ix86} x86_64
 %set_verify_elf_method relaxed
 # BEGIN SourceDeps(oneline):
@@ -12,7 +15,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		java3d
 Version:	1.5.2
-Release:	alt4_15jpp8
+Release:	alt5_15jpp8
 Summary:	The Java 3D API
 Group:		Development/Java
 License:	BSD, GPL
@@ -225,6 +228,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Wed Apr 06 2022 Igor Vlasenko <viy@altlinux.org> 1.5.2-alt5_15jpp8
+- workaround for libs.req stunt
+
 * Tue Jun 08 2021 Igor Vlasenko <viy@altlinux.org> 1.5.2-alt4_15jpp8
 - armh build
 
