@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 4.0.1
-Release: alt1
+Release: alt2
 
 Summary: Code checking using pep8 and pyflakes
 Group: Development/Python3
@@ -58,7 +58,7 @@ warning. - a Mercurial hook.
 %autopatch -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -75,6 +75,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Apr 06 2022 Stanislav Levin <slev@altlinux.org> 4.0.1-alt2
+- Fixed FTBFS (mccabe 0.7).
+
 * Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 4.0.1-alt1
 - 3.9.2 -> 4.0.1.
 

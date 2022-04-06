@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 2.12.2
-Release: alt1
+Release: alt2
 
 Summary: Python code static checker
 License: GPLv2+
@@ -97,10 +97,13 @@ tox.py3 --sitepackages --console-scripts -vvr --no-deps -- \
 %_bindir/epylint.py3
 %_bindir/pyreverse.py3
 %_bindir/symilar.py3
-%python3_sitelibdir/pylint/
-%python3_sitelibdir/pylint-*.egg-info/
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Wed Apr 06 2022 Stanislav Levin <slev@altlinux.org> 2.12.2-alt2
+- Fixed FTBFS (mccabe 0.7).
+
 * Thu Jan 27 2022 Stanislav Levin <slev@altlinux.org> 2.12.2-alt1
 - 2.8.2 -> 2.12.2.
 
