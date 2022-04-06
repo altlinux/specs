@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.0
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Apr 06 2022 Elena Mishina <lepata@altlinux.org> 10.0-alt4
+- update documentation
+- add geany, idle3
+
 * Wed Dec 08 2021 Elena Mishina <lepata@altlinux.org> 10.0-alt3
 - update to ALT Education 10.0
 
