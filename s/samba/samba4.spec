@@ -74,8 +74,8 @@
 %endif
 
 Name:    samba
-Version: 4.14.12
-Release: alt2
+Version: 4.14.13
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -187,8 +187,8 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.3.2
-%define ldb_version_release 2.3.2-alt2
+%define ldb_version 2.3.3
+%define ldb_version_release %nil
 BuildRequires: libldb-devel = %ldb_version
 %if "%ldb_version_release" != ""
 BuildRequires: libldb-devel >= %ldb_version_release
@@ -1921,6 +1921,32 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Apr 05 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.14.13-alt1
+- Update to latest bugfix release of Samba 4.14
+- Fixes:
+  + Renaming file on DFS root fails with NT_STATUS_OBJECT_PATH_NOT_FOUND.
+  + Samba does not response STATUS_INVALID_PARAMETER when opening 2 objects with
+    same lease key.
+  + NT error code is not set when overwriting a file during rename in libsmbclient.
+  + net ads info shows LDAP Server: 0.0.0.0 depending on contacted server.
+  + wbinfo -a doesn't work reliable with upn names.
+  + Problem when winbind renews Kerberos.
+  + NT_STATUS_ACCESS_DENIED translates into EPERM instead of EACCES in
+    SMBC_server_internal.
+  + Multpile RODC fixes:
+    - Simple bind doesn't work against an RODC (with non-preloaded users).
+    - Crash of winbind on RODC.
+    - Uncached logon on RODC always fails once.
+    - Changing the machine password against an RODC likely destroys the domain join.
+    - Simple bind doesn't work against an RODC (with non-preloaded users).
+  + Avoid mixing the main krbtgt account keys with an RODC if the
+    msDS-KeyVersionNumber is larger than 65535 (set 16 upper bits to zero).
+  + Use Heimdal 8.0 (pre) rather than an earlier snapshot.
+  + LDAP simple binds should honour "old password allowed period".
+  + Fix ldap simple bind with TLS auditing.
+  + "password hash userPassword schemes = CryptSHA256" does not seem to work
+    with samba-tool.
+
 * Thu Mar 03 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.14.12-alt2
 - Fix linking of some libraries (libsmbldap.so.2.1.0, libpopt-samba3-samba4.so,
   libsamba-modules-samba4.so, winbind_krb5_locator.so and smbpasswd.so):

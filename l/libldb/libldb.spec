@@ -8,8 +8,8 @@
 %endif
 
 Name: libldb
-Version: 2.3.2
-Release: alt3
+Version: 2.3.3
+Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
 Group: System/Libraries
@@ -21,12 +21,12 @@ Patch1: ldb-alt-fix-python-ldflags.patch
 Patch2: ldb-skip-test_guid_indexed_v1_db-on-mips64el-ppc64le-mipsel.patch
 Patch3: ldb-skip-ldb_lmdb_free_list_test-on-ppc64le.patch
 Patch4: ldb-pyldb-overflow-timestring-test-32bit.patch
-Patch5: 0001-CVE-2021-3670-ldb-Confirm-the-request-has-not-yet-ti.patch
 
 BuildRequires: libpopt-devel libldap-devel xsltproc docbook-style-xsl docbook-dtds
 BuildRequires: libcmocka-devel >= 1.1.3
 BuildRequires: socket_wrapper >= 1.3.3
 BuildRequires: nss_wrapper >= 1.1.11
+BuildRequires: resolv_wrapper >= 1.1.7
 BuildRequires: uid_wrapper >= 1.2.7
 BuildRequires: pam_wrapper >= 1.1.2
 BuildRequires: libtdb-devel >= 1.4.3
@@ -97,7 +97,6 @@ Development files for the Python3 bindings for the LDB library
 %ifarch %ix86 %arm %mips32
 %patch4 -p2
 %endif
-%patch5 -p3
 
 %build
 %undefine _configure_gettext
@@ -186,6 +185,9 @@ make test
 %_pkgconfigdir/pyldb-util.cpython-*.pc
 
 %changelog
+* Tue Apr 05 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.3.3-alt1
+- Update to the 2.3.3 for latest samba-4.14.13 bugfix release
+
 * Sun Jan 23 2022 Grigory Ustinov <grenka@altlinux.org> 2.3.2-alt3
 - Fix build requires.
 
