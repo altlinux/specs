@@ -1,5 +1,5 @@
 Name: eget
-Version: 5.2
+Version: 5.3
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -33,6 +33,10 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Wed Apr 06 2022 Vitaly Lipatov <lav@altlinux.ru> 5.3-alt1
+- eget: add --no-check-certificate support
+- eget: add --user-agent support
+
 * Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 5.2-alt1
 - eget: use sort --version-sort for ordering (fix 99 > 100)
 - eget: use Content-disposition for downloaded filename

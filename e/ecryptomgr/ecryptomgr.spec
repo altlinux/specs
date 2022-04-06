@@ -1,5 +1,5 @@
 Name: ecryptomgr
-Version: 0.8.4
+Version: 0.9.0
 Release: alt1
 
 Summary: Crypto provider installer
@@ -12,7 +12,8 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 
-Requires: eepm >= 1.7
+Requires: eget >= 5.3
+Requires: eepm >= 3.16
 
 %define sdir %_datadir/%name
 
@@ -39,7 +40,7 @@ subst "s|^SDIR=.*|SDIR=%sdir|" ecryptomgr.sh
 %install
 mkdir -p %buildroot%sdir/
 install -D ecryptomgr.sh %buildroot%_bindir/ecryptomgr
-for i in clean_* install_* uninstall_* test_* ; do
+for i in clean_* install_* uninstall_* test_* functions.sh ; do
     install $i %buildroot%sdir/
 done
 
@@ -49,6 +50,14 @@ done
 %sdir/
 
 %changelog
+* Wed Apr 06 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
+- use eget 5.3 and eepm 3.16
+- replace distro_info with epm print info
+- install_cryptopro.sh: install libidn.so.11
+- install_cades.sh: fix downloading tar and install packages (ALT bug 42014)
+- use common functions from functions.sh, enable SUDO support
+- install_jacarta.sh: install libjcpkcs11 (ALT bug 42015)
+
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 0.8.4-alt1
 - install_cryptopro.sh: fix install i586-lsb-core, fix support for Sisyphus and p10
 
