@@ -1,15 +1,14 @@
 Name: mirmon
-Version: 1.38
+Version: 2.11
 Release: alt1
 
 Summary: Monitor the state of mirrors
-License: BSD-style
+License: MIT
 Group: Networking/Other
-Url: http://people.cs.uu.nl/henkp/mirmon/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+Url: http://www2.projects.science.uu.nl/ictbeta/mirmon/
 BuildArch: noarch
 
-# http://people.cs.uu.nl/henkp/mirmon/src/mirmon-%version.tar.gz
+# http://www2.projects.science.uu.nl/ictbeta/mirmon/mirmon-%version.tar.gz
 Source: mirmon-%version.tar
 
 %description
@@ -21,16 +20,22 @@ an utility to monitor the state of mirrors.
 sed -i 's,/sw/bin/,%_bindir/,g' mirmon
 
 %install
-mkdir -p %buildroot{%_bindir,%_datadir/%name}
+mkdir -p %buildroot{%_bindir,%_datadir/%name,%_man1dir}
 install -pm755 mirmon %buildroot%_bindir/
+install -pm644 mirmon.1 %buildroot%_man1dir/
 cp -a countries.list icons %buildroot%_datadir/%name/
 
+%define _unpackaged_files_terminate_build 1
+
 %files
-%_bindir/*
+%_bindir/%name
+%_man1dir/%{name}.1*
 %_datadir/%name
 %doc *.txt
 
 %changelog
+* Wed Apr 06 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.11-alt1
+- Updated to 2.11.
+
 * Thu Sep 20 2007 Dmitry V. Levin <ldv@altlinux.org> 1.38-alt1
 - Initial revision.
-
