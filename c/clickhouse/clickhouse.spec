@@ -19,8 +19,8 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 22.3.2.2
-Release: alt2
+Version: 22.3.3.44
+Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -260,6 +260,7 @@ export ALTWRAP_LLVM_VERSION="%llvm_version"
 	-DENABLE_JEMALLOC:BOOL=OFF \
 %endif
 	-DENABLE_PARQUET:BOOL=OFF \
+	-DENABLE_CLICKHOUSE_TEST:BOOL=ON \
 	-DENABLE_S3:BOOL=OFF \
 	-DENABLE_UTILS:BOOL=OFF \
 	-DENABLE_HIVE:BOOL=OFF \
@@ -345,6 +346,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Thu Apr 07 2022 Anton Farygin <rider@altlinux.ru> 22.3.3.44-alt1
+- 22.3.2.2 -> 22.3.3.44
+
 * Tue Mar 22 2022 Anton Farygin <rider@altlinux.ru> 22.3.2.2-alt2
 - simplify backporting for stable ALT branches via define llvm_version
 
