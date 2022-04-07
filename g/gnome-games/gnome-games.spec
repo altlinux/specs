@@ -7,10 +7,10 @@
 
 Name: gnome-games
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt2.1%beta
 
 Summary: Simple game launcher for GNOME
-License: %gpl3plus
+License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Games
 
@@ -21,9 +21,12 @@ Source: %name-%version.tar
 %endif
 
 %define vala_ver 0.48.0
+%define tracker_api_ver 2.0
 
-BuildRequires(pre): meson >= 0.50 rpm-build-licenses
-BuildRequires: vala-tools >= %vala_ver
+Requires: tracker
+
+BuildRequires(pre): rpm-macros-meson >= 0.50
+BuildRequires: meson vala-tools >= %vala_ver
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(grilo-0.3)
@@ -34,7 +37,7 @@ BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(manette-0.2) >= 0.2.5
 BuildRequires: pkgconfig(retro-gtk-1) >= 1.0.0
 BuildRequires: pkgconfig(sqlite3)
-BuildRequires: pkgconfig(tracker-sparql-2.0)
+BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver)
 BuildRequires: pkgconfig(libhandy-1) >= 1.1.90
 
 %description
@@ -81,6 +84,9 @@ sed -E -i "s/'(desktop|appdata)-file'\,//" data/meson.build
 #%_vapidir/%name.vapi
 
 %changelog
+* Thu Apr 07 2022 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2.1
+- requires old tracker (2.0) (ALT #42361)
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
 - updated to 40.0-24-g91e76523
 - fixed build with meson >= 0.61
