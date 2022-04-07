@@ -5,7 +5,7 @@
 %define beta %nil
 
 Name: gnome-%_name
-Version: %ver_major.1
+Version: %ver_major.1.1
 Release: alt1%beta
 
 Summary: GNOME Connections
@@ -70,6 +70,9 @@ BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Thu Apr 07 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1.1-alt1
+- 42.1.1
+
 * Tue Apr 05 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 
