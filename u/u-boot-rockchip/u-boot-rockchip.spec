@@ -1,5 +1,5 @@
 Name: u-boot-rockchip
-Version: 2022.01
+Version: 2022.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -54,6 +54,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Thu Apr 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.04-alt1
+- 2022.04 released
+
 * Thu Jan 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.01-alt1
 - 2022.01 released
 
