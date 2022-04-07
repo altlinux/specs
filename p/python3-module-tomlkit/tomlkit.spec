@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 
 Summary: Style preserving TOML library
@@ -82,6 +82,9 @@ tox.py3 --sitepackages --console-scripts -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 0.10.1-alt1
+- 0.10.0 -> 0.10.1.
+
 * Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 0.10.0-alt1
 - 0.9.2 -> 0.10.0.
 

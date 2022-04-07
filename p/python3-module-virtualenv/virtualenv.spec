@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%modulename
-Version: 20.13.4
+Version: 20.14.0
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -77,22 +77,29 @@ rm src/virtualenv/util/subprocess/_win_subprocess.py
 # remove all bundled seed wheels
 rm src/virtualenv/seed/wheels/embed/*.whl
 
+# if build from git source tree
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
+git init
+git config user.email author@example.com
+git config user.name author
+git add .
+git commit -m 'release'
+git tag '%version'
+
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 mv %buildroot%_bindir/{virtualenv,virtualenv3}
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_INDEX=YES
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_FIND_LINKS=%system_wheels_path
 export NO_INTERNET=yes
-export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION PIP_NO_INDEX PIP_FIND_LINKS NO_INTERNET'
+export TOX_TESTENV_PASSENV='PIP_NO_INDEX PIP_FIND_LINKS NO_INTERNET'
 export TOXENV=py3
 tox.py3 --sitepackages --no-deps -vvr -s false
 
@@ -103,6 +110,9 @@ tox.py3 --sitepackages --no-deps -vvr -s false
 %python3_sitelibdir/virtualenv-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Apr 05 2022 Stanislav Levin <slev@altlinux.org> 20.14.0-alt1
+- 20.13.4 -> 20.14.0.
+
 * Mon Mar 21 2022 Stanislav Levin <slev@altlinux.org> 20.13.4-alt1
 - 20.13.3 -> 20.13.4.
 

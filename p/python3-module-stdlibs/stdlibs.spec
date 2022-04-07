@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2022.2.2
+Version: 2022.3.16
 Release: alt1
 
 Summary: List of packages in the stdlib
@@ -74,5 +74,8 @@ tox.py3 --sitepackages -vvr -s false
 %python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 2022.3.16-alt1
+- 2022.2.2 -> 2022.3.16.
+
 * Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 2022.2.2-alt1
 - Initial build for Sisyphus.

@@ -3,10 +3,13 @@
 
 %define typing_extensions %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 10)))')
 
+# tomli is tomllib(stdlib) on Python 3.11
+%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
+
 %def_with check
 
 Name: python3-module-%oname
-Version: 22.1.0
+Version: 22.3.0
 Release: alt1
 
 Summary: The Uncompromising Code Formatter
@@ -25,9 +28,11 @@ BuildRequires: python3-module-setuptools_scm
 # install_requires=
 BuildRequires: python3(click)
 BuildRequires: python3(platformdirs)
-BuildRequires: python3(tomli)
 BuildRequires: python3(pathspec)
 BuildRequires: python3(mypy_extensions)
+%if %tomli
+BuildRequires: python3(tomli)
+%endif
 %if %typing_extensions
 BuildRequires: python3(typing_extensions)
 %endif
@@ -43,6 +48,10 @@ BuildRequires: python3(tox)
 
 %if %typing_extensions
 %py3_requires typing_extensions
+%endif
+
+%if %tomli
+%py3_requires tomli
 %endif
 
 %description
@@ -87,16 +96,17 @@ tox.py3 --sitepackages -vvr
 %doc README.md LICENSE
 %_bindir/black
 %_bindir/blackd
-%_bindir/black-primer
 %python3_sitelibdir/__pycache__/_black_version.cpython*
 %python3_sitelibdir/_black_version.py
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
-%python3_sitelibdir/black_primer/
 %python3_sitelibdir/blackd/
 %python3_sitelibdir/blib2to3/
 
 %changelog
+* Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 22.3.0-alt1
+- 22.1.0 -> 22.3.0.
+
 * Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 22.1.0-alt1
 - 21.12b0 -> 22.1.0.
 

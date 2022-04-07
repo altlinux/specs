@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.0.3
+Version: 8.1.2
 Release: alt1
 
 Summary: Composable command line interface toolkit
@@ -61,6 +61,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
 %python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 8.1.2-alt1
+- 8.0.3 -> 8.1.2.
+
 * Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 8.0.3-alt1
 - 7.1.2 -> 8.0.3.
 

@@ -1,6 +1,9 @@
 %define oname kiwisolver
+
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.3.2
+Version: 1.4.2
 Release: alt1
 Summary: A fast implementation of the Cassowary constraint solver
 License: BSD
@@ -14,8 +17,14 @@ Source: kiwi-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools gcc-c++
+BuildRequires: python3(setuptools_scm)
 BuildRequires: python3-dev
 BuildRequires: python3-module-cppy
+
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(tox)
+%endif
 
 %description
 Kiwi is an efficient C++ implementation of the Cassowary constraint
@@ -29,6 +38,16 @@ are consistently > 5x.
 %prep
 %setup -n kiwi-%version
 
+# if build from git source tree
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
+git init
+git config user.email author@example.com
+git config user.name author
+git add .
+git commit -m 'release'
+git tag '%version'
+
 %build
 %python3_build
 
@@ -36,13 +55,25 @@ are consistently > 5x.
 %python3_install
 
 %check
-python3 setup.py test
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    # see .github/workflows/ci.yml for details
+    python -X dev -m pytest -vra py
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr --develop
 
 %files
 %doc *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Thu Apr 07 2022 Stanislav Levin <slev@altlinux.org> 1.4.2-alt1
+- New version.
+
 * Fri Aug 27 2021 Andrey Cherepanov <cas@altlinux.org> 1.3.2-alt1
 - New version.
 

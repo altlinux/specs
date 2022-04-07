@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Run things on paths
@@ -78,5 +78,8 @@ tox.py3 --sitepackages -vvr -s false
 %python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 1.1.3-alt1
+- 1.1.2 -> 1.1.3.
+
 * Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 1.1.2-alt1
 - Initial build for Sisyphus.

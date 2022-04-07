@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 16.3.0
+Version: 16.4.0
 Release: alt1
 
 Summary: A module wrapper for os.path
@@ -42,19 +42,23 @@ common operations on files to be invoked on those path objects directly.
 %setup
 %patch -p1
 
+# if build from git source tree
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
+git init
+git config user.email author@example.com
+git config user.name author
+git add .
+git commit -m 'release'
+git tag '%version'
+
 %build
-# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
-# its used as the primary source for the version number in which
-# case it will be a unparsed string
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
@@ -66,6 +70,9 @@ tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 %python3_sitelibdir/path-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Apr 05 2022 Stanislav Levin <slev@altlinux.org> 16.4.0-alt1
+- 16.3.0 -> 16.4.0.
+
 * Tue Jan 11 2022 Stanislav Levin <slev@altlinux.org> 16.3.0-alt1
 - 16.0.0 -> 16.3.0.
 

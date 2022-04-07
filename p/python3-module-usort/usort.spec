@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: A small, safe import sorter
@@ -86,5 +86,8 @@ tox.py3 --sitepackages -vvr -s false
 %_bindir/%pypi_name
 
 %changelog
+* Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1
+- 1.0.1 -> 1.0.2.
+
 * Thu Feb 10 2022 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus.

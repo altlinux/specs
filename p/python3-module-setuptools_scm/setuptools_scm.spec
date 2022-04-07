@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 6.4.2
-Release: alt1
+Release: alt2
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python3
@@ -52,18 +52,23 @@ It falls back to PKG-INFO/.hg_archival.txt when necessary.
 %setup
 %patch1 -p1
 
-%build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+# if build from git source tree
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
+git init
+git config user.email author@example.com
+git config user.name author
+git add .
+git commit -m 'release'
+git tag '%version'
 
-%python3_build_debug
+%build
+%python3_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
 %python3_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export TESTS_NO_NETWORK=1
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
@@ -77,6 +82,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %python3_sitelibdir/setuptools_scm-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Apr 07 2022 Stanislav Levin <slev@altlinux.org> 6.4.2-alt2
+- Fixed FTBFS (setuptools 61.0.0+).
+
 * Fri Jan 21 2022 Stanislav Levin <slev@altlinux.org> 6.4.2-alt1
 - 6.3.2 -> 6.4.2.
 

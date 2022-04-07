@@ -7,7 +7,7 @@
 
 Name: python3-module-%mname
 Epoch: 1
-Version: 60.10.0
+Version: 62.0.0
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -40,6 +40,7 @@ BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(virtualenv)
 BuildRequires: python3(wheel)
+BuildRequires: python3-module-ini2toml-lite
 
 # For the tests of the setuptools commands to do binary builds:
 BuildPreReq: python3-dev
@@ -151,7 +152,7 @@ sed -i "s@'pyconfig.h'@'%_pyconfig_h'@" setuptools/_distutils/sysconfig.py
 
 %build
 %global python3_setup_buildrequires %nil
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -199,6 +200,12 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- -vra
 %endif
 
 %changelog
+* Tue Apr 05 2022 Stanislav Levin <slev@altlinux.org> 1:62.0.0-alt1
+- 61.3.0 -> 62.0.0.
+
+* Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 1:61.3.0-alt1
+- 60.10.0 -> 61.3.0.
+
 * Fri Mar 18 2022 Stanislav Levin <slev@altlinux.org> 1:60.10.0-alt1
 - 60.9.3 -> 60.10.0.
 
