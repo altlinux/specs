@@ -1,4 +1,4 @@
-%define ver_major 3.28
+%define ver_major 42
 %define _name gnome-games
 
 Name: %_name-full
@@ -12,40 +12,46 @@ URL: http://live.gnome.org/GnomeGames/
 
 BuildArch: noarch
 
-%define aisleriot_ver 3.22.5
-%define atomix_ver 3.22.0
-%define hitori_ver 3.22.4
-%define klotski_ver 3.22.3
-%define mahjongg_ver 3.22.0
-%define nibbles_ver 3.24.0
-%define quadrapassel_ver 3.22.0
-%define robots_ver 3.22.3
-%define tali_ver 3.22.0
-%define tetravex_ver 3.22.0
+%define aisleriot_ver 3.22.22
+%define atomix_ver 3.34.0
+%define glines_ver 3.32.3
+%define gnect_ver 3.38.1
+%define hitori_ver 3.38.4
+%define iagno_ver 3.38.1
+%define klotski_ver 3.38.2
+%define lightsoff_ver 40.0.1
+%define mahjongg_ver 3.38.3
+%define mines_ver 40.1
+%define nibbles_ver 3.38.2
+%define quadrapassel_ver 40.2
+%define robots_ver 40.0
+%define swell_foop_ver 41.0
+%define tali_ver 40.6
+%define taquin_ver 3.38.1
+%define tetravex_ver 3.38.2
 # 2048
-%define tiles_ver 3.26.1
+%define tiles_ver 3.38.2
 
 Requires: %_name-2048 >= %tiles_ver
 Requires: %_name-aisleriot >= %aisleriot_ver
 Requires: %_name-atomix >= %atomix_ver
 Requires: %_name-glchess >= %ver_major
-Requires: %_name-glines >= %ver_major
-Requires: %_name-gnect >= %ver_major
+Requires: %_name-glines >= %glines_ver
+Requires: %_name-gnect >= %gnect_ver
 Requires: %_name-gnibbles >= %nibbles_ver
 Requires: %_name-gnobots >= %robots_ver
-Requires: %_name-gnomine >= %ver_major
+Requires: %_name-gnomine >= %mines_ver
 Requires: %_name-gnotravex >= %tetravex_ver
 Requires: %_name-gnotski >= %klotski_ver
 Requires: %_name-gtali >= %tali_ver
 Requires: %_name-hitori >= %hitori_ver
-Requires: %_name-iagno >= %ver_major
-Requires: %_name-lightsoff >= %ver_major
+Requires: %_name-iagno >= %iagno_ver
+Requires: %_name-lightsoff >= %lightsoff_ver
 Requires: %_name-mahjongg >= %mahjongg_ver
 Requires: %_name-quadrapassel >= %quadrapassel_ver
 Requires: %_name-sudoku >= %ver_major
-Requires: %_name-swell-foop >= %ver_major
-Requires: %_name-taquin >= %ver_major
-Requires: %_name >= %ver_major
+Requires: %_name-swell-foop >= %swell_foop_ver
+Requires: %_name-taquin >= %taquin_ver
 
 BuildRequires: rpm-build-licenses
 
@@ -74,6 +80,9 @@ Tetravex	a simple puzzle game based on Tetravex.
 %files
 
 %changelog
+* Thu Apr 07 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- updated versions, removed gnome-games (depends on tracker-2.0)
+
 * Fri May 25 2018 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0, renamed to gnome-games-full
 - added real gnome-games package and aisleriot
