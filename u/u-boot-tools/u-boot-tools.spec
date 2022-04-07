@@ -1,5 +1,5 @@
 Name: u-boot-tools
-Version: 2022.01
+Version: 2022.04
 Release: alt1
 
 Summary: Das U-Boot
@@ -13,7 +13,7 @@ Obsoletes: uboot-tools
 
 Source: %name-%version-%release.tar
 
-BuildRequires: flex libssl-devel
+BuildRequires: flex libgnutls-devel libssl-devel libtinfo-devel libuuid-devel
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
@@ -38,6 +38,9 @@ ln -s fw_printenv %buildroot%_bindir/fw_setenv
 %_bindir/*
 
 %changelog
+* Thu Apr 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.04-alt1
+- 2022.04 released
+
 * Thu Jan 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.01-alt1
 - 2022.01 released
 
