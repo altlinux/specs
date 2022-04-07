@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-File-Find-Rule-Perl
-Version:        1.15
-Release:        alt1_15
+Version:        1.16
+Release:        alt1
 Summary:        Common rules for searching for Perl things
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/File-Find-Rule-Perl
-Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETHER/File-Find-Rule-Perl-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/E/ET/ETHER/File-Find-Rule-Perl-%{version}.tar.gz
 # Filter out the files rpm generates in sourcedir.
 Patch0:         File-Find-Rule-Perl-1.15-fedora.patch
 BuildArch:      noarch
@@ -52,6 +53,9 @@ make test
 %{perl_vendor_privlib}/File
 
 %changelog
+* Thu Apr 07 2022 Igor Vlasenko <viy@altlinux.org> 1.16-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1_15
 - update to new release by fcimport
 
