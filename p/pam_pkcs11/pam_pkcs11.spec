@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pam_pkcs11
-Version: 0.6.12
+Version: 0.6.12.1
 Release: alt1
 
 Summary: PKCS #11 PAM Module and Login Tools
@@ -163,13 +163,8 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/openssh_mapper.so
 /%_lib/%name/opensc_mapper.so
 %_pam_modules_dir/pam_pkcs11.so
-%_man1dir/pkcs11_eventmgr.1*
-%_man1dir/pkcs11_inspect.1*
-%_man1dir/pkcs11_listcerts.1*
-%_man1dir/pkcs11_setup.1*
-%_man1dir/pklogin_finder.1*
-%_man1dir/pkcs11_make_hash_link.1*
-%_man8dir/pam_pkcs11.8*
+%_man1dir/*.1*
+%_man8dir/*.8*
 %config(noreplace) %_sysconfdir/pam.d/*
 %_unitdir/*
 %_datadir/doc/%name-%version/*.example
@@ -186,6 +181,12 @@ rm %buildroot/%_lib/*/*.la
 /%_lib/%name/ll_isbc.so
 
 %changelog
+* Thu Apr 07 2022 Paul Wolneykien <manowar@altlinux.org> 0.6.12.1-alt1
+- Updated version: upstream commit 4efa29f with fixed LGTM.com errors
+  and spelling in configuration files and docs.
+- Bring back the pkcs11_make_hash_link tool with improved filename
+  handling (thx krolikov) (closes: 42324).
+
 * Fri Aug 27 2021 Paul Wolneykien <manowar@altlinux.org> 0.6.12-alt1
 - Fresh up to v0.6.12.
 - Fixed segfault in CRL check (thx Komarov Egor).
