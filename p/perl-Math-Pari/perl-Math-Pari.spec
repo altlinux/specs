@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-Epoch: 2
+Epoch: 3
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -12,7 +12,7 @@ BuildRequires: perl(LWP/UserAgent.pm) perl(Net/FTP.pm) perl-podlators unzip
 
 Summary:	Perl interface to PARI
 Name:		perl-Math-Pari
-Version:	2.03052101
+Version:	2.030522a
 Release:	alt1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Math-Pari
@@ -60,7 +60,7 @@ scientific/ number-theoretic calculations. It allows use of most PARI functions
 as Perl functions, and (almost) seamless merging of PARI and Perl data.
 
 %prep
-%setup -q -n Math-Pari-%{version}
+%setup -q -n Math-Pari-2.030522
 
 # Create a directory structure for libpari23 like Math::Pari expects it to be
 mkdir libpari23
@@ -77,7 +77,7 @@ ln -s $(pkg-config --variable=paridir libpari23)/src libpari23/src
 %patch3
 
 # Escape left braces in regexes (#1452519)
-%patch4
+#patch4
 
 # Fix operation of MP_NOGNUPLOT
 %patch5
@@ -106,7 +106,7 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 make test MP_NOGNUPLOT=1
 
 %files
-%doc Changes README TODO-inprogress
+%doc Changes README TODO-inprogress README-after2_3_5
 %dir %{perl_vendor_archlib}/Math/
 %exclude %doc %{perl_vendor_archlib}/Math/libPARI.dumb.pod
 %doc %{perl_vendor_archlib}/Math/libPARI.pod
@@ -114,6 +114,9 @@ make test MP_NOGNUPLOT=1
 %{perl_vendor_archlib}/auto/Math/
 
 %changelog
+* Thu Apr 07 2022 Igor Vlasenko <viy@altlinux.org> 3:2.030522a-alt1
+- automated CPAN update
+
 * Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 2:2.03052101-alt1
 - automated CPAN update
 
