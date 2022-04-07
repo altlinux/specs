@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define optflags_lto %nil
 %define _libexecdir %_prefix/libexec
 
@@ -40,7 +40,7 @@
 
 Name: totem
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -361,6 +361,9 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Thu Apr 07 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt2
+- updated to 42.0-11-gcc6849823
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 
