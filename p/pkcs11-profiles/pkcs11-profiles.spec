@@ -17,7 +17,7 @@
 %endif
 
 Name: pkcs11-profiles
-Version: 0.1.12
+Version: 0.1.13
 Release: alt1
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
@@ -169,6 +169,10 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Thu Apr 07 2022 Paul Wolneykien <manowar@altlinux.org> 0.1.13-alt1
+- Remove slot_description = "none" from the default module profiles
+  (closes: 42339, 42341).
+
 * Mon Jul 19 2021 Paul Wolneykien <manowar@altlinux.org> 0.1.12-alt1
 - Enable JaCarta profile again (requires libjcpkcs11 >= 2.7.2-alt4).
 - Fix: Do not package module profile for "Aladdin eTokenPRO-32".
