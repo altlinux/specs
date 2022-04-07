@@ -3,10 +3,10 @@
 Name: kernel-image-rpi-un
 Release: alt1
 epoch:1
-%define kernel_need_version	5.15
+%define kernel_need_version	5.17
 # Used when kernel-source-x.y does not currently exist in repository.
-%define kernel_base_version	5.15
-%define kernel_sublevel .28
+%define kernel_base_version	5.17
+%define kernel_sublevel .1
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -444,6 +444,11 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Apr 06 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.17.1-alt1
+- Updated to 5.17.1
+- https://github.com/raspberrypi/linux.git rpi-5.17.y commit c86339fd1731b6c6776c9f3e609a0f5ef25045dc
+- Baikal-M support from git.alt/people/asheplyakov/linux.git commit 7f62cff013879a19b3b7709644163015f684bf2b
+
 * Fri Mar 18 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.28-alt1
 - Updated to 5.15.28
 - https://github.com/raspberrypi/linux.git rpi-5.15.y commit 53c0d5c6893c940cb762d3a474103706b1e5e383
