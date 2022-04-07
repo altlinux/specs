@@ -1,43 +1,36 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: unzip
 %define oname gettext
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 3.0
-Release: alt2
+Version: 4.0
+Release: alt1
 Summary: Python Gettext po to mo file compiler
 License: BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/python-gettext/
+Url: https://pypi.org/project/python-gettext/
 
 # https://github.com/hannosch/python-gettext.git
-Source0: https://pypi.python.org/packages/80/a7/a4a5cf3aa9500dbb09b48dae6d4d9581883dd90ae7a84cbb2d3448410114/python-%{oname}-%{version}.zip
+Source0: python-%oname-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-unittest2
 
-%py3_provides pythongettext
+%if_with check
+BuildRequires: python3(tox)
+%endif
+
+# pypi name
+%py3_provides python-%oname
 
 %description
 This implementation of Gettext for Python includes a Msgfmt class which
 can be used to generate compiled mo files from Gettext po files and
 includes support for the newer msgctxt keyword.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This implementation of Gettext for Python includes a Msgfmt class which
-can be used to generate compiled mo files from Gettext po files and
-includes support for the newer msgctxt keyword.
-
-This package contains tests for %oname.
-
 %prep
-%setup -n python-%{oname}-%{version}
+%setup -n python-%oname-%version
 
 %build
 %python3_build
@@ -46,17 +39,25 @@ This package contains tests for %oname.
 %python3_install
 
 %check
-%__python3 setup.py test
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    python -m unittest -v
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages -vvr --develop
 
 %files
-%doc *.rst PKG-INFO
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
+%doc *.rst
+%python3_sitelibdir/python_gettext-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/pythongettext/
+%exclude %python3_sitelibdir/pythongettext/tests/
 
 %changelog
+* Thu Apr 07 2022 Stanislav Levin <slev@altlinux.org> 4.0-alt1
+- 3.0 -> 4.0.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 3.0-alt2
 - Drop python2 support.
 
