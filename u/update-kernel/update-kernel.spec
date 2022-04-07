@@ -1,5 +1,5 @@
 Name: update-kernel
-Version: 0.9.21
+Version: 1.0.1
 Release: alt1
 
 Summary: Update kernel and modules
@@ -47,6 +47,15 @@ make check
 %_sbindir/remove-old-kernels
 
 %changelog
+* Fri Apr 08 2022 Vitaly Chikunov <vt@altlinux.org> 1.0.1-alt1
+- Rework interactive mode UI (ALT#42321).
+- '-i' can be used at any time to add new modules to the system.
+- Interactive module selection happen before kernel install.
+- Install kernel-headers and external modules together with the kernel in one
+  transaction.
+- Colorize & brighten some important messages.
+- Call sync after install.
+
 * Mon Apr 04 2022 Vitaly Chikunov <vt@altlinux.org> 0.9.21-alt1
 - Tools cannot be used under user anymore because sudo sub-invocation is
   removed (call them under root instead).
