@@ -1,9 +1,9 @@
-%define module_name IO-Compress-Lzma
 %define _unpackaged_files_terminate_build 1
+%define module_name IO-Compress-Lzma
 
 Name: perl-%module_name
-Version: 2.101
-Release: alt2
+Version: 2.103
+Release: alt1
 Summary: Write lzma files/buffers
 Group: Development/Perl
 License: %perl_license
@@ -36,6 +36,9 @@ IO::Uncompress::UnLzma.
 %perl_vendor_privlib/I*
 
 %changelog
+* Thu Apr 07 2022 Igor Vlasenko <viy@altlinux.org> 2.103-alt1
+- new version
+
 * Fri Nov 26 2021 L.A. Kostis <lakostis@altlinux.ru> 2.101-alt2
 - Rebuild by human.
 
