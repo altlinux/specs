@@ -1,4 +1,5 @@
 %define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 
 %def_enable tests
 %def_enable dummy
@@ -24,8 +25,8 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.7.4
-Release: alt2
+Version: 1.7.6
+Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
 Url: https://github.com/fwupd/fwupd
@@ -50,7 +51,7 @@ BuildRequires: libgnutls-devel
 BuildRequires: libgpgme-devel
 BuildRequires: libgudev-devel
 BuildRequires: libgusb-gir-devel
-BuildRequires: libjcat-devel
+BuildRequires: libjcat-devel >= 0.1.10
 BuildRequires: libpango-devel
 BuildRequires: libpolkit-devel
 %if_enabled dell
@@ -274,6 +275,7 @@ rm -rf %buildroot%_docdir/fwupd
 %fwupd_pluginsdir/libfu_plugin_ep963x.so
 %fwupd_pluginsdir/libfu_plugin_fresco_pd.so
 %fwupd_pluginsdir/libfu_plugin_flashrom.so
+%fwupd_pluginsdir/libfu_plugin_genesys.so
 %fwupd_pluginsdir/libfu_plugin_goodixmoc.so
 %fwupd_pluginsdir/libfu_plugin_hailuck.so
 %if_enabled uefi
@@ -292,6 +294,7 @@ rm -rf %buildroot%_docdir/fwupd
 %if_enabled msr
 %fwupd_pluginsdir/libfu_plugin_msr.so
 %_modulesloaddir/fwupd-msr.conf
+%config(noreplace)%_sysconfdir/fwupd/msr.conf
 %endif
 %fwupd_pluginsdir/libfu_plugin_mtd.so
 %fwupd_pluginsdir/libfu_plugin_nitrokey.so
@@ -309,6 +312,7 @@ rm -rf %buildroot%_docdir/fwupd
 %fwupd_pluginsdir/libfu_plugin_realtek_mst.so
 %fwupd_pluginsdir/libfu_plugin_rts54hid.so
 %fwupd_pluginsdir/libfu_plugin_rts54hub.so
+%fwupd_pluginsdir/libfu_plugin_scsi.so
 %fwupd_pluginsdir/libfu_plugin_superio.so
 %fwupd_pluginsdir/libfu_plugin_steelseries.so
 %fwupd_pluginsdir/libfu_plugin_synaptics_cape.so
@@ -373,6 +377,13 @@ rm -rf %buildroot%_docdir/fwupd
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 
 %changelog
+* Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 1.7.6-alt1
+- 1.7.5 -> 1.7.6
+
+* Sat Feb 19 2022 Anton Farygin <rider@altlinux.ru> 1.7.5-alt1
+- 1.7.5
+- switched to use /usr/libexec for libexecdir instead of /usr/lib
+
 * Thu Jan 27 2022 Ivan A. Melnikov <iv@altlinux.org> 1.7.4-alt2
 - enable build with flashrom on all architectures
 
