@@ -4,28 +4,24 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.1
+Version: 5.2
 Release: alt1
 Summary: Provides a restricted execution environment for Python, e.g. for running untrusted code
 License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/RestrictedPython/
+Url: https://pypi.org/project/RestrictedPython/
 #Git: https://github.com/zopefoundation/RestrictedPython.git
 
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
-BuildRequires: python3-module-setuptools
 
 %if_with check
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-pytest-runner
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-mock
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_mock)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -47,34 +43,24 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-# no need to keep constraint for pytest<5 as we drop Python2 module
-sed -i 's|pytest < 5|pytest|' constraints.txt
-# rename pytest executable
-sed -i 's|pytest --|py.test3 --|g' tox.ini
-# no need for html report and dependecy on pytest-html
-sed -i 's|--html=_build\/pytest\/report-{envname}\.html --self-contained-html||' tox.ini
-sed -i 's|pytest-html||' tox.ini
-# cancel coverage execution during unit testing
-sed -i 's|coverage run [ -a]\{0,\}-m||g' tox.ini
-sed -i 's|[[:space:]]coverage|#coverage|g' tox.ini
-# cancel docbuild tests
-sed -i 's|sphinx|#py3_sphinx|g' tox.ini
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test3\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test3' tox.ini
-sed -i '/setenv =$/a \
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3' tox.ini
-
-tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    {envbindir}/pytest -vra {posargs:tests}
+EOF
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr --develop
 
 %files
 %doc *.txt
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Apr 07 2022 Stanislav Levin <slev@altlinux.org> 5.2-alt1
+- 5.1 -> 5.2.
+
 * Sun Feb 28 2021 Nikolai Kostrigin <nickel@altlinux.org> 5.1-alt1
 - 5.0 -> 5.1
 
