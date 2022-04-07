@@ -8,7 +8,7 @@
 
 Name: libjcpkcs11
 Version: 2.7.4
-Release: alt5
+Release: alt6
 
 Summary: Aladdin JaCarta PKCS#11 library
 License: Proprietary
@@ -58,6 +58,10 @@ L-02210004 от 04.02.2021.
 %config(noreplace) %_sysconfdir/pkcs11/modules/jcpkcs11.module
 
 %changelog
+* Thu Apr 07 2022 Paul Wolneykien <manowar@altlinux.org> 2.7.4-alt6
+- Make symlinks to all installed libraries from the pkcs11/ subdir
+  (closes: 42342).
+
 * Thu Feb 03 2022 Paul Wolneykien <manowar@altlinux.org> 2.7.4-alt5
 - Set verify ELF method to 'relaxed' for all arches.
 
