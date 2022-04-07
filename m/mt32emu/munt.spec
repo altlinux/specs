@@ -1,5 +1,5 @@
 Name: mt32emu
-Version: 2.5.2
+Version: 2.6.2
 Release: alt1
 Summary: MT-32, CM-32L and LAPC-I synthesiser modules emulator
 Group: Sound
@@ -107,14 +107,18 @@ install -m755 mt32emu_alsadrv/mt32d %buildroot%_bindir/
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*
+%_libdir/cmake/MT32Emu
 
 %files qt
 %doc %_defaultdocdir/munt/mt32emu-qt
 %_bindir/mt32emu-qt
 %_desktopdir/*.desktop
-%_pixmapsdir/*.png
+%_iconsdir/hicolor/*/apps/munt.*
 
 %changelog
+* Thu Apr 07 2022 Fr. Br. George <george@altlinux.org> 2.6.2-alt1
+- Autobuild version bump to 2.6.2
+
 * Tue Aug 24 2021 Fr. Br. George <george@altlinux.ru> 2.5.2-alt1
 - Update submajor version
 - Separate packages
