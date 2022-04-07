@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define real_name Compress-Raw-Lzma
 
 Name: perl-%real_name
-Version: 2.101
-Release: alt3
+Version: 2.103
+Release: alt1
 Summary: Low-level interface to lzma compression library
 License: %perl_license
 Group: Development/Perl
@@ -41,6 +42,9 @@ perl -i -ne 'print $_ unless m{^t/Test/}' MANIFEST
 %perl_vendor_archlib/Compress/
 
 %changelog
+* Thu Apr 07 2022 Igor Vlasenko <viy@altlinux.org> 2.103-alt1
+- new version
+
 * Fri Nov 26 2021 L.A. Kostis <lakostis@altlinux.ru> 2.101-alt3
 - Rebuild by human.
 - Remove fcimport crap.
