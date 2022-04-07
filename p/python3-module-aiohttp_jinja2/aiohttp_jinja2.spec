@@ -1,30 +1,47 @@
+%define _unpackaged_files_terminate_build 1
 %define oname aiohttp_jinja2
+
+%def_with check
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 0.13.0
-Release: alt3
+Version: 1.5
+Release: alt1
 Summary: jinja2 template renderer for aiohttp.web
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/aiohttp_jinja2/
+Url: https://pypi.org/project/aiohttp-jinja2/
 
 # https://github.com/aio-libs/aiohttp_jinja2.git
-Source0: https://pypi.python.org/packages/79/fc/925fc60d87d38f0d6dcb7b538b7064b15b508d688a2fa6cf8e400c192308/aiohttp-jinja2-%{version}.tar.gz
+Source0: aiohttp-%version.tar
+Patch0: aiohttp_jinja2-1.5-tests-Drop-dependency-on-coverage.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
-%py3_provides %oname
-%py3_requires asyncio aiohttp jinja2
+%if_with check
+# dependencies=
+BuildRequires: python3(aiohttp)
+BuildRequires: python3(jinja2)
 
-BuildRequires: python3-module-aiohttp python3-module-coverage python3-module-html5lib python3-module-ipdb python3-module-nose python3-module-notebook
+BuildRequires: python3(aiohttp.test_utils)
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_aiohttp)
+BuildRequires: python3(tox)
+BuildRequires: python3(tox_console_scripts)
+%endif
+
+# PEP503 normalized name
+%py3_provides aiohttp-jinja2
+Provides: python3-module-aiohttp-jinja2 = %EVR
 
 %description
 jinja2 template renderer for aiohttp.web.
 
 %prep
-%setup -n aiohttp-jinja2-%{version}
+%setup -n aiohttp-%version
+%autopatch -p1
 
 %build
 %python3_build
@@ -32,16 +49,26 @@ jinja2 template renderer for aiohttp.web.
 %install
 %python3_install
 
-rm -f requirements-dev.txt
-
 %check
-python3 setup.py test
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    {envbindir}/pytest -vra {posargs:tests}
+EOF
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages --console-scripts -vvr --develop
 
 %files
-%doc *.txt *.rst docs/*.rst
-%python3_sitelibdir/*
+%doc *.rst docs/*.rst
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu Apr 07 2022 Stanislav Levin <slev@altlinux.org> 1:1.5-alt1
+- 0.13.0 -> 1.5.
+
 * Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 1:0.13.0-alt3
 - Drop python2 support.
 
