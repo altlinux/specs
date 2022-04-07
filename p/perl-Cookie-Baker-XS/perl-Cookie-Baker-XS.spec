@@ -6,7 +6,7 @@ BuildRequires: libsowing-devel perl(CPAN/Meta.pm) perl(CPAN/Meta/Prereqs.pm) per
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.11
+Version: 0.12
 Release: alt1
 Summary: boost Cookie::Baker's crush_cookie
 Group: Development/Perl
@@ -33,6 +33,9 @@ Source0: http://www.cpan.org/authors/id/K/KA/KAZEBURO/%{module_name}-%{version}.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Apr 07 2022 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
+- automated CPAN update
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - automated CPAN update
 
