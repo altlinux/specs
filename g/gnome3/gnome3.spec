@@ -1,4 +1,4 @@
-%define ver_major 41
+%define ver_major 42
 
 Name: gnome3
 Version: %ver_major.0
@@ -15,41 +15,43 @@ BuildRequires(pre): rpm-build-licenses
 # The following are required versions of those packages that
 # do not follow GNOME version numbers.
 ## Core components
-%define session_ver 40
+%define session_ver %ver_major
 %define keyring_ver 3.31.91
 
 ## Applications
 %define nautilus_ver %ver_major
-%define seahorse_ver %ver_major
+%define seahorse_ver 41.0
 %define utils_ver 3.20
-%define games_ver 3.28.0
-%define weather_ver 3.36.1
+%define games_ver %ver_major
+%define weather_ver %ver_major
 %define pm_ver 3.32.0
 %define yelp_ver %ver_major
 %define dconf_editor_ver %ver_major
 %define contacts_ver %ver_major
-%define roller_ver 3.40
+%define bijiben_ver 40.1
+%define cheese_ver 41.0
+%define roller_ver 3.42
 %define eog_ver %ver_major
-%define network_manager_ver 1.24
-%define terminal_ver 3.42
+%define network_manager_ver 1.26.0
+%define terminal_ver 3.44
 %define epiphany_ver %ver_major
 %define pidgin_ver 2.6.3
 %define evince_ver %ver_major
 %define applets_ver %ver_major
-%define gedit_ver 40.1
-%define gedit_plugins_ver 40.1
+%define gedit_ver %ver_major
+%define gedit_plugins_ver %ver_major
 %define gud_ver %ver_major
 %define gdm_ver %ver_major
 %define gdu_ver %ver_major
 %define evo_ver 3.42
 %define emp_ver 3.12.11
-%define brasero_ver 3.12.2
+%define brasero_ver 3.12.3
 %define accerciser_ver 3.38
-%define recorder_ver 40
-%define todo_ver 3.28.1
-%define characters_ver 3.34.0
+%define recorder_ver %ver_major
+%define todo_ver 41.0
+%define characters_ver %ver_major
 %define music_ver %ver_major
-%define photos_ver 40
+%define photos_ver %ver_major
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
@@ -174,11 +176,11 @@ Requires: gnome-contacts >= %contacts_ver
 ## Default document reader (currently pdf, ps, tiff, dvi)
 Requires: evince >= %evince_ver
 ## and E-Book Reader
-#Requires: fbreader
+Requires: foliate
 ## and videos from a webcam
-Requires: cheese >= %ver_major
+Requires: cheese >= %cheese_ver
 # Note editor
-Requires: bijiben >= 40.1
+Requires: bijiben >= %bijiben_ver
 
 # Utilities
 Requires: gnome-utils >= %utils_ver
@@ -212,8 +214,6 @@ Requires: eog-plugins
 Requires: brasero >= %brasero_ver
 ## Clipboard manager
 Requires: gnome-shell-extension-gpaste
-# Documents manager
-Requires: gnome-books
 # A quick previewer for Nautilus
 Requires: sushi
 # mypaint, krita thumbnailer for Nautilus
@@ -429,6 +429,9 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- default: gnome-books -> foliate
+
 * Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - default: xdg-desktop-portal-gtk -> xdg-desktop-portal-gnome,
            added gnome-remote-desktop,
