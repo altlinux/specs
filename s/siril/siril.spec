@@ -1,7 +1,7 @@
 
 Name:           siril
-Version:        1.0.0
-Release:        alt2
+Version:        1.0.1
+Release:        alt1
 Summary:        Astronomical image processing software
 Group: 		Graphics
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -57,7 +57,7 @@ SER files)
 
 %prep
 %setup -c -n siril-%version
-%patch1 -p1
+#patch1 -p1
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -95,6 +95,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.free_
 
 
 %changelog
+* Thu Apr 07 2022 Ilya Mashkin <oddity@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Tue Mar 15 2022 Ilya Mashkin <oddity@altlinux.ru> 1.0.0-alt2
 - Update BR
 
