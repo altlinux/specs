@@ -6,7 +6,7 @@
 
 Name: gnome-maps
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Maps is a map application for GNOME
 License: GPL-2.0 and LGPL-2.0
@@ -23,6 +23,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %define geoclue_ver 2.4.0
 %define champlain_ver 0.12.19
 %define handy_ver 1.5
+
+%define gtk_api_ver 3.0
+%define gweather_api_ver 3.0
+%define soup_api_ver 2.4
+%define webkit_api_ver 4.0
 
 Requires: geoclue2 >= %geoclue_ver
 Requires: libgeocode-glib-gir >= %geocode_ver
@@ -41,20 +46,20 @@ Requires: typelib(GLib)
 Requires: typelib(GnomeMaps)
 Requires: typelib(Goa)
 Requires: typelib(GObject)
-Requires: typelib(Gtk) = 3.0
+Requires: typelib(Gtk) = %gtk_api_ver
 Requires: typelib(GtkChamplain)
 Requires: typelib(GtkClutter)
-Requires: typelib(GWeather)
+Requires: typelib(GWeather) = %gweather_api_ver
 Requires: typelib(Handy) = 1
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 Requires: typelib(Rest)
 Requires: typelib(Secret)
-Requires: typelib(Soup) = 2.4
-Requires: typelib(WebKit2) = 4.0
+Requires: typelib(Soup) = %soup_api_ver
+Requires: typelib(WebKit2) = %webkit_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: meson yelp-tools %_bindir/appstream-util desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
 BuildRequires: pkgconfig(geoclue-2.0) >= %geoclue_ver
@@ -93,6 +98,9 @@ Maps is a map application for GNOME.
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Thu Apr 07 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1.1
+- updated dependencies (partially fixed ALT #42362)
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 
