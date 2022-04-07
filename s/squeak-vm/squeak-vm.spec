@@ -1,8 +1,10 @@
+Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 %set_verify_elf_method textrel=relaxed
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
 %global major   4
 %global minor   10
 %global patch   2
@@ -13,10 +15,9 @@ BuildRequires: gcc-c++
 
 Name:           squeak-vm
 Version:        %{vmver}
-Release:        alt3_9
+Release:        alt3_29
 Summary:        The Squeak virtual machine
 
-Group:          Development/Other
 License:        MIT
 URL:            http://squeakvm.org/unix
 Source0:        http://squeakvm.org/unix/release/%{source}.tar.gz
@@ -26,19 +27,22 @@ Patch0:         squeak-vm-dprintf.patch
 Patch1:         alsa-fixes.patch
 Patch2:         squeak-vm-4.10.2-fix-cmake.patch
 Patch3:         squeak-vm-4.10.2-squeak-init-fix.patch
+Patch4:         squeak-vm-4.10.2-format-security.patch
 
 # For clean upgrade path, could be probably dropped in F20 or later
 
-Requires(post): shared-mime-info
-Requires(postun): shared-mime-info
+Requires:       xmessage
 
-BuildRequires: ctest cmake
+BuildRequires:  gcc
+BuildRequires:  gcc-c++
+BuildRequires:  ctest cmake
 BuildRequires:  libX11-devel libXt-devel libvorbis-devel libtheora-devel libspeex-devel
-BuildRequires:  libdbus-devel libalsa-devel pango-devel gstreamer-devel libGL-devel
+BuildRequires:  libdbus-devel libalsa-devel libpango-devel libpango-gir-devel libGL-devel
 BuildRequires:  libICE-devel libSM-devel libXext-devel libuuid-devel
-BuildRequires:  libffi-devel libaudio-devel libpulseaudio-devel libxml2-devel glib2-devel
-BuildRequires:  libcairo-devel libv4l-devel
+BuildRequires:  libffi-devel libaudio-devel libpulseaudio-devel libxml2-devel glib2-devel libgio libgio-devel
+BuildRequires:  libcairo-devel,  libv4l-devel
 Source44: import.info
+Patch33: squeak-vm-4.10.2-alt-no-inline.patch
 
 %description
 Squeak is a full-featured implementation of the Smalltalk programming
@@ -54,22 +58,23 @@ This package contains just the Squeak virtual machine.
 %patch1 -p2 -b .alsa-fixes
 %patch2 -p1 -b .fix-cmake
 %patch3 -p1 -b .squeak-init-fix
+%patch4 -p1 -b .format-security
+%patch33 -p1
 
 # Fix libdir
 sed -i 's|libdir="${prefix}/lib/squeak"|libdir="%{_libdir}/squeak"|' unix/cmake/squeak.in
 
 %build
-mkdir -p bld
-cd bld
+#* Sat Feb 02 2019 Michael Shigorin <mike@altlinux.org> 4.10.2.2614-alt3_9
+#- force -std=c89 (see also debian#778129)
+# uncomment if we still need it
+#export CFLAGS="-std=gnu89"
 
-export CFLAGS="-std=gnu89"
-
-%{fedora_cmake} ../unix -DCMAKE_VERBOSE_MAKEFILE=ON -DVM_HOST="%{_host}" -DVM_VERSION="%{vmver2}" -DPLATFORM_SOURCE_VERSION="%{rev}"
-
-make %{?_smp_mflags}
+%{fedora_v2_cmake} ./unix -DCMAKE_VERBOSE_MAKEFILE=ON -DVM_HOST="%{_host}" -DVM_VERSION="%{vmver2}" -DPLATFORM_SOURCE_VERSION="%{rev}"
+%fedora_v2_cmake_build
 
 %install
-make -C bld install DESTDIR=%{buildroot}
+%fedora_v2_cmake_install
 
 # these files will be put in std RPM doc location
 rm -rf %{buildroot}%{_prefix}/doc/squeak
@@ -106,7 +111,9 @@ done
 chmod 755 %buildroot/usr/lib/rpm/squeak-vm.req*
 
 %files
-%doc unix/ChangeLog unix/doc/{README*,LICENSE,*RELEASE_NOTES}
+%doc unix/ChangeLog unix/doc/README*
+%doc unix/ChangeLog unix/doc/LICENSE
+%doc unix/ChangeLog unix/doc/*RELEASE_NOTES
 %{_bindir}/*
 %dir %{_libdir}/squeak
 %dir %{_libdir}/squeak/%{vmver2}
@@ -161,12 +168,15 @@ chmod 755 %buildroot/usr/lib/rpm/squeak-vm.req*
 #%dir %{_datadir}/squeak
 #%{_datadir}/squeak/*
 %{_datadir}/pixmaps/*
-%{_datadir}/mime/packages/*
+%{_datadir}/mime/packages/*.xml
 %{_datadir}/icons/gnome/*/mimetypes/*.png
 %_libdir/squeak/%{vmver2}/so.Mpeg3Plugin
 /usr/lib/rpm/squeak-vm.req*
 
 %changelog
+* Thu Apr 07 2022 Igor Vlasenko <viy@altlinux.org> 4.10.2.2614-alt3_29
+- update to new release by fcimport
+
 * Sat Feb 02 2019 Michael Shigorin <mike@altlinux.org> 4.10.2.2614-alt3_9
 - force -std=c89 (see also debian#778129)
 
