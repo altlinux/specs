@@ -2,10 +2,10 @@
 %define module_version	0.9.2.23.git43db5f1
 %define module_release	alt1
 
-%define flavour		centos
-%define karch		aarch64 x86_64
+%define flavour		un-def
+%define karch		aarch64 %arm %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-centos
+BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
