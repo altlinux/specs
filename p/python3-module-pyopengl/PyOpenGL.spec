@@ -1,65 +1,99 @@
 %define oname OpenGL
+%define modulename python3-module-%oname
 
-Name: python3-module-%oname
-Version: 3.1.5
-Release: alt3
+Name: python3-module-pyopengl
+Version: 3.1.6
+Release: alt1
 
-Summary: A Python module for interfacing with the OpenGL library
-Summary(ru_RU.UTF-8): Расширение языка Python для работы с библиотекой OpenGL
+Summary: Metapackage including python modules for OpenGL library
 
 Group: Development/Python3
 License: see license.txt
 Url: http://pyopengl.sourceforge.net
 
-Source: PyOpenGL-%version.tar.gz
-Patch: PyOpenGL-swig.patch
-Patch1: %name.patch
-
-BuildArch: noarch
+# https://pypi.org/project/PyOpenGL
+# https://pypi.org/project/PyOpenGL-accelerate
+# https://github.com/mcfletch/pyopengl
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-Cython
+BuildRequires: libnumpy-py3-devel
 
-%py3_requires OpenGL_accelerate
+%description
+OpenGL bindings for Python including support for GL extensions,
+GLU, WGL, GLUT, GLE, and Tk
+
+%package -n %modulename
+Summary: A Python module for interfacing with the OpenGL library
+Group: Development/Python3
+BuildArch: noarch
 %add_python3_req_skip OpenGL.GLES3.OES
 %add_python3_req_skip OpenGL.raw.DISABLED
 %add_python3_req_skip OpenGL.raw.DISABLED._types
 %add_python3_req_skip OpenGL.raw.GLSC2
 %add_python3_req_skip OpenGL.raw.GLSC2._types
 
-%description
+%description -n %modulename
 OpenGL bindings for Python including support for GL extensions,
 GLU, WGL, GLUT, GLE, and Tk
 
-%package tk
-Summary: %oname Python 2.x Tk widget
+%package -n %modulename-tk
+Summary: %oname Python3 Tk widget
 Group: Development/Python3
-Requires: %name = %EVR
+Requires: %modulename = %EVR
 %py3_requires tkinter
+BuildArch: noarch
 
-%description tk
-%oname Togl (Tk OpenGL widget) 1.6 support for Python 2.x.
+%description -n %modulename-tk
+%oname Togl (Tk OpenGL widget) 1.6 support for Python3
+
+%package -n %{modulename}_accelerate
+Summary: Acceleration code for PyOpenGL
+Group: Development/Python3
+
+%description -n %{modulename}_accelerate
+This set of C (Cython) extensions provides acceleration of common
+operations for slow points in PyOpenGL 3.x.
 
 %prep
-%setup -n PyOpenGL-%version
+%setup
 
 find tests -type f -name '*.py' -exec \
 	sed -i 's|#! %_bindir/env python|#!%_bindir/python3|' '{}' +
 
 %build
 %python3_build
+pushd accelerate
+%python3_build
+popd
 
 %install
 %python3_install
+pushd accelerate
+%python3_install
+popd
 
-%files
-%python3_sitelibdir/*.egg-info
-%python3_sitelibdir/%oname/
-%exclude %python3_sitelibdir/OpenGL/Tk
+%check
+# tests need available video device
 
-%files tk
-%python3_sitelibdir/OpenGL/Tk
+%files -n %modulename
+%python3_sitelibdir_noarch/%oname
+%python3_sitelibdir_noarch/Py%{oname}-*.egg-info
+%exclude %python3_sitelibdir_noarch/%oname/Tk
+
+%files -n %modulename-tk
+%python3_sitelibdir_noarch/%oname/Tk
+
+%files -n %{modulename}_accelerate
+%python3_sitelibdir/%{oname}_accelerate
+%python3_sitelibdir/Py%{oname}_accelerate*.egg-info
 
 %changelog
+* Wed Mar 30 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.6-alt1
+- Build new version.
+- Build OpenGL_accelerate from OpenGL git repo.
+
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.5-alt3
 - Drop python2 support.
 
