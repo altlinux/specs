@@ -1,6 +1,6 @@
 Name: borg
-Version: 1.1.17
-Release: alt3
+Version: 1.2.0
+Release: alt1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
 
@@ -16,10 +16,9 @@ BuildRequires(pre): rpm-build-python3
 
 BuildRequires: gcc-c++
 BuildRequires: libacl-devel ipython3 python3-module-Cython libssl-devel python3-dev
-BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-setuptools_scm python3-module-pytest python3-module-msgpack
 BuildRequires: liblz4-devel libzstd-devel libb2-devel libxxhash-devel
 
-#Requires: python3-module-msgpack >= 0.4.6
 Requires: python3-module-zmq
 
 %description
@@ -42,10 +41,12 @@ fully trusted targets.
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export BORG_OPENSSL_PREFIX="/usr/include/openssl"
 %python3_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export BORG_OPENSSL_PREFIX="/usr/include/openssl"
 %python3_install
 
 %check
@@ -68,6 +69,9 @@ py.test-3 -x -vk "$TEST_SELECTOR" $PYTHONPATH/borg/testsuite/*.py
 
 
 %changelog
+* Fri Apr 08 2022 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.2.0-alt1
+- 1.2.0 release
+
 * Wed Dec 01 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.17-alt3
 - enabled tests
 
