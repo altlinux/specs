@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.5.21
+Version: 5.5.22
 Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0
@@ -13,7 +13,7 @@ Source: %url/archive/%version/%name-%version.tar.gz
 Patch: dtkgui-5.5.17.1-alt-fix-build-ppc64le.patch
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %endif
 BuildRequires: dtk5-core-devel dtk5-common librsvg-devel libgtest-devel libgmock-devel
 
@@ -37,9 +37,9 @@ Header files and libraries for %name.
 
 %prep
 %setup
-%ifarch ppc64le
-%patch -p1
-%endif
+# %%ifarch ppc64le
+# %%patch -p1
+# %%endif
 sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|' \
     src/src.pro
 sed -i '/*build-*/d' .gitignore
@@ -76,6 +76,9 @@ sed -i '/*build-*/d' .gitignore
 %_libdir/libdtkgui.so
 
 %changelog
+* Fri Apr 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.22-alt1
+- New version (5.5.22).
+
 * Tue Feb 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.21-alt1
 - New version (5.5.21).
 

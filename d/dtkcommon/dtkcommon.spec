@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcommon
-Version: 5.5.20
+Version: 5.5.21
 Release: alt1
 Summary: Deepin desktop schemas
 License: LGPL-3.0+ and GPL-3.0+
@@ -63,6 +63,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/glib-2.0/schemas/com.deepin.dtk.gschema.xml
 
 %changelog
+* Fri Apr 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.21-alt1
+- New version (5.5.21).
+
 * Tue Feb 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.20-alt1
 - New version (5.5.20).
 

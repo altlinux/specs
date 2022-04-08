@@ -3,23 +3,24 @@
 %def_disable clang
 
 Name: deepin-file-manager
-Version: 5.5.1
+Version: 5.5.10
 Release: alt1
 Summary: Deepin File Manager
 License: GPL-3.0+
-Group: Graphical desktop/Other
+Group: File tools
 Url: https://github.com/linuxdeepin/dde-file-manager
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch1: deepin-file-manager-5.5.1-desktop.patch
-Patch2: deepin-file-manager-5.5.1-gcc10.patch
 Patch3: deepin-file-manager-5.2.0.87-alt-qterminal-instead-xterm.patch
 Patch4: deepin-file-manager-5.5.1-hide-lockscreen-checkbox.patch
 Patch5: deepin-file-manager-5.5.1-gcc11-fix-segfault.patch
 Patch6: deepin-file-manager-5.5.1-alt-aarch64.patch
 
 ExcludeArch: armh ppc64le
+
+Requires: libdde-file-manager5 libdfm-extension5
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -69,6 +70,7 @@ BuildRequires: libxml2-devel
 BuildRequires: libhtmlcxx-devel
 BuildRequires: libgsf-devel
 BuildRequires: libmimetic-devel
+BuildRequires: libdocparser-devel
 
 # run command by QProcess
 # Requires: deepin-shortcut-viewer deepin-terminal deepin-desktop file-roller gvfs samba xdg-user-dirs gst-plugins-good1.0-qt5
@@ -79,11 +81,39 @@ BuildRequires: libmimetic-devel
 File manager front end of Deepin OS.
 
 %package devel
-Summary: Development package for %name
-Group: Graphical desktop/Other
+Summary: Development files for %name
+Group: Development/Other
 
 %description devel
-Header files and libraries for %name.
+Development files for %name.
+
+%package -n lib%{repo}5
+Summary: Library for %name
+Group: System/Libraries
+
+%description -n lib%{repo}5
+Library for %name.
+
+%package -n lib%repo-devel
+Summary: Development files for lib%repo
+Group: Development/Other
+
+%description -n lib%repo-devel
+Development files for lib%repo.
+
+%package -n libdfm-extension5
+Summary: Library for %name extensions
+Group: System/Libraries
+
+%description -n libdfm-extension5
+Library for %name extensions.
+
+%package -n libdfm-extension-devel
+Summary: Development files for %name extensions
+Group: Development/Other
+
+%description -n libdfm-extension-devel
+Development files for %name extensions.
 
 %package -n deepin-desktop
 Summary: Deepin desktop environment - desktop module
@@ -96,9 +126,6 @@ Deepin desktop environment - desktop module.
 %prep
 %setup -n %repo-%version
 %patch1 -p1
-%if_disabled clang
-%patch2 -p1
-%endif
 # %%patch3 -p1
 %patch4 -p1
 %patch5 -p1
@@ -189,7 +216,6 @@ export PATH=%_qt5_bindir:$PATH
 %_bindir/dde-property-dialog
 %_bindir/dde-select-dialog-x11
 %_bindir/dde-select-dialog-wayland
-%_libdir/lib%repo.so.*
 %dir %_libdir/%repo/
 %dir %_libdir/%repo/tools/
 %dir %_libdir/%repo/tools/thumbnail/
@@ -226,6 +252,8 @@ export PATH=%_qt5_bindir:$PATH
 %dir %_libdir/%repo/plugins/
 %dir %_libdir/%repo/plugins/previews/
 %_libdir/%repo/plugins/previews/*.so
+%dir %_libdir/%repo/plugins/extensions/
+%_libdir/%repo/plugins/extensions/.readme
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
@@ -233,9 +261,35 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/deepin-manual/manual-assets/application/%repo/file-manager/
 
 %files devel
-%_includedir/%repo/
+%dir %_includedir/%repo/
+%dir %_includedir/%repo/%repo-plugins/
+%_includedir/%repo/%repo-plugins/*.h
+%dir %_includedir/%repo/gvfs/
+%_includedir/%repo/gvfs/*.h
+%dir %_includedir/%repo/private/
+%_includedir/%repo/private/*.h
+
+%files -n lib%{repo}5
+%_libdir/lib%repo.so.5*
+
+%files -n lib%repo-devel
+%dir %_includedir/%repo/
+%_includedir/%repo/*.h
 %_pkgconfigdir/%repo.pc
 %_libdir/lib%repo.so
+
+%files -n libdfm-extension5
+%_libdir/libdfm-extension.so.5*
+
+%files -n libdfm-extension-devel
+%dir %_includedir/dfm-extension/
+%_includedir/dfm-extension/*.h
+%dir %_includedir/dfm-extension/emblemicon/
+%_includedir/dfm-extension/emblemicon/*.h
+%dir %_includedir/dfm-extension/menu/
+%_includedir/dfm-extension/menu/*.h
+%_libdir/libdfm-extension.so
+%_pkgconfigdir/dfm-extension.pc
 
 %files -n deepin-desktop
 %_bindir/dde-desktop
@@ -250,6 +304,10 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Thu Apr 07 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.10-alt1
+- New version (5.5.10).
+- Changed group tag.
+
 * Tue Mar 22 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.1-alt1
 - New version (5.5.1).
 
