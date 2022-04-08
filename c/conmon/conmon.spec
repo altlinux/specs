@@ -1,5 +1,5 @@
 Name: conmon
-Version: 2.0.31
+Version: 2.1.0
 Release: alt1
 # due to typo in version :(
 Epoch: 1
@@ -38,6 +38,9 @@ export GIT_COMMIT=%release
 %_man8dir/conmon.*
 
 %changelog
+* Fri Apr 08 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.1.0-alt1
+- new version 2.1.0
+
 * Thu Dec 09 2021 Alexey Shabalin <shaba@altlinux.org> 1:2.0.31-alt1
 - new version 2.0.31
 
