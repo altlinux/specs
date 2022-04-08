@@ -3,7 +3,7 @@
 %define sover 1
 
 Name: libvdpau
-Version: 1.4
+Version: 1.5
 Release: alt1
 Epoch: 1
 Group: System/Libraries
@@ -81,6 +81,9 @@ Documentation for VDPAU library
 %docdir/html
 
 %changelog
+* Thu Apr 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:1.5-alt1
+- new version
+
 * Wed Sep 23 2020 Sergey V Turchin <zerg@altlinux.org> 1:1.4-alt1
 - new version
 
