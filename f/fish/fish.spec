@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fish
-Version: 3.4.0
-Release: alt2
+Version: 3.4.1
+Release: alt1
 
 Summary: A friendly interactive shell
 License: GPLv2+
@@ -79,6 +79,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Fri Apr 08 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.1-alt1
+- 3.4.1
+
 * Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.0-alt2
 - cherry-pick commits from Integration_3.4.1 branch
 
