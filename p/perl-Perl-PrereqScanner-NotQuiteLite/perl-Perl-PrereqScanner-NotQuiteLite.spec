@@ -1,14 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Perl-PrereqScanner-NotQuiteLite
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Any/Moose.pm) perl(Apache/DBI.pm) perl(CPAN/Meta/Prereqs.pm) perl(CPAN/Meta/Requirements.pm) perl(Catalyst.pm) perl(Class/Accessor.pm) perl(Class/Autouse.pm) perl(Class/Load.pm) perl(DBI.pm) perl(Data/Dump.pm) perl(Data/Section.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/MakeMaker/CPANfile.pm) perl(Function/Parameters.pm) perl(Inline.pm) perl(LWP/UserAgent.pm) perl(Mo.pm) perl(Module/CPANfile.pm) perl(Module/CoreList.pm) perl(Module/Find.pm) perl(Module/Runtime.pm) perl(Mojo/Base.pm) perl(Mojo/Loader.pm) perl(Mojolicious.pm)
-BuildRequires: perl(Mojolicious/Lite.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Moose.pm) perl(MooseX/Declare.pm) perl(MooseX/Role/Parameterized.pm) perl(MooseX/Types.pm) perl(Mouse.pm) perl(Package/Variant.pm) perl(Parse/RecDescent.pm) perl(Pegex/Base.pm) perl(Plack/Builder.pm) perl(Pod/POM.pm) perl(Pod/POM/View/HTML.pm) perl(Regexp/Trie.pm) perl(Test/Class.pm) perl(Test/FailWarnings.pm) perl(Test/More.pm) perl(Test/Most.pm) perl(Test/Pod.pm) perl(Test/Requires.pm) perl(Test/UseAllModules.pm) perl(Text/Balanced.pm) perl(XXX.pm) perl(YAML/Syck.pm) perl(aliased.pm)
-BuildRequires: perl(experimental.pm) perl(lib/abs.pm) perl(parent.pm) perl(prefork.pm) perl(syntax.pm)
+BuildRequires: perl(Any/Moose.pm) perl(Apache/DBI.pm) perl(CPAN/Meta/Prereqs.pm) perl(CPAN/Meta/Requirements.pm) perl(Catalyst.pm) perl(Class/Accessor.pm) perl(Class/Autouse.pm) perl(Class/Load.pm) perl(DBI.pm) perl(Data/Dump.pm) perl(Data/Section.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/MakeMaker/CPANfile.pm) perl(Function/Parameters.pm) perl(Inline.pm) perl(LWP/UserAgent.pm) perl(Mo.pm) perl(Module/CPANfile.pm) perl(Module/CoreList.pm) perl(Module/Find.pm) perl(Module/Runtime.pm) perl(Mojo/Base.pm) perl(Mojo/Loader.pm) perl(Mojolicious.pm) perl(Mojolicious/Lite.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(Moose.pm) perl(MooseX/Declare.pm) perl(MooseX/Role/Parameterized.pm) perl(MooseX/Types.pm) perl(Mouse.pm) perl(Package/Variant.pm) perl(Parse/Distname.pm) perl(Parse/RecDescent.pm) perl(Pegex/Base.pm)
+BuildRequires: perl(Plack/Builder.pm) perl(Pod/POM.pm) perl(Pod/POM/View/HTML.pm) perl(Regexp/Trie.pm) perl(Test/Class.pm) perl(Test/FailWarnings.pm) perl(Test/More.pm) perl(Test/Most.pm) perl(Test/Pod.pm) perl(Test/Requires.pm) perl(Test/UseAllModules.pm) perl(Text/Balanced.pm) perl(XXX.pm) perl(YAML/Syck.pm) perl(aliased.pm) perl(experimental.pm) perl(lib/abs.pm) perl(parent.pm) perl(prefork.pm) perl(syntax.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.9915
+Version: 0.9916
 Release: alt1
 Summary: a tool to scan your Perl code for its prerequisites
 Group: Development/Perl
@@ -81,6 +80,9 @@ rm -f t/unless.t
 %_bindir/*
 
 %changelog
+* Fri Apr 08 2022 Igor Vlasenko <viy@altlinux.org> 0.9916-alt1
+- automated CPAN update
+
 * Thu Apr 07 2022 Igor Vlasenko <viy@altlinux.org> 0.9915-alt1
 - automated CPAN update
 
