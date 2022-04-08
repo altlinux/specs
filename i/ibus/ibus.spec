@@ -23,7 +23,7 @@
 
 Name: ibus
 Version: 1.5.26
-Release: alt1
+Release: alt2
 
 Summary: Intelligent Input Bus for Linux OS
 License: LGPL-2.1 and Unicode
@@ -38,6 +38,7 @@ Source: %name-%version.tar
 Source1: ibus-xinput
 # fc
 Patch: ibus-1385349-segv-bus-proxy.patch
+Patch10: ibus-1.5.26-HEAD.patch
 
 %if_enabled gtk2
 %define gtk2_binary_version %(pkg-config --variable=gtk_binary_version gtk+-2.0)
@@ -209,6 +210,7 @@ the functionality of the installed Intelligent Input Bus.
 %prep
 %setup
 %patch -p1
+%patch10 -p1
 %{?_enable_snapshot:touch ChangeLog}
 
 %build
@@ -360,6 +362,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Fri Apr 08 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5.26-alt2
+- "Fix refcounting issues in IBusText & IBusProperty" (upstream patch)
+
 * Mon Mar 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5.26-alt1
 - 1.5.26
 
