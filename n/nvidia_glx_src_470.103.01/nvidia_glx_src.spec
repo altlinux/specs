@@ -27,7 +27,7 @@
 %define nv_version 470
 %define nv_release 103
 %define nv_minor   01
-%define pkg_rel alt234
+%define pkg_rel alt235
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -92,6 +92,8 @@
 #add_findreq_skiplist %nv_lib_dir/
 %add_findreq_skiplist %x11_lib_old/*
 %add_findreq_skiplist %_bindir/nvidia-bug-report*.sh
+%add_findreq_skiplist %nv_lib_dir/libnvidia-vulkan-producer.so*
+%add_findreq_skiplist %_libdir/libnvidia-vulkan-producer.so*
 
 Name: nvidia_glx_src_%nv_version_full
 Version: %nv_version_full
@@ -112,7 +114,7 @@ Patch5: kernel-5.13-aarch64.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
-BuildRequires: libXext-devel libEGL-devel
+BuildRequires: libXext-devel libEGL-devel egl-wayland-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel
 BuildRequires: libGLdispatch libGLX
 ExclusiveArch: x86_64 %ix86 aarch64
@@ -130,8 +132,11 @@ Sources for %{bin_pkg_name}_%{version} package
 %package -n %{bin_pkg_name}_%{version}
 Requires(pre): %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
-#Requires: libGLdispatch libGLX
-Requires: %libnvidia_egl_wayland >= 0
+Requires: libnvidia-egl-wayland >= 0
+%ifnarch aarch64
+Provides: libnvidia-compiler = %EVR
+Obsoletes: libnvidia-compiler < %EVR
+%endif
 #
 Group: %myGroup
 Summary: %mySummary
@@ -225,15 +230,23 @@ soname()
 %__install -m 0644 %subd/libnvidia-eglcore.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 %subd/libnvidia-glsi.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 %subd/libnvidia-tls.so.%tbver %buildroot/%_libdir/
+%ifnarch aarch64
+%__install -m 0644 %subd/libnvidia-compiler.so.%tbver %buildroot/%_libdir/
+%endif
+%ifnarch %ix86 armh
+%__install -m 0644 %subd/libnvidia-cbl.so.%tbver %buildroot/%_libdir/
+%__install -m 0644 %subd/libnvidia-rtcore.so.%tbver %buildroot/%_libdir/
+%__install -m 0644 %subd/libnvidia-vulkan-producer.so.%tbver %buildroot/%_libdir/
+%endif
 #
 %if_enabled package_egl_wayland
 %__install -m 0644 %subd/libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/
 #ln -s libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/libnvidia-egl-wayland.so.%nvidia_egl_wayland_sover
 %endif
 
-%__ln_s %nv_lib_dir/nvidia.xinf %buildroot/%nv_lib_sym_dir/nvidia.xinf
-%__ln_s %nv_lib_dir/nvidia.xinf %buildroot/%xinf_dir/nvidia-%version.xinf
-%__install -m 0644 %SOURCE2 %buildroot/%nv_lib_dir/nvidia.xinf
+install -m 0644 %SOURCE2 %buildroot/%nv_lib_dir/nvidia.xinf
+ln -sr %buildroot/%nv_lib_dir/nvidia.xinf %buildroot/%nv_lib_sym_dir/nvidia.xinf
+ln -sr %buildroot/%nv_lib_dir/nvidia.xinf %buildroot/%xinf_dir/nvidia-%version.xinf
 
 %ifarch x86_64 aarch64
 %__install -m 0644 %subd/nvidia_drv.so %buildroot/%nv_lib_dir/
@@ -259,12 +272,17 @@ soname()
 %endif
 #
 %__install -m 0644 %subd/libEGL_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libEGL_nvidia.so
+ln -sr %buildroot/%nv_lib_dir/libEGL_nvidia.so %buildroot/%_libdir/libEGL_nvidia.so.0
 %__install -m 0644 %subd/libGLESv2.so.2.1.0  %buildroot/%nv_lib_dir/libGLESv2.so
 %__install -m 0644 %subd/libGLESv2_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv2_nvidia.so
 %__install -m 0644 %subd/libGLESv1_CM.so.1.2.0  %buildroot/%nv_lib_dir/libGLESv1_CM.so
 %__install -m 0644 %subd/libGLESv1_CM_nvidia.so.%tbver %buildroot/%nv_lib_dir/libGLESv1_CM_nvidia.so
 %__install -m 0644 %subd/libGLX.so.0  %buildroot/%nv_lib_dir/libGLX.so
 %__install -m 0644 %subd/libGLX_nvidia.so.%tbver    %buildroot/%nv_lib_dir/libGLX_nvidia.so
+%__install -m 0644 %subd/libnvidia-allocator.so.%tbver    %buildroot/%nv_lib_dir/libnvidia-allocator.so
+%ifnarch %ix86 armh
+ln -sr %buildroot/%_libdir/libnvidia-vulkan-producer.so.%tbver %buildroot/%nv_lib_dir/libnvidia-vulkan-producer.so
+%endif
 
 %__install -m 0644 %subd/libvdpau_nvidia.so.%tbver %buildroot/%nv_lib_dir/libvdpau_nvidia.so
 %ifarch x86_64 aarch64
@@ -332,6 +350,14 @@ fi
 %_libdir/libnvidia-eglcore.so.%version
 %_libdir/libnvidia-glsi.so.%version
 %_libdir/libnvidia-glvkspirv.so.%version
+%ifnarch aarch64
+%_libdir/libnvidia-compiler.so.%version
+%endif
+%ifnarch %ix86 armh
+%_libdir/libnvidia-cbl.so.%version
+%_libdir/libnvidia-rtcore.so.%version
+%_libdir/libnvidia-vulkan-producer.so.%version
+%endif
 %_altdir/%name
 %_bindir/nvidia-bug-report-%version.sh
 %dir %nv_lib_dir
@@ -351,6 +377,10 @@ fi
 %nv_lib_dir/libGLdispatch.so*
 %nv_lib_dir/libGLX.so*
 %nv_lib_dir/libvdpau_nvidia.so*
+%nv_lib_dir/libnvidia-allocator.so*
+%ifnarch %ix86 armh
+%nv_lib_dir/libnvidia-vulkan-producer.so*
+%endif
 %if_enabled package_wfb
 %nv_lib_dir/libwfb.so
 %nv_lib_dir/libnvidia-wfb.so*
@@ -376,6 +406,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 08 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt235
+- package more internal libraries
+
 * Wed Feb 09 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt234
 - new version
 

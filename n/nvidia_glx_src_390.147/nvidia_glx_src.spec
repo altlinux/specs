@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 147
 %define nv_minor %nil
-%define pkg_rel alt217
+%define pkg_rel alt218
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -124,7 +124,11 @@ Sources for %{bin_pkg_name}_%{version} package
 Requires(pre,postun): %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
 #Requires: libGLdispatch libGLX
-Requires: %libnvidia_egl_wayland >= 0
+Requires: libnvidia-egl-wayland >= 0
+%ifnarch aarch64
+Provides: libnvidia-compiler = %EVR
+Obsoletes: libnvidia-compiler < %EVR
+%endif
 #
 Group: %myGroup
 Summary: %mySummary
@@ -209,6 +213,8 @@ soname()
 %__install -m 0644 libnvidia-eglcore.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 libnvidia-glsi.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 tls/libnvidia-tls.so.%tbver %buildroot/%_libdir/
+%__install -m 0644 libnvidia-compiler.so.%tbver %buildroot/%_libdir/
+%__install -m 0644 libnvidia-fatbinaryloader.so.%tbver %buildroot/%_libdir/
 #
 %if_enabled package_egl_wayland
 %__install -m 0644 libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/
@@ -309,6 +315,8 @@ fi
 %_libdir/libnvidia-glcore.so.%version
 %_libdir/libnvidia-eglcore.so.%version
 %_libdir/libnvidia-glsi.so.%version
+%_libdir/libnvidia-compiler.so.%version
+%_libdir/libnvidia-fatbinaryloader.so.%version
 %_altdir/%name
 %_bindir/nvidia-bug-report-%version.sh
 %dir %nv_lib_dir
@@ -350,6 +358,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 08 2022 Sergey V Turchin <zerg@altlinux.org> 390.147-alt218
+- package compiler and fatbinaryloader libs
+
 * Mon Dec 27 2021 Sergey V Turchin <zerg@altlinux.org> 390.147-alt217
 - new version
 
