@@ -4,27 +4,27 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 3.5.3
-Release: alt2
+Version: 5.0.7
+Release: alt1
 
 Summary: JSON-RPC 2.0 server library
-License: LGPL
+License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/jsonrpcserver
 
 BuildArch: noarch
 
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-jsonschema
-BuildRequires: python3-module-nose python3-module-pytest
+BuildRequires: python3-module-pytest
 
 %description
 A JSON-RPC 2.0 server library for Python 3.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build_debug
@@ -41,6 +41,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Thu Apr 07 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.7-alt1
+- Build new version.
+
 * Mon Apr 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.5.3-alt2
 - Build for python2 removed.
 

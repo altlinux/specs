@@ -3,8 +3,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 2.0.2
-Release: alt3
+Version: 2.0.3
+Release: alt1
 
 Summary: Python module to manipulate function signatures
 
@@ -17,15 +17,18 @@ Packager: Python Development Team <python@packages.altlinux.org>
 # https://github.com/epsy/sigtools.git
 # Source-url: https://pypi.io/packages/source/s/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
+
+Patch: 4838e84cbf5968910f282b41abf53769b34f0c1d.patch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 %if_with check
-BuildRequires: python3-module-unittest2 python3-module-coverage python3-module-mock
+BuildRequires: python3-module-unittest python3-module-coverage python3-module-mock
 %endif
 
 %py3_provides %oname
-%py3_requires six funcsigs sphinx
+%py3_requires six
 
 BuildRequires: python3-module-html5lib python3-module-sphinx
 
@@ -43,6 +46,7 @@ The sigtools python library provides:
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build
@@ -59,6 +63,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 06 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.3-alt1
+- Build new version.
+
 * Thu Jun 24 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.2-alt3
 - drop excessive python3-module-jinja2-tests BR
 
