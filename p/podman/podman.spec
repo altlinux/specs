@@ -1,8 +1,9 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/containers/podman
+%define _libexecdir %_usr/libexec
 
 Name:     podman
-Version:  3.4.4
+Version:  4.0.3
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -90,7 +91,9 @@ export GIT_COMMIT=%release
 
 pushd .gopath/src/%import_path
 %make_build PREFIX=%_prefix TMPFILESDIR=%_tmpfilesdir SYSTEMDDIR=%_unitdir
+%make docs docker-docs
 popd
+
 
 %install
 export BUILDDIR="$PWD/.gopath"
@@ -102,9 +105,9 @@ export GIT_COMMIT=%release
 
 pushd .gopath/src/%import_path
 %make DESTDIR=%buildroot PREFIX=%_prefix TMPFILESDIR=%_tmpfilesdir SYSTEMDDIR=%_unitdir \
-    install.bin-nobuild \
-    install.remote-nobuild \
-    install.man-nobuild \
+    install.bin \
+    install.remote \
+    install.man \
     install.completions \
     install.systemd \
     install.docker \
@@ -115,6 +118,9 @@ popd
 echo br_netfilter > %name.conf
 install -dp %buildroot%_sysconfdir/modules-load.d
 install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
+
+rm -f %buildroot%_man5dir/dockerignore*
+rm -f %buildroot%_man5dir/dockerfile*
 
 %files
 %_bindir/%name
@@ -130,6 +136,7 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %_man5dir/*
 %doc *.md
 %_tmpfilesdir/%name.conf
+%_libexecdir/%name
 
 %files remote
 %_bindir/%name-remote
@@ -146,6 +153,9 @@ install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
 %_tmpfilesdir/%name-docker.conf
 
 %changelog
+* Fri Apr 08 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.3-alt1
+- new version 4.0.3
+
 * Wed Dec 22 2021 Alexey Shabalin <shaba@altlinux.org> 3.4.4-alt1
 - new version 3.4.4
 - Add conflict with docker-cli (ALT#41569)
