@@ -12,7 +12,7 @@ BuildRequires: perl(LWP/UserAgent.pm) perl(Net/FTP.pm) perl-podlators unzip
 
 Summary:	Perl interface to PARI
 Name:		perl-Math-Pari
-Version:	2.030522a
+Version:	2.03052201
 Release:	alt1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Math-Pari
@@ -60,7 +60,7 @@ scientific/ number-theoretic calculations. It allows use of most PARI functions
 as Perl functions, and (almost) seamless merging of PARI and Perl data.
 
 %prep
-%setup -q -n Math-Pari-2.030522
+%setup -q -n Math-Pari-%{version}
 
 # Create a directory structure for libpari23 like Math::Pari expects it to be
 mkdir libpari23
@@ -114,6 +114,9 @@ make test MP_NOGNUPLOT=1
 %{perl_vendor_archlib}/auto/Math/
 
 %changelog
+* Fri Apr 08 2022 Igor Vlasenko <viy@altlinux.org> 3:2.03052201-alt1
+- automated CPAN update
+
 * Thu Apr 07 2022 Igor Vlasenko <viy@altlinux.org> 3:2.030522a-alt1
 - automated CPAN update
 
