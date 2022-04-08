@@ -1,8 +1,9 @@
+%define __spec_autodep_custom_pre export LD_LIBRARY_PATH=%buildroot%_libdir
 %define _unpackaged_files_terminate_build 1
 %define dist Text-BibTeX
 Name: perl-%dist
 Version: 0.88
-Release: alt2
+Release: alt3
 
 Summary: Interface to read and parse BibTeX files
 License: GPL or Artistic
@@ -48,6 +49,9 @@ install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 %exclude %_includedir/btparse.h
 
 %changelog
+* Fri Apr 08 2022 Igor Vlasenko <viy@altlinux.org> 0.88-alt3
+- fix build
+
 * Wed May 29 2019 Michael Shigorin <mike@altlinux.org> 0.88-alt2
 - fix build on e2k with upstream-style kludge
 
