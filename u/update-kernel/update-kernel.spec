@@ -1,5 +1,5 @@
 Name: update-kernel
-Version: 1.1
+Version: 1.1.1
 Release: alt1
 
 Summary: Update kernel and modules
@@ -47,6 +47,9 @@ make check
 %_sbindir/remove-old-kernels
 
 %changelog
+* Sun Apr 10 2022 Vitaly Chikunov <vt@altlinux.org> 1.1.1-alt1
+- Minor improvements.
+
 * Fri Apr 08 2022 Vitaly Chikunov <vt@altlinux.org> 1.1-alt1
 - Add '--headers' option to update-kernel to install kernel-headers.
 - Check presence of external modules in the selected kernel.
