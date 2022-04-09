@@ -1,6 +1,6 @@
 Name: tootle
 Version: 1.0
-Release: alt2
+Release: alt3
 
 Summary: Simple Mastodon client
 
@@ -15,6 +15,7 @@ Patch: fix-build-on-vala-46.patch
 Patch1: 858ee78fbebe161a4cdd707a469dc0f045211a51.patch
 # https://github.com/bleakgrey/tootle/pull/339
 Patch2: 0816105028c26965e37c9afc7c598854f3fecde1.patch
+Patch3: Application-make-app_entries-private.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= 0.50.0
@@ -41,6 +42,7 @@ support.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 %meson
@@ -61,6 +63,9 @@ support.
 %_datadir/metainfo/com.github.bleakgrey.tootle.appdata.xml
 
 %changelog
+* Sat Apr 09 2022 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt3
+- fix build with vala 0.56
+
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt2
 - fix build with vala 0.54.1
 
