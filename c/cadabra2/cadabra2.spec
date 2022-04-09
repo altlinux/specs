@@ -1,6 +1,6 @@
 Name: cadabra2
 Version: 2.3.8
-Release: alt1
+Release: alt2
 
 %def_with gui
 %def_without jupiter
@@ -57,6 +57,7 @@ kernel for Jupyter
   -DPACKAGING_MODE=ON\
   -DPYTHON_SITE_PATH="%python3_sitelibdir"\
   -DDESTDIR="%buildroot"\
+  -DCMAKE_SKIP_INSTALL_RPATH:BOOL=no\
 %if_without gui
   -DENABLE_FRONTEND=OFF\
 %endif
@@ -69,7 +70,9 @@ kernel for Jupyter
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
+
+%add_findprov_lib_path %python3_sitelibdir
 
 %files
 %_bindir/cadabra*
@@ -99,6 +102,10 @@ kernel for Jupyter
 %endif
 
 %changelog
+* Sat Feb 26 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.3.8-alt2
+- current upstream snapshot (ce5bc98) with a few important fixes
+- add RPATH to binaries to fix "cadabra2.cpython-310.so not found" error
+
 * Thu Jan 13 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.3.8-alt1
 - First build for Altlinux
 
