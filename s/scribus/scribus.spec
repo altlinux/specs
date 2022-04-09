@@ -1,6 +1,6 @@
 Name: scribus
-Version: 1.5.7
-Release: alt4
+Version: 1.5.8
+Release: alt1
 Epoch: 1
 
 Summary: Desktop Publishing application written in Qt
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 Patch0: scribus-1.5.7-up-harfbuzz-3.0.0.patch
 Patch1: scribus-1.5.7-no-execbit-plugins.patch
 Patch2: scribus-1.5.7-fix-undefined-mnone-color.patch
+Patch3: poppler-22.02.0.patch
+Patch4: poppler-22.03.0.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake zlib-devel libssl-devel
@@ -113,9 +115,12 @@ BuildArch: noarch
 
 %prep
 %setup
-%patch0 -p1 -b .harfbuzz
+#patch0 -p1 -b .harfbuzz
 %patch1 -p2
-%patch2 -p2
+#patch2 -p2
+%patch3 -p1
+%patch4 -p1
+
 # don't
 # brain damage with #if (PODOFO_VERSION < PODOFO_MAKE_VERSION(0, 9, 7))
 subst 's|\(pBase->SetOwner\)|//\1|' scribus/pdf_analyzer.cpp
@@ -133,6 +138,7 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 	-DWANT_NORPATH=true \
 	-DWANT_DISTROBUILD=true \
 	-DWANT_CCACHE=true \
+	-DWANT_CPP17=true \
 	-DWANT_GRAPHICSMAGICK=true \
 	-DFONTCONFIG_CONFIG:FILEPATH=%_pkgconfigdir/fontconfig.pc \
 	-DCMAKE_C_FLAGS:STRING="%optflags" \
@@ -186,6 +192,11 @@ popd
 %exclude %_docdir/%name/it
 
 %changelog
+* Sat Apr 09 2022 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.8-alt1
+- new version 1.5.8 (with rpmrb script)
+- fix build with poppler 22.02 and poppler 22.03
+- enable C++ 17 build (new popper wants it)
+
 * Tue Jan 18 2022 Paul Wolneykien <manowar@altlinux.org> 1:1.5.7-alt4
 - Fixed undefined m_NoneColor (closes: 41728).
 
