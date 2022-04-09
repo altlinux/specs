@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 76
+%define centos_release 77
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,39 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Apr 09 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.77-alt1.el9
+- Updated to kernel-5.14.0-77.el9 (fixes: CVE-2021-26401, CVE-2022-0001, CVE-2022-0002):
+  + 2032117 - tpm: fix lpar crash when running on kexec with VTPM2.0 enabled [P10]
+  + CNB: ethtool: update ethtool core to upstream v5.16
+  + crypto: ccp: update ccp drivers upto v5.17
+  + drm/i915/audio: Use BIOS provided value for RKL HDA link
+  + Enable KVM AMX on SPR
+  + futex: Fix PREEMPT_RT build
+  + genirq: Provide new interfaces for affinity hints
+  + ibmvnic: fix a race in ibmvnic_probe()
+  + [Intel 9.1 Bug] SPR PMU Support: Uncore Events not enabled
+  + KVM: use __vcalloc for very large allocations
+  + lib/sbitmap: kill 'depth' from sbitmap_word
+  + Merge tag 'kernel-5.14.0-70.5.1.el9_0' from 9.0
+  + mm/memcg: Fix a lockdep splat in memory cgroup
+  + mm: proactively backport MM fixes for RHEL-9.1
+  + NFSD size, offset, and count sanity
+  + perf tests attr: Add missing topdown metrics events
+  + powerpc: Hard lockups are observed while running stress-ng and LPAR hangs [P8][P9][P10]
+  + powerpc/papr_scm: Implement initial support for injecting smart errors
+  + powerpc/pseries: Fix use after free panic
+  + powerpc/smp: Update cpu_core_map on all PowerPc systems
+  + redhat/configs: aarch64: Enable ARM_SPE_PMU
+  + redhat: configs: Change aarch64 default dma domain to lazy
+  + redhat: configs: Disable TPM 1.2 device drivers
+  + redhat/configs: make SHA512_arch algos and CRYPTO_USER built-ins
+  + redhat: fix make {distg-brew,distg-koji}
+  + rename c9s pipeline from centos-stream-9 to c9s
+  + SPR PMU Support: Uncore Events not enabled
+  + Update kernel's PCI subsystem to v5.15
+  + Update nvme to upstream 5.17-rc8
+  + x86/speculation: Spectre-v2 BHI mitigation (CVE-2022-0001, CVE-2022-0002)
+
 * Wed Mar 30 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.76-alt1.el9
 - Updated to kernel-5.14.0-76.el9:
   + cifs: fix double free race when mount fails in cifs_get_root()
