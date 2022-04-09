@@ -1,6 +1,6 @@
 Name: wine-cpcsp_proxy
 Version: 0.6.0
-Release: alt2
+Release: alt3
 
 Summary: Proxy for using Linux CryptoPro in Windows applications with wine
 
@@ -14,10 +14,7 @@ ExclusiveArch: %ix86 x86_64
 
 BuildRequires: libwine-devel >= 6.23
 # for wineapploader
-BuildRequires: wine
-
-# FIXME: winegcc: Could not find g++
-BuildRequires: gcc-c++
+#BuildRequires: wine-common
 
 # TODO: move to rpm-macros-wine
 # set arch dependent dirs
@@ -34,10 +31,8 @@ BuildRequires: gcc-c++
 
 %define winelibdir %_libdir/wine
 
-%define targetdir %winelibdir/%winesodir
-
-%add_verify_elf_skiplist %targetdir/cpcsp_proxy.dll.so
-%add_verify_elf_skiplist %targetdir/cpcsp_proxy_setup.exe.so
+%add_verify_elf_skiplist %winelibdir/%winesodir/cpcsp_proxy.dll.so
+%add_verify_elf_skiplist %winelibdir/%winesodir/cpcsp_proxy_setup.exe.so
 
 %ifarch x86_64
 %define capilitepkg lsb-cprocsp-capilite-64
@@ -61,18 +56,27 @@ Proxy for using Linux CryptoPro in Windows applications with wine.
 %make_build -C cpcsp_proxy_setup
 
 %install
-mkdir -p %buildroot%targetdir/
-cp cpcsp_proxy/cpcsp_proxy.dll.so %buildroot%targetdir
-cp cpcsp_proxy_setup/cpcsp_proxy_setup.exe.so %buildroot%targetdir
+mkdir -p %buildroot%winelibdir/{%winesodir,%winepedir}
+
+cp cpcsp_proxy/cpcsp_proxy.dll.so %buildroot%winelibdir/%winesodir
+cp cpcsp_proxy/cpcsp_proxy.dll %buildroot%winelibdir/%winepedir
+cp cpcsp_proxy_setup/cpcsp_proxy_setup.exe.so %buildroot%winelibdir/%winesodir
+cp cpcsp_proxy_setup/cpcsp_proxy_setup.exe %buildroot%winelibdir/%winepedir
+
 mkdir -p %buildroot/%_bindir/
 cp %_bindir/wineapploader %buildroot/%_bindir/cpcsp_proxy_setup
 
 %files
-%targetdir/cpcsp_proxy_setup.exe.so
-%targetdir/cpcsp_proxy.dll.so
+%winelibdir/%winesodir/cpcsp_proxy_setup.exe.so
+%winelibdir/%winesodir/cpcsp_proxy.dll.so
+%winelibdir/%winepedir/cpcsp_proxy_setup.exe
+%winelibdir/%winepedir/cpcsp_proxy.dll
 %_bindir/cpcsp_proxy_setup
 
 %changelog
+* Sat Apr 09 2022 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt3
+- build and install wine stubs
+
 * Thu Apr 07 2022 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt2
 - update README.md
 - fix Makefile to build package
