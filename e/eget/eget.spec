@@ -1,5 +1,5 @@
 Name: eget
-Version: 5.3
+Version: 5.4
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -30,9 +30,14 @@ It supports wget or curl as backend.
 install -D eget %buildroot%_bindir/eget
 
 %files
+%doc README.md
 %_bindir/eget
 
 %changelog
+* Fri Apr 08 2022 Vitaly Lipatov <lav@altlinux.ru> 5.4-alt1
+- add README.md
+- eget: workaround quotes
+
 * Wed Apr 06 2022 Vitaly Lipatov <lav@altlinux.ru> 5.3-alt1
 - eget: add --no-check-certificate support
 - eget: add --user-agent support
