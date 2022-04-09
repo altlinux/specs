@@ -13,7 +13,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2021.Q4.1
+Version: 2022.Q2.1
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -55,7 +55,8 @@ AMD developer tools.
 %prep
 %setup -n xgl -b0 -b1 -b2 -b3 -b4 -b5 -b7
 mkdir -p %_builddir/llvm-project
-mv %_builddir/llvm %_builddir/llvm-project
+mv %_builddir/llvm/llvm %_builddir/llvm-project
+cp -ar %_builddir/llvm/{cmake,third-party} %_builddir/llvm-project/
 pushd %_builddir/spvgen
 %patch1 -p2
 popd
@@ -96,6 +97,17 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Sat Apr 09 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q2.1-alt1
+- update spvgen-shared patch.
+- fix llvm build.
+- 2022-4-3 update:
+  + icd: bump vulkan API version
+  + llvm: Updated to 219f568b0b60
+  + spvgen: Updated to 87983dba34c2
+  + llpc: Updated to c0dbc976ccae
+  + pal: Updated to 1ff58cafbae0
+  + xgl: Updated to 25569e8bf7ad
+
 * Fri Nov 05 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.Q4.1-alt1
 - 2021-11-4 update:
   + icd: bump vulkan API version
