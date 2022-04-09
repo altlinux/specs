@@ -1,5 +1,5 @@
 Name: gzip
-Version: 1.10.0.31.34db
+Version: 1.12
 Release: alt1
 
 Summary: The GNU data compression program
@@ -132,6 +132,9 @@ rm %buildroot{/bin/z{less,more},%_man1dir/z{less,more}.1}
 %exclude %_man1dir/zcat.*
 
 %changelog
+* Fri Apr 08 2022 Dmitry V. Levin <ldv@altlinux.org> 1.12-alt1
+- gzip: v1.10-31-g34db0a2 -> v1.12-3-g83c65d1 (fixes: CVE-2022-1271).
+
 * Fri Apr 09 2021 Dmitry V. Levin <ldv@altlinux.org> 1.10.0.31.34db-alt1
 - gzip: v1.10 -> v1.10-31-g34db0a2.
 - gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4279-gbb6ecf327.
