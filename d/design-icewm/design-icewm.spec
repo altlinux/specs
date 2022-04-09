@@ -1,16 +1,17 @@
-%define theme AltClearlooks
 Name: design-icewm
 Version: 1.0
-Release: alt11
+Release: alt12
 Summary: Default theme for IceWM
 Group: Graphical desktop/Icewm
-License: GPL
-Url: http://www.whatis.mynetcologne.de/icewm/index.html
+License: GPL-2.0
+Url: https://git.altlinux.org/people/jinn/packages/design-icewm.git
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 Source0: AltClearlooks.tar
-Source1: http://www.whatis.mynetcologne.de/icewm/20051225_gertplastik.tar
+# http://www.whatis.mynetcologne.de/icewm/20051225_gertplastik.tar.gz
+Source1: 20051225_gertplastik.tar
 Source2: sounds.tar
 BuildArch: noarch
+Requires: design-graphics
 %description
 Default theme for IceWM
 
@@ -25,7 +26,6 @@ find %buildroot%_x11x11dir/icewm/themes -type f -print0 |
 find %buildroot%_x11x11dir/icewm/themes -type d -print0 |
 	xargs -r0 chmod 0755
 pushd %buildroot%_x11x11dir/icewm/themes
-ln -s %theme default
 popd
 mkdir -p %buildroot%_x11x11dir/icewm/sounds
 tar xf %SOURCE2 -C %buildroot%_x11x11dir/icewm/
@@ -38,6 +38,12 @@ tar xf %SOURCE2 -C %buildroot%_x11x11dir/icewm/
 %_x11x11dir/icewm/sounds/*
 
 %changelog
+* Thu Apr 07 2022 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt12
+- removed symlink "default"
+- default background added to theme AltClearlooks
+- fixed Url
+- fixed license to GPL-2.0
+
 * Mon Sep 24 2018 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt11
 - renamed Start button from deprecated linux.xpm to icewm.xpm
 

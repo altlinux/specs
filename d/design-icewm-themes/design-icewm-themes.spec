@@ -1,19 +1,19 @@
 Name: design-icewm-themes
 Version: 1.0
-Release: alt5
+Release: alt6
 
 Summary: Themes collection for IceWM
-License: GPL
+License: GPL-2.0
 Group: Graphical desktop/Icewm
 
 Source: icewm-themes.tar
-Requires: icewm-light
+Requires: design-icewm >= 1.0-alt12
 AutoReqProv: no
 BuildArch: noarch
 
 Summary(ru_RU.UTF-8): Коллекция тем для IceWM
 
-%define themedir %_datadir/X11/icewm/themes
+%define themedir %_x11x11dir/icewm/themes
 
 %description
 Themes collection for IceWM
@@ -47,6 +47,11 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %themedir/*
 
 %changelog
+* Sat Apr 09 2022 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt6
+- removed themes that included to the main package, this themes Helix,
+  Infadel2, Natural are now provided in a package icewm-themes
+- fixed license to GPL-2.0
+
 * Sun Mar 31 2013 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt5
 - fixed and restored dropped themes
 - added several new themes from http://box-look.org

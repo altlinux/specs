@@ -2,7 +2,7 @@
 %define realname icewm
 
 Name: %realname
-Version: 2.9.0
+Version: 2.9.6
 Release: alt1
 Epoch:3
 
@@ -14,11 +14,11 @@ Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
 Provides: %realname-githubmod = %version-%release
 Provides: %realname-light = %version-%release
-Requires: design-%realname >= 1.0-alt6
+Requires: design-%realname >= 1.0-alt12
 Obsoletes: %realname-githubmod < %version-%release
 Obsoletes: %realname-light < %version-%release
 
-Source0: %name.tar
+Source0: %realname-%version.tar
 Source2: %realname.menu-method
 Source3: %realname-16.png
 Source4: %realname-32.png
@@ -30,15 +30,15 @@ Source9: README.ALT
 Source11: restart
 Source12: icewm-old-changelog.bz2
 
-Patch0: %name-%version-%release.patch
+Patch0: %realname-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-cmake
 
 # Automatically added by buildreq on Sun Jun 27 2021
 BuildRequires: asciidoctor cmake gcc-c++ imlib2-devel libSM-devel
 BuildRequires: libXcomposite-devel libXdamage-devel libXft-devel libXinerama-devel
-BuildRequires: libXpm-devel libXrandr-devel libalsa-devel librsvg-devel
-BuildRequires: libsndfile-devel perl-Pod-Usage perl-devel
+BuildRequires: libXpm-devel libXrandr-devel libalsa-devel libfribidi-devel
+BuildRequires: librsvg-devel libsndfile-devel perl-Pod-Usage perl-devel
 
 %description
  Window Manager for X Window System. Can emulate the look of Windows'95, OS/2
@@ -50,8 +50,19 @@ maintained on Github https://github.com/bbidulock/icewm
 
 Recommends: iftop, mutt
 
+%package themes
+Summary: Extra themes for IceWM
+Group: Graphical desktop/Icewm
+BuildArch: noarch
+
+Requires: design-%realname >= 1.0-alt12
+Conflicts: design-%realname-themes <= 1.0-alt5
+
+%description themes
+Extra themes that included to IceWM distribution
+
 %prep
-%setup -n %name
+%setup
 %patch0 -p1
 %ifarch armh
 sed -i 's@-Wl,--as-needed @&-Wl,--allow-shlib-undefined@' src/CMakeLists.txt
@@ -61,13 +72,14 @@ sed -i 's@-Wl,--as-needed @&-Wl,--allow-shlib-undefined@' src/CMakeLists.txt
 %cmake	-DPREFIX=%_prefix \
 	-DCFGDIR=%_sysconfdir/X11/%realname \
 	-DLIBDIR=%_x11x11dir/%realname \
-	-DDOCDIR=%_datadir/doc/%name-%version \
+	-DDOCDIR=%_datadir/doc/%realname-%version \
 	-DCONFIG_IMLIB2=on \
 	-DCONFIG_LIBRSVG=on \
 	-DCONFIG_GUIEVENTS=on \
 	-DICESOUND="ALSA,OSS" \
 	-DENABLE_LTO=on \
-	-DXTERMCMD=xvt
+	-DXTERMCMD=xvt \
+	-DCONFIG_DEFAULT_THEME="AltClearlooks/default.theme"
 %cmake_build
 
 %install
@@ -97,9 +109,6 @@ install -m 755 %SOURCE11 %buildroot%_sysconfdir/X11/%realname/restart
 
 # remove unpackaged files
 rm -f %buildroot/%_bindir/%realname-set-gnomewm
-mv %buildroot/%_x11x11dir/%realname/themes/default ./Default
-rm -rf %buildroot/%_x11x11dir/%realname/themes/*
-mv ./Default %buildroot/%_x11x11dir/%realname/themes/
 rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 
 %files -f %realname.lang
@@ -110,6 +119,7 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_bindir/*
 %dir %_x11x11dir/%realname
 %_x11x11dir/%realname/*
+%exclude %_x11x11dir/%realname/themes/*
 %_niconsdir/*
 %_miconsdir/*
 %_liconsdir/*
@@ -120,7 +130,16 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 
 %doc AUTHORS NEWS README.ALT README.md %_cmake__builddir/*.html %_cmake__builddir/man/*.html icewm-old-changelog.bz2
 
+%files themes
+%_x11x11dir/%realname/themes/*
+
 %changelog
+* Sat Apr 09 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.9.6-alt1
+- 2.9.6
+- theme AltClearlooks specified as default theme
+- built with libfribidi support
+- themes that included to distribution are moved to separate package
+
 * Tue Nov 30 2021 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.9.0-alt1
 - 2.9.0
 
