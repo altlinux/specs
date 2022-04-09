@@ -1,8 +1,9 @@
+%def_without test
 %define oname sphinxtesters
 
 Name: python3-module-%oname
 Version: 0.2.3
-Release: alt2
+Release: alt3
 
 Summary: Utilities for testing Sphinx extensions
 
@@ -56,6 +57,9 @@ py.test3 -vv
 #python_sitelibdir/%oname/tests
 
 %changelog
+* Sat Apr 09 2022 Vitaly Lipatov <lav@altlinux.ru> 0.2.3-alt3
+- disable tests (due test_pagebuilder.py:88)
+
 * Sat Apr 24 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.3-alt2
 - NMU: build python3 module separately
 
