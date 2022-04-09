@@ -3,7 +3,7 @@ Summary: CUPS printer drivers for SPL (Samsung Printer Language) printers
 %define real_name splix
 Name: printer-driver-%real_name
 Version: 2.0.1
-Release: alt1.svn315.1
+Release: alt2.svn315.1
 
 Provides: %real_name = %version
 Obsoletes: %real_name
@@ -24,22 +24,12 @@ Patch4: splix-2.0.1-gcc8-fix.patch
 
 Requires: cups
 
-# Automatically added by buildreq on Tue Nov 06 2007
-BuildRequires: cups-ddk gcc-c++ libqt4-devel
+BuildRequires: cups-ddk gcc-c++
 
 %description
 SpliX is a set of CUPS printer drivers for SPL (Samsung Printer Language)
 printers. If you have a such printer, you need to download and use SpliX.
 Moreover you will find documentation about this proprietary language.
-
-%package tools
-Summary: additional tools for splix
-License: GPL
-Group: Publishing
-Requires: %name = %version-%release
-
-%description tools
-An additional tools for splix
 
 %prep
 
@@ -51,26 +41,21 @@ An additional tools for splix
 %patch4 -p2
 
 %build
-%make V=1 OPTIM_CXXFLAGS="%optflags" DISABLE_JBIG=1 THREADS=1
-
-#additional tools
-%make CXXFLAGS="%optflags `pkg-config QtCore --cflags`" LIBS="`pkg-config QtCore --libs`" -C tools
+%make_build V=1 OPTIM_CXXFLAGS="%optflags" DISABLE_JBIG=1 THREADS=1
 
 %install
 %makeinstall_std
-
-#additional tools
-install -Dpm755 tools/decompress %buildroot%_bindir/%name-decompress
 
 %files
 %doc AUTHORS COPYING ChangeLog README THANKS TODO
 %_prefix/lib/cups/filter/*
 %_datadir/cups/model/*/*
 
-%files tools
-%_bindir/*
-
 %changelog
+* Tue Apr 05 2022 Anton Midyukov <antohami@altlinux.org> 2.0.1-alt2.svn315.1
+- build without qt4
+- don't build additional tools
+
 * Tue Feb 12 2019 Ivan Razzhivin <underwit@altlinux.org> 2.0.1-alt1.svn315.1
 - GCC8 fix
 
