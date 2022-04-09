@@ -1,6 +1,6 @@
 Name: zstd
-Version: 1.5.0
-Release: alt2
+Version: 1.5.2
+Release: alt1
 Summary: Zstd compression library and tools
 License: BSD-3-Clause
 Group: Archiving/Compression
@@ -122,6 +122,9 @@ export CXXFLAGS="$CFLAGS"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Apr 08 2022 Dmitry V. Levin <ldv@altlinux.org> 1.5.2-alt1
+- 1.5.0 -> 1.5.2 (closes: #41356, #42239).
+
 * Thu Jul 01 2021 Dmitry V. Levin <ldv@altlinux.org> 1.5.0-alt2
 - Removed zstdgrep.1 and zstdless.1 manpages that are already packaged
   in gzip-utils along with scripts themselves.
