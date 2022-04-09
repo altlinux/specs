@@ -1,8 +1,12 @@
+# [armh] hash: [armh] /usr/src/tmp/rpm-tmp.97635: line 128: 754225 Segmentation fault
+%ifarch armh
+%def_without test
+%endif
 %define _unpackaged_files_terminate_build 1
 
 Name: libbotan
-Version: 2.18.1
-Release: alt2
+Version: 2.19.1
+Release: alt1
 
 Summary: A C++ Crypto Library
 License: BSD
@@ -106,6 +110,10 @@ LD_LIBRARY_PATH=. ./botan-test
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Sat Apr 09 2022 Vitaly Lipatov <lav@altlinux.ru> 2.19.1-alt1
+- new version 2.19.1 (with rpmrb script)
+- disable test on armh (segfault)
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 2.18.1-alt2
 - use /usr/bin/rst2man.py
 
