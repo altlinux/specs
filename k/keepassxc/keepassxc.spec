@@ -1,5 +1,5 @@
 Name: keepassxc
-Version:  2.7.0
+Version:  2.7.1
 Release:  alt1
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
@@ -98,11 +98,15 @@ make -j%__nprocs test ARGS+="-E test\(cli\|gui\) --output-on-failure"
 %endif
 
 %changelog
+* Sun Apr 10 2022 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.1-alt1
+- updated to v2.7.1
+
 * Thu Mar 24 2022 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.0-alt1
 - updated to v2.7.0
 - updated Russian translation from https://www.transifex.com/keepassxc/keepassxc/language/ru/
 - added libbotan-devel build dependency, quazip-qt5-devel removed
 - added libreadline-devel and libminizip-devel build dependencies
+
 - tests were enabled
 - minor cleanup of cmake build flags
 
