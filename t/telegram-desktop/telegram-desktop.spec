@@ -19,7 +19,7 @@
 
 Name: telegram-desktop
 Version: 3.6.1
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -31,6 +31,7 @@ Url: https://telegram.org/
 Source: %name-%version.tar
 
 Patch1: telegram-desktop-remove-tgvoip.patch
+Patch2: telegram-desktop-set-native-window-frame.patch
 
 # [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
 # aarch64: see remove_target_sources ARM neon in https://github.com/desktop-app/tg_owt/blob/master/cmake/libyuv.cmake
@@ -194,7 +195,7 @@ or business messaging needs.
 %prep
 %setup
 %patch1 -p2
-#patch2 -p2
+%patch2 -p2
 #__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
 
 # See https://github.com/desktop-app/tg_owt/pull/82
@@ -313,6 +314,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sun Apr 10 2022 Vitaly Lipatov <lav@altlinux.ru> 3.6.1-alt2
+- enable system window frame by default (ALT bug 41888)
+
 * Sat Apr 09 2022 Vitaly Lipatov <lav@altlinux.ru> 3.6.1-alt1
 - new version 3.6.1 (with rpmrb script)
 
