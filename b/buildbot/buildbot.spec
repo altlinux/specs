@@ -1,5 +1,5 @@
 Name: buildbot
-Version: 3.4.1
+Version: 3.5.0
 Release: alt1
 Summary: Python-based continuous integration testing framework
 
@@ -41,7 +41,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
-Requires: python3-module-service-identity buildbot-www
+Requires: python3-module-service-identity buildbot-www python3(msgpack)
 
 
 ###############################################################################
@@ -80,7 +80,7 @@ inconvenienced by the failure.
 %package worker
 Group: Development/Python
 Summary: Buildbot worker implementation
-Requires: git-core python3(service_identity)
+Requires: git-core python3(service_identity) python3(msgpack)
 
 %description worker
 %summary.
@@ -276,6 +276,9 @@ buildbot-worker start worker
 %files checkinstall
 
 %changelog
+* Sun Apr 10 2022 Mikhail Gordeev <obirvalger@altlinux.org> 3.5.0-alt1
+- new version 3.5.0
+
 * Thu Feb 10 2022 Mikhail Gordeev <obirvalger@altlinux.org> 3.4.1-alt1
 - new version 3.4.1
 
