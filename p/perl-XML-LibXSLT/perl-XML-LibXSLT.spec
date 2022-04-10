@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(autodie.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist XML-LibXSLT
 Name: perl-%dist
-Version: 1.99
-Release: alt2
+Version: 2.000000
+Release: alt1
 
 Summary: Perl interface to the Gnome libxslt library
 License: GPL or Artistic
@@ -41,6 +44,9 @@ sed -i- '/Config{libs}/d' Makefile.PL
 %perl_vendor_autolib/XML
 
 %changelog
+* Sun Apr 10 2022 Igor Vlasenko <viy@altlinux.org> 2.000000-alt1
+- automated CPAN update
+
 * Sun Sep 20 2020 Igor Vlasenko <viy@altlinux.ru> 1.99-alt2
 - fixed build
 
