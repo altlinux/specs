@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ python3(setuptools)
 
 Name:           libcomps
 Version:        0.1.18
-Release:        alt1_1
+Release:        alt1_3
 Summary:        Comps XML file manipulation library
 
 Group:          System/Libraries
@@ -62,9 +62,9 @@ Documentation files for libcomps library.
 %package -n python-module-libcomps-doc
 Summary:        Documentation files for python bindings libcomps library
 Group:          Development/Python
-Requires:       python3-module-libcomps = %{version}-%{release}
+Requires:       python3-module-%{name} = %{version}-%{release}
 BuildArch:      noarch
-BuildRequires:  python3-module-sphinx python3-module-sphinx-sphinx-build-symlink
+BuildRequires:  python3-module-sphinx
 BuildRequires:  python3-module-sphinx_rtd_theme
 
 %description -n python-module-libcomps-doc
@@ -125,6 +125,9 @@ make test -C %{_vpath_builddir}
 
 
 %changelog
+* Sun Apr 10 2022 Igor Vlasenko <viy@altlinux.org> 0.1.18-alt1_3
+- update by mgaimport
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.1.18-alt1_1
 - new version
 
