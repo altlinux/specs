@@ -4,7 +4,7 @@
 %define rdn_name com.github.maoschanz.drawing
 
 Name: %_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A simple raster image editor for the GNOME desktop
@@ -18,7 +18,6 @@ Source: https://github.com/maoschanz/%_name/archive/%version/%_name-%version.tar
 Vcs: https://github.com/maoschanz/drawing.git
 Source: %_name-%version.tar
 %endif
-Patch: %name-1.0.0-alt-meson.patch
 
 BuildArch: noarch
 
@@ -34,7 +33,6 @@ GNOME desktop. PNG, JPEG and BMP files are supported.
 
 %prep
 %setup -n %_name-%version
-%patch -b .bak
 
 %build
 %meson
@@ -55,6 +53,9 @@ GNOME desktop. PNG, JPEG and BMP files are supported.
 
 
 %changelog
+* Sun Apr 10 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
