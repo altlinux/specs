@@ -1,9 +1,12 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
+# Can't be build with packaged GTest: https://github.com/abseil/abseil-cpp/issues/1102
+# And these tests are very long
 %def_without test
+
 Name: libabseil-cpp
-Version: 20210324.2
-Release: alt3
+Version: 20211102.0
+Release: alt1
 
 Summary: C++ Common Libraries
 
@@ -59,7 +62,10 @@ sed -i "/static_assert(value.empty()/{N;d}" absl/strings/internal/string_constan
 %cmake_insource -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_CXX_STANDARD=17 \
 %if_with test
-    -DBUILD_TESTING=ON -DABSL_USE_EXTERNAL_GOOGLETEST=ON \
+    -DBUILD_TESTING=ON \
+    -DABSL_USE_EXTERNAL_GOOGLETEST=ON \
+    -DABSL_FIND_GOOGLETEST=ON \
+#    -DABSL_USE_GOOGLETEST_HEAD=ON \
 %endif
     -DABSL_ENABLE_INSTALL=ON
 %make_build
@@ -80,6 +86,10 @@ ctest
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Apr 10 2022 Vitaly Lipatov <lav@altlinux.ru> 20211102.0-alt1
+- Abseil LTS branch, Nov 2021
+- new version (20211102.0) with rpmgs script
+
 * Wed Nov 17 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20210324.2-alt3
 - fixed build for Elbrus
 

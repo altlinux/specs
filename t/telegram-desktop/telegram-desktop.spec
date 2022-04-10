@@ -13,10 +13,12 @@
 %def_with wayland
 %def_with x11
 %def_with webkit
+%def_with rlottie
 %def_without ffmpeg_static
+%def_without jemalloc
 
 Name: telegram-desktop
-Version: 3.2.5
+Version: 3.6.1
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -29,7 +31,6 @@ Url: https://telegram.org/
 Source: %name-%version.tar
 
 Patch1: telegram-desktop-remove-tgvoip.patch
-Patch2: telegram-desktop-remove-jemalloc.patch
 
 # [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
 # aarch64: see remove_target_sources ARM neon in https://github.com/desktop-app/tg_owt/blob/master/cmake/libyuv.cmake
@@ -44,7 +45,7 @@ BuildRequires(pre): rpm-build-compat >= 2.1.5
 BuildRequires(pre): rpm-build-intro >= 2.1.5
 
 # use no more than system_memory/3000 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
-%_tune_parallel_build_by_procsize 3000
+%_tune_parallel_build_by_procsize 300
 
 # minimalize memory using
 %ifarch %ix86 armh
@@ -122,16 +123,17 @@ BuildRequires: libopenal-devel >= 1.17.2
 BuildRequires: libva-devel libdrm-devel
 
 # Telegram fork of OWT
-BuildRequires: libowt-tg-devel >= 4.3.0.4
+BuildRequires: libowt-tg-devel >= 4.3.0.6
 BuildRequires: librnnoise-devel
 #BuildRequires: libvpx-devel
 BuildRequires: libjpeg-devel
 #BuildRequires: libopenh264-devel
-# obsoleted in the repo
-#BuildRequires: libyuv-devel
+
+#see hack below (used directly in Telegram/ThirdParty/tgcalls/tgcalls/desktop_capturer/DesktopCaptureSourceHelper.cpp)
+BuildRequires: libyuv-devel
 
 # Just to disable noise like Package 'libffi', required by 'gobject-2.0', not found
-BuildRequires: libffi-devel
+BuildRequires: libffi-devel libmount-devel libXdmcp-devel
 
 
 # uses forked version, tag e0ea6af518345c4a46195c4951e023e621a9eb8f
@@ -192,16 +194,19 @@ or business messaging needs.
 %prep
 %setup
 %patch1 -p2
-%patch2 -p2
-%__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
+#patch2 -p2
+#__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
+
+# See https://github.com/desktop-app/tg_owt/pull/82
 # TODO: there are incorrect using and linking libyuv
+subst 's|third_party/libyuv/include/libyuv.h|libyuv.h|' Telegram/ThirdParty/tgcalls/tgcalls/desktop_capturer/*.cpp
 # TODO: ld: lib_webview/liblib_webview.a(webview_linux_webkit_gtk.cpp.o): undefined reference to symbol 'dlclose@@GLIBC_2.2.5
-%__subst "s|\(desktop-app::external_rnnoise\)|\1 -lyuv -ldl|" Telegram/cmake/lib_tgcalls.cmake
+# TODO: ld: /tmp/.private/lav/ccfxvz2E.ltrans115.ltrans.o: неопределённая ссылка на символ «ARGBScale»
+subst "s|\(desktop-app::external_rnnoise\)|\1 -lyuv|" Telegram/cmake/lib_tgcalls.cmake
 
 # Unbundling libraries...
 # TODO: minizip
-rm -rv \
-	Telegram/ThirdParty/Catch \
+for i in \
 	Telegram/ThirdParty/GSL \
 	Telegram/ThirdParty/QR \
 	Telegram/ThirdParty/expected \
@@ -210,7 +215,6 @@ rm -rv \
 	Telegram/ThirdParty/fcitx5-qt \
 	Telegram/ThirdParty/hime \
 	Telegram/ThirdParty/hunspell \
-	Telegram/ThirdParty/libdbusmenu-qt \
 	Telegram/ThirdParty/lz4 \
 	Telegram/ThirdParty/nimf \
 	Telegram/ThirdParty/range-v3 \
@@ -218,7 +222,10 @@ rm -rv \
 	Telegram/ThirdParty/rlottie \
 	Telegram/ThirdParty/libtgvoip \
 	Telegram/ThirdParty/tgcalls/tgcalls/legacy \
-	%nil
+	%nil ; do
+	echo "Removing $i ..."
+	rm -r $i
+done
 
 %build
 %if_with ffmpeg_static
@@ -244,6 +251,9 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 %else
     -DDESKTOP_APP_QT6:BOOL=OFF \
 %endif
+%if_without jemalloc
+    -DDESKTOP_APP_DISABLE_JEMALLOC=ON \
+%endif
 %if_with gtk3
     -DDESKTOP_APP_DISABLE_GTK_INTEGRATION:BOOL=OFF \
 %else
@@ -264,8 +274,13 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 %else
     -DDESKTOP_APP_DISABLE_X11_INTEGRATION:BOOL=ON \
 %endif
-# lottie_cache.h:9:10: fatal error: ffmpeg/ffmpeg_utility.h: No such file or directory
+%if_with rlottie
+    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE=ON \
+# FIXME: lottie_cache.h:9:10: fatal error: ffmpeg/ffmpeg_utility.h: No such file or directory
 #    -DDESKTOP_APP_LOTTIE_USE_CACHE:BOOL=OFF \
+%else
+    -DDESKTOP_APP_USE_PACKAGED_RLOTTIE=OFF \
+%endif
     %nil
 
 %make_build VERBOSE=1
@@ -286,7 +301,7 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %_bindir/telegram
 %_desktopdir/telegramdesktop.desktop
 #_Kservices/tg.protocol
-%_datadir/metainfo/telegramdesktop.appdata.xml
+%_datadir/metainfo/telegramdesktop.metainfo.xml
 %_iconsdir/hicolor/16x16/apps/telegram.png
 %_iconsdir/hicolor/32x32/apps/telegram.png
 %_iconsdir/hicolor/48x48/apps/telegram.png
@@ -298,6 +313,12 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sat Apr 09 2022 Vitaly Lipatov <lav@altlinux.ru> 3.6.1-alt1
+- new version 3.6.1 (with rpmrb script)
+
+* Fri Dec 03 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.8-alt1
+- new version 3.2.8 (with rpmrb script)
+
 * Fri Nov 26 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.5-alt1
 - new version 3.2.5 (with rpmrb script)
 

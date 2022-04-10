@@ -1,6 +1,15 @@
+# FIXME:
+# on aarch64 missed libs during linking:
+# ERROR: ./usr/lib64/libtg_owt.so.0.0.0: undefined symbol: _ZN4absl12lts_2021110214ascii_internal13kPropertyBitsE
+# ERROR: ./usr/lib64/libtg_owt.so.0.0.0: undefined symbol: _ZN4absl12lts_2021110220StartsWithIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEES4_
+# ERROR: ./usr/lib64/libtg_owt.so.0.0.0: undefined symbol: _ZN4absl12lts_2021110215AsciiStrToLowerEPNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
+# ERROR: ./usr/lib64/libtg_owt.so.0.0.0: undefined symbol: _ZN4absl12lts_2021110216EqualsIgnoreCaseESt17basic_string_viewIcSt11char_traitsIcEES4_
+# ERROR: ./usr/lib64/libtg_owt.so.0.0.0: undefined symbol: _ZN4absl12lts_2021110213base_internal18ThrowStdOutOfRangeEPKc
+%def_without internal_absl
+
 Name: libowt-tg
-Version: 4.3.0.5
-Release: alt4
+Version: 4.3.0.6
+Release: alt1
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
 
@@ -11,11 +20,14 @@ Url: https://github.com/desktop-app/tg_owt
 # Source-url: https://github.com/desktop-app/tg_owt/archive/master.zip
 Source: %name-%version.tar
 
-Patch5: ad47b06841f36702ec6ce4d8609ce358c5155cbf.patch
-Patch6: c22f796fe1eb6b37f8f891068941bb0e6e19f6cb.patch
+Patch4: 0001-disable-dcsctp_transport.patch
+Patch5: 0001-support-build-with-system-libsrtp.patch
+Patch6: 0001-support-build-with-system-libyuv.patch
+
 Patch2000: %name-e2k.patch
 
-ExcludeArch: armh ppc64le
+# skip aarch64 (see errors in the top of the spec)
+ExcludeArch: armh ppc64le aarch64
 
 BuildRequires: libalsa-devel
 BuildRequires: libXtst-devel libXcomposite-devel libXdamage-devel libXrender-devel libXrandr-devel
@@ -25,16 +37,28 @@ BuildRequires: libprotobuf-devel protobuf-compiler
 BuildRequires: libgio-devel
 
 # instead of third party
-# FIXME:
-# on aarch64 missed libs during linking:
-# verify-elf: ERROR: ./usr/lib64/libtg_owt.so.0.0.0: undefined symbol: _ZN4absl12lts_2021032414ascii_internal13kPropertyBit
-#BuildRequires: libabseil-cpp-devel
-BuildRequires: libusrsctp-devel libopenh264-devel
+# supported: absl openh264 usrsctp vpx pipewire srtp yuv (used if detected)
+%if_without internal_absl
+BuildRequires: libabseil-cpp-devel >= 20211102.0
+%endif
+BuildRequires: libopenh264-devel
+BuildRequires: libusrsctp-devel
 BuildRequires: libvpx-devel >= 1.10.0
 BuildRequires: pipewire-libs-devel
-BuildRequires: libevent-devel
-BuildRequires: libyuv-devel
-# TODO: libsrtp2-devel
+# TODO: upgrade embedded 2.1.0 (build errors with 2.2.0)
+# libsrtp: This project uses private APIs.
+# https://github.com/desktop-app/tg_owt/pull/55
+#BuildRequires: libsrtp2-devel >= 2.2.0
+BuildRequires: libyuv-devel >= 0.0.1805
+
+BuildRequires: libgbm-devel libdrm-devel libepoxy-devel
+
+# Just disable noise (cmake TODO https://gitlab.kitware.com/cmake/cmake/-/issues/18158):
+# Package 'libpcre', required by 'glib-2.0', not found
+# Package libpcre was not found in the pkg-config search path.
+BuildRequires: libpcre-devel
+# Just to disable noise like Package 'libffi', required by 'gobject-2.0', not found
+BuildRequires: libffi-devel
 
 BuildRequires: gcc-c++ cmake ninja-build
 
@@ -46,6 +70,7 @@ BuildRequires: gcc-c++ cmake ninja-build
 
 %ifarch %ix86
 %add_optflags -msse2 -mfpmath=sse
+# verify-elf: ERROR: ./usr/lib/libtg_owt.so.0.0.0: TEXTREL entry found: 0x0000000
 %set_verify_elf_method textrel=relaxed
 %endif
 
@@ -72,20 +97,20 @@ develop programs which make use of %name.
 
 %prep
 %setup
-%patch5 -p1
-%patch6 -p1
+%patch4 -p2
+%patch5 -p2
+%patch6 -p2
 %ifarch %e2k
 %patch2000 -p2
 %endif
-rm -rfv src/third_party/{libvpx,openh264,pipewire,usrsctp} src/base/third_party/libevent/
-rm -fv cmake/{libvpx,libopenh264,libusrsctp,libevent,libyuv}.cmake
+
+# TODO (used in cmake checks):
+#rm -rv src/third_party/{openh264,pipewire,usrsctp}
+#rm -v cmake/{libopenh264,libusrsctp}.cmake
 rm -rfv src/base/android/
 
-# FIXME: fix direct include paths (used in telegram build too)
-mkdir -p src/third_party/libyuv/include
-cp %_includedir/libyuv.h src/third_party/libyuv/include/libyuv.h
-cp -a %_includedir/libyuv/ src/third_party/libyuv/include
-
+# stop using direct path lib libyuv headers (TODO: move to the libyuv patch?)
+find -type f -name "*.cc" | xargs subst 's|third_party/libyuv/include/||'
 
 %build
 %ifarch %ix86 x86_64 %arm
@@ -97,6 +122,7 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
           -DTG_OWT_PACKAGED_BUILD:BOOL=ON \
           -DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=ON \
           -DTG_OWT_USE_PROTOBUF:BOOL=ON \
+          -DTG_OWT_USE_PIPEWIRE:BOOL=ON \
 %ifarch %ix86
           -DCMAKE_CXX_FLAGS="-fpic" \
 %endif
@@ -105,10 +131,15 @@ export CFLAGS="$RPM_OPT_FLAGS -fPIC"
 
 %install
 %makeinstall_std
-rm -rfv %buildroot%_includedir/tg_owt/sdk/{objc,android}/
-rm -rfv %buildroot%_includedir/tg_owt/base/android/
-rm -rfv %buildroot%_includedir/tg_owt/modules/audio_device/android
-#rm -rfv %buildroot%_includedir/tg_owt/third_party/libyuv
+rm -rv %buildroot%_includedir/tg_owt/sdk/{objc,android}/
+rm -rv %buildroot%_includedir/tg_owt/modules/audio_device/android
+
+%if_without internal_absl
+rm -rfv %buildroot%_includedir/tg_owt/third_party/abseil-cpp/
+%endif
+
+rm -rfv %buildroot%_includedir/tg_owt/third_party/{openh264,usrsctp,libvpx,pipewire,srtp,libyuv}
+rm -rfv %buildroot%_includedir/tg_owt/third_party/{yasm,pffft,rnnoise}
 
 %files
 %_libdir/libtg_owt.so.*
@@ -119,6 +150,12 @@ rm -rfv %buildroot%_includedir/tg_owt/modules/audio_device/android
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Sun Apr 10 2022 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.6-alt1
+- new version (4.3.0.6) with rpmgs script
+- build from git 1fe5e68d999e0bf88d0128ad813438726732f6e0
+- remove third_party headers from includedir
+- stop build for aarch64 (due strange linking issues with abseil-cpp
+
 * Fri Sep 17 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.3.0.5-alt4
 - added patch for Elbrus
 

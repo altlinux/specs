@@ -3,8 +3,8 @@
 # see soname version (player version) in CMakeLists.txt
 %define soname 0.0.1
 Name: librlottie
-Version: 0.1.1
-Release: alt3
+Version: 0.1.2
+Release: alt1
 
 Summary: Platform independent standalone library that plays Lottie Animation
 
@@ -14,15 +14,13 @@ License: LGPLv2+ and BSD and MIT
 Url: http://www.tizen.org/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-#Source-git: https://github.com/john-preston/rlottie.git
-# Source-url: https://github.com/Samsung/rlottie/archive/v%version.tar.gz
-# Source-url: https://github.com/desktop-app/rlottie/archive/e0ea6af518345c4a46195c4951e023e621a9eb8f.zip
+# Source-git: https://github.com/desktop-app/rlottie.git
 Source: %name-%version.tar
 
 Patch1: %name-fix-gcc11.patch
 
 BuildRequires: gcc-c++ cmake
- 
+
 %description
 rlottie is a platform independent standalone c++ library
 for rendering vector based animations and art in realtime.
@@ -75,6 +73,9 @@ developing applications that use %name.
 %_pkgconfigdir/rlottie.pc
 
 %changelog
+* Sun Apr 10 2022 Vitaly Lipatov <lav@altlinux.ru> 0.1.2-alt1
+- build from tag 8c69fc20cf2e150db304311f1233a4b55a8892d7 (Telegram 3.6.1)
+
 * Fri Oct 01 2021 Vitaly Lipatov <lav@altlinux.ru> 0.1.1-alt3
 - fix build with gcc11
 
