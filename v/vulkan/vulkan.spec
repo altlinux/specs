@@ -2,8 +2,8 @@
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: vulkan
-Version: 1.2.196
-Release: alt2
+Version: 1.3.211
+Release: alt1
 Summary: Khronos group Vulkan API SDK
 
 Group: System/Libraries
@@ -25,11 +25,13 @@ BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
 BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 # strict requires due internal dependency
-BuildRequires: glslang-devel = 11.7.0
-BuildRequires: libspirv-tools-devel = 2021.4
-BuildRequires: spirv-headers >= 1.5.4-alt3
+BuildRequires: glslang-devel = 11.9.0
+BuildRequires: libspirv-tools-devel = 2022.2
+BuildRequires: spirv-headers >= 1.6.0-alt1.g4995a2f
 # -layers need it
 BuildRequires: librobin-hood-hashing-devel
+# - tolls need it
+BuildRequires: wayland-protocols
 
 # textrel due asm optimisation in loader code
 %ifarch i586
@@ -193,6 +195,10 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Sun Apr 10 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.211-alt1
+- Updated to sdk-1.3.211:
+  + vulkan-layers: Updated to 5e090d28c.
+
 * Tue Nov 16 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2.196-alt2
 - Rebuild w/ updated glslang and spirv-tools.
 

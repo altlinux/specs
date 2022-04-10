@@ -4,7 +4,7 @@
 %define _cmake %cmake -GNinja -DCMAKE_BUILD_TYPE:STRING="%build_type" -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: spirv-tools
-Version: 2021.4
+Version: 2022.2
 Release: alt1
 Epoch: 1
 
@@ -22,7 +22,8 @@ Patch1: %name-alt-cmake-path.patch
 BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
-BuildRequires: spirv-headers >= 1.5.5-alt1
+# due sdk requires
+BuildRequires: spirv-headers >= 1.6.0-alt1.g4995a2f
 
 %description
 The package includes an assembler, binary module parser,
@@ -74,10 +75,7 @@ ninja \
   -C %_cmake__builddir
 
 %install
-pushd %_cmake__builddir
-cmake -DCMAKE_INSTALL_PREFIX=%buildroot%prefix -DSHARE_INSTALL_PREFIX=%buildroot%_datadir ../
-popd
-ninja -C %_cmake__builddir install
+%cmake_install
 
 %files
 %doc CHANGES LICENSE README.md
@@ -96,6 +94,10 @@ ninja -C %_cmake__builddir install
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
+* Sun Apr 10 2022 L.A. Kostis <lakostis@altlinux.ru> 1:2022.2-alt1
+- Updated to v2022.2 (tag sdk-1.3.211).
+- Update -soname patch.
+
 * Sat Nov 13 2021 L.A. Kostis <lakostis@altlinux.ru> 1:2021.4-alt1
 - Update to v2021.4.
 

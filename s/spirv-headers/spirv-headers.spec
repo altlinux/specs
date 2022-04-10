@@ -1,9 +1,10 @@
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_INSTALL_LIBDIR=%_datadir
-%define git 814e728
+%define git 4995a2f
 
 Name: spirv-headers
-Version: 1.5.5
+Version: 1.6.0
+# sdk-1.3.211
 Release: alt1.g%{git}
 Epoch: 1
 
@@ -46,6 +47,9 @@ This repository contains machine-readable files for the SPIR-V Registry. This in
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Sat Apr 09 2022 L.A. Kostis <lakostis@altlinux.ru> 1:1.6.0-alt1.g4995a2f
+- Updated to GIT 4995a2f (tag sdk-1.3.211).
+
 * Sat Nov 13 2021 L.A. Kostis <lakostis@altlinux.ru> 1:1.5.5-alt1.g814e728
 - Updated to GIT 814e728 (as required by SPIRV-Tools).
 
