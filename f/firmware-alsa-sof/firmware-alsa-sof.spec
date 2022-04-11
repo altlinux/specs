@@ -3,7 +3,7 @@
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
 Version: %version_major
-Release: alt1
+Release: alt2
 # See later in the spec for a breakdown of licensing
 License: BSD
 Group: Sound
@@ -11,6 +11,11 @@ Url: https://github.com/thesofproject/sof-bin
 BuildRequires: alsa-utils alsa-topology-conf
 Source: %name-%version.tar
 Source2: sof-glk-es8336-ssp0.tplg
+Source3: sof-cml-es8336.tplg
+Source4: sof-tgl-es8326.tplg
+# part of upstream development stage topology set for ES8336 codec
+# https://github.com/thesofproject/linux/files/8076329/es8336-topologies-3.tar.gz
+Source5: sof-cml-es8336-ssp0.tplg
 Provides: alsa-sof-firmware = %EVR
 # noarch, since the package is firmware
 BuildArch: noarch
@@ -38,6 +43,9 @@ alsatplg -c /usr/share/alsa/topology/hda-dsp/skl_hda_dsp_generic-tplg.conf \
 mkdir -p  %buildroot%_firmwarepath/intel/
 cp -a v%version_major.x/sof-tplg-v%version  %buildroot%_firmwarepath/intel/sof-tplg-v%version
 install %SOURCE2 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
+install %SOURCE3 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
+install %SOURCE4 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
+install %SOURCE5 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
 cp -a v%version_major.x/sof-v%version  %buildroot%_firmwarepath/intel/sof
 ln -s sof-tplg-v%version %buildroot%_firmwarepath/intel/sof-tplg
 install -m0644 skl_hda_dsp_generic-tplg.bin %buildroot%_firmwarepath/
@@ -67,6 +75,9 @@ cat alsa-sof-firmware.files
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Thu Apr 07 2022 Nikolai Kostrigin <nickel@altlinux.org> 2.0-alt2
+- added extra topologies for es83x6, from upstream and OEM patners
+
 * Wed Dec 22 2021 Anton Farygin <rider@altlinux.ru> 2.0-alt1
 - 1.9.3 -> 2.0
 
