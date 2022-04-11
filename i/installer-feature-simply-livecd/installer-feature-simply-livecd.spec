@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 10.0.0
+Version: 10.1.0
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -37,9 +37,10 @@ Requires: alterator-luks
 # NOTE: installer-feature-bell-off-stage3 uneeded:
 # the same changes are made by rootfs image script
 # in mkimage-profiles.
+# NOTE: installer-feature-online-repo replaced
+# by m-p use/live/repo feature.
 Requires: installer-feature-desktop-other-fs-stage2
 Requires: installer-feature-lightdm-stage3
-Requires: installer-feature-online-repo
 Requires: installer-feature-samba-usershares-stage2
 Requires: installer-feature-sudo-enable-by-default-stage3
 
@@ -69,6 +70,10 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Mon Apr 11 2022 Mikhail Efremov <sem@altlinux.org> 10.1.0-alt1
+- Include user to fuse group.
+- Drop installer-feature-online-repo.
+
 * Wed Oct 13 2021 Mikhail Efremov <sem@altlinux.org> 10.0.0-alt1
 - Drop 05-vm-profile.sh.
 
