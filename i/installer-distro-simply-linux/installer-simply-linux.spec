@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 10.0.0
+Version: 10.1.0
 Release: alt1
 
 Summary: Installer common files
@@ -79,7 +79,6 @@ Requires: alterator-luks
 #features
 Requires: installer-feature-bell-off-stage3
 Requires: installer-feature-lightdm-stage3
-Requires: installer-feature-online-repo
 Requires: installer-feature-repo-add
 Requires: installer-feature-sudo-enable-by-default-stage3
 
@@ -114,6 +113,10 @@ Installer stage3
 %files stage3
 
 %changelog
+* Mon Apr 11 2022 Mikhail Efremov <sem@altlinux.org> 10.1.0-alt1
+- stage3: Drop installer-feature-online-repo.
+- stage2: Include user to fuse group.
+
 * Wed Oct 13 2021 Mikhail Efremov <sem@altlinux.org> 10.0.0-alt1
 - stage2: Drop 05-vm-profile.sh.
 
