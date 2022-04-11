@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Config-General
 Name: perl-%dist
-Version: 2.63
+Version: 2.65
 Release: alt1
 
 Summary: Generic Config Module
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/T/TL/TLINDEN/Config-General-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TL/TLINDEN/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -28,7 +28,7 @@ you can also just use simple name/value pairs in your config
 files.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -41,6 +41,9 @@ files.
 %perl_vendor_privlib/Config*
 
 %changelog
+* Mon Apr 11 2022 Igor Vlasenko <viy@altlinux.org> 2.65-alt1
+- automated CPAN update
+
 * Fri Jul 29 2016 Igor Vlasenko <viy@altlinux.ru> 2.63-alt1
 - automated CPAN update
 
