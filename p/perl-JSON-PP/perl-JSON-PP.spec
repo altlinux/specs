@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(charnames.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 Epoch: 1
 %define dist JSON-PP
 Name: perl-%dist
-Version: 4.07
+Version: 4.08
 Release: alt1
 
 Summary: JSON::XS compatible pure-Perl module
@@ -37,6 +40,9 @@ It comes to be a perl core module in Perl 5.14.
 %_man1dir/json_pp*
 
 %changelog
+* Mon Apr 11 2022 Igor Vlasenko <viy@altlinux.org> 1:4.08-alt1
+- automated CPAN update
+
 * Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 1:4.07-alt1
 - automated CPAN update
 
