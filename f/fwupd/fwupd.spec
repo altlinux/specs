@@ -25,7 +25,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.7.6
+Version: 1.7.7
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -377,6 +377,9 @@ rm -rf %buildroot%_docdir/fwupd
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 
 %changelog
+* Mon Apr 11 2022 Anton Farygin <rider@altlinux.ru> 1.7.7-alt1
+- 1.7.6 -> 1.7.7
+
 * Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 1.7.6-alt1
 - 1.7.5 -> 1.7.6
 
