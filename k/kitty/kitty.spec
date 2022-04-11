@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.24.4
+Version: 0.25.0
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -16,6 +16,9 @@ Requires: %name-terminfo = %EVR
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 Patch1: alt-sphinx-use-classic-theme.patch
+
+# 0.25.0: shebang.req failed
+%add_findreq_skiplist %_libexecdir/%name/shell-integration/ssh/askpass.py
 
 BuildRequires(pre): rpm-build-python3
 
@@ -149,6 +152,9 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_datadir/terminfo/*/*
 
 %changelog
+* Mon Apr 11 2022 Egor Ignatov <egori@altlinux.org> 0.25.0-alt1
+- new version 0.25.0
+
 * Thu Mar 03 2022 Egor Ignatov <egori@altlinux.org> 0.24.4-alt1
 - new version 0.24.4
 
