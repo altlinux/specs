@@ -4,7 +4,7 @@
 
 Name: rabbitmq-c
 Version: 0.11.0
-Release: alt4
+Release: alt5
 
 Summary: RabbitMQ C client
 Group: System/Libraries
@@ -80,6 +80,9 @@ popd
 %_libdir/cmake
 
 %changelog
+* Mon Apr 11 2022 Egor Ignatov <egori@altlinux.org> 0.11.0-alt5
+- 1f6ff5e tools/common.c: die on failed rpc in make_connection
+
 * Fri Apr 01 2022 Egor Ignatov <egori@altlinux.org> 0.11.0-alt4
 - f54668b tools: multiple tries to make a connection
 
