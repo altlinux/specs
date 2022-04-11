@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 0.7.3
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Video
@@ -16,7 +16,8 @@ License: GPL-3.0-or-later
 Requires: youtube-dl
 
 Source: %rname-%version.tar
-Patch1: alt-dont-save-pos.patch
+#Patch1: alt-dont-save-pos.patch
+Patch2: alt-time-sync.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: cmake extra-cmake-modules
@@ -55,7 +56,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
+%patch2 -p2
 
 %build
 %K5build \
@@ -81,6 +82,9 @@ KF5 library
 #%_K5lib/libharuna.so.*
 
 %changelog
+* Mon Apr 11 2022 Slava Aseev <ptrnine@altlinux.org> 0.7.3-alt3
+- fix lags on time sync
+
 * Mon Apr 11 2022 Sergey V Turchin <zerg@altlinux.org> 0.7.3-alt2
 - don't save playback position by default
 
