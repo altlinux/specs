@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: glances
-Version: 3.2.4.2
+Version: 3.2.5
 Release: alt1
 
 Summary: CLI curses based monitoring tool
@@ -11,47 +11,21 @@ Url: https://github.com/nicolargo/glances
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
 Requires: python3-module-%name = %EVR
 
-%add_python3_req_skip bernhard
-%add_python3_req_skip bottle
-%add_python3_req_skip cassandra
-%add_python3_req_skip cassandra.cluster
-%add_python3_req_skip cassandra.util
-%add_python3_req_skip cassandra.auth
-%add_python3_req_skip couchdb
-%add_python3_req_skip couchdb.mapping
-%add_python3_req_skip docker
-%add_python3_req_skip elasticsearch
-%add_python3_req_skip graphitesend
-%add_python3_req_skip influxdb
-%add_python3_req_skip influxdb.client
-%add_python3_req_skip influxdb.influxdb08
-%add_python3_req_skip influxdb.influxdb08.client
-%add_python3_req_skip influxdb_client
-%add_python3_req_skip kafka
-%add_python3_req_skip matplotlib
-%add_python3_req_skip netifaces
-%add_python3_req_skip nvidia-ml-py3
-%add_python3_req_skip pika
-%add_python3_req_skip potsdb
-%add_python3_req_skip prometheus_client
-%add_python3_req_skip py-cpuinfo
-%add_python3_req_skip pymdstat
-%add_python3_req_skip pysnmp
-%add_python3_req_skip pystache
-%add_python3_req_skip zmq
-%add_python3_req_skip zmq.utils.strtypes
-%add_python3_req_skip requests
-%add_python3_req_skip scandir
-%add_python3_req_skip statsd
-%add_python3_req_skip wifi
-%add_python3_req_skip zeroconf
+#skip findreq for optional dependencies from exports
+%add_findreq_skiplist %python3_sitelibdir/%name/exports/*.py
 
-%{?!_without_check:%{?!_disable_check:BuildRequires: /proc python3-module-psutil python3-module-defusedxml }}
+%if 0%{?!_without_check:1} && 0%{?!_disable_check:1}
+BuildRequires: python3-module-defusedxml
+BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-psutil
+BuildRequires: /proc
+%endif
 
 
 %description
@@ -71,6 +45,8 @@ Glances uses the PsUtil library to get information from your system.
 
 %prep
 %setup
+
+%patch0 -p1
 
 %build
 %python3_build
@@ -93,6 +69,9 @@ Glances uses the PsUtil library to get information from your system.
 
 
 %changelog
+* Mon Apr 11 2022 Egor Ignatov <egori@altlinux.org> 3.2.5-alt1
+- new version 3.2.5
+
 * Wed Dec 01 2021 Egor Ignatov <egori@altlinux.org> 3.2.4.2-alt1
 - new version
 
