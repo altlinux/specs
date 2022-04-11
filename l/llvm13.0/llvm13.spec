@@ -2,8 +2,9 @@
 
 %filter_from_requires /python[0-9.]\+(Reporter)/d
 %filter_from_requires /python[0-9.]\+(optpmap)/d
+%filter_from_requires /python[0-9.]\+(libscanbuild[.].*)/d
 
-%global v_major 12
+%global v_major 13
 %global v_majmin %v_major.0
 %global v_full %v_majmin.1
 %global rcsuffix %nil
@@ -12,6 +13,8 @@
 %global clangd_name clangd%v_majmin
 %global lld_name lld%v_majmin
 %global lldb_name lldb%v_majmin
+%global mlir_name mlir%v_majmin
+%global polly_name polly%v_majmin
 
 %global llvm_default_name llvm%_llvm_version
 %global clang_default_name clang%_llvm_version
@@ -25,6 +28,10 @@
 %global llvm_datadir %llvm_prefix/share
 %global llvm_man1dir %llvm_datadir/man/man1
 %global llvm_docdir %llvm_datadir/doc
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
 
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %ifarch %ix86 %arm
@@ -48,7 +55,7 @@
 %endif
 
 %define tarversion %v_full%rcsuffix
-%if 0%rcsuffix==0
+%if "%rcsuffix" == ""
 %define mversion %v_full
 %else
 %define mversion %v_full%{?rcsuffix:-%rcsuffix}
@@ -56,25 +63,25 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4
+Release: alt1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
 License: Apache-2.0 with LLVM-exception
 Url: http://llvm.org
-Source0: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/llvm-%tarversion.src.tar.xz
-Source1: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/clang-%tarversion.src.tar.xz
-Source2: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/clang-tools-extra-%tarversion.src.tar.xz
-Source3: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/lld-%tarversion.src.tar.xz
-Source4: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/compiler-rt-%tarversion.src.tar.xz
-Source5: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/lldb-%tarversion.src.tar.xz
+Source0: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/llvm-project-%tarversion.src.tar.xz
+#Source0: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/llvm-%tarversion.src.tar.xz
+#Source1: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/clang-%tarversion.src.tar.xz
+#Source2: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/clang-tools-extra-%tarversion.src.tar.xz
+#Source3: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/lld-%tarversion.src.tar.xz
+#Source4: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/compiler-rt-%tarversion.src.tar.xz
+#Source5: https://github.com/llvm/llvm-project/releases/download/llvmorg-%mversion/lldb-%tarversion.src.tar.xz
 Patch:  clang-alt-i586-fallback.patch
 Patch1: clang-alt-triple.patch
 Patch2: 0001-alt-llvm-config-Ignore-wrappers-when-looking-for-current.patch
 Patch3: llvm-alt-fix-linking.patch
 Patch4: llvm-alt-triple.patch
 Patch5: compiler-rt-alt-i586-arch.patch
-Patch6: RH-0001-CMake-Split-static-library-exports-into-their-own-ex.patch
 Patch7: clang-alt-aarch64-dynamic-linker-path.patch
 Patch8: clang-tools-extra-alt-gcc-0001-clangd-satisfy-ALT-gcc-s-Werror-return-type.patch
 Patch9: lld-11-alt-mipsel-permit-textrels-by-default.patch
@@ -86,6 +93,7 @@ Patch15: llvm-cmake-resolve-symlinks-in-LLVMConfig.cmake.patch
 Patch16: clang-cmake-resolve-symlinks-in-ClangConfig.cmake.patch
 Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch18: lld-compact-unwind-encoding.h.patch
+Patch19: lldb-alt-gcc-0001-satisfy-ALT-gcc-s-Werror-return-type.patch
 
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 
@@ -98,7 +106,6 @@ Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 BuildPreReq: /proc
 
 # Obtain %%__python3 at prep stage.
-BuildRequires(pre): rpm-build-python
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-llvm-common
 
@@ -126,6 +133,10 @@ of programming tools as well as libraries with equivalent functionality.
 Group: Development/Other
 Summary: Owns the installation prefix for LLVM
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description filesystem
 This package owns the installation prefix for LLVM. It is designed to be
 pulled in by all non-empty LLVM packages.
@@ -140,6 +151,10 @@ Requires: %name = %EVR
 # The gold plugin was located in llvm-devel prior to 12.0.1-alt3.
 Requires: %name-gold
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description devel
 This package contains library and header files needed to develop new
 native programs that use the LLVM infrastructure.
@@ -151,8 +166,29 @@ Group: Development/Tools
 # requires: libLLVM
 Requires: %name-libs
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description gold
 This package contains the gold plugin for LLVM objects.
+
+%package polly
+Summary: Framework for High-Level Loop and Data-Locality Optimizations
+Group: Development/C
+%requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description polly
+Polly is a high-level loop and data-locality optimizer and optimization
+infrastructure for LLVM. It uses an abstract mathematical representation based
+on integer polyhedron to analyze and optimize the memory access pattern of a
+program.
+
+This package contains the Polly plugin.
 
 %package libs
 Group: Development/C
@@ -161,6 +197,10 @@ Summary: LLVM shared libraries
 # We pull in the gold plugin for e. g. Clang's -flto=thin to work
 # out of the box with gold.
 Requires: %name-gold
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
 
 %description libs
 This package contains shared libraries needed to develop new
@@ -172,6 +212,10 @@ Group: Documentation
 BuildArch: noarch
 %requires_filesystem
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description doc
 Documentation for the LLVM compiler infrastructure.
 
@@ -179,6 +223,10 @@ Documentation for the LLVM compiler infrastructure.
 Summary: Various minor tools bundled with LLVM
 Group: Development/C
 %requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
 
 %description tools
 This package contains various tools maintained as part of LLVM, including
@@ -192,6 +240,10 @@ Group: Development/C
 # Should they be packaged separately?
 Requires: gcc
 Requires: clang >= %_llvm_version
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
 
 %description -n %clang_name
 clang: noun
@@ -209,6 +261,10 @@ Summary: clang shared libraries
 %requires_filesystem
 Requires: %clang_name-libs-support = %EVR
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description -n %clang_name-libs
 Shared libraries for the clang compiler.
 
@@ -216,6 +272,10 @@ Shared libraries for the clang compiler.
 Group: Development/C
 Summary: Support for Clang's shared libraries
 %requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
 
 %description -n %clang_name-libs-support
 The Clang's shared libraries implement compilers for C and C++, and thus have
@@ -228,6 +288,10 @@ Summary: Shared runtimes for Clang's shared libraries
 %requires_filesystem
 Requires: %clang_name-libs-support = %EVR
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description -n %clang_name-libs-support-shared-runtimes
 This package contains shared runtime libraries for Scudo and sanitizers.
 
@@ -237,10 +301,26 @@ Group: Development/C
 %requires_filesystem
 Requires: clang-devel >= %_llvm_version
 Requires: %clang_name = %EVR
-Provides: %clang_name-devel-static
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
 
 %description -n %clang_name-devel
 This package contains header files for the Clang compiler.
+
+%package -n %clang_name-devel-static
+Summary: Static libraries for clang
+Group: Development/C
+%requires_filesystem
+Requires: %clang_name-devel = %EVR
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description -n %clang_name-devel-static
+This package contains static libraries for the Clang compiler.
 
 %package -n %clang_name-analyzer
 Summary: A source code analysis framework
@@ -248,6 +328,10 @@ Group: Development/C
 BuildArch: noarch
 %requires_filesystem
 Requires: %clang_name = %EVR
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
 
 %description -n %clang_name-analyzer
 The Clang Static Analyzer consists of both a source code analysis
@@ -262,6 +346,10 @@ Group: Development/C
 Requires: %clang_name = %EVR
 Requires: clang-tools >= %_llvm_version
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description -n %clang_name-tools
 This package contains various code analysis and manipulation tools based on
 libclang, including clang-format.
@@ -272,6 +360,10 @@ Group: Documentation
 BuildArch: noarch
 %requires_filesystem
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description -n %clang_name-doc
 Documentation for the Clang compiler front-end.
 
@@ -281,6 +373,10 @@ Group: Development/C
 %requires_filesystem
 Requires: clangd >= %_llvm_version
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description -n %clangd_name
 This package contains clangd, a Clang-based language server for C and C++.
 
@@ -289,6 +385,10 @@ Summary: LLD - The LLVM Linker
 Group: Development/C
 %requires_filesystem
 Requires: lld >= %_llvm_version
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
 
 %description -n %lld_name
 LLD is a linker from the LLVM project. That is a drop-in replacement for system
@@ -302,6 +402,10 @@ Group: Development/C
 Requires: lld-devel >= %_llvm_version
 Requires: %lld_name = %EVR
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description -n %lld_name-devel
 This package contains header files for the LLD linker.
 
@@ -311,6 +415,10 @@ Group: Documentation
 BuildArch: noarch
 %requires_filesystem
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description -n %lld_name-doc
 Documentation for the LLD linker.
 
@@ -318,6 +426,10 @@ Documentation for the LLD linker.
 Summary: A next-level high-performance debugger
 Group: Development/Debuggers
 %requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
 
 %description -n %lldb_name
 LLDB is a next generation, high-performance debugger. It is built as a set of
@@ -329,6 +441,10 @@ Summary: Shared library for LLDB
 Group: Development/Debuggers
 %requires_filesystem
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description -n lib%lldb_name
 This package contains the LLDB runtime library.
 
@@ -336,6 +452,10 @@ This package contains the LLDB runtime library.
 Summary: Development files for liblldb
 Group: Development/Debuggers
 %requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
 
 %description -n lib%lldb_name-devel
 This package contains header files to build extensions over lldb, as well as
@@ -347,36 +467,124 @@ Group: Documentation
 BuildArch: noarch
 %requires_filesystem
 
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
 %description -n %lldb_name-doc
 Documentation for the LLDB debugger.
 
+%package -n lib%mlir_name
+Summary: Multi-Level Intermediate Representation library
+Group: Development/C
+%requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description -n lib%mlir_name
+MLIR is a novel approach to building reusable and extensible compiler infrastructure.
+MLIR aims to address software fragmentation, improve compilation for
+heterogeneous hardware, significantly reduce the cost of building domain
+specific compilers, and aid in connecting existing compilers together.
+
+%package -n lib%mlir_name-devel
+Summary: Libraries and header files for MLIR
+Group: Development/C
+%requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description -n lib%mlir_name-devel
+MLIR is a novel approach to building reusable and extensible compiler infrastructure.
+MLIR aims to address software fragmentation, improve compilation for
+heterogeneous hardware, significantly reduce the cost of building domain
+specific compilers, and aid in connecting existing compilers together.
+
+This package contains headers and other development files for lib%mlir_name.
+
+%package -n %mlir_name-tools
+Summary: Various mlir-based tools
+Group: Development/C
+%requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description -n %mlir_name-tools
+MLIR is a novel approach to building reusable and extensible compiler infrastructure.
+MLIR aims to address software fragmentation, improve compilation for
+heterogeneous hardware, significantly reduce the cost of building domain
+specific compilers, and aid in connecting existing compilers together.
+
+This package contains some bundled tools.
+
+%package -n lib%polly_name-devel
+Summary: Development files for Polly
+Group: Development/C
+%requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description -n lib%polly_name-devel
+Polly is a high-level loop and data-locality optimizer and optimization
+infrastructure for LLVM. It uses an abstract mathematical representation based
+on integer polyhedron to analyze and optimize the memory access pattern of a
+program.
+
+This package contains header files for the Polly optimizer.
+
+%package -n lib%polly_name-doc
+Summary: Documentation for Polly
+Group: Development/C
+%requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description -n lib%polly_name-doc
+Polly is a high-level loop and data-locality optimizer and optimization
+infrastructure for LLVM. It uses an abstract mathematical representation based
+on integer polyhedron to analyze and optimize the memory access pattern of a
+program.
+
+This package contains documentation for the Polly optimizer.
+
 %prep
-%setup -n llvm-%tarversion.src -a1 -a2 -a3 -a4 -a5
-for pkg in clang lld lldb; do
-   mv $pkg-%tarversion.src tools/$pkg
-done
-mv clang-tools-extra-%tarversion.src tools/clang/tools/extra
-for pkg in compiler-rt; do
-   mv $pkg-%tarversion.src projects/$pkg
-done
+# %setup -n llvm-%tarversion.src -a1 -a2 -a3 -a4 -a5 -a6
+# for pkg in clang lld lldb; do
+   # mv $pkg-%tarversion.src tools/$pkg
+# done
+# mv clang-tools-extra-%tarversion.src tools/clang/tools/extra
+# for pkg in compiler-rt; do
+   # mv $pkg-%tarversion.src projects/$pkg
+# done
+%setup -n llvm-project-%tarversion.src
 %patch -p1 -b .alt-i586-fallback
 %patch1 -p1 -b .alt-triple
 %patch2 -p1
-sed -i 's)"%%llvm_bindir")"%llvm_bindir")' lib/Support/Unix/Path.inc
+sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 %patch3 -p1 -b .alt-fix-linking
 %patch4 -p1 -b .alt-triple
 %patch5 -p1 -b .alt-i586-arch
-%patch6 -p1
 %patch7 -p1 -b .alt-aarch64-dynamic-linker
 %patch8 -p1
 %patch9 -p1 -b .alt-mipsel-permit-textrels-by-default
 %patch10 -p1
 %patch11 -p1
 %patch14 -p1
-%patch15 -p2
+%patch15 -p1
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 
 %patch101 -p1
 
@@ -391,14 +599,15 @@ if [ "$NPROCS" -gt 64 ]; then
 	export NPROCS=64
 fi
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
-%define _cmake__builddir BUILD
-%cmake -G Ninja \
+%define builddir %_cmake__builddir
+%cmake -G Ninja -S llvm \
 	-DLLVM_PARALLEL_LINK_JOBS=1 \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_PREFIX=%llvm_prefix \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
 	-DPACKAGE_VENDOR="%vendor" \
+	-DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;lld;lldb;mlir;polly" \
 	-DLLVM_TARGETS_TO_BUILD="all" \
 	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
 	-DLLVM_ENABLE_LIBCXX:BOOL=OFF \
@@ -427,7 +636,6 @@ fi
 	-DCMAKE_AR:PATH=%_bindir/gcc-ar \
 	-DCMAKE_NM:PATH=%_bindir/gcc-nm \
 	-DCMAKE_RANLIB:PATH=%_bindir/gcc-ranlib \
-	-DCMAKE_SHARED_LINKER_FLAGS="-Wl,-Bsymbolic" \
 	%endif
 	\
 	-DLLVM_LIBDIR_SUFFIX="%_libsuff" \
@@ -465,27 +673,24 @@ fi
 	-DLLVM_INSTALL_TOOLCHAIN_ONLY:BOOL=OFF \
 	-DPYTHON_EXECUTABLE=%_bindir/python3
 
-sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' BUILD/build.ninja
-ninja -vvv -j $NPROCS -C BUILD
+sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' %builddir/build.ninja
+ninja -vvv -j $NPROCS -C %builddir
 
 %install
-pushd BUILD
-cmake -DCMAKE_INSTALL_PREFIX=%buildroot%llvm_prefix ../
-sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' build.ninja
-sed -i '/^[[:space:]]*include.*tools\/lld\/docs\/cmake_install.cmake.*/d' tools/lld/cmake_install.cmake
-popd
-ninja -C BUILD install
+sed -i 's|man\ tools/lld/docs/docs-lld-html|man|' %builddir/build.ninja
+sed -i '/^[[:space:]]*include.*tools\/lld\/docs\/cmake_install.cmake.*/d' %builddir/tools/lld/cmake_install.cmake
+DESTDIR=%buildroot ninja -C %builddir install
 
 # Prepare Clang documentation.
-rm -rf BUILD/clang-docs
-mkdir -p BUILD/clang-docs
+rm -rf %builddir/clang-docs
+mkdir -p %builddir/clang-docs
 for f in LICENSE.TXT NOTES.txt README.txt; do
-  ln tools/clang/$f BUILD/clang-docs/
+  ln clang/$f %builddir/clang-docs/
 done
 rm -rf tools/clang/docs/{doxygen*,Makefile*,*.graffle,tools}
 
-install -m 0755 BUILD/%_lib/LLVMHello.so %buildroot%llvm_libdir/
-install -m 0755 BUILD/%_lib/BugpointPasses.so %buildroot%llvm_libdir/
+install -m 0755 %builddir/%_lib/LLVMHello.so %buildroot%llvm_libdir/
+install -m 0755 %builddir/%_lib/BugpointPasses.so %buildroot%llvm_libdir/
 mkdir -p %buildroot%llvm_docdir/lld
 
 %ifarch %ix86
@@ -513,7 +718,7 @@ for mand in %buildroot%llvm_datadir/man/man*; do
 	mand_index="${mand##*/man}"
 	for m in "$mand"/*.[1-9]*; do
 		# Let's force compress the man page, then symlink it.
-		# /usr/lib/llvm-12.0/share/man/manD/utilX.D.xz -> /usr/share/man/manD/utilX-12.D.xz
+		# /usr/lib/llvm-13.0/share/man/manD/utilX.D.xz -> /usr/share/man/manD/utilX-12.D.xz
 		# Otherwise, brp-alt(compress) keeps fucking us up.
 		# It remakes the symlinks first, then compresses their targets,
 		# severing the symlinks.
@@ -551,16 +756,22 @@ sed < %_tmppath/libclang-support-dupes 's)^%buildroot)); s/$/.so/' > %_tmppath/l
 sed < %_tmppath/libclang-support-shared-runtimes 's/^/%%exclude /' > %_tmppath/dyn-files-libclang-support
 echo "Expelling likely redundant Clang shared runtimes:" && cat %_tmppath/dyn-files-libclang-support
 
-# Emit executable list for %name.
+# Emit a stanza list for %%files.
 # A tool can be accompanied by a man page or not.
-awk -F'\t' '
+emit_filelist() {
+    awk -F'\t' '
 $1 ~ "bin" { print "%llvm_bindir/" $2; print "%_bindir/" $2 "-%v_major"; }
 $1 ~ "man" { print "%llvm_man1dir/" $2 ".1*"; print "%_man1dir/" $2 "-%v_major.1*"; }
-' >%_tmppath/dyn-files-%name <<EOExecutableList
+'
+}
+
+# Emit executable list for %name.
+emit_filelist >%_tmppath/dyn-files-%name <<EOExecutableList
 bin,man	bugpoint
 bin,man	diagtool
 bin,man	dsymutil
 bin	ld64.lld.darwinnew
+bin	ld64.lld.darwinold
 bin,man	llc
 bin,man	lli
 bin,man	llvm-addr2line
@@ -581,7 +792,6 @@ bin,man	llvm-dis
 bin	llvm-dlltool
 bin,man	llvm-dwarfdump
 bin	llvm-dwp
-bin	llvm-elfabi
 bin,man	llvm-exegesis
 bin,man	llvm-extract
 bin	llvm-gsymutil
@@ -603,6 +813,7 @@ bin,man	llvm-nm
 bin,man	llvm-objcopy
 bin,man	llvm-objdump
 bin	llvm-opt-report
+bin,man	llvm-otool
 bin,man	llvm-pdbutil
 bin,man	llvm-profdata
 bin,man	llvm-profgen
@@ -613,34 +824,94 @@ bin,man	llvm-readobj
 bin	llvm-reduce
 bin	llvm-rtdyld
 bin,man	llvm-size
+bin	llvm-sim
+bin	llvm-tapi-diff
+bin	llvm-windres
 bin	llvm-split
 bin,man	llvm-stress
 bin,man	llvm-strings
 bin,man	llvm-strip
 bin,man	llvm-symbolizer
-bin	llvm-tblgen
+bin,man	llvm-tblgen
 bin	llvm-undname
 bin	llvm-xray
 bin	modularize
 bin,man	opt
 bin	pp-trace
+bin	run-clang-tidy
 bin	sancov
 bin	sanstats
 bin	split-file
 bin	verify-uselistorder
-man	xxx-tblgen
 
 man	FileCheck
 man	extraclangtools
 man	lit
 man	llvm-locstats
+man	lldb-tblgen
+man	tblgen
+EOExecutableList
+
+emit_filelist >%_tmppath/dyn-files-%clang_name <<EOExecutableList
+bin,man	clang
+bin	clang++
+bin	clang-cl
+bin	clang-cpp
+EOExecutableList
+
+emit_filelist >%_tmppath/dyn-files-%clang_name-analyzer <<EOExecutableList
+bin	analyze-build
+bin	intercept-build
+bin,man	scan-build
+bin	scan-build-py
+bin	scan-view
+EOExecutableList
+
+emit_filelist >%_tmppath/dyn-files-%clang_name-tools <<EOExecutableList
+bin	c-index-test
+bin	clang-apply-replacements
+bin	clang-change-namespace
+bin	clang-check
+bin	clang-doc
+bin	clang-extdef-mapping
+bin	clang-format
+bin	clang-include-fixer
+bin	clang-move
+bin	clang-offload-bundler
+bin	clang-offload-wrapper
+bin	clang-query
+bin	clang-refactor
+bin	clang-rename
+bin	clang-reorder-fields
+bin	clang-repl
+bin	clang-scan-deps
+man	clang-tblgen
+bin	clang-tidy
+bin	find-all-symbols
+bin	git-clang-format
+bin	hmaptool
+EOExecutableList
+
+emit_filelist >%_tmppath/dyn-files-%mlir_name-tools <<EOExecutableList
+bin	mlir-cpu-runner
+bin	mlir-linalg-ods-gen
+bin	mlir-linalg-ods-yaml-gen
+bin	mlir-lsp-server
+bin	mlir-opt
+bin	mlir-reduce
+bin,man	mlir-tblgen
+bin	mlir-translate
+EOExecutableList
+
+emit_filelist >%_tmppath/dyn-files-lib%polly_name-devel <<EOExecutableList
+man	polly
 EOExecutableList
 
 %check
 %if_enabled tests
 LD_LIBRARY_PATH=%buildroot%llvm_libdir:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH
-ninja -C BUILD check-all || :
+ninja -C %builddir check-all || :
 %endif
 
 # Do not generate dependencies for clang-{format,rename} plugins.
@@ -650,6 +921,7 @@ ninja -C BUILD check-all || :
 %dir %llvm_prefix
 %dir %llvm_bindir
 %dir %llvm_libdir
+%dir %llvm_libdir/cmake
 %dir %llvm_includedir
 %dir %llvm_libexecdir
 %dir %llvm_datadir
@@ -659,7 +931,7 @@ ninja -C BUILD check-all || :
 %dir %llvm_docdir
 
 %files -f %_tmppath/dyn-files-%name
-%doc CREDITS.TXT LICENSE.TXT README.txt
+%doc llvm/CREDITS.TXT llvm/LICENSE.TXT llvm/README.txt
 
 %files libs
 %llvm_libdir/libLLVM-*.so
@@ -684,40 +956,15 @@ ninja -C BUILD check-all || :
 %llvm_libdir/libRemarks.so
 %llvm_libdir/LLVMHello.so
 %llvm_libdir/BugpointPasses.so
-%dir %llvm_libdir/cmake
 %llvm_libdir/cmake/llvm
 %llvm_libdir/libLLVM*.a
 
 %files gold
 %llvm_libdir/LLVMgold.so
 
-%files -n %clang_name
-%doc BUILD/clang-docs/*
+%files -n %clang_name -f %_tmppath/dyn-files-%clang_name
+%doc %builddir/clang-docs/*
 %llvm_bindir/clang-%v_major
-%llvm_bindir/clang
-%_bindir/clang-%v_major
-%llvm_bindir/clang++
-%_bindir/clang++-%v_major
-%llvm_bindir/clang-cl
-%_bindir/clang-cl-%v_major
-%llvm_bindir/clang-cpp
-%_bindir/clang-cpp-%v_major
-%llvm_man1dir/clang.1*
-%_man1dir/clang-%v_major.1*
-%exclude %llvm_bindir/clang-check*
-%exclude %_bindir/clang-check*
-%exclude %llvm_bindir/clang-extdef-mapping*
-%exclude %_bindir/clang-extdef-mapping*
-%exclude %llvm_bindir/clang-format*
-%exclude %_bindir/clang-format*
-%exclude %llvm_bindir/git-clang-format*
-%exclude %_bindir/git-clang-format*
-%exclude %llvm_bindir/clang-offload-*
-%exclude %_bindir/clang-offload-*
-%exclude %llvm_bindir/clang-refactor*
-%exclude %_bindir/clang-refactor*
-%exclude %llvm_bindir/clang-rename*
-%exclude %_bindir/clang-rename*
 %llvm_datadir/clang/bash-autocomplete.sh
 %_datadir/bash-completion/completions/clang*
 
@@ -739,42 +986,21 @@ ninja -C BUILD check-all || :
 %llvm_includedir/clang-c
 %llvm_includedir/clang-tidy
 %llvm_libdir/libclang*.so
-%dir %llvm_libdir/cmake
 %llvm_libdir/cmake/clang
 %llvm_libdir/libclang*.a
 %llvm_libdir/libfindAllSymbols.a
 
-%files -n %clang_name-analyzer
-%llvm_prefix/libexec/*-analyzer
-%llvm_bindir/scan-build
-%_bindir/scan-build-%v_major
-%llvm_bindir/scan-view
-%_bindir/scan-view-%v_major
+%files -n %clang_name-analyzer -f %_tmppath/dyn-files-%clang_name-analyzer
+%llvm_libexecdir/c++-analyzer
+%llvm_libexecdir/ccc-analyzer
 %llvm_datadir/scan-build
 %llvm_datadir/scan-view
-%llvm_man1dir/scan-build.1*
-%_man1dir/scan-build-%v_major.1*
+%llvm_prefix/lib/libear
+%llvm_prefix/lib/libscanbuild
+%llvm_libexecdir/analyze-*
+%llvm_libexecdir/intercept-*
 
-%files -n %clang_name-tools
-%llvm_bindir/c-index-test
-%_bindir/c-index-test-%v_major
-%llvm_bindir/clang-*
-%_bindir/clang-*
-%llvm_bindir/git-clang-format
-%_bindir/git-clang-format-%v_major
-%exclude %llvm_bindir/clang-%v_major
-%exclude %llvm_bindir/clang
-%exclude %_bindir/*clang-%v_major
-%exclude %llvm_bindir/clang++
-%exclude %_bindir/clang++-%v_major
-%exclude %llvm_bindir/clang-cl
-%exclude %_bindir/clang-cl-%v_major
-%exclude %llvm_bindir/clang-cpp
-%exclude %_bindir/clang-cpp-%v_major
-%llvm_bindir/find-all-symbols
-%_bindir/find-all-symbols-%v_major
-%llvm_bindir/hmaptool
-%_bindir/hmaptool-%v_major
+%files -n %clang_name-tools -f %_tmppath/dyn-files-%clang_name-tools
 %llvm_datadir/clang
 %exclude %llvm_datadir/clang/bash-autocomplete.sh
 %ifarch %hwasan_symbolize_arches
@@ -800,7 +1026,6 @@ ninja -C BUILD check-all || :
 %llvm_includedir/lld/*
 # see Patch18: lld-compact-unwind-encoding.h.patch
 %llvm_includedir/mach-o
-%dir %llvm_libdir/cmake
 %llvm_libdir/cmake/lld
 %llvm_libdir/liblld*.a
 
@@ -828,6 +1053,36 @@ ninja -C BUILD check-all || :
 %llvm_libdir/liblldb*.so
 # %_libdir/liblldb*.so
 
+%files -n lib%mlir_name
+%llvm_libdir/libMLIR.so.*
+%_libdir/libMLIR.so.*
+%llvm_libdir/libmlir_async_runtime.so.*
+%_libdir/libmlir_async_runtime.so.*
+%llvm_libdir/libmlir_c_runner_utils.so.*
+%_libdir/libmlir_c_runner_utils.so.*
+%llvm_libdir/libmlir_runner_utils.so.*
+%_libdir/libmlir_runner_utils.so.*
+
+%files -n lib%mlir_name-devel
+%llvm_includedir/mlir
+%llvm_includedir/mlir-c
+%llvm_libdir/libMLIR*.a
+%llvm_libdir/libMLIR.so
+%llvm_libdir/libmlir_async_runtime.so
+%llvm_libdir/libmlir_c_runner_utils.so
+%llvm_libdir/libmlir_runner_utils.so
+%llvm_libdir/cmake/mlir
+
+%files -n %mlir_name-tools -f %_tmppath/dyn-files-%mlir_name-tools
+
+%files polly
+%llvm_libdir/LLVMPolly.so
+
+%files -n lib%polly_name-devel -f %_tmppath/dyn-files-lib%polly_name-devel
+%llvm_includedir/polly
+%llvm_libdir/cmake/polly
+%llvm_libdir/libPolly*.a
+
 %files doc
 %doc %llvm_docdir/llvm
 
@@ -841,9 +1096,15 @@ ninja -C BUILD check-all || :
 %files -n %lldb_name-doc
 #doc %llvm_docdir/lldb
 
+%files -n lib%polly_name-doc
+%doc %llvm_docdir/polly
+
 %changelog
-* Fri Apr 08 2022 Arseny Maslennikov <arseny@altlinux.org> 12.0.1-alt4
-- Merge *-devel-static into *-devel across supported LLVM major versions.
+* Sat Feb 19 2022 Arseny Maslennikov <arseny@altlinux.org> 13.0.1-alt1
+- 13.0.1.
+- Merge llvm-devel-static with llvm-devel.
+- Merge clang-devel-static with clang-devel.
+- New LLVM subprojects: mlir, polly.
 
 * Tue Sep 21 2021 Arseny Maslennikov <arseny@altlinux.org> 12.0.1-alt3
 - Included git-clang-format in clang-tools (closes: bug 40912).

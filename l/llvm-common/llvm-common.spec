@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%global _llvm_version 12.0
+%global _llvm_version 13.0
 
 Name: llvm-common
-Version: 12.0.0
-Release: alt3
+Version: 13.0.0
+Release: alt1
 
 Summary: Common directories, symlinks and tool selection for LLVM
 License: Apache-2.0 with LLVM-exception
@@ -61,7 +61,7 @@ Summary: Common symlinks and development files for LLVM static libraries
 License: Apache-2.0 with LLVM-exception
 Group: Development/C
 Provides: llvm-common-devel-static = %EVR
-Requires: llvm%_llvm_version-devel-static
+Requires: llvm%_llvm_version-devel
 Requires(pre,postun): %name = %version-%release
 
 %package -n clang
@@ -104,7 +104,7 @@ Summary: Provides clang-devel-static
 License: Apache-2.0 with LLVM-exception
 Group: Development/C
 Provides: llvm-common-clang-devel-static = %EVR
-Requires: clang%_llvm_version-devel-static
+Requires: clang%_llvm_version-devel
 Requires(pre,postun): %name = %version-%release
 
 %package -n lld
@@ -220,15 +220,17 @@ install -p -m755 llvm-alt-tool-wrapper %buildroot%_bindir/
 # Symlink tools to bindir.
 # The tool list is obtained from package llvmYYY, where YYY is its major version.
 %define install_tool_link() ln -s llvm-alt-tool-wrapper %buildroot%_bindir/%1
+%install_tool_link analyze-build
 %install_tool_link bugpoint
 %install_tool_link c-index-test
-%install_tool_link clang++
 %install_tool_link clang
+%install_tool_link clang++
 %install_tool_link clang-apply-replacements
 %install_tool_link clang-change-namespace
 %install_tool_link clang-check
 %install_tool_link clang-cl
 %install_tool_link clang-cpp
+%install_tool_link clangd
 %install_tool_link clang-doc
 %install_tool_link clang-extdef-mapping
 %install_tool_link clang-format
@@ -240,29 +242,38 @@ install -p -m755 llvm-alt-tool-wrapper %buildroot%_bindir/
 %install_tool_link clang-refactor
 %install_tool_link clang-rename
 %install_tool_link clang-reorder-fields
+%install_tool_link clang-repl
 %install_tool_link clang-scan-deps
 %install_tool_link clang-tidy
-%install_tool_link clangd
 %install_tool_link diagtool
 %install_tool_link dsymutil
 %install_tool_link find-all-symbols
 %install_tool_link git-clang-format
 %install_tool_link hmaptool
-%install_tool_link ld.lld
+%install_tool_link intercept-build
 %install_tool_link ld64.lld
+%install_tool_link ld64.lld.darwinnew
+%install_tool_link ld64.lld.darwinold
+%install_tool_link ld.lld
 %install_tool_link llc
 %install_tool_link lld
+%install_tool_link lldb
+%install_tool_link lldb-argdumper
+%install_tool_link lldb-instr
+%install_tool_link lldb-server
+%install_tool_link lldb-vscode
 %install_tool_link lld-link
 %install_tool_link lli
 %install_tool_link llvm-addr2line
 %install_tool_link llvm-ar
 %install_tool_link llvm-as
 %install_tool_link llvm-bcanalyzer
-%install_tool_link llvm-c-test
+%install_tool_link llvm-bitcode-strip
 %install_tool_link llvm-cat
 %install_tool_link llvm-cfi-verify
 %install_tool_link llvm-config
 %install_tool_link llvm-cov
+%install_tool_link llvm-c-test
 %install_tool_link llvm-cvtres
 %install_tool_link llvm-cxxdump
 %install_tool_link llvm-cxxfilt
@@ -280,6 +291,7 @@ install -p -m755 llvm-alt-tool-wrapper %buildroot%_bindir/
 %install_tool_link llvm-install-name-tool
 %install_tool_link llvm-jitlink
 %install_tool_link llvm-lib
+%install_tool_link llvm-libtool-darwin
 %install_tool_link llvm-link
 %install_tool_link llvm-lipo
 %install_tool_link llvm-lto
@@ -293,40 +305,50 @@ install -p -m755 llvm-alt-tool-wrapper %buildroot%_bindir/
 %install_tool_link llvm-objcopy
 %install_tool_link llvm-objdump
 %install_tool_link llvm-opt-report
+%install_tool_link llvm-otool
 %install_tool_link llvm-pdbutil
 %install_tool_link llvm-profdata
+%install_tool_link llvm-profgen
 %install_tool_link llvm-ranlib
 %install_tool_link llvm-rc
 %install_tool_link llvm-readelf
 %install_tool_link llvm-readobj
 %install_tool_link llvm-reduce
 %install_tool_link llvm-rtdyld
+%install_tool_link llvm-sim
 %install_tool_link llvm-size
 %install_tool_link llvm-split
 %install_tool_link llvm-stress
 %install_tool_link llvm-strings
 %install_tool_link llvm-strip
 %install_tool_link llvm-symbolizer
+%install_tool_link llvm-tapi-diff
 %install_tool_link llvm-tblgen
 %install_tool_link llvm-undname
+%install_tool_link llvm-windres
 %install_tool_link llvm-xray
+%install_tool_link mlir-cpu-runner
+%install_tool_link mlir-linalg-ods-gen
+%install_tool_link mlir-linalg-ods-yaml-gen
+%install_tool_link mlir-lsp-server
+%install_tool_link mlir-opt
+%install_tool_link mlir-reduce
+%install_tool_link mlir-tblgen
+%install_tool_link mlir-translate
 %install_tool_link modularize
 %install_tool_link obj2yaml
 %install_tool_link opt
 %install_tool_link pp-trace
+%install_tool_link run-clang-tidy
 %install_tool_link sancov
 %install_tool_link sanstats
 %install_tool_link scan-build
+%install_tool_link scan-build-py
 %install_tool_link scan-view
+%install_tool_link split-file
 %install_tool_link verify-uselistorder
 %install_tool_link wasm-ld
 %install_tool_link yaml2obj
-
-%install_tool_link lldb
-%install_tool_link lldb-argdumper
-%install_tool_link lldb-instr
-%install_tool_link lldb-server
-%install_tool_link lldb-vscode
 
 # Wrap the CMake configs useful to external users to respect %%_llvm_version.
 %define wrap_cmake_script() RPM_LLVM_VERSION=%_llvm_version %_sourcedir/alt-packaging-wrap-cmake-script %*
@@ -428,6 +450,9 @@ clang-cpp --version
 llc --version
 
 %changelog
+* Sun Apr 10 2022 Arseny Maslennikov <arseny@altlinux.org> 13.0.0-alt1
+- Made LLVM 13 the default.
+
 * Tue Jan 25 2022 Arseny Maslennikov <arseny@altlinux.org> 12.0.0-alt3
 - llvm-common.env: Fixed extra quotes. (closes: 41796)
 
