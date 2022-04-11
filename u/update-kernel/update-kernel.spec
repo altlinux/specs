@@ -1,5 +1,5 @@
 Name: update-kernel
-Version: 1.1.1
+Version: 1.2
 Release: alt1
 
 Summary: Update kernel and modules
@@ -38,6 +38,7 @@ http://lists.altlinux.org/pipermail/sisyphus/2006-November/192226.html
 mkdir -p %buildroot%_sbindir
 install -pm755 update-kernel %buildroot%_sbindir/
 install -pm755 remove-old-kernels %buildroot%_sbindir/
+install -pm755 analyze-kmodules %buildroot%_sbindir/
 
 %check
 make check
@@ -45,8 +46,13 @@ make check
 %files
 %_sbindir/update-kernel
 %_sbindir/remove-old-kernels
+%_sbindir/analyze-kmodules
 
 %changelog
+* Sun Apr 10 2022 Vitaly Chikunov <vt@altlinux.org> 1.2-alt1
+- Improve wording of some messages.
+- Add experimental analyze-kmodules tool.
+
 * Sun Apr 10 2022 Vitaly Chikunov <vt@altlinux.org> 1.1.1-alt1
 - Minor improvements.
 
