@@ -1,9 +1,9 @@
+%def_disable check
 %define _localstatedir %_var
 %define _libexecdir %_prefix/libexec
 
-
 Name: accountsservice
-Version: 0.6.55
+Version: 22.08.8
 Release: alt1
 Summary: D-Bus interfaces for querying and manipulating user account information
 
@@ -15,15 +15,21 @@ Url: http://www.fedoraproject.org/wiki/Features/UserAccountDialog
 Source: %name-%version.tar
 Patch1: %name-%version.patch
 
-BuildRequires: meson
+BuildRequires: meson >= 0.50.0
 BuildRequires: gtk-doc
-BuildRequires: pkgconfig(gio-2.0) >= 2.37.3
+BuildRequires: pkgconfig(gio-2.0) >= 2.63.5
 BuildRequires: pkgconfig(gio-unix-2.0)
-BuildRequires: pkgconfig(glib-2.0) >= 2.44
+BuildRequires: pkgconfig(glib-2.0) >= 2.63.5
 BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: gobject-introspection-devel
+BuildRequires: vala-tools
 BuildRequires: libsystemd-devel >= 186 systemd-devel
+# for test
+%if_enabled check
+BuildRequires: python3-module-pygobject3 python3-module-dbusmock
+BuildRequires: /proc
+%endif
 
 Requires: polkit
 Requires: shadow-utils
@@ -76,9 +82,7 @@ GObject introspection devel data for the accountsservice library
 %build
 %meson \
     -Dadmin_group=wheel \
-    -Duser_heuristics=true \
     -Dminimum_uid=500 \
-    -Dsystemd=true \
     -Dsystemdsystemunitdir=%_unitdir
 %meson_build
 
@@ -87,15 +91,19 @@ GObject introspection devel data for the accountsservice library
 
 %find_lang accounts-service
 
+%check
+%meson_test
+
 %files -f accounts-service.lang
-%doc COPYING README.md AUTHORS NEWS
-%_sysconfdir/dbus-1/system.d/org.freedesktop.Accounts.conf
+%doc COPYING README.md AUTHORS
 %_libexecdir/accounts-daemon
+%_datadir/dbus-1/system.d/org.freedesktop.Accounts.conf
 %_datadir/dbus-1/system-services/org.freedesktop.Accounts.service
 %_datadir/polkit-1/actions/org.freedesktop.accounts.policy
 %dir %_localstatedir/lib/AccountsService/
 %attr(700,root,root) %dir %_localstatedir/lib/AccountsService/users
 %attr(775,root,root) %dir %_localstatedir/lib/AccountsService/icons
+%_datadir/%name
 %_unitdir/accounts-daemon.service
 
 %files -n lib%name
@@ -109,11 +117,16 @@ GObject introspection devel data for the accountsservice library
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_datadir/dbus-1/interfaces/*.xml
+%_datadir/vala/vapi/%name.deps
+%_datadir/vala/vapi/%name.vapi
 
 %files -n lib%name-gir-devel
 %_girdir/*.gir
 
 %changelog
+* Mon Apr 04 2022 Alexey Shabalin <shaba@altlinux.org> 22.08.8-alt1
+- 22.08.8
+
 * Sat Jul 20 2019 Alexey Shabalin <shaba@altlinux.org> 0.6.55-alt1
 - 0.6.55
 
