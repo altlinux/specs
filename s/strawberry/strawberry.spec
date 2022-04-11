@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: strawberry
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -103,6 +103,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Apr 11 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.4-alt1
+- New version (1.0.4).
+
 * Mon Mar 28 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt1
 - New version (1.0.3).
 - Built with qt6 by default.
