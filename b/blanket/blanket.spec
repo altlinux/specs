@@ -5,7 +5,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Listen to different sounds
 License: GPL-3.0-or-later
@@ -51,7 +51,11 @@ sounds. Or allows you to fall asleep in a noisy environment.
 
 
 %changelog
+* Mon Apr 11 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt2
+- updated to 0.5.0-65-gaf542e4 (fixed for GStreamer-1.20)
+
 * Thu Jan 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - first build for Sisyphus (0.5.0-31-g148df25)
+
 
 
