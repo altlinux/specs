@@ -3,8 +3,8 @@
 %define rname lxc
 
 Name: pve-%rname
-Version: 4.0.11
-Release: alt2
+Version: 4.0.12
+Release: alt1
 Summary: Linux containers usersapce tools
 Group: System/Configuration/Other
 License: LGPL-2.1+
@@ -105,6 +105,9 @@ usermod --add-subgids 100000-165535 --add-subuids 100000-165535 root ||:
 %_man7dir/*.7*
 
 %changelog
+* Mon Apr 11 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.12-alt1
+- 4.0.12
+
 * Tue Feb 15 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.11-alt2
 - build from gear
 - update requires and conflicts
