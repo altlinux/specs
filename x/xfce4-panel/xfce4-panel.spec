@@ -1,9 +1,11 @@
 %def_enable introspection
 %def_enable vala
+%define git_hash .g1870071c
+#define git_hash %nil
 
 Name: xfce4-panel
 Version: 4.16.3
-Release: alt2
+Release: alt3%git_hash
 
 Summary: Panel for Xfce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
@@ -163,6 +165,9 @@ cp -a %SOURCE1 po/ru.po
 %endif
 
 %changelog
+* Mon Apr 11 2022 Mikhail Efremov <sem@altlinux.org> 4.16.3-alt3.g1870071c
+- Upstream git snapshot (xfce-4.16 branch) (closes: #42398).
+
 * Thu Jan 20 2022 Mikhail Efremov <sem@altlinux.org> 4.16.3-alt2
 - Use our own Russian translation.
 
