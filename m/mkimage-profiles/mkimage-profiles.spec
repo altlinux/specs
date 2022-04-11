@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.27
+Version: 1.4.28
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,22 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Apr 11 2022 Anton Midyukov <antohami@altlinux.org> 1.4.28-alt1
+- lib/profile.mk: install branding-$$(BRANDING)-release always after basesystem
+- stage2: use propagator for c% BRANCH also
+- install2, live: don't add priority base packages for these stage
+- regular-vm.mk: replace blueberry to blueman for desktop regulars
+- tar2fs: avoid losetup race (thanks mike@ and glebfm)
+- kernel: drop std-pae kernel flavour
+- stage2: add more modules to 50-stage2-net
+- output errors Step 3 to BUILDLOG and on screen
+- pkg.in/lists/Makefile: sort lists before copying
+- regular.mk: drop feature robotics
+- education: add latest commits from cas@
+- education: mark task-edu-* as metapackages
+- slinux, workstation: add latest commits from sem@
+- education, slinux, workstation: add fixes for e2k from mike@
+
 * Tue Mar 01 2022 Anton Midyukov <antohami@altlinux.org> 1.4.27-alt1
 - regular.mk: add regular-xfce-install target
 - regular.mk: add use/firmware to regular-builder
