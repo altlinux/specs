@@ -16,7 +16,7 @@
 
 Name: plasma5-%rname
 Version: 5.24.4
-Release: alt1
+Release: alt2
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -165,7 +165,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p2
-%patch3 -p2 -b .upd-appstream
+#%patch3 -p2 -b .upd-appstream
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
@@ -271,6 +271,9 @@ done
 
 
 %changelog
+* Mon Apr 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt2
+- don't apply alt-discover-update-all-packages-from-appstream.patch
+
 * Fri Apr 01 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
 - bump release
 
