@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 77
+%define centos_release 78
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,39 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Apr 11 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.78-alt1.el9
+- Updated to kernel-5.14.0-78.el9 (fixes: CVE-2022-0995, CVE-2022-1011, CVE-2022-23960):
+  + arm64: Spectre-BHB mitigation (CVE-2022-23960)
+  + block: release rq qos structures for queue without disk
+  + cifs: modefromsids must add an ACE for authenticated users
+  + configs: enable CONFIG_RMI4_F3A
+  + crypto: fips - Add algorithm-specific limits for FIPS
+  + fuse: fix pipe buffer lifetime for direct_io
+  + integrity: enable policy rule for restricting hash algo
+  + KVM: SVM: Allow AVIC support on system w/ physical APIC ID > 255
+  + Merge branch 'main' into nic_rdma
+  + Merge branch 'net-doc' into nic_rdma
+  + Merge commit '3801d2d30749ddab3e04e4998145b29bce09ac9a' into 9.0
+  + Merge tag 'kernel-5.14.0-70.10.1.el9_0' from 9.0
+  + Merge tag 'kernel-5.14.0-70.6.1.el9_0' from 9.0
+  + Merge tag 'kernel-5.14.0-70.7.1.el9_0' from 9.0
+  + Merge tag 'kernel-5.14.0-70.8.1.el9_0' from 9.0
+  + Merge tag 'kernel-5.14.0-70.9.1.el9_0' from 9.0
+  + Merge up tags kernel-5.14.0-70.6.1.el9_0 to kernel-5.14.0-70.10.1.el9_0
+  + NFS: Don't loop forever in nfs_do_recoalesce()
+  + perf symbols: Fix symbol size calculation condition
+  + perf/x86/intel/uncore: Make uncore_discovery clean for 64 bit addresses
+  + redhat: Add parallel processing of configs in dist-configs
+  + redhat/configs: drop some config options for rhel 9
+  + redhat/configs: remove unnecessary GPIO Kconfig options
+  + redhat/Makefile: Fix dist-dump-variables target
+  + [RHEL9.0 BZ2053219] amd/iommu: Fix I/O page table memory leak and recover from event log overflow
+  + [RHEL9 BZ2061621] iommu/vt-d: Fix double list_add when enabling VMD in scalable mode
+  + s390/mm: fix 2KB pgtable release race
+  + scsi: iscsi: offload sync session regression impacting qedi
+  + watch_queue: Fix filter limit check
+  + Various changes and improvements that are poorly described in merge.
+
 * Sat Apr 09 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.77-alt1.el9
 - Updated to kernel-5.14.0-77.el9 (fixes: CVE-2021-26401, CVE-2022-0001, CVE-2022-0002):
   + 2032117 - tpm: fix lpar crash when running on kexec with VTPM2.0 enabled [P10]
