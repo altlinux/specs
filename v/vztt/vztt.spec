@@ -13,7 +13,7 @@
 %add_python3_path %_libexecdir
 
 Name: vztt
-Version: 7.0.83.3
+Version: 7.0.83.5
 Release: alt1
 Summary: OpenVZ EZ template management tools
 Source: %name-%version.tar
@@ -106,6 +106,9 @@ rm -f %buildroot%_libdir/lib%name.a
 %_libdir/lib%name.so
 
 %changelog
+* Mon Apr 11 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.0.83.5-alt1
+- 7.0.83.5
+
 * Tue Dec 21 2021 Andrew A. Vasilyev <andy@altlinux.org> 7.0.83.3-alt1
 - 7.0.83.3
 
