@@ -55,8 +55,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 10.0
-Release: alt4
+Version: 10.0.900
+Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 %ifarch %ix86 x86_64
@@ -509,6 +509,11 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Mon Apr 11 2022 Mikhail Efremov <sem@altlinux.org> 10.0.900-alt1
+- xfce-settings: Update XKB plugin settings.
+- indexhtml: Add Yandex.Zen link.
+- indexhtml: Drop Facebook link.
+
 * Tue Dec 28 2021 Anton Midyukov <antohami@altlinux.org> 10.0-alt4
 - zdg-move-desktop.sh: make trusted indexhtml.desktop for xfce
 
