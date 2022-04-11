@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 41
+%define ver_major 42
 %define api_ver 3.0
 %define xdg_name org.gnome.Gtranslator
 
@@ -8,7 +8,7 @@
 
 Name: gtranslator
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: A GNOME po file editor with many bells and whistles.
 License: GPLv3
@@ -25,12 +25,13 @@ Requires: libgda6-sqlite gettext-tools
 
 %define gtk_ver 3.22.20
 %define gspell_ver 1.2.0
+%define gtksourceview_api_ver 4
 %define gtksourceview_ver 4.0.2
 %define xml_ver 2.4.12
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson yelp-tools gtk-doc libgtk+3-devel >= %gtk_ver
-BuildRequires: libgda6-devel libgtksourceview4-devel >= %gtksourceview_ver
+BuildRequires: libgda6-devel libgtksourceview%gtksourceview_api_ver-devel >= %gtksourceview_ver
 BuildRequires: libsoup-devel gsettings-desktop-schemas-devel iso-codes-devel
 BuildRequires: libgspell-devel >= %gspell_ver libxml2-devel >= %xml_ver
 BuildRequires: libjson-glib-devel libdazzle-devel
@@ -65,8 +66,6 @@ This package contains documentation needed to develop %name plugins.
 
 %prep
 %setup
-# fix for build with meson >= 0.61
-sed -E -i '/^[[:space:]]*(desktop|appdata)\,/d' data/meson.build
 
 %build
 %meson -Dbuildtype=release \
@@ -81,6 +80,7 @@ sed -E -i '/^[[:space:]]*(desktop|appdata)\,/d' data/meson.build
 %files -f %name.lang
 %_bindir/%name
 %_datadir/%name/
+%_datadir/gtksourceview-%gtksourceview_api_ver/language-specs/%name.lang
 %_datadir/glib-2.0/schemas/*.xml
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
@@ -95,6 +95,9 @@ sed -E -i '/^[[:space:]]*(desktop|appdata)\,/d' data/meson.build
 %_datadir/gtk-doc/html/%name/}
 
 %changelog
+* Mon Apr 11 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt2
 - updated to 41.0-6-gab775966 (updated translations)
 - fixed build with meson >= 0.61
