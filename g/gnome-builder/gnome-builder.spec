@@ -23,7 +23,7 @@
 
 Name: gnome-builder
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -42,6 +42,7 @@ Source1: %name-ru.po
 
 %define glib_ver 2.69.1
 %define gtk_ver 3.24
+%define gtksourceview_api_ver 4
 %define gtksourceview_ver 4.6.1
 %define git2_ver 0.28.0.1
 %define devhelp_ver 3.30.0
@@ -83,14 +84,14 @@ BuildRequires: %_bindir/ctags %_bindir/tidy %_bindir/uncrustify
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libgtksourceview4-devel >= %gtksourceview_ver
+BuildRequires: libgtksourceview%gtksourceview_api_ver-devel >= %gtksourceview_ver
 BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
 BuildRequires: libpcre-devel libgjs-devel >= %gjs_ver libwebkit2gtk-devel >= %webkit_ver
 BuildRequires: libxml2-devel >= %xml_ver libpeas-devel >= %peas_ver libvte3-devel >= %vte_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver libpcre2-devel
 BuildRequires: python3-devel python3-module-pygobject3-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libvte3-gir-devel
-BuildRequires: libgtksourceview4-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
+BuildRequires: libgtksourceview%gtksourceview_api_ver-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
 BuildRequires: libjson-glib-gir-devel libsoup-devel >= %soup_ver
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libgspell-devel >= %gspell_ver libenchant2-devel
@@ -261,9 +262,8 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %_datadir/glib-2.0/schemas/org.gnome.builder.terminal.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.workbench.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.rust-analyzer.gschema.xml
-%_datadir/gtksourceview-4/styles/*.xml
-%dir %_datadir/gtksourceview-4/language-specs/
-%_datadir/gtksourceview-4/language-specs/blueprint.lang
+%_datadir/gtksourceview-%gtksourceview_api_ver/styles/*.xml
+%_datadir/gtksourceview-%gtksourceview_api_ver/language-specs/blueprint.lang
 
 %_datadir/%name/
 %_iconsdir/hicolor/*/*/*.*
@@ -273,6 +273,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %{?_with_help:%_datadir/doc/%name/}
 
 %changelog
+* Tue Apr 12 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1.1
+- rebuilt against libclang.so.13
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 
