@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 0.7.3
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: Video
@@ -18,6 +18,7 @@ Requires: youtube-dl
 Source: %rname-%version.tar
 #Patch1: alt-dont-save-pos.patch
 Patch2: alt-time-sync.patch
+Patch3: alt-dont-switch-empty-list.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: cmake extra-cmake-modules
@@ -57,6 +58,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch2 -p2
+%patch3 -p1
 
 %build
 %K5build \
@@ -82,6 +84,9 @@ KF5 library
 #%_K5lib/libharuna.so.*
 
 %changelog
+* Tue Apr 12 2022 Sergey V Turchin <zerg@altlinux.org> 0.7.3-alt4
+- don't switch next video if not available (closes: 42407)
+
 * Mon Apr 11 2022 Slava Aseev <ptrnine@altlinux.org> 0.7.3-alt3
 - fix lags on time sync
 
