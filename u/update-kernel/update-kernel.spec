@@ -1,5 +1,5 @@
 Name: update-kernel
-Version: 1.2
+Version: 1.2.1
 Release: alt1
 
 Summary: Update kernel and modules
@@ -49,6 +49,9 @@ make check
 %_sbindir/analyze-kmodules
 
 %changelog
+* Tue Apr 12 2022 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt1
+- update-kernel: Do not suggest fresher flavour. (ALT#42400)
+
 * Sun Apr 10 2022 Vitaly Chikunov <vt@altlinux.org> 1.2-alt1
 - Improve wording of some messages.
 - Add experimental analyze-kmodules tool.
