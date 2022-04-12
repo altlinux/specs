@@ -2,7 +2,7 @@
 
 Name: clickhouse-cpp
 Version: 1.2.2
-Release: alt1
+Release: alt2
 Summary: ClickHouse C++ client library
 Group: System/Libraries
 License: Apache-2.0
@@ -54,6 +54,7 @@ Supported data types:
 Summary: Development files for ClickHouse C++ client library
 Group: Development/C++
 Requires: lib%name = %EVR
+Conflicts: libabseil-cpp-devel
 
 %description -n lib%name-devel
 C++ client for Yandex ClickHouse.
@@ -96,6 +97,9 @@ rm -rf contrib/{cityhash,gtest,lz4}
 %_libdir/*.so
 
 %changelog
+* Tue Apr 12 2022 Anton Farygin <rider@altlinux.ru> 1.2.2-alt2
+- libclickhouse-cpp-devel: add conflict with libabseil-cpp-devel (Closes: #42411)
+
 * Wed Sep 30 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.2-alt1
 - Updated to upstream version 1.2.2.
 
