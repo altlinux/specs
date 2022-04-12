@@ -5,7 +5,7 @@
 
 Name: python3-module-flask-restx
 Version: 0.5.1
-Release: alt2
+Release: alt3
 
 Summary: Flask-RESTX is a community driven fork of Flask-RESTPlus
 License: BSD-3-Clause
@@ -85,6 +85,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Tue Apr 12 2022 Danil Shein <dshein@altlinux.org> 0.5.1-alt3
+- update SwaggerUI
+
 * Fri Mar 04 2022 Danil Shein <dshein@altlinux.org> 0.5.1-alt2
 - enable tests
 
