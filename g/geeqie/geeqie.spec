@@ -6,7 +6,7 @@
 %def_enable ffmpegthumbnailer
 
 Name: geeqie
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -86,6 +86,9 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Tue Apr 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
+- 1.7.3
+
 * Wed Jan 26 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
 - 1.7.2
 - updated BRs and dependencies
