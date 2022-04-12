@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-Epoch: 3
+Epoch: 4
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -12,8 +12,8 @@ BuildRequires: perl(LWP/UserAgent.pm) perl(Net/FTP.pm) perl-podlators unzip
 
 Summary:	Perl interface to PARI
 Name:		perl-Math-Pari
-Version:	2.03052201
-Release:	alt1
+Version:	2.030523
+Release:	alt1.1
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Math-Pari
 Source0:	http://www.cpan.org/authors/id/I/IL/ILYAZ/modules/Math-Pari-%{version}.tar.gz
@@ -106,7 +106,7 @@ find %{buildroot} -type f -name '*.bs' -empty -delete
 make test MP_NOGNUPLOT=1
 
 %files
-%doc Changes README TODO-inprogress README-after2_3_5
+%doc Changes README README-after2_3_5 README-func_codes_h TODO-probably-obsolete
 %dir %{perl_vendor_archlib}/Math/
 %exclude %doc %{perl_vendor_archlib}/Math/libPARI.dumb.pod
 %doc %{perl_vendor_archlib}/Math/libPARI.pod
@@ -114,6 +114,9 @@ make test MP_NOGNUPLOT=1
 %{perl_vendor_archlib}/auto/Math/
 
 %changelog
+* Tue Apr 12 2022 Igor Vlasenko <viy@altlinux.org> 4:2.030523-alt1.1
+- automated CPAN update
+
 * Fri Apr 08 2022 Igor Vlasenko <viy@altlinux.org> 3:2.03052201-alt1
 - automated CPAN update
 
