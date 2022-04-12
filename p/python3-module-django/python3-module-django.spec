@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.12
+Version: %branch.13
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD
@@ -181,6 +181,12 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Mon Apr 11 2022 Anton Farygin <rider@altlinux.ru> 3.2.13-alt1
+- 3.2.12 -> 3.2.13
+- Fixes:
+  * CVE-2022-28346: Potential SQL injection in QuerySet.annotate(), aggregate(), and extra()
+  * CVE-2022-28347: Potential SQL injection via QuerySet.explain(**options) on PostgreSQL
+
 * Sun Feb 20 2022 Anton Farygin <rider@altlinux.ru> 3.2.12-alt1
 - 3.2.11 -> 3.2.12
 - Fixes for the following security vulnerabilities:
