@@ -16,8 +16,8 @@ Obsoletes: gambas3-%{*} < %EVR \
 %nil
 
 Name:		gambas
-Version:	3.16.3
-Release:	alt2
+Version:	3.17.2
+Release:	alt1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -120,6 +120,7 @@ Patch6:		%name-3.11.4-alt-postgre-bool-type-fix.patch
 Patch7:		%name-alt-mysql8-bool-type-fix.patch
 Patch8:    	gambas3-3.13.0-poppler-0.73.0.patch
 Patch9:	        gambas3-3.14.1-gst1.patch
+Patch10:	gambas-poppler-22.03.0.patch
 
 Provides:       gambas3 = %EVR
 Obsoletes:      gambas3 < %EVR
@@ -191,6 +192,7 @@ Requires:      %name-gb-opengl = %version-%release
 Requires:      %name-gb-opengl-glu = %version-%release
 Requires:      %name-gb-opengl-glsl = %version-%release
 Requires:      %name-gb-opengl-sge = %version-%release
+Requires:      %name-gb-gtk3-opengl = %version-%release
 %endif
 Requires:      %name-gb-openssl = %version-%release
 Requires:      %name-gb-option = %version-%release
@@ -230,6 +232,7 @@ Requires:      %name-gb-term = %version-%release
 Requires:      %name-gb-test = %version-%release
 Requires:      %name-gb-form-print = %version-%release
 Requires:      %name-gb-poppler = %version-%release
+Requires:      %name-gb-form-htmlview = %version-%release
 
 %description
 Gambas3 is a free development environment based on a Basic interpreter
@@ -315,6 +318,7 @@ Requires:	%name-gb-jit = %version-%release
 Requires:       %name-gb-term = %version-%release
 Requires:       %name-gb-test = %version-%release
 Requires:	%name-gb-form-print = %version-%release
+Requires:	%name-gb-form-htmlview = %version-%release
 
 %description ide
 This package includes the complete Gambas3 Development Environment
@@ -607,6 +611,16 @@ Requires:	%name-runtime = %version-%release
 %description gb-gtk-opengl
 This component allows to use the gb.opengl component in
 GTK+ applications.
+
+%package gb-gtk3-opengl
+Summary:	Gambas3 component package for gtk3.opengl
+Group:		Development/Tools
+Requires:	%name-runtime = %version-%release
+%prov3 gb-gtk-opengl
+
+%description gb-gtk3-opengl
+This component allows to use the gb.opengl component in
+GTK+ 3.x applications.
 %endif
 
 %package gb-gui
@@ -1208,6 +1222,14 @@ Requires: %name-gb-image = %version-%release
 %description gb-poppler
 %summary.
 
+%package gb-form-htmlview
+Summary: Gambas3 component package for gb.form.htmlview
+Group: Development/Tools
+Requires: %name-runtime = %version-%release
+
+%description gb-form-htmlview
+%summary.
+
 %prep
 %setup -q
 %patch1 -p1
@@ -1218,6 +1240,7 @@ Requires: %name-gb-image = %version-%release
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 # We used to patch these out, but this is simpler.
 for i in `find . |grep acinclude.m4`; do
@@ -1516,6 +1539,10 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %files gb-gtk-opengl
 %_libdir/gambas3/gb.gtk.opengl.*
 %appdir/info/gb.gtk.opengl.*
+
+%files gb-gtk3-opengl
+%_libdir/gambas3/gb.gtk3.opengl.*
+%appdir/info/gb.gtk3.opengl.*
 %endif
 
 %files gb-gui
@@ -1839,7 +1866,23 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.poppler.info
 %appdir/info/gb.poppler.list
 
+%files gb-form-htmlview
+%_libdir/gambas3/gb.form.htmlview.*
+%appdir/control/gb.form.htmlview/htmlview.png
+%appdir/info/gb.form.htmlview.info
+%appdir/info/gb.form.htmlview.list
+
 %changelog
+* Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 3.17.2-alt1
+- New version.
+- New components: gtk3-opengl, form-htmlview.
+
+* Tue Apr 05 2022 Andrey Cherepanov <cas@altlinux.org> 3.17.1-alt1
+- New version.
+
+* Sun Mar 13 2022 Andrey Cherepanov <cas@altlinux.org> 3.17.0-alt1
+- New version.
+
 * Fri Jan 28 2022 Sergey V Turchin <zerg@altlinux.org> 3.16.3-alt2
 - build without qtwebkit and qtwebengine on e2k and ppc64le
 
