@@ -1,5 +1,5 @@
 Name: winetricks
-Version: 20220401
+Version: 20220411
 Release: alt1
 
 Summary: Work around common problems in Wine
@@ -10,8 +10,8 @@ Url: https://github.com/Winetricks/winetricks
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/Winetricks/winetricks/archive/refs/heads/master.zip
-## Source-url: %url/archive/%version/%name-%version.tar.gz
+## Source-url: https://github.com/Winetricks/winetricks/archive/refs/heads/master.zip
+# Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -69,6 +69,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon Apr 11 2022 Vitaly Lipatov <lav@altlinux.ru> 20220411-alt1
+- new version 20220411 (with rpmrb script)
+
 * Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 20220401-alt1
 - new version (20220401) with rpmgs script
 
