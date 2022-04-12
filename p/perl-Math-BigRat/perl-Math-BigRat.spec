@@ -2,7 +2,7 @@
 Epoch: 1
 %define dist Math-BigRat
 Name: perl-%dist
-Version: 0.2620
+Version: 0.2621
 Release: alt1
 
 Summary: Arbitrarily big rational numbers
@@ -35,6 +35,9 @@ by providing support for arbitrarily big rational numbers.
 %perl_vendor_privlib/Math
 
 %changelog
+* Tue Apr 12 2022 Igor Vlasenko <viy@altlinux.org> 1:0.2621-alt1
+- automated CPAN update
+
 * Tue Oct 05 2021 Igor Vlasenko <viy@altlinux.org> 1:0.2620-alt1
 - automated CPAN update
 
