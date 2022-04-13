@@ -3,7 +3,7 @@
 
 Name: python3-module-fastbencode
 Version: 0.0.8
-Release: alt1
+Release: alt2
 
 Summary: An implementation of the bencode serialization format originally used by BitTorrent
 License: GPLv2
@@ -17,6 +17,8 @@ Source: fastbencode-%version.tar
 Patch0: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-Cython
 
 %description
 The package includes both a pure-Python version and an optional C extension based on Cython.
@@ -40,6 +42,9 @@ This module is built for python %__python_version
 %doc CODE_OF_CONDUCT.md README.md SECURITY.md
 
 %changelog
+* Wed Apr 13 2022 Anatoly Kitaykin <cetus@altlinux.org> 0.0.8-alt2
+- Fix build requirements
+
 * Tue Apr 12 2022 Anatoly Kitaykin <cetus@altlinux.org> 0.0.8-alt1
 - Initial build
 
