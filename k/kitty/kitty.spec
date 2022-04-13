@@ -3,7 +3,7 @@
 
 Name: kitty
 Version: 0.25.0
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -11,6 +11,7 @@ Group: Terminals
 Url: https://sw.kovidgoyal.net/kitty/
 
 Requires: %name-terminfo = %EVR
+Requires: %name-shell-integration = %EVR
 
 # VCS: https://github.com/kovidgoyal/kitty
 Source: %name-%version.tar
@@ -98,6 +99,16 @@ Cross-platform, fast, feature-rich, GPU based terminal
 
 The terminfo file for kitty
 
+%package shell-integration
+Summary: Shell-integration files for kitty
+Group: System/Configuration/Other
+BuildArch: noarch
+
+%description shell-integration
+Cross-platform, fast, feature-rich, GPU based terminal
+
+Shell-integration files for kitty
+
 
 %prep
 %setup
@@ -140,6 +151,8 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_bindir/%name
 %_datadir/doc/%name/
 %_libexecdir/%name/
+%exclude %_libexecdir/%name/shell-integration
+
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*
@@ -151,7 +164,13 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %files terminfo
 %_datadir/terminfo/*/*
 
+%files shell-integration
+%_libexecdir/%name/shell-integration
+
 %changelog
+* Wed Apr 13 2022 Egor Ignatov <egori@altlinux.org> 0.25.0-alt2
+- spec: move shell-integration to another package as upstream suggests
+
 * Mon Apr 11 2022 Egor Ignatov <egori@altlinux.org> 0.25.0-alt1
 - new version 0.25.0
 
