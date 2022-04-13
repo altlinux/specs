@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: fuse
 Version: 2.9.9
-Release: alt2
+Release: alt3
 
 Summary: a tool for creating virtual filesystems
 License: GPLv2
@@ -11,12 +13,7 @@ Url: https://github.com/libfuse/
 Source: %name-%version.tar
 Source1: fuserumount
 
-Patch0: %name.Makefile.patch
-Patch1: 914871b.patch
-Patch2: %name.link.patch
-Patch3: closefrom.patch
-
-Packager: Denis Smirnov <mithraen@altlinux.ru>
+Patch: %name-%version.patch
 
 Requires: mount >= 2.11
 Provides: avfs-fuse = %version
@@ -32,7 +29,6 @@ as well as for using them.
 License: LGPLv2
 Group: System/Kernel and hardware
 Summary: tool for creating virtual filesystems
-Requires: %name = %version-%release
 Provides: FUSE = %version avfs-fuse = %version libavfs-fuse = %version
 Obsoletes: FUSE < %version avfs-fuse < %version libavfs-fuse < %version
 
@@ -58,12 +54,11 @@ This package contains development headers.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p0
-%patch3 -p2
+%patch -p1
 
 %build
+mkdir -p m4
+cp /usr/share/gettext/config.rpath ./config.rpath
 %autoreconf
 %configure \
 	--enable-lib \
@@ -81,6 +76,7 @@ ln -sf ../../%_lib/lib%name.so.%version %buildroot%_libdir/lib%name.so
 rm -f %buildroot%_sysconfdir/udev/rules.d/*
 
 install -pD %SOURCE1 %buildroot%_bindir/fuserumount
+rm -f %buildroot/etc/init.d/fuse
 
 %pre
 if [ $1 -ge 2 -o -e %_bindir/fusermount3 ]; then
@@ -95,7 +91,7 @@ else
 fi
 
 %files
-%doc AUTHORS NEWS README.md README.NFS doc/how-fuse-works doc/kernel.txt doc/html
+%doc AUTHORS NEWS README.md README.NFS doc/how-fuse-works doc/kernel.txt
 /sbin/mount.fuse
 %attr(4710,root,fuse) %_bindir/fusermount
 %_bindir/ulockmgr_server
@@ -113,6 +109,11 @@ fi
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Apr 12 2022 Alexey Shabalin <shaba@altlinux.org> 2.9.9-alt3
+- build from upstream upstream/fuse_2_9_bugfix branch
+- deleted depends on fuse in libfuse (ALT#38714)
+- make buffer size match kernel max transfer size
+
 * Tue Jan 11 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.9.9-alt2
 - Fix build with closefrom() from newest unistd.h
 - Adjust license to GPLv2 and LGPLv2 for library
