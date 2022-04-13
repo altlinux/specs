@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %ifarch armh
@@ -35,8 +35,8 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.49
-Release: alt1.1
+Version: %ver_major.50
+Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -283,6 +283,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_man1dir/pw-cat.1.*
 %_man1dir/pw-cli.1*
 %_man1dir/pw-dot.1.*
+%_man1dir/pw-link.1.*
 %_man1dir/pw-metadata.1.*
 %_man1dir/pw-mididump.1.*
 %_man1dir/pw-mon.1*
@@ -292,6 +293,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Wed Apr 13 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.50-alt1
+- updated to 0.3.50-2-g339c22dce
+
 * Tue Mar 29 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.49-alt1.1
 - 0.3.49 + media-session-0.4.1-10-gf71506321
 
