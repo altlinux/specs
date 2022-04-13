@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.409
+Version: 0.410
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -33,6 +33,9 @@ BuildRequires: perl-devel perl(RPM/Header.pm) perl(RPM/Vercmp.pm) perl-String-Sh
 %perl_vendor_privlib/Source*
 
 %changelog
+* Wed Apr 13 2022 Igor Vlasenko <viy@altlinux.org> 0.410-alt1
+- new version
+
 * Tue Apr 12 2022 Igor Vlasenko <viy@altlinux.org> 0.409-alt1
 - ALTLinux hashertar support
 
