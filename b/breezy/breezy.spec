@@ -5,8 +5,8 @@
 %def_with bzr
 
 Name: breezy
-Version: 3.2.1
-Release: alt3
+Version: 3.2.2
+Release: alt1
 
 Summary: Breezy is a fork of the Bazaar version control system
 License: GPL-2.0-or-later
@@ -103,7 +103,7 @@ ln -s brz %buildroot%_bindir/bzr
 %define breezy_docdir %_docdir/%name-%version
 
 install -dm0755 %buildroot%breezy_docdir
-install -m0644 BRANCH.TODO INSTALL NEWS README.rst README_BDIST_RPM TODO %buildroot%breezy_docdir
+install -m0644 BRANCH.TODO CODE_OF_CONDUCT.md INSTALL NEWS README.rst SECURITY.md TODO %buildroot%breezy_docdir
 cp -a doc contrib %buildroot%breezy_docdir
 # Hack! Need a subst in setup.py
 cp -a breezy/locale %buildroot%_datadir
@@ -146,6 +146,9 @@ cp -a breezy/locale %buildroot%_datadir
 %endif
 
 %changelog
+* Wed Apr 13 2022 Anatoly Kitaykin <cetus@altlinux.org> 3.2.2-alt1
+- Release 3.2.2
+
 * Wed Jan 26 2022 Grigory Ustinov <grenka@altlinux.org> 3.2.1-alt3
 - Fixed build with python3.10
 
