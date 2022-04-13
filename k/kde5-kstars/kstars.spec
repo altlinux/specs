@@ -4,7 +4,7 @@
 %define optflags_lto %nil
 
 Name: kde5-%rname
-Version: 3.5.5
+Version: 3.5.8
 Release: alt1
 Epoch: 1
 %K5init
@@ -59,7 +59,7 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 #%config(noreplace) %_K5xdgconf/kstars.knsrc
 %_K5bin/kstars
 %_K5data/kstars/
@@ -77,6 +77,9 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %_K5cfg/kstars.kcfg
 
 %changelog
+* Wed Apr 13 2022 Sergey V Turchin <zerg@altlinux.org> 1:3.5.8-alt1
+- new version
+
 * Wed Oct 06 2021 Sergey V Turchin <zerg@altlinux.org> 1:3.5.5-alt1
 - new version
 
