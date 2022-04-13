@@ -5,7 +5,7 @@
 %def_with x2go
 
 Name: remmina
-Version: 1.4.24
+Version: 1.4.25
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -24,8 +24,8 @@ Obsoletes: %name-plugins-xdmcp < %EVR
 
 BuildRequires(pre): cmake >= 3.4.0
 BuildRequires: gcc-c++
-BuildRequires: desktop-file-utils
-BuildRequires: gettext pkgconfig(libpcre) libpcre2-devel
+BuildRequires: desktop-file-utils xdg-utils
+BuildRequires: gettext pkgconfig(libpcre) libpcre2-devel pkgconfig(libffi)
 BuildRequires: intltool
 BuildRequires: libappstream-glib
 BuildRequires: libgcrypt-devel libssl-devel
@@ -37,7 +37,7 @@ BuildRequires: pkgconfig(winpr2)
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.14.0 pkgconfig(gdk-pixbuf-2.0) pkgconfig(pango)
 BuildRequires: pkgconfig(atk)
 BuildRequires: pkgconfig(cairo)
-BuildRequires: pkgconfig(wayland-client) pkgconfig(wayland-cursor) pkgconfig(wayland-egl) pkgconfig(wayland-scanner) libxkbcommon-devel
+BuildRequires: pkgconfig(wayland-client) pkgconfig(wayland-cursor) pkgconfig(wayland-egl) pkgconfig(wayland-scanner) pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(libsecret-1)
 %{?_with_kwallet:BuildRequires: kf5-kwallet-devel}
 BuildRequires: pkgconfig(libssh) >= 0.6
@@ -50,7 +50,7 @@ BuildRequires: pkgconfig(xkbfile)
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(spice-client-gtk-3.0)
 BuildRequires: pkgconfig(json-glib-1.0)
-BuildRequires: pkgconfig(libsoup-2.4)
+BuildRequires: pkgconfig(libsoup-2.4) pkgconfig(webkit2gtk-4.0)
 BuildRequires: pkgconfig(libsodium)
 BuildRequires: pkgconfig(appindicator3-0.1)
 
@@ -180,6 +180,19 @@ computers in front of either large monitors or tiny net-books.
 This package contains the SPICE plugin for the Remmina remote desktop
 client.
 
+%package plugins-www
+Summary: WWW plugin for Remmina Remote Desktop Client
+Group: Networking/Remote access
+Requires: %name = %EVR
+
+%description plugins-www
+Remmina is a remote desktop client written in GTK+, aiming to be useful for
+system administrators and travelers, who need to work with lots of remote
+computers in front of either large monitors or tiny net-books.
+
+This package contains the WWW plugin (web browser with authentication) for the
+Remmina remote desktop client.
+
 %package plugins-x2go
 Summary: X2GO plugin for Remmina Remote Desktop Client
 Group: Networking/Remote access
@@ -303,6 +316,10 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_iconsdir/hicolor/*/emblems/org.remmina.Remmina-spice-ssh-symbolic.svg
 %_iconsdir/hicolor/*/emblems/org.remmina.Remmina-spice-symbolic.svg
 
+%files plugins-www
+%_libdir/remmina/plugins/remmina-plugin-www.so
+%_iconsdir/hicolor/*/emblems/org.remmina.Remmina-www-symbolic.svg
+
 %if_with x2go
 %files plugins-x2go
 %_libdir/remmina/plugins/remmina-plugin-x2go.so
@@ -323,6 +340,10 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Wed Apr 13 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.25-alt1
+- new version 1.4.25.
+- build www plugin.
+
 * Fri Mar 04 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.24-alt1
 - new version 1.4.24
 
