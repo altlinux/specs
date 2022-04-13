@@ -1,14 +1,14 @@
 Name: pqiv
-Version: 2.8.5
-Release: alt5
+Version: 2.12
+Release: alt1
 
 Summary: Minimalist Image Viewer
-License: GPL3+
+License: GPLv3+
 Group: Graphics
 
 Url: https://github.com/phillipberndt/pqiv
-Source: %name.tar
-Patch: %name-alt.patch
+Source: %name-%version.tar.gz
+#Patch: %name-alt.patch
 
 BuildRequires: libgtk+2-devel libgtk+3-devel glib2-devel libcairo-devel libgio-devel
 BuildRequires: libavformat-devel libavcodec-devel libswscale-devel libavutil-devel
@@ -71,8 +71,9 @@ Requires: %name = %version
 Backend for %name
 
 %prep
-%setup -n %name
-%patch -p1
+#setup -q -n %name-%version
+%setup -q
+#patch -p1
 %if "%_lib" == "lib64"
 sed -i 's|^LIBDIR=\$(PREFIX)/lib$|LIBDIR=%_libdir|' GNUmakefile
 %endif
@@ -109,6 +110,7 @@ _EOF_
 %files
 %_man1dir/%name.1.*
 %dir %_libdir/%name
+%_datadir/applications/pqiv.desktop
 %doc README.markdown
 
 %files gtk2
@@ -135,6 +137,11 @@ _EOF_
 %_libdir/%name/%name-backend-wand.so
 
 %changelog
+* Wed Apr 13 2022 Ilya Mashkin <oddity@altlinux.ru> 2.12-alt1
+- 2.12
+- Add desktop file
+- Update license tag
+
 * Wed Jun 26 2019 Michael Shigorin <mike@altlinux.org> 2.8.5-alt5
 - Fixed build on 64-bit arches
 - Minor spec cleanup
