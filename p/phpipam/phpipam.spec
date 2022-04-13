@@ -1,6 +1,6 @@
 
 Name: phpipam
-Version: 1.45.031
+Version: 1.46.031
 Release: alt1
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
@@ -117,6 +117,9 @@ rm -rf %buildroot%webserver_webappsdir/%name/functions/GoogleAuthenticator/tests
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Wed Apr 13 2022 Alexey Shabalin <shaba@altlinux.org> 1.46.031-alt1
+- 1.4.6 Release.
+
 * Tue Jan 25 2022 Alexey Shabalin <shaba@altlinux.org> 1.45.031-alt1
 - 1.4.5 Release (Fixes: CVE-2020-7988).
 
