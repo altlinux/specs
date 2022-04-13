@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220315
+Version: 20220411
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,32 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Apr 13 2022 Cronbuild Service <cronbuild@altlinux.org> 20220411-alt1
+- upstream changes (GIT f219d61):
+  + mediatek: Add mt8192 SCP firmware (thx Yunfei Dong)
+  + Update AMD cpu microcode (thx John Allen)
+  + nvidia: add GA102/GA103/GA104/GA106/GA107 signed firmware (thx Gourav Samaiya)
+  + brcm: rename Rock960 NVRAM to AP6356S and link devices to it (thx Peter Robinson)
+  + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9260 (thx Kiran K)
+  + amdgpu: update green sardine VCN firmware (thx Alex Deucher)
+  + amdgpu: update renoir VCN firmware (thx Alex Deucher)
+  + amdgpu: update navi14 VCN firmware (thx Alex Deucher)
+  + amdgpu: update navi12 VCN firmware (thx Alex Deucher)
+  + amdgpu: update navi10 VCN firmware (thx Alex Deucher)
+  + update firmware for MT7921 WiFi device (thx Sean Wang)
+  + update firmware for mediatek bluetooth chip (MT7921) (thx Sean Wang)
+  + rtw88: 8821c: Update normal firmware to v24.11.00 (thx Chin-Yen Lee)
+  + ice: Add wireless edge file for Intel E800 series driver (thx Guruprasad Rao)
+  + ice: update ice DDP comms package to 1.3.31.0 (thx Arjun Anantharam)
+
 * Wed Mar 23 2022 Cronbuild Service <cronbuild@altlinux.org> 20220315-alt1
 - upstream changes (GIT 681281e):
   + amdgpu: update PSP 13.0.8 firmware (thx Alex Deucher)
