@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-osec
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: alterator module for osec
@@ -52,6 +52,14 @@ install -D -m644 applications/osec.desktop %buildroot/%_datadir/alterator/applic
 %_sysconfdir/osec/run-osec
 
 %changelog
+* Wed Apr 13 2022 Paul Wolneykien <manowar@altlinux.org> 0.2.2-alt1
+- Add information about report mailing to the help page (closes: 42270).
+- Fixed Russian translation for the log rotation setting.
+- Fix: Remove extra log files (closes: 42272).
+- Update running status every 2 sec (closes: 42269).
+- Improved English help page.
+- Fixed typo in Russian help (closes: 42273).
+
 * Tue Mar 15 2022 Paul Wolneykien <manowar@altlinux.org> 0.2.1-alt1
 - Fix: State that only the Web UI is implemented for the module.
 
