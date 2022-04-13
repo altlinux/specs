@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.9285
+Version: 0.9290
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -18,7 +18,7 @@ Url: http://git.altlinux.org/people/viy/packages/RPM-Source-Editor.git
 # Recommends: rpm-build
 
 # Automatically added by buildreq on Wed Nov 06 2010
-BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl(RPM/Vercmp.pm) perl(RPM/Header.pm) perl(Clone.pm) perl(Tie/Hash.pm)
+BuildRequires: perl-devel /usr/bin/pod2man perl-podlators perl(RPM/Vercmp.pm) perl(RPM/Header.pm) perl(Clone.pm) perl(Tie/Hash.pm) perl(IPC/Run3.pm)
 # for RPM::Source::Tools
 BuildRequires: perl(RPM/uscan.pm) perl(Pod/Strip.pm) perl-Source-Shared-Resource
 # for srpm-spec-inject-patches
@@ -82,6 +82,9 @@ mkdir -p %buildroot%_datadir/srpmtools/hooks
 %_man1dir/hashertarbuild*
 
 %changelog
+* Wed Apr 13 2022 Igor Vlasenko <viy@altlinux.org> 0.9290-alt1
+- hasher tar input support
+
 * Tue Feb 15 2022 Igor Vlasenko <viy@altlinux.org> 0.9285-alt1
 - new version
 
