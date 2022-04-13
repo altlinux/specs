@@ -3,7 +3,7 @@
 
 Name: %realname
 Version: 2.9.6
-Release: alt1
+Release: alt1.1
 Epoch:3
 
 Summary: X11 Window Manager
@@ -66,6 +66,10 @@ Extra themes that included to IceWM distribution
 %patch0 -p1
 %ifarch armh
 sed -i 's@-Wl,--as-needed @&-Wl,--allow-shlib-undefined@' src/CMakeLists.txt
+%endif
+%ifarch %e2k
+# somehow works with GCC, but it's bad code from any point of view
+sed -i 's/\? directory : "."/? (char*)directory : "."/' src/misc.cc
 %endif
 
 %build
@@ -134,6 +138,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Wed Apr 13 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3:2.9.6-alt1.1
+- fixed build for Elbrus
+
 * Sat Apr 09 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.9.6-alt1
 - 2.9.6
 - theme AltClearlooks specified as default theme
