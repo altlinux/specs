@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.22
+Version:	0.9.23
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -141,6 +141,10 @@ fi
 %files full
 
 %changelog
+* Wed Apr 13 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.9.23-alt1
+- openvswitch: remove interfaces by default after putting them down.
+- openvswitch: setup port and bond after the bridge.
+
 * Fri Feb 11 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.22-alt1
 - ovsport: OVS_PATCH option (Closes: #39708).
 - ovsport: HOST must be set.
