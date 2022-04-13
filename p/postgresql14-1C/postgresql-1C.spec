@@ -10,7 +10,7 @@
 %define prog_name            postgresql
 %define postgresql_major     14
 %define postgresql_minor     1
-%define postgresql_altrel    3
+%define postgresql_altrel    4
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -63,7 +63,7 @@ BuildRequires: postgresql-devel
 BuildRequires: libicu-devel
 %endif
 %if_with jit
-BuildRequires: llvm-devel >= 5.0 clang-devel >= 5.0 gcc-c++
+BuildRequires: llvm12.0-devel clang12.0-devel gcc-c++
 %endif
 
 %description
@@ -193,7 +193,7 @@ Group: Development/Databases
 Requires: %libpq_name-devel
 Requires: %libecpg_name-devel
 %if_with jit
-Requires: clang-devel llvm-devel gcc-c++
+Requires: llvm12.0-devel clang12.0-devel gcc-c++
 %endif
 %if_with devel
 Provides: %prog_name-server-devel = %EVR
@@ -286,7 +286,7 @@ database.
 Summary: Just-in-time compilation support for PostgreSQL
 Group: Databases
 Requires: %name-server = %EVR
-Requires: llvm >= 5.0
+Requires: llvm12.0
 Provides: %prog_name-llvmjit = %EVR
 
 %description llvmjit
@@ -308,6 +308,11 @@ goal of accelerating analytics queries.
 %patch101 -p1
 
 %build
+%if_with jit
+export LLVM_CONFIG=/usr/bin/llvm-config-12
+export CLANG=/usr/bin/clang-12
+%endif
+
 %ifnarch armh
  %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %else
@@ -926,6 +931,9 @@ fi
 %endif
 
 %changelog
+* Wed Apr 13 2022 Alexei Takaseev <taf@altlinux.org> 14.1-alt4
+- Build with llvm 12
+
 * Sat Feb 26 2022 Alexei Takaseev <taf@altlinux.org> 14.1-alt3
 - Build with JIT feature
 
