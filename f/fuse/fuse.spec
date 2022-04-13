@@ -1,8 +1,9 @@
 %define _unpackaged_files_terminate_build 1
+%global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: fuse
 Version: 2.9.9
-Release: alt3
+Release: alt4
 
 Summary: a tool for creating virtual filesystems
 License: GPLv2
@@ -109,6 +110,9 @@ fi
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 13 2022 Alexey Shabalin <shaba@altlinux.org> 2.9.9-alt4
+- Added -ffat-lto-objects to %%optflags_lto.
+
 * Tue Apr 12 2022 Alexey Shabalin <shaba@altlinux.org> 2.9.9-alt3
 - build from upstream upstream/fuse_2_9_bugfix branch
 - deleted depends on fuse in libfuse (ALT#38714)
