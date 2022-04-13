@@ -5,7 +5,7 @@
 
 Name: qcustomplot-qt5
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Summary: Qt widget for plotting and data visualization
 
 License: GPLv3+
@@ -66,7 +66,7 @@ includedir=%_includedir
 Name: %name-qt5
 Description: %summary
 Version: %version
-Cflags: -I\${includedir}\qcustomplot-qt5
+Cflags: -I\${includedir}\/qt5
 Libs: -L\${libdir} -lqcustomplot-qt5
 EOF
 
@@ -83,6 +83,9 @@ EOF
 %doc documentation examples
 
 %changelog
+* Wed Apr 13 2022 Vladimir Rubanov <august@altlinux.org> 2.1.0-alt2
+- Fix include in pc file
+
 * Thu Dec 23 2021 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt1
 - new version (2.1.0) with rpmgs script
 - rename srpm to qcustomplot-qt5
