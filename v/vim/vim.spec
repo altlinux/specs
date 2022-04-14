@@ -52,7 +52,7 @@
 
 Name: vim
 %define branch 8.2
-Version: %branch.4146
+Version: %branch.4747
 Release: alt1
 Epoch: 4
 
@@ -1095,6 +1095,13 @@ fi
 
 # {{{ changelog
 %changelog
+* Wed Apr 13 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.4747-alt1
+- Updated to 8.2.4747 (fixes CVE-2022-0318, CVE-2022-0359, CVE-2022-0361,
+  CVE-2022-0368, CVE-2022-0392, CVE-2022-0393, CVE-2022-0407, CVE-2022-0408,
+  CVE-2022-0413, CVE-2022-0417, CVE-2022-0443, CVE-2022-0554, CVE-2022-0572,
+  CVE-2022-0629, CVE-2022-0685, CVE-2022-0696, CVE-2022-0714, CVE-2022-0729,
+  CVE-2022-0943, CVE-2022-1154, CVE-2022-1160) (ALT#42418).
+
 * Wed Jan 19 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.4146-alt1
 - Updated to 8.2.4146.
 - %name-minimal: fixed vimrc loading regression.
