@@ -5,7 +5,7 @@ BuildRequires: perl(Data/Peek.pm)
 BuildRequires: perl-podlators
 %define dist IO-Compress
 Name: perl-%dist
-Version: 2.105
+Version: 2.106
 Release: alt1
 
 Summary: Read and write compressed data
@@ -18,7 +18,7 @@ Source0: http://www.cpan.org/authors/id/P/PM/PMQS/%{dist}-%{version}.tar.gz
 BuildArch: noarch
 
 %define dep_version %version
-%if "%{version}" == "2.105"
+%if "%{version}" == "2.106"
 %define dep_version 2.103
 %endif
 
@@ -69,6 +69,9 @@ export TEST_SKIP_VERSION_CHECK=1
 
 
 %changelog
+* Thu Apr 14 2022 Igor Vlasenko <viy@altlinux.org> 2.106-alt1
+- automated CPAN update
+
 * Mon Apr 11 2022 Igor Vlasenko <viy@altlinux.org> 2.105-alt1
 - automated CPAN update
 
