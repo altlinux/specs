@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2 
 %define kernel_base_version	5.15
 %define kernel_sublevel .34
@@ -617,6 +617,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Apr 14 2022 Vitaly Chikunov <vt@altlinux.org> 2:5.15.34-alt2
+- Update baikalm-5.15.y patchset to 2022-01-17 (14b0e663071e).
+
 * Thu Apr 14 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.34-alt1
 - v5.15.34
 
