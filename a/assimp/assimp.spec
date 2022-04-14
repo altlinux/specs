@@ -7,13 +7,13 @@ BuildRequires: /usr/bin/doxygen gcc-c++ libGLU-devel libglvnd-devel python3-deve
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name assimp
 %define major   5
-%define minor   1
+%define minor   2
 %define libname lib%{name}%{major}
 %define devname lib%{name}-devel
 
 Name:           assimp
-Version:        5.1.5
-Release:        alt1_1
+Version:        5.2.2
+Release:        alt1_3
 Summary:        Library to import various 3D model formats into applications
 Group:          Graphics
 # Assimp is BSD
@@ -33,10 +33,17 @@ Source0:        %{name}-%{version}-free.tar.xz
 Source1:        assimp_generate_tarball.sh
 
 # Un-bundle libraries that are provided by the distribution.
-Patch0:         assimp-5.1.5-mga-unbundle.patch
+# Also fixes FTBFS: https://github.com/assimp/assimp/issues/4334
+Patch0:         assimp-5.2.2-mga-unbundle.patch
+# Endless sigh...
+Patch1:         assimp-5.2.2-mga-fix-version.patch
+# Disable -Werror flag, doesn't pass compilation with GCC 12
+Patch2:         assimp-5.2.2-no-Werror.patch
+# https://github.com/assimp/assimp/pull/4203 Reinstate a deprecated gltfpbr macro: AI_MATKEY_GLTF_PBRSPECULARGLOSSINESS
+Patch3:         assimp-5.2.2-reinstate-gltfpbr-macro.patch
 
 BuildRequires:  boost-complete
-BuildRequires:  cmake
+BuildRequires:  ccmake cmake ctest
 BuildRequires:  pkgconfig(gtest)
 BuildRequires:  pkgconfig(minizip)
 BuildRequires:  pkgconfig(poly2tri)
@@ -83,7 +90,8 @@ systems, but is not limited to these applications.
 
 %files -n       %{libname}
 %doc Readme.md LICENSE CREDITS CHANGES
-%{_libdir}/lib%{name}.so.%{major}*
+%{_libdir}/lib%{name}.so.%{major}
+%{_libdir}/lib%{name}.so.%{version}
 
 #----------------------------------------------------------------------------
 
@@ -108,6 +116,9 @@ You need to install it if you want to develop programs using assimp.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 
 # Get rid of bundled libs so we can't accidentally build against them
@@ -140,6 +151,9 @@ rm -rf contrib/zlib
 
 
 %changelog
+* Thu Apr 14 2022 Igor Vlasenko <viy@altlinux.org> 5.2.2-alt1_3
+- update by mgaimport
+
 * Fri Jan 14 2022 Igor Vlasenko <viy@altlinux.org> 5.1.5-alt1_1
 - new version + e2k support
 
