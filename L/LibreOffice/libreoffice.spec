@@ -28,7 +28,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -594,6 +594,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Apr 13 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.3.2.1-alt3
+- NMU: Update russian translation patch for 7.3.2.1
+
 * Thu Mar 31 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.3.2.1-alt2
 - NMU: Update russian translation for 7.3.2.1
 
