@@ -19,11 +19,11 @@
 %define BUILD_CMUCL	0
 
 %define BUILD_LANG_ES		1
-%define BUILD_LANG_ES_UTF	1
+%define BUILD_LANG_ES_UTF	0
 %define BUILD_LANG_PT		1
-%define BUILD_LANG_PT_UTF	1
+%define BUILD_LANG_PT_UTF	0
 %define BUILD_LANG_PT_BR	1
-%define BUILD_LANG_PT_BR_UTF	1
+%define BUILD_LANG_PT_BR_UTF	0
 
 %define BUILD_GCL_ANSI  1
 
@@ -34,12 +34,12 @@
 %define CVS_BUILD	0
 
 Name: maxima
-Version: 5.45.1
-%define maxima_version 5.45.1
+Version: 5.46.0
+%define maxima_version 5.46.0
 Release: alt1
 
 Summary: Maxima Computer Algebra System
-License: GPL-2.0
+License: GPLv2
 Group: Sciences/Mathematics
 
 Url: http://maxima.sourceforge.net
@@ -171,6 +171,7 @@ Summary: Maxima Spanish language pack
 Group: Sciences/Mathematics
 #Requires: maxima-common = %version-%release
 BuildArch: noarch
+Provides: %name-lang-es-utf8
 
 %description lang-es
 Maxima Spanish language pack.
@@ -193,7 +194,7 @@ Summary: Maxima Portuguese language pack
 Group: Sciences/Mathematics
 #Requires: maxima-common = %version-%release
 BuildArch: noarch
-
+Provides: %name-lang-pt-utf8
 %description lang-pt
 Maxima Portuguese language pack.
 %endif
@@ -215,7 +216,7 @@ Summary: Maxima Brazilian Portuguese language pack
 Group: Sciences/Mathematics
 #Requires: maxima-common = %version-%release
 BuildArch: noarch
-
+Provides: %name-lang-pt_BR-utf8
 %description lang-pt_BR
 Maxima Brazilian Portuguese language pack.
 %endif
@@ -259,7 +260,7 @@ tar jxf %SOURCE7 -C doc/maximabook
 %endif
 
 %patch1 -p2
-%patch4 -p1
+#patch4 -p1
 %patch5 -p1
 %patch50 -p1 -b .clisp-noreadline
 #patch51 -p1 -b .build-fasl
@@ -444,24 +445,24 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %exclude %doc_dir/es
 %endif
 %if %BUILD_LANG_ES_UTF
-%exclude %_infodir/es.utf8
-%exclude %doc_dir/es.utf8
+%exclude %_infodir/es/*
+%exclude %doc_dir/es/*
 %endif
 %if %BUILD_LANG_PT
 %exclude %_infodir/pt
 %exclude %doc_dir/pt
 %endif
 %if %BUILD_LANG_PT_UTF
-%exclude %_infodir/pt.utf8
-%exclude %doc_dir/pt.utf8
+%exclude %_infodir/pt/*
+%exclude %doc_dir/pt/*
 %endif
 %if %BUILD_LANG_PT_BR
 %exclude %_infodir/pt_BR
 %exclude %doc_dir/pt_BR
 %endif
 %if %BUILD_LANG_PT_BR_UTF
-%exclude %_infodir/pt_BR.utf8
-%exclude %doc_dir/pt_BR.utf8
+%exclude %_infodir/pt/*
+%exclude %doc_dir/pt/*
 %endif
 %_mandir/man1/maxima.1*
 %dir %_libexecdir/maxima
@@ -480,19 +481,19 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 %exclude %_datadir/maxima/%maxima_version/doc/html/es
 %endif
 %if %BUILD_LANG_ES_UTF
-%exclude %_datadir/maxima/%maxima_version/doc/html/es.utf8
+%exclude %_datadir/maxima/%maxima_version/doc/html/es/*
 %endif
 %if %BUILD_LANG_PT
 %exclude %_datadir/maxima/%maxima_version/doc/html/pt
 %endif
 %if %BUILD_LANG_PT_UTF
-%exclude %_datadir/maxima/%maxima_version/doc/html/pt.utf8
+%exclude %_datadir/maxima/%maxima_version/doc/html/pt/*
 %endif
 %if %BUILD_LANG_PT_BR
-%exclude %_datadir/maxima/%maxima_version/doc/html/pt_BR
+%exclude %_datadir/maxima/%maxima_version/doc/html/pt_BR/*
 %endif
 %if %BUILD_LANG_PT_BR_UTF
-%exclude %_datadir/maxima/%maxima_version/doc/html/pt_BR.utf8
+%exclude %_datadir/maxima/%maxima_version/doc/html/pt_BR/*
 %endif
 %doc AUTHORS
 %doc README
@@ -564,9 +565,9 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 
 %if %BUILD_LANG_ES_UTF
 %files lang-es-utf8
-%_datadir/maxima/%maxima_version/doc/html/es.utf8
-%_infodir/es.utf8
-%doc_dir/es.utf8
+%_datadir/maxima/%maxima_version/doc/html/es/*
+%_infodir/es/*
+%doc_dir/es/*
 %endif
 
 %if %BUILD_LANG_PT
@@ -578,9 +579,9 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 
 %if %BUILD_LANG_PT_UTF
 %files lang-pt-utf8
-%_datadir/maxima/%maxima_version/doc/html/pt.utf8
-%_infodir/pt.utf8
-%doc_dir/pt.utf8
+%_datadir/maxima/%maxima_version/doc/html/pt/*
+%_infodir/pt/*
+%doc_dir/pt/*
 %endif
 
 %if %BUILD_LANG_PT_BR
@@ -592,12 +593,16 @@ rm -f %buildroot%_datadir/maxima/%maxima_version/share/test_encodings/escape-dou
 
 %if %BUILD_LANG_PT_BR_UTF
 %files lang-pt_BR-utf8
-%_datadir/maxima/%maxima_version/doc/html/pt_BR.utf8
-%_infodir/pt_BR.utf8
-%doc_dir/pt_BR.utf8
+%_datadir/maxima/%maxima_version/doc/html/pt_BR/*
+%_infodir/pt_BR/*
+%doc_dir/pt_BR/*
 %endif
 
 %changelog
+* Thu Apr 14 2022 Ilya Mashkin <oddity@altlinux.ru> 5.46.0-alt1
+- 5.46.0
+- Disable *-utf8 lang packages. Now there is only one package for each language.
+
 * Tue Jun 22 2021 Ilya Mashkin <oddity@altlinux.ru> 5.45.1-alt1
 - 5.45.1
 
