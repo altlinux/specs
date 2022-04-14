@@ -5,7 +5,7 @@
 %endif
 
 Name: xfsprogs
-Version: 5.14.2
+Version: 5.15.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -113,6 +113,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %_sbindir/*
 %_unitdir/*.service
 %_unitdir/*.timer
+%dir %_datadir/xfsprogs
+%dir %_datadir/xfsprogs/mkfs
+%_datadir/xfsprogs/mkfs/*.conf
 /%_lib/xfsprogs/xfs_scrub_fail
 %_mandir/man[85]/*
 %doc doc/CHANGES.gz doc/CREDITS README
@@ -144,6 +147,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Mon Apr 11 2022 Anton Farygin <rider@altlinux.ru> 5.15.0-alt1
+- 5.14.2 -> 5.15.0
+
 * Wed Dec 08 2021 Anton Farygin <rider@altlinux.ru> 5.14.2-alt1
 - 5.14.2
 
