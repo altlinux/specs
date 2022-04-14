@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 3.5.8
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init
 
@@ -17,6 +17,7 @@ License: GPL-2.0-or-later AND GPL-3.0-or-later
 %if_enabled indi
 Requires: indi
 %endif
+Requires: xplanet
 
 Source: %rname-%version.tar
 
@@ -27,7 +28,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel qt5-multimedia-devel qt5-svg-devel qt5-websockets-devel
 BuildRequires: qt5-datavis3d-devel
 BuildRequires: libsecret-devel libqtkeychain-qt5-devel
-BuildRequires: xplanet eigen3 libGLU-devel zlib-devel
+BuildRequires: eigen3 libGLU-devel zlib-devel
 BuildRequires: libcfitsio-devel wcslib-devel libraw-devel
 %if_enabled indi
 BuildRequires: libindi-devel
@@ -77,6 +78,9 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %_K5cfg/kstars.kcfg
 
 %changelog
+* Thu Apr 14 2022 Sergey V Turchin <zerg@altlinux.org> 1:3.5.8-alt2
+- require xplanet
+
 * Wed Apr 13 2022 Sergey V Turchin <zerg@altlinux.org> 1:3.5.8-alt1
 - new version
 
