@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-generic-compat
 BuildRequires: /usr/bin/blender gcc-c++
 # END SourceDeps(oneline)
-%define mips mips mipsel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +13,7 @@ BuildRequires: /usr/bin/blender gcc-c++
 Summary:	A skeletal based character animation library
 Name:		cal3d
 Version:	0.11.0
-Release:	alt5_18
+Release:	alt5_22
 Group:		System/Libraries
 License:	LGPLv2+
 URL:		http://gna.org/projects/cal3d/
@@ -64,6 +64,7 @@ applications which will use Cal3D.
 %patch0 -p1
 %patch1 -p1
 
+
 %build
 autoreconf -fi
 %configure
@@ -88,6 +89,9 @@ autoreconf -fi
 
 
 %changelog
+* Thu Apr 14 2022 Igor Vlasenko <viy@altlinux.org> 0.11.0-alt5_22
+- update by mgaimport
+
 * Fri Sep 11 2020 Michael Shigorin <mike@altlinux.org> 0.11.0-alt5_18
 - ExclusiveArch: 64-bit ones (following blender)
 
