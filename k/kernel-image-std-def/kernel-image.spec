@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel .33
+%define kernel_sublevel .34
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -617,6 +617,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Apr 14 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.34-alt1
+- v5.15.34
+
 * Fri Apr 08 2022 Vitaly Chikunov <vt@altlinux.org> 2:5.15.33-alt1
 - Backport support for ES83x6 codec in I2S mode for CML/CNL platforms.
 - Update to v5.15.33 (2022-04-08).
