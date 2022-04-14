@@ -15,11 +15,10 @@
 %def_enable cairo
 %def_enable libthai
 %def_disable sysprof
-# 2 failed in hasher
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -219,6 +218,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Thu Apr 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1.50.7-alt1
+- 1.50.7 (fixed crash on missing fonts (ALT #42311))
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.50.6-alt1
 - 1.50.6
 
