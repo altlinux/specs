@@ -2,7 +2,7 @@
 
 Name: ctags
 Version: 5.8
-Release: alt3
+Release: alt4
 
 Summary: A C programming language indexing and/or cross-reference tool
 License: GPLv2+
@@ -14,6 +14,7 @@ Source: ctags-%version.tar
 Patch1: ctags-5.8-alt-warnings.patch
 Patch2: ctags-5.8-alt-buildroot.patch
 Patch3: ctags-5.8-rh-segfault-fix.patch
+Patch4: ctags-5.8-r791-cve-2014-7204-fix.patch
 
 %description
 The ctags program generate an index (or "tag") file for C, C++, Eiffel,
@@ -31,6 +32,7 @@ in a set of language files.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 %if "%version" == "5.8"
 sed -i s,__unused__,__unused,g `grep -rl __unused__ .`
@@ -50,6 +52,9 @@ sed -i s,__unused__,__unused,g `grep -rl __unused__ .`
 %doc EXTENDING.html FAQ NEWS README
 
 %changelog
+* Thu Apr 14 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.8-alt4
+- Security release (fixed CVE-2014-7204).
+
 * Mon Dec 06 2021 Igor Vlasenko <viy@altlinux.org> 5.8-alt3
 - NMU: fixed build
 
