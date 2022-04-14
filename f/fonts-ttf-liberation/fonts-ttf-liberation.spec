@@ -4,8 +4,8 @@
 %define oldname liberation-fonts
 
 Name: fonts-ttf-%fontname
-Version: 2.00.4
-Release: alt3
+Version: 2.1.5
+Release: alt1
 
 Summary: Fonts to replace commonly used Microsoft Windows Fonts
 
@@ -76,11 +76,14 @@ for fconf in %{fontconf}-mono.conf \
 done
 
 %files -f %fontname.files
-%doc LICENSE README AUTHORS ChangeLog
+%doc LICENSE README.md AUTHORS ChangeLog
 %{_fontconfig_templatedir}/*-%{fontname}-*.conf
 %config(noreplace) %{_fontconfig_confdir}/*-%{fontname}-*.conf
 
 %changelog
+* Thu Apr 14 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1.5-alt1
+- new version 2.1.5 (with rpmrb script) (ALT bug 42447)
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 2.00.4-alt3
 - NMU: removed rpm-macros-fontpackages, use new rpm-macros-fonts
 
