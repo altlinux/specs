@@ -4,7 +4,7 @@
 %def_enable nox
 
 Name: emacs
-Version: 27.2
+Version: 28.1
 Release: alt1
 
 Summary: GNU Emacs text editor
@@ -264,24 +264,24 @@ autoreconf -i -I m4
 %define stage3bin gtk3
 %define _configure_script ../configure
 %define _configure_mostly --disable-build-details --sharedstatedir=/var \\\
-	--with-pop --with-png --with-jpeg --with-xpm --with-gif --with-tiff \\\
-	--with-xft --with-dbus --with-rsvg --with-wide-int --with-lcms2 --with-modules
+	--with-pop --with-wide-int --with-modules
 
 pushd build-gtk3
-%configure %_configure_mostly --without-gpm --with-x-toolkit=gtk3 --with-cairo
+%configure %_configure_mostly --without-gpm --with-x-toolkit=gtk3
 popd
 
 %if_enabled athena
 pushd build-athena
-%configure %_configure_mostly --without-gpm --with-x-toolkit=athena
+%configure %_configure_mostly --without-gpm --without-cairo --without-harfbuzz \
+	--without-rsvg --without-dbus --without-gconf --without-gsettings \
+	--with-x-toolkit=athena
 popd
 %endif
 
 %if_enabled nox
 pushd build-nox
-%configure --disable-build-details --sharedstatedir=/var --without-all \
-	   --with-gnutls --with-gpm --with-selinux --with-pop --with-xml2 \
-	   --with-wide-int --with-modules --with-x=no
+%configure %_configure_mostly --without-all --with-gnutls --with-gpm --with-selinux \
+	--with-xml2 --with-zlib --with-x=no
 popd
 %endif
 
@@ -469,8 +469,8 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_emacs_datadir/%version/lisp/site-start.el
 %_emacs_sitestart_dir/*
 
-%_datadir/metainfo/emacs.appdata.xml
-%_desktopdir/%name.desktop
+%_datadir/metainfo/emacs.*.xml
+%_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
 %_man1dir/*.1*
 
@@ -492,6 +492,12 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Wed Apr 06 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 28.1-alt1
+- 28.1 released
+
+* Thu Mar 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 28.0.92-alt1
+- 28.0.92 released
+
 * Mon Dec 06 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 27.2-alt1
 - 27.2 released
 
@@ -1434,7 +1440,3 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 - Moved ctags to gctags to fit in the more powerful for C (but less
   general) exuberant ctags as the binary %_bindir/ctags and the
   man page /usr/man/man1/ctags.1
-
-# Local Variables:
-# compile-command: "rpm -ba --sign --target=i686 emacs22.spec"
-# End:
