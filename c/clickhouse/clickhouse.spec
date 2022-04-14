@@ -20,7 +20,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 
 Name: clickhouse
 Version: 22.3.3.44
-Release: alt1
+Release: alt2
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -131,6 +131,7 @@ Patch1: clickhouse-base64-ppc64le.patch
 Patch2: clickhouse-avro-gcc10-compat.patch
 Patch3: clickhouse-fastops-gcc-compat.patch
 Patch4: clickhouse-llvm-build.patch
+Patch5: clickhouse-22.3-use-system-toolchain.patch
 
 BuildRequires(pre): rpm-build-python3
 %if_with clang
@@ -220,12 +221,17 @@ pushd contrib/llvm
 %patch4 -p1
 popd
 
+%patch5 -p1
+
 %build
 if [ %__nprocs -gt 6 ] ; then
 	export NPROCS=6
 else
 	export NPROCS=%__nprocs
 fi
+
+# remove binary toolchain from clickhouse contrib
+rm -rf contrib/sysroot/linux*
 
 # strip debuginfo: with bundled llvm debuginfo takes too much space
 %define optflags_debug -g0
@@ -279,6 +285,7 @@ mkdir -p %buildroot%_logdir/clickhouse-server
 # remove unpackaged files
 rm -rfv %buildroot%_prefix/cmake
 rm -fv %buildroot%_prefix/lib/*.a
+rm -rf %buildroot%_sysconfdir/clickhouse-keeper
 
 %check
 ./%_cmake__builddir/src/unit_tests_dbms --gtest_filter='-CoordinationTest.TestRotateIntervalChanges:ReadBufferAIOTest.TestReadAfterAIO:WeakHash32.*'
@@ -312,11 +319,9 @@ fi
 
 %files server
 %dir %_sysconfdir/clickhouse-server
-%dir %_sysconfdir/clickhouse-keeper
 %config(noreplace) %_sysconfdir/cron.d/clickhouse-server
 %config(noreplace) %_sysconfdir/clickhouse-server/config.xml
 %config(noreplace) %_sysconfdir/clickhouse-server/users.xml
-%config(noreplace) %_sysconfdir/clickhouse-keeper/keeper_config.xml
 %_bindir/clickhouse-server
 %_bindir/clickhouse-report
 %_bindir/clickhouse-copier
@@ -346,6 +351,10 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Thu Apr 14 2022 Anton Farygin <rider@altlinux.ru> 22.3.3.44-alt2
+- use system toolchain for building clickhouse
+- removed clickhouse-keeper default config 
+
 * Thu Apr 07 2022 Anton Farygin <rider@altlinux.ru> 22.3.3.44-alt1
 - 22.3.2.2 -> 22.3.3.44
 
