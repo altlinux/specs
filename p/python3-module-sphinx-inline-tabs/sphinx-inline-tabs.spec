@@ -3,7 +3,7 @@
 %define oname sphinx-inline-tabs
 
 Name: python3-module-%oname
-Version: 2021.08.17.beta10
+Version: 2022.01.02.beta11
 Release: alt1
 Summary: Add inline tabbed content to your Sphinx documentation. 
 License: MIT
@@ -16,7 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-flit
 BuildRequires: python3-module-sphinx
 
 %description
@@ -25,14 +25,20 @@ Add inline tabbed content to your Sphinx documentation.
 %prep
 %setup
 
+%build
+flit build
+
 %install
-mkdir -p %buildroot/%python3_sitelibdir/sphinx_inline_tabs
-cp -r src/sphinx_inline_tabs/* %buildroot/%python3_sitelibdir/sphinx_inline_tabs
+pip%{_python3_version} install -I dist/sphinx_inline_tabs-*-none-any.whl --root %buildroot --prefix %prefix --no-deps
 
 %files
 %doc LICENSE README.md
 %python3_sitelibdir/sphinx_inline_tabs
+%python3_sitelibdir/sphinx_inline_tabs-*dist-info
 
 %changelog
+* Thu Apr 14 2022 Egor Ignatov <egori@altlinux.org> 2022.01.02.beta11-alt1
+- new version 2022.01.02.beta11
+
 * Wed Sep 01 2021 Egor Ignatov <egori@altlinux.org> 2021.08.17.beta10-alt1
 - Initial build for ALT
