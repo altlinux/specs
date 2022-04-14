@@ -3,9 +3,11 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
+
 Summary: Simple VTXXX-compatible terminal emulator
+
 License: LGPLv3
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/pyte/
@@ -17,11 +19,10 @@ BuildArch: noarch
 %py3_provides %oname
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pip
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-runner
 
 %if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-runner
 BuildRequires: python3-module-wcwidth
 %endif
 
@@ -49,6 +50,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Thu Apr 14 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1
+- Automatically updated to 0.8.1.
+
 * Sun Jun 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.0-alt1
 - Build new version.
 - build without docs.
