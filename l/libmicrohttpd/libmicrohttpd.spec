@@ -1,6 +1,6 @@
 Name: libmicrohttpd
 Version: 0.9.75
-Release: alt1
+Release: alt2
 
 Summary: Library providing compact API and implementation of an HTTP/1.1 webserver
 License: LGPL-2.1-or-later
@@ -26,6 +26,8 @@ This package contains the headers and libraries for libmicrohttpd development.
 
 %prep
 %setup
+# starting with curl-7.82.0 test fails with: curl_easy_perform failed: `Out of memory'
+sed -ri '/^\s+TEST_HTTPS_SNI/ s,=.+$,=,' src/testcurl/https/Makefile.am
 
 %build
 %autoreconf
@@ -53,6 +55,9 @@ This package contains the headers and libraries for libmicrohttpd development.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Apr 15 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.75-alt2
+- disable broken https_sni test
+
 * Mon Dec 27 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.75-alt1
 - new version 0.9.75
 - add check section
