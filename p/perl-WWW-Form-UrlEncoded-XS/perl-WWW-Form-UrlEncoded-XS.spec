@@ -6,7 +6,7 @@ BuildRequires: libsowing-devel perl(Exporter.pm) perl(JSON.pm) perl(Module/Build
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.26
+Version: 0.27
 Release: alt1
 Summary: XS implementation of parser and builder for application/x-www-form-urlencoded
 Group: Development/Perl
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_autolib/*
 
 %changelog
+* Fri Apr 15 2022 Igor Vlasenko <viy@altlinux.org> 0.27-alt1
+- automated CPAN update
+
 * Mon Jun 17 2019 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
 - automated CPAN update
 
