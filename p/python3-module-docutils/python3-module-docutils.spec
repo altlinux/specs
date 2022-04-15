@@ -3,7 +3,7 @@
 %define oname docutils
 %def_enable check
 Summary: Docutils -- Python Documentation Utilities
-Version: 0.17.1
+Version: 0.18.1
 Release: alt1
 Name: python3-module-%oname
 License: public domain, Python, BSD, GPL (see COPYING.txt)
@@ -32,6 +32,12 @@ what-you-see-is-what-you-get plaintext markup syntax.
 
 %install
 %python3_install
+pushd %buildroot%_bindir
+for i in *.py; do
+       mv $i $(basename $i .py)
+done
+popd
+
 
 %check
 python3 test/alltests.py
@@ -41,6 +47,10 @@ python3 test/alltests.py
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 13 2022 Anton Farygin <rider@altlinux.ru> 0.18.1-alt1
+- 0.18.1
+- Renamed resulting binaries, removed .py suffix (Closes: #40057, #41784)
+
 * Sat May 15 2021 Evgeny Sinelnikov <sin@altlinux.org> 0.17.1-alt1
 - 0.17.1
 
