@@ -1,6 +1,6 @@
 %global import_path github.com/docker/distribution
 Name:     docker-registry
-Version:  2.8.0
+Version:  2.8.1
 Release:  alt1
 
 Summary:  The Docker toolset to pack, ship, store, and deliver content
@@ -57,6 +57,9 @@ mkdir -p %buildroot/%_localstatedir/%name
 %dir %_localstatedir/%name
 
 %changelog
+* Fri Apr 15 2022 Mikhail Gordeev <obirvalger@altlinux.org> 2.8.1-alt1
+- new version 2.8.1
+
 * Tue Mar 01 2022 Mikhail Gordeev <obirvalger@altlinux.org> 2.8.0-alt1
 - new version 2.8.0
 
