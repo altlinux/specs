@@ -22,6 +22,7 @@
 %def_disable gui_athena
 %def_enable gui_gnome2
 %def_enable gui_gtk2
+%def_enable gui_gtk3
 %def_disable gui_motif
 %def_enable gui_neXtaw
 
@@ -34,6 +35,9 @@
 %endif
 %if_enabled gui_gtk2
 %global gui %gui gtk2
+%endif
+%if_enabled gui_gtk3
+%global gui %gui gtk3
 %endif
 %if_enabled gui_motif
 %global gui %gui motif
@@ -52,7 +56,7 @@
 
 Name: vim
 %define branch 8.2
-Version: %branch.4747
+Version: %branch.4753
 Release: alt1
 Epoch: 4
 
@@ -107,6 +111,10 @@ BuildPreReq: ORBit2-devel glib2-devel gnome-vfs2-devel libGConf2-devel libart_lg
 # gtk+2
 %if_enabled gui_gtk2
 BuildPreReq: glib2-devel libatk-devel libcairo-devel libgtk+2-devel libpango-devel pkg-config
+%endif
+# gtk+3
+%if_enabled gui_gtk3
+BuildPreReq: libgtk+3-devel
 %endif
 # motif
 %if_enabled gui_motif
@@ -420,6 +428,32 @@ supersedes vim-ehnanced package.
 
 Install the vim-X11 package if you'd like to use a full-featured VIM
 with both terminal and X11 gtk+2 interface.  You'll also need to install
+the vim-X11 package.
+# }}}
+# {{{ vim-X11-gtk3
+%package X11-gtk3
+Summary: A full version of VIM editor, including gtk+3 GUI for the X Window System
+Group: Editors
+PreReq: coreutils
+PreReq: alternatives >= 0.2.0-alt0.7
+Requires: libgtk+2 >= 2.0
+Requires: %name-X11 = %epoch:%version-%release
+Provides: %name-X11-gui = %epoch:%version-%release
+Provides: %_bindir/vim-X11
+Obsoletes: vim-color
+
+%description X11-gtk3
+VIM (VIsual editor iMproved) is an updated and improved version of the
+vi editor.  Vi was the first real screen-based editor for UNIX, and is
+still very popular.  VIM improves on vi by adding new features: multiple
+windows, multi-level undo, block highlighting and more.
+
+VIM-X11 is a full version of the VIM editor, including the GUI. You can
+run it either in terminal or within the X Window System. This package
+supersedes vim-ehnanced package.
+
+Install the vim-X11 package if you'd like to use a full-featured VIM
+with both terminal and X11 gtk+3 interface.  You'll also need to install
 the vim-X11 package.
 # }}}
 # {{{ vim-X11-motif
@@ -856,6 +890,9 @@ install -p -m644 alternatives/vim-X11-gnome2 %buildroot%_altdir/vim-X11-gnome2
  %if_enabled gui_gtk2
 install -p -m644 alternatives/vim-X11-gtk2 %buildroot%_altdir/vim-X11-gtk2
  %endif
+ %if_enabled gui_gtk3
+install -p -m644 alternatives/vim-X11-gtk3 %buildroot%_altdir/vim-X11-gtk3
+ %endif
  %if_enabled gui_motif
 install -p -m644 alternatives/vim-X11-motif %buildroot%_altdir/vim-X11-motif
  %endif
@@ -1072,6 +1109,14 @@ fi
 %_bindir/gvim-gtk2
 %endif
 # }}}
+# {{{ vim-X11-gtk3 files
+%if_enabled gui_gtk3
+%files X11-gtk3
+%_altdir/vim-X11-gtk3
+%_bindir/vim-gtk3
+%_bindir/gvim-gtk3
+%endif
+# }}}
 # {{{ vim-X11-motif files
 %if_enabled gui_motif
 %files X11-motif
@@ -1095,6 +1140,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Fri Apr 15 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.4753-alt1
+- Updated to 8.2.4753.
+- Enabled gtk3 GUI (alternatives weight = 60).
+
 * Wed Apr 13 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.4747-alt1
 - Updated to 8.2.4747 (fixes CVE-2022-0318, CVE-2022-0359, CVE-2022-0361,
   CVE-2022-0368, CVE-2022-0392, CVE-2022-0393, CVE-2022-0407, CVE-2022-0408,
