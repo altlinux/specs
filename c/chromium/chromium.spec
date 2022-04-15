@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        100.0.4896.60
+Version:        100.0.4896.127
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -442,6 +442,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Apr 15 2022 Alexey Gladkov <legion@altlinux.ru> 100.0.4896.127-alt1
+- New version (100.0.4896.127).
+- Security fixes:
+  - CVE-2022-1364: Type Confusion in V8.
+
 * Wed Mar 30 2022 Alexey Gladkov <legion@altlinux.ru> 100.0.4896.60-alt1
 - New version (100.0.4896.60) (ALT#42263).
 - Security fixes:
