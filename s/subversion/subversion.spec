@@ -62,7 +62,7 @@
 %define modname dav_svn_module
 
 Name:     subversion
-Version:  1.14.1
+Version:  1.14.2
 Release:  alt1
 
 Summary:  A version control system
@@ -773,6 +773,12 @@ fi
 %endif
 
 %changelog
+* Fri Apr 15 2022 Andrey Cherepanov <cas@altlinux.org> 1.14.2-alt1
+- New version.
+- Security fixes:
+  + CVE-2021-28544 Subversion servers reveal copyfrom paths that should be hidden according to configured path-based authorization (authz) rules.
+  + CVE-2022-24070 mod_dav_svn is prone to a use-after-free vulnerability when looking up path-based authorization rules, which can result in denial of service (crash of HTTPD worker handling the request).
+
 * Sun Feb 14 2021 Andrey Cherepanov <cas@altlinux.org> 1.14.1-alt1
 - New version.
 - Fixes:
