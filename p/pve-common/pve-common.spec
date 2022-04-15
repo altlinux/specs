@@ -3,7 +3,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 7.1.3
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -70,6 +70,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Tue Apr 12 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.1.3-alt2
+- add more unrecognized etcnet options
+
 * Sat Mar 05 2022 Alexey Shabalin <shaba@altlinux.org> 7.1.3-alt1
 - 7.1-3
 
