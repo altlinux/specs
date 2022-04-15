@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.24.4
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -83,6 +83,8 @@ sed -i '/EnabledByDefault/s|true|false|' runner/systemsettingsrunner.json
 %K5install
 %K5install_move data systemsettings kpackage kglobalaccel locale
 
+[ -e %buildroot/%_K5bin/systemsettings ] \
+    || ln -s systemsettings5 %buildroot/%_K5bin/systemsettings
 
 mkdir -p %buildroot/%_desktopdir/kf5
 mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5/
@@ -117,6 +119,12 @@ mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5
 %_K5lib/libsystemsettingsview.so.*
 
 %changelog
+* Fri Apr 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt2
+- merge p10 changes
+
+* Fri Apr 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt3
+- add systemsettings symlink
+
 * Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
 - new version
 
