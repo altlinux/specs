@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Locale-Maketext
 Name: perl-%dist
-Version: 1.30
+Version: 1.31
 Release: alt1
 
 Summary: A framework for localization
@@ -36,6 +36,9 @@ applications.
 %perl_vendor_privlib/Locale*
 
 %changelog
+* Fri Apr 15 2022 Igor Vlasenko <viy@altlinux.org> 1.31-alt1
+- automated CPAN update
+
 * Thu Apr 07 2022 Igor Vlasenko <viy@altlinux.org> 1.30-alt1
 - automated CPAN update
 
