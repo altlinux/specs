@@ -4,7 +4,7 @@
 #set_compress_method none
 %set_compress_method %mansuff
 Name: girar-nmu
-Version: 2.015.0
+Version: 2.015.1
 Release: alt1
 
 Summary: girar client utilities for NMU automation
@@ -26,7 +26,7 @@ BuildRequires: perl-devel perl-podlators perl(RPM/Header.pm) perl-RPM-Source-Edi
 BuildRequires: altlinux-repolist-utils
 
 Requires: gear
-Requires: perl-RPM-Source-Editor >= 0.9233
+Requires: perl-RPM-Source-Editor >= 0.9285
 
 %description
 This package contains girar utilities for NMU automation.
@@ -112,6 +112,9 @@ EOF
 %_man1dir/girar-*
 
 %changelog
+* Sat Apr 16 2022 Igor Vlasenko <viy@altlinux.org> 2.015.1-alt1
+- new version
+
 * Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 2.015.0-alt1
 - p10 support, gpg2 migration
 
