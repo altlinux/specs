@@ -1,20 +1,22 @@
 Name: nvdock
-Version: 1.02
-Release: alt3
+Version: 1.03
+Release: alt1.1
 
 Summary: A tray icon to easily launch the nvidia-settings control panel
 
 Group: System/Kernel and hardware
 License: BSD
 
-# Dead link! (
-Url: http://www.opsat.net/user/bob/projects/nvdock
+Url: https://github.com/LAKostis/nvdock
 
 Source: %url/%name-%version.tar.bz2
-Patch: %name-%version-alt.patch
+Patch0: %name-nvctrl-revamp.patch
+Patch1: %name-desktop-fix.patch
 
 # Automatically added by buildreq on Sun Aug 19 2007
 BuildRequires: libgtk+2-common-devel libgtk+2-devel
+# Due NVCtrlLib
+BuildRequires: nvidia-settings-devel
 Requires: nvidia-settings
 
 # we don't ship nvidia for other arches
@@ -27,7 +29,8 @@ did that for me.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p2
 
 %build
 RPM_OPT_FLAGS="%optflags" \
@@ -37,12 +40,19 @@ RPM_OPT_FLAGS="%optflags" \
 %makeinstall DESTDIR=%buildroot ROOT=$USER
 
 %files
-%doc COPYING README TODO
+%doc COPYING README* TODO*
 %_bindir/*
 %_pixmapsdir/*
 %_desktopdir/*
 
 %changelog
+* Sat Apr 16 2022 L.A. Kostis <lakostis@altlinux.ru> 1.03-alt1.1
+- Fix .desktop file categories.
+
+* Wed Jun 23 2021 L.A. Kostis <lakostis@altlinux.ru> 1.03-alt1
+- 1.03.
+- revamp version with nvctrl support.
+
 * Mon Jun 21 2021 L.A. Kostis <lakostis@altlinux.ru> 1.02-alt3
 - update -alt patch (more -fno-common fixes).
 
