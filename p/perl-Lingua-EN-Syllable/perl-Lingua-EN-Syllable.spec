@@ -1,6 +1,5 @@
-%define module_version 0.30
 %define module_name Lingua-EN-Syllable
-Serial: 1
+Epoch: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
@@ -8,21 +7,21 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Test/More.pm) 
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.30
-Release: alt2
+Version: 0.31
+Release: alt1
 Summary: perl module %module_name
 Group: Development/Perl
 License: perl
 URL: https://github.com/neilb/Lingua-EN-Syllable
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/N/NE/NEILB/%{module_name}-%{module_version}.tar.gz
+Source0: http://www.cpan.org/authors/id/N/NE/NEILB/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -q -n %{module_name}-%{module_version}
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -31,10 +30,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README
+%doc Changes README
 %perl_vendor_privlib/L*
 
 %changelog
+* Sat Apr 16 2022 Igor Vlasenko <viy@altlinux.org> 1:0.31-alt1
+- automated CPAN update
+
 * Thu Feb 25 2016 Igor Vlasenko <viy@altlinux.ru> 1:0.30-alt2
 - to Sisyphus
 
