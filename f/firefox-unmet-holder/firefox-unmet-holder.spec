@@ -2,8 +2,8 @@
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
 Name: %realname-unmet-holder
-Version: 99.0
-Release: alt2
+Version: 99.0.1
+Release: alt1
 Group: Networking/WWW
 License: GPL-3.0
 Provides: %realname = %version-%release
@@ -26,6 +26,9 @@ to run Firefox natively on Wayland.
 %files wayland
 
 %changelog
+* Sat Apr 16 2022 Alexey Gladkov <legion@altlinux.ru> 99.0.1-alt1
+- New release (99.0.1).
+
 * Thu Apr 07 2022 Alexey Gladkov <legion@altlinux.ru> 99.0-alt2
 - Don't provide noarch packages.
 

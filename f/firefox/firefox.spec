@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        99.0
+Version:        99.0.1
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -54,8 +54,8 @@ Patch023: 0023-Bug-1758579-land-NSS-NSS_3_77_RTM-UPGRADE_NSS_RELEAS.patch
 %define gst_version   1.0
 %define nspr_version  4.33
 %define nss_version   3.77
-%define rust_version  1.59.0
-%define cargo_version 1.59.0
+%define rust_version  1.60.0
+%define cargo_version 1.60.0
 %define llvm_version  12.0
 
 ExcludeArch: ppc64le
@@ -78,50 +78,53 @@ BuildRequires: nasm yasm
 BuildRequires: zip unzip
 BuildRequires: libshell
 BuildRequires: libwireless-devel
+BuildRequires: libnss-devel-static
 BuildRequires: xorg-cf-files chrpath alternatives
 BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
-BuildRequires: pkgconfig(xt)
-BuildRequires: pkgconfig(xcursor)
-BuildRequires: pkgconfig(xi)
-BuildRequires: pkgconfig(xcomposite)
-BuildRequires: pkgconfig(x11)
-BuildRequires: pkgconfig(xext)
-BuildRequires: pkgconfig(xft)
-BuildRequires: pkgconfig(xrandr)
-BuildRequires: pkgconfig(xscrnsaver)
-BuildRequires: pkgconfig(xdamage)
-BuildRequires: pkgconfig(xtst)
-BuildRequires: pkgconfig(libcurl)
-BuildRequires: pkgconfig(gtk+-2.0)
-BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: pkgconfig(hunspell)
-BuildRequires: pkgconfig(libjpeg)
-BuildRequires: pkgconfig(bzip2)
-BuildRequires: pkgconfig(zlib)
-BuildRequires: pkgconfig(cairo)
-BuildRequires: pkgconfig(pixman-1)
-BuildRequires: pkgconfig(dri)
 BuildRequires: pkgconfig(alsa)
-BuildRequires: pkgconfig(libnotify)
-BuildRequires: pkgconfig(libevent)
-BuildRequires: pkgconfig(libproxy-1.0)
-BuildRequires: pkgconfig(vpx)
-BuildRequires: pkgconfig(gio-2.0)
-BuildRequires: pkgconfig(freetype2)
-BuildRequires: pkgconfig(fontconfig)
-BuildRequires: pkgconfig(libstartup-notification-1.0)
-BuildRequires: pkgconfig(libffi)
-BuildRequires: pkgconfig(opus)
-BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(aom)
+BuildRequires: pkgconfig(bzip2)
+BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(dav1d)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(dbus-glib-1)
-BuildRequires: pkgconfig(xkbcommon)
-BuildRequires: pkgconfig(libdrm)
-BuildRequires: pkgconfig(icu-i18n)
-BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(dri)
+BuildRequires: pkgconfig(fontconfig)
+BuildRequires: pkgconfig(freetype2)
+BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(graphite2)
-BuildRequires: pkgconfig(aom)
-BuildRequires: pkgconfig(dav1d)
+BuildRequires: pkgconfig(gtk+-2.0)
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(hunspell)
+BuildRequires: pkgconfig(icu-i18n)
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(libevent)
+BuildRequires: pkgconfig(libffi)
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libnotify)
+BuildRequires: pkgconfig(libproxy-1.0)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(libstartup-notification-1.0)
+BuildRequires: pkgconfig(nspr) >= %nspr_version
+BuildRequires: pkgconfig(nss) >= %nss_version
+BuildRequires: pkgconfig(opus)
+BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(vpx)
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(xcomposite)
+BuildRequires: pkgconfig(xcursor)
+BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(xft)
+BuildRequires: pkgconfig(xi)
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xscrnsaver)
+BuildRequires: pkgconfig(xt)
+BuildRequires: pkgconfig(xtst)
+BuildRequires: pkgconfig(zlib)
 
 # Python requires
 BuildRequires: /dev/shm
@@ -129,17 +132,11 @@ BuildRequires: /dev/shm
 BuildRequires: python3-base
 BuildRequires: python3(hamcrest)
 BuildRequires: python3(pip)
-#BuildRequires: python3(pkg_resources)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(sqlite3)
 
 # Rust requires
 BuildRequires: /proc
-
-# Mozilla requires
-BuildRequires: pkgconfig(nspr) >= %nspr_version
-BuildRequires: pkgconfig(nss) >= %nss_version
-BuildRequires: libnss-devel-static
 
 Provides: webclient
 Requires: mozilla-common
@@ -448,6 +445,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri Apr 15 2022 Alexey Gladkov <legion@altlinux.ru> 99.0.1-alt1
+- New release (99.0.1).
+
 * Tue Apr 05 2022 Alexey Gladkov <legion@altlinux.ru> 99.0-alt1
 - New release (99.0).
 - Stop shipping user-installed search plugins (MOZ#1643679, MOZ#1203167).
