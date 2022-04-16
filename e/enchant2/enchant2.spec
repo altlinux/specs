@@ -3,11 +3,12 @@
 %define api_ver 2
 
 %def_enable aspell
+%def_disable voikko
 %def_disable relocatable
 %def_disable check
 
 Name: %_name%api_ver
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 
 Summary: An Enchanting Spell Checking Program
@@ -26,6 +27,7 @@ Requires:  lib%name = %version-%release
 
 BuildRequires: gcc-c++ glib2-devel libdbus-glib-devel libhunspell-devel
 %{?_enable_aspell:BuildRequires: libaspell-devel}
+%{?_enable_voikko:BuildRequires: libvoikko-devel}
 %{?_enable_check:BuildRequires: libunittest-cpp-devel}
 
 %description
@@ -85,6 +87,9 @@ using libenchant.
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Sat Apr 16 2022 Yuri N. Sedunov <aris@altlinux.org> 2.3.3-alt1
+- 2.3.3
+
 * Sun Dec 05 2021 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
 - 2.3.2
 
