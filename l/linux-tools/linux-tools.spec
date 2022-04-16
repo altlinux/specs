@@ -14,7 +14,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -246,7 +246,6 @@ sed -i 's/-s\b/-g/' testing/selftests/size/Makefile
 sed -i 's/-std=gnu99/& -g/' testing/selftests/vDSO/Makefile
 sed -Ei '\!^CFLAGS!s!(-Wl,-rpath=)\./!\1/usr/lib/kselftests/rseq!' testing/selftests/rseq/Makefile
 
-sed -i 's/rst2man/rst2man.py/' ../Documentation/tools/rtla/Makefile
 sed -i '/ln -s/s/-s $(DESTDIR)/-s /' tracing/rtla/Makefile
 
 %define optflags_lto %nil
@@ -256,11 +255,12 @@ banner build
 cd %kernel_source/tools
 
 # Use rst2man from python3-module-docutils
-# Sisyphus have rst2man.py, p9 have rst2man.py3.
-rst2man() {
-	type rst2man.py3 >/dev/null 2>&1 && rst2man.py3 "$@" || rst2man.py "$@"
-}; export -f rst2man
-
+# Sisyphus have rst2man, p10 have rst2man.py, p9 have rst2man.py3.
+type rst2man &>/dev/null || {
+	rst2man() {
+		type rst2man.py3 &>/dev/null 2>&1 && rst2man.py3 "$@" || rst2man.py "$@"
+	}; export -f rst2man
+}
 # Noiseless git stub
 git() { exit 1; }; export -f git
 
@@ -634,6 +634,9 @@ fi
 %_man1dir/rtla*
 
 %changelog
+* Sat Apr 16 2022 Vitaly Chikunov <vt@altlinux.org> 5.17-alt2
+- spec: Fix rebuild with new rst2man.
+
 * Wed Mar 23 2022 Vitaly Chikunov <vt@altlinux.org> 5.17-alt1
 - Updated to v5.17 (2022-03-20).
 - Package RTLA tools.
