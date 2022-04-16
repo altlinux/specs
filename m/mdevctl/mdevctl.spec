@@ -1,6 +1,6 @@
 Name:		mdevctl
 Version:	1.1.0
-Release:	alt2.22
+Release:	alt3.22
 Summary:	Mediated device management and persistence utility
 
 Group:		System/Configuration/Hardware
@@ -37,7 +37,7 @@ directory = "vendor"
 EOF
 
 %build
-export RST2MAN=rst2man.py
+export RST2MAN=rst2man
 cargo build --offline --release
 
 %install
@@ -45,7 +45,7 @@ cargo build --offline --release
 
 %check
 export RUST_BACKTRACE=1
-export RST2MAN=rst2man.py
+export RST2MAN=rst2man
 cargo check
 cargo test --release --no-fail-fast
 
@@ -60,6 +60,9 @@ cargo test --release --no-fail-fast
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sat Apr 16 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.1.0-alt3.22
+- spec: fix build with rst2man
+
 * Fri Mar 18 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.1.0-alt2.22
 - update to upstream, fix for rst2man
 - package mdevctl.d directory
