@@ -2,22 +2,22 @@
 
 Name:           python3-module-%oname
 Version:        2.0.0
-Release:        alt1
+Release:        alt2
 
-Summary:        No description=(
+Summary:        A sphinx extension which renders HTML help files
 
 Group:          Development/Python3
 License:        BSD
 URL:            https://pypi.org/project/sphinxcontrib-htmlhelp
 
-Source0:        %oname-%version.tar
+Source0:        %oname-%version.tar.gz
 
 BuildArch:      noarch
 
 BuildRequires:  gettext
 
 %description
-Really no description=(
+%summary
 
 %prep
 %setup -n %oname-%version
@@ -35,6 +35,9 @@ Really no description=(
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Sat Apr 16 2022 Fr. Br. George <george@altlinux.ru> 2.0.0-alt2
+- Fix old version in version.py
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Automatically updated to 2.0.0.
 
