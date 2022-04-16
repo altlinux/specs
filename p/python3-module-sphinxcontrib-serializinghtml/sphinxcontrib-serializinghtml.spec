@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 1.1.5
-Release: alt1
+Release: alt2
 
 Summary: Sphinx extension for serialized HTML
 
@@ -12,8 +12,7 @@ Group:   Development/Python3
 License: BSD-2-Clause
 URL:     https://pypi.org/project/sphinxcontrib-serializinghtml
 
-# https://github.com/sphinx-doc/sphinxcontrib-serializinghtml
-Source0: %oname-%version.tar
+Source0: %oname-%version.tar.gz
 
 BuildArch: noarch
 
@@ -39,7 +38,7 @@ HTML files (json and pickle).
 %python3_install
 
 %check
-%{__python3} -m pytest
+python3 -m pytest
 
 %files
 %doc README.rst
@@ -48,6 +47,9 @@ HTML files (json and pickle).
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Sat Apr 16 2022 Fr. Br. George <george@altlinux.ru> 1.1.5-alt2
+- Fix old version
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.5-alt1
 - Automatically updated to 1.1.5.
 
