@@ -1,20 +1,28 @@
 Name: rpm-macros-uefi
 Version: 0.6
-Release: alt1
+Release: alt2
 
 Summary: A set of RPM macros to help package UEFI related things
 License: ALT-Public-Domain
 Group: Development/Other
 
 Url: http://www.altlinux.org/UEFI
-Requires: pesign
 # NB: it's *not* noarch due to %%_libdir in a macro
 
 %define macrofile %_rpmmacrosdir/uefi
 
-%description
-This package carries helpful macros to package
-(and probably sign before that) UEFI binaries.
+%package -n rpm-build-uefi
+Summary: macros and tools to help package UEFI related things
+Group: Development/Other
+Requires: rpm-macros-uefi = %EVR
+Requires: pesign
+
+%description -n rpm-macros-uefi
+This package carries helpful macros to package UEFI binaries.
+
+%description -n rpm-build-uefi
+This package carries the build environment and helpful macros
+to package (and probably sign before that) UEFI binaries.
 
 %prep
 
@@ -38,10 +46,15 @@ cat > %buildroot%macrofile << EOF
 %endif
 EOF
 
-%files
+%files -n rpm-macros-uefi
 %macrofile
 
+%files -n rpm-build-uefi
+
 %changelog
+* Sat Apr 16 2022 Igor Vlasenko <viy@altlinux.org> 0.6-alt2
+- NMU: moved deps to rpm-build-uefi
+
 * Wed Sep 08 2021 Nikolai Kostrigin <nickel@altlinux.org> 0.6-alt1
 - added %%_efi_arch definition for aarch64
 - spec: clarified the license (mike@)
