@@ -1,6 +1,6 @@
 Name: zlib
-Version: 1.2.11
-Release: alt2
+Version: 1.2.12
+Release: alt1
 
 Summary: The zlib compression and decompression library
 Summary(ru_RU.UTF-8): Библиотека сжатия данных zlib
@@ -70,7 +70,7 @@ xz -9k FAQ doc/algorithm.txt
 iconv -fcp1252 -tutf8 < ChangeLog | xz -9 > ChangeLog.xz
 
 %build
-%global optflags_lto %optflags_lto -ffat-lto-objects
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define _optlevel 3
 
 %if_enabled asm
@@ -146,6 +146,9 @@ make test
 %_pkgconfigdir/minizip.pc
 
 %changelog
+* Sun Mar 27 2022 Dmitry V. Levin <ldv@altlinux.org> 1.2.12-alt1
+- v1.2.11 -> v1.2.12 (fixes: CVE-2018-25032).
+
 * Tue Aug 24 2021 Dmitry V. Levin <ldv@altlinux.org> 1.2.11-alt2
 - Added -ffat-lto-objects to %%optflags_lto.
 
