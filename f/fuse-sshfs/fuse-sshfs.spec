@@ -1,6 +1,6 @@
 Name: fuse-sshfs
 Version: 3.7.2.0.7.gita2054a2
-Release: alt1
+Release: alt2
 
 Summary: SSH filesystem using FUSE
 License: GPL-2.0-or-later
@@ -10,7 +10,6 @@ Url: https://github.com/libfuse/sshfs
 # repacked https://github.com/libfuse/sshfs/releases/download/sshfs-%version/sshfs-%version.tar.xz
 Source: sshfs-%version.tar
 Source1: sshfs.watch
-Patch1: alt-find-rst2man.patch
 
 BuildRequires: libfuse3-devel >= 3.1.0 meson python3-module-docutils
 Requires: ssh-provider-openssh-clients
@@ -39,7 +38,6 @@ that codebase, so he rewrote it. Features of this implementation are:
 
 %prep
 %setup -q -n sshfs-%version
-%patch1 -p1
 
 %build
 %meson
@@ -56,6 +54,9 @@ that codebase, so he rewrote it. Features of this implementation are:
 %_man1dir/sshfs.*
 
 %changelog
+* Sat Apr 16 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.7.2.0.7.gita2054a2-alt2
+- Drop rst2man patch, see https://bugzilla.altlinux.org/41784.
+
 * Mon Jan 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.7.2.0.7.gita2054a2-alt1
 - Updated to sshfs-3.7.2-7-ga2054a2.
 
