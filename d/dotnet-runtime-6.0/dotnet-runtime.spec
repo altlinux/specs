@@ -21,7 +21,7 @@
 
 Name: dotnet-runtime-%_dotnet_major
 Version: 6.0.3%preview
-Release: alt1
+Release: alt2
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
 
@@ -99,6 +99,9 @@ Requires: dotnet-host
 Requires: dotnet-runtime-%_dotnet_major = %EVR
 Requires: dotnet-hostfxr-%_dotnet_major = %EVR
 #Requires: dotnet-apphost-pack-%_dotnet_major = %EVR
+%if_enabled dotnet_host
+Provides: dotnet = %EVR
+%endif
 
 %description -n dotnet-%_dotnet_major
 The .NET %_dotnet_major.
@@ -372,6 +375,9 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Tue Apr 12 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.3-alt2
+- provide dotnet package (as recommended dotnet package)
+
 * Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.3-alt1
 - new version (6.0.3) with rpmgs script
 - CVE-2022-24464 : .NET Denial of Service Vulnerability
