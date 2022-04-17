@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qtermwidget
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: unicode-enabled, embeddable QT4 terminal widget
@@ -87,6 +87,9 @@ This package contains the development headers for %name library.
 %_libdir/cmake/*/
 
 %changelog
+* Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Fri Nov 05 2021 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
 - new version 1.0.0
 

@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: obconf-qt
-Version: 0.16.1
+Version: 0.16.2
 Release: alt1
 
 Summary: Openbox configuration tool
@@ -39,6 +39,9 @@ BuildRequires: libopenbox-devel
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 0.16.2-alt1
+- new version 0.16.2
+
 * Tue Aug 31 2021 Anton Midyukov <antohami@altlinux.org> 0.16.1-alt1
 - new version 0.16.1
 

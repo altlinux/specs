@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-about
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: About dialog of LXDE-Qt
@@ -33,9 +33,13 @@ BuildRequires: kf5-kwindowsystem-devel
 %_bindir/*
 %_desktopdir/*.desktop
 %_datadir/lxqt/translations/*
+%_iconsdir/hicolor/scalable/apps/%name.svg
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Fri Nov 05 2021 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
 - new version 1.0.0
 

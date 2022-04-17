@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-globalkeys
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 
 Summary: Service used to register global keyboard shortcuts
@@ -66,6 +66,9 @@ sed -i '/find_dependency(lxqt-globalkeys 0.14.2)/d' \
 %_datadir/cmake/*/
 
 %changelog
+* Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Tue Feb 08 2022 Anton Midyukov <antohami@altlinux.org> 1.0.1-alt1
 - new version 1.0.0
 - set 'lximage-qt -s' as default for hotkey 'printscreen'

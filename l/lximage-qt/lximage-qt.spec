@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lximage-qt
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Image viewer and screenshot tool
@@ -38,9 +38,13 @@ BuildRequires: glib2-devel libpcre-devel
 %_iconsdir/*/*/*/*
 %_desktopdir/*.desktop
 %_datadir/%name
+%_datadir/metainfo/%name.metainfo.xml
 %doc AUTHORS CHANGELOG README.md
 
 %changelog
+* Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Fri Nov 05 2021 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
 - new version 1.0.0
 

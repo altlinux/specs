@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: qterminal
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Qt-based multitab terminal emulator
@@ -52,10 +52,13 @@ at http://qterminal.sourceforge.net/
 %_bindir/%name
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
-%_datadir/appdata/*
+%_datadir/metainfo/%name.metainfo.xml
 %_datadir/%name
 
 %changelog
+* Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Fri Nov 05 2021 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
 - new version 1.0.0
 

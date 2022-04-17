@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-panel
-Version: 1.0.0
+Version: 1.1.0
 Release: alt1
 
 Summary: Desktop panel
@@ -16,17 +16,26 @@ Patch: alt-settings.patch
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: liblxqt-devel
-BuildRequires: libqtxdg-devel qt5-base-devel qt5-tools-devel
+BuildRequires: libqtxdg-devel
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools-devel
 BuildRequires: kf5-solid-devel
 BuildRequires: kf5-kwindowsystem-devel
 #kf5-kguiaddons-devel
 BuildRequires: libdbusmenu-qt5-devel
 BuildRequires: lxqt-globalkeys-devel
 BuildRequires: libalsa-devel
-BuildRequires: libXdmcp-devel libXdamage-devel
-BuildRequires: libXcomposite-devel libXrender-devel libxcbutil-devel
-BuildRequires: libmenu-cache-devel libstatgrab-devel libsensors3-devel
-BuildRequires: libxkbcommon-devel libxkbcommon-x11-devel
+BuildRequires: libXdmcp-devel
+BuildRequires: libXdamage-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXrender-devel
+BuildRequires: libxcbutil-devel
+BuildRequires: libxcbutil-image-devel
+BuildRequires: libmenu-cache-devel
+BuildRequires: libstatgrab-devel
+BuildRequires: libsensors3-devel
+BuildRequires: libxkbcommon-devel
+BuildRequires: libxkbcommon-x11-devel
 BuildRequires: libgio-devel
 
 # see bug 34612
@@ -78,6 +87,9 @@ This package provides the development files for %name.
 %_includedir/*/*.h
 
 %changelog
+* Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Fri Nov 05 2021 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
 - new version 1.0.0
 

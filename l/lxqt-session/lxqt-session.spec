@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-session
-Version: 1.0.1
+Version: 1.1.0
 Release: alt1
 
 Summary: Session manager
@@ -13,6 +13,7 @@ Url: https://lxqt.org
 Source0: %name-%version.tar
 Source1: 08lxqt
 Patch: fix_XDG_CONFIG_DIRS.patch
+Patch1: alt-settings.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
@@ -34,7 +35,7 @@ Conflicts: lxqt-common <= 0.11.0
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 # https://bugzilla.altlinux.org/32657
 sed -i 's,Exec=,Exec=%_bindir/,' xsession/lxqt.desktop.in
@@ -55,12 +56,14 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %_xdgconfigdir/autostart/lxqt-xscreensaver-autostart.desktop
 %_desktopdir/*.desktop
 %_datadir/xsessions/*.desktop
-%_datadir/kdm/sessions/*.desktop
 %_datadir/lxqt/*
 %_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Wed Feb 23 2022 Anton Midyukov <antohami@altlinux.org> 1.0.1-alt1
 - new version 1.0.1
 
