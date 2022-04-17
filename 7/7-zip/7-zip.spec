@@ -1,13 +1,13 @@
-Name:       7-zip
-Version:    21.04
-Release:    alt1
-Group:      Archiving/Compression
-License:    LGPLv2+ with UnRAR exception
-URL:        https://www.7-zip.org
-Source:     %name-%version.tar.gz
-Patch1:     nostrip.patch
-Summary:    Official 7-zip for linux, the file archiver with a high compression ratio
-Provides:   7zz = %version-%release
+Name: 7-zip
+Version: 21.07
+Release: alt1
+Group: Archiving/Compression
+License: LGPLv2+ with UnRAR exception
+Url: https://www.7-zip.org
+Source: %name-%version.tar.xz
+Patch1: nostrip.patch
+Summary: Official 7-zip for linux, the file archiver with a high compression ratio
+Provides: 7zz = %version-%release
 
 # Automatically added by buildreq on Fri Jul 02 2021
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel python3-base sh4
@@ -31,7 +31,7 @@ BuildRequires: gcc-c++
     Localizations for 87 languages
 
 %prep
-%setup -c
+%setup
 %patch1 -p1
 
 %build
@@ -39,6 +39,8 @@ cd CPP/7zip/Bundles/Alone2
 %make_build -f ../../cmpl_gcc.mak \
 %ifarch %e2k
 	CFLAGS_WARN="-Wno-error -O%_optlevel" \
+%else
+	MY_LIBS="-flto=auto"
 %endif
 	LOCAL_FLAGS="%optflags"
 
@@ -49,8 +51,10 @@ install -D CPP/7zip/Bundles/Alone2/b/g/7zz %buildroot%_bindir/7zz
 %doc DOC/*
 %_bindir/*
 
-
 %changelog
+* Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 21.07-alt1
+- Autobuild version bump to 21.07
+
 * Tue Nov 09 2021 Fr. Br. George <george@altlinux.ru> 21.04-alt1
 - Manual version up
 - Update patches
