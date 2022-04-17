@@ -1,7 +1,8 @@
 %define oname arpeggio
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.10.2
+Version: 2.0.0
 Release: alt1
 
 Summary: Parser interpreter based on PEG grammars written in Python
@@ -12,9 +13,14 @@ BuildArch: noarch
 
 Source0: Arpeggio-%version.tar.gz
 
-# Automatically added by buildreq on Mon Sep 06 2021
-# optimized out: python3 python3-base python3-dev python3-module-Pygments python3-module-babel python3-module-click python3-module-dateutil python3-module-ghp-import python3-module-importlib-metadata python3-module-jinja2 python3-module-markdown python3-module-markupsafe python3-module-mergedeep python3-module-packaging python3-module-pkg_resources python3-module-pytz python3-module-pyyaml-env-tag python3-module-six python3-module-watchdog python3-module-yaml python3-module-zipp sh4 xz
-BuildRequires: python3-module-mkdocs python3-module-pip python3-module-setuptools python3-module-wheel
+# Automatically added by buildreq on Sun Apr 17 2022
+# optimized out: alt-os-release fonts-font-awesome libgpg-error mpdecimal python3 python3-base python3-dev python3-module-Pygments python3-module-apipkg python3-module-attrs python3-module-babel python3-module-click python3-module-dateutil python3-module-ghp-import python3-module-importlib-metadata python3-module-iniconfig python3-module-jinja2 python3-module-markdown python3-module-markupsafe python3-module-mergedeep python3-module-mkdocs python3-module-packaging python3-module-pep517 python3-module-pkg_resources python3-module-pluggy python3-module-py python3-module-pyparsing python3-module-pytest python3-module-pytz python3-module-pyyaml-env-tag python3-module-six python3-module-tomli python3-module-verspec python3-module-watchdog python3-module-yaml python3-module-zipp sh4 xz
+BuildRequires: python3-module-build python3-module-flit python3-module-mike python3-module-setuptools python3-module-wheel python3-module-pytest-runner
+
+
+%if_with check
+BuildRequires: pytest3
+%endif
 
 %description
 Arpeggio is a recursive descent parser with memoization based on PEG
@@ -29,27 +35,35 @@ Group: Development/Python3
 %prep
 %setup -n Arpeggio-%version
 # A bit of hack here
-python3 -c "import configparser; config = configparser.ConfigParser(); config.read('setup.cfg'); config['options']['setup_requires']=''; print(config['options']['setup_requires']); config.write(open('setup.cfg', 'w'))"
+## python3 -c "import configparser; config = configparser.ConfigParser(); config.read('setup.cfg'); config['options']['setup_requires']=''; print(config['options']['setup_requires']); config.write(open('setup.cfg', 'w'))"
 
 %build
-%python3_build_debug -b build3
-
+python3 -m build -n -w
 mkdocs build
 
+%if_with check
+%check
+pytest3
+%endif
+
 %install
-rm -rf build && ln -sf build3 build
-%python3_install
+pip3 install --root=%buildroot --no-deps -I dist/Arpeggio-%version-*py3-none-any.whl
 
 %files
 %doc site examples
 %python3_sitelibdir_noarch/%oname
 %exclude %python3_sitelibdir_noarch/%oname/tests
-%python3_sitelibdir_noarch/Arpeggio-*.egg-info
+%python3_sitelibdir_noarch/Arpeggio-*
 
 %files tests
 %python3_sitelibdir_noarch/%oname/tests
 
 %changelog
+* Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 2.0.0-alt1
+- Autobuild version bump to 2.0.0
+- Switch to modern build scheme
+- Introduce tests
+
 * Tue Sep 21 2021 Fr. Br. George <george@altlinux.ru> 1.10.2-alt1
 - Autobuild version bump to 1.10.2
 - Separate tests submodule
