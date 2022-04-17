@@ -8,8 +8,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 4.3.1
-Release: alt3
+Version: 4.5.0
+Release: alt1
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
@@ -43,7 +43,6 @@ BuildRequires: /usr/bin/convert
 
 %if_enabled docs
 BuildRequires: python3(docutils)
-BuildRequires: python3(sphinx)
 %endif
 
 %if_enabled check
@@ -156,6 +155,7 @@ This packages contains RPM macros for build with Sphinx.
 
 # ship the stable releases
 sed -i '/^tag_build =.*/d;/^tag_date =.*/d' setup.cfg
+sed -i 's/docutils>=0.14,<0.18/docutils>=0.14,<0.19/' setup.py
 
 install -pm644 %SOURCE1 .
 
@@ -170,8 +170,10 @@ install -pm644 %SOURCE2 .
 
 %if_enabled docs
 # docs
+export PYTHONPATH=`pwd`/build/lib
 %make_build -C doc html
 %make_build -C doc man
+%make_build -C doc pickle
 %endif
 
 %install
@@ -211,9 +213,6 @@ install -d %buildroot%_rpmmacrosdir
 sed -e 's:@SPHINX3_DIR@:%sphinx3_dir:g' < macro3 > %buildroot%_rpmmacrosdir/sphinx3
 
 %if_enabled docs
-# add pickle files
-%make_build -C doc pickle
-
 install -d %buildroot%sphinx3_dir/doctrees
 install -p -m644 doc/_build/doctrees/*.pickle \
 	%buildroot%sphinx3_dir/doctrees/
@@ -238,8 +237,9 @@ rm -f tests/test_build_linkcheck.py
 export TESTS_NO_NETWORK=yes
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOX_TESTENV_PASSENV="PIP_NO_BUILD_ISOLATION TESTS_NO_NETWORK"
+export TOX_TESTENV_PASSENV="PIP_NO_BUILD_ISOLATION TESTS_NO_NETWORK PYTHONPATH"
 export TOXENV=py3
+export PYTHONPATH=`pwd`/build/lib
 tox.py3 --sitepackages -vvr -s false -- -vra
 
 %files
@@ -272,6 +272,9 @@ tox.py3 --sitepackages -vvr -s false -- -vra
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Sat Apr 16 2022 Fr. Br. George <george@altlinux.org> 1:4.5.0-alt1
+- Autobuild version bump to 4.5.0
+
 * Thu Feb 17 2022 Michael Shigorin <mike@altlinux.org> 1:4.3.1-alt3
 - Fix build with --enable docs --disable check.
 
