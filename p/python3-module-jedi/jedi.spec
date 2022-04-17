@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: python3-module-jedi
-Version: 0.18.0
+Version: 0.18.1
 Release: alt1
 Summary: An autocompletion tool for Python that can be used for text editors
 License: MIT
@@ -98,6 +98,9 @@ py.test-%_python3_version -vv
 %doc docs/_build3/html/*
 
 %changelog
+* Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 0.18.1-alt1
+- Autobuild version bump to 0.18.1
+
 * Mon Feb 01 2021 Fr. Br. George <george@altlinux.ru> 0.18.0-alt1
 - Autobuild version bump to 0.18.0
 
