@@ -1,5 +1,5 @@
 Name: eget
-Version: 5.5
+Version: 5.6
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,11 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Sun Apr 17 2022 Vitaly Lipatov <lav@altlinux.ru> 5.6-alt1
+- eget: clean warnings
+- eget: add support for -O- and -O/dev/stdout
+- add script to prepare patches for eepm
+
 * Fri Apr 15 2022 Vitaly Lipatov <lav@altlinux.ru> 5.5-alt1
 - eget: don't add latest slash, slit file to lines by tags
 - eget: add examples to help
