@@ -1,6 +1,6 @@
 Name: dosbox-staging
-Version: 0.77.0
-Release: alt2
+Version: 0.78.1
+Release: alt1
 License: GPLv2
 Summary: An attempt to revitalize DOSBox, an emulator that recreates a MS-DOS compatible environment
 Group: Emulators
@@ -11,9 +11,9 @@ Patch: dosbox-staging-0.77.0-ne2000.patch
 %set_verify_elf_method textrel=relaxed
 %endif
 
-# Automatically added by buildreq on Tue Aug 24 2021
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libX11-devel libcrypt-devel libglvnd-devel libgmock-devel libgpg-error libogg-devel libopus-devel libp11-kit libstdc++-devel libxcb-devel ninja-build perl pkg-config python3 python3-base sh4 xz zlib-devel
-BuildRequires: ctags gcc-c++ git-core libSDL2_net-devel libalsa-devel libfluidsynth-devel libgtest-devel libmt32emu-devel libopusfile-devel libpcap-devel libpng-devel meson
+# Automatically added by buildreq on Thu Apr 07 2022
+# optimized out: glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libX11-devel libcrypt-devel libglvnd-devel libgmock-devel libgpg-error libogg-devel libopus-devel libp11-kit libstdc++-devel libxcb-devel ninja-build perl pkg-config python3 python3-base sh4 xz zlib-devel
+BuildRequires: ctags gcc-c++ git-core libSDL2_net-devel libalsa-devel libfluidsynth-devel libgtest-devel libmt32emu-devel libopusfile-devel libpcap-devel libpng-devel libslirp-devel meson
 
 %description
 dosbox-staging is an attempt to revitalize DOSBox's development process.
@@ -42,7 +42,7 @@ sed -i 's/=dosbox$/=dosbox-staging/' contrib/linux/dosbox-staging.desktop
 sed -i 's/>dosbox</>dosbox-staging</' contrib/linux/dosbox-staging.metainfo.xml
 
 %build
-%meson -Duse_pcap=true
+%meson
 %meson_build
 
 %install
@@ -60,11 +60,16 @@ mv %buildroot/%_man1dir/dosbox.1 %buildroot/%_man1dir/dosbox-staging.1
 %_iconsdir/hicolor/*/apps/*
 %_desktopdir/*
 %_datadir/metainfo/*
+%_datadir/dosbox-staging
+
 %exclude %_defaultdocdir/%name
 %exclude %_datadir/licenses
 
-
 %changelog
+* Thu Apr 07 2022 Fr. Br. George <george@altlinux.org> 0.78.1-alt1
+- Autobuild version bump to 0.78.1
+- Introduce translations
+
 * Wed Aug 25 2021 Fr. Br. George <george@altlinux.ru> 0.77.0-alt2
 - Fix original DOSBox file conflicts
 
