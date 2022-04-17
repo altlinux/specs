@@ -1,6 +1,6 @@
 Name: pudb
-Version: 2019.2
-Release: alt2
+Version: 2022.1.1
+Release: alt1
 
 Summary: A full-screen, console-based Python debugger
 License: MIT
@@ -11,8 +11,8 @@ BuildArch: noarch
 Source: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-Requires: python3-module-%name
-
+Requires: python3(pygments) python3(%name) python3(jedi)
+Provides: %{name}3 = %version.%release
 
 %description
 PuDB is a full-screen, console-based visual debugger for Python.
@@ -27,17 +27,21 @@ or C tools, PuDB's UI might look familiar.
 Summary: Supplemental python3 module for %name, %summary
 Group: Development/Python3
 BuildArch: noarch
+Requires: python3(urwid_readline)
 
 %description -n python3-module-%name
 Supplemental python module for %name, %summary
 
+%package -n python3-module-%name-ipython
+Summary: IPython plugin for %name
+Group: Development/Python3
+BuildArch: noarch
+
+%description -n python3-module-%name-ipython
+IPython plugin for %name
+
 %prep
 %setup
-
-cat > %name.sh <<@@@
-#!/bin/sh
-python3 -m pudb.run "\$@"
-@@@
 
 %build
 %python3_build
@@ -52,9 +56,19 @@ python3 -m pudb.run "\$@"
 %files -n python3-module-%name
 %doc test
 %python3_sitelibdir_noarch/*
+%exclude %python3_sitelibdir_noarch/%name/ipython*
 
+%files -n python3-module-%name-ipython
+%python3_sitelibdir_noarch/%name/ipython*
 
 %changelog
+* Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 2022.1.1-alt1
+- Autobuild version bump to 2022.1.1
+
+* Fri Feb 11 2022 Fr. Br. George <george@altlinux.ru> 2022.1-alt1
+- Autobuild version bump to 2022.1
+- Separate IPython plugin
+
 * Mon Feb 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 2019.2-alt2
 - Build for python2 disabled.
 
