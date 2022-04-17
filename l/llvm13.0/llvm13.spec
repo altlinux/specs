@@ -63,7 +63,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt1
+Release: alt2
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -147,9 +147,6 @@ Summary: Libraries and header files for LLVM
 %requires_filesystem
 Requires: llvm-devel >= %_llvm_version
 Requires: %name = %EVR
-# Compatibility note:
-# The gold plugin was located in llvm-devel prior to 12.0.1-alt3.
-Requires: %name-gold
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -197,6 +194,7 @@ Summary: LLVM shared libraries
 # We pull in the gold plugin for e. g. Clang's -flto=thin to work
 # out of the box with gold.
 Requires: %name-gold
+Requires: %name-polly
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -601,12 +599,16 @@ fi
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %define builddir %_cmake__builddir
 %cmake -G Ninja -S llvm \
+	-DPACKAGE_VENDOR="%vendor" \
+%if_with clang
 	-DLLVM_PARALLEL_LINK_JOBS=1 \
+%else
+	-DLLVM_PARALLEL_LINK_JOBS=4 \
+%endif
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_PREFIX=%llvm_prefix \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
 	-DBUILD_SHARED_LIBS:BOOL=OFF \
-	-DPACKAGE_VENDOR="%vendor" \
 	-DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;compiler-rt;lld;lldb;mlir;polly" \
 	-DLLVM_TARGETS_TO_BUILD="all" \
 	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
@@ -629,7 +631,7 @@ fi
 	-DCMAKE_NM:PATH=%_bindir/llvm-nm \
 	-DLLVM_ENABLE_LLD:BOOL=ON \
 	%else
-	-DLLVM_ENABLE_LTO=On \
+	-DLLVM_ENABLE_LTO=Off \
 	%ifnarch riscv64
 	-DLLVM_USE_LINKER=gold \
 	%endif
@@ -662,9 +664,9 @@ fi
 	-DLLVM_INCLUDE_UTILS:BOOL=ON \
 	-DLLVM_INSTALL_UTILS:BOOL=OFF \
 	\
-	-DLLVM_INCLUDE_DOCS:BOOL=ON \
-	-DLLVM_BUILD_DOCS:BOOL=ON \
-	-DLLVM_ENABLE_SPHINX:BOOL=ON \
+	-DLLVM_INCLUDE_DOCS:BOOL=OFF \
+	-DLLVM_BUILD_DOCS:BOOL=OFF \
+	-DLLVM_ENABLE_SPHINX:BOOL=OFF \
 	-DSPHINX_WARNINGS_AS_ERRORS:BOOL=OFF \
 	-DSPHINX_EXECUTABLE=%_bindir/sphinx-build-3 \
 	-DLLVM_ENABLE_DOXYGEN:BOOL=OFF \
@@ -732,6 +734,10 @@ for mand in %buildroot%llvm_datadir/man/man*; do
 	done
 done
 
+# Remove certain man pages to unblock urgent fix.
+rm -f %buildroot%llvm_man1dir/*.1*
+rm -f %buildroot%_man1dir/*.1*
+
 # Symlink sonamed shared libraries in %llvm_prefix/%_libdir to %_libdir.
 mkdir -p %buildroot%_libdir
 find %buildroot%llvm_libdir/*.so* -type f,l \
@@ -761,7 +767,7 @@ echo "Expelling likely redundant Clang shared runtimes:" && cat %_tmppath/dyn-fi
 emit_filelist() {
     awk -F'\t' '
 $1 ~ "bin" { print "%llvm_bindir/" $2; print "%_bindir/" $2 "-%v_major"; }
-$1 ~ "man" { print "%llvm_man1dir/" $2 ".1*"; print "%_man1dir/" $2 "-%v_major.1*"; }
+$1 ~ "man" {  }
 '
 }
 
@@ -907,6 +913,20 @@ emit_filelist >%_tmppath/dyn-files-lib%polly_name-devel <<EOExecutableList
 man	polly
 EOExecutableList
 
+# Comment out file validation for CMake targets placed
+# in a different package.
+sed -i '
+/APPEND _IMPORT_CHECK_TARGETS \(mlir-\|MLIR\)/ {s|^|#|}
+/APPEND _IMPORT_CHECK_TARGETS \(Polly\)/ {s|^|#|}
+/APPEND _IMPORT_CHECK_TARGETS \(llvm-omp-device-info\|omptarget\)/ {s|^|#|}
+' %buildroot%llvm_libdir/cmake/llvm/LLVMExports-*.cmake
+
+# Comment out file validation for CMake targets producing executables
+# that may be placed in a different package.
+sed -i '
+/APPEND _IMPORT_CHECK_FILES_FOR_.* .*[/]bin[/].*/ {s|^|#|}
+' %buildroot%llvm_libdir/cmake/clang/ClangTargets-*.cmake
+
 %check
 %if_enabled tests
 LD_LIBRARY_PATH=%buildroot%llvm_libdir:$LD_LIBRARY_PATH
@@ -947,8 +967,8 @@ ninja -C %builddir check-all || :
 %files devel
 %llvm_bindir/llvm-config
 %_bindir/llvm-config-%v_major
-%llvm_man1dir/llvm-config.1.*
-%_man1dir/llvm-config-%v_major.1.*
+# %llvm_man1dir/llvm-config.1.*
+# %_man1dir/llvm-config-%v_major.1.*
 %llvm_includedir/llvm
 %llvm_includedir/llvm-c
 %llvm_libdir/libLLVM.so
@@ -1084,22 +1104,28 @@ ninja -C %builddir check-all || :
 %llvm_libdir/libPolly*.a
 
 %files doc
-%doc %llvm_docdir/llvm
+#doc %llvm_docdir/llvm
 
 %files -n %clang_name-doc
-%doc %llvm_docdir/clang
-%doc %llvm_docdir/clang-tools
+#doc %llvm_docdir/clang
+#doc %llvm_docdir/clang-tools
 
 %files -n %lld_name-doc
-%doc %llvm_docdir/lld
+#doc %llvm_docdir/lld
 
 %files -n %lldb_name-doc
 #doc %llvm_docdir/lldb
 
 %files -n lib%polly_name-doc
-%doc %llvm_docdir/polly
+#doc %llvm_docdir/polly
 
 %changelog
+* Fri Apr 15 2022 Arseny Maslennikov <arseny@altlinux.org> 13.0.1-alt2
+- Dropped certain targets from import checks in CMake configs.
+  This will fix bug 39685, or, at least, dramatically reduce its impact.
+- Built without gcc-LTO, since it miscompiles the LLVM optimizer.
+- Temporarily disabled doc generation to urgently push the fix above.
+
 * Sat Feb 19 2022 Arseny Maslennikov <arseny@altlinux.org> 13.0.1-alt1
 - 13.0.1.
 - Merge llvm-devel-static with llvm-devel.
