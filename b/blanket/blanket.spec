@@ -1,19 +1,23 @@
 %def_enable snapshot
 %define _name blanket
-%define ver_major 0.5
+%define ver_major 0.6
 %define rdn_name com.rafaelmardojai.Blanket
 
 Name: %_name
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
-Summary: Listen to different sounds
+Summary: Listen to ambient sounds
 License: GPL-3.0-or-later
 Group: Sound
 Url: https://github.com/rafaelmardojai/blanket
 
+%if_disabled snapshot
+Source: %url/-/archive/%version/%name-%version.tar.gz
+%else
 Vcs: https://github.com/rafaelmardojai/blanket.git
 Source: %_name-%version.tar
+%endif
 
 BuildArch: noarch
 
@@ -27,7 +31,7 @@ BuildRequires: meson /usr/bin/appstream-util desktop-file-utils
 
 %description
 Improve focus and increase your productivity by listening to different
-sounds. Or allows you to fall asleep in a noisy environment.
+ambient sounds. Or allows you to fall asleep in a noisy environment.
 
 %prep
 %setup -n %_name-%version
@@ -51,6 +55,9 @@ sounds. Or allows you to fall asleep in a noisy environment.
 
 
 %changelog
+* Sun Apr 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Mon Apr 11 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt2
 - updated to 0.5.0-65-gaf542e4 (fixed for GStreamer-1.20)
 
