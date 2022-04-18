@@ -1,6 +1,6 @@
 Name: nvidia-modprobe
-Version: 470.86
-Release: alt2
+Version: 510.60.02
+Release: alt1
 
 Group: System/Configuration/Hardware
 Summary: Helper to load kernel module and create device files
@@ -40,6 +40,9 @@ make install NV_VERBOSE=1 OUTPUTDIR=BUILD STRIP_CMD=true NV_KEEP_UNSTRIPPED_BINA
 
 
 %changelog
+* Fri Apr 08 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt1
+- new version
+
 * Wed Nov 24 2021 Sergey V Turchin <zerg@altlinux.org> 470.86-alt2
 - make SUID
 

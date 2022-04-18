@@ -17,17 +17,14 @@
 #define dirsuffix -no-compat32
 %endif
 
-%define nvidia_egl_wayland_sover 1
-%define nvidia_egl_wayland_libver 1.1.2
 %define gl_libver 1.7.0
 %define egl_libver 1.1.0
-%define libnvidia_egl_wayland libnvidia-egl-wayland%nvidia_egl_wayland_sover
 
 # version-release
-%define nv_version 470
-%define nv_release 103
-%define nv_minor   01
-%define pkg_rel alt236
+%define nv_version 510
+%define nv_release 60
+%define nv_minor   02
+%define pkg_rel alt237
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -42,11 +39,9 @@
 %ifarch %ix86
 %def_disable kernelsource
 %define subd ./32
-%def_disable package_egl_wayland
 %else
 %def_enable kernelsource
 %define subd ./
-%def_disable package_egl_wayland
 %endif
 #
 %def_disable package_wfb
@@ -131,6 +126,7 @@ Sources for %{bin_pkg_name}_%{version} package
 %package -n %{bin_pkg_name}_%{version}
 Requires(pre): %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
+Requires: libnvidia-egl-gbm >= 0
 %ifnarch aarch64
 Provides: libnvidia-compiler = %EVR
 Obsoletes: libnvidia-compiler < %EVR
@@ -156,12 +152,6 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 %description -n kernel-source-%module_name-%module_version
 %module_name modules sources for Linux kernel
 
-%package -n %libnvidia_egl_wayland
-Group: System/Libraries
-Summary: nvidia library
-Provides: libnvidia-egl-wayland = %version-%release
-%description -n %libnvidia_egl_wayland
-nvidia library
 
 %prep
 %setup -T -c -n %tbname-%tbver%dirsuffix
@@ -232,15 +222,10 @@ soname()
 %__install -m 0644 %subd/libnvidia-compiler.so.%tbver %buildroot/%_libdir/
 %endif
 %ifnarch %ix86 armh
-%__install -m 0644 %subd/libnvidia-cbl.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 %subd/libnvidia-rtcore.so.%tbver %buildroot/%_libdir/
 %__install -m 0644 %subd/libnvidia-vulkan-producer.so.%tbver %buildroot/%_libdir/
 %endif
 #
-%if_enabled package_egl_wayland
-%__install -m 0644 %subd/libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/
-#ln -s libnvidia-egl-wayland.so.%nvidia_egl_wayland_libver %buildroot/%_libdir/libnvidia-egl-wayland.so.%nvidia_egl_wayland_sover
-%endif
 
 install -m 0644 %SOURCE2 %buildroot/%nv_lib_dir/nvidia.xinf
 ln -sr %buildroot/%nv_lib_dir/nvidia.xinf %buildroot/%nv_lib_sym_dir/nvidia.xinf
@@ -352,7 +337,6 @@ fi
 %_libdir/libnvidia-compiler.so.%version
 %endif
 %ifnarch %ix86 armh
-%_libdir/libnvidia-cbl.so.%version
 %_libdir/libnvidia-rtcore.so.%version
 %_libdir/libnvidia-vulkan-producer.so.%version
 %endif
@@ -392,20 +376,17 @@ fi
 %_datadir/vulkan/implicit_layer.d/%{version}_nvidia_layers.json
 %_datadir/egl/egl_external_platform.d/%{version}_nvidia_wayland.json
 
-%if_enabled package_egl_wayland
-%files -n %libnvidia_egl_wayland
-%_libdir/libnvidia-egl-wayland.so.%{nvidia_egl_wayland_sover}
-%_libdir/libnvidia-egl-wayland.so.%{nvidia_egl_wayland_sover}.*
-%endif
-
 %if_enabled kernelsource
 %files -n kernel-source-%module_name-%module_version
 %_usrsrc/*
 %endif
 
 %changelog
-* Fri Apr 15 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt236
+* Fri Apr 15 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt237
 - fix requires
+
+* Thu Apr 14 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt236
+- new version
 
 * Fri Apr 08 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt235
 - package more internal libraries

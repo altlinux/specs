@@ -1,8 +1,8 @@
 %def_enable translation
 
 Name: nvidia-settings
-Version: 470.57.02
-Release: alt2
+Version: 510.60.02
+Release: alt1
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
@@ -126,6 +126,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Fri Apr 15 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt1
+- new version
+
 * Mon Aug 30 2021 Sergey V Turchin <zerg@altlinux.org> 470.57.02-alt2
 - fix to build
 

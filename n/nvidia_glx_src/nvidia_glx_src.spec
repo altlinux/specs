@@ -21,8 +21,8 @@
 %endif
 
 Name: nvidia_glx_src
-Version: 470.103.01
-Release: alt2
+Version: 510.60.02
+Release: alt1
 
 Source0: null
 Source201: http://http.download.nvidia.com/XFree86/Linux-x86_64/%version/%tbname-%version.run
@@ -153,6 +153,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %_libdir/libnvidia-encode.so.%version
 
 %changelog
+* Fri Apr 15 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt1
+- new version
+
 * Fri Apr 08 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt2
 - dont package libnvidia-compiler
 

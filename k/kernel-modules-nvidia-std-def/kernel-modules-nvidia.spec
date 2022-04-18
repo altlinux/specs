@@ -7,7 +7,7 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define package_version	470.103.01
+%define package_version	510.60.02
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.147
@@ -23,8 +23,14 @@
 %define xorg_ver %{get_version xorg-x11-server}
 %endif
 
+%define legacy7 %nil
+%nvIF_ver_lt %xorg_ver 99
+%define legacy7 470.103.01
+%endif
+%define legacy7_src %(echo %legacy7 | tr -d .)
+
 %define legacy6 %nil
-%nvIF_ver_lt %xorg_ver 22
+%nvIF_ver_lt %xorg_ver 99
 %define legacy6 390.147
 %endif
 %define legacy6_src %(echo %legacy6 | tr -d .)
@@ -60,9 +66,11 @@
 %define legacy1_src %(echo %legacy1 | tr -d .)
 
 %ifarch %ix86 armh
+%define legacy7 %nil
 %define legacy6 %nil
 %endif
 %ifarch aarch64
+%define legacy7 %nil
 %define legacy6 %nil
 %define legacy5 %nil
 %define legacy4 %nil
@@ -70,7 +78,7 @@
 %define legacy2 %nil
 %define legacy1 %nil
 %endif
-%define mod_ver_list %module_version %legacy6 %legacy5 %legacy4 %legacy3 %legacy2 %legacy1
+%define mod_ver_list %module_version %legacy7 %legacy6 %legacy5 %legacy4 %legacy3 %legacy2 %legacy1
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/nVidia
 %define module_local_dir /lib/modules/nvidia
@@ -98,6 +106,9 @@ BuildRequires(pre): kernel-headers-modules-std-def
 BuildRequires: rpm-utils
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name-%module_srcver
+%if "%legacy7" != "%nil"
+BuildRequires: kernel-source-%module_name-%legacy7_src
+%endif
 %if "%legacy6" != "%nil"
 BuildRequires: kernel-source-%module_name-%legacy6_src
 %endif
@@ -126,6 +137,9 @@ Conflicts: modutils < 2.4.27-alt4
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 Requires: kernel-modules-drm-%flavour = %kepoch%kversion-%krelease
 Requires:       nvidia_glx_%module_version
+%if "%legacy7" != "%nil"
+Requires:       nvidia_glx_%legacy7
+%endif
 %if "%legacy6" != "%nil"
 Requires:       nvidia_glx_%legacy6
 %endif
@@ -281,7 +295,10 @@ fi
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Fri Feb 25 2022 Sergey V Turchin <zerg at altlinux dot org> NNN.XX-alt1
+* Mon Apr 18 2022 Sergey V Turchin <zerg at altlinux dot org> 510.60.02-alt1
+- new release(510.60.02)
+
+* Fri Feb 25 2022 Sergey V Turchin <zerg at altlinux dot org> 470.103.01-alt2
 - fix maximum xserver version for 390
 
 * Wed Feb 09 2022 Sergey V Turchin <zerg at altlinux dot org> 470.103.01-alt1

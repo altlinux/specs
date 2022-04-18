@@ -1,6 +1,6 @@
 Name: nvidia-xconfig
-Version: 470.57.02
-Release: alt2
+Version: 510.60.02
+Release: alt1
 
 Group: System/Configuration/Hardware
 Summary: Command line tool for setup X11 for the NVIDIA driver
@@ -11,6 +11,7 @@ Source: %name-%version.tar.gz
 Patch1: alt-cflags.patch
 
 BuildRequires: glibc-devel
+BuildRequires: libpciaccess-devel
 
 %description
 Command line tool for setup X11 for the NVIDIA driver
@@ -32,6 +33,9 @@ make install NV_VERBOSE=1 OUTPUTDIR=BUILD PREFIX=%buildroot/%prefix bindir=%buil
 
 
 %changelog
+* Fri Apr 15 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt1
+- new version
+
 * Thu Aug 26 2021 Sergey V Turchin <zerg@altlinux.org> 470.57.02-alt2
 - fix build requires
 

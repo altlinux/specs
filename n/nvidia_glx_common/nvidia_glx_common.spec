@@ -13,11 +13,11 @@
 
 # version-release
 
-%define nv_version 470
-%define nv_release 103
-%define nv_minor 01
-%define pkg_rel alt251
-%define set_gl_nvidia_ver 1.5.2
+%define nv_version 510
+%define nv_release 60
+%define nv_minor 02
+%define pkg_rel alt252
+%define set_gl_nvidia_ver 1.6.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -213,6 +213,7 @@ install -m 0755 %SOURCE4 %buildroot/%_bindir/
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLESv2_nvidia.so.2
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.1
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libGLX_nvidia.so.0
+%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libnvidia-allocator.so.1
 %__ln_s `relative %x11driver_dir %_sysconfdir/libnvidiacurrent` %buildroot/%_sysconfdir/libnvidiacurrent
 %__ln_s `relative %_sysconfdir/libnvidiacurrent %nv_etclib_sym_dir/current` %buildroot/%nv_etclib_sym_dir/current
 %if "%_lib" == "lib64"
@@ -227,6 +228,7 @@ install -m 0755 %SOURCE4 %buildroot/%_bindir/
 %__ln_s ../..%nv_etclib_sym_dir/libGLESv2_nvidia.so.2 %buildroot/%x11_lib_dir/libGLESv2_nvidia.so.2
 %__ln_s ../..%nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.1 %buildroot/%x11_lib_dir/libGLESv1_CM_nvidia.so.1
 %__ln_s ../..%nv_etclib_sym_dir/libGLX_nvidia.so.0 %buildroot/%x11_lib_dir/libGLX_nvidia.so.0
+%__ln_s ../..%nv_etclib_sym_dir/libnvidia-allocator.so.1 %buildroot/%x11_lib_dir/libnvidia-allocator.so.1
 
 
 # nvidia_drv.o
@@ -307,6 +309,7 @@ fi
 %nv_etclib_sym_dir/libGLESv2_nvidia.so.?
 %nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.?
 %nv_etclib_sym_dir/libGLX_nvidia.so.?
+%nv_etclib_sym_dir/libnvidia-allocator.so.?
 #%nv_etclib_sym_dir/nvidia.xinf
 %nv_etclib_sym_dir/current
 %_sysconfdir/libnvidiacurrent
@@ -323,6 +326,7 @@ fi
 %x11_lib_dir/libGLESv2_nvidia.so.?
 %x11_lib_dir/libGLESv1_CM_nvidia.so.?
 %x11_lib_dir/libGLX_nvidia.so.?
+%x11_lib_dir/libnvidia-allocator.so.?
 #
 %_bindir/nvidia-clean-driver
 %_bindir/nvidia-install-driver
@@ -337,6 +341,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Mon Apr 18 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt252
+- switch libnvidia-allocator
+
 * Mon Feb 28 2022 Sergey V Turchin <zerg@altlinux.org> 470.103.01-alt251
 - don't load nvidia module by udev rules
 
