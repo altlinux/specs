@@ -19,17 +19,12 @@
 
 %def_enable devel
 
-%def_disable gui_athena
 %def_enable gui_gnome2
 %def_enable gui_gtk2
 %def_enable gui_gtk3
 %def_disable gui_motif
-%def_enable gui_neXtaw
 
 %global gui %nil
-%if_enabled gui_athena
-%global gui %gui athena
-%endif
 %if_enabled gui_gnome2
 %global gui %gui gnome2
 %endif
@@ -42,9 +37,6 @@
 %if_enabled gui_motif
 %global gui %gui motif
 %endif
-%if_enabled gui_neXtaw
-%global gui %gui neXtaw
-%endif
 
 %if "%gui" != "%nil"
 %force_enable gui_any
@@ -56,7 +48,7 @@
 
 Name: vim
 %define branch 8.2
-Version: %branch.4753
+Version: %branch.4784
 Release: alt1
 Epoch: 4
 
@@ -100,10 +92,6 @@ BuildPreReq: ctags
 %if_enabled gui_any
 BuildPreReq: libICE-devel libSM-devel libX11-devel libXdmcp-devel libXpm-devel libXt-devel xorg-proto-devel
 %endif
-# Athena
-%if_enabled gui_athena
-BuildPreReq: libXaw-devel libXext-devel libXmu-devel
-%endif
 # GNOME2
 %if_enabled gui_gnome2
 BuildPreReq: ORBit2-devel glib2-devel gnome-vfs2-devel libGConf2-devel libart_lgpl-devel libatk-devel libbonobo2-devel libbonoboui-devel libcairo-devel libgnome-devel libgnomecanvas-devel libgnomeui-devel libgtk+2-devel libpango-devel libpopt-devel libxml2-devel pkg-config zlib-devel
@@ -119,10 +107,6 @@ BuildPreReq: libgtk+3-devel
 # motif
 %if_enabled gui_motif
 BuildPreReq: libXau-devel libXext-devel libXmu-devel libXp-devel openmotif-devel
-%endif
-# neXtaw
-%if_enabled gui_neXtaw
-BuildPreReq: libXext-devel libXmu-devel libneXtaw-devel
 %endif
 # Perl
 %if_enabled perlinterp
@@ -354,31 +338,6 @@ Install the vim-X11 package if you'd like to use a full-featured VIM
 with both terminal and X11 interface.  You'll also need to install the
 vim-common package.
 # }}}
-# {{{ vim-X11-athena
-%package X11-athena
-Summary: A full version of VIM editor, including Xaw GUI for the X Window System
-Group: Editors
-PreReq: coreutils
-PreReq: alternatives >= 0.2.0-alt0.7
-Requires: %name-X11 = %epoch:%version-%release
-Provides: %name-X11-gui = %epoch:%version-%release
-Provides: %_bindir/vim-X11
-Obsoletes: vim-color
-
-%description X11-athena
-VIM (VIsual editor iMproved) is an updated and improved version of the
-vi editor.  Vi was the first real screen-based editor for UNIX, and is
-still very popular.  VIM improves on vi by adding new features: multiple
-windows, multi-level undo, block highlighting and more.
-
-VIM-X11 is a full version of the VIM editor, including the GUI. You can
-run it either in terminal or within the X Window System. This package
-supersedes vim-ehnanced package.
-
-Install the vim-X11 package if you'd like to use a full-featured VIM
-with both terminal and X11 Xaw interface.  You'll also need to install
-the vim-X11 package.
-# }}}
 # {{{ vim-X11-gnome2
 %package X11-gnome2
 Summary: A full version of VIM editor, including GNOME GUI for the X Window System
@@ -480,31 +439,6 @@ supersedes vim-ehnanced package.
 Install the vim-X11 package if you'd like to use a full-featured VIM
 with both terminal and X11 Motif interface.  You'll also need to install
 the vim-X11 package.
-# }}}
-# {{{ vim-X11-neXtaw
-%package X11-neXtaw
-Summary: A full version of VIM editor, including neXtaw GUI for the X Window System
-Group: Editors
-PreReq: coreutils
-PreReq: alternatives >= 0.2.0-alt0.7
-Requires: %name-X11 = %epoch:%version-%release
-Provides: %name-X11-gui = %epoch:%version-%release
-Provides: %_bindir/vim-X11
-Obsoletes: vim-color
-
-%description X11-neXtaw
-VIM (VIsual editor iMproved) is an updated and improved version of the
-vi editor.  Vi was the first real screen-based editor for UNIX, and is
-still very popular.  VIM improves on vi by adding new features: multiple
-windows, multi-level undo, block highlighting and more.
-
-VIM-X11 is a full version of the VIM editor, including the GUI. You can
-run it either in terminal or within the X Window System. This package
-supersedes vim-ehnanced package.
-
-Install the vim-X11 package if you'd like to use a full-featured VIM
-with both terminal and X11 neXtaw interface.  You'll also need to
-install the vim-X11 package.
 # }}}
 # {{{ vim-devel
 %package -n rpm-build-vim
@@ -881,9 +815,6 @@ install -p -m644 alternatives/vim-console %buildroot%_altdir/vim-console
 %if_enabled gui_any
 install -p -m644 alternatives/vim-X11 %buildroot%_altdir/vim-X11
 
- %if_enabled gui_athena
-install -p -m644 alternatives/vim-X11-athena %buildroot%_altdir/vim-X11-athena
- %endif
  %if_enabled gui_gnome2
 install -p -m644 alternatives/vim-X11-gnome2 %buildroot%_altdir/vim-X11-gnome2
  %endif
@@ -895,9 +826,6 @@ install -p -m644 alternatives/vim-X11-gtk3 %buildroot%_altdir/vim-X11-gtk3
  %endif
  %if_enabled gui_motif
 install -p -m644 alternatives/vim-X11-motif %buildroot%_altdir/vim-X11-motif
- %endif
- %if_enabled gui_neXtaw
-install -p -m644 alternatives/vim-X11-neXtaw %buildroot%_altdir/vim-X11-neXtaw
  %endif
 %endif
 # 2}}}
@@ -1085,14 +1013,6 @@ fi
 %_desktopdir/gvim.desktop
 %endif
 # }}}
-# {{{ vim-X11-athena files
-%if_enabled gui_athena
-%files X11-athena
-%_altdir/vim-X11-athena
-%_bindir/vim-athena
-%_bindir/gvim-athena
-%endif
-# }}}
 # {{{ vim-X11-gnome2 files
 %if_enabled gui_gnome2
 %files X11-gnome2
@@ -1125,14 +1045,6 @@ fi
 %_bindir/gvim-motif
 %endif
 # }}}
-# {{{ vim-X11-neXtaw files
-%if_enabled gui_neXtaw
-%files X11-neXtaw
-%_altdir/vim-X11-neXtaw
-%_bindir/vim-neXtaw
-%_bindir/gvim-neXtaw
-%endif
-# }}}
 # {{{ xxd
 %files -n xxd -f xxd.lang
 %_bindir/xxd
@@ -1140,6 +1052,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Mon Apr 18 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.4784-alt1
+- Updated to v8.2.4784.
+- Dropped unsupported neXtaw GUI.
+
 * Fri Apr 15 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.4753-alt1
 - Updated to 8.2.4753.
 - Enabled gtk3 GUI (alternatives weight = 60).
