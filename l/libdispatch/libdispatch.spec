@@ -2,7 +2,7 @@
 
 Name: libdispatch
 Version: 5.6.0
-Release: alt1
+Release: alt2
 
 Summary: Apple's Grand Central Dispatch library
 
@@ -17,7 +17,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: https://github.com/apple/swift-corelibs-libdispatch/archive/swift-%reltag.tar.gz
 Source: %name-%version.tar
 
-Patch: noerrors.patch
+Patch0: noerrors.patch
 
 BuildRequires: llvm
 
@@ -31,7 +31,8 @@ BuildRequires: chrpath
 BuildRequires: ctest
 %endif
 
-ExclusiveArch: x86_64 aarch64
+# [armh]     clang: error: unable to execute command: Segmentation fault
+ExcludeArch: armh ppc64le
 
 Provides:      libBlocksRuntime = %EVR
 Obsoletes:     libBlocksRuntime < 7.0.0
@@ -97,6 +98,9 @@ chrpath --delete %buildroot%_libdir/libdispatch.so
 %_includedir/os/
 
 %changelog
+* Mon Apr 18 2022 Vitaly Lipatov <lav@altlinux.ru> 5.6.0-alt2
+- build for all Telegram arches
+
 * Fri Apr 15 2022 Vitaly Lipatov <lav@altlinux.ru> 5.6.0-alt1
 - initial build for ALT Sisyphus
 
