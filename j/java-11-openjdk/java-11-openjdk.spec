@@ -408,7 +408,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt1_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
+Release: alt2_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -580,15 +580,15 @@ Source44: import.info
 %define javaws_ver      %{javaver}
 
 %if "%{_lib}" == "lib64"
-Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so()(64bit)
-Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1)(64bit)
-Provides: %{_jvmdir}/%{sdkdir}/lib/%archinstall/server/libjvm.so()(64bit)
-Provides: %{_jvmdir}/%{sdkdir}/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1)(64bit)
+Provides: /usr/lib/jvm/jre/lib/server/libjvm.so()(64bit)
+Provides: /usr/lib/jvm/jre/lib/server/libjvm.so(SUNWprivate_1.1)(64bit)
+Provides: %{_jvmdir}/%{sdkdir}/lib/server/libjvm.so()(64bit)
+Provides: %{_jvmdir}/%{sdkdir}/lib/server/libjvm.so(SUNWprivate_1.1)(64bit)
 %else
-Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so()
-Provides: /usr/lib/jvm/java/jre/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1)
-Provides: %{_jvmdir}/%{sdkdir}/lib/%archinstall/server/libjvm.so()
-Provides: %{_jvmdir}/%{sdkdir}/lib/%archinstall/server/libjvm.so(SUNWprivate_1.1)
+Provides: /usr/lib/jvm/jre/lib/server/libjvm.so()
+Provides: /usr/lib/jvm/jre/lib/server/libjvm.so(SUNWprivate_1.1)
+Provides: %{_jvmdir}/%{sdkdir}/lib/server/libjvm.so()
+Provides: %{_jvmdir}/%{sdkdir}/lib/server/libjvm.so(SUNWprivate_1.1)
 %endif
 Patch33: java-9-openjdk-alt-no-objcopy.patch
 
@@ -1778,6 +1778,9 @@ fi
 %endif
 
 %changelog
+* Mon Apr 18 2022 Igor Vlasenko <viy@altlinux.org> 0:11.0.14.1.1-alt2_1jpp11
+- NMU: corrected libjvm.so provides.
+
 * Fri Feb 18 2022 Andrey Cherepanov <cas@altlinux.org> 0:11.0.14.1.1-alt1_1jpp11
 - New version.
 - Security fixes
