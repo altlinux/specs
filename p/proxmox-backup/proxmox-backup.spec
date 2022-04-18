@@ -4,7 +4,7 @@
 
 Name: proxmox-backup
 Version: 2.1.5
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -79,7 +79,6 @@ This package contains the Proxmox Backup Documentation files.
 %prep
 %setup
 %patch -p1
-sed -i 's|rst2man|rst2man.py|' docs/Makefile
 rm -f docs/installation.rst
 
 %build
@@ -192,6 +191,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Sat Apr 16 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:2.1.5-alt3
+- spec: fix build with rst2man
+
 * Thu Mar 31 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.1.5-alt2
 - add backup system user with UID=37 for server and file-restore
 - fix execute post/preun scripts for server
