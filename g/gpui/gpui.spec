@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.0
-Release: alt13
+Version: 0.2.14
+Release: alt1
 
 Summary: Group policy editor
 License: GPLv2+
@@ -97,6 +97,11 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Mon Apr 18 2022 Vladimir Rubanov <august@altlinux.org> 0.2.14-alt1
+- Fixes:
+  + Vesioning improved.
+  + Fixed build on e2k platform.
+
 * Fri Apr 04 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt13
 - Fixes:
   + #75065 Add workaround for bug #75065.
