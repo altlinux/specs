@@ -19,12 +19,13 @@
 
 %define gl_libver 1.7.0
 %define egl_libver 1.1.0
+%define gbm_ver %{get_version libgbm-devel}
 
 # version-release
 %define nv_version 510
 %define nv_release 60
 %define nv_minor   02
-%define pkg_rel alt237
+%define pkg_rel alt238
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -106,7 +107,7 @@ Patch2: alt-ignore-dma-remap.patch
 Patch4: kernel-5.11-aarch64.patch
 Patch5: kernel-5.13-aarch64.patch
 
-BuildRequires(pre): rpm-build-ubt
+BuildRequires(pre): rpm-build-ubt libgbm-devel
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
 BuildRequires: libXext-devel libEGL-devel egl-wayland-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel
@@ -126,7 +127,9 @@ Sources for %{bin_pkg_name}_%{version} package
 %package -n %{bin_pkg_name}_%{version}
 Requires(pre): %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
+%Nif_ver_gteq %gbm_ver 21.1
 Requires: libnvidia-egl-gbm >= 0
+%endif
 %ifnarch aarch64
 Provides: libnvidia-compiler = %EVR
 Obsoletes: libnvidia-compiler < %EVR
@@ -382,6 +385,9 @@ fi
 %endif
 
 %changelog
+* Mon Apr 18 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt238
+- fix requires for old gbm
+
 * Fri Apr 15 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt237
 - fix requires
 
