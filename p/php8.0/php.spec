@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  0
-%define _php_release_version 17
+%define _php_release_version 18
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -253,7 +253,7 @@ touch configure.ac
 	--without-sqlite \
 	--with-regex=php \
 	--without-pear \
-	%ifarch %e2k
+	%ifarch %e2k riscv64
 	--without-pcre-jit \
 	%endif
 #
@@ -457,6 +457,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Mon Apr 18 2022 Anton Farygin <rider@altlinux.ru> 8.0.18-alt1
+- 8.0.17 -> 8.0.18
+
 * Sat Mar 19 2022 Anton Farygin <rider@altlinux.ru> 8.0.17-alt1
 - 8.0.16 -> 8.0.17
 
