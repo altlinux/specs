@@ -56,7 +56,7 @@
 
 Name: branding-simply-linux
 Version: 10.0.900
-Release: alt1
+Release: alt2
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 %ifarch %ix86 x86_64
@@ -509,6 +509,10 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Mon Apr 18 2022 Mikhail Efremov <sem@altlinux.org> 10.0.900-alt2
+- menu: Drop system-config-printer.desktop.
+- slideshow: Update slides (closes: #42424).
+
 * Mon Apr 11 2022 Mikhail Efremov <sem@altlinux.org> 10.0.900-alt1
 - xfce-settings: Update XKB plugin settings.
 - indexhtml: Add Yandex.Zen link.
