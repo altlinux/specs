@@ -7,7 +7,7 @@
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 27.2.3
+Version: 27.2.4
 Release: alt1
 License: GPLv2+
 Group: Video
@@ -51,6 +51,7 @@ BuildRequires: pkgconfig(gio-unix-2.0)
 BuildRequires: pkgconfig(libpci)
 BuildRequires: pipewire-libs-devel
 BuildRequires: libdrm-devel
+BuildRequires: libmbedtls13-devel
 %ifarch %luajit_arches
 BuildRequires: pkgconfig(luajit)
 %endif
@@ -137,6 +138,7 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 %cmake \
 	-DOBS_VERSION_OVERRIDE=%version \
 	-DUNIX_STRUCTURE=1 \
+	-DWITH_RTMPS=ON \
 	-DBUILD_BROWSER=OFF \
 	-DBUILD_VST=OFF
 
@@ -184,6 +186,10 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 %_datadir/obs/obs-plugins/linux-pulseaudio/
 
 %changelog
+* Tue Apr 19 2022 Evgeny Sinelnikov <sin@altlinux.org> 27.2.4-alt1
+- new version 27.2.4
+- build with rtmps support
+
 * Tue Mar 08 2022 Anton Midyukov <antohami@altlinux.org> 27.2.3-alt1
 - new version 27.2.3
 
