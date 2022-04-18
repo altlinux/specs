@@ -1,11 +1,11 @@
 %def_enable introspection
 %def_enable vala
-%define git_hash .g1870071c
-#define git_hash %nil
+#define git_hash .g1870071c
+%define git_hash %nil
 
 Name: xfce4-panel
-Version: 4.16.3
-Release: alt3%git_hash
+Version: 4.17.0
+Release: alt1%git_hash
 
 Summary: Panel for Xfce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
@@ -15,13 +15,12 @@ Url: https://www.xfce.org/
 
 Vcs: https://gitlab.xfce.org/xfce/xfce4-panel.git
 Source: %name-%version.tar
-Source1: for_translation_xfce4-panel_master_ru.po
 Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildRequires: libxfce4util-devel >= 4.15.6-alt1
-BuildRequires: libxfce4ui-gtk3-devel >= 4.15.7-alt1 libexo-gtk3-devel >= 0.6.0 libgarcon-gtk3-devel
+BuildRequires: libxfce4ui-gtk3-devel >= 4.17.1-alt1 libexo-gtk3-devel >= 0.6.0 libgarcon-gtk3-devel >= 0.8.0
 BuildRequires: gtk-doc libwnck3-devel libICE-devel libXext-devel libSM-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libdbusmenu-gtk3-devel
@@ -109,8 +108,6 @@ Vala bindings for libxfce4panel-gtk3.
 %setup
 %patch -p1
 
-cp -a %SOURCE1 po/ru.po
-
 %build
 # Don't use git tag in version.
 %xfce4_drop_gitvtag xfce4_panel_version_tag configure.ac.in
@@ -165,6 +162,10 @@ cp -a %SOURCE1 po/ru.po
 %endif
 
 %changelog
+* Mon Apr 18 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
+- Use upstream Russian translation.
+- Updated to 4.17.0.
+
 * Mon Apr 11 2022 Mikhail Efremov <sem@altlinux.org> 4.16.3-alt3.g1870071c
 - Upstream git snapshot (xfce-4.16 branch) (closes: #42398).
 
