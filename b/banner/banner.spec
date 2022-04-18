@@ -1,15 +1,17 @@
 Name: banner
 Release: alt1
-Version: 1.3.4
+Version: 1.3.5
 
 Summary: Prints a short string to the console in very large letters
-License: GPLv2
 Group: Text tools
+License: GPLv2
+Url: https://github.com/pronovic/%name
 
-Url: http://cedar-solutions.com/software/utilities.html
-Source: http://cedar-solutions.com/ftp/software/%name-%version.tar.gz
-Source100: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
+
+Vcs: https://github.com/pronovic/banner.git
+Source: %url/releases/download/BANNER_V%version/%name-%version.tar.gz
+Source100: %name.watch
 
 %description
 Classic-style banner program similar to the one found in Solaris or AIX.
@@ -32,6 +34,9 @@ letters.
 %_bindir/%name
 
 %changelog
+* Sat Apr 16 2022 Yuri N. Sedunov <aris@altlinux.org> 1.3.5-alt1
+- 1.3.5 (new homepage on GitHub)
+
 * Fri Feb 27 2015 Michael Shigorin <mike@altlinux.org> 1.3.4-alt1
 - new version (watch file uupdate)
 

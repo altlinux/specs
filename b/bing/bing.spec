@@ -1,17 +1,17 @@
 Name: bing
-Version: 1.1.3
-Release: alt1.qa1
+Version: 1.3.5
+Release: alt1
 
 Summary: Bing, a point-to-point bandwidth measurement tool (b from Bandwith)
-License: BSD
+Summary(ru_RU.UTF-8): Bing - я│я─п╣п╢я│я┌п╡п╬ п╦п╥п╪п╣я─п╣п╫п╦я▐ п©я─п╬п╦п╥п╡п╬п╢п╦я┌п╣п╩я▄п╫п╬я│я┌п╦ я│п╣я┌п╦
 Group: Networking/Other
-
+# from bing.8 by nomossa
+License: BSD-4-Clause-UC
 Url: http://fgouget.free.fr/bing/index-en.shtml
-Source: %name-%version.tar.bz2
-Patch0: bing.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
-Summary(ru_RU.KOI8-R): Bing - средство измерения производительности сети
+Source: http://fgouget.free.fr/%name/%{name}_src-%version.tar.gz
 
 # Automatically added by buildreq on Tue Aug 05 2003
 BuildRequires: groff-base groff-ps
@@ -21,28 +21,32 @@ Bing determines the real (raw, as opposed to available or average)
 throughput on a link by measuring ICMP echo requests roundtrip times
 for different packet sizes for each end of the link.
 
-%description -l ru_RU.KOI8-R
-Bing определяет реальную (а не доступную или среднюю) пропускную способность
-канала связи путем измерения времени возвращения эхо-запросов ICMP при
-использовании различных размеров пакетов для обоих концов соединения.
+%description -l ru_RU.UTF-8
+Bing п╬п©я─п╣п╢п╣п╩я▐п╣я┌ я─п╣п╟п╩я▄п╫я┐я▌ (п╟ п╫п╣ п╢п╬я│я┌я┐п©п╫я┐я▌ п╦п╩п╦ я│я─п╣п╢п╫я▌я▌) п©я─п╬п©я┐я│п╨п╫я┐я▌ я│п©п╬я│п╬п╠п╫п╬я│я┌я▄
+п╨п╟п╫п╟п╩п╟ я│п╡я▐п╥п╦ п©я┐я┌п╣п╪ п╦п╥п╪п╣я─п╣п╫п╦я▐ п╡я─п╣п╪п╣п╫п╦ п╡п╬п╥п╡я─п╟я┴п╣п╫п╦я▐ я█я┘п╬-п╥п╟п©я─п╬я│п╬п╡ ICMP п©я─п╦
+п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╦ я─п╟п╥п╩п╦я┤п╫я▀я┘ я─п╟п╥п╪п╣я─п╬п╡ п©п╟п╨п╣я┌п╬п╡ п╢п╩я▐ п╬п╠п╬п╦я┘ п╨п╬п╫я├п╬п╡ я│п╬п╣п╢п╦п╫п╣п╫п╦я▐.
 
 %prep
-%setup -q
-%patch -p0
+%setup
 
 %build
-%make_build
+%make_build "COPTIM=$RPM_OPT_FLAGS"
 
 %install
-install -pD -m755 bing %buildroot%_bindir/bing
-install -pD -m644 unix/bing.8 %buildroot%_man8dir/bing.8
+install -pD -m755 %name %buildroot%_bindir/%name
+install -pD -m644 unix/%name.8 %buildroot%_man8dir/%name.8
 
 %files
 %doc ChangeLog Readme.* bing.ps
-%_bindir/bing
-%_man8dir/bing*
+%_bindir/%name
+%_man8dir/%name.8.*
 
 %changelog
+* Sat Apr 16 2022 Yuri N. Sedunov <aris@altlinux.org> 1.3.5-alt1
+- 1.3.5
+- spec converted to UTF-8
+- fixed License tag
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.1.3-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
