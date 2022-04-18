@@ -10,8 +10,8 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.4.6.10
-Release: alt1
+Version: 0.4.7.6
+Release: alt0.rc%ubt
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
@@ -23,10 +23,14 @@ Source1: %name.init
 Source2: %name.systemd.service
 Source3: %name.tmpfiles
 
-# Automatically added by buildreq on Fri Jun 24 2011
-# optimized out: fontconfig fonts-type1-urw ghostscript-classic libcom_err-devel libkrb5-devel tex-common texlive-base texlive-base-bin texlive-common texlive-latex-base texlive-latex-recommended
-BuildRequires: ghostscript-common libevent-devel libssl-devel texlive-fonts-recommended texlive-generic-recommended transfig zlib-devel
-BuildRequires: libcap-devel libsystemd-devel liblzma-devel libzstd-devel
+Patch1:	 %name-0.4.7.6-source-date.patch
+
+BuildRequires(pre): ubt-utils
+
+# Automatically added by buildreq on Sun Apr 17 2022
+# optimized out: asciidoc docbook-dtds docbook-style-xsl glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error perl pkg-config python2-base python3 python3-base sh4 termutils tzdata xml-common xml-utils xsltproc xz
+BuildRequires: asciidoc-a2x libcap-devel libevent-devel liblzma-devel libseccomp-devel libssl-devel libsystemd-devel libzstd-devel zlib-devel
+
 %ifarch %ix86 x86_64 aarch64
 BuildRequires: libseccomp-devel
 %endif
@@ -53,22 +57,26 @@ for high-stakes anonymity.
 
 %prep
 %setup
+%patch1 -p1
 
 # Set default configuration values
 sed -i 's:^#Log notice file.*:Log notice file %_var/log/%name/%name.log:' src/config/torrc.sample.in
 sed -i 's:^#DataDirectory.*:DataDirectory %_var/cache/%name:' src/config/torrc.sample.in
 
 %build
+%autoreconf
+
 %configure --with-tor-user=%{toruser} --with-tor-group=%{toruser} --localstatedir=/var
 %make_build
 
 %install
 %makeinstall_std
 
+cp README.md README
 install -pD -m755 %SOURCE1 %buildroot/%_initdir/%name
 mv %buildroot/%_sysconfdir/%name/torrc.sample %buildroot/%_sysconfdir/%name/torrc
 mkdir -p %buildroot%_tor_root
-mkdir -p %buildroot%_var/{cache/%name,log/%name}
+mkdir -p %buildroot%_var/{cache/%name,log/%name,}
 mkdir -p %buildroot/run/%name
 mkdir -p %buildroot%_tmpfilesdir
 
@@ -146,6 +154,12 @@ fi
 %_var/cache/%name
 
 %changelog
+* Mon Apr 18 2022 Hihin Ruslan <ruslandh@altlinux.ru> 0.4.7.6-alt0.rc
+- fix tor.service and spec
+
+* Mon Apr 18 2022 Hihin Ruslan <ruslandh@altlinux.ru> 0.4.7.6-alt0.git_616c06c0b2%ubt
+- Develop version
+
 * Thu Feb 10 2022 Vladimir Didenko <cow@altlinux.ru> 0.4.6.10-alt1
 - new version
 
@@ -399,3 +413,4 @@ CVE-2017-8822, CVE-2017-8823)
 - First build for ALT Linux
 - Known problems:
   + service is not being chrooted
+
