@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 21.12.3
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
@@ -50,7 +50,9 @@ Requires: %name-common = %version-%release
 %setup -n %rname-%version
 
 %build
-%K5build
+%K5build \
+    -DKF_IGNORE_PLATFORM_CHECK=ON \
+    #
 
 %install
 %K5install
@@ -68,6 +70,9 @@ Requires: %name-common = %version-%release
 %_K5xmlgui/kmouth/
 
 %changelog
+* Mon Apr 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt2
+- fix to build
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 
