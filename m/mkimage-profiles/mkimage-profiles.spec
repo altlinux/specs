@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.28
+Version: 1.4.29
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,10 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Apr 18 2022 Anton Midyukov <antohami@altlinux.org> 1.4.29-alt1
+- stage2: fix 50-stage2-fs
+- desktop+mate: replace package list to metapackages
+
 * Mon Apr 11 2022 Anton Midyukov <antohami@altlinux.org> 1.4.28-alt1
 - lib/profile.mk: install branding-$$(BRANDING)-release always after basesystem
 - stage2: use propagator for c% BRANCH also
