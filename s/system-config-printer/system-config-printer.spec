@@ -1,6 +1,6 @@
 Name:    system-config-printer
 Version: 1.5.16
-Release: alt2
+Release: alt3
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -14,6 +14,7 @@ Patch1: fix_search_printer.patch
 Patch2: about_logo.patch
 Patch3: %name-alt-fix-SMB-auth-fields-order.patch
 Patch4: %name-1.5.11-plugins.patch
+Patch5: %name-alt-cups-service-name.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: autoconf-archive
@@ -74,6 +75,7 @@ sed -i 's/mod.*ins.*_aft.*//' newprinter.py
 %patch2 -p0
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 ./bootstrap
@@ -118,6 +120,9 @@ exit 0
 %python3_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Tue Apr 19 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.16-alt3
+- Fixed cups service name (ALT #42485).
+
 * Mon Mar 21 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.16-alt2
 - Required cups (ALT #42186).
 
