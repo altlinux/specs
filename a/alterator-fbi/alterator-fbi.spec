@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.49.2
+Version: 5.49.3
 Release: alt1
 
 Source: %name-%version.tar
@@ -26,7 +26,7 @@ Requires: gettext
 Requires: alterator-l10n >= 2.9.50
 Requires: /etc/cron.d
 
-Requires(pre): libguile-vhttpd >= 0.7.7-alt1
+Requires(pre): libguile-vhttpd >= 0.7.11
 Requires(pre): shadow-utils
 
 BuildPreReq: alterator >= 5.4.1-alt3, libguile-vhttpd, libexpat-devel
@@ -161,6 +161,12 @@ fi ||:
 
 
 %changelog
+* Mon Dec 06 2021 Paul Wolneykien <manowar@altlinux.org> 5.49.3-alt1
+- Require libguile-vhttpd >= 0.7.11 with the file upload fix.
+- form.js: Fixed concurrent form lock/unlock with lock counter.
+- form.js: Don't post the whole form along with a single file upload.
+- form.js: Fix/improve displaying of error messages.
+
 * Thu Aug 05 2021 Andrey Cherepanov <cas@altlinux.org> 5.49.2-alt1
 - CSS: fix column size for alterator-updates.
 

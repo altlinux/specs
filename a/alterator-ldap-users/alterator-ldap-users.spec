@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-ldap-users
-Version: 0.8.5
+Version: 0.8.6
 Release: alt2
 
 Summary: Alterator module for ldap users administration
@@ -23,13 +23,9 @@ Requires: passwdqc-utils >= 1.2.2-alt1
 # Has to be optional: depens on Samba-DC.
 #Recommends: netcmdplus
 
-Conflicts: alterator-fbi < 5.18-alt1
+Requires: alterator-fbi >= 5.49.3
 
-%ifarch %e2k
-BuildRequires: guile20-devel libguile20-devel
-%else
-BuildRequires: guile22-devel rpm-build >= 4.0.4-alt103
-%endif
+BuildRequires: guile-devel rpm-build >= 4.0.4-alt103
 BuildRequires: alterator >= 5.0 alterator-fbi >= 5.33-alt1
 
 %description
@@ -39,7 +35,6 @@ Alterator module for local and LDAP user administration
 Summary: Common functions for user and group account data source management
 License: GPL
 Group: Development/Other
-BuildArch: noarch
 
 %description -n alterator-usersource-functions
 Common functions for user and group account data source management.
@@ -66,6 +61,16 @@ Common functions for user and group account data source management.
 %_bindir/alterator-*-functions
 
 %changelog
+* Tue Apr 19 2022 Paul Wolneykien <manowar@altlinux.org> 0.8.6-alt2
+- Switch to the branch's default version of Guile (guile-devel).
+
+* Mon Dec 06 2021 Paul Wolneykien <manowar@altlinux.org> 0.8.6-alt1
+- Require alterator-fbi >= 5.49.3 for upload and UI fixes.
+- Hide the photo frame for AD (closes: 41391).
+- Fix current user selection in the user list.
+- Fix: Return error on trying to upload a photo for AD user.
+- Display the unset login shell as 'Default shell' (closes: 41389).
+
 * Sat May 25 2019 Michael Shigorin <mike@altlinux.org> 0.8.5-alt2
 - minor spec fixup/cleanup
 

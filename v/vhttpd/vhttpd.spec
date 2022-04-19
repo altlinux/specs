@@ -1,5 +1,5 @@
 Name: vhttpd
-Version: 0.7.10
+Version: 0.7.11
 Release: alt1
 
 Summary: simple embedded web server
@@ -94,6 +94,10 @@ guile bindings for %name
 %guile_ccachedir/vhttpd.go
 
 %changelog
+* Mon Dec 06 2021 Paul Wolneykien <manowar@altlinux.org> 0.7.11-alt1
+- Fix: In the case of a UTF-8 conversion error try to interpret
+  the HTTP request body as Latin-1 string.
+
 * Wed Mar 20 2019 Mikhail Efremov <sem@altlinux.org> 0.7.10-alt1
 - Drop libgnutls-devel from BR for now.
 - tests: Make test_message_write independent from lines order.

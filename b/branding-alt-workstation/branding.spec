@@ -24,8 +24,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.0
-Release: alt2
+Version: 10.1
+Release: alt1
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -357,6 +357,12 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Apr 19 2022 Paul Wolneykien <manowar@altlinux.org> 10.1-alt1
+- Lighten the background of list boxes (closes: 41514).
+- Fix: Don't specify extra horizontal margins for inputs in
+  alterator-listbox tables.
+- Fix: Don't restrict the width of the top panel buttons.
+
 * Mon Dec 06 2021 Mikhail Efremov <sem@altlinux.org> 10.0-alt2
 - bootloader: Fix grub colors.
 - bootsplash: Don't set GRUB_WALLPAPER.
