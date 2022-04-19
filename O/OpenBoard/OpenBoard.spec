@@ -4,8 +4,9 @@
 %define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
 Version: 1.6.1
-Release: alt6
+Release: alt8
 Summary: Interactive whiteboard for schools and universities
+Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
 Group: Education
 Url: https://github.com/OpenBoard-org/OpenBoard
@@ -18,6 +19,16 @@ Source1: %name.svg
 Patch: fix-build-with-poppler-22.patch
 
 Patch1: OpenBoard-1.6.1-update-russian-translations.patch
+
+Patch2: submenu-call-area-increasing.patch
+
+Patch3: dark-background-color-set-ability-feature.patch
+
+Patch4: stylus-palette-svg-icons-adding.patch
+Patch5: stylus-palette-icons-replacing.patch
+
+# Adding russian translation of GraphMe widget
+Patch6: graphme-widget-russian-translation.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -59,11 +70,22 @@ Requires: /sbin/pidof
 %description
 Interactive whiteboard for schools and universities.
 
+%description -l ru_RU.UTF-8
+Интерактивная доска для школ и университетов
+
 %prep
 %setup
 %patch -p1
 # update russian translations
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+# stylus palette icons replacing from png to svg
+%patch4 -p1
+%patch5 -p1
+
+# graphme widget russian translation
+%patch6 -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
@@ -164,6 +186,15 @@ cp -R resources/customizations %buildroot%dest_dir/
 %_bindir/%name
 
 %changelog
+* Tue Apr 19 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.1-alt8
+- Adding the patch for russian translation of GraphMe widget
+
+* Tue Apr 12 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.1-alt7
+- Adding a license to the icon
+- Adding the patch for increasing the call area of the submenu
+- Adding the patch for ability to set the color of the dark background in the configuration
+- Adding the patch for stylus palette icons replacing from png to svg
+
 * Wed Mar 23 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.1-alt6
 - Update russian translation for 1.6.1
 - Multiple app instances run ability disabling
