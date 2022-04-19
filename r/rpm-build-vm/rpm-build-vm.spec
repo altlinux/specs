@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.31
+Version: 1.32
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -190,6 +190,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Tue Apr 19 2022 Vitaly Chikunov <vt@altlinux.org> 1.32-alt1
+- Modprobe overlay if '--overlay' is used.
+
 * Sat Feb 12 2022 Vitaly Chikunov <vt@altlinux.org> 1.31-alt1
 - Allow to vm-run on uninstalled kernels (developer mode).
 
