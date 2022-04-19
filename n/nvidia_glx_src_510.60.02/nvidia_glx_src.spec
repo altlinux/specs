@@ -25,7 +25,7 @@
 %define nv_version 510
 %define nv_release 60
 %define nv_minor   02
-%define pkg_rel alt239
+%define pkg_rel alt240
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -129,10 +129,6 @@ Requires(pre): %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
 %Nif_ver_gteq %gbm_ver 21.2
 Requires: libnvidia-egl-gbm >= 0
-%endif
-%ifnarch aarch64
-Provides: libnvidia-compiler = %EVR
-Obsoletes: libnvidia-compiler < %EVR
 %endif
 #
 Group: %myGroup
@@ -385,6 +381,9 @@ fi
 %endif
 
 %changelog
+* Tue Apr 19 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt240
+- remove extra obsolete of libnvidia-compiler
+
 * Mon Apr 18 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt239
 - fix requires
 
