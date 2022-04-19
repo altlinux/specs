@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.51
+Version: %ver_major.52
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -28,7 +28,7 @@ Provides: %name-light = %version-%release
 %define gsf_ver 1.14.48
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.51
+%define goffice_ver 0.10.52
 
 %{?_with_python:
 %add_python3_path %_libdir/%name/%version/plugins
@@ -45,7 +45,8 @@ BuildRequires: bison flex help2man gtk-doc
 BuildRequires: libgnomeoffice%goffice_api_ver-devel >= %goffice_ver
 BuildRequires: libgsf-devel >= %gsf_ver
 BuildRequires: libgtk+3-devel
-BuildRequires: intltool yelp-tools zlib-devel librarian
+BuildRequires: intltool yelp-tools %_bindir/appstream-util desktop-file-utils
+BuildRequires: zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgsf-gir-devel libgnomeoffice%goffice_api_ver-gir-devel}
 %{?_with_perl:BuildRequires: perl-devel}
 %{?_with_python:
@@ -165,7 +166,7 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.dialogs.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.plugin.gschema.xml
-%_datadir/appdata/%name.appdata.xml
+%_datadir/metainfo/%name.appdata.xml
 
 %if_enabled introspection
 %files gir
@@ -183,6 +184,9 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %_pkgconfigdir/*
 
 %changelog
+* Tue Apr 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.52-alt1
+- 1.12.52
+
 * Thu Jan 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.51-alt1
 - 1.12.51
 
