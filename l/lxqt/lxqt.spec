@@ -1,5 +1,5 @@
 Name: lxqt
-Version: 1.0
+Version: 1.1
 Release: alt1
 Summary: Meta package for install LxQt
 Group: Graphical desktop/Other
@@ -81,6 +81,8 @@ Requires: lximage-qt
 Requires: openbox-themes
 # Graphical wrapper for su
 Requires: lxqt-sudo
+# xdg-desktop-portal
+Requires: xdg-desktop-portal-lxqt
 
 %description regular
 %summary
@@ -89,6 +91,10 @@ Requires: lxqt-sudo
 %files regular
 
 %changelog
+* Tue Apr 19 2022 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
+- new version 1.1
+- add requires xdg-desktop-portal-lxqt
+
 * Sat Nov 06 2021 Anton Midyukov <antohami@altlinux.org> 1.0-alt1
 - new version 1.0
 - fix License tag
