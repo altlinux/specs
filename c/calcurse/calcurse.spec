@@ -2,7 +2,7 @@ Group: Office
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           calcurse
-Version:        4.7.1
+Version:        4.8.0
 Release:        alt1
 Summary:        Text-based personal organizer
 Packager:	Ilya Mashkin <oddity@altlinux.ru>
@@ -44,6 +44,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/doc/%{name}
 
 
 %changelog
+* Tue Apr 19 2022 Ilya Mashkin <oddity@altlinux.ru> 4.8.0-alt1
+- 4.8.0
+
 * Wed May 05 2021 Ilya Mashkin <oddity@altlinux.ru> 4.7.1-alt1
 - 4.7.1
 - Add BR: rpm-build-python3
