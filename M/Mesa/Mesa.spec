@@ -85,7 +85,7 @@
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -196,6 +196,20 @@ Group: Development/C
 %description -n libOSMesa-devel
 %summary
 
+%package -n libd3d
+Summary: Mesa Direct3D9 state tracker
+Group: System/Libraries
+
+%description -n libd3d
+%summary
+
+%package -n libd3d-devel
+Summary: Mesa Direct3D9 state tracker development package
+Group: Development/C
+
+%description -n libd3d-devel
+%summary
+
 %package -n xorg-dri-swrast
 Summary: Mesa software rendering libraries
 Group: System/X11
@@ -298,6 +312,7 @@ Mesa-based DRI drivers
 %build
 %meson \
 	-Dplatforms=x11,wayland \
+	-Dgallium-nine=true \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
 	-Dvulkan-layers=device-select \
@@ -327,9 +342,9 @@ Mesa-based DRI drivers
 	-Dgles2=false \
 %endif
 %ifarch %xa_arches
-	-Dgallium-xa=true \
+	-Dgallium-xa=enabled \
 %else
-	-Dgallium-xa=false \
+	-Dgallium-xa=disabled \
 %endif
 %ifarch armh
 	-Dlibunwind=false \
@@ -340,12 +355,13 @@ Mesa-based DRI drivers
 	-Dselinux=true \
 	-Dglvnd=true \
 	-Ddri-drivers-path=%_libdir/X11/modules/dri \
+	-Db_ndebug=true \
 #
 
 %meson_build -v
 
 for i in $(seq 0 %ver_minor); do
-	rst2html.py %_builddir/%name-%version/docs/relnotes/%ver_major.$i.rst %_builddir/%name-%version/%ver_major.$i.html
+	rst2html %_builddir/%name-%version/docs/relnotes/%ver_major.$i.rst %_builddir/%name-%version/%ver_major.$i.html
 done
 
 %install
@@ -462,14 +478,20 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/libOSMesa.so
 %_pkgconfigdir/osmesa.pc
 
+%files -n libd3d
+%dir %_libdir/d3d
+%_libdir/d3d/*.so.*
+
+%files -n libd3d-devel
+%_includedir/d3dadapter
+%_libdir/d3d/*.so
+%_pkgconfigdir/d3d.pc
+
 %files -n xorg-dri-swrast
 %ghost %_sysconfdir/drirc
 %_datadir/drirc.d
 %_libdir/X11/modules/dri/*swrast*_dri.so
 %_libdir/X11/modules/dri/libgallium_dri.so
-#%ifarch %dri_megadriver_arches
-#%_libdir/X11/modules/dri/libmesa_dri_drivers.so
-#%endif
 %ifarch %gallium_pipe_arches
 %dir %_libdir/gallium-pipe
 %_libdir/gallium-pipe/pipe_swrast.so
@@ -482,12 +504,8 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/vdpau/libvdpau_gallium.so.1.0.0
 %endif
 %ifarch %vulkan_virtio_arches
-#_bindir/mesa-overlay-control.py
-#_libdir/libVkLayer_MESA_overlay.so
 %_libdir/libVkLayer_MESA_device_select.so
-%dir %_datadir/vulkan
-%dir %_datadir/vulkan/*plicit_layer.d
-%_datadir/vulkan/*plicit_layer.d/VkLayer_MESA*.json
+%_datadir/vulkan/implicit_layer.d/VkLayer_MESA*.json
 %endif
 
 %ifarch %virgl_arches
@@ -495,8 +513,6 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/virtio_gpu_dri.so
 %ifarch %vulkan_virtio_arches
 %_libdir/libvulkan_virtio.so
-%dir %_datadir/vulkan
-%dir %_datadir/vulkan/icd.d
 %_datadir/vulkan/icd.d/virtio_icd*.json
 %endif
 %endif
@@ -509,8 +525,6 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/iris_dri.so
 %ifarch %vulkan_intel_arches
 %_libdir/libvulkan_intel.so
-%dir %_datadir/vulkan
-%dir %_datadir/vulkan/icd.d
 %_datadir/vulkan/icd.d/intel_icd*.json
 %ifarch %gallium_pipe_arches
 %_libdir/gallium-pipe/pipe_i9?5.so
@@ -543,8 +557,6 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %endif
 %ifarch %vulkan_radeon_arches
 %_libdir/libvulkan_radeon.so
-%dir %_datadir/vulkan
-%dir %_datadir/vulkan/icd.d
 %_datadir/vulkan/icd.d/radeon_icd*.json
 %endif
 %endif
@@ -560,8 +572,6 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/libvulkan_freedreno.so
 %_libdir/libvulkan_broadcom.so
 %_libdir/libvulkan_panfrost.so
-%dir %_datadir/vulkan
-%dir %_datadir/vulkan/icd.d
 %_datadir/vulkan/icd.d/freedreno_icd*.json
 %_datadir/vulkan/icd.d/broadcom_icd*.json
 %_datadir/vulkan/icd.d/panfrost_icd*.json
@@ -570,6 +580,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Mon Apr 18 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.1-alt2
+- enabled Direct3D9 state tracker
+
 * Wed Mar 30 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.1-alt1
 - 22.0.1
 
