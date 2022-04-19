@@ -2,7 +2,7 @@
 %define pkgsystem apt-rpm
 
 Name: eepm
-Version: 3.18.0
+Version: 3.18.1
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -29,6 +29,8 @@ Provides: epm = %EVR
 Requires: apt rpm
 %endif
 
+Requires: which
+
 %description
 Etersoft EPM is the package manager for any platform
 and any platform version. It provides
@@ -42,7 +44,7 @@ See detailed description here: http://wiki.etersoft.ru/EPM
 Summary: Etersoft EPM package manager (repack requirements)
 Group: System/Configuration/Packaging
 Requires: %name = %EVR
-Requires: fakeroot alien dpkg patchelf
+Requires: erc alien dpkg patchelf
 Requires: /usr/bin/rpmbuild
 
 %description repack
@@ -148,6 +150,10 @@ rm -v %buildroot%_bindir/yum
 %endif
 
 %changelog
+* Tue Apr 19 2022 Vitaly Lipatov <lav@altlinux.ru> 3.18.1-alt1
+- add check for sed, which and grep commands
+- drop extra requires
+
 * Mon Apr 18 2022 Vitaly Lipatov <lav@altlinux.ru> 3.18.0-alt1
 - epm install/repack: add AppImage support
 - epm repack: drop using fakeroot during repack to rpm
