@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 10.1.0
+Version: 10.2.0
 Release: alt1
 
 Summary: Installer common files
@@ -42,9 +42,7 @@ Requires: installer-feature-autohostname-stage2
 Requires: installer-feature-desktop-disable-remote-stage2
 Requires: installer-feature-desktop-other-fs-stage2
 Requires: installer-feature-desktop-suspend-stage2
-Requires: installer-feature-hwtweaks-stage2
 Requires: installer-feature-local-clock
-Requires: installer-feature-runlevel5-stage2
 Requires: installer-feature-samba-usershares-stage2
 Requires: installer-feature-slideshow
 Requires: installer-feature-xdg-user-dirs
@@ -113,6 +111,10 @@ Installer stage3
 %files stage3
 
 %changelog
+* Mon Apr 18 2022 Mikhail Efremov <sem@altlinux.org> 10.2.0-alt1
+- stage2: Drop installer-feature-runlevel5-stage2.
+- stage2: Drop installer-feature-hwtweaks-stage2.
+
 * Mon Apr 11 2022 Mikhail Efremov <sem@altlinux.org> 10.1.0-alt1
 - stage3: Drop installer-feature-online-repo.
 - stage2: Include user to fuse group.
