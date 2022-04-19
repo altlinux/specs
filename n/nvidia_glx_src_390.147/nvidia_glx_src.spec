@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 147
 %define nv_minor %nil
-%define pkg_rel alt218
+%define pkg_rel alt219
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -125,10 +125,6 @@ Requires(pre,postun): %{bin_pkg_name}_common >= %version
 Requires(post): x11presetdrv
 #Requires: libGLdispatch libGLX
 Requires: libnvidia-egl-wayland >= 0
-%ifnarch aarch64
-Provides: libnvidia-compiler = %EVR
-Obsoletes: libnvidia-compiler < %EVR
-%endif
 #
 Group: %myGroup
 Summary: %mySummary
@@ -358,6 +354,9 @@ fi
 %endif
 
 %changelog
+* Tue Apr 19 2022 Sergey V Turchin <zerg@altlinux.org> 390.147-alt219
+- remove extra obsolete of libnvidia-compiler
+
 * Fri Apr 08 2022 Sergey V Turchin <zerg@altlinux.org> 390.147-alt218
 - package compiler and fatbinaryloader libs
 
