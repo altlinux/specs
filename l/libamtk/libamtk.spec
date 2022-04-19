@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name amtk
-%define ver_major 5.2
+%define ver_major 5.3
 %define api_ver 5
 
 %def_disable static
@@ -10,21 +10,22 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Actions, Menus and Toolbars Kit for GTK+ applications
-License: %lgpl2plus
+License: GPL-3.0-or-later
 Group: System/Libraries
 Url:  https://wiki.gnome.org/Projects/Amtk
 
+Vcs: https://gitlab.gnome.org/swilmet/amtk.git
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
 %define gtk_ver 3.22
 %define gi_ver 1.42
 
-BuildRequires(pre): rpm-build-gnome rpm-build-licenses rpm-build-gir
-BuildRequires: gtk-doc
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
+BuildRequires: meson gtk-doc
 BuildRequires: libgtk+3-devel >= %gtk_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel}
 
@@ -86,23 +87,22 @@ GObject introspection devel data for the Amtk library.
 %setup -n %_name-%version
 
 %build
-%autoreconf
-%configure %{subst_enable static} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable introspection}
-
-%make_build
+%meson 	\
+    %{?_disable_gtk_doc:-Dgtk_doc=false} \
+    %{?_disable_introspection:-Dintrospection=false}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang --output=%_name.lang %_name %{_name}-%api_ver
 
 %check
-%make check
+%__meson_test
 
 %files -f %_name.lang
 %_libdir/%name-%api_ver.so.*
-%doc AUTHORS NEWS README
+%doc NEWS README*
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -111,7 +111,7 @@ GObject introspection devel data for the Amtk library.
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/%_name-%{api_ver}.0/
+%_datadir/gtk-doc/html/%_name-%api_ver/
 %endif
 
 %if_enabled static
@@ -128,6 +128,9 @@ GObject introspection devel data for the Amtk library.
 %endif
 
 %changelog
+* Tue Apr 19 2022 Yuri N. Sedunov <aris@altlinux.org> 5.3.2-alt1
+- 5.3.2 (ported to Meson build system)
+
 * Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 5.2.0-alt1
 - 5.2.0
 
