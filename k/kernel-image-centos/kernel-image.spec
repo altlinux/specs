@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 78
+%define centos_release 79
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,36 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Apr 19 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.79-alt1.el9
+- Updated to kernel-5.14.0-79.el9 (fixes: CVE-2020-36516):
+  + audit: backport from upstream v5.13-rc1 to v5.16-rc6
+  + block: update to v5.17
+  + bpf/selftests: Fix namespace mount setup in tc_redirect
+  + CNB: ipv6: separate ndisc_ns_create() from ndisc_send_ns()
+  + Drivers: hv: Propagate VMBus coherence for performance
+  + drivers/net: mark several as unmaintained
+  + Fix panic while looking up a symlink due to NULL i_op->get_link
+  + Fix "TSC Calibration failed" error
+  + ibmvnic: fix race between xmit and reset
+  + ice: bonding bug fixes
+  + integrity: general upstream bugfixes
+  + ipv4: avoid using shared IP generator for connected sockets
+  + Merge tag 'kernel-5.14.0-70.11.1.el9_0' from 9.0
+  + Merge tag 'kernel-5.14.0-70.12.1.el9_0' from 9.0
+  + Merge up tags kernel-5.14.0-70.11.1.el9_0 to kernel-5.14.0-70.12.1.el9_0
+  + mlxsw: Refactor parsing configuration
+  + powerpc: fix some vm kernel selftests failures ( userfaultfd | userfaultfd_hugetlb | map_fixed_noreplace) [P10][DD2][Denali]
+  + powerpc: P10 hardware counter (PMU/performance counters/perf:) Enhancements [FEAT]
+  + powerpc: Support to handle control memory access error [FEAT]
+  + powerpc/xive: Export XIVE IPI information for online-only processors.
+  + Preallocate pgdat struct for all nodes during boot
+  + rcu: Backport upstream RCU related commits up to v5.17
+  + RDMA: update to v5.17
+  + redhat/configs: disable CONFIG_CAN_SOFTING
+  + redhat/configs: Enable WDT devices used by qemu VMs
+  + Revert "xfs: actually bump warning counts when we send warnings"
+  + Update kernel's PCI subsystem to v5.16
+
 * Mon Apr 11 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.78-alt1.el9
 - Updated to kernel-5.14.0-78.el9 (fixes: CVE-2022-0995, CVE-2022-1011, CVE-2022-23960):
   + arm64: Spectre-BHB mitigation (CVE-2022-23960)
