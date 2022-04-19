@@ -1,9 +1,9 @@
 %define theme_name Greybird
 
 Name: gtk-theme-greybird
-Version: 3.22.15
+Version: 3.23.1
 Release: alt1
-Summary: A clean minimalistic theme for Xfce, GTK+ 2 and 3
+Summary: A clean minimalistic GTK theme for Xfce
 Group: Graphical desktop/XFce
 
 License: GPLv2+ or CC-BY-SA-3.0
@@ -23,6 +23,7 @@ BuildRequires: libgdk-pixbuf-devel librsvg
 
 Requires: gtk2-theme-greybird = %version-%release
 Requires: gtk3-theme-greybird = %version-%release
+Requires: gtk4-theme-greybird = %version-%release
 Requires: metacity-theme-greybird = %version-%release
 Requires: xfwm4-theme-greybird = %version-%release
 Requires: xfce4-notifyd-theme-greybird = %version-%release
@@ -58,6 +59,14 @@ Requires: %name-common = %version-%release
 %description -n gtk3-theme-greybird
 Themes for GTK+3 as part of the Greybird theme.
 
+%package -n gtk4-theme-greybird
+Summary: Greybird GTK4 themes
+Group: Graphical desktop/XFce
+Requires: %name-common = %version-%release
+
+%description -n gtk4-theme-greybird
+Themes for GTK4 as part of the Greybird theme.
+
 %package -n metacity-theme-greybird
 Summary: Greybird Metacity themes
 Group: Graphical desktop/GNOME
@@ -91,11 +100,6 @@ Themes for Xfce4 notifyd as part of the Greybird theme.
 
 %install
 %meson_install
-# Fix xfwm themes path
-mv %buildroot%_datadir/themes/%theme_name-compact/xfwm4{-compact,}
-mv %buildroot%_datadir/themes/%theme_name-dark-accessibility/xfwm4{-a11y,}
-mv %buildroot%_datadir/themes/%theme_name-accessibility/xfwm4{-a11y,}
-mv %buildroot%_datadir/themes/%theme_name-bright/xfce-notify-4.0{_bright,}
 
 %files
 
@@ -117,6 +121,9 @@ mv %buildroot%_datadir/themes/%theme_name-bright/xfce-notify-4.0{_bright,}
 %_datadir/themes/%theme_name-dark/gtk-3.0/
 %_datadir/themes/%theme_name-dark/gnome-shell/
 %_datadir/themes/%theme_name-dark/plank/
+
+%files -n gtk4-theme-greybird
+%_datadir/themes/%theme_name/gtk-4.0/
 
 %files -n metacity-theme-greybird
 %_datadir/themes/%theme_name/metacity-1/
@@ -143,6 +150,10 @@ mv %buildroot%_datadir/themes/%theme_name-bright/xfce-notify-4.0{_bright,}
 %exclude %_datadir/themes/%theme_name-dark/unity
 
 %changelog
+* Tue Apr 19 2022 Mikhail Efremov <sem@altlinux.org> 3.23.1-alt1
+- Package GTK4 theme.
+- 3.23.1.
+
 * Tue Nov 02 2021 Mikhail Efremov <sem@altlinux.org> 3.22.15-alt1
 - Fix License tag.
 - Fix xfwm themes path.
