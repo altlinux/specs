@@ -1,5 +1,5 @@
 Name:           libnanomsg
-Version:        1.1.5
+Version:        1.2
 Release:        alt1
 
 Summary:        nanomsg is a socket library that provides several common communication patterns
@@ -66,6 +66,9 @@ that provides several common communication patterns.
 %_pkgconfigdir/nanomsg.pc
 
 %changelog
+* Tue Apr 19 2022 Andrey Cherepanov <cas@altlinux.org> 1.2-alt1
+- New version.
+
 * Mon Oct 15 2018 Andrey Cherepanov <cas@altlinux.org> 1.1.5-alt1
 - New version.
 
