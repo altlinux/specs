@@ -5,7 +5,7 @@
 %def_with gtk4
 
 Name: libnma
-Version: 1.8.36
+Version: 1.8.38
 Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: Graphical desktop/GNOME
@@ -26,6 +26,8 @@ BuildRequires: mobile-broadband-provider-info
 BuildRequires: gtk-doc
 %{?_with_gcr:BuildRequires: gcr-libs-devel}
 %{?_with_gtk4:BuildRequires: libgtk4-devel libgtk4-gir-devel}
+
+Requires: %name-common = %EVR
 
 %description
 This package contains the library used for integrating GUI tools with
@@ -64,20 +66,21 @@ GObject introspection devel data for the libnma.
 %package gtk4
 Summary: Experimental GTK 4 version of NetworkManager GUI library
 Group: Graphical desktop/GNOME
+Requires: %name-common = %EVR
 
 %description gtk4
-This package contains the experimental GTK4 version of library used for
+This package contains the GTK4 version of library used for
 integrating GUI tools with NetworkManager.
 
 %package gtk4-devel
 Group: Development/GNOME and GTK+
-Summary: Devel files for experimental GTK4 version of NetworkManager GUI library
+Summary: Devel files for GTK4 version of NetworkManager GUI library
 Requires: %name-gtk4 = %EVR
 Requires: libnm-devel >= %nm_version
 Requires: libgtk4-devel
 
 %description gtk4-devel
-This package contains the experimental GTK4 version of header and pkg-config
+This package contains the GTK4 version of header and pkg-config
 files to be used for integrating GUI tools with NetworkManager.
 
 %package gtk4-gir
@@ -98,6 +101,16 @@ Requires: %name-gtk4-devel = %version-%release
 %description gtk4-gir-devel
 GObject introspection devel data for the libnma-gtk4.
 %endif
+
+%package common
+Group: System/Libraries
+Summary: Common files for %name and %name-gtk4
+BuildArch: noarch
+Conflicts: %name < 1.8.36-alt1
+
+%description common
+This package contains the common files for both variants of %name
+(GTK3 and GTK4).
 
 %package devel-doc
 Summary: Development documentation for libnma-devel-doc
@@ -138,8 +151,7 @@ This package contains development documentation for libnma-devel-doc.
 %meson_install
 %find_lang %name
 
-%files -f %name.lang
-%doc NEWS CONTRIBUTING
+%files
 %_datadir/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
 %_libdir/libnma.so.*
 
@@ -170,10 +182,18 @@ This package contains development documentation for libnma-devel-doc.
 %_datadir/gir-1.0/NMA4-1.0.gir
 %endif
 
+%files common -f %name.lang
+%doc NEWS CONTRIBUTING
+
 %files devel-doc
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Tue Apr 19 2022 Mikhail Efremov <sem@altlinux.org> 1.8.38-alt1
+- Added common subpackage.
+- libnma-gtk4: Updated summary/description.
+- Updated to 1.8.38.
+
 * Wed Mar 30 2022 Mikhail Efremov <sem@altlinux.org> 1.8.36-alt1
 - Updated to 1.8.36.
 
