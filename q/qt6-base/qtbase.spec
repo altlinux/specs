@@ -33,7 +33,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.2.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -44,6 +44,8 @@ Url: http://qt.io/
 Source: %qt_module-everywhere-src-%version.tar
 Source1: rpm-macros
 Source2: rpm-macros-addon
+# FC
+Patch1: qtbase-version-check.patch
 
 # macros
 %define _qt6 %gname
@@ -97,9 +99,9 @@ Common package for Qt%major
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: pkgconfig(gl) pkgconfig(egl)
-Requires: rpm-macros-%gname = %EVR
+Requires: rpm-macros-%gname
 Requires: gcc-c++
 %description devel
 %summary.
@@ -107,7 +109,7 @@ Requires: gcc-c++
 %package devel-static
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: %name-devel
 %description devel-static
 %summary.
@@ -116,7 +118,7 @@ Requires: %name-devel
 Summary: Set of RPM macros for packaging Qt%major-based applications
 Group: Development/KDE and QT
 BuildArch: noarch
-Requires: %name-common = %version-%release
+#Requires: %name-common
 %description -n rpm-macros-%gname
 Set of RPM macros for packaging Qt%major-based applications for %distribution
 Install this package if you want to create RPM packages that use Qt%major
@@ -124,7 +126,7 @@ Install this package if you want to create RPM packages that use Qt%major
 %package static
 Group: Development/KDE and QT
 Summary: Static library files for %name
-Requires: %name-devel = %EVR
+Requires: %name-devel
 Requires: pkgconfig(fontconfig)
 Requires: pkgconfig(glib-2.0)
 Requires: pkgconfig(zlib)
@@ -134,7 +136,7 @@ Requires: pkgconfig(zlib)
 %package doc
 Summary: Document for developing apps which will use Qt%major
 Group: Development/KDE and QT
-Requires: %name-common = %EVR
+Requires: %name-common
 #Requires: %gname-assistant
 %description doc
 This package contains documentation and sources for example programs.
@@ -170,20 +172,20 @@ qtbase-gui compatibility package
 BuildArch: noarch
 Group: System/Libraries
 Summary: Meta-package for SQL support of Qt%major GUI toolkit
-Requires: %name-common = %EVR
-Requires: %gname-sql-mysql = %EVR
-Requires: %gname-sql-sqlite = %EVR
-%{?_enable_sql_ibase:Requires: %gname-sql-interbase = %EVR}
-%{?_enable_sql_pgsql:Requires: %gname-sql-postgresql = %EVR}
-%{?_enable_sql_odbc:Requires: %gname-sql-odbc = %EVR}
-%{?_enable_sql_tds:Requires: %gname-sql-tds = %EVR}
+Requires: %name-common
+Requires: %gname-sql-mysql
+Requires: %gname-sql-sqlite
+%{?_enable_sql_ibase:Requires: %gname-sql-interbase}
+%{?_enable_sql_pgsql:Requires: %gname-sql-postgresql}
+%{?_enable_sql_odbc:Requires: %gname-sql-odbc}
+%{?_enable_sql_tds:Requires: %gname-sql-tds}
 %description -n %gname-sql
 Meta-package for SQL support of Qt%major GUI toolkit
 
 %package -n %gname-sql-odbc
 Summary: ODBC drivers for Qt%major SQL classes
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Provides: %gname-plugin-sql = %EVR
 %description -n %gname-sql-odbc
 ODBC driver for Qt's SQL classes (QODBC)
@@ -191,7 +193,7 @@ ODBC driver for Qt's SQL classes (QODBC)
 %package -n %gname-sql-tds
 Summary: FreeTDS(Sybase) driver for Qt%major SQL classes
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Provides: %gname-plugin-sql = %EVR
 %description -n %gname-sql-tds
 FreeTDS(Sybase) driver for Qt's SQL classes (QTDS)
@@ -199,7 +201,7 @@ FreeTDS(Sybase) driver for Qt's SQL classes (QTDS)
 %package -n %gname-sql-mysql
 Summary: MySQL driver for Qt%major SQL classes
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Provides: %gname-plugin-sql = %EVR
 %description -n %gname-sql-mysql
 MySQL driver for Qt's SQL classes (QMYSQL)
@@ -207,7 +209,7 @@ MySQL driver for Qt's SQL classes (QMYSQL)
 %package -n %gname-sql-postgresql
 Summary: PostgreSQL drivers for Qt%major SQL classes
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Provides: %gname-plugin-sql = %EVR
 %description -n %gname-sql-postgresql
 PostgreSQL driver for Qt's SQL classes (QPSQL)
@@ -215,7 +217,7 @@ PostgreSQL driver for Qt's SQL classes (QPSQL)
 %package -n %gname-sql-interbase
 Summary: InterBase drivers for Qt%major SQL classes
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Provides: %gname-plugin-sql = %EVR
 %description -n %gname-sql-interbase
 InterBase driver for Qt's SQL classes (QIBASE)
@@ -223,7 +225,7 @@ InterBase driver for Qt's SQL classes (QIBASE)
 #%package -n %gname-sql-sqlite
 #Summary: SQLite driver for Qt%major SQL classes
 #Group: System/Libraries
-#Requires: %name-common = %EVR
+#Requires: %name-common
 #Provides: %gname-plugin-sql = %EVR
 #%description -n %gname-sql-sqlite
 #SQLite driver for Qt's SQL classes (QSQLITE)
@@ -231,7 +233,7 @@ InterBase driver for Qt's SQL classes (QIBASE)
 %package -n lib%gname-sql
 Summary: SQL support library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 # sqlite plugin included
 Provides: %gname-plugin-sql = %EVR
 Provides: %gname-sql-sqlite = %EVR
@@ -241,7 +243,7 @@ SQL support library for the Qt%major toolkit
 %package -n lib%gname-core
 Summary: Core library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: glibc-gconv-modules
 %description -n lib%gname-core
 Core library for the Qt%major toolkit
@@ -249,70 +251,70 @@ Core library for the Qt%major toolkit
 %package -n lib%gname-gui
 Summary: GUI support library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-gui
 GUI support library for the Qt%major toolkit
 
 %package -n lib%gname-dbus
 Summary: DBus support library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-dbus
 DBus support library for the Qt%major toolkit
 
 %package -n lib%gname-network
 Summary: Network support library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-network
 Network support library for the Qt%major toolkit
 
 %package -n lib%gname-opengl
 Summary: OpenGL support library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-opengl
 OpenGL support library for the Qt%major toolkit
 
 %package -n lib%gname-xml
 Summary: XML support library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-xml
 XML support library for the Qt%major toolkit
 
 %package -n lib%gname-concurrent
 Summary: Multi-threading concurrence support library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-concurrent
 Multi-threading concurrence support library for the Qt%major toolkit
 
 %package -n lib%gname-printsupport
 Summary: Printing support library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-printsupport
 Printing support library for the Qt%major toolkit
 
 %package -n lib%gname-test
 Summary: Testing support library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-test
 Testing support library for the Qt%major toolkit
 
 %package -n lib%gname-widgets
 Summary: Widgets library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-widgets
 Widgets library for the Qt%major toolkit
 
 %package -n lib%gname-eglfsdeviceintegration
 Summary: EGL integration library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: tslib
 %description -n lib%gname-eglfsdeviceintegration
 EGL integration library for the Qt%major toolkit
@@ -320,33 +322,34 @@ EGL integration library for the Qt%major toolkit
 %package -n lib%gname-xcbqpa
 Summary: EGL integration library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-xcbqpa
 EGL integration library for the Qt%major toolkit
 
 %package -n lib%gname-eglfskmssupport
 Summary: EGL integration library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-eglfskmssupport
 EGL integration library for the Qt%major toolkit
 
 %package -n lib%gname-eglfskmsgbmsupport
 Summary: EGL integration library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-eglfskmsgbmsupport
 EGL integration library for the Qt%major toolkit
 
 %package -n lib%gname-openglwidgets
 Summary: OpenGL widgets library for the Qt%major toolkit
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n lib%gname-openglwidgets
 OpenGL widgets library for the Qt%major toolkit
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+%patch1 -p1
 
 # install optflags
 %add_optflags %optflags_shared
@@ -765,6 +768,9 @@ ln -s `relative %buildroot/%_qt6_headerdir %buildroot/%_qt6_prefix/include` %bui
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Mon Apr 18 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt2
+- fix requires (closes: 42468)
+
 * Tue Dec 07 2021 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
 - new version
 
