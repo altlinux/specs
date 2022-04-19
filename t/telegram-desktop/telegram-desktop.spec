@@ -10,16 +10,15 @@
 # TODO: def_with clang
 %def_with gtk3
 %def_without qt6
-%def_with wayland
+%def_without wayland
 %def_with x11
-%def_with webkit
 %def_with rlottie
 %def_without ffmpeg_static
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 3.6.1
-Release: alt2
+Version: 3.7.0
+Release: alt1
 
 Summary: Telegram Desktop messaging app
 
@@ -32,6 +31,8 @@ Source: %name-%version.tar
 
 Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
+Patch3: telegram-desktop-revert-setscreen.patch
+Patch4: telegram-desktop-fix-qt5-setscreen.patch
 
 # [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
 # aarch64: see remove_target_sources ARM neon in https://github.com/desktop-app/tg_owt/blob/master/cmake/libyuv.cmake
@@ -46,11 +47,12 @@ BuildRequires(pre): rpm-build-compat >= 2.1.5
 BuildRequires(pre): rpm-build-intro >= 2.1.5
 
 # use no more than system_memory/3000 build procs (see https://bugzilla.altlinux.org/show_bug.cgi?id=35112)
-%_tune_parallel_build_by_procsize 300
+%_tune_parallel_build_by_procsize 3000
 
 # minimalize memory using
 %ifarch %ix86 armh
 %define optflags_debug -g0
+%define optflags_lto %nil
 %endif
 
 BuildRequires: gcc-c++ libstdc++-devel python3
@@ -61,10 +63,6 @@ BuildRequires: extra-cmake-modules
 
 BuildRequires: qt5-base-devel >= %tg_qt5_version
 BuildRequires: libqt5-core libqt5-network libqt5-gui qt5-imageformats qt5-svg-devel
-%if_with webkit
-#BuildRequires: libwebkit2gtk-devel
-BuildRequires: pkgconfig(webkit2gtk-4.0)
-%endif
 # needs for smiles and emojicons
 Requires: qt5-imageformats
 
@@ -134,7 +132,7 @@ BuildRequires: libjpeg-devel
 BuildRequires: libyuv-devel
 
 # Just to disable noise like Package 'libffi', required by 'gobject-2.0', not found
-BuildRequires: libffi-devel libmount-devel libXdmcp-devel
+BuildRequires: libffi-devel libmount-devel libXdmcp-devel libblkid-devel
 
 
 # uses forked version, tag e0ea6af518345c4a46195c4951e023e621a9eb8f
@@ -147,6 +145,7 @@ BuildRequires: libmicrosoft-gsl-devel >= 1:3.0.1
 #BuildRequires: libvariant-devel
 BuildRequires: libexpected-devel
 BuildRequires: librange-v3-devel >= 0.11.0
+BuildRequires: libdispatch-devel
 
 BuildRequires: libdbusmenu-qt5-devel
 
@@ -196,6 +195,8 @@ or business messaging needs.
 %setup
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
+%patch4 -p2
 #__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
 
 # See https://github.com/desktop-app/tg_owt/pull/82
@@ -236,6 +237,7 @@ export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 # due precompiled headers
 export CCACHE_SLOPPINESS=pch_defines,time_macros
 
+
 # AppID for Basealt build
 # got from https://core.telegram.org/api/obtaining_api_id
 %cmake_insource -DDESKTOP_APP_USE_PACKAGED=ON \
@@ -243,9 +245,7 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
     -DTDESKTOP_API_HASH=bb6c3f8fffd8fe6804fc5131a08e1c44 \
     -DDESKTOP_APP_USE_PACKAGED:BOOL=ON \
     -DDESKTOP_APP_USE_PACKAGED_FONTS:BOOL=ON \
-    -DDESKTOP_APP_USE_GLIBC_WRAPS:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_CRASH_REPORTS:BOOL=ON \
-    -DDESKTOP_APP_DISABLE_WEBRTC_INTEGRATION:BOOL=OFF \
     -DDESKTOP_APP_DISABLE_SPELLCHECK:BOOL=OFF \
 %if_with qt6
     -DDESKTOP_APP_QT6:BOOL=ON \
@@ -254,16 +254,6 @@ export CCACHE_SLOPPINESS=pch_defines,time_macros
 %endif
 %if_without jemalloc
     -DDESKTOP_APP_DISABLE_JEMALLOC=ON \
-%endif
-%if_with gtk3
-    -DDESKTOP_APP_DISABLE_GTK_INTEGRATION:BOOL=OFF \
-%else
-    -DDESKTOP_APP_DISABLE_GTK_INTEGRATION:BOOL=ON \
-%endif
-%if %{with webkit}
-    -DDESKTOP_APP_DISABLE_WEBKITGTK:BOOL=OFF \
-%else
-    -DDESKTOP_APP_DISABLE_WEBKITGTK:BOOL=ON \
 %endif
 %if_with wayland
     -DDESKTOP_APP_DISABLE_WAYLAND_INTEGRATION:BOOL=OFF \
@@ -314,6 +304,12 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sun Apr 17 2022 Vitaly Lipatov <lav@altlinux.ru> 3.7.0-alt1
+- new version 3.7.0 (with rpmrb script)
+- disable wayland integration (is not ported to Qt5)
+- drop webkit require (used without headers)
+- build with external libdispatch-devel
+
 * Sun Apr 10 2022 Vitaly Lipatov <lav@altlinux.ru> 3.6.1-alt2
 - enable system window frame by default (ALT bug 41888)
 
