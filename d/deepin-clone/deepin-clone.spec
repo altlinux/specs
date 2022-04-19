@@ -1,6 +1,6 @@
 Name: deepin-clone
-Version: 5.0.10
-Release: alt1.1
+Version: 5.0.11
+Release: alt1
 Summary: Disk and partition backup/restore tool
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -39,9 +39,11 @@ export PATH=%_qt5_bindir:$PATH
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DDISABLE_DFM_PLUGIN=YES \
     -DDISABLE_DFM_PLUGIN=YES \
+    -DENABLE_GUI=YES \
     -DVERSION=%version \
-    -DAPP_VERSION=%version
-%cmake_build
+    -DAPP_VERSION=%version \
+    %nil
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
@@ -63,6 +65,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/polkit-1/actions/com.deepin.pkexec.%name.policy
 
 %changelog
+* Tue Apr 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.11-alt1
+- New version (5.0.11).
+
 * Mon May 31 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.10-alt1.1
 - NMU: spec: adapted to new cmake macros (altlinux.org/CMakeMigration2021).
 
