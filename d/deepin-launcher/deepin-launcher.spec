@@ -1,7 +1,9 @@
+%def_disable clang
+
 %define repo dde-launcher
 
 Name: deepin-launcher
-Version: 5.5.6
+Version: 5.5.11
 Release: alt1
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
@@ -11,8 +13,15 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
+Provides: %name-devel = %version
+Obsoletes: %name-devel < %version
+
+%if_enabled clang
+BuildRequires(pre): clang-devel
+%else
+BuildRequires(pre): gcc-c++
+%endif
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++
 BuildRequires: cmake
 BuildRequires: qt5-tools-devel
 BuildRequires: dtk5-core-devel
@@ -30,23 +39,23 @@ BuildRequires: dtk5-common
 %description
 %summary.
 
-%package devel
-Summary: Development package for %name
-Group: Graphical desktop/Other
-BuildArch: noarch
-
-%description devel
-Header files and libraries for %name.
-
 %prep
 %setup -n %repo-%version
-sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
 
 %build
+export PATH=%_qt5_bindir:$PATH
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
+%endif
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DWITHOUT_UNINSTALL_APP=1
+    -DWITHOUT_UNINSTALL_APP=1 \
+    %nil
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
@@ -61,12 +70,12 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/glib-2.0/schemas/com.deepin.dde.launcher.gschema.xml
 %_desktopdir/%repo.desktop
-%_datadir/dsg/apps/dde-launcher/configs/default.json
-
-%files devel
-%_includedir/%repo/
+%_datadir/dsg/apps/dde-launcher/configs/com.deepin.dde.dde-launcher.dconfig.json
 
 %changelog
+* Tue Apr 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.11-alt1
+- New version (5.5.11).
+
 * Mon Mar 28 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.6-alt1
 - New version (5.5.6).
 - Checkout to master branch.
