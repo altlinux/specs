@@ -29,7 +29,7 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.15.8
+Version: 5.15.9
 Release: alt1
 
 Group: System/Libraries
@@ -202,7 +202,7 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
-%patch104 -p1
+#%patch104 -p1
 %patch105 -p1
 %patch106 -p1
 %patch107 -p1
@@ -419,6 +419,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Mon Apr 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.9-alt1
+- new version
+
 * Thu Jan 20 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
 - new version
 
