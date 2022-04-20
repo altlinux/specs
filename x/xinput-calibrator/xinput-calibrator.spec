@@ -1,6 +1,6 @@
 Name: xinput-calibrator
 Version: 0.7.5
-Release: alt3
+Release: alt4
 
 Summary: A generic touchscreen calibration program for X.Org
 License: MIT
@@ -13,6 +13,8 @@ Patch1: do_not_install_tester.patch
 Patch2: typo_in_man.patch
 Patch3: typo_in_src.patch
 
+Patch4: adding-russian-translate-desktop.patch
+
 BuildRequires: gcc-c++ libXi-devel libgtkmm2-devel
 
 %description
@@ -23,6 +25,8 @@ BuildRequires: gcc-c++ libXi-devel libgtkmm2-devel
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+
+%patch4 -p1
 
 %build
 %add_optflags -std=c++11
@@ -44,6 +48,9 @@ make
 %_man1dir/xinput_calibrator.*
 
 %changelog
+* Wed Apr 20 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 0.7.5-alt4
+- NMU: Adding russian translation for desktop file
+
 * Thu Jan 14 2021 Pavel Vasenkov <pav@altlinux.org> 0.7.5-alt3
 - Rebuild from newer source with patches
 
