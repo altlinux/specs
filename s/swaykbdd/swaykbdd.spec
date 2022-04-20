@@ -1,5 +1,5 @@
 Name: swaykbdd
-Version: 1.0
+Version: 1.1
 Release: alt1
 
 Summary: Per-window keyboard layout for Sway
@@ -32,6 +32,8 @@ on a per-window basis
 %_man1dir/swaykbdd.1*
 
 %changelog
+* Wed Apr 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1-alt1
+- 1.1 released
+
 * Mon Aug 09 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt1
 - initial
-
