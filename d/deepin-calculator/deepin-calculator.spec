@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-calculator
-Version: 5.7.0.19
+Version: 5.7.9
 Release: alt1
 Summary: An easy to use calculator for ordinary users
 License: GPL-3.0+
@@ -12,7 +12,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang11.0-devel
+BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -35,16 +35,17 @@ export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
 export PATH=%_qt5_bindir:$PATH
-%cmake_insource \
+%cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DAPP_VERSION=%version \
-    -DVERSION=%version
-%ninja_build
+    -DVERSION=%version \
+    %nil
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%ninja_install
+%cmake_install
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
@@ -59,6 +60,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/calculator/*/*
 
 %changelog
+* Tue Apr 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.7.9-alt1
+- New version (5.7.9).
+
 * Tue May 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.7.0.19-alt1
 - New version (5.7.0.19) with rpmgs script.
 - Fixed version tag.
