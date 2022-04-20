@@ -1,4 +1,4 @@
-%define mainline_ver 5.0.8
+%define mainline_ver 5.1.2
 
 Name: eid-mw
 Version: %mainline_ver
@@ -192,6 +192,9 @@ fi
 %_libdir/libeidviewer.so
 
 %changelog
+* Thu Apr 07 2022 Pavel Nakonechnyi <zorg@altlinux.org> 5.1.2-alt1
+- updated to version 5.1.2
+
 * Sun Sep 19 2021 Pavel Nakonechnyi <zorg@altlinux.org> 5.0.8-alt1
 - updated to version 5.0.8
 - add more build requires
