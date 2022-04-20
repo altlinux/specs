@@ -2,7 +2,7 @@
 
 Name: libqt-mvvm
 Version: 0.2.0
-Release: alt2
+Release: alt3
 
 Summary: This model-view-viewmodel framework is intended for development of large Qt based applications written in C++.
 License: GPLv3+
@@ -18,7 +18,6 @@ BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
-BuildRequires: qcustomplot-qt5-devel
 
 Source0: %name-%version.tar
 
@@ -49,7 +48,7 @@ develop programs that use set libqt-mvvm libraries.
 %setup -q
 
 %build
-%cmake -DMVVM_DISCOVER_TESTS=OFF -DMVVM_ENABLE_FILESYSTEM=OFF -DMVVM_BUILD_EXAMPLES=OFF -DMVVM_USE_SYSTEM_QCUSTOMPLOT=ON
+%cmake -DMVVM_DISCOVER_TESTS=OFF -DMVVM_ENABLE_FILESYSTEM=OFF -DMVVM_BUILD_EXAMPLES=OFF
 %cmake_build
 
 %install
@@ -65,6 +64,9 @@ develop programs that use set libqt-mvvm libraries.
 %_includedir/*
 
 %changelog
+* Wed Apr 20 2022 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt3
+- Update version.
+
 * Wed Apr 06 2021 Vladimir Rubanov <august@altlinux.org> 0.2.0-alt2
 - Fixes:
   - Improve package description.
