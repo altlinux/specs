@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 5.10.5
-Release: alt2
+Version: 5.12.5
+Release: alt1
 Summary: Archive Manager for Deepin Desktop Environment
 License: GPL-3.0+ and (GPL-2.0+ and LGPL-2.1+ and MPL-1.1) and BSD-2-Clause and Apache-2.0
 Group: Archiving/Compression
@@ -15,9 +15,10 @@ Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: deepin-compressor-5.12.5-alt-aarch64-armh.patch
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -49,6 +50,7 @@ BuildRequires: libgmock-devel
 
 %prep
 %setup
+%patch -p1
 sed -i 's|/usr/bin/cp|/bin/cp|' \
     tests/FuzzyTest/libfuzzer/CMakeLists.txt
 sed -i 's|/usr/lib|%_libdir|' \
@@ -58,13 +60,6 @@ sed -i 's|#include <zip.h>|#include <libzip/zip.h>|' \
     3rdparty/libzipplugin/libzipplugin.h
 sed -i 's|lib/|%_lib/|' \
     CMakeLists.txt
-# remove unbuilded translation
-# rm -rf translations/deepin-compressor*.ts
-
-# %if_disabled clang
-# sed -i 's|int myshowWarningDialog|void myshowWarningDialog|' \
-#     tests/UnitTest/deepin-compressor/source/src/uncompresspage_test.cpp
-# %endif
 
 %build
 %if_enabled clang
@@ -82,8 +77,8 @@ export PATH=%_qt5_bindir:$PATH
     -DAPP_VERSION=%version \
     -DVERSION=%version \
     -DLIB_INSTALL_DIR=%_libdir \
-#
-%cmake_build
+    %nil
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
@@ -111,6 +106,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
 
 %changelog
+* Tue Apr 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.12.5-alt1
+- New version (5.12.5).
+- Checkout from euler to dev/1050 branch.
+
 * Thu Jul 08 2021 Leontiy Volodin <lvol@altlinux.org> 5.10.5-alt2
 - Fixed build with libgmock.so.1.11.0.
 
