@@ -10,7 +10,7 @@
 %def_disable clang
 
 Name: deepin-kwin
-Version: 5.4.19
+Version: 5.4.26
 Release: alt1
 
 Summary: KWin configuration for Deepin Desktop Environment
@@ -136,6 +136,9 @@ chmod +x %buildroot%_K5data/kwin/scripts/dde-kwin.postinst
 %endif
 
 %changelog
+* Tue Apr 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.26-alt1
+- New version (5.4.26).
+
 * Wed Mar 09 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.19-alt1
 - New version (5.4.19).
 
