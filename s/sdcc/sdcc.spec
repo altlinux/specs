@@ -1,22 +1,20 @@
-%define _unpackaged_files_terminate_build 1
-
 Name: sdcc
-Epoch: 1
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
-Group: Development/C
-URL: http://sdcc.sourceforge.net
-License: GPL
+Epoch: 1
+
 Summary: Small Device C Compiler
+License: GPLv2
+Group: Development/C
+Url: http://sdcc.sourceforge.net
 
 Source: %name-%version.tar
 
 Patch1: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3
 BuildRequires: flex gcc-c++ boost-devel gputils /usr/bin/makeinfo
 BuildRequires: zlib-devel
-BuildRequires: /usr/bin/python3
 
 Requires: %name-common = %EVR
 
@@ -46,7 +44,6 @@ the Microchip PIC16 and PIC18 targets. It can be retargeted for other
 microprocessors.
 
 %package doc
-License:   GPL
 Group:     Development/C
 Summary:   Documentation for the SDCC C compiler
 BuildArch: noarch
@@ -80,6 +77,7 @@ microprocessors.
 
 %files 
 %_bindir/*
+%_man1dir/ucsim.1*
 
 %files common
 %_datadir/%name
@@ -88,6 +86,9 @@ microprocessors.
 %_docdir/%name-%version
 
 %changelog
+* Wed Apr 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:4.2.0-alt1
+- 4.2.0
+
 * Tue Nov 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:4.1.0-alt1
 - 4.1.0
 
