@@ -1,5 +1,5 @@
 Name: deepin-picker
-Version: 5.0.18
+Version: 5.0.24
 Release: alt1
 Summary: Color picker tool for deepin
 License: GPL-3.0+
@@ -40,6 +40,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/dbus-1/services/com.deepin.Picker.service
 
 %changelog
+* Tue Apr 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.24-alt1
+- New version (5.0.24).
+
 * Thu Jul 01 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.18-alt1
 - New version (5.0.18).
 
