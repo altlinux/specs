@@ -1,7 +1,7 @@
 %global repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.8.27
+Version: 5.8.29
 Release: alt1
 Summary: Calendar for Deepin Desktop Environment
 License: GPL-3.0+
@@ -40,6 +40,7 @@ Calendar for Deepin Desktop Environment.
 sed -i 's|/usr/lib/deepin-aiassistant|%_libdir/deepin-aiassistant|' schedule-plugin/CMakeLists.txt
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %cmake \
     -GNinja \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
@@ -51,12 +52,11 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
-%find_lang %repo
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 
-%files -f %repo.lang
+%files
 %doc README.md
 %doc LICENSE
 %_bindir/%repo
@@ -74,8 +74,13 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 %dir %_datadir/deepin-manual/manual-assets/application/
 %dir %_datadir/deepin-manual/manual-assets/application/%repo/
 %_datadir/deepin-manual/manual-assets/application/%repo/calendar/
+%_userunitdir/com.dde.calendarserver.calendar.service
+%_userunitdir/com.dde.calendarserver.calendar.timer
 
 %changelog
+* Tue Apr 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.29-alt1
+- New version (5.8.29).
+
 * Thu Feb 10 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.27-alt1
 - New version (5.8.27).
 
