@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: fribidi
-Version: 1.0.11
+Version: 1.0.12
 Release: alt1
 
 Summary: Bi-directional scripts support
@@ -68,6 +68,8 @@ programs which will use fribidi.
 
 %prep
 %setup
+# empty manpages in tarball
+rm -f doc/{c2man.stamp,%{name}_*.3}
 
 %build
 %meson \
@@ -81,8 +83,7 @@ programs which will use fribidi.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_bindir/*
@@ -104,6 +105,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Apr 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.12-alt1
+- 1.0.12
+
 * Fri Sep 24 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.11-alt1
 - 1.0.11
 
