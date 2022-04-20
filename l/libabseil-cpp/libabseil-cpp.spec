@@ -6,7 +6,7 @@
 
 Name: libabseil-cpp
 Version: 20211102.0
-Release: alt1
+Release: alt2
 
 Summary: C++ Common Libraries
 
@@ -23,6 +23,9 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 
 BuildRequires: libgtest-devel libgmock-devel ctest
+
+# https://bugzilla.altlinux.org/42411
+Conflicts: libclickhouse-cpp-devel <= 1.2.2-alt1
 
 %description
 Abseil is an open-source collection of C++ library code designed to augment
@@ -86,6 +89,9 @@ ctest
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Apr 20 2022 Vitaly Lipatov <lav@altlinux.ru> 20211102.0-alt2
+- add Conflicts: libclickhouse-cpp-devel
+
 * Sun Apr 10 2022 Vitaly Lipatov <lav@altlinux.ru> 20211102.0-alt1
 - Abseil LTS branch, Nov 2021
 - new version (20211102.0) with rpmgs script

@@ -2,7 +2,7 @@
 
 Name: libdispatch
 Version: 5.6.0
-Release: alt2
+Release: alt3
 
 Summary: Apple's Grand Central Dispatch library
 
@@ -36,6 +36,9 @@ ExcludeArch: armh ppc64le
 
 Provides:      libBlocksRuntime = %EVR
 Obsoletes:     libBlocksRuntime < 7.0.0
+
+# due Block.h
+Conflicts: libgnustep-objc2-devel < 2.1-alt3
 
 #define optflags_lto -flto=thin
 
@@ -98,6 +101,9 @@ chrpath --delete %buildroot%_libdir/libdispatch.so
 %_includedir/os/
 
 %changelog
+* Wed Apr 20 2022 Vitaly Lipatov <lav@altlinux.ru> 5.6.0-alt3
+- add Conflicts: libgnustep-objc2-devel
+
 * Mon Apr 18 2022 Vitaly Lipatov <lav@altlinux.ru> 5.6.0-alt2
 - build for all Telegram arches
 
