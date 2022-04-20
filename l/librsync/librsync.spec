@@ -5,7 +5,7 @@
 
 Name: librsync
 Version: 2.3.2
-Release: alt1
+Release: alt2
 
 Summary: remote delta-compression library
 License: LGPL-2.1
@@ -86,7 +86,7 @@ use librsync.
 %patch0 -p1
 
 %build
-%cmake
+%cmake -DENABLE_TRACE=1
 %cmake_build
 %if_with doc
 %cmake_build --target doc
@@ -115,6 +115,9 @@ use librsync.
 %endif
 
 %changelog
+* Wed Apr 20 2022 Egor Ignatov <egori@altlinux.org> 2.3.2-alt2
+- enable trace (closes: #42493)
+
 * Tue Jan 11 2022 Egor Ignatov <egori@altlinux.org> 2.3.2-alt1
 - update to 2.3.2 (closes: #41679)
 - gear: change package build scheme
