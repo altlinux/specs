@@ -9,7 +9,7 @@
 
 Name: dotnet-hostfxr-%_dotnet_major
 Version: 3.1.23
-Release: alt1
+Release: alt2
 
 Summary: Installer packages for the .NET Core runtime and libraries
 
@@ -71,6 +71,9 @@ contributing to the project on GitHub (https://github.com/dotnet/core).
 # since glibc 2.26 xlocale.h is removed
 %__subst "s|xlocale.h|locale.h|" src/corehost/cli/json/casablanca/include/cpprest/asyncrt_utils.h
 
+# drop -Werror from production build
+%__subst "s|.*-Werror.*||" src/settings.cmake
+
 # set global runtime location
 %__subst "s|/usr/share/dotnet|%_dotnetdir|" src/corehost/common/pal.unix.cpp
 
@@ -128,6 +131,9 @@ install -m644 %exedir/nethost.h %buildroot%_dotnet_shared/
 %files -n dotnet-%_dotnet_major
 
 %changelog
+* Wed Apr 20 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.23-alt2
+- don't use -Werror
+
 * Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.23-alt1
 - new version 3.1.23 (with rpmrb script)
 
