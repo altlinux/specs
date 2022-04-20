@@ -1,5 +1,5 @@
-%define kernel_base_version	5.16
-%define kernel_sublevel        .16
+%define kernel_base_version	5.17
+%define kernel_sublevel        .4
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -213,7 +213,8 @@ KbuildFiles="
 	scripts/mkversion
 	scripts/mod/mk_elfconfig
 	scripts/mod/modpost
-	scripts/module-common.lds
+	scripts/module.lds
+	scripts/modules-check.sh
 	scripts/pnmtologo
 	scripts/recordmcount
 	scripts/recordmcount.c
@@ -273,6 +274,12 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Wed Apr 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.17.4-alt1
+- 5.17.4
+
+* Tue Mar 22 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.17.0-alt1
+- 5.17
+
 * Mon Mar 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.16.16-alt1
 - 5.16.16
 
