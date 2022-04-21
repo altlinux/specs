@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: at-spi2-core
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -91,7 +91,7 @@ This package contains documentation for developing applications that use
     %{?_disable_x11:-Denable-x11=false} \
     %{?_disable_introspection:-Denable-introspection=false} \
     %{?_enable_doc:-Ddocs=true}
-
+%nil
 %meson_build
 
 %install
@@ -99,8 +99,7 @@ This package contains documentation for developing applications that use
 %find_lang %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_xdgconfigdir/Xwayland-session.d/00-at-spi
@@ -135,6 +134,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Apr 22 2022 Yuri N. Sedunov <aris@altlinux.org> 2.44.1-alt1
+- 2.44.1
+
 * Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 2.44.0-alt1
 - 2.44.0
 
