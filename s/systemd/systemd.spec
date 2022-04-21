@@ -61,7 +61,7 @@
 
 %def_enable sysusers
 %def_disable ldconfig
-%def_enable firstboot
+%def_disable firstboot
 %def_enable standalone_binaries
 
 %if_enabled sysusers
@@ -90,7 +90,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -774,7 +774,7 @@ Conflicts: startup < 0.9.9.14
         -Dntp-servers="" \
         %{?_enable_sysusers:-Dsysusers=true} \
         %{?_enable_ldconfig:-Dldconfig=true} \
-        %{?_enable_firstboot:-Dfirstboot=true} \
+	-Dfirstboot=%{?_enable_firstboot:true}%{!?_enable_firstboot:false} \
         %{?_enable_gnu_efi:-Dgnu-efi=true} \
         %{?_enable_seccomp:-Dseccomp=true} \
         %{?_enable_ima:-Dima=true} \
@@ -1985,7 +1985,6 @@ fi
 %if_enabled networkd
 %files networkd
 /bin/networkctl
-%dir %_sysconfdir/systemd/network
 %config(noreplace) %_sysconfdir/systemd/networkd.conf
 %config(noreplace) %_sysconfdir/systemd/resolved.conf
 %_datadir/dbus-1/system.d/org.freedesktop.resolve1.conf
@@ -2236,6 +2235,7 @@ fi
 %endif
 
 %files -n udev
+%dir %_sysconfdir/systemd/network
 %dir %_sysconfdir/udev
 %dir %_sysconfdir/udev/rules.d
 %dir %_sysconfdir/udev/hwdb.d
@@ -2272,6 +2272,11 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Apr 21 2022 Alexey Shabalin <shaba@altlinux.org> 1:249.11-alt1
+- 249.11.
+- udev is owner of /etc/systemd/network dir.
+- disable firstboot service.
+
 * Wed Feb 16 2022 Alexey Shabalin <shaba@altlinux.org> 1:249.10-alt1
 - 249.10 (Fixes: CVE-2021-4034)
 
