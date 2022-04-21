@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        1.0.1
+Version:        1.0.2
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -59,6 +59,21 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Thu Apr 21 2022 Dmitry Degtyarev <kevl@altlinux.org> 1.0.2-alt1
+- Writing: Restored previously removed "MD5 check after
+  writing" feature. This feature was originally removed
+  in version 0.6.0.
+- Writing: Added warnings for cases where "MD5 check
+  after writing" is not possible.
+- Restore dialog: Fixed a visual bug where if the app was
+  launched in Russian, text didn't word wrap correctly
+  and leaked into other dialog pages.
+- Misc: Fixed a visual bug where notification bar for
+  restoration was not sized properly for contents on
+  some languages/systems.
+- Image details: Fixed links in image description text
+  not opening in browser.
+
 * Wed Apr 13 2022 Dmitry Degtyarev <kevl@altlinux.org> 1.0.1-alt1
 - 1.0.1 (See CHANGELOG.txt for details)
 
