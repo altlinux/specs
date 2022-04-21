@@ -1,9 +1,9 @@
 %define module_name             ipt-ratelimit
-%define module_version          0.3.2
+%define module_version          0.3.3
 %define module_release 		alt1
 
 %define flavour		un-def
-%define karch %ix86 x86_64 aarch64 ppc64le
+%define karch %ix86 x86_64 aarch64 ppc64le armh
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
 
@@ -55,6 +55,9 @@ install -pD -m600 xt_ratelimit.ko %buildroot%module_dir/xt_ratelimit.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Apr 21 2022 Alexei Takaseev <taf@altlinux.org> 0.3.3-alt1
+- 0.3.3
 
 * Wed Aug 19 2020 Alexei Takaseev <taf@altlinux.org> 0.3.2-alt1
 - 0.3.2
