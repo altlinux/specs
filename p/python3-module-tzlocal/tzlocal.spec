@@ -2,53 +2,45 @@
 %define oname tzlocal
 
 Name: python3-module-%oname
-Version: 2.0.0
+Version: 4.2
 Release: alt1
 
-Summary: tzinfo object for the local timezone
+Summary: A Python module that tries to figure out what your local timezone is
 
-License: CC0 1.0 Universal
+License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/tzlocal/
 
 BuildArch: noarch
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytz
-BuildRequires: python3-module-mock
-
-%py3_provides %oname
-
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-mock
+BuildRequires: python3-module-pytz-deprecation-shim
 
 %description
-This Python module returns a tzinfo object with the local timezone
-information under Unix and Win-32. It requires pytz, and returns pytz
-tzinfo objects.
+This Python module returns a tzinfo object (with a pytz_deprecation_shim,
+for pytz compatibility) with the local timezone information, under
+Unix and Windows.
 
-This module attempts to fix a glaring hole in pytz, that there is no way
-to get the local timezone information, unless you know the zoneinfo
-name, and under several Linux distros that's hard or impossible to
-figure out.
+It requires Python 3.6 or later, and will use the backports.tzinfo
+package, for Python 3.6 to 3.8.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
+This module attempts to fix a glaring hole in the pytz and zoneinfo
+modules, that there is no way to get the local timezone information,
+unless you know the zoneinfo name, and under several Linux distros
+that's hard or impossible to figure out.
 
-%description tests
-This Python module returns a tzinfo object with the local timezone
-information under Unix and Win-32. It requires pytz, and returns pytz
-tzinfo objects.
-
-This package contains tests for %oname.
+With tzlocal you only need to call get_localzone() and you will get a
+tzinfo object with the local time zone info. On some Unices you will
+still not get to know what the timezone name is, but you don't need
+that when you have the tzinfo file. However, if the timezone name is
+readily available it will be used.
 
 %prep
 %setup
-
-sed -i 's|@PYVER@|%_python3_version|' tzlocal/unix.py
 
 %build
 %python3_build_debug
@@ -57,21 +49,17 @@ sed -i 's|@PYVER@|%_python3_version|' tzlocal/unix.py
 %python3_install
 
 %check
-# FIXME:
-%__python3 setup.py test || :
+%__python3 -m pytest tests
+
 
 %files
-%doc *.txt *.rst
+%doc CHANGES.txt LICENSE.txt README.rst
 %python3_sitelibdir/*
-#exclude %python3_sitelibdir/*/test*
-#exclude %python3_sitelibdir/*/*/test*
-
-#files tests
-#python3_sitelibdir/*/test*
-#python3_sitelibdir/*/*/test*
-
 
 %changelog
+* Thu Apr 21 2022 Egor Ignatov <egori@altlinux.org> 4.2-alt1
+- new version 4.2
+
 * Sun Mar 22 2020 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - new version 2.0.0 (with rpmrb script)
 - adopt spec for rpmgs util
