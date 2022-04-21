@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 79
+%define centos_release 80
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,19 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Apr 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.80-alt1.el9
+- Updated to kernel-5.14.0-80.el9 (fixes: CVE-2022-1015, CVE-2022-25636):
+  + gfs2: Fix bugs revealed by the dct tool
+  + Merge tag 'kernel-5.14.0-70.13.1.el9_0' from 9.0
+  + netfilter: heap out of bounds write in nf_dup_netdev.c since 5.4
+  + netfilter: nf_tables: validate registers coming from userspace.
+  + redhat/configs: Enable CONFIG_RCU_SCALE_TEST & CONFIG_RCU_REF_SCALE_TEST
+  + redhat: disable uncommon media device infrastructure
+  + redhat: Enable KASAN on all ELN debug kernels
+  + Sched/numa: fix allowed numa imbalance
+  + scsi: iscsi: iSCSI Offload regression fixes
+  + Update thermal/drivers/int340x
+
 * Tue Apr 19 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.79-alt1.el9
 - Updated to kernel-5.14.0-79.el9 (fixes: CVE-2020-36516):
   + audit: backport from upstream v5.13-rc1 to v5.16-rc6
