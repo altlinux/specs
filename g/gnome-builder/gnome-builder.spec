@@ -22,8 +22,8 @@
 %def_without gvls
 
 Name: gnome-builder
-Version: %ver_major.0
-Release: alt1.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
 License: LGPLv2+
@@ -231,7 +231,7 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 
 %_includedir/%name/
 %_includedir/%name-%ver_major/
-%_pkgconfigdir/%name-%api_ver.pc
+%_pkgconfigdir/%name-%version.pc
 %python3_sitelibdir_noarch/gi/overrides/Ide.py
 %python3_sitelibdir_noarch/gi/overrides/__pycache__/
 %doc README* AUTHORS NEWS
@@ -273,6 +273,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %{?_with_help:%_datadir/doc/%name/}
 
 %changelog
+* Thu Apr 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- 42.1
+
 * Tue Apr 12 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1.1
 - rebuilt against libclang.so.13
 
