@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 21.12.3
+Version: 22.04.0
 Release: alt1
 
 Summary: KDE Partition Manager core library
@@ -58,7 +58,7 @@ using %_name.
 %_datadir/dbus-1/system-services/%xdg_name.helperinterface.service
 %_datadir/dbus-1/system.d/%xdg_name.helperinterface.conf
 %_K5lib/*.so.*
-%_K5plug/*.so
+%_K5plug/%_name/*.so
 %_datadir/polkit-1/actions/%xdg_name.externalcommand.policy
 
 %files devel
@@ -68,6 +68,9 @@ using %_name.
 
 
 %changelog
+* Thu Apr 21 2022 Yuri N. Sedunov <aris@altlinux.org> 22.04.0-alt1
+- 22.04.0
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 21.12.3-alt1
 - 21.12.3
 

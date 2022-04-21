@@ -2,7 +2,7 @@
 %define xdg_name org.kde.partitionmanager
 
 Name: partitionmanager
-Version: 21.12.3
+Version: 22.04.0
 Release: alt1
 
 Summary: KDE Partition Manager
@@ -24,13 +24,13 @@ Source: %name-%version.tar
 %define kpmcore_ver %version
 
 Requires: libkpmcore >= %kpmcore_ver
-Requires: qca-qt5-ossl lvm2 cryptsetup
+Requires: qca-qt5-ossl lvm2 cryptsetup polkit
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc-c++ extra-cmake-modules qt5-base-devel >= %qt_ver
 BuildRequires: kf5-kcrash-devel kf5-kdoctools-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kdbusaddons-devel
-BuildRequires: kf5-kdoctools
+BuildRequires: libpolkitqt5-qt5-devel kf5-kdoctools
 BuildRequires: libkpmcore-devel >= %kpmcore_ver libatasmart-devel libblkid-devel
 BuildRequires: libappstream-glib-devel
 
@@ -62,9 +62,13 @@ file systems.
 %_K5cfg/%name.kcfg
 %_K5xmlgui/%name/
 %_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/solid/actions/open_in_%name.desktop
 %doc README*
 
 %changelog
+* Thu Apr 21 2022 Yuri N. Sedunov <aris@altlinux.org> 22.04.0-alt1
+- 22.04.0
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 21.12.3-alt1
 - 21.12.3
 
