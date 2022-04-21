@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.0.11
+Version: 3.0.12
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Mon Apr 18 2022 Vitaly Lipatov <lav@altlinux.ru> 3.0.12-alt1
+- rpmbsh: fix p10 support
+- repl: rewrite internal_repl_list to support major only versions and fix sorted order
+- jmake: drop docmd
+- move from SS to sisyphus suffix
+- config: check rpm via which
+- gitask: add support for srpms replacement
+- rpmbb: fix on non ALT platform
+
 * Thu Sep 30 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.11-alt1
 - build: add  define_allow_root_build if ALLOW_ROOT_USER is set
 - update srpms list for rpmgp -r
