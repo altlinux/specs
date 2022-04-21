@@ -7,7 +7,7 @@
 
 Name: gnustep-%oname
 Version: 2.1
-Release: alt2
+Release: alt3
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -23,10 +23,12 @@ ExcludeArch: armh
 
 BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): cmake
-BuildRequires: gcc-objc gcc-c++ libstdc++-devel
+BuildRequires: libobjc-devel libstdc++-devel
 %if_with clang
 BuildRequires: clang-devel
 BuildRequires: llvm-devel
+%else
+BuildRequires: gcc-objc gcc-c++
 %endif
 
 %description
@@ -169,6 +171,9 @@ sed -i 's|#include "visibility.h"|#include "objc2/visibility.h"|' \
 
 ln -s objc2 %buildroot%_includedir/objc
 
+# see that headers in libdispath-devel
+rm -v %buildroot%_includedir/{Block.h,Block_private.h}
+
 %files -n lib%name
 %doc ANNOUNCE* API README.md
 %_libdir/*.so.*
@@ -196,6 +201,10 @@ ln -s objc2 %buildroot%_includedir/objc
 %endif
 
 %changelog
+* Wed Apr 20 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1-alt3
+- spec: don't require gcc when clang build
+- remove Block.h and Block_private.h headers (check libdispatch-devel)
+
 * Fri Aug 27 2021 Andrey Cherepanov <cas@altlinux.org> 2.1-alt2
 - FTBFS: disable LTO.
 
