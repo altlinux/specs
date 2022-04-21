@@ -2,8 +2,8 @@
 %define _emacspeakdir %_datadir/emacs/site-lisp/emacspeak
 
 Name:       emacspeak
-Version:    50.0
-Release:    alt2
+Version:    55.0
+Release:    alt1
 
 Summary:    Speech output interface to Emacs.
 License:    GPLv2+ and BSD
@@ -15,9 +15,6 @@ Source0: %name-%version.tar
 Source1: %name-profile.sh
 Source2: %name.conf
 Source3: enable-%name
-
-Patch0: %name-alt-langswitch.patch
-Patch1: %name-alt-lisp.patch
 
 Requires: voiceman
 
@@ -37,9 +34,6 @@ independently and efficiently with the computer.
 
 %prep
 %setup
-
-%patch0 -p1
-%patch1 -p1
 
 %build
 make config SRC=`pwd`
@@ -72,9 +66,6 @@ install -d %buildroot%_emacspeakdir/etc/tables
 
 
 install -m 0644 lisp/*.el lisp/*.elc %buildroot%_emacspeakdir/lisp
-
-install -m 0644 lisp/g-client/*.el lisp/g-client/*.elc lisp/g-client/*.xsl \
-                %buildroot%_emacspeakdir/lisp/g-client
 
 cp -f etc/*.pl etc/*.sh etc/cbox* etc/pdf2text etc/cal2text etc/emacspeak.xpm \
       etc/emacspeak.jpg %buildroot%_emacspeakdir/etc
@@ -127,6 +118,9 @@ chmod -R go+rX %_emacspeakdir/media
 
 
 %changelog
+* Thu Apr 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 55.0-alt1
+- 55.0 releaseed
+
 * Thu Dec 30 2021 Igor Vlasenko <viy@altlinux.org> 50.0-alt2
 - NMU: fixed build
 
