@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.9.2.23.git43db5f1
+%define module_version	0.9.3
 %define module_release	alt1
 
 %define flavour		un-def
@@ -211,6 +211,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Thu Apr 21 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.3-alt1
+- Updated to v0.9.3.
 
 * Fri Apr 08 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.2.23.git43db5f1-alt1
 - Updated to v0.9.2-23-g43db5f1.
