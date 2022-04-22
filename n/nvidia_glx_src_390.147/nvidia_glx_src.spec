@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 147
 %define nv_minor %nil
-%define pkg_rel alt219
+%define pkg_rel alt220
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -100,6 +100,8 @@ Source100: nvidia_create_xinf
 
 Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
+Patch3: buildfix_kernel_5.17.patch
+Patch4: buildfix_kernel_5.17_uvm.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -167,6 +169,10 @@ cd %tbname-%tbver%dirsuffix
 pushd kernel
 #%patch1 -p1
 %patch2 -p1
+%patch3 -p1
+if [ -e nvidia-uvm/nvidia-uvm.Kbuild ] ; then
+%patch4 -p1
+fi
 rm -rf precompiled
 popd
 
@@ -354,6 +360,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 22 2022 Sergey V Turchin <zerg@altlinux.org> 390.147-alt220
+- add fix against 5.17 kernel
+
 * Tue Apr 19 2022 Sergey V Turchin <zerg@altlinux.org> 390.147-alt219
 - remove extra obsolete of libnvidia-compiler
 
