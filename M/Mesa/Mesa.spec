@@ -81,11 +81,11 @@
 %endif
 
 %define ver_major 22.0
-%define ver_minor 1
+%define ver_minor 2
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -105,8 +105,7 @@ BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-dev
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel libunwind-devel
 BuildRequires: libclc-devel libglvnd-devel >= 1.2.0 llvm-devel >= 11.0.0 clang-devel >= 11.0.0
-BuildRequires: python3-module-docutils
-#BuildRequires: glslang rpm-build-python3
+BuildRequires: rpm-build-python3 glslang python3-module-docutils
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -315,7 +314,7 @@ Mesa-based DRI drivers
 	-Dgallium-nine=true \
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
-	-Dvulkan-layers=device-select \
+	-Dvulkan-layers='device-select, overlay' \
 %ifarch %vdpau_arches
 	-Dgallium-vdpau=true \
 %endif
@@ -504,8 +503,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_libdir/vdpau/libvdpau_gallium.so.1.0.0
 %endif
 %ifarch %vulkan_virtio_arches
-%_libdir/libVkLayer_MESA_device_select.so
-%_datadir/vulkan/implicit_layer.d/VkLayer_MESA*.json
+%_bindir/mesa-overlay-control.py
+%_libdir/libVkLayer_MESA*.so
+%_datadir/vulkan/*plicit_layer.d/VkLayer_MESA*.json
 %endif
 
 %ifarch %virgl_arches
@@ -519,7 +519,6 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 
 %ifarch %intel_arches
 %files -n xorg-dri-intel
-#%_libdir/X11/modules/dri/i8?0_dri.so
 %_libdir/X11/modules/dri/i9?5_dri.so
 %_libdir/X11/modules/dri/crocus_dri.so
 %_libdir/X11/modules/dri/iris_dri.so
@@ -580,6 +579,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri Apr 22 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.2-alt1
+- 22.0.2
+
 * Mon Apr 18 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.1-alt2
 - enabled Direct3D9 state tracker
 
