@@ -2,7 +2,7 @@
 %def_enable static
 
 Name: libusb
-Version: 1.0.25
+Version: 1.0.26
 Release: alt1
 
 Summary: Libusb is a library which allows userspace access to USB devices
@@ -89,6 +89,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %doc doc/api-1.0
 
 %changelog
+* Fri Apr 22 2022 Anton Farygin <rider@altlinux.ru> 1.0.26-alt1
+- 1.0.25 -> 1.0.26
+
 * Sun Feb 13 2022 Anton Farygin <rider@altlinux.ru> 1.0.25-alt1
 - 1.0.24 -> 1.0.25
 - updated License according SPDX
