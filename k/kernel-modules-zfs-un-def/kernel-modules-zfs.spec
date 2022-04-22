@@ -1,5 +1,5 @@
 %define module_name zfs
-%define module_version 2.1.2
+%define module_version 2.1.4
 %define module_release alt1
 
 %define flavour un-def
@@ -14,7 +14,7 @@ BuildRequires(pre): kernel-headers-modules-un-def
 # The kernel 5.10 on powerpc has a GPL-only symbol mmu_feature_keys, which block build zfs with an error:
 # ERROR: modpost: GPL-incompatible module zfs.ko uses GPL-only symbol 'mmu_feature_keys'
 %if "%(rpmvercmp '%kversion' '5.10')" >= "0"
-ExcludeArch: ppc64le
+ExcludeArch: ppc64le %ix86
 %endif
 
 Summary: ZFS Linux modules
@@ -74,6 +74,9 @@ export CC="gcc${GCC_VERSION:+-$GCC_VERSION}"
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Apr 22 2022 Anton Farygin <rider@altlinux.ru> 2.1.4-alt1
+- 2.1.2 -> 2.1.4
 
 * Wed Jan 05 2022 Anton Farygin <rider@altlinux.ru> 2.1.2-alt1
 - 2.1.1 -> 2.1.2

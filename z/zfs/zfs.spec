@@ -2,13 +2,13 @@
 %global _localstatedir %_var
 
 Name: zfs
-Version: 2.1.2
+Version: 2.1.4
 Release: alt1
 Summary: ZFS on Linux
 License: CDDL-1.0
 Group: System/Kernel and hardware
-# VCS: https://github.com/openzfs/zfs
 URL: https://zfsonlinux.org/
+VCS: https://github.com/openzfs/zfs
 Conflicts: fuse-zfs
 
 Source0: %name-%version.tar
@@ -165,6 +165,7 @@ fi
 %_sysconfdir/zfs/*.example
 %_sysconfdir/modules-load.d/%name.conf
 %_unitdir/*.service
+%_unitdir/*.timer
 %_unitdir/*.target
 %_unitdir-preset/50-zfs.preset
 /lib/systemd/system-generators/zfs-mount-generator
@@ -202,6 +203,9 @@ fi
 %_usrsrc/kernel
 
 %changelog
+* Fri Apr 22 2022 Anton Farygin <rider@altlinux.ru> 2.1.4-alt1
+- 2.1.2 -> 2.1.4
+
 * Wed Jan 05 2022 Anton Farygin <rider@altlinux.ru> 2.1.2-alt1
 - 2.1.2
 
