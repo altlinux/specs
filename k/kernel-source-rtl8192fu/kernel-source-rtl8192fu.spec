@@ -1,6 +1,6 @@
 Name: kernel-source-rtl8192fu
 Version: 5.8.6.2
-Release: alt3.git69c7bf8
+Release: alt4.gitbfe289f
 
 Summary: RTL8192FU driver for Linux kernel
 License: GPL-2.0
@@ -28,6 +28,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Fri Apr 22 2022 Andrey Cherepanov <cas@altlinux.org> 5.8.6.2-alt4.gitbfe289f
+- Fixed build for kernel 5.17.
+
 * Wed Nov 17 2021 Andrey Cherepanov <cas@altlinux.org> 5.8.6.2-alt3.git69c7bf8
 - Upstream fix for kernel 5.15.
 
