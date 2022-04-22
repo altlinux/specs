@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        1.0.2
+Version:        1.0.3
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -59,6 +59,9 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Fri Apr 22 2022 Dmitry Degtyarev <kevl@altlinux.org> 1.0.3-alt1
+- Restore dialog: Fixed untranslated text on first page.
+
 * Thu Apr 21 2022 Dmitry Degtyarev <kevl@altlinux.org> 1.0.2-alt1
 - Writing: Restored previously removed "MD5 check after
   writing" feature. This feature was originally removed
