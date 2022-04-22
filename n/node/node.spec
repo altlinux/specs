@@ -1,14 +1,14 @@
 # check deps/npm/package.json for it
-%define npmver 6.14.14
+%define npmver 8.1.2
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 14.18
+%define major 16.13
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
-%global nodejs_abi 14
+%global nodejs_abi 16
 
 # there are both 6 and 7 provided (https://github.com/nodejs/node/pull/35199), see napi using
 %global napi 7
@@ -16,14 +16,15 @@
 # TODO: really we have no configure option to build with shared libv8
 # V8 presently breaks ABI at least every x.y release while never bumping SONAME,
 # so we need to be more explicit until spot fixes that
-%global v8_abi 7.9
+%global v8_abi 8.4
 %def_without systemv8
 
 
-%define openssl_version 1.1.1l
+# https://bugzilla.altlinux.org/show_bug.cgi?id=39716
+%define openssl_version 1.1.1k
 %def_with systemssl
 
-%global libuv_abi 1.42.0
+%global libuv_abi 1.41.1-alt1
 %def_with systemuv
 
 # see deps/v8/src/objects/intl-objects.h for V8_MINIMUM_ICU_VERSION
@@ -37,6 +38,12 @@
 %ifarch armh
 %global optflags_lto %nil
 %endif
+
+# minimalize memory using
+%ifarch armh
+%define optflags_debug -g0
+%endif
+
 
 %global libnghttp2_abi 1.41.0
 %def_with systemnghttp2
@@ -53,7 +60,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.2
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -69,15 +76,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: %name-%version.tar
 Source7: nodejs_native.req.files
 
-Patch: 8699aa501c4d4e1567ebe8901e5ec80cadaa9323.patch
-
 BuildRequires(pre): rpm-macros-nodejs
 BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires(pre): rpm-macros-features
 
 BuildRequires: python3-devel gcc-c++ zlib-devel
 
-BuildRequires: gyp
+BuildRequires: gyp >= 0.10.0
 BuildRequires: python3-module-simplejson
 
 %if_with systemv8
@@ -107,7 +112,7 @@ BuildRequires: libnghttp2-devel >= %libnghttp2_abi
 BuildRequires: libhttp-parser-devel >= 2.9.2-alt2
 %endif
 
-BuildRequires: libcares-devel >= 1.17.2-alt1
+BuildRequires: libcares-devel >= 1.18.1-alt1
 
 BuildRequires: curl
 
@@ -201,7 +206,6 @@ node programs. It manages dependencies and does other cool stuff.
 
 %prep
 %setup
-%patch -p1
 
 %if_with systemv8
 # hack against https://bugzilla.altlinux.org/show_bug.cgi?id=32573#c3
@@ -258,6 +262,7 @@ export PYTHONPATH=$(pwd)/tools/v8_gypfiles
 
 ./configure \
     --prefix=%_prefix \
+    --enable-lto \
     --shared-zlib \
 %if_with systemicu
     --with-intl=system-icu \
@@ -386,6 +391,9 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Fri Dec 17 2021 Vitaly Lipatov <lav@altlinux.ru> 16.13.1-alt1
+- new LTS version 16.13.1 (with rpmrb script)
+
 * Fri Dec 17 2021 Vitaly Lipatov <lav@altlinux.ru> 14.18.2-alt1
 - new version 14.18.2 (with rpmrb script)
 - CVE-2021-22959: HTTP Request Smuggling due to spaced in headers

@@ -1,14 +1,14 @@
 %define pname canvas
 
 Name: node-canvas
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 
 Summary: node-canvas is a Cairo-backed Canvas implementation for Node.js
 
-License: MIT License
+License: MIT
 Group: Development/Other
-Url: https://github.com/msgpack/msgpack-node
+Url: https://github.com/Automattic/node-canvas
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -53,5 +53,8 @@ rm -rf %buildroot/%nodejs_sitelib/%pname/{prebuild,examples,src,test,binding.gyp
 %nodejs_sitelib/%pname/
 
 %changelog
+* Mon Dec 20 2021 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt1
+- new version 2.8.0 (with rpmrb script)
+
 * Mon Oct 12 2020 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
 - initial build for ALT Sisyphus
