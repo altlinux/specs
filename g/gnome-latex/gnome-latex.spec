@@ -1,5 +1,5 @@
-%def_enable snapshot
-%define ver_major 3.38
+%def_disable snapshot
+%define ver_major 3.39
 %define xdg_name org.gnome.gnome-latex
 
 %def_enable gtk_doc
@@ -7,26 +7,27 @@
 %def_disable check
 
 Name: gnome-latex
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Integrated LaTeX Environment for the GNOME desktop
 Group: Publishing
 License: GPL-3.0
-Url: https://wiki.gnome.org/Apps/GNOME-LaTeX
+Url: https://gitlab.gnome.org/swilmet/gnome-latex
 
 %if_disabled snapshot
 Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version.tar.xz
 %else
+Vcs: https://gitlab.gnome.org/swilmet/gnome-latex.git
 Source: %name-%version.tar
 %endif
 
 Requires: %_bindir/latexmk dconf
 
 %define gtk_ver 3.22
-%define gtksource_ver 3.99.7
-%define tepl_ver 5.99.0
-%define amtk_ver 5.1.1
+%define gtksource_ver 4.0
+%define tepl_ver 5.99.1
+%define amtk_ver 5.2
 %define vala_ver 0.46.5
 
 BuildRequires: vala-tools >= %vala_ver
@@ -97,6 +98,9 @@ This package contains documentation for %name.
 %endif
 
 %changelog
+* Fri Apr 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.39.1-alt1
+- 3.39.1
+
 * Sat Mar 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt2
 - 3.38.0-13-g703c2c9 (ported to Tepl-6)
 
