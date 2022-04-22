@@ -1,5 +1,7 @@
 %def_without cross_toolchain_aarch64
 %def_disable check
+%def_disable docs
+%def_disable domU
 
 Name: kernel-image-rpi-def
 Release: alt1
@@ -7,7 +9,7 @@ epoch:1
 %define kernel_need_version	5.15
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	5.15
-%define kernel_sublevel .25
+%define kernel_sublevel .33
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -27,15 +29,6 @@ Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
 # You can change compiler version by editing this line:
 %define kgcc_version	%__gcc_version_base
 
-# Enable/disable SGML docs formatting
-%if "%sub_flavour" == "def" && %kgcc_version > 5
-%def_enable docs
-%else
-%def_disable docs
-%endif
-
-%def_disable domU
-
 #Remove oss
 %def_disable oss
 ## Don't edit below this line ##################################
@@ -54,7 +47,7 @@ License: GPL
 Group: System/Kernel and hardware
 Url: http://www.kernel.org/
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
-
+Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 ExclusiveArch: aarch64
@@ -79,13 +72,13 @@ BuildRequires: flex
 BuildRequires: libdb4-devel
 BuildRequires: gcc%kgcc_version gcc%kgcc_version-c++
 BuildRequires: gcc%kgcc_version-plugin-devel libgmp-devel libmpc-devel
-BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
 BuildRequires: module-init-tools >= 3.16
 BuildRequires: lzma-utils
 BuildRequires: libelf-devel
 BuildRequires: bc
 BuildRequires: rsync
 BuildRequires: openssl-devel
+BuildRequires: u-boot-tools
 %if_with cross_toolchain_aarch64
 BuildRequires: gcc-aarch64-linux-gnu
 %endif
@@ -201,12 +194,8 @@ patches applied to the corresponding kernel packages may change things
 in the kernel and update the documentation to reflect these changes.
 
 %prep
-%setup -cT -n kernel-image-%flavour-%kversion-%krelease
-rm -rf kernel-source-%kernel_base_version
-tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
-%setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
+%setup
 %patch0 -p1
-
 
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
@@ -461,6 +450,15 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Apr 20 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.33-alt1
+- Updated to 5.15.33
+- https://github.com/raspberrypi/linux.git rpi-5.15.y commit 784f0a39c945c79fcb52dbb01db08b3bcc8ff7a5
+- Baikal-M support from git.alt/people/asheplyakov/linux.git commit d047c3a6e1562e46fc0aaa753c39860784099b36
+- Baikal-M: HD audio support
+- Baikal-M: new supported boards: et101 (Elpitech), AQBM1000 (Aquarius)
+- Keep spec and .gear in a dedicated branch (separate from code)
+- Don't build docs to avoid spurious sphynx failures
+
 * Thu Mar 03 2022 Dmitry Terekhin <jqt4@altlinux.org> 1:5.15.25-alt1
 - Updated to 5.15.25 (still RPi-specific)
 - https://github.com/raspberrypi/linux.git rpi-5.15.y
