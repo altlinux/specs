@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.111
+Version: 2.9.112
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -116,8 +116,13 @@ make check
 %lang(de) %_datadir/locale/de/LC_MESSAGES/*.mo
 
 %lang(da) %_datadir/locale/da/LC_MESSAGES/*.mo
+%lang(da) %dir %_datadir/alterator/help/da_DK/
+%lang(da) %_datadir/alterator/help/da_DK/*.html
 
 %changelog
+* Sat Apr 23 2022 Michael Shigorin <mike@altlinux.org> 2.9.112-alt1
+- help: added Danish translations by Carl Andersen
+
 * Tue Apr 05 2022 Ivan Savin <svn17@altlinux.org> 2.9.111-alt1
 - Rename files for alterator-roles after its rename
 - Updated translations for alterator-roles
