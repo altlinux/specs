@@ -2,7 +2,7 @@
 
 Name: ctags
 Version: 5.8
-Release: alt4
+Release: alt5
 
 Summary: A C programming language indexing and/or cross-reference tool
 License: GPLv2+
@@ -11,10 +11,38 @@ Url: http://ctags.sourceforge.net/
 
 # http://download.sourceforge.net/ctags/ctags-%version.tar.gz
 Source: ctags-%version.tar
-Patch1: ctags-5.8-alt-warnings.patch
-Patch2: ctags-5.8-alt-buildroot.patch
-Patch3: ctags-5.8-rh-segfault-fix.patch
-Patch4: ctags-5.8-r791-cve-2014-7204-fix.patch
+
+# SUSE patches
+Patch1: 0001-Mixing-with-anjuta-tags-https-git.gnome.org-browse-a.patch
+Patch2: 0002-Making-inline-behave-like-an-attribute.-Fixes-1.patch
+Patch3: 0003-Treat-typename-as-an-attribute.patch
+Patch4: 0004-parseReturnType-should-start-from-the-first-non-brac.patch
+Patch5: 0005-Ensuring-a-space-is-printed-in-return-type-AFTER-the.patch
+Patch6: 0006-Prevent-C-static_assert-from-stopping-parsing.patch
+Patch7: 0007-c-Handle-C-11-noexcept.patch
+Patch8: 0008-c-Properly-parse-C-11-override-and-final-members.patch
+Patch9: 0009-Parse-C-11-enums-with-type-specifier.patch
+Patch10: 0010-Parse-C-11-classed-enums.patch
+Patch11: 0011-Handle-template-expressions-that-may-use-the-or-oper.patch
+Patch12: 0012-Make-sure-we-don-t-throw-things-away-while-collectin.patch
+Patch13: 0013-C-mitigate-matching-error-on-generics-containing-an-.patch
+Patch14: 0014-fix-wrongly-interpreted-in-template.patch
+Patch15: 0015-Added-constexpr-as-keyword.patch
+# Covered by ctags-5.8-r791-cve-2014-7204-fix.patch
+# Patch16: 0016-CVE-2014-7204.patch
+Patch17: 0017-Go-language-support.patch
+# SUSE specific
+# Patch18: 0018-SUSE-man-page-changes.patch
+# Covered by SOURCE_DATE_EPOCH
+# Patch19: 0019-Do-not-include-build-time-in-binary.patch
+Patch20: ctags-gcc11.patch
+
+# ALT patches
+Patch101: ctags-5.8-alt-warnings.patch
+Patch102: ctags-5.8-alt-buildroot.patch
+Patch103: ctags-5.8-rh-segfault-fix.patch
+Patch104: ctags-5.8-r791-cve-2014-7204-fix.patch
+Patch105: ctags-5.8-alt-man.patch
 
 %description
 The ctags program generate an index (or "tag") file for C, C++, Eiffel,
@@ -29,14 +57,7 @@ in a set of language files.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p2
-
-%if "%version" == "5.8"
-sed -i s,__unused__,__unused,g `grep -rl __unused__ .`
-%endif
+%autopatch -p1
 
 %build
 %autoreconf
@@ -52,6 +73,14 @@ sed -i s,__unused__,__unused,g `grep -rl __unused__ .`
 %doc EXTENDING.html FAQ NEWS README
 
 %changelog
+* Sat Apr 23 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.8-alt5
+- Synced with SUSE devel:tools/ctags r36:
+  + Included bugfixes and improvements;
+  + Added returntype field to tag file format (disabled by default);
+  + Added support for Go language.
+- Rediffed and updated patches.
+- Added patches for man page.
+
 * Thu Apr 14 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.8-alt4
 - Security release (fixed CVE-2014-7204).
 
