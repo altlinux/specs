@@ -1,6 +1,6 @@
 Name: git-remote-gcrypt
-Version: 1.2
-Release: alt2
+Version: 1.4
+Release: alt1
 
 Summary: A git remote helper for GPG-encrypted remotes
 License: GPLv2+
@@ -14,7 +14,7 @@ Packager: Pavel Nakonechnyi <zorg@altlinux.org>
 Provides: git-remote-gcrypt
 
 BuildArch: noarch
-BuildRequires: /usr/bin/rst2man.py
+BuildRequires: python3-module-docutils
 
 %description
 This lets git store git repositories in encrypted form.
@@ -33,7 +33,7 @@ collaboration using typical untrusted file hosts or services.
 %install
 install -d %buildroot%_bindir
 install -m 755 git-remote-gcrypt %buildroot%_bindir
-rst2man.py README.rst > git-remote-gcrypt.1
+rst2man README.rst > git-remote-gcrypt.1
 install -d %buildroot%_man1dir
 install -m 644 git-remote-gcrypt.1 %buildroot%_man1dir
 
@@ -42,6 +42,10 @@ install -m 644 git-remote-gcrypt.1 %buildroot%_man1dir
 %_man1dir/git-remote-gcrypt.1*
 
 %changelog
+* Sat Apr 23 2022 Pavel Nakonechnyi <zorg@altlinux.org> 1.4-alt1
+- updated to 1.4 upstream version (minor fixes, rsync-related changes)
+- require python3-module-docutils build dep explicitly
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 1.2-alt2
 - NMU: use rst2man.py from python3-module-docutils
 
