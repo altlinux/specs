@@ -11,8 +11,8 @@ BuildRequires: /usr/bin/glib-gettextize gcc-c++
 %define indic_tables 0
 
 Name:           scim-tables
-Version:        0.5.14
-Release:        alt2_3
+Version:        0.5.14.1
+Release:        alt1
 Summary:        SCIM Generic Table IMEngine
 
 License:        GPLv2+
@@ -460,6 +460,9 @@ rm ${RPM_BUILD_ROOT}/%{_datadir}/scim/{icons,tables}/{Hangul,Hanja,HIRAGANA,KATA
 %{_datadir}/scim/icons/Uyghur.png
 
 %changelog
+* Sun Apr 24 2022 Ilya Mashkin <oddity@altlinux.ru> 0.5.14.1-alt1
+- 0.5.14.1
+
 * Tue Nov 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.5.14-alt2_3
 - updated buildrequires
 
