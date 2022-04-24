@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.322.b06
+%define version 1.8.0.332.b06
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -295,7 +295,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo shenandoah-jdk8u
-%global shenandoah_revision aarch64-shenandoah-jdk8u322-b06
+%global shenandoah_revision shenandoah-jdk8u332-b06
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -317,7 +317,7 @@ BuildRequires: /proc rpm-build-java
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga           1
+%global is_ga           0
 %if %{is_ga}
 %global milestone          fcs
 %global milestone_version  %{nil}
@@ -381,7 +381,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{updatever}.%{buildver}
-Release: alt2_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
+Release: alt0_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -541,8 +541,10 @@ Patch202: jdk8035341-allow_using_system_installed_libpng.patch
 # 8042159: Allow using a system-installed lcms2
 Patch203: jdk8042159-allow_using_system_installed_lcms2-root.patch
 Patch204: jdk8042159-allow_using_system_installed_lcms2-jdk.patch
-# JDK-8195607, PR3776, RH1760437: sun/security/pkcs11/Secmod/TestNssDbSqlite.java failed with "NSS initialization failed" on NSS 3.34.1
-Patch580: jdk8195607-pr3776-rh1760437-nss_sqlite_db_config.patch
+Patch205: jdk8281098-pr3836-pass_compiler_flags_to_adlc.patch
+Patch206: jdk8282231-x86_32-missing_call_effects.patch
+Patch207: rh1582504-rsa_default_for_keytool.patch
+Patch208: rh1648249-add_commented_out_nss_cfg_provider_to_java_security.patch
 
 #############################################
 #
@@ -1063,6 +1065,10 @@ sh %{SOURCE12}
 %patch202
 %patch203
 %patch204
+%patch205
+%patch206
+%patch207
+%patch208
 
 # System security policy fixes
 %patch400
@@ -2143,6 +2149,9 @@ fi
 %endif
 
 %changelog
+* Fri Apr 22 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.332.b06-alt0_0.1.eajpp8
+- New version.
+
 * Fri Feb 18 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.322.b06-alt2_1jpp8
 - New version.
 - Security fixes:
