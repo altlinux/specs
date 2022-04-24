@@ -7,7 +7,7 @@
 
 Name: dolphin-emu
 Version: 5.0.16101
-Release: alt1
+Release: alt1.1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -32,9 +32,10 @@ BuildPreReq: pkgconfig(uuid)
 
 BuildRequires: cmake
 BuildRequires: libcubeb-devel
-BuildRequires: libmbedtls13-devel
+BuildRequires: libmbedtls-compat-devel
 BuildRequires: libminiupnpc-devel
-BuildRequires: llvm12.0-devel-static
+BuildRequires: llvm-devel
+BuildRequires: llvm13.0-gold
 BuildRequires: pkgconfig(Qt5)
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(bzip2)
@@ -67,7 +68,6 @@ BuildRequires: pkgconfig(xinerama)
 BuildRequires: pkgconfig(xmu)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(xxf86vm)
-BuildRequires: pkgconfig(udev)
 
 %description
 Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
@@ -106,6 +106,9 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Sun Apr 24 2022 Nazarov Denis <nenderus@altlinux.org> 5.0.16101-alt1.1
+- Fix FTBFS
+
 * Fri Mar 25 2022 Nazarov Denis <nenderus@altlinux.org> 5.0.16101-alt1
 - Version 5.0-16101
 
