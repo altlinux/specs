@@ -56,7 +56,7 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt4
+Release: alt4.1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -136,6 +136,7 @@ Summary: Libraries and header files for LLVM
 %requires_filesystem
 Requires: llvm-devel >= %_llvm_version
 Requires: %name = %EVR
+Provides: %name-devel-static
 # Compatibility note:
 # The gold plugin was located in llvm-devel prior to 12.0.1-alt3.
 Requires: %name-gold
@@ -393,7 +394,7 @@ fi
 %define _cmake_skip_rpath -DCMAKE_SKIP_RPATH:BOOL=OFF
 %define _cmake__builddir BUILD
 %cmake -G Ninja \
-	-DLLVM_PARALLEL_LINK_JOBS=1 \
+	-DLLVM_PARALLEL_LINK_JOBS=4 \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_PREFIX=%llvm_prefix \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
@@ -842,6 +843,10 @@ ninja -C BUILD check-all || :
 #doc %llvm_docdir/lldb
 
 %changelog
+* Sat Apr 23 2022 Arseny Maslennikov <arseny@altlinux.org> 12.0.1-alt4.1
+- [Fix] Merge *-devel-static into *-devel across supported LLVM major versions,
+  including llvm-devel.
+
 * Fri Apr 08 2022 Arseny Maslennikov <arseny@altlinux.org> 12.0.1-alt4
 - Merge *-devel-static into *-devel across supported LLVM major versions.
 
