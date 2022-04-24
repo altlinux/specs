@@ -1,9 +1,10 @@
 %global import_path code.gitea.io/gitea
 
 %global _unpackaged_files_terminate_build 1
+%def_enable tarball
 
 Name:    gitea
-Version: 1.15.10
+Version: 1.16.6
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -13,18 +14,23 @@ Group:   Development/Other
 Url:     https://gitea.io
 
 # https://github.com/go-gitea/gitea
-Source:  %name-%version.tar
+Source: %name-%version.tar
 
 Source2: gitea.service
 Source3: gitea.service.d.conf
 Source4: README.ALT
 
+%if_disabled tarball
 Patch1: %name-%version.patch
+%endif
 Patch2: ALT_config.patch
+Patch3: disable-strip.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: golang >= 1.14 go-bindata
-BuildRequires: npm >= 6.13.6-alt2 node >= 10.13 esbuild
+BuildRequires: golang >= 1.16
+%if_disabled tarball
+BuildRequires: npm >= 6.13.6-alt2 node >= 12.17 esbuild node-gyp go-bindata
+%endif
 BuildRequires: libpam-devel
 BuildRequires: /proc
 
@@ -38,15 +44,23 @@ and Gitlab. Gitea is a fork of Gogs.
 %prep
 # build the JavaScript and CSS files
 # $ npm install
-# $ git add -f node_modules
 # $ rm -f node_modules/esbuild/bin/esbuild
+# $ rm -rf node_modules/esbuild-linux*
+# $ git add -f node_modules
 # $ git commit -n --no-post-rewrite -m "add node js modules"
+# $ go mod vendor
+# $ git add -f vendor
+# $ git commit -n --no-post-rewrite -m "add go modules by go mod vendor"
 
 %setup
+%if_disabled tarball
 %patch1 -p1
-%patch2 -p1
 mkdir -p node_modules/esbuild/bin
 ln -s %_bindir/esbuild node_modules/esbuild/bin/esbuild
+%else
+%patch3 -p1
+%endif
+%patch2 -p1
 
 %build
 export BUILDDIR="$PWD/.gopath"
@@ -65,6 +79,8 @@ install -Dm 0644 %SOURCE3 %buildroot%_sysconfdir/systemd/system/gitea.service.d/
 install -Dm 0660 custom/conf/app.example.ini %buildroot%_sysconfdir/%name/app.ini
 
 # install docs
+mkdir -p %buildroot%_man1dir
+./gitea docs --man > %buildroot%_man1dir/gitea.1
 mkdir -p %buildroot%_docdir/%name
 install -Dm 0644 custom/conf/app.example.ini %buildroot%_docdir/%name/default-app.ini
 install -Dm 0644 %SOURCE4 %buildroot%_docdir/%name/
@@ -84,17 +100,24 @@ useradd -r -g %name -c 'Gitea daemon' \
 %_bindir/%name
 %dir %attr(0750,%name,%name) %_localstatedir/%name
 %dir %attr(0770,root,%name) %_logdir/%name
-%dir %_docdir/%name
 %dir %_sysconfdir/%name
 %config(noreplace) %attr(0660,root,%name) %_sysconfdir/%name/app.ini
-%config(noreplace) %_sysconfdir/systemd/system/gitea.service.d/port.conf
 %dir %_sysconfdir/systemd/system/gitea.service.d
+%config(noreplace) %_sysconfdir/systemd/system/gitea.service.d/port.conf
 %_unitdir/%name.service
-%_docdir/%name/default-app.ini
-%_docdir/%name/README.ALT
+%_man1dir/*
+%_docdir/%name
 %doc *.md
 
 %changelog
+* Sat Apr 23 2022 Alexey Shabalin <shaba@altlinux.org> 1.16.6-alt1
+- Build new version.
+- Build from src tarball.
+- Add man page.
+
+* Wed Mar 02 2022 Alexey Shabalin <shaba@altlinux.org> 1.16.2-alt1
+- Build new version.
+
 * Sat Jan 22 2022 Alexey Shabalin <shaba@altlinux.org> 1.15.10-alt1
 - Build new version.
 
