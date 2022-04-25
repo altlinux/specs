@@ -1,10 +1,10 @@
 # check deps/npm/package.json for it
-%define npmver 8.1.2
+%define npmver 8.5.0
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
 
-%define major 16.13
+%define major 16.14
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -20,11 +20,10 @@
 %def_without systemv8
 
 
-# https://bugzilla.altlinux.org/show_bug.cgi?id=39716
-%define openssl_version 1.1.1k
+%define openssl_version 1.1.1n
 %def_with systemssl
 
-%global libuv_abi 1.41.1-alt1
+%global libuv_abi 1.43.0-alt1
 %def_with systemuv
 
 # see deps/v8/src/objects/intl-objects.h for V8_MINIMUM_ICU_VERSION
@@ -60,7 +59,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.1
+Version: %major.2
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -391,6 +390,24 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Sat Apr 23 2022 Vitaly Lipatov <lav@altlinux.ru> 16.14.2-alt1
+- new version 16.14.2 (with rpmrb script)
+- set openssl >= 1.1.1n
+- CVE-2022-0778: Infinite loop in BN_mod_sqrt() reachable when parsing certificates (High)
+
+* Sat Apr 23 2022 Vitaly Lipatov <lav@altlinux.ru> 16.14.1-alt1
+- new version 16.14.1 (with rpmrb script)
+- set npm >= 8.5.0
+
+* Fri Mar 18 2022 Vitaly Lipatov <lav@altlinux.ru> 16.13.2-alt1
+- new version 16.13.2 (with rpmrb script)
+- set npm >= 8.3.1
+- set libuv >= 1.43.0
+- CVE-2021-44531: Improper handling of URI Subject Alternative Names (Medium)
+- CVE-2021-44532: Certificate Verification Bypass via String Injection (Medium)
+- CVE-2021-44533: Incorrect handling of certificate subject and issuer fields (Medium)
+- CVE-2022-21824: Prototype pollution via console.table properties (Low)
+
 * Fri Dec 17 2021 Vitaly Lipatov <lav@altlinux.ru> 16.13.1-alt1
 - new LTS version 16.13.1 (with rpmrb script)
 

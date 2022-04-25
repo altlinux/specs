@@ -1,6 +1,6 @@
 Name: npm
-Version: 8.3.1
-Release: alt3
+Version: 8.5.0
+Release: alt1
 
 Summary: A package manager for node
 
@@ -73,6 +73,9 @@ done
 %nodejs_sitelib/%name/
 
 %changelog
+* Sat Apr 23 2022 Vitaly Lipatov <lav@altlinux.ru> 8.5.0-alt1
+- new version 8.5.0 (with rpmrb script)
+
 * Thu Mar 31 2022 Vitaly Lipatov <lav@altlinux.ru> 8.3.1-alt3
 - disable update notifier
 
