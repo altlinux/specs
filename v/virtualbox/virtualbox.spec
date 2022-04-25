@@ -65,8 +65,8 @@
 
 
 Name: virtualbox
-Version: 6.1.32
-Release: alt5
+Version: 6.1.34
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -954,6 +954,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Apr 25 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.34-alt1
+- Update to newest version 6.1.34
+
 * Fri Mar 25 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.32-alt5
 - Fixed changelog entry for 'Fri Mar 18 2022', 41994 -> 40670
 
