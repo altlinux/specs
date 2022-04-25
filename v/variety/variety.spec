@@ -1,6 +1,6 @@
 Name:    variety
-Version: 0.8.5
-Release: alt2
+Version: 0.8.6
+Release: alt1
 
 Summary: Wallpaper downloader and manager for Linux systems
 License: GPL-3.0
@@ -86,6 +86,9 @@ cp -av build/mo/* %buildroot%_datadir/locale
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Apr 25 2022 Andrey Cherepanov <cas@altlinux.org> 0.8.6-alt1
+- New version.
+
 * Thu May 20 2021 Andrey Cherepanov <cas@altlinux.org> 0.8.5-alt2
 - Add icons, desktop file and localization files.
 
