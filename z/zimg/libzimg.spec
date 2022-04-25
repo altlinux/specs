@@ -1,9 +1,12 @@
 %define soname 2
 %define gname zimg
+
 Name: zimg
-Version: 3.0.3
+Version: 3.0.4
 Release: alt1
+
 Summary: Scaling, color space conversion, and dithering library
+
 License: WTFPL
 Group: System/Libraries
 Url: https://github.com/sekrit-twc/zimg
@@ -76,6 +79,9 @@ rm -fr %buildroot%_docdir/%gname
 %_pkgconfigdir/%gname.pc
 
 %changelog
+* Mon Apr 25 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.4-alt1
+- New version (3.0.4).
+
 * Wed Nov 17 2021 Leontiy Volodin <lvol@altlinux.org> 3.0.3-alt1
 - New version (3.0.3).
 - Package:
