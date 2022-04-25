@@ -6,7 +6,7 @@
 %def_with monitor
 
 Name: thermald
-Version: 2.4.7
+Version: 2.4.9
 Release: alt1
 
 Summary: Thermal daemon for IA
@@ -57,6 +57,7 @@ Summary: Application for monitoring %name
 License: GPLv3+
 Group: Monitoring
 BuildRequires: qt5-base-devel
+BuildRequires: qcustomplot-qt5-devel
 Requires: %name
 
 %description monitor
@@ -69,7 +70,10 @@ embedded devices.
 
 %prep
 %setup
-%patch1 -p2
+#patch1 -p2
+
+sed -i 's/LIBS += -lqcustomplot/LIBS += -lqcustomplot-qt5/' \
+  tools/thermal_monitor/ThermalMonitor.pro
 
 %build
 ./autogen.sh
@@ -177,13 +181,16 @@ exit 0
 
 %if_with monitor
 %files monitor
-%doc alt_addons/ReadMe tools/thermal_monitor/qcustomplot/GPL.txt
+%doc alt_addons/ReadMe
 %_bindir/ThermalMonitor
 %_desktopdir/%name-monitor.desktop
 %_iconsdir/hicolor/scalable/apps/%name-monitor.svg
 %endif
 
 %changelog
+* Mon Apr 25 2022 Anton Midyukov <antohami@altlinux.org> 2.4.9-alt1
+- new version 2.4.9
+
 * Mon Jan 10 2022 Nikolai Kostrigin <nickel@altlinux.org> 2.4.7-alt1
 - new version 2.4.7
   + Alder Lake and Jasper Lake support introduced by upstream
