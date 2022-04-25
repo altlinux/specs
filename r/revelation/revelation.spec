@@ -4,10 +4,10 @@
 %define rdn_name info.olasagasti.revelation
 
 Name: revelation
-Version: %ver_major.4
-Release: alt1.1
+Version: %ver_major.5
+Release: alt1
 
-Summary: Password manager for the GNOME 3 desktop
+Summary: Password manager for the GNOME desktop
 License: GPL-2.0
 Group: Graphical desktop/GNOME
 Url: http://revelation.olasagasti.info/
@@ -27,12 +27,13 @@ BuildArch: noarch
 Requires: dconf
 Requires: libgtk+3-gir >= %gtk_ver
 
-BuildRequires(pre): meson rpm-build-python3 rpm-build-gir
-BuildRequires: shared-mime-info desktop-file-utils %_bindir/appstream-util
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires: meson shared-mime-info desktop-file-utils %_bindir/appstream-util
 BuildRequires: libgtk+3-gir-devel >= %gtk_ver
 BuildRequires: python3-module-pygobject3-devel
 BuildRequires: python3-module-pycryptodomex
 BuildRequires: python3-module-pwquality
+BuildRequires: python3-module-defusedxml
 
 %description
 Revelation is a password manager for the GNOME desktop. It stores all
@@ -41,8 +42,6 @@ access to it through a user-friendly graphical interface.
 
 %prep
 %setup -n %name%{?_disable_snapshot:-%name}-%version
-# fix for build with meson >= 0.61
-sed -i '/^[[:space:]]*appdata\,/d' data/meson.build
 
 %build
 %meson
@@ -68,9 +67,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/*x*/*/*.png
 %_iconsdir//hicolor/scalable/*/*.svg
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
-%_datadir/metainfo/%rdn_name.appdata.xml
+%_datadir/metainfo/%rdn_name.metainfo.xml
 
 %changelog
+* Mon Apr 25 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.5-alt1
+- 0.5.5
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.4-alt1.1
 - fixed build with meson >= 0.61
 

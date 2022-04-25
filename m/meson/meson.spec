@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.61
+%define ver_major 0.62
 %define libname mesonbuild
 %define pkgdocdir %_docdir/%name-%version
 
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: High productivity build system
@@ -121,7 +121,7 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %python3_sitelibdir/%libname/
 %python3_sitelibdir/%name-%ver_major.*-*.egg-info/
 %{?_without_polkit:
-%exclude %_datadir/polkit-1/actions/com.mesonbuild.install.policy}
+%exclude }%_datadir/polkit-1/actions/com.mesonbuild.install.policy
 %_man1dir/%name.1.*
 %{?_disabled_docs:%doc COPYING README.*}
 
@@ -135,6 +135,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Sun Apr 24 2022 Yuri N. Sedunov <aris@altlinux.org> 0.62.1-alt1
+- 0.62.1
+
 * Sat Mar 26 2022 Yuri N. Sedunov <aris@altlinux.org> 0.61.4-alt1
 - 0.61.4
 

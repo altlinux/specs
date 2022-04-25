@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 %def_disable static
-%def_disable gtk_doc
+%def_enable docs
 %def_enable pixbuf_loader
 %def_enable introspection
 %def_enable vala
@@ -15,7 +15,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Epoch: 1
 
@@ -27,7 +27,7 @@ Url: https://wiki.gnome.org/action/show/Projects/LibRsvg
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.tar.xz
 
 # From configure.ac
-%define rust_ver 1.52
+%define rust_ver 1.56
 %define glib_ver 2.52.0
 %define pango_ver 1.44
 %define gtk3_ver 3.10.0
@@ -46,7 +46,7 @@ BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libfreetype-devel >= %freetype_ver
 BuildRequires: libharfbuzz-devel >= %harfbuzz_ver
 BuildRequires: libX11-devel libXt-devel zlib-devel
-BuildRequires: gi-docgen python3-module-docutils
+%{?_enable_docs:BuildRequires: gi-docgen python3-module-docutils}
 %{?_enable_introspection:
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
@@ -166,8 +166,10 @@ the functionality of the installed %name.
 %_libdir/pkgconfig/%bname-%gtk_api_ver.pc
 %{?_enable_vala:%_vapidir/%name-%api_ver.vapi}
 
+%if_enabled docs
 %files devel-doc
 %_datadir/doc/%name/Rsvg-%api_ver
+%endif
 
 %if_enabled static
 %files devel-static
@@ -177,7 +179,7 @@ the functionality of the installed %name.
 
 %files utils
 %_bindir/*
-%_man1dir/*
+%{?_enable_docs:%_man1dir/*}
 
 %if_enabled introspection
 %files gir
@@ -196,6 +198,9 @@ the functionality of the installed %name.
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Sat Apr 23 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.54.1-alt1
+- 2.54.1
+
 * Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.54.0-alt1
 - 2.54.0
 

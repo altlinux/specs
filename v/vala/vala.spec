@@ -8,7 +8,7 @@
 %define api_ver 0.56
 
 Name: vala
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Vala is a programming language which makes GNOME programming easy
@@ -268,6 +268,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 
 
 %changelog
+* Fri Apr 22 2022 Yuri N. Sedunov <aris@altlinux.org> 0.56.1-alt1
+- 0.56.1
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 0.56.0-alt1
 - 0.56.0
 

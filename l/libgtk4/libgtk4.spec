@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gtk
 %define ver_major 4.6
@@ -32,8 +32,8 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
 Group: System/Libraries
@@ -136,6 +136,7 @@ build programs that use GTK%api_ver_major.
 %package -n gtk4-update-icon-cache
 Summary: Icon theme caching utility for GTK
 Group: System/Libraries
+# last release of gtk-update-icon-cache is 3.24.32
 Obsoletes: gtk-update-icon-cache < %version
 Provides: gtk-update-icon-cache = %EVR
 
@@ -218,7 +219,6 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
-sed -i "s|\('rst2man\)|\1.py|" docs/reference/gtk/meson.build
 
 %build
 %meson \
@@ -391,6 +391,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sat Apr 23 2022 Yuri N. Sedunov <aris@altlinux.org> 4.6.3-alt1
+- 4.6.3
+
 * Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 4.6.2-alt2
 - new gtk4-update-icon-cache subpackage obsoletes/provides
   gtk-update-icon-cache from libgtk+3

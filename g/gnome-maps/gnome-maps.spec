@@ -5,8 +5,8 @@
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.0
-Release: alt1.1%beta
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Maps is a map application for GNOME
 License: GPL-2.0 and LGPL-2.0
@@ -25,7 +25,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %define handy_ver 1.5
 
 %define gtk_api_ver 3.0
-%define gweather_api_ver 3.0
+%define gweather_api_ver 4.0
 %define soup_api_ver 2.4
 %define webkit_api_ver 4.0
 
@@ -64,7 +64,8 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
 BuildRequires: pkgconfig(geoclue-2.0) >= %geoclue_ver
 BuildRequires: libgee0.8-devel libfolks-devel libgeocode-glib-devel libchamplain-gtk3-devel
-BuildRequires: libgeocode-glib-gir-devel libchamplain-gtk3-gir-devel librest-gir-devel
+BuildRequires: libgeocode-glib-gir-devel libgweather%gweather_api_ver-devel
+BuildRequires: libchamplain-gtk3-gir-devel librest-gir-devel
 BuildRequires: libclutter-gir-devel libcogl-gir-devel
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
@@ -98,6 +99,9 @@ Maps is a map application for GNOME.
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Sat Apr 23 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- 42.1 (ported to GWeather-4.0)
+
 * Thu Apr 07 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1.1
 - updated dependencies (partially fixed ALT #42362)
 

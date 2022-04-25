@@ -8,7 +8,7 @@
 %define tracker_api_ver 3.0
 
 Name: gnome-music
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Music playing application for GNOME3
@@ -80,6 +80,9 @@ Music playing application for GNOME3.
 %doc README* NEWS*
 
 %changelog
+* Mon Apr 25 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- 42.1
+
 * Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0 (ported to GTK4)
 
