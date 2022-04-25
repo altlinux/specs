@@ -1,6 +1,6 @@
 Name: mysql-workbench-community
 Version: 8.0.25
-Release: alt4
+Release: alt5
 
 Summary: A MySQL visual database modeling tool
 
@@ -57,6 +57,12 @@ BuildRequires(pre): rpm-build-python3
 
 # shell_snippets.py is not pure Python
 %add_findreq_skiplist */mysql-workbench/shell_snippets.py
+
+# rpm-build 4.0.4.181-alt1: "library not found" warnings to errors
+%add_findreq_skiplist */mysql-workbench/*.so
+%add_findreq_skiplist */mysql-workbench/*.so.*
+%add_findreq_skiplist */bin/mysql-workbench-bin
+%add_findreq_skiplist */bin/wbcopytables-bin
 
 # templates only
 %add_findreq_skiplist */mysql-workbench/script_templates/*
@@ -233,6 +239,9 @@ cp %_builddir/%name-%version/images/icons/MySQLWorkbenchDocIcon32x32.png %buildr
 %_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Mon Apr 25 2022 Sergey Y. Afonin <asy@altlinux.org> 8.0.25-alt5
+- FTBFS: added hack for build with rpm-build 4.0.4.181-alt1
+
 * Tue Jan 25 2022 Grigory Ustinov <grenka@altlinux.org> 8.0.25-alt4
 - Fixed build with python3.10.
 
