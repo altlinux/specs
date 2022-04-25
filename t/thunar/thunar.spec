@@ -1,6 +1,6 @@
 Name: thunar
 Version: 4.17.8
-Release: alt1
+Release: alt2
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Файловый менеджер Thunar
@@ -13,6 +13,10 @@ Vcs: https://gitlab.xfce.org/xfce/thunar.git
 Source: %name-%version.tar
 Source1: for_translation_thunar_master_ru.po
 Patch: %name-%version-%release.patch
+
+# Patch from upstream git, must be dropped when new version
+# will be released.
+Patch100: Refactor-thunarx-module-loading-Issue-755.patch
 
 BuildRequires(pre): rpm-build-xfce4 >= 0.1.0
 
@@ -74,6 +78,8 @@ This package contains development documentation for lib%name.
 %prep
 %setup
 %patch -p1
+
+%patch100 -p1
 
 # Don't use git tag in version.
 %xfce4_drop_gitvtag thunar_version_tag configure.ac.in
@@ -140,6 +146,10 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Mon Apr 25 2022 Mikhail Efremov <sem@altlinux.org> 4.17.8-alt2
+- Fixed plugin menu (patch from upstream git).
+- Updated ALT Russian translation.
+
 * Sun Apr 03 2022 Mikhail Efremov <sem@altlinux.org> 4.17.8-alt1
 - Updated BR.
 - Dropped libgamin-devel from BR.
