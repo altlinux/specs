@@ -8,7 +8,7 @@
 %define systemdsessionunitdir %_prefix/lib/systemd/user
 
 Name: dbus
-Version: 1.12.20
+Version: 1.12.22
 Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
@@ -170,6 +170,7 @@ fi
 %systemdsystemunitdir/*
 %systemdsessionunitdir/*
 /lib/tmpfiles.d/%name.conf
+/lib/sysusers.d/%name.conf
 /bin/dbus-cleanup-sockets
 /bin/dbus-daemon
 /bin/dbus-uuidgen
@@ -224,6 +225,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Mon Apr 25 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.12.22-alt1
+- 1.12.22
+
 * Wed Jul 28 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.12.20-alt1
 - 1.12.20
 
