@@ -1,12 +1,12 @@
 Name: autorepo-altnode-admin-scripts
-Version: 0.06
+Version: 0.07
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
 Summary: admin scripts for an automated packaging node
 Group: Development/Other
-License: GPL2+
+License: GPLv2+
 #Url: 
 Source: %name-%version.tar
 
@@ -32,6 +32,9 @@ install -m 755 autorepo-altnode-admin-delete-*node $RPM_BUILD_ROOT%_sbindir
 %_sbindir/*
 
 %changelog
+* Mon Apr 25 2022 Igor Vlasenko <viy@altlinux.org> 0.07-alt1
+- added robots group
+
 * Thu May 23 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - apt config for newer builder
 
