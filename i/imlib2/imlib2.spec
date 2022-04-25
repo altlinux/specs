@@ -1,5 +1,5 @@
 Name: imlib2
-Version: 1.8.1
+Version: 1.9.0
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 # Automatically added by buildreq on Sun Sep 16 2012
 # optimized out: gnu-config libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel zlib-devel
 BuildRequires: bzlib-devel libXext-devel libfreetype-devel libgif-devel libjpeg-devel libpng-devel libwebp-devel libtiff-devel libid3tag-devel
-BuildRequires: libheif-devel librsvg-devel liblzma-devel
+BuildRequires: libheif-devel librsvg-devel liblzma-devel libopenjpeg2.0-devel libspectre-devel
 
 %description
 Imlib 2 is a library that does image file loading and saving as well as
@@ -93,7 +93,7 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
-%doc doc/{*gif,*.html}
+# %%doc doc/{*gif,*.html}
 
 %files utils
 %_bindir/*
@@ -106,6 +106,9 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %endif
 
 %changelog
+* Mon Apr 25 2022 Leontiy Volodin <lvol@altlinux.org> 1.9.0-alt1
+- New version (1.9.0).
+
 * Mon Mar 21 2022 Leontiy Volodin <lvol@altlinux.org> 1.8.1-alt1
 - New version (1.8.1).
 
