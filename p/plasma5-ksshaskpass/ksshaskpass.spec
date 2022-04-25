@@ -3,7 +3,7 @@
 
 Name: plasma5-%rname
 Version: 5.24.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -96,6 +96,12 @@ EOF
 #%_K5xdgapp/org.kde.ksshaskpass.desktop
 
 %changelog
+* Mon Apr 25 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.4-alt2
+- merge p10 changes
+
+* Mon Apr 25 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.23.5-alt3
+- don't use '-c' option for ssh-add
+
 * Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.4-alt1
 - new version
 
