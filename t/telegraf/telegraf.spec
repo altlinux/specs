@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:		telegraf
-Version:	1.22.0
+Version:	1.22.2
 Release:	alt1
 Summary:	The plugin-driven server agent for collecting and reporting metrics
 
@@ -108,6 +108,9 @@ install -p -D -m 644 %SOURCE104 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Mon Apr 25 2022 Alexey Shabalin <shaba@altlinux.org> 1.22.2-alt1
+- 1.22.2
+
 * Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 1.22.0-alt1
 - 1.22.0
 
