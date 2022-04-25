@@ -1,5 +1,5 @@
 Name: foot
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 
 Summary: A fast, lightweight and minimalistic Wayland terminal emulator
@@ -18,6 +18,7 @@ BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(fcft) >= 3.0.0
+BuildRequires: pkgconfig(systemd)
 
 %description
 %summary
@@ -34,8 +35,10 @@ BuildRequires: pkgconfig(fcft) >= 3.0.0
 
 %files
 %doc %_defaultdocdir/foot
+%_sysconfdir/xdg/foot
 %_bindir/foot
 %_bindir/footclient
+%_libexecdir/systemd/user/foot-server*
 %_datadir/foot
 %_desktopdir/*
 %_datadir/bash-completion/*/*
@@ -45,6 +48,9 @@ BuildRequires: pkgconfig(fcft) >= 3.0.0
 %_mandir/*/*
 
 %changelog
+* Mon Apr 25 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.12.0-alt1
+- 1.12.0 released
+
 * Sat Feb 05 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.11.0-alt1
 - 1.11.0 released
 
