@@ -3,7 +3,7 @@
 %define appid net.lutris.Lutris
 
 Name: lutris
-Version: 0.5.10
+Version: 0.5.10.1
 Release: alt1
 Summary: Manager for game installation and execution
 License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
@@ -74,6 +74,9 @@ sed -i 's|GdkPixbuf.InterpType.NEAREST|1|' \
 %_man1dir/%name.1.xz
 
 %changelog
+* Mon Apr 25 2022 Leontiy Volodin <lvol@altlinux.org> 0.5.10.1-alt1
+- New version (0.5.10.1).
+
 * Mon Apr 04 2022 Leontiy Volodin <lvol@altlinux.org> 0.5.10-alt1
 - New version (0.5.10).
 
