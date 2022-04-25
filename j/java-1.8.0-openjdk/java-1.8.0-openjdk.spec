@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.332.b06
+%define version 1.8.0.332.b09
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -295,7 +295,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo shenandoah-jdk8u
-%global shenandoah_revision shenandoah-jdk8u332-b06
+%global shenandoah_revision shenandoah-jdk8u332-b09
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -2149,6 +2149,15 @@ fi
 %endif
 
 %changelog
+* Mon Apr 25 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.332.b09-alt0_0.1.eajpp8
+- New version.
+- Seciruty fixes:
+  + JDK-8270504, CVE-2022-21426: Better XPath expression handling
+  + JDK-8275151, CVE-2022-21443: Improved Object Identification
+  + JDK-8277672, CVE-2022-21434: Better invocation handler handling
+  + JDK-8278008, CVE-2022-21476: Improve Santuario processing
+  + JDK-8278972, CVE-2022-21496: Improve URL supports
+
 * Fri Apr 22 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.332.b06-alt0_0.1.eajpp8
 - New version.
 
