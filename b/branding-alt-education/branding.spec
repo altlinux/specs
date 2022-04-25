@@ -25,8 +25,8 @@
 %define design_graphics_abi_bugfix 0
 
 Name: branding-%flavour
-Version: 10.0
-Release: alt3
+Version: 10.1
+Release: alt1
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -482,6 +482,13 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Thu Apr 07 2022 Andrey Cherepanov <cas@altlinux.org> 10.1-alt1
+- Remove overrided Veyon menu items because they are now localized.
+- Remove unsupported Facebook group.
+- bootsplash: more narrow and short progressbar.
+- slides: update QR-code for Youtube channel.
+- xfce-settings: add power-manager-plugin to panel.
+
 * Tue Dec 21 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt3
 - Add missing TryExec for overrided menu entries.
 
