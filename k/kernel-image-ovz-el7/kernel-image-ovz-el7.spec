@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.53.1.vz7.185.3
-%define orelease 1160.53.1.vz7.185.3
+#     rh7-3.10.0-1160.62.1.vz7.187.1
+%define orelease 1160.62.1.vz7.187.1
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -28,7 +28,7 @@ Epoch: 1
 %define __nprocs 4
 
 %def_disable verbose
-%def_with src
+%def_without src
 %def_enable docs
 %def_enable htmldocs
 %def_enable man
@@ -85,7 +85,6 @@ ExclusiveArch: x86_64
 
 %if "%sub_flavour" != "def"
 %set_disable docs
-%set_without src
 %endif
 
 %if_disabled docs
@@ -600,6 +599,9 @@ grep beancounter boot.log
 
 
 %changelog
+* Tue Apr 26 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.62.1.vz7.187.1
+- Build rh7-3.10.0-1160.62.1.vz7.187.1
+
 * Mon Feb 21 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.53.1.vz7.185.3
 - Build rh7-3.10.0-1160.53.1.vz7.185.3
 - Disable CONFIG_DEBUG_INFO
