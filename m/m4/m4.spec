@@ -1,5 +1,5 @@
 Name: m4
-Version: 1.4.19.0.4.gcd7f
+Version: 1.4.19.0.15.bb35
 Release: alt1
 
 Summary: The GNU macro processor
@@ -56,6 +56,9 @@ install -pD -m644 m4/m4.m4 %buildroot%_aclocaldir/m4.m4
 %doc AUTHORS BACKLOG NEWS README THANKS TODO
 
 %changelog
+* Wed Jan 26 2022 Dmitry V. Levin <ldv@altlinux.org> 1.4.19.0.15.bb35-alt1
+- m4: v1.4.19-4-gcd7f4d15 -> v1.4.19-15-gbb35e808.
+
 * Tue Jun 01 2021 Dmitry V. Levin <ldv@altlinux.org> 1.4.19.0.4.gcd7f-alt1
 - v1.4.18-15-g4e5c2c01 -> v1.4.19-4-gcd7f4d15.
 - gnulib BR: v0.1-3618-g4cfff6810 -> v0.1-4645-g3639c57a9.
