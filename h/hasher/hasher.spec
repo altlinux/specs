@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.4.7
+Version: 1.4.8
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -61,6 +61,10 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Tue Apr 26 2022 Dmitry V. Levin <ldv@altlinux.org> 1.4.8-alt1
+- create_chroot: run rpmdb --rebuilddb after ldconfig.
+- Replaced "egrep" with "grep -E".
+
 * Wed Jul 28 2021 Dmitry V. Levin <ldv@altlinux.org> 1.4.7-alt1
 - hsh-initroot: enabled %%_rpmscript_werror (by Ivan Zakharyaschev; see ALT#40582).
 
