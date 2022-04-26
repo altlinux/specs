@@ -1,9 +1,9 @@
-%define usephp php8.1
+%define usephp php7
 # Note: /usr/bin/compose still use php command
 
 Name: composer
 Version: 2.2.12
-Release: alt1
+Release: alt2
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere
 
@@ -65,6 +65,9 @@ install -m 0644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Tue Apr 26 2022 Vitaly Lipatov <lav@altlinux.ru> 2.2.12-alt2
+- return to php7.4 for compatibility
+
 * Tue Apr 26 2022 Vitaly Lipatov <lav@altlinux.ru> 2.2.12-alt1
 - new version 2.2.12 (with rpmrb script)
 - switch to php8.1 by default
