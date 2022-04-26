@@ -2,8 +2,8 @@
 %def_with selinux
 
 Name: iproute2
-Version: 5.13.0
-Release: alt1
+Version: 5.17.0
+Release: alt2
 
 Summary: Advanced IP routing and network devices configuration tools
 License: GPLv2+
@@ -61,10 +61,11 @@ This package contains libnetlink dynamic library headers.
 %makeinstall_std LIBDIR=%_libdir
 mkdir -p %buildroot{%_bindir,%_sbindir,%_localstatedir/arpd}
 pushd %buildroot/sbin
-rm rtpr
-mv arpd bridge ctstat genl ifstat lnstat nstat routef routel rtacct rtstat ss tipc \
+rm routel
+mv arpd bridge ctstat genl ifstat lnstat nstat rtacct rtstat ss tipc \
 	%buildroot%_sbindir/
 popd
+rm %buildroot%_man8dir/routel.8
 
 # libnetlink
 mkdir -p %buildroot{%_includedir,%_libdir,%_man3dir,/%_lib}
@@ -77,7 +78,7 @@ ln -rs %buildroot/%_lib/libnetlink.so %buildroot%_libdir/
 for prg in ip rtmon tc; do
 	ln -rs %buildroot/sbin/$prg %buildroot%_bindir/
 done
-for prg in lnstat nstat routel ss; do
+for prg in lnstat nstat ss; do
 	ln -rs %buildroot%_sbindir/$prg %buildroot%_bindir/
 done
 
@@ -108,6 +109,21 @@ done
 %_man3dir/*
 
 %changelog
+* Tue Apr 26 2022 Vitaly Chikunov <vt@altlinux.org> 5.17.0-alt2
+- Change colorization defaults.
+
+* Tue Mar 22 2022 Dmitry V. Levin <ldv@altlinux.org> 5.17.0-alt1
+- 5.16.0 -> 5.17.0.
+
+* Mon Jan 10 2022 Dmitry V. Levin <ldv@altlinux.org> 5.16.0-alt1
+- 5.15.0 -> 5.16.0.
+
+* Mon Nov 01 2021 Dmitry V. Levin <ldv@altlinux.org> 5.15.0-alt1
+- 5.14.0 -> 5.15.0.
+
+* Tue Aug 31 2021 Dmitry V. Levin <ldv@altlinux.org> 5.14.0-alt1
+- 5.13.0 -> 5.14.0.
+
 * Tue Jun 29 2021 Dmitry V. Levin <ldv@altlinux.org> 5.13.0-alt1
 - 5.12.0 -> 5.13.0.
 
