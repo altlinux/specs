@@ -4,8 +4,8 @@
 %def_with docs
 
 Name: zoxide
-Version: 0.8.0
-Release: alt2
+Version: 0.8.1
+Release: alt1
 
 Summary:  A smarter cd command. Supports all major shells.
 License: MIT
@@ -13,6 +13,7 @@ Group: System/Libraries
 
 Url: https://github.com/ajeetdsouza/zoxide
 Source: %name-%version.tar
+Source1: vendor-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires: /proc
@@ -28,7 +29,7 @@ shells.
 
 
 %prep
-%setup
+%setup -a1
 %patch0 -p1
 
 mkdir -p .cargo
@@ -40,6 +41,8 @@ replace-with = "vendored-sources"
 directory = "vendor"
 EOF
 
+sed -i 's/strip/debug/' Cargo.toml
+
 %build
 export CARGO_HOME=${PWD}/cargo
 cargo build --release
@@ -48,7 +51,7 @@ cargo build --release
 export CARGO_HOME=${PWD}/cargo
 cargo install --force --root %buildroot/%_prefix --path ./ --no-track
 
-install -Dm 0644 man/*  -t %buildroot%_man1dir
+install -Dm 0644 man/man1/*  -t %buildroot%_man1dir
 
 install -Dm 0644 contrib/completions/zoxide.bash  -t %buildroot%_datadir/bash-completion/completions/
 install -Dm 0644 contrib/completions/_zoxide  -t %buildroot%_datadir/zsh/site-functions/
@@ -68,6 +71,9 @@ cargo test --release
 %_datadir/fish/vendor_completions.d/zoxide.fish
 
 %changelog
+* Mon Apr 25 2022 Egor Ignatov <egori@altlinux.org> 0.8.1-alt1
+- new version 0.8.1
+
 * Tue Jan 18 2022 Egor Ignatov <egori@altlinux.org> 0.8.0-alt2
 - spec: fix url
 
