@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220411
+Version: 20220422
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,20 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Apr 26 2022 Cronbuild Service <cronbuild@altlinux.org> 20220422-alt1
+- upstream changes (GIT ac21ab5):
+  + Mellanox: Add lc_ini_bundle for xx.2010.1006 (thx Petr Machata)
+  + Mellanox: xx.2010.1502: Distribute non-xz-compressed
+    lc_ini_bundle (thx Petr Machata)
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2010.1502 (thx Petr Machata)
+  + amdgpu: update yellow carp DMCUB firmware (thx Alex Deucher)
+  + update firmware for mediatek bluetooth chip (MT7922) (thx Sean Wang)
+  + update firmware for MT7922 WiFi device (thx Deren Wu)
+  + mediatek: Add mt8195 SCP firmware (thx Tinghan Shen)
+  + qcom: apq8096: add modem firmware (thx Dmitry Baryshkov)
+  + qcom: apq8096: add aDSP firmware (thx Dmitry Baryshkov)
+  + rtl_bt: Add firmware and config files for RTL8852C (thx Max Chou)
+
 * Wed Apr 13 2022 Cronbuild Service <cronbuild@altlinux.org> 20220411-alt1
 - upstream changes (GIT f219d61):
   + mediatek: Add mt8192 SCP firmware (thx Yunfei Dong)
