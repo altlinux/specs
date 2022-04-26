@@ -1,5 +1,5 @@
 Name: setup
-Version: 2.2.16
+Version: 2.2.17
 Release: alt1
 
 Summary: Initial set of configuration files
@@ -72,6 +72,10 @@ find %buildroot%_sysconfdir/profile.d -type l |
 %_datadir/base-passwd
 
 %changelog
+* Tue Apr 26 2022 Dmitry V. Levin <ldv@altlinux.org> 2.2.17-alt1
+- /etc/hosts: added ::1.
+- /etc/profile.d/proxy.sh: replaced "egrep" with "grep -E".
+
 * Tue Nov 05 2019 Alexey Shabalin <shaba@altlinux.org> 2.2.16-alt1
 - /etc/group: added vmusers
 
