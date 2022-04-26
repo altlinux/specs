@@ -1,5 +1,5 @@
 Name: pekwm
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 Summary: Fast & lightweight window manager
 License: GPLv2
@@ -66,6 +66,9 @@ install -D %SOURCE1 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %_iconsdir/hicolor/64x64/apps/%name.png
 
 %changelog
+* Tue Apr 26 2022 Fr. Br. George <george@altlinux.org> 0.2.1-alt1
+- Autobuild version bump to 0.2.1
+
 * Tue Nov 09 2021 Fr. Br. George <george@altlinux.ru> 0.2.0-alt1
 - Autobuild version bump to 0.2.0
 
