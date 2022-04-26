@@ -3,6 +3,8 @@
 %filter_from_requires /python[0-9.]\+(Reporter)/d
 %filter_from_requires /python[0-9.]\+(optpmap)/d
 %filter_from_requires /python[0-9.]\+(libscanbuild[.].*)/d
+# Self-provided by python3(lldb13.0) in a custom path.
+%filter_from_requires /python[0-9.]\+(lldb)/d
 
 %global v_major 13
 %global v_majmin %v_major.0
@@ -28,6 +30,8 @@
 %global llvm_datadir %llvm_prefix/share
 %global llvm_man1dir %llvm_datadir/man/man1
 %global llvm_docdir %llvm_datadir/doc
+%global llvm_python3_libdir %llvm_libdir/python3
+%global llvm_python3_sitelibdir %llvm_python3_libdir/site-packages
 
 # We do not want Python modules to be analyzed by rpm-build-python2.
 AutoReq: nopython
@@ -53,6 +57,8 @@ AutoProv: nopython
 %else
 %def_without clang
 %endif
+%def_with lldb_contrib
+%def_with lldb_python
 
 %define tarversion %v_full%rcsuffix
 %if "%rcsuffix" == ""
@@ -63,7 +69,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt2
+Release: alt3
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -113,6 +119,17 @@ BuildRequires(pre): cmake >= 3.4.3
 BuildRequires: rpm-build >= 4.0.4-alt112 libncursesw-devel
 BuildRequires: libstdc++-devel libffi-devel perl-Pod-Parser perl-devel
 BuildRequires: python3-module-recommonmark zip zlib-devel binutils-devel ninja-build
+%if_with lldb_contrib
+BuildRequires: pkgconfig(libedit)
+BuildRequires: pkgconfig(ncursesw)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(lua)
+BuildRequires: swig-devel
+BuildRequires: python3-module-sphinx-automodapi
+%if_with lldb_python
+BuildRequires: python3-devel
+%endif
+%endif
 %if_with clang
 BuildRequires: %clang_default_name %llvm_default_name-devel %lld_default_name
 %else
@@ -459,6 +476,18 @@ AutoProv: nopython
 This package contains header files to build extensions over lldb, as well as
 development symlinks for liblldb.
 
+%package -n python3-module-%lldb_name
+Summary: Python 3 scripting support for LLDB
+Group: Development/Debuggers
+%requires_filesystem
+
+# We do not want Python modules to be analyzed by rpm-build-python2.
+AutoReq: nopython
+AutoProv: nopython
+
+%description -n python3-module-%lldb_name
+This package contains the Python 3 interfaces to LLDB.
+
 %package -n %lldb_name-doc
 Summary: Documentation for LLDB
 Group: Documentation
@@ -664,9 +693,9 @@ fi
 	-DLLVM_INCLUDE_UTILS:BOOL=ON \
 	-DLLVM_INSTALL_UTILS:BOOL=OFF \
 	\
-	-DLLVM_INCLUDE_DOCS:BOOL=OFF \
-	-DLLVM_BUILD_DOCS:BOOL=OFF \
-	-DLLVM_ENABLE_SPHINX:BOOL=OFF \
+	-DLLVM_INCLUDE_DOCS:BOOL=ON \
+	-DLLVM_BUILD_DOCS:BOOL=ON \
+	-DLLVM_ENABLE_SPHINX:BOOL=ON \
 	-DSPHINX_WARNINGS_AS_ERRORS:BOOL=OFF \
 	-DSPHINX_EXECUTABLE=%_bindir/sphinx-build-3 \
 	-DLLVM_ENABLE_DOXYGEN:BOOL=OFF \
@@ -734,10 +763,6 @@ for mand in %buildroot%llvm_datadir/man/man*; do
 	done
 done
 
-# Remove certain man pages to unblock urgent fix.
-rm -f %buildroot%llvm_man1dir/*.1*
-rm -f %buildroot%_man1dir/*.1*
-
 # Symlink sonamed shared libraries in %llvm_prefix/%_libdir to %_libdir.
 mkdir -p %buildroot%_libdir
 find %buildroot%llvm_libdir/*.so* -type f,l \
@@ -767,7 +792,7 @@ echo "Expelling likely redundant Clang shared runtimes:" && cat %_tmppath/dyn-fi
 emit_filelist() {
     awk -F'\t' '
 $1 ~ "bin" { print "%llvm_bindir/" $2; print "%_bindir/" $2 "-%v_major"; }
-$1 ~ "man" {  }
+$1 ~ "man" { print "%llvm_man1dir/" $2 ".1*"; print "%_man1dir/" $2 "-%v_major.1*"; }
 '
 }
 
@@ -949,6 +974,8 @@ ninja -C %builddir check-all || :
 %dir %llvm_datadir/man
 %dir %llvm_man1dir
 %dir %llvm_docdir
+%dir %llvm_python3_libdir
+%dir %llvm_python3_sitelibdir
 
 %files -f %_tmppath/dyn-files-%name
 %doc llvm/CREDITS.TXT llvm/LICENSE.TXT llvm/README.txt
@@ -967,8 +994,8 @@ ninja -C %builddir check-all || :
 %files devel
 %llvm_bindir/llvm-config
 %_bindir/llvm-config-%v_major
-# %llvm_man1dir/llvm-config.1.*
-# %_man1dir/llvm-config-%v_major.1.*
+%llvm_man1dir/llvm-config.1.*
+%_man1dir/llvm-config-%v_major.1.*
 %llvm_includedir/llvm
 %llvm_includedir/llvm-c
 %llvm_libdir/libLLVM.so
@@ -1052,15 +1079,16 @@ ninja -C %builddir check-all || :
 %files -n %lldb_name
 %llvm_bindir/lldb
 %_bindir/lldb-%v_major
-# Temporarily exclude lldb man pages.
-# %llvm_man1dir/lldb.1*
-# %_man1dir/lldb-%v_major.1*
+%llvm_man1dir/lldb.1*
+%_man1dir/lldb-%v_major.1*
 %llvm_bindir/lldb-argdumper
 %_bindir/lldb-argdumper-%v_major
 %llvm_bindir/lldb-instr
 %_bindir/lldb-instr-%v_major
 %llvm_bindir/lldb-server
 %_bindir/lldb-server-%v_major
+%llvm_man1dir/lldb-server.1*
+%_man1dir/lldb-server-%v_major.1*
 %llvm_bindir/lldb-vscode
 %_bindir/lldb-vscode-%v_major
 
@@ -1072,6 +1100,11 @@ ninja -C %builddir check-all || :
 %llvm_includedir/lldb
 %llvm_libdir/liblldb*.so
 # %_libdir/liblldb*.so
+
+%files -n python3-module-%lldb_name
+%llvm_python3_sitelibdir/lldb
+# Hope this file will not be needed anywhere else.
+%llvm_python3_sitelibdir/six.py
 
 %files -n lib%mlir_name
 %llvm_libdir/libMLIR.so.*
@@ -1104,22 +1137,26 @@ ninja -C %builddir check-all || :
 %llvm_libdir/libPolly*.a
 
 %files doc
-#doc %llvm_docdir/llvm
+%doc %llvm_docdir/llvm
 
 %files -n %clang_name-doc
-#doc %llvm_docdir/clang
-#doc %llvm_docdir/clang-tools
+%doc %llvm_docdir/clang
+%doc %llvm_docdir/clang-tools
 
 %files -n %lld_name-doc
-#doc %llvm_docdir/lld
+%doc %llvm_docdir/lld
 
 %files -n %lldb_name-doc
-#doc %llvm_docdir/lldb
+%doc %llvm_docdir/lldb
 
 %files -n lib%polly_name-doc
-#doc %llvm_docdir/polly
+%doc %llvm_docdir/polly
 
 %changelog
+* Mon Apr 25 2022 Arseny Maslennikov <arseny@altlinux.org> 13.0.1-alt3
+- Restored doc generation, which was disabled in -alt2.
+- Built LLDB with libedit and SWIG support.
+
 * Fri Apr 15 2022 Arseny Maslennikov <arseny@altlinux.org> 13.0.1-alt2
 - Dropped certain targets from import checks in CMake configs.
   This will fix bug 39685, or, at least, dramatically reduce its impact.
