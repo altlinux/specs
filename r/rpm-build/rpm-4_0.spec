@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.181
+Version: 4.0.4.182
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -223,8 +223,8 @@ set_c_cflags="$(sed -n 's/^CFLAGS = //p' lib/Makefile) -W -Wno-missing-prototype
 %make_build -C lib set.lo CFLAGS="$set_c_cflags"
 %make_build
 
-rpmquery -a --provides |fgrep '= set:' |sort >P
-rpmquery -a --requires |fgrep '= set:' |sort >R
+rpmquery -a --provides |grep -F '= set:' |sort >P
+rpmquery -a --requires |grep -F '= set:' |sort >R
 join -o 1.3,2.3 P R |shuf >setcmp-data
 
 %if_with profile
@@ -281,7 +281,7 @@ if [ -s /lib/libc.so.6 -a -s /lib/libz.so.1 -a -s /lib/librt.so.1 -a -n "$(getco
 fi > all-funcs
 sed -r -n 's/^(.+)64(_.*|$)/\1\2/p' all-funcs |
 	sort -u |
-	egrep -v '^(wcs|str)' |
+	grep -E -v '^(wcs|str)' |
 	comm -12 - all-funcs |
 	LC_ALL=C sort -u \
 	> %buildroot%_rpmlibdir/verify-elf-non-lfs-funcs.list
@@ -384,6 +384,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Apr 26 2022 Dmitry V. Levin <ldv@altlinux.org> 4.0.4.182-alt1
+- scripts: replaced "egrep" with "grep -E", "fgrep" with "grep -F".
+
 * Sun Feb 06 2022 Dmitry V. Levin <ldv@altlinux.org> 4.0.4.181-alt1
 - lib.req: upgraded "library not found" warnings to errors:
   these warnings are real packaging errors,
