@@ -1,8 +1,14 @@
+%define _unpackaged_files_terminate_build 1
+
 # check deps/npm/package.json for it
 %define npmver 8.5.0
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
+
+# check deps/corepack/package.json
+%define corepackver 0.10.0
+%def_without corepack
 
 %define major 16.14
 
@@ -60,7 +66,7 @@
 
 Name: node
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: Evented I/O for V8 Javascript
 
@@ -79,7 +85,8 @@ BuildRequires(pre): rpm-macros-nodejs
 BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires(pre): rpm-macros-features
 
-BuildRequires: python3-devel gcc-c++ zlib-devel
+BuildRequires: python3-devel gcc-c++ 
+BuildRequires: zlib-devel libbrotli-devel
 
 BuildRequires: gyp >= 0.10.0
 BuildRequires: python3-module-simplejson
@@ -156,7 +163,7 @@ License:        MIT license
 #BuildArch:      noarch
 Provides:	nodejs-devel = %version-%release
 Requires:	%name = %version
-Requires:       gcc-c++ zlib-devel libcares-devel
+Requires:       gcc-c++ zlib-devel libbrotli-devel libcares-devel
 %if_with systemv8
 Requires:	%libv8_package-devel >= %{v8_abi}
 %endif
@@ -203,6 +210,30 @@ npm is a package manager for node. You can use it to install and publish your
 node programs. It manages dependencies and does other cool stuff.
 %endif
 
+%package corepack
+Version:	%corepackver
+Group:		Development/Tools
+Summary:	Bridge between Node projects and their package managers
+License:	MIT License
+Requires:	node
+BuildArch:	noarch
+AutoReq:	yes,nopython
+#%if_with nodejs_abi
+Requires:	nodejs(abi) = %{nodejs_abi}
+#%endif
+
+%description corepack
+Corepack is a zero-runtime-dependency Node.js script that acts as a bridge
+between Node.js projects and the package managers they are intended to be used
+with during development. In practical terms, **Corepack will let you use
+Yarn and pnpm without having to install them** - just like what currently
+happens with npm, which is shipped by Node.js by default.
+
+**Important:** At the moment, Corepack only covers Yarn and pnpm.
+Given that we have little control on the npm project, we prefer to focus
+on the Yarn and pnpm use cases.
+As a result, Corepack doesn't have any effect at all on the way you use npm.
+
 %prep
 %setup
 
@@ -230,7 +261,7 @@ rm -rf deps/nghttp2/
 # TODO:
 # deps/gtest
 rm -rf tools/gyp
-rm -rf deps/zlib deps/openssl deps/cares
+rm -rf deps/zlib deps/openssl deps/cares deps/brotli
 # make no sense for a first build
 %__subst "s|deps/zlib/zlib.gyp||" Makefile
 
@@ -263,6 +294,7 @@ export PYTHONPATH=$(pwd)/tools/v8_gypfiles
     --prefix=%_prefix \
     --enable-lto \
     --shared-zlib \
+    --shared-brotli \
 %if_with systemicu
     --with-intl=system-icu \
 %endif
@@ -277,15 +309,19 @@ export PYTHONPATH=$(pwd)/tools/v8_gypfiles
 %if_without npm
     --without-npm \
 %endif
+%if_without corepack
+   --without-corepack \
+%endif
 %if_with systemuv
     --shared-libuv \
 %endif
 %if_with systemnghttp2
-    --shared-nghttp2
+    --shared-nghttp2 \
 %endif
 %if_with systemv8
-    --without-bundled-v8
+    --without-bundled-v8 \
 %endif
+    %nil
 
 %make_build BUILDTYPE=Release
 # skip internal doc build (uses external modules)
@@ -389,7 +425,17 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %exclude %_libexecdir/node_modules/npm/node_modules/node-gyp/gyp/tools/emacs
 %endif
 
+%if_with corepack
+%files corepack
+%_bindir/corepack
+%nodejs_sitelib/corepack
+%endif
+
 %changelog
+* Tue Apr 26 2022 Alexey Shabalin <shaba@altlinux.org> 16.14.2-alt2
+- build with system brotli
+- add corepack package, but build without
+
 * Sat Apr 23 2022 Vitaly Lipatov <lav@altlinux.ru> 16.14.2-alt1
 - new version 16.14.2 (with rpmrb script)
 - set openssl >= 1.1.1n
