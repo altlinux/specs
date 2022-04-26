@@ -1,11 +1,11 @@
 Name: libnpupnp
-Version: 4.1.5
+Version: 4.2.1
 Release: alt1
 
 Summary: UPnP library derived from the pupnp
 License: BSD
 Group: System/Libraries
-Url: https://framagit.org/medoc92/npupnp 
+Url: https://framagit.org/medoc92/npupnp
 
 Source: %name-%version-%release.tar
 
@@ -48,6 +48,9 @@ applications using libnpupnp.
 %_pkgconfigdir/*
 
 %changelog
+* Mon Apr 25 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2.1-alt1
+- 4.2.1 released
+
 * Tue Nov 23 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.1.5-alt1
 - 4.1.5 released
 

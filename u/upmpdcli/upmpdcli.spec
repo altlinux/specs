@@ -1,5 +1,5 @@
 Name: upmpdcli
-Version: 1.5.13
+Version: 1.5.16
 Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
@@ -78,8 +78,10 @@ rm -rf %buildroot%_datadir/%name/web
 %add_python3_req_skip deezersession
 %add_python3_req_skip tidalapi tidalapi.models
 %add_python3_req_skip upmplgutils
+%add_python3_req_skip upmplgmodels
 %add_python3_req_skip minimconfig uprclindex uprclinit uprclsearch uprclutils
 %add_python3_req_skip upradioconf
+%add_python3_req_skip xbmcplug
 # conditional(py2):
 %add_python3_req_skip ConfigParser
 %add_python3_req_skip Cookie
@@ -125,6 +127,9 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Tue Apr 26 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.16-alt1
+- 1.5.16 released
+
 * Tue Nov 23 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.13-alt1
 - 1.5.13 released
 
