@@ -3,7 +3,7 @@
 #%%def_enable debug_output
 
 Name: xauthority-hostname-updater
-Version: 0.4
+Version: 0.4.1
 Release: alt1
 
 Summary: Daemon that keeps hostname in the Xauthority files up-to-date
@@ -57,6 +57,9 @@ install -m 644 %name.8.xz %buildroot%_man8dir/
 %_man8dir/*
 
 %changelog
+* Tue Apr 26 2022 Slava Aseev <ptrnine@altlinux.org> 0.4.1-alt1
+- Fix active hostname initialization (closes: 42563)
+
 * Tue Feb 08 2022 Slava Aseev <ptrnine@altlinux.org> 0.4-alt1
 - Daemonize properly (thx zerg@)
 
