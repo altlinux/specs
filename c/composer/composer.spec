@@ -1,5 +1,8 @@
+%define usephp php8.1
+# Note: /usr/bin/compose still use php command
+
 Name: composer
-Version: 2.1.6
+Version: 2.2.12
 Release: alt1
 
 Summary: Composer helps you declare, manage and install dependencies of PHP projects, ensuring you have the right stack everywhere
@@ -23,10 +26,11 @@ Patch1: composer-compiler.patch
 
 BuildArch: noarch
 
-BuildRequires: php7
+BuildRequires: %usephp >= 7.2.5
 
-Requires: %_bindir/php
-Requires: php7-openssl
+Requires: %_bindir/%usephp
+Requires: %usephp >= 7.2.5
+Requires: %usephp-openssl
 
 %description
 Composer helps you declare, manage and install dependencies of PHP projects,
@@ -38,6 +42,8 @@ ensuring you have the right stack everywhere.
 install %SOURCE3 -D ./compile
 cp %SOURCE4 .
 %__subst "s|src/Composer/Composer.php|disable-date-changing|" src/Composer/Composer.php
+# disable selfupdate
+%__subst "s|.*SelfUpdateCommand.*||" src/Composer/Console/Application.php
 
 %build
 
@@ -45,7 +51,7 @@ cp %SOURCE4 .
 # Note! stat -c%%y output is incompatible with date in python!
 export RELDATE="$(stat -c '%%y' CHANGELOG.md | sed -e 's|\.[0-9]* | |')"
 #build composer.phar
-php -d phar.readonly=off -d date.timezone='Europe/Moscow' ./compile %version "$RELDATE"
+%usephp -d phar.readonly=off -d date.timezone='Europe/Moscow' ./compile %version "$RELDATE"
 
 %install
 install -m 0755 -D composer.phar %buildroot/%_datadir/composer.phar
@@ -59,6 +65,12 @@ install -m 0644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 
 %changelog
+* Tue Apr 26 2022 Vitaly Lipatov <lav@altlinux.ru> 2.2.12-alt1
+- new version 2.2.12 (with rpmrb script)
+- switch to php8.1 by default
+- drop selfupdate command
+- CVE-2022-24828
+
 * Mon Sep 13 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
 - new version 2.1.6 (with rpmrb script)
 
