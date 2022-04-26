@@ -17,7 +17,7 @@
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 3.7.0
+Version: 3.7.3
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -304,10 +304,16 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Tue Apr 26 2022 Vitaly Lipatov <lav@altlinux.ru> 3.7.3-alt1
+- new version 3.7.3 (with rpmrb script)
+
+* Tue Apr 26 2022 Vitaly Lipatov <lav@altlinux.ru> 3.7.2-alt1
+- new version 3.7.2 (with rpmrb script)
+
 * Sun Apr 17 2022 Vitaly Lipatov <lav@altlinux.ru> 3.7.0-alt1
 - new version 3.7.0 (with rpmrb script)
 - disable wayland integration (is not ported to Qt5)
-- drop webkit require (used without headers)
+- drop webkit require (used without headers now)
 - build with external libdispatch-devel
 
 * Sun Apr 10 2022 Vitaly Lipatov <lav@altlinux.ru> 3.6.1-alt2
