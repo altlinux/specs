@@ -5,7 +5,7 @@ Summary: Icons for M OS distros
 Summary(ru): Иконки для дистрибутивов М ОС
 License: CC-BY-SA-3.0 and GPL-3.0
 Group: Graphics
-Version: 2.0
+Version: 2.1
 Release: alt1
 Source0: icons-mos-classic-%version.tar
 Source1: icon-theme-mos-classic-%version.tar
@@ -96,6 +96,9 @@ export PREFIX="../../.."
 )
 
 %changelog
+* Tue Apr 26 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.1-alt1
+- Add 22x22 (fix typo in index.theme)
+
 * Tue Apr 26 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.0-alt1
 - Rename from Kometa to M OS (Moscow OS)
 - Added SVG icons of different sizes alongside PNG
