@@ -12,7 +12,7 @@
 %define winetricks_version 20220207
 
 %define basemajor 7.x
-%define major 7.6
+%define major 7.7
 %define rel %nil
 %define conflictbase wine
 
@@ -251,8 +251,6 @@ BuildRequires: perl-XML-Simple
 Requires: glibc-pthread glibc-nss
 
 
-Requires: webclient
-
 Requires: wine-gecko = %gecko_version
 Conflicts: wine-mono < %mono_version
 
@@ -271,9 +269,6 @@ Requires: desktop-file-utils
 Requires: %name-common = %EVR
 
 Conflicts: %conflictbase
-
-# Actually for x86_32
-Requires: glibc-nss
 
 # FIXME:
 # Runtime linked
@@ -699,11 +694,9 @@ fi
 #if_without vanilla
 #libwinedir/%winesodir/windows.networking.connectivity.so
 #endif
-%libwinedir/%winesodir/light.msstyles.so
 %libwinedir/%winesodir/*.com.so
 %libwinedir/%winesodir/*.cpl.so
 %libwinedir/%winesodir/*.ocx.so
-%libwinedir/%winesodir/*.tlb.so
 %libwinedir/%winesodir/*.ax.so
 %libwinedir/%winesodir/*.exe.so
 %libwinedir/%winesodir/*.acm.so
@@ -917,6 +910,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Tue Apr 26 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.7-alt1
+- new version 7.7 (with rpmrb script)
+
 * Mon Apr 11 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.6-alt1
 - new version 7.6 (with rpmrb script)
 - set strict require wine-mono 7.2.0
