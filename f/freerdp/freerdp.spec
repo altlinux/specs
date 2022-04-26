@@ -7,7 +7,7 @@
 %def_without mbedtls
 
 Name: freerdp
-Version: 2.6.1
+Version: 2.7.0
 Release: alt1
 
 Group: Networking/Remote access
@@ -363,6 +363,9 @@ patchelf --set-rpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libu
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Mon Apr 25 2022 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt1
+- New version.
+
 * Sun Mar 13 2022 Andrey Cherepanov <cas@altlinux.org> 2.6.1-alt1
 - New version.
 
