@@ -5,7 +5,7 @@ Summary: XDG desktop settings for M OS distros
 Summary(ru): Настройки рабочего окружения дистрибутивов М ОС
 License: GPL-3.0
 Group: Graphical desktop/Other
-Version: 2.0
+Version: 2.1
 Release: alt1
 Source0: %name-%version.tar
 Source1: COPYING
@@ -73,7 +73,7 @@ KDE 5 desktop settings for classic variant of M OS
 /etc/xdg/mos/kcminputrc
 /etc/xdg/mos/kdeglobals
 /etc/xdg/mos/kxkbrc
-/etc/xdg/mos/powermanagementprofilesrc
+/etc/xdg/mos/mimeapps.list
 %dir /usr/share/mos/kxmlgui5
 %dir /usr/share/mos/kxmlgui5/dolphin
 %dir /usr/share/mos/kservices5
@@ -111,6 +111,10 @@ cd scripts
 ./test.sh
 
 %changelog
+* Tue Apr 26 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.1-alt1
+- Delete power settings: not valid for newer KDE (by tema@)
+- Add MIME associations (by tema@)
+
 * Tue Apr 26 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.0-alt1
 - Rename from Kometa to M OS (Moscow OS)
 - Drop pam-env hackery due to being useless (icons are reliably replaced by a filetrigger)
