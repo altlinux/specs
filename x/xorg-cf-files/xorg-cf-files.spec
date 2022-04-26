@@ -1,6 +1,6 @@
 Name: xorg-cf-files
 Version: 1.0.7
-Release: alt1
+Release: alt2
 Summary: config files for Xorg build
 License: XConsortium and XFree86
 Group: Development/C
@@ -71,6 +71,19 @@ cat > host.def << EOF
 
 EOF
 
+%ifarch %e2k
+cat >> linux.cf << EOF
+#ifdef __e2k__
+# ifndef OptimizedCDebugFlags
+#  define OptimizedCDebugFlags -O3
+# endif
+# define LinuxMachineDefines   -D__e2k__
+# define ServerOSDefines   XFree86ServerOSDefines -DDDXTIME
+# define ServerExtraDefines    -DGCCUSESGAS XFree86ServerDefines -D_XSERVER64
+#endif
+EOF
+%endif
+
 %install
 %make DESTDIR=%buildroot install
 
@@ -85,6 +98,9 @@ done
 %_libdir/%name/*
 
 %changelog
+* Tue Apr 26 2022 Fr. Br. George <george@altlinux.org> 1.0.7-alt2
+- E2k patches by ilyakurdyukov@
+
 * Tue Feb 15 2022 Fr. Br. George <george@altlinux.org> 1.0.7-alt1
 - Autobuild version bump to 1.0.7
 - Complete upstream fix (Closes: #41016)
