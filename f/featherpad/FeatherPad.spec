@@ -1,7 +1,7 @@
 %def_disable qmake
 
 Name: featherpad
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
 
 Summary: A lightweight Qt5 plain-text editor for Linux
@@ -18,7 +18,7 @@ BuildPreReq: cmake rpm-build-ninja
 # optimized out: GraphicsMagick GraphicsMagick-common gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libX11-devel libqt5-core libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel xorg-xproto-devel
 BuildRequires: GraphicsMagick-ImageMagick-compat qt5-3d-devel qt5-charts-devel qt5-connectivity-devel qt5-datavis3d-devel qt5-gamepad-devel qt5-multimedia-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-script-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel libhunspell-devel
 
-%ifnarch %e2k
+%ifnarch %e2k ppc64le
 BuildRequires: qt5-webview-devel qt5-webengine-devel qt5-webkit-devel
 %endif
 
@@ -84,6 +84,9 @@ done
 %_datadir/metainfo/featherpad.metainfo.xml
 
 %changelog
+* Tue Apr 26 2022 Leontiy Volodin <lvol@altlinux.org> 1.2.0-alt1
+- new version 1.2.0
+
 * Wed Jan 12 2022 Leontiy Volodin <lvol@altlinux.org> 1.1.1-alt1
 - new version 1.1.1
 
