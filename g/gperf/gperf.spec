@@ -1,5 +1,5 @@
 Name: gperf
-Version: 3.1.0.27.b0f9
+Version: 3.2.0.1.d89c
 Release: alt1
 
 Summary: A perfect hash function generator
@@ -50,6 +50,9 @@ install -pm644 AUTHORS NEWS README %buildroot%docdir/
 %docdir/
 
 %changelog
+* Tue Feb 08 2022 Dmitry V. Levin <ldv@altlinux.org> 3.2.0.1.d89c-alt1
+- gperf: v3.1-27-gb0f961a -> v3.2-1-gd89cab8.
+
 * Tue Apr 06 2021 Dmitry V. Levin <ldv@altlinux.org> 3.1.0.27.b0f9-alt1
 - gperf: v3.1-19-g9f4f11a -> v3.1-27-gb0f961a.
 - gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4003-gcfe65a873.
