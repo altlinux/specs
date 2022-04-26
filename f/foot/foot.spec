@@ -1,6 +1,6 @@
 Name: foot
 Version: 1.12.0
-Release: alt1
+Release: alt2
 
 Summary: A fast, lightweight and minimalistic Wayland terminal emulator
 License: MIT
@@ -48,6 +48,9 @@ BuildRequires: pkgconfig(systemd)
 %_mandir/*/*
 
 %changelog
+* Tue Apr 26 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.12.0-alt2
+- workarounds for sway issue 6960
+
 * Mon Apr 25 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.12.0-alt1
 - 1.12.0 released
 
