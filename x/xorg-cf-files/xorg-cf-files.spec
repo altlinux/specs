@@ -1,12 +1,13 @@
 Name: xorg-cf-files
 Version: 1.0.7
-Release: alt2
+Release: alt3
 Summary: config files for Xorg build
 License: XConsortium and XFree86
 Group: Development/C
 Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
 Patch: xorg-cf-files-1.0.7-ar-l.patch
+Patch1: xorg-cf-files-1.0.6-alt-e2k.patch
 
 BuildRequires: xorg-util-macros xorg-font-utils
 
@@ -16,6 +17,7 @@ Config files for Xorg build
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -98,6 +100,9 @@ done
 %_libdir/%name/*
 
 %changelog
+* Tue Apr 26 2022 Fr. Br. George <george@altlinux.org> 1.0.7-alt3
+- E2k patches by mike@
+
 * Tue Apr 26 2022 Fr. Br. George <george@altlinux.org> 1.0.7-alt2
 - E2k patches by ilyakurdyukov@
 
