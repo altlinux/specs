@@ -1,14 +1,14 @@
 %define soname 16
 
 Name: flint2
-Version: 2.8.4
+Version: 2.8.5
 Release: alt1
 Summary: Fast Library for Number Theory
 
 # Flint itself is LGPLv2+.  The hmod_mat extension is GPLv2+.
 License: LGPL-2.0+ and GPL-2.0+
 Group: System/Libraries
-Url: http://www.flintlib.org/
+Url: https://www.flintlib.org/
 
 Source: %url/%name-%version.tar.gz
 
@@ -72,6 +72,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/libflint.so
 
 %changelog
+* Tue Apr 26 2022 Leontiy Volodin <lvol@altlinux.org> 2.8.5-alt1
+- New version (2.8.5).
+
 * Fri Nov 19 2021 Leontiy Volodin <lvol@altlinux.org> 2.8.4-alt1
 - New version (2.8.4).
 
