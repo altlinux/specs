@@ -1,10 +1,10 @@
 Name: phpMyAdmin
-Version: 5.1.1
+Version: 5.1.3
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
 
-License: GPL
+License: GPLv2
 Group: System/Servers
 Url: http://www.phpmyadmin.net
 
@@ -123,6 +123,47 @@ manual. Currently phpMyAdmin can:
 
 Install this package if you need phpMyAdmin for apache 2.4 and php7.
 
+%package apache2-php8.1
+Summary: phpMyAdmin - web-based MySQL administration (for apache 2.4 and php8.1)
+Group: System/Servers
+Requires: %name = %version-%release
+Requires: apache2-mod_php8.1
+Requires: apache2-base
+
+# from composer.json
+Requires: php8.1-mysqlnd-mysqli
+Requires: php8.1-openssl
+Requires: php8.1-curl
+Requires: php8.1-opcache
+#Requires: php7-zlib
+Requires: php8.1-bz2
+Requires: php8.1-zip
+Requires: php8.1-gd2
+Requires: php8.1-mbstring
+Requires: php8.1-mcrypt
+
+Conflicts: %name-apache2
+Conflicts: %name-apache2-php7
+
+%description apache2-php8.1
+phpMyAdmin can administer a whole MySQL-server (needs a super-user)
+but also a single database. To accomplish the latter you'll need a
+properly set up MySQL-user who can read/write only the desired
+database. It's up to you to look up the appropiate part in the MySQL
+manual. Currently phpMyAdmin can:
+  - create and drop databases
+  - create, copy, drop and alter tables
+  - delete, edit and add fields
+  - execute any SQL-statement, even batch-queries
+  - manage keys on fields
+  - load text files into tables
+  - create (*) and read dumps of tables
+  - export (*) and import data to CSV values
+  - administer multiple servers and single databases
+  - communicate in more than 20 different languages
+
+Install this package if you need phpMyAdmin for apache 2.4 and php8.1.
+
 %prep
 %setup
 
@@ -184,7 +225,18 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 %apache2_extra_enabled/%name.conf
 #attr(755,root,root) %_controldir/%name-apache2
 
+%files apache2-php8.1
+%config(noreplace) %apache2_extra_available/%name.conf
+%apache2_extra_enabled/%name.conf
+#attr(755,root,root) %_controldir/%name-apache2
+
 %changelog
+* Tue Apr 26 2022 Vitaly Lipatov <lav@altlinux.ru> 5.1.3-alt1
+- new version 5.1.3 (with rpmrb script)
+ + PMASA-2022-1: a user could manipulate their account to bypass two factor authentication
+ + PMASA-2022-2: allowing a user to submit information to present an XSS or HTML injection attack
+- add phpMyAdmin-apache2-php8.1 subpackage
+
 * Mon Jul 12 2021 Vitaly Lipatov <lav@altlinux.ru> 5.1.1-alt1
 - new version 5.1.1 (with rpmrb script)
 
