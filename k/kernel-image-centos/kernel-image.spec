@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 80
+%define centos_release 81
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,20 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Apr 27 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.81-alt1.el9
+- Updated to kernel-5.14.0-81.el9:
+  + Add LPSS support for RPL-S
+  + Enable i2c-i801 support for RPL-S
+  + kABI: Prepare mm SST for kABI Lockdown
+  + pinctrl: Add support for RPL-S
+  + powerpc/pseries/vas: Enable NX-GZIP support with DLPAR and LPM operations
+  + pseries/eeh: Fix the kdump kernel crash during eeh_pseries_init
+  + RDMA/qedr: Fix reporting max_{send/recv}_wr attrs
+  + s390/kexec: fix memory leak of ipl report buffer
+  + selftests: xsk: Make packet validation more robust
+  + smartpqi updates
+  + x86: Introduce Intel SDSi
+
 * Thu Apr 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.80-alt1.el9
 - Updated to kernel-5.14.0-80.el9 (fixes: CVE-2022-1015, CVE-2022-25636):
   + gfs2: Fix bugs revealed by the dct tool
