@@ -1,17 +1,30 @@
 %global pypi_name easy-thumbnails
 
+%def_with check
+
 Name: python3-module-%pypi_name
-Version: 2.7
-Release: alt2
+Version: 2.8.1
+Release: alt1
+
 Summary: Easy thumbnails for Django
+
 Group: Development/Python3
 License: BSD-3-Clause
 Url: https://pypi.python.org/pypi/easy-thumbnails
+
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3-module-django
+BuildRequires: python3-module-django-dbbackend-sqlite3
+BuildRequires: python3-module-Pillow
+BuildRequires: python3-module-Reportlab
+BuildRequires: python3-module-svglib
+%endif
 
 %description
 A powerful, yet easy to implement thumbnailing
@@ -26,10 +39,20 @@ application for Django 1.8+
 %install
 %python3_install
 
+%check
+# this runs 119 tests, which pyunittest or pytest won't make
+export DJANGO_SETTINGS_MODULE='easy_thumbnails.tests.settings'
+export PYTHONPATH=$PWD
+%__python3 -m django test -v 2
+
 %files
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 2.8.1-alt1
+- Build new version.
+- Build with check.
+
 * Thu Jul 15 2021 Grigory Ustinov <grenka@altlinux.org> 2.7-alt2
 - Transferred on python3.
 
