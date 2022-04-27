@@ -2,12 +2,12 @@
 %define modulename python-memcached
 
 Name: python3-module-memcached
-Version: 1.58
-Release: alt2
+Version: 1.59
+Release: alt1
 
 Summary: A Python module for memcached daemon
 Group: Development/Python3
-License: GPL
+License: Python-2.0
 Url: https://github.com/linsomniac/python-memcached
 
 Source0: https://pypi.python.org/packages/f7/62/14b2448cfb04427366f24104c9da97cf8ea380d7258a3233f066a951a8d8/python-memcached-%{version}.tar.gz
@@ -38,6 +38,9 @@ distributed memory object caching system.
 %doc README* PKG-INFO ChangeLog
 
 %changelog
+* Mon Apr 25 2022 Grigory Ustinov <grenka@altlinux.org> 1.59-alt1
+- Build new version.
+
 * Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.58-alt2
 - Drop python2 support.
 
