@@ -6,7 +6,7 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.0.20
+Version: 2.0.22
 Release: alt1
 
 Summary: Simple DirectMedia Layer
@@ -120,6 +120,9 @@ This is the static libraries you can use to develop SDL applications.
 %_libdir/lib%{name}*.a
 
 %changelog
+* Wed Apr 27 2022 Nazarov Denis <nenderus@altlinux.org> 2.0.22-alt1
+- Version 2.0.22
+
 * Tue Jan 11 2022 Nazarov Denis <nenderus@altlinux.org> 2.0.20-alt1
 - Version 2.0.20
 
