@@ -1,7 +1,7 @@
 %define modulename genshi
 
 Name: python3-module-%modulename
-Version: 0.7.6
+Version: 0.7.7
 Release: alt1
 
 Summary: A toolkit for stream-based generation of output for the web
@@ -42,6 +42,9 @@ feature is a template language, which is heavily inspired by Kid.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 0.7.7-alt1
+- Automatically updated to 0.7.7.
+
 * Mon Mar 14 2022 Grigory Ustinov <grenka@altlinux.org> 0.7.6-alt1
 - Build new version.
 
