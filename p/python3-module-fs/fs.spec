@@ -1,17 +1,17 @@
-%define _unpackaged_files_terminate_build 1
-
 %define oname fs
 
 %def_with check
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.4.13
+Version: 2.4.15
 Release: alt1
+
 Summary: Filesystem abstraction layer
+
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/fs/
+Url: https://pypi.org/project/fs
 
 BuildArch: noarch
 
@@ -34,6 +34,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-recommonmark
 %endif
 
 %if_with check
@@ -41,6 +42,7 @@ BuildRequires: /proc
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-appdirs
 BuildRequires: python3-module-pyftpdlib-tests
+BuildRequires: python3-module-parameterized
 %endif
 
 %description
@@ -91,7 +93,6 @@ ln -s ../objects.inv docs/
 
 %if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
 %make SPHINXBUILD="sphinx-build-3" -C docs html
 %make SPHINXBUILD="sphinx-build-3" -C docs man
 %endif
@@ -100,8 +101,6 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_install
 
 %if_with docs
-mkdir -p %buildroot%python3_sitelibdir/%oname
-cp -fr docs/build/pickle %buildroot%python3_sitelibdir/%oname
 mkdir -p %buildroot%_man1dir
 cp -fr docs/build/man/*.1 %buildroot%_man1dir
 %endif
@@ -115,18 +114,17 @@ py.test3 -vv
 %python3_sitelibdir/fs-*.egg-info/
 %if_with docs
 %_man1dir/*
-%exclude %python3_sitelibdir/*/pickle
 %endif
 
 %if_with docs
-%files pickles
-%python3_sitelibdir/*/pickle
-
 %files docs
 %doc docs/build/html/*
 %endif
 
 %changelog
+* Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.15-alt1
+- Automatically updated to 2.4.15.
+
 * Thu Apr 01 2021 Grigory Ustinov <grenka@altlinux.org> 2.4.13-alt1
 - Automatically updated to 2.4.13.
 
