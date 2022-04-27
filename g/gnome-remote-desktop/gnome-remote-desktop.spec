@@ -9,7 +9,7 @@
 %def_enable nvenc
 
 Name: gnome-remote-desktop
-Version: %ver_major.1
+Version: %ver_major.1.1
 Release: alt1%beta
 
 Summary: GNOME Remote Desktop
@@ -80,6 +80,9 @@ Remote desktop daemon for GNOME using pipewire.
 %doc README
 
 %changelog
+* Tue Apr 26 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1.1-alt1
+- 42.1.1
+
 * Sat Apr 23 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 

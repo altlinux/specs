@@ -2,7 +2,7 @@
 
 %define ver_major 42
 %define beta %nil
-%define plugins_ver 17
+%define plugins_ver 18
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
 
@@ -39,7 +39,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -169,8 +169,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/%name/plugins-%plugins_ver/
 %_desktopdir/%name-local-file.desktop
 %_desktopdir/%xdg_name.desktop
-%_datadir/app-info/xmls/%xdg_name.Featured.xml
-%_datadir/app-info/xmls/%xdg_name.Popular.xml
+%_datadir/swcatalog/xml/%xdg_name.Featured.xml
+%_datadir/swcatalog/xml/%xdg_name.Popular.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %{?_enable_packagekit:%_datadir/dbus-1/services/org.freedesktop.PackageKit.service}
 %{?_enable_external_appstream:%_datadir/polkit-1/actions/org.gnome.software.external-appstream.policy}
@@ -192,6 +192,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Wed Apr 27 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- 42.1
+
 * Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 
