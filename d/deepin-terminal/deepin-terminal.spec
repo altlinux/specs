@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: deepin-terminal
-Version: 5.4.28
+Version: 5.4.29
 Release: alt1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
@@ -82,6 +82,7 @@ sed -i '/LXQtCompilerSettings/a remove_definitions(-DQT_NO_CAST_FROM_ASCII -DQT_
 # sed -i 's|default-config.json|src/assets/other/default-config.json|' CMakeLists.txt
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %cmake \
     -GNinja \
     -DDTKCORE_TOOL_DIR=%_libdir/libdtk-5*/DCore/bin \
@@ -125,6 +126,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/terminalwidget5/
 
 %changelog
+* Wed Apr 27 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.29-alt1
+- New version (5.4.29).
+
 * Fri Feb 04 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.28-alt1
 - New version (5.4.28).
 
