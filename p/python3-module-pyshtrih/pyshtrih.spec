@@ -1,7 +1,7 @@
 %define  oname pyshtrih
 
 Name:    python3-module-%oname
-Version: 2.0.4
+Version: 2.0.6
 Release: alt1
 
 Summary: Implementation of the barcode driver
@@ -13,17 +13,16 @@ URL:     https://github.com/oleg-golovanov/pyshtrih
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
 
 BuildArch: noarch
 
-Source:  %oname-%version.tar
+Source:  %name-%version.tar
 
 %description
 %summary
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
@@ -37,5 +36,8 @@ Source:  %oname-%version.tar
 %doc *.rst
 
 %changelog
+* Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.6-alt1
+- Automatically updated to 2.0.6.
+
 * Fri Jun 21 2019 Grigory Ustinov <grenka@altlinux.org> 2.0.4-alt1
 - Initial build for Sisyphus (Closes: #24269).
