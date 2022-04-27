@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.23
+Version:	0.9.24
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -82,6 +82,11 @@ if [ $1 -eq 1 ]; then
 # This is a fresh install.
 	/sbin/chkconfig --add network
 fi
+if [ $1 -eq 2 ]; then
+# Update.
+        grep -qs OVS_REMOVE %_sysconfdir/net/ifaces/default/options \
+	|| echo 'OVS_REMOVE=yes' >> %_sysconfdir/net/ifaces/default/options
+fi
 
 %preun
 if [ $1 -eq 0 ]; then
@@ -141,6 +146,9 @@ fi
 %files full
 
 %changelog
+* Wed Apr 27 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.9.24-alt1
+- openvswitch: add OVS_REMOVE=yes to default/options if it is not there.
+
 * Wed Apr 13 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.9.23-alt1
 - openvswitch: remove interfaces by default after putting them down.
 - openvswitch: setup port and bond after the bridge.
