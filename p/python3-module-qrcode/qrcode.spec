@@ -1,21 +1,27 @@
 %define oname qrcode
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 6.1.0
-Release: alt3
+Version: 7.3.1
+Release: alt1
 
 Summary: Python module to generate QR Codes
 
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://github.com/lincolnloop/python-qrcode
 
-# It is new feature etersoft-build-utils since 1.7.6: supports commented real url
-# Source-url: https://pypi.python.org/packages/source/q/qrcode/qrcode-4.0.4.tar.gz
-Source: %oname-%version.tar
+Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+Buildrequires: python3-module-pytest
+Buildrequires: python3-module-Pillow
+%endif
 
 Conflicts: python-module-%oname
 Obsoletes: python-module-%oname
@@ -25,13 +31,16 @@ This module uses image libraries, Python Imaging Library (PIL) by default,
 to generate QR Codes.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
 
 %install
 %python3_install
+
+%check
+py.test3 -s qrcode
 
 %files
 %doc README.rst LICENSE CHANGES.rst
@@ -43,6 +52,9 @@ to generate QR Codes.
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 7.3.1-alt1
+- Build new version.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt3
 - Drop python2 support.
 
