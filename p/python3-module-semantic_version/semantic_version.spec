@@ -1,32 +1,35 @@
 %define pypi_name semantic_version
+
 %def_without bootstrap
+%def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.8.5
-Release: alt6
+Version: 2.9.0
+Release: alt1
+
 Summary: A library implementing the 'SemVer' scheme.
 
 Group: Development/Python3
-License: BSD
+License: BSD-2-Clause
 URL:  https://github.com/rbarrois/python-semanticversion
-Source: %pypi_name-%version.tar
+
+Source: %name-%version.tar
+
 BuildArch:  noarch
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+Buildrequires: python3-module-django
+Buildrequires: python3-module-django-dbbackend-sqlite3
+%endif
 
 %description
 This small python library provides a few tools to handle `SemVer`_ in Python.
 It follows strictly the 2.0.0 version of the SemVer scheme.
 
-%package doc
-Summary: Documentation for the semantic_version library
-Group: Development/Documentation
-
-%description doc
-Documentation for the semantic_version library.
-
 %prep
-%setup -n %pypi_name-%version
+%setup
 
 %build
 %python3_build
@@ -42,11 +45,18 @@ rm -f %buildroot%python3_sitelibdir/%pypi_name/django_fields.py
 rm -fr %buildroot%python3_sitelibdir/tests
 rm -fr %buildroot%python3_sitelibdir/*/tests
 
+%check
+%__python3 setup.py test
+
 %files
 %doc README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
+- Build new version.
+- Build with check.
+
 * Fri Feb 04 2022 Grigory Ustinov <grenka@altlinux.org> 2.8.5-alt6
 - Change all back.
 
