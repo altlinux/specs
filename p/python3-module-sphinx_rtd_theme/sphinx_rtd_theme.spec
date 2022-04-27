@@ -1,15 +1,18 @@
 %define oname sphinx_rtd_theme
 
 Name: python3-module-%oname
-Version: 0.5.2
-Release: alt2
+Version: 1.0.0
+Release: alt1
+
 Summary: ReadTheDocs.org theme for Sphinx
+
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/sphinx_rtd_theme/
 
 # https://github.com/snide/sphinx_rtd_theme.git
 Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -35,6 +38,9 @@ export CI=":"
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt1
+- Build new version.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.2-alt2
 - Drop python2 support.
 
