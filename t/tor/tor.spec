@@ -10,8 +10,8 @@
 %define _tor_root %_localstatedir/%name
 
 Name: tor
-Version: 0.4.7.6
-Release: alt0.rc%ubt
+Version: 0.4.7.7
+Release: alt1
 
 Summary: Anonymizing overlay network for TCP (The onion router)
 Group: System/Servers
@@ -23,9 +23,7 @@ Source1: %name.init
 Source2: %name.systemd.service
 Source3: %name.tmpfiles
 
-Patch1:	 %name-0.4.7.6-source-date.patch
-
-BuildRequires(pre): ubt-utils
+Patch1:	 %name-0.4.7.7-source-date.patch
 
 # Automatically added by buildreq on Sun Apr 17 2022
 # optimized out: asciidoc docbook-dtds docbook-style-xsl glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error perl pkg-config python2-base python3 python3-base sh4 termutils tzdata xml-common xml-utils xsltproc xz
@@ -57,7 +55,7 @@ for high-stakes anonymity.
 
 %prep
 %setup
-%patch1 -p1
+%patch1 -p2
 
 # Set default configuration values
 sed -i 's:^#Log notice file.*:Log notice file %_var/log/%name/%name.log:' src/config/torrc.sample.in
@@ -154,10 +152,15 @@ fi
 %_var/cache/%name
 
 %changelog
+* Wed Apr 27 2022 Vladimir Didenko <cow@altlinux.ru> 0.4.7.7-alt1
+- new version
+- use SOURCE_DATE_EPOCH variable from the build environment
+- remove ubt macro (it is empty now)
+
 * Mon Apr 18 2022 Hihin Ruslan <ruslandh@altlinux.ru> 0.4.7.6-alt0.rc
 - fix tor.service and spec
 
-* Mon Apr 18 2022 Hihin Ruslan <ruslandh@altlinux.ru> 0.4.7.6-alt0.git_616c06c0b2%ubt
+* Mon Apr 18 2022 Hihin Ruslan <ruslandh@altlinux.ru> 0.4.7.6-alt0.git_616c06c0b2
 - Develop version
 
 * Thu Feb 10 2022 Vladimir Didenko <cow@altlinux.ru> 0.4.6.10-alt1
@@ -413,4 +416,3 @@ CVE-2017-8822, CVE-2017-8823)
 - First build for ALT Linux
 - Known problems:
   + service is not being chrooted
-
