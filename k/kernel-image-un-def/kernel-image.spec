@@ -1,14 +1,10 @@
 Name: kernel-image-un-def
 Release: alt1
-epoch:1 
-%define kernel_base_version	5.16
-%define kernel_sublevel .20
+epoch:1
+%define kernel_base_version	5.17
+%define kernel_sublevel .4
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-# Numeric extra version scheme developed by Alexander Bokovoy:
-# 0.0.X -- preX
-# 0.X.0 -- rcX
-# 1.0.0 -- release
 %define kernel_extra_version_numeric 1.0.0
 
 %define krelease	%release
@@ -16,9 +12,6 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define flavour		%( s='%name'; printf %%s "${s#kernel-image-}" )
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
-
-Source1: rules
-%define patches		%(grep name=.*patch %SOURCE1 | nl -v0 | sed 's/^\\s*\\([0-9]*\\).*name=\\(.*\\.patch\\).*$/Patch\\1: \\2/')
 
 # Build options
 # You can change compiler version by editing this line:
@@ -57,7 +50,7 @@ Group: System/Kernel and hardware
 Url: http://www.kernel.org/
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
-%patches
+Patch0: %name-%version-%release.patch
 
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
@@ -90,82 +83,78 @@ ExclusiveArch: i586 x86_64 ppc64le aarch64 armh
 
 ExclusiveOS: Linux
 
-BuildRequires(pre): rpm-build-kernel
-BuildRequires: flex
-BuildRequires: libdb4-devel
-BuildRequires: gcc%kgcc_version gcc%kgcc_version-c++
-BuildRequires: gcc%kgcc_version-plugin-devel libgmp-devel libmpc-devel
-BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
-BuildRequires: module-init-tools >= 3.16
-BuildRequires: lzma-utils zlib-devel
-BuildRequires: libelf-devel
-BuildRequires: bc
-BuildRequires: rsync
-BuildRequires: openssl-devel openssl
-BuildRequires: dwarves >= 1.16
-%ifarch aarch64
-BuildRequires: u-boot-tools
-%endif
-# for check
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.30 ltp >= 20210524-alt2 iproute2}}
+%if "%sub_flavour" == "def"
+Provides: kernel = %kversion
 Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
-Provides:  kernel-modules-alsa = %version-%release
+Provides: kernel-modules-alsa = %version-%release
 Provides: kernel-modules-kvm-%flavour = %version-%release
 Provides: kernel-modules-kvm-%kversion-%flavour-%krelease = %version-%release
+%endif
 
+Requires(pre,postun): bootloader-utils
+Requires(pre,postun): kmod
+Requires(pre,postun): mkinitrd
+
+BuildRequires(pre): rpm-build-kernel
+BuildRequires: banner
+BuildRequires: bc
+BuildRequires: dwarves >= 1.16
+BuildRequires: flex
+BuildRequires: gcc%kgcc_version
+BuildRequires: gcc%kgcc_version-c++
+BuildRequires: gcc%kgcc_version-plugin-devel
+BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
+BuildRequires: kmod
+BuildRequires: libdb4-devel
+BuildRequires: libelf-devel
+BuildRequires: libgmp-devel
+BuildRequires: libmpc-devel
+BuildRequires: lzma-utils
+BuildRequires: openssl
+BuildRequires: openssl-devel
+BuildRequires: rsync
+BuildRequires: zlib-devel
+%ifarch aarch64
+BuildRequires: u-boot-tools
+%endif
 %if_enabled docs
 BuildRequires: python3-module-sphinx /usr/bin/sphinx-build perl-Pod-Usage python3-module-sphinx_rtd_theme
 BuildRequires: fontconfig
 %endif
-
 %if_enabled ccache
 BuildRequires: ccache
 %endif
-
 %ifdef use_ccache
 BuildRequires: ccache
 %endif
 
-Requires: bootloader-utils >= 0.4.24-alt1
-Requires: module-init-tools >= 3.1
-Requires: mkinitrd >= 1:2.9.9-alt1
-
-Provides: kernel = %kversion
-
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
-Prereq: mkinitrd >= 1:2.9.9-alt1
+# for check
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.30 ltp >= 20210524-alt2 iproute2}}
 
 %description
-This package contains the Linux kernel that is used to boot and run
+This package contains the Linux kernel %kernel_base_version that is used to boot and run
 your system.
 
 Most hardware drivers for this kernel are built as modules.  Some of
 these drivers are built separately from the kernel; they are available
 in separate packages (kernel-modules-*-%flavour).
 
-There are some kernel variants in ALT systems:
+There are some other kernel variants in ALT systems:
 * std-def: standard longterm kernel without preemption;
-* std-pae: variant of std-def kernel for i686 with 64G memory support;
-* std-debug: variant of std-def kernel kernel with some DEBUG options enabled;
-* un-def: more modern then std-def and with voluntary (on ppc64le) and
-  forced (on x86) preemption enabled.
-* sn-def: insecure kernel for SecretNet only
+* un-def:  more modern then std-def and with preemption enabled.
 
 %package -n kernel-image-domU-%flavour
 Summary: Uncompressed linux kernel for XEN domU boot 
 Group: System/Kernel and hardware
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
+Requires(pre,postun): kmod
 
 %description -n kernel-image-domU-%flavour
 Most XEN virtualization system versions can not boot lzma-compressed
 kernel images. This is an optional package with uncompressed linux
 kernel image for this special case. If you do not know what is it XEN
 it seems that you do not need this package.
-
 
 %package -n kernel-modules-drm-%flavour
 Summary: The Direct Rendering Infrastructure modules
@@ -174,10 +163,8 @@ Provides:  kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
 Provides:  kernel-modules-v4l-%flavour = %version-%release
 Conflicts: kernel-modules-drm-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-drm-%kversion-%flavour-%krelease > %version-%release
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
-Prereq: %name = %epoch:%version-%release
-Requires(postun): %name = %epoch:%version-%release
+Requires(pre,postun): kmod
+Requires(pre,postun): %name = %EVR
 
 %description -n kernel-modules-drm-%flavour
 The Direct Rendering Infrastructure, also known as the DRI, is a framework
@@ -194,7 +181,6 @@ Group: System/Kernel and hardware
 Provides:  kernel-modules-drm-ancient-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-drm-ancient-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-drm-ancient-%kversion-%flavour-%krelease > %version-%release
-Prereq: coreutils
 Requires(pre,post,postun): %name = %EVR
 
 %description -n kernel-modules-drm-ancient-%flavour
@@ -210,8 +196,7 @@ Provides:  kernel-modules-drm-nouveau-%kversion-%flavour-%krelease = %version-%r
 Conflicts: kernel-modules-drm-nouveau-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-drm-nouveau-%kversion-%flavour-%krelease > %version-%release
 Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
+Requires(pre,postun): kmod
 Requires(pre,post,postun): %name = %EVR
 
 %description -n kernel-modules-drm-nouveau-%flavour
@@ -230,8 +215,7 @@ Provides:  kernel-modules-staging-%kversion-%flavour-%krelease = %version-%relea
 Conflicts: kernel-modules-staging-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-staging-%kversion-%flavour-%krelease > %version-%release
 Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
+Requires(pre,postun): kmod
 Requires(pre,post,postun): %name = %EVR
 
 %description -n kernel-modules-staging-%flavour
@@ -242,9 +226,11 @@ technical reasons.
 %package -n kernel-headers-%flavour
 Summary: Header files for the Linux kernel
 Group: Development/Kernel
-Requires: kernel-headers-common >= 1.1.5
+Requires: kernel-headers-common
+%if "%sub_flavour" == "def"
 Provides: kernel-headers = %version
-#Provides: kernel-headers-%base_flavour = %version-%release
+%endif
+AutoReqProv: nocpp
 
 %description -n kernel-headers-%flavour
 This package makes Linux kernel headers corresponding to the Linux
@@ -264,8 +250,7 @@ If possible, try to use glibc-kernheaders instead of this package.
 %package -n kernel-headers-modules-%flavour
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel 
-Requires: gcc%kgcc_version
-Requires: libelf-devel
+AutoReqProv: nocpp
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -307,7 +292,6 @@ tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %autopatch -p1
 
-
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
@@ -318,9 +302,8 @@ subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+c
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
 
-chmod +x tools/objtool/sync-check.sh
-
 %build
+banner build
 export ARCH=%base_arch
 export NPROCS=%__nprocs
 KernelVer=%kversion-%flavour-%krelease
@@ -329,27 +312,20 @@ echo "Building Kernel $KernelVer"
 
 %make_build mrproper
 
-
 #configuration construction
-
 CONFIGS="config config-%_target_cpu"
-
 %if "%base_flavour" == "std"
 CONFIGS="$CONFIGS config-std"
 %endif
-
 %if "%sub_flavour" == "pae"
 CONFIGS="$CONFIGS config-pae"
 %endif
-
 %if "%sub_flavour" == "debug"
 CONFIGS="$CONFIGS config-debug"
 %endif
-
 scripts/kconfig/merge_config.sh -m $CONFIGS
 
 %make_build oldconfig
-#%make_build include/linux/version.h
 %make_build %make_target
 %ifarch ppc64le
 eu-strip --remove-comment -o %image_path vmlinux
@@ -362,6 +338,7 @@ eu-strip --remove-comment -o %image_path vmlinux
 echo "Kernel built $KernelVer"
 
 %install
+banner install
 export ARCH=%base_arch
 KernelVer=%kversion-%flavour-%krelease
 
@@ -389,11 +366,15 @@ mv %buildroot%modules_dir/kernel/drivers/media/dvb-core/dvb-core.ko %buildroot%m
 mv %buildroot%modules_dir/kernel/drivers/media/radio/tea575x.ko %buildroot%modules_dir/kernel/drivers/media-core/
 
 %ifarch aarch64 %arm
-make dtbs_install INSTALL_DTBS_PATH=%buildroot/lib/devicetree/$KernelVer
+make dtbs_install INSTALL_DTBS_PATH=%buildroot/boot/devicetree/$KernelVer
 %ifarch aarch64
-find %buildroot/lib/devicetree/$KernelVer -mindepth 1 -type d |\
-       while read d; do mv $d/* $d/../ && rmdir $d && ln -srv $d/../ $d; done
+pushd %buildroot/boot/devicetree/$KernelVer/
+find . -mindepth 2 -type f | \
+       while read f; do ln -srv "$f" "$(basename $f)"; done
+popd
 %endif
+mkdir -p %buildroot/lib/devicetree
+ln -s /boot/devicetree/$KernelVer %buildroot/lib/devicetree/$KernelVer
 %endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
@@ -439,7 +420,6 @@ KbuildFiles="
 	arch/x86/Makefile_64
 %endif
 %endif
-
 	scripts/pnmtologo
 	scripts/mod/modpost
 	scripts/mkmakefile
@@ -519,7 +499,7 @@ touch %buildroot%modules_dir/modules.{alias,dep,devname,softdep,symbols}
 %if_enabled docs
 install -d %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
-%endif # if_enabled docs
+%endif
 
 # On some architectures (at least ppc64le) kernel image is ELF and
 # eu-findtextrel will fail if it is not a DSO or PIE.
@@ -531,6 +511,7 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 %endif
 
 %check
+banner check
 # First boot-test no matter have KVM or not.
 timeout 300 vm-run uname -a
 # Longer LTP tests only if there is KVM (which is present on all main arches).
@@ -559,11 +540,18 @@ check-pesign-helper
 %exclude %modules_dir/kernel/drivers/gpu/
 %exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko
 %exclude %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko
+%ifarch %ix86 x86_64
+# thinkpad_acpi now depends on drm causing "kernel image shouldn't require
+# kernel modules" "sisyphus_check: check-kernel ERROR: kernel package
+# violation".
+%exclude %modules_dir/kernel/drivers/platform/x86/thinkpad_acpi.ko
+%endif
 %ghost %modules_dir/modules.alias.bin
 %ghost %modules_dir/modules.dep.bin
 %ghost %modules_dir/modules.symbols.bin
 %ghost %modules_dir/modules.builtin.bin
 %ifarch aarch64 %arm
+/boot/devicetree/%kversion-%flavour-%krelease
 /lib/devicetree/%kversion-%flavour-%krelease
 %endif
 
@@ -591,6 +579,9 @@ check-pesign-helper
 %modules_dir/kernel/drivers/media/
 %modules_dir/kernel/drivers/usb/typec/altmodes/typec_displayport.ko
 %modules_dir/kernel/drivers/usb/typec/altmodes/typec_nvidia.ko
+%ifarch %ix86 x86_64
+%modules_dir/kernel/drivers/platform/x86/thinkpad_acpi.ko
+%endif
 %exclude %modules_dir/kernel/drivers/gpu/drm/nouveau
 %exclude %modules_dir/kernel/drivers/gpu/drm/mgag200
 %ifnarch aarch64 armh
@@ -611,7 +602,6 @@ check-pesign-helper
 %modules_dir/kernel/drivers/gpu/drm/r128
 %modules_dir/kernel/drivers/gpu/drm/mga
 %modules_dir/kernel/drivers/gpu/drm/via
-
 %endif
 
 %files -n kernel-modules-drm-nouveau-%flavour
@@ -623,6 +613,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Apr 20 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.17.4-alt1
+- Rebase over next major stable release v5.17.4 (2022-04-20) due to v5.16
+  branch being EOL. Duly contains multiple CVE fixes.
+- Replace external kernel-modules-rtw89 with CONFIG_RTW89=m.
+
 * Thu Apr 14 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.16.20-alt1
 - v5.16.20
 
