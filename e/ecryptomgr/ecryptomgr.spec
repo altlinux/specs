@@ -1,5 +1,5 @@
 Name: ecryptomgr
-Version: 0.9.1
+Version: 0.9.3
 Release: alt1
 
 Summary: Crypto provider installer
@@ -50,6 +50,18 @@ done
 %sdir/
 
 %changelog
+* Wed Apr 27 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
+- fix libjcpkcs11 name
+- fix typo in a description
+- ecryptomgr.sh: remove cprocsp as default
+
+* Tue Apr 26 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt1
+- add separate install for pcsc support
+- add --gui-install for use install-gui.sh in CryptoPro install process
+- install_cryptopro.sh: reinstall lsb-core with --auto
+- install_cryptopro.sh: install 32 bit packages by list of installed 64 bit packages
+- install_cryptopro.sh: fix i586 install
+
 * Mon Apr 11 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
 - install_cryptopro.sh: check libjcpkcs11 instead of jcPKCS11-2
 - install_crypropro.sh: add libpng12 install for GUI
