@@ -1,8 +1,8 @@
 %define oname phonenumbers
 
 Name: python3-module-%oname
-Version: 8.5.1
-Release: alt2
+Version: 8.12.47
+Release: alt1
 
 Summary: Python port of Google's libphonenumber
 
@@ -12,6 +12,7 @@ Url: https://pypi.python.org/pypi/phonenumbers/
 
 # Source-git: https://github.com/daviddrysdale/python-phonenumbers.git
 Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -26,19 +27,28 @@ storing and validating international phone numbers.
 %setup
 
 %build
+pushd python
 %python3_build
+popd
 
 %install
+pushd python
 %python3_install
+popd
 
 %check
-#python3 setup.py test
+pushd python
+%__python3 setup.py test
+popd
 
 %files
 %doc *.md python/HISTORY.md
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 8.12.47-alt1
+- Automatically updated to 8.12.47.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 8.5.1-alt2
 - Drop python2 support.
 
