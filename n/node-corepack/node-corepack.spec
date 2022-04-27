@@ -5,7 +5,7 @@
 
 Name: node-corepack
 Version: 0.10.0
-Release: alt1
+Release: alt2
 Summary: Bridge between Node projects and their package managers
 License: MIT License
 Group: Development/Other
@@ -46,7 +46,6 @@ mkdir -p %buildroot%_bindir
 mkdir -p %buildroot%nodejs_sitelib/%node_module
 cp -a dist %buildroot%nodejs_sitelib/%node_module
 cp -a shims %buildroot%nodejs_sitelib/%node_module
-rm -f %buildroot%nodejs_sitelib/%node_module/dist/vendors-*
 chmod a+x %buildroot%nodejs_sitelib/%node_module/dist/*.js
 rm -rf %buildroot%nodejs_sitelib/%node_module/shims/nodewin
 rm -f %buildroot%nodejs_sitelib/%node_module/shims/*.{cmd,ps1}
@@ -60,6 +59,9 @@ ln -sr %buildroot%nodejs_sitelib/%node_module/dist/corepack.js %buildroot%_bindi
 %nodejs_sitelib/%node_module
 
 %changelog
+* Tue Apr 26 2022 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt2
+- Fix install files.
+
 * Tue Apr 26 2022 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt1
 - Initial build.
 
