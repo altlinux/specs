@@ -1,5 +1,5 @@
 %define module_name     kvdo
-%define module_version  6.2.6.3
+%define module_version  6.2.6.14
 %define module_release  alt1
 %define flavour         std-def
 # Note: This project can only be built on x86_64, ppc, and aarch64.
