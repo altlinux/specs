@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.7
+Version: 3.4.8
 Release: alt1
 
 Source:%name-%version.tar
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Wed Apr 27 2022 Sergey V Turchin <zerg at altlinux dot org> 3.4.8-alt1
+- fix russian translation
+
 * Mon Mar 21 2022 Sergey V Turchin <zerg at altlinux dot org> 3.4.7-alt1
 - expand combobox list when too short
 
