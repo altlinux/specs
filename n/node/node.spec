@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 # check deps/npm/package.json for it
-%define npmver 8.5.0
+%define npmver 8.5.5
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -10,7 +10,7 @@
 %define corepackver 0.10.0
 %def_without corepack
 
-%define major 16.14
+%define major 16.15
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -65,8 +65,8 @@
 %define oversion %version
 
 Name: node
-Version: %major.2
-Release: alt2
+Version: %major.0
+Release: alt1
 
 Summary: Evented I/O for V8 Javascript
 
@@ -432,6 +432,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Wed Apr 27 2022 Vitaly Lipatov <lav@altlinux.ru> 16.15.0-alt1
+- new version 16.15.0 (with rpmrb script)
+- set npm >= 8.5.5
+
 * Tue Apr 26 2022 Alexey Shabalin <shaba@altlinux.org> 16.14.2-alt2
 - build with system brotli
 - add corepack package, but build without
