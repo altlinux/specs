@@ -1,20 +1,28 @@
-%define _unpackaged_files_terminate_build 1
 %define oname PyPDF2
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.26.0
-Release: alt2
+Version: 1.27.9
+Release: alt1
+
 Summary: A utility to read and write PDFs with Python
-License: BSD
+
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/PyPDF2/
+Url: https://pypi.python.org/pypi/PyPDF2
 
 # https://github.com/mstamy2/PyPDF2.git
-Source0: https://pypi.python.org/packages/b4/01/68fcc0d43daf4c6bdbc6b33cc3f77bda531c86b174cac56ef0ffdb96faab/%{oname}-%{version}.tar.gz
+Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 Requires: python3-module-Reportlab
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-Pillow
+%endif
 
 %description
 A Pure-Python library built as a PDF toolkit. It is capable of:
@@ -28,19 +36,25 @@ A Pure-Python library built as a PDF toolkit. It is capable of:
 * and more!
 
 %prep
-%setup -n %{oname}-%{version}
+%setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
+
+%check
+py.test3
 
 %files
 %doc CHANGELOG *.md
 %python3_sitelibdir/*
 
 %changelog
+* Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 1.27.9-alt1
+- Build new version.
+
 * Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.26.0-alt2
 - Drop python2 support.
 
