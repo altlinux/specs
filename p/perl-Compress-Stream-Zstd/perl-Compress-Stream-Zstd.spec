@@ -1,9 +1,9 @@
-%define module_name Compress-Stream-Zstd
 %define _unpackaged_files_terminate_build 1
+%define module_name Compress-Stream-Zstd
 
 Name: perl-%module_name
-Version: 0.202
-Release: alt5
+Version: 0.203
+Release: alt1
 
 Summary: Perl interface to the Zstd (Zstandard) (de)compressor
 License: BSD
@@ -35,11 +35,14 @@ popd
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README.md
+%doc Changes README.md
 %perl_vendor_archlib/C*
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Apr 28 2022 Igor Vlasenko <viy@altlinux.org> 0.203-alt1
+- new version
+
 * Sat Jan 15 2022 Michael Shigorin <mike@altlinux.org> 0.202-alt5
 - E2K: apply zstd arch support patch (ALT version)
 - minor spec cleanup
