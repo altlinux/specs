@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist libwww-perl
 Name: perl-libwww
-Version: 6.63
+Version: 6.64
 Release: alt1
 
 Summary: WWW client/server library for Perl (aka LWP)
@@ -70,6 +70,9 @@ ln -snf lwp-request.1 %buildroot%_man1dir/POST.1
 %doc	%perl_vendor_privlib/libwww/lwp*.pod
 
 %changelog
+* Thu Apr 28 2022 Igor Vlasenko <viy@altlinux.org> 6.64-alt1
+- automated CPAN update
+
 * Tue Apr 26 2022 Igor Vlasenko <viy@altlinux.org> 6.63-alt1
 - automated CPAN update
 
