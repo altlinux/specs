@@ -1,6 +1,6 @@
 Name: cups-pdf
 Version: 3.0.1
-Release: alt1
+Release: alt2
 
 Summary: Extension for creating pdf-Files with CUPS
 Summary(ru_RU.UTF-8): Расширения для создания PDF файлов с помощью CUPS
@@ -12,16 +12,23 @@ Url: http://www.cups-pdf.de
 # Source-url: http://www.cups-pdf.de/src/cups-pdf_%version.tar.gz
 Source: %name-%version.tar
 Source1: cups-pdf.sh
+Source2: cups-pdf-firsttime.service
 
 Patch1: cups-pdf-conf.patch
 Patch2: cups-pdf-desktop.patch
-
+Patch3: cups-pdf-setpdfwrite.patch
+Patch4: cups-pdf-build.patch
+Patch5: cups-pdf-title.patch
 
 Requires(pre): cups
 Requires: ghostscript
 BuildRequires: perl-MIME-Lite perl-MailTools perl-MIME-tools libcups-devel
 
 BuildRequires: libcups-devel
+
+# Drop systemctl fro Requires:
+# it is not needed on sysvinit.
+%filter_from_requires /^\/sbin\/systemctl/d
 
 %description
 "cups-pdf" is a backend script for use with CUPS - the "Common UNIX Printing System"
@@ -32,6 +39,9 @@ device to produce PDF Files.
 %setup
 %patch1 -p0 -b .oldconf
 %patch2 -p0 -b .desktop
+%patch3 -p0
+%patch4 -p0
+%patch5 -p0
 
 %build
 cc %optflags -D_FILE_OFFSET_BITS=64 -o cups-pdf src/cups-pdf.c -lcups
@@ -45,28 +55,50 @@ install -D -m644 extra/CUPS-PDF_opt.ppd %buildroot%_datadir/cups/model/CUPS-PDF.
 mkdir -p %buildroot%_spooldir/cups-pdf
 mkdir -p %buildroot%_spooldir/cups-pdf/SPOOL
 install -D -m 755 %SOURCE1 %buildroot%_sysconfdir/firsttime.d/cups-pdf
+install -D -m 644 %SOURCE2 %buildroot%_unitdir/cups-pdf-firsttime.service
+touch %buildroot%_sysconfdir/cups-pdf-firsttime.flag
 
 %post
 # First install : create the printer if cupsd is running
-if [ "$1" -eq "1" ]
-then
-
-    service cups status > /dev/null 2>&1
+if [ "$1" -eq "1" ]; then
+    SYSTEMCTL=systemctl
+    service cups status >/dev/null 2>&1
     if [ $? -eq 0 ]; then
-        /usr/sbin/lpadmin -p Cups-PDF -v cups-pdf:/ -m CUPS-PDF.ppd -E || :
+        /usr/sbin/lpadmin -p Cups-PDF -v cups-pdf:/ -m CUPS-PDF.ppd -E >/dev/null 2>&1 ||:
+		/usr/sbin/lpadmin -d Cups-PDF >/dev/null 2>&1 ||:
     else
-        service cups start > /dev/null 2>&1 && /usr/sbin/lpadmin -p Cups-PDF -v cups-pdf:/ -m CUPS-PDF.ppd -E || : && service cups stop > /dev/null 2>&1 || :
+        # We can't use sd_booted here because the package installation can be during
+        # an image installation/creation, so just check systemctl existance.
+        if type "$SYSTEMCTL" >/dev/null 2>&1; then
+            "$SYSTEMCTL" -q daemon-reload >/dev/null 2>&1 ||:
+            # Use cups-pdf-firsttime.service to add Cups-PDF printer
+            touch %_sysconfdir/cups-pdf-firsttime.flag ||:
+            "$SYSTEMCTL" -q enable cups-pdf-firsttime.service ||:
+        else
+            if service cups start >/dev/null 2>&1; then
+                /usr/sbin/lpadmin -p Cups-PDF -v cups-pdf:/ -m CUPS-PDF.ppd -E >/dev/null 2>&1  ||:
+                /usr/sbin/lpadmin -d Cups-PDF >/dev/null 2>&1 ||:
+                service cups stop >/dev/null 2>&1 ||:
+            fi
+        fi
     fi
 fi
 
-%postun
+%preun
 if [ "$1" -eq "0" ]; then
+    # Ensure that cups-pdf-firsttime.service is disabled
+    SYSTEMCTL=systemctl
+    if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+        "$SYSTEMCTL" --no-reload -q disable cups-pdf-firsttime.service ||:
+    fi
     # Delete the printer
-    /usr/sbin/lpadmin -x Cups-PDF || :
+    /usr/sbin/lpadmin -x Cups-PDF >/dev/null 2>&1 || :
 fi
 
 %files
 %doc ChangeLog COPYING README
+%ghost %_sysconfdir/cups-pdf-firsttime.flag
+%_unitdir/cups-pdf-firsttime.service
 %_sysconfdir/firsttime.d/cups-pdf
 %_libexecdir/cups/backend/cups-pdf
 %config(noreplace) %_sysconfdir/cups/cups-pdf.conf
@@ -75,6 +107,12 @@ fi
 %dir %_spooldir/cups-pdf/SPOOL
 
 %changelog
+* Thu Apr 28 2022 Mikhail Efremov <sem@altlinux.org> 3.0.1-alt2
+- Rework Cups-PDF printer setup (closes: #42624).
+- Remove newlines from title.
+- Fix potential NULL dereference.
+- Fix GhostScript command line (closes: #41587).
+
 * Sat Oct 28 2017 Vitaly Lipatov <lav@altlinux.ru> 3.0.1-alt1
 - new version 3.0.1 (with rpmrb script)
 - cleanup spec
