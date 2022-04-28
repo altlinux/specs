@@ -1,5 +1,5 @@
 Name: neovim
-Version: 0.6.1
+Version: 0.7.0
 Release: alt1
 
 Summary: heavily refactored vim fork
@@ -68,15 +68,13 @@ This package contains runtime files.
 %cmake_install
 %find_lang nvim
 
-gzip -9 LICENSE
-
 install -pm0644 runtime/nvim.desktop -Dt %buildroot%_desktopdir
 install -pm0644 runtime/nvim.png -Dt %buildroot%_pixmapsdir
 
 install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
 
 %files -f nvim.lang
-%doc LICENSE.gz
+%doc LICENSE.txt
 %_bindir/nvim
 %_man1dir/nvim*
 
@@ -91,6 +89,9 @@ install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
 %_datadir/nvim/sysinit.vim
 
 %changelog
+* Thu Apr 28 2022 Vladimir Didenko <cow@altlinux.org> 0.7.0-alt1
+- New version
+
 * Mon Jan 10 2022 Vladimir Didenko <cow@altlinux.org> 0.6.1-alt1
 - New version
 
