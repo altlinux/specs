@@ -1,14 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-App-cpanminus
-Version: 1.7045
+Version: 1.9019
 Release: alt1
 
 Summary: App::cpanminus - get, unpack, build and install modules from CPAN
 Group: Development/Perl
 License: Perl
 Url: %CPAN App-cpanminus
-
-# git://github.com/miyagawa/cpanminus.git
+VCS: https://github.com/miyagawa/cpanminus.git
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -37,6 +36,9 @@ Requires: perl-base
 %doc Changes
 
 %changelog
+* Thu Apr 28 2022 Igor Vlasenko <viy@altlinux.org> 1.9019-alt1
+- new version
+
 * Thu Jan 27 2022 Igor Vlasenko <viy@altlinux.org> 1.7045-alt1
 - new version
 
