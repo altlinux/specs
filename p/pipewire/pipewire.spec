@@ -35,7 +35,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.50
+Version: %ver_major.51
 Release: alt1
 
 Summary: Media Sharing Server
@@ -293,6 +293,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Apr 28 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.51-alt1
+- updated to 0.3.51-2-gb7845bd70
+
 * Wed Apr 13 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.50-alt1
 - updated to 0.3.50-2-g339c22dce
 
