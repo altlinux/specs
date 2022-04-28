@@ -1,19 +1,33 @@
+%def_enable snapshot
+
 %define gdk_pixbuf_moduledir  %(pkg-config --variable gdk_pixbuf_moduledir gdk-pixbuf-2.0)
-%define api_ver 0.1
+%define api_ver 0.3
+
+%def_enable gnome
+%def_disable bootstrap
 
 Name: libopenraw
-Version: 0.1.3
+Version: 0.3.1
 Release: alt1
 
 Summary: Decode camera RAW files
 Group: System/Libraries
-License: LGPLv3+
-Url: http://libopenraw.freedesktop.org/wiki
+License: GPL-3.0-or-later and LGPL-3.0-or-later
+Url: https://libopenraw.freedesktop.org/
 
-Source: http://libopenraw.freedesktop.org/download/libopenraw-%version.tar.bz2
+%if_disabled snapshot
+Source: https://libopenraw.freedesktop.org/download/libopenraw-%version.tar.bz2
+%else
+Vcs: https://gitlab.freedesktop.org/libopenraw/libopenraw.git
+Source: %name-%version.tar
+%endif
+Source1: %name-%version-mp4.tar
 
 BuildRequires: autoconf-archive boost-devel gcc-c++ libcurl-devel libgio-devel
-BuildRequires: libgdk-pixbuf-devel libjpeg-devel libxml2-devel
+BuildRequires: libjpeg-devel libxml2-devel
+# for CR3 support (lib/mp4)
+BuildRequires: /proc rust rust-cargo
+%{?_enable_gnome:BuildRequires: libgdk-pixbuf-devel}
 
 %description
 libopenraw is an ongoing project to provide a free software implementation for
@@ -49,26 +63,41 @@ The %name-gnome-devel package contains libraries and header files for developing
 applications that use %name-gnome.
 
 %prep
-%setup
-# fix boost.m4 for gcc < 5, lcc < 1.23
-sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
+%setup %{?_disable_bootstrap:-a1}
+%{?_enable_bootstrap:
+pushd lib/mp4
+cargo vendor -s Cargo.toml -s mp4parse/Cargo.toml -s mp4parse_capi/Cargo.toml
+mkdir .cargo
+cat << _EOF_ >> .cargo/config.toml
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+_EOF_
+tar -cf %_sourcedir/%name-%version-mp4.tar vendor .cargo
+}
+mv vendor .cargo lib/mp4
+sed -i 's/byteorder = "1.2.1"/byteorder = "1.2.2"/' lib/mp4/mp4parse/Cargo.toml
 
 %build
 %autoreconf
-%configure --disable-static
+%configure --disable-static \
+    %{subst_enable gnome}
 %make_build
 
 %install
 %makeinstall_std
 
 %check
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %make check
 
 %files
 %_libdir/%name.so.*
 %gdk_pixbuf_moduledir/*.so
 %exclude %gdk_pixbuf_moduledir/*.la
-%doc AUTHORS NEWS README TODO
+%doc AUTHORS NEWS README TODO RELEASE_NOTES
 
 %files devel
 %dir %_includedir/%name-%api_ver
@@ -76,6 +105,7 @@ sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 %_libdir/%name.so
 %_pkgconfigdir/%name-%api_ver.pc
 
+%if_enabled gnome
 %files gnome
 %_libdir/%{name}gnome.so.*
 
@@ -83,8 +113,12 @@ sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 %_includedir/%name-%api_ver/%name-gnome/
 %_libdir/%{name}gnome.so
 %_pkgconfigdir/%name-gnome-%api_ver.pc
+%endif
 
 %changelog
+* Wed Apr 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- updated to 0.3.1-12-gf2cfeee
+
 * Fri May 11 2018 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt1
 - 0.1.3
 
