@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 5.10.18
+Version: 5.10.21
 Release: alt1
 Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
@@ -10,6 +10,7 @@ Url: https://github.com/linuxdeepin/deepin-editor
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: deepin-editor-5.10.18-gcc11.patch
+Patch1: deepin-editor-5.10.21-alt-aarch64-armh.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -49,13 +50,14 @@ BuildRequires: libchardet-devel
 %if_disabled clang
 %patch -p1
 %endif
-sed -i 's|lrelease|lrelease-qt5|; s|lupdate|lupdate-qt5|' translate_generation.sh
+%patch1 -p1
 # use system libuchardet.a
 # sed -i 's|${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/lib/lib/libuchardet.a|%%_libdir/libuchardet.a|' \
 # 	src/CMakeLists.txt \
 # 	tests/CMakeLists.txt
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %if_enabled clang
 %define optflags_lto -flto=thin
 export CC="clang"
@@ -101,6 +103,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Thu Apr 28 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.21-alt1
+- New version (5.10.21).
+
 * Fri Mar 18 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.18-alt1
 - New version (5.10.18).
 
