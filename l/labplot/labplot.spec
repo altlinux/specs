@@ -2,11 +2,12 @@
 
 Name: labplot
 Version: 2.8.2
-Release: alt1
+Release: alt2
 Summary: Function and Data Plotter
 License: GPL-2.0+
 Group: Sciences/Other
 Url: https://labplot.kde.org/
+%K5init no_altplace
 
 # https://invent.kde.org/education/labplot
 Source: %name-%version.tar
@@ -14,7 +15,7 @@ Source: %name-%version.tar
 Patch1: labplot-alt-fix-netcdf-includes.patch
 
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: ccmake gcc-c++ extra-cmake-modules
+BuildRequires: cmake gcc-c++ extra-cmake-modules
 BuildRequires: qt5-base-devel qt5-svg-devel
 BuildRequires: kf5-karchive-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel
 BuildRequires: kf5-kcoreaddons-devel kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel
@@ -50,10 +51,7 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
 %build
-%K5build \
-    -DINCLUDE_INSTALL_DIR=%_K5inc \
-    -DLIBEXEC_INSTALL_DIR=%_K5exec \
-    -DDATA_INSTALL_DIR=%_K5data
+%K5build
 
 %install
 %K5install
@@ -63,7 +61,7 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %doc AUTHORS README.md COPYING ChangeLog
 #config(noreplace) %_K5xdgconf/*.knsrc
 %_K5bin/*
-%_K5data/%{name}2/
+%_datadir/%{name}2/
 %_K5xdgapp/*
 %_K5icon/hicolor/*/apps/*
 %_K5xmlgui/%{name}2/
@@ -72,6 +70,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Apr 28 2022 Sergey V Turchin <zerg@altlinux.org> 2.8.2-alt2
+- Move to standart place
+
 * Mon Mar 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.2-alt1
 - Updated to upstream version 2.8.2.
 
