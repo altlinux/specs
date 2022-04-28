@@ -3,7 +3,7 @@
 
 Name:    pcmanfm-qt
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: PCManFM-Qt is the Qt port of the LXDE file manager PCManFM
@@ -16,6 +16,10 @@ Source1: %name.desktop
 
 # fix initial settigs
 Patch: alt-settings.patch
+
+# upstream patches
+Patch10: 0001-Fixed-the-links-of-About-dialog-1572.patch
+Patch11: 0002-Weblate-commits-1571.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: qt5-base-devel qt5-tools-devel
@@ -32,7 +36,7 @@ PCManFM-Qt is the Qt port of the LXDE file manager PCManFM.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 %cmake
@@ -51,6 +55,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Thu Apr 28 2022 Anton Midyukov <antohami@altlinux.org> 1:1.1.0-alt2
+- Fixed the links of About dialog (Closes: 42588)
+
 * Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 1:1.1.0-alt1
 - new version 1.1.0
 
