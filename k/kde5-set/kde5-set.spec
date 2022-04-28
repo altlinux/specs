@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-set
-Version: 21.12.1
+Version: 21.12.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -45,7 +45,7 @@ Requires: icon-theme-breeze
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kde5-svgpart
 Requires: kf5-baloo
 Requires: kde5-display-manager
-Requires: plasma5-polkit-kde-agent kf5-kio-extras plasma5-breeze plasma5-oxygen plasma5-powerdevil plasma5-systemmonitor
+Requires: plasma5-polkit-kde-agent kf5-kio-extras plasma5-breeze plasma5-powerdevil plasma5-systemmonitor
 Requires: plasma5-drkonqi plasma5-milou plasma5-systemsettings plasma5-integration
 Requires: kde5-ark kde5-konsole kde5-gwenview kde5-okular kde5-kwrite kde5-kwalletmanager
 Requires: kde5-kcalc kde5-kdebugsettings kde5-kross-python
@@ -86,6 +86,8 @@ Requires: kde5
 Requires: kde5-email-client
 Requires: kde5-messenger-client
 #
+Requires: plasma5-oxygen
+Requires: icon-theme-oxygen
 Requires: plasma5-xdg-desktop-portal-kde
 Requires: plasma5-workspace-wallpapers
 Requires: plasma5-kwrited
@@ -218,6 +220,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Thu Apr 28 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt1
+- rearrange oxygen requires
+
 * Thu Mar 17 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.1-alt1
 - add zanshin to pim
 
