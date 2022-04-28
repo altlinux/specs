@@ -2,7 +2,7 @@
 %define		_rc	rc8
 Name:		aMule
 Version:	2.3.3
-Release:	alt2
+Release:	alt3
 
 Summary:	aMule - eMule client.
 License:	GPL
@@ -15,12 +15,8 @@ Source:		%_name-%version.tar.gz
 
 Conflicts:	xmule
 
-Patch2:		%name-2.0.0%_rc-alt-up-down-ratio.patch
-Patch3:		%name-2.3.1-alt-wxGTK3.1-gcc4.9.patch
-Patch4:		aMule-2.3.2-libcryptopp-6.patch
-
 # Automatically added by buildreq on Mon Jun 16 2008
-BuildRequires: flex gcc gcc-c++ imake libpng-devel libreadline-devel libwxGTK3.1-devel xorg-cf-files
+BuildRequires: flex gcc gcc-c++ imake libpng-devel libreadline-devel libwxGTK3.0-devel xorg-cf-files
 BuildRequires: libcryptopp-devel >= 6
 BuildRequires: libupnp-devel binutils-devel libcurl-devel libtool bison libexpat-devel
 
@@ -40,10 +36,6 @@ for multiplatform support.
 %__subst "s,aMuleConv(wxT(\"iso8859-1\")),aMuleConv(wxLocale::GetSystemEncodingName())," src/utils/aLinkCreator/src/ed2khash.cpp
 %__subst "s,#include <wx/strconv\.h>,#include <wx/strconv\.h>\n#include <wx/intl\.h>," src/utils/aLinkCreator/src/alcc.h
 %__subst "s,#include <wx/strconv\.h>,#include <wx/strconv\.h>\n#include <wx/intl\.h>," src/utils/aLinkCreator/src/ed2khash.cpp
-#patch2 -p1
-#patch3 -p0
-#patch4 -p2
-
 
 %build
 #set_gcc_version 4.9
@@ -85,6 +77,9 @@ export CXXFLAGS="%{optflags} -std=c++14"
 %dir %_docdir/amule
 
 %changelog
+* Tue Apr 26 2022 Anton Midyukov <antohami@altlinux.org> 2.3.3-alt3
+- build with stable wxGTK3.0
+
 * Thu Nov 11 2021 Ilya Mashkin <oddity@altlinux.ru> 2.3.3-alt2
 - Fix FTBFS
 
