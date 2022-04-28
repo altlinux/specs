@@ -6,7 +6,7 @@
 
 Name: giac
 Version: 1.7.0.13
-Release: alt1
+Release: alt1.1
 
 Summary: Computer algebra system
 
@@ -100,6 +100,11 @@ usage of giac, a computer algebra system.
 
 %prep
 %setup -n %name-%mainver
+%ifarch %e2k
+# name collision
+sed -i "/gen _compare/i #undef __compare" src/misc.cc
+sed -i "1i #include <alloca.h>" micropython-1.12/py/obj.h
+%endif
 
 # remove all hidden files
 find . -type f -iname '.*' -delete
@@ -214,6 +219,9 @@ rm %buildroot%_docdir/giac/Makefile.am
 %_docdir/giac/*/
 
 %changelog
+* Thu Apr 28 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.7.0.13-alt1.1
+- Fixed build for Elbrus.
+
 * Mon Nov 08 2021 Leontiy Volodin <lvol@altlinux.org> 1.7.0.13-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
 - Built as require for sagemath.
