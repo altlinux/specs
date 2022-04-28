@@ -5,7 +5,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name: drbd-utils
-Version: 9.21.0
+Version: 9.21.1
 Release: alt1
 
 Summary: DRBD user-land tools and scripts
@@ -186,6 +186,9 @@ make test
 %_datadir/cluster/drbd.metadata
 
 %changelog
+* Thu Apr 28 2022 Andrew A. Vasilyev <andy@altlinux.org> 9.21.1-alt1
+- 9.21.1
+
 * Tue Apr 26 2022 Andrew A. Vasilyev <andy@altlinux.org> 9.21.0-alt1
 - 9.21.0
 
