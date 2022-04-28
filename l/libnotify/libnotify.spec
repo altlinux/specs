@@ -6,7 +6,7 @@
 %def_enable man
 
 Name: libnotify
-Version: %ver_major.9
+Version: %ver_major.11
 Release: alt1
 
 Summary: Desktop notification library
@@ -14,19 +14,21 @@ Group: System/Libraries
 License: LGPL-2.1-or-later
 Url: http://www.gnome.org
 
-# https://gitlab.gnome.org/GNOME/libnotify.git
+Vcs: https://gitlab.gnome.org/GNOME/libnotify.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Provides: %{name}4 = %version-%release
 Obsoletes: %{name}4
 
-BuildRequires(pre): meson
-BuildRequires: libgio-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson libgio-devel
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_docbook_docs:BuildRequires: xmlto}
 %{?_enable_check:BuildRequires: libgtk+3-devel}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
+%{?_enable_introspection:
+BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
 %{?_enable_man:BuildRequires: xsltproc docbook5-style-xsl}
 
 %description
@@ -92,18 +94,19 @@ the command line.
 
 %build
 %meson \
-	%{?_disable_gtk_doc:-Dgtk_doc=false} \
-	%{?_disable_docbook_docs:-Ddocbook_docs=false} \
-	%{?_disable_introspection:-Dintrospection=disabled} \
-	%{?_disable_check:-Dtests=false} \
-	%{?_disable_man:-Dman=false}
+    %{?_disable_gtk_doc:-Dgtk_doc=false} \
+    %{?_disable_docbook_docs:-Ddocbook_docs=false} \
+    %{?_disable_introspection:-Dintrospection=disabled} \
+    %{?_disable_check:-Dtests=false} \
+    %{?_disable_man:-Dman=false}
+%nil
 %meson_build
 
 %install
 %meson_install
 
 %check
-%meson_test
+%__meson_test
 
 %files
 %_libdir/*.so.*
@@ -117,7 +120,7 @@ the command line.
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
-%doc NEWS %{?_enable_docbook_docs:%__builddir/docs/notification-spec.html}
+%doc NEWS README* %{?_enable_docbook_docs:%__builddir/docs/notification-spec.html}
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -135,6 +138,9 @@ the command line.
 %{?_enable_docbook_docs:%exclude %_datadir/doc/%name/}
 
 %changelog
+* Wed Apr 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.7.11-alt1
+- 0.7.11
+
 * Tue Mar 03 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.9-alt1
 - 0.7.9
 
