@@ -1,7 +1,7 @@
 %define bname fsprefix.bin
 
 Name: repocop-backend-%bname
-Version: 0.001
+Version: 0.002
 Release: alt1
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -28,11 +28,20 @@ for i in  skip experimental info warn fail import-tsv; do
     ln -s repocop-test-ok %buildroot%_prefix/libexec/repocop/backends/%bname/repocop-test-$i
 done
 
+for b in fssumbprefix.bin fssumxprefix.bin; do
+    ln -s %bname %buildroot%_prefix/libexec/repocop/backends/$b
+done
+
 %files
 #doc README ChangeLog
 #%_bindir/repocop-*
 %_prefix/libexec/repocop/backends/%bname
+%_prefix/libexec/repocop/backends/fssumbprefix.bin
+%_prefix/libexec/repocop/backends/fssumxprefix.bin
 
 %changelog
+* Thu Apr 28 2022 Igor Vlasenko <viy@altlinux.org> 0.002-alt1
+- add fssumbprefix.bin and fssumxprefix.bin backends
+
 * Mon Dec 27 2021 Igor Vlasenko <viy@altlinux.org> 0.001-alt1
 - build for Sisyphus
