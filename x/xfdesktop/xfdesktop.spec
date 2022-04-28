@@ -1,6 +1,6 @@
 Name: xfdesktop
 Version: 4.16.0
-Release: alt1
+Release: alt2
 
 Summary: Desktop manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
@@ -61,6 +61,9 @@ Requires: exo-utils
 %_datadir/backgrounds/xfce
 
 %changelog
+* Thu Apr 28 2022 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt2
+- Fixed Russian translation (closes: #42521).
+
 * Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
 - Fixed changelog entry.
 - Updated to 4.16.0.
