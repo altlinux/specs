@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-dock
-Version: 5.5.9
+Version: 5.5.12
 Release: alt1
 Summary: Deepin desktop-environment - Dock module
 License: GPL-3.0+
@@ -13,9 +13,10 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 Patch: deepin-dock-5.3.64-alt-fix-underlinked.patch
+Patch1: deepin-dock-5.5.12-upstream-fix-underlinked.patch
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %endif
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake
@@ -55,7 +56,8 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-%patch -p2
+#patch -p2
+%patch1 -p1
 
 sed -i '/TARGETS/s|lib/|%_lib/|' plugins/*/CMakeLists.txt
 sed -i 's|${prefix}/lib/@HOST_MULTIARCH@|%_libdir|' dde-dock.pc.in
@@ -69,6 +71,7 @@ export PATH=%_qt5_bindir:$PATH
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
+%define optflags_lto %nil
 %endif
 
 %cmake \
@@ -108,6 +111,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Thu Apr 21 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.12-alt1
+- New version (5.5.12).
+
 * Mon Feb 14 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.9-alt1
 - New version (5.5.9).
 - Changed licence tag.

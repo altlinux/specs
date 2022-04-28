@@ -4,7 +4,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.4.70
+Version: 5.5.16.2
 Release: alt1
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
@@ -18,14 +18,15 @@ Patch: deepin-control-center-no-user-experience.patch
 # alt patches
 Patch1: deepin-control-center-fix-build-deepinid-syncdaemon.patch
 Patch2: deepin-control-center-fix-build-gcc10.patch
-Patch3: deepin-control-center-disable-timeout-for-the-lockscreen.patch
 Patch4: deepin-control-center-lightdm-lockscreen.patch
 Patch5: deepin-control-center-hide-lockscreen-slide-widget.patch
 Patch6: deepin-control-center-remove-pw-check-support.patch
+# upstream patches
+Patch10: deepin-control-center-pull407-disable-biometric-auth.patch
 
 BuildRequires(pre): rpm-build-ninja desktop-file-utils rpm-build-kf5
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -49,7 +50,7 @@ BuildRequires: kf5-networkmanager-qt-devel
 BuildRequires: libpwquality-devel
 BuildRequires: libgmock-devel
 BuildRequires: libpolkitqt5-qt5-devel
-# BuildRequires: deepin-pw-check-devel
+BuildRequires: libdeepin-pw-check-devel
 BuildRequires: deepin-desktop-base
 BuildRequires: dtk5-common
 # ---
@@ -76,17 +77,13 @@ Group: Development/Other
 
 %prep
 %setup -n %repo-%version
-%patch -p2
-%patch1 -p1
-%patch2 -p1
-# %%patch3 -p1
-# %%patch4 -p1
+#patch -p2
+#patch1 -p1
+#patch2 -p1
+%patch4 -p1
 %patch5 -p1
-%patch6 -p1
-
-sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
-sed -i -E '/add_compile_definitions/d' CMakeLists.txt
-# sed -i '/%repo/s|\.\./lib|%_libdir|' src/frame/pluginscontroller.cpp
+#patch6 -p1
+%patch10 -p1
 
 # remove after they obey -DDISABLE_SYS_UPDATE properly
 sed -i '/new UpdateModule/d' src/frame/window/mainwindow.cpp
@@ -100,30 +97,25 @@ sed -i '/new SyncModule/d' src/frame/window/mainwindow.cpp
 # sed -i '/Wakeup Settings/d' \
 #     src/frame/window/modules/power/generalwidget.cpp \
 #     src/frame/window/search/searchwidget.cpp
+
 sed -i '/m_wakeComputerNeedPassword/d' src/frame/window/modules/power/generalwidget.{cpp,h}
 sed -i '/(GSettingWatcher::instance()->getStatus("systemSuspend") != "Hidden"));/d' src/frame/window/modules/power/generalwidget.cpp
 sed -i '/m_wakeDisplayNeedPassword/d' src/frame/window/modules/power/generalwidget.{cpp,h}
 sed -i '/m_monitorSleepOnPower/d' src/frame/window/modules/power/generalwidget.h
+# sed -i '/void CommonInfoWork::setUeProgram/s|enabled|disabled|' src/frame/window/modules/commoninfo/commoninfowork.cpp
 
 sed -i 's|/lib/|/%_lib/|' \
     com.deepin.controlcenter.develop.policy \
     src/frame/window/mainwindow.cpp \
-    src/frame/window/insertplugin.cpp \
-    src/frame/modules/update/updatework.cpp \
-    src/frame/plugins/battery-health/battery-health.pro \
-    src/frame/plugins/weather/weather.pro \
-    src/frame/plugins/example/example.pro \
-    src/frame/plugins/calculator/calculator.pro \
-    src/frame/plugins/privacy/privacy.pro
+    src/frame/window/insertplugin.cpp
 
 sed -i 's|/etc/deepin/dde-session-ui.conf|/usr/share/dde-session-ui/dde-session-ui.conf|' \
 	src/frame/modules/accounts/accountsworker.cpp
 
-sed -i 's|qDBusRegisterMetaType|qRegisterMetaType|' \
-    src/frame/window/modules/network/connectioneditpage.cpp \
-    src/frame/window/modules/network/sections/ipvxsection.cpp
+sed -i '/dde-grand-search-daemon/s|lib/|%_lib/|' CMakeLists.txt
 
 %build
+export PATH=%_qt5_bindir:$PATH
 export SYSTYPE=Desktop
 # export SYSTYPE=$(cat /etc/deepin-version | grep Type= | awk -F'=' '{print $$2}')
 %if_enabled clang
@@ -133,6 +125,7 @@ export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
+# src/frame/CMakeLists.txt
 %K5cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -142,23 +135,24 @@ export READELF="llvm-readelf"
     -DDISABLE_RECOVERY=YES \
     -DCVERSION=%version \
     -DAPP_VERSION=%version \
-    -DVERSION=%version
-%cmake_build
+    -DVERSION=%version \
+    -DDISABLE_CLOUD_SYNC=YES \
+    -DDISABLE_AUTHENTICATION=YES \
+    -DDISABLE_ACCOUNT=YES \
+    -DDISABLE_SYS_UPDATE_SOURCE_CHECK=YES \
+    -DDISABLE_SYS_UPDATE_MIRRORS=YES \
+    -DDCC_DISABLE_FEEDBACK=YES \
+%nil
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
 # place holder plugins dir
 mkdir -p %buildroot%_libdir/%repo/plugins
 
-# mkdir -p %buildroot%_libdir/cmake/DdeControlCenter
-# mv %buildroot/cmake/DdeControlCenter/DdeControlCenterConfig.cmake %buildroot%_libdir/cmake/DdeControlCenter
-
 %ifarch aarch64 ppc64le x86_64
 mv %buildroot/usr/lib/libdccwidgets.so %buildroot%_libdir/
 %endif
-
-# mkdir -p %%buildroot%%_libdir/%%repo/
-# mv %%buildroot/usr/lib/%%repo/* %%buildroot%%_libdir/%%repo/
 
 install -Dm644 com.deepin.controlcenter.addomain.policy %buildroot%_datadir/polkit-1/actions/
 
@@ -179,13 +173,24 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 # %%_sysconfdir/xdg/autostart/deepin-ab-recovery.desktop
 %_datadir/glib-2.0/schemas/com.deepin.dde.control-center.gschema.xml
 # %%_libdir/%%repo/
+%dir %_libdir/dde-grand-search-daemon/
+%dir %_libdir/dde-grand-search-daemon/plugins/
+%dir %_libdir/dde-grand-search-daemon/plugins/searcher/
+%_libdir/dde-grand-search-daemon/plugins/searcher/com.deepin.dde-grand-search.dde-control-center-setting.conf
 %_libdir/libdccwidgets.so
+%dir %_datadir/dsg/apps/dde-control-center/
+%dir %_datadir/dsg/apps/dde-control-center/configs/
+%_datadir/dsg/apps/dde-control-center/configs/dde.control-center.*.json
 
 %files devel
 %_libdir/cmake/DdeControlCenter/
 %_includedir/%repo/
 
 %changelog
+* Fri Apr 22 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.16.2-alt1
+- New version (5.5.16.2).
+- Built with deepin-pw-check again (without cracklib).
+
 * Wed Aug 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.70-alt1
 - New version (5.4.70).
 - Remove deepin-pw-check from BuildRequires.
