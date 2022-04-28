@@ -1,5 +1,5 @@
 Name: sed
-Version: 4.8.0.7.b352
+Version: 4.8.0.25.b8f9
 Release: alt1
 Epoch: 1
 
@@ -19,7 +19,7 @@ Patch: %srcname.patch
 
 %def_enable selinux
 
-BuildRequires: makeinfo, gnulib >= 0.1.4290.f2225
+BuildRequires: makeinfo, gnulib >= 0.1.5085.73495
 
 # for acl copying support.
 BuildRequires: libacl-devel
@@ -81,6 +81,11 @@ xz -k NEWS
 %doc BUGS NEWS.xz README doc/*.txt.xz
 
 %changelog
+* Mon Apr 04 2022 Dmitry V. Levin <ldv@altlinux.org> 1:4.8.0.25.b8f9-alt1
+- sed: v4.8-7-gb352b74 -> v4.8-25-gb8f98f7.
+- gnulib BR: v0.1-4290-gf22259966 -> v0.1-5085-g734950a9ed.
+- Updated translations from translationproject.org.
+
 * Mon Apr 12 2021 Dmitry V. Levin <ldv@altlinux.org> 1:4.8.0.7.b352-alt1
 - sed: v4.7 -> v4.8-7-gb352b74.
 - gnulib BR: v0.1-2305-g95c96b6dd -> v0.1-4290-gf22259966.

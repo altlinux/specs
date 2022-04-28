@@ -1,5 +1,5 @@
 Name: gnulib
-Version: 0.1.4724.7e3a9
+Version: 0.1.5208.c8b8f
 Release: alt1
 
 Summary: GNU Portability Library
@@ -60,6 +60,9 @@ cd build-check
 %_datadir/%name/
 
 %changelog
+* Fri Apr 22 2022 Dmitry V. Levin <ldv@altlinux.org> 0.1.5208.c8b8f-alt1
+- v0.1-4724-g7e3a9c5bd -> v0.1-5208-gc8b8f3bbcd.
+
 * Tue Jun 22 2021 Dmitry V. Levin <ldv@altlinux.org> 0.1.4724.7e3a9-alt1
 - v0.1-4683-g4480dd39f -> v0.1-4724-g7e3a9c5bd.
 

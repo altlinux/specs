@@ -1,6 +1,6 @@
 Name: grep
-Version: 3.6.0.18.70517
-Release: alt2
+Version: 3.7.0.24.b07c8
+Release: alt1
 
 Summary: The GNU versions of grep pattern matching utilities
 License: GPLv3+
@@ -22,7 +22,7 @@ Requires: libpcre3 >= 0:6.4-alt2
 Provides: pcre-grep, pgrep
 Obsoletes: pcre-grep, pgrep
 
-BuildRequires: makeinfo, gnulib >= 0.1.4279.bb6ec
+BuildRequires: makeinfo, gnulib >= 0.1.4960.50d64
 # due to build from git
 BuildRequires: gperf
 # due to --perl-regexp
@@ -69,6 +69,10 @@ export gl_cv_warn_c__fanalyzer=no
 %install
 %makeinstall_std bindir=/bin
 
+# Re-introduce symlinks for egrep and fgrep manpages.
+ln -s grep.1 %buildroot%_man1dir/egrep.1
+ln -s grep.1 %buildroot%_man1dir/fgrep.1
+
 # Use symlinks for pcregrep
 ln -s grep %buildroot/bin/pcregrep
 ln -s grep.1 %buildroot%_man1dir/pcregrep.1
@@ -99,6 +103,11 @@ ulimit -s 32768
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Thu Apr 14 2022 Dmitry V. Levin <ldv@altlinux.org> 3.7.0.24.b07c8-alt1
+- grep: v3.6-18-g7051705 -> v3.7-24-gb07c82c.
+- gnulib BR: v0.1-4279-gbb6ecf327 -> v0.1-4960-g50d64b72f2.
+- Updated translations from translationproject.org.
+
 * Wed Dec 08 2021 Dmitry V. Levin <ldv@altlinux.org> 3.6.0.18.70517-alt2
 - Disabled -fanalyzer on 32-bit platforms to fix FTBFS
   (thanks to glebfm@ for finding out the real cause of this issue).

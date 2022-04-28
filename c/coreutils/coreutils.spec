@@ -1,5 +1,5 @@
 Name: coreutils
-Version: 8.32.0.165.18dbc
+Version: 9.1.0.8.e08752
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -50,7 +50,7 @@ Conflicts: rpm-utils < 0:0.7.6-alt1
 # due to hostname
 Conflicts: net-tools < 0:1.60-alt9
 
-BuildRequires: gnulib >= 0.1.4702.ff7c8
+BuildRequires: gnulib >= 0.1.5207.7347ca
 BuildRequires: makeinfo
 
 # for ACL support in ls/dir/vdir, cp, mv and install utilities
@@ -141,7 +141,7 @@ build_exit() {
 # Executable may fail on some architectures if it uses libc's syscall wrapper
 # without initialization performed in start files.  Fall back to simple static
 # true/false implementation if it happens.
-build_exit -U_FORTIFY_SOURCE -fno-stack-protector -nostartfiles -static -DNOSTARTFILES=1
+build_exit -U_FORTIFY_SOURCE -fno-stack-protector -nostartfiles -static -DNOSTARTFILES=1 &&
 ./true ||
 	build_exit -static
 
@@ -224,6 +224,11 @@ export SHELL VERBOSE
 %doc AUTHORS NEWS.xz README THANKS.xz TODO
 
 %changelog
+* Thu Apr 21 2022 Dmitry V. Levin <ldv@altlinux.org> 9.1.0.8.e08752-alt1
+- coreutils: v8.32-165-g18dbcae25 -> v9.1-8-ge08752509.
+- gnulib BR: v0.1-4702-gff7c8b21e -> v0.1-5207-g7347caeb9d.
+- Updated translations from translationproject.org.
+
 * Mon Jun 21 2021 Dmitry V. Levin <ldv@altlinux.org> 8.32.0.165.18dbc-alt1
 - coreutils: v8.32-161-g370c29401 -> v8.32-165-g18dbcae25.
 - gnulib BR: v0.1-4669-gfed6ffdbb -> v0.1-4702-gff7c8b21e.
