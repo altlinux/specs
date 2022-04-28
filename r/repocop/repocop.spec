@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.84
+Version: 0.85
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -160,6 +160,9 @@ done
 %_man1dir/repocop-report-html.*
 
 %changelog
+* Thu Apr 28 2022 Igor Vlasenko <viy@altlinux.org> 0.85-alt1
+- added Filesystem::SumPrefix family of backends
+
 * Tue Dec 28 2021 Igor Vlasenko <viy@altlinux.org> 0.84-alt1
 - new version
 
