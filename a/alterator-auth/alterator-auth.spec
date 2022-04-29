@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.43.10
+Version: 0.43.11
 Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
@@ -171,6 +171,10 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Apr 27 2022 Ivan Savin <svn17@altlinux.org> 0.43.11-alt1
+- Enlarged sssd settings window (ALT #42008)
+- Replacing the apply button with ok in the sssd settings.
+
 * Wed Aug 25 2021 Ivan Savin <svn17@altlinux.org> 0.43.10-alt1
 - Add sssd settings.
 - Add use of control libnss-role instead of write_nsswitch
