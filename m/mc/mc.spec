@@ -3,7 +3,7 @@
 %define fullname MidnightCommander
 
 Name: mc
-Version: 4.8.27
+Version: 4.8.28
 Release: alt1
 
 # '-gitYYYYMMDD' or ''
@@ -46,9 +46,6 @@ Patch103: mc-4.8.24-alt-extfs-udar.patch
 # https://github.com/MidnightCommander/mc/pull/149
 Patch104: mc-4.8.25-python3.patch
 
-# http://www.midnight-commander.org/ticket/4323
-Patch105: mc-4.8.27-4323_fix_segfault_on_change_panel_mode.patch
-
 Conflicts: %name-data
 Conflicts: %name-locales
 Conflicts: %name-doc
@@ -61,7 +58,7 @@ Requires: rpm >= 4.13
 
 BuildRequires: rpm-build-python3
 BuildPreReq: glib2-devel libe2fs-devel
-BuildPreReq: groff-base cvs libX11-devel unzip
+BuildPreReq: groff-base libX11-devel unzip
 BuildPreReq: libslang2-devel libmount-devel
 %if_with gpm
 BuildPreReq: libgpm-devel
@@ -108,7 +105,6 @@ needed for working additional components (some vfs for example).
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
-%patch105 -p1
 
 %build
 cat <<EOF > mc-version.h
@@ -215,6 +211,10 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%fullname.png
 %files full
 
 %changelog
+* Fri Apr 29 2022 Sergey Y. Afonin <asy@altlinux.org> 4.8.28-alt1
+- 4.8.28
+- removed build dependency of the cvs package
+
 * Tue Dec 21 2021 Sergey Y. Afonin <asy@altlinux.org> 4.8.27-alt1
 - 4.8.27 (CVE-2021-36370; ALT #40217)
 
