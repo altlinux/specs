@@ -1,7 +1,7 @@
 %define rname desktop-wallpapers
 
 Name: alt-desktop-wallpapers
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 %K5init no_altplace
 
@@ -42,7 +42,7 @@ for d in %buildroot/%_datadir/wallpapers/* ; do
 done
 
 # install GNOME wallpapers
-PREFIX=/home/zerg/RPM/TMP/alt-desktop-wallpapers-buildroot
+PREFIX=%buildroot
 WALLDIR=%buildroot/%_datadir/wallpapers
 GNOMEWALLDIR=%buildroot/%_pixmapsdir
 mkdir -p $GNOMEWALLDIR
@@ -63,6 +63,9 @@ popd 1>/dev/null
 %_pixmapsdir/*
 
 %changelog
+* Fri Apr 29 2022 Sergey V Turchin <zerg at altlinux dot org> 0.3.0-alt1
+- add more wallpapers
+
 * Mon Nov 29 2021 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt1
 - fix morning_mist name
 
