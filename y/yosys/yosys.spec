@@ -2,7 +2,7 @@
 
 Name: yosys
 Version: 0.16
-Release: alt1
+Release: alt2
 
 Summary: Yosys Open SYnthesis Suite
 License: ISC
@@ -18,6 +18,10 @@ BuildRequires: flex gcc-c++ libffi-devel libreadline-devel python3 tcl-devel zli
 BuildPreReq: /proc
 
 Requires: alanmi-abc
+
+# For generating Graphviz representation of design (ALT bug 42631)
+Requires: graphviz
+Requires: python3-module-xdot
 
 %add_python3_path %_datadir/%name
 
@@ -70,6 +74,10 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_man1dir/%name-config.1*
 
 %changelog
+* Fri Apr 29 2022 Anton Midyukov <antohami@altlinux.org> 0.16-alt2
+- add dependencies on graphviz, python3-module-xdot for generating Graphviz
+  representation of design (Closes: 42631)
+
 * Tue Apr 12 2022 Anton Midyukov <antohami@altlinux.org> 0.16-alt1
 - New version 0.16
 - Update Url
