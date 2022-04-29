@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 81
+%define centos_release 82
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,23 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Apr 29 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.82-alt1.el9
+- Updated to kernel-5.14.0-82.el9:
+  + bpf, test_offload.py: Skip base maps without names
+  + CNB: Remove PDE_DATA() and replace by pde_data()
+  + dmaengine: ptdma: Initial driver for the AMD PTDMA
+  + e1000e: Add support for RPL-S
+  + mm: lru_cache_disable: replace work queue synchronization with synchronize_rcu
+  + mm/page_owner: Report memory cgroup info
+  + mt76: mt7921e: fix possible probe failure after reboot
+  + pci: fix multiple definition error when CONFIG_RHEL_DIFFERENCES is not set
+  + perf: Fix typos in error messages
+  + powerpc/lib/sstep: Don't use __{get/put}_user() on kernel addresses
+  + Scheduler updates and fixes
+  + selftests/bpf: Make test_lwt_ip_encap more stable and faster
+  + Support PREEMPT_DYNAMIC on aarch64
+  + ucounts: Backport fixes for ucount rlimits
+
 * Wed Apr 27 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.81-alt1.el9
 - Updated to kernel-5.14.0-81.el9:
   + Add LPSS support for RPL-S
