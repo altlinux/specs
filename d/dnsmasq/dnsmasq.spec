@@ -3,11 +3,11 @@
 Name: dnsmasq
 Version: 2.86
 
-Release: alt1
+Release: alt1.qa1
 Summary: A lightweight caching nameserver
 License: GPLv2+
 Group: System/Servers
-Url: http://www.thekelleys.org.uk/dnsmasq
+Url: https://thekelleys.org.uk/dnsmasq/
 Vcs: git://thekelleys.org.uk/dnsmasq.git
 Source0: %name-%version.tar
 Source1: %name.init
@@ -103,8 +103,8 @@ install -pD -m 644 trust-anchors.conf %buildroot%_datadir/%name/trust-anchors.co
 %pre
 # Upgrade configuration from previous versions
 if test -e %sysconfig_file; then
-if egrep -q '^[^#]*ALL *=' %sysconfig_file; then
-    if ! egrep -q '^[^#]*ALL_DEV *=' %sysconfig_file; then
+if grep -Eq '^[^#]*ALL *=' %sysconfig_file; then
+    if ! grep -Eq '^[^#]*ALL_DEV *=' %sysconfig_file; then
 	echo 'NOTE: You should put ALL_DEV=<interface> to %sysconfig_file'
 	echo '      for keeping DHCP broadcasts mode.'
     fi
@@ -138,6 +138,10 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Fri Apr 29 2022 Dmitry V. Levin <ldv@altlinux.org> 2.86-alt1.qa1
+- NMU.
+- Replaced "egrep" with "grep -E".
+
 * Thu Sep 09 2021 Mikhail Efremov <sem@altlinux.org> 2.86-alt1
 - Fix bogus date in changelog.
 - Fix changelog.
