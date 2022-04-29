@@ -32,7 +32,7 @@
 
 Name: lsb
 Version: 5.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: The skeleton package defining packages needed for LSB compliance
 
@@ -180,11 +180,9 @@ Requires: /bin/cut
 Requires: /usr/bin/diff
 Requires: /usr/bin/dirname
 Requires: /bin/du
-Requires: /bin/egrep
 Requires: /usr/bin/env
 Requires: /usr/bin/expand
 Requires: /usr/bin/expr
-Requires: /bin/fgrep
 Requires: /usr/bin/file
 Requires: /bin/find
 Requires: /usr/bin/fold
@@ -669,6 +667,10 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %_sysconfdir/lsb-release.d/trialuse-%version-noarch
 
 %changelog
+* Fri Apr 29 2022 Dmitry V. Levin <ldv@altlinux.org> 5.0-alt2.qa1
+- NMU.
+- Removed obsolescent dependencies on /bin/egrep and /bin/fgrep.
+
 * Tue Oct 05 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.0-alt2
 - Fixed ppc64le support.
 
