@@ -1,5 +1,5 @@
 Name: grep
-Version: 3.7.0.24.b07c8
+Version: 3.7.0.61.561c
 Release: alt1
 
 Summary: The GNU versions of grep pattern matching utilities
@@ -17,16 +17,14 @@ Source3: GREP_COLORS
 Source4: color_grep.sh
 Source5: color_grep.csh
 
-# due to libpcre relocation.
-Requires: libpcre3 >= 0:6.4-alt2
 Provides: pcre-grep, pgrep
 Obsoletes: pcre-grep, pgrep
 
-BuildRequires: makeinfo, gnulib >= 0.1.4960.50d64
+BuildRequires: makeinfo, gnulib >= 0.1.5193.8fa98
 # due to build from git
 BuildRequires: gperf
 # due to --perl-regexp
-BuildRequires: libpcre-devel
+BuildRequires: libpcre2-devel
 
 %description
 The GNU versions of commonly used grep utilities.  grep searches through
@@ -73,8 +71,13 @@ export gl_cv_warn_c__fanalyzer=no
 ln -s grep.1 %buildroot%_man1dir/egrep.1
 ln -s grep.1 %buildroot%_man1dir/fgrep.1
 
-# Use symlinks for pcregrep
-ln -s grep %buildroot/bin/pcregrep
+# Move deprecated egrep and fgrep from /bin/ to %_bindir/.
+mkdir -p %buildroot%_bindir
+mv %buildroot/bin/{e,f}grep %buildroot%_bindir/
+
+# Provide pcregrep for backwards compatibility.
+cp -a %buildroot%_bindir/egrep %buildroot%_bindir/pcregrep
+sed 's/-E/-P/g' < %buildroot%_bindir/egrep > %buildroot%_bindir/pcregrep
 ln -s grep.1 %buildroot%_man1dir/pcregrep.1
 
 mkdir -p %buildroot%_sysconfdir/profile.d
@@ -97,12 +100,20 @@ ulimit -s 32768
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/GREP_COLORS
 %config(noreplace) %_sysconfdir/profile.d/*
-/bin/*
+/bin/grep
+%_bindir/egrep
+%_bindir/fgrep
+%_bindir/pcregrep
 %_mandir/man?/*
 %_infodir/*.info*
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Fri Apr 29 2022 Dmitry V. Levin <ldv@altlinux.org> 3.7.0.61.561c-alt1
+- grep: v3.6-18-g7051705 -> v3.7-61-g561cf64.
+- gnulib BR: v0.1-4960-g50d64b72f2 -> v0.1-5193-g8fa9898afa.
+- Relocated obsolescent scripts from /bin/ to %_bindir/.
+
 * Thu Apr 14 2022 Dmitry V. Levin <ldv@altlinux.org> 3.7.0.24.b07c8-alt1
 - grep: v3.6-18-g7051705 -> v3.7-24-gb07c82c.
 - gnulib BR: v0.1-4279-gbb6ecf327 -> v0.1-4960-g50d64b72f2.
