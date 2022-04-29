@@ -1,5 +1,5 @@
 Name: texmaker
-Version: 5.1.2
+Version: 5.1.3
 Release: alt1
 
 Summary: free cross-platform LaTeX editor with a Qt interface
@@ -23,7 +23,11 @@ Patch2:		%{name}-5.1.0-viewfiles.patch
 
 
 # Automatically added by buildreq on Thu Apr 24 2008
-BuildRequires: fontconfig gcc-c++ qt5-base-devel qt5-tools-devel libpoppler-devel libpoppler-qt5-devel qt5-script-devel libhunspell-devel libqtsingleapplication-qt5-devel qt5-webengine-devel
+BuildRequires: fontconfig gcc-c++ qt5-base-devel qt5-tools-devel libpoppler-devel libpoppler-qt5-devel qt5-script-devel libhunspell-devel libqtsingleapplication-qt5-devel
+%ifnarch ppc64le %e2k
+BuildRequires:  qt5-webengine-devel
+%endif
+Excludearch: ppc64le
 
 %description
 Texmaker is a LaTeX editor that integrates many tools
@@ -33,7 +37,7 @@ needed to develop documents with LaTeX.
 %setup
 %patch0
 %patch1
-%patch2
+#patch2
 
 # get rid of zero-length space
 sed -i 's/\xe2\x80\x8b//g' utilities/%{name}.metainfo.xml
@@ -58,6 +62,10 @@ rm -fr hunspell singleapp
 
 
 %changelog
+* Fri Apr 29 2022 Ilya Mashkin <oddity@altlinux.ru> 5.1.3-alt1
+- 5.1.3
+- Excludearch: ppc64le
+
 * Sat Sep 04 2021 Ilya Mashkin <oddity@altlinux.ru> 5.1.2-alt1
 - 5.1.2
 
