@@ -4,7 +4,7 @@
 %define rdn_name org.gnome.gitlab.somas.Apostrophe
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GTK-based distraction free Markdown editor
@@ -12,8 +12,12 @@ License: GPL-3.0-or-later
 Group: Editors
 Url: https://gitlab.gnome.org/World/apostrophe
 
+%if_disabled snapshot
+Source: %url/-/archive/v%version/%_name-%version.tar.gz
+%else
 Vcs: https://gitlab.gnome.org/World/apostrophe.git
 Source: %_name-%version.tar
+%endif
 
 BuildArch: noarch
 
@@ -61,6 +65,9 @@ interface.
 
 
 %changelog
+* Sat Apr 30 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.3-alt1
+- 2.6.3
+
 * Thu Mar 31 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
 - 2.6.2
 
