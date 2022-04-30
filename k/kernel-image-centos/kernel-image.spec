@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 82
+%define centos_release 83
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,17 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Apr 30 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.83-alt1.el9
+- Updated to kernel-5.14.0-83.el9:
+  + Add the amd_pstate driver
+  + CNB: net: make dev_watchdog() less intrusive
+  + net: fix NULL pointer reference in cipso_v4_doi_free
+  + powerpc/pseries: Enable an interface to represent PAPR firmware attributes
+  + redhat/configs: aarch64: enable CPU_FREQ_GOV_SCHEDUTIL
+  + redhat: configs: Disable CONFIG_MPLS for s390x/zfcpdump
+  + x86: intel_epb: Allow model specific normal EPB value
+  + x86/platform/uv: UV Kernel support for UV5
+
 * Fri Apr 29 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.82-alt1.el9
 - Updated to kernel-5.14.0-82.el9:
   + bpf, test_offload.py: Skip base maps without names
