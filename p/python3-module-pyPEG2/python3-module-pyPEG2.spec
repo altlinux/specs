@@ -2,7 +2,7 @@
 
 Name: python3-module-%srcname
 Version: 2.15.2
-Release: alt1
+Release: alt2
 Summary: A PEG Parser-Interpreter in Python
 #%{?python_provide:%python_provide python3-%srcname}
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -37,10 +37,13 @@ With pyPEG you can parse many formal languages in a very easy way.
 %files
 #license LICENSE.txt
 %doc README.txt CHANGES.txt PKG-INFO docs
-%python3_sitelibdir/%srcname-%version-py?.?.egg-info
+%python3_sitelibdir/%srcname-%version-py?.??.egg-info
 %python3_sitelibdir/pypeg2
 
 %changelog
+* Sun May 01 2022 Ilya Mashkin <oddity@altlinux.ru> 2.15.2-alt2
+- Fix FTBFS
+
 * Thu Oct 11 2018 Ilya Mashkin <oddity@altlinux.ru> 2.15.2-alt1
 - build for Sisyphus
 
