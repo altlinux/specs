@@ -4,7 +4,7 @@
 
 Name: tig
 Version: 2.5.5
-Release: alt1
+Release: alt2
 
 Summary: Text-mode interface for git
 License: GPLv2+
@@ -18,7 +18,7 @@ Requires: git-core
 
 BuildRequires: asciidoc
 BuildRequires: libncursesw-devel
-BuildRequires: libpcre-devel
+BuildRequires: libpcre2-devel
 BuildRequires: libreadline-devel
 BuildRequires: xmlto
 
@@ -64,6 +64,9 @@ src/tig -v
 %_datadir/zsh/site-functions/_tig
 
 %changelog
+* Sat Apr 30 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.5-alt2
+- Rebuilt against libpcre2.
+
 * Fri Jan 14 2022 Vitaly Chikunov <vt@altlinux.org> 2.5.5-alt1
 - Updated to tig-2.5.5 (2022-01-11).
 
