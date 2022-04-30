@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.24
+Version:	0.9.25
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -146,6 +146,9 @@ fi
 %files full
 
 %changelog
+* Sat Apr 30 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.25-alt1
+- Replaced "egrep" with "grep -E", "fgrep" with "grep -F".
+
 * Wed Apr 27 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.9.24-alt1
 - openvswitch: add OVS_REMOVE=yes to default/options if it is not there.
 
