@@ -3,12 +3,12 @@
 
 Name: less
 Version: 590
-Release: alt1
+Release: alt2
 
 Summary: A text file browser similar to more, but better
 License: GPLv3+
 Group: File tools
-Url: http://www.greenwoodsoftware.com/less/
+Url: https://www.greenwoodsoftware.com/less/
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
 # http://www.greenwoodsoftware.com/less/less-%version.tar.gz
@@ -44,7 +44,7 @@ Conflicts: gzip-utils < 0:1.3.5-alt1
 # due to lzless
 Conflicts: lzma-utils < 4.32.7-alt3
 
-BuildRequires: libtinfo-devel libpcre-devel
+BuildRequires: libtinfo-devel libpcre2-devel
 
 %description
 The less utility is a text file browser that resembles more, but has
@@ -68,7 +68,7 @@ bzip2 -9k NEWS
 
 %build
 autoconf
-%configure --with-regex=pcre
+%configure --with-regex=pcre2
 %make_build
 
 %install
@@ -104,6 +104,9 @@ ln -s lesspipe.1 %buildroot%_man1dir/lessfile.1
 %doc NEWS.bz2 *.html
 
 %changelog
+* Sat Apr 30 2022 Alexey Gladkov <legion@altlinux.ru> 590-alt2
+- Rebuilt with libpcre2-devel.
+
 * Fri Nov 19 2021 Alexey Gladkov <legion@altlinux.ru> 590-alt1
 - New version 590.
 - lessfile.sh:
