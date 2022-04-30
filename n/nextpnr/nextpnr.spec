@@ -2,10 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_enable GUI
+%def_enable OPENMP
 
 Name:     nextpnr
 Version:  0.3
-Release:  alt1
+Release:  alt2
 
 Summary:  portable FPGA place and route tool
 License:  ISC
@@ -27,11 +28,12 @@ BuildRequires: eigen3
 # gowin
 BuildRequires: python3-module-apycula
 # # machxo2, ecp5
-#BuildRequires: python3-module-pytrellis
+#BuildRequires: trellis-devel
 # check
 BuildRequires: ctest
 
 %{?_enable_GUI:BuildRequires: qt5-base-devel}
+%{?_enable_OPENMP:BuildRequires: libgomp-devel}
 
 %description
 nextpnr aims to be a vendor neutral, timing driven, FOSS FPGA place and
@@ -41,11 +43,14 @@ route tool.
 %setup
 
 %build
-%cmake  -DARCH=gowin \
-	%{?_enable_GUI:-DBUILD_GUI=ON -DGOWIN_BBA_EXECUTABLE=%_bindir/gowin_bba} \
+%cmake \
+	-DCURRENT_GIT_VERSION=%version \
+	-DARCH=gowin \
+	-DGOWIN_BBA_EXECUTABLE=%_bindir/gowin_bba \
 	-DBUILD_TESTS=ON \
-	-DBUILD_PYTHON=ON \
-	-DSTATIC_BUILD=OFF
+	-DSTATIC_BUILD=OFF \
+	%{?_enable_OPENMP:-DUSE_OPENMP=ON} \
+	%{?_enable_GUI:-DBUILD_GUI=ON}
 
 %cmake_build
 
@@ -60,6 +65,10 @@ route tool.
 %doc *.md docs/*
 
 %changelog
+* Sat Apr 30 2022 Anton Midyukov <antohami@altlinux.org> 0.3-alt2
+- fix show version (Closes: 42644)
+- enable OPENMP
+
 * Tue Apr 12 2022 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
 - new version (0.3) with rpmgs script
 - enable GUI
