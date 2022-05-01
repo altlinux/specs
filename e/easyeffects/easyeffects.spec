@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 6.2.4
+Version: 6.2.5
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -21,7 +21,7 @@ Source: %name-%version.tar
 %define gtk_ver 4.2.1
 %define adwaita_ver 1.0.0
 %define pw_api_ver 0.3
-%define pw_ver 0.3.31
+%define pw_ver 0.3.41
 %define lv2_ver 1.18.2
 %define lilv_ver 0.22
 %define calf_ver 0.90.1
@@ -83,6 +83,9 @@ mkdir -p %buildroot%_sysconfdir/EasyEffects
 %doc README* CHANGELOG.*
 
 %changelog
+* Sun May 01 2022 Yuri N. Sedunov <aris@altlinux.org> 6.2.5-alt1
+- 6.2.5
+
 * Tue Mar 08 2022 Yuri N. Sedunov <aris@altlinux.org> 6.2.4-alt1
 - 6.2.4
 
