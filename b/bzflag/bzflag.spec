@@ -1,4 +1,6 @@
-%define git_commit e2fefd
+# commit a249151e4508704be8db9856627f61018862cb66
+
+%define git_commit a24915
 
 %def_disable plugins
 
@@ -7,12 +9,12 @@
 %undefine cvs
 
 Name: bzflag
-Version: 2.4.24
+Version: 2.4.25
 
 # %%ifndef git_commit
-Release: alt1
+#Release: alt1
 # %%else
-# Release: alt0.git_1_%git_commit
+Release: alt0.git_1_%git_commit
 # %%endif
 
 Summary: A multiplayer 3D tank battle game
@@ -24,9 +26,9 @@ Url: http://www.bzflag.org
 
 # commit e2fefdbb30154605c61fb85315d1d39e9be34689
 #ifdef git_commit
-#Source: %name-%version-%release.tar.bz2
+Source: %name-%version-%release.tar.bz2
 #%else
-Source: %name-%version.tar.bz2
+#Source: %name-%version.tar.bz2
 #endif
 
 
@@ -50,7 +52,8 @@ Summary(uk_UA.UTF-8): Тривимірна мережева гра на танк
 # optimized out: elfutils libGL-devel libGLU-devel libX11-devel libgpg-error libstdc++-devel libtinfo-devel perl pkg-config python-base termutils xorg-xf86vidmodeproto-devel xorg-xproto-devel xz
 BuildRequires: gcc-c++ libSDL2-devel libGLEW-devel libXext-devel libXxf86vm-devel libcares-devel libcurl-devel libncurses-devel zlib-devel
 
-BuildRequires: catdoc iconv
+# BuildRequires: catdoc iconv
+BuildRequires: catdoc
 
 %description
 BZFlag is a multiplayer 3D tank battle game. It's one of the most popular games
@@ -233,6 +236,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Sun May 01 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.25-alt0.git_1_a24915
+- Update from git
+
 * Mon Mar 14 2022 Ilya Mashkin <oddity@altlinux.ru> 2.4.24-alt1
 - 2.4.24
 
