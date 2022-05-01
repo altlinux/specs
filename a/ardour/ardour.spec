@@ -1,68 +1,51 @@
-%set_verify_elf_method unresolved=relaxed
-
-%define name2 ardour6
-
-Name:    ardour
+Name: ardour
 Version: 6.9
-Release: alt2
+Release: alt3
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
 Group:   Sound
+Url:     http://ardour.org/
 
-Url:     http://ardour.org
-Source:  %name-%version.tar
-Source1: ardour6.desktop
+Source:  %name-%version-%release.tar
 
-Packager: Grigory Ustinov <grenka@altlinux.org>
-
-BuildRequires: boost-devel
-BuildRequires: cppunit-devel >= 1.12.0
-BuildRequires: doxygen
-BuildRequires: gcc-c++
-BuildRequires: graphviz
-BuildRequires: libalsa-devel
-BuildRequires: libarchive-devel
-BuildRequires: pkgconfig(aubio) > 0.4
-BuildRequires: libcurl-devel >= 7.0.0
-BuildRequires: libcwiid-devel
-BuildRequires: libfftw3-devel
-BuildRequires: libflac-devel >= 1.2.1
-BuildRequires: libgnomecanvasmm-devel
-BuildRequires: libgtk+2-devel
-BuildRequires: libjack-devel
-BuildRequires: liblilv-devel >= 0.14
-BuildRequires: liblo-devel >= 0.26
-BuildRequires: liblrdf-devel >= 0.4.0
-# FIXME BuildRequires: libltc-devel >= 1.1.0
-BuildRequires: libogg-devel >= 1.1.2
-BuildRequires: libredland-devel
-BuildRequires: librubberband-devel
-BuildRequires: libsamplerate-devel
-BuildRequires: libserd-devel >= 0.14.0
-BuildRequires: libsndfile-devel >= 1.0.18
-BuildRequires: libsord-devel >= 0.8.0
-BuildRequires: libsratom-devel >= 0.4.0
-BuildRequires: libsuil-devel >= 0.6.0
-BuildRequires: libsqlite3-devel
-BuildRequires: libuuid-devel
-BuildRequires: libudev-devel
-BuildRequires: libusb-devel
-BuildRequires: libvamp-devel
-BuildRequires: libxml2-devel
-BuildRequires: libxslt-devel
-BuildRequires: lv2-devel >= 1.0.15
-BuildRequires: /proc
-BuildRequires: python-devel
-BuildRequires: raptor2-devel
-BuildRequires: taglib-devel
-
-# FIXME
-#Requires:      jackit
-#Requires:      gtk-engines2
-# For video import
-#Requires:      harvid
-#Requires:      xjadeo
+BuildRequires: gcc-c++ itstool python3-base boost-devel libqm-dsp-devel readline-devel
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(aubio)
+BuildRequires: pkgconfig(cppunit)
+BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(fftw3f)
+BuildRequires: pkgconfig(flac)
+BuildRequires: pkgconfig(fluidsynth)
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(glibmm-2.4)
+BuildRequires: pkgconfig(gthread-2.0)
+BuildRequires: pkgconfig(gtkmm-2.4)
+BuildRequires: pkgconfig(hidapi-hidraw)
+BuildRequires: pkgconfig(jack)
+BuildRequires: pkgconfig(libarchive)
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(liblo)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(libudev)
+BuildRequires: pkgconfig(libusb-1.0)
+BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(lilv-0)
+BuildRequires: pkgconfig(lrdf)
+BuildRequires: pkgconfig(ltc)
+BuildRequires: pkgconfig(lv2)
+BuildRequires: pkgconfig(ogg)
+BuildRequires: pkgconfig(pangomm-1.4)
+BuildRequires: pkgconfig(rubberband)
+BuildRequires: pkgconfig(samplerate)
+BuildRequires: pkgconfig(serd-0)
+BuildRequires: pkgconfig(sndfile)
+BuildRequires: pkgconfig(sord-0)
+BuildRequires: pkgconfig(soundtouch)
+BuildRequires: pkgconfig(sratom-0)
+BuildRequires: pkgconfig(suil-0)
+BuildRequires: pkgconfig(taglib)
+BuildRequires: pkgconfig(vamp-sdk)
 
 %description
 Ardour is a digital audio workstation. You can use it to record, edit
@@ -74,66 +57,81 @@ editing with unlimited undo/redo, full automation support, a powerful
 mixer, unlimited tracks/busses/plugins, time-code synchronization, and
 hardware control from surfaces like the Mackie Control Universal.
 
-You must have jackd running and an ALSA sound driver to use Ardour.
-If you are new to jackd, try qjackctl.
-
-See the online user manual at http://en.flossmanuals.net/ardour/index/
+See the online user manual at https://manual.ardour.org/toc/
 
 %prep
 %setup
+# Generate revision number
+echo '#include "ardour/revision.h"' > libs/ardour/revision.cc
+echo 'namespace ARDOUR { const char* revision = "%version"; const char* date = "'$(date --rfc-3339=date)'"; }' >> libs/ardour/revision.cc
+
+egrep -rl '^#!/usr/bin/env python'|xargs sed -ri '/env python$/ s,$,3,'
+
 %ifarch %e2k
 # wscript set CXXFLAGS_OSX without checking sys.platform
 # GCC silently ignores -Fxxx options, but LCC responds with an error
 sed -i "/conf.env.append_value('CXXFLAGS_OSX', '-F/s|conf.env|pass # conf.env|" wscript
 %endif
 
-# Generate revision number
-echo '#include "ardour/revision.h"' > libs/ardour/revision.cc
-echo 'namespace ARDOUR { const char* revision = "%version"; const char* date = "'$(date --rfc-3339=date)'"; }' >> libs/ardour/revision.cc
-
 %build
-%__python3 ./waf configure \
-    --prefix=%_prefix \
-    --libdir=%_libdir \
-    --configdir=%_sysconfdir \
-    --program-name=Ardour \
+LC_ALL=C.utf8 ./waf configure \
+	--prefix=%_prefix \
+	--bindir=%_bindir \
+	--configdir=%_sysconfdir \
+	--datadir=%_datadir \
+	--includedir=%_includedir \
+	--libdir=%_libdir \
+	--mandir=%_mandir \
+	--optimize \
+	--arch="%optflags" \
+%ifarch armh
+    --dist-target=armhf \
+%endif
+%ifarch aarch64
+    --dist-target=aarch64 \
+%endif
+%ifarch i586
+    --dist-target=i686 \
+%endif
+	--no-phone-home \
+	--freedesktop \
+	--use-external-libs \
+	--beatbox \
 %ifarch %e2k
     --cxx11 \
     --keepflags \
 %endif
-    --nls \
-    --docs
+	#
 
-%__python3 ./waf build \
-    --nls \
-    --docs \
-    -j%__nprocs
-
-%__python3 ./waf i18n_mo
+./waf build i18n -j%([ %__nprocs -gt 32 ] && echo 32 || echo %__nprocs)
 
 %install
-%__python3 ./waf install --destdir=%buildroot
+./waf --destdir=%buildroot install
+install -pm0644 -D ardour.1 %buildroot%_man1dir/ardour.1
+install -pm0644 -D .gear/ardour6.desktop %buildroot%_desktopdir/ardour6.desktop
+install -pm0644 -D gtk2_ardour/resources/Ardour-icon_16px.png %buildroot%_miconsdir/ardour6.png
+install -pm0644 -D gtk2_ardour/resources/Ardour-icon_32px.png %buildroot%_niconsdir/ardour6.png
+install -pm0644 -D gtk2_ardour/resources/Ardour-icon_48px.png %buildroot%_liconsdir/ardour6.png
+find %buildroot%_bindir -type l |while read l; do
+	ln -srvf %buildroot/$(readlink $l) $l
+done
+%find_lang --output ardour.lang --append ardour6 gtk2_ardour6 gtkmm2ext3
 
-install -d -m 0755 %buildroot%_desktopdir
-install -m 644 %SOURCE1 %buildroot%_desktopdir/
-
-install -d -m 0755 %buildroot%_iconsdir
-cp -f %buildroot%_datadir/%name2/icons/application-x-ardour_48px.png \
-%buildroot%_iconsdir/ardour6.png
-
-%add_findprov_lib_path %_libdir/%name2
-%find_lang --output=%name.lang %name2 gtk2_ardour3 gtkmm2ext3
-
-%files -f %name.lang
-%doc README
-%_bindir/*
-%_libdir/%name2
-%_datadir/%name2
-%_desktopdir/*.desktop
-%_sysconfdir/%name2
-%_iconsdir/ardour6.png
+%files -f ardour.lang
+%dir %_sysconfdir/ardour6
+%config(noreplace) %_sysconfdir/ardour6/*
+%_bindir/ardour6*
+%_libdir/lib*.so.*
+%_libdir/ardour6
+%_datadir/ardour6
+%_desktopdir/ardour6.desktop
+%_iconsdir/*/*/*/*.png
+%_man1dir/ardour.1*
 
 %changelog
+* Fri Apr 29 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.9-alt3
+- fix FTBFS by relocating shared libraries to %%_libdir
+
 * Wed Jan 12 2022 Grigory Ustinov <grenka@altlinux.org> 6.9-alt2
 - Remove jack-audio-connection-kit from Requires (Closes: #41496).
 
