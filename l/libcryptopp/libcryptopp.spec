@@ -9,7 +9,7 @@
 
 Name: libcryptopp
 Version: 8.6.0
-Release: alt1
+Release: alt1.1
 
 # convert 5.6.2 -> 562 format
 %define orig_version	%(echo %version | sed -e "s/\\.//g")
@@ -72,6 +72,9 @@ Cryptopp programs.
 %if_with autotools
 %patch -p1
 rm -f GNUmakefile
+%endif
+%ifarch %e2k
+sed -i "1i #define CRYPTOPP_DISABLE_ASM 1" config_asm.h
 %endif
 #touch NEWS README AUTHORS ChangeLog
 
@@ -142,6 +145,9 @@ EOF
 %_datadir/cryptopp/
 
 %changelog
+* Sun May 01 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.6.0-alt1.1
+- fixed build for Elbrus
+
 * Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 8.6.0-alt1
 - new version 8.6.0 (with rpmrb script)
 
