@@ -1,5 +1,5 @@
 Name: rpm-build-tcl
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: RPM helpers to use with Tcl scripts
@@ -34,6 +34,9 @@ install -p -m0755 tcl.prov.files %buildroot%_rpmlibdir/tcl.prov.files
 %_rpmlibdir/tcl.*
 
 %changelog
+* Sun May 01 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.2-alt1
+- Replaced "egrep" with "grep -E".
+
 * Sat Jan 16 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.6.1-alt1
 - Fixed tcl extension dependencies version generation:
   + Strip away "alpha" and "beta" identifiers from the generated versions;
