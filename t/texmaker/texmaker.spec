@@ -1,6 +1,6 @@
 Name: texmaker
 Version: 5.1.3
-Release: alt1
+Release: alt2
 
 Summary: free cross-platform LaTeX editor with a Qt interface
 License: GPLv2+
@@ -25,9 +25,11 @@ Patch2:		%{name}-5.1.0-viewfiles.patch
 # Automatically added by buildreq on Thu Apr 24 2008
 BuildRequires: fontconfig gcc-c++ qt5-base-devel qt5-tools-devel libpoppler-devel libpoppler-qt5-devel qt5-script-devel libhunspell-devel libqtsingleapplication-qt5-devel
 %ifnarch ppc64le %e2k
-BuildRequires:  qt5-webengine-devel
+BuildRequires: qt5-webengine-devel
+%else
+BuildRequires: qt5-declarative-devel rpm-build-qml
 %endif
-Excludearch: ppc64le
+#Excludearch: ppc64le
 
 %description
 Texmaker is a LaTeX editor that integrates many tools
@@ -62,6 +64,9 @@ rm -fr hunspell singleapp
 
 
 %changelog
+* Sun May 01 2022 Ilya Mashkin <oddity@altlinux.ru> 5.1.3-alt2
+- Fix build on ppc64le and e2k
+
 * Fri Apr 29 2022 Ilya Mashkin <oddity@altlinux.ru> 5.1.3-alt1
 - 5.1.3
 - Excludearch: ppc64le
