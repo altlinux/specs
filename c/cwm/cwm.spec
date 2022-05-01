@@ -1,5 +1,5 @@
 Name: cwm
-Version: 6.7.0.3.gitce65ff3
+Version: 7.1
 Release: alt1
 
 Summary: Calm Window Manager by OpenBSD project
@@ -18,6 +18,7 @@ Patch: %name-%version-%release.patch
 # Automatically added by buildreq on Wed Feb 19 2020
 # optimized out: fontconfig fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXrender-devel libfreetype-devel pkg-config python2-base sh4 xorg-proto-devel
 BuildRequires: libXft-devel libXrandr-devel
+Requires: /usr/bin/xvt
 
 %description
 cwm (calm window manager) is a window manager for X11 which contains many
@@ -33,10 +34,10 @@ provided by the original OpenBSD's project.
 %autopatch -p1
 
 %build
+export CFLAGS="%optflags"
 %make_build
 
 %install
-export CFLAGS="%optflags"
 make PREFIX=%prefix DESTDIR=%buildroot install
 install -d %buildroot/%_datadir/xsessions
 install -m 644 %SOURCE1 %buildroot/%_datadir/xsessions
@@ -49,6 +50,11 @@ install -m 644 %SOURCE1 %buildroot/%_datadir/xsessions
 %_mandir/man5/cwmrc.5*
 
 %changelog
+* Sun May 01 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 7.1-alt1
+- Updated to v7.1.
+- Added dependency to /usr/bin/xvt.
+- Fixed CFLAGS.
+
 * Wed Jul 14 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 6.7.0.3.gitce65ff3-alt1
 - Updated to v6.7-3-gce65ff3.
 - Made xvt a default terminal.
