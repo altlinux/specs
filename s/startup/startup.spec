@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.14
+Version: 0.9.9.15
 Release: alt1
 
 Summary: The system startup scripts
@@ -149,6 +149,9 @@ done
 %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %attr(600,root,root) %_localstatedir/random/random-seed
 
 %changelog
+* Sun May 01 2022 Alexey Gladkov <legion@altlinux.ru> 0.9.9.15-alt1
+- Replace obsolete egrep/fgrep by a grep call with an argument -E/-F.
+
 * Thu Dec 23 2021 Dmitry V. Levin <ldv@altlinux.org> 0.9.9.14-alt1
 - Moved /etc/modules to separate systemd-modules-common package.
 - Moved /etc/sysctl.conf to separate systemd-sysctl-common package.
