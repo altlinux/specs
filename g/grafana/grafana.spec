@@ -2,9 +2,10 @@
 
 %global _unpackaged_files_terminate_build 1
 %define _runtimedir /run
+%def_enable prebuilded_frontend
 
 Name:		grafana
-Version:	8.1.8
+Version:	8.5.0
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -22,13 +23,16 @@ Source103: %name-server.service
 Source104: %name.tmpfiles
 
 
-#ExclusiveArch: %go_arches
+#ExclusiveArch: %%go_arches
 # on ppc64le error:
 # error Command failed with signal "SIGXCPU"
 ExclusiveArch: %ix86 x86_64 %arm aarch64 mipsel riscv64
 BuildRequires(pre): rpm-build-golang rpm-macros-nodejs
-BuildRequires: npm yarn
+%if_disabled prebuilded_frontend
+BuildRequires: npm
 BuildRequires: node >= 14 node-devel node-gyp
+%endif
+BuildRequires: wire
 BuildRequires: fontconfig libfreetype
 BuildRequires: /proc
 
@@ -38,14 +42,14 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 
 %prep
 # Build the Front-end Assets
-# $ npm install yarn
-# $ ./node_modules/.bin/yarn install --pure-lockfile
-# $ npm run build
-# $ rm -rf node_modules/node-gyp
-# $ git add -f node_modules
-# $ git add -f packages/*/node_modules
-# $ git add -f plugins-bundled/internal/input-datasource/node_modules
+# $ node .yarn/releases/yarn-3.2.0.cjs install
+# $ git add .pnp.cjs .pnp.loader.mjs .yarn -f
 # $ git commit -n --no-post-rewrite -m "add node js modules"
+
+# Test build
+# $ export NODE_OPTIONS="--max-old-space-size=8192" # Increase to 8 GB
+# $ node .yarn/releases/yarn-3.2.0.cjs run build
+# $ node .yarn/releases/yarn-3.2.0.cjs run plugins:build-bundled
 #
 # Go vendors modules
 # $ go mod vendor -v
@@ -54,14 +58,6 @@ for Graphite, Elasticsearch, OpenTSDB, Prometheus and InfluxDB.
 
 %setup -q
 %patch -p1
-
-# add symlink to node headers
-node_ver=$(node -v | sed -e "s/v//")
-mkdir -p node_modules/.node-gyp/$node_ver/include
-ln -s %_includedir/node node_modules/.node-gyp/$node_ver/include/node
-echo "9" > node_modules/.node-gyp/$node_ver/installVersion
-
-ln -sf %nodejs_sitelib/node-gyp node_modules/node-gyp
 
 %build
 
@@ -82,6 +78,7 @@ ln -s %_builddir/%name-%version \
 
 pushd $BUILDDIR/src/%import_path
 
+%if_disabled prebuilded_frontend
 
 %ifarch %arm %ix86 %mips32 %mipsn32
 export NODE_OPTIONS=--max_old_space_size=2048
@@ -89,7 +86,11 @@ export NODE_OPTIONS=--max_old_space_size=2048
 #npm rebuild
 #npm run build
 #go run build.go build-frontend
-yarn run build
+node .yarn/releases/yarn-3.2.0.cjs run build
+node .yarn/releases/yarn-3.2.0.cjs run plugins:build-bundled
+%endif
+
+wire gen -tags oss ./pkg/server ./pkg/cmd/grafana-cli/runner
 
 #GO111MODULE=off CGO_ENABLED=1 go run build.go build
 #%%golang_build pkg/cmd/*
@@ -200,6 +201,19 @@ fi
 %_datadir/%name
 
 %changelog
+* Tue Apr 26 2022 Alexey Shabalin <shaba@altlinux.org> 8.5.0-alt1
+- 8.5.0
+- Use pre-builded frontend
+- Fixes:
+  + CVE-2022-24812
+  + CVE-2022-21702
+  + CVE-2022-21703
+  + CVE-2022-21713
+  + CVE-2021-43813
+  + CVE-2021-43815
+  + CVE-2021-41244
+  + CVE-2021-41174
+
 * Thu Dec 09 2021 Alexey Shabalin <shaba@altlinux.org> 8.1.8-alt1
 - 8.1.8 (Fixes: CVE-2021-43798, CVE-2021-39226)
 
