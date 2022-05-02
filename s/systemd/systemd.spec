@@ -90,7 +90,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
@@ -2272,6 +2272,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Mon May 02 2022 Alexey Shabalin <shaba@altlinux.org> 1:249.12-alt1
+- 249.12.
+- Replace egrep by "grep -E".
+
 * Thu Apr 21 2022 Alexey Shabalin <shaba@altlinux.org> 1:249.11-alt1
 - 249.11.
 - udev is owner of /etc/systemd/network dir.
