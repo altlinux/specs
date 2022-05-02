@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-python
-Version: 0.19
+Version: 0.20
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -53,6 +53,9 @@ install -pD -m 755 repocop-helper-specfile-python2-in-spec \
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon May 02 2022 Igor Vlasenko <viy@altlinux.org> 0.20-alt1
+- new version
+
 * Wed Sep 16 2020 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - packaged srctests properly
 
