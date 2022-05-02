@@ -4,7 +4,7 @@
 
 Name: tig
 Version: 2.5.5
-Release: alt2
+Release: alt3
 
 Summary: Text-mode interface for git
 License: GPLv2+
@@ -18,7 +18,6 @@ Requires: git-core
 
 BuildRequires: asciidoc
 BuildRequires: libncursesw-devel
-BuildRequires: libpcre2-devel
 BuildRequires: libreadline-devel
 BuildRequires: xmlto
 
@@ -32,7 +31,6 @@ Git commands.
 %setup
 
 %build
-export C_INCLUDE_PATH=/usr/include/pcre
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure
@@ -40,7 +38,7 @@ make V=1 src/tig doc-man
 
 %install
 install -pD -m755 src/tig %buildroot%_bindir/tig
-install -pD -m644 contrib/tig-pick %buildroot%_bindir/tig-pick
+install -pD -m755 contrib/tig-pick %buildroot%_bindir/tig-pick
 install -pD -m644 doc/tig.1 %buildroot%_man1dir/tig.1
 install -pD -m644 doc/tigrc.5 %buildroot%_man5dir/tigrc.5
 install -pD -m644 doc/tigmanual.7 %buildroot%_man7dir/tigmanual.7
@@ -64,6 +62,10 @@ src/tig -v
 %_datadir/zsh/site-functions/_tig
 
 %changelog
+* Mon May 02 2022 Vitaly Chikunov <vt@altlinux.org> 2.5.5-alt3
+- Fix install perms of tig-pick.
+- Do not use libpcre2 (there is already POSIX regex support).
+
 * Sat Apr 30 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.5-alt2
 - Rebuilt against libpcre2.
 
