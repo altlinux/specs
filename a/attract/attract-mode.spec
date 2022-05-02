@@ -1,9 +1,8 @@
 %define optflags_lto %nil
-%set_gcc_version 10
 
 Name: attract
-Version: 2.6.1
-Release: alt2
+Version: 2.6.2
+Release: alt1
 
 Summary: Arcade-like front-end for emulators
 Summary(ru_RU.UTF-8): Оболочка в стиле аркадных автоматов для эмуляторов
@@ -15,7 +14,7 @@ Url: http://attractmode.org/
 Source: %name-%version.tar
 
 BuildRequires: fontconfig-devel
-BuildRequires: gcc10-c++
+BuildRequires: gcc-c++
 BuildRequires: libxcb
 BuildRequires: libGLU-devel
 BuildRequires: libSFML-devel
@@ -48,7 +47,7 @@ Mac OS X и Windows.
 %setup -n %name-%version
 
 %build
-%make_build OPTIMISE="%optflags -std=gnu++14"
+%make_build OPTIMISE="%optflags"
 
 %install
 %makeinstall
@@ -69,6 +68,10 @@ install -Dm644 util/linux/attract-mode.desktop         %buildroot%_desktopdir/%n
 
 
 %changelog
+* Mon May 2 2022 Artyom Bystrov <arbars@altlinux.org> 2.6.2-alt1
+- Update to latest state of upstream
+- Fixed build proccess on GCC11
+
 * Sun Oct 10 2021 Artyom Bystrov <arbars@altlinux.org> 2.6.1-alt2
 - Update to latest state of upstream
 - walk-around build on Sisyphus (yes, it's creepy, but it's works)
