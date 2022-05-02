@@ -1,6 +1,6 @@
 Name: rpm-build-fonts
 Version: 0.7
-Release: alt2
+Release: alt3
 
 Summary: RPM helper scripts for building font packages
 
@@ -59,6 +59,9 @@ install -D -m755 fontconfig.prov.files %buildroot/usr/lib/rpm/fontconfig.prov.fi
 %_rpmmacrosdir/fonts
 
 %changelog
+* Mon May 02 2022 Igor Vlasenko <viy@altlinux.org> 0.7-alt3
+- egrep is obsolescent; using grep -E
+
 * Mon Apr 04 2022 Igor Vlasenko <viy@altlinux.org> 0.7-alt2
 - dropped macros for deprecated %%post(un) section
 
