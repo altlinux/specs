@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220422
+Version: 20220502
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,45 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Mon May 02 2022 Cronbuild Service <cronbuild@altlinux.org> 20220502-alt1
+- upstream changes (GIT c3624eb):
+  + rtl_bt: Update RTL8852A BT USB firmware to 0xDBB7_C1D9 (thx Hilda Wu)
+  + amdgpu: update psp_13_0_8 firmware (thx Alex Deucher)
+  + amdgpu: update gc_10_3_7_rlc firmware (thx Alex Deucher)
+  + amdgpu: update dcn_3_1_6_dmcub firmware (thx Alex Deucher)
+  + ath11k: QCA6390 hw2.0: update to
+    WLAN.HST.1.0.1-05266-QCAHSTSWPLZ_V2_TO_X86-1 (thx Kalle Valo)
+  + qcom: add firmware files for Adreno a420 & related generations (thx Dmitry Baryshkov)
+  + qcom: add firmware files for Adreno a330 (thx Dmitry Baryshkov)
+  + qcom: add firmware files for Adreno a220 (thx Dmitry Baryshkov)
+  + i915: Add GuC v70.1.2 for DG2 (thx John Harrison)
+  + rtw89: 8852c: add new firmware v0.27.20.0 for RTL8852C (thx Ping-Ke Shih)
+  + ath10k: QCA9984 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA9984 hw1.0: update firmware-5.bin to
+    10.4-3.9.0.2-00156 (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update firmware-5.bin to
+    10.4-3.9.0.2-00156 (thx Kalle Valo)
+  + ath10k: QCA6174 hw3.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA6174 hw3.0: update firmware-6.bin to
+    WLAN.RM.4.4.1-00288-QCARMSWPZ-1 (thx Kalle Valo)
+  + ath10k: QCA4019 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA99X0 hw2.0: add board-2.bin (thx Kalle Valo)
+  + ath11k: WCN6855 hw2.0: update to
+    WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.7 (thx Kalle Valo)
+  + ath11k: WCN6750 hw1.0: add to WLAN.MSL.1.0.1-00887-QCAMSLSWPLZ-1 (thx Kalle Valo)
+  + ath11k: WCN6750 hw1.0: add board-2.bin (thx Kalle Valo)
+  + ath11k: QCN9074 hw1.0: add to
+    WLAN.HK.2.5.0.1-01208-QCAHKSWPL_SILICONZ-1 (thx Kalle Valo)
+  + ath11k: QCN9074 hw1.0: add board-2.bin (thx Kalle Valo)
+  + ath11k: QCA6390 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath11k: IPQ8074 hw2.0: update to
+    WLAN.HK.2.5.0.1-01208-QCAHKSWPL_SILICONZ-1 (thx Kalle Valo)
+  + ath11k: IPQ8074 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath11k: IPQ6018 hw1.0: update to
+    WLAN.HK.2.5.0.1-01208-QCAHKSWPL_SILICONZ-1 (thx Kalle Valo)
+  + ath11k: IPQ6018 hw1.0: update board-2.bin (thx Kalle Valo)
+
 * Tue Apr 26 2022 Cronbuild Service <cronbuild@altlinux.org> 20220422-alt1
 - upstream changes (GIT ac21ab5):
   + Mellanox: Add lc_ini_bundle for xx.2010.1006 (thx Petr Machata)
