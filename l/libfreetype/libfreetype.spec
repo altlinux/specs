@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libfreetype
-Version: 2.12.0
+Version: 2.12.1
 Release: alt1
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
@@ -147,6 +147,9 @@ install -pm644 LICENSE.TXT %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Mon May 02 2022 Valery Inozemtsev <shrek@altlinux.ru> 2.12.1-alt1
+- 2.12.1
+
 * Tue Apr 05 2022 Valery Inozemtsev <shrek@altlinux.ru> 2.12.0-alt1
 - 2.12.0
 
