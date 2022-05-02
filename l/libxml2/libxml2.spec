@@ -1,12 +1,15 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: libxml2
-Version: 2.9.12
+Version: 2.9.14
 Release: alt1
 Epoch: 1
 
 Summary: The library for manipulating XML files
 License: MIT
 Group: System/Libraries
-Url: http://xmlsoft.org/
+Url: https://gitlab.gnome.org/GNOME/libxml2
+Vcs: https://gitlab.gnome.org/GNOME/libxml2.git
 
 %def_with python2
 %def_disable static
@@ -151,7 +154,6 @@ mkdir build
 pushd build
 ln -s ../xmlconf
 mkdir -p fuzz
-ln -s ../../fuzz/seed fuzz/seed
 %define _configure_script ../configure
 %configure \
     --with-python=%_bindir/python3 \
@@ -189,16 +191,16 @@ find %buildroot -type f -name '*.la' -print -delete
 mv %buildroot%_datadir/aclocal/libxml{,2}.m4
 
 %define pkgdocdir %_docdir/%name-%version
-install -p -m644 AUTHORS Copyright NEWS README %buildroot%pkgdocdir/
+install -p -m644 Copyright NEWS README.md %buildroot%pkgdocdir/
 install -p -m644 doc/*.html %buildroot%pkgdocdir/
+rm -rf %buildroot%_defaultdocdir/%name
 
 %files
 %_libdir/*.so.*
 %dir %pkgdocdir
-%pkgdocdir/AUTHORS
 %pkgdocdir/Copyright
 %pkgdocdir/NEWS
-%pkgdocdir/README
+%pkgdocdir/README.md
 
 %files -n xml-utils
 %_bindir/xmllint
@@ -235,10 +237,6 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %pkgdocdir/*.html
 %pkgdocdir/*.gif
 %pkgdocdir/*.png
-%pkgdocdir/*.xml
-%pkgdocdir/*.xsl
-%pkgdocdir/*.c
-%pkgdocdir/*.res
 %pkgdocdir/html
 %pkgdocdir/examples
 %pkgdocdir/tutorial
@@ -246,6 +244,9 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %doc %_datadir/gtk-doc/html/libxml2/
 
 %changelog
+* Mon May 02 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.9.14-alt1
+- 2.9.14 (Fixes: CVE-2022-29824, CVE-2022-23308)
+
 * Tue Jun 15 2021 Alexey Shabalin <shaba@altlinux.org> 1:2.9.12-alt1
 - 2.9.12 (Fixes: CVE-2021-3516, CVE-2021-3517, CVE-2021-3518, CVE-2021-3537, CVE-2021-3541)
 
