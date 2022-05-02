@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.85
+Version: 0.851
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -16,6 +16,7 @@ Provides: repocop-collector-rpm = 0.01
 # Recommends, not requires fakeroot
 Requires: fakeroot >= 1.9
 # pax is preferred over cpio due to correct unpacking for unreadable directories
+
 Requires: pax
 BuildRequires: perl-devel perldoc perl-autodie
 BuildRequires: perl(Data/Array2ArrayMap/Hash/XSTree.pm)
@@ -160,6 +161,9 @@ done
 %_man1dir/repocop-report-html.*
 
 %changelog
+* Mon May 02 2022 Igor Vlasenko <viy@altlinux.org> 0.851-alt1
+- new version
+
 * Thu Apr 28 2022 Igor Vlasenko <viy@altlinux.org> 0.85-alt1
 - added Filesystem::SumPrefix family of backends
 
