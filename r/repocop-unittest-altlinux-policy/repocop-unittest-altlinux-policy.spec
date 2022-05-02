@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.46
+Version: 0.47
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -14,8 +14,6 @@ Provides: repocop-unittest-altlinux-policy-rpm-macros-packaging = 0.04
 Obsoletes: repocop-unittest-altlinux-policy-rpm-macros-packaging
 Obsoletes: repocop-unittest-unknown-summary < 0.02
 
-# for pixmap-in-deprecated-location
-# Requires: pcregrep
 Requires: repocop-collector-specfile
 Requires: repocop-collector-description > 0.02
 Requires: repocop > 0.79
@@ -65,6 +63,10 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon May 02 2022 Igor Vlasenko <viy@altlinux.org> 0.47-alt1
+- removed specfile-macros-post_fonts-is-deprecated (done)
+- egrep is obsolescent; using grep -E
+
 * Wed Sep 29 2021 Igor Vlasenko <viy@altlinux.org> 0.46-alt1
 - removed specfile-macros-ubt-is-deprecated (closes: #41026)
 
