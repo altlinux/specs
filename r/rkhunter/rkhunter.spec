@@ -2,11 +2,13 @@
 #
 Name: rkhunter
 Version: 1.4.7
-Release: alt0_git_7b287f4
+Release: alt0_git_0_7b287f4
 
 Summary: Rootkit scans for rootkits, backdoors and local exploits
 License: GPLv3+
 Group: Monitoring
+
+Epoch:  1
 
 Url: http://rkhunter.sourceforge.net/
 
@@ -23,9 +25,10 @@ Source6: rpmhashes.sh
 #
 # Fix issue with ipcs command and locales
 #
-Patch1: rkhunter-1.4.2-ipcs-locale.patch
-
 Patch2: fix-lang-update-grep.patch
+Patch3: rkhunter-1.4.7-egrep.patch
+
+
 
 Requires: crontabs
 Requires: su, binutils, kmod, findutils, grep
@@ -88,8 +91,8 @@ and free for everyone to use.
 cp %SOURCE3 files/development
 cp %SOURCE6 files/%hash_list
 
-#patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 install %SOURCE4 files/i18n/ru
 install %SOURCE5 files/
@@ -218,9 +221,10 @@ rm -f %db_dir/%hash_list.{asc,*saved.*}
 %config(noreplace) %verify(not mtime size md5) %db_dir/%hash_list
 %dir %_logdir/%name
 
-
-
 %changelog
+* Mon May 02 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:1.4.7-alt0_git_0_7b287f4
+- Add rkhunter-1.4.7-egrep.patch
+
 * Tue Apr 19 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.4.7-alt0_git_7b287f4
 - devel version 1.4.7
 
@@ -346,4 +350,5 @@ rm -f %db_dir/%hash_list.{asc,*saved.*}
 
 * Mon Mar 29 2004 Doncho N. Gunchev - 1.0.0-0
 - initial .spec file
+
 
