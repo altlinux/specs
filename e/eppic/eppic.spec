@@ -8,7 +8,7 @@ Name:    eppic
 # git describe origin/master --tags
 # 4.0-13-gdc60e00
 Version: 4.0.0.13.gdc60e00
-Release: alt2
+Release: alt3
 Summary: Eppic is a C interpreter
 Group:   Development/C
 License: GPL-2.0-or-later
@@ -44,7 +44,7 @@ sed -i '/\$(AR)/s/l//' libeppic/Makefile
 
 %build
 cd libeppic
-%add_optflags %optflags_shared -ffat-lto-objects
+%add_optflags %optflags_shared -ffat-lto-objects %(getconf LFS_CFLAGS)
 %make_build CFLAGS="%optflags"
 
 %install
@@ -59,6 +59,10 @@ make ROOT=%buildroot LIBDIR=%_libdir install
 %_libdir/libeppic.a
 
 %changelog
+* Mon May 02 2022 Vitaly Chikunov <vt@altlinux.org> 4.0.0.13.gdc60e00-alt3
+- Fix multiple definitions of 'lastv'.
+- Enabled LFS support.
+
 * Wed Sep 22 2021 Vitaly Chikunov <vt@altlinux.org> 4.0.0.13.gdc60e00-alt2
 - Fix build with binutils 2.37.
 
