@@ -1,5 +1,5 @@
 Name: repocop-unittest-systemd
-Version: 0.08
+Version: 0.09
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -11,8 +11,6 @@ License: GPLv2+
 
 Source: %name-%version.tar
 
-# for pixmap-in-deprecated-location
-# Requires: pcregrep
 Requires: repocop-collector-systemd
 Requires: repocop > 0.59
 
@@ -43,6 +41,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon May 02 2022 Igor Vlasenko <viy@altlinux.org> 0.09-alt1
+- new version
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - disabled udev-files-in-etc (not relevant to actual usage)
 
