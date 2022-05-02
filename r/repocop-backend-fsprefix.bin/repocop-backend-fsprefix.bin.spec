@@ -1,7 +1,7 @@
 %define bname fsprefix.bin
 
 Name: repocop-backend-%bname
-Version: 0.002
+Version: 0.003
 Release: alt1
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -40,6 +40,9 @@ done
 %_prefix/libexec/repocop/backends/fssumxprefix.bin
 
 %changelog
+* Mon May 02 2022 Igor Vlasenko <viy@altlinux.org> 0.003-alt1
+- bugfix release
+
 * Thu Apr 28 2022 Igor Vlasenko <viy@altlinux.org> 0.002-alt1
 - add fssumbprefix.bin and fssumxprefix.bin backends
 
