@@ -4,8 +4,8 @@
 %def_disable static
 
 Name: libopenh264
-Version: 2.1.1
-Release: alt3
+Version: 2.2.0
+Release: alt1
 
 Summary: H.264 codec library
 
@@ -13,10 +13,9 @@ Group: System/Libraries
 License: BSD
 Url: http://www.openh264.org/
 
+Vcs: https://github.com/cisco/openh264.git
 # Source-url: https://github.com/cisco/openh264/archive/v%version/%oname-%version.tar.gz
 Source: %name-%version.tar
-
-Patch: libopenh264-meson-update.patch
 
 %ifarch %ix86
 %add_optflags -msse2 -mfpmath=sse
@@ -24,7 +23,8 @@ Patch: libopenh264-meson-update.patch
 %endif
 
 %if_with meson
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
 %endif
 BuildRequires: gcc-c++ nasm
 
@@ -53,7 +53,6 @@ This package provides %name static library.
 
 %prep
 %setup
-%patch -p2
 # setup build options
 %add_optflags %optflags_shared
 %ifarch %ix86
@@ -61,7 +60,7 @@ This package provides %name static library.
 sed -i 's|^USE_ASM[[:space:]][[:space:]]*=.*|USE_ASM = No|' Makefile
 sed -i 's|^HAVE_AVX2[[:space:]][[:space:]]*:=.*|HAVE_AVX2 := No|' build/arch.mk
 %endif
-sed -i -e 's|^CFLAGS_OPT=.*$|CFLAGS_OPT=%{optflags}|' Makefile
+sed -i -e 's|^CFLAGS_OPT=.*$|CFLAGS_OPT=%{optflags} %(getconf LFS_CFLAGS)|' Makefile
 #sed -i -e '/^CFLAGS_OPT=/i LDFLAGS={ldflags}' Makefile
 sed -i -e 's|^PREFIX=.*$|PREFIX=%{_prefix}|' Makefile
 sed -i -e 's|^LIBDIR_NAME=.*$|LIBDIR_NAME=%{_lib}|' Makefile
@@ -88,8 +87,7 @@ rm -v %buildroot%_libdir/%name.a
 
 %check
 %if_with meson
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 %endif
 
 %files
@@ -107,6 +105,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue May 03 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Sun Aug 29 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt3
 - disable devel-static subpackage (contains __gnu_lto_slim)
 
