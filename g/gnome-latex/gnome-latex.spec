@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 3.39
+%define ver_major 3.40
 %define xdg_name org.gnome.gnome-latex
 
 %def_enable gtk_doc
@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: gnome-latex
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated LaTeX Environment for the GNOME desktop
@@ -98,6 +98,9 @@ This package contains documentation for %name.
 %endif
 
 %changelog
+* Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Fri Apr 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.39.1-alt1
 - 3.39.1
 

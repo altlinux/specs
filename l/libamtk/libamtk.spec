@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name amtk
-%define ver_major 5.3
+%define ver_major 5.4
 %define api_ver 5
 
 %def_disable static
@@ -10,10 +10,10 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
-Summary: Actions, Menus and Toolbars Kit for GTK+ applications
+Summary: Actions, Menus and Toolbars Kit for GTK+3 applications
 License: GPL-3.0-or-later
 Group: System/Libraries
 Url:  https://wiki.gnome.org/Projects/Amtk
@@ -128,6 +128,9 @@ GObject introspection devel data for the Amtk library.
 %endif
 
 %changelog
+* Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Tue Apr 19 2022 Yuri N. Sedunov <aris@altlinux.org> 5.3.2-alt1
 - 5.3.2 (ported to Meson build system)
 
