@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel .34
+%define kernel_sublevel .37
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -617,6 +617,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed May 04 2022 Vitaly Chikunov <vt@altlinux.org> 2:5.15.37-alt1
+- Update to v5.15.37 (2022-05-01). (Fixes: CVE-2022-1204, CVE-2022-1205,
+  CVE-2022-0500, CVE-2022-23222).
+
 * Thu Apr 14 2022 Vitaly Chikunov <vt@altlinux.org> 2:5.15.34-alt2
 - Update baikalm-5.15.y patchset to 2022-01-17 (14b0e663071e).
 
