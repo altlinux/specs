@@ -2,22 +2,28 @@
 
 %define ver_major 3.4
 %define rev %nil
+%define xdg_name org.gnome.Rhythmbox3
 %define gst_api_ver 1.0
 
-%def_without hal
-%def_with gudev
+%def_enable gudev
+%def_disable vala
+%def_enable gtk_doc
 %def_enable daap
 %def_enable grilo
-%def_enable gtk_doc
+%def_enable mtp
 %def_enable zeitgeist
-%def_enable soundcloud
 %def_disable magnatune
+# disabled since 3.4.5
+%def_disable sample_plugins
+# removed since 3.4.5
+%def_disable soundcloud
+%def_disable mmkeys
 # based on WebKit1
 %def_disable context
 
 Name: rhythmbox
-Version: %ver_major.4
-Release: alt2.1%rev
+Version: %ver_major.5
+Release: alt1%rev
 
 Summary: Music Management Application
 License: GPL-2.0
@@ -31,6 +37,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-3.4.5-alt-rpath.patch
 
 %define dbus_ver 0.35
 %define glib_ver 2.36.0
@@ -47,7 +54,7 @@ Source: %name-%version.tar
 %define dmapsharing_ver 2.9.19
 %define grilo_ver 0.3
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 Requires: gstreamer%gst_api_ver >= %gst_ver
 Requires: libgst-plugins%gst_api_ver >= %gst_ver
@@ -69,13 +76,12 @@ Provides: python%__python3_version(rhythmdb)
 Provides: python3(rb)
 Provides: python3(rhythmdb)
 
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 
+BuildRequires: meson
 BuildRequires: python3-module-pygobject3-devel
 BuildRequires: glib2-devel >= %glib_ver
-BuildRequires: intltool >= 0.40
-BuildRequires: gtk-doc yelp-tools gnome-common desktop-file-utils
-
+BuildRequires: yelp-tools desktop-file-utils %_bindir/appstream-util
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libdbus-glib-devel >= %dbus_ver
 BuildRequires: libsoup-devel >= %soup_ver
@@ -86,17 +92,18 @@ BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver
 BuildRequires: gstreamer%gst_api_ver-utils >= %gst_ver
 BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_ver
 BuildRequires: libgpod-devel >= %gpod_ver
-BuildRequires: libmtp-devel >= %mtp_ver
 BuildRequires: libICE-devel libSM-devel libsecret-devel >= %secret_ver
 BuildRequires: iso-codes-devel libcheck-devel
 BuildRequires: liblirc-devel libnotify-devel >= 0.7.3
 BuildRequires: libxml2-devel libjson-glib-devel libpng-devel
 BuildRequires: libpeas-devel libtdb-devel zlib-devel
+%{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_mtp:BuildRequires: libmtp-devel >= %mtp_ver}
 %{?_enable_grilo:BuildRequires: libgrilo-devel >= %grilo_ver}
 BuildRequires: libavahi-glib-devel
-BuildRequires: libdmapsharing-devel >= %dmapsharing_ver
-%{?_with_hal:BuildRequires: libhal-devel}
-%{?_with_gudev:BuildRequires: libgudev-devel}
+%{?_enable_daap:BuildRequires: libdmapsharing-devel >= %dmapsharing_ver}
+%{?_enable_gudev:BuildRequires: libgudev-devel}
 BuildRequires: libgtk+3-gir-devel libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
 
 %description
@@ -113,7 +120,7 @@ This package provides shared library needed for Rhythmbox to work
 %package -n lib%name-devel
 Summary: Development files for Rhythmbox library
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 Files needed to develop applications that manipulate Rhythmbox,
@@ -131,7 +138,7 @@ API documentation for Rhythmbox, an integrated music management application.
 %package plugins-audioscrobbler
 Summary: Audioscrobbler plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-audioscrobbler
 Plugin to the Rhythmbox music manager that adds
@@ -140,7 +147,7 @@ Audioscrobbler (Last.fm) service support.
 %package plugins-cd-recorder
 Summary: CD recorder plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: brasero >= %brasero_ver
 
 %description plugins-cd-recorder
@@ -150,7 +157,7 @@ support for recording audio CDs from playlists
 %package plugins-daap
 Summary: DAAP plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-daap
 Plugin to the Rhythmbox music manager that provides
@@ -159,7 +166,7 @@ support for DAAP Music Sharing
 %package plugins-fmradio
 Summary: FM radio plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-fmradio
 Plugin to the Rhythmbox music manager that provides
@@ -168,7 +175,7 @@ Support for FM radio broadcasting services
 %package plugins-ipod
 Summary: iPod plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %description plugins-ipod
 Plugin to the Rhythmbox music manager that adds
 support for Apple iPod media player.
@@ -176,7 +183,7 @@ support for Apple iPod media player.
 %package plugins-mtpdevice
 Summary: MTP device plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-mtpdevice
 Plugin to the Rhythmbox music manager that adds
@@ -185,7 +192,7 @@ support for MTP devices.
 %package plugins-iradio
 Summary: Internet Radio plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 %description plugins-iradio
 Plugin to the Rhythmbox music manager that provides
 support for Internel Radio
@@ -193,7 +200,7 @@ support for Internel Radio
 %package plugins-lirc
 Summary: LIRC plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-lirc
 Plugin to the Rhythmbox music manager that adds
@@ -202,7 +209,7 @@ Linux Infrared Remote Control support.
 %package plugins-mmkeys
 Summary: Media Player Keys plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-mmkeys
 Plugin to the Rhythmbox music manager that provides
@@ -211,7 +218,7 @@ control Rhythmbox using key shortcuts
 %package plugins-power-manager
 Summary: Power Manager plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-power-manager
 Plugin to the Rhythmbox music manager that provides
@@ -220,7 +227,7 @@ inhibit Power Manager from suspending the machine while playing
 %package plugins-im-status
 Summary: IM status plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-im-status
 This plugin updates IM status according to the current song (works with
@@ -229,7 +236,7 @@ Empathy & Gossip)
 %package plugins-notification
 Summary: Status icon plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-notification
 Status icon and notification popups plugin for Rhythmbox
@@ -237,7 +244,7 @@ Status icon and notification popups plugin for Rhythmbox
 %package plugins-media-server
 Summary: MediaServer2 D-Bus interface for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-media-server
 This plugin provides an implementation of the MediaServer2 D-Bus
@@ -246,7 +253,7 @@ interface specification for Rhythmbox.
 %package plugins-mpris
 Summary: MPRIS D-Bus interface for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-mpris
 This plugin provides an implementation of the MPRIS D-Bus interface
@@ -255,7 +262,7 @@ specification for Rhythmbox.
 %package plugins-grilo
 Summary: Grilo browser for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description plugins-grilo
 A plugin to let you browse media content from various sources using
@@ -264,7 +271,7 @@ Grilo.
 %package plugins-android
 Summary: Android plugin for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: gvfs-backend-mtp
 
 %description plugins-android
@@ -273,8 +280,8 @@ A plugin that supports Android 4.0+ devices (via MTP).
 %package plugins-python
 Summary: Python plugins for Rhythmbox
 Group: Sound
-Requires: %name = %version-%release
-Requires: lib%name-gir = %version-%release
+Requires: %name = %EVR
+Requires: lib%name-gir = %EVR
 %{?_enable_context:Requires: typelib(WebKit) = 1.0}
 %{?_enable_zeitgeist:Requires: zeitgeist}
 
@@ -285,7 +292,7 @@ to the Rhythmbox music manager.
 %package -n lib%name-gir
 Summary: GObject introspection data for the Gedit
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the Rhythmbox music manager/
@@ -294,8 +301,8 @@ GObject introspection data for the Rhythmbox music manager/
 Summary: GObject introspection devel data for the Rhythmbox
 Group: System/Libraries
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Rhythmbox music manager.
@@ -306,51 +313,47 @@ Summary: All plugins for Rhythmbox
 Group: Sound
 BuildArch: noarch
 
-Requires: %name-plugins-audioscrobbler = %version-%release
-Requires: %name-plugins-cd-recorder = %version-%release
-%{?_enable_daap:Requires: %name-plugins-daap = %version-%release}
-Requires: %name-plugins-fmradio = %version-%release
-Requires: %name-plugins-ipod = %version-%release
-Requires: %name-plugins-iradio = %version-%release
-Requires: %name-plugins-lirc = %version-%release
-Requires: %name-plugins-mmkeys = %version-%release
-Requires: %name-plugins-mtpdevice = %version-%release
-Requires: %name-plugins-power-manager = %version-%release
-Requires: %name-plugins-im-status = %version-%release
-Requires: %name-plugins-notification = %version-%release
-Requires: %name-plugins-media-server = %version-%release
-Requires: %name-plugins-mpris = %version-%release
-%{?_enable_grilo:Requires: %name-plugins-grilo = %version-%release}
-Requires: %name-plugins-android = %version-%release
-Requires: %name-plugins-python = %version-%release
+Requires: %name-plugins-audioscrobbler = %EVR
+Requires: %name-plugins-cd-recorder = %EVR
+%{?_enable_daap:Requires: %name-plugins-daap = %EVR}
+Requires: %name-plugins-fmradio = %EVR
+%{?_enable_ipod:Requires: %name-plugins-ipod = %EVR}
+Requires: %name-plugins-iradio = %EVR
+%{?_enable_lirc:Requires: %name-plugins-lirc = %EVR}
+%{?_enable_mmkeys:Requires: %name-plugins-mmkeys = %EVR}
+%{?_enable_mtp:Requires: %name-plugins-mtpdevice = %EVR}
+Requires: %name-plugins-power-manager = %EVR
+Requires: %name-plugins-im-status = %EVR
+Requires: %name-plugins-notification = %EVR
+Requires: %name-plugins-media-server = %EVR
+Requires: %name-plugins-mpris = %EVR
+%{?_enable_grilo:Requires: %name-plugins-grilo = %EVR}
+Requires: %name-plugins-android = %EVR
+Requires: %name-plugins-python = %EVR
 
 %description plugins
 This virtual package installs all Rhythmbox plugins
 
 %prep
 %setup -n %name-%version
+%patch -p1
+sed -i 's|0\.62\.0|0.62.9|' meson.build
 
 %build
-%autoreconf
 %add_optflags %(getconf LFS_CFLAGS)
-%configure \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	--disable-static \
-	--disable-schemas-compile \
-	--disable-dependency-tracking \
-	--enable-lirc \
-	--with-brasero \
-	--with-mtp \
-	--with-ipod \
-	%{subst_with hal} \
-	%{subst_with gudev} \
-	%{subst_enable grilo}
-
-%make_build
+%meson \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_disable_gudev:-Dgudev=disabled} \
+    %{?_disable_lirc:-Dlirc=disabled} \
+    %{?_disable_brasero:-Dbrasero=disabled} \
+    %{?_disable_mtp:-Dmtp=disabled} \
+    %{?_disable_ipod:-Dipod=disabled} \
+    %{?_enable_sample_plugins:-Dsample-plugins=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 install -d -m755 %buildroot%pkgdocdir
 install -p -m644 AUTHORS DOCUMENTERS MAINTAINERS ChangeLog README* NEWS THANKS %buildroot%pkgdocdir/
 bzip2 -9 %buildroot%pkgdocdir/ChangeLog
@@ -371,7 +374,7 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %_datadir/icons/hicolor/*/*/*
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/org.gnome.rhythmbox.gschema.xml
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %dir %pkgdocdir
 %doc %pkgdocdir/AUTHORS
 %doc %pkgdocdir/DOCUMENTERS
@@ -389,6 +392,8 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %_libdir/lib%name-core.so
 %_includedir/%name/
 %_libdir/pkgconfig/%name.pc
+%{?_enable_vala:%_vapidir/rb.vapi
+%_vapidir/rhythmdb.vapi}
 
 %files plugins-audioscrobbler
 %_libdir/%name/plugins/audioscrobbler/
@@ -407,8 +412,10 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %files plugins-ipod
 %_libdir/%name/plugins/ipod/
 
+%if_enabled mtp
 %files plugins-mtpdevice
 %_libdir/%name/plugins/mtpdevice/
+%endif
 
 %files plugins-iradio
 %_libdir/%name/plugins/iradio/
@@ -416,12 +423,13 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %files plugins-lirc
 %_libdir/%name/plugins/rblirc/
 
+%if_enabled mmkeys
 %files plugins-mmkeys
 %_libdir/%name/plugins/mmkeys/
+%endif
 
 %files plugins-power-manager
 %_libdir/%name/plugins/power-manager/
-
 
 %files plugins-im-status
 %_libdir/%name/plugins/im-status/
@@ -457,14 +465,11 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %_libdir/%name/plugins/artsearch/
 %_libdir/%name/plugins/lyrics/
 %{?_disable_magnatune:%exclude %_libdir/%name/plugins/magnatune/}
-%{?_disable_context:%exclude %_libdir/%name/plugins/context/}
 %_libdir/%name/plugins/replaygain/
 %_libdir/%name/plugins/webremote/
 %_libdir/%name/plugins/listenbrainz/
 %{?_enable_zeitgeist:%_libdir/%name/plugins/rbzeitgeist/}
 %{?_enable_soundcloud:%_libdir/%name/plugins/soundcloud/}
-
-%exclude %_libdir/%name/plugins/*/*.la
 
 %files plugins
 
@@ -473,9 +478,10 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %_datadir/gtk-doc/html/rhythmbox/
 %endif
 
-%exclude %_libdir/%name/sample-plugins/
-
 %changelog
+* Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4.5-alt1
+- 3.4.5 (ported to Meson build system)
+
 * Sat Nov 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt2.1
 - plugins-python(context): fixed dependencies, disabled by default
 
