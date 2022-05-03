@@ -4,7 +4,7 @@
 
 Name: gnome-doc-utils
 Version: %ver_major.10
-Release: alt2
+Release: alt3
 
 Summary: Documentation utilities for GNOME
 Group: Development/Other
@@ -18,6 +18,8 @@ Source1: scrollkeeper-omf.dtd
 # GNOME bug #524207
 Patch1: gnome-doc-utils-0.14.0-package.patch
 Patch2: gnome-doc-utils-fig-path.patch
+# https://src.fedoraproject.org/rpms/gnome-doc-utils/blob/rawhide/f/gnome-doc-utils-0.20.10-python3.patch
+Patch3: gnome-doc-utils-0.20.10-fc-python3.patch
 
 %define pkgdocdir %_docdir/%name-%version
 
@@ -26,16 +28,16 @@ Patch2: gnome-doc-utils-fig-path.patch
 
 Requires: %name-xslt = %version-%release
 Requires: librarian
-Requires: python-modules-encodings
 
-%add_python_compile_include %python_sitelibdir/xml2po
+%add_python3_path %python3_sitelibdir/xml2po
 
 BuildArch: noarch
 
-BuildPreReq: rpm-build-python rpm-build-licenses rpm-build-gnome intltool
+BuildRequires(pre): rpm-build-python3 rpm-build-licenses rpm-build-gnome
+BuildRequires: intltool
 BuildRequires: libxml2-devel >= %libxml_version
 BuildRequires: libxslt-devel >= %libxslt_version
-BuildRequires: python-devel python-module-libxml2 python-modules-encodings
+BuildRequires: python3-devel python3-module-libxml2
 BuildRequires: db2latex-xsl docbook-dtds librarian xsltproc
 
 %description
@@ -65,6 +67,7 @@ export SGML_CATALOG_FILES=catalog
 
 %patch1 -p1 -b .package
 %patch2 -p1 -b .fig
+%patch3 -p1 -b .python3
 
 # Update URLs of external entities to fix build in isolated network environment.
 find -type f -print0 |
@@ -72,8 +75,10 @@ find -type f -print0 |
 	xargs -r0 sed -i "s|'http://[^']*/scrollkeeper-omf[.]dtd'|'/usr/share/xml/scrollkeeper/dtds/scrollkeeper-omf.dtd'|" --
 
 %build
-export am_cv_python_pythondir=%python_sitelibdir
-%configure --disable-scrollkeeper
+export am_cv_python_pythondir=%python3_sitelibdir
+%configure --disable-scrollkeeper \
+    PYTHON=%__python3
+%nil
 # SMP-incompatible build
 %make
 
@@ -99,7 +104,7 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%pkgdocdir/COPYING.LGPL
 %_datadir/xml/mallard/1.0/*
 %_man1dir/*
 #python
-%python_sitelibdir/xml2po/
+%python3_sitelibdir/xml2po/
 %dir %pkgdocdir
 %pkgdocdir/AUTHORS
 %pkgdocdir/COPYING
@@ -112,6 +117,9 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%pkgdocdir/COPYING.LGPL
 %_datadir/xml/gnome
 
 %changelog
+* Mon May 02 2022 Yuri N. Sedunov <aris@altlinux.org> 0.20.10-alt3
+- xml2po: ported to Python3 (fc patch)
+
 * Tue Oct 23 2012 Yuri N. Sedunov <aris@altlinux.org> 0.20.10-alt2
 - Fixed linking of figures in subfolders, where a relative path to
   ../../C doesn't work properly (gnome-doc-utils-fig-path.patch)
