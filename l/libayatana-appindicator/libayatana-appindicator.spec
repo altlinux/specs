@@ -7,8 +7,8 @@
 %endif
 
 Name: libayatana-appindicator
-Version: 0.5.90
-Release: alt3
+Version: 0.5.91
+Release: alt1
 
 Summary: Ayatana application indicators library
 License: LGPLv2.1 AND LGPLv3
@@ -174,6 +174,9 @@ This package provides Vala language bindings for %{name}3.
 %_vapidir/ayatana-appindicator3-0.1.deps
 
 %changelog
+* Tue May 03 2022 Nazarov Denis <nenderus@altlinux.org> 0.5.91-alt1
+- Version 0.5.91
+
 * Sun Feb 13 2022 Nazarov Denis <nenderus@altlinux.org> 0.5.90-alt3
 - Fix BR
 - Rename subpackages
