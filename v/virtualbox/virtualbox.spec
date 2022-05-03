@@ -66,7 +66,7 @@
 
 Name: virtualbox
 Version: 6.1.34
-Release: alt1
+Release: alt2
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -673,7 +673,7 @@ cd additions >/dev/null
 %if_with additions
 # install additions
   install -d %buildroot/%_bindir
-  install -m755 VBoxClient VBoxControl VBoxService %buildroot/%_bindir/
+  install -m755 VBoxClient VBoxControl VBoxDRMClient VBoxService %buildroot/%_bindir/
 
 # install kernel modules configuration
   install -pDm644 %SOURCE25 %buildroot%_sysconfdir/modprobe.d/virtualbox-vboxvideo.conf
@@ -906,6 +906,7 @@ mountpoint -q /dev || {
 %_unitdir/virtualbox-vmsvga.service
 %_sysconfdir/X11/xinit.d/98vboxadd-xclient
 %_bindir/VBoxClient
+%_bindir/VBoxDRMClient
 %endif
 
 %ifarch x86_64
@@ -954,6 +955,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Tue May 03 2022 Anton Midyukov <antohami@altlinux.org> 6.1.34-alt2
+- add missing VBoxDRMClient
+
 * Mon Apr 25 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.34-alt1
 - Update to newest version 6.1.34
 
