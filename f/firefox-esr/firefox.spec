@@ -6,7 +6,7 @@
 
 %define gst_version   1.0
 %define nspr_version  4.32
-%define nss_version   3.69.0
+%define nss_version   3.72.0
 %define rust_version  1.54.0
 %define cargo_version 1.54.0
 %define llvm_version  11.0
@@ -15,7 +15,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 91.7.0
+Version: 91.8.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -54,6 +54,7 @@ Patch013: 0013-bmo-1559213-Support-system-av1.patch
 Patch014: 0014-VAAPI-Add-extra-frames.patch
 Patch015: 0015-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch016: 0016-ALT-Fix-redefinition-double_t.patch
+Patch017: 0017-ALT-fix-armh-build.patch
 ### End Patches
 
 # Hang up on build browser/components/about
@@ -207,6 +208,7 @@ Most likely you don't need to use this package.
 %patch014 -p1
 %patch015 -p1
 %patch016 -p1
+%patch017 -p1
 ### Finish apply patches
 
 cd mozilla
@@ -454,9 +456,21 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Apr 06 2022 Pavel Vasenkov <pav@altlinux.org> 91.8.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2022-1097 Use-after-free in NSSToken objects
+  + CVE-2022-28281 Out of bounds write due to unexpected WebAuthN Extensions
+  + CVE-2022-1196 Use-after-free after VR Process destruction
+  + CVE-2022-28282 Use-after-free in DocumentL10n::TranslateDocument
+  + CVE-2022-28285 Incorrect AliasSet used in JIT Codegen
+  + CVE-2022-28286 iframe contents could be rendered outside the border
+  + CVE-2022-24713 Denial of Service via complex regular expressions
+  + CVE-2022-28289 Memory safety bugs fixed in Firefox 99 and Firefox ESR 91.8
+
 * Sun Mar 13 2022 Pavel Vasenkov <pav@altlinux.org> 91.7.0-alt1
 - New ESR version.
-- Security fixes: 
+- Security fixes:
   + CVE-2022-26383 Browser window spoof using fullscreen mode
   + CVE-2022-26384 iframe allow-scripts sandbox bypass
   + CVE-2022-26387 Time-of-check time-of-use bug when verifying add-on signatures
