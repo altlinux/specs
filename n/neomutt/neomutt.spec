@@ -4,14 +4,9 @@
 %set_verify_elf_method strict
 
 Name: neomutt
-Version: 20211029
+Version: 20220429
 Release: alt1
-
-%define docdir %_docdir/%name-%version
-%undefine _configure_gettext
-
 Summary: A version of Mutt with added features
-
 License: GPL-2.0-only and ALT-Public-Domain
 Group: Networking/Mail
 Url: https://www.neomutt.org/
@@ -24,6 +19,8 @@ Vcs: https://github.com/neomutt/neomutt.git
 Requires: mailcap
 
 Source: %name-%version.tar
+Source1: neomutt.desktop
+Source2: neomutt.xpm
 
 BuildRequires: docbook-style-xsl
 BuildRequires: elinks
@@ -42,10 +39,9 @@ BuildRequires: xsltproc
 BuildRequires: zlib-devel
 
 %description
-Neomutt is a small but very powerful text based program for reading
-and sending electronic mail under unix operating systems, including
-support for color terminals, MIME, OpenPGP, and a threaded sorting
-mode.
+Neomutt is a small but powerful text based program for reading and
+sending electronic mail under UNIX operating systems, including support
+for color terminals, MIME, OpenPGP, and a threaded sorting mode.
 
 %prep
 %setup
@@ -55,25 +51,30 @@ sed -i 's/armle-/armh-/' autosetup/autosetup-config.sub
 %autopatch -p1
 
 %build
+%define docdir %_docdir/%name
+%undefine _configure_gettext
 %configure \
-	--disable-nls \
-	--docdir=%docdir \
-	--with-ui=ncurses  \
-	--gpgme \
-	--notmuch \
-	--lua \
+	--autocrypt \
 	--bdb \
-	--ssl \
+	--docdir=%docdir \
+	--gpgme \
+	--idn2 --disable-idn \
+	--lua \
+	--notmuch \
 	--sasl \
-	--disable-idn --idn2 \
+	--sqlite \
+	--ssl \
 	--zlib \
 	--zstd \
-	--sqlite \
-
+	%nil
 %make_build
 
 %install
 %makeinstall_std
+install -Dpm0544 %SOURCE1 %buildroot%_desktopdir/neomutt.desktop
+install -Dpm0544 %SOURCE2 %buildroot%_pixmapsdir/neomutt.xpm
+
+%find_lang %name
 
 %check
 # Simplest test
@@ -85,14 +86,23 @@ pushd test-files
 popd
 make -s test
 
-%files
+%files -f %name.lang
 %config(noreplace) %_sysconfdir/neomuttrc
 %_bindir/neomutt
 %_mandir/man?/*
 %_libexecdir/neomutt*
 %docdir
+%_desktopdir/neomutt.desktop
+%_pixmapsdir/neomutt.xpm
 
 %changelog
+* Tue May 03 2022 Vitaly Chikunov <vt@altlinux.org> 20220429-alt1
+- Update to 20220429.
+- Enable Native Language Support (NLS).
+- Enable Autocrypt support.
+- Package documentation in non-versioned directory.
+- Package desktop files.
+
 * Wed Nov 03 2021 Vitaly Chikunov <vt@altlinux.org> 20211029-alt1
 - Update to 20211029.
 
