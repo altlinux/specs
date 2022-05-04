@@ -1,6 +1,6 @@
 Name: RTags
 Version: 2.41
-Release: alt2
+Release: alt3
 
 Summary: Cross-reference client/server tool for C/C++
 License: GPLv3
@@ -9,7 +9,7 @@ Url: https://github.com/Andersbakken/rtags
 
 Source: %name-%version-%release.tar
 
-BuildRequires: cmake libstdc++-devel clang12.0-devel llvm12.0-devel zlib-devel
+BuildRequires: cmake libstdc++-devel clang-devel llvm-devel zlib-devel
 
 %description
 RTags is a client/server application that indexes C/C++ code and keeps
@@ -22,8 +22,8 @@ to find symbols by name, including nested class and namespace scope.
 
 %build
 %define optflags_lto %nil
-export CC=clang-12
-export CXX=clang++-12
+export CC=clang
+export CXX=clang++
 %cmake
 %cmake_build
 
@@ -38,6 +38,9 @@ export CXX=clang++-12
 %_man7dir/rdm.7*
 
 %changelog
+* Wed May 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.41-alt3
+- unpin clang version
+
 * Wed Apr 13 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.41-alt2
 - pin clang-12 for build
 
