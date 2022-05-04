@@ -1,7 +1,7 @@
 Summary: An "archives first" approach to mailing lists
 
 Name: public-inbox
-Version: 1.7.0.17.g07cd8973
+Version: 1.8.0
 Release: alt1
 
 Group: Networking/Mail
@@ -95,6 +95,11 @@ perl ./create-certs.perl
 popd
 
 rm -f -- t/hl_mod.t
+case "`arch`" in
+	ppc64le) # I really don't care about ppc64le.
+		rm -f -- t/lei-sigpipe.t
+		;;
+esac
 
 %perl_vendor_build
 
@@ -120,6 +125,9 @@ mkdir -p "$HOME/.cache/public-inbox/inline-c"
 %_man8dir/*
 
 %changelog
+* Wed May 04 2022 Alexey Gladkov <legion@altlinux.ru> 1.8.0-alt1
+- New version (1.8.0).
+
 * Sat Dec 25 2021 Alexey Gladkov <legion@altlinux.ru> 1.7.0.17.g07cd8973-alt1
 - New git snapshot (v1.7.0-17-g07cd8973).
 - Remove Email::MIME dependency.
