@@ -1,16 +1,13 @@
 Summary: Library for Gtk+ which provides a widget for viewing and manipulating 2 dimensional tabular data
 Name: spread-sheet-widget
-Version: 0.6
+Version: 0.8
 Release: alt1
 License: GPLv3+
 Group: System/Libraries
 Source0: http://alpha.gnu.org/gnu/ssw/%name-%version.tar.gz
-# Source0-md5:	9bd94714a18229eb9e9a2b79dda30e1f
 Patch0: %name-am.patch
 Url: https://www.gnu.org/software/ssw/
 
-# Automatically added by buildreq on Thu Feb 07 2019
-# optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libwayland-client libwayland-cursor libwayland-egl perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent pkg-config python-base python-modules python3 python3-base sh4
 BuildRequires: libgtk+3-devel makeinfo
 
 %description
@@ -70,6 +67,9 @@ install -D demo/.libs/demo %buildroot%_bindir/%name-demo
 %_infodir/*.info*
 
 %changelog
+* Wed Apr 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.8-alt1
+- Updated to version 0.8
+
 * Thu Aug 27 2020 Fr. Br. George <george@altlinux.ru> 0.6-alt1
 - Autobuild version bump to 0.6
 
