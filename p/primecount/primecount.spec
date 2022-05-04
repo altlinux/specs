@@ -1,7 +1,7 @@
 %define soname 7
 
 Name: primecount
-Version: 7.2
+Version: 7.3
 Release: alt1
 Summary: Count the number of primes
 License: BSD-2-Clause
@@ -11,7 +11,7 @@ Url: https://github.com/kimwalisch/primecount
 Source: https://github.com/kimwalisch/primecount/archive/v%version.tar.gz#/%name-%version.tar.gz
 
 BuildPreReq: rpm-build-ninja ctest
-BuildRequires: gcc-c++ cmake asciidoc-a2x libprimesieve-devel
+BuildRequires: gcc-c++ libgomp-devel cmake asciidoc-a2x libprimesieve-devel
 
 %description
 primecount is a command-line program that counts the primes below an
@@ -42,6 +42,7 @@ files for developing applications that use the primecount library.
     -DBUILD_LIBPRIMESIEVE=OFF \
     -DBUILD_SHARED_LIBS=ON \
     -DBUILD_STATIC_LIBS=OFF \
+    -DSTATICALLY_LINK_LIBPRIMECOUNT=OFF \
     -DBUILD_MANPAGE=ON \
     -DBUILD_TESTS=ON \
     -DCMAKE_SKIP_RPATH:BOOL=OFF
@@ -71,6 +72,9 @@ ctest
 %_pkgconfigdir/primecount.pc
 
 %changelog
+* Wed May 04 2022 Leontiy Volodin <lvol@altlinux.org> 7.3-alt1
+- New version (7.3).
+
 * Wed Dec 08 2021 Leontiy Volodin <lvol@altlinux.org> 7.2-alt1
 - New version (7.2).
 
