@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 22.15
+Version: 22.16
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -7,7 +7,7 @@ Group: Graphics
 License: GPL-3.0-or-later
 Url: http://www.kornelix.com/%name/%name.html
 
-# VCS: https://gitlab.com/fotoxx/fotoxx.git
+Vcs: https://gitlab.com/fotoxx/fotoxx.git
 Source: http://www.kornelix.com/downloads/downloads/%name-%version.tar.gz
 Source1: fotoxx.desktop
 Source2: fotoxx16.png
@@ -82,6 +82,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %exclude %_datadir/doc/%name
 
 %changelog
+* Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 22.16-alt1
+- 22.16
+
 * Mon Apr 04 2022 Yuri N. Sedunov <aris@altlinux.org> 22.15-alt1
 - 22.15
 
