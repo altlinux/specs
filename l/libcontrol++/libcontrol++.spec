@@ -1,5 +1,5 @@
 Name: libcontrol++
-Version: 0.28.0
+Version: 0.29.0
 Release: alt1
 
 Summary: control++ common classes and functions library
@@ -56,6 +56,10 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed May 04 2022 Alexey Appolonov <alexey@altlinux.org> 0.29.0-alt1
+- Enhanced function "Split" that splits given string using whitespace if the
+  second argument is absent.
+
 * Thu Dec 16 2021 Alexey Appolonov <alexey@altlinux.org> 0.28.0-alt1
 - Fixed and modified functions that process strings ("FindSubstrNthOccurrence",
   "UnescapedQtnMarkPos" and others);
