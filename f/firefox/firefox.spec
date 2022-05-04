@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        99.0.1
+Version:        100.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -25,27 +25,18 @@ Source13:       firefox-search-provider.ini
 ### Start Patches
 Patch001: 0001-FEDORA-build-arm-libopus.patch
 Patch002: 0002-FEDORA-build-arm.patch
-Patch003: 0003-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
-Patch004: 0004-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
-Patch005: 0005-ALT-Fix-aarch64-build.patch
-Patch006: 0006-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch007: 0007-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch008: 0008-use-floats-for-audio-on-arm-too.patch
-Patch009: 0009-bmo-847568-Support-system-harfbuzz.patch
-Patch010: 0010-bmo-847568-Support-system-graphite2.patch
-Patch011: 0011-bmo-1559213-Support-system-av1.patch
-Patch012: 0012-VAAPI-Add-extra-frames.patch
-Patch013: 0013-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch014: 0014-ALT-fix-double_t-redefinition.patch
-Patch015: 0015-build-Disable-Werror.patch
-Patch016: 0016-Prevent-discrimination-of-Russian-services.patch
-Patch017: 0017-Bug-1615974-avoid-memmapping-CRLite-filters-in-cert_.patch
-Patch018: 0018-Bug-1758579-land-NSS-be8a62f85be7-UPGRADE_NSS_RELEAS.patch
-Patch019: 0019-Bug-1756061-PSM-changes-corresponding-to-mozilla-pki.patch
-Patch020: 0020-Bug-1758579-land-NSS-NSS_3_77_BETA1-UPGRADE_NSS_RELE.patch
-Patch021: 0021-Bug-1088140-support-RSA-PSS-signatures-on-certificat.patch
-Patch022: 0022-Bug-1761438-Stop-using-8.3-names-in-PSM.-r-keeler.patch
-Patch023: 0023-Bug-1758579-land-NSS-NSS_3_77_RTM-UPGRADE_NSS_RELEAS.patch
+Patch003: 0003-ALT-Fix-aarch64-build.patch
+Patch004: 0004-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch005: 0005-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
+Patch006: 0006-use-floats-for-audio-on-arm-too.patch
+Patch007: 0007-bmo-847568-Support-system-harfbuzz.patch
+Patch008: 0008-bmo-847568-Support-system-graphite2.patch
+Patch009: 0009-bmo-1559213-Support-system-av1.patch
+Patch010: 0010-VAAPI-Add-extra-frames.patch
+Patch011: 0011-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch012: 0012-ALT-fix-double_t-redefinition.patch
+Patch013: 0013-build-Disable-Werror.patch
+Patch014: 0014-Prevent-discrimination-of-Russian-services.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -197,8 +188,6 @@ Most likely you don't need to use this package.
 %setup -q -n firefox-%version -c
 %autopatch -p1
 
-cd mozilla
-
 tar -xf %SOURCE11
 
 cp -f %SOURCE4 .mozconfig
@@ -285,9 +274,6 @@ export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=2"
 #export WASM_CC="$CC --target=wasm32-wasi"
 #export WASM_CXX="$CXX --target=wasm32-wasi"
 
-# compile firefox
-cd mozilla
-
 export srcdir="$PWD"
 #export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
 export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
@@ -310,8 +296,6 @@ $CC $CFLAGS \
 
 
 %install
-cd mozilla
-
 export SHELL=/bin/sh
 export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE10)"
 
@@ -445,6 +429,19 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue May 03 2022 Alexey Gladkov <legion@altlinux.ru> 100.0-alt1
+- New release (100.0).
+- Security fixes:
+  + CVE-2022-29914: Fullscreen notification bypass using popups
+  + CVE-2022-29909: Bypassing permission prompt in nested browsing contexts
+  + CVE-2022-29916: Leaking browser history with CSS variables
+  + CVE-2022-29911: iframe Sandbox bypass
+  + CVE-2022-29912: Reader mode bypassed SameSite cookies
+  + CVE-2022-29910: Firefox for Android forgot HTTP Strict Transport Security settings
+  + CVE-2022-29915: Leaking cross-origin redirect through the Performance API
+  + CVE-2022-29917: Memory safety bugs fixed in Firefox 100 and Firefox ESR 91.9
+  + CVE-2022-29918: Memory safety bugs fixed in Firefox 100
+
 * Fri Apr 15 2022 Alexey Gladkov <legion@altlinux.ru> 99.0.1-alt1
 - New release (99.0.1).
 
