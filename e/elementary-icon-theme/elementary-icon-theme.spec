@@ -1,5 +1,5 @@
 %define _name elementaryicons
-%define ver_major 6.1
+%define ver_major 7.0
 %define rdn_name io.elementary.icons
 %def_disable palettes
 
@@ -48,6 +48,9 @@ theme.
 %doc README*
 
 %changelog
+* Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 7.0.0-alt1
+- 7.0.0
+
 * Thu Nov 25 2021 Yuri N. Sedunov <aris@altlinux.org> 6.1.0-alt1
 - 6.1.0
 
