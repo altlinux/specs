@@ -1,5 +1,5 @@
 Name: estrlist
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: estrlist - string operation utility
@@ -30,6 +30,9 @@ install -D bin/%name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed May 04 2022 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
+- egrep -> grep -E
+
 * Sun Sep 05 2021 Vitaly Lipatov <lav@altlinux.ru> 0.4-alt1
 - turn off wildcard expansion
 
