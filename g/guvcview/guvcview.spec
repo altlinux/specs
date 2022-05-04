@@ -7,7 +7,7 @@
 %def_disable qt5
 
 Name: guvcview
-Version: %ver_major.0.7
+Version: %ver_major.0.8.1
 Release: alt1
 
 Summary: A GTK UVC video viewer
@@ -102,8 +102,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 %files -n lib%name
 %_libdir/libgviewaudio-%api_ver.so.*
-%_libdir/libgviewrender-%api_ver.so.*
-%_libdir/libgviewv4l2core-%api_ver.so.*
+%_libdir/libgviewrender-%enc_api_ver.so.*
+%_libdir/libgviewv4l2core-%enc_api_ver.so.*
 %_libdir/libgviewencoder-%enc_api_ver.so.*
 
 %files -n lib%name-devel
@@ -114,6 +114,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0.8.1-alt1
+- updated to v2.0.8-1
+
 * Wed Nov 03 2021 Yuri N. Sedunov <aris@altlinux.org> 2.0.7-alt1
 - updated to v2.0.7-2-5-g9edc615
 
