@@ -9,8 +9,8 @@
 %def_disable check
 
 Name: libnice
-Version: %ver_major.18
-Release: alt2
+Version: %ver_major.19
+Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
 Group: System/Libraries
@@ -119,14 +119,14 @@ for Gstreamer (1.0 API version)
 	%{?_disable_gupnp:-Dgupnp=disabled} \
 	%{?_disable_gstreamer:-Dgstreamer=disabled} \
 	%{?_enable_gtk_doc:-Dgtk_doc=enabled}
+%nil
 %meson_build
 
 %install
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/*.so.*
@@ -163,6 +163,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.19-alt1
+- 0.1.19
+
 * Sat Apr 24 2021 Yuri N. Sedunov <aris@altlinux.org> 0.1.18-alt2
 - updated BR
 
