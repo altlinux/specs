@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		506e2b51e29
+%define svnrev		3d787ff402e
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 %endif
 
 Name: zabbix
-Version: 6.0.3
+Version: 6.0.4
 Release: alt1
 Epoch: 1
 
@@ -678,6 +678,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed May 04 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.4-alt1
+- 6.0.4
+
 * Wed Apr 06 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.3-alt1
 - 6.0.3
 
