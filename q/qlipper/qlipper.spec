@@ -1,13 +1,12 @@
 Name: qlipper
 Version: 5.1.2
-Release: alt1
+Release: alt2
 
 Summary: Lightweight clipboard history
 License: GPLv3+
 Group: Graphical desktop/Other
 
 Url: https://github.com/pvanek/qlipper
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source0: %name-%version.tar
 Source1: qlipper_ru.ts
@@ -57,6 +56,10 @@ install -pm644 %SOURCE2 %buildroot%_sysconfdir/xdg/autostart/
 %_sysconfdir/xdg/autostart/qlipper-startup.desktop
 
 %changelog
+* Wed May 04 2022 Anton Midyukov <antohami@altlinux.org> 5.1.2-alt2
+- autostart in LXQt only (Closes: 42674)
+- clean Packager
+
 * Tue Aug 13 2019 Anton Midyukov <antohami@altlinux.org> 5.1.2-alt1
 - new version 5.1.2
 
