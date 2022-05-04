@@ -1,5 +1,5 @@
 Name: alterator-kiosk
-Version: 1.9
+Version: 1.10
 Release: alt1
 
 Source: %name-%version.tar
@@ -52,8 +52,12 @@ install -Dm 0644 %SOURCE2 %buildroot%_unitdir/kiosk.service
 
 %files -n kiosk-profiles
 %_sysconfdir/alterator/kiosk/profiles/
+%_man5dir/kiosk-profiles.5.xz
 
 %changelog
+* Wed May 04 2022 Oleg Solovyov <mcpain@altlinux.org> 1.10-alt1
+- add manpage about profiles
+
 * Thu Feb 24 2022 Oleg Solovyov <mcpain@altlinux.org> 1.9-alt1
 - fix chromium-gost launch
 
