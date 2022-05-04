@@ -3,7 +3,7 @@
 %def_disable test
 
 Name: python3-module-%oname
-Version: 36.0.0
+Version: 37.0.2
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers
@@ -81,6 +81,9 @@ py.test3
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Wed May 4 2022 Vladimir Didenko <cow@altlinux.ru> 37.0.2-alt1
+- new version (37.0.2)
+
 * Thu Dec 2 2021 Vladimir Didenko <cow@altlinux.ru> 36.0.0-alt1
 - new version (36.0.0)
 
