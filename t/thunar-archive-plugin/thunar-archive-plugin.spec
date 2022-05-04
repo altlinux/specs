@@ -1,17 +1,15 @@
 Name: thunar-archive-plugin
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Summary: Thunar archive plugin
 Summary (ru_RU.UTF8): Дополнение к Thunar позволяющее работать с архивами
-License: %gpl2plus
+License: LGPLv2+ and GPLv2+
 Group: Graphical desktop/XFce
-Url: https://goodies.xfce.org/projects/thunar-plugins/%name
+Url: https://docs.xfce.org/xfce/thunar/archive
 Packager: Xfce Team <xfce@packages.altlinux.org>
-# git://git.xfce.org/thunar-plugins/thunar-archive-plugin
+Vcs: https://gitlab.xfce.org/thunar-plugins/thunar-archive-plugin.git
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4util-devel libthunar-devel libexo-gtk3-devel
@@ -50,7 +48,7 @@ using a single click.
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS
+%doc README.md AUTHORS NEWS
 %exclude %_libdir/thunarx-*/*.la
 %_libdir/thunarx-*/*.so
 %_libexecdir/%name/
@@ -60,6 +58,12 @@ using a single click.
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/thunar-archive-plugin.mo
 
 %changelog
+* Wed May 04 2022 Mikhail Efremov <sem@altlinux.org> 0.5.0-alt1
+- Added Vcs tag.
+- Updated Url.
+- Fixed License tag.
+- Updated to 0.5.0.
+
 * Tue Aug 21 2018 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
 - Don't package uz@Latn translation.
 - Update url.
