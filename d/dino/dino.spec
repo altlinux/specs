@@ -4,7 +4,7 @@
 
 Name: dino
 Version: 0.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Modern Jabber/XMPP client
 License: GPL-3.0
@@ -17,13 +17,21 @@ Source: https://github.com/%name/%name/archive/v%version/%name-%version.tar.gz
 Source: %name-%version.tar
 %endif
 
-Requires: lib%name = %EVR
+%define gst_api_ver 1.0
+%define webrtc_ver 0.2
+%define qrencode_ver 4.0
 
-BuildRequires(pre): cmake
-BuildRequires: gcc-c++ vala-tools libgtk+3-devel libgee0.8-devel libsoup-devel
-BuildRequires: libicu-devel pkgconfig(libqrencode) >= 4.0 libgcrypt-devel
-BuildRequires: gst-plugins1.0-devel libnice-devel
-BuildRequires: libgpgme-devel libgnutls-devel libsignal-protocol-c-devel libsqlite3-devel libsrtp2-devel
+Requires: lib%name = %EVR
+# VPx codecs
+Requires: gst-plugins-good%gst_api_ver
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ vala-tools libgtk+3-devel libgee0.8-devel libsoup-devel
+BuildRequires: libicu-devel pkgconfig(libqrencode) >= %qrencode_ver 
+BuildRequires: gst-plugins%gst_api_ver-devel libnice-devel
+BuildRequires: pkgconfig(webrtc-audio-processing) >= %webrtc_ver
+BuildRequires: libgcrypt-devel libgpgme-devel libgnutls-devel
+BuildRequires: libsignal-protocol-c-devel libsqlite3-devel libsrtp2-devel
 BuildRequires: libenchant-devel libgspell-devel
 
 %description
@@ -98,6 +106,9 @@ This package provides libraries and headers needed to develop Dino plugins.
 #%_datadir/vala/vapi/xmpp-vala.vapi
 
 %changelog
+* Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1.1
+- updated {build,}dependencies
+
 * Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - 0.3.0
 
