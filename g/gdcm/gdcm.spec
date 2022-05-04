@@ -27,8 +27,8 @@ BuildRequires: /usr/bin/git
 %endif
 
 Name:       gdcm
-Version:    3.0.9
-Release:    alt1_3
+Version:    3.0.12
+Release:    alt1_1
 Summary:    Grassroots DiCoM is a C++ library to parse DICOM medical files
 License:    BSD
 URL:        http://gdcm.sourceforge.net/wiki/index.php/Main_Page
@@ -39,7 +39,6 @@ Source1:    http://downloads.sourceforge.net/project/gdcm/gdcmData/gdcmData/gdcm
 Patch1: 0001-3.0.1-Use-copyright.patch
 # Fix for 1687233
 Patch3: 0002-Fix-export-variables.patch
-Patch4: 0003-Fix-missing-include-for-gcc-11.patch
 
 BuildRequires:  libCharLS-devel >= 2.0
 BuildRequires:  ctest cmake
@@ -147,8 +146,6 @@ cat %_sourcedir/0001-3.0.1-Use-copyright.patch | git apply --index --reject  -
 git commit -q -m 0001-3.0.1-Use-copyright.patch --author "rpmbuild <rpmbuild>"
 cat %_sourcedir/0002-Fix-export-variables.patch | git apply --index --reject  -
 git commit -q -m 0002-Fix-export-variables.patch --author "rpmbuild <rpmbuild>"
-cat %_sourcedir/0003-Fix-missing-include-for-gcc-11.patch | git apply --index --reject  -
-git commit -q -m 0003-Fix-missing-include-for-gcc-11.patch --author "rpmbuild <rpmbuild>"
 
 # Data source
 %setup -n GDCM-%{version} -q -T -D -a 1
@@ -235,25 +232,25 @@ make test -C %{__cmake_builddir} || exit 0
 %doc AUTHORS README.md
 %doc --no-dereference Copyright.txt README.Copyright.txt
 %{_libdir}/libgdcmCommon.so.3.0
-%{_libdir}/libgdcmCommon.so.3.0.9
+%{_libdir}/libgdcmCommon.so.3.0.12
 %{_libdir}/libgdcmDICT.so.3.0
-%{_libdir}/libgdcmDICT.so.3.0.9
+%{_libdir}/libgdcmDICT.so.3.0.12
 %{_libdir}/libgdcmDSED.so.3.0
-%{_libdir}/libgdcmDSED.so.3.0.9
+%{_libdir}/libgdcmDSED.so.3.0.12
 %{_libdir}/libgdcmIOD.so.3.0
-%{_libdir}/libgdcmIOD.so.3.0.9
+%{_libdir}/libgdcmIOD.so.3.0.12
 %{_libdir}/libgdcmMEXD.so.3.0
-%{_libdir}/libgdcmMEXD.so.3.0.9
+%{_libdir}/libgdcmMEXD.so.3.0.12
 %{_libdir}/libgdcmMSFF.so.3.0
-%{_libdir}/libgdcmMSFF.so.3.0.9
+%{_libdir}/libgdcmMSFF.so.3.0.12
 %{_libdir}/libgdcmjpeg12.so.3.0
-%{_libdir}/libgdcmjpeg12.so.3.0.9
+%{_libdir}/libgdcmjpeg12.so.3.0.12
 %{_libdir}/libgdcmjpeg16.so.3.0
-%{_libdir}/libgdcmjpeg16.so.3.0.9
+%{_libdir}/libgdcmjpeg16.so.3.0.12
 %{_libdir}/libgdcmjpeg8.so.3.0
-%{_libdir}/libgdcmjpeg8.so.3.0.9
+%{_libdir}/libgdcmjpeg8.so.3.0.12
 %{_libdir}/libgdcmmd5.so.3.0
-%{_libdir}/libgdcmmd5.so.3.0.9
+%{_libdir}/libgdcmmd5.so.3.0.12
 %{_libdir}/libsocketxx.so.1.2
 %{_libdir}/libsocketxx.so.1.2.0
 %dir %{_datadir}/%{name}
@@ -307,6 +304,9 @@ make test -C %{__cmake_builddir} || exit 0
 %{python3_sitelibdir}/__pycache__/%{name}*
 
 %changelog
+* Wed May 04 2022 Slava Aseev <ptrnine@altlinux.org> 3.0.12-alt1_1
+- new version
+
 * Thu Oct 14 2021 Igor Vlasenko <viy@altlinux.org> 3.0.9-alt1_3
 - new version
 
