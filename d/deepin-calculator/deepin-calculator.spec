@@ -1,10 +1,14 @@
 %def_disable clang
 
 Name: deepin-calculator
-Version: 5.7.9
+Version: 5.7.21
 Release: alt1
 Summary: An easy to use calculator for ordinary users
-License: GPL-3.0+
+License: GPL-2.0+ and GPL-3.0+
+
+# 3rdparty: GPL-2.0+
+# src: GPL-3.0+
+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-calculator
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -60,6 +64,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/calculator/*/*
 
 %changelog
+* Wed May 04 2022 Leontiy Volodin <lvol@altlinux.org> 5.7.21-alt1
+- New version (5.7.21).
+- Checkout from dev to master branch.
+
 * Tue Apr 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.7.9-alt1
 - New version (5.7.9).
 
