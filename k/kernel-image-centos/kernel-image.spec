@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 83
+%define centos_release 85
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,24 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed May 04 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.85-alt1.el9
+- Updated to kernel-5.14.0-85.el9 (fixes: CVE-2022-1015, CVE-2022-1016):
+  + bnx2x: driver updates
+  + CNB: net: annotate accesses to dev->gso_max_* fields
+  + CNB: net_tstamp: add new flag HWTSTAMP_FLAG_BONDED_PHC_INDEX
+  + CNB: string.h: Introduce memset_after and memset_startat helpers
+  + DRM 5.18 backport dependencies
+  + Fix for two recent CVEs
+  + Fix SCTP client-side peeloff issues with SELinux
+  + ipv6: 9.1 P1 stable backports from upstream
+  + mm: backport folio support
+  + netfilter: conntrack: Add and use nf_ct_set_auto_assign_helper_warned()
+  + net: mana: Add handling of CQE_RX_TRUNCATED
+  + redhat/configs: Enable CONFIG_NFT_SYNPROXY
+  + redhat/configs: enable CONFIG_RANDOMIZE_KSTACK_OFFSET_DEFAULT
+  + [RHEL-9.1.0] IPMI update to kernel v5.17
+  + Update kernel's PCI subsystem to v5.17
+
 * Sat Apr 30 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.83-alt1.el9
 - Updated to kernel-5.14.0-83.el9:
   + Add the amd_pstate driver
