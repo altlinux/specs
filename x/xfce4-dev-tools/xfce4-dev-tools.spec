@@ -1,11 +1,11 @@
 Name: xfce4-dev-tools
 Version: 4.17.0
-Release: alt2
+Release: alt3
 
 Summary: Development tools for Xfce
 Summary (ru): Инструменты для разработчика Xfce
 License: GPLv2+
-Url: https://www.xfce.org/
+Url: https://docs.xfce.org/xfce/xfce4-dev-tools/start
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 Vcs: https://gitlab.xfce.org/xfce/xfce4-dev-tools.git
@@ -52,6 +52,10 @@ make check
 %_man1dir/*
 
 %changelog
+* Wed May 04 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt3
+- Updated Url tag.
+- Don't use egrep.
+
 * Mon Oct 04 2021 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt2
 - Don't pull git.
 - Don't pull docker (closes: #41043).
