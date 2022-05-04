@@ -4,7 +4,7 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: plasma5-%rname
-Version: 5.24.4
+Version: 5.24.5
 Release: alt1
 %K5init altplace no_appdata
 
@@ -111,6 +111,9 @@ grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
 %_K5lib/libKInfoCenterInternal.so.%kinfocenterinternal_sover
 
 %changelog
+* Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt1
+- new version
+
 * Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
 - new version
 

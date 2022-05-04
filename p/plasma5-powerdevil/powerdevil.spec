@@ -12,7 +12,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: plasma5-%rname
-Version: 5.24.4
+Version: 5.24.5
 Release: alt1
 %K5init altplace
 
@@ -160,6 +160,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt1
+- new version
+
 * Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
 - new version
 

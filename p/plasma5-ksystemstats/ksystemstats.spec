@@ -5,7 +5,7 @@
 %define rname ksystemstats
 
 Name: plasma5-%rname
-Version: 5.24.4
+Version: 5.24.5
 Release: alt1
 %K5init altplace
 
@@ -19,7 +19,7 @@ Patch1: alt-find-dbus-interface.patch
 
 # Automatically added by buildreq on Wed Jul 07 2021 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libctf-nobfd0 libgio-devel libglvnd-devel libgpg-error libnm-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libsasl2-3 libssl-devel libstdc++-devel libudev-devel libxcbutil-keysyms pkg-config python-modules python2-base python3 python3-base python3-module-paste qt5-base-devel rpm-build-python3 rpm-macros-python sh4 tzdata
-#BuildRequires: appstream extra-cmake-modules kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-networkmanager-qt-devel libnl-devel libsensors3-devel plasma5-libksysguard-devel python-modules-compiler python3-dev python3-module-mpl_toolkits qt5-svg-devel qt5-wayland-devel qt5-webengine-devel tbb-devel
+#BuildRequires: appstream extra-cmake-modules kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-networkmanager-qt-devel libnl-devel libsensors3-devel plasma5-libksysguard-devel python-modules-compiler python3-dev python3-module-mpl_toolkits qt5-svg-devel qt5-wayland-devel tbb-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: libnl-devel libsensors3-devel
 BuildRequires: extra-cmake-modules qt5-base-devel
@@ -81,6 +81,9 @@ Requires: %name-common
 #%_K5lib/libksystemstats.so.*
 
 %changelog
+* Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt1
+- new version
+
 * Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
 - new version
 

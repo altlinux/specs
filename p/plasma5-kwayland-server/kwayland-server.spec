@@ -4,7 +4,7 @@
 %define libkwaylandserver libkwaylandserver%sover
 
 Name: plasma5-%rname
-Version: 5.24.4
+Version: 5.24.5
 Release: alt1
 %K5init altplace
 
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 
 # Automatically added by buildreq on Tue Jul 28 2020 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libglvnd-devel libqt5-concurrent libqt5-core libqt5-gui libqt5-waylandclient libsasl2-3 libssl-devel libstdc++-devel libwayland-client-devel libwayland-server libwayland-server-devel pkg-config python-modules python2-base python3 python3-base python3-dev qt5-base-devel rpm-build-python3 sh4 wayland-devel xorg-proto-devel
-#BuildRequires: appstream extra-cmake-modules git-core kde5-plasma-wayland-protocols kf5-kwayland-devel python3-module-mpl_toolkits qt5-wayland-devel qt5-webengine-devel wayland-protocols
+#BuildRequires: appstream extra-cmake-modules git-core kde5-plasma-wayland-protocols kf5-kwayland-devel python3-module-mpl_toolkits qt5-wayland-devel wayland-protocols
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules kde5-plasma-wayland-protocols kf5-kwayland-devel python3-module-mpl_toolkits qt5-wayland-devel wayland-protocols
 
@@ -77,6 +77,9 @@ mv %buildroot/KF5/* %buildroot/%_K5inc/
 %_K5lib/libKWaylandServer.so.*
 
 %changelog
+* Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt1
+- new version
+
 * Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
 - new version
 

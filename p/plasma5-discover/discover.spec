@@ -15,8 +15,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.24.4
-Release: alt2
+Version: 5.24.5
+Release: alt1
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -271,6 +271,9 @@ done
 
 
 %changelog
+* Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt1
+- new version
+
 * Mon Apr 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt2
 - don't apply alt-discover-update-all-packages-from-appstream.patch
 

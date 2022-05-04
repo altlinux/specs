@@ -1,7 +1,8 @@
 %define rname plasma-sdk
+%filter_from_requires /inkscape/d
 
 Name: plasma5-sdk
-Version: 5.24.4
+Version: 5.24.5
 Release: alt1
 %K5init altplace no_appdata
 
@@ -11,6 +12,8 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: kf5-kirigami
+Provides: kf5-plasma-sdk = %EVR
+Obsoletes: kf5-plasma-sdk < %EVR
 
 Source: %rname-%version.tar
 
@@ -25,9 +28,6 @@ BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf
 BuildRequires: kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
 BuildRequires: kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel kf5-kdbusaddons-devel kf5-kitemmodels-devel
 BuildRequires: kf5-kdoctools-devel kf5-syntax-highlighting-devel
-
-Provides: kf5-plasma-sdk = %EVR
-Obsoletes: kf5-plasma-sdk < %EVR
 
 %description
 Applications useful for Plasma Development.
@@ -83,6 +83,9 @@ KF5 library
 %_K5srv/*.desktop
 
 %changelog
+* Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt1
+- new version
+
 * Wed Mar 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.4-alt1
 - new version
 
