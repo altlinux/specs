@@ -1,6 +1,6 @@
 Name: irony-server
 Version: 1.5.0
-Release: alt2
+Release: alt3
 
 Summary: Clang-based irony-mode companion server
 License: GPLv3
@@ -10,8 +10,7 @@ Url: https://github.com/Sarcasm/irony-mode
 Source: %name-%version-%release.tar
 
 BuildRequires: cmake
-BuildRequires: clang12.0 clang12.0-devel clang12.0-tools clangd12.0
-BuildRequires: llvm12.0-devel llvm12.0-devel
+BuildRequires: clang-devel llvm-devel
 BuildRequires: libstdc++-devel zlib-devel
 
 %description
@@ -25,7 +24,6 @@ featuring code completion and syntax checking in Emacs.
 %define optflags_lto %nil
 export CC=clang
 export CXX=clang++
-export ALTWRAP_LLVM_VERSION=12.0
 %cmake -S server
 %cmake_build
 
@@ -37,6 +35,9 @@ export ALTWRAP_LLVM_VERSION=12.0
 %_bindir/irony-server
 
 %changelog
+* Wed May 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0-alt3
+- unpin clang version
+
 * Wed Apr 13 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0-alt2
 - pin clang-12 for build
 
