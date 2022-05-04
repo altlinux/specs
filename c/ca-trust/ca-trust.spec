@@ -6,11 +6,11 @@
 %define hooks_dir %_prefix/libexec/ca-trust/update.d
 
 Name: ca-trust
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 Summary: CA certificates and associated trust infrastructure
-License: %gpl2plus
+License: GPLv2+
 Group: System/Base
 BuildArch: noarch
 
@@ -21,7 +21,6 @@ Source3: extract-openssl.hook
 Source4: extract-pem.hook
 Source5: extract-java.hook
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: asciidoc asciidoc-a2x
 
 Requires: p11-kit-trust
@@ -136,6 +135,10 @@ ln -rs %buildroot%catrustdir/extracted/%java_bundle \
 %ghost %catrustdir/extracted/%java_bundle
 
 %changelog
+* Wed May 04 2022 Mikhail Efremov <sem@altlinux.org> 0.1.3-alt1
+- filetrigger: Replace egrep with grep -E.
+- Don't use rpm-build-licenses.
+
 * Thu Jun 27 2019 Mikhail Efremov <sem@altlinux.org> 0.1.2-alt1
 - filetrigger: Add hooks directory to activation paths.
 
