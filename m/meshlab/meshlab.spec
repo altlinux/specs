@@ -2,7 +2,7 @@
 
 Name: meshlab
 Version: 2021.10
-Release: alt1
+Release: alt1.1
 
 Summary: A system for processing and editing unstructured 3D triangular meshes
 License: GPLv2+ and BSD and Public Domain
@@ -41,7 +41,11 @@ BuildRequires: qt5-declarative-devel
 BuildRequires: qtsoap5-devel
 #BuildRequires: libexif-devel
 BuildRequires: boost-devel
+# disables filter_mesh_booleans plugin on e2k
+# because of "incomplete type is not allowed" errors
+%ifnarch %e2k
 BuildRequires: cgal-devel
+%endif
 BuildRequires: libmuparser-devel
 #BuildRequires: chrpath
 #BuildRequires: patchelf
@@ -148,6 +152,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed May 04 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2021.10-alt1.1
+- fixed build for Elbrus
+
 * Mon Dec 13 2021 Anton Midyukov <antohami@altlinux.org> 2021.10-alt1
 - new version (2021.10) with rpmgs script
 
