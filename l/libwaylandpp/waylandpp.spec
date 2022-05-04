@@ -1,5 +1,5 @@
 Name: libwaylandpp
-Version: 0.2.9
+Version: 1.0.0
 Release: alt1
 
 Summary: C++ bindings for Wayland
@@ -14,6 +14,7 @@ BuildRequires: pkgconfig(pugixml)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
+BuildRequires: pkgconfig(wayland-server)
 
 %package devel
 Summary: C++ bindings for Wayland
@@ -50,6 +51,9 @@ This package contains development part of waylandpp
 %_datadir/waylandpp
 
 %changelog
+* Wed May 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt1
+- 1.0.0 released
+
 * Mon Feb 14 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.9-alt1
 - 0.2.9 released
 
