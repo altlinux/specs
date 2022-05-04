@@ -4,8 +4,8 @@
 %define libfalkonprivate libfalkonprivate%sover
 
 Name: kde5-%rname
-Version: 22.02
-Release: alt2
+Version: 22.04
+Release: alt1
 %K5init altplace
 
 Summary: Webbrowser designed for mobile devices
@@ -76,6 +76,9 @@ __EOF__
 %_K5notif/*angelfish*
 
 %changelog
+* Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 22.04-alt1
+- new version
+
 * Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.02-alt2
 - using not_qt5_qtwebengine_arches macro
 

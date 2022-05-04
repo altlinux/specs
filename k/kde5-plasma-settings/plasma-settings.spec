@@ -1,7 +1,7 @@
 %define rname plasma-settings
 
 Name: kde5-%rname
-Version: 22.02
+Version: 22.04
 Release: alt1
 %K5init altplace no_appdata
 
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 #BuildRequires: appstream extra-cmake-modules kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel kf5-kpackage-devel kf5-plasma-framework-devel libkf5kcmutils python-modules-compiler python3-dev qt5-svg-devel qt5-translations qt5-wayland-devel qt5-webengine-devel tbb-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
+BuildRequires: qt5-svg-devel qt5-wayland-devel
 BuildRequires: ModemManager-devel kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel
 BuildRequires: kf5-kpackage-devel kf5-plasma-framework-devel
@@ -87,9 +87,9 @@ Requires: %name-common
 %files
 %_K5xdgapp/*plasmasettings*.desktop
 %_K5data/kpackage/kcms/*/
-%exclude %_K5data/kpackage/kcms/*virtualkeyboard*/
+%exclude %_K5data/kpackage/kcms/*keyboard*/
 %_K5plug/kcms/*.so
-%exclude %_K5plug/kcms/*virtualkeyboard*.so
+%exclude %_K5plug/kcms/*keyboard*.so
 #%_K5srv/*.desktop
 #%exclude %_K5srv/*virtualkeyboard*.desktop
 
@@ -98,8 +98,8 @@ Requires: %name-common
 %_K5data/kpackage/genericqml/org.kde.plasma.settings/
 
 %files virtualkeyboard
-%_K5data/kpackage/kcms/*virtualkeyboard*/
-%_K5plug/kcms/*virtualkeyboard*.so
+%_K5data/kpackage/kcms/*keyboard*/
+%_K5plug/kcms/*keyboard*.so
 #%_K5srv/*virtualkeyboard*.desktop
 
 #%files devel
@@ -113,6 +113,9 @@ Requires: %name-common
 #%_K5lib/libplasma-settings.so.*
 
 %changelog
+* Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 22.04-alt1
+- new version
+
 * Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 22.02-alt1
 - new version
 

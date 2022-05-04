@@ -1,7 +1,7 @@
 %define rname krecorder
 
 Name: kde5-%rname
-Version: 22.02
+Version: 22.04
 Release: alt1
 %K5init no_appdata
 
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 #BuildRequires: appstream extra-cmake-modules kf5-kconfig-devel kf5-ki18n-devel kf5-kirigami-devel python3-dev qt5-multimedia-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel tbb-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel
-BuildRequires: qt5-multimedia-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
+BuildRequires: qt5-multimedia-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel
 BuildRequires: kf5-kconfig-devel kf5-ki18n-devel kf5-kirigami-devel kf5-kcoreaddons-devel
 
 %description
@@ -73,6 +73,9 @@ Requires: %name-common
 #%_K5lib/libkrecorder.so.*
 
 %changelog
+* Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 22.04-alt1
+- new version
+
 * Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 22.02-alt1
 - new version
 

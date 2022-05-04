@@ -1,9 +1,9 @@
 %define rname kclock
 
 Name: kde5-%rname
-Version: 22.02
+Version: 22.04
 Release: alt1
-%K5init altplace
+%K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
 Summary: Clock
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: kf5-kirigami-addons-dateandtime
+Requires: %name-common
 
 Source: %rname-%version.tar
 Patch1: alt-bindir.patch
@@ -38,6 +39,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: %name-common
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -61,8 +63,11 @@ Requires: %name-common
 %K5install
 %find_lang %name --with-kde --all-name
 
-%files -f %name.lang
+
+%files common -f %name.lang
 %doc LICENSES/*
+
+%files
 %_K5bin/kclock*
 %_K5plug/plasma/applets/*kclock*.so
 %_K5start/*kclock*.desktop
@@ -73,17 +78,21 @@ Requires: %name-common
 %_K5data/plasma/plasmoids/org.kde.plasma.kclock*/
 %_K5notif/*kclock*.notifyrc
 
-#%files devel
+%files devel
 #%_K5inc/kclock_version.h
 #%_K5inc/kclock/
 #%_K5link/lib*.so
 #%_K5lib/cmake/kclock
 #%_K5archdata/mkspecs/modules/qt_kclock.pri
+%_K5dbus_iface/org.kde.kclockd.*.xml
 
 #%files -n libkf5clock
 #%_K5lib/libkclock.so.*
 
 %changelog
+* Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 22.04-alt1
+- new version
+
 * Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 22.02-alt1
 - new version
 

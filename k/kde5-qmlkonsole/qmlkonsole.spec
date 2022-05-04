@@ -1,7 +1,7 @@
 %define rname qmlkonsole
 
 Name: kde5-%rname
-Version: 22.02
+Version: 22.04
 Release: alt1
 %K5init
 
@@ -19,7 +19,7 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules debugedit elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickcontrols2 libqt5-svg libqt5-test libqt5-widgets libqt5-xml libsasl2-3 libssl-devel libstdc++-devel python-modules python2-base python3 python3-base python3-module-paste qt5-base-common qt5-base-devel qt5-declarative-devel rpm-build-python3 sh4 tzdata
 #BuildRequires: appstream extra-cmake-modules kf5-kconfig-devel kf5-ki18n-devel kf5-kirigami-devel python3-dev python3-module-mpl_toolkits qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules qt5-base-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
+BuildRequires: extra-cmake-modules qt5-base-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel
 BuildRequires: kf5-kconfig-devel kf5-ki18n-devel kf5-kirigami-devel
 
 %description
@@ -75,6 +75,9 @@ Requires: %name-common
 #%_K5lib/libqmlkonsole.so.*
 
 %changelog
+* Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 22.04-alt1
+- new version
+
 * Mon Feb 14 2022 Sergey V Turchin <zerg@altlinux.org> 22.02-alt1
 - new version
 
