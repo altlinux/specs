@@ -1,12 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 %define ver_major 6.0
 %define api_ver 2.0
 
 Name: switchboard
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.%name
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Modular Desktop Settings Hub for elementary OS
 License: LGPL-2.1
@@ -80,6 +80,9 @@ This package contains files that are needed to develop Switchboard plugins.
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Thu May 05 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.1-alt1
+- 6.0.1
+
 * Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt2
 - updated to 6.0.0-57-gdeeff7c (fixed build with meson >= 0.61,
   updated translations)
