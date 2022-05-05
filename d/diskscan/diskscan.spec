@@ -7,7 +7,7 @@ BuildRequires: libtinfo-devel
 #
 # spec file for package diskscan
 #
-# Copyright (c) 2018 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2021 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -18,17 +18,17 @@ BuildRequires: libtinfo-devel
 # license that conforms to the Open Source Definition (Version 1.9)
 # published by the Open Source Initiative.
 
-# Please submit bugfixes or comments via http://bugs.opensuse.org/
+# Please submit bugfixes or comments via https://bugs.opensuse.org/
 #
 
 
 Name:           diskscan
 Version:        0.20
-Release:        alt1_2.10
+Release:        alt1_3.5
 Summary:        Scan disk for bad or near failure sectors
 License:        GPL-3.0-or-later
 Group:          System/Kernel and hardware
-URL:            http://blog.disksurvey.org/proj/diskscan/
+URL:            https://github.com/baruch/diskscan
 Source0:        https://github.com/baruch/diskscan/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 BuildRequires:  cmake >= 3.0.2
 BuildRequires:  gcc-c++
@@ -66,6 +66,9 @@ the disk vendor decision making logic.
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Thu May 05 2022 Igor Vlasenko <viy@altlinux.org> 0.20-alt1_3.5
+- update by suseimport
+
 * Sat Dec 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_2.10
 - cleaned python2 buildrequires
 
