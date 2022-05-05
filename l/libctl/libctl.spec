@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/guile /usr/bin/indent libreadline-devel
 #
 # spec file for package libctl
 #
-# Copyright (c) 2019 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (c) 2022 SUSE LLC
 #
 # All modifications and additions to the file contributed by third parties
 # remain the property of their copyright owners, unless otherwise agreed
@@ -22,18 +22,18 @@ BuildRequires: /usr/bin/guile /usr/bin/indent libreadline-devel
 
 
 Name:           libctl
-Version:        4.3.0
-Release:        alt2_0
+Version:        4.5.1
+Release:        alt1_1.1
 %define somajor 7
 Summary:        A guile Library for Scientific Simulations
 License:        GPL-2.0-or-later
 Group:          Development/Other
-Url:            http://ab-initio.mit.edu/wiki/index.php/Libctl
-Source0:        https://github.com/stevengj/libctl/releases/download/v%{version}/libctl-%{version}.tar.gz
+URL:            https://libctl.readthedocs.io/en/latest/
+Source0:        https://github.com/NanoComp/libctl/releases/download/v%{version}/libctl-%{version}.tar.gz
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  gcc-fortran
-BuildRequires:  guile22-devel
+BuildRequires:  guile-devel
 BuildRequires:  libtool
 BuildRequires:  libnlopt-devel
 BuildRequires:  pkg-config
@@ -47,6 +47,8 @@ and Meep software, but has proven useful in other programs too.
 %package -n     %{name}%{somajor}
 Summary:        A guile Library for Scientific Simulations
 Group:          System/Libraries
+# Missed SOVERSION bump
+Conflicts:      libctl7 <= 4.5.0
 
 %description -n %{name}%{somajor}
 libctl is a free Guile-based library implementing flexible control files
@@ -92,11 +94,12 @@ make
 find %{buildroot} -type f -name "*.la" -delete -print
 
 install -d %{buildroot}%{_docdir}/%{name}/
-install -m 644 {AUTHORS,COPYING,NEWS.md,README.md} %{buildroot}%{_docdir}/%{name}/
+install -m 644 {AUTHORS,NEWS.md,README.md} %{buildroot}%{_docdir}/%{name}/
 cp -r doc/ %{buildroot}%{_docdir}/%{name}/
 
 %files -n %{name}%{somajor}
-%{_libdir}/libctl*.so.*
+%doc --no-dereference COPYING
+%{_libdir}/libctl*.so.%{somajor}*
 
 %files devel
 %{_bindir}/gen-ctl-io
@@ -109,6 +112,9 @@ cp -r doc/ %{buildroot}%{_docdir}/%{name}/
 %{_docdir}/%{name}/
 
 %changelog
+* Thu May 05 2022 Igor Vlasenko <viy@altlinux.org> 4.5.1-alt1_1.1
+- update by suseimport
+
 * Tue Aug 06 2019 Igor Vlasenko <viy@altlinux.ru> 4.3.0-alt2_0
 - fixed somajor for 4.3.0 (should be 7)
 
