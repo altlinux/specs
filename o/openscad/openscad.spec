@@ -3,7 +3,7 @@
 
 Name: openscad
 Version: 2021.01
-Release: alt2
+Release: alt3
 
 Summary: The Programmers Solid 3D CAD Modeller
 
@@ -16,7 +16,8 @@ Url: http://openscad.org/
 
 # Source0-url: https://github.com/%name/%name/releases/download/%name-%version/%name-%version.src.tar.gz
 Source0: %name-%version.tar
-#Source1: ru.po
+# https://github.com/openscad/openscad/blob/0f54c3e98d2a4638951b9ea5a32336a9a7839130/locale/ru.po
+Source1: ru.po
 Patch: openscad-polyclipping.patch
 # fix build with cgal >= 5.3
 Patch1: cc49ad8dac24309f5452d5dea9abd406615a52d9.patch
@@ -83,7 +84,7 @@ changes, however many things are already working.
 %patch -p1
 %patch1 -p1
 
-#cp -f %SOURCE1 locale/ru.po
+cp -f %SOURCE1 locale/ru.po
 
 # Unbundle polyclipping
 rm src/ext/polyclipping -rf
@@ -149,6 +150,9 @@ popd
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Thu May 05 2022 Anton Midyukov <antohami@altlinux.org> 2021.01-alt3
+- update russian translation from upstream
+
 * Fri Aug 13 2021 Vitaly Lipatov <lav@altlinux.ru> 2021.01-alt2
 - NMU: fix build with cgal >= 5.3
 - NMU: fix URL
