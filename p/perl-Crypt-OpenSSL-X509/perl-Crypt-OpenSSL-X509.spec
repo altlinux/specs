@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Crypt/OpenSSL/Guess.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define bname Crypt-OpenSSL-X509
 Name: perl-%bname
-Version: 1.913
+Version: 1.914
 Release: alt1
 Summary: Perl interface to OpenSSL for X509
 License: Perl
@@ -39,6 +42,9 @@ rm -rf ./inc
 
 
 %changelog
+* Thu May 05 2022 Igor Vlasenko <viy@altlinux.org> 1.914-alt1
+- automated CPAN update
+
 * Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 1.913-alt1
 - automated CPAN update
 
