@@ -3,7 +3,7 @@
 
 Name: systemd-boot-trigger
 Version: 1.0
-Release: alt5
+Release: alt6
 
 Summary: Filetrigger for systemd-boot
 License: GPL-2.0-only
@@ -28,6 +28,9 @@ install -p -m755 -D filetrigger %buildroot%_rpmlibdir/systemd-boot.filetrigger
 %_rpmlibdir/systemd-boot.filetrigger
 
 %changelog
+* Fri May 06 2022 Alexey Shabalin <shaba@altlinux.org> 1.0-alt6
+- Replace egrep by "grep -E".
+
 * Wed Sep 30 2020 Alexey Shabalin <shaba@altlinux.org> 1.0-alt5
 - Fixed path to kernel-install (changed in systemd-246.6-alt2).
 
