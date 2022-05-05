@@ -7,7 +7,7 @@
 
 Name: libnotify
 Version: %ver_major.11
-Release: alt1
+Release: alt2
 
 Summary: Desktop notification library
 Group: System/Libraries
@@ -138,6 +138,9 @@ the command line.
 %{?_enable_docbook_docs:%exclude %_datadir/doc/%name/}
 
 %changelog
+* Thu May 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.7.11-alt2
+- updated to 0.7.11-11-g4d68baf (also fixed i25, ALT #42685)
+
 * Wed Apr 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.7.11-alt1
 - 0.7.11
 
