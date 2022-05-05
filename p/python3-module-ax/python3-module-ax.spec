@@ -3,7 +3,7 @@
 %define thisdocdir %{_defaultdocdir}/%{name}
 
 Name: python3-module-%{pyname}
-Version: 0.17.0
+Version: 0.17.1
 Release: alt1
 
 Summary: Generic function library initially developed for cve-manager
@@ -45,6 +45,11 @@ cp COPYING %{buildroot}%{thisdocdir}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu May 05 2022 Alexey Appolonov <alexey@altlinux.org> 0.17.1-alt1
+- Improved algorithm of the "CompareLVersions" function;
+- The name of a "Printer" class method that clears the stack of indentation
+  levels is corrected.
+
 * Wed Oct 27 2021 Alexey Appolonov <alexey@altlinux.org> 0.17.0-alt1
 - Ability to control indentation levels while using the "Printer" class;
 - Function "FormNestedDictFromCSV" is deprecated.
