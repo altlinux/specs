@@ -81,7 +81,7 @@
 %endif
 
 %define ver_major 22.0
-%define ver_minor 2
+%define ver_minor 3
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -488,7 +488,8 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 
 %files -n xorg-dri-swrast
 %ghost %_sysconfdir/drirc
-%_datadir/drirc.d
+%dir %_datadir/drirc.d
+%_datadir/drirc.d/00-mesa-defaults.conf
 %_libdir/X11/modules/dri/*swrast*_dri.so
 %_libdir/X11/modules/dri/libgallium_dri.so
 %ifarch %gallium_pipe_arches
@@ -557,6 +558,7 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %ifarch %vulkan_radeon_arches
 %_libdir/libvulkan_radeon.so
 %_datadir/vulkan/icd.d/radeon_icd*.json
+%_datadir/drirc.d/00-radv-defaults.conf
 %endif
 %endif
 
@@ -579,6 +581,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu May 05 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.3-alt1
+- 22.0.3
+
 * Fri Apr 22 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.2-alt1
 - 22.0.2
 
