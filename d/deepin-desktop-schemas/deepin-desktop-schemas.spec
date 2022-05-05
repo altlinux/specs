@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 5.10.2
+Version: 5.10.6
 Release: alt1
 Summary: GSettings deepin desktop-wide schemas
 License: GPL-3.0
@@ -31,8 +31,6 @@ Requires(postun): dconf gsettings-desktop-schemas
 %setup
 %patch -p1
 
-sed -i 's|pkg.deepin.io/lib/|github.com/linuxdeepin/go-lib/|' \
-    $(find ./ -type f -name '*.go')
 sed -i 's|adwaita-lock.jpg|adwaita-night.jpg|' \
     schemas/wrap/com.deepin.wrap.gnome.desktop.screensaver.gschema.xml
 # sed -i 's|python|python3|' Makefile tools/overrides.py
@@ -87,6 +85,9 @@ dconf update
 %_sysconfdir/dconf/db/local.d/01-deepin-disable-timeout-lockscreen
 
 %changelog
+* Wed May 04 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.6-alt1
+- New version (5.10.6).
+
 * Mon Feb 07 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.2-alt1
 - New version (5.10.2).
 - Built with internal golang submodules.
