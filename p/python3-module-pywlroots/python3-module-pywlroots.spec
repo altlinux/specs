@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-pywlroots
-Version: 0.15.12
+Version: 0.15.13
 Release: alt1
 
 Summary: Python binding to the wlroots library using cffi
@@ -43,6 +43,9 @@ provide wlroots keyboard functionality.
 %install
 %python3_install
 
+# hack to drop .abi3 from binaries
+find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
+
 %check
 %__python3 -m pytest tests
 
@@ -52,6 +55,10 @@ provide wlroots keyboard functionality.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Apr 19 2022 Egor Ignatov <egori@altlinux.org> 0.15.13-alt1
+- add hack to drop .abi3 from binaries
+- new version 0.15.13
+
 * Fri Apr 15 2022 Egor Ignatov <egori@altlinux.org> 0.15.12-alt1
 - new version 0.15.12
 

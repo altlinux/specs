@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-pywayland
-Version: 0.4.11
+Version: 0.4.12
 Release: alt1
 
 Summary: Python bindings for the libwayland library
@@ -41,6 +41,9 @@ pure Python.
 %install
 %python3_install
 
+# hack to drop .abi3 from binaries
+find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
+
 %check
 export XDG_RUNTIME_DIR="${PWD}/temp"
 mkdir $XDG_RUNTIME_DIR
@@ -53,6 +56,10 @@ mkdir $XDG_RUNTIME_DIR
 %python3_sitelibdir/pywayland-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Apr 19 2022 Egor Ignatov <egori@altlinux.org> 0.4.12-alt1
+- hack to drop .abi3 from binaries
+- new version 0.4.12
+
 * Thu Feb 24 2022 Egor Ignatov <egori@altlinux.org> 0.4.11-alt1
 - new version 0.4.11
 
