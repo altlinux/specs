@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: lib%rname%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: C++ wrapper for GLib
@@ -110,6 +110,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu May 05 2022 Yuri N. Sedunov <aris@altlinux.org> 2.72.1-alt1
+- 2.72.1
+
 * Fri Apr 08 2022 Yuri N. Sedunov <aris@altlinux.org> 2.72.0-alt1
 - 2.72.0
 
