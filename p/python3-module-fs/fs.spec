@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.4.15
+Version: 2.4.16
 Release: alt1
 
 Summary: Filesystem abstraction layer
@@ -122,6 +122,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Thu May 05 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.16-alt1
+- Automatically updated to 2.4.16.
+
 * Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.15-alt1
 - Automatically updated to 2.4.15.
 
