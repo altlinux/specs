@@ -30,7 +30,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        100.0.4896.60
+Version:        101.0.4951.41
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -80,7 +80,6 @@ Patch010: 0010-Move-offending-function-to-chromeos-only.patch
 Patch011: 0011-ALT-Disable-NOMERGE-attribute.patch
 Patch012: 0012-FEDORA-bootstrap-with-python3.patch
 Patch013: 0013-sql-make-VirtualCursor-standard-layout-type.patch
-Patch014: 0014-GCC-explicitely-move-return-value-of-SCTHashdanceMet.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -481,6 +480,43 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri May 06 2022 Fr. Br. George <george@altlinux.org> 101.0.4951.41-alt1
+- GOST version
+
+* Wed Apr 27 2022 Alexey Gladkov <legion@altlinux.ru> 101.0.4951.41-alt1
+- New version (101.0.4951.41).
+- Security fixes:
+  - CVE-2022-1477: Use after free in Vulkan.
+  - CVE-2022-1478: Use after free in SwiftShader.
+  - CVE-2022-1479: Use after free in ANGLE.
+  - CVE-2022-1480: Use after free in Device API.
+  - CVE-2022-1481: Use after free in Sharing.
+  - CVE-2022-1482: Inappropriate implementation in WebGL.
+  - CVE-2022-1483: Heap buffer overflow in WebGPU.
+  - CVE-2022-1484: Heap buffer overflow in Web UI Settings.
+  - CVE-2022-1485: Use after free in File System API.
+  - CVE-2022-1486: Type Confusion in V8.
+  - CVE-2022-1487: Use after free in Ozone.
+  - CVE-2022-1488: Inappropriate implementation in Extensions API.
+  - CVE-2022-1489: Out of bounds memory access in UI Shelf.
+  - CVE-2022-1490: Use after free in Browser Switcher.
+  - CVE-2022-1491: Use after free in Bookmarks.
+  - CVE-2022-1492: Insufficient data validation in Blink Editing.
+  - CVE-2022-1493: Use after free in Dev Tools.
+  - CVE-2022-1494: Insufficient data validation in Trusted Types.
+  - CVE-2022-1495: Incorrect security UI in Downloads.
+  - CVE-2022-1496: Use after free in File Manager.
+  - CVE-2022-1497: Inappropriate implementation in Input.
+  - CVE-2022-1498: Inappropriate implementation in HTML Parser.
+  - CVE-2022-1499: Inappropriate implementation in WebAuthentication.
+  - CVE-2022-1500: Insufficient data validation in Dev Tools.
+  - CVE-2022-1501: Inappropriate implementation in iframe.
+
+* Fri Apr 15 2022 Alexey Gladkov <legion@altlinux.ru> 100.0.4896.127-alt1
+- New version (100.0.4896.127).
+- Security fixes:
+  - CVE-2022-1364: Type Confusion in V8.
+
 * Fri Apr 01 2022 Fr. Br. George <george@altlinux.org> 100.0.4896.60-alt1
 - GOST version
 
