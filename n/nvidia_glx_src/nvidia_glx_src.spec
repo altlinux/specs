@@ -21,7 +21,7 @@
 %endif
 
 Name: nvidia_glx_src
-Version: 510.60.02
+Version: 510.68.02
 Release: alt1
 
 Source0: null
@@ -78,7 +78,6 @@ nvidia CUDA library
 %package -n libnvidia-opencl
 Group: System/Libraries
 Summary: nvidia library
-Provides: libnvidia-opencl = %version-%release
 Requires: ocl-icd
 %description -n libnvidia-opencl
 nvidia OpenCL library
@@ -153,6 +152,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %_libdir/libnvidia-encode.so.%version
 
 %changelog
+* Thu May 05 2022 Sergey V Turchin <zerg@altlinux.org> 510.68.02-alt1
+- new version
+
 * Fri Apr 15 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt1
 - new version
 

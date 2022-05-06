@@ -14,9 +14,9 @@
 # version-release
 
 %define nv_version 510
-%define nv_release 60
+%define nv_release 68
 %define nv_minor 02
-%define pkg_rel alt252
+%define pkg_rel alt253
 %define set_gl_nvidia_ver 1.6.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -341,6 +341,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Thu May 05 2022 Sergey V Turchin <zerg@altlinux.org> 510.68.02-alt253
+- new version
+
 * Mon Apr 18 2022 Sergey V Turchin <zerg@altlinux.org> 510.60.02-alt252
 - switch libnvidia-allocator
 
