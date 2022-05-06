@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.22.2
+Version: 3.22.4
 Release: alt1
 Epoch:   1
 
@@ -268,7 +268,6 @@ Patch308: add-lidil-two-cartridge-modes.patch
 Patch310: hp-systray-make-menu-title-visible-in-sni-qt-indicator.patch
 Patch311: hp-systray-make-menu-appear-in-sni-qt-indicator-with-kde.patch
 Patch312: hpaio-option-duplex.diff
-Patch313: musb-c-do-not-crash-on-usb-failure.patch
 Patch314: pcardext-python3-workaround-upstream.patch
 Patch315: hpscan-deskjet-3520-aio-allow-non-jpeg-scanning.patch
 Patch317: order-page-sizes-consistently.patch
@@ -561,7 +560,6 @@ sed -i.duplex-constraints \
 %patch310 -p1
 %patch311 -p1
 %patch312 -p1
-%patch313 -p1
 %patch314 -p2
 %patch315 -p1
 %patch317 -p1
@@ -1123,6 +1121,22 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Sat Apr 30 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.22.4-alt1
+- New version.
+- Added support for the following new printers:
+  + HP LaserJet Pro 4001ne, 4001n, 4001dne, 4001dn, 4001dwe, 4001dw, 4001d, 4001de
+  + HP LaserJet Pro 4002ne, 4002n, 4002dne, 4002dn, 4002dwe, 4002dw, 4002d, 4002de
+  + HP LaserJet Pro 4003dn, 4003dw, 4003n, 4003d
+  + HP LaserJet Pro 4004d, 4004dn, 4004dw
+  + HP LaserJet Pro MFP 4101dwe, 4101dw, 4101fdn, 4101fdne, 4101fdw, 4101fdwe
+  + HP LaserJet Pro MFP 4102dwe, 4102dw, 4102fdn, 4102fdw, 4102fdwe, 4102fdne, 4102fnw, 4102fnwe
+  + HP LaserJet Pro MFP 4103dw, 4103dn, 4103fdn, 4103fdw
+  + HP LaserJet Pro MFP 4104dw, 4104fdw, 4104fdn
+  + HP ScanJet Pro 3600 f1
+  + HP ScanJet Pro N4600 fnw1
+  + HP ScanJet Pro 2600 f1
+  + HP ScanJet Enterprise Flow N6600 fnw1
+
 * Thu Mar 03 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.22.2-alt1
 - New version.
 - Added support for the following new printers:
