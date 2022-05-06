@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 Name: linuxcnc
 Version: 2.9.0
-Release: alt0.6.20220115
+Release: alt0.6.20220115.1
 
 Summary: LinuxCNC controls CNC machines
 Summary(ru_RU.UTF-8): Программа управления ЧПУ станков
@@ -146,6 +146,8 @@ sed 's/ -o root//g' -i src/Makefile
 %ifarch %e2k
 # unsupported as of lcc 1.25.17
 sed -i 's,-fno-fast-math,,' src/Makefile*
+# need for correct detection of boost libs path
+sed -i 's,sparc64|,&e2k|,' src/m4/ax_boost_base.m4
 %endif
 
 %build
@@ -266,6 +268,9 @@ rm %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Fri May 06 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.9.0-alt0.6.20220115.1
+- fixed build for Elbrus
+
 * Thu Jan 13 2022 Anton Midyukov <antohami@altlinux.org> 2.9.0-alt0.6.20220115
 - new snapshot
 
