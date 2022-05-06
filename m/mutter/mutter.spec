@@ -18,8 +18,8 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.0
-Release: alt3%beta
+Version: %ver_major.1
+Release: alt1%beta
 Epoch: 1
 
 Summary: Clutter based compositing GTK3 Window Manager
@@ -254,6 +254,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Fri May 06 2022 Yuri N. Sedunov <aris@altlinux.org> 1:42.1-alt1
+- 42.1
+
 * Fri Mar 25 2022 Yuri N. Sedunov <aris@altlinux.org> 1:42.0-alt3
 - updated to 42.0-9-g3c9622bea
 
