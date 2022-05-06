@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.7.2
-Release: alt1
+Release: alt1.1
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -93,7 +93,7 @@ rm -rf ./3rdparty
 %patch3 -p1
 %patch4 -p1
 %ifarch %e2k
-sed -i "s/-Werror/-Wno-error/" CMakeLists.txt
+sed -i "s/-Werror/-Wno-error/" cmake/modules/SetDefaultTargetProperties.cmake
 %endif
 
 %build
@@ -121,6 +121,9 @@ sed -i "s/-Werror/-Wno-error/" CMakeLists.txt
 %_datadir/%name
 
 %changelog
+* Fri May 06 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.7.2-alt1.1
+- fixed build for Elbrus
+
 * Thu Mar 17 2022 Egor Ignatov <egori@altlinux.org> 4.7.2-alt1
 - new version
 
