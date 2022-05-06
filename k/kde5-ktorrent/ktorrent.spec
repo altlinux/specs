@@ -12,7 +12,7 @@
 
 Name: kde5-%rname
 Version: 21.12.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group:     Networking/File transfer
@@ -79,6 +79,9 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 %install
 %K5install
 %K5install_move data ktorrent
+for f in %buildroot/%_K5xmlgui/%rname/*.rc ; do
+    ln -sr $f %buildroot/%_K5data/
+done
 
 %find_lang --with-kde %rname
 
@@ -90,6 +93,7 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 %_K5xdgapp/org.kde.%rname.desktop
 %_K5plug/%rname/
 %_K5xmlgui/%rname/
+%_K5data/*torrent*.rc
 %_K5notif/%rname.notifyrc
 %if_enabled qtwebengine
 %_K5data/%rname/
@@ -101,6 +105,9 @@ sed -i 's|^add_subdirectory(plasma)||' CMakeLists.txt
 
 
 %changelog
+* Fri May 06 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt2
+- fix find xmlgui files
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 
