@@ -3,7 +3,7 @@
 
 Name: kde5-network-filesharing
 Version: 21.12.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -46,8 +46,8 @@ cat %SOURCE10 >>po/ru/kfileshare.po
 
 %build
 %K5build \
-    -DSAMBA_INSTALL=OFF \
-    -DSAMBA_PACKAGE_NAME=%pkg_samba \
+    -DSAMBA_INSTALL=ON \
+    -DSAMBA_PACKAGE_NAME=\"%pkg_samba\" \
     #
 
 %install
@@ -65,6 +65,9 @@ cat %SOURCE10 >>po/ru/kfileshare.po
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Fri May 06 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt2
+- turn on samba installer
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 
