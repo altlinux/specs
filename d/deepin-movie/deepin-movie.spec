@@ -5,7 +5,7 @@
 %endif
 
 Name: deepin-movie
-Version: 5.9.8
+Version: 5.9.14
 Release: alt1
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and OpenSSL-exception
@@ -19,7 +19,7 @@ Patch: deepin-movie-5.9.8-alt-fix-build.patch
 ExcludeArch: armh
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -78,12 +78,12 @@ export AR="llvm-ar"
 
 %cmake \
     -GNinja \
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DAPP_VERSION=%version \
     -DVERSION=%version
-%cmake_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
@@ -112,6 +112,9 @@ export AR="llvm-ar"
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Fri May 06 2022 Leontiy Volodin <lvol@altlinux.org> 5.9.14-alt1
+- New version (5.9.14).
+
 * Wed Feb 09 2022 Leontiy Volodin <lvol@altlinux.org> 5.9.8-alt1
 - New version (5.9.8).
 
