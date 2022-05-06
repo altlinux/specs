@@ -9,7 +9,7 @@ epoch:1
 %define kernel_need_version	5.15
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	5.15
-%define kernel_sublevel .33
+%define kernel_sublevel .36
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -450,6 +450,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu May 05 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.36-alt1
+- Updated to 5.15.36
+- https://github.com/raspberrypi/linux.git rpi-5.15.y commit 9bc1ec59bd8db07e41067717aeea2749314ec801
+- Restored legacy_cursor_update for Xorg (closes: #42604)
+  Note: "legacy_cursor_update hack" has been removed by rpi-5.15.y commit 575197eedf2aae854cb1ce14882e0b910a382737
+
 * Wed Apr 20 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.33-alt1
 - Updated to 5.15.33
 - https://github.com/raspberrypi/linux.git rpi-5.15.y commit 784f0a39c945c79fcb52dbb01db08b3bcc8ff7a5
