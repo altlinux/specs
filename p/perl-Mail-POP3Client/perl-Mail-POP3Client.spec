@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Mail-POP3Client
 
 Name: perl-%module_name
-Version: 2.19
+Version: 2.20
 Release: alt1
 
 Summary: %module_name module for perl
@@ -9,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/authors/id/S/SD/SDOWD/Mail-POP3Client-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SD/SDOWD/%{module_name}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Mar 04 2008
 BuildRequires: perl-devel
@@ -21,7 +22,7 @@ interface to a POP3 server. It can be used to write perl-based biff clients,
 mail readers, or whatever.
 
 %prep
-%setup -n %module_name-%version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,9 +31,13 @@ mail readers, or whatever.
 %perl_vendor_install
 
 %files
+%doc Changes FAQ README
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Fri May 06 2022 Igor Vlasenko <viy@altlinux.org> 2.20-alt1
+- automated CPAN update
+
 * Sun Oct 06 2013 Igor Vlasenko <viy@altlinux.ru> 2.19-alt1
 - automated CPAN update
 
