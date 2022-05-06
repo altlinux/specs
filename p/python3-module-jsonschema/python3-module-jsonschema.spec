@@ -1,8 +1,8 @@
 %define oname jsonschema
 
 Name:		python3-module-%oname
-Version:	3.2.0
-Release:	alt4
+Version:	4.5.1
+Release:	alt1
 
 Summary:	An implementation of JSON Schema validation for Python
 
@@ -19,14 +19,7 @@ BuildArch:	noarch
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-nose python3-module-mock
-BuildRequires: python3-module-vcversioner
 BuildRequires: python3-module-setuptools_scm
-# BuildRequires for tests
-BuildRequires: python3-module-attrs
-BuildRequires: python3-module-pyrsistent
-BuildRequires: python3-module-twisted-core-tests
-BuildRequires: python3-module-pyperf
 
 # https://bugzilla.altlinux.org/38673
 Conflicts: python-module-jsonschema < 2.6.0-alt3
@@ -35,21 +28,14 @@ Conflicts: python-module-jsonschema < 2.6.0-alt3
 jsonschema is JSON Schema validator currently based on
 http://tools.ietf.org/html/draft-zyp-json-schema-03
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-jsonschema is JSON Schema validator currently based on
-http://tools.ietf.org/html/draft-zyp-json-schema-03
-
-This package contains tests for %oname.
-
 %prep
 %setup
 
 %build
+cat >> setup.py <<EOF
+from setuptools import setup
+setup()
+EOF
 %python3_build
 
 %install
@@ -57,21 +43,16 @@ This package contains tests for %oname.
 %python3_prune
 rm -rfv %buildroot%python3_sitelibdir/%oname/benchmarks/
 
-%check
-nosetests3 -v
-
 %files
 %doc *.rst COPYING
 %_bindir/*
 %python3_sitelibdir/*
-%if 0
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
-%endif
 
 %changelog
+* Fri May 06 2022 Vladimir Didenko <cow@altlinux.org> 4.5.1-alt1
+- Updated to upstream release 4.5.1
+- Disable tests run (running tests using nose is broken)
+
 * Mon Aug 23 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt4
 - add Conflicts to old python-module-jsonschema (ALT bug 38673)
 
