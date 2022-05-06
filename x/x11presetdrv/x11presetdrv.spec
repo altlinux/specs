@@ -1,8 +1,8 @@
 %define drvpre_dir /usr/libexec/X11/drvpre.d
 
 Name: x11presetdrv
-Version: 2.1.2
-Release: alt3
+Version: 2.1.3
+Release: alt1
 
 Group: System/Configuration/Hardware
 Summary: X Window System drivers preparing utility
@@ -11,7 +11,6 @@ URL: http://www.altlinux.ru
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-ubt
 Source: %name-%version.tar.bz2
 
 %description
@@ -64,10 +63,13 @@ __EOF__
 %_presetdir/??-%name.preset
 
 %changelog
+* Fri May 06 2022 Sergey V Turchin <zerg@altlinux.org> 2.1.3-alt1
+- install to multi-user too (closes: 42702)
+
 * Mon Jun 17 2019 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt3
 - dont use ubt macro
 
-* Fri Dec 15 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt2%ubt
+* Fri Dec 15 2017 Sergey V Turchin <zerg@altlinux.org> 2.1.2-alt2
 - turn on systemd service by default again
 
 * Fri Feb 13 2015 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
