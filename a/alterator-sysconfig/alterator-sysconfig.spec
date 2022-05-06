@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-sysconfig
-Version: 1.3.6
+Version: 1.3.7
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/preinstall.d/*
@@ -50,6 +50,9 @@ alterator module for basic system settings
 %_datadir/install2/preinstall.d/*
 
 %changelog
+* Fri Apr 22 2022 Slava Aseev <ptrnine@altlinux.org> 1.3.7-alt1
+- sysconfig-proxy: Write KDE/kio proxy settings
+
 * Mon Dec 06 2021 Mikhail Efremov <sem@altlinux.org> 1.3.6-alt1
 - sysconfig-base: Use English slideshow as default.
 
