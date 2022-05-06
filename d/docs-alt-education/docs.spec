@@ -7,8 +7,8 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v
 
 Name: docs-%variant
-Version: 10.0
-Release: alt4
+Version: 10.1
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri May 06 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt1
+- update to ALT Education 10.1Beta
+
 * Wed Apr 06 2022 Elena Mishina <lepata@altlinux.org> 10.0-alt4
 - update documentation
 - add geany, idle3
