@@ -8,7 +8,7 @@
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -64,11 +64,6 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/wayland-sessions/gnome-classic.desktop
 %_datadir/xsessions/gnome-classic-xorg.desktop
 %_datadir/gnome-shell/modes/classic.json
-%_datadir/gnome-shell/theme/calendar-today.svg
-%_datadir/gnome-shell/theme/classic-toggle-off-intl.svg
-%_datadir/gnome-shell/theme/classic-toggle-off-us.svg
-%_datadir/gnome-shell/theme/classic-toggle-on-intl.svg
-%_datadir/gnome-shell/theme/classic-toggle-on-us.svg
 %_datadir/gnome-shell/theme/classic-process-working.svg
 %_datadir/gnome-shell/theme/gnome-classic.css
 %_datadir/gnome-shell/theme/gnome-classic-high-contrast.css
@@ -87,7 +82,6 @@ See %_docdir/%name-%version/README for more information.
 %dir %_datadir/gnome-shell/extensions/auto-move-windows@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/auto-move-windows@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/auto-move-windows@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/auto-move-windows@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/gnome-shell/extensions/auto-move-windows@gnome-shell-extensions.%domain/prefs.js
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.auto-move-windows.gschema.xml
 
@@ -97,7 +91,6 @@ See %_docdir/%name-%version/README for more information.
 %_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/prefs.js
 %_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/util.js
 %_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/user-theme@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.user-theme.gschema.xml
 
 # removable drives menu
@@ -117,7 +110,6 @@ See %_docdir/%name-%version/README for more information.
 %dir %_datadir/gnome-shell/extensions/native-window-placement@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/native-window-placement@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/native-window-placement@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/native-window-placement@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/glib-2.0/schemas/org.gnome.shell.extensions.native-window-placement.gschema.xml
 
 # places-menu
@@ -138,7 +130,6 @@ See %_docdir/%name-%version/README for more information.
 %dir %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain
 %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain/extension.js
 %_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain/metadata.json
-%_datadir/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.%domain/stylesheet.css
 
 # window-list
 %dir %_datadir/gnome-shell/extensions/window-list@gnome-shell-extensions.%domain
@@ -161,6 +152,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Fri May 06 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- 42.1
+
 * Sun Mar 13 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 
