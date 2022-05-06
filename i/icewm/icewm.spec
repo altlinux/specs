@@ -2,8 +2,8 @@
 %define realname icewm
 
 Name: %realname
-Version: 2.9.6
-Release: alt1.1
+Version: 2.9.7
+Release: alt1
 Epoch:3
 
 Summary: X11 Window Manager
@@ -138,6 +138,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Thu May 05 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.9.7-alt1
+- 2.9.7
+
 * Wed Apr 13 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3:2.9.6-alt1.1
 - fixed build for Elbrus
 
