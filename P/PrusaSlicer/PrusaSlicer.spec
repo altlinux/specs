@@ -3,7 +3,7 @@
 
 Name: PrusaSlicer
 Summary: G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 License: AGPL-3.0-only
 Group: Engineering
@@ -133,5 +133,8 @@ popd
 %doc README.md doc/
 
 %changelog
+* Thu Apr 28 2022 Anton Midyukov <antohami@altlinux.org> 2.4.2-alt1
+- new version (2.4.2) with rpmgs script
+
 * Sun Apr 24 2022 Anton Midyukov <antohami@altlinux.org> 2.4.1-alt1
 - initial build for ALT Sisyphus (Closes: 42501)
