@@ -1,6 +1,6 @@
 
 Name: phpipam
-Version: 1.46.031
+Version: 1.50.016
 Release: alt1
 Summary: PHP-based virtual machine control tool
 Group: Networking/WWW
@@ -12,6 +12,9 @@ Source22: GoogleAuthenticator.tar
 Source23: PHPMailer.tar
 Source24: php-saml.tar
 Source25: qrcodejs.tar
+Source26: xmlseclibs.tar
+Source27: parsedown.tar
+
 Source11: %name-apache.conf
 # Patch: %%name-%%version-%%release.patch
 
@@ -69,7 +72,9 @@ tar -xf %SOURCE21 -C app/login/captcha
 tar -xf %SOURCE22 -C functions/GoogleAuthenticator
 tar -xf %SOURCE23 -C functions/PHPMailer
 tar -xf %SOURCE24 -C functions/php-saml
-tar -xf %SOURCE24 -C functions/qrcodejs
+tar -xf %SOURCE25 -C functions/qrcodejs
+tar -xf %SOURCE26 -C functions/xmlseclibs
+tar -xf %SOURCE27 -C functions/parsedown
 #%%patch -p1
 
 %install
@@ -104,6 +109,7 @@ rm -rf %buildroot%webserver_webappsdir/%name/app/login/captcha/examples
 rm -f %buildroot%webserver_webappsdir/%name/functions/GoogleAuthenticator/.gitignore
 rm -f %buildroot%webserver_webappsdir/%name/functions/GoogleAuthenticator/.travis.yml
 rm -rf %buildroot%webserver_webappsdir/%name/functions/GoogleAuthenticator/tests
+rm -rf %buildroot%webserver_webappsdir/%name/.github
 
 %files
 %doc INSTALL.txt README.md UPDATE misc/CHANGELOG misc/Roadmap
@@ -117,6 +123,9 @@ rm -rf %buildroot%webserver_webappsdir/%name/functions/GoogleAuthenticator/tests
 %config(noreplace) %apache2_extra_available/%name.conf
 
 %changelog
+* Fri May 06 2022 Alexey Shabalin <shaba@altlinux.org> 1.50.016-alt1
+- 1.5.0 Release.
+
 * Wed Apr 13 2022 Alexey Shabalin <shaba@altlinux.org> 1.46.031-alt1
 - 1.4.6 Release.
 
