@@ -9,7 +9,7 @@ BuildRequires: rpm-build-fedora-compat-fonts unzip
 %define fontpkgname intel-clear-sans-fonts
 # SPDX-License-Identifier: MIT
 Version: 1.00
-Release: alt1_6
+Release: alt1_12
 %global  projectname clear-sans
 URL:     https://01.org/%{projectname}
 
@@ -93,21 +93,21 @@ echo "" > "intel-clear-sans-fonts.list"
 install -m 0755 -vd %buildroot%_fontsdir/ttf/intel-clear-sans/
 echo "%%dir %_fontsdir/ttf/intel-clear-sans" >> "intel-clear-sans-fonts.list"
 install -m 0644 -vp "TTF/ClearSans-Bold.ttf" %buildroot%_fontsdir/ttf/intel-clear-sans/
-echo \"%_fontsdir/ttf/intel-clear-sans//$(basename "TTF/ClearSans-Bold.ttf")\" >> 'intel-clear-sans-fonts.list'
+echo \"%_fontsdir/ttf/intel-clear-sans/ClearSans-Bold.ttf\" >> 'intel-clear-sans-fonts.list'
 install -m 0644 -vp "TTF/ClearSans-BoldItalic.ttf" %buildroot%_fontsdir/ttf/intel-clear-sans/
-echo \"%_fontsdir/ttf/intel-clear-sans//$(basename "TTF/ClearSans-BoldItalic.ttf")\" >> 'intel-clear-sans-fonts.list'
+echo \"%_fontsdir/ttf/intel-clear-sans/ClearSans-BoldItalic.ttf\" >> 'intel-clear-sans-fonts.list'
 install -m 0644 -vp "TTF/ClearSans-Italic.ttf" %buildroot%_fontsdir/ttf/intel-clear-sans/
-echo \"%_fontsdir/ttf/intel-clear-sans//$(basename "TTF/ClearSans-Italic.ttf")\" >> 'intel-clear-sans-fonts.list'
+echo \"%_fontsdir/ttf/intel-clear-sans/ClearSans-Italic.ttf\" >> 'intel-clear-sans-fonts.list'
 install -m 0644 -vp "TTF/ClearSans-Light.ttf" %buildroot%_fontsdir/ttf/intel-clear-sans/
-echo \"%_fontsdir/ttf/intel-clear-sans//$(basename "TTF/ClearSans-Light.ttf")\" >> 'intel-clear-sans-fonts.list'
+echo \"%_fontsdir/ttf/intel-clear-sans/ClearSans-Light.ttf\" >> 'intel-clear-sans-fonts.list'
 install -m 0644 -vp "TTF/ClearSans-Medium.ttf" %buildroot%_fontsdir/ttf/intel-clear-sans/
-echo \"%_fontsdir/ttf/intel-clear-sans//$(basename "TTF/ClearSans-Medium.ttf")\" >> 'intel-clear-sans-fonts.list'
+echo \"%_fontsdir/ttf/intel-clear-sans/ClearSans-Medium.ttf\" >> 'intel-clear-sans-fonts.list'
 install -m 0644 -vp "TTF/ClearSans-MediumItalic.ttf" %buildroot%_fontsdir/ttf/intel-clear-sans/
-echo \"%_fontsdir/ttf/intel-clear-sans//$(basename "TTF/ClearSans-MediumItalic.ttf")\" >> 'intel-clear-sans-fonts.list'
+echo \"%_fontsdir/ttf/intel-clear-sans/ClearSans-MediumItalic.ttf\" >> 'intel-clear-sans-fonts.list'
 install -m 0644 -vp "TTF/ClearSans-Regular.ttf" %buildroot%_fontsdir/ttf/intel-clear-sans/
-echo \"%_fontsdir/ttf/intel-clear-sans//$(basename "TTF/ClearSans-Regular.ttf")\" >> 'intel-clear-sans-fonts.list'
+echo \"%_fontsdir/ttf/intel-clear-sans/ClearSans-Regular.ttf\" >> 'intel-clear-sans-fonts.list'
 install -m 0644 -vp "TTF/ClearSans-Thin.ttf" %buildroot%_fontsdir/ttf/intel-clear-sans/
-echo \"%_fontsdir/ttf/intel-clear-sans//$(basename "TTF/ClearSans-Thin.ttf")\" >> 'intel-clear-sans-fonts.list'
+echo \"%_fontsdir/ttf/intel-clear-sans/ClearSans-Thin.ttf\" >> 'intel-clear-sans-fonts.list'
 (
 
   IFS= lines=$(
@@ -151,6 +151,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'intel-clear-sans-fonts.list' \
 %files -n fonts-ttf-intel-clear-sans -f intel-clear-sans-fonts.list
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 1.00-alt1_12
+- update to new release by fcimport
+
 * Tue Feb 15 2022 Igor Vlasenko <viy@altlinux.org> 1.00-alt1_6
 - new version
 
