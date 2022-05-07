@@ -21,7 +21,7 @@
 
 Name: seamonkey
 Version: 2.53.12
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Web browser and mail reader
 License: MPL-2.0
@@ -181,16 +181,27 @@ AutoReq: yes, nopython
 Seamonkey development kit.
 
 %package -n rpm-build-seamonkey
-Summary:  RPM helper macros to rebuild seamonkey packages
+Summary:  RPM environment to rebuild seamonkey packages
 Group: Development/Other
 BuildArch: noarch
 
 Requires: mozilla-common-devel
 Requires: rpm-build-mozilla.org
+Requires: rpm-macros-seamonkey = %EVR
 
 %description -n rpm-build-seamonkey
 These helper macros provide possibility to rebuild
 seamonkey packages by some Alt Linux Team Policy compatible way.
+
+
+%package -n rpm-macros-seamonkey
+Summary: RPM helper macros to rebuild seamonkey packages
+Group: Development/Other
+BuildArch: noarch
+Conflicts: rpm-build-seamonkey <= 2.53.12-alt1
+
+%description -n rpm-macros-seamonkey
+Install this package if you want to create RPM packages for seamonkey.
 
 %prep
 %setup -n %name-%version%beta_suffix
@@ -372,9 +383,9 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %endif
 
 # rpm-build-seamonkey files
-mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
+mkdir -p %buildroot/%_rpmmacrosdir
 tar -xf %SOURCE8
-cp -a rpm-build/rpm.macros.seamonkey %buildroot/%_sysconfdir/rpm/macros.d/%name
+cp -a rpm-build/rpm.macros.seamonkey %buildroot/%_rpmmacrosdir/%name
 
 # install altlinux-specific configuration
 install -D -m 644 %SOURCE5 %buildroot/%sm_prefix/defaults/preferences/all-altlinux.js
@@ -454,9 +465,15 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 %endif
 
 %files -n rpm-build-seamonkey
-%_sysconfdir/rpm/macros.d/%name
+%files -n rpm-macros-seamonkey
+%_rpmmacrosdir/%name
+
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 1:2.53.12-alt2
+- NMU: use %%_rpmmacrosdir instead of /etc/rpm
+- split rpm-macros-seamonkey from rpm-build-seamonkey
+
 * Wed May 04 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.53.12-alt1
 - New version.
 
