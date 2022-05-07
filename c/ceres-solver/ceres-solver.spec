@@ -1,24 +1,23 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
+BuildRequires: python3-devel rpm-build-python3
 # END SourceDeps(oneline)
 %define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ceres-solver
-Version:        2.0.0
+Version:        2.1.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        alt2_6
+Release:        alt1_1
 Summary:        A non-linear least squares minimizer
 
 License:        BSD
 
 URL:            http://ceres-solver.org/
 Source0:        http://%{name}.org/%{name}-%{version}.tar.gz
-
-Patch1: ceres-solver-2.0.0-upstream-tbb-compat.patch
 
 %if 0%{?fedora} >= 33 || 0%{?rhel} >= 9
 %global blaslib flexiblas
@@ -105,7 +104,6 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
-%patch1 -p1
 
 
 %build
@@ -148,6 +146,9 @@ developing applications that use %{name}.
 
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 2.1.0-alt1_1
+- update to new release by fcimport
+
 * Fri Jan 28 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt2_6
 - Rebuilt with new TBB.
 
