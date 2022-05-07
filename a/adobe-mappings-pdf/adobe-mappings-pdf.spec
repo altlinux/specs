@@ -1,10 +1,11 @@
 Group: Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+BuildRequires: /usr/bin/git
 Name:             adobe-mappings-pdf
 Summary:          PDF mapping resources from Adobe
-Version:          20180407
-Release:          alt1_7
+Version:          20190401
+Release:          alt1_1
 License:          BSD
 
 URL:              https://www.adobe.com/
@@ -47,6 +48,12 @@ as well as all the fonts contained in this font set.
 
 %prep
 %setup -q -n mapping-resources-pdf-%{version}
+git init -q
+git config user.name "rpmbuild"
+git config user.email "<rpmbuild>"
+git config gc.auto 0
+git add --force .
+git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
 
 
 %install
@@ -78,6 +85,9 @@ _EOF
 # =============================================================================
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 20190401-alt1_1
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 20180407-alt1_7
 - update to new release by fcimport
 
