@@ -1,6 +1,6 @@
 Name: rpm-build-rpm-eval
 Version: 0.1
-Release: alt3
+Release: alt4
 
 Summary: The script disclosure macros in files
 Summary(ru_RU.KOI8-R): Скрипт раскрывающий макросы в файлах
@@ -55,16 +55,19 @@ sed -e 's/^%%define[[:space:]]\+/%%/' %SOURCE2 > rpm-eval.rpm-macros
 install -D -m755 %SOURCE1 %buildroot%rpmeval
 
 install -pD -m644 rpm-eval.rpm-macros \
-	%buildroot%_sysconfdir/rpm/macros.d/%name
+	%buildroot%_rpmmacrosdir/%name
 
 %files
 %dir %rpmeval_dir/
 %rpmeval
 
 %files -n rpm-macros-rpm-eval
-%_sysconfdir/rpm/macros.d/%name
+%_rpmmacrosdir/%name
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 0.1-alt4
+- NMU: use %%_rpmmacrosdir instead of /etc/rpm
+
 * Fri Aug 29 2008 Aleksey Avdeev <solo@altlinux.ru> 0.1-alt3
 - Add build subpackage for ALT Linux Team Policy compatible way:
   + rpm-macros-rpm-eval
