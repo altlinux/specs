@@ -1,13 +1,12 @@
-# due to kcmshell4
-%filter_from_requires /^kde4base-runtime-core/d
-# scripts test for kdialog before using
-%filter_from_requires /kdialog/d
-
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(xkbcommon)
 # END SourceDeps(oneline)
+# due to kcmshell4
+%filter_from_requires /^kde4base-runtime-core/d
+# scripts test for kdialog before using
+%filter_from_requires /kdialog/d
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global _xinputconf %{_sysconfdir}/X11/xinit/xinput.d/fcitx.conf
@@ -17,7 +16,7 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fon
 Name:			fcitx
 Summary:		An input method framework
 Version:		4.2.9.8
-Release:		alt3_3
+Release:		alt3_6
 License:		GPLv2+
 URL:			https://fcitx-im.org/wiki/Fcitx
 Source0:		http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
@@ -26,8 +25,8 @@ BuildRequires:		gcc-c++
 BuildRequires:		libpango-devel libpango-gir-devel, libdbus-devel, opencc-devel
 BuildRequires:		wget, intltool, chrpath, sysconftool, opencc
 BuildRequires:		ctest cmake, libtool, doxygen icu-utils libicu-devel
-BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel 
-BuildRequires:		libX11-devel libXvMC-devel xorg-proto-devel, xorg-xtrans-devel
+BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel, libicu69
+BuildRequires:		xorg-proto-devel, xorg-xtrans-devel
 BuildRequires:		gobject-introspection-devel, libxkbfile-devel
 BuildRequires:		libenchant-devel, iso-codes-devel icu-utils libicu-devel
 BuildRequires:		libX11-devel, libdbus-glib-devel, dbus-tools-gui
@@ -41,6 +40,9 @@ Requires:		imsettings
 Requires:		%{name}-libs = %{version}-%{release}
 Requires:		%{name}-gtk3 = %{version}-%{release}
 Requires:		%{name}-gtk2 = %{version}-%{release}
+
+# conflict to fcitx5 due to a icon file conflict
+Conflicts: fcitx5
 Source44: import.info
 
 %description
@@ -268,12 +270,12 @@ EOF
 %{_datadir}/gir-1.0/Fcitx-1.0.gir
 
 %files table-chinese
-%doc %_docdir/%name
+#doc %_docdir/%name
 %{_datadir}/%{name}/table/*
 %{_datadir}/%{name}/imicon/[!ps]*.png
 
 %files pinyin
-%doc %_docdir/%name
+#doc %_docdir/%name
 %{_datadir}/%{name}/inputmethod/pinyin.conf
 %{_datadir}/%{name}/inputmethod/shuangpin.conf
 %{_datadir}/%{name}/pinyin/
@@ -288,13 +290,13 @@ EOF
 %{_datadir}/%{name}/py-enhance/
 
 %files qw
-%doc %_docdir/%name
+#doc %_docdir/%name
 %{_datadir}/%{name}/inputmethod/qw.conf
 %{_libdir}/%{name}/%{name}-qw.so
 %{_datadir}/%{name}/addon/fcitx-qw.conf
 
 %files table
-%doc %_docdir/%name
+#doc %_docdir/%name
 %{_datadir}/%{name}/configdesc/table.desc
 %{_libdir}/%{name}/%{name}-table.so
 %{_datadir}/%{name}/addon/fcitx-table.conf
@@ -311,6 +313,9 @@ EOF
 %endif
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 4.2.9.8-alt3_6
+- update
+
 * Sat Oct 09 2021 Ivan A. Melnikov <iv@altlinux.org> 4.2.9.8-alt3_3
 - skip kdialog from requires, as it's not really needed
 
