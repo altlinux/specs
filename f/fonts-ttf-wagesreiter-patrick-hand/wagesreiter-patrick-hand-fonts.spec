@@ -11,7 +11,7 @@ BuildRequires: rpm-build-fedora-compat-fonts
 %define fontpkgname wagesreiter-patrick-hand-fonts
 # SPDX-License-Identifier: MIT
 Version: 20200215
-Release: alt1_5
+Release: alt1_11
 URL:     https://fonts.google.com/specimen/Patrick+Hand
 
 %global foundry           Wagesreiter
@@ -97,7 +97,7 @@ echo "" > "wagesreiter-patrick-hand-fonts.list"
 install -m 0755 -vd %buildroot%_fontsdir/ttf/wagesreiter-patrick-hand/
 echo "%%dir %_fontsdir/ttf/wagesreiter-patrick-hand" >> "wagesreiter-patrick-hand-fonts.list"
 install -m 0644 -vp "PatrickHand-Regular.ttf" %buildroot%_fontsdir/ttf/wagesreiter-patrick-hand/
-echo \"%_fontsdir/ttf/wagesreiter-patrick-hand//$(basename "PatrickHand-Regular.ttf")\" >> 'wagesreiter-patrick-hand-fonts.list'
+echo \"%_fontsdir/ttf/wagesreiter-patrick-hand/PatrickHand-Regular.ttf\" >> 'wagesreiter-patrick-hand-fonts.list'
 (
 
   IFS= lines=$(
@@ -145,6 +145,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'wagesreiter-patrick-hand-fonts
 %files -n fonts-ttf-wagesreiter-patrick-hand -f wagesreiter-patrick-hand-fonts.list
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 20200215-alt1_11
+- update to new release by fcimport
+
 * Tue Feb 15 2022 Igor Vlasenko <viy@altlinux.org> 20200215-alt1_5
 - new version
 
