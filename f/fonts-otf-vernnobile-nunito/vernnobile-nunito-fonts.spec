@@ -32,7 +32,7 @@ BuildRequires: rpm-build-fedora-compat-fonts
 # FedoraForgeMeta2ALT: end generated meta
 
 Version: 3.504
-Release: alt1_6
+Release: alt1_12
 URL:     %{forgeurl}
 
 %global foundry           vernnobile
@@ -113,37 +113,37 @@ echo "" > "vernnobile-nunito-fonts.list"
 install -m 0755 -vd %buildroot%_fontsdir/otf/vernnobile-nunito/
 echo "%%dir %_fontsdir/otf/vernnobile-nunito" >> "vernnobile-nunito-fonts.list"
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-Black.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-Black.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-Black.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-BlackItalic.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-BlackItalic.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-BlackItalic.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-Bold.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-Bold.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-Bold.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-BoldItalic.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-BoldItalic.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-BoldItalic.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-ExtraBold.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-ExtraBold.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-ExtraBold.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-ExtraBoldItalic.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-ExtraBoldItalic.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-ExtraBoldItalic.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-ExtraLight.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-ExtraLight.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-ExtraLight.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-ExtraLightItalic.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-ExtraLightItalic.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-ExtraLightItalic.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-Italic.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-Italic.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-Italic.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-Light.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-Light.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-Light.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-LightItalic.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-LightItalic.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-LightItalic.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-Regular.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-Regular.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-Regular.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-SemiBold.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-SemiBold.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-SemiBold.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/Nunito-SemiBoldItalic.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/Nunito-SemiBoldItalic.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/Nunito-SemiBoldItalic.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/NunitoHeavy-Italic.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/NunitoHeavy-Italic.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/NunitoHeavy-Italic.otf\" >> 'vernnobile-nunito-fonts.list'
 install -m 0644 -vp "fonts/TTF-unhinted/NunitoHeavy-Regular.otf" %buildroot%_fontsdir/otf/vernnobile-nunito/
-echo \"%_fontsdir/otf/vernnobile-nunito//$(basename "fonts/TTF-unhinted/NunitoHeavy-Regular.otf")\" >> 'vernnobile-nunito-fonts.list'
+echo \"%_fontsdir/otf/vernnobile-nunito/NunitoHeavy-Regular.otf\" >> 'vernnobile-nunito-fonts.list'
 (
 
   IFS= lines=$(
@@ -191,6 +191,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'vernnobile-nunito-fonts.list' 
 %files -n fonts-otf-vernnobile-nunito -f vernnobile-nunito-fonts.list
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 3.504-alt1_12
+- update to new release by fcimport
+
 * Tue Feb 15 2022 Igor Vlasenko <viy@altlinux.org> 3.504-alt1_6
 - new version
 
