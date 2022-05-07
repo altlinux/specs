@@ -14,16 +14,15 @@ Group: System/Libraries
 %bcond_without check
 
 Name:           libqb
-Version:        2.0.4
-Release:        alt1_2
+Version:        2.0.6
+Release:        alt1_1
 Summary:        Library providing high performance logging, tracing, ipc, and poll
 
 License:        LGPLv2+
 URL:            https://github.com/ClusterLabs/libqb
 Source0:        https://github.com/ClusterLabs/libqb/releases/download/v%{version}/%{name}-%{version}.tar.xz
 
-Patch0: add-async-connect.patch
-Patch1: bump-version-for-async.patch
+#Patch0: sock-test-rootonly.patch
 
 BuildRequires:  autoconf automake libtool
 BuildRequires:  libcheck-devel
@@ -56,8 +55,7 @@ This package contains the shared library.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .add-async-connect
-%patch1 -p1 -b .bump-version-for-async
+#%patch0 -p1 -b .sock-test-rootonly
 
 %build
 ./autogen.sh
@@ -113,6 +111,9 @@ This package contains a program to create nicely-formatted man pages from Doxyge
 
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 2.0.6-alt1_1
+- update to new release by fcimport
+
 * Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 2.0.4-alt1_2
 - update to new release by fcimport
 
