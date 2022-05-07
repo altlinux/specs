@@ -14,8 +14,8 @@
 
 Name: vhosts-filesystem
 Version: 0.2
-Release: alt1.4
-License: GPL
+Release: alt2
+License: GPLv2+
 Group: System/Servers
 Packager: Yury Konovalov <yurix@altlinux.ru>
 
@@ -92,7 +92,7 @@ mkdir -p %buildroot%srv_dir %buildroot%vhosts_dir \
     %buildroot%apachk_favours_dir
 
 # Generate macros for rpm
-mkdir -p %buildroot%_sysconfdir/rpm/macros.d
+mkdir -p %buildroot%_rpmmacrosdir
 
 echo "#root for data served by inet services
 srv_dir                 %srv_dir
@@ -109,7 +109,7 @@ apachk_addon_initd      %apachk_addon_initd
 apachk_favours_dir      %apachk_favours_dir
 post_addon() [ -x /usr/sbin/apachkconfig ] && /usr/sbin/apachkconfig --add %* ||: %\nil
 preun_addon() [ -x /usr/sbin/apachkconfig ] && /usr/sbin/apachkconfig --del %* ||: %\nil
-" | sed -e "s/^\([[:alpha:]]\+\)/%\1/" -e "s/\\\//g" > %buildroot%_sysconfdir/rpm/macros.d/%name
+" | sed -e "s/^\([[:alpha:]]\+\)/%\1/" -e "s/\\\//g" > %buildroot%_rpmmacrosdir/%name
 
 mkdir -p %buildroot%_rpmlibdir
 cat <<\EOF >%buildroot%_rpmlibdir/%name-files.req.list
@@ -131,12 +131,15 @@ EOF
 %dir %apachk_favours_dir
 
 %files -n rpm-macros-%name
-%attr(0644,root,root) %_sysconfdir/rpm/macros.d/%name
+%attr(0644,root,root) %_rpmmacrosdir/%name
 
 %files -n rpm-build-%name
 %_rpmlibdir/%name-files.req.list
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 0.2-alt2
+- NMU: use %%_rpmmacrosdir instead of /etc/rpm
+
 * Sat Jul 12 2008 Aleksey Avdeev <solo@altlinux.ru> 0.2-alt1.4
 - NMU
 - Add build subpackage for ALT Linux RPM Packaging Policy:
