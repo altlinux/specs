@@ -4,13 +4,12 @@
 %define optflags_lto %nil
 
 Name: guitarix
-Version: 0.43.1
+Version: 0.44.1
 Release: alt1
 Summary: Mono amplifier to JACK
 Group: Sound
 License: GPL-2.0-or-later
 Url: https://sourceforge.net/projects/guitarix
-Packager: Anton Midyukov <antohami@altlinux.org>
 # Source-url: https://sourceforge.net/projects/guitarix/files/guitarix/guitarix2-%version.tar.xz/download
 Source: %name-%version.tar
 
@@ -112,7 +111,7 @@ rm -fr src/zita-convolver src/zita-resampler
 
 %build
 ./waf -vv configure --prefix=%prefix --libdir=%_libdir \
-      --cxxflags="-std=c++0x -fomit-frame-pointer \
+      --cxxflags="-fomit-frame-pointer \
       -ffinite-math-only -fno-math-errno -fno-signed-zeros -fstrength-reduce \
 %ifarch %ix86 x86_64
       -msse \
@@ -162,6 +161,9 @@ rm -rf %buildroot%_libdir/libgxw*.so
 %_libdir/lv2/*
 
 %changelog
+* Sat May 07 2022 Anton Midyukov <antohami@altlinux.org> 0.44.1-alt1
+- new version (0.44.1) with rpmgs script
+
 * Fri Jan 07 2022 Anton Midyukov <antohami@altlinux.org> 0.43.1-alt1
 - new version 0.43.1
 
