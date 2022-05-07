@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 85
+%define centos_release 86
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,19 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat May 07 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.86-alt1.el9
+- Updated to kernel-5.14.0-86.el9:
+  + cifs: fix NULL ptr dereference in smb2_ioctl_query_info()
+  + CNB: skbuff: introduce skb_pull_data
+  + CNB: stddef: Introduce DECLARE_FLEX_ARRAY() helper
+  + CNB: virtchnl: Add support for new VLAN capabilities
+  + configs: enable LOGITECH_FF
+  + IDXD driver update for 9.1.0
+  + perf: Sync with upstream v5.15
+  + ping: a couple of fixes in ping_lookup
+  + [RHEL-9.1.0 BZ 2068207] redhat: configs: Enable CONFIG_INTEL_IOMMU_DEBUGFS
+  + veth: Ensure eth header is in skb's linear part
+
 * Wed May 04 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.85-alt1.el9
 - Updated to kernel-5.14.0-85.el9 (fixes: CVE-2022-1015, CVE-2022-1016):
   + bnx2x: driver updates
