@@ -32,7 +32,7 @@ BuildRequires: rpm-build-fedora-compat-fonts
 # FedoraForgeMeta2ALT: end generated meta
 
 Version: 2.001
-Release: alt1_6
+Release: alt1_12
 URL:     %{forgeurl}
 
 %global foundry           vernnobile
@@ -111,33 +111,33 @@ echo "" > "vernnobile-muli-fonts.list"
 install -m 0755 -vd %buildroot%_fontsdir/ttf/vernnobile-muli/
 echo "%%dir %_fontsdir/ttf/vernnobile-muli" >> "vernnobile-muli-fonts.list"
 install -m 0644 -vp "fonts/Muli-Black.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-Black.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-Black.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-BlackItalic.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-BlackItalic.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-BlackItalic.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-Bold.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-Bold.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-Bold.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-BoldItalic.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-BoldItalic.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-BoldItalic.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-ExtraBold.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-ExtraBold.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-ExtraBold.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-ExtraBoldItalic.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-ExtraBoldItalic.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-ExtraBoldItalic.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-ExtraLight.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-ExtraLight.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-ExtraLight.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-ExtraLightItalic.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-ExtraLightItalic.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-ExtraLightItalic.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-Italic.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-Italic.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-Italic.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-Light.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-Light.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-Light.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-LightItalic.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-LightItalic.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-LightItalic.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-Regular.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-Regular.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-Regular.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-SemiBold.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-SemiBold.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-SemiBold.ttf\" >> 'vernnobile-muli-fonts.list'
 install -m 0644 -vp "fonts/Muli-SemiBoldItalic.ttf" %buildroot%_fontsdir/ttf/vernnobile-muli/
-echo \"%_fontsdir/ttf/vernnobile-muli//$(basename "fonts/Muli-SemiBoldItalic.ttf")\" >> 'vernnobile-muli-fonts.list'
+echo \"%_fontsdir/ttf/vernnobile-muli/Muli-SemiBoldItalic.ttf\" >> 'vernnobile-muli-fonts.list'
 (
 
   IFS= lines=$(
@@ -185,6 +185,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'vernnobile-muli-fonts.list' \
 %files -n fonts-ttf-vernnobile-muli -f vernnobile-muli-fonts.list
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 2.001-alt1_12
+- update to new release by fcimport
+
 * Tue Feb 15 2022 Igor Vlasenko <viy@altlinux.org> 2.001-alt1_6
 - new version
 
