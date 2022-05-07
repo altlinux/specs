@@ -32,7 +32,7 @@ BuildRequires: rpm-build-fedora-compat-fonts
 # FedoraForgeMeta2ALT: end generated meta
 
 Version: 1.101
-Release: alt1_4
+Release: alt1_10
 URL:     %{forgeurl}
 
 %global foundry           TypeSETit
@@ -111,7 +111,7 @@ echo "" > "typesetit-great-vibes-fonts.list"
 install -m 0755 -vd %buildroot%_fontsdir/ttf/typesetit-great-vibes/
 echo "%%dir %_fontsdir/ttf/typesetit-great-vibes" >> "typesetit-great-vibes-fonts.list"
 install -m 0644 -vp "fonts/GreatVibes-Regular.ttf" %buildroot%_fontsdir/ttf/typesetit-great-vibes/
-echo \"%_fontsdir/ttf/typesetit-great-vibes//$(basename "fonts/GreatVibes-Regular.ttf")\" >> 'typesetit-great-vibes-fonts.list'
+echo \"%_fontsdir/ttf/typesetit-great-vibes/GreatVibes-Regular.ttf\" >> 'typesetit-great-vibes-fonts.list'
 (
 
   IFS= lines=$(
@@ -159,6 +159,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'typesetit-great-vibes-fonts.li
 %files -n fonts-ttf-typesetit-great-vibes -f typesetit-great-vibes-fonts.list
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 1.101-alt1_10
+- update to new release by fcimport
+
 * Tue Feb 15 2022 Igor Vlasenko <viy@altlinux.org> 1.101-alt1_4
 - new version
 
