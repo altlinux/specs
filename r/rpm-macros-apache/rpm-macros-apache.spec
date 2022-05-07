@@ -6,11 +6,9 @@
 
 %define macrosname apache
 
-%define rpm_masrosdir %_sysconfdir/rpm/macros.d
-
 Name: rpm-macros-%macrosname
 Version: 0.2
-Release: %branch_release alt4
+Release: %branch_release alt5
 
 Summary: RPM macros to Apache Web server
 Summary(ru_RU.UTF-8): RPM макросы для веб-сервера Apache
@@ -44,12 +42,15 @@ according to the ALT Linux Web Packaging Policy.
 
 %install
 
-install -pD -m644 %SOURCE1 %buildroot%rpm_masrosdir/%name
+install -pD -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 
 %files
-%rpm_masrosdir/%name
+%_rpmmacrosdir/%name
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 0.2-alt5
+- NMU: use %%_rpmmacrosdir instead of /etc/rpm
+
 * Wed Sep 30 2015 Michael Shigorin <mike@altlinux.org> 0.2-alt4
 - Re-added %%apache_{root,home} macros as aliases
 - Converted spec to UTF-8
