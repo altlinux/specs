@@ -9,15 +9,15 @@ BuildRequires: rpm-build-fedora-compat-fonts
 %define fontpkgname jetbrains-mono-fonts
 # SPDX-License-Identifier: MIT
 %global forgeurl    https://github.com/JetBrains/JetBrainsMono
-Version:            1.0.4
+Version:            2.242
 # FedoraForgeMeta2ALT: generated meta
 %global forgeurl https://github.com/JetBrains/JetBrainsMono
-%global forgesource https://github.com/JetBrains/JetBrainsMono/archive/1.0.4/JetBrainsMono-1.0.4.tar.gz
-%global archivename JetBrainsMono-1.0.4
+%global forgesource https://github.com/JetBrains/JetBrainsMono/archive/2.242/JetBrainsMono-2.242.tar.gz
+%global archivename JetBrainsMono-2.242
 %global archiveext tar.gz
-%global archiveurl https://github.com/JetBrains/JetBrainsMono/archive/1.0.4/JetBrainsMono-1.0.4.tar.gz
-%global topdir JetBrainsMono-1.0.4
-%global extractdir JetBrainsMono-1.0.4
+%global archiveurl https://github.com/JetBrains/JetBrainsMono/archive/2.242/JetBrainsMono-2.242.tar.gz
+%global topdir JetBrainsMono-2.242
+%global extractdir JetBrainsMono-2.242
 %global repo JetBrainsMono
 #global owner %nil
 #global namespace %nil
@@ -26,18 +26,18 @@ Version:            1.0.4
 #global commit %nil
 #global shortcommit %nil
 #global branch %nil
-%global version 1.0.4
+%global version 2.242
 #global date %nil
 #global distprefix %nil
 # FedoraForgeMeta2ALT: end generated meta
 
-Release: alt1_5
+Release: alt1_1
 URL:     https://jetbrains.com/mono/
 
 %global foundry           JetBrains
-%global fontlicense       ASL 2.0
-%global fontlicenses      LICENSE
-%global fontdocs          *md
+%global fontlicense       OFL 1.1
+%global fontlicenses      OFL.txt
+%global fontdocs          *.md
 
 %global common_description \
 The JetBrains Mono project publishes developer-oriented font families.\
@@ -60,10 +60,9 @@ distraction and eye strain. The usual angle is about 11A.a..12A..
 %global fontfamily0       JetBrains Mono
 %global fontsummary0      A mono-space font family containing coding ligatures
 %global fontpkgheader0    \
-Requires:  font(jetbrainsmononl)\
+#Suggests:  font(jetbrainsmononl)\
 
-%global fonts0            ttf/*ttf
-%global fontsex0          %{fonts1}
+%global fonts0            fonts/otf/*.otf
 %global fontdescription0  \
 %{common_description}\
 \
@@ -73,7 +72,7 @@ problematic for other use cases.
 
 %global fontfamily1       JetBrains Mono NL
 %global fontsummary1      A mono-space coding font family
-%global fonts1            ttf/*MonoNL*ttf
+%global fonts1            fonts/ttf/*MonoNL*.ttf
 %global fontdescription1  \
 %{common_description}\
 \
@@ -119,12 +118,12 @@ This meta-package installs all the font packages, generated from the %{oldname}
 %prep
 %global fontconfngs0      %{SOURCE10}
 %global fontconfngs1      %{SOURCE11}
-%setup -q -n JetBrainsMono-1.0.4
+%setup -q -n JetBrainsMono-2.242
 
 %build
 # fontbuild 0
 fontnames=$(
-  for font in 'ttf/JetBrainsMono-Bold-Italic.ttf' 'ttf/JetBrainsMono-Bold.ttf' 'ttf/JetBrainsMono-ExtraBold-Italic.ttf' 'ttf/JetBrainsMono-ExtraBold.ttf' 'ttf/JetBrainsMono-Italic.ttf' 'ttf/JetBrainsMono-Medium-Italic.ttf' 'ttf/JetBrainsMono-Medium.ttf' 'ttf/JetBrainsMono-Regular.ttf'; do
+  for font in 'fonts/otf/JetBrainsMono-Bold.otf' 'fonts/otf/JetBrainsMono-BoldItalic.otf' 'fonts/otf/JetBrainsMono-ExtraBold.otf' 'fonts/otf/JetBrainsMono-ExtraBoldItalic.otf' 'fonts/otf/JetBrainsMono-ExtraLight.otf' 'fonts/otf/JetBrainsMono-ExtraLightItalic.otf' 'fonts/otf/JetBrainsMono-Italic.otf' 'fonts/otf/JetBrainsMono-Light.otf' 'fonts/otf/JetBrainsMono-LightItalic.otf' 'fonts/otf/JetBrainsMono-Medium.otf' 'fonts/otf/JetBrainsMono-MediumItalic.otf' 'fonts/otf/JetBrainsMono-Regular.otf' 'fonts/otf/JetBrainsMono-SemiBold.otf' 'fonts/otf/JetBrainsMono-SemiBoldItalic.otf' 'fonts/otf/JetBrainsMono-Thin.otf' 'fonts/otf/JetBrainsMono-ThinItalic.otf'; do
     fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
   done | sort -u
 )
@@ -132,7 +131,7 @@ if [[ -n "${fontnames}" ]] ; then
   fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
 fi
 fontlangs=$(
-  for font in 'ttf/JetBrainsMono-Bold-Italic.ttf' 'ttf/JetBrainsMono-Bold.ttf' 'ttf/JetBrainsMono-ExtraBold-Italic.ttf' 'ttf/JetBrainsMono-ExtraBold.ttf' 'ttf/JetBrainsMono-Italic.ttf' 'ttf/JetBrainsMono-Medium-Italic.ttf' 'ttf/JetBrainsMono-Medium.ttf' 'ttf/JetBrainsMono-Regular.ttf'; do
+  for font in 'fonts/otf/JetBrainsMono-Bold.otf' 'fonts/otf/JetBrainsMono-BoldItalic.otf' 'fonts/otf/JetBrainsMono-ExtraBold.otf' 'fonts/otf/JetBrainsMono-ExtraBoldItalic.otf' 'fonts/otf/JetBrainsMono-ExtraLight.otf' 'fonts/otf/JetBrainsMono-ExtraLightItalic.otf' 'fonts/otf/JetBrainsMono-Italic.otf' 'fonts/otf/JetBrainsMono-Light.otf' 'fonts/otf/JetBrainsMono-LightItalic.otf' 'fonts/otf/JetBrainsMono-Medium.otf' 'fonts/otf/JetBrainsMono-MediumItalic.otf' 'fonts/otf/JetBrainsMono-Regular.otf' 'fonts/otf/JetBrainsMono-SemiBold.otf' 'fonts/otf/JetBrainsMono-SemiBoldItalic.otf' 'fonts/otf/JetBrainsMono-Thin.otf' 'fonts/otf/JetBrainsMono-ThinItalic.otf'; do
     fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
   done | sort -u
 )
@@ -147,7 +146,7 @@ cat > "org.altlinux.jetbrains-mono-fonts.metainfo.xml" << EOF_APPSTREAM
 <component type="font">
   <id>org.altlinux.jetbrains-mono-fonts</id>
   <metadata_license>MIT</metadata_license>
-  <project_license>ASL 2.0</project_license>
+  <project_license>OFL 1.1</project_license>
   <name>JetBrains JetBrains Mono</name>
   <summary><![CDATA[A mono-space font family containing coding ligatures]]></summary>
   <description>
@@ -162,7 +161,7 @@ cat > "org.altlinux.jetbrains-mono-fonts.metainfo.xml" << EOF_APPSTREAM
 EOF_APPSTREAM
 # fontbuild 1
 fontnames=$(
-  for font in 'ttf/JetBrainsMonoNL-Bold-Italic.ttf' 'ttf/JetBrainsMonoNL-Bold.ttf' 'ttf/JetBrainsMonoNL-ExtraBold-Italic.ttf' 'ttf/JetBrainsMonoNL-ExtraBold.ttf' 'ttf/JetBrainsMonoNL-Italic.ttf' 'ttf/JetBrainsMonoNL-Medium-Italic.ttf' 'ttf/JetBrainsMonoNL-Medium.ttf' 'ttf/JetBrainsMonoNL-Regular.ttf'; do
+  for font in 'fonts/ttf/JetBrainsMonoNL-Bold.ttf' 'fonts/ttf/JetBrainsMonoNL-BoldItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-ExtraBold.ttf' 'fonts/ttf/JetBrainsMonoNL-ExtraBoldItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-ExtraLight.ttf' 'fonts/ttf/JetBrainsMonoNL-ExtraLightItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-Italic.ttf' 'fonts/ttf/JetBrainsMonoNL-Light.ttf' 'fonts/ttf/JetBrainsMonoNL-LightItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-Medium.ttf' 'fonts/ttf/JetBrainsMonoNL-MediumItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-Regular.ttf' 'fonts/ttf/JetBrainsMonoNL-SemiBold.ttf' 'fonts/ttf/JetBrainsMonoNL-SemiBoldItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-Thin.ttf' 'fonts/ttf/JetBrainsMonoNL-ThinItalic.ttf'; do
     fc-scan "${font}" -f "    <font>%%{fullname[0]}</font>\n"
   done | sort -u
 )
@@ -170,7 +169,7 @@ if [[ -n "${fontnames}" ]] ; then
   fontnames=$'\n'"  <provides>"$'\n'"${fontnames}"$'\n'"  </provides>"
 fi
 fontlangs=$(
-  for font in 'ttf/JetBrainsMonoNL-Bold-Italic.ttf' 'ttf/JetBrainsMonoNL-Bold.ttf' 'ttf/JetBrainsMonoNL-ExtraBold-Italic.ttf' 'ttf/JetBrainsMonoNL-ExtraBold.ttf' 'ttf/JetBrainsMonoNL-Italic.ttf' 'ttf/JetBrainsMonoNL-Medium-Italic.ttf' 'ttf/JetBrainsMonoNL-Medium.ttf' 'ttf/JetBrainsMonoNL-Regular.ttf'; do
+  for font in 'fonts/ttf/JetBrainsMonoNL-Bold.ttf' 'fonts/ttf/JetBrainsMonoNL-BoldItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-ExtraBold.ttf' 'fonts/ttf/JetBrainsMonoNL-ExtraBoldItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-ExtraLight.ttf' 'fonts/ttf/JetBrainsMonoNL-ExtraLightItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-Italic.ttf' 'fonts/ttf/JetBrainsMonoNL-Light.ttf' 'fonts/ttf/JetBrainsMonoNL-LightItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-Medium.ttf' 'fonts/ttf/JetBrainsMonoNL-MediumItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-Regular.ttf' 'fonts/ttf/JetBrainsMonoNL-SemiBold.ttf' 'fonts/ttf/JetBrainsMonoNL-SemiBoldItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-Thin.ttf' 'fonts/ttf/JetBrainsMonoNL-ThinItalic.ttf'; do
     fc-scan "${font}" -f "%%{[]lang{    <lang>%%{lang}</lang>\n}}"
   done | sort -u
 )
@@ -185,7 +184,7 @@ cat > "org.altlinux.jetbrains-mono-nl-fonts.metainfo.xml" << EOF_APPSTREAM
 <component type="font">
   <id>org.altlinux.jetbrains-mono-nl-fonts</id>
   <metadata_license>MIT</metadata_license>
-  <project_license>ASL 2.0</project_license>
+  <project_license>OFL 1.1</project_license>
   <name>JetBrains JetBrains Mono NL</name>
   <summary><![CDATA[A mono-space coding font family]]></summary>
   <description>
@@ -202,29 +201,45 @@ EOF_APPSTREAM
 %install
 echo Installing jetbrains-mono-fonts
 echo "" > "jetbrains-mono-fonts0.list"
-install -m 0755 -vd %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo "%%dir %_fontsdir/ttf/jetbrains-mono" >> "jetbrains-mono-fonts0.list"
-install -m 0644 -vp "ttf/JetBrainsMono-Bold-Italic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMono-Bold-Italic.ttf")\" >> 'jetbrains-mono-fonts0.list'
-install -m 0644 -vp "ttf/JetBrainsMono-Bold.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMono-Bold.ttf")\" >> 'jetbrains-mono-fonts0.list'
-install -m 0644 -vp "ttf/JetBrainsMono-ExtraBold-Italic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMono-ExtraBold-Italic.ttf")\" >> 'jetbrains-mono-fonts0.list'
-install -m 0644 -vp "ttf/JetBrainsMono-ExtraBold.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMono-ExtraBold.ttf")\" >> 'jetbrains-mono-fonts0.list'
-install -m 0644 -vp "ttf/JetBrainsMono-Italic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMono-Italic.ttf")\" >> 'jetbrains-mono-fonts0.list'
-install -m 0644 -vp "ttf/JetBrainsMono-Medium-Italic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMono-Medium-Italic.ttf")\" >> 'jetbrains-mono-fonts0.list'
-install -m 0644 -vp "ttf/JetBrainsMono-Medium.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMono-Medium.ttf")\" >> 'jetbrains-mono-fonts0.list'
-install -m 0644 -vp "ttf/JetBrainsMono-Regular.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMono-Regular.ttf")\" >> 'jetbrains-mono-fonts0.list'
+install -m 0755 -vd %buildroot%_fontsdir/otf/jetbrains-mono/
+echo "%%dir %_fontsdir/otf/jetbrains-mono" >> "jetbrains-mono-fonts0.list"
+install -m 0644 -vp "fonts/otf/JetBrainsMono-Bold.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-Bold.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-BoldItalic.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-BoldItalic.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-ExtraBold.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-ExtraBold.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-ExtraBoldItalic.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-ExtraBoldItalic.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-ExtraLight.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-ExtraLight.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-ExtraLightItalic.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-ExtraLightItalic.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-Italic.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-Italic.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-Light.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-Light.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-LightItalic.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-LightItalic.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-Medium.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-Medium.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-MediumItalic.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-MediumItalic.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-Regular.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-Regular.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-SemiBold.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-SemiBold.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-SemiBoldItalic.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-SemiBoldItalic.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-Thin.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-Thin.otf\" >> 'jetbrains-mono-fonts0.list'
+install -m 0644 -vp "fonts/otf/JetBrainsMono-ThinItalic.otf" %buildroot%_fontsdir/otf/jetbrains-mono/
+echo \"%_fontsdir/otf/jetbrains-mono/JetBrainsMono-ThinItalic.otf\" >> 'jetbrains-mono-fonts0.list'
 (
 
   IFS= lines=$(
     for fontconfng in '%SOURCE10'; do
-      gen-fontconf -x "${fontconfng}" -w -f 'ttf/JetBrainsMono-Bold-Italic.ttf' 'ttf/JetBrainsMono-Bold.ttf' 'ttf/JetBrainsMono-ExtraBold-Italic.ttf' 'ttf/JetBrainsMono-ExtraBold.ttf' 'ttf/JetBrainsMono-Italic.ttf' 'ttf/JetBrainsMono-Medium-Italic.ttf' 'ttf/JetBrainsMono-Medium.ttf' 'ttf/JetBrainsMono-Regular.ttf'
+      gen-fontconf -x "${fontconfng}" -w -f 'fonts/otf/JetBrainsMono-Bold.otf' 'fonts/otf/JetBrainsMono-BoldItalic.otf' 'fonts/otf/JetBrainsMono-ExtraBold.otf' 'fonts/otf/JetBrainsMono-ExtraBoldItalic.otf' 'fonts/otf/JetBrainsMono-ExtraLight.otf' 'fonts/otf/JetBrainsMono-ExtraLightItalic.otf' 'fonts/otf/JetBrainsMono-Italic.otf' 'fonts/otf/JetBrainsMono-Light.otf' 'fonts/otf/JetBrainsMono-LightItalic.otf' 'fonts/otf/JetBrainsMono-Medium.otf' 'fonts/otf/JetBrainsMono-MediumItalic.otf' 'fonts/otf/JetBrainsMono-Regular.otf' 'fonts/otf/JetBrainsMono-SemiBold.otf' 'fonts/otf/JetBrainsMono-SemiBoldItalic.otf' 'fonts/otf/JetBrainsMono-Thin.otf' 'fonts/otf/JetBrainsMono-ThinItalic.otf'
     done
   )
   while IFS= read -r line; do
@@ -249,38 +264,54 @@ for fontappstream in 'org.altlinux.jetbrains-mono-fonts.metainfo.xml'; do
   echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "jetbrains-mono-fonts0.list"
 done
 
-for fontdoc in 'README.md'; do
+for fontdoc in 'Changelog.md' 'README.md'; do
   echo %%doc "'${fontdoc}'" >> "jetbrains-mono-fonts0.list"
 done
 
-for fontlicense in 'LICENSE'; do
+for fontlicense in 'OFL.txt'; do
   echo %%doc "'${fontlicense}'" >> "jetbrains-mono-fonts0.list"
 done
 echo Installing jetbrains-mono-nl-fonts
 echo "" > "jetbrains-mono-nl-fonts1.list"
 install -m 0755 -vd %buildroot%_fontsdir/ttf/jetbrains-mono/
 echo "%%dir %_fontsdir/ttf/jetbrains-mono" >> "jetbrains-mono-nl-fonts1.list"
-install -m 0644 -vp "ttf/JetBrainsMonoNL-Bold-Italic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMonoNL-Bold-Italic.ttf")\" >> 'jetbrains-mono-nl-fonts1.list'
-install -m 0644 -vp "ttf/JetBrainsMonoNL-Bold.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMonoNL-Bold.ttf")\" >> 'jetbrains-mono-nl-fonts1.list'
-install -m 0644 -vp "ttf/JetBrainsMonoNL-ExtraBold-Italic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMonoNL-ExtraBold-Italic.ttf")\" >> 'jetbrains-mono-nl-fonts1.list'
-install -m 0644 -vp "ttf/JetBrainsMonoNL-ExtraBold.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMonoNL-ExtraBold.ttf")\" >> 'jetbrains-mono-nl-fonts1.list'
-install -m 0644 -vp "ttf/JetBrainsMonoNL-Italic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMonoNL-Italic.ttf")\" >> 'jetbrains-mono-nl-fonts1.list'
-install -m 0644 -vp "ttf/JetBrainsMonoNL-Medium-Italic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMonoNL-Medium-Italic.ttf")\" >> 'jetbrains-mono-nl-fonts1.list'
-install -m 0644 -vp "ttf/JetBrainsMonoNL-Medium.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMonoNL-Medium.ttf")\" >> 'jetbrains-mono-nl-fonts1.list'
-install -m 0644 -vp "ttf/JetBrainsMonoNL-Regular.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
-echo \"%_fontsdir/ttf/jetbrains-mono//$(basename "ttf/JetBrainsMonoNL-Regular.ttf")\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-Bold.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-Bold.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-BoldItalic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-BoldItalic.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-ExtraBold.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-ExtraBold.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-ExtraBoldItalic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-ExtraBoldItalic.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-ExtraLight.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-ExtraLight.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-ExtraLightItalic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-ExtraLightItalic.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-Italic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-Italic.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-Light.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-Light.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-LightItalic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-LightItalic.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-Medium.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-Medium.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-MediumItalic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-MediumItalic.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-Regular.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-Regular.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-SemiBold.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-SemiBold.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-SemiBoldItalic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-SemiBoldItalic.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-Thin.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-Thin.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
+install -m 0644 -vp "fonts/ttf/JetBrainsMonoNL-ThinItalic.ttf" %buildroot%_fontsdir/ttf/jetbrains-mono/
+echo \"%_fontsdir/ttf/jetbrains-mono/JetBrainsMonoNL-ThinItalic.ttf\" >> 'jetbrains-mono-nl-fonts1.list'
 (
 
   IFS= lines=$(
     for fontconfng in '%SOURCE11'; do
-      gen-fontconf -x "${fontconfng}" -w -f 'ttf/JetBrainsMonoNL-Bold-Italic.ttf' 'ttf/JetBrainsMonoNL-Bold.ttf' 'ttf/JetBrainsMonoNL-ExtraBold-Italic.ttf' 'ttf/JetBrainsMonoNL-ExtraBold.ttf' 'ttf/JetBrainsMonoNL-Italic.ttf' 'ttf/JetBrainsMonoNL-Medium-Italic.ttf' 'ttf/JetBrainsMonoNL-Medium.ttf' 'ttf/JetBrainsMonoNL-Regular.ttf'
+      gen-fontconf -x "${fontconfng}" -w -f 'fonts/ttf/JetBrainsMonoNL-Bold.ttf' 'fonts/ttf/JetBrainsMonoNL-BoldItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-ExtraBold.ttf' 'fonts/ttf/JetBrainsMonoNL-ExtraBoldItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-ExtraLight.ttf' 'fonts/ttf/JetBrainsMonoNL-ExtraLightItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-Italic.ttf' 'fonts/ttf/JetBrainsMonoNL-Light.ttf' 'fonts/ttf/JetBrainsMonoNL-LightItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-Medium.ttf' 'fonts/ttf/JetBrainsMonoNL-MediumItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-Regular.ttf' 'fonts/ttf/JetBrainsMonoNL-SemiBold.ttf' 'fonts/ttf/JetBrainsMonoNL-SemiBoldItalic.ttf' 'fonts/ttf/JetBrainsMonoNL-Thin.ttf' 'fonts/ttf/JetBrainsMonoNL-ThinItalic.ttf'
     done
   )
   while IFS= read -r line; do
@@ -305,11 +336,11 @@ for fontappstream in 'org.altlinux.jetbrains-mono-nl-fonts.metainfo.xml'; do
   echo \"%{_metainfodir}/$(basename "${fontappstream}")\" >> "jetbrains-mono-nl-fonts1.list"
 done
 
-for fontdoc in 'README.md'; do
+for fontdoc in 'Changelog.md' 'README.md'; do
   echo %%doc "'${fontdoc}'" >> "jetbrains-mono-nl-fonts1.list"
 done
 
-for fontlicense in 'LICENSE'; do
+for fontlicense in 'OFL.txt'; do
   echo %%doc "'${fontlicense}'" >> "jetbrains-mono-nl-fonts1.list"
 done
 
@@ -329,6 +360,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'jetbrains-mono-nl-fonts1.list'
 %files -n fonts-ttf-jetbrains-mono-nl -f jetbrains-mono-nl-fonts1.list
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 2.242-alt1_1
+- update to new release by fcimport
+
 * Wed Feb 16 2022 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt1_5
 - new version
 
