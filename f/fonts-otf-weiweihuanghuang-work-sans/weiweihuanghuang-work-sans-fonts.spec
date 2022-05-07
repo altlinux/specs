@@ -32,7 +32,7 @@ BuildRequires: rpm-build-fedora-compat-fonts
 # FedoraForgeMeta2ALT: end generated meta
 
 Version: 2.07
-Release: alt1_9
+Release: alt1_15
 URL:     %{forgeurl}
 
 %global foundry           weiweihuanghuang
@@ -65,7 +65,7 @@ Source44: import.info
 %description
 %{?fontdescription}
 
-%package   doc
+%package doc
 Group: System/Fonts/True type
 Summary:   Optional documentation files of %{oldname}
 BuildArch: noarch
@@ -121,50 +121,50 @@ EOF_APPSTREAM
 %install
 echo Installing weiweihuanghuang-work-sans-fonts
 echo "" > "weiweihuanghuang-work-sans-fonts.list"
-install -m 0755 -vd %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo "%%dir %_fontsdir/otf/weiweihuanghuang-work-sans" >> "weiweihuanghuang-work-sans-fonts.list"
 install -m 0755 -vd %buildroot%_fontsdir/ttf/weiweihuanghuang-work-sans/
 echo "%%dir %_fontsdir/ttf/weiweihuanghuang-work-sans" >> "weiweihuanghuang-work-sans-fonts.list"
+install -m 0755 -vd %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
+echo "%%dir %_fontsdir/otf/weiweihuanghuang-work-sans" >> "weiweihuanghuang-work-sans-fonts.list"
 install -m 0644 -vp "fonts/variable/WorkSans-Italic-VF.ttf" %buildroot%_fontsdir/ttf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/ttf/weiweihuanghuang-work-sans//$(basename "fonts/variable/WorkSans-Italic-VF.ttf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/ttf/weiweihuanghuang-work-sans/WorkSans-Italic-VF.ttf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/variable/WorkSans-Roman-VF.ttf" %buildroot%_fontsdir/ttf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/ttf/weiweihuanghuang-work-sans//$(basename "fonts/variable/WorkSans-Roman-VF.ttf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/ttf/weiweihuanghuang-work-sans/WorkSans-Roman-VF.ttf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-Black.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-Black.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-Black.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-BlackItalic.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-BlackItalic.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-BlackItalic.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-Bold.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-Bold.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-Bold.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-BoldItalic.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-BoldItalic.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-BoldItalic.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-ExtraBold.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-ExtraBold.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-ExtraBold.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-ExtraBoldItalic.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-ExtraBoldItalic.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-ExtraBoldItalic.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-ExtraLight.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-ExtraLight.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-ExtraLight.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-ExtraLightItalic.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-ExtraLightItalic.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-ExtraLightItalic.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-Italic.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-Italic.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-Italic.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-Light.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-Light.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-Light.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-LightItalic.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-LightItalic.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-LightItalic.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-Medium.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-Medium.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-Medium.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-MediumItalic.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-MediumItalic.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-MediumItalic.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-Regular.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-Regular.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-Regular.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-SemiBold.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-SemiBold.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-SemiBold.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-SemiBoldItalic.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-SemiBoldItalic.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-SemiBoldItalic.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-Thin.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-Thin.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-Thin.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 install -m 0644 -vp "fonts/static/OTF/WorkSans-ThinItalic.otf" %buildroot%_fontsdir/otf/weiweihuanghuang-work-sans/
-echo \"%_fontsdir/otf/weiweihuanghuang-work-sans//$(basename "fonts/static/OTF/WorkSans-ThinItalic.otf")\" >> 'weiweihuanghuang-work-sans-fonts.list'
+echo \"%_fontsdir/otf/weiweihuanghuang-work-sans/WorkSans-ThinItalic.otf\" >> 'weiweihuanghuang-work-sans-fonts.list'
 (
 
   IFS= lines=$(
@@ -216,6 +216,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'weiweihuanghuang-work-sans-fon
 %doc documentation/*
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 2.07-alt1_15
+- update to new release by fcimport
+
 * Sun Feb 20 2022 Igor Vlasenko <viy@altlinux.org> 2.07-alt1_9
 - new version
 
