@@ -1,22 +1,22 @@
 Group: Games/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install imake libGLU-devel libSDL-devel libXext-devel libXt-devel libcrypt-devel libglvnd-devel libogg-devel perl(Cwd.pm) perl(Digest/MD5.pm) perl(DirHandle.pm) xorg-cf-files
+BuildRequires: /usr/bin/desktop-file-install imake libGLU-devel libSDL-devel libXext-devel libXt-devel libcrypt-devel libglvnd-devel libogg-devel xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: chrpath
-%define fedora 32
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:        Action game in four spatial dimensions
 Name:           adanaxisgpl
 Version:        1.2.5
-Release:        alt4_38
+Release:        alt4_42
 License:        GPLv2
 URL:            http://www.mushware.com/
 Source0:        http://www.mushware.com/files/%{name}-1.2.5.tar.gz
 Patch0:         adanaxisgpl-1.2.5-const.patch
 Patch1:         adanaxisgpl-1.2.5-gcc47.patch
 Patch2:         adanaxisgpl-1.2.5-xdg-open.patch
-Patch3:		adanaxisgpl-gcc11.patch
+Patch3:         adanaxisgpl-gcc11.patch
+Patch4:         adanaxisgpl-gcc12.patch
 BuildRequires:  gcc
 BuildRequires:  gcc-c++
 BuildRequires:  desktop-file-utils
@@ -51,7 +51,9 @@ Shading Language.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 %patch33 -p0
+
 
 
 %build
@@ -77,12 +79,7 @@ EOF
 
 # Install desktop files
 mkdir -p %{buildroot}%{_datadir}/applications
-desktop-file-install                           \
-  --dir %{buildroot}%{_datadir}/applications   \
-%if 0%{?fedora} && 0%{?fedora} < 19
- --vendor=mushware                             \
-%endif
-  %{name}.desktop
+desktop-file-install --dir %{buildroot}%{_datadir}/applications %{name}.desktop
 
 # Icons
 mkdir -p -m 755 %{buildroot}%{_datadir}/icons/hicolor/16x16/apps
@@ -98,7 +95,8 @@ done
 
 
 %files
-%doc COPYING README ChangeLog AUTHORS
+%doc README ChangeLog AUTHORS
+%doc --no-dereference COPYING
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/applications/*%{name}.desktop
@@ -109,6 +107,9 @@ done
 
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 1.2.5-alt4_42
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt4_38
 - update to new release by fcimport
 
