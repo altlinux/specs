@@ -1,19 +1,30 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: libGL-devel libGLU-devel libX11-devel
+BuildRequires: libGLU-devel libX11-devel libglvnd-devel
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           opencsg
-Version:        1.4.2
-Release:        alt1_8
+Version:        1.5.0
+Release:        alt1_1
 Summary:        Library for Constructive Solid Geometry using OpenGL
-Group:          System/Libraries
-# license.txt contains a linking exception for CGAL
-License:        GPLv2 with exceptions
+# This is GPLv2+ since 1.5.0
+# Bundled rendertexture is licensed as zlib
+# Bundled glew is removed
+License:        GPLv2+ and zlib
 URL:            http://www.opencsg.org/
-Source0:        http://www.opencsg.org/OpenCSG-%{version}.tar.gz
-Patch0:         %{name}-build.patch
-BuildRequires:  gcc-c++ libqt4-declarative libqt4-devel qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools, libfreeglut-devel, libGLEW-devel, dos2unix
+Source:         http://www.opencsg.org/OpenCSG-%{version}.tar.gz
+# Makes this build fine in Fedora, and with unbundled glew
+# Includes https://github.com/floriankirsch/OpenCSG/pull/3
+Patch:          opencsg-build.patch
+BuildRequires:  libfreeglut-devel
+BuildRequires:  gcc-c++
+BuildRequires:  libGLEW-devel
+BuildRequires:  libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools
+
+# https://github.com/floriankirsch/OpenCSG/commits/master/RenderTexture/
+# Indicates this was once 2.0.3 but has been changed since
+Provides:       bundled(rendertexture) = 2.0.3^
 Source44: import.info
 
 %description
@@ -35,37 +46,41 @@ shapes. OpenCSG implements a variety of those algorithms, namely the
 Goldfeather algorithm and the SCS algorithm, both of them in several variants.
 
 %package devel
-Summary: OpenCSG development files
 Group: Development/Other
+Summary: OpenCSG development files
 Requires: %{name} = %{version}-%{release}
 
 %description devel
 Development files for OpenCSG.
 
+%package doc
+Group: System/Libraries
+Summary: OpenCSG documentation
+BuildArch: noarch
+
+%description doc
+Documentation for OpenCSG.
+
 %prep
 %setup -q -n OpenCSG-%{version}
 %patch0 -p1
 
+
 rm src/Makefile RenderTexture/Makefile Makefile example/Makefile
-dos2unix license.txt
 
 # Encoding
 iconv --from=ISO-8859-1 --to=UTF-8 changelog.txt > changelog.txt.new && \
 touch -r changelog.txt changelog.txt.new && \
 mv changelog.txt.new changelog.txt
 
-# New FSF Address
-for FILE in src/*.h src/*.cpp include/opencsg.h
-do
-  sed -i s/"59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"/ $FILE
-done
-
 # Use Fedora's glew
-rm -rf glew/
+rm -r glew/
+
 
 %build
-%{qmake_qt4}
+%qmake_qt4
 %make_build
+
 
 %install
 # No make install
@@ -75,15 +90,26 @@ mkdir -p %{buildroot}/%{_includedir}
 cp -pP lib/* %{buildroot}/%{_libdir}/
 cp -p include/opencsg.h %{buildroot}/%{_includedir}/
 
+
 %files
-%doc changelog.txt doc license.txt
-%{_libdir}/*so.*
+%doc README.md
+%doc --no-dereference copying.txt
+%{_libdir}/libopencsg.so.1
+%{_libdir}/libopencsg.so.1.*
 
 %files devel
-%{_includedir}/*
-%{_libdir}/*so
+%{_includedir}/opencsg.h
+%{_libdir}/libopencsg.so
+
+%files doc
+%doc changelog.txt doc
+%doc --no-dereference copying.txt
+
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 1.4.2-alt1_8
 - update to new release by fcimport
 
