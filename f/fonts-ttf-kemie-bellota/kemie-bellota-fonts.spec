@@ -31,7 +31,7 @@ Version:            4.1
 #global distprefix %nil
 # FedoraForgeMeta2ALT: end generated meta
 
-Release: alt1_3
+Release: alt1_9
 URL:     %{forgeurl}
 
 %global foundry           kemie
@@ -58,7 +58,7 @@ Bellota, is the most exuberant variation published by the project.
 %global fontfamily1       Bellota Text
 %global fontsummary1      An ornamented, slightly demure, cute, low contrast sans-serif font family
 %global fontpkgheader1    \
-Requires: font(bellota)\
+#Suggests: font(bellota)\
 
 %global fonts1            ttf/BellotaText*ttf
 %global fontdescription1  \
@@ -191,17 +191,17 @@ echo "" > "kemie-bellota-fonts0.list"
 install -m 0755 -vd %buildroot%_fontsdir/ttf/kemie-bellota/
 echo "%%dir %_fontsdir/ttf/kemie-bellota" >> "kemie-bellota-fonts0.list"
 install -m 0644 -vp "ttf/Bellota-Bold.ttf" %buildroot%_fontsdir/ttf/kemie-bellota/
-echo \"%_fontsdir/ttf/kemie-bellota//$(basename "ttf/Bellota-Bold.ttf")\" >> 'kemie-bellota-fonts0.list'
+echo \"%_fontsdir/ttf/kemie-bellota/Bellota-Bold.ttf\" >> 'kemie-bellota-fonts0.list'
 install -m 0644 -vp "ttf/Bellota-BoldItalic.ttf" %buildroot%_fontsdir/ttf/kemie-bellota/
-echo \"%_fontsdir/ttf/kemie-bellota//$(basename "ttf/Bellota-BoldItalic.ttf")\" >> 'kemie-bellota-fonts0.list'
+echo \"%_fontsdir/ttf/kemie-bellota/Bellota-BoldItalic.ttf\" >> 'kemie-bellota-fonts0.list'
 install -m 0644 -vp "ttf/Bellota-Italic.ttf" %buildroot%_fontsdir/ttf/kemie-bellota/
-echo \"%_fontsdir/ttf/kemie-bellota//$(basename "ttf/Bellota-Italic.ttf")\" >> 'kemie-bellota-fonts0.list'
+echo \"%_fontsdir/ttf/kemie-bellota/Bellota-Italic.ttf\" >> 'kemie-bellota-fonts0.list'
 install -m 0644 -vp "ttf/Bellota-Light.ttf" %buildroot%_fontsdir/ttf/kemie-bellota/
-echo \"%_fontsdir/ttf/kemie-bellota//$(basename "ttf/Bellota-Light.ttf")\" >> 'kemie-bellota-fonts0.list'
+echo \"%_fontsdir/ttf/kemie-bellota/Bellota-Light.ttf\" >> 'kemie-bellota-fonts0.list'
 install -m 0644 -vp "ttf/Bellota-LightItalic.ttf" %buildroot%_fontsdir/ttf/kemie-bellota/
-echo \"%_fontsdir/ttf/kemie-bellota//$(basename "ttf/Bellota-LightItalic.ttf")\" >> 'kemie-bellota-fonts0.list'
+echo \"%_fontsdir/ttf/kemie-bellota/Bellota-LightItalic.ttf\" >> 'kemie-bellota-fonts0.list'
 install -m 0644 -vp "ttf/Bellota-Regular.ttf" %buildroot%_fontsdir/ttf/kemie-bellota/
-echo \"%_fontsdir/ttf/kemie-bellota//$(basename "ttf/Bellota-Regular.ttf")\" >> 'kemie-bellota-fonts0.list'
+echo \"%_fontsdir/ttf/kemie-bellota/Bellota-Regular.ttf\" >> 'kemie-bellota-fonts0.list'
 (
 
   IFS= lines=$(
@@ -243,17 +243,17 @@ echo "" > "kemie-bellota-text-fonts1.list"
 install -m 0755 -vd %buildroot%_fontsdir/ttf/kemie-bellota/
 echo "%%dir %_fontsdir/ttf/kemie-bellota" >> "kemie-bellota-text-fonts1.list"
 install -m 0644 -vp "ttf/BellotaText-Bold.ttf" %buildroot%_fontsdir/ttf/kemie-bellota/
-echo \"%_fontsdir/ttf/kemie-bellota//$(basename "ttf/BellotaText-Bold.ttf")\" >> 'kemie-bellota-text-fonts1.list'
+echo \"%_fontsdir/ttf/kemie-bellota/BellotaText-Bold.ttf\" >> 'kemie-bellota-text-fonts1.list'
 install -m 0644 -vp "ttf/BellotaText-BoldItalic.ttf" %buildroot%_fontsdir/ttf/kemie-bellota/
-echo \"%_fontsdir/ttf/kemie-bellota//$(basename "ttf/BellotaText-BoldItalic.ttf")\" >> 'kemie-bellota-text-fonts1.list'
+echo \"%_fontsdir/ttf/kemie-bellota/BellotaText-BoldItalic.ttf\" >> 'kemie-bellota-text-fonts1.list'
 install -m 0644 -vp "ttf/BellotaText-Italic.ttf" %buildroot%_fontsdir/ttf/kemie-bellota/
-echo \"%_fontsdir/ttf/kemie-bellota//$(basename "ttf/BellotaText-Italic.ttf")\" >> 'kemie-bellota-text-fonts1.list'
+echo \"%_fontsdir/ttf/kemie-bellota/BellotaText-Italic.ttf\" >> 'kemie-bellota-text-fonts1.list'
 install -m 0644 -vp "ttf/BellotaText-Light.ttf" %buildroot%_fontsdir/ttf/kemie-bellota/
-echo \"%_fontsdir/ttf/kemie-bellota//$(basename "ttf/BellotaText-Light.ttf")\" >> 'kemie-bellota-text-fonts1.list'
+echo \"%_fontsdir/ttf/kemie-bellota/BellotaText-Light.ttf\" >> 'kemie-bellota-text-fonts1.list'
 install -m 0644 -vp "ttf/BellotaText-LightItalic.ttf" %buildroot%_fontsdir/ttf/kemie-bellota/
-echo \"%_fontsdir/ttf/kemie-bellota//$(basename "ttf/BellotaText-LightItalic.ttf")\" >> 'kemie-bellota-text-fonts1.list'
+echo \"%_fontsdir/ttf/kemie-bellota/BellotaText-LightItalic.ttf\" >> 'kemie-bellota-text-fonts1.list'
 install -m 0644 -vp "ttf/BellotaText-Regular.ttf" %buildroot%_fontsdir/ttf/kemie-bellota/
-echo \"%_fontsdir/ttf/kemie-bellota//$(basename "ttf/BellotaText-Regular.ttf")\" >> 'kemie-bellota-text-fonts1.list'
+echo \"%_fontsdir/ttf/kemie-bellota/BellotaText-Regular.ttf\" >> 'kemie-bellota-text-fonts1.list'
 (
 
   IFS= lines=$(
@@ -307,6 +307,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'kemie-bellota-text-fonts1.list
 %files -n fonts-ttf-kemie-bellota-text -f kemie-bellota-text-fonts1.list
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 4.1-alt1_9
+- update to new release by fcimport
+
 * Wed Feb 16 2022 Igor Vlasenko <viy@altlinux.org> 4.1-alt1_3
 - new version
 
