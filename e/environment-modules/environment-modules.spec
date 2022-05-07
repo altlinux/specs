@@ -7,7 +7,7 @@ BuildRequires(pre): rpm-macros-alternatives
 %global vimdatadir %{_datadir}/vim/vimfiles
 
 Name:           environment-modules
-Version:        5.0.1
+Version:        5.1.0
 Release:        alt1_1
 Summary:        Provides dynamic modification of a user's environment
 
@@ -82,6 +82,9 @@ Install this package if you want to create RPM packages that use GNAT.
            --libexecdir=%{_libdir}/Modules/libexec \
            --mandir=%{_mandir} \
            --vimdatadir=%{vimdatadir} \
+           --with-bashcompletiondir=%{_datadir}/bash-completion/completions \
+           --with-fishcompletiondir=%{_datadir}/fish/vendor_completions.d \
+           --with-zshcompletiondir=%{_datadir}/zsh/site-functions \
            --enable-multilib-support \
            --disable-doc-install \
            --enable-modulespath \
@@ -155,6 +158,13 @@ fi
 %{_libdir}/Modules/libexec/modulecmd.tcl
 %dir %{_datadir}/Modules/init
 %{_datadir}/Modules/init/*
+# do not need to require shell package as we "own" completion dir
+%{_datadir}/bash-completion/completions/module
+%{_datadir}/bash-completion/completions/ml
+%dir %{_datadir}/zsh/site-functions
+%{_datadir}/zsh/site-functions/_module
+%dir %{_datadir}/fish/vendor_completions.d
+%{_datadir}/fish/vendor_completions.d/module.fish
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/initrc
 %config(noreplace) %{_sysconfdir}/%{name}/modulespath
@@ -174,6 +184,9 @@ fi
 
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 5.1.0-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 5.0.1-alt1_1
 - update to new release by fcimport
 
