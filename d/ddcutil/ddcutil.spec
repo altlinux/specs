@@ -15,24 +15,25 @@
 
 # Please submit bugfixes or comments via https://bugzilla.altlinux.org
 
-%define soname 2
+%define soname 4
 
 Name: ddcutil
-Version: 0.9.8
+Version: 1.2.2
 Release: alt1
 
 Summary: Utility to query and update monitor settings
-License: GPLv2+
 Group: System/Configuration/Hardware
-
+License: GPLv2+
 Url: http://github.com/rockowitz/%name
-Source: %url/archive/v%version.tar.gz#/%name-%version.tar.gz
 
-BuildRequires: i2c-tools
+Source: %url/archive/v%version/%name-%version.tar.gz
+
+BuildRequires: libi2c-devel i2c-tools
 BuildRequires: python-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libudev)
+BuildRequires: pkgconfig(libkmod)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(zlib)
@@ -48,11 +49,11 @@ effect, e.g. red gain.  ddcutil allows color related settings to be saved at
 the time a monitor is calibrated, and then restored when the calibration is
 applied.
 
-%package -n libddcutil%soname
+%package -n lib%name%soname
 Summary: Shared library to query and update monitor settings
 Group: System/Libraries
 
-%description -n libddcutil%soname
+%description -n lib%name%soname
 Shared library version of ddcutil, exposing a C API.
 
 ddcutil communicates with monitors implementing MCCS (Monitor Control Command
@@ -62,7 +63,7 @@ Device on USB.
 %package -n libddcutil-devel
 Summary: Development files for libddcutil
 Group: Development/C
-Requires: libddcutil%soname = %version
+Requires: lib%name%soname = %EVR
 
 %description -n libddcutil-devel
 Header files and pkgconfig control file for libddcutil.
@@ -71,51 +72,49 @@ Header files and pkgconfig control file for libddcutil.
 %setup
 
 %build
-./autogen.sh
+NOCONFIGURE=1 ./autogen.sh
 %configure \
-	--enable-lib \
-	--enable-drm \
-	--enable-usb \
-	--enable-x11 \
-	--docdir="%_defaultdocdir/%name-%version"
+    --enable-lib \
+    --enable-drm \
+    --enable-usb \
+    --enable-x11 \
+    --docdir="%_defaultdocdir/%name-%version"
 %make_build
+
+%install
+%makeinstall_std
 
 %check
 %make check
 
-%install
-%makeinstall_std
-install -pDm644 {data,%buildroot}%_datadir/cmake/Modules/FindDDCUtil.cmake
-# need customization if ever used
-#cp -p data/etc/udev/rules.d/*.rules %buildroot/etc/udev/rules.d
-
 %files
-%doc AUTHORS NEWS.md README.md ChangeLog
+%_bindir/%name
 %dir %_datadir/%name
 %dir %_datadir/%name/data
 %_datadir/%name/data/*rules
 %_datadir/%name/data/90-nvidia-i2c.conf
-%_man1dir/ddcutil.1*
-%_bindir/ddcutil
+%_man1dir/%name.1*
+%doc AUTHORS NEWS.md README.md CHANGELOG.md
 
 %files -n libddcutil%soname
-%doc AUTHORS NEWS.md README.md ChangeLog
-%_libdir/libddcutil.so.*
+%_libdir/libddcutil.so.%{soname}*
+%doc AUTHORS NEWS.md README.md CHANGELOG.md
 
 %files -n libddcutil-devel
-%_includedir/ddcutil_types.h
-%_includedir/ddcutil_c_api.h
-%_includedir/ddcutil_macros.h
-%_includedir/ddcutil_status_codes.h
-%_libdir/pkgconfig/ddcutil.pc
-%_libdir/libddcutil.so
-%dir %_datadir/%name
-%dir %_datadir/%name/data/
-%_datadir/cmake/Modules/FindDDCUtil.cmake
+%_includedir/%{name}_types.h
+%_includedir/%{name}_c_api.h
+%_includedir/%{name}_macros.h
+%_includedir/%{name}_status_codes.h
+%_libdir/lib%name.so
+%_pkgconfigdir/%name.pc
+%_libdir/cmake/%name/FindDDCUtil.cmake
 
 # TODO: python subpackage?
 
 %changelog
+* Sat May 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Wed May 06 2020 Michael Shigorin <mike@altlinux.org> 0.9.8-alt1
 - 0.9.8 (thx aris@)
 

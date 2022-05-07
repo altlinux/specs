@@ -22,7 +22,7 @@
 
 Name: enlightenment
 Version: %ver_major.3
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -78,7 +78,8 @@ Requires: connman
 # for the evrything module calculator mode
 Requires: bc
 # sinc 0.24
-Requires: %_libdir/libddcutil.so.2
+#src/bin/system/e_system_ddc.c:   ddc_lib = dlopen("libddcutil.so.4", RTLD_NOW | RTLD_LOCAL);
+Requires: %_libdir/libddcutil.so.4
 %{?_enable_xwayland:Requires: xorg-xwayland xorg-drv-libinput}
 %{?_enable_bluetooth:Requires: bluez %_sbindir/rfkill udev-rules-rfkill-uaccess}
 %{?_enable_connman:Requires: connman}
@@ -235,6 +236,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Sat May 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1:0.25.3-alt1.1
+- updated libddcutil dependency
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 1:0.25.3-alt1
 - 0.25.3
 
