@@ -1,14 +1,12 @@
 # hey Emacs, its -*- rpm-spec -*-
 
-%define rpm_masrosdir %_sysconfdir/rpm/macros.d
-
 # for distr selected
 %def_without M40
 %def_without M41
 
 # for set release
 %define release_pre alt
-%define release_base_num 1
+%define release_base_num 2
 %define release_base_num2 %nil
 %define release_suff %nil
 
@@ -97,15 +95,18 @@ find %buildroot%_sysconfdir -type f -print0 \
 	| xargs -r0i %_datadir/rpm-build-rpm-eval/rpm-eval.sh "{}"
 
 install -pD -m644 %SOURCE10 \
-	%buildroot%rpm_masrosdir/%name
+	%buildroot%_rpmmacrosdir/%name
 
 %files
 %_sysconfdir/control.d/webserver-cgi-bin-functions
 
 %files -n rpm-macros-%name
-%rpm_masrosdir/%name
+%_rpmmacrosdir/%name
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 0.4-alt2
+- NMU: use %%_rpmmacrosdir instead of /etc/rpm
+
 * Tue Oct 14 2008 Aleksey Avdeev <solo@altlinux.ru> 0.4-alt1
 - Fix symlink_* status and sets
 - Add build rpm-macros-%%name subpackage for ALT Linux RPM Packaging Policy
