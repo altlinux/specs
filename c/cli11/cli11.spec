@@ -11,13 +11,13 @@ BuildRequires: /usr/bin/clang-tidy boost-devel rpm-build-python3
 %global _docdir_fmt %{name}-devel
 
 Name:           cli11
-Version:        2.1.2
+Version:        2.2.0
 Release:        alt1_1
 Summary:        Command line parser for C++11
 
 License:        BSD
 URL:            https://github.com/CLIUtils/CLI11
-Source0:        %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/CLIUtils/CLI11/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  boost-complete
@@ -87,6 +87,9 @@ CXXFLAGS='%{build_cxxflags} -DCLI11_OPTIONAL -DCLI11_STD_OPTIONAL=1'
 %doc docs/CLI11.svg docs/CLI11_100.png
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 2.2.0-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 2.1.2-alt1_1
 - update to new release by fcimport
 
