@@ -1,6 +1,6 @@
 Name: linux-ha
 Version: 0.3
-Release: alt1
+Release: alt2
 
 Summary: The basic directory layout and rpm build macros for Linux-HA project apps
 License: GPL
@@ -45,9 +45,9 @@ RPM macros for Linux-HA project apps.
 %install
 mkdir -p %buildroot/%_sysconfdir/ha.d
 mkdir -p %buildroot/%_sysconfdir/ha.d/resource.d
-mkdir -p %buildroot/%_sysconfdir/rpm/macros.d
+mkdir -p %buildroot/%_rpmmacrosdir
 
-cat << EOF > %buildroot/%_sysconfdir/rpm/macros.d/linux-ha
+cat << EOF > %buildroot/%_rpmmacrosdir/linux-ha
 %%_ha_dir %%_sysconfdir/ha.d
 %%_ha_resource_dir %%_sysconfdir/ha.d/resource.d
 EOF
@@ -56,9 +56,12 @@ EOF
 %_sysconfdir/ha.d
 
 %files -n rpm-build-%name
-%_sysconfdir/rpm/macros.d/linux-ha
+%_rpmmacrosdir/linux-ha
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 0.3-alt2
+- NMU: use %%_rpmmacrosdir instead of /etc/rpm
+
 * Sat Dec 02 2006 L.A. Kostis <lakostis@altlinux.ru> 0.3-alt1
 - split out to many packages.
 
