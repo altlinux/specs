@@ -2,7 +2,7 @@ Summary: A simple tool to provide site-wide and per-user defaults for which MPI 
 
 Name: mpi-selector
 Version: 1.0.3
-Release: alt3
+Release: alt4
 License: BSD
 Group: System/Base
 
@@ -51,8 +51,8 @@ Install this package if you want to create RPM packages that use %name.
 install -d -m 755 %buildroot%_localstatedir/%name/data
 install -Dpm 644 /dev/null %buildroot%_sysconfdir/sysconfig/%name
 
-install -d %buildroot%_sysconfdir/rpm/macros.d
-cat >%buildroot%_sysconfdir/rpm/macros.d/%name<<EOF
+install -d %buildroot%_rpmmacrosdir
+cat >%buildroot%_rpmmacrosdir/%name<<EOF
 %%post_mpi_selector %_sbindir/post_mpi_selector
 %%preun_mpi_selector %_sbindir/preun_mpi_selector
 EOF
@@ -64,17 +64,19 @@ install -Dpm755 %SOURCE2 %buildroot%_sbindir/preun_mpi_selector
 %_bindir/*
 %_sbindir/*
 %_man1dir/*
-#%_sysconfdir/rpm/macros.d/*
 %_sysconfdir/profile.d/*
 %_localstatedir/%name
 %ghost %config(noreplace) %_sysconfdir/sysconfig/%name
-%exclude %_sysconfdir/rpm/macros.d/*
+%exclude %_rpmmacrosdir/*
 
 %files -n rpm-macros-%{name}
-%_sysconfdir/rpm/macros.d/*
+%_rpmmacrosdir/*
 
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt4
+- NMU: use %%_rpmmacrosdir instead of /etc
+
 * Mon Sep 04 2017 Andrey Cherepanov <cas@altlinux.org> 1.0.3-alt3
 - Do not package mpi-selector-manpath.sh (ALT #33842)
 
