@@ -7,8 +7,8 @@
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.9.2.0
-Release: alt2
+Version: 3.9.5.0
+Release: alt1
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
@@ -17,7 +17,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: fix-gnuradio-qtgui.pc.patch
-Patch1: gnuradio-3.9.1.0-python3-fix.patch
 
 # uhd not available for i586, armh
 ExcludeArch: %ix86 %arm
@@ -114,7 +113,6 @@ GNU Radio Headers.
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 %build
 %cmake \
@@ -165,6 +163,7 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %exclude %_docdir/%name-%version/html
 %endif #docs
 %_datadir/metainfo/org.gnuradio.grc.metainfo.xml
+%_man1dir/*.1.*
 
 %if_enabled docs
 %files docs
@@ -180,6 +179,9 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jan 28 2022 Anton Midyukov <antohami@altlinux.org> 3.9.5.0-alt1
+- new version 3.9.5.0
+
 * Fri Sep 24 2021 Anton Midyukov <antohami@altlinux.org> 3.9.2.0-alt2
 - ExcludeArch: %ix86 %arm
 - Drop examples subpackage
