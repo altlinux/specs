@@ -16,7 +16,7 @@ BuildRequires: gcc-c++ unzip
 
 Name:           avr-libc
 Version:        2.0.0
-Release:        alt6_12
+Release:        alt6_15
 Summary:        C library for use with GCC on Atmel AVR microcontrollers
 License:        BSD
 URL:            http://www.nongnu.org/avr-libc/
@@ -97,6 +97,10 @@ sed -i 's|@DOC_INST_DIR@/man|%{_prefix}/avr/share/man|' scripts/avr-man.in
 
 %build
 ./bootstrap
+
+# really don't try to force distrowide flags on crosscompiled noarch
+unset CC CXX CFLAGS CXXFLAGS FFLAGS FCFLAGS LDFLAGS LT_SYS_LIBRARY_PATH
+
 # The ps doc ways in at 7Mb versus 2.5 for the pdf and has little added value
 ./configure --prefix=%{_prefix} --host=avr --build=`./config.guess` #--enable-doc
 # don't use %{?_smp_mflags}, it breaks the build
@@ -142,6 +146,9 @@ chmod -R u=rwX,g=rX,o=rX $RPM_BUILD_ROOT%{_docdir}/%{name}/html
 %doc %{_docdir}/%{name}/%{name}*.pdf
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 1:2.0.0-alt6_15
+- update to new release by fcimport
+
 * Fri Aug 27 2021 Igor Vlasenko <viy@altlinux.org> 1:2.0.0-alt6_12
 - fixed build with added process-lto
 
