@@ -31,7 +31,7 @@ Version:            1.008
 #global distprefix %nil
 # FedoraForgeMeta2ALT: end generated meta
 
-Release: alt1_5
+Release: alt1_11
 URL:     https://public-sans.digital.gov/
 
 %global foundry           USWDS
@@ -125,45 +125,45 @@ echo "%%dir %_fontsdir/otf/uswds-public-sans" >> "uswds-public-sans-fonts.list"
 install -m 0755 -vd %buildroot%_fontsdir/ttf/uswds-public-sans/
 echo "%%dir %_fontsdir/ttf/uswds-public-sans" >> "uswds-public-sans-fonts.list"
 install -m 0644 -vp "binaries/otf/PublicSans-Black.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-Black.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-Black.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-BlackItalic.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-BlackItalic.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-BlackItalic.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-Bold.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-Bold.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-Bold.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-BoldItalic.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-BoldItalic.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-BoldItalic.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-ExtraBold.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-ExtraBold.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-ExtraBold.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-ExtraBoldItalic.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-ExtraBoldItalic.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-ExtraBoldItalic.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-ExtraLight.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-ExtraLight.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-ExtraLight.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-ExtraLightItalic.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-ExtraLightItalic.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-ExtraLightItalic.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-Italic.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-Italic.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-Italic.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-Light.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-Light.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-Light.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-LightItalic.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-LightItalic.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-LightItalic.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-Medium.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-Medium.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-Medium.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-MediumItalic.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-MediumItalic.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-MediumItalic.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-Regular.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-Regular.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-Regular.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-SemiBold.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-SemiBold.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-SemiBold.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-SemiBoldItalic.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-SemiBoldItalic.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-SemiBoldItalic.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-Thin.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-Thin.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-Thin.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/otf/PublicSans-ThinItalic.otf" %buildroot%_fontsdir/otf/uswds-public-sans/
-echo \"%_fontsdir/otf/uswds-public-sans//$(basename "binaries/otf/PublicSans-ThinItalic.otf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/otf/uswds-public-sans/PublicSans-ThinItalic.otf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/variable/Public-Sans-Italic-VF.ttf" %buildroot%_fontsdir/ttf/uswds-public-sans/
-echo \"%_fontsdir/ttf/uswds-public-sans//$(basename "binaries/variable/Public-Sans-Italic-VF.ttf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/ttf/uswds-public-sans/Public-Sans-Italic-VF.ttf\" >> 'uswds-public-sans-fonts.list'
 install -m 0644 -vp "binaries/variable/Public-Sans-Roman-VF.ttf" %buildroot%_fontsdir/ttf/uswds-public-sans/
-echo \"%_fontsdir/ttf/uswds-public-sans//$(basename "binaries/variable/Public-Sans-Roman-VF.ttf")\" >> 'uswds-public-sans-fonts.list'
+echo \"%_fontsdir/ttf/uswds-public-sans/Public-Sans-Roman-VF.ttf\" >> 'uswds-public-sans-fonts.list'
 (
 
   IFS= lines=$(
@@ -211,6 +211,9 @@ grep -E '^"%{_datadir}/metainfo/.+\.xml"'        'uswds-public-sans-fonts.list' 
 %files -n fonts-otf-uswds-public-sans -f uswds-public-sans-fonts.list
 
 %changelog
+* Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 1.008-alt1_11
+- update to new release by fcimport
+
 * Sun Feb 20 2022 Igor Vlasenko <viy@altlinux.org> 1.008-alt1_5
 - new version
 
