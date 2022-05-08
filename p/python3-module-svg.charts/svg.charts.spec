@@ -1,12 +1,12 @@
 %define mname svg
 %define oname %mname.charts
 
-%def_with doc
+%def_without doc
 %def_without check
 
 Name: python3-module-%oname
 Version: 6.1
-Release: alt2
+Release: alt3
 
 Summary: Python SVG Charting Library
 
@@ -107,6 +107,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Sun May 08 2022 Grigory Ustinov <grenka@altlinux.org> 6.1-alt3
+- Build without docs.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 6.1-alt2
 - Rename package, spec cleanup.
 
