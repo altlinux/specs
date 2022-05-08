@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2 
 %define kernel_base_version	5.15
 %define kernel_sublevel .37
@@ -108,10 +108,11 @@ BuildRequires: u-boot-tools
 %endif
 # for check
 %{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm-run >= 1.30 ltp >= 20210524-alt2 iproute2}}
-Provides: kernel-modules-eeepc-%flavour = %version-%release
+Provides: kernel-modules-alsa = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
+Provides: kernel-modules-eeepc-%flavour = %version-%release
 Provides: kernel-modules-igb-%flavour = %version-%release
-Provides:  kernel-modules-alsa = %version-%release
+Provides: kernel-modules-ipset-%flavour = %version-%release
 Provides: kernel-modules-kvm-%flavour = %version-%release
 Provides: kernel-modules-kvm-%kversion-%flavour-%krelease = %version-%release
 
@@ -390,11 +391,15 @@ mv %buildroot%modules_dir/kernel/drivers/media/dvb-core/dvb-core.ko %buildroot%m
 mv %buildroot%modules_dir/kernel/drivers/media/radio/tea575x.ko %buildroot%modules_dir/kernel/drivers/media-core/
 
 %ifarch aarch64 %arm
-make dtbs_install INSTALL_DTBS_PATH=%buildroot/lib/devicetree/$KernelVer
+make dtbs_install INSTALL_DTBS_PATH=%buildroot/boot/devicetree/$KernelVer
 %ifarch aarch64
-find %buildroot/lib/devicetree/$KernelVer -mindepth 1 -type d |\
-       while read d; do mv $d/* $d/../ && rmdir $d && ln -srv $d/../ $d; done
+pushd %buildroot/boot/devicetree/$KernelVer/
+find . -mindepth 2 -type f | \
+       while read f; do ln -srv "$f" "$(basename $f)"; done
+popd
 %endif
+mkdir -p %buildroot/lib/devicetree
+ln -s /boot/devicetree/$KernelVer %buildroot/lib/devicetree/$KernelVer
 %endif
 
 mkdir -p %buildroot%kbuild_dir/arch/%arch_dir
@@ -560,6 +565,7 @@ check-pesign-helper
 %ghost %modules_dir/modules.symbols.bin
 %ghost %modules_dir/modules.builtin.bin
 %ifarch aarch64 %arm
+/boot/devicetree/%kversion-%flavour-%krelease
 /lib/devicetree/%kversion-%flavour-%krelease
 %endif
 
@@ -617,6 +623,17 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu May 05 2022 Vitaly Chikunov <vt@altlinux.org> 2:5.15.37-alt2
+- Replace devicetree from /lib to /boot (Anton Midyukov)
+- /lib/devicetree/<name.dtb> -> /lib/devicetree/<vendor>/<name.dtb> for
+  aarch64 (Anton Midyukov).
+- spec: Provide: kernel-modules-ipset (closes: #42672).
+- config: Enable CONFIG_NR_CPUS=8192 (closes: #42694).
+- config: config: Enable KASLR (CONFIG_RANDOMIZE_BASE).
+- config: Minor config update to add newest hardware and remove some legacy
+  hardware support. Also, disable SHA1 (replace with SHA512), and
+  set PANIC_TIMEOUT=600.
+
 * Wed May 04 2022 Vitaly Chikunov <vt@altlinux.org> 2:5.15.37-alt1
 - Update to v5.15.37 (2022-05-01). (Fixes: CVE-2022-1204, CVE-2022-1205,
   CVE-2022-0500, CVE-2022-23222).
