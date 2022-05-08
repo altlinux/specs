@@ -4,7 +4,7 @@
 Name: kicad-packages3D
 Summary: 3D models for kicad (creation of electronic schematic diagrams)
 Summary(ru_RU.UTF-8): 3D модели для kicad (разработка печатных плат)
-Version: 6.0.2
+Version: 6.0.5
 Release: alt1
 Source: %name-%version.tar.gz
 License: GPLv2+
@@ -224,6 +224,9 @@ Kicad - это программное обеспечение с открытым
 %_datadir/kicad/3dmodels/Varistor.3dshapes
 
 %changelog
+* Sun May 08 2022 Anton Midyukov <antohami@altlinux.org> 6.0.5-alt1
+- new version 6.0.5
+
 * Wed Feb 23 2022 Anton Midyukov <antohami@altlinux.org> 6.0.2-alt1
 - new version 6.0.2
 
