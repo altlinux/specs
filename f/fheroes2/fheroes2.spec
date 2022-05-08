@@ -3,7 +3,7 @@
 %def_without cmake
 Name: fheroes2
 Epoch: 2
-Version: 0.9.13
+Version: 0.9.15
 #define rev 20210604
 #Release: alt1.%rev
 Release: alt1
@@ -20,8 +20,8 @@ Source2: %name.sh
 Source3: %name.png
 Source4: fheroes2-data.spec
 Source5: README.ALT
-Patch0: fheroes2-0.9.12-random-skills.patch
-Patch1: fheroes2-0.9.11-use-python3.patch
+Patch0: fheroes2-0.9.15-random-skills.patch
+Patch1: fheroes2-0.9.15-use-python3.patch
 
 # Automatically added by buildreq on Wed Oct 03 2012
 # optimized out: libSDL-devel libstdc++-devel zlib-devel
@@ -78,7 +78,6 @@ mkdir -p %buildroot%_gamesdatadir/%name/{data,maps,files/lang}
 
 # and install what we need where we need it to be...
 install -pD -m 755 %name %buildroot%_bindir/%name
-install -pD -m 644 %name.key %buildroot%_gamesdatadir/%name/
 cp -a files/{data,images} %buildroot%_gamesdatadir/%name/files/
 cp -a files/lang/*.mo %buildroot%_gamesdatadir/%name/files/lang/
 
@@ -108,6 +107,12 @@ install -pD -m 644 %SOURCE4 %SOURCE5 %buildroot%_docdir/%name/
 %_gamesdatadir/%name
 
 %changelog
+* Sun May 08 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.15-alt1
+- new version
+
+* Fri May 06 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.14-alt1
+- new version
+
 * Wed Mar 16 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.13-alt1
 - new version
 
