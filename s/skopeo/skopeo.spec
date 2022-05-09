@@ -1,10 +1,11 @@
 %global import_path github.com/containers/skopeo
-%global commit f45ae950aacb7b61ec13223fc22269f2fe270eab
+%global commit 37727a45f96ac208785b606f7772d609bf50dbc4
 
 %global _unpackaged_files_terminate_build 1
+%def_without check
 
 Name: skopeo
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: skopeo is a command line utility that performs various operations on container images and image repositories
@@ -38,6 +39,10 @@ BuildRequires: golang go-md2man
 BuildRequires: glib2-devel libgpgme-devel libbtrfs-devel
 BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
 BuildRequires: libassuan-devel
+%if_with check
+BuildRequires: /proc
+BuildRequires: podman
+%endif
 
 %description
 Skopeo works with API V2 registries such as Docker registries, the Atomic
@@ -113,6 +118,9 @@ install -m0644 %SOURCE7 %buildroot%_datadir/containers/seccomp.json
 install -m0644 %SOURCE13 %buildroot%_datadir/containers/containers.conf
 mkdir -p %buildroot%_datadir/alt/secrets
 
+%check
+make check
+
 %files -n containers-common
 %config(noreplace) %_sysconfdir/containers
 %_datadir/containers
@@ -126,6 +134,9 @@ mkdir -p %buildroot%_datadir/alt/secrets
 %doc *.md
 
 %changelog
+* Mon May 09 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.8.0-alt1
+- new version 1.8.0
+
 * Fri Mar 25 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.7.0-alt1
 - new version 1.7.0
 
