@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 Name: crtools-ovz
-Version: 3.15.4.5
+Version: 3.15.4.6
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
@@ -93,6 +93,9 @@ vm-run --kvm=cond --sbin --udevd make test || :
 %_man8dir/crtools.8*
 
 %changelog
+* Mon May 09 2022 Andrew A. Vasilyev <andy@altlinux.org> 3.15.4.6-alt1
+- 3.15.4.6
+
 * Wed Apr 27 2022 Andrew A. Vasilyev <andy@altlinux.org> 3.15.4.5-alt1
 - 3.15.4.5
 
