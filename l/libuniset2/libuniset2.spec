@@ -25,8 +25,8 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.19.1
-Release: alt2
+Version: 2.20.1
+Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL-2.1
@@ -594,6 +594,13 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Mon May 09 2022 Pavel Vainerman <pv@altlinux.ru> 2.20.1-alt1
+- (smemory): minor log fixes
+- (IOController): direct use DBServer (optimization)
+- (websocketgate): added LogServer, minor optimization
+- (logserver): supported "--set-verbosity" command, make style
+- (UNet): added processing statistics, minior fixes
+
 * Sun Dec 19 2021 Pavel Vainerman <pv@altlinux.ru> 2.19.1-alt2
 - [pg]: force c++17
 - fixed lib version
