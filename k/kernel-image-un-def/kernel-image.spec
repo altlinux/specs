@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	5.17
-%define kernel_sublevel .5
+%define kernel_sublevel .6
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_extra_version_numeric 1.0.0
@@ -119,6 +119,7 @@ BuildRequires: zlib-devel
 %ifarch aarch64
 BuildRequires: u-boot-tools
 %endif
+Provides: kernel-modules-ipset-%flavour = %version-%release
 %if_enabled docs
 BuildRequires: python3-module-sphinx /usr/bin/sphinx-build perl-Pod-Usage python3-module-sphinx_rtd_theme
 BuildRequires: fontconfig
@@ -613,6 +614,15 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon May 09 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.17.6-alt1
+- Update to v5.17.6 (2022-05-09).
+- spec: Provide: kernel-modules-ipset (closes: #42672).
+- config: Enable CONFIG_NR_CPUS=8192 (closes: #42694).
+- config: config: Enable KASLR (CONFIG_RANDOMIZE_BASE).
+- config: Minor config update to add newest hardware and remove some legacy
+  hardware support. Also, disable SHA1 (replace with SHA512), and
+  set PANIC_TIMEOUT=600.
+
 * Fri Apr 29 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.17.5-alt1
 - v5.17.5 (2022-04-27).
 
@@ -620,6 +630,9 @@ check-pesign-helper
 - Rebase over next major stable release v5.17.4 (2022-04-20) due to v5.16
   branch being EOL. Duly contains multiple CVE fixes.
 - Replace external kernel-modules-rtw89 with CONFIG_RTW89=m.
+- Replace devicetree from /lib to /boot (Anton Midyukov)
+- /lib/devicetree/<name.dtb> -> /lib/devicetree/<vendor>/<name.dtb> for
+  aarch64 (Anton Midyukov).
 
 * Thu Apr 14 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.16.20-alt1
 - v5.16.20
