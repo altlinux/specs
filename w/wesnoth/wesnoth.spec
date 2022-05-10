@@ -20,7 +20,7 @@
 %define _wesnothd_home     %_runtimedir/wesnothd%wessuffix
 
 Name: wesnoth%wessuffix
-Version: 1.16.1
+Version: 1.16.2
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
@@ -408,6 +408,9 @@ mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot%_datadir/%name/data/t
 %endif
 
 %changelog
+* Tue May 10 2022 Igor Vlasenko <viy@altlinux.org> 1.16.2-alt1
+- new version
+
 * Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 1.16.1-alt1
 - new version
 
