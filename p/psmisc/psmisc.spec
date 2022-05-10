@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: psmisc
-Version: 23.4
+Version: 23.5
 Release: alt1
 
 Summary: Miscellaneous utilities that use proc filesystem
@@ -143,6 +143,9 @@ make check
 %doc AUTHORS ChangeLog COPYING README.md
 
 %changelog
+* Tue May 10 2022 Vitaly Chikunov <vt@altlinux.org> 23.5-alt1
+- Update to v23.5 (2022-05-09).
+
 * Sat Dec 18 2021 Vitaly Chikunov <vt@altlinux.org> 23.4-alt1
 - sandbox: Replaced EPERM with ENOSYS.
 - Updated to v23.4-6-g1356c54 (2021-11-03).
