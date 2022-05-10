@@ -6,7 +6,7 @@ Epoch: 2
 Version: 0.9.15
 #define rev 20210604
 #Release: alt1.%rev
-Release: alt1
+Release: alt2
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPLv2+
 Group: Games/Strategy
@@ -25,7 +25,12 @@ Patch1: fheroes2-0.9.15-use-python3.patch
 
 # Automatically added by buildreq on Wed Oct 03 2012
 # optimized out: libSDL-devel libstdc++-devel zlib-devel
-BuildRequires: gcc-c++ libogg-devel libfreetype-devel libpng-devel gettext-tools
+BuildRequires: gcc-c++ libfreetype-devel gettext-tools
+
+# with image
+BuildRequires: libpng-devel
+# for future use:
+#BuildRequires: libjpeg-devel libwebp-devel libogg-devel
 %if_with sdl2
 BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_net-devel libSDL2_ttf-devel
 %else
@@ -50,22 +55,27 @@ export LANG=en_US.UTF-8
 %if_with cmake
 # see docs/README_cmake.md
 %cmake \
-    -DCONFIGURE_FHEROES2_DATA="%_gamesdatadir/%name/" \
+    -DFHEROES2_DATA="%_gamesdatadir/%name/" \
 %if_with sdl2
     -DUSE_SDL_VERSION=SDL2 \
 %else
     -DUSE_SDL_VERSION=SDL \
 %endif
     -DENABLE_IMAGE=ON
+#    -DENABLE_TOOLS=ON
 
 %cmake_build
 %else
-%if_with sdl2
-export WITH_SDL2="ON"
-%endif
-%add_optflags -DCONFIGURE_FHEROES2_DATA="%_gamesdatadir/%name/"
 CFLAGS="${CFLAGS:-%optflags}"; export CFLAGS;
-%make_build
+CCFLAGS="${CCFLAGS:-%optflags}"; export CCFLAGS;
+%make_build \
+%if_without sdl2
+    FHEROES2_WITH_SDL1=1 \
+%endif
+    FHEROES2_DATA=%_gamesdatadir/%name/ \
+    FHEROES2_WITH_IMAGE=1 \
+    FHEROES2_WITH_TOOLS=
+
 make -C files/lang
 %endif
 
@@ -107,6 +117,9 @@ install -pD -m 644 %SOURCE4 %SOURCE5 %buildroot%_docdir/%name/
 %_gamesdatadir/%name
 
 %changelog
+* Tue May 10 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.15-alt2
+- bugfix: switch to new format of defines
+
 * Sun May 08 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.15-alt1
 - new version
 
