@@ -12,7 +12,7 @@
 
 Name: LibreSSL
 Version: 3.5.2
-Release: alt1
+Release: alt2
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -78,6 +78,8 @@ This package contains documantation pages for %name
 %package -n libcrypto%libcrypto_sover
 Summary: LibreSSL libcrypto shared library
 Group: Security/Networking
+# Files conflict
+Conflicts: libcrypto45 libcrypto46 libcrypto47
 Obsoletes: libcrypto-LibreSSL < %version
 
 %description -n libcrypto%libcrypto_sover
@@ -277,6 +279,10 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Tue May 10 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.5.2-alt2
+- libcrypto49: Added explicit conflict to libcrypto45, libcrypto46 and
+  libcrypto47 (closes: 42719).
+
 * Sun May 08 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.5.2-alt1
 - Updated to 3.5.2.
 
