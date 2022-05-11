@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.49.3
-Release: alt1
+Release: alt2
 
 Source: %name-%version.tar
 Patch0: alterator-fbi-5.49.1-call-cc-via-reset.patch
@@ -44,7 +44,6 @@ this is an alterator based engine (form based interface) to create a simple form
 
 %brp_strip_none %_alterator_libdir/*
 %add_verify_elf_skiplist %_alterator_libdir/*
-%add_findreq_skiplist %_alterator_libdir/*
 
 %ifarch %e2k
 %def_with delimited_continuations
@@ -161,6 +160,9 @@ fi ||:
 
 
 %changelog
+* Wed May 11 2022 Paul Wolneykien <manowar@altlinux.org> 5.49.3-alt2
+- Fixed dependencies (closes: 42426).
+
 * Mon Dec 06 2021 Paul Wolneykien <manowar@altlinux.org> 5.49.3-alt1
 - Require libguile-vhttpd >= 0.7.11 with the file upload fix.
 - form.js: Fixed concurrent form lock/unlock with lock counter.
