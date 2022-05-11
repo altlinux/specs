@@ -1,15 +1,17 @@
 %define osg_version %(pkg-config --modversion openscenegraph)
 
-Name: osgEarth
-Version: 3.2
-Release: alt3
+Name: osgearth
+Version: 3.3
+Release: alt1
 
 Summary: Dynamic map generation toolkit for OpenSceneGraph
-License: LGPL
+License: LGPL-3.0 with exceptions
 Group: Graphics
 
 Url: http://osgearth.org
-Source: osgearth-%version.tar
+Source: %name-%version.tar
+Source1: submodules.tar
+Patch1: osgearth-alt-fix-pathes.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -31,6 +33,10 @@ BuildRequires: libwebp-devel
 BuildRequires: libzip-devel
 BuildRequires: libzip-utils
 BuildRequires: protobuf-compiler
+BuildRequires: rapidjson
+
+Provides: osgEarth = %EVR
+Obsoletes: osgEarth < %EVR
 
 %description
 osgEarth is a scalable terrain rendering toolkit for
@@ -43,6 +49,8 @@ easily.
 %package -n lib%name
 Summary: Runtime libraries for osgEarth
 Group: System/Libraries
+Provides: libosgEarth = %EVR
+Obsoletes: libosgEarth < %EVR
 
 %description -n lib%name
 osgEarth is a scalable terrain rendering toolkit for
@@ -58,6 +66,8 @@ This package contains runtime libraries for osgEarth.
 Summary: Development files for osgEarth
 Group: Development/C++
 Requires: lib%name = %version-%release
+Provides: libosgEarth-devel = %EVR
+Obsoletes: libosgEarth-devel < %EVR
 
 %description -n lib%name-devel
 osgEarth is a scalable terrain rendering toolkit for
@@ -73,6 +83,8 @@ This package contains development files for osgEarth.
 Summary: Sample applications for osgEarth
 Group: Development/Documentation
 Requires: %name-data
+Provides: osgEarth-examples = %EVR
+Obsoletes: osgEarth-examples < %EVR
 
 %description examples
 osgEarth is a scalable terrain rendering toolkit for
@@ -88,6 +100,8 @@ This package contains sample applications for osgEarth.
 Summary: Sample data files for osgEarth
 Group: Development/Documentation
 BuildArch: noarch
+Provides: osgEarth-data = %EVR
+Obsoletes: osgEarth-data < %EVR
 
 %description data
 osgEarth is a scalable terrain rendering toolkit for
@@ -100,7 +114,9 @@ easily.
 This package contains sample data files for osgEarth.
 
 %prep
-%setup -n osgearth-%version
+%setup
+tar xf %SOURCE1
+%patch1 -p1
 # Remove non-free content
 rm -rf data/loopix
  
@@ -135,6 +151,7 @@ cp -a data tests %buildroot%_datadir/osgEarth
 %files -n lib%name-devel
 %_includedir/osg*
 %_libdir/libosg*.so
+%_datadir/cmake/osgEarthConfig*.cmake
 
 %files examples
 %_bindir/*
@@ -143,6 +160,10 @@ cp -a data tests %buildroot%_datadir/osgEarth
 %_datadir/osgEarth
 
 %changelog
+* Sat Apr 30 2022 Andrey Cherepanov <cas@altlinux.org> 3.3-alt1
+- New version.
+- Renamed to osgearth.
+
 * Wed Jan 19 2022 Andrey Cherepanov <cas@altlinux.org> 3.2-alt3
 - Rebuild with geos-3.10.
 - Build from upstream git tag.
