@@ -19,8 +19,8 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 22.3.3.44
-Release: alt2
+Version: 22.3.6.5
+Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -351,6 +351,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Tue May 10 2022 Anton Farygin <rider@altlinux.ru> 22.3.6.5-alt1
+- 22.3.3.44 -> 22.3.6.5
+
 * Thu Apr 14 2022 Anton Farygin <rider@altlinux.ru> 22.3.3.44-alt2
 - use system toolchain for building clickhouse
 - removed clickhouse-keeper default config 
