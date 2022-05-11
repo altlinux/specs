@@ -17,7 +17,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.18.6
+Version: 1.18.8
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -196,13 +196,14 @@ fi
 %_sysconfdir/ModemManager/
 %dir %_libdir/ModemManager/
 %dir %_libdir/ModemManager/fcc-unlock.d/
+%dir %_libdir/ModemManager/connection.d/
+
 %_libdir/ModemManager/*.so
 %_sbindir/*
 %_bindir/mmcli
 %_datadir/%name/
 %_datadir/bash-completion/completions/mmcli
 %_sysconfdir/dbus-1/system.d/*.conf
-%_datadir/dbus-1/interfaces/*.xml
 /lib/udev/rules.d/*
 %_iconsdir/hicolor/*/apps/*
 %_datadir/polkit-1/actions/*.policy
@@ -215,6 +216,7 @@ fi
 %files devel
 %_includedir/%name
 %_pkgconfigdir/%name.pc
+%_datadir/dbus-1/interfaces/*.xml
 
 %files devel-doc
 %doc %_datadir/gtk-doc/html/%name
@@ -244,6 +246,10 @@ fi
 %endif
 
 %changelog
+* Wed May 11 2022 Mikhail Efremov <sem@altlinux.org> 1.18.8-alt1
+- Moved DBus interface xml files to devel subpackage.
+- Updated to 1.18.8.
+
 * Tue Feb 15 2022 Mikhail Efremov <sem@altlinux.org> 1.18.6-alt1
 - Updated to 1.18.6.
 
