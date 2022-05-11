@@ -91,7 +91,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.12
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -2272,6 +2272,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Fri May 06 2022 Alexey Shabalin <shaba@altlinux.org> 1:249.12-alt2
+- Backport fixes nspawn.
+- Don't enable audit by default.
+
 * Mon May 02 2022 Alexey Shabalin <shaba@altlinux.org> 1:249.12-alt1
 - 249.12.
 - Replace egrep by "grep -E".
