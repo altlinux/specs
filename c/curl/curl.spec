@@ -3,7 +3,7 @@
 %def_with check
 
 Name: curl
-Version: 7.83.0
+Version: 7.83.1
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -155,6 +155,16 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed May 11 2022 Anton Farygin <rider@altlinux.ru> 7.83.1-alt1
+- 7.83.1
+- Fixes:
+  * CVE-2022-30115: HSTS bypass via trailing dot
+  * CVE-2022-27782: TLS and SSH connection too eager reuse
+  * CVE-2022-27781: CERTINFO never-ending busy-loop
+  * CVE-2022-27780: percent-encoded path separator in URL host
+  * CVE-2022-27779: cookie for trailing dot TLD
+  * CVE-2022-27778: curl removes wrong file on error
+
 * Thu Apr 28 2022 Anton Farygin <rider@altlinux.ru> 7.83.0-alt1
 - 7.83.0 (Fixes: CVE-2022-22576, CVE-2022-27774, CVE-2022-27775, CVE-2022-27776)
 
