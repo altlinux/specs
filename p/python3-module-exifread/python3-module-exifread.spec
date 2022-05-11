@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%_modname
-Version: 2.3.2
+Version: 3.0.0
 Release: alt1
 
 Summary: Python3 library to extract Exif metadata
@@ -23,6 +23,7 @@ BuildRequires: python3-module-setuptools
 
 %description
 Easy to use Python3 module to extract Exif metadata from digital image files.
+Supported formats: TIFF, JPEG, PNG, Webp, HEIC.
 
 %prep
 %setup -n %modname-%version
@@ -44,6 +45,9 @@ py.test3
 
 
 %changelog
+* Wed May 11 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.0-alt1
+- 3.0.0
+
 * Wed Jan 05 2022 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
 - first build for Sisyphus
 
