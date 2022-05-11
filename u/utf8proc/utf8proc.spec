@@ -1,5 +1,5 @@
 Name: utf8proc
-Version: 2.1.1
+Version: 2.7.0
 Release: alt1
 
 Summary: Library for processing UTF-8 encoded Unicode strings
@@ -8,7 +8,6 @@ Group: System/Libraries
 
 Url: http://julialang.org/utf8proc/
 Source: https://github.com/JuliaLang/utf8proc/archive/v%version.tar.gz#/%name-%version.tar.gz
-Packager: Michael Shigorin <mike@altlinux.org>
 
 %description
 utf8proc is a library for processing UTF-8 encoded Unicode strings
@@ -26,8 +25,7 @@ the characters “Hyphen” (U+2010), “Minus” (U+2212) and “Hyphen-Minus
 (U+002D, ASCII Minus) all into the ASCII minus sign, to make them
 equal for comparisons.
 
-The currently supported Unicode version is 9.0.0.
-
+The currently supported Unicode version is 14.
 This package only contains the C library.
 
 %package -n lib%name-devel
@@ -46,6 +44,7 @@ strings, unless you want to allocate memory yourself.
 %setup
 
 %build
+CFLAGS='%optflags' \
 %make_build
 
 %check
@@ -63,8 +62,12 @@ rm %buildroot%_libdir/libutf8proc.a
 %files -n lib%name-devel
 %_includedir/*.h
 %_libdir/*.so
+%_pkgconfigdir/*.pc
 
 %changelog
+* Wed May 11 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.7.0-alt1
+- 2.7.0 released
+
 * Fri Apr 27 2018 Michael Shigorin <mike@altlinux.org> 2.1.1-alt1
 - 2.1.1: fixes a serious composition bug, thanks upstream for heads-up
 
