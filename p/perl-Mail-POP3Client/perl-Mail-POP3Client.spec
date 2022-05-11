@@ -2,7 +2,7 @@
 %define module_name Mail-POP3Client
 
 Name: perl-%module_name
-Version: 2.20
+Version: 2.21
 Release: alt1
 
 Summary: %module_name module for perl
@@ -35,6 +35,9 @@ mail readers, or whatever.
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Wed May 11 2022 Igor Vlasenko <viy@altlinux.org> 2.21-alt1
+- automated CPAN update
+
 * Fri May 06 2022 Igor Vlasenko <viy@altlinux.org> 2.20-alt1
 - automated CPAN update
 
