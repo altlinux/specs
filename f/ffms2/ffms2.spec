@@ -1,4 +1,3 @@
-BuildRequires: chrpath
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
@@ -6,21 +5,31 @@ BuildRequires: gcc-c++
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name ffms2
-%define major		4
+#
+# git clone https://github.com/FFMS/ffms2.git
+# cd ffms2
+# DATE=$(git log -1 --format="%cd" --date=short | sed "s|-||g")
+# git config tar.tar.xz.command "xz -c"
+# git archive --format=tar.xz -o ffms2-${DATE}.tar.xz --prefix=ffms2-${DATE}/ master
+#
+%define gitdate		20211209
+%define rel		1
+
+%define major		5
 %define libname		lib%{name}_%{major}
 %define develname	lib%{name}-devel
 
 Name:		ffms2
-Version:	2.23
-Release:	alt1_5
+Version:	3.0.1
+Release:	alt1_0.0.git20211209.1
 Summary:	Wrapper library around libffmpeg
 License:	MIT
 Group:		System/Libraries
 URL:		https://github.com/FFMS/ffms2/
-Source0:	https://github.com/FFMS/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:	https://github.com/FFMS/%{name}/archive/%{version}/%{name}-%{?gitdate}%{!?gitdate:%version}.tar.%{?gitdate:xz}%{!?gitdate:gz}
 
 BuildRequires:	libtool
-BuildRequires:	libavcodec-devel libavdevice-devel libavfilter-devel libavformat-devel libavresample-devel libavutil-devel libpostproc-devel libswresample-devel libswscale-devel
+BuildRequires:	libavcodec-devel libavdevice-devel libavfilter-devel libavformat-devel libavutil-devel libpostproc-devel libswresample-devel libswscale-devel
 BuildRequires:	pkgconfig(zlib)
 Source44: import.info
 
@@ -53,15 +62,20 @@ Header files for development with %{name}.
 
 #---------------------------------------------------------------------------
 %prep
-%setup -q
+%setup -q -n %{name}-%{?gitdate}%{!?gitdate:%version}
+
 
 sed -i 's/\r$//' COPYING
 
+# make autoreconf happy
+mkdir -p src/config
+
 %build
+autoreconf -fi
 %configure \
-		--docdir=%{_docdir}/lib%{name}-devel \
-		--enable-shared \
-		--disable-static
+	--docdir=%{_docdir}/lib%{name}-devel \
+	--enable-shared \
+	--disable-static
 %make_build
 
 %install
@@ -69,10 +83,6 @@ sed -i 's/\r$//' COPYING
 
 # we don't want these
 find %{buildroot} -name '*.la' -delete
-# kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
-	chrpath -d $i ||:
-done
 
 %files
 %doc COPYING
@@ -90,6 +100,9 @@ done
 
 
 %changelog
+* Wed May 11 2022 Igor Vlasenko <viy@altlinux.org> 3.0.1-alt1_0.0.git20211209.1
+- update by mgaimport
+
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 2.23-alt1_5
 - new version
 
