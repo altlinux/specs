@@ -7,7 +7,7 @@
 
 Name: lightdm
 Version: 1.30.0
-Release: alt20
+Release: alt22
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -16,11 +16,11 @@ Url: https://launchpad.net/lightdm
 Source: %name-%version.tar
 
 Patch1:  %name-1.30.0-cancelling.patch
-Patch2:  %name-1.30.0-chauthtok.patch
+#Patch2:  %name-1.30.0-chauthtok.patch
 Patch3:  %name-1.30.0-default-session.patch
-Patch4:  %name-1.30.0-default-username.patch
+#Patch4:  %name-1.30.0-default-username.patch
 Patch5:  %name-1.30.0-login-unknown.patch
-Patch6:  %name-1.30.0-switch.patch
+#Patch6:  %name-1.30.0-switch.patch
 Patch7:  %name-1.30.0-alt-env.patch
 Patch8:  %name-1.30.0-alt-config.patch
 Patch9:  %name-1.30.0-alt-01-Xgreeter.patch
@@ -37,8 +37,11 @@ Patch19: %name-1.30.0-alt-wayland-session.patch
 Patch20: %name-1.30.0-alt-lock-tty.patch
 Patch21: %name-1.30.0-alt-select-vt.patch
 Patch22: %name-1.30.0-session-sort.patch
+Patch23: %name-1.30.0-testfix.patch
+Patch24: %name-1.30.0-testfix_alt.patch
 
 Requires: dm-tool
+Requires: lightdm-greeter
 
 BuildRequires: gcc-c++ intltool
 BuildRequires: pkgconfig(glib-2.0) >= 2.30 pkgconfig(gio-2.0) >= 2.26  pkgconfig(gio-unix-2.0)  pkgconfig(xdmcp)  pkgconfig(xcb)
@@ -54,6 +57,9 @@ BuildRequires: pkgconfig(glib-2.0) pkgconfig(gio-2.0) >= 2.26 pkgconfig(gio-unix
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_qt:BuildRequires: pkgconfig(QtCore) pkgconfig(QtDBus) pkgconfig(QtGui) /usr/bin/moc-qt4}
 %{?_enable_qt5:BuildRequires: pkgconfig(Qt5Core) pkgconfig(Qt5DBus) pkgconfig(Qt5Gui) /usr/bin/moc-qt5}
+
+# For make check:
+BuildRequires: dbus python python-module-pygobject3
 
 %description
 LightDM is a lightweight, cross-desktop display manager. Its main features are
@@ -135,11 +141,11 @@ manager via D-Bus.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
+#%patch2 -p1
 %patch3 -p1
-%patch4 -p1
+#%patch4 -p1
 %patch5 -p1
-%patch6 -p1
+#%patch6 -p1
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
@@ -156,6 +162,8 @@ manager via D-Bus.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
+%patch24 -p1
 
 %ifarch %e2k
 # until apx. lcc-1.23.01
@@ -170,7 +178,7 @@ export CXXFLAGS="%optflags -std=gnu++11"
 %configure \
 	%{subst_enable introspection} \
 	--disable-static \
-	--disable-tests \
+	--enable-tests \
 	--enable-gtk-doc \
 	%{?_enable_qt:--enable-liblightdm-qt} \
 	%{?_enable_qt5:--enable-liblightdm-qt5} \
@@ -220,6 +228,10 @@ if [ $1 -eq 0 ] ; then
         $SYSTEMCTL --no-reload disable %name.service > /dev/null 2>&1 ||:
         $SYSTEMCTL stop %name.service > /dev/null 2>&1 ||:
 fi
+
+
+%check
+%make check
 
 
 %files -f %name.lang
@@ -288,6 +300,14 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Fri May 06 2022 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt22
+- Disable the following patches: chauthtok, default-username, switch.
+- Fix: Sending VT number on session stop (closes: 42637)
+- Build with tests.
+
+* Thu Apr 14 2022 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt21
+- Requires: lightdm-greeter (closes: 38407).
+
 * Tue Nov 09 2021 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt20
 - Sort sessions by directory first, then by name (closes: 41265).
 
