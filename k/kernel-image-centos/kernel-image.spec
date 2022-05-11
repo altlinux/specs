@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 86
+%define centos_release 88
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -513,6 +513,7 @@ filter()
 filter \
 	0:"filename .*/drivers/gpu/drm/.*" \
 	1:"filename kernel/drivers/media/cec/core/cec.ko" \
+	2:"filename kernel/drivers/usb/typec/altmodes/typec_displayport.ko" \
 	> kernel-modules-drm.files
 
 # Generate kernel-modules-alsa-flavour
@@ -632,6 +633,37 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed May 11 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.88-alt1.el9
+- Updated to kernel-5.14.0-88.el9:
+  + mpt3sas: a bugfix
+  + oom_kill.c: futex: delay the OOM reaper to allow time for proper futex cleanup
+  + qed*: driver updates
+  + sched/isolation: Split housekeeping cpumask per isolation features
+  + Update ACPI code to match Linux v5.16
+  + Update USB and Thunderbolt to v5.17
+  + vrf: 9.1 P1 backports
+
+* Mon May 09 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.87-alt1.el9
+- Updated to kernel-5.14.0-87.el9 (fixes: CVE-2022-0617, CVE-2022-1353):
+  + af_key: add __GFP_ZERO flag for compose_sadb_supported in function pfkey_register
+  + Bring cifs.ko up to 5.16 plus some additional patches
+  + cifs: destage any unwritten data to the server before calling copychunk_write
+  + CNB: net: make use of helper netif_is_bridge_master()
+  + CNB: xsk: Move tmp desc array from driver to pool
+  + cpufreq: intel_pstate: updates
+  + DAMON support
+  + drivers/base/memory: determine and store zone for single-zone memory blocks
+  + Fix CVE-2022-0617
+  + General updates for kernel-rt
+  + Information about perf-iostat is missing
+  + macsec: backport fixes from upstream
+  + mm: Optimize list lru memory consumption
+  + proc/vmcore: pull back upstream commits to RHEL9
+  + Redhat: enable Kfence on production servers
+  + sctp: check asoc strreset_chunk in sctp_generate_reconf_event
+  + tls: backport fixes from upstream
+  + xfrm: backport fixes from upstream
+
 * Sat May 07 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.86-alt1.el9
 - Updated to kernel-5.14.0-86.el9:
   + cifs: fix NULL ptr dereference in smb2_ioctl_query_info()
