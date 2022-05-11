@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura-cb
-Version: 0.1.9
+Version: 0.1.10
 Release: alt1
 
 Summary: Comic book support for zathura
@@ -43,6 +43,9 @@ The zathura-cb plugin adds comic book support to zathura.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed May 11 2022 Mikhail Efremov <sem@altlinux.org> 0.1.10-alt1
+- Updated to 0.1.10.
+
 * Thu Jul 15 2021 Mikhail Efremov <sem@altlinux.org> 0.1.9-alt1
 - Updated to 0.1.9.
 
