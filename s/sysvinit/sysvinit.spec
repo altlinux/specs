@@ -1,9 +1,12 @@
 Name: sysvinit
-Version: 2.88
-Release: alt7
+Version: 3.00
+Release: alt1
 
 %def_enable selinux
 %def_enable initramfs
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
 Summary: Programs which control basic system processes
 License: GPLv2+
@@ -13,30 +16,18 @@ Url: http://savannah.nongnu.org/projects/%name
 # ftp://ftp.twaren.net/Unix/NonGNU/%name/%name-%version.tar.bz2
 Source: %name-%version.tar
 
-# Debian
-Patch11: %name-2.88-deb-doc-manuals.patch
-Patch12: %name-2.88-deb-init-keep-utf8-ttyflag.patch
-Patch13: %name-2.88-deb-init-selinux.patch
-
-# Owl/ALT
-Patch101: %name-2.88-alt-progname.patch
-Patch102: %name-2.88-alt-usage.patch
-Patch103: %name-2.88-alt-umask.patch
-Patch104: %name-2.88-alt-execv-path.patch
-Patch105: %name-2.88-rh-alt-owl-pidof.patch
-Patch106: %name-2.88-owl-initcmd_setenv.patch
-Patch107: %name-2.88-owl-alt-fixes.patch
-Patch108: %name-2.88-alt-signedness.patch
-Patch109: %name-2.88-alt-makefile.patch
-Patch110: %name-2.88-alt-doc.patch
-Patch111: %name-2.88-alt-wur.patch
-Patch112: %name-2.88-alt-wall-line-size.patch
-Patch113: %name-2.88-alt-halt-poweroff.patch
-Patch114: %name-2.88-alt-gentoo-kexec.patch
-Patch115: %name-2.88-alt-sysmacros.patch
-
-# SuSE
-Patch201: %name-2.88-suse-SETSIG.patch
+Patch0001: 0001-ALT-Use-program_invocation_short_name-as-progname.patch
+Patch0002: 0002-ALT-Mark-usage-functions-as-noreturn.patch
+Patch0003: 0003-ALT-Do-not-try-a-few-binaries.patch
+Patch0004: 0004-OWL-initcmd_setenv-exclude-INIT_VERSION.patch
+Patch0005: 0005-OWL-Fixes.patch
+Patch0006: 0006-ALT-Fix-some-build-warnings.patch
+Patch0007: 0007-ALT-Add-DISTRO-ALT-to-makefile.patch
+Patch0008: 0008-ALT-Change-the-error-message-when-the-getuid-check-f.patch
+Patch0009: 0009-ALT-wall-line-size.patch
+Patch0010: 0010-ALT-halt-poweroff.patch
+Patch0011: 0011-GENTOO-halt-do-kexec-instead-of-reboot-if-another-ke.patch
+Patch0012: 0012-Fix-FTBFS-with-glibc-2.28.patch
 
 Provides: SysVinit = %version-%release
 Obsoletes: SysVinit < %version-%release
@@ -78,31 +69,7 @@ Simplified version of init (used in initfamfs).
 
 %prep
 %setup
-
-# Debian
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-
-# Owl/ALT
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-%patch104 -p1
-%patch105 -p1
-%patch106 -p1
-%patch107 -p1
-%patch108 -p1
-%patch109 -p1
-%patch110 -p1
-%patch111 -p1
-%patch112 -p1
-%patch113 -p1
-%patch114 -p1
-%patch115 -p1
-
-# rest
-%patch201 -p1
+%autopatch -p1
 
 pushd src
 find -type f -print0 |
@@ -110,9 +77,12 @@ find -type f -print0 |
 	xargs -r0 sed -i 's/"paths\.h"/"paths_init.h"/g' --
 mv paths.h paths_init.h
 echo '#include <paths.h>' >>paths_init.h
+sed -i 's/\<paths\.h\>/paths_init.h/g' -- Makefile
 popd
 
 find -type f -name \*.orig -delete
+
+sed -i 's,/run/initctl,/dev/initctl,g' -- man/initctl.5
 
 %build
 %if_enabled initramfs
@@ -136,7 +106,7 @@ mv -f src/init{,.initrd}
 	%{?_enable_selinux:WITH_SELINUX=yes} \
 	#
 %install
-mkdir -p %buildroot{/{s,}bin,/dev,%_bindir,%_includedir,%_mandir/man{1,3,5,8}}
+mkdir -p %buildroot{/{s,}bin,%_sysconfdir/inittab.d,/dev,%_bindir,%_includedir,%_mandir/man{1,3,5,8}}
 %make_install install -C src \
 	ROOT=%buildroot \
 	DISTRO=ALT \
@@ -146,6 +116,10 @@ install -pm755 src/bootlogd src/init.initrd %buildroot/sbin/
 
 mkfifo -m600 %buildroot/dev/initctl
 
+# Remove e2fsprogs utility.
+rm -f -- %buildroot/sbin/logsave
+rm -f -- %buildroot%_man8dir/logsave.*
+
 %pre
 # This is tricky.  We don't want to let RPM remove the only link to the
 # old init as that would actually leave it pending for delete on process
@@ -153,7 +127,7 @@ mkfifo -m600 %buildroot/dev/initctl
 # the root filesystem would need to stay mounted read/write.  But we
 # absolutely want to be able to remount it read-only during shutdown,
 # possibly with the old init still alive!
-if [ -e /sbin/init -a ! -e /sbin/.init-working ]; then
+if [ -e /sbin/init ] && [ ! -e /sbin/.init-working ]; then
 	ln /sbin/init /sbin/.init-working
 fi
 
@@ -174,6 +148,7 @@ fi
 %files
 %attr(700,root,root) /sbin/init
 %attr(700,root,root) /sbin/shutdown
+%dir %_sysconfdir/inittab.d
 /sbin/halt
 /sbin/fstab-decode
 /sbin/poweroff
@@ -182,6 +157,7 @@ fi
 /sbin/telinit
 %_man5dir/initscript.*
 %_man5dir/inittab.*
+%_man5dir/initctl.*
 %_man8dir/halt.*
 %_man8dir/fstab-decode.*
 %_man8dir/init.*
@@ -207,17 +183,23 @@ fi
 %_bindir/last
 %_bindir/lastb
 %_bindir/mesg
+%_bindir/readbootlog
 %attr(2711,root,tty) %_bindir/wall
 %_man1dir/last.*
 %_man1dir/lastb.*
 %_man1dir/mesg.*
 %_man1dir/mountpoint.*
 %_man1dir/wall.*
+%_man1dir/readbootlog.*
 %_man8dir/bootlogd.*
 %_man8dir/killall5.*
 %_man8dir/pidof.*
 
 %changelog
+* Thu Dec 16 2021 Alexey Gladkov <legion@altlinux.ru> 3.00-alt1
+- Updated to 3.00.
+- Reviewed patches.
+
 * Thu Dec 16 2021 Alexey Gladkov <legion@altlinux.ru> 2.88-alt7
 - Add conflict to systemd to make it impossible to install systemd on a system
   with sysvinit (ALT#41579).
