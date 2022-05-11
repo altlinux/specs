@@ -1,15 +1,17 @@
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 
 %define _name json-glib
 %define ver_major 1.6
 %define api_ver 1.0
-%def_disable gtk_doc
+%def_disable symbol_versioning
+%def_enable gtk_doc
 %def_enable man
 %def_enable introspection
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: GLib-based JSON manipulation library
@@ -17,11 +19,15 @@ Group: System/Libraries
 License: LGPLv2.1
 Url: https://wiki.gnome.org/Projects/JsonGlib
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-
+%else
+Source: %_name-%version.tar
+%endif
+Patch: json-glib-1.6.6-alt-doc_build.patch
 # https://gitlab.gnome.org/GNOME/json-glib/-/issues/33
 # --default-symver breaks set-versioned dependencies, revert it
-Patch: json-glib-1.6.4-alt-remove_symbol_versioning.patch
+Patch1: json-glib-1.6.4-alt-remove_symbol_versioning.patch
 
 %define glib_ver 2.54
 %define gi_ver 0.10.5
@@ -43,7 +49,7 @@ instances to and from JSON data types.
 %package devel
 Summary: Development files for %_name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -52,7 +58,7 @@ developing applications that use %name.
 %package gir
 Summary: GObject introspection data for the JSON-GLib library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the JSON-GLib library
@@ -61,7 +67,7 @@ GObject introspection data for the JSON-GLib library
 Summary: GObject introspection devel data for the JSON-GLib library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the JSON-GLib library
@@ -78,21 +84,21 @@ This package contains developer documentation for the JSON-GLib library.
 %package tests
 Summary: Tests for the %_name package
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
 the functionality of the installed %_name library.
 
-
 %prep
 %setup -n %_name-%version
-%patch -p1 -b .symver
+%patch -b .doc
+%{?_disable_symbol_versioning:%patch1 -p1 -b .symver}
 
 %build
 %meson %{?_disable_introspection:-Dintrospection=disabled} \
-	%{?_disable_gtk_doc:-Dgtk_doc=disabled} \
-	%{?_enable_man:-Dman=true}
+    %{?_disable_gtk_doc:-Dgtk_doc=disabled} \
+    %{?_enable_man:-Dman=true}
 %nil
 %meson_build
 
@@ -101,8 +107,7 @@ the functionality of the installed %_name library.
 %find_lang --output=%_name.lang %_name-%api_ver
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %_name.lang
 %_bindir/%_name-format
@@ -129,7 +134,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/%_name
+%_datadir/doc/%_name-%api_ver
 %endif
 
 %files tests
@@ -137,6 +142,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/installed-tests/%_name-%api_ver/
 
 %changelog
+* Mon May 09 2022 Yuri N. Sedunov <aris@altlinux.org> 1.6.6-alt1
+- updated to 1.6.6-20-g23ae2f5
+- made symbol versioning introduced in 1.5.2 optional (disabled by default)
+
 * Tue Aug 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6.4-alt1
 - 1.6.4
 
