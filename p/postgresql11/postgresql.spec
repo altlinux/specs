@@ -9,8 +9,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     11
-%define postgresql_minor     15
-%define postgresql_altrel    4
+%define postgresql_minor     16
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -307,7 +307,7 @@ goal of accelerating analytics queries.
 %prep
 %setup
 
-%patch2 -p2
+%patch2 -p1
 %patch3 -p2
 %patch6 -p2
 %patch8 -p1
@@ -911,6 +911,9 @@ fi
 %endif
 
 %changelog
+* Wed May 11 2022 Alexei Takaseev <taf@altlinux.org> 11.16-alt1
+- 11.16 (Fixes CVE-2022-1552)
+
 * Wed Apr 13 2022 Alexei Takaseev <taf@altlinux.org> 11.15-alt4
 - Build with llvm 12
 
