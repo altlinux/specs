@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_enable check
 
 Name: mobile-broadband-provider-info
-Version: 20220315
+Version: 20220511
 Release: alt1
 
 Summary: Mobile Broadband Service Provider Database
@@ -47,6 +47,9 @@ associated network and plan information.
 %doc COPYING README
 
 %changelog
+* Wed May 11 2022 Yuri N. Sedunov <aris@altlinux.org> 20220511-alt1
+- 20220511
+
 * Tue Mar 15 2022 Yuri N. Sedunov <aris@altlinux.org> 20220315-alt1
 - updated to 20220315-1-g042f9d8
 - fixed License tag
