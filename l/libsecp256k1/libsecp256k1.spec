@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ valgrind-devel
 
 Name:		libsecp256k1
 Summary:	Optimized C library for EC operations on curve secp256k1
-Version:	0.24.1
+Version:	0.25.4
 Release:	alt1_1
 License:	MIT
 Group:		System/Libraries
@@ -96,6 +96,9 @@ make check
 
 
 %changelog
+* Wed May 11 2022 Igor Vlasenko <viy@altlinux.org> 0.25.4-alt1_1
+- update by mgaimport
+
 * Wed Sep 22 2021 Igor Vlasenko <viy@altlinux.org> 0.24.1-alt1_1
 - enabled asm on i586
 
