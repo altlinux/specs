@@ -3,7 +3,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20211007
+Version: 20220418
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -48,6 +48,9 @@ including init and various helpers for hw probing and bootstrapping.
 %_sbindir/propagator
 
 %changelog
+* Mon Apr 18 2022 Anton Midyukov <antohami@altlinux.org> 20220418-alt1
+- mount.c: fix mount option for exfat
+
 * Thu Oct 07 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20211007-alt1
 - Fixed HTTP boot when server sent more headers after Content-Length (closes: #41072)
 
