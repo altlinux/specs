@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-ARP
 Name: perl-%dist
-Version: 1.0.11
+Version: 1.0.12
 Release: alt1
 
 Summary: Perl extension for creating ARP packets
@@ -11,10 +11,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/C/CR/CRAZYDJ/%{dist}-%{version}.tgz
-
-# from Fedora
-Patch: Net-Arp-1.0.6-tests.patch
+Source0: http://www.cpan.org/authors/id/C/CR/CRAZYDJ/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-devel
@@ -25,11 +22,9 @@ local or remote mac addresses.
 
 %prep
 %setup -q -n %{dist}-%{version}
-#setup -n %dist-%version
-%patch -p1
 
 # need root
-mv t/send_packet.t t/send_packet.t.orig
+# mv t/send_packet.t t/send_packet.t.orig
 
 %build
 %perl_vendor_build
@@ -43,6 +38,9 @@ mv t/send_packet.t t/send_packet.t.orig
 %perl_vendor_autolib/Net
 
 %changelog
+* Thu May 12 2022 Igor Vlasenko <viy@altlinux.org> 1.0.12-alt1
+- automated CPAN update
+
 * Thu Jun 25 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt1
 - automated CPAN update
 
