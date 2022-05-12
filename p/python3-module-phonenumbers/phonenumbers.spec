@@ -1,7 +1,7 @@
 %define oname phonenumbers
 
 Name: python3-module-%oname
-Version: 8.12.47
+Version: 8.12.48
 Release: alt1
 
 Summary: Python port of Google's libphonenumber
@@ -46,6 +46,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 12 2022 Grigory Ustinov <grenka@altlinux.org> 8.12.48-alt1
+- Automatically updated to 8.12.48.
+
 * Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 8.12.47-alt1
 - Automatically updated to 8.12.47.
 
