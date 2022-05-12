@@ -1,5 +1,5 @@
 Name: torrust-tracker
-Version: 2.2.1
+Version: 2.3.0
 Release: alt1
 
 Summary: Lightweight BitTorrent tracker
@@ -10,7 +10,7 @@ Url: https://github.com/torrust/torrust-tracker.git
 Source0: %name-%version.tar
 Source1: crates.tar
 
-BuildRequires: rust-cargo /proc libsqlite3-devel
+BuildRequires: rust-cargo /proc libsqlite3-devel libssl-devel
 ExcludeArch: ppc64le
 
 %description
@@ -51,5 +51,8 @@ cd %buildroot%_localstatedir/torrust && ../../../usr/sbin/torrust-tracker ||:
 %ghost %attr(0660,_torrust,_torrust) %_localstatedir/torrust/data.db
 
 %changelog
+* Thu May 12 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.3.0-alt1
+- 2.3.0 released
+
 * Tue Mar 22 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.1-alt1
 - initial
