@@ -4,11 +4,11 @@
 
 %define modname cairo
 %define oname py%modname
-%define ver_major 1.20
+%define ver_major 1.21
 
 Name: python3-module-%oname
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Pycairo is a set of Python bindings for the cairo vector graphics library
 Group: Development/Python3
@@ -23,9 +23,8 @@ Source: %oname-%version.tar
 %def_with bootstrap
 %endif
 
-BuildRequires: libcairo-devel >= 1.13.1
-BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
+BuildRequires: meson libcairo-devel >= 1.15.10 python3-devel
 %{?_with_bootstrap:BuildRequires: python3-module-Pygments}
 %{?_with_doc:
 BuildRequires(pre): rpm-macros-sphinx3
@@ -78,20 +77,15 @@ Pickles for pycairo.
 
 %prep
 %setup -n %oname-%version
-
-# fix pc-file install
-subst 's|\"lib\"|"%_lib"|' setup.py
-
 %{?_with_doc:%prepare_sphinx3 docs}
 
 %build
-# incomplete support
-%define opts --pkgconfigdir=%_pkgconfigdir
-%python3_build
-%{?_with_doc:%make -C docs}
+%meson
+%meson_build
+%{?_with_doc:%make_build -C docs}
 
 %install
-%python3_install
+%meson_install
 
 # docs
 install -d %buildroot%_docdir/%name-%version
@@ -117,11 +111,11 @@ rm -fR %python3_sitelibdir/%oname/pickle
 %endif # doc
 
 %check
-%__python3 setup.py test
+%__meson_test
 
 %files
 %python3_sitelibdir/%modname/
-%python3_sitelibdir/%oname-*.egg-info/
+%python3_sitelibdir/%oname-%version.egg-info
 %if_with doc
 %exclude %python3_sitelibdir/%modname/tests
 %exclude %python3_sitelibdir/%modname/examples
@@ -131,6 +125,7 @@ rm -fR %python3_sitelibdir/%oname/pickle
 %doc %_docdir/%name-%version/README*
 
 %files devel
+%exclude %python3_sitelibdir_noarch/%modname/include/py3cairo.h
 %dir %_includedir/%oname
 %_includedir/%oname/py3cairo.h
 %_pkgconfigdir/py3cairo.pc
@@ -154,6 +149,9 @@ rm -fR %python3_sitelibdir/%oname/pickle
 %endif
 
 %changelog
+* Thu May 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.21.0-alt1
+- 1.21.0 (ported to Meson build system)
+
 * Sat Feb 12 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.20.1-alt2
 - NMU: Packed egg-info files, see
   https://lists.altlinux.org/pipermail/devel/2020-October/212260.html
