@@ -3,9 +3,9 @@
 %define oname x42-plugins
 
 Name: lv2-%oname
-Version: 20211016
+Version: 20220327
 Release: alt1
-Summary: Collection LV2 plugins
+Summary: Collection of LV2 plugins
 
 License: GPLv2+ and ISC
 Group: Sound
@@ -78,6 +78,12 @@ auto-tune, awesome meters collection and others.
 %_man1dir/*
 
 %changelog
+* Thu May 12 2022 Ivan A. Melnikov <iv@altlinux.org> 20220327-alt1
+- 20220327
+
+* Sat Jan 22 2022 Ivan A. Melnikov <iv@altlinux.org> 20220107-alt1
+- 20220107
+
 * Tue Nov 02 2021 Ivan A. Melnikov <iv@altlinux.org> 20211016-alt1
 - 20211016
 
