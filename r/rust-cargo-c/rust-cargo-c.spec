@@ -1,5 +1,5 @@
 Name: rust-cargo-c
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 
 Summary: Cargo applet to build and install C-ABI compatible dynamic and static libraries
@@ -21,8 +21,8 @@ library, and a C header to be used by any C (and C-compatible) software.
 %prep
 %setup
 %ifdef bootstrap
-cargo vendor crates
-tar cf %SOURCE1 crates
+cargo vendor
+tar cf %SOURCE1 vendor
 %else
 tar xf %SOURCE1
 %endif
@@ -43,8 +43,15 @@ install -pm0755 target/release/cargo-ctest %buildroot%_bindir/
 %_bindir/cargo-c*
 
 %changelog
+* Thu May 12 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.9-alt1
+- 0.9.9 released
+
 * Fri Mar 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.8-alt1
 - 0.9.8 released
 
 * Fri Nov 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.5-alt1
 - initial
+
+# Local Variables:
+# compile-command: "share_network=1 gear-hsh --commit --mountpoints=/proc --build-args=\'--define \"bootstrap please\"\'"
+# End:
