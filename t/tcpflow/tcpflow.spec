@@ -1,7 +1,8 @@
-Summary: Network traffic recorder
 Name: tcpflow
-Version: 1.5.0
+Version: 1.6.1
 Release: alt1
+
+Summary: Network traffic recorder
 License: GPLv3
 Group: Monitoring
 Url: https://github.com/simsong/tcpflow
@@ -49,7 +50,7 @@ install -pD -m755 %SOURCE1 %buildroot%_controldir/%name
 sed -i -e 's:__BINARY__:%_bindir/%name:' %buildroot%_controldir/%name
 
 %pre
-/usr/sbin/groupadd -r -f netadmin
+i/usr/sbin/groupadd -r -f netadmin ||:
 %pre_control %name
 
 %post
@@ -64,6 +65,9 @@ sed -i -e 's:__BINARY__:%_bindir/%name:' %buildroot%_controldir/%name
 %config %_controldir/%name
 
 %changelog
+* Thu May 12 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.1-alt1
+- 1.6.1 released
+
 * Wed Sep 26 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0-alt1
 - 1.5.0 released
 
