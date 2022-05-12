@@ -1,8 +1,8 @@
 Name: kernel-image-std-def
-Release: alt2
+Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel .37
+%define kernel_sublevel .39
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -623,6 +623,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu May 12 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.39-alt1
+- v5.15.39 (2022-05-12).
+
+* Mon May 09 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.38-alt1
+- v5.15.38 (2022-05-09).
+
 * Thu May 05 2022 Vitaly Chikunov <vt@altlinux.org> 2:5.15.37-alt2
 - Replace devicetree from /lib to /boot (Anton Midyukov)
 - /lib/devicetree/<name.dtb> -> /lib/devicetree/<vendor>/<name.dtb> for
