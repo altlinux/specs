@@ -3,7 +3,7 @@
 
 Name: virt-manager
 Version: 4.0.0
-Release: alt2
+Release: alt3
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -15,6 +15,7 @@ AutoReqProv: nopython
 # https://github.com/virt-manager/virt-manager
 Source: %name-%version.tar
 Patch0001: 0001-fixed-build-with-python3-module-docutils-on-p9-branch.patch
+Patch0002: 0002-setup-add-bits-for-setuptools-61.patch
 # Patch: %name-%version-%release.patch
 
 Requires: virt-manager-common = %EVR
@@ -83,6 +84,7 @@ machine).
 %setup
 #%%patch -p1
 %patch0001 -p1
+%patch0002 -p1
 
 
 %build
@@ -134,6 +136,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Thu May 12 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.0-alt3
+- fixed build with setuptools >= 61
+
 * Fri Mar 25 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.0-alt2
 - filter requires typelib(AyatanaAppIndicator3)
 
