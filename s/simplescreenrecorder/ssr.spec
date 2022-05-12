@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: simplescreenrecorder
-Version: 0.4.3
-Release: alt1.1
+Version: 0.4.4
+Release: alt1
 
 Summary: Simple Screen Recording with OpenGL capture
 License: GPL-3.0 and ISC and GPL-3.0+ and Zlib
@@ -56,6 +56,7 @@ sed -i 's,^#ifdef __x86_64__,#if defined (__x86_64__) || defined (__e2k__),' \
 %endif
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %cmake \
     -GNinja \
 %ifnarch %ix86 x86_64
@@ -67,9 +68,9 @@ sed -i 's,^#ifdef __x86_64__,#if defined (__x86_64__) || defined (__e2k__),' \
 %ifarch ppc64le
     -DWITH_GLINJECT=FALSE \
 %endif
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DWITH_QT5=TRUE
-%cmake_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
@@ -87,6 +88,10 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/metainfo/*
 
 %changelog
+* Thu May 12 2022 Leontiy Volodin <lvol@altlinux.org> 0.4.4-alt1
+- New version (0.4.4) with rpmgs script.
+- Updated translations.
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 0.4.3-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
