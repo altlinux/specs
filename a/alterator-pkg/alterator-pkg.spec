@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-pkg
-Version: 2.7.6
+Version: 2.7.7
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -61,6 +61,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Thu May 12 2022 Sergey V Turchin <zerg@altlinux.org> 2.7.7-alt1
+- rearrange groups UI
+
 * Mon Apr 05 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.7.6-alt1
 - Use same image top directory location as Metadata for cdrom, disk, nfs and
   cifs methods in case when sources.list packages replaced in other subdirectory
