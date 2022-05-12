@@ -1,7 +1,7 @@
 
 Name: virt-viewer
 Version: 11.0
-Release: alt1
+Release: alt2
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
@@ -9,6 +9,7 @@ License: GPL-2.0+
 Url: https://gitlab.com/virt-viewer/virt-viewer
 # Vcs https://gitlab.com/virt-viewer/virt-viewer
 Source: %name-%version.tar
+Patch0001: 0001-data-remove-bogus-param-for-meson-i18nmerge_file.patch
 
 Obsoletes: spice-client < 0.12.5-alt3
 
@@ -40,6 +41,7 @@ using SSL/TLS encryption.
 
 %prep
 %setup
+%patch0001 -p1
 
 %build
 %meson -Dbuild-id=%release -Dos-id=ALT
@@ -60,6 +62,9 @@ using SSL/TLS encryption.
 %_datadir/bash-completion/completions/virt-viewer
 
 %changelog
+* Thu May 12 2022 Alexey Shabalin <shaba@altlinux.org> 11.0-alt2
+- data: remove bogus param for meson i18n.merge_file
+
 * Thu Dec 02 2021 Alexey Shabalin <shaba@altlinux.org> 11.0-alt1
 - new version 11.0
 
