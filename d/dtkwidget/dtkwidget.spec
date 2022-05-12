@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkwidget
-Version: 5.5.42
+Version: 5.5.44
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+ and GPL-3.0+
@@ -107,6 +107,9 @@ export PATH=%{_qt5_bindir}:$PATH
 %_libdir/dtkwidget5-examples/
 
 %changelog
+* Wed May 04 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.44-alt1
+- New version (5.5.44).
+
 * Tue Mar 22 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.42-alt1
 - New version (5.5.42).
 

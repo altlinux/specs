@@ -2,7 +2,7 @@
 %def_enable cmake
 
 Name: deepin-image-viewer
-Version: 5.8.2
+Version: 5.8.13
 Release: alt1
 Summary: Image viewer for Deepin
 License: GPL-3.0+
@@ -12,10 +12,12 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 
+ExcludeArch: armh
+
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %else
-BuildRequires(pre): gcc-c++ libgomp10-devel
+BuildRequires(pre): gcc-c++
 %endif
 %if_enabled cmake
 BuildRequires(pre): cmake rpm-build-ninja
@@ -26,8 +28,8 @@ BuildRequires: libraw-devel
 BuildRequires: qt5-tools
 BuildRequires: libexif-devel
 BuildRequires: dtk5-widget-devel
+BuildRequires: libimageviewer-devel
 BuildRequires: libgio-qt-devel
-BuildRequires: udisks2-qt5-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: libfreeimage-devel
@@ -45,19 +47,25 @@ Development libraries for %name.
 
 %prep
 %setup
-sed -i 's|lrelease|lrelease-qt5|' src/src.pro
-# Our build of freeimage disabled support for these formats like archlinux
-sed -i '/FIF_FAXG3/d' src/src/utils/unionimage.cpp
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %if_enabled cmake
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
+%endif
 %cmake \
 	-GNinja \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DAPP_VERSION=%version \
 	-DVERSION=%version \
-	-DCMAKE_INSTALL_LIBDIR=%_libdir
-%cmake_build
+	-DCMAKE_INSTALL_LIBDIR=%_libdir \
+	%nil
+cmake --build "%_cmake__builddir" -j1
 %else
 %qmake_qt5 \
 %if_enabled clang
@@ -66,9 +74,10 @@ sed -i '/FIF_FAXG3/d' src/src/utils/unionimage.cpp
     CONFIG+=nostrip \
     PREFIX=%prefix \
     DAPP_VERSION=%version \
-	DVERSION=%version \
-    LIB_INSTALL_DIR=%_libdir
-%make_build
+    DVERSION=%version \
+    LIB_INSTALL_DIR=%_libdir \
+    %nil
+%make
 %endif
 
 %install
@@ -97,6 +106,10 @@ sed -i '/FIF_FAXG3/d' src/src/utils/unionimage.cpp
 %_qt5_plugindir/imageformats/libxraw.so
 
 %changelog
+* Thu May 12 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.13-alt1
+- New version (5.8.13).
+- Not complied for armh architecture.
+
 * Thu Aug 19 2021 Leontiy Volodin <lvol@altlinux.org> 5.8.2-alt1
 - New version (5.8.2).
 

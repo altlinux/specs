@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt15
+Release: alt16
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -77,7 +77,9 @@ Requires: deepin-wallpapers
 Requires: deepin-system-monitor
 Requires: deepin-editor
 Requires: deepin-sound-theme
+%ifnarch armh
 Requires: deepin-image-viewer
+%endif
 Requires: deepin-printer
 Requires: deepin-clipboard
 Requires: deepin-music
@@ -133,6 +135,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Wed May 11 2022 Leontiy Volodin <lvol@altlinux.org> 5-alt16
+- Removed deepin-image-viewer for armh architecture.
+
 * Wed Nov 03 2021 Leontiy Volodin <lvol@altlinux.org> 5-alt15
 - Fixed memory leaks caused by booster-desktop.
 
