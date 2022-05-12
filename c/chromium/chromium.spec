@@ -10,7 +10,7 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-%global llvm_version 12.0
+%global llvm_version 13.0
 %global gcc_version %nil
 #set_gcc_version %gcc_version
 
@@ -30,7 +30,7 @@
 
 Name:           chromium
 Version:        101.0.4951.41
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -295,9 +295,21 @@ gn_arg enable_vulkan=true
 %endif
 
 %if_enabled google_api_keys
+### From 2013 until early 2021, Google permitted distribution builds of
+### Chromium to access Google APIs that added significant features to
+### Chromium including, but not limited to, Sync and geolocation.
+### As of March 15, 2021, any Chromium builds which pass client_id and/or
+### client_secret during build will prevent end-users from signing into their
+### Google account.
+###
+### I have removed the calls to "google_default_client_id"
+### and "google_default_client_secret" to comply with their changes.
+###
+### We can still use the api key though. For now.
 gn_arg google_api_key=\"%api_key\"
-gn_arg google_default_client_id=\"%default_client_id\"
-gn_arg google_default_client_secret=\"%default_client_secret\"
+
+#gn_arg google_default_client_id=\"%default_client_id\"
+#gn_arg google_default_client_secret=\"%default_client_secret\"
 %endif
 
 unbundle=
@@ -441,6 +453,10 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed May 11 2022 Alexey Gladkov <legion@altlinux.ru> 101.0.4951.41-alt2
+- Disable use of client_id and client_secret (Google shut off API access).
+- Use LLVM 13.
+
 * Wed Apr 27 2022 Alexey Gladkov <legion@altlinux.ru> 101.0.4951.41-alt1
 - New version (101.0.4951.41).
 - Security fixes:
