@@ -2,7 +2,7 @@
 
 Summary: EFI Application used by uefi-capsule plugin in fwupd
 Name: fwupd-efi
-Version: 1.2
+Version: 1.3
 Release: alt1
 License: LGPLv2+
 Group: System/Configuration/Hardware
@@ -38,6 +38,9 @@ fwupd-efi is the UEFI binary used with fwupd for installing UEFI firmware update
 %_libdir/pkgconfig/fwupd-efi.pc
 
 %changelog
+* Wed May 04 2022 Nikolai Kostrigin <nickel@altlinux.org> 1.3-alt1
+- new version
+
 * Tue Jan 25 2022 Nikolai Kostrigin <nickel@altlinux.org> 1.2-alt1
 - new version
 - spec: revert sbat-clarify-project-URL patch addition

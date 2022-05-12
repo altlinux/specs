@@ -16,16 +16,17 @@
 # libsmbios is only available on x86, and fwupdate is available on just x86_64
 %ifarch x86_64
 %def_enable dell
+%def_enable pci_psp
 %endif
 
 %def_enable flashrom
 
-%define fwupd_plugins_version 5
+%define fwupd_plugins_version 6
 %define fwupd_pluginsdir %_libdir/fwupd-plugins-%fwupd_plugins_version
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.7.7
+Version: 1.8.0
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -253,12 +254,14 @@ rm -rf %buildroot%_docdir/fwupd
 %dir %fwupd_pluginsdir
 %fwupd_pluginsdir/libfu_plugin_ata.so
 %fwupd_pluginsdir/libfu_plugin_amt.so
-%fwupd_pluginsdir/libfu_plugin_acpi_dmar.so
 %fwupd_pluginsdir/libfu_plugin_acpi_facp.so
 %fwupd_pluginsdir/libfu_plugin_acpi_phat.so
 %fwupd_pluginsdir/libfu_plugin_bcm57xx.so
+%fwupd_pluginsdir/libfu_plugin_cfu.so
 %fwupd_pluginsdir/libfu_plugin_ccgx.so
+%fwupd_pluginsdir/libfu_plugin_ch341a.so
 %fwupd_pluginsdir/libfu_plugin_colorhug.so
+%fwupd_pluginsdir/libfu_plugin_corsair.so
 %fwupd_pluginsdir/libfu_plugin_cpu.so
 %fwupd_pluginsdir/libfu_plugin_cros_ec.so
 %if_enabled dell
@@ -276,6 +279,7 @@ rm -rf %buildroot%_docdir/fwupd
 %fwupd_pluginsdir/libfu_plugin_fresco_pd.so
 %fwupd_pluginsdir/libfu_plugin_flashrom.so
 %fwupd_pluginsdir/libfu_plugin_genesys.so
+%fwupd_pluginsdir/libfu_plugin_gpio.so
 %fwupd_pluginsdir/libfu_plugin_goodixmoc.so
 %fwupd_pluginsdir/libfu_plugin_hailuck.so
 %if_enabled uefi
@@ -292,6 +296,8 @@ rm -rf %buildroot%_docdir/fwupd
 %fwupd_pluginsdir/libfu_plugin_logitech_bulkcontroller.so
 %fwupd_pluginsdir/libfu_plugin_logind.so
 %if_enabled msr
+%fwupd_pluginsdir/libfu_plugin_acpi_dmar.so
+%fwupd_pluginsdir/libfu_plugin_acpi_ivrs.so
 %fwupd_pluginsdir/libfu_plugin_msr.so
 %_modulesloaddir/fwupd-msr.conf
 %config(noreplace)%_sysconfdir/fwupd/msr.conf
@@ -304,6 +310,9 @@ rm -rf %buildroot%_docdir/fwupd
 %fwupd_pluginsdir/libfu_plugin_parade_lspcon.so
 %fwupd_pluginsdir/libfu_plugin_pci_bcr.so
 %fwupd_pluginsdir/libfu_plugin_pci_mei.so
+%if_enabled pci_psp
+%fwupd_pluginsdir/libfu_plugin_pci_psp.so
+%endif
 %fwupd_pluginsdir/libfu_plugin_pixart_rf.so
 %fwupd_pluginsdir/libfu_plugin_powerd.so
 %fwupd_pluginsdir/libfu_plugin_redfish.so
@@ -326,6 +335,7 @@ rm -rf %buildroot%_docdir/fwupd
 %if_enabled dummy
 %fwupd_pluginsdir/libfu_plugin_invalid.so
 %fwupd_pluginsdir/libfu_plugin_test.so
+%fwupd_pluginsdir/libfu_plugin_test_ble.so
 %endif
 %fwupd_pluginsdir/libfu_plugin_thelio_io.so
 %fwupd_pluginsdir/libfu_plugin_thunderbolt.so
@@ -377,6 +387,9 @@ rm -rf %buildroot%_docdir/fwupd
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 
 %changelog
+* Thu May 12 2022 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1
+- 1.7.7 -> 1.8.0
+
 * Mon Apr 11 2022 Anton Farygin <rider@altlinux.ru> 1.7.7-alt1
 - 1.7.6 -> 1.7.7
 
