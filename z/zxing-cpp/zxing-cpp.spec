@@ -1,6 +1,6 @@
 Name:     zxing-cpp
-Version:  1.2.0
-Release:  alt1.1
+Version:  1.3.0
+Release:  alt1
 
 Summary:  C++ port of ZXing
 License:  Apache-2.0 and LGPL-2.0 with exceptions
@@ -10,12 +10,6 @@ Url:      https://github.com/nu-book/zxing-cpp
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
-# Update stb_image/stb_image_write
-# https://github.com/nu-book/zxing-cpp/pull/269
-# Fixes CVE-2021-28021, CVE-2021-42715, and CVE-2021-42716, and adds a patch
-# file for zxing-cpp-specific changes
-Patch1: 269.patch
-Patch2: 0001-Add-a-mode-to-build-against-system-versions-of-depen.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -24,6 +18,8 @@ BuildRequires: qt5-base-devel
 BuildRequires: qt5-declarative-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: libfmt-devel
+BuildRequires: libstb-devel
+BuildRequires: libopencv-devel
 
 %description
 ZXing-C++ ("zebra crossing") is an open-source, multi-format 1D/2D barcode
@@ -52,8 +48,6 @@ Development files for lib%name.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
 %ifarch %e2k
 # error #1587: cannot deduce "auto" type
 sed -i '/{PointI{0, 1}/s/, {1/, PointI{1/g' core/src/ConcentricFinder.cpp
@@ -80,6 +74,9 @@ sed -i '1i #define preferred_separator preferred_separator_zxing' test/blackbox/
 %_libdir/pkgconfig/zxing.pc
 
 %changelog
+* Tue May 03 2022 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
+- New version.
+
 * Thu Feb 17 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.2.0-alt1.1
 - Fixed build for Elbrus
 
