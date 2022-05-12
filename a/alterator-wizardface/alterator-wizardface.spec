@@ -2,7 +2,7 @@
 # $Id: alterator-control.spec,v 1.15 2006/04/28 10:48:26 inger Exp $ 
 
 Name: alterator-wizardface
-Version: 2.2
+Version: 2.3
 Release: alt1
 
 Url: http://altlinux.org/alterator
@@ -14,7 +14,7 @@ Provides: alterator-wizard = %version
 Obsoletes: alterator-wizard
 
 Requires: alterator >= 5.0-alt1 alterator-sh-functions
-Requires: alterator-lookout >= 2.5
+Requires: alterator-lookout >= 2.8
 Requires: alterator-l10n >= 2.5-alt8
 Requires: alterator-browser-qt
 
@@ -95,6 +95,10 @@ EOF
 %_bindir/*
 
 %changelog
+* Wed Apr 20 2022 Paul Wolneykien <manowar@altlinux.org> 2.3-alt1
+- Use the new 'on-replace' frame hook to fix setting of the help
+  page on multi-form steps (closes: 42514).
+
 * Wed Sep 29 2021 Paul Wolneykien <manowar@altlinux.org> 2.2-alt1
 - Disable auto-compilation.
 

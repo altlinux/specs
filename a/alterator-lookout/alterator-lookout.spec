@@ -1,6 +1,6 @@
 Name: alterator-lookout
-Version: 2.7
-Release: alt3
+Version: 2.8
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -44,6 +44,9 @@ export GUILE_LOAD_PATH="lookout"
 %_alterator_datadir/ui/*
 
 %changelog
+* Wed Apr 20 2022 Paul Wolneykien <manowar@altlinux.org> 2.8-alt1
+- Added frame:set-on-replace proc.
+
 * Fri Jun 11 2021 Paul Wolneykien <manowar@altlinux.org> 2.7-alt3
 - No special patches for partial continuations.
 
