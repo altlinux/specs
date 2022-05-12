@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.24.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -297,7 +297,7 @@ popd
 %patch129 -p1
 %patch130 -p1
 %patch131 -p2 -b .theme_pam
-#%patch132 -p1
+%patch132 -p1
 %patch133 -p1
 %patch134 -p1
 %patch135 -p2
@@ -514,6 +514,12 @@ done
 
 
 %changelog
+* Wed May 11 2022 Slava Aseev <ptrnine@altlinux.org> 1:5.24.5-alt2
+- virtual keyboard fixes:
+  + make virtual keyboard enable button act as a switch
+  + prevent password field from being blocked by virtual keyboard
+  + remove virtual keyboard flickering when minimizing
+
 * Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.5-alt1
 - new version
 
