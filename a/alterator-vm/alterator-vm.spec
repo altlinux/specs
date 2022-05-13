@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.25
+Version: 0.4.26
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -38,6 +38,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Wed May 04 2022 Oleg Solovyov <mcpain@altlinux.org> 0.4.26-alt1
+- make sure that GRUB stage1.5 can be installed
+
 * Mon Dec 27 2021 Oleg Solovyov <mcpain@altlinux.org> 0.4.25-alt1
 - fix "Make Encrypted Volume" hiding
 
