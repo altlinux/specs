@@ -10,7 +10,7 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    20.10.13
+Version:    20.10.15
 Release: alt1
 Summary: Docker CLI
 License: Apache-2.0
@@ -96,6 +96,9 @@ install -d %{buildroot}%{_libexecdir}/docker/cli-plugins
 %dir %{_libexecdir}/docker/cli-plugins
 
 %changelog
+* Thu May 11 2022 Vladimir Didenko <cow@altlinux.org> 20.10.15-alt1
+- new release
+
 * Fri Mar 11 2022 Vladimir Didenko <cow@altlinux.org> 20.10.13-alt1
 - new release
 

@@ -13,7 +13,7 @@
 %brp_strip_none %_bindir/*
 
 Name:           runc
-Version:        1.1.0
+Version:        1.1.2
 Release:        alt1
 Summary:        CLI for running Open Containers
 Group:          Development/Other
@@ -73,6 +73,9 @@ EOF
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Thu May 12 2022 Vladimir Didenko <cow@altlinux.ru> 1.1.2-alt1
+- New version (Fixes: CVE-2022-29162)
+
 * Fri Mar 11 2022 Vladimir Didenko <cow@altlinux.ru> 1.1.0-alt1
 - New version
 
