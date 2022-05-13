@@ -4,7 +4,7 @@
 
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 7.1.10
+Version: 7.2.3
 Release: alt1
 License: AGPL-3.0+ AND GPLv3 AND MIT
 Group: System/Servers
@@ -16,9 +16,9 @@ ExclusiveArch: x86_64 aarch64
 
 Requires: cstream lzop zstd wget schedutils gdisk hdparm rsync pciutils
 Requires: perl-LWP-Protocol-https
-Requires: pve-vncterm pve-novnc pve-spiceterm pve-xtermjs pve-acme
-Requires: pve-cluster pve-container pve-firewall pve-ha-manager pve-qemu-server pve-i18n pve-docs
-Requires: proxmox-widget-toolkit proxmox-mini-journalreader fonts-font-awesome javascript-extjs javascript-qrcodejs
+Requires: pve-vncterm pve-novnc >= 1.2.2 pve-spiceterm pve-xtermjs >= 4.7.1 pve-acme
+Requires: pve-cluster >= 7.0.4 pve-container >= 4.0.9 pve-firewall pve-ha-manager pve-qemu-server >= 6.2.17 pve-i18n >= 1.0.3 pve-docs
+Requires: proxmox-widget-toolkit >= 3.4.9 proxmox-mini-journalreader fonts-font-awesome javascript-extjs javascript-qrcodejs
 
 Source: %name-%version.tar
 
@@ -27,7 +27,8 @@ Source8: basealt_favicon.ico
 Source9: basealt_logo-128.png
 
 BuildRequires: pve-doc-generator >= 7.0.4 xmlto perl-Pod-Parser
-BuildRequires: pve-storage >= 6.3.2 pve-cluster libpve-cluster-perl >= 6.1.6 libpve-cluster-api-perl pve-container pve-qemu-server >= 6.0.15
+BuildRequires: pve-storage >= 6.3.2 pve-cluster >= 7.0.4
+BuildRequires: libpve-cluster-perl >= 6.1.6 libpve-cluster-api-perl >= 7.0.5 pve-container pve-qemu-server >= 6.0.15
 BuildRequires: pve-acme pve-http-server >= 2.0.12 pve-access-control >= 7.0.2
 BuildRequires: perl(AptPkg/Cache.pm) perl(File/ReadBackwards.pm) perl(Template.pm) perl(Net/DNS/Resolver.pm)
 BuildRequires: unzip gnupg
@@ -118,6 +119,9 @@ rm -f  %buildroot%_bindir/pvemailforward
 %_man8dir/*
 
 %changelog
+* Thu May 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.3-alt1
+- 7.2-3
+
 * Wed Mar 16 2022 Alexey Shabalin <shaba@altlinux.org> 7.1.10-alt1
 - 7.1-10
 - build pve-manager only, all other build as separated packages.

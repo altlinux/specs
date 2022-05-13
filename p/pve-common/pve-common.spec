@@ -2,8 +2,8 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 7.1.3
-Release: alt3
+Version: 7.1.6
+Release: alt1
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -70,6 +70,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Thu May 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.1.6-alt1
+- 7.1-6
+
 * Tue Apr 19 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.1.3-alt3
 - ignore the absence of timezone file when starting CT
 

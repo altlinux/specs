@@ -1,6 +1,6 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 7.1.2
+Version: 7.2.2
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -25,7 +25,7 @@ grep 'proxmox.com' * -rl | while read f; do
 	sed -i 's|proxmox.com|basealt.ru|' $f
 done
 sed -i 's|{python}|python3|' asciidoc/*.conf
-rm -f getting-help.adoc howto-improve-pve-docs.adoc pve-package-repos.adoc pve-faq.adoc pve-installation.adoc pve-system-requirements.adoc translation.adoc pve-installation-media.adoc system-booting.adoc cpu-models.conf.adoc
+rm -f getting-help.adoc howto-improve-pve-docs.adoc pve-package-repos.adoc pve-faq.adoc pve-installation.adoc pve-system-requirements.adoc translation.adoc pve-installation-media.adoc cpu-models.conf.adoc
 
 %build
 %make DOCRELEASE=%version
@@ -43,6 +43,9 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/%name
 
 %changelog
+* Thu May 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.2-alt1
+- 7.2-2
+
 * Mon Mar 21 2022 Alexey Shabalin <shaba@altlinux.org> 7.1.2-alt1
 - 7.1-2
 - build doc generator from separated package

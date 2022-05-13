@@ -3,7 +3,7 @@
 
 Name: pve-ha-manager
 Summary: Proxmox VE HA Manager
-Version: 3.3.3
+Version: 3.3.4
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -69,6 +69,9 @@ install -m0644 debian/pve-ha-manager.default %buildroot%_sysconfdir/sysconfig/pv
 %_datadir/pve-ha-simulator
 
 %changelog
+* Thu May 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 3.3.4-alt1
+- 3.3-4
+
 * Mon Mar 07 2022 Alexey Shabalin <shaba@altlinux.org> 3.3.3-alt1
 - 3.3-3
 - build as separate package

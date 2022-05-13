@@ -3,7 +3,7 @@
 
 Name: pve-doc-generator
 Summary: Proxmox VE Documentation helpers
-Version: 7.1.2
+Version: 7.2.2
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -47,6 +47,9 @@ install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 %_datadir/pve-doc-generator
 
 %changelog
+* Thu May 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.2-alt1
+- 7.2-2
+
 * Thu Mar 17 2022 Alexey Shabalin <shaba@altlinux.org> 7.1.2-alt1
 - 7.1-2
 - build pve-doc-generator as separated package

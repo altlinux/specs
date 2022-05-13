@@ -8,8 +8,8 @@
 %global firmwaredirs "%_datadir/qemu:%_datadir/seabios:%_datadir/seavgabios:%_datadir/ipxe:%_datadir/ipxe.efi"
 
 Name: pve-%rname
-Version: 6.1.1
-Release: alt2
+Version: 6.2.0
+Release: alt1
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -28,7 +28,8 @@ Source5: qemu-kvm.sh
 # /etc/qemu/bridge.conf
 Source12: bridge.conf
 
-Patch100: 0057-cpu-add-Kunpeng-920-cpu-support.patch
+Patch100: cpu-add-Kunpeng-920-cpu-support.patch
+Patch101: 0003-cpu-add-Cortex-A72-processor-kvm-target-support.patch
 
 %set_verify_elf_method fhs=relaxed
 %add_verify_elf_skiplist %_datadir/%rname/*
@@ -44,7 +45,7 @@ Provides: pve-qemu-kvm = %EVR
 BuildRequires: acpica bzlib-devel glib2-devel flex libacl-devel libaio-devel libalsa-devel libattr-devel libcap-devel
 BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libiscsi-devel libjpeg-devel
 BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libpci-devel libpixman-devel libpng-devel ceph-devel
-BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libssh2-devel libusbredir-devel libxfs-devel
+BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libusbredir-devel libxfs-devel libepoxy-devel libgbm-devel
 BuildRequires: makeinfo perl-Pod-Usage pkgconfig(glusterfs-api) pkgconfig(virglrenderer) liburing-devel libuuid-devel
 BuildRequires: libsystemd-devel libtasn1-devel libpmem-devel libzstd-devel spice-protocol
 BuildRequires: ipxe-roms-qemu seavgabios seabios edk2-ovmf edk2-aarch64 qboot
@@ -118,6 +119,7 @@ for p in `cat debian/patches/series`; do
 done
 
 %patch100 -p1
+%patch101 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -143,6 +145,7 @@ export CFLAGS="%optflags"
         --disable-guest-agent \
         --disable-guest-agent-msi \
         --disable-libnfs \
+        --disable-libssh \
         --disable-libxml2 \
         --disable-sdl \
         --disable-smartcard \
@@ -152,19 +155,21 @@ export CFLAGS="%optflags"
         --enable-curl \
         --enable-glusterfs \
         --enable-gnutls \
-        --disable-jemalloc \
         --enable-libiscsi \
         --enable-libusb \
         --enable-linux-aio \
         --enable-linux-io-uring \
         --enable-numa \
+        --enable-opengl \
         --enable-rbd \
         --enable-seccomp \
         --enable-spice \
         --enable-usb-redir \
+        --enable-virglrenderer \
         --enable-virtfs \
         --enable-virtiofsd \
-        --enable-xfsctl
+        --enable-xfsctl \
+        --enable-zstd
 
 %make_build V=1
 
@@ -299,6 +304,7 @@ fi
 %_bindir/qemu-pr-helper
 #%_unitdir/qemu-pr-helper.service
 #%_unitdir/qemu-pr-helper.socket
+%_libexecdir/vhost-user-gpu
 %_libexecdir/virtfs-proxy-helper
 %_man1dir/virtfs-proxy-helper.*
 %_libexecdir/virtiofsd
@@ -315,6 +321,9 @@ fi
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Fri May 06 2022 Alexey Shabalin <shaba@altlinux.org> 1:6.2.0-alt1
+- 6.2.0-5
+
 * Tue Feb 15 2022 Alexey Shabalin <shaba@altlinux.org> 1:6.1.1-alt2
 - build from gear
 - add virtual pve-qemu package

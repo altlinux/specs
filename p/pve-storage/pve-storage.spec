@@ -1,6 +1,6 @@
 Name: pve-storage
 Summary: PVE storage management library
-Version: 7.1.1
+Version: 7.2.2
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -15,7 +15,7 @@ Requires: multipath-tools lvm2 thin-provisioning-tools
 Requires: ceph-common >= 12.2.1 ceph-fuse
 Requires: cifs-utils samba-client
 Requires: cstream
-Requires: glusterfs-client >= 3.4.0
+Requires: glusterfs-client >= 3.4.2
 Requires: zfs-utils
 Requires: nfs-clients nfs-utils
 Requires: proxmox-backup-client >= 1.0 proxmox-backup-file-restore
@@ -24,7 +24,8 @@ Requires: smartmontools
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires: librados2-perl pve-common pve-cluster libpve-cluster-perl pve-doc-generator pve-access-control pve-apiclient xmlto
+BuildRequires: librados2-perl pve-common pve-cluster >= 5.0.32 libpve-cluster-perl
+BuildRequires: pve-doc-generator >= 5.3.3 pve-access-control pve-apiclient xmlto
 BuildRequires: perl(File/chdir.pm) perl(Net/DBus.pm) perl(POSIX/strptime.pm)
 BuildRequires: perl(PVE/DataCenterConfig.pm)
 
@@ -52,6 +53,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Thu May 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.2-alt1
+- 7.2-2
+
 * Mon Mar 07 2022 Alexey Shabalin <shaba@altlinux.org> 7.1.1-alt1
 - 7.1-1
 - update requires

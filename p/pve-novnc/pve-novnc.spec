@@ -3,18 +3,16 @@
 
 Name: pve-%sname
 Summary: HTML5 VNC client
-Version: 1.1.0
+Version: 1.3.3
 Release: alt1
-License: MPL 2.0
+License: MPL-2.0
 Group: Networking/WWW
 Url: https://git.proxmox.com/
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source0: %pname.tar.xz
-Source1: %sname.tar.xz
-Source2: noVNC-ru.po
-Source3: noVNC-ru.json
-Source4: noVNC-app.js
+Source0: %name-%version.tar
+Source1: %sname.tar
+
+BuildRequires: esbuild
 
 BuildArch: noarch
 
@@ -27,9 +25,7 @@ Proxmox VE to provide HTML VM console
 
 cd %sname
 cat ../debian/patches/series | while read p; do patch -p1 < ../debian/patches/$p; done
-
-install -m0644 %SOURCE3 app/locale/ru.json
-install -m0644 %SOURCE4 app.js
+esbuild --bundle app/ui.js > app.js
 
 %install
 mkdir -p %buildroot%_datadir/%pname/app
@@ -45,6 +41,10 @@ install -m0644 %sname/vnc.html %buildroot%_datadir/%pname/index.html.tpl
 %_datadir/%pname
 
 %changelog
+* Thu May 12 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.3.3-alt1
+- 1.3.3
+- build from gear
+
 * Wed Sep 11 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.1.0-alt1
 - 1.1.0-1
 
