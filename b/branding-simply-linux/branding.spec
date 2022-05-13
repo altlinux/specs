@@ -55,8 +55,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 10.0.900
-Release: alt2
+Version: 10.0.910
+Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
 %ifarch %ix86 x86_64
@@ -509,6 +509,12 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Fri May 13 2022 Mikhail Efremov <sem@altlinux.org> 10.0.910-alt1
+- xfce-settings: Disable CSD for open/save dialogs.
+- xfce-settings; Update audacious config (closes: #29014).
+- indexhtml: Fix bugzilla.altllinux.org link.
+- indexhtml: Fix basealt.ru links (closes: #42530).
+
 * Mon Apr 18 2022 Mikhail Efremov <sem@altlinux.org> 10.0.900-alt2
 - menu: Drop system-config-printer.desktop.
 - slideshow: Update slides (closes: #42424).
