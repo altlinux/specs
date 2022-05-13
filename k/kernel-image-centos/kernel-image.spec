@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 88
+%define centos_release 90
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,32 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri May 13 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.90-alt1.el9
+- Updated to kernel-5.14.0-90.el9:
+  + bareudp: use ipv6_mod_enabled to check if IPv6 enabled
+  + ip tunnels: backport upstream fixes
+  + ipv4: Backport upstream fixes.
+  + net: mpls: Fix notifications when deleting a device
+  + Nvme misc fixes and quirks
+  + other: backports from upstream
+  + platform/x86/intel: Fix 'rmmod pmt_telemetry' panic
+  + scsi: target: Allow changing dbroot if there are no registered devices
+  + sctp: backports from upstream
+  + tipc: backports from upstream
+  + xfs: check sb_meta_uuid for dabuf buffer recovery
+
+* Thu May 12 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.89-alt1.el9
+- Updated to kernel-5.14.0-89.el9:
+  + CNB: net: use eth_hw_addr_set()
+  + Merge remote-tracking branch 'origin/merge-requests/627' into bz2069275
+  + Merge remote-tracking branch 'origin/merge-requests/671' into bz2069275
+  + Merge remote-tracking branch 'origin/merge-requests/673' into bz2069275
+  + net: cipso: fix warnings in netlbl_cipsov4_add_std
+  + sched/deadline: code cleanup
+  + Scheduler header clean up
+  + Scheduler RT prerequisites
+  + wireguard: 9.1 P1 backports
+
 * Wed May 11 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.88-alt1.el9
 - Updated to kernel-5.14.0-88.el9:
   + mpt3sas: a bugfix
