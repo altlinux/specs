@@ -7,7 +7,8 @@
 %define _libexecdir %_prefix/libexec
 
 %def_disable static
-%def_enable docs
+%def_enable gtk_doc
+%def_enable man
 %def_enable pixbuf_loader
 %def_enable introspection
 %def_enable vala
@@ -15,7 +16,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Epoch: 1
 
@@ -27,6 +28,7 @@ Url: https://wiki.gnome.org/action/show/Projects/LibRsvg
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.tar.xz
 
 # From configure.ac
+# since 2.53.1 rust-1.56 required
 %define rust_ver 1.56
 %define glib_ver 2.52.0
 %define pango_ver 1.44
@@ -46,7 +48,8 @@ BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libfreetype-devel >= %freetype_ver
 BuildRequires: libharfbuzz-devel >= %harfbuzz_ver
 BuildRequires: libX11-devel libXt-devel zlib-devel
-%{?_enable_docs:BuildRequires: gi-docgen python3-module-docutils}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
+%{?_enable_man:BuildRequires: python3-module-docutils}
 %{?_enable_introspection:
 BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
@@ -138,9 +141,9 @@ the functionality of the installed %name.
 %autoreconf
 %configure \
 	%{subst_enable static} \
+	%{?_enable_introspection:--enable-introspection=yes} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{?_enable_pixbuf_loader:--enable-pixbuf-loader} \
-	%{?_enable_introspection:--enable-introspection=yes} \
 	%{?_enable_vala:--enable-vala=yes} \
 	%{?_enable_installed_tests:--enable-installed-tests} \
 	--docdir=%_datadir/doc/%name
@@ -152,7 +155,7 @@ the functionality of the installed %name.
 %find_lang %name
 
 %check
-%make check V=1
+%make -k check VERBOSE=1
 
 %files -f %name.lang
 %_libdir/*.so.*
@@ -166,7 +169,7 @@ the functionality of the installed %name.
 %_libdir/pkgconfig/%bname-%gtk_api_ver.pc
 %{?_enable_vala:%_vapidir/%name-%api_ver.vapi}
 
-%if_enabled docs
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/doc/%name/Rsvg-%api_ver
 %endif
@@ -179,7 +182,7 @@ the functionality of the installed %name.
 
 %files utils
 %_bindir/*
-%{?_enable_docs:%_man1dir/*}
+%{?_enable_man:%_man1dir/*}
 
 %if_enabled introspection
 %files gir
@@ -198,6 +201,9 @@ the functionality of the installed %name.
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Fri May 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.54.2-alt1
+- 2.54.2
+
 * Sat Apr 23 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.54.1-alt1
 - 2.54.1
 
