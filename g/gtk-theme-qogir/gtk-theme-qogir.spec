@@ -1,5 +1,5 @@
 Name: gtk-theme-qogir
-Version: 2021.12.25
+Version: 2022.04.29
 Release: alt1
 Epoch: 1
 Summary: Qogir GTK theme
@@ -35,6 +35,12 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 %_datadir/themes/Qogir*
 
 %changelog
+* Fri May 13 2022 Leontiy Volodin <lvol@altlinux.org> 1:2022.04.29-alt1
+- New version.
+- Upstream:
+  + Added HiDPI support for xfwm4 version.
+  + Fixed Gnome 42 issues.
+
 * Thu Mar 17 2022 Leontiy Volodin <lvol@altlinux.org> 1:2021.12.25-alt1
 - New version.
 - Upstream:
