@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gtk
 %define ver_major 4.6
@@ -32,7 +32,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -391,6 +391,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Fri May 13 2022 Yuri N. Sedunov <aris@altlinux.org> 4.6.4-alt1
+- 4.6.4
+
 * Sat Apr 23 2022 Yuri N. Sedunov <aris@altlinux.org> 4.6.3-alt1
 - 4.6.3
 
