@@ -1,17 +1,17 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name openjpeg
-%define ver_major 2.4
+%define ver_major 2.5
 %define api_ver 2.0
 %define libname libopenjp2
 
 %def_enable docs
-#x86_64: 99% tests passed, 2 tests failed out of 1541
+#x86_64: 99%% tests passed, 2 tests failed out of 1541
 %def_disable check
 
 Name: lib%_name%api_ver
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: JPEG 2000 codec library (API version 2.0)
 License: BSD-2-Clause
@@ -22,15 +22,18 @@ Url: https://www.openjpeg.org/
 Vcs: https://github.com/uclouvain/openjpeg.git
 Source: %_name-%version.tar
 %else
-#Source: https://github.com/uclouvain/%_name/archive/%_name-%version.tar.gz
-Source: %url%_name-%version.tar.gz
+Source: https://github.com/uclouvain/%_name/archive/v%version/%_name-%version.tar.gz
+#Source: %url%_name-%version.tar.gz
 %endif
 # https://github.com/uclouvain/openjpeg-data.git
 # 679840K
 %{?_enable_check:Source1: %_name-data-cd724fb.tar}
 
-BuildRequires: cmake gcc-c++ libtiff-devel liblcms2-devel libpng-devel zlib-devel
-%{?_enable_docs:BuildRequires: doxygen}
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake gcc-c++ libtiff-devel libjpeg-devel libwebp-devel
+BuildRequires: liblcms2-devel libpng-devel libjbig-devel
+BuildRequires: zlib-devel libdeflate-devel liblzma-devel libzstd-devel
+%{?_enable_docs:BuildRequires: doxygen graphviz}
 %{?_enable_check:BuildRequires: ctest}
 
 %description
@@ -56,7 +59,7 @@ OpenJPEG is an open-source JPEG 2000 codec written in C.
 %package devel-doc
 Summary: Development documentation for %name
 Group: Development/Documentation
-BuildArch: noarch
+#BuildArch: noarch
 Conflicts: %name < %version
 
 %description devel-doc
@@ -68,6 +71,7 @@ developing with %name library.
 %{?_enable_check:mkdir data && tar -xf %SOURCE1 --strip-components=1 -C data/}
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DBUILD_STATIC_LIBS:BOOL=OFF \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
@@ -81,7 +85,7 @@ developing with %name library.
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 # to avoid conflict with libopenjpeg-1.x
 for file in %buildroot%_bindir/opj_*; do
@@ -96,7 +100,7 @@ mv %buildroot%_man1dir/opj_dump.1 %buildroot%_man1dir/opj2_dump.1
 subst 's|opj_\([compess,decompess,dump]\)|opj2_\1|g' %buildroot%_libdir/%_name-%ver_major/*.cmake
 
 %check
-%make -C BUILD test
+%cmake_build -t test
 
 %files
 %_libdir/%libname.so.*
@@ -121,6 +125,13 @@ subst 's|opj_\([compess,decompess,dump]\)|opj2_\1|g' %buildroot%_libdir/%_name-%
 %endif
 
 %changelog
+* Fri May 13 2022 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
+- 2.5.0 (fixed CVE-2013-4289, CVE-2013-4290, CVE-2019-6988, 
+  CVE-2018-20846, CVE-2018-16376, CVE-2021-29338)
+
+* Sat Jul 17 2021 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt3
+- updated BR for docs
+
 * Sat Apr 17 2021 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt2
 - improved "docs" knob
 - prepared %%check
