@@ -1,11 +1,11 @@
 Name: xmltoman
-Version: 0.4
+Version: 0.6
 Release: alt1
 
 Summary: XML to manpages converting utilities
-License: GPL
+License: GPLv2
 Group: Text tools
-Url: http://packages.qa.debian.org/x/xmltoman.html
+Url: https://github.com/atsb/xmltoman
  
 Source: %name-%version-%release.tar
 
@@ -23,7 +23,7 @@ to groff or html.
 make
 
 %install
-make install PREFIX=%buildroot%_prefix
+make install prefix=%buildroot%_prefix
 install -pm0644 -D %name.1 %buildroot%_man1dir/%name.1
 install -pm0644 xmlmantohtml.1 %buildroot%_man1dir
 
@@ -35,6 +35,9 @@ install -pm0644 xmlmantohtml.1 %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Fri May 13 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6-alt1
+- 0.6 released
+
 * Thu Aug 18 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4-alt1
 - 0.4 released
 
