@@ -2,7 +2,7 @@
 %define xdg_name in.lsp_plug.lsp_plugins
 
 Name: lsp-plugins
-Version: 1.1.31
+Version: 1.2.1
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -12,7 +12,8 @@ Url: https://lsp-plug.in/
 
 #Source: https://sourceforge.net/projects/%name/files/%name/%version/%name-src-%version.tar.gz
 Vcs: https://github.com/sadko4u/lsp-plugins
-Source: https://github.com/sadko4u/%name/archive/%version/%name-%version.tar.gz
+#Source: https://github.com/sadko4u/%name/archive/%version/%name-%version.tar.gz
+Source: https://github.com/sadko4u/%name/releases/download/%version/%name-src-%version.tar.gz
 
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++
@@ -64,55 +65,61 @@ BuildArch: noarch
 Documentation for LSP (Linux Studio Plugins) plugins.
 
 %prep
-%setup -n %name-%version
+%setup -n %name
 %ifarch %e2k
 sed -i "s|VSTCALLBACK __cdecl|VSTCALLBACK|" include/3rdparty/steinberg/vst2.h
 %endif
 
 %build
-export PLATFORM=Linux SYSTEM=Linux
+export PLATFORM=Linux BUILD_SYSTEM=Linux
 export VERSION=%version
 %make PREFIX=%_prefix \
-    BUILD_PROFILE=%_arch \
-    CC_FLAGS="-DLSP_NO_EXPERIMENTAL %optflags_warnings %(getconf LFS_CFLAGS)" \
-    BIN_PATH=%_bindir LIB_PATH=%_libdir \
-    DOC_PATH=%_docdir VERBOSE=1
+    LIBDIR=%_libdir \
+    FEATURES="jack ladspa lv2 vst2 doc xdg" \
+    CXXFLAGS_EXT="%optflags_default %(getconf LFS_CFLAGS)" \
+    CFLAGS_EXT="%optflags_default %(getconf LFS_CFLAGS)" \
+    config
+%make_build VERBOSE=1
 
 %install
-%makeinstall_std PREFIX=%_prefix LIB_PATH=%_libdir all install_xdg
+%makeinstall_std
+rm -f %buildroot%_libdir/*.a
 
 %check
 %make check
 
 %files -n jack-%name
 %_bindir/*
+%_libdir/liblsp-r3d-glx-lib*.so
 %dir %_libdir/%name
-%_libdir/%name/%name-jack-core-%version.so
-%_libdir/%name/%name-r3d-glx.so
+%_libdir/%name/lib%name-jack-%version.so
 %_desktopdir/%{xdg_name}_*.desktop
 %_datadir/desktop-directories/%name.directory
 %_xdgmenusdir/applications-merged/%name.menu
 %_iconsdir/hicolor/*/apps/%name.*
+%doc CHANGELOG* README*
 
-%doc CHANGELOG.txt README.txt
+%exclude %_pkgconfigdir/lsp-r3d-glx-lib.pc
 
 %files -n ladspa-%name
 %_libdir/ladspa/*
-%doc CHANGELOG.txt README.txt
+%doc CHANGELOG* README*
 
 %files -n lv2-%name
 %_libdir/lv2/*
-%doc CHANGELOG.txt README.txt
+%doc CHANGELOG* README*
 
 %files -n vst-%name
 %_libdir/vst/*
-%doc CHANGELOG.txt README.txt
+%doc CHANGELOG* README*
 
 %files doc
 %_defaultdocdir/%name/
 
-
 %changelog
+* Thu May 05 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
+- 1.2.1
+
 * Tue Dec 21 2021 Yuri N. Sedunov <aris@altlinux.org> 1.1.31-alt1
 - 1.1.31
 
