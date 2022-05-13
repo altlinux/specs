@@ -1,3 +1,5 @@
+%define major 1.1
+
 # pack shared libinkscape library
 %def_with shared
 
@@ -9,8 +11,8 @@
 %def_with graphicsmagick
 
 Name: inkscape
-Version: 1.1
-Release: alt8
+Version: %major.2
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -25,8 +27,7 @@ Source: %name-%version.tar
 
 Source1: inkview.desktop
 
-Patch: inkscape-1.1-fix-build-witch-gcc7.5.patch
-Patch2: 5724c21b9cb7b6176a7b36ca24068b148c817e82.patch
+Patch: poppler-22.03.0.patch
 
 # a program package can't have any provides
 AutoProv:no
@@ -62,6 +63,7 @@ BuildRequires: perl-podlators
 %add_python3_lib_path %_datadir/%name/extensions
 
 Requires: icc-profiles
+Requires: python3-module-appdirs
 
 # For extensions
 # https://bugzilla.altlinux.org/21626
@@ -146,7 +148,6 @@ Run checkinstall tests for %name.
 %prep
 %setup
 %patch -p1
-%patch2 -p1
 
 %ifarch %e2k
 # missing typeinfo fix
@@ -239,6 +240,12 @@ true
 %files checkinstall
 
 %changelog
+* Mon Apr 25 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.1.2-alt1
+- NMU:
+    + new version (1.1.2) with rpmgs script
+    + fix build with poppler-22.03.0
+    + add python3-module-appdirs to Requires
+
 * Sat Dec 04 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1-alt8
 - fix build with poppler 21.11.0 (thanks, zerg@) (ALT bug 41503)
 
