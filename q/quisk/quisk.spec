@@ -1,5 +1,5 @@
 Name: quisk
-Version: 4.1.95
+Version: 4.1.96
 Release: alt1
 Summary: QUISK is a Software Defined Radio (SDR) transceiver that can control various radio hardware
 
@@ -58,6 +58,9 @@ find . -type f -exec chmod a-x '{}' ';'
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri May 13 2022 Andrey Cherepanov <cas@altlinux.org> 4.1.96-alt1
+- new version 4.1.96
+
 * Mon May 09 2022 Andrey Cherepanov <cas@altlinux.org> 4.1.95-alt1
 - new version 4.1.95
 
