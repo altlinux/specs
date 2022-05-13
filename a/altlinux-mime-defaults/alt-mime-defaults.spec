@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.436
+Version: 0.437
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -45,6 +45,9 @@ touch %buildroot/%_desktopdir/defaults.list
 %_datadir/mate/applications/defaults.list
 
 %changelog
+* Fri May 13 2022 Igor Vlasenko <viy@altlinux.org> 0.437-alt1
+- updated mime defaults
+
 * Fri Jun 18 2021 Igor Vlasenko <viy@altlinux.org> 0.436-alt1
 - updated mime defaults
 
