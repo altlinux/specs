@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.32
+Version: 1.33
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -190,6 +190,10 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Fri May 13 2022 Vitaly Chikunov <vt@altlinux.org> 1.33-alt1
+- Replace egrep with grep -E.
+- Change default TMPDIR value to /tmp (to be on top-level tmpfs).
+
 * Tue Apr 19 2022 Vitaly Chikunov <vt@altlinux.org> 1.32-alt1
 - Modprobe overlay if '--overlay' is used.
 
