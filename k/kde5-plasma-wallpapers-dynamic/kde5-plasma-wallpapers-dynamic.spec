@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kde5-plasma-wallpapers-dynamic
-Version: 3.3.9
-Release: alt3
+Version: 4.3.1
+Release: alt1
 Summary: Dynamic wallpaper plugin for KDE Plasma
 License: GPL-3.0-or-later and LGPL-3.0-or-later and MIT
 Group: Graphical desktop/KDE
@@ -23,6 +23,7 @@ BuildRequires: kf5-kpackage-devel
 BuildRequires: kf5-plasma-framework-devel
 BuildRequires: libheif-devel
 BuildRequires: libexif-devel
+BuildRequires: libavif-devel
 
 %description
 A wallpaper plugin for KDE Plasma that continuously updates
@@ -49,20 +50,21 @@ https://github.com/karmanyaahm/awesome-plasma5-dynamic-wallpapers.
 
 %install
 %K5install
+%find_lang --with-kde %name
 
-%files
+%files -f %name.lang
 %_kf5_bin/kdynamicwallpaperbuilder
 %_libdir/libkdynamicwallpaper.so.*
 %_K5plug/kpackage/packagestructure/packagestructure_dynamicwallpaper.so
 %_K5qml/com/github/zzag/plasma/wallpapers/dynamic
 %_K5data/plasma/wallpapers/com.github.zzag.dynamic
-%_datadir/wallpapers/Dynamic*Numbers
+%_datadir/wallpapers/Dynamic
 %_datadir/locale/*/LC_MESSAGES/plasma_wallpaper_com.github.zzag.dynamic.mo
 %_datadir/metainfo/com.github.zzag.dynamic.appdata.xml
 %_datadir/bash-completion/completions/kdynamicwallpaperbuilder
 %_datadir/fish/completions/kdynamicwallpaperbuilder.fish
 %_datadir/zsh/site-functions/_kdynamicwallpaperbuilder
-%exclude %_K5srv/plasma-wallpaper-com.github.zzag.dynamic.desktop
+%_K5srv/plasma-wallpaper-com.github.zzag.dynamic.desktop
 %doc LICENSES README.md
 
 %files -n %name-devel
@@ -71,6 +73,9 @@ https://github.com/karmanyaahm/awesome-plasma5-dynamic-wallpapers.
 %_libdir/cmake/KDynamicWallpaper
 
 %changelog
+* Sat May 14 2022 Alexander Makeenkov <amakeenk@altlinux.org> 4.3.1-alt1
+- Updated to version 4.3.1
+
 * Mon Dec 27 2021 Alexander Makeenkov <amakeenk@altlinux.org> 3.3.9-alt3
 - Fix FTBFS: exclude .desktop file instead removing
 
