@@ -1,5 +1,5 @@
 Name: fd
-Version: 8.3.1
+Version: 8.3.2
 Release: alt1
 Summary: A simple, fast and user-friendly alternative to 'find'
 License: MIT and Apache-2.0
@@ -50,6 +50,9 @@ install -m 0644 target/release/build/%name-find-*/out/%name.bash %buildroot%_dat
 %doc LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Sat May 14 2022 Alexander Makeenkov <amakeenk@altlinux.org> 8.3.2-alt1
+- Updated to version 8.3.2
+
 * Sun Jan 23 2022 Alexander Makeenkov <amakeenk@altlinux.org> 8.3.1-alt1
 - Updated to version 8.3.1
 
