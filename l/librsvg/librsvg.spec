@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Epoch: 1
 
@@ -142,7 +142,7 @@ the functionality of the installed %name.
 %configure \
 	%{subst_enable static} \
 	%{?_enable_introspection:--enable-introspection=yes} \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
+	%{?_disable_gtk_doc:--disable-gtk-doc} \
 	%{?_enable_pixbuf_loader:--enable-pixbuf-loader} \
 	%{?_enable_vala:--enable-vala=yes} \
 	%{?_enable_installed_tests:--enable-installed-tests} \
@@ -171,7 +171,7 @@ the functionality of the installed %name.
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/doc/%name/Rsvg-%api_ver
+%_datadir/doc/Rsvg-%api_ver
 %endif
 
 %if_enabled static
@@ -201,6 +201,9 @@ the functionality of the installed %name.
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Sat May 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.54.3-alt1
+- 2.54.3
+
 * Fri May 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.54.2-alt1
 - 2.54.2
 
