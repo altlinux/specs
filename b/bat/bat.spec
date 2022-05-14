@@ -1,5 +1,5 @@
 Name: bat
-Version: 0.19.0
+Version: 0.21.0
 Release: alt1
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
@@ -49,6 +49,9 @@ install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.fish %b
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Sat May 14 2022 Alexander Makeenkov <amakeenk@altlinux.org> 0.21.0-alt1
+- Updated to version 0.21.0
+
 * Sun Jan 23 2022 Alexander Makeenkov <amakeenk@altlinux.org> 0.19.0-alt1
 - Updated to version 0.19.0
 
