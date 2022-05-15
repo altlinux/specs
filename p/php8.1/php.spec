@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  1
-%define _php_release_version 5
+%define _php_release_version 6
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -463,6 +463,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Sun May 15 2022 Anton Farygin <rider@altlinux.ru> 8.1.6-alt1
+- 8.1.5 -> 8.1.6
+
 * Fri Apr 15 2022 Anton Farygin <rider@altlinux.ru> 8.1.5-alt1
 - 8.1.5
 - disabled pcre-jit on riscv64 (closes: #42010)
