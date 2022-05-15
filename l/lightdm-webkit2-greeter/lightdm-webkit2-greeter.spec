@@ -1,30 +1,31 @@
 Name:     lightdm-webkit2-greeter
 Version:  3.4.1
-Release:  alt3
+Release:  alt4
 
 Summary:  A modern, visually appealing greeter for LightDM.
 License:  GPL-3.0
-Group:    Other
+Group:    Graphical desktop/Other
 Url:      https://github.com/JezerM/web-greeter
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 ExcludeArch: ppc64le
 
+Requires: lightdm
+Provides: lightdm-greeter
+
+Requires: python3-module-ruamel-yaml python3-module-PyQt5 python3-module-PyQtWebEngine python3-module-pygobject3 liblightdm-gobject 
+
 Source:   %name-%version.tar
 Source1:  %name.conf
 
-Patch: lightdm-webkit2-greeter-3.4.1-makefile.patch
+Patch:  lightdm-webkit2-greeter-3.4.1-makefile.patch
 Patch1: lightdm-webkit2-greeter-3.4.1-basedir.patch
 Patch2: lightdm-webkit2-greeter-3.4.1-opt.patch
 
 
-%add_python3_path   %_libdir/web-greeter/bridge/__init__.py
-%add_python3_path   %_bindir/web-greeter
-
-%add_findprov_skiplist %_libdir/web-greeter/*.py
-%add_findreq_skiplist %_libdir/web-greeter/*.py
-
+%add_python3_path   %_libdir/web-greeter
+%add_python3_req_skip gi.repository.GLib
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 
@@ -41,15 +42,16 @@ BuildRequires: bash-completion zsh-completions
 
 BuildRequires: /usr/bin/python3 
 
-Requires: python3-module-ruamel-yaml python3-module-PyQt5 python3-module-PyQtWebEngine python3-module-pygobject3 liblightdm-gobject 
 
 %description
 A modern, visually appealing greeter for LightDM, that allows to create web based themes with HTML, CSS and JavaScript.
 This is a fork of the Antergos web-greeter that tries to fix and improve this project for a modern and current use. Due to this, some API changes are needed, which implies that current themes would need to do changes to work correctly.
-Also, check out nody-greeter, a greeter made in Node.js with Electron! (Actually, faster than Web Greeter)\
+Also, check out nody-greeter, a greeter made in Node.js with Electron! (Actually, faster than Web Greeter)
 
 %prep
 %setup
+sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/bridge/*.py
+
 %make clean
 %patch -p1
 %patch1 -p1
@@ -98,6 +100,9 @@ install -m 644 %SOURCE1 %buildroot%_sysconfdir/lightdm/
 %doc *.md
 
 %changelog
+* Sun May 15 2022 Hihin Ruslan <ruslandh@altlinux.ru> 3.4.1-alt4
+- Added Spec fix by aris@, thanks to him
+
 * Sat May 14 2022 Hihin Ruslan <ruslandh@altlinux.ru> 3.4.1-alt3
 - Add lightdm-webkit2-greeter.conf
 - Add lightdm-webkit2-greeter-3.4.1-opt.patch
@@ -110,4 +115,3 @@ install -m 644 %SOURCE1 %buildroot%_sysconfdir/lightdm/
 
 * Mon May 09 2022 Hihin Ruslan <ruslandh@altlinux.ru> 3.4.1-alt1
 - Initial build for Sisyphus
-
