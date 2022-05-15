@@ -3,7 +3,7 @@
 %filter_from_requires /^python3(gajim.gui.dialogs)/d
 
 Name: gajim-plugin-pgp
-Version: 1.3.6
+Version: 1.4.4
 Release: alt1
 
 Summary: PGP encryption via XEP-0027 for Gajim
@@ -19,8 +19,8 @@ Source1: %oname.watch
 Source2: manifest.ini
 
 Requires: python3-module-gajim-pgp
-Requires: gajim >= %(sed -n 's/^min_gajim_version:\s*\([[:digit:].]\+\)$/\1/p' %SOURCE2)
-Conflicts: gajim > %(sed -n 's/^max_gajim_version:\s*\([[:digit:].]\+\)$/\1/p' %SOURCE2)
+Requires: gajim >= %(sed -n 's/^min_gajim_version:\s*\([[:digit:].]\+\).*$/\1/p' %SOURCE2)
+Conflicts: gajim > %(sed -n 's/^max_gajim_version:\s*\([[:digit:].]\+\).*$/\1/p' %SOURCE2)
 
 BuildRequires: rpm-build-python3
 BuildRequires: unzip
@@ -51,5 +51,8 @@ cp -a * %buildroot%python3_sitelibdir_noarch/gajim/data/plugins/%oname/
 %python3_sitelibdir_noarch/gajim/data/plugins/%oname
 
 %changelog
+* Sat May 14 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.4-alt1
+- Updated to 1.4.4.
+
 * Mon Feb 07 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.3.6-alt1
 - Initial build for ALT Sisyphus.

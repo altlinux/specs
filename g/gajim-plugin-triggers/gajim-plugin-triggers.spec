@@ -1,7 +1,7 @@
 %define oname triggers
 
 Name: gajim-plugin-triggers
-Version: 1.3.1
+Version: 1.4.4
 Release: alt1
 
 Summary: Configure Gajim's behavior on some events
@@ -27,8 +27,8 @@ BuildArch: noarch
 Summary: Python module for %name
 Group: Development/Python
 BuildArch: noarch
-Requires: gajim >= %(sed -n 's/^min_gajim_version:\s*\([[:digit:].]\+\)/\1/p' %SOURCE2)
-Conflicts: gajim > %(sed -n 's/^max_gajim_version:\s*\([[:digit:].]\+\)/\1/p' %SOURCE2)
+Requires: gajim >= %(sed -n 's/^min_gajim_version:\s*\([[:digit:].]\+\).*$/\1/p' %SOURCE2)
+Conflicts: gajim > %(sed -n 's/^max_gajim_version:\s*\([[:digit:].]\+\).*$/\1/p' %SOURCE2)
 
 %description -n python3-module-gajim-triggers
 %summary.
@@ -46,5 +46,8 @@ cp -a * %buildroot%python3_sitelibdir_noarch/gajim/data/plugins/%oname/
 %python3_sitelibdir_noarch/gajim/data/plugins/%oname
 
 %changelog
+* Sat May 14 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.4-alt1
+- Updated to 1.4.4.
+
 * Wed Mar 23 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.3.1-alt1
 - Initial build for ALT Sisyphus.

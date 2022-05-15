@@ -4,8 +4,8 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.3.3
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -33,7 +33,7 @@ Requires: libgtk+3-gir
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools
-BuildRequires: python3-module-nbxmpp >= 2.0.4
+BuildRequires: python3-module-nbxmpp >= 3.0.1
 BuildArch: noarch
 
 %description
@@ -43,7 +43,7 @@ users. Gajim does not require GNOME to run, eventhough it exists with
 it nicely.
 
 %prep
-%setup -n %name-%name-%version
+%setup -n %name-%version
 #patch1 -p1
 
 %build
@@ -58,7 +58,7 @@ it nicely.
 #doc AUTHORS ChangeLog README THANKS
 %_bindir/%name
 %_bindir/%name-remote
-%_bindir/%name-history-manager
+#_bindir/%name-history-manager
 %_man1dir/*
 %_datadir/applications/%appid.desktop
 %_datadir/metainfo/%appid.appdata.xml
@@ -74,6 +74,9 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Sat May 14 2022 Ilya Mashkin <oddity@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Mon Oct 18 2021 Ilya Mashkin <oddity@altlinux.ru> 1.3.3-alt2
 - BuildRequires python3-module-nbxmpp >= 2.0.4 (Closes: #41133)
 
