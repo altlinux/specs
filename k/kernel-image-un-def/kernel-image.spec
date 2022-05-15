@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	5.17
-%define kernel_sublevel .7
+%define kernel_sublevel .8
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kernel_extra_version_numeric 1.0.0
@@ -251,6 +251,7 @@ If possible, try to use glibc-kernheaders instead of this package.
 %package -n kernel-headers-modules-%flavour
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel 
+Requires: gcc%kgcc_version
 AutoReqProv: nocpp
 
 %description -n kernel-headers-modules-%flavour
@@ -614,6 +615,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun May 15 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.17.8-alt1
+- v5.17.8 (2022-05-15).
+
 * Thu May 12 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.17.7-alt1
 - v5.17.7 (2022-05-12).
 
