@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xpdf
-Version: 4.03
-Release: alt1.1
+Version: 4.04
+Release: alt1
 
 Summary: The PDF viewer and tools
 License: GPLv2 or GPLv3
@@ -221,6 +221,11 @@ done
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun May 15 2022 Andrew Savchenko <bircoph@altlinux.org> 4.04-alt1
+- Version bump
+- Many bugfixes, including security, including:
+  Fixes: CVE-2022-24106, CVE-2022-27135
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 4.03-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
