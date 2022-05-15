@@ -27,7 +27,7 @@ by digital cameras and certain image processing applications.
 %prep
 %setup -T -c
 cp -pr %php_extsrcdir/%php_extension/* .
-%if "%_php_suffix" != "8.1"
+%if "%_php_suffix" == "7"
 %patch0 -p3
 %endif
 
