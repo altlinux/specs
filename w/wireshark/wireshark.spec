@@ -9,7 +9,7 @@
 %define _pluginsdir %_libdir/%name/plugins/3.6
 
 Name: wireshark
-Version: 3.6.3
+Version: 3.6.5
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -224,6 +224,9 @@ _EOF_
 %_libdir/%name/cmake
 
 %changelog
+* Wed May 11 2022 Anton Farygin <rider@altlinux.ru> 3.6.5-alt1
+- 3.6.3 -> 3.6.5
+
 * Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 3.6.3-alt1
 - 3.6.3
 
