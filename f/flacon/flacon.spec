@@ -1,6 +1,6 @@
 Name: flacon
 Version: 9.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -19,6 +19,9 @@ BuildRequires: libtag-devel
 BuildRequires: libuchardet-devel
 BuildRequires: qt5-tools-devel
 
+%ifnarch %arm ppc64le
+Requires: alacenc
+%endif
 Requires: faac
 Requires: flac
 Requires: lame
@@ -70,6 +73,9 @@ Extracts audio tracks from audio CD image to separate tracks.
 %_man1dir/%name.1.*
 
 %changelog
+* Mon May 16 2022 Nazarov Denis <nenderus@altlinux.org> 9.0.0-alt1.1
+- Add require on alacenc except %arm and ppc64le (ALT #42737)
+
 * Sat Apr 30 2022 Nazarov Denis <nenderus@altlinux.org> 9.0.0-alt1
 - Version 9.0.0
 
