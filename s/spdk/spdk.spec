@@ -8,8 +8,8 @@
 %def_disable tests
 
 Name: spdk
-Version: 22.01
-Release: alt3
+Version: 22.01.1
+Release: alt1
 
 Summary: Storage Performance Development Kit
 License: BSD-3-Clause
@@ -224,6 +224,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Mon May 16 2022 Leontiy Volodin <lvol@altlinux.org> 22.01.1-alt1
+- New version (22.01.1).
+
 * Tue Mar 15 2022 Leontiy Volodin <lvol@altlinux.org> 22.01-alt3
 - Fix setup.sh startup (ALT #42131).
 
