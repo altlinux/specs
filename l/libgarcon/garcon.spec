@@ -4,13 +4,13 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: 4.16.1
+Version: 4.17.0
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
 License: LGPLv2+
 Group: System/Libraries
-URL: https://xfce.org/
+URL: https://docs.xfce.org/xfce/garcon/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/xfce/garcon.git
@@ -192,7 +192,6 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 %endif
 
 %files devel-doc
-%doc HACKING STATUS TODO
 %doc %_datadir/gtk-doc/html/%_name
 
 %files gtk3
@@ -214,6 +213,10 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 
 
 %changelog
+* Mon May 16 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
+- Updated Url tag.
+- Updated to 4.17.0.
+
 * Fri Jan 15 2021 Mikhail Efremov <sem@altlinux.org> 4.16.1-alt1
 - Updated to 4.16.1.
 
