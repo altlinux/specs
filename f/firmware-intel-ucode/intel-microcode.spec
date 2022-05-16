@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20220207
+%define orig_timestamp 20220510
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 17
+Version: 18
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,60 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Mon May 16 2022 L.A. Kostis <lakostis@altlinux.ru> 2:18-alt1.20220510
+- Sync with Debian 3.20220510.1:
+  + New upstream microcode datafile 20220510
+    + Fixes INTEL-SA-000617, CVE-2022-21151:
+      Processor optimization removal or modification of security-critical
+      code may allow an authenticated user to potentially enable information
+      disclosure via local access (closes: #1010947)
+    + Fixes several errata (functional issues) on Xeon Scalable, Atom C3000,
+      Atom E3900
+    + New Microcodes:
+      sig 0x00090672, pf_mask 0x03, 2022-03-03, rev 0x001f, size 212992
+      sig 0x00090675, pf_mask 0x03, 2022-03-03, rev 0x001f, size 212992
+      sig 0x000906a3, pf_mask 0x80, 2022-03-24, rev 0x041c, size 212992
+      sig 0x000906a4, pf_mask 0x80, 2022-03-24, rev 0x041c, size 212992
+      sig 0x000b06f2, pf_mask 0x03, 2022-03-03, rev 0x001f, size 212992
+      sig 0x000b06f5, pf_mask 0x03, 2022-03-03, rev 0x001f, size 212992
+    + Updated Microcodes:
+      sig 0x00030679, pf_mask 0x0f, 2019-07-10, rev 0x090d, size 52224
+      sig 0x000406e3, pf_mask 0xc0, 2021-11-12, rev 0x00f0, size 106496
+      sig 0x00050653, pf_mask 0x97, 2021-11-13, rev 0x100015d, size 34816
+      sig 0x00050654, pf_mask 0xb7, 2021-11-13, rev 0x2006d05, size 43008
+      sig 0x00050656, pf_mask 0xbf, 2021-12-10, rev 0x4003302, size 37888
+      sig 0x00050657, pf_mask 0xbf, 2021-12-10, rev 0x5003302, size 37888
+      sig 0x0005065b, pf_mask 0xbf, 2021-11-19, rev 0x7002501, size 29696
+      sig 0x000506c9, pf_mask 0x03, 2021-11-16, rev 0x0048, size 17408
+      sig 0x000506e3, pf_mask 0x36, 2021-11-12, rev 0x00f0, size 109568
+      sig 0x000506f1, pf_mask 0x01, 2021-12-02, rev 0x0038, size 11264
+      sig 0x000606a6, pf_mask 0x87, 2022-03-30, rev 0xd000363, size 294912
+      sig 0x000706a1, pf_mask 0x01, 2021-11-22, rev 0x003a, size 75776
+      sig 0x000706a8, pf_mask 0x01, 2021-11-22, rev 0x001e, size 75776
+      sig 0x000706e5, pf_mask 0x80, 2022-03-09, rev 0x00b0, size 112640
+      sig 0x000806a1, pf_mask 0x10, 2022-03-26, rev 0x0031, size 34816
+      sig 0x000806c1, pf_mask 0x80, 2022-02-01, rev 0x00a4, size 109568
+      sig 0x000806c2, pf_mask 0xc2, 2021-12-07, rev 0x0026, size 97280
+      sig 0x000806d1, pf_mask 0xc2, 2021-12-07, rev 0x003e, size 102400
+      sig 0x000806e9, pf_mask 0x10, 2021-11-12, rev 0x00f0, size 105472
+      sig 0x000806e9, pf_mask 0xc0, 2021-11-12, rev 0x00f0, size 105472
+      sig 0x000806ea, pf_mask 0xc0, 2021-11-12, rev 0x00f0, size 105472
+      sig 0x000806eb, pf_mask 0xd0, 2021-11-15, rev 0x00f0, size 105472
+      sig 0x000806ec, pf_mask 0x94, 2021-11-17, rev 0x00f0, size 105472
+      sig 0x00090661, pf_mask 0x01, 2022-02-03, rev 0x0016, size 20480
+      sig 0x000906c0, pf_mask 0x01, 2022-02-19, rev 0x24000023, size 20480
+      sig 0x000906e9, pf_mask 0x2a, 2021-11-12, rev 0x00f0, size 108544
+      sig 0x000906ea, pf_mask 0x22, 2021-11-15, rev 0x00f0, size 104448
+      sig 0x000906eb, pf_mask 0x02, 2021-11-12, rev 0x00f0, size 105472
+      sig 0x000906ec, pf_mask 0x22, 2021-11-15, rev 0x00f0, size 104448
+      sig 0x000906ed, pf_mask 0x22, 2021-11-16, rev 0x00f0, size 104448
+      sig 0x000a0652, pf_mask 0x20, 2021-11-16, rev 0x00f0, size 96256
+      sig 0x000a0653, pf_mask 0x22, 2021-11-15, rev 0x00f0, size 97280
+      sig 0x000a0655, pf_mask 0x22, 2021-11-16, rev 0x00f0, size 96256
+      sig 0x000a0660, pf_mask 0x80, 2021-11-15, rev 0x00f0, size 96256
+      sig 0x000a0661, pf_mask 0x80, 2021-11-16, rev 0x00f0, size 96256
+      sig 0x000a0671, pf_mask 0x02, 2022-03-09, rev 0x0053, size 103424
+
 * Mon Mar 21 2022 L.A. Kostis <lakostis@altlinux.ru> 2:17-alt1.20220207
 - Sync with Debian 3.20220207:
     + new upstream datafile 20220207
