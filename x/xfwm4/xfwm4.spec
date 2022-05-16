@@ -1,6 +1,6 @@
 Name: xfwm4
 Version: 4.16.1
-Release: alt1
+Release: alt2
 
 %def_enable epoxy
 %def_enable xi2
@@ -14,6 +14,7 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/xfce/xfwm4.git
 Source: %name-%version.tar
+Source1: ru-xfce-4.16-branch.po
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
@@ -43,6 +44,12 @@ Xfce.
 %prep
 %setup
 %patch -p1
+
+# Merge Russian translations from xfce-4.16 branch and from the release.
+# We are can't directly use updated ru.po from the branch: code is changed
+# and some lines are gone.
+msgcat --use-first -o merged_ru.po po/ru.po %SOURCE1
+mv -f merged_ru.po po/ru.po
 
 %build
 # Don't use git tag in version.
@@ -80,6 +87,12 @@ Xfce.
 %_libdir/xfce4/*
 
 %changelog
+* Mon May 16 2022 Mikhail Efremov <sem@altlinux.org> 4.16.1-alt2
+- Don't check ENABLE_NLS macro.
+- Updated Russian translation from xfce-4.16 branch (closes: #42772).
+- Patch from upstream git:
+  + settings: Fix untranslatable string.
+
 * Mon Jan 11 2021 Mikhail Efremov <sem@altlinux.org> 4.16.1-alt1
 - Updated to 4.16.1.
 
