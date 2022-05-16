@@ -1,8 +1,8 @@
 %define rname breeze-gtk
 
 Name: plasma5-%rname-education
-Version: 5.22.5
-Release: alt3
+Version: 5.24.5
+Release: alt1
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -28,6 +28,7 @@ Summary: %summary
 #Requires: gtk-engines-pixmap
 Provides: gtk2-theme-breeze = %version-%release
 Provides: gtk3-theme-breeze = %version-%release
+Provides: gtk4-theme-breeze = %version-%release
 %description -n gtk-theme-breeze-education
 %{description}
 
@@ -54,6 +55,9 @@ mv %buildroot%_datadir/themes/Breeze-{Dark,Education-dark}
 %_datadir/themes/Breeze-Education-dark
 
 %changelog
+* Mon May 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt1
+- new version
+
 * Wed Jan 26 2022 Andrey Cherepanov <cas@altlinux.org> 5.22.5-alt3
 - Rename Breeze-Dark-Education to Breeze-Education-dark.
 - Use Breeze-Education-dark as default dark theme for Breeze-Education.
