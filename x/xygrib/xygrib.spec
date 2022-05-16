@@ -2,7 +2,7 @@
 
 Name: xygrib
 Version: 1.2.6
-Release: alt3
+Release: alt4
 
 Summary: Visualisation of meteo data from files in GRIB formats
 
@@ -16,6 +16,7 @@ Patch1: XyGrib-1.2.6-71e6ce91da79.diff
 Patch2: XyGrib-1.2.6-c3fd4c5b0a41.diff
 Patch3: XyGrib-1.2.6-Qt-5.15.patch
 Patch4: XyGrib-1.2.6-openjpeg-2.4.patch
+Patch5: XyGrib-1.2.6-openjpeg-2.5.patch
 
 Requires: fonts-ttf-liberation
 Requires: %name-data = %version-%release
@@ -51,6 +52,7 @@ home page: http://www.geonames.org/
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 # -DNO_UPDATE=1 deactivates XyGrib internal SW update
@@ -66,7 +68,7 @@ home page: http://www.geonames.org/
 
 #cd BUILD
 #make install DESTDIR=%buildroot
-%cmakeinstall_std
+%cmake_install
 
 mkdir %buildroot/%_bindir
 mv %buildroot/%_datadir/openGribs/XyGrib/%binname %buildroot/%_bindir/%binname
@@ -88,6 +90,9 @@ find %buildroot \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 %_datadir/openGribs
 
 %changelog
+* Mon May 16 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt4
+- fixed build with openjpeg 2.5 (XyGrib-1.2.6-openjpeg-2.5.patch)
+
 * Sat Apr 10 2021 Sergey Y. Afonin <asy@altlinux.org> 1.2.6-alt3
 - fixed build with openjpeg 2.4 (XyGrib-1.2.6-openjpeg-2.4.patch)
 
