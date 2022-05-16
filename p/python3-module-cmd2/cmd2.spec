@@ -1,11 +1,11 @@
-%def_with docs
-%def_enable check
-
 %define _unpackaged_files_terminate_build 1
 %define oname cmd2
 
+%def_with docs
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.3.3
+Version: 2.4.1
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -33,7 +33,7 @@ Buildrequires: python3-module-colorama
 BuildRequires: python3-module-pyperclip
 %endif
 
-%if_enabled check
+%if_with check
 BuildRequires: pytest3
 BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-pytest-cov
@@ -118,6 +118,9 @@ pytest3
 %endif
 
 %changelog
+* Mon May 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt1
+- Automatically updated to 2.4.1.
+
 * Tue Nov 30 2021 Grigory Ustinov <grenka@altlinux.org> 2.3.3-alt1
 - Automatically updated to 2.3.3.
 
