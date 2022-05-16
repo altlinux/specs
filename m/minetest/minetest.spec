@@ -5,7 +5,7 @@
 
 Name: minetest
 Version: 5.5.0
-Release: alt2
+Release: alt3
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -20,7 +20,6 @@ URL: https://www.minetest.net
 # wget https://raw.github.com/RussianFedora/minetest/fedora/minetest.logrotate
 # wget https://raw.github.com/RussianFedora/minetest/fedora/minetest.README
 Source0: %name-%version.tar.gz
-Source1: %{name}.desktop
 Source2: %{name}.service
 Source3: %{name}.rsyslog
 Source4: %{name}.logrotate
@@ -117,9 +116,6 @@ rm -rf lib/jsoncpp lib/lua lib/gmp
 %install
 %ninja_install
 
-# Add desktop file
-install -D -m 0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
-
 # Systemd unit file
 mkdir -p %buildroot%_unitdir
 cp -p %SOURCE2 %buildroot%_unitdir
@@ -196,6 +192,9 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Mon May 16 2022 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt3
+- Remove duplicated desktop file (ALT #42759).
+
 * Tue Feb 08 2022 Ilya Mashkin <oddity@altlinux.ru> 5.5.0-alt2
 - fix build on e2k
 
