@@ -3,8 +3,9 @@
 %def_disable clang
 
 Name: deepin-dock
-Version: 5.5.27
+Version: 5.5.9.1
 Release: alt1
+Epoch: 1
 Summary: Deepin desktop-environment - Dock module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -12,6 +13,7 @@ Url: https://github.com/linuxdeepin/dde-dock
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: deepin-dock-5.5.9.1-upstream-fix-undefined-elfs.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -54,6 +56,7 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
+%patch -p1
 
 sed -i '/TARGETS/s|lib/|%_lib/|' plugins/*/CMakeLists.txt
 sed -i 's|${prefix}/lib/@HOST_MULTIARCH@|%_libdir|' dde-dock.pc.in
@@ -92,13 +95,12 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_sysconfdir/%repo/indicator/keybord_layout.json
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/apps/
-%dir %_datadir/dsg/apps/org.deepin.dde.dock/
-%dir %_datadir/dsg/apps/org.deepin.dde.dock/configs/
-%_datadir/dsg/apps/org.deepin.dde.dock/configs/org.deepin.dde.dock.json
-%_datadir/dsg/apps/org.deepin.dde.dock/configs/org.deepin.dde.dock.plugin.power.json
-%dir %_datadir/dsg/apps/org.deepin.dde.control-center/
-%dir %_datadir/dsg/apps/org.deepin.dde.control-center/configs/
-%_datadir/dsg/apps/org.deepin.dde.control-center/configs/org.deepin.dde.dock.plugin.json
+%dir %_datadir/dsg/apps/dde-control-center/
+%dir %_datadir/dsg/apps/dde-control-center/configs/
+%_datadir/dsg/apps/dde-control-center/configs/dde.dock.plugin.dconfig.json
+%dir %_datadir/dsg/apps/dde-dock/
+%dir %_datadir/dsg/apps/dde-dock/configs/
+%_datadir/dsg/apps/dde-dock/configs/com.deepin.dde.dock.dconfig.json
 %_libdir/dde-control-center/modules/libdcc-dock-plugin.so
 
 %files devel
@@ -108,6 +110,12 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Mon May 16 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.5.9.1-alt1
+- 5.5.9.1.
+- Upstream:
+  + Fixed window preview.
+  + Fixed undefined elfs.
+
 * Thu May 12 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.27-alt1
 - New version (5.5.27).
 
