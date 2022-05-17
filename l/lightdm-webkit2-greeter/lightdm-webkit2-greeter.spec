@@ -1,6 +1,6 @@
 Name:     lightdm-webkit2-greeter
 Version:  3.4.1
-Release:  alt4
+Release:  alt5
 
 Summary:  A modern, visually appealing greeter for LightDM.
 License:  GPL-3.0
@@ -15,6 +15,7 @@ Requires: lightdm
 Provides: lightdm-greeter
 
 Requires: python3-module-ruamel-yaml python3-module-PyQt5 python3-module-PyQtWebEngine python3-module-pygobject3 liblightdm-gobject 
+Requires: accountsservice
 
 Source:   %name-%version.tar
 Source1:  %name.conf
@@ -30,7 +31,7 @@ Patch2: lightdm-webkit2-greeter-3.4.1-opt.patch
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 
 
-# Automatically added by buildreq on Mon May 09 2022
+# Automatically added by buildreq on Mon May 16 2022
 # optimized out: libgpg-error libqt5-core libqt5-xml libxcb-devel pkg-config python3 python3-base python3-module-PyQt5 python3-module-PyQt5-sip sh4 xorg-proto-devel
 BuildRequires: libX11-devel python3-module-PyQt5-devel rsync zsh
 
@@ -100,6 +101,9 @@ install -m 644 %SOURCE1 %buildroot%_sysconfdir/lightdm/
 %doc *.md
 
 %changelog
+* Mon May 16 2022 Hihin Ruslan <ruslandh@altlinux.ru> 3.4.1-alt5
+- Add Requres accountsservice, thanks zerg@
+
 * Sun May 15 2022 Hihin Ruslan <ruslandh@altlinux.ru> 3.4.1-alt4
 - Added Spec fix by aris@, thanks to him
 
