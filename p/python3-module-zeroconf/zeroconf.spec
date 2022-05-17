@@ -1,5 +1,5 @@
 Name: python3-module-zeroconf
-Version: 0.38.4
+Version: 0.38.6
 Release: alt1
 
 Summary: Pure Python Multicast DNS Service Discovery Library
@@ -31,6 +31,9 @@ modified by William McBrine (https://github.com/wmcbrine/pyzeroconf).
 %python3_sitelibdir/zeroconf-%version-*-info
 
 %changelog
+* Tue May 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.38.6-alt1
+- 0.38.6 released
+
 * Tue Mar 29 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.38.4-alt1
 - 0.38.4 released
 
