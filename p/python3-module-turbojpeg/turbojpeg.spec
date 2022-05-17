@@ -1,5 +1,5 @@
 Name: python3-module-turbojpeg
-Version: 1.6.5
+Version: 1.6.6
 Release: alt1
 
 Summary: A Python wrapper of libjpeg-turbo for decoding and encoding JPEG image.
@@ -30,6 +30,9 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/PyTurboJPEG-%version-*-info
 
 %changelog
+* Tue May 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.6-alt1
+- 1.6.6 released
+
 * Wed Feb 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.5-alt1
 - 1.6.5 released
 
