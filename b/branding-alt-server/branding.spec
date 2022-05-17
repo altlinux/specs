@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -55,7 +55,9 @@ Summary(ru_RU.UTF-8): Тема для экрана выбора варианто
 License: GPLv2+
 
 Requires(pre):    coreutils
-Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
+Provides: design-bootloader-system-%theme = %EVR
+Provides: design-bootloader-livecd-%theme = %EVR
+Provides: design-bootloader-%theme = %EVR
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme
 %branding_add_conflicts %flavour bootloader
 
@@ -76,7 +78,7 @@ Summary(ru_RU.UTF-8): Тема для экрана загрузки для ди�
 License:  Distributable
 Group:    System/Configuration/Boot and Init
 BuildArch: noarch
-Provides: plymouth-theme-%theme
+Provides: plymouth-theme-%theme = %EVR
 Requires: plymouth-plugin-script
 Requires(pre):   plymouth
 
@@ -96,8 +98,11 @@ Summary(ru_RU.UTF-8): Тема для "Центра управления сис�
 License: GPL
 Group: System/Configuration/Other
 BuildArch: noarch
-Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
-Provides: alterator-icons design-alterator design-alterator-%theme
+Provides: branding-alt-%theme-browser-qt = %EVR
+Provides: branding-altlinux-%theme-browser-qt = %EVR
+Provides: alterator-icons design-alterator
+Provides: design-alterator-%theme = %EVR
+Provides: design-alterator-browser-%theme = %EVR
 
 %branding_add_conflicts %flavour alterator
 Obsoletes: design-alterator-server design-alterator-desktop design-altertor-browser-desktop  design-altertor-browser-server branding-altlinux-backup-server-alterator
@@ -116,8 +121,7 @@ Summary(ru_RU.UTF-8): Тема для дистрибутива %distro_name_ru
 License: Different licenses
 Group: Graphics
 BuildArch: noarch
-Provides: design-graphics-%theme  branding-alt-%theme-graphics
-Obsoletes:  design-graphics-%theme
+Provides: design-graphics-%theme = %EVR
 Provides: design-graphics = %design_graphics_abi_major.%design_graphics_abi_minor.%design_graphics_abi_bugfix
 
 Requires(post,preun): alternatives >= 0.2
@@ -139,7 +143,7 @@ Summary:  %distro_name release file
 Summary(ru_RU.UTF-8): Описание дистрибутива %distro_name_ru
 License:  GPL
 Group:    System/Configuration/Other
-Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
+Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme = %EVR
 Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
 Requires: alt-os-release
@@ -286,7 +290,6 @@ fi
 %_sysconfdir/*-release
 %_prefix/lib/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
-%ghost %config(noreplace) %_sysconfdir/*-release
 
 %files notes
 %dir %data_cur_dir
@@ -310,6 +313,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue May 17 2022 Alexey Shabalin <shaba@altlinux.org> 10.1-alt2
+- add /etc/altlinux-release to package (fixed ALT#41741).
+- update Provides.
+
 * Tue Apr 19 2022 Paul Wolneykien <manowar@altlinux.org> 10.1-alt1
 - Lighten the background of list boxes (closes: 41514).
 - Fix: Don't specify extra horizontal margins for inputs in
