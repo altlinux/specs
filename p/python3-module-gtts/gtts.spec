@@ -1,5 +1,5 @@
 Name: python3-module-gtts
-Version: 2.2.3
+Version: 2.2.4
 Release: alt1
 
 Summary: Python interface with Google Translate's TTS API
@@ -31,6 +31,9 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/gTTS-%version-*-info
 
 %changelog
+* Tue May 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.4-alt1
+- 2.2.4 released
+
 * Fri Aug 06 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.3-alt1
 - 2.2.3 released
 
