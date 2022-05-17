@@ -6,14 +6,13 @@
 %endif
 
 Name: stress-ng
-Version: 0.13.03
+Version: 0.14.01
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
 License: GPL-2.0-only
-Url: http://kernel.ubuntu.com/~cking/stress-ng/
-Vcs: git://kernel.ubuntu.com/cking/stress-ng.git
-# Mirror Vcs: https://github.com/ColinIanKing/stress-ng
+Url: http://colinianking.github.io/stress-ng/
+Vcs: https://github.com/ColinIanKing/stress-ng/
 
 Source: %name-%version.tar
 
@@ -24,10 +23,14 @@ BuildRequires: libattr-devel
 BuildRequires: libbsd-devel
 BuildRequires: libcap-devel
 BuildRequires: libgcrypt-devel
+BuildRequires: libjpeg-devel
+BuildRequires: libjudy-devel
 BuildRequires: libkeyutils-devel
 BuildRequires: libkmod-devel
 BuildRequires: liblksctp-devel
+BuildRequires: liblksctp-devel
 BuildRequires: libseccomp-devel
+BuildRequires: libxxhash-devel
 BuildRequires: zlib-devel
 
 %description
@@ -36,7 +39,7 @@ ways. It was designed to exercise various physical subsystems
 of a computer as well as the various operating system kernel
 interfaces. Stress-ng features:
 
-* 250 stress tests
+* 280 stress tests
 * 80+ CPU specific stress tests that exercise floating point,
   integer, bit manipulation and control flow
 * over 20 virtual memory stress tests
@@ -67,18 +70,20 @@ sed -i '/STRESSORS/s/getrandom //g' debian/tests/lite-test
 sed -i '/STRESSORS/s/ cache / /g' debian/tests/lite-test
 
 banner lite-test
-SEGFAULT_SIGNALS="segv abrt" LD_PRELOAD=libSegFault.so time timeout -s6 300 \
-	make lite-test
+time timeout 300 make lite-test
 banner done
 
 %files
-%doc COPYING README
+%doc COPYING README.md mascot/stress-ng.svg
 %_bindir/stress-ng
 %_datadir/bash-completion/completions/stress-ng
 %_datadir/stress-ng
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Wed May 18 2022 Vitaly Chikunov <vt@altlinux.org> 0.14.01-alt1
+- Update to V0.14.01 (2022-05-05).
+
 * Fri Sep 17 2021 Vitaly Chikunov <vt@altlinux.org> 0.13.03-alt1
 - Update to V0.13.03 (2021-09-17).
 
