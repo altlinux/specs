@@ -1,10 +1,10 @@
 Name: python3-module-Pillow
-Version: 9.0.1
-Release: alt2
+Version: 9.1.1
+Release: alt1
 
 Summary: Python Imaging Library
 License: MIT
-Group: Development/Python
+Group: Development/Python3
 Url: https://pypi.python.org/pypi/Pillow/
 
 Source0: %name-%version-%release.tar
@@ -45,6 +45,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir python3 selftest.py
 %python3_sitelibdir/Pillow-%version-*-info
 
 %changelog
+* Tue May 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 9.1.1-alt1
+- 9.1.1 released
+
 * Sun Mar 06 2022 Anton Midyukov <antohami@altlinux.org> 9.0.1-alt2
 - rebuild with xcb
 
