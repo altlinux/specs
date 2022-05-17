@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 11.2.1
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -101,7 +101,7 @@ Url: https://gcc.gnu.org/
 # and changes interpackage dependencies to non-strict (>=);
 # this gcc is expected to be installable at stage 2.
 # NB: compat and precompat are mutually exclusive.
-%def_disable precompat
+%def_enable precompat
 %def_disable compat
 
 # For some architectures we do not want multilib support.
@@ -2212,6 +2212,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Tue May 10 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.2.1-alt3
+- Rebuilt in precompat mode to prepare for gcc12 build.
+
 * Thu Dec 02 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.2.1-alt2
 - Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
   + vendors/redhat/heads/gcc-11-branch
