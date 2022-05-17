@@ -1,6 +1,6 @@
 Name: rpmrebuild-arepo
 Version: 3.1.13
-Release: alt1
+Release: alt2
 
 Summary: biarch repackager for Sisyphus packages
 License: GPL
@@ -32,6 +32,9 @@ install -m755 arepo.sh %buildroot%_libexecdir/rpmrebuild/plugins/
 %_libexecdir/rpmrebuild/plugins/arepo.*
 
 %changelog
+* Tue May 17 2022 L.A. Kostis <lakostis@altlinux.ru> 3.1.13-alt2
+- add special handling for vulkan ICD configuration (closes #42676).
+
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.13-alt1
 - restore /usr/lib/wine packing (was deleted by mistake)
 
