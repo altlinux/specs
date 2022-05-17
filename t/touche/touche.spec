@@ -1,8 +1,8 @@
 %define sover 0
 
 Name: touche
-Version: 1.0.7
-Release: alt4
+Version: 2.0.5
+Release: alt1
 
 Summary: The desktop application to configure Touchegg
 
@@ -13,18 +13,13 @@ Url: https://github.com/JoseExposito/touche
 # Source-url: https://github.com/JoseExposito/touche/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
-# node_modules from npm install command
+# auto predownloaded node modules during update version with rpmgs from etersoft-build-utils
 Source1: %name-development-%version.tar
-
-# add soname to libtouch library
-Patch1: touche-1.0.7-alt-add-libtouche-soversion.patch
-
-# add russian translation
-Patch2: touche-1.0.7-alt-add-russian-translation.patch
 
 Requires: lib%name%sover = %EVR
 Requires: lib%name-gir = %EVR
 Requires: touchegg
+Requires: typelib(Adw) = 1
 
 BuildRequires: rpm-macros-nodejs
 BuildRequires: rpm-build-gir
@@ -85,8 +80,6 @@ GObject introspection devel data for the Touche
 %prep
 %setup -q -n %name-%version
 %setup -a 1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %meson
@@ -119,12 +112,16 @@ appstream-util validate-relax --nonet %buildroot%_datadir/appdata/com.github.jos
 %_libdir/libtouche.so
 
 %files -n lib%name-gir
-%_typelibdir/Touche-1.0.0.typelib
+%_typelibdir/*.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/Touche-1.0.0.gir
+%_girdir/*.gir
 
 %changelog
+* Mon May 16 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 2.0.5-alt1
+- new version (2.0.5) with rpmgs script
+- Removed unneeded patches (Accepted by upstream)
+
 * Mon Apr 04 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.0.7-alt4
 - Added touchegg to Requires
 
