@@ -1,4 +1,9 @@
-%def_enable check
+# fakechroot is currently broken on 32-bit arches
+%ifarch i586 armh
+    %def_disable check
+%else
+    %def_enable check
+%endif
 %def_with libarchive
 %def_without libimaevm
 %def_enable plugins
@@ -19,7 +24,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt32
+Release: alt33
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -317,7 +322,7 @@ rm lib/set.lo lib/librpm.la
 %ifnarch %e2k
 ls -l lib/.libs/set.gcda
 %else
-mv eprof.sum* lib
+mv eprof*.sum* lib
 %endif
 rm lib/set.lo lib/librpm.la
 %make_build -C lib set.lo CFLAGS="$set_c_cflags -fprofile-use"
@@ -571,6 +576,11 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Tue May 17 2022 Andrew Savchenko <bircoph@altlinux.org> 4.13.0.1-alt33
+- E2K: support new naming scheme for profile data files.
+- Disable tests for 32-bit arches until fakechroot is fixed to
+  handle new *_time64 syscalls on them.
+
 * Mon Apr 18 2022 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt32
 - pdeath_execute: Use post-update hook API if available.
 
