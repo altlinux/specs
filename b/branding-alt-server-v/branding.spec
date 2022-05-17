@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt2
+Release: alt3
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -215,9 +215,6 @@ make
 
 %install
 %makeinstall
-
-touch %buildroot%_sysconfdir/os-release
-
 find %buildroot -name \*.in -delete
 
 #bootloader
@@ -297,13 +294,9 @@ fi
 %_pixmapsdir/system-logo.png
 
 %files release
-%_sysconfdir/altlinux-release
-%_sysconfdir/fedora-release
-%_sysconfdir/redhat-release
-%_sysconfdir/system-release
+%_sysconfdir/*-release
 %_prefix/lib/os-release
 %_sysconfdir/buildreqs/packages/ignore.d/*
-%ghost %config(noreplace) %_sysconfdir/os-release
 
 %files notes
 %dir %data_cur_dir
@@ -327,6 +320,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue May 17 2022 Alexey Shabalin <shaba@altlinux.org> 10.1-alt3
+- not provides /etc/os-release
+
 * Wed Mar 30 2022 Andrew A. Vasilyev <andy@altlinux.org> 10.1-alt2
 - use locale.conf if systemd installed, no dependency on startup package
 
