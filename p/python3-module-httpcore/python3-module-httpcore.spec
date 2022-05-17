@@ -1,7 +1,7 @@
 %define  modulename httpcore
 
 Name:    python3-module-%modulename
-Version: 0.14.7
+Version: 0.15.0
 Release: alt1
 
 Summary: A minimal HTTP client
@@ -9,8 +9,6 @@ Summary: A minimal HTTP client
 License: BSD-3-Clause
 Group:   Development/Python3
 URL:     https://www.encode.io/httpcore/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/encode/httpcore/archive/%version.tar.gz
 Source:  %modulename-%version.tar
@@ -42,6 +40,7 @@ Some things HTTP Core does do:
 %prep
 %setup -n %modulename-%version
 sed -ri 's/,\s+"anyio==[^"]+"//' setup.py
+sed -ri '/h11/ s/,<[^,"]+//p' setup.py
 
 %build
 %python3_build
@@ -59,6 +58,9 @@ sed -ri 's/,\s+"anyio==[^"]+"//' setup.py
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Tue May 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.15.0-alt1
+- 0.15.0
+
 * Wed Feb 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.14.7-alt1
 - 0.14.7
 

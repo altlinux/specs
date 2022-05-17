@@ -2,14 +2,12 @@
 
 Name:    python3-module-%modulename
 Version: 0.22.0
-Release: alt1
+Release: alt2
 
 Summary: A next generation HTTP client for Python
 License: BSD-3-Clause
 Group:   Development/Python3
 URL:     https://www.python-httpx.org/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/encode/httpx/archive/%version.tar.gz
 Source:  %modulename-%version.tar
@@ -31,6 +29,7 @@ A 1.0 release is expected to be issued sometime around mid-2020.
 
 %prep
 %setup -n %modulename-%version
+sed -ri '/httpcore/ s/,<[^,"]+//p' setup.py
 
 %build
 %python3_build
@@ -43,6 +42,9 @@ A 1.0 release is expected to be issued sometime around mid-2020.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Tue May 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.22.0-alt2
+- drop upper bound on httpcore version
+
 * Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.22.0-alt1
 - 0.22.0
 
