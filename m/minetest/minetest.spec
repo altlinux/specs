@@ -4,8 +4,8 @@
 %define irrlichtmt_version 1.9.0mt4
 
 Name: minetest
-Version: 5.5.0
-Release: alt3
+Version: 5.5.1
+Release: alt1
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -192,6 +192,9 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Tue May 17 2022 Ilya Mashkin <oddity@altlinux.ru> 5.5.1-alt1
+- 5.5.1
+
 * Mon May 16 2022 Andrey Cherepanov <cas@altlinux.org> 5.5.0-alt3
 - Remove duplicated desktop file (ALT #42759).
 
