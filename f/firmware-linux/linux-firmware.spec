@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220509
+Version: 20220512
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,35 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue May 17 2022 Cronbuild Service <cronbuild@altlinux.org> 20220512-alt1
+- upstream changes (GIT 251d290):
+  + amdgpu: update beige goby firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update renoir firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update dimgrey cavefish firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update vega20 firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update yellow carp firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update vega12 firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update navy flounder firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update vega10 firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update raven2 firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update raven firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update sienna cichlid firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update green sardine firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update PCO firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update vangogh firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update navi14 firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update navi12 firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update navi10 firmware for 22.10 (thx Alex Deucher)
+  + amdgpu: update aldebaran firmware for 22.10 (thx Alex Deucher)
+  + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + mediatek: Update mt8192 SCP firmware (thx Tinghan Shen)
+
 * Mon May 09 2022 Cronbuild Service <cronbuild@altlinux.org> 20220509-alt1
 - upstream changes (GIT b19cbdc):
   + mediatek: Update mt8183 SCP firmware (thx Tinghan Shen)
