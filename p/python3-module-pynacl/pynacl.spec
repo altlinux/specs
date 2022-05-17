@@ -2,7 +2,7 @@
 
 %define modulename pynacl
 Name: python3-module-pynacl
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: Python binding to the Networking and Cryptography (NaCl) library
@@ -10,8 +10,6 @@ Summary: Python binding to the Networking and Cryptography (NaCl) library
 Url: https://github.com/pyca/pynacl
 License: Apache-2.0
 Group: Development/Python3
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 # Source-url: https://github.com/pyca/pynacl/archive/%version.tar.gz
 Source: %modulename-%version.tar
@@ -46,6 +44,9 @@ mv %buildroot/%python3_sitelibdir/nacl/_sodium.abi3.so %buildroot/%python3_sitel
 %python3_sitelibdir/*
 
 %changelog
+* Tue May 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0-alt1
+- 1.5.0 released
+
 * Fri Aug 06 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.0-alt1
 - 1.4.0 released
 
