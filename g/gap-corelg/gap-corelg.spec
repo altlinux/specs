@@ -1,14 +1,14 @@
 %define repo corelg
 
 Name: gap-corelg
-Version: 1.20
+Version: 1.56
 Release: alt1
 Summary: GAP: computation with real Lie groups
 License: GPL-2.0+
 Group: Sciences/Mathematics
-Url: http://users.monash.edu/~heikod/corelg
+Url: https://gap-packages.github.io/corelg/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/corelg-%version.tar.bz2
+Source: https://github.com/gap-packages/corelg/releases/download/v%version/corelg-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: rpm-macros-gap
@@ -32,5 +32,9 @@ semisimple Lie algebras.
 %gap_sitelib/%repo/*
 
 %changelog
+* Tue May 17 2022 Leontiy Volodin <lvol@altlinux.org> 1.56-alt1
+- 1.56.
+- Changed url tag.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 1.20-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).

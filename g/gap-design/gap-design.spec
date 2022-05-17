@@ -2,13 +2,13 @@
 
 Name: gap-design
 Summary: GAP: The Design Package for GAP
-Version: 1.6
+Version: 1.7
 Release: alt1
 License: GPL-2.0+
 Group: Sciences/Mathematics
-Url: http://designtheory.org/software/gap_design/
+Url: https://gap-packages.github.io/design/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/design1r6.tar.bz2
+Source: https://github.com/gap-packages/design/archive/%version/%repo-%version.tar.gz
 BuildArch: noarch
 
 BuildPreReq: rpm-macros-gap
@@ -33,5 +33,9 @@ studying block designs.
 %gap_sitelib/%repo/*
 
 %changelog
+* Tue May 17 2022 Leontiy Volodin <lvol@altlinux.org> 1.7-alt1
+- 1.7.
+- Changed url tag.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 1.6-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).

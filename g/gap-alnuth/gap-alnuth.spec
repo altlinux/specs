@@ -1,14 +1,14 @@
 %define repo alnuth
 
 Name: gap-alnuth
-Version: 3.1.0
+Version: 3.2.1
 Release: alt1
 Summary: GAP: Algebraic number theory and an interface to KANT
 License: GPL-2.0+
 Group: Sciences/Mathematics
-Url: http://www.icm.tu-bs.de/ag_algebra/software/Alnuth/
+Url: https://gap-packages.github.io/alnuth/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/alnuth-%version.tar.bz2
+Source: https://github.com/gap-packages/alnuth/releases/download/v%version/alnuth-%version.tar.gz
 
 BuildArch: noarch
 BuildRequires: rpm-macros-gap
@@ -38,5 +38,9 @@ over number fields.
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Tue May 17 2022 Leontiy Volodin <lvol@altlinux.org> 3.2.1-alt1
+- 3.2.1.
+- Changed url tag.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 3.1.0-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for thr spec).

@@ -2,13 +2,13 @@
 
 Name: gap-ctbllib
 Summary: GAP Character Table Library
-Version: 1.2.2
+Version: 1.3.4
 Release: alt1
 License: GPL-3.0+
 Group: Sciences/Mathematics
-Url: http://www.math.rwth-aachen.de/~Thomas.Breuer/ctbllib/
+Url: https://www.math.rwth-aachen.de/~Thomas.Breuer/ctbllib/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/ctbllib-1r2p2.tar.bz2
+Source: %url/ctbllib-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: rpm-macros-gap
@@ -35,5 +35,8 @@ The package contains the GAP Character Table Library.
 %gap_sitelib/%repo/*
 
 %changelog
+* Tue May 17 2022 Leontiy Volodin <lvol@altlinux.org> 1.3.4-alt1
+- New version (1.3.4) with rpmgs script.
+
 * Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 1.2.2-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).

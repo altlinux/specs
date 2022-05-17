@@ -1,10 +1,10 @@
 %define repo cohomolo
 
 Name: gap-cohomolo
-Version: 1.6.9
+Version: 1.6.10
 Release: alt1
 Summary: GAP: Cohomology groups of finite groups on finite modules
-License: GPL-2.0-only
+License: GPL-2.0
 Group: Sciences/Mathematics
 Url: https://gap-packages.github.io/cohomolo
 
@@ -44,5 +44,8 @@ fdupes %buildroot%_prefix
 %gap_sitearch/%repo-%version/*
 
 %changelog
+* Tue May 17 2022 Leontiy Volodin <lvol@altlinux.org> 1.6.10-alt1
+- 1.6.10.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 1.6.9-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).

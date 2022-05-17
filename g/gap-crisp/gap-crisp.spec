@@ -1,7 +1,7 @@
 %define repo crisp
 
 Name: gap-crisp
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 Summary: GAP: Computing with Radicals, Injectors, Schunck classes and Projectors
 License: BSD-2-Clause
@@ -38,5 +38,8 @@ belonging to a given group class.
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Tue May 17 2022 Leontiy Volodin <lvol@altlinux.org> 1.4.5-alt1
+- New version (1.4.5) with rpmgs script.
+
 * Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 1.4.4-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).

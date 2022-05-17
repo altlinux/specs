@@ -1,14 +1,14 @@
 %define repo GAPDoc
 
 Name: gap-gapdoc
-Version: 1.6.2
+Version: 1.6.5
 Release: alt1
 Summary: GAP: package for GAP Documentation
-License: GPL-2.0-or-later
+License: GPL-2.0+
 Group: Sciences/Mathematics
-Url: http://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc/
+Url: https://www.gap-system.org/Packages/gapdoc.html
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/GAPDoc-%version.tar.bz2
+Source: https://github.com/frankluebeck/GAPDoc/archive/%version/%repo-relv%version.tar.gz
 
 BuildArch: noarch
 BuildRequires: fdupes
@@ -23,7 +23,7 @@ producing text, PDF or HTML versions of such documents, with
 hyperlinks, if possible.
 
 %prep
-%setup -n GAPDoc-%version
+%setup -n GAPDoc-relv%version
 
 %build
 %install
@@ -31,9 +31,13 @@ hyperlinks, if possible.
 fdupes %buildroot%_prefix
 
 %files -f %name.files
-%dir %gap_sitelib/%repo-%version/
-%gap_sitelib/%repo-%version/*
+%dir %gap_sitelib/%repo-relv%version/
+%gap_sitelib/%repo-relv%version/*
 
 %changelog
+* Tue May 17 2022 Leontiy Volodin <lvol@altlinux.org> 1.6.5-alt1
+- 1.6.5.
+- Changed url tag.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 1.6.2-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).

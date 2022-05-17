@@ -1,14 +1,14 @@
 %define repo atlasrep
 
 Name: gap-atlasrep
-Version: 1.5.1
+Version: 2.1.2
 Release: alt1
 Summary: GAP: Interface to the Atlas of Group Representations
 License: GPL-3.0+
 Group: Sciences/Mathematics
-Url: http://nickerson.org.uk/groups
+Url: http://www.math.rwth-aachen.de/homes/Thomas.Breuer/atlasrep/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/atlasrep1r5p1.tar.bz2
+Source: http://www.math.rwth-aachen.de/~Thomas.Breuer/atlasrep/atlasrep-%version.tar.gz
 
 BuildArch: noarch
 BuildPreReq: fdupes
@@ -38,5 +38,9 @@ fdupes %buildroot%_prefix
 %gap_sitelib/%repo/*
 
 %changelog
+* Tue May 17 2022 Leontiy Volodin <lvol@altlinux.org> 2.1.2-alt1
+- 2.1.2.
+- Changed url tag.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 1.5.1-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).

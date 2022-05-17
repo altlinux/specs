@@ -1,14 +1,14 @@
 %define repo FactInt
 
 Name: gap-factint
-Version: 1.6.2
+Version: 1.6.3
 Release: alt1
 Summary: GAP: Advanced Methods for Factoring Integers
 License: GPL-2.0-or-later
 Group: Sciences/Mathematics
-Url: http://www.cip.mathematik.uni-stuttgart.de/~kohlsn/factint.html
+Url: https://gap-packages.github.io/FactInt/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/FactInt-%version.tar.bz2
+Source: https://github.com/gap-packages/FactInt/releases/download/v%version/FactInt-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: rpm-macros-gap
@@ -40,5 +40,9 @@ integers of the form b^k +/- 1.
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Tue May 17 2022 Leontiy Volodin <lvol@altlinux.org> 1.6.3-alt1
+- 1.6.3.
+- Changed url tag.
+
 * Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 1.6.2-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
