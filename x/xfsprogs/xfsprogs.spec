@@ -5,7 +5,7 @@
 %endif
 
 Name: xfsprogs
-Version: 5.15.0
+Version: 5.16.0
 Release: alt1
 
 Summary: Utilities for managing the XFS filesystem
@@ -147,6 +147,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %endif
 
 %changelog
+* Tue May 17 2022 Anton Farygin <rider@altlinux.ru> 5.16.0-alt1
+- 5.15.0 -> 5.16.0
+
 * Mon Apr 11 2022 Anton Farygin <rider@altlinux.ru> 5.15.0-alt1
 - 5.14.2 -> 5.15.0
 
