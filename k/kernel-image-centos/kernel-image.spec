@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 90
+%define centos_release 94
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,40 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed May 18 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.94-alt1.el9
+- Updated to kernel-5.14.0-94.el9:
+  + arch/arm64: Fix topology initialization for core scheduling
+  + arm64: enable CONFIG_MEMORY_HOTREMOVE
+  + arm64: Fix KPTI disabling on ThunderX
+  + CNB: eth: fwnode: remove the addr len from mac helpers
+  + CNB: rebase/update devlink for RHEL 9.1
+  + dm integrity: fix memory corruption when tag_size is less than digest size
+  + drivers/char/random.c: Update for kernel-rt
+  + efi: Allow to enable EFI runtime services by default on RT
+  + ipvlan/macvlan: phase-1 updates for 9.1
+  + locking: Backport upstream v5.18 locking/rcu commits for kernel-rt
+  + md: fix NULL pointer deref with nowait but no mddev->queue
+  + mptcp: rebase code to 5.18-net-next
+  + net: backport core fixes from upstream
+  + netfilter: phase 1 backports from upstream
+  + netfilter: revert "kernel: lack of port sanity checking in natd and netfilter leads to exploit of OpenVPN clients"
+  + NFSv4 only print the label when its queried
+  + ntb_hw_amd: Add NTB PCI ID for new gen CPU
+  + nvme: tp-8010 support
+  + post upstream v5.14 backports for kprobes and arm64
+  + scsi: target: update LIO to the latest version
+  + xfs: punch out data fork delalloc blocks on COW writeback failure
+
+* Sat May 14 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.92-alt1.el9
+- Updated to kernel-5.14.0-92.el9:
+  + aarch64: Enable NXP i.MX8M SoCs
+  + ahci: update to latest
+  + genirq/affinity: Consider that CPUs on nodes can be unbalanced
+  + platform/x86: Add AMD system management interface
+  + RDMA: update to v5.18-rc6
+  + SCSI updates for 9.1
+  + update qedf driver to latest upstream
+
 * Fri May 13 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.90-alt1.el9
 - Updated to kernel-5.14.0-90.el9:
   + bareudp: use ipv6_mod_enabled to check if IPv6 enabled
