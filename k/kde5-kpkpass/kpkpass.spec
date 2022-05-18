@@ -4,7 +4,7 @@
 %define libkpimpkpass libkpimpkpass%sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init altplace
 
@@ -58,28 +58,28 @@ Obsoletes: libkpimpkpass < %EVR
 
 %install
 %K5install
-mv %buildroot/%_K5xdgmime/application-vnd-apple-pkpass.xml \
-    %buildroot/%_K5xdgmime/kde5-application-vnd-apple-pkpass.xml
+#mv %buildroot/%_K5xdgmime/application-vnd-apple-pkpass.xml \
+#    %buildroot/%_K5xdgmime/kde5-application-vnd-apple-pkpass.xml
 %find_lang %name --all-name
 
 %files common -f %name.lang
 %doc LICENSES/* README.md
-#%config(noreplace) %_K5xdgconf/*.*categories
 %_datadir/qlogging-categories5/*.*categories
-%_K5xdgmime/*.xml
+#%_K5xdgmime/*.xml
 
 %files devel
-#%_K5inc/kpkpass_version.h
 %_K5inc/KPim/KPkPass/
 %_K5link/lib*.so
 %_K5lib/cmake/KPimPkPass/
-#%_K5archdata/mkspecs/modules/qt_kpkpass.pri
 
 %files -n %libkpimpkpass
 %_K5lib/libKPimPkPass.so.%sover
 %_K5lib/libKPimPkPass.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

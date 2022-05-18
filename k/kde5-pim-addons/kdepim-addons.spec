@@ -15,9 +15,10 @@
 %define libfolderconfiguresettings libfolderconfiguresettings%sover
 %define libkmailconfirmbeforedeleting libkmailconfirmbeforedeleting%sover
 %define libscamconfiguresettings libscamconfiguresettings%sover
+%define libopenurlwithconfigure libopenurlwithconfigure%sover
 
 Name: kde5-pim-addons
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init
 
@@ -203,6 +204,13 @@ Requires: %name-common
 %description -n %libscamconfiguresettings
 %name library
 
+%package -n %libopenurlwithconfigure
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common
+%description -n %libopenurlwithconfigure
+%name library
+
 %prep
 %setup -n %rname-%version
 #%patch1 -p1
@@ -234,8 +242,7 @@ Requires: %name-common
 %files kmail
 %_K5bin/kmail_*.sh
 %_K5plug/kmail/
-%_K5plug/mailtransport/mailtransport_sendplugin.so
-#%_K5data/kmail2/pics/*.*
+%_K5plug/kf5/mailtransport/
 
 %files korganizer
 %_K5plug/korg_*.so
@@ -267,7 +274,6 @@ Requires: %name-common
 %files -n %libkmailmarkdown
 %_K5lib/libkmailmarkdown.so.%sover
 %_K5lib/libkmailmarkdown.so.*
-
 %files -n %libshorturlpluginprivate
 %_K5lib/libshorturlpluginprivate.so.%sover
 %_K5lib/libshorturlpluginprivate.so.*
@@ -301,9 +307,15 @@ Requires: %name-common
 %files -n %libdkimverifyconfigure
 %_K5lib/libdkimverifyconfigure.so.%sover
 %_K5lib/libdkimverifyconfigure.so.*
+%files -n %libopenurlwithconfigure
+%_K5lib/libopenurlwithconfigure.so.%sover
+%_K5lib/libopenurlwithconfigure.so.*
 
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

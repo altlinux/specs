@@ -1,7 +1,7 @@
 %define rname akonadi-calendar
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init altplace
 
@@ -70,10 +70,14 @@ KF5 library
 %doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
 
+%files
+%_K5start/org.kde.kalendarac.desktop
+%_K5bin/kalendarac
+%_K5dbus_srv/org.kde.kalendarac.service
+%_K5notif/kalendarac.notifyrc
+
 %files devel
-%_K5inc/akonadi-calendar_version.h
-%_K5inc/Akonadi/Calendar/
-%_K5inc/akonadi/calendar/
+%_K5inc/AkonadiCalendar/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5AkonadiCalendar/
 %_K5archdata/mkspecs/modules/qt_AkonadiCalendar.pri
@@ -84,6 +88,9 @@ KF5 library
 %_datadir/akonadi5/plugins/serializer/akonadi_serializer_kcalcore.desktop
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

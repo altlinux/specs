@@ -4,7 +4,7 @@
 %define libkf5gravatar libkf5gravatar%sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init
 
@@ -20,15 +20,15 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules kde5-kcalcore-devel kde5-kcontacts-devel kde5-kimap-devel kde5-kmime-devel kde5-pimcommon-devel kde5-pimlibs-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel kf5-kdesignerplugin-devel kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libsasl2-devel python-module-google python3-dev rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules
-BuildRequires: libsasl2-devel
-BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-kimap-devel kde5-kmime-devel kde5-pimcommon-devel
-BuildRequires: boost-devel kde5-akonadi-devel kde5-akonadi-contacts-devel
+BuildRequires: libsasl2-devel boost-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support-devel
 BuildRequires: kf5-kdesignerplugin-devel kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
 BuildRequires: kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-kimap-devel kde5-kmime-devel kde5-pimcommon-devel
+BuildRequires: kde5-akonadi-devel kde5-akonadi-contacts-devel kde5-kpimtextedit-devel
 
 %description
 %summary.
@@ -71,9 +71,7 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/gravatar_version.h
 %_K5inc/Gravatar/
-%_K5inc/gravatar/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Gravatar/
 %_K5archdata/mkspecs/modules/qt_Gravatar.pri
@@ -83,6 +81,9 @@ KF5 library
 %_K5lib/libKF5Gravatar.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

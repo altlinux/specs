@@ -6,7 +6,7 @@
 %define libkorganizerprivate libkorganizerprivate%pim_sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -17,7 +17,7 @@ License: GPLv2+ / LGPLv2+
 
 Provides: kde5-pim-korganizer = %EVR
 Obsoletes: kde5-pim-korganizer < %EVR
-Requires: kde5-akonadi kde5-pim-runtime kde5-akonadi-search
+Requires: kde5-akonadi kde5-pim-runtime kde5-akonadi-search kde5-akonadi-calendar
 
 Source: %rname-%version.tar
 
@@ -85,7 +85,7 @@ Requires: %name-common = %version-%release
 
 %install
 %K5install
-%K5install_move data korgac korganizer kontact kconf_update knsrcfiles
+%K5install_move data korganizer kontact kconf_update knsrcfiles
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -95,7 +95,6 @@ Requires: %name-common = %version-%release
 %_datadir/qlogging-categories5/*.*categories
 
 %files
-%_K5bin/korgac
 %_K5bin/korganizer
 %_K5plug/*korganizer*.so
 %_K5plug/pim/kcms/korganizer/
@@ -103,32 +102,17 @@ Requires: %name-common = %version-%release
 %_K5plug/pim/kcms/summary/kcmsdsummary.so
 %_K5plug/pim/kcms/summary/kcmtodosummary.so
 %_K5plug/kontact5/kontact_*.so
-%_K5start/org.kde.korgac.desktop
 %_K5xdgapp/*korganizer*.desktop
 %_K5data/korganizer/
 %_K5data/knsrcfiles/*korganizer*
 %_K5cfg/*korganizer*
-%_K5conf_up/*korganizer*
-%_K5srv/kontact/korganizerplugin.desktop
-%_K5srv/korganizer_*.desktop
-%_K5srv/kcmapptsummary.desktop
-%_K5srv/kcmsdsummary.desktop
-%_K5srv/kcmtodosummary.desktop
-%_K5srv/kontact/journalplugin.desktop
-%_K5srv/kontact/specialdatesplugin.desktop
-%_K5srv/kontact/todoplugin.desktop
 %_K5icon/*/*/apps/korganizer.*
 %_K5icon/*/*/apps/korg-*.*
 %_K5icon/*/*/apps/quickview.*
-%_K5icon/*/*/apps/*korgac*.*
 %_K5dbus_srv/*korga*.service
 
 %files devel
-#%_K5inc/korganizer_version.h
-#%_K5inc/korganizer/
 %_K5link/lib*.so
-#%_K5lib/cmake/korganizer
-#%_K5archdata/mkspecs/modules/qt_korganizer.pri
 %_K5dbus_iface/org.kde.*.xml
 
 %files -n %libkorganizer_core
@@ -142,6 +126,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkorganizerprivate.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

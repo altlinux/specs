@@ -5,7 +5,7 @@
 %define libnotesharedprivate libnotesharedprivate%pim_sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -90,12 +90,10 @@ Requires: %name-common = %version-%release
 %_K5plug/kontact5/*knotes*.so
 %_K5xdgapp/org.kde.*note*.desktop
 %_K5data/*note*/
-#%_K5data/kontact/ksettingsdialog/*note*
 %_K5data/knsrcfiles/*note*
-#%_K5cf_upd/*note*
 %_K5xmlgui/*note*/
-%_K5srv/kontact/*note*.desktop
-%_K5srv/*note*.desktop
+#%_K5srv/kontact/*note*.desktop
+#%_K5srv/*note*.desktop
 %_K5icon/*/*/apps/*note*.*
 %_K5icon/*/*/actions/*note*.*
 %_K5notif/*note*.notifyrc
@@ -117,6 +115,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libnotesharedprivate.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

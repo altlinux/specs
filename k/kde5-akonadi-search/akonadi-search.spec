@@ -1,7 +1,7 @@
 %define rname akonadi-search
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init altplace
 
@@ -80,7 +80,7 @@ KF5 library
 %setup -n %rname-%version
 
 # disable krunner by default
-sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' runner/plasma-krunner-pimcontacts.desktop
+sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' runner/plasma-krunner-pimcontacts.desktop*
 
 %build
 %K5build
@@ -98,16 +98,13 @@ sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefau
 %_K5bin/*
 %_K5plug/akonadi/*.so
 %_K5plug/kf5/krunner/*krunner*.so
-%_K5plug/*.so
-%_K5srv/*.desktop
+%_K5plug/kf5/krunner/kcms/*krunner*.so
 %_datadir/akonadi5/agents/*.desktop
 
 %files devel
-%_K5inc/akonadi_search_version.h
 %_K5inc/AkonadiSearch/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5AkonadiSearch/
-#%_K5archdata/mkspecs/modules/qt_Akonadi-Search.pri
 
 %files -n libkf5akonadisearchxapian
 %_K5lib/libKF5AkonadiSearchXapian.so.*
@@ -119,6 +116,9 @@ sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefau
 %_K5lib/libKF5AkonadiSearchDebug.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

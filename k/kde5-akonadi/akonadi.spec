@@ -3,7 +3,7 @@
 %def_enable tools
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init altplace
 
@@ -197,6 +197,9 @@ for f in %buildroot/%_datadir/akonadi5/*.xs* ; do
     ln -s `relative %_datadir/akonadi5/$fname %_K5data/akonadi5/$fname` %buildroot/%_K5data/akonadi5/$fname
 done
 
+# cleanup
+rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
+
 %find_lang %name --with-kde --all-name
 
 
@@ -257,7 +260,7 @@ done
 %_K5plug/designer/akonadiwidgets.so
 %_K5inc/akonadi_version.h
 %_K5inc/Akonadi*/
-%_K5inc/akonadi/
+#%_K5inc/akonadi/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Akonadi/
 %_K5dbus_iface/*.Akonadi.*.xml
@@ -265,7 +268,6 @@ done
 %_datadir/akonadi5/*.xs*
 %_K5data/akonadi/*.xs*
 %_K5data/akonadi5/*.xs*
-%_K5data/kdevappwizard/templates/*akonadi*
 
 %files -n libkf5akonadiprivate
 %_K5lib/libKF5AkonadiPrivate.so.5
@@ -287,6 +289,9 @@ done
 %endif
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

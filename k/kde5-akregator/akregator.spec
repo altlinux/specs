@@ -5,7 +5,7 @@
 %define libakregatorprivate libakregatorprivate%sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -95,12 +95,10 @@ Requires: %name-common = %version-%release
 %_K5xdgapp/org.kde.akregator.desktop
 %_K5data/akregator/
 %_K5cfg/*akregator*.kcfg
-#%_K5cf_upd/*akregator*
 %_K5notif/akregator.notifyrc
-%_K5srv/kontact/akregatorplugin.desktop
+#%_K5srv/kontact/akregatorplugin.desktop
 %_K5srv/akregator_*.desktop
 %_K5icon/*/*/apps/akregator*.*
-#%_K5data/kontact/ksettingsdialog/*akregator*
 
 #%files devel
 #%_K5inc/akregator_version.h
@@ -117,6 +115,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libakregatorprivate.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname ktnef
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init altplace
 
@@ -71,7 +71,7 @@ rm -rf %buildroot/%_K5doc/*/ktnef
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/ktnef_version.h
+#%_K5inc/ktnef_version.h
 %_K5inc/KTNEF/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Tnef/
@@ -81,6 +81,9 @@ rm -rf %buildroot/%_K5doc/*/ktnef
 %_K5lib/libKF5Tnef.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

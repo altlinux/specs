@@ -6,8 +6,8 @@
 %endif
 
 Name: kde5-%rname
-Version: 21.12.3
-Release: alt2
+Version: 22.04.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -67,6 +67,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Thu Mar 24 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt2
 - using not_qt5_qtwebengine_arches macro
 

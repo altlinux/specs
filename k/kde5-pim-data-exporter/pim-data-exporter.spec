@@ -4,7 +4,7 @@
 %define libpimdataexporterprivate libpimdataexporterprivate%pim_sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -26,7 +26,7 @@ BuildRequires: boost-devel libassuan-devel libsasl2-devel
 BuildRequires: libqtkeychain-qt5-devel
 BuildRequires: kde5-libkleo-devel
 BuildRequires: kde5-akonadi-calendar-devel kde5-akonadi-contacts-devel kde5-akonadi-devel kde5-akonadi-mime-devel kde5-calendarsupport-devel
-BuildRequires: kde5-kalarmcal-devel kde5-kcalcore-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel
+BuildRequires: kde5-kcalcore-devel kde5-kcontacts-devel kde5-kidentitymanagement-devel
 BuildRequires: kde5-kimap-devel kde5-kmailtransport-devel kde5-kmime-devel kde5-kpimtextedit-devel kde5-libkdepim-devel
 BuildRequires: kde5-mailcommon-devel kde5-messagelib-devel kde5-pimcommon-devel kde5-akonadi-notes-devel
 BuildRequires: kf5-kdelibs4support-devel kf5-kdoctools-devel kf5-kio-devel kf5-kwallet-devel kf5-kholidays-devel
@@ -91,6 +91,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libpimdataexporterprivate.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

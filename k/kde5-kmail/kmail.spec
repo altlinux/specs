@@ -4,7 +4,7 @@
 %define libkmailprivate libkmailprivate%pim_sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -95,8 +95,8 @@ Requires: %name-common = %version-%release
 %_K5xdgapp/kmail_view.desktop
 %_K5data/kmail2/
 %_K5xmlgui/kontactsummary/*
-%_K5srv/kontact/*.desktop
-%_K5srv/*.desktop
+#%_K5srv/kontact/*.desktop
+#%_K5srv/*.desktop
 %_K5icon/*/*/apps/kmail.*
 %_K5notif/kmail2.notifyrc
 %_K5notif/akonadi_*_agent.notifyrc
@@ -119,6 +119,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libkmailprivate.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

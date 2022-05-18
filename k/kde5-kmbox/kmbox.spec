@@ -1,7 +1,7 @@
 %define rname kmbox
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init altplace
 
@@ -70,7 +70,6 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/kmbox_version.h
 %_K5inc/KMbox/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5Mbox/
@@ -80,6 +79,9 @@ KF5 library
 %_K5lib/libKF5Mbox.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

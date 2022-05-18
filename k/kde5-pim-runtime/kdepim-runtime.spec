@@ -14,8 +14,8 @@
 %endif
 
 Name: kde5-pim-runtime
-Version: 21.12.3
-Release: alt2
+Version: 22.04.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -42,7 +42,7 @@ BuildRequires: libqca-qt5-devel
 BuildRequires: libqtkeychain-qt5-devel
 BuildRequires: xsltproc libsasl2-devel boost-devel
 #BuildRequires: libkolab-devel
-BuildRequires: kde5-akonadi-calendar-devel kde5-kalarmcal-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kf5-kholidays-devel
+BuildRequires: kde5-akonadi-calendar-devel kde5-kcalcore-devel kde5-kcalutils-devel kde5-kcontacts-devel kf5-kholidays-devel
 BuildRequires: kde5-kidentitymanagement-devel kde5-kimap-devel kde5-kmailtransport-devel kde5-kmbox-devel kde5-kmime-devel kde5-kpimtextedit-devel
 BuildRequires: kde5-akonadi-devel kde5-akonadi-mime-devel kde5-akonadi-contacts-devel kde5-akonadi-notes-devel kde5-pimcommon-devel
 BuildRequires: kde5-libkgapi-devel kde5-libkdepim-devel kde5-kldap-devel kde5-grantleetheme-devel
@@ -114,18 +114,13 @@ KF5 library
 %setup -n %rname-%version
 
 %if_disabled qtwebengine
-sed -i 's|WebEngineWidgets||' CMakeLists.txt
-ls -1d  resources/*/CMakeLists.txt | \
-while read f; do
-    if grep -q WebEngine $f ; then
-	subd=`dirname $f`
-	rs=$(basename $subd)
-	sed -i "/add_subdirectory([[:space:]]${rs}[[:space:]])/d" resources/CMakeLists.txt
-	rm -rf $subd
-    fi
-done
+#sed -i 's|WebEngineWidgets||' CMakeLists.txt
 sed -i "/add_subdirectory([[:space:]]ews[[:space:]])/d" resources/CMakeLists.txt
 rm -rf resources/ews
+sed -i "/add_subdirectory([[:space:]]tomboynotes[[:space:]])/d" resources/CMakeLists.txt
+rm -rf resources/tomboynotes
+sed -i "/add_subdirectory([[:space:]]facebook[[:space:]])/d" resources/CMakeLists.txt
+rm -rf resources/facebook
 %endif
 
 %build
@@ -187,6 +182,9 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Thu Mar 24 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt2
 - using not_qt5_qtwebengine_arches macro
 

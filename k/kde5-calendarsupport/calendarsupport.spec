@@ -4,7 +4,7 @@
 %define libkf5calendarsupport libkf5calendarsupport%sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init
 
@@ -74,8 +74,7 @@ KF5 library
 %_K5srvtyp/*calendar*.desktop
 
 %files devel
-%_K5inc/calendarsupport_version.h
-%_K5inc/?alendar?upport/
+%_K5inc/CalendarSupport/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5CalendarSupport/
 %_K5archdata/mkspecs/modules/qt_CalendarSupport.pri
@@ -85,6 +84,9 @@ KF5 library
 %_K5lib/libKF5CalendarSupport.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

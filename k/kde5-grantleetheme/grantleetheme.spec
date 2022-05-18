@@ -4,7 +4,7 @@
 %define libkf5grantleetheme libkf5grantleetheme%sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init
 
@@ -67,9 +67,7 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/grantleetheme_version.h
 %_K5inc/GrantleeTheme/
-%_K5inc/grantleetheme/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5GrantleeTheme/
 %_K5archdata/mkspecs/modules/qt_GrantleeTheme.pri
@@ -82,6 +80,9 @@ KF5 library
 %_libdir/grantlee/5.?/*grantlee_*.so
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

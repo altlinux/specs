@@ -1,7 +1,7 @@
 %define rname kidentitymanagement
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init altplace
 
@@ -46,9 +46,16 @@ developing applications that use %name.
 
 %package -n libkf5identitymanagement
 Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
+Summary: %name library
+Requires: %name-common
 %description -n libkf5identitymanagement
+KF5 library
+
+%package -n libkf5identitymanagementwidgets
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common
+%description -n libkf5identitymanagementwidgets
 KF5 library
 
 
@@ -67,17 +74,21 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-%_K5inc/kidentitymanagement_version.h
-%_K5inc/KIdentityManagement/
+%_K5inc/KIdentityManagement*/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5IdentityManagement/
-%_K5archdata/mkspecs/modules/qt_KIdentityManagement.pri
+%_K5archdata/mkspecs/modules/qt_KIdentityManagement*.pri
 %_K5dbus_iface/*.IdentityManager.xml
 
 %files -n libkf5identitymanagement
 %_K5lib/libKF5IdentityManagement.so.*
+%files -n libkf5identitymanagementwidgets
+%_K5lib/libKF5IdentityManagementWidgets.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

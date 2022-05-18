@@ -1,7 +1,7 @@
 %define rname akonadi-calendar-tools
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init
 
@@ -9,6 +9,8 @@ Group: Graphical desktop/KDE
 Summary: Akonadi Calendar Tools
 Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
+
+Requires: kde5-akonadi-calendar
 
 Source: %rname-%version.tar
 
@@ -44,6 +46,9 @@ Akonadi Calendar Tools.
 %_K5icon/*/*/apps/*alendar*.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

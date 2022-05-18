@@ -4,7 +4,7 @@
 %define libkf5mailcommon libkf5mailcommon%sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init
 
@@ -77,8 +77,7 @@ KF5 library
 
 %files devel
 %_K5plug/designer/mailcommonwidgets.so
-%_K5inc/mailcommon_version.h
-%_K5inc/?ail?ommon/
+%_K5inc/MailCommon/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5MailCommon/
 %_K5archdata/mkspecs/modules/qt_MailCommon.pri
@@ -88,6 +87,9 @@ KF5 library
 %_K5lib/libKF5MailCommon.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 
