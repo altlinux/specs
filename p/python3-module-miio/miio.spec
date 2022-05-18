@@ -1,5 +1,5 @@
 Name: python3-module-miio
-Version: 0.5.10
+Version: 0.5.11
 Release: alt1
 
 Summary: Python miIO library
@@ -47,6 +47,9 @@ find %buildroot%python3_sitelibdir -type d -name tests |\
 %_bindir/*
 
 %changelog
+* Wed May 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.11-alt1
+- 0.5.11 released
+
 * Tue Mar 29 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.10-alt1
 - 0.5.10 released
 
