@@ -4,7 +4,7 @@
 Name: 	       pcs
 Epoch:         1
 Version:       0.11.2
-Release:       alt2
+Release:       alt3
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
 Group:         System/Servers
@@ -37,7 +37,9 @@ Requires: gem-rspec
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: corosync fontconfig fonts-ttf-liberation
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-lxml
 BuildRequires: python3-module-pip
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-pycurl
@@ -47,7 +49,6 @@ BuildRequires: python3-module-tornado >= 6.0.0
 BuildRequires: python3-module-dateutil
 BuildRequires: python3-module-distro
 BuildRequires: python3-module-wheel
-BuildRequires: python3-module-lxml
 BuildRequires: gem-backports
 BuildRequires: ruby-daemons
 BuildRequires: gem-ethon
@@ -61,6 +62,7 @@ BuildRequires: gem-tilt
 BuildRequires: gem-thin
 BuildRequires: gem-rexml
 BuildRequires: gem-webrick
+BuildRequires: libpacemaker-devel
 BuildRequires: libsystemd-devel
 BuildRequires: wget
 BuildRequires: service
@@ -180,6 +182,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Wed May 18 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.11.2-alt3
+- Used pacemaker development package for real pacemaker pathes (ALT #40854).
+
 * Tue Apr 05 2022 Alexander Danilov <admsasha@altlinux.org> 1:0.11.2-alt2
 - FTBFS: fixed build
 
