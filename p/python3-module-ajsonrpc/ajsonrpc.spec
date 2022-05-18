@@ -1,5 +1,5 @@
 Name: python3-module-ajsonrpc
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Async JSON-RPC 2.0 protocol
@@ -33,5 +33,8 @@ sed -i '/^__version__/ s,0\.0\.0,%version,' ajsonrpc/__init__.py
 %python3_sitelibdir/ajsonrpc-%version-*-info
 
 %changelog
+* Wed May 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt1
+- 1.2.0 released
+
 * Mon Mar 22 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt1
 - initial
