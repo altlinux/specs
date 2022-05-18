@@ -1,6 +1,6 @@
 Name: alacenc
 Version: 0.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: encode audio into the Apple Lossless Audio Codec (ALAC) format
 License: MIT
@@ -23,6 +23,10 @@ BuildRequires: cmake gcc-c++
 
 %prep
 %setup
+%ifarch %e2k
+# should be named WhitelistedUnportable
+sed -i "s/__aarch64__/__e2k__/" vendor/alac/codec/EndianPortable.c
+%endif
 
 %build
 %cmake
@@ -35,5 +39,8 @@ BuildRequires: cmake gcc-c++
 %_bindir/%name
 
 %changelog
+* Wed May 18 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.3.0-alt1.1
+- Fixed build for Elbrus
+
 * Mon May 16 2022 Nazarov Denis <nenderus@altlinux.org> 0.3.0-alt1
 - Initial build for ALT Linux
