@@ -1,6 +1,6 @@
 Name: xfce4-settings
 Version: 4.16.2
-Release: alt3
+Release: alt4
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -88,6 +88,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Wed May 18 2022 Mikhail Efremov <sem@altlinux.org> 4.16.2-alt4
+- Drop "Enable editable accelerators" checkbox (closes: #42786).
+
 * Thu May 05 2022 Mikhail Efremov <sem@altlinux.org> 4.16.2-alt3
 - displays: Do nothing if 'Configure new displays when connected'
   is disabled (closes: #42678).
