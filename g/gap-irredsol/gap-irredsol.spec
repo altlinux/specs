@@ -1,14 +1,14 @@
 %define repo irredsol
 
 Name: gap-irredsol
-Version: 1.4
+Version: 1.4.3
 Release: alt1
 Summary: GAP: Library of irreducible soluble linear groups over finite fields
 License: BSD-2-Clause
 Group: Sciences/Mathematics
-Url: http://www.icm.tu-bs.de/~bhoeflin
+Url: http://www.icm.tu-bs.de/~bhoeflin/irredsol/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/irredsol-%version.tar.bz2
+Source: https://github.com/bh11/irredsol/releases/download/IRREDSOL-%version/irredsol-%version.tar.bz2
 BuildArch: noarch
 
 BuildRequires: rpm-macros-gap
@@ -31,5 +31,9 @@ finite fields and of finite primivite soluble groups.
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Wed May 18 2022 Leontiy Volodin <lvol@altlinux.org> 1.4.3-alt1
+- 1.4.3.
+- Updated url tag.
+
 * Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 1.4-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).

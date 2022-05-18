@@ -2,13 +2,13 @@
 
 Name: gap-gbnp
 Summary: GAP: computing Grobner bases of noncommutative polynomials
-Version: 1.0.3
+Version: 1.0.5
 Release: alt1
 License: LGPL-2.1+
 Group: Sciences/Mathematics
-Url: http://mathdox.org/products/gbnp/
+Url: https://gap-packages.github.io/gbnp/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/GBNP-%version.tar.bz2
+Source: https://github.com/gap-packages/gbnp/archive/v%version/GBNP-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: fdupes
@@ -40,5 +40,9 @@ fdupes %buildroot%_prefix
 %gap_sitelib/%repo/*
 
 %changelog
+* Wed May 18 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.5-alt1
+- 1.0.5.
+- Updated url tag.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
