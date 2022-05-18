@@ -1,7 +1,7 @@
 %define rname kcmutils
 
 Name: kf5-%rname
-Version: 5.93.0
+Version: 5.94.0
 Release: alt1
 %K5init altplace
 
@@ -47,11 +47,17 @@ developing applications that use %name.
 %package -n libkf5kcmutils
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 Conflicts: kf5-kcmutils-devel < %EVR
 %description -n libkf5kcmutils
 KF5 library
 
+%package -n libkf5kcmutilscore
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common
+%description -n libkf5kcmutilscore
+KF5 library
 
 %prep
 %setup -n %rname-%version
@@ -69,17 +75,22 @@ KF5 library
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-#%_K5inc/kcmutils_version.h
-%_K5inc/KCMUtils/
+%_K5inc/KCMUtils*/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5KCMUtils
 %_K5archdata/mkspecs/modules/qt_KCMUtils.pri
 
 %files -n libkf5kcmutils
 %_K5lib/libKF5KCMUtils.so.*
+%_K5qml/org/kde/kcmutils/
 %_K5srvtyp/kcm*.desktop
+%files -n libkf5kcmutilscore
+%_K5lib/libKF5KCMUtilsCore.so.*
 
 %changelog
+* Mon May 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.94.0-alt1
+- new version
+
 * Mon Apr 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.93.0-alt1
 - new version
 

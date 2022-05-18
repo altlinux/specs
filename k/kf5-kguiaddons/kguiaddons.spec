@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.93.0
+Version: 5.94.0
 Release: alt1
 %K5init altplace
 
@@ -32,6 +32,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-x11extras-devel qt5-wayland-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel
 BuildRequires: libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel
 BuildRequires: libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
+BuildRequires: kf5-kwayland-devel kde5-plasma-wayland-protocols
 
 %description
 The KDE GUI addons provide utilities for graphical user interfaces in the areas
@@ -40,7 +41,7 @@ of colors, fonts, text, images, keyboard input.
 %package common
 Summary: %name common package
 Group: System/Configuration/Other
-#BuildArch: noarch
+BuildArch: noarch
 Requires: kf5-filesystem
 %description common
 %name common package
@@ -111,8 +112,8 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 %files common -f %name.lang
 %doc LICENSES/* README.md
-%dir %_K5plug/kf5/kguiaddons/
-%dir %_K5plug/kf5/kguiaddons/kmodifierkey/
+#%dir %_K5plug/kf5/kguiaddons/
+#%dir %_K5plug/kf5/kguiaddons/kmodifierkey/
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -128,7 +129,7 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 
 %files -n libkf5guiaddons
 %_K5lib/libKF5GuiAddons.so.*
-%_K5plug/kf5/kguiaddons/kmodifierkey/kmodifierkey_*.so
+#%_K5plug/kf5/kguiaddons/kmodifierkey/kmodifierkey_*.so
 
 %if_enabled python
 #%files -n python-module-%rname
@@ -142,6 +143,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon May 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.94.0-alt1
+- new version
+
 * Mon Apr 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.93.0-alt1
 - new version
 
