@@ -1,5 +1,5 @@
 Name: websocat
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 
 Summary: Netcat, curl and socat for WebSockets
@@ -51,8 +51,11 @@ cargo test
 %doc doc.md moreexamples.md
 
 %changelog
+* Wed May 18 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.10.0-alt1
+- Updated to v1.10.1.
+
 * Thu Dec 09 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.9.0-alt1
-- Update to v1.9.0.
+- Updated to v1.9.0.
 
 * Wed May 12 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.1-alt1
 - Updated to v1.8.1.
