@@ -1,7 +1,7 @@
 %def_enable appindicator
 
 Name: xpad
-Version: 5.7.0
+Version: 5.8.0
 Release: alt1
 
 Summary: A virtual sticky pad system using GTK+3
@@ -30,7 +30,6 @@ a text box in which notes can be written.
 
 %install
 %makeinstall_std
-
 %find_lang %name
 
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -47,6 +46,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README ChangeLog TODO
 
 %changelog
+* Thu May 19 2022 Yuri N. Sedunov <aris@altlinux.org> 5.8.0-alt1
+- 5.8.0
+
 * Thu Mar 10 2022 Yuri N. Sedunov <aris@altlinux.org> 5.7.0-alt1
 - 5.7.0
 
