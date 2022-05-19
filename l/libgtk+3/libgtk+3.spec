@@ -22,7 +22,7 @@
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.33
+Version: %ver_major.34
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -451,6 +451,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Wed May 18 2022 Yuri N. Sedunov <aris@altlinux.org> 3.24.34-alt1
+- 3.24.34
+
 * Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 3.24.33-alt1
 - 3.24.33 (no changes since previous 2.4.32)
 - removed gtk-update-icon-cache subpackage
