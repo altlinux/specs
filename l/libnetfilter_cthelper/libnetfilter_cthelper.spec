@@ -1,11 +1,11 @@
 Name: libnetfilter_cthelper
-Version: 1.0.0
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
 Summary: userspace library for helper infrastructure in kernel-space.
 License: %gpl2plus
 Group: System/Libraries
-Url: http://netfilter.org/projects/libnetfilter_cttimeout/
+Url: https://netfilter.org/projects/libnetfilter_cthelper/
 
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -50,6 +50,9 @@ rm -f %buildroot%_libdir/%name/*.la
 
 
 %changelog
+* Wed May 18 2022 Anton Farygin <rider@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Tue Feb 05 2019 Anton Farygin <rider@altlinux.ru> 1.0.0-alt2
 - rebuilt in new environment
 

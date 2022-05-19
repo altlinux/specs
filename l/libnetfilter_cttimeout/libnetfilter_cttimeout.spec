@@ -1,6 +1,6 @@
 Name: libnetfilter_cttimeout
-Version: 1.0.0
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
 Summary: Library with fine-grain connection tracking timeout infrastructure
 License: %gpl2plus
@@ -52,6 +52,9 @@ rm -f %buildroot%_libdir/%name/*.la
 
 
 %changelog
+* Thu May 19 2022 Anton Farygin <rider@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Tue Feb 05 2019 Anton Farygin <rider@altlinux.ru> 1.0.0-alt2
 - rebuilt in new environment
 
