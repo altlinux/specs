@@ -1,6 +1,6 @@
 %define pypi_name pelican
 
-%def_without bootstrap
+%def_with bootstrap
 %def_with standalone_feedgenerator
 
 %define full_desc \
@@ -19,7 +19,7 @@ Pelican is a static site generator, written in Python_.\
 
 Name: python3-module-%{pypi_name}
 Version: 4.6.0
-Release: alt3
+Release: alt4
 Summary: %{short_desc}
 Group: Development/Python3
 
@@ -27,12 +27,14 @@ License: AGPLv3
 Url: http://getpelican.com/
 # https://github.com/getpelican/%{pypi_name}/archive/%{version}.tar.gz#/%{pypi_name}-%{version}.tar.gz
 Source: %{pypi_name}-%{version}.tar
+Patch1: %{name}-4.6.0-alt-cannot-import-Markup-from-jinja2.patch
 
 BuildArch: noarch
 
 BuildRequires: python3-devel
 BuildRequires: python3-module-blinker
 BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-markupsafe
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-pytz
 BuildRequires: python3-module-unidecode
@@ -69,6 +71,7 @@ Requires: python3-module-beautifulsoup4
 
 %prep
 %setup -n %{pypi_name}-%{version}
+%patch1 -p1
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
@@ -124,6 +127,11 @@ nosetests-3 -sv --with-coverage --cover-package=%{pypi_name} %{pypi_name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu May 19 2022 Alexey Appolonov <alexey@altlinux.org> 4.6.0-alt4
+- Fixed build (could not import class "Markup" from module "jinja2");
+- No docs (pelican use itself to generate the docs and the current build is
+  broken).
+
 * Mon Feb 07 2022 Alexey Appolonov <alexey@altlinux.org> 4.6.0-alt3
 - Fixed build (the build was broken after python3 upgrade to v3.10).
 
