@@ -2,12 +2,16 @@
 %def_disable cmake
 
 Name: deepin-screen-recorder
-Version: 5.10.2
+Version: 5.10.22
 Release: alt1
+
 Summary: Default screen recorder application for Deepin
+
 License: GPL-3.0+
+# 3rdparty/googletest: BSD-3-Clause and Apache-2.0
 Group: Video
 Url: https://github.com/linuxdeepin/deepin-screen-recorder
+
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
@@ -16,7 +20,7 @@ Provides: %name-data = %version
 Obsoletes: %name-data < %version
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -31,6 +35,7 @@ BuildRequires: deepin-qt-dbus-factory-devel
 BuildRequires: deepin-dock-devel
 BuildRequires: dtk5-gui-devel
 BuildRequires: dtk5-widget-devel
+BuildRequires: dtk5-common
 BuildRequires: gsettings-qt-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-multimedia-devel
@@ -56,42 +61,45 @@ BuildRequires: kf5-kconfig-devel
 %setup -n %name-%version
 sed -i 's|/usr/lib/|%_libdir/|' src/dde-dock-plugins/recordtime/recordtime.pro
 sed -i 's|/etc/due-shell|/etc/dde-shell|' src/src.pro
-# X11 header's weirdness with GCC 10
-sed -i '/#include <X11.extensions.XTest.h>/a #undef min' src/event_monitor.cpp
-sed -i '/#include <iostream>/d;1i #include <iostream>' src/screen_shot_event.cpp
-sed -i '/#include <X11.extensions.shape.h>/a #undef None' src/utils.cpp
 
 %build
 export PATH=%_qt5_bindir:$PATH
 %if_enabled cmake
+    %if_enabled clang
+    export CC="clang"
+    export CXX="clang++"
+    export AR="llvm-ar"
+    %endif
 %cmake \
-	-GNinja \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-#
-%cmake_build
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    %nil
+cmake --build "%_cmake__builddir" -j%__nprocs
 %else
 %qmake_qt5 \
     CONFIG+=nostrip \
-%if_enabled clang
-    QMAKE_STRIP= -spec linux-clang \
-%endif
-#
+    %if_enabled clang
+        QMAKE_STRIP= -spec linux-clang \
+    %endif
+    %nil
 %make_build
 %endif
 
 %install
 %if_enabled cmake
-%cmake_install
+    %cmake_install
 %else
-%makeinstall INSTALL_ROOT=%buildroot
+    %makeinstall INSTALL_ROOT=%buildroot
 %endif
 %find_lang %name
 
 %files -f %name.lang
 %doc LICENSE README.md CHANGELOG.md
 %_bindir/%name
+%_bindir/deepin-pin-screenshots
 %_desktopdir/%name.desktop
 %_datadir/%name/
+%_datadir/deepin-pin-screenshots/
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %_libdir/dde-dock/plugins/libdeepin-screen-recorder-plugin.so
@@ -99,9 +107,10 @@ export PATH=%_qt5_bindir:$PATH
 %_iconsdir/hicolor/scalable/apps/deepin-screenshot.svg
 %_datadir/dbus-1/services/com.deepin.ScreenRecorder.service
 %_datadir/dbus-1/services/com.deepin.Screenshot.service
-%dir %_sysconfdir/dde-shell/
-%dir %_sysconfdir/dde-shell/json/
-%_sysconfdir/dde-shell/json/screenRecorder.json
+%_datadir/dbus-1/services/com.deepin.PinScreenShots.service
+# %dir %_sysconfdir/dde-shell/
+# %dir %_sysconfdir/dde-shell/json/
+# %_sysconfdir/dde-shell/json/screenRecorder.json
 %dir %_datadir/deepin-manual/
 %dir %_datadir/deepin-manual/manual-assets/
 %dir %_datadir/deepin-manual/manual-assets/application/
@@ -109,6 +118,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/deepin-manual/manual-assets/application/%name/screen-capture/
 
 %changelog
+* Thu May 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.22-alt1
+- New version (5.10.22).
+
 * Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.10.2-alt1
 - New version (5.10.2).
 
