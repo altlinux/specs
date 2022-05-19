@@ -1,6 +1,6 @@
 Name:       qbe
 # git log -1 --format='%as' | tr - .  
-Version:    2021.12.05
+Version:    2022.05.12
 Release:    alt1
 Group:      Development/C
 # git clone git://c9x.me/qbe.git 
@@ -11,7 +11,7 @@ License:    BSD
 Summary:    C Compiler Backend
 URL:        https://c9x.me/compile/
 # TODO armh (buggy as for 2021.07.06)
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 %description
 QBE aims to be a pure C embeddable backend that provides 70% of the
@@ -39,6 +39,10 @@ install -D minic/minic %buildroot%_bindir/%name-minic
 make check
 
 %changelog
+* Thu May 19 2022 Fr. Br. George <george@altlinux.org> 2022.05.12-alt1
+- Build last master commit
+- Support more architectires
+
 * Wed Jan 12 2022 Fr. Br. George <george@altlinux.ru> 2021.12.05-alt1
 - Version up
 
