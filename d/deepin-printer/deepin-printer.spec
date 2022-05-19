@@ -2,10 +2,11 @@
 %define repo dde-printer
 
 Name: deepin-printer
-Version: 0.8.7
+Version: 0.9.13
 Release: alt1
 Summary: Printing utility for DDE
 License: GPL-3.0+
+# src/cppcups/snmp.{c,h}: Apache-2.0
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-printer
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -71,6 +72,9 @@ chmod +x %buildroot%_sysconfdir/xdg/autostart/%repo-watch.desktop
 %_datadir/deepin-manual/manual-assets/application/%repo/print-manager/
 
 %changelog
+* Thu May 19 2022 Leontiy Volodin <lvol@altlinux.org> 0.9.13-alt1
+- New version (0.9.13).
+
 * Wed Jun 30 2021 Leontiy Volodin <lvol@altlinux.org> 0.8.7-alt1
 - New version (0.8.7).
 
