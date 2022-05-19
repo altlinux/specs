@@ -2,7 +2,7 @@
 
 Name: proftpd
 Version: %ver
-Release: alt0.1.c
+Release: alt0.1.d
 
 %define _libexecdir %{expand:%_libdir}
 %def_disable tests
@@ -679,6 +679,9 @@ fi
 %_controldir/%name
 
 %changelog
+* Thu May 19 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt0.1.d
+- 1.3.7d release.
+
 * Thu Sep 02 2021 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt0.1.c
 - 1.3.7c release.
 - .spec:
