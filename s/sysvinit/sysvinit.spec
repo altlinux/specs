@@ -1,6 +1,6 @@
 Name: sysvinit
 Version: 3.00
-Release: alt1
+Release: alt2
 
 %def_enable selinux
 %def_enable initramfs
@@ -106,7 +106,7 @@ mv -f src/init{,.initrd}
 	%{?_enable_selinux:WITH_SELINUX=yes} \
 	#
 %install
-mkdir -p %buildroot{/{s,}bin,%_sysconfdir/inittab.d,/dev,%_bindir,%_includedir,%_mandir/man{1,3,5,8}}
+mkdir -p %buildroot{/{s,}bin,%_sysconfdir/inittab.d,/dev,/run,%_bindir,%_includedir,%_mandir/man{1,3,5,8}}
 %make_install install -C src \
 	ROOT=%buildroot \
 	DISTRO=ALT \
@@ -115,6 +115,7 @@ mkdir -p %buildroot{/{s,}bin,%_sysconfdir/inittab.d,/dev,%_bindir,%_includedir,%
 install -pm755 src/bootlogd src/init.initrd %buildroot/sbin/
 
 mkfifo -m600 %buildroot/dev/initctl
+touch %buildroot/run/initctl
 
 # Remove e2fsprogs utility.
 rm -f -- %buildroot/sbin/logsave
@@ -145,6 +146,11 @@ if ! pidof /sbin/.init-working >/dev/null 2>&1; then
 	rm -f /sbin/.init-working
 fi
 
+# Transition to avoid non-rebootable system after upgrade from 2.88
+if [ -e /dev/initctl ] && [ -d /run ] && [ ! -e /run/initctl ]; then
+	ln -srf /dev/initctl /run/initctl
+fi
+
 %files
 %attr(700,root,root) /sbin/init
 %attr(700,root,root) /sbin/shutdown
@@ -168,6 +174,7 @@ fi
 %_man8dir/telinit.*
 %_includedir/*
 %ghost /dev/initctl
+%ghost /run/initctl
 
 %if_enabled initramfs
 %files initramfs
@@ -196,6 +203,10 @@ fi
 %_man8dir/pidof.*
 
 %changelog
+* Thu May 19 2022 Alexey Gladkov <legion@altlinux.ru> 3.00-alt2
+- Create /run/initctl as a symlink to /dev/initctl to help with migration
+  without reboot (ALT#42789).
+
 * Thu Dec 16 2021 Alexey Gladkov <legion@altlinux.ru> 3.00-alt1
 - Updated to 3.00.
 - Reviewed patches.
