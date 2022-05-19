@@ -3,7 +3,7 @@
 %define proxy_user backup
 
 Name: proxmox-backup
-Version: 2.1.10
+Version: 2.2.1
 Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
@@ -189,6 +189,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Thu May 19 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:2.2.1-alt1
+- 2.2.1-1
+
 * Fri May 13 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:2.1.10-alt1
 - 2.1.10-1
 
