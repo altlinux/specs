@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 94
+%define centos_release 96
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,20 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu May 19 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.96-alt1.el9
+- Updated to kernel-5.14.0-96.el9 (fixes: CVE-2022-28390):
+  + can: ems_usb: ems_usb_start_xmit(): fix double dev_kfree_skb() in error path
+  + powerpc/ibmvnic: Upgrade ibmvnic device driver to latest from upstream, e.g. kernel 5.18
+  + powerps/pseries/dma: Add support for 2M IOMMU page size
+  + soc/tegra: Add devm_tegra_core_dev_init_opp_table_common()
+  + VFIO refresh to v5.18
+
+* Thu May 19 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.95-alt1.el9
+- Updated to kernel-5.14.0-95.el9:
+  + mm: create a new system state and fix core_kernel_text()
+  + openvswitch: Fix setting ipv6 fields causing hw csum failure
+  + vmxnet3: Update network driver for RHEL 9.1
+
 * Wed May 18 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.94-alt1.el9
 - Updated to kernel-5.14.0-94.el9:
   + arch/arm64: Fix topology initialization for core scheduling
