@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.2.3
+Version: 1.3.0
 Release: alt1
 
 Summary: Python tool to create HTML documentation from markdown sources
@@ -18,6 +18,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-coverage
 BuildRequires: fonts-font-awesome
 
 %if_with check
@@ -47,6 +48,8 @@ configuration file.
 %prep
 %setup
 %autopatch -p1
+# XXX hack in coverage
+sed -i 's@{envbindir}/coverage@coverage@g' tox.ini
 
 %build
 %python3_build_debug
@@ -78,7 +81,6 @@ done
 %check
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
-export TOXENV=py3
 export TOXENV=py%{python_version_nodots python3}-unittests
 tox.py3 --sitepackages --no-deps -vvr -s false
 
@@ -88,6 +90,10 @@ tox.py3 --sitepackages --no-deps -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Thu May 19 2022 Fr. Br. George <george@altlinux.org> 1.3.0-alt1
+- 1.2.3 -> 1.3.0
+- Hack in external coverage call in tests
+
 * Mon Jan 24 2022 Stanislav Levin <slev@altlinux.org> 1.2.3-alt1
 - 1.2.2 -> 1.2.3 (closes: #41685).
 
