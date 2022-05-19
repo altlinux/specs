@@ -79,9 +79,10 @@
 %vulkan_drivers_add broadcom
 %vulkan_drivers_add panfrost
 %endif
+%vulkan_drivers_add swrast
 
-%define ver_major 22.0
-%define ver_minor 3
+%define ver_major 22.1
+%define ver_minor 0
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -316,12 +317,12 @@ Mesa-based DRI drivers
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
 	-Dvulkan-layers='device-select, overlay' \
 %ifarch %vdpau_arches
-	-Dgallium-vdpau=true \
+	-Dgallium-vdpau=enabled \
 %endif
 %ifarch %xvmc_arches
-	-Dgallium-xvmc=true \
+	-Dgallium-xvmc=enabled \
 %endif
-	-Ddri3=true \
+	-Ddri3=enabled \
 %ifarch %opencl_arches
 	-Dgallium-opencl=icd \
 %endif
@@ -329,16 +330,16 @@ Mesa-based DRI drivers
 	-Dllvm=enabled \
 	-Dshared-llvm=enabled \
 %endif
-	-Dshared-glapi=true \
+	-Dshared-glapi=enabled \
 %if_enabled egl
-	-Degl=true \
+	-Degl=enabled \
 %else
-	-Degl=false \
+	-Degl=disabled \
 %endif
 %if_enabled gles2
-	-Dgles2=true \
+	-Dgles2=enabled \
 %else
-	-Dgles2=false \
+	-Dgles2=disabled \
 %endif
 %ifarch %xa_arches
 	-Dgallium-xa=enabled \
@@ -349,7 +350,7 @@ Mesa-based DRI drivers
 	-Dlibunwind=false \
 %endif
 	-Dosmesa=true \
-	-Dgles1=false \
+	-Dgles1=disabled \
 	-Dopengl=true \
 	-Dselinux=true \
 	-Dglvnd=true \
@@ -503,11 +504,11 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %ifarch %vdpau_arches
 %_libdir/vdpau/libvdpau_gallium.so.1.0.0
 %endif
-%ifarch %vulkan_virtio_arches
+%_libdir/libvulkan_lvp.so
+%_datadir/vulkan/icd.d/lvp_icd*.json
 %_bindir/mesa-overlay-control.py
 %_libdir/libVkLayer_MESA*.so
 %_datadir/vulkan/*plicit_layer.d/VkLayer_MESA*.json
-%endif
 
 %ifarch %virgl_arches
 %files -n xorg-dri-virtio
@@ -581,6 +582,12 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu May 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.1.0-alt1
+- 22.1.0
+
+* Thu May 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.3-alt2
+- enabled swrast vulkan driver
+
 * Thu May 05 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.3-alt1
 - 22.0.3
 
