@@ -19,7 +19,7 @@ Pelican is a static site generator, written in Python_.\
 
 Name: python3-module-%{pypi_name}
 Version: 4.6.0
-Release: alt4
+Release: alt5
 Summary: %{short_desc}
 Group: Development/Python3
 
@@ -127,6 +127,9 @@ nosetests-3 -sv --with-coverage --cover-package=%{pypi_name} %{pypi_name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Thu May 19 2022 Alexey Appolonov <alexey@altlinux.org> 4.6.0-alt5
+- Fixed build indeed (another import directive is changed in the same way).
+
 * Thu May 19 2022 Alexey Appolonov <alexey@altlinux.org> 4.6.0-alt4
 - Fixed build (could not import class "Markup" from module "jinja2");
 - No docs (pelican use itself to generate the docs and the current build is
