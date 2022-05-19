@@ -3,8 +3,8 @@
 %define proxy_user backup
 
 Name: proxmox-backup
-Version: 2.1.5
-Release: alt3
+Version: 2.1.10
+Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -12,7 +12,6 @@ Group: Archiving/Backup
 URL: https://www.proxmox.com/en/proxmox-backup-server
 Vcs: git://git.proxmox.com/git/proxmox-backup.git
 Source: %name-%version.tar
-Patch: %name-%version.patch
 
 ExclusiveArch: x86_64 aarch64
 
@@ -78,7 +77,6 @@ This package contains the Proxmox Backup Documentation files.
 
 %prep
 %setup
-%patch -p1
 rm -f docs/installation.rst
 
 %build
@@ -191,6 +189,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Fri May 13 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:2.1.10-alt1
+- 2.1.10-1
+
 * Sat Apr 16 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:2.1.5-alt3
 - spec: fix build with rst2man
 
