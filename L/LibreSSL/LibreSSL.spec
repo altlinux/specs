@@ -11,8 +11,8 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 3.5.2
-Release: alt2
+Version: 3.5.3
+Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
 
@@ -24,6 +24,7 @@ Url: http://www.libressl.org/
 # repacked http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/%oname-%version.tar.gz
 Source: %oname-%version.tar
 Source1: %name.watch
+Source2: upstream-signing-key.asc
 
 Patch1: 0001-ALT-netcat-execcmd.patch
 Patch2: 0002-ALT-netcat-proxy_pass.patch
@@ -279,6 +280,9 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Fri May 20 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.5.3-alt1
+- Updated to 3.5.3.
+
 * Tue May 10 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.5.2-alt2
 - libcrypto49: Added explicit conflict to libcrypto45, libcrypto46 and
   libcrypto47 (closes: 42719).
