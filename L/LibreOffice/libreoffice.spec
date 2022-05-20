@@ -1,4 +1,4 @@
-# 7.3.2.1
+# 7.3.3.2
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -22,13 +22,13 @@
 
 Name: LibreOffice
 %define hversion 7.3
-%define urelease 2.1
+%define urelease 3.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -67,7 +67,11 @@ Patch1: FC-0001-don-t-suppress-crashes.patch
 Patch2: FC-0001-disble-tip-of-the-day-dialog-by-default.patch
 Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
 Patch4: FC-0001-Revert-tdf-101630-gdrive-support-w-oAuth-and-Drive-A.patch
-Patch5: FC-0001-disable-libe-book-support.patch
+Patch5: FC-0001-workaround-x86-ICE-with-gcc-12.patch
+Patch6: FC-0001-s390x-canvas-test-fails.patch
+Patch7: FC-0001-tdf-144862-use-resolution-independent-positions-for-.patch
+Patch8: FC-0001-vertical-text-test-fails-with-latest-harfbuzz.patch
+Patch9: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -276,7 +280,11 @@ Provides additional %{langname} translations and resources for %name. \
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#patch5 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+#patch9 -p1
 
 ## Long-term FC patches applying
 
@@ -290,7 +298,7 @@ Provides additional %{langname} translations and resources for %name. \
 
 %patch500 -p0
 # Patch with russian translation update
-%patch600 -p1
+##patch600 -p1
 
 # TODO move officebeans to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
@@ -594,6 +602,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri May 20 2022 Fr. Br. George <george@altlinux.ru> 7.3.3.2-alt1
+- Update to 7.3.3.2
+
 * Wed Apr 13 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.3.2.1-alt3
 - NMU: Update russian translation patch for 7.3.2.1
 
