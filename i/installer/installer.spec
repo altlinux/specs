@@ -1,6 +1,6 @@
 Name: installer
-Version: 1.10.15
-Release: alt2
+Version: 1.11.0
+Release: alt1
 
 Summary: Installer common parts
 License: GPLv2+
@@ -111,6 +111,11 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu May 19 2022 Mikhail Efremov <sem@altlinux.org> 1.11.0-alt1
+- preinstall.d: Rename 50-initrd.sh -> 50-instkernel.sh.
+- 50-initrd.sh: Set kernel from installer as default kernel.
+- postinstall.d: Drop 98-remove-drm.sh.
+
 * Wed Nov 24 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 1.10.15-alt2
 - 30-setup-network.sh: handle 'localhost' from hostinfo fixed
 
