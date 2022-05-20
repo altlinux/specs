@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 9.5.7
+Version: 10.0.0
 Release: alt1
 
 Summary: IT and asset management software
@@ -16,7 +16,7 @@ Source0: http://www.glpi-project.org/IMG/gz/%name-%version.tar.gz
 Source1: apache2.conf
 Source2: README.ALT
 Source3: UPGRADE.ALT
-Patch: patch0.patch
+#Patch: patch0.patch
 
 Requires: webserver-common php-engine curl lynx
 BuildRequires(pre): rpm-macros-webserver-common
@@ -41,15 +41,38 @@ Apache 2.x web-server configuration for %name
 Summary: PHP7 dependencies for %name
 Group: Networking/Other
 Requires: %name = %version-%release
-Requires: php7-curl, php7-fileinfo, php7-gd2, php7-exif, php7-json, php7-mbstring, php7-mysqlnd-mysqli, php7-session, php7-zlib, php7-simplexml, php7-xml, php7-intl
-Requires: php7-bz2, php7-imap, php7-ldap, php7-openssl, php7-apcu, php7-xmlrpc, php7-zip, php7-sodium, php7-opcache
+Requires: php7 >= 7.4
+Requires: php7-curl, php7-fileinfo, php7-gd2, php7-json, php7-mbstring, php7-mysqlnd-mysqli, php7-session, php7-zlib, php7-simplexml, php7-xml, php7-intl
+Requires: php7-apcu, php7-bz2, php7-exif, php7-ldap, php7-opcache, php7-openssl, php7-sodium, php7-xmlrpc, php7-zip
 
 %description php7
 PHP7 dependencies for %name
 
+%package php8.0
+Summary: PHP8.0 dependencies for %name
+Group: Networking/Other
+Requires: %name = %version-%release
+Requires: php8.0
+Requires: php8.0-curl, php8.0-fileinfo, php8.0-gd2, php8.0-json, php8.0-mbstring, php8.0-mysqlnd-mysqli, php8.0-session, php8.0-zlib, php8.0-simplexml, php8.0-xml, php8.0-intl
+Requires: php8.0-apcu, php8.0-bz2, php8.0-exif, php8.0-ldap, php8.0-opcache, php8.0-openssl, php8.0-sodium, php8.0-xmlrpc, php8.0-zip
+
+%description php8.0
+php8.0 dependencies for %name
+
+%package php8.1
+Summary: PHP8.1 dependencies for %name
+Group: Networking/Other
+Requires: %name = %version-%release
+Requires: php8.1
+Requires: php8.1-curl, php8.1-fileinfo, php8.1-gd2, php8.1-json, php8.1-mbstring, php8.1-mysqlnd-mysqli, php8.1-session, php8.1-zlib, php8.1-simplexml, php8.1-xml, php8.1-intl
+Requires: php8.1-apcu, php8.1-bz2, php8.1-exif, php8.1-ldap, php8.1-opcache, php8.1-openssl, php8.1-sodium, php8.1-zip
+
+%description php8.1
+php8.1 dependencies for %name
+
+
 %prep
 %setup
-%patch -p0
 
 %build
 
@@ -104,6 +127,7 @@ fi
 %installdir/config
 %installdir/css
 %installdir/css_compiled
+%installdir/files
 %installdir/front
 %installdir/inc
 %installdir/install
@@ -114,9 +138,11 @@ fi
 %installdir/pics
 %installdir/plugins
 %installdir/public
-%installdir/scripts
 %installdir/sound
+%installdir/src
+%installdir/templates
 %installdir/vendor
+%installdir/*.js
 %installdir/*.php
 %installdir/COPYING.txt
 %doc CHANGELOG.md
@@ -133,7 +159,16 @@ fi
 
 %files php7
 
+%files php8.0
+
+%files php8.1
+
 %changelog
+* Wed Apr 20 2022 Pavel Zilke <zidex@altlinux.org> 10.0.0-alt1
+- New version 10.0.0
+- Added glpi-php8.0
+- Added glpi-php8.1
+
 * Thu Jan 27 2022 Pavel Zilke <zidex at altlinux dot org> 9.5.7-alt1
 - New version 9.5.7
 - This is a security release, upgrading is recommended
