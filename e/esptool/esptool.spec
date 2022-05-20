@@ -1,5 +1,5 @@
 Name: esptool
-Version: 3.3
+Version: 4.0
 Release: alt1
 
 Summary: Flasher for Espressif ESP8266 & ESP32 chips
@@ -24,12 +24,9 @@ the ROM bootloader in Espressif ESP8266 & ESP32 chips.
 
 %install
 %python3_install
-PYS=%buildroot%python3_sitelibdir/*.py
-sed -ri '/env python$/ s,$,3,' $PYS; chmod 0755 $PYS
-for f in $PYS; do
-	F=${f##*/}; ln -srv $f %buildroot%_bindir/${F%*.py}
+for f in %buildroot%_bindir/*.py;
+	do mv -v $f ${f%.py*}
 done
-rm -vf %buildroot%_bindir/*.py
 
 %set_python3_req_method strict
 
@@ -38,11 +35,15 @@ rm -vf %buildroot%_bindir/*.py
 %_bindir/espefuse
 %_bindir/espsecure
 %_bindir/esptool
-%python3_sitelibdir/*.py
-%python3_sitelibdir/espressif
+%python3_sitelibdir/espefuse
+%python3_sitelibdir/espsecure
+%python3_sitelibdir/esptool
 %python3_sitelibdir/esptool-%version-*-info
 
 %changelog
+* Fri May 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.0-alt1
+- 4.0 released
+
 * Mon Apr 25 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.3-alt1
 - 3.3 released
 
