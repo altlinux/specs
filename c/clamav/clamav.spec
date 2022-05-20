@@ -15,7 +15,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.103.5
+Version: 0.103.6
 Release: alt1
 %define abiversion 9
 
@@ -397,6 +397,14 @@ subst "s/^[0-9]*/$RNDM/" %_sysconfdir/cron.d/clamav-freshclam
 %endif
 
 %changelog
+* Fri May 20 2022 Sergey Y. Afonin <asy@altlinux.org> 0.103.6-alt1
+- 0.103.6
+  + CVE-2022-20770
+  + CVE-2022-20796
+  + CVE-2022-20771
+  + CVE-2022-20785
+  + CVE-2022-20792
+
 * Tue Jan 18 2022 Sergey Y. Afonin <asy@altlinux.org> 0.103.5-alt1
 - 0.103.5 (CVE-2022-20698)
 
