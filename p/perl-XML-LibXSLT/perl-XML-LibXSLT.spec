@@ -1,10 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(autodie.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 %define dist XML-LibXSLT
 Name: perl-%dist
-Version: 2.001000
+Version: 2.002000
 Release: alt1
 
 Summary: Perl interface to the Gnome libxslt library
@@ -44,6 +44,9 @@ sed -i- '/Config{libs}/d' Makefile.PL
 %perl_vendor_autolib/XML
 
 %changelog
+* Fri May 20 2022 Igor Vlasenko <viy@altlinux.org> 2.002000-alt1
+- automated CPAN update
+
 * Mon May 16 2022 Igor Vlasenko <viy@altlinux.org> 2.001000-alt1
 - automated CPAN update
 
