@@ -5,10 +5,11 @@
 %define  srcname py-ubjson
 
 Name:    python3-module-%modulename
-Version: 0.12.0
-Release: alt2
+Version: 0.16.1
+Release: alt1
 
 Summary: Universal Binary JSON draft-12 serializer for Python
+
 License: Apache-2.0
 Group:   Development/Python3
 URL:     https://github.com/Iotic-Labs/py-ubjson
@@ -16,7 +17,6 @@ URL:     https://github.com/Iotic-Labs/py-ubjson
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
 
 Source:  %srcname-%version.tar
 
@@ -39,6 +39,9 @@ draft-12 specification.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri May 20 2022 Grigory Ustinov <grenka@altlinux.org> 0.16.1-alt1
+- Automatically updated to 0.16.1.
+
 * Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.12.0-alt2
 - Drop python2 support
 
