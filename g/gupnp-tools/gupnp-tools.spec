@@ -2,7 +2,7 @@
 %define ver_major 0.10
 
 Name: gupnp-tools
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A collection of developer tools utilising GUPnP and GTK+3
@@ -16,17 +16,20 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define gupnp_api_ver 1.2
 %define gssdp_api_ver 1.2
-%define gupnp_ver 1.2
+%define gupnp_api_ver 1.2
 %define gssdp_ver 1.2
+%define gupnp_ver 1.4
+%define gtk_ver 3.10
 %define soup_ver 2.42
 
-BuildRequires(pre): meson
-BuildRequires: desktop-file-utils
-BuildRequires: libgupnp%gupnp_api_ver-devel >= %gupnp_ver libgssdp%gssdp_api_ver-devel >= %gssdp_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson desktop-file-utils
+BuildRequires: libgssdp%gssdp_api_ver-devel >= %gssdp_ver
+BuildRequires: libgupnp%gupnp_api_ver-devel >= %gupnp_ver
 BuildRequires: libgupnp-av-devel
-BuildRequires: libgtk+3-devel libsoup-devel >= %soup_ver libxml2-devel libuuid-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver libsoup-devel >= %soup_ver
+BuildRequires: libxml2-devel libuuid-devel
 BuildRequires: libgtksourceview4-devel
 
 %description
@@ -67,6 +70,9 @@ test and debug one's UPnP devices and control points.
 %doc AUTHORS README* NEWS
 
 %changelog
+* Fri May 20 2022 Yuri N. Sedunov <aris@altlinux.org> 0.10.3-alt1
+- 0.10.3
+
 * Tue Nov 16 2021 Yuri N. Sedunov <aris@altlinux.org> 0.10.2-alt1
 - 0.10.2
 
