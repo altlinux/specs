@@ -1,10 +1,10 @@
 Name:     activate-linux
-Version:  0.0.1
+Version:  0.0.2
 Release:  alt1
 
 Summary:  The "Activate Windows" watermark ported to Linux
 
-License:  The Based License
+License:  GPL-3.0
 Group:    Other
 Url:      https://github.com/MrGlockenspiel/activate-linux
 
@@ -31,13 +31,17 @@ In fact, why not invent a special safety door that won't hit you...
 %make_build
 
 %install
-mkdir -p %buildroot%_bindir
-install -m 0755 bin/%name %buildroot%_bindir
+export PREFIX=""
+export BINDIR="%_bindir"
+%makeinstall_std
 
 %files
 %_bindir/%name
 %doc *.md
 
 %changelog
+* Fri May 20 2022 Grigory Ustinov <grenka@altlinux.org> 0.0.2-alt1
+- Automatically updated to 0.0.2.
+
 * Wed May 18 2022 Grigory Ustinov <grenka@altlinux.org> 0.0.1-alt1
 - Initial build for Sisyphus.
