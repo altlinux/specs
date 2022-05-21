@@ -1,6 +1,6 @@
 Name:     kiwix-lib
 Version:  10.1.1
-Release:  alt1
+Release:  alt1.1
 
 Summary:  Common code base for all Kiwix ports
 License:  GPL-3.0
@@ -42,6 +42,9 @@ Group: Development/C++
 
 %prep
 %setup
+%ifarch %e2k
+sed -i "s/compiler.get_id()/'gcc'/" meson.build
+%endif
 
 %build
 %meson
@@ -62,6 +65,9 @@ Group: Development/C++
 %_man1dir/*.1*
 
 %changelog
+* Sat May 21 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 10.1.1-alt1.1
+- Fixed build for Elbrus.
+
 * Tue Apr 12 2022 Andrey Cherepanov <cas@altlinux.org> 10.1.1-alt1
 - New version.
 
