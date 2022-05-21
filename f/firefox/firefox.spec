@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        100.0
+Version:        100.0.2
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -429,6 +429,12 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Sat May 21 2022 Alexey Gladkov <legion@altlinux.ru> 100.0.2-alt1
+- New release (100.0.2).
+- Security fixes:
+  + CVE-2022-1802: Prototype pollution in Top-Level Await implementation
+  + CVE-2022-1529: Untrusted input used in JavaScript object indexing, leading to prototype pollution
+
 * Tue May 03 2022 Alexey Gladkov <legion@altlinux.ru> 100.0-alt1
 - New release (100.0).
 - Security fixes:
