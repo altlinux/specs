@@ -1,9 +1,5 @@
-%define distro_version 5.0
-
-%define _altdata_dir %_datadir/alterator
-
-Name: alterator-pkg
-Version: 2.7.7
+Name: installer-alterator-pkg
+Version: 3.0.0
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -14,7 +10,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
 
-Source:%name-%version.tar
+Source: alterator-pkg-%version.tar
 
 Summary: additional package installation
 License: GPL
@@ -27,7 +23,7 @@ Requires: alterator-lookout => 2.4-alt1
 Requires: altlinux-repos
 Conflicts: alterator-fbi < 5.10-alt1
 
-Provides: alterator-apt = %version
+Provides: alterator-apt = %EVR
 Obsoletes: alterator-apt
 
 BuildPreReq: alterator >= 4.6-alt3
@@ -36,14 +32,16 @@ Conflicts: apt-conf-branch < 5.0-alt3
 Conflicts: apt-conf-sisyphus < 5.0-alt4
 Conflicts: apt-conf-desktop < 5.0-alt3
 
-Provides: %name-tools = %version
-Obsoletes: %name-tools
+Provides: alterator-pkg-tools = %EVR
+Obsoletes: alterator-pkg-tools < 1.1-alt1
+
+Provides: alterator-pkg = %EVR
 
 %description
 additional package installation
 
 %prep
-%setup
+%setup -n alterator-pkg-%version
 
 %build
 %make_build
@@ -52,7 +50,6 @@ additional package installation
 %makeinstall
 
 %files
-%_datadir/alterator/applications/*
 %_datadir/alterator/ui/*
 %_libexecdir/alterator/hooks/pkg-preinstall.d
 %_datadir/install2/initinstall.d/*
@@ -61,6 +58,11 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Thu May 12 2022 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt1
+- Drop unused defines.
+- Rename package to installer-alterator-pkg.
+- Drop pkg-sources module.
+
 * Thu May 12 2022 Sergey V Turchin <zerg@altlinux.org> 2.7.7-alt1
 - rearrange groups UI
 
