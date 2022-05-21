@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/gtkdocize /usr/bin/php glib2-devel
 
 Name: libsoup22
 Version: 2.2.105
-Release: alt3_9
+Release: alt4_9
 License: LGPLv2+
 Group: Development/C
 Summary: Soup, an HTTP library implementation
@@ -52,7 +52,7 @@ you to develop applications that use the libsoup library.
 %setup -q -n libsoup-%{version}
 %patch1 -p1 -b .dprintf-conflict
 
-perl -i -npe 's,#include\s*<(?:glib/gmessages|glib/gversionmacros|glib/gmacros|glib/gtypes|glib/gthread|glibconfig)\.h>,#include <glib.h>,' `pcregrep -rl '#include\s*<\(glib/gmessages\|glib/gversionmacros\|glib/gmacros\|glib/gtypes\|glib/gthread\|glibconfig\)\.h>' .`
+perl -i -npe 's,#include\s*<(?:glib/gmessages|glib/gversionmacros|glib/gmacros|glib/gtypes|glib/gthread|glibconfig)\.h>,#include <glib.h>,' `grep -P -rl '#include\s*<(glib/gmessages|glib/gversionmacros|glib/gmacros|glib/gtypes|glib/gthread|glibconfig)\.h>' .`
 
 
 %build
@@ -79,6 +79,9 @@ rm -f $RPM_BUILD_ROOT/%{_libdir}/*.a
 %{_datadir}/gtk-doc/html/libsoup-2.2
 
 %changelog
+* Sat May 21 2022 Igor Vlasenko <viy@altlinux.ru> 2.2.105-alt4_9
+- fixed build with new grep
+
 * Sat Apr 14 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.105-alt3_9
 - fixed build with new glib
 
