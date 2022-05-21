@@ -2,7 +2,7 @@
 
 Name: chrony
 Version: 4.2
-Release: alt1
+Release: alt2
 
 Summary: Chrony clock synchronization program
 License: GPLv2
@@ -116,8 +116,8 @@ rm -rf %buildroot/usr/doc
 install -d %buildroot%_localstatedir/{lib,log}/%name
 touch %buildroot%_localstatedir/lib/%name/{drift,rtc}
 
-mkdir -p  %buildroot%_sysconfdir/tmpfiles.d
-echo 'd /run/chrony 0750 _chrony _chrony' >> %buildroot%_sysconfdir/tmpfiles.d/chronyd.conf
+mkdir -p  %buildroot%_tmpfilesdir
+echo 'd /run/chrony 0750 _chrony _chrony' >> %buildroot%_tmpfilesdir/chronyd.conf
 
 %pre
 %_sbindir/groupadd -r -f _chrony 2> /dev/null ||:
@@ -143,7 +143,7 @@ echo 'd /run/chrony 0750 _chrony _chrony' >> %buildroot%_sysconfdir/tmpfiles.d/c
 %config(noreplace) %verify(not md5 size mtime) %attr(640,root,_chrony) %_sysconfdir/chrony.keys
 %config(noreplace) %_sysconfdir/logrotate.d/chrony
 %config(noreplace) %_sysconfdir/control.d/facilities/chrony
-%_sysconfdir/tmpfiles.d/chronyd.conf
+%_tmpfilesdir/chronyd.conf
 %_sysconfdir/NetworkManager/dispatcher.d/20-chrony-dhcp
 %_sysconfdir/NetworkManager/dispatcher.d/21-chrony-onoffline
 %_bindir/*
@@ -157,6 +157,9 @@ echo 'd /run/chrony 0750 _chrony _chrony' >> %buildroot%_sysconfdir/tmpfiles.d/c
 %_man8dir/*
 
 %changelog
+* Sat May 21 2022 Anton Farygin <rider@altlinux.ru> 4.2-alt2
+- use %%_tmpfilesdir
+
 * Thu Dec 23 2021 Anton Farygin <rider@altlinux.ru> 4.2-alt1
 - 4.1 -> 4.2
 - enable system tests via run-vm
