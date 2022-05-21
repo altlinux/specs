@@ -5,7 +5,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:          portals-pom
 Version:       1.3
-Release:       alt3_21jpp8
+Release:       alt4_21jpp8
 Summary:       Apache Portals parent pom
 License:       ASL 2.0
 Url:           http://portals.apache.org/
@@ -14,7 +14,7 @@ Url:           http://portals.apache.org/
 Source0:       %{name}-%{version}-src-svn.tar.gz
 BuildRequires: maven-local
 BuildRequires: maven-install-plugin
-BuildRequires: maven-plugins-pom
+BuildRequires: maven-parent
 BuildArch:     noarch
 Source44: import.info
 
@@ -48,6 +48,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 21 2022 Igor Vlasenko <viy@altlinux.org> 1.3-alt4_21jpp8
+- fixed build with new maven-parent
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.3-alt3_21jpp8
 - fc update
 

@@ -7,7 +7,7 @@ BuildRequires: jpackage-11-compat
 %global pkg_name portlet-api_%{api_version}_spec
 Name:          portlet-2.0-api
 Version:       1.0
-Release:       alt2_22jpp11
+Release:       alt3_22jpp11
 Summary:       Java Portlet Specification V2.0
 License:       ASL 2.0
 Url:           http://portals.apache.org/
@@ -20,6 +20,8 @@ BuildRequires: mvn(org.apache.tomcat:tomcat-servlet-api)
 BuildRequires: maven-local
 BuildRequires: maven-plugin-bundle
 BuildArch:     noarch
+AutoProv: yes,noosgi-fc
+AutoReq: yes,noosgi-fc
 Source44: import.info
 
 %description
@@ -71,6 +73,9 @@ sed -i "s|javax.servlet.http;version=2.4,*|javax.servlet.http;version=3.0,*|" po
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 21 2022 Igor Vlasenko <viy@altlinux.org> 1.0-alt3_22jpp11
+- fixed build with new maven-parent
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_22jpp11
 - update
 
