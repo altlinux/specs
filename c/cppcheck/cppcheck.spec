@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 2.7.5
+Version: 2.8
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -13,7 +13,6 @@ Url: https://github.com/danmar/cppcheck
 # Source-url: https://github.com/danmar/cppcheck/archive/%version.tar.gz
 Source: %name-%version.tar
 
-Patch1: cppcheck-makefile-docbook_xsl-1.70.patch
 Patch2: cppcheck-1.78-norebuild.patch
 Patch4: cppcheck-1.72-test_32.patch
 Patch8: cppcheck-2.2-translations.patch
@@ -46,7 +45,10 @@ Requires: icon-theme-hicolor
 
 %prep
 %setup
-%patch1 -p1
+
+%__subst 's|/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl|/usr/share/xml/docbook/xsl-stylesheets/manpages/docbook.xsl|' \
+ Makefile man/cppcheck.1.xml tools/dmake.cpp
+
 %patch2 -p1
 
 %ifnarch x86_64
@@ -121,6 +123,9 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat May 21 2022 Andrew A. Vasilyev <andy@altlinux.org> 2.8-alt1
+- 2.8
+
 * Mon Apr 18 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2.7.5-alt1
 - 2.7.5
 
