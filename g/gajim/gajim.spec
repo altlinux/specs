@@ -4,7 +4,7 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: a Jabber client written in PyGTK
@@ -33,7 +33,7 @@ Requires: libgtk+3-gir
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools
-BuildRequires: python3-module-nbxmpp >= 3.0.1
+BuildRequires: python3-module-nbxmpp >= 3.0.2
 BuildArch: noarch
 
 %description
@@ -74,6 +74,9 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Sun May 22 2022 Ilya Mashkin <oddity@altlinux.ru> 1.4.1-alt1
+- 1.4.1
+
 * Sat May 14 2022 Ilya Mashkin <oddity@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 
