@@ -3,9 +3,7 @@
 
 Name: perl-%module
 Version: 3.004
-Release: alt1
-
-Packager: Victor Forsyuk <force@altlinux.org>
+Release: alt2
 
 Summary: SOAP-WSDL provides a SOAP client with WSDL support
 License: Perl
@@ -20,8 +18,7 @@ Patch5: SOAP-WSDL-2.00.10-debian-use_test_xml.patch
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Fri Aug 01 2008 (-bi)
-BuildRequires: apache2-mod_perl libnss-mdns perl-Class-Std-Fast perl-IO-stringy perl-Log-Agent perl-Module-Build perl-SOAP-Lite perl-Template perl-Term-ReadKey perl-Test-Pod perl-TimeDate perl-Class-Load perl(TAP/Formatter/HTML.pm) perl(File/Find/Rule.pm)
+BuildRequires: apache2-mod_perl libnss-mdns perl-Class-Std-Fast perl-IO-stringy perl-Log-Agent perl-Module-Build perl-SOAP-Lite perl-Template perl-Term-ReadKey perl-Test-Pod perl-TimeDate perl-Class-Load perl(TAP/Formatter/HTML.pm) perl(File/Find/Rule.pm) perl(CGI.pm)
 
 # automatically added during perl 5.8 -> 5.12 upgrade.
 # perl-podlators is required for pod2man conversion.
@@ -47,6 +44,9 @@ SOAP-WSDL provides a SOAP client with WSDL support.
 %perl_vendor_privlib/SOAP/*
 
 %changelog
+* Sat May 21 2022 Igor Vlasenko <viy@altlinux.org> 3.004-alt2
+- fixed build
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 3.004-alt1
 - automated CPAN update
 
