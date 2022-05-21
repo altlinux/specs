@@ -1,8 +1,11 @@
 # FIXME
 %define optflags_lto %nil
+%ifnarch ppc64le
+%def_with amdgpu
+%endif
 
 Name: crtools
-Version: 3.16.1
+Version: 3.17
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks
@@ -75,11 +78,24 @@ Obsoletes: python-module-criu
 %description -n python3-module-criu
 Python library library of checkpoint/restore.
 
+%if_with amdgpu
+%package plugin-amdgpu
+BuildRequires: libdrm-devel
+Summary: AMDGPU plugin for checkpoint/restore.
+Group: System/Libraries
+
+%description plugin-amdgpu
+This package contains the AMDGPU ROCm support plugin for checkpoint/restore.
+%endif
+
 %prep
 %setup -n criu-%version
 %autopatch -p1
 
 %build
+# Upstream claims that stack protection break criu
+# https://github.com/checkpoint-restore/criu/issues/1744#issuecomment-1031605370
+%add_optflags -fno-stack-protector -fno-stack-clash-protection
 export CFLAGS="%optflags"
 %make_build \
 	%ifarch armh
@@ -130,7 +146,21 @@ find %buildroot -name 'lib*.a' -delete
 %_libdir/*.so
 %_pkgconfigdir/criu.pc
 
+%if_with amdgpu
+%files plugin-amdgpu
+%doc plugins/amdgpu/README.md
+%_man1dir/amdgpu_plugin.1*
+%dir %_libdir/criu
+%_libdir/criu/amdgpu_plugin.so
+%endif
+
 %changelog
+* Fri May 20 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.17-alt1
+- Updated to 3.17.
+- Built without stack protection (upstream claims it break criu).
+- Applied SUSE and Fedora patches.
+- Introduced amdgpu plugin.
+
 * Tue Dec 07 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.16.1-alt1
 - Updated to 3.16.1.
 
