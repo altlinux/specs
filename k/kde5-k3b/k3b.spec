@@ -22,7 +22,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -144,12 +144,12 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %doc LICENSES/* README.txt FAQ.txt PERMISSIONS.txt
 %_K5bin/%rname
 %_K5plug/%{rname}/
-%_K5plug/kcm_%{rname}*.so
+#%_K5plug/kcm_%{rname}*.so
 %_K5xdgapp/org.kde.%rname.desktop
 %_K5data/solid/actions/%{rname}_*.desktop
 %_K5data/%rname/
 %_K5xdgmime/*%{rname}*.xml
-%_K5srv/kcm_%{rname}*.*
+#%_K5srv/kcm_%{rname}*.*
 %_K5srv/ServiceMenus/%{rname}*.desktop
 %_K5srvtyp/%{rname}plugin.desktop
 %_K5xmlgui/%rname/
@@ -180,6 +180,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

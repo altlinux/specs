@@ -4,8 +4,8 @@
 %define libkcupslib libkcupslib%sover
 
 Name: kde5-%rname
-Version: 21.12.3
-Release: alt2
+Version: 22.04.1
+Release: alt1
 %K5init altplace
 
 Group: System/Configuration/Printing
@@ -79,13 +79,11 @@ KF5 library
 %_K5bin/configure-printer
 %_K5bin/kde-add-printer
 %_K5bin/kde-print-queue
-%_K5plug/*print*.so
+%_K5plug/plasma/kcms/systemsettings_qwidgets/*print*.so
 %_K5plug/kf5/kded/*print*.so
 %_K5xdgapp/*rint*.desktop
 %_K5data/plasma/plasmoids/org.kde.plasma.printmanager/
 %_K5qml/org/kde/plasma/printmanager/
-#%_K5srv/kded/*.desktop
-%_K5srv/*.desktop
 %_K5notif/printmanager.notifyrc
 
 %files -n %libkcupslib
@@ -93,6 +91,9 @@ KF5 library
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 11 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt2
 - fix requires
 

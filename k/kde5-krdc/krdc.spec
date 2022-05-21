@@ -4,7 +4,7 @@
 %define libkrdccore libkrdccore%sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init
 
@@ -78,10 +78,9 @@ KF5 library
 %files
 %_K5bin/krdc
 %_K5plug/krdc/
-#%_K5data/krdc/
 %_K5xdgapp/org.kde.krdc.desktop
 %_K5cfg/krdc.kcfg
-%_K5srv/krdc_*.desktop
+#%_K5srv/krdc_*.desktop
 %_K5srv/ServiceMenus/smb2rdc.desktop
 
 %files devel
@@ -94,6 +93,9 @@ KF5 library
 %_K5lib/libkrdccore.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

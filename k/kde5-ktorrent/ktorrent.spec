@@ -11,8 +11,8 @@
 %add_findreq_skiplist %_K5data/%rname/scripts/*.py
 
 Name: kde5-%rname
-Version: 21.12.3
-Release: alt2
+Version: 22.04.1
+Release: alt1
 %K5init
 
 Group:     Networking/File transfer
@@ -24,7 +24,6 @@ Provides: ktorrent = %version-%release
 Requires: kde5-kross-python
 
 Source: %rname-%version.tar
-Patch1: apply-plugins-fix.patch
 
 # ALT
 Patch10: alt-defaults.patch
@@ -63,7 +62,6 @@ KTorrent library
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
 %patch10 -p1 -b .defaults
 %patch11 -p1
 %patch12 -p1
@@ -91,7 +89,7 @@ done
 %_K5bin/*
 %_K5icon/hicolor/*/*/kt*.*
 %_K5xdgapp/org.kde.%rname.desktop
-%_K5plug/%rname/
+%_K5plug/ktorrent_plugins/
 %_K5xmlgui/%rname/
 %_K5data/*torrent*.rc
 %_K5notif/%rname.notifyrc
@@ -105,6 +103,9 @@ done
 
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri May 06 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt2
 - fix find xmlgui files
 

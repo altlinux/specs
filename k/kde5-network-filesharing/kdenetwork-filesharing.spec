@@ -2,8 +2,8 @@
 %define pkg_samba samba
 
 Name: kde5-network-filesharing
-Version: 21.12.3
-Release: alt3
+Version: 22.04.1
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -65,6 +65,9 @@ cat %SOURCE10 >>po/ru/kfileshare.po
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Wed May 11 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt3
 - update russian translation
 

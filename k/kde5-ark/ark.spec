@@ -1,12 +1,12 @@
 %define rname ark
 
-%define sover 21
+%define sover 22
 %define libkerfuffle libkerfuffle%sover
 
 %def_disable libzip
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init altplace
 
@@ -78,7 +78,7 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
-%doc COPYING*
+%doc LICENSES/*
 %dir %_K5plug/kf5/kfileitemaction/
 %_datadir/qlogging-categories5/*.*categories
 
@@ -107,6 +107,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

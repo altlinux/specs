@@ -1,7 +1,7 @@
 %define rname kamera
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init
 
@@ -62,12 +62,15 @@ KF5 library
 
 %files -f %name.lang
 %doc COPYING*
-%_K5plug/*amera*.so
+%_K5xdgapp/*amera*.desktop
+%_K5plug/plasma/kcms/systemsettings_qwidgets/*amera*.so
 %_K5plug/kf5/kio/*amera*.so
-%_K5srv/*amera*.desktop
 %_K5data/solid/actions/*amera*.desktop
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

@@ -14,7 +14,7 @@
 %define libkonsoleapp libkonsoleapp%sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
@@ -45,7 +45,7 @@ Patch16: alt-new-tab-button.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: libalternatives-devel
 BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-script-devel
-BuildRequires: libdb4-devel
+BuildRequires: libdb4-devel zlib-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
@@ -113,7 +113,7 @@ Requires: %name-common = %version-%release
 %install
 %K5install
 %if_disabled obsolete_kde4
-%K5install_move data konsole khotkeys knsrcfiles
+%K5install_move data konsole khotkeys knsrcfiles kio kconf_update
 %endif
 
 # install profiles
@@ -143,21 +143,20 @@ __EOF__
 #%attr(2711,root,utempter) %_K5bin/konsole
 %_K5bin/konsole
 %_K5bin/konsoleprofile
+%_K5conf_bin/konsole_globalaccel
 %_K5plug/konsole*.so
 %_K5plug/konsoleplugins/
 %_K5xdgapp/org.kde.konsole.desktop
 %if_enabled obsolete_kde4
 %_datadir/konsole/
+%_datadir/kio/servicemenus/konsolerun.desktop
+%_datadir/kconf_update/konsole_globalaccel.upd
 %else
+%_K5data/kio/servicemenus/konsolerun.desktop
 %_K5data/konsole/
-%endif
-%if_enabled obsolete_kde4
-%_datadir/khotkeys/konsole.khotkeys
-%else
-%_K5data/khotkeys/konsole.khotkeys
+%_K5conf_up/konsole_globalaccel.upd
 %endif
 %_K5srv/*.desktop
-%_K5srv/ServiceMenus/konsole*.desktop
 %_K5srvtyp/*.desktop
 %_K5notif/*
 %if_enabled obsolete_kde4
@@ -178,6 +177,9 @@ __EOF__
 %_K5lib/libkonsoleapp.so.%sover
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

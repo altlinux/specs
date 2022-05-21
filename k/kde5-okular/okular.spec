@@ -10,11 +10,11 @@
 %def_disable obsolete_kde4
 %endif
 
-%define sover 9
+%define sover 10
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
@@ -110,7 +110,7 @@ KF5 library
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
-%patch5 -p2
+#%patch5 -p2 -b .csp
 sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 
 tmp_file=`mktemp`
@@ -203,6 +203,9 @@ rm -f "$tmp_file"
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

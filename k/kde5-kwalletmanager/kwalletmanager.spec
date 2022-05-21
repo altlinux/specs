@@ -1,9 +1,9 @@
 %define rname kwalletmanager
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
-%K5init altplace
+%K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
 Summary: KDE Wallet Manager
@@ -70,17 +70,19 @@ cp -ar po/ru/docs/kwallet5 po/ru/docs/kwalletmanager5
 %_K5icon/*/*/actions/wallet-*.*
 %_K5libexecdir/kauth/kcm_kwallet_helper5
 %_K5plug/kcm_kwallet5.so
-%_K5dbus_sys_srv/org.kde.kcontrol.kcmkwallet5.service
-#%config(noreplace) %_K5conf_dbus_sysd/org.kde.kcontrol.kcmkwallet5.conf
-%_K5dbus/system.d/org.kde.kcontrol.kcmkwallet5.conf
+%_datadir/dbus-1/services/*kwallet*.service
+%_K5dbus_sys_srv/*kwallet*.service
+%_K5dbus/system.d/*kwallet*.conf
 %_K5xdgapp/*kwallet*.desktop
-%_K5srv/kwallet*.desktop
-%_K5xmlgui/kwalletmanager5/
+%_K5srv/*kwallet*.desktop
 %_datadir/qlogging-categories5/*.*categories
 %_datadir/polkit-1/actions/*kwallet5*.policy
 
 
 %changelog
+* Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 
