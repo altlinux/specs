@@ -1,8 +1,8 @@
 # do not forget to update Git revision in setup section
 
 Name: yosys
-Version: 0.16
-Release: alt2
+Version: 0.17
+Release: alt1
 
 Summary: Yosys Open SYnthesis Suite
 License: ISC
@@ -74,6 +74,9 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_man1dir/%name-config.1*
 
 %changelog
+* Sat May 21 2022 Anton Midyukov <antohami@altlinux.org> 0.17-alt1
+- New version 0.17
+
 * Fri Apr 29 2022 Anton Midyukov <antohami@altlinux.org> 0.16-alt2
 - add dependencies on graphviz, python3-module-xdot for generating Graphviz
   representation of design (Closes: 42631)
