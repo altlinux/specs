@@ -1,8 +1,7 @@
+Group: System/Libraries
 # BEGIN SourceDeps(oneline):
 BuildRequires: libssl-devel
 # END SourceDeps(oneline)
-Group: System/Libraries
-%add_optflags %optflags_shared
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -21,8 +20,8 @@ Group: System/Libraries
 %bcond_without libisds_enables_test
 
 Name:           libisds
-Version:        0.11.1
-Release:        alt1_4
+Version:        0.11.2
+Release:        alt1_2
 Summary:        Library for accessing the Czech Data Boxes
 # COPYING:      LGPLv3 text
 # README:       LGPLv3+
@@ -65,10 +64,13 @@ Summary:        Library for accessing the Czech Data Boxes
 # test-driver:      GPLv2+ with exceptions
 License:        LGPLv3+ and GPLv3+
 URL:            http://xpisar.wz.cz/%{name}/
-Source0:        %{url}dist/%{name}-%{version}.tar.xz
-Source1:        %{url}dist/%{name}-%{version}.tar.xz.asc
+Source0:        http://xpisar.wz.cz/%{name}/dist/%{name}-%{version}.tar.xz
+Source1:        http://xpisar.wz.cz/%{name}/dist/%{name}-%{version}.tar.xz.asc
 # Key exported from Petr Pisar's keyring
-Source2:        gpgkey-4B528393E6A3B0DFB2EF3A6412C9C5C767C6FAA2.gpg
+Source2:        gpgkey-E3F42FCE156830A80358E6E94FD1AEC3365AF7BF.gpg
+# Adapt tests to changes in curl-7.83, in upstream after 0.11.2,
+# <https://github.com/curl/curl/issues/8844>
+Patch0:         libisds-0.11.2-tests-Do-not-send-multi-line-HTTP-headers-by-server.patch
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  coreutils
@@ -124,6 +126,8 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
+
 autoreconf -fi
 
 %build
@@ -177,6 +181,9 @@ rm -rf client/.deps client/Makefile{,.in}
 %doc client
 
 %changelog
+* Sat May 21 2022 Igor Vlasenko <viy@altlinux.org> 0.11.2-alt1_2
+- new version
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 0.11.1-alt1_4
 - fc update
 
