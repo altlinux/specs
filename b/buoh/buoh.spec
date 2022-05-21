@@ -5,7 +5,7 @@ Name:             buoh
 License:          GPLv2+
 Group:            Networking/Other
 Version:          0.8.2
-Release:          alt2_9
+Release:          alt3_9
 Summary:          Online comics reader
 URL:              http://buoh.steve-o.org/
 Source:           http://buoh.steve-o.org/downloads/buoh-%{version}.tar.bz2
@@ -23,7 +23,7 @@ the comic strip archives.
 %prep
 %setup -q
 
-perl -i -npe 's,#include\s*<(?:glib/gmessages|glib/gversionmacros|glib/gmacros|glib/gtypes|glib/gthread|glibconfig)\.h>,#include <glib.h>,' `pcregrep -rl '#include\s*<\(glib/gmessages\|glib/gversionmacros\|glib/gmacros\|glib/gtypes\|glib/gthread\|glibconfig\)\.h>' .`
+perl -i -npe 's,#include\s*<(?:glib/gmessages|glib/gversionmacros|glib/gmacros|glib/gtypes|glib/gthread|glibconfig)\.h>,#include <glib.h>,' `grep -P -rl '#include\s*<(glib/gmessages|glib/gversionmacros|glib/gmacros|glib/gtypes|glib/gthread|glibconfig)\.h>' .`
 
 
 %build
@@ -74,6 +74,9 @@ fi
 %{_datadir}/icons/hicolor/16x16/apps/buoh.png
 
 %changelog
+* Sat May 21 2022 Igor Vlasenko <viy@altlinux.org> 0.8.2-alt3_9
+- pcregrep syntax change
+
 * Sat Apr 14 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt2_9
 - fixed build with new glib
 
