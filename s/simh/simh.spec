@@ -1,5 +1,5 @@
 Name: simh
-Version: 3.11.1
+Version: 3.12.2
 Release: alt1
 Summary: A highly portable, multi-system emulator
 
@@ -15,7 +15,7 @@ Packager: Andrey Bergman <vkni@altlinux.org>
 Source: %name-%version.tar
 Patch0: %name-3.11.1-alt-uc15_memsize.patch
 
-BuildRequires: libpcap-devel recode
+BuildRequires: libpcap-devel libSDL2-devel libpng-devel recode
 
 %description
 SIMH is a historical computer simulation system. It consists of simulators
@@ -70,10 +70,11 @@ http://pdp-11.org.ru
 
 %build
 mkdir -p BIN
-%make_build -e OPT="%optflags" USE_NETWORK=1
+%make_build -e OPT="%optflags"
 
 %install
 mkdir -p %buildroot%_bindir
+rm -fr BIN/buildtools
 for i in `ls BIN/`; do
 	install -p -m 755 BIN/$i %buildroot%_bindir/simh-$i
 done
@@ -90,6 +91,9 @@ for i in `find -iname "*.txt"`; do recode cp1251/CR-LF.. $i; done
 #%%doc DOC/*.pdf
 
 %changelog
+* Sun May 22 2022 Andrey Bergman <vkni@altlinux.org> 3.12.2-alt1
+- Version update.
+
 * Sun Mar 28 2021 Andrey Bergman <vkni@altlinux.org> 3.11.1-alt1
 - Version update.
 
