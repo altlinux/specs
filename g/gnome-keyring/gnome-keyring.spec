@@ -1,12 +1,13 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 40
+%define ver_major 42
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
 %def_disable valgrind
 %def_enable pam
 %def_enable selinux
+%def_enable systemd
 %def_enable ssh
 %def_disable check
 
@@ -40,12 +41,13 @@ Requires(post): libcap-utils
 Requires: p11-kit >= %p11kit_ver
 
 # From configure.ac
-BuildPreReq: gnome-common libgio-devel >= %glib_ver
-BuildPreReq: intltool >= 0.35.0 gtk-doc xsltproc
-BuildPreReq: libdbus-devel >= %dbus_ver
-BuildPreReq: libgcrypt-devel >= %gcrypt_ver
-BuildPreReq: libtasn1-devel >= %tasn1_ver  libp11-kit-devel >= %p11kit_ver
-BuildPreReq: gcr-libs-devel >= %gcr_ver
+%{?_enable_systemd:BuildRequires(pre): rpm-build-systemd}
+BuildRequires: gnome-common libgio-devel >= %glib_ver
+BuildRequires: gtk-doc xsltproc
+BuildRequires: libdbus-devel >= %dbus_ver
+BuildRequires: libgcrypt-devel >= %gcrypt_ver
+BuildRequires: libtasn1-devel >= %tasn1_ver  libp11-kit-devel >= %p11kit_ver
+BuildRequires: gcr-libs-devel >= %gcr_ver
 BuildRequires: libtasn1-utils
 BuildRequires: libcap-ng-devel
 %{?_enable_pam:BuildRequires: libpam-devel}
@@ -85,7 +87,7 @@ GNOME Keyring ssh agent is a wrapper for stock ssh-agent from OpenSSH.
 %prep
 %setup
 %patch -p1 -b .lfs
-%patch1 -p1 -b .ssh-agent
+%{?_enable_ssh:%patch1 -p1 -b .ssh-agent}
 
 %build
 %autoreconf
@@ -95,6 +97,7 @@ GNOME Keyring ssh agent is a wrapper for stock ssh-agent from OpenSSH.
 	%{subst_enable debug} \
 	%{subst_enable valgrind} \
 	%{subst_enable selinux} \
+	%{?_disable_systemd:--without-systemd} \
 	%{?_disable_ssh:--disable-ssh-agent} \
 	--enable-doc \
 	--with-pam-dir=/%_lib/security
@@ -129,6 +132,9 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 %_man1dir/*
 %_datadir/dbus-1/services/org.freedesktop.impl.portal.Secret.service
 %_datadir/xdg-desktop-portal/portals/gnome-keyring.portal
+%{?_enable_systemd:
+%_userunitdir/%name-daemon.service
+%_userunitdir/%name-daemon.socket}
 %doc README AUTHORS NEWS
 
 %exclude %_libdir/pkcs11/*.la
@@ -150,6 +156,12 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Sat May 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
+* Mon Nov 22 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
+- updated to 40.0-11-gffb03fdd
+
 * Fri Mar 26 2021 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0
 
