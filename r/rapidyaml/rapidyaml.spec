@@ -1,6 +1,6 @@
 Name: rapidyaml
 Version: 0.4.1
-Release: alt1
+Release: alt2
 
 Summary: A library to parse and emit YAML
 License: MIT
@@ -19,11 +19,11 @@ BuildRequires: python3-dev
 %description
 ryml is a C++ library to parse and emit YAML.
 
-%package -n lib%name
+%package -n libryml
 Summary: A library to parse and emit YAML
 Group: System/Libraries
 
-%description -n lib%name
+%description -n libryml
 ryml is a C++ library to parse and emit YAML.
 
 ryml parses both read-only and in-situ source buffers; the resulting
@@ -37,11 +37,11 @@ Group: System/Libraries
 %description -n libc4core
 ryml is a C++ library to parse and emit YAML.
 
-%package -n lib%name-devel
+%package -n libryml-devel
 Summary: Header files for rapidyaml, a library to parse and emit YAML
 Group: Development/C++
 
-%description -n lib%name-devel
+%description -n libryml-devel
 ryml is a C++ library to parse and emit YAML.
 
 This package contains development headers and examples.
@@ -61,13 +61,13 @@ if [ "%_libdir" != "/usr/lib" ]; then
 	mv %buildroot/usr/lib/* %buildroot%_libdir/
 fi
 
-%files -n lib%name
-%{_libdir}/libryml.so.*
+%files -n libryml
+%_libdir/libryml.so.*
 
 %files -n libc4core
 %_libdir/libc4core.so.*
 
-%files -n lib%name-devel
+%files -n libryml-devel
 %doc README.md
 %_includedir/*
 %_libdir/cmake/c4core
@@ -76,5 +76,8 @@ fi
 %_libdir/libryml.so
 
 %changelog 
+* Sun May 22 2022 Nazarov Denis <nenderus@altlinux.org> 0.4.1-alt2
+- Rename subpackages
+
 * Fri May 20 2022 Nazarov Denis <nenderus@altlinux.org> 0.4.1-alt1
 - Initial build for ALT Linux
