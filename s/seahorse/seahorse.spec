@@ -1,11 +1,8 @@
 %def_disable snapshot
-# [150/151] Linking target pgp/hkp-source
-# hasher-priv: master: idle time limit (3600 seconds) exceeded
-%{?optflags_lto:%global optflags_lto %nil}
 
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 41
+%define ver_major 42
 %define beta %nil
 %define xdg_name org.gnome.seahorse
 
@@ -39,14 +36,14 @@ Source: %name-%version.tar
 #https://bugzilla.altlinux.org/show_bug.cgi?id=37650
 Source1: %name.ru.po
 
-%define glib_ver 2.58
+%define glib_ver 2.66
 %define gtk_ver 3.24
 %define soup_ver 2.34
 %define secret_ver 0.16
 %define avahi_ver 0.6
 %define gcr_ver 3.38
-%define gpgme_ver 1.7
-%define handy_ver 1.1
+%define gpgme_ver 1.14
+%define handy_ver 1.5.0
 %define gnupg_ver 2.2.0
 
 Requires: dconf
@@ -55,8 +52,8 @@ Requires: pinentry-x11
 %{?_enable_ssh:Requires: openssh-clients}
 %{?_enable_sharing:Requires: avahi-daemon}
 
-BuildRequires(pre): meson rpm-build-gnome rpm-build-licenses
-BuildRequires: yelp-tools libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson yelp-tools libappstream-glib-devel
 BuildRequires: gtk-doc desktop-file-utils
 BuildRequires: gcc-c++ glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
@@ -114,6 +111,10 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Sat May 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+- enabled LTO
+
 * Wed Sep 29 2021 Yuri N. Sedunov <aris@altlinux.org> 41.0-alt1
 - 41.0
 
