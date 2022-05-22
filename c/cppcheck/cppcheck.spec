@@ -3,7 +3,7 @@
 
 Name: cppcheck
 Version: 2.8
-Release: alt1
+Release: alt2
 
 Summary: A tool for static C/C++ code analysis
 License: GPLv3
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 Patch2: cppcheck-1.78-norebuild.patch
 Patch4: cppcheck-1.72-test_32.patch
 Patch8: cppcheck-2.2-translations.patch
-
+Patch10: cppcheck-2.8-kate.patch
 
 BuildRequires: gcc-c++
 BuildRequires: qt5-base-devel qt5-tools-devel qt5-charts-devel
@@ -56,6 +56,7 @@ Requires: icon-theme-hicolor
 %endif
 
 %patch8 -p1
+%patch10 -p1
 
 %__subst 's|/usr/bin/env python.*$|%__python3|' htmlreport/{cppcheck-htmlreport,*.py} addons/*.py tools/*.py
 
@@ -68,8 +69,9 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.c' -o -name '*.h' |
 # Make sure bundled tinyxml2 is not used
 #rm -r externals/tinyxml2
 
-%build
 
+
+%build
 %cmake \
 	-G'Unix Makefiles' \
 	-DCMAKE_BUILD_TYPE=Release \
@@ -123,6 +125,9 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun May 22 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2.8-alt2
+- Add cppcheck-2.8-kate.patch
+
 * Sat May 21 2022 Andrew A. Vasilyev <andy@altlinux.org> 2.8-alt1
 - 2.8
 
@@ -301,4 +306,5 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 
 * Tue May 05 2009 Slava Semushin <php-coder@altlinux.ru> 1.31-alt1
 - Initial build for ALT Linux
+
 
