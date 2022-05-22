@@ -5,7 +5,7 @@
 
 Name: minetest
 Version: 5.5.1
-Release: alt1
+Release: alt2
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -89,7 +89,7 @@ System.
 
 pushd games
 tar xf %SOURCE6
-#mv %gitname-%{name}_game %{name}_game
+mv %{name}_game-%version %{name}_game
 popd
 
 cp %SOURCE7 doc/
@@ -192,6 +192,9 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Sun May 22 2022 Ilya Mashkin <oddity@altlinux.ru> 5.5.1-alt2
+- add missed game data (Closes: #42822)
+
 * Tue May 17 2022 Ilya Mashkin <oddity@altlinux.ru> 5.5.1-alt1
 - 5.5.1
 
