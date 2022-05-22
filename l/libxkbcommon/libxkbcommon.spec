@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -142,6 +142,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sun May 22 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
+- 1.4.1
+
 * Wed Mar 02 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
