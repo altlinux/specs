@@ -1,6 +1,6 @@
 Name: algol68g
-Version: 3.0.4
-Release: alt1.1
+Version: 3.0.6
+Release: alt1
 Summary: Algol 68 interpreter
 License: GPL
 Group: Development/Other
@@ -54,6 +54,9 @@ install -pm644 ChangeLog %buildroot%_docdir/
 %_docdir/*
 
 %changelog
+* Sun May 22 2022 Andrey Bergman <vkni@altlinux.org> 3.0.6-alt1
+- Version update
+
 * Mon Feb 07 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0.4-alt1.1
 - Fixed build for Elbrus
 
