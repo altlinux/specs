@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 5.17
+%define kernel_base_version 5.18
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent/plugins/*
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -14,7 +14,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -38,6 +38,7 @@ BuildRequires: libhugetlbfs-devel
 BuildRequires: liblzma-devel
 BuildRequires: libmnl-devel
 BuildRequires: libmount-devel
+BuildRequires: libnl-devel
 BuildRequires: libpfm-devel
 BuildRequires: libpopt-devel
 BuildRequires: libprocps-devel
@@ -634,6 +635,9 @@ fi
 %_man1dir/rtla*
 
 %changelog
+* Mon May 23 2022 Vitaly Chikunov <vt@altlinux.org> 5.18-alt1
+- Update to v5.18 (2022-05-22).
+
 * Sat Apr 16 2022 Vitaly Chikunov <vt@altlinux.org> 5.17-alt2
 - spec: Fix rebuild with new rst2man.
 
