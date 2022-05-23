@@ -3,7 +3,7 @@
 
 Name: opensaml
 Version: 3.2.1
-Release: alt1
+Release: alt2
 
 Summary: Security Assertion Markup Language library
 
@@ -67,6 +67,10 @@ This package includes XML schemas and related files.
 
 %prep
 %setup
+%ifarch %e2k
+# lcc's cpp adds an extra space breaking this regex
+sed -r -i 's,\^boost(.)lib(.)version,boost\1lib\2version,' configure m4/boost.m4
+%endif
 
 %build
 # The default C++ standard used in GCC-11 is C++17,
@@ -100,5 +104,8 @@ rm -f %buildroot/%_libdir/libsaml.la
 %doc %pkgdocdir
 
 %changelog
+* Mon May 23 2022 Michael Shigorin <mike@altlinux.org> 3.2.1-alt2
+- E2K: lcc ftbfs workaround for lousy boost test
+
 * Thu Apr 14 2022 Leontiy Volodin <lvol@altlinux.org> 3.2.1-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
