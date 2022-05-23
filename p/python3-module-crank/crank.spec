@@ -2,12 +2,12 @@
 %define oname crank
 
 Name: python3-module-%oname
-Version: 0.8.0
-Release: alt2
+Version: 0.8.1
+Release: alt1
 Summary: Generalization of dispatch mechanism for use across frameworks
 License: MIT
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/crank/
+Url: http://pypi.python.org/pypi/crank
 
 Source0: https://pypi.python.org/packages/59/9b/5df0c3319f0c4de5a8fc428243487750bbd9e96646b5aa435494e724a1c5/%{oname}-%{version}.tar.gz
 BuildArch: noarch
@@ -31,6 +31,9 @@ Generalization of dispatch mechanism for use across frameworks.
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 23 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1
+- Build new version.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.0-alt2
 - Drop python2 support.
 
