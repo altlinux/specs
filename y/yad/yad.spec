@@ -1,5 +1,5 @@
 Name: yad
-Version: 7.3
+Version: 12.0
 Release: alt1
 Summary: Display graphical dialogs from shell scripts or command line
 
@@ -8,9 +8,9 @@ License: GPLv3+
 # http://sourceforge.net/projects/yad-dialog/
 Url: https://github.com/v1cont/yad
 Source0: v%version.tar.gz
+Source1: ru.po
 Patch0: fix-missing-buttons.patch
 Patch1: show-cursor-initially.patch
-Patch2: show-cursor-initially-po.patch
 
 BuildRequires: desktop-file-utils
 # Automatically added by buildreq on Fri Oct 10 2014
@@ -25,7 +25,7 @@ custom buttons, additional dialogs, pop-up menu in notification icon and more.
 %setup
 #patch0 -p0
 %patch1 -p1
-%patch2 -p1
+cp %SOURCE1 po/ && echo ru >> po/LINGUAS
 
 %build
 %autoreconf
@@ -58,6 +58,10 @@ desktop-file-install --remove-key Encoding     \
 %_datadir/glib-2.0/schemas/yad.gschema.xml
 
 %changelog
+* Mon May 23 2022 Fr. Br. George <george@altlinux.ru> 12.0-alt1
+- Autobuild version bump to 12.0
+- Resurrect russian translation
+
 * Sun Jan 31 2021 Fr. Br. George <george@altlinux.ru> 7.3-alt1
 - Autobuild version bump to 7.3
 
