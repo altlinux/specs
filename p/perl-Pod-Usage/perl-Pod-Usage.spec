@@ -7,14 +7,14 @@ BuildRequires: perl(Config.pm) perl(Cwd.pm) perl(Exporter.pm) perl(ExtUtils/Make
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.01
+Version: 2.03
 Release: alt1
 Summary: Pod::Usage extracts POD documentation and shows usage information
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://www.cpan.org/authors/id/A/AT/ATOOMIC/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MAREKR/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 Conflicts: perl-Pod-Parser < 1.60
 %if_without bootstrap
@@ -41,6 +41,9 @@ Requires: perl-podlators
 %_man1dir/*
 
 %changelog
+* Mon May 23 2022 Igor Vlasenko <viy@altlinux.org> 2.03-alt1
+- automated CPAN update
+
 * Sat Oct 24 2020 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
 - automated CPAN update
 
