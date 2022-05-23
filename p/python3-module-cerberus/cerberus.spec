@@ -1,22 +1,26 @@
 %define oname cerberus
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.3.2
+Version: 1.3.4
 Release: alt1
 Summary: Extensible validation for Python dictionaries
 License: ISCL
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/Cerberus/
+Url: https://pypi.python.org/pypi/Cerberus
 
 # https://github.com/pyeve/cerberus.git
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
+%if_with check
 BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
+%add_python3_req_skip cerberus.benchmarks.schemas.overalll_schema_2
 
 %description
 Cerberus is an ISC Licensed validation tool for Python dictionaries.
@@ -43,7 +47,7 @@ This package contains tests for %oname.
 %setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -60,6 +64,9 @@ py.test3 -v %oname/tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu May 12 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.4-alt1
+- Automatically updated to 1.3.4.
+
 * Tue Jul 28 2020 Grigory Ustinov <grenka@altlinux.org> 1.3.2-alt1
 - Build new version.
 - Drop python2 support.
