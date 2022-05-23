@@ -29,8 +29,8 @@
   --enable-toolbar
 
 Name: xterm
-Version: 370
-Release: alt2
+Version: 372
+Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
 Summary(ru_RU.UTF8): Стандартный эмулятор терминала для X Window System
@@ -159,6 +159,10 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Mon May 23 2022 Fr. Br. George <george@altlinux.ru> 372-alt1
+- Autobuild version bump to 372
+- Fix [ef]grep issue
+
 * Tue Feb 01 2022 Fr. Br. George <george@altlinux.ru> 370-alt2
 - Make xterm-experimental defaults to vt340 (sixel support) and 256color
 
