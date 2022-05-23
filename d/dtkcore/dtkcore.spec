@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcore
-Version: 5.5.30
+Version: 5.5.31
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -12,7 +12,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -98,6 +98,12 @@ sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|'  \
 %_pkgconfigdir/dtkcore.pc
 
 %changelog
+* Mon May 23 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.31-alt1
+- New version.
+- Upstream:
+  + fix: application crash when dconfig is invalid.
+  + fix: DConfig can't find resource.
+
 * Fri Apr 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.30-alt1
 - New version (5.5.30).
 
