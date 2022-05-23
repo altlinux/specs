@@ -1,23 +1,35 @@
 %define oname cvxopt
 
+%def_with check
+%def_with docs
+
 Name: python3-module-%oname
-Version: 1.2.7
+Version: 1.3.0
 Release: alt1
 
 Summary: Python Software for Convex Optimization
-License: GPL v3 or higher
-Group: Development/Python3
 
-Url: http://cvxopt.org/
+License: GPL-3.0-or-later
+Group: Development/Python3
+Url: http://cvxopt.org
+
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-# Automatically added by buildreq on Wed Jan 27 2016 (-bi)
-# optimized out: elfutils fontconfig libopenblas-devel python-base python-devel python-module-PyStemmer python-module-Pygments python-module-babel python-module-cssselect python-module-genshi python-module-jinja2 python-module-jinja2-tests python-module-markupsafe python-module-pytz python-module-setuptools python-module-six python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-json python-modules-multiprocessing python-modules-unittest python3 python3-base t1lib tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended
-BuildRequires: dvipng libfftw3-devel libglpk-devel libgsl-devel liblapack-devel python3-devel rpm-build-python3 time
+BuildRequires: dvipng libfftw3-devel libglpk-devel libgsl-devel liblapack-devel
 BuildRequires: libblas-devel libsuitesparse-devel
 
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx_rtd_theme
+%endif
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
+
+# mosek is not packaged and there is no tarball on pypi for it
 %add_python3_req_skip mosekarr pymosek mosek mosek.array
 
 Conflicts: %name-pickles < %version-%release
@@ -99,8 +111,8 @@ sed -i 's,openblas,blas,g' setup.py
 %if "%_lib" != "lib64"
 sed -i 's|lib64|lib|g' setup.py
 %endif
-%if "%arch" != "x86_64"
-sed -i 's|x86_64|%arch|g' setup.py
+%if "%_arch" != "x86_64"
+sed -i 's|x86_64|%_arch|g' setup.py
 %endif
 %add_optflags -fno-strict-aliasing
 export CC="gcc"
@@ -108,7 +120,8 @@ export LDSHARED="gcc -shared $RPM_LD_FLAGS"
 %python3_build_debug
 
 %if_with docs
-%make -C doc html
+%make SPHINXBUILD="sphinx-build-3" -C doc html
+%make SPHINXBUILD="sphinx-build-3" -C doc pickle
 %endif
 
 %install
@@ -118,15 +131,17 @@ export LDSHARED="gcc -shared $RPM_LD_FLAGS"
 install -d %buildroot%_docdir/%name
 cp -fR doc/build/html examples %buildroot%_docdir/%name/
 
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
+
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 -m pytest
 
 %files
 %doc LICENSE README.md
 %python3_sitelibdir/%oname
-# doesnt work=(
-#python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*.egg-info
 %if_with docs
 %exclude %python3_sitelibdir/%oname/pickle
 
@@ -144,6 +159,11 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon May 23 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Automatically updated to 1.3.0.
+- Build with check.
+- Build with docs.
+
 * Mon Dec 13 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.7-alt1
 - Automatically updated to 1.2.7.
 
