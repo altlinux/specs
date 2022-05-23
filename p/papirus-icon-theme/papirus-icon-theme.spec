@@ -1,6 +1,6 @@
 Name:     papirus-icon-theme
 Version:  20220508
-Release:  alt1
+Release:  alt2
 
 Summary:  All Papirus icon themes
 License:  GPLv3
@@ -13,8 +13,11 @@ Source:   %name-%version.tar
 
 BuildArch: noarch
 
+BuildRequires: papirus-folders
+
 Requires: icon-theme-Papirus = %EVR
 Requires: icon-theme-Papirus-Dark = %EVR
+Requires: icon-theme-Papirus-Education = %EVR
 Requires: icon-theme-Papirus-Light = %EVR
 Requires: icon-theme-ePapirus = %EVR
 
@@ -24,10 +27,11 @@ Paper Icon Set with a lot of new icons and a few extras, like
 Hardcode-Tray support, KDE colorscheme support, Folder Color support,
 and others.
 
-Papirus icon theme is available in six variants:
+Papirus icon theme is available in five variants:
 
 * Papirus
 * Papirus Dark
+* Papirus Education
 * Papirus Light
 * ePapirus (for elementary OS and Pantheon Desktop)
 
@@ -44,6 +48,14 @@ Group: Other
 Requires(pre): icon-theme-Papirus
 
 %description -n icon-theme-Papirus-Dark
+%summary.
+
+%package -n icon-theme-Papirus-Education
+Summary: Papirus-Education icon theme
+Group: Other
+Requires(pre): icon-theme-Papirus
+
+%description -n icon-theme-Papirus-Education
 %summary.
 
 %package -n icon-theme-Papirus-Light
@@ -69,9 +81,13 @@ for i in 16 22 24 32 48 64;do
     ln -s internet-web-browser.svg Papirus/${i}x${i}/apps/applications-network.svg
 done
 
+cp -a Papirus-Light Papirus-Education
+papirus-folders -C orange -t Papirus-Education
+sed -e 's/Light/Education/g; s/bright themes/ALT Education/g; s/breeze/orange/g' -i Papirus-Education/index.theme ||exit
+
 %install
 mkdir -p %buildroot%_iconsdir
-cp -a Papirus Papirus-Dark Papirus-Light ePapirus %buildroot%_iconsdir
+cp -a Papirus Papirus-Dark Papirus-Education Papirus-Light ePapirus %buildroot%_iconsdir
 
 %files
 %doc AUTHORS LICENSE README.md
@@ -84,6 +100,10 @@ cp -a Papirus Papirus-Dark Papirus-Light ePapirus %buildroot%_iconsdir
 %doc AUTHORS LICENSE README.md
 %_iconsdir/Papirus-Dark
 
+%files -n icon-theme-Papirus-Education
+%doc AUTHORS LICENSE README.md
+%_iconsdir/Papirus-Education
+
 %files -n icon-theme-Papirus-Light
 %doc AUTHORS LICENSE README.md
 %_iconsdir/Papirus-Light
@@ -93,6 +113,10 @@ cp -a Papirus Papirus-Dark Papirus-Light ePapirus %buildroot%_iconsdir
 %_iconsdir/ePapirus
 
 %changelog
+* Wed May 11 2022 Kirill Izmestev <felixz@altlinux.org> 20220508-alt2
+- Add new Papirus icon theme: Papirus-Education
+(based on Papirus-Light, but with orange folders).
+
 * Mon May 09 2022 Andrey Cherepanov <cas@altlinux.org> 20220508-alt1
 - New version.
 
