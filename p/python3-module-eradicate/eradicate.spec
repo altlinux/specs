@@ -1,8 +1,8 @@
 %define  oname eradicate
 
 Name:    python3-module-%oname
-Version: 1.0
-Release: alt2
+Version: 2.1.0
+Release: alt1
 
 Summary: Removes commented-out code from Python files
 
@@ -13,7 +13,7 @@ URL:     https://github.com/myint/eradicate
 Packager:  Grigory Ustinov <grenka@altlinux.org>
 BuildArch: noarch
 
-Source:  %oname-%version.tar
+Source:  %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
@@ -29,7 +29,7 @@ contain valid Python syntax that are likely to be commented out code.
 which is valid Python syntax, but is probably not code.)
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
@@ -42,8 +42,10 @@ which is valid Python syntax, but is probably not code.)
 %_bindir/eradicate
 %python3_sitelibdir/*
 
-
 %changelog
+* Mon May 23 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
+- Automatically updated to 2.1.0.
+
 * Thu Jan 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0-alt2
 - Porting on Python3.
 
