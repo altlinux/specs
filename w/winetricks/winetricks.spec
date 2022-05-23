@@ -1,6 +1,6 @@
 Name: winetricks
 Version: 20220411
-Release: alt1
+Release: alt2
 
 Summary: Work around common problems in Wine
 
@@ -13,6 +13,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 ## Source-url: https://github.com/Winetricks/winetricks/archive/refs/heads/master.zip
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
+
+Patch: 066a2334ebc6fb608825949d7c642b1441bc403a.patch
 
 BuildArch: noarch
 
@@ -39,6 +41,7 @@ or tweak various Wine settings individually.
  
 %prep
 %setup
+%patch -p1
 
 # fix req. Disable autoreq at all?
 %__subst 's|fusermount|a= fusermount|' src/winetricks
@@ -47,7 +50,9 @@ sed -i -e "s:steam::" -e "s:flash::" tests/*
 
 %build
 # not needed
-subst 's|WINETRICKS_VERSION=.*|WINETRICKS_VERSION=%version-%release|' src/winetricks
+#subst 's|WINETRICKS_VERSION=.*|WINETRICKS_VERSION=%version|' src/winetricks
+# disable version checking
+subst 's|winetricks_latest_version_check$||' src/winetricks
 
 %install
 %makeinstall_std
@@ -69,6 +74,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Mon May 23 2022 Vitaly Lipatov <lav@altlinux.ru> 20220411-alt2
+- fix kdialog detection
+
 * Mon Apr 11 2022 Vitaly Lipatov <lav@altlinux.ru> 20220411-alt1
 - new version 20220411 (with rpmrb script)
 
