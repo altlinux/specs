@@ -3,7 +3,7 @@
 
 Name: simplescreenrecorder
 Version: 0.4.4
-Release: alt1
+Release: alt2
 
 Summary: Simple Screen Recording with OpenGL capture
 License: GPL-3.0 and ISC and GPL-3.0+ and Zlib
@@ -45,7 +45,7 @@ f="data/simplescreenrecorder.desktop"
 for s in "GenericName=Simple screen recorder" \
 	"GenericName[ru]=Запись видео с экрана" \
 	"Comment[ru]=Программа записи видео с экрана" ; do
-	fgrep -q "${s%%=}" "$f" || echo "$s" >> "$f"
+	grep -F -q "${s%%=}" "$f" || echo "$s" >> "$f"
 done
 # XXX waiting for support for channels
 ##sed -i '/#define SSR_USE_AVFRAME_CHANNELS/s/TEST_AV_VERSION.*/TEST_AV_VERSION(LIBAVCODEC, 57, 0, 57, 0)/' src/Global.h
@@ -88,6 +88,9 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/metainfo/*
 
 %changelog
+* Mon May 23 2022 Fr. Br. George <george@altlinux.org> 0.4.4-alt2
+- Fix fgrep warning
+
 * Thu May 12 2022 Leontiy Volodin <lvol@altlinux.org> 0.4.4-alt1
 - New version (0.4.4) with rpmgs script.
 - Updated translations.
