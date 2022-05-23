@@ -1,6 +1,6 @@
 Name: netpbm
 Version: 10.85.04
-Release: alt1
+Release: alt2
 
 Summary: Tools for manipulating graphics files in netpbm supported formats
 License: BSD-like
@@ -133,7 +133,7 @@ sed	-e '/^@/d'				\
 	-e 's|@INCLUDEDIR@|%_includedir/netpbm|'	\
 	-e 's|@BINDIR@|%_bindir|'		\
 		buildtools/config_template >%buildroot%_bindir/netpbm-config
-egrep '@[A-Z]+@' %buildroot%_bindir/netpbm-config && exit 1
+grep -E '@[A-Z]+@' %buildroot%_bindir/netpbm-config && exit 1
 chmod +x %buildroot%_bindir/netpbm-config
 test "$(%buildroot%_bindir/netpbm-config --datadir)" = %_datadir/%name
 
@@ -165,6 +165,9 @@ install -p -m644 man/*.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Mon May 23 2022 Fr. Br. George <george@altlinux.ru> 10.85.04-alt2
+- Fix egrep warning
+
 * Tue Mar 26 2019 Vitaly Lipatov <lav@altlinux.ru> 10.85.04-alt1
 - NMU: build new version 10.85.04 (ALT bug 33079)
 - drop doc subpackage and generated from it man3, man5
