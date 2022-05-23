@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geany
-Version: 1.37.1
+Version: 1.38
 Release: alt1
 
 Summary: A fast and lightweight IDE using GTK2
@@ -126,6 +126,9 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_libdir/*.so
 
 %changelog
+* Mon May 23 2022 Fr. Br. George <george@altlinux.ru> 1.38-alt1
+- Autobuild version bump to 1.38
+
 * Fri May 07 2021 Fr. Br. George <george@altlinux.ru> 1.37.1-alt1
 - Autobuild version bump to 1.37.1
 - Eliminate python2
