@@ -3,11 +3,10 @@
 %def_enable doc
 
 Name: libgio-qt
-Version: 0.0.9
+Version: 0.0.11
 Release: alt1
 Summary: Qt wrapper library of Gio
-License: GPL-3.0+
-# LGPL-3.0 in future
+License: LGPL-3.0+
 Group: System/Libraries
 Url: https://github.com/linuxdeepin/gio-qt
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -33,7 +32,7 @@ This package provides development files for %repo library.
 %if_enabled doc
 %package doc
 Summary: %name documantation for QtCreator
-Group: Development/KDE and QT
+Group: Documentation
 BuildArch: noarch
 
 %description doc
@@ -42,19 +41,19 @@ This package provides %name documantation for QtCreator.
 
 %prep
 %setup -n %repo-%version
-%__subst 's|qhelpgenerator|qhelpgenerator-qt5|' CMakeLists.txt
 
 %build
-%cmake_insource \
+export PATH=%_qt5_bindir:$PATH
+%cmake \
     -GNinja \
 %if_disabled doc
     -DBUILD_DOCS=OFF
 %endif
 
-%ninja_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%ninja_install
+%cmake_install
 
 %files
 %doc README.md LICENSE
@@ -71,5 +70,8 @@ This package provides %name documantation for QtCreator.
 %endif
 
 %changelog
+* Mon May 23 2022 Leontiy Volodin <lvol@altlinux.org> 0.0.11-alt1
+- New version.
+
 * Thu Jun 11 2020 Leontiy Volodin <lvol@altlinux.org> 0.0.9-alt1
 - Initial build for ALT Sisyphus.
