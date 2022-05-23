@@ -1,5 +1,5 @@
 Name: waybar
-Version: 0.9.12
+Version: 0.9.13
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -7,8 +7,6 @@ URL: https://github.com/Alexays/Waybar.git
 Group: Graphical desktop/Other
 
 Source: %name-%version.tar
-Source1: xkb-layout.py
-Source2: clock.py
 
 Patch0: waybar-config.patch
 
@@ -16,7 +14,6 @@ Patch0: waybar-config.patch
 %define _stripped_files_terminate_build 1
 
 BuildRequires(pre): rpm-build-xdg
-BuildRequires(pre): rpm-build-python3
 
 BuildRequires: cmake meson
 BuildRequires: gcc-c++
@@ -24,6 +21,7 @@ BuildRequires: libstdc++-devel-static
 BuildRequires: pkgconfig(fmt)
 BuildRequires: pkgconfig(gtkmm-3.0)
 BuildRequires: pkgconfig(jsoncpp)
+BuildRequires: pkgconfig(libevdev)
 BuildRequires: pkgconfig(libinput)
 BuildRequires: pkgconfig(scdoc)
 BuildRequires: pkgconfig(sigc++-2.0)
@@ -72,10 +70,6 @@ BuildRequires: pkgconfig(libnl-genl-3.0)
 %install
 %meson_install
 
-mkdir -p -- %buildroot/%helperdir
-install -m 755 -- %SOURCE1 %buildroot/%helperdir/
-install -m 755 -- %SOURCE2 %buildroot/%helperdir/
-
 %check
 %meson_test
 
@@ -84,10 +78,12 @@ install -m 755 -- %SOURCE2 %buildroot/%helperdir/
 %dir %_xdgconfigdir/%name
 %config(noreplace) %_xdgconfigdir/%name/config
 %config(noreplace) %_xdgconfigdir/%name/style.css
-%helperdir
 %_man5dir/*
 
 %changelog
+* Mon May 23 2022 Alexey Gladkov <legion@altlinux.ru> 0.9.13-alt1
+- New version (0.9.13).
+
 * Thu Mar 10 2022 Alexey Gladkov <legion@altlinux.ru> 0.9.12-alt1
 - New version (0.9.12).
 
