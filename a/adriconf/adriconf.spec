@@ -1,7 +1,7 @@
 %define name adriconf
 %define build_type RelWithDebInfo
 %define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
-%define version 2.4.1
+%define version 2.5.0
 %define release alt1
 
 Summary: Advanced Mesa DRI Configurator
@@ -17,9 +17,8 @@ Packager: L.A. Kostis <lakostis@altlinux.org>
 
 BuildRequires(pre): cmake
 
-# Automatically added by buildreq on Wed May 26 2021 (-bi)
-BuildRequires: boost-filesystem-devel boost-locale-devel cmake gcc-c++ libdrm-devel
-BuildRequires: libgbm-devel libgtkmm3-devel libpci-devel libxml++3-devel
+BuildRequires: cmake gcc-c++ libdrm-devel
+BuildRequires: libgbm-devel libgtkmm3-devel libpci-devel libpugixml-devel
 
 %description
 adriconf (Advanced DRI CONFigurator) is a GUI tool used to configure open
@@ -51,5 +50,8 @@ install -m644 flatpak/org.freedesktop.%name.metainfo.xml %buildroot%{_datadir}/m
 %_iconsdir/*.png
 
 %changelog
+* Mon May 23 2022 L.A. Kostis <lakostis@altlinux.ru> 2.5.0-alt1
+- 2.5.0.
+
 * Wed May 26 2021 L.A. Kostis <lakostis@altlinux.ru> 2.4.1-alt1
 - Initial build for ALTLinux.
