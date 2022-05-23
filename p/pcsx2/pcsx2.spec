@@ -1,13 +1,19 @@
 %define optflags_lto %nil
 
 # git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
-%define svn_rev 20211210110636
+%define svn_rev 20220523172711
 
 %define libchdr_commit 5de1a59019815ccdbba0fe07c71b31406d023248
 %define gtest_version 1.11.0
+%define libzip_commit bdc03ab23b703fcc516436d6ebcbfb6ac4484033
+%define zstd_version 1.5.2
+%define vulkan_headers_version 1.2.203
+%define cubeb_commit 773f16b7ea308392c05be3e290163d1f636e6024
+%define imgui_commit 60bea052a92cbb4a93b221002fdf04f0da3698e1
+%define glslang_version 11.7.1
 
 Name: pcsx2
-Version: 1.7.2116
+Version: 1.7.2787
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -17,7 +23,7 @@ Group: Emulators
 Url: http://%name.net/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: x86_64
 
 BuildRequires(pre): at-spi2-atk-devel
 BuildRequires(pre): bzlib-devel
@@ -30,6 +36,7 @@ BuildRequires(pre): libdbus-devel
 BuildRequires(pre): libepoxy-devel
 BuildRequires(pre): libffi-devel
 BuildRequires(pre): libfribidi-devel
+BuildRequires(pre): libjpeg-devel
 BuildRequires(pre): libmount-devel
 BuildRequires(pre): libpcre-devel
 BuildRequires(pre): libpixman-devel
@@ -47,9 +54,23 @@ Source0: %name-%version.tar
 Source1: libchdr-%libchdr_commit.tar
 # https://github.com/google/googletest/archive/release-%gtest_version/googletest-release-%gtest_version.tar.gz
 Source2: googletest-release-%gtest_version.tar
+# https://github.com/nih-at/libzip/archive/%libzip_commit/libzip-%libzip_commit.tar.gz
+Source3: libzip-%libzip_commit.tar
+# https://github.com/facebook/zstd/archive/v%zstd_version/zstd-%zstd_version.tar.gz
+Source4: zstd-%zstd_version.tar
+# https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
+Source5: Vulkan-Headers-%vulkan_headers_version.tar
+# https://github.com/mozilla/cubeb/archive/%cubeb_commit/cubeb-%cubeb_commit.tar.gz
+Source6: cubeb-%cubeb_commit.tar
+# https://github.com/ocornut/imgui/archive/%imgui_commit/imgui-%imgui_commit.tar.gz
+Source7: imgui-%imgui_commit.tar
+# https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
+Source8: glslang-%glslang_version.tar
 
 BuildRequires: cmake
+BuildRequires: doxygen
 BuildRequires: gcc-c++
+BuildRequires: graphviz
 BuildRequires: libGLU-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libXcomposite-devel
@@ -61,19 +82,20 @@ BuildRequires: libXmu-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libXtst-devel
 BuildRequires: libaio-devel
+BuildRequires: libalsa-devel
 BuildRequires: libfmt-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: liblzma-devel
 BuildRequires: libpcap-devel
-BuildRequires: libportaudio2-devel
 BuildRequires: libpulseaudio-devel
+BuildRequires: libryml-devel
 BuildRequires: libsamplerate-devel
 BuildRequires: libsoundtouch-devel
+BuildRequires: libssl-devel
 BuildRequires: libudev-devel
 BuildRequires: libwxGTK3.1-devel
 BuildRequires: libxkbcommon-devel
-BuildRequires: libxml2-devel
-BuildRequires: libyaml-cpp-devel
+BuildRequires: libzip-devel
 BuildRequires: ninja-build
 
 %description
@@ -81,10 +103,16 @@ PCSX2 is an emulator for the playstation 2 video game console. It is written mos
 There is still lot of on going work to improve compatibility & speed.
 
 %prep
-%setup -b 1 -b 2
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8
 
 %__mv -Tf ../libchdr-%libchdr_commit 3rdparty/libchdr/libchdr
 %__mv -Tf ../googletest-release-%gtest_version 3rdparty/gtest
+%__mv -Tf ../libzip-%libzip_commit 3rdparty/libzip/libzip
+%__mv -Tf ../zstd-%zstd_version 3rdparty/zstd/zstd
+%__mv -Tf ../Vulkan-Headers-%vulkan_headers_version 3rdparty/vulkan-headers
+%__mv -Tf ../cubeb-%cubeb_commit 3rdparty/cubeb/cubeb
+%__mv -Tf ../imgui-%imgui_commit 3rdparty/imgui/imgui
+%__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 
 %build
 %cmake .. \
@@ -96,7 +124,9 @@ There is still lot of on going work to improve compatibility & speed.
 	-DDISABLE_BUILD_DATE:BOOL=TRUE \
 	-DUSE_SYSTEM_YAML:BOOL=TRUE \
 	-DLTO_PCSX2_CORE:BOOL=TRUE \
-	-GNinja
+	-DSDL2_API:BOOL=TRUE \
+	-GNinja \
+	-Wno-dev
 
 echo "#define SVN_REV $(echo %svn_rev)ll 
 #define GIT_TAG \"v$(echo %version)\"
@@ -107,20 +137,21 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 
 %install
 %cmake_install
-%find_lang --output=%name.lang %{name}_{Iconized,Main}
 
-%files -f %name.lang
-%_bindir/PCSX2*
+%files
+%_bindir/PCSX2-linux.sh
+%_bindir/%name
 %_desktopdir/PCSX2.desktop
 %_man1dir/PCSX2.1.*
-%dir %_datadir/PCSX2
-%_datadir/PCSX2/GameIndex.yaml
-%_datadir/PCSX2/cheats_ws.zip
+%_datadir/PCSX2
 %_pixmapsdir/PCSX2.xpm
 %dir %_defaultdocdir/Pcsx2
 %_defaultdocdir/Pcsx2/*.pdf
 
 %changelog
+* Mon May 23 2022 Nazarov Denis <nenderus@altlinux.org> 1.7.2787-alt1
+- Version 1.7.2787
+
 * Fri Dec 10 2021 Nazarov Denis <nenderus@altlinux.org> 1.7.2116-alt1
 - Version 1.7.2116
 
