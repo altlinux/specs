@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Pod-Parser
 Name: perl-%dist
-Version: 1.63
+Version: 1.65
 Release: alt1
 
 Summary: Modules for parsing/translating POD format documents
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MA/MAREKR/Pod-Parser-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MA/MAREKR/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -26,7 +26,7 @@ no function is exported by default to avoid pollution of your namespace,
 so be sure to specify them in the B<use> statement if you need them:
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,12 +35,15 @@ so be sure to specify them in the B<use> statement if you need them:
 %perl_vendor_install
 
 %files
-%doc README*
+%doc README* CHANGES
 %_bindir/pod*
 %_man1dir/*
 %perl_vendor_privlib/Pod
 
 %changelog
+* Mon May 23 2022 Igor Vlasenko <viy@altlinux.org> 1.65-alt1
+- automated CPAN update
+
 * Wed Nov 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.63-alt1
 - automated CPAN update
 
