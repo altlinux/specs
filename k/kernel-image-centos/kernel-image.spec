@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 96
+%define centos_release 97
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,18 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon May 23 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.97-alt1.el9
+- Updated to kernel-5.14.0-97.el9 (fixes: CVE-2022-1012, CVE-2022-27666):
+  + bridge: update bridge and switchdev to upstream v5.18
+  + cifs: truncate the inode and mapping when we simulate fcollapse
+  + Enable VM kselftests
+  + net: esp: fix out-of-bounds writes (CVE-2022-27666)
+  + quota: make dquot_quota_sync return errors from ->sync_fs
+  + redhat/configs: enable GUP_TEST in debug kernel
+  + ses: fix a fan issue
+  + Sync SELinux/LSM code with upstream up to v5.18-rc5
+  + tcp: Increase randomness for source port generation.
+
 * Thu May 19 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.96-alt1.el9
 - Updated to kernel-5.14.0-96.el9 (fixes: CVE-2022-28390):
   + can: ems_usb: ems_usb_start_xmit(): fix double dev_kfree_skb() in error path
