@@ -1,4 +1,4 @@
-%define kernel_base_version 5.17
+%define kernel_base_version 5.18
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -40,16 +40,11 @@ Source1: cyclades.h
 #Patch: %name-%version-%release.patch
 
 Patch1: 0001-uapi-fix-linux-sysctl.h-userspace-compilation-errors.patch
-Patch2: 0002-uapi-move-struct-reiserfs_security_handle-out-from-l.patch
-Patch3: 0003-uapi-fix-linux-vm_sockets.h-userspace-compilation-er.patch
-Patch4: 0004-uapi-fix-linux-sctp.h-userspace-compilation-errors.patch
-Patch5: 0005-uapi-fix-asm-shmbuf.h-userspace-compilation-errors.patch
-Patch6: 0006-uapi-fix-asm-signal.h-userspace-compilation-errors.patch
-Patch7: 0007-uapi-fix-linux-kexec.h-userspace-compilation-errors.patch
-Patch8: 0008-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
-Patch9: 0009-uapi-fix-linux-fsmap.h-userspace-compilation-error.patch
-Patch10: 0010-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
-Patch11: 0011-uapi-fix-linux-sysctl.h-Obsolete-types-detected-warn.patch
+Patch2: 0002-uapi-fix-linux-vm_sockets.h-userspace-compilation-er.patch
+Patch3: 0003-uapi-fix-linux-sctp.h-userspace-compilation-errors.patch
+Patch4: 0004-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
+Patch5: 0005-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
+Patch6: 0006-uapi-fix-linux-sysctl.h-Obsolete-types-detected-warn.patch
 
 BuildRequires: rpm-build-kernel rsync
 BuildRequires: %kernel_source = 1.0.0
@@ -126,7 +121,7 @@ building most standard programs and are also needed to build glibc. \
 
 # In the kernel tree:
 # ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|\1|p' | sort | xargs echo %%define kernel_arches
-%define kernel_arches alpha arc arm arm64 csky h8300 hexagon ia64 m68k microblaze mips nds32 nios2 openrisc parisc powerpc riscv s390 sh sparc x86 xtensa
+%define kernel_arches alpha arc arm arm64 csky h8300 hexagon ia64 m68k microblaze mips nios2 openrisc parisc powerpc riscv s390 sh sparc x86 xtensa
 
 # ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|%%do_package \1 1|p' | sort
 %do_package alpha 1
@@ -140,7 +135,6 @@ building most standard programs and are also needed to build glibc. \
 %do_package m68k 1
 %do_package microblaze 1
 %do_package mips 1
-%do_package nds32 1
 %do_package nios2 1
 %do_package openrisc 1
 %do_package parisc 1
@@ -280,7 +274,6 @@ cd - > /dev/null
 %do_files m68k 1
 %do_files microblaze 1
 %do_files mips 1
-%do_files nds32 1
 %do_files nios2 1
 %do_files openrisc 1
 %do_files parisc 1
@@ -302,6 +295,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sun May 22 2022 Dmitry V. Levin <ldv@altlinux.org> 5.18-alt1
+- v5.17 -> v5.18.
+
 * Sun Mar 20 2022 Dmitry V. Levin <ldv@altlinux.org> 5.17-alt1
 - v5.16 -> v5.17.
 
