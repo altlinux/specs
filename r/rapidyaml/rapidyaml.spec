@@ -1,6 +1,6 @@
 Name: rapidyaml
 Version: 0.4.1
-Release: alt2
+Release: alt3
 
 Summary: A library to parse and emit YAML
 License: MIT
@@ -10,6 +10,8 @@ URL: https://github.com/biojppm/%name
 Packager: Nazarov Denis <nenderus@altlinux.org> 
 
 Source: https://github.com/biojppm/%name/releases/download/v%version/%name-%version-src.tgz
+
+Patch0: %name-libdir-alt.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++
@@ -48,18 +50,18 @@ This package contains development headers and examples.
 
 %prep
 %setup -n %name-%version-src
+%patch0 -p1
 
 %build
-%cmake -DBUILD_SHARED_LIBS:BOOL=TRUE
+%cmake \
+	-DBUILD_SHARED_LIBS:BOOL=TRUE \
+	-D_ARCHIVE_INSTALL_DIR=%_lib/ \
+	-D_LIBRARY_INSTALL_DIR=%_lib/
+
 %cmake_build
 
 %install
 %cmake_install
-
-if [ "%_libdir" != "/usr/lib" ]; then
-	mkdir -p %buildroot%_libdir
-	mv %buildroot/usr/lib/* %buildroot%_libdir/
-fi
 
 %files -n libryml
 %_libdir/libryml.so.*
@@ -76,6 +78,9 @@ fi
 %_libdir/libryml.so
 
 %changelog 
+* Mon May 23 2022 Nazarov Denis <nenderus@altlinux.org> 0.4.1-alt3
+- Fix libdir
+
 * Sun May 22 2022 Nazarov Denis <nenderus@altlinux.org> 0.4.1-alt2
 - Rename subpackages
 
