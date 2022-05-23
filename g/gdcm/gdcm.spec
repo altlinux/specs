@@ -28,7 +28,7 @@ BuildRequires: /usr/bin/git
 
 Name:       gdcm
 Version:    3.0.12
-Release:    alt1_1
+Release:    alt2
 Summary:    Grassroots DiCoM is a C++ library to parse DICOM medical files
 License:    BSD
 URL:        http://gdcm.sourceforge.net/wiki/index.php/Main_Page
@@ -65,7 +65,6 @@ BuildRequires:  swig
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libjson-c-devel
 BuildRequires:  libxml2-devel
-Source44: import.info
 
 # BuildRequires:  vtk-devel
 
@@ -221,6 +220,9 @@ install -d $RPM_BUILD_ROOT%{python3_sitelibdir}
 install -d $RPM_BUILD_ROOT/%{_datadir}/%{name}/Examples/
 cp -rv ./Examples/* $RPM_BUILD_ROOT/%{_datadir}/%{name}/Examples/
 
+# Remove manuals for non-buildable executables (gdcm2vtk and gdcm2pnm)
+rm -f %buildroot%_mandir/man1/gdcm2{vtk,pnm}.1*
+
 %if %{with tests}
 %check
 # Making the tests informative only for now. Several failing tests (27/228):
@@ -304,6 +306,10 @@ make test -C %{__cmake_builddir} || exit 0
 %{python3_sitelibdir}/__pycache__/%{name}*
 
 %changelog
+* Mon May 23 2022 Slava Aseev <ptrnine@altlinux.org> 3.0.12-alt2
+- do not pack manuals for non-existent executables (closes: #42141)
+- remove import.info
+
 * Wed May 04 2022 Slava Aseev <ptrnine@altlinux.org> 3.0.12-alt1_1
 - new version
 
