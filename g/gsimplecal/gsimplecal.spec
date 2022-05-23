@@ -1,5 +1,5 @@
 Name: gsimplecal
-Version: 2.2
+Version: 2.3
 Release: alt1
 
 Summary: Simple and lightweight GTK calendar
@@ -35,6 +35,11 @@ without it.
 %_man1dir/*
 
 %changelog
+* Mon May 23 2022 Leontiy Volodin <lvol@altlinux.org> 2.3-alt1
+- Version 2.3.
+- Upstream:
+  + Add missing keyboard shortcut to launch external viewer.
+
 * Wed Feb 17 2021 Leontiy Volodin <lvol@altlinux.org> 2.2-alt1
 - Version 2.2
 
