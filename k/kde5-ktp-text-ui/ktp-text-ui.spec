@@ -6,8 +6,8 @@
 %endif
 
 Name: kde5-%rname
-Version: 21.12.3
-Release: alt2
+Version: 22.04.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -124,6 +124,9 @@ KF5 library
 %_K5lib/libktpimagesharer.so.*
 
 %changelog
+* Mon May 23 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Tue Apr 05 2022 Michael Shigorin <mike@altlinux.org> 21.12.3-alt2
 - fix srpm rebuild with --disable qtwebengine
 

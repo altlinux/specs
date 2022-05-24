@@ -8,7 +8,7 @@
 %define libktpwidgets libktpwidgets%sover
 
 Name: kde5-ktp-common-internals
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init altplace
 
@@ -162,6 +162,9 @@ developing applications that use %name.
 %_libdir/cmake/KTp/
 
 %changelog
+* Mon May 23 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Sat Mar 05 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 
