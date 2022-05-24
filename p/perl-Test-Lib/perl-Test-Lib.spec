@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-podlators
@@ -8,14 +9,14 @@ BuildRequires: perl-podlators
 %define upstream_version 0.002
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt3_7
+Version:    0.003
+Release:    alt1
 
 Summary:    Use libraries from a t/lib directory
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Test/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/H/HA/HAARG/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(Cwd.pm)
 BuildRequires: perl(File/Spec.pm)
@@ -31,7 +32,7 @@ directly in _t_ or in a subdirectory to find their included testing
 libraries located in _t/lib_.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -45,10 +46,13 @@ libraries located in _t/lib_.
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml  README
+%doc Changes META.json META.yml README
 %perl_vendor_privlib/*
 
 %changelog
+* Tue May 24 2022 Igor Vlasenko <viy@altlinux.org> 0.003-alt1
+- automated CPAN update
+
 * Wed Apr 28 2021 Igor Vlasenko <viy@altlinux.org> 0.002-alt3_7
 - to Sisyphus as Dancer2 dep
 
