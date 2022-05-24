@@ -1,8 +1,8 @@
 Name:     udev-ipheth
 Version:  1.05
-Release:  alt1
+Release:  alt2
 
-%define modprobedir %_sysconfdir/modprobe.d/
+%define modprobedir /lib/modprobe.d/
 
 
 Summary:  iPhone USB Ethernet Driver
@@ -14,7 +14,9 @@ Requires: libimobiledevice
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source:  ipheth-pair.tar
-Source1: ipheth-modprobe.conf
+Source1: ipheth-load.conf
+Source2: ipheth-modprobe.conf 
+
 Patch1:  ipheth-makefile-1.05.patch
 
 BuildRequires: udev libimobiledevice-devel >= 1.3.0
@@ -41,15 +43,25 @@ set up the tethered connection.
 
 %install
 %makeinstall_std
-install -d %buildroot/%modprobedir/
-install -m 644 %SOURCE1 %buildroot/%modprobedir/
+install -d %buildroot/%_modulesloaddir/
+install -m 644 %SOURCE1 %buildroot/%_modulesloaddir/
+
+install -d     %buildroot/%modprobedir/
+install -m 644 %SOURCE2 %buildroot/%modprobedir/
+
+
 
 %files
 %modprobedir/*
+%_modulesloaddir/*
 /lib/udev/ipheth-pair
 /lib/udev/rules.d/*
 
 %changelog
+* Tue May 24 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.05-alt2
+- Replace ipheth-modprobe.conf
+
 * Sun May 22 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.05-alt1
 - Initial build for Sisyphus
+
 
