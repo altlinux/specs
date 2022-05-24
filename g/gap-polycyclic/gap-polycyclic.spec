@@ -1,14 +1,14 @@
 %define repo polycyclic
 
 Name: gap-polycyclic
-Version: 2.14
+Version: 2.16
 Release: alt1
 Summary: GAP: Computation with polycyclic groups
-License: GPL-2.0-or-later
+License: GPL-2.0+
 Group: Sciences/Mathematics
 Url: https://gap-packages.github.io/polycyclic/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/polycyclic-%version.tar.bz2
+Source: https://github.com/gap-packages/polycyclic/releases/download/v%version/polycyclic-%version.tar.gz
 BuildArch: noarch
 
 BuildPreReq: rpm-macros-gap
@@ -48,5 +48,8 @@ The features of this package include
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Tue May 24 2022 Leontiy Volodin <lvol@altlinux.org> 2.16-alt1
+- New version.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 2.14-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).

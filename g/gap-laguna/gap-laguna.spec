@@ -1,14 +1,14 @@
 %define repo laguna
 
 Name: gap-laguna
-Version: 3.9.0
+Version: 3.9.5
 Release: alt1
 Summary: GAP: Lie AlGebras and UNits of group Algebras
-License: GPL-2.0-or-later
+License: GPL-2.0+
 Group: Sciences/Mathematics
-Url: http://www.cs.st-andrews.ac.uk/~alexk/laguna.htm
+Url: https://gap-packages.github.io/laguna/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/laguna-%version.tar.bz2
+Source: https://github.com/gap-packages/laguna/releases/download/v%version/laguna-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: rpm-macros-gap
@@ -38,5 +38,8 @@ rm -Rf scripts
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Tue May 24 2022 Leontiy Volodin <lvol@altlinux.org> 3.9.5-alt1
+- New version.
+
 * Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 3.9.0-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).

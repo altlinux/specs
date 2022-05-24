@@ -1,14 +1,14 @@
 %define repo utils
 
 Name: gap-utils
-Version: 0.49
+Version: 0.72
 Release: alt1
 Summary: GAP: Utility functions in GAP
 License: GPL-2.0+
 Group: Sciences/Mathematics
 Url: https://gap-packages.github.io/utils
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/utils-%version.tar.bz2
+Source: https://github.com/gap-packages/utils/releases/download/v%version/utils-%version.tar.gz
 BuildPreReq: rpm-macros-gap
 BuildRequires: xz
 
@@ -33,5 +33,8 @@ from many packages.
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Tue May 24 2022 Leontiy Volodin <lvol@altlinux.org> 0.72-alt1
+- New version.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 0.49-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
