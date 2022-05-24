@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: psi-plus
-Version: 1.5.1600
+Version: 1.5.1627
 Release: alt1
 
 Summary: Psi+ Jabber client
@@ -598,7 +598,7 @@ install -pDm644 redirectorplugin/libredirectplugin.so %buildroot%_libdir/%name/p
 popd
 
 rm %buildroot%_datadir/%name/{COPYING,README.html}
-rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp,skins}plugin.so
+rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp,skins,noughtsandcrosses}plugin.so
 
 %files
 %doc COPYING INSTALL.md README.html TODO
@@ -610,6 +610,7 @@ rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp,skins}plugin.so
 %_datadir/%name/client_icons.txt
 %_datadir/%name/certs
 %_datadir/%name/iconsets
+%_datadir/%name/skins
 %_datadir/%name/sound
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/*/apps/*.png
@@ -728,6 +729,9 @@ rm %buildroot%_libdir/%name/plugins/lib{battleshipgame,openpgp,skins}plugin.so
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Tue May 24 2022 Oleg Solovyov <mcpain@altlinux.org> 1.5.1627-alt1
+- Version 1.5.1627
+
 * Mon Jan 31 2022 Oleg Solovyov <mcpain@altlinux.org> 1.5.1600-alt1
 - Version 1.5.1600
 

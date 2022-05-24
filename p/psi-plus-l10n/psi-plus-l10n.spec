@@ -1,5 +1,5 @@
 Name: psi-plus-l10n
-Version: 1.5.1599
+Version: 1.5.1627
 Release: alt1
 
 Summary: Translations for Psi+
@@ -37,6 +37,9 @@ lrelease-qt5 translations/*.ts
 %_datadir/psi-plus/*.qm
 
 %changelog
+* Tue May 24 2022 Oleg Solovyov <mcpain@altlinux.org> 1.5.1627-alt1
+- Version 1.5.1627
+
 * Wed Mar 09 2022 Oleg Solovyov <mcpain@altlinux.org> 1.5.1599-alt1
 - Version 1.5.1599
 
