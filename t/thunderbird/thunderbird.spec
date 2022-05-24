@@ -7,7 +7,7 @@
 %define llvm_version 12.0
 
 Name: 	 thunderbird
-Version: 91.7.0
+Version: 91.9.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -509,6 +509,40 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Sat May 21 2022 Pavel Vasenkov <pav@altlinux.org> 91.9.1-alt1
+- New version.
+- Security fixes:
+  + CVE-2022-1802 Prototype pollution in Top-Level Await implementation
+  + CVE-2022-1529 Untrusted input used in JavaScript object indexing, leading to prototype pollution
+
+* Wed May 04 2022 Pavel Vasenkov <pav@altlinux.org> 91.9.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2022-1520 Incorrect security status shown after viewing an attached email
+  + CVE-2022-29914 Fullscreen notification bypass using popups
+  + CVE-2022-29909 Bypassing permission prompt in nested browsing contexts
+  + CVE-2022-29916 Leaking browser history with CSS variables
+  + CVE-2022-29911 iframe sandbox bypass
+  + CVE-2022-29912 Reader mode bypassed SameSite cookies
+  + CVE-2022-29913 Speech Synthesis feature not properly disabled
+  + CVE-2022-29917 Memory safety bugs fixed in Thunderbird 91.9
+
+* Mon Apr 25 2022 Pavel Vasenkov <pav@altlinux.org> 91.8.1-alt1
+- New version.
+
+* Wed Apr 06 2022 Pavel Vasenkov <pav@altlinux.org> 91.8.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2022-1097 Use-after-free in NSSToken objects
+  + CVE-2022-28281 Out of bounds write due to unexpected WebAuthN Extensions
+  + CVE-2022-1197 OpenPGP revocation information was ignored
+  + CVE-2022-1196 Use-after-free after VR Process destruction
+  + CVE-2022-28282 Use-after-free in DocumentL10n::TranslateDocument
+  + CVE-2022-28285 Incorrect AliasSet used in JIT Codegen
+  + CVE-2022-28286 iframe contents could be rendered outside the border
+  + CVE-2022-24713 Denial of Service via complex regular expressions
+  + CVE-2022-28289 Memory safety bugs fixed in Thunderbird 91.8
+
 * Sun Mar 13 2022 Pavel Vasenkov <pav@altlinux.org> 91.7.0-alt1
 - New version.
 - Security fixes:
