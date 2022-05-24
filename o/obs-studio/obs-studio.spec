@@ -8,11 +8,12 @@ Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
 Version: 27.2.4
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Video
 Url: https://github.com/jp9000/obs-studio.git
 Source: %name-%version.tar
+Patch1: obs-studio-27.2.4-alt-cert-bundle.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-luajit
@@ -129,6 +130,7 @@ PulseAudio plugin for Open Broadcaster Software.
 
 %prep
 %setup
+%patch1 -p0
 
 # rpmlint reports E: hardcoded-library-path
 # replace OBS_MULTIARCH_SUFFIX by LIB_SUFFIX
@@ -186,6 +188,9 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 %_datadir/obs/obs-plugins/linux-pulseaudio/
 
 %changelog
+* Tue May 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 27.2.4-alt2
+- NMU: Fixed certificate bundle path (Closes: 42827).
+
 * Tue Apr 19 2022 Evgeny Sinelnikov <sin@altlinux.org> 27.2.4-alt1
 - new version 27.2.4
 - build with rtmps support
