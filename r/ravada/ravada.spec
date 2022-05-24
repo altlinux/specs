@@ -5,24 +5,26 @@
 %def_without check
 
 Name: ravada
-Summary: Remote Virtual Desktops Manager
 Version: 1.5.0
-Release: alt1
+Release: alt2
+Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
 Group: Development/Perl
 Url: https://ravada.upc.edu/
 Vcs: https://github.com/UPC/ravada.git
-Packager: Andrew A. Vasilyev <andy@altlinux.org>
+BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildArch: noarch
+Requires: perl-DBD-mysql perl-DBD-SQLite perl-Mojolicious-Plugin-I18N
+Requires: bridge-utils iproute2 iptables libvirt mariadb-common net-tools qemu-img qemu-kvm
 
 BuildRequires(pre): rpm-build-perl
 
 BuildRequires: ImageMagick-tools
 BuildRequires: bridge-utils iproute2 net-tools qemu-img wget
 
+BuildRequires: perl-Authen-ModAuthPubTkt
 BuildRequires: perl-Authen-Passphrase
 BuildRequires: perl-DateTime-Format-DateParse
 BuildRequires: perl-DateTime-Locale
@@ -31,6 +33,7 @@ BuildRequires: perl-DBD-SQLite
 BuildRequires: perl-DBIx-Connector
 BuildRequires: perl-devel
 BuildRequires: perl-File-Rsync
+BuildRequires: perl-File-Tee
 BuildRequires: perl-IO-Interface
 BuildRequires: perl-IO-stringy
 BuildRequires: perl-IPC-Run3
@@ -61,6 +64,9 @@ BuildRequires: /proc
 BuildRequires: rpm-build-vm
 BuildRequires: perl-Test-Moose-More
 BuildRequires: perl-Test-Perl-Critic
+BuildRequires: iptables
+BuildRequires: libvirt
+BuildRequires: mariadb-common
 %endif
 
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_privlib -MRavada'; export TZ=UTC
@@ -97,6 +103,9 @@ install -p -m644 etc/%name.conf %buildroot%_sysconfdir/%name.conf
 install -p -m644 etc/rvd_front.conf.example %buildroot%_sysconfdir/rvd_front.conf
 mkdir -p %buildroot%_unitdir
 install -p -m644 etc/systemd/*.service %buildroot%_unitdir
+mkdir -p %buildroot%_docdir/%name
+cp -aR sql %buildroot%_docdir/%name
+rm -f %buildroot%_docdir/%name/sql/mysql/Makefile
 
 # Remove empty files
 find %buildroot -size 0 -delete
@@ -120,6 +129,9 @@ fi
 
 %post_service rvd_front
 # First installation, not upgrade.
+if [ $1 -eq 1 ]; then
+    %_sbindir/useradd --system ravada ||:
+fi
 systemctl=/bin/systemctl
 if [ $1 -eq 1 -a -f "$systemctl" ]; then
     $systemctl enable rvd_front.service ||:
@@ -132,10 +144,15 @@ fi
 %_datadir/%name
 %_localstatedir/%name
 %_unitdir/*.service
+%_docdir/%name
 %config(noreplace)%_sysconfdir/%name.conf
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Sun May 22 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.5.0-alt2
+- package sql scripts
+- add missed Requires
+
 * Fri May 20 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.5.0-alt1
 - 1.5.0
 
