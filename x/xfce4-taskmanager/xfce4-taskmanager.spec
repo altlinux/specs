@@ -1,18 +1,19 @@
 Name: xfce4-taskmanager
-Version: 1.4.2
+Version: 1.5.3
 Release: alt1
 
 Summary: Taskmanager for Xfce Desktop
 Summary(ru_RU.UTF-8): Системный монитор для Xfce
 License: GPLv2+
 Group: Graphical desktop/XFce
-Url: https://docs.xfce.org/apps/xfce4-taskmanager
+Url: https://docs.xfce.org/apps/xfce4-taskmanager/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 Vcs: https://gitlab.xfce.org/apps/xfce4-taskmanager.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4ui-gtk3-devel libxfconf-devel
 BuildRequires: glib2-devel intltool libXmu-devel
 BuildRequires: libgtk+3-devel libcairo-devel libwnck3-devel
 
@@ -48,6 +49,11 @@ mkdir m4/
 %_iconsdir/hicolor/*/*/*.*
 
 %changelog
+* Tue May 24 2022 Mikhail Efremov <sem@altlinux.org> 1.5.3-alt1
+- Don't check ENABLE_NLS macro.
+- Updated Url tag.
+- Updated to 1.5.3.
+
 * Tue Feb 09 2021 Mikhail Efremov <sem@altlinux.org> 1.4.2-alt1
 - Updated to 1.4.2.
 
