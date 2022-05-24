@@ -80,13 +80,14 @@
 %vulkan_drivers_add panfrost
 %endif
 %vulkan_drivers_add swrast
+%gallium_drivers_add zink
 
 %define ver_major 22.1
 %define ver_minor 0
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -101,7 +102,7 @@ Patch: %name-%version.patch
 BuildPreReq: /proc
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
-BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel
+BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel libvulkan-devel
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel libunwind-devel
@@ -418,6 +419,7 @@ sed -i '/.*swrast.*/d' xorg-dri-armsoc.list
 sed -i '/.*virtio.*/d' xorg-dri-armsoc.list
 sed -i '/.*nouveau.*/d' xorg-dri-armsoc.list
 sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
+sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %endif
 
 #define _unpackaged_files_terminate_build 1
@@ -493,6 +495,7 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %_datadir/drirc.d/00-mesa-defaults.conf
 %_libdir/X11/modules/dri/*swrast*_dri.so
 %_libdir/X11/modules/dri/libgallium_dri.so
+%_libdir/X11/modules/dri/zink_dri.so
 %ifarch %gallium_pipe_arches
 %dir %_libdir/gallium-pipe
 %_libdir/gallium-pipe/pipe_swrast.so
@@ -582,6 +585,9 @@ sed -i '/.*dri\/r[a236].*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Tue May 24 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.1.0-alt2
+- enabled zink gallium driver (closes: #42849)
+
 * Thu May 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.1.0-alt1
 - 22.1.0
 
