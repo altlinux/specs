@@ -1,22 +1,21 @@
 %define pypi_name pecan
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
-Release: alt2
-Summary: A lean WSGI object-dispatching web framework
-Group: Development/Python3
+Version: 1.4.1
+Release: alt1
 
-License: BSD
+Summary: A lean WSGI object-dispatching web framework
+
+Group: Development/Python3
+License: BSD-3-Clause
 Url: http://github.com/pecan/pecan
-Source0: %pypi_name-%version.tar.gz
+
+Source: %name-%version.tar
+
 BuildArch: noarch
 
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-webob >= 1.2
-BuildRequires: python3-module-simplegeneric >= 0.8
+BuildRequires: python3-module-webob >= 1.8
 BuildRequires: python3-module-mako >= 0.4.0
 BuildRequires: python3-module-webtest >= 1.3.1
 BuildRequires: python3-module-logutils >= 0.3
@@ -38,10 +37,7 @@ Requires: %name = %EVR
 This package contains tests for %pypi_name.
 
 %prep
-%setup -n %pypi_name-%version
-
-# Remove bundled egg-info
-rm -rf %pypi_name.egg-info
+%setup
 
 %build
 %python3_build
@@ -65,6 +61,9 @@ rm -rf %buildroot%python3_sitelibdir/%pypi_name/tests/config_fixtures/bad
 %python3_sitelibdir/*/*/*/+package+/tests
 
 %changelog
+* Tue May 24 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
+- Build new version.
+
 * Fri Mar 26 2021 Stanislav Levin <slev@altlinux.org> 1.4.0-alt2
 - Dropped dependency on singledispatch(removed from Sisyphus).
 
