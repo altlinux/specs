@@ -2,13 +2,13 @@
 %define oname parted
 
 Name: python3-module-%oname
-Version: 3.11.7
+Version: 3.12.0
 Release: alt1
 
 Summary: Python bindings for libparted
 
 Group: Development/Python3
-License: GPL v2 or later
+License: GPLv2-or-later
 URL: https://github.com/rhinstaller/pyparted
 
 # https://github.com/rhinstaller/pyparted.git
@@ -36,7 +36,7 @@ you want to, but it's really just meant for the larger parted module.
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -48,6 +48,9 @@ you want to, but it's really just meant for the larger parted module.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue May 24 2022 Grigory Ustinov <grenka@altlinux.org> 3.12.0-alt1
+- Automatically updated to 3.12.0.
+
 * Wed Jan 27 2021 Grigory Ustinov <grenka@altlinux.org> 3.11.7-alt1
 - Automatically updated to 3.11.7.
 - Drop python2 support.
