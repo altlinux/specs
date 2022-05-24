@@ -30,7 +30,7 @@
 
 Name: xterm
 Version: 372
-Release: alt1
+Release: alt2
 
 Summary: A standard terminal emulator for the X Window System
 Summary(ru_RU.UTF8): Стандартный эмулятор терминала для X Window System
@@ -54,6 +54,7 @@ Patch0010: 0010-xterm-alt-back_old_behavior_for_modifyFunctionKeys.patch
 Patch0011: 0011-xterm-alt-appdef.patch
 Patch0012: 0012-xterm-alt-man_suffix.patch
 Patch0013: 0013-xterm-alt-translate-update-desktop.patch
+Patch0014: 0014-xterm-efgrep.patch
 
 Provides: xvt, %_bindir/xvt
 Requires(pre): libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
@@ -98,6 +99,7 @@ install -pm755 %_sourcedir/uxterm .
 %patch0011 -p2
 %patch0012 -p2
 %patch0013 -p2
+%patch0014 -p1
 
 sed -i 's|^Exec=xterm|& -name XTerm|' %name.desktop
 sed -i 's|_48x48||' *.desktop
@@ -159,6 +161,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Tue May 24 2022 Fr. Br. George <george@altlinux.org> 372-alt2
+- More [ef]grep fixes
+
 * Mon May 23 2022 Fr. Br. George <george@altlinux.ru> 372-alt1
 - Autobuild version bump to 372
 - Fix [ef]grep issue
