@@ -2,7 +2,7 @@
 
 Name: supervisor
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: A System for Allowing the Control of Process State on UNIX
 License: ZPLv2.1 and BSD and MIT
@@ -28,7 +28,6 @@ number of processes on UNIX-like operating systems.
 %package -n python3-module-%name
 Summary: Python3 module for %name
 Group: Development/Python3
-Requires: python3-module-meld3 >= 0.6.5
 
 %description -n python3-module-%name
 The supervisor is a client/server system that allows its users to control a
@@ -92,6 +91,9 @@ rm -f %buildroot%prefix/doc/*.txt
 
 
 %changelog
+* Tue May 24 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt2
+- The meld3 package is no longer a dependency.
+
 * Tue Dec 10 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.1.0-alt1
 - version updated to 4.1.0
 
