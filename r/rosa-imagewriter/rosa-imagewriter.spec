@@ -1,6 +1,6 @@
 Name:		rosa-imagewriter
 Version:	2.6.2.0
-Release:	alt1
+Release:	alt2
 Summary:	Utility for writing raw disk images and hybrid isos to USB keys
 
 License:	GPLv3
@@ -54,6 +54,9 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri May 13 2022 Ivan A. Melnikov <iv@altlinux.org> 2.6.2.0-alt2
+- Fix segfault on start (altbug #37458).
+
 * Mon Jan 27 2020 Andrey Cherepanov <cas@altlinux.org> 2.6.2.0-alt1
 - New version.
 
