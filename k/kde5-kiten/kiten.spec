@@ -4,7 +4,7 @@
 %define libkiten libkiten%soname
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -72,6 +72,10 @@ Requires: %name-common
 %install
 %K5install
 %K5install_move data kiten
+
+# cleanup
+rm -rf %buildroot/%_datadir/fonts/ ||:
+
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -97,6 +101,9 @@ Requires: %name-common
 %_K5lib/libkiten.so.*
 
 %changelog
+* Mon May 23 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Sat Mar 05 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 
