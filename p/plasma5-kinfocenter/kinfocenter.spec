@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.24.5
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -13,9 +13,23 @@ Summary: KDE Workspace 5 Info Center
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Requires: usbids kf5-kirigami
 Provides:  kf5-kinfocenter = %EVR kf5-kinfocenter-common = %EVR plasma5-kinfocenter-common = %EVR
 Obsoletes: kf5-kinfocenter < %EVR kf5-kinfocenter-common < %EVR plasma5-kinfocenter-common < %EVR
+Requires: usbids kf5-kirigami
+# OpenGL (EGL)
+Requires: /usr/bin/eglinfo
+# OpenGL (GLX)
+Requires: /usr/bin/glxinfo
+# X-Server
+Requires: /usr/bin/xdpyinfo
+# Wayland
+Requires: /usr/bin/wayland-info
+# PCI
+Requires: /usr/bin/lspci
+# CPU
+Requires: /usr/bin/lscpu
+# Vulkan
+Requires: /usr/bin/vulkaninfo
 
 Source: %rname-%version.tar
 Patch1: alt-usbids-path.patch
@@ -111,6 +125,9 @@ grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
 %_K5lib/libKInfoCenterInternal.so.%kinfocenterinternal_sover
 
 %changelog
+* Tue May 24 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt2
+- fix requires
+
 * Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt1
 - new version
 
