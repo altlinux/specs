@@ -2,9 +2,11 @@
 %define oname et_xmlfile
 
 Name: python3-module-%oname
-Version: 1.0.1
-Release: alt3
+Version: 1.1.0
+Release: alt1
+
 Summary: An implementation of lxml.xmlfile for the standard library
+
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/et_xmlfile
@@ -13,8 +15,7 @@ Source0: %{oname}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-lxml
-BuildRequires: python3-module-pytest
+BuildRequires: python3-module-lxml
 
 %py3_provides %oname
 
@@ -47,25 +48,20 @@ This package contains tests for %oname.
 
 %build
 export LC_ALL=en_US.UTF-8
-%python3_build_debug
+%python3_build
 
 %install
 export LC_ALL=en_US.UTF-8
 %python3_install
 
-%check
-export LC_ALL=en_US.UTF-8
-py.test3 -vv
-
 %files
 %doc *.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
 
 %changelog
+* Mon May 23 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Build new version.
+
 * Thu Jul 15 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt3
 - Drop python2 support.
 
