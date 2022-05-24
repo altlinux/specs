@@ -38,7 +38,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.2
-Release: alt13
+Release: alt14
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -52,7 +52,7 @@ Source1: rpm-macros
 Source2: rpm-macros-addon
 # KDE
 Patch1: kde-5.15.patch
-Patch2: kde-5.15-rev-6344955d17e.patch
+Patch2: kde-5.15-rev-ver.patch
 Patch3: kde-5.15-rev-f8ad329f7ee.patch
 # FC
 Patch51: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
@@ -847,6 +847,9 @@ make check -k ||:
 
 
 %changelog
+* Wed May 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt14
+- update fixes from kde/qt-5.15
+
 * Thu May 05 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt13
 - update fixes from kde/qt-5.15
 
