@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 4.7.0
+Version: 4.7.1
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
@@ -71,6 +71,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Tue May 24 2022 Sergey V Turchin <zerg@altlinux.org> 4.7.1-alt1
+- rearrange installer popup dialog widgets
+
 * Wed Dec 29 2021 Anton Midyukov <antohami@altlinux.org> 4.7.0-alt1
 - Unified the clock service control code (thanks manowar@)
 - Made /etc/sysconfig/clock optional
