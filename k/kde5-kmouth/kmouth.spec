@@ -1,8 +1,8 @@
 %define rname kmouth
 
 Name: kde5-%rname
-Version: 21.12.3
-Release: alt2
+Version: 22.04.1
+Release: alt1
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
@@ -70,6 +70,9 @@ Requires: %name-common = %version-%release
 %_K5xmlgui/kmouth/
 
 %changelog
+* Thu May 19 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Mon Apr 18 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt2
 - fix to build
 

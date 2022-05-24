@@ -15,7 +15,7 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -38,7 +38,7 @@ Source: %rname-%version.tar
 # Automatically added by buildreq on Wed Mar 29 2017 (-bi)
 # optimized out: alternatives cmake cmake-modules desktop-file-utils docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-svg libqt5-test libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel perl python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: extra-cmake-modules kf5-kactivities-devel kf5-kcmutils-devel kf5-kded kf5-kded-devel kf5-kdelibs4support-devel kf5-kdesu-devel kf5-kdoctools-devel kf5-khtml-devel kf5-kio-devel kf5-kjs-devel kf5-kpty-devel libXres-devel libtidy-devel python-module-google python3-dev qt5-script-devel qt5-webengine-devel qt5-x11extras-devel rpm-build-ruby zlib-devel-static
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-script-devel qt5-x11extras-devel
 %if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
@@ -162,7 +162,6 @@ done
 %_K5icon/*/*/actions/babelfish.*
 %_K5icon/*/*/actions/imagegallery.*
 %_K5icon/*/*/actions/webarchiver.*
-#%_K5srvtyp/*.desktop
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -177,21 +176,23 @@ done
 %if_enabled qtwebengine
 %_K5lib/libkwebenginepart.so
 %_K5conf_up/*.upd
+%_K5data/webenginepart/
 %endif
 %_K5plug/*.so
 %_K5plug/konqueror_kcms/
+%_K5plug/konqueror/
+%_K5plug/khtml/
+%_K5plug/kwebkitpart/
+%_K5plug/webenginepart/
+%_K5plug/dolphinpart/
+%_K5plug//
 %_K5plug/kf5/kfileitemaction/*.so
 %_K5plug/kf5/parts/*.so
 %_K5start/*.desktop
-#%_K5data/fsview/
 %_K5data/konqsidebartng/
 %_K5data/kbookmark/
 %_K5data/konqueror/
-%_K5data/khtml/
-%_K5data/kwebkitpart/
-%_K5data/webenginepart/
 %_K5data/kcmcss/
-%_K5data/dolphinpart/
 %_K5data/akregator/pics/*
 %_K5data/kcontrol/pics/*
 %_K5cfg/*.kcfg
@@ -219,6 +220,9 @@ done
 %_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Thu May 19 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 
@@ -318,35 +322,35 @@ done
 * Tue Feb 19 2019 Sergey V Turchin <zerg@altlinux.org> 18.12.2-alt1
 - new version
 
-* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1%ubt
+* Tue Jul 24 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.3-alt1
 - new version
 
-* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1%ubt
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.2-alt1
 - new version
 
-* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1%ubt
+* Tue May 22 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt1
 - new version
 
-* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1%ubt
+* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.3-alt1
 - new version
 
-* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1%ubt
+* Tue Mar 06 2018 Sergey V Turchin <zerg@altlinux.org> 17.12.2-alt1
 - new version
 
-* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1%ubt
+* Mon Nov 13 2017 Sergey V Turchin <zerg@altlinux.org> 17.08.3-alt1
 - new version
 
-* Mon Oct 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt2%ubt
+* Mon Oct 09 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt2
 - conflict with kde5-baseapps-common
 
-* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1%ubt
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.3-alt1
 - new version
 
-* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1%ubt
+* Wed Jun 14 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.2-alt1
 - new version
 
-* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1%ubt
+* Tue May 02 2017 Sergey V Turchin <zerg@altlinux.org> 17.04.0-alt1
 - new version
 
-* Thu Mar 16 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1%ubt
+* Thu Mar 16 2017 Sergey V Turchin <zerg@altlinux.org> 16.12.3-alt1
 - initial build

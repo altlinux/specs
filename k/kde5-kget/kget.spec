@@ -4,7 +4,7 @@
 %define libkgetcore libkgetcore%sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -71,7 +71,7 @@ sed -i '/^find_package(KF5Torrent/d' CMakeLists.txt
 
 %install
 %K5install
-%K5install_move data kget khtml kwebkitpart dolphinpart kconf_update
+%K5install_move data kget khtml kwebkitpart dolphinpart kconf_update kio
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -79,22 +79,16 @@ sed -i '/^find_package(KF5Torrent/d' CMakeLists.txt
 %_datadir/qlogging-categories5/*.*categories
 
 %files
-#%config(noreplace) %_K5xdgconf/*
 %_K5bin/*
 %_K5plug/kget/
-%_K5plug/*kget*.so
 %_K5icon/*/*/apps/kget.*
 %_K5cfg/kget*
-#%_K5conf_up/kget*
 %_K5data/kget/
 %_K5xdgapp/*kget*
-%_K5data/kwebkitpart//kpartplugins/kget*
-%_K5data/dolphinpart/kpartplugins/kget*
-%_K5data/khtml/kpartplugins/kget*
 %_K5notif/kget*
 %_K5xmlgui/kget/
-%_K5srv/kget_*
-%_K5srv/ServiceMenus/kget_*
+%_K5data/kio/servicemenus/kget_*.desktop
+
 %_K5srvtyp/kget_*
 %_K5dbus_srv/*kget*
 
@@ -109,6 +103,9 @@ sed -i '/^find_package(KF5Torrent/d' CMakeLists.txt
 %_K5lib/libkgetcore.so.%sover
 
 %changelog
+* Thu May 19 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

@@ -2,7 +2,7 @@
 %def_disable tunepimp
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -63,7 +63,7 @@ sed -i '/^find_package.*TunePimp/d' CMakeLists.txt
 
 %install
 %K5install
-%K5install_move data juk
+%K5install_move data juk kio
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
@@ -73,10 +73,13 @@ sed -i '/^find_package.*TunePimp/d' CMakeLists.txt
 %_K5data/juk/
 %_K5xmlgui/juk/
 %_K5icon/*/*/apps/juk.*
-%_K5srv/ServiceMenus/*juk*
+%_K5data/kio/servicemenus/*juk*.desktop
 %_K5notif/juk.notifyrc
 
 %changelog
+* Thu May 19 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

@@ -5,7 +5,7 @@
 %define libkompareinterface libkompareinterface%sover
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init altplace no_appdata
 
@@ -73,6 +73,7 @@ KF5 library
 
 %install
 %K5install
+%K5install_move data kio
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
@@ -83,11 +84,9 @@ KF5 library
 %_K5plug/kf5/parts/kompare*.so
 %_K5xdgapp/org.kde.kompare.desktop
 %_K5icon/hicolor/*/apps/*kompare*.*
-#%_K5xmlgui/kompare/
 %_K5srv/*kompare*.desktop
-%_K5srv/ServiceMenus/*kompare*.desktop
+%_K5data/kio/servicemenus/*kompare*.desktop
 %_K5srvtyp/*kompare*.desktop
-#%_K5xmlgui/komparepart/
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
@@ -105,6 +104,9 @@ KF5 library
 %_K5lib/libkomparedialogpages.so.*
 
 %changelog
+* Thu May 19 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

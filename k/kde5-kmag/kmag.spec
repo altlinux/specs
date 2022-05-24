@@ -1,7 +1,7 @@
 %define rname kmag
 
 Name: kde5-%rname
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -40,6 +40,9 @@ those working in the fields of image analysis, web development etc.
 %_K5data/%rname/
 
 %changelog
+* Thu May 19 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 

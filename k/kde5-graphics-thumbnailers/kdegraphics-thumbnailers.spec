@@ -1,7 +1,7 @@
 %define rname kdegraphics-thumbnailers
 
 Name: kde5-graphics-thumbnailers
-Version: 21.12.3
+Version: 22.04.1
 Release: alt1
 %K5init no_appdata
 
@@ -31,7 +31,9 @@ BuildRequires: kf5-karchive-devel kf5-kio-devel
 %setup -n %rname-%version
 
 %build
-%K5build
+%K5build \
+    -DDISABLE_MOBIPOCKET=ON \
+    #
 
 %install
 %K5install
@@ -44,6 +46,9 @@ BuildRequires: kf5-karchive-devel kf5-kio-devel
 #%_K5cfg/*.kcfg
 
 %changelog
+* Thu May 19 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- new version
+
 * Fri Mar 04 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.3-alt1
 - new version
 
