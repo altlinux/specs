@@ -2,21 +2,21 @@
 %define oname phaul
 %def_without check
 
-Name:    phaul-ovz
-Version: 0.1.86
+Name:    %oname-ovz
+Version: 0.1.93
 Release: alt1
 
 Summary: Process HAULer -- a tool to live-migrate containers and processes
 License: LGPL-2.1
 Group: System/Configuration/Other
-#Vcs: https://src.openvz.org/scm/ovz/p.haul.git
 URL: https://src.openvz.org/
+Vcs: https://src.openvz.org/scm/ovz/p.haul.git
 
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-Requires: crtools-ovz
+Requires: crtools-ovz >= 3.15.4.7
 Conflicts: %oname
 
 ExclusiveArch: x86_64
@@ -60,6 +60,9 @@ popd
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed May 25 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.1.93-alt1
+- 0.1.93
+
 * Thu May 12 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.1.86-alt1
 - 0.1.86
 
