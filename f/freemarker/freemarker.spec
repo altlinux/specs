@@ -15,7 +15,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           freemarker
 Version:        2.3.30
-Release:        alt2_3jpp8
+Release:        alt3_3jpp8
 Summary:        The Apache FreeMarker Template Engine
 License:        ASL 2.0
 URL:            https://freemarker.apache.org/
@@ -61,6 +61,7 @@ BuildRequires: saxpath
 BuildRequires: jython
 BuildRequires: rhino >= 1.6
 %endif
+BuildRequires: jakarta-el-api
 Source44: import.info
 
 %description
@@ -139,6 +140,9 @@ export LANG=C.UTF-8
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed May 25 2022 Igor Vlasenko <viy@altlinux.org> 0:2.3.30-alt3_3jpp8
+- fix for new cdi-api
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0:2.3.30-alt2_3jpp8
 - fc update
 
