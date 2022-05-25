@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 42
 %def_disable static
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: gnome-keyring
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -156,6 +156,9 @@ setcap -q cap_ipc_lock=ep %_bindir/gnome-keyring-daemon 2>/dev/null ||:
 
 
 %changelog
+* Wed May 25 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- 42.1
+
 * Sat May 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 
