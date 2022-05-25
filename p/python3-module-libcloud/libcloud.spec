@@ -1,17 +1,19 @@
 %define oname libcloud
 
 Name: python3-module-%oname
-Version: 3.3.1
+Version: 3.5.1
 Release: alt1
+
 Summary: Library for interacting with popular cloud service
 
 License: Apache-2.0
 Group: Development/Python3
 Url: http://libcloud.apache.org/
+
 BuildArch: noarch
 
 # Source-git: https://github.com/apache/libcloud
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-requests
@@ -54,7 +56,7 @@ cloud resources through a unified and easy to use API.
 This package contains documentation for %oname
 
 %prep
-%setup -n %oname-%version
+%setup
 pushd %oname
 sed -i 's/requests.packages.//' http.py
 pushd test
@@ -87,6 +89,9 @@ export PYTHONPATH=$PWD
 
 
 %changelog
+* Wed May 25 2022 Grigory Ustinov <grenka@altlinux.org> 3.5.1-alt1
+- Automatically updated to 3.5.1.
+
 * Thu Apr 01 2021 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
 - Build new version.
 - Drop python2 support.
