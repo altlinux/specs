@@ -17,7 +17,7 @@ Obsoletes: gambas3-%{*} < %EVR \
 
 Name:		gambas
 Version:	3.17.2
-Release:	alt1
+Release:	alt1.1
 
 Summary:	IDE based on a basic interpreter with object extensions
 Group:		Development/Tools
@@ -1241,6 +1241,9 @@ Requires: %name-runtime = %version-%release
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%ifarch %e2k
+find . -name 'gambas.h' -exec sed -i "/ifndef NO_GAMBAS_CASE_REPLACEMENT/a #ifdef __cplusplus\n#include <bits/locale_facets.h>\n#endif" {} \;
+%endif
 
 # We used to patch these out, but this is simpler.
 for i in `find . |grep acinclude.m4`; do
@@ -1285,7 +1288,11 @@ MY_CFLAGS=`echo $RPM_OPT_FLAGS | sed -e 's/-Wp,-D_FORTIFY_SOURCE=2//g'`
 	--with-ffi-libraries=`pkg-config libffi --variable=libdir` \
 	--with-mysql-libraries=%_libdir/mysql \
 	--disable-static \
+%ifarch %e2k
+	AM_CFLAGS="$MY_CFLAGS" AM_CXXFLAGS="$MY_CFLAGS -std=c++17"
+%else
 	AM_CFLAGS="$MY_CFLAGS" AM_CXXFLAGS="$MY_CFLAGS"
+%endif
 # rpath removal
 for i in main; do
 	sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' $i/libtool
@@ -1873,6 +1880,9 @@ rm -rf %buildroot%appdir/info/gb.jit.*
 %appdir/info/gb.form.htmlview.list
 
 %changelog
+* Wed May 25 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.17.2-alt1.1
+- Fixed build for Elbrus.
+
 * Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 3.17.2-alt1
 - New version.
 - New components: gtk3-opengl, form-htmlview.
