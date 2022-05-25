@@ -1,5 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
+# like subst_with, but replacing '_' with '-'
+%define subst_enable_dash() %{expand:%%(echo '%%{subst_enable %1}' | sed 's/_/-/g')}
+
 %def_enable vgauth
 %def_enable xmlsec1
 %def_disable xmlsecurity
@@ -9,6 +12,7 @@
 %def_without dnet
 %def_enable resolutionkms
 %def_enable servicediscovery
+%def_enable salt_minion
 
 %def_without gtk2
 %def_without gtkmm
@@ -16,8 +20,8 @@
 %def_with gtkmm3
 
 %global majorversion    12.0
-%global minorversion    0
-%global toolsbuild      19345655
+%global minorversion    5
+%global toolsbuild      19716617
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
@@ -50,7 +54,7 @@ ExclusiveArch: %ix86 x86_64 aarch64
 BuildRequires: gcc-c++
 BuildRequires: doxygen
 # Fuse is optional and enables vmblock-fuse
-BuildRequires: libfuse-devel
+BuildRequires: libfuse3-devel
 BuildRequires: glib2-devel >= 2.34.0
 BuildRequires: gtk2-devel >= 2.4.0
 BuildRequires: libgtkmm2-devel libsigc++2-devel
@@ -97,6 +101,15 @@ This package contains only the user-space programs and libraries of
 %name that are essential for developing customized applications for
 VMware virtual machines.
 
+%package salt-minion
+Summary: Script file to install/uninstall salt-minion
+Group: System/Configuration/Other
+Requires: %name = %version-%release
+ExclusiveArch: x86_64
+
+%description salt-minion
+This package contains a script to setup Salt Minion on VMware virtual machines.
+
 %package test
 Summary: Test utilities for Open Virtual Machine Tools
 Group: Development/Other
@@ -134,6 +147,7 @@ export CXXFLAGS="$RPM_OPT_FLAGS -std=gnu++11"
     %{subst_with gtkmm3} \
     %{subst_enable resolutionkms} \
     %{subst_enable servicediscovery} \
+    %{subst_enable_dash salt_minion} \
     --disable-static
 # sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %make_build
@@ -288,6 +302,13 @@ fi
 %_libdir/libvgauth.so
 %endif
 
+%ifarch x86_64
+%files salt-minion
+%dir %_libdir/%name/componentMgr/
+%dir %_libdir/%name/componentMgr/saltMinion/
+%_libdir/%name/componentMgr/saltMinion/svtminion.sh
+%endif
+
 %if_enabled vgauth
 %files test
 %_bindir/vmware-vgauth-smoketest
@@ -295,6 +316,10 @@ fi
 
 
 %changelog
+* Wed May 25 2022 Andrew A. Vasilyev <andy@altlinux.org> 12.0.5-alt1
+- 12.0.5
+- add salt-minion package
+
 * Sat Mar 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 12.0.0-alt1
 - 12.0.0
 
