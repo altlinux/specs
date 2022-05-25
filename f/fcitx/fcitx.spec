@@ -16,7 +16,7 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fon
 Name:			fcitx
 Summary:		An input method framework
 Version:		4.2.9.8
-Release:		alt3_6
+Release:		alt4_6
 License:		GPLv2+
 URL:			https://fcitx-im.org/wiki/Fcitx
 Source0:		http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
@@ -44,6 +44,7 @@ Requires:		%{name}-gtk2 = %{version}-%{release}
 # conflict to fcitx5 due to a icon file conflict
 Conflicts: fcitx5
 Source44: import.info
+Patch33: fcitx-4.2.9.8-alt-translation-dmitrydmitry761.patch
 
 %description
 Fcitx is an input method framework with extension support. Currently it
@@ -154,6 +155,7 @@ This package contains table engine for Fcitx.
 
 %prep
 %setup -q
+%patch33 -p1
 # bash4
 sed -i '1s,env bash,env bash4,' data/script/fcitx-diagnose.sh
 
@@ -313,6 +315,9 @@ EOF
 %endif
 
 %changelog
+* Wed May 25 2022 Igor Vlasenko <viy@altlinux.org> 4.2.9.8-alt4_6
+- ru.po patch from dmitrydmitry761@gmail.com
+
 * Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 4.2.9.8-alt3_6
 - update
 
