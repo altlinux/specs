@@ -7,7 +7,7 @@
 
 Name: shibboleth-sp
 Version: 3.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Open source system for attribute-based Web SSO
 
@@ -15,7 +15,7 @@ License: Apache-2.0
 Group: Networking/Other
 Url: https://shibboleth.net/
 
-Source: https://shibboleth.net/downloads/service-provider/latest/%name-%version.tar.gz
+Source0: https://shibboleth.net/downloads/service-provider/latest/%name-%version.tar.gz
 Source1: shibd.service
 
 BuildRequires: gcc-c++ boost-devel-headers liblog4cpp-devel libxerces-c-devel libxml-security-c-devel libxmltooling-devel libsaml-devel
@@ -63,8 +63,13 @@ This package includes files needed for development with Shibboleth.
 %prep
 %setup
 
-%__subst "s|%_bindir/env bash|/bin/bash|" \
+sed -i "s|%_bindir/env bash|/bin/bash|" \
 		configs/metagen.sh
+
+%ifarch %e2k
+# lcc's cpp adds an extra space breaking this regex
+sed -r -i 's,\^boost(.)lib(.)version,boost\1lib\2version,' configure m4/boost.m4
+%endif
 
 %build
 export CXXFLAGS="%optflags --std=c++11"
@@ -78,7 +83,7 @@ export CXXFLAGS="%optflags --std=c++11"
 install -D -m 644 %SOURCE1 %buildroot%_unitdir/shibd.service
 ln -sf /sbin/service %buildroot%_sbindir/rcshibd
 
-# %__subst "s|/var/log/httpd|/var/log/apache2|g" \
+# sed -i "s|/var/log/httpd|/var/log/apache2|g" \
 # 		%buildroot%_sysconfdir%realname/native.logger
 
 
@@ -162,5 +167,8 @@ EOF
 %doc %pkgdocdir/
 
 %changelog
+* Wed May 25 2022 Michael Shigorin <mike@altlinux.org> 3.3.0-alt1.1
+- spec: lousy boost test fixup; avoid using obsolete/internal macro
+
 * Thu Apr 14 2022 Leontiy Volodin <lvol@altlinux.org> 3.3.0-alt1
 - Initial build for ALT Sisyphus.
