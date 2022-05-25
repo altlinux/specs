@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Actions, Menus and Toolbars Kit for GTK+3 applications
@@ -128,6 +128,9 @@ GObject introspection devel data for the Amtk library.
 %endif
 
 %changelog
+* Wed May 25 2022 Yuri N. Sedunov <aris@altlinux.org> 5.4.1-alt1
+- 5.4.1
+
 * Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 5.4.0-alt1
 - 5.4.0
 
