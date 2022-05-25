@@ -1,13 +1,13 @@
 # git describe upstream/dolphin-emu | sed 's/-g[0-9a-f]*\(+*\)$/\1/'
-%define git_version 5.0-16101
+%define git_version 5.0-16380
 # git show-ref --heads --hash upstream/dolphin-emu
-%define git_commit 8ecfa537a242de74d2e372e30d9d79b14584b2fb
+%define git_commit 8335ec70e5fe253eb21509408ca6b5736ed57dfc
 
 %define mgba_commit 40d4c430fc36caeb7ea32fd39624947ed487d2f2
 
 Name: dolphin-emu
-Version: 5.0.16101
-Release: alt1.1
+Version: 5.0.16380
+Release: alt1
 
 Summary: The Gamecube / Wii Emulator
 License: GPLv2
@@ -51,6 +51,7 @@ BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libpulse)
 BuildRequires: pkgconfig(libswresample)
 BuildRequires: pkgconfig(libswscale)
+BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(libusb-1.0)
 BuildRequires: pkgconfig(libzstd)
 BuildRequires: pkgconfig(lzo2)
@@ -106,6 +107,9 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Wed May 25 2022 Nazarov Denis <nenderus@altlinux.org> 5.0.16380-alt1
+- Version 5.0-16380
+
 * Sun Apr 24 2022 Nazarov Denis <nenderus@altlinux.org> 5.0.16101-alt1.1
 - Fix FTBFS
 
