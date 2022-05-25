@@ -1,7 +1,7 @@
 %define pg_ver 14
 
 Name: postgresql%pg_ver-timescaledb
-Version: 2.6.1
+Version: 2.7.0
 Release: alt1
 Summary: Open-source time-series database powered by PostgreSQL
 Group: Databases
@@ -23,8 +23,6 @@ support.
 
 %prep
 %setup
-# Remove tsl directory containing sources licensed under Timescale license
-echo %major_ver
 
 %build
 %cmake \
@@ -49,6 +47,9 @@ echo "ALTER EXTENSION timescaledb UPDATE;                                       
 %_datadir/pgsql/extension/*
 
 %changelog
+* Wed May 25 2022 Alexei Takaseev <taf@altlinux.org> 2.7.0-alt1
+- 2.7.0
+
 * Tue Apr 12 2022 Alexei Takaseev <taf@altlinux.org> 2.6.1-alt1
 - 2.6.1
 
