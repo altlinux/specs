@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 97
+%define centos_release 99
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,23 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed May 25 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.99-alt1.el9
+- Updated to kernel-5.14.0-99.el9:
+  + ceph: backport mainline changes up to v5.18 for RHEL 9.1
+  + [EHL] Intel Sensor Hub (ISH): EClite driver enabling
+  + Enable virtio-mem as tech-preview for aarch64
+  + intel_idle: updates
+  + megaraid_sas: driver update
+  + net: drop_monitor: support drop reason
+  + selftests: RHEL 9.1 backports from upstream
+  + update tools/cpupower
+
+* Tue May 24 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.98-alt1.el9
+- Updated to kernel-5.14.0-98.el9:
+  + hv_balloon: rate-limit "Unhandled message" warning
+  + KVM: s390: pv: make use of ultravisor AIV support
+  + update qla2xxx driver to latest upstream
+
 * Mon May 23 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.97-alt1.el9
 - Updated to kernel-5.14.0-97.el9 (fixes: CVE-2022-1012, CVE-2022-27666):
   + bridge: update bridge and switchdev to upstream v5.18
