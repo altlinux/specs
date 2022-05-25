@@ -1,8 +1,8 @@
 %global modname logutils
 
 Name:               python3-module-%{modname}
-Version:            0.3.3
-Release:            alt2
+Version:            0.3.5
+Release:            alt1
 Summary:            Logging utilities
 
 Group:              Development/Python3
@@ -39,11 +39,14 @@ rm -rf %{modname}.egg-info
 %{__python3} setup.py test
 
 %files
-%doc README.txt LICENSE.txt NEWS.txt doc/
+%doc README.rst LICENSE.txt NEWS.txt doc/
 %{python3_sitelibdir}/%{modname}/
 %{python3_sitelibdir}/%{modname}-%{version}-*
 
 %changelog
+* Wed May 25 2022 Grigory Ustinov <grenka@altlinux.org> 0.3.5-alt1
+- Build new version.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 0.3.3-alt2
 - Drop python2 support.
 
