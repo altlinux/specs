@@ -1,7 +1,7 @@
 %define oname lingua
 
 Name: python3-module-%oname
-Version: 4.14
+Version: 4.15.0
 Release: alt1
 Summary: Translation toolset
 License: BSD
@@ -13,10 +13,12 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python3-module-polib python3-module-chameleon.core
-BuildPreReq: python3-module-mock
+BuildRequires: python3-module-flit
+BuildRequires: python3-module-polib
+BuildRequires: python3-module-chameleon.core
+BuildRequires: python3-module-mock
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-click
 
 Conflicts: python-module-lingua < %EVR
 Obsoletes: python-module-lingua < %EVR
@@ -31,21 +33,28 @@ xgettext command from gettext, or pybabel from Babel.
 %prep
 %setup
 
+sed -i 's/4.14/4.15/' src/lingua/__init__.py
+
 %build
-%python3_build_debug
+python3 -m flit build --format wheel
 
 %install
-%python3_install
+pip3 install -I dist/%oname-%version-*-none-any.whl --root %buildroot --prefix %prefix --no-deps
 
 %check
-python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -v
 
 %files
 %doc *.rst docs/examples
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/*.dist-info
 
 %changelog
+* Wed May 25 2022 Grigory Ustinov <grenka@altlinux.org> 4.15.0-alt1
+- Automatically updated to 4.15.0.
+
 * Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 4.14-alt1
 - Automatically updated to 4.14.
 
