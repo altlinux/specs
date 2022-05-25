@@ -2,10 +2,9 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	5.17
-%define kernel_sublevel .9
+%define kernel_sublevel .11
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-%define kernel_extra_version_numeric 1.0.0
 
 %define krelease	%release
 
@@ -105,7 +104,7 @@ BuildRequires: flex
 BuildRequires: gcc%kgcc_version
 BuildRequires: gcc%kgcc_version-c++
 BuildRequires: gcc%kgcc_version-plugin-devel
-BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
+BuildRequires: kernel-source-%kernel_base_version
 BuildRequires: kmod
 BuildRequires: libdb4-devel
 BuildRequires: libelf-devel
@@ -615,6 +614,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed May 25 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.17.11-alt1
+- Update to v5.17.11 (2022-05-25).
+- Applied Baikal-M patches. Supported boards: et101, aqbm1000, tf307.
+  Supported firmware: based on SDK-M 5.3 (Alexey Sheplyakov)
+- config: CONFIG_MICROCODE_OLD_INTERFACE=y which was off since 5.17.6-alt1.
+
 * Wed May 18 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.17.9-alt1
 - v5.17.9 (2022-05-18).
 
