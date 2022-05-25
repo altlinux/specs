@@ -1,6 +1,6 @@
 Name: update-kernel
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: Update kernel and modules
 License: GPL-2.0+
@@ -49,6 +49,9 @@ make check
 %_sbindir/analyze-kmodules
 
 %changelog
+* Mon May 23 2022 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt2
+- update-kernel: Minor spelling fixes.
+
 * Tue Apr 12 2022 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt1
 - update-kernel: Do not suggest fresher flavour. (ALT#42400)
 
