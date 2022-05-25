@@ -2,14 +2,9 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel .42
+%define kernel_sublevel .43
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-# Numeric extra version scheme developed by Alexander Bokovoy:
-# 0.0.X -- preX
-# 0.X.0 -- rcX
-# 1.0.0 -- release
-%define kernel_extra_version_numeric 1.0.0
 
 %define krelease	%release
 
@@ -95,7 +90,7 @@ BuildRequires: flex
 BuildRequires: libdb4-devel
 BuildRequires: gcc%kgcc_version gcc%kgcc_version-c++
 BuildRequires: gcc%kgcc_version-plugin-devel libgmp-devel libmpc-devel
-BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
+BuildRequires: kernel-source-%kernel_base_version
 BuildRequires: module-init-tools >= 3.16
 BuildRequires: lzma-utils zlib-devel
 BuildRequires: libelf-devel
@@ -623,8 +618,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
-* Wed May 25 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.42-alt1
-- v5.15.42 (2022-05-25).
+* Wed May 25 2022 Vitaly Chikunov <vt@altlinux.org> 2:5.15.43-alt1
+- Update to v5.15.43 (2022-05-25).
+- config: CONFIG_MICROCODE_OLD_INTERFACE=y which was off since 5.15.37-alt2.
 
 * Wed May 18 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.41-alt1
 - v5.15.41 (2022-05-18).
