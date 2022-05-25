@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: calibre
-Version: 5.40.0
+Version: 5.42.0
 Release: alt1
 
 Summary: A e-book library management application
@@ -44,7 +44,8 @@ BuildRequires(pre): rpm-macros-qt5-webengine
 BuildRequires: chrpath
 BuildRequires: /proc
 
-BuildRequires: cmake gcc-c++ libX11-devel libXext-devel libXrender-devel libjpeg-devel libsqlite3-devel
+BuildRequires: gcc-c++ libX11-devel libXext-devel libXrender-devel libjpeg-devel libsqlite3-devel
+BuildRequires: cmake >= 3.14
 BuildRequires: libusb-devel >= 1.0.22
 
 ####### Building headless QPA plugin #######
@@ -107,22 +108,23 @@ BuildRequires: libhyphen-devel >= 2.8.8
 # TODO: 2.1.0
 BuildRequires: libstemmer-devel
 
-# Checked 12.07.2021 with
+# Checked 23.05.2022 with
 # https://github.com/kovidgoyal/build-calibre/blob/master/scripts/sources.json
 # calibre/bypy/sources.json
 
 %py3_use six >= 1.15.0
-%py3_use unrardll >= 0.1.3
+%py3_use unrardll >= 0.1.5
 %py3_use lxml >= 4.5.2
 %py3_use pychm >= 0.8.6
-%py3_use html5-parser >= 0.4.9
+%py3_use html5-parser >= 0.4.10
 %py3_use css-parser >= 1.0.6
 %py3_use dateutil >= 2.8.1
 %py3_use jeepney >= 0.6.0
-#py3_use dns >= 2.0.0
-%py3_use dns
-%py3_use mechanize >= 0.4.5
+%py3_use dns >= 2.0.0
+%py3_use mechanize >= 0.4.7
 %py3_use feedparser >= 5.2.1
+# sgmllib is needed for feedparser parsing malformed feeds
+#py3_use sgmllib3k >= 1.0.0
 %py3_use markdown >= 3.2.2
 %py3_use html2text >= 2020.1.16
 # no need really
@@ -139,12 +141,13 @@ BuildRequires: libstemmer-devel
 %py3_use apsw > 3.35.4-alt1.r1
 %py3_use webencodings >= 0.5.1
 %py3_use html5lib >= 1.1
-%py3_use Pillow >= 7.2.0
+%py3_use Pillow >= 8.3.0
 %py3_use netifaces >= 0.10.9
 %py3_use psutil >= 5.7.2
 %py3_use ifaddr >= 0.1.7
-%py3_use texttable >= 1.6.3
-# TODO: build it
+# used only in py7zr?
+#py3_use texttable >= 1.6.3
+# TODO: build py7zr
 #py3_use py7zr >= 0.11.1
 %py3_use zeroconf >= 0.31.0
 %py3_use toml >= 0.10.1
@@ -238,6 +241,10 @@ rm -vf %buildroot%_libdir/calibre/calibre/translations/msgfmt.py
 %_datadir/mime/packages/calibre-mimetypes.xml
 
 %changelog
+* Tue May 24 2022 Vitaly Lipatov <lav@altlinux.ru> 5.42.0-alt1
+- new version 5.42.0 (with rpmrb script)
+- update build requires
+
 * Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 5.40.0-alt1
 - new version 5.40.0 (with rpmrb script)
 

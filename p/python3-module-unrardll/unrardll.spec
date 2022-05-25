@@ -1,7 +1,7 @@
 %define modulename unrardll
 Name: python3-module-unrardll
-Version: 0.1.3
-Release: alt2
+Version: 0.1.5
+Release: alt1
 
 Summary: Python wrapper for the UnRAR DLL
 
@@ -42,6 +42,9 @@ export LANG=en_US.UTF8
 %python3_sitelibdir/*
 
 %changelog
+* Wed May 25 2022 Vitaly Lipatov <lav@altlinux.ru> 0.1.5-alt1
+- new version 0.1.5 (with rpmrb script)
+
 * Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.1.3-alt2
 - Drop python2 support.
 
