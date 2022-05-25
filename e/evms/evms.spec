@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt51
+Release: alt52
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -183,6 +183,10 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Wed May 25 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt52
+- plugins/md: fix computing parity indices in RAID6
+- plugins/md: implement raw read/write operations in RAID10
+
 * Mon Oct 18 2021 Slava Aseev <ptrnine@altlinux.org> 2.5.5-alt51
 - Fix FTBFS: disable static library building
 
