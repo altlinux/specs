@@ -4,7 +4,7 @@ Group: Databases
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -57,8 +57,8 @@ BuildRequires: jpackage-11-compat
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:  42.2.18
-Release:	alt1_2jpp11
+Version:    42.3.1
+Release:	alt1_3jpp11
 License:	BSD
 URL:		http://jdbc.postgresql.org/
 
@@ -67,7 +67,6 @@ Provides:	pgjdbc = %version-%release
 
 BuildArch:	noarch
 BuildRequires:	maven-local
-BuildRequires:	maven-javadoc-plugin
 BuildRequires:	maven-enforcer-plugin
 BuildRequires:	maven-plugin-bundle
 BuildRequires:	classloader-leak-test-framework
@@ -158,7 +157,7 @@ EOF
 opts="-f"
 %endif
 
-%mvn_build $opts --xmvn-javadoc -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build $opts --xmvn-javadoc
 
 
 %install
@@ -175,6 +174,9 @@ opts="-f"
 
 
 %changelog
+* Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 0:42.3.1-alt1_3jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:42.2.18-alt1_2jpp11
 - new version
 
