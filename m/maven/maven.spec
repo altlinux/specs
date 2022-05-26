@@ -1,3 +1,4 @@
+%def_disable jarlink_bootstrap
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
@@ -23,7 +24,7 @@ BuildRequires: jpackage-11-compat
 Name:           maven
 Epoch:          1
 Version:        3.6.3
-Release:        alt2_8jpp11
+Release:        alt2_9jpp11
 Summary:        Java project management and project comprehension tool
 # maven itself is ASL 2.0
 # bundled slf4j is MIT
@@ -262,8 +263,8 @@ build-jar-repository -s -p %{buildroot}%{apphomedir}/lib \
     httpcomponents/{httpclient,httpcore} maven-wagon/http-shared
 
 # Transitive deps of cdi-api that should have been excluded
-rm %{buildroot}%{apphomedir}/lib/jakarta.interceptor-api*.jar
-rm %{buildroot}%{apphomedir}/lib/javax.el-api*.jar
+rm -f %{buildroot}%{apphomedir}/lib/jakarta.interceptor-api*.jar
+rm -f %{buildroot}%{apphomedir}/lib/javax.el-api*.jar
 
 # Native lib whose extraction we suppressed
 ln -s %{_jnidir}/jansi-native/jansi-linux.jar %{buildroot}%{apphomedir}/lib/
@@ -308,6 +309,16 @@ touch $RPM_BUILD_ROOT/etc/mavenrc
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/maven.conf`
 touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
+%if_enabled jarlink_bootstrap
+find %buildroot/usr/ -type l -name '*.jar' | \
+while read jar; do
+  realjar=`readlink -e "$jar"`;
+  rm -f "$jar";
+  cp -a "$realjar" "$jar"
+done
+%endif
+
+
 
 %pre 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=27807 (upgrade from maven1)
@@ -337,6 +348,10 @@ touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 
 %changelog
+* Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 1:3.6.3-alt2_9jpp11
+- support for new cdi-api
+- added jarlink_bootstrap option
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 1:3.6.3-alt2_8jpp11
 - fixed alternatives
 
