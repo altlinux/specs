@@ -1,8 +1,8 @@
 %define oname pysvn
 
 Name: python3-module-%oname
-Version: 1.9.12
-Release: alt3
+Version: 1.9.18
+Release: alt1
 Summary: Subversion support for python
 License: Apache-1.1
 Group: Development/Python3
@@ -42,6 +42,9 @@ cp -r Source/pysvn %buildroot%python3_sitelibdir
 %python3_sitelibdir/pysvn
 
 %changelog
+* Thu May 26 2022 Grigory Ustinov <grenka@altlinux.org> 1.9.18-alt1
+- Build new version.
+
 * Thu Sep 16 2021 Stanislav Levin <slev@altlinux.org> 1.9.12-alt3
 - Fixed FTBFS (removed pyutilib).
 
