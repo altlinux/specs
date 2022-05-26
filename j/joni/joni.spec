@@ -1,73 +1,49 @@
 Epoch: 0
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:             joni
-Version:          2.1.20
-Release:          alt1_1jpp11
-Summary:          Java port of Oniguruma regexp library
+Name:           joni
+Version:        2.1.24
+Release:        alt1_1jpp11
+Summary:        Java port of Oniguruma regexp library
+License:        MIT
+URL:            https://github.com/jruby/%{name}
+BuildArch:      noarch
 
-License:          MIT
-URL:              https://github.com/jruby/%{name}
-Source0:          https://github.com/jruby/%{name}/archive/%{name}-%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/jruby/%{name}/archive/%{name}-%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.jruby.jcodings:jcodings)
 BuildRequires:  mvn(org.ow2.asm:asm)
-
-BuildArch: noarch
 Source44: import.info
 
 %description
 joni is a port of Oniguruma, a regular expressions library,
 to java. It is used by jruby.
 
-%package javadoc
-Group: Development/Java
-Summary: API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
-
 %prep
 %setup -q -n %{name}-%{name}-%{version}
 
-find -name '*.class' -delete
-find -name '*.jar' -delete
 
-%mvn_file : %{name}
+find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 
 # Remove pointless parent pom
 %pom_remove_parent
 
 # Remove wagon extension
-%pom_xpath_remove "pom:build/pom:extensions"
+%pom_xpath_remove 'pom:build/pom:extensions'
 
 # Remove plugins not relevant for downstream RPM builds
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-source-plugin
 
-# fixes rpmlint warning about wrong-file-end-of-line-encoding
-sed -i -e 's|\r||' test/org/joni/test/TestC.java
-sed -i -e 's|\r||' test/org/joni/test/TestU.java
-sed -i -e 's|\r||' test/org/joni/test/TestA.java
-
-# Generate OSGi metadata by using bundle packaging
-%pom_xpath_set pom:packaging "bundle"
-%pom_add_plugin org.apache.felix:maven-bundle-plugin "<extensions>true</extensions>"
-
 %build
-# Work around xmvn bug with generating javadoc from modular projects: https://github.com/fedora-java/xmvn/issues/58
-# Disable default javadoc generation with -j then generate separately with
-# explicit invokation of javadoc mojo without the module definition present
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-find -name module-info.java -delete
-xmvn --batch-mode --offline org.fedoraproject.xmvn:xmvn-mojo:javadoc
+# https://github.com/fedora-java/xmvn/issues/58
+%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -P !release-on-9
 
 %install
 %mvn_install
@@ -76,9 +52,10 @@ xmvn --batch-mode --offline org.fedoraproject.xmvn:xmvn-mojo:javadoc
 %doc --no-dereference LICENSE
 %doc README.md
 
-%files javadoc -f .mfiles-javadoc
-
 %changelog
+* Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 0:2.1.24-alt1_1jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:2.1.20-alt1_1jpp11
 - new version
 
