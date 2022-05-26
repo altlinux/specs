@@ -1,20 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define oname pylbfgs
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.2.0.13
+Version: 0.2.0.14
 Release: alt1
+
 Summary: LBFGS and OWL-QN optimization algorithms
+
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/PyLBFGS
 
-Source0: https://pypi.python.org/packages/ff/82/5bd1a652ee8d061593f07ba54eb62e72a6a04f60e9fc4273033f5a021d0c/PyLBFGS-%{version}.tar.gz
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-nose libnumpy-py3-devel
+BuildRequires: python3-module-Cython
+BuildRequires: libnumpy-py3-devel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-numpy-testing
+%endif
 
 %py3_provides %oname lbfgs
 %py3_requires numpy
@@ -29,10 +37,10 @@ than is currently available in SciPy, and to provide the OWL-QN
 algorithm to Python users.
 
 %prep
-%setup -q -n PyLBFGS-%{version}
+%setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -40,15 +48,18 @@ algorithm to Python users.
 cp liblbfgs/README README.libLBFGS
 
 %check
-python3 setup.py test -v
-python3 setup.py build_ext -i
-nosetests3 -vv lbfgs
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -v
 
 %files
 %doc *.rst README.libLBFGS
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 26 2022 Grigory Ustinov <grenka@altlinux.org> 0.2.0.14-alt1
+- Build new version.
+- Build with check.
+
 * Mon Feb 08 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.0.13-alt1
 - Build new version for python3.9.
 - Drop python2 support.
