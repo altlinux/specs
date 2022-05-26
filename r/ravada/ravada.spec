@@ -5,8 +5,8 @@
 %def_without check
 
 Name: ravada
-Version: 1.5.0
-Release: alt2
+Version: 1.5.1
+Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
 Group: Development/Perl
@@ -17,7 +17,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 Requires: perl-DBD-mysql perl-DBD-SQLite perl-Mojolicious-Plugin-I18N
-Requires: bridge-utils iproute2 iptables libvirt mariadb-common net-tools qemu-img qemu-kvm
+Requires: bridge-utils iproute2 iptables iptstate net-tools
+Requires: libvirt mariadb-common qemu-img qemu-kvm openssl guestfs-tools lxc-core
+# spice-vdagent @ VM
 
 BuildRequires(pre): rpm-build-perl
 
@@ -65,7 +67,7 @@ BuildRequires: rpm-build-vm
 BuildRequires: perl-Test-Moose-More
 BuildRequires: perl-Test-Perl-Critic
 BuildRequires: iptables
-BuildRequires: libvirt
+BuildRequires: libvirt libvirt-daemon libvirt-kvm
 BuildRequires: mariadb-common
 %endif
 
@@ -113,7 +115,7 @@ find %buildroot -size 0 -delete
 %check
 export TZ=UTC
 export PATH=$PATH:/sbin
-vm-run --kvm=cond "mount -t tmpfs tmp /var/run; make test"
+vm-run --kvm=cond "mount -t tmpfs tmp /var/run; service libvirtd start; make test"
 
 %preun
 %preun_service rvd_back
@@ -149,6 +151,10 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Wed May 25 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.5.1-alt1
+- 1.5.1
+- fix path to ss
+
 * Sun May 22 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.5.0-alt2
 - package sql scripts
 - add missed Requires
