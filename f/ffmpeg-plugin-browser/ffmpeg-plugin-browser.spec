@@ -157,11 +157,11 @@
 %global optflags_lto %nil
 %endif
 
-Name:		ffmpeg-yandex-browser
+Name:		ffmpeg-plugin-browser
 Version:	100
-Release:	alt2
+Release:	alt3
 
-Summary:	FFmpeg built specifically for codec support in Yandex browser
+Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
 Group:		Video
 
@@ -249,7 +249,7 @@ BuildRequires:	yasm
 %{?_enable_cuvid:BuildRequires: nv-codec-headers}
 
 %define common_descr \
-FFmpeg built specifically for codec support in Yandex browser.
+FFmpeg built specifically for codec support in special browser.
 
 %description
 %common_descr
@@ -741,9 +741,9 @@ cat > add-provides.c <<__EOF__
 #include <libavformat/version.h>
 #include <libavutil/version.h>
 int main() {
-    fprintf(stdout, "ffmpeg-yandex-browser-avcodec = %%d\n", LIBAVCODEC_VERSION_INT);
-    fprintf(stdout, "ffmpeg-yandex-browser-avformat = %%d\n", LIBAVFORMAT_VERSION_INT);
-    fprintf(stdout, "ffmpeg-yandex-browser-avutil = %%d\n", LIBAVUTIL_VERSION_INT);
+    fprintf(stdout, "ffmpeg-plugin-browser-avcodec = %%d\n", LIBAVCODEC_VERSION_INT);
+    fprintf(stdout, "ffmpeg-plugin-browser-avformat = %%d\n", LIBAVFORMAT_VERSION_INT);
+    fprintf(stdout, "ffmpeg-plugin-browser-avutil = %%d\n", LIBAVUTIL_VERSION_INT);
     return 0;
 }
 __EOF__
@@ -763,9 +763,12 @@ tests/checkasm/checkasm
 
 %files
 %doc README.* MAINTAINERS Changelog* LICENSE.md CREDITS*
-%_libdir/yandex-browser/libffmpeg.so
+%_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Thu May 26 2022 Sergey V Turchin <zerg@altlinux.org> 100-alt3
+- rename package
+
 * Thu May 26 2022 Sergey V Turchin <zerg@altlinux.org> 100-alt2
 - add ptovides to avcodec, avformat and avutil versions
 - rename package
