@@ -3,35 +3,37 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           maven-parent
 Version:        34
-Release:        alt1_5jpp11
+Release:        alt1_8jpp11
 Summary:        Apache Maven parent POM
 License:        ASL 2.0
-
-URL:            http://maven.apache.org
+URL:            https://maven.apache.org
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-remote-resources-plugin)
 BuildRequires:  mvn(org.apache:apache:pom:)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
-
-# this package obsoletes maven-shared and maven-plugins-pom
-Provides:       maven-shared = %{version}-%{release}
-Obsoletes:      maven-shared < 22-9
-
-Provides:       maven-plugins-pom = %{version}-%{release}
-Obsoletes:      maven-plugins-pom < 28-9
-
-Patch1:         remove_javadoc_plugin_taglet.patch
+%endif
 Source44: import.info
 
 %description
@@ -39,14 +41,12 @@ Apache Maven parent POM file used by other Maven projects.
 
 %prep
 %setup -q
-
-%pom_remove_plugin :apache-rat-plugin
+%pom_disable_module apache-resource-bundles
+%pom_remove_plugin :maven-enforcer-plugin
 %pom_remove_plugin :maven-checkstyle-plugin
-%pom_remove_plugin -r :maven-enforcer-plugin
-%pom_remove_plugin :maven-scm-publish-plugin
-%pom_remove_plugin :maven-site-plugin
+%pom_remove_plugin :apache-rat-plugin
 
-%patch1 -p2
+%pom_xpath_remove "pom:execution[pom:id='generate-helpmojo']" maven-plugins
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -58,6 +58,9 @@ Apache Maven parent POM file used by other Maven projects.
 %doc LICENSE NOTICE
 
 %changelog
+* Sat May 21 2022 Igor Vlasenko <viy@altlinux.org> 34-alt1_8jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 34-alt1_5jpp11
 - new version
 

@@ -3,12 +3,12 @@ Group: Development/Other
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-verifier-plugin
 Version:        1.0
-Release:        alt4_23jpp8
+Release:        alt4_28jpp11
 Summary:        Maven Verifier Plugin
 
 License:        ASL 2.0
@@ -19,7 +19,7 @@ BuildArch: noarch
 
 BuildRequires: jpackage-utils
 BuildRequires: maven-local
-BuildRequires: maven-plugins-pom
+BuildRequires: maven-parent
 BuildRequires: modello
 BuildRequires: plexus-utils
 Source44: import.info
@@ -40,9 +40,11 @@ API documentation for %{name}.
 %setup -q 
 
 %mvn_file :%{name} %{name}
+%pom_remove_parent
+%pom_add_parent org.apache.maven.plugins:maven-plugins:34
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -54,6 +56,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 1.0-alt4_28jpp11
+- fixed build with new maven-parent
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_23jpp8
 - fc update
 
