@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: deepin-terminal
-Version: 5.4.29
+Version: 5.4.30
 Release: alt1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
@@ -126,6 +126,11 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/terminalwidget5/
 
 %changelog
+* Thu May 26 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.30-alt1
+- New version.
+- Upstream:
+  + Minimize window size adjustment.
+
 * Wed Apr 27 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.29-alt1
 - New version (5.4.29).
 
