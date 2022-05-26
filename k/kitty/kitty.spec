@@ -2,8 +2,8 @@
 %def_with check
 
 Name: kitty
-Version: 0.25.0
-Release: alt2
+Version: 0.25.1
+Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -20,6 +20,13 @@ Patch1: alt-sphinx-use-classic-theme.patch
 
 # 0.25.0: shebang.req failed
 %add_findreq_skiplist %_libexecdir/%name/shell-integration/ssh/askpass.py
+
+# play sound
+Requires: libcanberra
+# panel kitten
+Requires: libstartup-notification
+# icat kitten
+Requires: ImageMagick-tools
 
 BuildRequires(pre): rpm-build-python3
 
@@ -168,6 +175,14 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_libexecdir/%name/shell-integration
 
 %changelog
+* Thu May 26 2022 Egor Ignatov <egori@altlinux.org> 0.25.1-alt1
+- new version 0.25.1
+
+* Thu Apr 28 2022 Egor Ignatov <egori@altlinux.org> 0.25.0-alt3
+- add libstartup-notification dependency (closes: #42606)
+- add ImageMagick-tools dependency (closes: #42607)
+- add libcanberra dependency
+
 * Wed Apr 13 2022 Egor Ignatov <egori@altlinux.org> 0.25.0-alt2
 - spec: move shell-integration to another package as upstream suggests
 
