@@ -1,13 +1,15 @@
 %define oname whitenoise
 
 Name: python3-module-%oname
-Version: 5.3.0
+Version: 6.1.0
 Release: alt1
 
 Summary: Radically simplified static file serving for Python web apps
+
 License: MIT
 Group: Development/Python3
 Url: https://github.com/evansd/whitenoise
+
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -54,6 +56,9 @@ export PYTHONPATH=$PWD
 %doc docs/*
 
 %changelog
+* Thu May 26 2022 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
+- 6.1.0
+
 * Wed Aug 18 2021 Alexey Shabalin <shaba@altlinux.org> 5.3.0-alt1
 - 5.3.0
 
