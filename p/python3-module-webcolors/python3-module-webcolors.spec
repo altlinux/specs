@@ -1,7 +1,7 @@
 %define  modulename webcolors
 
 Name:    python3-module-%modulename
-Version: 1.11.1
+Version: 1.12
 Release: alt1
 
 Summary: Library for working with HTML/CSS color formats in Python
@@ -16,13 +16,13 @@ BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source:  %name-%version.tar
 
 %description
 %summary
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
 %python3_build
@@ -37,6 +37,9 @@ Source:  %modulename-%version.tar
 %doc *.rst
 
 %changelog
+* Thu May 26 2022 Grigory Ustinov <grenka@altlinux.org> 1.12-alt1
+- Automatically updated to 1.12.
+
 * Wed Sep 16 2020 Grigory Ustinov <grenka@altlinux.org> 1.11.1-alt1
 - Automatically updated to 1.11.1.
 
