@@ -2,77 +2,74 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global srcname cdi
+%bcond_with bootstrap
 
 Name:           cdi-api
-Version:        2.0
-Release:        alt1_2jpp11
-Summary:        Contexts and Dependency Injection API
+Version:        2.0.2
+Release:        alt1_3jpp11
+Summary:        CDI API
 License:        ASL 2.0
-
 URL:            https://github.com/eclipse-ee4j/cdi
-Source0:        %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
-
 BuildArch:      noarch
 
+Source0:        https://github.com/eclipse-ee4j/cdi/archive/%{version}.tar.gz
+
+Patch1:         0001-Remove-dependency-on-glassfish-el.patch
+
 BuildRequires:  maven-local
-BuildRequires:  mvn(jakarta.interceptor:jakarta.interceptor-api)
-BuildRequires:  mvn(javax.el:javax.el-api)
-BuildRequires:  mvn(javax.inject:javax.inject)
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  %{?module_prefix}mvn(jakarta.inject:jakarta.inject-api)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.jboss.weld:weld-parent:pom:)
-BuildRequires:  mvn(org.testng:testng)
+%endif
 Source44: import.info
 
 %description
 APIs for JSR-299: Contexts and Dependency Injection for Java EE
 
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{srcname}-%{version}
+%setup -q -n cdi-%{version}
 
-
-# do not build specification documentation
+%pom_remove_parent
+%pom_remove_parent api
 %pom_disable_module spec
+%pom_remove_plugin -r :maven-javadoc-plugin
 
-# do not install useless parent POM
-%mvn_package javax.enterprise:cdi-spec __noinstall
+%pom_remove_dep :jakarta.el-api api
+%pom_remove_dep :jakarta.interceptor-api api
+rm -rf api/src/main/java/javax/enterprise/{context/,inject/spi/,inject/se/,inject/Model.java,inject/New.java}
 
-# use new jakarta interceptors coordinates
-%pom_change_dep :javax.interceptor-api jakarta.interceptor:jakarta.interceptor-api api
-
+%mvn_alias :jakarta.enterprise.cdi-api javax.enterprise:cdi-api
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
+ln -s jakarta.enterprise.cdi-api.jar %buildroot%_javadir/%name/%{name}.jar
 
 %files -f .mfiles
-%doc --no-dereference spec/src/main/asciidoc/license-asl2.asciidoc
-%doc --no-dereference spec/src/main/asciidoc/license-jcp-final.asciidoc
-%doc spec/src/main/asciidoc/cdi-spec.asciidoc
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference spec/src/main/asciidoc/license-asl2.asciidoc
-%doc --no-dereference spec/src/main/asciidoc/license-jcp-final.asciidoc
-
+%doc README.md
+%doc --no-dereference LICENSE.txt
+%_javadir/%name/%{name}.jar
 
 %changelog
+* Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 2.0.2-alt1_3jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.0-alt1_2jpp11
 - new version
 
