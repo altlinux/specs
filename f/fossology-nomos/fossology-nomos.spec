@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: fossology-nomos
-Version: 4.0.0
+Version: 4.1.0
 Release: alt1
 
 Summary: Architecture for analyzing software, nomos standalone
@@ -56,6 +56,9 @@ src/nomos/agent/nomossa -d .gear
 %_bindir/nomossa
 
 %changelog
+* Thu May 26 2022 Vitaly Chikunov <vt@altlinux.org> 4.1.0-alt1
+- Updated to 4.1.0 (2022-05-20).
+
 * Tue Jan 25 2022 Vitaly Chikunov <vt@altlinux.org> 4.0.0-alt1
 - Updated to 4.0.0 (2022-01-21).
 
