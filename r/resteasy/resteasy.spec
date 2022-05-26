@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -10,20 +10,19 @@ BuildRequires: jpackage-11-compat
 
 Name:           resteasy
 Version:        3.0.26
-Release:        alt1_7jpp11
+Release:        alt1_15jpp11
 Summary:        Framework for RESTful Web services and Java applications
-License:        ASL 2.0 and CDDL
+License:        ASL 2.0
 URL:            http://resteasy.jboss.org/
 Source0:        https://github.com/resteasy/Resteasy/archive/%{namedversion}/%{name}-%{namedversion}.tar.gz
 Patch1:         0001-RESTEASY-2559-Improper-validation-of-response-header.patch
+Patch2:         0001-Remove-Log4jLogger.patch
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(com.sun.xml.bind:jaxb-impl)
-BuildRequires:  mvn(javax.xml.bind:jaxb-api)
-BuildRequires:  mvn(log4j:log4j)
+BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(org.apache.httpcomponents:httpclient)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.tomcat:tomcat-servlet-api)
@@ -38,27 +37,9 @@ BuildRequires:  mvn(org.jboss:jboss-parent:pom:)
 BuildRequires:  mvn(org.jboss.logging:jboss-logging)
 BuildRequires:  mvn(org.jboss.logging:jboss-logging-annotations)
 BuildRequires:  mvn(org.jboss.logging:jboss-logging-processor)
-BuildRequires:  mvn(org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec)
+BuildRequires:  mvn(javax.annotation:javax.annotation-api)
 BuildRequires:  mvn(org.jboss.spec.javax.ws.rs:jboss-jaxrs-api_2.0_spec)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
-
-Requires:       resteasy-atom-provider = %{version}-%{release}
-Requires:       resteasy-client = %{version}-%{release}
-Requires:       resteasy-core = %{version}-%{release}
-Requires:       resteasy-jackson2-provider = %{version}-%{release}
-Requires:       resteasy-jaxb-provider = %{version}-%{release}
-
-# subpackages removed in fedora 32
-Obsoletes:      %{name}-fastinfoset-provider < 3.0.26-1
-Obsoletes:      %{name}-jackson-provider < 3.0.26-1
-Obsoletes:      %{name}-jettison-provider < 3.0.26-1
-Obsoletes:      %{name}-json-p-provider < 3.0.26-1
-Obsoletes:      %{name}-multipart-provider < 3.0.26-1
-Obsoletes:      %{name}-netty3 < 3.0.26-1
-Obsoletes:      %{name}-optional < 3.0.26-1
-Obsoletes:      %{name}-test < 3.0.26-1
-Obsoletes:      %{name}-validator-provider-11 < 3.0.26-1
-Obsoletes:      %{name}-yaml-provider < 3.0.26-1
 Source44: import.info
 
 %description
@@ -71,53 +52,68 @@ certified and portable implementation of the JAX-RS specification.
 \
 This package contains
 
-%package        javadoc
+%package -n     pki-%{name}
 Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
+Summary:        Framework for RESTful Web services and Java applications
+Obsoletes:      %{name} < %{version}-%{release}
+Conflicts:      %{name} < %{version}-%{release}
+Provides:       %{name} = %{version}-%{release}
 
-%description    javadoc
-This package contains the API documentation for %{name}.
+Requires:       resteasy-client = %{version}-%{release}
+Requires:       resteasy-core = %{version}-%{release}
+Requires:       resteasy-jackson2-provider = %{version}-%{release}
 
-%package        core
+# subpackages removed in fedora 32
+Obsoletes:      %{name}-fastinfoset-provider < 3.0.26-1
+Obsoletes:      %{name}-jackson-provider < 3.0.26-1
+Obsoletes:      %{name}-jettison-provider < 3.0.26-1
+Obsoletes:      %{name}-json-p-provider < 3.0.26-1
+Obsoletes:      %{name}-multipart-provider < 3.0.26-1
+Obsoletes:      %{name}-netty3 < 3.0.26-1
+Obsoletes:      %{name}-optional < 3.0.26-1
+Obsoletes:      %{name}-test < 3.0.26-1
+Obsoletes:      %{name}-validator-provider-11 < 3.0.26-1
+Obsoletes:      %{name}-yaml-provider < 3.0.26-1
+
+%description -n pki-%{name}
+%{desc}
+
+%package -n     pki-%{name}-core
 Group: Development/Java
 Summary:        Core modules for %{name}
 Obsoletes:      resteasy-jaxrs-api < 3.0.7
+Obsoletes:      %{name}-core < %{version}-%{release}
+Conflicts:      %{name}-core < %{version}-%{release}
+Provides:       %{name}-core = %{version}-%{release}
 
-%description    core
+%description -n pki-%{name}-core
 %{extdesc} %{summary}.
 
-%package        atom-provider
-Group: Development/Java
-Summary:        Module atom-provider for %{name}
-
-%description    atom-provider
-%{extdesc} %{summary}.
-
-%package        jackson2-provider
+%package -n     pki-%{name}-jackson2-provider
 Group: Development/Java
 Summary:        Module jackson2-provider for %{name}
+Obsoletes:      %{name}-jackson2-provider < %{version}-%{release}
+Conflicts:      %{name}-jackson2-provider < %{version}-%{release}
+Provides:       %{name}-jackson2-provider = %{version}-%{release}
 
-%description    jackson2-provider
+%description -n pki-%{name}-jackson2-provider
 %{extdesc} %{summary}.
 
-%package        jaxb-provider
-Group: Development/Java
-Summary:        Module jaxb-provider for %{name}
-
-%description    jaxb-provider
-%{extdesc} %{summary}.
-
-%package        client
+%package -n     pki-%{name}-client
 Group: Development/Java
 Summary:        Client for %{name}
+Obsoletes:      %{name}-client < %{version}-%{release}
+Conflicts:      %{name}-client < %{version}-%{release}
+Provides:       %{name}-client = %{version}-%{release}
 
-%description    client
+%description -n pki-%{name}-client
 %{extdesc} %{summary}.
 
 %prep
 %setup -q -n Resteasy-%{namedversion}
 %patch1 -p1
+%patch2 -p1
+
 
 %pom_disable_module arquillian
 %pom_disable_module eagledns
@@ -147,17 +143,35 @@ pushd providers
 %pom_disable_module jettison
 %pom_disable_module json-p-ee7
 %pom_disable_module multipart
+%pom_disable_module resteasy-atom
 %pom_disable_module resteasy-html
 %pom_disable_module resteasy-validator-provider-11
 %pom_disable_module yaml
+%pom_disable_module jaxb
 popd
 
 find -name '*.jar' -print -delete
 
 %pom_remove_plugin :maven-clover2-plugin
+%pom_remove_plugin :maven-javadoc-plugin
 
-# remove activation.jar dependencies
-%pom_remove_dep -r javax.activation:activation resteasy-jaxrs resteasy-spring
+# depend on jakarta-activation
+%pom_change_dep javax.activation:activation jakarta.activation:jakarta.activation-api resteasy-jaxrs
+%pom_change_dep javax.activation:activation jakarta.activation:jakarta.activation-api resteasy-spring
+
+# depend on jakarta-annotations
+%pom_change_dep org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec javax.annotation:javax.annotation-api jboss-modules
+%pom_change_dep org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec javax.annotation:javax.annotation-api providers/jaxb
+%pom_change_dep org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec javax.annotation:javax.annotation-api resteasy-dependencies-bom
+%pom_change_dep org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec javax.annotation:javax.annotation-api resteasy-guice
+%pom_change_dep org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec javax.annotation:javax.annotation-api resteasy-jaxrs
+%pom_change_dep org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec javax.annotation:javax.annotation-api resteasy-links
+%pom_change_dep org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec javax.annotation:javax.annotation-api resteasy-spring
+%pom_change_dep org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec javax.annotation:javax.annotation-api security/keystone/keystone-core
+%pom_change_dep org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec javax.annotation:javax.annotation-api security/resteasy-crypto
+%pom_change_dep org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec javax.annotation:javax.annotation-api security/skeleton-key-idm/skeleton-key-core
+%pom_change_dep org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec javax.annotation:javax.annotation-api security/skeleton-key-idm/skeleton-key-idp
+%pom_change_dep org.jboss.spec.javax.annotation:jboss-annotations-api_1.2_spec javax.annotation:javax.annotation-api server-adapters/resteasy-jdk-http
 
 # remove resteasy-dependencies pom
 %pom_remove_dep "org.jboss.resteasy:resteasy-dependencies"
@@ -170,6 +184,9 @@ find -name '*.jar' -print -delete
 %pom_remove_dep junit:junit providers/resteasy-atom
 %pom_remove_dep junit:junit providers/jaxb
 %pom_remove_dep junit:junit resteasy-jaxrs
+
+# remove log4j dependency
+%pom_remove_dep log4j:log4j resteasy-jaxrs
 
 # depend on servlet-api from pki-servlet-4.0-api
 %pom_change_dep org.jboss.spec.javax.servlet: org.apache.tomcat:tomcat-servlet-api resteasy-jaxrs
@@ -186,9 +203,7 @@ find -name '*.jar' -print -delete
 %mvn_package ":providers-pom" core
 %mvn_package ":resteasy-jaxrs-all" core
 %mvn_package ":resteasy-pom" core
-%mvn_package ":resteasy-atom-provider" atom-provider
 %mvn_package ":resteasy-jackson2-provider" jackson2-provider
-%mvn_package ":resteasy-jaxb-provider" jaxb-provider
 %mvn_package ":resteasy-client" client
 
 # Disable useless artifacts generation, package __noinstall do not work
@@ -198,34 +213,28 @@ find -name '*.jar' -print -delete
 </configuration>'
 
 %build
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
-%files
+%files -n pki-%{name}
 %doc README.md
 %doc --no-dereference License.html
 
-%files core -f .mfiles-core
+%files -n pki-%{name}-core -f .mfiles-core
 %doc --no-dereference License.html
 
-%files atom-provider -f .mfiles-atom-provider
+%files -n pki-%{name}-jackson2-provider -f .mfiles-jackson2-provider
 %doc --no-dereference License.html
 
-%files jackson2-provider -f .mfiles-jackson2-provider
-%doc --no-dereference License.html
-
-%files jaxb-provider -f .mfiles-jaxb-provider
-%doc --no-dereference License.html
-
-%files client -f .mfiles-client
-%doc --no-dereference License.html
-
-%files javadoc -f .mfiles-javadoc
+%files -n pki-%{name}-client -f .mfiles-client
 %doc --no-dereference License.html
 
 %changelog
+* Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 3.0.26-alt1_15jpp11
+- fc update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 3.0.26-alt1_7jpp11
 - fc34 update
 
