@@ -157,22 +157,27 @@
 %global optflags_lto %nil
 %endif
 
-Name:		ffmpeg-chromium
+Name:		ffmpeg-yandex-browser
 Version:	100
-Release:	alt1
+Release:	alt2
 
-Summary:	FFmpeg built specifically for codec support in Chromium-based browsers
+Summary:	FFmpeg built specifically for codec support in Yandex browser
 License:	GPLv3
 Group:		Video
 
 Url:		http://ffmpeg.org
 
+
 # https://chromium.googlesource.com/chromium/third_party/ffmpeg.git
 Source:		%name-%version.tar
+Source1: find-provides.sh
 Patch1: chromium.patch
 Patch2: ffmpeg-chromium-100.patch
 Patch3: alt-av_sscanf.patch
 Patch2000: ffmpeg-e2k-simd.patch
+
+%define __find_provides %SOURCE1
+
 BuildRequires:	libX11-devel libXext-devel libXvMC-devel libXfixes-devel
 BuildRequires:	libalsa-devel
 %ifarch %ix86 x86_64
@@ -244,7 +249,7 @@ BuildRequires:	yasm
 %{?_enable_cuvid:BuildRequires: nv-codec-headers}
 
 %define common_descr \
-FFmpeg built specifically for codec support in Chromium-based browsers.
+FFmpeg built specifically for codec support in Yandex browser.
 
 %description
 %common_descr
@@ -730,6 +735,20 @@ echo 'include $(SRC_PATH)/ffbuild/libffmpeg.mak' >> Makefile
 %install
 %makeinstall_std V=1 STRIP=true install-libffmpeg
 
+cat > add-provides.c <<__EOF__
+#include <stdio.h>
+#include <libavcodec/version.h>
+#include <libavformat/version.h>
+#include <libavutil/version.h>
+int main() {
+    fprintf(stdout, "ffmpeg-yandex-browser-avcodec = %%d\n", LIBAVCODEC_VERSION_INT);
+    fprintf(stdout, "ffmpeg-yandex-browser-avformat = %%d\n", LIBAVFORMAT_VERSION_INT);
+    fprintf(stdout, "ffmpeg-yandex-browser-avutil = %%d\n", LIBAVUTIL_VERSION_INT);
+    return 0;
+}
+__EOF__
+gcc -I%buildroot/%_includedir add-provides.c -o add-provides
+
 # cleanup
 rm -rf %buildroot/%_bindir ||:
 rm -rf %buildroot/%_datadir ||:
@@ -744,9 +763,13 @@ tests/checkasm/checkasm
 
 %files
 %doc README.* MAINTAINERS Changelog* LICENSE.md CREDITS*
-%_libdir/chromium/libffmpeg.so
+%_libdir/yandex-browser/libffmpeg.so
 
 %changelog
+* Thu May 26 2022 Sergey V Turchin <zerg@altlinux.org> 100-alt2
+- add ptovides to avcodec, avformat and avutil versions
+- rename package
+
 * Tue Apr 26 2022 Sergey V Turchin <zerg@altlinux.org> 100-alt1
 - initial build based on ffmpeg package (closes: 42574)
 
