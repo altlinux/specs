@@ -1,15 +1,23 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:           plexus-languages
-Summary:        Plexus Languages
-Version:        1.0.6
-Release:        alt1_1jpp11
-License:        ASL 2.0
+%bcond_with bootstrap
 
+Name:           plexus-languages
+Version:        1.0.6
+Release:        alt1_6jpp11
+Summary:        Plexus Languages
+License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-languages
+BuildArch:      noarch
 
 # ./generate-tarball.sh
 Source0:        %{name}-%{version}.tar.gz
@@ -17,15 +25,22 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 # Sources contain bundled jars that we cannot verify for licensing
 Source2:        generate-tarball.sh
 
-BuildArch:      noarch
+# Upstream patch: Jars of which modulename extraction cause an exception should end up on the classpath
+# https://github.com/codehaus-plexus/plexus-languages/issues/70
+# https://issues.apache.org/jira/browse/SUREFIRE-1897
+Patch0:         0001-70-Jars-of-which-modulename-extraction-cause-an-exce.patch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(com.thoughtworks.qdox:qdox)
 BuildRequires:  mvn(javax.inject:javax.inject)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-failsafe-plugin)
 BuildRequires:  mvn(org.codehaus.plexus:plexus:pom:)
 BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
 BuildRequires:  mvn(org.ow2.asm:asm)
+%endif
 Source44: import.info
 
 %description
@@ -34,28 +49,31 @@ language features.
 
 %{?javadoc_package}
 
-
 %prep
-%setup -q -n %{name}-%{name}-%{version}
+%setup -q -n plexus-languages-plexus-languages-%{version}
+%patch0 -p1
 
 cp %{SOURCE1} .
 
 %pom_remove_plugin :maven-enforcer-plugin
 
+# Remove module build specific to Java 9
+%pom_xpath_remove 'pom:profiles' plexus-java
+
 %build
 # many tests rely on bundled test jars/classes
 %mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
-
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc --no-dereference LICENSE-2.0.txt
 
-
 %changelog
+* Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 1.0.6-alt1_6jpp11
+- fc update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.0.6-alt1_1jpp11
 - new version
 
