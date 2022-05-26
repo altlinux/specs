@@ -1,20 +1,22 @@
 %define oname notify2
 
 Name: python3-module-notify2
-Version: 0.3
-Release: alt3
+Version: 0.3.1
+Release: alt1
+
 Summary: Python interface to DBus notifications
 
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/notify2
-Packager: Python Development Team <python at packages.altlinux.org>
 
-Source: https://pypi.python.org/packages/7f/be/f749b44ac10ca9e4b9e54a9549e37233b30451bd1c12ece640bec730c0e5/%oname-%version.tar.gz
+Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-dbus
+
 %py3_provides %oname
 
 %description
@@ -23,7 +25,7 @@ communicate with the notifications server directly. It's compatible with Python
 2 and 3, and its callbacks can work with Gtk 3 or Qt 4 applications.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
@@ -35,6 +37,9 @@ communicate with the notifications server directly. It's compatible with Python
 %python3_sitelibdir/*
 
 %changelog
+* Thu May 26 2022 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt1
+- Build new version.
+
 * Thu May 27 2021 Grigory Ustinov <grenka@altlinux.org> 0.3-alt3
 - Drop python2 support.
 
