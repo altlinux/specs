@@ -1,60 +1,48 @@
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
 %filter_from_requires /osgi(org.apache.ant*/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+%define fedora 34
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Name:      jacoco
-Version:   0.8.3
-Release:   alt1_4jpp11
-Summary:   Java Code Coverage for Eclipse 
-License:   EPL
-URL:       http://www.eclemma.org/jacoco/
-Source0:   https://github.com/jacoco/jacoco/archive/v%{version}.tar.gz
-Source1:   EnchancedManifest.mf
+BuildRequires: /usr/bin/git
+Name:           jacoco
+Version:        0.8.7
+Release:        alt1_6jpp11
+Summary:        Java Code Coverage for Eclipse
+License:        EPL-2.0
+URL:            http://www.eclemma.org/jacoco/
+BuildArch:      noarch
 
-BuildArch:        noarch
+Source0:        https://github.com/jacoco/jacoco/archive/v%{version}/%{name}-%{version}.tar.gz
 
+%if 0%{?fedora} >= 36
+Patch0:         0001-Upgrade-maven-reporting-api-to-3.1.0.patch
+%endif
+
+BuildRequires:  git
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.ant:ant)
-BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
-BuildRequires:  mvn(org.apache.maven:maven-project)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-api)
-BuildRequires:  mvn(org.apache.maven.reporting:maven-reporting-impl)
-BuildRequires:  mvn(org.apache.maven.shared:file-management)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:buildnumber-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
-BuildRequires:  mvn(org.jacoco:org.jacoco.build:pom:)
-BuildRequires:  mvn(org.ow2.asm:asm-debug-all)
-BuildRequires:  dos2unix
+BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.ow2.asm:asm-analysis)
+BuildRequires:  mvn(org.ow2.asm:asm-commons)
+BuildRequires:  mvn(org.ow2.asm:asm-tree)
+# required by wrapper scripts
+Requires:       javapackages-tools
 Source44: import.info
-
 
 %description
 JaCoCo is a free code coverage library for Java, 
 which has been created by the EclEmma team based on the lessons learned 
 from using and integration existing libraries over the last five years. 
-
-
-%package    javadoc
-Group: System/Libraries
-Summary:    Java-docs for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
 
 %package    maven-plugin
 Group: System/Libraries
@@ -63,79 +51,93 @@ Summary:    A Jacoco plugin for maven
 %description maven-plugin
 A Jacoco plugin for maven.
 
+%{?javadoc_package}
+
 %prep
-%setup -q 
+%setup -q
+git init -q
+git config user.name "rpmbuild"
+git config user.email "<rpmbuild>"
+git config gc.auto 0
+git add --force .
+git commit -q --allow-empty -a --author "rpmbuild <rpmbuild>" -m "%{NAME}-%{VERSION} base"
+%if 0%{?fedora} >= 36
+cat %_sourcedir/0001-Upgrade-maven-reporting-api-to-3.1.0.patch | git apply --index --reject  -p1 -
+git commit -q -m 0001-Upgrade-maven-reporting-api-to-3.1.0.patch --author "rpmbuild <rpmbuild>"
+%endif
 
-# Make it work with ASM 6.0
-# TODO: forward upstream
-#sed -i '/org.objectweb.asm/s/version="[^"]*"/bundle-version="[5.1.0,7.0.0)"/' $(find -name \*.MF)
 
-%pom_disable_module ../org.jacoco.examples org.jacoco.build
-%pom_disable_module ../org.jacoco.doc org.jacoco.build
-%pom_disable_module ../org.jacoco.tests org.jacoco.build
+find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
+
 %pom_disable_module ../jacoco org.jacoco.build
-
-%mvn_package ":jacoco-maven-plugin:{jar,pom}:{}:" maven-plugin
-%mvn_package ":{org.}*:{jar,pom}:runtime:"
-
-sed -i -e "s|nb-configuration.xml|nb-configuration.xml,build.xml, pom.xml|g" org.jacoco.build/pom.xml
+%pom_disable_module ../org.jacoco.doc org.jacoco.build
+%pom_disable_module ../org.jacoco.examples org.jacoco.build
+%pom_disable_module ../org.jacoco.tests org.jacoco.build
 
 # Remove unnecessary dependency on maven-javadoc-plugin
 %pom_remove_plugin -r :maven-javadoc-plugin
 
 # Remove enforcer plugin that causes build failure of 'Jacoco :: Maven Plugin'
-%pom_remove_plugin -f -r org.apache.maven.plugins:maven-enforcer-plugin
+%pom_remove_plugin -r :maven-enforcer-plugin
 
-%pom_remove_plugin -f -r com.github.genthaler:beanshell-maven-plugin
-%pom_remove_plugin -f -r com.diffplug.spotless:spotless-maven-plugin
-%pom_remove_plugin -f -r org.apache.felix:maven-bundle-plugin
+# Don't build jars with classifier ":nodeps:"
+%pom_remove_plugin :maven-shade-plugin \
+    org.jacoco.ant \
+    org.jacoco.cli
 
-# Add execution config for maven.antrun.plugin
-%pom_xpath_inject pom:plugin[pom:artifactId=\'maven-antrun-plugin\']/pom:executions '<execution>
-             <id>parse-version</id>
-             <phase>validate</phase>
-             <goals>
-               <goal>run</goal>
-             </goals>
-             <configuration>
-                <target>
-                     <property name="jacoco.runtime.package.name" value="org.jacoco.agent.rt.internal_${randomNumber}" />
-               </target>
-               <exportAntProperties>true</exportAntProperties>
-             </configuration>
-           </execution>' org.jacoco.build/pom.xml
+%pom_remove_plugin -r :spotless-maven-plugin
 
-for x in `find | grep "/pom.xml$"` ; do sed -i "s|<manifestFile>.*/META-INF/MANIFEST.MF</manifestFile>||" $x  ; done
+# Need to redefine various properties
+%pom_remove_plugin :beanshell-maven-plugin \
+    org.jacoco.build
+
+# Remove "requires osgi(org.apache.ant)"
+%pom_xpath_remove 'pom:configuration/pom:instructions/pom:Require-Bundle' \
+    org.jacoco.ant
+
+# Remove requires on maven-plugin-plugin:report
+%pom_xpath_remove 'pom:execution[pom:id = "report"]' \
+    jacoco-maven-plugin
+
+# Define properties
+%pom_xpath_inject 'pom:properties' '
+    <unqualifiedVersion>${project.version}</unqualifiedVersion>
+    <buildQualifier>${maven.build.timestamp}</buildQualifier>
+    <qualified.bundle.version>${unqualifiedVersion}.${buildQualifier}</qualified.bundle.version>
+    <jacoco.runtime.package.name>org.jacoco.agent.rt.internal_fedora</jacoco.runtime.package.name>' \
+      org.jacoco.build
+
+%mvn_package ":jacoco-maven-plugin:{jar,pom}:{}:" maven-plugin
+%mvn_package ":{org.}*:{jar,pom}:runtime:"
+
+%mvn_package :root __noinstall
+%mvn_package :org.jacoco.build __noinstall
 
 %build
-%mvn_build --xmvn-javadoc -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
-
-# workaround missing premain in agent.rt RH1151442. Not sure where to fix this in build.
-# TODO, fix in build itself
-# 'all' have already premain, 'sources' don't need.
-a=`find org.jacoco.agent.rt/target/ | grep jar | grep -v -e sources -e all`
-for x in $a ; do
-jar -umf %{SOURCE1}  $x
-done;
+%mvn_build -f -- -Dbuild.date=$(date +%Y/%m/%d) -Dproject.build.sourceEncoding=UTF-8 -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 # ant config
 mkdir -p %{buildroot}%{_sysconfdir}/ant.d
-echo %{name} %{name}/org.jacoco.ant objectweb-asm/asm-debug-all > %{buildroot}%{_sysconfdir}/ant.d/%{name}
+echo %{name} %{name}/org.jacoco.ant objectweb-asm/asm > %{buildroot}%{_sysconfdir}/ant.d/%{name}
+
+# wrapper script
+%jpackage_script org.jacoco.cli.internal.Main "" "" jacoco/org.jacoco.cli:args4j:objectweb-asm:jacoco/org.jacoco.core:jacoco/org.jacoco.report jacococli true
 
 %files -f .mfiles
-%dir %{_javadir}/%{name}
 %config(noreplace) %{_sysconfdir}/ant.d/%{name}
-%doc org.jacoco.doc/docroot/*
-%doc org.jacoco.doc/about.html
+%{_bindir}/jacococli
+%doc --no-dereference LICENSE.md
+%doc README.md
 
 %files maven-plugin -f .mfiles-maven-plugin
 
-%files javadoc -f .mfiles-javadoc
-
 %changelog
+* Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 0.8.7-alt1_6jpp11
+- new version
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0.8.3-alt1_4jpp11
 - new version
 

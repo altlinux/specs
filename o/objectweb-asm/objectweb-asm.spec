@@ -3,7 +3,7 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,15 +12,14 @@ BuildRequires: jpackage-1.8-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_without junit5
-%bcond_without osgi
+%bcond_with bootstrap
 
 Name:           objectweb-asm
-Version:        8.0.1
-Release:        alt1_1jpp8
+Version:        9.1
+Release:        alt1_3jpp11
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
-URL:            http://asm.ow2.org/
+URL:            https://asm.ow2.org/
 BuildArch:      noarch
 
 # ./generate-tarball.sh
@@ -32,38 +31,12 @@ Source4:        https://repo1.maven.org/maven2/org/ow2/asm/asm-commons/%{version
 Source5:        https://repo1.maven.org/maven2/org/ow2/asm/asm-test/%{version}/asm-test-%{version}.pom
 Source6:        https://repo1.maven.org/maven2/org/ow2/asm/asm-tree/%{version}/asm-tree-%{version}.pom
 Source7:        https://repo1.maven.org/maven2/org/ow2/asm/asm-util/%{version}/asm-util-%{version}.pom
-# We still want to create an "all" uberjar, so this is a custom pom to generate it
-# TODO: Fix other packages to no longer depend on "asm-all" so we can drop this
-Source8:        asm-all.pom
 # The source contains binary jars that cannot be verified for licensing and could be proprietary
-Source9:       generate-tarball.sh
-
-# Revert upstream change https://gitlab.ow2.org/asm/asm/-/commit/2a58bc9bcf2ea6eee03e973d1df4cf9312573c9d
-# To restore some deprecations that were deleted and broke the API
-Patch0: 0001-Revert-upstream-change-2a58bc9.patch
-
-# Move a statement that can throw a CompileException inside a try-catch block
-# for that exception.  Upstream has fixed this another way with a large code
-# refactor that seems inappropriate to backport.
-Patch1: 0002-Catch-CompileException-in-test.patch
+Source9:        generate-tarball.sh
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
-BuildRequires:  mvn(org.ow2:ow2:pom:)
-%if %{with junit5}
-BuildRequires:  mvn(org.codehaus.janino:janino)
-BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
-BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-engine)
-BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-params)
-BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit-platform)
-%endif
-
-%if %{with osgi}
-# asm-all needs to be in pluginpath for BND.  If this self-dependency
-# becomes a problem then ASM core will have to be build from source
-# with javac before main maven build, just like bnd-module-plugin
-BuildRequires:  objectweb-asm >= 6
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
 %endif
 
 # Explicit javapackages-tools requires since asm-processor script uses
@@ -88,65 +61,15 @@ This package provides %{summary}.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-
 
 # A custom parent pom to aggregate the build
 cp -p %{SOURCE1} pom.xml
 
-%if %{without junit5}
-%pom_disable_module asm-test
-%endif
-
 # Insert poms into modules
 for pom in asm asm-analysis asm-commons asm-test asm-tree asm-util; do
   cp -p $RPM_SOURCE_DIR/${pom}-%{version}.pom $pom/pom.xml
-  # Fix junit5 configuration
-%if %{with junit5}
-  %pom_add_dep org.junit.jupiter:junit-jupiter-engine:5.1.0:test $pom
-  %pom_add_plugin org.apache.maven.plugins:maven-surefire-plugin:2.22.0 $pom
-%endif
-%if %{with osgi}
-  if [ "$pom" != "asm-test" ] ; then
-    # Make into OSGi bundles
-    bsn="org.objectweb.${pom//-/.}"
-    %pom_xpath_inject pom:project "<packaging>bundle</packaging>" $pom
-    %pom_add_plugin org.apache.felix:maven-bundle-plugin:3.5.0 $pom \
-"   <extensions>true</extensions>
-    <configuration>
-      <instructions>
-        <Bundle-SymbolicName>$bsn</Bundle-SymbolicName>
-        <Bundle-RequiredExecutionEnvironment>JavaSE-1.8</Bundle-RequiredExecutionEnvironment>
-        <_removeheaders>Bnd-LastModified,Build-By,Created-By,Include-Resource,Require-Capability,Tool</_removeheaders>
-        <_pluginpath>$(pwd)/tools/bnd-module-plugin/bnd-module-plugin.jar, $(find-jar objectweb-asm/asm-all)</_pluginpath>
-        <_plugin>org.objectweb.asm.tools.ModuleInfoBndPlugin;</_plugin>
-      </instructions>
-    </configuration>"
-  fi
-%endif
+  %pom_remove_parent $pom
 done
-
-# Disable tests that use unlicensed class files
-sed -i -e '/testToByteArray_computeMaxs_largeSubroutines/i@org.junit.jupiter.api.Disabled("missing class file")' \
-  asm/src/test/java/org/objectweb/asm/ClassWriterTest.java
-sed -i -e '/testAnalyze_mergeWithJsrReachableFromTwoDifferentPaths/i@org.junit.jupiter.api.Disabled("missing class file")' \
-  asm-analysis/src/test/java/org/objectweb/asm/tree/analysis/AnalyzerWithBasicInterpreterTest.java
-sed -i -e '/testAllMethods_issue317586()/i@org.junit.jupiter.api.Disabled("missing class file")' \
-  asm-commons/src/test/java/org/objectweb/asm/commons/LocalVariablesSorterTest.java
-
-# Remove failing test SerialVersionUidAdderTest due to missing class files
-rm asm-commons/src/test/java/org/objectweb/asm/commons/SerialVersionUidAdderTest.java
-
-# Insert asm-all pom
-mkdir -p asm-all
-sed 's/@VERSION@/%{version}/g' %{SOURCE8} > asm-all/pom.xml
-
-# Remove invalid self-dependency
-%pom_remove_dep org.ow2.asm:asm-test asm-test
-
-# Compat aliases
-%mvn_alias :asm-all org.ow2.asm:asm-debug-all
 
 # No need to ship the custom parent pom
 %mvn_package :asm-aggregator __noinstall
@@ -154,17 +77,7 @@ sed 's/@VERSION@/%{version}/g' %{SOURCE8} > asm-all/pom.xml
 %mvn_package :asm-test __noinstall
 
 %build
-# Must compile bnd plugin first, which is used to generate Java 9 module-info.class files
-pushd tools/bnd-module-plugin
-javac -sourcepath ../../asm/src/main/java/ -cp $(build-classpath aqute-bnd) $(find -name *.java)
-jar cf bnd-module-plugin.jar -C src/main/java org
-popd
-
-%if %{with junit5}
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
-%else
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
-%endif
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -179,6 +92,9 @@ popd
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri May 27 2022 Igor Vlasenko <viy@altlinux.org> 0:9.1-alt1_3jpp11
+- new version
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:8.0.1-alt1_1jpp8
 - new version, use jvm8
 
