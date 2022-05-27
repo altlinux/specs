@@ -11,7 +11,7 @@ BuildRequires: waf
 %{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
 
 Name:           lv2
-Version:        1.18.2
+Version:        1.18.4
 Release:        alt1
 Summary:        Audio Plugin Standard
 
@@ -138,6 +138,9 @@ done
 %{_docdir}/%{name}/
 
 %changelog
+* Fri May 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
+- 1.18.4
+
 * Tue Sep 14 2021 Yuri N. Sedunov <aris@altlinux.org> 1.18.2-alt1
 - 1.18.2 (ALT #40919)
 
