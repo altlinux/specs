@@ -2,7 +2,7 @@
 %define soversion 12
 ExclusiveArch: x86_64
 Name:     intel-gmmlib
-Version:  22.1.2
+Version:  22.1.3
 Release:  alt1
 Summary:  Intel(R) Graphics Memory Management Library
 License:  MIT
@@ -50,6 +50,9 @@ rm -f %buildroot/%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri May 27 2022 Anton Farygin <rider@altlinux.ru> 22.1.3-alt1
+- 22.1.3
+
 * Mon Apr 04 2022 Anton Farygin <rider@altlinux.ru> 22.1.2-alt1
 - 22.1.2
 
