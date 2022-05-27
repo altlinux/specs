@@ -48,7 +48,7 @@
 
 Name: vim
 %define branch 8.2
-Version: %branch.4784
+Version: %branch.5019
 Release: alt1
 Epoch: 4
 
@@ -927,6 +927,7 @@ fi
 %doc %_datadir/vim/doc/tags
 %_datadir/vim/ftdetect
 %_datadir/vim/ftplugin
+%_datadir/vim/import
 %_datadir/vim/indent
 %_datadir/vim/keymap
 %_datadir/vim/lang
@@ -1052,6 +1053,11 @@ fi
 
 # {{{ changelog
 %changelog
+* Thu May 26 2022 Alexander Danilov <admsasha@altlinux.org> 4:8.2.5019-alt1
+- Updated to 8.2.5019 (fixes CVE-2022-1735, CVE-2022-1769, CVE-2022-1733,
+  CVE-2022-1674, CVE-2022-1629, CVE-2022-1621, CVE-2022-1620, CVE-2022-1619,
+  CVE-2022-1616) (ALT#42859).
+
 * Mon Apr 18 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:8.2.4784-alt1
 - Updated to v8.2.4784.
 - Dropped unsupported neXtaw GUI.
