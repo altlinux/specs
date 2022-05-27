@@ -37,7 +37,7 @@ BuildRequires: jpackage-11-compat
 Name:           arduino
 Epoch:          1
 Version:        1.8.13
-Release:        alt1_5jpp11
+Release:        alt2_5jpp11
 Summary:        An IDE for Arduino-compatible electronics prototyping platforms
 
 License:        GPLv2+ and LGPLv2+ and CC-BY-SA
@@ -154,7 +154,7 @@ Requires:       mvn(org.apache.xmlgraphics:batik-all)
 Requires:       mvn(org.apache.xmlgraphics:xmlgraphics-commons)
 Requires:       mvn(org.bouncycastle:bcpg-jdk15)
 Requires:       mvn(org.jmdns:jmdns)
-Requires:       mvn(org.ow2.asm:asm-all)
+Requires:       mvn(org.ow2.asm:asm)
 Requires:       mvn(org.scream3r:jssc)
 Requires:       mvn(org.slf4j:slf4j-api)
 Requires:       mvn(xml-apis:xml-apis)
@@ -370,6 +370,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 
 
 %changelog
+* Fri May 27 2022 Igor Vlasenko <viy@altlinux.org> 1:1.8.13-alt2_5jpp11
+- fixed dependency on objectweb-asm 9
+
 * Mon May 17 2021 Igor Vlasenko <viy@altlinux.org> 1:1.8.13-alt1_5jpp11
 - new version
 
