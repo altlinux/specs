@@ -5,7 +5,7 @@
 
 Name: file
 Version: 5.41
-Release: alt3
+Release: alt4
 
 Summary: File type guesser
 License: BSD-2-Clause
@@ -116,6 +116,9 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Fri May 27 2022 Vitaly Chikunov <vt@altlinux.org> 5.41-alt4
+- sandbox: Allow CAP_DAC_READ_SEARCH when sandboxing is disabled (ALT#42873).
+
 * Sun Feb 06 2022 Vitaly Chikunov <vt@altlinux.org> 5.41-alt3
 - Fix ALT beekeeper rebuild failure due to use of rseq syscall after glibc
   update to 2.35.
