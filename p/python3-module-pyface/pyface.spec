@@ -1,23 +1,21 @@
 %define oname pyface
 
 Name: python3-module-%oname
-Version: 7.3.0
+Version: 7.4.1
 Release: alt1
 
 Summary: Traits-capable windowing framework
 
 License: BSD, EPL and LGPL
-Group: Development/Python
+Group: Development/Python3
 URL: https://docs.enthought.com/pyface/
 
-# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 2.2.4
-BuildRequires: python3-module-setuptools
 
 BuildRequires: python3 >= 3.8
 # As of Python 3.8, this functionality has been added to the Python standard library.
@@ -45,10 +43,9 @@ back-end take care of the details of displaying them.
 # Users of Python 3.9 and beyond should use the standard library module
 subst 's|importlib_resources|importlib.resources|' pyface/resource/resource_manager.py pyface/tests/test_image_resource.py
 sed -i -e 's|"importlib-resources>=1.1.0",||' -e 's|"importlib-metadata",||' pyface/__init__.py
-sed -i -e '/importlib-resources/d' -e '/importlib-metadata/d' pyface.egg-info/requires.txt
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -68,6 +65,9 @@ rm -f \
 %python3_sitelibdir/*
 
 %changelog
+* Fri May 20 2022 Grigory Ustinov <grenka@altlinux.org> 7.4.1-alt1
+- Build new version.
+
 * Wed Jun 16 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.3.0-alt1
 - Updated to upstream version 7.3.0.
 - Fixed runtime dependencies.

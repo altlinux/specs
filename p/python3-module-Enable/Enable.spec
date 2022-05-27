@@ -1,40 +1,34 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_enable bootstrap
+%def_with docs
 
 %define oname Enable
 Name: python3-module-%oname
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
+
 Summary: Drawing and interaction packages
 
 Group: Development/Python3
 License: BSD and GPLv2
-URL: https://github.com/enthought/enable/
+URL: https://github.com/enthought/enable
 
-# https://github.com/enthought/enable.git
 Source: %name-%version.tar
 
 Patch: use_system_freetype.patch
-
-Patch1: 8ffd91b463a58411e088eff6c1638972b3cfe9f1.patch
-Patch2: a33ea7bd6f96fdfb42765605edbb7f1f9e86f13a.patch
-
 
 BuildRequires: gcc-c++ swig
 BuildRequires: libX11-devel libGL-devel libGLU-devel
 BuildRequires: libfreetype-devel
 BuildRequires: libopenblas-devel liblapack-devel
-
-%if_disabled bootstrap
-BuildRequires: python-module-Pyrex
-BuildRequires: python-module-sphinx-devel python-module-Pygments
-BuildRequires: python-module-traits fonts-ttf-PT
-%endif
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-Cython
+
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-traits
+%endif
 
 %add_python3_req_skip macport mac_context hypothesis
 %add_python3_req_skip wx.aui wx.glcanvas wx.grid wx.py.shell
@@ -48,40 +42,7 @@ multi-platform DisplayPDF vector drawing engine that supports multiple
 output backends, including Windows, GTK, and Macintosh native windowing
 systems, a variety of raster image formats, PDF, and Postscript.
 
-%package tests
-Summary: Tests for Enable project
-Group: Development/Python3
-Requires: %name = %EVR
-%add_python3_req_skip hypothesis
-%add_python3_req_skip etsdevtools.debug.memusage
-
-%description tests
-The Enable project provides two related multi-platform packages for
-drawing GUI objects. The Enable package is a multi-platform object
-drawing library built on top of Kiva. The core of Enable is a
-container/component model for drawing and event notification. Kiva is a
-multi-platform DisplayPDF vector drawing engine that supports multiple
-output backends, including Windows, GTK, and Macintosh native windowing
-systems, a variety of raster image formats, PDF, and Postscript.
-
-This package contains tests for Enable project.
-
-%if_disabled bootstrap
-%package pickles
-Summary: Pickles for Enable project
-Group: Development/Python3
-
-%description pickles
-The Enable project provides two related multi-platform packages for
-drawing GUI objects. The Enable package is a multi-platform object
-drawing library built on top of Kiva. The core of Enable is a
-container/component model for drawing and event notification. Kiva is a
-multi-platform DisplayPDF vector drawing engine that supports multiple
-output backends, including Windows, GTK, and Macintosh native windowing
-systems, a variety of raster image formats, PDF, and Postscript.
-
-This package contains pickles for Enable project.
-
+%if_with docs
 %package doc
 Summary: Documentation for Enable project
 Group: Development/Documentation
@@ -98,36 +59,45 @@ output backends, including Windows, GTK, and Macintosh native windowing
 systems, a variety of raster image formats, PDF, and Postscript.
 
 This package contains development documentation for Enable project.
+
+%package pickles
+Summary: Pickles for Enable project
+Group: Development/Python3
+
+%description pickles
+The Enable project provides two related multi-platform packages for
+drawing GUI objects. The Enable package is a multi-platform object
+drawing library built on top of Kiva. The core of Enable is a
+container/component model for drawing and event notification. Kiva is a
+multi-platform DisplayPDF vector drawing engine that supports multiple
+output backends, including Windows, GTK, and Macintosh native windowing
+systems, a variety of raster image formats, PDF, and Postscript.
+
+This package contains pickles for Enable project.
 %endif
 
 %prep
 %setup
-#patch -p1
-%patch1 -p1
-%patch2 -p1
+%patch -p1
 
 #remove bundled freetype2 library
-#rm -rf kiva/agg/freetype2
-
-# remove python3-only backend
-rm -rf enable/enable/vtk_backend
+rm -rf kiva/agg/freetype2
 
 # Very quick fix for python3.10
 sed -i 's/++Py_REFCNT(o)/Py_SET_REFCNT(o, Py_REFCNT(o) + 1)/' kiva/_cython_speedups.cpp
 sed -i 's/--Py_REFCNT(o)/Py_SET_REFCNT(o, Py_REFCNT(o) - 1)/' kiva/_cython_speedups.cpp
-
-%if_disabled bootstrap
-%prepare_sphinx .
-%endif
 
 %build
 %add_optflags -fno-strict-aliasing
 
 %python3_build
 
-%if_disabled bootstrap
-%generate_pickles docs/source docs/source %oname
-sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
+%if_with docs
+# generate html docs
+sphinx-build-3 docs/source html
+sphinx-build-3 docs/source pickles
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
@@ -138,40 +108,36 @@ rm -f $(find %buildroot%python3_sitelibdir -name '*mac*.py*')
 
 # remove shebangs from files
 find %buildroot%python3_sitelibdir -type f -name '*.py' -exec \
-	sed -i -e '1!b' -e '/^\#\!\/usr\/bin\/env python$/d' '{}' +
+    sed -i -e '1!b' -e '/^\#\!\/usr\/bin\/env python$/d' '{}' +
 
-%if_disabled bootstrap
-install -d %buildroot%python_sitelibdir/enable
-cp -fR pickle %buildroot%python_sitelibdir/enable/
+%if_with docs
+cp -fR pickles %buildroot%python3_sitelibdir/enable/
 %endif
 
-%if_disabled bootstrap
-%files pickles
-%dir %python_sitelibdir/enable
-%python_sitelibdir/enable/pickle
-
-%files doc
-%doc docs examples
-%endif
+%check
+# tests need display
 
 %files
 %doc image_LICENSE*.txt LICENSE.txt
 %doc *.rst CHANGES.txt
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
-%exclude %python3_sitelibdir/*/example*
-%exclude %python3_sitelibdir/*/*/tests
-%exclude %python3_sitelibdir/*/*/*/tests
+%if_with docs
+%exclude %python3_sitelibdir/enable/pickles
 
-%files tests
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
-%python3_sitelibdir/*/example*
-%python3_sitelibdir/*/*/tests
-%python3_sitelibdir/*/*/*/tests
+%files doc
+%doc docs
+
+%files pickles
+%dir %python3_sitelibdir/enable
+%python3_sitelibdir/enable/pickles
+%endif
 
 %changelog
+* Fri May 20 2022 Grigory Ustinov <grenka@altlinux.org> 5.3.0-alt1
+- Automatically updated to 5.3.0.
+- Build with system freetype.
+- Build with docs.
+
 * Thu Jan 13 2022 Grigory Ustinov <grenka@altlinux.org> 5.2.1-alt1
 - Build new version.
 - Build with bundled freetype (temporary for python3.10).
