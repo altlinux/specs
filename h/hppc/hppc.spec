@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          hppc
 Version:       0.7.1
-Release:       alt1_8jpp8
+Release:       alt1_8jpp11
 Summary:       High Performance Primitive Collections for Java
 License:       ASL 2.0
 URL:           http://labs.carrotsearch.com/hppc.html
@@ -27,6 +27,8 @@ BuildRequires: mvn(org.apache.velocity:velocity)
 BuildRequires: mvn(org.sonatype.oss:oss-parent:pom:)
 BuildRequires: mvn(org.antlr:antlr4)
 BuildRequires: mvn(org.antlr:antlr4-maven-plugin)
+# viy
+BuildRequires: mvn(javax.annotation:javax.annotation-api)
 
 %if 0
 # hppc-benchmarks deps
@@ -90,10 +92,12 @@ done
 %mvn_file :%{name}-template-processor %{name}-templateprocessor
 %mvn_package :%{name}-template-processor %{name}-templateprocessor
 
+%pom_add_dep javax.annotation:javax.annotation-api
+
 %build
 
 # Disable test for now. Unavailable test deps
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -109,6 +113,9 @@ done
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri May 27 2022 Igor Vlasenko <viy@altlinux.org> 0.7.1-alt1_8jpp11
+- java11 build
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_8jpp8
 - new version
 
