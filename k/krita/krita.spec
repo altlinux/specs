@@ -33,8 +33,8 @@
 %define libkritaresourcewidgets libkritaresourcewidgets%sover
 
 Name: krita
-Version: 5.0.2
-Release: alt2
+Version: 5.0.6
+Release: alt1
 %K5init no_altplace
 
 Group: Graphics
@@ -74,9 +74,10 @@ BuildRequires: quazip-qt5-devel
 #BuildRequires: libquadmath-devel
 BuildRequires: libopencolorio2.0-devel
 BuildRequires: libXres-devel libxcbutil-devel
-BuildRequires: libjpeg-devel libpng-devel libpoppler-qt5-devel libraw-devel libtiff-devel
+BuildRequires: libjpeg-devel libpng-devel libpoppler-qt5-devel libraw-devel libtiff-devel libwebp-devel
 #BuildRequires: libheif-devel openexr-devel
 BuildRequires: libexiv2-devel liblcms2-devel
+BuildRequires: libmypaint-devel
 BuildRequires: kf5-karchive-devel kf5-kcrash-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kwindowsystem-devel
 
 %description
@@ -453,6 +454,9 @@ done
 %_libdir/libkritametadata.so.*
 
 %changelog
+* Tue May 24 2022 Sergey V Turchin <zerg@altlinux.org> 5.0.6-alt1
+- new version
+
 * Fri Jan 21 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 5.0.2-alt2
 - Rebuilt with opencolorio 2.0
 
