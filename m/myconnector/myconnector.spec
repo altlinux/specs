@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.2.1
+Version:  2.3
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -91,6 +91,7 @@ install -pm755 kiosk/myconnector-*kiosk %buildroot%basedir/kiosk
 install -pm755 kiosk/myconnector-kiosk-check %buildroot%basedir/kiosk
 install -pm755 kiosk/*.desktop %buildroot%basedir/kiosk
 install -pDm600 kiosk/kiosk.conf %buildroot%_sysconfdir/%name/kiosk.conf
+install -pDm644 myconnector.conf %buildroot%_sysconfdir/%name/%name.conf
 install -pDm644 %name.bashcomp %buildroot%_datadir/bash-completion/completions/%name
 mkdir -p %buildroot%xdgdir
 cat > %buildroot%xdgdir/myconnector.desktop << EOF
@@ -119,6 +120,7 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %_datadir/mime/packages/%name.xml
 %_iconsdir/hicolor/*/apps/%name.png
 %_datadir/bash-completion/completions/%name
+%config(noreplace) %_sysconfdir/%name/%name.conf
 
 %files kiosk -f %name-kiosk.lang
 %basedir/kiosk
@@ -136,6 +138,15 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Fri May 20 2022 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.3-alt1
+- Added global settings and a global list of connections
+- Added stealth mode
+- [CLI] Added editing of the configuration file
+- Fixed bash-completion
+- Fixed connect when there is a password save, but saving is disabled
+- Added autofilling in lists of servers and groups
+- Updated documentation and manual pages
+
 * Wed Mar 16 2022 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.2.1-alt1
 - Fixed connection renaming errors
 - Added offline documentation button
