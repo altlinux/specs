@@ -1,25 +1,30 @@
 %define mname dogpile
 %define oname %mname.cache
 
-%def_without docs
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.7.1
-Release: alt2
+Version: 1.1.5
+Release: alt1
 
 Summary: A caching front-end based on the Dogpile lock
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/dogpile.cache/
 
-# https://bitbucket.org/zzzeek/dogpile.cache.git
+# https://github.com/sqlalchemy/dogpile.cache
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage python3-module-nose
-BuildRequires: python3-module-mock python3-module-mako
-BuildRequires: python3-module-decorator python-tools-2to3
+
+%if_with check
+BuildRequires: python3-module-pbr
+BuildRequires: python3-module-tox
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-mako
+BuildRequires: python3-module-decorator
+BuildRequires: python3-module-stevedore
+%endif
 
 Provides: python3-module-dogpile-cache = %EVR
 Obsoletes: python3-module-dogpile-cache < %EVR
@@ -28,7 +33,6 @@ Obsoletes: python3-module-dogpile-core < %EVR
 
 %py3_provides %oname
 %py3_provides %mname.core
-
 
 %description
 A caching API built around the concept of a "dogpile lock", which allows
@@ -44,40 +48,11 @@ dogpile.cache in a more efficient and succinct manner, and all the cruft
 (Beaker's internals were first written in 2005) relegated to the trash
 heap.
 
-%if_with docs
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-A caching API built around the concept of a "dogpile lock", which allows
-continued access to an expiring data value while a single thread
-generates a new value.
-
-This package contains pickles for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-A caching API built around the concept of a "dogpile lock", which allows
-continued access to an expiring data value while a single thread
-generates a new value.
-
-This package contains documentation for %oname.
-%endif
-
 %prep
 %setup
 
-%if_with docs
-sed -i 's|sphinx-build|sphinx-build-3|' docs/build/Makefile
-%endif
-
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -86,32 +61,20 @@ sed -i 's|sphinx-build|sphinx-build-3|' docs/build/Makefile
 mv %buildroot%_libexecdir %buildroot%_libdir
 %endif
 
-%if_with docs
-%make -C docs/build pickle
-%make -C docs/build html
-
-install -d %buildroot%python3_sitelibdir/%oname
-cp -fR docs/build/output/pickle %buildroot%python3_sitelibdir/%oname/
-%endif
-
 %check
-%__python3 setup.py test
+export PIP_NO_BUILD_ISOLATION=no
+export PIP_NO_INDEX=YES
+export TOXENV=py3
+tox.py3 --sitepackages
 
 %files
 %doc *.rst
 %python3_sitelibdir/*
-%if_with docs
-%exclude %python3_sitelibdir/*/pickle
-
-%files pickles
-%python3_sitelibdir/*/pickle
-
-%files docs
-%doc docs/build/output/html/*
-%endif
-
 
 %changelog
+* Tue Apr 26 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.5-alt1
+- Automatically updated to 1.1.5.
+
 * Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.7.1-alt2
 - Build for python2 disabled.
 

@@ -1,32 +1,37 @@
 %define oname stevedore
 
-%def_enable check
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 1.32.0
-Release: alt3.2
+Version: 3.5.0
+Release: alt1
+
 Summary: Manage dynamic plugins for Python applications
+
 Group: Development/Python3
 License: Apache-2.0
 URL: http://docs.openstack.org/developer/stevedore/
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source1: stevedore.watch
 BuildArch: noarch
 
-BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 2.0.0
+
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-sphinx-devel
-%if_enabled check
-BuildRequires: python3-module-six >= 1.10.0
-BuildRequires: python3-module-Pillow
-BuildRequires: python3-module-oslotest
-BuildRequires: python3-module-coverage
+%endif
+
+%if_with check
 BuildRequires: python3-module-mock
-BuildRequires: python3-module-mox3
-BuildRequires: python3-module-mimeparse
 BuildRequires: python3-module-reno >= 2.5.0
-BuildRequires: python3-module-bandit
+BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %py3_provides %oname
@@ -44,6 +49,7 @@ Manage dynamic plugins for Python applications
 
 This package contains tests for %oname.
 
+%if_with docs
 %package pickles
 Summary: Pickles for %oname
 Group: Development/Python3
@@ -62,51 +68,64 @@ BuildArch: noarch
 Manage dynamic plugins for Python applications
 
 This package contains documentation for %oname.
+%endif
 
 %prep
 %setup -n %oname-%version
 
+%if_with docs
 %prepare_sphinx3 doc
 ln -s ../objects.inv doc/source/
+%endif
 
 %build
 %python3_build
 
+%if_with docs
+export PYTHONPATH=$PWD
+export PBR_VERSION=$(pbr --version)
+sphinx-build-3 doc/source html
+sphinx-build-3 doc/source pickle
+%endif
+
 %install
 %python3_install
 
-export PYTHONPATH=$PWD
-export PBR_VERSION=$(pbr.py3 --version)
-%make SPHINXBUILD="sphinx-build-3" -C doc pickle
-%make SPHINXBUILD="sphinx-build-3" -C doc html
-
-cp -fR doc/build/pickle %buildroot%python3_sitelibdir/%oname/
+%if_with docs
+cp -fR pickle %buildroot%python3_sitelibdir/%oname/
+%endif
 
 %check
 export PYTHONPATH=$PWD
-py.test3
+# use pytest instead of stestr to break a build cycle between python-cliff, python-stestr and python-stevedore
+%__python3 -m pytest stevedore/tests -k "not test_extension"
 
 %files
 %doc README.rst LICENSE
 %python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/%oname/pickle
-%exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/example
 %exclude %python3_sitelibdir/%oname/example2
+%exclude %python3_sitelibdir/%oname/tests
+%if_with docs
+%exclude %python3_sitelibdir/%oname/pickle
+
+%files pickles
+%python3_sitelibdir/%oname/pickle
+
+%files docs
+%doc html/*
+%endif
 
 %files tests
 %python3_sitelibdir/%oname/tests
 %python3_sitelibdir/%oname/example
 %python3_sitelibdir/%oname/example2
 
-%files pickles
-%python3_sitelibdir/%oname/pickle
-
-%files docs
-%doc doc/build/html/*
-
 %changelog
+* Mon May 16 2022 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
+- Automatically updated to 3.5.0.
+
 * Thu Mar 31 2022 Grigory Ustinov <grenka@altlinux.org> 1.32.0-alt3.2
 - Fixed BuildRequires.
 
