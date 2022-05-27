@@ -1,5 +1,5 @@
 Name: alterator-lookout
-Version: 2.8
+Version: 2.8.1
 Release: alt1
 
 Source:%name-%version.tar
@@ -44,6 +44,9 @@ export GUILE_LOAD_PATH="lookout"
 %_alterator_datadir/ui/*
 
 %changelog
+* Fri May 27 2022 Paul Wolneykien <manowar@altlinux.org> 2.8.1-alt1
+- Support min-width and min-height widget attributes (closes: 42745).
+
 * Wed Apr 20 2022 Paul Wolneykien <manowar@altlinux.org> 2.8-alt1
 - Added frame:set-on-replace proc.
 
