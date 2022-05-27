@@ -1,6 +1,7 @@
 %def_disable snapshot
 
 %define ver_major 42
+%define beta %nil
 %def_enable python
 # removed since 3.36
 %def_disable zeitgeist
@@ -8,8 +9,8 @@
 %add_python3_path %gedit_pluginsdir
 
 Name: gedit-plugins
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: Plugins for GEdit
 License: GPL-2.0
@@ -17,7 +18,7 @@ Group: Editors
 Url: https://wiki.gnome.org/Apps/Gedit/ShippedPlugins
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
@@ -68,7 +69,7 @@ small at its core, multiple document editing through the use of a
 This package contains various plugins for gEdit, including Charmap, Terminal, and others.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson
@@ -90,6 +91,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 
 
 %changelog
+* Fri May 27 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- 42.1
+
 * Mon Apr 04 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

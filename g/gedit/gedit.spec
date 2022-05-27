@@ -4,6 +4,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 42
+%define beta %nil
 %define lib_ver 41
 %define api_ver 3.0
 %def_enable plugins
@@ -12,8 +13,8 @@
 %def_enable gtk_doc
 
 Name: gedit
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major.1
+Release: alt1%beta
 
 Summary: gEdit is a small but powerful text editor for GNOME
 License: GPL-2.0
@@ -23,7 +24,7 @@ Url: http://www.gedit.org
 %if_enabled snapshot
 Source: %name-%version.tar
 %else
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
 
 %{?_enable_python:%py3_provides gedit}
@@ -121,7 +122,7 @@ This package contains documentation needed to develop plugins for gedit.
 
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson -Dbuildtype=plain \
@@ -216,6 +217,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Fri May 27 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- 42.1
+
 * Sat Apr 02 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

@@ -12,7 +12,7 @@
 %def_disable installed_tests
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GTK+ Text Editor Framework
@@ -143,6 +143,9 @@ the functionality of the installed Tepl library.
 
 
 %changelog
+* Fri May 27 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.2-alt1
+- 6.0.2
+
 * Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.1-alt1
 - 6.0.1
 
