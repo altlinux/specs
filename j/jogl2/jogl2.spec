@@ -1,3 +1,4 @@
+%add_findreq_skiplist %_libdir/jogl2/libnativewindow_awt.so
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
@@ -9,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:    jogl2
 Version: 2.3.2
-Release: alt5_9jpp8
+Release: alt6_9jpp8
 %global src_name jogl-v%{version}
 Summary: Java bindings for the OpenGL API
 
@@ -146,6 +147,9 @@ cp -t %{buildroot}%{_docdir}/%{name}/ README.txt LICENSE.txt CHANGELOG.txt
 %{_docdir}/%{name}
 
 %changelog
+* Fri May 27 2022 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt6_9jpp8
+- fixed build with new libs.req
+
 * Sat Nov 27 2021 Andrey Cherepanov <cas@altlinux.org> 2.3.2-alt5_9jpp8
 - use patch for new Mesa from Mageia (ALT #41445)
 - fix license names according to SPDX
