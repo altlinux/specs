@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 
 Summary: A library implementing the 'SemVer' scheme.
@@ -53,6 +53,9 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt1
+- Automatically updated to 2.10.0.
+
 * Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
 - Build new version.
 - Build with check.
