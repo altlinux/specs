@@ -1,10 +1,11 @@
 %define oname wtforms
 
 Name: python3-module-%oname
-Version: 2.3.3
+Version: 3.0.1
 Release: alt1
 
 Summary: A flexible forms validation and rendering library for python web development
+
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/WTForms/
@@ -12,17 +13,13 @@ Url: https://pypi.python.org/pypi/WTForms/
 BuildArch: noarch
 
 # https://github.com/wtforms/wtforms.git
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-pallets-sphinx-themes
 BuildRequires: python3-module-sphinx-issues
 BuildRequires: python3-module-sphinxcontrib-log-cabinet
-# For get_version from pallets_sphinx_themes
-BuildRequires: python3-module-wtforms
-# BuildRequires: python3-module-babel
-# BuildRequires: python3-module-dateutil
 
 %description
 WTForms is a flexible forms validation and rendering library for python
@@ -52,16 +49,17 @@ web development.
 This package contains documentation for %oname.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 sed -i 's|sphinx-build|&-3|' docs/Makefile
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
+export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle html
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
@@ -77,6 +75,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %changelog
+* Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Automatically updated to 3.0.1.
+
 * Fri Jul 31 2020 Andrey Cherepanov <cas@altlinux.org> 2.3.3-alt1
 - New version.
 

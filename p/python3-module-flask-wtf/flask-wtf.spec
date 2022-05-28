@@ -1,7 +1,7 @@
 %define oname flask-wtf
 
 Name: python3-module-%oname
-Version: 0.15.1
+Version: 1.0.1
 Release: alt1
 
 Summary: Simple integration of Flask and WTForms
@@ -18,6 +18,9 @@ BuildRequires: python3-module-nose python3-module-flask
 BuildRequires: python3-module-werkzeug python3-module-wtforms
 BuildRequires: python3-module-flask-babel python3-module-speaklater
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx-issues
+BuildRequires: python3-module-pallets-sphinx-themes
+BuildRequires: python3-module-sphinxcontrib-log-cabinet
 
 %py3_provides flask_wtf
 
@@ -33,7 +36,7 @@ Group: Development/Python3
 Simple integration of Flask and WTForms, including CSRF, file upload and
 Recaptcha integration.
 
-This package comtains pickles for %oname.
+This package contains pickles for %oname.
 
 %package docs
 Summary: Documentation for %oname
@@ -44,7 +47,7 @@ BuildArch: noarch
 Simple integration of Flask and WTForms, including CSRF, file upload and
 Recaptcha integration.
 
-This package comtains documentation for %oname.
+This package contains documentation for %oname.
 
 %prep
 %setup
@@ -52,13 +55,14 @@ This package comtains documentation for %oname.
 sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
-PYTHONPATH=$(pwd) %make -C docs pickle
-PYTHONPATH=$(pwd) %make -C docs html
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%make -C docs pickle
+%make -C docs html
 
 install -d %buildroot%python3_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
@@ -67,7 +71,7 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 py.test3 ||:
 
 %files
-%doc AUTHORS *.rst
+%doc *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/pickle
 
@@ -78,6 +82,9 @@ py.test3 ||:
 %doc docs/_build/html examples
 
 %changelog
+* Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
+- Automatically updated to 1.0.1.
+
 * Tue Jun 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.15.1-alt1
 - Automatically updated to 0.15.1.
 
