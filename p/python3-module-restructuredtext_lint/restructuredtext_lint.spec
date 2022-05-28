@@ -1,8 +1,8 @@
 %define  modulename restructuredtext_lint
 
 Name:    python3-module-%modulename
-Version: 1.2.1
-Release: alt2
+Version: 1.4.0
+Release: alt1
 
 Summary: reStructuredText linter
 License: Unlicense
@@ -14,13 +14,13 @@ BuildRequires: python3-module-docutils >= 0.11
 
 BuildArch: noarch
 
-Source: %modulename-%version.tar.gz
+Source: %name-%version.tar
 
 %description
 %summary
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
 %python3_build
@@ -33,6 +33,9 @@ Source: %modulename-%version.tar.gz
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
+- Build new version.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt2
 - Drop python2 support.
 
