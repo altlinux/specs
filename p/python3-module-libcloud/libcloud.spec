@@ -1,7 +1,7 @@
 %define oname libcloud
 
 Name: python3-module-%oname
-Version: 3.5.1
+Version: 3.6.0
 Release: alt1
 
 Summary: Library for interacting with popular cloud service
@@ -57,15 +57,8 @@ This package contains documentation for %oname
 
 %prep
 %setup
-pushd %oname
-sed -i 's/requests.packages.//' http.py
-pushd test
-mv secrets.py-dist secrets.py
-popd
-pushd compute/drivers
-rm -f vsphere.py
-popd
-popd
+sed -i 's/requests.packages.//' %oname/http.py
+cp libcloud/test/secrets.py-dist libcloud/test/secrets.py
 
 %build
 %python3_build
@@ -89,6 +82,9 @@ export PYTHONPATH=$PWD
 
 
 %changelog
+* Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 3.6.0-alt1
+- Automatically updated to 3.6.0.
+
 * Wed May 25 2022 Grigory Ustinov <grenka@altlinux.org> 3.5.1-alt1
 - Automatically updated to 3.5.1.
 
