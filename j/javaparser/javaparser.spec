@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          javaparser
 Version:       3.14.16
-Release:       alt1_1jpp11
+Release:       alt1_4jpp11
 Summary:       Java 1 to 13 Parser and Abstract Syntax Tree for Java
 License:       LGPLv3+ or ASL 2.0
 URL:           http://javaparser.org
@@ -17,6 +17,7 @@ BuildRequires:  mvn(net.java.dev.javacc:javacc)
 BuildRequires:  mvn(org.codehaus.mojo:javacc-maven-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(javax.annotation:javax.annotation-api)
+BuildRequires:  mvn(junit:junit)
 
 BuildArch:     noarch
 Source44: import.info
@@ -94,6 +95,9 @@ sed -i \
 %doc --no-dereference LICENSE LICENSE.APACHE LICENSE.GPL LICENSE.LGPL
 
 %changelog
+* Sat May 28 2022 Igor Vlasenko <viy@altlinux.org> 3.14.16-alt1_4jpp11
+- aqute-bnd5 support
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.14.16-alt1_1jpp11
 - new version
 
