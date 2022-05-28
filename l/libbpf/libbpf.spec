@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libbpf
-Version: 0.6.1
+Version: 0.8.0
 Release: alt1
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
@@ -50,6 +50,9 @@ cd src
 %_pkgconfigdir/libbpf.pc
 
 %changelog
+* Sat May 28 2022 Vitaly Chikunov <vt@altlinux.org> 0.8.0-alt1
+- Updated to v0.8.0 (2022-05-16).
+
 * Wed Jan 12 2022 Vitaly Chikunov <vt@altlinux.org> 0.6.1-alt1
 - Updated to v0.6.1 (2021-12-10).
 

@@ -20,20 +20,15 @@
 #   (merge) git merge --continue
 
 Name:		bcc
-Version:	0.22.0
+Version:	0.24.0
 Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
 URL:		https://www.iovisor.org/technology/bcc
 Vcs:		https://github.com/iovisor/bcc.git
-# Also libbpf https://github.com/libbpf/libbpf
-# Which is a mirror of bpf-next linux tree's tools/lib/bpf
-# directory plus its supporting header files.
-# It's bundled with bcc in src/cc/libbpf
 
 Source:		%name-%version.tar
-Source1:	libbpf.tar
 
 # bcc does not support 32-bit arches
 # See https://github.com/iovisor/bcc/issues/3241
@@ -48,6 +43,7 @@ BuildRequires: flex
 BuildRequires: libstdc++-devel
 BuildRequires: clang-devel
 BuildRequires: clang-devel-static
+BuildRequires: libbpf-devel
 BuildRequires: llvm-devel
 BuildRequires: llvm-devel-static
 BuildRequires: lld
@@ -152,10 +148,9 @@ linked (and built in bcc package).
 
 %prep
 %setup -q
-tar -xf %SOURCE1 -C src/cc/libbpf
 
 %build
-%define optflags_lto -flto=thin
+%define optflags_lto %nil
 
 %if_without luajit
 subst '/add_subdirectory(lua)/d' examples/CMakeLists.txt
@@ -171,8 +166,6 @@ subst '/add_subdirectory(examples)/d' CMakeLists.txt
 %remove_optflags -frecord-gcc-switches
 export CC=clang
 export CXX=clang++
-# ld cannot link libLLVM and libclang in ALT: https://bugzilla.altlinux.org/34801
-export LDFLAGS="-fuse-ld=lld -Wl,--as-needed $LDFLAGS -lLLVM -lclang-cpp -lelf"
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DREVISION_LAST=%version \
@@ -181,11 +174,13 @@ export LDFLAGS="-fuse-ld=lld -Wl,--as-needed $LDFLAGS -lLLVM -lclang-cpp -lelf"
 	-DUSINGISYSTEM:BOOL=no \
 	-DPYTHON_CMD=python3 \
 	-DENABLE_LLVM_SHARED=ON \
+	-DCMAKE_USE_LIBBPF_PACKAGE=ON \
 	%{?lua_config}
 %cmake_build
 
 %ifarch x86_64
-%make_build -C libbpf-tools BPFTOOL=/usr/sbin/bpftool
+# LIBBPF_OBJ expects libbpf.a, but...
+%make_build -C libbpf-tools BPFTOOL=/usr/sbin/bpftool LIBBPF_OBJ=%_libdir/libbpf.so V=1
 %endif
 
 %install
@@ -266,6 +261,11 @@ fi
 %endif
 
 %changelog
+* Sat May 28 2022 Vitaly Chikunov <vt@altlinux.org> 0.24.0-alt1
+- Update to v0.24.0 (2022-01-14).
+- Replace built-in with system libbpf package.
+- Disable LTO to fix static libs.
+
 * Sat Nov 13 2021 Vitaly Chikunov <vt@altlinux.org> 0.22.0-alt1
 - Update to v0.22.0 (2021-09-15).
 

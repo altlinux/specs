@@ -8,7 +8,7 @@
 # Based on https://github.com/iovisor/bpftrace/blob/master/INSTALL.md
 
 Name:		bpftrace
-Version:	0.13.1
+Version:	0.15.0
 Release:	alt1
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
@@ -26,6 +26,7 @@ Source:		%name-%version.tar
 ExclusiveArch:	x86_64 aarch64
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cereal-devel
 BuildRequires: cmake
 BuildRequires: flex
 BuildRequires: libstdc++-devel
@@ -46,16 +47,19 @@ BuildRequires: /proc
 %{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm kernel-headers-modules-un-def}}
 
 %description
-BPFtrace is a high-level tracing language for Linux enhanced Berkeley Packet
-Filter (eBPF) available in recent Linux kernels (4.x). BPFtrace uses LLVM as a
-backend to compile scripts to BPF-bytecode and makes use of BCC for interacting
-with the Linux BPF system, as well as existing Linux tracing capabilities:
-kernel dynamic tracing (kprobes), user-level dynamic tracing (uprobes), and
-tracepoints. The BPFtrace language is inspired by awk and C, and predecessor
-tracers such as DTrace and SystemTap.
+bpftrace is a high-level tracing language for Linux enhanced Berkeley
+Packet Filter (eBPF) available in recent Linux kernels (4.x). bpftrace
+uses LLVM as a backend to compile scripts to BPF-bytecode and makes use of
+BCC for interacting with the Linux BPF system, as well as existing Linux
+tracing capabilities: kernel dynamic tracing (kprobes), user-level dynamic
+tracing (uprobes), and tracepoints. The bpftrace language is inspired by
+awk and C, and predecessor tracers such as DTrace and SystemTap. bpftrace
+was created by Alastair Robertson.
 
 %prep
 %setup
+sed -i 's/\bpython\b/python3/' tests/runtime/call
+sed -i 's/@.*@/True/' tests/runtime/engine/cmake_vars.py
 
 %build
 %remove_optflags -frecord-gcc-switches
@@ -81,7 +85,6 @@ find %buildroot%_datadir/%name/tools -name '*.bt' | xargs chmod a+x
 # Fix man pages.
 pushd %buildroot%_man8dir
  rename '' bpftrace- *.gz
- rename bpftrace- '' bpftrace-bpftrace.8.gz
 popd
 
 # Need to keep BEGIN_trigger and END_trigger
@@ -109,12 +112,13 @@ if [ -w /dev/kvm ]; then
 	.gear/delete-blocks tracepoint_order tests/runtime/probe
 	.gear/delete-blocks uint64_t	tests/runtime/signed_ints
 	.gear/delete-blocks tracepoint:random:random_read tests/runtime/variable
+	.gear/delete-blocks tracepoint:sched:sched_wakeup tests/runtime/regression
 %ifarch aarch64
 	# TIMEOUT on aarch64
 	.gear/delete-blocks python	tests/runtime/json-output
 %endif
 	export BPFTRACE_RUNTIME_TEST_EXECUTABLE=$PWD/%_cmake__builddir/src/
-	vm-run --sbin tests/runtime-tests.sh
+	vm-run --kvm=cond --sbin tests/runtime-tests.sh
 fi
 
 %files
@@ -125,6 +129,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Sat May 28 2022 Vitaly Chikunov <vt@altlinux.org> 0.15.0-alt1
+- Updated to v0.15.0 (2022-05-24).
+
 * Fri Jan 21 2022 Vitaly Chikunov <vt@altlinux.org> 0.13.1-alt1
 - Updated to v0.13.1 (2021-12-21).
 - Do not strip BEGIN/END triggers from bpftrace (closes: #41750).
