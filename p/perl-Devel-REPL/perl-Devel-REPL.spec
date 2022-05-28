@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -7,12 +8,12 @@ BuildRequires: perl(Sub/Identify.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Devel-REPL
-Version:        1.003028
-Release:        alt2_12
+Version:        1.003029
+Release:        alt1
 Summary:        Modern perl interactive shell
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Devel-REPL
-Source0:        https://cpan.metacpan.org/authors/id/E/ET/ETHER/Devel-REPL-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/E/ET/ETHER/Devel-REPL-%{version}.tar.gz
 BuildArch:      noarch
 # Build
 BuildRequires:  perl-devel
@@ -213,7 +214,7 @@ make pure_install DESTDIR=%{buildroot}
 make test
 
 %files
-%doc --no-dereference LICENCE
+%doc LICENCE
 %doc Changes CONTRIBUTING README examples
 %{_bindir}/*
 %{perl_vendor_privlib}/*
@@ -286,6 +287,9 @@ make test
 
 
 %changelog
+* Sat May 28 2022 Igor Vlasenko <viy@altlinux.org> 1.003029-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.003028-alt2_12
 - update to new release by fcimport
 
