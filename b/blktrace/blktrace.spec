@@ -5,7 +5,7 @@
 
 Name: blktrace
 Version: 1.3.0
-Release: alt1
+Release: alt2
 Summary: Block queue IO tracer
 License: GPL-2.0-only
 Group: Development/Debuggers
@@ -58,7 +58,8 @@ information about request queue operations up to user space.
 
 truncate -s 11M disk.img
 PATH=%buildroot%_bindir:$PATH
-vm-run --kvm=cond --udevd --drive=disk.img,format=raw .gear/tests.sh
+# 9p have bugs which prevent blktrace correctly working
+vm-run --kvm=cond --udevd --drive=$PWD/disk.img,format=raw "cd /tmp; $PWD/.gear/tests.sh"
 
 %files
 %doc README doc/blktrace.tex
@@ -67,6 +68,10 @@ vm-run --kvm=cond --udevd --drive=disk.img,format=raw .gear/tests.sh
 %_man8dir/*
 
 %changelog
+* Sat May 28 2022 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt2
+- Update to blktrace-1.3.0-3-g7f5d2c5 (2021-10-21).
+- Fix %%check failure on 9pfs.
+
 * Wed Jun 16 2021 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt1
 - Update to blktrace-1.3.0 (2021-06-14).
 - spec: Add tests in %%check.
