@@ -15,7 +15,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           freemarker
 Version:        2.3.30
-Release:        alt3_3jpp8
+Release:        alt4_3jpp8
 Summary:        The Apache FreeMarker Template Engine
 License:        ASL 2.0
 URL:            https://freemarker.apache.org/
@@ -34,6 +34,7 @@ Patch6:         enable-jdom.patch
 # Fix compatibility with javacc 7
 Patch7:         javacc-7.patch
 Patch8:		freemarker-2.3.30-use-jakarta-el.patch
+Patch33: aqute-bnd4.patch
 
 BuildArch:      noarch
 
@@ -41,7 +42,7 @@ BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires: ant
 BuildRequires: apache-parent
 BuildRequires: apache-commons-logging
-BuildRequires: aqute-bnd
+BuildRequires: aqute-bnd4
 BuildRequires: hamcrest
 BuildRequires: ivy-local
 BuildRequires: glassfish-jsp-api
@@ -92,6 +93,7 @@ find -type f -name "*.class" -delete
 %patch6
 %patch7 -p1
 %patch8 -p1
+%patch33 -p0
 
 # Use system ivy settings
 rm ivysettings.xml
@@ -140,6 +142,9 @@ export LANG=C.UTF-8
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat May 28 2022 Igor Vlasenko <viy@altlinux.org> 0:2.3.30-alt4_3jpp8
+- build with aqute-bnd4
+
 * Wed May 25 2022 Igor Vlasenko <viy@altlinux.org> 0:2.3.30-alt3_3jpp8
 - fix for new cdi-api
 
