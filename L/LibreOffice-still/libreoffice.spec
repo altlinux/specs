@@ -26,7 +26,7 @@
 
 Name: LibreOffice-still
 %define hversion 7.2
-%define urelease 6.2
+%define urelease 7.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -704,6 +704,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri May 27 2022 Andrey Cherepanov <cas@altlinux.org> 7.2.7.2-alt1
+- New version.
+
 * Mon Mar 14 2022 Andrey Cherepanov <cas@altlinux.org> 7.2.6.2-alt1
 - New version.
 
