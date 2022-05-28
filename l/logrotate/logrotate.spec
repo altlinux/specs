@@ -1,9 +1,9 @@
 Name: logrotate
-Version: 3.16.0
-Release: alt1.git35_6e8dfb8
+Version: 3.20.1
+Release: alt1
 
 Summary: Rotates, compresses, and mails system logs
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: File tools
 Url: https://github.com/logrotate/logrotate
 
@@ -17,6 +17,11 @@ Patch3: 0003-ALT-insecure-permissions.patch
 Patch4: 0004-ALT-Add-more-taboo-suffixes.patch
 
 Provides: /etc/logrotate.d
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
+%set_verify_elf_method strict
 
 %def_with selinux
 
@@ -33,10 +38,7 @@ a daily cron job.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
+%autopatch -p1
 
 %build
 touch AUTHORS ChangeLog NEWS README
@@ -75,6 +77,11 @@ fi
 %doc ChangeLog.md
 
 %changelog
+* Sat May 28 2022 Alexey Gladkov <legion@altlinux.ru> 3.20.1-alt1
+- New version (3.20.1).
+- Security fixes:
+  - CVE-2022-1348: potential DoS from unprivileged users via the state file.
+
 * Sun Apr 26 2020 Alexey Gladkov <legion@altlinux.ru> 3.16.0-alt1.git35_6e8dfb8
 - Update from git (6e8dfb8).
 
