@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 2.0.0
+Version: 3.0.0
 Release: alt1
 
 Summary: A sphinx extension for embedding sequence diagram using seqdiag
@@ -25,13 +25,13 @@ BuildRequires: python3-module-webcolors
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source:  %name-%version.tar
 
 %description
 %summary
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
 %python3_build
@@ -47,6 +47,9 @@ Source:  %modulename-%version.tar
 %doc *.rst
 
 %changelog
+* Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Automatically updated to 2.0.0.
 
