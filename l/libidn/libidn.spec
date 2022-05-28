@@ -1,6 +1,6 @@
 Name: libidn
 Version: 1.37
-Release: alt1
+Release: alt2
 
 Summary: Internationalized Domain Name support library
 Group: System/Libraries
@@ -68,7 +68,6 @@ Group: Development/Java
 Summary:       Java port of the GNU Libidn library
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java java-devel-default javapackages-local
-BuildRequires: mvn(com.google.code.findbugs:annotations)
 BuildRequires: mvn(com.google.guava:guava)
 BuildRequires: mvn(junit:junit)
 BuildArch:     noarch
@@ -196,6 +195,9 @@ export LD_LIBRARY_PATH=%buildroot/%_lib:%buildroot%_libdir
 %endif #java
 
 %changelog
+* Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.37-alt2
+- Fixed FTBFS.
+
 * Mon Jul 12 2021 Grigory Ustinov <grenka@altlinux.org> 1.37-alt1
 - Build new version (Closes: #40432).
 
