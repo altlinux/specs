@@ -5,7 +5,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 10.0
+Version: 10.2
 Release: alt1
 
 Summary: a pytest plugin that re-runs failed tests up to -n times to eliminate flakey failures
@@ -20,6 +20,7 @@ BuildRequires(pre): rpm-build-python3
 
 %if_with check
 BuildRequires: python3(tox)
+BuildRequires: python3-module-pytest-xdist
 %endif
 
 BuildArch: noarch
@@ -62,6 +63,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/pytest_rerunfailures-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 10.2-alt1
+- Automatically updated to 10.2.
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 10.0-alt1
 - Automatically updated to 10.0.
 
