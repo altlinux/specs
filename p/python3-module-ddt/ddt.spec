@@ -4,9 +4,11 @@
 %def_with check
 
 Name: python3-module-ddt
-Version: 1.4.2
-Release: alt2
+Version: 1.5.0
+Release: alt1
+
 Summary: A Python library to multiply test cases
+
 Group: Development/Python3
 License: MIT
 Url: https://pypi.org/project/ddt/
@@ -51,6 +53,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
+- Automatically updated to 1.5.0.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt2
 - Drop python2 support.
 
