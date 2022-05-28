@@ -8,7 +8,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           aqute-bnd4
 Version:        4.3.1
-Release:        alt2_4jpp11
+Release:        alt3_4jpp11
 Summary:        BND Tool
 # Part of jpm is under BSD, but jpm is not included in binary RPM
 License:        ASL 2.0 or EPL-2.0
@@ -63,7 +63,7 @@ BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.slf4j:slf4j-simple)
 BuildRequires:  mvn(org.sonatype.plexus:plexus-build-api)
 # Requires self to generate OSGi metadata
-BuildRequires:  mvn(biz.aQute.bnd:bnd-maven-plugin)
+BuildRequires:  mvn(biz.aQute.bnd:bnd-maven-plugin:4)
 
 # Explicit javapackages-tools requires since bnd script uses
 # /usr/share/java-utils/java-functions
@@ -154,7 +154,7 @@ cp -p %{SOURCE5} pom.xml
 %pom_add_dep org.osgi:osgi.cmpn
 %pom_add_dep biz.aQute.bnd:aQute.libg:%{version}
 %pom_add_dep biz.aQute.bnd:biz.aQute.bnd.annotation:%{version}
-%pom_add_plugin biz.aQute.bnd:bnd-maven-plugin . "
+%pom_add_plugin biz.aQute.bnd:bnd-maven-plugin:4 . "
 <executions>
   <execution>
     <goals>
@@ -279,6 +279,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{oldname}.conf
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat May 28 2022 Igor Vlasenko <viy@altlinux.org> 0:4.3.1-alt3_4jpp11
+- nobootstrap; self-dependent build
+
 * Fri May 27 2022 Igor Vlasenko <viy@altlinux.org> 0:4.3.1-alt2_4jpp11
 - compat build (bootstrap)
 
