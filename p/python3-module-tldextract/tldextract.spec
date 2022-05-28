@@ -1,20 +1,24 @@
 %define oname tldextract
 
-%def_disable check
+%def_without check
 
 Name: python3-module-%oname
-Version: 1.5.1
-Release: alt1.git20141205.3
+Version: 3.3.0
+Release: alt1
+
 Summary: Accurately separate the TLD from the registered domain and subdomains of a URL
+
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/tldextract/
 
 # https://github.com/john-kurkowski/tldextract.git
 Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools_scm
 
 %py3_provides %oname
 
@@ -28,40 +32,31 @@ tldextract accurately separates the gTLD or ccTLD (generic or country
 code top-level domain) from the registered domain and subdomains of a
 URL, using the Public Suffix List.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-tldextract accurately separates the gTLD or ccTLD (generic or country
-code top-level domain) from the registered domain and subdomains of a
-URL, using the Public Suffix List.
-
-This package contains tests for %oname.
-
 %prep
 %setup
 
 %build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 python3 setup.py test
 
 %files
-%doc *.md tldextract_app
+%doc *.md
 %_bindir/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- Automatically updated to 3.3.0.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 1.5.1-alt1.git20141205.3
 - Drop python2 support.
 
