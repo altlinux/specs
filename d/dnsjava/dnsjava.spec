@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          dnsjava
 Version:       2.1.3
-Release:       alt1_18jpp8
+Release:       alt2_18jpp8
 Summary:       Java DNS implementation
 License:       BSD and MIT
 URL:           http://www.dnsjava.org/
@@ -20,7 +20,7 @@ Source1:       %{name}-%{version}.pom
 Patch0:        dnsjava-2.0.6-java1.5.target.patch
 
 BuildRequires: ant
-BuildRequires: aqute-bnd
+BuildRequires: aqute-bnd4
 # see https://fedorahosted.org/released/javapackages/doc/#_add_maven_depmap_macro_2
 BuildRequires: javapackages-local
 # For tests
@@ -73,7 +73,7 @@ mv -f Changelog.tmp Changelog
 
 %build
 
-export CLASSPATH=%(build-classpath jce aqute-bnd)
+export CLASSPATH=%(build-classpath jce aqute-bnd4)
 ant -Dj2se.javadoc=%{_javadocdir}/java clean docsclean bundle docs
 
 %mvn_artifact %{SOURCE1} org.xbill.dns_%{version}.jar
@@ -96,6 +96,9 @@ ant -Dj2se.javadoc=%{_javadocdir}/java run_tests
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri May 27 2022 Igor Vlasenko <viy@altlinux.org> 0:2.1.3-alt2_18jpp8
+- build with compat bnd4
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_18jpp8
 - fc update
 
