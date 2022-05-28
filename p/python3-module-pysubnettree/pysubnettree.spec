@@ -1,13 +1,17 @@
 %define oname pysubnettree
 
-Summary: Provides maps subnets given in CIDR notation to Python objects
 Name: python3-module-%oname
-Version: 0.23
-Release: alt2
-Source: pysubnettree-%version.tar.gz
+Version: 0.35
+Release: alt1
+
+Summary: Provides maps subnets given in CIDR notation to Python objects
+
 License: BSD-style
 Group: Development/Python3
-Url: http://www.icir.org/robin/pysubnettree
+Url: https://pypi.org/project/pysubnettree
+
+Source: pysubnettree-%version.tar.gz
+
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 BuildRequires(pre): rpm-build-python3
@@ -43,6 +47,9 @@ unset RPM_PYTHON
 %python3_sitelibdir/*
 
 %changelog
+* Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 0.35-alt1
+- Build new version.
+
 * Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.23-alt2
 - Drop python2 support.
 
