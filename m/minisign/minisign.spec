@@ -5,7 +5,7 @@
 
 Name: minisign
 Version: 0.10
-Release: alt1
+Release: alt2
 Summary: A dead simple tool to sign files and verify signatures
 License: ISC
 Group: File tools
@@ -49,5 +49,8 @@ echo -ne '\0' >> README.md
 %_man1dir/minisign.1*
 
 %changelog
+* Sun May 29 2022 Vitaly Chikunov <vt@altlinux.org> 0.10-alt2
+- Increment release to override Autoimports.
+
 * Thu May 26 2022 Vitaly Chikunov <vt@altlinux.org> 0.10-alt1
 - First import 0.10-6-g4b2df2e (2022-02-20).
