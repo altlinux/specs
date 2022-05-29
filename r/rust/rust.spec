@@ -1,10 +1,10 @@
 Name: rust
 Epoch: 1
-Version: 1.60.0
+Version: 1.61.0
 Release: alt1
 Summary: The Rust Programming Language
 
-%define r_ver 1.59.0
+%define r_ver 1.60.0
 
 Group: Development/Other
 License: Apache-2.0 and MIT
@@ -19,7 +19,7 @@ Patch2: rust-disable-lint-tests.patch
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
-%global llvm_version 12.0
+%global llvm_version 13.0
 
 %define _unpackaged_files_terminate_build 1
 
@@ -29,6 +29,7 @@ BuildRequires: /proc
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: libstdc++-devel
+BuildRequires: libstdc++-devel-static
 BuildRequires: curl
 BuildRequires: cmake
 BuildRequires: binutils
@@ -476,6 +477,12 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Sun May 29 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.61.0-alt1
+- New version (1.61.0).
+
+* Tue Apr 12 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.60.0-alt2
+- Rebuilt with llvm13.0.
+
 * Sat Apr 09 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.60.0-alt1
 - New version (1.60.0).
 
