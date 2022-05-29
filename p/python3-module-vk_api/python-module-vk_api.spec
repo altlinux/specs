@@ -1,15 +1,15 @@
 %define modulename vk_api
 
 Name: python3-module-vk_api
-Version: 9.3.1
-Release: alt3
+Version: 11.9.8
+Release: alt1
 
 Summary: Module for writing scripts for vk.com (vkontakte)
+
 License: Apache-2.0
 Group: Development/Python3
-
 Url: https://github.com/python273/vk_api
-Packager: Andrey Bychkov <mrdrew@altlinux.ru>
+
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -35,6 +35,9 @@ Module for writing scripts for vk.com (vkontakte).
 %python3_sitelibdir/*
 
 %changelog
+* Sun May 29 2022 Grigory Ustinov <grenka@altlinux.org> 11.9.8-alt1
+- Automatically updated to 11.9.8.
+
 * Tue Jul 13 2021 Grigory Ustinov <grenka@altlinux.org> 9.3.1-alt3
 - Drop python2 support.
 
