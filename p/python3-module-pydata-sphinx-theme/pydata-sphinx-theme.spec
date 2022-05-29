@@ -1,10 +1,11 @@
 %define  modulename pydata-sphinx-theme
 
 Name:    python3-module-%modulename
-Version: 0.6.3
+Version: 0.8.1
 Release: alt1
 
 Summary: Bootstrap-based sphinx theme from the PyData community
+
 License: BSD-3-Clause
 Group:   Development/Python3
 URL:     https://github.com/pydata/pydata-sphinx-theme
@@ -15,13 +16,16 @@ BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source:  %name-%version.tar
 
 %description
 %summary
 
 %prep
-%setup -n %modulename-%version
+%setup
+# https://bugzilla.altlinux.org/show_bug.cgi?id=39907
+[ -e setup.py ] && rm -f ./setup.py
+echo 'import setuptools; setuptools.setup()' > setup.py
 
 %build
 %python3_build
@@ -35,6 +39,9 @@ Source:  %modulename-%version.tar
 %doc *.md
 
 %changelog
+* Sun May 29 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1
+- Automatically updated to 0.8.1.
+
 * Sun May 16 2021 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt1
 - Automatically updated to 0.6.3.
 
