@@ -2,7 +2,7 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.12.5
+Version: 2.13.0
 Release: alt1
 
 Group:   System/Configuration/Other
@@ -10,8 +10,6 @@ License: GPL-3.0
 Source0: %rname-%version.tar
 Source1: apt_rpm.py
 Source2: apt_repo.py
-
-Patch0: ansible-prohibit-pkg5-usage.patch
 
 Url: http://www.ansible.com
 
@@ -59,7 +57,6 @@ are transferred to managed machines automatically.
 %setup -n %rname-%version
 cp %SOURCE1 lib/ansible/modules/apt_rpm.py
 cp %SOURCE2 lib/ansible/modules/apt_repo.py
-%patch0 -p1
 
 %build
 %python3_build
@@ -86,6 +83,9 @@ find %buildroot%python3_sitelibdir/ansible_test/_data -name \*.ps1 -delete
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Sun May 29 2022 Andrey Cherepanov <cas@altlinux.org> 2.13.0-alt1
+- New version.
+
 * Tue Apr 26 2022 Andrey Cherepanov <cas@altlinux.org> 2.12.5-alt1
 - New version.
 
