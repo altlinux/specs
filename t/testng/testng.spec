@@ -3,7 +3,7 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -12,15 +12,15 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_with    groovy
-%bcond_without snakeyaml
+%bcond_with bootstrap
 
 Name:           testng
-Version:        6.14.3
-Release:        alt1_13jpp11
+Version:        7.3.0
+Release:        alt1_3jpp11
 Summary:        Java-based testing framework
 License:        ASL 2.0
 URL:            http://testng.org/
+
 # ./generate-tarball.sh
 Source0:        %{name}-%{version}.tar.gz
 
@@ -36,21 +36,15 @@ Patch1:         0002-Replace-bundled-jquery-with-CDN-link.patch
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(com.beust:jcommander)
-BuildRequires:  mvn(com.google.inject:guice)
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+BuildRequires:  mvn(com.google.inject:guice::no_aop:)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.ant:ant)
-BuildRequires:  mvn(org.apache-extras.beanshell:bsh)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-%if %{with groovy}
-BuildRequires:  mvn(org.assertj:assertj-core) >= 3.8.0
-BuildRequires:  mvn(org.codehaus.gmavenplus:gmavenplus-plugin)
-BuildRequires:  mvn(org.codehaus.groovy:groovy-all)
-BuildRequires:  mvn(org.spockframework:spock-core)
-%endif
-%if %{with snakeyaml}
-BuildRequires:  mvn(org.yaml:snakeyaml)
 %endif
 Source44: import.info
 
@@ -69,12 +63,12 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%(echo %{version} | tr '~' '-')
 
 %patch0 -p1
 %patch1 -p1
 
-cp %{SOURCE1} .
+sed 's/@VERSION@/%{version}/' %{SOURCE1} > pom.xml
 
 # remove any bundled libs, but not test resources
 find ! -path "*/test/*" -name *.jar -print -delete
@@ -85,23 +79,13 @@ find -name *.class -delete
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 
-%if %{without snakeyaml}
 %pom_remove_dep org.yaml:snakeyaml
 rm src/main/java/org/testng/internal/Yaml*.java
 rm src/main/java/org/testng/Converter.java
-%endif
 
-# missing test deps
-%if %{with groovy}
-%pom_add_plugin "org.codehaus.gmavenplus:gmavenplus-plugin" pom.xml \
-  "<executions><execution><goals><goal>addTestSources</goal><goal>testGenerateStubs</goal><goal>testCompile</goal><goal>removeTestStubs</goal></goals></execution></executions>"
-%pom_add_dep "org.assertj:assertj-core::test"
-%pom_add_dep "org.spockframework:spock-core::test"
-%pom_add_dep "org.codehaus.groovy:groovy-all::test"
+%pom_remove_dep :bsh
 
-# java.lang.NoClassDefFoundError: net/sf/cglib/proxy/CallbackFilter when executing tests
-%pom_add_dep "net.sf.cglib:cglib::test"
-%endif
+%pom_xpath_inject "pom:dependency[pom:artifactId='guice']" "<classifier>no_aop</classifier>"
 
 sed -i -e 's/DEV-SNAPSHOT/%{version}/' src/main/java/org/testng/internal/Version.java
 
@@ -112,13 +96,7 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %mvn_alias : :::jdk15:
 
 %build
-%if %{with groovy} && %{with snakeyaml}
-# A couple of parallelisation tests are *sometimes* failing, so let's ignore failures
-# because they do complete successfully most of the time
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
-%else
 %mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
-%endif
 
 %install
 %mvn_install
@@ -131,6 +109,9 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun May 29 2022 Igor Vlasenko <viy@altlinux.org> 0:7.3.0-alt1_3jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:6.14.3-alt1_13jpp11
 - update
 
