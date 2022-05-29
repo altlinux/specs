@@ -1,13 +1,16 @@
 %define oname oslo.db
 
 Name: python3-module-%oname
-Version: 6.0.0
+Version: 11.3.0
 Release: alt1
+
 Summary: OpenStack oslo.db library
+
 Group: Development/Python3
-License: ASL 2.0
-Url: http://docs.openstack.org/developer/%oname
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+License: Apache-2.0
+Url: http://docs.openstack.org/developer/oslo.db
+
+Source: %oname-%version.tar.gz
 Source1: oslo.db.watch
 
 BuildArch: noarch
@@ -21,8 +24,6 @@ Requires: python3-module-SQLAlchemy
 Requires: python3-module-iso8601
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
@@ -30,17 +31,26 @@ BuildRequires: python3-module-alembic >= 0.9.6
 BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.config >= 5.2.0
-BuildRequires: python3-module-oslo.context >= 2.9.0
+BuildRequires: python3-module-oslo.context >= 2.19.2
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-migrate
-BuildRequires: python3-module-migrate-tests
-BuildRequires: python3-module-eventlet
-BuildRequires: python3-module-oslotest
+BuildRequires: python3-module-eventlet >= 0.18.2
+BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-stevedore >= 1.20.0
-BuildRequires: python3-module-six >= 1.10.0
 
 BuildRequires: python3-module-testresources >= 2.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
+BuildRequires: python3-module-sqlalchemy
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-pifpaf >= 0.10.0
+BuildRequires: python3-module-pymysql
+BuildRequires: python3-module-psycopg2 >= 2.8.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
 
 %description
 The OpenStack Oslo database handling library. Provides database connectivity
@@ -87,6 +97,9 @@ Tests for the Oslo database handling library.
 %python3_sitelibdir/*/*/test*
 
 %changelog
+* Mon May 16 2022 Grigory Ustinov <grenka@altlinux.org> 11.3.0-alt1
+- Automatically updated to 11.3.0.
+
 * Thu Jan 09 2020 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
 - Automatically updated to 6.0.0.
 - Added watch file.
