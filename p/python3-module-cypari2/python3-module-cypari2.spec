@@ -1,7 +1,7 @@
 %define  modulename cypari2
 
 Name:    python3-module-%modulename
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: Python interface to the number theory library PARI/GP
@@ -21,14 +21,12 @@ BuildRequires: pari-gp
 BuildRequires: libgmp-devel
 
 Source: %modulename-%version.tar
-Patch: cypari2-use-polisirreducible.patch
 
 %description
 A Python interface to the number theory library PARI/GP.
 
 %prep
 %setup -n %modulename-%version
-%patch -p1
 
 %build
 %python3_build
@@ -44,5 +42,8 @@ A Python interface to the number theory library PARI/GP.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat May 28 2022 Andrey Cherepanov <cas@altlinux.org> 2.1.2-alt1
+- New version.
+
 * Mon Jun 21 2021 Andrey Cherepanov <cas@altlinux.org> 2.1.1-alt1
 - Initial build for Sisyphus
