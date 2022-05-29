@@ -2,8 +2,12 @@
 %define _vkdir %_datadir/vulkan/icd.d
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %define optflags_debug -g1
+# As ubuntu
+%define llvm_ver 11.0
 
+%def_with clang
 %def_with wayland
+%def_with shader_cache
 
 %ifarch x86_64
 %define bits 64
@@ -13,7 +17,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2022.Q2.1
+Version: 2022.Q2.2
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -25,11 +29,16 @@ ExclusiveArch: %ix86 x86_64
 Requires: vulkan-filesystem
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: gcc9-c++ cmake python3-devel curl libstdc++9-devel libxcb-devel libssl-devel llvm-devel
+BuildRequires: cmake python3-devel curl libxcb-devel libssl-devel llvm-devel
 BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel spirv-headers libspirv-tools-devel libspirv-cross-devel glslang-devel
 %if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 BuildRequires: libffi-devel
+%endif
+%if_with clang
+BuildRequires: clang%{llvm_ver} lld%{llvm_ver} llvm%{llvm_ver}-devel gcc-c++ libstdc++-devel
+%else
+BuildRequires: gcc9-c++ libstdc++9-devel
 %endif
 
 Source0: xgl.tar
@@ -67,15 +76,31 @@ popd
 
 # build amdvlk.so
 pushd %_builddir/xgl
+%if_with clang
+optflags=$(echo '%optflags'|sed 's,lto=auto,lto=thin,')
+export ALTWRAP_LLVM_VERSION=11.0 \
+%cmake \
+	-DCMAKE_C_COMPILER=clang \
+	-DCMAKE_CXX_COMPILER=clang++ \
+	-DLLVM_USE_LINKER=lld \
+	-DCMAKE_EXE_LINKER_FLAGS='-fuse-ld=lld' \
+	-DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=lld' \
+	-DCMAKE_C_FLAGS:STRING="$optflags" \
+	-DCMAKE_CXX_FLAGS:STRING="$optflags" \
+%else	
 export GCC_VERSION=9 \
 %cmake \
 	-DCMAKE_AR:PATH=%_bindir/gcc-ar \
 	-DCMAKE_NM:PATH=%_bindir/gcc-nm \
 	-DCMAKE_RANLIB:PATH=%_bindir/gcc-ranlib \
-	-DCMAKE_BUILD_TYPE=Release \
+%endif
 %if_with wayland
 	-DBUILD_WAYLAND_SUPPORT=ON \
 %endif
+%if_with shader_cache
+	-DLLPC_ENABLE_SHADER_CACHE=1 \
+%endif
+	-DCMAKE_BUILD_TYPE=Release \
         -DXGL_METROHASH_PATH=%_builddir/metrohash \
         -DXGL_CWPACK_PATH=%_builddir/cwpack \
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
@@ -97,6 +122,18 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Sun May 29 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q2.2-alt1
+- try build with clang.
+- 2022-5-20 update:
+  + icd: bump vulkan API version
+  + llvm-project: Updated to 219f568b0b60
+  + cwpack: Updated to 4f8cf0584442
+  + metrohash: Updated to 18893fb28601
+  + spvgen: Updated to cd629c08af16
+  + llpc: Updated to be276de91f44
+  + pal: Updated to ca98822bbccc
+  + xgl: Updated to 9478a913fc7d
+
 * Sat Apr 09 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q2.1-alt1
 - update spvgen-shared patch.
 - fix llvm build.
