@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 # git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
-%define svn_rev 20220523172711
+%define svn_rev 20220529010424
 
 %define libchdr_commit 5de1a59019815ccdbba0fe07c71b31406d023248
 %define gtest_version 1.11.0
@@ -13,7 +13,7 @@
 %define glslang_version 11.7.1
 
 Name: pcsx2
-Version: 1.7.2787
+Version: 1.7.2828
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -116,13 +116,14 @@ There is still lot of on going work to improve compatibility & speed.
 
 %build
 %cmake .. \
+	-DCMAKE_BUILD_TYPE:STRING="RelWithDebInfo" \
 	-DCMAKE_DISABLE_PRECOMPILE_HEADERS:BOOL=TRUE \
 	-DCMAKE_BUILD_PO:BOOL=TRUE \
 	-DDISABLE_ADVANCE_SIMD:BOOL=TRUE \
+	-DDISABLE_BUILD_DATE:BOOL=TRUE \
+	-DDISABLE_PCSX2_WRAPPER:BOOL=TRUE \
 	-DPACKAGE_MODE:BOOL=TRUE \
 	-DXDG_STD:BOOL=TRUE \
-	-DDISABLE_BUILD_DATE:BOOL=TRUE \
-	-DUSE_SYSTEM_YAML:BOOL=TRUE \
 	-DLTO_PCSX2_CORE:BOOL=TRUE \
 	-DSDL2_API:BOOL=TRUE \
 	-GNinja \
@@ -139,7 +140,6 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %cmake_install
 
 %files
-%_bindir/PCSX2-linux.sh
 %_bindir/%name
 %_desktopdir/PCSX2.desktop
 %_man1dir/PCSX2.1.*
@@ -149,6 +149,9 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %_defaultdocdir/Pcsx2/*.pdf
 
 %changelog
+* Sun May 29 2022 Nazarov Denis <nenderus@altlinux.org> 1.7.2828-alt1
+- Version 1.7.2828
+
 * Mon May 23 2022 Nazarov Denis <nenderus@altlinux.org> 1.7.2787-alt1
 - Version 1.7.2787
 
