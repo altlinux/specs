@@ -1,5 +1,5 @@
 Name: alternatives
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: alternatives support
@@ -98,6 +98,9 @@ ln -s /bin/true %buildroot%_sbindir/update-alternatives
 %_rpmmacrosdir/*
 
 %changelog
+* Sat May 28 2022 Alexey Gladkov <legion@altlinux.ru> 0.5.2-alt1
+- Replaced "fgrep" with "grep -F".
+
 * Sun Mar 10 2019 Dmitry V. Levin <ldv@altlinux.org> 0.5.1-alt1
 - Packaged %_sbindir/update-alternatives -> /bin/true (closes: #36073).
 
