@@ -12,7 +12,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Eye Of Gnome
@@ -177,6 +177,9 @@ ln -sf %name/lib%name.so \
 
 
 %changelog
+* Sun May 29 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
+- 42.2
+
 * Sat Apr 23 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 
