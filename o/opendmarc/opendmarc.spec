@@ -1,25 +1,25 @@
 Name: opendmarc
-Version: 1.4.1.1
+Version: 1.4.2
 Release: alt1
 Summary: A Domain-based Message Authentication, Reporting & Conformance (DMARC) milter and library
 
 License: BSD and Sendmail
 Group: System/Servers
 URL: http://www.trusteddomain.org/opendmarc.html
+VCS: https://github.com/trusteddomainproject/OpenDMARC
 
-Source0: https://github.com/trusteddomainproject/OpenDMARC/archive/refs/tags/rel-opendmarc-1-4-1-1.tar.gz
+Source0: %name-%version.tar
 Source1: %name.sysconfig
 Source2: %name.service
 Patch1: opendmarc-1.4.0-ticket159-179.patch
-Patch2: opendmarc-1.4.1-conf_holdquarantinedmessages.patch
-Patch3: https://patch-diff.githubusercontent.com/raw/trusteddomainproject/OpenDMARC/pull/178.patch
-Patch4: opendmarc-python3.patch
+Patch2: opendmarc-python3.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libbsd-devel
 BuildRequires: libmariadb-devel
 BuildRequires: libspf2-devel
 BuildRequires: openssl-devel
+BuildRequires: perl-DBD-mysql
 BuildRequires: perl-DBI
 BuildRequires: perl-IO-Compress
 BuildRequires: perl-JSON
@@ -29,6 +29,9 @@ BuildRequires: perl-Switch
 BuildRequires: perl-XML-Simple
 BuildRequires: sendmail-devel
 Requires(pre): shadow-utils
+
+# Bad switch statement from old Switch module
+%add_findreq_skiplist %_sbindir/opendmarc-*
 
 %description
 OpenDMARC (Domain-based Message Authentication, Reporting & Conformance)
@@ -61,7 +64,7 @@ This package contains the static libraries, headers, and other support files
 required for developing applications against libopendmarc.
 
 %prep
-%setup -n OpenDMARC-rel-opendmarc-1-4-1-1
+%setup
 %autopatch -p1
 
 %build
@@ -110,7 +113,6 @@ mkdir -p %buildroot/run/%name
 # install db/ and contrib/ to datadir
 mkdir -p %buildroot%_datadir/%name/contrib
 cp -R db/ %buildroot%_datadir/%name
-sed -i -e 's:/usr/local/bin/python:%__python3:' contrib/rddmarc/dmarcfail.py
 cp -R contrib/rddmarc/ %buildroot%_datadir/%name/contrib
 # not much point including the Makefiles
 rm -f %buildroot%_datadir/%name/contrib/rddmarc/Makefile*
@@ -154,6 +156,9 @@ exit 0
 %_libdir/*.so
 
 %changelog
+* Sun May 29 2022 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
+- New version.
+
 * Fri Mar 25 2022 Andrey Cherepanov <cas@altlinux.org> 1.4.1.1-alt1
 - Initial build for Sisyphus (based on spec from Fedora) (ALT #42230).
 
