@@ -1,7 +1,7 @@
 # since 3.21.90 (libmutter-clutter-1.0.so private library)
 %set_verify_elf_method unresolved=relaxed
 
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 42
 %define beta %nil
@@ -18,7 +18,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 Epoch: 1
 
@@ -254,6 +254,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Sun May 29 2022 Yuri N. Sedunov <aris@altlinux.org> 1:42.2-alt1
+- 42.2
+
 * Fri May 06 2022 Yuri N. Sedunov <aris@altlinux.org> 1:42.1-alt1
 - 42.1
 

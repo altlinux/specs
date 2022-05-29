@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
@@ -14,7 +14,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -285,6 +285,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Sun May 29 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
+- 42.2
+
 * Fri May 06 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 
