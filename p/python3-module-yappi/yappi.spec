@@ -1,7 +1,9 @@
 %define  oname yappi
 
+%def_without check
+
 Name:    python3-module-%oname
-Version: 1.3.3
+Version: 1.3.5
 Release: alt1
 
 Summary: Yet Another Python Profiler, but this time support Multithread/CPU time profiling
@@ -12,7 +14,7 @@ URL:     https://pypi.org/project/yappi
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
-Source:  %oname-%version.tar
+Source:  %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
@@ -22,13 +24,17 @@ Conflicts: python-module-%oname
 %summary.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
 
 %install
 %python3_install
+
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 run_tests.py
 
 %files
 %doc README.md
@@ -37,6 +43,9 @@ Conflicts: python-module-%oname
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Sun May 29 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.5-alt1
+- Build new version.
+
 * Tue Nov 30 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt1
 - Build new version.
 
