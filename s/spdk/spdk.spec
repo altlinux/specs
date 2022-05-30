@@ -9,7 +9,7 @@
 
 Name: spdk
 Version: 22.01.1
-Release: alt1
+Release: alt2
 
 Summary: Storage Performance Development Kit
 License: BSD-3-Clause
@@ -88,6 +88,8 @@ SPDK devel libraries
 %setup
 %patch -p1
 %patch1 -p1
+
+sed -i 's|__bitwise__|__bitwise|' include/linux/virtio_types.h
 
 sed -i 's|/etc/lsb-release|/etc/os-release|' \
 	scripts/vagrant/update.sh
@@ -224,6 +226,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Mon May 30 2022 Leontiy Volodin <lvol@altlinux.org> 22.01.1-alt2
+- Fixed FTBFS.
+
 * Mon May 16 2022 Leontiy Volodin <lvol@altlinux.org> 22.01.1-alt1
 - New version (22.01.1).
 
