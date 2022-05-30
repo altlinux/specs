@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	5.17
-%define kernel_sublevel .11
+%define kernel_sublevel .12
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -614,6 +614,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon May 30 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.17.12-alt1
+- v5.17.12 (2022-05-30).
+
 * Wed May 25 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.17.11-alt1
 - Update to v5.17.11 (2022-05-25).
 - Applied Baikal-M patches. Supported boards: et101, aqbm1000, tf307.
