@@ -1,6 +1,6 @@
 Name: pulseaudio
-Version: 15.0
-Release: alt3
+Version: 16.0
+Release: alt1
 
 Summary: PulseAudio is a networked sound server
 Group: System/Servers
@@ -16,7 +16,7 @@ BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
 BuildRequires: libltdl7-devel libsoxr-devel
 BuildRequires: libsndfile-devel libspeex-devel libspeexdsp-devel libwebrtc-devel
 BuildRequires: libICE-devel libSM-devel libX11-devel libXtst-devel libxcbutil-devel
-BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
+BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc
 BuildRequires: libcheck-devel libssl-devel libsystemd-devel
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 
@@ -201,7 +201,7 @@ mkdir -p \
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-15.0
+%define pulselibdir %_libdir/pulseaudio
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -238,7 +238,7 @@ mkdir -p \
 %_datadir/zsh/site-functions/_pulseaudio
 %_datadir/bash-completion/completions/*
 
-%_libdir/pulseaudio/libpulsecore-15.0.so
+%_libdir/pulseaudio/libpulsecore-16.0.so
 
 %_libexecdir/systemd/user/pulseaudio.service
 %_libexecdir/systemd/user/pulseaudio-x11.service
@@ -324,7 +324,7 @@ mkdir -p \
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-15.0.so
+%_libdir/pulseaudio/libpulsecommon-16.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -335,6 +335,9 @@ mkdir -p \
 %_datadir/vala/vapi/*
 
 %changelog
+* Mon May 30 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 16.0-alt1
+- 16.0 released
+
 * Thu Mar 31 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 15.0-alt3
 - package default.pa.d and system.pa.d config directories
 
