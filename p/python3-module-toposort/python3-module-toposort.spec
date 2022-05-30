@@ -3,7 +3,7 @@
 
 Name: python3-module-%modname
 Version: 1.6
-Release: alt1
+Release: alt1.1
 
 Summary: %modname implements a topological sort algorithm
 Group: Development/Python3
@@ -16,7 +16,7 @@ Source: https://pypi.io/packages/source/t/%modname/%modname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools python3-module-unittest2
+BuildRequires: python3-devel python3-module-setuptools
 
 %description
 %summary
@@ -39,6 +39,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc README* CHANGES* NOTICE
 
 %changelog
+* Mon May 30 2022 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1.1
+- fixed BR
+
 * Tue Mar 09 2021 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
 - 1.6
 
