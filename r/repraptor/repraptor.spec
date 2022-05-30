@@ -1,6 +1,6 @@
 Name:		repraptor
 Version:	0.3.8
-Release:	alt1
+Release:	alt2
 Summary:	A Qt RepRap gcode sender/host controller
 
 License:	GPLv2
@@ -22,19 +22,24 @@ still absent, but it is already usable.
 
 %prep
 %setup -q
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" RepRaptor.pro
 
 %build
+%qmake_qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%_prefix RepRaptor.pro
 %make_build
 
 %install
-install -Dm 0755 RepRaptor %buildroot%_bindir/RepRaptor
+%installqt5
 
 %files
 %doc README.md
 %_bindir/RepRaptor
+%_desktopdir/*.desktop
+%_iconsdir/%name.png
 
 %changelog
+* Mon May 30 2022 Andrey Cherepanov <cas@altlinux.org> 0.3.8-alt2
+- Packaged desktop file and icons (ALT #42871).
+
 * Tue Jul 25 2017 Anton Midyukov <antohami@altlinux.org> 0.3.8-alt1
 - New version 0.3.8
 
