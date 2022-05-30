@@ -24,12 +24,12 @@ BuildRequires: jpackage-11-compat
 %global bindir %{apphomedir}/bin
 
 Name:             byteman
-Version:          4.0.11
-Release:          alt2_3jpp11
+Version:          4.0.16
+Release:          alt1_2jpp11
 Summary:          Java agent-based bytecode injection tool
 License:          LGPLv2+
 URL:              http://www.jboss.org/byteman
-# wget -O 4.0.11.tar.gz https://github.com/bytemanproject/byteman/archive/4.0.11.tar.gz
+# wget -O 4.0.16.tar.gz https://github.com/bytemanproject/byteman/archive/4.0.16.tar.gz
 Source0:          https://github.com/bytemanproject/byteman/archive/%{version}.tar.gz
 
 BuildArch:        noarch
@@ -55,18 +55,15 @@ BuildRequires:    objectweb-asm
 BuildRequires:    junit
 BuildRequires:    junit5
 BuildRequires:    testng
-BuildRequires:    mvn(org.apache.maven:maven-project)
-# JBoss modules byteman plugin requires it
-BuildRequires:    mvn(org.jboss.modules:jboss-modules)
 
-Provides:         bundled(objectweb-asm) = 7.0
-Provides:         bundled(java_cup) = 1:0.11b-8
+Provides:         bundled(objectweb-asm) = 9.1
+Provides:         bundled(java_cup) = 1:0.11b-17
 # We are filtering java-headless >= 1:1.9 requirement. Add
 # JDK 8 requirement here explicitly which shouldn't match the filter.
 
 # Related pieces removed via pom_xpath_remove macros
 Patch1:           remove_submit_integration_test_verification.patch
-Patch2:           tests_pom_xml.patch
+Patch2:           testng7_port.patch
 Source44: import.info
 %filter_from_requires /^%{mvn_javacup_or_asm_matcher}|%{java_headless_matcher}$/d
 
@@ -148,10 +145,14 @@ sed -i "s|java-cup|java_cup|" tests/pom.xml
 
 # Don't use javadoc plugin, use XMvn for javadocs
 %pom_remove_plugin -r :maven-javadoc-plugin
+%pom_remove_dep 'org.apache.maven:maven-project' contrib/rulecheck-maven-plugin
 %pom_xpath_remove 'pom:execution[pom:id="make-javadoc-assembly"]' byteman
 
 # Put byteman-rulecheck-maven-plugin into a separate package
 %mvn_package ":byteman-rulecheck-maven-plugin" rulecheck-maven-plugin
+
+# CNFE being thrown without this for bmunit5 in rawhide and with tests enabled
+%pom_add_dep "org.apache.commons:commons-lang3" contrib/bmunit5
 # Put byteman-bmunit/byteman-dtest into a separate packages since they
 # runtime require junit
 %mvn_package ":byteman-bmunit" bmunit
@@ -200,7 +201,11 @@ done
 # for the -m option.
 install -d -m 755 $RPM_BUILD_ROOT%{apphomedir}/contrib
 install -d -m 755 $RPM_BUILD_ROOT%{apphomedir}/contrib/jboss-modules-system
-ln -s %{_javadir}/byteman/byteman-jboss-modules-plugin.jar $RPM_BUILD_ROOT%{apphomedir}/contrib/jboss-modules-system/byteman-jboss-modules-plugin.jar
+# viy@: bad symlink, unmets
+#ln -s %{_javadir}/byteman/byteman-jboss-modules-plugin.jar $RPM_BUILD_ROOT%{apphomedir}/contrib/jboss-modules-system/byteman-jboss-modules-plugin.jar
+# viy@: if it is really needed, use touch:
+#touch $RPM_BUILD_ROOT%{apphomedir}/contrib/jboss-modules-system/byteman-jboss-modules-plugin.jar
+
 
 ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.jar
 
@@ -230,6 +235,9 @@ ln -s %{_javadir}/byteman/byteman.jar $RPM_BUILD_ROOT%{apphomedir}/lib/byteman.j
 %{apphomedir}/lib/byteman-dtest.jar
 
 %changelog
+* Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 4.0.16-alt1_2jpp11
+- new version
+
 * Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 4.0.11-alt2_3jpp11
 - fixed build
 
