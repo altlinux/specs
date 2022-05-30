@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: timeshift
-Version: 21.09.1
+Version: 22.06.1
 Summary: System restore tool for Linux
 Release: alt1
 License: GPLv3
@@ -42,10 +42,14 @@ rm -f %buildroot%_bindir/%name-uninstall
 %_desktopdir/%name-gtk.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 %_datadir/metainfo/%name.appdata.xml
+%_pixmapsdir/%name.png
 %_datadir/polkit-1/actions/in.teejeetech.pkexec.timeshift.policy
 %doc README.md
 
 %changelog
+* Mon May 30 2022 Alexander Makeenkov <amakeenk@altlinux.org> 22.06.1-alt1
+- Updated to version 22.06.1
+
 * Tue Sep 28 2021 Alexander Makeenkov <amakeenk@altlinux.org> 21.09.1-alt1
 - Updated to version 21.09.1
 
