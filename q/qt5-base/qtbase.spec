@@ -38,7 +38,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.2
-Release: alt14
+Release: alt15
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -54,6 +54,8 @@ Source2: rpm-macros-addon
 Patch1: kde-5.15.patch
 Patch2: kde-5.15-rev-ver.patch
 Patch3: kde-5.15-rev-f8ad329f7ee.patch
+# 
+Patch20: QTBUG-94557.patch
 # FC
 Patch51: qtbase-opensource-src-5.7.1-QT_VERSION_CHECK.patch
 Patch52: qtbase-opensource-src-5.7.1-moc_macros.patch
@@ -388,6 +390,8 @@ EGL integration library for the Qt%major toolkit
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+#
+%patch20 -p1
 #
 %patch51 -p1
 %patch52 -p1
@@ -847,6 +851,9 @@ make check -k ||:
 
 
 %changelog
+* Mon May 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt15
+- add fix against QTBUG-94557 (closes: 42524)
+
 * Wed May 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt14
 - update fixes from kde/qt-5.15
 
