@@ -1,30 +1,22 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          disruptor
 Version:       3.4.2
-Release:       alt1_3jpp11
+Release:       alt1_6jpp8
 Summary:       Concurrent Programming Framework
 License:       ASL 2.0
 URL:           https://lmax-exchange.github.io/disruptor/
+BuildArch:     noarch
+
 Source0:       https://github.com/LMAX-Exchange/disruptor/archive/%{version}/%{name}-%{version}.tar.gz
 Source1:       https://repo1.maven.org/maven2/com/lmax/%{name}/%{version}/%{name}-%{version}.pom
 
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
 BuildRequires: mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires: mvn(org.hamcrest:hamcrest-library)
-BuildRequires: mvn(org.jmock:jmock-junit4)
-BuildRequires: mvn(org.jmock:jmock-legacy)
-
-%if 0
-# Unavailable performance test deps
-BuildRequires: mvn(org.hdrhistogram:HdrHistogram:1.2.1)
-%endif
-
-BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -93,6 +85,9 @@ rm -r src/test/java/com/lmax/disruptor/dsl/DisruptorTest.java
 %doc --no-dereference LICENCE.txt
 
 %changelog
+* Mon May 30 2022 Igor Vlasenko <viy@altlinux.org> 3.4.2-alt1_6jpp8
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.4.2-alt1_3jpp11
 - new version
 
