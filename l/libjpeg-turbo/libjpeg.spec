@@ -3,7 +3,7 @@
 
 Name: libjpeg-turbo
 Version: 2.1.2
-Release: alt1.1
+Release: alt1.2
 Epoch: 2
 
 Summary: A SIMD-accelerated library for manipulating JPEG image format files
@@ -139,7 +139,7 @@ EOF
 %remove_optflags -fprofile-generate
 %ifarch %e2k
 %add_optflags -fprofile-use=%_builddir/%name-%version-%release/%_cmake__builddir/eprof.sum
-eprof -s %_cmake__builddir/eprof.sum
+eprof -d %_cmake__builddir -s %_cmake__builddir/eprof.sum
 %else
 %add_optflags -fprofile-use
 %endif
@@ -199,6 +199,10 @@ install -pm644 README* change.log \
 %_pkgconfigdir/libturbojpeg.pc
 
 %changelog
+* Sat May 28 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:2.1.2-alt1.2
+- improved SIMD patch for Elbrus
+- e2k: also need to specify a directory with profiles
+
 * Wed May 25 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:2.1.2-alt1.1
 - updated SIMD patch for Elbrus
 - e2k: fixed compiler hang when using profile
