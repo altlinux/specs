@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.44
+Version: 0.2.45
 Release: alt1
 
 Summary: Simple image creator
@@ -86,8 +86,13 @@ fi
 # - maybe Require: %%name-preinstall in the main package sometime later
 
 %changelog
+* Mon May 30 2022 Alexey Gladkov <legion@altlinux.ru> 0.2.45-alt1
+- mki-copy-efiboot-chrooted: fix copy grub efi binary for unsecure boot x86_64
+- mki-copy-efiboot: add variables for copy or replace files to efiboot.img
+- Add netwotk support
+
 * Thu Nov 18 2021 Alexey Gladkov <legion@altlinux.ru> 0.2.44-alt1
-- mki-copy-efiboot-chrooted: Add riscv64 support. 
+- mki-copy-efiboot-chrooted: Add riscv64 support.
 
 * Mon Jul 26 2021 Alexey Gladkov <legion@altlinux.ru> 0.2.43-alt1
 - Add own list of initial packages to instrumental chroot
