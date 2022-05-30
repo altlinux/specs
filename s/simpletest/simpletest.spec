@@ -2,10 +2,13 @@
 %def_enable profile
 %def_enable sanitizers
 %def_enable coverage
+%ifarch %e2k
+%def_without fortran
+%endif
 
 Name:     simpletest
-Version:  11
-Release:  alt6
+Version:  12
+Release:  alt1
 
 Summary:  Simple toolchain test
 License:  GPL-3
@@ -16,7 +19,8 @@ Packager: Andrew Savchenko <bircoph@altlinux.org>
 
 Source:   %name-%version.tar
 
-BuildRequires: gcc-c++ gcc-fortran
+BuildRequires: gcc-c++
+%{?!_without_fortran:BuildRequires: gcc-fortran}
 %{?!_enable_bootstrap:BuildRequires: libgomp-devel}
 %if_enabled sanitizers
 BuildRequires: /proc libasan-devel-static
@@ -57,7 +61,8 @@ Also provides useful information about system:
     %{subst_enable bootstrap} \
     %{subst_enable profile} \
     %{subst_enable sanitizers} \
-    %{subst_enable coverage}
+    %{subst_enable coverage} \
+    %{?_without_fortran: --disable-fortran}
 
 %make_build -O
 
@@ -71,6 +76,9 @@ Also provides useful information about system:
 %doc README
 
 %changelog
+* Mon May 30 2022 Andrew Savchenko <bircoph@altlinux.org> 12-alt1
+- Make Fortran support conditional
+
 * Sat Nov 27 2021 Andrew Savchenko <bircoph@altlinux.org> 11-alt6
 - Workaround g++-11 bug. Alt bug 41451.
 
