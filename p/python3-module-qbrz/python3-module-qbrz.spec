@@ -4,7 +4,7 @@
 Name: python3-module-qbrz
 Epoch: 1
 Version: 0.4.1
-Release: alt2.bzr20210527
+Release: alt3.bzr20220414
 
 Summary: A simple Qt cross-platform frontend for some of Bazaar commands
 License: GPLv2+
@@ -15,7 +15,7 @@ Packager: Anatoly Kitaikin <cetus@altlinux.org>
 
 Source: qbrz-%version.tar
 
-Patch0: %name-%version-%release-alt.patch
+#Patch0: %name-%version-%release-alt.patch
 
 Provides: qbrz
 
@@ -48,7 +48,7 @@ This package contains tools and test suites for testing qbrz plugin.
 
 %prep
 %setup -n qbrz-%version
-%patch0 -p1
+#patch0 -p1
 
 %build
 %python3_build
@@ -60,18 +60,20 @@ This package contains tools and test suites for testing qbrz plugin.
 %python3_sitelibdir/breezy/plugins/qbrz
 %exclude %python3_sitelibdir/breezy/plugins/qbrz/COPYING.txt
 %exclude %python3_sitelibdir/breezy/plugins/qbrz/AUTHORS.txt
-%exclude %python3_sitelibdir/breezy/plugins/qbrz/README.txt
 %exclude %python3_sitelibdir/breezy/plugins/qbrz/NEWS.txt
 %exclude %python3_sitelibdir/breezy/plugins/qbrz/TODO.txt
 %exclude %python3_sitelibdir/breezy/plugins/qbrz/lib/tests
 %python3_sitelibdir/*.egg-info
-%doc AUTHORS.txt README.txt NEWS.txt TODO.txt
+%doc AUTHORS.txt README.md NEWS.txt TODO.txt
 
 %files tests
 %dir %python3_sitelibdir/breezy/plugins/qbrz/lib
 %python3_sitelibdir/breezy/plugins/qbrz/lib/tests
 
 %changelog
+* Mon May 30 2022 Anatoly Kitaykin <cetus@altlinux.org> 1:0.4.1-alt3.bzr20220414
+- update from launchpad.net
+
 * Fri Jul 02 2021 Anatoly Kitaykin <cetus@altlinux.org> 1:0.4.1-alt2.bzr20210527
 - fix for brz qlog colo:
 
