@@ -2,21 +2,26 @@
 
 Name: python3-module-%oname
 Version: 3.7.0
-Release: alt1
+Release: alt2
+
 Summary: Plugin for nose or py.test that automatically reruns flaky tests
+
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/flaky
-BuildArch: noarch
 
 # https://github.com/box/flaky.git
 Source: %name-%version.tar
 
+Patch: remove-nose-dependency.patch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-mock python3-module-genty python3-module-nose
+BuildRequires: python3-module-mock python3-module-genty
+
+BuildArch: noarch
 
 %description
-Flaky is a plugin for nose or py.test that automatically reruns flaky tests.
+Flaky is a plugin for py.test that automatically reruns flaky tests.
 
 Ideally, tests reliably pass or fail, but sometimes test fixtures must rely
 on components that aren't 100%% reliable. With flaky, instead of removing
@@ -24,6 +29,7 @@ those tests or marking them to @skip, they can be automatically retried.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build
@@ -33,9 +39,13 @@ those tests or marking them to @skip, they can be automatically retried.
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt2
+- Removed nose dependency.
+
 * Thu Sep 10 2020 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
 - Automatically updated to 3.7.0.
 
