@@ -32,7 +32,7 @@
 
 Name: lsb
 Version: 5.0
-Release: alt2.qa1
+Release: alt3
 
 Summary: The skeleton package defining packages needed for LSB compliance
 
@@ -150,7 +150,6 @@ Requires: /bin/rmdir
 Requires: /bin/sed
 Requires: /usr/sbin/sendmail
 Requires: /bin/sh
-Requires: /sbin/shutdown
 Requires: /bin/su
 Requires: /bin/sync
 Requires: /bin/tar
@@ -667,6 +666,9 @@ touch %buildroot%_sysconfdir/lsb-release.d/trialuse-%version-noarch
 %_sysconfdir/lsb-release.d/trialuse-%version-noarch
 
 %changelog
+* Mon May 30 2022 Andrey Cherepanov <cas@altlinux.org> 5.0-alt3
+- Removed requirement of /sbin/shutdown because it provided both sysvinit and systemd.
+
 * Fri Apr 29 2022 Dmitry V. Levin <ldv@altlinux.org> 5.0-alt2.qa1
 - NMU.
 - Removed obsolescent dependencies on /bin/egrep and /bin/fgrep.
