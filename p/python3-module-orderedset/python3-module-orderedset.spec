@@ -3,19 +3,19 @@
 
 Name: python3-module-%modname
 Version: 2.0.3
-Release: alt1
+Release: alt1.1
 
 Summary: An Ordered Set implementation in Cython
 Group: Development/Python3
 License: BSD-3-Clause and MIT
 Url: https://pypi.org/project/%modname
 
-#VCS: https://github.com/simonpercivall/orderedset
+Vcs: https://github.com/simonpercivall/orderedset
 Source: https://pypi.io/packages/source/o/%modname/%modname-%version.tar.gz
 
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-Cython python3-module-setuptools python3-module-unittest2
+BuildRequires: python3-devel python3-module-Cython python3-module-setuptools
 
 %description
 An Ordered Set implementation in Cython. Based on Raymond Hettinger's
@@ -39,6 +39,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc README* HISTORY*
 
 %changelog
+* Mon May 30 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1.1
+- fixed BR
+
 * Tue Jul 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt1
 - first build for Sisyphus
 
