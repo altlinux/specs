@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 0.8.1
-Release: alt3
+Release: alt4
 Summary: A Python client to use the TestLink API
 License: Apache 2.0
 Group: Development/Python3
@@ -38,8 +38,11 @@ cp -r example test %buildroot%python3_sitelibdir/%oname
 %doc LICENSE-2.0.txt doc/{install.rst,usage.rst}
 
 %changelog
+* Mon May 30 2022 Mikhail Chernonog <snowmix@altlinux.org> 0.8.1-alt4
+- Fix name of the activeBuildInTestPlan function in patch
+
 * Wed Apr 20 2022 Mikhail Chernonog <snowmix@altlinux.org> 0.8.1-alt3
-- Add inactive and active feature for build in testplan 
+- Add inactive and active feature for build in testplan
 
 * Thu Oct 31 2019 Alexander Makeenkov <amakeenk@altlinux.org> 0.8.1-alt2
 - Add inactive and active feature for testplan
