@@ -1,5 +1,5 @@
 # Variable _tnt_version is `git describe --long` from original Tarantool repo for this version
-%define _tnt_version %version-20-geed93fbbc   
+%define _tnt_version %version-0-g47e6bd362
 
 %def_disable static
 %def_enable check
@@ -7,7 +7,7 @@
 ExclusiveArch: x86_64
 
 Name: tarantool
-Version: 2.8.3
+Version: 2.8.4
 Release: alt1
 
 Summary: In-memory database and Lua application server
@@ -178,7 +178,13 @@ make test-force
 %_unitdir/tarantool@.service
 %_tmpfilesdir/tarantool.conf
 
+%files devel
+%_includedir/tarantool/*.h
+
 %changelog
+* Fri May 27 2022 Dmitry Kibirev <kdy@altlinux.org> 2.8.4-alt1
+- New stable version
+
 * Tue Nov 02 2021 Dmitry Kibirev <kdy@altlinux.org> 2.8.3-alt1
 - Initial build for Alt
 
