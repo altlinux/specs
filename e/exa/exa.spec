@@ -2,7 +2,7 @@
 
 Name: exa
 Version: 0.10.1
-Release: alt1
+Release: alt2
 
 Summary: A modern replacement for ls
 License: MIT
@@ -12,6 +12,7 @@ Url: https://the.exa.website/
 #Upstream: https://github.com/ogham/exa
 Source: %name-%version.tar
 Source1: %name-%version-vendor.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires: /proc
 BuildRequires: rust
@@ -30,6 +31,11 @@ and just one single binary.
 
 %prep
 %setup -a1
+%patch0 -p1
+
+# Disable lto to fix build on rust 1.61.0
+# See: https://github.com/ogham/exa/issues/1068
+sed -i -e "s/lto = true/lto = false/" Cargo.toml
 
 mkdir -p .cargo
 cat > .cargo/config <<EOF
@@ -52,5 +58,8 @@ install -D -m755 target/release/exa %buildroot%_bindir/exa
 %_bindir/*
 
 %changelog
+* Mon May 30 2022 Egor Ignatov <egori@altlinux.org> 0.10.1-alt2
+- Fix FTBFS on rust 1.61.0
+
 * Wed Apr 14 2021 Egor Ignatov <egori@altlinux.org> 0.10.1-alt1
 - First build for ALT
