@@ -30,7 +30,7 @@ Name: kde5-%rname
 %define ver_minor 6
 %define ver_bugfix 0
 Version: %ver_major.%ver_minor.%ver_bugfix
-Release: alt2
+Release: alt3
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 %define sover %version
@@ -104,6 +104,7 @@ Source10: mysql_install_db
 # ALT
 Patch100: alt-libraw-aarch64.patch
 Patch101: alt-own-mysql-install-db.patch
+Patch102: alt-akonadi22.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -185,6 +186,7 @@ mv %rname-%version core
 pushd core
 %patch100 -p1
 %patch101 -p1
+%patch102 -p1
 popd
 install -m 0644 %SOURCE6 ./
 sed -i '/DIGIKAM_MAJOR_VERSION/s|@VERMAJOR@|%ver_major|' CMakeLists.txt
@@ -331,6 +333,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Mon May 30 2022 Sergey V Turchin <zerg@altlinux.org> 7.6.0-alt3
+- fix compile with new akonadi
+
 * Thu Mar 31 2022 Sergey V Turchin <zerg@altlinux.org> 7.6.0-alt2
 - fix internal app version number (closes: 42302)
 
