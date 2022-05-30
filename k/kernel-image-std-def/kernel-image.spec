@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel .43
+%define kernel_sublevel .44
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -618,6 +618,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon May 30 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.44-alt1
+- v5.15.44 (2022-05-30).
+
 * Wed May 25 2022 Vitaly Chikunov <vt@altlinux.org> 2:5.15.43-alt1
 - Update to v5.15.43 (2022-05-25).
 - config: CONFIG_MICROCODE_OLD_INTERFACE=y which was off since 5.15.37-alt2.
