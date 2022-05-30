@@ -4,7 +4,7 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -13,41 +13,32 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%bcond_with     equinox
-%bcond_with     groovy
+%bcond_with bootstrap
 
 Name:           xbean
+Version:        4.18
+Release:        alt1_4jpp11
 Summary:        Java plugin based web server
-Version:        4.15
-Release:        alt2_7jpp11
 License:        ASL 2.0
-
-URL:            http://geronimo.apache.org/xbean/
-Source0:        http://repo2.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
-
-# Compatibility with Eclipse Luna (rhbz#1087461)
-Patch1:         0002-Port-to-Eclipse-Luna-OSGi.patch
-Patch2:         0003-Port-to-QDox-2.0.patch
-
+URL:            https://geronimo.apache.org/xbean/
 BuildArch:      noarch
 
+Source0:        https://repo1.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
+Patch1:         0001-Remove-unused-import.patch
+Patch2:         0002-Unbundle-ASM.patch
+Patch3:         0003-Remove-dependency-on-log4j-and-commons-logging.patch
+
 BuildRequires:  maven-local
-BuildRequires:  mvn(commons-logging:commons-logging-api)
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.logging.log4j:log4j-1.2-api)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
-BuildRequires:  mvn(org.osgi:osgi.core)
+BuildRequires:  mvn(org.osgi:org.osgi.core)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
-
-%if %{with equinox}
-BuildRequires:  mvn(org.eclipse:osgi)
-%endif
-
-%if %{with groovy}
-BuildRequires:  mvn(org.codehaus.groovy:groovy-all)
 %endif
 Source44: import.info
 
@@ -60,7 +51,6 @@ support for running with no IoC system, JMX without JMX code,
 lifecycle and class loader management, and a rock solid Spring
 integration.
 
-
 %package        javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
@@ -69,78 +59,49 @@ BuildArch: noarch
 %description    javadoc
 This package provides %{summary}.
 
-
 %prep
 %setup -q
-# build failing on this due to doxia-sitetools problems
-rm src/site/site.xml
-
-%if %{with equinox}
 %patch1 -p1
-%endif
 %patch2 -p1
+%patch3 -p1
 
+cp xbean-asm-util/src/main/java/org/apache/xbean/asm9/original/commons/AsmConstants.java xbean-reflect/src/main/java/org/apache/xbean/recipe/
+
+# Parent POM is not packaged
 %pom_remove_parent
-%pom_remove_dep mx4j:mx4j
 
-# use osgi-core instead of felix-osgi-core
-%pom_change_dep -r :org.osgi.core org.osgi:osgi.core
-
-# switch from log4j 1.2 compat package to log4j 1.2 API shim
-%pom_change_dep -r log4j:log4j org.apache.logging.log4j:log4j-1.2-api
-
-# Unshade ASM
-%pom_remove_dep -r :xbean-asm7-shaded
-%pom_remove_dep -r :xbean-finder-shaded
-%pom_disable_module xbean-asm7-shaded
-%pom_disable_module xbean-finder-shaded
-%pom_add_dep org.apache.xbean:xbean-asm-util:%{version} xbean-reflect
-%pom_xpath_remove pom:optional xbean-reflect xbean-asm-util
-%pom_xpath_remove 'pom:scope[text()="provided"]' xbean-reflect xbean-asm-util
-sed -i 's/org\.apache\.xbean\.asm7/org.objectweb.asm/g' `find xbean-reflect -name '*.java'`
-
-# Springframework is not available in Fedora
-%pom_remove_dep org.springframework:
-%pom_disable_module xbean-blueprint
 %pom_disable_module xbean-classloader
+%pom_disable_module xbean-classpath
+%pom_disable_module xbean-bundleutils
+%pom_disable_module xbean-asm9-shaded
+%pom_disable_module xbean-finder-shaded
+%pom_disable_module xbean-naming
+%pom_disable_module xbean-blueprint
 %pom_disable_module xbean-spring
+%pom_disable_module xbean-telnet
 %pom_disable_module maven-xbean-plugin
 
-# Disable uneeded modules that cannot be built on JDK 11
-%pom_disable_module xbean-classpath
+%pom_remove_dep :commons-logging-api xbean-reflect
+%pom_remove_dep :log4j xbean-reflect
+%pom_remove_dep :xbean-asm9-shaded xbean-reflect
+find -name CommonsLoggingConverter.java -delete
+find -name Log4jConverter.java -delete
+
+# Plugins useful for upstream only
+%pom_remove_plugin :apache-rat-plugin
+%pom_remove_plugin :maven-source-plugin
+
+%pom_remove_dep :xbean-bundleutils xbean-finder
+rm -r xbean-finder/src/main/java/org/apache/xbean/finder{,/archive}/Bundle*
 
 # Disable one test that fails on JDK 11
 sed -i '/testGetBytecode/i@org.junit.Ignore' xbean-finder/src/test/java/org/apache/xbean/finder/archive/MJarJarArchiveTest.java
 
-# Unused import which is not available in OpenJDK 11
-# Forwarded upstream: https://issues.apache.org/jira/browse/XBEAN-329
-sed -i '/import com.sun.org.apache.regexp.internal.RE/d' xbean-reflect/src/main/java/org/apache/xbean/propertyeditor/PropertyEditors.java
-
-%if %{without equinox}
-  %pom_remove_dep :xbean-bundleutils xbean-finder
-  rm -r xbean-finder/src/main/java/org/apache/xbean/finder{,/archive}/Bundle*
-  %pom_disable_module xbean-bundleutils
-%endif
-
-%if %{without groovy}
-%pom_disable_module xbean-telnet
-%endif
-
-# maven-xbean-plugin invocation makes no sense as there are no namespaces
-%pom_remove_plugin :maven-xbean-plugin xbean-classloader
-
-# Remove plugins useful for upstream only.
-%pom_remove_plugin :apache-rat-plugin
-%pom_remove_plugin :maven-source-plugin
-
-
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
-
 %install
 %mvn_install
-
 
 %files -f .mfiles
 %doc --no-dereference LICENSE NOTICE
@@ -148,8 +109,10 @@ sed -i '/import com.sun.org.apache.regexp.internal.RE/d' xbean-reflect/src/main/
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE NOTICE
 
-
 %changelog
+* Mon May 30 2022 Igor Vlasenko <viy@altlinux.org> 0:4.18-alt1_4jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:4.15-alt2_7jpp11
 - fc34 update
 
