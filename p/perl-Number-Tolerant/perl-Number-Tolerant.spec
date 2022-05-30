@@ -1,5 +1,4 @@
 %define _unpackaged_files_terminate_build 1
-%define module_version 1.708
 %define module_name Number-Tolerant
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Math/BigFloat.pm) perl(Math/BigRat.pm) perl(Scalar/Util.pm) perl(Sub/Exporter.pm) perl(Sub/Exporter/Util.pm) perl(Test/Builder.pm) perl(Test/More.pm) perl(Test/Tester.pm) perl(base.pm) perl(overload.pm) perl(parent.pm) perl(strict.pm) perl(warnings.pm)
@@ -7,21 +6,21 @@ BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.708
+Version: 1.709
 Release: alt1
 Summary: tolerance ranges for inexact numbers
 Group: Development/Perl
 License: perl
 URL: https://github.com/rjbs/Number-Tolerant
 
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Number-Tolerant-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -n %module_name-%module_version
+%setup -q -n %{module_name}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,11 +29,14 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes
+%doc README Changes
 %perl_vendor_privlib/T*
 %perl_vendor_privlib/N*
 
 %changelog
+* Mon May 30 2022 Igor Vlasenko <viy@altlinux.org> 1.709-alt1
+- automated CPAN update
+
 * Mon Nov 02 2015 Igor Vlasenko <viy@altlinux.ru> 1.708-alt1
 - automated CPAN update
 
