@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -9,48 +9,47 @@ BuildRequires: jpackage-11-compat
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Byte Buddy requires itself to build, so set this flag
-# to break the bootstrap cycle
 %bcond_with bootstrap
 
-Name:          byte-buddy
-Version:       1.10.14
-Release:       alt1_1jpp11
-Summary:       Runtime code generation for the Java virtual machine
-License:       ASL 2.0
-URL:           http://bytebuddy.net/
-Source0:       https://github.com/raphw/byte-buddy/archive/%{name}-%{version}.tar.gz
+Name:           byte-buddy
+Version:        1.10.20
+Release:        alt1_3jpp11
+Summary:        Runtime code generation for the Java virtual machine
+License:        ASL 2.0
+URL:            http://bytebuddy.net/
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}.tar.gz
 
 # Patch the build to avoid bundling inside shaded jars
-Patch0:         avoid-bundling-asm.patch
+Patch1:         0001-Avoid-bundling-asm.patch
+Patch2:         0002-Remove-dependency-on-jna.patch
+Patch3:         0003-Remove-Java-14-tests.patch
 
 BuildRequires:  maven-local
-%if %{without bootstrap}
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.bytebuddy:byte-buddy)
 BuildRequires:  mvn(net.bytebuddy:byte-buddy-dep)
-BuildRequires:  mvn(net.bytebuddy:byte-buddy-maven-plugin)
 BuildRequires:  mvn(org.apache.maven:maven-compat)
 BuildRequires:  mvn(org.apache.maven.plugin-testing:maven-plugin-testing-harness)
 BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires:  mvn(org.ow2.asm:asm-analysis)
 BuildRequires:  mvn(org.ow2.asm:asm-util)
-%endif
-BuildRequires:  mvn(net.java.dev.jna:jna)
-BuildRequires:  mvn(net.java.dev.jna:jna-platform)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven:maven-core)
 BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  mvn(org.eclipse.aether:aether-api)
 BuildRequires:  mvn(org.eclipse.aether:aether-util)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
+%endif
 
-BuildArch:     noarch
+BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -92,14 +91,12 @@ This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-%patch0
 
-# Remove pre-built jars
-find -name *.jar -delete
-find -name *.class -delete
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
-# JDK 11 does not know about the Java record type
-rm byte-buddy-dep/src/precompiled/java/net/bytebuddy/test/precompiled/SampleRecord.java
+rm byte-buddy-agent/src/test/java/net/bytebuddy/agent/VirtualMachineAttachmentTest.java
 
 # Cause pre-compiled stuff to be re-compiled
 mv byte-buddy-dep/src/precompiled/java/net/bytebuddy/build/*.java \
@@ -126,6 +123,9 @@ mv byte-buddy-dep/src/precompiled/java/net/bytebuddy/test/precompiled/*.java \
 %pom_remove_plugin :clirr-maven-plugin
 %pom_remove_plugin :maven-release-plugin
 
+# Avoid circural dependency
+%pom_remove_plugin :byte-buddy-maven-plugin byte-buddy-dep
+
 # Not interested in shading sources (causes NPE on old versions of shade plugin)
 %pom_xpath_set "pom:createSourcesJar" "false" byte-buddy
 
@@ -136,22 +136,19 @@ sed -i -e '/SuppressFBWarnings/d' $(grep -lr SuppressFBWarnings)
 # Plugin for generating Java 9 module-info file is not in Fedora
 %pom_remove_plugin -r :modulemaker-maven-plugin
 
-%if %{with bootstrap}
-# Remove circular self-dependency to allow bootstrapping
-%pom_remove_plugin :byte-buddy-maven-plugin byte-buddy-dep
-%endif
+%pom_remove_dep org.ow2.asm:asm-deprecated
+
+%pom_remove_plugin :maven-shade-plugin byte-buddy
+%pom_remove_plugin :maven-shade-plugin byte-buddy-benchmark
+
+%pom_remove_dep :jna byte-buddy-agent
+%pom_remove_dep :jna-platform byte-buddy-agent
 
 %build
-%if %{with bootstrap}
-# Cannot run the test suite in bootstrap mode due to circular dep
-# on self and mockito
-%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -P'java8,!checks'
-%else
 # Ignore test failures, there seems to be something different about the
 # bytecode of our recompiled test resources, expect 6 test failures in
 # the byte-buddy-dep module
 %mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -P'java8,!checks' -Dsourcecode.test.version=1.8 -Dmaven.test.failure.ignore=true
-%endif
 
 %install
 %mvn_install
@@ -174,6 +171,9 @@ cat .mfiles-%{name}-dep >> .mfiles-%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon May 30 2022 Igor Vlasenko <viy@altlinux.org> 1.10.20-alt1_3jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.10.14-alt1_1jpp11
 - new version
 
