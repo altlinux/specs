@@ -6,7 +6,7 @@
 
 Name: hotdoc
 Version: %ver_major.7
-Release: alt2.1
+Release: alt2.2
 
 Summary: Hotdoc is a documentation framework
 License: LGPL-2.1-or-later
@@ -47,7 +47,7 @@ BuildRequires: meson npm node-gyp
 BuildRequires: python3-module-appdirs python3-module-contextlib2
 BuildRequires: python3-module-lxml python3-module-cchardet
 BuildRequires: python3-module-schema python3-module-toposort
-BuildRequires: python3-module-unittest2 python3-module-wheezy.template
+BuildRequires: python3-module-wheezy.template
 BuildRequires: python3-module-yaml python3-module-dbus-deviation
 BuildRequires: python3-module-networkx-core python3-module-feedgen}
 
@@ -82,6 +82,9 @@ mv %name-%version-bootstrap_theme.tar %_sourcedir/
 %doc README.md
 
 %changelog
+* Mon May 30 2022 Yuri N. Sedunov <aris@altlinux.org> 0.13.7-alt2.2
+- fixed BR
+
 * Tue Apr 12 2022 Yuri N. Sedunov <aris@altlinux.org> 0.13.7-alt2.1
 - drop versions from clang/llvm dependencies
 
