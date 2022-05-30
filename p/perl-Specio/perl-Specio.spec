@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Specio
 Version: 0.47.fix
-Release: alt3
+Release: alt4
 
 Summary: Type constraints and coercions for Perl
 Group: Development/Perl
@@ -24,14 +24,17 @@ BuildRequires: perl(List/MoreUtils.pm) perl(Try/Tiny.pm) perl(Moose/Role.pm) per
 
 %install
 %perl_vendor_install
-rm -rfv %buildroot%perl_vendor_privlib/Test/Specio*
 
 %files
 %doc TODO.md README.md Changes CONTRIBUTING.md
 %perl_vendor_privlib/Specio*
+%perl_vendor_privlib/Test/Specio*
 %doc Changes README* TODO*
 
 %changelog
+* Mon May 16 2022 Alexandr Antonov <aas@altlinux.org> 0.47.fix-alt4
+- pack Test:Specio
+
 * Sat Aug 21 2021 Vitaly Lipatov <lav@altlinux.ru> 0.47.fix-alt3
 - apply upstreamed patch reverts hack about old (2014) Moose tests
 
