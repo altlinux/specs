@@ -2,7 +2,7 @@
 %global qt_module qtsvg
 
 Name: qt6-svg
-Version: 6.2.2
+Version: 6.2.4
 Release: alt1
 
 Group: System/Libraries
@@ -122,6 +122,9 @@ Provides: %name = %EVR
 %_qt6_examplesdir/*
 
 %changelog
+* Wed May 25 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Tue Dec 07 2021 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
 - new version
 

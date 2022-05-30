@@ -1,13 +1,13 @@
-%define optflags_lto %nil
 
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %global qt_module qttools
 %def_enable bootstrap
+#define optflags_lto %nil
 
 %define kf6_bindir %prefix/lib/kf6/bin
 
 Name: qt6-tools
-Version: 6.2.2
+Version: 6.2.4
 Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
@@ -211,6 +211,11 @@ cat >>main.filelist <<__EOF__
 __EOF__
 fi
 
+if [ -z "`ls -1 %buildroot/%_qt6_examplesdir/`" ] ; then
+    mkdir -p %buildroot/%_qt6_examplesdir/
+    >%buildroot/%_qt6_examplesdir/%name
+fi
+
 %files common
 %_qt6_datadir/phrasebooks/
 
@@ -308,6 +313,9 @@ fi
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Wed May 25 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Tue Dec 07 2021 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
 - new version
 

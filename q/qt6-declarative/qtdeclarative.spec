@@ -6,7 +6,7 @@
 %define optflags_lto %nil
 
 Name: qt6-declarative
-Version: 6.2.2
+Version: 6.2.4
 Release: alt1
 
 Group: System/Libraries
@@ -426,6 +426,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Wed May 25 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Tue Dec 07 2021 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
 - new version
 

@@ -3,7 +3,7 @@
 %global qt_module qt5compat
 
 Name: qt6-5compat
-Version: 6.2.2
+Version: 6.2.4
 Release: alt1
 
 Group: System/Libraries
@@ -103,5 +103,8 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed May 25 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Mon Apr 25 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt1
 - initial build

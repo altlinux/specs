@@ -17,7 +17,7 @@
 %def_enable pulse
 %def_disable journald
 %def_enable vulkan
-%def_disable sctp
+%def_enable sctp
 
 %define platform linux-g++
 #define graphicssystem raster
@@ -32,8 +32,8 @@
 %define gname  qt6
 Name: qt6-base
 %define major  6
-Version: 6.2.2
-Release: alt2
+Version: 6.2.4
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -363,6 +363,9 @@ pushd src/3rdparty
 rm -rf freetype libjpeg libpng zlib xcb
 popd
 
+# exclude from build
+sed -i '/^qt_internal_add_example.*htmlinfo.*/d' examples/xml/CMakeLists.txt
+
 %build
 unset QTDIR QTLIB QTINC
 export QT_DIR="$PWD"
@@ -504,7 +507,7 @@ translationdir=%_qt6_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 6.2.2
+Version: 6.2.4
 __EOF__
 
 # rpm macros
@@ -768,6 +771,9 @@ ln -s `relative %buildroot/%_qt6_headerdir %buildroot/%_qt6_prefix/include` %bui
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Wed May 25 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
+- new version
+
 * Mon Apr 18 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.2-alt2
 - fix requires (closes: 42468)
 
