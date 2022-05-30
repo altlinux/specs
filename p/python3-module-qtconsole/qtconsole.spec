@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.2.2
-Release: alt1
+Release: alt2
 Summary: Jupyter Qt console
 License: BSD
 Group: Development/Python3
@@ -17,14 +17,12 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-PyQt5
 BuildRequires: python3(qtpy)
-BuildRequires: python3-module-html5lib
-BuildRequires: python3-module-ipython_genutils-tests python3-module-notebook
+BuildRequires: python3-module-ipython_genutils-tests
 BuildRequires: python3(IPython)
 BuildRequires: python3(IPython.testing.tests)
-BuildRequires: python3-module-pbr python3-module-traitlets-tests python3-module-unittest2
+BuildRequires: python3-module-traitlets-tests
 BuildRequires: python3(sphinx_rtd_theme)
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3(flaky)
@@ -82,6 +80,9 @@ xvfb-run py.test3 -vv -ra -k "not (test_00 and (test_scroll or test_debug or tes
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 5.2.2-alt2
+- Fixed BuildRequires.
+
 * Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.2-alt1
 - Updated to upstream version 5.2.2.
 

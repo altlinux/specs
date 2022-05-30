@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 2.6.2
-Release: alt2
+Release: alt3
 
 Summary: Server side implemenation of Google Analytics in Python
 License: BSD
@@ -15,7 +15,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest python3-module-unittest2
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
 %py3_provides %oname
@@ -84,6 +84,9 @@ cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname
 
 
 %changelog
+* Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt3
+- Fixed BuildRequires.
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 2.6.2-alt2
 - drop unused BR: rpm-macros-sphinx
 

@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.1.0
-Release: alt2
+Release: alt3
 
 Summary: pytest plugin to display test execution output like a SPECIFICATION
 License: GPLv2+
@@ -17,8 +17,7 @@ BuildArch: noarch
 Source0: https://pypi.python.org/packages/96/d1/68ced04b24b93203db875e0123c288b5993732fda2be5f3859907e4a40a4/%{oname}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib python3-module-pbr
-BuildRequires: python3-module-pytest python3-module-unittest2
+BuildRequires: python3-module-pytest
 
 %py3_provides pytest_spec
 
@@ -54,6 +53,9 @@ py.test-%_python3_version -vv
 
 
 %changelog
+* Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt3
+- Fixed BuildRequires.
+
 * Fri Nov 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1.0-alt2
 - python2 disabled
 

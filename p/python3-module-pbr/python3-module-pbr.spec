@@ -12,7 +12,7 @@ re-usable library.
 
 Name:       python3-module-%pypi_name
 Version:    5.8.1
-Release:    alt1
+Release:    alt2
 
 Summary:    Python Build Reasonableness
 
@@ -26,7 +26,6 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-unittest2
 %if_with doc
 BuildRequires: python3-module-sphinx python3-module-sphinxcontrib-apidoc
 %endif
@@ -77,6 +76,9 @@ rm -fv %buildroot%python3_sitelibdir/%pypi_name/sphinxext.py
 %python3_sitelibdir/%pypi_name
 
 %changelog
+* Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 5.8.1-alt2
+- Fixed BuildRequires.
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 5.8.1-alt1
 - new version 5.8.1 (with rpmrb script)
 

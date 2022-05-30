@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Implementation of per object permissions for Django 1.2 or later
 License: BSD
@@ -19,8 +19,6 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-coverage python3-module-django
-BuildRequires: python3-module-html5lib python3-module-pbr
-BuildRequires: python3-module-pytest python3-module-unittest2
 BuildRequires: python3-module-pytest-runner
 
 %py3_provides %oname
@@ -77,6 +75,9 @@ sed -i 's|coverage|coverage3|g' run_test_and_report.sh
 
 
 %changelog
+* Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt2
+- Fixed BuildRequires.
+
 * Mon Dec 16 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.1.0-alt1
 - Version updated to 2.1
 - build for python2 disabled

@@ -2,7 +2,7 @@
 
 Name: python3-module-oauthlib
 Version: 3.2.0
-Release: alt1
+Release: alt2
 
 Summary: An implementation of the OAuth request-signing logic
 
@@ -19,8 +19,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose python3-module-pbr python3-module-pycrypto
-BuildRequires: python3-module-pytest python3-module-unittest2
+BuildRequires: python3-module-pytest
 
 %py3_use Crypto >= 2.6
 
@@ -51,6 +50,9 @@ very little effort.
 %python3_sitelibdir/%oname-*.egg-info
 
 %changelog
+* Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt2
+- Fixed BuildRequires.
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 3.2.0-alt1
 - new version 3.2.0 (with rpmrb script)
 

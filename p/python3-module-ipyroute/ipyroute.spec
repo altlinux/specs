@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.0.36
-Release: alt2
+Release: alt3
 
 Summary: Yet another interface for iproute2
 License: MIT
@@ -23,9 +23,8 @@ BuildRequires(pre): rpm-build-python3
 Requires: iproute2
 %py3_requires sh netaddr six
 
-BuildRequires: python3-module-html5lib python3-module-netaddr
-BuildRequires: python3-module-nose python3-module-pbr
-BuildRequires: python3-module-pytest python3-module-sh python3-module-unittest2
+BuildRequires: python3-module-netaddr
+BuildRequires: python3-module-pytest python3-module-sh
 
 
 %description
@@ -53,6 +52,9 @@ nosetests3 -v
 
 
 %changelog
+* Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 0.0.36-alt3
+- Fixed BuildRequires.
+
 * Fri Nov 08 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.0.36-alt2
 - disable python2
 

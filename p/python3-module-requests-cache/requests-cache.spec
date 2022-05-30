@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 0.4.13
-Release: alt2
+Release: alt3
 
 Summary: Persistent cache for requests library
 License: BSD
@@ -18,7 +18,7 @@ Source0: https://pypi.python.org/packages/1a/cf/12349c7113b252d9a0b26d497d3349ba
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-chardet python3-module-pytest
-BuildRequires: python3-module-unittest2 python3-module-urllib3
+BuildRequires: python3-module-urllib3
 BuildRequires: python3-module-sphinx
 
 %py3_provides requests_cache
@@ -86,6 +86,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.13-alt3
+- Fixed BuildRequires.
+
 * Thu Dec 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.13-alt2
 - python2 disabled
 

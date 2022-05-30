@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.0.0
-Release: alt2
+Release: alt3
 
 Summary: Fixtures, reusable state for writing clean tests and more
 
@@ -25,7 +25,7 @@ BuildRequires(pre): rpm-build-python3
 %py3_use six
 %py3_use testtools >= 0.9.22
 
-BuildRequires: python3-module-pytest python3-module-unittest2
+BuildRequires: python3-module-pytest
 
 %description
 Fixtures defines a Python contract for reusable state / support logic,
@@ -51,6 +51,9 @@ python3 setup.py test -v
 %python3_sitelibdir/*
 
 %changelog
+* Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt3
+- Fixed BuildRequires.
+
 * Tue Apr 27 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.0-alt2
 - build python3 module separately
 - set requires from requirements.txt

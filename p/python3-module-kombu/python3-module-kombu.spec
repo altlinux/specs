@@ -10,7 +10,7 @@
 Name: python3-module-%oname
 Epoch: 1
 Version: 5.2.4
-Release: alt1
+Release: alt2
 
 Group: Development/Python3
 License: BSD License
@@ -30,7 +30,7 @@ BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-amqp >= 1:1.4.9
-BuildRequires: python3(pytz) python3(case) python3(unittest2) python3(mock) python3(pytest) python3(Pyro4) python3(serpent)
+BuildRequires: python3(pytz) python3(case) python3(mock) python3(pytest) python3(Pyro4) python3(serpent)
 BuildRequires: python3(pytest_cov) python3(redis) python3(msgpack) python3(boto3) python3(pycurl)
 BuildRequires: python3-module-tox
 
@@ -104,6 +104,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 1:5.2.4-alt2
+- Fixed BuildRequires.
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1:5.2.4-alt1
 - new version 5.2.4 (with rpmrb script)
 

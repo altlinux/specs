@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.2.5.1
-Release: alt2
+Release: alt3
 
 Summary: Wraps (asynchronous) Psycopg2 for Tornado
 License: MIT
@@ -19,7 +19,7 @@ Source0: %name-%version.tar.gz
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-cffi python3-module-psycopg2
 BuildRequires: python3-module-pycares python3-module-pytest
-BuildRequires: python3-module-unittest2 python3-module-zope
+BuildRequires: python3-module-zope
 BuildRequires: python3-module-sphinx
 
 %py3_provides %oname
@@ -73,6 +73,9 @@ python3 setup.py test -v
 
 
 %changelog
+* Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 2.2.5.1-alt3
+- Fixed BuildRequires.
+
 * Mon Dec 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.2.5.1-alt2
 - python2 disabled
 
