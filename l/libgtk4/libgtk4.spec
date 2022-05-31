@@ -32,7 +32,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -262,7 +262,7 @@ mkdir -p %buildroot/%_docdir/%name-devel-%version/examples
 cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 %check
-%meson_test
+%__meson_test
 
 %files -f gtk40.lang
 %{?_enable_broadway:%_bindir/gtk4-broadwayd}
@@ -391,6 +391,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Tue May 31 2022 Yuri N. Sedunov <aris@altlinux.org> 4.6.5-alt1
+- 4.6.5
+
 * Fri May 13 2022 Yuri N. Sedunov <aris@altlinux.org> 4.6.4-alt1
 - 4.6.4
 
