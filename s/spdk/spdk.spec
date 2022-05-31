@@ -8,8 +8,8 @@
 %def_disable tests
 
 Name: spdk
-Version: 22.01.1
-Release: alt2
+Version: 22.05
+Release: alt1
 
 Summary: Storage Performance Development Kit
 License: BSD-3-Clause
@@ -35,11 +35,13 @@ Patch1: spdk-21.10-alt-scripts-startup.patch
 #Requires: openssl-libs
 #Requires: zlib
 
-%add_python3_req_skip common rpc.client rpc.helpers
+%add_python3_req_skip common spdk.rpc spdk.rpc.client spdk.rpc.helpers spdk.sma spdk.sma.proto.nvmf_tcp_pb2 spdk.sma.proto.nvmf_tcp_pb2_grpc spdk.sma.proto.sma_pb2 spdk.sma.proto.sma_pb2_grpc spdk.spdkcli
 %filter_from_requires /apt*/d
+# %%filter_from_requires /bpftrace/d
 
 Requires: systemd-utils
 BuildRequires: gcc-c++ glibc-devel rpm-build-python3 libuuid-devel libssl-devel libaio-devel libncurses-devel
+BuildRequires: rdma-core-devel libbpf-devel libelf-devel zlib-devel libpcap-devel libjansson-devel
 # BuildPreReq: libpmem-devel rdma-core-devel libiscsi-devel liburing-devel librbd-devel libpmem-devel
 %if_enabled dpdk_internal
 BuildPreReq: libnuma-devel libfdt-devel
@@ -119,9 +121,7 @@ export SPDK_ROOT_DIR=$PWD
 %_configure_script \
 	--prefix=%prefix \
 	--cross-prefix=%_target_alias \
-%ifnarch aarch64 x86_64
 	--without-isal \
-%endif
 %if_enabled dpdk_internal
 	--without-dpdk \
 %else
@@ -226,6 +226,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Mon May 30 2022 Leontiy Volodin <lvol@altlinux.org> 22.05-alt1
+- New version (22.05).
+
 * Mon May 30 2022 Leontiy Volodin <lvol@altlinux.org> 22.01.1-alt2
 - Fixed FTBFS.
 
