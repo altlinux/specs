@@ -1,9 +1,9 @@
 %def_without python
-%def_without ruby
+%def_with ruby
 
 Name: libstfl0
 Version: 0.24
-Release: alt8
+Release: alt9
 
 %define oname stfl
 
@@ -19,11 +19,12 @@ Source: %oname-%version.tar
 Source1: %name.watch
 
 Patch1: stfl-0.24-alt-as-needed.patch
-#Patch2: stfl-0.24-alt-ruby-linkage-fix.patch
 Patch3: stfl-0.24-alt-warnings.patch
 
+%{?_with_ruby:BuildRequires(pre): rpm-build-ruby}
 BuildRequires: libncursesw-devel perl-Encode swig
-%{?_with_python: BuildRequires: python-devel}
+%{?_with_ruby:BuildRequires: libruby-devel}
+%{?_with_python:BuildRequires: python-devel}
 
 %description
 STFL is a library which implements a curses-based widget set for text
@@ -107,6 +108,10 @@ rm %buildroot%_libdir/*.a
 %endif # ruby
 
 %changelog
+* Mon May 30 2022 Pavel Skrylev <majioa@altlinux.org> 0.24-alt9
+- !enable ruby module
+- !fix build
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.24-alt8
 - NMU: drop unused swig require, make interdeps more strong
 
