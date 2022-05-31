@@ -6,7 +6,7 @@
 
 Name: dovecot
 Version: 2.3.19
-Release: alt1
+Release: alt2
 
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -34,6 +34,8 @@ Requires(pre,postun): mailboxes-control
 
 # TODO remove this when splitting into modules
 %add_findreq_skiplist %_libexecdir/dovecot/decode2text.sh
+
+%filter_from_requires /systemd/d
 
 BuildRequires: bzlib-devel
 BuildRequires: gcc-c++
@@ -217,6 +219,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Tue May 31 2022 Andrey Cherepanov <cas@altlinux.org> 2.3.19-alt2
+- Remove autorequirement of systemd.
+
 * Sat May 28 2022 Andrey Cherepanov <cas@altlinux.org> 2.3.19-alt1
 - Updated to 2.3.19.
 
