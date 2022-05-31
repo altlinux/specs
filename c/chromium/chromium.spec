@@ -29,8 +29,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        101.0.4951.41
-Release:        alt2
+Version:        102.0.5005.61
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -58,8 +58,7 @@ Obsoletes:      chromium-gnome
 Obsoletes:      chromium-desktop-kde
 Obsoletes:      chromium-desktop-gnome
 
-# Unsupported target_cpu
-ExcludeArch: ppc64le armh
+ExclusiveArch: x86_64 aarch64
 
 ### Start Patches
 Patch001: 0001-OPENSUSE-enables-reading-of-the-master-preference.patch
@@ -75,6 +74,9 @@ Patch010: 0010-Move-offending-function-to-chromeos-only.patch
 Patch011: 0011-ALT-Disable-NOMERGE-attribute.patch
 Patch012: 0012-FEDORA-bootstrap-with-python3.patch
 Patch013: 0013-sql-make-VirtualCursor-standard-layout-type.patch
+Patch014: 0014-IWYU-add-cstring-for-std-strlen-in-fenced_frame_util.patch
+Patch015: 0015-IWYU-add-utility-for-std-exchange.patch
+Patch016: 0016-GENTOO-Fix-instantiating-fold-expression-error.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -84,6 +86,7 @@ BuildRequires:  bison
 BuildRequires:  bzlib-devel
 BuildRequires:  flex
 BuildRequires:  chrpath
+BuildRequires:  elfutils
 BuildRequires:  libstdc++-devel
 BuildRequires:  libstdc++-devel-static
 BuildRequires:  glibc-kernheaders
@@ -180,13 +183,14 @@ faster, and more stable way for all Internet users to experience the web.
 sed -i \
 	-e 's/"-ffile-compilation-dir=."//g' \
 	-e 's/"-no-canonical-prefixes"//g' \
+	-e 's/"-no-opaque-pointers",//g' \
 	build/config/compiler/BUILD.gn
 
 mkdir -p third_party/node/linux/node-linux-x64/bin
 ln -s %_bindir/node third_party/node/linux/node-linux-x64/bin/node
 
 mkdir -p buildtools/third_party/eu-strip/bin
-ln -sf %_bindir/strip buildtools/third_party/eu-strip/bin/eu-strip
+ln -sf %_bindir/eu-strip buildtools/third_party/eu-strip/bin/eu-strip
 
 rm -f -- third_party/depot_tools/ninja
 ln -s %_bindir/ninja third_party/depot_tools/ninja
@@ -284,11 +288,11 @@ gn_arg chrome_pgo_phase=0
 gn_arg is_clang=false
 %endif
 
-%ifnarch %{ix86} x86_64
+%ifnarch x86_64
 gn_arg icu_use_data_file=false
 %endif
 
-%ifnarch %{ix86} x86_64 aarch64
+%ifnarch x86_64 aarch64
 gn_arg enable_vulkan=false
 %else
 gn_arg enable_vulkan=true
@@ -453,6 +457,34 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed May 25 2022 Alexey Gladkov <legion@altlinux.ru> 102.0.5005.61-alt1
+- New version (102.0.5005.61).
+- Security fixes:
+  - CVE-2022-1853: Use after free in Indexed DB.
+  - CVE-2022-1854: Use after free in ANGLE.
+  - CVE-2022-1855: Use after free in Messaging.
+  - CVE-2022-1856: Use after free in User Education.
+  - CVE-2022-1857: Insufficient policy enforcement in File System API.
+  - CVE-2022-1858: Out of bounds read in DevTools.
+  - CVE-2022-1859: Use after free in Performance Manager.
+  - CVE-2022-1860: Use after free in UI Foundations.
+  - CVE-2022-1861: Use after free in Sharing.
+  - CVE-2022-1862: Inappropriate implementation in Extensions.
+  - CVE-2022-1863: Use after free in Tab Groups.
+  - CVE-2022-1864: Use after free in WebApp Installs.
+  - CVE-2022-1865: Use after free in Bookmarks.
+  - CVE-2022-1866: Use after free in Tablet Mode.
+  - CVE-2022-1867: Insufficient validation of untrusted input in Data Transfer.
+  - CVE-2022-1868: Inappropriate implementation in Extensions API.
+  - CVE-2022-1869: Type Confusion in V8.
+  - CVE-2022-1870: Use after free in App Service.
+  - CVE-2022-1871: Insufficient policy enforcement in File System API.
+  - CVE-2022-1872: Insufficient policy enforcement in Extensions API.
+  - CVE-2022-1873: Insufficient policy enforcement in COOP.
+  - CVE-2022-1874: Insufficient policy enforcement in Safe Browsing.
+  - CVE-2022-1875: Inappropriate implementation in PDF.
+  - CVE-2022-1876: Heap buffer overflow in DevTools.
+
 * Wed May 11 2022 Alexey Gladkov <legion@altlinux.ru> 101.0.4951.41-alt2
 - Disable use of client_id and client_secret (Google shut off API access).
 - Use LLVM 13.

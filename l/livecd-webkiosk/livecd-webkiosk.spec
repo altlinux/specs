@@ -1,9 +1,9 @@
 Name: livecd-webkiosk
-Version: 0.6.1
-Release: alt4
+Version: 0.6.3
+Release: alt1
 
 Summary: start the browser for a suitable webkiosk environment
-License: Public domain
+License: ALT-Public-Domain
 Group: System/X11
 
 Url: http://en.altlinux.org/starterkits
@@ -41,7 +41,6 @@ Requires: livecd-firefox firefox-r-kiosk
 %summary
 (the browser == firefox)
 
-#ifarch x86_64
 %package chromium
 Summary: chromium webkiosk setup
 Group: System/X11
@@ -51,7 +50,6 @@ Requires: chromium
 %description chromium
 %summary
 (the browser == chromium)
-#endif
 
 %package falkon
 Summary: falkon webkiosk setup
@@ -115,14 +113,12 @@ exec firefox "\$@"
 _EOF_
 chmod +x %wrapper
 
-#ifarch x86_64
 %post chromium
 cat > %wrapper << _EOF_
 #!/bin/sh
 exec chromium --kiosk --start-maximized --disable-translate --no-first-run "\$@"
 _EOF_
 chmod +x %wrapper
-#endif
 
 %post falkon
 cat > %wrapper << _EOF_
@@ -136,17 +132,27 @@ chmod +x %wrapper
 %ifacedir/options
 %xsfile
 
+%ifnarch ppc64le
 %files firefox
+%endif
 
 %ifarch %ix86 x86_64
 #files seamonkey
-#ifarch x86_64
+%ifarch x86_64
 %files chromium
-#endif
+%endif
 %files falkon
 %endif
 
 %changelog
+* Mon May 30 2022 Michael Shigorin <mike@altlinux.org> 0.6.3-alt1
+- disable firefox subpackage on ppc64le
+- minor spec cleanup
+
+* Fri May 27 2022 Michael Shigorin <mike@altlinux.org> 0.6.2-alt1
+- re-disabled non-x86_64 build for chromium subpackage
+  as requested by legion@
+
 * Thu Sep 16 2021 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt4
 - Build without %name-seamonkey.
 

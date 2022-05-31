@@ -1,6 +1,6 @@
 Name:    task-edu
-Version: 1.5.7
-Release: alt3
+Version: 1.5.8
+Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -67,7 +67,7 @@ Requires: brasero
 Requires: imagination
 %endif
 Requires: connector
-%ifarch %ix86 x86_64 aarch64
+%ifarch x86_64 aarch64
 Requires: chromium
 %endif
 Requires: fonts-otf-mozilla-fira
@@ -184,7 +184,9 @@ Requires: xsane-doc-ru
 Requires: simple-scan
 Requires: imagination
 Requires: connector
+%ifarch x86_64 aarch64
 Requires: chromium
+%endif
 Requires: fonts-otf-mozilla-fira
 Requires: itest
 Requires: kumir2
@@ -616,6 +618,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Sat May 28 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.8-alt1
+- Excluded chromium for i586.
+
 * Fri Feb 04 2022 Sergey V Turchin <zerg@altlinux.org> 1.5.7-alt3
 - Update requires for qt-creator.
 
