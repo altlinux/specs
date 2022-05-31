@@ -17,7 +17,7 @@ Group: System/Libraries
 
 Name:           libprelude
 Version:        5.2.0
-Release:        alt1_11
+Release:        alt1_12
 Summary:        Secure Connections between all Sensors and the Prelude Manager
 License:        LGPL-2.1+
 URL:            https://www.prelude-siem.org/
@@ -317,6 +317,9 @@ patch -d %{buildroot}%{_includedir}/libprelude/ -p0 < %SOURCE1
 %doc AUTHORS ChangeLog README NEWS
 
 %changelog
+* Tue May 31 2022 Pavel Skrylev <majioa@altlinux.org> 5.2.0-alt1_12
+- !merge with c9f2 branch
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 5.2.0-alt1_11
 - update to new release by fcimport
 
