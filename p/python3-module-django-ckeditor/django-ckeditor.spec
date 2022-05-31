@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname django-ckeditor
 
 Name: python3-module-%oname
-Version: 5.6.1
-Release: alt2
+Version: 6.4.1
+Release: alt1
 
 Summary: Django admin CKEditor integration
 License: BSD
@@ -10,22 +12,21 @@ Group: Development/Python3
 Url: https://pypi.python.org/pypi/django-ckeditor/
 BuildArch: noarch
 
-# https://github.com/shaunsephton/django-ckeditor.git
+# VCS: https://github.com/shaunsephton/django-ckeditor.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-django-js-asset
 
+%add_python3_req_skip selenium
 
 %description
-Django admin CKEditor integration. Provides a RichTextField and
-CKEditorWidget utilizing CKEditor with image upload and browsing support
-included.
+Django admin CKEditor integration. Provides a RichTextField,
+RichTextUploadingField, CKEditorWidget and CKEditorUploadingWidget
+utilizing CKEditor with image upload and browsing support included.
 
 %prep
 %setup
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
 
 %build
 %python3_build_debug
@@ -39,6 +40,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Fri May 30 2022 Dmitry Lyalyaev <fruktime@altlinux.org> 6.4.1-alt1
+- New version.
+
 * Thu Dec 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 5.6.1-alt2
 - build for python2 disabled
 
