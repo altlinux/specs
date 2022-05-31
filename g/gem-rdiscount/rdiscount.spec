@@ -1,8 +1,8 @@
-%define        pkgname rdiscount
+%define        gemname rdiscount
 
-Name:          gem-%pkgname
+Name:          gem-rdiscount
 Version:       2.2.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -12,60 +12,86 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(ronn)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Provides:      gem(rdiscount) = 2.2.0.2
+
 
 %description
-Discount is an implementation of John Gruber's Markdown markup language
-in C. It implements all of the language described in the markdown syntax
-document and passes the Markdown 1.0 test suite.
+Discount is an implementation of John Gruber's Markdown markup language in C. It
+implements all of the language described in the markdown syntax document and
+passes the Markdown 1.0 test suite.
 
 
-%package       -n %pkgname
-Summary:       %summary
+%package       -n rdiscount
+Version:       2.2.0.2
+Release:       alt1.1
+Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета rdiscount
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   -n %pkgname
-Discount is an implementation of John Gruber's Markdown markup language
-in C. It implements all of the language described in the markdown syntax
-document and passes the Markdown 1.0 test suite.
+Requires:      gem(rdiscount) = 2.2.0.2
 
-%description   -n %pkgname -l ru_RU.UTF8
-Исполнямка для самоцвета %gemname.
+%description   -n rdiscount
+Discount (For Ruby) Implementation of John Gruber's Markdown
+executable(s).
+
+Discount is an implementation of John Gruber's Markdown markup language in C. It
+implements all of the language described in the markdown syntax document and
+passes the Markdown 1.0 test suite.
+
+%description   -n rdiscount -l ru_RU.UTF-8
+Исполнямка для самоцвета rdiscount.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-rdiscount-doc
+Version:       2.2.0.2
+Release:       alt1.1
+Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rdiscount
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(rdiscount) = 2.2.0.2
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-rdiscount-doc
+Discount (For Ruby) Implementation of John Gruber's Markdown documentation
+files.
+
+Discount is an implementation of John Gruber's Markdown markup language in C. It
+implements all of the language described in the markdown syntax document and
+passes the Markdown 1.0 test suite.
+
+%description   -n gem-rdiscount-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета rdiscount.
 
 
-%package       devel
-Summary:       Development headers files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
-Group:         Development/Documentation
+%package       -n gem-rdiscount-devel
+Version:       2.2.0.2
+Release:       alt1.1
+Summary:       Discount (For Ruby) Implementation of John Gruber's Markdown development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rdiscount
+Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      gem(rdiscount) = 2.2.0.2
 Conflicts:     libsexpr-devel
 Conflicts:     libbobpp-devel
 Conflicts:     libdiscount-devel
 Conflicts:     libpicosat-devel
 
-%description   devel
-Development headers for %gemname gem.
+%description   -n gem-rdiscount-devel
+Discount (For Ruby) Implementation of John Gruber's Markdown development
+package.
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+Discount is an implementation of John Gruber's Markdown markup language in C. It
+implements all of the language described in the markdown syntax document and
+passes the Markdown 1.0 test suite.
+
+%description   -n gem-rdiscount-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета rdiscount.
 
 
 %prep
@@ -81,24 +107,28 @@ Development headers for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.markdown
 %ruby_gemspec
-%ruby_gemextdir
 %ruby_gemlibdir
+%ruby_gemextdir
 
-%files         -n %pkgname
-%doc README*
-%_bindir/%pkgname
-%_mandir/*
+%files         -n rdiscount
+%doc README.markdown
+%_bindir/rdiscount
 
-%files         doc
+%files         -n gem-rdiscount-doc
+%doc README.markdown
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-rdiscount-devel
+%doc README.markdown
 %ruby_includedir/*
 
 
 %changelog
+* Mon Apr 04 2022 Pavel Skrylev <majioa@altlinux.org> 2.2.0.2-alt1.1
+- ! spec
+
 * Tue Dec 22 2020 Pavel Skrylev <majioa@altlinux.org> 2.2.0.2-alt1
 - ^ 2.2.0.1 -> 2.2.0.2
 - ! spec
