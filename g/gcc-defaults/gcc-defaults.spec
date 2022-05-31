@@ -1,9 +1,9 @@
 %set_compress_method none
 
-%define gcc_branch 11
+%define gcc_branch 12
 %define psuffix -%gcc_branch
 
-%define d_runtime_arches	%ix86 x86_64 %arm aarch64 %mips s390x riscv64
+%define d_arches		%ix86 x86_64 %arm aarch64 %mips s390x riscv64
 %define gnat_arches		%ix86 x86_64
 %define go_arches		%ix86 x86_64
 %define libasan_arches		%ix86 x86_64 %arm aarch64 ppc64le
@@ -18,7 +18,7 @@
 
 Name: gcc-defaults
 Version: %gcc_branch
-Release: alt2
+Release: alt1
 License: None
 Group: Development/Other
 
@@ -183,7 +183,7 @@ This is metapackage for %{1}-%{2}. \
 %do_package libstdc++ devel-static 1 %nil
 
 # arch
-%ifarch %d_runtime_arches
+%ifarch %d_arches
 %do_package libgphobos devel 1 #
 %do_package libgphobos devel-static 1 #
 %endif
@@ -263,13 +263,15 @@ ln -s %gcc_target_libdir/liblto_plugin.so %buildroot%_libdir/bfd-plugins/
 ln_bin g++
 ln_man g++
 
-# gcc-gdc
-ln_bin gdc
-ln_man gdc
-
 # gcc-fortran
 ln_bin gfortran
 ln_man gfortran
+
+%ifarch %d_arches
+# gcc-gdc
+ln_bin gdc
+ln_man gdc
+%endif
 
 %ifarch %go_arches
 ln_bin gccgo
@@ -277,8 +279,18 @@ ln_man gccgo
 %endif
 
 %ifarch %gnat_arches
-ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
-	gnatmake gnatname gnatprep gnatxref
+ln_bin \
+	gnat \
+	gnatbind \
+	gnatchop \
+	gnatclean \
+	gnatkr \
+	gnatlink \
+	gnatls \
+	gnatmake \
+	gnatname \
+	gnatprep \
+	#
 %endif
 
 %add_findreq_skiplist %_man1dir/*
@@ -313,13 +325,15 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %_bindir/%gcc_target_platform-g++
 %_man1dir/g++.1.xz
 
-%files -n gcc-gdc
-%_bindir/%gcc_target_platform-gdc
-%_man1dir/gdc.1.xz
-
 %files -n gcc-fortran
 %_bindir/%gcc_target_platform-gfortran
 %_man1dir/gfortran.1.xz
+
+%ifarch %d_arches
+%files -n gcc-gdc
+%_bindir/%gcc_target_platform-gdc
+%_man1dir/gdc.1.xz
+%endif
 
 %ifarch %go_arches
 %files -n gcc-go
@@ -333,6 +347,9 @@ ln_bin gnat gnatbind gnatchop gnatclean gnatfind gnatkr gnatlink gnatls \
 %endif
 
 %changelog
+* Tue May 10 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 12-alt1
+- Changed the default compiler to gcc12.
+
 * Sat May 07 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 11-alt2
 - Added libgphobos-devel and libgphobos-devel-static subpackages.
 
