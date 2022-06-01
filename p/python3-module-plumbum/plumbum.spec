@@ -1,21 +1,43 @@
 %define oname plumbum
 
+%def_with check
+%def_with docs
+
 Name: python3-module-%oname
-Version: 1.6.9
+Version: 1.7.2
 Release: alt1
+
 Summary: Plumbum: shell combinators library
+
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/plumbum/
 
 # https://github.com/tomerfiliba/plumbum.git
 Source: %name-%version.tar
+
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
-BuildRequires: python3-module-setuptools python3-module-sphinx /usr/bin/2to3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools_scm
+%if_with docs
+BuildRequires: python3-module-sphinx
+%endif
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-pytest-mock
+BuildRequires: python3-module-pytest-timeout
+BuildRequires: python3-module-psutil
+BuildRequires: /proc
+%endif
 
 %py3_provides %oname
+
+# Experimental concurrent machine support in ``experimental/parallel.py``
+# Used only in experiments/test_parallel.py
+%add_python3_req_skip parallel
 
 %description
 Ever wished the compactness of shell scripts be put into a real
@@ -48,21 +70,7 @@ makes sense, while keeping it all Pythonic and cross-platform.
 
 This package contains tests for %oname.
 
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-Ever wished the compactness of shell scripts be put into a real
-programming language? Say hello to Plumbum Shell Combinators. Plumbum
-(Latin for lead, which was used to create pipes back in the day) is a
-small yet feature-rich library for shell script-like programs in Python.
-The motto of the library is "Never write shell scripts again", and thus
-it attempts to mimic the shell syntax ("shell combinators") where it
-makes sense, while keeping it all Pythonic and cross-platform.
-
-This package contains pickles for %oname.
-
+%if_with docs
 %package docs
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -78,47 +86,52 @@ it attempts to mimic the shell syntax ("shell combinators") where it
 makes sense, while keeping it all Pythonic and cross-platform.
 
 This package contains documentation for %oname.
+%endif
 
 %prep
 %setup
 
-%prepare_sphinx3 .
-ln -s ../objects.inv docs/
-
 %build
-%python3_build_debug
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%python3_build
+
+%if_with docs
+export PYTHONPATH=$PWD
+# generate html docs
+sphinx-build-3 docs html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 touch experiments/__init__.py
 cp -fR experiments %buildroot%python3_sitelibdir/%oname/
-find %buildroot%python3_sitelibdir/%oname/experiments \
-	-type f -name '*.py' -exec 2to3 -w -n '{}' +
-
-%make SPHINXBUILD="sphinx-build-3" -C docs pickle
-%make SPHINXBUILD="sphinx-build-3" -C docs html
-
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python3 setup.py test ||:
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 -m pytest --ignore tests/test_remote.py
 
 %files
 %doc examples *.rst
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/pickle
 %exclude %python3_sitelibdir/*/*/test*
 
 %files tests
 %python3_sitelibdir/*/*/test*
 
-%files pickles
-%python3_sitelibdir/*/pickle
-
+%if_with docs
 %files docs
-%doc docs/_build/html/*
+%doc html/*
+%endif
 
 %changelog
+* Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 1.7.2-alt1
+- Automatically updated to 1.7.2.
+- Build with check.
+
 * Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 1.6.9-alt1
 - Automatically updated to 1.6.9.
 
