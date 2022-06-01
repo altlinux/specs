@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Test/Needs.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 #
 #   - Catalyst::Plugin::Session -
@@ -12,7 +15,7 @@
 %def_enable test
 
 Name: perl-Catalyst-Plugin-Session
-Version: 0.41
+Version: 0.42
 Release: alt1
 
 Summary: %m_name - Generic Session plugin - ties together server side
@@ -24,7 +27,7 @@ Url: http://search.cpan.org/dist/Catalyst-Plugin-Session/
 Packager: Michael Bochklaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source0: http://www.cpan.org/authors/id/J/JJ/JJNAPIORK/%{module}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Apr 20 2010 (-bi)
 BuildRequires: perl-Catalyst-Runtime perl-Module-Install perl-Object-Signature perl-Test-Deep perl-Test-Exception perl-Test-Pod perl-Test-Pod-Coverage
@@ -48,6 +51,9 @@ applications.
 %doc Changes README
 
 %changelog
+* Wed Jun 01 2022 Igor Vlasenko <viy@altlinux.org> 0.42-alt1
+- automated CPAN update
+
 * Fri Dec 07 2018 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1
 - automated CPAN update
 
