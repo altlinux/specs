@@ -1,0 +1,63 @@
+%define _unpackaged_files_terminate_build 1
+
+Name: libcbor
+Version: 0.9.0
+Release: alt1
+
+Summary: libcbor is a C library for parsing and generating CBOR
+License: MIT
+Group: System/Libraries
+Url: https://github.com/pjk/libcbor
+
+Source: %name-%version.tar
+
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: sphinx
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-breathe
+BuildRequires: doxygen
+
+%description
+libcbor is a C library for parsing and generating CBOR (see more
+information: https://datatracker/ietf.org/doc/html/rfc7049),
+the general-purpose schema-less binary data format.
+
+%package devel
+Summary: Development header files for libcbor C library
+Group: Development/C
+Requires: %name = %EVR
+
+%description devel
+Development header file for libcbor - a C library for parsing and generating
+CBOR, the general-purpose schema-less binary data format.
+
+%prep
+%setup
+
+%build
+%cmake -DCBOR_CUSTOM_ALLOC=ON -DBUILD_SHARED_LIBS=ON
+%cmake_build
+
+make SPHINXBUILD="sphinx-build-3" BUILDDIR=. -C doc man
+
+%install
+%cmake_install
+
+install -pD -m0644 doc/man/libcbor.3 %buildroot/%_man3dir/libcbor.3
+
+%files
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE.md README.md
+%_libdir/libcbor*
+
+%files devel
+%doc CHANGELOG.md CONTRIBUTING.md LICENSE.md README.md
+%_includedir/cbor*
+%_libdir/pkgconfig/*
+%_man3dir/*
+
+%changelog
+* Wed May 01 2022 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
+- initial build for Sisyphus
