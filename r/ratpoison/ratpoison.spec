@@ -1,27 +1,28 @@
-%define        pkg_name ratpoison
+%def_with emacs
 
-Name:          %pkg_name
-Version:       1.4.9
-Release:       alt2
+Name: ratpoison
+Version: 1.4.9
+Release: alt3
 
-Group:         Graphical desktop/Other
-Summary:       ratpoison - Simple window manager with no fat library dependencies
-License:       GPL2
-Url:           http://www.nongnu.org/ratpoison
-# VCS:         https://git.savannah.nongnu.org/git/ratpoison.git
+Group: Graphical desktop/Other
+Summary: Simple window manager with no fat library dependencies
+License: GPLv2+
+Url: http://www.nongnu.org/ratpoison
+# VCS: https://git.savannah.nongnu.org/git/ratpoison.git
 
-Source:        %name-%version.tar
-Source1:       ratpoison-64.xpm
-Source2:       ratpoison-16.png
+Source0: %name-%version.tar
+Source1: ratpoison-64.xpm
+Source2: ratpoison-16.png
 
 # Automatically added by buildreq on Thu Apr 08 2010 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glibc-pthread libX11-devel libXrender-devel libfreetype-devel pkg-config xorg-inputproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: imake libICE-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXtst-devel libreadline-devel xorg-cf-files
 BuildRequires: libXrandr-devel
-BuildRequires(pre): emacs-devel
-BuildRequires(pre): emacs-common
 # explicitly added texinfo for info files
 BuildRequires: texinfo
+%if_with emacs
+BuildRequires: emacs-devel emacs-common
+%endif
 
 %description
 ratpoison is a simple Window Manager with no fat library
@@ -34,33 +35,32 @@ keystrokes. ratpoison has a prefix map to minimize the
 key clobbering that cripples EMACS and other quality
 pieces of software.
 
+%if_with emacs
+%package -n emacs-%name
+Summary: The Emacs Lisp bytecode included in %name
+Group: Development/Other
+Requires: %name = %EVR
+Requires: emacs-common
 
-%package       -n emacs-%name
-Summary:       The Emacs Lisp bytecode included in %name
-Group:         Development/Other
-Requires:      %name = %EVR
-Requires:      emacs-common
-
-%description   -n emacs-%name
+%description -n emacs-%name
 %name-el contains the Emacs Lisp bytecode
 included in the %name package, that extends the Emacs editor.
 
 You need to install %name-el only if you intend to modify any of the
 %name code or see some Lisp examples.
 
+%package -n emacs-%name-el
+Summary: The Emacs Lisp sources for bytecode included in %name
+Group: Development/Other
+Requires: emacs-%name = %EVR
 
-%package       -n emacs-%name-el
-Summary:       The Emacs Lisp sources for bytecode included in %name
-Group:         Development/Other
-Requires:      emacs-%name = %EVR
-
-%description   -n emacs-%name-el
+%description -n emacs-%name-el
 %name-el contains the Emacs Lisp sources for the bytecode
 included in the %name package, that extends the Emacs editor.
 
 You need to install %name-el only if you intend to modify any of the
 %name code or see some Lisp examples.
-
+%endif
 
 %prep
 %setup
@@ -68,13 +68,15 @@ You need to install %name-el only if you intend to modify any of the
 %build
 %autoreconf
 %configure \
-    --prefix=%_prefix \
-    --infodir=%_infodir \
-    --mandir=%_mandir \
-		--with-x
+	--prefix=%prefix \
+	--infodir=%_infodir \
+	--mandir=%_mandir \
+	--with-x
 
 %make_build
-%byte_compile_file contrib/%pkg_name.el
+%if_with emacs
+%byte_compile_file contrib/%name.el
+%endif
 
 %install
 %makeinstall_std
@@ -108,7 +110,9 @@ Exec=start%name
 Type=Application
 EOF
 
-install -D -m 644 contrib/%pkg_name.elc %buildroot%_emacslispdir/%pkg_name.elc
+%if_with emacs
+install -pDm644 contrib/%name.elc %buildroot%_emacslispdir/%name.elc
+%endif
 
 %files
 %config(noreplace) %_sysconfdir/X11/wmsession.d/16%name
@@ -122,13 +126,20 @@ install -D -m 644 contrib/%pkg_name.elc %buildroot%_emacslispdir/%pkg_name.elc
 %_datadir/xsessions/%name.desktop
 %doc README TODO AUTHORS NEWS ChangeLog doc/sample.ratpoisonrc doc/ipaq.ratpoisonrc
 
-%files       -n emacs-%name-el
+%if_with emacs
+%files -n emacs-%name-el
 %_emacslispdir/%name.el
 
-%files       -n emacs-%name
+%files -n emacs-%name
 %_emacslispdir/%name.elc
+%endif
 
 %changelog
+* Mon May 30 2022 Michael Shigorin <mike@altlinux.org> 1.4.9-alt3
+- introduce emacs knob (on by default)
+- clarified License:
+- spec cleanup
+
 * Wed Nov 03 2021 Igor Vlasenko <viy@altlinux.org> 1.4.9-alt2
 - NMU: WM packaging policy 2.0:
 - added .desktop
