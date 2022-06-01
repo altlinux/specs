@@ -1,6 +1,6 @@
 Name:           nftables
 Epoch:          1
-Version:        1.0.2
+Version:        1.0.3
 Release:        alt1
 Summary:        nftables is the project that aims to replace the existing {ip,ip6,arp,eb}tables framework
 Group:          System/Libraries
@@ -100,6 +100,9 @@ install -pDm0644 nftables.service %buildroot%_unitdir/nftables.service
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Jun 01 2022 Alexei Takaseev <taf@altlinux.org> 1:1.0.3-alt1
+- 1.0.3
+
 * Tue Feb 22 2022 Alexei Takaseev <taf@altlinux.org> 1:1.0.2-alt1
 - Version 1.0.2
 - Remove devel-static. Not supported by upstream.
