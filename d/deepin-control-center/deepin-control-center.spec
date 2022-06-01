@@ -4,7 +4,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.5.16.2
+Version: 5.5.34
 Release: alt1
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
@@ -53,6 +53,7 @@ BuildRequires: libpolkitqt5-qt5-devel
 BuildRequires: libdeepin-pw-check-devel
 BuildRequires: deepin-desktop-base
 BuildRequires: dtk5-common
+BuildRequires: qt5-wayland-devel kf5-kwayland-devel
 # ---
 BuildRequires: libpcre-devel
 BuildRequires: libffi-devel
@@ -77,7 +78,7 @@ Group: Development/Other
 
 %prep
 %setup -n %repo-%version
-#patch -p2
+%patch -p2
 #patch1 -p1
 #patch2 -p1
 %patch4 -p1
@@ -116,6 +117,7 @@ sed -i '/dde-grand-search-daemon/s|lib/|%_lib/|' CMakeLists.txt
 
 %build
 export PATH=%_qt5_bindir:$PATH
+export CPLUS_INCLUDE_PATH=%_qt5_headerdir/QtXkbCommonSupport/%{_qt5_version}:$CPLUS_INCLUDE_PATH
 export SYSTYPE=Desktop
 # export SYSTYPE=$(cat /etc/deepin-version | grep Type= | awk -F'=' '{print $$2}')
 %if_enabled clang
@@ -178,15 +180,21 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %dir %_libdir/dde-grand-search-daemon/plugins/searcher/
 %_libdir/dde-grand-search-daemon/plugins/searcher/com.deepin.dde-grand-search.dde-control-center-setting.conf
 %_libdir/libdccwidgets.so
+%dir %_datadir/dsg/apps/org.deepin.dde.control-center/
+%dir %_datadir/dsg/apps/org.deepin.dde.control-center/configs/
+%_datadir/dsg/apps/org.deepin.dde.control-center/configs/org.deepin.dde.control-center*.json
 %dir %_datadir/dsg/apps/dde-control-center/
 %dir %_datadir/dsg/apps/dde-control-center/configs/
-%_datadir/dsg/apps/dde-control-center/configs/dde.control-center.*.json
+%_datadir/dsg/apps/dde-control-center/configs/org.deepin.dde.control-center*.json
 
 %files devel
 %_libdir/cmake/DdeControlCenter/
 %_includedir/%repo/
 
 %changelog
+* Wed Jun 01 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.34-alt1
+- New version (5.5.34).
+
 * Fri Apr 22 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.16.2-alt1
 - New version (5.5.16.2).
 - Built with deepin-pw-check again (without cracklib).
