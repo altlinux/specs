@@ -1,5 +1,5 @@
 Name: volumes-profile-cliff-server
-Version: 0.17.1
+Version: 0.18
 Release: alt1
 
 Summary: Volumes description for Centaurus distribution
@@ -30,6 +30,9 @@ install -pm755 20-*.sh %buildroot%hook2dir/
 %hook2dir/*
 
 %changelog
+* Wed Jun 01 2022 Dmitry Terekhin <jqt4@altlinux.org> 0.18-alt1
+- don't use RAIDs at all for automatic disk partitioning
+
 * Fri Aug 20 2021 Michael Shigorin <mike@altlinux.org> 0.17.1-alt1
 - E2K: increase /boot size from 512 Mb to 1 Gb for serviceability
 
