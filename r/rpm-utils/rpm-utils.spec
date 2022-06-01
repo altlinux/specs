@@ -1,5 +1,5 @@
 Name: rpm-utils
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 
 Summary: Utilities every rpm packager must have
@@ -75,6 +75,9 @@ fi >&2
 %_datadir/buildreqs
 
 %changelog
+* Wed Jun 01 2022 Dmitry V. Levin <ldv@altlinux.org> 0.10.4-alt1
+- Fixed build with gcc12.
+
 * Wed Sep 25 2019 Dmitry V. Levin <ldv@altlinux.org> 0.10.3-alt1
 - strace_files: speedup by enabling latest strace features.
 
