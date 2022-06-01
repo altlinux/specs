@@ -1,29 +1,30 @@
 %define oname pam
 
-Name:		python3-module-PAM
-Version:	1.8.4
-Release:	alt3
+Name:       python3-module-PAM
+Version:    2.0.2
+Release:    alt1
 
-Summary:	PAM bindings for Python
+Summary:    PAM bindings for Python
 
-License:	%mit
-Group:		Development/Python3
-Url:		https://github.com/FirefighterBlu3/python-pam
+License:    MIT
+Group:      Development/Python3
+Url:        https://github.com/FirefighterBlu3/python-pam
 
-Source0:	%{name}-%{version}.tar
+Source0:    %name-%version.tar
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-devel python3-module-distribute
 
 %description
 PAM (Pluggable Authentication Module) bindings for Python.
 
 %prep
 %setup
+# https://bugzilla.altlinux.org/show_bug.cgi?id=39907
+[ -e setup.py ] && rm -f ./setup.py
+echo 'import setuptools; setuptools.setup()' > setup.py
 
 %build
 %python3_build
@@ -31,13 +32,18 @@ PAM (Pluggable Authentication Module) bindings for Python.
 %install
 %python3_install
 
+%check
+# needs display
+
 %files
 %doc LICENSE README.md
-%python3_sitelibdir/%{oname}*
-%python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/python_%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri May 20 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
+- Automatically updated to 2.0.2.
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.8.4-alt3
 - drop unused BR: python3-module-pip
 
