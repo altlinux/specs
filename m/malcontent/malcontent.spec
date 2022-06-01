@@ -6,7 +6,7 @@
 %def_enable ui
 
 Name: malcontent
-Version: 0.10.4
+Version: 0.10.5
 Release: alt1
 
 Summary: Parental controls implementation
@@ -198,6 +198,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%xdg_name.app
 
 
 %changelog
+* Wed Jun 01 2022 Yuri N. Sedunov <aris@altlinux.org> 0.10.5-alt1
+- 0.10.5
+
 * Thu Mar 10 2022 Yuri N. Sedunov <aris@altlinux.org> 0.10.4-alt1
 - 0.10.4
 
