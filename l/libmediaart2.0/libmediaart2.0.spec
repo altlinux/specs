@@ -4,11 +4,12 @@
 %define ver_major 1.9
 %define api_ver 2.0
 %def_enable introspection
+%def_enable vala
 %def_enable gtk_doc
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Library for handling media art (2.0 API)
@@ -28,9 +29,10 @@ Provides: %_name = %version-%release
 %define meson_ver 0.56.2
 %define glib_ver 2.38
 
+BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson >= %meson_ver gcc-c++ libgio-devel >= %glib_ver libgdk-pixbuf-devel zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
-BuildRequires: libvala-devel vala-tools
+%{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_check:BuildRequires: /proc dbus-tools-gui}
 
@@ -89,15 +91,17 @@ This package contains development documentation for LibMediaArt library.
 %build
 %meson \
 	%{?_enable_gtk_doc:-Dgtk_doc=true} \
-	-Dimage_library=gdk-pixbuf
+	-Dimage_library=gdk-pixbuf \
+	%{?_disable_introspection:-Dintrospection=false} \
+	%{?_disable_vala:-Dvala=false}
+%nil
 %meson_build
 
 %install
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/%_name-%api_ver.so.*
@@ -107,8 +111,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_includedir/%_name-%api_ver/
 %_libdir/%_name-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
+%{?_enable_vala:
 %_vapidir/%_name-%api_ver.vapi
-%_vapidir/%%_name-%api_ver.deps
+%_vapidir/%%_name-%api_ver.deps}
 
 %if_enabled introspection
 %files gir
@@ -124,6 +129,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Jun 01 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9.6-alt1
+- 1.9.6
+
 * Sat May 22 2021 Yuri N. Sedunov <aris@altlinux.org> 1.9.5-alt1
 - 1.9.5
 
