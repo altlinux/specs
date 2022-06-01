@@ -5,7 +5,7 @@
 
 Name: gajim
 Version: 1.4.2
-Release: alt1
+Release: alt2
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -22,7 +22,7 @@ Requires: python3 >= 3.7
 # typelib(Avahi)
 %filter_from_requires /^typelib(Avahi)/d
 
-Requires: libgtk+3-gir
+Requires: libgtk+3-gir libsoup-gir
 %py3_requires cssutils
 %py3_requires keyring
 %py3_requires precis_i18n
@@ -32,7 +32,7 @@ Requires: libgtk+3-gir
 %py3_requires cairo
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools
+BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools libsoup-gir-devel
 BuildRequires: python3-module-nbxmpp >= 3.0.2
 BuildArch: noarch
 
@@ -74,6 +74,9 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Wed Jun 01 2022 Ilya Mashkin <oddity@altlinux.ru> 1.4.2-alt2
+- Add BR libsoup-gir (Closes: #42902)
+
 * Fri May 27 2022 Ilya Mashkin <oddity@altlinux.ru> 1.4.2-alt1
 - 1.4.2
 
