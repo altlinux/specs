@@ -6,7 +6,7 @@
 %endif
 
 Name: deepin-manual
-Version: 5.8.4
+Version: 5.8.8
 Release: alt1
 Summary: Help files for DDE
 License: GPL-3.0+ and (BSD-3-Clause and Qt.Commercial) and ISC
@@ -75,6 +75,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Wed Jun 01 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.8-alt1
+- New version (5.8.8).
+
 * Thu Feb 10 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.4-alt1
 - New version (5.8.4).
 
