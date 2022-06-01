@@ -6,7 +6,7 @@
 %def_enable systemd
 
 Name: pcsc-lite
-Version: 1.9.6
+Version: 1.9.7
 Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
@@ -16,7 +16,6 @@ Group: System/Servers
 URL: https://pcsclite.apdu.fr/
 
 Source: %name-%version.tar
-Patch1: %name-dwClientID-uninitialized.patch
 
 Source1: pcscd.init
 Source2: pcsc-lite-pcscd.sysconfig
@@ -79,7 +78,6 @@ Static libraries for libpcsclite
 
 %prep
 %setup
-%patch1 -p1
 subst 's|AC_PREREQ(\[2.69\])|AC_PREREQ(\[2.68\])|' configure.ac
 subst 's|/usr/bin/python$|%__python3|' src/spy/pcsc-spy
 
@@ -161,6 +159,9 @@ rm -rf %buildroot/%_defaultdocdir/pcsc-lite
 %endif
 
 %changelog
+* Tue May 31 2022 Andrey Cherepanov <cas@altlinux.org> 1.9.7-alt1
+- New version.
+
 * Thu May 12 2022 Andrey Cherepanov <cas@altlinux.org> 1.9.6-alt1
 - New version.
 
