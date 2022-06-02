@@ -2,17 +2,20 @@
 %def_with docs
 
 Name: python3-module-%module_name
-Version: 2.3.0
-Release: alt2
+Version: 4.1.2
+Release: alt1
 
 Summary: Python interface for c-ares
+
 License: MIT
 Group: Development/Python3
-
 Url: http://github.com/saghul/pycares
-Source: pycares-%version.tar.gz
+
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: libcares-devel
+
 %if_with docs
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
 %endif
@@ -23,10 +26,10 @@ pycares is a Python module which provides an interface to c-ares. c-ares
 requests and name resolves asynchronously.
 
 %prep
-%setup -n pycares-%version
-sed -i 's@/setup.py@/pycares/_version.py@' docs/conf.py
+%setup
 
 %build
+export PYCARES_USE_SYSTEM_LIB=1
 export LANG=en_US.UTF-8
 %python3_build
 %if_with docs
@@ -45,6 +48,9 @@ export LANG=en_US.UTF-8
 %endif
 
 %changelog
+* Thu Jun 02 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.2-alt1
+- Build new version.
+
 * Mon Aug 02 2021 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt2
 - Drop python2 support.
 
