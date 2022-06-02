@@ -1,6 +1,6 @@
 Name: openl2tp
 Version: 1.8
-Release: alt8
+Release: alt9
 
 Summary: L2TP (RFC2661) server/client
 License: GPLv2
@@ -42,7 +42,8 @@ or applications that use the OpenL2TP APIs.
 
 %build
 %add_optflags -Wno-strict-aliasing -Wno-unused-but-set-variable
-%add_optflags -Wno-error=address-of-packed-member -Wno-error=stringop-overflow -Wno-error=array-bounds
+%add_optflags -Wno-error=address-of-packed-member -Wno-error=stringop-overflow
+%add_optflags -Wno-error=array-bounds -Wno-error=address
 make OPT_CFLAGS='%optflags -I%_includedir/tirpc' SYS_LIBDIR=%_libdir
 
 %install
@@ -85,6 +86,9 @@ cp -f etc/sysconfig/openl2tpd %buildroot%_sysconfdir/sysconfig/openl2tpd
 %{_libdir}/openl2tp/event_sock.h
 
 %changelog
+* Thu Jun 02 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8-alt9
+- fix build with gcc12
+
 * Mon Jan 25 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8-alt8
 - rebuilt with libtirpc
 
