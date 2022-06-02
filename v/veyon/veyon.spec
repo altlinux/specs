@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.7.2
-Release: alt1.1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -121,6 +121,9 @@ sed -i "s/-Werror/-Wno-error/" cmake/modules/SetDefaultTargetProperties.cmake
 %_datadir/%name
 
 %changelog
+* Thu Jun 02 2022 Egor Ignatov <egori@altlinux.org> 4.7.2-alt2
+- backport upstream commit to fix build with gcc12
+
 * Fri May 06 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.7.2-alt1.1
 - fixed build for Elbrus
 
