@@ -1,19 +1,18 @@
-Name: python3-module-pysnmp4
-Version: 4.4.9
-Release: alt2
+%define oname pysnmp
+
+Name: python3-module-%{oname}4
+Version: 4.4.12
+Release: alt1
 
 Summary: SNMP v1/v2c/v3 engine
 
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
-Url: http://pysnmp.sourceforge.net/
+Url: https://pypi.org/project/pysnmp
 
-# Source-url: https://pypi.io/packages/source/p/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
-
-Conflicts: python-module-pysnmp
 
 BuildRequires(pre): rpm-build-python3
 
@@ -30,12 +29,18 @@ implementation of v1/v2c/v3 SNMP engine.
 %install
 %python3_install
 
+%check
+# syntax error in runtests
+
 %files
-#%doc CHANGES README THANKS TODO docs/*
-%doc docs/*
-%python3_sitelibdir/*
+%doc docs/* *.txt *.rst *.md
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Jun 02 2022 Grigory Ustinov <grenka@altlinux.org> 4.4.12-alt1
+- Build new version.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 4.4.9-alt2
 - Drop python2 support.
 
