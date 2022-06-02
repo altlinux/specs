@@ -1,19 +1,19 @@
-%define _unpackaged_files_terminate_build 1
 %define oname pyprof2calltree
 
 Name: python3-module-%oname
-Version: 1.4.0
-Release: alt2
-Summary: Help visualize profiling data from cProfile with kcachegrind
-License: BSD
-Group: Development/Python3
-Url: http://pypi.python.org/pypi/pyprof2calltree/
+Version: 1.4.4
+Release: alt1
 
-Source0: https://pypi.python.org/packages/ad/d9/2e3380728d3c8709574d81b749020fdc047073576cecba38fe14d6672ce3/%{oname}-%{version}.tar.gz
+Summary: Help visualize profiling data from cProfile with kcachegrind
+
+License: MIT
+Group: Development/Python3
+Url: http://pypi.python.org/pypi/pyprof2calltree
+
+Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python-tools-2to3
 
 %py3_provides %oname
 
@@ -33,9 +33,7 @@ package. The final goal is to make it part of the official upstream
 kdesdk package.
 
 %prep
-%setup -n %{oname}-%{version}
-
-find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%setup
 
 %build
 %python3_build
@@ -45,10 +43,15 @@ find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %files
 %doc *.txt
-%_bindir/*
-%python3_sitelibdir/*
+%_bindir/%oname
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Jun 02 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.4-alt1
+- Build new version.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt2
 - Drop python2 support.
 
