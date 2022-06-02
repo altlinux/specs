@@ -1,6 +1,6 @@
 Name: blackmagic
-Version: 1.7.1
-Release: alt2
+Version: 1.8.0
+Release: alt1
 
 Summary: In-application debugging tool for embedded microprocessors
 License: GPLv3
@@ -42,6 +42,9 @@ install -pm0644 -D driver/99-blackmagic.rules %buildroot%_udevrulesdir/60-blackm
 %_bindir/swolisten
 
 %changelog
+* Thu Jun 02 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.0-alt1
+- 1.8.0 released
+
 * Mon Apr 05 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.1-alt2
 - updated to git.a6a8606
 - udev rule packaged
