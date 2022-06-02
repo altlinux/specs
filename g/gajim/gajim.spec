@@ -5,7 +5,7 @@
 
 Name: gajim
 Version: 1.4.3
-Release: alt1
+Release: alt2
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -22,7 +22,7 @@ Requires: python3 >= 3.7
 # typelib(Avahi)
 %filter_from_requires /^typelib(Avahi)/d
 
-Requires: libgtk+3-gir libsoup-gir
+Requires: libgtk+3-gir libsoup-gir libgtksourceview4-gir
 %py3_requires cssutils
 %py3_requires keyring
 %py3_requires precis_i18n
@@ -32,7 +32,7 @@ Requires: libgtk+3-gir libsoup-gir
 %py3_requires cairo
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools libsoup-gir-devel
+BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools libsoup-gir-devel libgtksourceview4-gir-devel
 BuildRequires: python3-module-nbxmpp >= 3.0.2
 BuildArch: noarch
 
@@ -74,6 +74,9 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Fri Jun 03 2022 Ilya Mashkin <oddity@altlinux.ru> 1.4.3-alt2
+- Add BR libgtksourceview4-gir (Thanks to Vladimir D. Seleznev)
+
 * Fri Jun 03 2022 Ilya Mashkin <oddity@altlinux.ru> 1.4.3-alt1
 - 1.4.3
 
