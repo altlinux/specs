@@ -33,7 +33,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.2.4
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -46,6 +46,8 @@ Source1: rpm-macros
 Source2: rpm-macros-addon
 # FC
 Patch1: qtbase-version-check.patch
+Patch1000: alt-timezone.patch
+Patch1001: alt-zonetab.patch
 
 # macros
 %define _qt6 %gname
@@ -350,6 +352,8 @@ OpenGL widgets library for the Qt%major toolkit
 %prep
 %setup -n %qt_module-everywhere-src-%version
 %patch1 -p1
+%patch1000 -p1
+%patch1001 -p1
 
 # install optflags
 %add_optflags %optflags_shared
@@ -771,6 +775,9 @@ ln -s `relative %buildroot/%_qt6_headerdir %buildroot/%_qt6_prefix/include` %bui
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Thu Jun 02 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
+- fix parse timezones
+
 * Wed May 25 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 
