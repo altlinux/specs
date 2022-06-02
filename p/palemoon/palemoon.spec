@@ -7,7 +7,7 @@ Name: palemoon
 Version: 31.0.0
 
 # %%ifndef git_commit
-Release: alt0.4
+Release: alt0.5
 # %%else
 # Release: alt1.git_1_%git_commit
 # %%endif
@@ -32,7 +32,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 #define newmoon_datadir                 %%_datadir/%%sname
 %define newmoon_datadir                 %_datadir/%bname
-%define newmoon_bindir                  %_libdir/%bname-%version
+%define newmoon_bindir                  %_libdir/%bname
 %define palemoon_arch_extensionsdir     %_newmoon_datadir/extensions
 #define palemoon_noarch_extensionsdir   %%newmoon_datadir/extensions
 
@@ -78,6 +78,8 @@ Patch107: palemoon-29.4.6-user-agent-overrides.patch
 Patch111: palemoon-29.4.6-firefox-kde.patch
 Patch112: palemoon-29.4.6-mozilla-kde.patch
 Patch113: palemoon-29.4.6-kde-background.patch
+
+Patch114: nemoon_branding-31.0.0.patch
 
 %set_gcc_version 8
 %set_autoconf_version 2.13
@@ -166,6 +168,17 @@ These helper macros provide possibility to rebuild
 
 %prep
 %setup -n %sname-%version -c
+
+#cd UXP-PM%{version}_Release
+# patch to move files directly to /usr/lib No more symlinks
+
+
+pushd palemoon/platform
+sed -e 's;$(libdir)/$(MOZ_APP_NAME)-$(MOZ_APP_VERSION);$(libdir)/$(MOZ_APP_NAME);g' -i config/baseconfig.mk
+sed -e 's;$(libdir)/$(MOZ_APP_NAME)-devel-$(MOZ_APP_VERSION);$(libdir)/$(MOZ_APP_NAME)-devel;g' -i config/baseconfig.mk
+popd
+
+
 %setup -T -D -a 2
 %setup -T -D -a 11
 
@@ -179,6 +192,7 @@ These helper macros provide possibility to rebuild
 %patch18 -p1
 
 %patch22 -p1
+
 
 cd %sname
 tar -xf %SOURCE1
@@ -198,6 +212,8 @@ cd ..
 #patch111 -p1 -b .kdepatch
 #patch112 -p1 -b .kdemoz
 #patch113 -p1 -b .kdebackground
+
+%patch114 -p1
 
 cd %sname
 # icons
@@ -272,8 +288,7 @@ echo "ac_add_options --enable-system-hunspell" >> .mozconfig
 
 # echo "ac_add_options --with-system-nss"  >> .mozconfig
 
-echo "ac_add_options --x-libraries=%_libexecdir/X11" >> .mozconfig
-
+echo "ac_add_options --x-libraries=%_libdir/X11" >> .mozconfig
 echo "ac_add_options --with-nss-prefix=$RPATH_PATH" >> .mozconfig
 
 # echo "ac_add_options --with-nss-prefix=%_libdir" >> .mozconfig
@@ -431,7 +446,8 @@ pushd %buildroot
 # Remove devel files
 rm -rf -- \
  	%buildroot%_libdir/newmoon-devel-%version \
- 	%buildroot%_libdir/newmoon-devel-
+ 	%buildroot%_libdir/newmoon-devel \
+ 	%buildroot%_datadir/idl/%bname-%version
 
 
 # 	%buildroot%_includedir/%sname-%version \
@@ -651,6 +667,9 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 
 # git commit 0fe675cd9692cc792c4d5a267dce11702ee4d4f4
 %changelog
+* Mon May 30 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.0.0-alt0.5
+- Add nemoon_branding-31.0.0.patch
+
 * Fri May 27 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.0.0-alt0.4
 - Beta build
 
