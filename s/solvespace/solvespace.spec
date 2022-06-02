@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %def_with gtk3
 
 Name: 	 solvespace
-Version: 3.0
+Version: 3.1
 Release: alt1
 Epoch:   1
 
@@ -21,6 +22,7 @@ BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 BuildRequires: fontconfig-devel
+BuildRequires: eigen3
 BuildRequires: libGL-devel
 BuildRequires: libGLEW-devel
 BuildRequires: libGLU-devel
@@ -100,13 +102,13 @@ tar xf %SOURCE2
 %_bindir/%name
 %_bindir/%name-cli
 %_iconsdir/hicolor/*/apps/%name.png
-%_iconsdir/hicolor/*/mimetypes/application.x-solvespace.png
 %_iconsdir/hicolor/*/apps/%name.svg
-%_iconsdir/hicolor/*/mimetypes/application.x-solvespace.svg
+%_iconsdir/hicolor/*/mimetypes/application-x-solvespace.png
+%_iconsdir/hicolor/scalable/mimetypes/application-x-solvespace.svg
 %_desktopdir/%name.desktop
-%_pixmapsdir/*.xpm
 %_datadir/%name
 %_datadir/mime/packages/solvespace-slvs.xml
+%_datadir/metainfo/*.metainfo.xml
 
 %files -n libslvs
 %_libdir/libslvs.so.*
@@ -116,6 +118,9 @@ tar xf %SOURCE2
 %_includedir/slvs.h
 
 %changelog
+* Thu Jun 02 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.1-alt1
+- New version.
+
 * Sun Apr 18 2021 Andrey Cherepanov <cas@altlinux.org> 1:3.0-alt1
 - New version.
 - Build with GTK 3.
