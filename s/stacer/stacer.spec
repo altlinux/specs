@@ -1,6 +1,6 @@
 Name:     stacer
 Version:  1.1.0
-Release:  alt1.1
+Release:  alt1.2
 
 Summary:  Linux System Optimizer and Monitoring - https://oguzhaninan.github.io/Stacer-Web
 License:  GPL-3.0
@@ -12,7 +12,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 #set_gcc_version 11
 
 Source:   %name-%version.tar
-Patch1: stacer-1.1.0-translation.patch
+Patch1:   stacer-1.1.0-translation.patch
 
 BuildRequires(pre): cmake rpm-macros-cmake  rpm-macros-qt5 gcc-c++ 
 
@@ -37,6 +37,7 @@ BuildRequires: qt5-base-devel qt5-svg-devel qt5-charts-devel qt5-tools-devel
 %prep
 %setup
 %patch1 -p1
+
 
 %build
 export PATH=$PATH:%_qt5_bindir
@@ -74,6 +75,9 @@ cp stacer/translations/%{name}*.qm %buildroot%_datadir/%name/translations
 
 
 %changelog
+* Thu Jun 02 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.1.0-alt1.2
+- Correct Translations
+
 * Wed Jun 01 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.1.0-alt1.1
 - Correct BuildRequires
 
