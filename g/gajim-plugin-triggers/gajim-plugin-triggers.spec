@@ -1,7 +1,7 @@
 %define oname triggers
 
 Name: gajim-plugin-triggers
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 
 Summary: Configure Gajim's behavior on some events
@@ -13,10 +13,11 @@ Url: https://dev.gajim.org/gajim/gajim-plugins/-/wikis/TriggersPlugin
 # repacked https://ftp.gajim.org/plugins_releases/triggers_%version.zip
 Source: %oname-%version.zip
 Source1: %oname.watch
-Source2: manifest.ini
+Source2: plugin-manifest.json
 
 Requires: python3-module-gajim-triggers
 
+BuildRequires(pre): jq
 BuildRequires: rpm-build-python3 unzip
 BuildArch: noarch
 
@@ -27,8 +28,8 @@ BuildArch: noarch
 Summary: Python module for %name
 Group: Development/Python
 BuildArch: noarch
-Requires: gajim >= %(sed -n 's/^min_gajim_version:\s*\([[:digit:].]\+\).*$/\1/p' %SOURCE2)
-Conflicts: gajim > %(sed -n 's/^max_gajim_version:\s*\([[:digit:].]\+\).*$/\1/p' %SOURCE2)
+Requires: %(jq '.requirements[]' %SOURCE2 |sed -E 's,",,g;s,([>=]+), \1 ,g')
+Conflicts: gajim >= 1.5
 
 %description -n python3-module-gajim-triggers
 %summary.
@@ -46,6 +47,9 @@ cp -a * %buildroot%python3_sitelibdir_noarch/gajim/data/plugins/%oname/
 %python3_sitelibdir_noarch/gajim/data/plugins/%oname
 
 %changelog
+* Thu Jun 02 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.5-alt1
+- Updated to 1.4.5.
+
 * Sat May 14 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.4-alt1
 - Updated to 1.4.4.
 
