@@ -1,10 +1,10 @@
 Name: librdkafka
-Version: 1.5.3
+Version: 1.6.2
 Release: alt1
 
 Summary: the Apache Kafka C/C++ client library
 
-License: BSD-2-CLAUSE
+License: BSD-2-Clause
 Group: Development/C++
 Url: https://github.com/edenhill/librdkafka
 
@@ -16,12 +16,12 @@ Source1: rdkafka.pc
 
 # Automatically added by buildreq on Fri Nov 09 2018
 # optimized out: cmake-modules libcom_err-devel libkrb5-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base zlib-devel
-BuildRequires: cmake gcc-c++ libssl-devel liblz4-devel libxxhash-devel
+BuildRequires: cmake gcc-c++ libssl-devel liblz4-devel libxxhash-devel libsasl2-devel
 
 %description
-librdkafka is a C library implementation of the Apache Kafka protocol, containing 
-both Producer and Consumer support. It was designed with message delivery 
-reliability and high performance in mind, current figures exceed 1 million 
+librdkafka is a C library implementation of the Apache Kafka protocol, containing
+both Producer and Consumer support. It was designed with message delivery
+reliability and high performance in mind, current figures exceed 1 million
 msgs/second for the producer and 3 million msgs/second for the consumer.
 
 %package devel
@@ -30,9 +30,9 @@ Summary: the Apache Kafka C/C++ client library
 Requires: %name = %version-%release
 
 %description devel
-librdkafka is a C library implementation of the Apache Kafka protocol, containing 
-both Producer and Consumer support. It was designed with message delivery 
-reliability and high performance in mind, current figures exceed 1 million 
+librdkafka is a C library implementation of the Apache Kafka protocol, containing
+both Producer and Consumer support. It was designed with message delivery
+reliability and high performance in mind, current figures exceed 1 million
 msgs/second for the producer and 3 million msgs/second for the consumer.
 
 %prep
@@ -68,6 +68,9 @@ rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu May 26 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.2-alt1
+- Build new version for python3-module-confluent-kafka.
+
 * Sun Jan 24 2021 Pavel Vainerman <pv@altlinux.ru> 1.5.3-alt1
 - new version (1.5.3) with rpmgs script
 
