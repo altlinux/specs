@@ -3,7 +3,7 @@
 %filter_from_requires /^python3(gajim.gui.dialogs)/d
 
 Name: gajim-plugin-pgp
-Version: 1.4.4
+Version: 1.4.6
 Release: alt1
 
 Summary: PGP encryption via XEP-0027 for Gajim
@@ -16,15 +16,16 @@ Url: https://dev.gajim.org/gajim/gajim-plugins/-/wikis/pgpplugin
 Source: %oname-%version.zip
 Source1: %oname.watch
 # extracted from zip archive
-Source2: manifest.ini
+Source2: plugin-manifest.json
 
-Requires: python3-module-gajim-pgp
-Requires: gajim >= %(sed -n 's/^min_gajim_version:\s*\([[:digit:].]\+\).*$/\1/p' %SOURCE2)
-Conflicts: gajim > %(sed -n 's/^max_gajim_version:\s*\([[:digit:].]\+\).*$/\1/p' %SOURCE2)
-
+BuildRequires(pre): jq
 BuildRequires: rpm-build-python3
 BuildRequires: unzip
 BuildArch: noarch
+
+Requires: python3-module-gajim-pgp
+Requires: %(jq '.requirements[]' %SOURCE2 |sed -E 's,",,g;s,([>=]+), \1 ,g')
+Conflicts: gajim >= 1.5
 
 %description
 %summary.
@@ -33,7 +34,6 @@ BuildArch: noarch
 Summary: Python module for %name
 Group: Development/Python
 BuildArch: noarch
-Requires: %name
 
 %description -n python3-module-gajim-pgp
 %summary.
@@ -51,6 +51,10 @@ cp -a * %buildroot%python3_sitelibdir_noarch/gajim/data/plugins/%oname/
 %python3_sitelibdir_noarch/gajim/data/plugins/%oname
 
 %changelog
+* Thu Jun 02 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.6-alt1
+- Updated to 1.4.6.
+- Dropped cycle dependency.
+
 * Sat May 14 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.4-alt1
 - Updated to 1.4.4.
 
