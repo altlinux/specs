@@ -1,7 +1,7 @@
 %define  modulename bandit
 
 Name:    python3-module-%modulename
-Version: 1.7.0
+Version: 1.7.4
 Release: alt1
 
 Summary: Bandit is a tool designed to find common security issues in Python code.
@@ -12,14 +12,14 @@ URL:     https://github.com/PyCQA/bandit
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
+Source:  %name-%version.tar
+
 Requires: python3-module-yaml
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr
 
 BuildArch: noarch
-
-Source:  %modulename-%version.tar
 
 %description
 Bandit is a tool designed to find common security issues in Python code.
@@ -31,23 +31,28 @@ Bandit was originally developed within the OpenStack Security Project and later
 rehomed to PyCQA.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
+export PBR_VERSION=%version
 %python3_build
 
 %install
+export PBR_VERSION=%version
 %python3_install
 
 %files
 %_bindir/bandit
 %_bindir/bandit-baseline
 %_bindir/bandit-config-generator
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
-%doc *.rst
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
+%doc LICENSE *.rst *.md
 
 %changelog
+* Thu Jun 02 2022 Grigory Ustinov <grenka@altlinux.org> 1.7.4-alt1
+- Build new version.
+
 * Fri Mar 19 2021 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt1
 - Build new version.
 
