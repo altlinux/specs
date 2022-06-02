@@ -1,27 +1,28 @@
 %define oname grapy
 
 Name: python3-module-%oname
-Version: 0.1.8
-Release: alt2
+Version: 0.1.11
+Release: alt1
 
 Summary: Fast high-level web crawling framework for Python 3.3 or later base on asyncio
 
 License: Free
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/grapy/
+Url: https://pypi.python.org/pypi/grapy
 
+# There are no tags on github=(
 # https://github.com/Lupino/grapy.git
-# Source-url: https://pypi.io/packages/source/g/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
-BuildArch: noarch
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(asyncio) python3-module-aiohttp
-BuildRequires: python3-module-BeautifulSoup4 python3-module-requests
+BuildRequires: python3-module-aiohttp
+BuildRequires: python3-module-BeautifulSoup4
+BuildRequires: python3-module-requests
 
 %py3_provides %oname
 %py3_requires asyncio aiohttp bs4 requests
+
+BuildArch: noarch
 
 %description
 Grapy, a fast high-level screen scraping and web crawling framework for
@@ -29,12 +30,6 @@ Python 3.3 or later base on asyncio.
 
 %prep
 %setup
-subst "s|self.async|self.fasync|" grapy/core/request.py
-
-# don't explicitely require asyncio module, it's part of python3 base now
-#sed -i \
-#	-e "s|'asyncio', ||g" \
-#	setup.py
 
 %build
 %python3_build
@@ -43,13 +38,17 @@ subst "s|self.async|self.fasync|" grapy/core/request.py
 %python3_install
 
 %check
-python3 setup.py test
+# there is no any tests
 
 %files
-%doc *.md docs/*.rst
-%python3_sitelibdir/*
+%doc README
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Jun 02 2022 Grigory Ustinov <grenka@altlinux.org> 0.1.11-alt1
+- Build new version.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.1.8-alt2
 - Drop python2 support.
 
