@@ -5,7 +5,7 @@
 %def_without check
 
 Name: ravada
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
@@ -81,7 +81,7 @@ Ravada is a software that allows the user to connect to a remote virtual desktop
 %prep
 %setup -q -n %name-%version
 # ALT doesn't ship kvm-spice but qemu-kvm
-find . -type f -name "*.xml" -exec sed -i 's|kvm-spice|qemu-kvm|g' {} ';'
+# find . -type f -name "*.xml" -exec sed -i 's|kvm-spice|qemu-kvm|g' {} ';'
 
 %build
 # set environment variable to make sure DateTime::TimeZone::Local
@@ -108,6 +108,24 @@ install -p -m644 etc/systemd/*.service %buildroot%_unitdir
 mkdir -p %buildroot%_docdir/%name
 cp -aR sql %buildroot%_docdir/%name
 rm -f %buildroot%_docdir/%name/sql/mysql/Makefile
+
+mkdir -p %buildroot%_bindir
+cat > %buildroot%_bindir/kvm-spice <<_EOF
+#!/bin/sh
+
+arch="\$(uname -m)"
+case "\$arch" in
+	i?86) arch="i386" ;;
+	x86_64) arch="x86_64" ;;
+	aarch64) arch=aarch64 ;;
+	arm*) arch=arm ;;
+	ppc64|ppc64le) arch=ppc64 ;;
+	ppc) arch=ppc ;;
+esac
+
+exec /usr/bin/qemu-system-"\$arch" "\$@"
+_EOF
+chmod 0755 %buildroot%_bindir/kvm-spice
 
 # Remove empty files
 find %buildroot -size 0 -delete
@@ -142,6 +160,7 @@ fi
 %files
 %doc LICENSE MANIFEST README.md
 %perl_vendor_privlib/*
+%_bindir/kvm-spice
 %_sbindir/*
 %_datadir/%name
 %_localstatedir/%name
@@ -151,6 +170,12 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Thu Jun 02 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.5.2-alt1
+- 1.5.2
+- add qcow2 files detection
+- add kvm-spice script
+- add "Do not try LDAP if not available" fix
+
 * Wed May 25 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.5.1-alt1
 - 1.5.1
 - fix path to ss
