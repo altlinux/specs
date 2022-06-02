@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        100.0.2
+Version:        101.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -47,7 +47,7 @@ Patch014: 0014-Prevent-discrimination-of-Russian-services.patch
 %define nss_version   3.77
 %define rust_version  1.60.0
 %define cargo_version 1.60.0
-%define llvm_version  12.0
+%define llvm_version  13.0
 
 ExcludeArch: ppc64le
 
@@ -63,7 +63,6 @@ BuildRequires: libstdc++-devel
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
 BuildRequires: rust-cargo >= %cargo_version
-BuildRequires: cbindgen
 BuildRequires: node
 BuildRequires: nasm yasm
 BuildRequires: zip unzip
@@ -270,6 +269,24 @@ export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
 export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=2"
 %endif
 
+CBINDGEN_HOME="$PWD/.rpm/cbindgen-vendor"
+CBINDGEN_BINDIR="$CBINDGEN_HOME/bin"
+
+if [ ! -x "$CBINDGEN_BINDIR/cbindgen" ]; then
+	cat > "$CBINDGEN_HOME/config" <<-EOF
+	[source.crates-io]
+	replace-with = "vendored-sources"
+
+	[source.vendored-sources]
+	directory = "$CBINDGEN_HOME"
+	EOF
+
+	env CARGO_HOME="$CBINDGEN_HOME" \
+		cargo install cbindgen
+
+	export PATH="$CBINDGEN_BINDIR:$PATH"
+fi
+
 #export WASM_SANDBOXED_LIBRARIES=graphite,ogg
 #export WASM_CC="$CC --target=wasm32-wasi"
 #export WASM_CXX="$CXX --target=wasm32-wasi"
@@ -429,6 +446,24 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Jun 01 2022 Alexey Gladkov <legion@altlinux.ru> 101.0-alt1
+- New release (101.0).
+- Use internal cbindgen again.
+- Security fixes:
+  + CVE-2022-31736: Cross-Origin resource's length leaked
+  + CVE-2022-31737: Heap buffer overflow in WebGL
+  + CVE-2022-31738: Browser window spoof using fullscreen mode
+  + CVE-2022-31739: Attacker-influenced path traversal when saving downloaded files
+  + CVE-2022-31740: Register allocation problem in WASM on arm64
+  + CVE-2022-31741: Uninitialized variable leads to invalid memory read
+  + CVE-2022-31742: Querying a WebAuthn token with a large number of allowCredential entries may have leaked cross-origin information
+  + CVE-2022-31743: HTML Parsing incorrectly ended HTML comments prematurely
+  + CVE-2022-31744: CSP bypass enabling stylesheet injection
+  + CVE-2022-31745: Incorrect Assertion caused by unoptimized array shift operations
+  + CVE-2022-1919: Memory Corruption when manipulating webp images
+  + CVE-2022-31747: Memory safety bugs fixed in Firefox 101 and Firefox ESR 91.10
+  + CVE-2022-31748: Memory safety bugs fixed in Firefox 101
+
 * Sat May 21 2022 Alexey Gladkov <legion@altlinux.ru> 100.0.2-alt1
 - New release (100.0.2).
 - Security fixes:
