@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
 Version:        101.0
-Release:        alt1
+Release:        alt2
 License:        MPL-2.0
 Group:          Networking/WWW
 URL:            http://www.mozilla.org/projects/firefox/
@@ -37,6 +37,7 @@ Patch011: 0011-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch012: 0012-ALT-fix-double_t-redefinition.patch
 Patch013: 0013-build-Disable-Werror.patch
 Patch014: 0014-Prevent-discrimination-of-Russian-services.patch
+Patch015: 0015-Wayland-Utility-popups-may-be-invisible-or-dislocate.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -47,7 +48,7 @@ Patch014: 0014-Prevent-discrimination-of-Russian-services.patch
 %define nss_version   3.77
 %define rust_version  1.60.0
 %define cargo_version 1.60.0
-%define llvm_version  13.0
+%define llvm_version  12.0
 
 ExcludeArch: ppc64le
 
@@ -446,6 +447,10 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Jun 02 2022 Alexey Gladkov <legion@altlinux.ru> 101.0-alt2
+- Wayland: Add fix for utility popups (MOZ#1771104).
+- Use LLVM12 again.
+
 * Wed Jun 01 2022 Alexey Gladkov <legion@altlinux.ru> 101.0-alt1
 - New release (101.0).
 - Use internal cbindgen again.
