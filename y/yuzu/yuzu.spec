@@ -1,19 +1,19 @@
 # git describe upstream/yuzu
-%define git_descr mainline-636-8008-g046ac865890
+%define git_descr mainline-636-8872-gac8ca475011
 
 %define inih_version r52
 %define cpp_httplib_commit 9648f950f5a8a41d18833cf4a85f5821b1bcac54
 %define cubeb_commit 75d9d125ee655ef80f3bfcd97ae5a805931042b8
-%define dynarmic_commit 1635958d0613da376046532e0db5aed6316fbc18
-%define soundtouch_commit 060181eaf273180d3a7e87349895bd0cb6ccbf4a
-%define sirit_commit a39596358a3a5488c06554c0c15184a6af71e433
+%define dynarmic_commit 57af72a567454b93c757e087b4510a24b81911b1
+%define sirit_commit aa292d56650bc28f2b2d75973fab2e61d0136f9c
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
 %define xbyak_version 5.96
+%define vulkan_headers_version 1.3.213
 %define sanitizers_cmake_commit aab6948fa863bc1cbe5d0850bc46b9ef02ed4c1a
 %define spirv_headers_commit a3fdfe81465d57efc97cfd28ac6c8190fb31a6c8
 
 Name: yuzu
-Version: 875
+Version: 1040
 Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
@@ -35,24 +35,26 @@ Source2: cpp-httplib-%cpp_httplib_commit.tar
 Source3: cubeb-%cubeb_commit.tar
 # https://github.com/merryhime/dynarmic/archive/%dynarmic_commit/dynarmic-%dynarmic_commit.tar.gz
 Source4: dynarmic-%dynarmic_commit.tar
-# https://github.com/citra-emu/ext-soundtouch/archive/%soundtouch_commit/ext-soundtouch-%soundtouch_commit.tar.gz
-Source5: ext-soundtouch-%soundtouch_commit.tar
 # https://github.com/ReinUsesLisp/sirit/archive/%sirit_commit/sirit-%sirit_commit.tar.gz
-Source6: sirit-%sirit_commit.tar
+Source5: sirit-%sirit_commit.tar
 # https://github.com/yuzu-emu/mbedtls/archive/%mbedtls_commit/mbedtls-%mbedtls_commit.tar.gz
-Source7: mbedtls-%mbedtls_commit.tar
+Source6: mbedtls-%mbedtls_commit.tar
 # https://github.com/herumi/xbyak/archive/v%xbyak_version/xbyak-%xbyak_version.tar.gz
-Source8: xbyak-%xbyak_version.tar
+Source7: xbyak-%xbyak_version.tar
+# https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
+Source8: Vulkan-Headers-%vulkan_headers_version.tar
 # https://github.com/arsenm/sanitizers-cmake/archive/%sanitizers_cmake_commit/sanitizers-cmake-%sanitizers_cmake_commit.tar.gz
 Source9: sanitizers-cmake-%sanitizers_cmake_commit.tar
 # https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_commit/SPIRV-Headers-%spirv_headers_commit.tar.gz
 Source10: SPIRV-Headers-%spirv_headers_commit.tar
 
-BuildRequires(pre): llvm-common-clang-tools
+Patch0: %name-compile-alt.patch
 
 BuildRequires: boost-asio-devel
 BuildRequires: boost-context-devel
+BuildRequires: boost-filesystem-devel
 BuildRequires: catch2-devel
+BuildRequires: clang-tools
 BuildRequires: cmake
 BuildRequires: doxygen
 BuildRequires: glslang
@@ -82,15 +84,16 @@ BuildRequires: zlib-devel
 
 %prep
 %setup -n %name-mainline-mainline-0-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
+%patch0 -p1
 
 %__mv -Tf ../inih-%inih_version externals/inih/inih
 %__mv -Tf ../cpp-httplib-%cpp_httplib_commit externals/cpp-httplib
 %__mv -Tf ../cubeb-%cubeb_commit externals/cubeb
 %__mv -Tf ../dynarmic-%dynarmic_commit externals/dynarmic
-%__mv -Tf ../ext-soundtouch-%soundtouch_commit externals/soundtouch
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
 %__mv -Tf ../xbyak-%xbyak_version externals/xbyak
+%__mv -Tf ../Vulkan-Headers-%vulkan_headers_version externals/Vulkan-Headers
 %__mv -Tf ../sanitizers-cmake-%sanitizers_cmake_commit externals/cubeb/cmake/sanitizers-cmake
 %__mv -Tf ../SPIRV-Headers-%spirv_headers_commit externals/sirit/externals/SPIRV-Headers
 
@@ -117,15 +120,23 @@ src/common/scm_rev.cpp.in
 %install
 %cmake_install
 
+%__rm -rf %buildroot%_libdir
+%__rm -rf %buildroot%_includedir
+%__rm -rf %buildroot%_datadir/cmake
+
 %files
 %doc CONTRIBUTING.md README.md
 %_bindir/%name
 %_bindir/%name-cmd
-%_desktopdir/%name.desktop
-%_datadir/mime/packages/%name.xml
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%_desktopdir/org.%{name}_emu.%name.desktop
+%_datadir/metainfo/org.%{name}_emu.%name.metainfo.xml
+%_datadir/mime/packages/org.%{name}_emu.%name.xml
+%_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Thu Jun 02 2022 Nazarov Denis <nenderus@altlinux.org> 1040-alt1
+- Version 1040
+
 * Mon Jan 10 2022 Nazarov Denis <nenderus@altlinux.org> 875-alt1
 - Version 875
 
