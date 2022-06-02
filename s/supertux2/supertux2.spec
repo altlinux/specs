@@ -1,6 +1,6 @@
 Name: supertux2
 Version: 0.6.3
-Release: alt1
+Release: alt2
 
 Summary: Classic 2D jump'n run sidescroller game in a Super Mario style
 License: GPL-3.0-or-later AND CC-BY-SA-3.0 AND GPL-2.0-or-later AND GPL-1.0-only
@@ -14,6 +14,8 @@ Source: SuperTux-v%version-Source.tar.gz
 Source1: supertux-16x16.png
 Source2: supertux-32x32.png
 Source3: supertux-48x48.png
+
+Patch: supertux2-0.6.3-alt-gcc12.patch
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -51,6 +53,7 @@ This is package contains data files for supertux2.
 
 %prep
 %setup -n SuperTux-v%version-Source
+%patch -p2
 
 %ifarch %e2k
 # see also http://github.com/albertodemichelis/squirrel/pull/226/commits
@@ -60,7 +63,7 @@ sed -i 's/LINKER_LANGUAGE C/&XX/' external/squirrel/sq/CMakeLists.txt
 
 %build
 %cmake_insource \
-				-GNinja \
+        -GNinja \
         -DINSTALL_SUBDIR_BIN=bin \
         -DINSTALL_SUBDIR_SHARE=share/supertux2 \
         -DCMAKE_BUILD_TYPE="Release" \
@@ -99,6 +102,9 @@ rm -rf %buildroot/%_docdir/supertux2/
 %exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Thu Jun 02 2022 Leontiy Volodin <lvol@altlinux.org> 0.6.3-alt2
+- Fixed build with gcc12.
+
 * Mon Dec 27 2021 Leontiy Volodin <lvol@altlinux.org> 0.6.3-alt1
 - New version (0.6.3) with rpmgs script.
 - Built with ninja instead make.
