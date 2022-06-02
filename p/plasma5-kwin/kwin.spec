@@ -17,7 +17,7 @@
 
 Name: plasma5-%rname
 Version: 5.24.5
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -143,6 +143,11 @@ KF5 library
 %K5install_move data kconf_update knsrcfiles krunner
 %find_lang %name --with-kde --all-name
 
+# clean doc entries
+for f in %buildroot/%_K5srv/kcm_kwin_virtualdesktops.desktop ; do
+    sed -i '/^X-DocPath=/d' $f
+done
+
 %post
 /sbin/setcap CAP_SYS_NICE=+ep %_K5bin/kwin_wayland ||:
 
@@ -199,6 +204,9 @@ KF5 library
 
 
 %changelog
+* Thu Jun 02 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt3
+- remove unneeded docs entry
+
 * Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt2
 - load default xkb settings from /etc/X11/xinit/Xkbmap
 
