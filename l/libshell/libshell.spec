@@ -1,11 +1,11 @@
 %def_enable man
 
 Name: libshell
-Version: 0.4.9
+Version: 0.4.10
 Release: alt1
 
 Summary: A library of shell functions
-License: GPL
+License: GPL-2.0-or-later
 Group: Development/Other
 BuildArch: noarch
 Packager: Alexey Gladkov <legion@altlinux.ru>
@@ -80,6 +80,14 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 %endif
 
 %changelog
+* Thu Jun 02 2022 Alexey Gladkov <legion@altlinux.ru> 0.4.10-alt1
+- shell-getopt:
+  + Shellcheck fixes (thx Andrey Limachko).
+- shell-ini-config changes:
+  + Improve ini-file parse (thx Andrey Limachko).
+- Other changes:
+  + Add json parser.
+
 * Thu Mar 18 2021 Alexey Gladkov <legion@altlinux.ru> 0.4.9-alt1
 - shell-args:
   + Properly handle an argument starting with a dash.
