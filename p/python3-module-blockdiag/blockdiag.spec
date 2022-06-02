@@ -1,7 +1,7 @@
-%define srcname blockdiag
+%define oname blockdiag
 
-Name:    python3-module-%srcname
-Version: 2.0.1
+Name:    python3-module-%oname
+Version: 3.0.0
 Release: alt1
 
 Summary: Generate block-diagram images from text
@@ -46,10 +46,14 @@ Enjoy documentation with blockdiag !
 %python3_install
 
 %files
-%_bindir/blockdiag
-%python3_sitelibdir/*
+%_bindir/%oname
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Apr 11 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Mon May 31 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
 - Build new version.
 
