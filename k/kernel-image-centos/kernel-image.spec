@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 99
+%define centos_release 104
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,50 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Jun 02 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.104-alt1.el9
+- Updated to kernel-5.14.0-104.el9:
+  + bonding: driver update for 9.1
+  + mptcp: fix subflow accounting on close
+  + redhat: enable CONFIG_NET_ACT_CTINFO (as a module)
+  + update qedi driver to latest upstream
+
+* Wed Jun 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.103-alt1.el9
+- Updated to kernel-5.14.0-103.el9:
+  + dlm: fix plock invalid read
+  + ipc/mqueue: use get_tree_nodev() in mqueue_get_tree()
+  + MMIO support for SMBus and ASF controller in AMD APU/CPU
+  + mpt3sas: driver update
+  + powerpc/pseries/vas: Use QoS credits from the userspace
+  + powerpc: support for perf sampling tests (PMU/performance counters/perf) [FEAT]
+  + s390/cio: verify the driver availability for path_event call
+  + [s390] RDMA/mlx5: Fix number of allocated XLT entries
+  + [s390] s390/hypfs: include z/VM guests with access control group set
+  + [s390] s390/tape: fix timer initialization in tape_std_assign()
+  + scsi: mpi3mr: driver update
+  + Sync osnoise/timerlat tracers with v5.17 upstream
+  + tcp: stable backports for rhel 9.1 phase 1
+  + vfs: make sync_filesystem return errors from ->sync_fs
+
+* Tue May 31 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.102-alt1.el9
+- Updated to kernel-5.14.0-102.el9:
+  + Enable INTEL_HFI_THERMAL
+  + livepatch: rebase to linux v5.17
+  + perf: sync with upstream v5.17
+  + thunderx nic: mark device as unmaintained
+  + xfs: Fix the free logic of state in xfs_attr_node_hasname
+
+* Sat May 28 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.101-alt1.el9
+- Updated to kernel-5.14.0-101.el9:
+  + mm: Backport upstream mm commits for kernel-rt
+  + redhat: Exclude cpufreq.h from kernel-headers
+  + tools: Fix radix-tree test build failure
+
+* Thu May 26 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.100-alt1.el9
+- Updated to kernel-5.14.0-100.el9:
+  + bpf: update to v5.15
+  + KVM: Enable storage key checking for intercepted instruction
+  + PCI: vmd: IRQ domain assignment to sub devices
+
 * Wed May 25 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.99-alt1.el9
 - Updated to kernel-5.14.0-99.el9:
   + ceph: backport mainline changes up to v5.18 for RHEL 9.1
