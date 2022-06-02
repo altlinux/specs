@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        1.0.3
+Version:        1.0.4
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -59,6 +59,14 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Wed Jun 01 2022 Dmitry Degtyarev <kevl@altlinux.org> 1.0.4-alt1
+- Download dialog: Fix visual problems where text elements
+  would sometimes overlap each other.
+- Misc: Use software rendering on Windows. Fixes app
+  sometimes failing to launch due to hardware rendering.
+- Misc: Fix non-English languages in Windows installer.
+- Misc: Fix window icon.
+
 * Fri Apr 22 2022 Dmitry Degtyarev <kevl@altlinux.org> 1.0.3-alt1
 - Restore dialog: Fixed untranslated text on first page.
 
