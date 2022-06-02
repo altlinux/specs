@@ -4,7 +4,7 @@
 
 Name: deepin-file-manager
 Version: 5.5.10
-Release: alt1
+Release: alt2
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: File tools
@@ -17,6 +17,7 @@ Patch3: deepin-file-manager-5.2.0.87-alt-qterminal-instead-xterm.patch
 Patch4: deepin-file-manager-5.5.1-hide-lockscreen-checkbox.patch
 Patch5: deepin-file-manager-5.5.1-gcc11-fix-segfault.patch
 Patch6: deepin-file-manager-5.5.1-alt-aarch64.patch
+Patch7: deepin-file-manager-5.5.10-alt-gcc12.patch
 
 ExcludeArch: armh ppc64le
 
@@ -125,11 +126,12 @@ Deepin desktop environment - desktop module.
 
 %prep
 %setup -n %repo-%version
-%patch1 -p1
+# %%patch1 -p1
 # %%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # sed -i 's|"groups":|"groups"\ :|' dde-file-manager-lib/configure/global-setting-template*.js
 
@@ -304,6 +306,10 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Thu Jun 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.10-alt2
+- Fixed gcc12 build.
+- Returned desktop icons.
+
 * Thu Apr 07 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.10-alt1
 - New version (5.5.10).
 - Changed group tag.

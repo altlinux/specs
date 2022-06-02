@@ -11,7 +11,7 @@
 
 Name: deepin-kwin
 Version: 5.4.26
-Release: alt2
+Release: alt3
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -117,7 +117,7 @@ ln -s %_K5lib/libkwin.so.5 libs/libkwin.so
     -DUSE_KWIN_NO_SCALE=ON \
     -DENABLE_BUILTIN_BLUR=OFF \
     -DENABLE_KDECORATION=ON \
-    -DENABLE_BUILTIN_MULTITASKING=OFF \
+    -DENABLE_BUILTIN_MULTITASKING=ON \
     -DENABLE_BUILTIN_BLACK_SCREEN=OFF \
 %endif
 #
@@ -163,6 +163,10 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %endif
 
 %changelog
+* Thu Jun 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.26-alt3
+- Fixed multitasking using the dock panel.
+- Rebuilt with gcc12.
+
 * Tue May 31 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.26-alt2
 - Fixed wallpaper error.
 - Enabled blur.
