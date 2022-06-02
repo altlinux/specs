@@ -3,7 +3,7 @@
 %define oname lxml
 
 Name: python3-module-lxml
-Version: 4.8.0
+Version: 4.9.0
 Release: alt1
 
 Summary: Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API
@@ -83,6 +83,9 @@ PYTHONPATH=src python3 src/lxml/tests/selftest2.py
 %doc doc samples
 
 %changelog
+* Thu Jun 02 2022 Grigory Ustinov <grenka@altlinux.org> 4.9.0-alt1
+- Automatically updated to 4.9.0.
+
 * Thu Mar 17 2022 Grigory Ustinov <grenka@altlinux.org> 4.8.0-alt1
 - Automatically updated to 4.8.0.
 
