@@ -4,8 +4,8 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.4.2
-Release: alt2
+Version: 1.4.3
+Release: alt1
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -74,6 +74,9 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Fri Jun 03 2022 Ilya Mashkin <oddity@altlinux.ru> 1.4.3-alt1
+- 1.4.3
+
 * Wed Jun 01 2022 Ilya Mashkin <oddity@altlinux.ru> 1.4.2-alt2
 - Add BR libsoup-gir (Closes: #42902)
 
