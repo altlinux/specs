@@ -1,6 +1,6 @@
 Name: exim
 Version: 4.94.2
-Release: alt1
+Release: alt2
 Summary: Exim MTA
 Group: Networking/Mail
 License: GPLv2+
@@ -15,7 +15,10 @@ Provides: %name-light
 Provides: %name-bin
 
 BuildRequires: pkg-config perl libdb4-devel libpcre-devel libssl-devel
-BuildRequires: libsqlite3-devel postgresql-devel libmariadb-devel
+BuildRequires: libldap-devel
+BuildRequires: libmariadb-devel
+BuildRequires: libsqlite3-devel
+BuildRequires: postgresql-devel
 # for exigrep
 BuildRequires: perl-Pod-Usage
 
@@ -44,6 +47,15 @@ Summary: Optional documentation for %name
 Group: Documentation
 BuildArch: noarch
 %description doc
+%summary
+
+%package ldap
+Summary: %name MTA with LDAP support
+Group: Networking/Mail
+Requires: %name-config
+Provides: %name-bin
+Provides: smtpdaemon, smtpd, MTA, MailTransferAgent
+%description ldap
 %summary
 
 %package mysql
@@ -95,12 +107,12 @@ for buildtype in $allconfigs
 do
   rm -rf build-Linux-*
   cat ../Local-Makefile.$buildtype > Local/Makefile
-  echo '' > src/version.sh
+  true > src/version.sh
   echo EXIM_RELEASE_VERSION=%version >> src/version.sh
   echo EXIM_VARIANT_VERSION=%release >> src/version.sh
   echo EXIM_COMPILE_NUMBER=1 >> src/version.sh
   export CFLAGS="-I%_includedir/openssl -I%_includedir/pgsql"
-  export LDFLAGS="-s -lpq"
+  export LDFLAGS="-s -lpq -lldap -llber"
   %make_build
   cp -a build-Linux-*/%name ./%name.$buildtype
 done
@@ -148,6 +160,9 @@ rm -rf %buildroot %_builddir/%name-%version
 %post
 ln -sf exim.vmail %_sbindir/exim
 
+%post ldap
+ln -sf exim.ldap %_sbindir/exim
+
 %post mysql
 ln -sf exim.mysql %_sbindir/exim
 
@@ -166,6 +181,10 @@ test -s mail-server.key || exim-mkcert
 %files
 %defattr(-,root,root)
 %_sbindir/exim.vmail
+
+%files ldap
+%defattr(-,root,root)
+%_sbindir/exim.ldap
 
 %files mysql
 %defattr(-,root,root)
@@ -215,6 +234,9 @@ test -s mail-server.key || exim-mkcert
 %doc Readme.pod vmail-dovecot.txt
 
 %changelog
+* Fri Jun 03 2022 Gremlin from Kremlin <gremlin@altlinux.org> 4.94.2-alt2
+- add LDAP support (#42927)
+
 * Tue Jul 07 2020 Gremlin from Kremlin <gremlin@altlinux.org> 4.94.2-alt1
 - update to 4.94.2 (fix CVE-2020-28007 ... CVE-2020-28026 and CVE-2021-27216)
 
