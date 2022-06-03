@@ -2,7 +2,7 @@
 
 Name:		glmark2
 Version:	2021.12
-Release:	alt1
+Release:	alt2
 
 Summary:	an OpenGL 2.0 and ES 2.0 benchmark
 Url:		https://github.com/glmark2/glmark2
@@ -145,6 +145,9 @@ export CXXFLAGS="${CFLAGS}"
 %_datadir/%name
 
 %changelog
+* Fri Jun 03 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 2021.12-alt2
+- Fixed build failure with GCC 12
+
 * Fri Apr 22 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 2021.12-alt1
 - Updated to 2021.12 (closes: #42554)
 
