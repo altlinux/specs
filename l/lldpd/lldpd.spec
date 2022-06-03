@@ -1,7 +1,7 @@
 %define _runtimedir /run
 
 Name: lldpd
-Version: 1.0.13
+Version: 1.0.14
 Release: alt1
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
@@ -149,6 +149,9 @@ useradd -M -r -g _lldpd -s /dev/null -c "LLDP Daemon" \
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jun 03 2022 Alexey Shabalin <shaba@altlinux.org> 1.0.14-alt1
+- new version 1.0.14
+
 * Thu Dec 02 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.13-alt1
 - new version 1.0.13 (Fixes: CVE-2021-43612)
 - migrate /var/run -> /run
