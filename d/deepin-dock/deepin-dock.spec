@@ -4,7 +4,7 @@
 
 Name: deepin-dock
 Version: 5.5.9.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Deepin desktop-environment - Dock module
 License: GPL-3.0+
@@ -95,9 +95,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_sysconfdir/%repo/indicator/keybord_layout.json
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/apps/
-%dir %_datadir/dsg/apps/dde-control-center/
-%dir %_datadir/dsg/apps/dde-control-center/configs/
-%_datadir/dsg/apps/dde-control-center/configs/dde.dock.plugin.dconfig.json
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/dde-control-center/
+%_datadir/dsg/configs/dde-control-center/dde.dock.plugin.dconfig.json
 %dir %_datadir/dsg/apps/dde-dock/
 %dir %_datadir/dsg/apps/dde-dock/configs/
 %_datadir/dsg/apps/dde-dock/configs/com.deepin.dde.dock.dconfig.json
@@ -110,6 +110,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Fri Jun 03 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.5.9.1-alt2
+- Fixed build with new dtkcommon.
+
 * Mon May 16 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.5.9.1-alt1
 - 5.5.9.1.
 - Upstream:

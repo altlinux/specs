@@ -5,7 +5,7 @@
 
 Name: deepin-control-center
 Version: 5.5.34
-Release: alt1
+Release: alt2
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -180,18 +180,21 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %dir %_libdir/dde-grand-search-daemon/plugins/searcher/
 %_libdir/dde-grand-search-daemon/plugins/searcher/com.deepin.dde-grand-search.dde-control-center-setting.conf
 %_libdir/libdccwidgets.so
-%dir %_datadir/dsg/apps/org.deepin.dde.control-center/
-%dir %_datadir/dsg/apps/org.deepin.dde.control-center/configs/
-%_datadir/dsg/apps/org.deepin.dde.control-center/configs/org.deepin.dde.control-center*.json
-%dir %_datadir/dsg/apps/dde-control-center/
-%dir %_datadir/dsg/apps/dde-control-center/configs/
-%_datadir/dsg/apps/dde-control-center/configs/org.deepin.dde.control-center*.json
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/dde-control-center/
+%dir %_datadir/dsg/configs/org.deepin.dde.control-center/
+%_datadir/dsg/configs/dde-control-center/org.deepin.dde.control-center*.json
+%_datadir/dsg/configs/org.deepin.dde.control-center/org.deepin.dde.control-center*.json
 
 %files devel
 %_libdir/cmake/DdeControlCenter/
 %_includedir/%repo/
 
 %changelog
+* Fri Jun 03 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.34-alt2
+- Fixed build with new dtkcommon.
+
 * Wed Jun 01 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.34-alt1
 - New version (5.5.34).
 
