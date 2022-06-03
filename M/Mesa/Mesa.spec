@@ -83,11 +83,11 @@
 %gallium_drivers_add zink
 
 %define ver_major 22.1
-%define ver_minor 0
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -585,6 +585,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Fri Jun 03 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.1.1-alt1
+- 22.1.1
+
 * Tue May 24 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.1.0-alt2
 - enabled zink gallium driver (closes: #42849)
 
