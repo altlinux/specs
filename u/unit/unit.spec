@@ -11,8 +11,8 @@
 %def_disable devel
 
 Name: unit
-Version: 1.26.1
-Release: alt3
+Version: 1.27.0
+Release: alt1
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -169,7 +169,7 @@ build/tests
 %preun_service unit
 
 %files
-%doc CHANGES LICENSE README COPYRIGHT
+%doc CHANGES LICENSE README.md COPYRIGHT
 %_man8dir/*.8*
 %_sbindir/unitd
 %_initdir/unit
@@ -214,6 +214,9 @@ build/tests
 %endif
 
 %changelog
+* Fri Jun 03 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.27.0-alt1
+- Update to 1.27.0 (2022-06-02).
+
 * Mon Dec 20 2021 Vitaly Chikunov <vt@altlinux.org> 1.26.1-alt3
 - Restore user/group creation that accidentally removed on previous release.
 
