@@ -132,7 +132,7 @@
 
 Name: qemu
 Version: 6.2.0
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1316,6 +1316,9 @@ fi
 %exclude %docdir/LICENSE
 
 %changelog
+* Thu Jun 02 2022 Alexey Shabalin <shaba@altlinux.org> 6.2.0-alt3
+- Fixed /usr/bin/qemu-kvm script (ALT #42713)
+
 * Thu Feb 24 2022 Alexey Shabalin <shaba@altlinux.org> 6.2.0-alt2
 - Fixes for the following security vulnerabilities:
   + CVE-2022-0358 virtiofsd: Drop membership of all supplementary groups
