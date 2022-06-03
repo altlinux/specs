@@ -1,6 +1,6 @@
 
 Name: libslirp
-Version: 4.6.1
+Version: 4.7.0
 Release: alt1
 Summary: A general purpose TCP-IP emulator
 Group: System/Libraries
@@ -45,6 +45,9 @@ echo "%version" > .tarball-version
 %_pkgconfigdir/slirp.pc
 
 %changelog
+* Fri Jun 03 2022 Alexey Shabalin <shaba@altlinux.org> 4.7.0-alt1
+- new version 4.7.0
+
 * Mon Jul 19 2021 Alexey Shabalin <shaba@altlinux.org> 4.6.1-alt1
 - new version 4.6.1 (Fixes: CVE-2021-3592, CVE-2021-3593, CVE-2021-3594, CVE-2021-3595)
 
