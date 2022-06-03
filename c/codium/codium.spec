@@ -1,5 +1,5 @@
 Name:    codium
-Version: 1.66.2
+Version: 1.67.2
 Release: alt1
 
 Summary: Visual Studio Code without MS branding/telemetry/licensing
@@ -21,7 +21,7 @@ Source4: codium.png
 %set_verify_elf_method skip
 %global __find_debuginfo_files %nil
 
-BuildRequires: electron13
+BuildRequires: electron4
 BuildRequires: libgio
 BuildRequires: libnss
 BuildRequires: libnspr
@@ -48,6 +48,8 @@ BuildRequires: libalsa
 BuildRequires: libat-spi2-core
 BuildRequires: libsecret
 BuildRequires: libxkbfile
+
+Provides: vscodium = %EVR
 
 ExclusiveArch: x86_64 armh aarch64
 
@@ -93,6 +95,10 @@ install -m644 -D %SOURCE4 %buildroot%_pixmapsdir/codium.png
 %_pixmapsdir/codium.png 
 
 %changelog
+* Fri Jun 03 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.67.2-alt1
+- new version (1.67.2)
+- added Provides: vscodium
+
 * Thu Apr 28 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.66.2-alt1
 - changed build from source to packing from binaries
 - new version (1.66.2) ALT #42144
