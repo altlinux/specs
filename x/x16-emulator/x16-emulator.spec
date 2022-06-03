@@ -1,6 +1,7 @@
+%set_gcc_version 10
 Name: x16-emulator
 Version: r38
-Release: alt3
+Release: alt4
 
 Summary: Emulator for the Commander X16 computer system
 License: BSD-2-Clause License
@@ -35,7 +36,7 @@ operating systems.
 pandoc --from gfm --to html -c github-pandoc.css --standalone --metadata pagetitle="X16 Emulator" README.md --output README.html
 %endif
 
-%make_build
+%make_build OPTIMISE="%optflags -std=gnu++14"
 
 %install
 mkdir -p %buildroot%_docdir/%name/
@@ -72,6 +73,7 @@ done
 %dir %_iconsdir/hicolor/64x64/apps
 %dir %_iconsdir/hicolor/128x128
 %dir %_iconsdir/hicolor/128x128/apps
+%dir %_docdir/%name/
 %doc README.md LICENSE
 %_bindir/%name
 %_iconsdir/hicolor/*/apps/%name.png
@@ -82,6 +84,9 @@ done
 %endif
 
 %changelog
+* Thu Jun 02 2022 Artyom Bystrov <arbars@altlinux.org> r38-alt4
+- Add GCC handle
+
 * Sat Jan 15 2022 Michael Shigorin <mike@altlinux.org> r38-alt3
 - E2K: build without pandoc (unavailable for now)
 - minor spec cleanup
