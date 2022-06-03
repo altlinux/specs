@@ -3,7 +3,7 @@
 %define libsnapd_qt libsnapd-qt%sover
 %define libsnapd_glib libsnapd-glib%sover
 Name: snapd-glib
-Version: 1.58
+Version: 1.60
 Release: alt1
 
 Group: System/Libraries
@@ -126,5 +126,8 @@ that use snapd-qt to communicate with snapd.
 #%_datadir/installed-tests/snapd-glib/*-qt.test
 
 %changelog
+* Fri Jun 03 2022 Sergey V Turchin <zerg@altlinux.org> 1.60-alt1
+- new version
+
 * Wed Dec 08 2021 Sergey V Turchin <zerg@altlinux.org> 1.58-alt1
 - initial build
