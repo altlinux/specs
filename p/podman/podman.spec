@@ -1,9 +1,10 @@
 %global _unpackaged_files_terminate_build 1
 %global import_path github.com/containers/podman
 %define _libexecdir %_usr/libexec
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     podman
-Version:  4.0.3
+Version:  4.1.0
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -17,7 +18,7 @@ Source:   %name-%version.tar
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang rpm-macros-systemd
 BuildRequires: golang go-md2man
-BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libbtrfs-devel
+BuildRequires: libseccomp-devel glib2-devel libgpgme-devel libgpg-error-devel libbtrfs-devel
 BuildRequires: libgio-devel libostree-devel libselinux-devel libdevmapper-devel
 BuildRequires: libassuan-devel libsystemd-devel
 BuildRequires: /proc
@@ -32,6 +33,7 @@ Requires: runc
 Requires: slirp4netns
 Requires: cni cni-plugins >= 0.8.6
 Requires: xz
+Requires: shadow-submap
 
 %description
 %summary.
@@ -56,18 +58,15 @@ Requires: %name = %EVR
 %description remote
 Remote client for managing %name containers.
 
-This experimental remote client is under heavy development. Please do not
-run %name-remote in production.
-
-%name-remote uses the varlink connection to connect to a %{name} client to
-manage pods, containers and container images. %{name}-remote supports ssh
+%name-remote uses the libpod REST API to connect to a %name client to
+manage pods, containers and container images. %name-remote supports ssh
 connections as well.
 
 %prep
 %setup
 
 %build
-export CGO_CFLAGS="-O2 -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -ffat-lto-objects -fexceptions -fasynchronous-unwind-tables -fstack-protector-strong -fstack-clash-protection -D_GNU_SOURCE -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE"
+export CGO_CFLAGS=$CFLAGS
 
 %ifnarch %ix86 %mips32 %arm
 export CGO_CFLAGS+=" -D_FILE_OFFSET_BITS=64"
@@ -76,7 +75,7 @@ export CGO_CFLAGS+=" -D_FILE_OFFSET_BITS=64"
 %ifarch x86_64
 # Builds only on x86_64 with this flag
 export CGO_CFLAGS+=" -m64 -mtune=generic"
-export CGO_CFLAGS+=" -fcf-protection"
+export CGO_CFLAGS+=" -fcf-protection=full"
 %endif
 
 export BUILDDIR="$PWD/.gopath"
@@ -90,7 +89,7 @@ export GIT_COMMIT=%release
 %golang_prepare
 
 pushd .gopath/src/%import_path
-%make_build PREFIX=%_prefix TMPFILESDIR=%_tmpfilesdir SYSTEMDDIR=%_unitdir
+%make_build PREFIX=%_prefix TMPFILESDIR=%_tmpfilesdir SYSTEMDDIR=%_unitdir MODULESLOADDIR=%_modulesloaddir
 %make docs docker-docs
 popd
 
@@ -104,9 +103,10 @@ export RELEASE_NUMBER=%version
 export GIT_COMMIT=%release
 
 pushd .gopath/src/%import_path
-%make DESTDIR=%buildroot PREFIX=%_prefix TMPFILESDIR=%_tmpfilesdir SYSTEMDDIR=%_unitdir \
+%make DESTDIR=%buildroot PREFIX=%_prefix TMPFILESDIR=%_tmpfilesdir SYSTEMDDIR=%_unitdir MODULESLOADDIR=%_modulesloaddir \
     install.bin \
     install.remote \
+    install.modules-load \
     install.man \
     install.completions \
     install.systemd \
@@ -114,10 +114,7 @@ pushd .gopath/src/%import_path
     install.docker-docs
 popd
 
-# install /etc/modules-load.d/podman.conf
-echo br_netfilter > %name.conf
-install -dp %buildroot%_sysconfdir/modules-load.d
-install -p -m 644 %name.conf %buildroot%_sysconfdir/modules-load.d/
+echo br_netfilter >> %buildroot%_modulesloaddir/podman-iptables.conf
 
 rm -f %buildroot%_man5dir/dockerignore*
 rm -f %buildroot%_man5dir/dockerfile*
@@ -129,7 +126,7 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/fish/vendor_completions.d/%name.fish
 %_unitdir/*
 %_userunitdir/*
-%config(noreplace) %_sysconfdir/modules-load.d/%name.conf
+%_modulesloaddir/*
 %_man1dir/*
 %exclude %_man1dir/%name-remote*
 %exclude %_man1dir/docker*
@@ -153,6 +150,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_tmpfilesdir/%name-docker.conf
 
 %changelog
+* Fri Jun 03 2022 Alexey Shabalin <shaba@altlinux.org> 4.1.0-alt1
+- new version 4.1.0
+
 * Fri Apr 08 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.3-alt1
 - new version 4.0.3
 
