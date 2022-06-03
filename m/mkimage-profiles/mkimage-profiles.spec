@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.29
+Version: 1.4.30
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,17 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Jun 03 2022 Anton Midyukov <antohami@altlinux.org> 1.4.30-alt1
+- create initrd.img with propagator instead full.cz
+- base+network, base+nm: add missing iputils
+- uboot: use relative pathes in extlinux.conf
+- replace 'egrep' to 'grep -E', replace 'fgrep' to 'grep -F'
+- install2: drop STAGE1_KMODULES virtualbox-additions, vmguest
+- slinux, workstation: add latest commits from sem@
+- education: add latest commits from cas@
+- alt-server: add latest commits from jqt4@
+- fix build slinux, workstation, education, alt-server on e2k
+
 * Mon Apr 18 2022 Anton Midyukov <antohami@altlinux.org> 1.4.29-alt1
 - stage2: fix 50-stage2-fs
 - desktop+mate: replace package list to metapackages
