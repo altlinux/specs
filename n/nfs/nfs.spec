@@ -1,6 +1,6 @@
 Name: nfs
 Version: 2.6.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -311,6 +311,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Fri Jun 03 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.1-alt2
+- fix build with gcc-12
+
 * Fri Jan 28 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.1-alt1
 - 2.6.1 released
 
