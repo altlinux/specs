@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-set
-Version: 21.12.2
+Version: 22.04.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -98,7 +98,6 @@ Requires: kde5-connect
 Requires: kde5-krfb
 Requires: kde5-kdf
 Requires: kid3-ui-kde5
-Requires: kde5-kipi-plugins-core
 Requires: kde5-graphics-thumbnailers
 %description -n kde5-big
 %summary
@@ -113,7 +112,7 @@ Requires: kde5-printing
 Requires: kde5-scanning
 #
 Requires: plasma5-discover-maxi
-#Requires: plasma5-desktop-maxi
+Requires: plasma5-desktop-maxi
 Requires: kde5-konqueror kde5-keditbookmarks
 Requires: kde5-kfloppy
 Requires: kde5-dragon
@@ -121,7 +120,7 @@ Requires: kde5-kmousetool kde5-kmag
 Requires: kde5-juk kde5-kmouth
 Requires: kdenlive
 Requires: kde5-k3b kde5-kwave kde5-konversation
-Requires: kde5-digikam kde5-kipi-plugins
+Requires: kde5-digikam
 %description -n kde5-maxi
 %summary
 
@@ -220,6 +219,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Fri Jun 03 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.0-alt1
+- drop kipi-plugins
+
 * Thu Apr 28 2022 Sergey V Turchin <zerg@altlinux.org> 21.12.2-alt1
 - rearrange oxygen requires
 
