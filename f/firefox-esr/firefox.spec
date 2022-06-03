@@ -6,7 +6,7 @@
 
 %define gst_version   1.0
 %define nspr_version  4.32
-%define nss_version   3.72.0
+%define nss_version   3.69.0
 %define rust_version  1.54.0
 %define cargo_version 1.54.0
 %define llvm_version  11.0
@@ -15,7 +15,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 91.9.1
+Version: 91.10.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -456,6 +456,18 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri Jun 03 2022 Pavel Vasenkov <pav@altlinux.org> 91.10.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2022-31736 Cross-Origin resource's length leaked
+  + CVE-2022-31737 Heap buffer overflow in WebGL
+  + CVE-2022-31738 Browser window spoof using fullscreen mode
+  + CVE-2022-31739 Attacker-influenced path traversal when saving downloaded files
+  + CVE-2022-31740 Register allocation problem in WASM on arm64
+  + CVE-2022-31741 Uninitialized variable leads to invalid memory read
+  + CVE-2022-31742 Querying a WebAuthn token with a large number of allowCredential entries may have leaked cross-origin information
+  + CVE-2022-31747 Memory safety bugs fixed in Firefox 101 and Firefox ESR 91.10
+
 * Sun May 22 2022 Pavel Vasenkov <pav@altlinux.org> 91.9.1-alt1
 - New ESR version.
 - Security fixes:
