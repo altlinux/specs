@@ -1,21 +1,14 @@
 
 %global import_path github.com/containernetworking/cni
-%global commit 4cfb7b568922a3c79a23e438dc52fe537fc9687e
-#%%global shortcommit %(c=%commit; echo ${c:0:7})
 
-%global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
-%set_verify_elf_method unresolved=no
-%add_debuginfo_skiplist %_bindir
-%brp_strip_none %_bindir/*
-
 Name: cni
-Version: 0.8.0
+Version: 1.1.1
 Release: alt1
 Summary: Container Network Interface - networking for Linux containers
 Group: Development/Other
-License: ASL 2.0
+License: Apache-2.0
 Url: https://%import_path
 Source: %name-%version.tar
 ExclusiveArch: %go_arches
@@ -49,10 +42,10 @@ export GOPATH="$BUILDDIR:%go_path"
 cd .gopath/src/%import_path
 
 export VERSION=%version
-export COMMIT=%commit
+export COMMIT=%release
 export BRANCH=altlinux
 
-CGO_ENABLED=0 GOGC=off go install -ldflags " -s -w \
+CGO_ENABLED=0 GOGC=off go install -ldflags " \
     -X main.version=$VERSION \
     -X main.commit=$COMMIT \
     -X main.branch=$BRANCH \
@@ -72,6 +65,9 @@ rm -f %buildroot%_bindir/{noop,sleep}
 %_bindir/*
 
 %changelog
+* Fri Jun 03 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Thu Sep 10 2020 Alexey Shabalin <shaba@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
