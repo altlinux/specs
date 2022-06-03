@@ -2,7 +2,7 @@
 Name: libcgroup
 Summary: Libraries for allow to control and monitor control groups
 Group: System/Libraries
-Version: 2.0
+Version: 2.0.2
 Release: alt1
 License: LGPLv2+
 Url: http://libcg.sourceforge.net/
@@ -131,6 +131,9 @@ install -m 644 cgred.service %buildroot%_unitdir/
 %_pkgconfigdir/libcgroup.pc
 
 %changelog
+* Fri Jun 03 2022 Alexey Shabalin <shaba@altlinux.org> 2.0.2-alt1
+- new version 2.0.2
+
 * Sat May 29 2021 Alexey Shabalin <shaba@altlinux.org> 2.0-alt1
 - new version 2.0
 
