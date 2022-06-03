@@ -6,7 +6,7 @@
 %define cni_etc_dir %_sysconfdir/cni
 
 Name: cni-plugins
-Version: 1.0.1
+Version: 1.1.1
 Release: alt1
 Summary: Container Network Interface plugins
 Group: Development/Other
@@ -66,6 +66,9 @@ install -p -m0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/*
 
 %changelog
+* Fri Jun 03 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt1
+- new version 1.1.1
+
 * Mon Nov 01 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.1-alt1
 - new version 1.0.1
 
