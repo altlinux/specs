@@ -4,7 +4,7 @@
 
 Name: iptraf-ng
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: IPTraf-ng is a console-based network monitoring program for Linux
 License: GPL-2.0
@@ -62,5 +62,8 @@ install -pD -m644 iptraf-ng-logrotate.conf %buildroot%_logrotatedir/%name.conf
 
 
 %changelog
+* Sat Jun 04 2022 Anton Zhukharev <ancieg@altlinux.org> 1.2.1-alt2
+- bump release to override autoimports package
+
 * Tue May 31 2022 Anton Zhukharev <ancieg@altlinux.org> 1.2.1-alt1
 - initial build for Sisyphus
