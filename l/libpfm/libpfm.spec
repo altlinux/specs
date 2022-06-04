@@ -5,7 +5,7 @@
 
 Name: libpfm
 Version: 4.11.1
-Release: alt1
+Release: alt2
 Summary: Library to encode performance events for use by perf tool
 License: MIT
 Group: System/Libraries
@@ -36,7 +36,7 @@ applications for the perf_events interface.
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-%add_optflags %(getconf LFS_CFLAGS)
+%add_optflags %(getconf LFS_CFLAGS) -Wno-error=use-after-free
 %ifarch ppc64le
 # Possible upstream bug: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=100332
 %add_optflags -Wno-error=maybe-uninitialized
@@ -69,6 +69,9 @@ tests/validate -A
 %_man3dir/*pfm*.3*
 
 %changelog
+* Sat Jun 04 2022 Vitaly Chikunov <vt@altlinux.org> 4.11.1-alt2
+- Fix rebuild after switching to GCC 12.
+
 * Mon Jan 03 2022 Vitaly Chikunov <vt@altlinux.org> 4.11.1-alt1
 - Imported upstream v4.11.1-51-g45d2888 (2021-11-30) into this standalone
   package. Previously libpfm was built from the source bundled in papi.
