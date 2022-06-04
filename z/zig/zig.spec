@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: zig
-Version: 0.8.1
+Version: 0.9.1
 Release: alt1
 Summary: General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
 # TODO: Zig lib is bundled with a lot of third party with other licenses.
@@ -20,16 +20,17 @@ ExcludeArch: %ix86 armh ppc64le
 
 Source: %name-%version.tar
 
+%define minimal_llvm_ver 13
 BuildRequires(pre): rpm-macros-cmake
 # /proc is required or zig will output FileNotFound
 BuildRequires: /proc
-BuildRequires: clang-devel
+BuildRequires: clang-devel >= %minimal_llvm_ver
 BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gcc-c++
-BuildRequires: lld-devel
-BuildRequires: llvm-devel
-BuildRequires: llvm-devel-static
+BuildRequires: lld-devel >= %minimal_llvm_ver
+BuildRequires: llvm-devel >= %minimal_llvm_ver
+BuildRequires: llvm-devel-static >= %minimal_llvm_ver
 
 %description
 %summary.
@@ -38,6 +39,7 @@ BuildRequires: llvm-devel-static
 %setup
 
 %build
+%define optflags_lto %nil
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DLLD_INCLUDE_DIRS=$(llvm-config --includedir) \
@@ -56,5 +58,8 @@ BuildRequires: llvm-devel-static
 %_prefix/lib/zig
 
 %changelog
+* Sat Apr 16 2022 Vitaly Chikunov <vt@altlinux.org> 0.9.1-alt1
+- Updated to 0.9.1 (2022-02-14).
+
 * Fri Sep 10 2021 Vitaly Chikunov <vt@altlinux.org> 0.8.1-alt1
 - First import of 0.8.1 (2021-09-06).
