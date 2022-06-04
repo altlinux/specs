@@ -1,6 +1,6 @@
 Name: hardinfo
 Version: 0.6
-Release: alt1.20210404
+Release: alt2.20220113
 
 Summary: A system profiler for Linux
 License: GPLv2+
@@ -71,6 +71,10 @@ desktop-file-install --vendor="" \
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Jun 04 2022 Anton Midyukov <antohami@altlinux.org> 0.6-alt2.20220113
+- New snapshot
+- Fix locale path (Closes: 42936)
+
 * Sun Apr 11 2021 Anton Midyukov <antohami@altlinux.org> 0.6-alt1.20210404
 - New snapshot
 
