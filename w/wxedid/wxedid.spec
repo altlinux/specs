@@ -1,18 +1,17 @@
 Name:     wxedid
 Version:  0.0.27
-Release:  alt1
+Release:  alt1.1
 
 Summary:  wxEDID - A tool for modifying EDID data on Linux
 License:  GPL-3.0-only
 Group:    System/Configuration/Hardware
 Url:      https://sourceforge.net/projects/wxedid/
 
-
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-#set_gcc_version 11
-
 Source:   %name-%version.tar
+Source1:  %name.desktop
+Source2:  wxEdid.svg  
 
 BuildRequires(pre): gcc-c++ 
 
@@ -50,7 +49,10 @@ wxEDID — это основанный на wxWidgets редактор EDID (Ext
 %makeinstall_std
 install -d %buildroot/%_man1dir/  
 install -m 644 man/*  %buildroot/%_man1dir/
-
+install -d  %buildroot/%_desktopdir
+install -m 644 %SOURCE1 %buildroot/%_desktopdir/
+install -d  %buildroot/%_liconsdir/
+install -m 644 %SOURCE2 %buildroot/%_liconsdir/
 
 %find_lang %name
 
@@ -58,8 +60,13 @@ install -m 644 man/*  %buildroot/%_man1dir/
 %_bindir/*
 %doc AUTHORS ChangeLog
 %_man1dir/*
+%_desktopdir/*
+%_liconsdir/*
+
 
 %changelog
+* Sun Jun 05 2022 Hihin Ruslan <ruslandh@altlinux.ru> 0.0.27-alt1.1
+- Added desktop and icon files 
+
 * Sat Jun 04 2022 Hihin Ruslan <ruslandh@altlinux.ru> 0.0.27-alt1
 - Initial Build to Sisyphus
-
