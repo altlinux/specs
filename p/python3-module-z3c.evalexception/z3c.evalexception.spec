@@ -1,21 +1,22 @@
 %define oname z3c.evalexception
 
 Name: python3-module-%oname
-Version: 2.0
-Release: alt4
+Version: 3.0
+Release: alt1
 
 Summary: Debugging middlewares for zope.publisher-based web applications
-License: ZPLv2.1
+
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/z3c.evalexception/
+Url: http://pypi.python.org/pypi/z3c.evalexception
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
+
+BuildArch: noarch
 
 %py3_requires paste zope.security
-
 
 %description
 z3c.evalexception provides two WSGI middlewares for debugging web
@@ -26,27 +27,22 @@ the application and provide means for debugging.
 %prep
 %setup
 
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 %build
 %python3_build
 
 %install
 %python3_install
 
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-    %buildroot%python3_sitelibdir/
-%endif
-
 %files
 %doc *.txt
-%python3_sitelibdir/*
 %exclude %python3_sitelibdir/*.pth
-
+%python3_sitelibdir/z3c/evalexception
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun Jun 05 2022 Grigory Ustinov <grenka@altlinux.org> 3.0-alt1
+- Build new version.
+
 * Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0-alt4
 - python3 disabled
 
