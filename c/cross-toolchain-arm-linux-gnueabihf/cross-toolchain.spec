@@ -50,10 +50,9 @@
 
 # don't strip debuginfo from binaries for other platform, it does not work
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
-# %brp_strip_none %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*.a %prefix/lib/gcc/%target/%gcc_branch/*.o
 
 Name: cross-toolchain-%target
-Version: 20211201
+Version: 20220605
 Release: alt1
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
@@ -145,11 +144,15 @@ rm -rf stage
 %build
 mkdir -p obj_binutils
 mkdir -p obj_gcc
+mkdir -p obj_gcc_bootstrap
 mkdir -p obj_kheaders
 mkdir -p obj_glibc
 mkdir -p -m755 stage%prefix/bin
-export PATH=`pwd`/stage%prefix/bin:$PATH
+mkdir -p -m755 stage1%prefix/bin
+save_PATH="$PATH"
+export PATH=`pwd`/stage1%prefix/bin:$PATH
 stagedir=`pwd`/stage
+stage1dir=`pwd`/stage1
 
 # kernel headers
 %_make_bin -j%__nprocs \
@@ -192,8 +195,96 @@ cd obj_binutils
 %make_build
 # XXX: avoid makeinstall for it puts $target libraries into /usr/lib64
 %make_install install DESTDIR=${stagedir}
+# for bootstrap toolchain (to compile target glibc)
+%make_install install DESTDIR=${stage1dir}
 
-# N.B.: this builds GCC in a single stage (but not all target at once)
+# bootstrap gcc (for compiling target glibc)
+cd ../obj_gcc_bootstrap
+../gcc/configure \
+	--target=%target \
+	--host=%{_configure_platform} \
+	--build=%{_configure_platform} \
+%if "%target_arch" == "arm"
+	--with-arch=%arm_arch \
+	--with-fpu=%arm_fp_isa \
+	--with-float=%arm_fp_abi \
+%endif
+	--prefix=%prefix \
+	--disable-bootstrap \
+	--disable-multiarch \
+	--disable-multilib \
+	--disable-werror \
+	--with-sysroot=%sysroot \
+	--with-build-sysroot=${stagedir}%sysroot \
+	--enable-languages=c \
+	--with-newlib \
+	--without-headers \
+	--disable-nls \
+	--disable-shared \
+	--disable-threads \
+	--disable-libsanitizer \
+	--disable-libgomp \
+	--disable-libitm \
+	--disable-libquadmath \
+	--disable-libsanitizer \
+	--disable-libssp \
+	--disable-libvtv \
+	--disable-libatomic \
+	--disable-libcilkrts \
+	--enable-version-specific-runtime-libs \
+	--with-gcc-major-version-only \
+	--with-system-zlib \
+%if "%target_arch" == "mipsel"
+	--with-arch-32=mips32r2 \
+	--with-fp-32=xx \
+	--with-lxc1-sxc1=no \
+	--with-madd4=no \
+%endif
+%if "%target_arch" == "riscv64"
+	--with-arch=rv64gc \
+	--with-abi=lp64d \
+%endif
+	%nil
+
+%make_build all-gcc all-target-libgcc
+# XXX: avoid makeinstall for it puts $target libraries into /usr/lib64
+%make_install install-gcc install-target-libgcc DESTDIR=${stage1dir}
+
+# glibc
+cd ../obj_glibc
+# XXX: avoid %%configure since it puts target libraries/binaries into /usr/lib64
+# Note: glibc's is a library, so $host must be the same as $target
+../glibc/configure \
+	--host=%target \
+	--target=%target \
+	--build=%{_configure_platform} \
+%if "%target_arch" == "arm"
+	--with-arch=%arm_arch \
+	--with-fpu=%arm_fp_isa \
+	--with-float=%arm_fp_abi \
+%endif
+	--prefix=%prefix \
+	--with-sysroot=%sysroot \
+	--with-build-sysroot=${stagedir}%sysroot \
+	--with-headers=${stagedir}%sysroot/usr/include \
+	--with-lib=${stagedir}%sysroot/usr/lib \
+	--disable-multilib \
+	--disable-crypt \
+	libc_cv_forced_unwind=yes \
+	%nil
+
+%make_build
+# XXX: avoid makeinstall since it puts target libs into /usr/lib64
+# Note: target glibc **must** be installed into sysroot to prevent
+# native compilers from using it by default
+%make_install install DESTDIR=${stagedir}%sysroot
+# XXX: gcc needs this to locate crt{1,i}.o
+mkdir -p -m755 ${stagedir}%sysroot/usr/lib
+
+# Don't use bootstrap toolchain any more
+export PATH="${stagedir}%prefix/bin:${save_PATH}"
+
+# gcc
 cd ../obj_gcc
 # XXX: avoid %%configure puts $target libraries in /usr/lib64
 ../gcc/configure \
@@ -230,58 +321,8 @@ cd ../obj_gcc
 %endif
 	%nil
 
-%make_build all-gcc
+%make_build
 # XXX: avoid makeinstall for it puts $target libraries into /usr/lib64
-%make_install install-gcc DESTDIR=${stagedir}
-
-cd ../obj_glibc
-# XXX: avoid %%configure since it puts target libraries/binaries into /usr/lib64
-# Note: glibc's is a library, so $host must be the same as $target
-../glibc/configure \
-	--host=%target \
-	--target=%target \
-	--build=%{_configure_platform} \
-%if "%target_arch" == "arm"
-	--with-arch=%arm_arch \
-	--with-fpu=%arm_fp_isa \
-	--with-float=%arm_fp_abi \
-%endif
-	--prefix=%prefix \
-	--with-sysroot=%sysroot \
-	--with-build-sysroot=${stagedir}%sysroot \
-	--with-headers=${stagedir}%sysroot/usr/include \
-	--with-lib=${stagedir}%sysroot/usr/lib \
-	--disable-multilib \
-	--disable-crypt \
-	libc_cv_forced_unwind=yes
-
-# glibc: headers, C runtime
-%_make_bin -j%__nprocs install-bootstrap-headers=yes install-headers DESTDIR=${stagedir}%sysroot
-%_make_bin -j%__nprocs csu/subdir_lib
-install -d -m755 ${stagedir}%sysroot/usr/lib
-install csu/crt1.o csu/crti.o csu/crtn.o ${stagedir}%sysroot/usr/lib
-%target-gcc -nostdlib -nostartfiles -shared -x c /dev/null -o "${stagedir}%sysroot/usr/lib/libc.so"
-touch ${stagedir}/%sysroot/usr/include/gnu/stubs.h
-touch ${stagedir}/%sysroot/usr/include/bits/stdio_lim.h
-
-# libgcc
-cd ../obj_gcc
-%make_build all-target-libgcc
-# XXX: avoid makeinstall since it puts target libs into /usr/lib64
-%make_install install-target-libgcc DESTDIR=${stagedir}
-
-# finish off glibc
-cd ../obj_glibc
-%make_build
-# XXX: avoid makeinstall since it puts target libs into /usr/lib64
-# Note: target glibc **must** be installed into sysroot to prevent
-# native compilers from using it by default
-%make_install install DESTDIR=${stagedir}%sysroot
-
-# finish off gcc (g++, libstdc++, libssp, whatever)
-cd ../obj_gcc
-%make_build
-# XXX: avoid makeinstall since it puts target libs into /usr/lib64
 %make_install install DESTDIR=${stagedir}
 
 %install
@@ -350,6 +391,7 @@ install -d -m 755 %buildroot%sysroot/lib
 ln -s ../lib64/`basename %target_ld_linux` %buildroot%sysroot/lib/`basename %target_ld_linux`
 %endif
 
+# remove runtime bits, not necessary for a cross-toolchain
 rm -rf %buildroot%sysroot/etc
 rm -rf %buildroot%sysroot/var
 rm -rf %buildroot%sysroot/sbin
@@ -377,6 +419,9 @@ find %buildroot%prefix/lib/gcc/%target/%gcc_branch -type f -name 'lib*-gdb.py' -
 
 # XXX: gcc needs this to locate crt1.o
 install -d -m 755 %buildroot%sysroot/usr/lib
+
+# remove bootstrap toolchain
+rm -rf %buildroot/stage1
 
 # Leave alone $target libraries
 %add_verify_elf_skiplist %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*
@@ -590,6 +635,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Sun Jun 05 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 20220605-alt1
+- Use slow 2-stage bootstrap to avoid a build failure with GCC 12
+
 * Wed Dec 01 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 20211201-alt1
 - Added armv7-a targeted compiler (arm-linux-gnueabihf)
 - Partially merged riscv64/mipsel specs from iv@
