@@ -38,7 +38,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           gnu-getopt
 Version:        1.0.14
-Release:        alt1_17jpp8
+Release:        alt1_20jpp8
 Epoch:          0
 Summary:        Java getopt implementation
 License:        LGPLv2+
@@ -77,35 +77,30 @@ BuildArch: noarch
 %setup -q -c
 mv gnu/getopt/buildx.xml build.xml
 
+# install in _javadir
+%mvn_file %{name}:getopt %{name}
+
 %build
 ant jar javadoc
 
+%mvn_artifact %{SOURCE2} build/lib/gnu.getopt.jar
+%mvn_alias %{name}:getopt urbanophile:java-getopt gnu.getopt:java-getopt
+
 %install
-install -d -m 755 %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-
-install -p -m 644 build/lib/gnu.getopt.jar %{buildroot}%{_javadir}/%{name}.jar
+%mvn_install -J build/api
 ln -sf %{name}.jar %{buildroot}%{_javadir}/gnu.getopt.jar
-
-install -p -m 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap -a urbanophile:java-getopt,gnu.getopt:java-getopt
-
-cp -pr build/api/* %{buildroot}%{_javadocdir}/%{name}
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files -f .mfiles
 %doc gnu/getopt/COPYING.LIB gnu/getopt/README
 %{_javadir}/gnu.getopt.jar
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc gnu/getopt/COPYING.LIB
-%{_javadocdir}/%{name}
 
 %changelog
+* Sun Jun 05 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0.14-alt1_20jpp8
+- migrated to %%mvn_artifact
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt1_17jpp8
 - fc update
 
