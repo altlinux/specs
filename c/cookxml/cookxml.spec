@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:             cookxml
 Version:          3.0.2
-Release:          alt4_17jpp8
+Release:          alt5_17jpp8
 Summary:          Dynamic XML data binding tool
 License:          BSD
 URL:              http://cookxml.yuanheng.org/
@@ -46,35 +46,28 @@ This package contains the API documentation for %{name}.
 find . -name '*.jar' -exec rm -rf {} \;
 
 sed -i 's/\r//' LICENSE
+# install in _javadir
+%mvn_file org.yuanheng.%{name}:%{name} %{name}
 
 %build
 cp %{SOURCE1} .
 ant -f %{name}-build.xml cookxml_jar apidoc
 
+%mvn_artifact %{SOURCE2} dist/%{name}-%{version}.jar
+
 %install
-# JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-cp -p dist/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# JAVADOC
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp apidoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# POM
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-
-# DEPMAP
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%mvn_install -J apidoc
 
 %files -f .mfiles
 %doc LICENSE
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
 
 %changelog
+* Sun Jun 05 2022 Igor Vlasenko <viy@altlinux.org> 3.0.2-alt5_17jpp8
+- migrated to %%mvn_artifact
+
 * Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt4_17jpp8
 - fixed build with new java
 
