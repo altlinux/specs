@@ -39,7 +39,7 @@ Name:		json
 Summary:	JavaScript Object Notation
 Url:		http://www.json.org/java/index.html
 Version:	20080425
-Release:	alt6_2jpp6
+Release:	alt7_2jpp6
 Epoch:		0
 License:	Open Source
 Group:		Development/Java
@@ -76,6 +76,9 @@ chmod -R go=u-w *
 mkdir src
 mv org src
 
+# install in _javadir
+%mvn_file org.%{name}:%{name} %{name}
+
 %build
 mkdir -p target/classes
 %{_jvmdir}/java/bin/javac  -target 1.6 -source 1.6 -d target/classes $(find src -name "*.java")
@@ -83,18 +86,10 @@ mkdir -p target/classes
 #mkdir -p target/site/apidocs
 #%{_jvmdir}/java/bin/javadoc -d target/site/apidocs $(find src -name "*.java")
 
+%mvn_artifact %{SOURCE1} target/%{name}.jar
+
 %install
-%define installname %{name}-%{version}
-%define installname %{name}
-
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 target/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{installname}.jar
-
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-json.pom
-%add_maven_depmap -v %{version} JPP-json.pom %{installname}.jar
+%mvn_install
 
 # javadoc
 #install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -102,13 +97,15 @@ install -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-json.pom
 #ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 %files -f .mfiles
-%{_javadir}/*
 
 #%files javadoc
 #%doc %{_javadocdir}/%{name}-%{version}
 #%doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Jun 05 2022 Igor Vlasenko <viy@altlinux.org> 0:20080425-alt7_2jpp6
+- migrated to %%mvn_artifact
+
 * Fri Jul 02 2021 Igor Vlasenko <viy@altlinux.org> 0:20080425-alt6_2jpp6
 - java11 build
 
