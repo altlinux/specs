@@ -1,6 +1,6 @@
 Name:     stacer
 Version:  1.1.0
-Release:  alt1.2
+Release:  alt1.3
 
 Summary:  Linux System Optimizer and Monitoring - https://oguzhaninan.github.io/Stacer-Web
 License:  GPL-3.0
@@ -12,7 +12,10 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 #set_gcc_version 11
 
 Source:   %name-%version.tar
-Patch1:   stacer-1.1.0-translation.patch
+Patch1:  stacer-1.1.0-translation.patch
+Patch2:  stacer-1.0.0-apt-rpm.patch
+Patch3:  stacer-1.0.0-fixlscpu.patch
+Patch4:  stacer-1.0.0-fix_warnings.patch
 
 BuildRequires(pre): cmake rpm-macros-cmake  rpm-macros-qt5 gcc-c++ 
 
@@ -28,6 +31,7 @@ BuildRequires: qt5-base-devel qt5-svg-devel qt5-charts-devel qt5-tools-devel
 
 # BuildRequires: bzlib-devel libblkid-devel libe2fs-devel libgcrypt-devel liblz4-devel liblzma-devel liblzo2-devel libuuid-devel python3-module-zope qt5-connectivity-devel qt5-multimedia-devel qt5-phonon-devel qt5-sensors-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-x11extras-devel qt5-xmlpatterns-devel zlib-devel
 
+Requires: util-linux
 
 %description
 %summary
@@ -37,7 +41,9 @@ BuildRequires: qt5-base-devel qt5-svg-devel qt5-charts-devel qt5-tools-devel
 %prep
 %setup
 %patch1 -p1
-
+%patch2 -p2
+%patch3 -p2
+%patch4 -p1
 
 %build
 export PATH=$PATH:%_qt5_bindir
@@ -75,6 +81,9 @@ cp stacer/translations/%{name}*.qm %buildroot%_datadir/%name/translations
 
 
 %changelog
+* Fri Jun 03 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.1.0-alt1.3
+- Add apt-rpm
+
 * Thu Jun 02 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.1.0-alt1.2
 - Correct Translations
 
@@ -83,4 +92,5 @@ cp stacer/translations/%{name}*.qm %buildroot%_datadir/%name/translations
 
 * Tue May 31 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.1.0-alt1
 - Initial build for Sisyphus
+
 
