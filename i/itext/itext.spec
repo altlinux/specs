@@ -14,7 +14,7 @@ BuildRequires: jpackage-default
 Summary:          A Free Java-PDF library
 Name:             itext
 Version:          2.1.7
-Release:          alt6_41jpp11
+Release:          alt7_41jpp11
 #src/toolbox/com/lowagie/toolbox/Versions.java is MPLv1.1 or MIT
 #src/toolbox/com/lowagie/toolbox/plugins/XML2Bookmarks.java is MPLv1.1 or LGPLv2+
 #src/rups/com/lowagie/rups/Rups.java is LGPLv2+
@@ -243,6 +243,17 @@ sed -i 's|maxmemory="128m"|maxmemory="512m"|' src/ant/site.xml
 sed -i '/Class-Path/d' src/ant/compile.xml
 sed -i 's,59 Temple Place,51 Franklin Street,;s,Suite 330,Fifth Floor,;s,02111-1307,02110-1301,' src/core/com/lowagie/text/lgpl.txt
 
+
+# install in _javadir
+%mvn_file com.lowagie:%{name} %{name}
+%mvn_file com.lowagie:%{name}-rtf %{name}-rtf
+%mvn_file com.lowagie:%{name}-rups %{name}-rups
+%mvn_alias com.lowagie:%{name} "itext:itext"
+
+%mvn_package ":%{name}-rtf" rtf
+%mvn_package ":%{name}-rups" rups
+
+
 %build
 export CLASSPATH=$(build-classpath bcprov bcmail bcpkix pdf-renderer dom4j)
 pushd src
@@ -253,15 +264,14 @@ pushd src
 #     javadoc
 popd
 
+%mvn_artifact JPP-%{name}.pom lib/iText.jar
+%mvn_artifact JPP-%{name}-rtf.pom lib/iText-rtf.jar
+%mvn_artifact JPP-%{name}-rups.pom lib/iText-rups.jar
+
 %install
+%mvn_install -J apidoc
 # jars
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p lib/iText.jar \
-      $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-cp -p lib/iText-rtf.jar \
-      $RPM_BUILD_ROOT%{_javadir}/%{name}-rtf.jar
-cp -p lib/iText-rups.jar \
-      $RPM_BUILD_ROOT%{_javadir}/%{name}-rups.jar
 cp -p lib/iText-toolbox.jar \
       $RPM_BUILD_ROOT%{_javadir}/%{name}-toolbox.jar
 
@@ -292,15 +302,6 @@ cp -a %{name}.png \
 #mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 #cp -pr build/docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-# Install the pom
-install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-cp -pr JPP-itext.pom $RPM_BUILD_ROOT%{_mavenpomdir}
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "itext:itext"
-
-cp -pr JPP-%{name}-rtf.pom $RPM_BUILD_ROOT%{_mavenpomdir}
-%add_maven_depmap JPP-%{name}-rtf.pom %{name}-rtf.jar -f rtf
-cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
-%add_maven_depmap JPP-%{name}-rups.pom %{name}-rups.jar  -f rups
 
 %files
 %doc --no-dereference build/bin/com/lowagie/text/apache_license.txt
@@ -346,6 +347,9 @@ cp -pr JPP-%{name}-rups.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sun Jun 05 2022 Igor Vlasenko <viy@altlinux.org> 1:2.1.7-alt7_41jpp11
+- migrated to %%mvn_artifact
+
 * Fri Aug 27 2021 Igor Vlasenko <viy@altlinux.org> 1:2.1.7-alt6_41jpp11
 - real java11 build
 - build w/o javadoc
