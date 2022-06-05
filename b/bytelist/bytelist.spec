@@ -14,7 +14,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           bytelist
 Version:        1.0.8
-Release:        alt2_22jpp11
+Release:        alt3_22jpp11
 Summary:        A java library for lists of bytes
 
 License:        CPL or GPLv2+ or LGPLv2+
@@ -48,6 +48,8 @@ A small java library for manipulating lists of bytes.
 find -name '*.class' -delete
 find -name '*.jar' -delete
 
+# install in _javadir
+%mvn_file org.jruby.extras:%{name} %{name}
 
 %build
 echo "See %{url} for more info about the %{name} project." > README.txt
@@ -56,27 +58,22 @@ export CLASSPATH=$(build-classpath junit jcodings)
 mkdir -p lib
 %ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 
 
+%mvn_artifact pom.xml lib/%{name}-1.0.2.jar
 
 %install
-mkdir -p %{buildroot}%{_javadir}
-
-cp -p lib/%{name}-1.0.2.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%mvn_install
 
 %check
 export CLASSPATH=$(build-classpath junit jcodings)
 %ant test
 
-%files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_datadir}/maven-metadata/%{name}.xml
+%files -f .mfiles
 %doc README.txt
 
 %changelog
+* Sun Jun 05 2022 Igor Vlasenko <viy@altlinux.org> 1.0.8-alt3_22jpp11
+- migrated to %%mvn_artifact
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.8-alt2_22jpp11
 - update
 
