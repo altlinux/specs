@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -40,7 +40,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:           gnu-regexp
 Version:        1.1.4
-Release:        alt1_27jpp8
+Release:        alt1_27jpp11
 Summary:        Java NFA regular expression engine implementation
 # GPLv2+: gnu/regexp/util/Egrep.java
 #         gnu/regexp/util/Grep.java
@@ -96,44 +96,39 @@ Javadoc for %{name}.
 %setup -q -n gnu.regexp-%{version}
 cp %{SOURCE1} build.xml
 
+# install in _javadir
+%mvn_file %{name}:%{name} %{name}
+
 %build
 export CLASSPATH=$(build-classpath gnu-getopt)
 ant jar javadoc
 
+%mvn_artifact %{SOURCE2} build/lib/gnu.regexp.jar
+
 %install
+%mvn_install -J build/api
 # jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 build/lib/gnu.regexp.jar %{buildroot}%{_javadir}/%{name}.jar
 ln -s %{name}.jar %{buildroot}%{_javadir}/gnu.regexp.jar
-
-# pom
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -p -m 644 %{SOURCE2} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-# depmap
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # demo
 install -d -m 755 %{buildroot}%{_datadir}/%{name}/gnu/regexp/util
 install -p -m 644 build/classes/gnu/regexp/util/*.class \
   %{buildroot}%{_datadir}/%{name}/gnu/regexp/util
 
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-cp -rp build/api/* %{buildroot}%{_javadocdir}/%{name}
-
 %files -f .mfiles
 %doc COPYING COPYING.LIB README TODO docs/*.html
-%{_javadir}/*
+%{_javadir}/gnu.regexp.jar
 
 %files demo
 %{_datadir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc COPYING COPYING.LIB
-%doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Jun 05 2022 Igor Vlasenko <viy@altlinux.org> 0:1.1.4-alt1_27jpp11
+- migrated to %%mvn_artifact
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1.4-alt1_27jpp8
 - new version
 
