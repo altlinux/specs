@@ -3,17 +3,18 @@
 
 Name: python3-module-%oname
 Version: 1.0.0
-Release: alt2
+Release: alt3
+
 Summary: Useful extra bits for Python - things that shold be in the standard library
+
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/extras
 
-Source0: https://pypi.python.org/packages/be/18/0b7283f0ebf6ad4bb6b9937538495eadf05ef097b102946b9445c4242636/%{oname}-%{version}.tar.gz
+Source0: %oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python-tools-2to3
 
 %description
 extras is a set of extensions to the Python standard library, originally
@@ -33,10 +34,9 @@ general use outside of a testing context.
 This package contains tests for extras.
 
 %prep
-%setup -n %{oname}-%{version}
+%setup -n %oname-%version
 
 %build
-find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 
 %install
@@ -44,13 +44,17 @@ find -type f -name '*.py' -exec 2to3 -w '{}' +
 
 %files
 %doc LICENSE NEWS *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Sun Jun 05 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt3
+- Drop 2to3 dependency.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt2
 - Drop python2 support.
 
