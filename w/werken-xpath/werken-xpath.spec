@@ -38,7 +38,7 @@ BuildRequires: jpackage-default
 
 Name:           werken-xpath
 Version:        0.9.4
-Release:        alt2_15.beta.12.7jpp11
+Release:        alt3_15.beta.12.7jpp11
 Epoch:          0
 Summary:        XPath implementation using JDOM
 License:        Saxpath
@@ -110,6 +110,9 @@ done
 cp %{SOURCE1} .
 
 # -----------------------------------------------------------------------------
+# install in _javadir
+%mvn_file %{name}:%{name} %{name}
+
 
 %build
 export CLASSPATH=$(build-classpath jdom antlr xerces-j2 xml-commons-apis)
@@ -120,35 +123,25 @@ CLASSPATH=$CLASSPATH:build/werken.xpath.jar:build/test/classes
 sh runtests.sh
 
 # -----------------------------------------------------------------------------
+%mvn_artifact %{name}-%{version}.pom build/%{dotname}.jar
 
 %install
-# jars
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p build/%{dotname}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-# javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# maven
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 %{name}-%{version}.pom \
-        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
-
+%mvn_install -J build/apidocs
 
 # -----------------------------------------------------------------------------
 
 %files -f .mfiles
 %doc INSTALL LICENSE LIMITATIONS README TODO
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%{_javadocdir}/%{name}
 
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 0:0.9.4-alt3_15.beta.12.7jpp11
+- migrated to %%mvn_artifact
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:0.9.4-alt2_15.beta.12.7jpp11
 - java11 build
 
