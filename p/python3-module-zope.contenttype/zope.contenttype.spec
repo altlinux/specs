@@ -4,10 +4,11 @@
 
 Name: python3-module-%oname
 Version: 4.5.0
-Release: alt1
+Release: alt2
 
 Summary: Zope contenttype
-License: ZPL
+
+License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.contenttype/
 
@@ -15,8 +16,9 @@ Url: http://pypi.python.org/pypi/zope.contenttype/
 Source0: https://pypi.python.org/packages/e0/56/25c9ea14b6632a9e90f96ecc88e10caf743e66a6365b06d6ff881e16af06/%{oname}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
 BuildRequires: python3-module-zope.testrunner
+
+BuildArch: noarch
 
 %py3_requires zope
 
@@ -35,21 +37,13 @@ A utility module for content-type handling.
 This package contains tests for zope.contenttype.
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-find -type f -name '*.py' -exec 2to3 -w '{}' +
+%setup -n %{oname}-%{version}
 
 %build
 %python3_build
 
 %install
 %python3_install
-
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-    %buildroot%python3_sitelibdir/
-%endif
 
 %check
 %__python3 setup.py test -v
@@ -65,6 +59,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Mon Jun 06 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt2
+- Drop 2to3 dependency.
+
 * Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.5.0-alt1
 - Version updated to 4.5.0.
 
