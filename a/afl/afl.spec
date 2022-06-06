@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_with clang
+%def_without clang
 
 Name: afl
-Version: 2.56
-Release: alt4.b.git.f10d601
+Version: 2.57b
+Release: alt1
 
 Summary: american fuzzy lop - a security-oriented fuzzer
 License: Apache-2.0
@@ -69,6 +69,10 @@ install -m0755 -D %SOURCE1 %buildroot/%_bindir/afl-hsh-rebuild
 %_defaultdocdir/%name
 
 %changelog
+* Mon Jun 06 2022 Paul Wolneykien <manowar@altlinux.org> 2.57b-alt1
+- Version 2.57b.
+- Build without clang.
+
 * Mon Mar 30 2020 Paul Wolneykien <manowar@altlinux.org> 2.56-alt4.b.git.f10d601
 - Added afl-hsh-rebuild wrapper.
 
