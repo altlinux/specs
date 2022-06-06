@@ -5,9 +5,9 @@
 
 Name: python3-module-%oname
 Version: 4.3.1
-Release: alt2
+Release: alt3
 Summary: Password encoding and checking utilities
-License: ZPL
+License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.password/
 
@@ -15,8 +15,6 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 
 %if_with check
 BuildRequires: python3-module-tox
@@ -32,6 +30,8 @@ BuildRequires: python3-module-zope.component
 BuildRequires: python3-module-zope.component-tests
 BuildRequires: python3-module-zope.security
 %endif
+
+BuildArch: noarch
 
 %py3_requires zope zope.component zope.configuration zope.interface
 
@@ -59,11 +59,6 @@ This package contains tests for zope.password.
 
 %install
 %python3_install
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
 pushd %buildroot%_bindir
 for i in $(ls); do
 	mv $i $i.py3
@@ -93,6 +88,10 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 --sitepackages -e py%{python_version_no
 %python3_sitelibdir/*/*/*/test*
 
 %changelog
+* Mon Jun 06 2022 Grigory Ustinov <grenka@altlinux.org> 4.3.1-alt3
+- Fix noarch crutch.
+- Fix license.
+
 * Thu Apr 02 2020 Nikolai Kostrigin <nickel@altlinux.org> 4.3.1-alt2
 - Fix tests by adding zope.security to BR:
 
