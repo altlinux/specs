@@ -26,7 +26,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -387,6 +387,9 @@ rm -rf %buildroot%_docdir/fwupd
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 
 %changelog
+* Sat Jun 04 2022 Anton Farygin <rider@altlinux.ru> 1.8.1-alt1
+- 1.8.0 -> 1.8.1
+
 * Thu May 12 2022 Anton Farygin <rider@altlinux.ru> 1.8.0-alt1
 - 1.7.7 -> 1.8.0
 
