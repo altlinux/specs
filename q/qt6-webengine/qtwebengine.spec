@@ -25,7 +25,7 @@
 
 Name: qt6-webengine
 Version: 6.2.4
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - QtWebEngine components
@@ -242,6 +242,7 @@ ln -s %__python bin/python
 #syncqt.pl-qt6  -version %version
 
 %build
+ulimit -n $(ulimit -Hn) ||:
 %add_optflags %optflags_shared -Wno-error=return-type
 export PATH=$PWD/bin:$PATH
 NUM_PROCS="%__nprocs"
@@ -387,5 +388,8 @@ done
 %_qt6_datadir/modules/*.json
 
 %changelog
+* Mon Jun 06 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
+- workaround agains build system open descriptors limit
+
 * Thu Jun 02 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build
