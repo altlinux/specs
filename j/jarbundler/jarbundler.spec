@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:          jarbundler	
 Version:       2.2.0
-Release:       alt3_12jpp8
+Release:       alt4_12jpp8
 Summary:       A feature-rich Ant task which will create a Mac OS X application bundle
 License:       ASL 2.0
 URL:           http://informagen.com/JarBundler/
@@ -19,7 +19,6 @@ BuildRequires: ant
 BuildRequires: jpackage-utils
 
 Requires:      ant
-Requires:      jpackage-utils
 
 BuildArch:     noarch
 Source44: import.info
@@ -63,24 +62,21 @@ sed -i 's|source="1.4"|source="1.6" target="1.6"|' build.xml
 sed -i 's|/Developer/Java/Ant/lib/ant.jar|%{_javadir}/ant.jar|' build.xml
 sed -i 's|<javadoc destdir="javadoc" classpath="${ant.jar}">|<javadoc destdir="javadoc" classpath="${ant.jar}:build/${jarbundler.jar}">|' build.xml
 
+# install in _javadir
+%mvn_file net.sourceforge.%{name}:%{name} %{name}
+
 %build
 
 ant jar javadocs
 
+%mvn_artifact pom.xml build/%{name}-%{version}.jar
+
 %install
+%mvn_install -J javadoc
 
 # jars
 mkdir -p %{buildroot}%{_javadir}/ant
-install -pm 644 build/%{name}-%{version}.jar \
- %{buildroot}/%{_javadir}/%{name}.jar
 ln -s ../%{name}.jar  %{buildroot}/%{_javadir}/ant/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-mkdir -p  %{buildroot}/%{_javadocdir}
-cp -rp javadoc %{buildroot}/%{_javadocdir}/%{name}
 
 mkdir -p  %{buildroot}/%{_sysconfdir}/ant.d
 echo "%{name}" >  %{buildroot}/%{_sysconfdir}/ant.d/%{name}
@@ -90,11 +86,13 @@ echo "%{name}" >  %{buildroot}/%{_sysconfdir}/ant.d/%{name}
 %{_javadir}/ant/%{name}.jar
 %doc LICENSE.TXT
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.TXT
 
 %changelog
+* Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 2.2.0-alt4_12jpp8
+- migrated to %%mvn_artifact
+
 * Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt3_12jpp8
 - fixed build with new java
 
