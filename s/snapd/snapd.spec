@@ -26,10 +26,10 @@
 %{!?_systemdgeneratordir: %global _systemdgeneratordir /lib/systemd/system-generators}
 %{!?_systemd_system_env_generator_dir: %global _systemd_system_env_generator_dir /lib/systemd/system-environment-generators}
 
-#%%define _libexecdir %_prefix/libexec
+#%%define _libexecdir %%_prefix/libexec
 
 Name: snapd
-Version: 2.54.3
+Version: 2.56
 Release: alt1
 Summary: A transactional software package manager
 License: GPLv3
@@ -37,9 +37,6 @@ Group: System/Configuration/Other
 Url: https://%provider_prefix
 Source0: https://%provider_prefix/releases/download/%version/%{name}_%version.no-vendor.tar.xz
 Source1: https://%provider_prefix/releases/download/%version/%{name}_%version.only-vendor.tar.xz
-
-Patch0001: 0001-dirs-add-altlinux-to-altDirDistros.patch
-Patch0002: 0002-add-autogen-case-for-altlinux.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang rpm-build-systemd
@@ -77,7 +74,7 @@ BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(udev)
 BuildRequires: libxfs-devel
 BuildRequires: glibc-devel-static
-BuildRequires: %_bindir/rst2man.py
+BuildRequires: %_bindir/rst2man
 BuildRequires: %_bindir/shellcheck
 
 %description -n snap-confine
@@ -102,8 +99,6 @@ runs properly under an environment with SELinux enabled.
 
 %prep
 %setup -D -b 1
-%patch0001 -p1
-%patch0002 -p1
 
 # We don't want/need squashfuse in the rpm
 sed -e 's:_ "github.com/snapcore/squashfuse"::g' -i systemd/systemd.go
@@ -114,9 +109,6 @@ sed -e "s:/usr/lib/environment.d/:/lib/environment.d/:g" -i data/systemd-env/Mak
 sed -e 's:${prefix}/lib/systemd/system-environment-generators:/lib/systemd/system-environment-generators:g' -i cmd/configure.ac
 
 %build
-# Generate version files
-./mkversion.sh "%version-%release"
-
 # Build snapd
 mkdir -p src/github.com/snapcore
 ln -s ../../../ src/github.com/snapcore/snapd
@@ -127,6 +119,9 @@ ln -s ../../../ src/github.com/snapcore/snapd
 export IMPORT_PATH="%import_path"
 export GOPATH=$(pwd):%go_path
 export GO111MODULE=off
+
+# Generate version files
+./mkversion.sh "%version-%release"
 
 BUILDTAGS="nosecboot"
 
@@ -451,6 +446,9 @@ fi
 %endif
 
 %changelog
+* Mon Jun 06 2022 Alexey Shabalin <shaba@altlinux.org> 2.56-alt1
+- 2.56
+
 * Sun Feb 20 2022 Alexey Shabalin <shaba@altlinux.org> 2.54.3-alt1
 - 2.54.3 (Fixes: CVE-2021-44730, CVE-2021-44731, CVE-2021-4120)
 
