@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jFormatString
 Version:        0
-Release:        alt1_0.33.20131227gitf159b88jpp8
+Release:        alt1_0.39.20131227gitf159b88jpp8
 Summary:        Java format string compile-time checker
 
 License:        GPLv2 with exceptions
@@ -25,8 +25,8 @@ Source1:        http://search.maven.org/remotecontent?filepath=com/google/code/f
 # This patch has not been sent upstream, since it is Fedora specific.
 Patch0:         %{name}-build.patch
 
-# Add temporary dependency on javapackages-local, for %%add_maven_depmap macro
-# See https://lists.fedoraproject.org/archives/list/java-devel@lists.fedoraproject.org/thread/R3KZ7VI5DPCMCELFIVJQ4AXB2WQED35C/
+Patch1:         %{name}-java8.patch
+
 BuildRequires:  javapackages-local
 
 BuildRequires:  ant java-1.8.0-javadoc jpackage-utils junit
@@ -56,6 +56,7 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q -n j-format-string-%{zipcommit}
 %patch0 -p1
+%patch1 -p1
 
 cp %{SOURCE1} pom.xml
 
@@ -65,36 +66,32 @@ rm -rfv src/junit
 # delete JARs
 rm -v lib/*
 
+%mvn_file com.google.code.findbugs:%{name} %{name}
+
 %build
 # Build the JAR
 ant jarFile
 
 # Create the javadocs
 mkdir docs
-javadoc -d docs -source 1.5 -sourcepath src/java \
+javadoc -d docs -source 1.8 -sourcepath src/java \
   -classpath build/classes \
   -link file://%{_javadocdir}/java edu.umd.cs.findbugs.formatStringChecker
 
+%mvn_artifact pom.xml build/%{name}.jar
+
 %install
 
-# JAR files
-mkdir -p %{buildroot}%{_javadir}
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-cp -p build/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
-install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-
-# Javadocs
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -rp docs/* %{buildroot}%{_javadocdir}/%{name}
+%mvn_install -J docs
 
 %files -f .mfiles
 
-%files javadoc
-%{_javadocdir}/%{name}*
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 0-alt1_0.39.20131227gitf159b88jpp8
+- migrated to %%mvn_artifact
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.33.20131227gitf159b88jpp8
 - fc update
 
