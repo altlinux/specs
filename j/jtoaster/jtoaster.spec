@@ -9,13 +9,12 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:          jtoaster
 Version:       1.0.5
-Release:       alt3_12jpp11
+Release:       alt4_12jpp11
 Summary:       Java utility class for swing applications
 License:       ASL 2.0
 URL:           http://jtoaster.sourceforge.net/
 Source0:       http://downloads.sourceforge.net/project/jtoaster/%{name}/1.0/%{name}-%{version}.jar
 Source1:       %{name}-template.pom
-BuildRequires: java-devel
 BuildRequires: javapackages-local
 BuildRequires: jpackage-utils
 
@@ -48,6 +47,9 @@ sed -i "s|@version@|%{version}|" %{name}.pom
 mkdir -p src/com/nitido/utils/toaster docs
 mv ./\ com/nitido/utils/toaster/Toaster.java src/com/nitido/utils/toaster/
 
+# install in _javadir
+%mvn_file com.nitido:%{name} %{name}
+
 %build
 
 %javac -source 8 -target 8 -encoding UTF-8 $(find src -type f -name "*.java")
@@ -57,27 +59,22 @@ mv ./\ com/nitido/utils/toaster/Toaster.java src/com/nitido/utils/toaster/
 )
 %javadoc -source 8 -d docs -encoding UTF-8 $(find src -type f -name "*.java")
 
+%mvn_artifact %{name}.pom %{name}.jar
+
 %install
-
-mkdir -p %{buildroot}%{_javadir}
-install -m 644 %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 %{name}.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
-
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}/
+%mvn_install -J docs
 
 %files -f .mfiles
 %doc README com
 %doc --no-dereference apache2.0_license.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc --no-dereference apache2.0_license.txt
 
 %changelog
+* Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 1.0.5-alt4_12jpp11
+- migrated to %%mvn_artifact
+
 * Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.5-alt3_12jpp11
 - java11 build
 - added BR: unzip
