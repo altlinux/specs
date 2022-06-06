@@ -1,7 +1,7 @@
 %def_enable man
 
 Name: libshell
-Version: 0.4.10
+Version: 0.4.11
 Release: alt1
 
 Summary: A library of shell functions
@@ -80,6 +80,10 @@ sed -i -e 's,^#!/bin/ash,#!/bin/sh,' \
 %endif
 
 %changelog
+* Mon Jun 06 2022 Alexey Gladkov <legion@altlinux.ru> 0.4.11-alt1
+- shell-version:
+  + Fix version.
+
 * Thu Jun 02 2022 Alexey Gladkov <legion@altlinux.ru> 0.4.10-alt1
 - shell-getopt:
   + Shellcheck fixes (thx Andrey Limachko).
