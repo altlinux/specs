@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           gluegen2
 Version:        2.3.2
-Release:        alt2_11jpp8
+Release:        alt3_11jpp8
 %global src_name gluegen-v%{version}
 Summary:        Java/JNI glue code generator to call out to ANSI C
 
@@ -37,7 +37,6 @@ BuildRequires:  ant-junit
 BuildRequires:  cpptasks
 BuildRequires:  maven-local
 
-Requires:       jpackage-utils
 Source44: import.info
 
 %description
@@ -129,6 +128,10 @@ sed -i 's/executable="7z"/executable="true"/' make/jogamp-archivetasks.xml
 # mvn executable should not be used, use true (to avoid install) instead
 sed -i 's/executable="mvn"/executable="true"/' make/build.xml
 
+# install in _javadir
+%mvn_file org.jogamp.gluegen:gluegen %{name}
+%mvn_file org.jogamp.gluegen:gluegen-rt %{name}-rt
+
 %build
 
 # Clean up some tests
@@ -157,7 +160,14 @@ xargs -t ant <<EOF
  maven.install
 EOF
 
+cd ..
+%mvn_artifact build/pom-gluegen.xml build/gluegen.jar
+%mvn_artifact build/pom-gluegen-rt.xml build/gluegen-rt.jar
+
 %install
+%mvn_install
+rm -f %{buildroot}%{_javadir}/%{name}-rt.jar
+rm -f %{buildroot}%{_jnidir}/%{name}.jar
 mkdir -p %{buildroot}%{_javadir}/%{name} \
     %{buildroot}%{_libdir}/%{name} \
     %{buildroot}%{_jnidir}
@@ -166,13 +176,6 @@ install build/gluegen.jar %{buildroot}%{_javadir}/%{name}.jar
 install build/gluegen-rt.jar %{buildroot}%{_jnidir}/%{name}-rt.jar
 ln -s ../../..%{_jnidir}/%{name}-rt.jar %{buildroot}%{_libdir}/%{name}/
 install build/obj/libgluegen-rt.so %{buildroot}%{_libdir}/%{name}/lib%{name}-rt.so
-
-# Provide JPP pom
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 build/pom-gluegen.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-install -pm 644 build/pom-gluegen-rt.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}-rt.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
-%add_maven_depmap JPP-%{name}-rt.pom %{name}-rt.jar
 
 # Make the devel package. This package is needed to build JOGL2
 %global gluegen_devel_dir %{_datadir}/gluegen2
@@ -217,12 +220,12 @@ rm -fr %{buildroot}%{_jnidir}/test
 %{_docdir}/%{name}/LICENSE.txt
 %{_jnidir}/%{name}-rt.jar
 %{_libdir}/%{name}
-%{_mavenpomdir}/JPP-%{name}-rt.pom
+%{_mavenpomdir}/%{name}-rt.pom
 
 %files devel
 %{_docdir}/%{name}/LICENSE.txt
 %{_javadir}/%{name}.jar
-%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavenpomdir}/%{name}.pom
 %{_datadir}/maven-metadata/%{name}.xml
 %{gluegen_devel_dir}
 
@@ -233,6 +236,9 @@ rm -fr %{buildroot}%{_jnidir}/test
 %{_docdir}/%{name}
 
 %changelog
+* Sun Jun 05 2022 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt3_11jpp8
+- migrated to %%mvn_artifact
+
 * Tue Apr 20 2021 Slava Aseev <ptrnine@altlinux.org> 2.3.2-alt2_11jpp8
 - fix build with gcc-10 (-fno-common)
 
