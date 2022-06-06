@@ -52,7 +52,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           xmlbeans
 Version:        2.6.0
-Release:        alt2_19jpp8
+Release:        alt3_19jpp8
 Summary:        XML-Java binding tool
 URL:            http://xmlbeans.apache.org/
 Source0:        http://www.apache.org/dist/xmlbeans/source/%{name}-%{version}-src.tgz
@@ -81,7 +81,6 @@ BuildRequires:  ant >= 0:1.6 ant-junit ant-contrib junit
 BuildRequires:  xml-commons-resolver >= 0:1.1
 BuildRequires:  bea-stax-api
 BuildRequires:  saxon >= 8
-Requires:       jpackage-utils >= 0:1.6
 
 BuildArch:      noarch
 Source44: import.info
@@ -141,6 +140,10 @@ Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 %patch4 -p1
 %patch5 -p0
 
+%mvn_file org.apache.%{name}:%{name} %{name}/xbean
+%mvn_file org.apache.%{name}:%{name}-xpath %{name}/xbean_xpath
+%mvn_file org.apache.%{name}:%{name}-xmlpublic %{name}/xmlpublic
+
 %build
 # Piccolo and jam are rebuilt from source and bundled with xbean
 # ant clean.jars leaves some dangling jars around, do not use it
@@ -163,20 +166,12 @@ sed 's/\r//' -i LICENSE.txt NOTICE.txt README.txt docs/stylesheet.css docs/xmlbe
 # Build
 ant -Djavac.source=1.6 -Djavac.target=1.6 default docs
 
-%install
-# jar
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -p -m 0644 build/lib/xmlpublic.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xmlpublic.jar
-install -p -m 0644 build/lib/xbean_xpath.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean_xpath.jar
-install -p -m 0644 build/lib/xbean.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/xbean.jar
+%mvn_artifact %{SOURCE1} build/lib/xbean.jar
+%mvn_artifact %{SOURCE2} build/lib/xbean_xpath.jar
+%mvn_artifact %{SOURCE3} build/lib/xmlpublic.jar
 
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-xbean.pom
-%add_maven_depmap JPP.%{name}-xbean.pom %{name}/xbean.jar
-install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-xbean_xpath.pom
-%add_maven_depmap JPP.%{name}-xbean_xpath.pom %{name}/xbean_xpath.jar
-install -pm 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-xmlpublic.pom
-%add_maven_depmap JPP.%{name}-xmlpublic.pom %{name}/xmlpublic.jar
+%install
+%mvn_install
 
 # bin
 install -d -m 0755 $RPM_BUILD_ROOT%{_bindir}
@@ -221,6 +216,9 @@ cp -pr build/docs/* README.txt $RPM_BUILD_ROOT%{_docdir}/%{name}
 
 
 %changelog
+* Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 0:2.6.0-alt3_19jpp8
+- migrated to %%mvn_artifact
+
 * Tue Mar 31 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt2_19jpp8
 - fc update
 
