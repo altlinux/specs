@@ -1,6 +1,6 @@
 Name: myMPD
-Version: 9.3.1
-Release: alt1.1
+Version: 9.3.3
+Release: alt1
 
 Summary: myMPD is a standalone and mobile friendly web mpd client with a tiny footprint and advanced features
 License: GPL-3.0-or-later
@@ -63,6 +63,9 @@ fi
 %_man1dir/mympd-script.1.xz
 
 %changelog
+* Mon Jun 06 2022 Nikolay Burykin <bne@altlinux.org> 9.3.3-alt1
+- 9.3.3
+
 * Fri May 20 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 9.3.1-alt1.1
 - Fixed build for Elbrus
 
