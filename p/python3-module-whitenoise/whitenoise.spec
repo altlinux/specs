@@ -1,7 +1,7 @@
 %define oname whitenoise
 
 Name: python3-module-%oname
-Version: 6.1.0
+Version: 6.2.0
 Release: alt1
 
 Summary: Radically simplified static file serving for Python web apps
@@ -14,9 +14,10 @@ BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme
+BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx_rtd_theme
 
 %description
 With a couple of lines of config WhiteNoise allows your web app to serve
@@ -56,6 +57,9 @@ export PYTHONPATH=$PWD
 %doc docs/*
 
 %changelog
+* Mon Jun 06 2022 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1
+- Automatically updated to 6.2.0.
+
 * Thu May 26 2022 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
 - 6.1.0
 
