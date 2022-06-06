@@ -1,8 +1,7 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname sass-rails
+%define        gemname sass-rails
 
-Name:          gem-%pkgname
-Version:       6.0.0
+Name:          gem-sass-rails
+Version:       6.0.0.1
 Release:       alt1
 Summary:       Ruby on Rails stylesheet engine for Sass
 License:       MIT
@@ -14,35 +13,67 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(sassc-rails) >= 2.1.1 gem(sassc-rails) < 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%gemname < %EVR
-Provides:      ruby-%gemname = %EVR
+Requires:      gem(sassc-rails) >= 2.1.1 gem(sassc-rails) < 3
+Obsoletes:     ruby-sass-rails < %EVR
+Provides:      ruby-sass-rails = %EVR
+Provides:      gem(sass-rails) = 6.0.0.1
+
+%ruby_use_gem_version sass-rails:6.0.0.1
 
 %description
-This gem provides official integration for Ruby on Rails projects with
-the Sass stylesheet language.
+This gem provides official integration for Ruby on Rails projects with the Sass
+stylesheet language.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-sass-rails-doc
+Version:       6.0.0.1
+Release:       alt1
+Summary:       Ruby on Rails stylesheet engine for Sass documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sass-rails
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(sass-rails) = 6.0.0.1
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-sass-rails-doc
+Ruby on Rails stylesheet engine for Sass documentation files.
+
+This gem provides official integration for Ruby on Rails projects with the Sass
+stylesheet language.
+
+%description   -n gem-sass-rails-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета sass-rails.
+
+
+%package       -n gem-sass-rails-devel
+Version:       6.0.0.1
+Release:       alt1
+Summary:       Ruby on Rails stylesheet engine for Sass development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета sass-rails
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(sass-rails) = 6.0.0.1
+
+%description   -n gem-sass-rails-devel
+Ruby on Rails stylesheet engine for Sass development package.
+
+This gem provides official integration for Ruby on Rails projects with the Sass
+stylesheet language.
+
+%description   -n gem-sass-rails-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета sass-rails.
 
 
 %prep
 %setup
 
 %build
-%ruby_build --ignore=sass_project,scss_project,alternate_config_project,engine_project
+%ruby_build
 
 %install
 %ruby_install
@@ -51,15 +82,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-sass-rails-doc
+%doc README.md
 %ruby_gemdocdir
+
+%files         -n gem-sass-rails-devel
+%doc README.md
 
 
 %changelog
+* Tue Apr 19 2022 Pavel Skrylev <majioa@altlinux.org> 6.0.0.1-alt1
+- ^ 6.0.0 -> 6.0.0.1
+
 * Wed Jun 10 2020 Pavel Skrylev <majioa@altlinux.org> 6.0.0-alt1
 - ^ 5.1.0 -> 6.0.0
 - ! spec name and syntax

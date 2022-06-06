@@ -2,7 +2,7 @@
 
 Name:          gem-coderay
 Version:       1.1.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Fast and easy syntax highlighting for selected languages, written in Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -16,6 +16,7 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_version coderay:1.1.3
 Obsoletes:     ruby-coderay < %EVR
 Provides:      ruby-coderay = %EVR
 Provides:      gem(coderay) = 1.1.3
@@ -29,7 +30,7 @@ comments - all in different colors. And with line numbers.
 
 %package       -n coderay
 Version:       1.1.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Fast syntax highlighting for selected languages. executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета coderay
 Group:         Other
@@ -49,7 +50,7 @@ with RedCloth integration and LOC counter.
 
 %package       -n gem-coderay-doc
 Version:       1.1.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Fast syntax highlighting for selected languages. documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета coderay
 Group:         Development/Documentation
@@ -94,6 +95,9 @@ with RedCloth integration and LOC counter.
 
 
 %changelog
+* Wed Mar 30 2022 Pavel Skrylev <majioa@altlinux.org> 1.1.3-alt1.1
+- !fix spec version
+
 * Tue May 04 2021 Pavel Skrylev <majioa@altlinux.org> 1.1.3-alt1
 - ^ 1.1.2 -> 1.1.3
 

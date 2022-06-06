@@ -1,7 +1,7 @@
-%define        pkgname rabl
+%define        gemname rabl
 
-Name:          gem-%pkgname
-Version:       0.14.3.1
+Name:          gem-rabl
+Version:       0.15.0
 Release:       alt1
 Summary:       General ruby templating with json, bson, xml, plist and msgpack support
 License:       MIT
@@ -14,68 +14,153 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 Patch:         0.14.3.patch
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(activesupport) >= 2.3.14
+BuildRequires: gem(riot) >= 0.12.3 gem(riot) < 0.13
+BuildRequires: gem(rr) >= 0
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(tilt) >= 0
+BuildRequires: gem(oj) >= 0
+BuildRequires: gem(msgpack) >= 1.0.0 gem(msgpack) < 2
+BuildRequires: gem(bson) >= 1.7.0 gem(bson) < 5
+BuildRequires: gem(plist) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%ruby_use_gem_dependency msgpack >= 1.4.5,msgpack < 2
+%ruby_use_gem_dependency bson >= 4.8.2,bson < 5
+Requires:      gem(activesupport) >= 2.3.14
+Obsoletes:     ruby-rabl < %EVR
+Provides:      ruby-rabl = %EVR
+Provides:      gem(rabl) = 0.15.0
+
 
 %description
 RABL (Ruby API Builder Language) is a Rails and Padrino ruby templating system
 for generating JSON, XML, MessagePack, PList and BSON. When using the
 ActiveRecord 'to_json' method, I find myself wanting a more expressive and
 powerful solution for generating APIs. This is especially true when the JSON
-representation is complex or doesn't match the exact schema defined within
-the database.
+representation is complex or doesn't match the exact schema defined within the
+database.
 
 In particular, I want to easily:
 
- * Create arbitrary nodes named based on combining data in an object
- * Pass arguments to methods and store the result as a child node
- * Render partial templates and inherit to reduce code duplication
- * Rename or alias attributes to change the name from the model
- * Append attributes from a child into a parent node
- * Include nodes only if a certain condition has been met
+* Create arbitrary nodes named based on combining data in an object * Pass
+arguments to methods and store the result as a child node * Render partial
+templates and inherit to reduce code duplication * Rename or alias attributes to
+change the name from the model * Append attributes from a child into a parent
+node * Include nodes only if a certain condition has been met
 
-Anyone who has tried the 'to_json' method used in ActiveRecord for generating
-a JSON response has felt the pain of this restrictive approach. RABL is
-a general templating system created to solve these problems by approaching API
-response generation in an entirely new way.
+Anyone who has tried the 'to_json' method used in ActiveRecord for generating a
+JSON response has felt the pain of this restrictive approach. RABL is a general
+templating system created to solve these problems by approaching API response
+generation in an entirely new way.
 
 RABL at the core is all about adhering to MVC principles by deferring API data
 representations to the view layer of your application. For a breakdown of common
 misconceptions about RABL, please check out our guide to understanding RABL,
 which can help clear up any confusion about this project.
 
-%description -l ru_RU.UTF8
-RABL есть шаблонная система для Рубина и Падрины для генерирования структур в
-форматах JSON, XML, MessagePack, PList и BSON. При использовании метода
-'to_json' в Рельсах, было обнаружено, что требуется более яркое и мощное
-решение для созидания API. Это особенно верно в случае, когда
-представленый JSON сложен или не точно отражает схеме определённой внутри базы
-данных.
 
-
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-rabl-doc
+Version:       0.15.0
+Release:       alt1
+Summary:       General ruby templating with json, bson, xml, plist and msgpack support documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rabl
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(rabl) = 0.15.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-rabl-doc
+General ruby templating with json, bson, xml, plist and msgpack support
+documentation files.
+
+RABL (Ruby API Builder Language) is a Rails and Padrino ruby templating system
+for generating JSON, XML, MessagePack, PList and BSON. When using the
+ActiveRecord 'to_json' method, I find myself wanting a more expressive and
+powerful solution for generating APIs. This is especially true when the JSON
+representation is complex or doesn't match the exact schema defined within the
+database.
+
+In particular, I want to easily:
+
+* Create arbitrary nodes named based on combining data in an object * Pass
+arguments to methods and store the result as a child node * Render partial
+templates and inherit to reduce code duplication * Rename or alias attributes to
+change the name from the model * Append attributes from a child into a parent
+node * Include nodes only if a certain condition has been met
+
+Anyone who has tried the 'to_json' method used in ActiveRecord for generating a
+JSON response has felt the pain of this restrictive approach. RABL is a general
+templating system created to solve these problems by approaching API response
+generation in an entirely new way.
+
+RABL at the core is all about adhering to MVC principles by deferring API data
+representations to the view layer of your application. For a breakdown of common
+misconceptions about RABL, please check out our guide to understanding RABL,
+which can help clear up any confusion about this project.
+
+%description   -n gem-rabl-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета rabl.
+
+
+%package       -n gem-rabl-devel
+Version:       0.15.0
+Release:       alt1
+Summary:       General ruby templating with json, bson, xml, plist and msgpack support development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rabl
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(rabl) = 0.15.0
+Requires:      gem(riot) >= 0.12.3 gem(riot) < 0.13
+Requires:      gem(rr) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(tilt) >= 0
+Requires:      gem(oj) >= 0
+Requires:      gem(msgpack) >= 1.0.0 gem(msgpack) < 2
+Requires:      gem(bson) >= 1.7.0 gem(bson) < 5
+Requires:      gem(plist) >= 0
+
+%description   -n gem-rabl-devel
+General ruby templating with json, bson, xml, plist and msgpack support
+development package.
+
+RABL (Ruby API Builder Language) is a Rails and Padrino ruby templating system
+for generating JSON, XML, MessagePack, PList and BSON. When using the
+ActiveRecord 'to_json' method, I find myself wanting a more expressive and
+powerful solution for generating APIs. This is especially true when the JSON
+representation is complex or doesn't match the exact schema defined within the
+database.
+
+In particular, I want to easily:
+
+* Create arbitrary nodes named based on combining data in an object * Pass
+arguments to methods and store the result as a child node * Render partial
+templates and inherit to reduce code duplication * Rename or alias attributes to
+change the name from the model * Append attributes from a child into a parent
+node * Include nodes only if a certain condition has been met
+
+Anyone who has tried the 'to_json' method used in ActiveRecord for generating a
+JSON response has felt the pain of this restrictive approach. RABL is a general
+templating system created to solve these problems by approaching API response
+generation in an entirely new way.
+
+RABL at the core is all about adhering to MVC principles by deferring API data
+representations to the view layer of your application. For a breakdown of common
+misconceptions about RABL, please check out our guide to understanding RABL,
+which can help clear up any confusion about this project.
+
+%description   -n gem-rabl-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета rabl.
 
 
 %prep
 %setup
-%patch
 
 %build
-%ruby_build --ignore=padrino_test,rails2,rails3,rails3_2,rails4,rails5,rails5_api,rails6,sinatra_test \
-            --use=%gemname --version-replace=%version
+%ruby_build
+
 %install
 %ruby_install
 
@@ -83,15 +168,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-rabl-doc
+%doc README.md
 %ruby_gemdocdir
+
+%files         -n gem-rabl-devel
+%doc README.md
 
 
 %changelog
+* Tue Apr 19 2022 Pavel Skrylev <majioa@altlinux.org> 0.15.0-alt1
+- ^ 0.14.3.1 -> 0.15.0
+
 * Tue Jun 09 2020 Pavel Skrylev <majioa@altlinux.org> 0.14.3.1-alt1
 - ^ 0.14.2 -> 0.14.3+
 - ! fault to require to active_view explicitly in code by patch

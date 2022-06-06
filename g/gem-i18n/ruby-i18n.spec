@@ -1,11 +1,11 @@
-%define        pkgname i18n
+%define        gemname i18n
 
-Name:          gem-%pkgname
-Version:       1.8.3
+Name:          gem-i18n
+Version:       1.10.0
 Release:       alt1
 Summary:       I18n and localization solution for Ruby
-Group:         Development/Ruby
 License:       MIT
+Group:         Development/Ruby
 Url:           https://github.com/svenfuchs/i18n
 Vcs:           https://github.com/svenfuchs/i18n.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
@@ -14,41 +14,63 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: tzdata
-BuildRequires: gem(concurrent-ruby) >= 1.0
-BuildRequires: gem(mocha) >= 1.7.0
-BuildRequires: gem(rake) >= 13
-BuildRequires: gem(minitest) >= 5.1
-BuildRequires: gem(json)
-BuildRequires: gem(activesupport)
-BuildRequires: gem(pry)
+BuildRequires: gem(concurrent-ruby) >= 1.0 gem(concurrent-ruby) < 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%gemname < %EVR
-Provides:      ruby-%gemname = %EVR
+Requires:      gem(concurrent-ruby) >= 1.0 gem(concurrent-ruby) < 2
+Obsoletes:     ruby-i18n < %EVR
+Provides:      ruby-i18n = %EVR
+Provides:      gem(i18n) = 1.10.0
+
 
 %description
 Ruby internationalization and localization (i18n) solution.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-i18n-doc
+Version:       1.10.0
+Release:       alt1
+Summary:       I18n and localization solution for Ruby documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета i18n
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(i18n) = 1.10.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-i18n-doc
+I18n and localization solution for Ruby documentation files.
+
+Ruby internationalization and localization (i18n) solution.
+
+%description   -n gem-i18n-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета i18n.
+
+
+%package       -n gem-i18n-devel
+Version:       1.10.0
+Release:       alt1
+Summary:       I18n and localization solution for Ruby development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета i18n
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(i18n) = 1.10.0
+
+%description   -n gem-i18n-devel
+I18n and localization solution for Ruby development package.
+
+Ruby internationalization and localization (i18n) solution.
+
+%description   -n gem-i18n-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета i18n.
 
 
 %prep
 %setup
 
 %build
-%ruby_build --use=%gemname --version-replace=%version
+%ruby_build
 
 %install
 %ruby_install
@@ -57,15 +79,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-i18n-doc
+%doc README.md
 %ruby_gemdocdir
+
+%files         -n gem-i18n-devel
+%doc README.md
 
 
 %changelog
+* Wed May 18 2022 Pavel Skrylev <majioa@altlinux.org> 1.10.0-alt1
+- ^ 1.8.3 -> 1.10.0
+
 * Wed Jun 10 2020 Pavel Skrylev <majioa@altlinux.org> 1.8.3-alt1
 - ^ 1.1.1 -> 1.8.3
 - ! spec name
@@ -82,7 +111,7 @@ Documentation files for %gemname gem.
 
 * Sat Mar 22 2014 Led <led@altlinux.ru> 0.3.7-alt2.2
 - add true to respond_to? for 1.9.3 compatibility
-- enabled %%check
+- enabled %%ruby_test
 
 * Wed Dec 05 2012 Led <led@altlinux.ru> 0.3.7-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
@@ -111,4 +140,3 @@ Documentation files for %gemname gem.
 
 * Mon Nov 10 2008 Sir Raorn <raorn@altlinux.ru> 0.1.0-alt1
 - Built for Sisyphus
-

@@ -3,7 +3,7 @@
 Name:          gem-%pkgname
 Epoch:         1
 Version:       0.10.0
-Release:       alt1.3
+Release:       alt1.4
 Summary:       OpenGL Interface for Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -20,8 +20,10 @@ BuildRequires: gem(hoe)
 BuildRequires: gem(rake-compiler)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%ruby_use_gem_dependency bundler >= 2.2,bundler < 3
+%ruby_use_gem_dependency rake-compiler-dock >= 1.1.0,rake-compiler-dock < 2
+Obsoletes:     ruby-%pkgname < %EVR
+Provides:      ruby-%pkgname = %EVR
 
 %description
 ruby-opengl consists of Ruby extension modules that are bindings for
@@ -83,6 +85,9 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Mon May 16 2022 Pavel Skrylev <majioa@altlinux.org> 1:0.10.0-alt1.4
+- !fixed spec for deps
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 1:0.10.0-alt1.3
 - fixed (!) spec
 

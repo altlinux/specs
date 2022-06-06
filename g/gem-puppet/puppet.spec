@@ -1,80 +1,143 @@
-%define _unpackaged_files_terminate_build 1
-%define pkgname puppet
-%define confdir ext/redhat
+%define        gemname puppet
+%define        _unpackaged_files_terminate_build 1
+%define        confdir ext/redhat
 
-Name:          gem-%pkgname
-Version:       7.17.0
+Name:          gem-puppet
+Version:       7.17.0.1
 Release:       alt1
 Summary:       A network tool for managing many disparate systems
-Group:         Development/Ruby
 License:       Apache-2.0
+Group:         Development/Ruby
 Url:           https://puppet.com/
 Vcs:           https://github.com/puppetlabs/puppet.git
+Packager:      Pavel Skrylev <majioa@altlinux.org>
 BuildArch:     noarch
 
-Source:        %name-%version.tar
-Source1:       client.init
-Source2:       puppet.service
-Source3:       puppet-nm-dispatcher
-Source4:       auth.conf
 Source5:       puppet.conf
-
-Patch1:        puppet-alt-adjust-default-paths.patch
-Patch2:        puppet-fix-locale-loading.patch
-Patch3:        puppet-alt-aptrpm-osfamily.patch
+Source4:       auth.conf
+Source3:       puppet-nm-dispatcher
+Source2:       puppet.service
+Source1:       client.init
+Source:        %name-%version.tar
 Patch4:        fix_yaml.patch
-
+Patch3:        puppet-alt-aptrpm-osfamily.patch
+Patch2:        puppet-fix-locale-loading.patch
+Patch1:        puppet-alt-adjust-default-paths.patch
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(yard)
+BuildRequires: gem(facter) >= 2.4.0 gem(facter) < 5
+BuildRequires: gem(hiera) >= 3.2.1 gem(hiera) < 4
+BuildRequires: gem(semantic_puppet) >= 1.0 gem(semantic_puppet) < 2
+BuildRequires: gem(fast_gettext) >= 1.1 gem(fast_gettext) < 3
+BuildRequires: gem(locale) >= 2.1 gem(locale) < 3
+BuildRequires: gem(multi_json) >= 1.13 gem(multi_json) < 2
+BuildRequires: gem(concurrent-ruby) >= 1.0 gem(concurrent-ruby) < 2
+BuildRequires: gem(deep_merge) >= 1.0 gem(deep_merge) < 2
+BuildRequires: gem(scanf) >= 1.0 gem(scanf) < 2
+BuildRequires: gem(CFPropertyList) >= 2.2 gem(CFPropertyList) < 4
+BuildRequires: gem(gettext-setup) >= 1.0.1 gem(gettext-setup) < 1.1
 
-%gem_replace_version CFPropertyList ~> 3.0
-%gem_replace_version gettext-setup ~> 1.0.1
-%add_findreq_skiplist %ruby_gemslibdir/*
+%add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      %pkgname = %EVR
+%ruby_use_gem_dependency CFPropertyList >= 2.2,CFPropertyList < 4
+%ruby_use_gem_dependency gettext-setup >= 1.1,gettext-setup < 2
+Requires:      gem(facter) >= 2.4.0 gem(facter) < 5
+Requires:      gem(hiera) >= 3.2.1 gem(hiera) < 4
+Requires:      gem(semantic_puppet) >= 1.0 gem(semantic_puppet) < 2
+Requires:      gem(fast_gettext) >= 1.1 gem(fast_gettext) < 3
+Requires:      gem(locale) >= 2.1 gem(locale) < 3
+Requires:      gem(multi_json) >= 1.13 gem(multi_json) < 2
+Requires:      gem(concurrent-ruby) >= 1.0 gem(concurrent-ruby) < 2
+Requires:      gem(deep_merge) >= 1.0 gem(deep_merge) < 2
+Requires:      gem(scanf) >= 1.0 gem(scanf) < 2
+Requires:      gem(CFPropertyList) >= 2.2 gem(CFPropertyList) < 4
+Requires:      puppet = %EVR
+Provides:      gem(puppet) = 7.17.0.1
+
+%ruby_use_gem_version puppet:7.17.0.1
 
 %description
-Puppet lets you centrally manage every important aspect of your
-system using a cross-platform specification language that manages
-all the separate elements normally aggregated in different files,
-like users, cron jobs, and hosts, along with obviously discrete
-elements like packages, services, and files.
+Puppet lets you centrally manage every important aspect of your system using a
+cross-platform specification language that manages all the separate elements
+normally aggregated in different files, like users, cron jobs, and hosts, along
+with obviously discrete elements like packages, services, and files.
 
 
-%package       -n %pkgname
-Summary:       Executable for a network tool for managing many disparate systems
+%package       -n puppet
+Version:       7.17.0.1
+Release:       alt1
+Summary:       A network tool for managing many disparate systems executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета puppet
 Group:         System/Servers
 BuildArch:     noarch
+
+Requires:      gem(puppet) = 7.17.0.1
+Requires:      shadow-change
 Requires(preun,post): %name = %EVR
 
-Requires:      shadow-change
+%description   -n puppet
+A network tool for managing many disparate systems executable(s).
 
-%description   -n %pkgname
-%summary.
+Puppet lets you centrally manage every important aspect of your system using a
+cross-platform specification language that manages all the separate elements
+normally aggregated in different files, like users, cron jobs, and hosts, along
+with obviously discrete elements like packages, services, and files.
+
+%description   -n puppet -l ru_RU.UTF-8
+Исполнямка для самоцвета puppet.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-puppet-doc
+Version:       7.17.0.1
+Release:       alt1
+Summary:       A network tool for managing many disparate systems documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(puppet) = 7.17.0.1
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-puppet-doc
+A network tool for managing many disparate systems documentation files.
+
+Puppet lets you centrally manage every important aspect of your system using a
+cross-platform specification language that manages all the separate elements
+normally aggregated in different files, like users, cron jobs, and hosts, along
+with obviously discrete elements like packages, services, and files.
+
+%description   -n gem-puppet-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета puppet.
+
+
+%package       -n gem-puppet-devel
+Version:       7.17.0.1
+Release:       alt1
+Summary:       A network tool for managing many disparate systems development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(puppet) = 7.17.0.1
+Requires:      gem(gettext-setup) >= 1.0.1 gem(gettext-setup) < 1.1
+Requires:      gem(CFPropertyList) >= 3.0 gem(CFPropertyList) < 4
+
+%description   -n gem-puppet-devel
+A network tool for managing many disparate systems development package.
+
+Puppet lets you centrally manage every important aspect of your system using a
+cross-platform specification language that manages all the separate elements
+normally aggregated in different files, like users, cron jobs, and hosts, along
+with obviously discrete elements like packages, services, and files.
+
+%description   -n gem-puppet-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета puppet.
 
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%autopatch -p1
 
 %build
-%ruby_build --ignore=full_catalog,acceptance
+%ruby_build
 
 %install
 %ruby_install
@@ -94,11 +157,11 @@ mkdir -p %buildroot%_sysconfdir/puppet/code/environments/production/manifests
 
 # Setup tmpfiles.d config
 mkdir -p %buildroot%_tmpfilesdir
-echo "D /run/%pkgname 0755 _%pkgname %pkgname -" > \
-    %buildroot%_tmpfilesdir/%pkgname.conf
+echo "D /run/%gemname 0755 _%gemname %gemname -" > \
+    %buildroot%_tmpfilesdir/%gemname.conf
 
 # Create puppet modules directory for puppet module tool
-mkdir -p %buildroot%_sysconfdir/%pkgname/code/modules
+mkdir -p %buildroot%_sysconfdir/%gemname/code/modules
 touch %buildroot%_sysconfdir/puppet/code/modules/.dir
 
 # Create service directory
@@ -116,7 +179,7 @@ install -Dm644 %SOURCE4 %buildroot%_sysconfdir/puppet/auto.conf
 install -Dm644 %SOURCE5 %buildroot%_sysconfdir/puppet/puppet.conf
 
 # link to gem library code base
-ln -s %ruby_gemlibdir %buildroot%_datadir/%pkgname
+ln -s %ruby_gemlibdir %buildroot%_datadir/%gemname
 
 # TODO fix backward link to a foreman ? from theforeman-foreman
 ln -s %_libexecdir/puppet-modules/theforeman-foreman/files/foreman-report_v2.rb %buildroot%ruby_gemlibdir/lib/puppet/reports/foreman.rb
@@ -132,7 +195,10 @@ touch %buildroot%_datadir/puppet-locale/.dir %buildroot%_libexecdir/puppet-modul
 # Remove demo files
 rm -rf %buildroot%_libexecdir/demo %buildroot%_datadir/ri/demo
 
-%pre           -n %pkgname
+%check
+%ruby_test
+
+%pre           -n puppet
 [ ! -d %_sysconfdir/puppetlabs/puppet/ssl ] || (
    cp -rf %_sysconfdir/puppetlabs/puppet/ssl %_sysconfdir/puppet &&
    rm -rf %_sysconfdir/puppetlabs/puppet/ssl)
@@ -140,25 +206,27 @@ getent group foreman >/dev/null || %_sbindir/groupadd -r foreman
 getent group puppet >/dev/null || %_sbindir/groupadd -r puppet
 %_sbindir/useradd -r -N -G puppet,foreman -d %_cachedir/puppet -s /dev/null -c Puppet _puppet >/dev/null 2>&1 ||:
 
-%post          -n %pkgname
+%post          -n puppet
 %post_service puppet
 sed -e "s,sample.server.name,$(hostname)," \
     -i %_sysconfdir/puppet/puppet.conf
 
-%preun         -n %pkgname
+%preun         -n puppet
 %preun_service puppet
 
 %files
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %_libexecdir/puppet-modules
 
-%files         -n %pkgname
+%files         -n puppet
+%doc README.md
 %_bindir/puppet
 %_initdir/puppet
 %_unitdir/puppet.service
 %_unitdir/puppetagent.service
-%config(noreplace) %_tmpfilesdir/%pkgname.conf
+%config(noreplace) %_tmpfilesdir/%gemname.conf
 %dir %_sysconfdir/puppet
 %attr(0771,_puppet,puppet) %dir %_sysconfdir/puppet/ssl
 %attr(0755,_puppet,puppet) %dir %_sysconfdir/puppet/ssl/public_keys
@@ -183,7 +251,6 @@ sed -e "s,sample.server.name,$(hostname)," \
 %_sysconfdir/NetworkManager/dispatcher.d/98-%{name}
 %_datadir/puppet
 %_datadir/puppet-locale
-%_libexecdir/ruby/site_ruby/puppet/functions/l10n.rb
 %attr(1770,_puppet,puppet) %dir %_cachedir/puppet
 %_cachedir/puppet/
 %attr(1770,_puppet,puppet) %dir %_logdir/puppet
@@ -191,10 +258,18 @@ sed -e "s,sample.server.name,$(hostname)," \
 %doc %_man8dir/*
 %doc %_man5dir/puppet.conf.5*
 
-%files         doc
+%files         -n gem-puppet-doc
+%doc README.md
 %ruby_gemdocdir
 
+%files         -n gem-puppet-devel
+%doc README.md
+
+
 %changelog
+* Tue May 31 2022 Pavel Skrylev <majioa@altlinux.org> 7.17.0.1-alt1
+- ^ 7.17.0 -> 7.17.0.1
+
 * Sun May 29 2022 Andrey Cherepanov <cas@altlinux.org> 7.17.0-alt1
 - New version.
 
@@ -499,7 +574,6 @@ sed -e "s,sample.server.name,$(hostname)," \
 - Set correct pid file name for services (ALT #29114)
 - Set correct user name _puppet in configuration of puppetmasterd
 
-
 * Fri Jun 07 2013 Andrey Cherepanov <cas@altlinux.org> 2.7.21-alt1
 - New version 2.7.21 (ALT #28695)
 - Use system group `puppet` instead `_puppet` (ALT #28273)
@@ -531,4 +605,3 @@ sed -e "s,sample.server.name,$(hostname)," \
 
 * Tue Aug 26 2008 Sir Raorn <raorn@altlinux.ru> 0.24.5-alt1
 - Built for Sisyphus
-

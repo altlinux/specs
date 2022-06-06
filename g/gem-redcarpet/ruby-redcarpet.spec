@@ -1,7 +1,7 @@
-%define        pkgname redcarpet
+%define        gemname redcarpet
 
-Name:          gem-%pkgname
-Version:       3.5.0
+Name:          gem-redcarpet
+Version:       3.5.1.1
 Release:       alt1
 Summary:       The safe Markdown parser, reloaded
 License:       MIT
@@ -12,56 +12,88 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(rake) >= 13 gem(rake) < 14
+BuildRequires: gem(rake-compiler) >= 1.1 gem(rake-compiler) < 2
+BuildRequires: gem(test-unit) >= 3.3.5 gem(test-unit) < 4
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%ruby_use_gem_dependency test-unit >= 3.3.5,test-unit < 4
+%ruby_use_gem_dependency benchmark-ips >= 2.9.1,benchmark-ips < 3
+%ruby_use_gem_dependency kramdown >= 2.3.1,kramdown < 3
+
+Obsoletes:     ruby-redcarpet < %EVR
+Provides:      ruby-redcarpet = %EVR
+Provides:      gem(redcarpet) = 3.5.1
+
+%ruby_use_gem_version redcarpet:3.5.1.1
 
 %description
-Redcarpet is a Ruby library for Markdown processing that smells like
-butterflies and popcorn.
+Redcarpet is a Ruby library for Markdown processing that smells like butterflies
+and popcorn.
 
 
-%package       -n %pkgname
-Summary:       HTML, XML, SAX, and Reader parser
+%package       -n redcarpet
+Version:       3.5.1.1
+Release:       alt1
+Summary:       The safe Markdown parser, reloaded executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета redcarpet
 Group:         Development/Other
 BuildArch:     noarch
 
-%description   -n %pkgname
-Redcarpet is a Ruby library for Markdown processing that smells like
-butterflies and popcorn.
+Requires:      gem(redcarpet) = 3.5.1
 
-Executable file for %gemname gem.
+%description   -n redcarpet
+The safe Markdown parser, reloaded executable(s).
 
-%description   -n %pkgname -l ru_RU.UTF8
-Исполнямка для %gemname самоцвета.
+Redcarpet is a Ruby library for Markdown processing that smells like butterflies
+and popcorn.
+
+%description   -n redcarpet -l ru_RU.UTF-8
+Исполнямка для самоцвета redcarpet.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-redcarpet-doc
+Version:       3.5.1.1
+Release:       alt1
+Summary:       The safe Markdown parser, reloaded documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета redcarpet
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(redcarpet) = 3.5.1
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-redcarpet-doc
+The safe Markdown parser, reloaded documentation files.
+
+Redcarpet is a Ruby library for Markdown processing that smells like butterflies
+and popcorn.
+
+%description   -n gem-redcarpet-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета redcarpet.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-redcarpet-devel
+Version:       3.5.1.1
+Release:       alt1
+Summary:       The safe Markdown parser, reloaded development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета redcarpet
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   devel
-Development files for %gemname gem.
+Requires:      gem(redcarpet) = 3.5.1
+Requires:      gem(rake) >= 13 gem(rake) < 14
+Requires:      gem(rake-compiler) >= 1.1 gem(rake-compiler) < 2
+Requires:      gem(test-unit) >= 3.3.5 gem(test-unit) < 4
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+%description   -n gem-redcarpet-devel
+The safe Markdown parser, reloaded development package.
 
+Redcarpet is a Ruby library for Markdown processing that smells like butterflies
+and popcorn.
+
+%description   -n gem-redcarpet-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета redcarpet.
 
 
 %prep
@@ -77,22 +109,31 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.markdown
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n redcarpet
+%doc README.markdown
+%_bindir/redcarpet
+
+%files         -n gem-redcarpet-doc
+%doc README.markdown
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-redcarpet-devel
+%doc README.markdown
 %ruby_includedir/*
-
-%files         -n %pkgname
-%_bindir/*
 
 
 %changelog
+* Tue May 17 2022 Pavel Skrylev <majioa@altlinux.org> 3.5.1.1-alt1
+- ^ 3.5.1 -> 3.5.1[.1]
+
+* Sat Apr 24 2021 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt1
+- ^ 3.5.0 -> 3.5.1
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 3.5.0-alt1
 - ^ 3.4.0 -> 3.5.0
 - ! spec tags and syntax

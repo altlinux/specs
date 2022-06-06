@@ -1,7 +1,7 @@
 %define        gemname rake-compiler
 
 Name:          gem-rake-compiler
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       Provide a standard and simplified way to build and package Ruby C and Java extensions using Rake as glue
 License:       MIT
@@ -21,8 +21,8 @@ BuildRequires: gem(rspec) >= 2.8.0 gem(rspec) < 4
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
-Requires:      gem(rake) >= 0 gem(rake) < 14
-Provides:      gem(rake-compiler) = 1.1.2
+Requires:      gem(rake) >= 0
+Provides:      gem(rake-compiler) = 1.2.0
 
 
 %description
@@ -32,14 +32,14 @@ packaging of Ruby extensions by simplifying code and reducing duplication.
 
 
 %package       -n rake-compiler
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       Provide a standard and simplified way to build and package Ruby C and Java extensions using Rake as glue executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rake-compiler
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(rake-compiler) = 1.1.2
+Requires:      gem(rake-compiler) = 1.2.0
 
 %description   -n rake-compiler
 Provide a standard and simplified way to build and package Ruby C and Java
@@ -54,14 +54,14 @@ packaging of Ruby extensions by simplifying code and reducing duplication.
 
 
 %package       -n gem-rake-compiler-doc
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       Provide a standard and simplified way to build and package Ruby C and Java extensions using Rake as glue documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rake-compiler
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rake-compiler) = 1.1.2
+Requires:      gem(rake-compiler) = 1.2.0
 
 %description   -n gem-rake-compiler-doc
 Provide a standard and simplified way to build and package Ruby C and Java
@@ -76,15 +76,15 @@ packaging of Ruby extensions by simplifying code and reducing duplication.
 
 
 %package       -n gem-rake-compiler-devel
-Version:       1.1.2
+Version:       1.2.0
 Release:       alt1
 Summary:       Provide a standard and simplified way to build and package Ruby C and Java extensions using Rake as glue development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rake-compiler
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rake-compiler) = 1.1.2
-Requires:      gem(bundler) >= 0 gem(bundler) < 3
+Requires:      gem(rake-compiler) = 1.2.0
+Requires:      gem(bundler) >= 0
 Requires:      gem(rspec) >= 2.8.0 gem(rspec) < 4
 # Requires:      gem(cucumber) >= 1.1.4 gem(cucumber) < 1.2
 
@@ -130,6 +130,9 @@ packaging of Ruby extensions by simplifying code and reducing duplication.
 
 
 %changelog
+* Sat Apr 16 2022 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1
+- ^ 1.1.2 -> 1.2.0
+
 * Mon Jun 28 2021 Pavel Skrylev <majioa@altlinux.org> 1.1.2-alt1
 - ^ 1.1.1 -> 1.1.2
 - * policify name

@@ -7,11 +7,11 @@
 %define        ridir %_datadir/ri
 %define        vendordir %libdir/vendor_%name
 %define        lname lib%name
-%define        _version 2.7.5
+%define        _version 2.7.6
 
 Name:          ruby
 Version:       %_version
-Release:       alt1.2
+Release:       alt1
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -49,6 +49,8 @@ BuildRequires: gem(rspec) >= 3.8 gem(rspec) < 4
 %define optflags_lto %nil
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %libdir/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %libdir/*
 Requires:      %lname = %_version-%release
 Requires:      ruby-stdlibs = %_version-%release
 Requires:      gem irb erb ri rdoc rake bundle
@@ -210,14 +212,6 @@ extensible.
 This package contains Ruby documentation in ri format.
 
 
-%package       -n ruby-mspec
-Summary:       RSpec-like test runner for the Ruby Spec Suite
-Group:         Development/Ruby
-
-%description   -n ruby-mspec
-irb is the REPL(read-eval&print loop) environment for Ruby programs.
-
-
 %if_without bootstrap
 %package       miniruby-src
 Summary:       Preprocessed miniruby sources
@@ -234,7 +228,7 @@ on different arches.
 %package       -n gem
 Epoch:         2
 Version:       3.1.6
-Release:       alt1.4
+Release:       alt1.5
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -351,7 +345,7 @@ popd
 %endif #_with_bootstrap
 
 %make_build
-%__setup_rb config --prefixes=ruby,gem --use-gem-dependencies="$RPM_RUBY_USE_GEM_DEPENDENCY_LIST" --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib --ignore=03-tompng --use=stdlibs --alias=psych,bar,yaml,webrick,uri,tracer,timeout,singleton,rss,rexml,readline,prime,mutex_m,ipaddr,fileutils,rdoc,racc,pstore,ostruct,open3,observer,net-smtp,net-pop,matrix,logger,irb,getoptlong,forwardable,did_you_mean,delegate,csv,cgi,bundler,benchmark,zlib,strscan,stringio,sdbm,readline-ext,openssl,json,io-console,gdbm,fiddle,fcntl,etc,dbm,date,bigdecimal,reline
+%__setup_rb config --prefixes=ruby,gem --use-gem-dependencies="$RPM_RUBY_USE_GEM_DEPENDENCY_LIST" --gem-version-replace="$RPM_RUBY_GEMVERSION_REPLACE_LIST" --use=rdoc --join=doc:lib --use=stdlibs --alias=psych,bar,yaml,webrick,uri,tracer,timeout,singleton,rss,rexml,readline,prime,mutex_m,ipaddr,fileutils,rdoc,racc,pstore,ostruct,open3,observer,net-smtp,net-pop,matrix,logger,irb,getoptlong,forwardable,did_you_mean,delegate,csv,cgi,bundler,benchmark,zlib,strscan,stringio,sdbm,readline-ext,openssl,json,io-console,gdbm,fiddle,fcntl,etc,dbm,date,bigdecimal,reline --ignore-path-tokens=templates,sample,spec
 %__setup_rb document
 
 %install
@@ -411,6 +405,8 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %_bindir/*racc*
 %_man1dir/%name.*
 %_man1dir/bundle*
+%_mandir/%name.*
+%_mandir/bundle*
 %dir %_datadir/ri
 
 
@@ -430,17 +426,19 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 
 %files         -n gem
 %_bindir/gem
-%_libexecdir/templates
-%_mandir/man5/gemfile.5.xz
+%_man5dir/gemfile.5.xz
+%_mandir/gemfile.5.xz
 
 %files         -n erb
 %_bindir/erb
 %_man1dir/erb.*
+%_mandir/erb.*
 
 %files         -n irb
 %lang(ja) %doc doc/irb/*.ja
 %_bindir/irb
 %_man1dir/irb.*
+%_mandir/irb.1.xz
 
 %files         doc
 %dir %ridir/%ruby_version/site
@@ -448,18 +446,20 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 
 %files         -n ri-doc
 %_man1dir/ri.*
-
-%files         -n ruby-mspec
-%_bindir/mspec*
-%_bindir/mkspec*
-%_libexecdir/mspec
+%_mandir/ri.*
 
 %if_without bootstrap
 %files miniruby-src
 %_datadir/%name-%_version-miniruby/miniruby-src.patch
 %endif
 
+
 %changelog
+* Wed Apr 20 2022 Pavel Skrylev <majioa@altlinux.org> 2.7.6-alt1
+- !fix bugs:
+ + CVE-2022-28738
+ + CVE-2022-28739
+
 * Fri Mar 11 2022 Pavel Skrylev <majioa@altlinux.org> 2.7.5-alt1.2
 - !fix dependency to libffi8
 

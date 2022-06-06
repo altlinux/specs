@@ -1,11 +1,11 @@
-%define        pkgname rmagick
+%define        gemname rmagick
 
-Name:          gem-%pkgname
-Version:       4.1.1
+Name:          gem-rmagick
+Version:       4.2.4
 Release:       alt1
 Summary:       ImageMagick for Ruby
-Group:         Development/Ruby
 License:       MIT
+Group:         Development/Ruby
 Url:           https://rmagick.github.io/
 Vcs:           https://github.com/rmagick/rmagick.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
@@ -13,43 +13,82 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libImageMagick-devel >= 6.6.9.6-alt1
+BuildRequires: gem(pry) >= 0.12.2 gem(pry) < 1
+BuildRequires: gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
+BuildRequires: gem(rspec) >= 3.8 gem(rspec) < 4
+BuildRequires: gem(rspec_junit_formatter) >= 0.4.1 gem(rspec_junit_formatter) < 1
+BuildRequires: gem(rubocop) >= 0.81.0 gem(rubocop) < 2
+BuildRequires: gem(rubocop-rspec) >= 1.38.1 gem(rubocop-rspec) < 3
+BuildRequires: gem(rubocop-performance) >= 1.5.2 gem(rubocop-performance) < 2
+BuildRequires: gem(simplecov) >= 0.16.1 gem(simplecov) < 1
+BuildRequires: gem(yard) >= 0.9.24 gem(yard) < 0.10
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
+%ruby_use_gem_dependency pry >= 0.13.1,pry < 1
+%ruby_use_gem_dependency rubocop-rspec >= 2.4.0,rubocop-rspec < 3
+%ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
+%ruby_use_gem_dependency rspec_junit_formatter >= 0.5.1,rspec_junit_formatter < 1
+Obsoletes:     ruby-rmagick < %EVR
+Provides:      ruby-rmagick = %EVR
+Provides:      gem(rmagick) = 4.2.4
+
 
 %description
 RMagick is an interface between the Ruby programming language and the
 ImageMagick image processing library.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-rmagick-doc
+Version:       4.2.4
+Release:       alt1
+Summary:       ImageMagick for Ruby documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rmagick
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(rmagick) = 4.2.4
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-rmagick-doc
+ImageMagick for Ruby documentation files.
+
+RMagick is an interface between the Ruby programming language and the
+ImageMagick image processing library.
+
+%description   -n gem-rmagick-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета rmagick.
 
 
-%package       devel
-Summary:       Development headers files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
-Group:         Development/Documentation
+%package       -n gem-rmagick-devel
+Version:       4.2.4
+Release:       alt1
+Summary:       ImageMagick for Ruby development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rmagick
+Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      gem(rmagick) = 4.2.4
+Requires:      gem(pry) >= 0.12.2 gem(pry) < 1
+Requires:      gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
+Requires:      gem(rspec) >= 3.8 gem(rspec) < 4
+Requires:      gem(rspec_junit_formatter) >= 0.4.1 gem(rspec_junit_formatter) < 1
+Requires:      gem(rubocop) >= 0.81.0 gem(rubocop) < 2
+Requires:      gem(rubocop-rspec) >= 1.38.1 gem(rubocop-rspec) < 3
+Requires:      gem(rubocop-performance) >= 1.5.2 gem(rubocop-performance) < 2
+Requires:      gem(simplecov) >= 0.16.1 gem(simplecov) < 1
+Requires:      gem(yard) >= 0.9.24 gem(yard) < 0.10
 Requires:      libImageMagick-devel >= 6.6.9.6-alt1
 
-%description   devel
-Development headers for %gemname gem.
+%description   -n gem-rmagick-devel
+ImageMagick for Ruby development package.
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+RMagick is an interface between the Ruby programming language and the
+ImageMagick image processing library.
+
+%description   -n gem-rmagick-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета rmagick.
 
 
 %prep
@@ -65,19 +104,27 @@ Development headers for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
-%ruby_gemextdir
 %ruby_gemlibdir
+%ruby_gemextdir
 
-%files         doc
+%files         -n gem-rmagick-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-rmagick-devel
+%doc README.md
 %ruby_includedir/*
 
 
 %changelog
+* Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 4.2.4-alt1
+- ^ 4.2.2 -> 4.2.4
+
+* Sat Apr 24 2021 Pavel Skrylev <majioa@altlinux.org> 4.2.2-alt1
+- new version 4.2.2
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 4.1.1-alt1
 - ^ 4.0.0 -> 4.1.1
 - ! spec tags
@@ -96,7 +143,7 @@ Development headers for %gemname gem.
 - Rebuild with new Ruby autorequirements.
 
 * Tue May 29 2018 Anton Farygin <rider@altlinux.ru> 2.16.0-alt5
-- rebuilt for ImageMagick 
+- rebuilt for ImageMagick
 
 * Fri Mar 30 2018 Andrey Cherepanov <cas@altlinux.org> 2.16.0-alt3.4
 - Rebuild with Ruby 2.5.1

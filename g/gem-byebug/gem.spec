@@ -2,7 +2,7 @@
 
 Name:          gem-byebug
 Version:       11.1.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby fast debugger - base + CLI
 License:       BSD-2-Clause
 Group:         Development/Ruby
@@ -16,6 +16,12 @@ BuildRequires: gem(bundler) >= 2.0 gem(bundler) < 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency chandler >= 0.9.0,chandler < 1
+%ruby_use_gem_dependency mdl >= 0.11.0,mdl < 1
+%ruby_use_gem_dependency pry >= 0.14.0,pry < 1
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency simplecov >= 0.21.2,simplecov < 1
+%ruby_use_gem_dependency yard >= 0.9.25,yard < 1
 Provides:      gem(byebug) = 11.1.3
 
 
@@ -29,7 +35,7 @@ comes with an easy to use command line interface.
 
 %package       -n byebug
 Version:       11.1.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby fast debugger - base + CLI executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета byebug
 Group:         Other
@@ -52,7 +58,7 @@ comes with an easy to use command line interface.
 
 %package       -n gem-byebug-doc
 Version:       11.1.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby fast debugger - base + CLI documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета byebug
 Group:         Development/Documentation
@@ -75,7 +81,7 @@ comes with an easy to use command line interface.
 
 %package       -n gem-byebug-devel
 Version:       11.1.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby fast debugger - base + CLI development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета byebug
 Group:         Development/Ruby
@@ -129,5 +135,8 @@ comes with an easy to use command line interface.
 
 
 %changelog
+* Fri May 06 2022 Pavel Skrylev <majioa@altlinux.org> 11.1.3-alt1.1
+- !fix spec to conform dependencies
+
 * Tue Jun 22 2021 Pavel Skrylev <majioa@altlinux.org> 11.1.3-alt1
 - + packaged gem with Ruby Policy 2.0

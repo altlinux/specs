@@ -1,7 +1,7 @@
 %define        gemname rake
 
 Name:          gem-rake
-Version:       13.0.5
+Version:       13.0.6
 Release:       alt1
 Summary:       Ruby based make-like utility
 License:       MIT
@@ -16,8 +16,7 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_alias_names %gemname
-Provides:      gem(rake) = 13.0.5
+Provides:      gem(rake) = 13.0.6
 
 
 %description
@@ -30,14 +29,14 @@ Rake есть Make-подобная утилита и набор модулей,
 
 
 %package       -n rake
-Version:       13.0.5
+Version:       13.0.6
 Release:       alt1
 Summary:       Ruby based make-like utility executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rake
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rake) = 13.0.5
+Requires:      gem(rake) = 13.0.6
 
 %description   -n rake
 Ruby based make-like utility executable(s).
@@ -50,14 +49,14 @@ specified in standard Ruby syntax.
 
 
 %package       -n gem-rake-doc
-Version:       13.0.5
+Version:       13.0.6
 Release:       alt1
 Summary:       Ruby based make-like utility documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rake
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rake) = 13.0.5
+Requires:      gem(rake) = 13.0.6
 
 %description   -n gem-rake-doc
 Ruby based make-like utility documentation files.
@@ -89,6 +88,7 @@ specified in standard Ruby syntax.
 %files         -n rake
 %doc README.rdoc
 %_bindir/rake
+%_mandir/rake.1.xz
 
 %files         -n gem-rake-doc
 %doc README.rdoc
@@ -96,6 +96,9 @@ specified in standard Ruby syntax.
 
 
 %changelog
+* Sun Apr 03 2022 Pavel Skrylev <majioa@altlinux.org> 13.0.6-alt1
+- ^ 13.0.5 -> 13.0.6
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 13.0.5-alt1
 - ^ 13.0.1 -> 13.0.5
 

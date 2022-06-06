@@ -2,7 +2,7 @@
 
 Name:          gem-ed25519
 Version:       1.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby library for the Ed25519 public-key signature system
 License:       MIT
 Group:         Development/Ruby
@@ -16,6 +16,7 @@ BuildRequires: gem(bundler) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 Obsoletes:     ruby-ed25519 < %EVR
 Provides:      ruby-ed25519 = %EVR
 Provides:      gem(ed25519) = 1.3.0
@@ -28,7 +29,7 @@ described in RFC 8032.
 
 %package       -n gem-ed25519-doc
 Version:       1.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby library for the Ed25519 public-key signature system documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ed25519
 Group:         Development/Documentation
@@ -48,7 +49,7 @@ described in RFC 8032.
 
 %package       -n gem-ed25519-devel
 Version:       1.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby library for the Ed25519 public-key signature system development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ed25519
 Group:         Development/Ruby
@@ -95,6 +96,9 @@ described in RFC 8032.
 
 
 %changelog
+* Sun May 08 2022 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt1.1
+- !spec dep top rubocop
+
 * Fri Mar 11 2022 Pavel Skrylev <majioa@altlinux.org> 1.3.0-alt1
 - ^ 1.2.4 -> 1.3.0
 

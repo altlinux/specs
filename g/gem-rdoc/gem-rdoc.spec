@@ -1,9 +1,9 @@
 %define        gemname rdoc
 
 Name:          gem-rdoc
-Version:       6.3.0
+Version:       6.4.0
 Release:       alt1
-Summary:       RDoc produces HTML and online documentation for Ruby projects.
+Summary:       RDoc produces HTML and online documentation for Ruby projects
 License:       Ruby
 Group:         Development/Ruby
 Url:           https://ruby.github.io/rdoc/
@@ -13,12 +13,14 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(psych) >= 4.0.0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      gem(psych) >= 4.0.0
 Obsoletes:     ruby-rdoc < %EVR
 Provides:      ruby-rdoc = %EVR
-Provides:      gem(rdoc) = 6.3.0
+Provides:      gem(rdoc) = 6.4.0
 
 %description
 RDoc produces HTML and online documentation for Ruby projects. RDoc includes the
@@ -26,75 +28,69 @@ rdoc and ri tools for generating and displaying online documentation.
 
 
 %package       -n rdoc
-Version:       6.3.0
+Version:       6.4.0
 Release:       alt1
-Summary:       RDoc produces HTML and command-line documentation for Ruby projects executable(s)
-Summary(ru_RU.UTF-8): Исполнямка для самоцвета ri
+Summary:       RDoc produces HTML and online documentation for Ruby projects executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета rdoc
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(rdoc) = 6.3.0
-Obsoletes:     ruby-tools
-Obsoletes:     ruby-tool-rdoc
-Provides:      ruby-tool-rdoc
-
-%description   -n rdoc
-RDoc produces HTML and command-line documentation for Ruby projects
-executable(s).
-
-RDoc produces HTML and command-line documentation for Ruby projects. RDoc
-includes the +rdoc+ and +ri+ tools for generating and displaying documentation
-from the command-line.
-
-%description   -n rdoc -l ru_RU.UTF-8
-Исполнямка для самоцвета ri.
-
-
-%package       -n gem-rdoc-doc
-Version:       6.3.0
-Release:       alt1
-Summary:       RDoc produces HTML and command-line documentation for Ruby projects documentation files
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ri
-Group:         Development/Documentation
-BuildArch:     noarch
-
-Requires:      gem(rdoc) = 6.3.0
-
-%description   -n gem-rdoc-doc
-RDoc produces HTML and command-line documentation for Ruby projects
-documentation files.
-
-RDoc produces HTML and command-line documentation for Ruby projects. RDoc
-includes the +rdoc+ and +ri+ tools for generating and displaying documentation
-from the command-line.
-
-%description   -n gem-rdoc-doc -l ru_RU.UTF-8
-Файлы сведений для самоцвета ri.
-
-
-%package       -n ri
-Version:       6.3.0
-Release:       alt1
-Summary:       RDoc produces HTML and command-line documentation for Ruby projects executable(s)
-Summary(ru_RU.UTF-8): Исполнямка для самоцвета ri
-Group:         Other
-BuildArch:     noarch
-
-Requires:      gem(rdoc) = 6.3.0
+Requires:      gem(rdoc) = 6.4.0
 Obsoletes:     ruby-tool-rdoc
 Obsoletes:     ruby-tools
 Conflicts:     rdoc <= 1.9.3-alt10
 
-%description   -n ri
-RDoc produces HTML and command-line documentation for Ruby projects
+%description   -n rdoc
+RDoc produces HTML and online documentation for Ruby projects
 executable(s).
 
-RDoc produces HTML and command-line documentation for Ruby projects. RDoc
-includes the +rdoc+ and +ri+ tools for generating and displaying documentation
-from the command-line.
+RDoc produces HTML and online documentation for Ruby projects. RDoc includes the
+rdoc and ri tools for generating and displaying online documentation.
+
+%description   -n rdoc -l ru_RU.UTF-8
+Исполнямка для самоцвета rdoc.
+
+
+%package       -n ri
+Version:       6.4.0
+Release:       alt1
+Summary:       RI produces HTML and online documentation for Ruby projects executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета rdoc
+Group:         Other
+BuildArch:     noarch
+
+Requires:      gem(rdoc) = 6.4.0
+
+%description   -n ri
+RDoc produces HTML and online documentation for Ruby projects
+executable(s).
+
+RDoc produces HTML and online documentation for Ruby projects. RDoc includes the
+rdoc and ri tools for generating and displaying online documentation.
 
 %description   -n ri -l ru_RU.UTF-8
-Исполнямка для самоцвета ri.
+Исполнямка для самоцвета rdoc.
+
+
+%package       -n gem-rdoc-doc
+Version:       6.4.0
+Release:       alt1
+Summary:       RDoc produces HTML and online documentation for Ruby projects documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rdoc
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Requires:      gem(rdoc) = 6.4.0
+
+%description   -n gem-rdoc-doc
+RDoc produces HTML and online documentation for Ruby projects documentation
+files.
+
+RDoc produces HTML and online documentation for Ruby projects. RDoc includes the
+rdoc and ri tools for generating and displaying online documentation.
+
+%description   -n gem-rdoc-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета rdoc.
 
 
 %prep
@@ -118,17 +114,20 @@ from the command-line.
 %doc README.rdoc
 %_bindir/rdoc
 
+%files         -n ri
+%doc README.rdoc
+%_bindir/ri
+%_mandir/ri*
+
 %files         -n gem-rdoc-doc
 %doc README.rdoc
 %ruby_gemdocdir
 
-%files         -n ri
-%doc README.rdoc
-%_bindir/ri
-%_mandir/*
-
 
 %changelog
+* Sat May 14 2022 Pavel Skrylev <majioa@altlinux.org> 6.4.0-alt1
+- ^ 6.3.0 -> 6.4.0
+
 * Wed Apr 28 2021 Pavel Skrylev <majioa@altlinux.org> 6.3.0-alt1
 - ^ 6.1.1 -> 6.3.0
 

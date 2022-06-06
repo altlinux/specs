@@ -1,68 +1,81 @@
-%define        pkgname pg
+%define        gemname pg
 
-Name:          gem-%pkgname
-Version:       1.2.3
-Release:       alt1.1
+Name:          gem-pg
+Version:       1.3.5
+Release:       alt1
 Summary:       Ruby interface to PostgreSQL RDBMS
-Group:         Development/Ruby
 License:       BSD-2-Clause
+Group:         Development/Ruby
 Url:           https://bitbucket.org/ged/ruby-pg/
 Vcs:           https://bitbucket.org/ged/ruby-pg.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(hoe)
-BuildRequires: gem(rake-compiler)
 BuildRequires: postgresql-devel
 BuildRequires: uni2ascii
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_ignore_names ruby-pg,postgres
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+Obsoletes:     ruby-pg < %EVR
+Provides:      ruby-pg = %EVR
+Provides:      gem(pg) = 1.3.5
+
 
 %description
-This is the extension library to access a PostgreSQL database
-from Ruby. This library works with PostgreSQL 6.4-8.x; it
-probably works with 6.3 or earlier with slight modification,
-but not tested at all.
+This is the extension library to access a PostgreSQL database from Ruby. This
+library works with PostgreSQL 6.4-8.x; it probably works with 6.3 or earlier
+with slight modification, but not tested at all.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-pg-doc
+Version:       1.3.5
+Release:       alt1
+Summary:       Ruby interface to PostgreSQL RDBMS documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pg
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(pg) = 1.3.5
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-pg-doc
+Ruby interface to PostgreSQL RDBMS documentation files.
+
+This is the extension library to access a PostgreSQL database from Ruby. This
+library works with PostgreSQL 6.4-8.x; it probably works with 6.3 or earlier
+with slight modification, but not tested at all.
+
+%description   -n gem-pg-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета pg.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы для разработки на основе самоцвета %gemname
+%package       -n gem-pg-devel
+Version:       1.3.5
+Release:       alt1
+Summary:       Ruby interface to PostgreSQL RDBMS development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pg
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      gem(pg) = 1.3.5
 Requires:      postgresql-devel
 
-%description   devel
-Development files for %gemname gem.
+%description   -n gem-pg-devel
+Ruby interface to PostgreSQL RDBMS development package.
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+This is the extension library to access a PostgreSQL database from Ruby. This
+library works with PostgreSQL 6.4-8.x; it probably works with 6.3 or earlier
+with slight modification, but not tested at all.
+
+%description   -n gem-pg-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета pg.
 
 
 %prep
 %setup
 
 %build
-%ruby_build --use=%gemname --version-replace=%version
+%ruby_build
 
 %install
 %ruby_install
@@ -71,19 +84,27 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README* LICENSE
+%doc README.rdoc README.ja.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-pg-doc
+%doc README.rdoc README.ja.rdoc
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-pg-devel
+%doc README.rdoc README.ja.rdoc
 %ruby_includedir/*
 
 
 %changelog
+* Fri May 13 2022 Pavel Skrylev <majioa@altlinux.org> 1.3.5-alt1
+- ^ 1.3.4 -> 1.3.5
+
+* Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 1.3.4-alt1
+- ^ 1.2.3 -> 1.3.4
+
 * Tue Jun 29 2021 Pavel Skrylev <majioa@altlinux.org> 1.2.3-alt1.1
 - + ignore names to spec
 
@@ -92,7 +113,7 @@ Development files for %gemname gem.
 - ! spec tags and syntax
 
 * Mon Dec 09 2019 Pavel Skrylev <majioa@altlinux.org> 1.1.4-alt2
-- added (+) postgresql-devel to gem-%pkgname-devel
+- added (+) postgresql-devel to gem-pg-devel
 - added (+) some translations
 - fixed (*) some syntax issues, licence (TODO)
 

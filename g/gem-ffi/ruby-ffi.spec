@@ -1,7 +1,7 @@
 %define        gemname ffi
 
 Name:          gem-ffi
-Version:       1.15.4
+Version:       1.15.5
 Release:       alt1
 Summary:       Ruby foreign function interface
 License:       BSD-3-Clause
@@ -15,15 +15,16 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: libffi-devel
 BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
 BuildRequires: gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
-BuildRequires: gem(rake-compiler-dock) >= 1.0 gem(rake-compiler-dock) < 2
+BuildRequires: gem(rake-compiler-dock) >= 0.7.2 gem(rake-compiler-dock) < 2
 BuildRequires: gem(rspec) >= 2.14.1 gem(rspec) < 4
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
 Obsoletes:     ruby-ffi < %EVR
 Provides:      ruby-ffi = %EVR
-Provides:      gem(ffi) = 1.15.4
+Provides:      gem(ffi) = 1.15.5
 
 
 %description
@@ -35,14 +36,14 @@ extension using Ruby-FFI.
 
 
 %package       -n gem-ffi-doc
-Version:       1.15.4
+Version:       1.15.5
 Release:       alt1
 Summary:       Ruby foreign function interface documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ffi
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ffi) = 1.15.4
+Requires:      gem(ffi) = 1.15.5
 
 %description   -n gem-ffi-doc
 Ruby foreign function interface documentation files.
@@ -58,17 +59,17 @@ extension using Ruby-FFI.
 
 
 %package       -n gem-ffi-devel
-Version:       1.15.4
+Version:       1.15.5
 Release:       alt1
 Summary:       Ruby foreign function interface development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ffi
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ffi) = 1.15.4
+Requires:      gem(ffi) = 1.15.5
 Requires:      gem(rake) >= 13.0 gem(rake) < 14
 Requires:      gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
-Requires:      gem(rake-compiler-dock) >= 1.0 gem(rake-compiler-dock) < 2
+Requires:      gem(rake-compiler-dock) >= 0.7.2 gem(rake-compiler-dock) < 2
 Requires:      gem(rspec) >= 2.14.1 gem(rspec) < 4
 
 %description   -n gem-ffi-devel
@@ -112,6 +113,9 @@ extension using Ruby-FFI.
 
 
 %changelog
+* Wed Mar 16 2022 Pavel Skrylev <majioa@altlinux.org> 1.15.5-alt1
+- ^ 1.15.4 -> 1.15.5
+
 * Fri Sep 03 2021 Pavel Skrylev <majioa@altlinux.org> 1.15.4-alt1
 - ^ 1.15.0 -> 1.15.4
 

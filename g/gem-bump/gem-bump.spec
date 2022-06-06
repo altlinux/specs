@@ -1,8 +1,8 @@
-%define        pkgname bump
+%define        gemname bump
 
-Name:          gem-%pkgname
-Version:       0.8.0
-Release:       alt3.1
+Name:          gem-bump
+Version:       0.10.0
+Release:       alt1
 Summary:       Bump is a gem that will simplify the way you build gems
 License:       MIT
 Group:         Development/Ruby
@@ -13,45 +13,87 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(bundler) >= 0
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(rspec) >= 0
+BuildRequires: gem(rubocop) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Provides:      gem(bump) = 0.10.0
+
 
 %description
 Bump is a gem that will simplify the way you build gems and chef-cookbooks.
 
-%description -l ru_RU.UTF-8
-Бамп есть бисер, который позволяет упростить путь в построении
-бисеров и поваренных книг.
-
-
-%package       doc
-Summary:       Documentation files for %name
-Group:         Development/Documentation
-BuildArch:     noarch
-
-%description   doc
-Documentation files for %{name}.
-
-%description   doc -l ru_RU.UTF-8
-Документация для %{name}.
+%description         -l ru_RU.UTF-8
+Бамп есть бисер, который позволяет упростить путь в построении бисеров и
+поваренных книг.
 
 
 %package       -n bump
-Summary:       Bump is the executable file for bump gem.
+Version:       0.10.0
+Release:       alt1
+Summary:       Bump is a gem that will simplify the way you build gems executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета bump
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      gem(bump) = 0.10.0
 Conflicts:     mesa-demos
 Conflicts:     bumper
 
 %description   -n bump
-Bump is the executable file for bump gem, which is a gem that will simplify
-the way you build gems and chef-cookbooks.
+Bump is a gem that will simplify the way you build gems executable(s).
+
+Bump is a gem that will simplify the way you build gems and chef-cookbooks.
 
 %description   -n bump -l ru_RU.UTF-8
-Исполняемый файл для бисера bump, который позволяет упростить путь в построении
-бисеров и поваренных книг.
+Исполнямка для самоцвета bump.
+
+
+%package       -n gem-bump-doc
+Version:       0.10.0
+Release:       alt1
+Summary:       Bump is a gem that will simplify the way you build gems documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета bump
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Requires:      gem(bump) = 0.10.0
+
+%description   -n gem-bump-doc
+Bump is a gem that will simplify the way you build gems documentation
+files.
+
+Bump is a gem that will simplify the way you build gems and chef-cookbooks.
+
+%description   -n gem-bump-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета bump.
+
+
+%package       -n gem-bump-devel
+Version:       0.10.0
+Release:       alt1
+Summary:       Bump is a gem that will simplify the way you build gems development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета bump
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(bump) = 0.10.0
+Requires:      gem(bundler) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(rspec) >= 0
+Requires:      gem(rubocop) >= 0
+
+%description   -n gem-bump-devel
+Bump is a gem that will simplify the way you build gems development
+package.
+
+Bump is a gem that will simplify the way you build gems and chef-cookbooks.
+
+%description   -n gem-bump-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета bump.
 
 
 %prep
@@ -67,16 +109,26 @@ the way you build gems and chef-cookbooks.
 %ruby_test
 
 %files
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n bump
+%doc README.md
+%_bindir/bump
+
+%files         -n gem-bump-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         -n bump
-%_bindir/*
+%files         -n gem-bump-devel
+%doc README.md
+
 
 %changelog
+* Thu Apr 21 2022 Pavel Skrylev <majioa@altlinux.org> 0.10.0-alt1
+- ^ 0.8.0 -> 0.10.0
+
 * Thu Jun 04 2020 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt3.1
 - + conflict dep to bumper
 

@@ -1,8 +1,8 @@
 %define        pkgname setup
 
 Name:          gem-%pkgname
-Version:       5.999.5
-Release:       alt12
+Version:       5.999.6
+Release:       alt1
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,22 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Sun May 01 2022 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt1
+- + novel yamlto support when YAML parsings
+- + log-level, debug-io, info-io CLI args
+- + loaders for ruby, manifest, cmake, git-version-gen, mast, pom XML, rookbook,
+    yaml
+- + log module to support advanced IO flow logging
+- + hoe parser
+- !fix loading concerns
+- !fix some parsers
+- !fix setup default gem generator extension require when real gem is erroneous
+- !fix minor loader, and rakefile gemspec bugs
+- *changed rake app based on loader
+- *changed deps dsl detection
+- *changed slightly sources
+- -remove gemspec-based parser
+
 * Thu Mar 03 2022 Pavel Skrylev <majioa@altlinux.org> 5.999.5-alt12
 - ! for jeweler, and some others spec parser to properly load and store specs
 

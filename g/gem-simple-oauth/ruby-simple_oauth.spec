@@ -1,7 +1,7 @@
 %define        gemname simple_oauth
 
 Name:          gem-simple-oauth
-Version:       0.3.0
+Version:       0.3.1
 Release:       alt1
 Summary:       Simply builds and verifies OAuth headers
 License:       MIT
@@ -20,10 +20,10 @@ BuildRequires: gem(bundler) >= 1.0 gem(bundler) < 3
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
-%ruby_ignore_names fixtures
+%ruby_alias_names simple_oauth,simple-oauth
 Obsoletes:     ruby-simple_oauth < %EVR
 Provides:      ruby-simple_oauth = %EVR
-Provides:      gem(simple_oauth) = 0.3.0
+Provides:      gem(simple_oauth) = 0.3.1
 
 
 %description
@@ -31,39 +31,35 @@ Simply builds and verifies OAuth headers.
 
 
 %package       -n gem-simple-oauth-doc
-Version:       0.3.0
+Version:       0.3.1
 Release:       alt1
 Summary:       Simply builds and verifies OAuth headers documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета simple_oauth
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(simple_oauth) = 0.3.0
+Requires:      gem(simple_oauth) = 0.3.1
 
 %description   -n gem-simple-oauth-doc
 Simply builds and verifies OAuth headers documentation files.
-
-Simply builds and verifies OAuth headers.
 
 %description   -n gem-simple-oauth-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета simple_oauth.
 
 
 %package       -n gem-simple-oauth-devel
-Version:       0.3.0
+Version:       0.3.1
 Release:       alt1
 Summary:       Simply builds and verifies OAuth headers development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета simple_oauth
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(simple_oauth) = 0.3.0
+Requires:      gem(simple_oauth) = 0.3.1
 Requires:      gem(bundler) >= 1.0 gem(bundler) < 3
 
 %description   -n gem-simple-oauth-devel
 Simply builds and verifies OAuth headers development package.
-
-Simply builds and verifies OAuth headers.
 
 %description   -n gem-simple-oauth-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета simple_oauth.
@@ -95,6 +91,9 @@ Simply builds and verifies OAuth headers.
 
 
 %changelog
+* Tue Apr 19 2022 Pavel Skrylev <majioa@altlinux.org> 0.3.1-alt1
+- ^ 0.3.0 -> 0.3.1
+
 * Thu Jul 01 2021 Pavel Skrylev <majioa@altlinux.org> 0.3.0-alt1
 - ^ 0.2.0 -> 0.3.0
 

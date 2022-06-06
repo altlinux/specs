@@ -1,8 +1,8 @@
-%define        pkgname oj
+%define        gemname oj
 
-Name:          gem-%pkgname
-Version:       3.10.5
-Release:       alt1.1
+Name:          gem-oj
+Version:       3.13.11
+Release:       alt1
 Summary:       A fast JSON parser and Object marshaller as a Ruby gem
 License:       MIT
 Group:         Development/Ruby
@@ -12,42 +12,68 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(rake-compiler) >= 0.9 gem(rake-compiler) < 2
+BuildRequires: gem(minitest) >= 5 gem(minitest) < 6
+BuildRequires: gem(test-unit) >= 3.0 gem(test-unit) < 4
+BuildRequires: gem(wwtd) >= 0 gem(wwtd) < 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency wwtd >= 1.4.1,wwtd < 2
+Obsoletes:     ruby-oj < %EVR
+Provides:      ruby-oj = %EVR
+Provides:      gem(oj) = 3.13.11
+
 
 %description
-%summary.
-
-Version 3.0 is out! 3.0 provides better json gem and Rails compatibility.
-It also provides additional optimization options.
+Version 3.0 is out! 3.0 provides better json gem and Rails compatibility. It
+also provides additional optimization options.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-oj-doc
+Version:       3.13.11
+Release:       alt1
+Summary:       A fast JSON parser and Object marshaller as a Ruby gem documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета oj
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(oj) = 3.13.11
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-oj-doc
+A fast JSON parser and Object marshaller as a Ruby gem documentation
+files.
+
+Version 3.0 is out! 3.0 provides better json gem and Rails compatibility. It
+also provides additional optimization options.
+
+%description   -n gem-oj-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета oj.
 
 
-%package       devel
-Summary:       Development headers files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
-Group:         Development/Documentation
+%package       -n gem-oj-devel
+Version:       3.13.11
+Release:       alt1
+Summary:       A fast JSON parser and Object marshaller as a Ruby gem development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета oj
+Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   devel
-Development headers for %gemname gem.
+Requires:      gem(oj) = 3.13.11
+Requires:      gem(rake-compiler) >= 0.9 gem(rake-compiler) < 2
+Requires:      gem(minitest) >= 5 gem(minitest) < 6
+Requires:      gem(test-unit) >= 3.0 gem(test-unit) < 4
+Requires:      gem(wwtd) >= 0 gem(wwtd) < 2
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+%description   -n gem-oj-devel
+A fast JSON parser and Object marshaller as a Ruby gem development
+package.
+
+Version 3.0 is out! 3.0 provides better json gem and Rails compatibility. It
+also provides additional optimization options.
+
+%description   -n gem-oj-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета oj.
 
 
 %prep
@@ -63,17 +89,27 @@ Development headers for %gemname gem.
 %ruby_test
 
 %files
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         devel
-%ruby_includedir/*
-
-%files         doc
+%files         -n gem-oj-doc
+%doc README.md
 %ruby_gemdocdir
 
+%files         -n gem-oj-devel
+%doc README.md
+%ruby_includedir/*
+
+
 %changelog
+* Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 3.13.11-alt1
+- ^ 3.11.5 -> 3.13.11
+
+* Sat Apr 24 2021 Pavel Skrylev <majioa@altlinux.org> 3.11.5-alt1
+- new version 3.11.5
+
 * Tue Apr 07 2020 Pavel Skrylev <majioa@altlinux.org> 3.10.5-alt1.1
 - ! spec obsolete/provide pair
 

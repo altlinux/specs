@@ -1,9 +1,8 @@
-%define        pkgname ruby-parser
 %define        gemname ruby_parser
 
-Name:          gem-%pkgname
-Version:       3.15.0
-Release:       alt1.1
+Name:          gem-ruby-parser
+Version:       3.19.1
+Release:       alt1
 Summary:       ruby_parser (RP) is a ruby parser written in pure ruby
 License:       MIT
 Group:         Development/Ruby
@@ -15,54 +14,104 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: unifdef
-BuildRequires: gem-hoe
-BuildRequires: gem(sexp_processor)
-BuildRequires: gem(oedipus_lex)
 BuildRequires: /usr/bin/racc
+BuildRequires: gem(sexp_processor) >= 4.16 gem(sexp_processor) < 5
+BuildRequires: gem(rake) >= 10 gem(rake) < 15
+BuildRequires: gem(oedipus_lex) >= 2.6 gem(oedipus_lex) < 3
+BuildRequires: gem(racc) >= 1.5 gem(racc) < 2
+BuildRequires: gem(hoe) >= 0
+BuildRequires: gem(rdoc) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_alias_names ruby_parser,ruby-parser
+Requires:      gem(sexp_processor) >= 4.16 gem(sexp_processor) < 5
+Provides:      gem(ruby_parser) = 3.19.1
+
+%ruby_on_build_rake_tasks generate
 
 %description
-ruby_parser (RP) is a ruby parser written in pure ruby (utilizing
-racc-which does by default use a C extension). RP's output is the same
-as ParseTree's output: s-expressions using ruby's arrays and base types.
+ruby_parser (RP) is a ruby parser written in pure ruby (utilizing racc-which
+does by default use a C extension). RP's output is the same as ParseTree's
+output: s-expressions using ruby's arrays and base types.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n ruby-parser
+Version:       3.19.1
+Release:       alt1
+Summary:       ruby_parser (RP) is a ruby parser written in pure ruby executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета ruby_parser
+Group:         Other
+BuildArch:     noarch
+
+Requires:      gem(ruby_parser) = 3.19.1
+
+%description   -n ruby-parser
+ruby_parser (RP) is a ruby parser written in pure ruby
+executable(s).
+
+ruby_parser (RP) is a ruby parser written in pure ruby (utilizing racc-which
+does by default use a C extension). RP's output is the same as ParseTree's
+output: s-expressions using ruby's arrays and base types.
+
+%description   -n ruby-parser -l ru_RU.UTF-8
+Исполнямка для самоцвета ruby_parser.
+
+
+%package       -n gem-ruby-parser-doc
+Version:       3.19.1
+Release:       alt1
+Summary:       ruby_parser (RP) is a ruby parser written in pure ruby documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ruby_parser
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(ruby_parser) = 3.19.1
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-ruby-parser-doc
+ruby_parser (RP) is a ruby parser written in pure ruby documentation
+files.
+
+ruby_parser (RP) is a ruby parser written in pure ruby (utilizing racc-which
+does by default use a C extension). RP's output is the same as ParseTree's
+output: s-expressions using ruby's arrays and base types.
+
+%description   -n gem-ruby-parser-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета ruby_parser.
 
 
-%package       -n %pkgname
-Summary:       Executable file for %gemname gem
-Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+%package       -n gem-ruby-parser-devel
+Version:       3.19.1
+Release:       alt1
+Summary:       ruby_parser (RP) is a ruby parser written in pure ruby development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ruby_parser
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   -n %pkgname
-ruby_parser (RP) is a ruby parser written in pure ruby (utilizing
-racc-which does by default use a C extension). RP's output is the same
-as ParseTree's output: s-expressions using ruby's arrays and base types.
+Requires:      gem(ruby_parser) = 3.19.1
+Requires:      gem(rake) >= 10 gem(rake) < 15
+Requires:      gem(oedipus_lex) >= 2.6 gem(oedipus_lex) < 3
+Requires:      gem(racc) >= 1.5 gem(racc) < 2
+Requires:      gem(hoe) >= 0
+Requires:      gem(rdoc) >= 0
 
-Executable file for %gemname gem.
+%description   -n gem-ruby-parser-devel
+ruby_parser (RP) is a ruby parser written in pure ruby development
+package.
 
-%description   -n %pkgname -l ru_RU.UTF8
-Исполнямка для %gemname самоцвета.
+ruby_parser (RP) is a ruby parser written in pure ruby (utilizing racc-which
+does by default use a C extension). RP's output is the same as ParseTree's
+output: s-expressions using ruby's arrays and base types.
+
+%description   -n gem-ruby-parser-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета ruby_parser.
 
 
 %prep
 %setup
 
 %build
-%ruby_build --pre=repackage --use=%gemname --alias=parser --join=bin:lib --version-replace=%version
+%ruby_build
 
 %install
 %ruby_install
@@ -71,17 +120,27 @@ Executable file for %gemname gem.
 %ruby_test
 
 %files
+%doc README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n ruby-parser
+%doc README.rdoc
+%_bindir/ruby_parse
+%_bindir/ruby_parse_extract_error
+
+%files         -n gem-ruby-parser-doc
+%doc README.rdoc
 %ruby_gemdocdir
 
-%files         -n %pkgname
-%_bindir/*
+%files         -n gem-ruby-parser-devel
+%doc README.rdoc
 
 
 %changelog
+* Wed Apr 06 2022 Pavel Skrylev <majioa@altlinux.org> 3.19.1-alt1
+- ^ 3.15.0 -> 3.19.1
+
 * Mon Dec 07 2020 Pavel Skrylev <majioa@altlinux.org> 3.15.0-alt1.1
 - ! out of compilation error due to spec typo
 - + proper build dep to racc executable

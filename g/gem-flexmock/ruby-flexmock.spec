@@ -1,48 +1,44 @@
 %define        gemname flexmock
 
 Name:          gem-flexmock
-Version:       2.3.6
-Release:       alt2
+Version:       2.3.6.1
+Release:       alt1
 Summary:       Simple mock object library for Ruby unit testing
 License:       MIT
 Group:         Development/Ruby
-Url:           http://rubyforge.org/projects/flexmock/
+Url:           https://github.com/doudou/flexmock
+Vcs:           https://github.com/doudou/flexmock.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: rpm-build-ruby
-BuildRequires: ruby-test-unit
-BuildRequires: ruby-tool-rdoc
-BuildRequires: gem(minitest) >= 0 gem(minitest) < 6
-BuildRequires: gem(rake) >= 0 gem(rake) < 14
-BuildRequires: gem(simplecov) >= 0.11.0 gem(simplecov) < 1
+BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(simplecov) >= 0.11.0
 BuildRequires: gem(coveralls) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
 Obsoletes:     ruby-flexmock < %EVR
 Provides:      ruby-flexmock = %EVR
-Provides:      gem(flexmock) = 2.3.6
+Provides:      gem(flexmock) = 2.3.6.1
 
+%ruby_use_gem_version flexmock:2.3.6.1
 
 %description
 FlexMock is a simple, but flexible, mock object library for Ruby unit testing.
 
 
 %package       -n gem-flexmock-doc
-Version:       2.3.6
-Release:       alt2
+Version:       2.3.6.1
+Release:       alt1
 Summary:       Simple mock object library for Ruby unit testing documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета flexmock
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(flexmock) = 2.3.6
+Requires:      gem(flexmock) = 2.3.6.1
 
 %description   -n gem-flexmock-doc
 Simple mock object library for Ruby unit testing documentation files.
@@ -54,17 +50,17 @@ FlexMock is a simple, but flexible, mock object library for Ruby unit testing.
 
 
 %package       -n gem-flexmock-devel
-Version:       2.3.6
-Release:       alt2
+Version:       2.3.6.1
+Release:       alt1
 Summary:       Simple mock object library for Ruby unit testing development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета flexmock
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(flexmock) = 2.3.6
-Requires:      gem(minitest) >= 0 gem(minitest) < 6
-Requires:      gem(rake) >= 0 gem(rake) < 14
-Requires:      gem(simplecov) >= 0.11.0 gem(simplecov) < 1
+Requires:      gem(flexmock) = 2.3.6.1
+Requires:      gem(minitest) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(simplecov) >= 0.11.0
 Requires:      gem(coveralls) >= 0
 
 %description   -n gem-flexmock-devel
@@ -102,6 +98,9 @@ FlexMock is a simple, but flexible, mock object library for Ruby unit testing.
 
 
 %changelog
+* Tue Apr 19 2022 Pavel Skrylev <majioa@altlinux.org> 2.3.6.1-alt1
+- ^ 2.3.6 -> 2.3.6.1
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 2.3.6-alt2
 - ! spec
 

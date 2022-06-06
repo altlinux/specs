@@ -1,10 +1,10 @@
-%define        pkgname twitter-text
+%define        gemname twitter-text
 
-Name:          gem-%pkgname
-Version:       3.1.0
+Name:          gem-twitter-text
+Version:       3.1.0.1
 Release:       alt1
 Summary:       Twitter Text Libraries
-License:       Apache-2.0
+License:       Apache 2.0
 Group:         Development/Ruby
 Url:           https://github.com/twitter/twitter-text
 Vcs:           https://github.com/twitter/twitter-text.git
@@ -13,12 +13,28 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(test-unit) >= 0
+BuildRequires: gem(multi_json) >= 1.3 gem(multi_json) < 2
+BuildRequires: gem(nokogiri) >= 1.10.9 gem(nokogiri) < 2
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(rdoc) >= 0
+BuildRequires: gem(rspec) >= 3.0 gem(rspec) < 4
+BuildRequires: gem(simplecov) >= 0
+BuildRequires: gem(unf) >= 0.1 gem(unf) < 1
+BuildRequires: gem(idn-ruby) >= 0
 
-%gem_replace_version unf ~> 0.1
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     %gemname < %EVR
-Provides:      %gemname = %EVR
+%ruby_use_gem_dependency nokogiri >= 1.13.2,nokogiri < 2
+%ruby_use_gem_dependency unf >= 0.2,unf < 1
+%ruby_ignore_names gem-twitter-text
+Requires:      gem(unf) >= 0.1 gem(unf) < 1
+Requires:      gem(idn-ruby) >= 0
+Obsoletes:     twitter-text < %EVR
+Provides:      twitter-text = %EVR
+Provides:      gem(twitter-text) = 3.1.0.1
+
+%ruby_use_gem_version twitter-text:3.1.0.1
 
 %description
 This repo is a collection of libraries and conformance tests to standardize
@@ -28,24 +44,65 @@ libraries are responsible for determining the quantity of characters in a Tweet
 and identifying and linking any url, @username, #hashtag, or $cashtag.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-twitter-text-doc
+Version:       3.1.0.1
+Release:       alt1
+Summary:       Twitter Text Libraries documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета twitter-text
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(twitter-text) = 3.1.0.1
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-twitter-text-doc
+Twitter Text Libraries documentation files.
+
+This repo is a collection of libraries and conformance tests to standardize
+parsing of Tweet text. It synchronizes development, testing, creating issues,
+and pull requests for twitter-text's implementations and specification. These
+libraries are responsible for determining the quantity of characters in a Tweet
+and identifying and linking any url, @username, #hashtag, or $cashtag.
+
+%description   -n gem-twitter-text-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета twitter-text.
+
+
+%package       -n gem-twitter-text-devel
+Version:       3.1.0.1
+Release:       alt1
+Summary:       Twitter Text Libraries development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета twitter-text
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(twitter-text) = 3.1.0.1
+Requires:      gem(test-unit) >= 0
+Requires:      gem(multi_json) >= 1.3 gem(multi_json) < 2
+Requires:      gem(nokogiri) >= 1.10.9 gem(nokogiri) < 2
+Requires:      gem(rake) >= 0
+Requires:      gem(rdoc) >= 0
+Requires:      gem(rspec) >= 3.0 gem(rspec) < 4
+Requires:      gem(simplecov) >= 0
+Requires:      gem(unf) >= 0.1 gem(unf) < 1
+
+%description   -n gem-twitter-text-devel
+Twitter Text Libraries development package.
+
+This repo is a collection of libraries and conformance tests to standardize
+parsing of Tweet text. It synchronizes development, testing, creating issues,
+and pull requests for twitter-text's implementations and specification. These
+libraries are responsible for determining the quantity of characters in a Tweet
+and identifying and linking any url, @username, #hashtag, or $cashtag.
+
+%description   -n gem-twitter-text-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета twitter-text.
 
 
 %prep
 %setup
 
 %build
-%ruby_build --ignore=conformance #--use=%gemname --version-replace=%version
+%ruby_build
 
 %install
 %ruby_install
@@ -54,14 +111,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-twitter-text-doc
+%doc README.md
 %ruby_gemdocdir
+
+%files         -n gem-twitter-text-devel
+%doc README.md
 
 
 %changelog
+* Tue Apr 19 2022 Pavel Skrylev <majioa@altlinux.org> 3.1.0.1-alt1
+- ^ 3.1.0 -> 3.1.0.1
+
 * Thu May 14 2020 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt1
 - ^ 3.0.1 -> 3.1.0
 - * recomsotions packages in spec

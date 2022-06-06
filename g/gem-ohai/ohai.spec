@@ -1,7 +1,7 @@
 %define        gemname ohai
 
 Name:          gem-ohai
-Version:       16.13.2
+Version:       18.0.10
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON
 License:       Apache-2.0
@@ -13,8 +13,8 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(chef-config) >= 14.12 gem(chef-config) < 17
-BuildRequires: gem(chef-utils) >= 16.0 gem(chef-utils) < 17
+BuildRequires: gem(chef-config) >= 14.12 gem(chef-config) < 19
+BuildRequires: gem(chef-utils) >= 16.0 gem(chef-utils) < 19
 BuildRequires: gem(ffi) >= 1.9 gem(ffi) < 2
 BuildRequires: gem(ffi-yajl) >= 2.2 gem(ffi-yajl) < 3
 BuildRequires: gem(ipaddress) >= 0
@@ -28,8 +28,8 @@ BuildRequires: gem(wmi-lite) >= 1.0 gem(wmi-lite) < 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(chef-config) >= 14.12 gem(chef-config) < 17
-Requires:      gem(chef-utils) >= 16.0 gem(chef-utils) < 17
+Requires:      gem(chef-config) >= 14.12 gem(chef-config) < 19
+Requires:      gem(chef-utils) >= 16.0 gem(chef-utils) < 19
 Requires:      gem(ffi) >= 1.9 gem(ffi) < 2
 Requires:      gem(ffi-yajl) >= 2.2 gem(ffi-yajl) < 3
 Requires:      gem(ipaddress) >= 0
@@ -42,7 +42,7 @@ Requires:      gem(train-core) >= 0
 Requires:      gem(wmi-lite) >= 1.0 gem(wmi-lite) < 2
 Obsoletes:     ohai < %EVR
 Provides:      ohai = %EVR
-Provides:      gem(ohai) = 16.13.2
+Provides:      gem(ohai) = 18.0.10
 
 
 %description
@@ -52,14 +52,14 @@ is required by the chef-client and must be present on a node.
 
 
 %package       -n ohai
-Version:       16.13.2
+Version:       18.0.10
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета ohai
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(ohai) = 16.13.2
+Requires:      gem(ohai) = 18.0.10
 
 %description   -n ohai
 Ohai profiles your system and emits JSON executable(s).
@@ -73,14 +73,14 @@ is required by the chef-client and must be present on a node.
 
 
 %package       -n gem-ohai-doc
-Version:       16.13.2
+Version:       18.0.10
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ohai
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ohai) = 16.13.2
+Requires:      gem(ohai) = 18.0.10
 
 %description   -n gem-ohai-doc
 Ohai profiles your system and emits JSON documentation files.
@@ -94,14 +94,14 @@ is required by the chef-client and must be present on a node.
 
 
 %package       -n gem-ohai-devel
-Version:       16.13.2
+Version:       18.0.10
 Release:       alt1
 Summary:       Ohai profiles your system and emits JSON development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ohai
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ohai) = 16.13.2
+Requires:      gem(ohai) = 18.0.10
 
 %description   -n gem-ohai-devel
 Ohai profiles your system and emits JSON development package.
@@ -140,6 +140,9 @@ is required by the chef-client and must be present on a node.
 
 
 %changelog
+* Thu Apr 21 2022 Pavel Skrylev <majioa@altlinux.org> 18.0.10-alt1
+- ^ 16.13.2 -> 18.0.10
+
 * Tue Jul 13 2021 Pavel Skrylev <majioa@altlinux.org> 16.13.2-alt1
 - ^ 16.2.4 -> 16.13.2
 

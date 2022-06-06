@@ -2,7 +2,7 @@
 
 Name:          passenger
 Version:       6.0.11
-Release:       alt1
+Release:       alt2
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers
 Summary(ru_RU.UTF-8): Простой и ясный мост между приложениями на Рельсах и серверами Апач и Нжинкс
 License:       MIT
@@ -16,6 +16,7 @@ Source1:       passenger.load
 Source2:       passenger.conf
 Source3:       passenger.start
 Source4:       locations.ini
+Patch:         patch.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-python3
@@ -33,6 +34,11 @@ BuildRequires: gem(rack) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency json >= 1.8.5,json < 3
+%ruby_use_gem_dependency mime-types >= 3.3.1,mime-types < 4
+%ruby_use_gem_dependency rack >= 2.2.2,rack < 3
+%ruby_use_gem_dependency rake >= 13.0.5,rake < 14
+%ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
 Requires(pre): apache2 >= %apache2_version-%apache2_release
 Provides:      gem(passenger) = 6.0.11
 Conflicts:     ruby1.8-passenger
@@ -62,7 +68,7 @@ Phusion Passenger™ известный как mod_rails или mod_rack
 
 %package       -n gem-passenger
 Version:       6.0.11
-Release:       alt1
+Release:       alt2
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers
 Group:         Development/Ruby
 
@@ -96,7 +102,7 @@ framework, a breeze. It follows the usual Ruby on Rails conventions, such as
 
 %package       -n gem-passenger-doc
 Version:       6.0.11
-Release:       alt1
+Release:       alt2
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers gem
 Summary(ru_RU.UTF-8): Самоцвет простого и ясного моста между приложениями на Рельсах и серверами Апач и Нжинкс
 Group:         Development/Documentation
@@ -130,7 +136,7 @@ framework, a breeze. It follows the usual Ruby on Rails conventions, such as
 
 %package       -n gem-passenger-devel
 Version:       6.0.11
-Release:       alt1
+Release:       alt2
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета passenger
 Group:         Development/Ruby
@@ -164,7 +170,7 @@ framework, a breeze. It follows the usual Ruby on Rails conventions, such as
 
 %package       -n apache2-mod-passenger
 Version:       6.0.11
-Release:       alt1
+Release:       alt2
 Summary:       Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers apache module files
 Summary(ru_RU.UTF-8): Модуль passenger для вебсервера apache
 Group:         System/Servers
@@ -200,6 +206,7 @@ framework, a breeze. It follows the usual Ruby on Rails conventions, such as
 
 %prep
 %setup
+%autopatch
 # Set correct python3 executable in shebang
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 subst '1i #!%__python3' test/stub/wsgi/passenger_wsgi.py
@@ -210,14 +217,14 @@ subst '1i #!%__python3' test/stub/wsgi/passenger_wsgi.py
 %install
 %ruby_install
 %ifnarch armh
-install -p -D -m 755 -- $(find -name passenger_native_support.so) %buildroot%ruby_gemextdir/passenger_native_support.so
+mkdir -p %buildroot%ruby_gemextdir/
+mv -f $(find buildout/ -name passenger_native_support.so) %buildroot%ruby_gemextdir/
 %endif
 
 #mod_passenger
 %ifnarch armh
 install -p -D -m 755 -- buildout/apache2/mod_passenger.so %buildroot%apache2_libexecdir/mod_passenger.so
 %endif
-
 install -d -m 755 -- %buildroot%apache2_mods_available
 install -d -m 755 -- %buildroot%apache2_mods_start
 install -p -m 644 -- %SOURCE1 %buildroot%apache2_mods_available/passenger.load
@@ -314,6 +321,9 @@ fi
 
 
 %changelog
+* Mon Mar 14 2022 Pavel Skrylev <majioa@altlinux.org> 6.0.11-alt2
+- !fix build for new setup
+
 * Thu Oct 14 2021 Pavel Skrylev <majioa@altlinux.org> 6.0.11-alt1
 - ^ 6.0.4 -> 6.0.11
 

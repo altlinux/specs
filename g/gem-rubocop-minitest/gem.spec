@@ -1,7 +1,7 @@
 %define        gemname rubocop-minitest
 
 Name:          gem-rubocop-minitest
-Version:       0.13.0
+Version:       0.19.1
 Release:       alt1
 Summary:       Automatic Minitest code style checking tool
 License:       MIT
@@ -13,15 +13,13 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(rubocop) >= 0.90 gem(rubocop) < 2.0
+BuildRequires: gem(rubocop) >= 0.90 gem(rubocop) < 2
 BuildRequires: gem(minitest) >= 5.11 gem(minitest) < 6
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rubocop >= 1.13.0,rubocop < 2
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-Requires:      gem(rubocop) >= 0.90 gem(rubocop) < 2.0
-Provides:      gem(rubocop-minitest) = 0.13.0
+Requires:      gem(rubocop) >= 0.90 gem(rubocop) < 2
+Provides:      gem(rubocop-minitest) = 0.19.1
 
 
 %description
@@ -30,14 +28,14 @@ enforcing Minitest best practices and coding conventions.
 
 
 %package       -n gem-rubocop-minitest-doc
-Version:       0.13.0
+Version:       0.19.1
 Release:       alt1
 Summary:       Automatic Minitest code style checking tool documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rubocop-minitest
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rubocop-minitest) = 0.13.0
+Requires:      gem(rubocop-minitest) = 0.19.1
 
 %description   -n gem-rubocop-minitest-doc
 Automatic Minitest code style checking tool documentation files.
@@ -50,14 +48,14 @@ enforcing Minitest best practices and coding conventions.
 
 
 %package       -n gem-rubocop-minitest-devel
-Version:       0.13.0
+Version:       0.19.1
 Release:       alt1
 Summary:       Automatic Minitest code style checking tool development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rubocop-minitest
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rubocop-minitest) = 0.13.0
+Requires:      gem(rubocop-minitest) = 0.19.1
 Requires:      gem(minitest) >= 5.11 gem(minitest) < 6
 
 %description   -n gem-rubocop-minitest-devel
@@ -96,5 +94,8 @@ enforcing Minitest best practices and coding conventions.
 
 
 %changelog
+* Sat Apr 16 2022 Pavel Skrylev <majioa@altlinux.org> 0.19.1-alt1
+- ^ 0.13.0 -> 0.19.1
+
 * Wed Jun 23 2021 Pavel Skrylev <majioa@altlinux.org> 0.13.0-alt1
 - + packaged gem with Ruby Policy 2.0

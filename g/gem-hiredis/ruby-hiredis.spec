@@ -1,8 +1,8 @@
-%define        pkgname hiredis
+%define        gemname hiredis
 
-Name: 	       gem-%pkgname
-Version:       0.6.3
-Release:       alt2
+Name:          gem-hiredis
+Version:       0.6.3.1
+Release:       alt0.1
 Summary:       Ruby wrapper for hiredis
 License:       BSD-3-Clause
 Group:         Development/Ruby
@@ -11,50 +11,79 @@ Vcs:           https://github.com/redis/hiredis-rb.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
+Patch:         sysbuild.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libhiredis-devel
+BuildRequires: gem(rake) >= 10.0 gem(rake) < 14
+BuildRequires: gem(rake-compiler) >= 0.7.1 gem(rake-compiler) < 2
+BuildRequires: gem(minitest) >= 5.5.1 gem(minitest) < 6
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+%ruby_use_gem_dependency minitest >= 5.15,minitest < 6
+Obsoletes:     ruby-hiredis < %EVR
+Provides:      ruby-hiredis = %EVR
+Provides:      gem(hiredis) = 0.6.3.1
+
+%ruby_use_gem_version hiredis:0.6.3.1
 
 %description
-Ruby extension that wraps hiredis. Both the synchronous connection API and
-a separate protocol reader are supported. It is primarily intended to speed up
+Ruby extension that wraps hiredis. Both the synchronous connection API and a
+separate protocol reader are supported. It is primarily intended to speed up
 parsing multi bulk replies.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-hiredis-doc
+Version:       0.6.3.1
+Release:       alt0.1
+Summary:       Ruby wrapper for hiredis documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета hiredis
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(hiredis) = 0.6.3.1
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-hiredis-doc
+Ruby wrapper for hiredis documentation files.
+
+Ruby extension that wraps hiredis. Both the synchronous connection API and a
+separate protocol reader are supported. It is primarily intended to speed up
+parsing multi bulk replies.
+
+%description   -n gem-hiredis-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета hiredis.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-hiredis-devel
+Version:       0.6.3.1
+Release:       alt0.1
+Summary:       Ruby wrapper for hiredis development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета hiredis
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      gem(hiredis) = 0.6.3.1
+Requires:      gem(rake) >= 10.0 gem(rake) < 14
+Requires:      gem(rake-compiler) >= 0.7.1 gem(rake-compiler) < 2
+Requires:      gem(minitest) >= 5.5.1 gem(minitest) < 6
 Requires:      libhiredis-devel
 
-%description   devel
-Development files for %gemname gem.
+%description   -n gem-hiredis-devel
+Ruby wrapper for hiredis development package.
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+Ruby extension that wraps hiredis. Both the synchronous connection API and a
+separate protocol reader are supported. It is primarily intended to speed up
+parsing multi bulk replies.
 
+%description   -n gem-hiredis-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета hiredis.
 
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %ruby_build
@@ -66,18 +95,24 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-hiredis-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-hiredis-devel
+%doc README.md
 %ruby_includedir/*
 
+
 %changelog
+* Wed Apr 06 2022 Pavel Skrylev <majioa@altlinux.org> 0.6.3.1-alt0.1
+- ^ 0.6.3 -> 0.6.3[1]
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 0.6.3-alt2
 - ! spec tags and syntax
 

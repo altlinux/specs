@@ -1,8 +1,7 @@
-%define        pkgname sexp-processor
 %define        gemname sexp_processor
 
-Name:          gem-%pkgname
-Version:       4.15.0
+Name:          gem-sexp-processor
+Version:       4.16.0
 Release:       alt1
 Summary:       sexp_processor branches from ParseTree bringing all the generic sexp processing tools with it
 License:       MIT
@@ -14,30 +13,41 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(hoe)
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%gemname < %EVR
-Provides:      ruby-%gemname = %EVR
+%ruby_alias_names sexp_processor,sexp-processor
+Obsoletes:     ruby-sexp_processor < %EVR
+Provides:      ruby-sexp_processor = %EVR
+Provides:      gem(sexp_processor) = 4.16.0
+
 
 %description
-sexp_processor branches from ParseTree bringing all the generic sexp
-processing tools with it. Sexp, SexpProcessor, Environment, etc... all for
-your language processing pleasure.
+sexp_processor branches from ParseTree bringing all the generic sexp processing
+tools with it. Sexp, SexpProcessor, Environment, etc... all for your language
+processing pleasure.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-sexp-processor-doc
+Version:       4.16.0
+Release:       alt1
+Summary:       sexp_processor branches from ParseTree bringing all the generic sexp processing tools with it documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sexp_processor
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(sexp_processor) = 4.16.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-sexp-processor-doc
+sexp_processor branches from ParseTree bringing all the generic sexp processing
+tools with it documentation files.
+
+sexp_processor branches from ParseTree bringing all the generic sexp processing
+tools with it. Sexp, SexpProcessor, Environment, etc... all for your language
+processing pleasure.
+
+%description   -n gem-sexp-processor-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета sexp_processor.
 
 
 %prep
@@ -53,15 +63,19 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-sexp-processor-doc
+%doc README.rdoc
 %ruby_gemdocdir
 
 
 %changelog
+* Fri Apr 01 2022 Pavel Skrylev <majioa@altlinux.org> 4.16.0-alt1
+- ^ 4.15.0 -> 4.16.0
+
 * Tue Dec 15 2020 Pavel Skrylev <majioa@altlinux.org> 4.15.0-alt1
 - ^ 4.12.1 -> 4.15.0
 - * renamed

@@ -1,7 +1,7 @@
 %define        gemname puma
 
 Name:          gem-puma
-Version:       5.3.2
+Version:       5.6.2
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency
 License:       BSD-3-Clause
@@ -13,14 +13,14 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libssl-devel
-BuildRequires: gem-minitest
 BuildRequires: gem(nio4r) >= 2.0 gem(nio4r) < 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_ignore_names new_json_with_puma_stats_after_fork,old_json_with_puma_stats_after_fork,new_json,old_json,new_nio4r,old_nio4r,version2,version1
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 Requires:      gem(nio4r) >= 2.0 gem(nio4r) < 3
-Provides:      gem(puma) = 5.3.2
+Provides:      gem(puma) = 5.6.2
 
 
 %description
@@ -29,14 +29,14 @@ Ruby/Rack applications in development and production.
 
 
 %package       -n puma
-Version:       5.3.2
+Version:       5.6.2
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puma
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puma) = 5.3.2
+Requires:      gem(puma) >= 5.2.2 gem(puma) < 6
 
 %description   -n puma
 A Ruby/Rack web server built for concurrency executable(s).
@@ -49,14 +49,14 @@ Ruby/Rack applications in development and production.
 
 
 %package       -n gem-puma-doc
-Version:       5.3.2
+Version:       5.6.2
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puma
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puma) = 5.3.2
+Requires:      gem(puma) >= 5.2.2 gem(puma) < 6
 Obsoletes:     puma-doc
 Provides:      puma-doc
 
@@ -71,14 +71,14 @@ Ruby/Rack applications in development and production.
 
 
 %package       -n gem-puma-devel
-Version:       5.3.2
+Version:       5.6.2
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puma
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puma) = 5.3.2
+Requires:      gem(puma) >= 5.2.2 gem(puma) < 6
 Requires:      libssl-devel
 Obsoletes:     puma-devel
 Provides:      puma-devel
@@ -126,6 +126,9 @@ Ruby/Rack applications in development and production.
 
 
 %changelog
+* Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 5.6.2-alt1
+- ^ 5.3.2 -> 5.6.2
+
 * Fri Jun 25 2021 Pavel Skrylev <majioa@altlinux.org> 5.3.2-alt1
 - ^ 4.3.3 -> 5.3.2
 

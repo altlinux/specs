@@ -1,7 +1,7 @@
-%define        pkgname hiera
+%define        gemname hiera
 
-Name:          gem-%pkgname
-Version:       3.6.0
+Name:          gem-hiera
+Version:       3.9.0
 Release:       alt1
 Summary:       A simple pluggable Hierarchical Database
 License:       Apache-2.0
@@ -18,54 +18,69 @@ BuildRequires(pre): rpm-build-ruby
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Obsoletes:     ruby-%gemname < %EVR
 Provides:      ruby-%gemname = %EVR
+Provides:      gem(hiera) = 3.9.0
+
 
 %description
 A simple pluggable Hierarchical Database.
 
 
-%package       -n %pkgname
-Summary:       Executable file for %gemname gem
-Summary(ru_RU.UTF-8): Исполнямка для самоцвета %gemname
+%package       -n hiera
+Version:       3.9.0
+Release:       alt1
+Summary:       A simple pluggable Hierarchical Database executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета hiera
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   -n %pkgname
-Executable file for %gemname gem.
+Requires:      gem(hiera) = 3.9.0
 
-%description   -n %pkgname -l ru_RU.UTF8
-Исполнямка для %gemname самоцвета.
+%description   -n hiera
+A simple pluggable Hierarchical Database executable(s).
 
-
-%package       devel
-Summary:       Development files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
-Group:         Development/Ruby
-
-%description   devel
-Development files for %gemname gem.
-
-%description   devel -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n hiera -l ru_RU.UTF-8
+Исполнямка для самоцвета hiera.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-hiera-doc
+Version:       3.9.0
+Release:       alt1
+Summary:       A simple pluggable Hierarchical Database documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета hiera
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(hiera) = 3.9.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-hiera-doc
+A simple pluggable Hierarchical Database documentation files.
+
+%description   -n gem-hiera-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета hiera.
+
+
+%package       -n gem-hiera-devel
+Version:       3.9.0
+Release:       alt1
+Summary:       A simple pluggable Hierarchical Database development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета hiera
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(hiera) = 3.9.0
+
+%description   -n gem-hiera-devel
+A simple pluggable Hierarchical Database development package.
+
+%description   -n gem-hiera-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета hiera.
 
 
 %prep
 %setup
 
 %build
-%ruby_build --ignore=acceptance
+%ruby_build
 
 %install
 %ruby_install
@@ -74,18 +89,22 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
-%ruby_gemlibdir
 %ruby_gemspec
+%ruby_gemlibdir
 
-%files         -n %pkgname
-%_bindir/%{pkgname}*
+%files         -n hiera
+%_bindir/hiera
 
-%files         doc
+%files         -n gem-hiera-doc
 %ruby_gemdocdir
+
+%files         -n gem-hiera-devel
 
 
 %changelog
+* Tue Apr 19 2022 Pavel Skrylev <majioa@altlinux.org> 3.9.0-alt1
+- ^ 3.6.0 -> 3.9.0
+
 * Tue Sep 15 2020 Pavel Skrylev <majioa@altlinux.org> 3.6.0-alt1
 - ^ 3.6.0pre -> 3.6.0
 - ! spec tags

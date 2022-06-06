@@ -2,7 +2,7 @@
 
 Name:          gem-andand
 Version:       1.3.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       andand is a method that provides guarded method invocation
 License:       MIT or Ruby
 Group:         Development/Ruby
@@ -13,8 +13,6 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-test-unit
-BuildRequires: ruby-tool-rdoc
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -31,7 +29,7 @@ operator in Ruby, and especially &&=.
 
 %package       -n gem-andand-doc
 Version:       1.3.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       andand is a method that provides guarded method invocation documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета andand
 Group:         Development/Documentation
@@ -70,6 +68,9 @@ operator in Ruby, and especially &&= documentation files.
 
 
 %changelog
+* Thu Jun 02 2022 Pavel Skrylev <majioa@altlinux.org> 1.3.3.1-alt1.1
+- - unnecessary deps
+
 * Fri Sep 10 2021 Pavel Skrylev <majioa@altlinux.org> 1.3.3.1-alt1
 - ^ 1.3.1 -> 1.3.3.1
 

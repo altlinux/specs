@@ -3,7 +3,7 @@
 Name:          rpm-build-ruby
 Epoch:         1
 Version:       1.0.0
-Release:       alt18
+Release:       alt19
 Summary:       RPM helper scripts to calculate Ruby dependencies
 License:       GPLv2
 Group:         Development/Ruby
@@ -54,6 +54,9 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 %_rpmmacrosdir/ruby
 
 %changelog
+* Wed Apr 13 2022 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt19
+- + ignore-path-token-list tag support, plus its defaults
+
 * Mon Jan 31 2022 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt18
 - * some cleanups
 

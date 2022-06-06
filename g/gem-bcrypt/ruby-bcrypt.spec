@@ -1,8 +1,8 @@
-%define        pkgname bcrypt
+%define        gemname bcrypt
 
-Name:          gem-%pkgname
-Version:       3.1.13
-Release:       alt1.3
+Name:          gem-bcrypt
+Version:       3.1.17
+Release:       alt1
 Summary:       bcrypt-ruby is a Ruby binding for the OpenBSD bcrypt() password hashing algorithm, allowing you to easily store a secure hash of your users' passwords
 License:       MIT
 Group:         Development/Ruby
@@ -11,47 +11,76 @@ Vcs:           https://github.com/codahale/bcrypt-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
+Patch:         patch.patch
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(rake-compiler) >= 0.9.2 gem(rake-compiler) < 2
+BuildRequires: gem(rspec) >= 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+Obsoletes:     ruby-bcrypt < %EVR
+Provides:      ruby-bcrypt = %EVR
+Provides:      gem(bcrypt) = 3.1.17
+
 
 %description
-bcrypt() is a sophisticated and secure hash algorithm designed by The
-OpenBSD project for hashing passwords. The bcrypt Ruby gem provides a
-simple wrapper for safely handling passwords.
+bcrypt() is a sophisticated and secure hash algorithm designed by The OpenBSD
+project for hashing passwords. The bcrypt Ruby gem provides a simple wrapper for
+safely handling passwords.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы заголовков для самоцвета %gemname
-Group:         Development/Ruby
-BuildArch:     noarch
-
-%description   devel
-Development files for %gemname gem.
-
-%description   devel -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
-
-
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-bcrypt-doc
+Version:       3.1.17
+Release:       alt1
+Summary:       bcrypt-ruby is a Ruby binding for the OpenBSD bcrypt() password hashing algorithm, allowing you to easily store a secure hash of your users' passwords documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета bcrypt
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(bcrypt) = 3.1.17
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-bcrypt-doc
+bcrypt-ruby is a Ruby binding for the OpenBSD bcrypt() password hashing
+algorithm, allowing you to easily store a secure hash of your users' passwords
+documentation files.
+
+bcrypt() is a sophisticated and secure hash algorithm designed by The OpenBSD
+project for hashing passwords. The bcrypt Ruby gem provides a simple wrapper for
+safely handling passwords.
+
+%description   -n gem-bcrypt-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета bcrypt.
+
+
+%package       -n gem-bcrypt-devel
+Version:       3.1.17
+Release:       alt1
+Summary:       bcrypt-ruby is a Ruby binding for the OpenBSD bcrypt() password hashing algorithm, allowing you to easily store a secure hash of your users' passwords development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета bcrypt
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(bcrypt) = 3.1.17
+Requires:      gem(rake-compiler) >= 0.9.2 gem(rake-compiler) < 2
+Requires:      gem(rspec) >= 3
+
+%description   -n gem-bcrypt-devel
+bcrypt-ruby is a Ruby binding for the OpenBSD bcrypt() password hashing
+algorithm, allowing you to easily store a secure hash of your users' passwords
+development package.
+
+bcrypt() is a sophisticated and secure hash algorithm designed by The OpenBSD
+project for hashing passwords. The bcrypt Ruby gem provides a simple wrapper for
+safely handling passwords.
+
+%description   -n gem-bcrypt-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета bcrypt.
 
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -63,19 +92,24 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-bcrypt-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
-%ruby_includedir/mri
+%files         -n gem-bcrypt-devel
+%doc README.md
+%ruby_includedir/*
 
 
 %changelog
+* Wed Mar 16 2022 Pavel Skrylev <majioa@altlinux.org> 3.1.17-alt1
+- ^ 3.1.13 -> 3.1.17
+
 * Tue Apr 07 2020 Pavel Skrylev <majioa@altlinux.org> 3.1.13-alt1.3
 - ! spec obsoletes/provides pair
 

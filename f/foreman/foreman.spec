@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.0.0
-Release:       alt1
+Release:       alt1.1
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -50,7 +50,7 @@ BuildRequires: gem(ldap_fluff) >= 0.5.0 gem(ldap_fluff) < 1.0
 BuildRequires: gem(apipie-rails) >= 0.5.19 gem(apipie-rails) < 0.6.0
 BuildRequires: gem(apipie-dsl) >= 2.2.6
 BuildRequires: gem(rdoc) >= 0
-BuildRequires: gem(rabl) >= 0.14.2 gem(rabl) < 0.15
+BuildRequires: gem(rabl) >= 0.14.2 gem(rabl) < 1
 BuildRequires: gem(oauth) >= 0.5.4 gem(oauth) < 1
 BuildRequires: gem(deep_cloneable) >= 3 gem(deep_cloneable) < 4
 BuildRequires: gem(validates_lengths_from_database) >= 0.5 gem(validates_lengths_from_database) < 1
@@ -98,7 +98,7 @@ BuildRequires: gem(facter) >= 0
 BuildRequires: gem(activerecord-nulldb-adapter) >= 0
 BuildRequires: gem(fog-google) >= 1.11.0 gem(fog-google) < 2
 BuildRequires: gem(redis) >= 4.0 gem(redis) < 5
-BuildRequires: gem(sidekiq) >= 5.0 gem(sidekiq) < 6
+BuildRequires: gem(sidekiq) >= 5.0 gem(sidekiq) < 7
 BuildRequires: gem(gitlab-sidekiq-fetcher) >= 0
 BuildRequires: gem(sd_notify) >= 0.1 gem(sd_notify) < 1
 BuildRequires: gem(rack-openid) >= 1.3 gem(rack-openid) < 2
@@ -177,6 +177,8 @@ BuildRequires: gem(webmock) >= 0 gem(webmock) < 4
 %ruby_use_gem_dependency factory_bot_rails >= 6.2.0,factory_bot_rails < 7
 %ruby_use_gem_dependency shoulda-matchers >= 4.5.1,shoulda-matchers < 5
 %ruby_use_gem_dependency shoulda-context >= 2.0.0,shoulda-context < 3
+%ruby_use_gem_dependency rabl >= 0.15,rabl < 1
+%ruby_use_gem_dependency sidekiq >= 6.0.0,sidekiq < 7
 Requires:      gem(rails) >= 6.0.3.1 gem(rails) < 7
 Requires:      gem(rest-client) >= 2.0.0 gem(rest-client) < 3
 Requires:      gem(audited) >= 4.9.0 gem(audited) < 6
@@ -187,7 +189,7 @@ Requires:      gem(ldap_fluff) >= 0.5.0 gem(ldap_fluff) < 1.0
 Requires:      gem(apipie-rails) >= 0.5.19 gem(apipie-rails) < 0.6.0
 Requires:      gem(apipie-dsl) >= 2.2.6
 Requires:      gem(rdoc) >= 0 gem(rdoc) < 7
-Requires:      gem(rabl) >= 0.14.2 gem(rabl) < 0.15
+Requires:      gem(rabl) >= 0.14.2 gem(rabl) < 1
 Requires:      gem(oauth) >= 0.5.4 gem(oauth) < 1
 Requires:      gem(deep_cloneable) >= 3 gem(deep_cloneable) < 4
 Requires:      gem(validates_lengths_from_database) >= 0.5 gem(validates_lengths_from_database) < 1
@@ -235,7 +237,7 @@ Requires:      gem(facter) >= 0
 Requires:      gem(activerecord-nulldb-adapter) >= 0
 Requires:      gem(fog-google) >= 1.11.0 gem(fog-google) < 2
 Requires:      gem(redis) >= 4.0 gem(redis) < 5
-Requires:      gem(sidekiq) >= 5.0 gem(sidekiq) < 6
+Requires:      gem(sidekiq) >= 5.0 gem(sidekiq) < 7
 Requires:      gem(gitlab-sidekiq-fetcher) >= 0
 Requires:      gem(sd_notify) >= 0.1 gem(sd_notify) < 1
 Requires:      gem(rack-openid) >= 1.3 gem(rack-openid) < 2
@@ -456,6 +458,9 @@ railsctl cleanup %name
 
 
 %changelog
+* Fri Apr 22 2022 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1.1
+- !fix deps
+
 * Wed Oct 20 2021 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1
 - ^ 2.5.0 -> 3.0.0
 

@@ -2,7 +2,7 @@
 
 Name:          gem-xml-simple
 Version:       1.1.9
-Release:       alt1
+Release:       alt1.1
 Summary:       A very simple API for XML processing
 License:       MIT
 Group:         Development/Ruby
@@ -13,8 +13,6 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: rpm-build-ruby
-BuildRequires: ruby-tool-rdoc
 BuildRequires: gem(rexml) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -33,7 +31,7 @@ automatically converts XML documents into a Ruby Hash.
 
 %package       -n gem-xml-simple-doc
 Version:       1.1.9
-Release:       alt1
+Release:       alt1.1
 Summary:       A very simple API for XML processing documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета xml-simple
 Group:         Development/Documentation
@@ -54,7 +52,7 @@ automatically converts XML documents into a Ruby Hash.
 
 %package       -n gem-xml-simple-devel
 Version:       1.1.9
-Release:       alt1
+Release:       alt1.1
 Summary:       A very simple API for XML processing development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета xml-simple
 Group:         Development/Ruby
@@ -96,6 +94,9 @@ automatically converts XML documents into a Ruby Hash.
 
 
 %changelog
+* Tue Apr 19 2022 Pavel Skrylev <majioa@altlinux.org> 1.1.9-alt1.1
+- ! spec to avoid build errors by using old deps
+
 * Fri Jul 02 2021 Pavel Skrylev <majioa@altlinux.org> 1.1.9-alt1
 - ^ 1.1.5 -> 1.1.9
 

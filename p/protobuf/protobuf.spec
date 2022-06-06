@@ -29,7 +29,7 @@ Name: %oname
 Name: %oname%soversion
 %endif
 Version: 3.16.0
-Release: alt6
+Release: alt6.1
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -63,11 +63,12 @@ BuildRequires: python3-module-dateutil
 %endif
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(rake-compiler-dock) >= 1.1.0 gem(rake-compiler-dock) < 2.0
-BuildRequires: gem(rake-compiler) >= 1.1.0 gem(rake-compiler) < 1.2
+BuildRequires: gem(rake-compiler) >= 1.1.0 gem(rake-compiler) < 2
 BuildRequires: gem(test-unit) >= 3.0 gem(test-unit) < 4
 BuildRequires: gem(rubygems-tasks) >= 0.2.4 gem(rubygems-tasks) < 0.3
 BuildRequires: gem(rspec) >= 3.0.0 gem(rspec) < 4.0.0
 
+%ruby_use_gem_dependency rake-compiler >= 1.2.0,rake-compiler < 2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 
@@ -262,7 +263,7 @@ BuildArch: noarch
 
 Requires: gem(google-protobuf)
 Requires: gem(rake-compiler-dock) >= 1.1.0 gem(rake-compiler-dock) < 2.0
-Requires: gem(rake-compiler) >= 1.1.0 gem(rake-compiler) < 1.2
+Requires: gem(rake-compiler) >= 1.1.0 gem(rake-compiler) < 2
 Requires: gem(test-unit) >= 3.0 gem(test-unit) < 4
 Requires: gem(rubygems-tasks) >= 0.2.4 gem(rubygems-tasks) < 0.3
 Requires: gem(rspec) >= 3.0.0 gem(rspec) < 4.0.0
@@ -451,6 +452,9 @@ popd
 
 
 %changelog
+* Thu Jun 02 2022 Pavel Skrylev <majioa@altlinux.org> 3.16.0-alt6.1
+- !fix deps to rack-compiler gem
+
 * Sat Nov 06 2021 Alexey Shabalin <shaba@altlinux.org> 3.16.0-alt6
 - fixed FTBFS
 

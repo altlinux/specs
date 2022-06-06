@@ -1,8 +1,8 @@
 %define        gemname kramdown-parser-gfm
 
 Name:          gem-kramdown-parser-gfm
-Version:       1.0.1
-Release:       alt1.1
+Version:       1.1.0
+Release:       alt1
 Summary:       This is a parser for kramdown that converts Markdown documents in the GFM dialect to HTML
 License:       MIT
 Group:         Development/Ruby
@@ -18,6 +18,7 @@ BuildRequires: gem(kramdown) >= 2.0 gem(kramdown) < 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_version kramdown-parser-gfm:1.1.0
 %ruby_use_gem_dependency kramdown >= 2.3.1,kramdown < 3
 Requires:      gem(kramdown) >= 2.0 gem(kramdown) < 3
 Provides:      gem(kramdown-parser-gfm) = 1.0.1
@@ -29,8 +30,8 @@ dialect to HTML.
 
 
 %package       -n gem-kramdown-parser-gfm-doc
-Version:       1.0.1
-Release:       alt1.1
+Version:       1.1.0
+Release:       alt1
 Summary:       This is a parser for kramdown that converts Markdown documents in the GFM dialect to HTML documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета kramdown-parser-gfm
 Group:         Development/Documentation
@@ -47,8 +48,8 @@ dialect to HTML documentation files.
 
 
 %package       -n gem-kramdown-parser-gfm-devel
-Version:       1.0.1
-Release:       alt1.1
+Version:       1.1.0
+Release:       alt1
 Summary:       This is a parser for kramdown that converts Markdown documents in the GFM dialect to HTML development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета kramdown-parser-gfm
 Group:         Development/Ruby
@@ -87,6 +88,9 @@ dialect to HTML development package.
 
 
 %changelog
+* Fri May 06 2022 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt1
+- ^ 1.0.1 -> 1.1.0
+
 * Tue Sep 14 2021 Pavel Skrylev <majioa@altlinux.org> 1.0.1-alt1.1
 - ! spec
 

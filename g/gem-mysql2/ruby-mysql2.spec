@@ -1,7 +1,7 @@
-%define        pkgname mysql2
+%define        gemname mysql2
 
-Name:          gem-%pkgname
-Version:       0.5.3
+Name:          gem-mysql2
+Version:       0.5.4
 Release:       alt1
 Summary:       A modern, simple and very fast Mysql library for Ruby - binding to libmysql
 License:       MIT
@@ -16,46 +16,78 @@ BuildRequires: libmysqlclient-devel
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+%ruby_use_gem_dependency rake-compiler-dock >= 1.1.0,rake-compiler-dock < 2
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+Obsoletes:     ruby-mysql2 < %EVR
+Provides:      ruby-mysql2 = %EVR
+Provides:      gem(mysql2) = 0.5.4
+
 
 %description
-The Mysql2 gem is meant to serve the extremely common use-case of
-connecting, querying and iterating on results. Some database libraries
-out there serve as direct 1:1 mappings of the already complex C APIs
-available. This one is not.
+The Mysql2 gem is meant to serve the extremely common use-case of connecting,
+querying and iterating on results. Some database libraries out there serve as
+direct 1:1 mappings of the already complex C APIs available. This one is
+not.
 
-It also forces the use of UTF-8 [or binary] for the connection [and all
-strings in 1.9, unless Encoding.default_internal is set then it will
-convert from UTF-8 to that encoding] and uses encoding-aware MySQL API
-calls where it can.
+It also forces the use of UTF-8 [or binary] for the connection [and all strings
+in 1.9, unless Encoding.default_internal is set then it will convert from UTF-8
+to that encoding] and uses encoding-aware MySQL API calls where it can.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-mysql2-doc
+Version:       0.5.4
+Release:       alt1
+Summary:       A modern, simple and very fast Mysql library for Ruby - binding to libmysql documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета mysql2
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(mysql2) = 0.5.4
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-mysql2-doc
+A modern, simple and very fast Mysql library for Ruby - binding to libmysql
+documentation files.
+
+The Mysql2 gem is meant to serve the extremely common use-case of connecting,
+querying and iterating on results. Some database libraries out there serve as
+direct 1:1 mappings of the already complex C APIs available. This one is
+not.
+
+It also forces the use of UTF-8 [or binary] for the connection [and all strings
+in 1.9, unless Encoding.default_internal is set then it will convert from UTF-8
+to that encoding] and uses encoding-aware MySQL API calls where it can.
+
+%description   -n gem-mysql2-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета mysql2.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-mysql2-devel
+Version:       0.5.4
+Release:       alt1
+Summary:       A modern, simple and very fast Mysql library for Ruby - binding to libmysql development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета mysql2
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      gem(mysql2) = 0.5.4
 Requires:      libmysqlclient-devel
 
-%description   devel
-Development files for %gemname gem.
+%description   -n gem-mysql2-devel
+A modern, simple and very fast Mysql library for Ruby - binding to libmysql
+development package.
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+The Mysql2 gem is meant to serve the extremely common use-case of connecting,
+querying and iterating on results. Some database libraries out there serve as
+direct 1:1 mappings of the already complex C APIs available. This one is
+not.
+
+It also forces the use of UTF-8 [or binary] for the connection [and all strings
+in 1.9, unless Encoding.default_internal is set then it will convert from UTF-8
+to that encoding] and uses encoding-aware MySQL API calls where it can.
+
+%description   -n gem-mysql2-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета mysql2.
 
 
 %prep
@@ -71,19 +103,24 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-mysql2-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-mysql2-devel
+%doc README.md
 %ruby_includedir/*
 
 
 %changelog
+* Wed May 18 2022 Pavel Skrylev <majioa@altlinux.org> 0.5.4-alt1
+- ^ 0.5.3 -> 0.5.4
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 0.5.3-alt1
 - ^ 0.5.2 -> 0.5.3
 - ! spec tags and syntax

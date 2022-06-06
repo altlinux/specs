@@ -1,12 +1,11 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname facter
+%define        gemname facter
 
-Name:          gem-%pkgname
-Version:       4.2.7
+Name:          gem-facter
+Version:       4.2.9
 Release:       alt1
 Summary:       Ruby library for retrieving facts from operating systems
-Group:         Development/Ruby
 License:       Apache-2.0
+Group:         Development/Ruby
 Url:           https://tickets.puppetlabs.com/browse/FACT
 Vcs:           https://github.com/puppetlabs/facter.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
@@ -18,59 +17,228 @@ BuildRequires: libcpp-hocon-devel
 BuildRequires: libyaml-cpp-devel
 BuildRequires: libleatherman-devel
 BuildRequires: boost-program_options-devel
+BuildRequires: gem(rake) >= 12.3
+BuildRequires: gem(rspec) >= 3.0 gem(rspec) < 4
+BuildRequires: gem(rubocop) >= 0.81.0 gem(rubocop) < 2
+BuildRequires: gem(rubocop-performance) >= 1.5.2 gem(rubocop-performance) < 2
+BuildRequires: gem(rubocop-rspec) >= 1.38 gem(rubocop-rspec) < 3
+BuildRequires: gem(simplecov) >= 0.17 gem(simplecov) < 1
+BuildRequires: gem(sys-filesystem) >= 1.3 gem(sys-filesystem) < 2
+BuildRequires: gem(timecop) >= 0.9 gem(timecop) < 1
+BuildRequires: gem(webmock) >= 3.12 gem(webmock) < 4
+BuildRequires: gem(yard) >= 0.9 gem(yard) < 1
+BuildRequires: gem(hocon) >= 1.3 gem(hocon) < 2
+BuildRequires: gem(thor) >= 1.0.1 gem(thor) < 2.0
+BuildRequires: gem(bundler) >= 2.0 gem(bundler) < 3
+BuildRequires: gem(coveralls) >= 0.8.23 gem(coveralls) < 0.9
+BuildRequires: gem(rubocop) >= 0.74.0 gem(rubocop) < 2
+# BuildRequires: gem(rubycritic) >= 4.1.0 gem(rubycritic) < 4.2
+BuildRequires: gem(ffi) >= 1.9 gem(ffi) < 2
 
+%add_findreq_skiplist %ruby_gemslibdir/**/*
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
+%ruby_use_gem_dependency rubocop-rspec >= 2.4.0,rubocop-rspec < 3
+%ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
+%ruby_use_gem_dependency octokit >= 4.21.0,octokit < 5
+Requires:      gem(hocon) >= 1.3 gem(hocon) < 2
+Requires:      gem(thor) >= 1.0.1 gem(thor) < 2.0
 Requires:      coreutils
 Requires:      dmidecode
 Requires:      net-tools
 Requires:      pciutils
 Requires:      bind-utils
-%add_findreq_skiplist *.erb
-%add_findreq_skiplist %ruby_gemslibdir/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+Obsoletes:     ruby-facter
+Provides:      ruby-facter
+Provides:      gem(facter) = 4.2.9
+
 
 %description
-A cross-platform Ruby library for retrieving facts from
-operating systems. Supports multiple resolution mechanisms, any
-of which can be restricted to working only on certain operating
-systems or environments. Facter is especially useful for
-retrieving things like operating system names, IP addresses, MAC
+A cross-platform Ruby library for retrieving facts from operating systems.
+Supports multiple resolution mechanisms, any of which can be restricted to
+working only on certain operating systems or environments. Facter is especially
+useful for retrieving things like operating system names, IP addresses, MAC
 addresses, and SSH keys.
 
-It is easy to extend Facter to include your own custom facts or
-to include additional mechanisms for retrieving facts.
+It is easy to extend Facter to include your own custom facts or to include
+additional mechanisms for retrieving facts.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-facter-ng
+Version:       4.2.9
+Release:       alt1
+Summary:       Facter, a system inventory tool
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(ffi) >= 1.9 gem(ffi) < 2
+Requires:      gem(hocon) >= 1.3 gem(hocon) < 2
+Requires:      gem(sys-filesystem) >= 1.3 gem(sys-filesystem) < 2
+Requires:      gem(thor) >= 1.0.1 gem(thor) < 2.0
+Provides:      gem(facter-ng) = 4.2.9
+
+%description   -n gem-facter-ng
+You can prove anything with facts!
+
+
+%package       -n facter-ng
+Version:       4.2.9
+Release:       alt1
+Summary:       Facter, a system inventory tool executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета facter-ng
+Group:         Other
+BuildArch:     noarch
+
+Requires:      gem(facter-ng) = 4.2.9
+
+%description   -n facter-ng
+Facter, a system inventory tool executable(s).
+
+You can prove anything with facts!
+
+%description   -n facter-ng -l ru_RU.UTF-8
+Исполнямка для самоцвета facter-ng.
+
+
+%package       -n gem-facter-ng-doc
+Version:       4.2.9
+Release:       alt1
+Summary:       Facter, a system inventory tool documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета facter-ng
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(facter-ng) = 4.2.9
+
+%description   -n gem-facter-ng-doc
+Facter, a system inventory tool documentation files.
+
+You can prove anything with facts!
+
+%description   -n gem-facter-ng-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета facter-ng.
 
 
-%package       -n %pkgname
-Summary:       Console executable called 'facter'
+%package       -n gem-facter-ng-devel
+Version:       4.2.9
+Release:       alt1
+Summary:       Facter, a system inventory tool development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета facter-ng
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(facter-ng) = 4.2.9
+Requires:      gem(bundler) >= 2.0 gem(bundler) < 3
+Requires:      gem(coveralls) >= 0.8.23 gem(coveralls) < 0.9
+Requires:      gem(rake) >= 12.3
+Requires:      gem(rspec) >= 3.0 gem(rspec) < 4
+Requires:      gem(rubocop) >= 0.74.0 gem(rubocop) < 2
+# Requires:      gem(rubycritic) >= 4.1.0 gem(rubycritic) < 4.2
+
+%description   -n gem-facter-ng-devel
+Facter, a system inventory tool development package.
+
+You can prove anything with facts!
+
+%description   -n gem-facter-ng-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета facter-ng.
+
+
+%package       -n facter
+Version:       4.2.9
+Release:       alt1
+Summary:       Ruby library for retrieving facts from operating systems executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета facter
 Group:         System/Base
 BuildArch:     noarch
 
-%description -n %pkgname
-%summary, for retrieving facts from
-operating systems. Supports multiple resolution mechanisms, any
-of which can be restricted to working only on certain operating
-systems or environments. Facter is especially useful for
-retrieving things like operating system names, IP addresses, MAC
+Requires:      gem(facter) = 4.2.9
+
+%description   -n facter
+Ruby library for retrieving facts from operating systems executable(s).
+
+A cross-platform Ruby library for retrieving facts from operating systems.
+Supports multiple resolution mechanisms, any of which can be restricted to
+working only on certain operating systems or environments. Facter is especially
+useful for retrieving things like operating system names, IP addresses, MAC
 addresses, and SSH keys.
+
+It is easy to extend Facter to include your own custom facts or to include
+additional mechanisms for retrieving facts.
+
+%description   -n facter -l ru_RU.UTF-8
+Исполнямка для самоцвета facter.
+
+
+%package       -n gem-facter-doc
+Version:       4.2.9
+Release:       alt1
+Summary:       Ruby library for retrieving facts from operating systems documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета facter
+Group:         Development/Documentation
+BuildArch:     noarch
+
+Requires:      gem(facter) = 4.2.9
+
+%description   -n gem-facter-doc
+Ruby library for retrieving facts from operating systems documentation files.
+
+A cross-platform Ruby library for retrieving facts from operating systems.
+Supports multiple resolution mechanisms, any of which can be restricted to
+working only on certain operating systems or environments. Facter is especially
+useful for retrieving things like operating system names, IP addresses, MAC
+addresses, and SSH keys.
+
+It is easy to extend Facter to include your own custom facts or to include
+additional mechanisms for retrieving facts.
+
+%description   -n gem-facter-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета facter.
+
+
+%package       -n gem-facter-devel
+Version:       4.2.9
+Release:       alt1
+Summary:       Ruby library for retrieving facts from operating systems development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета facter
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(facter) = 4.2.9
+Requires:      gem(rake) >= 12.3
+Requires:      gem(rspec) >= 3.0 gem(rspec) < 4
+Requires:      gem(rubocop) >= 0.81.0 gem(rubocop) < 2
+Requires:      gem(rubocop-performance) >= 1.5.2 gem(rubocop-performance) < 2
+Requires:      gem(rubocop-rspec) >= 1.38 gem(rubocop-rspec) < 3
+Requires:      gem(simplecov) >= 0.17 gem(simplecov) < 1
+Requires:      gem(sys-filesystem) >= 1.3 gem(sys-filesystem) < 2
+Requires:      gem(timecop) >= 0.9 gem(timecop) < 1
+Requires:      gem(webmock) >= 3.12 gem(webmock) < 4
+Requires:      gem(yard) >= 0.9 gem(yard) < 1
+
+%description   -n gem-facter-devel
+Ruby library for retrieving facts from operating systems development package.
+
+A cross-platform Ruby library for retrieving facts from operating systems.
+Supports multiple resolution mechanisms, any of which can be restricted to
+working only on certain operating systems or environments. Facter is especially
+useful for retrieving things like operating system names, IP addresses, MAC
+addresses, and SSH keys.
+
+It is easy to extend Facter to include your own custom facts or to include
+additional mechanisms for retrieving facts.
+
+%description   -n gem-facter-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета facter.
 
 
 %prep
 %setup
-#sed -e 's/ALT /ALT/g' -e 's/ALTLinux/ALT/' -i lib/facter/operatingsystem/linux.rb
 
 %build
-%ruby_build --ignore=acceptance --use=%gemname --version-replace=%version
+%ruby_build
 
 %install
 %ruby_install
@@ -82,15 +250,31 @@ addresses, and SSH keys.
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-facter-ng
+%ruby_gemspecdir/facter-ng-4.2.9.gemspec
+%ruby_gemslibdir/facter-ng-4.2.9
+
+%files         -n facter-ng
+%_bindir/facter-ng
+
+%files         -n gem-facter-ng-doc
+%ruby_gemsdocdir/facter-ng-4.2.9
+
+%files         -n gem-facter-ng-devel
+
+%files         -n facter
+%_bindir/facter
+
+%files         -n gem-facter-doc
 %ruby_gemdocdir
 
-%files         -n %pkgname
-%_bindir/*
-%doc %_man8dir/%{pkgname}.*
+%files         -n gem-facter-devel
 
 
 %changelog
+* Sun Apr 17 2022 Pavel Skrylev <majioa@altlinux.org> 4.2.9-alt1
+- ^ 4.2.7 -> 4.2.9
+
 * Thu Jan 13 2022 Andrey Cherepanov <cas@altlinux.org> 4.2.7-alt1
 - New version.
 

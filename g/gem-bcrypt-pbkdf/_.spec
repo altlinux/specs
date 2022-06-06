@@ -4,7 +4,7 @@
 
 Name:          gem-%pkgname
 Version:       1.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby gem implementing bcrypt_pbkdf
 License:       MIT
 Group:         Development/Ruby
@@ -14,6 +14,9 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%ruby_use_gem_dependency rdoc >= 6.3.0,rdoc < 7
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+%ruby_use_gem_dependency rake-compiler-dock >= 1.1.0,rake-compiler-dock < 2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 
 %description
@@ -86,6 +89,9 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Fri May 06 2022 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt1.1
+- !fix spec for dependencies
+
 * Tue Feb 09 2021 Pavel Skrylev <majioa@altlinux.org> 1.1.0-alt1
 - ^ 1.1.0.rc1 -> 1.1.0
 

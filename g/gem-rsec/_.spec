@@ -1,9 +1,8 @@
-# vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname rsec
+%define        gemname rsec
 
-Name:          gem-%pkgname
-Version:       0.4.3
-Release:       alt1
+Name:          gem-rsec
+Version:       1.0.0
+Release:       alt1.1
 Summary:       Parser / Regexp Combinator For Ruby
 License:       Ruby
 Group:         Development/Ruby
@@ -17,34 +16,47 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+Provides:      gem(rsec) = 1.0.0
+
 
 %description
 Easy and extreme fast dynamic PEG parser combinator.
 
-PEG grammar for Ruby, based on StringScanner. Consistently superior speed: up
-to 10 times faster than Treetop, and twice the speed of rex+racc.
+PEG grammar for Ruby, based on StringScanner. Consistently superior speed: up to
+10 times faster than Treetop, and twice the speed of rex+racc.
 
 Compatible with Ruby v1.9 and above.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-rsec-doc
+Version:       1.0.0
+Release:       alt1.1
+Summary:       Parser / Regexp Combinator For Ruby documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rsec
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(rsec) = 1.0.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-rsec-doc
+Parser / Regexp Combinator For Ruby documentation files.
+
+Easy and extreme fast dynamic PEG parser combinator.
+
+PEG grammar for Ruby, based on StringScanner. Consistently superior speed: up to
+10 times faster than Treetop, and twice the speed of rex+racc.
+
+Compatible with Ruby v1.9 and above.
+
+%description   -n gem-rsec-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета rsec.
 
 
 %prep
 %setup
 
 %build
-%ruby_build --ignore=website
+%ruby_build
 
 %install
 %ruby_install
@@ -53,14 +65,18 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc readme*
+%doc readme.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         doc
+%files         -n gem-rsec-doc
+%doc readme.rdoc
 %ruby_gemdocdir
 
 
 %changelog
-* Mon Jun 15 2020 Pavel Skrylev <majioa@altlinux.org> 0.4.3-alt1
+* Tue Apr 19 2022 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1.1
+- ! spec
+
+* Mon Jun 15 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
 - + packaged gem with usage Ruby Policy 2.0

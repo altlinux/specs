@@ -1,7 +1,7 @@
 %define        gemname rubocop
 
 Name:          gem-rubocop
-Version:       1.15.0
+Version:       1.27.0
 Release:       alt1
 Summary:       A Ruby static code analyzer and formatter
 License:       MIT
@@ -14,28 +14,26 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(parallel) >= 1.10 gem(parallel) < 2
-BuildRequires: gem(parser) >= 3.0.0.0
+BuildRequires: gem(parser) >= 3.1.0.0
 BuildRequires: gem(rainbow) >= 2.2.2 gem(rainbow) < 4.0
 BuildRequires: gem(regexp_parser) >= 1.8 gem(regexp_parser) < 3.0
 BuildRequires: gem(rexml) >= 0
-BuildRequires: gem(rubocop-ast) >= 1.7.0 gem(rubocop-ast) < 2.0
+BuildRequires: gem(rubocop-ast) >= 1.7.0 gem(rubocop-ast) < 2
 BuildRequires: gem(ruby-progressbar) >= 1.7 gem(ruby-progressbar) < 2
 BuildRequires: gem(unicode-display_width) >= 1.4.0 gem(unicode-display_width) < 3.0
-BuildRequires: gem(bundler) >= 1.15.0 gem(bundler) < 3.0
+BuildRequires: gem(bundler) >= 1.15.0 gem(bundler) < 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Requires:      gem(parallel) >= 1.10 gem(parallel) < 2
-Requires:      gem(parser) >= 3.0.0.0
+Requires:      gem(parser) >= 3.1.0.0
 Requires:      gem(rainbow) >= 2.2.2 gem(rainbow) < 4.0
 Requires:      gem(regexp_parser) >= 1.8 gem(regexp_parser) < 3.0
 Requires:      gem(rexml) >= 0
-Requires:      gem(rubocop-ast) >= 1.7.0 gem(rubocop-ast) < 2.0
+Requires:      gem(rubocop-ast) >= 1.16.0 gem(rubocop-ast) < 2
 Requires:      gem(ruby-progressbar) >= 1.7 gem(ruby-progressbar) < 2
 Requires:      gem(unicode-display_width) >= 1.4.0 gem(unicode-display_width) < 3.0
-Requires:      gem-regexp-parser >= 1.7.1-alt1.1
-Requires:      gem-parser >= 2.7.1.4-alt1.1
-Provides:      gem(rubocop) = 1.15.0
+Provides:      gem(rubocop) = 1.27.0
 
 
 %description
@@ -44,14 +42,14 @@ guide.
 
 
 %package       -n rubocop
-Version:       1.15.0
+Version:       1.27.0
 Release:       alt1
 Summary:       A Ruby static code analyzer and formatter executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета rubocop
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rubocop) >= 1.13.0 gem(rubocop) < 2
+Requires:      gem(rubocop) = 1.27.0
 
 %description   -n rubocop
 A Ruby static code analyzer and formatter executable(s).
@@ -64,14 +62,14 @@ guide.
 
 
 %package       -n gem-rubocop-doc
-Version:       1.15.0
+Version:       1.27.0
 Release:       alt1
 Summary:       A Ruby static code analyzer and formatter documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rubocop
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rubocop) >= 1.13.0 gem(rubocop) < 2
+Requires:      gem(rubocop) = 1.27.0
 
 %description   -n gem-rubocop-doc
 A Ruby static code analyzer and formatter documentation files.
@@ -84,15 +82,15 @@ guide.
 
 
 %package       -n gem-rubocop-devel
-Version:       1.15.0
+Version:       1.27.0
 Release:       alt1
 Summary:       A Ruby static code analyzer and formatter development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rubocop
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rubocop) >= 1.13.0 gem(rubocop) < 2
-Requires:      gem(bundler) >= 1.15.0 gem(bundler) < 3.0
+Requires:      gem(rubocop) = 1.27.0
+Requires:      gem(bundler) >= 1.15.0 gem(bundler) < 3
 
 %description   -n gem-rubocop-devel
 A Ruby static code analyzer and formatter development package.
@@ -134,6 +132,9 @@ guide.
 
 
 %changelog
+* Sat Apr 16 2022 Pavel Skrylev <majioa@altlinux.org> 1.27.0-alt1
+- ^ 1.15.0 -> 1.27.0
+
 * Sun May 30 2021 Pavel Skrylev <majioa@altlinux.org> 1.15.0-alt1
 - ^ 1.13.0 -> 1.15.0
 
