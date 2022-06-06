@@ -7,7 +7,7 @@
 %def_enable gtk_doc
 
 Name: libgupnp-av
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A library to handle UPnP A/V profiles
@@ -131,6 +131,9 @@ GObject introspection devel data for the GUPnP A/V library
 
 
 %changelog
+* Fri Jun 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.14.1-alt1
+- 0.14.1
+
 * Sun Sep 19 2021 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
 - 0.14.0
 

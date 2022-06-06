@@ -22,7 +22,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -237,6 +237,9 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_girdir/*.gir
 
 %changelog
+* Fri Jun 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.40.4-alt1
+- 0.40.4
+
 * Sun Jan 09 2022 Yuri N. Sedunov <aris@altlinux.org> 0.40.3-alt1
 - 0.40.3
 
