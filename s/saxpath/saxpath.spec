@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:       saxpath
 Version:    1.0
-Release:    alt4_20jpp8
+Release:    alt5_20jpp8
 Summary:    Simple API for XPath
 License:    Saxpath
 URL:        http://sourceforge.net/projects/saxpath/
@@ -44,6 +44,9 @@ find -name \*.jar -delete
 
 cp %{SOURCE2} .
 
+# install in _javadir
+%mvn_file %{name}:%{name} %{name}
+
 %build
 mkdir src/conf
 touch src/conf/MANIFEST.MF
@@ -55,15 +58,10 @@ for file in `find build/doc -type f | grep .css`; do
     sed -i 's/\r//g' $file
 done
 
-%install
-install -d -m 755 %{buildroot}/%{_javadir}
-install -d -m 755 %{buildroot}/%{_mavenpomdir}
-install -d -m 755 %{buildroot}/%{_javadocdir}/%{name}
+%mvn_artifact %{SOURCE1} build/%{name}.jar
 
-install -p -m 644 build/%{name}.jar %{buildroot}/%{_javadir}/
-install -p -m 644 %{SOURCE1} %{buildroot}/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap
-cp -a build/doc/* %{buildroot}/%{_javadocdir}/%{name}/
+%install
+%mvn_install -J build/doc
 
 %check
 ant test
@@ -71,12 +69,14 @@ ant test
 %files -f .mfiles
 %doc LICENSE
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE
-%{_javadocdir}/*
 
 
 %changelog
+* Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0-alt5_20jpp8
+- migrated to %%mvn_artifact
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_20jpp8
 - fc update
 
