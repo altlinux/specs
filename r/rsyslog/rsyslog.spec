@@ -25,7 +25,7 @@
 %def_enable impcap
 
 Name: rsyslog
-Version: 8.2202.0
+Version: 8.2204.1
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -70,7 +70,7 @@ BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_impcap:BuildRequires: libpcap-devel}
 
 BuildRequires: iproute2
-BuildRequires: /usr/bin/rst2man.py
+BuildRequires: /usr/bin/rst2man
 BuildRequires: /usr/bin/lsb_release
 
 %define mod_dir /%_lib/%name
@@ -679,6 +679,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Mon Jun 06 2022 Alexey Shabalin <shaba@altlinux.org> 8.2204.1-alt1
+- 8.2204.1 (Fixes: CVE-2022-24903)
+
 * Tue Mar 22 2022 Alexey Shabalin <shaba@altlinux.org> 8.2202.0-alt1
 - new version 8.2202.0
 - renamed 00_classic.conf to 10_classic.conf
