@@ -12,7 +12,7 @@ BuildRequires: jpackage-default
 Name:           fop
 Summary:        XSL-driven print formatter
 Version:        2.5
-Release:        alt1_2jpp11
+Release:        alt2_2jpp11
 # ASL 1.1:
 # several files in fop-core/src/main/resources/org/apache/fop/render/awt/viewer/resources
 # rest is ASL 2.0
@@ -102,6 +102,9 @@ rm -f fop/lib/*.jar fop/lib/build/*.jar
 #upstream workaround -- many thanks to spepping@apache.org -- see https://issues.apache.org/bugzilla/show_bug.cgi?id=50575
 ln -s %{_javadir}/qdox.jar fop/lib/build/qdox.jar
 
+# install in _javadir
+%mvn_file org.apache.xmlgraphics:%{name} %{name}
+
 %build
 #qdox intentionally left off classpath -- see https://issues.apache.org/bugzilla/show_bug.cgi?id=50575
 export CLASSPATH=$(build-classpath apache-commons-logging apache-commons-io \
@@ -113,14 +116,16 @@ export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 #ant -f fop/build.xml jar-main transcoder-pkg javadocs
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f fop/build.xml jar-main transcoder-pkg
 
-%install
 # inject OSGi manifest
 jar ufm fop/build/%{name}.jar %{SOURCE2}
 
+%mvn_artifact %{SOURCE3} fop/build/%{name}.jar
 
+%install
+%mvn_install
 # jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 fop/build/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+#install -d -m 755 %{buildroot}%{_javadir}
+#install -p -m 644 fop/build/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 install -p -m 644 fop/build/%{name}-transcoder.jar %{buildroot}%{_javadir}/pdf-transcoder.jar
 
 # script
@@ -135,10 +140,6 @@ cp -rp fop/conf/* %{buildroot}%{_datadir}/%{name}/conf
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 # FIXME no javadocs for now
 #cp -rp fop/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}
-
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -p -m 644 %{SOURCE3} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/fop.conf`
 touch $RPM_BUILD_ROOT/etc/fop.conf
@@ -164,6 +165,9 @@ ln -s fop %buildroot%_bindir/xmlgraphics-fop
 
 
 %changelog
+* Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 0:2.5-alt2_2jpp11
+- migrated to %%mvn_artifact
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:2.5-alt1_2jpp11
 - new version
 
