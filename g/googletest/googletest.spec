@@ -1,6 +1,8 @@
+%set_gcc_version 11
+
 Name: googletest
 Version: 1.11.0
-Release: alt1.2
+Release: alt1.3
 
 Summary: Google's framework for writing C++ tests
 License: BSD-3-Clause
@@ -13,7 +15,7 @@ Source: %name-release-%version.tar
 
 BuildRequires: cmake
 BuildRequires: ctest
-BuildRequires: gcc-c++
+BuildRequires: gcc11-c++
 
 %description
 Google's framework for writing C++ tests on a variety of platforms
@@ -108,6 +110,9 @@ Development environment for gmock
 %_includedir/gmock
 
 %changelog
+* Mon Jun 06 2022 Nazarov Denis <nenderus@altlinux.org> 1.11.0-alt1.3
+- Set GCC version 11
+
 * Thu Jul 08 2021 Nazarov Denis <nenderus@altlinux.org> 1.11.0-alt1.2
 - Add requires on libgmock-devel for libgtest-devel (ALT #40408)
 
