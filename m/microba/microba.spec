@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           microba
 Version:        0.4.4.3
-Release:        alt3_15jpp8
+Release:        alt4_15jpp8
 Summary:        Set of JFC (Swing) components
 License:        BSD
 URL:            http://microba.sourceforge.net/
@@ -26,8 +26,6 @@ BuildRequires:  ant
 BuildRequires:  dos2unix
 BuildRequires:  jpackage-utils
 # BuildRequires:  jgraph
-Requires:       java
-Requires:       jpackage-utils
 BuildArch:      noarch
 Source44: import.info
 
@@ -53,31 +51,30 @@ find . -name '*.jar' -delete
 
 dos2unix *.txt
 
+# install in _javadir
+%mvn_file com.michaelbaranov:%{name} %{name}
+%mvn_alias com.michaelbaranov:%{name} "net.sf.%{name}:%{name}"
+
 %build
 
 ant bin_release doc_release
 
+%mvn_artifact %{SOURCE1} redist/%{name}-%{version}.jar
+
 %install
-
-mkdir -p %{buildroot}%{_javadir}
-install redist/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "net.sf.%{name}:%{name}"
-
-mkdir -p %{buildroot}%{_javadocdir}
-cp -r javadoc %{buildroot}%{_javadocdir}/%{name}
+%mvn_install -J javadoc
 
 %files -f .mfiles
 %doc readme.txt change.log.txt
 %doc license.txt
 
-%files javadoc
-%{_javadocdir}/%{name}
+%files javadoc -f .mfiles-javadoc
 %doc license.txt
 
 %changelog
+* Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 0.4.4.3-alt4_15jpp8
+- migrated to %%mvn_artifact
+
 * Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.4.4.3-alt3_15jpp8
 - fixed build with new java
 
