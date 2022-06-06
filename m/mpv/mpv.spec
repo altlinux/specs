@@ -3,8 +3,8 @@
 %endif
 
 Name: mpv
-Version: 0.34.0
-Release: alt2
+Version: 0.34.1
+Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -32,7 +32,7 @@ BuildRequires: libgbm-devel libplacebo-devel libSDL2-devel libavdevice-devel
 
 BuildRequires: libzimg-devel vapoursynth-devel libshaderc-devel
 
-BuildRequires: /usr/bin/rst2man.py
+BuildRequires: /usr/bin/rst2man
 
 %if_enabled lua
 BuildRequires: liblua5.3-devel libluajit-devel
@@ -87,7 +87,6 @@ This package contains %name shared library
 %prep
 %setup -n %name-%version
 %patch -p1
-subst 's|rst2man|rst2man.py|' wscript*
 
 ls
 chmod ugo+rx waf
@@ -105,7 +104,6 @@ chmod ugo+rx waf
 --enable-vulkan \
 --enable-sdl2 \
 --enable-vapoursynth \
---enable-libmpv-shared \
 #
 
 %build
@@ -145,6 +143,10 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Mon Jun 06 2022 Leontiy Volodin <lvol@altlinux.org> 0.34.1-alt1
+- 0.34.1.
+- Fix build with python3-module-docutils.
+
 * Tue Nov 16 2021 L.A. Kostis <lakostis@altlinux.ru> 0.34.0-alt2
 - use shaderc.
 

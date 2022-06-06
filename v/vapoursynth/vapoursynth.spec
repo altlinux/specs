@@ -1,10 +1,12 @@
+%define sonamev 0
+
 %def_without tests
 %def_with ffmpeg
 # waiting ImageMagick >= 7.0
 %def_without ImageMagick
 
 Name: vapoursynth
-Version: 58
+Version: 59
 Release: alt1
 Summary: Video processing framework with simplicity in mind
 License: WTFPL and LGPL-2.1+ and OFL-1.1 and GPL-2.0+ and ISC and MIT
@@ -51,12 +53,22 @@ VapourSynth is an application for video manipulation. Or a plugin. Or a library.
 It is hard to tell because it has a core library written in C++ and a Python
 module to allow video scripts to be created.
 
-%package -n lib%name
+%package -n lib%name%version
 Summary: VapourSynth core library with a C++ API
 Group: System/Libraries
+Provides: lib%name = %version
+Obsoletes: lib%name < %version
+Requires: lib%name-script%sonamev = %version
 
-%description -n lib%name
+%description -n lib%name%version
 VapourSynth core library with a C++ API.
+
+%package -n lib%name-script%sonamev
+Summary: VapourSynth script library with a C++ API
+Group: System/Libraries
+
+%description -n lib%name-script%sonamev
+VapourSynth script library with a C++ API.
 
 %package -n python3-module-%name
 Summary: Python interface for VapourSynth
@@ -132,10 +144,12 @@ rm -fr %buildroot%_docdir/%name
 python3 -m pytest -v
 %endif
 
-%files -n lib%name
+%files -n lib%name%version
 %doc ChangeLog COPYING.LESSER README.md
-%_libdir/lib%name.so.*
-%_libdir/lib%name-script.so.*
+%_libdir/lib%name.so.%{version}*
+
+%files -n lib%name-script%sonamev
+%_libdir/lib%name-script.so.%{sonamev}*
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name.so
@@ -156,6 +170,12 @@ python3 -m pytest -v
 # %%_libdir/%%name/lib*.so
 
 %changelog
+* Mon Jun 06 2022 Leontiy Volodin <lvol@altlinux.org> 59-alt1
+- New version (59).
+- Subpackages:
+  + Rename libvapoursynth to libvapoursynth59.
+  + Rename libvapoursynth-script to libvapoursynth-script0.
+
 * Fri Apr 15 2022 Leontiy Volodin <lvol@altlinux.org> 58-alt1
 - New version (58).
 
