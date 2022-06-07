@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt52
+Release: alt53
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -183,6 +183,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Tue Jun 07 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt53
+- plugins/md: fix incorrect ternary operator
+
 * Wed May 25 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt52
 - plugins/md: fix computing parity indices in RAID6
 - plugins/md: implement raw read/write operations in RAID10
