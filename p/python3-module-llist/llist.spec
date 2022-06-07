@@ -1,10 +1,13 @@
 %define oname llist
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.4
-Release: alt2
+Version: 0.7.1
+Release: alt1
 
 Summary: Linked list data structures for Python
+
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/llist/
@@ -13,10 +16,12 @@ Url: https://pypi.python.org/pypi/llist/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest python-tools-2to3
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
-
 
 %description
 llist is an extension module for CPython providing basic linked list
@@ -28,36 +33,31 @@ lists.
 
 %prep
 %setup
-
-## py2 -> py3
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
     $(find ./ -name '*.py')
-##
 
 %build
 %add_optflags -fno-strict-aliasing
-
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-%if 0
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-%_python3_version
-%endif
+py.test-3 -v
 
 %files
-%doc CHANGES README docs/*.rst examples
-%python3_sitelibdir/*
-
+%doc CHANGES README.md docs/*.rst examples
+%python3_sitelibdir/%oname.cpython-*.so
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Jun 07 2022 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1
+- Automatically updated to 0.7.1.
+
 * Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4-alt2
 - python2 disabled
 
