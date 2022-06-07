@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:    jogl2
 Version: 2.3.2
-Release: alt6_9jpp8
+Release: alt7_9jpp8
 %global src_name jogl-v%{version}
 Summary: Java bindings for the OpenGL API
 
@@ -88,6 +88,10 @@ done
 # git executable should not be used, use true (to avoid checkout) instead
 sed -i 's/executable="git"/executable="true"/' make/build-common.xml
 
+# install in _javadir
+%mvn_file org.jogamp.jogl:jogl %{name}
+%mvn_alias org.jogamp.jogl:jogl "org.jogamp.jogl:jogl-all"
+
 %build
 # zerg's girar armh hack:
 (while true; do date; sleep 7m; done) &
@@ -120,19 +124,18 @@ xargs -t ant <<EOF
  build.nativewindow build.jogl build.newt one.dir javadoc.public
 EOF
 
+cd ..
+%mvn_artifact %{SOURCE1} build/jar/jogl-all.jar
+
 %install
+%mvn_install 
 mkdir -p %{buildroot}%{_javadir}/%{name} \
     %{buildroot}%{_libdir}/%{name} \
     %{buildroot}%{_javadir}
 
-install build/jar/jogl-all.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -s ../../..%{_javadir}/%{name}.jar %{buildroot}%{_libdir}/%{name}/
+ln -s ../../..%{_jnidir}/%{name}.jar %{buildroot}%{_libdir}/%{name}/
 install -t %{buildroot}%{_libdir}/%{name}/ build/lib/*.so
 
-# Provide JPP pom
-mkdir -p %{buildroot}%{_mavenpomdir}
-install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.jogamp.jogl:jogl-all"
 
 # Make the doc package
 mkdir -p %{buildroot}%{_docdir}/%{name}
@@ -147,6 +150,10 @@ cp -t %{buildroot}%{_docdir}/%{name}/ README.txt LICENSE.txt CHANGELOG.txt
 %{_docdir}/%{name}
 
 %changelog
+* Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt7_9jpp8
+- migrated to %%mvn_artifact
+- jogl2.jar moved to _jnidir
+
 * Fri May 27 2022 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt6_9jpp8
 - fixed build with new libs.req
 
