@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220512
+Version: 20220607
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,22 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jun 07 2022 Cronbuild Service <cronbuild@altlinux.org> 20220607-alt1
+- upstream changes (GIT 02c6986):
+  + rtl_bt: Update RTL8852A BT USB firmware to 0xDFB8_0634 (thx Hilda Wu)
+  + Makefile: replace mkdir by install (thx Konrad Weihmann)
+  + iwlwifi: remove old unsupported 3160/7260/7265/8000/8265 firmware (thx Peter Robinson)
+  + ath11k: WCN6855 hw2.0: update to
+    WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.9 (thx Kalle Valo)
+  + WHENCE: ath11k: move regdb.bin before board-2.bin (thx Kalle Valo)
+  + ath10k: QCA9984 hw1.0: update firmware-5.bin to
+    10.4-3.9.0.2-00157 (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: QCA9888 hw2.0: update firmware-5.bin to
+    10.4-3.9.0.2-00157 (thx Kalle Valo)
+  + ath10k: QCA4019 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath10k: WCN3990 hw1.0: add board-2.bin (thx Kalle Valo)
+
 * Tue May 17 2022 Cronbuild Service <cronbuild@altlinux.org> 20220512-alt1
 - upstream changes (GIT 251d290):
   + amdgpu: update beige goby firmware for 22.10 (thx Alex Deucher)
