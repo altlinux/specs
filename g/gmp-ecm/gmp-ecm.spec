@@ -1,16 +1,16 @@
 %define so_version 1
 
 Name: gmp-ecm
-Version: 7.0.4
+Version: 7.0.5
 Release: alt1
 
 Summary: Elliptic Curve Method for Integer Factorization
 
 License: GPL-3.0
 Group: Sciences/Mathematics
-Url: https://gforge.inria.fr/projects/ecm
+Url: https://gitlab.inria.fr/zimmerma/ecm
 
-Source: https://gforge.inria.fr/frs/download.php/36224/ecm-%version.tar.gz
+Source: https://gitlab.inria.fr/zimmerma/ecm/-/archive/git-%version/ecm-git-%version.tar.gz
 
 BuildRequires: libgmp-devel
 
@@ -38,9 +38,10 @@ This package contains header files required when building applications which
 use the libecm library.
 
 %prep
-%setup -n ecm-%version
+%setup -n ecm-git-%version
 
 %build
+%autoreconf
 %configure \
 %ifnarch x86_64
     --disable-sse2 \
@@ -77,6 +78,10 @@ make check
 %_libdir/libecm.so.%{so_version}*
 
 %changelog
+* Tue Jun 07 2022 Leontiy Volodin <lvol@altlinux.org> 7.0.5-alt1
+- New version (7.0.5).
+- Updated url and source links.
+
 * Thu Oct 28 2021 Leontiy Volodin <lvol@altlinux.org> 7.0.4-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
 - Built as require for sagemath.
