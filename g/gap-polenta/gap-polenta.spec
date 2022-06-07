@@ -1,15 +1,14 @@
 %define repo polenta
 
 Name: gap-polenta
-Version: 1.3.8
+Version: 1.3.10
 Release: alt1
 Summary: GAP: Polycyclic presentations for matrix groups
 License: GPL-2.0+
 Group: Sciences/Mathematics
-Url: http://www.quendi.de/math
+Url: https://gap-packages.github.io/polenta/
 
-#Git-Clone:	git://github.com/gap-system/polenta
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/polenta-%version.tar.bz2
+Source: https://github.com/gap-packages/%repo/releases/download/v%version/%repo-%version.tar.bz2
 BuildArch: noarch
 
 BuildRequires: rpm-macros-gap
@@ -39,5 +38,9 @@ series of the natural Q[G]-module Q^d.
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Tue Jun 07 2022 Leontiy Volodin <lvol@altlinux.org> 1.3.10-alt1
+- New version (1.3.10).
+- Updated url and source links.
+
 * Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 1.3.8-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
