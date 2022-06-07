@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
+%global import_path github.com/yggdrasil-network/yggdrasil-go
+
 Name: yggdrasil
 Version: 0.4.3
-Release: alt1
+Release: alt2
 
 Summary: End-to-end encrypted IPv6 networking
 License: LGPLv3
@@ -34,20 +36,37 @@ over either IPv4 or IPv6.
 %patch0 -p1
 
 %build
-%gobuild -o %_builddir/ ./cmd/*
+export GO111MODULE=off
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+export GOPATH="$BUILDDIR:%go_path"
+
 cp -r LICENSE README.md CHANGELOG.md contrib/systemd/* %_builddir/
+%golang_prepare
+
+cd .build/src/%import_path
+
+# remove genkeys util
+rm -rf cmd/genkeys
+
+export PKGSRC="%import_path/src/version"
+export PKGNAME="%name"
+export PKGVER="%version-%release"
+export LDFLAGS="-X $PKGSRC.buildName=$PKGNAME -X $PKGSRC.buildVersion=$PKGVER"
+%golang_build cmd/*
+
 
 %install
-mkdir -p %buildroot
+export BUILDDIR="$PWD/.build"
+export IGNORE_SOURCES=1
 
-cd %_builddir
+%golang_install
 
-sed -i yggdrasil-default-config.service -e 's/\/usr\/bin\/chmod/\/bin\/chmod/g'
-
-install -pD yggdrasil %buildroot%_bindir/yggdrasil
-install -pD yggdrasilctl %buildroot%_bindir/yggdrasilctl
-install -pD yggdrasil.service %buildroot%_unitdir/yggdrasil.service
-install -pD yggdrasil-default-config.service %buildroot%_unitdir/yggdrasil-default-config.service
+pushd %_builddir
+    sed -i yggdrasil-default-config.service -e 's/\/usr\/bin\/chmod/\/bin\/chmod/g'
+    install -pD yggdrasil.service %buildroot%_unitdir/yggdrasil.service
+    install -pD yggdrasil-default-config.service %buildroot%_unitdir/yggdrasil-default-config.service
+popd
 
 %files
 %doc LICENSE README.md CHANGELOG.md
@@ -58,5 +77,9 @@ install -pD yggdrasil-default-config.service %buildroot%_unitdir/yggdrasil-defau
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Tue Jun 07 2022 Anton Zhukharev <ancieg@altlinux.org> 0.4.3-alt2
+- change instructions for golang building
+- add buildName and buildVersion to the output of `yggdrasil -version'
+
 * Mon May 30 2022 Anton Zhukharev <ancieg@altlinux.org> 0.4.3-alt1
 - initial build for Sisyphus
