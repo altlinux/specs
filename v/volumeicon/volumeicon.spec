@@ -1,16 +1,21 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: volumeicon
-Version: 0.4.6
+Version: 0.5.1
 Release: alt1
 
 Summary: Systray volume control
 License: GPLv3
 Group: Graphical desktop/Other
-Url: http://softwarebakery.com/maato/volumeicon.html
+Url: https://github.com/Maato/volumeicon
 
 Source: %name-%version.tar
-Patch: %name-0.4.5-alt-glib2-2.32.3.patch
 
-BuildRequires: libgtk+2-devel libalsa-devel
+BuildRequires: libalsa-devel
+BuildRequires: glib2-devel
+BuildRequires: libgtk+3-devel
+BuildRequires: libnotify-devel
+BuildRequires: intltool
 
 %description
 Volume Icon aims to be a lightweight volume control that sits in your systray
@@ -26,21 +31,26 @@ Features:
 
 %prep
 %setup
-%patch -p2
 
 %build
-%configure
+./autogen.sh
+%configure --enable-notify
 %make_build
 
 %install
 %makeinstall_std
 
 %files
-%doc AUTHORS ChangeLog COPYING NEWS README*
+%doc AUTHORS ChangeLog COPYING README
 %_bindir/*
-%_datadir/*
+%_datadir/volumeicon
+%_datadir/locale/*/*/volumeicon.mo
 
 %changelog
+* Tue Jun 07 2022 Egor Ignatov <egori@altlinux.org> 0.5.1-alt1
+- new version 0.5.1
+- remove volumeicon-0.4.5-alt-glib2-2.32.3 patch
+
 * Fri Oct 12 2012 Alexander Plehanov <tonik@altlinux.org> 0.4.6-alt1
 - New version (0.4.6)
 
