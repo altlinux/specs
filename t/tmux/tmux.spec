@@ -4,7 +4,7 @@
 
 Summary: Terminal multiplexer
 Name: tmux
-Version: 3.2a
+Version: 3.3
 Release: alt1
 Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 Source1: bash_completion_tmux.sh
@@ -27,7 +27,7 @@ later reattached.
 %setup
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
+%add_optflags %(getconf LFS_CFLAGS) -Wno-unused-result -Wno-pointer-sign
 %autoreconf
 %configure --enable-utempter
 %make_build
@@ -43,6 +43,9 @@ install -Dpm 644 %SOURCE1 %buildroot%_datadir/bash-completion/completions/tmux
 %_datadir/bash-completion/completions/tmux
 
 %changelog
+* Wed Jun 01 2022 Vitaly Chikunov <vt@altlinux.org> 3.3-alt1
+- Updated to 3.3 (2022-06-01).
+
 * Sat Feb 19 2022 Vitaly Chikunov <vt@altlinux.org> 3.2a-alt1
 - Updated to 3.2a (2021-06-10).
 - Enable LFS on 32-bit architectures.
