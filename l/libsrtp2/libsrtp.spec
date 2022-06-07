@@ -1,9 +1,9 @@
 Name: libsrtp2
-Version: 2.2.0
+Version: 2.4.2
 Release: alt1
 
 Summary: Secure RTP library
-License: BSD-like
+License: BSD-3-Clause
 Group: System/Libraries
 Url: https://github.com/cisco/libsrtp
 
@@ -50,6 +50,9 @@ This package contains the headers and libraries for libsrtp development.
 %_pkgconfigdir/libsrtp2.pc
 
 %changelog
+* Tue Jun 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.2-alt1
+- 2.4.2 released
+
 * Tue Oct 02 2018 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0-alt1
 - 2.2.0 released
 
