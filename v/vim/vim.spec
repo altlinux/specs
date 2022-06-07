@@ -48,7 +48,7 @@
 
 Name: vim
 %define branch 8.2
-Version: %branch.5019
+Version: %branch.5062
 Release: alt1
 Epoch: 4
 
@@ -1053,6 +1053,9 @@ fi
 
 # {{{ changelog
 %changelog
+* Mon Jun  6 2022 Alexander Danilov <admsasha@altlinux.org> 4:8.2.5062-alt1
+- Updated to 8.2.5062 (fixes CVE-2022-1898).
+
 * Thu May 26 2022 Alexander Danilov <admsasha@altlinux.org> 4:8.2.5019-alt1
 - Updated to 8.2.5019 (fixes CVE-2022-1735, CVE-2022-1769, CVE-2022-1733,
   CVE-2022-1674, CVE-2022-1629, CVE-2022-1621, CVE-2022-1620, CVE-2022-1619,
