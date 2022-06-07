@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel .44
+%define kernel_sublevel .45
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -11,9 +11,6 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define flavour		%( s='%name'; printf %%s "${s#kernel-image-}" )
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
-
-Source1: rules
-%define patches		%(grep name=.*patch %SOURCE1 | nl -v0 | sed 's/^\\s*\\([0-9]*\\).*name=\\(.*\\.patch\\).*$/Patch\\1: \\2/')
 
 # Build options
 # You can change compiler version by editing this line:
@@ -52,7 +49,7 @@ Group: System/Kernel and hardware
 Url: http://www.kernel.org/
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
-%patches
+Patch0: %name-%version-%release.patch
 
 %if "%sub_flavour" == "pae"
 ExclusiveArch: i586
@@ -618,6 +615,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Jun 07 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.45-alt1
+- v5.15.45 (2022-06-06).
+- altha: Restrict setcap binaries in nosuid mode.
+- kernel.perf_event_paranoid=4 by default.
+
 * Mon May 30 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.44-alt1
 - v5.15.44 (2022-05-30).
 
