@@ -1,7 +1,7 @@
 %define soname 0
 
 Name: igraph
-Version: 0.9.8
+Version: 0.9.9
 Release: alt1
 Summary: Library for creating and manipulating graphs
 
@@ -16,6 +16,8 @@ BuildRequires: cmake rpm-build-ninja
 BuildRequires: libxml2-devel
 BuildRequires: libgmp-devel
 BuildRequires: libarpack-ng-devel
+BuildRequires: liblapack-devel
+BuildRequires: libblas-devel
 BuildRequires: libglpk-devel
 BuildRequires: libsuitesparse-devel
 BuildRequires: flex
@@ -55,11 +57,14 @@ documentation needed to develop application with %name.
 
 %prep
 %setup
+sed -i 's|set(PACKAGE_VERSION "NOTFOUND")|set(PACKAGE_VERSION "%version")|' \
+    etc/cmake/version.cmake
 
 %build
 %cmake \
     -GNinja \
-    -DBUILD_SHARED_LIBS=YES \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DBUILD_SHARED_LIBS=ON \
     -DIGRAPH_ENABLE_LTO=AUTO \
     -DIGRAPH_ENABLE_TLS=1 \
     -DIGRAPH_USE_INTERNAL_BLAS=0 \
@@ -68,8 +73,8 @@ documentation needed to develop application with %name.
     -DIGRAPH_USE_INTERNAL_GLPK=0 \
     -DIGRAPH_USE_INTERNAL_CXSPARSE=0 \
     -DIGRAPH_USE_INTERNAL_GMP=0 \
-    -DBLAS_LIBRARIES=%_libdir/libopenblas.so \
-    -DLAPACK_LIBRARIES=%_libdir/libopenblas.so \
+    -DBLAS_LIBRARIES=%_libdir/libblas.so \
+    -DLAPACK_LIBRARIES=%_libdir/liblapack.so \
     -DIGRAPH_GRAPHML_SUPPORT=1 \
     -DCMAKE_INSTALL_INCLUDEDIR=include/ \
 #
@@ -91,9 +96,12 @@ find . -name '.arch-ids' | xargs rm -rf
 %_libdir/libigraph.so
 %_pkgconfigdir/igraph.pc
 %_libdir/cmake/igraph/
-%exclude %_man3dir/igraph.3*
+%_man3dir/igraph.3*
 
 %changelog
+* Tue Jun 07 2022 Leontiy Volodin <lvol@altlinux.org> 0.9.9-alt1
+- New version (0.9.9).
+
 * Mon Apr 11 2022 Leontiy Volodin <lvol@altlinux.org> 0.9.8-alt1
 - New version (0.9.8).
 
