@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    epsonscan2
-Version: 6.6.40.0
+Version: 6.6.41.0
 Release: alt1
 
 Summary: Simple Image Acquisition for Epson scanners and MFP
@@ -61,5 +61,8 @@ rm -rf %buildroot%_defaultdocdir/epsonscan2-1.0.0.0-1
 %_udevrulesdir/60-epsonscan2.rules
 
 %changelog
+* Sun Jun 05 2022 Andrey Cherepanov <cas@altlinux.org> 6.6.41.0-alt1
+- New version.
+
 * Wed May 11 2022 Andrey Cherepanov <cas@altlinux.org> 6.6.40.0-alt1
 - Initial build in Sisyphus (ALT #42634).
