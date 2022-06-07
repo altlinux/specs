@@ -1,25 +1,31 @@
 %define oname peewee-async
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.0.2
-Release: alt2.git20141030
+Version: 0.7.2
+Release: alt1
+
 Summary: Asynchronous interface for peewee ORM powered by asyncio
+
 License: MIT
 Group: Development/Python3
 Url: http://peewee-async.readthedocs.org/en/latest/
 
 # https://github.com/05bit/peewee-async.git
 Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-peewee
+%endif
+
 %py3_provides peewee_async
 %py3_requires asyncio peewee aiopg
-
-BuildRequires: python3-module-apsw python3-module-psycopg2 python3-module-pytest
 
 %description
 peewee-async is a library providing asynchronous interface powered by
@@ -39,9 +45,15 @@ python3 setup.py test
 
 %files
 %doc *.md docs/*.rst docs/peewee_async
-%python3_sitelibdir/*
+%python3_sitelibdir/peewee_async.py
+%python3_sitelibdir/peewee_asyncext.py
+%python3_sitelibdir/peewee_async-%version-py%_python3_version.egg-info
+%python3_sitelibdir/__pycache__
 
 %changelog
+* Tue Jun 07 2022 Grigory Ustinov <grenka@altlinux.org> 0.7.2-alt1
+- Automatically updated to 0.7.2.
+
 * Sat Jun 05 2021 Grigory Ustinov <grenka@altlinux.org> 0.0.2-alt2.git20141030
 - Drop python2 support.
 
