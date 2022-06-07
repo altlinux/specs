@@ -1,6 +1,6 @@
 Name: libtiff
-Version: 4.3.0
-Release: alt2
+Version: 4.4.0
+Release: alt1
 
 Summary: Library of functions for manipulating TIFF format image files
 License: BSD-style
@@ -95,7 +95,6 @@ TIFFFaxMainTable
 TIFFFaxWhiteCodes
 TIFFFaxWhiteTable
 _TIFFCheckMalloc
-_TIFFDataSize
 _TIFFFax3fillruns
 _TIFFMultiply32
 _TIFFRewriteField
@@ -106,7 +105,6 @@ TIFFFlushData1
 _TIFFGetFields
 _TIFFMergeFields
 _TIFFSeekOK
-_TIFFSetGetFieldSize
 display_sRGB
 EOF
 sed -n 's/^extern[^)]\+[[:space:]]\*\?\([^[:space:]*()]\+\)[[:space:]]*(.*/\1/p' \
@@ -175,6 +173,10 @@ xz -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Tue May 31 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.4.0-alt1
+- Updated to v4.4.0.
+- Dropped removed symbols from libtiff.sym.
+
 * Mon Nov 29 2021 Vitaly Chikunov <vt@altlinux.org> 4.3.0-alt2
 - Rebuilt with libdeflate support.
 

@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.18.0
-Release: alt6
+Release: alt7
 
 Summary: Multi-format image decoder library
 Group: System/Libraries
@@ -18,6 +18,7 @@ Patch1: FreeImage_doxygen.patch
 Patch2: FreeImage_bigendian.patch
 Patch3: FreeImage-3.18.0-alt-return-type.patch
 Patch4: FreeImage-3.18-deb-libraw-0.20.patch
+Patch5: libfreeimage-3.18.0-libtiff5.patch
 
 BuildRequires: gcc-c++ libgomp-devel libmng-devel libpng-devel openexr-devel unzip
 BuildPreReq: rpm-macros-make libraw-devel zlib-devel libwebp-devel
@@ -67,6 +68,7 @@ find ./ -type f -print0| xargs -r0 dos2unix --
 %patch2 -p1
 %patch3 -p2
 %patch4 -p1
+%patch5 -p2
 
 # remove bundled libraries
 rm -r Source/Lib* Source/ZLib Source/OpenEXR
@@ -107,6 +109,9 @@ sh ./genfipsrclist.sh
 %_libdir/%nameplus.so
 
 %changelog
+* Tue Jun 07 2022 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt7
+- rebuilt against new libtiff5 ABI
+
 * Sun Nov 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt6
 - fixed build against libraw-0.20 (deb patch)
 
