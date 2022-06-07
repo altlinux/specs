@@ -1,6 +1,6 @@
 Name: libdvbpsi
-Version: 1.3.0
-Release: alt2
+Version: 1.3.3
+Release: alt1
 
 Summary: A library for decoding and generating MPEG 2 and DVB PSI sections
 License: LGPLv2.1
@@ -59,6 +59,9 @@ information using the libdvbpsi
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jun 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.3-alt1
+- 1.3.3 released
+
 * Thu Mar 10 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt2
 - do not package api documentation
 
