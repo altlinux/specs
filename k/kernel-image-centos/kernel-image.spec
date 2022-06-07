@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 104
+%define centos_release 106
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,28 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jun 07 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.106-alt1.el9
+- Updated to kernel-5.14.0-106.el9 (fixes: CVE-2022-24448):
+  + clk: qcom: rpmhcc: add sc8280xp support to the RPMh clock controller
+  + Documentation: add description for net.core.gro_normal_batch
+  + Documentation/sysctl: document max_rcu_stall_to_panic
+  + drivers/char: fix unused variable warning in mem.c
+  + Fixes for nfs_atomic_open()
+  + mm, compaction: fast_find_migrateblock() should return pfn in the target zone
+  + PTP: backport fixes from upstream
+  + [RHEL 9.1.0] IDXD fixes
+  + [s390] Upgrade the qeth driver to latest from upstream
+
+* Fri Jun 03 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.105-alt1.el9
+- Updated to kernel-5.14.0-105.el9:
+  + Add Alderlake and Raptorlake CPU model numbers
+  + Documentation/sysctl: document page_lock_unfairness
+  + iommu/virtio: Support bypass domains
+  + NFSv4.2: Fix up an invalid combination of memory allocation flags
+  + Update bluetooth to upstream 5.17-rc5
+  + Update thermal/int340x for RPL
+  + XDP and networking eBPF rebase to v5.15
+
 * Thu Jun 02 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.104-alt1.el9
 - Updated to kernel-5.14.0-104.el9:
   + bonding: driver update for 9.1
