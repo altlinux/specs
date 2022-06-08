@@ -1,5 +1,5 @@
 Name:     hyperfine
-Version:  1.13.0
+Version:  1.14.0
 Release:  alt1
 
 Summary:  A command-line benchmarking tool
@@ -36,6 +36,9 @@ BuildRequires: /proc
 %doc *.md
 
 %changelog
+* Wed May 25 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.14.0-alt1
+- new version 1.14.0
+
 * Tue Mar 15 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.13.0-alt1
 - new version 1.13.0
 
