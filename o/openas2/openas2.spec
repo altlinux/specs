@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -39,7 +39,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           openas2
 Version:        2.10.0
-Release:        alt1_9jpp11
+Release:        alt2_9jpp11
 Summary:        Java-based implementation of the EDIINT AS2 standard
 
 License:        BSD
@@ -75,6 +75,7 @@ BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.mockito:mockito-all)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.osgi:osgi.core)
+BuildRequires:  mvn(commons-logging:commons-logging)
 %if %{with tests}
 # FIXME: adding to try to make unit tests work in mock
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
@@ -349,6 +350,9 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 
 
 %changelog
+* Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 2.10.0-alt2_9jpp11
+- fixed build with new guava
+
 * Sun Jun 13 2021 Igor Vlasenko <viy@altlinux.org> 2.10.0-alt1_9jpp11
 - new version
 
