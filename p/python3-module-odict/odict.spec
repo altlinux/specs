@@ -1,25 +1,29 @@
 %define oname odict
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.6.0
-Release: alt2
+Version: 1.9.0
+Release: alt1
 
 Summary: Ordered dictionary
-License: Python
+
+License: Python-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/odict/
-# https://github.com/bluedynamics/odict.git
-BuildArch: noarch
+Url: https://pypi.python.org/pypi/odict
+# https://github.com/bluedynamics/odict
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
+
 %py3_provides %oname
 
-BuildRequires: python3-module-interlude python3-module-pytest
-BuildRequires: python-tools-2to3
-
+BuildArch: noarch
 
 %description
 Dictionary in which the insertion order of items is preserved (using an
@@ -41,18 +45,14 @@ This package contains tests for %oname.
 %prep
 %setup
 
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-%if 0
 %__python3 setup.py test
-%endif
 
 %files
 %doc *.rst
@@ -64,8 +64,10 @@ find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_sitelibdir/*/tests.*
 %python3_sitelibdir/*/*/tests.*
 
-
 %changelog
+* Wed Jun 08 2022 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1
+- Automatically updated to 1.9.0.
+
 * Wed Nov 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.6.0-alt2
 - python2 disabled
 
