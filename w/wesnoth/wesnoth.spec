@@ -20,14 +20,14 @@
 %define _wesnothd_home     %_runtimedir/wesnothd%wessuffix
 
 Name: wesnoth%wessuffix
-Version: 1.16.2
+Version: 1.16.3
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
 License: %gpl2plus
 Url: http://www.wesnoth.org
-VCS: https://github.com/wesnoth/wesnoth.git
+VCS: git+https://github.com/wesnoth/wesnoth.git
 Source0: wesnoth-%version.tar
 Patch1: wesnoth-1.13.8-sdl2.02-alt-hack.patch
 
@@ -408,6 +408,9 @@ mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot%_datadir/%name/data/t
 %endif
 
 %changelog
+* Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 1.16.3-alt1
+- new version
+
 * Tue May 10 2022 Igor Vlasenko <viy@altlinux.org> 1.16.2-alt1
 - new version
 
