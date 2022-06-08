@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcore
-Version: 5.5.31
+Version: 5.5.32
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -98,6 +98,11 @@ sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|'  \
 %_pkgconfigdir/dtkcore.pc
 
 %changelog
+* Wed Jun 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.32-alt1
+- New version.
+- Upstream:
+  + chore: dtkcore_config.h miss include some Class.
+
 * Mon May 23 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.31-alt1
 - New version.
 - Upstream:

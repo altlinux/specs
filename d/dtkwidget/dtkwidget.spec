@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkwidget
-Version: 5.5.45
+Version: 5.5.46
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+ and GPL-3.0+
@@ -107,6 +107,13 @@ export PATH=%{_qt5_bindir}:$PATH
 %_libdir/dtkwidget5-examples/
 
 %changelog
+* Wed Jun 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.46-alt1
+- New version.
+- Upstream:
+  + fix: wayland environmental network link dialogue box click invalid.
+  + fix: print preview titlebar does not follow the theme changes.
+  + fix: abandoned interface update.
+
 * Mon May 23 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.45-alt1
 - New version.
 

@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.5.22
+Version: 5.5.24
 Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0
@@ -76,6 +76,15 @@ sed -i '/*build-*/d' .gitignore
 %_libdir/libdtkgui.so
 
 %changelog
+* Wed Jun 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.24-alt1
+- New version.
+- Upstream:
+  + fix: use detected pkg-config to fix cross build.
+  + fix: the problem of failure to start again when repairing
+  anomalies withdraws.
+  + fix: modify the color value of TextWarning under the dark mode.
+  + fix: dcc can't start after calling setSingleInstance again.
+
 * Fri Apr 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.22-alt1
 - New version (5.5.22).
 
