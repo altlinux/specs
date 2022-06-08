@@ -2,7 +2,7 @@ Group: Development/Other
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2009, JPackage Project
@@ -37,7 +37,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           slf4j
 Version:        1.7.30
-Release:        alt1_6jpp11
+Release:        alt1_7jpp11
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 # the log4j-over-slf4j and jcl-over-slf4j submodules are ASL 2.0, rest is MIT
@@ -150,7 +150,12 @@ cp -p %{SOURCE1} APACHE-LICENSE
 %pom_disable_module integration
 %pom_disable_module osgi-over-slf4j
 %pom_disable_module slf4j-android
+%pom_disable_module slf4j-ext
+%pom_disable_module slf4j-log4j12
 %pom_disable_module slf4j-migrator
+
+# Port to maven-antrun-plugin 3.0.0
+sed -i s/tasks/target/ slf4j-api/pom.xml
 
 # Because of a non-ASCII comment in slf4j-api/src/main/java/org/slf4j/helpers/MessageFormatter.java
 %pom_xpath_inject "pom:project/pom:properties" "
@@ -222,9 +227,9 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %doc --no-dereference LICENSE.txt APACHE-LICENSE
 
 %files jdk14 -f .mfiles-%{name}-jdk14
-%files log4j12 -f .mfiles-%{name}-log4j12
+#files log4j12 -f .mfiles-%{name}-log4j12
 %files jcl -f .mfiles-%{name}-jcl
-%files ext -f .mfiles-%{name}-ext
+#files ext -f .mfiles-%{name}-ext
 %files -n jcl-over-slf4j -f .mfiles-jcl-over-slf4j
 %files -n log4j-over-slf4j -f .mfiles-log4j-over-slf4j
 %files -n jul-to-slf4j -f .mfiles-jul-to-slf4j
@@ -240,6 +245,10 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %{_defaultdocdir}/%{name}-manual
 
 %changelog
+* Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 0:1.7.30-alt1_7jpp11
+- Port to maven-antrun-plugin 3.0.0
+- disabled slf4j-ext and slf4j-log4j12 subpackages
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:1.7.30-alt1_6jpp11
 - fixed build
 
