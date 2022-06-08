@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -21,7 +21,7 @@ BuildRequires: jpackage-11-compat
 
 Name:          log4j12
 Version:       1.2.17
-Release:       alt1_30jpp11
+Release:       alt2_30jpp11
 Summary:       Java logging package
 License:       ASL 2.0
 URL:           http://logging.apache.org/log4j/1.2/
@@ -140,6 +140,9 @@ rm -r src/main/java/org/apache/log4j/nt/NTEventLogAppender.java \
 rm tests/src/java/org/apache/log4j/net/TelnetAppenderTest.java
 sed -i '/TelnetAppenderTest/d' tests/src/java/org/apache/log4j/CoreTestSuite.java
 
+# Port to maven-antrun-plugin 3.0.0
+sed -i s/tasks/target/ pom.xml
+
 %mvn_file log4j:log4j log4j %{name}
 
 %build
@@ -202,6 +205,9 @@ fi
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 1.2.17-alt2_30jpp11
+- Port to maven-antrun-plugin 3.0.0
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.2.17-alt1_30jpp11
 - update
 
