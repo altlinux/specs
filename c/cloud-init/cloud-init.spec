@@ -2,7 +2,7 @@
 
 Name:    cloud-init
 Version: 21.4
-Release: alt2
+Release: alt3
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -31,7 +31,7 @@ BuildArch: noarch
 %filter_from_requires s/requests.packages.urllib3.connectionpool/urllib3.connectionpool/
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-distribute python3-module-nose python3-module-mocker
+BuildRequires: python3-dev python3-module-distribute
 BuildRequires: python3-module-yaml python3-module-oauthlib
 BuildRequires: systemd-devel
 BuildRequires: python3-module-httpretty python3-module-serial iproute2
@@ -171,6 +171,9 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Wed Jun 08 2022 Mikhail Gordeev <obirvalger@altlinux.org> 21.4-alt3
+- Remove unnecessary build Requires
+
 * Mon Nov 22 2021 Andrey Limachko <liannnix@altlinux.org> 21.4-alt2
 - When using sudo add user to the wheel group
 - Add DHCP interface configuration support for etcnet
