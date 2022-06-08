@@ -1,20 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 
-%define mname requests-kerberos
+%define oname requests-kerberos
 %def_with check
 
-Name: python3-module-%mname
-Version: 0.12.0
-Release: alt4
+Name: python3-module-%oname
+Version: 0.14.0
+Release: alt1
+
 Summary: A Kerberos authentication handler for python-requests
+
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/requests-kerberos
 
 # https://github.com/requests/requests-kerberos.git
 Source: %name-%version.tar
-Patch: %name-%version-alt.patch
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-kerberos
@@ -23,13 +23,17 @@ BuildRequires: python3-module-kerberos
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-mock
+BuildRequires: python3-module-spnego
 %endif
 
 Requires: python3-module-requests >= 1.1
 Requires: python3-module-kerberos
 
-%py3_provides %mname
 %add_python3_req_skip requests.packages.urllib3
+%py3_provides %oname
+
+BuildArch: noarch
 
 %description
 Requests is an HTTP library, written in Python, for human beings. This
@@ -38,7 +42,6 @@ supports mutual authentication.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %python3_build
@@ -55,6 +58,9 @@ python3 -m pytest --verbose
 %python3_sitelibdir/requests_kerberos-%version-*.egg-info
 
 %changelog
+* Wed Jun 08 2022 Grigory Ustinov <grenka@altlinux.org> 0.14.0-alt1
+- Automatically updated to 0.14.0.
+
 * Tue May 25 2021 Grigory Ustinov <grenka@altlinux.org> 0.12.0-alt4
 - Drop python2 support.
 
@@ -62,15 +68,15 @@ python3 -m pytest --verbose
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.12.0-alt2
-- NMU: remove %ubt from release
+- NMU: remove .S1 from release
 
-* Tue Feb 13 2018 Stanislav Levin <slev@altlinux.org> 0.12.0-alt1%ubt
+* Tue Feb 13 2018 Stanislav Levin <slev@altlinux.org> 0.12.0-alt1.S1
 - v0.11.0 -> v0.12.0
 
-* Tue Feb 13 2018 Stanislav Levin <slev@altlinux.org> 0.11.0-alt2%ubt
+* Tue Feb 13 2018 Stanislav Levin <slev@altlinux.org> 0.11.0-alt2.S1
 - Fix BuildRequires for tests
 
-* Tue Nov 14 2017 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1%ubt
+* Tue Nov 14 2017 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1.S1
 - 0.6.1 -> 0.11.0
 
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 0.6.1-alt1.git20141114.1
