@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-invoker
 Version:        3.0.1
-Release:        alt1_2jpp11
+Release:        alt2_2jpp11
 Summary:        Fires a maven build in a clean environment
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-invoker/
@@ -53,6 +53,9 @@ API documentation for %{name}.
 %setup -q
 %patch1 -p1
 
+# Port to maven-antrun-plugin 3.0.0
+sed -i s/tasks/target/ pom.xml
+
 %build
 %mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
 
@@ -67,6 +70,9 @@ API documentation for %{name}.
 
 
 %changelog
+* Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 3.0.1-alt2_2jpp11
+- Port to maven-antrun-plugin 3.0.0
+
 * Tue May 11 2021 Igor Vlasenko <viy@altlinux.org> 3.0.1-alt1_2jpp11
 - new version
 
