@@ -1,5 +1,5 @@
 Name:           rsibreak
-Version:        0.12.14
+Version:        0.12.15
 Release:        alt1
 Summary:        A small utility which bothers you at certain intervals
 Group:          Graphical desktop/KDE
@@ -45,7 +45,7 @@ This can help people to prevent Repetive Strain Injury.
 %find_lang --with-kde %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog COPYING NEWS TODO
+%doc AUTHORS ChangeLog LICENSES NEWS TODO
 %_K5bin/%name
 %_K5xdgapp/*.desktop
 %_K5start/%{name}_autostart.desktop
@@ -56,6 +56,9 @@ This can help people to prevent Repetive Strain Injury.
 %_datadir/metainfo/org.kde.rsibreak.appdata.xml
 
 %changelog
+* Wed Jun 08 2022 Andrey Cherepanov <cas@altlinux.org> 0.12.15-alt1
+- New version.
+
 * Mon Jul 05 2021 Andrey Cherepanov <cas@altlinux.org> 0.12.14-alt1
 - New version.
 
