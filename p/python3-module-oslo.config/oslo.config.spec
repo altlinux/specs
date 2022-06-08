@@ -9,16 +9,17 @@
 %endif
 
 Name:       python3-module-%oname
-Version:    8.0.2
-Release:    alt2
+Version:    8.8.0
+Release:    alt1
 
 Summary:    OpenStack common configuration library
 
 Group:      Development/Python3
 License:    Apache-2.0
-URL:        http://docs.openstack.org/developer/oslo.config/
+URL:        http://docs.openstack.org/developer/oslo.config
 
 Source:     https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source1:    %oname.watch
 
 BuildArch:  noarch
 
@@ -27,10 +28,7 @@ Obsoletes: python3-module-oslo-config < %EVR
 %py3_provides oslo
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr
-BuildRequires: python3-module-six >= 1.10.0
 
 %if_without bootstrap
 BuildRequires: python3-module-debtcollector >= 1.2.0
@@ -48,10 +46,17 @@ BuildRequires: python3-module-sphinxcontrib-apidoc
 BuildRequires: python3-module-reno >= 2.5.0
 
 %if_enabled check
-BuildRequires: python3-module-stestr
-BuildRequires: python3-module-oslotest
+BuildRequires: python3-module-stestr >= 2.1.0
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-oslo.log >= 3.36.0
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-testscenarios >= 0.4
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-mypy >= 0.720
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: python3-module-requests-mock
-BuildRequires: python3-module-oslo.log
 %endif
 %endif
 
@@ -121,6 +126,9 @@ stestr run
 %endif
 
 %changelog
+* Mon May 16 2022 Grigory Ustinov <grenka@altlinux.org> 8.8.0-alt1
+- Automatically updated to 8.8.0.
+
 * Thu Jul 29 2021 Ivan A. Melnikov <iv@altlinux.org> 8.0.2-alt2
 - Add bootstrap knob to specfile.
 - Add %%check.
