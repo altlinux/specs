@@ -1,32 +1,39 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global base_name       collections
-%global short_name      commons-%{base_name}
+%bcond_with bootstrap
 
-Name:           apache-%{short_name}
+Name:           apache-commons-collections
 Version:        3.2.2
-Release:        alt1_20jpp11
+Release:        alt1_24jpp11
 Summary:        Provides new interfaces, implementations and utilities for Java Collections
 License:        ASL 2.0
-URL:            http://commons.apache.org/%{base_name}/
-Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-
-Patch0:         0001-Port-to-Java-8.patch
-Patch1:         0001-Port-to-Java-11.patch
-
+URL:            http://commons.apache.org/collections/
 BuildArch:      noarch
 
-BuildRequires:  ant
+Source0:        http://www.apache.org/dist/commons/collections/source/commons-collections-%{version}-src.tar.gz
+
+Patch0:         0001-Port-to-Java-8.patch
+Patch1:         0002-Port-to-OpenJDK-11.patch
+
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+%endif
 Source44: import.info
-Obsoletes: jakarta-%{short_name} < 1:%{version}-%{release}
-Conflicts: jakarta-%{short_name} < 1:%{version}-%{release}
 
 %description
 The introduction of the Collections API by Sun in JDK 1.2 has been a
@@ -54,15 +61,13 @@ Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
-Provides:       %{name}-testframework-javadoc = %{version}-%{release}
-Obsoletes:      %{name}-testframework-javadoc < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
 %{summary}.
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
+%setup -q -n commons-collections-%{version}-src
 
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
@@ -71,18 +76,20 @@ find . -name "*.class" -exec rm -f {} \;
 %patch0 -p1
 %patch1 -p1
 
+# Port to maven-antrun-plugin 3.0.0
+sed -i s/tasks/target/ pom.xml
+
 # Fix file eof
 sed -i 's/\r//' LICENSE.txt PROPOSAL.html README.txt NOTICE.txt
 
-%mvn_package :%{short_name}-testframework testframework
-%mvn_file ':%{short_name}{,-testframework}' %{short_name}@1 %{name}@1
+%mvn_package :commons-collections-testframework testframework
+%mvn_file ':commons-collections{,-testframework}' %{name}@1 commons-collections@1
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6 \
-  -Dcommons.osgi.symbolicName=org.apache.commons.collections
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6 -Dcommons.osgi.symbolicName=org.apache.commons.collections
 
 %install
-%mvn_artifact %{short_name}:%{short_name}-testframework:%{version} target/%{short_name}-testframework-%{version}.jar
+%mvn_artifact commons-collections:commons-collections-testframework:%{version} target/commons-collections-testframework-%{version}.jar
 %mvn_install
 
 %files -f .mfiles
@@ -94,8 +101,10 @@ sed -i 's/\r//' LICENSE.txt PROPOSAL.html README.txt NOTICE.txt
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
-
 %changelog
+* Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 0:3.2.2-alt1_24jpp11
+- support of new antrun plugin
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:3.2.2-alt1_20jpp11
 - update
 
