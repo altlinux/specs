@@ -2,18 +2,21 @@
 %define oname releases
 
 Name: python3-module-%oname
-Version: 1.4.0
-Release: alt2
-Summary: A Sphinx extension for changelog manipulation
-License: BSD
-Group: Development/Python3
-BuildArch: noarch
-Url: https://pypi.python.org/pypi/releases/
+Version: 1.6.3
+Release: alt1
 
-# https://github.com/bitprophet/releases.git
+Summary: A Sphinx extension for changelog manipulation
+
+License: BSD-2-Clause
+Group: Development/Python3
+Url: https://pypi.python.org/pypi/releases
+
+# https://github.com/bitprophet/releases
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+
+BuildArch: noarch
 
 %description
 Releases is a Sphinx extension designed to help you keep a source
@@ -35,6 +38,9 @@ human readable HTML output.
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Wed Jun 08 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.3-alt1
+- Automatically updated to 1.6.3.
+
 * Tue Jun 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt2
 - Drop python2 support.
 
