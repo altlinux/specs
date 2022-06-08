@@ -9,7 +9,7 @@
 
 Name: bluez
 Version: 5.64
-Release: alt1
+Release: alt2
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -129,21 +129,15 @@ find %buildroot%_libdir -name \*.la -delete
 %post
 SYSTEMCTL=systemctl
 %post_service bluetoothd
-if [ $1 = 1 ] && sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-    "$SYSTEMCTL" -q --user --global preset obex.service >/dev/null 2>&1 || :
+if [ $1 = 1 ] && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+    "$SYSTEMCTL" -q --user --global enable obex.service >/dev/null 2>&1 || :
 fi
 
 %preun
 SYSTEMCTL=systemctl
 %preun_service bluetoothd
-if [ $1 = 0 ] && sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+if [ $1 = 0 ] && "$SYSTEMCTL" --version >/dev/null 2>&1; then
 	"$SYSTEMCTL" -q --user --global disable obex.service >/dev/null 2>&1 || :
-fi
-
-%triggerin -- %name < 5.54-alt5
-SYSTEMCTL=systemctl
-if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-    $SYSTEMCTL -q --user --global preset obex.service >/dev/null 2>&1 || :
 fi
 
 %files
@@ -206,6 +200,10 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Thu May 19 2022 Anton Midyukov <antohami@altlinux.org> 5.64-alt2
+- fix enable obex.service with first install into chroot (ALT #42742)
+- clean old triggerin, actual for p9 only
+
 * Fri Mar 25 2022 L.A. Kostis <lakostis@altlinux.ru> 5.64-alt1
 - 5.64.
 
