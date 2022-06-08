@@ -1,4 +1,3 @@
-%def_enable jarlink_bootstrap
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
@@ -22,7 +21,7 @@ BuildRequires: jpackage-default
 
 Name:           xmvn
 Version:        3.1.0
-Release:        alt2_7jpp11
+Release:        alt3_7jpp11
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 
@@ -70,10 +69,6 @@ Requires:       %{name}-minimal = %{version}-%{release}
 Requires:       maven >= 3.6.1
 Source44: import.info
 %filter_from_requires /^osgi\\($/d
-%if_enabled jarlink_bootstrap
-Source45: guava.jar
-Source46: failureaccess.jar
-%endif
 
 %description
 This package provides extensions for Apache Maven that can be used to
@@ -350,18 +345,6 @@ rm jansi-linux.jar
 ln -s /usr/lib/java/jansi-native/jansi-linux.jar .
 popd
 
-%if_enabled jarlink_bootstrap
-#find %buildroot/usr/ -type l -name '*.jar' | \
-#while read jar; do
-#  realjar=`readlink -e "$jar"`;
-#  rm -f "$jar";
-#  cp -a "$realjar" "$jar"
-#done
-rm %buildroot/usr/share/%{name}/lib/guava-27.1-jre.jar
-install -m 644 %SOURCE45 %buildroot/usr/share/%{name}/lib/guava-27.1-jre.jar
-install -m 644 %SOURCE46 %buildroot/usr/share/%{name}/lib/failureaccess-1.0.1.jar
-%endif
-
 %files
 %{_bindir}/mvn-local
 
@@ -416,6 +399,9 @@ install -m 644 %SOURCE46 %buildroot/usr/share/%{name}/lib/failureaccess-1.0.1.ja
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt3_7jpp11
+- nobootstrap
+
 * Tue Jun 07 2022 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt2_7jpp11
 - bootstrap for guava update
 
