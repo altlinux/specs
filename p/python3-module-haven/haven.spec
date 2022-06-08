@@ -2,10 +2,11 @@
 %define oname haven
 
 Name: python3-module-%oname
-Version: 1.1.111
-Release: alt2
+Version: 2.0.3
+Release: alt1
 
 Summary: flask's style binary server framework
+
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/haven/
@@ -16,11 +17,10 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-events python3-module-netkit python3(setproctitle)
-BuildRequires: python-tools-2to3 python3(gevent) python3(geventwebsocket)
+BuildRequires: python3(gevent) python3(geventwebsocket)
 
 %py3_provides %oname
 %py3_requires events netkit
-
 
 %description
 flask's style binary server framework.
@@ -28,10 +28,8 @@ flask's style binary server framework.
 %prep
 %setup
 
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -40,11 +38,13 @@ find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 python3 setup.py test
 
 %files
-%doc *.md examples
+%doc *.md
 %python3_sitelibdir/*
 
-
 %changelog
+* Wed Jun 08 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.3-alt1
+- Build new version.
+
 * Wed Nov 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.1.111-alt2
 - disable python2
 
