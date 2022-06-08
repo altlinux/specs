@@ -69,7 +69,6 @@
 %def_disable lzfse
 %def_disable xen
 %def_enable mpath
-%def_enable libxml2
 %def_disable libpmem
 %def_enable libudev
 %def_enable libdaxctl
@@ -114,11 +113,11 @@
 
 %def_enable have_kvm
 
-%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa} %{?_enable_jack:jack}
+%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa} %{?_enable_jack:jack} dbus
 %define block_drv_list curl dmg %{?_enable_glusterfs:gluster} %{?_enable_libiscsi:iscsi} %{?_enable_libnfs:nfs} %{?_enable_rbd:rbd} %{?_enable_libssh:ssh}
-%define ui_list %{?_enable_gtk:gtk} %{?_enable_curses:curses} %{?_enable_sdl:sdl} %{?_enable_opengl:opengl}
+%define ui_list %{?_enable_gtk:gtk} %{?_enable_curses:curses} %{?_enable_sdl:sdl} %{?_enable_opengl:opengl} dbus
 %define ui_spice_list %{?_enable_spice:app core}
-%define device_usb_list redirect smartcard host
+%define device_usb_list redirect %{?_enable_smartcard:smartcard} host
 %define device_display_list virtio-gpu-pci %{?_enable_virglrenderer:virtio-gpu virtio-gpu-gl virtio-gpu-pci-gl virtio-vga-gl} virtio-vga %{?_enable_spice:qxl}
 %define qemu_arches aarch64 alpha arm avr cris hppa m68k microblaze mips nios2 or1k ppc riscv rx s390x sh4 sparc tricore x86 xtensa
 
@@ -131,8 +130,8 @@
 # }}}
 
 Name: qemu
-Version: 6.2.0
-Release: alt3
+Version: 7.0.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -165,7 +164,7 @@ Requires: %name-system = %EVR
 Requires: %name-user = %EVR
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: meson >= 0.58.2
+BuildRequires: meson >= 0.59.3
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre-devel-static libattr-devel-static
 BuildRequires: glib2-devel >= 2.56 libgio-devel
 BuildRequires: makeinfo perl-devel python3-module-sphinx python3-module-sphinx_rtd_theme
@@ -179,14 +178,14 @@ BuildRequires: python3-devel
 %{?_enable_curses:BuildRequires: libncursesw-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
-%{?_enable_jack:BuildRequires: libjack-devel}
+%{?_enable_jack:BuildRequires: libjack-devel jack-audio-connection-kit}
 %{?_enable_vnc_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vnc_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_vnc_png:BuildRequires: libpng-devel}
 %{?_enable_xkbcommon:BuildRequires: libxkbcommon-devel}
 %{?_enable_vde:BuildRequires: libvde-devel}
 %{?_enable_aio:BuildRequires: libaio-devel}
-%{?_enable_io_uring:BuildRequires: liburing-devel}
+%{?_enable_io_uring:BuildRequires: liburing-devel >= 0.3}
 %{?_enable_bpf:BuildRequires: libbpf-devel}
 %{?_enable_spice:BuildRequires: libspice-server-devel >= 0.12.5 spice-protocol >= 0.12.3}
 BuildRequires: libuuid-devel
@@ -221,7 +220,6 @@ BuildRequires: libslirp-devel
 %{?_enable_lzfse:BuildRequires: liblzfse-devel}
 %{?_enable_xen:BuildRequires: libxen-devel}
 %{?_enable_mpath:BuildRequires: libudev-devel libmultipath-devel}
-%{?_enable_libxml2:BuildRequires: libxml2-devel}
 %{?_enable_libpmem:BuildRequires: libpmem-devel}
 %{?_enable_libudev:BuildRequires: libudev-devel}
 %{?_enable_libdaxctl:BuildRequires: libdaxctl-devel}
@@ -258,7 +256,7 @@ Requires: %name-device-display-virtio-vga        \
 %{?_enable_spice:Requires: %name-char-spice} \
 Requires: %name-device-usb-host \
 Requires: %name-device-usb-redirect \
-Requires: %name-device-usb-smartcard
+%{?_enable_smartcard:Requires: %name-device-usb-smartcard}
 
 ##%%{?_enable_opengl:Requires: %%name-ui-opengl} \
 ##%%{?_enable_opengl:Requires: %%name-ui-egl-headless} \
@@ -302,6 +300,7 @@ BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: %name-tools = %EVR
 %{?_enable_mpath:Requires: %name-pr-helper = %EVR}
+Requires: vhostuser-backend(fs)
 Conflicts: %name-img < %EVR
 %{expand:%(for i in %qemu_arches; do echo Requires: %%name-system-$i ; done)}
 
@@ -437,6 +436,16 @@ Group: Emulators
 %description pr-helper
 This package provides the qemu-pr-helper utility that is required for certain
 SCSI features.
+
+%package virtiofsd
+Summary: QEMU virtio-fs shared file system daemon
+Group: Emulators
+Provides: vhostuser-backend(fs)
+
+%description virtiofsd
+This package provides virtiofsd daemon. This program is a vhost-user backend
+that implements the virtio-fs device that is used for sharing a host directory
+tree with a guest.
 
 %package tests
 Summary: tests for the %name package
@@ -706,6 +715,7 @@ This package provides the system emulator for %%{1}. \
 %%_datadir/%%name/u-boot* \
 %%_datadir/%%name/openbios-ppc \
 %%_datadir/%%name/slof.bin \
+%%_datadir/%%name/vof*.bin \
 %%endif \
 \
 %%if "%%{1}" == "riscv" \
@@ -760,12 +770,14 @@ run_configure \
 	--enable-tcg \
 	--extra-ldflags="-Wl,-Ttext-segment=0x60000000" \
 	--audio-drv-list="" \
+	--disable-alsa \
 	--disable-fdt \
 	--disable-auth-pam \
 	--disable-avx2 \
 	--disable-avx512f \
 	--disable-blobs \
 	--disable-bochs \
+	--disable-bpf \
 	--disable-brlapi \
 	--disable-bsd-user \
 	--disable-bzip2 \
@@ -773,28 +785,32 @@ run_configure \
 	--disable-capstone \
 	--disable-cloop \
 	--disable-cocoa \
+	--disable-coreaudio \
 	--disable-crypto-afalg \
 	--disable-curl \
 	--disable-curses \
+	--disable-dbus-display \
 	--disable-debug-info \
 	--disable-debug-mutex \
 	--disable-debug-tcg \
 	--disable-dmg \
 	--disable-docs \
-	--disable-bpf \
+	--disable-dsound \
 	--disable-gcrypt \
-	--disable-selinux \
+	--disable-gio \
+	--disable-gettext \
 	--disable-glusterfs \
 	--disable-gnutls \
 	--disable-gtk \
-	--disable-gio \
 	--disable-guest-agent \
 	--disable-guest-agent-msi \
 	--disable-hax \
 	--disable-hvf \
 	--disable-iconv \
+	--disable-jack \
 	--disable-keyring \
 	--disable-kvm \
+	--disable-l2tpv3 \
 	--disable-libdaxctl \
 	--disable-libiscsi \
 	--disable-libnfs \
@@ -802,7 +818,6 @@ run_configure \
 	--disable-libssh \
 	--disable-libudev \
 	--disable-libusb \
-	--disable-libxml2 \
 	--disable-linux-aio \
 	--disable-linux-io-uring \
 	--disable-live-block-migration \
@@ -814,7 +829,10 @@ run_configure \
 	--disable-netmap \
 	--disable-nettle \
 	--disable-numa \
+	--disable-nvmm \
 	--disable-opengl \
+	--disable-oss \
+	--disable-pa \
 	--disable-parallels \
 	--disable-pie \
 	--disable-pvrdma \
@@ -828,6 +846,7 @@ run_configure \
 	--disable-sdl \
 	--disable-sdl-image \
 	--disable-seccomp \
+	--disable-selinux \
 	--disable-slirp \
 	--disable-slirp-smbd \
 	--disable-smartcard \
@@ -860,7 +879,6 @@ run_configure \
 	--disable-whpx \
 	--disable-xen \
 	--disable-xen-pci-passthrough \
-	--disable-xfsctl \
 	--disable-xkbcommon \
 	--disable-zstd \
 	--disable-fuse \
@@ -907,6 +925,7 @@ run_configure \
 	--enable-modules \
 	%{?_enable_sdl:--enable-sdl} \
 	%{?_disable_curses:--disable-curses} \
+	--enable-dbus-display \
 	%{subst_enable vnc} \
 	%{?_enable_gtk:--enable-gtk --enable-vte} \
 	%{?_disable_vnc_tls:--disable-vnc-tls} \
@@ -942,7 +961,6 @@ run_configure \
 	%{subst_enable rbd} \
 	%{subst_enable libnfs} \
 	%{subst_enable glusterfs} \
-	%{subst_enable libxml2} \
 	%{subst_enable libssh} \
 	%{?_enable_live_block_migration:--enable-live-block-migration} \
 	%{subst_enable rdma} \
@@ -1217,10 +1235,7 @@ fi
 %config(noreplace) %_sysconfdir/%name/bridge.conf
 %attr(4710,root,vmusers) %_libexecdir/qemu-bridge-helper
 
-%_libexecdir/virtiofsd
-%_man1dir/virtiofsd.*
 %dir %_datadir/qemu/vhost-user
-%_datadir/qemu/vhost-user/50-qemu-virtiofsd.json
 
 %_libexecdir/virtfs-proxy-helper
 %_man1dir/virtfs-proxy-helper.*
@@ -1271,6 +1286,11 @@ fi
 %_datadir/%name/tracetool
 %_datadir/%name/trace-events-all
 
+%files -n qemu-virtiofsd
+%_man1dir/virtiofsd.1*
+%_libexecdir/virtiofsd
+%_datadir/qemu/vhost-user/50-qemu-virtiofsd.json
+
 %files tests
 #%testsdir
 %_libdir/%name/accel-qtest-*.so
@@ -1316,6 +1336,19 @@ fi
 %exclude %docdir/LICENSE
 
 %changelog
+* Tue Jun 07 2022 Alexey Shabalin <shaba@altlinux.org> 7.0.0-alt1
+- 7.0.0.
+- Split out qemu-virtiofsd subpackage.
+- Backport patches from upstream for fix virtio-scsi.
+- Fixes for the following security vulnerabilities:
+  + CVE-2021-3507 hw/block/fdc: Prevent end-of-track overrun
+  + CVE-2021-4206 ui/cursor: fix integer overflow in cursor_alloc
+  + CVE-2021-4207 display/qxl-render: fix race condition in qxl_cursor
+  + CVE-2021-3611 hw/audio/intel-hda: Restrict DMA engine to memories
+  + CVE-2022-26353 virtio-net: fix map leaking on error during receive
+  + CVE-2022-26354 vhost-vsock: detach the virqueue element in case of error
+  + CVE-2021-3929 hw/nvme: fix
+
 * Thu Jun 02 2022 Alexey Shabalin <shaba@altlinux.org> 6.2.0-alt3
 - Fixed /usr/bin/qemu-kvm script (ALT #42713)
 
