@@ -1,13 +1,13 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.21.1
+Version: 1.21.2
 Release: alt1
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
 License: Apache-2.0 and ISC and MIT and Zlib
 Url: https://github.com/mongodb/mongo-c-driver
-#vsc-git https://github.com/mongodb/mongo-c-driver.git
+Vcs: https://github.com/mongodb/mongo-c-driver.git
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++
@@ -132,6 +132,9 @@ exit $ret
 
 
 %changelog
+* Wed Jun 08 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.21.2-alt1
+- 1.21.2
+
 * Thu Mar 03 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.21.1-alt1
 - 1.21.1
 
