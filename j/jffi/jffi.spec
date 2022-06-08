@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ texinfo unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global cluster jnr
@@ -12,7 +12,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           jffi
 Version:        1.2.23
-Release:        alt1_5jpp11
+Release:        alt1_6jpp11
 Summary:        Java Foreign Function Interface
 
 License:        LGPLv3+ or ASL 2.0
@@ -102,6 +102,9 @@ sed -i -e 's/haltonfailure="true"/haltonfailure="no"/' build.xml
 # Ensure debug symbols in the native java
 sed -i -e 's/<javac/<javac debug="true"/' build.xml
 
+# Port to maven-antrun-plugin 3.0.0
+sed -i s/tasks/target/ pom.xml
+
 %mvn_package 'com.github.jnr:jffi::native:' native
 %mvn_file ':{*}' %{name}/@1 @1
 
@@ -150,6 +153,9 @@ ant -Duse.system.libffi=1 -Drun.jvm.model=-Xmx128m test
 %doc --no-dereference COPYING.GPL COPYING.LESSER LICENSE
 
 %changelog
+* Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 1.2.23-alt1_6jpp11
+- Port to maven-antrun-plugin 3.0.0
+
 * Sun Jun 13 2021 Igor Vlasenko <viy@altlinux.org> 1.2.23-alt1_5jpp11
 - new version
 
