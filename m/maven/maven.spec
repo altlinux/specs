@@ -1,4 +1,4 @@
-%def_disable jarlink_bootstrap
+%def_enable jarlink_bootstrap
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
@@ -24,7 +24,7 @@ BuildRequires: jpackage-11-compat
 Name:           maven
 Epoch:          1
 Version:        3.6.3
-Release:        alt2_9jpp11
+Release:        alt3_9jpp11
 Summary:        Java project management and project comprehension tool
 # maven itself is ASL 2.0
 # bundled slf4j is MIT
@@ -147,7 +147,10 @@ Requires:       slf4j
 Requires: maven-filesystem
 BuildArch: noarch
 Source44: import.info
-
+%if_enabled jarlink_bootstrap
+Source45: guava.jar
+Source46: failureaccess.jar
+%endif
 
 %description
 Maven is a software project management and comprehension tool. Based on the
@@ -310,12 +313,15 @@ mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/maven.conf`
 touch $RPM_BUILD_ROOT/etc/java/maven.conf
 
 %if_enabled jarlink_bootstrap
-find %buildroot/usr/ -type l -name '*.jar' | \
-while read jar; do
-  realjar=`readlink -e "$jar"`;
-  rm -f "$jar";
-  cp -a "$realjar" "$jar"
-done
+#find %buildroot/usr/ -type l -name '*.jar' | \
+#while read jar; do
+#  realjar=`readlink -e "$jar"`;
+#  rm -f "$jar";
+#  cp -a "$realjar" "$jar"
+#done
+rm %buildroot/usr/share/maven/lib/guava-27.1-jre.jar
+install -m 644 %SOURCE45 %buildroot/usr/share/maven/lib/guava-27.1-jre.jar
+install -m 644 %SOURCE46 %buildroot/usr/share/maven/lib/failureaccess-1.0.1.jar
 %endif
 
 
@@ -348,6 +354,9 @@ done
 
 
 %changelog
+* Tue Jun 07 2022 Igor Vlasenko <viy@altlinux.org> 1:3.6.3-alt3_9jpp11
+- jarlink bootstrap for guava update
+
 * Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 1:3.6.3-alt2_9jpp11
 - support for new cdi-api
 - added jarlink_bootstrap option

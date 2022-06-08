@@ -3,11 +3,19 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-1.8-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           guava
-Version:        25.0
-Release:        alt1_9jpp8
+Version:        30.1
+Release:        alt1_3jpp8
 Summary:        Google Core Libraries for Java
 # Most of the code is under ASL 2.0
 # Few classes are under CC0, grep for creativecommons
@@ -17,10 +25,17 @@ BuildArch:      noarch
 
 Source0:        https://github.com/google/guava/archive/v%{version}.tar.gz
 
+Patch1:         0001-Remove-multi-line-annotations.patch
+
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.google.code.findbugs:jsr305)
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  %{?module_prefix}mvn(com.google.code.findbugs:jsr305)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+%endif
 Source44: import.info
 
 %description
@@ -31,13 +46,7 @@ This project is a complete packaging of all the Guava libraries
 into a single jar.  Individual portions of Guava can be used
 by downloading the appropriate module and its dependencies.
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-API documentation for %{name}.
+%{?javadoc_package}
 
 %package testlib
 Group: Development/Java
@@ -51,11 +60,14 @@ guava-testlib provides additional functionality for conveninent unit testing
 
 find . -name '*.jar' -delete
 
-# drop unnecessary dependency on parent POM
-%pom_remove_parent
+%pom_remove_parent guava-bom
 
 %pom_disable_module guava-gwt
 %pom_disable_module guava-tests
+
+%pom_xpath_inject pom:modules "<module>futures/failureaccess</module>"
+%pom_xpath_inject pom:parent "<relativePath>../..</relativePath>" futures/failureaccess
+%pom_xpath_set pom:parent/pom:version %{version}-jre futures/failureaccess
 
 %pom_remove_plugin -r :animal-sniffer-maven-plugin
 # Downloads JDK source for doc generation
@@ -70,26 +82,35 @@ find . -name '*.jar' -delete
 
 %pom_xpath_inject /pom:project/pom:build/pom:plugins/pom:plugin/pom:configuration/pom:instructions "<_nouses>true</_nouses>" guava/pom.xml
 
-%pom_remove_dep -r :animal-sniffer-annotations
 %pom_remove_dep -r :error_prone_annotations
 %pom_remove_dep -r :j2objc-annotations
 %pom_remove_dep -r org.checkerframework:
+%pom_remove_dep -r :listenablefuture
 
 annotations=$(
     find -name '*.java' \
     | xargs fgrep -h \
         -e 'import com.google.j2objc.annotations' \
         -e 'import com.google.errorprone.annotation' \
+        -e 'import com.google.errorprone.annotations' \
+        -e 'import com.google.common.annotations' \
         -e 'import org.codehaus.mojo.animal_sniffer' \
         -e 'import org.checkerframework' \
     | sort -u \
     | sed 's/.*\.\([^.]*\);/\1/' \
     | paste -sd\|
 )
+
 # guava started using quite a few annotation libraries for code quality, which
 # we don't have. This ugly regex is supposed to remove their usage from the code
 find -name '*.java' | xargs sed -ri \
     "s/^import .*\.($annotations);//;s/@($annotations)"'\>\s*(\((("[^"]*")|([^)]*))\))?//g'
+
+%patch1 -p1
+
+%mvn_package "com.google.guava:failureaccess" guava
+
+%mvn_package "com.google.guava:guava-bom" __noinstall
 
 %build
 # Tests fail on Koji due to insufficient memory,
@@ -103,12 +124,12 @@ find -name '*.java' | xargs sed -ri \
 %doc CONTRIBUTORS README*
 %doc --no-dereference COPYING
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference COPYING
-
 %files testlib -f .mfiles-guava-testlib
 
 %changelog
+* Tue Jun 07 2022 Igor Vlasenko <viy@altlinux.org> 30.1-alt1_3jpp8
+- new version
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 25.0-alt1_9jpp8
 - jvm8 update
 
