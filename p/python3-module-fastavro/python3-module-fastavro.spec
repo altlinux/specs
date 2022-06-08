@@ -1,7 +1,7 @@
 %define  modulename fastavro
 
 Name:    python3-module-%modulename
-Version: 1.4.12
+Version: 1.5.0
 Release: alt1
 
 Summary: Fast Avro for Python
@@ -15,7 +15,7 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-Cython
 
-Source:  %modulename-%version.tar
+Source:  %name-%version.tar
 
 %description
 Apache Avro is a data serialization system. The current Python avro package is
@@ -23,7 +23,7 @@ packed with features but dog slow. fastavro is less feature complete than avro,
 however it is much faster.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 # Remove the already generated C files so we generate them ourselves
 find fastavro/ -name "*.c" -print -delete
@@ -39,10 +39,13 @@ export FASTAVRO_USE_CYTHON=1
 %files
 %_bindir/fastavro
 %python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
 %doc *.md
 
 %changelog
+* Wed Jun 08 2022 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
+- Automatically updated to 1.5.0.
+
 * Fri May 20 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.12-alt1
 - Automatically updated to 1.4.12.
 
