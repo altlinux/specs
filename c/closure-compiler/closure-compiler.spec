@@ -11,7 +11,7 @@ Name:       closure-compiler
 #define commit ad29f06d581fb8c54ad031334b82a5c301b6ce0a
 #define shorthash %%(printf %%.7s %%commit)
 Version:    20160315
-Release:    alt2_11jpp8
+Release:    alt3_11jpp8
 License:    ASL 2.0
 URL:        https://developers.google.com/closure/compiler/
 Source0:    https://github.com/google/closure-compiler/archive/maven-release-v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -73,6 +73,10 @@ rm -rf lib/*
   <Bundle-SymbolicName>\${project.groupId}</Bundle-SymbolicName>
 </instructions></configuration>" pom-main.xml
 
+# Port to maven-antrun-plugin 3.0.0
+sed -i s/tasks/target/ externs/pom.xml
+
+
 %build
 %mvn_build -f -j
 
@@ -103,6 +107,9 @@ install -Dm0644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 #%doc --no-dereference COPYING
 
 %changelog
+* Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 1:20160315-alt3_11jpp8
+- Port to maven-antrun-plugin 3.0.0
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 1:20160315-alt2_11jpp8
 - disabled javadoc to fix build
 
