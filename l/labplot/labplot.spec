@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: labplot
-Version: 2.8.2
-Release: alt2
+Version: 2.9.0
+Release: alt1
 Summary: Function and Data Plotter
 License: GPL-2.0+
 Group: Sciences/Other
@@ -11,8 +11,6 @@ Url: https://labplot.kde.org/
 
 # https://invent.kde.org/education/labplot
 Source: %name-%version.tar
-
-Patch1: labplot-alt-fix-netcdf-includes.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: cmake gcc-c++ extra-cmake-modules
@@ -43,7 +41,6 @@ The plots now use double buffering and LabPlot supports scripting using QSA.
 
 %prep
 %setup
-%patch1 -p1
 
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
@@ -51,14 +48,16 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %endif
 
 %build
-%K5build
+%K5build \
+    -DENABLE_READSTAT:BOOL=OFF \
+    #
 
 %install
 %K5install
 %find_lang %name --with-kde
 
 %files -f %name.lang
-%doc AUTHORS README.md COPYING ChangeLog
+%doc AUTHORS README.md LICENSES/* ChangeLog
 #config(noreplace) %_K5xdgconf/*.knsrc
 %_K5bin/*
 %_datadir/%{name}2/
@@ -70,6 +69,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Jun 08 2022 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt1
+- new veresion
+
 * Thu Apr 28 2022 Sergey V Turchin <zerg@altlinux.org> 2.8.2-alt2
 - Move to standart place
 
