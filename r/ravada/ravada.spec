@@ -5,7 +5,7 @@
 %def_without check
 
 Name: ravada
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
@@ -113,6 +113,18 @@ mkdir -p %buildroot%_bindir
 cat > %buildroot%_bindir/kvm-spice <<_EOF
 #!/bin/sh
 
+# Libvirt introspects the binary using -M none. In that case, don't try
+# to init KVM, which will fail and be noisy if the host has kvm disabled
+opts="-machine accel=kvm"
+if echo "\$@" | grep -q " -M none "; then
+    opts=
+fi
+
+if echo "\$@" | grep -q -E -e '(^|\s)-machine\s.*accel=' -e '(^|\s)-accel\s' -e '(^|\s)-enable-kvm'; then
+    # acceleration already set via commandline option
+    opts=
+fi
+
 arch="\$(uname -m)"
 case "\$arch" in
 	i?86) arch="i386" ;;
@@ -170,6 +182,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Wed Jun 08 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.5.3-alt1
+- 1.5.3
+
 * Thu Jun 02 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.5.2-alt1
 - 1.5.2
 - add qcow2 files detection
