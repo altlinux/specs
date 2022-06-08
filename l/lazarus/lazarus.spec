@@ -2,8 +2,8 @@
 %define cfg %_builddir/%name-%version/
 
 Name:    lazarus
-Version: 2.2.0.4
-Release: alt2
+Version: 2.2.2.0
+Release: alt1
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -42,6 +42,8 @@ BuildRequires: fpc >= 2.6.4 fpc-utils glibc-devel libgtk+2-devel libXi-devel des
 BuildRequires: libXext-devel libXtst-devel libGL-devel libGLU-devel libode-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5pas-devel
+# .xct files for documentation build
+BuildRequires: fpc-docs
 
 Requires:   fpc >= 2.6.4 fpc-src fpc-utils gdb libGL-devel libXi-devel libXext-devel libgtk+2-devel
 Requires:   glibc-devel
@@ -138,6 +140,9 @@ subst 's|share/lazarus|%_lib/lazarus|' Makefile
 # Generate revision.inc
 echo "const RevisionStr = '${SVNVERSION}';" > ide/revision.inc
 
+# Fix path to fpdoc
+subst 's|fpdocpath=.*|fpdocpath="%_bindir"|' docs/html/build_*.sh
+
 %build
 MAKEOPTS="-Fl/opt/gnome/lib"
 if [ -n "$FPCCfg" ]; then
@@ -175,8 +180,11 @@ mkdir -p tools/lazdatadesktop/lib
 export LCL_PLATFORM=nogui
 ./lazbuild --ws="$LCL_PLATFORM" --pcp=%cfg docs/html/build_lcl_docs.lpi
 pushd docs/html
+ln -s /usr/share/doc/fpc/rtl.xct ../chm/rtl.xct
+ln -s /usr/share/doc/fpc/fcl.xct ../chm/fcl.xct
 ./build_lcl_docs
 ./build_html.sh
+./build_chm.sh
 popd
 
 # Build Qt5 bindings
@@ -291,6 +299,10 @@ ln -s ../../bin/lazarus %buildroot$LAZARUSDIR/lazarus
 %_libdir/libQt5Pas.so
 
 %changelog
+* Sun May 15 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.2.2.0-alt1
+- New version.
+- Build help (ALT #42054).
+
 * Tue Mar 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.2.0.4-alt2
 - Frontend subpackages require lazarus (ALT #42077).
 
