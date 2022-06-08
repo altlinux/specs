@@ -2,24 +2,23 @@
 %define oname flake8-print
 
 Name: python3-module-%oname
-Version: 2.0.2
-Release: alt2
+Version: 5.0.0
+Release: alt1
 
 Summary: Print statement checker plugin for flake8
+
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/flake8-print/
-BuildArch: noarch
 
-# https://github.com/JBKahn/flake8-print.git
-Source0: https://pypi.python.org/packages/b8/ce/b253acf4da0ea69bedbeec0e62c066be7962057a27ab552638d757201ea7/%{oname}-%{version}.tar.gz
+Source0: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flake8 python3-module-nose
-BuildRequires: python-tools-2to3
+BuildRequires: python3-module-flake8
+
+BuildArch: noarch
 
 %py3_provides flake8_print
-
 
 %description
 Check for Print statements in python files.
@@ -27,25 +26,22 @@ Check for Print statements in python files.
 This module provides a plugin for ``flake8``, the Python code checker.
 
 %prep
-%setup -q -n %{oname}-%{version}
-
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%setup -n %oname-%version
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
-%check
-%__python3 setup.py test
-
 %files
-%doc *.rst
+%doc *.md
 %python3_sitelibdir/*
 
-
 %changelog
+* Wed Jun 08 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Build new version.
+
 * Fri Nov 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.0.2-alt2
 - python2 disabled
 
