@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.40
+Version: 0.41
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -61,6 +61,8 @@ Requires(pre): java-11-devel >= 11 java-11
 Conflicts: java-devel > 11.99 java > 11.99 java-headless > 11.99 java-javadoc > 11.99
 Conflicts: maven-local-openjdk8
 Conflicts: maven-local-openjdk17
+Conflicts: maven-openjdk8
+Conflicts: maven-openjdk17
 #Requires: jpackage-generic-compat
 %jpackage_common_requires
 
@@ -81,6 +83,9 @@ install -d $RPM_BUILD_ROOT%_datadir
 %files -n jpackage-11-compat
 
 %changelog
+* Thu Jun 09 2022 Igor Vlasenko <viy@altlinux.org> 0.41-alt1
+- added Conflicts for maven-openjdkXX
+
 * Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 0.40-alt1
 - added Conflicts for maven-local-openjdkXX
 
