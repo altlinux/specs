@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 106
+%define centos_release 108
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,23 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Jun 09 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.108-alt1.el9
+- Updated to kernel-5.14.0-108.el9:
+  + ahci: Add a generic 'controller2' RAID id
+  + bnx2x: fix napi API usage sequence
+  + CNB: net: add netif_set_real_num_queues() for device reconfig
+  + interconnect: updates
+  + net/af_packet: add VLAN support for AF_PACKET SOCK_RAW GSO
+  + net: openvswitch: fix leak of nested actions
+  + NFSv4: Fix free of uninitialized nfs4_label on referral lookup.
+  + regulator: updates
+  + rpmsg: updates
+  + Scheduler late arriving fixes for 9.1
+  + scsi: scsi_dh_alua: Properly handle the ALUA transitioning state
+  + selftests/bpf: Fix btf_dump test under new clang
+  + spmi: updates
+  + vdpa: mlx5: prevent cvq work from hogging CPU
+
 * Tue Jun 07 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.106-alt1.el9
 - Updated to kernel-5.14.0-106.el9 (fixes: CVE-2022-24448):
   + clk: qcom: rpmhcc: add sc8280xp support to the RPMh clock controller
