@@ -1,6 +1,6 @@
 Name: libopenmpt
-Version: 0.5.8
-Release: alt2
+Version: 0.6.3
+Release: alt1
 License: BSD
 Group: System/Libraries
 Summary: C/C++ library to decode tracker music module (MOD) files
@@ -96,6 +96,9 @@ install -d %buildroot%_docdir/%name/examples
 
 
 %changelog
+* Wed Aug 04 2021 Artyom Bystrov <arbars@altlinux.org> 0.6.3-alt1
+- new version
+
 * Wed Aug 04 2021 Artyom Bystrov <arbars@altlinux.org> 0.5.8-alt2
 - fix the loop deps
 
