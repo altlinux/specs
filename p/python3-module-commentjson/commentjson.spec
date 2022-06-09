@@ -1,29 +1,33 @@
 %define oname commentjson
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.4
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: Add Python and JavaScript style comments in your JSON files
+
 License: Free
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/commentjson/
-BuildArch: noarch
 
 # https://github.com/vaidik/commentjson.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
+
 %if_with check
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-six
+BuildRequires: python3-module-lark-parser
+BuildRequires: python3-test
 %endif
 
 %py3_provides %oname
 %py3_requires json
 
+BuildArch: noarch
 
 %description
 commentjson (Comment JSON) is a Python package that helps you create
@@ -45,22 +49,19 @@ This package contains tests for %oname.
 %prep
 %setup
 
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
-%if_with check
 %check
 %__python3 setup.py test
-%endif
 
 %files
 %doc *.rst docs/source/*.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
@@ -68,6 +69,9 @@ find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 
 %changelog
+* Fri Jun 10 2022 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt1
+- Build new version.
+
 * Wed Nov 27 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4-alt2
 - python2 disabled
 
