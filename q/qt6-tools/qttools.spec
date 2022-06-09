@@ -8,7 +8,7 @@
 
 Name: qt6-tools
 Version: 6.2.4
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -21,8 +21,7 @@ License:  GPL-3.0-only or LGPL-3.0-only
 Requires: %name-common = %EVR
 
 Source: %qt_module-everywhere-src-%version.tar
-# FC
-Patch1: qttools-run-qttools-with-qt6-suffix.patch
+Patch1: alt-run-qttools-with-qt6-suffix.patch
 
 Source20: assistant.desktop
 Source21: designer.desktop
@@ -313,6 +312,9 @@ fi
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Thu Jun 09 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
+- fix run lprodump
+
 * Wed May 25 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 
