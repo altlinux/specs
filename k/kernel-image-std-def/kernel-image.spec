@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel .45
+%define kernel_sublevel .46
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -615,6 +615,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jun 09 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.46-alt1
+- v5.15.46 (2022-06-09).
+- altha: Restrict setcap binaries in nosuid mode.
+- kernel.perf_event_paranoid=4 by default.
+
 * Tue Jun 07 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.45-alt1
 - v5.15.45 (2022-06-06).
 - altha: Restrict setcap binaries in nosuid mode.
