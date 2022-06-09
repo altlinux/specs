@@ -1,8 +1,10 @@
+%define soname 0
+
 Name: deepin-turbo
-Version: 0.0.5
-Release: alt1.1
+Version: 0.0.6.3
+Release: alt1
 Summary: A daemon that helps to launch applications faster
-License: LGPL-2.1
+License: GPL-2.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-turbo
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -15,6 +17,13 @@ BuildRequires: gcc-c++ cmake qt5-base-devel libdbus-devel libsystemd-devel dtk5-
 %description
 %summary.
 Deepin-trubo is a deepin project that derives from Applauncherd.
+
+%package -n lib%name%soname
+Summary: The library for %name
+Group: System/Libraries
+
+%description -n lib%name%soname
+This package provides the library for %name.
 
 %package devel
 Summary: Development files for %name
@@ -35,26 +44,36 @@ sed -i 's|/usr/lib/binfmt.d|%_binfmtdir|' src/booster-desktop/CMakeLists.txt
     -GNinja \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DCMAKE_BUILD_TYPE=Debug
-%cmake_build
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+#
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
 
 %files
-%doc CHANGELOG COPYING.LESSER README.md
+%doc CHANGELOG LICENSE README.md
 %_bindir/deepin-turbo-invoker
 %_bindir/deepin-turbo-single-instance
-%_libdir/lib%name.so.*
 %_binfmtdir/desktop.conf
 %_libexecdir/%name/
-%_libexecdir/systemd/user/*.service
+
+%files -n lib%name%soname
+%_libdir/lib%name.so.%{soname}*
 
 %files devel
 %_includedir/%name/
 %_libdir/lib%name.so
 
 %changelog
+* Thu Jun 09 2022 Leontiy Volodin <lvol@altlinux.org> 0.0.6.3-alt1
+- New version.
+- Upstream:
+  + fix: Repair the wm class name error using the window.
+  + fix: The problem of collapse when the parameters are more frequent.
+  + chore: Modify LGPL to GPL.
+  + chore: V20 goes up booster service.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 0.0.5-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
