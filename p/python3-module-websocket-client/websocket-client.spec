@@ -1,29 +1,35 @@
 %define oname websocket-client
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.56.0
-Release: alt2
-Summary: WebSocket client for python. hybi13 is supported
-License: BSD
+Version: 1.3.2
+Release: alt1
+
+Summary: WebSocket client for Python with low level API options
+
+License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/websocket-client/
+Url: https://pypi.python.org/pypi/websocket-client
 
 # https://github.com/liris/websocket-client.git
 Source: %name-%version.tar
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-six
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides websocket
 
-%description
-websocket-client module is WebSocket client for python. This provide the
-low level APIs for WebSocket. All APIs are the synchronous functions.
+BuildArch: noarch
 
-websocket-client supports only hybi-13.
+%description
+websocket-client is a WebSocket client for Python.  It provides access to low
+level APIs for WebSockets.  websocket-client implements version hybi-13 of the
+WebSocket protocol. This client does not currently support the
+permessage-deflate extension from RFC 7692.
 
 %package tests
 Summary: Tests for %oname
@@ -31,10 +37,10 @@ Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
-websocket-client module is WebSocket client for python. This provide the
-low level APIs for WebSocket. All APIs are the synchronous functions.
-
-websocket-client supports only hybi-13.
+websocket-client is a WebSocket client for Python.  It provides access to low
+level APIs for WebSockets.  websocket-client implements version hybi-13 of the
+WebSocket protocol. This client does not currently support the
+permessage-deflate extension from RFC 7692.
 
 This package contains tests for %oname.
 
@@ -48,18 +54,23 @@ This package contains tests for %oname.
 %python3_install
 
 %check
-python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -v websocket/tests
 
 %files
-%doc ChangeLog *.rst
-%_bindir/*
-%python3_sitelibdir/*
+%doc ChangeLog *.md
+%_bindir/wsdump
+%python3_sitelibdir/websocket
+%python3_sitelibdir/websocket_client-%version-py%_python3_version.egg-info
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Jun 10 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.2-alt1
+- Automatically updated to 1.3.2.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.56.0-alt2
 - Drop python2 support.
 
