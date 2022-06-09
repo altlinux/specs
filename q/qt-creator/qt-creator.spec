@@ -8,8 +8,8 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 7.0.1
-Release: alt1
+Version: 7.0.2
+Release: alt2
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -25,7 +25,8 @@ Source:  %name-%version.tar
 Source1: qbs.tar
 Source2: perfparser.tar
 
-Patch0:  %name-%version-%release.patch
+Patch0: %name-%version-%release.patch
+Patch1: 0001-Correctly-include-KSyntaxHighlighting-headers.patch
 
 Provides: qtcreator = %EVR
 Obsoletes: qtcreator-clangcodemodel
@@ -136,6 +137,7 @@ tar xf %SOURCE2
 #sed -i 's,tools\/qdoc3,bin,' doc/doc.pri
 #subst 's,share\/doc\/qtcreator,share\/qtcreator\/doc,' doc/doc.pri src/plugins/help/helpplugin.cpp
 %patch0 -p1
+%patch1 -p1
 %ifarch %e2k
 # strip UTF-8 BOM, lcc 1.23 won't ignore it yet
 find src -type f -print0 -name '*.cpp' -o -name '*.h' |
@@ -200,6 +202,12 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Thu Jun 09 2022 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt2
+- Correctly include KSyntaxHighlighting headers (patch from OpenSUSE) (ALT #42956).
+
+* Wed May 25 2022 Andrey Cherepanov <cas@altlinux.org> 7.0.2-alt1
+- New version.
+
 * Thu Apr 28 2022 Andrey Cherepanov <cas@altlinux.org> 7.0.1-alt1
 - New version.
 
