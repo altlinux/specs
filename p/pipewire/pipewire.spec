@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %ifarch armh
@@ -35,7 +35,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.51
+Version: %ver_major.52
 Release: alt1
 
 Summary: Media Sharing Server
@@ -72,6 +72,8 @@ BuildRequires: libbluez-devel
 BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
 # https://github.com/iamthehorker/libfreeaptx
 BuildRequires: libfreeaptx-devel
+# LC3plus BT codec
+# BuildRequires: lc3plus-devel
 # for pw-top
 BuildRequires: libncursesw-devel
 # for pw-cli
@@ -293,6 +295,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Jun 09 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.52-alt1
+- 0.3.52
+
 * Thu Apr 28 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.51-alt1
 - updated to 0.3.51-2-gb7845bd70
 
