@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.43.11
+Version: 0.43.12
 Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
@@ -12,7 +12,7 @@ Summary: Alterator module for system wide auth settings
 License: GPL
 Group: System/Configuration/Other
 Requires: alterator >= 4.7-alt4
-Requires: alterator-l10n >= 2.9.107-alt1
+Requires: alterator-l10n >= 2.9.114-alt1
 Requires: pam-config >= 1.7.0-alt1
 Requires: pam_krb5
 Requires: libnss-myhostname
@@ -21,6 +21,7 @@ Requires: avahi-daemon
 Requires: settime-rfc867
 Requires: bind-utils
 Requires: local-policy >= 0.4.8-alt1
+Requires: alterator-default-configs >= 0.0.2-alt1
 
 Conflicts: alterator-fbi < 5.9-alt2
 Conflicts: alterator-lookout < 1.6-alt6
@@ -171,6 +172,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Jun 08 2022 Ivan Savin <svn17@altlinux.org> 0.43.12-alt1
+- Add ability to restore default configuration files.
+
 * Wed Apr 27 2022 Ivan Savin <svn17@altlinux.org> 0.43.11-alt1
 - Enlarged sssd settings window (ALT #42008)
 - Replacing the apply button with ok in the sssd settings.

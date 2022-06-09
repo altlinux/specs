@@ -1,5 +1,5 @@
 Name:    alterator-net-domain
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 Source:  %name-%version.tar
 
@@ -7,7 +7,8 @@ Summary: Alterator module to provision system network domain
 License: GPL
 Group:   System/Configuration/Other
 Requires: alterator >= 5.0
-Requires: alterator-l10n >= 2.0-alt2
+Requires: alterator-l10n >= 2.9.114-alt1
+Requires: alterator-default-configs >= 0.0.2-alt1
 
 Conflicts: ldap-user-tools < 0.8.1
 Conflicts: alterator-lookout < 1.6-alt6
@@ -45,6 +46,9 @@ and FreeIPA domain.
 %_bindir/*-sh-functions
 
 %changelog
+* Thu Jun 09 2022 Ivan Savin <svn17@altlinux.org> 0.7.3-alt1
+- Add ability to restore default configuration file.
+
 * Fri Jul 30 2021 Andrey Cherepanov <cas@altlinux.org> 0.7.2-alt1
 - Domain name should have at least two labels separated by dot (ALT #40566).
 
