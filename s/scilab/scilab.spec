@@ -1,3 +1,5 @@
+# hack until proper libs.req fix
+%add_findreq_skiplist /usr/bin/scilab-bin
 %set_verify_elf_method unresolved=relaxed
 %define hdf5_version 1.8.9
 # TODO problem with package freehep-util
@@ -6,7 +8,7 @@
 
 Name:     scilab
 Version:  6.0.2
-Release:  alt2
+Release:  alt3
 Epoch:    1
 Summary:  A high-level language and system for numerical computations
 
@@ -109,7 +111,7 @@ BuildRequires: libsuitesparse-devel
 BuildRequires: libhdf5-devel
 #?BuildRequires: jhdf5
 BuildRequires: xml-commons-jaxp-1.3-apis
-BuildRequires: checkstyle
+#BuildRequires: checkstyle
 
 BuildRequires: libncurses-devel
 BuildRequires: libgomp-devel
@@ -236,6 +238,9 @@ tar xf %SOURCE2 -C %buildroot%_datadir/scilab/modules/helptools/jar/
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 1:6.0.2-alt3
+- NMU: removed checkstyle from BR: and fixed build
+
 * Mon Nov 22 2021 Andrey Cherepanov <cas@altlinux.org> 1:6.0.2-alt2
 - Downgrade to working 6.0.2 (ALT #40587).
 
