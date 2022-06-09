@@ -4,7 +4,7 @@
 
 %global provider_prefix %{provider}/%{project}/%{repo}
 %global import_path     %{provider_prefix}
-%global commit          64b7a4574d1426139437d20e81c0b6d391130ec8
+%global commit          f6ccccb1c082a432c2a5814aaedaca56af33d9ea
 %global shortcommit     %(c=%{commit}; echo ${c:0:7})
 
 %global __find_debuginfo_files %nil
@@ -15,7 +15,7 @@
 %brp_strip_none %_bindir/*
 
 Name:           libnetwork
-Version:        20.10.8
+Version:        20.10.17
 Release:        alt1.git%shortcommit
 Summary:        Networking for containers
 Group:          Development/Other
@@ -64,6 +64,9 @@ install -p -m 755 bin/docker-proxy %buildroot/%_bindir
 %_bindir/*
 
 %changelog
+* Wed Jun 8 2022 Vladimir Didenko <cow@altlinux.org> 20.10.17-alt1.gitf6ccccb
+- New version for docker 20.10.17
+
 * Wed Sep 1 2021 Vladimir Didenko <cow@altlinux.org> 20.10.8-alt1.git64b7a45
 - Update to the latest master branch (fixes: #40835)
 
