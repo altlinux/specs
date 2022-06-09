@@ -1,74 +1,53 @@
+Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Copyright (c) 2000-2007, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+%bcond_with bootstrap
 
 Name:           xmlunit
+Version:        2.8.2
+Release:        alt1_4jpp11
 Summary:        Provides classes to do asserts on xml
-Epoch:          0
-Version:        2.7.0
-Release:        alt1_6jpp11
-# xmlunit2 is licensed under ASL 2.0, xmlunit-legacy is still BSD-licensed
+# The whole package is ASL 2.0 except for xmlunit-legacy which is BSD
 License:        ASL 2.0 and BSD
-
 URL:            https://www.xmlunit.org/
-Source0:        https://github.com/xmlunit/xmlunit/releases/download/v%{version}/%{name}-%{version}-src.tar.gz
-
-Patch0:         0001-Disable-tests-requiring-network-access.patch
-Patch1:         xmlunit-2.7.0-ValueAssertTest-fix.patch
-
 BuildArch:      noarch
 
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}.tar.gz
+# Remove bundled binaries which cannot be easily verified for licensing
+Source1:        generate-tarball.sh
+
+Patch1:         0001-Disable-tests-requiring-network-access.patch
+Patch2:         0002-Port-to-hamcrest-2.1.patch
+Patch3:         0003-Drop-support-for-JAXB.patch
+
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.sun.istack:istack-commons-runtime)
-BuildRequires:  mvn(com.sun.xml.bind:jaxb-impl)
-BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
-BuildRequires:  mvn(javax.xml.bind:jaxb-api)
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.bytebuddy:byte-buddy)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
 BuildRequires:  mvn(org.assertj:assertj-core)
 BuildRequires:  mvn(org.hamcrest:hamcrest-core)
 BuildRequires:  mvn(org.hamcrest:hamcrest-library)
 BuildRequires:  mvn(org.mockito:mockito-core)
+%endif
 Source44: import.info
 
 %description
 XMLUnit provides you with the tools to verify the XML you emit is the one you
 want to create. It provides helpers to validate against an XML Schema, assert
 the values of XPath queries or compare XML documents against expected outcomes.
-
 
 %package        javadoc
 Group: Development/Java
@@ -78,14 +57,12 @@ BuildArch: noarch
 %description    javadoc
 Javadoc for %{name}
 
-
 %package        assertj
 Group: Development/Java
 Summary:        Assertj for %{name}
 
 %description    assertj
 This package provides %{summary}.
-
 
 %package        core
 Group: Development/Java
@@ -94,14 +71,12 @@ Summary:        Core package for %{name}
 %description    core
 This package provides %{summary}.
 
-
 %package        legacy
 Group: Development/Java
 Summary:        Legacy package for %{name}
 
 %description    legacy
 This package provides %{summary}.
-
 
 %package        matchers
 Group: Development/Java
@@ -110,7 +85,6 @@ Summary:        Matchers for %{name}
 %description    matchers
 This package provides %{summary}.
 
-
 %package        placeholders
 Group: Development/Java
 Summary:        Placeholders for %{name}
@@ -118,23 +92,31 @@ Summary:        Placeholders for %{name}
 %description    placeholders
 This package provides %{summary}.
 
-
 %prep
 %setup -q -n %{name}-%{version}-src
 
-%patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
+# Tests compare the string constent of thrown exceptions
+# and we use a different version of assertj
+find xmlunit-assertj3/src/test -name '*.java' -exec sed -i 's/\(Expecting not blank but was:\)<\(.*\)>/\1 \2/' {} +
+sed -i 's/\(expected:\)<\\"\[\(something\)\]\\"> but was:<\\"\[\(abc\)\]\\">/\1 \\"\2\\"\\nbut was : \\"\3\\"/' xmlunit-assertj3/src/test/java/org/xmlunit/assertj3/ValueAssertTest.java
+
+%pom_disable_module xmlunit-assertj
 
 %pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
 %pom_remove_plugin :maven-assembly-plugin
+%pom_remove_plugin -r :maven-shade-plugin
 
-# Add deps to EE APIs removed in Java 11
-%pom_change_dep javax.activation:activation jakarta.activation:jakarta.activation-api . xmlunit-core
-%pom_change_dep com.sun.xml.bind:jaxb-core com.sun.xml.bind:jaxb-impl . xmlunit-core
-%pom_add_dep com.sun.istack:istack-commons-runtime::test xmlunit-core
+%mvn_alias org.xmlunit:xmlunit-legacy xmlunit:xmlunit
+%mvn_alias org.xmlunit:xmlunit-assertj3 org.xmlunit:xmlunit-assertj
 
-%mvn_alias "org.xmlunit:xmlunit-legacy" "xmlunit:xmlunit"
-
+# JAXB and JAF are not available in JDK11
+%pom_remove_dep org.glassfish.jaxb: xmlunit-core
+%pom_remove_dep jakarta.xml.bind: xmlunit-core
+rm -rf xmlunit-core/src/{main,test}/java/org/xmlunit/builder/{jaxb/,JaxbBuilder.java,JaxbBuilderTest.java}
 
 %build
 %mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -142,20 +124,21 @@ This package provides %{summary}.
 %install
 %mvn_install
 
-
 %files -f .mfiles-xmlunit-parent
 %doc README.md CONTRIBUTING.md RELEASE_NOTES.md
 %doc --no-dereference LICENSE
 
 %files javadoc -f .mfiles-javadoc
-%files assertj -f .mfiles-xmlunit-assertj
+%files assertj -f .mfiles-xmlunit-assertj3
 %files core -f .mfiles-xmlunit-core
 %files legacy -f .mfiles-xmlunit-legacy
 %files matchers -f .mfiles-xmlunit-matchers
 %files placeholders -f .mfiles-xmlunit-placeholders
 
-
 %changelog
+* Thu Jun 09 2022 Igor Vlasenko <viy@altlinux.org> 0:2.8.2-alt1_4jpp11
+- new version
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.0-alt1_6jpp11
 - fixed build
 
