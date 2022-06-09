@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.11.0
+Version: 1.11.1
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,10 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Wed Jun 08 2022 Anton Midyukov <antohami@altlinux.org> 1.11.1-alt1
+- exclude devices on which device mounted in /image depends
+  (Closes: 42887)
+
 * Thu May 19 2022 Mikhail Efremov <sem@altlinux.org> 1.11.0-alt1
 - preinstall.d: Rename 50-initrd.sh -> 50-instkernel.sh.
 - 50-initrd.sh: Set kernel from installer as default kernel.
