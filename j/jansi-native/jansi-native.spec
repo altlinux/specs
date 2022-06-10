@@ -4,7 +4,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global bits %{__isa_bits}
@@ -16,7 +16,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           jansi-native
 Version:        1.8
-Release:        alt1_5jpp11
+Release:        alt1_7jpp11
 Summary:        Jansi Native implements the JNI Libraries used by the Jansi project
 License:        ASL 2.0
 URL:            http://jansi.fusesource.org/
@@ -50,8 +50,9 @@ This package contains the API documentation for %{name}.
 %mvn_alias :jansi-linux%{bits} :jansi-linux
 %mvn_file :jansi-linux%{bits} %{name}/jansi-linux%{bits} %{name}/jansi-linux
 
-# remove hard-coded compiler settings
-%pom_remove_plugin :maven-compiler-plugin
+# use more modern source and target settings
+%pom_xpath_set //pom:source 1.8
+%pom_xpath_set //pom:target 1.8
 
 # fix javadoc generation for java 11
 %pom_remove_plugin :maven-javadoc-plugin
@@ -78,6 +79,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference license.txt
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 0:1.8-alt1_7jpp11
+- update
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:1.8-alt1_5jpp11
 - new version
 
