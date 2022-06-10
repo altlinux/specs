@@ -2,8 +2,8 @@
 %define major 1.3
 
 Name: %{oname}13
-Version: %major.5
-Release: alt0.2.rc1
+Version: %major.8
+Release: alt1
 
 Summary: Multiplatform C++ GUI Fast Light ToolKit
 License: LGPLv2
@@ -12,11 +12,9 @@ URL: http://www.fltk.org/
 
 # https://github.com/fltk/fltk
 Source: %name-%version.tar
-Source2: fltk-%{version}rc1-docs-html.tar.gz
+Source2: fltk-%{version}-docs-html.tar.gz
 
 Patch: fltk-fix-soname.patch
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires: gcc-c++ groff-base libICE-devel libXext-devel
 BuildRequires: libXft-devel libalsa-devel libjpeg-devel libGL-devel
@@ -93,7 +91,7 @@ install -d %buildroot%_mandir
 
 %makeinstall_std docdir=%buildroot%_docdir/fltk-%version
 cp -p ANNOUNCEMENT CHANGES CREDITS README %buildroot%_docdir/fltk-%version/
-cp -fR fltk-%{version}rc1/documentation/html %buildroot%_docdir/fltk-%version/
+cp -fR fltk-%{version}/documentation/html %buildroot%_docdir/fltk-%version/
 
 find %buildroot -name '*.a' -exec rm -f {} ';'
 
@@ -121,6 +119,9 @@ find %buildroot -name '*.a' -exec rm -f {} ';'
 %exclude %_docdir/fltk-%version/README
 
 %changelog
+* Sun May 22 2022 Artyom Bystrov <arbars@altlinux.org> 1.3.8-alt1
+- update to new version.
+
 * Wed Sep 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.5-alt0.2.rc1
 - Fixed FTBFS.
 
