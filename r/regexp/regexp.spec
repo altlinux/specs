@@ -4,13 +4,13 @@ Obsoletes: jakarta-regexp = 1.4-alt2
 Obsoletes: jakarta-regexp = 1.4-alt3
 Obsoletes: jakarta-regexp = 1.4-alt4
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           regexp
 Epoch:          1
 Version:        1.5
-Release:        alt1_31jpp8
+Release:        alt1_36jpp11
 Summary:        Simple regular expressions API
 License:        ASL 2.0
 URL:            http://jakarta.apache.org/%{name}/
@@ -66,7 +66,7 @@ EOF
 
 %build
 mkdir lib
-%ant -Djakarta-site2.dir=. jar javadocs
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Djakarta-site2.dir=. jar javadocs
 
 %mvn_artifact pom.xml build/*.jar
 
@@ -76,8 +76,6 @@ mkdir lib
 %check
 %ant -Djakarta-site2.dir=. test
 
-# Workaround for RPM bug #646523 - can't change symlink to directory
-# TODO: Remove this in F-23
 %files -f .mfiles
 %doc LICENSE
 
@@ -85,6 +83,9 @@ mkdir lib
 %doc LICENSE
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 1:1.5-alt1_36jpp11
+- update
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.5-alt1_31jpp8
 - fc update
 
