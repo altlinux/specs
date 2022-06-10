@@ -8,7 +8,7 @@
 
 Name: qt6-tools
 Version: 6.2.4
-Release: alt2
+Release: alt3
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -146,7 +146,7 @@ Requires: libqt6-core = %_qt6_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
-%patch1 -p1
+#%patch1 -p1
 
 %build
 # needed for documentation generation
@@ -312,6 +312,9 @@ fi
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt3
+- fix run lupdate
+
 * Thu Jun 09 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
 - fix run lprodump
 
