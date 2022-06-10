@@ -3,8 +3,8 @@
 %define libkaccounts libkaccounts%sover
 
 Name: kde5-%rname
-Version: 22.04.1
-Release: alt2
+Version: 22.04.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -98,6 +98,9 @@ mkdir -p %buildroot/%_K5plug/kaccounts/{ui,daemonplugins}
 %_K5data/kpackage/kcms/kcm_kaccounts/
 
 %changelog
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
+- new version
+
 * Wed Jun 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt2
 - update requires
 

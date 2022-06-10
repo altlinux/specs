@@ -4,7 +4,7 @@
 %define libakonadiconsole libakonadiconsole%sover
 
 Name: kde5-%rname
-Version: 22.04.1
+Version: 22.04.2
 Release: alt1
 %K5init
 
@@ -79,6 +79,9 @@ desktop-file-install \
 %_K5lib/libakonadiconsole.so.*
 
 %changelog
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
+- new version
+
 * Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
 - new version
 

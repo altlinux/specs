@@ -4,7 +4,7 @@
 %define libkpimimportwizard libkpimimportwizard%sover
 
 Name: kde5-%rname
-Version: 22.04.1
+Version: 22.04.2
 Release: alt1
 %K5init
 
@@ -94,6 +94,9 @@ sed -i '/DESTINATION/s/\${KDE_INSTALL_INCLUDEDIR}\/KPim\//${KDE_INSTALL_INCLUDED
 %_K5lib/libKPimImportWizard.so.*
 
 %changelog
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
+- new version
+
 * Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
 - new version
 
