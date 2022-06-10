@@ -1,13 +1,17 @@
-%define pypi_name requestsexceptions
+%define oname requestsexceptions
 
-Name: python3-module-%pypi_name
-Version: 1.1.3
-Release: alt2
+Name: python3-module-%oname
+Version: 1.4.0
+Release: alt1
+
 Summary: Import exceptions from potentially bundled packages in requests
+
 Group: Development/Python3
 License: Apache-2.0
-Url: https://github.com/openstack/%pypi_name
-Source: %name-%version.tar
+Url: https://pypi.org/project/requestsexceptions
+
+Source: %oname-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
@@ -23,9 +27,10 @@ library to find the correct path to exceptions in the requests library
 regardless of whether they are bundled.
 
 %prep
-%setup
-# Let RPM handle the dependencies
-rm -f test-requirements.txt requirements.txt
+%setup -n %oname-%version
+
+# Remove bundled egg-info
+rm -rf *.egg-info
 
 %build
 %python3_build
@@ -34,9 +39,14 @@ rm -f test-requirements.txt requirements.txt
 %python3_install
 
 %files
-%python3_sitelibdir/*
+%doc AUTHORS LICENSE *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Jun 10 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
+- Build new version.
+
 * Tue Jun 08 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.3-alt2
 - Drop python2 support.
 
