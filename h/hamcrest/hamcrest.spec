@@ -1,73 +1,46 @@
+Epoch: 0
 Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Copyright (c) 2000-2008, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 2.2
+%bcond_with bootstrap
+
+%global upstream_version %(echo %{version} | tr '~' '-')
 
 Name:           hamcrest
-Version:        1.3
-Release:        alt3_30jpp11
-Epoch:          0
+Version:        2.2
+Release:        alt1_5jpp11
 Summary:        Library of matchers for building test expressions
 License:        BSD
 URL:            https://github.com/hamcrest/JavaHamcrest
-Source0:        https://github.com/hamcrest/JavaHamcrest/archive/hamcrest-java-%{version}.tar.gz
-
-Source8:        hamcrest-core-MANIFEST.MF
-Source9:        hamcrest-library-MANIFEST.MF
-Source11:       hamcrest-integration-MANIFEST.MF
-Source12:       hamcrest-generator-MANIFEST.MF
-
-Patch0:         %{name}-%{version}-build.patch
-Patch1:         %{name}-%{version}-no-jarjar.patch
-Patch3:         %{name}-%{version}-javadoc.patch
-Patch4:         %{name}-%{version}-qdox-2.0.patch
-Patch5:         %{name}-%{version}-fork-javac.patch
-
-Requires:       qdox
-Requires:       easymock >= 3.0
-Requires:       %{name}-core = %{epoch}:%{version}-%{release}
-
-BuildRequires:  javapackages-local
-BuildRequires:  ant
-BuildRequires:  ant-junit
-BuildRequires:  easymock
-BuildRequires:  junit
-BuildRequires:  qdox
-BuildRequires:  testng
-
 BuildArch:      noarch
+
+Source0:        https://github.com/hamcrest/JavaHamcrest/archive/v%{upstream_version}.tar.gz#/%{name}-%{version}.tar.gz
+Source1:        https://repo1.maven.org/maven2/org/hamcrest/hamcrest/%{upstream_version}/hamcrest-%{upstream_version}.pom
+
+Patch0:         0001-Fix-build-with-OpenJDK-11.patch
+
+BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  mvn(junit:junit)
+%endif
+
+Provides:       hamcrest-core = %{version}-%{release}
+Obsoletes:      hamcrest-core < 1.3-32
+Obsoletes:      hamcrest-demo < 1.3-32
 Source44: import.info
 
 %description
@@ -75,15 +48,6 @@ Provides a library of matcher objects (also known as constraints or predicates)
 allowing 'match' rules to be defined declaratively, to be used in other
 frameworks. Typical scenarios include testing frameworks, mocking libraries and
 UI validation rules.
-
-%package core
-Group: Development/Java
-Summary:        Core API of hamcrest matcher framework.
-Obsoletes:      %{name} < 0:1.3-10
-
-%description core
-The core API of hamcrest matcher framework to be used by third-party framework providers. 
-This includes the a foundation set of matcher implementations for common operations. 
 
 %package javadoc
 Group: Development/Java
@@ -93,90 +57,60 @@ BuildArch: noarch
 %description javadoc
 Javadoc for %{name}.
 
-%package demo
-Group: Development/Other
-Summary:        Demos for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
-Requires:       junit
-Requires:       testng
-
-%description demo
-Demonstrations and samples for %{name}.
-
 %prep
-%setup -q -n JavaHamcrest-%{name}-java-%{version}
-
-find . -type f -name "*.jar" | xargs -t rm
-rm -fr hamcrest-integration/src/main/java/org/hamcrest/integration/JMock1Adapter.java
-rm -fr hamcrest-integration/src/main/java/org/hamcrest/JMock1Matchers.java
-rm -fr hamcrest-unit-test/src/main/java/org/hamcrest/integration/JMock1AdapterTest.java
-# BUILD/hamcrest-1.1/lib/generator/qdox-1.6.1.jar.no
-ln -sf $(build-classpath qdox) lib/generator/
-# BUILD/hamcrest-1.1/lib/integration/easymock-2.2.jar.no
-ln -sf $(build-classpath easymock3) lib/integration/
-# BUILD/hamcrest-1.1/lib/integration/jmock-1.10RC1.jar.no
-ln -sf $(build-classpath jmock) lib/integration/
-# BUILD/hamcrest-1.1/lib/integration/testng-4.6-jdk15.jar.no
-ln -sf $(build-classpath testng-jdk15) lib/integration/
-
+%setup -q -n JavaHamcrest-%{upstream_version}
 %patch0 -p1
-%patch1 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+
+rm -rf docs
+rm -rf *gradle*
+rm -rf */*.gradle
+
+mv hamcrest/src .
+rm -rf hamcrest
+rm -rf hamcrest-core
+rm -rf hamcrest-integration
+rm -rf hamcrest-library
+
+cp -p %{SOURCE1} pom.xml
+%pom_add_dep junit:junit::test
+%pom_xpath_inject pom:project '
+<build>
+	<plugins>
+		<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-compiler-plugin</artifactId>
+		<version>3.8.1</version>
+		<configuration>
+			<source>1.8</source>
+			<target>1.8</target>
+		</configuration>
+		</plugin>
+	</plugins>
+</build>'
+
+%mvn_alias org.hamcrest:hamcrest org.hamcrest:hamcrest-all
+%mvn_alias org.hamcrest:hamcrest org.hamcrest:hamcrest-core
+%mvn_alias org.hamcrest:hamcrest org.hamcrest:hamcrest-library
 
 sed -i 's/\r//' LICENSE.txt
 
-# Set target to 1.6 to build with Java 11
-sed -i 's/target="1.5"/target="1.6"/' build.xml
-# Disable checking of remote javadoc links
-sed -i '/link offline/ d' build.xml
-
 %build
-export CLASSPATH=$(build-classpath qdox)
-export OPT_JAR_LIST="junit ant/ant-junit"
-# The unit-test goal is switched off as some tests fail with JDK 7
-# see https://github.com/hamcrest/JavaHamcrest/issues/30
-ant -Dant.build.javac.source=1.6 -Dversion=%{version} -Dbuild.sysclasspath=last clean core generator library bigjar javadoc
-
-# inject OSGi manifests
-jar ufm build/%{name}-core-%{version}.jar %{SOURCE8}
-jar ufm build/%{name}-library-%{version}.jar %{SOURCE9}
-jar ufm build/%{name}-integration-%{version}.jar %{SOURCE11}
-jar ufm build/%{name}-generator-%{version}.jar %{SOURCE12}
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
-sed -i 's/@VERSION@/%{version}/g' pom/*.pom
-
-%mvn_artifact pom/hamcrest-parent.pom
-
-for mod in all core generator library integration; do
-    %mvn_artifact pom/hamcrest-$mod.pom build/%{name}-$mod-%{version}.jar
-done
-
-%mvn_package :hamcrest-parent core
-%mvn_package :hamcrest-core core
-
-%mvn_file ':hamcrest-{*}' %{name}/@1
-
-# demo
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
-
-%mvn_install -J build/temp/hamcrest-all-1.3-javadoc.jar.contents/
+%mvn_install
 
 %files -f .mfiles
-
-%files core -f .mfiles-core
+%doc README.md
 %doc --no-dereference LICENSE.txt
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt
 
-%files demo
-%{_datadir}/%{name}
-
 %changelog
+* Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:2.2-alt1_5jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.3-alt3_30jpp11
 - update
 
