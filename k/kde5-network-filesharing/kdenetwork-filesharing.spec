@@ -2,8 +2,8 @@
 %define req_samba_pkgs samba,samba-common-tools,samba-client
 
 Name: kde5-network-filesharing
-Version: 22.04.1
-Release: alt2
+Version: 22.04.2
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -67,6 +67,9 @@ cat %SOURCE10 >>po/ru/kfileshare.po
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
+- new version
+
 * Tue May 24 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt2
 - allow to list domain users
 

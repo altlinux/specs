@@ -4,7 +4,7 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 22.04.1
+Version: 22.04.2
 Release: alt1
 %K5init
 
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel
 BuildRequires: libexiv2-devel libjpeg-devel liblcms2-devel libpng-devel zlib-devel libtiff-devel
 #BuildRequires: libcfitsio-devel
-BuildRequires: kde5-libkdcraw-devel kde5-libkipi-devel
+BuildRequires: kde5-libkdcraw-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel
 BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel
@@ -102,6 +102,9 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
+- new version
+
 * Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
 - new version
 

@@ -4,8 +4,8 @@
 %define libaudiocdplugins libaudiocdplugins%sover
 
 Name: kde5-%rname
-Version: 22.04.1
-Release: alt2
+Version: 22.04.2
+Release: alt1
 %K5init
 
 Group: Sound
@@ -106,6 +106,9 @@ KF5 library
 %_K5lib/libaudiocdplugins.so.*
 
 %changelog
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
+- new version
+
 * Fri Jun 03 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt2
 - fix open settings docs
 

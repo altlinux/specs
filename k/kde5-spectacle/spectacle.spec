@@ -5,7 +5,7 @@
 %define service_name app-org.kde.spectacle
 
 Name: kde5-%rname
-Version: 22.04.1
+Version: 22.04.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -32,7 +32,6 @@ BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidget
 BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel
 BuildRequires: kf5-solid-devel kf5-knewstuff-devel kf5-kglobalaccel-devel kf5-kwayland-devel
 BuildRequires: kf5-purpose-devel
-BuildRequires: kde5-libkipi-devel
 BuildRequires: plasma5-libkscreen-devel
 BuildRequires: kde5-kcolorpicker-devel kde5-kimageannotator-devel
 
@@ -91,6 +90,9 @@ developing applications that use %name.
 #%_K5dbus_iface/org.kde.Spectacle.xml
 
 %changelog
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
+- new version
+
 * Fri May 13 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
 - new version
 
