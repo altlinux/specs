@@ -16,8 +16,8 @@ BuildRequires: jpackage-default
 %bcond_without reflections
 
 Name:           jna
-Version:        5.6.0
-Release:        alt1_4jpp11
+Version:        5.9.0
+Release:        alt1_1jpp11
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1+ only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
@@ -49,7 +49,7 @@ Patch5:         0006-Remove-Werror.patch
 
 # We manually require libffi because find-requires doesn't work
 # inside jars.
-Requires:       libffi
+Requires:       libffi8
 BuildRequires:  gcc
 BuildRequires:  javapackages-local
 BuildRequires:  libffi-devel
@@ -58,6 +58,8 @@ BuildRequires:  ant-junit
 BuildRequires:  junit
 BuildRequires:  libX11-devel
 BuildRequires:  libXt-devel
+BuildRequires:  objectweb-asm
+BuildRequires:  hamcrest
 %if %{with reflections}
 BuildRequires:  reflections
 %endif
@@ -117,6 +119,8 @@ rm test/com/sun/jna/StructureFieldOrderInspector.java
 rm test/com/sun/jna/StructureFieldOrderInspectorTest.java
 %endif
 ln -s $(xmvn-resolve ant:ant:1.10.5) lib/ant.jar
+ln -s $(xmvn-resolve org.ow2.asm:asm) lib/asm-8.0.1.jar
+ln -s $(xmvn-resolve org.hamcrest:hamcrest-all) lib/hamcrest-core-1.3.jar
 
 cp lib/native/aix-ppc64.jar lib/clover.jar
 
@@ -164,6 +168,9 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 5.9.0-alt1_1jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 5.6.0-alt1_4jpp11
 - update
 
