@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 5.5.6
+Version: 5.5.23
 Release: alt1
 Summary: Deepin desktop-environment - Session UI module
 License: GPL-3.0+
@@ -14,11 +14,14 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
+BuildRequires(pre): rpm-build-ninja
+BuildRequires: cmake
 BuildRequires: deepin-gettext-tools
+BuildRequires: dtk5-common
 BuildRequires: dtk5-widget-devel
 BuildRequires: deepin-qt-dbus-factory-devel
 BuildRequires: gsettings-qt-devel
@@ -53,32 +56,34 @@ This project include those sub-project:
 #    widgets/fullscreenbackground.cpp \
 #    lightdm-deepin-greeter/logintheme.qrc \
 #    dde-lock/logintheme.qrc
-sed -i 's|/usr/lib/dde-dock|%_libdir/dde-dock|' \
-    dde-notification-plugin/notifications/notifications.pro
+sed -i 's|lib/dde-dock/|%_lib/dde-dock/|' CMakeLists.txt
 
 %build
 export PATH=%_qt5_bindir:$PATH
-%qmake_qt5 \
 %if_enabled clang
-    QMAKE_STRIP= -spec linux-clang \
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
 %endif
-    CONFIG+=nostrip \
-    PREFIX=%_prefix \
-    PKGTYPE=rpm \
+%cmake \
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DARCHITECTURE=%_arch \
 %ifarch aarch64 armh ppc64le
-    SHUTDOWN_NO_QUIT=YES \
-    LOCK_NO_QUIT=YES \
-    DISABLE_DEMO_VIDEO=YES \
-    DISABLE_TEXT_SHADOW=YES \
-    DISABLE_ANIMATIONS=YES \
-    USE_CURSOR_LOADING_ANI=YES \
+    -DSHUTDOWN_NO_QUIT=YES \
+    -DLOCK_NO_QUIT=YES \
+    -DDISABLE_DEMO_VIDEO=YES \
+    -DDISABLE_TEXT_SHADOW=YES \
+    -DDISABLE_ANIMATIONS=YES \
+    -DUSE_CURSOR_LOADING_ANI=YES \
 %endif
 #
-
-%make_build
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+%cmake_install
 
 %files
 %doc README.md
@@ -99,7 +104,8 @@ export PATH=%_qt5_bindir:$PATH
 %_libexecdir/deepin-daemon/dde-welcome
 %_libexecdir/deepin-daemon/dnetwork-secret-dialog
 %_datadir/%repo/
-%_iconsdir/hicolor/*/apps/deepin-*
+#_iconsdir/hicolor/*/apps/deepin-*
+%_iconsdir/hicolor/scalable/devices/computer.svg
 %_datadir/dbus-1/services/*.service
 %_datadir/glib-2.0/schemas/com.deepin.dde.dock.module.notifications.gschema.xml
 %dir %_libdir/dde-dock
@@ -107,6 +113,43 @@ export PATH=%_qt5_bindir:$PATH
 %_libdir/dde-dock/plugins/libnotifications.so
 
 %changelog
+* Fri Jun 10 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.23-alt1
+- New version.
+- Upstream:
+  + refactor: qmake to cmake.
+  + fix: Notify the window of abnormalities when the low power is activated.
+  + fix: No notice of news will be ejected when the Display interface service
+  is invalid.
+  + fix: dde-session-ui ASAN problem handling.
+  + fix: More than two apps alternately send message notices, which will cause
+  the message notices to be repeated.
+  + fix: Recommended indentation ratio error in repair calculation.
+  + fix: Repair The problem of opening the flight mode OSD in a dark mode
+  does not show the aircraft icon.
+  + fix: The insertion of the repair notice prompts the lack of blank on both
+  sides.
+  + fix: Set the initial height of Bubble to 1.
+  + fix: Repair the notice above the screen does not support the problem
+  of clicking on the blank area to achieve default operation.
+  + fix(display): Repair cannot distinguish two touch screens of the same model.
+  + chore: Remove the translation warning.
+  + fix: Repair the problem of OSD display error in different situations
+  of left and right screen resolution.
+  + fix: The back-end display module adds TouchscreensV2 attributes
+  and AssociateTouchByUUID interface.
+  + fix(dnetwork-secret-dialog): Modify the untranslated password window
+  Password connection problem.
+  + fix: The problem of pulling out the USB flash drive and stuck
+  in the mission column after awakening.
+  + fix: Safety reinforcement of compilation options.
+  + fix: Notification center window did not follow the task column.
+  + fix: When calculating the width of the task column, you need to consider
+  the screen indentation ratio.
+  + fix: Increase the processing of the meta key flag sign under wayland.
+  + fix: filter out the judgment of meta status under wayland.
+  + fix: Repair the problem of the synchronous change of the silent icon
+  on the dde-osd panel.
+
 * Fri Feb 11 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.6-alt1
 - New version (5.5.6).
 
