@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -18,7 +18,7 @@ BuildRequires: jpackage-11-compat
 %bcond_with swt
 Name:           jfreechart
 Version:        1.0.19
-Release:        alt1_18jpp11
+Release:        alt1_19jpp11
 Summary:        Java chart library
 
 License:        LGPLv2+
@@ -30,6 +30,7 @@ BuildRequires:  maven-local
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  mvn(org.jfree:jcommon) >= 1.0.23
 BuildRequires:  mvn(javax.servlet:javax.servlet-api) >= 2.5
+BuildRequires:  mvn(junit:junit)
 %if %{with swt}
 BuildRequires:  eclipse-swt
 %endif
@@ -122,6 +123,9 @@ install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{n
 %endif
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0.19-alt1_19jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0.19-alt1_18jpp11
 - fc34 update
 
