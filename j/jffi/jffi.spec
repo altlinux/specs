@@ -4,15 +4,15 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ texinfo unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: jpackage-1.8-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global cluster jnr
 %global sover 1.2
 
 Name:           jffi
-Version:        1.2.23
-Release:        alt1_6jpp11
+Version:        1.3.4
+Release:        alt1_1jpp8
 Summary:        Java Foreign Function Interface
 
 License:        LGPLv3+ or ASL 2.0
@@ -26,11 +26,8 @@ Patch0:         0001-Fix-dependencies-on-junit-hamcrest.patch
 # Fix compilation flags and binary stripping
 Patch1:         0002-Fix-compilation-flags.patch
 
-# Allow building on Java 11
-Patch2:         0003-Fix-native-header-generation.patch
-
-# Fix java version detection of Java 9+
-Patch3:         0004-Fix-java-version-detection.patch
+# Fix usage of antrun plugin, sent upstream: https://github.com/jnr/jffi/pull/111
+Patch2:         0003-Update-to-latest-maven-ant-plugin.patch
 
 BuildRequires:  gcc
 BuildRequires:  maven-local
@@ -38,6 +35,7 @@ BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 BuildRequires:  libffi-devel
 BuildRequires:  ant
 BuildRequires:  ant-junit
@@ -67,21 +65,9 @@ This package contains the API documentation for %{name}.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 # Remove pointless parent pom
 %pom_remove_parent
-
-# Port to maven-antrun-plugin 3.0.0
-sed -i s/tasks/target/ pom.xml
-
-# Allow building on Java 11
-for f in src/main/java/com/kenai/jffi/{Foreign,ObjectBuffer}.java version.xml; do
-  # Add the import for @Native
-  sed -i '/package .*;/ a import java.lang.annotation.Native;' $f
-  # Set @Native for fields
-  sed -i '/\(static final\|final static\) int [A-Z]/ i @Native' $f
-done
 
 # Don't attempt to override arch configuration from RPM flags
 sed -i -e '/i586/d' jni/GNUmakefile
@@ -101,9 +87,6 @@ sed -i -e 's/haltonfailure="true"/haltonfailure="no"/' build.xml
 
 # Ensure debug symbols in the native java
 sed -i -e 's/<javac/<javac debug="true"/' build.xml
-
-# Port to maven-antrun-plugin 3.0.0
-sed -i s/tasks/target/ pom.xml
 
 %mvn_package 'com.github.jnr:jffi::native:' native
 %mvn_file ':{*}' %{name}/@1 @1
@@ -153,6 +136,9 @@ ant -Duse.system.libffi=1 -Drun.jvm.model=-Xmx128m test
 %doc --no-dereference COPYING.GPL COPYING.LESSER LICENSE
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 1.3.4-alt1_1jpp8
+- new version
+
 * Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 1.2.23-alt1_6jpp11
 - Port to maven-antrun-plugin 3.0.0
 
