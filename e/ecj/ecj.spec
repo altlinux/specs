@@ -1,48 +1,50 @@
-BuildRequires: unzip
 Group: Development/Java
+Obsoletes: ecj-standalone <= 3.4.2-alt4_0jpp6
+BuildRequires: unzip
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Epoch: 1
 
-%global qualifier R-4.19-202103031800
+%global eclipse_ver 4.21
+%global bundle_ver 3.27.0
+%global jar_ver %{eclipse_ver}RC2a
+%global drop S-%{jar_ver}-202109060500
 
 Summary: Eclipse Compiler for Java
 Name: ecj
-Version: 4.19
-Release: alt2_1jpp11
+Version: %{eclipse_ver}
+Release: alt1_1jpp11
 URL: https://www.eclipse.org
 License: EPL-2.0
 
-Source0: https://download.eclipse.org/eclipse/downloads/drops4/%{qualifier}/ecjsrc-%{version}.jar
-Source1: https://repo1.maven.org/maven2/org/eclipse/jdt/ecj/3.25.0/ecj-3.25.0.pom
-# Extracted from https://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops4/%%{qualifier}/ecj-%%{version}.jar
-Source4: MANIFEST.MF
-# Java API stubs for newer JDKs to allow us to build on the system default JDK
-# Fetched from https://github.com/eclipse/eclipse.jdt.core/blob/R4_18/org.eclipse.jdt.compiler.tool/lib/javax15api.jar
-Source5: https://github.com/eclipse/eclipse.jdt.core/blob/R4_18/org.eclipse.jdt.compiler.tool/lib/javax15api.jar
+Source0: https://download.eclipse.org/eclipse/downloads/drops4/%{drop}/ecjsrc-%{jar_ver}.jar
+Source1: https://repo1.maven.org/maven2/org/eclipse/jdt/ecj/%{bundle_ver}/ecj-%{bundle_ver}.pom
+# The ecj build does not generate a proper manifest, so use the one from the binary distribution
+# Extracted from: https://download.eclipse.org/eclipse/downloads/drops4/%%{drop}/ecj-%%{jar_ver}.jar
+Source2: MANIFEST.MF
+# Provide API stubs for newer JDKs to allow us to build on the system default JDK where those APIs are not present
+# Fetched from: https://git.eclipse.org/c/jdt/eclipse.jdt.core.git/plain/org.eclipse.jdt.compiler.tool/lib/javax16api.jar?h=S4_21_0_RC2a
+Source3: javax16api.jar
 
 # Always generate debug info when building RPMs (Andrew Haley)
-Patch0: %{name}-rpmdebuginfo.patch
+Patch0: 0001-Always-generate-bytecode-debuginfo.patch
 
-# Include java API stubs in build
-Patch1: javaAPI.patch
+# Include java API stubs in build and fix misc other incorrect build flags
+Patch1: 0002-Fix-build-from-source.patch
 
 BuildArch: noarch
 
 BuildRequires: ant
 BuildRequires: javapackages-local
-
-# Build with Java 11 against bootclasspath of Java 8
 BuildRequires: java-11-openjdk-devel
-BuildRequires: java-1.8.0-openjdk-devel
 Source44: import.info
 # Use ECJ for GCJ
 # cvs -d:pserver:anonymous@sourceware.org:/cvs/rhug \
 # export -D 2013-12-11 eclipse-gcj
 # tar cjf ecj-gcj.tar.bz2 eclipse-gcj
-Source2: ecj-gcj.tar.bz2
+Source4: ecj-gcj.tar.bz2
 Patch33: ecj-defaultto1.5.patch
 Patch55: eclipse-gcj-nodummysymbol.patch
 Patch34: ecj-gcj-for-4.6-api.patch
@@ -55,27 +57,25 @@ ECJ is the Java bytecode compiler of the Eclipse Platform.  It is also known as
 the JDT Core batch compiler.
 
 %prep
-%setup -q -c
+%setup -q -c -n %{name}-%{eclipse_ver}
 %patch0 -p1
-%patch1
+%patch1 -p1
+
 
 sed -i -e 's|debuglevel=\"lines,source\"|debug=\"yes\"|g' build.xml
 
 cp %{SOURCE1} pom.xml
 mkdir -p scripts/binary/META-INF/
-cp %{SOURCE4} scripts/binary/META-INF/MANIFEST.MF
+cp %{SOURCE2} scripts/binary/META-INF/MANIFEST.MF
 rm ./META-INF/ECLIPSE_.{SF,RSA}
 
 # Aliases
 %mvn_alias org.eclipse.jdt:ecj org.eclipse.jdt:core org.eclipse.jdt.core.compiler:ecj \
   org.eclipse.tycho:org.eclipse.jdt.core org.eclipse.tycho:org.eclipse.jdt.compiler.apt
-
-# Make Java API stubs available for other packages
-%mvn_artifact "org.eclipse:javax15api:jar:15" %{SOURCE5}
 %patch33 -p1
 
 # Use ECJ for GCJ's bytecode compiler
-tar jxf %{SOURCE2}
+tar jxf %{SOURCE4}
 mv eclipse-gcj/org/eclipse/jdt/internal/compiler/batch/GCCMain.java \
   org/eclipse/jdt/internal/compiler/batch/
 %patch55 -p1
@@ -86,7 +86,8 @@ rm -rf eclipse-gcj
 #patch55 -p1
 
 %build
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Djavaapi=%{SOURCE5}
+#export JAVA_HOME=/usr/lib/jvm/java-11
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Djavaapi=%{SOURCE3}
 
 %install
 %mvn_artifact pom.xml ecj.jar
@@ -105,6 +106,9 @@ install -m 644 -p ecj.1 $RPM_BUILD_ROOT%{_mandir}/man1/ecj.1
 %{_mandir}/man1/ecj*
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 1:4.21-alt1_1jpp11
+- new version
+
 * Fri Jul 02 2021 Igor Vlasenko <viy@altlinux.org> 1:4.19-alt2_1jpp11
 - added BR: unzip
 
