@@ -4,7 +4,7 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		mariadb-java-client
-Version:	3.0.0
+Version:	3.0.1
 Release:	alt1_1jpp11
 Summary:	Connects applications developed in Java to MariaDB and MySQL databases
 # added BSD license because of https://bugzilla.redhat.com/show_bug.cgi?id=1291558#c13
@@ -45,7 +45,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -qn mariadb-connector-j-%{version}
+%setup -qn mariadb-connector-j-%{version}-beta
 
 # remove missing optional dependency waffle-jna
 %pom_remove_dep com.github.waffle:waffle-jna
@@ -96,6 +96,9 @@ rm -f src/main/java/org/mariadb/jdbc/plugin/authentication/addon/gssapi/WindowsN
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 3.0.1-alt1_1jpp11
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_1jpp11
 - new version
 
