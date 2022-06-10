@@ -5,16 +5,16 @@ BuildRequires(pre): rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 68.2
+%define version 69.1
 %global gittag %(v=%{version}; echo "release-$v" | sed 's/\\./-/')
 %global srctgz %(v=%{version}; echo "icu4j-$v" | sed 's/\\./_/')
 
 Name:           icu4j
-Version:        68.2
+Version:        69.1
 Release:        alt1_1jpp11
 Epoch:          1
 Summary:        International Components for Unicode for Java
@@ -33,10 +33,18 @@ Patch0:         0001-Improve-OSGi-manifest.patch
 # that prevent ICU's custom one from being built
 Patch1:         0002-Use-default-doclet.patch
 
+# Update the code for Java 8.  Patch courtesy of OpenSuSE.
+Patch2:         0003-java8.patch
+
+# Ivy is no longer available from Fedora
+Patch3:         0004-remove-ivy.patch
+
+# Fix some invalid javadoc characters
+Patch4:         0005-javadoc.patch
+
 BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  javapackages-local
-BuildRequires:  ivy-local
 
 BuildArch:      noarch
 Source44: import.info
@@ -84,6 +92,10 @@ API documentation for %{name}.
 %setup -q -c
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
 
 # Ivy local does not name these libs as icu4j expects
 sed -i -e 's/junit-4.12/junit-SYSTEM/' \
@@ -130,6 +142,9 @@ install -m 644 icu4j-localespi.jar %{buildroot}%{_javadir}/icu4j/
 %doc --no-dereference main/shared/licenses/*
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 1:69.1-alt1_1jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:68.2-alt1_1jpp11
 - new version
 
