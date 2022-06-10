@@ -3,7 +3,7 @@
 
 Name:    lazarus
 Version: 2.2.2.0
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -180,8 +180,9 @@ mkdir -p tools/lazdatadesktop/lib
 export LCL_PLATFORM=nogui
 ./lazbuild --ws="$LCL_PLATFORM" --pcp=%cfg docs/html/build_lcl_docs.lpi
 pushd docs/html
-ln -s /usr/share/doc/fpc/rtl.xct ../chm/rtl.xct
-ln -s /usr/share/doc/fpc/fcl.xct ../chm/fcl.xct
+for i in rtl.xct fcl.xct fclres.chm fcl.chm rtl.chm; do
+    ln -s %_defaultdocdir/fpc/$i ../chm/$i
+done
 ./build_lcl_docs
 ./build_html.sh
 ./build_chm.sh
@@ -299,6 +300,9 @@ ln -s ../../bin/lazarus %buildroot$LAZARUSDIR/lazarus
 %_libdir/libQt5Pas.so
 
 %changelog
+* Thu Jun 09 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.2.2.0-alt2
+- Use FPC documentation in CHM format from fpc-docs.
+
 * Sun May 15 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.2.2.0-alt1
 - New version.
 - Build help (ALT #42054).

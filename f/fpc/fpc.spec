@@ -8,7 +8,7 @@
 
 Name: 	  fpc
 Version:  3.2.2
-Release:  alt3
+Release:  alt4
 Epoch:    3
 
 Summary:  Free Pascal Compiler -- Meta Package
@@ -213,10 +213,9 @@ make build VERBOSE=1 FPC=$ppcname LDCONFIG="$(dirname `gcc -print-file-name=libg
 popd
 
 # Make documentation
-# TODO PDF generation does not work
 %if_with doc
-# FIXME: -j1 as there is a race - seen on "missing" `rtl.xct'.
-#make -j1 -C fpcdocs pdf html FPC=$(pwd)/fpcsrc/compiler/%ppcname
+mkdir fpcdocs/rtl fpcdocs/fcl fpcdocs/fclres
+make -j1 -C fpcdocs chm FPC=$(pwd)/fpcsrc/compiler/%ppcname
 make -j1 -C fpcdocs html FPC=$(pwd)/fpcsrc/compiler/%ppcname
 
 # Generate help index to file fpctoc.htx
@@ -302,6 +301,7 @@ install -p -m 644 install/doc/copying* install/doc/whatsnew.txt install/doc/read
 make INSTALL_DOCDIR=%buildroot%fpc_docdir DESTDIR=%buildroot -C fpcdocs htmlinstall #pdfinstall
 # Install xct files
 cp -a fpcdocs/*.xct %buildroot%fpc_docdir
+cp -a fpcdocs/*.chm %buildroot%fpc_docdir
 %if_with help_index
 install -p -m 644 fpcdocs/fpctoc.htx %buildroot%fpc_docdir
 %else
@@ -1004,18 +1004,19 @@ This package provides documentation for the Free Pascal Compiler in HTML
 and PDF format.
 
 %files docs
-%doc %fpc_docdir/buttons
-%doc %fpc_docdir/chart
-%doc %fpc_docdir/fcl
-%doc %fpc_docdir/fclres
-%doc %fpc_docdir/fpctoc.*
-%doc %fpc_docdir/fpdoc
-%doc %fpc_docdir/pics
-%doc %fpc_docdir/prog
-%doc %fpc_docdir/ref
-%doc %fpc_docdir/rtl
-%doc %fpc_docdir/user
-%doc %fpc_docdir/*.xct
+%fpc_docdir/buttons
+%fpc_docdir/chart
+%fpc_docdir/fcl
+%fpc_docdir/fclres
+%fpc_docdir/fpctoc.*
+%fpc_docdir/fpdoc
+%fpc_docdir/pics
+%fpc_docdir/prog
+%fpc_docdir/ref
+%fpc_docdir/rtl
+%fpc_docdir/user
+%fpc_docdir/*.xct
+%fpc_docdir/*.chm
 %endif
 
 %if_with win32
@@ -1038,6 +1039,9 @@ Free Pascal runtime library units cross-compiled for win32.
 %endif
 
 %changelog
+* Thu Jun 09 2022 Andrey Cherepanov <cas@altlinux.org> 3:3.2.2-alt4
+- Build documentation in CHM format.
+
 * Tue Jun 07 2022 Andrey Cherepanov <cas@altlinux.org> 3:3.2.2-alt3
 - Build with documentation.
 - Install generated .xct files.
