@@ -13,12 +13,12 @@ BuildRequires: jpackage-default
 
 Name:           jackson-modules-base
 Version:        2.11.4
-Release:        alt1_4jpp11
+Release:        alt1_5jpp11
 Summary:        Jackson modules: Base
 License:        ASL 2.0
 
 URL:            https://github.com/FasterXML/jackson-modules-base
-Source0:        %{url}/archive/%{name}-%{version}.tar.gz
+Source0:        https://github.com/FasterXML/jackson-modules-base/archive/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
@@ -31,7 +31,6 @@ BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
 BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.glassfish.jaxb:jaxb-runtime)
 BuildRequires:  mvn(org.mockito:mockito-all)
 BuildRequires:  mvn(org.ow2.asm:asm)
 
@@ -54,6 +53,8 @@ framework to read and write XML.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+
+%pom_remove_dep org.glassfish.jaxb:jaxb-runtime jaxb
 
 # no need for Java 9 module stuff
 %pom_remove_plugin -r :moditect-maven-plugin
@@ -108,6 +109,9 @@ rm osgi/src/test/java/com/fasterxml/jackson/module/osgi/InjectOsgiServiceTest.ja
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_5jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_4jpp11
 - update
 
