@@ -1,7 +1,7 @@
 %define rname bovo
 
 Name: kde5-%rname
-Version: 22.04.1
+Version: 22.04.2
 Release: alt1
 %K5init
 
@@ -46,6 +46,9 @@ where you try to connect five in a row prior to your opponent.
 #%_K5xmlgui/bovo/
 
 %changelog
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
+- new version
+
 * Mon May 23 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
 - new version
 

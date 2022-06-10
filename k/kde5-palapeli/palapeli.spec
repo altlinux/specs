@@ -4,7 +4,7 @@
 %define libpala libpala%pala_sover
 
 Name: kde5-%rname
-Version: 22.04.1
+Version: 22.04.2
 Release: alt1
 %K5init
 
@@ -96,6 +96,9 @@ mv %buildroot/%_K5xdgmime/palapeli-mimetypes.xml \
 %_K5lib/libpala.so.*
 
 %changelog
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
+- new version
+
 * Mon May 23 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
 - new version
 
