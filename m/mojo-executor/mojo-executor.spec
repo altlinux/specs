@@ -8,8 +8,8 @@ BuildRequires: jpackage-default
 # to the new version is needed.
 
 Name:           mojo-executor
-Version:        2.3.1
-Release:        alt1_8jpp11
+Version:        2.3.2
+Release:        alt1_1jpp11
 Summary:        Execute other plugins within a maven plugin
 
 License:        ASL 2.0
@@ -20,6 +20,8 @@ Source0:        https://github.com/TimMoore/%{name}/archive/%{name}-parent-%{ver
 Patch0:         %{name}-commons-lang3.patch
 # Remove dependency on ant-contrib, which no longer builds successfully
 Patch1:         %{name}-ant-contrib.patch
+# Fix a javadoc comment
+Patch2:         %{name}-javadoc.patch
 
 BuildArch:      noarch
 BuildRequires:  maven-local
@@ -63,6 +65,7 @@ This package contains %{summary}.
 %setup -q -n %{name}-%{name}-parent-%{version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 
 # sonatype-oss-parent is deprecated in Fedora
@@ -97,6 +100,9 @@ This package contains %{summary}.
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt1_1jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.3.1-alt1_8jpp11
 - update
 
