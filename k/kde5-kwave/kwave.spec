@@ -5,7 +5,7 @@
 %define libkwave libkwave%sover
 
 Name: kde5-%rname
-Version: 22.04.1
+Version: 22.04.2
 Release: alt1
 %K5init no_appdata
 
@@ -106,6 +106,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libkwavegui.so.*
 
 %changelog
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
+- new version
+
 * Thu May 19 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libkdebugsettings libkdebugsettings%sover
 
 Name: kde5-%rname
-Version: 22.04.1
+Version: 22.04.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -75,6 +75,9 @@ KF5 library
 %_K5lib/libkdebugsettings.so.%sover
 
 %changelog
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
+- new version
+
 * Thu May 19 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
 - new version
 
