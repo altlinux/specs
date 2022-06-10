@@ -6,14 +6,14 @@ BuildRequires: perl(CPAN.pm) perl(Carp.pm) perl(Config.pm) perl(Cwd.pm) perl(Dat
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.08
+Version: 0.092
 Release: alt1
 Summary: Overrides the time() and sleep() core functions for testing
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://www.cpan.org/authors/id/S/SA/SATOH/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/A/AN/ANATOFUZ/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -42,6 +42,9 @@ custom time by passing time => number after the `use' statement:
 %perl_vendor_privlib/T*
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 0.092-alt1
+- automated CPAN update
+
 * Sun May 12 2019 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - automated CPAN update
 
