@@ -1,11 +1,11 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.0
+Version: 10.0.1
 Release: alt1
 
 Summary: IT and asset management software
-License: GPLv2
+License: GPLv3
 Group: Networking/Other
 
 URL: http://www.glpi-project.org
@@ -144,7 +144,7 @@ fi
 %installdir/vendor
 %installdir/*.js
 %installdir/*.php
-%installdir/COPYING.txt
+%installdir/LICENSE
 %doc CHANGELOG.md
 %doc CONTRIBUTING.md
 %doc README.md
@@ -164,6 +164,11 @@ fi
 %files php8.1
 
 %changelog
+* Fri Jun 10 2022 Pavel Zilke <zidex@altlinux.org> 10.0.1-alt1
+- New version 10.0.1
+- This is a security release, upgrading is recommended
+- The GLPI licence has been moved to GPLv3+
+
 * Wed Apr 20 2022 Pavel Zilke <zidex@altlinux.org> 10.0.0-alt1
 - New version 10.0.0
 - Added glpi-php8.0
