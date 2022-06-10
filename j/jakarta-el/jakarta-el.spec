@@ -1,24 +1,25 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global srcname el-ri
 
 Name:           jakarta-el
 Version:        4.0.0
-Release:        alt1_3jpp11
+Release:        alt1_5jpp11
 Summary:        Jakarta Expression Language
 License:        EPL-2.0 or GPLv2 with exceptions
 
 URL:            https://github.com/eclipse-ee4j/el-ri
-Source0:        %{url}/archive/%{version}-RELEASE/%{srcname}-%{version}.tar.gz
+Source0:        https://github.com/eclipse-ee4j/el-ri/archive/%{version}-RELEASE/%{srcname}-%{version}.tar.gz
 
 BuildArch:      noarch
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit47)
 
 # package renamed in fedora 33, remove in fedora 35
 Provides:       glassfish-el = %{version}-%{release}
@@ -115,6 +116,9 @@ sed -i -e 's/jakarta\./javax./g' $(find api/src/main/java/javax -name *.java)
 
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt1_5jpp11
+- update
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt1_3jpp11
 - new version
 
