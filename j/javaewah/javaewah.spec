@@ -1,11 +1,11 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           javaewah
 Version:        1.1.6
-Release:        alt1_11jpp11
+Release:        alt1_13jpp11
 Summary:        A word-aligned compressed variant of the Java bitset class
 
 License:        ASL 2.0
@@ -16,6 +16,7 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 Source44: import.info
@@ -45,6 +46,9 @@ API documentation for %{name}.
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
 
+# Add missing test dep
+%pom_add_dep org.apache.commons:commons-lang3:3.12.0:test
+
 # Plugins that are unnecessary for RPM build
 %pom_remove_plugin :maven-gpg-plugin
 %pom_remove_plugin :maven-javadoc-plugin
@@ -68,6 +72,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 1.1.6-alt1_13jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.1.6-alt1_11jpp11
 - fc34 update
 
