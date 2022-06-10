@@ -6,7 +6,7 @@ BuildRequires: perl(Data/Dmp.pm) perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.038
+Version: 0.040
 Release: alt1
 Summary: A lightweight, flexible logging framework
 Group: Development/Perl
@@ -74,6 +74,9 @@ Per-package settings. Each importer package can use its own...
 %perl_vendor_privlib/L*
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 0.040-alt1
+- automated CPAN update
+
 * Mon Feb 01 2021 Igor Vlasenko <viy@altlinux.ru> 0.038-alt1
 - automated CPAN update
 
