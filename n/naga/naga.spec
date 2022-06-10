@@ -3,7 +3,7 @@ Group: System/Base
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Upstream was originally located at http://code.google.com/p/naga/.  The
@@ -17,12 +17,33 @@ Version:        3.0
 %global date    20200930
 %global forgeurl https://github.com/lerno/naga
 
+# FedoraForgeMeta2ALT: generated meta
+%global forgeurl https://github.com/lerno/naga
+%global forgesource https://github.com/lerno/naga/archive/6f1e95ddfdb1aa7719c98168f0a5efc5be191426/naga-6f1e95ddfdb1aa7719c98168f0a5efc5be191426.tar.gz
+%global archivename naga-6f1e95ddfdb1aa7719c98168f0a5efc5be191426
+%global archiveext tar.gz
+%global archiveurl https://github.com/lerno/naga/archive/6f1e95ddfdb1aa7719c98168f0a5efc5be191426/naga-6f1e95ddfdb1aa7719c98168f0a5efc5be191426.tar.gz
+%global topdir naga-6f1e95ddfdb1aa7719c98168f0a5efc5be191426
+%global extractdir naga-6f1e95ddfdb1aa7719c98168f0a5efc5be191426
+%global repo naga
+#global owner %nil
+#global namespace %nil
+%global scm git
+#global tag %nil
+%global commit 6f1e95ddfdb1aa7719c98168f0a5efc5be191426
+#global shortcommit %nil
+#global branch %nil
+%global version 3.0
+%global date 20200930
+%global distprefix 20200930git6f1e95d
+# FedoraForgeMeta2ALT: end generated meta
+
 URL:            %{forgeurl}
-Release:        alt1_16jpp11
+Release:        alt1_17jpp11
 Summary:        Simplified Java NIO asynchronous sockets
 
 License:        MIT
-Source0:        naga-%{commit}.tar.gz
+Source0:        %{forgesource}
 # Fix javadoc errors and warnings
 Patch0:         %{name}-javadoc.patch
 # Build for Java 1.8 and tell javac that the sources are UTF-8 encoded
@@ -63,13 +84,13 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -n %name-%commit
+%setup -q -n naga-6f1e95ddfdb1aa7719c98168f0a5efc5be191426
 %patch0 -p1
 %patch1 -p1
 
 
 %build
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 build javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  build javadoc
 
 %install
 mkdir -p %{buildroot}%{_javadir}
@@ -91,6 +112,9 @@ cp -rp _BUILD/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 3.0-alt1_17jpp11
+- update
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 3.0-alt1_16jpp11
 - java11 build
 
