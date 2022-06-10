@@ -1,5 +1,5 @@
 Name: easy-rsa
-Version: 3.0.8
+Version: 3.1.0
 Release: alt1
 
 Summary: Simple shell based CA utility
@@ -25,18 +25,21 @@ certificates, including sub-CAs and certificate revokation lists (CRL).
 %patch0 -p1
 
 %build
-mkdir -p %{buildroot}%{_datadir}
+mkdir -p %{buildroot}%{_datadir}/%name
 mkdir -p %{buildroot}%{_bindir}
-cp -r easyrsa3 %{buildroot}%{_datadir}/
-mv %{buildroot}%{_datadir}/easyrsa3/easyrsa %{buildroot}%{_bindir}/
+cp -r easyrsa3/* %{buildroot}%{_datadir}/%name
+mv %{buildroot}%{_datadir}/%name/easyrsa %{buildroot}%{_bindir}/
 
 %files
 %defattr(-,root,root,-)
 %doc COPYING.md doc/ ChangeLog README.md README.quickstart.md KNOWN_ISSUES
 %{_bindir}/easyrsa
-%{_datadir}/easyrsa3
+%{_datadir}/%name
 
 %changelog
+* Fri Jun 10 2022 Vladimir Didenko <cow@altlinux.org> 3.1.0-alt1
+- new version
+
 * Wed Sep 30 2020 Vladimir Didenko <cow@altlinux.org> 3.0.8-alt1
 - new version
 
