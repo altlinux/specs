@@ -41,7 +41,7 @@ BuildRequires: jpackage-default
 
 Name:		javahelp2
 Version:	2.0.05
-Release:	alt5_30jpp11
+Release:	alt5_31jpp11
 Summary:	JavaHelp is a full-featured, platform-independent, extensible help system 
 License:	GPLv2 with exceptions
 Url:		https://javahelp.java.net/
@@ -91,12 +91,12 @@ find . -name "*.bat" -delete
 rm jhMaster/JavaHelp/src/new/javax/help/plaf/basic/BasicNativeContentViewerUI.java
 
 mkdir javahelp_nbproject/lib
-ln -s %{_javadir}/tomcat/tomcat-jsp-api.jar javahelp_nbproject/lib/jsp-api.jar
-ln -s %{_javadir}/tomcat/tomcat-servlet-api.jar javahelp_nbproject/lib/servlet-api.jar
+ln -s %{_javadir}/tomcat-jsp-2.3-api.jar javahelp_nbproject/lib/jsp-api.jar
+ln -s %{_javadir}/tomcat-servlet-4.0-api.jar javahelp_nbproject/lib/servlet-api.jar
 
 %build
 
-ant -f javahelp_nbproject/build.xml \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f javahelp_nbproject/build.xml \
  -Djavac.source=1.6 -Djavac.target=1.6 \
  -Djdic-jar-present=true -Djdic-zip-present=true \
  -Dservlet-jar-present=true -Dtomcat-zip-present=true \
@@ -131,6 +131,9 @@ touch $RPM_BUILD_ROOT/etc/jhsearch.conf
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 0:2.0.05-alt5_31jpp11
+- update
+
 * Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.05-alt5_30jpp11
 - fixed build
 
