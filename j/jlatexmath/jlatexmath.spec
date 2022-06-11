@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 %define _localstatedir %{_var}
 Name:           jlatexmath
 Version:        1.0.3
-Release:        alt1_10jpp8
+Release:        alt2_10jpp8
 Summary:        Java API to display mathematical formulas written in LaTeX
 
 License:        GPLv2+
@@ -21,7 +21,6 @@ BuildRequires:  jpackage-utils
 BuildRequires:  ant
 
 Requires:       java
-Requires:       jpackage-utils
 
 BuildArch:      noarch
 Source44: import.info
@@ -67,6 +66,11 @@ find -name '*.jar' -exec rm -f '{}' \;
 # Fix class-path-in-manifest error
 sed -i '/class-path/I d' plugin/fop/MANIFEST.MF
 
+# Fix jar locations
+sed -i s,/usr/share/java/xml-apis-ext.jar,/usr/share/java/xml-commons-apis-ext.jar, fop.properties
+# fop >= 2.6
+[ -e %{_javadir}/fop/fop.jar ] && sed -i s,%{_javadir}/fop.jar,%{_javadir}/fop/fop.jar, fop.properties
+
 %build
 ant buildJar
 ant fop
@@ -96,6 +100,9 @@ cp -rp doc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Jun 11 2022 Igor Vlasenko <viy@altlinux.org> 1:1.0.3-alt2_10jpp8
+- support for fop 2.6
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.0.3-alt1_10jpp8
 - fc update
 
