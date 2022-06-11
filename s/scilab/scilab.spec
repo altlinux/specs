@@ -8,7 +8,7 @@
 
 Name:     scilab
 Version:  6.0.2
-Release:  alt3
+Release:  alt4
 Epoch:    1
 Summary:  A high-level language and system for numerical computations
 
@@ -110,7 +110,7 @@ BuildRequires: libmatio-devel
 BuildRequires: libsuitesparse-devel
 BuildRequires: libhdf5-devel
 #?BuildRequires: jhdf5
-BuildRequires: xml-commons-jaxp-1.3-apis
+BuildRequires: xml-commons-apis
 #BuildRequires: checkstyle
 
 BuildRequires: libncurses-devel
@@ -139,7 +139,7 @@ Requires: fop
 Requires: jeuclid
 Requires: batik
 Requires: xmlgraphics-commons
-Requires: xml-commons-jaxp-1.3-apis
+Requires: xml-commons-apis
 Requires: libfftw3
 %if_with freehep
 Requires: freehep-graphics2d
@@ -238,6 +238,9 @@ tar xf %SOURCE2 -C %buildroot%_datadir/scilab/modules/helptools/jar/
 %_datadir/mime/packages/scilab.xml
 
 %changelog
+* Sat Jun 11 2022 Igor Vlasenko <viy@altlinux.org> 1:6.0.2-alt4
+- NMU: support for xml-commons-apis-1.4.01-alt3_35jpp11
+
 * Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 1:6.0.2-alt3
 - NMU: removed checkstyle from BR: and fixed build
 
