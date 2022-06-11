@@ -2,29 +2,47 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 Name:           junit
 Epoch:          1
-Version:        4.13
-Release:        alt1_2jpp11
+Version:        4.13.1
+Release:        alt1_3jpp11
 Summary:        Java regression test package
 License:        EPL-1.0
 URL:            http://www.junit.org/
 BuildArch:      noarch
 
-# ./clean-tarball.sh %%{version}
-Source0:        %{name}4-%{version}-clean.tar.gz
-Source3:        create-tarball.sh
+# ./generate-tarball.sh
+Source0:        %{name}-%{version}.tar.gz
+Source1:        generate-tarball.sh
+
+Patch1:         0001-Port-to-hamcrest-2.2.patch
 
 BuildRequires:  maven-local
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
 BuildRequires:  mvn(org.hamcrest:hamcrest-core)
-BuildRequires:  mvn(org.hamcrest:hamcrest-library)
+%endif
 
-Obsoletes:      %{name}-demo < 4.12
+# For other packages, surefire-junit4 is normally pulled as transitive
+# runtime dependency of junit, but junit doesn't build-depend on
+# itself, so explicit BR on surefire-junit4 is needed.
+%if %{without bootstrap}
+BuildRequires:  mvn(org.apache.maven.surefire:surefire-junit4)
+%endif
 Source44: import.info
 
 Provides: junit = 0:%{version}
@@ -59,8 +77,12 @@ BuildArch: noarch
 Javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}4-r%{version}
+%setup -q -n junit4-r%{version}
 
+%patch1 -p1
+
+# InaccessibleBaseClassTest fails with Java 8
+sed -i /InaccessibleBaseClassTest/d src/test/java/org/junit/tests/AllTests.java
 
 %pom_remove_plugin :replacer
 sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >src/main/java/junit/runner/Version.java
@@ -87,24 +109,10 @@ sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >sr
       </configuration>
     </plugin>"
 
-# Use compiler release flag when building on JDK >8 for correct cross-compiling
-%pom_xpath_inject pom:profiles "
-    <profile>
-      <id>jdk-release-flag</id>
-      <activation>
-        <jdk>[9,)</jdk>
-      </activation>
-      <properties>
-        <maven.compiler.release>\${jdkVersion}</maven.compiler.release>
-      </properties>
-    </profile>"
-
-%pom_xpath_set //pom:compilerVersion 1.8
-
 %mvn_file : %{name}
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DjdkVersion=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DjdkVersion=1.6
 
 %install
 %mvn_install
@@ -121,6 +129,9 @@ sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >sr
 %doc doc/*
 
 %changelog
+* Sat Jun 11 2022 Igor Vlasenko <viy@altlinux.org> 1:4.13.1-alt1_3jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:4.13-alt1_2jpp11
 - new version
 
