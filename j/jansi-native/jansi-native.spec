@@ -16,7 +16,7 @@ BuildRequires: jpackage-default
 
 Name:           jansi-native
 Version:        1.8
-Release:        alt1_7jpp11
+Release:        alt1_9jpp11
 Summary:        Jansi Native implements the JNI Libraries used by the Jansi project
 License:        ASL 2.0
 URL:            http://jansi.fusesource.org/
@@ -29,6 +29,7 @@ BuildRequires:  mvn(org.fusesource:fusesource-pom:pom:)
 BuildRequires:  mvn(org.fusesource.hawtjni:maven-hawtjni-plugin) >= 1.9
 BuildRequires:  mvn(org.fusesource.hawtjni:hawtjni-runtime) >= 1.9
 Source44: import.info
+Provides: /usr/lib/java/jansi/jansi.jar
 
 %description
 Jansi is a small java library that allows you to use ANSI escape sequences
@@ -79,6 +80,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference license.txt
 
 %changelog
+* Sat Jun 11 2022 Igor Vlasenko <viy@altlinux.org> 0:1.8-alt1_9jpp11
+- added jni provides for maven migration
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 0:1.8-alt1_7jpp11
 - update
 
