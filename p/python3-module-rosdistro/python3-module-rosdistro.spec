@@ -1,7 +1,7 @@
 %define  modulename rosdistro
 
 Name:    python3-module-%modulename
-Version: 0.8.3
+Version: 0.9.0
 Release: alt1
 
 Summary: Tools to work with catkinized rosdistro files
@@ -37,5 +37,8 @@ Source:  %modulename-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Jun 11 2022 Andrey Cherepanov <cas@altlinux.org> 0.9.0-alt1
+- New version.
+
 * Wed May 04 2022 Andrey Cherepanov <cas@altlinux.org> 0.8.3-alt1
 - Initial build for Sisyphus.
