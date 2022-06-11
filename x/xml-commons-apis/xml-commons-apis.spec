@@ -1,14 +1,11 @@
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          xml-commons-apis
 Version:       1.4.01
-Release:       alt3_32jpp11
+Release:       alt3_35jpp11
 Summary:       APIs for DOM, SAX, and JAXP
 License:       ASL 2.0 and W3C and Public Domain
 URL:           http://xml.apache.org/commons/
@@ -28,9 +25,6 @@ BuildRequires: ant
 BuildRequires: apache-parent
 
 Provides:      xml-commons = %{version}-%{release}
-
-# TODO: Ugh, this next line should be dropped since it actually provides JAXP 1.4 now...
-Provides:      xml-commons-jaxp-1.3-apis = %{version}-%{release}
 Source44: import.info
 # jpackage deprecations
 Conflicts: xml-commons-apis12 < 0:1.2.05
@@ -78,14 +72,6 @@ iconv -f iso8859-1 -t utf-8 LICENSE.dom-documentation.txt > \
 iconv -f iso8859-1 -t utf-8 LICENSE.dom-software.txt > \
   LICENSE.dom-sof.temp && mv -f LICENSE.dom-sof.temp LICENSE.dom-software.txt
 
-# disable javadoc linting
-sed -i -e '/javadoc packagenames/aadditionalparam="-Xdoclint:none"' build.xml
-
-# in Java 9+ a single underscore is no longer a valid identifier
-sed -i -e 's/\(Throwable\|Exception\) _/\1 ex/' \
-  src/javax/xml/validation/SchemaFactoryFinder.java \
-  src/javax/xml/xpath/XPathFactoryFinder.java
-
 # remove bogus section from poms
 cp %{SOURCE3} %{SOURCE4} .
 sed -i '/distributionManagement/,/\/distributionManagement/ {d}' *.pom
@@ -95,7 +81,7 @@ sed -i '/distributionManagement/,/\/distributionManagement/ {d}' *.pom
 %mvn_alias :xml-apis-ext xerces:dom3-xml-apis
 
 %build
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 jar javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 jar javadoc
 
 # inject OSGi manifests
 jar ufm build/xml-apis.jar %{SOURCE1}
@@ -115,15 +101,16 @@ rm -rf build/docs/javadoc
 %doc LICENSE.dom-documentation.txt README.dom.txt
 %doc LICENSE.dom-software.txt LICENSE.sac.html
 %doc LICENSE.sax.txt README-sax  README.sax.txt
-%{_javadir}/*
 
 %files manual
 %doc build/docs/*
 
-%files javadoc
-%{_javadocdir}/*
+%files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 1.4.01-alt3_35jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.4.01-alt3_32jpp11
 - update
 
