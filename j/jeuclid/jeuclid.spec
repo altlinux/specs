@@ -8,7 +8,7 @@ Epoch:          2
 
 Name:		jeuclid
 Version:	3.1.9
-Release:	alt1_2jpp6
+Release:	alt2_2jpp6
 Summary:	MathML rendering solution
 Group:		Development/Java
 License:	ASL 2.0 and SPL
@@ -40,7 +40,7 @@ BuildRequires:	apache-commons-logging
 BuildRequires:	jcip-annotations
 BuildRequires:	xml-commons-apis
 BuildRequires:	xmlgraphics-commons >= 1.3
-BuildRequires:	fop >= 0.95
+#BuildRequires:	fop > 2.5
 BuildRequires:	apache-commons-cli >= 1.1
 BuildRequires:	apache-commons-lang
 BuildRequires:	desktop-file-utils
@@ -52,6 +52,7 @@ Requires:	batik >= 1.10
 Requires:	xmlgraphics-commons >= 1.3
 Requires:	jcip-annotations
 Source44: import.info
+Source45: fop.jar
 
 %description
 Core module containing basic JEuclid rendering and document handling classes.
@@ -69,7 +70,7 @@ The %{name}-mathviewer package contains the Swing MathViewer application.
 Summary:	JEuclid plug-in for FOP
 Group:	 	Development/Java
 Requires:	%{name} = %epoch:%{version}-%{release}
-Requires:	fop >= 0.95
+Requires:	fop > 2.5
 
 %description	fop
 The %{name}-fop package is a jeuclid plug-in for FOP.
@@ -94,7 +95,8 @@ touch -r NOTICE NOTICE.unix;
 mv NOTICE.unix NOTICE
 
 mkdir lib
-build-jar-repository -s -p lib jcip-annotations commons-logging xmlgraphics-commons batik-all fop commons-cli commons-lang xml-commons-apis xalan-j2
+build-jar-repository -s -p lib jcip-annotations commons-logging xmlgraphics-commons batik-all commons-cli commons-lang xml-commons-apis xalan-j2
+cp -a %{SOURCE45} lib/fop.jar
 
 #patch0 -p1
 %patch1 -p1
@@ -154,6 +156,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications \
 
 
 %changelog
+* Sat Jun 11 2022 Igor Vlasenko <viy@altlinux.org> 2:3.1.9-alt2_2jpp6
+- build with fop 2.6
+
 * Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 2:3.1.9-alt1_2jpp6
 - use jvm_run
 - set source/target 1.6
