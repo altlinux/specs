@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		freeplane
 Version:	1.3.15
-Release:	alt5_7jpp8
+Release:	alt6_7jpp8
 Summary:	Mind mapping, knowledge management and project management tool
 Group:		Office
 License:	GPLv2+
@@ -175,7 +175,7 @@ for cp in \
     xerces \
     xml-commons-apis-ext \
     xml-commons-apis \
-    fop
+    fop/fop
 do
     CLASSPATH=$CLASSPATH:%{_javadir}/$cp.jar
 done
@@ -272,6 +272,9 @@ cp -ap -t %{buildroot}%{_javadir}/%{name}/org.freeplane.plugin.script/lib/ \
 
 
 %changelog
+* Sat Jun 11 2022 Igor Vlasenko <viy@altlinux.org> 1.3.15-alt6_7jpp8
+- fixed build with fop 2.6
+
 * Tue Nov 09 2021 Igor Vlasenko <viy@altlinux.org> 1.3.15-alt5_7jpp8
 - fixed bundled groovy location (closes: #41144)
 
