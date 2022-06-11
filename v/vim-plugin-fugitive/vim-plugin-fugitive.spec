@@ -1,8 +1,8 @@
 %define oname vim-fugitive
 
 Name: vim-plugin-fugitive
-Version: 3.6
-Release: alt2
+Version: 3.7
+Release: alt1
 
 Summary: A Git wrapper for Vim
 
@@ -37,6 +37,9 @@ find . -mindepth 1 -maxdepth 1 -type d \
 %vim_runtime_dir/*/*
 
 %changelog
+* Sat Jun 11 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.7-alt1
+- Updated to v3.7.
+
 * Sun Jan 09 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.6-alt2
 - Packed all needed files.
 
