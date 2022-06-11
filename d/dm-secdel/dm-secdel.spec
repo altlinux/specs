@@ -3,7 +3,7 @@
 
 Name: dm-secdel
 Version: 1.0.7
-Release: alt5
+Release: alt6
 
 Summary: dm-linear with secure deletion on discard
 License: GPL-2.0-only
@@ -63,6 +63,9 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Sat Jun 11 2022 Vitaly Chikunov <vt@altlinux.org> 1.0.7-alt6
+- Fix build for v5.19.
+
 * Sun Oct 03 2021 Vitaly Chikunov <vt@altlinux.org> 1.0.7-alt5
 - Fix building for v5.14.
 
