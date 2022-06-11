@@ -11,8 +11,8 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           fop
 Summary:        XSL-driven print formatter
-Version:        2.5
-Release:        alt2_2jpp11
+Version:        2.6
+Release:        alt1_2jpp11
 # ASL 1.1:
 # several files in fop-core/src/main/resources/org/apache/fop/render/awt/viewer/resources
 # rest is ASL 2.0
@@ -21,50 +21,44 @@ URL:            https://xmlgraphics.apache.org/fop
 Source0:        https://www.apache.org/dist/xmlgraphics/%{name}/source/%{name}-%{version}-src.tar.gz
 Source1:        %{name}.script
 Source2:        batik-pdf-MANIFEST.MF
-Source3:        https://repo1.maven.org/maven2/org/apache/xmlgraphics/%{name}/%{version}/%{name}-%{version}.pom
 Source4:        https://www.apache.org/licenses/LICENSE-1.1.txt
-Patch1:         0001-Main.patch
-Patch2:         0002-Use-sRGB.icc-color-profile-from-colord-package.patch
-Patch3:         0003-Disable-javadoc-doclint.patch
+#Patch0:        fop-xmlunit.patch
+Patch1:		0001-Main.patch
+Patch2:		0002-Use-sRGB.icc-color-profile-from-colord-package.patch
 Patch4:         0004-Port-to-QDox-2.0.patch
-Patch5:         0005-Allow-javascript-in-javadoc.patch
-Patch6:		0006-Revert-Fix-compile-on-newer-mvn.patch
-Patch7:		0007-Revert-FOP-2895-Try-to-fix-Java-7.patch
-Patch8:		0008-Revert-FOP-2895-Build-at-root.patch
-Patch9:		0009-Revert-FOP-2895-Ant-build-should-use-mvn-jar-to-avoi.patch
 
 BuildArch:      noarch
 
-Requires:       apache-commons-io >= 1.2
-Requires:       apache-commons-logging >= 1.0.4
-Requires:       batik >= 1.7
-Requires:       fontbox
-Requires:       apache-commons-httpclient
 Requires:       java
 Requires:       xalan-j2 >= 2.7.0
 Requires:       xml-commons-apis >= 1.3.04
-Requires:       xmlgraphics-commons >= 1.5
 # Explicit requires for javapackages-tools since fop script
 # uses /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
 
-BuildRequires:  ant
 BuildRequires:  apache-commons-io
 BuildRequires:  apache-commons-logging
 BuildRequires:  batik
 BuildRequires:  fontbox
 BuildRequires:  javapackages-local
 BuildRequires:  junit
+BuildRequires:  maven-antrun-plugin
+BuildRequires:  maven-assembly-plugin
+BuildRequires:  maven-clean-plugin
+BuildRequires:  maven-local
+BuildRequires:  maven-plugin-build-helper
+BuildRequires:  mvn(javax.servlet:servlet-api)
+# For servlet, not packaged
+#BuildRequires:  maven-war-plugin
+BuildRequires:  pdfbox
 BuildRequires:  qdox
 BuildRequires:  servlet
+BuildRequires:  xml-maven-plugin
 BuildRequires:  xmlgraphics-commons >= 1.5
 BuildRequires:  xmlunit
+BuildRequires:  xmlunit-assertj
 BuildRequires:  xmlunit-core
 Source44: import.info
-
-Provides: xmlgraphics-fop = %{epoch}:%version-%release
-Obsoletes: xmlgraphics-fop <= 0:1.0-alt3_4jpp6
-Conflicts: xmlgraphics-fop <= 0:1.0-alt3_4jpp6
 
 %description
 FOP is the world's first print formatter driven by XSL formatting
@@ -86,47 +80,38 @@ Javadoc for %{name}.
 %setup -q
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
 
 
 cp %{SOURCE4} LICENSE-1.1
 
 rm -f fop/lib/*.jar fop/lib/build/*.jar
 
-#upstream workaround -- many thanks to spepping@apache.org -- see https://issues.apache.org/bugzilla/show_bug.cgi?id=50575
-ln -s %{_javadir}/qdox.jar fop/lib/build/qdox.jar
+# Not packaged
+%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin
+%pom_remove_dep javax.media:jai-core fop-core
+%pom_remove_dep com.sun.media:jai-codec fop-core
+%pom_remove_dep net.sf.offo:fop-hyph fop-core
+%pom_remove_dep net.sf.saxon:saxon fop-core
+# Update to current xmlunit
+%pom_change_dep xmlunit:xmlunit org.xmlunit:xmlunit-core fop-core
+%pom_add_dep org.xmlunit:xmlunit-assertj3 fop-core
+# Requires maven-war-plugin
+%pom_disable_module fop-servlet
+# Requires JAI, not packaged
+rm fop-core/src/main/java/org/apache/fop/util/bitmap/JAIMonochromeBitmapConverter.java
 
-# install in _javadir
-%mvn_file org.apache.xmlgraphics:%{name} %{name}
 
 %build
-#qdox intentionally left off classpath -- see https://issues.apache.org/bugzilla/show_bug.cgi?id=50575
-export CLASSPATH=$(build-classpath apache-commons-logging apache-commons-io \
-    fontbox xmlgraphics-commons batik-all \
-    servlet batik/batik-svg-dom xml-commons-apis \
-    xml-commons-apis-ext objectweb-asm/asm-all xmlunit)
-export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
-# FIXME no javadocs for now
-#ant -f fop/build.xml jar-main transcoder-pkg javadocs
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f fop/build.xml jar-main transcoder-pkg
+# Skip tests for now, make dirs needed by build but created by tests
+mkdir -p fop-events/target/test-classes
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
-# inject OSGi manifest
-jar ufm fop/build/%{name}.jar %{SOURCE2}
-
-%mvn_artifact %{SOURCE3} fop/build/%{name}.jar
 
 %install
 %mvn_install
-# jars
-#install -d -m 755 %{buildroot}%{_javadir}
-#install -p -m 644 fop/build/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
-install -p -m 644 fop/build/%{name}-transcoder.jar %{buildroot}%{_javadir}/pdf-transcoder.jar
+# inject OSGi manifest
+jar ufm %{buildroot}%{_javadir}/%{name}/%{name}.jar %{SOURCE2}
 
 # script
 install -d -m 755 %{buildroot}%{_bindir}
@@ -138,26 +123,17 @@ cp -rp fop/conf/* %{buildroot}%{_datadir}/%{name}/conf
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-# FIXME no javadocs for now
-#cp -rp fop/build/javadocs/* %{buildroot}%{_javadocdir}/%{name}
+cp -rp target/xmvn-apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/fop.conf`
 touch $RPM_BUILD_ROOT/etc/fop.conf
-
-# xmlgraphics-fop compat symlinks
-ln -s fop.jar %buildroot%_javadir/xmlgraphics-fop.jar
-ln -s fop %buildroot%_bindir/xmlgraphics-fop
 
 
 %files -f .mfiles
 %doc LICENSE LICENSE-1.1 README NOTICE
 %{_datadir}/%{name}
-%{_javadir}/pdf-transcoder.jar
 %{_bindir}/fop
 %config(noreplace,missingok) /etc/fop.conf
-# compat symlinks
-%_javadir/xmlgraphics-fop.jar
-%_bindir/xmlgraphics-fop
 
 %files javadoc
 %doc %{_javadocdir}/%{name}
@@ -165,6 +141,9 @@ ln -s fop %buildroot%_bindir/xmlgraphics-fop
 
 
 %changelog
+* Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 0:2.6-alt1_2jpp11
+- new version
+
 * Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 0:2.5-alt2_2jpp11
 - migrated to %%mvn_artifact
 
