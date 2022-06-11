@@ -6,12 +6,12 @@
 Name: kernel-image-%flavour
 
 %define xenomai_version		3.1.2
-%define ipipe_version		4.19.207-cip58-x86-20
+%define ipipe_version		4.19.229-cip67-x86-21
 %define kernel_base_version	4.19
-%define kernel_sublevel		.207
+%define kernel_sublevel		.229
 %define kernel_extra_version	%nil
-%define kernel_cip_release	cip58
-%define kernel_ipipe_release	20
+%define kernel_cip_release	cip67
+%define kernel_ipipe_release	21
 
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_cip_release.%kernel_ipipe_release
@@ -315,8 +315,9 @@ grep -w -e ^CONFIG_CPU_FREQ \
 	-e ^CONFIG_INTEL_IDLE \
 	-e ^CONFIG_INPUT_PCSPKR .config && exit 1
 
-%make_build bzImage
-%make_build modules
+export WERROR=0
+%make_build bzImage V=1
+%make_build modules V=1
 
 %install
 export ARCH=%base_arch
@@ -395,6 +396,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Sat Jun 11 2022 Vitaly Chikunov <vt@altlinux.org> 4.19.229-alt1.cip67.21
+- Update to ipipe-core-4.19.229-cip67-x86-21 (2022-02-18).
+
 * Sat Nov 13 2021 Vitaly Chikunov <vt@altlinux.org> 4.19.207-alt1.cip58.20
 - Update to ipipe-core-4.19.207-cip58-x86-20 (2021-10-07).
 
