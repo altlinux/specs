@@ -16,7 +16,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 Epoch: 1
 
@@ -31,7 +31,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 # since 2.53.1 rust-1.56 required
 %define rust_ver 1.56
 %define glib_ver 2.52.0
-%define pango_ver 1.44
+%define pango_ver 1.46
 %define gtk3_ver 3.10.0
 %define libxml2_ver 2.9.0
 %define cairo_ver 1.16
@@ -56,6 +56,7 @@ BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
 %{?_enable_vala:
 BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools >= %vala_ver}
+%{?_enable_check:BuildRequires: libgtest-devel}
 
 %description
 A high performance SVG rendering library associated with the Gnome Project.
@@ -161,7 +162,7 @@ the functionality of the installed %name.
 %_libdir/*.so.*
 %{?_enable_pixbuf_loader:%_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.so}
 %_datadir/thumbnailers/librsvg.thumbnailer
-%doc AUTHORS NEWS README*
+%doc AUTHORS NEWS* README* SECURITY*
 
 %files devel
 %_includedir/*
@@ -201,6 +202,9 @@ the functionality of the installed %name.
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Sat Jun 11 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.54.4-alt1
+- 2.54.4
+
 * Sat May 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.54.3-alt1
 - 2.54.3
 
