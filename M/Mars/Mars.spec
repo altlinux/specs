@@ -1,21 +1,33 @@
 Group: Emulators
-
+# BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
-# Automatically added by buildreq on Sun Jan 23 2022
-# optimized out: ant-lib javapackages-tools javazi libgpg-error python3-base sh4
-BuildRequires: ant java-headless unzip ImageMagick-tools
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/unzip ImageMagick-tools
+# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-default
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+Name:           Mars
+Version:        4.5
+Release:        alt6_17jpp11
+Summary:        An interactive development environment for programming in MIPS assembly language
 
-Name: Mars
-Version: 4.5
-Release: alt6
-Summary: An interactive development environment for programming in MIPS assembly language
+License:        MIT
+URL:            http://courses.missouristate.edu/KenVollmar/MARS/
+Source0:        http://courses.missouristate.edu/KenVollmar//mars/MARS_4_5_Aug2014/Mars4_5.jar
+Source1:        Mars
+Source2:        Mars.desktop
+Source3:        build.xml
+BuildArch:      noarch
 
-License: MIT
-Url: http://courses.missouristate.edu/KenVollmar/MARS/
-Source0: http://courses.missouristate.edu/KenVollmar/mars/MARS_4_5_Aug2014/Mars4_5.jar
-Source3: build.xml
-BuildArch: noarch
+BuildRequires:  ant
+BuildRequires:  java-1.8.0-openjdk-devel
+BuildRequires:  jpackage-utils
+BuildRequires:  desktop-file-utils
+
+Requires:       java-1.8.0-openjdk
+Requires:       jpackage-utils
+Source44: import.info
 
 %description
 MARS is a lightweight interactive development environment (IDE) for
@@ -23,74 +35,40 @@ programming in MIPS assembly language, intended for educational-level
 use with Patterson and Hennessy's Computer Organization and Design.
 
 %prep
-%setup -c %name-%version
-rm *.class
+%setup -q -c %{name}-%{version}
 
-cat > %name.desktop <<@@@
-[Desktop Entry]
-Name=MARS
-GenericName=MIPS Assembly Language Programming Environment
-Comment=Develop in assembly language for the MIPS family of processors
-Exec=%name
-Terminal=false
-Type=Application
-Icon=%name
-Categories=Development;IDE;Emulator
-@@@
-
-cat > %name.sh <<@@@
-#!/bin/sh
-#
-# Mars script
-# JPackage Project <http://www.jpackage.org/>
-
-# Source functions library
-_prefer_jre="true"
-. /usr/share/java-utils/java-functions
-
-# Configuration
-MAIN_CLASS="Mars"
-BASE_FLAGS="-Dswing.aatext=true -Dawt.useSystemAAFontSettings=on"
-BASE_OPTIONS=""
-BASE_JARS="Mars"
-
-# Set parameters
-set_jvm
-set_classpath \$BASE_JARS
-set_flags \$BASE_FLAGS
-set_options \$BASE_OPTIONS
-
-# Let's start
-run "\$@"
-@@@
+find . -name '*.jar'   -exec rm -f '{}' \;
+find . -name '*.class' -exec rm -f '{}' \;
 
 %build
 sed -i 's/\r//' MARSlicense.txt
 
-cp -p %SOURCE3 build.xml
-ant
-
-for i in 16 24 32 48 64; do
-    convert images/RedMars50.gif $i.png
-done
+cp -p %{SOURCE3} build.xml
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 
 
 %install
-install -D %name.jar %buildroot%_javadir/%name.jar
-install -D %name.sh %buildroot%_bindir/%name
-install -D %name.desktop %buildroot%_desktopdir/%name.desktop
+install -Dpm 644 %{name}.jar ${RPM_BUILD_ROOT}%{_javadir}/%{name}.jar
+install -Dpm 755 %{SOURCE1} ${RPM_BUILD_ROOT}%{_bindir}/%{name}
+desktop-file-install                                \
+    --add-category="Development" --add-category="IDE" --add-category="Emulator"                    \
+    --dir=${RPM_BUILD_ROOT}%{_datadir}/applications \
+    %{SOURCE2}
+ # icons
 for i in 16 24 32 48 64; do
-    install -D $i.png %buildroot%_iconsdir/${i}x${x}/apps/%name.png
+    convert images/RedMars50.gif $i.png
+    install -D $i.png %buildroot%_iconsdir/${i}x${i}/apps/%name.png
 done
 
 %files
-%doc *.txt docs/*
-%_javadir/%name.jar
-%_bindir/%name
-%_datadir/applications/Mars.desktop
-%_iconsdir/*/apps/*
-%_desktopdir/*
+%{_javadir}/%{name}.jar
+%{_bindir}/%{name}
+%{_datadir}/applications/Mars.desktop
+%doc MARSlicense.txt
 
 %changelog
+* Sat Jun 11 2022 Igor Vlasenko <viy@altlinux.org> 4.5-alt6_17jpp11
+- update and merged george@ -alt6 changes
+
 * Sun Jan 23 2022 Fr. Br. George <george@altlinux.ru> 4.5-alt6
 - Update for new java and repackage
 - Add icons
