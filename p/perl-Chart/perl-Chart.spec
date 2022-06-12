@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Test/Warn.pm)
+# END SourceDeps(oneline)
+%define _unpackaged_files_terminate_build 1
 %define dist Chart
 Name: perl-%dist
-Version: 2.4.10
+Version: 2.402.1
 Release: alt1
 
 Summary: A series of charting modules
@@ -8,7 +12,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/C/CH/CHARTGRP/Chart-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/L/LI/LICHTKIND/%{dist}-v%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +25,7 @@ is easily modified and expanded.  Chart uses Lincoln Stein's GD module for
 all of its graphics primitives calls.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-v%{version}
 
 %build
 %perl_vendor_build
@@ -30,12 +34,16 @@ all of its graphics primitives calls.
 %perl_vendor_install
 
 %files
-%doc README
+%doc README CONTRIBUTING Changes Documentation.pdf doc
 %dir %perl_vendor_privlib/Chart
+%perl_vendor_privlib/Chart.pm
 %perl_vendor_privlib/Chart/*.pm
-%doc %perl_vendor_privlib/Chart.pod
+%perl_vendor_privlib/Chart/Color
 
 %changelog
+* Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 2.402.1-alt1
+- automated CPAN update
+
 * Wed Apr 01 2015 Igor Vlasenko <viy@altlinux.ru> 2.4.10-alt1
 - automated CPAN update
 
