@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          hibernate-jpa-2.1-api
 Version:       1.0.0
-Release:       alt2_8jpp8
+Release:       alt2_12jpp11
 Summary:       Java Persistence 2.1 (JSR 338) API
 License:       EPL and BSD
 URL:           http://www.hibernate.org/
@@ -55,7 +55,7 @@ sed -i 's/\r//' src/main/javadoc/jdstyle.css
 
 %build
 
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -68,6 +68,9 @@ sed -i 's/\r//' src/main/javadoc/jdstyle.css
 %doc --no-dereference license.txt
 
 %changelog
+* Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 1.0.0-alt2_12jpp11
+- java11 build
+
 * Thu May 13 2021 Igor Vlasenko <viy@altlinux.org> 1.0.0-alt2_8jpp8
 - new version
 
