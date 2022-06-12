@@ -5,7 +5,7 @@
 %def_without pmemcheck
 
 Name: pmdk
-Version: 1.11.1
+Version: 1.12.0
 Release: alt1
 Summary: Persistent Memory Development Kit (formerly NVML)
 Group: System/Base
@@ -17,6 +17,8 @@ Source: %name-%version.tar
 BuildRequires: python3
 BuildRequires: pandoc
 BuildRequires: groff
+# for build deps/miniasync
+BuildRequires: cmake
 
 %{?_with_ndctl:BuildRequires: libndctl-devel >= 60.1 libdaxctl-devel >= 60.1}
 %{?_with_fabric:BuildRequires: libfabric-devel >= 1.4.2}
@@ -27,6 +29,7 @@ BuildRequires: /proc
 BuildRequires: gdb
 BuildRequires: bc
 BuildRequires: libunwind-devel
+BuildRequires: ndctl
 #BuildRequires: valgrind
 %endif
 
@@ -321,7 +324,10 @@ echo "}"                                >> src/test/testconfig.py
 
 rm -f src/test/obj_sync/TEST7
 rm -f src/test/pmemset*/TEST*
-
+rm -f src/test/ex_libpmemobj/TESTS.py
+%ifarch ppc64le
+rm -f src/test/pmem2_future/TESTS.py
+%endif
 make pycheck
 make check
 
@@ -347,6 +353,7 @@ make check
 %_libdir/libpmem2.so
 %_pkgconfigdir/libpmem2.pc
 %_includedir/libpmem2.h
+%_includedir/libpmem2
 %_man7dir/libpmem2*
 %_man3dir/pmem2_*
 
@@ -442,6 +449,9 @@ make check
 %endif
 
 %changelog
+* Sun Jun 12 2022 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1
+- new version 1.12.0
+
 * Wed Oct 06 2021 Alexey Shabalin <shaba@altlinux.org> 1.11.1-alt1
 - Initial build.
 
