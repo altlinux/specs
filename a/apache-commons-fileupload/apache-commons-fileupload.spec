@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -14,7 +14,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           apache-commons-fileupload
 Version:        1.4
-Release:        alt1_3jpp8
+Release:        alt1_7jpp11
 Summary:        API to work with HTML file upload
 License:        ASL 2.0
 URL:            http://commons.apache.org/fileupload/
@@ -71,7 +71,7 @@ rm -r src/main/java/org/apache/commons/fileupload/portlet
 
 %build
 # tests fail to compile because they use an obsolete version of servlet API (2.4)
-%mvn_build -f -- -Dcommons.osgi.symbolicName=org.apache.commons.fileupload
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.fileupload
 
 %install
 %mvn_install
@@ -85,6 +85,9 @@ rm -r src/main/java/org/apache/commons/fileupload/portlet
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 1:1.4-alt1_7jpp11
+- java11 build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.4-alt1_3jpp8
 - fc update
 
