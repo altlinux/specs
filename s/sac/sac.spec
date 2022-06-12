@@ -6,12 +6,12 @@ BuildRequires: unzip
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: sac
 Version: 1.3
-Release: alt3_32jpp8
+Release: alt3_38jpp11
 Summary: Java standard interface for CSS parser
 License: W3C
 #Original source: http://www.w3.org/2002/06/%{name}java-%{version}.zip
@@ -47,7 +47,7 @@ install -m 644 %{SOURCE1} build.xml
 find . -name "*.jar" -exec rm -f {} \;
 
 %build
-ant jar javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadoc
 
 # inject OSGi manifest
 jar ufm build/lib/sac.jar %{SOURCE2}
@@ -64,6 +64,9 @@ jar ufm build/lib/sac.jar %{SOURCE2}
 %doc --no-dereference COPYRIGHT.html
 
 %changelog
+* Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 0:1.3-alt3_38jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_32jpp8
 - fc update
 
