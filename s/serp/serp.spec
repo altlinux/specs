@@ -1,12 +1,12 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          serp
 Version:       1.15.2
-Release:       alt1_0.12.20150412cvsjpp8
+Release:       alt1_0.17.20150412cvsjpp11
 Summary:       Byte-code manipulation framework
 License:       BSD
 Url:           http://serp.sourceforge.net/
@@ -58,7 +58,7 @@ find . -name "*.jar" -delete
 
 %build
 
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -71,6 +71,9 @@ find . -name "*.jar" -delete
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 0:1.15.2-alt1_0.17.20150412cvsjpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.15.2-alt1_0.12.20150412cvsjpp8
 - fc update
 
