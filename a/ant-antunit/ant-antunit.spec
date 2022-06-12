@@ -1,97 +1,85 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global base_name       antunit
-
-Name:           ant-%{base_name}
-Version:        1.4
-Release:        alt1_2jpp11
-Summary:        Provide antunit ant task
+Name:           ant-antunit
+Version:        1.4.1
+Release:        alt1_3jpp11
+Summary:        Unit Test Framework for Ant Tasks
 License:        ASL 2.0
-URL:            http://ant.apache.org/antlibs/%{base_name}/
-Source0:        http://www.apache.org/dist/ant/antlibs/%{base_name}/source/apache-%{name}-%{version}-src.tar.bz2
-# Do not download ivy
-Patch0:         ant-antunit-local.patch
+URL:            https://ant.apache.org/antlibs/antunit
 BuildArch:      noarch
 
-BuildRequires:  javapackages-local
-BuildRequires:  ant
-BuildRequires:  ant-junit
-BuildRequires:  ant-testutil
-BuildRequires:  ivy-local
+Source0:        https://archive.apache.org/dist/ant/antlibs/antunit/source/apache-%{name}-%{version}-src.tar.bz2
+Source1:        https://archive.apache.org/dist/ant/antlibs/antunit/source/apache-%{name}-%{version}-src.tar.bz2.asc
+Source2:        https://archive.apache.org/dist/ant/KEYS
+
+BuildRequires:  gnupg2
+BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.ant:ant)
+BuildRequires:  mvn(org.apache.ant:ant-testutil)
 Source44: import.info
 
-
 %description
-The <antunit> task drives the tests much like <junit> does for JUnit tests.
+This library contains tasks that enables Ant task developers to test their tasks
+with Ant and without JUnit.  It contains a few assertion tasks and an antunit
+task that runs build files instead of test classes and is modelled after the
+JUnit task.
 
-When called on a build file, the task will start a new Ant project for that
-build file and scan for targets with names that start with "test". For each
-such target it then will:
-
-   1. Execute the target named setUp, if there is one.
-   2. Execute the target itself - if this target depends on other targets the
-      normal Ant rules apply and the dependent targets are executed first.
-   3. Execute the target names tearDown, if there is one.
-
-
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
+%{?javadoc_package}
 
 %prep
+
 %setup -q -n apache-%{name}-%{version}
-%patch0 -p1
 
-cat > build.properties <<EOF
-javac.-source=6
-javac.-target=1.6
-javac.test-source=6
-javac.test-target=1.6
-EOF
-mkdir ivy
-build-jar-repository -p ivy ivy
-mv CONTRIBUTORS CONTRIBUTORS.orig
-iconv -f ISO-8859-1 -t UTF-8 CONTRIBUTORS.orig > CONTRIBUTORS
-touch -r CONTRIBUTORS.orig CONTRIBUTORS
 
+find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
+
+mv %{name}-%{version}.pom pom.xml
+
+%pom_xpath_inject pom:project/pom:build '
+    <resources>
+      <resource>
+        <directory>${project.basedir}/src/main</directory>
+        <includes>
+          <include>**/antlib.xml</include>
+        </includes>
+      </resource>
+    </resources>'
+
+# EatYourOwnDogFoodTest
+sed -i 's|build/test-classes|target/test-classes|g' src/etc/testcases/antunit/java-io.xml
+
+# AssertTest
+sed -i 's|build/classes|target/classes|g' src/etc/testcases/assert.xml src/tests/junit/org/apache/ant/antunit/AssertTest.java
 
 %build
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Divy.mode=local package
-
-
-%install
-%mvn_artifact %{name}-%{version}.pom build/lib/%{name}-%{version}.jar
-%mvn_file ":ant-antunit" ant/ant-antunit
-%mvn_install -J docs/
-
-# OPT_JAR_LIST fragments
-mkdir -p %{buildroot}%{_sysconfdir}/ant.d
-echo "ant/%{name}" > %{buildroot}%{_sysconfdir}/ant.d/%{base_name}
-
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %check
-# Not resolving local antunit at the moment
-ant -Divy.mode=local -lib build/lib test || :
+# enable tests
+%pom_xpath_set pom:maven.test.skip false
 
+# compile tests
+xmvn test-compile -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+
+# run tests
+java -cp target/classes:target/test-classes:$(build-classpath junit hamcrest ant/ant-testutil ant ant/ant-launcher) \
+       org.junit.runner.JUnitCore \
+       $(find src/tests/junit/ -name '*.java' -printf '%%P\n' | cut -f 1 -d '.' | tr / .)
+
+%install
+%mvn_install
 
 %files -f .mfiles
 %doc --no-dereference common/LICENSE NOTICE
-%doc CONTRIBUTORS README README.html WHATSNEW
-%config(noreplace) %{_sysconfdir}/ant.d/%{base_name}
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference common/LICENSE NOTICE
-
 
 %changelog
+* Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 1.4.1-alt1_3jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.4-alt1_2jpp11
 - new version
 
