@@ -23,7 +23,7 @@ BuildRequires: jpackage-default
 Name:           maven
 Epoch:          1
 Version:        3.6.3
-Release:        alt4_10jpp11
+Release:        alt5_10jpp11
 Summary:        Java project management and project comprehension tool
 # maven itself is ASL 2.0
 # bundled slf4j is MIT
@@ -42,6 +42,7 @@ Patch2:         0002-Invoke-logback-via-reflection.patch
 Patch3:         0003-Use-non-shaded-HTTP-wagon.patch
 Patch4:         0004-Remove-dependency-on-powermock.patch
 
+BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
@@ -228,9 +229,6 @@ echo JAVA_HOME=%{_jvmlibdir}/java-11-openjdk >%{buildroot}%{_javaconfdir}/maven.
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/mavenrc`
 touch $RPM_BUILD_ROOT/etc/mavenrc
-
-mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/maven.conf`
-touch $RPM_BUILD_ROOT/etc/java/maven.conf
 # no %{name}-jdk-binding
 rm -f %buildroot%{_javaconfdir}/maven.conf-openjdk*
 
@@ -259,9 +257,11 @@ rm -f %buildroot%{_javaconfdir}/maven.conf-openjdk*
 %{_mandir}/man1/mvnDebug%{maven_version_suffix}.1*
 %endif
 %config(noreplace,missingok) /etc/mavenrc
-%config(noreplace,missingok) /etc/java/maven.conf
 
 %changelog
+* Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 1:3.6.3-alt5_10jpp11
+- maven-openjdkXX support
+
 * Sat Jun 11 2022 Igor Vlasenko <viy@altlinux.org> 1:3.6.3-alt4_10jpp11
 - update
 
