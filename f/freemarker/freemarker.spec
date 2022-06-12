@@ -15,7 +15,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           freemarker
 Version:        2.3.30
-Release:        alt4_3jpp8
+Release:        alt5_3jpp8
 Summary:        The Apache FreeMarker Template Engine
 License:        ASL 2.0
 URL:            https://freemarker.apache.org/
@@ -59,7 +59,7 @@ BuildRequires: xalan-j2 >= 2.7.0
 %if %{without jp_minimal}
 BuildRequires: dom4j
 BuildRequires: saxpath
-BuildRequires: jython
+#BuildRequires: jython
 BuildRequires: rhino >= 1.6
 %endif
 BuildRequires: jakarta-el-api
@@ -82,10 +82,6 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
-
-find -type f -name "*.jar" -delete
-find -type f -name "*.class" -delete
-
 %patch1
 %patch2
 %patch3
@@ -95,12 +91,17 @@ find -type f -name "*.class" -delete
 %patch8 -p1
 %patch33 -p0
 
+
+
+find -type f '(' -name '*.jar' -o -iname '*.class' ')' -print -delete
+
 # Use system ivy settings
 rm ivysettings.xml
 
 # Correct classpath for Javadoc generation
 sed -i 's/cachepath conf="IDE"/cachepath conf="javadoc"/' build.xml
-sed -i '/conf name="IDE"/i<conf name="javadoc" extends="build.jython2.5,build.jsp2.1" />' ivy.xml
+#sed -i '/conf name="IDE"/i<conf name="javadoc" extends="build.jython2.5,build.jsp2.1" />' ivy.xml
+sed -i '/conf name="IDE"/i<conf name="javadoc" extends="build.jsp2.1" />' ivy.xml
 
 # Disable Java 8 javadoc linting
 sed -i '/<javadoc/a\ additionalparam="-Xdoclint:none" encoding="UTF-8"' build.xml
@@ -119,6 +120,26 @@ sed -i -e '/dom4j/d' -e '/saxpath/d' ivy.xml
 rm src/main/java/freemarker/ext/xml/_Dom4jNavigator.java
 %endif
 
+sed -i -e '/"jython"/d' ivy.xml
+# Remove jython:jython
+#pom_remove_dep jython:jython
+rm src/main/java/freemarker/ext/ant/UnlinkedJythonOperationsImpl.java
+rm src/main/java/freemarker/ext/jython/JythonHashModel.java
+rm src/main/java/freemarker/ext/jython/JythonModel.java
+rm src/main/java/freemarker/ext/jython/JythonModelCache.java
+rm src/main/java/freemarker/ext/jython/JythonNumberModel.java
+rm src/main/java/freemarker/ext/jython/JythonSequenceModel.java
+rm src/main/java/freemarker/ext/jython/JythonVersionAdapter.java
+rm src/main/java/freemarker/ext/jython/JythonVersionAdapterHolder.java
+rm src/main/java/freemarker/ext/jython/JythonWrapper.java
+rm src/main/java/freemarker/ext/jython/_Jython20And21VersionAdapter.java
+rm src/main/java/freemarker/template/utility/JythonRuntime.java
+
+# Remove org.python:jython
+#pom_remove_dep org.python:jython
+rm src/main/java/freemarker/ext/jython/_Jython22VersionAdapter.java
+rm src/main/java/freemarker/ext/jython/_Jython25VersionAdapter.java
+
 # Don't import all the logger implementations in the OSGi metadata
 sed -i -e '/^Import-Package/s/:/: !org.apache.log4j, /' osgi.bnd
 
@@ -131,7 +152,7 @@ ant -Divy.mode=local -Ddeps.available=true javacc jar javadoc maven-pom
 
 %install
 export LANG=C.UTF-8
-%mvn_artifact build/pom.xml build/%{name}.jar
+%mvn_artifact build/pom.xml build/freemarker.jar
 %mvn_install -J build/api
 
 %files -f .mfiles
@@ -142,6 +163,9 @@ export LANG=C.UTF-8
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 0:2.3.30-alt5_3jpp8
+- build without jython
+
 * Sat May 28 2022 Igor Vlasenko <viy@altlinux.org> 0:2.3.30-alt4_3jpp8
 - build with aqute-bnd4
 
