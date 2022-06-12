@@ -8,7 +8,7 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.20.1
+Version: 1.21.0
 Release: alt1
 
 Summary: Input devices library
@@ -100,7 +100,7 @@ This package contains visual debug helper for %name.
 %meson_install
 
 %check
-%meson_test
+%__meson_test
 
 %files
 %_libdir/%name.so.*
@@ -141,6 +141,7 @@ This package contains visual debug helper for %name.
 %_man1dir/%name-quirks-validate.1.*
 %_man1dir/%name-record.1.*
 %_man1dir/%name-replay.1.*
+%_man1dir/%name-test.1.*
 %{?_enable_tests:%_man1dir/%name-test-suite.1.*}
 %_datadir/zsh/site-functions/_%{name}
 
@@ -152,6 +153,9 @@ This package contains visual debug helper for %name.
 
 
 %changelog
+* Sun Jun 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.21.0-alt1
+- 1.21.0
+
 * Wed Apr 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.1-alt1
 - 1.20.1 (fixed CVE-2022-1215)
 
