@@ -1,12 +1,12 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           codehaus-parent
 Version:        4
-Release:        alt4_17jpp8
+Release:        alt4_21jpp11
 Summary:        Parent pom file for codehaus projects
 License:        ASL 2.0
 URL:            http://codehaus.org/
@@ -31,7 +31,7 @@ cp -p %{SOURCE1} LICENSE
 %patch0
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -40,6 +40,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 0:4-alt4_21jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:4-alt4_17jpp8
 - fc update
 
