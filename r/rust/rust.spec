@@ -1,7 +1,7 @@
 Name: rust
 Epoch: 1
 Version: 1.61.0
-Release: alt1
+Release: alt2
 Summary: The Rust Programming Language
 
 %define r_ver 1.60.0
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 
 Patch1: rust-gdb.patch
 Patch2: rust-disable-lint-tests.patch
+Patch3: rustc-1.61.0-fix-compiletest-ignore_message.patch
+Patch4: 0001-Add-missing-target_feature-to-the-list-of-well-known.patch
 
 %def_without bootstrap
 %def_without bundled_llvm
@@ -22,6 +24,8 @@ Patch2: rust-disable-lint-tests.patch
 %global llvm_version 13.0
 
 %define _unpackaged_files_terminate_build 1
+
+Requires: /proc
 
 BuildRequires: /proc
 
@@ -477,6 +481,10 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Sun Jun 12 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.61.0-alt2
+- Add dependency to /proc.
+- Fix compiletest.
+
 * Sun May 29 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.61.0-alt1
 - New version (1.61.0).
 
