@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.41
+Version: 0.42
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -54,6 +54,7 @@ Group: Development/Java
 Obsoletes: jpackage-9-compat < %version
 Obsoletes: jpackage-10-compat < %version
 Provides: jpackage-default = %version-%release
+Provides: jpackage-11 = %version-%release
 
 Requires(pre): java-11-devel >= 11 java-11
 #Requires(pre): java-11-openjdk-javadoc-zip
@@ -83,6 +84,9 @@ install -d $RPM_BUILD_ROOT%_datadir
 %files -n jpackage-11-compat
 
 %changelog
+* Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 0.42-alt1
+- added jpackage-11 provides
+
 * Thu Jun 09 2022 Igor Vlasenko <viy@altlinux.org> 0.41-alt1
 - added Conflicts for maven-openjdkXX
 
