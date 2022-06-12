@@ -1,12 +1,12 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-commons-collections4
 Summary:        Extension of the Java Collections Framework
 Version:        4.4
-Release:        alt1_1jpp8
+Release:        alt1_6jpp11
 License:        ASL 2.0
 
 URL:            http://commons.apache.org/proper/commons-collections/
@@ -42,7 +42,7 @@ This package provides %{summary}.
 
 
 %build
-%mvn_build -- -Dcommons.osgi.symbolicName=org.apache.commons.collections4
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.collections4
 
 
 %install
@@ -58,6 +58,9 @@ This package provides %{summary}.
 
 
 %changelog
+* Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 4.4-alt1_6jpp11
+- java11 build
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 4.4-alt1_1jpp8
 - new version
 
