@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.33
+Version: 1.34
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -182,6 +182,7 @@ set | grep ^LD_
 %endif
 timeout 300 vm-run --verbose uname -a
 timeout 300 vm-run --verbose --overlay=ext4 uname -a
+! timeout --preserve-status 300 vm-run --verbose exit 1
 
 %ifarch %ix86 x86_64 ppc64le aarch64 armh
 %check
@@ -190,6 +191,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Sun Jun 12 2022 Vitaly Chikunov <vt@altlinux.org> 1.34-alt1
+- Fix always 0 exit code. (Add build test for this case.)
+
 * Fri May 13 2022 Vitaly Chikunov <vt@altlinux.org> 1.33-alt1
 - Replace egrep with grep -E.
 - Change default TMPDIR value to /tmp (to be on top-level tmpfs).
