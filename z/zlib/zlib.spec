@@ -1,6 +1,6 @@
 Name: zlib
 Version: 1.2.12
-Release: alt1
+Release: alt2
 
 Summary: The zlib compression and decompression library
 Summary(ru_RU.UTF-8): Библиотека сжатия данных zlib
@@ -146,6 +146,9 @@ make test
 %_pkgconfigdir/minizip.pc
 
 %changelog
+* Wed Mar 30 2022 Dmitry V. Levin <ldv@altlinux.org> 1.2.12-alt2
+- Backported upstream fix for incorrect CRC inputs.
+
 * Sun Mar 27 2022 Dmitry V. Levin <ldv@altlinux.org> 1.2.12-alt1
 - v1.2.11 -> v1.2.12 (fixes: CVE-2018-25032).
 
