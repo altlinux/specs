@@ -2,9 +2,9 @@
 %define qIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 %define _localstatedir %_var
 
-%define pkg_version 6.4
+%define pkg_version 6.5
 %define xdg_name org.a11y.brlapi
-%define api_ver 0.8.3
+%define api_ver 0.8.4
 %define _exec_prefix %nil
 %define _jnidir %_libdir/java
 
@@ -57,7 +57,7 @@ BuildRequires: doxygen python3-module-docutils
 %{?_with_speech_dispatcher:BuildRequires: libspeechd-devel}
 %{?_with_python3:
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-Cython >= %cython_ver}
+BuildRequires: python3-devel python3-module-setuptools python3-module-Cython >= %cython_ver}
 %{?_with_tcl:BuildRequires: tcl-devel}
 %{?_with_ocaml:BuildRequires: ocaml findlib}
 # for XWindow driver
@@ -283,7 +283,7 @@ popd
 # udev rules
 #install -pD -m644 Autostart/Udev/ %buildroot%_udevrulesdir/95-%name.rules
 pushd Autostart/Udev
-%makeinstall_std
+%makeinstall_std UDEV_PARENT_LOCATION=/lib
 popd
 
 # systemd unit
@@ -299,8 +299,10 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %config(noreplace) %_sysconfdir/brltty.conf
 %_sysconfdir/brltty/
 /lib/sysusers.d/%name.conf
-%_udevrulesdir/90-%name-device.rules
+%_udevrulesdir/90-%name-hid.rules
 %_udevrulesdir/90-%name-uinput.rules
+%_udevrulesdir/90-%name-usb-customized.rules
+%_udevrulesdir/90-%name-usb-generic.rules
 %_tmpfilesdir/%name.conf
 %_unitdir/brltty@.service
 %_unitdir/%name-device@.service
@@ -399,6 +401,9 @@ chmod +x %buildroot%_bindir/%name-config.sh
 %endif
 
 %changelog
+* Sun Jun 12 2022 Yuri N. Sedunov <aris@altlinux.org> 6.5-alt1
+- 6.5
+
 * Sun Jan 16 2022 Yuri N. Sedunov <aris@altlinux.org> 6.4-alt1
 - 6.4
 
