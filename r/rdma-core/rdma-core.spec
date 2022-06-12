@@ -11,8 +11,8 @@
 
 
 Name: rdma-core
-Version: 38.0
-Release: alt3.2
+Version: 41.0
+Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -33,7 +33,7 @@ BuildRequires: libudev-devel
 BuildRequires: pkgconfig(libnl-3.0)
 BuildRequires: pkgconfig(libnl-route-3.0)
 BuildRequires: libsystemd-devel
-BuildRequires: /usr/bin/rst2man.py
+BuildRequires: /usr/bin/rst2man
 %ifnarch %e2k
 BuildRequires: pandoc
 %endif
@@ -232,7 +232,6 @@ discover and use SCSI devices via the SCSI RDMA Protocol over InfiniBand.
 mkdir -p buildlib/pandoc-prebuilt
 sed -i '/rdma_man_get_prebuilt(/a execute_process(COMMAND "echo" " " OUTPUT_FILE "${OBJ}")' buildlib/rdma_man.cmake
 %endif
-subst 's|NAMES rst2man|& rst2man.py|' buildlib/Findrst2man.cmake
 
 %build
 
@@ -581,6 +580,9 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %docdir/ibsrpdm.md
 
 %changelog
+* Sun Jun 12 2022 Alexey Shabalin <shaba@altlinux.org> 41.0-alt1
+- new version 41.0
+
 * Thu Feb 17 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 38.0-alt3.2
 - dma_coherent support for Elbrus
 
