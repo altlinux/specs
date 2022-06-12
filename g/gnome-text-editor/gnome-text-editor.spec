@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: gnome-text-editor
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: A simple Text Editor for GNOME
@@ -23,7 +23,7 @@ Source: %name-%version.tar
 
 %define glib_ver 2.69
 %define gtk_ver 4.6
-%define gtksource_ver 5.3.1
+%define gtksource_ver 5.4.2
 %define enchant_ver 2.2.0
 
 BuildRequires(pre): rpm-macros-meson
@@ -65,6 +65,9 @@ general purpose default editor.
 %doc README* NEWS
 
 %changelog
+* Sun Jun 12 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
+- 42.2
+
 * Thu Apr 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 
