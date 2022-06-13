@@ -4,7 +4,7 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           maven-enforcer
 Version:        3.0.0_M2
-Release:        alt1_3jpp8
+Release:        alt1_3jpp11
 Summary:        Maven Enforcer
 License:        ASL 2.0
 URL:            http://maven.apache.org/enforcer
@@ -109,7 +109,7 @@ sed -e "s|<artifactId>plexus-maven-plugin</artifactId>|<artifactId>plexus-compon
     -i enforcer-{api,rules}/pom.xml
 
 %build
-%mvn_build -s -f
+%mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -128,6 +128,9 @@ sed -e "s|<artifactId>plexus-maven-plugin</artifactId>|<artifactId>plexus-compon
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:3.0.0_M2-alt1_3jpp11
+- java11 build
+
 * Fri May 28 2021 Igor Vlasenko <viy@altlinux.org> 0:3.0.0_M2-alt1_3jpp8
 - new version
 
