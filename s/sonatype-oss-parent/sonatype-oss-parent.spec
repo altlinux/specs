@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           sonatype-oss-parent
 Version:        7
-Release:        alt1_19jpp8
+Release:        alt1_19jpp11
 Summary:        Sonatype OSS Parent
 
 License:        ASL 2.0
@@ -19,7 +19,6 @@ BuildArch: noarch
 
 BuildRequires:  maven-local
 
-Provides:       deprecated()
 Source44: import.info
 
 %description
@@ -40,6 +39,9 @@ cp -p %{SOURCE1} LICENSE
 %doc LICENSE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 7-alt1_19jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 7-alt1_19jpp8
 - fc update
 
