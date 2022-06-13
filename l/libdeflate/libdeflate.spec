@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libdeflate
-Version: 1.11
+Version: 1.12
 Release: alt1
 Summary: Heavily optimized library for DEFLATE/zlib/gzip compression and decompression
 License: MIT
@@ -80,6 +80,11 @@ rm %buildroot%_libdir/%name.a
 %_bindir/libdeflate-*
 
 %changelog
+* Mon Jun 13 2022 Vitaly Chikunov <vt@altlinux.org> 1.12-alt1
+- Update to v1.12 (2022-06-12).
+- This release focuses on improving the performance of the CRC-32 and
+  Adler-32 checksum algorithms on x86 and ARM (both 32-bit and 64-bit).
+
 * Thu May 26 2022 Vitaly Chikunov <vt@altlinux.org> 1.11-alt1
 - Update to v1.11 (2022-05-23).
 
