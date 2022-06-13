@@ -1,5 +1,5 @@
 Name: prosody
-Version: 0.12.0
+Version: 0.12.1
 Release: alt1
 
 Summary: Modern XMPP communication server
@@ -57,6 +57,7 @@ install -Dpm644 %SOURCE4 %buildroot/%_tmpfilesdir/prosody.conf
 %post_service prosody
 
 %files
+%doc AUTHORS CHANGES CONTRIBUTING COPYING HACKERS README
 %_bindir/*
 %_libexecdir/prosody
 %config(noreplace) %_sysconfdir/prosody
@@ -67,6 +68,10 @@ install -Dpm644 %SOURCE4 %buildroot/%_tmpfilesdir/prosody.conf
 %_man1dir/*
 
 %changelog
+* Mon Jun 13 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12.1-alt1
+- Updated to 0.12.1.
+- Packed more docs files.
+
 * Mon Mar 21 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12.0-alt1
 - Updated to 0.12.0.
 
