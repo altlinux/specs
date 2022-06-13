@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -21,7 +21,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           %{parent}-%{subproj}
 Version:        1.9.2
-Release:        alt1_3jpp8
+Release:        alt1_7jpp11
 Summary:        Doxia content generation framework
 License:        ASL 2.0
 URL:            http://maven.apache.org/doxia/
@@ -124,7 +124,7 @@ rm -r doxia-doc-renderer/src/main/java/org/apache/maven/doxia/docrenderer/pdf/fo
 
 %build
 # tests can't run because of missing deps
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -137,6 +137,9 @@ rm -r doxia-doc-renderer/src/main/java/org/apache/maven/doxia/docrenderer/pdf/fo
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.9.2-alt1_7jpp11
+- java11 build
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9.2-alt1_3jpp8
 - new version, use jvm8
 
