@@ -4,7 +4,7 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -48,7 +48,7 @@ Source1:        http://dist.codehaus.org/stax/jars/stax-%{version}.pom
 Source2:        http://dist.codehaus.org/stax/jars/stax-api-%{apiver}.pom
 Name:           bea-stax
 Version:        1.2.0
-Release:        alt4_20jpp8
+Release:        alt4_20jpp11
 License:        ASL 1.1 and ASL 2.0
 BuildArch:      noarch
 
@@ -90,8 +90,11 @@ cp -p %{SOURCE1} pom.xml
 # Incorrectly scoped
 %pom_remove_dep :junit
 
+sed -i 's,source="1.2" target="1.2",source="1.6" target="1.6" encoding="iso8859-1",' build.xml
+
 %build
-ant all javadoc
+#export LANG=C.ISO8859-1
+ant all
 
 %install
 %mvn_file ':{*}' bea-@1
@@ -100,7 +103,8 @@ ant all javadoc
 %mvn_artifact pom.xml build/stax-%{version}-dev.jar
 %mvn_artifact %{SOURCE2} build/stax-api-%{apiver}.jar
 
-%mvn_install -J build/javadoc
+%mvn_install 
+#-J build/javadoc
 
 %files -f .mfiles
 %doc --no-dereference ASF2.0.txt
@@ -108,10 +112,13 @@ ant all javadoc
 %files api -f .mfiles-api
 %doc --no-dereference ASF2.0.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference ASF2.0.txt
+#%files javadoc -f .mfiles-javadoc
+#%doc --no-dereference ASF2.0.txt
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.2.0-alt4_20jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt4_20jpp8
 - fc update
 
