@@ -5,8 +5,10 @@
 %set_verify_elf_method strict
 %endif
 
+%def_without gpu
+
 Name: stress-ng
-Version: 0.14.01
+Version: 0.14.02
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -32,6 +34,11 @@ BuildRequires: liblksctp-devel
 BuildRequires: libseccomp-devel
 BuildRequires: libxxhash-devel
 BuildRequires: zlib-devel
+%if_with gpu
+BuildRequires: libEGL-devel
+BuildRequires: libgbm-devel
+BuildRequires: libglvnd-devel
+%endif
 
 %description
 stress-ng will stress test a computer system in various selectable
@@ -74,13 +81,16 @@ time timeout 300 make lite-test
 banner done
 
 %files
-%doc COPYING README.md mascot/stress-ng.svg
+%doc COPYING README.md mascot/stress-ng.svg debian/changelog
 %_bindir/stress-ng
 %_datadir/bash-completion/completions/stress-ng
 %_datadir/stress-ng
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Mon Jun 13 2022 Vitaly Chikunov <vt@altlinux.org> 0.14.02-alt1
+- Update to V0.14.02 (2022-06-12).
+
 * Wed May 18 2022 Vitaly Chikunov <vt@altlinux.org> 0.14.01-alt1
 - Update to V0.14.01 (2022-05-05).
 
