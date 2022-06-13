@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          dnsjava
 Version:       2.1.3
-Release:       alt2_18jpp8
+Release:       alt3_18jpp8
 Summary:       Java DNS implementation
 License:       BSD and MIT
 URL:           http://www.dnsjava.org/
@@ -76,10 +76,11 @@ mv -f Changelog.tmp Changelog
 export CLASSPATH=%(build-classpath jce aqute-bnd4)
 ant -Dj2se.javadoc=%{_javadocdir}/java clean docsclean bundle docs
 
-%mvn_artifact %{SOURCE1} org.xbill.dns_%{version}.jar
+#mvn_artifact %{SOURCE1} org.xbill.dns_%{version}.jar
 
 %install
-%mvn_install -J doc
+#mvn_install -J doc
+install -D -m644 org.xbill.dns_%{version}.jar %buildroot%_javadir/%name.jar
 
 %if ! 0%{?do_not_test}
 %check
@@ -88,14 +89,21 @@ ant -Dj2se.javadoc=%{_javadocdir}/java compile_tests
 ant -Dj2se.javadoc=%{_javadocdir}/java run_tests
 %endif
 
-%files -f .mfiles
+%files
+#-f .mfiles
 %doc --no-dereference LICENSE
 %doc Changelog README USAGE examples.html *.java
+%_javadir/%name.jar
 
+%if 0
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
+%endif
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:2.1.3-alt3_18jpp8
+- build w/o xmvn to support xmvn4
+
 * Fri May 27 2022 Igor Vlasenko <viy@altlinux.org> 0:2.1.3-alt2_18jpp8
 - build with compat bnd4
 
