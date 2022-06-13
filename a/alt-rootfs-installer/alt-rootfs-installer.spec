@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.5.4
+Version: 0.5.5
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -41,6 +41,10 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Sun Mar 13 2022 Anton Midyukov <antohami@altlinux.org> 0.5.5-alt1
+- jetson_nano-aarch64.sh: extract archive to /root
+- fix include logging function for portable version
+
 * Wed Jan 26 2022 Anton Midyukov <antohami@altlinux.org> 0.5.4-alt1
 - Fix rewrite bootloader with GPT partition table
 - Add AllWinner riscv64 support (nezha, lichee_rv)
