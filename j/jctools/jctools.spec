@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global srcname JCTools
 
 Name:           jctools
 Version:        3.3.0
-Release:        alt1_1jpp8
+Release:        alt1_1jpp11
 Summary:        Java Concurrency Tools for the JVM
 License:        ASL 2.0
 
@@ -112,6 +112,9 @@ rm -r jctools-core/src/test/java/org/jctools/maps/linearizability_test/
 
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_1jpp11
+- java11 build
+
 * Mon Aug 16 2021 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_1jpp8
 - new version
 
