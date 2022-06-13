@@ -4,10 +4,11 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 
 Summary: A caching front-end based on the Dogpile lock
+
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/dogpile.cache/
@@ -72,6 +73,9 @@ tox.py3 --sitepackages
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jun 13 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.6-alt1
+- Automatically updated to 1.1.6.
+
 * Tue Apr 26 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.5-alt1
 - Automatically updated to 1.1.5.
 
