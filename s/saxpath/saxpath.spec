@@ -4,12 +4,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:       saxpath
 Version:    1.0
-Release:    alt5_20jpp8
+Release:    alt5_20jpp11
 Summary:    Simple API for XPath
 License:    Saxpath
 URL:        http://sourceforge.net/projects/saxpath/
@@ -51,7 +51,7 @@ cp %{SOURCE2} .
 mkdir src/conf
 touch src/conf/MANIFEST.MF
 
-ant
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8 
 
 # fix rpmlint warings: saxpath-javadoc.noarch: W: wrong-file-end-of-line-encoding /usr/share/javadoc/saxpath/**/*.css
 for file in `find build/doc -type f | grep .css`; do
@@ -74,6 +74,9 @@ ant test
 
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0-alt5_20jpp11
+- java11 build
+
 * Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0-alt5_20jpp8
 - migrated to %%mvn_artifact
 
