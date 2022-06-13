@@ -6,17 +6,18 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt28
+Release: alt28.2
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
 Group: System/Configuration/Packaging
-License: GPL
+License: GPL-2.0+
 Url: http://www.nongnu.org/synaptic/
 
 # http://people.debian.org/~mvo/synaptic/%name-%version.tar
 Source: %name-%version.tar
 Source1: package-supported.png
 Source2: %name.conf
+Source3: %name-ru.po
 
 Patch1: %name-%version-alt.patch
 
@@ -57,6 +58,7 @@ Synaptic - это графическая оболочка для APT (Advanced P
 %patch1 -p1
 
 install -p -m644 %SOURCE1 pixmaps/hicolor/16x16/package-supported.png
+install -p -m644 %SOURCE3 po/ru.po
 
 # bootstrap russian help files
 gnome-doc-prepare --copy --force
@@ -108,6 +110,10 @@ install -p -m644 %SOURCE2 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Mon Jun 13 2022 Hihin Ruslan <ruslandh@altlinux.ru> 0.58-alt28.2
+- NMU: added russian tranlation from gammaray_basealt.ru
+- Thanks gosts_87@ for creating bugs and trying to translate (ALT bug 42843)
+
 * Wed Dec 08 2021 Ivan Zakharyaschev <imz@altlinux.org> 0.58-alt28
 - Adapted to the new API with custom callbacks introduced
   in libapt-0.5.15lorg2-alt74. (Surprisingly, the call that had to be adapted
@@ -605,4 +611,5 @@ install -p -m644 %SOURCE2 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 * Mon Jan 15 2001 Alfredo K. Kojima <kojima@conectiva.com.br>
 + raptor-0.2-1cl
 - release version 0.2 (first)
+
 
