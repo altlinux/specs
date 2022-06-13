@@ -1,12 +1,12 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           avalon-framework
 Epoch:          0
 Version:        4.3
-Release:        alt5_24jpp8
+Release:        alt5_24jpp11
 Summary:        Java components interfaces
 License:        ASL 2.0
 URL:            http://avalon.apache.org/
@@ -78,7 +78,7 @@ done
 
 %build
 # Test use old jmock
-%mvn_build -f -j
+%mvn_build -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -92,6 +92,9 @@ done
 #%doc --no-dereference avalon-framework-api-4.3/NOTICE.txt
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:4.3-alt5_24jpp11
+- java11 build
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0:4.3-alt5_24jpp8
 - fixed build (disabled javadoc)
 
