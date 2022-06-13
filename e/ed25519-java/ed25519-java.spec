@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          ed25519-java
 Version:       0.3.0
-Release:       alt1_8jpp8
+Release:       alt1_8jpp11
 Summary:       Implementation of EdDSA (Ed25519) in Java
 License:       CC0
 URL:           https://github.com/str4d/ed25519-java
@@ -69,6 +69,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_8jpp11
+- java11 build
+
 * Thu Jun 03 2021 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_8jpp8
 - jvm8 update
 
