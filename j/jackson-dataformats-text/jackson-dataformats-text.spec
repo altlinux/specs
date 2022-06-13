@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jackson-dataformats-text
 Version:       2.9.8
-Release:       alt1_3jpp8
+Release:       alt1_9jpp11
 Summary:       Jackson standard text-format data format backends
 License:       ASL 2.0
 URL:           https://github.com/FasterXML/jackson-dataformats-text
@@ -81,7 +81,7 @@ sed -i 's/\r//' LICENSE NOTICE
 %mvn_file ":{*}" jackson-dataformats/@1
 
 %build
-%mvn_build -s
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -106,6 +106,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 2.9.8-alt1_9jpp11
+- java11 build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 2.9.8-alt1_3jpp8
 - fc update
 
