@@ -1,15 +1,15 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           javacc-maven-plugin
 Version:        2.6
-Release:        alt5_29jpp8
+Release:        alt5_35jpp11
 Summary:        JavaCC Maven Plugin
 License:        ASL 2.0
-URL:            http://mojo.codehaus.org/javacc-maven-plugin/
+URL:            https://github.com/mojohaus/javacc-maven-plugin
 BuildArch:      noarch
 
 #svn export http://svn.codehaus.org/mojo/tags/javacc-maven-plugin-2.6
@@ -51,7 +51,7 @@ API documentation for %{name}.
 cp -p %{SOURCE1} .
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -63,6 +63,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt src/main/resources/NOTICE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:2.6-alt5_35jpp11
+- java11 build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt5_29jpp8
 - fc update
 
