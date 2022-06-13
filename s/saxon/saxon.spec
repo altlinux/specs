@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-alternatives rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -47,7 +47,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:        Java XPath, XSLT 2.0 and XQuery implementation
 Name:           saxon
 Version:        9.4.0.9
-Release:        alt2_10jpp8
+Release:        alt2_10jpp11
 # net.sf.saxon.om.XMLChar is from ASL-licensed Xerces
 # net/sf/saxon/option/jdom/ is MPLv1.1
 # net/sf/saxon/serialize/codenorm/ is UCD
@@ -191,7 +191,7 @@ platform=net.sf.saxon.java.JavaPlatform
 EOF
 
 export CLASSPATH=$(build-classpath axiom xml-commons-apis xml-commons-resolver jdom jdom2 xom bea-stax-api dom4j)
-ant \
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  \
   -Dj2se.javadoc=%{_javadocdir}/java \
   -Djdom.javadoc=%{_javadocdir}/jdom
 
@@ -250,6 +250,9 @@ mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 %{_mandir}/man1/%{name}q.1*
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:9.4.0.9-alt2_10jpp11
+- java11 build
+
 * Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0:9.4.0.9-alt2_10jpp8
 - use jvm_run
 
