@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ texinfo unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global cluster jnr
@@ -12,7 +12,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jffi
 Version:        1.3.4
-Release:        alt1_1jpp8
+Release:        alt1_1jpp11
 Summary:        Java Foreign Function Interface
 
 License:        LGPLv3+ or ASL 2.0
@@ -136,6 +136,9 @@ ant -Duse.system.libffi=1 -Drun.jvm.model=-Xmx128m test
 %doc --no-dereference COPYING.GPL COPYING.LESSER LICENSE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.3.4-alt1_1jpp11
+- java11 build
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 1.3.4-alt1_1jpp8
 - new version
 
