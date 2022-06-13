@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global spec_name geronimo-jms_1.1_spec
 
 Name:           geronimo-jms
 Version:        1.1.1
-Release:        alt3_29jpp8
+Release:        alt3_29jpp11
 Summary:        J2EE JMS v1.1 API
 License:        ASL 2.0
 URL:            http://geronimo.apache.org/
@@ -45,7 +45,7 @@ This package provides %{summary}.
 %mvn_alias : javax.jms:jms
 
 %build
-%mvn_build -f
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -57,6 +57,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt3_29jpp11
+- java11 build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt3_29jpp8
 - fc update
 
