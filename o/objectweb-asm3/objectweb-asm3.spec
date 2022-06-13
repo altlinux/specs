@@ -5,13 +5,13 @@ BuildRequires(pre): rpm-macros-java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 %define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           objectweb-asm3
 Version:        3.3.1
-Release:        alt2_23jpp8
+Release:        alt2_23jpp11
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
 URL:            http://asm.ow2.org/
@@ -56,6 +56,8 @@ sed -i /Class-path/d archive/asm-xml.xml
 # compatibility with existing Eclipse plugins, so we have to use the
 # old BSN (org.objectweb.asm).
 sed -i s/org.objectweb.asm.all/org.objectweb.asm/ archive/asm-all.xml
+
+sed -i 's,source="1.3" target="1.2",source="1.6" target="1.6",' build.xml
 
 %build
 %ant -Dobjectweb.ant.tasks.path= jar jdoc
@@ -120,6 +122,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc LICENSE.txt
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 3.3.1-alt2_23jpp11
+- fixed build with java11
+
 * Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 3.3.1-alt2_23jpp8
 - rebuild to use jvm_run
 
