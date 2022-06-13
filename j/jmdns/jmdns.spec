@@ -1,12 +1,12 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jmdns
 Version:        3.5.5
-Release:        alt1_1jpp8
+Release:        alt1_1jpp11
 Summary:        Java implementation of multi-cast DNS
 
 License:        ASL 2.0
@@ -44,7 +44,7 @@ chmod -x README.md
 
 %build
 # Tests are disabled because they try to use network
-%mvn_build -f --skip-javadoc
+%mvn_build -f --skip-javadoc -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -58,6 +58,9 @@ chmod -x README.md
 
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:3.5.5-alt1_1jpp11
+- java11 build
+
 * Wed May 12 2021 Igor Vlasenko <viy@altlinux.org> 0:3.5.5-alt1_1jpp8
 - new version
 
