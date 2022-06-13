@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -57,7 +57,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           xstream
 Version:        1.4.14
-Release:        alt1_2jpp8
+Release:        alt1_2jpp11
 Summary:        Java XML serialization library
 License:        BSD
 URL:            http://x-stream.github.io/
@@ -312,6 +312,9 @@ rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.4.14-alt1_2jpp11
+- java11 build
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4.14-alt1_2jpp8
 - new version
 
