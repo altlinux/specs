@@ -1,5 +1,5 @@
 %define module_name	evdi
-%define module_version	1.10.1
+%define module_version	1.11.0
 %define module_release	alt1
 
 %define flavour		un-def
@@ -31,7 +31,7 @@ PreReq: coreutils
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
-Patch1: %module_name-1.10.1-centos9.patch
+Patch1: %module_name-1.11.0-centos9.patch
 
 %description
 Extensible Virtual Display Interface
@@ -65,6 +65,10 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Jun 03 2022 L.A. Kostis <lakostis@altlinux.org> 1.11.0-alt1
+- Updated to 1.11.0.
+- Updated -centos9 patch.
 
 * Mon Mar 21 2022 L.A. Kostis <lakostis@altlinux.org> 1.10.1-alt1
 - Updated to 1.10.1.
