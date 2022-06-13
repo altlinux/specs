@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -11,7 +11,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          jboss-jms-1.1-api
 Version:       1.0.1
-Release:       alt2_20jpp8
+Release:       alt2_20jpp11
 Summary:       JBoss JMS API 1.1 Spec
 License:       CDDL or GPLv2 with exceptions
 URL:           http://www.jboss.org
@@ -44,7 +44,7 @@ This package contains the API documentation for %{name}.
 %pom_remove_plugin :maven-source-plugin
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -58,6 +58,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1:1.0.1-alt2_20jpp11
+- java11 build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_20jpp8
 - fc update
 
