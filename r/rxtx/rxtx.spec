@@ -3,7 +3,7 @@ Group: System/Libraries
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 %define fedora 31
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -17,7 +17,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:	Parallel communication for the Java Development Toolkit
 Name:		rxtx
 Version:	%{upver}
-Release:	alt3_0.24.20100211jpp8
+Release:	alt3_0.24.20100211jpp11
 License:	LGPLv2+
 URL:		http://rxtx.qbang.org/
 # The source for this package was pulled from upstream's vcs.  Use the
@@ -35,6 +35,7 @@ Patch5:		rxtx-2.2-Add-Arduino-driver-ttyACM-rxtxcomm-as-device.patch
 Patch6:		rxtx-2.2-java-version-fix.patch
 Patch7:		rxtx-2.2-convert-strcpy-to-strncpy.patch
 Patch8:		rxtx-2.2-minor.patch
+Patch9:		rxtx-2.2-javah.patch
 
 BuildRequires:	libtool automake
 BuildRequires:	ant
@@ -60,16 +61,24 @@ sed -e 's|@JNIPATH@|%{jni}|' %{PATCH1} | patch -s -b --suffix .p1 -p1
 %patch7 -p1
 %endif
 %patch8 -p1
+%patch9 -p1
 # remove prebuild binaries
 find . -name '*.jar' -exec rm {} \;
 find . -name '*.hqx' -exec rm {} \;
 cp -a %{SOURCE1} .
 
+rm -f acinclude.m4 aclocal.m4 libtool ltconfig ltmain.sh \
+      Makefile.in config.guess config.sub configure install-sh missing mkinstalldirs
+./autogen.sh
+
 # Don't need to install jar file, mvn_install will do it
 sed -i -e '/JHOME/d' Makefile.in
 
+sed -i 's,-source 1.3 -target 1.3,-source 1.6 -target 1.6,g' configure.in configure
+
 %build
-export JAVA_HOME=%{java_home}
+#export JAVA_HOME=%{java_home}
+#autoreconf -fisv
 %configure
 # parallel make fails with make %%{?_smp_mflags}
 make
@@ -95,6 +104,9 @@ find %{buildroot} -name '*.la' -exec rm {} \;
 %{jni}
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 2.2-alt3_0.24.20100211jpp11
+- fixed build with java11
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_0.24.20100211jpp8
 - update
 
