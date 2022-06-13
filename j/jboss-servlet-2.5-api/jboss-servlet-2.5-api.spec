@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:             jboss-servlet-2.5-api
 Version:          1.0.1
-Release:          alt3_18jpp8
+Release:          alt3_18jpp11
 Summary:          Java Servlet 2.5 API
 License:          ASL 2.0 and W3C
 Url:              http://www.jboss.org
@@ -44,7 +44,7 @@ This package contains the API documentation for %{name}.
 
 %build
 
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -56,6 +56,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt3_18jpp11
+- java11 build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_18jpp8
 - fc update
 
