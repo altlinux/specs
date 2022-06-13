@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global alternate_name PDFRenderer
@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:        A 100% Java PDF renderer and viewer
 Name:           pdf-renderer
 Version:        0
-Release:        alt3_0.23.128svn.20110310jpp8
+Release:        alt3_0.23.128svn.20110310jpp11
 #src/com/sun/pdfview/decode/CCITTFaxDecoder.java under a BSD-alike License
 #src/com/sun/pdfview/font/ttf/resource/glyphlist.txt and src/com/sun/pdfview/font/ttf/AdobeGlyphList.java
 #are under Adobe Glyph List License
@@ -87,14 +87,15 @@ popd
 # -------------------------------------------------------------
 
 %build
-%ant \
+%ant jar \
  -Djavadoc.additionalparam="-Xdoclint:none" \
  -Djavac.source=1.6 -Djavac.target=1.6
 
 %install
 %mvn_file com.sun.pdfview:pdfrenderer %{name}
 %mvn_artifact com.sun.pdfview:pdfrenderer:%{version} dist/%{alternate_name}.jar
-%mvn_install -J dist/javadoc
+%mvn_install 
+#-J dist/javadoc
 
 # compat symlink (requected by @REAL); just let it be (but use pdf-renderer.jar, please!)
 pushd %buildroot%_javadir
@@ -104,11 +105,14 @@ ln -s pdf-renderer.jar PDFRenderer.jar
 %doc demos
 %_javadir/PDFRenderer.jar
 
-%files javadoc -f .mfiles-javadoc
+#%files javadoc -f .mfiles-javadoc
 
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0-alt3_0.23.128svn.20110310jpp11
+- java11 build
+
 * Sat Jul 13 2019 Igor Vlasenko <viy@altlinux.ru> 0-alt3_0.23.128svn.20110310jpp8
 - explicit build with java8
 
