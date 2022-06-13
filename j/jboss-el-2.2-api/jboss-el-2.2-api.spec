@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:         jboss-el-2.2-api
 Version:      1.0.5
-Release:      alt1_1jpp8
+Release:      alt1_1jpp11
 Summary:      Expression Language 2.2 API
 License:      CDDL or GPLv2 with exceptions
 
@@ -44,7 +44,7 @@ This package contains the API documentation for %{name}.
 cp %{SOURCE1} .
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -57,6 +57,9 @@ cp %{SOURCE1} .
 %doc --no-dereference cddl.txt LICENSE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.0.5-alt1_1jpp11
+- java11 build
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1jpp8
 - new version
 
