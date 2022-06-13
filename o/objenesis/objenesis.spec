@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -45,7 +45,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:        A library for instantiating Java objects
 Name:           objenesis
 Version:        3.1
-Release:        alt1_7jpp8
+Release:        alt1_7jpp11
 License:        ASL 2.0
 URL:            http://objenesis.org/
 BuildArch:      noarch
@@ -121,6 +121,9 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:3.1-alt1_7jpp11
+- java11 build
+
 * Mon Aug 16 2021 Igor Vlasenko <viy@altlinux.org> 0:3.1-alt1_7jpp8
 - update
 
