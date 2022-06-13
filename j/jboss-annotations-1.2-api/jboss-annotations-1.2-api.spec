@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -10,7 +10,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          jboss-annotations-1.2-api
 Version:       1.0.2
-Release:       alt1_1jpp8
+Release:       alt1_1jpp11
 Summary:       Common Annotations 1.2 API
 License:       CDDL or GPLv2 with exceptions
 URL:           https://github.com/jboss/jboss-annotations-api_spec
@@ -43,7 +43,7 @@ cp %{SOURCE1} .
 %pom_remove_plugin :maven-source-plugin
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -56,6 +56,9 @@ cp %{SOURCE1} .
 %doc --no-dereference cddl.txt LICENSE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.0.2-alt1_1jpp11
+- java11 build
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_1jpp8
 - new version
 
