@@ -1,12 +1,12 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		cpptasks
 Version:	1.0b5
-Release:	alt2_24jpp8
+Release:	alt2_24jpp11
 Summary:	Compile and link task for ant
 
 License:	ASL 2.0
@@ -64,7 +64,7 @@ cp -p %{SOURCE1} ./README.fedora
 %mvn_file :%{name} ant/%{name}
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -82,6 +82,9 @@ echo "ant/%{name}" > $RPM_BUILD_ROOT/%{_sysconfdir}/ant.d/%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0b5-alt2_24jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_24jpp8
 - fc update
 
