@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 %define fedora 30
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -20,7 +20,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           %{?scl_prefix}jgraphx
 Version:        3.6.0.0
-Release:        alt1_10jpp8
+Release:        alt1_10jpp11
 Summary:        Java Graph Drawing Component
 
 License:        BSD
@@ -66,7 +66,7 @@ rm -rf docs/api
 
 %build
 %{?scl:scl enable %{scl_maven} %{scl} - << "EOF"}
-ant build maven-jar
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  build maven-jar
 
 #Convert to OSGi bundle
 pushd lib
@@ -102,6 +102,9 @@ popd
 %endif
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 3.6.0.0-alt1_10jpp11
+- java11 build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 3.6.0.0-alt1_10jpp8
 - fc update
 
