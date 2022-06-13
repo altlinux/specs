@@ -2,7 +2,7 @@ Group: Development/Java
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -15,7 +15,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           guava
 Version:        30.1
-Release:        alt1_3jpp8
+Release:        alt1_3jpp11
 Summary:        Google Core Libraries for Java
 # Most of the code is under ASL 2.0
 # Few classes are under CC0, grep for creativecommons
@@ -127,6 +127,9 @@ find -name '*.java' | xargs sed -ri \
 %files testlib -f .mfiles-guava-testlib
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 30.1-alt1_3jpp11
+- java11 build
+
 * Tue Jun 07 2022 Igor Vlasenko <viy@altlinux.org> 30.1-alt1_3jpp8
 - new version
 
