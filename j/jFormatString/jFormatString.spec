@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global commit f159b88a16be4d103c7e7beb90e07a92617980b9
@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           jFormatString
 Version:        0
-Release:        alt1_0.39.20131227gitf159b88jpp8
+Release:        alt1_0.41.20131227gitf159b88jpp11
 Summary:        Java format string compile-time checker
 
 License:        GPLv2 with exceptions
@@ -70,7 +70,7 @@ rm -v lib/*
 
 %build
 # Build the JAR
-ant jarFile
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jarFile
 
 # Create the javadocs
 mkdir docs
@@ -89,6 +89,9 @@ javadoc -d docs -source 1.8 -sourcepath src/java \
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0-alt1_0.41.20131227gitf159b88jpp11
+- java11 build
+
 * Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 0-alt1_0.39.20131227gitf159b88jpp8
 - migrated to %%mvn_artifact
 
