@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 %filter_from_requires /.opt-share.etc.profile.ant/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default java-1.8.0-openjdk-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           gluegen2
 Version:        2.3.2
-Release:        alt3_11jpp8
+Release:        alt4_11jpp8
 %global src_name gluegen-v%{version}
 Summary:        Java/JNI glue code generator to call out to ANSI C
 
@@ -30,7 +30,6 @@ Patch8:         %{name}-0008-jcpp-remove-javax-api.patch
 Patch9:         %{name}-fix-gcc-10.patch
 
 BuildRequires:  gcc
-BuildRequires:  jpackage-utils
 BuildRequires:  ant-antlr
 BuildRequires:  ant-contrib
 BuildRequires:  ant-junit
@@ -137,6 +136,8 @@ sed -i 's/executable="mvn"/executable="true"/' make/build.xml
 # Clean up some tests
 rm -f src/junit/com/jogamp/common/util/TestVersionSemantics.java src/junit/com/jogamp/junit/util/VersionSemanticsUtil.java
 
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+
 cd make
 xargs -t ant <<EOF
  -verbose
@@ -161,6 +162,8 @@ xargs -t ant <<EOF
 EOF
 
 cd ..
+
+export JAVA_HOME=/usr/lib/jvm/java
 %mvn_artifact build/pom-gluegen.xml build/gluegen.jar
 %mvn_artifact build/pom-gluegen-rt.xml build/gluegen-rt.jar
 
@@ -195,6 +198,7 @@ cp LICENSE.txt %{buildroot}%{_docdir}/%{name}/
 cp LICENSE.txt %{buildroot}%{_javadocdir}/%{name}/
 
 %check
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
 cd make
 _JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/natives" xargs -t ant <<EOF
  -verbose
@@ -236,6 +240,9 @@ rm -fr %{buildroot}%{_jnidir}/test
 %{_docdir}/%{name}
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt4_11jpp8
+- support of xmvn 4
+
 * Sun Jun 05 2022 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt3_11jpp8
 - migrated to %%mvn_artifact
 
