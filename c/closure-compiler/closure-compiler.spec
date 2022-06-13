@@ -1,7 +1,7 @@
 Epoch: 1
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 #global _check 1
@@ -11,7 +11,7 @@ Name:       closure-compiler
 #define commit ad29f06d581fb8c54ad031334b82a5c301b6ce0a
 #define shorthash %%(printf %%.7s %%commit)
 Version:    20160315
-Release:    alt3_11jpp8
+Release:    alt3_11jpp11
 License:    ASL 2.0
 URL:        https://developers.google.com/closure/compiler/
 Source0:    https://github.com/google/closure-compiler/archive/maven-release-v%{version}.tar.gz#/%{name}-%{version}.tar.gz
@@ -78,7 +78,7 @@ sed -i s/tasks/target/ externs/pom.xml
 
 
 %build
-%mvn_build -f -j
+%mvn_build -f -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 xsltproc \
         --nonet \
@@ -107,6 +107,9 @@ install -Dm0644 %{name}.1 $RPM_BUILD_ROOT%{_mandir}/man1/%{name}.1
 #%doc --no-dereference COPYING
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1:20160315-alt3_11jpp11
+- java11 build
+
 * Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 1:20160315-alt3_11jpp8
 - Port to maven-antrun-plugin 3.0.0
 
