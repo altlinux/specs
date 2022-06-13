@@ -3,12 +3,12 @@ Group: Development/Other
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-install-plugin
 Version:        2.5.2
-Release:        alt1_11jpp8
+Release:        alt1_11jpp11
 Summary:        Maven Install Plugin
 
 License:        ASL 2.0
@@ -57,7 +57,7 @@ API documentation for %{name}.
 %pom_add_dep org.apache.maven:maven-compat
 
 %build
-%mvn_build -f -- -DmavenVersion=3.1.1
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DmavenVersion=3.1.1
 
 %install
 %mvn_install
@@ -69,6 +69,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 2.5.2-alt1_11jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_11jpp8
 - fc update
 
