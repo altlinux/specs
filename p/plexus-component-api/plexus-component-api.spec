@@ -3,14 +3,14 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define project_version 1.0-alpha-15
 
 Name:           plexus-component-api
 Version:        1.0
-Release:        alt4_0.28.alpha15jpp8
+Release:        alt4_0.33.alpha15jpp11
 Summary:        Plexus Component API
 
 License:        ASL 2.0
@@ -46,7 +46,7 @@ API documentation for %{name}.
 %setup -q -n %{name}-%{project_version}
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -60,6 +60,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.0-alt4_0.33.alpha15jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_0.28.alpha15jpp8
 - fc update
 
