@@ -4,7 +4,7 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
@@ -38,7 +38,7 @@ BuildRequires: jpackage-1.8-compat
 #
 Name:          janino
 Version:       2.7.8
-Release:       alt1_13jpp8
+Release:       alt1_13jpp11
 Summary:       An embedded Java compiler
 License:       BSD
 URL:           http://unkrig.de/w/Janino
@@ -124,7 +124,7 @@ perl -pi -e 's/\r$//g' new_bsd_license.txt README.txt
 
 %build
 
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -137,6 +137,9 @@ perl -pi -e 's/\r$//g' new_bsd_license.txt README.txt
 %doc --no-dereference new_bsd_license.txt
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:2.7.8-alt1_13jpp11
+- java11 build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:2.7.8-alt1_13jpp8
 - fc update
 
