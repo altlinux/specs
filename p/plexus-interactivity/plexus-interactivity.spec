@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           plexus-interactivity
 Summary:        Plexus Interactivity Handler Component
 Epoch:          0
 Version:        1.0
-Release:        alt6_2jpp8
+Release:        alt6_2jpp11
 License:        MIT
 
 URL:            https://github.com/codehaus-plexus/plexus-interactivity
@@ -76,7 +76,7 @@ sed -i "s!jline.ConsoleReader!jline.console.ConsoleReader!" \
 
 
 %build
-%mvn_build -s
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -97,6 +97,9 @@ sed -i "s!jline.ConsoleReader!jline.console.ConsoleReader!" \
 
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0-alt6_2jpp11
+- java11 build
+
 * Mon May 10 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0-alt6_2jpp8
 - new version
 
