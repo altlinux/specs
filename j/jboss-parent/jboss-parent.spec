@@ -1,12 +1,12 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jboss-parent
 Version:        20
-Release:        alt1_8jpp8
+Release:        alt1_14jpp11
 Summary:        JBoss Parent POM
 License:        CC0
 URL:            http://www.jboss.org/
@@ -41,7 +41,7 @@ cp -p %SOURCE1 LICENSE
 sed -i 's/\r//' LICENSE
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -51,6 +51,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:20-alt1_14jpp11
+- java11 build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 0:20-alt1_8jpp8
 - fc update
 
