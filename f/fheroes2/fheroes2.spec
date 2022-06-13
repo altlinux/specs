@@ -3,10 +3,10 @@
 %def_without cmake
 Name: fheroes2
 Epoch: 2
-Version: 0.9.15
+Version: 0.9.16
 #define rev 20210604
 #Release: alt1.%rev
-Release: alt2
+Release: alt1
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPLv2+
 Group: Games/Strategy
@@ -117,6 +117,9 @@ install -pD -m 644 %SOURCE4 %SOURCE5 %buildroot%_docdir/%name/
 %_gamesdatadir/%name
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.16-alt1
+- new version
+
 * Tue May 10 2022 Igor Vlasenko <viy@altlinux.org> 2:0.9.15-alt2
 - bugfix: switch to new format of defines
 
