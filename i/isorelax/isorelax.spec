@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -44,7 +44,7 @@ URL:            http://iso-relax.sourceforge.net/
 Epoch:          2
 Version:        0
 # I can't use %%{cvstag} as dashes aren't allowed in Release tags
-Release:        alt1_0.27.release20050331jpp8
+Release:        alt1_0.27.release20050331jpp11
 # Parts of VerifierFactory.java were copied from Apache Batik and are
 # under ASL 1.1, everything else is under MIT.
 License:        MIT and ASL 1.1
@@ -90,7 +90,7 @@ ln -s %{_javadir}/ant.jar lib/
 cp %{SOURCE1} .
 
 %build
-ant release
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  release
 
 %install
 %mvn_file : %{name}
@@ -105,6 +105,9 @@ ant release
 %doc --no-dereference license.txt
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 2:0-alt1_0.27.release20050331jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 2:0-alt1_0.27.release20050331jpp8
 - fc update
 
