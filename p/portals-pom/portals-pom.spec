@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          portals-pom
 Version:       1.3
-Release:       alt4_21jpp8
+Release:       alt4_21jpp11
 Summary:       Apache Portals parent pom
 License:       ASL 2.0
 Url:           http://portals.apache.org/
@@ -13,7 +13,7 @@ Url:           http://portals.apache.org/
 # tar czf portals-pom-1.3-src-svn.tar.gz portals-pom-1.3
 Source0:       %{name}-%{version}-src-svn.tar.gz
 BuildRequires: maven-local
-BuildRequires: maven-install-plugin
+#BuildRequires: maven-install-plugin
 BuildRequires: maven-parent
 BuildArch:     noarch
 Source44: import.info
@@ -48,6 +48,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.3-alt4_21jpp11
+- java11 build
+
 * Sat May 21 2022 Igor Vlasenko <viy@altlinux.org> 1.3-alt4_21jpp8
 - fixed build with new maven-parent
 
