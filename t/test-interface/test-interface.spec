@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global test_interface_version 1.0
@@ -8,7 +8,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           test-interface
 Version:        %{test_interface_version}
-Release:        alt2_14jpp8
+Release:        alt2_20jpp11
 Summary:        Uniform interface to Scala and Java test frameworks
 
 License:        BSD
@@ -68,7 +68,7 @@ export SBT_IVY_DIR=ivy-local
 sbt package deliverLocal publishM2Configuration
 %else # building without sbt
 mkdir -p classes target/api
-%javac -d classes $(find src/main/java -name "*.java")
+%javac -target 1.8 -source 1.8 -d classes $(find src/main/java -name "*.java")
 
 (
 cd classes
@@ -86,7 +86,7 @@ EOF
 %jar -cMf ../target/%{name}.jar *
 )
 
-%javadoc -d target/api -classpath $PWD/target/%{name}.jar $(find src/main/java -name "*.java")
+%javadoc -source 1.8 -d target/api -classpath $PWD/target/%{name}.jar $(find src/main/java -name "*.java")
 
 cp pom.xml target/%{name}-%{version}.pom
 
@@ -105,6 +105,9 @@ cp pom.xml target/%{name}-%{version}.pom
 %doc LICENSE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.0-alt2_20jpp11
+- java11 build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_14jpp8
 - fc update
 
