@@ -1,8 +1,8 @@
 %def_disable firewire
 
 Name: jack-audio-connection-kit
-Version: 1.9.18
-Release: alt2
+Version: 1.9.19
+Release: alt1
 Epoch: 1
 
 Summary: The Jack Audio Connection Kit
@@ -14,10 +14,7 @@ Source: jack2-%version.tar
 # Source-url: https://github.com/jackaudio/jack2/archive/refs/tags/v%version.tar.gz
 Source2: %name-script.pa
 Source3: %name-limits.conf
-Source4: svnversion.h
 Patch: jack-realtime-compat.patch
-# Patch doxygen documentation
-Patch1: %name-doxygen.patch
 
 Provides: jackd = %epoch:%version-%release
 Obsoletes: jackd < %epoch:%version
@@ -75,9 +72,7 @@ Utilities that control and interact with the JACK server-jackd
 
 %prep
 %setup -n jack2-%version
-%patch -p1
-%patch1 -p1
-cp -p %SOURCE4 .
+%autopatch -p1
 
 %build
 # Some plugins use C++ and need lcxa. It can't be loaded
@@ -161,6 +156,9 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_man1dir/jackrec.1*
 
 %changelog
+* Sun Jun 12 2022 Anton Midyukov <antohami@altlinux.org> 1:1.9.19-alt1
+- 1.9.19
+
 * Tue Jun 29 2021 Anton Midyukov <antohami@altlinux.org> 1:1.9.18-alt2
 - rebuild without libffado (firewire disable)
 
