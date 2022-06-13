@@ -2,7 +2,7 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # (daviddavid) Please do not update this package otherwise it break
@@ -11,7 +11,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:	Java OpenStreetMap Tile Viewer
 Name:		jmapviewer
 Version:	1.03
-Release:	alt2_6jpp8
+Release:	alt3_6jpp8
 Group:		Development/Java
 License:	GPLv2
 URL:		http://wiki.openstreetmap.org/wiki/JMapViewer
@@ -19,7 +19,7 @@ Source:		http://svn.openstreetmap.org/applications/viewer/jmapviewer/releases/%{
 
 BuildArch:	noarch
 
-BuildRequires(pre): java-1.8.0-openjdk-devel
+BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires:	ant
 BuildRequires:	maven-local
 Source44: import.info
@@ -66,8 +66,10 @@ sed -i '/<\/javac>/a \
 ' build.xml
 
 %build
-%ant clean build pack
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+ant clean build pack
 
+export JAVA_HOME=/usr/lib/jvm/java
 %mvn_artifact org.openstreetmap:%{name}:%{version} JMapViewer.jar
 %mvn_file :%{name} JMapViewer %{name}
 
@@ -82,6 +84,9 @@ sed -i '/<\/javac>/a \
 
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.03-alt3_6jpp8
+- xmvn4 support
+
 * Wed Sep 08 2021 Andrey Cherepanov <cas@altlinux.org> 1.03-alt2_6jpp8
 - Build strictly with java-1.8.0-openjdk-devel
 
