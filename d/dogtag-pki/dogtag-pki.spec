@@ -26,7 +26,7 @@
 
 Name: dogtag-pki
 Version: 11.1.0
-Release: alt1
+Release: alt2
 
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
@@ -59,7 +59,6 @@ BuildRequires: libnss-devel
 BuildRequires: zlib-devel
 BuildRequires: selinux-policy-alt
 
-BuildRequires: jackson
 BuildRequires: ldapjdk >= %ldapjdk_version
 BuildRequires: resteasy
 BuildRequires: tomcatjss >= %tomcatjss_version
@@ -749,6 +748,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 11.1.0-alt2
+- NMU: drop obsolete BR: jackson.
+
 * Fri Mar 04 2022 Stanislav Levin <slev@altlinux.org> 11.1.0-alt1
 - 11.0.3 -> 11.1.0.
 
