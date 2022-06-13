@@ -5,12 +5,13 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: gcc-c++ rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
+BuildRequires: java-1.8.0-openjdk-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:    jogl2
 Version: 2.3.2
-Release: alt7_9jpp8
+Release: alt8_9jpp8
 %global src_name jogl-v%{version}
 Summary: Java bindings for the OpenGL API
 
@@ -101,6 +102,7 @@ cd make
 # As we never cross-compile this package, the SDK root is always /
 export TARGET_PLATFORM_ROOT=/
 
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
 xargs -t ant <<EOF
  -verbose
  -Dc.compiler.debug=true
@@ -125,6 +127,7 @@ xargs -t ant <<EOF
 EOF
 
 cd ..
+export JAVA_HOME=/usr/lib/jvm/java
 %mvn_artifact %{SOURCE1} build/jar/jogl-all.jar
 
 %install
@@ -150,6 +153,9 @@ cp -t %{buildroot}%{_docdir}/%{name}/ README.txt LICENSE.txt CHANGELOG.txt
 %{_docdir}/%{name}
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt8_9jpp8
+- xmvn4 support
+
 * Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt7_9jpp8
 - migrated to %%mvn_artifact
 - jogl2.jar moved to _jnidir
