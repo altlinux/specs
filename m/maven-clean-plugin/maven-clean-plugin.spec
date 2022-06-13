@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-clean-plugin
 Version:        3.1.0
-Release:        alt1_4jpp8
+Release:        alt1_10jpp11
 Summary:        Maven Clean Plugin
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-clean-plugin/
@@ -47,7 +47,7 @@ This package provides %{summary}.
 %pom_add_dep junit:junit::test
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -59,6 +59,9 @@ This package provides %{summary}.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_10jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_4jpp8
 - fc update
 
