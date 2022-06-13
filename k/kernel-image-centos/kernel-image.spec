@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 108
+%define centos_release 110
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,27 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jun 13 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.110-alt1.el9
+- Updated to kernel-5.14.0-110.el9:
+  + ACPI: sysfs: Fix BERT error region memory mapping
+  + CNB: net: disable NET_RX_BUSY_POLL on PREEMPT_RT
+  + Hyper-V: x86: x86_64 Updates for RHEL 9.1
+  + KVM: x86: Rebase to v5.18
+  + topology: make core_mask include at least cluster_siblings
+
+* Fri Jun 10 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.109-alt1.el9
+- Updated to kernel-5.14.0-109.el9:
+  + Backport latest fixes from upstream s390x KVM for the RHEL 9.1 kernel
+  + Brush up s390x/zfcpdump/ configs
+  + CNB: net: consolidate neif_rx() and make it callable from any context
+  + mptcp: better window sharing
+  + ovs: 9.1 P1 backports
+  + powerpc: Support for reporting NVDIMM performance stats (HMS/SCM/pmem)
+  + redhat/configs: enable interconnect for NXP i.MX 8M
+  + [s390] s390/cpumf: add new extended counter set for IBM z16
+  + [s390] s390/perf: obtain sie_block from the right address
+  + x86/split_lock: Enable the split lock feature on Raptor Lake
+
 * Thu Jun 09 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.108-alt1.el9
 - Updated to kernel-5.14.0-108.el9:
   + ahci: Add a generic 'controller2' RAID id
