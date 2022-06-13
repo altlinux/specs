@@ -3,7 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2009, JPackage Project
@@ -38,7 +38,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           gnu-getopt
 Version:        1.0.14
-Release:        alt1_20jpp8
+Release:        alt1_20jpp11
 Epoch:          0
 Summary:        Java getopt implementation
 License:        LGPLv2+
@@ -81,7 +81,7 @@ mv gnu/getopt/buildx.xml build.xml
 %mvn_file %{name}:getopt %{name}
 
 %build
-ant jar javadoc
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadoc
 
 %mvn_artifact %{SOURCE2} build/lib/gnu.getopt.jar
 %mvn_alias %{name}:getopt urbanophile:java-getopt gnu.getopt:java-getopt
@@ -98,6 +98,9 @@ ln -sf %{name}.jar %{buildroot}%{_javadir}/gnu.getopt.jar
 %doc gnu/getopt/COPYING.LIB
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0.14-alt1_20jpp11
+- java11 build
+
 * Sun Jun 05 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0.14-alt1_20jpp8
 - migrated to %%mvn_artifact
 
