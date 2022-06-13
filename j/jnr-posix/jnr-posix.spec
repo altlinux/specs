@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jnr-posix
 Version:        3.0.47
-Release:        alt1_8jpp8
+Release:        alt1_8jpp11
 Summary:        Java Posix layer
 License:        CPL or GPLv2+ or LGPLv2+
 URL:            http://github.com/jnr/jnr-posix
@@ -62,6 +62,9 @@ sed -i 's|"nogroup"|"root"|' src/test/java/jnr/posix/GroupTest.java
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 3.0.47-alt1_8jpp11
+- java11 build
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 3.0.47-alt1_8jpp8
 - fc update
 
