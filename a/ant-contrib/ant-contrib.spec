@@ -1,7 +1,7 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global beta_number b3
@@ -9,7 +9,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:        Collection of tasks for Ant
 Name:           ant-contrib
 Version:        1.0
-Release:        alt5_0.36.b3jpp8
+Release:        alt5_0.36.b3jpp11
 License:        ASL 2.0 and ASL 1.1
 URL:            http://ant-contrib.sourceforge.net/
 Source0:        https://downloads.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-src.tar.bz2
@@ -65,6 +65,9 @@ rm -f ivy-conf.xml
 sed -i '/<info /s//&revision="1.0b3" /' ivy.xml
 %mvn_alias : ant-contrib:
 
+# -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8
+sed -i '/^jdk\./s,1\.4,1.8,' build.properties
+
 %build
 %ant -Divy.mode=local dist
 
@@ -84,6 +87,9 @@ echo "ant-contrib/ant-contrib" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/ant-contrib
 %doc target/docs/LICENSE.txt LICENSE-2.0.txt
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0-alt5_0.36.b3jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.36.b3jpp8
 - fc update
 
