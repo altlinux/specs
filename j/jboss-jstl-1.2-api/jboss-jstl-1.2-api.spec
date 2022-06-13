@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -12,7 +12,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:          jboss-jstl-1.2-api
 Version:       1.1.2
-Release:       alt1_9jpp8
+Release:       alt1_9jpp11
 Summary:       JSP Standard Template Library 1.2 API
 License:       ASL 2.0 and (CDDL or GPLv2 with exceptions)
 URL:           https://github.com/jboss/jboss-jstl-api_spec
@@ -74,6 +74,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE README
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.1.2-alt1_9jpp11
+- java11 build
+
 * Wed Jan 29 2020 Igor Vlasenko <viy@altlinux.ru> 1.1.2-alt1_9jpp8
 - fc update
 
