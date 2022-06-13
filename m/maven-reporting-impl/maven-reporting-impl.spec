@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-reporting-impl
 Version:        3.0.0
-Release:        alt1_7jpp8
+Release:        alt1_7jpp11
 Summary:        Abstract classes to manage report generation
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/%{name}
@@ -58,7 +58,7 @@ API documentation for %{name}.
 %pom_remove_plugin :maven-invoker-plugin
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -70,6 +70,9 @@ API documentation for %{name}.
 %doc LICENSE NOTICE
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 3.0.0-alt1_7jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 3.0.0-alt1_7jpp8
 - fc update
 
