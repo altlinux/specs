@@ -1,11 +1,11 @@
 Name: proguard
 Summary: Java class file shrinker, optimizer, obfuscator, and preverifier
 Version: 5.3.3
-Release: alt2
+Release: alt3
 License: GPL
 Group: Development/Java
 BuildArch: noarch
-BuildRequires: ant checkstyle tzdata log4j slf4j rpm-build-java java-devel-default
+BuildRequires: ant tzdata log4j slf4j rpm-build-java java-devel-default
 BuildRequires: /proc
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
@@ -95,6 +95,9 @@ cp -p %{SOURCE104} %buildroot%_liconsdir/%{name}.png
 %_liconsdir/%{name}.png
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 5.3.3-alt3
+- NMU: drop obsolete checkstyle BR:.
+
 * Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 5.3.3-alt2
 - NMU: rebuild to use jvm_run in %%jpackage_script
 
