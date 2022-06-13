@@ -1,5 +1,5 @@
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # (daviddavid)
@@ -13,7 +13,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		sunflow-sweethome3d
 Version:	0.07.3i
-Release:	alt1_1jpp8
+Release:	alt1_1jpp11
 Summary:	A rendering system for photo-realistic image synthesis
 License:	MIT
 Group:		Development/Java
@@ -61,7 +61,7 @@ dos2unix -k README.md
 %mvn_file  : %{up_name}
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -74,6 +74,9 @@ dos2unix -k README.md
 
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0.07.3i-alt1_1jpp11
+- java11 build
+
 * Fri Jan 03 2020 Igor Vlasenko <viy@altlinux.ru> 0.07.3i-alt1_1jpp8
 - new version
 
