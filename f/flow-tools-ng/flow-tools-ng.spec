@@ -1,6 +1,6 @@
 Name: flow-tools-ng
 Version: 0.68.5
-Release: alt4
+Release: alt5
 
 Summary: Tool set for working with NetFlow data version %version
 License: BSD
@@ -18,7 +18,7 @@ Conflicts: flow-tools
 
 BuildPreReq: flex zlib-devel %{?_with_mysql: libMySQL-devel} %{?_with_pgsql: postgresql-devel}
 
-BuildRequires: checkstyle docbook-utils flex postgresql-devel
+BuildRequires: docbook-utils flex postgresql-devel
 
 Requires: lib%name = %version-%release
 
@@ -117,6 +117,9 @@ rm -f %buildroot%_libdir/*.la
 %_bindir/flow-rptfmt
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0.68.5-alt5
+- NMU: drop obsolete checkstyle BR:
+
 * Fri Mar 26 2021 Slava Aseev <ptrnine@altlinux.org> 0.68.5-alt4
 - fix build with gcc-10
 
