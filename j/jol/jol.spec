@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jol
 Version:        0.16
-Release:        alt1_1jpp8
+Release:        alt1_1jpp11
 Summary:        Java Object Layout
 
 License:        GPLv2 with exceptions
@@ -96,6 +96,9 @@ sed -i 's/1\.7/1.8/' pom.xml
 %files cli -f .mfiles-jol-cli
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0.16-alt1_1jpp11
+- java11 build
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0.16-alt1_1jpp8
 - new version
 
