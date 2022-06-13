@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,7 +16,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:           maven-script-interpreter
 Version:        1.2
-Release:        alt1_4jpp8
+Release:        alt1_11jpp11
 Summary:        Maven Script Interpreter
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/maven-script-interpreter/
@@ -65,7 +65,7 @@ sed -i /GroovyScriptInterpreter/d src/main/java/org/apache/maven/shared/scriptin
 %endif
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -78,6 +78,9 @@ sed -i /GroovyScriptInterpreter/d src/main/java/org/apache/maven/shared/scriptin
 
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1.2-alt1_11jpp11
+- java11 build
+
 * Fri Oct 09 2020 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_4jpp8
 - update
 
