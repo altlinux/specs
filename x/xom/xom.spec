@@ -1,10 +1,11 @@
 Group: Development/Java
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
+BuildRequires: /usr/bin/native2ascii
 # END SourceDeps(oneline)
 BuildRequires: dom4j
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2005, JPackage Project
@@ -45,7 +46,7 @@ BuildRequires: jpackage-1.8-compat
 Summary:        XML Object Model
 Name:           xom
 Version:        1.2.10
-Release:        alt1_13jpp8
+Release:        alt1_13jpp11
 Epoch:          1
 License:        LGPLv2
 URL:            http://www.xom.nu
@@ -151,7 +152,7 @@ ln -sf $(build-classpath dom4j) dom4j.jar
 ln -sf $(build-classpath servlet) servlet.jar
 popd
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -v compile15 jar samples betterdoc maven2
+ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6  -v compile15 jar samples betterdoc maven2
 
 pushd build/apidocs
 for f in `find -name \*.css -o -name \*.html`; do
@@ -205,6 +206,9 @@ ln -s xom/xom.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_datadir}/%{name}/xom-samples.jar
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1:1.2.10-alt1_13jpp11
+- fixed build with java11
+
 * Thu Oct 08 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.2.10-alt1_13jpp8
 - fixed build with new java
 
