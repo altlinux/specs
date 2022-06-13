@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-reporting-api
 Version:        3.0
-Release:        alt3_18jpp8
+Release:        alt3_18jpp11
 Epoch:          1
 Summary:        API to manage report generation
 License:        ASL 2.0
@@ -46,7 +46,7 @@ cp %{SOURCE1} LICENSE.txt
 %build
 # Previous package provides groupIds org.apache.maven.shared and org.apache.maven.reporting
 %mvn_alias : org.apache.maven.shared:maven-reporting-api
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -59,6 +59,9 @@ cp %{SOURCE1} LICENSE.txt
 
 
 %changelog
+* Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 1:3.0-alt3_18jpp11
+- java11 build
+
 * Sat Feb 15 2020 Igor Vlasenko <viy@altlinux.ru> 1:3.0-alt3_18jpp8
 - fc update
 
