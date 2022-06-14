@@ -2,7 +2,7 @@
 
 Name: jack-audio-connection-kit
 Version: 1.9.19
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Jack Audio Connection Kit
@@ -75,6 +75,9 @@ Utilities that control and interact with the JACK server-jackd
 %autopatch -p1
 
 %build
+# Disable lto (ALT bug 42979)
+%define optflags_lto %nil
+
 # Some plugins use C++ and need lcxa. It can't be loaded
 # dynamically, so all binaries should be linked with it.
 %ifarch %e2k
@@ -156,6 +159,9 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_man1dir/jackrec.1*
 
 %changelog
+* Tue Jun 14 2022 Anton Midyukov <antohami@altlinux.org> 1:1.9.19-alt2
+- disable LTO (Closes: 1869059)
+
 * Sun Jun 12 2022 Anton Midyukov <antohami@altlinux.org> 1:1.9.19-alt1
 - 1.9.19
 
