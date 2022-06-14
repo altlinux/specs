@@ -4,15 +4,15 @@
 
 Summary: Terminal multiplexer
 Name: tmux
-Version: 3.3
+Version: 3.3a
 Release: alt1
-Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
-Source1: bash_completion_tmux.sh
 License: ISC and BSD-3-Clause and BSD-2-Clause
 Group: Terminals
 Url: https://tmux.github.io/
 Vcs: https://github.com/tmux/tmux
 
+Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
+Source1: bash_completion_tmux.sh
 BuildRequires: libevent-devel >= 2.0
 BuildRequires: libncurses-devel
 BuildRequires: libutempter-devel
@@ -27,7 +27,7 @@ later reattached.
 %setup
 
 %build
-%add_optflags %(getconf LFS_CFLAGS) -Wno-unused-result -Wno-pointer-sign
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --enable-utempter
 %make_build
@@ -43,6 +43,9 @@ install -Dpm 644 %SOURCE1 %buildroot%_datadir/bash-completion/completions/tmux
 %_datadir/bash-completion/completions/tmux
 
 %changelog
+* Tue Jun 14 2022 Vitaly Chikunov <vt@altlinux.org> 3.3a-alt1
+- Updated to 3.3a (2022-06-09).
+
 * Wed Jun 01 2022 Vitaly Chikunov <vt@altlinux.org> 3.3-alt1
 - Updated to 3.3 (2022-06-01).
 
