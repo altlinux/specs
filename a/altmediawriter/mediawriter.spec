@@ -2,7 +2,7 @@
 %define oname ALTMediaWriter
 
 Name:           altmediawriter
-Version:        1.0.4
+Version:        1.0.5
 Release:        alt1
 Summary:        ALT Media Writer
 Group:          System/Configuration/Other
@@ -59,6 +59,9 @@ appstream-util validate-relax --nonet %buildroot/%_datadir/appdata/%name.appdata
 
 
 %changelog
+* Tue Jun 14 2022 Dmitry Degtyarev <kevl@altlinux.org> 1.0.5-alt1
+- Misc: Fix compatibility with ALT Linux P9.
+
 * Wed Jun 01 2022 Dmitry Degtyarev <kevl@altlinux.org> 1.0.4-alt1
 - Download dialog: Fix visual problems where text elements
   would sometimes overlap each other.
