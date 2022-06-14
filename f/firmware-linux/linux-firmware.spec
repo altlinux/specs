@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220607
+Version: 20220610
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,16 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jun 14 2022 Cronbuild Service <cronbuild@altlinux.org> 20220610-alt1
+- upstream changes (GIT 7b71b75):
+  + WHENCE: add symlinks for StarFive based boards (thx Dimitri John Ledkov)
+  + wilc1000: update WILC1000 firmware to v15.6 (thx Ajay Singh)
+  + brcm: Add NVRAM file 43455 based Wifi/BT module as used on the
+    Quartz64 Model B from Pine64. This file is based on the existing
+    "brcm/brcmfmac43455-sdio.raspberrypi,4-model-b.txt" NVRAM file. (thx Dan Johansen)
+  + iwlwifi: add new FWs from core70-87 release (thx Gregory Greenman)
+  + iwlwifi: update 9000-family firmwares to core70-87 (thx Gregory Greenman)
+
 * Tue Jun 07 2022 Cronbuild Service <cronbuild@altlinux.org> 20220607-alt1
 - upstream changes (GIT 02c6986):
   + rtl_bt: Update RTL8852A BT USB firmware to 0xDFB8_0634 (thx Hilda Wu)
