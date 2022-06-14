@@ -17,7 +17,7 @@
 
 Name: plasma5-%rname
 Version: 5.24.5
-Release: alt3
+Release: alt4
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -144,7 +144,10 @@ KF5 library
 %find_lang %name --with-kde --all-name
 
 # clean doc entries
-for f in %buildroot/%_K5srv/kcm_kwin_virtualdesktops.desktop ; do
+for f in \
+    %buildroot/%_K5srv/kcm_kwin_virtualdesktops.desktop \
+    %buildroot/%_K5srv/kwincompositing.desktop \
+    ; do
     sed -i '/^X-DocPath=/d' $f
 done
 
@@ -204,6 +207,9 @@ done
 
 
 %changelog
+* Tue Jun 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt4
+- remove unneeded docs entry
+
 * Thu Jun 02 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt3
 - remove unneeded docs entry
 
