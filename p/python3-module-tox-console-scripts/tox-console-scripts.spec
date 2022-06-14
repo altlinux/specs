@@ -4,26 +4,26 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.2
+Version: 0.3.2
 Release: alt1
 
 Summary: Tox plugin for installation of console scripts for system site packages
 License: MIT
 Group: Development/Python3
-Url: https://github.com/stanislavlevin/tox-console-scripts.git
+Url: https://pypi.org/project/tox-console-scripts/
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-setuptools_scm
-
 %if_with check
 BuildRequires: python3(tox)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_mock)
 %endif
+
+%py3_provides %oname
 
 BuildArch: noarch
 
@@ -40,18 +40,12 @@ environment.
 %autopatch -p1
 
 %build
-# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
-# its used as the primary source for the version number in which
-# case it will be a unparsed string
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
@@ -63,6 +57,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/tox_console_scripts-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Jun 10 2022 Stanislav Levin <slev@altlinux.org> 0.3.2-alt1
+- 0.2 -> 0.3.2.
+
 * Wed Mar 10 2021 Stanislav Levin <slev@altlinux.org> 0.2-alt1
 - 0.1 -> 0.2.
 

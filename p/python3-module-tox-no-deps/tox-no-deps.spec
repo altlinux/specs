@@ -4,20 +4,18 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.1
+Version: 0.2.0
 Release: alt1
 
 Summary: Tox plugin for skipping the installation of all deps and extras
 License: MIT
 Group: Development/Python3
-Url: https://github.com/stanislavlevin/tox-no-deps
+Url: https://pypi.org/project/tox-no-deps/
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools_scm)
-BuildRequires: python3(toml)
 
 %if_with check
 BuildRequires: python3(tox)
@@ -38,15 +36,12 @@ environments. The dependencies of tested package if any are not touched.
 %autopatch -p1
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
@@ -59,5 +54,8 @@ tox.py3 --sitepackages --console-scripts -vvr -- -vra
 %python3_sitelibdir/tox_no_deps-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Jun 14 2022 Stanislav Levin <slev@altlinux.org> 0.2.0-alt1
+- 0.1 -> 0.2.0.
+
 * Sat Mar 27 2021 Stanislav Levin <slev@altlinux.org> 0.1-alt1
 - Initial build for Sisyphus.
