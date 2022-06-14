@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.7.2
-Release: alt2
+Version: 4.7.3
+Release: alt1
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -121,6 +121,10 @@ sed -i "s/-Werror/-Wno-error/" cmake/modules/SetDefaultTargetProperties.cmake
 %_datadir/%name
 
 %changelog
+* Fri Jun 03 2022 Egor Ignatov <egori@altlinux.org> 4.7.3-alt1
+- new version 4.7.3
+- 9e4b294d9 linux: runProgramAsUser set gid as well
+
 * Thu Jun 02 2022 Egor Ignatov <egori@altlinux.org> 4.7.2-alt2
 - backport upstream commit to fix build with gcc12
 
