@@ -1,5 +1,5 @@
 Name: livecd-evms
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 
 Summary: Tune EVMS config to run from LiveCD
@@ -37,6 +37,9 @@ install -pDm644 %SOURCE1 %buildroot%_unitdir/livecd-evms.service
 %_unitdir/%name.service
 
 %changelog
+* Fri Jun 10 2022 Anton Midyukov <antohami@altlinux.org> 0.2.6-alt1
+- ignore mtdblock* devices
+
 * Wed Jun 08 2022 Anton Midyukov <antohami@altlinux.org> 0.2.5-alt1
 - exclude devices on which device mounted in /image depends
   (Closes: 42887)
