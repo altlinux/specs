@@ -1,6 +1,6 @@
 Name: printer-driver-foo2capt
 Version: 0.1.0
-Release: alt1.git94b2bf2
+Release: alt2.git_0_5208e72
 
 Source: %name-%version.tar
 
@@ -18,7 +18,6 @@ currently in an early alpha stage. Use at your own risk.
 
 Compatible printers:
 Canon LBP-2900
-Canon LBP-2900B
 Canon LBP-3000
 
 %prep
@@ -34,12 +33,15 @@ install -d %buildroot%_libexecdir/cups/filter
 install -d %buildroot%_datadir/ppd/foo2capt
 
 install -m0755 src/rastertocapt %buildroot%_libexecdir/cups/filter/
-install -m644 Canon-LBP-2900.ppd %buildroot%_datadir/ppd/foo2capt/
+install -m644 *.ppd %buildroot%_datadir/ppd/foo2capt/
 
 %files
-%_datadir/ppd/foo2capt/Canon-LBP-2900.ppd
+%_datadir/ppd/foo2capt/*.ppd
 %_libexecdir/cups/filter/rastertocapt
 
 %changelog
+* Wed Jun 15 2022 Hihin Ruslan <ruslandh@altlinux.ru> 0.1.0-alt2.git_0_5208e72
+- Update Version
+
 * Fri Nov 1 2019 Grigory Maksimov <zacat@altlinux.org> 0.1.0-alt1.git94b2bf2
 - Initial build for ALT
