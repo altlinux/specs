@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: feh
-Version: 3.8
-Release: alt2
+Version: 3.9
+Release: alt1
 Summary: Image viewer using Imlib 2
 Group: Graphics
 License: BSD
@@ -16,7 +16,7 @@ Patch0: feh-1.10.1-fontpath.patch
 
 # Automatically added by buildreq on Thu Sep 08 2011
 # optimized out: imlib2 imlib2-devel libX11-devel xorg-xproto-devel zlib-devel
-BuildRequires: libXinerama-devel libXt-devel libcurl-devel libgiblib-devel libpng-devel libexif-devel libjpeg-utils imlib2-devel
+BuildRequires: libXinerama-devel libXt-devel libcurl-devel libgiblib-devel libpng-devel libexif-devel libjpeg-utils imlib2-devel libmagic-devel
 Requires: fonts-ttf-dejavu
 
 %description
@@ -35,14 +35,14 @@ export VERSION="%version"
 export CFLAGS="%optflags"
 export PREFIX="%_prefix"
 
-%make_build exif=1
+%make_build exif=1 curl=1 xinerama=1 magic=1
 
 %install
 export VERSION="%version"
 export CFLAGS="%optflags"
 export PREFIX="%_prefix"
 
-%makeinstall_std exif=1
+%makeinstall_std exif=1 curl=1 xinerama=1 magic=1
 
 %files
 %_bindir/*
@@ -58,6 +58,10 @@ export PREFIX="%_prefix"
 %doc COPYING
 
 %changelog
+* Tue Jun 14 2022 Ilya Mashkin <oddity@altlinux.ru> 3.9-alt1
+- 3.9
+- Build with enabled curl/libmagic/xinerama
+
 * Sat Jan 08 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.8-alt2
 - Fixed font path location (closes: #41468).
 - Removed current directory from the font path (hardening).
