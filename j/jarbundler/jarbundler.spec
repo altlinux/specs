@@ -4,12 +4,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-1.8-compat
+BuildRequires: jpackage-default
+BuildRequires: java-1.8.0-openjdk-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jarbundler	
 Version:       2.2.0
-Release:       alt4_12jpp8
+Release:       alt5_12jpp8
 Summary:       A feature-rich Ant task which will create a Mac OS X application bundle
 License:       ASL 2.0
 URL:           http://informagen.com/JarBundler/
@@ -66,9 +67,10 @@ sed -i 's|<javadoc destdir="javadoc" classpath="${ant.jar}">|<javadoc destdir="j
 %mvn_file net.sourceforge.%{name}:%{name} %{name}
 
 %build
-
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
 ant jar javadocs
 
+export JAVA_HOME=/usr/lib/jvm/java
 %mvn_artifact pom.xml build/%{name}-%{version}.jar
 
 %install
@@ -90,6 +92,9 @@ echo "%{name}" >  %{buildroot}/%{_sysconfdir}/ant.d/%{name}
 %doc LICENSE.TXT
 
 %changelog
+* Tue Jun 14 2022 Igor Vlasenko <viy@altlinux.org> 2.2.0-alt5_12jpp8
+- xmvn4 support
+
 * Mon Jun 06 2022 Igor Vlasenko <viy@altlinux.org> 2.2.0-alt4_12jpp8
 - migrated to %%mvn_artifact
 
