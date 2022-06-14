@@ -1,8 +1,8 @@
 %def_disable firewire
 
 Name: jack-audio-connection-kit
-Version: 1.9.19
-Release: alt2
+Version: 1.9.21
+Release: alt1
 Epoch: 1
 
 Summary: The Jack Audio Connection Kit
@@ -85,15 +85,17 @@ cc --version | grep -q '^lcc:1.21' && export LINKFLAGS+=" -lcxa"
 %endif
 export CFLAGS="%{optflags} -ggdb -fPIC"
 export CXXFLAGS="$CFLAGS"
+export PREFIX=%_prefix
 ./waf configure \
-	--prefix=%_prefix \
 	--libdir=/%_libdir \
+	--mandir=%_man1dir \
 	--doxygen \
 	--alsa \
 	--dbus \
 	--classic \
+	--example-tools=yes \
 	%{?_enable_firewire:--firewire --freebob}
-./waf build -j${NPROCS:-%__nprocs}
+./waf build -j${NPROCS:-%__nprocs} -v
 
 %install
 ./waf --destdir=%buildroot install
@@ -159,8 +161,15 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_man1dir/jackrec.1*
 
 %changelog
+* Tue Jun 14 2022 Anton Midyukov <antohami@altlinux.org> 1:1.9.21-alt1
+- 1.9.21 (Closes: 42971)
+
+* Tue Jun 14 2022 Anton Midyukov <antohami@altlinux.org> 1:1.9.20-alt1
+- 1.9.20
+- fix changelog
+
 * Tue Jun 14 2022 Anton Midyukov <antohami@altlinux.org> 1:1.9.19-alt2
-- disable LTO (Closes: 1869059)
+- disable LTO (Closes: 42979)
 
 * Sun Jun 12 2022 Anton Midyukov <antohami@altlinux.org> 1:1.9.19-alt1
 - 1.9.19
