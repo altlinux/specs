@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: file
-Version: 5.41
-Release: alt4
+Version: 5.42
+Release: alt1
 
 Summary: File type guesser
 License: BSD-2-Clause
@@ -75,7 +75,7 @@ set -o pipefail
 strace_file() {
 	local ret=0
 	strace -nfo strace.log -- src/file "$@" > stdout.log || ret=$?
-	! grep -w -e ENOSYS -e EPERM -e SIGSYS strace.log >&2 || ret=$?
+	! grep -w -e ENOSYS strace.log >&2 || ret=$?
 	cat < stdout.log >&2
 	cat < stdout.log
 	return $ret
@@ -116,6 +116,9 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Tue Jun 14 2022 Vitaly Chikunov <vt@altlinux.org> 5.42-alt1
+- Update to FILE5_42-4-g7a1f533c (2022-06-13).
+
 * Fri May 27 2022 Vitaly Chikunov <vt@altlinux.org> 5.41-alt4
 - sandbox: Allow CAP_DAC_READ_SEARCH when sandboxing is disabled (ALT#42873).
 
