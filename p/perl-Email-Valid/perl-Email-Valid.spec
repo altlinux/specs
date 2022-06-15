@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-Valid
 Name: perl-%dist
-Version: 1.202
+Version: 1.203
 Release: alt1
 
 Summary: Check validity of Internet email addresses 
@@ -9,21 +9,23 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Valid-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
 Patch: perl-Email-Valid-0.182-alt-req.patch
+Patch1: perl-Email-Valid-0.203-alt-t-valid.t-no-dns.patch
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Oct 05 2011
-BuildRequires: perl-MailTools perl-Net-DNS perl-Net-Domain-TLD perl-Test-Pod perl-Test-Pod-Coverage perl(Capture/Tiny.pm)
+BuildRequires: perl-MailTools perl-Net-DNS perl-Net-Domain-TLD perl-Test-Pod perl-Test-Pod-Coverage perl(Capture/Tiny.pm) perl(IO/CaptureOutput.pm)
 
 %description
 This module determines whether an email address is well-formed,
 and optionally, whether a mail host exists for the domain.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 %patch -p1
+%patch1 -p0
 
 %build
 %perl_vendor_build
@@ -36,6 +38,9 @@ and optionally, whether a mail host exists for the domain.
 %perl_vendor_privlib/Email
 
 %changelog
+* Wed Jun 15 2022 Igor Vlasenko <viy@altlinux.org> 1.203-alt1
+- automated CPAN update
+
 * Wed Oct 19 2016 Igor Vlasenko <viy@altlinux.ru> 1.202-alt1
 - automated CPAN update
 
