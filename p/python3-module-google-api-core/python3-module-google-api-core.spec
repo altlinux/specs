@@ -1,5 +1,5 @@
 Name:    python3-module-google-api-core
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 
 Summary: Core Library for Google Client Libraries
@@ -39,6 +39,9 @@ documentation at https://googleapis.dev/python/google-api-core/latest.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jun 15 2022 Andrey Cherepanov <cas@altlinux.org> 2.8.2-alt1
+- New version.
+
 * Fri May 27 2022 Andrey Cherepanov <cas@altlinux.org> 2.8.1-alt1
 - New version.
 
