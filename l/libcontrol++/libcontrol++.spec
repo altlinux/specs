@@ -1,6 +1,6 @@
 Name: libcontrol++
 Version: 0.29.0
-Release: alt1
+Release: alt2
 
 Summary: control++ common classes and functions library
 License: GPLv3
@@ -56,6 +56,9 @@ cp src/*.h %{buildroot}%{_includedir}/%{name}
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Wed Jun 15 2022 Alexey Appolonov <alexey@altlinux.org> 0.29.0-alt2
+- Fixed build (was broken by the GCC update to version 12).
+
 * Wed May 04 2022 Alexey Appolonov <alexey@altlinux.org> 0.29.0-alt1
 - Enhanced function "Split" that splits given string using whitespace if the
   second argument is absent.
