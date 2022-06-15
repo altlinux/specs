@@ -5,8 +5,8 @@
 %def_with ed25519
 
 Name: ostree
-Version: 2022.2
-Release: alt2
+Version: 2022.4
+Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
 License: LGPLv2+
@@ -29,7 +29,7 @@ Requires: %_bindir/gpg2
 BuildRequires(pre): rpm-macros-systemd
 
 # Core requirements
-BuildRequires: pkgconfig(gio-unix-2.0) >= 2.44.0
+BuildRequires: pkgconfig(gio-unix-2.0) >= 2.66.0
 BuildRequires: pkgconfig(zlib)
 BuildRequires: pkgconfig(libcurl) >= 7.29.0
 BuildRequires: pkgconfig(libcrypto) >= 1.0.1
@@ -196,6 +196,9 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Jun 15 2022 Alexey Shabalin <shaba@altlinux.org> 2022.4-alt1
+- 2022.4
+
 * Mon Mar 28 2022 Alexey Shabalin <shaba@altlinux.org> 2022.2-alt2
 - build with ed25519 sign support (ALT#42271)
 
