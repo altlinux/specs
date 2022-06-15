@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 4
+Version: 5
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -51,6 +51,9 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Wed Jun 15 2022 Vitaly Chikunov <vt@altlinux.org> 5-alt1
+- Skip failing tests on i586 and armh.
+
 * Mon Jun 13 2022 Vitaly Chikunov <vt@altlinux.org> 4-alt1
 - Disable userns tests.
 
