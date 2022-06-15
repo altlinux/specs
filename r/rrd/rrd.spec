@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rrd
-Version: 1.7.2
-Release: alt3
+Version: 1.8.0
+Release: alt1
 %define native rrdtool
 %define abiversion 8
 %define rrdcached_user root
@@ -370,6 +370,9 @@ rm -rf %buildroot/usr/share/tcl
 #   (the tcl one looks broken too as of 1.5.4-alt2.1)
 
 %changelog
+* Wed Jun 15 2022 Alexey Shabalin <shaba@altlinux.org> 1.8.0-alt1
+- 1.8.0
+
 * Mon Mar 07 2022 Alexey Shabalin <shaba@altlinux.org> 1.7.2-alt3
 - update sysv init script
 - add systemd service and socket units
