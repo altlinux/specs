@@ -17,7 +17,7 @@
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 3.7.3
+Version: 3.7.5
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -33,6 +33,7 @@ Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
 Patch3: telegram-desktop-revert-setscreen.patch
 Patch4: telegram-desktop-fix-qt5-setscreen.patch
+Patch5: telegram-desktop-fix-missed-cstdint.patch
 
 # [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
 # aarch64: see remove_target_sources ARM neon in https://github.com/desktop-app/tg_owt/blob/master/cmake/libyuv.cmake
@@ -122,7 +123,7 @@ BuildRequires: libopenal-devel >= 1.17.2
 BuildRequires: libva-devel libdrm-devel
 
 # Telegram fork of OWT
-BuildRequires: libowt-tg-devel >= 4.3.0.6
+BuildRequires: libowt-tg-devel >= 4.3.0.7
 BuildRequires: librnnoise-devel
 #BuildRequires: libvpx-devel
 BuildRequires: libjpeg-devel
@@ -147,7 +148,8 @@ BuildRequires: libexpected-devel
 BuildRequires: librange-v3-devel >= 0.11.0
 BuildRequires: libdispatch-devel
 
-BuildRequires: libdbusmenu-qt5-devel
+# unused since 3.5.0
+#BuildRequires: libdbusmenu-qt5-devel
 
 # need for /usr/lib64/cmake/Qt5XkbCommonSupport/Qt5XkbCommonSupportConfig.cmake
 BuildRequires: libxkbcommon-devel
@@ -197,6 +199,8 @@ or business messaging needs.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
+
 #__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
 
 # See https://github.com/desktop-app/tg_owt/pull/82
@@ -304,6 +308,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Wed Jun 15 2022 Vitaly Lipatov <lav@altlinux.ru> 3.7.5-alt1
+- new version 3.7.5 (with rpmrb script)
+
 * Tue Apr 26 2022 Vitaly Lipatov <lav@altlinux.ru> 3.7.3-alt1
 - new version 3.7.3 (with rpmrb script)
 

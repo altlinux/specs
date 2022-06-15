@@ -8,7 +8,7 @@
 %def_without internal_absl
 
 Name: libowt-tg
-Version: 4.3.0.6
+Version: 4.3.0.7
 Release: alt1
 
 Summary: Open WebRTC Toolkit with Telegram desktop patches
@@ -20,9 +20,13 @@ Url: https://github.com/desktop-app/tg_owt
 # Source-url: https://github.com/desktop-app/tg_owt/archive/master.zip
 Source: %name-%version.tar
 
+# Source1-url: https://github.com/google/crc32c/archive/refs/heads/main.zip
+Source1: %name-crc32c-%version.tar
+
 Patch4: 0001-disable-dcsctp_transport.patch
 Patch5: 0001-support-build-with-system-libsrtp.patch
 Patch6: 0001-support-build-with-system-libyuv.patch
+Patch7: 0001-add-missed-cstdint.patch
 
 Patch2000: %name-e2k.patch
 
@@ -42,7 +46,7 @@ BuildRequires: libgio-devel
 BuildRequires: libabseil-cpp-devel >= 20211102.0
 %endif
 BuildRequires: libopenh264-devel
-BuildRequires: libusrsctp-devel
+#BuildRequires: libusrsctp-devel
 BuildRequires: libvpx-devel >= 1.10.0
 BuildRequires: pipewire-libs-devel
 # TODO: upgrade embedded 2.1.0 (build errors with 2.2.0)
@@ -51,6 +55,7 @@ BuildRequires: pipewire-libs-devel
 #BuildRequires: libsrtp2-devel >= 2.2.0
 BuildRequires: libyuv-devel >= 0.0.1805
 
+# TODO remove epoxy
 BuildRequires: libgbm-devel libdrm-devel libepoxy-devel
 
 # Just disable noise (cmake TODO https://gitlab.kitware.com/cmake/cmake/-/issues/18158):
@@ -96,10 +101,11 @@ Requires: libyuv-devel
 develop programs which make use of %name.
 
 %prep
-%setup
-%patch4 -p2
+%setup -a1
+#patch4 -p2
 %patch5 -p2
 %patch6 -p2
+%patch7 -p2
 %ifarch %e2k
 %patch2000 -p2
 %endif
@@ -138,7 +144,7 @@ rm -rv %buildroot%_includedir/tg_owt/modules/audio_device/android
 rm -rfv %buildroot%_includedir/tg_owt/third_party/abseil-cpp/
 %endif
 
-rm -rfv %buildroot%_includedir/tg_owt/third_party/{openh264,usrsctp,libvpx,pipewire,srtp,libyuv}
+rm -rfv %buildroot%_includedir/tg_owt/third_party/{openh264,libvpx,pipewire,srtp,libyuv}
 rm -rfv %buildroot%_includedir/tg_owt/third_party/{yasm,pffft,rnnoise}
 
 %files
@@ -150,11 +156,17 @@ rm -rfv %buildroot%_includedir/tg_owt/third_party/{yasm,pffft,rnnoise}
 %_libdir/cmake/tg_owt/
 
 %changelog
+* Wed Jun 15 2022 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.7-alt1
+- new version (4.3.0.7) with rpmgs script
+- build from git 10d5f4bf77333ef6b43516f90d2ce13273255f41
+- removed BR: usrsctp
+- pack third party crc32c
+
 * Sun Apr 10 2022 Vitaly Lipatov <lav@altlinux.ru> 4.3.0.6-alt1
 - new version (4.3.0.6) with rpmgs script
 - build from git 1fe5e68d999e0bf88d0128ad813438726732f6e0
 - remove third_party headers from includedir
-- stop build for aarch64 (due strange linking issues with abseil-cpp
+- stop build for aarch64 (due strange linking issues with abseil-cpp)
 
 * Fri Sep 17 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.3.0.5-alt4
 - added patch for Elbrus
