@@ -1,8 +1,8 @@
 %def_without test
 
 Name: checksec
-Version: 2.5.0
-Release: alt2
+Version: 2.6.0
+Release: alt1
 
 Summary: Tool to check system for binary-hardening
 
@@ -78,6 +78,9 @@ popd
 %_man1dir/%name.1*
 
 %changelog
+* Tue Jun 07 2022 Vitaly Lipatov <lav@altlinux.ru> 2.6.0-alt1
+- new version 2.6.0 (with rpmrb script)
+
 * Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt2
 - fix PATH (thanks, andy@!)
 
