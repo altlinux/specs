@@ -65,7 +65,7 @@
 
 Name: wine
 Version: %major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -259,9 +259,6 @@ BuildRequires: perl-XML-Simple
 # Actually for x86_32
 Requires: glibc-pthread glibc-nss
 
-
-Requires: webclient
-
 Requires: wine-gecko = %gecko_version
 Conflicts: wine-mono < %mono_version
 
@@ -280,9 +277,6 @@ Requires: desktop-file-utils
 Requires: %name-common = %EVR
 
 Conflicts: %conflictbase
-
-# Actually for x86_32
-Requires: glibc-nss
 
 # FIXME:
 # Runtime linked
@@ -377,6 +371,8 @@ BuildArch: noarch
 Conflicts: %conflictbase-common
 # we don't need provide anything
 AutoProv:no
+Conflicts: libwine <= 6.14.1
+Conflicts: i586-libwine <= 6.14.1
 
 %description common
 Common arch independent wine files and scripts.
@@ -716,11 +712,9 @@ fi
 #if_without vanilla
 %libwinedir/%winesodir/windows.networking.connectivity.so
 #endif
-%libwinedir/%winesodir/light.msstyles.so
 %libwinedir/%winesodir/*.com.so
 %libwinedir/%winesodir/*.cpl.so
 %libwinedir/%winesodir/*.ocx.so
-%libwinedir/%winesodir/*.tlb.so
 %libwinedir/%winesodir/*.ax.so
 %libwinedir/%winesodir/*.exe.so
 %libwinedir/%winesodir/*.acm.so
@@ -934,6 +928,11 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Wed Jun 15 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.6.1-alt2
+- drop Requires: webclient
+- add conflicts for wine-common
+- fix build without PE
+
 * Mon Apr 11 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.6.1-alt1
 - new version 7.6.1 (with rpmrb script)
 - set strict require wine-mono 7.2.0
