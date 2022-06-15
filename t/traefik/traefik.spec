@@ -4,7 +4,7 @@
 %def_with prebuild_webui
 
 Name: traefik
-Version: 2.6.0
+Version: 2.7.1
 Release: alt1
 Summary: The Cloud Native Edge Router
 
@@ -93,9 +93,8 @@ export GOFLAGS="-mod=vendor"
 
 %if_without prebuild_webui
 pushd webui
-npm rebuild
-npm run build:nc
-echo 'For more information show `webui/readme.md`' > static/DONT-EDIT-FILES-IN-THIS-DIRECTORY.md
+yarn build:nc
+echo 'For more information see `webui/readme.md`' > static/DONT-EDIT-FILES-IN-THIS-DIRECTORY.md
 popd
 %endif
 
@@ -146,6 +145,9 @@ install -d -m 755 %buildroot%_sharedstatedir/%name
 %dir %attr(0750, %name, %name) %_sharedstatedir/%name
 
 %changelog
+* Wed Jun 15 2022 Alexey Shabalin <shaba@altlinux.org> 2.7.1-alt1
+- 2.7.1
+
 * Thu Jan 27 2022 Alexey Shabalin <shaba@altlinux.org> 2.6.0-alt1
 - 2.6.0
 
