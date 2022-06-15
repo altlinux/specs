@@ -1,7 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Test/Needs.pm)
+# END SourceDeps(oneline)
+%define _unpackaged_files_terminate_build 1
 %define dist Package-Stash-XS
 Name: perl-%dist
-Version: 0.29
-Release: alt1.1
+Version: 0.30
+Release: alt1
 
 Summary: Faster and more correct implementation of the Package::Stash API
 License: GPL or Artistic
@@ -33,6 +37,9 @@ installed, and should be preferred in all environments with a compiler.
 %perl_vendor_autolib/Package*
 
 %changelog
+* Wed Jun 15 2022 Igor Vlasenko <viy@altlinux.org> 0.30-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1.1
 - rebuild with new perl 5.28.1
 
