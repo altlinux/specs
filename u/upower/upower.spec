@@ -3,11 +3,11 @@
 %ifarch %ix86
 %def_disable check
 %else
-%def_enable check
+%def_disable check
 %endif
 
 Name: upower
-Version: 0.99.17
+Version: 0.99.19
 Release: alt1
 
 Summary: Power Management Service
@@ -37,7 +37,7 @@ BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: gtk-doc libusb-devel libgudev-devel >= %gudev_ver libdbus-devel >= %dbus_ver
 BuildRequires: libpolkit-devel libudev-devel gobject-introspection-devel
 BuildRequires: libimobiledevice-devel > %imobiledevice_ver pkgconfig(libplist-2.0) pkgconfig(systemd)
-%{?_enable_check:BuildRequires: /proc python3 python3-module-dbusmock >= %dbusmock_ver
+%{?_enable_check:BuildRequires: /proc /dev/pts python3 python3-module-dbusmock >= %dbusmock_ver
 BuildRequires: python3-module-packaging libumockdev-gir python3-module-dbus}
 
 %description
@@ -105,7 +105,8 @@ GObject introspection devel data for the UPower library
 %dir %_sysconfdir/UPower
 %_sysconfdir/UPower/*.conf
 %_unitdir/*
-/lib/udev/rules.d/*.rules
+%_udevhwdbdir/95-upower-hid.hwdb
+%_udevrulesdir/*.rules
 %_bindir/*
 %_libexecdir/*
 %_datadir/dbus-1/system.d/*.conf
@@ -130,6 +131,9 @@ GObject introspection devel data for the UPower library
 %_girdir/*.gir
 
 %changelog
+* Wed Jun 15 2022 Yuri N. Sedunov <aris@altlinux.org> 0.99.19-alt1
+- updated to v0.99.19-7-g54e396e
+
 * Tue Mar 15 2022 Yuri N. Sedunov <aris@altlinux.org> 0.99.17-alt1
 - 0.99.17
 
