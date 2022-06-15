@@ -1,8 +1,8 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.94.0
-Release: alt2
+Version: 5.95.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -116,6 +116,9 @@ LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Tue Jun 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.95.0-alt1
+- new version
+
 * Tue May 31 2022 Slava Aseev <ptrnine@altlinux.org> 5.94.0-alt2
 - fix blinking fdo_secrets_test
 

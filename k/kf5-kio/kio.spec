@@ -3,7 +3,7 @@
 %def_enable streebog
 
 Name: kf5-%rname
-Version: 5.94.0
+Version: 5.95.0
 Release: alt1
 %K5init altplace
 
@@ -139,6 +139,7 @@ KF5 library
 %_K5exec/*
 #%_K5libexecdir/kauth/*
 %_K5plug/kf5/*
+%_K5plug/plasma/kcms/systemsettings*
 %_K5data/kcookiejar/
 %_K5notif/*
 %_K5plug/*.so
@@ -176,6 +177,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Tue Jun 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.95.0-alt1
+- new version
+
 * Mon May 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.94.0-alt1
 - new version
 

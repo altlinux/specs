@@ -1,7 +1,7 @@
 %define rname knewstuff
 
 Name: kf5-%rname
-Version: 5.94.0
+Version: 5.95.0
 Release: alt1
 %K5init altplace
 
@@ -96,8 +96,8 @@ done
 %_K5data/kmoretools/
 
 %files devel
-%_K5inc/knewstuff*_version.h
 %_K5inc/KNewStuff3/
+%_K5inc/KMoreTools/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5NewStuff*/
 %_K5archdata/mkspecs/modules/qt_KNewStuff*.pri
@@ -115,6 +115,9 @@ done
 
 
 %changelog
+* Tue Jun 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.95.0-alt1
+- new version
+
 * Mon May 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.94.0-alt1
 - new version
 
