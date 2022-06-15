@@ -1,9 +1,9 @@
 %define module_name	r8168
 %define module_release	alt1.k
-%define module_version	8.049.02
+%define module_version	8.050.03
 
 %define flavour		std-def
-%define karch %ix86 x86_64 aarch64 ppc64le
+%define karch %ix86 x86_64 aarch64 ppc64le armh
 
 %setup_kernel_module %flavour
 
@@ -61,6 +61,9 @@ install -Dp -m600 src/%module_name.ko %buildroot/%module_dir/%module_name.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Jun 15 2022 Nazarov Denis <nenderus@altlinux.org> 8.050.03-alt1
+- Version 8.050.03
 
 * Wed Aug 11 2021 Nazarov Denis <nenderus@altlinux.org> 8.049.02-alt1
 - Version 8.049.02

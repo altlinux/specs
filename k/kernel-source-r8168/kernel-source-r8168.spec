@@ -1,6 +1,6 @@
 Name: kernel-source-r8168
-Version: 8.049.02
-Release: alt4
+Version: 8.050.03
+Release: alt1
 
 Summary: Source for RTL8168 driver
 License: GPLv2+
@@ -11,8 +11,6 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Source0: r8168-%version.tar.bz2
 Source1: blacklist-r8168.conf
-
-Patch0: kernel-5.17.patch
 
 BuildArch: noarch
 
@@ -35,7 +33,6 @@ Blacklist modules for correctly working module r8168
 
 %prep
 %setup -c
-%patch0 -p0
 %__mv r8168-%version %name-%version
 
 %install
@@ -53,6 +50,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %config %_sysconfdir/modprobe.d/blacklist-r8168.conf
 
 %changelog
+* Wed Jun 15 2022 Nazarov Denis <nenderus@altlinux.org> 8.050.03-alt1
+- Version 8.050.03
+
 * Tue Apr 26 2022 Nazarov Denis <nenderus@altlinux.org> 8.049.02-alt4
 - Update kernel 5.17 patch
 
