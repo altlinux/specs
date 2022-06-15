@@ -1,5 +1,5 @@
 Name: xarchiver
-Version: 0.5.4.17
+Version: 0.5.4.18
 Release: alt1
 
 Summary: A GTK+2 only archive manager
@@ -9,6 +9,8 @@ Group: File tools
 Url: http://xarchiver.sourceforge.net/
 Source: %name-%version.tar.gz
 Packager: Xfce Team <xfce@packages.altlinux.org>
+
+# TODO strace -eaccess xarchiver |& grep "/usr/bin"
 
 BuildRequires(pre): rpm-build-licenses rpm-build-xfce4 xfce4-dev-tools
 # Automatically added by buildreq on Thu Dec 19 2019
@@ -48,6 +50,9 @@ touch AUTHORS NEWS # XXX
 %doc %_docdir/%name
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 0.5.4.18-alt1
+- Autobuild version bump to 0.5.4.18
+
 * Thu Jan 28 2021 Fr. Br. George <george@altlinux.ru> 0.5.4.17-alt1
 - Autobuild version bump to 0.5.4.17
 
