@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Class/Method/Modifiers.pm) perl(Class/Tiny.pm) perl(Eval/TypeTiny.pm) perl(Exporter/Shiny.pm) perl(ExtUtils/MakeMaker.pm) perl(List/Util.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(MooX/TypeTiny.pm) perl(Moose.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/ArrayRef.pm) perl(MooseX/InsideOut.pm) perl(Mouse.pm) perl(Mouse/Role.pm) perl(Mouse/Util.pm) perl(Mouse/Util/TypeConstraints.pm) perl(Role/Tiny.pm) perl(Test/Fatal.pm) perl(Test/Moose.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(Type/Params.pm) perl(Types/Standard.pm)
+BuildRequires: perl(Class/Method/Modifiers.pm) perl(Class/Tiny.pm) perl(Eval/TypeTiny.pm) perl(Exporter/Shiny.pm) perl(ExtUtils/MakeMaker.pm) perl(List/Util.pm) perl(Moo.pm) perl(Moo/Role.pm) perl(MooX/TypeTiny.pm) perl(Moose.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/ArrayRef.pm) perl(MooseX/InsideOut.pm) perl(Mouse.pm) perl(Mouse/Role.pm) perl(Mouse/Util.pm) perl(Mouse/Util/TypeConstraints.pm) perl(Role/Tiny.pm) perl(Scope/Guard.pm) perl(Test/Fatal.pm) perl(Test/Moose.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(Type/Params.pm) perl(Types/Standard.pm)
 # END SourceDeps(oneline)
 %define module_name Sub-HandlesVia
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.020
+Version: 0.023
 Release: alt1
 Summary: alternative handles_via implementation
 Group: Development/Perl
@@ -44,6 +44,9 @@ fi
 %perl_vendor_privlib/S*
 
 %changelog
+* Wed Jun 15 2022 Igor Vlasenko <viy@altlinux.org> 0.023-alt1
+- automated CPAN update
+
 * Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 0.020-alt1
 - automated CPAN update
 
