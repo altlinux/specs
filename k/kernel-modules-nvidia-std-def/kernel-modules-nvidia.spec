@@ -10,9 +10,9 @@
 %define package_version	510.68.02
 %define module_version	%package_version
 %ifarch %ix86 armh
-%define module_version	390.147
+%define module_version	390.151
 %endif
-%define module_release	alt1
+%define module_release	alt2
 %define flavour		std-def
 %define karch x86_64 aarch64 %ix86
 
@@ -25,13 +25,13 @@
 
 %define legacy7 %nil
 %nvIF_ver_lt %xorg_ver 99
-%define legacy7 470.103.01
+%define legacy7 470.129.06
 %endif
 %define legacy7_src %(echo %legacy7 | tr -d .)
 
 %define legacy6 %nil
 %nvIF_ver_lt %xorg_ver 99
-%define legacy6 390.147
+%define legacy6 390.151
 %endif
 %define legacy6_src %(echo %legacy6 | tr -d .)
 
@@ -294,6 +294,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri May 06 2022 Sergey V Turchin <zerg at altlinux dot org> 510.68.02-alt2
+- new releases (470.129.06, 390.151)
 
 * Fri May 06 2022 Sergey V Turchin <zerg at altlinux dot org> 510.68.02-alt1
 - new release(510.68.02)
