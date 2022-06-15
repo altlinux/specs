@@ -8,8 +8,9 @@
 %define IF_ver_not_lt() %if "%(rpmvercmp '%2' '%1')" <= "0"
 %define IF_ver_not_lteq() %if "%(rpmvercmp '%2' '%1')" < "0"
 %define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
+%define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 
-%def_enable bootstrap
+%def_disable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -33,7 +34,7 @@
 Name: qt6-base
 %define major  6
 Version: 6.2.4
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -48,6 +49,10 @@ Source2: rpm-macros-addon
 Patch1: qtbase-version-check.patch
 Patch1000: alt-timezone.patch
 Patch1001: alt-zonetab.patch
+Patch1002: alt-ca-certificates-path.patch
+Patch1003: alt-decrease-iconloader-fallback-depth.patch
+Patch1004: alt-kernel-requires.patch
+Patch1005: e2k-qt-6.patch
 
 # macros
 %define _qt6 %gname
@@ -82,7 +87,7 @@ BuildRequires: libxkbcommon-x11-devel libxkbfile-devel libzstd-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: libsqlite3-devel
 %if_disabled bootstrap
-BuildRequires: qt6-base-devel qt6-tools
+BuildRequires(pre): qt6-base-devel qt6-tools
 %endif
 
 %description
@@ -102,7 +107,7 @@ Common package for Qt%major
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common
-Requires: pkgconfig(gl) pkgconfig(egl)
+Requires: pkgconfig(xkbcommon) pkgconfig(gl) pkgconfig(egl)
 Requires: rpm-macros-%gname
 Requires: gcc-c++
 %description devel
@@ -354,6 +359,12 @@ OpenGL widgets library for the Qt%major toolkit
 %patch1 -p1
 %patch1000 -p1
 %patch1001 -p1
+%patch1002 -p1
+%patch1003 -p1
+%patch1004 -p1
+%ifarch %e2k
+%patch1005 -p1
+%endif
 
 # install optflags
 %add_optflags %optflags_shared
@@ -431,6 +442,7 @@ cmake .. \
     -DQT_FEATURE_system_pcre2=ON \
     -DQT_FEATURE_libproxy=ON \
     -DQT_FEATURE_sctp=%{?_enable_sctp:ON}%{!?_enable_sctp:OFF} \
+    -DQT_FEATURE_mimetype=ON \
     -DQT_FEATURE_mimetype_database=OFF \
     \
     -DQT_FEATURE_sql_odbc=ON \
@@ -453,13 +465,17 @@ cmake .. \
 #    -DINPUT_opengl=%opengl_type \
 popd
 cmake --build BUILD %_smp_mflags --verbose
+%if_disabled bootstrap
+cmake --build BUILD --target docs
+%endif
 
 %install
 cmake --install BUILD --prefix %buildroot/%prefix
-
-#if_disabled bootstrap
-#[ -d doc/qtcore ] && %make INSTALL_ROOT=%buildroot install_docs ||:
-#endif
+%if_disabled bootstrap
+%if %qdoc_found
+DESTDIR=%buildroot cmake --build BUILD --target install_docs
+%endif
+%endif
 
 # install private qtxcb headers
 mkdir -p %buildroot/%_qt6_headerdir/QtXcb
@@ -775,6 +791,10 @@ ln -s `relative %buildroot/%_qt6_headerdir %buildroot/%_qt6_prefix/include` %bui
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Wed Jun 15 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt3
+- move some altlinux fixes from Qt5
+- build docs
+
 * Thu Jun 02 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
 - fix parse timezones
 
