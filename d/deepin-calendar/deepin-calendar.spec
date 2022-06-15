@@ -1,7 +1,7 @@
 %global repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.8.29
+Version: 5.8.30
 Release: alt1
 Summary: Calendar for Deepin Desktop Environment
 License: GPL-3.0+
@@ -78,6 +78,18 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 %_userunitdir/com.dde.calendarserver.calendar.timer
 
 %changelog
+* Tue Jun 14 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.30-alt1
+- New version (5.8.30).
+- Upstream:
+  + feat: minimum size optimization:
+    + monthly view display;
+    + focus interaction in the search box of the state column;
+    + focus switching optimization in the search box of the status column.
+  + feat: Modify the statistical configuration of code coverage.
+  + feat: Add default size.
+  + fix: After bug112880 created the schedule under the viewing chart,
+  the monthly viewing information area was gray occasionally displayed.
+
 * Tue Apr 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.29-alt1
 - New version (5.8.29).
 
