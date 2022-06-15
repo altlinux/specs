@@ -1,5 +1,5 @@
 Name: capstats
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: A command-line tool collecting packet statistics
@@ -39,6 +39,9 @@ ln -s %_datadir/zeek-cmake/ cmake
 %_bindir/%name
 
 %changelog
+* Tue Jun 07 2022 Vitaly Lipatov <lav@altlinux.ru> 0.31-alt1
+- new version 0.31 (with rpmrb script)
+
 * Mon Feb 14 2022 Vitaly Lipatov <lav@altlinux.ru> 0.30-alt1
 - new version 0.30 (with rpmrb script)
 
