@@ -5,7 +5,7 @@
 Name: switchboard
 %define xdg_name org.pantheon.%name
 %define rdn_name io.elementary.%name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Modular Desktop Settings Hub for elementary OS
@@ -25,8 +25,8 @@ Requires: lib%name = %version-%release
 
 %define granite_ver 5.4.0
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools gcc-c++ libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-vala
+BuildRequires: meson vala-tools gcc-c++ libappstream-glib-devel
 BuildRequires: libgranite-devel >= %granite_ver 
 BuildRequires: pkgconfig(libhandy-1)
 BuildRequires: libclutter-gtk3-devel
@@ -67,6 +67,7 @@ This package contains files that are needed to develop Switchboard plugins.
 %_bindir/%rdn_name
 %_desktopdir/%rdn_name.desktop
 %_datadir/glib-2.0/schemas/%rdn_name.gschema.xml
+%_iconsdir/hicolor/*x*/*/%rdn_name.*
 %_datadir/metainfo/%rdn_name.appdata.xml
 
 %files -n lib%name
@@ -80,6 +81,9 @@ This package contains files that are needed to develop Switchboard plugins.
 %_vapidir/%name-%api_ver.vapi
 
 %changelog
+* Wed Jun 15 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.2-alt1
+- 6.0.2
+
 * Thu May 05 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.1-alt1
 - 6.0.1
 
