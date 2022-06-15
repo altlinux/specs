@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 110
+%define centos_release 111
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,17 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jun 14 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.111-alt1.el9
+- Updated to kernel-5.14.0-111.el9 (fixes: CVE-2022-1966):
+  + Add pinctrl support for ADL-N
+  + block, loop: support partitions without scanning
+  + [Intel 9.1 FEAT] [RPL-P] perf: PerfMon support
+  + ipv4: do not use per netns icmp sockets
+  + netfilter: nf_tables: disallow non-stateful expression in sets earlier
+  + remoteproc: updates
+  + scsi: fnic: Finish scsi_cmnd before dropping the spinlock
+  + turbostat: fix PC6 displaying on some systems
+
 * Mon Jun 13 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.110-alt1.el9
 - Updated to kernel-5.14.0-110.el9:
   + ACPI: sysfs: Fix BERT error region memory mapping
