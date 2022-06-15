@@ -5,7 +5,7 @@
 %def_with x2go
 
 Name: remmina
-Version: 1.4.25
+Version: 1.4.26
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -24,8 +24,9 @@ Obsoletes: %name-plugins-xdmcp < %EVR
 
 BuildRequires(pre): cmake >= 3.4.0
 BuildRequires: gcc-c++
+BuildRequires: python3-dev
 BuildRequires: desktop-file-utils xdg-utils
-BuildRequires: gettext pkgconfig(libpcre) libpcre2-devel pkgconfig(libffi)
+BuildRequires: gettext pkgconfig(libpcre2-8) pkgconfig(libffi)
 BuildRequires: intltool
 BuildRequires: libappstream-glib
 BuildRequires: libgcrypt-devel libssl-devel
@@ -207,6 +208,18 @@ computers in front of either large monitors or tiny net-books.
 This package contains the X2GO plugin for the Remmina remote desktop
 client.
 
+%package plugins-python
+Summary: Pyhton plugin for Remmina Remote Desktop Client
+Group: Networking/Remote access
+Requires: %name = %EVR
+
+%description plugins-python
+Remmina is a remote desktop client written in GTK+, aiming to be useful for
+system administrators and travelers, who need to work with lots of remote
+computers in front of either large monitors or tiny net-books.
+
+This package contains the python plugin for the Remmina remote desktop client.
+
 %package gnome-session
 Summary: Gnome Shell session for Remmina kiosk mode
 Group: Networking/Remote access
@@ -243,6 +256,7 @@ that shows up under the display manager session menu.
     %{?_with_gvnc:-DWITH_GVNC=ON} \
     %{?_with_x2go:-DWITH_X2GO=ON} \
     %{?_with_kwallet:-DWITH_KF5WALLET=ON} \
+    -DWITH_PYTHON=ON \
     -DREMMINA_RUNTIME_PLUGINDIR=%_libdir/remmina/plugins \
     -DREMMINA_PLUGINDIR=%_libdir/remmina/plugins
 
@@ -327,6 +341,9 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_iconsdir/hicolor/*/emblems/org.remmina.Remmina-x2go-symbolic.svg
 %endif
 
+%files plugins-python
+%_libdir/remmina/plugins/remmina-plugin-python_wrapper.so
+
 %files gnome-session
 %_bindir/gnome-session-remmina
 %_bindir/remmina-gnome
@@ -340,6 +357,10 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jun 15 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.26-alt1
+- new version 1.4.26.
+- new python plugin enabled.
+
 * Wed Apr 13 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.25-alt1
 - new version 1.4.25.
 - build www plugin.
