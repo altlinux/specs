@@ -1,7 +1,7 @@
 %def_with cppunit
 
 Name: xournalpp
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 Summary: Handwriting note-taking software with PDF annotation support
 Group: Office
@@ -12,9 +12,9 @@ Source: %name-%version.tar.gz
 Requires: %name-plugins = %version-%release
 Requires: %name-ui = %version-%release
 
-# Automatically added by buildreq on Fri Mar 25 2022
-# optimized out: at-spi2-atk cmake cmake-modules cppunit fontconfig fontconfig-devel fonts-ttf-liberation-narrow glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXrender-devel libalsa-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libpoppler8-glib libsasl2-3 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libxcb-devel pkg-config python3 python3-base sh4 shared-mime-info xorg-proto-devel zlib-devel
-BuildRequires: cppunit-devel ctest fonts-ttf-liberation gcc-c++ git-core libXi-devel libgtk+3-devel libpoppler-glib-devel libportaudio2-devel librsvg-devel libsndfile-devel libssl-devel libxml2-devel libzip-devel
+# Automatically added by buildreq on Wed Jun 15 2022
+# optimized out: at-spi2-atk cmake cmake-modules cppunit fontconfig fontconfig-devel fonts-ttf-liberation-narrow glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXrender-devel libalsa-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libpoppler8-glib libsasl2-3 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libxcb-devel perl perl-Encode perl-Locale-gettext perl-parent pkg-config python3 python3-base sh4 shared-mime-info xorg-proto-devel zlib-devel
+BuildRequires: cppunit-devel ctest fonts-ttf-liberation gcc-c++ git-core help2man libXi-devel libgtk+3-devel libpoppler-glib-devel libportaudio2-devel librsvg-devel libsndfile-devel libssl-devel libxml2-devel libzip-devel lsb-release lua-devel
 
 %description
 Xournal++ is a handwriting note-taking software with PDF annotation support.
@@ -71,6 +71,7 @@ The %name-ui package contains a graphical user interface for  %name.
 %_datadir/mimelnk/application/*
 %exclude %_datadir/%name/plugins
 %exclude %_datadir/%name/ui
+%_man1dir/*
 
 %files plugins
 %_datadir/%name/plugins
@@ -79,6 +80,9 @@ The %name-ui package contains a graphical user interface for  %name.
 %_datadir/%name/ui
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1.1.1-alt1
+- Autobuild version bump to 1.1.1
+
 * Fri Mar 25 2022 Fr. Br. George <george@altlinux.org> 1.1.0-alt1
 - Autobuild version bump to 1.1.0
 
