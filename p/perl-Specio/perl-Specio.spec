@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Specio
-Version: 0.47.fix
-Release: alt4
+Version: 0.48
+Release: alt1
 
 Summary: Type constraints and coercions for Perl
 Group: Development/Perl
-License: Artistic 2
+License: Artistic-2
 
 Url: %CPAN Specio
 Source: %name-%version.tar
@@ -32,6 +32,9 @@ BuildRequires: perl(List/MoreUtils.pm) perl(Try/Tiny.pm) perl(Moose/Role.pm) per
 %doc Changes README* TODO*
 
 %changelog
+* Wed Jun 15 2022 Igor Vlasenko <viy@altlinux.org> 0.48-alt1
+- new version
+
 * Mon May 16 2022 Alexandr Antonov <aas@altlinux.org> 0.47.fix-alt4
 - pack Test:Specio
 
