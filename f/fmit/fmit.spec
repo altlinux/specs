@@ -1,5 +1,5 @@
 Name: fmit
-Version: 1.2.13
+Version: 1.2.14
 Release: alt1
 
 Summary: Free Music Instrument Tuner
@@ -65,6 +65,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Jun 07 2022 Vitaly Lipatov <lav@altlinux.ru> 1.2.14-alt1
+- new version 1.2.14 (with rpmrb script)
+
 * Fri Jun 19 2020 Vitaly Lipatov <lav@altlinux.ru> 1.2.13-alt1
 - new version 1.2.13 (with rpmrb script)
 
