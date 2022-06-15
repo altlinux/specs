@@ -31,7 +31,7 @@
 
 Name:           chromium-gost
 Version:        102.0.5005.61
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -82,6 +82,7 @@ Patch013: 0013-sql-make-VirtualCursor-standard-layout-type.patch
 Patch014: 0014-IWYU-add-cstring-for-std-strlen-in-fenced_frame_util.patch
 Patch015: 0015-IWYU-add-utility-for-std-exchange.patch
 Patch016: 0016-GENTOO-Fix-instantiating-fold-expression-error.patch
+Patch017: 0017-Handle-kioslaverc-config-located-in-XDG_CONFIG_DIRS.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -496,6 +497,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Jun 15 2022 Slava Aseev <ptrnine@altlinux.org> 102.0.5005.61-alt2
+- Handle kioslaverc config located in XDG_CONFIG_DIRS.
+
 * Wed Jun 01 2022 Fr. Br. George <george@altlinux.org> 102.0.5005.61-alt1
 - GOST version
 
