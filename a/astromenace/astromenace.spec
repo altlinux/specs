@@ -1,24 +1,26 @@
 Name: astromenace
-Version: 1.3.2
+Version: 1.4.1
 Release: alt1
 Summary: Hardcore 3D space shooter with spaceship upgrade possibilities
 Summary(ru_RU.UTF-8): Хардкорный космический 3D шутер с возможностью апгрейда корабля
 %define cname AstroMenace
 
 Group: Games/Arcade
-License: GPL
+License: GPLv3
 Url: http://www.viewizard.com/
-Source: %name-src-%version.tar.bz2
+Source: %name-%version.tar.gz
 Source1: icon.tar
-Patch: %name-1.3.1-alt-glext-include-fix.patch
+Patch: %name-1.4.1-alt-gl-include-fix.patch
 Provides: openastromenace
 Obsoletes: openastromenace
 
 Requires: %name-data
 
-# Automatically added by buildreq on Sat Mar 23 2013
-# optimized out: cmake-modules libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libfreetype-devel libogg-devel libopenal-devel libstdc++-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
-BuildRequires: cmake gcc-c++ libSDL-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libalut-devel libvorbis-devel libxkbfile-devel
+# Automatically added by buildreq on Thu Oct 14 2021
+# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libfreetype-devel libglvnd-devel libgpg-error libogg-devel libopenal-devel libsasl2-3 libstdc++-devel python3 python3-base sh4
+BuildRequires: cmake gcc-c++ libGLU-devel libSDL2-devel libalut-devel libvorbis-devel
+
+BuildRequires: libfreetype-devel
 
 %description
 AstroMenace stands out for a hardcore gameplay that absorbs you
@@ -49,6 +51,7 @@ process of causing total annihilation has never looked so fascinating!
 С версии 1.2.0 распространяется под GPL v3.
 
 %package data
+License: CC-BY-NC-SA-4.0
 Group: Games/Arcade
 Summary: Data files for %name
 Summary(ru_RU.UTF-8): Файлы с данными для %name
@@ -61,12 +64,12 @@ Data files for %name
 Файлы с данными для %name
 
 %prep
-%setup -a1 -n %cname
-%patch -p3
+%setup -a1
+%patch -p1
 
-cat > %cname.sh << EOF
+cat > %name.sh << EOF
 #!/bin/sh
-%_gamesbindir/%cname.bin --dir=%_gamesdatadir/%cname
+%_gamesbindir/%name.bin --dir=%_gamesdatadir/%name
 EOF
 
 cat > %name.desktop << EOF
@@ -75,7 +78,7 @@ Type=Application
 Comment=3D space shooter
 Comment=Космический 3D шутер
 Terminal=false
-Exec=%_gamesbindir/%cname
+Exec=%_gamesbindir/%name
 Icon=%name
 Name=%name
 Encoding=UTF-8
@@ -83,13 +86,12 @@ Categories=Game;ArcadeGame;
 EOF
 
 %build
-cmake .
-%make_build
-./AstroMenace --pack --rawdata=./RAW_VFS_DATA
+%cmake
+%cmake_build
 
 %install
-install -D -m755 %cname %buildroot%_gamesbindir/%cname.bin
-install -D -m755 %cname.sh %buildroot%_gamesbindir/%cname
+install -D -m755 %_cmake__builddir/%name %buildroot%_gamesbindir/%name.bin
+install -D -m755 %name.sh %buildroot%_gamesbindir/%name
 
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 for n in 32 48 64 128; do \
@@ -97,20 +99,22 @@ for n in 32 48 64 128; do \
     %buildroot%_iconsdir/hicolor/$n''x$n/apps/%name.png; \
 done
 
-mkdir -p %buildroot%_gamesdatadir/%cname
-install gamedata.vfs %buildroot%_gamesdatadir/%cname/
+install -D %_cmake__builddir/gamedata.vfs %buildroot%_gamesdatadir/%name/gamedata.vfs
 
 %files
-%doc ReadMe.txt
-%dir %_gamesdatadir/%cname
-%_gamesbindir/%{cname}*
+%doc *.md docs
+%dir %_gamesdatadir/%name
+%_gamesbindir/%{name}*
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/%name.png
 
 %files data
-%_gamesdatadir/%cname/*
+%_gamesdatadir/%name/*
 
 %changelog
+* Fri Oct 15 2021 Fr. Br. George <george@altlinux.ru> 1.4.1-alt1
+- Autobuild version bump to 1.4.1
+
 * Tue Jul 16 2013 Fr. Br. George <george@altlinux.ru> 1.3.2-alt1
 - Autobuild version bump to 1.3.2
 
