@@ -18,7 +18,7 @@ BuildRequires: jpackage-1.8-compat
 
 Name:		sweethome3d
 Version:	6.1
-Release:	alt2_2jpp8
+Release:	alt3_2jpp8
 Summary:	A free interior design application, with a 3D preview
 License:	GPLv2
 Group:		Graphics
@@ -50,7 +50,7 @@ BuildRequires:	batik
 BuildRequires:	desktop-file-utils
 BuildRequires:	dos2unix
 BuildRequires:	gnu-regexp
-BuildRequires:	java-1.8.0-openjdk-javaws mozilla-plugin-java-1.8.0-openjdk
+#BuildRequires:	java-1.8.0-openjdk-javaws mozilla-plugin-java-1.8.0-openjdk
 BuildRequires:	ImageMagick-tools
 BuildRequires:	itext-core
 BuildRequires:	java-javadoc
@@ -68,7 +68,7 @@ BuildRequires:	xml-commons-apis
 
 Requires:	batik
 Requires:	bouncycastle-pkix
-Requires:	java-1.8.0-openjdk-javaws mozilla-plugin-java-1.8.0-openjdk
+#Requires:	java-1.8.0-openjdk-javaws mozilla-plugin-java-1.8.0-openjdk
 Requires:	itext-core
 Requires:	java3d
 Requires:	jpackage-utils
@@ -174,7 +174,8 @@ pushd libtest
   ln -sf $(build-classpath gnu-regexp) gnu-regexp-1.1.0.jar
   ln -sf $(build-classpath jdepend) jdepend-2.9.jar
   ln -sf $(build-classpath jdom) jdom-1.0.jar
-  ln -sf /usr/share/icedtea-web/javaws.jar jnlp.jar
+#  ln -sf /usr/share/icedtea-web/javaws.jar jnlp.jar
+  cp -a jnlp.jar.no jnlp.jar
   ln -sf $(build-classpath jiprof/profile) profile.jar
 popd
 
@@ -259,7 +260,8 @@ pushd Textures-eTeksScopia
 popd
 
 %build
-%ant application furniture textures help javadoc
+%ant application furniture textures help 
+#javadoc
 
 %install
 # .jar-repertory
@@ -305,8 +307,8 @@ for i in Contributions eTeksScopia; do
 done
 
 # javadoc-repertory
-mkdir -p %{buildroot}%{_javadocdir}/%{name}
-cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}
+#mkdir -p %{buildroot}%{_javadocdir}/%{name}
+#cp -pr javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 # binary-repertory
 mkdir -p %{buildroot}%{_bindir}
@@ -402,12 +404,16 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %dir %{_datadir}/%{name}/%{pkgtextu}
 %{_datadir}/%{name}/%{pkgtextu}/*.sh3t
 
+%if 0
 %files javadoc
 %dir %{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/*
-
+%endif
 
 %changelog
+* Wed Jun 15 2022 Igor Vlasenko <viy@altlinux.org> 6.1-alt3_2jpp8
+- build with bundled jnlp.jar
+
 * Mon Jun 07 2021 Igor Vlasenko <viy@altlinux.org> 6.1-alt2_2jpp8
 - use jvm_run
 
