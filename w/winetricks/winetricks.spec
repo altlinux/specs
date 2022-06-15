@@ -1,6 +1,6 @@
 Name: winetricks
 Version: 20220411
-Release: alt2
+Release: alt3
 
 Summary: Work around common problems in Wine
 
@@ -14,7 +14,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
-Patch: 066a2334ebc6fb608825949d7c642b1441bc403a.patch
+Patch: 0001-fix-detection-for-gui-without-args.patch
 
 BuildArch: noarch
 
@@ -58,6 +58,8 @@ subst 's|winetricks_latest_version_check$||' src/winetricks
 %makeinstall_std
 # some tarballs do not install appdata
 install -m0644 -D -t %buildroot%_datadir/metainfo src/%name.appdata.xml
+# hack for empty output to console
+subst 's|Terminal=false|Terminal=true|' %buildroot%_desktopdir/%name.desktop
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%name.desktop
@@ -74,6 +76,11 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Wed Jun 15 2022 Vitaly Lipatov <lav@altlinux.ru> 20220411-alt3
+- fix kdialog detection again
+- run from menu with terminal enabled
+- disable version checking
+
 * Mon May 23 2022 Vitaly Lipatov <lav@altlinux.ru> 20220411-alt2
 - fix kdialog detection
 
