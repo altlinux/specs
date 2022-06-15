@@ -1,5 +1,5 @@
 Name: zsh-syntax-highlighting
-Version: 0.6.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Fish shell like syntax highlighting for Zsh
@@ -44,6 +44,9 @@ install -D syntax-highlighting.zsh %buildroot/%_sysconfdir/zshrc.d/syntax-highli
 %_sysconfdir/zshrc.d/syntax-highlighting.zsh
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 0.7.1-alt1
+- Autobuild version bump to 0.7.1
+
 * Thu Nov 15 2018 Fr. Br. George <george@altlinux.ru> 0.6.0-alt1
 - Initial build from Fedora
 
