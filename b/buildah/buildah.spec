@@ -9,7 +9,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: buildah
-Version: 1.25.1
+Version: 1.26.1
 Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
@@ -81,6 +81,9 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Jun 15 2022 Alexey Shabalin <shaba@altlinux.org> 1.26.1-alt1
+- new version 1.26.1
+
 * Fri Apr 08 2022 Alexey Shabalin <shaba@altlinux.org> 1.25.1-alt1
 - new version 1.25.1
 
