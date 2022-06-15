@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Test/Needs.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define dist HTTP-Message
 Name: perl-%dist
-Version: 6.36
+Version: 6.37
 Release: alt1
 
 Summary: HTTP style messages
@@ -36,6 +39,9 @@ The following methods are available:
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Wed Jun 15 2022 Igor Vlasenko <viy@altlinux.org> 6.37-alt1
+- automated CPAN update
+
 * Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 6.36-alt1
 - automated CPAN update
 
