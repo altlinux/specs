@@ -1,5 +1,5 @@
 Name: pentobi
-Version: 19.0
+Version: 21.0
 Release: alt1
 
 Summary: A computer program that plays the board game Blokus
@@ -9,13 +9,17 @@ Group: Games/Boards
 Url: https://pentobi.sourceforge.io
 
 # Source-url: https://github.com/enz/pentobi/archive/refs/tags/v%version.tar.gz
-Source: %name-%version.tar.xz
+Source: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: docbook-xsl itstool xsltproc librsvg-utils
-BuildRequires: libGConf libappstream-glib-devel libgtk+3-devel libpolkit-devel
-BuildRequires: qt5-imageformats qt5-quickcontrols2-devel qt5-svg-devel qt5-tools-devel qt5-translations qt5-wayland-devel qt5-webengine-devel
-BuildRequires: cmake gcc-c++
+
+# Automatically added by buildreq on Wed Jun 15 2022
+# optimized out: cmake-modules dconf fontconfig gcc-c++ glib-networking glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libcairo-gobject libgdk-pixbuf libglvnd-devel libgpg-error libqt5-concurrent libqt5-core libqt5-gui libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-quickcontrols2 libqt5-quicktemplates2 libsasl2-3 libssl-devel libstdc++-devel python3 python3-base python3-module-libxml2 qt5-base-devel qt5-declarative-devel qt5-tools sh4 shared-mime-info xml-common
+BuildRequires: cmake docbook-style-xsl itstool libGConf libappstream-glib-devel libgtk+3-devel libpolkit-devel librsvg-utils qt5-imageformats qt5-quickcontrols2-devel qt5-svg-devel qt5-tools-devel qt5-wayland-devel xsltproc
+
+%ifnarch ppc64le
+BuildRequires: qt5-webengine-devel
+%endif
 
 %description
 Pentobi is a computer program that plays the board game Blokus.
@@ -46,11 +50,14 @@ mkdir -p %buildroot%_sysconfdir
 %_datadir/mime/packages/*.xml
 %_datadir/thumbnailers/*
 %_datadir/metainfo/*
-%_datadir/help/*/%name/
 %_man6dir/*
 %_mandir/*/man6/*
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 21.0-alt1
+- Autobuild version bump to 21.0
+- Fix ppc build
+
 * Fri Jul 09 2021 Vitaly Lipatov <lav@altlinux.ru> 19.0-alt1
 - NMU: build new version, build with Qt5
 
@@ -107,7 +114,7 @@ mkdir -p %buildroot%_sysconfdir
 - Autobuild version bump to 1.0
 - Catch upstream's relocation to gamesbindir/gamesdatadir
 
-* Mon Dec 07 2011 Fr. Br. George <george@altlinux.ru> 0.2-alt1
+* Wed Dec 07 2011 Fr. Br. George <george@altlinux.ru> 0.2-alt1
 - Autobuild version bump to 0.2
 - Thumbnailer and books added
 
