@@ -1,7 +1,7 @@
 # TODO: build from source
 
 Name: go-ipfs
-Version: 0.12.1
+Version: 0.12.2
 Release: alt1
 
 Summary: IPFS implementation in Go
@@ -45,6 +45,9 @@ install -m755 -D ipfs %buildroot%_bindir/ipfs
 %_bindir/ipfs
 
 %changelog
+* Tue Jun 07 2022 Vitaly Lipatov <lav@altlinux.ru> 0.12.2-alt1
+- new version 0.12.2 (with rpmrb script)
+
 * Sun Mar 20 2022 Vitaly Lipatov <lav@altlinux.ru> 0.12.1-alt1
 - new version 0.12.1 (with rpmrb script)
 
