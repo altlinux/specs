@@ -1,14 +1,15 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
+%define _localstatedir %_var
 %global modname pycxx
 
 Name:           python3-module-pycxx-devel
-Version:        7.1.5
+Version:        7.1.7
 Release:        alt1
+
 Summary:        Write Python extensions in C++
 
 Group:          Development/Python3
@@ -17,8 +18,7 @@ URL:            http://CXX.sourceforge.net/
 
 BuildArch:      noarch
 
-# SVN version contains updates for Python3
-Source0:        http://downloads.sourceforge.net/cxx/%{modname}-%{version}.tar.gz
+Source0:        %modname-%version.tar.gz
 # Patch0:  remove unnecessary 'Src/' directory from include path in sources
 Patch0:         python-pycxx-6.2.8-change-include-paths.patch
 
@@ -31,54 +31,57 @@ of exceptions and ref counting. The second part supports the building
 of Python extension modules in C++.
 
 %prep
-%setup -n %{modname}-%{version}
+%setup -n %modname-%version
 %patch0 -p1 -b .change-include-paths
 
 %build
-%{__python3} setup.py build
+%__python3 setup.py build
 
 %install
 INSTALL='setup.py install
-        --root=%{buildroot}
-        --prefix=%{_prefix}
-        --install-headers=%{_includedir}/CXX
-        --install-data=%{_usrsrc}'
+        --root=%buildroot
+        --prefix=%_prefix
+        --install-headers=%_includedir/CXX
+        --install-data=%_usrsrc'
 
-%{__python3} $INSTALL
+%__python3 $INSTALL
 
 # Write pkg-config PyCXX.pc file
-mkdir -p %{buildroot}%{_datadir}/pkgconfig
-cat > %{buildroot}%{_datadir}/pkgconfig/PyCXX.pc <<EOF
-prefix=%{_prefix}
-exec_prefix=%{_prefix}
-includedir=%{_includedir}
-srcdir=%{_usrsrc}/CXX
+mkdir -p %buildroot%_datadir/pkgconfig
+cat > %buildroot%_datadir/pkgconfig/PyCXX.pc <<EOF
+prefix=%_prefix
+exec_prefix=%_prefix
+includedir=%_includedir
+srcdir=%_usrsrc/CXX
 
 Name: PyCXX
 Description: Write Python extensions in C++
-Version: %{version}
+Version: %version
 Cflags: -I\${includedir}
 EOF
 
 %files -n python3-module-pycxx-devel
 %doc README.html COPYRIGHT Doc/Python3/
-%dir %{_includedir}/CXX
-%{_includedir}/CXX/*.hxx
-%{_includedir}/CXX/*.h
-%{_includedir}/CXX/Python3
-%{python3_sitelibdir_noarch}/CXX*
-%dir %{_usrsrc}/CXX
-%{_usrsrc}/CXX/*.cxx
-%{_usrsrc}/CXX/*.c
-%{_usrsrc}/CXX/Python3
-%{_datadir}/pkgconfig/PyCXX.pc
+%dir %_includedir/CXX
+%_includedir/CXX/*.hxx
+%_includedir/CXX/*.h
+%_includedir/CXX/Python3
+%python3_sitelibdir_noarch/CXX*
+%dir %_usrsrc/CXX
+%_usrsrc/CXX/*.cxx
+%_usrsrc/CXX/*.c
+%_usrsrc/CXX/Python3
+%_datadir/pkgconfig/PyCXX.pc
 
 
 %check
-export PKG_CONFIG_PATH=%{buildroot}%{_datadir}/pkgconfig:%{buildroot}%{_libdir}/pkgconfig
-test "$(pkg-config --modversion PyCXX)" = "%{version}"
+export PKG_CONFIG_PATH=%buildroot%_datadir/pkgconfig:%buildroot%_libdir/pkgconfig
+test "$(pkg-config --modversion PyCXX)" = "%version"
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 7.1.7-alt1
+- Build new version.
+
 * Thu Jul 08 2021 Grigory Ustinov <grenka@altlinux.org> 7.1.5-alt1
 - Build new version.
 
