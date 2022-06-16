@@ -5,8 +5,8 @@
 %def_without glib
 
 Name: python3-module-pyudev
-Version: 0.22.0
-Release: alt2
+Version: 0.23.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Udev bindings for Python
@@ -116,6 +116,9 @@ service found in modern linux systems.
 %endif
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.23.2-alt1
+- 0.23.2
+
 * Thu Oct 21 2021 Grigory Ustinov <grenka@altlinux.org> 0.22.0-alt2
 - Disabled glib subpackage (Closes: #41093).
 
