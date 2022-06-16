@@ -1,5 +1,5 @@
 Name: myMPD
-Version: 9.3.3
+Version: 9.3.4
 Release: alt1
 
 Summary: myMPD is a standalone and mobile friendly web mpd client with a tiny footprint and advanced features
@@ -48,7 +48,7 @@ install -pDm755 %SOURCE1 %buildroot/%_initdir/mympd
 if [ $1 = 1 ]; then
 # Add the "mympd" user and group
     getent group mympd > /dev/null || groupadd -r mympd
-    getent passwd %name > /dev/null || \
+    getent passwd mympd > /dev/null || \
         useradd -r -g mympd -s /sbin/nologin -d /var/lib/mympd mympd
 fi
 
@@ -63,6 +63,9 @@ fi
 %_man1dir/mympd-script.1.xz
 
 %changelog
+* Thu Jun 16 2022 Nikolay Burykin <bne@altlinux.org> 9.3.4-alt1
+- 9.3.4
+
 * Mon Jun 06 2022 Nikolay Burykin <bne@altlinux.org> 9.3.3-alt1
 - 9.3.3
 
