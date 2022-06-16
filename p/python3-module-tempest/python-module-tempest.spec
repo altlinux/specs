@@ -1,20 +1,20 @@
 %define oname tempest
 
+%def_without docs
+
 Name: python3-module-%oname
 Version: 19.0.0
-Release: alt4
+Release: alt5
 Summary: OpenStack Integration Testing Suite
 
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/%oname
 Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-cliff >= 2.8.0
@@ -35,7 +35,6 @@ BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-prettytable >= 0.7.1
 BuildRequires: python3-module-urllib3 >= 1.21.1
 BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-unittest2
 
 # for build doc and tests
 BuildRequires: python3-module-sphinx
@@ -60,12 +59,14 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
 Summary: Documentation for OpenStack Integration Testing Suite
 Group: Development/Documentation
 
 %description doc
 Documentation for OpenStack Integration Testing Suite.
+%endif
 
 %prep
 %setup -n %oname-%version
@@ -82,9 +83,11 @@ rm -rf {test-,}requirements.txt
 %build
 %python3_build
 
+%if_with docs
 python3 setup.py build_sphinx
 # Fix hidden-file-or-dir warnings
 rm -fr build/sphinx/html/.buildinfo
+%endif
 
 %install
 %python3_install
@@ -102,10 +105,16 @@ rm -rf %buildroot/usr/etc/tempest
 %files tests
 %python3_sitelibdir/%oname/tests
 
+%if_with docs
 %files doc
 %doc build/sphinx/html
+%endif
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 19.0.0-alt5
+- Drop unneeded BR: python3-module-unittest2.
+- Build without docs.
+
 * Fri Aug 06 2021 Vitaly Lipatov <lav@altlinux.ru> 19.0.0-alt4
 - replace pep8 with pycodestyle
 
