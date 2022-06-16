@@ -3,7 +3,7 @@
 
 Name:           python3-module-%{pypi_name}
 Version:        2.0.1
-Release:        alt2
+Release:        alt3
 Summary:        Testresources, a pyunit extension for managing expensive test resources
 
 Group:          Development/Python3
@@ -14,10 +14,7 @@ Source0:        %{name}-%{version}.tar
 BuildArch:      noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-html5lib
-BuildRequires: python3-module-mimeparse
 BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-unittest2
 BuildRequires: python3-module-testtools
 BuildRequires: python3-module-fixtures
 
@@ -42,9 +39,12 @@ rm -rf lib/%{pypi_name}.egg-info
 %files
 %doc README.rst NEWS doc
 %{python3_sitelibdir}/%{pypi_name}
-%{python3_sitelibdir}/%{pypi_name}-%{version}-py?.?.egg-info
+%{python3_sitelibdir}/%{pypi_name}-%{version}-py%_python3_version.egg-info
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt3
+- Fixed FTBFS.
+
 * Tue Jun 08 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt2
 - Drop python2 support.
 

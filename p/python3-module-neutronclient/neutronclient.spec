@@ -1,8 +1,10 @@
 %define oname neutronclient
 
+%def_without docs
+
 Name: python3-module-%oname
 Version: 7.1.1
-Release: alt2
+Release: alt3
 
 Summary: Python API and CLI for OpenStack Neutron
 
@@ -15,8 +17,6 @@ Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-cliff >= 2.8.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
@@ -51,6 +51,7 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
 Summary: Documentation for OpenStack Neutron API Client
 Group: Development/Documentation
@@ -60,6 +61,7 @@ Client library and command line utility for interacting with Openstack
 Neutron's API.
 
 This package contains documentation for %oname.
+%endif
 
 %prep
 %setup -n python-%oname-%version
@@ -70,12 +72,13 @@ rm -f test-requirements.txt requirements.txt
 %build
 %python3_build
 
+%if_with docs
 export PYTHONPATH="$PWD"
-
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
@@ -96,10 +99,15 @@ rm -rf %buildroot%python3_sitelibdir/*/tests/functional/hooks
 %files tests
 %python3_sitelibdir/*/tests
 
+%if_with docs
 %files doc
 %doc LICENSE html
+%endif
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 7.1.1-alt3
+- Build without docs.
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 7.1.1-alt2
 - Unify documentation building.
 

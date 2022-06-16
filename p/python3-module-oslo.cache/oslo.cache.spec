@@ -1,8 +1,10 @@
 %define oname oslo.cache
 
+%def_without docs
+
 Name: python3-module-%oname
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: Cache storage for Openstack projects
 
@@ -44,12 +46,14 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
 Summary: Documentation for Cache storage for Openstack projects
 Group: Development/Documentation
 
 %description doc
 Documentation for Cache storage for Openstack projects.
+%endif
 
 %prep
 %setup -n %oname-%version
@@ -60,12 +64,13 @@ rm -rf %oname.egg-info
 %build
 %python3_build
 
+%if_with docs
 export PYTHONPATH="$PWD"
-
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
@@ -78,10 +83,15 @@ rm -rf html/.{doctrees,buildinfo}
 %files tests
 %python3_sitelibdir/*/tests
 
+%if_with docs
 %files doc
 %doc LICENSE html
+%endif
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt2
+- Build without docs.
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
 - Automatically updated to 2.3.0.
 - Unify documentation building.

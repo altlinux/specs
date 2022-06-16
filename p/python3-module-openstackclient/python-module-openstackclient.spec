@@ -1,19 +1,21 @@
 %define oname openstackclient
 
+%def_without docs
+
 Name: python3-module-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt2
+
 Summary: OpenStack Command-line Client
+
 Group: Development/Python3
-License: ASL 2.0
+License: Apache-2.0
 Url: http://docs.openstack.org/developer/python-%oname
 Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-babel >= 2.3.4
@@ -56,6 +58,7 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
 Summary: Documentation for OpenStack Client
 Group: Development/Documentation
@@ -66,6 +69,7 @@ It is a thin wrapper to the stock python-*client modules that implement the
 actual REST API client actions.
 
 This package contains auto-generated documentation.
+%endif
 
 %prep
 %setup -n python-%oname-%version
@@ -82,6 +86,7 @@ rm -rf *.egg-info
 %install
 %python3_install
 
+%if_with docs
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
 sphinx-build-3 -b html doc/source html
 sphinx-build-3 -b man doc/source man
@@ -90,6 +95,7 @@ sphinx-build-3 -b man doc/source man
 
 # Fix hidden-file-or-dir warnings
 rm -fr html/.doctrees html/.buildinfo
+%endif
 
 %files
 %doc LICENSE README.rst
@@ -101,10 +107,15 @@ rm -fr html/.doctrees html/.buildinfo
 %files tests
 %python3_sitelibdir/*/tests
 
+%if_with docs
 %files doc
 %doc html
+%endif
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt2
+- Build without docs.
+
 * Fri Nov 01 2019 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - new version 4.0.0
 - Build without python2.

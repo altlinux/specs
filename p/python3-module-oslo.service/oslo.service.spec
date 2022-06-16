@@ -1,8 +1,10 @@
 %global oname oslo.service
 
+%def_without docs
+
 Name: python3-module-%oname
 Version: 2.1.1
-Release: alt1
+Release: alt2
 
 Summary: Oslo service library
 
@@ -48,11 +50,14 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
 Summary: Oslo service documentation
 Group: Development/Documentation
+
 %description doc
 Documentation for oslo.service
+%endif
 
 %prep
 %setup -n %oname-%version
@@ -63,12 +68,13 @@ rm -rf %oname.egg-info
 %build
 %python3_build
 
+%if_with docs
 export PYTHONPATH="$PWD"
-
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
@@ -81,10 +87,15 @@ rm -rf html/.{doctrees,buildinfo}
 %files tests
 %python3_sitelibdir/*/tests
 
+%if_with docs
 %files doc
 %doc LICENSE html
+%endif
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt2
+- Build without docs.
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
 - Automatically updated to 2.1.1.
 - Unify documentation building.

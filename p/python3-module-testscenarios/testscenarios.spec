@@ -2,11 +2,11 @@
 
 Name: python3-module-%oname
 Version: 0.5.0
-Release: alt3
+Release: alt4
 
 Summary: Testscenarios, a pyunit extension for dependency injection
 
-License: BSD
+License: Apache-2.0 and BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/testscenarios/
 
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-testtools
-BuildRequires: python3-module-pytest python3-module-unittest2 python3-module-pbr
+BuildRequires: python3-module-pytest python3-module-pbr
 
 %py3_provides %oname
 %py3_requires testtools
@@ -50,6 +50,9 @@ python3 -m testtools.run -v testscenarios.test_suite
 
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt4
+- Fixed FTBFS.
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 0.5.0-alt3
 - build python3 separately
 

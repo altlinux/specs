@@ -2,7 +2,7 @@
 
 Name:           python3-module-%{modname}
 Version:        0.8.1
-Release:        alt2
+Release:        alt3
 Summary:        Simple generic functions (similar to Python's own len(), pickle.dump(), etc.)
 
 Group:          Development/Python3
@@ -13,7 +13,6 @@ Source0:        %{modname}-%{version}.zip
 BuildArch:      noarch
 BuildRequires:  unzip
 BuildRequires:  rpm-build-python3
-BuildRequires:  python3-module-setuptools
 BuildRequires:  python-tools-2to3
 
 %description
@@ -43,9 +42,12 @@ PYTHONPATH=$(pwd) %{__python3} setup.py test
 %doc README.txt
 %{python3_sitelibdir}/__pycache__/simplegeneric.cpython*
 %{python3_sitelibdir}/simplegeneric.py*
-%{python3_sitelibdir}/simplegeneric-%{version}-py?.?.egg-info
+%{python3_sitelibdir}/simplegeneric-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt3
+- Fixed FTBFS.
+
 * Mon Jul 26 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt2
 - Drop python2 support.
 
