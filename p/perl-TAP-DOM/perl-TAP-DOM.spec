@@ -12,7 +12,7 @@ BuildRequires: perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    0.95
+Version:    0.97
 Release:    alt1
 
 Summary:    Accessors for TAP::DOM summary part
@@ -74,6 +74,9 @@ change, so your data tools can, well, rely on it.
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Jun 16 2022 Igor Vlasenko <viy@altlinux.org> 0.97-alt1
+- automated CPAN update
+
 * Wed Jun 15 2022 Igor Vlasenko <viy@altlinux.org> 0.95-alt1
 - automated CPAN update
 
