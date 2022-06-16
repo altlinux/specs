@@ -1,6 +1,6 @@
 Name: elinks
 Version: 0.15.0
-Release: alt1
+Release: alt2
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
@@ -16,6 +16,7 @@ Patch2: 0003-Fix-OpenSSL-1.1-compat.patch
 Patch3: 0004-fix-dereference-error.patch
 Patch4: 0005-fix-unused-result-errors.patch
 Patch5: 0006-fix-address-always-true-error.patch
+Patch6: 0007-fix-address-always-true-error.patch
 
 # alternatives
 %set_compress_method gzip
@@ -46,6 +47,7 @@ with more open patches/features inclusion policy.
 %patch3 -p2
 %patch4 -p2
 %patch5 -p2
+%patch6 -p2
 
 # fix shebang
 sed -i 's,/usr/bin/env python,%_bindir/python,' doc/tools/asciidoc/asciidoc.py
@@ -111,6 +113,9 @@ install -pD -m644 %SOURCE1 %buildroot/etc/elinks/elinks.conf
 %doc doc/manual.html
 
 %changelog
+* Thu Jun 16 2022 Vladislav Zavjalov <slazav@altlinux.org> 0.15.0-alt2
+- fix build with gcc-12.1.1 (-Werror=address, address always true)
+
 * Mon Jan 17 2022 Vladislav Zavjalov <slazav@altlinux.org> 0.15.0-alt1
 - 0.15.0
 
