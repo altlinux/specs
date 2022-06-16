@@ -5,8 +5,8 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.3.19
-Release: alt2
+Version: 2.3.19.1
+Release: alt1
 
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -219,6 +219,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Wed Jun 15 2022 Andrey Cherepanov <cas@altlinux.org> 2.3.19.1-alt1
+- Updated to 2.3.19.1.
+
 * Tue May 31 2022 Andrey Cherepanov <cas@altlinux.org> 2.3.19-alt2
 - Remove autorequirement of systemd.
 
