@@ -2,15 +2,18 @@
 %define oname jdcal
 
 Name: python3-module-%oname
-Version: 1.3
-Release: alt1.2
+Version: 1.4.1
+Release: alt1
+
 Summary: Julian dates from proleptic Gregorian and Julian calendars
-License: BSD
+
+License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/jdcal/
 
 # https://github.com/phn/jdcal.git
-Source0: https://pypi.python.org/packages/9b/fa/40beb2aa43a13f740dd5be367a10a03270043787833409c61b79e69f1dfd/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -22,19 +25,24 @@ This module contains functions for converting between Julian dates and
 calendar dates.
 
 %prep
-%setup -n %{oname}-%{version}
+%setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc *.rst *.txt
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
+- Automatically updated to 1.4.1.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 1.3-alt1.2
 - Drop python2 support.
 
