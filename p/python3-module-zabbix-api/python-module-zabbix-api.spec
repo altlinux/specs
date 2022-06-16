@@ -1,10 +1,11 @@
 Name: python3-module-zabbix-api
-Version: 0.5.3
-Release: alt2
+Version: 0.5.4
+Release: alt1
+
 Summary: Zabbix API
 
 Group: Development/Python3
-License: GNU LGPL 2.1
+License: LGPL-2.1
 Url: https://github.com/gescheit/scripts
 
 Source: %name-%version.tar
@@ -30,8 +31,12 @@ cd zabbix
 %files
 %doc zabbix/README.md zabbix/examples
 %python3_sitelibdir/zabbix_api*
+%python3_sitelibdir/__pycache__
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.5.4-alt1
+- 0.5.4 (2dddc0f)
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.5.3-alt2
 - Drop python2 support.
 
