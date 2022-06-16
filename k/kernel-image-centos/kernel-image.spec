@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 111
+%define centos_release 113
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,24 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Jun 16 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.113-alt1.el9
+- Updated to kernel-5.14.0-113.el9:
+  + bpf update v5.16
+  + netfilter: nat: really support inet nat without l3 address
+  + netfilter: nf_tables: double hook unregistration in netns path
+  + powerpc/rtas: Keep MSR[RI] set when calling RTAS
+  + [s390] - s390/dasd: Fix read inconsistency and failure for ESE devices
+  + Update ACPI subsystem to match Linux 5.17
+  + Watchdog driver  (sp5100_tco) support for AMD Family 17 and Family 19 CPUs
+
+* Wed Jun 15 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.112-alt1.el9
+- Updated to kernel-5.14.0-112.el9:
+  + iio: updates
+  + net: mana: MANA driver updates for RHEL 9.1
+  + PCI: Hyper-V: PCI driver updates for RHEL 9.1
+  + [s390] s390/dasd: Fix data corruption for ESE devices
+  + VMCI: Update driver and enable ARM64 build
+
 * Tue Jun 14 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.111-alt1.el9
 - Updated to kernel-5.14.0-111.el9 (fixes: CVE-2022-1966):
   + Add pinctrl support for ADL-N
