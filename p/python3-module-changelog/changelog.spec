@@ -1,7 +1,7 @@
 %define  modulename changelog
 
 Name:    python3-module-%modulename
-Version: 0.5.7
+Version: 0.5.8
 Release: alt1
 
 Summary: A Sphinx extension to generate changelog files
@@ -37,5 +37,8 @@ Source:  %name-%version.tar
 %doc *.rst
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.5.8-alt1
+- Automatically updated to 0.5.8.
+
 * Tue Apr 26 2022 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt1
 - Initial build for Sisyphus.
