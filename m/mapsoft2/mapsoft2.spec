@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      1.6
+Version:      1.7
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -38,6 +38,15 @@ export SKIP_IMG_DIFFS=1
 %_datadir/mapsoft2/*
 
 %changelog
+* Thu Jun 16 2022 Vladislav Zavjalov <slazav@altlinux.org> 1.7-alt1
+- Drawing tracks: --trk_draw_width option
+- Downloading tiled maps: --insecure, --user_agent, --http_ref options
+- Making map reference: --coords_nom, --coords_file options
+- TIFF: --tiff_compression option -- support many compression types
+- better support for ALOS DEM files
+- FIG/GeoFIG support
+- fix build with gcc12.1.1
+
 * Sun Apr 18 2021 Vladislav Zavjalov <slazav@altlinux.org> 1.6-alt1
 - Drawing maps, tracks, waypoints, srtm-data:
     Fix projection setting if map boundaries can not be converted.
