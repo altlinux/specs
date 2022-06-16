@@ -1,13 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define oname hglib
 
-%def_disable check
-
 Name: python3-module-%oname
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: Mercurial Python library
+
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/python-hglib/
@@ -16,7 +15,6 @@ BuildArch: noarch
 Source0: https://pypi.python.org/packages/80/9c/1618281fc1ef0df4436b1435de6276452fefb46b111b3b00d3e20fcf5e17/python-%{oname}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
 
 %py3_provides %oname
 
@@ -28,26 +26,23 @@ Mercurial. It uses Mercurial's command server for communication with hg.
 %prep
 %setup -q -n python-%{oname}-%{version}
 
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
-
-%check
-python3 test.py
 
 %files
 %doc README examples
 %python3_sitelibdir/*
 
-
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt1
+- Build new version.
+
 * Tue Nov 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.6.1-alt1
 - version updated to 2.6.1
 - disable python2, enable python3
