@@ -86,7 +86,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 Name: python3
-Version: %{pybasever}.4
+Version: %{pybasever}.5
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -991,17 +991,20 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.5-alt1
+- Updated to upstream version 3.10.5.
+
 * Thu Mar 24 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.4-alt1
-- Updated to upstream version 3.10.4
+- Updated to upstream version 3.10.4.
 
 * Mon Mar 21 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.3-alt1
-- Updated to upstream version 3.10.3
+- Updated to upstream version 3.10.3.
 
 * Fri Feb 04 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.10.2-alt1.1
 - Fixed build and excluded hanging tests for Elbrus.
 
 * Wed Feb 02 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.2-alt1
-- Updated to upstream version 3.10.2
+- Updated to upstream version 3.10.2.
 
 * Thu Dec 02 2021 Grigory Ustinov <grenka@altlinux.org> 3.10.0-alt1
 - Updated to upstream version 3.10.0.
