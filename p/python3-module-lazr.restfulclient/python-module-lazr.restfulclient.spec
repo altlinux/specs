@@ -1,20 +1,24 @@
 %define _unpackaged_files_terminate_build 1
 
-Name: python3-module-lazr.restfulclient
-Version: 0.14.3
+%define oname lazr.restfulclient
+
+Name: python3-module-%oname
+Version: 0.14.4
 Release: alt1
+
 Summary: A programmable lazr.restful client library
+
 License: LGPLv3
 Group: Development/Python3
 Url: https://launchpad.net/lazr.restfulclient
+
 Packager: Anatoly Kitaikin <cetus@altlinux.ru>
+
 BuildArch: noarch
 
 Source: %name-%version.tar
 
-BuildPreReq: rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): /usr/bin/2to3
 
 %py3_provides lazr.restfulclient
 
@@ -36,21 +40,25 @@ Requires: %name = %version-%release
 %setup
 
 %build
-find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 
 %install
 %python3_install
 
 %files
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/lazr/restfulclient/tests
 %doc HACKING.rst README.rst
+%python3_sitelibdir/lazr/restfulclient
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version-py%_python3_version-nspkg.pth
+%exclude %python3_sitelibdir/lazr/restfulclient/tests
 
 %files tests
 %python3_sitelibdir/lazr/restfulclient/tests
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.14.4-alt1
+- Automatically updated to 0.14.4.
+
 * Tue Feb 02 2021 Anatoly Kitaykin <cetus@altlinux.org> 0.14.3-alt1
 - Release 0.14.3
 
