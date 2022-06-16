@@ -2,10 +2,10 @@
 
 %define oname jupyter_client
 
-%def_enable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 7.0.6
+Version: 7.3.4
 Release: alt1
 Summary: Jupyter protocol implementation and client libraries
 License: BSD
@@ -15,11 +15,12 @@ Url: https://pypi.org/project/jupyter-client/
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: jupyter-client-fix787-kernelwarningsfilter.patch
 
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-html5lib python3-module-ipython_genutils-tests python3-module-notebook python3-module-pbr
-BuildRequires: python3-module-unittest2 python3-module-zmq-tests python3-module-pytest
+BuildRequires: python3-module-zmq-tests python3-module-pytest
 BuildRequires: python3-module-sphinx_rtd_theme python3-module-pathlib2
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3(sphinxcontrib_github_alt)
@@ -29,6 +30,9 @@ BuildRequires: python3(async_generator)
 BuildRequires: python3(nest_asyncio)
 BuildRequires: python3(myst_parser)
 BuildRequires: python3(entrypoints)
+BuildRequires: python3-module-flit
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-timeout
 
 %py3_provides %oname
 %py3_requires traitlets jupyter_core zmq
@@ -87,15 +91,16 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch -p1
 
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
-%python3_build_debug
+%__python3 -m flit build --format wheel
 
 %install
-%python3_install
+pip3 install -I dist/%oname-%version-*-none-any.whl --root %buildroot --prefix %prefix --no-deps
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle
@@ -113,7 +118,7 @@ py.test3 -vv
 %doc *.md
 %_bindir/*
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/pickle
 
@@ -127,6 +132,9 @@ py.test3 -vv
 %doc docs/_build/html/*
 
 %changelog
+* Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 7.3.4-alt1
+- Automatically updated to 7.3.4.
+
 * Thu Oct 07 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 7.0.6-alt1
 - Updated to upstream version 7.0.6.
 
