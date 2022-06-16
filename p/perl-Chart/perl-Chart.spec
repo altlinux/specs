@@ -1,10 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Test/Warn.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 %define dist Chart
 Name: perl-%dist
-Version: 2.402.1
+Version: 2.402.2
 Release: alt1
 
 Summary: A series of charting modules
@@ -41,6 +41,9 @@ all of its graphics primitives calls.
 %perl_vendor_privlib/Chart/Color
 
 %changelog
+* Thu Jun 16 2022 Igor Vlasenko <viy@altlinux.org> 2.402.2-alt1
+- automated CPAN update
+
 * Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 2.402.1-alt1
 - automated CPAN update
 
