@@ -1,5 +1,5 @@
 Name: poco
-Version: 1.11.2
+Version: 1.11.3
 Release: alt1
 Summary: POrtable COmponents C++ Libraries
 License: BSL-1.0
@@ -280,6 +280,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 #files -n lib%name-devel-docs
 
 %changelog
+* Sat Jun 18 2022 Alexei Takaseev <taf@altlinux.org> 1.11.3-alt1
+- 1.11.3
+
 * Mon Apr 18 2022 Alexei Takaseev <taf@altlinux.org> 1.11.2-alt1
 - 1.11.2
 
