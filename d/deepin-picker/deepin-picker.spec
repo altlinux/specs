@@ -1,5 +1,5 @@
 Name: deepin-picker
-Version: 5.0.24
+Version: 5.0.28
 Release: alt1
 Summary: Color picker tool for deepin
 License: GPL-3.0+
@@ -18,7 +18,6 @@ Simplest color picker.
 
 %prep
 %setup
-sed -i 's|Picker;||' %name.desktop
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -40,6 +39,16 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/dbus-1/services/com.deepin.Picker.service
 
 %changelog
+* Fri Jun 17 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.28-alt1
+- New version.
+- Upstream:
+  + fix: Use the picker card under wayland.
+  + fix: wayland: You can't click on the color collector under the touch screen
+  and can't click to pick color.
+  + fix: wayland: Click on Esc after tapping the color collector to get out
+  of the color collector
+  + fix: Multi-screen-copy screen cannot use the color collector normally.
+
 * Tue Apr 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.24-alt1
 - New version (5.0.24).
 
