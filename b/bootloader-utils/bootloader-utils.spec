@@ -1,6 +1,6 @@
 Name: bootloader-utils
-Version: 0.5.3
-Release: alt2
+Version: 0.5.4
+Release: alt1
 
 Summary: Bootloader utilities
 License: GPL
@@ -88,6 +88,16 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Thu May 19 2022 Anton Midyukov <antohami@altlinux.org> 0.5.4-alt1
+- installkernel: add detect /boot/devicetree
+- installkernel: add bootloading with separate partition /boot with extlinux.conf
+  (Closes: 41140)
+- installkernel: create relative symlink dtb for /boot/devicetree/$VERSION
+- installkernel: unset $DTB_DIR, if not exist $DTB_DIR/$VERSION directory
+- installkernel: create symlink /boot/dtb, if exist $DTB_DIR/$VERSION
+- installkernel: update extlinux.conf, if it exist and exist $DTB_DIR/$VERSION
+- installkernel: add entry to extlinux.conf, if DTB_DIR not exist also
+
 * Wed Jun 16 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.5.3-alt2
 - installkernel: support call from Linux' install.sh for real
 
