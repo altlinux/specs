@@ -8,7 +8,7 @@
 
 Name: trikStudio
 Version: 2022.1
-Release: alt2
+Release: alt3
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -21,6 +21,7 @@ Patch: %name-%version-alt.patch
 Patch1: gamepad.patch
 Patch2: alt-ftbfs.patch
 Patch3: fix-build-with-qt5-quazip1.patch
+Patch4: trikRuntime.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel
 BuildRequires: libqscintilla2-qt5-devel zlib-devel python3-dev libhidapi-devel libusb-devel quazip-qt5-devel
@@ -99,6 +100,11 @@ rm -rf qscintilla quazip
 pushd thirdparty/gamepad
 %patch1
 popd
+
+pushd plugins/robots/thirdparty/trikRuntime/trikRuntime
+%patch4
+popd
+
 
 # Quick hack for python3.10 but think about using system pythonqt library.
 sed -i '/pydebug.h/d' plugins/robots/thirdparty/trikRuntime/trikRuntime/PythonQt/PythonQt/src/PythonQt.cpp
@@ -194,6 +200,9 @@ popd
 %endif
 
 %changelog
+* Fri Jun 17 2022 Valery Sinelnikov <greh@altlinux.org> 2022.1-alt3
+- Fixed building with gcc-12
+
 * Thu Feb 10 2022 Valery Sinelnikov <greh@altlinux.org> 2022.1-alt2
 - Removed build dependency libquazip-qt5-devel
 
