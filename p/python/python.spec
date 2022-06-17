@@ -8,7 +8,7 @@
 Name: %real_name
 
 Version: 2.7.18
-Release: alt9
+Release: alt10
 
 %define package_name		%real_name
 %define weight			1001
@@ -36,7 +36,7 @@ Release: alt9
 Summary: An interpreted, interactive object-oriented programming language
 License: Python-2.0
 Group: Development/Python
-URL: http://www.python.org/
+URL: https://www.python.org/
 Packager: Python Development Team <python@packages.altlinux.org>
 
 # ftp://ftp.python.org/pub/python/%version/Python-%version.tar.bz2
@@ -133,6 +133,7 @@ Patch111: python-2.7.18-fc-cve-2021-3737.patch
 Patch112: python-2.7-fc-cve-2021-4189.patch
 Patch113: python-2.7-fc-cve-2022-0391.patch
 Patch114: python-2.7-fc-expat-2-4-5.patch
+Patch115: python-2.7.18-fc-cve-2015-20107.patch
 
 # XXX ignore pydoc dependencies for now
 %add_findreq_skiplist %_bindir/pydoc*
@@ -771,6 +772,7 @@ install -p -m644 %SOURCE12 -t Lib/distutils/command
 %patch112 -p1
 %patch113 -p1
 %patch114 -p1
+%patch115 -p1
 
 # XXX temporary Issue20445 fix
 sed -i 's/val1 == nice(2)/val1 == nice(2)+2/' configure.ac
@@ -1221,6 +1223,10 @@ rm %buildroot%_man1dir/python.1
 %endif
 
 %changelog
+* Fri Jun 17 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt10
+- Secutiry update (fixed: CVE-2015-20107).
+- Fixed Url field.
+
 * Sat Mar 12 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.7.18-alt9
 - Security update (fixed: CVE-2021-4189 and CVE-2022-0391);
 - Fixed FTBFS against libexpat >= 2.4.5.
