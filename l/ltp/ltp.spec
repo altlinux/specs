@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: ltp
-Version: 20210927
+Version: 20220527
 Release: alt1
 
 Summary: Linux Test Project
@@ -28,6 +28,8 @@ BuildRequires: libnuma-devel
 BuildRequires: libselinux-devel
 BuildRequires: libssl-devel
 BuildRequires: libxfs-devel
+
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 
 # No Reqs at all, because there is tons of them.
 # Idea is - all tests are optional, so we should not provide ready-to-go
@@ -68,6 +70,16 @@ AutoReqProv: off
 Realtime tests is an open-source testsuite for testing real-time Linux.
 This testsuite is maintained by the IBM Real-Time team.
 
+%package checkinstall
+Summary: Checkinstall for %name
+Group: Development/Other
+BuildArch: noarch
+Requires(pre): %name = %EVR
+Requires(pre): rpm-build-vm
+
+%description checkinstall
+%summary.
+
 %prep
 %setup
 
@@ -104,18 +116,30 @@ find %buildroot/usr/lib/{ltp,openposix_testsuite,realtime_testsuite} -perm /g+w 
 # Create output dirs (will have tmp-like permissions).
 mkdir %buildroot/usr/lib/ltp/{output,results}
 # EZ-Lanucher for LTP.
-mkdir -p %buildroot/%_bindir
-cat > %buildroot/%_bindir/runltp <<-EOF
+! test -e %buildroot%_bindir/runltp 
+cat > %buildroot%_bindir/runltp <<-EOF
 	#!/bin/sh
 	exec /usr/lib/ltp/runltp "\$@"
 EOF
-chmod a+x %buildroot/%_bindir/runltp
+chmod a+rx %buildroot%_bindir/runltp
 
 %check
 PATH=%buildroot/usr/lib/ltp/testcases/bin:$PATH
 uname01
 uname02
 uname04
+
+%pre checkinstall
+set -ex
+# 'LD_PRELOAD=libfakeroot.so' hangs some binaries (including 'bash' and excluding
+# 'id' for example) in vm-run, and it's set under rooter.
+unset LD_PRELOAD
+vm-run runltp -f io 
+if [ $(arch) = x86_64 ]; then
+	# Other arches will skip kvm test (for example on i586 with "This arch 'x86' is not
+	# supported for test!") thus it's not suitable for a false positive testing.
+	! vm-run runltp -f kvm
+fi
 
 %post
 if [ -d /.host -a -d /.in -a -d /.out ]; then
@@ -139,7 +163,13 @@ fi
 %doc testcases/realtime/{00_Descriptions.txt,README,doc}
 /usr/lib/realtime_testsuite
 
+%files checkinstall
+
 %changelog
+* Wed Jun 15 2022 Vitaly Chikunov <vt@altlinux.org> 20220527-alt1
+- Update to 20220527.
+- Now have installed ltp.json with tests metadata.
+
 * Tue Sep 28 2021 Vitaly Chikunov <vt@altlinux.org> 20210927-alt1
 - Update to 20210927.
 
