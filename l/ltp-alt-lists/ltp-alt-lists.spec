@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 7
+Version: 8
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -51,6 +51,9 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Sat Jun 18 2022 Vitaly Chikunov <vt@altlinux.org> 8-alt1
+- Skip futex_waitv0{1,2,3} and waitid10 (after ltp update).
+
 * Sat Jun 18 2022 Vitaly Chikunov <vt@altlinux.org> 7-alt1
 - Skip 2 tests (ppoll01, pread02_64) failed on i586 in ALT beekeeper.
 

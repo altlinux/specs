@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_base_version	5.17
 %define kernel_sublevel .15
@@ -614,6 +614,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Jun 18 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.17.15-alt2
+- Pick fixes of Intel-specific processor MMIO stale-data vulnerabilities.
+ (Fixes: CVE-2022-21166, CVE-2022-21125, CVE-2022-21123).
+
 * Wed Jun 15 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.17.15-alt1
 - v5.17.15 (2022-06-14).
 
