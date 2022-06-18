@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 113
+%define centos_release 114
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,15 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Jun 17 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.114-alt1.el9
+- Updated to kernel-5.14.0-114.el9 (fixes: CVE-2022-1729):
+  + block: ignore RWF_HIPRI hint for sync dio
+  + lpfc cs9 (rhel9.1) update
+  + perf: Fix sys_perf_event_open() race against self
+  + redhat/configs: Drop outdated CRYPTO_ECDH and unify CRYPTO_USER configs
+  + [s390] Upgrade the zfcp driver to latest from upstream, e.g. kernel 5.18
+  + Update ext4 and jbd2 to upstream v5.17
+
 * Thu Jun 16 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.113-alt1.el9
 - Updated to kernel-5.14.0-113.el9:
   + bpf update v5.16
