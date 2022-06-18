@@ -2,8 +2,8 @@
 %define major 1
 
 Name: vkd3d
-Version: 1.2
-Release: alt1.2
+Version: 1.3
+Release: alt1
 Summary: The vkd3d 3D Graphics Library
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: libvulkan-devel spirv-headers wine-devel-tools
-BuildRequires: libspirv-tools-devel spirv-tools
+BuildRequires: libspirv-tools-devel spirv-tools flex
 %if_enabled demos
 BuildRequires: libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel libxcbutil-icccm-devel
 %endif
@@ -100,6 +100,9 @@ done
 %endif
 
 %changelog
+* Sat Jun 18 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3-alt1
+- 1.3.
+
 * Mon Dec 06 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2-alt1.2
 - Fix wine BR (changed again).
 
