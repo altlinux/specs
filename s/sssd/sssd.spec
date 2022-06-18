@@ -8,8 +8,8 @@
 %def_disable systemtap
 
 Name: sssd
-Version: 2.6.3
-Release: alt1
+Version: 2.7.2
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -105,6 +105,8 @@ BuildRequires: libhttp-parser-devel libcurl-devel
 %if_with gdm_pam_extensions
 BuildRequires: gdm-libs-devel
 %endif
+BuildRequires: libjansson-devel
+BuildRequires: libjose-devel
 
 %if_with check
 BuildRequires: /proc
@@ -262,6 +264,17 @@ An implementation of a Kerberos KCM server is a process that stores, tracks and
 manages Kerberos credential caches. It originates in the Heimdal Kerberos
 project, although the MIT Kerberos library also provides client side support for
 the KCM credential cache.
+
+%package idp
+Summary: Kerberos plugins and OIDC helper for external identity providers.
+Group: System/Servers
+License: GPLv3+
+Requires: %name = %version-%release
+
+%description idp
+This package provides Kerberos plugins that are required to enable
+authentication against external identity providers. Additionally a helper
+program to handle the OAuth 2.0 Device Authorization Grant is provided.
 
 %package -n libsss_idmap
 Summary: FreeIPA Idmap library
@@ -517,6 +530,9 @@ mkdir -p %buildroot%_sysconfdir/krb5.conf.d
 # Kerberos KCM credential cache would be ruled by control
 # cp %buildroot%_datadir/sssd/krb5-snippets/kcm_default_ccache %buildroot%_sysconfdir/krb5.conf.d/kcm_default_ccache
 
+# Enable krb5 idp plugins by default (when sssd-idp package is installed)
+cp %buildroot%_datadir/sssd/krb5-snippets/sssd_enable_idp %buildroot%_sysconfdir/krb5.conf.d/sssd_enable_idp
+
 # krb5 configuration snippet
 cp %buildroot%_datadir/sssd/krb5-snippets/enable_sssd_conf_dir %buildroot%_sysconfdir/krb5.conf.d/enable_sssd_conf_dir
 
@@ -724,6 +740,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_mandir/*/man8/pam_sss*
 %_man8dir/sssd_krb5_locator_plugin*
 %_mandir/*/man8/sssd_krb5_locator_plugin*
+%_man8dir/sssd_krb5_localauth_plugin*
 
 %files -n libsss_sudo
 %_libdir/libsss_sudo.so*
@@ -806,6 +823,12 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_mandir/*/man8/sssd-kcm*
 %endif
 
+%files idp
+%_libexecdir/%name/oidc_child
+%_libdir/%name/modules/sssd_krb5_idp_plugin.so
+%_datadir/sssd/krb5-snippets/sssd_enable_idp
+%config(noreplace) %_sysconfdir/krb5.conf.d/sssd_enable_idp
+
 %files -n libsss_simpleifp
 %_libdir/libsss_simpleifp.so.*
 
@@ -853,6 +876,26 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Sat Jun 18 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.7.2-alt2
+- Update russian translations (by Elena Mishina <lepata@basealt.ru>)
+
+* Tue Jun 14 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.7.2-alt1
+- Update to 2.7 major release:
+  + Added a new krb5 plugin idp and a new binary oidc_child which performs
+    OAuth2 authentication against FreeIPA.
+  + Better default for IPA/AD re_expression. Tunning for group names
+    containing '@' is no longer needed.
+  + Added support for anonymous PKINIT to get FAST credentials.
+  + SSSD now correctly falls back to UPN search if the user was not found even
+    with cache_first = true.
+  + SSSD can now handle multi-valued RDNs if a unique name must be determined
+    with the help of the RDN.
+  + New option implicit_pac_responder to control if the PAC responder is started
+    for the IPA and AD providers, default is true.
+  + New option krb5_check_pac to control the PAC validation behavior.
+  + Multiple crl_file arguments can be used in the certificate_verification
+    option.
+
 * Thu Jan 27 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.6.3-alt1
 - AD Domain in the AD Forest Missing after sssd latest update
 - sdap_idmap.c/sssd_idmap.c incorrectly calculates rangesize from upper/lower

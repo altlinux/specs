@@ -1,13 +1,16 @@
 Name:    jose
-Version: 10
+Version: 11
 Release: alt1
 Summary: C-language implementation of Javascript Object Signing and Encryption
 
-License: Apache 2.0
+License: Apache-2.0
 Group:   System/Libraries
 URL:     https://github.com/latchset/jose
 Source:  jose-%{version}.tar.gz
 
+BuildRequires(pre): rpm-macros-meson rpm-macros-ninja-build
+BuildRequires: meson
+BuildRequires: asciidoc-a2x
 BuildRequires: openssl-devel
 BuildRequires: libjansson-devel
 BuildRequires: zlib-devel
@@ -45,12 +48,15 @@ Devel files for lib%name
 %setup
 
 %build
-%autoreconf
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+rm -rf %buildroot%_datadir/licenses/%name/COPYING
+
+%check
+%meson_test
 
 %files
 %_bindir/jose
@@ -66,6 +72,9 @@ Devel files for lib%name
 %_includedir/*
 
 %changelog
+* Sat Jun 18 2022 Andrey Limachko <liannnix@altlinux.org> 11-alt1
+- Updated to 11 version
+
 * Mon Oct 01 2018 Oleg Solovyov <mcpain@altlinux.org> 10-alt1
 - initial build
 
