@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 3004
-Release: alt2
+Release: alt3
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -21,6 +21,7 @@ Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
 Patch2: salt-python3.10.patch
+Patch3: 0001-Fix-Jinja2-3.1.0.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
@@ -97,6 +98,7 @@ with XMLRPC or even a Websocket API.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 # Remove local copy documentation mention
 subst 's| file:///usr/share/doc/salt/html/contents.html||' pkg/*.service
 
@@ -244,6 +246,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Sat Jun 18 2022 Andrey Cherepanov <cas@altlinux.org> 3004-alt3
+- Use Jinja2 3.1.0 (ALT #43012).
+
 * Tue Apr 05 2022 Andrey Cherepanov <cas@altlinux.org> 3004-alt2
 - Fix build for Python 3.10.
 - Remove yum from autorequirements.
