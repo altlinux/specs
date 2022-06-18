@@ -1,8 +1,10 @@
-%define ver_major 3.20
+%define ver_major 3.21
+%define xdg_name org.gnome.Meld
+
+%def_enable check
 
 Name: meld
-%define xdg_name org.gnome.%name
-Version: %ver_major.4
+Version: %ver_major.2
 Release: alt1
 
 Summary: Meld Diff Viewer
@@ -14,10 +16,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildArch: noarch
 
-Requires: typelib(GtkSource) = 3.0
+%define gtk_api_ver 3.0
+%define gtksource_api_ver 4
 
-BuildRequires(pre): rpm-build-gir rpm-build-python3
-BuildRequires: intltool yelp-tools python3-devel
+Requires: typelib(Gtk) = %gtk_api_ver
+Requires: typelib(GtkSource) = %gtksource_api_ver
+
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
+BuildRequires: meson yelp-tools
+BuildRequires: python3-devel python3-module-pygobject3-devel python3-module-pycairo-devel
+BuildRequires: gir(Gtk) = %gtk_api_ver gir(GtkSource) = %gtksource_api_ver
 
 %description
 Meld is a visual diff and merge tool. It lets you compare two or three
@@ -31,16 +39,15 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %setup
 
 %build
-%python3_build
+%meson -Dbyte-compile=false
+%meson_build
 
 %install
-%__python3 setup.py \
-	--no-update-icon-cache \
-	--no-compile-schemas \
-	install \
-	--root=%buildroot
-
+%meson_install
 %find_lang %name --with-gnome
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -48,7 +55,6 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/*/*
-%_iconsdir/HighContrast/*/*/*
 %_datadir/glib-2.0/schemas/org.gnome.meld.gschema.xml
 %_datadir/mime/packages/%xdg_name.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
@@ -56,6 +62,9 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %doc NEWS
 
 %changelog
+* Sat Jun 18 2022 Yuri N. Sedunov <aris@altlinux.org> 3.21.2-alt1
+- 3.21.2 (ported to Meson build system)
+
 * Fri Aug 13 2021 Yuri N. Sedunov <aris@altlinux.org> 3.20.4-alt1
 - 3.20.4
 
