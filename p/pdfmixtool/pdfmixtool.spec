@@ -1,6 +1,6 @@
 Name: pdfmixtool
-Version: 1.0.2
-Release: alt2
+Version: 1.1
+Release: alt1
 
 License: LGPL-3.0-only
 Group: Office
@@ -15,6 +15,7 @@ BuildRequires: qt5-base-devel
 
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-svg-devel
+BuildRequires: libImageMagick-devel
 BuildRequires(pre): rpm-macros-cmake
 
 Summary: PDF Mix Tool is a simple PDF editing application
@@ -56,6 +57,9 @@ PDF, извлекать страницы из файла PDF, редактиро
 %_datadir/metainfo/eu.scarpetta.PDFMixTool.appdata.xml
 
 %changelog
+* Sat Jun 18 2022 Evgeny Chuck <koi@altlinux.org> 1.1-alt1
+- new version (1.1) with rpmgs script
+
 * Sun Feb 13 2022 Evgeny Chuck <koi@altlinux.org> 1.0.2-alt2
 - fix License tag (GPLv3 -> LGPL-3.0-only)
 - cleanup spec
