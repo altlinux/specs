@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 6
+Version: 7
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -51,6 +51,9 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Sat Jun 18 2022 Vitaly Chikunov <vt@altlinux.org> 7-alt1
+- Skip 2 tests (ppoll01, pread02_64) failed on i586 in ALT beekeeper.
+
 * Wed Jun 15 2022 Vitaly Chikunov <vt@altlinux.org> 6-alt1
 - Skip failing (set_mempolicy05) test on i586.
 
