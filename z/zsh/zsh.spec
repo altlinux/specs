@@ -1,6 +1,6 @@
 Name: zsh
 Version: 5.8.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A shell with lots of features
@@ -122,7 +122,19 @@ find %buildroot%_datadir/zsh -type f -name compaudit -print0 |
 rm -f %buildroot%_datadir/zsh/Completion/Linux/_rpmbuild
 
 %check
-make check
+# Tests use egrep/fgrep and ensure standard error contents are fixed.
+mkdir -p %_tmppath/progs
+cat >%_tmppath/progs/egrep <<EOF
+#!/bin/sh -e
+exec grep -E "\$@"
+EOF
+chmod +x %_tmppath/progs/egrep
+cat >%_tmppath/progs/fgrep <<EOF
+#!/bin/sh -e
+exec grep -F "\$@"
+EOF
+chmod +x %_tmppath/progs/fgrep
+PATH="%_tmppath/progs:$PATH" make check
 
 %files
 /bin/zsh
@@ -136,6 +148,9 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Sat Jun 18 2022 Arseny Maslennikov <arseny@altlinux.org> 1:5.8.1-alt2
+- Fixed ftbfs (egrep/fgrep warnings in test suite).
+
 * Sat Feb 12 2022 Arseny Maslennikov <arseny@altlinux.org> 1:5.8.1-alt1
 - 5.8 -> 5.8.1.
 - Fixes:
