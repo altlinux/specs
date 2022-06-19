@@ -1,6 +1,6 @@
 Name:		pasystray
-Version:	0.7.1
-Release:	alt2
+Version:	0.8.0
+Release:	alt1
 
 Summary:	a replacement for the deprecated padevchooser
 License:	GPLv2.1
@@ -47,7 +47,6 @@ applications.
 
 %files
 %doc AUTHORS
-%doc LICENSE
 %doc README.md
 %_xdgconfigdir/autostart/*
 %_bindir/*
@@ -59,6 +58,9 @@ applications.
 %_iconsdir/hicolor/scalable/*
 
 %changelog
+* Sun May 08 2022 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt1
+- new version 0.8.0
+
 * Mon Nov 23 2020 Anton Midyukov <antohami@altlinux.org> 0.7.1-alt2
 - Rebuild with gtk3
 
