@@ -2,7 +2,7 @@
 %define modulename apycula
 
 Name:    python3-module-%modulename
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Documentation and open source tools for the Gowin FPGA bitstream format
@@ -41,5 +41,8 @@ BuildRequires: python3-module-setuptools_scm
 %doc *.md doc/*
 
 %changelog
+* Sun Jun 19 2022 Anton Midyukov <antohami@altlinux.org> 0.4-alt1
+- new version (0.4) with rpmgs script
+
 * Tue Apr 05 2022 Anton Midyukov <antohami@altlinux.org> 0.3-alt1
 - Initial build for Sisyphus
