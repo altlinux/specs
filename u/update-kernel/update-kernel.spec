@@ -1,6 +1,6 @@
 Name: update-kernel
-Version: 1.2.1
-Release: alt2
+Version: 1.2.2
+Release: alt1
 
 Summary: Update kernel and modules
 License: GPL-2.0+
@@ -49,6 +49,9 @@ make check
 %_sbindir/analyze-kmodules
 
 %changelog
+* Sun Jun 19 2022 Vitaly Chikunov <vt@altlinux.org> 1.2.2-alt1
+- update-kernel: Add --add (-A) option(s) to install external module.
+
 * Mon May 23 2022 Vitaly Chikunov <vt@altlinux.org> 1.2.1-alt2
 - update-kernel: Minor spelling fixes.
 
