@@ -14,7 +14,7 @@
 # vim:set ft=spec:
 Name: swig
 Version: 4.0.2
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
@@ -28,6 +28,8 @@ Source: %name-%version.tar
 # Upstream patches
 Patch10: swig-4.0.2-Fix-overload_simple_cast-test-with-Python-3.10.patch
 
+# Fedora patches
+Patch20: swig-4.0.2-gcc-12-warning-fix-in-test-case.patch
 %def_enable testsuite
 
 %{?_with_boost:BuildPreReq: boost-devel}
@@ -237,6 +239,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Sun Jun 19 2022 Anton Midyukov <antohami@altlinux.org> 1:4.0.2-alt4
+- fix build examples with gcc12
+
 * Tue Mar 08 2022 Anton Midyukov <antohami@altlinux.org> 1:4.0.2-alt3
 - build without libracket
 
