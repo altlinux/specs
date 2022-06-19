@@ -1,6 +1,6 @@
 Name: winetricks
-Version: 20220411
-Release: alt3
+Version: 20220617
+Release: alt1
 
 Summary: Work around common problems in Wine
 
@@ -10,11 +10,12 @@ Url: https://github.com/Winetricks/winetricks
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-## Source-url: https://github.com/Winetricks/winetricks/archive/refs/heads/master.zip
-# Source-url: %url/archive/%version/%name-%version.tar.gz
+# Source-url: https://github.com/Winetricks/winetricks/archive/refs/heads/master.zip
+#Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
-Patch: 0001-fix-detection-for-gui-without-args.patch
+Patch1: 0001-fix-detection-for-gui-without-args.patch
+Patch2: 0001-winetricks-try-use-xvt-as-terminal.patch
 
 BuildArch: noarch
 
@@ -41,7 +42,8 @@ or tweak various Wine settings individually.
  
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p1
 
 # fix req. Disable autoreq at all?
 %__subst 's|fusermount|a= fusermount|' src/winetricks
@@ -76,6 +78,10 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sat Jun 18 2022 Vitaly Lipatov <lav@altlinux.ru> 20220617-alt1
+- new version (20220617) with rpmgs script
+- try use xvt as terminal (ALT bug 43003)
+
 * Wed Jun 15 2022 Vitaly Lipatov <lav@altlinux.ru> 20220411-alt3
 - fix kdialog detection again
 - run from menu with terminal enabled
