@@ -1,12 +1,11 @@
 Name: profile-sync-daemon
-Version: 6.44
+Version: 6.45
 Release: alt1
 Summary: Offload browser profiles to RAM for speed a wear reduction
 Summary(ru_RU.UTF-8): Выгружает профиль браузера в ОЗУ для ускорения его работы
 License: MIT
 Group: Networking/WWW
 Url: https://github.com/graysky2/profile-sync-daemon
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -57,16 +56,19 @@ echo 'systemctl --user enable psd psd-resync.timer && systemctl --user start psd
 
 %files
 %doc README*
-%doc MIT
 %_datadir/psd
 %_bindir/*
-%dir %_datadir/zsh
-%dir %_datadir/zsh/site-functions/
-%_datadir/zsh/site-functions/_psd
 %_man1dir/*.1*
 %_libexecdir/systemd/user/psd*.*
+%_datadir/zsh/site-functions/_psd
 
 %changelog
+* Sun Jun 19 2022 Anton Midyukov <antohami@altlinux.org> 6.45-alt1
+- new version 6.45
+
+* Sun Jun 19 2022 Anton Midyukov <antohami@altlinux.org> 6.44-alt2
+- cleanup spec
+
 * Wed Dec 16 2020 Cronbuild Service <cronbuild@altlinux.org> 6.44-alt1
 - new version 6.44
 
