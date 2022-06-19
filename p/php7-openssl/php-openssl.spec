@@ -44,6 +44,7 @@ export LDFLAGS=-lphp-%_php_version
 %php_make
 
 %check
+export SKIP_ONLINE_TESTS=1
 make test
 
 %install

@@ -1,21 +1,14 @@
-# TODO: build with igbinary
 %define		php_extension	memcached
-%define 	real_name	memcached
-%define		real_version	3.1.5
-
 Name:	 	php%_php_suffix-%php_extension
-Version:	%real_version
-Release:	alt3.%_php_release_version
+Version:	3.2.0
+Release:	alt1.%_php_release_version
 Epoch:		1
-
 Summary:	php extension for interfacing with memcached via libmemcached library
-
 License:	PHP-3.01
 Group:		System/Servers
 URL:		http://pecl.php.net/package/memcached
-
-# Source0-url:	https://github.com/php-memcached-dev/php-memcached/archive/v%real_version.tar.gz
-Source0: %php_extension-%real_version.tar
+VCS: https://github.com/php-memcached-dev/php-memcached
+Source0: php-memcached-%version.tar
 Source1: php-%php_extension.ini
 Source2: php-%php_extension-params.sh
 
@@ -34,7 +27,7 @@ speeding up dynamic web applications by alleviating database
 load.
 
 %prep
-%setup -n %php_extension-%real_version
+%setup -n php-memcached-%version
 
 %build
 phpize
@@ -61,10 +54,7 @@ install -D -m 644 -- %SOURCE1 %buildroot/%php_extconf/%php_extension/config
 install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 
 %check
-%if "%_php_suffix" == "8.0"
- # these must be reformatted for use with php-8
- rm -f tests/bad_construct.phpt tests/undefined_set.phpt tests/vbucket.phpt
-%endif
+rm -rf tests/experimental
 memcached -d
 NO_INTERACTION=1 make test
 
@@ -83,6 +73,9 @@ NO_INTERACTION=1 make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Tue Mar 29 2022 Anton Farygin <rider@altlinux.ru> 1:3.2.0-alt1
+- 3.1.5 -> 3.2.0
 
 * Wed Apr 19 2017 Vitaly Lipatov <lav@altlinux.ru> 7.1.3-alt1
 - initial build 3.0.3 for ALT Sisyphus

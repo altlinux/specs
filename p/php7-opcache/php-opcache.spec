@@ -76,6 +76,9 @@ install -D -m 644 -- %SOURCE1 %buildroot/%php_extconf/%php_extension/config
 install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 
 %check
+# create symlink to source of the dl_test for the test gh8466
+[ -d %php_extsrcdir/dl_test ] && ln -s %php_extsrcdir/dl_test ../dl_test
+
 NO_INTERACTION=1 make test
 
 %files
