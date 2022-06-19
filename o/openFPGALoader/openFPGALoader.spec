@@ -5,7 +5,7 @@
 
 Name:     openFPGALoader
 Version:  0.8.0
-Release:  alt3
+Release:  alt4
 
 Summary:  Universal utility for programming FPGA
 License:  Apache-2.0
@@ -44,6 +44,9 @@ Group:   Documentation
 %autopatch -p1
 
 %build
+# fix build with gcc12
+%add_optflags -Wno-narrowing
+
 %cmake
 %cmake_build
 %if_with doc
@@ -76,6 +79,9 @@ install -pm644 doc/_build/man/openFPGALoader.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Sun Jun 19 2022 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt4
+- add compiler flag -Wno-narrowing for fix build with gcc12
+
 * Tue Apr 05 2022 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt3
 - add udev rules
 - build man
