@@ -1,6 +1,6 @@
 Name: devscripts
-Version: 2.19.7
-Release: alt2
+Version: 2.22.2
+Release: alt1
 Source: %{name}_%version.tar.xz
 Source1: devscripts-po4a.conf
 Patch: devscripts-uscan-no_ssl_namecheck.patch
@@ -9,12 +9,11 @@ Group: Development/Other
 Url: http://packages.debian.org/devscripts
 Summary: Scripts to make the life of a Debian Package maintainer easier
 
-# Automatically added by buildreq on Mon Feb 18 2019
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error perl perl-Dpkg perl-Encode perl-Locale-gettext perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Pod-Usage perl-Time-Piece perl-parent perl-podlators pkg-config python-base python3 python3-base sh4 xml-common xsltproc xz
-BuildRequires: docbook5-style-xsl dpkg help2man perl-Pod-Checker po4a python3-dev
+# Automatically added by buildreq on Mon Jun 20 2022
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error perl perl-Dpkg perl-Encode perl-Encode-Locale perl-File-Which perl-HTTP-Date perl-HTTP-Message perl-Locale-gettext perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Pod-Usage perl-Tie-RefHash perl-Time-Piece perl-Try-Tiny perl-URI perl-parent perl-podlators pkg-config python3 python3-base python3-dev sh4 xml-common xz
+BuildRequires: docbook5-style-xsl dpkg help2man perl-File-HomeDir perl-JSON-PP perl-Pod-Checker perl-String-ShellQuote perl-autodie perl-libwww po4a python3-module-setuptools xsltproc
 
-BuildRequires: python3-module-setuptools perl-File-HomeDir perl-GitLab-API-v4 perl-DBM perl-IPC-Run perl-JSON-PP perl-File-DesktopEntry perl-Git-Wrapper perl-List-Compare perl-String-ShellQuote perl-TimeDate
-BuildRequires: xsltproc
+BuildRequires: perl-DB_File perl-HTTP-Tiny perl-File-DesktopEntry perl-Git-Wrapper perl-List-Compare perl-Moo perl-IPC-Run perl-TimeDate perl-GitLab-API-v4 perl-File-DirList perl-File-Touch
 
 %description
 Devscripts provides several scripts which may be of use to Debian
@@ -107,6 +106,9 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Jun 20 2022 Fr. Br. George <george@altlinux.org> 2.22.2-alt1
+- Autobuild version bump to 2.22.2
+
 * Mon Jan 24 2022 Alexander Danilov <admsasha@altlinux.org> 2.19.7-alt2
 - FTBFS: add in BuildRequires xsltproc
 
