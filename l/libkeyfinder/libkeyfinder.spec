@@ -2,7 +2,7 @@
 %def_disable tests
 
 Name: libkeyfinder
-Version: 2.2.6
+Version: 2.2.7
 Release: alt1
 
 Summary: Musical key detection for digital audio
@@ -51,7 +51,6 @@ libkeyfinder - это небольшая библиотека на c++11 для 
 
 %prep
 %setup
-sed -i 's|lib/cmake/KeyFinder|%_lib/cmake/KeyFinder|' CMakeLists.txt
 
 %build
 %cmake \
@@ -80,6 +79,12 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/KeyFinder/*
 
 %changelog
+* Mon Jun 20 2022 Leontiy Volodin <lvol@altlinux.org> 2.2.7-alt1
+- New version.
+- Upstream:
+  + Fix pkgconfig file when CMAKE_INSTALL_{INCLUDE,LIB}DIR
+  are absolute paths.
+
 * Mon Jan 17 2022 Leontiy Volodin <lvol@altlinux.org> 2.2.6-alt1
 - New version (2.2.6).
 
