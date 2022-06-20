@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 8
+Version: 9
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -51,6 +51,9 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Mon Jun 20 2022 Vitaly Chikunov <vt@altlinux.org> 9-alt1
+- Skip ENOSYS tests for xenomai-4.19.246.
+
 * Sat Jun 18 2022 Vitaly Chikunov <vt@altlinux.org> 8-alt1
 - Skip futex_waitv0{1,2,3} and waitid10 (after ltp update).
 
