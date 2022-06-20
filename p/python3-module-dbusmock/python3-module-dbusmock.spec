@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-dbusmock
-Version: 0.27.5
+Version: 0.28.0
 Release: alt1
 
 Summary: mock D-Bus objects for tests
@@ -21,16 +21,16 @@ BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel python3-module-setuptools
 %if_enabled check
 BuildRequires: /proc dbus-tools-gui %_bindir/notify-send %_bindir/nmcli upower bluez
+BuildRequires: polkit iio-sensor-proxy notification-daemon
 BuildRequires: python3-module-dbus-gobject python3-module-pycodestyle
-BuildRequires: python3-module-importlib-metadata
-# polkit tests fail since 0.115-alt4
-#BuildRequires: polkit
+BuildRequires: python3-module-pyflakes python3-module-importlib-metadata
+BuildRequires: python3-module-mypy
 %endif
 
 %description
 With this program/Python library you can easily create mock objects on
 D-Bus. This is useful for writing tests for software which talks to D-Bus
-services such as upower, systemd, ConsoleKit, gnome-session or others,
+services such as upower, systemd, logind, gnome-session or others,
 and it is hard (or impossible without root privileges) to set the state
 of the real services to what you expect in your tests.
 
@@ -50,9 +50,13 @@ See %_docdir/%name-%version/README.rst for more information.
 
 %files
 %python3_sitelibdir_noarch/%modname/
+%python3_sitelibdir_noarch/*.egg-info
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Mon Jun 20 2022 Yuri N. Sedunov <aris@altlinux.org> 0.28.0-alt1
+- 0.28.0
+
 * Tue Apr 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.27.5-alt1
 - 0.27.5
 
