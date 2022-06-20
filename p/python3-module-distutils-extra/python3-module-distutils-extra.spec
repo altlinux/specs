@@ -1,11 +1,11 @@
 %define modname python-distutils-extra
-%define ver_major 2.45
+%define ver_major 2.47
 
 %def_disable check
 
 Name: python3-module-distutils-extra
 Version: %ver_major
-Release: alt2
+Release: alt1
 
 Summary: Integrate more support into Python's distutils
 Group: Development/Python3
@@ -48,6 +48,9 @@ chmod a+x %buildroot%python3_sitelibdir/DistUtilsExtra/command/build_extra.py
 
 
 %changelog
+* Mon Jun 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.47-alt1
+- 2.47
+
 * Sat Mar 26 2022 Yuri N. Sedunov <aris@altlinux.org> 2.45-alt2
 - disabled %%check broken with Python-3.10
 
