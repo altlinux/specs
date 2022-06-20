@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libqtxdg
-Version: 3.9.0
+Version: 3.9.1
 Release: alt1
 
 Summary: Qt implementation of freedesktop.org xdg specs
@@ -30,19 +30,6 @@ Requires: libgio-devel
 This package provides the development files for qtxdg library
 which implements functions of the XDG Specifications in Qt.
 
-%package -n qtxdg-mat
-Summary: Command line MimeType (mimetype) tool
-Group: File tools 
-Requires: %name = %EVR
-
-%description -n qtxdg-mat
-This tool determines the mime type of a file using the Shared MIME-info
-database.
-Typical use:
-qtxdg-mat mimetype mimetypematcommand.cpp
-Result:
-text/x-c++src
-
 %prep
 %setup
 %ifarch %e2k
@@ -59,8 +46,8 @@ sed -i 's,-flto -fuse-linker-plugin,,' cmake/compiler_settings.cmake
 %files
 %_libdir/*.so.*
 %_qt5_plugindir/*/*.so
-%_datadir/lxqt/lxqt-qtxdg.conf
-%_datadir/lxqt/qtxdg.conf
+%config %_sysconfdir/xdg/lxqt-qtxdg.conf
+%config %_sysconfdir/xdg/qtxdg.conf
 
 %files devel
 %_libdir/*.so
@@ -68,10 +55,11 @@ sed -i 's,-flto -fuse-linker-plugin,,' cmake/compiler_settings.cmake
 %_pkgconfigdir/*.pc
 %_datadir/cmake/*/
 
-%files -n qtxdg-mat
-%_bindir/qtxdg-mat
-
 %changelog
+* Mon Jun 20 2022 Anton Midyukov <antohami@altlinux.org> 3.9.1-alt1
+- new version 3.9.1
+- drop qtxdg-mat (replaced to qtxdg-tools)
+
 * Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 3.9.0-alt1
 - new version 3.9.0
 

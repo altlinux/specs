@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lxqt-session
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Session manager
@@ -17,6 +17,7 @@ Patch1: alt-settings.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake git-core
 BuildRequires: liblxqt-devel qt5-base-devel qt5-tools-devel
+BuildRequires: qtxdg-tools
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: rpm-build-xdg libqtxdg-devel xdg-utils xdg-user-dirs
 BuildRequires: libudev-devel
@@ -61,6 +62,9 @@ install -pDm644 %SOURCE1 %buildroot%_sysconfdir/X11/wmsession.d/08lxqt
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Sun Jun 19 2022 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt1
+- new version 1.1.1
+
 * Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt1
 - new version 1.1.0
 
