@@ -1,7 +1,7 @@
 %define modulename indicator_sound_switcher
 
 Name:    indicator-sound-switcher
-Version: 2.3.4
+Version: 2.3.8
 Release: alt1
 
 Summary: Sound input/output selector indicator for Linux
@@ -44,5 +44,8 @@ Source:  %name-%version.tar
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Mon Jun 20 2022 Anton Midyukov <antohami@altlinux.org> 2.3.8-alt1
+- new version 2.3.8
+
 * Tue Jul 21 2020 Anton Midyukov <antohami@altlinux.org> 2.3.4-alt1
 - Initial build for Sisyphus
