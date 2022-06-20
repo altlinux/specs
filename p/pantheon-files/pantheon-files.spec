@@ -8,7 +8,7 @@
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-files
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: The file manager of the Pantheon desktop
@@ -30,13 +30,13 @@ Provides: %rdn_name = %version-%release
 #Suggests: tumbler-plugins-extra
 Requires: polkit zeitgeist tumbler elementary-icon-theme
 
+%define vala_ver 0.48.2
 %define gtk_ver 3.22.25
 %define granite_ver 6.1.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-systemd
-BuildRequires: meson vala-tools
-BuildRequires: intltool libappstream-glib-devel
-#BuildRequires: flatpak-builder
+BuildRequires: meson vala-tools > %vala_ver
+BuildRequires: libappstream-glib-devel
 BuildRequires: libsqlite3-devel libgtk+3-devel >= %gtk_ver
 BuildRequires: libgee0.8-devel libgranite-devel
 BuildRequires: libgail3-devel libdbus-glib-devel libnotify-devel
@@ -47,7 +47,6 @@ BuildRequires: libcanberra-devel libcanberra-vala
 BuildRequires: libcloudproviders-devel
 BuildRequires: libgit2-glib-devel
 BuildRequires: pkgconfig(libhandy-1)
-BuildRequires: pkgconfig(systemd)
 
 %description
 The simple, powerful, and sexy file manager from elementary.
@@ -111,6 +110,9 @@ This package provides Vala language bindings for the pantheon-files.
 %endif
 
 %changelog
+* Mon Jun 20 2022 Yuri N. Sedunov <aris@altlinux.org> 6.1.3-alt1
+- updated to 6.1.3-5-g660492c9d
+
 * Wed Jan 26 2022 Yuri N. Sedunov <aris@altlinux.org> 6.1.2-alt1
 - updated to 6.1.2-6-g9f7866d32
 
