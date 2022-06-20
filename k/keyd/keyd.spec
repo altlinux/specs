@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: keyd
-Version: 2.4.0
-Release: alt1.git3421ccaa
+Version: 2.4.1
+Release: alt1
 
 Summary: A key remapping daemon for linux.
 License: MIT
@@ -48,5 +48,8 @@ install -Dm644 keyd.quirks %buildroot%_datadir/libinput/30-keyd.quirks
 %_man1dir/*
 
 %changelog
+* Mon Jun 20 2022 Egor Ignatov <egori@altlinux.org> 2.4.1-alt1
+- new version 2.4.1
+
 * Fri May 13 2022 Egor Ignatov <egori@altlinux.org> 2.4.0-alt1.git3421ccaa
 - First build for ALT
