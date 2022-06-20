@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.8.1
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Fast numerical array expression evaluator for Python and NumPy
@@ -49,7 +49,7 @@ allows to use multiple cores in your computations.
 
 install -p -m644 %SOURCE1 ./
 sed -i 's|@LIBDIR@|%_libdir|' site.cfg
-%ifnarch %ix86 x86_64 armh aarch64 ppc64le
+%ifnarch %ix86 x86_64 armh aarch64 ppc64le %e2k
 sed -i 's@ openblas,@ blas,@' site.cfg
 %endif
 sed -i 's|@PYVER@|%_python3_version%_python3_abiflags|' \
@@ -81,6 +81,9 @@ tox.py3 --sitepackages -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Jun 20 2022 Michael Shigorin <mike@altlinux.org> 1:2.8.1-alt4
+- E2K: build with openblas too
+
 * Fri Feb 04 2022 Grigory Ustinov <grenka@altlinux.org> 1:2.8.1-alt3
 - Build with check again.
 
