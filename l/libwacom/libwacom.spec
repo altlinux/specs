@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.2
+%define ver_major 2.3
 %define sover 9
 %def_disable docs
 
@@ -14,7 +14,7 @@
 
 Name: libwacom
 Version: %ver_major.0
-Release: alt1.1
+Release: alt1
 
 Summary: A Wacom tablets library
 Group: System/Libraries
@@ -123,6 +123,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Jun 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Tue Apr 05 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1.1
 - spec: fixed typo
 
