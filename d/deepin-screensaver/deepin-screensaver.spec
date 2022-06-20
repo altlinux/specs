@@ -1,5 +1,5 @@
 Name: deepin-screensaver
-Version: 5.0.5
+Version: 5.0.10
 Release: alt1
 Summary: Screensaver Tool
 License: GPL-3.0+
@@ -27,11 +27,15 @@ Extra modules for Deepin Screensaver.
 
 %prep
 %setup
-%__subst 's|/lib/|/libexec/|' common.pri xscreensaver/xscreensaver.pro
-%__subst 's|/usr/lib|/usr/libexec|' common.pri tools/preview/main.cpp
+sed -i 's|/lib/|/libexec/|' common.pri xscreensaver/xscreensaver.pro
+sed -i 's|/usr/lib|/usr/libexec|' common.pri tools/preview/main.cpp
 
 %build
-%qmake_qt5 PREFIX=%prefix
+%qmake_qt5 \
+    DEFINES+="VERSION=%version" \
+    VERSION=%version \
+    CONFIG+=nostrip \
+    PREFIX=%prefix
 %make_build
 
 %install
@@ -47,6 +51,16 @@ Extra modules for Deepin Screensaver.
 %_prefix/libexec/%name/
 
 %changelog
+* Mon Jun 20 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.10-alt1
+- New version.
+- Upstream:
+  + chore: Optimize the construction-based dependence and add man manual.
+  + feat: Add the function of defining pictures as screen guarantees.
+  + fix: bug6339: In the state of screen guarantee, insert behind the extended
+  screen, the extended screen does not display the screen guarantee.
+  + fix: The screen preservation window of the preview will take away the focus
+  of the desktop screen protection setting window when activating.
+
 * Fri Jun 18 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.5-alt1
 - New version (5.0.5).
 
