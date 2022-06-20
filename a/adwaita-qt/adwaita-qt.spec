@@ -1,11 +1,13 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: adwaita-qt
-Version: 1.3.1
+Version: 1.4.1
 Release: alt1
 Summary: Adwaita theme for Qt-based applications
 License: LGPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: https://github.com/MartinBriza/adwaita-qt
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: adwaita-qt-%version.tar
 
@@ -13,8 +15,10 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-x11extras-devel
+BuildRequires: qt6-base-devel
 
 Requires: adwaita-qt5
+Requires: adwaita-qt6
 Obsoletes: adwaita-qt4
 
 %description
@@ -43,6 +47,29 @@ Requires: libadwaita-qt5 = %EVR
 The libadwaita-qt5-devel package contains libraries and header files for
 developing applications that use libadwaita-qt5.
 
+%package -n adwaita-qt6
+Summary: Adwaita Qt6 theme
+Group: Graphical desktop/GNOME
+
+%description -n adwaita-qt6
+Adwaita theme variant for applications utilizing Qt6
+
+%package -n libadwaita-qt6
+Summary: Adwaita Qt6 library
+Group: Graphical desktop/GNOME
+
+%description -n libadwaita-qt6
+%summary.
+
+%package -n libadwaita-qt6-devel
+Summary: Development files for libadwaita-qt6
+Group: Development/KDE and QT
+Requires: libadwaita-qt6 = %EVR
+
+%description -n libadwaita-qt6-devel
+The libadwaita-qt6-devel package contains libraries and header files for
+developing applications that use libadwaita-qt6.
+
 %prep
 %setup
 
@@ -51,9 +78,18 @@ developing applications that use libadwaita-qt5.
 %cmake
 %cmake_build
 
+%define _cmake__builddir %_target_platform-qt6
+%cmake -DUSE_QT6=true
+%cmake_build
+
 %install
 %define _cmake__builddir %_target_platform-qt5
 %cmake_install
+
+%define _cmake__builddir %_target_platform-qt6
+%cmake_install
+
+rm %buildroot%_libdir/pkgconfig/adwaita-qt6.pc
 
 %files -n adwaita-qt5
 %doc LICENSE.LGPL2 README.md
@@ -72,8 +108,29 @@ developing applications that use libadwaita-qt5.
 %_libdir/libadwaitaqt.so
 %_libdir/libadwaitaqtpriv.so
 
+%files -n adwaita-qt6
+%doc LICENSE.LGPL2 README.md
+%_qt6_archdatadir/plugins/styles/adwaita.so
+
+%files -n libadwaita-qt6
+%_libdir/libadwaitaqt6.so.*
+%_libdir/libadwaitaqt6priv.so.*
+
+%files -n libadwaita-qt6-devel
+%dir %_includedir/AdwaitaQt6
+%_includedir/AdwaitaQt6/*.h
+%dir %_libdir/cmake/AdwaitaQt6
+%_libdir/cmake/AdwaitaQt6/*.cmake
+#_pkgconfigdir/adwaita-qt6.pc
+%_libdir/libadwaitaqt6.so
+%_libdir/libadwaitaqt6priv.so
+
 %files
 %changelog
+* Mon Jun 20 2022 Anton Midyukov <antohami@altlinux.org> 1.4.1-alt1
+- new version 1.4.1
+- initial build adwaita-qt6
+
 * Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 1.3.1-alt1
 - new version 1.3.1
 - drop qt4 subpackage
