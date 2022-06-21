@@ -1,81 +1,93 @@
 Name: dropbear
-Summary: Relatively small SSH 2 server
-Version: 2017.75
-Release: alt2
-License: MIT-style
+Summary: A smallish SSH server and client
+Version: 2022.82
+Release: alt1
+License: MIT
 Group: System/Servers
-Url: http://matt.ucc.asn.au/dropbear/dropbear.html
-
-Patch: dropbear-2013.62-authkey_fp.patch
+Url: https://matt.ucc.asn.au/dropbear/dropbear.html
+Vcs: https://github.com/mkj/dropbear
 
 Source: %name-%version.tar.bz2
+Source1: localoptions.h
+Source2: dropbear.service
+Source3: dropbear.sysconfig
 
-# Automatically added by buildreq on Wed Sep 14 2011
-BuildRequires: libtomcrypt-devel libtommath-devel zlib-devel
+BuildRequires: zlib-devel
 
 %description
 Dropbear is a relatively small SSH 2 server.
 
-WARNING: PAM and %_sysconfdir/shadow are not supported by ths package.
-You should use %_sysconfdir/passwd file or pubkey authentication.
-
 %package scp
-Summary: SCP support for dropbear SSH
+Summary: Standalone scp program from OpenSSH
 Group: %group
 
 Conflicts: openssh-common
 
 %description scp
-SCP support for dropbear SSH
-
-%package client
-Summary: Relatively small SSH 2 client
-Group: %group
-%description client
-Relatively small SSH 2 client
-
-%package doc
-Summary: Manpages and other documentation for dropbear SSH
-BuildArch: noarch
-Group: %group
-%description doc
-Manpages and other documentation for dropbear SSH.
+The Dropbear distribution includes a standalone version of OpenSSH's scp
+program.
 
 # TODO: Use static versons for embedding and leave documentation where it belongs
 
 %prep
 %setup
-%patch -p2
+install -p %SOURCE1 localoptions.h
 
 %build
-export LIBS=-lcrypt CFLAGS="-I/usr/include/tomcrypt -I/usr/include/tommath"
-%configure --disable-shadow --disable-lastlog
-%make_build PROGRAMS="dropbear dbclient dropbearkey dropbearconvert scp"
+%configure
+%make_build all scp SCPPROGRESS=1
 
 %install
 %makeinstall
 install -D -m 0755 scp %buildroot%_bindir/scp
-install -D dbclient.1 %buildroot%_man1dir/dbclient.1
-install -D dropbear.8 %buildroot%_man8dir/dropbear.8
-install -D dropbearkey.1 %buildroot%_man1dir/dropbearkey.1
-install -D dropbearconvert.1 %buildroot%_man1dir/dropbearconvert.1
+mkdir -p %buildroot%_sysconfdir/%name
+install -Dpm644 %SOURCE2 %buildroot%_unitdir/%name.service
+install -Dpm644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%check
+./dropbearkey -t rsa -f dropbear_rsa_host_key
+! ./dropbearkey -t dss -f dropbear_dss_host_key
+./dropbearkey -t ecdsa -f dropbear_ecdsa_host_key
+./dropbearkey -t ed25519 -f dropbear_ed25519_host_key
+
+%post
+%post_service %name
+
+%preun
+%preun_service %name
 
 %files
+%define _customdocdir %_docdir/%name
+%doc [A-Z][A-Z]*
+%_bindir/dbclient
 %_bindir/dropbearconvert
 %_bindir/dropbearkey
 %_sbindir/dropbear
-
-%files doc
-%doc [A-Z][A-Z]*
+%dir %_sysconfdir/%name
+%config(noreplace) %_sysconfdir/sysconfig/%name
+%_unitdir/%name.service
 %_mandir/*/*
-
-%files client
-%_bindir/dbclient
 
 %files scp
 %_bindir/scp
 
 %changelog
+* Sun Jun 19 2022 Vitaly Chikunov <vt@altlinux.org> 2022.82-alt1
+- Update to DROPBEAR_2022.82 (2022-04-01). (Fixes: CVE-2018-15599,
+  CVE-2018-5399, CVE-2018-20685, CVE-2019-12953, CVE-2020-15833,
+  CVE-2020-36254).
+- Disable DSS keys.
+- Allow password auth.
+- Undo authkey_fp patch (as it does not apply to the new codebase).
+- Use bundled libtom{crypt,math} maintained by the authors of Dropbear.
+- Doc and client packages are merged into main package.
+- Add systemd services.
+- Correct sftp-server path (to openssh-server binary).
+
 * Fri Jan 12 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 2017.75-alt2
 - Rebuilt with new libtommath and libtomcrypt.
 
