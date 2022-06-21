@@ -1,8 +1,8 @@
 %define oname defusedxml
 
 Name: python-module-%oname
-Version: 0.6.0
-Release: alt2
+Version: 0.7.1
+Release: alt1
 Summary: XML bomb protection for Python stdlib modules
 License: Python
 Group: Development/Python
@@ -34,6 +34,9 @@ defusedxml -- defusing XML bombs and other exploits.
 %python_sitelibdir/*
 
 %changelog
+* Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 0.7.1-alt1
+- Autobuild version bump to 0.7.1
+
 * Mon Jun 21 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt2
 - rebuilt as legacy python2 package
 
