@@ -2,7 +2,7 @@
 %define xf86 XFree86
 
 Name: xdm
-Version: 1.1.12
+Version: 1.1.13
 Release: alt1
 Epoch: 2
 Summary: X Display Manager with support for XDMCP, host chooser
@@ -80,6 +80,9 @@ ln -snf ../../..%_localstatedir/xdm %buildroot%_sysconfdir/X11/xdm/authdir
 %_man8dir/*
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 2:1.1.13-alt1
+- Autobuild version bump to 1.1.13
+
 * Wed Mar 27 2019 Fr. Br. George <george@altlinux.ru> 2:1.1.12-alt1
 - Autobuild version bump to 1.1.12
 - Intruduce app-defaults file
