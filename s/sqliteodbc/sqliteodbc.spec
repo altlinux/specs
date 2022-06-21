@@ -1,8 +1,8 @@
 %def_without sqlite2
 Name: sqliteodbc
 Summary: ODBC driver for SQLite
-Version: 0.9996
-Release: alt3
+Version: 0.9998
+Release: alt1
 Source: %name-%version.tar.gz
 Patch: sqliteodbc-0.993-alt-odbcinstext.patch
 Group: Databases
@@ -13,7 +13,7 @@ License: BSD
 # optimized out: libunixODBC-devel
 BuildRequires: libiodbc-devel libsqlite3-devel libxml2-devel zlib-devel
 %if_with sqlite2
-BuildRequires: libsqlite-devel 
+BuildRequires: libsqlite-devel
 %endif
 
 %description
@@ -106,6 +106,9 @@ fi
 %_libdir/*.so*
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 0.9998-alt1
+- Autobuild version bump to 0.9998
+
 * Fri Nov 20 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9996-alt3
 - Updated rpm post script (Fixes: CVE-2020-12050).
 
