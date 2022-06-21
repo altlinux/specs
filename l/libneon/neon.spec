@@ -1,5 +1,5 @@
 Name: libneon
-Version: 0.31.2
+Version: 0.32.2
 Release: alt1
 Summary: neon is an HTTP and WebDAV client library
 License: LGPLv2+
@@ -58,7 +58,7 @@ install -pm644 AUTHORS BUGS NEWS README* THANKS TODO doc/*.txt \
 %_libdir/lib*.so.*
 
 %files devel
-%doc 
+%doc
 %_bindir/*
 %_includedir/*
 %_libdir/lib*.so
@@ -68,6 +68,9 @@ install -pm644 AUTHORS BUGS NEWS README* THANKS TODO doc/*.txt \
 %docdir
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 0.32.2-alt1
+- Autobuild version bump to 0.32.2
+
 * Sat Feb 13 2021 Fr. Br. George <george@altlinux.ru> 0.31.2-alt1
 - Autobuild version bump to 0.31.2
 
