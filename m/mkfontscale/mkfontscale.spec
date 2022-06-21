@@ -1,6 +1,6 @@
 Name: mkfontscale
-Version: 1.2.1
-Release: alt2
+Version: 1.2.2
+Release: alt1
 Summary: create an index of scalable font files for X
 License: MIT/X11
 Group: System/X11
@@ -38,6 +38,9 @@ file fonts.scale in the directory.
 %_man1dir/*
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1.2.2-alt1
+- Autobuild version bump to 1.2.2
+
 * Mon Sep 30 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.2.1-alt2
 - obsoletes mkfontdir (closes: #36333)
 
