@@ -1,11 +1,11 @@
 Name: jot
-Version: 12.1
+Version: 12.3
 Release: alt1
-Source: jot-12.1.tar
+Source: jot-12.3.tar
 Patch: %name-urandom.patch
-Patch1: %name-12.1-nocap.patch
+Patch1: %name-12.3-nocap.patch
 Patch2: %name-12.1-nonegperc.patch
-Patch3: %name-12.1-posix.patch
+Patch3: %name-12.3-posix.patch
 Url: http://www.freebsd.org/cgi/cvsweb.cgi/src/usr.bin/jot
 Summary: jot is a simple tool that prints random or sequential data
 Summary (ru_RU.UTF-8): Выводит данные по возрастанию, убыванию по одному элементу на строку
@@ -44,6 +44,9 @@ install %name.1 %buildroot%_man1dir/
 sed -n '/REGRESSION_TEST/s@.*`\(.*\)., `\(jot .*\).)@./\2 | cmp tests/regress.\1.out -@p' < tests/regress.sh | sh -e
 
 %changelog
+* Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 12.3-alt1
+- Autobuild version bump to 12.3
+
 * Thu Jan 23 2020 Fr. Br. George <george@altlinux.ru> 12.1-alt1
 - Autobuild version bump to 12.1
 - Fix negative precision bug
