@@ -1,5 +1,5 @@
 Name: xtruss
-Version: 20200918
+Version: 20211025
 Release: alt1
 Summary: Trace X protocol exchanges, in the manner of strace
 License: MIT/X11
@@ -7,8 +7,9 @@ Group: System/X11
 Source: %name-%version.tar.gz
 Url: http://www.chiark.greenend.org.uk/~sgtatham/xtruss/
 
-# Automatically added by buildreq on Mon Aug 23 2010
-BuildRequires: halibut
+# Automatically added by buildreq on Tue Jun 21 2022
+# optimized out: cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libsasl2-3 perl python3-base sh4
+BuildRequires: cmake halibut
 
 %description
 XTruss is a utility which logs everything that passes between
@@ -20,13 +21,13 @@ functionality with an interface much more similar to strace(1).
 %setup
 
 %build
-%configure
-%make_build
+%cmake
+%cmake_build
 rm %name.1
-halibut --man=%name.1 %name.but
+halibut --man=%name.1 doc/man-xtruss.but
 
 %install
-%makeinstall
+%cmakeinstall_std
 
 %files
 %doc README
@@ -34,6 +35,9 @@ halibut --man=%name.1 %name.but
 %_man1dir/*
 
 %changelog
+* Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 20211025-alt1
+- Autobuild version bump to 20211025
+
 * Thu Jan 28 2021 Fr. Br. George <george@altlinux.ru> 20200918-alt1
 - Autobuild version bump to 20200918
 
