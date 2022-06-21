@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 114
+%define centos_release 116
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,15 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jun 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.116-alt1.el9
+- Updated to kernel-5.14.0-116.el9:
+  + CNB: Update TC subsystem to upstream v5.18
+  + hv: vmbus: Driver updates for 9.1
+  + ixgbevf: Driver update for RHEL9.1
+  + [RHEL9.1] IOMMU/DMA Updates
+  + video: fbdev: hyperv_fb: Allow resolutions with size > 64 MB for Gen1
+  + x86/fpu: KVM: Set the base guest FPU uABI size to sizeof(struct kvm_xsave)
+
 * Fri Jun 17 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.114-alt1.el9
 - Updated to kernel-5.14.0-114.el9 (fixes: CVE-2022-1729):
   + block: ignore RWF_HIPRI hint for sync dio
