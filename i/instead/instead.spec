@@ -1,6 +1,6 @@
 
 Name: instead
-Version: 3.3.2
+Version: 3.4.1
 Release: alt1
 Group: Games/Adventure
 License: GPLv2
@@ -58,6 +58,9 @@ mkdir -p %buildroot%_localstatedir/%name/games
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 3.4.1-alt1
+- Autobuild version bump to 3.4.1
+
 * Mon Oct 05 2020 Fr. Br. George <george@altlinux.ru> 3.3.2-alt1
 - Autobuild version bump to 3.3.2
 - Drop bogus instead/instead-sdl separation
