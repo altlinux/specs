@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-Pygments
-Version: 2.11.2
+Version: 2.12.0
 Release: alt1
 
 Summary: Pygments is a syntax highlighting package written in Python
@@ -71,6 +71,9 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 2.12.0-alt1
+- 2.11.2 -> 2.12.0
+
 * Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 2.11.2-alt1
 - 2.10.0 -> 2.11.2.
 
