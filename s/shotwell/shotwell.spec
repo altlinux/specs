@@ -1,5 +1,5 @@
 %set_verify_elf_method unresolved=relaxed
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shotwell
 
@@ -11,8 +11,8 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.3
-Release: alt3.1
+Version: %ver_major.4
+Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -41,7 +41,7 @@ BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: libdconf-devel libdbus-glib-devel libgexiv2-devel >= %gexiv_ver
 BuildRequires: libwebp-devel libgphoto2-devel libgudev-devel libjson-glib-devel
-BuildRequires: libraw-devel libexif-devel libgomp-devel
+BuildRequires: libraw-devel libexif-devel libgomp-devel libavif-devel
 BuildRequires: libsqlite3-devel libstdc++-devel libwebkit2gtk-devel
 BuildRequires: librest-devel libgee0.8-devel gcr-libs-devel
 BuildRequires: desktop-file-utils yelp-tools libappstream-glib-devel
@@ -62,9 +62,6 @@ mode, and export them to share with others.
 %prep
 %setup
 %patch -b .no_dark_theme
-# comment out duplicate "id" entry from help/LINGUAS
-sed -i '0,/^id$/s/\(^id$\)/#\1/' help/LINGUAS
-
 %build
 %add_optflags -D_GIT_VERSION=%(echo %version | tr -d .)
 %define vala_ver %(rpm -q --qf '%%{VERSION}' vala)
@@ -83,8 +80,7 @@ sed -i '0,/^id$/s/\(^id$\)/#\1/' help/LINGUAS
 %find_lang --with-gnome --output=%name.lang %name %name-extras
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -113,6 +109,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Jun 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.31.4-alt1
+- 0.31.4
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.31.3-alt3.1
 - fixed build with meson >= 0.61
 
