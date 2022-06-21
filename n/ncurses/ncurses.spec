@@ -1,6 +1,6 @@
 Name: ncurses
-Version: 6.3.20211106
-Release: alt2
+Version: 6.3.20220618
+Release: alt1
 
 %define rootdatadir /lib
 
@@ -692,6 +692,9 @@ done
 %endif # with_utf8
 
 %changelog
+* Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 6.3.20220618-alt1
+- Autobuild version bump to 6.3.20220618
+
 * Mon Jan 31 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.3.20211106-alt2
 - add alacritty and foot to baseterm list
 
