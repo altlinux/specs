@@ -2,7 +2,7 @@
 %def_without extbuild
 
 Name: dpkg
-Version: 1.19.7
+Version: 1.21.8
 Release: alt1
 
 Summary: Package maintenance system for Debian Linux
@@ -102,6 +102,9 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1.21.8-alt1
+- Autobuild version bump to 1.21.8
+
 * Sat Oct 26 2019 Fr. Br. George <george@altlinux.ru> 1.19.7-alt1
 - Autobuild version bump to 1.19.7
 
