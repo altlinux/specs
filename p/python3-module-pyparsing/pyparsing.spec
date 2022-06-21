@@ -1,7 +1,7 @@
 %def_with check
 
 Name: python3-module-pyparsing
-Version: 3.0.8
+Version: 3.0.9
 Release: alt1
 
 Summary: Python parsing module
@@ -47,6 +47,9 @@ tox.py3 --sitepackages -p auto -v --skip-pkg-instal
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 3.0.9-alt1
+- Autobuild version bump to 3.0.9
+
 * Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 3.0.8-alt1
 - Autobuild version bump to 3.0.8
 - Switch to modern build scheme
