@@ -1,6 +1,6 @@
 Name: bitlbee
-Version: 3.5.1
-Release: alt4
+Version: 3.6
+Release: alt1
 Group: Networking/IRC
 License: GPLv2
 Url: http://www.bitlbee.org
@@ -102,6 +102,9 @@ install -m 755 -D %SOURCE1  %buildroot%_initdir/%name
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Thu Jun 16 2022 Fr. Br. George <george@altlinux.org> 3.6-alt1
+- Autobuild version bump to 3.6
+
 * Thu Mar 26 2020 Fr. Br. George <george@altlinux.ru> 3.5.1-alt4
 - Add libpurple support
 - Remove unsupported old skype
