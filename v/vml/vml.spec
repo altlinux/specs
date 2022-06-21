@@ -1,5 +1,5 @@
 Name:     vml
-Version:  0.1.5
+Version:  0.1.6
 Release:  alt1
 
 Summary:  Tool for easily and transparently work with qemu virtual machines
@@ -27,7 +27,12 @@ Debian, Fedora, openSUSE and Ubuntu could be created with just one command.
 %setup
 
 %build
-%rust_build
+RUSTFLAGS="${RUSTFLAGS} -g"
+%ifarch ppc64le
+cargo build --no-default-features --features=native-tls --release %{?_smp_mflags} --offline
+%else
+cargo build --release %{?_smp_mflags} --offline
+%endif
 
 %install
 %rust_install
@@ -52,6 +57,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Mon Jun 20 2022 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.6-alt1
+- Add support of multiple arches
+
 * Thu Dec 30 2021 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.5-alt1
 - Fix finding running vms after qemu update
 - Create openssh config for vms
