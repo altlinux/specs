@@ -7,7 +7,7 @@
 %def_disable ps
 
 Name: xorg-docs
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 Serial: 1
 Summary: Documentation on various X11 programming interfaces
@@ -55,6 +55,9 @@ the font server API, etc.
 %_man7dir/*
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1:1.7.2-alt1
+- Autobuild version bump to 1.7.2
+
 * Tue Jul 14 2015 Fr. Br. George <george@altlinux.ru> 1:1.7.1-alt1
 - Autobuild version bump to 1.7.1
 
