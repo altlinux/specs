@@ -6,8 +6,8 @@
 
 %define _unpackaged_files_terminate_build 0
 Name: btrfs-progs
-Version: 5.16.2
-Release: alt1
+Version: 5.18.1
+Release: alt2
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -29,12 +29,15 @@ BuildRequires: xmlto
 BuildRequires: libzstd-devel
 BuildRequires: libudev-devel
 BuildRequires: libselinux-devel
+BuildRequires: python3-module-sphinx-sphinx-build-symlink
 %if_with check
 BuildRequires: /proc /dev/kvm
 BuildRequires: /sbin/dmsetup
 BuildRequires: /usr/bin/getfacl
 BuildRequires: /sbin/udevadm
 BuildRequires: rpm-build-vm
+BuildRequires: libaio-devel
+BuildRequires: liburing-devel
 %endif
 
 %description
@@ -45,7 +48,7 @@ limitations, particularly with respect to file size, total file system size
 and filesystem check duration; it is also expected to implement modern
 filesystem features not supported by ext3, like writable snapshots,
 snapshots of snapshots, builtin RAID support, and subvolumes. In addition,
-Btrfs claims a "focus on fault tolerance, repair and easy administration.
+Btrfs claims a "focus on fault tolerance, repair and easy administration".
 
 This package contains utilities for managing the Btrfs filesystem
 
@@ -103,12 +106,16 @@ rm -rf tests/convert-tests/002-ext3-basic
 rm -rf tests/convert-tests/003-ext4-basic
 rm -rf tests/convert-tests/005-delete-all-rollback
 
+rm -rf tests/convert-tests/*-reiserfs-*
+
 # mknod is not allowed in virtual environment
 rm -rf tests/mkfs-tests/009-special-files-for-rootdir
 # don't run all fuzzing tests
 rm -rf tests/fuzz-tests/0*
 
-vm-run --sbin --udevd --kvm=cond make test
+mkdir "$HOME/new_tmp"
+TMPDIR="$HOME/new_tmp"
+vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 
 %files
 /sbin/*
@@ -127,6 +134,15 @@ vm-run --sbin --udevd --kvm=cond make test
 %_includedir/*
 
 %changelog
+* Tue Jun 21 2022 Egor Ignatov <egori@altlinux.org> 5.18.1-alt2
+- fix tests
+
+* Mon Jun 20 2022 Anton Farygin <rider@altlinux.ru> 5.18.1-alt1
+- 5.18 -> 5.18.1
+
+* Mon May 30 2022 Anton Farygin <rider@altlinux.ru> 5.18-alt1
+- 5.16.2 -> 5.18
+
 * Sat Feb 19 2022 Anton Farygin <rider@altlinux.ru> 5.16.2-alt1
 - 5.16.1 -> 5.16.2
 
