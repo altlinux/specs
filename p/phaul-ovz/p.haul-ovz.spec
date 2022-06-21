@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    %oname-ovz
-Version: 0.1.93
+Version: 0.1.93.1
 Release: alt1
 
 Summary: Process HAULer -- a tool to live-migrate containers and processes
@@ -60,6 +60,9 @@ popd
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Jun 21 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.1.93.1-alt1
+- 0.1.93.1
+
 * Wed May 25 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.1.93-alt1
 - 0.1.93
 
