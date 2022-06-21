@@ -1,5 +1,5 @@
 Name: ucblogo
-Version: 6.2.1
+Version: 6.2.2
 Release: alt1
 Summary: An interpreter for the Logo programming language
 Group: Development/Functional
@@ -98,6 +98,9 @@ rm %buildroot%_datadir/emacs/site-lisp/logo/*.el
 %_datadir/emacs/site-lisp/site-start.d
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 6.2.2-alt1
+- Autobuild version bump to 6.2.2
+
 * Tue Nov 23 2021 Fr. Br. George <george@altlinux.ru> 6.2.1-alt1
 - Autobuild version bump to 6.2.1
 
