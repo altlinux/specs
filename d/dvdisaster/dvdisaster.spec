@@ -1,13 +1,13 @@
 Name: dvdisaster
-Version: 0.79.6
+Version: 0.79.9
 Release: alt1
 
 Summary: Additional error protection for CD/DVD media
 License: GPL-3.0+
 Group: File tools
 
-URL: http://www.dvdisaster.com/
-Source: http://deb.debian.org/debian/pool/main/d/dvdisaster/dvdisaster-%version.tar.bz2
+URL: https://dvdisaster.jcea.es
+Source: https://dvdisaster.jcea.es/downloads/dvdisaster-%version.tar.bz2
 Source1: dvdisaster.desktop
 Patch: dvdisaster-0.72.3-alt-libpng15.patch
 
@@ -36,8 +36,6 @@ Help files for %name.
 
 subst 's/\@\$/\$/' GNUmakefile.template
 subst 's/-O2/%optflags/' configure
-
-subst 's~glib/gstrfuncs.h~glib.h~' memtrack.c dvdisaster.h
 
 %build
 export CFLAGS="$CFLAGS -fcommon"
@@ -86,6 +84,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_defaultdocdir/dvdisaster-%version
 
 %changelog
+* Tue Jun 21 2022 Leontiy Volodin <lvol@altlinux.org> 0.79.9-alt1
+- 0.79.9 (with rpmgs script)
+
 * Tue Jul 20 2021 Leontiy Volodin <lvol@altlinux.org> 0.79.6-alt1
 - 0.79.6
 
