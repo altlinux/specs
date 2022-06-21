@@ -1,6 +1,6 @@
 Name: radeontop
 Version: 1.4
-Release: alt2
+Release: alt3
 
 Summary: Console utility for monitoring Radeon graphics cards
 Summary(ru_RU.UTF-8): Консольная утилита для мониторинга видеокарт Radeon
@@ -10,10 +10,11 @@ Url: https://github.com/clbr/%name
 
 # Source-url: https://github.com/clbr/radeontop/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+Source1: translations_radeontop-ru.po
 
 Patch: %name-1.4-alt-makefile.patch
 
-BuildRequires: gettext
+BuildRequires: gettext-tools
 BuildRequires: libdrm-devel
 BuildRequires: libncursesw-devel
 BuildRequires: libpciaccess-devel
@@ -38,7 +39,8 @@ Requires root access to /dev/mem or /dev/dri/card#
 %prep
 %setup
 patch -p1
-sed -i 's/unknown/%version/' getver.sh
+%__subst 's/unknown/%version/' getver.sh
+cp -fv %SOURCE1 translations/ru.po
 
 %build
 %add_optflags
@@ -60,6 +62,9 @@ install -Dm 0644 -p %name.metainfo.xml %buildroot%_datadir/metainfo/
 %_libdir/libradeontop_xcb.so
 
 %changelog
+* Tue Jun 21 2022 Evgeny Chuck <koi@altlinux.org> 1.4-alt3
+- updated russian translation (Closes: 42895)
+
 * Tue May 31 2022 Evgeny Chuck <koi@altlinux.org> 1.4-alt2
 - correct license information
 - cleanup spec
