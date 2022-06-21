@@ -1,6 +1,6 @@
 Summary: Flat assembler
 Name: fasm
-Version: 1.73.28
+Version: 1.73.30
 Release: alt1
 License: BSD-like
 Group: Development/Tools
@@ -65,6 +65,9 @@ test "$A" = "Current process ID is $!."
 %_bindir/*
 
 %changelog
+* Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 1.73.30-alt1
+- Autobuild version bump to 1.73.30
+
 * Sun Oct 03 2021 Fr. Br. George <george@altlinux.ru> 1.73.28-alt1
 - Autobuild version bump to 1.73.28
 
