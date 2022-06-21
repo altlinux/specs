@@ -3,7 +3,7 @@
 %define soname 8
 
 Name: eclib
-Version: 20210625
+Version: 20220620
 Release: alt1
 Summary: Tools for create the elliptic curve database
 Group: Sciences/Mathematics
@@ -111,6 +111,13 @@ make check LD_LIBRARY_PATH=%buildroot%_libdir
 %_man1dir/mwrank.1*
 
 %changelog
+* Tue Jun 21 2022 Leontiy Volodin <lvol@altlinux.org> 20220620-alt1
+- New version.
+- Upstream:
+  + fix sign bug in quartic minimisation found by Bill Allombert.
+  + fix possibly unreduced pari output of p2points.
+  + fix saturation bug where Tamagawa primes were not always tested.
+
 * Mon Nov 08 2021 Leontiy Volodin <lvol@altlinux.org> 20210625-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
 - Built as require for sagemath.
