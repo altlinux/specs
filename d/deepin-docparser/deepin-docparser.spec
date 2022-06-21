@@ -2,7 +2,7 @@
 %define soname 1
 
 Name: deepin-docparser
-Version: 1.0.1
+Version: 1.0.3
 Release: alt1
 
 Summary: Document parser library by deepin
@@ -73,6 +73,11 @@ Header files and libraries for %name.
 %_pkgconfigdir/%repo.pc
 
 %changelog
+* Tue Jun 21 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.3-alt1
+- New version.
+- Upstream:
+  + fix: Full text search leads to the death/collapse of the documentary tube.
+
 * Thu Apr 07 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.1-alt1
 - Initial build for ALT Sisyphus.
 - Built as require for deepin-file-manager.
