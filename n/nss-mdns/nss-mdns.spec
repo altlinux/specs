@@ -1,5 +1,5 @@
 Name: nss-mdns
-Version: 0.14.1
+Version: 0.15.1
 Release: alt1
 
 Summary: nss-mdns provides host name resolution via Multicast DNS
@@ -81,6 +81,9 @@ fi
 /%_lib/libnss_*.so.*
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 0.15.1-alt1
+- Autobuild version bump to 0.15.1
+
 * Thu Dec 05 2019 Fr. Br. George <george@altlinux.ru> 0.14.1-alt1
 - Autobuild version bump to 0.14.1
 
