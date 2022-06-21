@@ -5,7 +5,7 @@
 Summary: Command-line tools and library for transforming PDF files
 Name: qpdf
 Version: 10.6.3
-Release: alt1
+Release: alt2
 License: Apache-2.0
 Group: System/Base
 Url: http://qpdf.sourceforge.net/
@@ -121,6 +121,9 @@ make check
 %doc manual/build/singlehtml/index.html  manual/build/singlehtml/_static
 
 %changelog
+* Mon Jun 20 2022 Anton Farygin <rider@altlinux.ru> 10.6.3-alt2
+- FTBFS: replace egrep to grep -E
+
 * Thu Mar 24 2022 Anton Farygin <rider@altlinux.ru> 10.6.3-alt1
 - 10.6.3
 
