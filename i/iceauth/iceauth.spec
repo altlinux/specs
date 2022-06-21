@@ -1,8 +1,8 @@
 Name: iceauth
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 Summary: ICE authority file utility
-License: MIT/X11
+License: X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
 
@@ -31,10 +31,14 @@ on the iceauth command line, or in scripts.
 %make DESTDIR=%buildroot install
 
 %files
+%doc *.md
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1.0.9-alt1
+- Autobuild version bump to 1.0.9
+
 * Wed Sep 19 2018 Fr. Br. George <george@altlinux.ru> 1.0.8-alt1
 - Autobuild version bump to 1.0.8
 
