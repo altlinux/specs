@@ -1,5 +1,5 @@
 Name: xcowsay
-Version: 1.5.1
+Version: 1.6
 Release: alt1
 Summary: displays a cute cow and message on your desktop
 Group: Games/Other
@@ -33,6 +33,9 @@ xcowsay displays a cute cow and message on your desktop. Inspired by the origina
 %_man6dir/xcow*
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1.6-alt1
+- Autobuild version bump to 1.6
+
 * Thu Jan 28 2021 Fr. Br. George <george@altlinux.ru> 1.5.1-alt1
 - Autobuild version bump to 1.5.1
 
