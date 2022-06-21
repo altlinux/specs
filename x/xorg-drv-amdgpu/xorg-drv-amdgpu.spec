@@ -1,8 +1,8 @@
 Name: xorg-drv-amdgpu
-Version: 21.0.0
+Version: 22.0.0
 Release: alt1
 Summary: AMD GPU video driver for the Xorg X server
-License: MIT/X11
+License: MIT
 Group: System/X11
 Url: http://cgit.freedesktop.org/xorg/driver/xf86-video-amdgpu
 
@@ -41,6 +41,9 @@ BuildRequires: libGL-devel libgbm-devel libudev-devel xorg-proto-devel
 %_man4dir/*
 
 %changelog
+* Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 22.0.0-alt1
+- 22.0.0
+
 * Mon Nov 08 2021 Valery Inozemtsev <shrek@altlinux.ru> 21.0.0-alt1
 - 21.0.0
 
