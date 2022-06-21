@@ -1,11 +1,11 @@
 Name: rs
-Version: 12.1
+Version: 12.3
 Release: alt1
-Source: rs-12.1.tar
+Source: rs-12.3.tar
 Url: http://www.freebsd.org/cgi/cvsweb.cgi/src/usr.bin/%name
 Packager: Fr. Br. George <george@altlinux.ru>
 Summary: Reshape a data array
-License: BSD
+License: BSD-3-Clause
 Group: Text tools
 # svn checkout svn://svn.freebsd.org/base/head/usr.bin/rs
 
@@ -34,6 +34,9 @@ install %name.1 %buildroot%_man1dir/
 %_man1dir/%name.*
 
 %changelog
+* Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 12.3-alt1
+- Autobuild version bump to 12.3
+
 * Mon Nov 04 2019 Fr. Br. George <george@altlinux.ru> 12.1-alt1
 - Autobuild version bump to 12.1
 
