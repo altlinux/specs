@@ -1,10 +1,10 @@
 %global repo dde-account-faces
 
 Name: deepin-account-faces
-Version: 1.0.12
+Version: 1.0.12.1
 Release: alt1
 Summary: Account faces for Linux Deepin
-License: CC0-1.0
+License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-account-faces
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -27,6 +27,10 @@ Account faces for Linux Deepin
 %_sharedstatedir/AccountsService/icons/*
 
 %changelog
+* Wed Jun 22 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.12.1-alt1
+- New version (1.0.12.1) with rpmgs script.
+- Changed license tag.
+
 * Thu Feb 25 2021 Leontiy Volodin <lvol@altlinux.org> 1.0.12-alt1
 - New version (1.0.12) with rpmgs script.
 - Changed license tag.
