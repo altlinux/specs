@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 116
+%define centos_release 117
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,18 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Jun 22 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.117-alt1.el9
+- Updated to kernel-5.14.0-117.el9:
+  + Enable verbose error logging support for nvme
+  + ionic: update driver to v5.18
+  + Make DMAR_UNITS_SUPPORTED configurable
+  + powerpc/rtas: rtas_busy_delay() improvements
+  + [s390] zcrypt DD: Exploitation Support of new IBM Z Crypto Hardware - kernel part
+  + scripts/pahole-flags.sh: use exit instead of return at the top level
+  + Update kernel's PCI subsystem to v5.18
+  + XDP and networking eBPF rebase to v5.16
+  + xfs: validate inode fork size against fork format
+
 * Tue Jun 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.116-alt1.el9
 - Updated to kernel-5.14.0-116.el9:
   + CNB: Update TC subsystem to upstream v5.18
