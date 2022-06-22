@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfprint2
-Version: 1.94.3
+Version: 1.94.4
 Release: alt1
 
 Summary: Tool kit for fingerprint scanner
@@ -90,6 +90,9 @@ export LD_LIBRARY_PATH="libfprint"
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Jun 21 2022 Egor Ignatov <egori@altlinux.org> 1.94.4-alt1
+- new version 1.94.4
+
 * Sat Feb 19 2022 Anton Farygin <rider@altlinux.ru> 1.94.3-alt1
 - 1.94.3
 
