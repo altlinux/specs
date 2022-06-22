@@ -22,7 +22,7 @@
 %def_disable context
 
 Name: rhythmbox
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1%rev
 
 Summary: Music Management Application
@@ -37,7 +37,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-Patch: %name-3.4.5-alt-rpath.patch
 
 %define dbus_ver 0.35
 %define glib_ver 2.36.0
@@ -77,7 +76,6 @@ Provides: python3(rb)
 Provides: python3(rhythmdb)
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
-
 BuildRequires: meson
 BuildRequires: python3-module-pygobject3-devel
 BuildRequires: glib2-devel >= %glib_ver
@@ -336,8 +334,7 @@ This virtual package installs all Rhythmbox plugins
 
 %prep
 %setup -n %name-%version
-%patch -p1
-sed -i 's|0\.62\.0|0.62.9|' meson.build
+#sed -i 's|0\.62\.0|0.62.9|' meson.build
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -479,6 +476,9 @@ ln -s %_licensedir/GPL-2.0 %buildroot%pkgdocdir/COPYING
 %endif
 
 %changelog
+* Wed Jun 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4.6-alt1
+- 3.4.6
+
 * Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4.5-alt1
 - 3.4.5 (ported to Meson build system)
 
