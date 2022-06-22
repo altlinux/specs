@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Amazon-S3
-Version: 0.52
+Version: 0.53
 Release: alt1
 
 Summary: A portable client library for working with and
@@ -84,6 +84,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Amazon/*
 
 %changelog
+* Wed Jun 22 2022 Igor Vlasenko <viy@altlinux.org> 0.53-alt1
+- new version
+
 * Mon Jun 20 2022 Igor Vlasenko <viy@altlinux.org> 0.52-alt1
 - new version
 
