@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 9
+Version: 10
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -51,6 +51,9 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Wed Jun 22 2022 Vitaly Chikunov <vt@altlinux.org> 10-alt1
+- Skip getrusage04 (due to armh failures).
+
 * Mon Jun 20 2022 Vitaly Chikunov <vt@altlinux.org> 9-alt1
 - Skip ENOSYS tests for xenomai-4.19.246.
 
