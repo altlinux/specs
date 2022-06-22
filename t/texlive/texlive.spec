@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ gobject-introspection-devel imake libXt-devel perl(Archive/Tar.pm) perl(BibTeX/Parser.pm) perl(BibTeX/Parser/Author.pm) perl(Date/Format.pm) perl(Date/Parse.pm) perl(Digest/SHA1.pm) perl(Encode.pm) perl(Encode/Alias.pm) perl(Encode/Locale.pm) perl(ExtUtils/MakeMaker.pm) perl(Fatal.pm) perl(File/Copy/Recursive.pm) perl(File/Which.pm) perl(HTML/FormatText.pm) perl(HTML/TreeBuilder.pm) perl(HTTP/Request/Common.pm) perl(IO/Compress/Zip.pm) perl(IPC/System/Simple.pm) perl(JSON.pm) perl(LWP/Protocol/https.pm) perl(LWP/Simple.pm) perl(LWP/UserAgent.pm) perl(LaTeX/ToUnicode.pm) perl(Locale/Maketext/Simple.pm) perl(Math/Trig.pm) perl(Pod/Man.pm) perl(Pod/Text.pm) perl(Pod/Usage.pm) perl(Spreadsheet/ParseExcel.pm) perl(Statistics/Descriptive.pm) perl(Statistics/Distributions.pm) perl(Term/ANSIColor.pm)
-BuildRequires: perl(Term/ReadKey.pm) perl(Test.pm) perl(Tk.pm) perl(Tk/Dialog.pm) perl(Tk/NoteBook.pm) perl(URI/Escape.pm) perl(WWW/Mechanize.pm) perl(autodie.pm) perl-devel texinfo xorg-cf-files zlib-devel
+BuildRequires: perl(Term/ReadKey.pm) perl(Test.pm) perl(Tk.pm) perl(Tk/Dialog.pm) perl(Tk/NoteBook.pm) perl(URI/Escape.pm) perl(WWW/Mechanize.pm) perl(autodie.pm) perl-devel texinfo xorg-cf-files zlib-devel bzlib-devel
 # END SourceDeps(oneline)
 # findreq artefacts
 # let's drop the dep for now
@@ -75,7 +75,7 @@ BuildRequires: /usr/bin/hg
 #-----------------------------------------------------------------------
 Name:		texlive
 Version:	%relYear
-Release:	alt2_3
+Release:	alt3_3
 Summary:	The TeX formatting system
 Group:		Publishing
 License:	http://www.tug.org/texlive/LICENSE.TL
@@ -437,6 +437,10 @@ autoreconf -vfi texk/dvisvgm
 # and something like autoreconf -fisv libs/cairo does not work
 rm -rf libs/cairo
 
+# viy: for new
+#libtool: Version mismatch error.  This is libtool 2.4.7, but the
+#libtool: definition of this LT_INIT comes from libtool 2.4.6.
+./reautoconf
 mkdir -p Work
 pushd Work
 
@@ -681,6 +685,9 @@ rm -f %{texmfdir}/ls-R %{texmfdistdir}/ls-R %{texmfconfdir}/ls-R
 
 #-----------------------------------------------------------------------
 %changelog
+* Wed Jun 22 2022 Igor Vlasenko <viy@altlinux.org> 2021-alt3_3
+- fixed build
+
 * Tue Jan 04 2022 Igor Vlasenko <viy@altlinux.org> 2021-alt2_3
 - riscv64 support
 
