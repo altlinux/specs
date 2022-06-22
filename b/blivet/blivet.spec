@@ -5,7 +5,7 @@ Summary: A python module for system storage configuration
 Name: blivet
 Group: System/Configuration/Other
 Url: https://storageapis.wordpress.com/projects/blivet
-Version: 3.4.1
+Version: 3.4.4
 Release: alt1
 License: GPLv2+
 
@@ -88,6 +88,9 @@ make PYTHON=%__python3 DESTDIR=%buildroot install
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jun 22 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.4-alt1
+- 3.4.4
+
 * Mon Aug 23 2021 Alexey Shabalin <shaba@altlinux.org> 3.4.1-alt1
 - Initial build.
 
