@@ -9,7 +9,7 @@
 
 Name: pve-%rname
 Version: 6.2.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -51,7 +51,7 @@ BuildRequires: libsystemd-devel libtasn1-devel libpmem-devel libzstd-devel spice
 BuildRequires: ipxe-roms-qemu seavgabios seabios edk2-ovmf edk2-aarch64 qboot
 #BuildRequires: librdmacm-devel libibverbs-devel libibumad-devel
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme ninja-build meson
-BuildRequires: libproxmox-backup-qemu-devel
+BuildRequires: libproxmox-backup-qemu-devel >= 1.3.0
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -321,6 +321,9 @@ fi
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Wed Jun 22 2022 Alexey Shabalin <shaba@altlinux.org> 1:6.2.0-alt2
+- 6.2.0-11
+
 * Fri May 06 2022 Alexey Shabalin <shaba@altlinux.org> 1:6.2.0-alt1
 - 6.2.0-5
 
