@@ -57,7 +57,7 @@
 Name: boost
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt4
+Release: alt5
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -93,6 +93,9 @@ Patch94: boost-1.73-fedora-locale-empty-vector.patch
 Patch1000: boost-1.63.0-alt-python-paths.patch
 Patch1001: boost-1.77.0-upstream-python-3.10-compat.patch
 Patch2000: boost-1.76-e2k-makecontext.patch
+
+# https://github.com/boostorg/multiprecision/issues/419
+Patch3000: boost-1.77.0-update-gcc-Intel-intrinsic-usage-config.patch
 
 # we use %%_python3_abiflags
 # we use %%requires_python_ABI, introduced in rpm-build-python3-0.1.9.3-alt1
@@ -1228,6 +1231,7 @@ popd &>/dev/null
 %ifarch %e2k
 %patch2000 -p1
 %endif
+%patch3000 -p2
 
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
 
@@ -1802,6 +1806,10 @@ done
 
 
 %changelog
+* Wed Jun 22 2022 Anton Midyukov <antohami@altlinux.org> 1:1.77.0-alt5
+- add upstream patch for fix build packages with CGAL and gcc12 on ppc64le
+  (e.g. openscad)
+
 * Fri Jan 14 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.77.0-alt4
 - Fixed compatibility with python-3.10.
 

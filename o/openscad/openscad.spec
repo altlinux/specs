@@ -3,7 +3,7 @@
 
 Name: openscad
 Version: 2021.01
-Release: alt3
+Release: alt4
 
 Summary: The Programmers Solid 3D CAD Modeller
 
@@ -21,6 +21,12 @@ Source1: ru.po
 Patch: openscad-polyclipping.patch
 # fix build with cgal >= 5.3
 Patch1: cc49ad8dac24309f5452d5dea9abd406615a52d9.patch
+# https://github.com/openscad/openscad/commit/9b79576c1ee9d57d0f4a5de5c1365bb87c548f36
+Patch2: %name-2021.01-fix-overloaded-join.patch
+# https://github.com/openscad/openscad/commit/770e3234cbfe66edbc0333f796b46d36a74aa652
+Patch3: CVE-2022-0496.patch
+# https://github.com/openscad/openscad/commit/84addf3c1efbd51d8ff424b7da276400bbfa1a4b
+Patch4: CVE-2022-0497.patch
 
 # needed cgal-devel on armh
 ExcludeArch: armh
@@ -81,8 +87,7 @@ changes, however many things are already working.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
+%autopatch -p1
 
 cp -f %SOURCE1 locale/ru.po
 
@@ -129,8 +134,8 @@ ctest || : # let the tests fail, as they probably won't work in hasher
 popd
 
 %files -f %name.lang
-%doc COPYING
-%doc README.md RELEASE_NOTES.md
+%doc README.md
+%doc RELEASE_NOTES.md
 %attr(755,root,root) %_bindir/%name
 %_datadir/metainfo/*.xml
 %_desktopdir/%name.desktop
@@ -145,11 +150,20 @@ popd
 %_man1dir/*
 
 %files MCAD
-%doc libraries/MCAD/lgpl-2.1.txt
-%doc libraries/MCAD/README.markdown libraries/MCAD/TODO
+%doc libraries/MCAD/README.markdown
+%doc libraries/MCAD/TODO
+%doc libraries/MCAD/bitmap-README
 %_datadir/%name/libraries/MCAD
 
 %changelog
+* Mon Jun 20 2022 Anton Midyukov <antohami@altlinux.org> 2021.01-alt4
+- Fixes:
+  + CVE-2022-0496 Out-of-bounds memory access in DXF loader (path
+    identification)
+  + CVE-2022-0497 Out-of-bounds memory access in comment parser
+  + Fix build issue with overloaded join().
+- cleanup spec
+
 * Thu May 05 2022 Anton Midyukov <antohami@altlinux.org> 2021.01-alt3
 - update russian translation from upstream
 
