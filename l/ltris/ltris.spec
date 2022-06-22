@@ -1,5 +1,5 @@
 Name: ltris
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 Serial: 1
 
@@ -42,7 +42,8 @@ o Two game modes
 #patch1 -p1
 %patch2 -p1
 %patch3 -p1
-convert ltris48.gif ltris.png
+#convert ltris48.gif ltris.png
+mv ltris128.png ltris.png
 
 %build
 autoreconf -f -i
@@ -79,6 +80,9 @@ sed -i -e 's,^Icon=.*,Icon=%name,' %buildroot%_desktopdir/%name.desktop
 %_liconsdir/%name.xpm
 
 %changelog
+* Wed Jun 22 2022 Ilya Mashkin <oddity@altlinux.ru> 1:1.2.5-alt1
+- 1.2.5
+
 * Tue Apr 19 2022 Ilya Mashkin <oddity@altlinux.ru> 1:1.2.4-alt1
 - 1.2.4
 
