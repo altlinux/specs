@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: fish
-Version: 3.4.1
+Version: 3.5.0
 Release: alt1
 
 Summary: A friendly interactive shell
@@ -79,6 +79,9 @@ fi
 %_pixmapsdir/fish.png
 
 %changelog
+* Wed Jun 22 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt1
+- 3.5.0
+
 * Fri Apr 08 2022 Alexey Shabalin <shaba@altlinux.org> 3.4.1-alt1
 - 3.4.1
 
