@@ -1,5 +1,5 @@
 Name:		focuswriter
-Version:	1.7.6
+Version:	1.8.0
 Release:	alt1
 Summary:	FocusWriter is a fullscreen, distraction-free word processor
 License:	GPLv3
@@ -8,7 +8,9 @@ Group:		Text tools
 Url:		http://gottcode.org/focuswriter/
 Source0:	http://gottcode.org/focuswriter/%name-%version-src.tar.bz2
 
-BuildRequires:	libhunspell-devel qt5-multimedia-devel qt5-tools zlib-devel gcc-c++
+BuildRequires:	libhunspell-devel gcc-c++ zlib-devel 
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake rpm-macros-qt6 qt6-base-devel qt6-tools-devel qt6-multimedia-devel qt6-declarative-devel qt6-5compat-devel
 
 %description
 FocusWriter is a fullscreen, distraction-free word processor
@@ -26,12 +28,13 @@ that only one thing matters: your writing.
 %endif
 
 %build
-sed -i 's|DATADIR/metainfo/|DATADIR/appdata/|g' %name.pro
-qmake-qt5 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%prefix
-%make_build
+%cmake \
+    -DENABLE_LTO=OFF 
+%cmake_build
 
 %install
-%make_install INSTALL_ROOT=%buildroot install
+
+%cmakeinstall_std
 # http://altlinux.org/Icon_Paths_Policy
 rm -f %buildroot%_pixmapsdir/*.xpm
 
@@ -39,11 +42,15 @@ rm -f %buildroot%_pixmapsdir/*.xpm
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_datadir/%name
-%_datadir/appdata/%name.*
+%_datadir/metainfo/%name.*
 %_man1dir/%name.*
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Jun 22 2022 Ilya Mashkin <oddity@altlinux.ru> 1.8.0-alt1
+- 1.8.0
+- Build with Qt6/cmake
+
 * Fri May 01 2020 Motsyo Gennadi <drool@altlinux.ru> 1.7.6-alt1
 - 1.7.6
 
