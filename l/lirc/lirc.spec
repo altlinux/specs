@@ -1,7 +1,7 @@
 %add_python3_path /usr/share/lirc/python-pkg/
 Name: lirc
 Version: 0.10.1
-Release: alt5
+Release: alt6
 
 Summary: The Linux Infrared Remote Control package
 License: GPL-2.0-or-later and MIT
@@ -72,7 +72,12 @@ cp %SOURCE5 configs/
 	    --with-x --with-syslog --with-driver=userspace \
 	    --enable-uinput --enable-devinput \
 	    --with-port=0x3f8 --with-irq=4
-make
+
+# Workaround FTBFS: LIRC_CAN_SET_REC_FILTER and LIRC_CAN_NOTIFY_DECODE
+# macroses were removed from kernel's lirc.h header in 5.18 b2a90f4 and
+# restored in 5.19-rc1 e5499dd.
+# This can be safely reverted after 5.19 release.
+make CPPFLAGS='-DLIRC_CAN_SET_REC_FILTER=0 -DLIRC_CAN_NOTIFY_DECODE=0'
 
 %install
 %makeinstall_std varrundir=%buildroot/%_runtimedir docdir=%_defaultdocdir/%name-%version
@@ -163,6 +168,9 @@ fi
 %python3_sitelibdir/lirc-setup
 
 %changelog
+* Wed Jun 22 2022 Egor Ignatov <egori@altlinux.org> 0.10.1-alt6
+- Fix FTBFS.
+
 * Sat Mar 26 2022 L.A. Kostis <lakostis@altlinux.ru> 0.10.1-alt5
 - Fix compile w/ python-yaml >= 6.
 
