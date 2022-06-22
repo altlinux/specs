@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           perl-URI-db
-Version:        0.19
+Version:        0.20
 Release:        alt1
 Summary:        Perl support for database URIs
 License:        GPL+ or Artistic
 Group: 		Development/Perl
 URL:            https://metacpan.org/release/URI-db/
-Source:        	%name-%version.tar
+Source0:        	http://www.cpan.org/authors/id/D/DW/DWHEELER/URI-db-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  perl(Module/Build.pm)
@@ -27,7 +27,7 @@ JDBC URIs and PostgreSQL URIs, though they're a bit more formal.
 The specification for their format is documented in README.md.
 
 %prep
-%setup
+%setup -q -n URI-db-%{version}
 
 %build
 %perl_vendor_build
@@ -40,5 +40,8 @@ The specification for their format is documented in README.md.
 %perl_vendorlib/URI*
 
 %changelog
+* Wed Jun 22 2022 Igor Vlasenko <viy@altlinux.org> 0.20-alt1
+- automated CPAN update
+
 * Tue Nov 20 2018 Alexandr Antonov <aas@altlinux.org> 0.19-alt1
 - initial build for ALT
