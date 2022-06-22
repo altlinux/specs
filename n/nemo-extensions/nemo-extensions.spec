@@ -1,7 +1,7 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 5.2.1
+Version: 5.4.0
 Release: alt1
 Summary: Extensions for Nemo
 
@@ -134,17 +134,6 @@ Requires: nemo-preview = %version-%release
 %description -n nemo-preview-gir-devel
 GObject introspection devel data for the nemo-preview extension.
 
-%package -n nemo-emblems
-Summary: Emblem support for nemo
-License: %gpl3plus
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Requires: nemo-python
-Requires: nemo-extensions-translations
-
-%description -n nemo-emblems
-Restores the emblems functionality that used to be in GNOME 2.
-
 %package -n nemo-image-converter
 Summary: Nemo extension to mass resize images
 License: %gpl3plus
@@ -154,19 +143,6 @@ Requires: ImageMagick
 
 %description -n nemo-image-converter
 Adds a "Resize Images..." menu item to the context menu. This opens a dialog where you set the desired image size and file name.
-
-%package -n nemo-compare
-Summary: Context menu comparison extension for nemo
-License: %gpl3plus
-Group: Graphical desktop/GNOME
-BuildArch: noarch
-Requires: nemo-python
-Requires: meld
-Requires: pyxdg
-Requires: nemo-extensions-translations
-
-%description -n nemo-compare
-Context menu comparison extension for Nemo file manager.
 
 %prep
 %setup -q
@@ -204,14 +180,6 @@ pushd nemo-terminal
 %python3_build
 popd
 
-pushd nemo-emblems
-%python3_build
-popd
-
-pushd nemo-compare
-%python3_build
-popd
-
 %install
 rm -rf %buildroot
 mkdir -p %buildroot/%_datadir/nemo-python/extensions/
@@ -236,16 +204,8 @@ pushd nemo-preview
 %meson_install
 popd
 
-pushd nemo-emblems
-%python3_install
-popd
-
 pushd nemo-image-converter
 %meson_install
-popd
-
-pushd nemo-compare
-%python3_install
 popd
 
 rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.la
@@ -287,6 +247,8 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/nemo-terminal/
 %_datadir/glib-2.0/schemas/org.nemo.extensions.nemo-terminal.gschema.xml
 %python3_sitelibdir_noarch/nemo_terminal-*.egg-*
+%python3_sitelibdir_noarch/nemo_terminal.py
+%python3_sitelibdir_noarch/__pycache__/nemo_terminal*
 
 %files -n nemo-preview -f nemo-preview.lang
 %doc nemo-preview/README
@@ -300,24 +262,17 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %files -n nemo-preview-gir-devel
 %_datadir/nemo-preview/gir-1.0/*
 
-%files -n nemo-emblems
-%doc nemo-emblems/COPYING.GPL3
-%_datadir/nemo-python/extensions/nemo-emblems.py*
-%python3_sitelibdir_noarch/nemo_emblems-*.egg-*
-
 %files -n nemo-image-converter
 %doc nemo-image-converter/README
 %doc nemo-image-converter/COPYING
 %_libdir/nemo/extensions-%api_ver/libnemo-image-converter.so
 %_datadir/nemo-image-converter/
 
-%files -n nemo-compare
-%_datadir/nemo-python/extensions/nemo-compare.py*
-%_datadir/nemo-compare
-%_bindir/nemo-compare-preferences
-%python3_sitelibdir_noarch/nemo_compare-*.egg-*
-
 %changelog
+* Fri Jun 17 2022 Vladimir Didenko <cow@altlinux.org> 5.4.0-alt1
+- 5.4.0
+- don't pack nemo-emblems and nemo-compare because of build issues
+
 * Mon Nov 20 2021 Vladimir Didenko <cow@altlinux.org> 5.2.1-alt1
 - 5.2.1
 

@@ -1,4 +1,4 @@
-%define ver_major 5.2
+%define ver_major 5.4
 %define api_ver 1.0
 
 %def_disable debug
@@ -136,11 +136,10 @@ you'll want to install this package.
 %files data -f %name-timezones.lang
 %dir %_datadir/%name
 %_datadir/%name/ui
-# This desktop files are outdated and not usable/useful anymore
-# TODO: Notify upstream about this issue
-%exclude %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/*/*
 %_datadir/glib-2.0/schemas/*.xml
+%_datadir/%name/panels
+%_datadir/applications/*.desktop
 %doc AUTHORS NEWS README
 
 %files devel
@@ -151,6 +150,12 @@ you'll want to install this package.
 
 
 %changelog
+* Tue Jun 21 2022 Vladimir Didenko <cow@altlinux.org> 5.4.1-alt1
+- 5.4.1-1-g5aa5fab
+
+* Fri Jun 10 2022 Vladimir Didenko <cow@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Wed Jan 12 2022 Vladimir Didenko <cow@altlinux.org> 5.2.1-alt1
 - 5.2.1
 

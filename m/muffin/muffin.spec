@@ -1,7 +1,10 @@
-%def_enable gtk_doc
+%set_verify_elf_method unresolved=relaxed
+
+%define api_ver 0
+%define sover 0
 
 Name: muffin
-Version: 5.2.1
+Version: 5.4.1
 Release: alt1
 
 Summary: Window and compositing manager based on Clutter
@@ -12,7 +15,6 @@ Url: https://github.com/linuxmint/muffin
 # To generate tarball
 # wget https://github.com/linuxmint/muffin/tarball/1.0.2 -O muffin-1.0.2.tar.gz
 Source: %name-%version.tar
-Source1: pkg.m4
 Patch: %name-%version-%release.patch
 
 # since 4.0 muffin forks Cogl and Clutter libraries into own private libraries
@@ -48,10 +50,10 @@ Requires: zenity
 
 BuildPreReq: rpm-build-gir >= 0.7.1-alt6
 BuildPreReq: libgtk+3-devel >= 3.3.3
+BuildRequires(pre): meson
 BuildRequires: libcanberra-gtk3-devel libstartup-notification-devel
 BuildRequires: libXrandr-devel libXcursor-devel libXcomposite-devel
 BuildRequires: libXinerama-devel libXext-devel libSM-devel
-BuildRequires: gtk-doc gnome-common intltool gnome-doc-utils
 BuildRequires: zenity
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libcinnamon-desktop-devel libcinnamon-desktop-gir-devel
@@ -64,6 +66,7 @@ BuildRequires: libdrm-devel libGL-devel
 BuildRequires: libxcb-devel libXtst-devel
 BuildRequires: libgudev-devel libinput-devel
 BuildRequires: libEGL-devel
+BuildRequires: libgraphene-devel libgraphene-gir-devel libfribidi-devel libdbus-devel pipewire-libs-devel
 
 %description
 Muffin is a window and compositing manager that displays and manages
@@ -76,14 +79,6 @@ used as the display core of a larger system such as Cinnamon.
 For this reason, Muffin is very extensible via plugins, which
 are used both to add fancy visual effects and to rework the window
 management behaviors to meet the needs of the environment.
-%package utils
-
-Summary: Additional utilities for %name
-Group: Development/GNOME and GTK+
-Requires: %name = %version-%release
-
-%description utils
-Utilities for testing Metacity/Muffin themes.
 
 %package -n lib%name
 Summary: Shared libraries for %name
@@ -131,68 +126,55 @@ GObject introspection devel data for the Muffin library
 %set_typelibdir %_libdir/%name
 %set_girdir %_libdir/%name
 
+%package -n %name-cinnamon
+Summary: Cinnamon-specific parts of Mutter
+Group: Graphical desktop/GNOME
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description -n %name-cinnamon
+This package contains everything necessary to use Mutter in Cinnamon desktop
+environment.
+
 %prep
 %setup -n %name-%version
-%patch0 -p1
-[ ! -d m4 ] && mkdir m4
-cp %SOURCE1 m4/
-
-%ifarch %e2k
-sed -i 's,-Werror=pointer-arith,,' */configure.ac
-%endif
 
 %build
-# Fix for e2k build: lcc is more strict comparing to gcc and finds additional issues
-# that triggers build fail with -Werror=maybe-uninitialized
-sed -i 's,-Werror=maybe-uninitialized,,' cogl/configure.ac
+%meson
+%meson_build
 
-%autoreconf
-%configure --disable-static \
-	   --disable-schemas-compile \
-	   %{?_enable_gtk_doc:--enable-gtk-doc}
-
-%make_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang %name
 
+
+ln -sf %name/lib%name-clutter-%api_ver.so.%sover \
+%buildroot%_libdir/lib%name-clutter-%api_ver.so.%sover
+
+ln -sf %name/lib%name-cogl-%api_ver.so.%sover \
+%buildroot%_libdir/lib%name-cogl-%api_ver.so.%sover
+
 %files -f %name.lang
 %_man1dir/muffin.1*
-%_man1dir/muffin-message.1*
 %_bindir/muffin
-%_bindir/muffin-message
+%_libexecdir/muffin-restart-helper
 %_desktopdir/*.desktop
-%_datadir/muffin
-%_datadir/glib-2.0/schemas/org.cinnamon.muffin.gschema.xml
-%doc README AUTHORS NEWS HACKING doc/theme-format.txt
-
-%files utils
-%_bindir/muffin-theme-viewer
-%_bindir/muffin-window-demo
-%_man1dir/muffin-theme-viewer.1*
-%_man1dir/muffin-window-demo.1*
+%doc README.md
 
 %files -n lib%name
 %_libdir/lib*.so.*
-%dir %_libdir/%name
-%exclude %_libdir/%name/*.la
-%_libdir/%name/*.so
-%_libexecdir/muffin-restart-helper
-
+%_libdir/%name/lib*.so.*
 %dir %_libdir/%name/plugins
-%_libdir/%name/plugins/default.so
+%_libdir/%name/plugins/*.so
+%dir %_libdir/%name
 
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/lib*.so
+%_libdir/%name/*.so
 %_pkgconfigdir/*
-
-%if_enabled gtk_doc
-%files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/*
-%endif
 
 %files -n lib%name-gir
 %_libdir/%name/*.typelib
@@ -200,8 +182,19 @@ sed -i 's,-Werror=maybe-uninitialized,,' cogl/configure.ac
 %files -n lib%name-gir-devel
 %_libdir/%name/*.gir
 
+%files -n %name-cinnamon
+%_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 
 %changelog
+* Tue Jun 21 2022 Vladimir Didenko <cow@altlinux.org> 5.4.1-alt1
+- 5.4.1-1-g8961c35
+
+* Sun Jun 12 2022 Vladimir Didenko <cow@altlinux.org> 5.4.0-alt2
+- 5.4.0-1-gcf6598e
+
+* Sat Jun 11 2022 Vladimir Didenko <cow@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Thu Mar 10 2022 Vladimir Didenko <cow@altlinux.org> 5.2.1-alt1
 - 5.2.1
 

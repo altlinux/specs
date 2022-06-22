@@ -1,13 +1,13 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 5.2
+%define ver_major 5.4
 %define api_ver 3.0
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
 License: GPLv2+ and LGPLv2+ and MIT
@@ -154,6 +154,9 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Fri Jun 10 2022 Vladimir Didenko <cow@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Tue Mar 29 2022 Vladimir Didenko <cow@altlinux.org> 5.2.1-alt2
 - Fix path to Adwaita wallpaper (closes: #42286)
 - Specify default path to the slideshow image source directory

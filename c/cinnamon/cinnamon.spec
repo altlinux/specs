@@ -1,8 +1,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 5.2.7
-Release: alt3
+Version: 5.4.1
+Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -39,6 +39,7 @@ Requires: caribou
 Requires: cinnamon-freedesktop-menu
 Requires: %name-data = %version-%release
 Requires: muffin >= %muffin_ver
+Requires: muffin-cinnamon >= %muffin_ver
 Requires: libmuffin-gir >= %muffin_ver
 Requires: %name-translations
 Requires: mintlocale
@@ -76,6 +77,7 @@ BuildRequires: desktop-file-utils
 BuildRequires: gtk-doc gnome-common intltool
 BuildRequires: at-spi2-atk-devel
 BuildRequires: rpm-build-xdg
+BuildRequires: libxapps-devel libxapps-gir-devel
 
 %description
 Cinnamon is a Linux desktop which provides advanced innovative features
@@ -190,6 +192,12 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Tue Jun 21 2022 Vladimir Didenko <cow@altlinux.org> 5.4.1-alt1
+- 5.4.1
+
+* Sat Jun 11 2022 Vladimir Didenko <cow@altlinux.org> 5.4.0-alt1
+- 5.4.0-2-gdb2866ec3
+
 * Mon Mar 28 2022 Vladimir Didenko <cow@altlinux.org> 5.2.7-alt3
 - Fix build with meson 0.61
 

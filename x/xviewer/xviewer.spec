@@ -1,10 +1,5 @@
-%define _libexecdir %_prefix/libexec
-%define api_ver 3.0
-%def_enable color_management
-%def_enable introspection
-
 Name: xviewer
-Version: 3.2.4
+Version: 3.2.5
 Release: alt1
 
 Summary: Fast and functional image viewer.
@@ -13,7 +8,6 @@ Group: Graphics
 Url: https://github.com/linuxmint/xviewer
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 
@@ -31,8 +25,9 @@ BuildPreReq: libexif-devel >= 0.6.14
 BuildPreReq: libjpeg-devel librsvg-devel
 BuildPreReq: libpeas-devel >= 0.7.4
 BuildRequires: libXt-devel libxml2-devel perl-XML-Parser zlib-devel gsettings-desktop-schemas-devel
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel}
+BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel
 BuildRequires: libxapps-devel
+BuildRequires: meson
 
 Requires: xapps-icons
 
@@ -55,15 +50,6 @@ Requires: %name = %version-%release
 %description gir
 GObject introspection data for the Xviewer
 
-%package gir-devel
-Summary: GObject introspection devel data for the Xviewer
-Group: System/Libraries
-BuildArch: noarch
-Requires: %name-gir = %version-%release
-
-%description gir-devel
-GObject introspection devel data for the Xviewer
-
 %package tests
 Summary: Tests for the Xviewer
 Group: Development/Other
@@ -77,22 +63,13 @@ the functionality of the Xviewer GUI.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
-%autoreconf
-%configure \
-    --with-libexif \
-    %{?_enable_color_management:--with-cms} \
-    --with-xmp \
-    --with-libjpeg \
-    --disable-schemas-compile
-
-
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %find_lang --with-gnome %name
 
@@ -105,26 +82,23 @@ the functionality of the Xviewer GUI.
 %_iconsdir/hicolor/*/apps/%{name}*.*
 %config %_datadir/glib-2.0/schemas/org.x.viewer.enums.xml
 %config %_datadir/glib-2.0/schemas/org.x.viewer.gschema.xml
-%_datadir/appdata/%name.appdata.xml
-%doc AUTHORS HACKING MAINTAINERS NEWS
-%doc README THANKS TODO
+%_datadir/metainfo/%name.appdata.xml
+%_datadir/gtk-doc/html/%name
+%doc AUTHORS MAINTAINERS
+%doc README.md THANKS
 
 %files devel
-%dir %_includedir/%name-%api_ver/%name
-%_includedir/%name-%api_ver/%name/*.h
+%dir %_includedir/%name
+%_includedir/%name/*.h
 %_pkgconfigdir/%name.pc
 
-%if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/*.typelib
-
-%files gir-devel
-%_datadir/gir-1.0/*.gir
-%endif
-
-%exclude %_libdir/%name/lib%name.la
+%_libdir/%name/girepository-1.0/*.typelib
 
 %changelog
+* Tue Jun 21 2022 Vladimir Didenko <cow@altlinux.org> 3.2.5-alt1
+- New version
+
 * Thu Jan 13 2022 Vladimir Didenko <cow@altlinux.org> 3.2.4-alt1
 - New version
 

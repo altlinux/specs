@@ -1,4 +1,4 @@
-%define ver_major 5.2
+%define ver_major 5.4
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
@@ -8,7 +8,7 @@
 
 Name: cinnamon-settings-daemon
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -116,6 +116,12 @@ developing applications that use %name.
 %_pkgconfigdir/*
 
 %changelog
+* Tue Jun 21 2022 Vladimir Didenko <cow@altlinux.org> 5.4.0-alt2
+- 5.4.0-1-g745e720
+
+* Fri Jun 10 2022 Vladimir Didenko <cow@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Mon Nov 29 2021 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt1
 - 5.2.0
 

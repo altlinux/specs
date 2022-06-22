@@ -1,4 +1,4 @@
-%define ver_major 5.2
+%define ver_major 5.4
 %define _name cjs
 %define api_ver 1.0
 
@@ -6,7 +6,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt3
+Release: alt1
 
 Summary: Javascript Bindings for Cinnamon
 Group: System/Libraries
@@ -78,7 +78,7 @@ xvfb-run %meson_test
 %exclude %_libexecdir/installed-tests/%_name
 %exclude %_datadir/installed-tests/%_name/
 %exclude %_datadir/glib-2.0/schemas/org.cinnamon.CjsTest.gschema.xml
-%doc COPYING NEWS README
+%doc COPYING NEWS README.md
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -90,6 +90,9 @@ xvfb-run %meson_test
 %doc examples/*
 
 %changelog
+* Fri Jun 10 2022 Vladimir Didenko <cow@altlinux.org> 5.4.0-alt1
+- 5.4.0
+
 * Mon Mar 28 2022 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt3
 - revert upstream commit to fix build with meson 0.61
 
