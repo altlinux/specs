@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt1
 epoch:1
-%define kernel_base_version	5.17
-%define kernel_sublevel .15
+%define kernel_base_version	5.18
+%define kernel_sublevel .6
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -391,8 +391,6 @@ install -d %buildroot%kbuild_dir/drivers/net/wireless
 install -d %buildroot%kbuild_dir/net/mac80211
 install -d %buildroot%kbuild_dir/kernel
 install -d %buildroot%kbuild_dir/lib
-cp -a drivers/scsi/scsi.h \
-	%buildroot%kbuild_dir/drivers/scsi/
 cp -a drivers/md/dm*.h \
 	%buildroot%kbuild_dir/drivers/md/
 cp -a drivers/usb/core/*.h \
@@ -614,6 +612,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Jun 23 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.18.6-alt1
+- Rebase to v5.18.6 (2022-06-22).
+- Apply baikalm-5.18.y patches.
+- Replace the fbdev drivers with simpledrm and the DRM fbdev emulation layer
+  (excluding armh).
+
 * Sat Jun 18 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.17.15-alt2
 - Pick fixes of Intel-specific processor MMIO stale-data vulnerabilities.
  (Fixes: CVE-2022-21166, CVE-2022-21125, CVE-2022-21123).
