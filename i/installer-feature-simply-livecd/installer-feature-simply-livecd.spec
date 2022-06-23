@@ -1,5 +1,5 @@
 Name: installer-feature-simply-livecd
-Version: 10.1.0
+Version: 10.2.0
 Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
@@ -70,6 +70,9 @@ cp -ar alterator-menu/ %buildroot%_datadir/livecd-install
 %_datadir/livecd-install/
 
 %changelog
+* Thu Jun 23 2022 Mikhail Efremov <sem@altlinux.org> 10.2.0-alt1
+- livecd-preinstall: Add setup-backgrounds hook.
+
 * Mon Apr 11 2022 Mikhail Efremov <sem@altlinux.org> 10.1.0-alt1
 - Include user to fuse group.
 - Drop installer-feature-online-repo.
