@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 10.2.0
+Version: 10.3.0
 Release: alt1
 
 Summary: Installer common files
@@ -34,7 +34,7 @@ Requires: alterator-license
 Requires: alterator-datetime >= 4.0
 Requires: chrony
 Requires: alterator-vm
-Requires: alterator-pkg
+Requires: installer-alterator-pkg
 Requires: alterator-luks
 Requires: x-cursor-theme-jimmac
 #features
@@ -111,6 +111,10 @@ Installer stage3
 %files stage3
 
 %changelog
+* Thu Jun 23 2022 Mikhail Efremov <sem@altlinux.org> 10.3.0-alt1
+- preinstall: Add setup-backgrounds hook.
+- stage2: Requires: alterator-pkg -> installer-alterator-pkg.
+
 * Mon Apr 18 2022 Mikhail Efremov <sem@altlinux.org> 10.2.0-alt1
 - stage2: Drop installer-feature-runlevel5-stage2.
 - stage2: Drop installer-feature-hwtweaks-stage2.
