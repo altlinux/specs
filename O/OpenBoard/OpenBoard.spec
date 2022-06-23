@@ -1,10 +1,9 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define dest_dir %_libdir/OpenBoard
 Name: OpenBoard
-Version: 1.6.1
-Release: alt8
+Version: 1.6.3
+Release: alt1
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
@@ -16,19 +15,9 @@ Source: %name-%version.tar
 
 Source1: %name.svg
 
-Patch: fix-build-with-poppler-22.patch
+Patch1: OpenBoard-1.6.3-update-russian-translations.patch
 
-Patch1: OpenBoard-1.6.1-update-russian-translations.patch
-
-Patch2: submenu-call-area-increasing.patch
-
-Patch3: dark-background-color-set-ability-feature.patch
-
-Patch4: stylus-palette-svg-icons-adding.patch
-Patch5: stylus-palette-icons-replacing.patch
-
-# Adding russian translation of GraphMe widget
-Patch6: graphme-widget-russian-translation.patch
+Patch2: dark-background-color-set-ability-feature.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -75,33 +64,20 @@ Interactive whiteboard for schools and universities.
 
 %prep
 %setup
-%patch -p1
 # update russian translations
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-# stylus palette icons replacing from png to svg
-%patch4 -p1
-%patch5 -p1
-
-# graphme widget russian translation
-%patch6 -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
 sed -i -e 's|-lx264 ||' src/podcast/podcast.pri
 
-# fix build with poppler 0.83
-#sed -i -e 's,std=c++11,std=c++14,g' src/podcast/podcast.pri
-
 # drop quazip LIBS INCLUDEPATH
 sed -i -e '/LIBS += -lquazip5/d' \
-	-e '/INCLUDEPATH += "\/usr\/include\/quazip"/d' \
+	-e '/INCLUDEPATH += "\/usr\/include\/quazip5"/d' \
 	OpenBoard.pro
 
 %build
-%_qt5_bindir/lrelease -removeidentical %name.pro
-
 %qmake_qt5 \
     LIBS+="`pkg-config --libs quazip1-qt5`" \
     INCLUDEPATH+="`pkg-config --cflags-only-I quazip1-qt5 |
@@ -124,7 +100,7 @@ Name=%name
 GenericName=%name
 Comment=Interactive whiteboard for schools and universities
 Comment[ru]=Интерактивная доска для школ и университетов
-Exec=%dest_dir/run.sh "%f"
+Exec=%_bindir/openboard "%f"
 Icon=%name
 StartupNotify=true
 Terminal=false
@@ -133,11 +109,11 @@ MimeType=application/x-%name;
 Categories=Education;Engineering;
 EOF
 
-install -D -m 0755 build/linux/release/product/%name %buildroot%dest_dir/%name
-cp -r build/linux/release/product/* %buildroot%dest_dir/
+install -D -m 0755 build/linux/release/product/OpenBoard %buildroot%_libdir/%name/OpenBoard
+cp -r build/linux/release/product/* %buildroot%_libdir/%name/
 
 #run.sh (set env to avoid some possible issues)
-cat > %buildroot%dest_dir/run.sh <<EOF
+cat > %buildroot%_libdir/%name/run.sh <<EOF
 #!/bin/bash
 # --------------------------------------------------------------------
 # This program is free software: you can redistribute it and/or modify
@@ -154,14 +130,17 @@ cat > %buildroot%dest_dir/run.sh <<EOF
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # ---------------------------------------------------------------------
 
-env QT_PLUGIN_PATH=\$QT_PLUGIN_PATH:%dest_dir/%name/plugins LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:%dest_dir/plugins/cffadaptor %dest_dir/%name "\$@"
+if pid="\$(/sbin/pidof OpenBoard)"; then
+    echo "OpenBoard is already running, PID \${pid}."
+    exit 0
+fi
+
+env QT_PLUGIN_PATH=\$QT_PLUGIN_PATH:%_libdir/%name/plugins LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:%_libdir/%name/plugins/cffadaptor %_libdir/%name/OpenBoard "\$@"
 EOF
 
-sed -i -e '/env QT_PLUGIN_PATH=/i if pid="$(/sbin/pidof OpenBoard)"; then\n    echo "OpenBoard is already running, PID ${pid}."\n    exit 0\nfi\n' %buildroot%dest_dir/run.sh
-
-chmod 0755 %buildroot%dest_dir/run.sh
+chmod 0755 %buildroot%_libdir/%name/run.sh
 mkdir -p %buildroot/%_bindir/
-ln -s -T %dest_dir/run.sh %buildroot/%_bindir/%name
+ln -s -T %_libdir/%name/run.sh %buildroot/%_bindir/openboard
 
 # clean some exe bits
 find %buildroot -executable -type f -name *.js -exec chmod -x '{}' \+
@@ -172,20 +151,26 @@ find %buildroot -executable -type f -name *.html -exec chmod -x '{}' \+
 
 # internalization
 lrelease-qt5 -removeidentical %name.pro
-mkdir -p %buildroot%dest_dir/i18n/
-cp -R resources/i18n/%{name}*.qm %buildroot%dest_dir/i18n/
+mkdir -p %buildroot%_libdir/%name/i18n/
+cp -R resources/i18n/%{name}*.qm %buildroot%_libdir/%name/i18n/
 
 # customizations
-cp -R resources/customizations %buildroot%dest_dir/
+cp -R resources/customizations %buildroot%_libdir/%name/
 
 %files
 %doc COPYRIGHT LICENSE
+%_bindir/openboard
+%_libdir/%name
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_libdir/OpenBoard
-%_bindir/%name
 
 %changelog
+* Wed Jun 22 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.3-alt1
+- new version 1.6.3
+- Update russian translation for 1.6.3
+- Remove patches merged to upstream
+- Cleaned up spec
+
 * Tue Apr 19 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.1-alt8
 - Adding the patch for russian translation of GraphMe widget
 
