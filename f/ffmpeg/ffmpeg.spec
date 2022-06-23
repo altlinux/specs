@@ -156,7 +156,7 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.4.1
+Version:	4.4.2
 Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
@@ -890,6 +890,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Thu Jun 23 2022 Anton Farygin <rider@altlinux.ru> 2:4.4.2-alt1
+- 4.4.1 -> 4.4.2
+
 * Fri Oct 29 2021 Anton Farygin <rider@altlinux.ru> 2:4.4.1-alt1
 - 4.4.1
 
