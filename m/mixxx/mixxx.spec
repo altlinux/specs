@@ -1,4 +1,4 @@
-%def_enable clang
+%def_disable clang
 
 %define _unpackaged_files_terminate_build 1
 %define _cmake__builddir BUILD
@@ -7,7 +7,7 @@
 %endif
 
 Name: mixxx
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 
 Summary: Free digital DJ software
@@ -104,6 +104,10 @@ chmod +x %buildroot%_datadir/mixxx/controllers/novation-launchpad/scripts/compil
 %_udevrulesdir/69-%name-usb-uaccess.rules
 
 %changelog
+* Thu Jun 23 2022 Leontiy Volodin <lvol@altlinux.org> 2.3.3-alt1
+- Updated to upstream release version 2.3.3.
+- Built via gcc again.
+
 * Mon Feb 14 2022 Leontiy Volodin <lvol@altlinux.org> 2.3.2-alt1
 - Updated to upstream release version 2.3.2 (ALT #41883).
 - Removed bpm-tools from requires.
