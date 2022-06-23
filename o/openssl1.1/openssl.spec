@@ -2,8 +2,8 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: openssl1.1
-Version: 1.1.1n
-Release: alt2
+Version: 1.1.1p
+Release: alt1
 
 Summary: OpenSSL - Secure Sockets Layer and cryptography shared libraries and tools
 License: OpenSSL
@@ -21,7 +21,6 @@ Source4: cc.sh
 Patch03: openssl-alt-config.patch
 Patch04: openssl-alt-engines-path.patch
 Patch05: openssl-alt-e2k-makecontext.patch
-Patch06: openssl-upstream-fix-engine-version-check.patch
 
 # Patches from Fedora
 # Build changes
@@ -223,7 +222,6 @@ on the command line.
 %patch03 -p1
 %patch04 -p1
 %patch05 -p2
-%patch06 -p1
 
 %patch101 -p1
 #%%patch102 -p1 (different config)
@@ -469,6 +467,9 @@ LD_LIBRARY_PATH=%buildroot/%_lib \
 %endif
 
 %changelog
+* Wed Jun 22 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1p-alt1
+- Updated to 1.1.1p (fixes CVE-2022-1292, CVE-2022-2068).
+
 * Mon Mar 28 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.1.1n-alt2
 - Backported upstream fix for engine version check (ALT#42274).
 
