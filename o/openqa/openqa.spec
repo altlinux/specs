@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt7
+Release: alt8
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -237,6 +237,7 @@ rm -f t/05-scheduler-full.t
 rm -f t/24-worker-overall.t
 rm -f t/25-cache-client.t
 rm -f t/25-cache-service.t
+rm -f t/09-job_clone.t
 rm -f t/40-script_openqa-clone-custom-git-refspec.t
 rm -f t/43-scheduling-and-worker-scalability.t
 rm -f t/42-screenshots.t
@@ -392,6 +393,7 @@ fi
 /lib/systemd/system-generators/systemd-openqa-generator
 %_unitdir/openqa-worker.target
 %_unitdir/openqa-worker@.service
+%_unitdir/openqa-worker-plain@.service
 %_unitdir/openqa-worker-cacheservice-minion.service
 %_unitdir/openqa-worker-cacheservice.service
 %_unitdir/openqa-worker-no-cleanup@.service
@@ -450,6 +452,9 @@ fi
 %files single-instance
 
 %changelog
+* Tue Jun 21 2022 Alexandr Antonov <aas@altlinux.org> 4.6-alt8
+- update to current version
+
 * Mon Mar 28 2022 Alexandr Antonov <aas@altlinux.org> 4.6-alt7
 - update to current version
 

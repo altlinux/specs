@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt7
+Release: alt8
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -142,6 +142,9 @@ export OPENQA_TEST_TIMEOUT_SCALE_CI=10
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Tue Jun 21 2022 Alexandr Antonov <aas@altlinux.org> 4.6-alt8
+- update to current version
+
 * Mon May 16 2022 Alexandr Antonov <aas@altlinux.org> 4.6-alt7
 - update to current version
 
