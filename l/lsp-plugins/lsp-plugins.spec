@@ -2,7 +2,7 @@
 %define xdg_name in.lsp_plug.lsp_plugins
 
 Name: lsp-plugins
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Linux Studio Plugins
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++
 BuildRequires: lv2-devel libjack-devel ladspa_sdk
 BuildRequires: libsndfile-devel libcairo-devel
-BuildRequires: libGL-devel
+BuildRequires: libGL-devel libXrandr-devel
 BuildRequires: %_bindir/php
 
 ExclusiveArch: %ix86 x86_64 aarch64 %e2k
@@ -117,6 +117,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Thu Jun 23 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
+- 1.2.2
+
 * Thu May 05 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 
