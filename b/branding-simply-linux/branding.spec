@@ -16,27 +16,41 @@
 %define xfwm4_compositing false
 %endif
 
+%define def_desktop_wallpaper vladstudio_skyline_16x9_2560x1440.jpg
+
 # NOTE: Helper's name must be one of xfce4-settings helpers.
-%ifarch %e2k %arm mipsel riscv64
+
+# Browser
+%ifarch %e2k %arm mipsel i586
 # e2k: 2019: no chromium port available
 # mipsel: firefox works better now -- iv@
+# i586: chromium no longer supports 32bit
+%define web_browser firefox
+%else
 %ifarch riscv64
 # riscv64: 2021: no firefox port available
 %define web_browser epiphany
 %else
-%define web_browser firefox
+%define web_browser chromium
 %endif
+%endif
+
+# Media Player
+%ifarch %e2k %arm mipsel riscv64
 %define media_player celluloid
 %else
-%define web_browser chromium
 %define media_player vlc
 %endif
+
+# Mail Reader
 %ifarch riscv64
 # riscv64: 2021: no thunderbird port available
 %define mail_reader sylpheed-claws
 %else
 %define mail_reader thunderbird
 %endif
+
+# File Manager
 %define file_manager Thunar
 
 # LibreOffice icon theme
@@ -55,7 +69,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-simply-linux
-Version: 10.0.910
+Version: 10.1
 Release: alt1
 
 BuildRequires: fonts-ttf-dejavu fonts-ttf-google-droid-serif fonts-ttf-google-droid-sans fonts-ttf-google-droid-sans-mono
@@ -247,10 +261,20 @@ Group: Graphics
 Summary: Backgrounds for SL-10
 License: CC-BY-NC-SA-3.0+
 BuildArch: noarch
+Requires: branding-simply-linux-backgrounds10-vladstudio = %EVR
 %branding_add_conflicts simply-linux backgrounds10
 
 %description backgrounds10
 This package contains backgrounds for Simply Linux 10.
+
+%package backgrounds10-vladstudio
+Group: Graphics
+Summary: Backgrounds from Vladstudio
+License: CC-BY-NC-SA-3.0+
+BuildArch: noarch
+
+%description backgrounds10-vladstudio
+This package contains backgrounds for Simply Linux 10 from https://vlad.studio.
 
 %package slideshow
 Summary: Slideshow for Simply Linux %version installer.
@@ -276,14 +300,7 @@ BuildArch: noarch
 Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
 Obsoletes: indexhtml-desktop indexhtml-Desktop
 
-Conflicts: indexhtml-sisyphus
-Conflicts: indexhtml-school_junior
-Conflicts: indexhtml-school_lite
-Conflicts: indexhtml-school_master
-Conflicts: indexhtml-school_terminal
-Conflicts: indexhtml-small_business
-Conflicts: indexhtml-school-server
-Conflicts: branding-altlinux-backup-server-indexhtml
+%branding_add_conflicts simply-linux indexhtml
 
 Requires: xdg-utils 
 Requires: docs-simply-linux
@@ -336,8 +353,8 @@ mkdir -p %buildroot%data_cur_dir
 #graphics
 mkdir -p %buildroot/%_datadir/design/{%theme,backgrounds}
 mkdir -p %buildroot/%_niconsdir
-install graphics/icons/slinux.png %buildroot/%_niconsdir/slinux.png
-install graphics/icons/mini/slinux.png %buildroot/%_iconsdir/altlinux.png
+install -m644 graphics/icons/slinux.png %buildroot/%_niconsdir/slinux.png
+install -m644 graphics/icons/mini/slinux.png %buildroot/%_iconsdir/altlinux.png
 cp -ar graphics/* %buildroot/%_datadir/design/%theme
 
 pushd %buildroot/%_datadir/design/%theme
@@ -377,22 +394,26 @@ mkdir -p %buildroot/etc/alterator
 cp -a slideshow/Slides*/  %buildroot/usr/share/install2/slideshow/
 # Set English slideshow as default
 ln -s Slides-en %buildroot/usr/share/install2/slideshow/Slides
-install slideshow/slideshow.conf %buildroot/etc/alterator/
+install -m0644 slideshow/slideshow.conf %buildroot/etc/alterator/
 
 #indexhtml
 %define _indexhtmldir %_defaultdocdir/indexhtml
-install components/indexhtml/*.html %buildroot%_defaultdocdir/indexhtml/
+install -m644 components/indexhtml/*.html %buildroot%_defaultdocdir/indexhtml/
 mkdir -p %buildroot%_defaultdocdir/indexhtml/images
-install components/indexhtml/images/* %buildroot%_defaultdocdir/indexhtml/images/
+install -m644 components/indexhtml/images/* %buildroot%_defaultdocdir/indexhtml/images/
 #install -m644 components/indexhtml.desktop %buildroot%_desktopdir/
 
 #menu
 mkdir -p %buildroot/usr/share/slinux-style/applications
-install menu/applications/* %buildroot/usr/share/slinux-style/applications/
+install -m644 menu/applications/* %buildroot/usr/share/slinux-style/applications/
 mkdir -p %buildroot/etc/xdg/menus/xfce-applications-merged
 cp menu/50-xfce-applications.menu %buildroot/etc/xdg/menus/xfce-applications-merged/
 mkdir -p %buildroot/usr/share/desktop-directories
 cp menu/altlinux-wine.directory %buildroot/usr/share/desktop-directories/
+
+#backgrounds
+mkdir -p %buildroot/%_datadir/backgrounds/xfce/
+touch %buildroot/%_datadir/backgrounds/xfce/default_SL10
 
 %ifarch %ix86 x86_64
 #bootloader
@@ -437,6 +458,18 @@ if ! [ -e %_datadir/alt-notes/license.all.html ]; then
 	cp -a %data_cur_dir/alt-notes/license.*.html %_datadir/alt-notes/
 fi
 
+#graphics
+%post graphics
+[ -e %_datadir/design/slinux/backgrounds/default.png ] || \
+	ln -s default-16x9.png %_datadir/design/slinux/backgrounds/default.png
+[ -e %_datadir/design/slinux/backgrounds/xdm.png ] || \
+	ln -s xdm-16x9.png %_datadir/design/slinux/backgrounds/xdm.png
+
+#backgrounds10
+%post backgrounds10
+[ -e %_datadir/backgrounds/xfce/default_SL10 ] || \
+	ln -s %def_desktop_wallpaper %_datadir/backgrounds/xfce/default_SL10
+
 %files alterator
 %config %_altdir/*.rcc
 /usr/share/alterator-browser-qt/design/*.rcc
@@ -447,6 +480,8 @@ fi
 %_datadir/design
 %_niconsdir/slinux.png
 %_iconsdir/altlinux.png
+%ghost %_datadir/design/slinux/backgrounds/default.png
+%ghost %_datadir/design/slinux/backgrounds/xdm.png
 
 %files bootloader
 %ifarch %ix86 x86_64
@@ -484,7 +519,12 @@ fi
 /etc/skel/.gtkrc-2.0
 
 %files backgrounds10
-/usr/share/backgrounds/xfce/*
+%_datadir/backgrounds/xfce/slinux_*.png
+%ghost %_datadir/backgrounds/xfce/default_SL10
+
+%files backgrounds10-vladstudio
+%_datadir/backgrounds/xfce/vladstudio10/
+%_datadir/backgrounds/xfce/vladstudio_*.jpg
 
 %files slideshow
 /etc/alterator/slideshow.conf
@@ -509,6 +549,19 @@ fi
 %_datadir/install3/*
 
 %changelog
+* Thu Jun 23 2022 Mikhail Efremov <sem@altlinux.org> 10.1-alt1
+- backgrounds10,xfce-settings: Move default_SL10 symlink.
+- graphics: Add default.png and xdm.png in different sizes.
+- backgrounds: Package Vladstudio backgrounds as separate subpackage.
+- backgrounds10: Set Vladstudio "skyline" wallpaper as default.
+- xfce-settings: Use symlink as default wallpaper.
+- backgrounds10: Add new Vladstudio wallpapers for SL.
+- xfce-settings: Use firefox on i586.
+- spec: Cleanup defines of xfce4-settings helpers.
+- indexhtml: Use %%branding_add_conflicts macro.
+- graphics,menu,indexhtml: Fix files permission mode.
+- xfce-settings: Replace dm-tool with xfce4-session-logout.
+
 * Fri May 13 2022 Mikhail Efremov <sem@altlinux.org> 10.0.910-alt1
 - xfce-settings: Disable CSD for open/save dialogs.
 - xfce-settings; Update audacious config (closes: #29014).
