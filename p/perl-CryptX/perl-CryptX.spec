@@ -3,7 +3,7 @@
 
 Name: perl-%dist
 Version: 0.076
-Release: alt1
+Release: alt2
 
 Summary: Crypto toolkit with multiple ciphers, hash functions and other
 License: %perl_license
@@ -11,13 +11,13 @@ Group: Development/Perl
 
 Url: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/M/MI/MIK/%{dist}-%{version}.tar.gz
-Patch: CryptX-0.057-alt-uint128.patch
-
-# Automatically added by buildreq on Mon Feb 22 2016
-# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-ExtUtils-CBuilder perl-IPC-Cmd perl-JSON-PP perl-Locale-Maketext-Simple perl-Module-Load perl-Module-Load-Conditional perl-Module-Metadata perl-Params-Check perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Types-Serialiser perl-common-sense perl-devel perl-parent perl-podlators
-BuildRequires: perl-HTML-Parser perl-JSON-XS perl-Module-Build
+# Upstream issue: https://github.com/DCIT/perl-CryptX/issues/82
+Patch0:         0001-fix-82-issues-in-tests-by-Math-BigInt-1.999831.patch
+# e2k
+Patch3: CryptX-0.057-alt-uint128.patch
 
 BuildRequires: rpm-build-licenses
+BuildRequires: perl-HTML-Parser perl-JSON-XS perl-Module-Build
 
 %description
 CryptX - Crypto toolkit (self-contained no external libraries needed)
@@ -79,9 +79,12 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 
 %prep
 %setup -q -n %{dist}-%{version}
+# Fix issues with new Math::BigInt
+%patch0 -p1
 %ifarch e2k
-%patch -p1
+%patch3 -p1
 %endif
+
 [ %version = 0.061 ] && rm -f t/mbi_ltm_bugs.t t/mbi_ltm_bigintpm.t
 
 %build
@@ -98,6 +101,9 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 %perl_vendor_archlib/Math
 
 %changelog
+* Thu Jun 23 2022 Igor Vlasenko <viy@altlinux.org> 0.076-alt2
+- fixed build
+
 * Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 0.076-alt1
 - automated CPAN update
 
