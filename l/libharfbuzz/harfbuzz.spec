@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name harfbuzz
-%define ver_major 4.2
+%define ver_major 4.3
 %def_with graphite2
 %def_with icu
 %def_with gobject
@@ -13,7 +13,7 @@
 %endif
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -178,6 +178,9 @@ GObject introspection devel data for the HarfBuzz library
 %endif
 
 %changelog
+* Thu Jun 23 2022 Yuri N. Sedunov <aris@altlinux.org> 4.3.0-alt1
+- 4.3.0
+
 * Wed Apr 27 2022 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
 - 4.2.1
 
