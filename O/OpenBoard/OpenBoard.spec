@@ -3,7 +3,7 @@
 
 Name: OpenBoard
 Version: 1.6.3
-Release: alt1
+Release: alt2
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
@@ -165,6 +165,9 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu Jun 23 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.3-alt2
+- Fix of patch with russian translation for 1.6.3
+
 * Wed Jun 22 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.3-alt1
 - new version 1.6.3
 - Update russian translation for 1.6.3
