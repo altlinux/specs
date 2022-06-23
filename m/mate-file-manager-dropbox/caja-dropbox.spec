@@ -2,7 +2,7 @@
 
 Name: mate-file-manager-dropbox
 Version: 1.26.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Dropbox extension for caja
 License: GPLv3 and CC-BY-ND-3.0
@@ -15,7 +15,7 @@ Patch: %rname-%version.patch
 
 BuildRequires: mate-common mate-file-manager-devel
 BuildRequires: rpm-build-python3 python3-module-pygobject3
-BuildRequires: python3-module-docutils /usr/bin/rst2man.py
+BuildRequires: python3-module-docutils
 
 %description
 Dropbox extension for caja file manager
@@ -52,6 +52,9 @@ subst 's|python3 rst2man.py|rst2man.py|' configure.ac
 %_man1dir/%rname.1*
 
 %changelog
+* Thu Jun 23 2022 Igor Vlasenko <viy@altlinux.org> 1:1.26.0-alt3
+- NMU: fixed build
+
 * Thu Aug 19 2021 Vitaly Lipatov <lav@altlinux.ru> 1:1.26.0-alt2
 - NMU: add BR python3-module-docutils /usr/bin/rst2man.py (used separately)
 - NMU: drop internal rst2man.py, use rst2man.py from python3-module-docutils
