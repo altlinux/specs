@@ -1,20 +1,25 @@
+%define _unpackaged_files_terminate_build 1
 %define oname setproctitle
 
+%def_enable check
+
 Name: python3-module-%oname
-Version: 1.1.10
-Release: alt3
+Version: 1.2.3
+Release: alt1
 
 Summary: A library to allow customization of the process title
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/setproctitle/
+VCS: https://github.com/dvarrazzo/py-setproctitle.git
 
-# https://github.com/dvarrazzo/py-setproctitle.git
 Source: %name-%version.tar
-Patch0: fix-deprecation-warning.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python-tools-2to3 python3-module-Cython-tests
+%if_enabled check
+BuildRequires: /proc
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
 
@@ -24,24 +29,25 @@ tools such as ps and top).
 
 %prep
 %setup
-%patch0 -p1
-
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-%__python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir/
+python3 -m pytest -k "not embedded" -vra
 
 %files
 %doc *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jun 23 2022 Danil Shein <dshein@altlinux.org> 1.2.3-alt1
+ - new version 1.2.3
+
 * Tue May 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.10-alt3
 - Deprecation warning fixed (Closes #38459).
 
