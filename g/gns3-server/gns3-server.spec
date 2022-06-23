@@ -11,7 +11,7 @@
 %add_python3_req_skip prompt_toolkit.terminal.vt100_output
 
 Name: gns3-server
-Version: 2.2.31
+Version: 2.2.33.1
 Release: alt1
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
@@ -20,8 +20,6 @@ Group: File tools
 Url: https://github.com/GNS3/gns3-server
 
 Buildarch: noarch
-
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -33,13 +31,13 @@ BuildRequires(pre): rpm-build-python3 rpm-build-gir
 Requires: cpulimit
 Requires: dynamips >= 0.2.11
 Requires: python3-module-aiofiles >= 0.8.0
-Requires: python3-module-aiohttp >= 3.7.4
+Requires: python3-module-aiohttp >= 3.8.1
 Requires: python3-module-aiohttp-cors >= 0.7.0
 Requires: python3-module-async-timeout >= 3.0.1
 Requires: python3-module-jinja2 >= 2.11.3
 Requires: python3-module-jsonschema >= 3.2.0
-Requires: python3-module-psutil >= 5.7.1
-#Requires: python3-module-sentry-sdk >= 1.0.0
+Requires: python3-module-psutil >= 5.9.0
+#Requires: python3-module-sentry-sdk >= 1.5.12
 Requires: iouyap
 Requires: ubridge
 Requires: vpcs
@@ -50,10 +48,11 @@ Conflicts: gns3 < 1.0.0
 BuildRequires: /proc
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-aiohttp
+BuildRequires: python3-module-aiohttp >= 3.8.1
 BuildRequires: python3-module-aiohttp-tests
 BuildRequires: python3-module-jsonschema >= 3.2.0
 BuildRequires: python3-module-aiofiles >= 0.7.0
-BuildRequires: python3-module-psutil >= 5.7.1
+BuildRequires: python3-module-psutil >= 5.9.0
 BuildRequires: python3-module-jinja2 >= 2.11.3
 BuildRequires: python3-module-distro
 BuildRequires: python3-module-aiohttp-cors >= 0.7.0
@@ -84,12 +83,16 @@ export PYTHONPATH=%buildroot/%python3_sitelibdir/
 py.test3 -v
 
 %files
-%doc AUTHORS LICENSE README.rst
+%doc AUTHORS README.rst
 %_bindir/*
 %python3_sitelibdir/gns3server
 %python3_sitelibdir/gns3_server-*.egg-info
 
 %changelog
+* Thu Jun 23 2022 Anton Midyukov <antohami@altlinux.org> 2.2.33.1-alt1
+- new version 2.2.33.1
+- cleanup spec
+
 * Thu Mar 03 2022 Anton Midyukov <antohami@altlinux.org> 2.2.31-alt1
 - new version 2.2.31
 

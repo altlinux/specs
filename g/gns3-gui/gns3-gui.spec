@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gns3-gui
-Version: 2.2.31
+Version: 2.2.33.1
 Release: alt1
 
 Summary: GNS3 Graphical User Interface
@@ -11,8 +11,6 @@ Group: File tools
 Url: https://github.com/GNS3/gns3-gui
 
 Buildarch: noarch
-
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Source1: gns3-16x16.png
@@ -23,9 +21,9 @@ Source5: gns3.desktop
 
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-Requires: python3-module-jsonschema >= 2.6.0
+Requires: python3-module-jsonschema >= 3.2.0
 Requires: python3-module-raven >= 5.23.0
-Requires: python3-module-psutil >= 5.6.6
+Requires: python3-module-psutil >= 5.9.0
 Requires: python3-module-service_identity
 
 %description
@@ -78,6 +76,10 @@ install -Dp -m0644 %SOURCE5 %buildroot%_desktopdir/gns3.desktop
 %files -n gns3
 
 %changelog
+* Thu Jun 23 2022 Anton Midyukov <antohami@altlinux.org> 2.2.33.1-alt1
+- new version 2.2.33.1
+- cleanup spec
+
 * Thu Mar 03 2022 Anton Midyukov <antohami@altlinux.org> 2.2.31-alt1
 - new version 2.2.31
 
