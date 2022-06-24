@@ -1,15 +1,18 @@
 %define modname mygpoclient
 
 Name: python3-module-%modname
-Version: 1.8
-Release: alt3
+Version: 1.9
+Release: alt1
 
-Summary: Python 3 interface to the my.gpodder.org webservices
+Summary: gpodder.net API Client Library for Python3
 License: GPLv3+
 Group: Development/Python3
 Url: https://github.com/gpodder/%modname
+#https://pypi.org/project/mygpoclient/
 
-Source: %url/archive/%modname-%version.tar.gz
+Vcs: https://github.com/gpodder/mygpoclient.git
+#Source: %url/archive/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/m/%modname/%modname-%version.tar.gz
 
 BuildArch: noarch
 
@@ -41,6 +44,9 @@ and download episode status changes.
 
 
 %changelog
+* Fri Jun 24 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1
+- 1.9
+
 * Thu Aug 05 2021 Yuri N. Sedunov <aris@altlinux.org> 1.8-alt3
 - python3-only build
 
