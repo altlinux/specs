@@ -112,8 +112,8 @@
 %def_disable check
 
 Name: weston
-Version: %ver_major.0.0
-Release: alt2
+Version: %ver_major.0.1
+Release: alt1
 
 Summary: Reference compositor for Wayland
 Group: Graphical desktop/Other
@@ -308,6 +308,9 @@ ln -sf %name/libexec_%{name}.so.0 \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Fri Jun 24 2022 Yuri N. Sedunov <aris@altlinux.org> 10.0.1-alt1
+- 10.0.1
+
 * Wed Mar 09 2022 Yuri N. Sedunov <aris@altlinux.org> 10.0.0-alt2
 - enabled deprecated weston launcher for systems without logind
 
