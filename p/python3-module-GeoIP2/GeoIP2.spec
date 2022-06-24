@@ -1,11 +1,15 @@
 %define  oname GeoIP2
 %define  descr Python code for GeoIP2 webservice client and database reader
 
+%def_with docs
+%def_with check
+
 Name:    python3-module-%oname
-Version: 4.5.0
+Version: 4.6.0
 Release: alt1
 
 Summary: %descr
+
 License: Apache-2.0
 Group:   Development/Python3
 URL:     https://github.com/maxmind/GeoIP2-python
@@ -14,41 +18,68 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-MaxMindDB
+
+%if_with docs
 BuildRequires: python3-module-sphinx
+%endif
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-mocket
+BuildRequires: python3-module-decorator
+BuildRequires: python3-module-http-parser
+BuildRequires: python3-module-aiohttp
+%endif
 
 BuildArch: noarch
 
-Source:  %oname-%version.tar
+Source:  %name-%version.tar
 
 %description
 %descr
 
+%if_with docs
 %package doc
 Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
 Documentation for %oname.
+%endif
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
+
+%if_with docs
 sphinx-build-3 -b html docs html
 rm -rf html/.{buildinfo,doctrees}
+%endif
 
 %install
 %python3_install
 
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+# database_test needs submodule with database
+py.test-3 --ignore tests/database_test.py
+
 %files
 %python3_sitelibdir/geoip2
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/geoip2-%version-py%_python3_version.egg-info
 
+%if_with docs
 %files doc
-%doc LICENSE html/
+%doc LICENSE html
+%endif
 
 %changelog
+* Fri Jun 24 2022 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
+- Automatically updated to 4.6.0.
+- Build with check.
+
 * Mon Nov 29 2021 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
 - Automatically updated to 4.5.0.
 
