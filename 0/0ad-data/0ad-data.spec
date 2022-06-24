@@ -1,14 +1,25 @@
 Name: 0ad-data
 Epoch: 1
 Version: 0.0.25
-Release: alt1
-BuildArch: noarch
+Release: alt2_O_alpha
 
 Group: Games/Strategy
 Summary: Data for 0ad: free, open-source realtime strategy game of ancient warfare
-License: Various (all distributable)
+License: GPLv2 MIT
+
 Url: http://www.wildfiregames.com/0ad/
-Source: 0ad-%version-alpha-unix-data.tar.xz
+
+Requires: 0ad = %EVR
+
+Packager: Hihin Ruslan <ruslandh@altlinux.ru>
+
+Source: 0ad-%version-alpha-unix-data.tar
+
+# disabled i586 build to unblock wxGTK3.0 rebuild; please remove later
+ExcludeArch: ppc64le %ix86
+
+Conflicts: %name-data =< 1:0.0.25-alt1
+
 
 %description
 0 A.D. (pronounced "zero ey-dee") is a free, open-source, cross-platform
@@ -27,6 +38,9 @@ educational celebration of game development and ancient history.
 
 %prep
 %setup -n 0ad-%version-alpha
+rm -f binaries/data/tools/fontbuilder/fonts/*
+rmdir  binaries/data/tools/fontbuilder/fonts/
+rmdir  binaries/data/tools/fontbuilder/
 
 %install
 mkdir -p %buildroot%_datadir/0ad
@@ -36,6 +50,9 @@ mv binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad
 
 %changelog
+* Thu Jun 23 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.25-alt2_O_alpha
+- Update to 0.0.25-beta
+
 * Mon Aug 09 2021 Alexey Tourbin <at@altlinux.ru> 1:0.0.25-alt1
 - 0.0.24b -> 0.0.25
 
