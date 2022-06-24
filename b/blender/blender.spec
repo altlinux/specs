@@ -13,7 +13,7 @@
 %def_with jemalloc
 
 Name: blender
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -294,6 +294,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Fri Jun 24 2022 Egor Ignatov <egori@altlinux.org> 3.2.0-alt1
+- Updated to upstream version 3.2.0.
+
 * Fri Mar 25 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.1.0-alt1
 - Updated to upstream version 3.1.0.
 
