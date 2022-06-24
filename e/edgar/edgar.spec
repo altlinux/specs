@@ -1,18 +1,18 @@
 %define rel 1
 Summary: 2D Platform Game
 Name: edgar
-Version: 1.28
+Version: 1.35
 Release: alt1
 Source: %version.tar.gz
 Url: http://www.parallelrealities.co.uk/p/legend-of-edgar.html
 Group: Games/Arcade
-License: GPL
+License: GPLv2+
 Patch: %name-1.28-icons.patch
 Requires: %name-data = %version
 
-# Automatically added by buildreq on Fri Aug 04 2017
-# optimized out: glibc-kernheaders-x86 libSDL-devel libgpg-error python-base zlib-devel
-BuildRequires: glibc-kernheaders-generic libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libpng-devel
+# Automatically added by buildreq on Fri Jun 24 2022
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libSDL2-devel libgpg-error python3-base sh4 zlib-devel
+BuildRequires: libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libpng-devel python3
 
 BuildRequires: desktop-file-utils
 
@@ -22,7 +22,6 @@ one stormy night, Edgar sets off on a quest to rescue him.
 
 %package data
 Group: Games/Arcade
-License: GPL
 BuildArch: noarch
 Summary: The Legend of Edgar level set
 Requires: %name = %version
@@ -35,7 +34,7 @@ This package contains official level set for Edgar.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 
 %build
 %make_build VERSION=%version RELEASE=%rel DATA_DIR=%_gamesdatadir/%name/ BIN_DIR=%_gamesbindir/ DOC_DIR=%_defaultdocdir/%name-%version ICON_DIR=%_iconsdir/hicolor/ DESKTOP_DIR=%_desktopdir LOCALE_DIR=%_datadir/locale/
@@ -63,6 +62,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_gamesdatadir/%name/*
 
 %changelog
+* Fri Jun 24 2022 Fr. Br. George <george@altlinux.org> 1.35-alt1
+- Autobuild version bump to 1.35
+- Switch to SDL2
+
 * Wed Mar 21 2018 Fr. Br. George <george@altlinux.ru> 1.28-alt1
 - Autobuild version bump to 1.28
 
