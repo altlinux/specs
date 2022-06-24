@@ -18,8 +18,8 @@
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 3.7.5
-Release: alt2
+Version: 4.0.0
+Release: alt1
 
 Summary: Telegram Desktop messaging app
 
@@ -32,10 +32,10 @@ Source: %name-%version.tar
 
 Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
-Patch3: telegram-desktop-revert-setscreen.patch
 Patch4: telegram-desktop-fix-qt5-setscreen.patch
 Patch5: telegram-desktop-fix-missed-cstdint.patch
 Patch6: telegram-desktop-disabled-icon-checkbox.patch
+Patch7: telegram-desktop-fix-qt5-build.patch
 
 # [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
 # aarch64: see remove_target_sources ARM neon in https://github.com/desktop-app/tg_owt/blob/master/cmake/libyuv.cmake
@@ -67,9 +67,7 @@ BuildRequires(pre): rpm-macros-qt6
 BuildRequires: qt6-base-devel >= %tg_qt6_version
 BuildRequires: qt6-svg-devel
 BuildRequires: qt6-5compat-devel
-%if_with wayland
-BuildRequires: qt6-wayland-devel
-%endif
+%{?_with_wayland:BuildRequires: qt6-wayland-devel}
 %else
 BuildRequires(pre): rpm-macros-qt5
 BuildRequires: qt5-base-devel >= %tg_qt5_version
@@ -83,16 +81,8 @@ Requires: libqt5-core >= %_qt5_version
 
 # for -lQt5PlatformSupport
 BuildRequires: qt5-base-devel-static
-%endif
 
-%if_with wayland
-# TODO: add cmake provides
-#BuildRequires: cmake(KF5Wayland)
-#BuildRequires: cmake(Qt5WaylandClient)
-#BuildRequires: pkgconfig(wayland-client)
-#BuildRequires: qt5-qtbase-static
-BuildRequires: kf5-kwayland-devel
-BuildRequires: qt5-wayland-devel
+%{?_with_wayland:BuildRequires: kf5-kwayland-devel qt5-wayland-devel}
 %endif
 
 BuildRequires: libenchant2-devel
@@ -110,6 +100,7 @@ BuildRequires: libxxhash-devel
 BuildRequires: liblz4-devel
 
 BuildRequires: libminizip-devel libpcre-devel libexpat-devel libssl-devel bison
+
 %if_with x11
 #BuildRequires: libxcbutil-keysyms-devel
 BuildRequires: pkgconfig(xcb)
@@ -211,9 +202,9 @@ or business messaging needs.
 %patch2 -p2
 %patch5 -p2
 %if_without qt6
-%patch3 -p2
 %patch4 -p2
 %patch6 -p2
+#patch7 -p2
 %endif
 
 #__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
@@ -323,8 +314,15 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Thu Jun 23 2022 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
+- new version 4.0.0 (with rpmrb script)
+
+* Sun Jun 19 2022 Vitaly Lipatov <lav@altlinux.ru> 3.7.6-alt1
+- new version 3.7.6 (with rpmrb script)
+- fix build with Qt5
+
 * Sun Jun 19 2022 Vitaly Lipatov <lav@altlinux.ru> 3.7.5-alt2
-- fix build with Qt6
+- add support for build with Qt6
 - settings: make icon checkbox with disabled state (ALT bug 42548)
 
 * Wed Jun 15 2022 Vitaly Lipatov <lav@altlinux.ru> 3.7.5-alt1
