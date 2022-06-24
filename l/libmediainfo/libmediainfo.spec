@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 22.03
+Version: 22.06
 Release: alt1
 
 Group: System/Libraries
@@ -85,6 +85,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Fri Jun 24 2022 Yuri N. Sedunov <aris@altlinux.org> 22.06-alt1
+- 22.06
+
 * Thu Mar 31 2022 Yuri N. Sedunov <aris@altlinux.org> 22.03-alt1
 - 22.03
 
