@@ -1,6 +1,6 @@
 Name: mk-files
-Version: 20191111
-Release: alt2
+Version: 20220214
+Release: alt1
 
 Summary: Support files for bmake, the NetBSD make(1) tool
 
@@ -28,8 +28,8 @@ shared libraries.
 
 %prep
 %setup -n mk
-%__subst 's|cp_f=-f|cp_f=-pf|' install-mk
-%__subst "s|/usr/bin/env python\$|/usr/bin/env python3|" *.py
+sed -i 's|cp_f=-f|cp_f=-pf|' install-mk
+sed -i "s|/usr/bin/env python\$|/usr/bin/env python3|" *.py
 
 %install
 install -m 755 -d %buildroot%_datadir/mk
@@ -42,6 +42,9 @@ env FORCE_BSD_MK=%buildroot/nonexistent \
 %_datadir/mk/*
 
 %changelog
+* Fri Jun 24 2022 Fr. Br. George <george@altlinux.org> 20220214-alt1
+- Fresh version
+
 * Sat May 15 2021 Vitaly Lipatov <lav@altlinux.ru> 20191111-alt2
 - add BR: rpm-build-python3
 
