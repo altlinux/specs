@@ -1,8 +1,8 @@
 Name: abi-dumper
-Version: 1.1
+Version: 1.2
 Release: alt1
 Group: Development/Other
-License: GPLv2
+License: LGPL-2.1
 Summary: A tool to dump ABI of an ELF object containing DWARF debug info
 Source: %version.tar.gz
 Url: https://github.com/lvc/abi-dumper
@@ -22,10 +22,13 @@ mkdir -p %buildroot%prefix
 perl Makefile.pl -install --prefix=%buildroot%prefix
 
 %files
-%doc README
+%doc README*
 %_bindir/*
 
 %changelog
+* Fri Jun 24 2022 Fr. Br. George <george@altlinux.org> 1.2-alt1
+- Autobuild version bump to 1.2
+
 * Mon Sep 18 2017 Fr. Br. George <george@altlinux.ru> 1.1-alt1
 - Autobuild version bump to 1.1
 
