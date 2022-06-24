@@ -6,7 +6,7 @@
 
 Name: lua5.1
 Version: 5.1.5
-Release: alt18
+Release: alt19
 
 Summary: Embeddable programming language
 License: MIT
@@ -159,6 +159,7 @@ stand-alone language through the simple command line interpreter provided.
 
 %build
 %def_enable Werror
+%add_optflags -Wno-error=address
 
 cd ./src
 sed -i '/#define LUA_ROOT/s|/usr/local|%_prefix|' luaconf.h
@@ -276,6 +277,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Thu Jun 23 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt19
+- Fixed FTBFS: disabled address warning.
+
 * Sat Aug 28 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt18
 - Fixed FTBFS: built fat LTO objects.
 
