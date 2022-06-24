@@ -1,5 +1,5 @@
 Name: mapsoft
-Version: 20210121
+Version: 20220624
 Release: alt1
 License: GPL3.0
 
@@ -9,7 +9,6 @@ Url: http://github.org/ushakov/mapsoft
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
 Source: %name-%version.tar
-Patch1: 0001-skip-convs_gtiles.patch
 
 BuildRequires: boost-devel gcc-c++ libcurl-devel libzip-devel zlib-devel
 BuildRequires: libcairomm-devel libpixman-devel libgtkmm2-devel
@@ -41,7 +40,6 @@ mapsoft-vmap - programs for working with vector maps
 
 %prep
 %setup -q
-%patch1 -p1
 
 %build
 # boost::spirit crashes with -O2 on 32-bit systems
@@ -84,6 +82,13 @@ scons -Q minimal=1 -Q prefix=%buildroot install
 %_bindir/mapsoft_wp_parse
 
 %changelog
+* Fri Jun 24 2022 Vladislav Zavjalov <slazav@altlinux.org> 20220624-alt1
+- fix build with gcc12.1.1: std::ws set failbit on eof
+- scripts: install mapsoft_map.sh to fix script deps
+- do not install convs_gtiles
+- small updates in map styles
+- mapsoft_srtm2fig: sctn operation (finding slope contours)
+
 * Thu Jan 21 2021 Vladislav Zavjalov <slazav@altlinux.org> 20210121-alt1
 - scripts/mapsoft_wp_parse: fix name conversions
 - skip convs_gtiles program in Altlinux build (build problem with new boost)
