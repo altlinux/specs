@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Jun 24 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt2
+- update to Simply Linux 10.1
+
 * Wed Apr 27 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt1
 - update to beta version of Simply Linux 10.1
 
