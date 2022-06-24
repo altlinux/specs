@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 10
+Version: 11
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -51,6 +51,9 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Fri Jun 24 2022 Vitaly Chikunov <vt@altlinux.org> 11-alt1
+- Skip long running pty0{6,7} tests.
+
 * Wed Jun 22 2022 Vitaly Chikunov <vt@altlinux.org> 10-alt1
 - Skip getrusage04 (due to armh failures).
 

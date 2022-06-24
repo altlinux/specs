@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_base_version	5.18
 %define kernel_sublevel .6
@@ -612,6 +612,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Jun 24 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.18.6-alt2
+- Rebuild to fix loading of some kernel modules (particularly NAT).
+  Note: This increases kernel-image package by ~20MB.
+
 * Thu Jun 23 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.18.6-alt1
 - Rebase to v5.18.6 (2022-06-22).
 - Apply baikalm-5.18.y patches.

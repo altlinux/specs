@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.182
+Version: 4.0.4.183
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -384,6 +384,10 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Fri Jun 24 2022 Vitaly Chikunov <vt@altlinux.org> 4.0.4.183-alt1
+- debuginfo: Fix building of kernel modules by keeping .BTF section for kernel
+  objects.
+
 * Tue Apr 26 2022 Dmitry V. Levin <ldv@altlinux.org> 4.0.4.182-alt1
 - scripts: replaced "egrep" with "grep -E", "fgrep" with "grep -F".
 
