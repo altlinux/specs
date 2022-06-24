@@ -8,7 +8,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 4.5.0
+Version: 5.0.1
 Release: alt1
 
 Summary: Tool for producing documentation for Python projects
@@ -272,6 +272,9 @@ tox.py3 --sitepackages -vvr -s false -- -vra
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1:5.0.1-alt1
+- Autobuild version bump to 5.0.1
+
 * Sat Apr 16 2022 Fr. Br. George <george@altlinux.org> 1:4.5.0-alt1
 - Autobuild version bump to 4.5.0
 
