@@ -1,6 +1,6 @@
 Name: fricas
-Version: 1.3.6
-Release: alt2
+Version: 1.3.8
+Release: alt1
 
 Summary: FriCAS Computer Algebra System
 License: Modified BSD License
@@ -74,10 +74,13 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 %_miconsdir/%name.png
 %_liconsdir/%name.png
 %_libdir/%name/*
-%doc README FAQ CHA* Cha*
+%doc FAQ CHA* Cha*
 
 
 %changelog
+* Fri Jun 24 2022 Ilya Mashkin <oddity@altlinux.ru> 1.3.8-alt1
+- 1.3.8
+
 * Wed Mar 24 2021 Ilya Mashkin <oddity@altlinux.ru> 1.3.6-alt2
 - ExcludeArch: ppc64le
 
