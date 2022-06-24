@@ -9,7 +9,7 @@ epoch:1
 %define kernel_need_version	5.15
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	5.15
-%define kernel_sublevel .36
+%define kernel_sublevel .48
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -27,7 +27,7 @@ Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
 
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	%__gcc_version_base
+%define kgcc_version	10
 
 #Remove oss
 %def_disable oss
@@ -450,6 +450,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Jun 23 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.48-alt1
+- Updated to 5.15.48
+- https://github.com/raspberrypi/linux.git rpi-5.15.y commit b0a1e3b995b7d3161a7414dc5fc6d59ae44d910c
+- Baikal-M: added PCI-E driver for boards with new firmware (SDK-M 5.5)
+- Build with GCC 10 to avoid spurious build failures (staging WiFi drivers and others)
+
 * Thu May 05 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.36-alt1
 - Updated to 5.15.36
 - https://github.com/raspberrypi/linux.git rpi-5.15.y commit 9bc1ec59bd8db07e41067717aeea2749314ec801
