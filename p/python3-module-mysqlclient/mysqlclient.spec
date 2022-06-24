@@ -1,9 +1,11 @@
 %define oname mysqlclient
 
-%def_enable check
+%def_with docs
+# check needs running mysql server
+%def_without check
 
 Name: python3-module-%oname
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Python interface to MySQL
@@ -19,15 +21,19 @@ Conflicts: python3-module-MySQLdb2
 Provides: python3-module-MySQLdb
 %py3_provides MySQLdb
 
-BuildRequires(pre): rpm-macros-sphinx3 rpm-build-python3
+BuildRequires(pre): rpm-build-python3
 Buildrequires: libmysqlclient21-devel
-BuildRequires: python3-module-nose python3-module-pytest time
+
+%if_with docs
+BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
+%endif
 
 %description
 mysqlclient is a fork of MySQL-python. It adds Python 3.3 support and
 merges some pull requests.
 
+%if_with docs
 %package docs
 Summary: Documentation for %oname
 Group: Development/Documentation
@@ -43,44 +49,57 @@ Group: Development/Python3
 
 %description pickles
 This package contains pickles for %oname.
+%endif
 
 %prep
 %setup
+%if_with docs
 %prepare_sphinx3 .
 ln -s ../objects.inv doc/
+%endif
 
 %build
 %python3_build
+%if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make SPHINXBUILD="sphinx-build-3" -C doc html
 %make SPHINXBUILD="sphinx-build-3" -C doc pickle
 %make SPHINXBUILD="sphinx-build-3" -C doc man
+%endif
 
 %install
 %python3_install
+%if_with docs
 install -d %buildroot%python3_sitelibdir/%oname
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 mkdir -p %buildroot%_man1dir/
 install -m0644 doc/_build/man/mysqldb.1 %buildroot%_man1dir/
+%endif
 
 %check
-python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3
 
 %files
 %doc HISTORY* *.md
 %python3_sitelibdir/%oname
 %python3_sitelibdir/MySQLdb
-%python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/%oname/pickle
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%if_with docs
 %_man1dir/*
+%exclude %python3_sitelibdir/%oname/pickle
 
 %files pickles
 %python3_sitelibdir/%oname/pickle
 
 %files docs
 %doc doc/_build/html/*
+%endif
 
 %changelog
+* Fri Jun 24 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
+- Automatically updated to 2.1.1.
+
 * Tue Nov 30 2021 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
 - Automatically updated to 2.1.0.
 
