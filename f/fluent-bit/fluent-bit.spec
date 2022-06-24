@@ -1,7 +1,7 @@
 %def_disable tests
 
 Name: fluent-bit
-Version: 1.9.4
+Version: 1.9.5
 Release: alt1
 Summary: Fast data collector for Linux
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
@@ -32,6 +32,7 @@ BuildRequires: zlib-devel
 BuildRequires: libgnutls-devel
 BuildRequires: libssl-devel
 BuildRequires: libsasl2-devel
+BuildRequires: libyaml-devel
 
 # Exclude armv7hl temporarily because of failing runtime tests
 # https://github.com/fluent/fluent-bit/issues/4395
@@ -64,6 +65,7 @@ Fluent Bit is a high performance and multi-platform log forwarder.
     -DFLB_LUAJIT=Off \
     -DFLB_FILTER_LUA=Off \
     -DFLB_HTTP_SERVER=On \
+    -DFLB_CONFIG_YAML=On \
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
 
@@ -93,6 +95,10 @@ ctest
 %_libdir/lib%name.so
 
 %changelog
+* Fri Jun 24 2022 Leontiy Volodin <lvol@altlinux.org> 1.9.5-alt1
+- New version.
+- Enabled yaml support by default.
+
 * Thu Jun 09 2022 Leontiy Volodin <lvol@altlinux.org> 1.9.4-alt1
 - New version.
 - Disabled luajit and filter_lua support (ALT #42618).
