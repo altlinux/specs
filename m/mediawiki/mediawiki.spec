@@ -2,8 +2,8 @@
 %define major 1.37
 
 Name: mediawiki
-Version: %major.1
-Release: alt2
+Version: %major.2
+Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
 
@@ -449,6 +449,11 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Fri Jun 24 2022 Vitaly Lipatov <lav@altlinux.ru> 1.37.2-alt1
+- new version 1.37.2 (with rpmrb script)
+- (T297571, CVE-2022-28201) (T297731, CVE-2022-28203)
+- (T297754, CVE-2022-28204) (T297543, CVE-2022-28202)
+
 * Thu Feb 24 2022 Vitaly Lipatov <lav@altlinux.ru> 1.37.1-alt2
 - pack Scribunto extension separately
 
