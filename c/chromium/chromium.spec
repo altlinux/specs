@@ -29,8 +29,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        102.0.5005.61
-Release:        alt2
+Version:        103.0.5060.53
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -71,13 +71,10 @@ Patch007: 0007-ALT-allow-to-override-clang-through-env-variables.patch
 Patch008: 0008-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch009: 0009-ALT-disable-asm-on-x86-in-dav1d.patch
 Patch010: 0010-Move-offending-function-to-chromeos-only.patch
-Patch011: 0011-ALT-Disable-NOMERGE-attribute.patch
-Patch012: 0012-FEDORA-bootstrap-with-python3.patch
-Patch013: 0013-sql-make-VirtualCursor-standard-layout-type.patch
-Patch014: 0014-IWYU-add-cstring-for-std-strlen-in-fenced_frame_util.patch
-Patch015: 0015-IWYU-add-utility-for-std-exchange.patch
-Patch016: 0016-GENTOO-Fix-instantiating-fold-expression-error.patch
-Patch017: 0017-Handle-kioslaverc-config-located-in-XDG_CONFIG_DIRS.patch
+Patch011: 0011-FEDORA-bootstrap-with-python3.patch
+Patch012: 0012-sql-make-VirtualCursor-standard-layout-type.patch
+Patch013: 0013-GENTOO-Fix-instantiating-fold-expression-error.patch
+Patch014: 0014-Handle-kioslaverc-config-located-in-XDG_CONFIG_DIRS.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -458,6 +455,19 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Jun 25 2022 Alexey Gladkov <legion@altlinux.ru> 103.0.5060.53-alt1
+- New version (103.0.5060.53).
+- Security fixes:
+  - CVE-2022-2156: Use after free in Base.
+  - CVE-2022-2157: Use after free in Interest groups.
+  - CVE-2022-2158: Type Confusion in V8.
+  - CVE-2022-2160: Insufficient policy enforcement in DevTools.
+  - CVE-2022-2161: Use after free in WebApp Provider.
+  - CVE-2022-2162: Insufficient policy enforcement in File System API.
+  - CVE-2022-2163: Use after free in Cast UI and Toolbar.
+  - CVE-2022-2164: Inappropriate implementation in Extensions API.
+  - CVE-2022-2165: Insufficient data validation in URL formatting.
+
 * Wed Jun 01 2022 Alexey Gladkov <legion@altlinux.ru> 102.0.5005.61-alt2
 - Handle kioslaverc config located in XDG_CONFIG_DIRS.
 
