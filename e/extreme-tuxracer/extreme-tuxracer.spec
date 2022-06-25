@@ -1,16 +1,17 @@
 %define _name etr
 
 Name: extreme-tuxracer
-Version: 0.8.1
-Release: alt1
 Epoch: 1
+Version: 0.8.2
+Release: alt1
 
 Summary: High speed arctic racing game based on Tux Racer
+
 Group: Games/Arcade
 License: GPL-2.0
 Url: https://sourceforge.net/projects/extremetuxracer/
 
-Source: https://downloads.sourceforge.net/extremetuxracer/etr-%version.tar.xz
+Source: %_name-%version.tar.xz
 
 Requires: %name-data = %EVR
 
@@ -65,11 +66,14 @@ EOF
 
 %files data
 %_pixmapsdir/*
-%_datadir/%_name/
-%_datadir/doc/%_name/
-%_datadir/appdata/etr.appdata.xml
+%_datadir/%_name
+%_datadir/doc/%_name
+%_datadir/metainfo/%_name.appdata.xml
 
 %changelog
+* Sat Jun 25 2022 Grigory Ustinov <grenka@altlinux.org> 1:0.8.2-alt1
+- Build new version.
+
 * Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 1:0.8.1-alt1
 - Build new version.
 
