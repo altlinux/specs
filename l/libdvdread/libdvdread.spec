@@ -1,6 +1,6 @@
 %define soname 8
 Name: libdvdread
-Version: 6.1.2
+Version: 6.1.3
 Release: alt1
 Summary: A library for reading DVD-Video images
 License: GPLv2
@@ -57,12 +57,15 @@ rm -rf %buildroot%_datadir/doc/libdvdread
 %_libdir/*.so.*
 
 %files devel
-%doc AUTHORS TODO README
+%doc AUTHORS TODO README.md
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Jun 25 2022 Anton Farygin <rider@altlinux.ru> 6.1.3-alt1
+- 6.1.3
+
 * Tue May 25 2021 Anton Farygin <rider@altlinux.ru> 6.1.2-alt1
 - 6.1.2
 
