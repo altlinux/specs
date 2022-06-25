@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.24
+Version: 0.5.25
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,10 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Thu Jun 23 2022 Anton Midyukov <antohami@altlinux.org> 0.5.25-alt1
+- install2-remount-functions: run set_active, if "$destination"/boot/efi not
+  found
+
 * Sun Oct 10 2021 Anton Midyukov <antohami@altlinux.org> 0.5.24-alt1
 - install2-remount-functions: run set_active for msdos partition table type only
 
