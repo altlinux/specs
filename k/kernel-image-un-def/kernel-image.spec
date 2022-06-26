@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt1
 epoch:1
 %define kernel_base_version	5.18
-%define kernel_sublevel .6
+%define kernel_sublevel .7
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -612,6 +612,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Jun 27 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.18.7-alt1
+- v5.18.7 (2022-06-25).
+
 * Fri Jun 24 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.18.6-alt2
 - Rebuild to fix loading of some kernel modules (particularly NAT).
   Note: This increases kernel-image package by ~20MB.
