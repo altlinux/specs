@@ -1,7 +1,7 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 Name:	 newsboat
-Version: 2.25
+Version: 2.27
 Release: alt1
 
 Summary: an RSS/Atom feed reader for the text console
@@ -64,6 +64,11 @@ export CARGO_FLAGS="--offline"
 %find_lang %name
 
 %check
+# workaround for test compilaton: remove me in the next release
+%add_optflags -Wno-error=maybe-uninitialized
+export CFLAGS="%optflags"
+export CXXFLAGS="$CFLAGS"
+
 make test
 cargo test
 
@@ -83,6 +88,9 @@ cargo test
 %_iconsdir/hicolor/scalable/apps/newsboat.svg
 
 %changelog
+* Sun Jun 26 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.27-alt1
+- Updated to 2.27.
+
 * Wed Sep 29 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.25-alt1
 - Updated to 2.25.
 
