@@ -1,5 +1,5 @@
 Name: update-kernel
-Version: 1.2.2
+Version: 1.3
 Release: alt1
 
 Summary: Update kernel and modules
@@ -49,6 +49,16 @@ make check
 %_sbindir/analyze-kmodules
 
 %changelog
+* Sun Jun 26 2022 Vitaly Chikunov <vt@altlinux.org> 1.3-alt1
+- remove-old-kernels: Show list of kernel that won't be removed and why.
+- remove-old-kernels: Add colors to improve UI (for a dark background).
+- remove-old-kernels: Do not remove previous kernel with good uptime (backup
+  kernel) as safeguarding measure. (ALT#43062)
+- remove-old-kernels: Slightly change confirmation logic (do not leave
+  confirmation to apt-get.)
+- remove-old-kernels: Add -A option to attempt to remove other flavours
+  completely (which was previously impossible).
+
 * Sun Jun 19 2022 Vitaly Chikunov <vt@altlinux.org> 1.2.2-alt1
 - update-kernel: Add --add (-A) option(s) to install external module.
 
