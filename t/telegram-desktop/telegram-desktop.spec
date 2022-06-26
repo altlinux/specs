@@ -18,7 +18,7 @@
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 4.0.0
+Version: 4.0.2
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -32,10 +32,8 @@ Source: %name-%version.tar
 
 Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
-Patch4: telegram-desktop-fix-qt5-setscreen.patch
 Patch5: telegram-desktop-fix-missed-cstdint.patch
 Patch6: telegram-desktop-disabled-icon-checkbox.patch
-Patch7: telegram-desktop-fix-qt5-build.patch
 
 # [ppc64le] /usr/bin/ld.default: /usr/lib64/libtg_owt.a: error adding symbols: file in wrong format
 # aarch64: see remove_target_sources ARM neon in https://github.com/desktop-app/tg_owt/blob/master/cmake/libyuv.cmake
@@ -202,9 +200,7 @@ or business messaging needs.
 %patch2 -p2
 %patch5 -p2
 %if_without qt6
-%patch4 -p2
 %patch6 -p2
-#patch7 -p2
 %endif
 
 #__subst "s|set(webrtc_build_loc.*|set(webrtc_build_loc %_libdir)|" cmake/external/webrtc/CMakeLists.txt
@@ -314,6 +310,12 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Sat Jun 25 2022 Vitaly Lipatov <lav@altlinux.ru> 4.0.2-alt1
+- new version 4.0.2 (with rpmrb script)
+
+* Sat Jun 25 2022 Vitaly Lipatov <lav@altlinux.ru> 4.0.1-alt1
+- new version 4.0.1 (with rpmrb script)
+
 * Thu Jun 23 2022 Vitaly Lipatov <lav@altlinux.ru> 4.0.0-alt1
 - new version 4.0.0 (with rpmrb script)
 
