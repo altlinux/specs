@@ -8,7 +8,7 @@
 %endif
 
 Name: libldb
-Version: 2.3.3
+Version: 2.4.2
 Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
@@ -29,9 +29,9 @@ BuildRequires: nss_wrapper >= 1.1.11
 BuildRequires: resolv_wrapper >= 1.1.7
 BuildRequires: uid_wrapper >= 1.2.7
 BuildRequires: pam_wrapper >= 1.1.2
-BuildRequires: libtdb-devel >= 1.4.3
-BuildRequires: libtalloc-devel >= 2.3.2
-BuildRequires: libtevent-devel >= 0.10.2
+BuildRequires: libtdb-devel >= 1.4.4
+BuildRequires: libtalloc-devel >= 2.3.3
+BuildRequires: libtevent-devel >= 0.11.0
 %if_with mdb
 BuildRequires: liblmdb-devel >= 0.9.16
 %endif
@@ -42,9 +42,9 @@ BuildRequires: python3-module-tdb
 BuildRequires: python3-module-talloc-devel
 BuildRequires: python3-module-tevent
 
-Requires: libtdb >= 1.4.3
-Requires: libtalloc >= 2.3.2
-Requires: libtevent >= 0.10.2
+Requires: libtdb >= 1.4.4
+Requires: libtalloc >= 2.3.3
+Requires: libtevent >= 0.11.0
 %if_with mdb
 Requires: liblmdb >= 0.9.16
 %endif
@@ -185,6 +185,9 @@ make test
 %_pkgconfigdir/pyldb-util.cpython-*.pc
 
 %changelog
+* Thu Apr 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.4.2-alt1
+- Update to the 2.4.2 for samba-4.15.6 release
+
 * Tue Apr 05 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.3.3-alt1
 - Update to the 2.3.3 for latest samba-4.14.13 bugfix release
 

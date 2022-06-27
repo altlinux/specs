@@ -3,8 +3,8 @@
 %def_with check
 
 Name: libtdb
-Version: 1.4.3
-Release: alt1
+Version: 1.4.4
+Release: alt2
 
 Summary: A trivial database system
 License: LGPLv3+
@@ -13,6 +13,7 @@ Url: http://tdb.samba.org/
 
 Source: http://samba.org/ftp/tdb/tdb-%{version}.tar.gz
 Patch: tdb-alt-fix-python-ldflags.patch
+Patch1: libtdb-revert-breaking-tdb.h.patch
 
 BuildRequires: docbook-dtds docbook-style-xsl xsltproc
 
@@ -82,6 +83,7 @@ Python3 bindings for libtdb
 %prep
 %setup -n tdb-%version
 %patch -p1
+%patch1 -p1
 
 %build
 %undefine _configure_gettext
@@ -119,6 +121,13 @@ make test
 %python3_sitelibdir/__pycache__/_tdb_text.cpython*.py*
 
 %changelog
+* Sun Mar 06 2022 Evgeny Sinelnikov <sin@altlinux.org> 1.4.4-alt2
+- Apply patch libtdb-revert-breaking-tdb.h.patch from fedora
+  (resolved sssd#5793 on github, rhbz#1983011)
+
+* Thu Oct 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.4.4-alt1
+- Update to release for samba-4.15.0
+
 * Wed Feb 05 2020 Evgeny Sinelnikov <sin@altlinux.org> 1.4.3-alt1
 - Update to latest release without crypt replace
 - Set license to LGPLv3+

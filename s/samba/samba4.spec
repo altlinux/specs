@@ -61,6 +61,7 @@
 %endif
 
 %define _samba_libdir  %_libdir
+%define _samba_libexecdir  %_libexecdir/samba
 %define _samba_mod_libdir  %_libdir/samba
 %define _samba_dc_libdir  %_libdir/samba-dc
 %define _samba_dc_mod_libdir  %_libdir/samba-dc
@@ -74,8 +75,8 @@
 %endif
 
 Name:    samba
-Version: 4.14.13
-Release: alt1
+Version: 4.15.7
+Release: alt3
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -172,27 +173,23 @@ BuildRequires: libdbus-devel
 %endif
 
 %if_without talloc
-BuildRequires: libtalloc-devel >= 2.3.2
+BuildRequires: libtalloc-devel >= 2.3.3
 BuildRequires: python3-module-talloc-devel
 %endif
 
 %if_without tevent
-BuildRequires: libtevent-devel >= 0.10.2
+BuildRequires: libtevent-devel >= 0.11.0
 BuildRequires: python3-module-tevent
 %endif
 
 %if_without tdb
-BuildRequires: libtdb-devel >= 1.4.3
+BuildRequires: libtdb-devel >= 1.4.4
 BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.3.3
-%define ldb_version_release %nil
+%define ldb_version 2.4.2
 BuildRequires: libldb-devel = %ldb_version
-%if "%ldb_version_release" != ""
-BuildRequires: libldb-devel >= %ldb_version_release
-%endif
 BuildRequires: python3-module-pyldb-devel
 %endif
 %{?_with_testsuite:BuildRequires: ldb-tools}
@@ -318,9 +315,6 @@ Group: System/Libraries
 Requires: %name-common-libs = %version-%release
 %if_without ldb
 Requires: libldb = %ldb_version
-%if "%ldb_version_release" != ""
-Requires: libldb >= %ldb_version_release
-%endif
 %endif
 
 %if_without libsmbclient
@@ -841,6 +835,7 @@ pushd ../%rname-%version-separate-heimdal-server
 
 %configure_common \
 	--libdir=%_samba_dc_libdir \
+	--libexecdir=%_samba_dc_libdir \
 	--with-modulesdir=%_samba_dc_mod_libdir \
 	--with-privatelibdir=%_samba_dc_mod_libdir \
 	--pythonarchdir=%_samba_dc_pythonarchdir \
@@ -1135,6 +1130,7 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_sbindir/nmbd
 %_sbindir/smbd
 %endif
+%_samba_libexecdir/samba-bgqd
 %config(noreplace) %_sysconfdir/samba/smbusers
 %attr(755,root,root) %_initdir/smb
 %attr(755,root,root) %_initdir/nmb
@@ -1234,9 +1230,8 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_bindir/cifsdd
 %_bindir/dbwrap_tool
 %_bindir/dumpmscat
-%_bindir/findsmb
+%_bindir/mdsearch
 %_bindir/mvxattr
-%_bindir/mdfind
 %_bindir/nmblookup
 %_bindir/oLschema2ldif
 %_bindir/regdiff
@@ -1256,12 +1251,12 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 #_bindir/smbta-util
 %_bindir/smbtar
 %_bindir/smbtree
-%_libexecdir/samba/smbspool_krb5_wrapper
+%_samba_libexecdir/smbspool_krb5_wrapper
 %{cups_serverbin}/backend/smb
 %if_with doc
 %_man1dir/dbwrap_tool.1*
+%_man1dir/mdsearch.1*
 %_man1dir/mvxattr.1*
-%_man1dir/mdfind.1*
 %_man1dir/nmblookup.1*
 %_man1dir/oLschema2ldif.1*
 %_man1dir/regdiff.1*
@@ -1269,7 +1264,6 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_man1dir/regpatch.1*
 %_man1dir/regshell.1*
 %_man1dir/regtree.1*
-%exclude %_man1dir/findsmb.1*
 %_man1dir/log2pcap.1*
 %_man1dir/rpcclient.1*
 %_man1dir/sharesec.1*
@@ -1355,6 +1349,7 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_man8dir/eventlogadm.8*
 %_man8dir/smbd.8*
 %_man8dir/nmbd.8*
+%_man8dir/samba-bgqd.8*
 %_man8dir/vfs_*.8*
 
 %if_with libcephfs
@@ -1460,6 +1455,7 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_samba_mod_libdir/libasn1util-samba4.so
 %_samba_mod_libdir/libgenrand-samba4.so
 %_samba_mod_libdir/libdbwrap-samba4.so
+%_samba_mod_libdir/libflag-mapping-samba4.so
 %_samba_mod_libdir/libinterfaces-samba4.so
 %_samba_mod_libdir/libiov-buf-samba4.so
 %_samba_mod_libdir/libmessages-dgm-samba4.so
@@ -1512,14 +1508,13 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_samba_mod_libdir/libcliauth-samba4.so
 %_samba_mod_libdir/libclidns-samba4.so
 %_samba_mod_libdir/libcluster-samba4.so
+%_samba_mod_libdir/libcmdline-samba4.so
 %_samba_mod_libdir/libcmdline-contexts-samba4.so
-%_samba_mod_libdir/libcmdline-credentials-samba4.so
 %_samba_mod_libdir/libcommon-auth-samba4.so
 %_samba_mod_libdir/libdcerpc-pkt-auth-samba4.so
 %_samba_mod_libdir/libdcerpc-samba-samba4.so
 %_samba_mod_libdir/libdcerpc-samba4.so
 %_samba_mod_libdir/libevents-samba4.so
-%_samba_mod_libdir/libflag-mapping-samba4.so
 %_samba_mod_libdir/libgensec-samba4.so
 %_samba_mod_libdir/libgpo-samba4.so
 %_samba_mod_libdir/libgse-samba4.so
@@ -1538,8 +1533,6 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_samba_mod_libdir/libnet-keytab-samba4.so
 %_samba_mod_libdir/libnetif-samba4.so
 %_samba_mod_libdir/libnpa-tstream-samba4.so
-%_samba_mod_libdir/libpopt-samba3-samba4.so
-%_samba_mod_libdir/libpopt-samba3-cmdline-samba4.so
 %_samba_mod_libdir/libposix-eadb-samba4.so
 %_samba_mod_libdir/libprinter-driver-samba4.so
 %_samba_mod_libdir/libprinting-migrate-samba4.so
@@ -1556,7 +1549,6 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_samba_mod_libdir/libsmbpasswdparser-samba4.so
 %_samba_mod_libdir/libtorture-samba4.so
 %_samba_mod_libdir/libtrusts-util-samba4.so
-%_samba_mod_libdir/libutil-cmdline-samba4.so
 
 %_samba_libdir/libdcerpc-binding.so.*
 %_samba_libdir/libdcerpc-samr.so.*
@@ -1625,8 +1617,6 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 
 %if_with dc
 %files dc-libs
-%_samba_mod_libdir/bind9/dlz_bind9.so
-%_samba_mod_libdir/bind9/dlz_bind9_9.so
 %_samba_mod_libdir/bind9/dlz_bind9_10.so
 %_samba_mod_libdir/bind9/dlz_bind9_11.so
 %_samba_mod_libdir/bind9/dlz_bind9_12.so
@@ -1885,6 +1875,7 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_libexecdir/ctdb/ctdb_natgw
 %_libexecdir/ctdb/ctdb_recovery_helper
 %_libexecdir/ctdb/ctdb_takeover_helper
+%_libexecdir/ctdb/tdb_mutex_check
 %_libexecdir/ctdb/smnotify
 
 %if_with doc
@@ -1921,6 +1912,26 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Jun 20 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.15.7-alt3
+- samba-dc: Replace internal helper program performing asynchronous
+  printing-related jobs (samba-bgqd) to internal package directory.
+
+* Sun Jun 19 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.15.7-alt2
+- Revert get_naming_master() for dc replica join, which requires due only domain
+  naming master can create application directory partitions.
+- Fix smbd doesn't handle UPNs for looking up names (Samba#15054).
+- Fix net ads info shows LDAP Server: 0.0.0.0 (Samba#14674).
+- Fix logging dsdb audit to specific files does not work (Samba#15076).
+- Fix use pathref fd instead of io fd in vfs_default_durable_cookie (Samba#15042).
+- Fix vfs_gpfs recalls=no option prevents listing files (Samba#15055).
+- Fix smbget manpage (no &stdarg.encrypt anymore).
+
+* Mon Jun 06 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.15.7-alt1
+- Update to release of Samba 4.15 with SMB multi-channel, Offline Domain Join,
+  samba-tool dns zoneoptions for aging control, samba-tool domain backup offline
+  with the LMDB backend and always use enterprise principals for Kerberos (so
+  that the DC will be able to redirect ticket requests to the right DC) support.
+
 * Tue Apr 05 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.14.13-alt1
 - Update to latest bugfix release of Samba 4.14
 - Fixes:
