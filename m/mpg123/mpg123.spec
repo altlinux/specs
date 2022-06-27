@@ -8,18 +8,18 @@
 %def_enable check
 
 Name: mpg123
-Version: 1.29.3
+Version: 1.30.0
 Release: alt1
 
 Summary: MPEG audio player
 Group: Sound
-License: LGPLv2.1
+License: GPL-2.0 and LGPL-2.1
 Url: http://www.%name.org
 
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source1: mp3license
 
-Requires: libmpg123 = %version-%release
+Requires: libmpg123 = %EVR
 
 %ifarch %ix86
 %define wcpu i586
@@ -49,6 +49,7 @@ For information on the MP3 License, please visit:
 %package -n libmpg123
 Summary: mpg123 library
 Group: System/Libraries
+License: LGPL-2.1
 
 %description -n libmpg123
 This package provides mpg123 library.
@@ -56,7 +57,8 @@ This package provides mpg123 library.
 %package -n libmpg123-devel
 Summary: mpg123 library headers
 Group:  Development/C
-Requires: libmpg123 = %version-%release
+License: LGPL-2.1
+Requires: libmpg123 = %EVR
 
 %description -n libmpg123-devel
 This package provides mpg123 library headers
@@ -73,7 +75,9 @@ install -p -m644 %SOURCE1 .
 	--with-audio="%mods" \
 	--with-optimization=0 \
 	--enable-network=yes \
+	--enable-ipv6 \
 	--with-cpu=%{wcpu}
+%nil
 %make_build CFLAGS="%optflags -Wformat -Werror=format-security"
 
 %install
@@ -85,8 +89,6 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 %make check
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog COPYING INSTALL NEWS README mp3license doc/
-
 %_bindir/%name
 %_bindir/%name-id3dump
 %_bindir/%name-strip
@@ -95,6 +97,7 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 %_man1dir/out123.1.*
 %dir %_libdir/%name
 %_libdir/%name/*.so
+%doc AUTHORS ChangeLog COPYING INSTALL NEWS README mp3license doc/
 
 %files -n libmpg123
 %_libdir/libmpg123.so.*
@@ -113,6 +116,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Mon Jun 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1.30.0-alt1
+- 1.30.0
+
 * Sun Dec 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1.29.3-alt1
 - 1.29.3
 
