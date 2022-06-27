@@ -1,24 +1,27 @@
 %define oname Paver
 
 Name: python3-module-%oname
-Version: 1.2.4
-Release: alt2
+Version: 1.3.4
+Release: alt1
+
 Summary: Easy build, distribution and deployment scripting
-License: BSD
+
+License: BSD-3-Clause
 Group: Development/Python3
-BuildArch: noarch
-Url: https://pypi.python.org/pypi/Paver/
+Url: https://pypi.python.org/pypi/Paver
 
 # https://github.com/paver/paver.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
+Patch:  2d4279a46da414419c507b05afab49b3478bf75b.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
+
 %add_python3_req_skip bzrlib bzrlib.builtins
 
 Conflicts: python-module-Paver
 Obsoletes: python-module-Paver
+
+BuildArch: noarch
 
 %description
 Paver is a Python-based build/distribution/deployment scripting tool
@@ -29,11 +32,10 @@ applications specific needs and requirements is also easy.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 
-find . -type f -name '*.py' -exec 2to3 -w -n '{}' +
 # currently there is no bzr module for python-3
-rm -f ../python3/paver/bzr.py
+rm -f paver/bzr.py
 
 %build
 %python3_build
@@ -41,12 +43,19 @@ rm -f ../python3/paver/bzr.py
 %install
 %python3_install
 
+# https://github.com/paver/paver/issues/211
+rm -f %buildroot/%python3_sitelibdir/paver/deps/path2.py
+
 %files
 %doc *.rst
-%_bindir/*
-%python3_sitelibdir/*
+%_bindir/paver
+%python3_sitelibdir/paver
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Jun 10 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.4-alt1
+- Automatically updated to 1.3.4.
+
 * Mon Jun 07 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.4-alt2
 - Drop python2 support.
 - Build without docs.
