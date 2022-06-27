@@ -1,5 +1,5 @@
 Name: parallel
-Version: 20220522
+Version: 20220622
 Release: alt1
 
 Summary: A shell tool for executing jobs in parallel
@@ -9,6 +9,7 @@ Group: File tools
 Url: http://www.gnu.org/software/parallel
 Source: http://ftp.gnu.org/gnu/parallel/%name-%version.tar.bz2
 Source100: parallel.watch
+Patch: parallel-20220622-alt-makefile.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Tue Apr 16 2013
@@ -26,10 +27,32 @@ command or a small script that has to be run for each of the
 lines in the input. The typical input is a list of files, a list
 of hosts, a list of users, a list of URLs, or a list of tables.
 
+%package -n bash-completion-%name
+Summary: Bash completion for %name
+Group: Shells
+BuildArch: noarch
+Requires: bash-completion
+Requires: %name = %version-%release
+
+%description -n bash-completion-%name
+Bash completion for %name.
+
+%package -n zsh-completion-%name
+Summary: Zsh completion for %name
+Group: Shells
+BuildArch: noarch
+Requires: zsh
+Requires: %name = %version-%release
+
+%description -n zsh-completion-%name
+Zsh completion for %name.
+
 %prep
 %setup
+%patch -p1
 
 %build
+%autoreconf
 %configure
 %make
 
@@ -46,7 +69,17 @@ ln -sf parallel %buildroot%_bindir/sem
 %_man1dir/*
 %_man7dir/*
 
+%files -n bash-completion-%name
+%_datadir/bash-completion/completions/%name
+
+%files -n zsh-completion-%name
+%_datadir/zsh/site-functions/_%name
+
 %changelog
+* Sat Jun 25 2022 Michael Shigorin <mike@altlinux.org> 20220622-alt1
+- new version (watch file uupdate)
+- fixed completions installation
+
 * Fri May 27 2022 Michael Shigorin <mike@altlinux.org> 20220522-alt1
 - new version (watch file uupdate)
 
