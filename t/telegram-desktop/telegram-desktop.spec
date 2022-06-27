@@ -19,7 +19,7 @@
 
 Name: telegram-desktop
 Version: 4.0.2
-Release: alt1
+Release: alt2
 
 Summary: Telegram Desktop messaging app
 
@@ -310,6 +310,9 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Mon Jun 27 2022 Vitaly Lipatov <lav@altlinux.ru> 4.0.2-alt2
+- merge git repo with p10 (with -s ours)
+
 * Sat Jun 25 2022 Vitaly Lipatov <lav@altlinux.ru> 4.0.2-alt1
 - new version 4.0.2 (with rpmrb script)
 
