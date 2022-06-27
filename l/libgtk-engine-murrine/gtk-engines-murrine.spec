@@ -3,14 +3,14 @@
 
 Name: %engine_prefix-%_name
 Version: 0.98.1.1
-Release: alt0.1.1
+Release: alt0.1.1.1
 
 Summary: Murrine GTK2 engine
-Summary(ru_RU.UTF-8):Модуль прорисовки Murrine для GTK2
-License: GPL
+License: LGPLv2+
 Group: Graphical desktop/GNOME
+
 Url: http://cimi.netsons.org/pages/murrine.php
-Source0: %name-%version.tar
+Source: %name-%version.tar
 Patch0: %name-%version-cppflags-alt.patch
 Patch1: gtk-engines-murrine-0.98.1.1-alt-glib2.patch
 Packager: Denis Koryavov <dkoryavov@altlinux.org>
@@ -20,29 +20,29 @@ Packager: Denis Koryavov <dkoryavov@altlinux.org>
 %define engines_dir %_libdir/gtk-2.0/%gtk_binary_ver/engines
 
 BuildPreReq: libgtk+2-devel >= %gtk_ver
-BuildRequires: gcc-c++ gcc-g77 libgtk+2-devel
-BuildRequires:  intltool, gettext
+BuildRequires: gcc-c++ libgtk+2-devel
+BuildRequires: intltool gettext
 BuildRequires: libpixman-devel
 
+Summary(ru_RU.UTF-8): Модуль прорисовки Murrine для GTK+2
+
 %description
-Murrine is a Gtk2 engine, written in C language, using cairo vectorial 
-drawing library to draw widgets. It features a modern glassy look, 
+Murrine is a Gtk2 engine, written in C language, using cairo vectorial
+drawing library to draw widgets. It features a modern glassy look,
 and it is elegant and clean on the eyes. It is also extremely customizable.
 
 %description -l ru_RU.UTF-8
 Murrine - использующий cairo быстрый модуль прорисовки для GTK2.
 
 %prep
-%setup -q 
+%setup
 %patch0 -p1
 %patch1 -p0
 
 %build
 %autoreconf
-#undefine __libtoolize
 export CPPFLAGS+="-I %_includedir/pixman-1/"
 %configure --enable-animation 
-#--enable-macmenu
 %make_build
 
 %install
@@ -51,10 +51,13 @@ export CPPFLAGS+="-I %_includedir/pixman-1/"
 %files
 %doc AUTHORS README ChangeLog
 %engines_dir/*.so
-
 %exclude %engines_dir/*.la
+%_datadir/gtk-engines/*.xml
 
 %changelog
+* Mon Jun 27 2022 Michael Shigorin <mike@altlinux.org> 0.98.1.1-alt0.1.1.1
+- minor spec cleanup
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.98.1.1-alt0.1.1
 - Fixed build
 
