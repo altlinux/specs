@@ -1,5 +1,5 @@
 Name:    gnucash-docs
-Version: 4.10.1
+Version: 4.11
 Release: alt1
 
 Summary: Documentation for the Gnucash
@@ -46,6 +46,9 @@ rm -f %buildroot%_datadir/gnucash-docs/COPYING*
 %_datadir/gnome/help/gnucash-*/
 
 %changelog
+* Mon Jun 27 2022 Andrey Cherepanov <cas@altlinux.org> 4.11-alt1
+- New version.
+
 * Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 4.10.1-alt1
 - New version.
 
