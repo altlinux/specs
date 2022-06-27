@@ -1,5 +1,5 @@
 Name:     vml
-Version:  0.1.6
+Version:  0.1.7
 Release:  alt1
 
 Summary:  Tool for easily and transparently work with qemu virtual machines
@@ -57,6 +57,9 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Mon Jun 27 2022 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.7-alt1
+- Improve work with gui images
+
 * Mon Jun 20 2022 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.6-alt1
 - Add support of multiple arches
 
