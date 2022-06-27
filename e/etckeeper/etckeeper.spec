@@ -2,12 +2,12 @@
 
 Name: etckeeper
 Version: 1.18.8
-Release: alt1
+Release: alt2
 
 Summary: Etckeeper help to keep your /etc directory in VCS repository
-License: GPL2+
-Group: Development/Other
-Url: http://etckeeper.branchable.com
+License: GPL-2.0-or-later
+Group: System/Configuration/Other
+Url: https://etckeeper.branchable.com/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 BuildArch: noarch
@@ -42,8 +42,11 @@ rm -rf %buildroot%_sysconfdir/cruft
 
 mv -v %buildroot%_sysconfdir/apt/apt.conf.d/05%name %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 
+%check
+find %buildroot -type f | xargs file | grep 'shell script' | cut -d: -f1 | xargs -n1 -t bash -n
+
 %post
-if [ -e %_sysconfdir/.git/hooks/pre-commit ] && egrep '^(/us[rb]/s?bin/)?%name' %_sysconfdir/.git/hooks/pre-commit >/dev/null 2>&1; then
+if [ -e %_sysconfdir/.git/hooks/pre-commit ] && grep -E '^(/us[rb]/s?bin/)?%name' %_sysconfdir/.git/hooks/pre-commit >/dev/null 2>&1; then
  echo "Replacing path to etckeeper in %_sysconfdir/.git/hooks/pre-commit"
  sed -i 's!^/usr/sbin/etckeeper!etckeeper!;s!^/usr/bin/etckeeper!etckeeper!;s!^/usb/sbin/etckeeper!etckeeper!' %_sysconfdir/.git/hooks/pre-commit
 fi
@@ -58,9 +61,13 @@ fi
 %_cachedir/%name
 %_sysconfdir/cron.daily/%name
 %_unitdir/%{name}.*
-%doc README.md
+%doc README.md GPL
 
 %changelog
+* Tue Jun 28 2022 Vitaly Chikunov <vt@altlinux.org> 1.18.8-alt2
+- Fixed annoying 'egrep is obsolescent' warning.
+- Updated License, Group, and Url tags.
+
 * Sun Sep 30 2018 Terechkov Evgenii <evg@altlinux.org> 1.18.8-alt1
 - 1.18.8
 
