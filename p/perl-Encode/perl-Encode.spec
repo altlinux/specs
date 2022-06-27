@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Encode
 Name: perl-%dist
-Version: 3.17
+Version: 3.18
 Release: alt1
 
 Summary: Character encodings
-License: GPL or Artistic
+License: GPLv2+ or Artistic-2
 Group: Development/Perl
 
 URL: %CPAN %dist
@@ -134,6 +134,9 @@ bzip2 -k Changes
 	%perl_vendor_archlib/Encode/MIME/Header/ISO_2022_JP.pm
 
 %changelog
+* Mon Jun 27 2022 Igor Vlasenko <viy@altlinux.org> 3.18-alt1
+- new version
+
 * Thu Apr 07 2022 Igor Vlasenko <viy@altlinux.org> 3.17-alt1
 - new version
 
