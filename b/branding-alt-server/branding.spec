@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt2
+Release: alt3
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -171,6 +171,25 @@ Distribution license and release notes
 В данном пакете находится лицензия и дополнительные сведения
 для дистрибутива %distro_name_ru.
 
+%package mate-settings
+BuildArch: noarch
+Summary: MATE settings for %distro_name
+License: Distributable
+Group:   Graphical desktop/GNOME
+%branding_add_conflicts %flavour mate-settings
+%branding_add_conflicts %flavour graphics
+Requires(post): lightdm-gtk-greeter
+# To avoid install check conflicts
+Requires: %name-graphics = %EVR
+Conflicts: installer-feature-lightdm-stage3 < 0.1.0-alt1
+# Due to /usr/share/install3/lightdm-gtk-greeter.conf
+Conflicts: branding-simply-linux-system-settings
+Conflicts: branding-alt-workstation-mate-settings
+Conflicts: lxde-settings-lxdesktop < 0.3.2-alt2
+
+%description mate-settings
+MATE settings for %distro_name
+
 %package slideshow
 Summary: Slideshow for %distro_name installer
 Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива %distro_name_ru
@@ -217,6 +236,9 @@ make
 %install
 %makeinstall
 find %buildroot -name \*.in -delete
+
+mkdir -p %buildroot/%_datadir/install3
+install mate-settings/lightdm-gtk-greeter.conf %buildroot/%_datadir/install3/lightdm-gtk-greeter.conf
 
 #bootloader
 %ifarch %ix86 x86_64
@@ -298,6 +320,9 @@ fi
 %_datadir/alt-notes/release-notes.*
 %ghost %config(noreplace) %_datadir/alt-notes/license.*.html
 
+%files mate-settings
+%_datadir/install3/lightdm-gtk-greeter.conf
+
 %files slideshow
 /etc/alterator/slideshow.conf
 /usr/share/install2/slideshow
@@ -313,6 +338,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Mon Jun 27 2022 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt3
+- add /usr/share/install3/lightdm-gtk-greeter.conf
+  to change the keyboard layout in greeter
+- remove wrong web links
+
 * Tue May 17 2022 Alexey Shabalin <shaba@altlinux.org> 10.1-alt2
 - add /etc/altlinux-release to package (fixed ALT#41741).
 - update Provides.
