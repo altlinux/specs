@@ -1,5 +1,5 @@
 Name: flameshot
-Version: 11.0.0
+Version: 12.0.0
 Release: alt1
 
 Summary: Powerful yet simple to use screenshot software
@@ -38,6 +38,7 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_bindir/%name
 %_datadir/applications/org.flameshot.Flameshot.desktop
 %_datadir/bash-completion/completions/%name
+%_datadir/fish/vendor_completions.d/flameshot.fish
 %_datadir/zsh/site-functions/_%name
 %_datadir/dbus-1/interfaces/org.flameshot.Flameshot.xml
 %_datadir/dbus-1/services/org.flameshot.Flameshot.service
@@ -52,6 +53,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_man1dir/flameshot.1.xz
 
 %changelog
+* Mon Jun 27 2022 Grigory Ustinov <grenka@altlinux.org> 12.0.0-alt1
+- Automatically updated to 12.0.0.
+
 * Tue Jan 18 2022 Grigory Ustinov <grenka@altlinux.org> 11.0.0-alt1
 - Automatically updated to 11.0.0.
 
