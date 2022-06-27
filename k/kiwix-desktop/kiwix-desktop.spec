@@ -1,6 +1,6 @@
 Name:     kiwix-desktop
 Version:  2.2.2
-Release:  alt1
+Release:  alt2
 
 # no qtwebengine
 ExcludeArch: ppc64le
@@ -11,6 +11,9 @@ Group:    Other
 Url:      https://github.com/kiwix/kiwix-desktop
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
+
+# no qtwebengine
+ExcludeArch: ppc64le
 
 Source:   %name-%version.tar
 
@@ -47,6 +50,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Mon Jun 27 2022 Andrey Cherepanov <cas@altlinux.org> 2.2.2-alt2
+- Added inheritance for p10.
+
 * Fri Jun 24 2022 Andrey Cherepanov <cas@altlinux.org> 2.2.2-alt1
 - New version.
 
@@ -55,6 +61,9 @@ export PATH=%_qt5_bindir:$PATH
 
 * Sat Mar 05 2022 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
 - New version.
+
+* Thu Mar 03 2022 Sergey V Turchin <zerg@altlinux.org> 2.0.5-alt2
+- exclude ppc64le from build
 
 * Mon Jan 31 2022 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
 - exclude ppc64le from build
