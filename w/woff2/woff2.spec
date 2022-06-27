@@ -1,10 +1,11 @@
 Name: woff2
 Version: 1.0.2
-Release: alt2.1
+Release: alt3
 
 Summary: WOFF2 compress/decompress tools
-Group: File tools
 License: MIT
+Group: File tools
+
 Url: https://github.com/google/woff2
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -59,7 +60,8 @@ libraries.
 %build
 %cmake \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
-    -DCMAKE_SKIP_RPATH:BOOL=ON
+    -DCMAKE_SKIP_RPATH:BOOL=ON \
+    -DCANONICAL_PREFIXES=ON \
 %nil
 %cmake_build
 
@@ -86,6 +88,9 @@ cp -a %_cmake__builddir/woff2_* %buildroot%_bindir/
 
 
 %changelog
+* Mon Jun 27 2022 Michael Shigorin <mike@altlinux.org> 1.0.2-alt3
+- E2K: ftbfs fix (cf. gentoo#661942)
+
 * Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt2.1
 - rebuild with new cmake macros
 
