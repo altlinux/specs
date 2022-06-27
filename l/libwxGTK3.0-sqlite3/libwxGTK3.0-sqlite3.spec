@@ -3,7 +3,7 @@
 %define oname wxsqlite3
 
 Name: libwxGTK%wxversion-sqlite3
-Version: 4.5.1
+Version: 4.8.1
 Release: alt1
 
 Summary: C++ wrapper around the SQLite 3.x database
@@ -93,6 +93,9 @@ wxsqlite3.pc.in > %buildroot%_pkgconfigdir/%oname-%wxversion.pc
 #doc docs/html
 
 %changelog
+* Mon Jun 27 2022 Anton Midyukov <antohami@altlinux.org> 4.8.1-alt1
+- new version (4.8.1) with rpmgs script
+
 * Thu Mar 26 2020 Anton Midyukov <antohami@altlinux.org> 4.5.1-alt1
 - new version (4.5.1) with rpmgs script
 
