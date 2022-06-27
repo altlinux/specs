@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Virtual environment for Node.js & integrator with virtualenv
@@ -19,6 +19,8 @@ BuildRequires(pre): rpm-build-python3
 %if_with check
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-pytest
+BuildRequires: python3-module-coverage
+BuildRequires: nodejs
 %endif
 
 BuildArch: noarch
@@ -41,14 +43,20 @@ doesn't share libraries with other node.js virtual environments.
 %python3_install
 
 %check
-%__python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+# test_smoke is an integration test requiring network access.
+py.test-3 -k 'not test_smoke'
 
 %files
 %_bindir/%modulename
 %python3_sitelibdir/%modulename.py
 %python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Jun 27 2022 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt1
+- Automatically updated to 1.7.0.
+- Build with check.
+
 * Tue Apr 26 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt1
 - Initial build for Sisyphus.
