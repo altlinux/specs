@@ -1,22 +1,27 @@
-%def_without check
-
 %define modulename frozendict
+
+%def_with check
+
 Name: python3-module-frozendict
-Version: 2.3.0
+Version: 2.3.2
 Release: alt1
 
 Summary: An immutable dictionary
 
-Url: https://pypi.python.org/pypi/frozendict
+Url: https://pypi.org/project/frozendict
 License: MIT
 Group: Development/Python3
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://pypi.io/packages/source/f/%modulename/%modulename-%version.tar.gz
-Source: %modulename-%version.tar
+# https://github.com/Marco-Sulla/python-frozendict
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %description
 frozendict is an immutable wrapper around dictionaries that implements
@@ -24,7 +29,7 @@ the complete mapping interface. It can be used as a drop-in replacement
 for dictionaries where immutability is desired.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
 %python3_build
@@ -32,11 +37,20 @@ for dictionaries where immutability is desired.
 %install
 %python3_install
 
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -v
+
 %files
 %doc README.md
-%python3_sitelibdir/*
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Jun 27 2022 Grigory Ustinov <grenka@altlinux.org> 2.3.2-alt1
+- Automatically updated to 2.3.2.
+- Build with check.
+
 * Thu Mar 10 2022 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - new version 2.3.0 (with rpmrb script)
 - frozendict is arch dependent package now
