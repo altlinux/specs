@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 117
+%define centos_release 120
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,34 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Jun 27 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.120-alt1.el9
+- Updated to kernel-5.14.0-120.el9 (fixes: CVE-2022-1998, CVE-2022-2078):
+  + block: update with 5.18 for rhel 9.1
+  + fanotify: Fix stale file descriptor in copy_event_to_user()
+  + netfilter: nf_tables: sanitize nft_set_desc_concat_parse()
+  + ntb: update from upstream v5.17
+  + redhat: spec: trigger dracut when modules are installed separately
+  + [s390] s390/zcrypt: Add admask to zcdn
+  + scsi: mpi3mr: Add bsg device support
+  + tcp: Don't acquire inet_listen_hashbucket::lock with disabled BH.
+  + vmxnet3: Update network driver for RHEL 9.1
+
+* Fri Jun 24 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.119-alt1.el9
+- Updated to kernel-5.14.0-119.el9:
+  + mt76: mt7921: Fix the error handling path of mt7921_pci_probe()
+  + powerpc/pseries:  Added support for differentiated memory equivalent to ACPI special purpose memory (SPM) (SCM/pmem)
+  + revert bus: Make remove callback return void
+  + [s390] drivers/s390/char: Add Ultravisor io device
+  + [s390] [IBM 9.1 FEAT] Upgrade the SMC driver to latest from upstream, e.g. kernel 5.18
+  + tg3: Driver update for RHEL9.1
+  + wireless: stack & drivers update to v5.18
+
+* Thu Jun 23 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.118-alt1.el9
+- Updated to kernel-5.14.0-118.el9:
+  + ixgbe: Driver update for RHEL9.1
+  + sfc: update to upstream v5.18
+  + SGX updates from v5.17
+
 * Wed Jun 22 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.117-alt1.el9
 - Updated to kernel-5.14.0-117.el9:
   + Enable verbose error logging support for nvme
