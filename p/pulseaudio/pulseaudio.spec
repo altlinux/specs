@@ -1,5 +1,5 @@
 Name: pulseaudio
-Version: 16.0
+Version: 16.1
 Release: alt1
 
 Summary: PulseAudio is a networked sound server
@@ -238,7 +238,7 @@ mkdir -p \
 %_datadir/zsh/site-functions/_pulseaudio
 %_datadir/bash-completion/completions/*
 
-%_libdir/pulseaudio/libpulsecore-16.0.so
+%_libdir/pulseaudio/libpulsecore-16.1.so
 
 %_libexecdir/systemd/user/pulseaudio.service
 %_libexecdir/systemd/user/pulseaudio-x11.service
@@ -324,7 +324,7 @@ mkdir -p \
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-16.0.so
+%_libdir/pulseaudio/libpulsecommon-16.1.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -335,6 +335,9 @@ mkdir -p \
 %_datadir/vala/vapi/*
 
 %changelog
+* Mon Jun 27 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 16.1-alt1
+- 16.1 released
+
 * Mon May 30 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 16.0-alt1
 - 16.0 released
 
