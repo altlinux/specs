@@ -1,6 +1,6 @@
 Name:     kiwix-lib
-Version:  10.1.1
-Release:  alt2
+Version:  11.0.0
+Release:  alt1
 
 Summary:  Common code base for all Kiwix ports
 License:  GPL-3.0
@@ -67,6 +67,9 @@ sed -i "s/compiler.get_id()/'gcc'/" meson.build
 %_man1dir/*.1*
 
 %changelog
+* Fri Jun 24 2022 Andrey Cherepanov <cas@altlinux.org> 11.0.0-alt1
+- New version.
+
 * Thu Jun 02 2022 Andrey Cherepanov <cas@altlinux.org> 10.1.1-alt2
 - FTBFS: ignore warning about old Xapian version.
 
