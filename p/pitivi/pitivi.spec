@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2021
+%define ver_major 2022
 %define api_ver 1.0
 %define gst_api_ver 1.0
 %define gst_ver 1.18.0
@@ -11,8 +11,8 @@
 %define xdg_name org.pitivi.Pitivi
 
 Name: pitivi
-Version: %ver_major.05
-Release: alt1.1
+Version: %ver_major.06
+Release: alt1
 
 Summary: PiTiVi allows users to easily edit audio/video projects
 License: LGPLv2.1+
@@ -24,7 +24,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-Patch: %name-2021-05.0-up-meson-0.61.patch
 
 %add_python3_path %_libdir/%name/python
 
@@ -59,7 +58,6 @@ newbies and professionals alike.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %meson
@@ -82,6 +80,9 @@ newbies and professionals alike.
 
 
 %changelog
+* Sat Jun 25 2022 Yuri N. Sedunov <aris@altlinux.org> 2022.06-alt1
+- 2022.06
+
 * Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 2021.05-alt1.1
 - fixed build with meson >= 0.61
 
