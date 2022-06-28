@@ -1,10 +1,13 @@
 %define oname lmdb
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.93
-Release: alt3
+Version: 1.3.0
+Release: alt1
 
 Summary: Universal Python binding for the LMDB 'Lightning' Database
+
 License: OpenLDAP BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/lmdb/
@@ -14,8 +17,10 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: liblmdb-devel
+%if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-cffi
+%endif
 
 %description
 Universal Python binding for the LMDB 'Lightning' Database.
@@ -25,7 +30,7 @@ Universal Python binding for the LMDB 'Lightning' Database.
 
 %build
 export LMDB_FORCE_SYSTEM=1
-%python3_build_debug
+%python3_build
 
 %install
 export LMDB_FORCE_SYSTEM=1
@@ -38,10 +43,13 @@ py.test3
 
 %files
 %doc ChangeLog *.md docs/*.rst examples LICENSE
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Jun 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Automatically updated to 1.3.0.
+
 * Sat Dec 11 2021 Grigory Ustinov <grenka@altlinux.org> 0.93-alt3
 - Fixed build with python3.10.
 
