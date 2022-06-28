@@ -1,6 +1,6 @@
 
 Name: vzctl
-Version: 7.0.252
+Version: 7.0.254
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
@@ -19,7 +19,7 @@ ExclusiveArch: x86_64
 # these reqs are for vz helper scripts
 Requires: ploop >= 7.0.199
 Requires: network-config-subsystem
-Requires: libvzctl >= 7.0.659
+Requires: libvzctl >= 7.0.714
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: glibc-devel libuuid-devel
@@ -124,6 +124,9 @@ exit 0
 %config %_sysconfdir/modules-load.d/*.conf
 
 %changelog
+* Tue Jun 28 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.0.254-alt1
+- 7.0.254
+
 * Thu May 12 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.0.252-alt1
 - 7.0.252
 
