@@ -17,7 +17,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.18.8
+Version: 1.18.10
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -32,8 +32,8 @@ Requires: dbus >= %dbus_version
 BuildRequires: libgudev-devel >= %libgudev_version
 BuildRequires: libgio-devel
 %{?_with_qrtr:BuildRequires: libqrtr-glib-devel >= 1.0.0}
-%{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.28.0}
-%{?_with_mbim:BuildRequires: libmbim-glib-devel >= 1.18.0}
+%{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.30.8}
+%{?_with_mbim:BuildRequires: libmbim-glib-devel >= 1.26.0}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 BuildRequires: ppp-devel
@@ -246,6 +246,11 @@ fi
 %endif
 
 %changelog
+* Tue Jun 28 2022 Mikhail Efremov <sem@altlinux.org> 1.18.10-alt1
+- Patch from upstream:
+   + mm-sms-part-3gpp: sms_decode_text: avoid decoding an empty.
+- Updated to 1.18.10.
+
 * Wed May 11 2022 Mikhail Efremov <sem@altlinux.org> 1.18.8-alt1
 - Moved DBus interface xml files to devel subpackage.
 - Updated to 1.18.8.
