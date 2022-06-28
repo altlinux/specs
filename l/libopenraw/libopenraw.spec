@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define gdk_pixbuf_moduledir  %(pkg-config --variable gdk_pixbuf_moduledir gdk-pixbuf-2.0)
 %define api_ver 0.3
@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: libopenraw
-Version: 0.3.1
+Version: 0.3.2
 Release: alt1
 
 Summary: Decode camera RAW files
@@ -21,7 +21,7 @@ Source: https://libopenraw.freedesktop.org/download/libopenraw-%version.tar.bz2
 Vcs: https://gitlab.freedesktop.org/libopenraw/libopenraw.git
 Source: %name-%version.tar
 %endif
-Source1: %name-%version-mp4.tar
+%{?_disable_bootstrap:Source1: %name-%version-mp4.tar}
 
 BuildRequires: autoconf-archive boost-devel gcc-c++ libcurl-devel libgio-devel
 BuildRequires: libjpeg-devel libxml2-devel
@@ -76,11 +76,13 @@ replace-with = "vendored-sources"
 directory = "vendor"
 _EOF_
 tar -cf %_sourcedir/%name-%version-mp4.tar vendor .cargo
+popd
 }
 mv vendor .cargo lib/mp4
 sed -i 's/byteorder = "1.2.1"/byteorder = "1.2.2"/' lib/mp4/mp4parse/Cargo.toml
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-static \
     %{subst_enable gnome}
@@ -116,6 +118,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Jun 28 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Wed Apr 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - updated to 0.3.1-12-gf2cfeee
 
