@@ -20,7 +20,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 
 Name: clickhouse
 Version: 22.3.7.28
-Release: alt1
+Release: alt2
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
 Group: Databases
@@ -351,6 +351,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Tue Jun 28 2022 Anton Farygin <rider@altlinux.ru> 22.3.7.28-alt2
+- fix version in clickhouse-client output
+
 * Tue Jun 21 2022 Anton Farygin <rider@altlinux.ru> 22.3.7.28-alt1
 - 22.3.6.5 -> 22.3.7.28
 
