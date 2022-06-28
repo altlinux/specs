@@ -5,7 +5,7 @@
 %def_with gtk4
 
 Name: libnma
-Version: 1.8.38
+Version: 1.8.40
 Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: Graphical desktop/GNOME
@@ -189,6 +189,9 @@ This package contains development documentation for libnma-devel-doc.
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Tue Jun 28 2022 Mikhail Efremov <sem@altlinux.org> 1.8.40-alt1
+- Updated to 1.8.40.
+
 * Tue Apr 19 2022 Mikhail Efremov <sem@altlinux.org> 1.8.38-alt1
 - Added common subpackage.
 - libnma-gtk4: Updated summary/description.

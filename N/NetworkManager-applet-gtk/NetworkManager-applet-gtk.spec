@@ -15,7 +15,7 @@
 %endif
 
 Name: NetworkManager-applet-gtk
-Version: 1.26.0
+Version: 1.28.0
 Release: alt1%git_hash
 License: GPLv2+
 Group: Graphical desktop/GNOME
@@ -99,6 +99,9 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Tue Jun 28 2022 Mikhail Efremov <sem@altlinux.org> 1.28.0-alt1
+- Updated to 1.28.0.
+
 * Tue Mar 22 2022 Mikhail Efremov <sem@altlinux.org> 1.26.0-alt1
 - Updated to 1.26.0.
 
