@@ -1,33 +1,55 @@
 %define _unpackaged_files_terminate_build 1
-Name: sysstat
-Version: 12.5.1
-Release: alt2
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
-Summary: The sar and iostat system monitoring commands
-License: GPLv2+
-Group: System/Base
+Name: sysstat
+Version: 12.6.0
+Release: alt1
+
+Summary: Performance monitoring tools for Linux
+License: GPL-2.0-or-later
+Group: Monitoring
 
 URL: http://sebastien.godard.pagesperso-orange.fr/
-# https://github.com/sysstat/sysstat.git
+Vcs: https://github.com/sysstat/sysstat.git
 Source: %name-%version.tar
 Source1: sysstat.init
 
-# https://github.com/sysstat/sysstat/pull/281
-Patch1: %name-%version-alt-32bit-fix.patch
-
-# Automatically added by buildreq on Wed Aug 04 2010
 BuildRequires: libsensors3-devel
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc desktop-file-utils}}
 
 %description
-This package provides the sar and iostat commands for the Linux operating
-system, similar to their traditional UNIX counterparts. They enable system
-monitoring of disk, network, and other IO activity.
+The sysstat package contains various utilities, common to many commercial
+Unixes, to monitor system performance and usage activity:
+
+- iostat reports CPU statistics and input/output statistics for block devices
+  and partitions.
+- mpstat reports individual or combined processor related statistics.
+- pidstat reports statistics for Linux tasks (processes) : I/O, CPU, memory,
+  etc.
+- tapestat reports statistics for tape drives connected to the system.
+- cifsiostat reports CIFS statistics.
+
+Sysstat also contains tools you can schedule via cron or systemd to collect and
+historize performance and activity data:
+
+- sar collects, reports and saves system activity information (see below a list
+  of metrics collected by sar).
+- sadc is the system activity data collector, used as a backend for sar.
+- sa1 collects and stores binary data in the system activity daily data file.
+  It is a front end to sadc designed to be run from cron or systemd.
+- sa2 writes a summarized daily activity report. It is a front end to sar
+  designed to be run from cron or systemd.
+- sadf displays data collected by sar in multiple formats (CSV, XML, JSON, etc.)
+  and can be used for data exchange with other programs. This command can also
+  be used to draw graphs for the various activities collected by sar using SVG
+  (Scalable Vector Graphics) format.
 
 %package isag
 Summary: Interactive System Activity Graph
-License: GPLv2+
-Group: System/Base
-Requires: gnuplot, sysstat = %version
+License: GPL-2.0-or-later
+Group: Monitoring
+Requires: %name = %EVR
 
 BuildArch: noarch
 
@@ -37,22 +59,41 @@ by a previous sar run.
 
 %prep
 %setup
-%patch1 -p1
+
+sed -i '/\[Service\]/a\
+LogsDirectory=sa\
+PrivateTmp=true\
+ProtectClock=true\
+ProtectControlGroups=true\
+ProtectHome=true\
+ProtectHostname=true\
+ProtectKernelLogs=true\
+ProtectKernelModules=true\
+ProtectKernelTunables=true\
+ProtectSystem=strict\
+RestrictNamespaces=true\
+RestrictRealtime=true\
+StandardOutput=null\
+' sysstat.service.in cron/sysstat-*.service.in
+
+sed -i '/\[Unit\]/a\
+After=remote-fs.target local-fs.target' sysstat.service.in
 
 %build
-export CFLAGS="%optflags"
+%autoreconf
+%add_optflags %(getconf LFS_CFLAGS)
 export sa_lib_dir=%_libdir/sa
-# we build script for daily summary that takes yesterday's data and will
-# run it by cron after midnight
+export SADC_OPT='-S DISK'
 %configure \
-	--enable-yesterday \
 	--enable-sensors \
 	--disable-file-attr \
-	--disable-compress-manpg 
+	--disable-compress-manpg \
+	--disable-stripping \
+	history=61 \
+	compressafter=31 \
+	%nil
 
-sed -i 's/SADC_OPTIONS=""/SADC_OPTIONS="-S DISK"/' sysstat.sysconfig
-
-%make_build SA_LIB_DIR="%_libdir/sa" LFLAGS="-lsensors"
+%make_build
 
 %install
 %makeinstall_std IGNORE_MAN_GROUP=y
@@ -61,40 +102,58 @@ install -p -m644 -D sysstat.ioconf %buildroot%_sysconfdir/sysconfig/
 install -p -m644 -D sysstat.sysconfig %buildroot/etc/sysconfig/sysstat
 install ./contrib/isag/isag %buildroot%_bindir
 install ./contrib/isag/isag.1  %buildroot%_man1dir
+install -Dm044 .gear/isag.desktop %buildroot%_desktopdir/isag.desktop
 
 install -d %buildroot%_sysconfdir/cron.d/
-# Create cronjob file inline. We can easily use here rpm macros for libdir and
-# thus allows for multiarch build.
-cat > %buildroot%_sysconfdir/cron.d/%name <<EOF
-# run system activity accounting tool every 10 minutes
-*/10 * * * * root %_libdir/sa/sa1 -S DISK 1 1
-# generate a daily summary of process accounting
-0 2 * * * root %_libdir/sa/sa2 -A
+# Create cronjob file inline. We can use here rpm macros for libdir and
+# thus allows for multi-arch build.
+cat > %buildroot%_sysconfdir/cron.d/%name <<-EOF
+	# Run system activity accounting tool every 10 minutes
+	# unless system is booted into systemd, in that case
+	# sysstat.service will do the work and enable timers.
+	*/10 * * * * root  test -d /run/systemd/system || %_libdir/sa/sa1 1 1
+	# Generate a daily summary of process accounting.
+	0    2 * * * root  test -d /run/systemd/system || %_libdir/sa/sa2 -A
 EOF
 
 install -pD -m755 %_sourcedir/sysstat.init %buildroot%_initrddir/sysstat
-subst 's@LIBDIR@%_libdir@' %buildroot%_initrddir/sysstat
+subst 's!@LIBDIR@!%_libdir!' %buildroot%_initrddir/sysstat
 
-# Install service file
-mkdir -p %buildroot%_unitdir
+# Install systemd files
+mkdir -p %buildroot{%_unitdir,%_presetdir,/lib/systemd/system-sleep}
 install -m 0644 sysstat.service %buildroot%_unitdir/
-
-# Install timer units
 install -m 0644 cron/sysstat-{collect,summary}.{service,timer} %buildroot%_unitdir/
+install -m 0644 cron/sysstat.sleep %buildroot/lib/systemd/system-sleep/%name.sleep
+echo "enable %name.service" | tee %buildroot%_presetdir/60-%name.preset
 
 # sysstat makefiles install the docs, blow them away
 rm -rf %buildroot/usr/doc
 
 %find_lang %name
 
+%check
+desktop-file-validate %buildroot%_desktopdir/isag.desktop
+%buildroot%_libdir/sa/sadc -S ALL 1 2 a
+%buildroot%_bindir/sar -A -f a
+
 %post
+SYSTEMCTL=systemctl
 %post_service sysstat
+# It works w/o enable&start on sysv because of cron.d
+# Make it the same on systemd - sysstat.service [mostly]
+# enables the timers.
+if [ -d /run/systemd/system ]; then
+	# User can disable the service and in that case it will not
+	# be started.
+	$SYSTEMCTL is-enabled --quiet %name &&
+	$SYSTEMCTL start %name
+fi
 
 %preun
 %preun_service sysstat
 if [[ $1 -eq 0 ]]; then
   # Remove sa logs if removing sysstat completely
-  rm -f %_logdir/sa/*
+  rm -f %_logdir/sa/sa*
 fi
 
 %files -f %name.lang
@@ -104,20 +163,33 @@ fi
 %_bindir/*
 %exclude %_bindir/isag
 %_libdir/sa
-%_initrddir/*
-%_unitdir/*
+%_initrddir/%name
+%_unitdir/%{name}*
+/lib/systemd/system-sleep/%name.sleep
+%_presetdir/60-%name.preset
 %_man1dir/*
 %exclude %_man1dir/isag.*
 %_man5dir/*
 %_man8dir/*
 %attr(750,root,adm) %_logdir/sa
-%doc CHANGES CREDITS FAQ.md
+%doc CHANGES CREDITS FAQ.md README.md BUG_REPORT
 
 %files isag
+%doc contrib/isag/README-isag
 %_bindir/isag
 %_man1dir/isag.*
+%_desktopdir/isag.desktop
 
 %changelog
+* Tue Jun 28 2022 Vitaly Chikunov <vt@altlinux.org> 12.6.0-alt1
+- Update to v12.6.0 (2022-05-29).
+- Fixed 'egrep is obsolescent' warning (actually since v12.5.5).
+- Update package description and Group tag.
+- Enable LFS on 32-bit architectures.
+- Apply systemd Unit hardening.
+- Work via crontab on sysv and timers on systemd.
+- spec: Add %%check section with a simple test.
+
 * Thu Dec 10 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 12.5.1-alt2
 - Fixed issue on 32bit systems where generated system activity file could not be read.
 
