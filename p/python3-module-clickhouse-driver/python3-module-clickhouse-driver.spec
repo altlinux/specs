@@ -2,7 +2,7 @@
 %define oname clickhouse-driver
 
 Name:       python3-module-%oname
-Version:    0.2.3
+Version:    0.2.4
 Release:    alt1
 License:    %mit
 Group:      Development/Python3
@@ -60,6 +60,9 @@ install -pm0644 docs/*/man/*.1 %buildroot/%_man1dir/
 %python3_sitelibdir/clickhouse_driver/tests/
 
 %changelog
+* Tue Jun 28 2022 Anton Farygin <rider@altlinux.ru> 0.2.4-alt1
+- 0.2.3 -> 0.2.4
+
 * Mon Feb 21 2022 Anton Farygin <rider@altlinux.ru> 0.2.3-alt1
 - 0.2.2 -> 0.2.3
 
