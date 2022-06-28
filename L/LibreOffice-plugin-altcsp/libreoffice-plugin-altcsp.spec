@@ -1,9 +1,10 @@
-%define ext_dir  %{_libdir}/LibreOffice-still/share/extensions/
+%define ext_dir  %{_libdir}/LibreOffice/share/extensions/
+%define ext_still_dir  %{_libdir}/LibreOffice-still/share/extensions/
 %define ext_name altcsp
 
 Name: LibreOffice-plugin-altcsp
 Version: 0.0.3
-Release: alt1
+Release: alt2
 
 Group: File tools
 Summary: LibreOffice plugin for alt-csp-cryptopro
@@ -27,10 +28,18 @@ cd %buildroot%ext_dir/
 tar -xvf %SOURCE0
 cp %_licensedir/%license %buildroot%ext_dir/%ext_name/license.txt
 
+# copy regular plugin to LO-still directory
+mkdir -p %buildroot%ext_still_dir/
+cp -r %buildroot%ext_dir/%ext_name/ %buildroot%ext_still_dir/%ext_name/
+
 %files
 %ext_dir/%ext_name/
+%ext_still_dir/%ext_name/
 
 %changelog
+* Fri Jun 24 2022 Oleg Solovyov <mcpain@altlinux.org> 0.0.3-alt2
+- install module for both LO and LO-still
+
 * Tue Jul 13 2021 Oleg Solovyov <mcpain@altlinux.org> 0.0.3-alt1
 - write module on basic
 
