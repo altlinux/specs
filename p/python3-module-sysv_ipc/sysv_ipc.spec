@@ -1,13 +1,13 @@
 %define oname sysv_ipc
 
 Name: python3-module-%oname
-Version: 1.0.1
-Release: alt2
+Version: 1.1.0
+Release: alt1
 Summary: System V IPC for Python - Semaphores, Shared Memory and Message Queues
 Group: Development/Python3
 License: GPLv3+
 Url: http://semanchuk.com/philip/%oname/
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires: rpm-build-python3
 
@@ -27,7 +27,7 @@ demo) shows how to use shared memory and semaphores. The second (in the
 directory demo2) shows how to use message queues.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
@@ -37,9 +37,13 @@ directory demo2) shows how to use message queues.
 
 %files
 %doc INSTALL LICENSE README ReadMe.html VERSION
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname.*.so
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Jun 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Build new version.
+
 * Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt2
 - Drop python2 support.
 
