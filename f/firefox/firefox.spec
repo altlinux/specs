@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        101.0.1
+Version:        102.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -32,12 +32,14 @@ Patch006: 0006-use-floats-for-audio-on-arm-too.patch
 Patch007: 0007-bmo-847568-Support-system-harfbuzz.patch
 Patch008: 0008-bmo-847568-Support-system-graphite2.patch
 Patch009: 0009-bmo-1559213-Support-system-av1.patch
-Patch010: 0010-VAAPI-Add-extra-frames.patch
-Patch011: 0011-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch012: 0012-ALT-fix-double_t-redefinition.patch
-Patch013: 0013-build-Disable-Werror.patch
-Patch014: 0014-Prevent-discrimination-of-Russian-services.patch
-Patch015: 0015-Wayland-Utility-popups-may-be-invisible-or-dislocate.patch
+Patch010: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch011: 0011-ALT-fix-double_t-redefinition.patch
+Patch012: 0012-build-Disable-Werror.patch
+Patch013: 0013-Prevent-discrimination-of-Russian-services.patch
+Patch014: 0014-Bug-1735929-Linux-Add-support-of-EGL_MESA_image_dma_.patch
+Patch015: 0015-Bug-1735929-Linux-Import-DMABufSurfaceRGBA-from-exis.patch
+Patch016: 0016-Bug-1735929-Linux-Use-EGL_MESA_image_dma_buf_export-.patch
+Patch017: 0017-Bug-1773968-Linux-Release-EGLImages-in-DMABufSurface.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -447,6 +449,30 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Jun 29 2022 Alexey Gladkov <legion@altlinux.ru> 102.0-alt1
+- New release (102.0).
+- Use internal libevent.
+- Security fixes:
+  + CVE-2022-34479: A popup window could be resized in a way to overlay the address bar with web content
+  + CVE-2022-34470: Use-after-free in nsSHistory
+  + CVE-2022-34468: CSP sandbox header without `allow-scripts` can be bypassed via retargeted javascript: URI
+  + CVE-2022-34482: Drag and drop of malicious image could have led to malicious executable and potential code execution
+  + CVE-2022-34483: Drag and drop of malicious image could have led to malicious executable and potential code execution
+  + CVE-2022-34476: ASN.1 parser could have been tricked into accepting malformed ASN.1
+  + CVE-2022-34481: Potential integer overflow in ReplaceElementsAt
+  + CVE-2022-34474: Sandboxed iframes could redirect to external schemes
+  + CVE-2022-34469: TLS certificate errors on HSTS-protected domains could be bypassed by the user on Firefox for Android
+  + CVE-2022-34471: Compromised server could trick a browser into an addon downgrade
+  + CVE-2022-34472: Unavailable PAC file resulted in OCSP requests being blocked
+  + CVE-2022-34478: Microsoft protocols can be attacked if a user accepts a prompt
+  + CVE-2022-2200: Undesired attributes could be set as part of prototype pollution
+  + CVE-2022-34480: Free of uninitialized pointer in lg_init
+  + CVE-2022-34477: MediaError message property leaked information on cross-origin same-site pages
+  + CVE-2022-34475: HTML Sanitizer could have been bypassed via same-origin script via use tags
+  + CVE-2022-34473: HTML Sanitizer could have been bypassed via use tags
+  + CVE-2022-34484: Memory safety bugs fixed in Firefox 102 and Firefox ESR 91.11
+  + CVE-2022-34485: Memory safety bugs fixed in Firefox 102
+
 * Fri Jun 10 2022 Alexey Gladkov <legion@altlinux.ru> 101.0.1-alt1
 - New release (101.0.1).
 
