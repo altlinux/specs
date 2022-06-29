@@ -1,13 +1,16 @@
 %define oname scrypt
 
-Summary: Bindings for the scrypt key derivation function library
 Name: python3-module-%oname
-Version: 0.8.6
-Release: alt2
-Url: http://bitbucket.org/mhallin/py-scrypt
-Source: https://pypi.python.org/packages/source/a/%oname/%oname-%version.tar.gz
+Version: 0.8.20
+Release: alt1
+
+Summary: Bindings for the scrypt key derivation function library
+
+Url: https://pypi.org/project/scrypt
 License: BSD
 Group: Development/Python3
+
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libssl-devel
@@ -34,7 +37,7 @@ Requires: %name = %EVR
 This package contains tests for %oname.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
@@ -44,9 +47,13 @@ This package contains tests for %oname.
 
 %files
 %doc README.rst LICENSE
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.20-alt1
+- Build new version.
+
 * Mon May 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.6-alt2
 - Drop python2 support.
 
