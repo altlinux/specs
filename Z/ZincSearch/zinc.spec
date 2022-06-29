@@ -5,7 +5,7 @@
 %define oname zinc
 
 Name: ZincSearch
-Version: 0.2.4
+Version: 0.2.5
 Release: alt1
 Summary: Zinc Search engine
 
@@ -46,7 +46,8 @@ data using APIs and searching using kibana
 # $ cd webui
 # $ git rm -r node_modules
 # $ npm install
-# $ rm -f web/node_modules/esbuild-linux-64/bin/esbuild web/node_modules/esbuild/bin/esbuild
+# $ rm -rf node_modules/esbuild-linux-*
+# $ rm -f node_modules/esbuild/bin/esbuild
 # $ git add -f node_modules
 # $ git commit -n --no-post-rewrite -m "add node js modules"
 #%%endif
@@ -89,7 +90,7 @@ popd
 %endif
 
 export BUILD_DATE=`date -u '+%%Y-%%m-%%d_%%I:%%M:%%S%%p-GMT'`
-export ZINC_LDFLAGS=" -X github.com/zinclabs/zinc/pkg/meta.Version=%version -X github.com/zinclabs/zinc/pkg/meta.BuildDate=$BUILD_DATE -X github.com/zinclabs/zinc/pkg/meta.CommitHash=%release"
+export ZINC_LDFLAGS=" -X github.com/zinclabs/zinc/pkg/meta.Version=%version -X github.com/zinclabs/zinc/pkg/meta.BuildDate=$BUILD_DATE -X github.com/zinclabs/zinc/pkg/meta.CommitHash=%release -X github.com/zinclabs/zinc/pkg/meta.Build=%release -X github.com/zinclabs/zinc/pkg/meta.Branch=main"
 
 
 CGO_ENABLED=0 GOGC=off go build -ldflags "$ZINC_LDFLAGS"  \
@@ -101,7 +102,7 @@ install -p -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%oname
 install -p -D -m 0644 %SOURCE3 %buildroot%_unitdir/%oname.service
 
 # Setup directories
-#install -d -m 755 %buildroot%_logdir/%oname
+#install -d -m 755 %%buildroot%%_logdir/%%oname
 install -d -m 755 %buildroot%_sharedstatedir/%oname
 # Install logrotate
 #install -p -D -m 644 %%SOURCE10 %%buildroot%%_logrotatedir/%%oname
@@ -121,10 +122,15 @@ useradd -r -g %oname -c 'Zinc Search engine' \
 %_bindir/%oname
 %config(noreplace) %attr(640, root, %oname) %_sysconfdir/sysconfig/%oname
 %_unitdir/%oname.service
-#%dir %attr(0770, root, %name) %_logdir/%oname
-%dir %attr(0750, %name, %name) %_sharedstatedir/%oname
+#%dir %attr(0770, root, %oname) %_logdir/%oname
+%dir %attr(0750, %oname, %oname) %_sharedstatedir/%oname
 
 %changelog
+* Wed Jun 29 2022 Alexey Shabalin <shaba@altlinux.org> 0.2.5-alt1
+- 0.2.5
+- update env for zinc service
+- fix perm on /var/lib/zinc
+
 * Sun Jun 12 2022 Alexey Shabalin <shaba@altlinux.org> 0.2.4-alt1
 - 0.2.4
 
