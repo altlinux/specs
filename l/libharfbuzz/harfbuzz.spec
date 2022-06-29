@@ -1,19 +1,20 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name harfbuzz
-%define ver_major 4.3
+%define ver_major 4.4
 %def_with graphite2
 %def_with icu
 %def_with gobject
 %def_enable introspection
 %def_enable docs
+%def_disable experimental_api
 
 %ifnarch armh
 %def_enable check
 %endif
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -117,7 +118,8 @@ GObject introspection devel data for the HarfBuzz library
 	%{?_with_graphite2:-Dgraphite2=enabled} \
         %{?_enable_gobject:-Dgobject=enabled} \
         %{?_enable_introspection:-Dintrospection=enabled} \
-	%{?_disable_docs:-Ddocs=disabled}
+	%{?_disable_docs:-Ddocs=disabled} \
+	%{?_enable_experimental_api:-Dexperimental_api=true}
 %nil
 %meson_build
 
@@ -178,6 +180,10 @@ GObject introspection devel data for the HarfBuzz library
 %endif
 
 %changelog
+* Wed Jun 29 2022 Yuri N. Sedunov <aris@altlinux.org> 4.4.1-alt1
+- updated to 4.4.1-2-g22835dea2
+- introduced experimental API knob (disabled by default)
+
 * Thu Jun 23 2022 Yuri N. Sedunov <aris@altlinux.org> 4.3.0-alt1
 - 4.3.0
 
