@@ -3,10 +3,10 @@
 Name: kernel-image-rpi-un
 Release: alt1
 epoch:1
-%define kernel_need_version	5.17
+%define kernel_need_version	5.18
 # Used when kernel-source-x.y does not currently exist in repository.
-%define kernel_base_version	5.17
-%define kernel_sublevel .1
+%define kernel_base_version	5.18
+%define kernel_sublevel .7
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -24,7 +24,7 @@ Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
 
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	%__gcc_version_base
+%define kgcc_version	10
 
 # Enable/disable SGML docs formatting
 %if "%sub_flavour" == "def" && %kgcc_version > 5
@@ -264,15 +264,12 @@ cp -a include %buildroot%kbuild_dir/include
 cp -a arch/%arch_dir/include %buildroot%kbuild_dir/arch/%arch_dir
 
 # drivers-headers install
-install -d %buildroot%kbuild_dir/drivers/scsi
 install -d %buildroot%kbuild_dir/drivers/md
 install -d %buildroot%kbuild_dir/drivers/usb/core
 install -d %buildroot%kbuild_dir/drivers/net/wireless
 install -d %buildroot%kbuild_dir/net/mac80211
 install -d %buildroot%kbuild_dir/kernel
 install -d %buildroot%kbuild_dir/lib
-cp -a drivers/scsi/scsi.h \
-	%buildroot%kbuild_dir/drivers/scsi/
 cp -a drivers/md/dm*.h \
 	%buildroot%kbuild_dir/drivers/md/
 cp -a drivers/usb/core/*.h \
@@ -444,6 +441,23 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jun 28 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.18.7-alt1
+- Updated to 5.18.7
+- https://github.com/raspberrypi/linux.git rpi-5.18.y commit 66742fe5d8a4ecd489f11aa315b6530c32eb126b
+- Baikal-M support git.alt/people/asheplyakov/linux.git commit 1adbc886c19b040851abd3975e8f45839e4207c0
+- Baikal-M: added PCI-E driver for "new" (SDK-M 5.5) firmware
+- Baikal-M: preliminary support of SDK-M 5.5 firmware
+- Build with GCC 10 to avoid spurious build failures
+
+* Thu May 26 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.18.0-alt1
+- Updated to 5.18.0
+- https://github.com/raspberrypi/linux.git rpi-5.18.y commit 596cca29caedbd932949a0f9835306d6c5d03ac4
+- Baikal-M support git.alt/people/asheplyakov/linux.git commit 30585df684ee2b8bbfeeee583055d5f702103ae1
+- Baikal-M: supported boards: ET101 rev 1.2, AQBM1000, TF307 (rev 1.4 aka MB-S-D)
+- Baikal-M: supported firmwares: based on SDK-M 5.3
+- Baikal-M: firmwares from SDK-M 5.4 and 5.5 are known to NOT work
+- adjusted spec due to drivers/scsi/scsi.h removal in v5.18
+
 * Wed Apr 06 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.17.1-alt1
 - Updated to 5.17.1
 - https://github.com/raspberrypi/linux.git rpi-5.17.y commit c86339fd1731b6c6776c9f3e609a0f5ef25045dc
