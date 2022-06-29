@@ -1,9 +1,11 @@
 %define module_name amqp
 
+%def_without check
+
 Name: python3-module-%module_name
 Version: 2.5.2
 Epoch: 1
-Release: alt2
+Release: alt3
 Group: Development/Python3
 License: GPLv2
 Summary: fork of amqplib used by Kombu containing additional features and improvements
@@ -12,11 +14,10 @@ URL: http://github.com/celery/py-amqp.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-sugar >= 0.9.1
 BuildRequires: python3-module-pytest-rerunfailures
-BuildRequires: python3(vine) python3(case)
+BuildRequires: python3(vine)
 
 %description
 This is a fork of amqplib_ which was originally written by Barry Pederson.
@@ -45,6 +46,10 @@ python3 setup.py test
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 1:2.5.2-alt3
+- Fixed BuildRequires.
+- Build without check.
+
 * Tue Oct 13 2020 Stanislav Levin <slev@altlinux.org> 1:2.5.2-alt2
 - Stopped Python2 package build(Python2 EOL).
 

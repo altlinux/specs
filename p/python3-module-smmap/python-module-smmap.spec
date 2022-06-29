@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
 Summary:  Sliding window memory map manager
 
@@ -17,8 +17,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 2.2.4
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-coverage python3-module-nosexcover
+BuildRequires: python3-module-coverage
 
 %description
 A pure python implementation of a sliding window memory map manager
@@ -51,6 +50,9 @@ python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt2
+- Fixed BuildRequires.
+
 * Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
 - new version 5.0.0 (with rpmrb script)
 

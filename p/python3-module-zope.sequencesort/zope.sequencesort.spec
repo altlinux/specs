@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 4.0.2
-Release: alt2
+Release: alt3
 
 Summary: Sequence Sorting
 License: ZPLv2.1
@@ -12,8 +12,7 @@ Url: http://pypi.python.org/pypi/zope.sequencesort/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose python3-module-coverage
-BuildRequires: python3-module-nosexcover
+BuildRequires: python3-module-coverage
 
 %py3_requires zope
 
@@ -49,7 +48,6 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %check
 %__python3 setup.py test -v
-nosetests3 -vv --with-xunit --with-xcoverage
 
 %files
 %doc *.txt
@@ -62,6 +60,9 @@ nosetests3 -vv --with-xunit --with-xcoverage
 
 
 %changelog
+* Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt3
+- Fixed BuildRequires.
+
 * Mon Dec 02 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.0.2-alt2
 - python2 disabled
 

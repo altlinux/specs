@@ -1,9 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 %define oname SAValidation
 
+# See BAO #42228
+%add_python3_req_skip nose
+%def_disable check
+
 Name: python3-module-%oname
 Version: 0.4.1
-Release: alt2
+Release: alt3
 
 Summary: Active Record like validation on SQLAlchemy declarative model objects
 License: BSD
@@ -14,8 +18,6 @@ BuildArch: noarch
 Source0: https://pypi.python.org/packages/77/b9/b88e840e46266c99b3a35cfe77272302b6023ee2fa3d2d408ca873268b72/%{oname}-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose
-BuildRequires: python3-module-nosexcover
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-SQLAlchemy
 BuildRequires: python3-module-dateutil
@@ -24,7 +26,6 @@ BuildRequires: python3-modules-sqlite3
 
 %py3_provides savalidation
 %py3_requires sqlalchemy dateutil formencode sqlite3
-
 
 %description
 SAValidation facilitates Active Record like validation on SQLAlchemy
@@ -63,6 +64,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt3
+- Fixed BuildRequires.
+
 * Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.1-alt2
 - porting on python3
 

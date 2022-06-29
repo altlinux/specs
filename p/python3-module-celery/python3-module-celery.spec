@@ -13,7 +13,7 @@
 
 Name: python3-module-%oname
 Version: 5.2.3
-Release: alt1
+Release: alt2
 
 Summary: Celery is an open source asynchronous task queue/job queue based on distributed message passing
 
@@ -36,11 +36,10 @@ BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
 BuildRequires: dvipng
 
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-html5lib python3-module-nose
+BuildRequires: python3-module-html5lib
 BuildRequires: python3(Crypto)
 BuildRequires: python3-module-django python3-module-ecdsa python3-module-pytz python3(requests)
-BuildRequires: python3(case) python3(eventlet)
+BuildRequires: python3(eventlet)
 BuildRequires: python3(redis)
 
 %if_with doc
@@ -61,7 +60,6 @@ BuildRequires: python3-module-botocore < 1.11.0
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-pytest >= 4.3.1
 BuildRequires: python3-module-pytest < 4.4.0
-BuildRequires: python3-module-unittest2
 %endif
 
 %if_with s3
@@ -159,6 +157,9 @@ rm -f t/unit/contrib/test_sphinx.py
 %endif
 
 %changelog
+* Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 5.2.3-alt2
+- Fixed BuildRequires.
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 5.2.3-alt1
 - new version 5.2.3 (with rpmrb script)
 

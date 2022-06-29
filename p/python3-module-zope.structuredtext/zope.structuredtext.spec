@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 4.1.1
-Release: alt2
+Release: alt3
 
 Summary: StructuredText parser
 License: ZPLv2.1
@@ -12,7 +12,7 @@ Url: http://pypi.python.org/pypi/zope.structuredtext/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nosexcover python3-module-coverage
+BuildRequires: python3-module-coverage
 
 %py3_requires zope
 
@@ -51,7 +51,6 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 %check
 %__python3 setup.py test -v
-nosetests3 -vv --with-xunit --with-xcoverage
 
 %files
 %doc *.txt *.rst docs/*.rst
@@ -68,6 +67,9 @@ nosetests3 -vv --with-xunit --with-xcoverage
 
 
 %changelog
+* Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt3
+- Fixed BuildRequires.
+
 * Fri Nov 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.1.1-alt2
 - python2 disabled
 

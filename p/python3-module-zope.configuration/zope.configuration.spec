@@ -1,10 +1,10 @@
 %define oname zope.configuration
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
 Version: 4.4.0
-Release: alt2
+Release: alt3
 
 Summary: Zope Configuration Markup Language (ZCML) (Python 3)
 License: ZPL
@@ -20,7 +20,6 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-repoze.sphinx.autointerface
 BuildRequires: python3-module-coverage
-BuildRequires: python3-module-nosexcover
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-zope.i18nmessageid
 BuildRequires: python3-module-zope.schema
@@ -123,6 +122,10 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %python3_sitelibdir/*/*/tests
 
 %changelog
+* Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt3
+- Fixed BuildRequires.
+- Build with check again.
+
 * Fri Jan 29 2021 Grigory Ustinov <grenka@altlinux.org> 4.4.0-alt2
 - Bootstrap for python3.9.
 

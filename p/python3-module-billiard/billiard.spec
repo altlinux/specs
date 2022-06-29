@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 3.6.4.0
-Release: alt2
+Release: alt3
 
 Summary: billiard is a fork of the Python 2.7 multiprocessing package
 
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-intro
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3(case)
 BuildRequires: python3(pytest) python3(psutil)
 
 %add_findreq_skiplist %python3_sitelibdir/%oname/popen_spawn_win32.py
@@ -50,6 +49,9 @@ mv %buildroot%_libexecdir/* %buildroot%_libdir/
 %python3_sitelibdir/*
 
 %changelog
+* Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 3.6.4.0-alt3
+- Fixed BuildRequires.
+
 * Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 3.6.4.0-alt2
 - Fixed BuildRequires.
 
