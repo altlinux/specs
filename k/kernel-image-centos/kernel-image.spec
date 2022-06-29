@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 120
+%define centos_release 121
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,16 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Jun 29 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.121-alt1.el9
+- Updated to kernel-5.14.0-121.el9:
+  + arm64: Update core arch code to upstream v5.16
+  + crypto: fips - make proc files report fips module name and version
+  + fuse: allow sharing existing sb
+  + gfs2: File corruption with large writes when memory is tight
+  + kbuild: Enable -std=gnu11
+  + redhat/configs: Set CONFIG_VIRTIO_IOMMU on x86_64
+  + redhat/kernel.spec.template: fix standalone tools build
+
 * Mon Jun 27 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.120-alt1.el9
 - Updated to kernel-5.14.0-120.el9 (fixes: CVE-2022-1998, CVE-2022-2078):
   + block: update with 5.18 for rhel 9.1
