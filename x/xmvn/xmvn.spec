@@ -9,66 +9,60 @@ BuildRequires: jpackage-default
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# XMvn uses OSGi environment provided by Tycho, it shouldn't require
-# any additional bundles.
+%bcond_with bootstrap
 
-
-# Integration tests are disabled by default, but you can run them by
-# adding "--with its" to rpmbuild or mock invocation.
-%bcond_with its
-
-%bcond_with gradle
+%if %{with bootstrap}
+%global mbi 1
+%endif
 
 Name:           xmvn
-Version:        3.1.0
-Release:        alt3_7jpp11
+Version:        4.0.0
+Release:        alt1_0jpp11
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
-
 URL:            https://fedora-java.github.io/xmvn/
-Source0:        https://github.com/fedora-java/xmvn/releases/download/%{version}/xmvn-%{version}.tar.xz
-
-# Upstream bug-fix patch:
-# https://github.com/fedora-java/xmvn/commit/a4d655c
-Patch1:         0001-Prefer-namespaced-metadata-when-duplicates-are-found.patch
-# Upstream bug-fix patch:
-# https://github.com/fedora-java/xmvn/commit/ccde1f4
-Patch2:         0002-Make-xmvn-subst-honor-settings-for-ignoring-duplicat.patch
-# Downstream bug-fix patch from modular branch:
-Patch3:         0003-Fix-requires-generation-for-self-depending-packages.patch
-# Submitted upstream: https://github.com/fedora-java/xmvn/pull/57
-Patch4:         0004-Honour-source-parameter.patch
-
 BuildArch:      noarch
 
-BuildRequires:  maven >= 3.6.1
+Source0:        https://github.com/fedora-java/xmvn/releases/download/%{version}/xmvn-%{version}.tar.xz
+
 BuildRequires:  maven-local
-BuildRequires:  apache-commons-compress
-BuildRequires:  beust-jcommander
-BuildRequires:  cglib
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-plugin-build-helper
-BuildRequires:  maven-assembly-plugin
-BuildRequires:  maven-install-plugin
-BuildRequires:  maven-plugin-plugin
-BuildRequires:  objectweb-asm
-BuildRequires:  modello
-BuildRequires:  xmlunit-assertj
-BuildRequires:  apache-ivy
-BuildRequires:  junit
-BuildRequires:  easymock
-BuildRequires:  maven-invoker
-BuildRequires:  plexus-containers-container-default
-BuildRequires:  plexus-containers-component-annotations
-BuildRequires:  plexus-containers-component-metadata
-%if %{with gradle}
-BuildRequires:  gradle >= 4.4.1
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
+BuildRequires:  mvn(com.beust:jcommander)
+BuildRequires:  mvn(org.apache.commons:commons-compress)
+BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-api)
+BuildRequires:  mvn(org.apache.maven.resolver:maven-resolver-util)
+BuildRequires:  mvn(org.apache.maven:maven-artifact)
+BuildRequires:  mvn(org.apache.maven:maven-core)
+BuildRequires:  mvn(org.apache.maven:maven-model)
+BuildRequires:  mvn(org.apache.maven:maven-model-builder)
+BuildRequires:  mvn(org.apache.maven:maven-plugin-api)
+BuildRequires:  mvn(org.codehaus.modello:modello-maven-plugin)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-classworlds)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-container-default)
+BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter)
+BuildRequires:  mvn(org.ow2.asm:asm)
+BuildRequires:  mvn(org.slf4j:slf4j-api)
+BuildRequires:  mvn(org.slf4j:slf4j-simple)
+BuildRequires:  mvn(org.xmlunit:xmlunit-assertj3)
+# Maven home is used as template for XMvn home
+BuildRequires:  maven
+# Test dependency (for testing compatibility with Java 8)
+BuildRequires:  java-1.8.0-openjdk-devel
 %endif
 
 Requires:       %{name}-minimal = %{version}-%{release}
 Requires:       maven >= 3.6.1
 Source44: import.info
-%filter_from_requires /^osgi\\($/d
 
 %description
 This package provides extensions for Apache Maven that can be used to
@@ -79,88 +73,43 @@ creating RPM packages containing Maven artifacts.
 %package        minimal
 Group: Development/Java
 Summary:        Dependency-reduced version of XMvn
-Requires:       maven-lib >= 3.6.1
-Requires:       %{name}-api = %{version}-%{release}
-Requires:       %{name}-connector-aether = %{version}-%{release}
 Requires:       %{name}-core = %{version}-%{release}
 Requires:       apache-commons-cli
 Requires:       apache-commons-lang3
 Requires:       atinject
 Requires:       google-guice
 Requires:       guava
-Requires:       maven-lib
-Requires:       maven-resolver-api
-Requires:       maven-resolver-impl
-Requires:       maven-resolver-spi
-Requires:       maven-resolver-util
-Requires:       maven-wagon-provider-api
+Requires:       maven-resolver-api maven-resolver-connector-basic maven-resolver-impl maven-resolver-spi maven-resolver-transport-wagon maven-resolver-util
+Requires:       maven-wagon-file maven-wagon-http maven-wagon-http-shared maven-wagon-provider-api
 Requires:       plexus-cipher
 Requires:       plexus-classworlds
 Requires:       plexus-containers-component-annotations
 Requires:       plexus-interpolation
 Requires:       plexus-sec-dispatcher
 Requires:       plexus-utils
-Requires:       sisu-inject
-Requires:       sisu-plexus
+Requires:       sisu-inject sisu-plexus
 Requires:       slf4j
+
+Requires:       maven-lib >= 3.4.0
+#Requires:       maven-jdk-binding
+#Requires:       maven-openjdk11
+
+Obsoletes:      xmvn-connector-aether < 4.0.0
 
 %description    minimal
 This package provides minimal version of XMvn, incapable of using
 remote repositories.
 
-%package        parent-pom
-Group: Development/Java
-Summary:        XMvn Parent POM
-
-%description    parent-pom
-This package provides XMvn parent POM.
-
-%package        api
-Group: Development/Java
-Summary:        XMvn API
-
-%description    api
-This package provides XMvn API module which contains public interface
-for functionality implemented by XMvn Core.
-
 %package        core
 Group: Development/Java
-Summary:        XMvn Core
+Summary:        XMvn library
+Obsoletes:      xmvn-parent-pom < 4.0.0
+Obsoletes:      xmvn-api < 4.0.0
 
 %description    core
-This package provides XMvn Core module, which implements the essential
-functionality of XMvn such as resolution of artifacts from system
-repository.
-
-%package        connector-aether
-Group: Development/Java
-Summary:        XMvn Connector for Maven Resolver
-
-%description    connector-aether
-This package provides XMvn Connector for Maven Resolver, which
-provides integration of Maven Resolver with XMvn.  It provides an
-adapter which allows XMvn resolver to be used as Maven workspace
-reader.
-
-%if %{with gradle}
-%package        connector-gradle
-Group: Development/Java
-Summary:        XMvn Connector for Gradle
-
-%description    connector-gradle
-This package provides XMvn Connector for Gradle, which provides
-integration of Gradle with XMvn.  It provides an adapter which allows
-XMvn resolver to be used as Gradle resolver.
-%endif
-
-%package        connector-ivy
-Group: Development/Java
-Summary:        XMvn Connector for Apache Ivy
-
-%description    connector-ivy
-This package provides XMvn Connector for Apache Ivy, which provides
-integration of Apache Ivy with XMvn.  It provides an adapter which
-allows XMvn resolver to be used as Ivy resolver.
+This package provides XMvn API and XMvn Core modules, which implement
+the essential functionality of XMvn such as resolution of artifacts
+from system repository.
 
 %package        mojo
 Group: Development/Java
@@ -172,62 +121,30 @@ of several MOJOs.  Some goals of these MOJOs are intended to be
 attached to default Maven lifecycle when building packages, others can
 be called directly from Maven command line.
 
-%package        tools-pom
+%package        tools
 Group: Development/Java
-Summary:        XMvn Tools POM
-
-%description    tools-pom
-This package provides XMvn Tools parent POM.
-
-%package        resolve
-Group: Development/Java
-Summary:        XMvn Resolver
+Summary:        XMvn tools
 # Explicit javapackages-tools requires since scripts use
 # /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
+Obsoletes:      xmvn-tools-pom < 4.0.0
+Obsoletes:      xmvn-bisect < 4.0.0
+Obsoletes:      xmvn-install < 4.0.0
+Obsoletes:      xmvn-resolve < 4.0.0
+Obsoletes:      xmvn-subst < 4.0.0
 
-%description    resolve
-This package provides XMvn Resolver, which is a very simple
-commald-line tool to resolve Maven artifacts from system repositories.
-Basically it's just an interface to artifact resolution mechanism
-implemented by XMvn Core.  The primary intended use case of XMvn
-Resolver is debugging local artifact repositories.
-
-%package        bisect
-Group: Development/Java
-Summary:        XMvn Bisect
-# Explicit javapackages-tools requires since scripts use
-# /usr/share/java-utils/java-functions
-Requires:       javapackages-tools
-
-%description    bisect
-This package provides XMvn Bisect, which is a debugging tool that can
-diagnose build failures by using bisection method.
-
-%package        subst
-Group: Development/Java
-Summary:        XMvn Subst
-# Explicit javapackages-tools requires since scripts use
-# /usr/share/java-utils/java-functions
-Requires:       javapackages-tools
-
-%description    subst
-This package provides XMvn Subst, which is a tool that can substitute
-Maven artifact files with symbolic links to corresponding files in
-artifact repository.
-
-%package        install
-Group: Development/Java
-Summary:        XMvn Install
-Requires:       apache-commons-compress
-# Explicit javapackages-tools requires since scripts use
-# /usr/share/java-utils/java-functions
-Requires:       javapackages-tools
-
-%description    install
-This package provides XMvn Install, which is a command-line interface
-to XMvn installer.  The installer reads reactor metadata and performs
-artifact installation according to specified configuration.
+%description    tools
+This package provides various XMvn tools:
+* XMvn Install, which is a command-line interface to XMvn installer.
+  The installer reads reactor metadata and performs artifact
+  installation according to specified configuration.
+* XMvn Resolver, which is a very simple commald-line tool to resolve
+  Maven artifacts from system repositories.  Basically it's just an
+  interface to artifact resolution mechanism implemented by XMvn Core.
+  The primary intended use case of XMvn Resolver is debugging local
+  artifact repositories.
+* XMvn Subst, which is a tool that can substitute Maven artifact files
+  with symbolic links to corresponding files in artifact repository.
 
 %package        javadoc
 Group: Development/Java
@@ -240,93 +157,69 @@ This package provides %{summary}.
 %prep
 %setup -q
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
-# Bisect IT has no chances of working in local, offline mode, without
-# network access - it needs to access remote repositories.
-find -name BisectIntegrationTest.java -delete
-
-# Resolver IT won't work either - it tries to execute JAR file, which
-# relies on Class-Path in manifest, which is forbidden in Fedora...
-find -name ResolverIntegrationTest.java -delete
-
-%pom_remove_plugin -r :maven-site-plugin
-
-%mvn_package ":xmvn{,-it}" __noinstall
-
-%if %{without gradle}
-%pom_disable_module xmvn-connector-gradle
-%endif
-
-# Upstream code quality checks, not relevant when building RPMs
-%pom_remove_plugin -r :apache-rat-plugin
-%pom_remove_plugin -r :maven-checkstyle-plugin
-%pom_remove_plugin -r :jacoco-maven-plugin
-# FIXME pom macros don't seem to support submodules in profile
-%pom_remove_plugin :jacoco-maven-plugin xmvn-it
-
-# remove dependency plugin maven-binaries execution
-# we provide apache-maven by symlink
-%pom_xpath_remove "pom:executions/pom:execution[pom:id[text()='maven-binaries']]"
+%mvn_package ::tar.gz: __noinstall
+%mvn_package ":{xmvn,xmvn-connector}" xmvn
+%mvn_package ":xmvn-{api,core,parent}" core
+%mvn_package ":xmvn-mojo" mojo
+%mvn_package ":xmvn-{install,resolve,subst,tools}" tools
 
 # Don't put Class-Path attributes in manifests
 %pom_remove_plugin :maven-jar-plugin xmvn-tools
 
-# get mavenVersion that is expected
-maven_home=$(realpath $(dirname $(realpath $(which mvn)))/..)
+# Copy Maven home packaged as RPM instead of unpacking Maven binary
+# tarball with maven-dependency-plugin
+%pom_remove_plugin :maven-dependency-plugin
+maven_home=$(realpath $(dirname $(realpath $(%{?jpb_env} which mvn)))/..)
 mver=$(sed -n '/<mavenVersion>/{s/.*>\(.*\)<.*/\1/;p}' \
            xmvn-parent/pom.xml)
 mkdir -p target/dependency/
-cp -aL ${maven_home} target/dependency/apache-maven-$mver
+cp -a "${maven_home}" target/dependency/apache-maven-$mver
 
 %build
-%if %{with its}
-%mvn_build -s -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Prun-its
-%else
-%mvn_build -s -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
-%endif
+%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -P\\!quality
 
-tar --delay-directory-restore -xvf target/*tar.bz2
-chmod -R +rwX %{name}-%{version}*
+version=4.0.0
+tar --delay-directory-restore -xvf target/xmvn-*-bin.tar.gz
+chmod -R +rwX %{name}-${version}*
 # These are installed as doc
-rm -f %{name}-%{version}*/{AUTHORS-XMVN,README-XMVN.md,LICENSE,NOTICE,NOTICE-XMVN}
+rm -f %{name}-${version}*/{AUTHORS-XMVN,README-XMVN.md,LICENSE,NOTICE,NOTICE-XMVN}
 # Not needed - we use JPackage launcher scripts
-rm -Rf %{name}-%{version}*/lib/{installer,resolver,subst,bisect}/
+rm -Rf %{name}-${version}*/lib/{installer,resolver,subst}/
 # Irrelevant Maven launcher scripts
-rm -f %{name}-%{version}*/bin/*
+rm -f %{name}-${version}*/bin/*
 
 
 %install
 %mvn_install
 
-maven_home=$(realpath $(dirname $(realpath $(which mvn)))/..)
+version=4.0.0
+maven_home=$(realpath $(dirname $(realpath $(%{?jpb_env} which mvn)))/..)
 
 install -d -m 755 %{buildroot}%{_datadir}/%{name}
-cp -r %{name}-%{version}*/* %{buildroot}%{_datadir}/%{name}/
+cp -r%{?mbi:L} %{name}-${version}*/* %{buildroot}%{_datadir}/%{name}/
 
 for cmd in mvn mvnDebug; do
     cat <<EOF >%{buildroot}%{_datadir}/%{name}/bin/$cmd
 #!/bin/sh -e
 export _FEDORA_MAVEN_HOME="%{_datadir}/%{name}"
-exec ${maven_home}/bin/$cmd "\${@}"
+exec %{_datadir}/maven/bin/$cmd "\${@}"
 EOF
     chmod 755 %{buildroot}%{_datadir}/%{name}/bin/$cmd
 done
 
 # helper scripts
-%jpackage_script org.fedoraproject.xmvn.tools.bisect.BisectCli "" "-Dxmvn.home=%{_datadir}/%{name}" xmvn/xmvn-bisect:beust-jcommander:maven-invoker:plexus/utils xmvn-bisect
 %jpackage_script org.fedoraproject.xmvn.tools.install.cli.InstallerCli "" "" xmvn/xmvn-install:xmvn/xmvn-api:xmvn/xmvn-core:beust-jcommander:slf4j/api:slf4j/simple:objectweb-asm/asm:commons-compress xmvn-install
 %jpackage_script org.fedoraproject.xmvn.tools.resolve.ResolverCli "" "" xmvn/xmvn-resolve:xmvn/xmvn-api:xmvn/xmvn-core:beust-jcommander xmvn-resolve
 %jpackage_script org.fedoraproject.xmvn.tools.subst.SubstCli "" "" xmvn/xmvn-subst:xmvn/xmvn-api:xmvn/xmvn-core:beust-jcommander xmvn-subst
 
-# copy over maven lib directory
-cp -r ${maven_home}/lib/* %{buildroot}%{_datadir}/%{name}/lib/
+# copy over maven boot and lib directories
+cp -r%{?mbi:L} ${maven_home}/boot/* %{buildroot}%{_datadir}/%{name}/boot/
+cp -r%{?mbi:L} ${maven_home}/lib/* %{buildroot}%{_datadir}/%{name}/lib/
 
 # possibly recreate symlinks that can be automated with xmvn-subst
+%if !0%{?mbi}
 %{name}-subst -s -R %{buildroot} %{buildroot}%{_datadir}/%{name}/
+%endif
 
 # /usr/bin/xmvn
 ln -s %{_datadir}/%{name}/bin/mvn %{buildroot}%{_bindir}/%{name}
@@ -339,16 +232,41 @@ install -d -m 755 %{buildroot}%{_datadir}/%{name}/conf/
 cp -P ${maven_home}/conf/settings.xml %{buildroot}%{_datadir}/%{name}/conf/
 cp -P ${maven_home}/bin/m2.conf %{buildroot}%{_datadir}/%{name}/bin/
 
+# Make sure javapackages config is not bundled
+rm -rf %{buildroot}%{_datadir}/%{name}/{configuration.xml,config.d/,conf/toolchains.xml,maven-metadata/}
+for rpm404_ghost in %{_datadir}/%{name}/conf/logging.rpmmoved
+do
+    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+    touch %buildroot"$rpm404_ghost"
+done
+
+%if 0
 pushd %buildroot%{_datadir}/%{name}/lib
 [ -e jansi-linux.jar ] || exit 1
 rm jansi-linux.jar
 ln -s /usr/lib/java/jansi-native/jansi-linux.jar .
 popd
+%endif
 
+%pre minimal
+path = "/usr/share/xmvn/conf/logging"
+if [ -d "$path" ]; then
+  if [ -e "$path".rpmmoved ]; then
+    mv "$path" "$path".rpmmoved.$$
+  else
+    mv "$path" "$path".rpmmoved
+  fi
+fi
+
+
+
+
+# Workaround for rpm bug 447156 - rpm fails to change directory to symlink
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/Directory_Replacement/
 %files
 %{_bindir}/mvn-local
 
-%files minimal
+%files minimal -f .mfiles-xmvn
 %{_bindir}/%{name}
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/bin
@@ -361,44 +279,27 @@ popd
 %{_datadir}/%{name}/bin/mvnDebug
 %{_datadir}/%{name}/boot
 %{_datadir}/%{name}/conf
+%ghost %{_datadir}/%{name}/conf/logging.rpmmoved
 
-%files parent-pom -f .mfiles-xmvn-parent
-%doc LICENSE NOTICE
-
-%files core -f .mfiles-xmvn-core
-
-%files api -f .mfiles-xmvn-api
-%doc LICENSE NOTICE
+%files core -f .mfiles-core
+%doc --no-dereference LICENSE NOTICE
 %doc AUTHORS README.md
 
-%files connector-aether -f .mfiles-xmvn-connector-aether
+%files mojo -f .mfiles-mojo
 
-%if %{with gradle}
-%files connector-gradle -f .mfiles-xmvn-connector-gradle
-%endif
-
-%files connector-ivy -f .mfiles-xmvn-connector-ivy
-
-%files mojo -f .mfiles-xmvn-mojo
-
-%files tools-pom -f .mfiles-xmvn-tools
-
-%files resolve -f .mfiles-xmvn-resolve
+%files tools -f .mfiles-tools
+%{_bindir}/%{name}-install
 %{_bindir}/%{name}-resolve
-
-%files bisect -f .mfiles-xmvn-bisect
-%{_bindir}/%{name}-bisect
-
-%files subst -f .mfiles-xmvn-subst
 %{_bindir}/%{name}-subst
 
-%files install -f .mfiles-xmvn-install
-%{_bindir}/%{name}-install
-
 %files javadoc
-%doc LICENSE NOTICE
+%doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Wed Jun 29 2022 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt1_0jpp11
+- new version
+- for use with older maven build
+
 * Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt3_7jpp11
 - nobootstrap
 

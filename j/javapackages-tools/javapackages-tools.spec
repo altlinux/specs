@@ -37,7 +37,7 @@ BuildRequires: jpackage-default
 
 Name:           javapackages-tools
 Version:        6.0.0
-Release:        alt0_0jpp11
+Release:        alt1_0jpp11
 Summary:        Macros and scripts for Java packaging support
 License:        BSD
 URL:            https://github.com/fedora-java/javapackages
@@ -74,13 +74,12 @@ Source45: abs2rel
 Source46: osgi-fc.prov.files
 Source47: maven.prov.files
 Source48: maven.env
-Patch34: javapackages-tools-6.0.0-alt-tmp-xmvn3.patch
-Patch35: javapackages-tools-6.0.0-alt-use-enviroment.patch
-Patch36: javapackages-tools-4.6.0-alt-req-headless-off.patch
-Patch37: javapackages-tools-4.6.0-alt-shade-jar.patch
-Patch38: macros.fjava-to-alt-rpm404.patch
-Patch39: macros.fjava-alt-javadoc-package.patch
-Patch40: macros.jpackage-alt-script.patch
+Patch34: javapackages-tools-6.0.0-alt-use-enviroment.patch
+Patch35: javapackages-tools-4.6.0-alt-req-headless-off.patch
+Patch36: javapackages-tools-4.6.0-alt-shade-jar.patch
+Patch37: macros.fjava-to-alt-rpm404.patch
+Patch38: macros.fjava-alt-javadoc-package.patch
+Patch39: macros.jpackage-alt-script.patch
 
 Conflicts:       jpackage-utils < 0:5.0.1
 Obsoletes:       jpackage-utils < 0:5.0.1
@@ -203,7 +202,6 @@ sed -i '/${mandir}/d' install
 %patch37 -p1
 %patch38 -p1
 %patch39 -p1
-%patch40 -p1
 
 # alt specific shabang
 sed -i -e 1,1s,/bin/bash,/bin/sh, java-utils/java-wrapper bin/*
@@ -316,6 +314,9 @@ rm -f %buildroot/usr/share/xmvn/conf/toolchains.xml
 %doc --no-dereference LICENSE
 
 %changelog
+* Wed Jun 29 2022 Igor Vlasenko <viy@altlinux.org> 1:6.0.0-alt1_0jpp11
+- release for xmvn4; disable maven-local-openjdk8 for now; enable ivy
+
 * Tue Jun 07 2022 Igor Vlasenko <viy@altlinux.org> 1:6.0.0-alt0_0jpp11
 - new version; for xmvn3; disable maven-local-openjdk8 for now; enable ivy
 
