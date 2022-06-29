@@ -2,14 +2,17 @@
 %define oname svgwrite
 
 Name: python3-module-%oname
-Version: 1.1.9
-Release: alt2
+Version: 1.4.2
+Release: alt1
+
 Summary: A Python library to create SVG drawings
+
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/svgwrite/
+Url: https://pypi.python.org/pypi/svgwrite
 
-Source0: https://pypi.python.org/packages/27/77/041204e668cdcd305b3366dbf486baa70bfcf40705ed4a658ef4fd3f0a74/%{oname}-%{version}.tar.gz
+Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
@@ -18,7 +21,7 @@ BuildRequires(pre): rpm-build-python3
 A Python library to create SVG drawings.
 
 %prep
-%setup -n %{oname}-%{version}
+%setup
 
 %build
 %python3_build
@@ -28,9 +31,13 @@ A Python library to create SVG drawings.
 
 %files
 %doc *.TXT
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
+- Build new version.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 1.1.9-alt2
 - Drop python2 support.
 
