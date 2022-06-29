@@ -1,9 +1,11 @@
+%def_without check
+
 Summary: Twm based window manager for the X Window System
 Summary(ru_RU): Основанный на twm оконный менеджер для X Window System
 Name: ctwm
-Version: 4.0.3
+Version: 4.0.3.691
 Epoch: 1
-Release: alt3
+Release: alt1
 
 Source: %name-%version.tar.xz
 Url: http://www.ctwm.org/index.html
@@ -22,9 +24,9 @@ Patch: ctwm-3.8.2-GetFont.patch
 License: BSD
 Group: Graphical desktop/Other
 
-# Automatically added by buildreq on Tue Nov 09 2021
-# optimized out: asciidoc cmake-modules docbook-dtds docbook-style-xsl glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXau-devel libXt-devel libcrypt-devel libgpg-error libsasl2-3 libxcb-devel python3 python3-base sh4 xml-common xml-utils xorg-proto-devel xsltproc xz
-BuildRequires: asciidoc-a2x cmake ctags flex libXext-devel libXmu-devel libXpm-devel libjpeg-devel
+# Automatically added by buildreq on Wed Jun 29 2022
+# optimized out: asciidoc cmake-modules docbook-dtds docbook-style-xsl glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXau-devel libXrender-devel libXt-devel libcrypt-devel libgpg-error libsasl2-3 libxcb-devel python3 python3-base sh4 xml-common xml-utils xorg-proto-devel xsltproc xz
+BuildRequires: asciidoc-a2x cmake ctags doxygen flex graphviz libXext-devel libXmu-devel libXpm-devel libXrandr-devel libjpeg-devel
 
 %description
 Ctwm is a window manager for the X Window System.  It provides
@@ -50,11 +52,25 @@ Ctwm -- оконный менеждер для X Windows System, основан�
 имеет несколько уникальных функций, например movepush, когда окно,
 перемещаемое по экрану, расталкивает прочие окна в стороны.
 
+%package docs
+BuildArch: noarch
+Summary: Developmeatn documentation for %name
+Group: Graphical desktop/Other
+%description docs
+%summary
+
+%package systemd
+BuildArch: noarch
+Summary: Systemd services ans scripts for %name
+Group: Graphical desktop/Other
+Requires: %name = %version-%release
+%description systemd
+%summary
+
 %prep
 %setup
 #patch -p1
 sed -ri 's/(#define[[:space:]]+MAX_BUTTONS[[:space:]]+).*/\1 24/' ctwm.h
-ln -s build BUILD
 %cmake \
     -DETCDIR=%_sysconfdir/X11/ctwm \
     -DDOCDIR=%_defaultdocdir/%name-%version \
@@ -63,22 +79,24 @@ ln -s build BUILD
     # unmaintained -DDO_CLIENT=ON
 
 %build
-%cmake_build
+%cmake_build -t all -t doxygen
+(cd doc/devman; for N in *adoc; do asciidoc -atoc -anumbered $N; done)
 
 %install
 %cmakeinstall_std
 install -d %buildroot%_datadir/xsessions
-install -m644 %SOURCE4 %buildroot%_datadir/xsessions/
-install -m644 %SOURCE5 %buildroot%_datadir/xsessions/
-install -pD -m644 %SOURCE3 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.xpm
-install -pD -m644 %SOURCE2 %buildroot/%_sysconfdir/X11/wmsession.d/07%name
-install -pD -m644 system.ctwmrc %buildroot/%_sysconfdir/X11/%name/system.ctwmrc
-install -Dm 755 %SOURCE1 %buildroot/%_bindir/startctwm
-install -Dm 755 %SOURCE6 %buildroot%_prefix/libexec/%name-session-target
+install %SOURCE4 %buildroot%_datadir/xsessions/
+install %SOURCE5 %buildroot%_datadir/xsessions/
+install -D %SOURCE3 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.xpm
+install -D %SOURCE1 %buildroot/%_sysconfdir/X11/wmsession.d/07%name
+install -D system.ctwmrc %buildroot/%_sysconfdir/X11/%name/system.ctwmrc
+install -D %SOURCE1 %buildroot/%_bindir/startctwm
+install -D %SOURCE6 %buildroot%_prefix/libexec/%name-session-target
 install -d %buildroot%_user_unitdir
-install -m644 %SOURCE7 %buildroot%_user_unitdir/
-install -m644 %SOURCE8 %buildroot%_user_unitdir/
-install -m644 %SOURCE9 %buildroot%_user_unitdir/
+install -D %SOURCE7 %buildroot%_user_unitdir/
+install -D %SOURCE8 %buildroot%_user_unitdir/
+install -D %SOURCE9 %buildroot%_user_unitdir/
+install -D %_cmake__builddir/ctwm.1 %buildroot%_man1dir/ctwm.1
 
 %files
 %doc %_defaultdocdir/%name-%version
@@ -88,11 +106,27 @@ install -m644 %SOURCE9 %buildroot%_user_unitdir/
 %config(noreplace) %_sysconfdir/X11/%name/system.ctwmrc
 %_sysconfdir/X11/wmsession.d/*
 %_datadir/%name/
-%_datadir/xsessions/*
+%_datadir/xsessions/%name.desktop
+
+%files docs
+%doc %_cmake__builddir/doxygen/html
+%doc doc/devman/*.html doc/devman/static
+
+%files systemd
 %_user_unitdir/*
 %_prefix/libexec/*
+%_datadir/xsessions/%name-systemd.desktop
+
+%if_with check
+%check
+%cmake_build -t test
+%endif
 
 %changelog
+* Wed Jun 29 2022 Fr. Br. George <george@altlinux.org> 1:4.0.3.691-alt1
+- Update to revision 691
+- Separate systemd-avare subpackage
+
 * Tue Nov 09 2021 Fr. Br. George <george@altlinux.ru> 1:4.0.3-alt3
 - Introduce systemd --user session startup
 
