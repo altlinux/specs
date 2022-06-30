@@ -4,8 +4,8 @@
 %global optflags_lto %nil
 
 Name: aircrack-ng
-Version: 1.6
-Release: alt3
+Version: 1.7
+Release: alt1
 
 Summary: 802.11 WEP and WPA-PSK key recovery program
 License: GPLv2+
@@ -86,6 +86,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %_includedir/*
 
 %changelog
+* Thu Jun 30 2022 Pavel Nakonechnyi <zorg@altlinux.org> 1.7-alt1
+- Version updated to 1.7
+
 * Mon Aug 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.6-alt3
 - Disabled LTO.
 
