@@ -1,7 +1,7 @@
 %def_disable tests
 
 Name: libmongoc
-Version: 1.21.2
+Version: 1.22.0
 Release: alt1
 Summary: Client library written in C for MongoDB
 Group: System/Libraries
@@ -18,7 +18,7 @@ BuildRequires: zlib-devel libsnappy-devel
 BuildRequires: sphinx
 BuildRequires(pre): rpm-macros-cmake
 
-%{?_enable_tests:BuildRequires: mongodb-server openssl}
+%{?_enable_tests:BuildRequires: mongo-server-mongod openssl}
 
 %description
 mongo-c-driver is a client library written in C for MongoDB.
@@ -72,9 +72,11 @@ sed -i 's|sphinx-build|sphinx-build-3|' build/cmake/FindSphinx.cmake
     -DENABLE_SASL:STRING=CYRUS \
     -DENABLE_ICU:STRING=ON \
     -DENABLE_AUTOMATIC_INIT_AND_CLEANUP:BOOL=OFF \
+    -DENABLE_MONGODB_AWS_AUTH:STRING=ON \
     -DENABLE_CRYPTO_SYSTEM_PROFILE:BOOL=ON \
     -DENABLE_MAN_PAGES:BOOL=ON \
     %{?_disable_tests:-DENABLE_TESTS:BOOL=OFF} \
+    -DENABLE_UNINSTALL:BOOL=OFF \
     -DENABLE_EXAMPLES:BOOL=OFF
 
 
@@ -97,6 +99,7 @@ mongod \
 # Run the test suite
 ret=0
 export MONGOC_TEST_OFFLINE=on
+export MONGOC_TEST_SKIP_MOCK=on
 #export MONGOC_TEST_SKIP_SLOW=on
 make check || ret=1
 # Cleanup
@@ -132,6 +135,9 @@ exit $ret
 
 
 %changelog
+* Thu Jun 30 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Wed Jun 08 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.21.2-alt1
 - 1.21.2
 
