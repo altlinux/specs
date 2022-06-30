@@ -1,6 +1,6 @@
 Name: livecd-install
 Version: 0.9.19
-Release: alt1
+Release: alt2
 
 Summary: Permanently install Live system
 License: GPLv2
@@ -11,7 +11,6 @@ Source1: %name.pam
 Source2: %name.apps
 
 Url: http://www.altlinux.org/Alterator
-Packager: Andriy Stepanov <stanv@altlinux.ru>
 
 BuildArch: noarch
 BuildRequires(pre): rpm-macros-alternatives
@@ -63,6 +62,10 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Thu Jun 30 2022 Anton Midyukov <antohami@altlinux.org> 0.9.19-alt2
+- NMU: replace fgrep with grep -F
+- NMU: clear Packager
+
 * Tue Oct 12 2021 Anton Midyukov <antohami@altlinux.org> 0.9.19-alt1
 - 08-crypttab.sh: Rework crypttab generator
 - 40-autohostname.sh: generate short hostname if it's longer than 13 chars

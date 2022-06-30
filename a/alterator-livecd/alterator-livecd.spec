@@ -2,7 +2,7 @@
 
 Name: alterator-livecd
 Version: 0.8.9
-Release: alt1
+Release: alt2
 
 Summary: special steps for LiveCD installers
 License: GPL
@@ -44,6 +44,9 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Jun 30 2022 Anton Midyukov <antohami@altlinux.org> 0.8.9-alt2
+- NMU: replace egrep with grep -E
+
 * Fri Oct 08 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 0.8.9-alt1
 - Faster and more reliable installation (closes: #41080)
 
