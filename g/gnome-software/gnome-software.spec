@@ -39,7 +39,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -192,6 +192,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Thu Jun 30 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
+- 42.3
+
 * Mon May 30 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
 - 42.2
 
