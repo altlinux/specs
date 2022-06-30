@@ -1,6 +1,6 @@
 Name: installer-alterator-pkg
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -58,6 +58,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Jun 30 2022 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt2
+- NMU: pkg-install: replace egrep with grep -E
+
 * Thu May 12 2022 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt1
 - Drop unused defines.
 - Rename package to installer-alterator-pkg.
