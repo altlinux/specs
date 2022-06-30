@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.6
+Version: %ver_major.7
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -63,7 +63,7 @@ and the glib main loop, to integrate well with GNOME applications.
 %package devel
 Summary: Headers for HTTP client/server library for GNOME
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 libsoup is an HTTP client/server library for GNOME. It uses GObjects
@@ -86,7 +86,7 @@ This package contains development documentation for Soup.
 %package devel-static
 Summary: Headers for Simple Object Access Protocol static library
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package allows to develop applications that statically linked
@@ -95,7 +95,7 @@ against Soup library.
 %package gir
 Summary: GObject introspection data for the Soup library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 libsoup is an HTTP client/server library for GNOME. It uses GObjects
@@ -107,7 +107,7 @@ This package provides GObject introspection data for the Soup library
 Summary: GObject introspection devel data for the Soup library
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 libsoup is an HTTP client/server library for GNOME. It uses GObjects
@@ -189,6 +189,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Jun 30 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.7-alt1
+- 3.0.7
+
 * Thu Mar 31 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.6-alt1
 - 3.0.6
 
