@@ -5,7 +5,7 @@
 
 Name: aircrack-ng
 Version: 1.7
-Release: alt1
+Release: alt2
 
 Summary: 802.11 WEP and WPA-PSK key recovery program
 License: GPLv2+
@@ -86,6 +86,9 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %_includedir/*
 
 %changelog
+* Thu Jun 30 2022 Pavel Nakonechnyi <zorg@altlinux.org> 1.7-alt2
+- Removes dependency on systemd (closes: #43117).
+
 * Thu Jun 30 2022 Pavel Nakonechnyi <zorg@altlinux.org> 1.7-alt1
 - Version updated to 1.7
 
