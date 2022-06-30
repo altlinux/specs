@@ -83,7 +83,7 @@
 %gallium_drivers_add zink
 
 %define ver_major 22.1
-%define ver_minor 2
+%define ver_minor 3
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -585,6 +585,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Jun 30 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.1.3-alt1
+- 22.1.3
+
 * Thu Jun 16 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.1.2-alt1
 - 22.1.2
 
