@@ -1,8 +1,8 @@
-%define  modulename glymur
+%define  oname glymur
 %def_with check
 
-Name:    python3-module-%modulename
-Version: 0.10.0
+Name:    python3-module-%oname
+Version: 0.10.1
 Release: alt1
 
 Summary: Python interface to OpenJPEG library for reading and writing JPEG 2000 images.
@@ -26,13 +26,13 @@ BuildRequires: python3-module-scikit-image
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source:  %name-%version.tar
 
 %description
 %summary
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
 # https://bugzilla.altlinux.org/show_bug.cgi?id=39907
@@ -53,10 +53,13 @@ py.test3
 %doc README.md CHANGES.txt LICENSE.txt
 %_bindir/jp2dump
 %_bindir/tiff2jp2
-%python3_sitelibdir/%modulename/
+%python3_sitelibdir/%oname
 %python3_sitelibdir/Glymur-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Jun 30 2022 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt1
+- Automatically updated to 0.10.1.
+
 * Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
 - Automatically updated to 0.10.0.
 
