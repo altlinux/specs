@@ -1,6 +1,9 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name: xdg-utils
 Version: 1.1.3
-Release: alt8
+Release: alt9
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -11,9 +14,9 @@ Url: https://www.freedesktop.org/wiki/Software/xdg-utils/
 # Source-url: https://portland.freedesktop.org/download/xdg-utils-%version.tar.gz
 Source: %name-%version.tar
 
-Patch0: added-xdg-su-1.1.0rc1-alt.patch
+Patch0: install-some-more-scripts.patch
 Patch1: xdg-open-opera.patch
-Patch2: xdg-su-added-lxde-and-gksu-and-beesu-support-1.1.2.patch
+Patch2: xdg-su-added-beesu-support-for-generic-1.1.3.patch
 Patch5: xdg-open-generic-mimeapps.patch
 Patch6: xdg-su-use-gnomesu-for-xfce-if-available.patch
 Patch7: xdg-open-fix-ifs-use.patch
@@ -26,6 +29,11 @@ Patch13: xdg-desktop-menu-dummy.patch
 Patch14: xdg-email-detect-thunderbird-kde5.patch
 Patch15: xdg-email-detect-thunderbird-mate.patch
 Patch16: xdg-su-xvt.patch
+Patch17: xdg-open-replace-egrep-to-grep-E.patch
+Patch18: xdg-su-added-dde-support.patch
+Patch19: xdg-terminal-added-kde5-support.patch
+Patch20: xdg-terminal-added-dde-support.patch
+Patch21: xdg-terminal-fix-generic.patch
 
 BuildArch: noarch
 
@@ -84,6 +92,11 @@ popd
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p2
+%patch18 -p2
+%patch19 -p2
+%patch20 -p2
+%patch21 -p2
 
 %build
 %autoreconf
@@ -104,10 +117,21 @@ popd
 %_bindir/xdg-screensaver
 %_bindir/xdg-settings
 %_bindir/xdg-su
+%_bindir/xdg-terminal
 %_man1dir/*
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Wed Jun 29 2022 Anton Midyukov <antohami@altlinux.org> 1.1.3-alt9
+- Unpackaged files in buildroot should terminate build
+- install xdg-terminal also
+- xdg-open: replace egrep to grep -E
+- xdg-su: fix generic fallback, don't add lxde support
+- xdg-su: add Deepin support
+- xdg-terminal: added kde5 support
+- xdg-terminal: added Deepin support
+- xdg-terminal: fix generic terminal
+
 * Fri Jun 04 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.3-alt8
 - add requires: perl-X11-Protocol perl-Net-DBus (ALT bug 40152)
 
