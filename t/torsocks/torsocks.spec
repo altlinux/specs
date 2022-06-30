@@ -1,6 +1,6 @@
 Name: torsocks
 Version: 2.3.0
-Release: alt2
+Release: alt3.git67cee6c
 
 Summary: Use SOCKS-friendly applications with Tor
 Group: Security/Networking
@@ -53,6 +53,9 @@ install -p -m755 %SOURCE2 %buildroot%_bindir/torify
 %exclude %_datadir/doc/%name
 
 %changelog
+* Thu Jun 30 2022 Vladimir Didenko <cow@altlinux.org> 2.3.0-alt3.git67cee6c
+- new version (v2.3.0-6-g67cee6c)
+
 * Thu Aug 26 2021 Vladimir Didenko <cow@altlinux.org> 2.3.0-alt2
 - don't build static libraries
 
