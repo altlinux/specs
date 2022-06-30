@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.41
+Version: 0.42
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -65,6 +65,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Tue Jun 28 2022 Anton Midyukov <antohami@altlinux.org> 0.42-alt1
+- replace fgrep to grep -F
+
 * Sun Feb 20 2022 Anton Midyukov <antohami@altlinux.org> 0.41-alt1
 - mount-fstab: fix quotes support for UUID and LABEL in fstab entries
   (CLoses: 41999)
