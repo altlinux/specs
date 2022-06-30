@@ -1,6 +1,6 @@
 Name: installer
 Version: 1.11.2
-Release: alt1
+Release: alt2
 
 Summary: Installer common parts
 License: GPLv2+
@@ -111,6 +111,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Jun 30 2022 Anton Midyukov <antohami@altlinux.org> 1.11.2-alt2
+- NMU: replace egrep with grep -E, fgrep with grep -F
+
 * Fri Jun 10 2022 Anton Midyukov <antohami@altlinux.org> 1.11.2-alt1
 - 10-disk.sh: ignore mtdblock* devices
 
