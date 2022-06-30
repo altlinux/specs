@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 121
+%define centos_release 122
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,19 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Jun 30 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.122-alt1.el9
+- Updated to kernel-5.14.0-122.el9:
+  + Add MEI support for ADL-N
+  + Backport fixes for ucounts
+  + bonding: ARP monitor spams NETDEV_NOTIFY_PEERS notifiers
+  + exec: Force single empty string when argv is empty
+  + Intel SDSi: fix issue reading state certificate
+  + iwlwifi: fix use-after-free
+  + mptcp: fix checksum byte order
+  + net: hyper-v: NetVSC driver updates for 9.1
+  + [PATCHv3 00/28] support reserving crashkernel above 4G on arm64 kdump
+  + s390/crypto: add SIMD implementation for ChaCha20
+
 * Wed Jun 29 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.121-alt1.el9
 - Updated to kernel-5.14.0-121.el9:
   + arm64: Update core arch code to upstream v5.16
