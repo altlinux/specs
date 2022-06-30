@@ -2,18 +2,20 @@
 
 %define _name geocode-glib
 %define ver_major 3.26
-%define api_ver 1.0
-%def_enable soup2
+%define api_ver_major 2
+%define api_ver 2.0
+
+%def_disable soup2
 %def_enable gtk_doc
 %def_enable introspection
 %def_disable installed_tests
 %def_disable check
 
-Name: lib%{_name}
+Name: lib%{_name}%api_ver
 Version: %ver_major.3
 Release: alt1
 
-Summary: Helper library for geocoding services
+Summary: Helper library for geocoding services (2.0 API)
 License: LGPL-2.0-or-later
 Group: System/Libraries
 Url: http://www.gnome.org/
@@ -21,22 +23,23 @@ Url: http://www.gnome.org/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 %define glib_ver 2.44
-%define soup_ver 2.42
+%define soup3_ver 2.99.2
 %define json_glib_ver 1.0
+
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libgio-devel >= %glib_ver
-BuildRequires: libjson-glib-devel >= %json_glib_ver pkgconfig(libsoup-2.4) >= %soup_ver
+BuildRequires: libjson-glib-devel >= %json_glib_ver pkgconfig(libsoup-3.0) >= %soup3_ver
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_introspection:
 BuildRequires(pre): rpm-build-gir
-BuildRequires: gir(Soup) = 2.4 libjson-glib-gir-devel}
+BuildRequires: gir(Soup) = 3.0 libjson-glib-gir-devel}
 
 %description
 %_name is a helper library for geocoding and reverse-geocoding
 services offered by OpenStreetMap and Nominatim.
 
-This version supports libsoup-2.4
+This version supports libsoup-3.x
 
 %package devel
 Summary: Development files for %_name library
@@ -90,7 +93,7 @@ the functionality of the installed %_name library.
 
 %build
 %meson \
-    -Dsoup2=true \
+    -Dsoup2=false \
     %{?_disable_gtk_doc:-Denable-gtk-doc=false} \
     %{?_disable_introspection:-Denable-introspection=false} \
     %{?_disable_installed_tests:-Denable-installed-tests=false}
@@ -105,17 +108,17 @@ the functionality of the installed %_name library.
 %__meson_test
 
 %files -f %_name.lang
-%_libdir/%name.so.*
+%_libdir/lib%_name-%api_ver_major.so.*
 %_iconsdir/hicolor/scalable/places/*.svg
 %doc AUTHORS NEWS README
 
 %files devel
 %_includedir/%_name-%api_ver/
-%_libdir/%name.so
+%_libdir/lib%_name-%api_ver_major.so
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %files devel-doc
-%_datadir/gtk-doc/html/%_name/
+%_datadir/gtk-doc/html/%_name-%api_ver_major/
 
 %if_enabled introspection
 %files gir
@@ -133,7 +136,7 @@ the functionality of the installed %_name library.
 
 %changelog
 * Thu Jun 30 2022 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
-- 3.26.3
+- 3.26.3 (geocode-glib-2.0)
 
 * Mon Mar 09 2020 Yuri N. Sedunov <aris@altlinux.org> 3.26.2-alt1
 - 3.26.2

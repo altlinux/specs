@@ -29,7 +29,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -441,6 +441,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Jun 30 2022 Yuri N. Sedunov <aris@altlinux.org> 2.72.3-alt1
+- 2.72.3
+
 * Mon May 30 2022 Yuri N. Sedunov <aris@altlinux.org> 2.72.2-alt1
 - 2.72.2
 
