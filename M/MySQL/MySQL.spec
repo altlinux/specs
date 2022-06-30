@@ -2,7 +2,12 @@
 %def_without debug
 %def_with libs
 %def_with devel
-%def_with mysql_router
+%def_without mysql_router
+%if_with mysql_router
+%def_with mysql_shell
+%else
+%def_without mysql_shell
+%endif
 %def_disable static
 %define mysqld_user mysql
 %define mysqlrouter_user mysqlrouter
@@ -10,8 +15,8 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.28
-Release: alt1.1
+Version: 8.0.29
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
@@ -57,11 +62,12 @@ Patch4: mysql-8.0.26-alt-client.patch
 Patch5: mysql-8.0.12-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-8.0.27-alt-mysql_config-libs.patch
-Patch9: mysql-8.0.18-alt-disable-run-libmysql_api_test.patch
+Patch9: mysql-8.0.29-alt-disable-run-libmysql_api_test.patch
 
 # Patches taken from boost 1.59
 Patch115: boost-1.58.0-pool.patch
 Patch125: boost-1.57.0-mpl-print.patch
+Patch126: boost-1.77.0-boostfix_multiprecision_issue_419-ppc64le.patch
 
 # Patches for mysql-shell
 Patch201: mysql-shell-8.0.26-alt-link-secret-store-login-path-with-ssl.patch
@@ -173,6 +179,7 @@ Provides: mysql-router = %EVR
 Obsoletes: mysql-router < %EVR
 %endif
 
+%if_with mysql_shell
 %package shell
 Summary: MySQL Shell
 Summary(ru_RU.UTF-8): MySQL Shell
@@ -186,6 +193,7 @@ Obsoletes: mysql-shell < %EVR
 Summary: MySQL Shell python package
 License: GPL
 Group: Databases
+%endif
 
 %define see_base For a description of MySQL see the base MySQL RPM or %url
 %define see_base_ru Подробное описание смотрите в пакете MySQL или на %url
@@ -349,6 +357,7 @@ recommend upgrading your installation to MySQL Router 8.
 %see_base_ru
 %endif
 
+%if_with mysql_shell
 %description shell
 This is a release of MySQL Shell (part of MySQL Server), an interactive
 JavaScript, Python and SQL console interface, supporting development and
@@ -368,6 +377,7 @@ expertise.
 Python module for MySQL Shell
 
 %see_base
+%endif
 
 %prep
 %setup -a98 -a99
@@ -380,9 +390,10 @@ Python module for MySQL Shell
 %patch9 -p1
 
 # Patch Boost
-pushd boost/boost_1_73_0
+pushd boost/boost_1_77_0
 %patch115 -p0
 %patch125 -p1
+%patch126 -p1
 popd
 
 %patch201 -p1
@@ -461,7 +472,7 @@ rm -rf extra/icu
 	-DWITH_SYSTEMD=ON \
 	-DCMAKE_C_FLAGS="%optflags" \
 	-DCMAKE_CXX_FLAGS="%optflags" \
-	-DWITH_BOOST=boost/boost_1_73_0 \
+	-DWITH_BOOST=boost/boost_1_77_0 \
 	-DCOMPILATION_COMMENT="(%distribution)" \
 %if_with debug
 	-DWITH_DEBUG=1 \
@@ -470,6 +481,7 @@ rm -rf extra/icu
 
 %cmake_build
 
+%if_with mysql_shell
 pushd mysql-shell
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
 	python/packages/mysql_gadgets/__main__.py
@@ -491,6 +503,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
 
 %cmake_build
 popd
+%endif
 
 %install
 mkdir -p %buildroot{%_bindir,%_sbindir,%_includedir,%_mandir,%_datadir,/var/log/mysql}
@@ -502,9 +515,11 @@ mkdir -p %buildroot%ROUTER_ROOT/{log,data/{,keyring},run}
 
 %cmakeinstall_std
 
+%if_with mysql_shell
 pushd mysql-shell
 %cmakeinstall_std
 popd
+%endif
 
 # Install various helper scripts.
 install -pD -m755 %SOURCE1 %buildroot%_initdir/mysqld
@@ -832,6 +847,7 @@ fi
 %_man1dir/mysqlrouter*
 %endif
 
+%if_with mysql_shell
 %files shell
 %doc mysql-shell/README mysql-shell/LICENSE
 %_bindir/mysqlsh
@@ -840,6 +856,7 @@ fi
 
 %files -n python3-module-mysqlsh
 %_libexecdir/mysqlsh
+%endif
 
 %files server-perl
 %_bindir/mysqldumpslow
@@ -902,6 +919,21 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Thu Jun 30 2022 Nikolai Kostrigin <nickel@altlinux.org> 8.0.29-alt1
+- new version
+  + (fixes: CVE-2021-22570, CVE-2022-0778, CVE-2022-21454, CVE-2022-21457)
+  + (fixes: CVE-2022-21425, CVE-2022-21440, CVE-2022-21459, CVE-2022-21478)
+  + (fixes: CVE-2022-21479, CVE-2022-21418, CVE-2022-21417, CVE-2022-21413)
+  + (fixes: CVE-2022-21427, CVE-2022-21412, CVE-2022-21414, CVE-2022-21435)
+  + (fixes: CVE-2022-21436, CVE-2022-21437, CVE-2022-21438, CVE-2022-21452)
+  + (fixes: CVE-2022-21462, CVE-2022-21415, CVE-2022-21451, CVE-2022-21444)
+  + (fixes: CVE-2022-21460, CVE-2022-21423)
+- update mysql-shell 8.0.28 -> 8.0.29
+- update alt-disable-run-libmysql_api_test patch
+- update bundled boost headers 1.73.0 -> 1.77.0
+- spec: turn build of mysql-shell and mysql-router off
+- add boostfix_multiprecision_issue_419-ppc64le patch
+
 * Tue Feb 15 2022 Michael Shigorin <mike@altlinux.org> 8.0.28-alt1.1
 - update alt-e2k patch: 8.0.27 -> 8.0.28 (ilyakurdyukov@)
 
