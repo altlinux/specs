@@ -2,7 +2,7 @@
 
 Name: babeltrace
 Version: 1.5.8
-Release: alt1
+Release: alt2
 Summary: Trace conversion program
 License: LGPLv2
 Group: System/Libraries
@@ -31,7 +31,7 @@ This package provides the babeltrace trace reading and conversion library
 Summary: Babeltrace development files
 Group: Development/C
 Provides: lib%name-ctf-devel = %EVR
-Obsoletes: lib%name-ctf-devel <= %EVR
+Obsoletes: lib%name-ctf-devel < %EVR
 
 %description -n lib%name-devel
 This package provides the development headers for linking applications against
@@ -102,6 +102,9 @@ rm -rf %buildroot%_datadir/doc
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jun 30 2022 Alexey Shabalin <shaba@altlinux.org> 1.5.8-alt2
+- fix obsoletes in devel subpackage
+
 * Tue Mar 22 2022 Alexey Shabalin <shaba@altlinux.org> 1.5.8-alt1
 - 1.5.8
 - build python bindings
