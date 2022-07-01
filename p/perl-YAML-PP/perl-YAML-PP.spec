@@ -7,7 +7,7 @@ BuildRequires: perl(YAML/XS.pm) perl(base.pm) perl(boolean.pm) perl(constant.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.033
+Version: 0.034
 Release: alt1
 Summary: YAML Parser and Loader
 Group: Development/Perl
@@ -48,6 +48,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.034-alt1
+- automated CPAN update
+
 * Tue Jun 28 2022 Igor Vlasenko <viy@altlinux.org> 0.033-alt1
 - automated CPAN update
 
