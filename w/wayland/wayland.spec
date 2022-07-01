@@ -2,7 +2,7 @@
 %def_enable doc
 %def_enable check
 # since mesa-18.0 wayland-egl moved to this wayland package
-%define main_ver 1.20.0
+%define main_ver 1.21.0
 %define egl_ver 18.1.0
 %define mesa_epoch 4
 
@@ -16,14 +16,14 @@ License: MIT
 Url: http://%name.freedesktop.org/
 
 %if_disabled snapshot
-Source: http://%name.freedesktop.org/releases/%name-%version.tar.xz
+Source: https://gitlab.freedesktop.org/%name/%name/-/releases/%version/downloads/%name-%version.tar.xz
 %else
-Vcs: https://anongit.freedesktop.org/wayland/wayland
+Vcs: https://gitlab.freedesktop.org/wayland/wayland.git
 Source: %name-%version.tar
 %endif
 
-BuildRequires(pre): meson >= 0.52.1
-BuildRequires: /proc gcc-c++ doxygen libexpat-devel libffi-devel
+BuildRequires(pre): rpm-macros-meson >= 0.56
+BuildRequires: /proc meson gcc-c++ doxygen libexpat-devel libffi-devel
 BuildRequires: libxml2-devel xsltproc docbook-style-xsl
 %{?_enable_doc:BuildRequires: graphviz >= 2.26 xmlto fonts-ttf-roboto fonts-ttf-google-noto-sans-vf}
 
@@ -103,8 +103,8 @@ Requires: lib%name-client-devel = %EVR
 This package provides development files for Wayland cursor helper library.
 
 %package -n lib%name-egl
-Version: %egl_ver
 Epoch: %mesa_epoch
+Version: %egl_ver
 Summary: Wayland-EGL library
 Group: System/Libraries
 Requires: lib%name-client = %main_ver-%release
@@ -136,8 +136,7 @@ Wayland-EGL development package
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files devel
 %_bindir/%name-scanner
@@ -195,6 +194,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Jul 01 2022 Yuri N. Sedunov <aris@altlinux.org> 1.21.0-alt1.1
+- 1.21.0
+
 * Wed Mar 09 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.0-alt1.1
 - added some fonts to BR to fix docs build
 

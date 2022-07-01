@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 41
+%define ver_major 42
 %define xdg_name org.gnome.NautilusPreviewer
 %define api_ver 1.0
 %define gst_api_ver 1.0
@@ -10,7 +10,7 @@
 %define lo_bin %_bindir/libreoffice
 
 Name: sushi
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A quick previewer for Nautilus
@@ -107,6 +107,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Fri Jul 01 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
+- 42.0
+
 * Wed Apr 06 2022 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt1
 - 41.2
 
