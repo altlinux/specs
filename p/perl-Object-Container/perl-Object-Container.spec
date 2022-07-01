@@ -1,5 +1,7 @@
+Epoch: 1
+%define _unpackaged_files_terminate_build 1
 Name: perl-Object-Container
-Version: 0.05001
+Version: 0.15
 Release: alt1
 Summary: Object::Container - simple object container
 
@@ -10,7 +12,9 @@ VCS: git+https://github.com/typester/object-container-perl
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-devel perl-Test-Requires perl-parent perl-Class-Accessor perl-Module-Install perl-Test-Base perl-Module-Install-Repository perl-Module-Install-AuthorTests perl-Module-Install-TestBase perl(Exporter/AutoClean.pm) perl(Class/Singleton.pm) perl(Any/Moose.pm) perl(Moo.pm) perl(Moose.pm)
+BuildRequires: perl-devel perl-Test-Requires perl-parent perl-Class-Accessor perl-Test-Base perl(Exporter/AutoClean.pm) perl(Class/Singleton.pm) perl(Any/Moose.pm) perl(Moo.pm) perl(Moose.pm)
+#BuildRequires: perl-Module-Install perl-Module-Install-Repository perl-Module-Install-AuthorTests perl-Module-Install-TestBase
+BuildRequires: perl(Module/Build/Pluggable.pm) perl(Module/Build/Pluggable/CPANfile.pm)
 
 %description
 %summary
@@ -26,9 +30,12 @@ BuildRequires: perl-devel perl-Test-Requires perl-parent perl-Class-Accessor per
 
 %files
 %perl_vendor_privlib/Object/Container*
-%doc LICENSE Changes README 
+%doc Changes README
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:0.15-alt1
+- new version
+
 * Thu Jun 30 2022 Igor Vlasenko <viy@altlinux.org> 0.05001-alt1
 - new version 0.05001
 
