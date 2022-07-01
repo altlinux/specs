@@ -9,8 +9,8 @@ BuildRequires: perl(YAML/XS.pm) perl(autodie.pm) perl(base.pm) perl(charnames.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 8.000000
-Release: alt1.1
+Version: 10.000000
+Release: alt1
 Summary: Release 2 of Marpa
 Group: Development/Perl
 License: open_source
@@ -37,12 +37,15 @@ cd engine/read_only
 %add_findreq_skiplist */Marpa/R2/HTML/Config/Compile.pm 
 
 %files
-%doc LICENSE COPYING.LESSER Changes README engine/read_only/COPYING
+%doc COPYING.LESSER Changes README engine/read_only/COPYING
 %perl_vendor_archlib/M*
 %perl_vendor_autolib/*
 %_bindir/*
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 10.000000-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 8.000000-alt1.1
 - rebuild with new perl 5.28.1
 
