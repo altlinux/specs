@@ -7,14 +7,14 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           maven-invoker
-Version:        3.0.1
-Release:        alt2_2jpp11
+Version:        3.1.0
+Release:        alt1_1jpp11
 Summary:        Fires a maven build in a clean environment
 License:        ASL 2.0
-URL:            http://maven.apache.org/shared/maven-invoker/
+URL:            https://maven.apache.org/shared/maven-invoker/
 BuildArch:      noarch
 
-Source0:        http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 # Patch rejected upstream
 Patch1:         %{name}-MSHARED-279.patch
@@ -22,9 +22,9 @@ Patch1:         %{name}-MSHARED-279.patch
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven.shared:maven-shared-components:pom:)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-annotations)
-BuildRequires:  mvn(org.codehaus.plexus:plexus-component-metadata)
 BuildRequires:  mvn(org.codehaus.plexus:plexus-utils)
+BuildRequires:  mvn(org.eclipse.sisu:sisu-maven-plugin)
+BuildRequires:  mvn(org.eclipse.sisu:org.eclipse.sisu.inject)
 # Required by tests
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-clean-plugin
@@ -51,13 +51,13 @@ API documentation for %{name}.
 
 %prep
 %setup -q
+# Change line endings so patch can be applied
+sed -i 's/\r$//' src/main/java/org/apache/maven/shared/invoker/MavenCommandLineBuilder.java
 %patch1 -p1
-
-# Port to maven-antrun-plugin 3.0.0
-sed -i s/tasks/target/ pom.xml
+%pom_change_dep javax.inject:javax.inject:1  org.eclipse.sisu:org.eclipse.sisu.inject
 
 %build
-%mvn_build -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -70,6 +70,9 @@ sed -i s/tasks/target/ pom.xml
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_1jpp11
+- new version
+
 * Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 3.0.1-alt2_2jpp11
 - Port to maven-antrun-plugin 3.0.0
 
