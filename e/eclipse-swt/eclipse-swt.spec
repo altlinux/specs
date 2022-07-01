@@ -11,17 +11,17 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define version 4.21
+%define version 4.23
 Epoch:                  1
 
-%global swtdir          eclipse-platform-sources-I20210906-0500
+%global swtdir          eclipse-platform-sources-I20220308-0310
 %global eclipse_rel     %{version}
-%global eclipse_tag     R-%{eclipse_rel}-202109060500
+%global eclipse_tag     R-%{eclipse_rel}-202203080310
 %global swtsrcdir       eclipse.platform.swt/bundles/org.eclipse.swt
 %global eclipse_arch    %{_arch}
 
 Name:           eclipse-swt
-Version:        4.21
+Version:        4.23
 Release:        alt1_1jpp11
 Summary:        Eclipse SWT: The Standard Widget Toolkit for GTK+
 
@@ -148,6 +148,9 @@ cp -a %{swtsrcdir}/*.so %{buildroot}/%{_libdir}/%{name}
 %doc --no-dereference NOTICE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:4.23-alt1_1jpp11
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:4.21-alt1_1jpp11
 - new version
 
