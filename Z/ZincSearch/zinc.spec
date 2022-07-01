@@ -6,7 +6,7 @@
 
 Name: ZincSearch
 Version: 0.2.5
-Release: alt1
+Release: alt2
 Summary: Zinc Search engine
 
 License: Apache-2.0
@@ -126,6 +126,9 @@ useradd -r -g %oname -c 'Zinc Search engine' \
 %dir %attr(0750, %oname, %oname) %_sharedstatedir/%oname
 
 %changelog
+* Sat Jul 02 2022 Alexey Shabalin <shaba@altlinux.org> 0.2.5-alt2
+- update systemd unit
+
 * Wed Jun 29 2022 Alexey Shabalin <shaba@altlinux.org> 0.2.5-alt1
 - 0.2.5
 - update env for zinc service
