@@ -7,7 +7,7 @@
 
 
 Name: kf5-%rname
-Version: 0.2
+Version: 0.3
 Release: alt1
 %K5init
 
@@ -15,6 +15,16 @@ Group: System/Libraries
 Summary: Set of widgets for Kirigami-based applications
 Url:  https://invent.kde.org/libraries/kirigami-addons
 License: GPL-2.0-or-later or LGPL-2.0-or-later
+
+Provides: %name-dateandtime = %EVR
+Obsoletes: %name-dateandtime < %EVR
+Provides: %name-treeview = %EVR
+Obsoletes: %name-treeview < %EVR
+Requires: %name-common
+# all
+Requires: kf5-kirigami
+# treeview
+Requires: libkf5itemmodels kf5-qqc2-desktop-style
 
 Source: %rname-%version.tar
 
@@ -55,6 +65,13 @@ Requires: libkf5itemmodels kf5-kirigami kf5-qqc2-desktop-style
 %description treeview
 Tree view Kirigami addon, which is useful for listing files.
 
+%package devel
+Summary: Development files for %name
+Group: Development/KDE and QT
+Requires: %name-common
+%description devel
+This package contains the development files for %name.
+
 %prep
 %setup -n %rname-%version
 
@@ -70,12 +87,15 @@ Tree view Kirigami addon, which is useful for listing files.
 %files common -f %name.lang
 %doc LICENSES/*
 
-%files dateandtime
-%_K5qml/org/kde/kirigamiaddons/dateandtime/
+%files
+%_K5qml/org/kde/kirigamiaddons/
 
-%files treeview
-%_K5qml/org/kde/kirigamiaddons/treeview/
+%files devel
+%_libdir/cmake/KF5KirigamiAddons/
 
 %changelog
+* Fri Jul 01 2022 Sergey V Turchin <zerg@altlinux.org> 0.3-alt1
+- new version
+
 * Mon Sep 06 2021 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
 - initial build
