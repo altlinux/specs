@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 122
+%define centos_release 123
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,15 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Jul 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.123-alt1.el9
+- Updated to kernel-5.14.0-123.el9:
+  + exec: Force single empty string when argv is empty
+  + net: backport netdevice and netns refcount tracking and enable them for debug kernels
+  + nfs: fix broken handling of the softreval mount option
+  + powerpc: Enable execve syscall exit tracepoint
+  + rcu: Fix rcu_tasks_verify_self_tests failure
+  + scsi: ibmvfc: Store vhost pointer during subcrq allocation
+
 * Thu Jun 30 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.122-alt1.el9
 - Updated to kernel-5.14.0-122.el9:
   + Add MEI support for ADL-N
