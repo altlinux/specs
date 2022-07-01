@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: gnome-calculator
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GTK+3 based desktop calculator
@@ -211,6 +211,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/devhelp/books/GCi-%gci_api_ver/
 
 %changelog
+* Fri Jul 01 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
+- 42.2
+
 * Fri May 27 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 
