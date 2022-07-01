@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name IO-Compress-Zstd
 Name: perl-%module_name
-Version: 2.103
+Version: 2.201
 Release: alt1
 Summary: Write zstd files/buffers
 Group: Development/Perl
@@ -35,6 +35,9 @@ IO::Uncompress::UnZstd.
 %perl_vendor_privlib/I*
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.201-alt1
+- new version
+
 * Thu Apr 07 2022 Igor Vlasenko <viy@altlinux.org> 2.103-alt1
 - new version
 
