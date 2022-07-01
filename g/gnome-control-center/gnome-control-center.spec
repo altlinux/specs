@@ -15,7 +15,7 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -183,6 +183,9 @@ you'll want to install this package.
 
 
 %changelog
+* Fri Jul 01 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
+- 42.3
+
 * Fri May 27 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
 - 42.2
 
