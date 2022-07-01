@@ -3,7 +3,7 @@
 %def_with check
 
 Name: freeipa-healthcheck
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Check the health of a FreeIPA installation
@@ -17,6 +17,7 @@ Patch: %name-%version-alt.patch
 ExcludeArch: %ix86
 
 Requires: python3-module-%name = %EVR
+Requires: dogtag-pki-healthcheck
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-ipaserver
@@ -121,6 +122,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/ipahealthcheck/core/
 
 %changelog
+* Mon Jun 27 2022 Stanislav Levin <slev@altlinux.org> 0.11-alt1
+- 0.10 -> 0.11.
+
 * Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 0.10-alt1
 - 0.9 -> 0.10.
 

@@ -16,9 +16,9 @@
 %endif
 
 %if_with lint
-    %define linter_options --enable-pylint --with-jslint
+    %define linter_options --enable-pylint
 %else
-    %define linter_options --disable-pylint --without-jslint
+    %define linter_options --disable-pylint
 %endif
 
 # paths defines
@@ -44,15 +44,15 @@
 %define samba_version 4.7.6
 # RHBZ#1958909, RHBZ#1967906
 %define slapi_nis_version 0.56.7-alt2
-%define sssd_version 1.16.3
+%define sssd_version 2.7.0
 %define openldap_version 2.4.47-alt2
 %define opendnssec_version 2.1.9-alt1
 %define libp11_version 0.4.10-alt2
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.9.8
-Release: alt2
+Version: 4.9.10
+Release: alt1
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -123,7 +123,8 @@ BuildRequires: python3(wheel)
 
 %if_with docs
 BuildRequires: python3(sphinx)
-BuildRequires: python3(m2r)
+BuildRequires: plantuml
+BuildRequires: fonts-ttf-google-noto-sans-vf
 %endif
 
 #
@@ -132,7 +133,6 @@ BuildRequires: python3(m2r)
 %if_with lint
 BuildRequires: git-core
 BuildRequires: softhsm
-BuildRequires: jsl
 BuildRequires: nss-utils
 
 BuildRequires: python3-modules-sqlite3
@@ -324,6 +324,7 @@ Group: System/Base
 Requires: libsasl2-plugin-gssapi
 Requires: curl
 Requires: sssd-krb5
+Requires: sssd-idp >= %sssd_version
 Requires: sssd-ipa >= %sssd_version
 Requires: sssd-tools >= %sssd_version
 Requires: libsss_sudo
@@ -588,6 +589,7 @@ rm %buildroot/%plugin_dir/libipa_extdom_extop.la
 rm %buildroot/%plugin_dir/libipa_range_check.la
 rm %buildroot/%plugin_dir/libipa_otp_counter.la
 rm %buildroot/%plugin_dir/libipa_otp_lasttoken.la
+rm %buildroot/%plugin_dir/libipa_graceperiod.la
 rm %buildroot/%plugin_dir/libtopology.la
 rm %buildroot/%_libdir/krb5/plugins/kdb/ipadb.la
 rm %buildroot/%_libdir/samba/pdb/ipasam.la
@@ -739,6 +741,7 @@ fi
 if [ $1 -gt 1 ] ; then
     # Has the client been configured?
     restore=0
+    IPA_UPGRADE_LOG="/var/log/ipaupgrade.log"
     test -f '/var/lib/ipa-client/sysrestore/sysrestore.index' && restore=$(wc -l '/var/lib/ipa-client/sysrestore/sysrestore.index' | awk '{print $1}') ||:
 
     if [ -f '/etc/sssd/sssd.conf' -a $restore -ge 2 ]; then
@@ -756,14 +759,9 @@ if [ $1 -gt 1 ] ; then
             cp /etc/ipa/ca.crt /var/lib/ipa-client/pki/kdc-ca-bundle.pem
             cp /etc/ipa/ca.crt /var/lib/ipa-client/pki/ca-bundle.pem
         fi
-        %__python3 -c 'from ipaclient.install.client import configure_krb5_snippet; configure_krb5_snippet()' >>/var/log/ipaupgrade.log 2>&1
-    fi
-
-    if [ $restore -ge 2 ]; then
-        %__python3 -c 'from ipaclient.install.client import update_ipa_nssdb; update_ipa_nssdb()' >/var/log/ipaupgrade.log 2>&1
-    fi
-
-    if [ $restore -ge 2 ]; then
+        %__python3 -c 'from ipaclient.install.client import configure_krb5_snippet; configure_krb5_snippet()' >>"$IPA_UPGRADE_LOG" 2>&1
+        %__python3 -c 'from ipaclient.install.client import update_ipa_nssdb; update_ipa_nssdb()' >>"$IPA_UPGRADE_LOG" 2>&1
+        chmod 0600 "$IPA_UPGRADE_LOG"
         sed -E --in-place=.orig 's/^(HostKeyAlgorithms ssh-rsa,ssh-dss)$/# disabled by ipa-client update\n# \1/' /etc/openssh/ssh_config ||:
     fi
 fi
@@ -888,6 +886,7 @@ fi
 %attr(755,root,root) %plugin_dir/libipa_sidgen.so
 %attr(755,root,root) %plugin_dir/libipa_sidgen_task.so
 %attr(755,root,root) %plugin_dir/libipa_extdom_extop.so
+%attr(755,root,root) %plugin_dir/libipa_graceperiod.so
 %attr(755,root,root) %_libdir/krb5/plugins/kdb/ipadb.so
 %_man1dir/ipa-replica-conncheck.1*
 %_man1dir/ipa-replica-install.1*
@@ -1090,6 +1089,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Thu Jun 23 2022 Stanislav Levin <slev@altlinux.org> 4.9.10-alt1
+- 4.9.8 -> 4.9.10.
+
 * Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 4.9.8-alt2
 - Fixed FTBFS (Pylint 2.12.2).
 
