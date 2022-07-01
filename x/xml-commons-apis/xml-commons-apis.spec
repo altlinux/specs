@@ -5,7 +5,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:          xml-commons-apis
 Version:       1.4.01
-Release:       alt3_35jpp11
+Release:       alt3_38jpp11
 Summary:       APIs for DOM, SAX, and JAXP
 License:       ASL 2.0 and W3C and Public Domain
 URL:           http://xml.apache.org/commons/
@@ -81,7 +81,7 @@ sed -i '/distributionManagement/,/\/distributionManagement/ {d}' *.pom
 %mvn_alias :xml-apis-ext xerces:dom3-xml-apis
 
 %build
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 jar javadoc
+ant -Dant.build.javac.source=1.7 -Dant.build.javac.target=1.7 jar javadoc
 
 # inject OSGi manifests
 jar ufm build/xml-apis.jar %{SOURCE1}
@@ -108,6 +108,9 @@ rm -rf build/docs/javadoc
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.4.01-alt3_38jpp11
+- update
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 1.4.01-alt3_35jpp11
 - update
 
