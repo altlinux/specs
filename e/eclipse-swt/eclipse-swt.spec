@@ -1,82 +1,156 @@
-Epoch: 1
-Name: eclipse-swt
-Version: 4.9.0
-Summary: SWT Library for GTK+
-License: EPL
-Url: http://www.eclipse.org/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: eclipse-swt = 1:4.9.0-2.fc29
-Provides: mvn(org.eclipse.swt:org.eclipse.swt) = 3.108.0.v20180912.1831
-Provides: mvn(org.eclipse.swt:swt) = 3.108.0.v20180912.1831
-Provides: osgi(org.eclipse.swt) = 3.108.0
-Requires: libgtk+3
-Requires: java
-Requires: libwebkit2gtk
-
+# see alt bug #43049
+%global __find_debuginfo_files %nil
+# libs.req java problem
+%add_findreq_skiplist %_libdir/eclipse-swt/*.so
 Group: Development/Java
-Release: alt0.2jpp
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-default
+# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
+%define _localstatedir %{_var}
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 4.21
+Epoch:                  1
 
-# extract jar&xmvn xml from arch rpm
-Source01: extract.sh
+%global swtdir          eclipse-platform-sources-I20210906-0500
+%global eclipse_rel     %{version}
+%global eclipse_tag     R-%{eclipse_rel}-202109060500
+%global swtsrcdir       eclipse.platform.swt/bundles/org.eclipse.swt
+%global eclipse_arch    %{_arch}
 
-Source10: i686.swt.jar
-Source11: i686.eclipse-swt.xml
-Source20: x86_64.swt.jar
-Source21: x86_64.eclipse-swt.xml
-Source30: aarch64.swt.jar
-Source31: aarch64.eclipse-swt.xml
-Source40: armv7hl.swt.jar
-Source41: armv7hl.eclipse-swt.xml
-Source50: ppc64le.swt.jar
-Source51: ppc64le.eclipse-swt.xml
+Name:           eclipse-swt
+Version:        4.21
+Release:        alt1_1jpp11
+Summary:        Eclipse SWT: The Standard Widget Toolkit for GTK+
 
-ExclusiveArch: %ix86 x86_64 aarch64 armv7hl ppc64le
+License:        EPL-2.0
+URL:            https://www.eclipse.org/swt/
+
+Source0:        https://download.eclipse.org/eclipse/downloads/drops4/%{eclipse_tag}/eclipse-platform-sources-%{eclipse_rel}.tar.xz
+# Copy of the script https://git.eclipse.org/c/linuxtools/org.eclipse.linuxtools.eclipse-build.git/tree/utils/ensure_arch.sh. Need for create secondary arch for s390x
+Source1:        ensure_arch.sh
+
+# Avoid the need for a javascript interpreter at build time
+Patch0:         eclipse-swt-avoid-javascript-at-build.patch
+# Remove eclipse tasks and modify build tasks to generate jar like expected
+Patch1:         eclipse-swt-rm-eclipse-tasks-and-customize-build.patch
+# Add fedora cflags to build native libs
+Patch2:         eclipse-swt-fedora-build-native.patch
+
+ExclusiveArch:  s390x x86_64 aarch64 ppc64le
+
+Requires:       java-11-openjdk
+Requires:       libwebkit2gtk libwebkit2gtk-gir
+
+BuildRequires:  java-11-openjdk-devel
+BuildRequires:  javapackages-local
+BuildRequires:  ant
+BuildRequires:  gcc
+BuildRequires:  libwebkit2gtk-devel libwebkit2gtk-gir-devel
+BuildRequires:  libcairo-devel
+BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  libGLU-devel
+
+#Provides:       eclipse-swt = 1:%{version}-%{release}
+#Obsoletes:      eclipse-swt <= 1:4.19-3
+Source44: import.info
 
 %description
-SWT Library for GTK+.
-bootstrap jar pack.
+SWT is an open source widget toolkit for Java designed to provide 
+efficient, portable access to the user-interface facilities of the 
+operating systems on which it is implemented.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%javadoc_package
 
 %prep
+%setup -q -n %{swtdir}
+%patch0 -p1
+%patch1 -p1
+
+# Remove pre-compiled native launchers	
+rm -rf rt.equinox.binaries/org.eclipse.equinox.executable/{bin,contributed}/
+
+# Delete pre-built binary artifacts except some test data that cannot be generated
+rm -rf rt.equinox.p2/
+rm -rf eclipse.jdt.core/org.eclipse.jdt.core.tests.model/
+find . ! -path "*/JCL/*" ! -name "rtstubs*.jar" ! -name "javax15api.jar" ! -name "j9stubs.jar" ! -name "annotations.jar" \
+-type f -name *.jar -delete
+find -name '*.class' -delete
+find -name '*.jar' -delete
+find -name '*.so' -delete
+find -name '*.dll' -delete
+find -name '*.jnilib' -delete
+
+# Patch doesn't support path with spaces, renaming and back to apply patch
+mv %{swtsrcdir}/Eclipse\ SWT\ PI %{swtsrcdir}/Eclipse-SWT-PI
+%patch2 -p1
+mv %{swtsrcdir}/Eclipse-SWT-PI %{swtsrcdir}/Eclipse\ SWT\ PI
+
+# This part generates secondary fragments using primary fragments
+%pom_xpath_inject "pom:plugin[pom:artifactId='target-platform-configuration']/pom:configuration/pom:environments" \
+  "<environment><os>linux</os><ws>gtk</ws><arch>s390x</arch></environment>" eclipse-platform-parent
+rm -rf eclipse.platform.swt.binaries/bundles/org.eclipse.swt.gtk.linux.s390x
+rm -rf rt.equinox.framework/bundles/org.eclipse.equinox.launcher.gtk.linux.s390x
+for dir in rt.equinox.binaries rt.equinox.framework/bundles eclipse.platform.swt.binaries/bundles ; do
+  %{_sourcedir}/ensure_arch.sh "$dir" x86_64 s390x	
+done
+
+cp %{swtsrcdir}/Eclipse\ SWT/common/library/* %{swtsrcdir}/Eclipse\ SWT\ PI/gtk/library/
+cp %{swtsrcdir}/Eclipse\ SWT/common/version.txt %{swtsrcdir}/
+cp %{swtsrcdir}/Eclipse\ SWT\ PI/{common,cairo}/library/* %{swtsrcdir}/Eclipse\ SWT\ PI/gtk/library/
+cp %{swtsrcdir}/Eclipse\ SWT\ OpenGL/glx/library/* %{swtsrcdir}/Eclipse\ SWT\ PI/gtk/library/
+cp %{swtsrcdir}/Eclipse\ SWT\ WebKit/gtk/library/* %{swtsrcdir}/Eclipse\ SWT\ PI/gtk/library/
+cp %{swtsrcdir}/Eclipse\ SWT\ AWT/gtk/library/* %{swtsrcdir}/Eclipse\ SWT\ PI/gtk/library/
+cp eclipse.platform.swt.binaries/bundles/org.eclipse.swt.gtk.linux.%{eclipse_arch}/about_files/*.txt %{swtsrcdir}/about_files/
 
 %build
 
+#export JAVA_HOME=%{_jvmdir}/java-11-openjdk
+
+cd %{swtsrcdir}
+
+# Build native part
+export SWT_LIB_DEBUG=1
+export CFLAGS="${RPM_OPT_FLAGS}"
+export LFLAGS="${RPM_LD_FLAGS}"
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f buildSWT.xml build_local -Dbuild_dir=Eclipse\ SWT\ PI/gtk/library -Dtargets="-gtk3 install" -Dclean= -Dcflags="${RPM_OPT_FLAGS}" -Dlflags="${RPM_LD_FLAGS}"
+
+# Build Java part
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f buildSWT.xml check_compilation_all_platforms -Drepo.src=../../
+
+# Build Jar file
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f build.xml
+
 %install
-mkdir -p $RPM_BUILD_ROOT/usr/share/maven-metadata
-mkdir -p $RPM_BUILD_ROOT/usr/lib/java/
-mkdir -p $RPM_BUILD_ROOT%_libdir/eclipse
-ln -s ../../lib/java/swt.jar %buildroot%_libdir/eclipse/swt.jar
+# Generate addition Maven metadata
+rm -rf .xmvn/ .xmvn-reactor
 
-%ifarch %{ix86}
-install -m 644 %{SOURCE10} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
-install -m 644 %{SOURCE11} $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.xml
-%endif
-%ifarch x86_64
-install -m 644 %{SOURCE20} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
-install -m 644 %{SOURCE21} $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.xml
-%endif
-%ifarch aarch64
-install -m 644 %{SOURCE30} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
-install -m 644 %{SOURCE31} $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.xml
-%else
-%ifarch %arm
-install -m 644 %{SOURCE40} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
-install -m 644 %{SOURCE41} $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.xml
-%endif
-%endif
-%ifarch ppc64le
-install -m 644 %{SOURCE50} $RPM_BUILD_ROOT/usr/lib/java/swt.jar
-install -m 644 %{SOURCE51} $RPM_BUILD_ROOT/usr/share/maven-metadata/eclipse-swt.xml
-%endif
+# Install Maven metadata for SWT
+JAR=%{swtsrcdir}/org.eclipse.swt_*.jar
+VER=$(echo $JAR | sed -e "s/.*_\(.*\)\.jar/\1/")
+%mvn_artifact "org.eclipse.swt:org.eclipse.swt:jar:$VER" %{swtsrcdir}/org.eclipse.swt_*.jar
+%mvn_alias "org.eclipse.swt:org.eclipse.swt" "org.eclipse.swt:swt"
+%mvn_file "org.eclipse.swt:org.eclipse.swt" swt
 
-%files
-/usr/share/maven-metadata/eclipse-swt.xml
-/usr/lib/java/swt.jar
-%_libdir/eclipse/swt.jar
+%mvn_install -J %{swtsrcdir}/docs/api/
+
+#fix so permissions
+find %{swtsrcdir}/*.so -name *.so -exec chmod a+x {} \;
+
+install -d 755 %{buildroot}/%{_libdir}/%{name}
+cp -a %{swtsrcdir}/*.so %{buildroot}/%{_libdir}/%{name}
+
+%files -f .mfiles
+%{_libdir}/%{name}
+%doc --no-dereference LICENSE
+%doc --no-dereference NOTICE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:4.21-alt1_1jpp11
+- new version
+
 * Tue Jul 02 2019 Igor Vlasenko <viy@altlinux.ru> 1:4.9.0-alt0.2jpp
 - updated requires thanks to arei@
 
