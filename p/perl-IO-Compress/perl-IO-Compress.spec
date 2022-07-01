@@ -1,11 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Data/Peek.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: perl-podlators
 %define dist IO-Compress
 Name: perl-%dist
-Version: 2.106
+Version: 2.201
 Release: alt1
 
 Summary: Read and write compressed data
@@ -69,6 +69,9 @@ export TEST_SKIP_VERSION_CHECK=1
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.201-alt1
+- automated CPAN update
+
 * Thu Apr 14 2022 Igor Vlasenko <viy@altlinux.org> 2.106-alt1
 - automated CPAN update
 
