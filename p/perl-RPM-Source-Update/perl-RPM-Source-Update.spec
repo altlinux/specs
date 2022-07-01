@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-%module
-Version: 0.004
+Version: 0.005
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -38,6 +38,9 @@ Requires: perl-RPM-Source-Editor > 0.9229
 %_man1dir/*
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.005-alt1
+- new version
+
 * Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 0.004-alt1
 - new version
 
