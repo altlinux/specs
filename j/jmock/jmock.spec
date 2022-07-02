@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
@@ -9,17 +6,13 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           jmock
 Version:        2.12.0
-Release:        alt1_4jpp11
+Release:        alt1_7jpp11
 Summary:        Java library for testing code with mock objects
 License:        BSD
-
 URL:            http://www.jmock.org/
-Source0:        https://github.com/jmock-developers/jmock-library/archive/%{version}/%{name}-%{version}.tar.gz
-# Adapt to junit 4.13
-# See https://github.com/jmock-developers/jmock-library/pull/200
-Patch0:         %{name}-junit4.13.patch
-
 BuildArch:      noarch
+
+Source0:        https://github.com/jmock-developers/jmock-library/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(cglib:cglib)
@@ -105,14 +98,6 @@ Summary:        jMock Legacy Plugins
 Plugins that make it easier to use jMock with legacy code.
 
 
-%package parent
-Group: Development/Java
-Summary:        jMock Parent POM
-
-%description parent
-jMock Parent POM.
-
-
 %package testjar
 Group: Development/Java
 Summary:        jMock Test Jar
@@ -121,18 +106,11 @@ Summary:        jMock Test Jar
 Source for JAR files used in jMock Core tests.
 
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
+%{?javadoc_package}
 
 
 %prep
 %setup -q -n %{name}-library-%{version}
-%patch0 -p1
 
 
 # remove unnecessary dependency on parent POM
@@ -149,8 +127,9 @@ This package contains javadoc for %{name}.
 # use correct maven artifact for @javax.annotations.Nullable
 %pom_change_dep com.google.code.findbugs:annotations com.google.code.findbugs:jsr305 testjar
 
-# don't install imposters-tests package
-%mvn_package org.jmock:jmock-imposters-tests __noinstall
+# don't install imposters-tests and parent package
+%mvn_package :jmock-imposters-tests __noinstall
+%mvn_package :jmock-parent __noinstall
 
 
 %build
@@ -172,17 +151,14 @@ This package contains javadoc for %{name}.
 %files junit5    -f .mfiles-%{name}-junit5
 %files legacy    -f .mfiles-%{name}-legacy
 
-%files parent    -f .mfiles-%{name}-parent
-%doc --no-dereference LICENSE.txt
-
 %files testjar   -f .mfiles-%{name}-testjar
-%doc --no-dereference LICENSE.txt
-
-%files javadoc   -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:2.12.0-alt1_7jpp11
+- update
+
 * Mon Aug 16 2021 Igor Vlasenko <viy@altlinux.org> 0:2.12.0-alt1_4jpp11
 - fixed build
 
