@@ -5,7 +5,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           tomcat-native
 Version:        1.2.23
-Release:        alt1_5jpp11
+Release:        alt1_8jpp11
 Summary:        Tomcat native library
 
 License:        ASL 2.0
@@ -65,6 +65,9 @@ rm -rf ${RPM_BUILD_ROOT}%{_includedir}/*.h
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.2.23-alt1_8jpp11
+- update
+
 * Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 1.2.23-alt1_5jpp11
 - java11 migration
 
