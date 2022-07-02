@@ -12,7 +12,7 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           apiguardian
-Version:        1.1.1
+Version:        1.1.2
 Release:        alt1_3jpp11
 Summary:        API Guardian Java annotation
 License:        ASL 2.0
@@ -80,7 +80,7 @@ cp -p %{SOURCE100} pom.xml
   </build>"
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7
 
 %install
 %mvn_install
@@ -92,6 +92,9 @@ cp -p %{SOURCE100} pom.xml
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.1.2-alt1_3jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt1_3jpp11
 - update
 
