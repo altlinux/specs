@@ -16,7 +16,7 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           mockito
-Version:        3.7.13
+Version:        3.12.4
 Release:        alt1_3jpp11
 Summary:        Tasty mocking framework for unit tests in Java
 License:        MIT
@@ -30,6 +30,10 @@ Source1:        generate-tarball.sh
 # A custom build script to allow building with maven instead of gradle
 Source2:        mockito-core.pom
 
+# Maven central POMs for subprojects
+Source3:        https://repo1.maven.org/maven2/org/mockito/mockito-inline/%{version}/mockito-inline-%{version}.pom
+Source4:        https://repo1.maven.org/maven2/org/mockito/mockito-junit-jupiter/%{version}/mockito-junit-jupiter-%{version}.pom
+
 # Mockito expects byte-buddy to have a shaded/bundled version of ASM, but
 # we don't bundle in Fedora, so this patch makes mockito use ASM explicitly
 Patch0:         use-unbundled-asm.patch
@@ -38,12 +42,15 @@ BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  mvn(biz.aQute.bnd:biz.aQute.bnd)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.bytebuddy:byte-buddy)
 BuildRequires:  mvn(net.bytebuddy:byte-buddy-agent)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.apiguardian:apiguardian-api)
 BuildRequires:  mvn(org.assertj:assertj-core)
 BuildRequires:  mvn(org.hamcrest:hamcrest)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
 BuildRequires:  mvn(org.objenesis:objenesis)
 BuildRequires:  mvn(org.opentest4j:opentest4j)
 BuildRequires:  mvn(org.ow2.asm:asm)
@@ -64,9 +71,29 @@ BuildArch: noarch
 %description javadoc
 This package contains the API documentation for %{name}.
 
+%package inline
+Group: Development/Java
+Summary:        Mockito preconfigured inline mock maker
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+
+%description inline
+Mockito preconfigured inline mock maker (intermediate and to be
+superseded by automatic usage in a future version).
+
+%if %{without bootstrap}
+%package junit-jupiter
+Group: Development/Java
+Summary:        Mockito JUnit 5 support
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+
+%description junit-jupiter
+Mockito JUnit 5 support.
+%endif
+
 %prep
 %setup -q
 %patch0 -p1
+
 
 # Disable failing test
 # TODO check status: https://github.com/mockito/mockito/issues/2162
@@ -75,7 +102,12 @@ sed -i '/add_listeners_concurrently_sanity_check/i @org.junit.Ignore' src/test/j
 # Use our custom build script
 sed -e 's/@VERSION@/%{version}/' %{SOURCE2} > pom.xml
 
-# OGGi metadata configuration
+# Workaround easymock incompatibility with Java 17 that should be fixed
+# in easymock 4.4: https://github.com/easymock/easymock/issues/274
+%pom_add_plugin :maven-surefire-plugin . "<configuration>
+    <argLine>--add-opens=java.base/sun.reflect.generics.reflectiveObjects=ALL-UNNAMED</argLine></configuration>"
+
+# OSGi metadata configuration
 cat > osgi.bnd <<EOF
 Automatic-Module-Name: org.mockito
 Bundle-SymbolicName: org.mockito
@@ -85,10 +117,18 @@ Private-Package: org.mockito.*
 -removeheaders: Bnd-LastModified,Include-Resource,Private-Package
 EOF
 
+# OSGi metadata configuration for the junit-jupiter jar
+cat > osgi-junit-jupiter.bnd <<EOF
+Automatic-Module-Name: org.mockito.junit.jupiter
+Bundle-SymbolicName: org.mockito.junit-jupiter
+Bundle-Name: Mockito Extension Library for JUnit 5.
+Import-Package: org.junit.jupiter.api.extension;version="[5.7,6)",org.junit.platform.commons.support;version="[1.7,2)",org.mockito*;version="%{version}",*
+-removeheaders: Bnd-LastModified,Include-Resource
+Export-Package: org.mockito.junit.jupiter;version="%{version}";uses:="org.junit.jupiter.api.extension,org.mockito.quality"
+EOF
+
 # Compatibility alias
 %mvn_alias org.%{name}:%{name}-core org.%{name}:%{name}-all
-
-sed -i 's/net\.bytebuddy\.jar\.asm/org.objectweb.asm/' src/main/java/org/mockito/internal/creation/bytebuddy/MockMethodAdvice.java
 
 %build
 # See the usage of exec-maven-plugin in the pom
@@ -96,7 +136,31 @@ mkdir -p target/classes/
 javac  -target 1.8 -source 1.8 -d target/classes/ src/main/java/org/mockito/internal/creation/bytebuddy/inject/MockMethodDispatcher.java
 mv target/classes/org/mockito/internal/creation/bytebuddy/inject/MockMethodDispatcher.{class,raw}
 
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
+
+# Build the inline subproject
+cd subprojects/inline/src/main/resources
+jar cf ../../../../../target/mockito-inline.jar mockito-extensions
+cd -
+%mvn_artifact %{SOURCE3} target/mockito-inline.jar
+%mvn_package org.mockito:mockito-inline inline
+
+%if %{without bootstrap}
+# Build the junit-jupiter subproject
+cd subprojects/junit-jupiter
+mkdir -p target/classes/
+CLASSPATH=$(build-classpath apiguardian junit5/junit-jupiter-api junit5/junit-platform-commons)
+javac  -target 1.8 -source 1.8 -d target/classes/ \
+      -cp ../../target/mockito-core-%{version}.jar:$CLASSPATH \
+      src/main/java/org/mockito/junit/jupiter/*.java
+jar -cf ../../target/mockito-junit-jupiter.unwrapped.jar -C target/classes org
+cd -
+bnd wrap --properties osgi-junit-jupiter.bnd --version %{version} \
+    --output target/mockito-junit-jupiter.jar \
+    target/mockito-junit-jupiter.unwrapped.jar
+%mvn_artifact %{SOURCE4} target/mockito-junit-jupiter.jar
+%mvn_package org.mockito:mockito-junit-jupiter junit-jupiter
+%endif
 
 %install
 %mvn_install
@@ -105,10 +169,19 @@ mv target/classes/org/mockito/internal/creation/bytebuddy/inject/MockMethodDispa
 %doc --no-dereference LICENSE
 %doc README.md doc/design-docs/custom-argument-matching.md
 
+%files inline -f .mfiles-inline
+
+%if %{without bootstrap}
+%files junit-jupiter -f .mfiles-junit-jupiter
+%endif
+
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:3.12.4-alt1_3jpp11
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:3.7.13-alt1_3jpp11
 - new version
 
