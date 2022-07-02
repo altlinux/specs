@@ -13,8 +13,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           apache-commons-cli
-Version:        1.4
-Release:        alt1_14jpp11
+Version:        1.5.0
+Release:        alt1_3jpp11
 Summary:        Command Line Interface Library for Java
 License:        ASL 2.0
 URL:            http://commons.apache.org/cli/
@@ -22,16 +22,12 @@ BuildArch:      noarch
 
 Source0:        http://www.apache.org/dist/commons/cli/source/commons-cli-%{version}-src.tar.gz
 
-# workaround for https://issues.apache.org/jira/browse/CLI-253
-Patch0:         CLI-253-workaround.patch
-
 BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 %endif
 Source44: import.info
 Provides: jakarta-commons-cli = %version
@@ -44,7 +40,6 @@ command line arguments and options.
 
 %prep
 %setup -q -n commons-cli-%{version}-src
-%patch0 -p1
 
 
 # Compatibility links
@@ -52,7 +47,7 @@ command line arguments and options.
 %mvn_file : commons-cli %{name}
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -62,6 +57,9 @@ command line arguments and options.
 %doc README.md RELEASE-NOTES.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.5.0-alt1_3jpp11
+- new version
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:1.4-alt1_14jpp11
 - update
 
