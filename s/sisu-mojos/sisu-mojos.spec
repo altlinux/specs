@@ -13,7 +13,7 @@ BuildRequires: jpackage-default
 
 Name:           sisu-mojos
 Version:        0.3.4
-Release:        alt1_8jpp11
+Release:        alt1_11jpp11
 Summary:        Sisu plugin for Apache Maven
 License:        EPL-1.0
 URL:            http://www.eclipse.org/sisu
@@ -62,7 +62,7 @@ mv releases/%{version}/* .
 %mvn_alias : org.sonatype.plugins:
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7
 
 %install
 %mvn_install
@@ -74,6 +74,9 @@ mv releases/%{version}/* .
 %doc LICENSE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.3.4-alt1_11jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0.3.4-alt1_8jpp11
 - update
 
