@@ -11,7 +11,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           jsch
 Version:        0.1.55
-Release:        alt1_4jpp11
+Release:        alt1_7jpp11
 Summary:        Pure Java implementation of SSH2
 License:        BSD
 URL:            http://www.jcraft.com/jsch/
@@ -57,7 +57,7 @@ BuildArch: noarch
 %pom_xpath_set pom:project/pom:version %{version}
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7
 
 # inject the OSGi Manifest
 mkdir META-INF
@@ -78,6 +78,9 @@ zip target/%{name}-%{version}.jar plugin.properties
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:0.1.55-alt1_7jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:0.1.55-alt1_4jpp11
 - update
 
