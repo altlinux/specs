@@ -13,14 +13,14 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 %if %{without bootstrap} && !0%{?rhel}
-%bcond_without maven_plugin
+%bcond_without bnd_maven_plugin
 %else
-%bcond_with maven_plugin
+%bcond_with bnd_maven_plugin
 %endif
 
 Name:           aqute-bnd
 Version:        5.2.0
-Release:        alt1_5jpp11
+Release:        alt1_9jpp11
 Summary:        BND Tool
 # Part of jpm is under BSD, but jpm is not included in binary RPM
 License:        ASL 2.0 or EPL-2.0
@@ -38,6 +38,7 @@ Source3:        https://repo1.maven.org/maven2/biz/aQute/bnd/aQute.libg/%{versio
 Source4:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd/%{version}/biz.aQute.bnd-%{version}.pom
 Source5:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bndlib/%{version}/biz.aQute.bndlib-%{version}.pom
 Source6:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd.annotation/%{version}/biz.aQute.bnd.annotation-%{version}.pom
+Source7:        https://repo1.maven.org/maven2/biz/aQute/bnd/biz.aQute.bnd.ant/%{version}/biz.aQute.bnd.ant-%{version}.pom
 
 Patch1:         0001-Disable-removed-commands.patch
 Patch2:         0002-Port-to-OSGI-7.0.0.patch
@@ -46,13 +47,14 @@ BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.osgi:osgi.annotation)
 BuildRequires:  mvn(org.osgi:osgi.cmpn)
 BuildRequires:  mvn(org.osgi:osgi.core)
 BuildRequires:  mvn(org.slf4j:slf4j-api)
 BuildRequires:  mvn(org.slf4j:slf4j-simple)
 %endif
-%if %{with maven_plugin}
+%if %{with bnd_maven_plugin}
 BuildRequires:  mvn(org.apache.maven.plugin-tools:maven-plugin-annotations)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-plugin-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
@@ -90,7 +92,7 @@ Summary:        BND library
 %description -n aqute-bndlib
 %{summary}.
 
-%if %{with maven_plugin}
+%if %{with bnd_maven_plugin}
 %package -n bnd-maven-plugin
 Group: Development/Java
 Summary:        BND Maven plugin
@@ -119,7 +121,7 @@ rm biz.aQute.bnd/src/aQute/bnd/main/{ExportReportCommand,MbrCommand,RemoteComman
 sed 's/@VERSION@/%{version}/' %SOURCE2 > pom.xml
 sed -i 's|${Bundle-Version}|%{version}|' biz.aQute.bndlib/src/aQute/bnd/osgi/bnd.info
 
-%if %{without maven_plugin}
+%if %{without bnd_maven_plugin}
 %pom_disable_module maven
 %endif
 
@@ -147,13 +149,18 @@ cp -p %{SOURCE5} pom.xml
 %pom_add_dep biz.aQute.bnd:biz.aQute.bnd.annotation:%{version}
 popd
 
+# bnd.ant
+pushd biz.aQute.bnd.ant
+cp -p %{SOURCE7} pom.xml
+%pom_add_parent biz.aQute.bnd:parent:%{version}
+popd
+
 # bnd
 cp -r biz.aQute.bnd.exporters/src/aQute/bnd/exporter biz.aQute.bnd/src/aQute/bnd/
 pushd biz.aQute.bnd
 cp -p %{SOURCE4} pom.xml
 %pom_add_parent biz.aQute.bnd:parent:%{version}
 %pom_remove_dep :biz.aQute.resolve
-%pom_remove_dep :biz.aQute.bnd.ant
 %pom_remove_dep :biz.aQute.repository
 %pom_remove_dep :biz.aQute.bnd.exporters
 %pom_remove_dep :biz.aQute.bnd.reporter
@@ -202,7 +209,7 @@ popd
 %mvn_package biz.aQute.bnd:aQute.libg bndlib
 %mvn_package biz.aQute.bnd:parent __noinstall
 %mvn_package biz.aQute.bnd:bnd-plugin-parent __noinstall
-%if %{with maven_plugin}
+%if %{with bnd_maven_plugin}
 %mvn_package biz.aQute.bnd:bnd-maven-plugin maven
 %mvn_package biz.aQute.bnd:bnd-baseline-maven-plugin maven
 %endif
@@ -230,7 +237,7 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %files -n aqute-bndlib -f .mfiles-bndlib
 %doc --no-dereference LICENSE
 
-%if %{with maven_plugin}
+%if %{with bnd_maven_plugin}
 %files -n bnd-maven-plugin -f .mfiles-maven
 %endif
 
@@ -238,6 +245,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:5.2.0-alt1_9jpp11
+- update
+
 * Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 0:5.2.0-alt1_5jpp11
 - new version
 
