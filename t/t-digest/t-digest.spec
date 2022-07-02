@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -8,8 +8,8 @@ BuildRequires: jpackage-11-compat
 %global url     https://github.com/tdunning/%{name}
 
 Name:           t-digest
-Version:        3.0
-Release:        alt1_15jpp11
+Version:        3.2
+Release:        alt1_2jpp11
 Summary:        A new data structure for on-line accumulation of statistics
 License:        ASL 2.0
 URL:            %{url}
@@ -19,6 +19,7 @@ Source0:        %{url}/archive/%{name}-%{version}.tar.gz
 #sed "s;<p/>;<br>;g"  -i src/main/java/com/tdunning/math/stats/TreeDigest.java
 #sed "s;<p/>;<br>;g"  -i src/main/java/com/tdunning/math/stats/ArrayDigest.java
 Patch0:         jdk8-javadoc.patch
+Patch1:         sourceTarget.patch
 
 BuildArch:      noarch
 
@@ -40,17 +41,19 @@ BuildArch: noarch
 %description javadoc
 This package contains the API documentation for %{name}.
 
-%prep
-%setup -q
-%patch0
-# Useless tasks
+%prep 
+%setup -q -n %{name}-%{name}-%{version}
+#%%patch0
+%patch1
+# Useless tasks, pom_remove_plugin is in maven-local pkg
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-release-plugin
 %pom_remove_plugin :maven-source-plugin
+%pom_remove_plugin com.carrotsearch.randomizedtesting
 
 %build
 #skipping tests, they requires currently unpacked depndences
-%mvn_build --force
+%mvn_build --force -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -63,6 +66,9 @@ This package contains the API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICES
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.2-alt1_2jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 3.0-alt1_15jpp11
 - update
 
