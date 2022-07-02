@@ -14,7 +14,7 @@ BuildRequires: jpackage-default
 
 Name:           easymock
 Version:        4.2
-Release:        alt1_4jpp11
+Release:        alt1_7jpp11
 Summary:        Easy mock objects
 License:        ASL 2.0
 URL:            http://www.easymock.org
@@ -118,6 +118,17 @@ rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
 %pom_xpath_inject "pom:plugin[pom:artifactId='maven-surefire-plugin']" \
     "<configuration><testNGArtifactName>none:none</testNGArtifactName></configuration>" core
 
+# Workaround Java 17 compatibility issue that should be fixed in
+# easymock 4.4: https://github.com/easymock/easymock/issues/274
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-surefire-plugin']/pom:configuration" \
+    "<argLine>--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED</argLine>" core
+%pom_xpath_inject "pom:plugin[pom:artifactId='maven-surefire-plugin']/pom:configuration" \
+    "<argLine>--add-opens=java.base/java.lang=ALL-UNNAMED</argLine>" test-testng
+%pom_add_plugin :maven-surefire-plugin test-java8 "<configuration>
+    <argLine>--add-opens=java.base/java.lang=ALL-UNNAMED</argLine></configuration>"
+%pom_add_plugin :maven-surefire-plugin test-junit5 "<configuration>
+    <argLine>--add-opens=java.base/java.lang=ALL-UNNAMED</argLine></configuration>"
+
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
@@ -131,6 +142,9 @@ rm core/src/test/java/org/easymock/tests2/ClassExtensionHelperTest.java
 %doc --no-dereference core/LICENSE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:4.2-alt1_7jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:4.2-alt1_4jpp11
 - update
 
