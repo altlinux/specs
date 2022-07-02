@@ -8,7 +8,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name: jcommon-serializer
 Version: 0.3.0
-Release: alt1_27jpp11
+Release: alt1_30jpp11
 Summary: JFree Java General Serialization Framework
 License: LGPLv2+
 Source0: http://downloads.sourceforge.net/jfreereport/%{name}-%{version}.tar.gz
@@ -62,6 +62,9 @@ cp -rp javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_30jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_27jpp11
 - update
 
