@@ -15,8 +15,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           xz-java
-Version:        1.8
-Release:        alt1_12jpp11
+Version:        1.9
+Release:        alt1_3jpp11
 Summary:        Java implementation of XZ data compression
 License:        Public Domain
 URL:            http://tukaani.org/xz/java.html
@@ -58,7 +58,7 @@ This package contains the API documentation for %{name}.
 # package-list from oracle.com. Create a dummy package-list to prevent that.
 mkdir -p extdoc && touch extdoc/package-list
 
-%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  maven -Dsourcever=1.6
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  maven
 
 %install
 %mvn_artifact build/maven/xz-%{version}.pom build/jar/xz.jar
@@ -73,6 +73,9 @@ mkdir -p extdoc && touch extdoc/package-list
 %doc --no-dereference COPYING
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.9-alt1_3jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.8-alt1_12jpp11
 - update
 
