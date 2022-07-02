@@ -10,7 +10,7 @@ BuildRequires: jpackage-default
 
 Name:           jgoodies-common
 Version:        1.8.1
-Release:        alt1_11jpp11
+Release:        alt1_14jpp11
 Summary:        Common library shared by JGoodies libraries and applications
 
 License:        BSD
@@ -67,6 +67,10 @@ done
 
 %mvn_file :%{name} %{name} %{name}
 
+# Fix source/target version for JDK 17
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:source" "1.8"
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:target" "1.8"
+
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -85,6 +89,9 @@ done
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.8.1-alt1_14jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.8.1-alt1_11jpp11
 - update
 
