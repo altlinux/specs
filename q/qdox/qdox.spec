@@ -1,21 +1,31 @@
+Epoch: 1
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global vertag  M9
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 2.0.0
+%bcond_with bootstrap
 
-Summary:        Extract class/interface/method definitions from sources
+%global upstream_version %(echo %{version} | tr '~' '-')
+
 Name:           qdox
-Version:        2.0
-Release:        alt1_8.M9jpp11
-Epoch:          1
+Version:        2.0.0
+Release:        alt1_9jpp11
+Summary:        Extract class/interface/method definitions from sources
 License:        ASL 2.0
 URL:            https://github.com/paul-hammant/qdox
 BuildArch:      noarch
 
 # ./generate-tarball.sh
-Source0:        %{name}-%{version}-%{vertag}.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 Source1:        qdox-MANIFEST.MF
 # Remove bundled binaries which are possibly proprietary
 Source2:        generate-tarball.sh
@@ -23,12 +33,12 @@ Source2:        generate-tarball.sh
 Patch0:         0001-Port-to-JFlex-1.7.0.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(org.apache.maven.plugins:maven-assembly-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:exec-maven-plugin)
-
 BuildRequires:  byaccj
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  jflex
+%endif
 Source44: import.info
 Obsoletes: qdox16-poms < 1.1
 
@@ -47,48 +57,58 @@ BuildArch: noarch
 %description javadoc
 API docs for %{name}.
 
-
 %prep
-%setup -q -n %{name}-%{version}-%{vertag}
+%setup -q -n %{name}-%{upstream_version}
 %patch0 -p1
-find -name *.jar -delete
-rm -rf bootstrap
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
 
 # We don't need these plugins
 %pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_remove_plugin :maven-assembly-plugin
 %pom_remove_plugin :maven-failsafe-plugin
+%pom_remove_plugin :maven-invoker-plugin
 %pom_remove_plugin :maven-jflex-plugin
 %pom_remove_plugin :maven-enforcer-plugin
+%pom_remove_plugin :exec-maven-plugin
 
 %mvn_file : %{name}
 %mvn_alias : qdox:qdox
 
-%pom_xpath_set pom:workingDirectory '${basedir}/src/main/java/com/thoughtworks/qdox/parser/impl'
-
 %build
+%{?jpb_env}
+
 # Generate scanners (upstream does this with maven-jflex-plugin)
 jflex -d src/main/java/com/thoughtworks/qdox/parser/impl src/grammar/lexer.flex
 jflex -d src/main/java/com/thoughtworks/qdox/parser/impl src/grammar/commentlexer.flex
 
+# Generate parsers (upstream does this with exec-maven-plugin)
+(cd ./src/main/java/com/thoughtworks/qdox/parser/impl
+ byaccj -v -Jnorun -Jnoconstruct -Jclass=DefaultJavaCommentParser -Jpackage=com.thoughtworks.qdox.parser.impl ../../../../../../../grammar/commentparser.y
+ byaccj -v -Jnorun -Jnoconstruct -Jclass=Parser -Jimplements=CommentHandler -Jsemantic=Value -Jpackage=com.thoughtworks.qdox.parser.impl -Jstack=500 ../../../../../../../grammar/parser.y
+)
+
 # Build artifact
-%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dqdox.byaccj.executable=byaccj
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7
 
 # Inject OSGi manifests
-jar ufm target/%{name}-%{version}*.jar %{SOURCE1}
+jar ufm target/%{name}-%{upstream_version}.jar %{SOURCE1}
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc LICENSE.txt README.md
+%doc --no-dereference LICENSE.txt
+%doc README.md
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE.txt
+%doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:2.0.0-alt1_9jpp11
+- new version
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 1:2.0-alt1_8.M9jpp11
 - update
 
