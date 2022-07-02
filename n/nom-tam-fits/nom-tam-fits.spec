@@ -3,9 +3,11 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%define autorelease 13
+
 Name:          nom-tam-fits
 Version:       1.15.2
-Release:       alt1_8jpp11
+Release:       alt1_13jpp11
 Summary:       Java library for reading and writing FITS files
 License:       Public Domain
 URL:           http://nom-tam-fits.github.io/nom-tam-fits/
@@ -29,9 +31,8 @@ FITS (Flexible Image Transport System) is the standard data format in
 astronomy used for the transport, analysis, and archival storage of
 scientific data sets.
 
-This library provides efficient I/O for FITS images and binary
-tables. All basic FITS formats and GZIP compressed files are
-supported.
+This library provides efficient I/O for FITS images and binary tables.
+All basic FITS formats and GZIP compressed files are supported.
 
 %package javadoc
 Group: Development/Java
@@ -105,6 +106,8 @@ rm -r src/main/fpack
     <id>default-testCompile</id>
     <phase>test-compile</phase>
     <configuration>
+      <source>1.8</source>
+      <target>1.8</target>
       <testExcludes>
         <exclude>**/CompressTest.*</exclude>
         <exclude>**/ReadWriteProvidedCompressedImageTest.*</exclude>
@@ -141,6 +144,9 @@ sed -i 's/.*SuppressFBWarnings.*//' $(fgrep -lr SuppressFBWarnings src/main/java
 %doc --no-dereference src/license/publicdomain/license.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.15.2-alt1_13jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.15.2-alt1_8jpp11
 - update
 
