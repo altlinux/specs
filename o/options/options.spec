@@ -1,57 +1,49 @@
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           options
-Version:        1.2
-Release:        alt1_18jpp11
+Version:        1.7
+Release:        alt1_3jpp11
 Summary:        Library for managing sets of JVM properties to configure an app or library
 License:        ASL 2.0
 URL:            https://github.com/headius/%{name}
-Source0:        https://github.com/headius/%{name}/archive/%{name}-%{version}.zip
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
+
+Source0:        https://github.com/headius/%{name}/archive/%{name}-%{version}/%{name}-%{version}.tar.gz
+
 BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
 Source44: import.info
 
 %description
 Provides a simple mechanism for defining JVM property-based
 configuration for an application or library.
 
-%package        javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description    javadoc
-Javadoc for %{name}.
+%{?javadoc_package}
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
-cp %{SOURCE1} .
+
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files  -f .mfiles
-%dir %{_javadir}/%{name}
-%doc LICENSE-2.0.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE-2.0.txt
+%doc --no-dereference LICENSE
+%doc README.md
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.7-alt1_3jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1.2-alt1_18jpp11
 - fc34 update
 
