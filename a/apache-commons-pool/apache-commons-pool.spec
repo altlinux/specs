@@ -1,23 +1,21 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global base_name       pool
-%global short_name      commons-%{base_name}
+Name:           apache-commons-pool
+Version:        1.6
+Release:        alt2_29jpp11
+Summary:        Apache Commons Pool Package
+License:        ASL 2.0
+URL:            http://commons.apache.org/pool/
+BuildArch:      noarch
 
-Name:             apache-%{short_name}
-Version:          1.6
-Release:          alt2_22jpp11
-Summary:          Apache Commons Pool Package
-License:          ASL 2.0
-URL:              http://commons.apache.org/%{base_name}/
-BuildArch:        noarch
-
-Source0:          http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Source0:        http://www.apache.org/dist/commons/pool/source/commons-pool-%{version}-src.tar.gz
 
 BuildRequires:  maven-local
+BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-parent:pom:)
 Source44: import.info
 
@@ -27,34 +25,30 @@ pooling package to be distributed under the ASF license. The package should
 support a variety of pool implementations, but encourage support of an
 interface that makes these implementations interchangeable.
 
-%package javadoc
-Group: Development/Java
-Summary:          Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
+%setup -q -n commons-pool-%{version}-src
 
-%mvn_alias : org.apache.commons:%{short_name}
-%mvn_file : %{short_name} %{name}
+
+# Compatibility links
+%mvn_alias : org.apache.commons:commons-pool
+%mvn_file : commons-pool %{name}
 
 %build
-%mvn_build -f -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dcommons.osgi.symbolicName=org.apache.commons.pool -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
 %files -f .mfiles
+%doc --no-dereference LICENSE.txt NOTICE.txt
 %doc README.txt RELEASE-NOTES.txt
-%doc --no-dereference LICENSE.txt NOTICE.txt
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.6-alt2_29jpp11
+- update
+
 * Thu Apr 29 2021 Igor Vlasenko <viy@altlinux.org> 0:1.6-alt2_22jpp11
 - update
 
