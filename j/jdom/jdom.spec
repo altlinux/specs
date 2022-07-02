@@ -49,7 +49,7 @@ BuildRequires: jpackage-default
 
 Name:           jdom
 Version:        1.1.3
-Release:        alt3_26jpp11
+Release:        alt3_30jpp11
 Summary:        Java alternative to DOM and SAX
 License:        Saxpath
 URL:            http://www.jdom.org/
@@ -57,6 +57,12 @@ Source0:        http://jdom.org/dist/binary/archive/jdom-%{version}.tar.gz
 Source1:        http://repo1.maven.org/maven2/org/jdom/jdom/%{version}/jdom-%{version}.pom
 Patch0:         %{name}-crosslink.patch
 Patch1:         %{name}-1.1-OSGiManifest.patch
+
+#
+# Security patches
+# P100 -> ...
+#
+Patch100:       CVE-2021-33813.patch
 
 BuildRequires:  javapackages-local
 %if %{with bootstrap}
@@ -97,12 +103,13 @@ Demonstrations and samples for %{name}.
 %setup -q -n %{name}
 %patch0 -p0
 %patch1 -p0
+%patch100 -p1
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
 find . -name "*.class" -exec rm -f {} \;
 
 %build
-%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcompile.source=1.6 -Dcompile.target=1.6 -Dj2se.apidoc=%{_javadocdir}/java package javadoc-link
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dcompile.source=1.7 -Dcompile.target=1.7 -Dj2se.apidoc=%{_javadocdir}/java package javadoc-link
 
 %install
 %mvn_file : %{name}
@@ -126,6 +133,9 @@ cp -pr samples $RPM_BUILD_ROOT%{_datadir}/%{name}
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.1.3-alt3_30jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.3-alt3_26jpp11
 - update
 
