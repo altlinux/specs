@@ -11,7 +11,7 @@ BuildRequires: jpackage-default
 
 Name:           apache-%{short_name}
 Version:        3.6
-Release:        alt1_13jpp11
+Release:        alt1_16jpp11
 Summary:        Internet protocol suite Java library
 License:        ASL 2.0
 URL:            http://commons.apache.org/%{base_name}/
@@ -54,7 +54,7 @@ rm src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java
 %mvn_alias : org.apache.commons:%{short_name}
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.net
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7 -Dcommons.osgi.symbolicName=org.apache.commons.net
 
 %install
 %mvn_install
@@ -67,6 +67,9 @@ rm src/test/java/org/apache/commons/net/tftp/TFTPServerPathTest.java
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:3.6-alt1_16jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:3.6-alt1_13jpp11
 - update
 
