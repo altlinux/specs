@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -16,7 +16,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           sblim-cim-client2
 Version:        2.2.5
-Release:        alt1_16jpp11
+Release:        alt1_21jpp11
 Summary:        Java CIM Client library
 
 License:        EPL
@@ -126,6 +126,9 @@ cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.2.5-alt1_21jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 2.2.5-alt1_16jpp11
 - update
 
