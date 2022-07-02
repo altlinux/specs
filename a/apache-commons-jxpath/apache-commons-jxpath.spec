@@ -14,7 +14,7 @@ BuildRequires: jpackage-default
 
 Name:           apache-commons-jxpath
 Version:        1.3
-Release:        alt3_40jpp11
+Release:        alt3_43jpp11
 Summary:        Simple XPath interpreter
 License:        ASL 2.0
 URL:            http://commons.apache.org/jxpath/
@@ -70,7 +70,7 @@ rm src/test/org/apache/commons/jxpath/servlet/JXPathServletContextTest.java
 
 %build
 # we are skipping tests because we don't have com.mockrunner in repos yet
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6 -Dcommons.osgi.symbolicName=org.apache.commons.jxpath
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7 -Dcommons.osgi.symbolicName=org.apache.commons.jxpath
 
 %install
 %mvn_install
@@ -82,6 +82,9 @@ rm src/test/org/apache/commons/jxpath/servlet/JXPathServletContextTest.java
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.3-alt3_43jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.3-alt3_40jpp11
 - update
 
