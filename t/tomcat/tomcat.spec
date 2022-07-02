@@ -16,7 +16,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 # %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name tomcat
-%define version 9.0.52
+%define version 9.0.59
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -50,7 +50,7 @@ BuildRequires: jpackage-default
 %global jspspec 2.3
 %global major_version 9
 %global minor_version 0
-%global micro_version 52
+%global micro_version 59
 %global packdname apache-tomcat-%{version}-src
 %global servletspec 4.0
 %global elspec 3.0
@@ -75,7 +75,7 @@ BuildRequires: jpackage-default
 Name:          tomcat
 Epoch:         1
 Version:       %{major_version}.%{minor_version}.%{micro_version}
-Release:       alt1_1jpp11
+Release:       alt1_3jpp11
 Summary:       Apache Servlet/JSP Engine, RI for Servlet %{servletspec}/JSP %{jspspec} API
 
 License:       Apache-2.0
@@ -92,6 +92,7 @@ Source21:      tomcat-functions
 Source30:      tomcat-preamble
 Source31:      tomcat-server
 Source32:      tomcat-named.service
+Source33:      java-9-start-up-parameters.conf
 
 Patch0:        %{name}-%{major_version}.%{minor_version}-bootstrap-MANIFEST.MF.patch
 Patch1:        %{name}-%{major_version}.%{minor_version}-tomcat-users-webapp.patch
@@ -109,11 +110,11 @@ BuildRequires: javapackages-local
 BuildRequires: aqute-bnd
 BuildRequires: aqute-bndlib
 BuildRequires: wsdl4j
-BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-homed systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires: libsystemd-devel libudev-devel systemd systemd-analyze systemd-homed systemd-networkd systemd-portable systemd-sysvinit
 
 Requires:      javapackages-tools
 Requires:      procps
-Requires:      tomcat-el-3.0-api tomcat-jsp-2.3-api tomcat-lib tomcat-servlet-4.0-api
+Requires:      %{name}-lib = %{epoch}:%{version}-%{release}
 %if 0%{?fedora} || 0%{?rhel} > 7
 Requires:    tomcat-native >= %{native_version}
 %endif
@@ -328,6 +329,8 @@ install -m 0755 %{SOURCE31} \
 install -m 0644 %{SOURCE32} \
     ${RPM_BUILD_ROOT}%{_unitdir}/%{name}@.service
 
+install -m 0644 %{SOURCE33} ${RPM_BUILD_ROOT}%{confdir}/conf.d/
+
 # Substitute libnames in catalina-tasks.xml
 sed -i \
    "s,el-api.jar,%{name}-el-%{elspec}-api.jar,;
@@ -441,6 +444,7 @@ exit 0
 %attr(0775,root,tomcat) %dir %{confdir}/Catalina/localhost
 %attr(0755,root,tomcat) %dir %{confdir}/conf.d
 %{confdir}/conf.d/README
+%{confdir}/conf.d/java-9-start-up-parameters.conf
 %config(noreplace) %{confdir}/%{name}.conf
 %config(noreplace) %{confdir}/*.policy
 %config(noreplace) %{confdir}/*.properties
@@ -502,6 +506,9 @@ exit 0
 %{appdir}/ROOT
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:9.0.59-alt1_3jpp11
+- new version
+
 * Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 1:9.0.52-alt1_1jpp11
 - new version
 
