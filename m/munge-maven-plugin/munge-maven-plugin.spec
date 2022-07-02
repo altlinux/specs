@@ -13,7 +13,7 @@ BuildRequires: jpackage-default
 
 Name:           munge-maven-plugin
 Version:        1.0
-Release:        alt1_21jpp11
+Release:        alt1_24jpp11
 Summary:        Munge Maven Plugin
 License:        CDDL-1.0
 URL:            http://github.com/sonatype/munge-maven-plugin
@@ -67,7 +67,7 @@ This package provides %{summary}.
 %pom_remove_parent
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7
 
 %install
 %mvn_install
@@ -80,6 +80,9 @@ This package provides %{summary}.
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.0-alt1_24jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.0-alt1_21jpp11
 - update
 
