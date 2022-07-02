@@ -1,11 +1,13 @@
-%define ver_major 3.8
+%define _libexecdir %_prefix/libexec
+
+%define ver_major 4.0
 %define beta %nil
 %def_enable noise_tools
 %def_enable libavif
-%def_enable libheif
+%def_disable libheif
 
 Name: darktable
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -20,7 +22,7 @@ Patch: darktable-3.0.0-is_supported_platform.patch
 #See https://bugzilla.altlinux.org/38215
 # based on https://bugzilla.altlinux.org/attachment.cgi?id=8682&action=edit
 # by Pavel Nakonechnyi
-Patch1: darktable-3.6.0-alt-disable-use-of-gcc-graphite.patch
+Patch1: darktable-4.0.0-alt-disable-use-of-gcc-graphite.patch
 
 ExcludeArch: %ix86 armh
 
@@ -32,9 +34,11 @@ ExcludeArch: %ix86 armh
 %define iso_codes_ver 3.66
 %define pugixml_ver 1.8
 %define libavif_ver 0.8.2
+%define libheif_ver 1.12.0
 
 Requires: iso-codes >= %iso_codes_ver
 Requires: icon-theme-adwaita
+%{?_enable_noise_tools:Requires: %_bindir/gnuplot}
 
 BuildRequires(pre):rpm-macros-cmake
 BuildRequires: /proc cmake >= %cmake_ver ninja-build gcc-c++ libgomp-devel
@@ -82,7 +86,7 @@ light table. It also enables you to develop raw images and enhance them.
 -DCMAKE_BUILD_TYPE=Release \
 -DBINARY_PACKAGE_BUILD:BOOL=ON \
 -DRAWSPEED_ENABLE_LTO=ON \
-%{?_enable noise_tools:-DBUILD_NOISE_TOOLS=ON} \
+%{?_enable_noise_tools:-DBUILD_NOISE_TOOLS=ON} \
 %ifarch ppc64le
 -DUSE_OPENCL=OFF
 %endif
@@ -109,7 +113,7 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*
 %_datadir/metainfo/%name.appdata.xml
-%{?_enable noise_tools:
+%{?_enable_noise_tools:
 %_libexecdir/%name/tools/%name-gen-noiseprofile
 %_libexecdir/%name/tools/%name-noiseprofile
 %_libexecdir/%name/tools/profiling-shot.xmp
@@ -118,6 +122,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Sun Jul 03 2022 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Sat Feb 26 2022 Yuri N. Sedunov <aris@altlinux.org> 3.8.1-alt1
 - 3.8.1
 
