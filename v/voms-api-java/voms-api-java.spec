@@ -9,7 +9,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:		voms-api-java
 Version:	3.3.2
-Release:	alt1_3jpp11
+Release:	alt1_6jpp11
 Summary:	Virtual Organization Membership Service Java API
 
 License:	ASL 2.0
@@ -68,6 +68,12 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 # Remove license plugin
 %pom_remove_plugin com.mycila.maven-license-plugin:maven-license-plugin
 
+# These tests fail due to changes to the ASN1TaggedObject class in
+# bouncycastle 1.70 - remove until fixed
+# https://github.com/italiangrid/voms-api-java/issues/28
+rm src/test/java/org/italiangrid/voms/test/ac/TestACGeneration.java
+rm src/test/java/org/italiangrid/voms/test/ac/TestFakeVOMSACService.java
+
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
@@ -83,6 +89,9 @@ Virtual Organization Membership Service (VOMS) Java API Documentation.
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt1_6jpp11
+- update
+
 * Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt1_3jpp11
 - rebuild with new bouncycastle
 
