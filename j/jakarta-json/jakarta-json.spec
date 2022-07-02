@@ -5,7 +5,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           jakarta-json
 Version:        1.1.6
-Release:        alt1_3jpp11
+Release:        alt1_7jpp11
 Summary:        Jakarta JSON Processing
 
 License:        EPL-2.0 or GPLv2 with exceptions
@@ -15,9 +15,6 @@ Source0:        https://github.com/eclipse-ee4j/jsonp/archive/1.1-%{version}-REL
 Patch0:         %{name}-deprecated.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(jakarta.annotation:jakarta.annotation-api)
-BuildRequires:  mvn(jakarta.ws.rs:jakarta.ws.rs-api)
-BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
@@ -32,6 +29,10 @@ BuildArch:      noarch
 Obsoletes:      jsonp < 1.0.4-12
 Provides:       jsonp = %{version}-%{release}
 Obsoletes:      jsonp-javadoc < 1.0.4-12
+
+# These can be removed when Fedora 38 reaches EOL
+Obsoletes:      jakarta-json-jaxrs < 1.1.6-5
+Obsoletes:      jakarta-json-jaxrs-1x < 1.1.6-5
 
 %global _desc \
 Jakarta JSON Processing provides portable APIs to parse, generate,\
@@ -66,34 +67,6 @@ Requires:       %{name}-api = %{version}-%{release}
 
 This package contains the default provider for Jakarta JSON Processing.
 
-%package        jaxrs
-Group: Development/Java
-Summary:        Jakarta JSON Processing Media for RESTful web services
-Requires:       %{name}-api = %{version}-%{release}
-Requires:       mvn(jakarta.annotation:jakarta.annotation-api)
-Requires:       mvn(jakarta.ws.rs:jakarta.ws.rs-api)
-
-%description    jaxrs 
-%_desc
-
-This package contains Jakarta RESTful web services MessageBodyReader and
-MessageBodyWriter to support the JsonValue API of Jakarta JSON
-Processing.
-
-%package        jaxrs-1x
-Group: Development/Java
-Summary:        Jakarta JSON Processing Media for JAX-RS 1.1
-Requires:       %{name}-api = %{version}-%{release}
-Requires:       mvn(jakarta.annotation:jakarta.annotation-api)
-Requires:       mvn(jakarta.ws.rs:jakarta.ws.rs-api)
-
-%description    jaxrs-1x 
-%_desc
-
-This package contains JAX-RS 1.1 MessageBodyReader and MessageBodyWriter
-to support the JsonObject, JsonArray, and JsonStructure APIs of Jakarta
-JSON Processing.
-
 %prep
 %setup -q -n jsonp-1.1-%{version}-RELEASE
 %patch0 -p1
@@ -106,7 +79,9 @@ JSON Processing.
 # - bundles: make distribution bundles
 # - demos: build demos
 # - gf: create WARs
-%pom_xpath_remove "//pom:profile[//pom:id='all']/pom:modules/pom:module[text()='bundles' or text()='demos' or text()='gf']"
+# - jaxrs: depends on jaxb, which has been retired
+# - jaxrs-1x: depends on jaxb, which has been retired
+%pom_xpath_remove "//pom:profile[//pom:id='all']/pom:modules/pom:module[text()='bundles' or text()='demos' or text()='gf' or text()='jaxrs' or text()='jaxrs-1x']"
 
 # Unnecessary plugins for an RPM build
 %pom_remove_plugin -r org.apache.maven.plugins:maven-release-plugin
@@ -115,15 +90,9 @@ JSON Processing.
 %pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin
 %pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin api
 %pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin impl
-%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin jaxrs
-%pom_remove_plugin org.apache.maven.plugins:maven-javadoc-plugin jaxrs-1x
 
-# jsr311-api is now javax.ws.rs-api
-%pom_change_dep javax.ws.rs:jsr311-api javax.ws.rs:javax.ws.rs-api
-%pom_change_dep javax.ws.rs:jsr311-api javax.ws.rs:javax.ws.rs-api jaxrs-1x
-
-# javax.annotation is now provided by jakarta-annotation
-%pom_add_dep jakarta.annotation:jakarta.annotation-api:1.3.5 jaxrs jaxrs-1x
+# Due to jaxb retirement, remove support for jsr311-api (javax.ws.rs-api)
+%pom_remove_dep javax.ws.rs:jsr311-api
 
 # Do not copy the API classes into the implementation JAR
 %pom_xpath_remove "//pom:plugin[pom:artifactId ='maven-bundle-plugin']//pom:Export-Package" impl
@@ -151,11 +120,10 @@ JSON Processing.
 
 %files impl -f .mfiles-jakarta.json
 
-%files jaxrs -f .mfiles-jsonp-jaxrs
-
-%files jaxrs-1x -f .mfiles-jsonp-jaxrs-1x
-
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.1.6-alt1_7jpp11
+- update
+
 * Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 1.1.6-alt1_3jpp11
 - update
 
