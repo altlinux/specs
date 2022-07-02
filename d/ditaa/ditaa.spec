@@ -3,13 +3,13 @@ Group: System/Base
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:        Diagrams Through ASCII Art
 Name:           ditaa
 Version:        0.10
-Release:        alt1_12jpp11
+Release:        alt1_17jpp11
 License:        GPLv2+
 URL:            http://ditaa.sourceforge.net/
 Source0:        https://github.com/stathissideris/ditaa/archive/v%{version}.tar.gz
@@ -17,6 +17,7 @@ Source1:        ditaa.wrapper
 Patch0:         ditaa-0.9-port-to-batik-1.8.patch
 # Patch from Debian to build with JDK 10+
 Patch1:         https://sources.debian.org/data/main/d/ditaa/0.10+ds1-1.2/debian/patches/remove-JavadocTaglet.patch
+Patch2:         jdk17.patch
 BuildArch:      noarch
 BuildRequires:  ant
 BuildRequires:  jpackage-utils
@@ -41,6 +42,7 @@ graphics.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 find -name '*.class' -delete
 find -name '*.jar' -delete
 
@@ -59,6 +61,9 @@ install -D -p -m 0755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 %{_javadir}/%{name}.jar
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.10-alt1_17jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.10-alt1_12jpp11
 - update
 
