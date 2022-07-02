@@ -8,8 +8,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          pdfbox
-Version:       2.0.24
-Release:       alt1_2jpp11
+Version:       2.0.25
+Release:       alt1_3jpp11
 Summary:       Apache PDFBox library for working with PDF documents
 License:       ASL 2.0
 URL:           http://pdfbox.apache.org/
@@ -61,6 +61,15 @@ published under the Apache License v2.0.
 
 %package debugger
 Group: Development/Java
+# See: debugger/target/classes/META-INF/DEPENDENCIES
+Requires:      mvn(commons-logging:commons-logging)
+Requires:      mvn(org.apache.pdfbox:fontbox)
+Requires:      mvn(org.apache.pdfbox:pdfbox)
+Requires:      mvn(org.bouncycastle:bcmail-jdk15on)
+Requires:      mvn(org.bouncycastle:bcpkix-jdk15on)
+Requires:      mvn(org.bouncycastle:bcprov-jdk15on)
+# needed by wrapper script
+Requires:      javapackages-tools
 Summary:       Apache PDFBox Debugger
 
 %description debugger
@@ -68,6 +77,16 @@ This package contains the PDF debugger for Apache PDFBox.
 
 %package tools
 Group: Development/Java
+# See: tools/target/classes/META-INF/DEPENDENCIES
+Requires:      mvn(commons-logging:commons-logging)
+Requires:      mvn(org.apache.pdfbox:fontbox)
+Requires:      mvn(org.apache.pdfbox:pdfbox)
+Requires:      mvn(org.apache.pdfbox:pdfbox-debugger)
+Requires:      mvn(org.bouncycastle:bcmail-jdk15on)
+Requires:      mvn(org.bouncycastle:bcpkix-jdk15on)
+Requires:      mvn(org.bouncycastle:bcprov-jdk15on)
+# needed by wrapper script
+Requires:      javapackages-tools
 Summary:       Apache PDFBox Tools
 
 %description tools
@@ -105,6 +124,19 @@ Apache PDFBox Reactor POM.
 
 %package -n preflight
 Group: Development/Java
+# See: preflight/pom.xml
+Requires:      mvn(jakarta.activation:jakarta.activation-api)
+Requires:      mvn(javax.xml.bind:jaxb-api)
+# See: preflight/target/classes/META-INF/DEPENDENCIES
+Requires:      mvn(commons-logging:commons-logging)
+Requires:      mvn(org.apache.pdfbox:fontbox)
+Requires:      mvn(org.apache.pdfbox:pdfbox)
+Requires:      mvn(org.apache.pdfbox:xmpbox)
+Requires:      mvn(org.bouncycastle:bcmail-jdk15on)
+Requires:      mvn(org.bouncycastle:bcpkix-jdk15on)
+Requires:      mvn(org.bouncycastle:bcprov-jdk15on)
+# needed by wrapper script
+Requires:      javapackages-tools
 Summary:        Apache Preflight
 
 %description -n preflight
@@ -149,6 +181,7 @@ find -name '*.ttf' -print -delete
 %pom_remove_plugin -r :maven-source-plugin
 %pom_remove_plugin -r :maven-javadoc-plugin
 %pom_remove_plugin -r :maven-checkstyle-plugin
+%pom_remove_plugin -r :maven-enforcer-plugin
 
 # Some test resources are not okay to distribute with the source, upstream
 # downloads them at build time, but we can't, so we either remove or fix
@@ -189,23 +222,33 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %mvn_file :xmpbox xmpbox
 %mvn_file :fontbox fontbox
 
-%pom_add_dep jakarta.activation:jakarta.activation-api
+%pom_xpath_set 'pom:source' 8 parent
+%pom_xpath_set 'pom:target' 8 parent
+
+%pom_change_dep javax.activation:activation jakarta.activation:jakarta.activation-api preflight
 
 %build
 # Integration tests all require internet access to download test resources, so skip
 # Use compat version of lucene
 # Ignore test failures on F28 and earlier due to liberation fonts being too old
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DskipITs -Dlucene.version=4 -Dmaven.test.failure.ignore=true
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DskipITs -Dlucene.version=4 -Dmaven.test.failure.ignore=true -P !jdkGte9
 
 %install
 %mvn_install
+
+# wrapper scripts
+%jpackage_script org.apache.pdfbox.debugger.PDFDebugger "" "" %{name}-debugger:commons-logging:fontbox:%{name}:bcmail:bcpkix:bcprov pdfbox-debugger true
+%jpackage_script org.apache.pdfbox.tools.PDFBox "" "" %{name}-tools:commons-logging:fontbox:%{name}:%{name}-debugger:bcmail:bcpkix:bcprov pdfbox true
+%jpackage_script org.apache.pdfbox.preflight.Validator_A1b "" "" preflight:jakarta-activation:jaxb-api:commons-logging:fontbox:%{name}:xmpbox:bcmail:bcpkix:bcprov pdfbox-preflight true
 
 %files -f .mfiles-%{name}
 %doc README.md RELEASE-NOTES.txt
 
 %files debugger -f .mfiles-%{name}-debugger
+%{_bindir}/pdfbox-debugger
 
 %files tools -f .mfiles-%{name}-tools
+%{_bindir}/pdfbox
 
 %files -n fontbox -f .mfiles-fontbox
 %doc fontbox/README.txt
@@ -218,6 +261,7 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %files -n preflight -f .mfiles-preflight
+%{_bindir}/pdfbox-preflight
 %doc preflight/README.txt
 
 %files -n xmpbox -f .mfiles-xmpbox
@@ -228,6 +272,9 @@ rm pdfbox/src/test/java/org/apache/pdfbox/pdmodel/graphics/image/CCITTFactoryTes
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:2.0.25-alt1_3jpp11
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:2.0.24-alt1_2jpp11
 - new version
 
