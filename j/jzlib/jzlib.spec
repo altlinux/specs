@@ -6,7 +6,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           jzlib
 Version:        1.1.3
-Release:        alt1_18jpp11
+Release:        alt1_21jpp11
 Summary:        Re-implementation of zlib in pure Java
 License:        BSD
 URL:            http://www.jcraft.com/jzlib/
@@ -47,8 +47,8 @@ Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 %setup -q
 %patch0
 
-%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:source" 1.6
-%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:target" 1.6
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:source" 1.7
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:target" 1.7
 
 # Make into OSGi bundle
 %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
@@ -76,6 +76,9 @@ cp -pr example/* %{buildroot}%{_datadir}/%{name}
 %doc %{_datadir}/%{name}
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.1.3-alt1_21jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.3-alt1_18jpp11
 - update
 
