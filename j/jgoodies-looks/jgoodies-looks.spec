@@ -10,7 +10,7 @@ BuildRequires: jpackage-default
 
 Name:           jgoodies-looks
 Version:        2.7.0
-Release:        alt1_1jpp11
+Release:        alt1_4jpp11
 Summary:        Free high-fidelity Windows and multi-platform appearance
 
 License:        BSD
@@ -61,6 +61,10 @@ cp %{SOURCE1} pom.xml
 # Drop Windows L&F support files (unsupported on JDK 11)
 rm -r src/main/java/com/jgoodies/looks/windows/
 
+# Fix source/target version for JDK 17
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:source" "1.8"
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/pom:target" "1.8"
+
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -77,6 +81,9 @@ rm -r src/main/java/com/jgoodies/looks/windows/
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt1_4jpp11
+- update
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt1_1jpp11
 - new version
 
