@@ -1,24 +1,22 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jaxb-dtd-parser
-Version:        1.4.3
-Release:        alt1_4jpp11
+Version:        1.4.5
+Release:        alt1_3jpp11
 Summary:        SAX-like API for parsing XML DTDs
 License:        BSD
-
 URL:            https://github.com/eclipse-ee4j/jaxb-dtd-parser
-Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
-
 BuildArch:      noarch
+
+Source0:        https://github.com/eclipse-ee4j/jaxb-dtd-parser/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
 
-Obsoletes:      glassfish-dtd-parser < 1.4.3-1
 Provides:       glassfish-dtd-parser = %{version}-%{release}
 Source44: import.info
 
@@ -28,15 +26,16 @@ SAX-like API for parsing XML DTDs.
 
 %package javadoc
 Group: Development/Java
-Summary:        Javadoc for %{name}
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+API documentation for %{name}.
 
 
 %prep
 %setup -q
+
 
 pushd dtd-parser
 # remove unnecessary dependency on parent POM
@@ -71,6 +70,9 @@ popd
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.4.5-alt1_3jpp11
+- new version
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1.4.3-alt1_4jpp11
 - new version
 
