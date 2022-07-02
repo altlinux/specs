@@ -12,12 +12,13 @@ BuildRequires: jpackage-default
 %bcond_without tests
 
 Name:		classloader-leak-test-framework
-Version:	1.1.1
-Release:	alt1_16jpp11
+%global nwname classloader-leak-prevention-parent
+Version:	2.7.0
+Release:	alt1_1jpp11
 Summary:	Detection and verification of Java ClassLoader leaks
 License:	ASL 2.0
 URL:		https://github.com/mjiderhamn/classloader-leak-prevention/tree/master/%{name}
-Source0:	https://github.com/mjiderhamn/classloader-leak-prevention/archive/%{name}-%{version}.tar.gz
+Source0:	https://github.com/mjiderhamn/classloader-leak-prevention/archive/%{nwname}-%{version}.tar.gz
 
 BuildArch:	noarch
 
@@ -41,7 +42,7 @@ BuildArch: noarch
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n classloader-leak-prevention-%{name}-%{version}
+%setup -q -n classloader-leak-prevention-%{nwname}-%{version}
 
 rm -r classloader-leak-prevention
 cp -r %{name}/* .
@@ -49,6 +50,9 @@ cp -r %{name}/* .
 %pom_remove_dep com.sun.faces:jsf-api
 %pom_remove_dep com.sun.faces:jsf-impl
 %pom_remove_dep javax.el:el-api
+sed "s;<maven.compiler.source>1.6</maven.compiler.source>;<maven.compiler.source>8</maven.compiler.source>;" -i pom.xml
+sed "s;<maven.compiler.target>1.6</maven.compiler.target>;<maven.compiler.target>8</maven.compiler.target>;" -i pom.xml
+cat pom.xml | grep -B 3 -A 3 -e 1.6 -e 8
 
 %pom_remove_plugin -r :maven-javadoc-plugin
 
@@ -70,6 +74,9 @@ cp -r %{name}/* .
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt1_1jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.1.1-alt1_16jpp11
 - update
 
