@@ -13,13 +13,15 @@ BuildRequires: jpackage-default
 
 Name:           univocity-parsers
 Version:        2.9.1
-Release:        alt1_3jpp11
+Release:        alt1_6jpp11
 Summary:        Collection of parsers for Java
 License:        ASL 2.0
 URL:            https://github.com/uniVocity/univocity-parsers
 BuildArch:      noarch
 
 Source0:        https://github.com/uniVocity/univocity-parsers/archive/v%{version}.tar.gz
+
+Patch0:         0001-Resolve-import-clash-with-OpenJDK-17.patch
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
@@ -46,13 +48,15 @@ API documentation for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %pom_remove_plugin :nexus-staging-maven-plugin
+%pom_remove_plugin :maven-compiler-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 
 %build
 # Tests require univocity-output-tester, which is not packaged yet.
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7
 
 %install
 %mvn_install
@@ -65,6 +69,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE-2.0.html
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.9.1-alt1_6jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.9.1-alt1_3jpp11
 - update
 
