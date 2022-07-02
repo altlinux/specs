@@ -5,8 +5,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jdependency
-Version:        1.2
-Release:        alt1_12jpp11
+Version:        2.7.0
+Release:        alt1_3jpp11
 Summary:        This project provides an API to analyse class dependencies
 License:        ASL 2.0
 URL:            http://github.com/tcurdt/%{name}
@@ -18,6 +18,9 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(commons-io:commons-io)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-shade-plugin)
+BuildRequires:  mvn(org.jacoco:jacoco-maven-plugin)
 BuildRequires:  mvn(org.ow2.asm:asm)
 BuildRequires:  mvn(org.ow2.asm:asm-analysis)
 BuildRequires:  mvn(org.ow2.asm:asm-commons)
@@ -41,16 +44,16 @@ BuildArch: noarch
 %setup -q -n %{name}-%{name}-%{version}
 %mvn_file : %{name}
 # work-around for: https://bugzilla.redhat.com/show_bug.cgi?id=1981486
-%pom_add_dep org.apache.commons:commons-lang3:3.12.0:test
+#%%pom_add_dep org.apache.commons:commons-lang3:3.12.0:test
 
 # remove maven-compiler-plugin configuration that is broken with Java 11
-%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
+#%%pom_xpath_remove 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration'
 
 # remove a test case that is harmlessly broken on Java 11
-rm src/test/java/org/vafer/jdependency/DependencyUtilsTestCase.java
+#rm src/test/java/org/vafer/jdependency/DependencyUtilsTestCase.java
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -63,6 +66,9 @@ rm src/test/java/org/vafer/jdependency/DependencyUtilsTestCase.java
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:2.7.0-alt1_3jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.2-alt1_12jpp11
 - update
 
