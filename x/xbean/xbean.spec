@@ -17,7 +17,7 @@ BuildRequires: jpackage-default
 
 Name:           xbean
 Version:        4.18
-Release:        alt1_4jpp11
+Release:        alt1_7jpp11
 Summary:        Java plugin based web server
 License:        ASL 2.0
 URL:            https://geronimo.apache.org/xbean/
@@ -98,7 +98,7 @@ rm -r xbean-finder/src/main/java/org/apache/xbean/finder{,/archive}/Bundle*
 sed -i '/testGetBytecode/i@org.junit.Ignore' xbean-finder/src/test/java/org/apache/xbean/finder/archive/MJarJarArchiveTest.java
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7
 
 %install
 %mvn_install
@@ -110,6 +110,9 @@ sed -i '/testGetBytecode/i@org.junit.Ignore' xbean-finder/src/test/java/org/apac
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:4.18-alt1_7jpp11
+- update
+
 * Mon May 30 2022 Igor Vlasenko <viy@altlinux.org> 0:4.18-alt1_4jpp11
 - new version
 
