@@ -18,16 +18,20 @@ BuildRequires: jpackage-default
 %bcond_without  jp_minimal
 
 Name:           log4j
-Version:        2.17.0
+Version:        2.17.2
 Release:        alt1_1jpp11
 Summary:        Java logging package
 BuildArch:      noarch
-License:        Apache-2.0
+License:        ASL 2.0
 
-URL:            http://logging.apache.org/%{name}
-Source0:        http://www.apache.org/dist/logging/%{name}/%{version}/apache-%{name}-%{version}-src.tar.gz
+URL:            https://logging.apache.org/%{name}
+Source0:        https://www.apache.org/dist/logging/%{name}/%{version}/apache-%{name}-%{version}-src.tar.gz
+Source1:        https://www.apache.org/dist/logging/%{name}/%{version}/apache-%{name}-%{version}-src.tar.gz.asc
+Source2:        https://www.apache.org/dist/logging/KEYS
 
 Patch2:         logging-log4j-Remove-unsupported-EventDataConverter.patch
+
+BuildRequires:  gnupg2
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
@@ -224,9 +228,6 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 # tests are disabled
 %pom_remove_plugin :maven-failsafe-plugin
 
-# Update required version of jansi 1.x
-%pom_xpath_set "//pom:dependency[pom:artifactId='jansi']/pom:version" 1.18
-
 # Remove deps on slf4j-ext, it is no longer available in Fedora 35
 %pom_remove_dep -r :slf4j-ext
 %pom_remove_parent
@@ -318,6 +319,9 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:2.17.2-alt1_1jpp11
+- new version
+
 * Sun Dec 19 2021 Andrey Cherepanov <cas@altlinux.org> 0:2.17.0-alt1_1jpp11
 - new version (fixes CVE-2021-45105)
 
