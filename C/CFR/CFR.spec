@@ -5,7 +5,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           CFR
 Version:        0.151
-Release:        alt1_4jpp11
+Release:        alt1_7jpp11
 Summary:        CFR - Another Java Decompiler
 
 License:        MIT
@@ -48,6 +48,7 @@ Javadoc for %{name}.
 %pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-gpg-plugin
+sed "s;<javaVersion>1.6</javaVersion>;<javaVersion>1.8</javaVersion>;" -i pom.xml
 
 # workaround for template-maven-plugin
 sed -i 's/${project.version}/%{version}/' %{_builddir}/%{build_folder}/src-templates/org/benf/cfr/reader/util/CfrVersionInfo.java
@@ -57,7 +58,7 @@ cp %{_builddir}/%{build_folder}/src-templates/org/benf/cfr/reader/util/CfrVersio
 
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -76,6 +77,9 @@ cp %{_builddir}/%{build_folder}/src-templates/org/benf/cfr/reader/util/CfrVersio
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.151-alt1_7jpp11
+- update
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0.151-alt1_4jpp11
 - new version
 
