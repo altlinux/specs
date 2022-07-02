@@ -9,7 +9,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           osmpbf
 Version:        1.5.0
-Release:        alt1_6jpp11
+Release:        alt1_11jpp11
 Summary:        C library to read and write OpenStreetMap PBF files
 
 License:        LGPLv3
@@ -17,9 +17,7 @@ URL:            https://github.com/openstreetmap/OSM-binary
 Source0:        https://github.com/openstreetmap/OSM-binary/archive/v%{version}/OSM-binary-%{version}.tar.gz
 
 BuildRequires:  ctest cmake gcc-c++
-BuildRequires:  libprotobuf-devel protobuf-java protobuf-compiler
-BuildRequires:  maven-local maven-source-plugin
-BuildRequires:  junit
+BuildRequires:  libprotobuf-devel protobuf-compiler
 Source44: import.info
 
 %description
@@ -44,45 +42,20 @@ Requires:       %{name} = %{version}-%{release}
 This package contains libraries and header files for
 developing applications that use %{name}.
 
-%package java
-Group: Development/Java
-Summary:        Java OpenStreetMap PBF file format library
-BuildArch:      noarch
-
-%description java
-Osmpbf is a Java/C library to read and write OpenStreetMap PBF files.
-PBF (Protocol buffer Binary Format) is a binary file format for OpenStreetMap
-data that uses Google Protocol Buffers as low-level storage.
-
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch:      noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
-
 
 %prep
 %setup -q -n OSM-binary-%{version}
 
-%pom_remove_plugin :protobuf-maven-plugin
-%pom_remove_plugin :maven-gpg-plugin
-%pom_remove_plugin :maven-javadoc-plugin
 
 
 %build
 %{fedora_v2_cmake}
 %fedora_v2_cmake_build
-protoc --java_out=src.java src/osmformat.proto
-protoc --java_out=src.java src/fileformat.proto
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 
 %install
 %fedora_v2_cmake_install
 rm %{buildroot}/%{_libdir}/libosmpbf.a
-%mvn_install
 
 
 %files
@@ -102,15 +75,10 @@ rm %{buildroot}/%{_libdir}/libosmpbf.a
 %{_libdir}/libosmpbf.so
 
 
-%files java -f .mfiles
-%doc --no-dereference LICENSE
-
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE
-
-
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt1_11jpp11
+- update
+
 * Tue Aug 10 2021 Igor Vlasenko <viy@altlinux.org> 1.5.0-alt1_6jpp11
 - fixed build
 
