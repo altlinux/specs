@@ -14,7 +14,7 @@ BuildRequires: jpackage-default
 
 Name:           apache-commons-collections
 Version:        3.2.2
-Release:        alt1_24jpp11
+Release:        alt1_27jpp11
 Summary:        Provides new interfaces, implementations and utilities for Java Collections
 License:        ASL 2.0
 URL:            http://commons.apache.org/collections/
@@ -86,7 +86,7 @@ sed -i 's/\r//' LICENSE.txt PROPOSAL.html README.txt NOTICE.txt
 %mvn_file ':commons-collections{,-testframework}' %{name}@1 commons-collections@1
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.6 -Dmaven.compiler.target=1.6 -Dcommons.osgi.symbolicName=org.apache.commons.collections
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7 -Dcommons.osgi.symbolicName=org.apache.commons.collections
 
 %install
 %mvn_artifact commons-collections:commons-collections-testframework:%{version} target/commons-collections-testframework-%{version}.jar
@@ -102,6 +102,9 @@ sed -i 's/\r//' LICENSE.txt PROPOSAL.html README.txt NOTICE.txt
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:3.2.2-alt1_27jpp11
+- update
+
 * Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 0:3.2.2-alt1_24jpp11
 - support of new antrun plugin
 
