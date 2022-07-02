@@ -16,7 +16,7 @@ BuildRequires: jpackage-default
 Name:           junit
 Epoch:          1
 Version:        4.13.1
-Release:        alt1_3jpp11
+Release:        alt1_7jpp11
 Summary:        Java regression test package
 License:        EPL-1.0
 URL:            http://www.junit.org/
@@ -111,8 +111,10 @@ sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >sr
 
 %mvn_file : %{name}
 
+%mvn_alias junit:junit junit:junit-dep
+
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DjdkVersion=1.6
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -DjdkVersion=1.7 -P\!restrict-doclint
 
 %install
 %mvn_install
@@ -129,6 +131,9 @@ sed s/@version@/%{version}/ src/main/java/junit/runner/Version.java.template >sr
 %doc doc/*
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:4.13.1-alt1_7jpp11
+- update
+
 * Sat Jun 11 2022 Igor Vlasenko <viy@altlinux.org> 1:4.13.1-alt1_3jpp11
 - new version
 
