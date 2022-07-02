@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: jpackage-11
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -14,83 +14,48 @@ BuildRequires: jpackage-default
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Copyright statement from JPackage this file is derived from:
-
-# Copyright (c) 2000-2007, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%bcond_with dom4j
-%bcond_with hibernate
-%bcond_with jdom
-%bcond_with jdom2
-%bcond_with joda
-%bcond_with kxml
+%bcond_without activation
+%bcond_without cglib
+%bcond_without dom4j
+%bcond_without jdom
+%bcond_without jdom2
+%bcond_with jettison
+%bcond_with joda-time
+%bcond_with kxml2
 %bcond_with stax
 %bcond_with woodstox
+%bcond_with xom
+%bcond_with xpp3
 
 Name:           xstream
-Version:        1.4.14
+Version:        1.4.19
 Release:        alt1_2jpp11
 Summary:        Java XML serialization library
 License:        BSD
-URL:            http://x-stream.github.io/
+URL:            https://x-stream.github.io
 BuildArch:      noarch
 
 Source0:        https://repo1.maven.org/maven2/com/thoughtworks/%{name}/%{name}-distribution/%{version}/%{name}-distribution-%{version}-src.zip
 
-# patch pom.xml to target Java 8 / 1.8
-Patch0:         xstream-java-8-target.patch
-
 BuildRequires:  maven-local
-BuildRequires:  mvn(cglib:cglib)
-BuildRequires:  mvn(com.sun.activation:jakarta.activation)
+BuildRequires:  mvn(io.github.x-stream:mxparser)
 BuildRequires:  mvn(javax.xml.bind:jaxb-api)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-enforcer-plugin)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(xpp3:xpp3)
-BuildRequires:  mvn(xpp3:xpp3_min)
 
+%if %{with activation}
+BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
+%endif
+
+%if %{with cglib}
+BuildRequires:  mvn(cglib:cglib-nodep)
+%endif
 
 %if %{with dom4j}
 BuildRequires:  mvn(dom4j:dom4j)
-%endif
-
-%if %{with hibernate}
-BuildRequires:  mvn(javassist:javassist)
-BuildRequires:  mvn(org.codehaus.jettison:jettison)
-BuildRequires:  mvn(org.hibernate:hibernate-core)
-BuildRequires:  mvn(org.hibernate:hibernate-envers)
-BuildRequires:  mvn(org.slf4j:slf4j-simple)
-BuildRequires:  mvn(xom:xom)
 %endif
 
 %if %{with jdom}
@@ -101,11 +66,15 @@ BuildRequires:  mvn(org.jdom:jdom)
 BuildRequires:  mvn(org.jdom:jdom2)
 %endif
 
-%if %{with joda}
+%if %{with jettison}
+BuildRequires:  mvn(org.codehaus.jettison:jettison)
+%endif
+
+%if %{with joda-time}
 BuildRequires:  mvn(joda-time:joda-time)
 %endif
 
-%if %{with kxml}
+%if %{with kxml2}
 BuildRequires:  mvn(net.sf.kxml:kxml2-min)
 %endif
 
@@ -115,10 +84,17 @@ BuildRequires:  mvn(stax:stax-api)
 %endif
 
 %if %{with woodstox}
-BuildRequires:  mvn(org.codehaus.woodstox:woodstox-core-asl)
+BuildRequires:  mvn(org.codehaus.woodstox:wstx-asl)
+%endif
+
+%if %{with xom}
+BuildRequires:  mvn(xom:xom)
+%endif
+
+%if %{with xpp3}
+BuildRequires:  mvn(xpp3:xpp3_min)
 %endif
 Source44: import.info
-
 
 %description
 XStream is a simple library to serialize objects to XML
@@ -140,85 +116,36 @@ customization of how particular types are represented as XML.
 When an exception occurs due to malformed XML, detailed diagnostics
 are provided to help isolate and fix the problem.
 
-
-%package        javadoc
+%package -n %{name}-benchmark
 Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
+Summary:        Benchmark module for %{name}
+%description -n %{name}-benchmark
+Benchmark module for %{name}.
 
-%description    javadoc
-%{name} API documentation.
-
-%if %{with hibernate}
-%package        hibernate
-Group: Development/Java
-Summary:        hibernate module for %{name}
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-
-%description    hibernate
-hibernate module for %{name}.
-%endif
-
-%package        benchmark
-Group: Development/Java
-Summary:        benchmark module for %{name}
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-
-%description    benchmark
-benchmark module for %{name}.
-
-%package parent
-Group: Development/Java
-Summary:        Parent POM for %{name}
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-
-%description parent
-Parent POM for %{name}.
-
+%{?javadoc_package}
 
 %prep
-%setup -qn %{name}-%{version}
-find . -name "*.class" -print -delete
-find . -name "*.jar" -print -delete
+%setup -q -n %{name}-%{version}
 
-%patch0 -p1
 
-# Require org.codehaus.xsite:xsite-maven-plugin
-%pom_disable_module xstream-distribution
+find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 
-# missing artifacts:
-#  org.openjdk.jmh:jmh-core:jar:1.11.1
-#  org.openjdk.jmh:jmh-generator-annprocess:jar:1.11.1
-%pom_disable_module xstream-jmh
+# https://jakarta.ee/about/faq#What_happened_with_javax.*_namespace?
+%pom_change_dep javax.activation:activation jakarta.activation:jakarta.activation-api %{name}
 
-# Unwanted
-%pom_remove_plugin :maven-source-plugin
-%pom_remove_plugin :maven-dependency-plugin
-%pom_remove_plugin :maven-eclipse-plugin
-%pom_remove_plugin :maven-release-plugin
-%pom_remove_plugin :xsite-maven-plugin
+%pom_remove_plugin -r :maven-dependency-plugin
 
-%pom_xpath_set "pom:dependency[pom:groupId = 'org.codehaus.woodstox' ]/pom:artifactId" woodstox-core-asl
-%pom_xpath_set "pom:dependency[pom:groupId = 'org.codehaus.woodstox' ]/pom:artifactId" woodstox-core-asl xstream
-%pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib
-%pom_xpath_set "pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib xstream
-# Replace old xmlpull dependency with xpp3
-%pom_change_dep :xmlpull xpp3:xpp3:1.1.4c xstream
-# Require unavailable proxytoys:proxytoys
-%pom_remove_plugin :maven-dependency-plugin xstream
+%if %{without activation}
+%pom_remove_dep -r jakarta.activation:jakarta.activation-api
+rm xstream/src/java/com/thoughtworks/xstream/converters/extended/ActivationDataFlavorConverter.java
+%endif
 
-%pom_remove_plugin :maven-javadoc-plugin xstream
-
-%pom_xpath_set "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'cglib' ]/pom:artifactId" cglib xstream-hibernate
-%pom_xpath_inject "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'junit' ]" "<scope>test</scope>" xstream-hibernate
-%pom_remove_plugin :maven-dependency-plugin xstream-hibernate
-%pom_remove_plugin :maven-javadoc-plugin xstream-hibernate
-
-%pom_xpath_inject "pom:project/pom:dependencies/pom:dependency[pom:groupId = 'junit' ]" "<scope>test</scope>" xstream-benchmark
-%pom_remove_plugin :maven-javadoc-plugin xstream-benchmark
-
-# Fix dep on activation
-%pom_change_dep javax.activation:activation com.sun.activation:jakarta.activation . xstream
+%if %{without cglib}
+%pom_remove_dep -r cglib:cglib-nodep
+rm xstream/src/java/com/thoughtworks/xstream/converters/reflection/CGLIBEnhancedConverter.java
+rm xstream/src/java/com/thoughtworks/xstream/mapper/CGLIBMapper.java
+rm xstream/src/java/com/thoughtworks/xstream/security/CGLIBProxyTypePermission.java
+%endif
 
 %if %{without dom4j}
 %pom_remove_dep -r dom4j:dom4j
@@ -227,17 +154,6 @@ rm xstream/src/java/com/thoughtworks/xstream/io/xml/Dom4JReader.java
 rm xstream/src/java/com/thoughtworks/xstream/io/xml/Dom4JWriter.java
 rm xstream/src/java/com/thoughtworks/xstream/io/xml/Dom4JXmlWriter.java
 rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamDom4J.java
-%endif
-
-%if %{without hibernate}
-# Don't build hibernate module
-%pom_disable_module xstream-hibernate
-# Disable support for some lesser used XML backends
-%pom_remove_dep -r xom:xom
-%pom_remove_dep -r org.codehaus.jettison:jettison
-rm xstream/src/java/com/thoughtworks/xstream/io/xml/Xom*
-rm xstream/src/java/com/thoughtworks/xstream/io/json/Jettison*
-rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamXom.java
 %endif
 
 %if %{without jdom}
@@ -255,13 +171,18 @@ rm xstream/src/java/com/thoughtworks/xstream/io/xml/JDom2Reader.java
 rm xstream/src/java/com/thoughtworks/xstream/io/xml/JDom2Writer.java
 %endif
 
-%if %{without joda}
-%pom_remove_dep -r joda-time:joda-time
-rm xstream/src/java/com/thoughtworks/xstream/core/util/ISO8601JodaTimeConverter.java
-rm xstream/src/test/com/thoughtworks/acceptance/JodaTimeTypesTest.java
+%if %{without jettison}
+%pom_remove_dep -r org.codehaus.jettison:jettison
+rm xstream/src/java/com/thoughtworks/xstream/io/json/JettisonMappedXmlDriver.java
+rm xstream/src/java/com/thoughtworks/xstream/io/json/JettisonStaxWriter.java
 %endif
 
-%if %{without kxml}
+%if %{without joda-time}
+%pom_remove_dep -r joda-time:joda-time
+rm xstream/src/java/com/thoughtworks/xstream/core/util/ISO8601JodaTimeConverter.java
+%endif
+
+%if %{without kxml2}
 %pom_remove_dep -r net.sf.kxml:kxml2-min
 rm xstream/src/java/com/thoughtworks/xstream/io/xml/KXml2DomDriver.java
 rm xstream/src/java/com/thoughtworks/xstream/io/xml/KXml2Driver.java
@@ -273,45 +194,58 @@ rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/
 %pom_remove_dep -r stax:stax
 %pom_remove_dep -r stax:stax-api
 rm xstream/src/java/com/thoughtworks/xstream/io/xml/BEAStaxDriver.java
-rm xstream/src/test/com/thoughtworks/xstream/io/xml/BEAStaxReaderTest.java
-rm xstream/src/test/com/thoughtworks/xstream/io/xml/BEAStaxWriterTest.java
 rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamBEAStax.java
 %endif
 
 %if %{without woodstox}
-%pom_remove_dep -r org.codehaus.woodstox:woodstox-core-asl
+%pom_remove_dep -r org.codehaus.woodstox:wstx-asl
 rm xstream/src/java/com/thoughtworks/xstream/io/xml/WstxDriver.java
 rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamWoodstox.java
 %endif
 
-%mvn_file :%{name} %{name}/%{name} %{name}
-%mvn_file :%{name}-benchmark %{name}/%{name}-benchmark %{name}-benchmark
+%if %{without xom}
+%pom_remove_dep -r xom:xom
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/XomDriver.java
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/XomReader.java
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/XomWriter.java
+rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamXom.java
+%endif
 
-%mvn_package :%{name}
+%if %{without xpp3}
+%pom_remove_dep -r xpp3:xpp3_min
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/Xpp3DomDriver.java
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/Xpp3Driver.java
+rm xstream/src/java/com/thoughtworks/xstream/io/xml/xppdom/Xpp3DomBuilder.java
+rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamXpp3.java
+rm xstream-benchmark/src/java/com/thoughtworks/xstream/tools/benchmark/products/XStreamXpp3DOM.java
+%endif
+
+%pom_disable_module %{name}-distribution
+
+%pom_disable_module %{name}-hibernate
+
+%pom_disable_module %{name}-jmh
+
+%mvn_package :%{name}-parent __noinstall
 
 %build
-# test skipped for unavailable test deps (com.megginson.sax:xml-writer)
-%mvn_build -f -s
+%mvn_build -s -f -- -Dversion.java.source=1.8 -Dversion.java.target=1.8
 
 %install
 %mvn_install
 
-%files -f .mfiles
+%files -n %{name} -f .mfiles-%{name}
+%doc --no-dereference LICENSE.txt
 %doc README.txt
+
+%files -n %{name}-benchmark -f .mfiles-%{name}-benchmark
 %doc --no-dereference LICENSE.txt
-
-%files parent -f .mfiles-%{name}-parent
-
-%if %{with hibernate}
-%files hibernate -f .mfiles-%{name}-hibernate
-%endif
-
-%files benchmark -f .mfiles-%{name}-benchmark
-
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt
+%doc README.txt
 
 %changelog
+* Sat Jul 02 2022 Igor Vlasenko <viy@altlinux.org> 0:1.4.19-alt1_2jpp11
+- update
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:1.4.14-alt1_2jpp11
 - java11 build
 
