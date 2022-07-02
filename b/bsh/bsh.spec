@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2000-2007, JPackage Project
@@ -38,7 +38,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           bsh
 Version:        2.1.0
-Release:        alt1_1jpp11
+Release:        alt1_5jpp11
 Epoch:          0
 Summary:        Lightweight Scripting for Java
 URL:            http://www.beanshell.org/
@@ -176,6 +176,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:2.1.0-alt1_5jpp11
+- update
+
 * Fri Jun 11 2021 Igor Vlasenko <viy@altlinux.org> 0:2.1.0-alt1_1jpp11
 - new version
 
