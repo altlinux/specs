@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: libformula
 Version: 1.1.3
-Release: alt1_30jpp11
+Release: alt1_34jpp11
 Summary: Formula Parser
 License: LGPLv2
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{name}-%%{version}.zip
@@ -70,6 +70,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_34jpp11
+- update
+
 * Tue Jun 15 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_30jpp11
 - fc34 update
 
