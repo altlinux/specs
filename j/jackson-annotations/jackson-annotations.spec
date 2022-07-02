@@ -1,17 +1,17 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jackson-annotations
 Version:        2.11.4
-Release:        alt1_2jpp11
+Release:        alt1_6jpp11
 Summary:        Core annotations for Jackson data processor
 License:        ASL 2.0
 
 URL:            https://github.com/FasterXML/jackson-annotations
-Source0:        %{url}/archive/%{name}-%{version}.tar.gz
-
+Source0:        https://github.com/FasterXML/jackson-annotations/archive/%{name}-%{version}.tar.gz
+Patch1:         0001-Change-compilation-source-target-to-Java-11.patch
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-parent:pom:) >= 2.11
 BuildRequires:  mvn(junit:junit)
@@ -34,6 +34,7 @@ This package contains API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+%patch1 -p1
 
 %pom_remove_plugin "org.moditect:moditect-maven-plugin"
 %pom_remove_plugin "org.sonatype.plugins:nexus-staging-maven-plugin"
@@ -56,6 +57,9 @@ sed -i 's/\r//' LICENSE
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_6jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_2jpp11
 - new version
 
