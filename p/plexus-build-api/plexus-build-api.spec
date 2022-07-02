@@ -14,14 +14,13 @@ BuildRequires: jpackage-default
 
 Name:           plexus-build-api
 Version:        0.0.7
-Release:        alt3_33jpp11
+Release:        alt3_36jpp11
 Summary:        Plexus Build API
 License:        ASL 2.0
-URL:            https://github.com/sonatype/sisu-build-api
+URL:            https://github.com/codehaus-plexus/plexus-build-api
 BuildArch:      noarch
 
-#Fetched from https://github.com/sonatype/sisu-build-api/tarball/plexus-build-api-0.0.7
-Source0:        sonatype-sisu-build-api-plexus-build-api-0.0.7-0-g883ea67.tar.gz
+Source0:        https://github.com/codehaus-plexus/plexus-build-api/archive/refs/tags/plexus-build-api-0.0.7.tar.gz
 Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 # Forwarded upstream: https://github.com/sonatype/sisu-build-api/pull/2
@@ -50,14 +49,15 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q -n sonatype-sisu-build-api-f1f8849
+%setup -q -n plexus-build-api-plexus-build-api-0.0.7
 cp -p %{SOURCE1} .
 
 %patch0 -p1
 %patch1 -p1
 
 %pom_remove_parent
-%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/*" 1.6
+# From upstream commit: https://github.com/codehaus-plexus/plexus-build-api/commit/6566292a7d85e275b824857bdf92d6504bc4824e
+%pom_xpath_set "pom:plugin[pom:artifactId='maven-compiler-plugin']/pom:configuration/*" 1.8
 
 %mvn_file : plexus/%{name}
 
@@ -77,6 +77,9 @@ cp -p %{SOURCE1} .
 %doc LICENSE-2.0.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:0.0.7-alt3_36jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:0.0.7-alt3_33jpp11
 - update
 
