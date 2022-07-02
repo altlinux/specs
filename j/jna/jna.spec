@@ -16,8 +16,8 @@ BuildRequires: jpackage-default
 %bcond_without reflections
 
 Name:           jna
-Version:        5.9.0
-Release:        alt1_1jpp11
+Version:        5.10.0
+Release:        alt1_3jpp11
 Summary:        Pure Java access to native libraries
 # Most of code is dual-licensed under either LGPL 2.1+ only or Apache
 # License 2.0.  WeakIdentityHashMap.java was taken from Apache CXF,
@@ -46,6 +46,8 @@ Patch3:         0004-Fix-javadoc-build.patch
 Patch4:         0005-Fix-duplicate-manifest-entry.patch
 # We don't want newly added warnings to break our build
 Patch5:         0006-Remove-Werror.patch
+
+Patch6:         0007-Support-openjdk-17.patch
 
 # We manually require libffi because find-requires doesn't work
 # inside jars.
@@ -101,6 +103,7 @@ cp %{SOURCE1} .
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 chmod -Rf a+rX,u+w,g-w,o-w .
 sed -i 's|@LIBDIR@|%{_libdir}/%{name}|' src/com/sun/jna/Native.java
@@ -121,6 +124,7 @@ rm test/com/sun/jna/StructureFieldOrderInspectorTest.java
 ln -s $(xmvn-resolve ant:ant:1.10.5) lib/ant.jar
 ln -s $(xmvn-resolve org.ow2.asm:asm) lib/asm-8.0.1.jar
 ln -s $(xmvn-resolve org.hamcrest:hamcrest-all) lib/hamcrest-core-1.3.jar
+ln -s $(xmvn-resolve org.reflections:reflections) lib/test/reflections.jar
 
 cp lib/native/aix-ppc64.jar lib/clover.jar
 
@@ -132,7 +136,7 @@ cp lib/native/aix-ppc64.jar lib/clover.jar
 # upstream doesn't want to default to dynamic linking.
 # -Drelease removes the .SNAPSHOT suffix from maven artifact names
 #ant -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true native compile javadoc jar contrib-jars
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Drelease -Dcompatibility=1.6 -Dplatform.compatibility=1.6\
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Drelease -Dcompatibility=1.8 -Dplatform.compatibility=1.8\
  -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true -DCC=gcc native dist
 # remove compiled contribs
 find contrib -name build -exec rm -rf {} \; || :
@@ -168,6 +172,9 @@ install -m 755 build/native*/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 5.10.0-alt1_3jpp11
+- new version
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 5.9.0-alt1_1jpp11
 - new version
 
