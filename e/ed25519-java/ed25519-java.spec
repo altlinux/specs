@@ -5,11 +5,16 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:          ed25519-java
 Version:       0.3.0
-Release:       alt1_8jpp11
+Release:       alt1_14jpp11
 Summary:       Implementation of EdDSA (Ed25519) in Java
 License:       CC0
 URL:           https://github.com/str4d/ed25519-java
 Source0:       https://github.com/str4d/ed25519-java/archive/v%{version}/%{name}-%{version}.tar.gz
+
+# https://github.com/str4d/ed25519-java/commit/e0ac35769db8553fb714b09f0d3f3d2b001fd033
+Patch0: 0001-EdDSAEngine.initVerify-Handle-any-non-EdDSAPublicKey.patch
+
+Patch1: 0002-Disable-test-that-relies-on-internal-sun-JDK-classes.patch
 
 BuildRequires: maven-local
 BuildRequires: mvn(junit:junit)
@@ -42,6 +47,8 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
+%patch0 -p1
+%patch1 -p1
 
 # Unwanted tasks
 %pom_remove_plugin :maven-gpg-plugin
@@ -49,14 +56,15 @@ This package contains javadoc for %{name}.
 %pom_remove_plugin :maven-source-plugin
 # Unavailable plugin
 %pom_remove_plugin :nexus-staging-maven-plugin
-# Make dep on sun.security.x509 optional, inject an Import-Package directive
-%pom_xpath_inject "pom:configuration/pom:instructions" \
-  "<Import-Package>sun.security.x509;resolution:=optional,*</Import-Package>"
 
 %mvn_file net.i2p.crypto:eddsa %{name} eddsa
 
+# Remove hard-coded source/target
+%pom_xpath_remove pom:plugin/pom:configuration/pom:target
+%pom_xpath_remove pom:plugin/pom:configuration/pom:source
+
 %build
-%mvn_build -- -Dsource=1.8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.release=11
 
 %install
 %mvn_install
@@ -69,6 +77,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_14jpp11
+- update
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0.3.0-alt1_8jpp11
 - java11 build
 
