@@ -1,22 +1,22 @@
-%define optflags_lto -flto=thin
+%define optflags_lto %nil
 
 %define llvm_version 13.0
 
-%define git_ver 13535
-%define git_commit 799c4837d3d601c7e89d922afb499e6a1d0a7f83/3rdparty
+%define git_ver 13833
+%define git_commit 969b9eb89dfd409cee5fa1279e730cbef8d5a5ba
 
-%define glslang_version 11.9.0
+%define glslang_version 11.10.0
 %define asmjit_commit fc2a5d82f7434d7d03161275a764c051f970f41c
-%define hidapi_commit 6cf133697c4413dc9ae0fefefeba5f33587dff76
+%define hidapi_commit c2aa9dd37c7b401b918fd56e18a3bac7f8f00ec2
 %define yaml_cpp_commit 0b67821f307e8c6bf0eba9b6d3250e3cf1441450
-%define llvm_commit 509d31ad89676522f7121b3bb8688f7d29b7ee60
-%define spirv_headers_version 1.5.3.reservations1
-%define spirv_tools_version 2020.4
+%define llvm_commit 5521155be5c869b0b760e1dec86c41cdbb7a75c0
+%define spirv_headers_version sdk-1.3.211.0
+%define spirv_tools_version 2022.2
 %define cubeb_commit 708f52cccffe69ed1d65b52903237c990db860a9
 %define soundtouch_commit 83cfba67b6af80bb9bfafc0b324718c4841f2991
 
 Name: rpcs3
-Version: 0.0.22
+Version: 0.0.23
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -154,6 +154,8 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %install
 %cmake_install
 
+%__rm -rf %buildroot%_datadir/%name/{git,test}
+
 %files
 %doc LICENSE README.md
 %_bindir/%name
@@ -164,6 +166,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Sat Jul 02 2022 Nazarov Denis <nenderus@altlinux.org> 0.0.23-alt1
+- Version 0.0.23
+
 * Sun May 01 2022 Nazarov Denis <nenderus@altlinux.org> 0.0.22-alt1
 - Version 0.0.22
 - Build with Clang
