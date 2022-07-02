@@ -16,7 +16,7 @@ BuildRequires: jpackage-default
 
 Name:          jdom2
 Version:       2.0.6
-Release:       alt1_23jpp11
+Release:       alt1_27jpp11
 Summary:       Java manipulation of XML made easy
 License:       Saxpath
 URL:           http://www.jdom.org/
@@ -30,6 +30,15 @@ Source4:       generate-tarball.sh
 # Disable gpg signatures
 # Process contrib and junit pom files
 Patch0:        0001-Adapt-build.patch
+
+#
+# Security patches
+# P100 -> ...
+#
+# CVE-2021-33813
+Patch100:      bd3ab78370098491911d7fe9d7a43b97144a234e.patch
+Patch101:      dd4f3c2fc7893edd914954c73eb577f925a7d361.patch
+Patch102:      07f316957b59d305f04c7bdb26292852bcbc2eb5.patch
 
 BuildRequires: javapackages-local
 %if %{with bootstrap}
@@ -66,6 +75,10 @@ This package contains javadoc for %{name}.
 
 %patch0 -p1
 
+%patch100 -p1
+%patch101 -p1
+%patch102 -p1
+
 sed -i 's/\r//' LICENSE.txt README.txt
 
 # Unable to run coverage: use log4j12 but switch to log4j 2.x
@@ -77,7 +90,7 @@ sed -i '/import org.jdom2.xpath.XPathFactory/d' core/src/java/org/jdom2/JDOMCons
 
 %build
 mkdir lib
-%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dversion=%{version} -Dcompile.source=1.6 -Dcompile.target=1.6 -Dj2se.apidoc=%{_javadocdir}/java maven
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dversion=%{version} -Dcompile.source=1.7 -Dcompile.target=1.7 -Dj2se.apidoc=%{_javadocdir}/java maven
 
 # Make jar into an OSGi bundle
 # XXX disabled until BND is fixed
@@ -97,6 +110,9 @@ mkdir lib
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.0.6-alt1_27jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.0.6-alt1_23jpp11
 - update
 
