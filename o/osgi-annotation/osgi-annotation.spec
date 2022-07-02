@@ -15,8 +15,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           osgi-annotation
-Version:        8.0.0
-Release:        alt1_3jpp11
+Version:        8.0.1
+Release:        alt1_4jpp11
 Summary:        Annotations for use in compiling OSGi bundles
 License:        ASL 2.0
 URL:            https://www.osgi.org
@@ -79,19 +79,21 @@ cp -p %{SOURCE1} pom.xml
 %mvn_alias org.osgi:osgi.annotation org.osgi:org.osgi.annotation
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7
 
 %install
 %mvn_install
 
 %files -f .mfiles
-%doc --no-dereference LICENSE
-%doc about.html
+%doc --no-dereference META-INF/LICENSE META-INF/NOTICE
 
 %files javadoc -f .mfiles-javadoc
-%doc LICENSE
+%doc --no-dereference META-INF/LICENSE META-INF/NOTICE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 8.0.1-alt1_4jpp11
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 8.0.0-alt1_3jpp11
 - new version
 
