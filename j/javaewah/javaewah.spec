@@ -4,8 +4,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           javaewah
-Version:        1.1.6
-Release:        alt1_13jpp11
+Version:        1.1.13
+Release:        alt1_3jpp11
 Summary:        A word-aligned compressed variant of the Java bitset class
 
 License:        ASL 2.0
@@ -18,7 +18,6 @@ BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 Source44: import.info
 
 %description
@@ -51,12 +50,8 @@ API documentation for %{name}.
 
 # Plugins that are unnecessary for RPM build
 %pom_remove_plugin :maven-gpg-plugin
+%pom_remove_plugin :maven-source-plugin
 %pom_remove_plugin :maven-javadoc-plugin
-%pom_remove_plugin :animal-sniffer-maven-plugin
-%pom_remove_plugin :jacoco-maven-plugin
-
-# Avoids JVM startup error when jacoco-maven-plugin is not in use
-%pom_xpath_inject "pom:project/pom:properties" "<argLine/>"
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -72,6 +67,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.1.13-alt1_3jpp11
+- new version
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 1.1.6-alt1_13jpp11
 - update
 
