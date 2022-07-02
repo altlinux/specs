@@ -1,14 +1,14 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jansi1
 Version:        1.18
-Release:        alt1_7jpp11
+Release:        alt1_11jpp11
 Summary:        Generate and interpret ANSI escape sequences in Java
 License:        ASL 2.0
-URL:            http://fusesource.github.io/jansi/
+URL:            https://fusesource.github.io/jansi/
 
 Source0:        https://github.com/fusesource/jansi/archive/jansi-project-%{version}.tar.gz
 
@@ -64,6 +64,10 @@ cd -
 # javadoc generation fails due to strict doclint in JDK 8
 %pom_remove_plugin -r :maven-javadoc-plugin
 
+# Build for JDK 1.8 at a minimum for JDK 17 compatibility
+%pom_xpath_set //pom:source 1.8
+%pom_xpath_set //pom:target 1.8
+
 %build
 %mvn_compat_version org.fusesource.jansi:jansi %{version} 1
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -79,6 +83,9 @@ cd -
 %doc --no-dereference license.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.18-alt1_11jpp11
+- update
+
 * Fri Jun 04 2021 Igor Vlasenko <viy@altlinux.org> 1.18-alt1_7jpp11
 - new version
 
