@@ -1,128 +1,58 @@
 Epoch: 0
 Group: Development/Other
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-java
-BuildRequires: unzip
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Disable swt by default
-%bcond_with swt
 Name:           jfreechart
-Version:        1.0.19
-Release:        alt1_19jpp11
-Summary:        Java chart library
-
+Version:        1.5.3
+Release:        alt1_3jpp11
+Summary:        A 2D chart library for Java applications (JavaFX, Swing or server-side)
 License:        LGPLv2+
-URL:            http://www.jfree.org/jfreechart/
-Source0:        http://download.sourceforge.net/sourceforge/jfreechart/%{name}-%{version}.zip
-Patch0:         build_swt_encoding_fix.patch
+URL:            https://www.jfree.org/jfreechart
+BuildArch:      noarch
+
+Source0:        https://github.com/jfree/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  mvn(org.jfree:jcommon) >= 1.0.23
-BuildRequires:  mvn(javax.servlet:javax.servlet-api) >= 2.5
-BuildRequires:  mvn(junit:junit)
-%if %{with swt}
-BuildRequires:  eclipse-swt
-%endif
-BuildRequires:  ant
-
-BuildArch:      noarch
+BuildRequires:  mvn(javax.servlet:servlet-api)
+# need apiguardian-api until Fedora releases junit >= 5.8.0 (1)
+# link:
+# https://junit.org/junit5/docs/5.8.0/release-notes/index.html#deprecations-and-breaking-changes
+# https://junit.org/junit5/docs/5.8.0/release-notes/index.html#new-features-and-improvements
+BuildRequires:  mvn(org.apiguardian:apiguardian-api)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-api)
+BuildRequires:  mvn(org.junit.jupiter:junit-jupiter-engine)
 Source44: import.info
 
 %description
-JFreeChart is a free 100% Java chart library that makes it easy for
-developers to display professional quality charts in their applications.
+JFreeChart is a comprehensive free chart library for the Java platform that can
+be used on the client-side (JavaFX and Swing) or the server side (with export to
+multiple formats including SVG, PNG and PDF).
 
-%if %{with swt}
-%package swt
-Group: Development/Other
-Summary:        Swt extension for jfreechart
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       eclipse-swt jpackage-utils
-
-%description swt
-Experimental swt extension for jfreechart.
-%endif
-
+%{?javadoc_package}
 
 %prep
 %setup -q
-# Erase prebuilt files
-find \( -name '*.jar' -o -name '*.class' \) -exec rm -f '{}' \;
-%patch0 -p2
 
-# remove unnecessary dependency on parent POM
-%pom_remove_parent
 
-MVN_BUNDLE_PLUGIN_EXTRA_XML="<extensions>true</extensions>
-        <configuration>
-          <instructions>
-            <Bundle-SymbolicName>org.jfree.jfreechart</Bundle-SymbolicName>
-            <Bundle-Vendor>Fedora Project</Bundle-Vendor>
-            <Bundle-Version>%{version}</Bundle-Version>
-            <!-- Do not autogenerate uses clauses in Manifests -->
-            <Import-Package>
-              !javax.servlet,
-              !javax.servlet.http,
-              *
-            </Import-Package>
-            <_nouses>true</_nouses>
-          </instructions>
-        </configuration>"
-%pom_remove_plugin :maven-gpg-plugin
-%pom_remove_plugin :nexus-staging-maven-plugin
-%pom_remove_plugin :cobertura-maven-plugin
-%pom_remove_plugin :maven-site-plugin
-%pom_remove_plugin :animal-sniffer-maven-plugin
-%pom_remove_plugin :maven-jxr-plugin
-%pom_remove_plugin :maven-javadoc-plugin
-%pom_change_dep javax.servlet:servlet-api: javax.servlet:javax.servlet-api:
-
-%pom_add_plugin org.apache.felix:maven-bundle-plugin . "$MVN_BUNDLE_PLUGIN_EXTRA_XML"
-# Change to packaging type bundle so as to be able to use it
-# as an OSGi bundle.
-%pom_xpath_set "pom:packaging" "bundle"
+# (1)
+%pom_add_dep org.apiguardian:apiguardian-api:1.1.1
 
 %build
-# Ignore failing test: SegmentedTimelineTest
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.test.failure.ignore=true
-
-%if %{with swt}
-# /usr/lib/java/swt.jar is an arch independent path to swt
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f ant/build-swt.xml \
-        -Dswt.jar=/usr/lib/java/swt.jar \
-        -Djcommon.jar=$(build-classpath jcommon) \
-        -Djfreechart.jar=target/jfreechart-%{version}.jar
-%endif
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
-%if %{with swt}
-install -m 644 lib/swtgraphics2d.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}/swtgraphics2d.jar
-install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-swt.jar
-%endif
-
 %files -f .mfiles
-%doc ChangeLog NEWS README.txt
-
-%if %{with swt}
-%files swt
-%{_javadir}/%{name}/swtgraphics2d*.jar
-%{_javadir}/%{name}/%{name}-swt*.jar
-%endif
+%doc --no-dereference licence-LGPL.txt
+%doc README.md
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.5.3-alt1_3jpp11
+- new version
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0.19-alt1_19jpp11
 - update
 
