@@ -17,7 +17,7 @@ BuildRequires: jpackage-default
 
 Name:           apache-commons-beanutils
 Version:        1.9.4
-Release:        alt1_6jpp11
+Release:        alt1_10jpp11
 Summary:        Java utility methods for accessing and modifying the properties of arbitrary JavaBeans
 License:        ASL 2.0
 URL:            http://commons.apache.org/beanutils
@@ -61,7 +61,7 @@ sed -i 's/\r//' *.txt
 
 %build
 # Some tests fail in Koji
-%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dcommons.osgi.symbolicName=org.apache.commons.beanutils
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7 -Dcommons.osgi.symbolicName=org.apache.commons.beanutils
 
 %install
 %mvn_install
@@ -74,6 +74,9 @@ sed -i 's/\r//' *.txt
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.9.4-alt1_10jpp11
+- update
+
 * Mon Jul 05 2021 Igor Vlasenko <viy@altlinux.org> 0:1.9.4-alt1_6jpp11
 - quick fix (closes: #40375)
 
