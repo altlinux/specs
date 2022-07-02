@@ -11,7 +11,7 @@ BuildRequires: jpackage-default
 
 Name: pentaho-libxml
 Version: 1.1.3
-Release: alt1_30jpp11
+Release: alt1_33jpp11
 Summary: Namespace aware SAX-Parser utility library
 License: LGPLv2
 #Original source: http://downloads.sourceforge.net/jfreereport/%%{origname}-%%{version}.zip
@@ -75,6 +75,9 @@ cp -rp bin/javadoc/docs/api $RPM_BUILD_ROOT%{_javadocdir}/%{origname}
 %{_javadocdir}/%{origname}
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_33jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.1.3-alt1_30jpp11
 - update
 
