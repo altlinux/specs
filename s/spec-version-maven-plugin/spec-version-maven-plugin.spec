@@ -1,18 +1,18 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           spec-version-maven-plugin
 Version:        1.5
-Release:        alt1_1jpp11
+Release:        alt1_6jpp11
 Summary:        Spec Version Maven Plugin
 License:        CDDL or GPLv2 with exceptions
 
 # project moved to eclipse-ee4j for versions > 1.5
 # https://github.com/eclipse-ee4j/glassfish-spec-version-maven-plugin
 URL:            https://github.com/javaee/spec-version-maven-plugin
-Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/javaee/spec-version-maven-plugin/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -40,7 +40,11 @@ This package contains javadoc for %{name}.
 %prep
 %setup -q
 
+
 sed -i "s|mvn|mvn-rpmbuild|" src/main/resources/checkVersion.sh
+
+# Build for JDK 1.8 instead of 1.6
+sed -i 's/1\.6/1.8/g' pom.xml
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
@@ -69,6 +73,9 @@ sed -i "s|mvn|mvn-rpmbuild|" src/main/resources/checkVersion.sh
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.5-alt1_6jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.5-alt1_1jpp11
 - new version
 
