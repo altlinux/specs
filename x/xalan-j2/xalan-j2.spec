@@ -15,7 +15,7 @@ BuildRequires: jpackage-default
 
 Name:           xalan-j2
 Version:        2.7.2
-Release:        alt1_9jpp11
+Release:        alt1_12jpp11
 Summary:        Java XSLT processor
 # src/org/apache/xpath/domapi/XPathStylesheetDOM3Exception.java is W3C
 License:        ASL 2.0 and W3C
@@ -119,8 +119,8 @@ popd
 export CLASSPATH=$(build-classpath glassfish-servlet-api)
 
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  \
-  -Dcompiler.source=1.6 \
-  -Dcompiler.target=1.6 \
+  -Dcompiler.source=1.7 \
+  -Dcompiler.target=1.7 \
   -Djava.awt.headless=true \
   -Dbuild.xalan-interpretive.jar=build/xalan-interpretive.jar \
   xalan-interpretive.jar\
@@ -160,6 +160,9 @@ mv %{_javadir}/jaxp_transform_impl.jar{.tmp,} || :
 %doc --no-dereference build/docs/*
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:2.7.2-alt1_12jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:2.7.2-alt1_9jpp11
 - update
 
