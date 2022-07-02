@@ -17,7 +17,7 @@ BuildRequires: jpackage-default
 Name:           maven-file-management
 Epoch:          1
 Version:        3.0.0
-Release:        alt1_14jpp11
+Release:        alt1_17jpp11
 Summary:        Maven File Management API
 License:        ASL 2.0
 URL:            http://maven.apache.org/shared/file-management
@@ -54,7 +54,7 @@ API documentation for %{name}.
 %setup -q -n file-management-%{version}
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=1.7 -Dmaven.compiler.target=1.7
 
 %install
 %mvn_install
@@ -66,6 +66,9 @@ API documentation for %{name}.
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:3.0.0-alt1_17jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1:3.0.0-alt1_14jpp11
 - update
 
