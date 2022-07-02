@@ -13,8 +13,8 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:             jansi
-Version:          2.3.3
-Release:          alt1_2jpp11
+Version:          2.4.0
+Release:          alt1_3jpp11
 Summary:          Generate and interpret ANSI escape sequences in Java
 License:          ASL 2.0
 URL:              http://fusesource.github.io/jansi/
@@ -123,6 +123,9 @@ ln -s ../../../lib/java/%name/%{name}.jar %{buildroot}%{_javadir}/%name/%{name}.
 %doc --no-dereference license.txt
 
 %changelog
+* Sat Jul 02 2022 Igor Vlasenko <viy@altlinux.org> 0:2.4.0-alt1_3jpp11
+- new version
+
 * Mon Aug 16 2021 Igor Vlasenko <viy@altlinux.org> 0:2.3.3-alt1_2jpp11
 - new version
 
