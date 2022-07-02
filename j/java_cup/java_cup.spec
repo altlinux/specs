@@ -15,7 +15,7 @@ BuildRequires: jpackage-default
 
 Name:           java_cup
 Version:        0.11b
-Release:        alt4_18jpp11
+Release:        alt4_21jpp11
 Epoch:          2
 Summary:        LALR parser generator for Java
 License:        MIT
@@ -71,7 +71,7 @@ Documentation for java_cup.
 %setup -q
 %patch0 -b .build
 
-sed -i '/<javac/s/1.5/1.6/g' build.xml
+sed -i '/<javac/s/1.5/1.7/g' build.xml
 
 # remove all binary files
 find -name "*.class" -delete
@@ -117,6 +117,9 @@ jar ufm dist/java-cup-%{pkg_version}-runtime.jar %{SOURCE4}
 %doc --no-dereference licence.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2:0.11b-alt4_21jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2:0.11b-alt4_18jpp11
 - update
 
