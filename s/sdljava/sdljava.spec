@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: ruby-stdlibs zlib-devel
 BuildRequires: bsh
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Copyright (c) 2007 oc2pus <toni@links2linux.de>
@@ -17,7 +17,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           sdljava
 Version:        0.9.1
-Release:        alt2_50jpp11
+Release:        alt2_56jpp11
 Summary:        Java binding to the SDL API
 License:        LGPLv2+
 URL:            http://sdljava.sourceforge.net/
@@ -41,7 +41,6 @@ BuildRequires:  libSDL_ttf-devel
 BuildRequires:  javapackages-local
 BuildRequires:  ant
 BuildRequires:  swig
-BuildRequires:  bsh
 BuildRequires:  jdom
 BuildRequires:  xml-commons-apis
 BuildRequires:  %{_bindir}/ruby
@@ -51,7 +50,6 @@ BuildRequires:  font(dejavusans) fontconfig
 
 Requires:       java
 Requires:       javapackages-filesystem
-Requires:       bsh
 Requires:       jdom
 Source44: import.info
 
@@ -110,8 +108,8 @@ sed -i "s#@GCC_INCLUDE_PATH@#$GCC_PATH/include#g" \
 find ./testsrc -name '*.java' | xargs sed -i \
   -e 's|testdata|%{_datadir}/%{name}/testdata|g'
 
-# use system versions of bsh & jdom
-build-jar-repository -p lib jdom bsh
+# use system versions of jdom
+build-jar-repository -p lib jdom
 
 # copy the Linux Makefiles into place
 cp etc/build/linux/Makefile src/sdljava/native
@@ -196,6 +194,7 @@ cp -pr docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}
 pushd bin
 rm runtest.sh
+rm run-bsh.sh
 for i in `ls -1 *.sh`; do
    sed -i -e 's|./runtest.sh|%{_bindir}/%{name}-runtest.sh|g' $i
    FN=`echo $i | awk 'BEGIN { FS="." }{ print $1 }'`
@@ -229,6 +228,9 @@ ln -s $(fc-match -f "%{file}" "sans:bold:italic") \
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt2_56jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0.9.1-alt2_50jpp11
 - update
 
