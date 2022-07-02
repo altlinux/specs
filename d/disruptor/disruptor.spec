@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: jpackage-11
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          disruptor
-Version:       3.4.2
-Release:       alt1_6jpp11
+Version:       3.4.4
+Release:       alt1_3jpp11
 Summary:       Concurrent Programming Framework
 License:       ASL 2.0
 URL:           https://lmax-exchange.github.io/disruptor/
@@ -85,6 +85,9 @@ rm -r src/test/java/com/lmax/disruptor/dsl/DisruptorTest.java
 %doc --no-dereference LICENCE.txt
 
 %changelog
+* Sat Jul 02 2022 Igor Vlasenko <viy@altlinux.org> 3.4.4-alt1_3jpp11
+- new version
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 3.4.2-alt1_6jpp11
 - java11 build
 
