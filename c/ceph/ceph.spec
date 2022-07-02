@@ -1,4 +1,4 @@
-%define git_version ee28fb57e47e9f88813e24bbf4c14496ca299d31
+%define git_version 4c3647a322c0ff5a1dd2344e039859dcbd28c830
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
@@ -50,7 +50,7 @@
 %global optflags_lto %nil
 
 Name: ceph
-Version: 16.2.7
+Version: 16.2.9
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -98,8 +98,8 @@ Patch100: erasure_code-aarch64-textrel.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-systemd >= 5
 # in cmake-3.10.2-alt add support find boost-1.66
-BuildRequires: cmake >= 3.10.2-alt1
-BuildRequires: rpm-macros-cmake
+BuildRequires: cmake >= 3.10.2-alt1 ninja-build
+BuildRequires(pre): rpm-macros-cmake
 %if_with system_boost
 BuildRequires: boost-asio-devel boost-devel-headers >= 1.72.0 boost-program_options-devel boost-intrusive-devel
 BuildRequires: boost-filesystem-devel boost-coroutine-devel boost-context-devel boost-lockfree-devel boost-msm-devel
@@ -127,7 +127,7 @@ BuildRequires: liboath-devel
 BuildRequires: libfmt-devel >= 5.2.1
 BuildRequires: jq gperf
 %{?_with_tcmalloc:BuildRequires: libgperftools-devel >= 2.7.90}
-%{?_with_lttng:BuildRequires: liblttng-ust-devel libbabeltrace-devel libbabeltrace-ctf-devel}
+%{?_with_lttng:BuildRequires: liblttng-ust-devel libbabeltrace-devel}
 %{?_with_cephfs_java:BuildRequires: java-devel}
 %{?_with_selinux:BuildRequires: checkpolicy selinux-policy-devel}
 %{?_enable_check:BuildRequires: socat ctest}
@@ -690,8 +690,8 @@ Summary: Java libraries for the Ceph File System
 Group: Development/Java
 Requires: java
 Requires: libcephfs_jni1 = %EVR
-Requires:       junit
-BuildRequires:  junit
+Requires: junit
+BuildRequires: junit
 %description -n cephfs-java
 This package contains the Java libraries for the Ceph File System.
 
@@ -703,7 +703,7 @@ Requires: python3-module-colorama
 Requires: python3-module-cephfs
 %description -n cephfs-shell
 This package contains an interactive tool that allows accessing a Ceph
-file system without mounting it  by providing a nice pseudo-shell which
+file system without mounting it by providing a nice pseudo-shell which
 works like an FTP client.
 
 %package devel
@@ -786,7 +786,7 @@ tar -xf %SOURCE25 -C src/spdk
 tar -xf %SOURCE17 -C src/spdk/dpdk
 %endif
 tar -xf %SOURCE26 -C src/xxHash
-#tar -xf %SOURCE27 -C src/zstd
+#tar -xf %%SOURCE27 -C src/zstd
 tar -xf %SOURCE28 -C src/c-ares
 tar -xf %SOURCE29 -C src/dmclock
 tar -xf %SOURCE30 -C src/seastar
@@ -818,8 +818,11 @@ done
 export CPPFLAGS="$java_inc"
 %endif
 
-cd build
-cmake .. \
+%cmake \
+    -GNinja \
+    -DCMAKE_COLOR_MAKEFILE:BOOL=OFF \
+    -DBUILD_CONFIG=rpmbuild \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF \
     -DCMAKE_INSTALL_PREFIX=%prefix \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir \
@@ -939,12 +942,18 @@ cmake .. \
 
 export VERBOSE=1
 export V=1
-%make_build
+export GCC_COLORS=
+%cmake_build
 
 %install
-pushd build
-%makeinstall_std
-popd
+%cmake_install
+
+# ??? 16.2.9 not install cephfs-shell
+%if_with cephfs_shell
+if [ ! -x %buildroot%_bindir/cephfs-shell ]; then
+    install -m 0755 src/tools/cephfs/cephfs-shell %buildroot%_bindir/cephfs-shell
+fi
+%endif
 
 mkdir -p %buildroot{%_unitdir,%_sbindir}
 find %buildroot -type f -name "*.la" -exec rm -f {} ';'
@@ -979,7 +988,7 @@ touch %buildroot%_localstatedir/cephadm/.ssh/authorized_keys
 install -m 0400 -D sudoers.d/ceph-smartctl %buildroot%_sysconfdir/sudoers.d/ceph-smartctl
 
 # prometheus alerts
-install -m 644 -D monitoring/prometheus/alerts/ceph_default_alerts.yml %{buildroot}/etc/prometheus/ceph/ceph_default_alerts.yml
+install -m 644 -D monitoring/ceph-mixin/prometheus_alerts.yml %buildroot%_sysconfdir/prometheus/ceph/ceph_default_alerts.yml
 
 #set up placeholder directories
 mkdir -p %buildroot%_sysconfdir/ceph
@@ -1029,7 +1038,7 @@ ctest %{?_smp_mflags}
 CEPH_GROUP_ID=167
 CEPH_USER_ID=167
 groupadd -r -f -g $CEPH_GROUP_ID ceph 2>/dev/null ||:
-useradd  -r -g ceph -u $CEPH_USER_ID -s /sbin/nologin -c "Ceph daemons" -d %_localstatedir/ceph ceph 2>/dev/null ||:
+useradd -r -g ceph -u $CEPH_USER_ID -s /sbin/nologin -c "Ceph daemons" -d %_localstatedir/ceph ceph 2>/dev/null ||:
 
 %post common
 %tmpfiles_create %_tmpfilesdir/ceph-common.conf
@@ -1041,35 +1050,98 @@ useradd  -r -g ceph -u $CEPH_USER_ID -s /sbin/nologin -c "Ceph daemons" -d %_loc
 %post base
 # Allow execute smartctl for ceph user with sudo
 control sudo public 2>/dev/null ||:
-%post_systemd_postponed ceph.target ceph-crash.service
+%systemd_post ceph.target ceph-crash.service
+if [ $1 -eq 1 ] ; then
+systemctl start ceph.target ceph-crash.service >/dev/null 2>&1 || :
+fi
 
 %preun base
 %systemd_preun ceph.target ceph-crash.service
 
 %post mds
-%post_systemd_postponed ceph-mds@*.service ceph-mds.target
+%systemd_post ceph-mds.target
+if [ $1 -eq 1 ] ; then
+  systemctl start ceph-mds.target >/dev/null 2>&1 || :
+fi
+
+if [ $1 -eq 2 ] ; then
+  # Restart on upgrade, but only if "CEPH_AUTO_RESTART_ON_UPGRADE" is set to
+  # "yes". In any case: if units are not running, do not touch them.
+  SYSCONF_CEPH=%_sysconfdir/sysconfig/ceph
+  if [ -f $SYSCONF_CEPH -a -r $SYSCONF_CEPH ] ; then
+    source $SYSCONF_CEPH
+  fi
+  if [ "X$CEPH_AUTO_RESTART_ON_UPGRADE" = "Xyes" ] ; then
+    systemctl try-restart ceph-mds@\*.service > /dev/null 2>&1 || :
+  fi
+fi
 
 %preun mds
-%systemd_preun ceph-mds@*.service ceph-mds.target
+%systemd_preun ceph-mds.target
 
 %post mon
-%post_systemd_postponed ceph-mon@*.service ceph-mon.target
+%systemd_post ceph-mon.target
+if [ $1 -eq 1 ] ; then
+  systemctl start ceph-mon.target >/dev/null 2>&1 || :
+fi
+
+if [ $1 -ge 2 ] ; then
+  # Restart on upgrade, but only if "CEPH_AUTO_RESTART_ON_UPGRADE" is set to
+  # "yes". In any case: if units are not running, do not touch them.
+  SYSCONF_CEPH=%_sysconfdir/sysconfig/ceph
+  if [ -f $SYSCONF_CEPH -a -r $SYSCONF_CEPH ] ; then
+    source $SYSCONF_CEPH
+  fi
+  if [ "X$CEPH_AUTO_RESTART_ON_UPGRADE" = "Xyes" ] ; then
+    systemctl try-restart ceph-mon@\*.service > /dev/null 2>&1 || :
+  fi
+fi
 
 %preun mon
-%systemd_preun ceph-mon@*.service ceph-mon.target
+%systemd_preun ceph-mon.target
 
 %post osd
 %sysctl_apply 90-ceph-osd.conf
-%post_systemd_postponed ceph-osd@*.service ceph-volume@*.service ceph-osd.target
+%systemd_post ceph-osd.target
+if [ $1 -eq 1 ] ; then
+  systemctl start ceph-osd.target >/dev/null 2>&1 || :
+fi
+
+if [ $1 -ge 2 ] ; then
+  # Restart on upgrade, but only if "CEPH_AUTO_RESTART_ON_UPGRADE" is set to
+  # "yes". In any case: if units are not running, do not touch them.
+  SYSCONF_CEPH=%_sysconfdir/sysconfig/ceph
+  if [ -f $SYSCONF_CEPH -a -r $SYSCONF_CEPH ] ; then
+    source $SYSCONF_CEPH
+  fi
+  if [ "X$CEPH_AUTO_RESTART_ON_UPGRADE" = "Xyes" ] ; then
+    systemctl try-restart ceph-osd@\*.service ceph-volume@\*.service > /dev/null 2>&1 || :
+  fi
+fi
 
 %preun osd
-%systemd_preun ceph-osd@*.service ceph-volume@*.service ceph-osd.target
+%systemd_preun ceph-osd.target
 
 %post mgr
-%post_systemd_postponed ceph-mgr@*.service ceph-mgr.target
+%systemd_post ceph-mgr.target
+if [ $1 -eq 1 ] ; then
+  systemctl start ceph-mgr.target >/dev/null 2>&1 || :
+fi
+
+if [ $1 -ge 2 ] ; then
+  # Restart on upgrade, but only if "CEPH_AUTO_RESTART_ON_UPGRADE" is set to
+  # "yes". In any case: if units are not running, do not touch them.
+  SYSCONF_CEPH=%_sysconfdir/sysconfig/ceph
+  if [ -f $SYSCONF_CEPH -a -r $SYSCONF_CEPH ] ; then
+    source $SYSCONF_CEPH
+  fi
+  if [ "X$CEPH_AUTO_RESTART_ON_UPGRADE" = "Xyes" ] ; then
+    systemctl try-restart ceph-mgr@\*.service > /dev/null 2>&1 || :
+  fi
+fi
 
 %preun mgr
-%systemd_preun ceph-mgr@*.service ceph-mgr.target
+%systemd_preun ceph-mgr.target
 
 %post mgr-dashboard
 if [ $1 -eq 1 ] ; then
@@ -1122,32 +1194,92 @@ if [ $1 -eq 1 ] ; then
 fi
 
 %post -n cephfs-mirror
-%post_systemd_postponed cephfs-mirror@*.service cephfs-mirror.target
+%systemd_post cephfs-mirror.target
+if [ $1 -eq 1 ] ; then
+  systemctl start cephfs-mirror.target >/dev/null 2>&1 || :
+fi
+
+if [ $1 -ge 2 ] ; then
+  # Restart on upgrade, but only if "CEPH_AUTO_RESTART_ON_UPGRADE" is set to
+  # "yes". In any case: if units are not running, do not touch them.
+  SYSCONF_CEPH=%_sysconfdir/sysconfig/ceph
+  if [ -f $SYSCONF_CEPH -a -r $SYSCONF_CEPH ] ; then
+    source $SYSCONF_CEPH
+  fi
+  if [ "X$CEPH_AUTO_RESTART_ON_UPGRADE" = "Xyes" ] ; then
+    systemctl try-restart cephfs-mirror@\*.service > /dev/null 2>&1 || :
+  fi
+fi
 
 %preun -n cephfs-mirror
-%systemd_preun cephfs-mirror@*.service cephfs-mirror.target
+%systemd_preun cephfs-mirror.target
 
 %post -n rbd-mirror
-%post_systemd_postponed ceph-rbd-mirror@*.service ceph-rbd-mirror.target
+%systemd_post ceph-rbd-mirror.target
+if [ $1 -eq 1 ] ; then
+  systemctl start ceph-rbd-mirror.target >/dev/null 2>&1 || :
+fi
+
+if [ $1 -ge 2 ] ; then
+  # Restart on upgrade, but only if "CEPH_AUTO_RESTART_ON_UPGRADE" is set to
+  # "yes". In any case: if units are not running, do not touch them.
+  SYSCONF_CEPH=%_sysconfdir/sysconfig/ceph
+  if [ -f $SYSCONF_CEPH -a -r $SYSCONF_CEPH ] ; then
+    source $SYSCONF_CEPH
+  fi
+  if [ "X$CEPH_AUTO_RESTART_ON_UPGRADE" = "Xyes" ] ; then
+    systemctl try-restart ceph-rbd-mirror@\*.service > /dev/null 2>&1 || :
+  fi
+fi
 
 %preun -n rbd-mirror
-%systemd_preun ceph-rbd-mirror@*.service ceph-rbd-mirror.target
+%systemd_preun ceph-rbd-mirror.target
 
 %post radosgw
-%post_systemd_postponed ceph-radosgw@*.service ceph-radosgw.target
+%systemd_post ceph-radosgw.target
+if [ $1 -eq 1 ] ; then
+  systemctl start ceph-radosgw.target >/dev/null 2>&1 || :
+fi
+
+if [ $1 -ge 2 ] ; then
+  # Restart on upgrade, but only if "CEPH_AUTO_RESTART_ON_UPGRADE" is set to
+  # "yes". In any case: if units are not running, do not touch them.
+  SYSCONF_CEPH=%_sysconfdir/sysconfig/ceph
+  if [ -f $SYSCONF_CEPH -a -r $SYSCONF_CEPH ] ; then
+    source $SYSCONF_CEPH
+  fi
+  if [ "X$CEPH_AUTO_RESTART_ON_UPGRADE" = "Xyes" ] ; then
+    systemctl try-restart ceph-radosgw@\*.service > /dev/null 2>&1 || :
+  fi
+fi
 
 %preun radosgw
-%systemd_preun ceph-radosgw@*.service ceph-radosgw.target
+%systemd_preun ceph-radosgw.target
 
 %post immutable-object-cache
-%post_systemd_postponed ceph-immutable-object-cache@*.service ceph-immutable-object-cache.target
+%systemd_post ceph-immutable-object-cache.target
+if [ $1 -eq 1 ] ; then
+  systemctl start ceph-immutable-object-cache.target >/dev/null 2>&1 || :
+fi
+
+if [ $1 -ge 2 ] ; then
+  # Restart on upgrade, but only if "CEPH_AUTO_RESTART_ON_UPGRADE" is set to
+  # "yes". In any case: if units are not running, do not touch them.
+  SYSCONF_CEPH=%_sysconfdir/sysconfig/ceph
+  if [ -f $SYSCONF_CEPH -a -r $SYSCONF_CEPH ] ; then
+    source $SYSCONF_CEPH
+  fi
+  if [ "X$CEPH_AUTO_RESTART_ON_UPGRADE" = "Xyes" ] ; then
+    systemctl try-restart ceph-immutable-object-cache@\*.service > /dev/null 2>&1 || :
+  fi
+fi
 
 %preun immutable-object-cache
-%systemd_preun ceph-immutable-object-cache@*.service ceph-immutable-object-cache.target
+%systemd_preun ceph-immutable-object-cache.target
 
 %pre -n cephadm
 groupadd -r -f cephadm 2>/dev/null ||:
-useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstatedir/cephadm cephadm 2>/dev/null ||:
+useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstatedir/cephadm cephadm 2>/dev/null ||:
 
 
 %files
@@ -1257,7 +1389,7 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %_man8dir/cephadm.8*
 %attr(0700,cephadm,cephadm) %dir %_localstatedir/cephadm
 %attr(0700,cephadm,cephadm) %dir %_localstatedir/cephadm/.ssh
-%attr(0600,cephadm,cephadm) %_localstatedir/cephadm/.ssh/authorized_keys
+%config(noreplace) %attr(0600,cephadm,cephadm) %_localstatedir/cephadm/.ssh/authorized_keys
 
 %files mds
 %_bindir/ceph-mds
@@ -1574,8 +1706,6 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %files -n grafana-dashboards-ceph
 %dir %_sysconfdir/grafana/dashboards/ceph-dashboard
 %config(noreplace) %_sysconfdir/grafana/dashboards/ceph-dashboard/*
-%doc monitoring/grafana/dashboards/README
-%doc monitoring/grafana/README.md
 %endif
 
 %files prometheus-alerts
@@ -1628,6 +1758,10 @@ useradd  -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localsta
 %endif
 
 %changelog
+* Wed Jun 29 2022 Alexey Shabalin <shaba@altlinux.org> 16.2.9-alt1
+- 16.2.9
+- use CEPH_AUTO_RESTART_ON_UPGRADE from /etc/sysconfig/ceph for update in %%post scripts
+
 * Tue Dec 21 2021 Alexey Shabalin <shaba@altlinux.org> 16.2.7-alt1
 - 16.2.7
 
