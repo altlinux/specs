@@ -15,7 +15,7 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           atinject
-Version:        1.0.3
+Version:        1.0.5
 Release:        alt1_3jpp11
 Summary:        Dependency injection specification for Java (JSR-330)
 License:        ASL 2.0
@@ -45,7 +45,8 @@ beneficial to most nontrivial applications.
 %setup -q -n injection-api-%{version}
 
 %pom_remove_parent
-%pom_remove_plugin -r :maven-javadoc-plugin
+%pom_remove_plugin :maven-javadoc-plugin
+%pom_remove_plugin :moditect-maven-plugin
 
 %mvn_alias : javax.inject:javax.inject
 %mvn_file : atinject
@@ -60,6 +61,9 @@ beneficial to most nontrivial applications.
 %doc --no-dereference LICENSE.txt NOTICE.md
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.0.5-alt1_3jpp11
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:1.0.3-alt1_3jpp11
 - new version
 
