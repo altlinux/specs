@@ -15,7 +15,7 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           maven-common-artifact-filters
-Version:        3.1.1
+Version:        3.2.0
 Release:        alt1_3jpp11
 Summary:        Maven Common Artifact Filters
 License:        ASL 2.0
@@ -24,7 +24,7 @@ BuildArch:      noarch
 
 Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
-Patch0:         0001-Remove-Maven-3.0-specific-code.patch
+Patch1:         0001-Pass-empty-list-instead-of-null-to-DependencyFilter..patch
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
@@ -59,12 +59,13 @@ This package contains javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch1 -p1
 
-# We don't want to support legacy Maven versions (older than 3.1)
-%pom_remove_dep org.sonatype.sisu:
-%pom_remove_dep org.sonatype.aether:
-find -name SonatypeAether\*.java -delete
+# Test depends on jmh performance benchmarking library
+%pom_remove_dep org.openjdk.jmh:jmh-core
+%pom_remove_dep org.openjdk.jmh:jmh-generator-annprocess
+
+rm src/test/java/org/apache/maven/shared/artifact/filter/PatternFilterPerfTest.java
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -79,6 +80,9 @@ find -name SonatypeAether\*.java -delete
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.2.0-alt1_3jpp11
+- new version
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.1.1-alt1_3jpp11
 - update
 
