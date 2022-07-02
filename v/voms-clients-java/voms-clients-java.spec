@@ -8,7 +8,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:		voms-clients-java
 Version:	3.3.2
-Release:	alt1_4jpp11
+Release:	alt1_7jpp11
 Summary:	Virtual Organization Membership Service Java clients
 
 License:	ASL 2.0
@@ -70,21 +70,21 @@ mkdir -p %{buildroot}%{_bindir}
 cat > %{buildroot}%{_bindir}/voms-proxy-init3 << EOF
 #!/bin/sh
 VOMS_CLIENTS_JAVA_OPTIONS=\${VOMS_CLIENTS_JAVA_OPTIONS:-"-XX:+UseSerialGC -Xmx16m"}
-java \$VOMS_CLIENTS_JAVA_OPTIONS -cp \$(build-classpath voms-clients-java voms-api-java canl-java bcpkix bcprov commons-cli commons-io) org.italiangrid.voms.clients.VomsProxyInit "\$@"
+java \$VOMS_CLIENTS_JAVA_OPTIONS -cp \$(build-classpath voms-clients-java voms-api-java canl-java bcpkix bcutil bcprov commons-cli commons-io) org.italiangrid.voms.clients.VomsProxyInit "\$@"
 EOF
 chmod 755 %{buildroot}%{_bindir}/voms-proxy-init3
 
 cat > %{buildroot}%{_bindir}/voms-proxy-info3 << EOF
 #!/bin/sh
 VOMS_CLIENTS_JAVA_OPTIONS=\${VOMS_CLIENTS_JAVA_OPTIONS:-"-XX:+UseSerialGC -Xmx16m"}
-java \$VOMS_CLIENTS_JAVA_OPTIONS -cp \$(build-classpath voms-clients-java voms-api-java canl-java bcpkix bcprov commons-cli commons-io) org.italiangrid.voms.clients.VomsProxyInfo "\$@"
+java \$VOMS_CLIENTS_JAVA_OPTIONS -cp \$(build-classpath voms-clients-java voms-api-java canl-java bcpkix bcutil bcprov commons-cli commons-io) org.italiangrid.voms.clients.VomsProxyInfo "\$@"
 EOF
 chmod 755 %{buildroot}%{_bindir}/voms-proxy-info3
 
 cat > %{buildroot}%{_bindir}/voms-proxy-destroy3 << EOF
 #!/bin/sh
 VOMS_CLIENTS_JAVA_OPTIONS=\${VOMS_CLIENTS_JAVA_OPTIONS:-"-XX:+UseSerialGC -Xmx16m"}
-java \$VOMS_CLIENTS_JAVA_OPTIONS -cp \$(build-classpath voms-clients-java voms-api-java canl-java bcpkix bcprov commons-cli commons-io) org.italiangrid.voms.clients.VomsProxyDestroy "\$@"
+java \$VOMS_CLIENTS_JAVA_OPTIONS -cp \$(build-classpath voms-clients-java voms-api-java canl-java bcpkix bcutil bcprov commons-cli commons-io) org.italiangrid.voms.clients.VomsProxyDestroy "\$@"
 EOF
 chmod 755 %{buildroot}%{_bindir}/voms-proxy-destroy3
 
@@ -146,6 +146,9 @@ EOF
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt1_7jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt1_4jpp11
 - update
 
