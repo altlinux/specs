@@ -1,11 +1,11 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           weld-parent
-Version:        44
-Release:        alt1_1jpp11
+Version:        45
+Release:        alt1_3jpp11
 Summary:        Parent POM for Weld
 License:        ASL 2.0
 
@@ -41,6 +41,9 @@ Parent POM for Weld
 %files -f .mfiles
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 45-alt1_3jpp11
+- new version
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 44-alt1_1jpp11
 - new version
 
