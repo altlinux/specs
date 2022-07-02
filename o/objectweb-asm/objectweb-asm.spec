@@ -15,7 +15,7 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           objectweb-asm
-Version:        9.1
+Version:        9.2
 Release:        alt1_3jpp11
 Summary:        Java bytecode manipulation and analysis framework
 License:        BSD
@@ -92,6 +92,9 @@ done
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:9.2-alt1_3jpp11
+- new version
+
 * Fri May 27 2022 Igor Vlasenko <viy@altlinux.org> 0:9.1-alt1_3jpp11
 - new version
 
