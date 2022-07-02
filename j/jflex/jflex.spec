@@ -18,15 +18,13 @@ BuildRequires: jpackage-default
 Summary:        Fast Scanner Generator
 Name:           jflex
 Version:        1.7.0
-Release:        alt1_7jpp11
+Release:        alt1_10jpp11
 License:        BSD
 URL:            http://jflex.de/
 BuildArch:      noarch
 
 # ./create-tarball.sh %%{version}
 Source0:        %{name}-%{version}-clean.tar.gz
-Source2:        %{name}.desktop
-Source3:        %{name}.png
 Source4:        %{name}.1
 Source5:        create-tarball.sh
 
@@ -99,7 +97,6 @@ cup -parser LexParse -interface -destdir src/main/java src/main/cup/LexParse.cup
 jflex -d src/main/java/jflex --skel src/main/jflex/skeleton.nested src/main/jflex/LexScan.flex
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
-
 %install
 %mvn_install
 
@@ -112,10 +109,6 @@ install -p -m 644 %{SOURCE4} %{buildroot}%{_mandir}/man1
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
-
-# .desktop + icons
-
-# Emacs files
 
 %files -f .mfiles
 %doc doc
@@ -130,6 +123,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:1.7.0-alt1_10jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0:1.7.0-alt1_7jpp11
 - update
 
