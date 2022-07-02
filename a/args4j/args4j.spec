@@ -1,14 +1,14 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           args4j
 Version:        2.33
-Release:        alt1_14jpp11
+Release:        alt1_19jpp11
 Summary:        Java command line arguments parser
 License:        MIT
-URL:            http://args4j.kohsuke.org
+URL:            https://args4j.kohsuke.org
 Source0:        https://github.com/kohsuke/%{name}/archive/%{name}-site-%{version}.tar.gz
 
 BuildArch:      noarch
@@ -16,6 +16,9 @@ BuildArch:      noarch
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+
+# Fix build on Java 11/17
+Patch0: 0001-Remove-usage-of-internal-sun-class-removed-in-Java-9.patch
 
 # Stopped shipping these unused subpackages in F34
 Obsoletes: %{name}-tools < 2.33-13
@@ -42,6 +45,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{name}-site-%{version}
+%patch0 -p1
 
 # removing bundled stuff
 find -name '*.class' -exec rm -f '{}' \;
@@ -58,11 +62,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 # Remove reliance on the parent pom
 %pom_remove_parent
 
-# Fix javadoc generation on java 11
-%pom_xpath_inject pom:pluginManagement/pom:plugins "<plugin>
-<artifactId>maven-javadoc-plugin</artifactId>
-<configuration><source>1.6</source></configuration>
-</plugin>"
+# Remove hard-coded source/target
+%pom_xpath_remove pom:plugin/pom:configuration/pom:target
+%pom_xpath_remove pom:plugin/pom:configuration/pom:source
 
 # Don't package the parent pom
 %mvn_package :args4j-site __noinstall
@@ -71,7 +73,7 @@ find -name '*.jar' -exec rm -f '{}' \;
 %mvn_file ":{*}" %{name}/@1 @1
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.release=11
 
 %install
 %mvn_install
@@ -83,6 +85,9 @@ find -name '*.jar' -exec rm -f '{}' \;
 %doc --no-dereference %{name}/LICENSE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.33-alt1_19jpp11
+- update
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 2.33-alt1_14jpp11
 - fc34 update
 
