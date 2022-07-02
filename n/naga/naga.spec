@@ -39,7 +39,7 @@ Version:        3.0
 # FedoraForgeMeta2ALT: end generated meta
 
 URL:            %{forgeurl}
-Release:        alt1_17jpp11
+Release:        alt1_19jpp11
 Summary:        Simplified Java NIO asynchronous sockets
 
 License:        MIT
@@ -112,6 +112,9 @@ cp -rp _BUILD/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.0-alt1_19jpp11
+- update
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 3.0-alt1_17jpp11
 - update
 
