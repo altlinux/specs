@@ -1,12 +1,12 @@
+Epoch: 1
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           bsf
-Epoch:          1
 Version:        2.4.0
-Release:        alt3_39jpp11
+Release:        alt3_44jpp11
 Summary:        Bean Scripting Framework
 License:        ASL 2.0
 URL:            http://commons.apache.org/bsf/
@@ -15,14 +15,14 @@ BuildArch:      noarch
 Source0:        http://apache.mirror.anlx.net//commons/%{name}/source/%{name}-src-%{version}.tar.gz
 Source1:        %{name}-pom.xml
 
-Patch0:         java-11-fixes.patch
+Patch0:         build-file.patch
+Patch1:         build.properties.patch
 
 BuildRequires:  javapackages-local
 BuildRequires:  ant
-BuildRequires:  apache-commons-logging
 BuildRequires:  apache-parent
-BuildRequires:  rhino
 BuildRequires:  xalan-j2
+BuildRequires:  apache-commons-logging
 Source44: import.info
 %add_findreq_skiplist /usr/share/bsf-*
 
@@ -52,40 +52,32 @@ engines:
 * JRuby
 * JudoScript
 
-%package javadoc
-Group: Development/Java
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
-
 %prep
 %setup -q
 %patch0 -p1
-
+%patch1 -p1
 find -name \*.jar -delete
 
 %mvn_file : %{name}
 %mvn_alias : org.apache.bsf:
 
 %build
-export CLASSPATH=$(build-classpath apache-commons-logging rhino xalan-j2)
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jar javadocs
+export CLASSPATH=$(build-classpath apache-commons-logging xalan-j2)
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Dsource.level=1.7 jar
 
 %mvn_artifact %{SOURCE1} build/lib/%{name}.jar
 
 %install
-%mvn_install -J build/javadocs
+%mvn_install
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt NOTICE.txt
 %doc AUTHORS.txt CHANGES.txt README.txt TODO.txt RELEASE-NOTE.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE.txt NOTICE.txt
-
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:2.4.0-alt3_44jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1:2.4.0-alt3_39jpp11
 - update
 
