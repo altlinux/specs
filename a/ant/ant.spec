@@ -50,8 +50,8 @@ BuildRequires: jpackage-default
 %global ant_home %{_datadir}/ant
 
 Name:           ant
-Version:        1.10.11
-Release:        alt1_1jpp11
+Version:        1.10.12
+Release:        alt1_3jpp11
 Summary:        Java build tool
 Summary(it):    Tool per la compilazione di programmi java
 Summary(fr):    Outil de compilation pour java
@@ -101,6 +101,10 @@ Requires:       %{name}-lib = %{?epoch:%epoch:}%{version}-%{release}
 # Require full javapackages-tools since the ant script uses
 # /usr/share/java-utils/java-functions
 Requires:       javapackages-tools
+
+# Subpackage was removed, and would prevent upgrades because it
+# requires the exact old ant version.
+Obsoletes:      ant-apache-log4j < 1.10.9-5
 
 BuildArch:      noarch
 Source44: import.info
@@ -694,6 +698,9 @@ sed -i -e '1s,^#! *,#!,' %buildroot/%_bindir/*
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sat Jul 02 2022 Igor Vlasenko <viy@altlinux.org> 0:1.10.12-alt1_3jpp11
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:1.10.11-alt1_1jpp11
 - new version
 
