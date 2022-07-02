@@ -5,12 +5,13 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           jackson-core
 Version:        2.11.4
-Release:        alt1_4jpp11
+Release:        alt1_7jpp11
 Summary:        Core part of Jackson
 License:        ASL 2.0
 
 URL:            https://github.com/FasterXML/jackson-core
-Source0:        %{url}/archive/%{name}-%{version}.tar.gz
+Source0:        https://github.com/FasterXML/jackson-core/archive/%{name}-%{version}.tar.gz
+Patch1:         0001-Change-compilation-source-target-to-Java-11.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.fasterxml.jackson:jackson-base:pom:) >= %{version}
@@ -26,6 +27,7 @@ as basic shared abstractions.
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
+%patch1 -p1
 
 # Remove plugins unnecessary for RPM builds
 %pom_remove_plugin ":maven-enforcer-plugin"
@@ -49,6 +51,9 @@ sed -i 's/\r//' LICENSE NOTICE
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_7jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 2.11.4-alt1_4jpp11
 - update
 
