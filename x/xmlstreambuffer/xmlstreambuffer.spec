@@ -1,37 +1,34 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: jpackage-11
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global srcname metro-xmlstreambuffer
 
 Name:           xmlstreambuffer
-Version:        1.5.9
+Version:        1.5.10
 Release:        alt1_5jpp11
 Summary:        Stream Based Representation for XML Infoset
 License:        BSD
-
 URL:            https://github.com/eclipse-ee4j/metro-xmlstreambuffer
-Source0:        %{url}/archive/%{version}/%{srcname}-%{version}.tar.gz
-
 BuildArch:      noarch
 
-BuildRequires:  maven-local
-BuildRequires:  mvn(jakarta.activation:jakarta.activation-api)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
-BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.jvnet.staxex:stax-ex)
+Source0:        https://github.com/eclipse-ee4j/metro-xmlstreambuffer/archive/%{version}/%{srcname}-%{version}.tar.gz
 
-# javadoc subpackage is currently not built
-Obsoletes:      xmlstreambuffer-javadoc < 1.5.9-1
+BuildRequires:  maven-local
+BuildRequires:  mvn(com.sun.activation:jakarta.activation)
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(org.jvnet.staxex:stax-ex)
+BuildRequires:  mvn(junit:junit)
 Source44: import.info
 
 %description
 Stream based representation for XML infoset.
 
-
 %prep
 %setup -q -n %{srcname}-%{version}
+
 
 pushd streambuffer
 # remove unnecessary dependency on parent POM
@@ -42,30 +39,27 @@ pushd streambuffer
 %pom_remove_plugin :glassfish-copyright-maven-plugin
 %pom_remove_plugin :maven-enforcer-plugin
 
-%pom_remove_dep "com.fasterxml.woodstox:woodstox-core"
-%pom_remove_dep "junit:junit"
+%pom_remove_dep :woodstox-core
 popd
-
 
 %build
 pushd streambuffer
-# skip javadoc build due to https://github.com/fedora-java/xmvn/issues/58
-%mvn_build -f -j -- -DbuildNumber=unknown
+%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -DbuildNumber=unknown
 popd
-
 
 %install
 pushd streambuffer
 %mvn_install
 popd
 
-
 %files -f streambuffer/.mfiles
 %doc --no-dereference LICENSE.md NOTICE.md
-%doc README.md
-
+%doc CONTRIBUTING.md README.md
 
 %changelog
+* Sat Jul 02 2022 Igor Vlasenko <viy@altlinux.org> 1.5.10-alt1_5jpp11
+- update
+
 * Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 1.5.9-alt1_5jpp11
 - update
 
