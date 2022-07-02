@@ -51,7 +51,7 @@
 
 Name: ceph
 Version: 16.2.9
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -803,7 +803,7 @@ tar -xf %SOURCE38 -C src/libkmip
 
 cat << __EOF__ > src/.git_version
 %git_version
-v%version
+%version
 __EOF__
 
 
@@ -1758,6 +1758,9 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Sun Jul 03 2022 Alexey Shabalin <shaba@altlinux.org> 16.2.9-alt2
+- set version without prefix "v".
+
 * Wed Jun 29 2022 Alexey Shabalin <shaba@altlinux.org> 16.2.9-alt1
 - 16.2.9
 - use CEPH_AUTO_RESTART_ON_UPGRADE from /etc/sysconfig/ceph for update in %%post scripts
