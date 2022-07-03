@@ -1,18 +1,18 @@
 %define _unpackaged_files_terminate_build 1
-
-%if %_vendor == "alt"
+%if "%_vendor" == "alt"
 # hack for lib.req: ERROR: /tmp/.private/lav/wine-etersoft-buildroot/usr/lib64/wine/x86_64-unix/ws2_32.so: library ntdll.so not found
 %filter_from_requires /^ntdll.so.*/d
+%filter_from_requires /^win32u.so.*/d
 %global __find_debuginfo_files %nil
 %endif
 
 %def_without vanilla
 %define gecko_version 2.47.2
-%define mono_version 7.2.0
-%define winetricks_version 20220207
+%define mono_version 7.3.0
+%define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.6
+%define major 7.11
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -23,9 +23,6 @@
 
 # build ping subpackage
 %def_with set_cap_net_raw
-
-# build libwine.so.1 for compatibility
-%def_without libwine
 
 %if_feature llvm 11.0
 # build real PE libraries (.dll, not .dll.so), via clang
@@ -63,9 +60,19 @@
 %def_without set_cap_net_raw
 %endif
 
+%ifarch x86_64 aarch64
+    %def_with build64
+    %define winearch wine64
+    %define winepkgname wine
+%else
+    %def_without build64
+    %define winearch wine32
+    %define winepkgname wine
+%endif
+
 Name: wine
 Version: %major.1
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -110,15 +117,6 @@ ExclusiveArch: %ix86 x86_64 aarch64
 #ld: <artificial>:(.text+0x2a): undefined reference to `wld_start'
 %define optflags_lto %nil
 
-
-%ifarch x86_64 aarch64
-    %def_with build64
-    %define winearch wine64
-%else
-    %def_without build64
-    %define winearch wine32
-%endif
-
 # TODO: also check build64
 # workaround for https://bugzilla.altlinux.org/38130
 # notbuild64mingw = without mingw && without build64
@@ -159,8 +157,6 @@ ExclusiveArch: %ix86 x86_64 aarch64
 %if_without build64
     # skip -fPIC checking (-fnoPIC need in new wine to skip DECLSPEC_HOTPATCH)
     %add_verify_elf_skiplist %libwinedir/%winesodir/*.so
-    # TODO: use -fPIC for libwine.so.1
-    %add_verify_elf_skiplist %_libdir/*.so.*
     # -fPIC is totally disabled for i586
     %add_verify_elf_skiplist %_bindir/*
     %add_verify_elf_skiplist %winebindir/*
@@ -170,6 +166,7 @@ ExclusiveArch: %ix86 x86_64 aarch64
 # TODO: remove it for mingw build (when there will no any dll.so files)
 %add_verify_elf_skiplist %libwinedir/%winesodir/*.*.so
 %add_findreq_skiplist %libwinedir/%winepedir/*
+
 #
 # /usr/bin/strip: ./usr/lib64/wine/x86_64-windows/stqrTIUz/stPNVRry/dsound.dll: warning: line number count (0x10000) exceeds section size (0x8)
 # /usr/bin/strip: ./usr/lib64/wine/x86_64-windows/stbguFIA: file format not recognized
@@ -248,14 +245,20 @@ BuildRequires: libX11-devel libXau-devel libXaw-devel libXrandr-devel
 BuildRequires: libXext-devel libXfixes-devel libXfont-devel libXft-devel libXi-devel
 BuildRequires: libXmu-devel libXpm-devel libXrender-devel
 BuildRequires: libXres-devel libXScrnSaver-devel libXinerama-devel libXt-devel
-BuildRequires: libXxf86dga-devel libXxf86misc-devel libXcomposite-devel
+BuildRequires: libXxf86dga-devel libXcomposite-devel
 BuildRequires: libXxf86vm-devel libfontenc-devel libXdamage-devel
-BuildRequires: libXvMC-devel libXcursor-devel libXevie-devel libXv-devel
+BuildRequires: libXvMC-devel libXcursor-devel libXv-devel
 
 # a long way to get needed perl-XML-LibXML?
 BuildRequires: perl-XML-Simple
 
-# FIXME:
+BuildRequires: desktop-file-utils
+
+#BuildRequires(pre): rpm-macros-wine
+
+# Use it instead proprietary MS Core Fonts
+# Requires: fonts-ttf-liberation
+
 # Actually for x86_32
 Requires: glibc-pthread glibc-nss
 
@@ -267,10 +270,6 @@ Provides: lib%name = %EVR
 Obsoletes: lib%name
 %endif
 
-BuildRequires: desktop-file-utils
-# Use it instead proprietary MS Core Fonts
-# Requires: fonts-ttf-liberation
-
 # For menu/MIME subsystem
 Requires: desktop-file-utils
 
@@ -281,9 +280,9 @@ Conflicts: %conflictbase
 # FIXME:
 # Runtime linked
 Requires: libcups
-Requires: libXrender libXi libXext libX11 libICE
-Requires: libXcomposite libXcursor libXinerama libXrandr
+Requires: libXrender libXi libXext libX11 libICE libXcomposite libXcursor libXinerama libXrandr
 Requires: libssl libgnutls30
+Requires: libXpm libalsa libcups libldap libopenal1 libpulseaudio libudev1 libusb libkrb5
 
 %if_with gtk3
 Requires: libcairo libgtk+3
@@ -296,17 +295,40 @@ Requires: libvulkan1
 # Many programs depends on unixODBC
 # Requires: libunixODBC2
 
-%if_with set_cap_net_raw
-Requires(pre): libcap-utils
-%endif
-
 %if_with pcap
 # Recommended
 # Requires: libpcap0.8
 %endif
 
-# Linked:
-#Requires: fontconfig libfreetype
+Requires: fontconfig libfreetype
+
+# old gl part
+Provides: %winepkgname-gl = %EVR
+Obsoletes: %winepkgname-gl < %EVR
+
+Conflicts: libwine-vanilla-gl libwine-gl
+Conflicts: wine-vanilla-gl wine-gl
+Obsoletes: lib%name-gl
+
+# Runtime linked (via dl_open)
+Requires: libGL
+
+%if_without vanilla
+Requires: libva
+Requires: libtxc_dxtn
+%endif
+
+
+# old twain part
+Provides: %winepkgname-twain = %EVR
+Obsoletes: %winepkgname-twain < %EVR
+
+Conflicts: libwine-vanilla-twain libwine-twain
+Conflicts: wine-vanilla-twain wine-twain
+Obsoletes: lib%name-twain
+
+# Runtime linked (via dl_open)
+Requires: libsane
 
 
 # Provides/Obsoletes Fedora packages
@@ -351,7 +373,6 @@ Group: Emulators
 #BuildArch: noarch
 Requires: %name = %EVR
 Requires: %name-programs = %EVR
-Requires: %name-gl = %EVR
 
 Requires: wine-mono = %mono_version
 Requires: wine-gecko = %gecko_version
@@ -405,66 +426,17 @@ Requires: %name = %EVR
 #BuildArch: noarch
 Conflicts: %conflictbase-ping
 
+%if_with set_cap_net_raw
+Requires(pre): libcap-utils
+%endif
+
+
 %description ping
 Set capability for Wine ping in post install script.
 
 Also you can control in manually:
 
-# wine-cap_net_raw [on|off]
-
-
-%if_with libwine
-%package -n lib%name
-Summary: Compatibility library for Wine
-Group: System/Libraries
-Conflicts: lib%conflictbase
-
-
-%description -n lib%name
-This package contains the library needed to run programs dynamically
-linked with Wine.
-
-%description -n lib%name -l ru_RU.UTF-8
-Этот пакет состоит из библиотек, которые реализуют Windows API.
-
-%endif
-
-%package gl
-Summary: DirectX/OpenGL support libraries for Wine
-Group: System/Libraries
-Requires: %name = %EVR
-Conflicts: lib%conflictbase-gl
-Conflicts: %conflictbase-gl
-Obsoletes: lib%name-gl
-# we don't need provide anything
-AutoProv:no
-
-# Runtime linked (via dl_open)
-Requires: libGL
-
-# wine-staging only
-Requires: libva
-Requires: libtxc_dxtn
-
-%description gl
-This package contains the libraries for DirectX/OpenGL support in Wine.
-
-
-%package twain
-Summary: Twain support library for Wine
-Group: System/Libraries
-Requires: %name = %EVR
-Conflicts: lib%conflictbase-twain
-Conflicts: %conflictbase-twain
-Obsoletes: lib%name-twain
-# we don't need provide anything
-AutoProv:no
-
-# Runtime linked (via dl_open)
-Requires: libsane
-
-%description twain
-This package contains the library for Twain support.
+$ wine-cap_net_raw [on|off]
 
 
 %package devel-tools
@@ -480,7 +452,7 @@ Provides: libwine-devel = %EVR
 # we don't need provide anything
 AutoProv:no
 
-# due winegcc require
+# due winegcc requires
 Requires: gcc gcc-c++ glibc-devel libstdc++-devel
 
 
@@ -542,7 +514,8 @@ export CROSSCC=clang
 %endif
 	--disable-tests \
 	--without-gstreamer \
-	--without-oss \
+	--without-oss --with-alsa --with-pulse \
+	--with-cups \
 	--without-capi \
 	%{subst_with pcap} \
 	%{subst_with unwind} \
@@ -571,8 +544,9 @@ rm -v %buildroot%libwinedir/%winesodir/libwine.so.1*
 %endif
 
 # hack for lib.req: ERROR: /tmp/.private/lav/wine-etersoft-buildroot/usr/lib64/wine/x86_64-unix/ws2_32.so: library ntdll.so not found
-%if %_vendor == "alt"
+%if "%_vendor" == "alt"
 cp -v %buildroot%libwinedir/%winesodir/ntdll.so %buildroot%libdir
+cp -v %buildroot%libwinedir/%winesodir/win32u.so %buildroot%libdir
 %endif
 
 mkdir -p %buildroot%_bindir/
@@ -675,8 +649,9 @@ fi
 %dir %libwinedir/%winesodir/
 %dir %libwinedir/%winepedir/
 
-%if %_vendor == "alt"
+%if "%_vendor" == "alt"
 %exclude %libdir/ntdll.so
+%exclude %libdir/win32u.so
 %endif
 
 %libwinedir/%winesodir/avicap32.so
@@ -696,28 +671,40 @@ fi
 %libwinedir/%winesodir/winspool.so
 %libwinedir/%winesodir/msv1_0.so
 %libwinedir/%winesodir/win32u.so
+%libwinedir/%winesodir/winex11.so
 %libwinedir/%winesodir/ws2_32.so
 %if_with opencl
 %libwinedir/%winesodir/opencl.so
 %endif
 %libwinedir/%winesodir/secur32.so
+%libwinedir/%winesodir/gphoto2.so
+%libwinedir/%winesodir/sane.so
 %libwinedir/%winesodir/winepulse.so
 %libwinedir/%winesodir/winealsa.so
+%libwinedir/%winesodir/winevulkan.so
 %if_with pcap
 %libwinedir/%winesodir/wpcap.so
 %endif
 %libwinedir/%winesodir/winebus.so
 
 %if_without mingw
-#if_without vanilla
-%libwinedir/%winesodir/windows.networking.connectivity.so
-#endif
+%{?_without_vanilla:%libwinedir/%winesodir/windows.networking.connectivity.so}
 %libwinedir/%winesodir/*.com.so
 %libwinedir/%winesodir/*.cpl.so
 %libwinedir/%winesodir/*.ocx.so
 %libwinedir/%winesodir/*.ax.so
 %libwinedir/%winesodir/*.exe.so
 %libwinedir/%winesodir/*.acm.so
+%libwinedir/%winesodir/*.drv.so
+%libwinedir/%winesodir/*.ds.so
+%endif
+
+%if_without build64
+%libwinedir/%winepedir/*.dll16
+%libwinedir/%winepedir/*.drv16
+%libwinedir/%winepedir/*.exe16
+%libwinedir/%winepedir/winoldap.mod16
+%libwinedir/%winepedir/*.vxd
 %endif
 
 %ifdef notbuild64mingw
@@ -728,8 +715,7 @@ fi
 %libwinedir/%winesodir/*.vxd.so
 %endif
 
-# some dll still compiled not as PE in any way
-%libwinedir/%winesodir/*.drv.so
+# some dll still compiled as not PE in any way
 %libwinedir/%winesodir/*.dll.so
 %libwinedir/%winesodir/*.sys.so
 
@@ -748,33 +734,7 @@ fi
 %libwinedir/%winepedir/windows.networking.connectivity
 %endif
 %libwinedir/%winepedir/light.msstyles
-%if_without build64
-%libwinedir/%winepedir/*.dll16
-%libwinedir/%winepedir/*.drv16
-%libwinedir/%winepedir/*.exe16
-%libwinedir/%winepedir/winoldap.mod16
-%libwinedir/%winepedir/*.vxd
-%endif
 
-# move to separate packages
-%exclude %libwinedir/%winepedir/twain_32.dll
-%exclude %libwinedir/%winepedir/gphoto2.ds
-%exclude %libwinedir/%winesodir/winevulkan.so
-%if_without mingw
-%exclude %libwinedir/%winesodir/winevulkan.dll.so
-%exclude %libwinedir/%winesodir/twain_32.dll.so
-%exclude %libwinedir/%winesodir/d3d10.dll.so
-%exclude %libwinedir/%winesodir/d3d8.dll.so
-%exclude %libwinedir/%winesodir/d3d9.dll.so
-%exclude %libwinedir/%winesodir/d3dxof.dll.so
-%exclude %libwinedir/%winesodir/opengl32.dll.so
-%exclude %libwinedir/%winesodir/glu32.dll.so
-%exclude %libwinedir/%winesodir/wined3d.dll.so
-%endif
-
-%ifdef notbuild64mingw
-%exclude %libwinedir/%winesodir/twain.dll16.so
-%endif
 
 %files common
 %doc ANNOUNCE AUTHORS LICENSE README
@@ -839,14 +799,6 @@ fi
 %_datadir/wine/fonts/
 
 
-%if_with libwine
-%files -n lib%name
-%doc LICENSE AUTHORS
-# for compatibility only
-%libdir/libwine.so.1
-%libdir/libwine.so.1.0
-%endif
-
 
 %files full
 
@@ -861,33 +813,6 @@ fi
 %_desktopdir/wine-winefile.desktop
 %_desktopdir/wine-winemine.desktop
 
-
-%files twain
-%libwinedir/%winepedir/twain_32.dll
-%libwinedir/%winepedir/gphoto2.ds
-%libwinedir/%winesodir/gphoto2.so
-%libwinedir/%winesodir/sane.so
-%if_without mingw
-%libwinedir/%winesodir/twain_32.dll.so
-%libwinedir/%winesodir/gphoto2.ds.so
-%libwinedir/%winesodir/sane.ds.so
-%endif
-%ifdef notbuild64mingw
-%libwinedir/%winesodir/twain.dll16.so
-%endif
-
-%files gl
-%libwinedir/%winesodir/winevulkan.so
-%if_without mingw
-%libwinedir/%winesodir/winevulkan.dll.so
-%libwinedir/%winesodir/d3d10.dll.so
-%libwinedir/%winesodir/d3d8.dll.so
-%libwinedir/%winesodir/d3d9.dll.so
-%libwinedir/%winesodir/d3dxof.dll.so
-%libwinedir/%winesodir/opengl32.dll.so
-%libwinedir/%winesodir/glu32.dll.so
-%libwinedir/%winesodir/wined3d.dll.so
-%endif
 
 %files devel-tools
 %doc LICENSE
@@ -928,6 +853,15 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sat Jul 02 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.11.1-alt1
+- new version 7.11.1 (with rpmrb script)
+
+* Sat Jul 02 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.10.1-alt1
+- new version 7.10.1 (with rpmrb script)
+
+* Fri Jun 24 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.7.1-alt1
+- new version 7.7.1 (with rpmrb script)
+
 * Wed Jun 15 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.6.1-alt2
 - drop Requires: webclient
 - add conflicts for wine-common

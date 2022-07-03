@@ -1,7 +1,7 @@
 %define winemonodir %_datadir/wine/mono
 
 Name: wine-mono
-Version: 7.2.0
+Version: 7.3.0
 Release: alt1
 
 Summary: Windows build of Mono to run .NET applications via Wine
@@ -27,6 +27,8 @@ For Wine releases 1.5.3 and later, the Wine Mono package is recommended.
 
 %prep
 %setup
+# fix python2 print
+%__subst 's|^print \(.*\)|print (\1)|' lib/mono/lldb/mono.py
 
 %install
 mkdir -p %buildroot%winemonodir/%name-%version/
@@ -38,6 +40,12 @@ cp -a * %buildroot%winemonodir/%name-%version/
 %winemonodir/%name-%version/
 
 %changelog
+* Fri Jun 24 2022 Vitaly Lipatov <lav@altlinux.ru> 7.3.0-alt1
+- new version 7.3.0 (with rpmrb script)
+
+* Tue Apr 19 2022 Vitaly Lipatov <lav@altlinux.ru> 7.2.0-alt2
+- fix python2 issue
+
 * Mon Apr 11 2022 Vitaly Lipatov <lav@altlinux.ru> 7.2.0-alt1
 - new version 7.2.0 (with rpmrb script)
 
