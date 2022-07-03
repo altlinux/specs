@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.22.4
+Version: 3.22.6
 Release: alt1
 Epoch:   1
 
@@ -512,7 +512,7 @@ rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 %patch127 -p1 -b .check-cups
 %patch130 -p1 -b .typo
 %patch131 -p1 -b .use-binary-str
-%patch132 -p1 -b .error-print-fix
+%patch132 -p2 -b .error-print-fix
 %patch133 -p1 -b .hpfax-import-error-print
 %patch134 -p1 -b .wifisetup-bad-call-fix
 %patch135 -p1 -b .keyserver
@@ -1121,6 +1121,62 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Jun 29 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.22.6-alt1
+- New version.
+- Added support for the following new printers:
+  + HP Color LaserJet Managed MFP E785dn
+  + HP Color LaserJet Managed MFP E78523dn
+  + HP Color LaserJet Managed MFP E78528dn
+  + HP Color LaserJet Managed MFP E786dn
+  + HP Color LaserJet Managed MFP E786 Core Printer
+  + HP Color LaserJet Managed MFP E78625dn
+  + HP Color LaserJet Managed Flow MFP E786z
+  + HP Color LaserJet Managed Flow MFP E78625z
+  + HP Color LaserJet Managed MFP E78630dn
+  + HP Color LaserJet Managed Flow MFP E78630z
+  + HP Color LaserJet Managed MFP E78635dn
+  + HP Color LaserJet Managed Flow MFP E78635z
+  + HP LaserJet Managed MFP E731dn
+  + HP LaserJet Managed MFP E731 Core Printer
+  + HP LaserJet Managed MFP E73130dn
+  + HP LaserJet Managed Flow MFP E731z
+  + HP LaserJet Managed Flow MFP E73130z
+  + HP LaserJet Managed MFP E73135dn
+  + HP LaserJet Managed Flow MFP E73135z
+  + HP LaserJet Managed MFP E73140dn
+  + HP LaserJet Managed Flow MFP E73140z
+  + HP Color LaserJet Managed MFP E877dn
+  + HP Color LaserJet Managed MFP E877 Core Printer
+  + HP Color LaserJet Managed MFP E87740dn
+  + HP Color LaserJet Managed Flow MFP E877z
+  + HP Color LaserJet Managed Flow MFP E87740z
+  + HP Color LaserJet Managed MFP E87750dn
+  + HP Color LaserJet Managed Flow MFP E87750z
+  + HP Color LaserJet Managed MFP E87760dn
+  + HP Color LaserJet Managed Flow MFP E87760z
+  + HP Color LaserJet Managed MFP E87770dn
+  + HP Color LaserJet Managed Flow MFP E87770z
+  + HP LaserJet Managed MFP E826dn
+  + HP LaserJet Managed MFP E826 Core Printer
+  + HP LaserJet Managed MFP E82650dn
+  + HP LaserJet Managed Flow MFP E826z
+  + HP LaserJet Managed Flow MFP E82650z
+  + HP LaserJet Managed MFP E82660dn
+  + HP LaserJet Managed Flow MFP E82660z
+  + HP LaserJet Managed MFP E82670dn
+  + HP LaserJet Managed Flow MFP E82670z
+  + HP LaserJet Managed MFP E730dn
+  + HP LaserJet Managed MFP E73025dn
+  + HP LaserJet Managed MFP E73030dn
+  + HP LaserJet Pro MFP 3101fdwe, 3101fdw, 3101fdne, 3101fdn
+  + HP LaserJet Pro MFP 3102fdwe, 3102fdw, 3102fdne, 3102fdn
+  + HP LaserJet Pro MFP 3103fdw, 3103fdn
+  + HP LaserJet Pro MFP 3104fdw, 3104fdn
+  + HP LaserJet Pro 3001dwe, 3001dn, 3001dne, 3001dw
+  + HP LaserJet Pro 3002dn, 3002dne, 3002dw, 3002dwe 
+  + HP LaserJet Pro 3003dn, 3003dw
+  + HP LaserJet Pro 3004dn, 3004dw
+
 * Sat Apr 30 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.22.4-alt1
 - New version.
 - Added support for the following new printers:
