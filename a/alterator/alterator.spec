@@ -1,6 +1,6 @@
 Name: alterator
 Version: 5.4.1
-Release: alt6
+Release: alt7
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -183,6 +183,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Jun 30 2022 Anton Midyukov <antohami@altlinux.org> 5.4.1-alt7
+- NMU: replace fgrep with grep -F
+
 * Thu Aug 19 2021 Paul Wolneykien <manowar@altlinux.org> 5.4.1-alt6
 - Fixed the last changelog entry with %%e2k macro.
 
