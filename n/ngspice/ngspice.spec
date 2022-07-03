@@ -4,7 +4,7 @@
 %define _pkgdocdir %_docdir/%name-%version
 
 Name: ngspice
-Version: 35
+Version: 37
 Release: alt1
 Summary: A mixed level/signal circuit simulator
 
@@ -12,14 +12,12 @@ License: BSD
 Group: Engineering
 Url: http://ngspice.sourceforge.net
 
-Packager: Anton Midyukov <antohami@altlinux.org>
-
 Source: %name-%version.tar
 Source1: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/%version/ngspice-%version-manual.pdf
 
 # Link libspice.so with -lBLT or -lBLIlite, depending on whether in tk mode or
 # not (bug 1047056, debian bug 737279)
-Patch: ngspice-26-blt-linkage-workaround.patch
+Patch: ngspice-37-blt-linkage-workaround.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libgomp-devel flex glibc-kernheaders-generic
@@ -28,7 +26,8 @@ BuildRequires: libXext-devel
 BuildRequires: libtinfo-devel
 BuildRequires: mot-adms
 BuildRequires: libfftw3-devel
-BuildRequires: readline-devel libncurses-devel
+BuildRequires: libncurses-devel
+BuildRequires: libreadline-devel
 Requires: %name-data = %EVR
 Requires: lib%name = %EVR
 
@@ -119,19 +118,10 @@ do
     --enable-xspice \
     --enable-maintainer-mode \
     --enable-dependency-tracking \
-    --enable-capzerobypass \
     --enable-cider \
-    --enable-newpred \
-    --enable-expdevices \
-    --enable-intnoise \
     --enable-openmp \
     --enable-predictor \
-    --enable-numparam \
-    --enable-dot-global \
-    --enable-ndev \
-    --enable-shared \
-    --with-readline=yes \
-    --enable-oldapps
+    --with-readline=yes
 
 make clean
 %make_build
@@ -190,6 +180,9 @@ cp -a \
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Jul 03 2022 Anton Midyukov <antohami@altlinux.org> 37-alt1
+- new version 37
+
 * Thu Dec 23 2021 Anton Midyukov <antohami@altlinux.org> 35-alt1
 - new version 35
 
