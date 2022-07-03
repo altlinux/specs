@@ -1,9 +1,9 @@
-%define module_name Archive-Zip-SimpleZip
 %define _unpackaged_files_terminate_build 1
+%define module_name Archive-Zip-SimpleZip
 
 Name: perl-%module_name
-Version: 0.040
-Release: alt2
+Version: 1.000
+Release: alt1
 Summary: Create Zip Archives
 Group: Development/Perl
 License: %perl_license
@@ -43,6 +43,9 @@ create a Zip archive and how to add a file to it.
 %perl_vendor_privlib/A*
 
 %changelog
+* Sun Jul 03 2022 Igor Vlasenko <viy@altlinux.org> 1.000-alt1
+- new version
+
 * Tue Nov 23 2021 L.A. Kostis <lakostis@altlinux.ru> 0.040-alt2
 - Rebuild by human.
 
