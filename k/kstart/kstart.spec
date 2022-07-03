@@ -1,5 +1,5 @@
 Name: kstart
-Version: 4.2
+Version: 4.3
 Release: alt1
 
 Summary: Daemon version of kinit for Kerberos v5
@@ -27,7 +27,7 @@ credentials and refresh those credentials until the command exits.
 
 %build
 %add_optflags -I%_includedir/krb5
-./autogen
+%autoreconf
 %configure --disable-k4start --enable-setpag --enable-reduced-depends \
            --with-krb5-include=%_includedir/krb5
 %make
@@ -43,6 +43,9 @@ credentials and refresh those credentials until the command exits.
 %_mandir/man1/krenew.1.*
 
 %changelog
+* Sun Jul 03 2022 Andrey Cherepanov <cas@altlinux.org> 4.3-alt1
+- New version.
+
 * Fri Jan 13 2017 Andrey Cherepanov <cas@altlinux.org> 4.2-alt1
 - New version
 
