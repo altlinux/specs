@@ -1,7 +1,7 @@
-Epoch: 1
 %define _unpackaged_files_terminate_build 1
+Epoch: 1
 Name: perl-Object-Container
-Version: 0.15
+Version: 0.16
 Release: alt1
 Summary: Object::Container - simple object container
 
@@ -33,6 +33,9 @@ BuildRequires: perl(Module/Build/Pluggable.pm) perl(Module/Build/Pluggable/CPANf
 %doc Changes README
 
 %changelog
+* Sun Jul 03 2022 Igor Vlasenko <viy@altlinux.org> 1:0.16-alt1
+- new version
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1:0.15-alt1
 - new version
 
