@@ -6,7 +6,7 @@ BuildRequires: perl(Capture/Tiny.pm) perl(Config.pm) perl(Exporter.pm) perl(ExtU
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.015
+Version: 0.016
 Release: alt1
 Summary: Find the path to your perl
 Group: Development/Perl
@@ -29,10 +29,13 @@ BuildArch: noarch
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes
+%doc README Changes
 %perl_vendor_privlib/D*
 
 %changelog
+* Sun Jul 03 2022 Igor Vlasenko <viy@altlinux.org> 0.016-alt1
+- automated CPAN update
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.015-alt1
 - automated CPAN update
 
