@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: perl
-Version: 5.34.0
-Release: alt1
+Version: 5.34.1
+Release: alt0.3
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -38,6 +40,9 @@ Patch20: perl-5.24.1-alt-viy-installperl-ExtUtils-MakeMaker-version.patch
 # mail from Oleg Solovyov; see patch body
 Patch21: perl-5.24.3-alt-solovyov.patch
 Patch23: perl-5.22.3-alt-mcpain-trust-mode.patch
+# hack;
+# Perl lib version (5.34.1) doesn't match executable 'buildroot/usr/bin/perl5.34.1' version (5.34.0) at buildroot/usr/lib64/perl5/Config.pm line 62.
+Source24: perl-5.34.1-alt-Config.pm-hack.patch
 
 # cpan update patches here. use format below:
 Patch50: cpan-update-Scalar-List-Utils-1.55-to-Scalar-List-Utils-1.56.patch
@@ -277,13 +282,20 @@ ln -snf libperl-%ver.so libperl.so
 # build the rest (SMP incompatible on: sparc64 %%arm, according to fedora)
 make
 
+# deprecated; see https://bugzilla.altlinux.org/40649
 %ifarch %e2k
-# http://bugzilla.altlinux.org/35523 workaround
-rm -f regexec.o libperl-%ver.so ext/re/re_exec.o
-make OPTIMIZE+='%optflags -O1' regexec.o
-make libperl-%ver.so
-make -C ext/re OPTIMIZE+='%optflags -O1' re_exec.o
-make -C ext/re all
+## http://bugzilla.altlinux.org/35523 workaround
+#rm -f regexec.o libperl-%ver.so ext/re/re_exec.o
+#make OPTIMIZE+='%optflags -O1' regexec.o
+#make libperl-%ver.so
+#make -C ext/re OPTIMIZE+='%optflags -O1' re_exec.o
+#make -C ext/re all
+%endif
+
+%if "%version" == "5.34.1"
+# ugly hack for buildroot bootstrap
+# Perl lib version (5.34.1) doesn't match executable 'buildroot/usr/bin/perl5.34.1' version (5.34.0) at buildroot/usr/lib64/perl5/Config.pm line 62.
+patch -p1 < %{SOURCE24}
 %endif
 
 %check
@@ -388,7 +400,8 @@ grep -lZ '^warn "Legacy library' %buildroot%privlib/*.pl |xargs -r0 rm -fv --
 %if_without file_spec_other_os
 rm %buildroot%archlib/File/Spec/{Cygwin,Epoc,Mac,OS2,VMS,Win32}.pm
 %endif
-rm %buildroot%privlib/ExtUtils/MM_{AIX,BeOS,Cygwin,Darwin,DOS,MacOS,NW5,OS2,QNX,UWIN,VMS,VOS,Win32,Win95}.pm
+rm %buildroot%privlib/ExtUtils/MM_{AIX,BeOS,Cygwin,Darwin,DOS,MacOS,NW5,OS2,OS390,QNX,UWIN,VMS,VOS,Win32,Win95}.pm
+rm %buildroot%privlib/ExtUtils/PL2Bat.pm
 rm %buildroot%_bindir/perlivp
 
 mkdir -p %buildroot%_rpmlibdir
@@ -906,6 +919,10 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Mon Jul 04 2022 Igor Vlasenko <viy@altlinux.org> 1:5.34.1-alt0.3
+- 5.34.0 -> 5.34.1
+- bootstrap; see Source24: perl-5.34.1-alt-Config.pm-hack.patch
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 1:5.34.0-alt1
 - 5.32.1 -> 5.34.0
 
