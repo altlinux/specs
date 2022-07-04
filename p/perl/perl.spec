@@ -2,7 +2,7 @@
 
 Name: perl
 Version: 5.34.1
-Release: alt0.3
+Release: alt1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -40,9 +40,6 @@ Patch20: perl-5.24.1-alt-viy-installperl-ExtUtils-MakeMaker-version.patch
 # mail from Oleg Solovyov; see patch body
 Patch21: perl-5.24.3-alt-solovyov.patch
 Patch23: perl-5.22.3-alt-mcpain-trust-mode.patch
-# hack;
-# Perl lib version (5.34.1) doesn't match executable 'buildroot/usr/bin/perl5.34.1' version (5.34.0) at buildroot/usr/lib64/perl5/Config.pm line 62.
-Source24: perl-5.34.1-alt-Config.pm-hack.patch
 
 # cpan update patches here. use format below:
 Patch50: cpan-update-Scalar-List-Utils-1.55-to-Scalar-List-Utils-1.56.patch
@@ -290,12 +287,6 @@ make
 #make libperl-%ver.so
 #make -C ext/re OPTIMIZE+='%optflags -O1' re_exec.o
 #make -C ext/re all
-%endif
-
-%if "%version" == "5.34.1"
-# ugly hack for buildroot bootstrap
-# Perl lib version (5.34.1) doesn't match executable 'buildroot/usr/bin/perl5.34.1' version (5.34.0) at buildroot/usr/lib64/perl5/Config.pm line 62.
-patch -p1 < %{SOURCE24}
 %endif
 
 %check
@@ -919,6 +910,9 @@ echo perl >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/perl-base
 	%autolib/Unicode
 
 %changelog
+* Mon Jul 04 2022 Igor Vlasenko <viy@altlinux.org> 1:5.34.1-alt1
+- nobootstrap build
+
 * Mon Jul 04 2022 Igor Vlasenko <viy@altlinux.org> 1:5.34.1-alt0.3
 - 5.34.0 -> 5.34.1
 - bootstrap; see Source24: perl-5.34.1-alt-Config.pm-hack.patch
