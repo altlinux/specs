@@ -6,7 +6,7 @@
 
 Name: openquantumsafe-openssh
 Version: 8.6p1.202201
-Release: alt1
+Release: alt2
 
 Summary: OQS-OpenSSH is a fork of OpenSSH that adds quantum-safe algorithms
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
@@ -314,6 +314,9 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Mon Jul 04 2022 Vitaly Chikunov <vt@altlinux.org> 8.6p1.202201-alt2
+- Disable Falcon (SIG) due to problems with liboqs on armh.
+
 * Sun Jan 09 2022 Vitaly Chikunov <vt@altlinux.org> 8.6p1.202201-alt1
 - Updated to OQS-OpenSSH-snapshot-2022-01 (2022-01-06).
 
