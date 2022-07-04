@@ -17,7 +17,7 @@ BuildRequires: jpackage-default
 
 Name:           xmvn
 Version:        4.0.0
-Release:        alt1_0jpp11
+Release:        alt1_1jpp11
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            https://fedora-java.github.io/xmvn/
@@ -79,15 +79,15 @@ Requires:       apache-commons-lang3
 Requires:       atinject
 Requires:       google-guice
 Requires:       guava
-Requires:       maven-resolver-api maven-resolver-connector-basic maven-resolver-impl maven-resolver-spi maven-resolver-transport-wagon maven-resolver-util
-Requires:       maven-wagon-file maven-wagon-http maven-wagon-http-shared maven-wagon-provider-api
+Requires:       maven-resolver
+Requires:       maven-wagon
 Requires:       plexus-cipher
 Requires:       plexus-classworlds
 Requires:       plexus-containers-component-annotations
 Requires:       plexus-interpolation
 Requires:       plexus-sec-dispatcher
 Requires:       plexus-utils
-Requires:       sisu-inject sisu-plexus
+Requires:       sisu
 Requires:       slf4j
 
 Requires:       maven-lib >= 3.4.0
@@ -240,24 +240,15 @@ do
     touch %buildroot"$rpm404_ghost"
 done
 
-%if 0
-pushd %buildroot%{_datadir}/%{name}/lib
-[ -e jansi-linux.jar ] || exit 1
-rm jansi-linux.jar
-ln -s /usr/lib/java/jansi-native/jansi-linux.jar .
-popd
-%endif
-
 %pre minimal
-path = "/usr/share/xmvn/conf/logging"
-if [ -d "$path" ]; then
-  if [ -e "$path".rpmmoved ]; then
-    mv "$path" "$path".rpmmoved.$$
+oldpath=/usr/share/xmvn/conf/logging
+if [ -d "$oldpath" ]; then
+  if [ -e "$oldpath".rpmmoved ]; then
+    mv "$oldpath" "$oldpath".rpmmoved.$$
   else
-    mv "$path" "$path".rpmmoved
+    mv "$oldpath" "$oldpath".rpmmoved
   fi
 fi
-
 
 
 
@@ -296,6 +287,9 @@ fi
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Mon Jul 04 2022 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt1_1jpp11
+- fix for update (closes: #43128)
+
 * Wed Jun 29 2022 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt1_0jpp11
 - new version
 - for use with older maven build
