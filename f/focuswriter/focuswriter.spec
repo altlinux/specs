@@ -1,5 +1,5 @@
 Name:		focuswriter
-Version:	1.8.0
+Version:	1.8.1
 Release:	alt1
 Summary:	FocusWriter is a fullscreen, distraction-free word processor
 License:	GPLv3
@@ -10,7 +10,7 @@ Source0:	http://gottcode.org/focuswriter/%name-%version-src.tar.bz2
 
 BuildRequires:	libhunspell-devel gcc-c++ zlib-devel 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake rpm-macros-qt6 qt6-base-devel qt6-tools-devel qt6-multimedia-devel qt6-declarative-devel qt6-5compat-devel
+BuildRequires: cmake rpm-macros-qt6 qt6-base-devel qt6-tools-devel qt6-multimedia-devel qt6-declarative-devel qt6-5compat-devel libicu-devel
 
 %description
 FocusWriter is a fullscreen, distraction-free word processor
@@ -47,6 +47,9 @@ rm -f %buildroot%_pixmapsdir/*.xpm
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Jul 05 2022 Ilya Mashkin <oddity@altlinux.ru> 1.8.1-alt1
+- 1.8.1
+
 * Wed Jun 22 2022 Ilya Mashkin <oddity@altlinux.ru> 1.8.0-alt1
 - 1.8.0
 - Build with Qt6/cmake
