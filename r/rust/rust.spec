@@ -1,10 +1,10 @@
 Name: rust
 Epoch: 1
-Version: 1.61.0
-Release: alt2
+Version: 1.62.0
+Release: alt1
 Summary: The Rust Programming Language
 
-%define r_ver 1.60.0
+%define r_ver 1.61.0
 
 Group: Development/Other
 License: Apache-2.0 and MIT
@@ -15,8 +15,6 @@ Source: %name-%version.tar
 
 Patch1: rust-gdb.patch
 Patch2: rust-disable-lint-tests.patch
-Patch3: rustc-1.61.0-fix-compiletest-ignore_message.patch
-Patch4: 0001-Add-missing-target_feature-to-the-list-of-well-known.patch
 
 %def_without bootstrap
 %def_without bundled_llvm
@@ -60,39 +58,13 @@ BuildRequires: patchelf
 %endif
 
 %if_without bootstrap
-
 BuildRequires: rust rust-cargo
 %define cargo %_bindir/cargo
 %define rustc %_bindir/rustc
-
 %else
-
-Source2: https://static.rust-lang.org/dist/rust-%r_ver-i686-unknown-linux-gnu.tar.gz
-Source3: https://static.rust-lang.org/dist/rust-%r_ver-x86_64-unknown-linux-gnu.tar.gz
-Source4: https://static.rust-lang.org/dist/rust-%r_ver-aarch64-unknown-linux-gnu.tar.gz
-Source5: https://static.rust-lang.org/dist/rust-%r_ver-armv7-unknown-linux-gnueabihf.tar.gz
-Source6: https://static.rust-lang.org/dist/rust-%r_ver-powerpc64le-unknown-linux-gnu.tar.gz
-
-%ifarch %ix86
-%define r_src %SOURCE2
-%endif
-%ifarch x86_64
-%define r_src %SOURCE3
-%endif
-%ifarch aarch64
-%define r_src %SOURCE4
-%endif
-%ifarch armh
-%define r_src %SOURCE5
-%endif
-%ifarch ppc64le
-%define r_src %SOURCE6
-%endif
-
 %define rustdir %_tmppath/rust
 %define cargo %rustdir/bin/cargo
 %define rustc %rustdir/bin/rustc
-
 %endif
 
 %ifarch %ix86
@@ -226,7 +198,7 @@ data to provide information about the Rust standard library.
 %autopatch -p1
 
 %if_with bootstrap
-tar xf %r_src
+tar xf .rpm/rust-%r_ver-%rust_triple.tar.gz
 mkdir -p %rustdir
 pushd rust-%r_ver-%rust_triple
 ./install.sh --prefix=%rustdir
@@ -481,6 +453,9 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Sun Jul 03 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.62.0-alt1
+- New version (1.62.0).
+
 * Sun Jun 12 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.61.0-alt2
 - Add dependency to /proc.
 - Fix compiletest.
