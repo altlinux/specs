@@ -3,7 +3,7 @@
 
 Name: kde5-network-filesharing
 Version: 22.04.2
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -20,6 +20,7 @@ Patch2: alt-uid-min-max.patch
 Patch3: alt-i18n.patch
 Patch4: alt-permissions-helper.patch
 Patch5: alt-max-domain-uid.patch
+Patch6: alt-share-under-domain-user.patch
 
 # Automatically added by buildreq on Wed Jan 13 2016 (-bi)
 # optimized out: cmake cmake-modules elfutils gcc-c++ kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 python3-base ruby ruby-stdlibs
@@ -43,6 +44,7 @@ Adds Configuration of Samba sharing for folders in Dolphin.
 %patch3 -p1 -b .i18n
 %patch4 -p2 -b .permissions
 %patch5 -p1
+%patch6 -p1
 
 cat %SOURCE10 >>po/ru/kfileshare.po
 
@@ -67,6 +69,9 @@ cat %SOURCE10 >>po/ru/kfileshare.po
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Wed Jun 15 2022 Slava Aseev <ptrnine@altlinux.org> 22.04.2-alt2
+- fix blank "Share" tab under domain user
+
 * Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
 - new version
 
