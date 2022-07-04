@@ -3,10 +3,11 @@
 %add_findreq_skiplist %_K5bin/kdedoc
 %add_findreq_skiplist %_K5bin/package_crystalsvg
 %add_findreq_skiplist %_K5bin/kde-systemsettings-tree.py
+%filter_from_requires /^cvs$/d
 
 Name: kde5-dev-scripts
 Version: 22.04.2
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -65,6 +66,9 @@ done
 %_K5data/*/
 
 %changelog
+* Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt2
+- drop requires to cvs binary
+
 * Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
 - new version
 
