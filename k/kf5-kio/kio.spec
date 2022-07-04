@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.95.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -16,7 +16,6 @@ Source: %rname-%version.tar
 Source10: ru-kio5.po
 Patch1: alt-def-trash.patch
 Patch2: alt-kio-help-fallback-kde4.patch
-Patch3: alt-def-proxy-type.patch
 Patch10: alt-streebog-support.patch
 Patch2000: alt-kio-e2k.patch
 
@@ -100,7 +99,6 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %if_enabled streebog
 %patch10 -p2 -b .streebog
@@ -177,6 +175,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.95.0-alt2
+- don't change default proxy type
+
 * Tue Jun 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.95.0-alt1
 - new version
 
