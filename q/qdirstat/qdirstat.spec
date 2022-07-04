@@ -1,5 +1,5 @@
 Name: qdirstat
-Version: 1.8
+Version: 1.8.1
 Release: alt1
 Summary: Qt-based directory statistics
 Group: File tools
@@ -68,6 +68,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/%name.appdata
 %_datadir/icons/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Jul 05 2022 Ilya Mashkin <oddity@altlinux.ru> 1.8.1-alt1
+- 1.8.1
+
 * Mon Aug 30 2021 Ilya Mashkin <oddity@altlinux.ru> 1.8-alt1
 - 1.8
 
