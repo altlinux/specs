@@ -40,7 +40,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.14.1.1
+%define version 11.0.15.0.10
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -277,7 +277,7 @@ BuildRequires: /proc rpm-build-java
 # Used via new version scheme. JDK 11 was
 # GA'ed in September 2018 => 18.9
 %global vendor_version_string 18.9
-%global securityver 14
+%global securityver 15
 # buildjdkver is usually same as %%{majorver},
 # but in time of bootstrap of next jdk, it is majorver-1, 
 # and this it is better to change it here, on single place
@@ -299,7 +299,7 @@ BuildRequires: /proc rpm-build-java
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global minorver        0
-%global buildver        1
+%global buildver        10
 %global rpmrelease      1
 %global dist		jpp11
 #%%global tagsuffix      ""
@@ -310,7 +310,7 @@ BuildRequires: /proc rpm-build-java
 # for techpreview, using 1, so slowdebugs can have 0
 %define priority %( printf '%08d' 3 )
 %endif
-%global newjavaver      %{majorver}.%{minorver}.%{securityver}.1
+%global newjavaver      %{majorver}.%{minorver}.%{securityver}.0
 
 %global javaver         %{majorver}
 
@@ -408,7 +408,7 @@ BuildRequires: /proc rpm-build-java
 
 Name:    java-%{javaver}-%{origin}
 Version: %{newjavaver}.%{buildver}
-Release: alt2_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
+Release: alt1_%{?eaprefix}%{rpmrelease}%{?extraver}%{?dist}
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons
 # and this change was brought into RHEL-4. java-1.5.0-ibm packages
 # also included the epoch in their virtual provides. This created a
@@ -442,7 +442,8 @@ URL:      http://openjdk.java.net/
 
 # to regenerate source0 (jdk) run update_package.sh
 # update_package.sh contains hard-coded repos, revisions, tags, and projects to regenerate the source archives
-Source0: jdk-updates-jdk%{majorver}u-jdk-%{newjavaver}+%{buildver}%{?tagsuffix:-%{tagsuffix}}-4curve.tar.xz
+#Source0: jdk-updates-jdk%{majorver}u-jdk-%{newjavaver}+%{buildver}%{?tagsuffix:-%{tagsuffix}}-4curve.tar.xz
+Source0: jdk-updates-jdk%{majorver}u-jdk-%{majorver}.%{minorver}.%{securityver}+%{buildver}%{?tagsuffix:-%{tagsuffix}}-4curve.tar.xz
 
 # Use 'icedtea_sync.sh' to update the following
 # They are based on code contained in the IcedTea project (3.x).
@@ -1228,7 +1229,7 @@ if ! echo $suffix | grep -q "debug" ; then
   install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}
   cp -a %{buildoutputdir}/images/docs $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}
   #cp -a %{buildoutputdir}/bundles/jdk-%{newjavaver}%{ea_designator_zip}+%{buildver}%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
-  cp -a %{buildoutputdir}/bundles/jdk-11.0.14.1+1%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
+  cp -a %{buildoutputdir}/bundles/jdk-11.0.15.1+1%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
 fi
 
 # Install release notes
@@ -1778,6 +1779,15 @@ fi
 %endif
 
 %changelog
+* Wed Jun 29 2022 Andrey Cherepanov <cas@altlinux.org> 0:11.0.15.0.10-alt1_1jpp11
+- New version.
+- Security fixes
+  + JDK-8270504, CVE-2022-21426: Better XPath expression handling
+  + JDK-8275082, JDK-8278008, CVE-2022-21476: Update XML Security for Java to 2.3.0
+  + JDK-8275151, CVE-2022-21443: Improved Object Identification
+  + JDK-8277672, CVE-2022-21434: Better invocation handler handling
+  + JDK-8278972, CVE-2022-21496: Improve URL supports
+
 * Mon Apr 18 2022 Igor Vlasenko <viy@altlinux.org> 0:11.0.14.1.1-alt2_1jpp11
 - NMU: corrected libjvm.so provides.
 
