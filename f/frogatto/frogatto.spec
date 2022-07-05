@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install libglvnd-devel zlib-devel
 
 Name:           frogatto
 Version:        1.3.3
-Release:        alt3_19
+Release:        alt3_25
 Summary:        An old-school 2D platform game
 
 # Artwork and music not released under an open license
@@ -35,6 +35,13 @@ Patch3:         %{name}-1.3-narrowing-conversion-fixes.patch
 Patch4:         %{name}-1.3-comparison.patch
 # Fix building with Boost 1.70+
 Patch5:         %{name}-1.3-boost.patch
+# Fix stack overflow in base64 test
+# Patch by Ingo van Lil
+Patch6:         %{name}-1.3.3-stack-overflow.patch
+# Work around surface double free with sdl12-compat
+# This needs to be removed once sdl12-compat > 1.2.52 is released
+# Patch by Ingo van Lil
+Patch7:         %{name}-1.3.3-sdl.patch
 
 # We have problems with these architectures
 # https://lists.rpmfusion.org/archives/list/rpmfusion-developers@lists.rpmfusion.org/thread/LQXC5S37G6S4NRZNB7KKGD2Q25OKXSEV/
@@ -47,13 +54,13 @@ BuildRequires:  libSDL_mixer-devel
 BuildRequires:  libSDL_ttf-devel >= 2.0.8
 BuildRequires:  libGLU-devel
 BuildRequires:  libGLEW-devel
-BuildRequires:  libpng-devel
+BuildRequires:  libpng-devel libpng17-tools
 BuildRequires:  ccache
 BuildRequires:  boost-complete
 BuildRequires:  perl-podlators
 BuildRequires:  libicns-utils
 BuildRequires:  desktop-file-utils 
-BuildRequires:  libappstream-glib
+BuildRequires:  libappstream-glib libappstream-glib-gir
 Requires:       icon-theme-hicolor
 Requires:       fonts-ttf-gnu-freefont-mono
 Source44: import.info
@@ -90,14 +97,19 @@ Game data for frogatto.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p0
+%patch6 -p1
+%patch7 -p1
 
 # Fix locale file path
 sed -i 's!"./locale/"!"%{_datadir}/locale/"!' src/i18n.cpp
 
+# Edit BASE_CXXFLAGS
+sed -i 's/BASE_CXXFLAGS += -g -fno-inline-functions -fthreadsafe-statics -Wnon-virtual-dtor -Werror -Wignored-qualifiers -Wformat -Wswitch/BASE_CXXFLAGS += -fno-inline-functions -fthreadsafe-statics -Wno-narrowing/' Makefile
+
 
 %build
-%make_build \
-  BASE_CXXFLAGS="$RPM_OPT_FLAGS -fno-inline-functions -fthreadsafe-statics -Wno-narrowing"
+
+%make_build
 
 
 %install
@@ -168,6 +180,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 1.3.3-alt3_25
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt3_19
 - update to new release by fcimport
 
