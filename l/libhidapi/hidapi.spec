@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: /usr/bin/fox-config gcc-c++
 # END SourceDeps(oneline)
 Group: Development/Other
@@ -7,7 +8,7 @@ Group: Development/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libhidapi
-Version:        0.11.2
+Version:        0.12.0
 Release:        alt1_1
 Summary:        Library for communicating with USB and Bluetooth HID devices
 
@@ -16,13 +17,10 @@ URL:            https://github.com/libusb/hidapi
 
 Source0:        https://github.com/libusb/hidapi/archive/%{oldname}-%{version}.tar.gz
 
-BuildRequires: autoconf
-BuildRequires: automake
+BuildRequires: ctest cmake
 BuildRequires: gcc
-BuildRequires: libtool
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
-BuildRequires: m4
 Source44: import.info
 Provides: hidapi = %{version}-%{release}
 
@@ -47,15 +45,11 @@ USB and Bluetooth HID-class devices.
 
 
 %build
-autoreconf -vif
-%configure --disable-testgui --disable-static
-%make_build V=1
+%{fedora_v2_cmake}
+%fedora_v2_cmake_build
 
 %install
-make install DESTDIR=%{buildroot}
-
-rm -f %{buildroot}%{_libdir}/*.la
-rm -rf %{buildroot}%{_defaultdocdir}/%{oldname}
+%fedora_v2_cmake_install
 
 
 
@@ -65,12 +59,16 @@ rm -rf %{buildroot}%{_defaultdocdir}/%{oldname}
 
 %files devel
 %{_includedir}/hidapi
+%{_libdir}/cmake/hidapi
 %{_libdir}/libhidapi-hidraw.so
 %{_libdir}/libhidapi-libusb.so
 %{_libdir}/pkgconfig/hidapi-hidraw.pc
 %{_libdir}/pkgconfig/hidapi-libusb.pc
 
 %changelog
+* Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 0.12.0-alt1_1
+- update to new release by fcimport
+
 * Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 0.11.2-alt1_1
 - update to new release by fcimport
 
