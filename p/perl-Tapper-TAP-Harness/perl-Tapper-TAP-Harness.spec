@@ -1,4 +1,3 @@
-%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Devel/AssertOS.pm) perl(Devel/CheckOS.pm) perl(File/Find/Rule.pm) perl(Pod/Coverage/TrustPod.pm) perl(Test/EOL.pm) perl(Test/NoTabs.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl-podlators
@@ -7,19 +6,19 @@ BuildRequires: perl(YAML/Syck.pm) perl(parent.pm)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define upstream_name    Tapper-TAP-Harness
-%define upstream_version 5.0.9
+%define upstream_version 5.0.11
 
 %{?perl_default_filter}
 
 Name:       perl-%{upstream_name}
-Version:    5.0.11
-Release:    alt1
+Version:    %{upstream_version}
+Release:    alt1_1
 
 Summary:    Tapper - Tapper specific TAP handling
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        https://metacpan.org/release/%{upstream_name}
-Source0:    http://www.cpan.org/authors/id/T/TA/TAPPER/%{upstream_name}-%{version}.tar.gz
+Source0:    https://cpan.metacpan.org/modules/by-module/Tapper/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires: perl(Archive/Tar.pm)
 BuildRequires: perl(Data/Dumper.pm)
@@ -46,7 +45,7 @@ Source44: import.info
 This package provides a Tapper-specific TAP handling.
 
 %prep
-%setup -q -n %{upstream_name}-%{version}
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 /usr/bin/perl Makefile.PL INSTALLDIRS=vendor
@@ -60,10 +59,13 @@ This package provides a Tapper-specific TAP handling.
 %makeinstall_std
 
 %files
-%doc Changes META.json META.yml README README.md
+%doc Changes LICENSE META.json META.yml  README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 5.0.11-alt1_1
+- update by mgaimport
+
 * Mon Jun 20 2022 Igor Vlasenko <viy@altlinux.org> 5.0.11-alt1
 - automated CPAN update
 
