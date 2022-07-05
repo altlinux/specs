@@ -14,7 +14,7 @@ BuildRequires: /usr/bin/desktop-file-install boost-devel boost-filesystem-devel 
 
 Name:           slic3r
 Version:        1.3.0
-Release:        alt3_19
+Release:        alt3_26
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -113,7 +113,6 @@ Provides:       bundled(poly2tri) = 0.0
 %endif
 
 BuildRequires:  boost-complete
-BuildRequires:  libleatherman-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  ImageMagick-tools
 Requires:       perl(Growl/GNTP.pm) >= 0.150
@@ -269,6 +268,9 @@ SLIC3R_NO_AUTO=1 perl Build.PL installdirs=vendor
 %{_datadir}/%{name}
 
 %changelog
+* Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt3_26
+- update to new release by fcimport
+
 * Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt3_19
 - update to new release by fcimport
 
