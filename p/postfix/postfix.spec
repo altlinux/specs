@@ -1,5 +1,5 @@
 Name: postfix
-Version: 3.6.4
+Version: 3.6.6
 Release: alt1
 Epoch: 1
 
@@ -662,6 +662,11 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Mon Jul 04 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.6-alt1
+- Updated to 3.6.6.
+- Fixed 'egrep is obsolescent' warning (arriving from cron job)
+  (thnx Vitaly Chikunov).
+
 * Wed Jan 19 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.4-alt1
 - Updated to 3.6.4.
 
