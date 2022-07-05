@@ -1,6 +1,6 @@
 Name: xfce4-settings
-Version: 4.16.2
-Release: alt5
+Version: 4.16.3
+Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -88,6 +88,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Tue Jul 05 2022 Mikhail Efremov <sem@altlinux.org> 4.16.3-alt1
+- Updated to 4.16.3.
+
 * Tue May 31 2022 Mikhail Efremov <sem@altlinux.org> 4.16.2-alt5
 - displays: Enable 'Configure new displays when connected'
   by default (closes: #42840).
