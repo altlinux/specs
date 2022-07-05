@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: yara
-Version: 4.2.1
+Version: 4.2.2
 Release: alt1
 License: BSD-3-Clause and Apache-2.0
 Group: Development/Tools
@@ -65,10 +65,19 @@ Development files for YARA.
 rm -f %buildroot%_libdir/libyara.a
 
 %check
-LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/yara --version
 # Parallel make -j check does not work anymore:
 # https://github.com/VirusTotal/yara/issues/1667
 %make check
+export LD_LIBRARY_PATH=%buildroot%_libdir PATH=%buildroot%_bindir:$PATH
+yara --version
+cat > main.rule <<'EOF'
+rule MAIN {
+  strings:   $my = /Name:/
+  condition: $my
+}
+EOF
+yarac main.rule /tmp/a
+yara main.rule -r . | grep MAIN.*yara.spec
 
 %files
 %doc AUTHORS CONTRIBUTORS README.md COPYING
@@ -84,6 +93,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/yara --version
 %_pkgconfigdir/yara.pc
 
 %changelog
+* Tue Jul 05 2022 Vitaly Chikunov <vt@altlinux.org> 4.2.2-alt1
+- Update to v4.2.2 (2022-06-30).
+
 * Mon May 02 2022 Vitaly Chikunov <vt@altlinux.org> 4.2.1-alt1
 - Update to v4.2.1 (2022-04-26).
 
