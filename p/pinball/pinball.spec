@@ -2,11 +2,15 @@ Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install cppunit-devel imake libSDL-devel libX11-devel liballegro-devel xorg-cf-files
 # END SourceDeps(oneline)
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+# Disable automatic .la file removal
+%global __brp_remove_la_files %nil
+
 Name:           pinball
 Version:        0.3.4
-Release:        alt1_8
+Release:        alt1_10
 Summary:        Emilia 3D Pinball Game
 # core license is GPLv2+
 # gnu table licenses are (GFDL or Free Art or CC-BY-SA) and GPLv3 and CC-BY-SA
@@ -22,7 +26,7 @@ BuildRequires:  libSDL_mixer-devel
 BuildRequires:  libpng-devel libpng17-tools
 BuildRequires:  libvorbis-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
+BuildRequires:  libappstream-glib libappstream-glib-gir
 BuildRequires:  libtool
 BuildRequires:  libltdl7-devel
 BuildRequires:  gettext-tools libasprintf-devel
@@ -53,7 +57,6 @@ sed -i 's/Exec=pinball/Exec=pinball-wrapper/' pinball.desktop
 
 
 %build
-%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %configure --disable-static
 %make_build
 
@@ -102,6 +105,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 0.3.4-alt1_10
+- update to new release by fcimport
+
 * Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 0.3.4-alt1_8
 - fixed build
 
