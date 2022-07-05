@@ -7,7 +7,7 @@ BuildRequires(pre): rpm-macros-alternatives
 %global vimdatadir %{_datadir}/vim/vimfiles
 
 Name:           environment-modules
-Version:        5.1.0
+Version:        5.1.1
 Release:        alt1_1
 Summary:        Provides dynamic modification of a user's environment
 
@@ -76,7 +76,7 @@ Install this package if you want to create RPM packages that use GNAT.
 %build
 %configure --prefix=%{_datadir}/Modules \
 	--with-tcl-inc=/usr/include \
-           --libdir=%{_libdir} \
+           --libdir=%{_libdir}/%{name} \
            --etcdir=%{_sysconfdir}/%{name} \
            --bindir=%{_datadir}/Modules/bin \
            --libexecdir=%{_libdir}/Modules/libexec \
@@ -151,7 +151,8 @@ fi
 %doc ChangeLog README NEWS.txt MIGRATING.txt INSTALL.txt CONTRIBUTING.txt changes.txt
 %{_sysconfdir}/modulefiles
 %{_bindir}/envml
-%{_libdir}/libtclenvmodules.so
+%dir %{_libdir}/%{name}
+%{_libdir}/%{name}/libtclenvmodules.so
 %dir %{_datadir}/Modules
 %{_datadir}/Modules/bin
 %dir %{_libdir}/Modules/libexec
@@ -184,6 +185,9 @@ fi
 
 
 %changelog
+* Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 5.1.1-alt1_1
+- update to new release by fcimport
+
 * Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 5.1.0-alt1_1
 - update to new release by fcimport
 
