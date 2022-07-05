@@ -76,7 +76,7 @@
 
 Name:    samba
 Version: 4.15.7
-Release: alt3
+Release: alt4
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -360,6 +360,17 @@ Explorer using the "previous versions" dialog.
 Snapshots can also be created and remove remotely, using the File Server Remote
 VSS Protocol (FSRVP). Snapshot creation and deletion requests are forwarded to
 snapper via DBus
+
+%package krb5-printing
+Summary: Samba CUPS backend for printing with Kerberos
+Group: System/Configuration/Printing
+Requires(pre): %name-client
+Requires: %name-client = %version-%release
+
+%description krb5-printing
+If you need Kerberos for print jobs to a printer connection to cups via the SMB
+backend, then you need to install that package. It will allow cups to access
+the Kerberos credentials cache of the user issuing the print job.
 
 %package dc-libs
 Summary: Samba libraries
@@ -1026,8 +1037,11 @@ mv %buildroot%_samba_mod_libdir/krb5/winbind_krb5_localauth.so %buildroot%_libdi
 
 #cups backend
 %define cups_serverbin %(cups-config --serverbin 2>/dev/null)
-mkdir -p %buildroot%{cups_serverbin}/backend
-ln -s %_bindir/smbspool %buildroot%{cups_serverbin}/backend/smb
+mkdir -p %buildroot%cups_serverbin/backend
+ln -s %_bindir/smbspool %buildroot%cups_serverbin/backend/smb
+
+printf "%cups_serverbin/backend/smb\t%_bindir/smbspool\t20\n" > %buildroot%_altdir/samba-printing
+printf "%cups_serverbin/backend/smb\t%_samba_libexecdir/smbspool_krb5_wrapper\t50\n" > %buildroot%_altdir/samba-krb5-printing
 
 # Fix up permission on perl install.
 %_fixperms %buildroot%perl_vendor_privlib
@@ -1226,6 +1240,11 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %endif #doc
 %endif #dc
 
+%files krb5-printing
+%_altdir/samba-krb5-printing
+%attr(0700,root,root) %_samba_libexecdir/smbspool_krb5_wrapper
+%_man8dir/smbspool_krb5_wrapper.8*
+
 %files client
 %_bindir/cifsdd
 %_bindir/dbwrap_tool
@@ -1251,8 +1270,12 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 #_bindir/smbta-util
 %_bindir/smbtar
 %_bindir/smbtree
-%_samba_libexecdir/smbspool_krb5_wrapper
-%{cups_serverbin}/backend/smb
+%_altdir/samba-printing
+# Samba CUPS backend for printing with Kerberos support or not controlled
+# by whether the samba-krb5-printing package is installed or not:
+#  %_bindir/smbspool or %_samba_libexecdir/smbspool_krb5_wrapper
+#   -> %cups_serverbin/backend/smb
+%ghost %cups_serverbin/backend/smb
 %if_with doc
 %_man1dir/dbwrap_tool.1*
 %_man1dir/mdsearch.1*
@@ -1277,7 +1300,6 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_man5dir/smbpasswd.5*
 %_man8dir/smbpasswd.8*
 %_man8dir/smbspool.8*
-%_man8dir/smbspool_krb5_wrapper.8*
 #_man8dir/smbta-util.8*
 %_man8dir/cifsdd.8*
 %endif
@@ -1912,6 +1934,10 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Jun 27 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.15.7-alt4
+- Add samba-krb5-printing with CUPS backend for printing with Kerberos support.
+- Fix samba-tool domain backup DC with forced local samdb.
+
 * Mon Jun 20 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.15.7-alt3
 - samba-dc: Replace internal helper program performing asynchronous
   printing-related jobs (samba-bgqd) to internal package directory.
