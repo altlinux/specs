@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.24.5
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -14,6 +14,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Source: %rname-%version.tar
+Patch1: alt-terminal.patch
 
 # Automatically added by buildreq on Thu Mar 26 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -64,6 +65,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -96,6 +98,9 @@ KF5 library
 %_K5lib/libkhotkeysprivate.so.%khotkeysprivate_sover
 
 %changelog
+* Tue Jul 05 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt2
+- add terminal envocation by Ctrl+Alt+T (closes: 42977,43033)
+
 * Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt1
 - new version
 
