@@ -6,18 +6,18 @@ BuildRequires: boost-program_options-devel
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		bastet
-Version:	0.43.1
-Release:	alt1_25
+Version:	0.43.2
+Release:	alt1_1
 Summary:	An evil falling bricks game
 
 License:	GPLv3+
-URL:		http://fph.altervista.org/prog/bastet.html
+URL:		https://github.com/fph/bastet
 Source0:	https://github.com/fph/bastet/archive/%{version}.zip
 Source1:	%{name}.desktop
 # self-made icon
 Source2:	%{name}.png
 Patch0:		bastet-tr1.patch
-Patch1:		bastet-fix-appdata.patch
+Patch1:         bastet-fmt-str.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:	boost-complete libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel desktop-file-utils
@@ -36,7 +36,7 @@ frustrating experience!
 %setup -q
 
 %patch0 -p1
-%patch1 -p1
+%patch1 -p0
 
 # remove reference to Tetris to match our guidelines
 sed -e 's/Tetris(R)/any falling bricks game/g' -e 's/Tetris/falling bricks game/g' \
@@ -89,6 +89,9 @@ mkdir -p %{buildroot}%{_mandir}/man6/
 
 
 %changelog
+* Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 0.43.2-alt1_1
+- update to new release by fcimport
+
 * Sat Feb 09 2019 Igor Vlasenko <viy@altlinux.ru> 0.43.1-alt1_25
 - update to new release by fcimport
 
