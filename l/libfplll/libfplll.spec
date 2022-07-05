@@ -6,14 +6,30 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 10
+%define autorelease 1
 
 Name:           libfplll
-Version:        5.4.1
+Version:        5.4.2
 %global so_version 7
-Release:        alt1_%autorelease
+Release:        alt1_1
 Summary:        Lattice algorithms using floating-point arithmetic
 
+# The entire source is LGPLv2+, except:
+#
+#   - The contents of fplll/enum-parallel/ are MIT
+#   - fplll/io/thread_pool.hpp is MIT
+#   - fplll/io/json.hpp is MIT, but is unbundled
+#
+# Since all of the MIT-licensed sources are linked into a single shared library
+# with the LGPLv2+ sources, the overall a.'effective licensea.' remains LGPLv2+.
+#
+# Additionally, a number of autoconf build system sources, which do not
+# contribute to the binary RPM license because they are neither installed nor
+# linked into any installed file, are under various other permissible licenses:
+#
+#   - INSTALL, {,fplll/,tests/}Makefile.in, aclocal.m4, compile, config.guess,
+#     config.sub, configure, depcomp, install-sh, ltmain.sh, missing,
+#     test-driver, */Makefile.in, m4/*.m4
 License:        LGPLv2+
 URL:            https://fplll.github.io/fplll/
 Source0:        https://github.com/fplll/fplll/releases/download/%{version}/fplll-%{version}.tar.gz
@@ -26,8 +42,27 @@ BuildRequires:  gcc-c++
 
 BuildRequires:  pkgconfig(mpfr)
 BuildRequires:  pkgconfig(qd)
+# BR on *-static required for tracking header-only libraries
+BuildRequires:  pkgconfig(nlohmann_json)
+BuildRequires:  nlohmann-json-devel
 
 BuildRequires:  help2man
+
+# The contents of fplll/enum-parallel/ are based on, but heavily modified from,
+# https://github.com/cr-marcstevens/fplll-extenum. We do not treat this as a
+# bundled dependency because the separate fplll-extenum library was integrated
+# into fplll and is no longer separately developed.
+
+# The file fplll/io/thread_pool.hpp is a copy of cxxheaderonly/thread_pool.hpp
+# from commit e01ae885cdbef3af265341110a434f6fa7b8e8ac (or, equivalently, a
+# number of earlier commits that did not modify that file) of
+# https://github.com/cr-marcstevens/snippets/.
+#
+# This can be unbundled once the package review is complete:
+# Review Request: cr-marcstevens-snippets - Collection of useful one-file C/C++
+#   headers
+# https://bugzilla.redhat.com/show_bug.cgi?id=2090707
+Provides:       bundled(cr-marcstevens-snippets-thread_pool-devel) = 0^20210722gite01ae88
 Source44: import.info
 
 %description
@@ -94,10 +129,18 @@ the functionality of libfplll.
 %prep
 %setup -q -n fplll-%{version}
 
+# Unbundle “JSON for Modern C++”:
+echo '#include <nlohmann/json.hpp>' > fplll/io/json.hpp
 
 
 %build
 autoreconf --install --force --verbose
+
+# This is a formality; no extra flags are required in practice:
+
+export CFLAGS="${CFLAGS-} $(pkgconf --cflags nlohmann_json)"
+export LDFLAGS="${LDFLAGS-} $(pkgconf --libs nlohmann_json)"
+
 %configure --disable-silent-rules
 
 # Eliminate hardcoded rpaths, and work around libtool moving all -Wl options
@@ -132,7 +175,8 @@ LD_LIBRARY_PATH="${PWD}/src/.libs" %make_build check
 %files
 %doc NEWS README.md
 %doc --no-dereference COPYING
-%{_libdir}/libfplll.so.%{so_version}*
+%{_libdir}/libfplll.so.%{so_version}
+%{_libdir}/libfplll.so.%{so_version}.*
 %{_datadir}/fplll/
 
 
@@ -155,6 +199,9 @@ LD_LIBRARY_PATH="${PWD}/src/.libs" %make_build check
 
 
 %changelog
+* Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 5.4.2-alt1_1
+- update to new release by fcimport
+
 * Fri Dec 17 2021 Igor Vlasenko <viy@altlinux.org> 5.4.1-alt1_10
 - update to new release by fcimport
 
