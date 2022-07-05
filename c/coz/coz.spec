@@ -1,6 +1,6 @@
 Name: coz
 Version: 0.2.2
-Release: alt2
+Release: alt3
 
 Packager: %packager
 
@@ -11,8 +11,8 @@ URL: https://github.com/plasma-umass/coz
 
 Source: %name-%version.tar
 
-BuildRequires: gcc-c++ libelfin-devel
-BuildRequires: /usr/bin/rst2man.py
+BuildRequires(pre): rpm-build-python3
+BuildRequires: gcc-c++ libelfin-devel python3-module-docutils
 
 %description
 Coz is a new kind of profiler that unlocks optimization opportunities
@@ -30,12 +30,11 @@ code will have the greatest impact on performance.
 %install
 %define docdir %_docdir/%name-%version
 
-%makeinstall LIBDIR=%buildroot%_libdir prefix=%buildroot%_exec_prefix MANPREFIX=%_mandir pkglibdir=%buildroot%_libdir/coz-profiler RST2MAN=rst2man.py
+%makeinstall LIBDIR=%buildroot%_libdir prefix=%buildroot%_exec_prefix MANPREFIX=%_mandir pkglibdir=%buildroot%_libdir/coz-profiler
 
 mkdir -p %buildroot%docdir
 install -pm644 README.md %buildroot%docdir/
 install -pm644 LICENSE.md %buildroot%docdir/
-cp -R benchmark.mk %buildroot%docdir/
 cp -R common.mk %buildroot%docdir/
 cp -R benchmarks %buildroot%docdir/
 
@@ -51,6 +50,9 @@ cp -R benchmarks %buildroot%docdir/
 %docdir/*
 
 %changelog
+* Mon Jul 04 2022 Andrey Bergman <vkni@altlinux.org> 0.2.2-alt3
+- Slightly update from upstream, update buildreq.
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt2
 - NMU: drop unused BR
 
