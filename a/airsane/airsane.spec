@@ -1,11 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%define GIT_COMMIT_HASH 361b52b
-%define GIT_BRANCH master
-%define GIT_REVISION_NUMBER 112
 
 Name: airsane
-Version: 0.0.0
-Release: alt1.20200805.git361b52b
+Version: 0.3.4
+Release: alt1
 Summary: A SANE WebScan frontend that supports Apple's AirScan protocol.
 License: GPLv3
 Group: Graphics
@@ -13,6 +10,9 @@ Group: Graphics
 Url: https://github.com/SimulPiscator/AirSane.git
 #Git: https://github.com/SimulPiscator/AirSane.git
 Source: %name-%version.tar
+
+Patch1: %name-0.3.4-alt-strerror-fix.patch
+Patch2: %name-0.3.4-alt-mPort-fix.patch
 
 BuildRequires: ccmake
 BuildRequires: gcc-c++
@@ -42,6 +42,9 @@ for you. You may be interested in phpSANE instead.
 %prep
 %setup
 
+%patch1 -p1
+%patch2 -p1
+
 # fix build with our libpng
 sed -i 's|libpng\/png\.h|png.h|' imageformats/pngencoder.cpp
 # change systemd unit-file settings
@@ -50,11 +53,6 @@ sed -i 's|^Group=saned|Group=scanner|' systemd/airsaned.service
 sed -i 's|^User=saned|User=_saned|' systemd/airsaned.service
 #  look for an icon in a more suitable FS path
 sed -i 's|^icon \/etc\/airsane\/Gnome-scanner.png|icon %_iconsdir/hicolor/512x512/apps/Gnome-scanner.png|' etc/options.conf
-# provide git version info to build scripts
-sed -i 's|git rev-parse --abbrev-ref HEAD|echo "%GIT_BRANCH"|' version.cmake
-sed -i 's|git log -1 --format=\%h|echo "%GIT_COMMIT_HASH"|' version.cmake
-sed -i 's|git rev-list --count --first-parent HEAD|echo "%GIT_REVISION_NUMBER"|' version.cmake
-sed -i 's|sh -c \"git diff --quiet --exit-code \|\| echo +\"|echo ""|' version.cmake
 
 %build
 %cmake
@@ -82,5 +80,12 @@ mv %buildroot/%_sysconfdir/%name/*.png %buildroot/%_iconsdir/hicolor/512x512/app
 %_iconsdir/hicolor/512x512/apps/*.png
 
 %changelog
+* Mon Jul 4 2022 Vasiliy Kovalev <kovalev@altlinux.org> 0.3.4-alt1
+- Updated to 0.3.4
+- Add patches
+  + airsane-0.3.4-alt-strerror-fix.patch to fix error undeclared function
+  + airsane-0.3.4-alt-mPort-fix.patch to fix warning incorrect initialization
+    sequence of class members
+
 * Fri Aug 21 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.0.0-alt1.20200805.git361b52b
 - Initial build for Sisyphus
