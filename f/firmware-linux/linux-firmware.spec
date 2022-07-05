@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220621
+Version: 20220704
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,28 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jul 05 2022 Cronbuild Service <cronbuild@altlinux.org> 20220704-alt1
+- upstream changes (GIT f5f02da):
+  + bnx2: Drop unsupported Broadcom NetXtremeII firmware (thx Peter Robinson)
+  + bnx2: drop unsupported firmwares (thx Peter Robinson)
+  + bnx2: sort firmware names in filesystem order (thx Peter Robinson)
+  + brocade: drop old unsupported firmware revs (thx Peter Robinson)
+  + amdgpu: update yellow carp DMCUB firmware (thx Mario Limonciello)
+  + update firmware for MT7622 WiFi device (thx Ryder Lee)
+  + update firmware for MT7922 WiFi device (thx Deren Wu)
+  + update firmware for mediatek bluetooth chip (MT7922) (thx Sean Wang)
+  + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + mediatek: Add SCP firmware for MT8186 (thx Allen-kh Cheng)
+  + rtw88: 8822c: Update normal firmware to v9.9.13 (thx Po-Hao Huang)
+  + rtw88: 8822c: Update normal firmware to v9.9.12 (thx Po-Hao Huang)
+  + amdgpu: update Yellow Carp VCN firmware (thx Alex Deucher)
+
 * Wed Jun 22 2022 Cronbuild Service <cronbuild@altlinux.org> 20220621-alt1
 - upstream changes (GIT fc8557e):
   + update firmware for MT7921 WiFi device (thx Deren Wu)
