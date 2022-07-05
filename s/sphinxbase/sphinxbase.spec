@@ -17,19 +17,18 @@ BuildRequires: liblapack-devel perl(Pod/Usage.pm) python3-devel
 %define devname		lib%{name}-devel
 
 # rel to bump
-%define rel 6
+%define rel 9
 
 Name:		sphinxbase
 Version:	0.9
-Release:	alt1_0.0.5prealpha.6.1
+Release:	alt1_%{?prel:0.0.%prel.}%{rel}
 Summary:	The CMU Sphinx Recognition System
 Group:		System/Libraries
 License:	BSD and LGPLv2+
 Url:		https://cmusphinx.github.io/
-Source0:	http://downloads.sourceforge.net/cmusphinx/%{name}-%{?prel}%{?!prel:%version}.tar.gz
+Source0:	https://downloads.sourceforge.net/cmusphinx/%{name}-%{?prel}%{?!prel:%version}.tar.gz
 # https://github.com/cmusphinx/sphinxbase/pull/72
 Patch0:		sphinxbase-5prealpha-fix-doxy2swig.patch
-Patch1:		python3.10.patch
 BuildRequires:	bison
 BuildRequires:	doxygen
 BuildRequires:	pkgconfig(python3)
@@ -38,6 +37,7 @@ BuildRequires:	pkgconfig(libpulse)
 BuildRequires:	libblas-devel
 BuildRequires:	swig
 BuildRequires:	texlive-dist
+BuildRequires:	autoconf-archive
 # for check
 BuildRequires:	locales-fr
 Source44: import.info
@@ -90,11 +90,12 @@ System.
 %prep
 %setup -qn %{name}-%{?prel}%{?!prel:%version}
 %patch0 -p1
-%patch1 -p1
 
 
 %build
+rm -Rf ./m4/ax_*.m4
 autoreconf -vfi
+
 %configure \
 	--disable-static \
 	--disable-rpath \
@@ -140,6 +141,9 @@ make check
 
 
 %changelog
+* Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 0.9-alt1_0.0.5prealpha.9
+- update by mgaimport
+
 * Wed Dec 15 2021 Grigory Ustinov <grenka@altlinux.org> 0.9-alt1_0.0.5prealpha.6.1
 - Fixed build with python3.10.
 
