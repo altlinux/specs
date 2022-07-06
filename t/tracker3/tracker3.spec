@@ -14,7 +14,7 @@
 %def_enable upower
 %def_enable stemmer
 %def_enable soup2
-%def_enable soup3
+%def_disable soup3
 %def_enable docs
 %def_enable man
 %def_enable test_utils
@@ -25,7 +25,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -56,7 +56,7 @@ Requires: dconf
 
 Requires: libsqlite3 >= %sqlite_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir rpm-build-systemd
+BuildRequires(pre): rpm-macros-meson rpm-build-vala rpm-build-gnome rpm-build-gir rpm-build-systemd
 %{?_enable_test_utils:
 BuildRequires(pre): rpm-build-python3 python3-module-pygobject3
 %add_python3_path %_libdir/%_name-%api_ver/trackertestutils
@@ -148,6 +148,7 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 
 %build
 %meson \
+	%{?_disable_soup3:-Dsoup='soup2'} \
 	-Dunicode_support=%unicode_support \
 	%{?_enable_stemmer:-Dstemmer=enabled} \
 	%{?_disable_docs:-Ddocs=false} \
@@ -211,6 +212,12 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 %endif
 
 %changelog
+* Wed Jul 06 2022 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt1
+- 3.3.2
+
+* Thu Jun 30 2022 Yuri N. Sedunov <aris@altlinux.org> 3.3.1-alt1.1
+- temporarily disabled libsoup-3.0 support
+
 * Wed Jun 01 2022 Yuri N. Sedunov <aris@altlinux.org> 3.3.1-alt1
 - 3.3.1
 
