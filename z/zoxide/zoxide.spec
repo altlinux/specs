@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: zoxide
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Summary:  A smarter cd command. Supports all major shells.
@@ -41,7 +41,8 @@ replace-with = "vendored-sources"
 directory = "vendor"
 EOF
 
-sed -i 's/strip/debug/' Cargo.toml
+sed -i 's/^strip = true/strip = false/' Cargo.toml
+sed -i 's/^debug = 0/debug = true/' Cargo.toml
 
 %build
 export CARGO_HOME=${PWD}/cargo
@@ -71,6 +72,9 @@ cargo test --release
 %_datadir/fish/vendor_completions.d/zoxide.fish
 
 %changelog
+* Mon Jun 27 2022 Egor Ignatov <egori@altlinux.org> 0.8.2-alt1
+- new version 0.8.2
+
 * Mon Apr 25 2022 Egor Ignatov <egori@altlinux.org> 0.8.1-alt1
 - new version 0.8.1
 
