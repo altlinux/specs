@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Role-Hooks
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Class/Method/Modifiers.pm) perl(Class/Tiny.pm) perl(Devel/GlobalDestruction.pm) perl(ExtUtils/MakeMaker.pm) perl(List/Util.pm) perl(Moo.pm) perl(Moo/HandleMoose.pm) perl(Moo/Role.pm) perl(Moose.pm) perl(Moose/Meta/Role.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Mouse.pm) perl(Mouse/Meta/Role.pm) perl(Mouse/Role.pm) perl(Mouse/Util.pm) perl(Package/Variant.pm) perl(Role/Basic.pm) perl(Role/Tiny.pm) perl(Role/Tiny/With.pm) perl(Test/More.pm) perl(Test/Requires.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.006
-Release: alt2
+Version: 0.008
+Release: alt1
 Summary: role callbacks
 Group: Development/Perl
 License: perl
 URL: https://metacpan.org/release/Role-Hooks
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/T/TO/TOBYINK/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/T/TO/TOBYINK/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -30,10 +30,13 @@ to another role.
 %perl_vendor_install
 
 %files
-%doc CREDITS COPYRIGHT LICENSE README Changes
+%doc CREDITS COPYRIGHT README Changes
 %perl_vendor_privlib/R*
 
 %changelog
+* Wed Jul 06 2022 Igor Vlasenko <viy@altlinux.org> 0.008-alt1
+- automated CPAN update
+
 * Sun Jul 03 2022 Igor Vlasenko <viy@altlinux.org> 0.006-alt2
 - to Sisyphus as perl-Sub-HandlesVia build dep
 
