@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.24.5
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -98,6 +98,9 @@ KF5 library
 %_K5lib/libkhotkeysprivate.so.%khotkeysprivate_sover
 
 %changelog
+* Wed Jul 06 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt3
+- fix terminal envocation
+
 * Tue Jul 05 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt2
 - add terminal envocation by Ctrl+Alt+T (closes: 42977,43033)
 
