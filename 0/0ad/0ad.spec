@@ -1,12 +1,12 @@
 Name: 0ad
 Epoch: 1
-Version: 0.0.25
-Release: alt2_O_alpha
+Version: 0.0.26
+Release: alt0_1_rc1
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
 License: GPLv2 MIT
-# Source from  https://github.com/0ad/0ad.git
+# Source from  https://releases.wildfiregames.com/rc/0ad-0.0.26-rc1-26926-alpha-unix-build.tar.xz
 
 Url: http://www.wildfiregames.com/0ad/
 
@@ -16,28 +16,39 @@ Requires: fonts-ttf-dejavu
 Conflicts: %name-data <=  1:0.0.25-alt1
 
 Source: %name-%version.tar
-Source1: README.ALT
+# Source1: README.ALT
+
 Patch0: 0ad-mozjs78-version.patch
 Patch1: 0ad-mozjs78-PrepareZoneForGC.patch
 Patch2: 0ad-0.0.25-fonts.patch
-Patch3: 0ad-0.0.25-PI.patch
+# Patch4: 0ad-0.0.26-ppc64le.patch
+Patch5: 0ad-0.0.25-i586.patch
 
 
 # disabled i586 build to unblock wxGTK3.0 rebuild; please remove later
-ExcludeArch: ppc64le %ix86
+# ExcludeArch: %ix86
 
-# Automatically added by buildreq on Thu Jun 23 2022
-# optimized out: at-spi2-atk boost-devel boost-devel-headers cmake-modules fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libat-spi2-core libcairo-gobject libgdk-pixbuf libglvnd-devel libgpg-error libogg-devel libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwxBase3.0-devel libwxGTK3.0-gl libwxGTK3.0-webview perl pkg-config python-modules python2-base python3 python3-base sh4 xorg-proto-devel zlib-devel
-BuildRequires: boost-filesystem-devel boost-flyweight-devel boost-lockfree-devel boost-signals-devel cmake gcc-c++ libSDL2-devel libcurl-devel libenet-devel libfmt-devel libgloox-devel libicu-devel libminiupnpc-devel libmozjs78-devel libopenal-devel libpng-devel libsodium-devel libvorbis-devel libwxGTK3.0-devel libxml2-devel
+# Automatically added by buildreq on Mon Jul 04 2022
+# optimized out: at-spi2-atk boost-devel boost-devel-headers cmake-modules fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libat-spi2-core libcairo-gobject libfreetype-devel libgdk-pixbuf libglvnd-devel libgpg-error libicu-devel libogg-devel libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwxBase3.0-devel libwxGTK3.0-gl libwxGTK3.0-webview perl pkg-config python3 python3-base sh4 xorg-proto-devel zlib-devel
+BuildRequires: boost-filesystem-devel boost-flyweight-devel boost-lockfree-devel boost-signals-devel 
+BuildRequires: cmake gcc-c++ libSDL2-devel libcurl-devel libenet-devel libfmt-devel libgloox-devel libminiupnpc-devel
+BuildRequires: libmozjs78-devel libopenal-devel libpng-devel libsodium-devel libvorbis-devel libwxGTK3.0-devel libxml2-devel
+BuildRequires: python3-dev
 
-BuildRequires: gcc-c++ python cmake
+
+BuildRequires: gcc-c++ /usr/bin/python3 cmake
 BuildRequires: boost-filesystem-devel boost-flyweight-devel boost-signals-devel
 BuildRequires: libjpeg-devel libpng-devel libvorbis-devel libfreetype-devel
 BuildRequires: libopenal-devel libGL-devel libSDL2-devel libwxGTK3.0-devel libXcursor-devel
 BuildRequires: libcurl-devel libxml2-devel libnspr-devel libicu-devel zlib-devel
 BuildRequires: libenet-devel libminiupnpc-devel libgloox-devel libsodium-devel
-BuildRequires: python-devel python-module-json
+BuildRequires: python3-dev python3-module-jsonlib
 BuildRequires: libmozjs78-devel libfmt-devel boost-lockfree-devel
+BuildRequires: libblitz-devel
+
+%ifarch %intel x86_64 aarch64
+BuildRequires: libdispatch-devel
+%endif
 
 # premake5 requires /proc/self/exe
 BuildRequires: /proc
@@ -63,20 +74,27 @@ educational celebration of game development and ancient history.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 
-# update shebangs from python to python2
+%patch5 -p1
+
+# update shebangs from python to python3
 find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
-	-e '1 s:#!/usr/bin/env python$:#!/usr/bin/env python2:' \
-	-e '1 s:#! /usr/bin/env python$:#! /usr/bin/env python2:' \
+	-e '1 s:#!/usr/bin/env python$:#!/usr/bin/env python3:' \
+	-e '1 s:#! /usr/bin/env python$:#! /usr/bin/env python3:' \
 	%nil
 
-install -m 644 %SOURCE1 .
+## install -m 644 %%SOURCE1 .
 
 %build
+%ifarch ppc64le
+export CPPFLAGS="%optflags -maltivec"
+export CFLAGS="%optflags -maltivec"
+%else
 export CFLAGS="%optflags"
-export CPPFLAGS="%optflags"
+export CFLAGS="%optflags"
+%endif
+
 export SHELL=/bin/sh
 [ -n "$NPROCS" ] || NPROCS=%__nprocs
 build/workspaces/update-workspaces.sh \
@@ -84,17 +102,25 @@ build/workspaces/update-workspaces.sh \
 	--datadir=%_datadir/%name \
 	--libdir=%_libdir/%name \
 	--with-system-mozjs \
+%ifarch ppc64le
+	--without-nvtt 	\
+%endif
 	-j$NPROCS
+
 %make_build -C build/workspaces/gcc verbose=1
 
 %install
 install -Dm 0755 binaries/system/pyrogenesis %buildroot%_bindir/pyrogenesis
+install -Dm 0755 binaries/system/pyrogenesis %buildroot%_bindir/ActorEditor
 install -Dm 0755 binaries/system/libCollada.so %buildroot%_libdir/%name/libCollada.so
 install -Dm 0755 binaries/system/libAtlasUI.so %buildroot%_libdir/%name/libAtlasUI.so
+
+%ifnarch ppc64le
 install -Dm 0755 binaries/system/libnvcore.so %buildroot%_libdir/%name/libnvcore.so
 install -Dm 0755 binaries/system/libnvimage.so %buildroot%_libdir/%name/libnvimage.so
 install -Dm 0755 binaries/system/libnvmath.so %buildroot%_libdir/%name/libnvmath.so
 install -Dm 0755 binaries/system/libnvtt.so %buildroot%_libdir/%name/libnvtt.so
+%endif
 
 install -Dm 0644 build/resources/0ad.desktop %buildroot%_desktopdir/%name.desktop
 install -Dm 0644 build/resources/0ad.png %buildroot%_pixmapsdir/%name.png
@@ -103,11 +129,11 @@ mkdir -p %buildroot%_datadir/0ad
 cp -a binaries/data/* %buildroot%_datadir/0ad/
 
 
-
 %files
-%doc README.txt README.ALT LICENSE.* license*
+%doc README.txt LICENSE.* license*
 %_bindir/0ad
 %_bindir/pyrogenesis
+%_bindir/ActorEditor
 %_libdir/%name/*.so
 %_pixmapsdir/%name.png
 %_desktopdir/%name.desktop
@@ -115,6 +141,15 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Mon Jul 04 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_1_rc1
+- Add build to ppc64le 
+
+* Tue Jun 28 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_0_rc1
+- Version 0.0.26-rc1-26926
+
+* Fri Jun 24 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.25-alt2_1_alpha
+- Add 0ad-0.0.25-i586.patch
+
 * Thu Jun 23 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.25-alt2_O_alpha
 - 0.0.25b 
 
