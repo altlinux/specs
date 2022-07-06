@@ -1,6 +1,6 @@
 Name: TetrisGL
 Version: 1.0.2
-Release: alt3
+Release: alt4
 
 Summary: Just another tetris game with OpenGL graphics
 License: GPLv3
@@ -36,8 +36,6 @@ care for them not to get stuck!
 
 %prep
 %setup
-# ALT-specific?
-sed -i '/^target_link_libraries/ s/glfw3/glfw/' CMakeLists.txt
 
 %build
 %cmake_insource
@@ -94,6 +92,9 @@ done
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Jul 05 2022 Michael Shigorin <mike@altlinux.org> 1.0.2-alt4
+- updated to g24aec3e, dropped glfw version hack
+
 * Sat Jan 16 2021 Michael Shigorin <mike@altlinux.org> 1.0.2-alt3
 - Imp5: enabled sound (ported from FMOD to ALSA)
 - restricted the binary to games group (so it's more obvious)
