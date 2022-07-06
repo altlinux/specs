@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Module/Build.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 #
 #   - Lingua::EN::Sentence -
@@ -15,7 +18,7 @@
 %define _enable_test 1
 
 Name: perl-Lingua-EN-Sentence
-Version: 0.31
+Version: 0.33
 Release: alt1
 
 Summary: Lingua-EN-Sentence - Module for splitting text into sentences
@@ -57,6 +60,9 @@ so it notices them.
 %perl_vendor_privlib/Lingua/
 
 %changelog
+* Wed Jul 06 2022 Igor Vlasenko <viy@altlinux.org> 0.33-alt1
+- automated CPAN update
+
 * Tue Aug 21 2018 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - automated CPAN update
 
