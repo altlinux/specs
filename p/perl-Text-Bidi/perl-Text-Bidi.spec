@@ -2,7 +2,7 @@
 BuildRequires: perl-podlators
 %define dist Text-Bidi
 Name: perl-%dist
-Version: 2.17
+Version: 2.18
 Release: alt1
 
 Summary: Unicode bidi algorithm for Perl using libfribidi
@@ -52,6 +52,9 @@ scripts for %name
 
 
 %changelog
+* Wed Jul 06 2022 Igor Vlasenko <viy@altlinux.org> 2.18-alt1
+- automated CPAN update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.17-alt1
 - automated CPAN update
 
