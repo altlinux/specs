@@ -1,21 +1,27 @@
 Name: scantailor
-Version: 0.9.12.2
-Release: alt1.1
+Version: 1.0.18
+Release: alt1
 
 Summary: Scan processing software
 License: GPL
 Group: Graphics
-Url: https://github.com/scantailor/scantailor
+Url: https://github.com/vigri/scantailor-advanced
 
-Packager: %packager
+# Source-url: https://github.com/vigri/scantailor-advanced/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 Source1: %name.desktop
 
-BuildRequires: boost-devel-headers boost-intrusive-devel cmake gcc-c++ libXft-devel libXmu-devel libXpm-devel libjpeg-devel libtiff-devel libqt4-devel
+# Automatically added by buildreq on Fri Apr 10 2009
+BuildRequires: boost-devel-headers boost-intrusive-devel cmake gcc-c++
+BuildRequires: zlib-devel libXft-devel libXmu-devel libXpm-devel libjpeg-devel libtiff-devel libpng-devel
+BuildRequires: qt5-base-devel qt5-tools-devel qt5-svg-devel libqt5-core libqt5-network libqt5-gui qt5-imageformats
 
 %description
-Scantailor is a book scan processing software. It
-splits scanned pages, aligns, and converts to b/w from
+scantailor-advanced is a book scan processing software.
+ScanTailor Advanced is the version that merges the features
+of the ScanTailor Featured and ScanTailor Enhanced versions,
+brings new ones and fixes.
+It splits scanned pages, aligns, and converts to b/w from
 grayscale. It has GUI interface. Analogs of this
 program are ScanKromsator (written by kamerade bolega,
 currently discontinued), BookRestorer.
@@ -29,32 +35,35 @@ GUI интерфейс. Наиболее известными аналогами
 сейчас не развивается) и BookRestorer.
 
 %prep
-%setup -q
+%setup
+subst "s|scantailor-advanced|%name|" CMakeLists.txt
+# remove project's options
+subst "s|.*add_compile_options.*||" CMakeLists.txt
 
 %build
-cp resources/appicon.svg %name.svg
-cmake -DCMAKE_INSTALL_PREFIX=/usr .
-%make
+%cmake
+%cmake_build
 
 %install
-mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%_datadir/%name/translations
-install -pm755 scantailor %buildroot/%_bindir/
-install -pm644 *.qm %buildroot%_datadir/%name/translations
-install -pm644 -D %name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+%cmakeinstall_std
+mv %buildroot%_iconsdir/hicolor/scalable/apps/ScanTailor.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+rm -f %buildroot%_desktopdir/scantailor.desktop
 install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 %files
-%_bindir/scantailor
-%dir %_datadir/%name
-%dir %_datadir/%name/translations
-%dir %_iconsdir/hicolor/scalable
-%dir %_iconsdir/hicolor/scalable/apps
-%_datadir/%name/translations/*
+%_bindir/%name
+%dir %_datadir/%name/
+%_datadir/%name/translations/
 %_desktopdir/%name.desktop
-%_iconsdir/hicolor/*/apps/*
+/usr/share/mime/packages/scantailor-project.xml
+%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu Jul 07 2022 Vitaly Lipatov <lav@altlinux.ru> 1.0.18-alt1
+- switch to https://github.com/vigri/scantailor-advanced upstream
+- use Qt5 now
+- obsolete scantailer-advanced package
+
 * Thu Jul 15 2021 Andrey Cherepanov <cas@altlinux.org> 0.9.12.2-alt1.1
 - FTBFS: build without phonon-devel
 
