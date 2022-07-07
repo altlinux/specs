@@ -1,16 +1,23 @@
+%define freetype_commit 6fc77cee03e078e97afcee0c0e06a2d3274b9a29
+%define harfbuzz_commit 6022fe2f68d028ee178284f297b3902ffdf65b03
+
 Name: SDL2_ttf
-Version: 2.0.18
-Release: alt1.2
+Version: 2.20.0
+Release: alt1
 
 Summary: Simple DirectMedia Layer - Sample TrueType Font Library
-License: zlib
+License: Zlib
 Group: System/Libraries
 
 Url: http://www.libsdl.org/projects/SDL_ttf/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# http://www.libsdl.org/projects/SDL_ttf/release/%name-%version.tar.gz
-Source: %name-%version.tar
+# https://github.com/libsdl-org/SDL_ttf/archive/release-%version/SDL_ttf-release-%version.tar.gz
+Source0: SDL_ttf-release-%version.tar
+# https://github.com/libsdl-org/freetype/archive/%freetype_commit/freetype-%freetype_commit.tar.gz
+Source1: freetype-%freetype_commit.tar
+# https://github.com/libsdl-org/harfbuzz/archive/%harfbuzz_commit/harfbuzz-%harfbuzz_commit.tar.gz
+Source2: harfbuzz-%harfbuzz_commit.tar
 
 BuildRequires: gcc-c++
 BuildRequires: libICE-devel
@@ -38,7 +45,11 @@ This library allows you to use TrueType fonts to render text in SDL
 applications.
 
 %prep
-%setup
+%setup -n SDL_ttf-release-%version -b 1 -b 2
+
+%__mv -Tf ../freetype-%freetype_commit external/freetype
+%__mv -Tf ../harfbuzz-%harfbuzz_commit external/harfbuzz
+
 %ifarch %e2k
 # HarfBuzz is written in C++ and pretends not to use
 # the C++ runtime, but it relies on non-portable hacks.
@@ -72,7 +83,7 @@ EOF
 %__rm -rf %buildroot%_libdir/lib%name.la
 
 %files -n lib%name
-%doc CHANGES.txt COPYING.txt README.txt
+%doc CHANGES.txt README.txt
 %_libdir/lib%name-2.0.so.*
 
 %files -n lib%name-devel
@@ -80,8 +91,12 @@ EOF
 %_includedir/SDL2/SDL_ttf.h
 %_pkgconfigdir/%name.pc
 %_libdir/lib%name.so
+%_libdir/cmake/%name
 
 %changelog
+* Thu Jul 07 2022 Nazarov Denis <nenderus@altlinux.org> 2.20.0-alt1
+- Version 2.20.0
+
 * Wed Jan 19 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.18-alt1.2
 - Better fix for Elbrus
 
