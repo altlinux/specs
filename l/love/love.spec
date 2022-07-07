@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           love
-Version:        11.3
+Version:        11.4
 Release:        alt1_1
 Summary:        A free 2D game engine which enables easy game creation in Lua
 Group:          Development/Other
@@ -47,10 +47,11 @@ allowing it to be used for both free and non-free projects.
 
 
 %build
-%configure --bindir=%{_gamesbindir} \
-               --with-lua=luajit \
-               --enable-gme \
-               --disable-static
+%configure \
+  --bindir=%{_gamesbindir} \
+  --with-lua=luajit \
+  --enable-gme \
+  --disable-static
 %make_build
 
 %install
@@ -59,12 +60,15 @@ allowing it to be used for both free and non-free projects.
 find %{buildroot} -name '*.la' -delete
 rm -f %{buildroot}%{_libdir}/lib%{name}.so
 # kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/games,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin,/usr/games} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
 
 
 %changelog
+* Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 11.4-alt1_1
+- update by mgaimport
+
 * Mon Jan 25 2021 Igor Vlasenko <viy@altlinux.ru> 11.3-alt1_1
 - update by mgaimport
 
