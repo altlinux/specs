@@ -14,7 +14,7 @@ BuildRequires: jpackage-default
 
 Name:           plexus-io
 Version:        3.2.0
-Release:        alt1_7jpp11
+Release:        alt1_9jpp11
 Summary:        Plexus IO Components
 License:        ASL 2.0
 URL:            https://github.com/codehaus-plexus/plexus-io
@@ -60,7 +60,7 @@ sed -i /class/i@org.junit.Ignore src/test/java/org/codehaus/plexus/components/io
 
 %build
 %mvn_file  : plexus/io
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -72,6 +72,9 @@ sed -i /class/i@org.junit.Ignore src/test/java/org/codehaus/plexus/components/io
 %doc --no-dereference NOTICE.txt LICENSE-2.0.txt
 
 %changelog
+* Thu Jul 07 2022 Igor Vlasenko <viy@altlinux.org> 0:3.2.0-alt1_9jpp11
+- fixed build
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:3.2.0-alt1_7jpp11
 - update
 
