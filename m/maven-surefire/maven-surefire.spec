@@ -14,17 +14,17 @@ BuildRequires: jpackage-11
 
 Name:           maven-surefire
 Version:        3.0.0_M4
-Release:        alt1_3jpp11
+Release:        alt1_6jpp11
 Summary:        Test framework project
 License:        ASL 2.0 and CPL
 URL:            https://maven.apache.org/surefire/
 BuildArch:      noarch
 
 %global upstream_version %(echo '%{version}' | tr '_' '-')
-%global source_version %(echo '%{version}' | tr '_' '~')
+%global src_version %(echo '%{version}' | tr '_' '~')
 
 # ./generate-tarball.sh
-Source0:        %{name}-%{source_version}.tar.gz
+Source0:        %{name}-%{src_version}.tar.gz
 # Remove bundled binaries which cannot be easily verified for licensing
 Source1:        generate-tarball.sh
 Source2:        https://junit.sourceforge.net/cpl-v10.html
@@ -195,6 +195,9 @@ rm surefire-providers/surefire-testng-utils/src/main/java/org/apache/maven/suref
 %doc --no-dereference LICENSE NOTICE cpl-v10.html
 
 %changelog
+* Thu Jul 07 2022 Igor Vlasenko <viy@altlinux.org> 0:3.0.0_M4-alt1_6jpp11
+- fixed build with new testng
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:3.0.0_M4-alt1_3jpp11
 - fixed build with maven-shared-utils
 

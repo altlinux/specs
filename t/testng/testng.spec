@@ -15,7 +15,7 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           testng
-Version:        7.3.0
+Version:        7.4.0
 Release:        alt1_3jpp11
 Summary:        Java-based testing framework
 License:        ASL 2.0
@@ -109,6 +109,9 @@ cp -p ./src/main/java/*.dtd.html ./src/main/resources/.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:7.4.0-alt1_3jpp11
+- new version
+
 * Sun May 29 2022 Igor Vlasenko <viy@altlinux.org> 0:7.3.0-alt1_3jpp11
 - new version
 
