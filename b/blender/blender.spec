@@ -14,14 +14,17 @@
 
 # Disable LTO for p10 until the following issue is solved:
 # lto1: fatal error: bytecode stream in file '/usr/lib/llvm-11.0/lib64/libclangFrontend.a' generated with LTO version 9.2 instead of the expected 9.4
-%define IF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
-%IF_ver_lteq %__ubt_branch_id M100P
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
+%define IF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
+%IF_ver_lt %ubt_id M110
 %add_optflags -fno-lto
 %endif
 
 Name: blender
 Version: 3.2.0
-Release: alt2
+Release: alt3
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -305,6 +308,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Thu Jul 07 2022 Egor Ignatov <egori@altlinux.org> 3.2.0-alt3
+- Fix branch check
+
 * Thu Jul 07 2022 Egor Ignatov <egori@altlinux.org> 3.2.0-alt2
 - Add blender-3.2.0-alt-python39 patch
 - Disable LTO for p10 to fix build
