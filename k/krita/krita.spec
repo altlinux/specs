@@ -1,5 +1,6 @@
-# obsoleted koffice version
-%define koffice_ver 4:2.3.70
+
+%define optflags_lto %nil
+%def_disable python_bindings
 
 %define sover 17
 %define libkritacommand libkritacommand%sover
@@ -33,7 +34,7 @@
 %define libkritaresourcewidgets libkritaresourcewidgets%sover
 
 Name: krita
-Version: 5.0.6
+Version: 5.0.8
 Release: alt1
 %K5init no_altplace
 
@@ -52,8 +53,6 @@ Requires: create-resources
 
 Provides: calligra-krita = %EVR
 Obsoletes: calligra-krita < %EVR
-Provides: koffice-krita = %koffice_ver
-Obsoletes: koffice-krita < %koffice_ver
 
 Source: krita-%version.tar
 Patch1: alt-find-pyqt.patch
@@ -66,7 +65,10 @@ BuildRequires(pre): rpm-build-python3 rpm-build-kf5
 BuildRequires: zlib-devel libssl-devel
 BuildRequires: extra-cmake-modules
 BuildRequires: qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel qt5-x11extras-devel
-BuildRequires: python3-devel python3-module-PyQt5-devel python3-module-sip6
+BuildRequires: python3-devel
+%if_enabled python_bindings
+BuildRequires: python3-module-PyQt5-devel python3-module-sip5
+%endif
 BuildRequires: eigen3 libfftw3-devel libgomp-devel libgsl-devel
 BuildRequires: boost-devel boost-geometry-devel
 #BuildRequires: libgif-devel
@@ -77,7 +79,7 @@ BuildRequires: libXres-devel libxcbutil-devel
 BuildRequires: libjpeg-devel libpng-devel libpoppler-qt5-devel libraw-devel libtiff-devel libwebp-devel
 #BuildRequires: libheif-devel openexr-devel
 BuildRequires: libexiv2-devel liblcms2-devel
-BuildRequires: libmypaint-devel
+#BuildRequires: libmypaint-devel
 BuildRequires: kf5-karchive-devel kf5-kcrash-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kwindowsystem-devel
 
 %description
@@ -318,6 +320,9 @@ sed -i 's,HAVE_OCIO,0,' plugins/dockers/CMakeLists.txt
 %ifarch %arm
 %add_optflags -DHAS_ONLY_OPENGL_ES=1
 %endif
+%ifarch ppc64 ppc64le
+%add_optflags -DEIGEN_ALTIVEC_DISABLE_MMA
+%endif
 %K5build \
     -DRELEASE_BUILD=ON \
     -DFOUNDATION_BUILD=OFF \
@@ -342,7 +347,9 @@ done
 %config(noreplace) %_K5xdgconf/kritarc
 %_K5bin/krita*
 %_libdir/kritaplugins/
-#%_libdir/krita-python-libs/
+%if_enabled python_bindings
+%_libdir/krita-python-libs/
+%endif
 %_K5qml/org/krita/
 %_datadir/krita/
 %_datadir/kritaplugins/
@@ -454,6 +461,12 @@ done
 %_libdir/libkritametadata.so.*
 
 %changelog
+* Thu Jul 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.0.8-alt1
+- new version
+
+* Tue Jul 05 2022 Sergey V Turchin <zerg@altlinux.org> 5.0.6-alt2
+- update build options
+
 * Tue May 24 2022 Sergey V Turchin <zerg@altlinux.org> 5.0.6-alt1
 - new version
 
