@@ -12,9 +12,16 @@
 
 %def_with jemalloc
 
+# Disable LTO for p10 until the following issue is solved:
+# lto1: fatal error: bytecode stream in file '/usr/lib/llvm-11.0/lib64/libclangFrontend.a' generated with LTO version 9.2 instead of the expected 9.4
+%define IF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
+%IF_ver_lteq %__ubt_branch_id M100P
+%add_optflags -fno-lto
+%endif
+
 Name: blender
 Version: 3.2.0
-Release: alt1
+Release: alt2
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
 Group: Graphics
@@ -44,10 +51,12 @@ Patch27: blender-2.90.0-alt-embree-components.patch
 Patch28: blender-3.0.0-alt-doc.patch
 Patch29: blender-2.90-alt-non-x86_64-linking.patch
 Patch30: blender-2.93.0-suse-reproducible.patch
+Patch31: blender-3.2.0-alt-python39.patch
+
 
 Patch2000: blender-e2k-support.patch
 
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-ubt
 BuildRequires: boost-filesystem-devel boost-locale-devel
 BuildRequires: cmake gcc-c++
 BuildRequires: libGLEW-devel libXi-devel
@@ -177,6 +186,8 @@ This package contains documentation for Blender.
 %patch28 -p1
 %patch29 -p1
 %patch30 -p1
+%patch31 -p1
+
 %ifarch %e2k
 %patch2000 -p1
 # lcc 1.25.15's EDG bug would fail building OPENVDB+TBB otherwise
@@ -294,6 +305,10 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Thu Jul 07 2022 Egor Ignatov <egori@altlinux.org> 3.2.0-alt2
+- Add blender-3.2.0-alt-python39 patch
+- Disable LTO for p10 to fix build
+
 * Fri Jun 24 2022 Egor Ignatov <egori@altlinux.org> 3.2.0-alt1
 - Updated to upstream version 3.2.0.
 
