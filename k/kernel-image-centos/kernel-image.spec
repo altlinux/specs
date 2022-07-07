@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 123
+%define centos_release 125
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,23 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Jul 07 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.125-alt1.el9
+- Updated to kernel-5.14.0-125.el9:
+  + bnxt: Driver update for RHEL9.1
+  + CIFS, backport two patches that fixes issues in smb2_compound_op
+  + gfs2: Make sure FITRIM minlen is rounded up to fs block size
+  + i40e: Driver Update
+  + iavf: Driver update to upstream 5.18
+  + ice: Driver update to upstream 5.18
+  + time: Handle negative seconds correctly in timespec64_to_ns()
+
+* Tue Jul 05 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.124-alt1.el9
+- Updated to kernel-5.14.0-124.el9:
+  + ceph: wait on async create before checking caps for syncfs
+  + CNB: lib: bitmap: Introduce node-aware alloc API
+  + dm: sync with upstream 5.19
+  + scsi: ibmvfc: Allocate/free queue resource only during probe/remove
+
 * Fri Jul 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.123-alt1.el9
 - Updated to kernel-5.14.0-123.el9:
   + exec: Force single empty string when argv is empty
