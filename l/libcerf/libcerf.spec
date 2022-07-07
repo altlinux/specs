@@ -1,24 +1,24 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-mageia-compat
-BuildRequires: ctest gcc-c++
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
 %global optflags_lto %nil
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define major	1
+%define major	2
 %define libname	libcerf%{major}
 %define devname	libcerf-devel
 
 Name:		libcerf
 Summary:	Complex error functions, Dawson, Faddeeva, and Voigt function
-Version:	1.17
+Version:	2.1
 Release:	alt1_1
 Group:		System/Libraries
 License:	MIT
 Url:		https://jugit.fz-juelich.de/mlz/libcerf
 Source0:	https://jugit.fz-juelich.de/mlz/libcerf/-/archive/v%{version}/%{name}-v%{version}.tar.gz
-BuildRequires:	cmake
+BuildRequires:	ccmake cmake ctest
 BuildRequires:	clang
 Source44: import.info
 
@@ -66,6 +66,7 @@ rm -rf fortran/__MACOSX
 %remove_optflags -frecord-gcc-switches
 # for some reason %ix86 tests fails with gcc
 export CC=clang
+export LDFLAGS="$LDFLAGS -Wl,--build-id=sha1"
 %{mageia_cmake}
 %mageia_cmake_build
 
@@ -87,11 +88,15 @@ export CC=clang
 %doc %{_docdir}/cerf/
 %{_includedir}/cerf.h
 %{_libdir}/%{name}.so
+%{_libdir}/cmake/cerf/
 %{_libdir}/pkgconfig/%{name}.pc
 %{_mandir}/man3/*
 
 
 %changelog
+* Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 2.1-alt1_1
+- update by mgaimport
+
 * Sun Jan 02 2022 Igor Vlasenko <viy@altlinux.org> 1.17-alt1_1
 - new version
 
