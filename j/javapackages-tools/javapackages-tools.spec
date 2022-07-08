@@ -37,7 +37,7 @@ BuildRequires: jpackage-default
 
 Name:           javapackages-tools
 Version:        6.0.0
-Release:        alt1_0jpp11
+Release:        alt1_1jpp11
 Summary:        Macros and scripts for Java packaging support
 License:        BSD
 URL:            https://github.com/fedora-java/javapackages
@@ -270,8 +270,6 @@ mv osgi.req osgi-fc.req
 popd
 sed -i 's,/usr/lib/rpm/osgi\.,/usr/lib/rpm/osgi-fc.,' files-generators
 sed -i '/usr.lib.rpm.fileattrs/d' files-generators
-# disable maven-local-openjdk8 for now
-rm -f %buildroot/usr/share/xmvn/conf/toolchains.xml
 
 
 
@@ -310,10 +308,16 @@ rm -f %buildroot/usr/share/xmvn/conf/toolchains.xml
 %files -n ivy-local -f files-ivy
 %endif
 
+%files -n maven-local-openjdk8
+%{_datadir}/xmvn/conf
+
 %files -n python3-module-javapackages -f files-python
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jul 08 2022 Igor Vlasenko <viy@altlinux.org> 1:6.0.0-alt1_1jpp11
+- enabled maven-local-openjdk8
+
 * Wed Jun 29 2022 Igor Vlasenko <viy@altlinux.org> 1:6.0.0-alt1_0jpp11
 - release for xmvn4; disable maven-local-openjdk8 for now; enable ivy
 
