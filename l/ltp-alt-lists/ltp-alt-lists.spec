@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 11
+Version: 12
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -51,6 +51,11 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Fri Jul 08 2022 Vitaly Chikunov <vt@altlinux.org> 12-alt1
+- Skip keyctl02 due to failure of kernel-image-un-def-5.18.10-alt1 on armh.
+- Skip madvise06 that failed on beekeeper for kernel-image-rt-5.10.120-alt1.rt70.
+- Skip inotify11 that failed on beekeeper for kernel-image-un-def-1:5.18.8-alt1.
+
 * Fri Jun 24 2022 Vitaly Chikunov <vt@altlinux.org> 11-alt1
 - Skip long running pty0{6,7} tests.
 
