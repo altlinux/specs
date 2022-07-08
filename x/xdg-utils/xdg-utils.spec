@@ -3,7 +3,7 @@
 
 Name: xdg-utils
 Version: 1.1.3
-Release: alt10
+Release: alt12
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 
@@ -36,6 +36,7 @@ Patch20: xdg-terminal-added-dde-support.patch
 Patch21: xdg-terminal-fix-generic.patch
 Patch22: Fix-a-bug-when-xdg-terminal-needs-gsettings-to-get-t.patch
 Patch23: Fixes-x-argument-which-is-the-default-for-gnome-mate.patch
+Patch24: xdg-screensaver.in-add-xfce4-screensaver-support.patch
 
 BuildArch: noarch
 
@@ -101,6 +102,7 @@ popd
 %patch21 -p2
 %patch22 -p1
 %patch23 -p1
+%patch24 -p1
 
 %build
 %autoreconf
@@ -126,6 +128,12 @@ popd
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Fri Jul 08 2022 Anton Midyukov <antohami@altlinux.org> 1.1.3-alt12
+- xdg-screensaver: add xfce4-screensaver support
+
+* Thu Jul 07 2022 Anton Midyukov <antohami@altlinux.org> 1.1.3-alt11
+- xdg-su-xvt.patch: fix run mate-terminal
+
 * Thu Jul 07 2022 Anton Midyukov <antohami@altlinux.org> 1.1.3-alt10
 - Add xdg-terminal fixes from upstream (Closes: 43161):
   + Fix a bug when xdg-terminal needs gsettings to get the default terminal
