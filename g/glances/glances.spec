@@ -2,7 +2,7 @@
 
 Name: glances
 Version: 3.2.6.4
-Release: alt1
+Release: alt2
 
 Summary: CLI curses based monitoring tool
 License: GPLv3
@@ -69,6 +69,11 @@ Glances uses the PsUtil library to get information from your system.
 
 
 %changelog
+* Mon Jun 20 2022 Egor Ignatov <egori@altlinux.org> 3.2.6.4-alt2
+- remove 'future' and 'packaging' dependencies (9b9a7862)
+  + future is python2 only dependency
+  + packaging is optional and used to check for updates
+
 * Tue May 31 2022 Egor Ignatov <egori@altlinux.org> 3.2.6.4-alt1
 - new version 3.2.6.4
 
