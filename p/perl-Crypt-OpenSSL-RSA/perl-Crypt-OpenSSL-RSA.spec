@@ -2,7 +2,7 @@
 %define module Crypt-OpenSSL-RSA
 
 Name: perl-%module
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: RSA encoding and decoding, using the openSSL libraries
@@ -38,6 +38,9 @@ decryption, signatures and signature verification.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Fri Jul 08 2022 Igor Vlasenko <viy@altlinux.org> 0.33-alt1
+- automated CPAN update
+
 * Fri Sep 17 2021 Igor Vlasenko <viy@altlinux.org> 0.32-alt1
 - automated CPAN update
 
