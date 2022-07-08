@@ -3,7 +3,7 @@
 
 Name: OpenBoard
 Version: 1.6.3
-Release: alt2
+Release: alt3
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
@@ -18,6 +18,8 @@ Source1: %name.svg
 Patch1: OpenBoard-1.6.3-update-russian-translations.patch
 
 Patch2: dark-background-color-set-ability-feature.patch
+
+Patch3: Fixed-the-program-version-in-the-text-from-the-copyright-widget.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -67,6 +69,7 @@ Interactive whiteboard for schools and universities.
 # update russian translations
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
@@ -165,6 +168,9 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Jul 08 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.3-alt3
+- Fixed the program version in the text from the copyrightTextBrowser widget (Closes: 43124)
+
 * Thu Jun 23 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.3-alt2
 - Fix of patch with russian translation for 1.6.3
 
