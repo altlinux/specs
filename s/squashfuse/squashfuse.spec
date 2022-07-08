@@ -3,8 +3,8 @@
 
 
 Name: squashfuse
-Version: 0.1.104
-Release: alt0.git.e51978c
+Version: 0.1.105
+Release: alt1
 
 Summary: FUSE filesystem to mount squashfs archives
 License: BSD-2-Clause
@@ -68,6 +68,9 @@ find ./ -name '*.la' -print -delete
 
 
 %changelog
+* Fri Jul 08 2022 Danil Shein <dshein@altlinux.org> 0.1.105-alt1
+ - new version 0.1.105
+
 * Fri Dec 17 2021 Danil Shein <dshein@altlinux.org> 0.1.104-alt0.git.e51978c
 - initial build for ALT
 
