@@ -1,4 +1,4 @@
-%define ver_major 1.25
+%define ver_major 1.26
 
 %if "%__gcc_version_major" < "11"
 %ifarch ppc64le
@@ -19,7 +19,7 @@ Source: https://wayland.freedesktop.org/releases/%name-%version.tar.xz
 
 BuildArch: noarch
 
-%define wayland_ver 1.18
+%define wayland_ver 1.20
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ libwayland-client-devel >= %wayland_ver libwayland-server-devel
@@ -50,6 +50,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README.md
 
 %changelog
+* Fri Jul 08 2022 Yuri N. Sedunov <aris@altlinux.org> 1.26-alt1
+- 1.26
+
 * Wed Mar 02 2022 Yuri N. Sedunov <aris@altlinux.org> 1.25-alt1
 - 1.25
 
