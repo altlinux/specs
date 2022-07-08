@@ -4,15 +4,15 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nettle
-Version: 3.7.3
+Version: 3.8.0
 Release: alt1
 Summary: A low-level cryptographic library
 
 License: LGPLv2.1+
 Group: System/Libraries
-Url: http://www.lysator.liu.se/~nisse/nettle/
+Url: https://www.lysator.liu.se/~nisse/nettle/
 
-Vcs: http://git.lysator.liu.se/nettle/nettle.git
+Vcs: https://git.lysator.liu.se/nettle/nettle.git
 Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ libgmp-devel libssl-devel makeinfo
@@ -91,11 +91,13 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %_bindir/*
 
 %files -n %libnettle
-%_libdir/libnettle.so.%{libnettle_soname}*
+%_libdir/libnettle.so.%{libnettle_soname}
+%_libdir/libnettle.so.%{libnettle_soname}.*
 %doc AUTHORS NEWS README
 
 %files -n %libhogweed
-%_libdir/libhogweed.so.%{libhogweed_soname}*
+%_libdir/libhogweed.so.%{libhogweed_soname}
+%_libdir/libhogweed.so.%{libhogweed_soname}.*
 
 %files -n lib%name-devel
 %_pkgconfigdir/*.pc
@@ -104,6 +106,11 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %_infodir/*.*
 
 %changelog
+* Tue Jun 28 2022 Mikhail Efremov <sem@altlinux.org> 3.8.0-alt1
+- Updated to 3.8.0.
+- Updated Vcs tag.
+- Updated Url tag.
+
 * Fri Jul 02 2021 Mikhail Efremov <sem@altlinux.org> 3.7.3-alt1
 - Updated to 3.7.3.
 

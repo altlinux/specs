@@ -1,9 +1,9 @@
 %define libgnutls_soname 30
-%define libgnutlsxx28_soname 28
+%define libgnutlsxx_soname 30
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.6.16
+Version: 3.7.6
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -18,17 +18,17 @@ Patch3: Fix-privkey-verify-broken-test.patch
 Patch4: tests-Use-IPv4-only-in-s_server.patch
 Patch6: gnulib-E2K-fix-for-lcc-1.23.patch
 Patch8: fix-32bit-LTS.patch
-Patch9: fix_gl_tests.patch
+Patch10: tests-Don-t-use-lscpu.patch
 
-%define libcxx libgnutlsxx%libgnutlsxx28_soname
+%define libcxx libgnutlsxx%libgnutlsxx_soname
 %define libssl libgnutls%{libgnutls_openssl_soname}-openssl
 %def_enable guile
 #set_automake_version 1.11
 
 # Automatically added by buildreq on Thu Dec 08 2011
 BuildRequires: gcc-c++ gtk-doc libgcrypt-devel libp11-kit-devel libreadline-devel libtasn1-devel makeinfo zlib-devel
-BuildRequires: autogen libopts-devel libidn2-devel libunistring-devel
-BuildRequires: libnettle-devel >= 3.4.1-alt1
+BuildRequires: libidn2-devel libunistring-devel
+BuildRequires: libnettle-devel >= 3.6-alt1
 %if_enabled guile
 # Unfortunately we have different version
 # on e2k and don't have guile-devel.
@@ -42,7 +42,7 @@ BuildRequires: guile22-devel
 %endif
 
 # For tests
-%{?!_without_check:%{?!_disable_check:BuildRequires: net-tools}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: iproute2}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 %{?!_without_check:%{?!_disable_check:BuildRequires: datefudge}}
 # tests/pkcs11/tls-neg-pkcs11-key.c doesn't work with softhsm-2.1.0:
@@ -219,14 +219,14 @@ pushd gl
 popd
 
 %patch8 -p1
-%patch9 -p1
+%patch10 -p1
 
 touch doc/*.texi
 rm doc/*.info*
 rm aclocal.m4 m4/{libtool,lt*}.m4
 # Thanks to USE_POSIX_THREADS_WEAK feature, we have to link
 # tests with @LIBMULTITHREAD@ in --no-as-needed mode.
-sed -i 's/^\(test_[^ +=]\+\)_LDADD.*@LIBMULTITHREAD@.*/&\n\1_LDFLAGS = -Wl,--no-as-needed/' gl/tests/Makefile.*
+sed -i 's/^\(test_[^ +=]\+\)_LDADD.*@LIBMULTITHREAD@.*/&\n\1_LDFLAGS = -Wl,--no-as-needed/' src/gl/tests/Makefile.*
 # Use soname in the names of locale files
 sed -i -r 's/^DOMAIN = [^[:blank:]#]+/&%libgnutls_soname/' po/Makevars
 
@@ -241,10 +241,8 @@ sed -i -r 's/^DOMAIN = [^[:blank:]#]+/&%libgnutls_soname/' po/Makevars
 	--without-tpm \
 	--with-default-trust-store-file=/usr/share/ca-certificates/ca-bundle.crt \
 	%{subst_enable guile} \
-	--disable-local-libopts \
 	--with-included-libtasn1=no \
 	--enable-openssl-compatibility \
-	--with-libidn2 \
 	--docdir=%_docdir/gnutls-%version/
 make MAKEINFOFLAGS=--no-split
 
@@ -274,13 +272,16 @@ make -k check
 %files -n lib%name -f gnutls%libgnutls_soname.lang
 %dir %docdir
 %docdir/[ACNRT]*
-%_libdir/libgnutls.so.*
+%_libdir/libgnutls.so.%libgnutls_soname
+%_libdir/libgnutls.so.%libgnutls_soname.*
 
 %files -n %libcxx
-%_libdir/libgnutlsxx.so.*
+%_libdir/libgnutlsxx.so.%libgnutlsxx_soname
+%_libdir/libgnutlsxx.so.%libgnutlsxx_soname.*
 
 %files -n %libssl
-%_libdir/libgnutls-openssl.so.*
+%_libdir/libgnutls-openssl.so.%libgnutls_openssl_soname
+%_libdir/libgnutls-openssl.so.%libgnutls_openssl_soname.*
 
 %files -n libgnutls-devel
 %_includedir/gnutls/
@@ -325,6 +326,19 @@ make -k check
 %endif
 
 %changelog
+* Thu Jul 07 2022 Mikhail Efremov <sem@altlinux.org> 3.7.6-alt1
+- Bumped libgnutlsxx soname.
+- Dropped obsoleted configure option.
+- Dropped autogen and libopts-devel from BR.
+- Dropped obsoleted patch.
+- Updated patches.
+- Ensure that right soname is packaged.
+- tests: Don't use lscpu.
+- tests: Use iproute2 instead of net-tools.
+- Dropped 28 from libgnutlsxx_soname macro name.
+- Updated to 3.7.6.
+
+
 * Mon May 31 2021 Mikhail Efremov <sem@altlinux.org> 3.6.16-alt1
 - Updated to 3.6.16 (fixes: CVE-2021-20305).
 - Dropped obsoleted patches.
