@@ -1,5 +1,5 @@
 Name:     zxing-cpp
-Version:  1.3.0
+Version:  1.4.0
 Release:  alt1
 
 Summary:  C++ port of ZXing
@@ -74,6 +74,9 @@ sed -i '1i #define preferred_separator preferred_separator_zxing' test/blackbox/
 %_libdir/pkgconfig/zxing.pc
 
 %changelog
+* Fri Jul 08 2022 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1
+- New version.
+
 * Tue May 03 2022 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
 - New version.
 
