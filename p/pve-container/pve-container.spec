@@ -3,7 +3,7 @@
 
 Name: pve-container
 Summary: Proxmox VE Container management tool
-Version: 4.2.1
+Version: 4.2.2
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -51,6 +51,9 @@ mv %buildroot/usr/lib/sysctl.d/10-pve-ct-inotify-limits.conf %buildroot%_sysctld
 %_man5dir/*
 
 %changelog
+* Wed Jul 06 2022 Andrew A. Vasilyev <andy@altlinux.org> 4.2.2-alt1
+- 4.2-2
+
 * Thu May 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 4.2.1-alt1
 - 4.2-1
 
