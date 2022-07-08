@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.27.0
+Version: 2.27.1
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -339,6 +339,12 @@ fi
 %_datadir/%name/features/bootloader
 
 %changelog
+* Fri Jul 08 2022 Alexey Gladkov <legion@altlinux.ru> 2.27.1-alt1
+- New version (2.27.1).
+- Feature luks:
+  + Fix typo and use keyfile if exists (ALT#43056).
+  + Add more documentation.
+
 * Wed Jul 06 2022 Alexey Gladkov <legion@altlinux.ru> 2.27.0-alt1
 - New version (2.27.0).
 - Feature luks:
