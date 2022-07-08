@@ -2,14 +2,14 @@
 
 %define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %global qt_module qttools
-%def_disable bootstrap
+%def_enable bootstrap
 %def_disable qtconfig
 
 %define kf5_bindir %prefix/lib/kf5/bin
 
 Name: qt5-tools
-Version: 5.15.2
-Release: alt5
+Version: 5.15.4
+Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -362,6 +362,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
 * Tue Sep 21 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt5
 - package empty devel-static package to solve autorebuild tests
 

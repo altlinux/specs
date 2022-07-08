@@ -2,8 +2,8 @@
 %global qt_module qtquickcontrols
 
 Name: qt5-quickcontrols
-Version: 5.15.2
-Release: alt2
+Version: 5.15.4
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - module with set of QtQuick controls
@@ -70,6 +70,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
 * Wed Jun 16 2021 Oleg Solovyov <mcpain@altlinux.org> 5.15.2-alt2
 - fix KDE bug 359783
 

@@ -2,7 +2,7 @@
 %global qt_module qtdatavis3d
 
 Name: qt5-datavis3d
-Version: 5.15.2
+Version: 5.15.4
 Release: alt1
 
 Group: System/Libraries
@@ -17,7 +17,7 @@ Source: %qt_module-everywhere-src-%version.tar
 #BuildRequires: kde5-kholidays-devel kf5-bluez-qt-devel kf5-kactivities-devel kf5-kactivities-stats-devel kf5-karchive-devel kf5-kcmutils-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdesu-devel kf5-kdewebkit-devel kf5-kdiagram-devel kf5-kdnssd-devel kf5-kemoticons-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-khtml-devel kf5-kiconthemes-devel kf5-kidletime-devel kf5-kio-devel kf5-kirigami-devel kf5-kitemmodels-devel kf5-kjsembed-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel kf5-kpeople-devel kf5-kplotting-devel kf5-kpty-devel kf5-kreport-devel kf5-kross-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwindowsystem-devel kf5-kxmlrpcclient-devel kf5-libkgapi-devel kf5-libkscreen-devel kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel kf5-prison-devel kf5-syntax-highlighting-devel kf5-threadweaver-devel qt5-multimedia-devel qt5-phonon-devel qt5-quickcontrols2-devel qt5-script-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-x11extras-devel qt5-xmlpatterns-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-ubt rpm-macros-qt5 qt5-tools
 BuildRequires: qt5-base-devel
-BuildRequires: qt5-declarative-devel qt5-xmlpatterns-devel
+BuildRequires: qt5-declarative-devel qt5-xmlpatterns-devel qt5-multimedia-devel
 # examples
 #BuildRequires: qt5-multimedia-devel
 
@@ -66,6 +66,7 @@ Requires: libqt5-core = %_qt5_version
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+syncqt.pl-qt5 -version %version
 
 %build
 %qmake_qt5
@@ -103,6 +104,9 @@ Requires: libqt5-core = %_qt5_version
 %_qt5_examplesdir/*
 
 %changelog
+* Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
 * Mon Jan 11 2021 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt1
 - new version
 

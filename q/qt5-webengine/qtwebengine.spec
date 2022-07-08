@@ -29,7 +29,7 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.15.9
+Version: 5.15.10
 Release: alt1
 
 Group: System/Libraries
@@ -49,6 +49,7 @@ Patch6:  qtwebengine-everywhere-src-5.10.1-no-sse2.patch
 Patch7:  qtwebengine-opensource-src-5.9.2-arm-fpu-fix.patch
 Patch8: qtwebengine-everywhere-src-5.11.3-aarch64-new-stat.patch
 Patch9: qtwebengine-opensource-src-5.15.5-webrtc-neon-detect.patch
+Patch10: qtwebengine-skia-missing-includes.patch
 # SuSE
 Patch30: chromium-non-void-return.patch
 Patch31: armv6-ffmpeg-no-thumb.patch
@@ -189,6 +190,7 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 #%patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 #
 #%patch30 -p1
 %patch31 -p1
@@ -274,6 +276,7 @@ ln -s %__python bin/python
 syncqt.pl-qt5  -version %version
 
 %build
+ulimit -n $(ulimit -Hn) ||:
 %add_optflags %optflags_shared -Wno-error=return-type
 export PATH=$PWD/bin:$PATH
 %if_enabled no_sse2
@@ -419,6 +422,12 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Jul 06 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt1
+- new version
+
+* Wed Jul 06 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.9-alt2
+- add workaround agains build system open descriptors limit
+
 * Mon Apr 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.9-alt1
 - new version
 

@@ -1,12 +1,12 @@
 
 %global qt_module qtdeclarative
-%def_disable bootstrap
+%def_enable bootstrap
 
 %define optflags_lto %nil
 
 Name: qt5-declarative
-Version: 5.15.2
-Release: alt8
+Version: 5.15.4
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -20,7 +20,6 @@ Source2: qml.env
 Source3: find-provides.sh
 Source4: find-requires.sh
 Patch1: kde-5.15.patch
-Patch2: kde-5.15-rev-568763928a7.patch
 Patch10: Link-with-libatomic-on-riscv32-64.patch
 Patch11: alt-remove-createSize.patch
 Patch12: alt-multiscreen-applet-sigsegv-fix.patch
@@ -156,10 +155,11 @@ mv rpm-build-qml src/
 mkdir bin_add
 ln -s %__python3 bin_add/python
 %patch1 -p1
-%patch2 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+sed -i -E 's|MODULE_VERSION[[:space:]]+.*$|MODULE_VERSION = %version|' .qmake.conf
+syncqt.pl-qt5 -version %version
 
 %build
 export PATH=$PWD/bin_add:$PATH
@@ -285,6 +285,12 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
+* Tue May 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt9
+- update fixes from kde/qt-5.15
+
 * Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 5.15.2-alt8
 - Broke infinite loop in qml.prov triggered in vtk-9.1.0.
 

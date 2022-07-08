@@ -2,8 +2,8 @@
 %global qt_module qtwebview
 
 Name: qt5-webview
-Version: 5.15.2
-Release: alt3
+Version: 5.15.4
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt Web View
@@ -92,6 +92,9 @@ Requires: libqt5-core = %_qt5_version
 %_qt5_examplesdir/*
 
 %changelog
+* Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
 * Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt3
 - using not_qt5_qtwebengine_arches macro
 

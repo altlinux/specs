@@ -37,8 +37,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.2
-Release: alt15
+Version: 5.15.4
+Release: alt1
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -91,7 +91,7 @@ Patch1013: alt-QTBUG-88599.patch
 BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): libharfbuzz-devel
 BuildRequires: gcc-c++ glibc-devel libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel
-BuildRequires: libproxy-devel libssl-devel
+BuildRequires: libproxy-devel libssl-devel libkrb5-devel
 %{?_enable_sctp:BuildRequires: liblksctp-devel}
 BuildRequires: libpcre2-devel libudev-devel libdrm-devel libgbm-devel zlib-devel libzstd-devel libgtk+3-devel
 BuildRequires: libmtdev-devel libinput-devel libts-devel
@@ -432,6 +432,9 @@ pushd src/3rdparty
 rm -rf freetype libjpeg libpng zlib xcb
 popd
 
+# exclude from build
+sed -i 's|htmlinfo||' examples/xml/xml.pro
+
 %build
 unset QTDIR QTLIB QTINC
 export QT_DIR="$PWD"
@@ -574,7 +577,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.15.2
+Version: 5.15.4
 __EOF__
 
 # rpm macros
@@ -851,6 +854,9 @@ make check -k ||:
 
 
 %changelog
+* Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
+- new version
+
 * Mon May 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt15
 - add fix against QTBUG-94557 (closes: 42524)
 
