@@ -1,6 +1,6 @@
 Name: slade
-Version: 3.2.0_b3
-Release: alt4
+Version: 3.2.1
+Release: alt1
 
 Summary: SLADE3 Doom editor
 License: GPLv2
@@ -97,6 +97,9 @@ done
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Jul 9 2022 Artyom Bystrov <arbars@altlinux.org> 3.2.1-alt1
+- Update to new version
+
 * Sun Aug 15 2021 Artyom Bystrov <arbars@altlinux.org> 3.2.0_b3-alt4
 - Add patch for fixing build for aarch64 arch (2nd attempt)
 
