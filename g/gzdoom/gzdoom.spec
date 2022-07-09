@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: gzdoom
-Version: 4.7.1
+Version: 4.8.2
 Release: alt1
 
 Summary: Enhanced Doom engine
@@ -22,7 +22,7 @@ Patch: fix-soundfont-paths.patch
 
 BuildRequires: cmake gcc-c++ rpm-macros-cmake nasm glslang-devel libspirv-tools-devel bzip2
 BuildRequires: libSDL2-devel zlib-devel libgme-devel libpng-devel libfluidsynth-devel libjpeg-devel libtimidity-devel xz zmusic-devel
-BuildRequires: libopenal1-devel libGLU-devel libsndfile-devel libmpg123-devel flac libogg-devel libvorbis-devel ImageMagick-tools
+BuildRequires: libopenal1-devel libGLU-devel libsndfile-devel libmpg123-devel flac libogg-devel libvorbis-devel ImageMagick-tools libvpx-devel
 Requires: fluidsynth fluid-soundfont-gs
 Conflicts: lzdoom
 
@@ -106,6 +106,9 @@ done
 %_datadir/%name/soundfonts/%name.sf2
 
 %changelog
+
+* Sat Jul 09 2022 Artyom Bystrov <arbars@altlinux.org> 4.8.2-alt1
+- Update to new version
 
 * Thu Dec 09 2021 Artyom Bystrov <arbars@altlinux.org> 4.7.1-alt1
 - Update to new version
