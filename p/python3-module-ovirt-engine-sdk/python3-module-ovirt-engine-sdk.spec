@@ -2,7 +2,7 @@
 
 Name: python3-module-%modulename
 Summary: Python SDK for version 4 of the oVirt Engine API
-Version: 4.5.0
+Version: 4.5.1
 Release: alt1
 Group: Development/Python3
 License: Apache-2.0
@@ -32,6 +32,9 @@ API.
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jul 10 2022 Andrew A. Vasilyev <andy@altlinux.org> 4.5.1-alt1
+- update to 4.5.1
+
 * Thu Jan 27 2022 Andrew A. Vasilyev <andy@altlinux.org> 4.5.0-alt1
 - update to 4.5.0
 
