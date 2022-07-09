@@ -1,5 +1,5 @@
 Name: virt-what
-Version: 1.21
+Version: 1.24
 Release: alt1
 
 Summary: Detect if we are running in a virtual machine
@@ -7,7 +7,8 @@ License: GPLv2+
 Group: Emulators
 
 # http://git.annexia.org/?p=virt-what.git;a=summary
-Url: http://et.redhat.com/~rjones/virt-what/
+Url: http://people.redhat.com/~rjones/virt-what/
+
 Source: %url/files/%name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -47,6 +48,10 @@ know about or cannot detect.
 %_man1dir/*
 
 %changelog
+* Sun Jul 10 2022 Ilya Mashkin <oddity@altlinux.ru> 1.24-alt1
+- 1.24
+- Update url
+
 * Sat Jun 12 2021 Ilya Mashkin <oddity@altlinux.ru> 1.21-alt1
 - 1.21
 
