@@ -4,8 +4,9 @@
 %set_verify_elf_method strict
 
 Name:		burp
-Version:	3.1.0
-Release:	alt1
+Epoch:		1
+Version:	2.5.4
+Release:	alt3
 Summary:	Burp is a network-based backup and restore program
 License:	AGPL-3.0 and BSD and GPLv2+ and LGPLv2+
 Group:		Archiving/Backup
@@ -101,6 +102,9 @@ fi
 %preun_service burp-server
 
 %changelog
+* Sat Jul 09 2022 Vitaly Chikunov <vt@altlinux.org> 1:2.5.4-alt3
+- Revert release 3.1.0 to fix backup client-2.x to server-3.1.0 failures.
+
 * Mon May 02 2022 Vitaly Chikunov <vt@altlinux.org> 3.1.0-alt1
 - Update to 3.1.0 (2022-04-30).
 - Remove protocol 2.
