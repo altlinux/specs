@@ -1,17 +1,25 @@
 Name: desmume
-Version: 0.9.11
-Release: alt4
+Version: 0.9.13
+Release: alt1
 Summary: A Nintendo DS emulator
 Group: Emulators
 License: GPLv2+
 Url: http://desmume.org/
 # http://downloads.sourceforge.net/%%name/%%name-%%version.tar.gz
-Source: %name-%version.tar
-# Do not look into builddir
-Patch: %name-0.9-dontlookinbuilddir.patch
-Patch1: %name-0.9.11-alt-c++-compat.patch
-Patch2: %name-0.9.11-alt-gcc-8.patch
+Source: %name-%version.tar.gz
+# Fix format strings
+Patch0: %{name}-0.9.13-formatstring.patch
+# Use system tinyxml instead of the embedded copy
+Patch1: %{name}-0.9.13-tinyxml.patch
+# Fix building on aarch64
+# https://github.com/TASEmulators/desmume/issues/551
+Patch2: %{name}-0.9.13-aarch64.patch
+#Fix building on ppc64le
+# https://github.com/TASEmulators/desmume/issues/550
+Patch3: %{name}-0.9.13-ppc64le.patch
+Patch4: %{name}-0.9.13-arm.patch
 
+BuildRequires: meson
 BuildRequires: libgtkglext-devel
 BuildRequires: libglade-devel
 BuildRequires: libopenal-devel
@@ -19,16 +27,17 @@ BuildRequires: liblua5-devel
 BuildRequires: zziplib-devel
 BuildRequires: gettext
 BuildRequires: intltool
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ libpcap-devel
 BuildRequires: desktop-file-utils
-BuildRequires: libSDL-devel
+BuildRequires: libSDL2-devel
+BuildRequires: pkgconfig(tinyxml)
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(sdl2)
+BuildRequires: pkgconfig(gtk+-3.0)
 Requires: icon-theme-hicolor
 BuildPreReq: chrpath
 
 
-%package glade
-Summary: A Nintendo DS emulator (Glade GUI version)
-Group: Emulators
 
 %package cli
 Summary: A Nintendo DS emulator (CLI version)
@@ -37,10 +46,6 @@ Group: Emulators
 %description
 DeSmuME is a Nintendo DS emulator running homebrew demos and commercial games.
 
-%description glade
-DeSmuME is a Nintendo DS emulator running homebrew demos and commercial games.
-
-This is the GTK/Glade version.
 
 %description cli
 DeSmuME is a Nintendo DS emulator running homebrew demos and commercial games.
@@ -48,10 +53,17 @@ DeSmuME is a Nintendo DS emulator running homebrew demos and commercial games.
 This is the CLI version.
 
 %prep
-%setup
+%setup -q -n %name-release_0_9_13
 %patch -p1
-%patch1 -p2
-%patch2 -p2
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+
+pushd desmume
+
+# Remove bundled tinyxml
+rm -rf src/utils/tinyxml
 
 # Fix end-of-line encoding
 sed -i 's/\r//' AUTHORS
@@ -68,86 +80,52 @@ done
 find src -name '*.cpp' -exec chmod -v 644 '{}' \;
 find src -name '*.h' -exec chmod -v 644 '{}' \;
 
-# Fix glade path
-sed -i 's|gladedir = $(datadir)/desmume/glade|gladedir = $(datadir)/desmume-glade/|g' src/gtk-glade/Makefile.{am,in}
 
-# We need a different icon for desmume-glade
-sed -i 's|Icon=DeSmuME|Icon=DeSmuME-glade|g' src/gtk-glade/desmume-glade.desktop
+# Fix premissions
+find src -name *.[ch]* -exec chmod 644 {} \;
 
-# Fix gettext package name
-sed -i 's|GETTEXT_PACKAGE=desmume|GETTEXT_PACKAGE=desmume-glade|g' configure{,.ac}
+popd
+
 
 %build
-%add_optflags -fpermissive
-#autoreconf
-%configure --enable-openal --enable-glade
-%make_build
+pushd desmume/src/frontend/posix
+%meson
+%meson_build
+popd
 
 %install
-%makeinstall_std
+pushd desmume/src/frontend/posix
+%meson_install
+popd
+
 
 # Remove installed icon
-rm -f %buildroot%_datadir/pixmaps/DeSmuME.xpm
+#rm -f %buildroot%_datadir/pixmaps/DeSmuME.xpm
 
 # Install icons
 mkdir -p %buildroot%_datadir/icons/hicolor/32x32/apps
-install -m 644 src/gtk/DeSmuME.xpm %buildroot%_datadir/icons/hicolor/32x32/apps/
-install -m 644 src/gtk/DeSmuME.xpm %buildroot%_datadir/icons/hicolor/32x32/apps/DeSmuME-glade.xpm
-
-# Rename desktop files and fix categories
-mkdir -p %buildroot%_datadir/applications
-desktop-file-install \
-  --delete-original \
-  --vendor altlinux \
-  --remove-key Version \
-  --remove-category GNOME \
-  --remove-category GTK \
-  --dir %buildroot%_datadir/applications \
-  %buildroot%_datadir/applications/%name.desktop
-
-desktop-file-install \
-  --delete-original \
-  --vendor altlinux \
-  --remove-key Version \
-  --remove-category GNOME \
-  --remove-category GTK \
-  --dir %buildroot%_datadir/applications \
-  %buildroot%_datadir/applications/%name-glade.desktop
+#install -m 644 src/gtk/DeSmuME.xpm %buildroot%_datadir/icons/hicolor/32x32/apps/
+#install -m 644 src/gtk/DeSmuME.xpm %buildroot%_datadir/icons/hicolor/32x32/apps/DeSmuME-glade.xpm
 
 
-for i in %buildroot%_libdir/*.so %buildroot%_libdir/desmume/*.so \
-        %buildroot%_bindir/*
-do
-        chrpath -d $i ||:
-done
+%find_lang %name
 
-
-
-
-%find_lang %name-glade
-
-
-%files
+%files -f %name.lang
 %_bindir/%name
-%_datadir/icons/hicolor/32x32/apps/DeSmuME.xpm
-%_datadir/applications/altlinux-%name.desktop
+%_datadir/icons/hicolor/*/apps/*DeSmuME*
+%_datadir/applications/*.desktop
+%_datadir/metainfo/*.xml
 %_mandir/man1/%name.1*
-%doc AUTHORS ChangeLog COPYING README README.LIN
-
-%files glade -f %name-glade.lang
-%_bindir/%name-glade
-%_datadir/%name-glade
-%_datadir/icons/hicolor/32x32/apps/DeSmuME-glade.xpm
-%_datadir/applications/altlinux-%name-glade.desktop
-%_mandir/man1/%name-glade.1*
-%doc AUTHORS ChangeLog COPYING README README.LIN
+%doc %name/AUTHORS %name/ChangeLog %name/COPYING %name/README %name/README.LIN
 
 %files cli
 %_bindir/%name-cli
 %_mandir/man1/%name-cli.1*
-%doc AUTHORS ChangeLog COPYING README README.LIN
 
 %changelog
+* Tue Jul 05 2022 Ilya Mashkin <oddity@altlinux.ru> 0.9.13-alt1
+- 0.9.13
+
 * Wed Apr 07 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.11-alt4
 - Fixed FTBFS (corrected build requires).
 
