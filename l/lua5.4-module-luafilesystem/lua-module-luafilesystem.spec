@@ -1,4 +1,4 @@
-Name: lua5.1-module-luafilesystem
+Name: lua5.4-module-luafilesystem
 Version: 1.8.0
 Release: alt1
 
@@ -18,7 +18,7 @@ Provides: lua5-luafilesystem = %version
 # https://github.com/keplerproject/luafilesystem/archive/v%version.tar.gz
 Source: luafilesystem-%version.tar
 
-BuildRequires: lua5.1 liblua5.1-devel
+BuildRequires: lua5.4 liblua5.4-devel
 
 %description
       LuaFileSystem is a Lua library developed to complement the set of

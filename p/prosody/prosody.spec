@@ -1,6 +1,12 @@
+# Filter inner lua modules from requires
+%filter_from_requires /^lua%current_lua_version(core.*/d
+%filter_from_requires /^lua%current_lua_version(cqueues.*/d
+%filter_from_requires /^lua%current_lua_version(net.*/d
+%filter_from_requires /^lua%current_lua_version(util.*/d
+
 Name: prosody
 Version: 0.12.1
-Release: alt1
+Release: alt2
 
 Summary: Modern XMPP communication server
 
@@ -8,9 +14,10 @@ Group: System/Servers
 License: MIT
 Url: https://prosody.im/
 
-BuildRequires: openssl lua5 liblua5-devel libidn-devel libssl-devel libicu-devel
+BuildRequires(pre): liblua5.4-devel
+BuildRequires: openssl lua5.4 libidn-devel libssl-devel libicu-devel
 
-Requires: openssl lua-module-luaexpat lua-module-luasocket lua-module-luafilesystem lua-module-luasec lua-module-unbound
+Requires: openssl
 
 Source0: %name-%version.tar
 Source1: prosody.cfg.lua
@@ -21,17 +28,20 @@ Source10: autobuild.watch
 Source11: upstream-signing-key.asc
 
 Patch1: prosody-0.12.0-alt-user.patch
+Patch2: prosody-0.12.1-alt-lua5.4.patch
 
 %description
 %summary
 
 %prep
 %setup
-%patch1 -p1
+%autopatch -p1
 
 %build
 ./configure --prefix=/usr
 %make_build
+
+sed -i "s,@LUA_VERSION@,%current_lua_version,g" %SOURCE3
 
 %install
 %makeinstall_std
@@ -68,6 +78,10 @@ install -Dpm644 %SOURCE4 %buildroot/%_tmpfilesdir/prosody.conf
 %_man1dir/*
 
 %changelog
+* Wed Jun 29 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12.1-alt2
+- Rebuilt against Lua 5.4.
+- Filtered inner lua modules from requires.
+
 * Mon Jun 13 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12.1-alt1
 - Updated to 0.12.1.
 - Packed more docs files.

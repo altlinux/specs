@@ -2,7 +2,7 @@
 %define oname luasocket
 
 Epoch: 1
-Name: lua5.3-module-%oname
+Name: lua5.4-module-%oname
 Version: 3.0.0
 Release: alt1
 Summary: Network support for the Lua language
@@ -10,7 +10,7 @@ License: MIT
 Group: Development/Other
 Url: http://luaforge.net/projects/luasocket/
 
-%if "5.3" >= "5.3"
+%if "5.4" >= "5.3"
 Obsoletes: lua-module-%oname < %EVR
 Provides: lua-module-%oname = %version
 %else
@@ -21,7 +21,7 @@ Provides: lua5-%oname = %version
 Source: %oname-%version.tar
 Patch1: lua-module-luasocket-3.0.0-alt-headers.patch
 
-BuildRequires(pre): liblua5.3-devel lua5.3
+BuildRequires(pre): liblua5.4-devel lua5.4
 
 %description
 LuaSocket is a Lua extension library that is composed by two parts: a C core

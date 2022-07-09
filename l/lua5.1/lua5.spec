@@ -3,10 +3,11 @@
 %def_with lua_compat
 
 %global abi_version 5.1
+%global current_lua_version %abi_version
 
 Name: lua5.1
 Version: 5.1.5
-Release: alt19
+Release: alt20
 
 Summary: Embeddable programming language
 License: MIT
@@ -36,7 +37,7 @@ Obsoletes: lua5 <= 5.1.5-alt2
 Conflicts: lua4
 
 # if libreadline-devel changed, change Requires: in devel too
-BuildRequires: libreadline-devel
+BuildRequires: libreadline-devel rpm-build-lua
 
 %package -n lib%{name}
 Summary: Embeddable programming language
@@ -57,6 +58,7 @@ Requires: lib%{name} = %EVR
 Conflicts: asterisk-build-hacks < 0.0.2
 Obsoletes: asterisk-build-hacks < 0.0.2
 Provides: asterisk-build-hacks = 0.0.2
+Requires: rpm-build-lua
 %if_with lua_compat
 Requires: lib%{name}-compat-devel = %EVR
 %endif
@@ -277,6 +279,9 @@ fi
 %pkgdocdir/test
 
 %changelog
+* Wed Jun 29 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt20
+- lualua5.1-devel: require rpm-build-lua.
+
 * Thu Jun 23 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.1.5-alt19
 - Fixed FTBFS: disabled address warning.
 

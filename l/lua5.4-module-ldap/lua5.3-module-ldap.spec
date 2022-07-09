@@ -1,4 +1,4 @@
-Name: lua5.3-module-ldap
+Name: lua5.4-module-ldap
 Version: 1.3.0.0.2.5714c5f
 Release: alt1
 
@@ -10,8 +10,8 @@ Group: Development/Other
 VCS: https://github.com/lualdap/lualdap/
 Source: %name-%version.tar
 
-BuildRequires: lua5.3
-BuildRequires: liblua5.3-devel
+BuildRequires: lua5.4
+BuildRequires: liblua5.4-devel
 BuildRequires: libldap-devel
 
 %description

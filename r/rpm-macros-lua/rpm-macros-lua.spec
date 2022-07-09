@@ -1,5 +1,5 @@
 Name: rpm-macros-lua
-Version: 1.4
+Version: 1.5
 Release: alt1
 Summary: RPM helper macros to build Lua packages
 Url: https://www.altlinux.org/Lua_Policy
@@ -24,6 +24,9 @@ install -pD -m644 %SOURCE0 %buildroot%_rpmlibdir/macros.d/lua
 %_rpmlibdir/macros.d/lua
 
 %changelog
+* Sat Jul 02 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.5-alt1
+- add support for lua5.4
+
 * Wed Jun 05 2019 Ildar Mulyukov <ildar@altlinux.ru> 1.4-alt1
 - multi-LuaRocks (one per Lua version)
 - macros changes:

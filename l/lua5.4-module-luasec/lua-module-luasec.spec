@@ -1,6 +1,6 @@
 %define oname luasec
 
-Name: lua5.3-module-%oname
+Name: lua5.4-module-%oname
 Version: 1.0.2
 Release: alt1
 Summary: A binding for OpenSSL library to provide TLS/SSL communication over LuaSocket
@@ -8,15 +8,15 @@ License: MIT
 Group: Development/Other
 Url: https://github.com/brunoos/luasec/wiki
 
-%if "5.3" >= "5.3"
+%if "5.4" >= "5.3"
 Obsoletes: lua-module-%oname < %EVR
 Provides: lua-module-%oname = %version
 %endif
 
 Source: luasec-%version.tar
 
-BuildRequires(pre): liblua5.3-devel lua5.3
-BuildRequires: lua5.3-module-luasocket-devel libssl-devel
+BuildRequires(pre): liblua5.4-devel lua5.4
+BuildRequires: lua5.4-module-luasocket-devel libssl-devel
 
 %description
 This version delegates to LuaSocket the TCP connection establishment between

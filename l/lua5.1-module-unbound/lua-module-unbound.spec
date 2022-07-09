@@ -1,6 +1,6 @@
 %define oname luaunbound
 
-Name: lua5.3-module-unbound
+Name: lua5.1-module-unbound
 Version: 1.0
 Release: alt2
 
@@ -13,8 +13,8 @@ Url: https://www.zash.se/luaunbound.html
 # repacked https://code.zash.se/dl/luaunbound/luaunbound-%version.tar.gz
 Source: %oname-%version.tar
 
-BuildRequires(pre): liblua5.3-devel rpm-build-lua
-BuildRequires: lua5.3 libunbound-devel
+BuildRequires(pre): liblua5.1-devel rpm-build-lua
+BuildRequires: lua5.1 libunbound-devel
 
 Provides: lua-module-unbound = %EVR
 
@@ -26,7 +26,7 @@ Lua bindings for the Unbound APIs.
 
 %build
 %make_build \
-	LUA_VERSION=5.3 \
+	LUA_VERSION=5.1 \
 	MYCFLAGS="%optflags" \
 	MYLDFLAGS="%optflags" \
 	CC=gcc \

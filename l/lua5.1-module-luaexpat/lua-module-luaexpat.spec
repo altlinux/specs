@@ -1,7 +1,7 @@
 # Original package name LuaExpat
 %define oname luaexpat
 
-Name: lua5.3-module-%oname
+Name: lua5.1-module-%oname
 Version: 1.3.0
 Release: alt2
 Epoch: 1
@@ -11,7 +11,7 @@ License: MIT
 Group: Development/Other
 Url: https://matthewwild.co.uk/projects/luaexpat/
 
-%if "5.3" == "5.3"
+%if "5.1" == "5.3"
 Obsoletes: lua-module-%oname < %EVR
 Provides: lua-module-%oname = %version
 %else
@@ -24,9 +24,9 @@ Provides: lua-expat = %version
 # repacked https://matthewwild.co.uk/projects/luaexpat/luaexpat-%version.tar.gz
 Source: luaexpat-%version.tar
 
-BuildRequires(pre): liblua5.3-devel rpm-build-lua
+BuildRequires(pre): liblua5.1-devel rpm-build-lua
 # Automatically added by buildreq on ...
-BuildRequires: lua5.3 libexpat-devel
+BuildRequires: lua5.1 libexpat-devel
 
 %description
       LuaExpat is a SAX (Simple API for XML) XML parser based on the
@@ -38,13 +38,13 @@ BuildRequires: lua5.3 libexpat-devel
 %build
 %make_build \
 	CFLAGS="%optflags -std=c99" \
-	LUA_V=5.3 \
+	LUA_V=5.1 \
 	LUA_CDIR=%lua_modulesdir \
 	#
 
 %install
 %makeinstall_std \
-	LUA_V=5.3 \
+	LUA_V=5.1 \
 	LUA_CDIR=%lua_modulesdir \
 	#
 

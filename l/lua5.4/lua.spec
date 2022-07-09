@@ -1,14 +1,13 @@
 %global optflags_lto %optflags_lto -ffat-lto-objects
 
 %define oname lua
-%global major_version 5.3
+%global major_version 5.4
 %global current_lua_version %major_version
-# no tests for 5.3.5
-%global test_version 5.3.4
+%global test_version 5.4.4
 
 Name: lua%major_version
-Version: %major_version.6
-Release: alt3
+Version: %major_version.4
+Release: alt1
 
 Summary: Powerful light-weight programming language
 License: MIT
@@ -26,11 +25,14 @@ Source4: luaconf.h
 # copied from readme.html
 Source5: COPYRIGHT
 Source44: import.info
-Patch0: %oname-5.3.0-autotoolize.patch
+Patch0: %oname-5.4.0-beta-autotoolize.patch
 Patch1: %oname-5.3.0-idsize.patch
 #Patch2:         %%{oname}-5.3.0-luac-shared-link-fix.patch
 Patch3: %oname-5.2.2-configure-linux.patch
 Patch4: %oname-5.3.0-configure-compat-module.patch
+# lua bugs
+Patch5: 25b143dd34fb587d1e35290c4b25bc08954800e2.patch
+Patch6: 1f3c6f4534c6411313361697d98d1145a1f030fa.patch
 
 BuildRequires: automake-common autoconf-common libtool-common readline-devel libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires: rpm-build-lua
@@ -38,6 +40,7 @@ Requires: liblua = %version
 Provides: lua = %EVR
 Provides: lua5 = %EVR
 Conflicts: lua5 <= 5.1.5-alt2
+Conflicts: lua5.3 <= 5.3.6-alt1
 
 %define common_descr \
 Lua is a powerful light-weight programming language designed for\
@@ -63,11 +66,10 @@ BuildArch: noarch
 This package contains documantaion for %oname
 
 %package -n lib%name-devel
-%filter_from_provides '/^pkgconfig\(lua\)/d'
 Summary: Development files for %oname
 Group: Development/C
-Requires: rpm-build-lua
 Requires: %name = %version
+Requires: rpm-build-lua
 Provides: lua-devel = %EVR
 Provides: lua%major_version-devel = %EVR
 Provides: liblua-devel = %EVR
@@ -141,7 +143,7 @@ sed -i.orig -e '
     /db.lua/d;
     /errors.lua/d;
     ' all.lua
-LD_LIBRARY_PATH=%buildroot/%_libdir %buildroot/%_bindir/lua-%major_version -e"_U=true" all.lua
+LD_LIBRARY_PATH=%buildroot/%_libdir %buildroot/%_bindir/lua -e"_U=true" all.lua
 
 %install
 %makeinstall_std
@@ -151,10 +153,14 @@ mkdir -p %buildroot%_datadir/lua/%major_version
 
 mv %buildroot%_bindir/lua{,-%major_version}
 mv %buildroot%_bindir/luac{,-%major_version}
+ln -s lua-%major_version %buildroot%_bindir/lua
+ln -s luac-%major_version %buildroot%_bindir/luac
 ln -s lua-%major_version %buildroot%_bindir/lua%major_version
 ln -s luac-%major_version %buildroot%_bindir/luac%major_version
 mv %buildroot%_man1dir/lua{,-%major_version}.1
 mv %buildroot%_man1dir/luac{,-%major_version}.1
+ln -s lua-%major_version.1 %buildroot%_man1dir/lua.1
+ln -s lua-%major_version.1 %buildroot%_man1dir/luac.1
 ln -s lua-%major_version.1 %buildroot%_man1dir/lua%major_version.1
 ln -s lua-%major_version.1 %buildroot%_man1dir/luac%major_version.1
 
@@ -214,11 +220,10 @@ echo lua-devel-static >%buildroot%_sysconfdir/buildreqs/packages/substitute.d/li
 %config %_sysconfdir/buildreqs/packages/substitute.d/lib%name-devel-static
 
 %changelog
-* Wed Jun 29 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.3.6-alt3
-- Do not pack unversioned interpreter binaries and man pages.
-- liblua5.3-devel:
-  + Added rpm-build-lua to requires;
-  + Added versioned pkgconfig provides, filtered unversioned.
+* Sat Jul 02 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 5.4.4-alt1
+- 5.4.4.
+- Synced with Fedora.
+- liblua5.4-devel: Added versioned pkgconfig provides.
 
 * Sun Oct 03 2021 Ivan A. Melnikov <iv@altlinux.org> 5.3.6-alt2
 - riscv64 support
