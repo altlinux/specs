@@ -12,7 +12,7 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           byte-buddy
-Version:        1.10.20
+Version:        1.12.0
 Release:        alt1_3jpp11
 Summary:        Runtime code generation for the Java virtual machine
 License:        ASL 2.0
@@ -22,8 +22,9 @@ Source0:        %{name}-%{version}.tar.gz
 
 # Patch the build to avoid bundling inside shaded jars
 Patch1:         0001-Avoid-bundling-asm.patch
-Patch2:         0002-Remove-dependency-on-jna.patch
+Patch2:         0002-Remove-dependencies.patch
 Patch3:         0003-Remove-Java-14-tests.patch
+Patch4:         0004-Remove-JDK-15-sealed-classes.patch
 
 BuildRequires:  maven-local
 %if %{with bootstrap}
@@ -95,8 +96,10 @@ This package contains API documentation for %{name}.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 rm byte-buddy-agent/src/test/java/net/bytebuddy/agent/VirtualMachineAttachmentTest.java
+rm byte-buddy-agent/src/test/java/net/bytebuddy/agent/VirtualMachineForOpenJ9Test.java
 
 # Cause pre-compiled stuff to be re-compiled
 mv byte-buddy-dep/src/precompiled/java/net/bytebuddy/build/*.java \
@@ -122,6 +125,7 @@ mv byte-buddy-dep/src/precompiled/java/net/bytebuddy/test/precompiled/*.java \
 %pom_remove_plugin :jitwatch-jarscan-maven-plugin
 %pom_remove_plugin :clirr-maven-plugin
 %pom_remove_plugin :maven-release-plugin
+%pom_remove_plugin :nexus-staging-maven-plugin
 
 # Avoid circural dependency
 %pom_remove_plugin :byte-buddy-maven-plugin byte-buddy-dep
@@ -141,8 +145,13 @@ sed -i -e '/SuppressFBWarnings/d' $(grep -lr SuppressFBWarnings)
 %pom_remove_plugin :maven-shade-plugin byte-buddy
 %pom_remove_plugin :maven-shade-plugin byte-buddy-benchmark
 
-%pom_remove_dep :jna byte-buddy-agent
-%pom_remove_dep :jna-platform byte-buddy-agent
+%pom_remove_dep net.java.dev.jna:jna byte-buddy
+%pom_remove_dep net.java.dev.jna:jna byte-buddy-dep
+%pom_remove_dep net.java.dev.jna:jna byte-buddy-agent
+
+%pom_remove_dep net.java.dev.jna:jna-platform byte-buddy
+%pom_remove_dep net.java.dev.jna:jna-platform byte-buddy-dep
+%pom_remove_dep net.java.dev.jna:jna-platform byte-buddy-agent
 
 %build
 # Ignore test failures, there seems to be something different about the
@@ -171,6 +180,9 @@ cat .mfiles-%{name}-dep >> .mfiles-%{name}
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 1.12.0-alt1_3jpp11
+- new version
+
 * Mon May 30 2022 Igor Vlasenko <viy@altlinux.org> 1.10.20-alt1_3jpp11
 - new version
 
