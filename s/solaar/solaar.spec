@@ -1,7 +1,7 @@
 %def_with bootstrap
 
 Name:           solaar
-Version:        1.1.3
+Version:        1.1.4
 Release:        alt1
 
 Group:          System/Configuration/Hardware
@@ -26,7 +26,6 @@ Requires:  	unifying-receiver-udev
 %add_typelib_req_skiplist typelib(AyatanaAppIndicator3)
 
 Source0: https://github.com/pwr/Solaar/archive/%{version}.tar.gz
-Source1: ru.po
 Patch1: solaar-paths.patch
 
 %description
@@ -50,7 +49,6 @@ Logitech's Unifying Receiver peripherals.
 
 %prep
 %setup -n Solaar-%version
-cat %SOURCE1 > po/ru.po
 %patch1 -p1
 
 %build
@@ -76,6 +74,9 @@ tools/po-compile.sh
 %doc docs
 
 %changelog
+* Sun Jul 10 2022 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1
+- New version.
+
 * Mon Apr 25 2022 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
 - New version.
 
