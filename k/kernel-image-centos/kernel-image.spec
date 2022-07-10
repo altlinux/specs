@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 125
+%define centos_release 127
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,23 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sun Jul 10 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.127-alt1.el9
+- Updated to kernel-5.14.0-127.el9:
+  + aarch64: Enable NVIDIA Jetson Xavier SoCs
+  + fs: dlm: filter messages case to avoid kernel crash
+  + hyperv: Add support for AMD SEV-SNP for Azure/Hyper-V
+  + igbvf: Driver Update
+  + perf: Support Cstate PMU on SPR
+  + powercap: intel_rapl: add support for RaptorLake
+  + r8169: driver update
+  + x86/sme: fix boot failure when memory encryption is enabled
+
+* Fri Jul 08 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.126-alt1.el9
+- Updated to kernel-5.14.0-126.el9:
+  + cxl: Update CXL code from upstream 5.17.
+  + kvm/arm64 rebase for RHEL9.1
+  + mm/page_alloc: always attempt to allocate at least one page during bulk allocation
+
 * Thu Jul 07 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.125-alt1.el9
 - Updated to kernel-5.14.0-125.el9:
   + bnxt: Driver update for RHEL9.1
