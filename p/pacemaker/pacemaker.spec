@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define _rundir /run
 %define gname haclient
 %define uname hacluster
@@ -10,7 +11,7 @@
 
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
@@ -164,6 +165,9 @@ manager.
 	--with-gcov		\
 	--with-acl		\
 	--with-ais		\
+	--with-nls		\
+	--with-sbd-sync-default="true" \
+	--with-cibsecrets       \
 	--with-corosync		\
 	--with-cs-quorum	\
 	--with-stonithd		\
@@ -272,6 +276,7 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %config(noreplace) %_sysconfdir/sysconfig/crm_mon
 %_sbindir/attrd_updater
 %_sbindir/cibadmin
+%_sbindir/cibsecret
 %_sbindir/crm_attribute
 %_sbindir/crm_diff
 %_sbindir/crm_error
@@ -342,8 +347,12 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_datadir/pacemaker/*.rng
 %_datadir/pacemaker/*.xsl
 %_datadir/pacemaker/api
+%_datadir/pacemaker/base
 
 %changelog
+* Sun Jul 10 2022 Andrey Cherepanov <cas@altlinux.org> 2.1.4-alt1
+- New version.
+
 * Sun Jun 12 2022 Andrey Cherepanov <cas@altlinux.org> 2.1.3-alt1
 - New version.
 
