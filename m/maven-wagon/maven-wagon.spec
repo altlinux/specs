@@ -17,7 +17,7 @@ BuildRequires: jpackage-default
 
 Name:           maven-wagon
 Version:        3.4.2
-Release:        alt1_4jpp11
+Release:        alt2_4jpp11
 Summary:        Tools to manage artifacts and deployment
 License:        ASL 2.0
 URL:            https://maven.apache.org/wagon
@@ -46,13 +46,20 @@ Provides:       maven-wagon-http-shared = %{version}-%{release}
 Provides:       maven-wagon-provider-api = %{version}-%{release}
 Provides:       maven-wagon-providers = %{version}-%{release}
 
-Obsoletes:      maven-wagon-file < 3.4.2-2
-Obsoletes:      maven-wagon-http < 3.4.2-2
-Obsoletes:      maven-wagon-http-shared < 3.4.2-2
-Obsoletes:      maven-wagon-provider-api < 3.4.2-2
-Obsoletes:      maven-wagon-providers < 3.4.2-2
-Obsoletes:      maven-wagon-ftp < 3.4.2-2
-Obsoletes:      maven-wagon-http-lightweight < 3.4.2-2
+Obsoletes:      maven-wagon-file < 3.4.2-alt1_3
+Conflicts:      maven-wagon-file < 3.4.2-alt1_3
+Obsoletes:      maven-wagon-http < 3.4.2-alt1_3
+Conflicts:      maven-wagon-http < 3.4.2-alt1_3
+Obsoletes:      maven-wagon-http-shared < 3.4.2-alt1_3
+Conflicts:      maven-wagon-http-shared < 3.4.2-alt1_3
+Obsoletes:      maven-wagon-provider-api < 3.4.2-alt1_3
+Conflicts:      maven-wagon-provider-api < 3.4.2-alt1_3
+Obsoletes:      maven-wagon-providers < 3.4.2-alt1_3
+Conflicts:      maven-wagon-providers < 3.4.2-alt1_3
+Obsoletes:      maven-wagon-ftp < 3.4.2-alt1_3
+Conflicts:      maven-wagon-ftp < 3.4.2-alt1_3
+Obsoletes:      maven-wagon-http-lightweight < 3.4.2-alt1_3
+Conflicts:      maven-wagon-http-lightweight < 3.4.2-alt1_3
 Source44: import.info
 
 %description
@@ -111,6 +118,9 @@ following providers:
 %doc DEPENDENCIES
 
 %changelog
+* Sun Jul 10 2022 Igor Vlasenko <viy@altlinux.org> 0:3.4.2-alt2_4jpp11
+- added proper Obsoletes/Confilcts: on old wagon
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 0:3.4.2-alt1_4jpp11
 - update
 
