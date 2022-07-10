@@ -1,14 +1,14 @@
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Prevent brp-java-repack-jars from being run.
 %define __jar_repack %{nil}
 
 Name:           jcodings
-Version:        1.0.36
-Release:        alt1_2jpp11
+Version:        1.0.55
+Release:        alt1_0jpp11
 Summary:        Java-based codings helper classes for Joni and JRuby
 
 License:        MIT
@@ -56,7 +56,8 @@ find -name '*.jar' -delete
 %pom_add_plugin org.apache.felix:maven-bundle-plugin "<extensions>true</extensions>"
 
 %build
-%mvn_build -- -Dmaven.compiler.source=9 -Dmaven.compiler.target=9 -Dmaven.javadoc.source=9 -Dmaven.compiler.release=9
+# the pom is already on 1.7, I had not found what builds by 6 deep in sources 
+%mvn_build  -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -68,6 +69,9 @@ find -name '*.jar' -delete
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 1.0.55-alt1_0jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.0.36-alt1_2jpp11
 - new version; needs java9 api
 
