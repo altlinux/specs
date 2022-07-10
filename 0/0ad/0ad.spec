@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.26
-Release: alt0_1_rc1
+Release: alt0_2_rc1
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -10,10 +10,10 @@ License: GPLv2 MIT
 
 Url: http://www.wildfiregames.com/0ad/
 
-Requires: %name-data = %EVR
+Requires: %name-data >= 0.0.26-alt0_1_rc1
 Requires: fonts-ttf-dejavu
 
-Conflicts: %name-data <=  1:0.0.25-alt1
+# Conflicts: %name-data <=  1:0.0.25-alt1
 
 Source: %name-%version.tar
 # Source1: README.ALT
@@ -141,6 +141,9 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Sun Jul 10 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_2_rc1
+- Fix Requires
+
 * Mon Jul 04 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_1_rc1
 - Add build to ppc64le 
 

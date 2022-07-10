@@ -1,7 +1,7 @@
 Name: 0ad-data
 Epoch: 1
 Version: 0.0.26
-Release: alt0_1_rc1
+Release: alt0_2_rc1
 BuildArch: noarch
 
 Group: Games/Strategy
@@ -10,8 +10,6 @@ Summary: Data for 0ad: free, open-source realtime strategy game of ancient warfa
 License: GPLv2 MIT
 
 Url: http://www.wildfiregames.com/0ad/
-
-Requires: 0ad = %EVR
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
@@ -53,6 +51,9 @@ mv binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad
 
 %changelog
+* Sun Jul 10 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_2_rc1
+- removed Requires: 0ad
+
 * Tue Jul 05 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_1_rc1
 - Version  0.26-rc1-26926
 
