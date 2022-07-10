@@ -1,15 +1,16 @@
 Name: SDL2_image
-Version: 2.0.5
+Version: 2.6.0
 Release: alt1
 
 Summary: Simple DirectMedia Layer - Image library
-License: zlib
+License: Zlib
 Group: System/Libraries
 
 Url: http://www.libsdl.org/projects/SDL_image/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source: http://www.libsdl.org/projects/SDL_image/release/%name-%version.tar.gz
+# https://github.com/libsdl-org/SDL_image/archive/release-%version/SDL_image-release-%version.tar.gz
+Source: SDL_image-release-%version.tar
 
 BuildRequires: libSDL2-devel
 BuildRequires: libjpeg-devel
@@ -44,7 +45,7 @@ This is the libraries, include files and other resources you can use
 to develop SDL applications.
 
 %prep
-%setup
+%setup -n SDL_image-release-%version
 
 %build
 %configure --disable-static
@@ -55,7 +56,7 @@ to develop SDL applications.
 %__rm -f %buildroot%_libdir/lib%name.la
 
 %files -n lib%name
-%doc CHANGES.txt COPYING.txt README.txt
+%doc CHANGES.txt README.txt
 %_libdir/lib%name-2.0.so.*
 
 %files -n lib%name-devel
@@ -63,8 +64,12 @@ to develop SDL applications.
 %_includedir/SDL2/SDL_image.h
 %_pkgconfigdir/%name.pc
 %_libdir/lib%name.so
+%_libdir/cmake/%name
 
 %changelog
+* Sun Jul 10 2022 Nazarov Denis <nenderus@altlinux.org> 2.6.0-alt1
+- Version 2.6.0
+
 * Wed Feb 10 2021 Nazarov Denis <nenderus@altlinux.org> 2.0.5-alt1
 - Versioon 2.0.5
 
