@@ -17,7 +17,7 @@ BuildRequires: jpackage-default
 Name:           maven-resolver
 Epoch:          1
 Version:        1.6.1
-Release:        alt1_5jpp11
+Release:        alt2_5jpp11
 License:        ASL 2.0
 Summary:        Apache Maven Artifact Resolver library
 URL:            https://maven.apache.org/resolver/
@@ -57,16 +57,26 @@ Provides:       maven-resolver-transport-http = %{epoch}:%{version}-%{release}
 Provides:       maven-resolver-transport-file = %{epoch}:%{version}-%{release}
 Provides:       maven-resolver-transport-classpath = %{epoch}:%{version}-%{release}
 
-Obsoletes:      maven-resolver-api < 1:1.4.2-6
-Obsoletes:      maven-resolver-spi < 1:1.4.2-6
-Obsoletes:      maven-resolver-impl < 1:1.4.2-6
-Obsoletes:      maven-resolver-util < 1:1.4.2-6
-Obsoletes:      maven-resolver-connector-basic < 1:1.4.2-6
-Obsoletes:      maven-resolver-transport-wagon < 1:1.4.2-6
-Obsoletes:      maven-resolver-transport-http < 1:1.4.2-6
-Obsoletes:      maven-resolver-transport-file < 1:1.4.2-6
-Obsoletes:      maven-resolver-transport-classpath < 1:1.4.2-6
-Obsoletes:      maven-resolver-test-util < 1:1.4.2-6
+Obsoletes:      maven-resolver-api < 1:1.4.2-alt1_7
+Conflicts:      maven-resolver-api < 1:1.4.2-alt1_7
+Obsoletes:      maven-resolver-spi < 1:1.4.2-alt1_7
+Conflicts:      maven-resolver-spi < 1:1.4.2-alt1_7
+Obsoletes:      maven-resolver-impl < 1:1.4.2-alt1_7
+Conflicts:      maven-resolver-impl < 1:1.4.2-alt1_7
+Obsoletes:      maven-resolver-util < 1:1.4.2-alt1_7
+Conflicts:      maven-resolver-util < 1:1.4.2-alt1_7
+Obsoletes:      maven-resolver-connector-basic < 1:1.4.2-alt1_7
+Conflicts:      maven-resolver-connector-basic < 1:1.4.2-alt1_7
+Obsoletes:      maven-resolver-transport-wagon < 1:1.4.2-alt1_7
+Conflicts:      maven-resolver-transport-wagon < 1:1.4.2-alt1_7
+Obsoletes:      maven-resolver-transport-http < 1:1.4.2-alt1_7
+Conflicts:      maven-resolver-transport-http < 1:1.4.2-alt1_7
+Obsoletes:      maven-resolver-transport-file < 1:1.4.2-alt1_7
+Conflicts:      maven-resolver-transport-file < 1:1.4.2-alt1_7
+Obsoletes:      maven-resolver-transport-classpath < 1:1.4.2-alt1_7
+Conflicts:      maven-resolver-transport-classpath < 1:1.4.2-alt1_7
+Obsoletes:      maven-resolver-test-util < 1:1.4.2-alt1_7
+Conflicts:      maven-resolver-test-util < 1:1.4.2-alt1_7
 Source44: import.info
 
 %description
@@ -128,6 +138,9 @@ done
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sun Jul 10 2022 Igor Vlasenko <viy@altlinux.org> 1:1.6.1-alt2_5jpp11
+- added proper Obsoletes/Confilcts:
+
 * Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 1:1.6.1-alt1_5jpp11
 - new version
 
