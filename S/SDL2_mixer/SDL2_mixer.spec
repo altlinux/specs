@@ -1,18 +1,18 @@
 %def_with bootstrap
 
 Name: SDL2_mixer
-Version: 2.0.4
-Release: alt3
+Version: 2.6.0
+Release: alt1
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
-License: zlib
+License: Zlib
 Group: System/Libraries
 
 Url: http://www.libsdl.org/projects/SDL_mixer/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-# http://www.libsdl.org/projects/SDL_mixer/release/%name-%version.tar.gz
-Source: %name-%version.tar
+# https://github.com/libsdl-org/SDL_mixer/archive/release-%version/SDL_mixer-release-%version.tar.gz
+Source: SDL_mixer-release-%version.tar
 
 BuildRequires: libSDL2-devel
 BuildRequires: libflac-devel
@@ -49,7 +49,7 @@ of music, mixed by the popular MikMod MOD, Timidity MIDI and SMPEG MP3
 libraries.
 
 %prep
-%setup
+%setup -n SDL_mixer-release-%version
 
 %build
 %configure --disable-static
@@ -59,8 +59,10 @@ libraries.
 %makeinstall_std
 %__rm -f %buildroot%_libdir/lib%name.la
 
+sed -i 's/Version:/Version: %version/' %buildroot%_pkgconfigdir/%name.pc
+
 %files -n lib%name
-%doc CHANGES.txt COPYING.txt README.txt
+%doc CHANGES.txt README.txt
 %_libdir/lib%name-2.0.so.*
 
 %files -n lib%name-devel
@@ -68,8 +70,12 @@ libraries.
 %_includedir/SDL2/SDL_mixer.h
 %_pkgconfigdir/%name.pc
 %_libdir/lib%name.so
+%_libdir/cmake/%name
 
 %changelog
+* Sun Jul 10 2022 Nazarov Denis <nenderus@altlinux.org> 2.6.0-alt1
+- Version 2.6.0
+
 * Sat Jan 15 2022 Nazarov Denis <nenderus@altlinux.org> 2.0.4-alt3
 - Build with opus support (ALT #41721)
 
