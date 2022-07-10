@@ -3,13 +3,13 @@ Group: Development/Java
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-11
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary: Application for extraction and decompilation of JVM byte code
 Name: java-runtime-decompiler
-Version: 5.1
-Release: alt1_1jpp11
+Version: 6.1
+Release: alt1_3jpp11
 License: GPLv3
 URL: https://github.com/pmikova/java-runtime-decompiler
 Source0: https://github.com/pmikova/%{name}/archive/%{name}-%{version}.tar.gz
@@ -21,7 +21,7 @@ Patch3: rsyntaxVersion.patch
 Patch4: systemCfr.patch
 Patch5: systemJasm.patch
 Patch6: systemJcoder.patch
-
+Patch7: removeMultilineSpotbugs.patch
 
 BuildArch: noarch
 BuildRequires: maven-local
@@ -36,7 +36,6 @@ BuildRequires: maven-surefire-provider-junit5
 BuildRequires: maven-surefire
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-clean-plugin
-BuildRequires: java-11-devel
 BuildRequires: google-gson
 BuildRequires: desktop-file-utils
 BuildRequires: classpathless-compiler
@@ -69,14 +68,24 @@ This package contains the API documentation for %{name}.
 %patch4 -p0
 %patch5 -p0
 %patch6 -p0
+%patch7 -p1
 sed -i 's,/usr/bin/bash,/bin/bash,;s,^run ,jvm_run ,' %{SOURCE1}
 
 %build
 pushd runtime-decompiler
 %pom_remove_plugin :maven-jar-plugin
 popd
+%pom_remove_plugin :spotbugs-maven-plugin
+%pom_remove_plugin :maven-checkstyle-plugin
+%pom_remove_plugin :formatter-maven-plugin
+%pom_remove_dep :spotbugs-annotations
+a=`find | grep ".*\.java$"`
+for x in $a ; do 
+  #grep -e ".*SuppressFBWarnings.*" $x && echo "^ $x ^"
+  sed "s/.*SuppressFBWarnings.*//g" $x -i
+done
 
-%mvn_build --xmvn-javadoc -f
+%mvn_build -f --xmvn-javadoc -- -Plegacy
 java -cp /usr/share/java/classpathless-compiler/classpathless-compiler.jar:runtime-decompiler/target/runtime-decompiler-%{version}.jar org.jrd.backend.data.Help > %{name}.1
 
 %install
@@ -90,7 +99,7 @@ install -d -m 755 $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/
 cp -r %{_builddir}/%{name}-%{name}-%{version}/runtime-decompiler/src/plugins/ $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/
 
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install                      \
+desktop-file-install --vendor=alt \
 --dir=${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE3}
 
 %files -f .mfiles
@@ -111,12 +120,15 @@ desktop-file-install                      \
 %config(noreplace) %{_sysconfdir}/%{name}/plugins/JcoderDecompilerWrapper.json
 %doc --no-dereference LICENSE
 
-%{_datadir}/applications/jrd.desktop
+%{_datadir}/applications/alt-jrd.desktop
 
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 6.1-alt1_3jpp11
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 5.1-alt1_1jpp11
 - new version
 
