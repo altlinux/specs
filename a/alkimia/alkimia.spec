@@ -7,8 +7,8 @@
 %endif
 
 Name:    alkimia
-Version: 8.1.0
-Release: alt3
+Version: 8.1.1
+Release: alt1
 %K5init no_altplace
 
 Summary: Alkimia is the infrastructure for common storage and business logic that will be used by all financial applications in KDE
@@ -18,7 +18,6 @@ URL:     http://community.kde.org/Alkimia/libalkimia
 # Download from https://download.kde.org/stable/alkimia/
 
 Source: %name-%version.tar
-Patch1: alt-ftbfs.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc-c++
@@ -68,7 +67,6 @@ Headers and other files for develop with %name.
 
 %prep
 %setup -q
-%patch1 -p1
 
 %build
 %K5build -DCMAKE_SKIP_RPATH=1 \
@@ -106,6 +104,9 @@ Headers and other files for develop with %name.
 %_libdir/cmake/LibAlkimia*
 
 %changelog
+* Sun Jul 10 2022 Andrey Cherepanov <cas@altlinux.org> 8.1.1-alt1
+- New version.
+
 * Thu Jan 27 2022 Sergey V Turchin <zerg@altlinux.org> 8.1.0-alt3
 - build without qtwebengine on ppc64le and e2k
 
