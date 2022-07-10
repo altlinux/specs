@@ -11,7 +11,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           fop
 Summary:        XSL-driven print formatter
-Version:        2.6
+Version:        2.7
 Release:        alt1_2jpp11
 # ASL 1.1:
 # several files in fop-core/src/main/resources/org/apache/fop/render/awt/viewer/resources
@@ -52,7 +52,6 @@ BuildRequires:  mvn(javax.servlet:servlet-api)
 #BuildRequires:  maven-war-plugin
 BuildRequires:  pdfbox
 BuildRequires:  qdox
-BuildRequires:  servlet
 BuildRequires:  xml-maven-plugin
 BuildRequires:  xmlgraphics-commons >= 1.5
 BuildRequires:  xmlunit
@@ -141,6 +140,9 @@ touch $RPM_BUILD_ROOT/etc/fop.conf
 
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:2.7-alt1_2jpp11
+- new version
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 0:2.6-alt1_2jpp11
 - new version
 
