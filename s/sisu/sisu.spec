@@ -14,7 +14,7 @@ BuildRequires: jpackage-default
 Name:           sisu
 Epoch:          2
 Version:        0.3.4
-Release:        alt1_7jpp11
+Release:        alt2_7jpp11
 Summary:        Eclipse dependency injection framework
 # sisu is EPL-1.0, the bundled asm is BSD
 License:        EPL-1.0 and BSD
@@ -53,8 +53,10 @@ BuildRequires:  mvn(org.testng:testng)
 
 Provides:       bundled(objectweb-asm)
 
-Obsoletes:      %{name}-inject < 1:0.3.4-5
-Obsoletes:      %{name}-plexus < 1:0.3.4-5
+Obsoletes:      %{name}-inject < 1:0.3.4-alt1_6
+Conflicts:      %{name}-inject < 1:0.3.4-alt1_6
+Obsoletes:      %{name}-plexus < 1:0.3.4-alt1_6
+Conflicts:      %{name}-plexus < 1:0.3.4-alt1_6
 Provides:       %{name}-inject = %{epoch}:%{version}-%{release}
 Provides:       %{name}-plexus = %{epoch}:%{version}-%{release}
 Source44: import.info
@@ -98,6 +100,9 @@ cp %{SOURCE102} sisu-plexus/pom.xml
 %doc --no-dereference sisu-inject/LICENSE.txt
 
 %changelog
+* Sun Jul 10 2022 Igor Vlasenko <viy@altlinux.org> 2:0.3.4-alt2_7jpp11
+- added proper Obsoletes/Confilcts:
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 2:0.3.4-alt1_7jpp11
 - update
 
