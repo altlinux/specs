@@ -1,6 +1,6 @@
 Name:     wxedid
 Version:  0.0.27
-Release:  alt1.1
+Release:  alt2
 
 Summary:  wxEDID - A tool for modifying EDID data on Linux
 License:  GPL-3.0-only
@@ -17,7 +17,7 @@ BuildRequires(pre): gcc-c++
 
 # Automatically added by buildreq on Sat Jun 04 2022
 # optimized out: at-spi2-atk bash4 fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libat-spi2-core libcairo-gobject libgdk-pixbuf libgpg-error libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwxBase3.1-devel perl python3 python3-base sh4
-BuildRequires: gcc-c++ libwxGTK3.1-devel
+BuildRequires: gcc-c++ libwxGTK3.2-devel
 
 BuildRequires: /proc 
 
@@ -65,6 +65,9 @@ install -m 644 %SOURCE2 %buildroot/%_liconsdir/
 
 
 %changelog
+* Fri Jul 08 2022 Anton Midyukov <antohami@altlinux.org> 0.0.27-alt2
+- rebuilt with stable wxGTK3.2
+
 * Sun Jun 05 2022 Hihin Ruslan <ruslandh@altlinux.ru> 0.0.27-alt1.1
 - Added desktop and icon files 
 

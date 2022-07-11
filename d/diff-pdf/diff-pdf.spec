@@ -1,6 +1,6 @@
 Name: diff-pdf
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Summary: A simple tool for visually comparing two PDF files
 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 
 BuildRequires: gcc-c++
 BuildRequires: automake
-BuildRequires: libwxGTK3.1-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: libpoppler-glib-devel
 
 %description
@@ -38,6 +38,9 @@ automake --add-missing --copy --foreign
 %_bindir/%name
 
 %changelog
+* Fri Jul 08 2022 Anton Midyukov <antohami@altlinux.org> 0.5-alt2
+- Rebuilt with wxGTK3.2
+
 * Sun Aug 22 2021 Vitaly Lipatov <lav@altlinux.ru> 0.5-alt1
 - initial build for ALT Sisyphus
 
