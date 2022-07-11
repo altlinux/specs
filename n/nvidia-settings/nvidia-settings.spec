@@ -1,7 +1,7 @@
 %def_enable translation
 
 Name: nvidia-settings
-Version: 510.68.02
+Version: 515.57
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -22,6 +22,7 @@ Patch1: xlibs.patch
 Patch2: cflags.patch
 Patch3: alt-ui-modules-dir.patch
 Patch4: add-error-popup.patch
+Patch5: alt-link-wayland.patch
 Patch100: nvidia-settings-440.59-alt-integrate-translation.patch
 
 # Automatically added by buildreq on Mon May 13 2013 (-bi)
@@ -29,6 +30,7 @@ Patch100: nvidia-settings-440.59-alt-integrate-translation.patch
 #BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libgtk+2-devel libvdpau-devel ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libGL-devel libvdpau-devel
+BuildRequires: libwayland-client-devel
 BuildRequires: libdbus-devel
 BuildRequires: libgtk+2-devel libgtk+3-devel
 
@@ -62,6 +64,7 @@ Development files for %name
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+%patch5 -p1
 %if_enabled translation
 mkdir -p po/msg
 #%patch100 -p1
@@ -82,6 +85,8 @@ sed -i -E 's|LIBDIR[[:space:]]+=[[:space:]].*|LIBDIR = $(DESTDIR)$(PREFIX)/%_lib
 
 %install
 make install DESTDIR=%buildroot PREFIX=%prefix bindir=%buildroot/%_bindir mandir=%buildroot/%_man1dir
+# cleanup
+rm -f %buildroot/%_libdir/libnvidia-wayland-client.* ||:
 
 #mkdir -p %buildroot/%_bindir
 #install -m 0755 nvidia-settings %buildroot/%_bindir
@@ -126,6 +131,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Fri Jul 08 2022 Sergey V Turchin <zerg@altlinux.org> 515.57-alt1
+- new version
+
 * Thu May 05 2022 Sergey V Turchin <zerg@altlinux.org> 510.68.02-alt1
 - new version
 

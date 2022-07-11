@@ -3,8 +3,8 @@
 %define libnvidia_egl_wayland libnvidia-egl-wayland%sover
 
 Name: egl-wayland
-Version: 1.1.9
-Release: alt3
+Version: 1.1.10
+Release: alt1
 Epoch: 1
 
 Group: System/Libraries
@@ -16,12 +16,13 @@ Source0: %name-%version.tar
 Source1: 10_nvidia_wayland.json
 Source2: 15_nvidia_gbm.json
 Patch1: alt-ftbfs.patch
+Patch2: alt-wlEglInitializeSurfaceExport.patch
 
 # Automatically added by buildreq on Fri Jul 12 2019 (-bi)
 # optimized out: elfutils glibc-devel-static glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libstdc++-devel libwayland-client libwayland-client-devel libwayland-server perl pkg-config python-base python-modules python3 python3-base python3-dev rpm-build-python3 sh4 wayland-devel xorg-proto-devel
 #BuildRequires: eglexternalplatform-devel gcc-c++ libEGL-devel libstdc++-devel-static libwayland-egl-devel libwayland-server-devel python3-module-mpl_toolkits
 BuildRequires: autoconf-archive
-BuildRequires: eglexternalplatform-devel libEGL-devel
+BuildRequires: eglexternalplatform-devel libEGL-devel libdrm-devel
 BuildRequires: libwayland-egl-devel libwayland-server-devel libwayland-client-devel wayland-devel wayland-protocols
 
 %description
@@ -44,6 +45,7 @@ Wayland EGL External Platform library development package
 %prep
 %setup
 %patch1 -p1
+%patch2 -p1
 %autoreconf
 
 %build
@@ -73,6 +75,9 @@ install -pDm644 %SOURCE2 \
 %_datadir/wayland-eglstream/
 
 %changelog
+* Fri Jul 08 2022 Sergey V Turchin <zerg@altlinux.org> 1:1.1.10-alt1
+- new version
+
 * Wed Dec 29 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.1.9-alt3
 - package icd for gbm provider
 

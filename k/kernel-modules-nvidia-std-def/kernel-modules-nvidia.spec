@@ -7,12 +7,12 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define package_version	510.68.02
+%define package_version	515.57
 %define module_version	%package_version
 %ifarch %ix86 armh
 %define module_version	390.151
 %endif
-%define module_release	alt2
+%define module_release	alt1
 %define flavour		std-def
 %define karch x86_64 aarch64 %ix86
 
@@ -294,6 +294,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Jul 11 2022 Sergey V Turchin <zerg at altlinux dot org> 515.57-alt1
+- new release (515.57)
 
 * Fri May 06 2022 Sergey V Turchin <zerg at altlinux dot org> 510.68.02-alt2
 - new releases (470.129.06, 390.151)
