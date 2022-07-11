@@ -8,7 +8,7 @@
 
 Name: poedit
 Version: 3.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Cross-platform translation files editor
 Summary(ru_RU.UTF-8): Кроссплатформенный редактор файлов переводов
@@ -28,15 +28,11 @@ ExcludeArch: armh
 Requires: gettext-tools
 
 %define cpprest_ver 2.5
-# /deps/wx/include/wx/version.h 3.1.6
-# with our 3.1.5 poedit segfaults
-%define wxgtk_ver 3.0.3-alt9
+%define wxgtk_ver 3.2.0-alt2
 %define boost_ver 1.60
 
-Requires: libwxGTK3.0 >= %wxgtk_ver
-
 BuildPreReq: desktop-file-utils libappstream-glib-devel
-BuildRequires: gcc-c++ libwxGTK3.0-devel >= %wxgtk_ver libdb4_cxx-devel libgtkspell3-devel
+BuildRequires: gcc-c++ libwxGTK3.2-devel >= %wxgtk_ver libdb4_cxx-devel libgtkspell3-devel
 BuildRequires: libicu-devel liblucene++-devel libpugixml-devel
 BuildRequires: boost-locale-devel >= %boost_ver zlib-devel
 %{?_with_cpprest:BuildRequires: libcpprest-devel >= %cpprest_ver libsecret-devel}
@@ -80,6 +76,9 @@ rm -f %buildroot/%_iconsdir/hicolor/icon-theme.cache
 %_datadir/metainfo/%rdn_name.appdata.xml
 
 %changelog
+* Mon Jul 11 2022 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1.1
+- rebuilt against wxGTK-3.2
+
 * Fri Jul 08 2022 Yuri N. Sedunov <aris@altlinux.org> 3.1.1-alt1
 - 3.1.1
 
