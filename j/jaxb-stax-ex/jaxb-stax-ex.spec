@@ -5,12 +5,12 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           jaxb-stax-ex
 Version:        1.8.3
-Release:        alt1_4jpp11
+Release:        alt1_8jpp11
 Summary:        Extended StAX API
 License:        BSD
 
 URL:            https://github.com/eclipse-ee4j/jaxb-stax-ex
-Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:        https://github.com/eclipse-ee4j/jaxb-stax-ex/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 
@@ -20,13 +20,6 @@ BuildRequires:  mvn(jakarta.xml.bind:jakarta.xml.bind-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-
-# package renamed in fedora 33, remove in fedora 35
-Provides:       stax-ex = %{version}-%{release}
-Obsoletes:      stax-ex < 1.7.7-16
-
-# javadoc subpackage is currently not built
-Obsoletes:      stax-ex-javadoc < 1.7.7-16
 Source44: import.info
 
 %description
@@ -40,9 +33,11 @@ the following areas:
   FastInfoset.
 - Improve the namespace support.
 
+%{?javadoc_package}
 
 %prep
 %setup -q
+
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
@@ -54,8 +49,7 @@ the following areas:
 
 
 %build
-# skip javadoc build due to https://github.com/fedora-java/xmvn/issues/58
-%mvn_build -f -j -- -DbuildNumber=unknown
+%mvn_build
 
 
 %install
@@ -68,6 +62,9 @@ the following areas:
 
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 1.8.3-alt1_8jpp11
+- update
+
 * Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 1.8.3-alt1_4jpp11
 - update
 
