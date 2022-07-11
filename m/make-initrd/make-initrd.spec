@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.27.1
+Version: 2.27.2
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -339,6 +339,12 @@ fi
 %_datadir/%name/features/bootloader
 
 %changelog
+* Mon Jul 11 2022 Alexey Gladkov <legion@altlinux.ru> 2.27.2-alt1
+- New version (2.27.2).
+- Feature luks:
+  + Get rid of LUKS_ALL_CRYPTTAB. The LUKS_ALL_CRYPTTAB variable was needed
+    until the autodetect worked (ALT#43188).
+
 * Fri Jul 08 2022 Alexey Gladkov <legion@altlinux.ru> 2.27.1-alt1
 - New version (2.27.1).
 - Feature luks:
