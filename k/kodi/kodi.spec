@@ -1,11 +1,11 @@
 Name: kodi
 Version: 19.4
-Release: alt1
+Release: alt2
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
 Group: Video
-Url: http://kodi.tv
+Url: https://kodi.tv/
 
 ExclusiveArch: armh aarch64 %ix86 x86_64 %e2k
 
@@ -192,6 +192,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Mon Jul 11 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.4-alt2
+- fix build with fmt9
+
 * Wed Mar 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.4-alt1
 - 19.4 Matrix released
 
