@@ -1,142 +1,111 @@
 Epoch: 0
 Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Copyright (c) 2000-2007, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-Name:          janino
-Version:       2.7.8
-Release:       alt1_13jpp11
-Summary:       An embedded Java compiler
-License:       BSD
-URL:           http://unkrig.de/w/Janino
-Source0:       http://janino.net/download/%{name}-%{version}.zip
-Source1:       http://repo1.maven.org/maven2/org/codehaus/%{name}/%{name}-parent/%{version}/%{name}-parent-%{version}.pom
-Source2:       http://repo1.maven.org/maven2/org/codehaus/%{name}/commons-compiler/%{version}/commons-compiler-%{version}.pom
-Source3:       http://repo1.maven.org/maven2/org/codehaus/%{name}/commons-compiler-jdk/%{version}/commons-compiler-jdk-%{version}.pom
-Source4:       http://repo1.maven.org/maven2/org/codehaus/%{name}/%{name}/%{version}/%{name}-%{version}.pom
-# removes the de.unkrig.commons.nullanalysis annotations
-# http://unkrig.de/w/Unkrig.de
-# https://svn.code.sf.net/p/loggifier/code/tags/loggifier_0.9.9.v20140430-1829/de.unkrig.commons.nullanalysis/
-Patch0:        %{name}-2.7.8-remove-nullanalysis-annotations.patch
+Name:           janino
+Version:        3.1.6
+Release:        alt1_3jpp11
+Summary:        Super-small, super-fast Java compiler
+License:        BSD
+URL:            http://janino-compiler.github.io/janino
+BuildArch:      noarch
+Source0:        https://github.com/janino-compiler/janino/archive/v%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires: maven-local
-BuildRequires: mvn(junit:junit)
-BuildRequires: mvn(org.apache.ant:ant)
-BuildRequires: mvn(org.apache.maven.plugins:maven-enforcer-plugin)
-BuildRequires: mvn(org.codehaus:codehaus-parent:pom:)
-BuildRequires: /usr/bin/perl
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.apache.ant:ant)
 
-BuildArch:     noarch
+Requires:       javapackages-tools
+Requires:       janino = %{?epoch:%epoch:}%{version}-%{release}
 Source44: import.info
 
 %description
-Janino is a super-small, super-fast Java compiler. Not only can it compile
-a set of source files to a set of class files like the JAVAC tool, but also
-can it compile a Java expression, block, class body or source file in
-memory, load the byte-code and execute it directly in the same JVM. Janino
-is not intended to be a development tool, but an embedded compiler for
-run-time compilation purposes, e.g. expression evaluators or "server pages"
-engines like JSP.
+Janino is a super-small, super-fast Java compiler.
 
-%package javadoc
+The "JANINO" implementation of the "commons-compiler" API: Super-small,
+super-fast, independent from the JDK's "tools.jar".
+
+%package     -n commons-compiler
 Group: Development/Java
-Summary:       Javadoc for %{name}
+Summary:        Commons Compiler
+
+%description -n commons-compiler
+The "commons-compiler" API, including the "IExpressionEvaluator",
+"IScriptEvaluator", "IClassBodyEvaluator" and "ISimpleCompiler" interfaces.
+
+%package     -n commons-compiler-jdk
+Group: Development/Java
+Summary:        Commons Compiler JDK
+
+%description -n commons-compiler-jdk
+The "JDK" implementation of the "commons-compiler" API that uses the
+JDK's Java compiler (JAVAC) in "tools.jar".
+
+%package        javadoc
+Group: Development/Java
+Summary:        API documentation for %{name}
 BuildArch: noarch
 
-%description javadoc
-This package contains javadoc for %{name}.
+%description    javadoc
+API documentation for %{name}.
 
 %prep
+
 %setup -q
 
-find . -name "*.jar" -delete
-find . -name "*.class" -delete
 
-for m in commons-compiler \
-  commons-compiler-jdk \
-  %{name};do
-  mkdir -p ${m}/src
-  (
-    cd ${m}/src/
-    unzip -qq  ../../${m}-src.zip
-    if [ -f org.codehaus.commons.compiler.properties ]; then
-      mkdir -p main/resources
-      mv org.codehaus.commons.compiler.properties main/resources
-    fi
-  )
-done
+find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 
-%patch0 -p1
+pushd %{name}-parent
+  %pom_xpath_remove pom:maven.compiler.source
+  %pom_xpath_remove pom:maven.compiler.target
+  %pom_xpath_remove pom:maven.compiler.executable
+  %pom_xpath_remove pom:maven.compiler.fork
 
-install -m 644 %{SOURCE1} pom.xml
-install -m 644 %{SOURCE2} commons-compiler/pom.xml
-install -m 644 %{SOURCE3} commons-compiler-jdk/pom.xml
-install -m 644 %{SOURCE4} %{name}/pom.xml
+  %pom_remove_plugin :nexus-staging-maven-plugin
+  %pom_remove_plugin :maven-jarsigner-plugin
+  %pom_remove_plugin :maven-javadoc-plugin
+  %pom_remove_plugin :maven-source-plugin
 
-%pom_change_dep -r :ant-nodeps :ant
+  %pom_disable_module ../commons-compiler-tests
 
-# RHBZ#842604
-%pom_xpath_set "pom:plugin[pom:artifactId = 'maven-compiler-plugin']/pom:configuration/pom:source" 1.6
-%pom_xpath_set "pom:plugin[pom:artifactId = 'maven-compiler-plugin']/pom:configuration/pom:target" 1.6
-
-perl -pi -e 's/\r$//g' new_bsd_license.txt README.txt
-
-# Cannot run program "svn"
-%pom_remove_plugin :buildnumber-maven-plugin
-
-%pom_remove_plugin :maven-clean-plugin
-%pom_remove_plugin :maven-deploy-plugin
-%pom_remove_plugin :maven-site-plugin
-%pom_remove_plugin :maven-source-plugin
+  %mvn_package :%{name}-parent __noinstall
+popd
 
 %build
 
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+pushd %{name}-parent
+  %mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dmaven.compiler.source=8 -Dmaven.compiler.target=8
+popd
 
 %install
-%mvn_install
 
-%files -f .mfiles
-%doc README.txt
-%doc --no-dereference new_bsd_license.txt
+pushd %{name}-parent
+  %mvn_install
+  
+  %jpackage_script org.codehaus.commons.compiler.samples.CompilerDemo "" "" %{name}/janino:%{name}/commons-compiler janinoc true
+popd
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference new_bsd_license.txt
+%files                         -f %{name}-parent/.mfiles-%{name}
+%doc --no-dereference LICENSE
+%{_bindir}/janinoc
+
+%files -n commons-compiler     -f %{name}-parent/.mfiles-commons-compiler
+%doc --no-dereference LICENSE
+
+%files -n commons-compiler-jdk -f %{name}-parent/.mfiles-commons-compiler-jdk
+%doc --no-dereference LICENSE
+
+%files javadoc                 -f %{name}-parent/.mfiles-javadoc
+%doc --no-dereference LICENSE
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:3.1.6-alt1_3jpp11
+- new version
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0:2.7.8-alt1_13jpp11
 - java11 build
 
