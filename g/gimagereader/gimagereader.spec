@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.4.0
-Release: alt1
+Release: alt2
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -12,8 +12,8 @@ Url: https://github.com/manisandro/gImageReader
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# TODO: https://github.com/manisandro/gImageReader/archive/v%version.tar.gz
-Source: http://sourceforge.net/projects/gimagereader/files/%version/%name-%version.tar
+# Source-url: https://github.com/manisandro/gImageReader/archive/v%version.tar.gz
+Source: %name-%version.tar
 
 Source1: gimagereader-translations-ru.po
 Source2: manual-ru.html.in
@@ -127,8 +127,8 @@ Common files for %name.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p1
+#patch1 -p2
+#patch2 -p1
 # remove with new version
 # https://redmine.basealt.space/issues/2497
 cp -fv %SOURCE1 po/ru.po
@@ -204,6 +204,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Mon Jul 11 2022 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt2
+- real build 3.4.0
+
 * Mon Feb 14 2022 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt1
 - new version 3.4.0 (with rpmrb script)
 
