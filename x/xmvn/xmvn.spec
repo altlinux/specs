@@ -17,7 +17,7 @@ BuildRequires: jpackage-default
 
 Name:           xmvn
 Version:        4.0.0
-Release:        alt1_1jpp11
+Release:        alt1_8jpp11
 Summary:        Local Extensions for Apache Maven
 License:        ASL 2.0
 URL:            https://fedora-java.github.io/xmvn/
@@ -56,8 +56,6 @@ BuildRequires:  mvn(org.slf4j:slf4j-simple)
 BuildRequires:  mvn(org.xmlunit:xmlunit-assertj3)
 # Maven home is used as template for XMvn home
 BuildRequires:  maven
-# Test dependency (for testing compatibility with Java 8)
-BuildRequires:  java-1.8.0-openjdk-devel
 %endif
 
 Requires:       %{name}-minimal = %{version}-%{release}
@@ -92,7 +90,7 @@ Requires:       slf4j
 
 Requires:       maven-lib >= 3.4.0
 #Requires:       maven-jdk-binding
-#Requires:       maven-openjdk11
+#Requires:       maven-openjdk17
 
 Obsoletes:      xmvn-connector-aether < 4.0.0
 
@@ -174,6 +172,13 @@ mver=$(sed -n '/<mavenVersion>/{s/.*>\(.*\)<.*/\1/;p}' \
            xmvn-parent/pom.xml)
 mkdir -p target/dependency/
 cp -a "${maven_home}" target/dependency/apache-maven-$mver
+
+# Workaround easymock incompatibility with Java 17that should be fixed
+# in easymock 4.4: https://github.com/easymock/easymock/issues/274
+%pom_add_plugin :maven-surefire-plugin xmvn-connector "<configuration>
+    <argLine>--add-opens=java.base/java.lang=ALL-UNNAMED</argLine></configuration>"
+%pom_add_plugin :maven-surefire-plugin xmvn-tools/xmvn-install "<configuration>
+    <argLine>--add-opens=java.base/java.lang=ALL-UNNAMED</argLine></configuration>"
 
 %build
 %mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -P\\!quality
@@ -287,6 +292,9 @@ fi
 %doc --no-dereference LICENSE NOTICE
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt1_8jpp11
+- update
+
 * Mon Jul 04 2022 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt1_1jpp11
 - fix for update (closes: #43128)
 
