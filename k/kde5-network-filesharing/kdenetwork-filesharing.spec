@@ -2,8 +2,8 @@
 %define req_samba_pkgs samba,samba-common-tools,samba-client
 
 Name: kde5-network-filesharing
-Version: 22.04.2
-Release: alt2
+Version: 22.04.3
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -69,6 +69,9 @@ cat %SOURCE10 >>po/ru/kfileshare.po
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
+- new version
+
 * Wed Jun 15 2022 Slava Aseev <ptrnine@altlinux.org> 22.04.2-alt2
 - fix blank "Share" tab under domain user
 

@@ -7,7 +7,7 @@
 %define libkdeconnectsmshelper libkdeconnectsmshelper%sover
 
 Name: kde5-connect
-Version: 22.04.2
+Version: 22.04.3
 Release: alt1
 %K5init
 
@@ -152,6 +152,9 @@ done
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
+- new version
+
 * Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
 - new version
 

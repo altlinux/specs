@@ -1,8 +1,8 @@
 %define rname ksystemlog
 
 Name: kde5-%rname
-Version: 22.04.2
-Release: alt2
+Version: 22.04.3
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -53,6 +53,9 @@ who want to quickly see problems occuring on their server.
 %_K5xmlgui/ksystemlog/
 
 %changelog
+* Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
+- new version
+
 * Tue Jul 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt2
 - show error when open empty log
 
