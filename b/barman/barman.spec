@@ -1,5 +1,5 @@
 Name: barman
-Version: 2.19
+Version: 3.0.1
 Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
@@ -140,6 +140,9 @@ getent passwd barman >/dev/null || \
 exit 0
 
 %changelog
+* Mon Jul 11 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.1-alt1
+- New version (3.0.1).
+
 * Fri Mar 11 2022 Leontiy Volodin <lvol@altlinux.org> 2.19-alt1
 - New version (2.19).
 
