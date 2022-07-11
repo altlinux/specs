@@ -9,7 +9,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:		canl-java
 Version:	2.7.0
-Release:	alt1_2jpp11
+Release:	alt1_5jpp11
 Summary:	EMI Common Authentication library - bindings for Java
 
 #		The main parts of the code are BSD
@@ -22,16 +22,21 @@ URL:		https://github.com/eu-emi/%{name}/
 Source0:	https://github.com/eu-emi/%{name}/archive/canl-%{version}/%{name}-%{version}.tar.gz
 #		Disable tests that require network connections
 Patch0:		%{name}-test.patch
+#		Backported from upstream
+Patch1:		%{name}-parts-of-deprecated-API-not-used.patch
+#		Bump source and target to Java 1.8
+#		for compatibility with Apache Commons-IO 2.9 and later
+Patch2:		%{name}-src-tgt-1.8.patch
 
 BuildArch:	noarch
 
 BuildRequires:	maven-local
 BuildRequires:	mvn(commons-io:commons-io) >= 2.4
 BuildRequires:	mvn(junit:junit) >= 4.8
-BuildRequires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.68
-BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.68
-Requires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.68
-Requires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.68
+BuildRequires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.69
+BuildRequires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.69
+Requires:	mvn(org.bouncycastle:bcpkix-jdk15on) >= 1.69
+Requires:	mvn(org.bouncycastle:bcprov-jdk15on) >= 1.69
 Source44: import.info
 
 %description
@@ -48,6 +53,8 @@ Javadoc documentation for EMI caNl.
 %prep
 %setup -q -n %{name}-canl-%{version}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 # Remove maven-wagon-webdav-jackrabbit dependency
 %pom_xpath_remove pom:build/pom:extensions
@@ -82,6 +89,9 @@ Javadoc documentation for EMI caNl.
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt1_5jpp11
+- update
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 2.7.0-alt1_2jpp11
 - new version
 
