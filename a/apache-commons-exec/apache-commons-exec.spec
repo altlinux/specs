@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /bin/ping
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global base_name exec
@@ -13,7 +13,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           apache-commons-exec
 Version:        1.3
-Release:        alt1_17jpp11
+Release:        alt1_22jpp11
 Summary:        Java library to reliably execute external processes from within the JVM
 License:        ASL 2.0
 URL:            http://commons.apache.org/exec/
@@ -61,8 +61,8 @@ chmod a+x src/test/scripts/*.sh
 # Skip Exec57Test (it is unstable), see rhbz#1202260
 find -name Exec57Test.java -delete
 
-%pom_xpath_set pom:properties/pom:maven.compiler.source 6
-%pom_xpath_set pom:properties/pom:maven.compiler.target 6
+%pom_xpath_set pom:properties/pom:maven.compiler.source 8
+%pom_xpath_set pom:properties/pom:maven.compiler.target 8
 
 %mvn_file :%{short_name} %{short_name} %{name}
 
@@ -70,8 +70,10 @@ find -name Exec57Test.java -delete
 %build
 %mvn_build -- -Dmaven.test.failure.ignore=true -Dcommons.osgi.symbolicName=org.apache.commons.exec
 
+
 %install
 %mvn_install
+
 
 %files -f .mfiles
 %doc --no-dereference LICENSE.txt NOTICE.txt
@@ -81,7 +83,11 @@ find -name Exec57Test.java -delete
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
+
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:1.3-alt1_22jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.3-alt1_17jpp11
 - update
 
