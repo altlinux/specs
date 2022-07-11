@@ -1,7 +1,7 @@
 %define rname qmlkonsole
 
 Name: kde5-%rname
-Version: 22.04
+Version: 22.06
 Release: alt1
 %K5init
 
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 #BuildRequires: appstream extra-cmake-modules kf5-kconfig-devel kf5-ki18n-devel kf5-kirigami-devel python3-dev python3-module-mpl_toolkits qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel
-BuildRequires: kf5-kconfig-devel kf5-ki18n-devel kf5-kirigami-devel
+BuildRequires: kf5-kconfig-devel kf5-ki18n-devel kf5-kirigami-devel kf5-kcoreaddons-devel
 
 %description
 Terminal application offering additional keyboard buttons useful on touch devices.
@@ -75,6 +75,9 @@ Requires: %name-common
 #%_K5lib/libqmlkonsole.so.*
 
 %changelog
+* Tue Jul 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.06-alt1
+- new version
+
 * Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 22.04-alt1
 - new version
 
