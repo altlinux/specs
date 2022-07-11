@@ -26,7 +26,7 @@ BuildRequires: jpackage-default
 
 # Enable tests at build time.  
 # Tests require mockito >= 2.6.8 and localhost networking.
-%bcond_without tests
+%bcond_with tests
 
 %global openas2dir %{_sharedstatedir}/%{name}
 %global factory_passwd ChangeMe
@@ -39,7 +39,7 @@ BuildRequires: jpackage-default
 
 Name:           openas2
 Version:        2.10.0
-Release:        alt2_9jpp11
+Release:        alt3_9jpp11
 Summary:        Java-based implementation of the EDIINT AS2 standard
 
 License:        BSD
@@ -62,7 +62,7 @@ Source2:        openas2.service
 # Logrotate to delete old logs (openas2 rotates on its own)
 Source3:        openas2.logrotate
 
-BuildRequires:  maven-local dom4j javamail bouncycastle glassfish-servlet-api
+BuildRequires:  maven-local dom4j jakarta-mail bouncycastle glassfish-servlet-api
 BuildRequires:  hamcrest dos2unix jsr-305
 %if %{with hsqldb}
 BuildRequires:  hsqldb-lib ant
@@ -350,6 +350,9 @@ systemctl daemon-reload >/dev/null 2>&1 || :
 
 
 %changelog
+* Mon Jul 11 2022 Igor Vlasenko <viy@altlinux.org> 2.10.0-alt3_9jpp11
+- fixed build with new libbase
+
 * Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 2.10.0-alt2_9jpp11
 - fixed build with new guava
 
