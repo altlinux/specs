@@ -1,20 +1,19 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: jpackage-11
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jaxb-fi
 Version:        1.2.18
-Release:        alt1_4jpp11
+Release:        alt1_7jpp11
 Summary:        Implementation of the Fast Infoset Standard for Binary XML
 # jaxb-fi is licensed ASL 2.0 and EDL-1.0 (BSD)
 # bundled org.apache.xerces.util.XMLChar.java is licensed ASL 1.1
 License:        ASL 2.0 and BSD and ASL 1.1
-
 URL:            https://github.com/eclipse-ee4j/jaxb-fi
-Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
-
 BuildArch:      noarch
+
+Source0:        https://github.com/eclipse-ee4j/jaxb-fi/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.sun.xml.stream.buffer:streambuffer)
@@ -40,44 +39,74 @@ The Fast Infoset specification (ITU-T Rec. X.891 | ISO/IEC 24824-1)
 describes an open, standards-based "binary XML" format that is based on
 the XML Information Set.
 
+%package -n FastInfoset
+Group: Development/Java
+Summary:        FastInfoset
+%description -n FastInfoset
+%{summary}.
+
+%package -n FastInfosetRoundTripTests
+Group: Development/Java
+Summary:        FastInfoset Roundtrip Tests
+%description -n FastInfosetRoundTripTests
+%{summary}.
+
+%package -n FastInfosetSamples
+Group: Development/Java
+Summary:        FastInfoset Samples
+%description -n FastInfosetSamples
+%{summary}.
+
+%package -n FastInfosetUtilities
+Group: Development/Java
+Summary:        FastInfoset Utilities
+%description -n FastInfosetUtilities
+%{summary}.
 
 %prep
 %setup -q
+
 
 pushd code
 # remove unnecessary dependency on parent POM
 # org.eclipse.ee4j:project is not packaged and not required
 %pom_remove_parent
 
-# disable unnecessary submodules
-%pom_disable_module roundtrip-tests
-%pom_disable_module samples
-
 # disable unnecessary plugins
 %pom_remove_plugin :buildnumber-maven-plugin
 %pom_remove_plugin :glassfish-copyright-maven-plugin
-popd
 
+# disable parent
+%mvn_package :fastinfoset-project __noinstall
+popd
 
 %build
 pushd code
-# skip javadoc build due to https://github.com/fedora-java/xmvn/issues/58
-%mvn_build -f -j -- -DbuildNumber=unknown
+%mvn_build -s -f -j -- -DbuildNumber=unknown
 popd
-
 
 %install
 pushd code
 %mvn_install
 popd
 
-
-%files -f code/.mfiles
+%files -n FastInfoset -f code/.mfiles-FastInfoset
 %doc --no-dereference LICENSE NOTICE.md
 %doc README.md
 
+%files -n FastInfosetRoundTripTests -f code/.mfiles-FastInfosetRoundTripTests
+%doc --no-dereference LICENSE NOTICE.md
+
+%files -n FastInfosetSamples -f code/.mfiles-FastInfosetSamples
+%doc --no-dereference LICENSE NOTICE.md
+
+%files -n FastInfosetUtilities -f code/.mfiles-FastInfosetUtilities
+%doc --no-dereference LICENSE NOTICE.md
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 1.2.18-alt1_7jpp11
+- update
+
 * Sun Aug 15 2021 Igor Vlasenko <viy@altlinux.org> 1.2.18-alt1_4jpp11
 - update
 
