@@ -7,13 +7,13 @@ BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%global gittag r1rv68
+%global gittag r1rv70
 %global classname org.bouncycastle.jce.provider.BouncyCastleProvider
 
 Summary:          Bouncy Castle Cryptography APIs for Java
 Name:             bouncycastle
-Version:          1.68
-Release:          alt1_2jpp11
+Version:          1.70
+Release:          alt1_4jpp11
 License:          MIT
 URL:              http://www.bouncycastle.org
 
@@ -25,17 +25,21 @@ Source2:          https://repo1.maven.org/maven2/org/bouncycastle/bcpkix-jdk15on
 Source3:          https://repo1.maven.org/maven2/org/bouncycastle/bcpg-jdk15on/%{version}/bcpg-jdk15on-%{version}.pom
 Source4:          https://repo1.maven.org/maven2/org/bouncycastle/bcmail-jdk15on/%{version}/bcmail-jdk15on-%{version}.pom
 Source5:          https://repo1.maven.org/maven2/org/bouncycastle/bctls-jdk15on/%{version}/bctls-jdk15on-%{version}.pom
+Source6:          https://repo1.maven.org/maven2/org/bouncycastle/bcutil-jdk15on/%{version}/bcutil-jdk15on-%{version}.pom
 
 # Script to fetch POMs from Maven Central
-Source6:          get-poms.sh
+Source7:          get-poms.sh
+
+# Backport fix for regression in bouncycastle 1.70
+Patch0:           0001-added-back-support-for-subject-key-identifier-check-.patch
 
 BuildArch:        noarch
 
 BuildRequires:    aqute-bnd
 BuildRequires:    ant
 BuildRequires:    ant-junit
-BuildRequires:    javamail
 BuildRequires:    jakarta-activation
+BuildRequires:    jakarta-mail
 BuildRequires:    javapackages-local
 
 Requires(post):   javapackages-tools
@@ -64,9 +68,8 @@ Group: System/Libraries
 Summary: Bouncy Castle OpenPGP API
 
 %description pg
-The Bouncy Castle Java API for handling the OpenPGP protocol. This jar
-contains the OpenPGP API for JDK 1.5 to JDK 1.8. The APIs can be used in
-conjunction with a JCE/JCA provider such as the one provided with the
+The Bouncy Castle Java API for handling the OpenPGP protocol. The APIs can be
+used in conjunction with a JCE/JCA provider such as the one provided with the
 Bouncy Castle Cryptography APIs.
 
 %package mail
@@ -74,11 +77,10 @@ Group: System/Libraries
 Summary: Bouncy Castle S/MIME API
 
 %description mail
-The Bouncy Castle Java S/MIME APIs for handling S/MIME protocols. This jar
-contains S/MIME APIs for JDK 1.5 to JDK 1.8. The APIs can be used in
-conjunction with a JCE/JCA provider such as the one provided with the Bouncy
-Castle Cryptography APIs. The JavaMail API and the Java activation framework
-will also be needed.
+The Bouncy Castle Java S/MIME APIs for handling S/MIME protocols. The APIs can
+be used in conjunction with a JCE/JCA provider such as the one provided with
+the Bouncy Castle Cryptography APIs. The JavaMail API and the Java activation
+framework will also be needed.
 
 %package tls
 Group: System/Libraries
@@ -87,6 +89,14 @@ Summary: Bouncy Castle JSSE provider and TLS/DTLS API
 %description tls
 The Bouncy Castle Java APIs for TLS and DTLS, including a provider for the
 JSSE.
+
+%package util
+Group: System/Libraries
+Summary: Bouncy Castle ASN.1 Extension and Utility APIs
+
+%description util
+The Bouncy Castle Java APIs for ASN.1 extension and utility APIs used to
+support bcpkix and bctls.
 
 %package javadoc
 Group: Development/Java
@@ -98,8 +108,9 @@ API documentation for the Bouncy Castle Cryptography APIs.
 
 %prep
 %setup -q -n bc-java-%{gittag}
+%patch0 -p1
 
-# Remove provided binaries
+# Remove bundled binary libs
 find . -type f -name "*.class" -exec rm -f {} \;
 find . -type f -name "*.jar" -exec rm -f {} \;
 
@@ -107,26 +118,34 @@ find . -type f -name "*.jar" -exec rm -f {} \;
 sed -i -e '/<javadoc/aadditionalparam="-Xdoclint:none" encoding="UTF-8" source="1.8"' \
        -e '/<javac/aencoding="UTF-8"' ant/bc+-build.xml
 
+# Mail and Activation do not yet provide jakarta packages, so don't build jmail module
+sed -i -e '/target="build-jmail"/d' ant/jdk15+.xml
+
+# Not shipping lw/lcrypto (lightweight crypto) jar
+sed -i -e '/target="build-lw"/d' ant/jdk15+.xml
+sed -i -e '/target="javadoc-lw"/d' ant/jdk15+.xml
+
 cp -p %{SOURCE1} bcprov.pom
 cp -p %{SOURCE2} bcpkix.pom
 cp -p %{SOURCE3} bcpg.pom
 cp -p %{SOURCE4} bcmail.pom
 cp -p %{SOURCE5} bctls.pom
+cp -p %{SOURCE6} bcutil.pom
 
 %build
 ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -f ant/jdk15+.xml \
   -Djunit.jar.home=$(build-classpath junit) \
-  -Dmail.jar.home=$(build-classpath javax.mail) \
+  -Dmail.jar.home=$(build-classpath jakarta-mail/jakarta.mail) \
   -Dactivation.jar.home=$(build-classpath jakarta-activation/jakarta.activation) \
   -Drelease.debug=true -Dbc.javac.source=1.8 -Dbc.javac.target=1.8 \
   clean build-provider build #test
 
 cat > bnd.bnd <<EOF
--classpath=bcprov.jar,bcpkix.jar,bcpg.jar,bcmail.jar,bctls.jar
+-classpath=bcprov.jar,bcutil.jar,bcpkix.jar,bcpg.jar,bcmail.jar,bctls.jar
 Export-Package: *;version=%{version}
 EOF
 
-for bc in bcprov bcpkix bcpg bcmail bctls ; do
+for bc in bcprov bcutil bcpkix bcpg bcmail bctls ; do
   # Make into OSGi bundle
   bnd wrap -b $bc -v %{version} -p bnd.bnd -o $bc.jar build/artifacts/jdk1.5/jars/$bc-jdk15on-*.jar
 
@@ -136,9 +155,6 @@ for bc in bcprov bcpkix bcpg bcmail bctls ; do
   %mvn_alias ":$bc-jdk15on" "org.bouncycastle:$bc-jdk16" "org.bouncycastle:$bc-jdk15"
   %mvn_artifact $bc.pom $bc.jar
 done
-
-# Not shipping the "lcrypto" jar, so don't ship the javadoc for it
-rm -rf build/artifacts/jdk1.5/javadoc/lcrypto
 
 %install
 install -dm 755 $RPM_BUILD_ROOT%{_sysconfdir}/java/security/security.d
@@ -211,10 +227,16 @@ fi
 %files tls -f .mfiles-bctls
 %doc --no-dereference build/artifacts/jdk1.5/bctls-jdk15on-*/LICENSE.html
 
+%files util -f .mfiles-bcutil
+%doc --no-dereference build/artifacts/jdk1.5/bcutil-jdk15on-*/LICENSE.html
+
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.html
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:1.70-alt1_4jpp11
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:1.68-alt1_2jpp11
 - new version
 
