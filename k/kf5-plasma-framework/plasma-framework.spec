@@ -3,7 +3,7 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.95.0
+Version: 5.96.0
 Release: alt1
 %K5init altplace
 
@@ -23,7 +23,7 @@ Patch3: alt-armh.patch
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-kdoctools kf5-kdoctools-devel kf5-kglobalaccel-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libGLU-devel python-module-google qt5-declarative-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel rpm-build-gir rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++
-BuildRequires: libGLU-devel
+BuildRequires: libGLU-devel libglvnd-devel
 #BuildRequires: rpm-build-ruby
 BuildRequires: qt5-declarative-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel qt5-quickcontrols2-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel
@@ -131,6 +131,9 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.96.0-alt1
+- new version
+
 * Tue Jun 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.95.0-alt1
 - new version
 
