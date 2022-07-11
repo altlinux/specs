@@ -5,10 +5,12 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:          reflections
 Version:       0.9.12
-Release:       alt1_7jpp11
+Release:       alt1_10jpp11
 Summary:       Java run-time meta-data analysis
 License:       WTFPL
 URL:           https://github.com/ronmamo/reflections
+BuildArch:     noarch
+
 Source0:       https://github.com/ronmamo/reflections/archive/%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  maven-local
@@ -17,11 +19,6 @@ BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.dom4j:dom4j)
 BuildRequires:  mvn(org.javassist:javassist)
-BuildRequires:  mvn(org.jsr-305:ri)
-BuildRequires:  mvn(org.slf4j:slf4j-api)
-BuildRequires:  mvn(org.slf4j:slf4j-simple)
-
-BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -37,36 +34,18 @@ Using Reflections you can query your meta-data such as:
   w/o annotation parameters matching
 * get all resources matching matching a regular expression
 
-%package javadoc
-Group: Development/Java
-Summary:       Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains javadoc for %{name}.
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{name}-%{version}
-find -name "*.class" -print -delete
-find -name "*.jar" -print -delete
+%setup -q
 
-# Unwanted
-%pom_remove_plugin :maven-enforcer-plugin
-%pom_remove_plugin :maven-source-plugin
-# Use system maven default conf
-%pom_remove_plugin :maven-javadoc-plugin
 
-# Force servlet 3.1 apis
-%pom_change_dep :servlet-api :javax.servlet-api:3.1.0
+find -type f '(' -name '*.jar' -o -name '*.class' ')' -not -path './src/test/*' -print -delete
 
-# Cannot find symbol package javax.annotation
-%pom_add_dep org.jsr-305:ri
-
-%mvn_file :%{name} %{name}
+%pom_xpath_inject 'pom:plugin[pom:artifactId = "maven-compiler-plugin"]' '<version>3.8.1</version>'
 
 %build
-
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -75,10 +54,10 @@ find -name "*.jar" -print -delete
 %doc README.md
 %doc --no-dereference COPYING.txt
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference COPYING.txt
-
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.9.12-alt1_10jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 0.9.12-alt1_7jpp11
 - update
 
