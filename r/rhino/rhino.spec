@@ -4,143 +4,311 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 BuildRequires: perl(Getopt/Mixed.pm)
 # END SourceDeps(oneline)
-%filter_from_requires /^.usr.bin.run/d
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Copyright (c) 2000-2005, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%define scm_version 1_7_7_1
+# %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define version 1.7.14
+%global scm_release Rhino%(v=%{version}; echo ${v//\./_})_Release
+%global test262_commit f94fc660cc3c59b1f2f9f122fc4d44b4434b935c
+%global test262_shortcommit %(c=%{test262_commit}; echo ${c:0:7})
 
 Name:           rhino
-Version:        1.7.7.1
-Release:        alt1_14jpp11
-Summary:        JavaScript for Java
-License:        MPLv2.0
+Version:        1.7.14
+Release:        alt1_3jpp11
+Summary:        Rhino
 
-Source0:        https://github.com/mozilla/rhino/archive/Rhino%{scm_version}_RELEASE.tar.gz
-Source1:        http://repo1.maven.org/maven2/org/mozilla/rhino/%{version}/rhino-%{version}.pom
-Source2:        %{name}.script
-
-Patch0:         %{name}-build.patch
-# Add OSGi metadata from Eclipse Orbit project
-Patch1:         %{name}-addOrbitManifest.patch
-
-URL:            http://www.mozilla.org/rhino/
-
-BuildRequires:  ant
-BuildRequires:  javapackages-local
-Requires:       jline2
-# Explicit javapackages-tools requires since rhino script uses
-# /usr/share/java-utils/java-functions
-Requires:       javapackages-tools
-Obsoletes:      %{name}-javadoc < %{version}-%{release}
-Obsoletes:      %{name}-manual < %{version}-%{release}
-
-# Disable xmlbeans until we can get it into Fedora
-#Requires:       xmlbeans
-#BuildRequires:  xmlbeans
+# rhino itself is MPLv2.0 but use other codes, breakdown:
+# BSD: toolsrc/org/mozilla/javascript/tools/debugger/treetable/*
+#      src/org/mozilla/javascript/v8dtoa/* except FastDtoaBuilder.java
+License:        MPLv2.0 and BSD
+URL:            https://mozilla.github.io/rhino
 BuildArch:      noarch
+ExcludeArch:    %{ix86}
+
+Source0:        https://mozilla.github.io/rhino/archive/%{scm_release}/%{name}-%{version}.tar.gz
+Source1:        https://repo1.maven.org/maven2/org/mozilla/%{name}/%{version}/%{name}-%{version}.pom
+Source2:        https://repo1.maven.org/maven2/org/mozilla/%{name}-engine/%{version}/%{name}-engine-%{version}.pom
+Source3:        https://repo1.maven.org/maven2/org/mozilla/%{name}-runtime/%{version}/%{name}-runtime-%{version}.pom
+# required for tests
+Source4:        https://github.com/tc39/test262/archive/%{test262_shortcommit}/test262-%{test262_shortcommit}.tar.gz
+
+BuildRequires:  maven-local
+BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(org.yaml:snakeyaml)
+BuildRequires:  mvn(jakarta.xml.soap:jakarta.xml.soap-api)
+Requires:       javapackages-tools
 Source44: import.info
 
 %description
-Rhino is an open-source implementation of JavaScript written entirely
-in Java. It is typically embedded into Java applications to provide
-scripting to end users.
+Rhino is an open-source implementation of JavaScript written entirely in Java.
+It is typically embedded into Java applications to provide scripting to end
+users. Full jar including tools, excluding the JSR-223 Script Engine wrapper.
 
-%package        demo
+%package -n %{name}-engine
 Group: Development/Java
-Summary:        Examples for %{name}
+Summary:        Rhino Engine
+%description -n %{name}-engine
+Rhino Javascript JSR-223 Script Engine wrapper.
 
-%description    demo
-Examples for %{name}.
+%package -n %{name}-runtime
+Group: Development/Java
+Summary:        Rhino Runtime
+%description -n %{name}-runtime
+Rhino JavaScript runtime jar, excludes tools & JSR-223 Script Engine wrapper.
+
+%{?javadoc_package}
 
 %prep
-%setup -q -n %{name}-Rhino%{scm_version}_RELEASE
-%patch0 -p1 -b .build
-%patch1 -b .fixManifest
+%setup -q -n %{name}-%{scm_release}
 
-# Fix manifest
-sed -i -e '/^Class-Path:.*$/d' src/manifest
 
-# Add jpp release info to version
-sed -i -e 's|^implementation.version: Rhino .* release .* \${implementation.date}|implementation.version: Rhino %{version} release %{release} \${implementation.date}|' build.properties
+# Uncomment to include test262
+tar --extract --strip-component=1 --file=%{SOURCE4} --directory=test262
 
-%mvn_alias : rhino:js
-%mvn_file : js %{name}
+# jar in tests is used by requireJarTest
+find -type f '(' -name '*.jar' -o -name '*.class' ')' -not -path './testsrc/*' -print -delete
+
+# requires netscape.security
+rm -rf testsrc/tests/src
+
+mkdir %{name}
+mkdir %{name}-engine
+mkdir %{name}-runtime
+
+# use simplest pom as parent pom
+cp %{SOURCE1} pom.xml
+cp %{SOURCE1} %{name}/pom.xml
+cp %{SOURCE2} %{name}-engine/pom.xml
+cp %{SOURCE3} %{name}-runtime/pom.xml
+
+%pom_add_dep junit:junit:4.13.2:test %{name}
+%pom_add_dep org.yaml:snakeyaml:1.28:test %{name}
+%pom_add_dep jakarta.xml.soap:jakarta.xml.soap-api:1.4.0:test %{name}
+
+# needed by surefire plugin
+%pom_add_dep org.apache.commons:commons-lang3:3.8.1:test %{name}
+%pom_add_dep commons-io:commons-io:2.6:test %{name}
+
+%pom_xpath_set pom:artifactId %{name}-parent
+%pom_xpath_set pom:name %{name}-parent
+%pom_xpath_inject pom:project '<packaging>pom</packaging>'
+
+%pom_remove_parent . \
+    %{name} \
+    %{name}-engine \
+    %{name}-runtime
+
+%pom_xpath_inject pom:project '
+    <modules>
+      <module>%{name}</module>
+      <module>%{name}-engine</module>
+      <module>%{name}-runtime</module>
+    </modules>'
+
+%pom_add_plugin org.codehaus.mojo:build-helper-maven-plugin \
+    %{name} '
+    <executions>
+      <execution>
+        <id>add-source</id>
+        <goals>
+          <goal>add-source</goal>
+        </goals>
+        <configuration>
+          <sources>
+            <source>${project.basedir}/../src</source>
+            <source>${project.basedir}/../toolsrc</source>
+            <source>${project.basedir}/../xmlimplsrc</source>
+          </sources>
+        </configuration>
+      </execution>
+      <execution>
+        <id>add-test-source</id>
+        <goals>
+          <goal>add-test-source</goal>
+        </goals>
+        <configuration>
+          <sources>
+            <source>${project.basedir}/../examples</source>
+            <source>${project.basedir}/../testsrc</source>
+          </sources>
+        </configuration>
+      </execution>
+    </executions>'
+
+%pom_xpath_inject pom:project/pom:build '
+    <resources>
+      <resource>
+        <directory>${project.basedir}/../src</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+          <exclude>build.xml</exclude>
+          <exclude>manifest</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>${project.basedir}/../toolsrc</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+          <exclude>build.xml</exclude>
+          <exclude>manifest</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>${project.basedir}/../testsrc</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </testResource>
+    </testResources>' \
+      %{name}
+
+%pom_add_plugin :maven-surefire-plugin \
+    %{name} '
+    <configuration>
+      <argLine>
+        -Xss1280k
+        -Dfile.encoding=UTF-8
+        --add-opens java.desktop/javax.swing.table=ALL-UNNAMED
+      </argLine>
+      <excludes>
+        <exclude>**/benchmarks/**</exclude>
+      </excludes>
+      <forkCount>64</forkCount>
+      <reuseForks>false</reuseForks>
+      <systemPropertyVariables>
+        <java.awt.headless>true</java.awt.headless>
+        <mozilla.js.tests>testsrc/tests</mozilla.js.tests>
+        <mozilla.js.tests.timeout>60000</mozilla.js.tests.timeout>
+        <user.language>en</user.language>
+        <user.country>US</user.country>
+        <user.timezone>America/Los_Angeles</user.timezone>
+        <TEST_OPTLEVEL>-1</TEST_OPTLEVEL>
+        <TEST_262_OPTLEVEL>-1</TEST_262_OPTLEVEL>
+        <test262properties>testsrc/test262.properties</test262properties>
+      </systemPropertyVariables>
+      <workingDirectory>${project.basedir}/../</workingDirectory>
+    </configuration>'
+
+%pom_add_plugin :maven-resources-plugin \
+    %{name}-engine \
+    %{name}-runtime '
+    <executions>
+      <execution>
+        <id>copy-resources</id>
+        <phase>generate-sources</phase>
+        <goals>
+          <goal>copy-resources</goal>
+        </goals>
+        <configuration>
+          <outputDirectory>${project.build.outputDirectory}</outputDirectory>
+          <resources>
+            <resource>
+              <directory>${project.basedir}/../%{name}/target/classes</directory>
+            </resource>
+          </resources>
+        </configuration>
+      </execution>
+    </executions>'
+
+%pom_add_plugin :maven-jar-plugin \
+    %{name} '
+    <configuration>
+      <archive>
+        <manifestEntries>
+          <Main-Class>org.mozilla.javascript.tools.shell.Main</Main-Class>
+          <Implementation-Title>Mozilla Rhino</Implementation-Title>
+          <Implementation-Version>${project.version}</Implementation-Version>
+          <Automatic-Module-Name>org.mozilla.rhino</Automatic-Module-Name>
+          <Bundle-SymbolicName>org.mozilla.rhino</Bundle-SymbolicName>
+        </manifestEntries>
+      </archive>
+      <excludes>
+        <exclude>META-INF/services/**</exclude>
+        <exclude>org/mozilla/javascript/engine/**</exclude>
+      </excludes>
+    </configuration>'
+
+%pom_add_plugin :maven-jar-plugin \
+    %{name}-engine '
+    <configuration>
+      <archive>
+        <manifestEntries>
+          <Automatic-Module-Name>org.mozilla.rhino.engine</Automatic-Module-Name>
+        </manifestEntries>
+      </archive>
+      <includes>
+        <include>META-INF/services/**</include>
+        <include>org/mozilla/javascript/engine/**</include>
+      </includes>
+    </configuration>'
+
+%pom_add_plugin :maven-jar-plugin \
+    %{name}-runtime '
+    <configuration>
+      <archive>
+        <manifestEntries>
+          <Bundle-SymbolicName>org.mozilla.rhino-runtime</Bundle-SymbolicName>
+        </manifestEntries>
+      </archive>
+      <excludes>
+        <exclude>META-INF/services/**</exclude>
+        <exclude>org/mozilla/javascript/engine/**</exclude>
+        <exclude>org/mozilla/javascript/tools/**</exclude>
+      </excludes>
+    </configuration>'
+
+%mvn_package :%{name}-parent \
+    __noinstall
+
+# Compatibility
+%mvn_alias :%{name} rhino:js
+%mvn_file :%{name} rhino/%{name} %{name}
 
 %build
-ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  deepclean jar copy-all -Dno-xmlbeans=1
-%mvn_artifact %{SOURCE1} build/%{name}%{version}/js.jar
-
-pushd examples
-
-export CLASSPATH=../build/%{name}%{version}/js.jar:$(build-classpath xmlbeans/xbean 2>/dev/null)
-%{javac} -target 1.8 -source 1.8 *.java
-%{jar} cf ../build/%{name}%{version}/%{name}-examples.jar *.class
-popd
+# Ignore test
+%mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
 
-# man page
+%jpackage_script org.mozilla.javascript.tools.shell.Main "" "" rhino rhino true
+%jpackage_script org.mozilla.javascript.tools.debugger.Main "" "" rhino rhino-debugger true
+%jpackage_script org.mozilla.javascript.tools.jsc.Main "" "" rhino rhino-jsc true
+
 mkdir -p %{buildroot}%{_mandir}/man1/
 install -m 644 man/%{name}.1 %{buildroot}%{_mandir}/man1/%{name}.1
-
-## script
-mkdir -p %{buildroot}%{_bindir}
-install -m 755 %{SOURCE2} %{buildroot}%{_bindir}/%{name}
-
-# examples
-cp -a build/%{name}%{version}/%{name}-examples.jar %{buildroot}%{_javadir}/%{name}-examples.jar
-mkdir -p %{buildroot}%{_datadir}/%{name}
-cp -a examples/* %{buildroot}%{_datadir}/%{name}
-find %{buildroot}%{_datadir}/%{name} -name '*.build' -delete
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/%{name}.conf
 
-%files -f .mfiles
-%attr(0755,root,root) %{_bindir}/*
-%{_javadir}/*
+%files -n %{name} -f .mfiles-%{name}
+%{_bindir}/%{name}
+%{_bindir}/%{name}-debugger
+%{_bindir}/%{name}-jsc
 %{_mandir}/man1/%{name}.1*
+%doc --no-dereference LICENSE.txt NOTICE.txt NOTICE-tools.txt
+%doc README.md CODE_OF_CONDUCT.md RELEASE-NOTES.md
 %config(noreplace,missingok) /etc/%{name}.conf
 
-%files demo
-%{_datadir}/%{name}
+%files -n %{name}-engine -f .mfiles-%{name}-engine
+%doc --no-dereference LICENSE.txt
+%doc README.md CODE_OF_CONDUCT.md RELEASE-NOTES.md
+
+%files -n %{name}-runtime -f .mfiles-%{name}-runtime
+%doc --no-dereference LICENSE.txt NOTICE.txt
+%doc README.md CODE_OF_CONDUCT.md RELEASE-NOTES.md
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 1:1.7.14-alt1_3jpp11
+- new version
+
 * Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 1:1.7.7.1-alt1_14jpp11
 - rebuild with java11 and use jvm_run
 
