@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: 4.17.0
+Version: 4.17.1
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -213,6 +213,9 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 
 
 %changelog
+* Mon Jul 11 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
+- Updated to 4.17.1.
+
 * Mon May 16 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
 - Updated Url tag.
 - Updated to 4.17.0.
