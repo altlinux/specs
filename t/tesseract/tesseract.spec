@@ -1,8 +1,8 @@
 #set_verify_elf_method none
 
 Name: tesseract
-Version: 4.1.3
-Release: alt1.1
+Version: 5.2.0
+Release: alt1
 
 Summary: Tesseract Open Source OCR Engine
 Summary(ru_RU.UTF-8): Движок распознавания текста с открытым исходным кодом
@@ -17,7 +17,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 
 # installing language files /usr/share/tesseract/tessdata
-Patch: tesseract-4.1.1-fedora-makefile.patch
+Patch: tesseract-5.1.0-alt-makefile.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libtiff-devel
@@ -77,7 +77,7 @@ models.
 
 %prep
 %setup
-%patch -p1
+%patch -p2
 %ifarch %e2k
 # LCC autovectorization perform better than these brief SIMD snippets
 sed -i "/CHECK_COMPILE_FLAG/{N;/_OPT/s/=true/=false/}" configure.ac
@@ -107,7 +107,7 @@ rm -I %buildroot%_libdir/*.la
 %_datadir/%name/tessdata/configs
 %_datadir/%name/tessdata/tessconfigs
 %_datadir/%name/tessdata/pdf.ttf
-%_libdir/lib*.so.4*
+%_libdir/lib*.so.5*
 
 %files devel
 %_includedir/%name
@@ -118,6 +118,14 @@ rm -I %buildroot%_libdir/*.la
 %doc doc/html/*
 
 %changelog
+* Sun Jul 10 2022 Evgeny Chuck <koi@altlinux.org> 5.2.0-alt1
+- Build new version (Closes: 43192)
+- new version (5.2.0) with rpmgs script
+
+* Sat May 21 2022 Evgeny Chuck <koi@altlinux.org> 5.1.0-alt1
+- new version (5.1.0) with rpmgs scrip
+- Fixed path to "tessdata" directory
+
 * Mon Jan 10 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.1.3-alt1.1
 - fixed build for Elbrus
 
