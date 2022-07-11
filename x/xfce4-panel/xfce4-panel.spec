@@ -4,7 +4,7 @@
 %define git_hash %nil
 
 Name: xfce4-panel
-Version: 4.17.1
+Version: 4.17.2
 Release: alt1%git_hash
 
 Summary: Panel for Xfce
@@ -19,7 +19,7 @@ Patch: %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
-BuildRequires: libxfce4util-devel >= 4.15.6-alt1
+BuildRequires: libxfce4util-devel >= 4.17.2-alt1
 BuildRequires: libxfce4ui-gtk3-devel >= 4.17.1-alt1 libexo-gtk3-devel >= 0.11.2 libgarcon-gtk3-devel >= 4.17.0
 BuildRequires: gtk-doc libwnck3-devel libICE-devel libXext-devel libSM-devel
 BuildRequires: libgtk+3-devel
@@ -162,6 +162,9 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Mon Jul 11 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
+- Updated to 4.17.2.
+
 * Mon May 23 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
 - Updated Url tag.
 - Updated to 4.17.1 (closes: #41835).
