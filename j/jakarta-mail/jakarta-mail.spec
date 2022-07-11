@@ -5,7 +5,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           jakarta-mail
 Version:        1.6.5
-Release:        alt1_4jpp11
+Release:        alt1_8jpp11
 Summary:        Jakarta Mail API
 License:        EPL-2.0 or GPLv2 with exceptions
 URL:            https://github.com/eclipse-ee4j/mail
@@ -20,10 +20,6 @@ BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-dependency-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-
-# package renamed in fedora 34, remove in fedora 36+
-Provides:       javamail = %{version}-%{release}
-Obsoletes:      javamail < 1.5.2-16
 
 # javadoc package is currently not built
 Obsoletes:      javamail-javadoc  < 1.5.2-16
@@ -53,6 +49,9 @@ protocol-independent framework to build mail and messaging applications.
 sed -i "s/\${mail\.osgiversion}/%{version}/g" mail/pom.xml
 sed -i "s/\${mail\.osgiversion}/%{version}/g" mailapi/pom.xml
 
+# -Werror is considered harmful
+sed -i "/-Werror/d" mail/pom.xml
+
 # add aliases for old maven artifact coordinates
 %mvn_alias com.sun.mail:mailapi \
     javax.mail:mailapi
@@ -72,7 +71,16 @@ sed -i "s/\${mail\.osgiversion}/%{version}/g" mailapi/pom.xml
 
 %build
 # skip javadoc build due to https://github.com/fedora-java/xmvn/issues/58
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+#
+# XXX 2022-01-05 disable tests for now due to issue with DNS resolution caused by glibc change.
+# Tests fail with: java.net.UnknownHostException: myhostname: Temporary failure in name resolution
+# Simple reproducer: echo 'java.net.InetAddress.getLocalHost();' | jshell -s
+# Until glibc-2.34.9000-27.fc36 jakarta-mail tests pass.
+# Starting with glibc-2.34.9000-28.fc36 jakarta-mail tests fail.
+# Related bugs:
+# https://bugzilla.redhat.com/show_bug.cgi?id=2023741
+# https://bugzilla.redhat.com/show_bug.cgi?id=2033020
+%mvn_build -j -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -82,6 +90,9 @@ sed -i "s/\${mail\.osgiversion}/%{version}/g" mailapi/pom.xml
 %doc README.md
 
 %changelog
+* Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 1.6.5-alt1_8jpp11
+- update
+
 * Wed Aug 04 2021 Igor Vlasenko <viy@altlinux.org> 1.6.5-alt1_4jpp11
 - update
 
