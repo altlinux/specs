@@ -24,7 +24,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt33
+Release: alt34
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -66,7 +66,7 @@ BuildRequires: gettext-devel
 BuildRequires: bzip2-devel
 BuildRequires: python-devel >= 2.6
 BuildRequires: python3-devel >= 3.2
-BuildRequires: liblua5-devel >= 5.1
+BuildRequires: liblua5.3-devel
 BuildRequires: libcap-devel
 BuildRequires: libacl-devel
 %if_with xz
@@ -576,6 +576,9 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Sat Jul 09 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.13.0.1-alt34
+- Fixed FTBFS: changed BR from liblua5-devel to liblua5.3-devel.
+
 * Tue May 17 2022 Andrew Savchenko <bircoph@altlinux.org> 4.13.0.1-alt33
 - E2K: support new naming scheme for profile data files.
 - Disable tests for 32-bit arches until fakechroot is fixed to
