@@ -14,7 +14,7 @@ BuildRequires: jpackage-11-compat
 Summary:          Bouncy Castle Cryptography APIs for Java
 Name:             bouncycastle1.65
 Version:          1.65
-Release:          alt2_4jpp11
+Release:          alt3_4jpp11
 License:          MIT
 URL:              http://www.bouncycastle.org
 
@@ -35,7 +35,7 @@ BuildArch:        noarch
 BuildRequires:    aqute-bnd
 BuildRequires:    ant
 BuildRequires:    ant-junit
-BuildRequires:    javamail
+BuildRequires:    jakarta-mail
 BuildRequires:    jakarta-activation
 BuildRequires:    javapackages-local
 
@@ -218,6 +218,9 @@ fi
 %doc --no-dereference LICENSE.html
 
 %changelog
+* Mon Jul 11 2022 Igor Vlasenko <viy@altlinux.org> 0:1.65-alt3_4jpp11
+- rebuild with jakarta-mail
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0:1.65-alt2_4jpp11
 - compat build
 
