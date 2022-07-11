@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: /usr/bin/xvfb-run
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           stringtemplate4
 Version:        4.3.1
-Release:        alt1_4jpp11
+Release:        alt1_9jpp11
 Summary:        A Java template engine
 License:        BSD
 URL:            http://www.stringtemplate.org/
@@ -54,7 +54,7 @@ This package contains javadoc for %{name}.
 %pom_remove_plugin :revapi-maven-plugin
 
 %build
-xvfb-run -a -n 1 %mvn_build
+xvfb-run -a -n 1 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -67,6 +67,9 @@ xvfb-run -a -n 1 %mvn_build
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 4.3.1-alt1_9jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 4.3.1-alt1_4jpp11
 - new version
 
