@@ -35,7 +35,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.54
+Version: %ver_major.55
 Release: alt1
 
 Summary: Media Sharing Server
@@ -194,7 +194,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_datadir/%name/client-rt.conf
 %_datadir/%name/jack.conf
 %_datadir/%name/minimal.conf
-%_datadir/%name/pipewire-pulse.conf
+%_datadir/%name/%name-pulse.conf
+%_datadir/%name/filter-chain.conf
+
 %dir %_datadir/%name/media-session.d
 %_datadir/%name/media-session.d/alsa-monitor.conf
 %_datadir/%name/media-session.d/bluez-monitor.conf
@@ -207,10 +209,12 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_datadir/%name/filter-chain/sink-dolby-surround.conf
 %_datadir/%name/filter-chain/sink-eq6.conf
 %_datadir/%name/filter-chain/sink-matrix-spatialiser.conf
+%_datadir/%name/filter-chain/sink-mix-FL-FR.conf
 %_datadir/%name/filter-chain/sink-virtual-surround-5.1-kemar.conf
 %_datadir/%name/filter-chain/sink-virtual-surround-7.1-hesuvi.conf
 %_datadir/%name/filter-chain/source-rnnoise.conf
-%_datadir/%name/filter-chain/duplicate-FL.conf
+%_datadir/%name/filter-chain/source-duplicate-FL.conf
+
 %dir %_datadir/spa-%spa_api_ver
 %dir %_datadir/spa-%spa_api_ver/bluez5
 %_datadir/spa-%spa_api_ver/bluez5/bluez-hardware.conf
@@ -295,6 +299,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Tue Jul 12 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.55-alt1
+- 0.3.55
+
 * Thu Jul 07 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.54-alt1
 - 0.3.54
 
