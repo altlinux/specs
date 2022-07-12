@@ -5,12 +5,12 @@ BuildRequires: %_bindir/flock %_bindir/gunzip %_bindir/less %_bindir/renice %_bi
 %def_with fireqos
 
 Name: firehol
-Version: 3.1.6
+Version: 3.1.7
 Release: alt1
 
 Summary: An easy to use but powerfull iptables stateful firewall
 
-License: GPL
+License: GPLv2
 Group: System/Configuration/Networking
 Url: http://firehol.org/
 
@@ -26,11 +26,11 @@ Patch2: firehol-sbin-alt-iptables.patch
 
 BuildArch: noarch
 
-%define iptools /sbin/insmod /sbin/modprobe iproute traceroute iptables ipset iprange
+%define iptools /sbin/insmod /sbin/modprobe iproute traceroute iptables ipset iprange iputils whois tcpdump
 BuildRequires: %iptools
 Requires: %iptools
 
-%define tools which bash4 su curl procps-ng udev-rules
+%define tools which bash4 su curl procps-ng udev-rules jq unzip
 BuildRequires: %tools
 Requires: %tools
 
@@ -55,14 +55,14 @@ interfaces.
 %patch2 -p2
 
 # wait for new bash4
-%__subst 's|+(\[0-9\])|[0-9]*|' sbin/fireqos
+subst 's|+(\[0-9\])|[0-9]*|' sbin/fireqos
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=32663
 %if %_vendor == "alt"
 for i in sbin/firehol sbin/fireqos ; do
 	test -s "$i" || continue
-	%__subst "s|^#!%_bindir/env bash$|#!/bin/bash4|g" "$i"
-	%__subst "s|^#!/bin/bash$|#!/bin/bash4|g" "$i"
+	subst "s|^#!%_bindir/env bash$|#!/bin/bash4|g" "$i"
+	subst "s|^#!/bin/bash$|#!/bin/bash4|g" "$i"
 done
 %endif
 
@@ -84,9 +84,6 @@ find doc/ examples/ -name "Makefile*" -delete -print
 # Install systemd units.
 mkdir -p %buildroot%_unitdir
 install -pm644 contrib/firehol.service contrib/fireqos.service %buildroot%_unitdir
-
-#mkdir -p %buildroot%_initdir
-#install -m 750 sbin/firehol %buildroot%_initdir/firehol
 
 # Install runtime directories.
 mkdir -p %buildroot%_sysconfdir/firehol/services
@@ -143,6 +140,11 @@ fi
 %doc doc/*
 
 %changelog
+* Tue Jul 12 2022 L.A. Kostis <lakostis@altlinux.ru> 3.1.7-alt1
+- 3.1.7.
+- fix FTBFS (added iputils).
+- Added whois/jq/unzip/tcpdump to requires.
+
 * Sun Mar 01 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1.6-alt1
 - new version 3.1.6 (with rpmrb script)
 
