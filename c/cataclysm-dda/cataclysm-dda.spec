@@ -1,6 +1,6 @@
 Name: cataclysm-dda
 Version: 0.F.3
-Release: alt1
+Release: alt3
 
 Summary: Turn-based survival game set in a post-apocalyptic world
 License: CC-BY-SA-3.0 and GPLv2+ and OFL-1.1 and BSL-1.0 and Zlib and MIT and BSD-3-Clause
@@ -10,6 +10,9 @@ URL: https://cataclysmdda.org/
 Vcs: https://github.com/CleverRaven/Cataclysm-DDA.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+
+# Patch from upstream git
+Patch1: fix_compile_error.patch
 
 BuildRequires: gcc-c++ libncursesw-devel
 BuildRequires: libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_ttf-devel libfreetype-devel
@@ -91,8 +94,18 @@ Data files for %name-sdl.
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+# unsupported as of lcc 1.25.19
+sed -i '/-Wodr/d' Makefile
+%endif
+
+%patch1 -p1
 
 %build
+%ifarch %e2k
+# src/rotatable_symbols.cpp:26
+%add_optflags -Wno-error=unused-function
+%endif
 export CXXFLAGS="%optflags"
 # ncurses version
 # Don't build tests, they will be built with SDL version
@@ -143,6 +156,12 @@ LC_ALL=C.UTF-8 make PCH=0 check
 %_datadir/metainfo/*.xml
 
 %changelog
+* Mon Jul 11 2022 Mikhail Efremov <sem@altlinux.org> 0.F.3-alt3
+- Fixed build with gcc12 (patch from upstream).
+
+* Wed Jan 12 2022 Michael Shigorin <mike@altlinux.org> 0.F.3-alt2
+- E2K: avoid lcc-unsupported option.
+
 * Wed Dec 15 2021 Mikhail Efremov <sem@altlinux.org> 0.F.3-alt1
 - Updated to 0.F-3 Frank-3.
 
