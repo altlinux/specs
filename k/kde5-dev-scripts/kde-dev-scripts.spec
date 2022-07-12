@@ -6,8 +6,8 @@
 %filter_from_requires /^cvs$/d
 
 Name: kde5-dev-scripts
-Version: 22.04.2
-Release: alt2
+Version: 22.04.3
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -66,6 +66,9 @@ done
 %_K5data/*/
 
 %changelog
+* Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
+- new version
+
 * Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt2
 - drop requires to cvs binary
 
