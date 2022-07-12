@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: unbound
-Version: 1.16.0
+Version: 1.16.1
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -237,6 +237,9 @@ rm -f %buildroot%python3_sitelibdir/*.la
 %endif
 
 %changelog
+* Tue Jul 12 2022 Alexei Takaseev <taf@altlinux.org> 1.16.1-alt1
+- 1.16.1
+
 * Fri Jun 03 2022 Alexei Takaseev <taf@altlinux.org> 1.16.0-alt1
 - 1.16.0
 
