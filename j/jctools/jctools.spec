@@ -7,7 +7,7 @@ BuildRequires: jpackage-default
 
 Name:           jctools
 Version:        3.3.0
-Release:        alt1_1jpp11
+Release:        alt2_1jpp11
 Summary:        Java Concurrency Tools for the JVM
 License:        ASL 2.0
 
@@ -17,7 +17,7 @@ Source0:        %{url}/archive/v%{version}/%{srcname}-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.github.javaparser:javaparser-core) >= 3.14.16
+BuildRequires:  mvn(com.github.javaparser:javaparser-core:3.14.2)
 BuildRequires:  mvn(com.google.guava:guava-testlib)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -112,6 +112,9 @@ rm -r jctools-core/src/test/java/org/jctools/maps/linearizability_test/
 
 
 %changelog
+* Tue Jul 12 2022 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt2_1jpp11
+- build with compat javaparser3
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 3.3.0-alt1_1jpp11
 - java11 build
 
