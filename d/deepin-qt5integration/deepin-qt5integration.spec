@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-qt5integration
-Version: 5.5.20
+Version: 5.5.23.1
 Release: alt1
 Summary: Qt platform theme integration plugins for DDE
 # The entire source code is GPLv3+ except styles/ which is BSD,
@@ -77,6 +77,28 @@ make -j1
 %_qt5_plugindir/imageformats/libdsvg.so
 
 %changelog
+* Tue Jul 12 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.23.1-alt1
+- New version.
+- Upstream:
+  + chore: Log output adjustment.
+  + chore: Modify unit test generation catalog.
+  + chore: Remove the debug log.
+  + chore: The menu round angle follows the round corner of the control center.
+  + fix: wayland menu interface is not rounded.
+  + fix: At the time of warning prompt, the background color of the combobox
+  input box has not changed.
+  + fix: combobox pops up menu text and pictures.
+  + fix: The calendar window of the non-DTK application draws a round corner.
+  + fix: Combobox text with icon is too long to omit.
+  + fix: MouseEvent intercepted in QScrollArea's scrollbar.
+  + fix: Access null pointer for QScrollArea.
+  + fix: editable combobox warning tips do not warn background color.
+  + chore: remove qt5widget5 depends from themeplugin.
+  + fix: The main window and sub-menu window frame overlap display.
+  + chore: No BASED_DTK_DIR is generated when chooser related libraries are
+  not generated.
+  + chore: replace dde-qt5integration5.5.
+
 * Fri Apr 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.20-alt1
 - New version (5.5.20).
 

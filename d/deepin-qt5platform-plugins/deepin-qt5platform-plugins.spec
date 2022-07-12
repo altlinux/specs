@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.0.62
+Version: 5.0.65
 Release: alt1
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 License: GPL-2.0+ and LGPL-3.0 and MIT
@@ -46,6 +46,7 @@ BuildRequires: qt5-base-devel-static
 %setup -n %repo-%version
 # Disable wayland for now: https://github.com/linuxdeepin/qt5platform-plugins/issues/47
 sed -i '/wayland/d' qt5platform-plugins.pro
+sed -i 's|error(Not support Qt Version: .*)|INCLUDEPATH += %_qt5_headerdir/QtXcb|' xcb/linux.pri
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -67,6 +68,34 @@ export PATH=%_qt5_bindir:$PATH
 %_qt5_plugindir/platforms/libdxcb.so
 
 %changelog
+* Tue Jul 12 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.65-alt1
+- New version.
+- Upstream:
+  + fix: wayland dock right key dish unit deviation.
+  + chore: Optimization of problems that cannot be shown by non-tooltip
+  menu.
+  + chore: Update vtablehook to support lambda expression.
+  + fix: The cinema has not resumed broadcasting after minimization.
+  + chore: Streamline source files on which the wayland plug depends.
+  + chore: Restructuring wayland-shell.
+  + chore: reconstruct wayland shell manager.
+  + refactor: Modify style and some code logic.
+  + refactor: Mainly update the code of the dwayland part.
+  + feat(libqt5xcbqpa-dev): support Qt 5.15.4.
+  + fix: wayland Environmental touch is not sensitive.
+  + chore: fix no-POD static warnings.
+  + fix: In the high version, the plug cannot be loaded.
+  + chore: Support v23 version to create xdg-shell.
+  + fix: wayland switched to the work area, the window is hidden.
+  + chore: Support the setting of windows through QWindowFlags to top.
+  + feat: add wayland functional test.
+  + chore: dde-qt5wayland-plugin running dependency plus qtwayland5.
+  + fix(build): qtwayland 5.15 build error.
+  + refactor: v23 shell compatibility support and process optimization.
+  + chore: Qt5.11 version compatibility test reminder information.
+  + fix: The failure of the community version compatibility test
+  prevented the application from starting.
+
 * Fri Apr 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.62-alt1
 - New version (5.0.62).
 
