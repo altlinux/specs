@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.24.6
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -18,6 +18,7 @@ Requires: ibus-dicts
 
 Source: %rname-%version.tar
 Source10: kcm_multicomponentchooser-ru-add.po
+Source11: kcm_touchpad-ru-add.po
 Source1: multicomponentchooser.tar
 Patch2: alt-menu-icon.patch
 Patch3: alt-def-apps-menu.patch
@@ -141,6 +142,9 @@ Common polkit files for %name
 
 msgcat --use-first po/ru/kcm_componentchooser.po %SOURCE10 > po/ru/kcm_multicomponentchooser.po
 cat po/ru/kcm_multicomponentchooser.po > po/ru/kcm_componentchooser.po
+msgcat --use-first po/ru/kcm_touchpad.po %SOURCE11 > po/ru/kcm_touchpad.po.tmp
+cat po/ru/kcm_touchpad.po.tmp >po/ru/kcm_touchpad.po
+rm -f po/ru/kcm_touchpad.po.tmp
 
 pushd kcms
     tar xvf %SOURCE1
@@ -240,6 +244,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Tue Jul 12 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.6-alt2
+- fix translation of "No touchpad was found"
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.6-alt1
 - new version
 
