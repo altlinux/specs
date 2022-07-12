@@ -8,16 +8,14 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:             jline
-Version:          3.20.0
-Release:          alt1_2jpp11
+Version:          3.21.0
+Release:          alt1_3jpp11
 Summary:          Java library for handling console input
 License:          BSD
 URL:              https://github.com/jline/jline3
 BuildArch:        noarch
 
-Source0:          %{url}/archive/jline-parent-%{version}.tar.gz
-# Adapt to newer versions of apache-sshd
-Patch0:           %{name}-apache-sshd.patch
+Source0:          https://github.com/jline/jline3/archive/jline-parent-%{version}.tar.gz
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.googlecode.juniversalchardet:juniversalchardet)
@@ -158,7 +156,6 @@ This package contains a telnet client.
 
 %prep
 %setup -q -n jline3-jline-parent-%{version}
-%patch0
 
 
 # remove unnecessary dependency on parent POM
@@ -178,14 +175,6 @@ This package contains a telnet client.
 %pom_remove_plugin :maven-javadoc-plugin
 %pom_remove_plugin :maven-release-plugin
 %pom_remove_plugin :native-image-maven-plugin
-
-# Apache SSHD package names where refactored in 2.6.0
-# See https://github.com/apache/mina-sshd/commit/5cbae28a42c478c052ade11d0fc3b84d4ee2f720
-sed -i -e 's/org.apache.sshd.server.scp/org.apache.sshd.scp.server/' \
-  remote-ssh/src/main/java/org/jline/builtins/ssh/Ssh.java
-sed -i -e 's/org.apache.sshd.server.subsystem.sftp/org.apache.sshd.sftp.server/' \
-  remote-ssh/src/main/java/org/jline/builtins/ssh/Ssh.java
-
 
 %build
 %mvn_build -s -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -222,6 +211,9 @@ sed -i -e 's/org.apache.sshd.server.subsystem.sftp/org.apache.sshd.sftp.server/'
 %files remote-telnet -f .mfiles-jline-remote-telnet
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:3.21.0-alt1_3jpp11
+- new version
+
 * Sat Aug 14 2021 Igor Vlasenko <viy@altlinux.org> 0:3.20.0-alt1_2jpp11
 - new version
 
