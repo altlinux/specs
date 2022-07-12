@@ -4,8 +4,8 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: plasma5-%rname
-Version: 5.24.5
-Release: alt2
+Version: 5.24.6
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -125,6 +125,9 @@ grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
 %_K5lib/libKInfoCenterInternal.so.%kinfocenterinternal_sover
 
 %changelog
+* Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.6-alt1
+- new version
+
 * Tue May 24 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt2
 - fix requires
 

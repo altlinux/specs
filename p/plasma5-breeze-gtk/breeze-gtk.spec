@@ -1,7 +1,7 @@
 %define rname breeze-gtk
 
 Name: plasma5-%rname
-Version: 5.24.5
+Version: 5.24.6
 Release: alt1
 %K5init no_altplace
 
@@ -11,6 +11,8 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Provides: kde5-breeze-dark-gtk = %EVR
+Provides: kde5-breeze-gtk = %EVR
+Obsoletes: kde5-breeze-gtk < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-conf-update.patch
@@ -23,9 +25,6 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: gtk-engines-pixmap libgtk+3-devel pkg-config
 BuildRequires: /usr/bin/sassc python3-module-pycairo plasma5-breeze plasma5-breeze-devel
-
-Provides: kde5-breeze-gtk = %EVR
-Obsoletes: kde5-breeze-gtk < %EVR
 
 %description
 This is GTK2/3 port of default KDE Breeze style.
@@ -61,6 +60,9 @@ Provides: gtk4-theme-breeze = %version-%release
 %_datadir/themes/Breeze*
 
 %changelog
+* Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.6-alt1
+- new version
+
 * Wed May 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt1
 - new version
 

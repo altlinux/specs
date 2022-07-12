@@ -2,8 +2,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.24.5
-Release: alt3
+Version: 5.24.6
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -240,6 +240,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.6-alt1
+- new version
+
 * Wed Jul 06 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt3
 - fix translation of "No touchpad found"
 

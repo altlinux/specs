@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.24.5
-Release: alt2
+Version: 5.24.6
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -514,6 +514,9 @@ done
 
 
 %changelog
+* Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.6-alt1
+- new version
+
 * Wed May 11 2022 Slava Aseev <ptrnine@altlinux.org> 1:5.24.5-alt2
 - virtual keyboard fixes:
   + make virtual keyboard enable button act as a switch

@@ -16,8 +16,8 @@
 %define libkcmkwincommon libkcmkwincommon%kcmkwincommon_sover
 
 Name: plasma5-%rname
-Version: 5.24.5
-Release: alt4
+Version: 5.24.6
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -207,6 +207,9 @@ done
 
 
 %changelog
+* Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.6-alt1
+- new version
+
 * Tue Jun 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt4
 - remove unneeded docs entry
 

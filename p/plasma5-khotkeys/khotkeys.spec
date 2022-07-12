@@ -4,8 +4,8 @@
 %define libkhotkeysprivate libkhotkeysprivate%khotkeysprivate_sover
 
 Name: plasma5-%rname
-Version: 5.24.5
-Release: alt3
+Version: 5.24.6
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -98,6 +98,9 @@ KF5 library
 %_K5lib/libkhotkeysprivate.so.%khotkeysprivate_sover
 
 %changelog
+* Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.6-alt1
+- new version
+
 * Wed Jul 06 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.5-alt3
 - fix terminal envocation
 
