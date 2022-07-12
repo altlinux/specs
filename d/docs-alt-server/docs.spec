@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Jul 12 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt2
+- fix typo (closes: #43146, #43079, #43073)
+- fix pbs (closes: #43131, #43132, #43133)
+
 * Mon Jun 20 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt1
 - update to ALT Server 10.1Beta
 - add proxmox backup server
