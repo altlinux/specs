@@ -1,11 +1,11 @@
 Epoch: 0
 Group: Development/Other
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           javassist
-Version:        3.27.0
+Version:        3.28.0
 Release:        alt1_2jpp11
 Summary:        Java Programming Assistant for Java bytecode manipulation
 License:        MPLv1.1 or LGPLv2+ or ASL 2.0
@@ -82,6 +82,9 @@ find src/test -name "*.class" -print -delete
 
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:3.28.0-alt1_2jpp11
+- new version
+
 * Sun Jun 13 2021 Igor Vlasenko <viy@altlinux.org> 0:3.27.0-alt1_2jpp11
 - new version
 
