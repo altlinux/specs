@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 # check deps/npm/package.json for it
-%define npmver 8.5.5
+%define npmver 8.11.0
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -10,7 +10,7 @@
 %define corepackver 0.10.0
 %def_without corepack
 
-%define major 16.15
+%define major 16.16
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -26,7 +26,7 @@
 %def_without systemv8
 
 
-%define openssl_version 1.1.1n
+%define openssl_version 1.1.1q
 %def_with systemssl
 
 %global libuv_abi 1.43.0-alt1
@@ -432,6 +432,11 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Tue Jul 12 2022 Vitaly Lipatov <lav@altlinux.ru> 16.16.0-alt1
+- new version 16.16.0 (with rpmrb script)
+- set openssl >= 1.1.1q
+- set npm >= 8.11.0
+
 * Wed Apr 27 2022 Vitaly Lipatov <lav@altlinux.ru> 16.15.0-alt1
 - new version 16.15.0 (with rpmrb script)
 - set npm >= 8.5.5

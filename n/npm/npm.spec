@@ -1,5 +1,5 @@
 Name: npm
-Version: 8.5.5
+Version: 8.11.0
 Release: alt1
 
 Summary: A package manager for node
@@ -73,6 +73,9 @@ done
 %nodejs_sitelib/%name/
 
 %changelog
+* Tue Jul 12 2022 Vitaly Lipatov <lav@altlinux.ru> 8.11.0-alt1
+- new version 8.11.0 (with rpmrb script)
+
 * Wed Apr 27 2022 Vitaly Lipatov <lav@altlinux.ru> 8.5.5-alt1
 - new version 8.5.5 (with rpmrb script)
 
