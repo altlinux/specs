@@ -8,7 +8,7 @@ BuildRequires: jpackage-11-compat
 
 Name:           aqute-bnd4
 Version:        4.3.1
-Release:        alt3_4jpp11
+Release:        alt4_4jpp11
 Summary:        BND Tool
 # Part of jpm is under BSD, but jpm is not included in binary RPM
 License:        ASL 2.0 or EPL-2.0
@@ -44,7 +44,7 @@ Patch2:         0003-Port-to-OSGI-7.0.0.patch
 Patch3:         0004-Patch-out-twig-plugin-for-report-generation.patch
 
 BuildRequires:  maven-local
-BuildRequires:  mvn(com.github.javaparser:javaparser-core) >= 3.14.16
+BuildRequires:  mvn(com.github.javaparser:javaparser-core:3.13.10)
 BuildRequires:  mvn(jline:jline)
 BuildRequires:  mvn(org.apache.ant:ant)
 BuildRequires:  mvn(org.apache.maven:maven-artifact)
@@ -279,6 +279,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{oldname}.conf
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Jul 12 2022 Igor Vlasenko <viy@altlinux.org> 0:4.3.1-alt4_4jpp11
+- build with compat javaparser3
+
 * Sat May 28 2022 Igor Vlasenko <viy@altlinux.org> 0:4.3.1-alt3_4jpp11
 - nobootstrap; self-dependent build
 
