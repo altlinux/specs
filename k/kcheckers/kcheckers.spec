@@ -1,11 +1,11 @@
 
 Name: kcheckers
 Version: 0.8.1
-Release: alt6
+Release: alt7
 
 Group: Games/Boards
 Summary: Classic boardgame - checkers
-License: GPL
+License: GPL-2.0-only
 Url: http://qcheckers.sf.net/
 #Url: http://kcheckers.org/
 #http://www.kde-apps.org/content/show.php?content=14772
@@ -17,6 +17,7 @@ Source1: %name.desktop
 Source2: %name-16.png
 Source3: %name-32.png
 Source4: %name-48.png
+Source10: kcheckers_ru.ts
 
 Patch1: kcheckers-0.8.1-alt-prefix.patch
 Patch2: kcheckers-0.8.1-alt-qt-translator.patch
@@ -34,6 +35,7 @@ This game is also known as "draughts".
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+cat %SOURCE10 >i18n/kcheckers_ru.ts
 
 export PATH=%_qt5_bindir/bin:$PATH
 %qmake_qt5
@@ -67,13 +69,16 @@ install -Dm 0644 %SOURCE4 %buildroot/%_iconsdir/hicolor/48x48/apps/%name.png
 %doc ChangeLog AUTHORS
 
 %changelog
+* Tue Jul 12 2022 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt7
+- update russian translation
+
 * Sat Jun 22 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt6
 - NMU: remove rpm-build-ubt from BR:
 
 * Sat Jun 15 2019 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt5
-- NMU: remove %ubt from release
+- NMU: remove ubt tag from release
 
-* Fri Apr 21 2017 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt4%ubt
+* Fri Apr 21 2017 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt4
 - port to Qt5
 
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 0.8.1-alt3.qa1
