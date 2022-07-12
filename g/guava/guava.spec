@@ -1,8 +1,11 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires: maven-local
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: jpackage-11
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -14,7 +17,7 @@ BuildRequires: jpackage-default
 %bcond_with bootstrap
 
 Name:           guava
-Version:        30.1
+Version:        31.0.1
 Release:        alt1_3jpp11
 Summary:        Google Core Libraries for Java
 # Most of the code is under ASL 2.0
@@ -23,7 +26,7 @@ License:        ASL 2.0 and CC0
 URL:            https://github.com/google/guava
 BuildArch:      noarch
 
-Source0:        https://github.com/google/guava/archive/v%{version}.tar.gz
+Source0:        https://github.com/google/guava/archive/v%{version}/guava-%{version}.tar.gz
 
 Patch1:         0001-Remove-multi-line-annotations.patch
 
@@ -106,7 +109,7 @@ annotations=$(
 find -name '*.java' | xargs sed -ri \
     "s/^import .*\.($annotations);//;s/@($annotations)"'\>\s*(\((("[^"]*")|([^)]*))\))?//g'
 
-%patch1 -p1
+%patch1 -p1 -b .multiline
 
 %mvn_package "com.google.guava:failureaccess" guava
 
@@ -116,6 +119,7 @@ find -name '*.java' | xargs sed -ri \
 # Tests fail on Koji due to insufficient memory,
 # see https://bugzilla.redhat.com/show_bug.cgi?id=1332971
 %mvn_build -s -f
+#-- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -127,6 +131,9 @@ find -name '*.java' | xargs sed -ri \
 %files testlib -f .mfiles-guava-testlib
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 31.0.1-alt1_3jpp11
+- new version
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 30.1-alt1_3jpp11
 - java11 build
 
