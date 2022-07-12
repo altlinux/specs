@@ -4,8 +4,8 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          javaparser
-Version:       3.14.16
-Release:       alt1_4jpp11
+Version:       3.22.0
+Release:       alt1_3jpp11
 Summary:       Java 1 to 13 Parser and Abstract Syntax Tree for Java
 License:       LGPLv3+ or ASL 2.0
 URL:           http://javaparser.org
@@ -72,8 +72,8 @@ sed -i \
 
 # Don't build the symbol solver
 %pom_disable_module javaparser-symbol-solver-core
-%pom_disable_module javaparser-symbol-solver-logic
-%pom_disable_module javaparser-symbol-solver-model
+#%pom_disable_module javaparser-symbol-solver-logic
+#%pom_disable_module javaparser-symbol-solver-model
 %pom_disable_module javaparser-symbol-solver-testing
 
 # Only need to ship the core module
@@ -95,6 +95,9 @@ sed -i \
 %doc --no-dereference LICENSE LICENSE.APACHE LICENSE.GPL LICENSE.LGPL
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 3.22.0-alt1_3jpp11
+- new version
+
 * Sat May 28 2022 Igor Vlasenko <viy@altlinux.org> 3.14.16-alt1_4jpp11
 - aqute-bnd5 support
 
