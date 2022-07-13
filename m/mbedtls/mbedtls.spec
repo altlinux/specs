@@ -1,11 +1,11 @@
 %define __nprocs 1
-%define so_tls_version 17
-%define so_crypto_version 11
+%define so_tls_version 18
+%define so_crypto_version 12
 %define so_x509_version 4
 %def_disable static
 
 Name: mbedtls
-Version: 3.1.0
+Version: 3.2.1
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -146,6 +146,9 @@ rm -rf %buildroot%_prefix/cmake
 %_libexecdir/%name/*
 
 %changelog
+* Wed Jul 13 2022 Nazarov Denis <nenderus@altlinux.org> 3.2.1-alt1
+- Version 3.2.1
+
 * Sat Dec 18 2021 Nazarov Denis <nenderus@altlinux.org> 3.1.0-alt1
 - Version 3.1.1
 
