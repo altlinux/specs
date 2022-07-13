@@ -1,7 +1,7 @@
 %define rname lskat
 
 Name: kde5-%rname
-Version: 22.04.2
+Version: 22.04.3
 Release: alt1
 %K5init
 
@@ -54,6 +54,9 @@ where the second player is either live opponent, or built in artificial intellig
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Tue Jul 12 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
+- new version
+
 * Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.2-alt1
 - new version
 
