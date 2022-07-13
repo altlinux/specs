@@ -4,7 +4,7 @@
 
 %define rname smb4k
 Name: kde5-%rname
-Version: 3.1.0
+Version: 3.1.2
 Release: alt1
 %K5init altplace
 
@@ -82,6 +82,9 @@ Developemnt files for %name
 %_K5lib/libsmb4kcore.so.%sover.*
 
 %changelog
+* Tue Jul 12 2022 Sergey V Turchin <zerg@altlinux.org> 3.1.2-alt1
+- new version
+
 * Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 3.1.0-alt1
 - new version
 
