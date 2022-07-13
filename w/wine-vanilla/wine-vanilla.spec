@@ -67,7 +67,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -256,11 +256,6 @@ Requires: glibc-pthread glibc-nss
 Requires: wine-gecko = %gecko_version
 Conflicts: wine-mono < %mono_version
 
-%if_without libwine
-Provides: lib%name = %EVR
-Obsoletes: lib%name
-%endif
-
 # For menu/MIME subsystem
 Requires: desktop-file-utils
 
@@ -381,6 +376,10 @@ BuildArch: noarch
 Conflicts: %conflictbase-common
 # we don't need provide anything
 AutoProv:no
+Conflicts: libwine <= 6.14.1
+Conflicts: i586-libwine <= 6.14.1
+Conflicts: wine <= 6.14.1
+Conflicts: i586-wine <= 6.14.1
 
 %description common
 Common arch independent wine files and scripts.
@@ -834,6 +833,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Tue Jul 12 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.12-alt2
+- add obsoletes for libwine, wine, i586-libwine, i586-wine < 6.14.1
+
 * Sat Jul 02 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.12-alt1
 - new version 7.12 (with rpmrb script)
 
