@@ -9,6 +9,15 @@
 %def_with wayland
 %def_with shader_cache
 
+# play with optlevel
+%ifarch x86_64
+%define _optlevel 3
+%endif
+
+%if_with clang
+%define optflags_lto -flto=thin
+%endif
+
 %ifarch x86_64
 %define bits 64
 %endif
@@ -17,7 +26,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2022.Q2.2
+Version: 2022.Q2.3
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -72,21 +81,18 @@ popd
 
 %build
 # FIXME! should be fixed in next build
-%add_optflags -Wno-error=return-type
+#%%add_optflags -Wno-error=return-type
 
 # build amdvlk.so
 pushd %_builddir/xgl
 %if_with clang
-optflags=$(echo '%optflags'|sed 's,lto=auto,lto=thin,')
-export ALTWRAP_LLVM_VERSION=11.0 \
+export ALTWRAP_LLVM_VERSION=%{llvm_ver} \
 %cmake \
 	-DCMAKE_C_COMPILER=clang \
 	-DCMAKE_CXX_COMPILER=clang++ \
 	-DLLVM_USE_LINKER=lld \
 	-DCMAKE_EXE_LINKER_FLAGS='-fuse-ld=lld' \
 	-DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=lld' \
-	-DCMAKE_C_FLAGS:STRING="$optflags" \
-	-DCMAKE_CXX_FLAGS:STRING="$optflags" \
 %else	
 export GCC_VERSION=9 \
 %cmake \
@@ -122,6 +128,18 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Tue Jul 12 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q2.3-alt1
+- .spec: play with optlevel on x86_64
+- .spec: remove llvm optflags hack
+- spvgen: update -alt-shared patch
+- 2022-6-21 update:
+  + icd: bump vulkan API version
+  + llvm-project: Updated to ff4dc0eccd74
+  + spvgen: Updated to eaa8c1dafbdb
+  + llpc: Updated to 61aabddf65ae
+  + pal: Updated to a40241a1e6f5
+  + xgl: Updated to a9a73115ee5c
+
 * Sun May 29 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q2.2-alt1
 - try build with clang.
 - 2022-5-20 update:
