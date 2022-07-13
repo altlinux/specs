@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: mpg123
-Version: 1.30.0
+Version: 1.30.1
 Release: alt1
 
 Summary: MPEG audio player
@@ -33,7 +33,7 @@ Requires: libmpg123 = %EVR
 
 BuildRequires: libalsa-devel
 %{?_with_nas:BuildRequires: libaudio-devel}
-%{?_with_sdl:BuildRequires: libSDL_sound-devel libSDL-devel}
+%{?_with_sdl:BuildRequires: libSDL2-devel libsdl2_sound-devel}
 %{?_with_pulse:BuildRequires: libpulseaudio-devel}
 
 %description
@@ -116,6 +116,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Wed Jul 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1.30.1-alt1
+- 1.30.1
+
 * Mon Jun 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1.30.0-alt1
 - 1.30.0
 
