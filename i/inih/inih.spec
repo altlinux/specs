@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: inih
-Version: r55
+Version: r56
 Release: alt1
 
 Summary: Simple .INI file parser in C, good for embedded systems 
@@ -86,6 +86,9 @@ Static libraries for INI Not Invented Here
 %endif
 
 %changelog
+* Wed Jul 13 2022 Nazarov Denis <nenderus@altlinux.org> r56-alt1
+- Version r56
+
 * Sat Mar 26 2022 Nazarov Denis <nenderus@altlinux.org> r55-alt1
 - Version r55
 
