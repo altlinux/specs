@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220704
+Version: 20220708
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,10 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Jul 13 2022 Cronbuild Service <cronbuild@altlinux.org> 20220708-alt1
+- upstream changes (GIT dfa2931):
+  + WHENCE: Correct dangling symlinks (thx Mario Limonciello)
+
 * Tue Jul 05 2022 Cronbuild Service <cronbuild@altlinux.org> 20220704-alt1
 - upstream changes (GIT f5f02da):
   + bnx2: Drop unsupported Broadcom NetXtremeII firmware (thx Peter Robinson)
