@@ -3,7 +3,7 @@
 
 Name: xorg-drv-intel
 Version: 2.99.917
-Release: alt1.20210115
+Release: alt1.20210115.1
 Epoch: 8
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -21,7 +21,7 @@ ExclusiveArch: %ix86 x86_64
 BuildRequires(Pre): xorg-sdk
 BuildRequires: libGL-devel libX11-devel libXext-devel libXvMC-devel libXcursor-devel libXdamage-devel libXinerama-devel
 BuildRequires: libXrandr-devel libXtst-devel xorg-proto-devel libxshmfence-devel libXrender-devel libxcbutil-devel
-BuildRequires: xorg-util-macros libXfixes-devel libudev-devel intel-gen4asm libXScrnSaver-devel libXcomposite-devel
+BuildRequires: xorg-util-macros libXfixes-devel libudev-devel libXScrnSaver-devel libXcomposite-devel
 BuildRequires: libXxf86vm-devel libXfont2-devel
 
 %description
@@ -65,6 +65,9 @@ and 24 for the 830M and later
 %endif
 
 %changelog
+* Wed Jul 13 2022 L.A. Kostis <lakostis@altlinux.ru> 8:2.99.917-alt1.20210115.1
+- Fix FTBFS (remove intel-gen4asm).
+
 * Wed Nov 24 2021 Valery Inozemtsev <shrek@altlinux.ru> 8:2.99.917-alt1.20210115
 - git snapshot master.31486f4
 
