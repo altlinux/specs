@@ -1,7 +1,7 @@
 %def_with bootstrap
 
 Name: SDL2_mixer
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
@@ -59,8 +59,6 @@ libraries.
 %makeinstall_std
 %__rm -f %buildroot%_libdir/lib%name.la
 
-sed -i 's/Version:/Version: %version/' %buildroot%_pkgconfigdir/%name.pc
-
 %files -n lib%name
 %doc CHANGES.txt README.txt
 %_libdir/lib%name-2.0.so.*
@@ -73,6 +71,9 @@ sed -i 's/Version:/Version: %version/' %buildroot%_pkgconfigdir/%name.pc
 %_libdir/cmake/%name
 
 %changelog
+* Wed Jul 13 2022 Nazarov Denis <nenderus@altlinux.org> 2.6.1-alt1
+- Version 2.6.1
+
 * Sun Jul 10 2022 Nazarov Denis <nenderus@altlinux.org> 2.6.0-alt1
 - Version 2.6.0
 
