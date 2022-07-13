@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -49,6 +49,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Jul 13 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt2
+- fix typos (closes: #43144, #43151, #43143)
+
 * Fri Jun 24 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt1
 - update to ALT Kworkstation 10.1beta
 
