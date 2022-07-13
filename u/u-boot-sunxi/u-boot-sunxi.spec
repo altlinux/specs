@@ -1,5 +1,5 @@
 Name: u-boot-sunxi
-Version: 2022.04
+Version: 2022.07
 Release: alt1
 
 Summary: Das U-Boot
@@ -65,6 +65,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jul 12 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.07-alt1
+- 2022.07 released
+
 * Thu Apr 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.04-alt1
 - 2022.04 released
 
