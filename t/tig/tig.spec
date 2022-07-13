@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: tig
-Version: 2.5.5
-Release: alt3
+Version: 2.5.6
+Release: alt1
 
 Summary: Text-mode interface for git
 License: GPLv2+
@@ -62,6 +62,9 @@ src/tig -v
 %_datadir/zsh/site-functions/_tig
 
 %changelog
+* Wed Jul 13 2022 Vitaly Chikunov <vt@altlinux.org> 2.5.6-alt1
+- Update to tig-2.5.6 (2022-07-11).
+
 * Mon May 02 2022 Vitaly Chikunov <vt@altlinux.org> 2.5.5-alt3
 - Fix install perms of tig-pick.
 - Do not use libpcre2 (there is already POSIX regex support).
