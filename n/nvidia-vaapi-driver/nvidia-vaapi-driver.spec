@@ -1,6 +1,8 @@
+%define git a4fb2d6
+
 Name: nvidia-vaapi-driver
 Version: 0.0.6
-Release: alt1.1
+Release: alt2.g%{git}
 
 Summary: VA-API implementation that uses NVDEC as a backend
 License: MIT/X11
@@ -42,6 +44,9 @@ parameter nvidia-drm.modeset=1
 %_libdir/dri/nvidia_drv_video.so
 
 %changelog
+* Wed Jul 13 2022 L.A. Kostis <lakostis@altlinux.ru> 0.0.6-alt2.ga4fb2d6
+- v0.0.6-13-ga4fb2d6.
+
 * Fri May 27 2022 L.A. Kostis <lakostis@altlinux.ru> 0.0.6-alt1.1
 - Add ExclusiveArch.
 
