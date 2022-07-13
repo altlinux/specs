@@ -18,7 +18,7 @@
 
 Name: %_name-gostcrypto
 Version: 2.4.9
-Release: alt2
+Release: alt3
 
 Summary: a full-featured SSL VPN solution with GOST algorithms
 Summary(ru_RU.UTF-8): полнофункциональное решение VPN на базе SSL с ГОСТ алгоритмами
@@ -352,6 +352,9 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%_name
 %endif
 
 %changelog
+* Tue Jul 12 2022 Slava Aseev <ptrnine@altlinux.org> 2.4.9-alt3
+- Fix missing initialization of mac_key_length (Closes: 42082)
+
 * Mon Jul 12 2021 Mikhail Efremov <sem@altlinux.org> 2.4.9-alt2
 - Drop rpm-build-licenses from BR.
 - Fix GOST ciphers with openSSL >= 1.1.0.
