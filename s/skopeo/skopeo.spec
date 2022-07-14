@@ -1,11 +1,11 @@
 %global import_path github.com/containers/skopeo
-%global commit 37727a45f96ac208785b606f7772d609bf50dbc4
+%global commit a03cba7c7ef4c49cf98336063ee4f1e235bf80e0
 
 %global _unpackaged_files_terminate_build 1
 %def_without check
 
 Name: skopeo
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: skopeo is a command line utility that performs various operations on container images and image repositories
@@ -130,10 +130,15 @@ make check
 %files
 %_bindir/*
 %_datadir/bash-completion/completions/%name
+%_datadir/fish/vendor_completions.d/skopeo.fish
+%_datadir/zsh/site-functions/_skopeo
 %_man1dir/%{name}*
 %doc *.md
 
 %changelog
+* Thu Jul 14 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.9.0-alt1
+- new version 1.9.0
+
 * Mon May 09 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.8.0-alt1
 - new version 1.8.0
 
