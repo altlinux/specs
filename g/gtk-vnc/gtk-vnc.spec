@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: gtk-vnc
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: VNC viewer widget
@@ -222,6 +222,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Jul 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
+- 1.3.1
+
 * Wed Nov 17 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
