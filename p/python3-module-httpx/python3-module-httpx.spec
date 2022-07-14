@@ -1,7 +1,7 @@
 %define  modulename httpx
 
 Name:    python3-module-%modulename
-Version: 0.22.0
+Version: 0.23.0
 Release: alt2
 
 Summary: A next generation HTTP client for Python
@@ -42,6 +42,9 @@ sed -ri '/httpcore/ s/,<[^,"]+//p' setup.py
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Thu Jul 14 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.23.0-alt2
+- 0.23.0
+
 * Tue May 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.22.0-alt2
 - drop upper bound on httpcore version
 
