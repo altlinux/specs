@@ -1,6 +1,6 @@
 Name: liri-materialdecoration
 Version: 1.1.0
-Release: alt4
+Release: alt5
 
 Summary: Client-side decoration for Qt applications on Wayland
 License: LGPLv3
@@ -19,7 +19,7 @@ BuildRequires: pkgconfig(xkbcommon)
 
 %prep
 %setup
-%add_optflags -I%_includedir/qt5/QtXkbCommonSupport/5.15.2
+%add_optflags -I%_includedir/qt5/QtXkbCommonSupport/%_qt5_version
 
 %build
 %cmake
@@ -33,6 +33,9 @@ BuildRequires: pkgconfig(xkbcommon)
 %_libdir/qt5/plugins/wayland-decoration-client/libmaterialdecoration.so
 
 %changelog
+* Thu Jul 14 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt5
+- fix build with qt-5.15.4
+
 * Tue Aug 10 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt4
 - update from git.1d9f0fd
 
