@@ -1,5 +1,5 @@
 Name: xfce4-xkb-plugin
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: XKB layout switch plugin for the Xfce panel
@@ -15,7 +15,7 @@ Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libgarcon-devel
-BuildRequires: libSM-devel librsvg-devel libwnck3-devel libxklavier-devel xorg-cf-files
+BuildRequires: librsvg-devel libwnck3-devel libxklavier-devel xorg-cf-files libnotify-devel
 
 Requires: xfce4-panel
 
@@ -51,18 +51,22 @@ XFce panel.
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS COPYING
+%doc README.md AUTHORS COPYING NEWS
 %_libdir/xfce4/panel/plugins/*.so
 %dir %_datadir/xfce4/xkb
 %dir %_datadir/xfce4/xkb/flags
 %_datadir/xfce4/xkb/flags/*
 %_datadir/xfce4/panel/plugins/*.desktop
+%_iconsdir/hicolor/*/apps/*
 
 %exclude %_libdir/xfce4/panel/plugins/*.la
 # Seems glibc doesn't support uz@Latn
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/xfce4-xkb-plugin.mo
 
 %changelog
+* Thu Jul 14 2022 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt1
+- Updated to 0.8.3.
+
 * Thu Dec 24 2020 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1
 - Updated to 0.8.2.
 
