@@ -1,21 +1,14 @@
-%define git_commit 0fe675c
-		    
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version: 31.0.0
+Version: 31.1.1
 
-# %%ifndef git_commit
-Release: alt0.5
-# %%else
-# Release: alt1.git_1_%git_commit
-# %%endif
+Release: alt1
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
 
-# git commit 0fe675cd9692cc792c4d5a267dce11702ee4d4f4
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
@@ -37,11 +30,7 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 #define palemoon_noarch_extensionsdir   %%newmoon_datadir/extensions
 
 
-#%%ifdef git_commit
 Source: %sname-source-%version-%release.tar
-#%%else
-#Source: %sname-source-%version.tar
-#%%endif
 
 Source1: rpm-build.tar
 Source2: defaults-newmoon.tar
@@ -72,7 +61,7 @@ Patch24: palemoon-31.0.0-ui_picker_false.patch
 Patch103: palemoon-29.4.6-disable-check-default-browser.patch
 Patch105: palemoon-29.4.6-default-mail-handler.patch
 Patch106: palemoon-29.4.6-enable-addons.patch
-Patch107: palemoon-29.4.6-user-agent-overrides.patch
+#Patch107: palemoon-29.4.6-user-agent-overrides.patch
 
 # Patches for KDE integration of New Moon
 Patch111: palemoon-29.4.6-firefox-kde.patch
@@ -81,19 +70,19 @@ Patch113: palemoon-29.4.6-kde-background.patch
 
 Patch114: nemoon_branding-31.0.0.patch
 
-%set_gcc_version 8
+#set_gcc_version 8
 %set_autoconf_version 2.13
 
 BuildpreReq: libXcomposite-devel libXdamage-devel
 
-# Automatically added by buildreq on Tue May 03 2022
-# optimized out: alt-os-release alternatives fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libcrypt-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-distutils python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base sh4 xorg-proto-devel xz
-# BuildRequires: doxygen gcc-c++ imake libGConf-devel libXScrnSaver-devel libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel libhunspell-devel libpulseaudio-devel libsocket python-devel python-modules-json python-modules-wsgiref unzip wget xorg-cf-files yasm zip
-BuildRequires: doxygen gcc-c++ imake libGConf-devel libXScrnSaver-devel
-BuildRequires: libXt-devel libalsa-devel libdbus-glib-devel libgtk+2-devel
-BuildRequires: libhunspell-devel libpulseaudio-devel libsocket
-BuildRequires: python-devel python-modules-json python-modules-wsgiref
-BuildRequires: unzip wget xorg-cf-files yasm zip
+# Automatically added by buildreq on Wed Jul 13 2022
+# optimized out: alt-os-release alternatives fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base sh4 xorg-proto-devel zlib-devel
+BuildRequires: doxygen gcc-c++ libGConf-devel libXt-devel libalsa-devel
+BuildRequires: libdbus-glib-devel libgtk+2-devel libhunspell-devel
+BuildRequires: libpulseaudio-devel libsocket
+BuildRequires: python-modules-distutils python-modules-json
+BuildRequires: unzip yasm zip
+
 BuildRequires: /usr/bin/python2.7 python2-base
 
 
@@ -105,9 +94,9 @@ BuildRequires(pre): mozilla-common-devel rpm-macros-alternatives mozilla-common
 BuildRequires(pre): browser-plugins-npapi-devel
 
 BuildPreReq: python-module-future python-modules-json python-modules-wsgiref
-BuildPreReq: libsocket
+BuildPreReq: libnss-devel
 
-BuildRequires: gcc%_gcc_version-c++
+# BuildRequires: gcc%%_gcc_version-c++
 
 BuildPreReq: chrpath
 BuildPreReq: autoconf_%_autoconf_version
@@ -206,7 +195,7 @@ cd ..
 %patch103  -p1 -b .disable-software-update
 %patch105  -p1 -b .default-mail-handler
 %patch106 -p1 -b .addons
-%patch107 -p1 -b .ua
+#patch107 -p1 -b .ua
 
 # KDE integration
 #patch111 -p1 -b .kdepatch
@@ -255,7 +244,6 @@ echo "mk_add_options MOZ_MAKE_FLAGS=-j${NPROCS:-4}" >> .mozconfig
 
 %ifnarch %ix86 x86_64
 echo _BUILD_64=1  >> .mozconfig
-echo "ac_add_options --disable-methodjit" >> .mozconfig
 echo "ac_add_options --disable-monoic" >> .mozconfig
 echo "ac_add_options --disable-polyic" >> .mozconfig
 echo "ac_add_options --disable-tracejit" >> .mozconfig
@@ -266,32 +254,13 @@ echo "ac_add_options --disable-elf-hack" >> .mozconfig
 echo "ac_add_options --enable-alsa --enable-pulseaudio" >> .mozconfig
 echo "ac_add_options --enable-raw --enable-ffmpeg" >> .mozconfig
 
-# echo "ac_add_options" >> .mozconfig
-
-## Old Options  --enable-media-plugins --enable-media-navigator  --with-system-libvpx --enable-wave 
-## --enable-webm --enable-sanbox
-# echo "ac_add_options --enable-release" >> .mozconfig
-
-echo "ac_add_options --with-x" >> .mozconfig
-echo "ac_add_options --enable-b2g-bt --enable-nfc --enable-synth-pico --enable-b2g-camera" >> .mozconfig
-echo "ac_add_options --enable-synth-pico" >> .mozconfig
 
 echo "ac_add_options --enable-system-hunspell" >> .mozconfig
 
-# Add  Ofiicial Options:
-#  --enable-shared-js --enable-jemalloc --enable-jemalloc-lib --with-pthreads --x-libraries=/usr/lib/X11
-# echo "ac_add_options --with-pthreads" >> .mozconfig
-# echo "ac_add_options --enable-shared-js"  >> .mozconfig
-# echo "ac_add_options --enable-jemalloc --enable-jemalloc-lib" >> .mozconfig
-# echo "ac_add_options --sharedstatedir=%_datadir" >> .mozconfig
-# echo "ac_add_options --datadir=%_datadir" >> .mozconfig
-
-# echo "ac_add_options --with-system-nss"  >> .mozconfig
+echo "ac_add_options --with-pthreads" >> .mozconfig
 
 echo "ac_add_options --x-libraries=%_libdir/X11" >> .mozconfig
-echo "ac_add_options --with-nss-prefix=$RPATH_PATH" >> .mozconfig
-
-# echo "ac_add_options --with-nss-prefix=%_libdir" >> .mozconfig
+echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
 
 %ifarch %ix86
  echo "ac_add_options --with-arch=i586" >> .mozconfig
@@ -299,14 +268,13 @@ echo "ac_add_options --with-nss-prefix=$RPATH_PATH" >> .mozconfig
 %endif
 
 
-
 %build
 cd %sname
 
 %add_optflags %optflags_shared
 %add_findprov_lib_path %newmoon_datadir
-#export MOZ_BUILD_APP=%bname
-export MOZ_BUILD_APP=browser
+
+export MOZ_BUILD_APP=%sname
 
 # Mozilla builds with -Wall with exception of a few warnings which show up
 # everywhere in the code; so, don't override that.
@@ -321,7 +289,6 @@ export CXXFLAGS="$MOZ_OPT_FLAGS -Wmaybe-uninitialized -Wreorder -D_GNUC_"
 
 
 # Add fake RPATH
-#export LDFLAGS="-Wl,-rpath,%newmoon_bindir"
 rpath="/$(printf %%s '%newmoon_bindir' |tr '[:print:]' '_')"
 export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 
@@ -332,17 +299,6 @@ echo '%newmoon_bindir'
 echo "$rpath"
 
 
-# Add fake RPATH
-#export LDFLAGS="-Wl,-rpath,%newmoon_datadir"
-#export LD_LIBRARY_PATH="-Wl,-rpath,%newmoon_datadir"
-#rpath="/$(printf %%s '%newmoon_datadir' |tr '[:print:]' '_')"
-#export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
-
-# for  palemoon_rpath-27.0.2.patch
-# export RPATH_PATH="$rpath"     
-
-#make -f client.mk build STRIP="/bin/true" MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
-
 export PREFIX="%prefix"
 export LIBDIR="%_libdir"
 export LIBIDL_CONFIG=%_bindir/libIDL-config-2
@@ -350,10 +306,6 @@ export srcdir="$PWD"
 export SHELL=/bin/sh
 
 %__autoconf
-
-
-
-# autoreconf -f -i
 
 
 MOZ_SMP_FLAGS=-j${NPROCS:-4}
@@ -385,10 +337,6 @@ gcc %optflags \
 
 
 %install
-#	MOZ_APP_VERSION=%version \
-
-#COMSPEC=rpm ./mach build
-
 ## ? install -D -m644 %SOURCE12 obj-%_arch/dist/bin/browser/defaults/profile/xulstore.json 
 
 # нужен только с патчами KDE
@@ -400,7 +348,6 @@ cd palemoon
 cd obj-%_arch
 %makeinstall MOZ_APP_VERSION=%version SHELL=/bin/sh
 
-
 #makeinstall_std MOZ_APP_VERSION=%version COMSPEC=rpm SHELL=/bin/sh
 # MOZILLABUILD SHELL=/bin/sh COMSPEC=rpm
 
@@ -409,7 +356,6 @@ rm -f %buildroot%newmoon_bindir/%bname
 mkdir -p \
 	%buildroot/%mozilla_arch_extdir/%palemoon_cid \
 	%buildroot/%mozilla_noarch_extdir/%palemoon_cid
-#
 
 cd ..
 
@@ -428,9 +374,7 @@ fi
 
 
 install  %bname  %buildroot/%_bindir/%bname
-# cp  %buildroot/%newmoon_datadir/%name-bin  %buildroot%_bindir/%name
 
-# install rpm-build-%sname
 mkdir -p -- \
 	%buildroot/%_rpmmacrosdir
 
@@ -449,21 +393,6 @@ rm -rf -- \
  	%buildroot%_libdir/newmoon-devel \
  	%buildroot%_datadir/idl/%bname-%version
 
-
-# 	%buildroot%_includedir/%sname-%version \
-# 	%buildroot%_datadir/idl/%sname-%version
-
-#install -d %buildroot%newmoon_datadir-%version
-#mv -f %buildroot/%_libdir/%sname-%version/* %buildroot%newmoon_datadir-%version/
-
-#install -d %buildroot/%_libdir/%sname-%version/
-
-
-# install altlinux-specific configuration
-#install -D -m 644 %SOURCE8 %buildroot/%newmoon_datadir-%version/browser/defaults/preferences/all-altlinux.js
-
-
-#mv -f %buildroot%newmoon_datadir-%version/application.ini %buildroot%newmoon_datadir-%version/browser/application.ini
 
 
 # install menu file
@@ -506,50 +435,6 @@ set -x
 mkdir -p ./%_altdir
 printf '%_bindir/xbrowser\t%_bindir/%bname\t99\n' >./%_altdir/%bname
 
-#install -d %buildroot%newmoon_bindir/
-
-
-#install -d  %buildroot%newmoon_bindir/components/
-#install -d  %buildroot%newmoon_bindir/browser/components/
-
-
-# install -m 644 %buildroot%newmoon_datadir-%version/components/* %buildroot%newmoon_bindir/components/
-#install -m 644 %buildroot%newmoon_datadir-%version/browser/components/* %buildroot%newmoon_bindir/browser/components/
-
-#rm -f  %buildroot%newmoon_datadir-%version/components/*
-#rmdir  %buildroot%newmoon_datadir-%version/components/
-
-
-#rm -f %buildroot%newmoon_datadir-%version/browser/components/*
-#rmdir %buildroot%newmoon_datadir-%version/browser/components/
-
-#mv %buildroot/%newmoon_datadir-%version/{palemoon,palemoon-bin,plugin-container,run-mozilla.sh} %buildroot%newmoon_bindir/
-#mv %buildroot/%newmoon_datadir-%version/*.so* %buildroot%newmoon_bindir/
-#mv %buildroot/%newmoon_datadir-%version/*.manifest %buildroot%newmoon_bindir/
-
-
-#mv %buildroot/%newmoon_datadir-%version/browser/chrome/ %buildroot%newmoon_bindir/browser/
-
-#install -d %buildroot%newmoon_datadir-%version/broewser/chrome/
-#install -d %buildroot%newmoon_bindir/browser
-#mv %buildroot/%newmoon_datadir-%version/browser/chrome/ %buildroot%newmoon_bindir/browser
-#install -d %buildroot%newmoon_datadir-%version/browser/chrome/
-
-#mv %buildroot/%newmoon_datadir-%version/*.chk %buildroot%newmoon_bindir/
-
-#ln -s %newmoon_datadir-%version/{defaults,dictionaries} %buildroot/%newmoon_bindir/
-#ln -s %newmoon_datadir-%version/{dependentlibs.list,platform.ini} %buildroot/%newmoon_bindir/
-#ln -s %newmoon_datadir-%version/browser/{application.ini,blocklist.xml,chrome.manifest,defaults,extensions,icons,searchplugins} %buildroot/%newmoon_bindir/browser/
-
-#rm -f -- \
-#	./%newmoon_datadir-%version/%bname \
-#	./%newmoon_datadir-%version/removed-files
-
-#rmdir  %buildroot%_libdir/palemoon-%version/
-
-#pwd
-#ls %_builddir/palemoon-%version/defaults-newmoon/
-
 
 
 # Add real RPATH
@@ -574,20 +459,6 @@ printf '%_bindir/xbrowser\t%_bindir/%bname\t99\n' >./%_altdir/%bname
  		fi
  	done
      )
-#popd
-
-
-
-
-# echo "as=""$as" \
-#    echo "pr=$pr"
-#    ls -la "$rt"
-# ldd $rt
-
-
-
-
-#set -x
 
 #install -d   %buildroot/%_docdir/%bname-%version/
 # Add Doc
@@ -598,58 +469,15 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/LICENSE %_builddir/%snam
 install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sname-%version
 
 
-# ? %post -n %bname
-#post -n %bname-base
-# ?  for n in libfreeblpriv3.chk libnssdbm3.chk libsoftokn3.chk; do
-# ?   	[  -e "%newmoon_datadir/$n" ] || ln -fs  %newmoon_bindir/$n %newmoon_datadir/$n
-# ?  done
- 
-# ?  for n in palemoon.jar chrome.manifest en-US.jar; do
-# ?   	[  -e "%newmoon_datadir/palemoon/chrome/$n" ] || ln -fs  %newmoon_bindir/palemoon/chrome/$n %newmoon_datadir/palemoon/chrome/$n
-# ?  done
- 
-# ?  for n in chrome.manifest en-US.jar marionette.jar pippki.jar recording.jar toolkit.jar; do
-# ?   	[  -e "%newmoon_datadir/chrome/$n" ] || ln -fs  %newmoon_bindir/chrome/$n %newmoon_datadir/chrome/$n
-# ?  done
-
-#postun -n %bname-base
-
-# ?  for n in libfreeblpriv3.chk libnssdbm3.chk libsoftokn3.chk; do
-# ?  	[ !  -L "%newmoon_datadir/$n" ] || rm -f  %newmoon_datadir/$n
-# ?  done
-
-# ?  for n in browser.jar chrome.manifest en-US.jar; do
-# ?  	[ ! -L "%newmoon_datadir/palemoon/chrome/$n" ] || rm -f %newmoon_datadir/palemoon/chrome/$n
-# ?  done
-
-# ?  for n in chrome.manifest en-US.jar marionette.jar pippki.jar recording.jar toolkit.jar; do
-# ?  	[ ! -L "%newmoon_datadir/chrome/$n" ] || rm -f %newmoon_datadir/chrome/$n
-# ?  done
-
-
-#files -n %bname-data
 
 %files -n %bname
 %dir %newmoon_bindir
 %newmoon_bindir/
-#%dir %newmoon_bindir/browser
-#%newmoon_bindir/browser/*
-
-#dir %newmoon_datadir-%version/chrome
-#dir %newmoon_datadir-%version/defaults
-#%newmoon_datadir-%version/defaults/*
-
-#%dir %newmoon_bindir/dictionaries
-#%newmoon_bindir/dictionaries/*
-#%newmoon_bindir/dependentlibs.list
-#%newmoon_bindir/platform.ini
 
 %_desktopdir/%bname.desktop
 %_miconsdir/%bname.png
 %_niconsdir/%bname.png
 %_liconsdir/%bname.png
-
-#files -n %bname-base
 
 %doc AUTHORS LICENSE HISTORY_GIT Changelog README.md
 %_altdir/%bname
@@ -661,12 +489,15 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %files -n rpm-build-%sname
 %_rpmmacrosdir/%sname
 %exclude %_includedir/*
-#exclude %_datadir/idl/*
-#exclude %_libdir/newmoon-devel-31.0.0/*
 
 
-# git commit 0fe675cd9692cc792c4d5a267dce11702ee4d4f4
 %changelog
+* Wed Jul 13 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.1.1-alt1
+- Version 31.1.1
+
+* Wed Jul 13 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.1.1-alt0_1
+- New Version (test buld)
+
 * Mon May 30 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.0.0-alt0.5
 - Add nemoon_branding-31.0.0.patch
 
