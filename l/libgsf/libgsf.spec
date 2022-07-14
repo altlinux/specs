@@ -10,7 +10,7 @@
 %endif
 
 Name: libgsf
-Version: %ver_major.49
+Version: %ver_major.50
 Release: alt1
 
 Summary: GNOME Structured file library
@@ -154,6 +154,9 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 %endif
 
 %changelog
+* Thu Jul 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.50-alt1
+- 1.14.50
+
 * Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.49-alt1
 - 1.14.49
 

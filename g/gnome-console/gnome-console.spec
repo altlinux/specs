@@ -7,7 +7,7 @@
 %def_with nautilus
 
 Name: gnome-console
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Console
@@ -76,6 +76,9 @@ Nautilus file manager.
 %endif
 
 %changelog
+* Thu Jul 14 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
+- 42.2
+
 * Wed Jul 13 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - first build for Sisyphus
 
