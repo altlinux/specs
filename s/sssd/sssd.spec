@@ -8,8 +8,8 @@
 %def_disable systemtap
 
 Name: sssd
-Version: 2.7.2
-Release: alt2
+Version: 2.7.3
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -876,6 +876,13 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Fri Jul 15 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.7.3-alt1
+- Update to latest 2.7 major release:
+  + CLIENT: use thread local storage for socket to a.void the need for a lock.
+  + SSS_CLIENT: got rid of code duplication.
+  + SSS_CLIENT: mem-cache: fixed missing error code.
+  + PAM P11: fixed minor mem-leak.
+
 * Sat Jun 18 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.7.2-alt2
 - Update russian translations (by Elena Mishina <lepata@basealt.ru>)
 
