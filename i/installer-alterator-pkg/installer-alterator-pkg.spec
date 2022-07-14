@@ -1,6 +1,6 @@
 Name: installer-alterator-pkg
-Version: 3.0.0
-Release: alt2
+Version: 3.0.1
+Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
 %add_findreq_skiplist %_datadir/install2/initinstall.d/*
@@ -58,6 +58,9 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Jul 14 2022 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1
+- add multiple lists support in X-Alterator-PackageList (Closes: 43186)
+
 * Thu Jun 30 2022 Anton Midyukov <antohami@altlinux.org> 3.0.0-alt2
 - NMU: pkg-install: replace egrep with grep -E
 
