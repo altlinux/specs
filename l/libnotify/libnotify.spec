@@ -1,4 +1,4 @@
-%define ver_major 0.7
+%define ver_major 0.8
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable docbook_docs
@@ -6,8 +6,8 @@
 %def_enable man
 
 Name: libnotify
-Version: %ver_major.11
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Desktop notification library
 Group: System/Libraries
@@ -138,6 +138,9 @@ the command line.
 %{?_enable_docbook_docs:%exclude %_datadir/doc/%name/}
 
 %changelog
+* Thu Jul 14 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Thu May 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.7.11-alt2
 - updated to 0.7.11-11-g4d68baf (also fixed i25, ALT #42685)
 
