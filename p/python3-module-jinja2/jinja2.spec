@@ -1,5 +1,5 @@
 Name: python3-module-jinja2
-Version: 3.1.1
+Version: 3.1.2
 Release: alt1
 
 Summary: The new and improved version of a small but fast template engine
@@ -32,6 +32,9 @@ sandboxed environment.
 %python3_sitelibdir/Jinja2-%version-*-info
 
 %changelog
+* Thu Jul 14 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.2-alt1
+- 3.1.2 released
+
 * Tue May 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.1-alt1
 - 3.1.1 released
 
