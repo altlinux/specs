@@ -1,8 +1,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.43.13
-Release: alt1
+Version: 0.43.14
+Release: alt2
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
 
@@ -68,6 +68,8 @@ Requires: alterator-datetime
 Requires: sssd-dbus
 Requires: alterator-roles-common
 Requires: samba-winbind-clients
+Requires: sssd-tools
+Requires: adcli
 
 Provides:  task-auth-ad = %EVR
 Obsoletes: task-auth-ad < %EVR
@@ -172,6 +174,12 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Tue Jul 12 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.43.14-alt2
+- task-auth-ad-sssd: add requires for sssd-tools and adcli for machine password
+
+* Mon Jul 11 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.43.14-alt1
+- Added functionality related to adding roles for domain groups.
+
 * Mon Jul 04 2022 Ivan Savin <svn17@altlinux.org> 0.43.13-alt1
 - Add new parameters when setting up AD.
 
