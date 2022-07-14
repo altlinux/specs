@@ -1,5 +1,5 @@
 Name: xviewer
-Version: 3.2.5
+Version: 3.2.7
 Release: alt1
 
 Summary: Fast and functional image viewer.
@@ -96,6 +96,9 @@ the functionality of the Xviewer GUI.
 %_libdir/%name/girepository-1.0/*.typelib
 
 %changelog
+* Wed Jul 13 2022 Vladimir Didenko <cow@altlinux.org> 3.2.7-alt1
+- New version
+
 * Tue Jun 21 2022 Vladimir Didenko <cow@altlinux.org> 3.2.5-alt1
 - New version
 
