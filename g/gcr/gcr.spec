@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 3.41
@@ -11,8 +11,8 @@
 %def_enable check
 
 Name: gcr
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
 Group: Graphical desktop/GNOME
@@ -127,7 +127,6 @@ This package contains development documentation for GCR libraries.
 %find_lang %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
 xvfb-run %__meson_test -t 2
 
 %files -f %name.lang
@@ -196,6 +195,9 @@ xvfb-run %__meson_test -t 2
 
 
 %changelog
+* Thu Jul 14 2022 Yuri N. Sedunov <aris@altlinux.org> 3.41.1-alt1
+- 3.41.1
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.41.0-alt2
 - updated to 3.41.0-27-g31bc9eb from gcr-3-41 branch (fixed build
   with meson >= 0.61)
