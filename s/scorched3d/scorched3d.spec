@@ -12,7 +12,7 @@
 
 Name:    scorched3d
 Version: 44
-Release: alt2
+Release: alt3
 License: GPL
 Group:   Games/Arcade
 Summary: A 3D version of the classic DOS game Scorched Earth
@@ -32,6 +32,8 @@ Patch4: %name-%version-fedora-syslibs.patch
 Patch5: %name-%version-fedora-returntype.patch
 Patch6: %name-%version-alt-thumbsdb.patch
 Patch7: %name-%version-alt-wxGTK-compat.patch
+# https://sources.debian.org/patches/scorched3d/44+dfsg-7/lua-5.4.patch/
+Patch8: %name-%version-lua-5.4.patch
 
 BuildRequires: gcc-c++ libGL-devel libSDL-devel libSDL_net-devel
 BuildRequires: libexpat-devel libfftw3-devel libjpeg-devel
@@ -73,6 +75,7 @@ This package contains data files for Scorched 3D.
 %patch5 -p0
 %patch6 -p3
 %patch7 -p3
+%patch8 -p1
 
 # ensure we use the system versions of these
 rm -f src/common/common/snprintf.c
@@ -128,6 +131,9 @@ install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 %_gamesdatadir/*
 
 %changelog
+* Thu Jul 14 2022 L.A. Kostis <lakostis@altlinux.ru> 44-alt3
+- Fix FTBFS (apply lua-5.4 patch from debian).
+
 * Mon Oct 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 44-alt2
 - Rebuilt with new wxGTK.
 
