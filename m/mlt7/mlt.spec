@@ -9,6 +9,7 @@
 
 %def_disable debug
 %def_enable libvidstab
+%def_enable opencv
 
 %define Name MLT
 %define nam mlt
@@ -19,7 +20,7 @@
 %define libmltxx libmlt++%mltxx_sover
 
 Name: %nam%mlt_major
-Version: 7.2.0
+Version: 7.8.0
 Release: alt1
 %K5init no_altplace
 
@@ -54,6 +55,9 @@ BuildRequires: librubberband-devel libvorbis-devel
 BuildRequires: libxml2-devel swig ladspa_sdk
 %if_enabled libvidstab
 BuildRequires: libvidstab-devel
+%endif
+%if_enabled opencv
+BuildRequires: libopencv-devel
 %endif
 BuildRequires: python3-devel
 BuildRequires: libgdk-pixbuf-devel libpango-devel
@@ -134,7 +138,7 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %endif
 %K5build \
     -DSWIG_PYTHON=ON \
-    -DMOD_OPENCV=OFF \
+    -DMOD_OPENCV=%{?_enable_opencv:ON}%{!?_enable_opencv:OFF} \
     #
 
 %install
@@ -171,6 +175,9 @@ export CC=gcc CXX=g++ CFLAGS="%optflags" QTDIR=%_qt5_prefix
 %_pkgconfigdir/mlt++-%mlt_major.pc
 
 %changelog
+* Wed Jul 13 2022 Sergey V Turchin <zerg@altlinux.org> 7.8.0-alt1
+- new version
+
 * Thu Nov 18 2021 Sergey V Turchin <zerg@altlinux.org> 7.2.0-alt1
 - new version
 
