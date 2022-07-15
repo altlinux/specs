@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-virtual
-Version: 5.23.1
+Version: 5.24.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -249,7 +249,7 @@ Summary:  LightDM Display Manager collective package
 Provides: kde5-display-manager = %EVR
 Provides: kde5-display-manager-lightdm = %EVR
 Requires: kf5-filesystem
-Requires: lightdm-kde-greeter
+Requires: lightdm-kde-greeter dm-tool
 %description -n kde5-display-manager-4-lightdm
 %summary
 
@@ -261,7 +261,7 @@ Obsoletes: kde5-display-manager-2-sddm < %EVR
 Provides: kde5-display-manager = %EVR
 Provides: kde5-display-manager-sddm = %EVR
 Requires: kf5-filesystem
-Requires: sddm sddm-theme-breeze plasma5-sddm-kcm
+Requires: sddm sddm-theme-breeze plasma5-sddm-kcm dm-tool
 %description -n kde5-display-manager-5-sddm
 %summary
 
@@ -301,6 +301,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm
 %files -n kde5-display-manager-5-sddm
 
 %changelog
+* Thu Jul 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.0-alt1
+- require dm-tool for display-manager
+
 * Wed Apr 06 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.1-alt1
 - add kde5-video-player-haruna
 
