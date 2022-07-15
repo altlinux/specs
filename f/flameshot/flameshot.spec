@@ -1,5 +1,5 @@
 Name: flameshot
-Version: 12.0.0
+Version: 12.1.0
 Release: alt1
 
 Summary: Powerful yet simple to use screenshot software
@@ -53,6 +53,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_man1dir/flameshot.1.xz
 
 %changelog
+* Fri Jul 15 2022 Grigory Ustinov <grenka@altlinux.org> 12.1.0-alt1
+- Automatically updated to 12.1.0.
+
 * Mon Jun 27 2022 Grigory Ustinov <grenka@altlinux.org> 12.0.0-alt1
 - Automatically updated to 12.0.0.
 
