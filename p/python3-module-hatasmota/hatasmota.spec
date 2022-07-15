@@ -1,5 +1,5 @@
 Name: python3-module-hatasmota
-Version: 0.4.1
+Version: 0.5.1
 Release: alt1
 
 Summary: Python library to interface with Tasmota devices
@@ -29,6 +29,9 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %python3_sitelibdir/HATasmota-%version-*-info
 
 %changelog
+* Tue Jun 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.1-alt1
+- 0.5.1 released
+
 * Wed May 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.1-alt1
 - 0.4.1 released
 
