@@ -7,7 +7,7 @@
 %define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite docs-school-teacher docs-alt-education docs-alt-kworkstation docs-alt-server docs-alt-workstation docs-alt-spworkstation docs-alt-server-v
 
 Name: docs-%variant
-Version: 10.0
+Version: 10.1
 Release: alt1
 
 Summary: %Variant documentation
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Jul 15 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt1
+- update to ALT Server V 10.1rc
+
 * Tue Dec 28 2021 Elena Mishina <lepata@altlinux.org> 10.0-alt1
 - update to ALT Server V 10.0beta
 - reduce package size
