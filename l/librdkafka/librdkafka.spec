@@ -1,5 +1,5 @@
 Name: librdkafka
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary: the Apache Kafka C/C++ client library
@@ -64,6 +64,9 @@ rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Fri Jul 15 2022 Grigory Ustinov <grenka@altlinux.org> 1.9.1-alt1
+- Automatically updated to 1.9.1.
+
 * Mon Jun 27 2022 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1
 - Build new version for python3-module-confluent-kafka from git.
 
