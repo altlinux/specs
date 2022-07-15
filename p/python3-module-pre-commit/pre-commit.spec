@@ -1,5 +1,7 @@
-Name:    python3-module-pre-commit
-Version: 2.19.0
+%define oname pre-commit
+
+Name:    python3-module-%oname
+Version: 2.20.0
 Release: alt1
 
 Summary: A framework for managing and maintaining multi-language pre-commit hooks.
@@ -20,7 +22,7 @@ Source:  %name-%version.tar
 %summary
 
 %prep
-%setup -n %name-%version
+%setup
 
 %build
 %python3_build
@@ -33,11 +35,16 @@ Source:  %name-%version.tar
 
 %files
 %doc *.md
-%_bindir/*
+%_bindir/%oname
+%_bindir/%oname-validate-config
+%_bindir/%oname-validate-manifest
 %python3_sitelibdir/pre_commit
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/pre_commit-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Jul 15 2022 Grigory Ustinov <grenka@altlinux.org> 2.20.0-alt1
+- Automatically updated to 2.20.0.
+
 * Thu May 12 2022 Grigory Ustinov <grenka@altlinux.org> 2.19.0-alt1
 - Automatically updated to 2.19.0.
 
