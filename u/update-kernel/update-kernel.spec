@@ -1,5 +1,5 @@
 Name: update-kernel
-Version: 1.3.1
+Version: 1.4
 Release: alt1
 
 Summary: Update kernel and modules
@@ -49,6 +49,10 @@ make check
 %_sbindir/analyze-kmodules
 
 %changelog
+* Sat Jul 16 2022 Vitaly Chikunov <vt@altlinux.org> 1.4-alt1
+- update-kernel: Only check booted kernel for external modules compatibility
+  and remove red colored warnings.
+
 * Thu Jun 30 2022 Vitaly Chikunov <vt@altlinux.org> 1.3.1-alt1
 - Output some minor warnings in yellow instead of red.
 - remove-old-kernels: Do not keep backup kernel with '-B' (reproducing old
