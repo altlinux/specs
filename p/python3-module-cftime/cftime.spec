@@ -1,9 +1,9 @@
-%define  modulename cftime
+%define  oname cftime
 
 %def_with check
 
-Name:    python3-module-%modulename
-Version: 1.6.0
+Name:    python3-module-%oname
+Version: 1.6.1
 Release: alt1
 
 Summary: Time-handling functionality from netcdf4-python.
@@ -44,11 +44,14 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 py.test3
 
 %files
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 %doc *.md
 
 %changelog
+* Fri Jul 15 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt1
+- Automatically updated to 1.6.1.
+
 * Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt1
 - Automatically updated to 1.6.0.
 - Build with check.
