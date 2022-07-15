@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	5.18
-%define kernel_sublevel .11
+%define kernel_sublevel .12
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -612,6 +612,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Jul 15 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.18.12-alt1
+- v5.18.12 (2022-07-15).
+- config: CONFIG_SND_SOC_AMD_ACP_PCI=m (ALT#43224).
+
 * Wed Jul 13 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.18.11-alt1
 - v5.18.11 (2022-07-12).
 
