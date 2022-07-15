@@ -1,16 +1,16 @@
 Name: nauty
-%define lname   libnauty-2_7_1
-%define fuv      27r1
-Version: 2.7.1
+%define lname   libnauty-2_7_4
+Version: 27r4
 Release: alt1
 Summary: Tools for computing automorphism groups of graphs
 License: Apache-2.0
 Group: Sciences/Mathematics
 Url: http://pallini.di.uniroma1.it/
 
-Source: http://pallini.di.uniroma1.it/nauty%fuv.tar.gz
+Source: http://pallini.di.uniroma1.it/nauty%version.tar.gz
 Patch1: nauty-am.diff
 Patch2: nauty-uninitialized.diff
+Patch3: nauty-0.7.3-am.patch
 BuildRequires: automake
 BuildRequires: libgmp-devel
 BuildRequires: libtool >= 2
@@ -49,9 +49,10 @@ This subpackage contains the header files for developing
 applications that want to make use of libnauty.
 
 %prep
-%setup -n nauty%fuv
-%patch1 -p1
+%setup -n nauty%version
+#%patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 rm -f makefile
@@ -70,7 +71,7 @@ rm -f %buildroot%_libdir/*.la
 %doc COPYRIGHT
 
 %files -n %lname
-%_libdir/libnauty*-2.7.1.so
+%_libdir/libnauty*-2.7.4.so
 
 %files devel
 %_includedir/nauty/
@@ -84,5 +85,8 @@ rm -f %buildroot%_libdir/*.la
 %_libdir/libnautyW1.so
 
 %changelog
+* Fri Jul 15 2022 Leontiy Volodin <lvol@altlinux.org> 27r4-alt1
+- New version (27r4).
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 2.7.1-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
