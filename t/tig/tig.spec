@@ -4,7 +4,7 @@
 
 Name: tig
 Version: 2.5.6
-Release: alt1
+Release: alt2
 
 Summary: Text-mode interface for git
 License: GPLv2+
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 Requires: git-core
 
 BuildRequires: asciidoc
+BuildRequires: hardlink
 BuildRequires: libncursesw-devel
 BuildRequires: libreadline-devel
 BuildRequires: xmlto
@@ -45,7 +46,9 @@ install -pD -m644 doc/tigmanual.7 %buildroot%_man7dir/tigmanual.7
 mkdir -p %buildroot%_datadir/tig
 install -p -m644 contrib/*.tigrc %buildroot%_datadir/tig/
 install -pD -m644 contrib/tig-completion.bash %buildroot%_datadir/bash-completion/completions/tig
+install -pD -m644 contrib/tig-completion.bash %buildroot%_datadir/zsh/site-functions/tig-completion.bash
 install -pD -m644 contrib/tig-completion.zsh  %buildroot%_datadir/zsh/site-functions/_tig
+hardlink -v %buildroot%_datadir
 
 %check
 src/tig -v
@@ -60,8 +63,12 @@ src/tig -v
 %_datadir/tig
 %_datadir/bash-completion/completions/tig
 %_datadir/zsh/site-functions/_tig
+%_datadir/zsh/site-functions/tig-completion.bash
 
 %changelog
+* Fri Jul 15 2022 Vitaly Chikunov <vt@altlinux.org> 2.5.6-alt2
+- Package tig-completion.bash for zsh completion.
+
 * Wed Jul 13 2022 Vitaly Chikunov <vt@altlinux.org> 2.5.6-alt1
 - Update to tig-2.5.6 (2022-07-11).
 
