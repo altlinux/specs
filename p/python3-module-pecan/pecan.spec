@@ -1,7 +1,7 @@
-%define pypi_name pecan
+%define oname pecan
 
-Name: python3-module-%pypi_name
-Version: 1.4.1
+Name: python3-module-%oname
+Version: 1.4.2
 Release: alt1
 
 Summary: A lean WSGI object-dispatching web framework
@@ -29,12 +29,12 @@ A WSGI object-dispatching web framework, designed to be lean and
 fast with few dependencies
 
 %package tests
-Summary: Tests for %pypi_name
+Summary: Tests for %oname
 Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
-This package contains tests for %pypi_name.
+This package contains tests for %oname.
 
 %prep
 %setup
@@ -45,12 +45,13 @@ This package contains tests for %pypi_name.
 %install
 %python3_install
 
-rm -rf %buildroot%python3_sitelibdir/%pypi_name/tests/config_fixtures/bad
+rm -rf %buildroot%python3_sitelibdir/%oname/tests/config_fixtures/bad
 
 %files
 %doc LICENSE README.rst
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 %exclude %python3_sitelibdir/*/testing.py
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/*/+package+/tests
@@ -61,6 +62,9 @@ rm -rf %buildroot%python3_sitelibdir/%pypi_name/tests/config_fixtures/bad
 %python3_sitelibdir/*/*/*/+package+/tests
 
 %changelog
+* Fri Jul 15 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
+- Automatically updated to 1.4.2.
+
 * Tue May 24 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
 - Build new version.
 
