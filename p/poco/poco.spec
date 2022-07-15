@@ -1,5 +1,5 @@
 Name: poco
-Version: 1.11.3
+Version: 1.12.0
 Release: alt1
 Summary: POrtable COmponents C++ Libraries
 License: BSL-1.0
@@ -12,7 +12,7 @@ Patch2000: %name-e2k.patch
 
 BuildPreReq: gcc-c++ cmake libsqlite3-devel zlib-devel libpcre-devel
 BuildPreReq: libexpat-devel libssl-devel libmariadb-devel
-BuildPreReq: libunixODBC-devel libiodbc-devel
+BuildPreReq: libunixODBC-devel libiodbc-devel libpcre2-devel
 
 %description
 POrtable COmponents C++ Libraries are:
@@ -121,6 +121,14 @@ Requires: lib%name = %EVR
 
 %description -n lib%name-util
 POrtable COmponents C++ Libraries: Poco util library
+
+%package -n lib%name-prometheus
+Summary: POrtable COmponents C++ Libraries (util)
+Group: Development/C++
+Requires: lib%name = %EVR
+
+%description -n lib%name-prometheus
+POrtable COmponents C++ Libraries: Poco prometheus library
 
 %package -n lib%name-ssl
 Summary: POrtable COmponents C++ Libraries (ssl)
@@ -271,15 +279,19 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 %files -n lib%name-jwt
 %_libdir/libPocoJWT*.so.*
 
+%files -n lib%name-prometheus
+%_libdir/libPocoPrometheus*.so.*
+
 %files -n lib%name-devel
 %_bindir/*
 %_includedir/*
 %_libdir/*.so
 %_libdir/cmake/*
 
-#files -n lib%name-devel-docs
-
 %changelog
+* Fri Jul 15 2022 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Sat Jun 18 2022 Alexei Takaseev <taf@altlinux.org> 1.11.3-alt1
 - 1.11.3
 
