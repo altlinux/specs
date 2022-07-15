@@ -19,7 +19,7 @@
 Summary: The PHP7 scripting language
 Name:	 php%_php_suffix
 Version: %_php_major.%_php_minor.%_php_release_version
-Release: alt1
+Release: alt2
 
 
 License: PHP-3.01
@@ -117,6 +117,7 @@ read the file SELF-CONTAINED-EXTENSIONS.
 Group: Development/C
 Summary: Package with common data for various PHP7 packages
 Requires: php-base >= 2.5
+Conflicts: installer-common-stage3 installer-stage3
 
 Provides: php%_php_major-bcmath = %php_version-%php_release
 Provides: php%_php_major-ctype = %php_version-%php_release
@@ -450,6 +451,10 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Thu Jul 14 2022 Anton Farygin <rider@altlinux.ru> 7.4.30-alt2
+- added conflicts with the installer-stage3 to avoid using php7
+  in distributios: The first stage of EOL plan
+
 * Thu Jun 16 2022 Anton Farygin <rider@altlinux.ru> 7.4.30-alt1
 - 7.4.28 -> 7.4.30 (Fixes: CVE-2022-31626, CVE-2022-31625)
 
