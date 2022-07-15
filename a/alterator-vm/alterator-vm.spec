@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.26
+Version: 0.4.27
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -38,6 +38,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Wed Jul 13 2022 Oleg Solovyov <mcpain@altlinux.org> 0.4.27-alt1
+- Handle new BtrFS subvolume feature
+
 * Wed May 04 2022 Oleg Solovyov <mcpain@altlinux.org> 0.4.26-alt1
 - make sure that GRUB stage1.5 can be installed
 

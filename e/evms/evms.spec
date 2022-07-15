@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt53
+Release: alt54
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -19,6 +19,7 @@ Source: %name-%version-%release.tar
 BuildRequires: glib2-devel libe2fs-devel libncurses-devel libreadline-devel libuuid-devel
 BuildRequires: libblkid-devel
 BuildRequires: libcryptsetup-devel >= 1.4.0
+BuildRequires: libbtrfs-devel
 
 %if_with x
 BuildRequires: gtk+-devel
@@ -120,7 +121,7 @@ sed -i /SEGV/d engine/faulthdlr.c
     %{subst_enable static} \
     #
 
-make LD_LIBRARY_PATH=%buildroot/%_lib
+%make_build LD_LIBRARY_PATH=%buildroot/%_lib
 make -C tests evms_deactivate
 
 %install
@@ -183,6 +184,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Wed Jul 13 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt54
+- new feature: btrfs subvolumes support
+
 * Tue Jun 07 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt53
 - plugins/md: fix incorrect ternary operator
 

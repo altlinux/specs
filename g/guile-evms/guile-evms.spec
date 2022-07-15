@@ -1,5 +1,5 @@
 Name: guile-evms
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 
 Summary: Guile bindings for EVMS
@@ -33,6 +33,10 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Wed Jul 13 2022 Oleg Solovyov <mcpain@altlinux.org> 0.6.3-alt1
+- handle new evms feature: BtrFS subvolumes support
+- set volume mountpoint: remove "required" from field
+
 * Tue Sep 21 2021 Slava Aseev <ptrnine@altlinux.org> 0.6.2-alt1
 - remove deletion of twice-assigned mountpoint from old volume
 
