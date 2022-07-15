@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.1.6
+Version: 1.1.8
 Release: alt1
 
 Summary: A caching front-end based on the Dogpile lock
@@ -70,9 +70,13 @@ tox.py3 --sitepackages
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%mname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Jul 15 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.8-alt1
+- Automatically updated to 1.1.8.
+
 * Mon Jun 13 2022 Grigory Ustinov <grenka@altlinux.org> 1.1.6-alt1
 - Automatically updated to 1.1.6.
 
