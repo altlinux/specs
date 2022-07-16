@@ -2,15 +2,14 @@ Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
-%filter_from_requires /^.usr.bin.run/d
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           apache-rat
 Summary:        Apache Release Audit Tool (RAT)
 Version:        0.13
-Release:        alt1_8jpp11
+Release:        alt1_9jpp11
 License:        ASL 2.0
 
 URL:            http://creadur.apache.org/rat/
@@ -154,7 +153,7 @@ rm apache-rat-plugin/src/test/java/org/apache/rat/mp/RatCheckMojoTest.java
 
 
 %build
-%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8
+%mvn_build -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.compiler.release=8
 
 
 %install
@@ -193,6 +192,9 @@ touch $RPM_BUILD_ROOT/etc/java/apache-rat.conf
 
 
 %changelog
+* Sat Jul 16 2022 Igor Vlasenko <viy@altlinux.org> 0.13-alt1_9jpp11
+- update
+
 * Sun Jun 06 2021 Igor Vlasenko <viy@altlinux.org> 0.13-alt1_8jpp11
 - rebuild with java11 and use jvm_run
 
