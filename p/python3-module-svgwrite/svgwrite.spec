@@ -2,7 +2,7 @@
 %define oname svgwrite
 
 Name: python3-module-%oname
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 
 Summary: A Python library to create SVG drawings
@@ -35,6 +35,9 @@ A Python library to create SVG drawings.
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sat Jul 16 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.3-alt1
+- Automatically updated to 1.4.3.
+
 * Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.2-alt1
 - Build new version.
 
