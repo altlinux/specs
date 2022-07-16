@@ -8,7 +8,7 @@
 
 Name:     simpletest
 Version:  12
-Release:  alt1
+Release:  alt2
 
 Summary:  Simple toolchain test
 License:  GPL-3
@@ -76,6 +76,9 @@ Also provides useful information about system:
 %doc README
 
 %changelog
+* Sat Jul 16 2022 Andrew Savchenko <bircoph@altlinux.org> 12-alt2
+- Workaround g++-12 bug: alt bug 41451.
+
 * Mon May 30 2022 Andrew Savchenko <bircoph@altlinux.org> 12-alt1
 - Make Fortran support conditional
 
