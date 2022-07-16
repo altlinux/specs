@@ -7,12 +7,12 @@
 %endif
 
 %def_without vanilla
-%define gecko_version 2.47.2
+%define gecko_version 2.47.3
 %define mono_version 7.3.0
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.11
+%define major 7.13
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -265,11 +265,6 @@ Requires: glibc-pthread glibc-nss
 Requires: wine-gecko = %gecko_version
 Conflicts: wine-mono < %mono_version
 
-%if_without libwine
-Provides: lib%name = %EVR
-Obsoletes: lib%name
-%endif
-
 # For menu/MIME subsystem
 Requires: desktop-file-utils
 
@@ -394,6 +389,8 @@ Conflicts: %conflictbase-common
 AutoProv:no
 Conflicts: libwine <= 6.14.1
 Conflicts: i586-libwine <= 6.14.1
+Conflicts: wine <= 6.14.1
+Conflicts: i586-wine <= 6.14.1
 
 %description common
 Common arch independent wine files and scripts.
@@ -686,6 +683,7 @@ fi
 %libwinedir/%winesodir/wpcap.so
 %endif
 %libwinedir/%winesodir/winebus.so
+%libwinedir/%winesodir/wineusb.so
 
 %if_without mingw
 %{?_without_vanilla:%libwinedir/%winesodir/windows.networking.connectivity.so}
@@ -717,7 +715,6 @@ fi
 
 # some dll still compiled as not PE in any way
 %libwinedir/%winesodir/*.dll.so
-%libwinedir/%winesodir/*.sys.so
 
 %libwinedir/%winepedir/*.com
 %libwinedir/%winepedir/*.cpl
@@ -853,6 +850,11 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.13.1-alt1
+- new version 7.13.1 (with rpmrb script)
+- add obsoletes for libwine, wine, i586-libwine, i586-wine < 6.14.1
+- set strict require wine-gecko 2.47.3
+
 * Sat Jul 02 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.11.1-alt1
 - new version 7.11.1 (with rpmrb script)
 

@@ -7,12 +7,12 @@
 %endif
 
 %def_with vanilla
-%define gecko_version 2.47.2
+%define gecko_version 2.47.3
 %define mono_version 7.3.0
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.12
+%define major 7.13
 %define rel %nil
 %define conflictbase wine
 
@@ -67,7 +67,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -697,7 +697,6 @@ fi
 
 # some dll still compiled as not PE in any way
 %libwinedir/%winesodir/*.dll.so
-%libwinedir/%winesodir/*.sys.so
 
 %libwinedir/%winepedir/*.com
 %libwinedir/%winepedir/*.cpl
@@ -833,6 +832,10 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sat Jul 16 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.13-alt1
+- new version 7.13 (with rpmrb script)
+- set strict require wine-gecko 2.47.3
+
 * Tue Jul 12 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.12-alt2
 - add obsoletes for libwine, wine, i586-libwine, i586-wine < 6.14.1
 

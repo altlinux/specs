@@ -3,7 +3,7 @@
 %define geckodir %_datadir/wine/gecko
 
 Name: wine-gecko
-Version: 2.47.2
+Version: 2.47.3
 Release: alt1
 
 Summary: Custom version of Mozilla's Gecko Layout Engine for Wine
@@ -48,6 +48,9 @@ cp -a $(basename %SOURCE2 .tar) %buildroot%geckodir/wine-gecko-%version-x86_64/
 %geckodir/wine-gecko-%version-x86_64/
 
 %changelog
+* Sat Jul 16 2022 Vitaly Lipatov <lav@altlinux.ru> 2.47.3-alt1
+- new version 2.47.3 (with rpmrb script)
+
 * Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 2.47.2-alt1
 - new version 2.47.2 (with rpmrb script)
 
