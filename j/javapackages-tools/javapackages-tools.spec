@@ -13,6 +13,7 @@ BuildRequires(pre): rpm-build-python3
 %add_python3_path /usr/share/java-utils/
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
+%define fedora 34
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -23,7 +24,11 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 %bcond_with bootstrap
 
+%if 0%{?fedora}
 %bcond_without ivy
+%else
+%bcond_without ivy
+%endif
 
 # Don't generate requires on jpackage-utils and java-headless for
 # provided pseudo-artifacts: com.sun:tools and sun.jdk:jconsole.
@@ -37,15 +42,21 @@ BuildRequires: jpackage-default
 
 Name:           javapackages-tools
 Version:        6.0.0
-Release:        alt1_1jpp11
+Release:        alt1_7jpp11
 Summary:        Macros and scripts for Java packaging support
 License:        BSD
 URL:            https://github.com/fedora-java/javapackages
 BuildArch:      noarch
 
 Source0:        https://github.com/fedora-java/javapackages/archive/%{version}.tar.gz
-Source2:        toolchains-openjdk8.xml
 Source3:        javapackages-config.json
+
+Source8:        toolchains-openjdk8.xml
+Source11:       toolchains-openjdk11.xml
+Source17:       toolchains-openjdk17.xml
+
+# Upstream patch for rhbz#2025272
+Patch0:         0001-Update-ivy-local-classpath.patch
 
 BuildRequires:  coreutils
 BuildRequires:  which
@@ -170,13 +181,13 @@ packaging in Linux distributions
 Group: Development/Java
 Summary:        Non-essential macros and scripts for Java packaging support
 Requires:       rpm-build-java = %{?epoch:%epoch:}%{version}-%{release}
+# Java build systems don't have hard requirement on java-devel, so it should be there
 %if %{with bootstrap}
 Requires:       javapackages-bootstrap
 %else
 Requires:       %{_bindir}/xmvn-install
 Requires:       %{_bindir}/xmvn-subst
 Requires:       %{_bindir}/xmvn-resolve
-# Java build systems don't have hard requirement on java-devel, so it should be there
 %endif
 
 %description -n javapackages-local
@@ -185,13 +196,33 @@ This package provides non-essential macros and scripts to support Java packaging
 %package -n maven-local-openjdk8
 Group: Development/Java
 Summary:        OpenJDK 8 toolchain for XMvn
+#RemovePathPostfixes: -openjdk8
 Requires:       maven-local
 
 %description -n maven-local-openjdk8
 OpenJDK 8 toolchain for XMvn
 
+%package -n maven-local-openjdk11
+Group: Development/Java
+Summary:        OpenJDK 11 toolchain for XMvn
+#RemovePathPostfixes: -openjdk11
+Requires:       maven-local
+
+%description -n maven-local-openjdk11
+OpenJDK 11 toolchain for XMvn
+
+%package -n maven-local-openjdk17
+Group: Development/Java
+Summary:        OpenJDK 17 toolchain for XMvn
+#RemovePathPostfixes: -openjdk17
+Requires:       maven-local
+
+%description -n maven-local-openjdk17
+OpenJDK 17 toolchain for XMvn
+
 %prep
 %setup -q -n javapackages-%{version}
+%patch0 -p1
 
 sed -i '/^manpage /d' build
 sed -i '/${mandir}/d' install
@@ -227,7 +258,9 @@ rm -rf %{buildroot}%{_sysconfdir}/ant.d
 %endif
 
 mkdir -p %{buildroot}%{_datadir}/xmvn/conf/
-cp -p %{SOURCE2} %{buildroot}%{_datadir}/xmvn/conf/toolchains.xml
+cp -p %{SOURCE8} %{buildroot}%{_datadir}/xmvn/conf/toolchains.xml-openjdk8
+cp -p %{SOURCE11} %{buildroot}%{_datadir}/xmvn/conf/toolchains.xml-openjdk11
+cp -p %{SOURCE17} %{buildroot}%{_datadir}/xmvn/conf/toolchains.xml-openjdk17
 
 install -p -m 644 %{SOURCE3} %{buildroot}%{_sysconfdir}/java/javapackages-config.json
 
@@ -270,6 +303,9 @@ mv osgi.req osgi-fc.req
 popd
 sed -i 's,/usr/lib/rpm/osgi\.,/usr/lib/rpm/osgi-fc.,' files-generators
 sed -i '/usr.lib.rpm.fileattrs/d' files-generators
+# keep maven-local-openjdk8 for now
+mv %buildroot%_datadir/xmvn/conf/toolchains.xml{-openjdk8,}
+rm %buildroot%_datadir/xmvn/conf/toolchains.xml-openjdk1*
 
 
 
@@ -309,12 +345,16 @@ sed -i '/usr.lib.rpm.fileattrs/d' files-generators
 %endif
 
 %files -n maven-local-openjdk8
-%{_datadir}/xmvn/conf
+%dir %{_datadir}/xmvn/conf
+%{_datadir}/xmvn/conf/toolchains.xml
 
 %files -n python3-module-javapackages -f files-python
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Jul 16 2022 Igor Vlasenko <viy@altlinux.org> 1:6.0.0-alt1_7jpp11
+- update
+
 * Fri Jul 08 2022 Igor Vlasenko <viy@altlinux.org> 1:6.0.0-alt1_1jpp11
 - enabled maven-local-openjdk8
 
