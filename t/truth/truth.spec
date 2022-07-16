@@ -1,6 +1,6 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: jpackage-11
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -16,17 +16,19 @@ BuildRequires: jpackage-default
 
 Name:           truth
 Version:        1.0.1
-Release:        alt1_2jpp11
+Release:        alt1_4jpp11
 Summary:        An assertion framework for Java unit tests
 License:        ASL 2.0
 URL:            https://github.com/google/truth
 Source0:        https://github.com/google/truth/archive/%{vertag}/%{name}-%{version}.tar.gz
 BuildArch:      noarch
+#ExclusiveArch:  %{java_arches} noarch
 
 BuildRequires:  maven-local
+# Test failure with openjdk17
+#BuildRequires:  maven-openjdk11
 BuildRequires:  mvn(com.google.auto.value:auto-value)
-# This is in auto-value >= 1.6
-#BuildRequires:  mvn(com.google.auto.value:auto-value-annotations)
+BuildRequires:  mvn(com.google.auto.value:auto-value-annotations)
 BuildRequires:  mvn(com.google.code.findbugs:jsr305)
 # A number of annotation and testing deps are missing and are removed below
 #BuildRequires:  mvn(com.google.errorprone:error_prone_annotations)
@@ -62,16 +64,12 @@ or it can be used alongside where other approaches seem more suitable.
 %pom_disable_module proto extensions
 %endif
 %pom_remove_plugin :gwt-maven-plugin core
-# This is in auto-value >= 1.6
-%pom_remove_dep -r :auto-value-annotations
 %pom_remove_dep -r :compile-testing
 %pom_remove_dep -r :error_prone_annotations
 %pom_remove_dep :gwt-user core
 %pom_remove_dep :guava-gwt core
 %pom_remove_dep -r org.checkerframework:
 %pom_remove_plugin -r :protobuf-maven-plugin
-%pom_remove_plugin -r :maven-enforcer-plugin
-%pom_remove_plugin -r :animal-sniffer-maven-plugin
 %pom_change_dep :protobuf-lite :protobuf-javalite extensions/liteproto/pom.xml
 # Fails with missing class TestMessageLite2
 rm extensions/liteproto/src/test/java/com/google/common/truth/extensions/proto/LiteProtoSubjectTest.java
@@ -130,6 +128,9 @@ find -name '*.java' | xargs sed -ri \
 %doc --no-dereference LICENSE
 
 %changelog
+* Sat Jul 16 2022 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt1_4jpp11
+- fixed build with new auto
+
 * Wed Jun 08 2022 Igor Vlasenko <viy@altlinux.org> 1.0.1-alt1_2jpp11
 - new version
 
