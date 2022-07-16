@@ -3,13 +3,13 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           auto
 Summary:        Collection of source code generators for Java
-Version:        1.5.4
-Release:        alt1_6jpp11
+Version:        1.6.1
+Release:        alt1_3jpp11
 License:        ASL 2.0
 
 URL:            https://github.com/google/auto
@@ -20,6 +20,7 @@ Source1:        gen_auto_tarball.sh
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.squareup:javapoet)
+BuildRequires:  mvn(org.apache.maven.plugins:maven-invoker-plugin)
 
 BuildArch:      noarch
 Source44: import.info
@@ -57,6 +58,22 @@ Summary:        Auto Value
 Immutable value-type code generation for Java 1.6+.
 
 
+%package value-annotations
+Group: Development/Java
+Summary:        Auto Value Annotations
+
+%description value-annotations
+Immutable value-type code generation for Java 1.6+.
+
+
+%package value-parent
+Group: Development/Java
+Summary:        Auto Value Parent
+
+%description value-parent
+Immutable value-type code generation for Java 1.6+.
+
+
 %package javadoc
 Group: Development/Java
 Summary:        Javadoc for %{name}
@@ -77,23 +94,16 @@ find -name '*.jar' -print -delete
 # Disable factory module due to missing dep:
 # com.google.googlejavaformat:google-java-format
 %pom_disable_module factory build-pom.xml
+# Missing dep on com.google.gwt:gwt
+%pom_disable_module src/it/functional value/pom.xml
+%pom_disable_module src/it/gwtserializer value/pom.xml
 
 # Fix deps in service module
 %pom_xpath_set "pom:parent/pom:version" 6 service
 %pom_change_dep com.google.auto:auto-common com.google.auto:auto-common:0.10 service
-
 %pom_remove_plugin org.apache.maven.plugins:maven-checkstyle-plugin
-%pom_remove_plugin :maven-shade-plugin value
-%pom_remove_plugin :maven-invoker-plugin value
-
-# Broader guava compatibility
-sed -i -e 's/23.5-jre/20.0/' pom.xml
-sed -i -e 's/toImmutableMap/toMap/' -e 's/static com.google.common.collect.ImmutableMap/static java.util.stream.Collectors/' \
-  -e '/elementValues/s/ImmutableMap/Map/' \
-  common/src/main/java/com/google/auto/common/SimpleAnnotationMirror.java
-sed -i -e 's/toImmutableSet/toSet/' -e 's/static com.google.common.collect.ImmutableSet/static java.util.stream.Collectors/' \
-  -e '/ImmutableSet</s/ImmutableSet/Set/' \
-  service/src/main/java/com/google/auto/service/processor/AutoServiceProcessor.java
+%pom_remove_plugin :maven-shade-plugin
+%pom_remove_plugin :maven-shade-plugin value/processor
 
 %mvn_package :build-only __noinstall
 
@@ -124,11 +134,20 @@ sed -i -e 's/toImmutableSet/toSet/' -e 's/static com.google.common.collect.Immut
 %doc value/README.md
 %doc --no-dereference LICENSE.txt
 
+%files value-annotations -f .mfiles-%{name}-value-annotations
+%doc --no-dereference LICENSE.txt
+
+%files value-parent -f .mfiles-%{name}-value-parent
+%doc --no-dereference LICENSE.txt
+
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt
 
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 1.6.1-alt1_3jpp11
+- new version
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 1.5.4-alt1_6jpp11
 - update
 
