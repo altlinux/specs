@@ -1,6 +1,6 @@
 Name: dbeaver
 Version: 21.2.0
-Release: alt1
+Release: alt2
 
 Summary: Universal Database Manager
 Summary(ru_RU.UTF-8): Универсальный менеджер баз данных
@@ -26,17 +26,12 @@ BuildRequires: /proc
 BuildRequires: java-11-openjdk-headless
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-jar-plugin
-BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-surefire-provider-testng
 BuildRequires: rpm-build-java
-BuildRequires: xmvn-install
-BuildRequires: xmvn-minimal
-BuildRequires: xmvn-mojo
-BuildRequires: xmvn-resolve
-BuildRequires: xmvn-subst
+BuildRequires: maven-local
 
 Requires: java-11-openjdk-headless
 
@@ -109,6 +104,9 @@ done
 %_pixmapsdir/%name.xpm
 
 %changelog
+* Sat Jul 16 2022 Igor Vlasenko <viy@altlinux.org> 21.2.0-alt2
+- build w/o maven-javadoc-plugin
+
 * Sun Sep 05 2021 Nazarov Denis <nenderus@altlinux.org> 21.2.0-alt1
 - Version 21.2.0
 
