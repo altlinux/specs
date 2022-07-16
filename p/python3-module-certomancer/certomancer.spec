@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: PKI testing tool
@@ -60,5 +60,8 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sat Jul 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.3-alt1
+- Automatically updated to 0.8.3.
+
 * Tue Jun 28 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.2-alt1
 - Initial build for Sisyphus.
