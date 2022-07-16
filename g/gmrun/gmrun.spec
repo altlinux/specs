@@ -1,23 +1,19 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: gmrun
-Version: 0.9.2
-Release: alt3
+Version: 1.4w
+Release: alt1
 Summary: Small GTK based 'Run application'
 
-Group: System/XFree86
-License: GPL
-Url: http://sourceforge.net/projects/%name/
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.gz
-
-# debian pacthes, three pieces
-Patch1: gmrun-0.9.1-deb-10-escaping.patch
-Patch2: gmrun-0.9.1-deb-20-includes.patch
-Patch3: gmrun-0.9.1-deb-30-fix-gcc-4.3-build.patch
-Patch4: gmrun-0.9.2-alt-fix-gcc-4.4-build.patch
+Group: System/X11
+License: Unlicense
+Url: https://github.com/WdesktopX/gmrun
+Source: %name-%version.tar
 
 Packager: Afanasov Dmitry <ender@altlinux.org>
 
-# Automatically added by buildreq on Sat Jul 15 2006
-BuildRequires: fontconfig freetype2 gcc-c++ glib2-devel libatk-devel libgtk+2-devel libpango-devel libpopt-devel libstdc++-devel pkgconfig
+BuildRequires: gcc-c++ pkgconfig gettext
+BuildRequires: libgtk+3-devel >= 3.14
 
 %description
 A full featured 'Run' application, GTK based.
@@ -25,24 +21,33 @@ A full featured 'Run' application, GTK based.
 %prep
 %setup
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
 %build
-%configure
-%__make %{?_smp_mflags}
+# xdg paths are disable for compatibility with old gmrun history
+%configure \
+    --enable-nls \
+    --enable-gtk3 \
+    --disable-xdg
+
+%make_build
 
 %install
-%__make install-strip DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %_bindir/%name
-%_datadir/%name
-%doc AUTHORS COPYING INSTALL README NEWS ChangeLog
+%_sysconfdir/%{name}rc
+%_datadir/applications/%name.desktop
+%_datadir/locale/*/LC_MESSAGES/%name.mo
+%_man1dir/%name.*
+%_pixmapsdir/%name.*
+%doc AUTHORS README.md ChangeLog
 
 %changelog
+* Sat Jul 16 2022 Andrew Savchenko <bircoph@altlinux.org> 1.4w-alt1
+- Version bump (Closes: 42988).
+- Move to new upstream.
+- Add debuginfo.
+
 * Fri May 08 2009 Afanasov Dmitry <ender@altlinux.org> 0.9.2-alt3
 - fix buidl with gcc4.4. gcc4.3 is not supported now
 
