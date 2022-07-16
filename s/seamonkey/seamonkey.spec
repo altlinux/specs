@@ -20,8 +20,8 @@
 %define ciddir %sm_prefix/extensions/%cid
 
 Name: seamonkey
-Version: 2.53.12
-Release: alt2
+Version: 2.53.13
+Release: alt1
 Epoch: 1
 Summary: Web browser and mail reader
 License: MPL-2.0
@@ -47,7 +47,6 @@ Source11: seamonkey-ru.watch
 
 Patch0: seamonkey-fix-installdirs.patch
 Patch1: seamonkey-alt-machOS-fix.patch
-Patch2: seamonkey-alt-fix-plugin-path.patch
 %if_with system_mozldap
 Patch5: thunderbird-with-system-mozldap.patch
 %endif
@@ -208,7 +207,6 @@ Install this package if you want to create RPM packages for seamonkey.
 
 #patch0 -p1
 %patch1 -p1
-%patch2 -p1
 %if_with system_mozldap
 %patch5 -p1 -b .mozldap
 %endif
@@ -470,6 +468,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 
 
 %changelog
+* Thu Jul 14 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.53.13-alt1
+- New version.
+
 * Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 1:2.53.12-alt2
 - NMU: use %%_rpmmacrosdir instead of /etc/rpm
 - split rpm-macros-seamonkey from rpm-build-seamonkey
