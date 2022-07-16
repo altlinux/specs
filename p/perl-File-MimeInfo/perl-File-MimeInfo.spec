@@ -2,7 +2,7 @@
 BuildRequires: perl-podlators perl(Encode/Locale.pm)
 %define dist File-MimeInfo
 Name: perl-%dist
-Version: 0.32
+Version: 0.33
 Release: alt1
 
 Summary: Determine file type
@@ -51,6 +51,9 @@ scripts for %name
 %_man1dir/*
 
 %changelog
+* Sat Jul 16 2022 Igor Vlasenko <viy@altlinux.org> 0.33-alt1
+- automated CPAN update
+
 * Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 0.32-alt1
 - automated CPAN update
 
