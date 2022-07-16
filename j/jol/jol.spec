@@ -1,11 +1,11 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-default
+BuildRequires: jpackage-11
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jol
 Version:        0.16
-Release:        alt1_1jpp11
+Release:        alt1_4jpp11
 Summary:        Java Object Layout
 
 License:        GPLv2 with exceptions
@@ -28,40 +28,40 @@ specification assumptions, etc.
 Source44: import.info
 
 %description 
+%_desc
 
 # Uncomment this once javadocs can be generated again
 # See https://github.com/fedora-java/xmvn/issues/58
 #%%{?javadoc_package}
 
-%_desc
 %package        parent
 Group: Development/Java
 Summary:        Java Object Layout parent POM
 
 %description    parent 
+%_desc
 
 This package contains the parent POM for JOL.
 
-%_desc
 %package        core
 Group: Development/Java
 Summary:        Java Object Layout core classes
 
 %description    core 
+%_desc
 
 This package contains the core classes for JOL.
 
-%_desc
 %package        cli
 Group: Development/Java
 Summary:        Java Object Layout command line interface
 Requires:       %{name}-core = %{version}-%{release}
 
 %description    cli 
+%_desc
 
 This package contains a command line interface to JOL.
 
-%_desc
 %prep
 %setup -q
 
@@ -75,6 +75,9 @@ This package contains a command line interface to JOL.
 # We do not need benchmarks or samples
 %pom_disable_module jol-benchmarks
 %pom_disable_module jol-samples
+
+# Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=1981486
+%pom_add_dep org.apache.commons:commons-lang3:3.12.0:test
 
 # Build for JDK 1.8
 sed -i 's/1\.7/1.8/' pom.xml
@@ -96,6 +99,9 @@ sed -i 's/1\.7/1.8/' pom.xml
 %files cli -f .mfiles-jol-cli
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0.16-alt1_4jpp11
+- update
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 0.16-alt1_1jpp11
 - java11 build
 
