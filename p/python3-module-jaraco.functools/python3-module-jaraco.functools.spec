@@ -1,7 +1,7 @@
 %define  modulename jaraco.functools
 
 Name:    python3-module-%modulename
-Version: 3.5.0
+Version: 3.5.1
 Release: alt1
 
 Summary: Additional functools in the spirit of stdlib's functools
@@ -12,8 +12,11 @@ URL:     https://github.com/jaraco/jaraco.functools
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: pip
 BuildRequires: python3-dev python3-module-setuptools_scm
+BuildRequires: python3-module-build
 BuildRequires: python3-module-toml
+BuildRequires: python3-module-wheel
 
 BuildArch: noarch
 
@@ -31,17 +34,20 @@ Source:  %modulename-%version.tar
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%__python3 -m build -n
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+pip3 install --root=%buildroot --no-deps dist/*.whl
 
 %files
 %python3_sitelibdir/jaraco/*
 %python3_sitelibdir/%{modulename}*
 
 %changelog
+* Fri Jul 15 2022 Andrey Cherepanov <cas@altlinux.org> 3.5.1-alt1
+- New version.
+
 * Mon Dec 20 2021 Andrey Cherepanov <cas@altlinux.org> 3.5.0-alt1
 - New version.
 
