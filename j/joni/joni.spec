@@ -5,7 +5,7 @@ BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           joni
-Version:        2.1.24
+Version:        2.1.41
 Release:        alt1_1jpp11
 Summary:        Java port of Oniguruma regexp library
 License:        MIT
@@ -16,14 +16,14 @@ Source0:        https://github.com/jruby/%{name}/archive/%{name}-%{version}/%{na
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
-BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.jruby.jcodings:jcodings)
-BuildRequires:  mvn(org.ow2.asm:asm)
 Source44: import.info
 
 %description
 joni is a port of Oniguruma, a regular expressions library,
 to java. It is used by jruby.
+
+%{?javadoc_package}
 
 %prep
 %setup -q -n %{name}-%{name}-%{version}
@@ -42,8 +42,7 @@ find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 %pom_remove_plugin :maven-source-plugin
 
 %build
-# https://github.com/fedora-java/xmvn/issues/58
-%mvn_build -j -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -P !release-on-9
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -53,6 +52,9 @@ find -type f '(' -iname '*.jar' -o -iname '*.class' ')' -print -delete
 %doc README.md
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:2.1.41-alt1_1jpp11
+- new version
+
 * Thu May 26 2022 Igor Vlasenko <viy@altlinux.org> 0:2.1.24-alt1_1jpp11
 - new version
 
