@@ -42,7 +42,7 @@
 
 Name: conky
 Version: 1.12.2
-Release: alt2
+Release: alt3
 
 Summary: lightweight graphical system monitor
 Summary(ru_RU.UTF-8): Легковесный графический системный монитор
@@ -69,7 +69,7 @@ BuildRequires(pre): cmake gcc-c++ rpm-build-vim
 %{?_enable_imlib2:BuildRequires: imlib2-devel}
 %{?_enable_irc:BuildRequires: libircclient-devel}
 %{?_enable_http:BuildRequires: libmicrohttpd-devel}
-%{?_enable_lua:BuildRequires:lua-devel}
+%{?_enable_lua:BuildRequires:lua5.3-devel}
 %{?_enable_lua_cairo:BuildRequires: lua5.3-devel tolua++-devel libcairo-devel}
 %{?_enable_lua_imlib2:BuildRequires: lua5.3-devel tolua++-devel imlib2-devel}
 %{?_enable_lua_rsvg:BuildRequires: lua5.3-devel tolua++-devel librsvg-devel}
@@ -197,6 +197,9 @@ rm %buildroot%_libdir/libtcp-portmon.a
 %vim_runtime_dir/syntax/conkyrc.vim
 
 %changelog
+* Sat Jul 16 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.12.2-alt3
+- Fixed FTBFS: changed lua-devel to lua5.3-devel in the BR.
+
 * Fri Mar 18 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.12.2-alt2
 - Fixed conky.watch.
 - Cleaned up gear repo.
