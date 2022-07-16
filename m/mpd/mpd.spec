@@ -4,13 +4,14 @@
 %def_enable shout
 %def_enable tcp
 %def_enable curl
-%def_disable ipv6
+%def_enable ipv6
 %def_enable fluidsynth
 %def_disable wildmidi
 %def_enable oss
 %def_enable alsa
 %def_enable jack
 %def_enable pulse
+%def_enable pipewire
 %def_enable fifo
 %def_enable vorbis
 %def_enable flac
@@ -22,7 +23,7 @@
 %def_disable modplug
 %def_enable faad
 %def_disable mpc
-%def_disable ffmpeg
+%def_enable ffmpeg
 %def_enable wavpack
 %def_enable id3
 %def_enable lsr
@@ -41,7 +42,10 @@
 %def_enable mpdclient
 %def_enable smbclient
 %def_enable opus
+%def_enable pcre
+%def_enable chromaprint
 %def_enable systemd
+%def_enable snapcast
 # auto|avahi|bonjour|disabled
 %define zeroconf avahi
 %define mpd_user _mpd
@@ -56,22 +60,22 @@
 %endif
 
 %if_enabled tremor
-%set_disable shout
+%def_disable shout
 %endif
 %{!?zeroconf:%define zeroconf disabled}
 
 %define  Name MPD
 
 Name:    mpd
-Version: 0.21.24
-Release: alt1.1
+Version: 0.23.8
+Release: alt2
 
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 License: %gpl2plus
 Group:   Sound
 Url:     https://musicpd.org
 
-# VCS:   https://github.com/MusicPlayerDaemon/MPD.git
+Vcs: https://github.com/MusicPlayerDaemon/MPD.git
 Source:  %name-%version.tar
 Source1: %name.conf
 Source2: %name.sys.conf.in
@@ -79,19 +83,19 @@ Source3: %name.init.in
 Source4: %name.logrotate
 Source5: %name.tmpfile
 
-Patch10: mpd-0.21.24-alt-docs-remove-upload-target.patch
+#Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson
 %if_enabled systemd
-BuildRequires(pre): systemd-devel /usr/bin/pkg-config
+BuildRequires(pre): rpm-build-systemd /usr/bin/pkg-config
 %endif
-BuildRequires: zlib-devel gcc-c++
+BuildRequires: meson gcc-c++ zlib-devel libfmt-devel
 %{?_enable_curl:BuildRequires: libcurl-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel >= 0.9.0}
 %{?_enable_jack:BuildRequires: jackit-devel}
 %{?_enable_ao:BuildRequires: libao-devel}
-%{?_enable_shout:BuildRequires: libshout2-devel}
+%{?_enable_shout:BuildRequires: libshout2-devel >= 2.4.0}
 %{?_enable_audiofile:BuildRequires: libaudiofile-devel >= 0.1.7}
 %{?_enable_mikmod:BuildRequires: libmikmod-devel >= 3.1.7}
 %{?_enable_modplug:BuildRequires: libmmodplug-devel}
@@ -102,9 +106,10 @@ BuildRequires: zlib-devel gcc-c++
 %{?_enable_vorbisenc:BuildRequires: libvorbis-devel}
 %{?_enable_lame:BuildRequires: liblame-devel}
 %{?_enable_mpc:BuildRequires: libmpcdec-devel}
-%{?_enable_ffmpeg:BuildRequires: libavformat-devel}
+%{?_enable_ffmpeg:BuildRequires: libavformat-devel libavcodec-devel libavutil-devel libavfilter-devel}
 %{?_enable_wavpack:BuildRequires: libwavpack-devel}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
+%{?_enable_pipewire:BuildRequires: pkgconfig(libpipewire-0.3)}
 %{?_enable_vorbis:BuildRequires: libvorbis-devel}
 %{?_enable_lsr:BuildRequires: libsamplerate-devel}
 %{?_enable_mms:BuildRequires: libmms-devel >= 0.4}
@@ -117,16 +122,18 @@ BuildRequires: zlib-devel gcc-c++
 %{?_enable_mpg123:BuildRequires: libmpg123-devel}
 %{?_enable_nfs:BuildRequires: libnfs-devel}
 %{?_enable_webdav:BuildRequires: libcurl-devel libexpat-devel}
-%{?_enable_upnp:BuildRequires: libupnp-devel}
+%{?_enable_upnp:BuildRequires: libnpupnp-devel}
 %{?_enable_mpdclient:BuildRequires: libmpdclient-devel}
 %{?_enable_smbclient:BuildRequires: libsmbclient-devel}
 %{?_enable_opus:BuildRequires: libopus-devel}
+%{?_enable_pcre:BuildRequires: libpcre2-devel}
+%{?_enable_chromaprint:BuildRequires: libchromaprint-devel}
 %{?_enable_doc:BuildRequires: python3-module-sphinx python3-module-sphinx-sphinx-build-symlink}
 %if %zeroconf == avahi
 BuildRequires: libavahi-glib-devel libdbus-devel
 %endif
 
-BuildRequires: boost-complete libicu-devel
+BuildRequires: boost-complete libicu-devel cmake libfmt-devel
 
 %description
 Music Player Daemon (%Name) allows remote access for playing music
@@ -155,11 +162,10 @@ This package contains %Name documentation.
 
 %prep
 %setup
-%patch10 -p1
+#%patch -p1
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
-
+%add_optflags %(getconf LFS_CFLAGS)
 %meson \
 	%{subst_enable_meson_feature tremor tremor} \
 	%{subst_enable_meson_feature ao ao} \
@@ -171,6 +177,7 @@ This package contains %Name documentation.
 	%{subst_enable_meson_feature alsa alsa} \
 	%{subst_enable_meson_feature jack jack} \
 	%{subst_enable_meson_feature pulse pulse} \
+	%{subst_enable_meson_feature pipewire pipewire} \
 	%{subst_enable_meson_bool fifo fifo} \
 	%{subst_enable_meson_feature vorbis vorbis} \
 	%{subst_enable_meson_feature flac flac} \
@@ -196,12 +203,15 @@ This package contains %Name documentation.
 	%{subst_enable_meson_feature mpg123 mpg123} \
 	%{subst_enable_meson_feature nfs nfs} \
 	%{subst_enable_meson_feature webdav webdav} \
-	%{subst_enable_meson_feature upnp upnp} \
+	%{?_enable_upnp:-Dupnp='npupnp'} \
 	%{subst_enable_meson_feature mpdclient libmpdclient} \
 	%{subst_enable_meson_feature smbclient smbclient} \
 	%{subst_enable_meson_feature opus opus} \
-	%{subst_enable_meson_bool doc documentation} \
+	%{subst_enable_meson_feature doc documentation} \
+	%{subst_enable_meson_feature pcre pcre} \
+	%{subst_enable_meson_feature chromaprint chromaprint} \
 	%{subst_enable_meson_feature systemd systemd} \
+	%{subst_enable_meson_bool snapcast snapcast} \
 %if_enabled systemd
 	-Dsystemd_system_unit_dir=%_unitdir \
 	-Dsystemd_user_unit_dir=%_userunitdir \
@@ -266,6 +276,25 @@ install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Sat Jul 16 2022 L.A. Kostis <lakostis@altlinux.ru> 0.23.8-alt2
+- merge aris@ .spec changes.
+
+* Thu Jul 14 2022 L.A. Kostis <lakostis@altlinux.ru> 0.23.8-alt1
+- 0.23.8.
+- enable snapcast.
+- enable ipv6.
+
+* Tue May 10 2022 Yuri N. Sedunov <aris@altlinux.org> 0.23.7-alt1
+- 0.23.7 (ported to PCRE2, new PipeWire plugin)
+
+* Mon Jun 28 2021 Yuri N. Sedunov <aris@altlinux.org> 0.22.9-alt1
+- 0.22.9
+
+* Tue Jun 22 2021 Yuri N. Sedunov <aris@altlinux.org> 0.22.8-alt1
+- updated to v0.22.8-35-gab487b9a9
+- enabled pcre, chromaprint support
+- enabled ffmpeg again
+
 * Fri May 28 2021 Yuri N. Sedunov <aris@altlinux.org> 0.21.24-alt1.1
 - doc/meson.build: remove "upload" target
   (https://github.com/MusicPlayerDaemon/MPD/issues/1161)

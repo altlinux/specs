@@ -1,6 +1,6 @@
 Name: libshout2
-Version: 2.2.2
-Release: alt3
+Version: 2.4.6
+Release: alt2
 
 Summary: libshout - icecast source streaming library
 Group: System/Libraries
@@ -8,15 +8,14 @@ License: LGPLv2+
 Url: http://www.icecast.org/
 # http://downloads.us.xiph.org/releases/libshout/libshout-%version.tar.gz
 Source: libshout-%version.tar
-# http://git.altlinux.org/gears/l/libshout2.git
-Patch: libshout-%version-%release.patch
+Patch: %name-%version-alt-shout2.patch
 
 %def_disable static
 
 %if_enabled static
 BuildRequires: glibc-devel-static
 %endif
-BuildRequires: libogg-devel libvorbis-devel libtheora-devel libspeex-devel
+BuildRequires: libogg-devel libvorbis-devel libtheora-devel libspeex-devel libssl-devel
 
 %description
 Libshout is a library for communicating with and sending data to an
@@ -26,7 +25,7 @@ data, and prevents most bad data from getting to the icecast server.
 %package devel
 Summary: icecast2 source streaming library development package
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains development library and header files needed for
@@ -35,7 +34,7 @@ developing applications that send data to an icecast2 server.
 %package devel-static
 Summary: icecast2 static library
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 This package contains static version of libshout2 library.
@@ -72,6 +71,14 @@ This package contains static version of libshout2 library.
 %endif
 
 %changelog
+* Sat Jul 16 2022 L.A. Kostis <lakostis@altlinux.ru> 2.4.6-alt2
+- Re-apply -shout2 patch (tnx to aris@).
+- Update requires.
+
+* Thu Jul 14 2022 L.A. Kostis <lakostis@altlinux.ru> 2.4.6-alt1
+- 2.4.6 release.
+- Enable TLS support.
+
 * Thu Apr 21 2011 Dmitry V. Levin <ldv@altlinux.org> 2.2.2-alt3
 - Cleaned up packaging.
 - Rebuilt for soname set-versions and debuginfo.

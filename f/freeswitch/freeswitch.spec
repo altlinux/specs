@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
 Version: 1.10.7
-Release: alt1
+Release: alt1.2
 Epoch: 1
 ExcludeArch: %arm %ix86
 
@@ -214,6 +214,9 @@ This package provides simple web-based UI.
 %patch0 -p1
 
 %build
+# https://github.com/signalwire/freeswitch/issues/1670
+%add_optflags -Wno-error=address
+
 LIBTOOL_M4=/usr/share/libtool/aclocal/libtool.m4 ./bootstrap.sh
 autoreconf -fisv
 cat %SOURCE4 >modules.conf
@@ -541,6 +544,13 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Fri Jul 15 2022 L.A. Kostis <lakostis@altlinux.ru> 1:1.10.7-alt1.2
+- Fix gcc9+ warning (-Werror=stringop-truncation).
+- mod_shout: libshout 2.3+ compatibility fixes.
+
+* Fri Jul 15 2022 L.A. Kostis <lakostis@altlinux.ru> 1:1.10.7-alt1.1
+- Add workaround to compile with gcc12.
+
 * Fri Nov 26 2021 Anton Farygin <rider@altlinux.ru> 1:1.10.7-alt1
 - 1.10.6 -> 1.10.7 (Fixes: CVE-2021-41158, CVE-2021-41145, CVE-2021-41157,
   CVE-2021-41105, CVE-2021-37624, CVE-2021-36513)
