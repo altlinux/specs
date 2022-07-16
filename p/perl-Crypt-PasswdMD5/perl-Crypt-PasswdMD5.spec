@@ -6,7 +6,7 @@
 %define _enable_test 1
 
 Name: perl-Crypt-PasswdMD5
-Version: 1.41
+Version: 1.42
 Release: alt1
 
 Summary: Perl Crypt-PasswdMD5
@@ -37,6 +37,9 @@ the unix_md5_crypt() provides a crypt()-compatible interface to the rather new M
 %perl_vendor_privlib/Crypt/*.pm
 
 %changelog
+* Sat Jul 16 2022 Igor Vlasenko <viy@altlinux.org> 1.42-alt1
+- automated CPAN update
+
 * Mon Feb 01 2021 Igor Vlasenko <viy@altlinux.ru> 1.41-alt1
 - automated CPAN update
 
