@@ -3,7 +3,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 
 Summary: Accurately separate the TLD from the registered domain and subdomains of a URL
@@ -54,6 +54,9 @@ python3 setup.py test
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Jul 16 2022 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
+- Automatically updated to 3.3.1.
+
 * Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
 - Automatically updated to 3.3.0.
 
