@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires(pre): rpm-macros-java
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jsemver
 Version:        0.9.0
-Release:        alt1_15jpp11
+Release:        alt2_15jpp11
 Summary:        A Java implementation of the Semantic Versioning Specification
 
 License:        MIT
@@ -19,7 +19,7 @@ BuildArch:      noarch
 
 BuildRequires:  maven-local
 BuildRequires:  maven-compiler-plugin >= 3.2
-BuildRequires:  maven-javadoc-plugin >= 2.10.2
+#BuildRequires:  maven-javadoc-plugin >= 2.10.2
 BuildRequires:  junit >= 4.12
 Source44: import.info
 
@@ -42,6 +42,7 @@ find -name \*.class -delete
 
 # remove unnecessary dependency on parent POM
 %pom_remove_parent
+%pom_remove_plugin :maven-javadoc-plugin
 
 %build
 %mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
@@ -56,11 +57,15 @@ find -name \*.class -delete
 %doc README.md
 %doc --no-dereference LICENSE
 
+%if 0
 %files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE
-
+%endif
 
 %changelog
+* Sat Jul 16 2022 Igor Vlasenko <viy@altlinux.org> 0.9.0-alt2_15jpp11
+- fixed build without javadoc plugin
+
 * Thu Jun 10 2021 Igor Vlasenko <viy@altlinux.org> 0.9.0-alt1_15jpp11
 - fc34 update
 
