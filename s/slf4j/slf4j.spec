@@ -1,10 +1,22 @@
+Epoch: 0
 Group: Development/Other
+# BEGIN SourceDeps(oneline):
+BuildRequires: maven-local
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc rpm-build-java
 BuildRequires: jpackage-default
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
+%bcond_with bootstrap
+
 # Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
@@ -36,26 +48,29 @@ BuildRequires: jpackage-default
 #
 
 Name:           slf4j
-Version:        1.7.30
-Release:        alt1_8jpp11
-Epoch:          0
+Version:        1.7.32
+Release:        alt1_3jpp11
 Summary:        Simple Logging Facade for Java
 # the log4j-over-slf4j and jcl-over-slf4j submodules are ASL 2.0, rest is MIT
 License:        MIT and ASL 2.0
 URL:            http://www.slf4j.org/
-Source0:        https://github.com/qos-ch/%{name}/archive/v_%{version}/v_%{version}.tar.gz
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 
+Source0:        https://github.com/qos-ch/slf4j/archive/v_%{version}.tar.gz
+Source1:        https://www.apache.org/licenses/LICENSE-2.0.txt
+
 BuildRequires:  maven-local
-BuildRequires:  mvn(ch.qos.cal10n:cal10n-api)
+%if %{with bootstrap}
+BuildRequires:  javapackages-bootstrap
+%else
 BuildRequires:  mvn(commons-logging:commons-logging)
-BuildRequires:  mvn(javassist:javassist)
-#BuildRequires:  mvn(log4j:log4j:1.2.17)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
+%endif
+
+# -log4j12 subpackage removed in fedora 34
+Obsoletes:      slf4j-log4j12 < 0:1.7.30-alt2
 Source44: import.info
 
 %description
@@ -70,13 +85,7 @@ SLF4J interfaces directly, e.g. NLOG4J or SimpleLogger. Alternatively,
 it is possible (and rather easy) to write SLF4J adapters for the given
 API implementation, e.g. Log4jLoggerAdapter or JDK14LoggerAdapter..
 
-%package javadoc
-Group: Development/Java
-Summary:        API documentation for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package provides %{summary}.
+%{?javadoc_package}
 
 %package manual
 Group: Development/Java
@@ -93,26 +102,12 @@ Summary:        SLF4J JDK14 Binding
 %description jdk14
 SLF4J JDK14 Binding.
 
-%package log4j12
-Group: Development/Java
-Summary:        SLF4J LOG4J-12 Binding
-
-%description log4j12
-SLF4J LOG4J-12 Binding.
-
 %package jcl
 Group: Development/Java
 Summary:        SLF4J JCL Binding
 
 %description jcl
 SLF4J JCL Binding.
-
-%package ext
-Group: Development/Java
-Summary:        SLF4J Extensions Module
-
-%description ext
-Extensions to the SLF4J API.
 
 %package -n jcl-over-slf4j
 Group: Development/Java
@@ -121,6 +116,13 @@ Summary:        JCL 1.1.1 implemented over SLF4J
 %description -n jcl-over-slf4j
 JCL 1.1.1 implemented over SLF4J.
 
+%package -n jul-to-slf4j
+Group: Development/Java
+Summary:        JUL to SLF4J bridge
+
+%description -n jul-to-slf4j
+JUL to SLF4J bridge.
+
 %package -n log4j-over-slf4j
 Group: Development/Java
 Summary:        Log4j implemented over SLF4J
@@ -128,12 +130,12 @@ Summary:        Log4j implemented over SLF4J
 %description -n log4j-over-slf4j
 Log4j implemented over SLF4J.
 
-%package -n jul-to-slf4j
-Group: Development/Java
-Summary:        JUL to SLF4J bridge
+%package -n slf4j-migrator
+Group: Development/Other
+Summary:        SLF4J Migrator
 
-%description -n jul-to-slf4j
-JUL to SLF4J bridge.
+%description -n slf4j-migrator
+SLF4J Migrator.
 
 %package sources
 Group: Development/Other
@@ -145,14 +147,13 @@ SLF4J Source JARs.
 %prep
 %setup -q -n %{name}-v_%{version}
 find -name '*.jar' -delete
-cp -p %{SOURCE1} APACHE-LICENSE
+install -p -m 0644 %{SOURCE1} APACHE-LICENSE
 
 %pom_disable_module integration
 %pom_disable_module osgi-over-slf4j
 %pom_disable_module slf4j-android
 %pom_disable_module slf4j-ext
 %pom_disable_module slf4j-log4j12
-%pom_disable_module slf4j-migrator
 
 # Port to maven-antrun-plugin 3.0.0
 sed -i s/tasks/target/ slf4j-api/pom.xml
@@ -160,8 +161,6 @@ sed -i s/tasks/target/ slf4j-api/pom.xml
 # Because of a non-ASCII comment in slf4j-api/src/main/java/org/slf4j/helpers/MessageFormatter.java
 %pom_xpath_inject "pom:project/pom:properties" "
     <project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>"
-
-%pom_xpath_set "pom:project/pom:properties/pom:required.jdk.version" "1.6"
 
 # Fix javadoc links
 %pom_xpath_remove "pom:links"
@@ -185,12 +184,6 @@ find -name "*.css" -o -name "*.js" -o -name "*.txt" | \
       <phase>skip</phase>
     </execution>" slf4j-api
 
-# trivial port to commons-lang3
-%pom_change_dep :commons-lang org.apache.commons:commons-lang3:3.8.1 slf4j-ext
-
-sed -i "s/org.apache.commons.lang./org.apache.commons.lang3./g" \
-    slf4j-ext/src/main/java/org/slf4j/ext/MDCStrLookup.java
-
 # The general pattern is that the API package exports API classes and does
 # not require impl classes. slf4j was breaking that causing "A cycle was
 # detected when generating the classpath slf4j.api, slf4j.nop, slf4j.api."
@@ -210,7 +203,7 @@ sed -i '/Import-Package/s/\}$/};resolution:=optional/' slf4j-api/src/main/resour
 %mvn_package :%{name}-nop
 
 %build
-%mvn_build -f -s -- -Dmaven.compile.source=1.8 -Dmaven.compile.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dsource=1.6
+%mvn_build -f -s -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Drequired.jdk.version=1.6
 
 %install
 # Compat symlinks
@@ -223,21 +216,17 @@ install -d -m 0755 $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 rm -rf target/site/{.htaccess,apidocs}
 cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 
-%files -f .mfiles
+%files -n %{?module_prefix}%{name} -f .mfiles
 %doc --no-dereference LICENSE.txt APACHE-LICENSE
 
 %files jdk14 -f .mfiles-%{name}-jdk14
-#files log4j12 -f .mfiles-%{name}-log4j12
 %files jcl -f .mfiles-%{name}-jcl
-#files ext -f .mfiles-%{name}-ext
 %files -n jcl-over-slf4j -f .mfiles-jcl-over-slf4j
-%files -n log4j-over-slf4j -f .mfiles-log4j-over-slf4j
 %files -n jul-to-slf4j -f .mfiles-jul-to-slf4j
+%files -n log4j-over-slf4j -f .mfiles-log4j-over-slf4j
+%files -n slf4j-migrator -f .mfiles-slf4j-migrator
 
 %files sources -f .mfiles-sources
-%doc --no-dereference LICENSE.txt APACHE-LICENSE
-
-%files javadoc -f .mfiles-javadoc
 %doc --no-dereference LICENSE.txt APACHE-LICENSE
 
 %files manual
@@ -245,6 +234,9 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_defaultdocdir}/%{name}-manual
 %{_defaultdocdir}/%{name}-manual
 
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:1.7.32-alt1_3jpp11
+- new version
+
 * Thu Jun 16 2022 Igor Vlasenko <viy@altlinux.org> 0:1.7.30-alt1_8jpp11
 - build w/o log4j12
 
