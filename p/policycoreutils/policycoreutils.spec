@@ -10,7 +10,7 @@ Summary: SELinux policy core utilities
 Name: policycoreutils
 Epoch:   1
 Version: 3.2
-Release: alt5
+Release: alt6
 License: GPLv2
 Group: System/Base
 Url: https://github.com/SELinuxProject/selinux
@@ -127,6 +127,7 @@ system-config-selinux is a utility for managing the SELinux environment.
 Summary: SELinux policy core python utilities
 Group:   Development/Python3
 Requires: %name = %EVR
+Provides: policycoreutils-python-utils
 
 %description -n python3-module-policycoreutils
 The policycoreutils-python package contains the management tools use to manage
@@ -429,6 +430,9 @@ grep -Fvx -f %name-newrole.lang -f %name-sandbox.lang -f %name-restorecond.lang 
 %python3_sitelibdir/sepolicy/sepolicy.glade
 
 %changelog
+* Thu Jun 23 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1:3.2-alt6
+- Added providing for policycoreutils-python-utils for more compatibility with RHEL.
+
 * Fri Sep 03 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:3.2-alt5
 - Fixed selinux-polgengui (Closes: #30183).
 
