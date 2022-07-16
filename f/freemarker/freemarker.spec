@@ -1,68 +1,46 @@
 Epoch: 0
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-1.8-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-# Conditionally build with a minimal dependency set
-%bcond_with jp_minimal
-
 Name:           freemarker
-Version:        2.3.30
-Release:        alt5_3jpp8
+Version:        2.3.31
+Release:        alt1_4jpp11
 Summary:        The Apache FreeMarker Template Engine
 License:        ASL 2.0
-URL:            https://freemarker.apache.org/
-Source0:        https://github.com/apache/freemarker/archive/v%{version}/%{name}-%{version}.tar.gz
-
-# Remove JSP 2.0 API usage
-Patch1:         jsp-api.patch
-# Compile only the classes compatible with the version of jython
-Patch2:         jython-compatibility.patch
-# illegal character in the javadoc comment
-Patch3:         fix-javadoc-encoding.patch
-# Disable JRebel integration, it is not free software and not in Fedora
-Patch5:         no-javarebel.patch
-# enable jdom extension
-Patch6:         enable-jdom.patch
-# Fix compatibility with javacc 7
-Patch7:         javacc-7.patch
-Patch8:		freemarker-2.3.30-use-jakarta-el.patch
-Patch33: aqute-bnd4.patch
-
+URL:            https://freemarker.apache.org
 BuildArch:      noarch
 
-BuildRequires: java-1.8.0-openjdk-devel
-BuildRequires: ant
-BuildRequires: apache-parent
-BuildRequires: apache-commons-logging
-BuildRequires: aqute-bnd4
-BuildRequires: hamcrest
-BuildRequires: ivy-local
-BuildRequires: glassfish-jsp-api
-BuildRequires: glassfish-servlet-api
-BuildRequires: javacc >= 7.0
-BuildRequires: jaxen >= 1.1
-BuildRequires: jcl-over-slf4j
-BuildRequires: jdom >= 1.0
-BuildRequires: junit
-BuildRequires: log4j-over-slf4j
-BuildRequires: slf4j
-BuildRequires: xalan-j2 >= 2.7.0
+Source0:        http://archive.apache.org/dist/freemarker/engine/%{version}/source/apache-freemarker-%{version}-src.tar.gz
+Source1:        http://archive.apache.org/dist/freemarker/engine/%{version}/source/apache-freemarker-%{version}-src.tar.gz.asc
+Source2:        http://archive.apache.org/dist/freemarker/KEYS
 
-%if %{without jp_minimal}
-BuildRequires: dom4j
-BuildRequires: saxpath
-#BuildRequires: jython
-BuildRequires: rhino >= 1.6
-%endif
-BuildRequires: jakarta-el-api
+# enable jdom extension
+Patch0:         enable-jdom.patch
+# Fix compatibility with javacc 7
+Patch1:         javacc-7.patch
+
+BuildRequires:  ant
+BuildRequires:  gnupg2
+BuildRequires:  ivy-local
+BuildRequires:  java-1.8.0-openjdk
+BuildRequires:  java-11-openjdk-devel
+BuildRequires:  mvn(biz.aQute:bnd)
+BuildRequires:  mvn(commons-logging:commons-logging)
+BuildRequires:  mvn(dom4j:dom4j)
+BuildRequires:  mvn(jakarta.el:jakarta.el-api)
+BuildRequires:  mvn(javax.servlet:jsp-api)
+BuildRequires:  mvn(javax.servlet:servlet-api)
+BuildRequires:  mvn(jaxen:jaxen)
+BuildRequires:  mvn(jdom:jdom)
+BuildRequires:  mvn(junit:junit)
+BuildRequires:  mvn(net.java.dev.javacc:javacc)
+BuildRequires:  mvn(org.apache:apache:pom:)
+BuildRequires:  mvn(org.slf4j:jcl-over-slf4j)
+BuildRequires:  mvn(org.slf4j:log4j-over-slf4j)
+BuildRequires:  mvn(rhino:js)
+BuildRequires:  mvn(xalan:xalan)
 Source44: import.info
 
 %description
@@ -72,24 +50,10 @@ templates and changing data. Templates are written in the FreeMarker Template
 Language (FTL), which is a simple, specialized language (not a full-blown
 programming language like PHP).
 
-%package javadoc
-Group: Development/Java
-Summary: Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-This package contains the API documentation for %{name}.
-
 %prep
-%setup -q
-%patch1
-%patch2
-%patch3
-%patch5
-%patch6
-%patch7 -p1
-%patch8 -p1
-%patch33 -p0
+%setup -q -n apache-%{name}-%{version}-src
+%patch0 -p1
+%patch1 -p1
 
 
 
@@ -98,31 +62,26 @@ find -type f '(' -name '*.jar' -o -iname '*.class' ')' -print -delete
 # Use system ivy settings
 rm ivysettings.xml
 
-# Correct classpath for Javadoc generation
-sed -i 's/cachepath conf="IDE"/cachepath conf="javadoc"/' build.xml
-#sed -i '/conf name="IDE"/i<conf name="javadoc" extends="build.jython2.5,build.jsp2.1" />' ivy.xml
-sed -i '/conf name="IDE"/i<conf name="javadoc" extends="build.jsp2.1" />' ivy.xml
+# Add jakarta.el-api
+%pom_add_dep jakarta.el:jakarta.el-api:4.0.0
 
-# Disable Java 8 javadoc linting
-sed -i '/<javadoc/a\ additionalparam="-Xdoclint:none" encoding="UTF-8"' build.xml
+# Remove saxpath
+%pom_remove_dep saxpath:saxpath
 
-# Drop unnecessary dep on avalon
-sed -i -e '/avalon-logkit/d' ivy.xml
+# Remove avalon-logkit
+%pom_remove_dep avalon-logkit:avalon-logkit
 rm src/main/java/freemarker/log/_AvalonLoggerFactory.java
 
-%if %{with jp_minimal}
-# Drop dep on optional extra deps for minimal build
-sed -i -e '/"rhino"/d' -e '/"jython"/d' ivy.xml
-rm -rf src/main/java/freemarker/ext/{rhino,jython,ant}
-rm src/main/java/freemarker/template/utility/JythonRuntime.java
-# Drop dep on additional xml backends for minimal build
-sed -i -e '/dom4j/d' -e '/saxpath/d' ivy.xml
-rm src/main/java/freemarker/ext/xml/_Dom4jNavigator.java
-%endif
+# Remove javarebel-sdk
+%pom_remove_dep org.zeroturnaround:javarebel-sdk
+rm src/main/java/freemarker/ext/beans/JRebelClassChangeNotifier.java
 
-sed -i -e '/"jython"/d' ivy.xml
+# Remove jsp classes
+rm src/main/java/freemarker/ext/jsp/FreeMarkerJspFactory2.java
+rm src/main/java/freemarker/ext/jsp/_FreeMarkerPageContext2.java
+
 # Remove jython:jython
-#pom_remove_dep jython:jython
+%pom_remove_dep jython:jython
 rm src/main/java/freemarker/ext/ant/UnlinkedJythonOperationsImpl.java
 rm src/main/java/freemarker/ext/jython/JythonHashModel.java
 rm src/main/java/freemarker/ext/jython/JythonModel.java
@@ -136,33 +95,31 @@ rm src/main/java/freemarker/ext/jython/_Jython20And21VersionAdapter.java
 rm src/main/java/freemarker/template/utility/JythonRuntime.java
 
 # Remove org.python:jython
-#pom_remove_dep org.python:jython
+%pom_remove_dep org.python:jython
 rm src/main/java/freemarker/ext/jython/_Jython22VersionAdapter.java
 rm src/main/java/freemarker/ext/jython/_Jython25VersionAdapter.java
 
-# Don't import all the logger implementations in the OSGi metadata
-sed -i -e '/^Import-Package/s/:/: !org.apache.log4j, /' osgi.bnd
+%mvn_file : %{name}
 
-%mvn_file org.%{name}:%{name} %{name}
+sed -i '/"jsp-api"/s,javax.servlet.jsp,javax.servlet,' ivy.xml
+
 
 %build
-export LANG=C.UTF-8
-export JAVA_HOME=%{_jvmdir}/java-1.8.0
-ant -Divy.mode=local -Ddeps.available=true javacc jar javadoc maven-pom
+#export JAVA_HOME=%{_jvmdir}/java-11
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Divy.mode=local -Dsun.boot.class.path=%{_jvmdir}/jre-1.8.0/lib/rt.jar jar maven-pom
 
 %install
-export LANG=C.UTF-8
 %mvn_artifact build/pom.xml build/freemarker.jar
-%mvn_install -J build/api
+%mvn_install
 
 %files -f .mfiles
 %doc README.md RELEASE-NOTES
 %doc --no-dereference LICENSE NOTICE
 
-%files javadoc -f .mfiles-javadoc
-%doc --no-dereference LICENSE NOTICE
-
 %changelog
+* Sat Jul 09 2022 Igor Vlasenko <viy@altlinux.org> 0:2.3.31-alt1_4jpp11
+- new version
+
 * Sun Jun 12 2022 Igor Vlasenko <viy@altlinux.org> 0:2.3.30-alt5_3jpp8
 - build without jython
 
