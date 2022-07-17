@@ -1,6 +1,6 @@
 %define oname breathe
 Name: python3-module-breathe
-Version: 4.33.1
+Version: 4.34.0
 Release: alt1
 
 Summary: Make reStructuredText and Sphinx read and render Doxygen xml output
@@ -42,6 +42,9 @@ ln -s breathe-apidoc %buildroot/%_bindir/python3-breathe-apidoc
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 4.34.0-alt1
+- new version 4.34.0 (with rpmrb script)
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 4.33.1-alt1
 - new version 4.33.1 (with rpmrb script)
 
