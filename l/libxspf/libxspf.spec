@@ -1,6 +1,6 @@
 Name: libxspf
-Version: 1.2.0
-Release: alt1.2
+Version: 1.2.1
+Release: alt1
 
 Summary: XSPF playlist reading and writing support
 
@@ -57,6 +57,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %doc examples/
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- new version 1.2.1 (with rpmrb script)
+
 * Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.2
 - Fixed build with glibc 2.16
 
