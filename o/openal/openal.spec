@@ -1,9 +1,10 @@
 %def_with pulse
 %def_with qt5
+%def_without bootstrap
 
 Name: openal
-Version: 1.21.1
-Release: alt3
+Version: 1.22.2
+Release: alt1
 
 Summary: Open Audio Library
 
@@ -11,7 +12,7 @@ License: LGPLv2
 Group: Sound
 Url: http://kcat.strangesoft.net/openal.html
 
-# Source-url: https://github.com/kcat/openal-soft/archive/openal-soft-%version.tar.gz
+# Source-url: https://github.com/kcat/openal-soft/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 Patch0: openal-soft-1.17-alt-config.patch
@@ -23,9 +24,10 @@ BuildRequires: libalsa-devel
 %{?_with_qt5:BuildRequires: qt5-base-devel}
 %{?_with_pulse:BuildRequires: libpulseaudio-devel}
 %if_without bootstrap
-BuildRequires: libjack-devel libportaudio2-devel}
+BuildRequires: libjack-devel libportaudio2-devel
 BuildRequires: libavdevice-devel libswresample-devel libswscale-devel
 BuildRequires: libSDL2-devel libSDL2_mixer-devel libSDL_sound-devel
+BuildRequires: libdbus-devel libpostproc-devel libsndfile-devel pipewire-libs-devel
 %endif
 
 %description
@@ -89,6 +91,7 @@ sed -i "/[{]_mm/{s|[{]_mm|=_mm|;:x;/[}]/!{N;bx};s|[}]||}" \
 %cmake_insource \
 	-DALSOFT_REQUIRE_OSS=OFF \
 	-DALSOFT_CONFIG=ON \
+	-DALSOFT_INSTALL_EXAMPLES=ON \
 %ifarch %e2k
 	-DALSOFT_CPUEXT_NEON=OFF \
 %endif
@@ -123,7 +126,7 @@ install -m0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 
 %_bindir/altonegen
 %_bindir/alrecord
-%_bindir/makehrtf
+#_bindir/makehrtf
 #_bindir/bsincgen
 %endif
 
@@ -131,8 +134,9 @@ install -m0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 %_includedir/AL/
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_libdir/cmake/OpenAL/OpenALConfig-relwithdebinfo.cmake
 %_libdir/cmake/OpenAL/OpenALConfig.cmake
+%_libdir/cmake/OpenAL/OpenALTargets-relwithdebinfo.cmake
+%_libdir/cmake/OpenAL/OpenALTargets.cmake
 
 %if_with qt5
 %files qt
@@ -143,6 +147,9 @@ install -m0644 alsoftrc.sample %buildroot%_sysconfdir/%name/alsoft.conf
 # - alrecord, altonegen not packaged (really needed?)
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 1.22.2-alt1
+- new version 1.22.2 (with rpmrb script)
+
 * Wed Jun 09 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.21.1-alt3
 - fixed SSE code for Elbrus compiler
 
