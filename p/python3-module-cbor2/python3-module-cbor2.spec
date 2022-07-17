@@ -1,6 +1,6 @@
 %define oname cbor2
 Name: python3-module-%oname
-Version: 5.4.2
+Version: 5.4.3
 Release: alt1
 
 Summary: Pure Python CBOR (de)serializer with extensive tag support
@@ -52,6 +52,9 @@ SETUPTOOLS_SCM_DEBUG=1 %python3_build
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 5.4.3-alt1
+- new version 5.4.3 (with rpmrb script)
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 5.4.2-alt1
 - new version 5.4.2 (with rpmrb script)
 
