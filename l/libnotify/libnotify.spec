@@ -1,4 +1,7 @@
 %define ver_major 0.8
+%define api_ver 0.7
+%define sover 4
+
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable docbook_docs
@@ -6,7 +9,7 @@
 %def_enable man
 
 Name: libnotify
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Desktop notification library
@@ -18,7 +21,7 @@ Vcs: https://gitlab.gnome.org/GNOME/libnotify.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-Provides: %{name}4 = %version-%release
+Provides: %{name}4 = %EVR
 Obsoletes: %{name}4
 
 BuildRequires(pre): rpm-macros-meson
@@ -38,8 +41,8 @@ in accordance to the proposed Desktop Notification Specification.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
-Provides: %{name}4-devel = %version-%release
+Requires: %name = %EVR
+Provides: %{name}4-devel = %EVR
 Obsoletes: %{name}4-devel
 
 %description devel
@@ -51,7 +54,7 @@ Summary: Development documentation for %name
 Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name-devel < %version
-Provides: %{name}4-devel-doc = %version-%release
+Provides: %{name}4-devel-doc = %EVR
 Obsoletes: %{name}4-devel-doc
 
 %description devel-doc
@@ -60,8 +63,8 @@ API documentation for %name in gtk-doc format.
 %package gir
 Summary: GObject introspection data for libnotify
 Group: System/Libraries
-Requires: %name = %version-%release
-Provides: %{name}4-gir = %version-%release
+Requires: %name = %EVR
+Provides: %{name}4-gir = %EVR
 Obsoletes: %{name}4-gir
 
 %description gir
@@ -71,9 +74,9 @@ GObject introspection data for the desktop notification library.
 Summary: GObject introspection devel data for libnotify
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-devel = %version-%release
-Requires: %name-gir = %version-%release
-Provides: %{name}4-gir-devel = %version-%release
+Requires: %name-devel = %EVR
+Requires: %name-gir = %EVR
+Provides: %{name}4-gir-devel = %EVR
 Obsoletes: %{name}4-gir-devel
 
 %description gir-devel
@@ -82,7 +85,7 @@ GObject introspection devel data for the desktop notification library.
 %package -n notify-send
 Summary: A program to send desktop notifications
 Group: Graphical desktop/GNOME
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n notify-send
 notify-send sends desktop notifications via a notification daemon from
@@ -109,7 +112,7 @@ the command line.
 %__meson_test
 
 %files
-%_libdir/*.so.*
+%_libdir/%name.so.%{sover}*
 %doc NEWS
 
 %files -n notify-send
@@ -117,27 +120,30 @@ the command line.
 %{?_enable_man:%_man1dir/notify-send.1.*}
 
 %files devel
-%_libdir/*.so
-%_includedir/*
-%_pkgconfigdir/*.pc
+%_libdir/%name.so
+%_includedir/%name/
+%_pkgconfigdir/%name.pc
 %doc NEWS README* %{?_enable_docbook_docs:%__builddir/docs/notification-spec.html}
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/gtk-doc/html/%name
 %endif
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Notify-%ver_major.typelib
+%_typelibdir/Notify-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Notify-%ver_major.gir
+%_girdir/Notify-%api_ver.gir
 %endif
 
 %{?_enable_docbook_docs:%exclude %_datadir/doc/%name/}
 
 %changelog
+* Sun Jul 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- 0.8.1 (keep version of bindings at 0.7)
+
 * Thu Jul 14 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
 - 0.8.0
 
