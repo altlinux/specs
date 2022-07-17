@@ -10,7 +10,7 @@
 %define krelease %release
 
 %define kernel_base_version     5.10
-%define kernel_sublevel .128
+%define kernel_sublevel .130
 %define kernel_extra_version    %nil
 
 %define kernel_extra_version_numeric 1.0.0
@@ -166,6 +166,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/*
 
 %changelog
+* Sun Jul 17 2022 Andrew A. Vasilyev <andy@altlinux.org> 5.10.130-alt1
+- 5.10.130
+
 * Sat Jul 09 2022 Andrew A. Vasilyev <andy@altlinux.org> 5.10.128-alt1
 - 5.10.128
 
