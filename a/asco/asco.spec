@@ -1,6 +1,6 @@
 Name: asco
-Version: 0.4.10
-Release: alt3
+Version: 0.4.11
+Release: alt1
 
 Summary: A SPICE Circuit Optimizer
 
@@ -44,6 +44,9 @@ install -D -m755 %name %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 0.4.11-alt1
+- new version 0.4.11 (with rpmrb script)
+
 * Thu Mar 11 2021 Slava Aseev <ptrnine@altlinux.org> 0.4.10-alt3
 - fixed build with gcc-10
 
