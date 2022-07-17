@@ -75,8 +75,8 @@
 %endif
 
 Name:    samba
-Version: 4.15.7
-Release: alt4
+Version: 4.15.8
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -188,7 +188,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.4.2
+%define ldb_version 2.4.3
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -1644,6 +1644,7 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_samba_mod_libdir/bind9/dlz_bind9_12.so
 %_samba_mod_libdir/bind9/dlz_bind9_14.so
 %_samba_mod_libdir/bind9/dlz_bind9_16.so
+%_samba_mod_libdir/bind9/dlz_bind9_18.so
 %if_without mitkrb5
 %_samba_mod_libdir/libheimntlm-samba4.so.1
 %_samba_mod_libdir/libheimntlm-samba4.so.1.0.1
@@ -1934,6 +1935,19 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Jun 27 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.15.8-alt1
+- Update to maintenance release of Samba 4.15 with latest bugfixes:
+  + Setting fruit:resource = stream in vfs_fruit causes a panic (Samba#15099).
+  + Fix logging dsdb audit to specific files (Samba#15076).
+  + Fix vfs_gpfs with vfs_shadowcopy2 fail to restore file if original file had
+    been deleted (Samba#15069).
+  + Remove netgroups support (Samba#15087).
+  + Fix smbclient commands del & deltree fail with
+    NT_STATUS_OBJECT_PATH_NOT_FOUND with DFS (Samba#15100).
+  + Fix out-by-4 error in smbd read reply max_send clamp (Samba#14443).
+  + s3:libads: Check if we have a valid sockaddr (Samba#15106).
+  + smbd: Make non_widelink_open() robust for non-cwd dirfsp (Samba#15105).
+
 * Mon Jun 27 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.15.7-alt4
 - Add samba-krb5-printing with CUPS backend for printing with Kerberos support.
 - Fix samba-tool domain backup DC with forced local samdb.
