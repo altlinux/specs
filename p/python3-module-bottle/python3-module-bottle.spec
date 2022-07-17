@@ -1,7 +1,7 @@
 %define oname bottle
 
 Name: python3-module-%oname
-Version: 0.12.19
+Version: 0.12.21
 Release: alt1
 Epoch: 1
 
@@ -64,6 +64,9 @@ This package contains documentation for %oname.
 
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 1:0.12.21-alt1
+- new version 0.12.21 (with rpmrb script)
+
 * Thu Jan 21 2021 Vitaly Lipatov <lav@altlinux.ru> 1:0.12.19-alt1
 - new version 0.12.19 (with rpmrb script)
 
