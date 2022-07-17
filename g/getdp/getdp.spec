@@ -1,14 +1,12 @@
 Name: getdp
-Version: 3.3.0
-Release: alt4
+Version: 3.5.0
+Release: alt1
 Summary: A General Environment for the Treatment of Discrete Problems
 License: GPLv2
 Group: Sciences/Mathematics
 Url: https://getdp.info/
 
 Source: %name-%version.tar
-Patch1: getdp-3.3.0-missing-cstring.patch
-Patch2: getdp-3.3.0-sparskit-fix-rank-mismatch-error.patch
 
 BuildPreReq: rpm-macros-cmake
 BuildRequires: cmake gcc-c++ gcc-fortran
@@ -23,8 +21,6 @@ de Rham-type complexes in one, two and three dimensions.
 
 %prep
 %setup
-%patch1 -p2
-%patch2 -p2
 
 %build
 # - For linking with gmsh it should be build with private API enabled.
@@ -46,6 +42,9 @@ de Rham-type complexes in one, two and three dimensions.
 %_man1dir/getdp.*
 
 %changelog
+* Sun Jul 17 2022 Vladislav Zavjalov <slazav@altlinux.org> 3.5.0-alt1
+- v.3.5.0
+
 * Thu Dec 10 2020 Vladislav Zavjalov <slazav@altlinux.org> 3.3.0-alt4
 - add patch: fix Rank mismatch error in contrib/Sparskit/inout.f (for gcc-10)
 
