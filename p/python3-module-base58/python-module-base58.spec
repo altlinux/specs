@@ -1,7 +1,7 @@
 %define oname base58
 
 Name: python3-module-base58
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Base58 and Base58Check implementation
@@ -39,5 +39,8 @@ Any other alternative alphabet (like the XRP one) can be used.
 %python3_sitelibdir/%{oname}*.egg-info
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
+- new version 2.1.1 (with rpmrb script)
+
 * Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - initial build for ALT Linux Sisyphus
