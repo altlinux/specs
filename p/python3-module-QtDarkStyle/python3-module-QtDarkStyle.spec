@@ -1,5 +1,5 @@
 Name: python3-module-QtDarkStyle
-Version: 3.0.2
+Version: 3.1
 Release: alt1
 
 License: MIT
@@ -35,6 +35,9 @@ rm -fv %buildroot/usr/bin/{qdarkstyle.example,qdarkstyle.utils}
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1-alt1
+- new version 3.1 (with rpmrb script)
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 3.0.2-alt1
 - new version 3.0.2 (with rpmrb script)
 
