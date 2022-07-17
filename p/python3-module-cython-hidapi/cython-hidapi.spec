@@ -1,6 +1,6 @@
 %define oname hidapi
 Name: python3-module-cython-hidapi
-Version: 0.10.1
+Version: 0.12.0
 Release: alt1
 
 Summary: Python wrapper for the hidapi
@@ -37,6 +37,9 @@ export CFLAGS="%optflags"
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 0.12.0-alt1
+- new version 0.12.0 (with rpmrb script)
+
 * Sun Aug 15 2021 Vitaly Lipatov <lav@altlinux.ru> 0.10.1-alt1
 - build python3 module separately, from a release tarball
 
