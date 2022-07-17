@@ -7,7 +7,7 @@
 %endif
 
 Name: upower
-Version: 0.99.19
+Version: 0.99.20
 Release: alt1
 
 Summary: Power Management Service
@@ -131,6 +131,9 @@ GObject introspection devel data for the UPower library
 %_girdir/*.gir
 
 %changelog
+* Sun Jul 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.99.20-alt1
+- 0.99.20
+
 * Wed Jun 15 2022 Yuri N. Sedunov <aris@altlinux.org> 0.99.19-alt1
 - updated to v0.99.19-7-g54e396e
 
