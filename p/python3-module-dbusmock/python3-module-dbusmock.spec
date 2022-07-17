@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-dbusmock
-Version: 0.28.1
+Version: 0.28.2
 Release: alt1
 
 Summary: mock D-Bus objects for tests
@@ -54,6 +54,9 @@ See %_docdir/%name-%version/README.rst for more information.
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Sun Jul 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.28.2-alt1
+- 0.28.2 (fixed tests with libnotify 0.8.0)
+
 * Wed Jun 29 2022 Yuri N. Sedunov <aris@altlinux.org> 0.28.1-alt1
 - 0.28.1
 
