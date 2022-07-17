@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-beautifulsoup4
-Version: 4.10.0
+Version: 4.11.0
 Release: alt1
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
@@ -57,6 +57,9 @@ python3 -m unittest discover -s bs4
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 4.11.0-alt1
+- new version 4.11.0 (with rpmrb script)
+
 * Fri Sep 17 2021 Stanislav Levin <slev@altlinux.org> 4.10.0-alt1
 - 4.9.3 -> 4.10.0.
 
