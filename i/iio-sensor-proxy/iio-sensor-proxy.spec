@@ -1,6 +1,7 @@
 %define ver_major 3
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
+%define rdn_name net.hadess.SensorProxy
 
 %def_enable gtk_doc
 %def_disable gtk_tests
@@ -11,8 +12,8 @@
 %def_disable check
 
 Name: iio-sensor-proxy
-Version: %ver_major.3
-Release: alt1.1
+Version: %ver_major.4
+Release: alt1
 
 Summary: IIO sensors to input device proxy
 Group: System/Kernel and hardware
@@ -27,9 +28,10 @@ Patch: %name-%version-%release.patch
 %define glib_ver 2.56
 %define gudev_ver 237
 
-BuildRequires(pre): meson >= %meson_ver
-BuildRequires: libgio-devel >= %glib_ver pkgconfig(systemd)
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson >= %meson_ver libgio-devel >= %glib_ver pkgconfig(systemd)
 BuildRequires: libudev-devel libgudev-devel >= %gudev_ver
+BuildRequires: libpolkit-devel
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_gtk_tests:BuildRequires: libgtk+3-devel}
 %{?_enable_check:
@@ -68,7 +70,9 @@ Developer documentation for %name.
 %build
 %meson \
 	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{?_enable_check:-Dtests=true} \
 	%{?_disable_gtk_tests:-Dgtk-tests=false}
+%nil
 %meson_build
 
 %install
@@ -82,7 +86,8 @@ dbus-run-session %__meson_test -t 2
 %_bindir/monitor-sensor
 %_unitdir/%name.service
 %_udevrulesdir/80-%name.rules
-%_sysconfdir/dbus-1/system.d/net.hadess.SensorProxy.conf
+%_sysconfdir/dbus-1/system.d/%rdn_name.conf
+%_datadir/polkit-1/actions/%rdn_name.policy
 %doc README.md NEWS
 
 %if_enabled gtk_doc
@@ -92,6 +97,9 @@ dbus-run-session %__meson_test -t 2
 
 
 %changelog
+* Sun Jul 17 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4-alt1
+- 3.4
+
 * Fri Dec 10 2021 Yuri N. Sedunov <aris@altlinux.org> 3.3-alt1.1
 - rebuilt from git
 
