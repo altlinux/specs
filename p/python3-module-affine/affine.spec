@@ -2,7 +2,7 @@
 %define oname affine
 
 Name: python3-module-%oname
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: Affine transformation matrices
@@ -51,6 +51,9 @@ py.test3 -vv
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 2.3.1-alt1
+- new version 2.3.1 (with rpmrb script)
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 2.3.0-alt1
 - build python3 module separately, clean spec
 - new version (2.3.0) with rpmgs script
