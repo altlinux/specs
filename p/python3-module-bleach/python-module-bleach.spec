@@ -3,7 +3,7 @@
 %define modulename bleach
 
 Name: python3-module-bleach
-Version: 4.1.0
+Version: 5.0.0
 Release: alt1
 
 Summary: An easy whitelist-based HTML-sanitizing tool
@@ -43,6 +43,9 @@ attributes based on a white list.
 
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
+- new version 5.0.0 (with rpmrb script)
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 4.1.0-alt1
 - new version 4.1.0 (with rpmrb script)
 
