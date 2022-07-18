@@ -2,7 +2,7 @@
 %def_without test
 
 Name: python3-module-rfc6555
-Version: 0.0.0
+Version: 0.1.0
 Release: alt1
 
 Summary: Python implementation of the Happy Eyeballs Algorithm described in RFC 6555
@@ -59,5 +59,8 @@ Provided with a single file and dead-simple API to allow easy vendoring and inte
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 0.1.0-alt1
+- new version 0.1.0 (with rpmrb script)
+
 * Fri Nov 06 2020 Vitaly Lipatov <lav@altlinux.ru> 0.0.0-alt1
 - initial build for ALT Sisyphus
