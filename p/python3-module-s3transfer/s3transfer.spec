@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.5.2
+Version: 0.6.0
 Release: alt1
 
 Summary: An Amazon S3 Transfer Manager
@@ -71,6 +71,9 @@ tox.py3 --sitepackages --console-scripts -vvr -s false --develop
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 0.6.0-alt1
+- new version 0.6.0
+
 * Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 0.5.2-alt1
 - 0.3.3 -> 0.5.2.
 
