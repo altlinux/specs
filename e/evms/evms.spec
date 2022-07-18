@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt54
+Release: alt55
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Mon Jul 18 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt55
+- hotfix: avoid null pointer dereference
+
 * Wed Jul 13 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt54
 - new feature: btrfs subvolumes support
 
