@@ -1,7 +1,7 @@
 %define modulename txtorcon
 
 Name: python3-module-txtorcon
-Version: 21.1.0
+Version: 22.0.0
 Release: alt1
 
 Summary: txtorcon password-authenticated key exchange (pure python)
@@ -49,6 +49,9 @@ rm -rfv %buildroot%_datadir/%modulename/*.py
 %_datadir/%modulename/
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 22.0.0-alt1
+- new version 22.0.0 (with rpmrb script)
+
 * Thu Aug 26 2021 Vitaly Lipatov <lav@altlinux.ru> 21.1.0-alt1
 - new version 21.1.0 (with rpmrb script)
 
