@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.7.3
-Release: alt1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -121,6 +121,9 @@ sed -i "s/-Werror/-Wno-error/" cmake/modules/SetDefaultTargetProperties.cmake
 %_datadir/%name
 
 %changelog
+* Mon Jul 18 2022 Egor Ignatov <egori@altlinux.org> 4.7.3-alt2
+- Backport KDE open website workaround (closes: #41101)
+
 * Fri Jun 03 2022 Egor Ignatov <egori@altlinux.org> 4.7.3-alt1
 - new version 4.7.3
 - 9e4b294d9 linux: runProgramAsUser set gid as well
