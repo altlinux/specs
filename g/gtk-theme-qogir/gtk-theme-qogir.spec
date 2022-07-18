@@ -1,5 +1,5 @@
 Name: gtk-theme-qogir
-Version: 2022.05.29
+Version: 2022.07.17
 Release: alt1
 Epoch: 1
 Summary: Qogir GTK theme
@@ -35,6 +35,11 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 %_datadir/themes/Qogir*
 
 %changelog
+* Mon Jul 18 2022 Leontiy Volodin <lvol@altlinux.org> 1:2022.07.17-alt1
+- New version.
+- Upstream:
+  + Fixed Gnome 42 issues.
+
 * Mon Jun 06 2022 Leontiy Volodin <lvol@altlinux.org> 1:2022.05.29-alt1
 - New version.
 
