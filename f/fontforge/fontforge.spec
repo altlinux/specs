@@ -1,7 +1,7 @@
 %def_enable docs
 
 Name: fontforge
-Version: 20201107
+Version: 20220308
 Release: alt1
 
 Summary: FontForge -- font editor
@@ -100,7 +100,7 @@ sed -i "s|-Werror=int-conversion||" CMakeLists.txt
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*.*
 %_datadir/mime/packages/*
-%_datadir/pixmaps/*
+#_datadir/pixmaps/*
 %_datadir/metainfo/*
 
 %files -n lib%name
@@ -121,6 +121,9 @@ sed -i "s|-Werror=int-conversion||" CMakeLists.txt
 
 
 %changelog
+* Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 20220308-alt1
+- new version 20220308 (with rpmrb script)
+
 * Sun Nov 08 2020 Vitaly Lipatov <lav@altlinux.ru> 20201107-alt1
 - new version 20201107 (with rpmrb script)
 
