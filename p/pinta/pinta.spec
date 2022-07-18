@@ -1,6 +1,6 @@
 Name: pinta
 Version: 1.7
-Release: alt2
+Release: alt3
 
 Summary: An easy to use drawing and image editing program
 
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt-fix-MonoPosix.patch
 
 # Mono only available on these:
-ExclusiveArch: %ix86 x86_64 ppc ppc64 ia64 %arm sparcv9 alpha s390x
+ExclusiveArch: %ix86 x86_64 ppc ppc64 ia64 %arm aarch64 sparcv9 alpha s390x
 
 
 # Manually:
@@ -65,6 +65,9 @@ It's goal is to provide a simplified alternative to GIMP for casual users.
 %_pixmapsdir/%{name}*
 
 %changelog
+* Mon Jul 18 2022 Anton Midyukov <antohami@altlinux.org> 1.7-alt3
+- add aarch64 in ExclusiveArch
+
 * Wed Jul 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.7-alt2
 - Updated dependencies.
 
