@@ -1,7 +1,7 @@
 %define oname pygame
 
 Name: python3-module-pygame
-Version: 2.1.0
+Version: 2.1.2
 Release: alt1
 
 Summary: A Python module for interfacing with the SDL multimedia library
@@ -97,6 +97,9 @@ sed -i '/^pkg_dir =/s@pkg_dir = .*@pkg_dir = "%_defaultdocdir/python3-module-pyg
 
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt1
+- new version 2.1.2 (with rpmrb script)
+
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - new version 2.1.0 (with rpmrb script)
 
