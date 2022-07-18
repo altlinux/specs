@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.8.1
-Release: alt4
+Version: 2.8.3
+Release: alt1
 Epoch: 1
 
 Summary: Fast numerical array expression evaluator for Python and NumPy
@@ -81,6 +81,9 @@ tox.py3 --sitepackages -vvr -s false
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 1:2.8.3-alt1
+- new version 2.8.3
+
 * Mon Jun 20 2022 Michael Shigorin <mike@altlinux.org> 1:2.8.1-alt4
 - E2K: build with openblas too
 
