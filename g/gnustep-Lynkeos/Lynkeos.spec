@@ -2,13 +2,13 @@
 
 Name: gnustep-Lynkeos
 Version: 1.2
-Release: alt7
+Release: alt8
 Summary: Tool to process planetary astronomical images for GNUstep
 License: GPLv2
 Group: Graphical desktop/GNUstep
 Url: http://packages.debian.org/jessie/lynkeos.app
 
-ExclusiveArch: %ix86 x86_64
+#ExclusiveArch: %ix86 x86_64
 
 Source: %name-%version.tar
 Source1: %name.menu
@@ -71,6 +71,9 @@ install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
 %doc Docs/html/*
 
 %changelog
+* Mon Jul 18 2022 Anton Midyukov <antohami@altlinux.org> 1.2-alt8
+- NMU: rebuilt for all arches
+
 * Wed Nov 04 2020 Andrey Cherepanov <cas@altlinux.org> 1.2-alt7
 - Remove redundant clang-devel for build
 
