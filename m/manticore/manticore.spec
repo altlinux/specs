@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: manticore
-Version: 4.0.2
+Version: 5.0.2
 Release: alt1
 
 Summary: Manticore full-text search server
@@ -33,13 +33,13 @@ ExclusiveArch: x86_64
 
 BuildRequires: flex bison
 BuildRequires: boost-context-devel boost-devel-headers
-BuildRequires: libexpat-devel libmariadb-devel libre2-devel libssl-devel libunixODBC-devel libstemmer-devel postgresql-devel zlib-devel
+BuildRequires: libexpat-devel libmysqlclient-devel libre2-devel libssl-devel libunixODBC-devel libstemmer-devel postgresql-devel zlib-devel
 #BuildRequires: libjemalloc-devel
 
-BuildRequires: libmanticore-columnar-devel
+BuildRequires: libmanticore-columnar-devel >= 1.15
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake
+BuildRequires: cmake >= 3.17
 BuildRequires: gcc-c++
 %if_enabled check
 BuildRequires: ctest php mysql python3
@@ -134,7 +134,7 @@ ctest -C Debug
 rm -rv %buildroot/usr/include/manticore/sphinxudf.h
 #    /usr/bin/index_converter
 rm -rv %buildroot/usr/lib/systemd/system-generators/manticore-search-generator
-rm -rv %buildroot/usr/lib/tmpfiles.d/manticore.conf
+rm -rv %buildroot/usr/lib/tmpfiles.d/searchd.conf
 rm -rv %buildroot/usr/share/doc/%name/
 rm -rv %buildroot/%_datadir/%name/api/
 
@@ -160,7 +160,7 @@ tar xfv %SOURCE2
 %_bindir/searchd
 %_bindir/spelldump
 %_bindir/wordbreaker
-#_bindir/manticore_new_cluster
+%_bindir/manticore_new_cluster
 %_datadir/%name/
 %_unitdir/*
 %dir %_sysconfdir/manticoresearch/
@@ -175,6 +175,12 @@ tar xfv %SOURCE2
 %_bindir/index_converter
 
 %changelog
+* Mon Jun 27 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.2-alt1
+- new version 5.0.2 (with rpmrb script)
+
+* Sat Dec 25 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.0-alt1
+- new version 4.2.0 (with rpmrb script)
+
 * Sat Dec 11 2021 Vitaly Lipatov <lav@altlinux.ru> 4.0.2-alt1
 - new version 4.0.2 (with rpmrb script)
 
