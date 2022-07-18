@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 3.14.10
+Version: 3.15.1
 Release: alt1
 
 Summary: A small, expressive orm -- supports postgresql, mysql and sqlite
@@ -86,6 +86,9 @@ python3 runtests.py
 %doc docs/_build/html/*
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 3.15.1-alt1
+- new version 3.15.1 (with rpmrb script)
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 3.14.10-alt1
 - new version 3.14.10 (with rpmrb script)
 
