@@ -1,3 +1,4 @@
+%define __GIVARO_USE_OPENMP 0
 %define soname 9
 
 %def_enable static
@@ -7,13 +8,13 @@
 %endif
 
 Name: givaro
-Version: 4.1.1
+Version: 4.2.0
 Release: alt1
 Summary: C++ library for arithmetic and algebraic computations
 
 License: CECILL-B
 Group: Development/C
-Url: https://casys.gricad-pages.univ-grenoble-alpes.fr/givaro/
+Url: https://github.com/linbox-team/givaro
 
 Source: https://github.com/linbox-team/%name/releases/download/v%version/%name-%version.tar.gz
 # Fix a memory leak.  The original code creates a temporary object, then does
@@ -58,7 +59,6 @@ univariate polynomials (and therefore recursive multivariate).
 %package -n lib%name-devel
 Summary: Files useful for %name development
 Group: Development/C
-Provides: bundled(jquery)
 
 %description -n lib%name-devel
 The libraries and header files for using %name for development.
@@ -74,37 +74,41 @@ The static libraries for using %name for development.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
-%patch2 -p1
+# %%patch -p1
+# %%patch1 -p1
+# %%patch2 -p1
 
 # Remove parts of the configure script that select non-default architectures
 # and ABIs.
-subst '/INSTR_SET/,/fabi-version/d' configure.ac
+#subst '/INSTR_SET/,/fabi-version/d' configure.ac
 
 # Regenerate configure after monkeying with configure.ac
 %autoreconf
 
 %build
-%ifarch %ix86
-# Excess precision leads to test failures
-%global optflags %optflags -ffloat-store
-%endif
-%ifarch s390x
-%global optflags %optflags -ffp-contract=off
-%endif
+#%%ifarch %%ix86
+## Excess precision leads to test failures
+#%%global optflags %%optflags -ffloat-store
+#%%endif
+#%%ifarch s390x
+#%%global optflags %%optflags -ffp-contract=off
+#%%endif
 
 %configure \
-    --enable-doc \
-    --docdir=%_docdir/%name-devel \
+%if_disabled static
+	--disable-static \
+%endif
+	--enable-doc \
+	--with-docdir="%_docdir/%name-devel" \
+	--enable-silent-rules \
+	--disable-simd \
+	--without-archnative \
 #
 chmod a+x givaro-config
 
-# Get rid of undesirable hardcoded rpaths, and workaround libtool reordering
-# -Wl,--as-needed after all the libraries.
+# Get rid of undesirable hardcoded rpaths.
 sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-    -e 's|CC="\(g..\)"|CC="\1 -Wl,--as-needed"|' \
     -i libtool
 
 %make_build
@@ -116,15 +120,15 @@ sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
 rm -f %buildroot%_libdir/lib%name.la
 
 # Documentation is installed in the wrong place
-mkdir -p %buildroot%_docdir
-mv %buildroot%prefix/docs %buildroot%_docdir/%name-devel
+#mkdir -p %%buildroot%%_docdir
+#mv %%buildroot%%prefix/docs %%buildroot%%_docdir/%%name-devel
 
 # We don't want these files with the doxygen-generated files
 rm -f %buildroot%_docdir/%name-devel/givaro-html/{AUTHORS,COPYING,INSTALL}
 
-%if_disabled static
-rm -f %buildroot%_libdir/lib%name.a
-%endif
+#%%if_disabled static
+#rm -f %%buildroot%%_libdir/lib%%name.a
+#%%endif
 
 %check
 export LD_LIBRARY_PATH=$PWD/src/.libs
@@ -138,7 +142,8 @@ make check
 %files -n lib%name-devel
 %_docdir/%name-devel/
 %_bindir/%name-config
-%_bindir/%name-makefile
+%dir %_datadir/%name/
+%_datadir/%name/%name-makefile
 %_includedir/%name/
 %_includedir/gmp++/
 %_includedir/recint/
@@ -152,6 +157,9 @@ make check
 %endif
 
 %changelog
+* Wed Jun 22 2022 Leontiy Volodin <lvol@altlinux.org> 4.2.0-alt1
+- New version (4.2.0).
+
 * Wed Oct 20 2021 Leontiy Volodin <lvol@altlinux.org> 4.1.1-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
 - Built as require for sagemath.
