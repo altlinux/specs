@@ -1,7 +1,7 @@
 %define  modulename starlette
 
 Name:    python3-module-%modulename
-Version: 0.19.0
+Version: 0.20.4
 Release: alt1
 
 Summary: The little ASGI framework that shines
@@ -53,6 +53,9 @@ Zero hard dependencies.
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 0.20.4-alt1
+- new version 0.20.4 (with rpmrb script)
+
 * Tue Apr 05 2022 Vitaly Lipatov <lav@altlinux.ru> 0.19.0-alt1
 - new version 0.19.0 (with rpmrb script)
 
