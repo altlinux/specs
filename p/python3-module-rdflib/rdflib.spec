@@ -1,7 +1,7 @@
 %define oname rdflib
 
 Name: python3-module-%oname
-Version: 5.0.0
+Version: 6.1.1
 Release: alt1
 
 Summary: RDFLib is a Python library for working with RDF
@@ -45,6 +45,9 @@ SQLite, Sleepycat, ZODB and SQLObject.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 6.1.1-alt1
+- new version 6.1.1 (with rpmrb script)
+
 * Sat Jul 10 2021 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
 - new version 5.0.0 (with rpmrb script)
 
