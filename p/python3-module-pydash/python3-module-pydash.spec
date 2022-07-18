@@ -2,7 +2,7 @@
 %def_without test
 
 Name: python3-module-%oname
-Version: 4.9.0
+Version: 5.1.0
 Release: alt1
 
 Summary: The kitchen sink of Python utility libraries for doing "stuff" in a functional way
@@ -45,5 +45,8 @@ PYTHONPATH=%buildroot%python3_sitelibdir/%oname/ pytest3
 %python3_sitelibdir/%oname-*.egg-info
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 5.1.0-alt1
+- new version 5.1.0 (with rpmrb script)
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 4.9.0-alt1
 - initial build for ALT Sisyphus
