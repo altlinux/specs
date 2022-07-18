@@ -1,7 +1,7 @@
 %define oname vcpkg-tool
 
 Name: vcpkg
-Version: 2021.09.10
+Version: 2022.07.14
 Release: alt1
 
 Summary: C++ Library Manager
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 Source1: %name.sh
 
 BuildRequires: catch2-devel
+BuildRequires: libfmt-devel >= 8.1.1
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: ninja-build
@@ -31,6 +32,9 @@ or unset the VCPKG_DISABLE_METRICS environment variable.
 
 %prep
 %setup
+# https://github.com/microsoft/vcpkg-tool/pull/634
+subst 's|inline namespace v8|inline namespace v9|' include/vcpkg/base/fwd/format.h
+
 
 # Fixing line endings...
 sed -e "s,\r,," -i README.md
@@ -49,7 +53,8 @@ ln -svf %_includedir/catch2/ include/
     -DVCPKG_BUILD_FUZZING:BOOL=OFF \
     -DVCPKG_EMBED_GIT_SHA:BOOL=OFF \
     -DVCPKG_BUILD_BENCHMARKING:BOOL=OFF \
-    -DVCPKG_ADD_SOURCELINK:BOOL=OFF
+    -DVCPKG_ADD_SOURCELINK:BOOL=OFF \
+    -DVCPKG_DEPENDENCY_EXTERNAL_FMT:BOOL=ON
 %cmake_build
 
 %install
@@ -65,6 +70,12 @@ install -D -m 0644 -p "%SOURCE1" "%buildroot%_sysconfdir/profile.d/%name.sh"
 %config(noreplace) %_sysconfdir/profile.d/%name.sh
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 2022.07.14-alt1
+- new version (2022.07.14) with rpmgs script
+
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 2022.06.15-alt1
+- new version 2022.06.15 (with rpmrb script)
+
 * Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 2021.09.10-alt1
 - new version 2021.09.10 (with rpmrb script)
 
