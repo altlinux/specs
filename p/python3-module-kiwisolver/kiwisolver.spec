@@ -1,9 +1,8 @@
 %define oname kiwisolver
-
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
-Version: 1.4.2
+Version: 1.4.4
 Release: alt1
 Summary: A fast implementation of the Cassowary constraint solver
 License: BSD
@@ -16,10 +15,14 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: kiwi-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools gcc-c++
-BuildRequires: python3(setuptools_scm)
+BuildRequires: gcc-c++
 BuildRequires: python3-dev
 BuildRequires: python3-module-cppy
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-build
+BuildRequires: python3-module-toml
+BuildRequires: python3-module-wheel
+BuildRequires: pip
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -49,11 +52,14 @@ git commit -m 'release'
 git tag '%version'
 
 %build
-%python3_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%__python3 -m build -n
 
 %install
-%python3_install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+pip3 install --root=%buildroot --no-deps dist/*.whl
 
+%if_with check
 %check
 cat > tox.ini <<'EOF'
 [testenv]
@@ -65,12 +71,18 @@ export PIP_NO_BUILD_ISOLATION=no
 export PIP_NO_INDEX=YES
 export TOXENV=py3
 tox.py3 --sitepackages -vvr --develop
+%endif
 
 %files
 %doc *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jul 18 2022 Andrey Cherepanov <cas@altlinux.org> 1.4.4-alt1
+- New version.
+- Disabled checks.
+- Built by PEP 517/518.
+
 * Thu Apr 07 2022 Stanislav Levin <slev@altlinux.org> 1.4.2-alt1
 - New version.
 
