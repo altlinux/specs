@@ -8,14 +8,15 @@
 %endif
 
 Name: scsitarget-utils
-Version: 1.0.81
+Version: 1.0.83
 Release: alt1
 
 Summary: The SCSI target daemon and utility programs
 
 Group: System/Configuration/Hardware
 License: GPLv2
-URL: http://stgt.sourceforge.net/
+URL: https://github.com/fujita/tgt
+Vcs: https://github.com/fujita/tgt.git
 
 Source0: %name-%version.tar
 Source1: tgt.service
@@ -32,6 +33,7 @@ Source6: tgt.init
 Patch1: 0002-remove-check-for-xsltproc.patch
 Patch2: 0003-default-config.patch
 Patch3: tgt-1.0.79-Adapt-to-glusterfs-api-7.6.3.patch
+Patch4: 0004-conn-use-after-free.patch
 
 BuildRequires: libxslt docbook-style-xsl xsltproc
 BuildRequires: glibc-devel
@@ -78,6 +80,7 @@ Adds support for the Gluster glfs backstore to scsi-target-utils.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %__subst 's|-g -O2 -Wall|%optflags|' Makefile
@@ -125,7 +128,7 @@ mkdir -p %buildroot%_libdir/tgt/backing-store
 %preun_service tgt
 
 %files
-%doc doc/README.* doc/*.txt doc/htmlpages
+%doc LICENSE README.md doc/README.* doc/*.txt doc/htmlpages
 %_sbindir/tgtd
 %_sbindir/tgtadm
 %_sbindir/tgt-setup-lun
@@ -159,6 +162,10 @@ mkdir -p %buildroot%_libdir/tgt/backing-store
 %endif
 
 %changelog
+* Mon Jul 18 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.0.83-alt1
+- 1.0.83
+- fix use-after-free bug
+
 * Wed Mar 09 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.0.81-alt1
 - 1.0.81
 
