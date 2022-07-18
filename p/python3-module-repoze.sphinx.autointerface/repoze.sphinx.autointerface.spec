@@ -1,8 +1,8 @@
 %define oname repoze.sphinx.autointerface
 
 Name: python3-module-%oname
-Version: 0.8
-Release: alt3.0
+Version: 1.0.0
+Release: alt1
 
 Summary: Auto-generate Sphinx API docs from Zope interfaces (Python 3)
 
@@ -66,6 +66,9 @@ touch %buildroot%python3_sitelibdir/repoze/sphinx/__init__.py
 %python3_sitelibdir/repoze/sphinx/__init__.*
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
+- new version 1.0.0 (with rpmrb script)
+
 * Tue May 18 2021 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt3.0
 - use sphinx 4.0 PR
 
