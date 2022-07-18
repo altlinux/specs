@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 0.8.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Video
@@ -13,7 +13,7 @@ Summary: Video Player
 Url: https://invent.kde.org/multimedia/haruna
 License: GPL-3.0-or-later
 
-Requires: youtube-dl
+Requires: %name-youtube-player
 
 Source: %rname-%version.tar
 #Patch1: alt-dont-save-pos.patch
@@ -39,9 +39,30 @@ Requires: kf5-filesystem
 %description common
 %name common package
 
+%package -n %name-youtube-player-4-ytdlp
+Group: System/Configuration/Other
+Summary: %name youtube player
+Provides: %name-youtube-player
+Provides: %name-youtube-player-ytdlp
+Requires: %name-common
+Requires: yt-dlp
+%description -n %name-youtube-player-4-ytdlp
+%name youtube player.
+
+%package -n %name-youtube-player-2-youtubedl
+Group: System/Configuration/Other
+Summary: %name youtube player
+Provides: %name-youtube-player
+Provides: %name-youtube-player-youtubedl
+Requires: %name-common
+Requires: youtube-dl
+%description -n %name-youtube-player-2-youtubedl
+%name youtube player.
+
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: %name-common
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -49,10 +70,9 @@ developing applications that use %name.
 %package -n %libharuna
 Group: System/Libraries
 Summary: KF5 library
-#Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libharuna
 KF5 library
-
 
 %prep
 %setup -n %rname-%version
@@ -70,8 +90,12 @@ KF5 library
 %K5install_move data locale
 %find_lang %name --with-kde --all-name
 
+%files common
+%doc LICENSES/*
+%files -n %name-youtube-player-4-ytdlp
+%files -n %name-youtube-player-2-youtubedl
 %files -f %name.lang
-%doc LICENSES/* README.md
+%doc README.md
 %_K5bin/haruna
 %_K5xdgapp/*haruna*.desktop
 %_K5icon/hicolor/*/apps/*haruna*.*
@@ -82,6 +106,9 @@ KF5 library
 #%_K5lib/libharuna.so.*
 
 %changelog
+* Sun Jul 17 2022 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt2
+- prefer yt-dlp over youtube-dl
+
 * Thu Apr 21 2022 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt1
 - new version
 
