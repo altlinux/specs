@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: virtualgl
-Version: 3.0
+Version: 3.0.1
 Release: alt1
 
 %define vgl_name vgl
@@ -22,6 +22,7 @@ Patch3: %name-3.0-alt-nettest.patch
 Patch4: %name-2.6.3-alt-fix-linkage.patch
 # patch 5: modified RedHat libexec path patch
 Patch5: %name-2.5.2-alt-libexec-path-fix.patch
+Patch6: %name-3.0.1-upstream-Fix-compilation-errors-with-libX11-1.8.x.patch
 
 BuildRequires: cmake
 BuildRequires: gcc-c++ 
@@ -70,6 +71,7 @@ This package contains VirtualGL development libraries.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 sed -i -e 's,"glx.h",<GL/glx.h>,' server/*.[hc]*
 sed -i -e 's,"glxext.h",<GL/glxext.h>,' server/*.[hc]*
@@ -145,6 +147,10 @@ chmod 2755 %_localstatedir/%vgl_name
 %_includedir/*.h
 
 %changelog
+* Mon Jul 18 2022 Nikolai Kostrigin <nickel@altlinux.org> 3.0.1-alt1
+- new version
+  + add upstream-Fix-compilation-errors-with-libX11-1.8.x patch (fix FTBFS)
+
 * Mon Nov 22 2021 Nikolai Kostrigin <nickel@altlinux.org> 3.0-alt1
 - new version
   + pack vgl_eglinfo utility by upstream
