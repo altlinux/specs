@@ -2,7 +2,7 @@
 %def_disable qt5
 
 Name: strawberry
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -113,6 +113,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Jul 18 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.6-alt1
+- New version (1.0.6).
+
 * Tue Jun 14 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.5-alt1
 - New version (1.0.5).
 
