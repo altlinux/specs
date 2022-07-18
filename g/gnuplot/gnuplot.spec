@@ -2,16 +2,17 @@
 %def_with emacs
 
 Name: gnuplot
-Version: 5.4.3
-Release: alt2
 Epoch: 1
+Version: 5.4.4
+Release: alt1
 
 Summary: A program for plotting mathematical expressions and data
+Summary(ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
+
 License: gnuplot and MIT
 Group: Sciences/Other
 URL: http://www.gnuplot.info/
 
-# git://git.code.sf.net/p/gnuplot/gnuplot-main
 Source0: %name-%version.tar
 Source2: http://www.gnuplot.info/faq/faq.pdf
 Source3: %name.desktop
@@ -29,9 +30,11 @@ Patch2: gnuplot-4.2.0-fonts.patch
 Patch3: gnuplot-4.6.1-plot-sigsegv.patch
 Patch4: gnuplot-5.2.2-doc.patch
 # this from suse
-Patch5: gnuplot-5.4.3-libgd.patch
+Patch5: gnuplot-5.4.4-libgd.patch
 # ALT 34350
 Patch6: gnuplot-5.4.0-fix-help.patch
+
+Patch7: gnuplot-5.4.4-add_russian_translation.patch
 
 BuildRequires(pre): rpm-build-tex
 BuildPreReq: desktop-file-utils
@@ -52,8 +55,6 @@ BuildRequires: lua-devel tex(pgf.sty)
 Requires(post,postun): desktop-file-utils
 Requires: fonts-ttf-dejavu
 Requires: %name-common-x11 = %EVR
-
-Summary(ru_RU.UTF-8): Программа для построения графиков математических выражений и данных
 
 %package common
 Group: Sciences/Other
@@ -149,6 +150,7 @@ plotting tool
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 #export CFLAGS="$RPM_OPT_FLAGS -fno-fast-math"
@@ -273,6 +275,10 @@ rm -f demo/html/Makefile*
 %doc demo
 
 %changelog
+* Mon Jul 18 2022 Grigory Ustinov <grenka@altlinux.org> 1:5.4.4-alt1
+- Automatically updated to 5.4.4.
+- Add russian translation to gnuplot-qt.
+
 * Wed Mar 23 2022 Grigory Ustinov <grenka@altlinux.org> 1:5.4.3-alt2
 - Fixed FTBFS (thx to aris@).
 - Little cleanup spec.
