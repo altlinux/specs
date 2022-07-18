@@ -2,12 +2,12 @@
 
 Name: python3-module-%oname
 Version: 0.8.20
-Release: alt1
+Release: alt2
 
 Summary: Bindings for the scrypt key derivation function library
 
 Url: https://pypi.org/project/scrypt
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
 
 Source: %name-%version.tar
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libssl-devel
 
 %description
-This is a set of Python_ bindings for the scrypt_ key derivation
+This is a set of Python bindings for the scrypt key derivation
 function.
 
 Scrypt is useful when encrypting password as it is possible to specify
@@ -27,14 +27,6 @@ search of several billion passwords will take a considerable amount of
 time. This is in contrast to more traditional hash functions such as
 MD5 or the SHA family which can be implemented extremely fast on cheap
 hardware.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %oname.
 
 %prep
 %setup
@@ -51,6 +43,10 @@ This package contains tests for %oname.
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Jul 18 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.20-alt2
+- Fix license.
+- Add filter for tags.
+
 * Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.20-alt1
 - Build new version.
 
