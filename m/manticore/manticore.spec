@@ -9,7 +9,7 @@
 
 Name: manticore
 Version: 5.0.2
-Release: alt1
+Release: alt2
 
 Summary: Manticore full-text search server
 
@@ -169,12 +169,16 @@ tar xfv %SOURCE2
 %config(noreplace) %_sysconfdir/logrotate.d/%name
 %dir %attr(775,root,_manticore) %_var/log/%name/
 %dir %attr(775,root,_manticore) %_var/lib/%name/
+%dir %attr(775,root,_manticore) %_var/lib/%name/data/
 %_man1dir/*
 
 %files -n manticore-converter
 %_bindir/index_converter
 
 %changelog
+* Tue Jul 19 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.2-alt2
+- pack /var/lib/manticore/data dir
+
 * Mon Jun 27 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.2-alt1
 - new version 5.0.2 (with rpmrb script)
 
