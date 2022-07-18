@@ -1,8 +1,8 @@
 %define modulename youtube_dl_gui
 
 Name: youtube-dl-gui
-Version: 1.8.2
-Release: alt2
+Version: 1.8.3
+Release: alt1
 
 Summary: Front-end GUI of the popular youtube-dl media downloader
 
@@ -73,6 +73,9 @@ desktop-file-install \
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 1.8.3-alt1
+- new version 1.8.3 (with rpmrb script)
+
 * Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 1.8.2-alt2
 - Dropped excessive dependency on `twodict`.
 
