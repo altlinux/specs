@@ -2,7 +2,7 @@
 %define oname xmltodict
 
 Name: python3-module-%oname
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 
 Summary: Makes working with XML feel like you are working with JSON
@@ -47,6 +47,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 0.13.0-alt1
+- new version 0.13.0 (with rpmrb script)
+
 * Mon Jul 05 2021 Vitaly Lipatov <lav@altlinux.ru> 0.12.0-alt1
 - build python3 module separately
 - new version (0.12.0) with rpmgs script
