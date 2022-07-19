@@ -1,6 +1,6 @@
 Name: 7-zip
 Version: 21.07
-Release: alt1
+Release: alt2
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR exception
 Url: https://www.7-zip.org
@@ -21,7 +21,7 @@ BuildRequires: gcc-c++
             HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM,
             SquashFS, UDF, UEFI, VDI, VHD, VMDK, WIM, XAR and Z.
     For ZIP and GZIP formats, 7-Zip provides a compression ratio that is
-        2-10% better than the ratio provided by PKZip and WinZip
+        2-10%% better than the ratio provided by PKZip and WinZip
     Strong AES-256 encryption in 7z and ZIP formats
     Self-extracting capability for 7z format
     Integration with Windows Shell
@@ -52,6 +52,9 @@ install -D CPP/7zip/Bundles/Alone2/b/g/7zz %buildroot%_bindir/7zz
 %_bindir/*
 
 %changelog
+* Thu Jul 07 2022 Vasiliy Tsukanov <palar@altlinux.org> 21.07-alt2
+- FTBFS: description field was fixed
+
 * Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 21.07-alt1
 - Autobuild version bump to 21.07
 
