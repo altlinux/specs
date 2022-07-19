@@ -1,10 +1,10 @@
-%def_without openblas
+%def_with openblas
 
 %define lname libfflas0
 
 Name: fflas-ffpack
-Version: 2.4.3
-Release: alt3
+Version: 2.5.0
+Release: alt1
 
 Summary: Finite Field Linear Algebra Subroutines
 License: LGPL-2.1+
@@ -16,7 +16,9 @@ Source: https://github.com/linbox-team/fflas-ffpack/releases/download/%version/f
 Patch: reproducible.patch
 
 # Couldn't find package libatlas-devel on aarch64, armh and ppc64le.
+%if_without openblas
 ExclusiveArch: i586 x86_64 %e2k
+%endif
 
 BuildPreReq: fdupes
 BuildRequires: gcc-c++
@@ -29,6 +31,7 @@ BuildRequires: libopenblas-devel
 BuildRequires: libatlas-devel
 %endif
 BuildRequires: libgivaro-devel
+BuildRequires: texlive texlive-dist
 
 %description
 The FFLAS-FFPACK library provides functionalities for dense linear
@@ -59,7 +62,7 @@ the FFLAS-FFPACK API.
 
 %prep
 %setup
-%patch -p1
+# %%patch -p1
 
 #Do not compile in DATE and TIME
 sed '/HTML_TIMESTAMP/s/YES/NO/' -i doc/Doxyfile
@@ -103,6 +106,10 @@ sed -i 's,-fabi-version=6,,' \
 %_docdir/%name/
 
 %changelog
+* Tue Jul 19 2022 Leontiy Volodin <lvol@altlinux.org> 2.5.0-alt1
+- New version (2.5.0).
+- Built with openblas instead atlas.
+
 * Wed Jan 19 2022 Michael Shigorin <mike@altlinux.org> 2.4.3-alt3
 - E2K: avoid lcc-unsupported option hardwired into fflas-ffpack-config
 

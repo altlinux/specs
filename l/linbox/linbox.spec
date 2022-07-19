@@ -1,9 +1,9 @@
-%def_without openblas
+%def_with openblas
 
 Name: linbox
 %define lname   liblinbox0
-Version: 1.6.3
-Release: alt2
+Version: 1.7.0
+Release: alt1
 Summary: C++ library for computation with matrices over ints and finite fields
 License: LGPL-2.1+
 Group: Sciences/Mathematics
@@ -16,7 +16,9 @@ Patch1: fix-ksh-pkgconfig.patch
 Patch2: linbox-pr-256.patch
 
 # Couldn't find package libatlas-devel on aarch64, armh and ppc64le.
+%if_without openblas
 ExclusiveArch: i586 x86_64
+%endif
 
 BuildRequires: autoconf >= 2.61
 BuildRequires: automake >= 1.8
@@ -64,18 +66,36 @@ developing against the Givaro library.
 
 %prep
 %setup
-%patch -p1
-%patch1 -p1
-%patch2 -p1
+# %%patch -p1
+# %%patch1 -p1
+# %%patch2 -p1
 
 %build
+%if_with openblas
+export LIBS+="-L%_libdir -lgivaro -lopenblas -lgmp"
+%endif
+
 %autoreconf
 %configure --disable-static \
 %ifarch %ix86
-	--disable-sse --disable-sse2 \
+  --disable-sse --disable-sse2 \
 %endif
-	--disable-sse3 --disable-ssse3 --disable-sse41 --disable-sse42 \
-	--disable-avx --disable-avx2 --disable-fma --disable-fma4
+  --disable-sse3 --disable-ssse3 --disable-sse41 --disable-sse42 \
+  --disable-avx --disable-avx2 --disable-fma --disable-fma4 \
+  --enable-gmp=yes \
+  %if_with openblas
+    --enable-openblas=yes \
+    --with-blas-libs=" -lopenblas" \
+  %endif
+#
+
+# Get rid of undesirable hardcoded rpaths, and workaround libtool reordering
+# -Wl,--as-needed after all the libraries.
+# sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
+#     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
+#     -e 's|CC="\(g..\)"|CC="\1 -Wl,--as-needed"|' \
+#     -i libtool
+
 %make_build
 
 %install
@@ -94,6 +114,10 @@ rm -f "%buildroot/%_libdir"/*.la
 %doc COPYING*
 
 %changelog
+* Tue Jul 19 2022 Leontiy Volodin <lvol@altlinux.org> 1.7.0-alt1
+- New version (1.7.0).
+- Built with openblas instead atlas.
+
 * Mon Nov 29 2021 Leontiy Volodin <lvol@altlinux.org> 1.6.3-alt2
 - Fixed build with sagemath.
 - Added buildrequires.

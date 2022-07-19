@@ -1,7 +1,7 @@
 %define __GIVARO_USE_OPENMP 0
 %define soname 9
 
-%def_enable static
+%def_disable static
 
 %if_enabled static
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -9,11 +9,11 @@
 
 Name: givaro
 Version: 4.2.0
-Release: alt1
+Release: alt2
 Summary: C++ library for arithmetic and algebraic computations
 
 License: CECILL-B
-Group: Development/C
+Group: System/Libraries
 Url: https://github.com/linbox-team/givaro
 
 Source: https://github.com/linbox-team/%name/releases/download/v%version/%name-%version.tar.gz
@@ -78,38 +78,27 @@ The static libraries for using %name for development.
 # %%patch1 -p1
 # %%patch2 -p1
 
-# Remove parts of the configure script that select non-default architectures
-# and ABIs.
-#subst '/INSTR_SET/,/fabi-version/d' configure.ac
-
 # Regenerate configure after monkeying with configure.ac
 %autoreconf
 
 %build
-#%%ifarch %%ix86
-## Excess precision leads to test failures
-#%%global optflags %%optflags -ffloat-store
-#%%endif
-#%%ifarch s390x
-#%%global optflags %%optflags -ffp-contract=off
-#%%endif
-
 %configure \
 %if_disabled static
-	--disable-static \
+  --disable-static \
 %endif
-	--enable-doc \
-	--with-docdir="%_docdir/%name-devel" \
-	--enable-silent-rules \
-	--disable-simd \
-	--without-archnative \
+  --enable-shared \
+  --enable-doc \
+  --with-docdir="%_docdir/%name-devel" \
+  --disable-simd \
 #
 chmod a+x givaro-config
 
-# Get rid of undesirable hardcoded rpaths.
-sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
-    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-    -i libtool
+# Get rid of undesirable hardcoded rpaths, and workaround libtool reordering
+# -Wl,--as-needed after all the libraries.
+# sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
+#     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
+#     -e 's|CC="\(g..\)"|CC="\1 -Wl,--as-needed"|' \
+#     -i libtool
 
 %make_build
 
@@ -119,16 +108,8 @@ sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
 # We don't want libtool archives
 rm -f %buildroot%_libdir/lib%name.la
 
-# Documentation is installed in the wrong place
-#mkdir -p %%buildroot%%_docdir
-#mv %%buildroot%%prefix/docs %%buildroot%%_docdir/%%name-devel
-
 # We don't want these files with the doxygen-generated files
 rm -f %buildroot%_docdir/%name-devel/givaro-html/{AUTHORS,COPYING,INSTALL}
-
-#%%if_disabled static
-#rm -f %%buildroot%%_libdir/lib%%name.a
-#%%endif
 
 %check
 export LD_LIBRARY_PATH=$PWD/src/.libs
@@ -157,6 +138,9 @@ make check
 %endif
 
 %changelog
+* Tue Jul 19 2022 Leontiy Volodin <lvol@altlinux.org> 4.2.0-alt2
+- Fixed build with new linbox.
+
 * Wed Jun 22 2022 Leontiy Volodin <lvol@altlinux.org> 4.2.0-alt1
 - New version (4.2.0).
 
