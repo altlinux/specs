@@ -11,7 +11,7 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
@@ -28,7 +28,8 @@ Patch: %name-0.31.3-alt-no-dark-theme-by-default.patch
 
 %define gtk_ver 3.22
 %define gexiv_ver 0.12.1
-%define soup_ver 2.42
+%define soup3_ver 3.0
+%define webkit_api_ver 4.1
 
 Requires: dconf
 # for video-thumbnailer
@@ -36,19 +37,17 @@ Requires: gst-plugins-base%gst_api_ver gst-plugins-good%gst_api_ver gst-libav
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
+BuildRequires: desktop-file-utils yelp-tools /usr/bin/appstream-util
 BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libsoup-devel >= %soup_ver
+BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver
 BuildRequires: gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: libdconf-devel libdbus-glib-devel libgexiv2-devel >= %gexiv_ver
 BuildRequires: libwebp-devel libgphoto2-devel libgudev-devel libjson-glib-devel
 BuildRequires: libraw-devel libexif-devel libgomp-devel libavif-devel
-BuildRequires: libsqlite3-devel libstdc++-devel libwebkit2gtk-devel
-BuildRequires: librest-devel libgee0.8-devel gcr-libs-devel
-BuildRequires: desktop-file-utils yelp-tools libappstream-glib-devel
-BuildRequires: gcr-libs-vala
+BuildRequires: libsqlite3-devel libstdc++-devel pkgconfig(webkit2gtk-%webkit_api_ver)
+BuildRequires: libgee0.8-devel gcr-libs-devel gcr-libs-vala
 BuildRequires: libgdata-devel libchamplain-gtk3-devel
 BuildRequires: libsecret-devel
-# opencv4 also supported
 %{?_enable_face_detection:BuildRequires: gcc-c++ libopencv-devel}
 %{?_enable_check:BuildRequires: python3 dbus}
 
@@ -109,6 +108,9 @@ mode, and export them to share with others.
 
 
 %changelog
+* Tue Jul 19 2022 Yuri N. Sedunov <aris@altlinux.org> 0.31.5-alt1
+- 0.31.5 (ported to libsoup-3.0/webkit2gtk-4.1)
+
 * Tue Jun 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.31.4-alt1
 - 0.31.4
 
