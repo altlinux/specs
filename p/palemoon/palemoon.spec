@@ -4,7 +4,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Name: palemoon
 Version: 31.1.1
 
-Release: alt1
+Release: alt2
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -13,7 +13,7 @@ Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
 
-ExcludeArch: aarch64 armh ppc64le i586
+ExcludeArch: armh i586
 
 %define sname palemoon
 %define bname newmoon
@@ -242,12 +242,6 @@ echo "mk_add_options MOZ_OBJDIR=obj-%_arch" >> .mozconfig
 echo "mk_add_options MOZ_MAKE_FLAGS=-j${NPROCS:-4}" >> .mozconfig
 # echo "ac_add_options --enable-rpath"  >> .mozconfig
 
-%ifnarch %ix86 x86_64
-echo _BUILD_64=1  >> .mozconfig
-echo "ac_add_options --disable-monoic" >> .mozconfig
-echo "ac_add_options --disable-polyic" >> .mozconfig
-echo "ac_add_options --disable-tracejit" >> .mozconfig
-%endif
 
 ## echo "ac_add_options --disable-static" >> .mozconfig
 echo "ac_add_options --disable-elf-hack" >> .mozconfig
@@ -490,8 +484,10 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %_rpmmacrosdir/%sname
 %exclude %_includedir/*
 
-
 %changelog
+* Sat Jul 16 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.1.1-alt2
+- Add BuildArch aarch64, ppc64le
+
 * Wed Jul 13 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.1.1-alt1
 - Version 31.1.1
 
