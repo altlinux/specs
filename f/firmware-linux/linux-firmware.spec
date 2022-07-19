@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220708
+Version: 20220718
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,29 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jul 19 2022 Cronbuild Service <cronbuild@altlinux.org> 20220718-alt1
+- upstream changes (GIT 4421586):
+  + amdgpu: update renoir to release 22.20 (thx Alex Deucher)
+  + amdgpu: update beige goby to release 22.20 (thx Alex Deucher)
+  + amdgpu: update yellow carp to release 22.20 (thx Alex Deucher)
+  + amdgpu: update dimgrey cavefish to release 22.20 (thx Alex Deucher)
+  + amdgpu: update vega20 to release 22.20 (thx Alex Deucher)
+  + amdgpu: update vega12 to release 22.20 (thx Alex Deucher)
+  + amdgpu: update raven to release 22.20 (thx Alex Deucher)
+  + amdgpu: update navy flounder to release 22.20 (thx Alex Deucher)
+  + amdgpu: update vega10 to release 22.20 (thx Alex Deucher)
+  + amdgpu: update sienna cichlid to release 22.20 (thx Alex Deucher)
+  + amdgpu: update navi14 to release 22.20 (thx Alex Deucher)
+  + amdgpu: update green sardine to release 22.20 (thx Alex Deucher)
+  + amdgpu: update vangogh to release 22.20 (thx Alex Deucher)
+  + amdgpu: update navi12 to release 22.20 (thx Alex Deucher)
+  + amdgpu: update navi10 to release 22.20 (thx Alex Deucher)
+  + amdgpu: update picasso to release 22.20 (thx Alex Deucher)
+  + amdgpu: update aldebaran to release 22.20 (thx Alex Deucher)
+  + amdgpu: update psp 13.0.8 TA firmware (thx Alex Deucher)
+  + WHENCE: Fix the dangling symlinks fix (thx Peter Robinson)
+  + amdgpu: update DMCUB firmware for DCN 3.1.6 (thx Alex Deucher)
+
 * Wed Jul 13 2022 Cronbuild Service <cronbuild@altlinux.org> 20220708-alt1
 - upstream changes (GIT dfa2931):
   + WHENCE: Correct dangling symlinks (thx Mario Limonciello)
