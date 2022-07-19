@@ -35,7 +35,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.55
+Version: %ver_major.56
 Release: alt1
 
 Summary: Media Sharing Server
@@ -182,6 +182,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %files -f %name.lang
 %_bindir/%name
 %_bindir/pw-jack
+%_bindir/%name-avb
 %_bindir/%name-pulse
 %_bindir/%name-media-session
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
@@ -194,6 +195,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_datadir/%name/client-rt.conf
 %_datadir/%name/jack.conf
 %_datadir/%name/minimal.conf
+%_datadir/%name/%name-avb.conf
 %_datadir/%name/%name-pulse.conf
 %_datadir/%name/filter-chain.conf
 
@@ -208,6 +210,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_datadir/%name/filter-chain/demonic.conf
 %_datadir/%name/filter-chain/sink-dolby-surround.conf
 %_datadir/%name/filter-chain/sink-eq6.conf
+%_datadir/%name/filter-chain/sink-make-LFE.conf
 %_datadir/%name/filter-chain/sink-matrix-spatialiser.conf
 %_datadir/%name/filter-chain/sink-mix-FL-FR.conf
 %_datadir/%name/filter-chain/sink-virtual-surround-5.1-kemar.conf
@@ -299,6 +302,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Tue Jul 19 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.56-alt1
+- 0.3.56
+
 * Tue Jul 12 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.55-alt1
 - 0.3.55
 
