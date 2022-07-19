@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.7.3
-Release: alt2
+Release: alt4
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -16,12 +16,19 @@ Requires: polkit qca-qt5-ossl qt5-translations
 Obsoletes: italc3
 
 Source: %name-%version.tar
-Source1: %name-%version-3rdparty.tar
-Source2: veyon-config-dm-login.sh
+Source1: %name-%version-3rdparty-kldap.tar
+Source2: %name-%version-3rdparty-kldap-qt-compat.tar
+Source3: %name-%version-3rdparty-libfakekey.tar
+Source4: %name-%version-3rdparty-libvncserver.tar
+Source5: %name-%version-3rdparty-libvncserver-webclients-novnc.tar
+Source6: %name-%version-3rdparty-qthttpserver.tar
+Source7: %name-%version-3rdparty-qthttpserver-src-3rdparty-http-parser.tar
+Source8: %name-%version-3rdparty-x11vnc.tar
+
+Source100: veyon-config-dm-login.sh
 
 Patch0: %name-%version-alt.patch
 Patch1: alt-veyon-libdir.patch
-Patch3: alt-fix-builtindirectory-computers-list-display.patch
 Patch4: alt-fix-dm-login.patch
 
 BuildRequires(pre): rpm-macros-cmake
@@ -82,16 +89,12 @@ Veyon доступен на разных языках и предоставля�
 просто установив Veyon у себя на домашнем ПК.
 
 %prep
-%setup
-
-# Use 3rdparty from .gear instead of submodules
-rm -rf ./3rdparty
-%setup -D -T -a 1
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8
 
 %patch0 -p1
 %patch1 -p1
-%patch3 -p1
 %patch4 -p1
+
 %ifarch %e2k
 sed -i "s/-Werror/-Wno-error/" cmake/modules/SetDefaultTargetProperties.cmake
 %endif
@@ -106,7 +109,7 @@ sed -i "s/-Werror/-Wno-error/" cmake/modules/SetDefaultTargetProperties.cmake
 
 %install
 %cmakeinstall_std
-%__install -D -m 0755 %SOURCE2 %buildroot%_datadir/%name/
+%__install -D -m 0755 %SOURCE100 %buildroot%_datadir/%name/
 
 %files
 %doc COPYING README.md
@@ -121,6 +124,12 @@ sed -i "s/-Werror/-Wno-error/" cmake/modules/SetDefaultTargetProperties.cmake
 %_datadir/%name
 
 %changelog
+* Tue Jul 19 2022 Egor Ignatov <egori@altlinux.org> 4.7.3-alt4
+- cherry-pick commits from alt-fix-builtindirectory-computers-list-display patch
+
+* Tue Jul 19 2022 Egor Ignatov <egori@altlinux.org> 4.7.3-alt3
+- Use update-submodules.sh
+
 * Mon Jul 18 2022 Egor Ignatov <egori@altlinux.org> 4.7.3-alt2
 - Backport KDE open website workaround (closes: #41101)
 
