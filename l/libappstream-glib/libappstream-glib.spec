@@ -1,5 +1,7 @@
+%def_enable snapshot
+
 %define _name appstream-glib
-%define ver_major 0.7
+%define ver_major 0.8
 %define api_ver 1.0
 %define asb_ver 5
 
@@ -13,7 +15,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.18
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -21,10 +23,15 @@ Group: System/Libraries
 License: LGPLv2+
 Url: http://www.freedesktop.org/wiki/Distributions/AppStream/
 
+%if_disabled snapshot
 Source: http://people.freedesktop.org/~hughsient/%_name/releases/%_name-%version.tar.xz
+%else
+Vcs: https://github.com/hughsie/appstream-glib.git
+Source: %_name-%version.tar
+%endif
 
 %define glib_ver 2.58
-%define soup_ver 2.52
+%define curl_ver 7.56
 %define json_glib_ver 1.1.2
 
 Obsoletes: appdata-tools < 0.1.9
@@ -35,10 +42,10 @@ Provides: %_bindir/appstream-builder
 Obsoletes: libappstream-builder < 0.9.15
 Conflicts: libappstream-builder < 0.9.15
 
-BuildRequires(pre): meson
-BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel
-BuildRequires: libarchive-devel libsoup-devel >= %soup_ver
-BuildRequires: libgdk-pixbuf-devel libpango-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson glib2-devel >= %glib_ver
+BuildRequires: libarchive-devel libcurl-devel >= %curl_ver
+BuildRequires: libgdk-pixbuf-devel libpango-devel pkgconfig(gdk-3.0)
 BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel
 BuildRequires: gtk-doc docbook-utils docbook-dtds
 BuildRequires: libyaml-devel gcab libgcab-devel gperf libuuid-devel
@@ -120,8 +127,7 @@ the functionality of the installed %_name library.
 %find_lang %_name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %_name.lang
 %_bindir/appstream-util
@@ -162,6 +168,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Jul 19 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- updated to appstream_glib_0_8_0-5-g674490b
+
 * Mon Sep 07 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.18-alt1
 - 0.7.18
 
