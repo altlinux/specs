@@ -1,6 +1,6 @@
 Name: wxMaxima
 Version: 22.05.0
-Release: alt1
+Release: alt2
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL-2.0+
@@ -17,11 +17,17 @@ Requires: maxima
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: gcc-c++ libwxGTK3.1-devel libpango-devel libxml2-devel zlib-devel makeinfo
-BuildRequires: po4a doxygen
-BuildRequires: libgomp-devel
-BuildRequires: desktop-file-utils libappstream-glib
+BuildRequires: gcc-c++
 BuildRequires: ccache
+BuildRequires: desktop-file-utils
+BuildRequires: libappstream-glib
+BuildRequires: libgomp-devel
+BuildRequires: libpango-devel
+BuildRequires: libwxGTK3.2-devel
+BuildRequires: libxml2-devel
+BuildRequires: makeinfo
+BuildRequires: po4a doxygen
+BuildRequires: zlib-devel
 
 ExclusiveArch: %ix86 x86_64 armh aarch64 %e2k
 
@@ -82,6 +88,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_datadir/metainfo/*wxMaxima.appdata.xml
 
 %changelog
+* Tue Jul 19 2022 Andrey Cherepanov <cas@altlinux.org> 22.05.0-alt2
+- Rebuilt with libwxGTK3.2-devel.
+
 * Sat May 28 2022 Andrey Cherepanov <cas@altlinux.org> 22.05.0-alt1
 - New version.
 
