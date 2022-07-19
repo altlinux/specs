@@ -7,11 +7,14 @@
 
 Name: qalculate-gtk
 Version: 4.1.1
-Release: alt1
+Release: alt2
 Summary: A very versatile desktop calculator - GTK+ version.
 Group: Office
 License: GPL-2.0+
 Url: https://qalculate.github.io/
+
+# libqalculate support invoking /usr/bin/gnuplot
+Requires: /usr/bin/gnuplot
 
 # https://github.com/Qalculate/qalculate-gtk.git
 Source: %name-%version.tar
@@ -65,6 +68,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gnome-shell/search-providers/io.github.Qalculate.search-provider.ini
 
 %changelog
+* Mon Jul 18 2022 Sergey V Turchin <zerg@altlinux.org> 4.1.1-alt2
+- Move requires to gnuplot binary from library to application
+
 * Wed Apr 06 2022 Sergey V Turchin <zerg@altlinux.org> 4.1.1-alt1
 - new version
 - fix outrage with flags (closes: 42143) (thanks Artem Kurashov)

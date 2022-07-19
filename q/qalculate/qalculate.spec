@@ -6,7 +6,7 @@
 
 Name: qalculate
 Version: 4.1.1
-Release: alt1
+Release: alt2
 Summary: A very versatile desktop calculator
 Group: Office
 License: GPL-2.0+
@@ -28,7 +28,6 @@ precision, plotting.
 Summary: libqalculate libraries
 Group: System/Libraries
 Requires: %name-common >= %EVR
-Requires: /usr/bin/gnuplot
 
 %description -n lib%name
 Qalculate libraries.
@@ -114,6 +113,9 @@ rm -f %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Mon Jul 18 2022 Sergey V Turchin <zerg@altlinux.org> 4.1.1-alt2
+- Move requires to gnuplot binary from library to application
+
 * Wed Apr 06 2022 Sergey V Turchin <zerg@altlinux.org> 4.1.1-alt1
 - Updated to upstream version 4.1.1.
 
