@@ -1,13 +1,13 @@
 %define oname nose2
 
 Name: python3-module-%oname
-Version: 0.11.0
+Version: 0.12.0
 Release: alt1
 
 Summary: A unittest-based testing framework for python that makes writing and running tests easier
 
 Group: Development/Python3
-License: LGPL
+License: BSD-2-Clause
 Url: https://github.com/nose-devs/nose2
 
 BuildArch: noarch
@@ -37,11 +37,13 @@ rm -f %buildroot%_bindir/nosetests
 %files
 %doc AUTHORS README.rst
 %_bindir/nose2
-%_bindir/nose2-3*
 %python3_sitelibdir/%oname/
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Jul 17 2022 Andrey Cherepanov <cas@altlinux.org> 0.12.0-alt1
+- New version.
+
 * Mon Feb 14 2022 Andrey Cherepanov <cas@altlinux.org> 0.11.0-alt1
 - New version.
 
