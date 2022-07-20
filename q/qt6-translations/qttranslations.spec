@@ -3,7 +3,7 @@
 
 Name: qt6-translations
 Version: 6.2.4
-Release: alt1
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt6 - QtTranslations module
@@ -11,10 +11,11 @@ Url: http://qt.io/
 License: GPL-3.0-only WITH Qt-GPL-exception-1.0
 
 BuildArch: noarch
+Requires: qt6-base-common
 
 Source: %qt_module-everywhere-src-%version.tar
 
-BuildRequires: cmake qt6-base-devel qt6-tools
+BuildRequires: cmake qt6-base-devel qt6-tools qt6-tools-devel
 
 %description
 %{summary}.
@@ -39,5 +40,11 @@ done
 %files -f %name.lang
 
 %changelog
+* Tue Jul 19 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt3
+- fix compile translations
+
+* Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
+- fix build requires
+
 * Mon Jun 06 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build
