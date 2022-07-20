@@ -9,7 +9,7 @@
 
 Name: babel
 Version: 2.0.0
-Release: alt6
+Release: alt7
 Summary: Language tool for high-performance scientific computing community
 License: LGPLv2.1
 Group: Sciences/Mathematics
@@ -29,9 +29,12 @@ Requires: python-module-sidlx = %EVR
 Conflicts: openbabel
 
 BuildRequires(pre): rpm-build-compat rpm-build-python
-BuildRequires: gcc-fortran gcc-c++ %mpiimpl-devel libltdl7-devel
+BuildRequires: gcc-c++ %mpiimpl-devel libltdl7-devel
 BuildRequires: libxml2-devel libparsifal-devel
 BuildRequires: jpackage-utils gnu-getopt
+%ifnarch %e2k
+BuildRequires: gcc-fortran
+%endif
 %if_with python
 BuildRequires: python-devel libnumpy-devel
 %endif
@@ -400,6 +403,9 @@ done
 %_docdir/%name
 
 %changelog
+* Wed Jul 20 2022 Michael Shigorin <mike@altlinux.org> 2.0.0-alt7
+- E2K: completed the -alt5 change
+
 * Thu Oct 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.0.0-alt6
 - Fixed build with gcc-11.
 
