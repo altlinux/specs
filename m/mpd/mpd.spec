@@ -68,7 +68,7 @@
 
 Name:    mpd
 Version: 0.23.8
-Release: alt2
+Release: alt3
 
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 License: %gpl2plus
@@ -83,7 +83,7 @@ Source3: %name.init.in
 Source4: %name.logrotate
 Source5: %name.tmpfile
 
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-alt-fluidsynth-fix-sound-font-location.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-meson
@@ -162,7 +162,7 @@ This package contains %Name documentation.
 
 %prep
 %setup
-#%patch -p1
+%patch -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -276,6 +276,9 @@ install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Wed Jul 20 2022 L.A. Kostis <lakostis@altlinux.ru> 0.23.8-alt3
+- fluidsynth: fix sound font path.
+
 * Sat Jul 16 2022 L.A. Kostis <lakostis@altlinux.ru> 0.23.8-alt2
 - merge aris@ .spec changes.
 
