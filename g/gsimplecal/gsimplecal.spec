@@ -1,5 +1,5 @@
 Name: gsimplecal
-Version: 2.4
+Version: 2.4.1
 Release: alt1
 
 Summary: Simple and lightweight GTK calendar
@@ -35,6 +35,12 @@ without it.
 %_man1dir/*
 
 %changelog
+* Wed Jul 20 2022 Leontiy Volodin <lvol@altlinux.org> 2.4.1-alt1
+- New version.
+- Upstream:
+  + Fix datetime initialization.
+  + Remove function call space.
+
 * Mon Jun 20 2022 Leontiy Volodin <lvol@altlinux.org> 2.4-alt1
 - New version.
 - Upstream:
