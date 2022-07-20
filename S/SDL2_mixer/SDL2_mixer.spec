@@ -2,7 +2,7 @@
 
 Name: SDL2_mixer
 Version: 2.6.1
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer - Sample Mixer Library
 License: Zlib
@@ -52,7 +52,19 @@ libraries.
 %setup -n SDL_mixer-release-%version
 
 %build
-%configure --disable-static
+%configure \
+	--disable-static \
+	--disable-music-ogg-stb \
+	--disable-music-flac-drflac \
+	--disable-music-mp3-drmp3 \
+	--disable-music-mod-modplug \
+	--disable-music-mod-xmp-shared \
+	--disable-music-midi-fluidsynth-shared \
+	--enable-music-ogg-vorbis \
+	--enable-music-flac-libflac \
+	--enable-music-mp3-mpg123 \
+	--enable-music-mod-xmp \
+	--enable-music-mp3-mpg123-shared
 %make_build
 
 %install
@@ -71,6 +83,9 @@ libraries.
 %_libdir/cmake/%name
 
 %changelog
+* Wed Jul 20 2022 Nazarov Denis <nenderus@altlinux.org> 2.6.1-alt2
+- --disable-*-shared: Link, rather than dlopen
+
 * Wed Jul 13 2022 Nazarov Denis <nenderus@altlinux.org> 2.6.1-alt1
 - Version 2.6.1
 
