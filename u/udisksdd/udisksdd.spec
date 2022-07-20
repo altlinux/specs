@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    udisksdd
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: a dd(1) drop-in replacement that makes use of udisks(8)
@@ -13,6 +13,8 @@ URL:     https://github.com/bonktree/udisksdd
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3(dbus)
 
 Source: %name-%version.tar
@@ -38,13 +40,10 @@ standalone fashion, but the main way to use it is via udd(1).
 %setup
 
 %build
-# https://bugzilla.altlinux.org/show_bug.cgi?id=39907
-[ -e setup.py ] && rm -f ./setup.py
-echo 'import setuptools; setuptools.setup()' > setup.py
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.md
@@ -53,9 +52,12 @@ echo 'import setuptools; setuptools.setup()' > setup.py
 %files -n python3-module-%name
 %doc README.md
 %python3_sitelibdir/udisksdd
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*.dist-info
 
 %changelog
+* Thu Jul 21 2022 Arseny Maslennikov <arseny@altlinux.org> 0.3-alt1
+- 0.2 -> 0.3.
+
 * Sat Jan 15 2022 Arseny Maslennikov <arseny@altlinux.org> 0.2-alt1
 - 0.1 -> 0.2.
 
