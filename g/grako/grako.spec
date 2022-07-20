@@ -2,7 +2,7 @@
 
 Name: grako
 Version: 3.99.9
-Release: alt1
+Release: alt2
 
 Summary: Grako (for grammar compiler).
 License: BSD
@@ -11,6 +11,7 @@ URL: https://pypi.org/project/grako/
 BuildArch: noarch
 
 Source0: %name-%version.tar
+Patch0: 0001-Changed-grammars.py.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest-runner
@@ -43,6 +44,7 @@ This package contains python3 module for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build
@@ -58,6 +60,9 @@ This package contains python3 module for %name.
 
 
 %changelog
+* Wed Jul 20 2022 Evgeny Sinelnikov <sin@altlinux.org> 3.99.9-alt2
+- Fixed import in the file grammar.py (suggested by Vadim Yufin)
+
 * Mon Dec 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.99.9-alt1
 - Initial build for Sisyphus
 
