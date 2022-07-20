@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 129
+%define centos_release 133
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,32 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Jul 20 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.133-alt1.el9
+- Updated to kernel-5.14.0-133.el9 (fixes: CVE-2022-0854, CVE-2022-21123, CVE-2022-21125, CVE-2022-21166, CVE-2022-28893):
+  + arm64: Update core arch code to upstream v5.18
+  + dlm: fix missing lkb refcount handling
+  + fix swiotlb information leak with DMA_FROM_DEVICE
+  + igb: Driver Update
+  + kdump: round up the total memory size to 128M for crashkernel reservation
+  + lockd: set fl_owner when unlocking files
+  + lpfc cs9 (rhel9.1) update to 14.2.0.5
+  + nfs: reexport documentation
+  + ovs: backports for 9.1 P2
+  + remoteproc: updates for build issues
+  + scsi: target: pscsi: Set SCF_TREAT_READ_AS_NORMAL flag only if there is valid data
+  + SUNRPC: Ensure we flush any closed sockets before xs_xprt_free()
+  + update cpuidle to v5.18
+  + Update drivers/base to v5.18
+  + x86/speculation/mmio: Fix Processor MMIO Stale Data Vulnerabilities
+
+* Fri Jul 15 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.130-alt1.el9
+- Updated to kernel-5.14.0-130.el9:
+  + CNB: bpf: Let bpf_warn_invalid_xdp_action() report more info
+  + mm: folio backports part 2
+  + redhat: make kernel-zfcpdump-core to not provide kernel-core/kernel
+  + scsi: csiostor: Add module softdep on cxgb4
+  + scsi: iscsi: iSCSI transport bugfixes
+
 * Fri Jul 15 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.129-alt1.el9
 - Updated to kernel-5.14.0-129.el9:
   + DRM 5.18 backport
