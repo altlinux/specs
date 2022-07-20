@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.9.3
+%define module_version	0.9.3.0.41.gitcbd4198
 %define module_release	alt1
 
 %define flavour		std-def
@@ -159,8 +159,8 @@ console=ttyAMA0
 timeout=1800
 %endif
 timeout --foreground "$timeout" qemu-system-"$qemu_arch" -m 512 $qemu_opts -kernel /boot/vmlinuz-$KernelVer -nographic -append console="$console no_timer_check" -initrd initrd.img.gz > boot.log &&
-grep -qF "LKRG initialized successfully!" boot.log &&
-grep -qF "LKRG unloaded!" boot.log &&
+grep -qF "LKRG initialized successfully" boot.log &&
+grep -qF "LKRG unloaded" boot.log &&
 grep -qE '^.*Power down' boot.log &&
 ! grep -qF "$failmsg" &&
 ! grep -qF 'Kernel panic' || {
@@ -211,6 +211,10 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Wed Jul 20 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.3.0.41.gitcbd4198-alt1
+- Updated to v0.9.3-41-gcbd4198 (closes: 43005).
+- %%check: Fixed for centos and ovz-el7 flavours.
 
 * Thu Apr 21 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.3-alt1
 - Updated to v0.9.3.
