@@ -1,6 +1,6 @@
 Name: SDL2_image
 Version: 2.6.0
-Release: alt1
+Release: alt2
 
 Summary: Simple DirectMedia Layer - Image library
 License: Zlib
@@ -48,7 +48,14 @@ to develop SDL applications.
 %setup -n SDL_image-release-%version
 
 %build
-%configure --disable-static
+%configure \
+	--disable-static \
+	--disable-stb-image \
+	--disable-jpg-shared \
+	--disable-png-shared \
+	--disable-tif-shared \
+	--disable-jxl-shared \
+	--disable-webp-shared
 %make_build
 
 %install
@@ -67,6 +74,9 @@ to develop SDL applications.
 %_libdir/cmake/%name
 
 %changelog
+* Tue Jul 19 2022 Nazarov Denis <nenderus@altlinux.org> 2.6.0-alt2
+- --disable-*-shared: Link, rather than dlopen
+
 * Sun Jul 10 2022 Nazarov Denis <nenderus@altlinux.org> 2.6.0-alt1
 - Version 2.6.0
 
