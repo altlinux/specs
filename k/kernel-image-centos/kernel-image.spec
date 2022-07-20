@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 127
+%define centos_release 129
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,24 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Jul 15 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.129-alt1.el9
+- Updated to kernel-5.14.0-129.el9:
+  + DRM 5.18 backport
+  + ext4,jbd2: Backport fixes from 5.18
+  + iRDMA: Driver update to v5.19
+  + Make NFSv4 OPEN(CREATE) less brittle
+  + net/core: backport fixes from upstream for 9.1 P2
+  + redhat/configs: enable CONFIG_SAMPLE_VFIO_MDEV_MTTY
+  + spec: Keep .BTF section in modules
+  + virtiofs: Add support for SELinux
+
+* Tue Jul 12 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.128-alt1.el9
+- Updated to kernel-5.14.0-128.el9:
+  + block: kill warning of 'Directory XXXXX with parent 'block' already present!'
+  + CNB: gro: get out of core files
+  + sched: Fix balance_push() vs __sched_setscheduler()
+  + selftests, xsk: Fix bpf_res cleanup test
+
 * Sun Jul 10 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.127-alt1.el9
 - Updated to kernel-5.14.0-127.el9:
   + aarch64: Enable NVIDIA Jetson Xavier SoCs
