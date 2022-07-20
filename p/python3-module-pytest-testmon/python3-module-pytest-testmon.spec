@@ -2,11 +2,11 @@
 %global pypi_name pytest-testmon
 
 Name: python3-module-%pypi_name
-Version: 1.2.2
-Release: alt2
+Version: 1.3.4
+Release: alt1
 Summary: A py.test plug-in which executes only tests affected by recent changes
 Group: Development/Python
-License: MIT
+License: AGPL-3.0
 Url: http://testmon.org/
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
@@ -14,7 +14,12 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %py3_provides pytest_testmon
+%py3_provides %pypi_name
 
 %description
 This is a py.test plug-in which automatically selects and re-
@@ -25,20 +30,23 @@ executes only tests affected by recent changes.
 %patch0 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 # upstream no longer provides the test suite
 
 %files
-%doc README.rst LICENSE
+%doc README.md LICENSE
 %python3_sitelibdir/testmon/
-%python3_sitelibdir/pytest_testmon-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 20 2022 Stanislav Levin <slev@altlinux.org> 1.3.4-alt1
+- 1.2.2 -> 1.3.4.
+
 * Thu Feb 03 2022 Stanislav Levin <slev@altlinux.org> 1.2.2-alt2
 - Fixed FTBFS (Python3.10).
 

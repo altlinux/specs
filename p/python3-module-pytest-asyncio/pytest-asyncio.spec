@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-asyncio
+%define pypi_name pytest-asyncio
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.17.2
+Name: python3-module-%pypi_name
+Version: 0.19.0
 Release: alt1
 
 Summary: Pytest support for asyncio
@@ -17,9 +17,13 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
-%py3_provides %oname
+%py3_provides %pypi_name
 
 %if_with check
 # install_requires=
@@ -27,9 +31,6 @@ BuildRequires: python3(pytest)
 
 BuildRequires: python3(hypothesis)
 BuildRequires: python3(flaky)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -41,31 +42,35 @@ python 3.5+.
 %prep
 %setup
 %autopatch -p1
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
 
 %build
-# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
-# its used as the primary source for the version number in which
-# case it will be a unparsed string
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%tox_check_pyproject
 
 %files
 %doc *.rst LICENSE
 %python3_sitelibdir/pytest_asyncio/
-%python3_sitelibdir/pytest_asyncio-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 20 2022 Stanislav Levin <slev@altlinux.org> 0.19.0-alt1
+- 0.17.2 -> 0.19.0.
+
 * Thu Feb 03 2022 Stanislav Levin <slev@altlinux.org> 0.17.2-alt1
 - 0.15.1 -> 0.17.2.
 

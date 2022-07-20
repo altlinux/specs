@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-mock
+%define pypi_name pytest-mock
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.7.0
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 3.8.2
+Release: alt1
 
 Summary: Thin-wrapper around the mock package for easier use with py.test
 License: MIT
@@ -17,6 +17,10 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
@@ -27,7 +31,7 @@ BuildRequires: python3(pytest-asyncio)
 BuildRequires: python3(tox)
 %endif
 
-%py3_provides %oname
+%py3_provides %pypi_name
 
 BuildArch: noarch
 %description
@@ -40,32 +44,35 @@ to worry about undoing patches at the end of a test
 %prep
 %setup
 %patch -p1
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
 
 %build
-# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
-# its used as the primary source for the version number in which
-# case it will be a unparsed string
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject
 
 %files
 %doc LICENSE *.rst
 %python3_sitelibdir/pytest_mock/
-%python3_sitelibdir/pytest_mock-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 20 2022 Stanislav Levin <slev@altlinux.org> 3.8.2-alt1
+- 3.7.0 -> 3.8.2.
+
 * Fri Mar 18 2022 Stanislav Levin <slev@altlinux.org> 3.7.0-alt2
 - Fixed FTBFS (Pytest 7.1.1).
 

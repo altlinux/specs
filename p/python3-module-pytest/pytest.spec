@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest
+%define pypi_name pytest
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 7.1.1
+Name: python3-module-%pypi_name
+Version: 7.1.2
 Release: alt1
 
 Summary: Python test framework
@@ -17,6 +17,10 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
@@ -39,9 +43,6 @@ BuildRequires: python3-module-Pygments > 2.4.2
 BuildRequires: /dev/pts
 BuildRequires: /dev/shm
 
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-
 # optional
 BuildRequires: python3(decorator)
 BuildRequires: python3(jinja2)
@@ -62,7 +63,7 @@ scales to support complex functional testing for applications and libraries.
 %package -n pytest3
 Summary: Additional executable for pytest
 Group: Development/Python3
-Requires: python3-module-%oname = %EVR
+Requires: python3-module-%pypi_name = %EVR
 # It simply has executables with the same filename:
 Conflicts: python3-module-logilab-common < 1.0.2-alt2.hg20150708
 
@@ -73,19 +74,22 @@ scales to support complex functional testing for applications and libraries.
 %prep
 %setup
 %patch -p1
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
 
 %build
-# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
-# its used as the primary source for the version number in which
-# case it will be a unparsed string
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python3_install
+%pyproject_install
 mv %buildroot%_bindir/py.test -T %buildroot%_bindir/py.test3
 mv %buildroot%_bindir/pytest -T %buildroot%_bindir/pytest3
 ln -s py.test3 %buildroot%_bindir/py.test-3
@@ -94,11 +98,7 @@ ln -s pytest3 %buildroot%_bindir/pytest-3
 %check
 # add workaround for https://github.com/pytest-dev/pytest/issues/6297
 export TERM=xterm
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false --no-deps -- -vra
+%tox_check_pyproject -- -vra
 
 %files
 %doc AUTHORS LICENSE *.rst
@@ -106,13 +106,16 @@ tox.py3 --sitepackages -vvr -s false --no-deps -- -vra
 %_bindir/py.test-3
 %python3_sitelibdir/pytest/
 %python3_sitelibdir/_pytest/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files -n pytest3
 %_bindir/pytest3
 %_bindir/pytest-3
 
 %changelog
+* Wed Jul 20 2022 Stanislav Levin <slev@altlinux.org> 7.1.2-alt1
+- 7.1.1 -> 7.1.2.
+
 * Fri Mar 18 2022 Stanislav Levin <slev@altlinux.org> 7.1.1-alt1
 - 7.0.1 -> 7.1.1.
 

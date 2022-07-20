@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-randomly
+%define pypi_name pytest-randomly
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.11.0
+Name: python3-module-%pypi_name
+Version: 3.12.0
 Release: alt1
 
 Summary: Pytest plugin to randomly order tests and control random.seed
@@ -18,6 +18,10 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 # install_requires=
 BuildRequires: python3(pytest)
@@ -26,16 +30,12 @@ BuildRequires: python3(factory)
 BuildRequires: python3(faker)
 BuildRequires: python3(numpy)
 BuildRequires: python3(pytest_xdist)
-
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
 
 # PyPi name
-%py3_provides pytest-randomly
+%py3_provides %pypi_name
 
 %description
 Randomness in testing can be quite powerful to discover hidden flaws in the
@@ -55,23 +55,23 @@ filled in randomly due to not being specified.
 %patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -- -vra
+%tox_check_pyproject -- -vra
 
 %files
 %doc README.rst
 %python3_sitelibdir/pytest_randomly/
-%python3_sitelibdir/pytest_randomly-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 20 2022 Stanislav Levin <slev@altlinux.org> 3.12.0-alt1
+- 3.11.0 -> 3.12.0.
+
 * Thu Feb 03 2022 Stanislav Levin <slev@altlinux.org> 3.11.0-alt1
 - 3.7.0 -> 3.11.0.
 

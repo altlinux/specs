@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-bdd
+%define pypi_name pytest-bdd
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 4.1.0
+Name: python3-module-%pypi_name
+Version: 6.0.1
 Release: alt1
 
 Summary: BDD library for the py.test runner
@@ -19,17 +19,19 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 BuildRequires: python3(execnet)
 BuildRequires: python3(glob2)
 BuildRequires: python3(mako)
 BuildRequires: python3(parse)
 BuildRequires: python3(parse_type)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 %endif
 
+%py3_provides %pypi_name
 
 %description
 pytest-bdd implements a subset of Gherkin language for the automation of
@@ -52,24 +54,24 @@ the Gherkin imperative declarations.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%tox_check_pyproject
 
 %files
 %doc CHANGES.rst README.rst
-%_bindir/*
+%_bindir/pytest-bdd
 %python3_sitelibdir/pytest_bdd/
-%python3_sitelibdir/pytest_bdd-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 20 2022 Stanislav Levin <slev@altlinux.org> 6.0.1-alt1
+- 4.1.0 -> 6.0.1.
+
 * Mon Oct 11 2021 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1
 - 4.0.2 -> 4.1.0.
 

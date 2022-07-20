@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-enabler
+%define pypi_name pytest-enabler
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.2.1
+Name: python3-module-%pypi_name
+Version: 1.3.0
 Release: alt1
 
 Summary: Pytest plugin for configuration of another plugins
@@ -17,6 +17,10 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
@@ -26,18 +30,15 @@ BuildRequires: python3(jaraco.context)
 BuildRequires: python3(jaraco.functools)
 
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 %endif
 
 BuildArch: noarch
 
-%py3_provides %oname
+%py3_provides %pypi_name
 
 %description
-%oname plugin allows configuration of Pytest plugins if present, but omits the
-settings if the plugin is not present.
+%pypi_name plugin allows configuration of Pytest plugins if present, but omits
+the settings if the plugin is not present.
 
 %prep
 %setup
@@ -46,31 +47,33 @@ settings if the plugin is not present.
 # if build from git source tree
 # setuptools_scm implements a file_finders entry point which returns all files
 # tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
-git init
-git config user.email author@example.com
-git config user.name author
-git add .
-git commit -m 'release'
-git tag '%version'
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -- -vra
+%tox_check_pyproject -- -vra
 
 %files
 %doc README.rst
 %python3_sitelibdir/pytest_enabler/
-%python3_sitelibdir/pytest_enabler-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 20 2022 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
+- 1.2.1 -> 1.3.0.
+
 * Tue Apr 05 2022 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
 - 1.2.0 -> 1.2.1.
 

@@ -1,26 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-timeout
+%define pypi_name pytest-timeout
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.3.3
-Release: alt4
+Name: python3-module-%pypi_name
+Version: 2.1.0
+Release: alt1
 Summary: pytest plugin which will terminate tests after a certain timeout
 License: MIT
 Group: Development/Python3
-# Source: https://bitbucket.org/pytest-dev/pytest-timeout
+# Source: https://github.com/pytest-dev/pytest-timeout
 Url: https://pypi.org/project/pytest-timeout/
 
-Source: %name-%version.tar.gz
-Patch: pytest-timeout-1.3.3-Change-tests-to-use-pytest-param.patch
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 BuildRequires: /dev/pts
-BuildRequires: python3-module-tox
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pexpect
 %endif
@@ -41,34 +44,27 @@ nevertheless, which is the most important part at this stage.
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-sed -i '/^\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    py%{python_version_nodots python3}: _PYTEST_BIN=%_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' tox.ini
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject -- -vra
 
 %files
-%doc README failure_demo.py
+%doc README.rst failure_demo.py
 %python3_sitelibdir/pytest_timeout.py
 %python3_sitelibdir/__pycache__/pytest_timeout.*.py*
-%python3_sitelibdir/pytest_timeout-*.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jul 20 2022 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
+- 1.3.3 -> 2.1.0.
+
 * Wed Sep 09 2020 Stanislav Levin <slev@altlinux.org> 1.3.3-alt4
 - Stopped Python2 package build.
 
