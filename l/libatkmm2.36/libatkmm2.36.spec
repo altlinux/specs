@@ -7,7 +7,7 @@
 %def_enable check
 
 Name: lib%rname%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A C++ interface for ATK library
@@ -25,11 +25,11 @@ Provides: %rname-%api_ver = %version
 
 %define glibmm_api_ver 2.68
 %define glibmm_ver 2.68.0
-%define atk_ver 1.18
+%define atk_ver 2.33.3
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++ mm-common 
-BuildRequires: libatk-devel >= %atk_ver libglibmm%glibmm_api_ver-devel  >= %glibmm_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ mm-common
+BuildRequires: libatk-devel >= %atk_ver libglibmm%glibmm_api_ver-devel >= %glibmm_ver
 %{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 
 %description
@@ -94,6 +94,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Jul 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.36.2-alt1
+- 2.36.2
+
 * Fri May 21 2021 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt1
 - 2.36.1
 

@@ -7,11 +7,11 @@
 %def_enable check
 
 Name: libatkmm
-Version: %major.2
+Version: %major.3
 Release: alt1
 
 Summary: A C++ interface for ATK library
-License: LGPLv2.1+
+License: LGPL-2.1-or-later
 Group: System/Libraries
 Url: http://atkmm.sourceforge.net/
 
@@ -24,10 +24,11 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%major/%rname-%version.tar.
 Provides: %rname = %version
 
 %define glibmm_ver 2.46.2
-%define atk_ver 1.18
+%define atk_ver 2.12
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++ mm-common libatk-devel >= %atk_ver libglibmm-devel >= %glibmm_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ mm-common
+BuildRequires:  libatk-devel >= %atk_ver libglibmm-devel >= %glibmm_ver
 %{?_enable_docs:BuildRequires: docbook-style-xsl doxygen graphviz xsltproc}
 
 %description
@@ -73,8 +74,7 @@ developing atkmm applications.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %doc AUTHORS NEWS
@@ -93,6 +93,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Jul 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.28.3-alt1
+- 2.28.3
+
 * Fri May 21 2021 Yuri N. Sedunov <aris@altlinux.org> 2.28.2-alt1
 - 2.28.2
 
