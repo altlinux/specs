@@ -2,9 +2,11 @@
 
 Name: python3-module-%oname
 Version: 4.15.0
-Release: alt1
+Release: alt2
+
 Summary: Translation toolset
-License: BSD
+
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/lingua/
 
@@ -36,22 +38,27 @@ xgettext command from gettext, or pybabel from Babel.
 sed -i 's/4.14/4.15/' src/lingua/__init__.py
 
 %build
-python3 -m flit build --format wheel
+%pyproject_build
 
 %install
-pip3 install -I dist/%oname-%version-*-none-any.whl --root %buildroot --prefix %prefix --no-deps
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc *.rst docs/examples
-%_bindir/*
+%_bindir/polint
+%_bindir/pot-create
 %python3_sitelibdir/%oname
-%python3_sitelibdir/*.dist-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Jul 21 2022 Grigory Ustinov <grenka@altlinux.org> 4.15.0-alt2
+- Built and installed by pyproject_* macros.
+- Fixed license.
+
 * Wed May 25 2022 Grigory Ustinov <grenka@altlinux.org> 4.15.0-alt1
 - Automatically updated to 4.15.0.
 
