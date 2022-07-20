@@ -1,18 +1,18 @@
-%define modname librosa
+%define pypi_name librosa
 # no tests
 %def_disable check
 
-Name: python3-module-%modname
-Version: 0.9.1
+Name: python3-module-%pypi_name
+Version: 0.9.2
 Release: alt1
 
 Summary: A python package for music and audio analysis
 Group: Development/Python3
 License: ISC
-Url: https://pypi.org/project/%modname
+Url: https://pypi.org/project/%pypi_name
 
 Vcs: https://github.com/librosa/librosa.git
-Source: https://pypi.io/packages/source/l/%modname/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/l/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
@@ -23,23 +23,28 @@ BuildRequires: python3-module-setuptools >= 48 python3-module-wheel >= 0.29
 %summary
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py check
+%tox_check
 
 %files
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/%pypi_name
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %doc README*
 
 
 %changelog
+* Wed Jul 20 2022 Yuri N. Sedunov <aris@altlinux.org> 0.9.2-alt1
+- 0.9.2
+- ported to %%pyproject* macros
+
 * Sat Jun 25 2022 Yuri N. Sedunov <aris@altlinux.org> 0.9.1-alt1
 - first build for Sisyphus
 

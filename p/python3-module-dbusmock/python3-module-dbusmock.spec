@@ -1,24 +1,24 @@
 %define modname dbusmock
-%define _name python-%modname
+%define pypi_name python-%modname
 %def_enable check
 
 Name: python3-module-dbusmock
-Version: 0.28.3
+Version: 0.28.4
 Release: alt1
 
 Summary: mock D-Bus objects for tests
 License: LGPL-3.0-or-later
 Group: Development/Python3
 Url: https://github.com/martinpitt/python-dbusmock
-# https://pypi.python.org/pypi/%_name
+# https://pypi.python.org/pypi/%pypi_name
 
-Source: %url/releases/download/%version/%_name-%version.tar.gz
+Source: %url/releases/download/%version/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 Requires: dbus
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
 %if_enabled check
 BuildRequires: /proc dbus-tools-gui %_bindir/notify-send %_bindir/nmcli upower bluez
 BuildRequires: polkit iio-sensor-proxy notification-daemon
@@ -37,23 +37,27 @@ of the real services to what you expect in your tests.
 See %_docdir/%name-%version/README.rst for more information.
 
 %prep
-%setup -n %_name-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 %__python3 -m unittest
 
 %files
 %python3_sitelibdir_noarch/%modname/
-%python3_sitelibdir_noarch/*.egg-info
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Wed Jul 20 2022 Yuri N. Sedunov <aris@altlinux.org> 0.28.4-alt1
+- 0.28.4
+- ported to %%pyproject macros
+
 * Sun Jul 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.28.3-alt1
 - 0.28.3
 
