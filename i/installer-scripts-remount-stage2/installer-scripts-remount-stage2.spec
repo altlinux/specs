@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.25
+Version: 0.5.26
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,11 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Wed Jul 20 2022 Anton Midyukov <antohami@altlinux.org> 0.5.26-alt1
+- stop luks after umount chroot
+- do not dmsetup remove when stop LUKS, it is not required
+- run start_luks only once after start_mdraid and start_lvm
+
 * Thu Jun 23 2022 Anton Midyukov <antohami@altlinux.org> 0.5.25-alt1
 - install2-remount-functions: run set_active, if "$destination"/boot/efi not
   found
