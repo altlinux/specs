@@ -1,6 +1,6 @@
 Name: maturin
 Version: 0.12.11
-Release: alt1
+Release: alt2
 
 Summary: Build and publish rust crates as python packages
 
@@ -14,9 +14,6 @@ Source: %name-%version.tar
 # auto predownloaded node modules during update version with rpmgs from etersoft-build-utils
 # ask me about description using: lav@etersoft.ru
 Source1: %name-development-%version.tar
-
-# error: failed to run custom build command for `ring v0.16.20`
-ExcludeArch: ppc64le
 
 BuildRequires: rust-cargo
 BuildRequires(pre): rpm-build-intro
@@ -47,7 +44,7 @@ EOF
 
 
 %build
-%rust_build
+%rust_build --no-default-features --features=log,human-panic
 
 %install
 %rust_install
@@ -58,6 +55,9 @@ EOF
 %attr(755,root,root) %_bindir/maturin
 
 %changelog
+* Wed Jul 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.11-alt2
+- rebuilt with reduced feature set for all arches
+
 * Sun Apr 03 2022 Vitaly Lipatov <lav@altlinux.ru> 0.12.11-alt1
 - new version 0.12.11 (with rpmrb script)
 
@@ -73,4 +73,3 @@ EOF
 
 * Wed Apr 14 2021 Jan Palus <atler@pld-linux.org> 531002c
 - new
-
