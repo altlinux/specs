@@ -1,5 +1,5 @@
 Name: hass
-Version: 2022.5.5
+Version: 2022.7.5
 Release: alt1
 
 Summary: Home automation platform
@@ -10,7 +10,7 @@ Url: https://www.home-assistant.io/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3 python3(setuptools) python3(wheel)
 
 %package core
 Summary: Home automation platform
@@ -18,13 +18,13 @@ Group: System/Servers
 Requires: python3-module-aiohttp >= 3.8.1
 Requires: python3-module-astral >= 2.2
 Requires: python3-module-httpcore >= 0.14.5
-Requires: python3-module-pip >= 8.0.3
+Requires: python3-module-pip >= 21.0
 Requires: python3-module-async-timeout >= 4.0.2
 Requires: python3-module-text-unidecode >= 1.3
-Requires: python3-module-voluptuous >= 0.12.2
+Requires: python3-module-voluptuous >= 0.13.1
 Requires: python3-module-websocket-client >= 0.56.0
 Requires: python3-module-yaml >= 6.0
-Requires: python3-module-hass-frontend >= 20220301.0
+Requires: python3-module-hass-frontend >= 20220707.1
 
 %package -n python3-module-hass
 Summary: Home automation platform
@@ -50,10 +50,10 @@ This package contains most of Home Assistant modules.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 install -pm0644 -D hass.service %buildroot%_unitdir/hass.service
 install -pm0644 -D hass.sysconfig %buildroot%_sysconfdir/sysconfig/hass
 mkdir -p %buildroot%_localstatedir/hass
@@ -83,13 +83,19 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %_bindir/hass
 
 %python3_sitelibdir/homeassistant
-%python3_sitelibdir/homeassistant-%version-*-info
+%python3_sitelibdir/homeassistant-%version.dist-info
 
 %dir %attr(0770,root,_hass) %_localstatedir/hass
 
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Wed Jul 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.7.5-alt1
+- 2022.7.5 released
+
+* Thu Jul 14 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.7.0-alt1
+- 2022.7.0 released
+
 * Thu May 19 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.5.5-alt1
 - 2022.5.5 released
 
