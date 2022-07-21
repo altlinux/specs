@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.6.3
-Release: alt2
+Release: alt3
 
 Summary: Guile bindings for EVMS
 License: GPLv2
@@ -33,6 +33,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Thu Jul 21 2022 Oleg Solovyov <mcpain@altlinux.org> 0.6.3-alt3
+- fix: sort subvolume and volume mountpoints together
+
 * Tue Jul 19 2022 Oleg Solovyov <mcpain@altlinux.org> 0.6.3-alt2
 - fix typo
 

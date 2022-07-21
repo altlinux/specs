@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt56
+Release: alt57
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Thu Jul 21 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt57
+- btrfs: trim slashes from subvol path
+
 * Wed Jul 20 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt56
 - btrfs: remove initial volume on subvolume name option
 
