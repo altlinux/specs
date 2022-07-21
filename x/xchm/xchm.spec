@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xchm
-Version: 1.31
+Version: 1.33
 Release: alt1
 
 Summary: xCHM - the CHM viewer for UNIX
@@ -46,6 +46,9 @@ install -pD -m644 %SOURCE1 %buildroot%_desktopdir/xchm.desktop
 %_man1dir/*
 
 %changelog
+* Thu Jul 21 2022 Anton Midyukov <antohami@altlinux.org> 1.33-alt1
+- New version 1.33
+
 * Wed May 20 2020 Anton Midyukov <antohami@altlinux.org> 1.31-alt1
 - New version 1.31
 - build with wxGTK3.0
