@@ -4,7 +4,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Name: palemoon
 Version: 31.1.1
 
-Release: alt2
+Release: alt3
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -13,7 +13,7 @@ Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
 
-ExcludeArch: armh i586
+ExcludeArch: %ix86 %arm
 
 %define sname palemoon
 %define bname newmoon
@@ -258,7 +258,7 @@ echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
 
 %ifarch %ix86
  echo "ac_add_options --with-arch=i586" >> .mozconfig
- echo 'ac_add_options --enable-optimize="-O2 -msse2 -mfpmath=sse" ' >> .mozconfig
+ echo 'ac_add_options --enable-optimize=" -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
 
@@ -302,7 +302,14 @@ export SHELL=/bin/sh
 %__autoconf
 
 
-MOZ_SMP_FLAGS=-j${NPROCS:-4}
+MOZ_SMP_FLAGS=-j1
+%ifarch %ix86
+[ "%__nprocs" -ge 2 ] && MOZ_SMP_FLAGS=-j2
+[ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
+%else
+    MOZ_SMP_FLAGS=-j${NPROCS:-4}
+%endif
+
 
 TOPSRCDIR=$pwd
 
@@ -485,6 +492,9 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %exclude %_includedir/*
 
 %changelog
+* Thu Jul 21 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.1.1-alt3
+- Fix rpm-build-palemoon
+
 * Sat Jul 16 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.1.1-alt2
 - Add BuildArch aarch64, ppc64le
 
