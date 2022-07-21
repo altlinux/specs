@@ -8,7 +8,7 @@
 %def_enable cmake
 
 Name: deepin-image-editor
-Version: 1.0.13
+Version: 1.0.18
 Release: alt1
 Summary: Image editor libraries for Deepin
 License: GPL-3.0+
@@ -17,7 +17,9 @@ Url: https://github.com/linuxdeepin/image-editor
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
+%if_enabled clang
 ExcludeArch: armh
+%endif
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -27,7 +29,7 @@ BuildRequires(pre): gcc-c++
 %if_enabled cmake
 BuildRequires(pre): cmake rpm-build-ninja
 %endif
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel dtk5-widget-devel libopencv-devel libfreeimage-devel
+BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel dtk5-widget-devel libopencv-devel libfreeimage-devel glib2-devel libmediainfo-devel
 
 %description
 Image editor is a public library for deepin-image-viewer
@@ -154,6 +156,9 @@ cmake --build "%_cmake__builddir"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Thu Jul 21 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.18-alt1
+- New version.
+
 * Wed May 11 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.13-alt1
 - Initial build for ALT Sisyphus.
 - Built as require for deepin-image-viewer.
