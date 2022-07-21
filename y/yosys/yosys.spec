@@ -1,8 +1,8 @@
 # do not forget to update Git revision in setup section
 
 Name: yosys
-Version: 0.18
-Release: alt1
+Version: 0.19
+Release: alt2
 
 Summary: Yosys Open SYnthesis Suite
 License: ISC
@@ -45,10 +45,9 @@ and programs needed to build yosys plugins.
 %prep
 %setup
 %autopatch -p1
-%__subst "s|GIT_REV := .*$|GIT_REV := a58571d|" Makefile
-%__subst "s|CXXFLAGS += -std=c++11 -Os|CXXFLAGS += -std=c++11|" Makefile
 
 %build
+%define optflags_lto %nil
 make config-gcc
 echo "CXXFLAGS += %optflags" >> Makefile.conf
 %make_build ABCEXTERNAL=abc PRETTY=0 PREFIX=%prefix
@@ -74,6 +73,13 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_man1dir/%name-config.1*
 
 %changelog
+* Thu Jul 21 2022 Anton Midyukov <antohami@altlinux.org> 0.19-alt2
+- disable LTO
+- cleanup spec
+
+* Thu Jul 21 2022 Anton Midyukov <antohami@altlinux.org> 0.19-alt1
+- new version 0.19
+
 * Sun Jun 19 2022 Anton Midyukov <antohami@altlinux.org> 0.18-alt1
 - New version 0.18
 
