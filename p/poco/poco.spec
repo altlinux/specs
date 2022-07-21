@@ -1,6 +1,6 @@
 Name: poco
 Version: 1.12.1
-Release: alt1
+Release: alt2
 Summary: POrtable COmponents C++ Libraries
 License: BSL-1.0
 Group: Development/C++
@@ -154,6 +154,8 @@ POrtable COmponents C++ Libraries: Poco jwt library
 Summary: Development files of POrtable COmponents C++ Libraries
 Group: Development/C++
 Requires: lib%name = %EVR
+# Fix file conflict
+Conflicts: arc
 
 %description -n lib%name-devel
 POrtable COmponents C++ Libraries are:
@@ -289,6 +291,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 %_libdir/cmake/*
 
 %changelog
+* Thu Jul 21 2022 Alexei Takaseev <taf@altlinux.org> 1.12.1-alt2
+- Fix file conflict (Fixes ALT#43291)
+
 * Wed Jul 20 2022 Alexei Takaseev <taf@altlinux.org> 1.12.1-alt1
 - 1.12.1
 
