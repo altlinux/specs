@@ -1,5 +1,5 @@
 Name: python3-module-emoji
-Version: 1.7.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Emoji for Python
@@ -10,7 +10,10 @@ Url: https://pypi.org/project/emoji/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(pytest)
 
 %description
 %summary
@@ -19,16 +22,22 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+py.test3 tests
 
 %files
 %python3_sitelibdir/emoji
-%python3_sitelibdir/emoji-%version-*-info
+%python3_sitelibdir/emoji-%version.dist-info
 
 %changelog
+* Thu Jul 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.0-alt1
+- 2.0.0 released
+
 * Fri Mar 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.0-alt1
 - 1.7.0 released
 
