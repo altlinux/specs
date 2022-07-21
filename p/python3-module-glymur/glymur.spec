@@ -3,7 +3,7 @@
 
 Name:    python3-module-%oname
 Version: 0.10.2
-Release: alt1
+Release: alt2
 
 Summary: Python interface to OpenJPEG library for reading and writing JPEG 2000 images.
 
@@ -15,6 +15,9 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
+
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -35,13 +38,10 @@ Source:  %name-%version.tar
 %setup
 
 %build
-# https://bugzilla.altlinux.org/show_bug.cgi?id=39907
-[ -e setup.py ] && rm -f ./setup.py
-echo 'import setuptools; setuptools.setup()' > setup.py
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # don't install tests in such directory please
 rm -rf %buildroot%python3_sitelibdir/tests
@@ -54,9 +54,12 @@ py.test3
 %_bindir/jp2dump
 %_bindir/tiff2jp2
 %python3_sitelibdir/%oname
-%python3_sitelibdir/Glymur-%version-py%_python3_version.egg-info
+%python3_sitelibdir/Glymur-%version.dist-info
 
 %changelog
+* Wed Jul 20 2022 Grigory Ustinov <grenka@altlinux.org> 0.10.2-alt2
+- Built and installed by pyproject_* macros.
+
 * Mon Jul 18 2022 Grigory Ustinov <grenka@altlinux.org> 0.10.2-alt1
 - Automatically updated to 0.10.2.
 
