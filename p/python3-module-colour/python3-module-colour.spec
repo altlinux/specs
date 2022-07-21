@@ -1,50 +1,53 @@
-%define modname colour
+%define pypi_name colour
 %def_enable check
 
-Name: python3-module-%modname
+Name: python3-module-%pypi_name
 Version: 0.1.5
-Release: alt3
+Release: alt4
 
 Summary: Python module to convert and manipulate various color representations
 Group: Development/Python3
 License: BSD-3-Clause
-Url: https://pypi.python.org/pypi/%modname
+Url: https://pypi.python.org/pypi/%pypi_name
 
 Vcs: https://github.com/vaab/colour
-Source: https://pypi.io/packages/source/c/%modname/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/c/%pypi_name/%pypi_name-%version.tar.gz
 Patch: %name-0.1.5-alt-setup.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-%{?_enable_check:BuildRequires: python3-module-nose python3-module-nosexcover}
+BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+%{?_enable_check:BuildRequires: python3-module-nose python3-module-coverage}
 
 %description
 This Python module defines several color formats that can be converted to
 one or another.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 %patch -b .orig
-rm -r %modname.egg-info
+rm -r %pypi_name.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 nosetests-3
 
 %files
-%python3_sitelibdir_noarch/%modname.py
-%python3_sitelibdir_noarch/__pycache__/%{modname}*
+%python3_sitelibdir_noarch/%pypi_name.py
+%python3_sitelibdir_noarch/__pycache__/%{pypi_name}*
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %doc README.rst LICENSE CHANGELOG.rst
-%python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Thu Jul 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt4
+- ported to %%pyproject* macros, fixed BR
+
 * Tue Jan 25 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.5-alt3
 - ported from deprecated d2to1 to setuptools
 - enabled %%check
