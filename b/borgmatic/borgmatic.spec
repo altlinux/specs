@@ -1,6 +1,6 @@
 Name: borgmatic
 Version: 1.6.4
-Release: alt1
+Release: alt1.1
 
 Summary: borgmatic (formerly atticmatic) is a simple Python wrapper script for the Borg
 
@@ -25,7 +25,7 @@ BuildRequires: python3-dev python3-module-setuptools
 %py3_use pykwalify < 14.06
 %py3_use pykwalify > 1.6.0
 %py3_use ruamel-yaml > 0.15.0
-%py3_use ruamel-yaml < 0.16.0
+%py3_use ruamel-yaml < 0.18.0
 
 
 %description
@@ -50,6 +50,9 @@ rather than having to put them all on the command-line, and handles common error
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Thu Jul 21 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.4-alt1.1
+- NMU: fixed requires according to setup.py
+
 * Sat Jun 25 2022 Pavel Vainerman <pv@altlinux.ru> 1.6.4-alt1
 - new version (1.6.4) with rpmgs script
 

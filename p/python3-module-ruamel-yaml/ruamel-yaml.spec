@@ -1,6 +1,6 @@
 Name: python3-module-ruamel-yaml
-Version: 0.15.100
-Release: alt2
+Version: 0.17.21
+Release: alt1
 
 Summary: is a YAML 1.2 loader/dumper package for Python
 
@@ -16,11 +16,9 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-# Automatically added by buildreq on Thu Aug 16 2018
-# optimized out: python-base python-modules python3 python3-base python3-dev python3-module-greenlet python3-module-pycparser python3-module-setuptools
-# BuildRequires: python3-module-zmq
+BuildArch: noarch
 
-BuildRequires: libssl-devel python3-dev python3-module-setuptools
+%add_python3_req_skip _ruamel_yaml
 
 %description
 ruamel.yaml is a YAML 1.2 loader/dumper package for Python
@@ -28,9 +26,6 @@ It is a derivative of Kirill Simonov's PyYAML 3.11
 
 %prep
 %setup
-# Very quick fix for python3.10
-sed -i 's/++Py_REFCNT(o)/Py_SET_REFCNT(o, Py_REFCNT(o) + 1)/' ext/_ruamel_yaml.c
-sed -i 's/--Py_REFCNT(o)/Py_SET_REFCNT(o, Py_REFCNT(o) - 1)/' ext/_ruamel_yaml.c
 
 %build
 %python3_build
@@ -41,9 +36,13 @@ export RUAMEL_NO_PIP_INSTALL_CHECK="1"
 
 %files
 %doc LICENSE CHANGES README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/ruamel
+%python3_sitelibdir/ruamel.yaml-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Jul 21 2022 Grigory Ustinov <grenka@altlinux.org> 0.17.21-alt1
+- Build new version.
+
 * Wed Jan 26 2022 Grigory Ustinov <grenka@altlinux.org> 0.15.100-alt2
 - Fixed build with python3.10.
 
