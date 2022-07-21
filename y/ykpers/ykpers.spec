@@ -4,7 +4,7 @@
 
 Name: ykpers
 Version: 1.20.0
-Release: alt1
+Release: alt2
 
 Summary: A library and command line tool used to personalize YubiKeys
 License: BSD-2-Clause
@@ -73,6 +73,9 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", \
   MODE="0664", GROUP="plugdev", ATTRS{idVendor}=="1050"
 EOF
 
+%check
+%make check
+
 %files -n libykpers-1
 %_libdir/*so*
 
@@ -87,5 +90,8 @@ EOF
 %attr(0644,root,root) %_udevrulesdir/*
 
 %changelog
+* Thu Jul 21 2022 Anton Zhukharev <ancieg@altlinux.org> 1.20.0-alt2
+- add make check
+
 * Thu Jun 23 2022 Anton Zhukharev <ancieg@altlinux.org> 1.20.0-alt1
 - initial build for Sisyphus
