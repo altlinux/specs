@@ -1,5 +1,5 @@
 Name: python3-module-ephem
-Version: 4.1.2
+Version: 4.1.3
 Release: alt1
 
 Summary: Compute positions of the planets and stars
@@ -9,7 +9,9 @@ Url: https://pypi.python.org/pypi/ephem/
 
 Source: %name-%version-%release.tar
 
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 PyEphem provides an ephem Python package for performing high-precision
@@ -24,19 +26,22 @@ position of a planet, asteroid, or comet for a series of dates.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc *.rst ephem/doc/*.rst TODO issues
 %python3_sitelibdir/ephem
-%python3_sitelibdir/ephem-%version-*-info
+%python3_sitelibdir/ephem-%version.dist-info
 %exclude %python3_sitelibdir/ephem/doc
 %exclude %python3_sitelibdir/ephem/tests
 
 %changelog
+* Thu Jul 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.1.3-alt1
+- 4.1.3 released
+
 * Wed May 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.1.2-alt1
 - 4.1.2 released
 
