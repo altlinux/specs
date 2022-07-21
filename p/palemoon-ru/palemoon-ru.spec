@@ -9,18 +9,18 @@
 
 %define bname		newmoon
 %define sdir		searchplugins
-%define newmoon_dir 	%_datadir/%bname-data/browser/
+%define newmoon_dir 	%palemoon_datadir/browser/
 %define search_dir 	%newmoon_dir%sdir
 
 Name: palemoon-ru
 
 Version: 31.1.0
-Release: alt1
+Release: alt2
 
 ExcludeArch: %ix86 %arm
 
 Summary: Russian (RU) Language Pack for Pale Moon
-License: MPL
+License: MPL-2.0
 
 Group: Networking/WWW
 Url: http://www.palemoon.org/langpacks.shtml
@@ -130,6 +130,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 %changelog
+* Thu Jul 21 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.1.0-alt2
+- Specifying the license version
+
 * Tue Jul 19 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.1.0-alt1
 - Uppdate to release 31.1.0
 
