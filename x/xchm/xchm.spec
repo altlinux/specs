@@ -3,7 +3,7 @@
 
 Name: xchm
 Version: 1.33
-Release: alt1
+Release: alt2
 
 Summary: xCHM - the CHM viewer for UNIX
 License: GPL-2.0-or-later
@@ -15,7 +15,7 @@ Source1: xchm.desktop
 
 BuildRequires: gcc-c++
 BuildRequires: libchm-devel
-BuildRequires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: libssl-devel
 
 %description
@@ -46,6 +46,9 @@ install -pD -m644 %SOURCE1 %buildroot%_desktopdir/xchm.desktop
 %_man1dir/*
 
 %changelog
+* Thu Jul 21 2022 Anton Midyukov <antohami@altlinux.org> 1.33-alt2
+- rebuilt with wxGTK3.2
+
 * Thu Jul 21 2022 Anton Midyukov <antohami@altlinux.org> 1.33-alt1
 - New version 1.33
 
