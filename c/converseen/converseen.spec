@@ -1,5 +1,5 @@
 Name: converseen
-Version: 0.9.9.0
+Version: 0.9.9.6
 Release: alt1
 Summary: Converseen is a free cross-platform batch image processor.
 Summary(ru_RU.UTF-8): Converseen — свободная программа пакетного конвертирования изображений.
@@ -38,7 +38,7 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr .
 
 %install
 %make_install DESTDIR=%buildroot install
-desktop-file-validate %buildroot/%_desktopdir/%name.desktop
+desktop-file-validate %buildroot/%_desktopdir/net.fasterland.converseen.desktop
 for x in 16 32 48; do
     mkdir -p %buildroot%_iconsdir/hicolor/$x'x'$x/apps/
 	convert %buildroot%_pixmapsdir/%name.png -resize $x'x'$x %buildroot/%_iconsdir/hicolor/$x'x'$x/apps/%name.png
@@ -53,10 +53,13 @@ done
 %_niconsdir/*
 %_miconsdir/*
 %exclude %_pixmapsdir/%name.png
-%_desktopdir/%name.desktop
+%_desktopdir/net.fasterland.converseen.desktop
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Thu Jul 21 2022 Anton Midyukov <antohami@altlinux.org> 0.9.9.6-alt1
+- new version 0.9.9.6
+
 * Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 0.9.9.0-alt1
 - new version 0.9.9.0
 
