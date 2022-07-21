@@ -1,7 +1,7 @@
-%define modulename pika
+%define oname pika
 
-Name: python3-module-%modulename
-Version: 1.2.1
+Name: python3-module-%oname
+Version: 1.3.0
 Release: alt1
 
 Summary: Pika is a pure-Python implementation of the AMQP 0-9-1 protocol.
@@ -19,6 +19,9 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
 
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 %py3_requires twisted.internet tornado
 
 %description
@@ -27,7 +30,7 @@ tries to stay fairly independent of the underlying network support
 library.
 
 %package docs
-Summary: Documentation for %modulename
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description docs
@@ -35,7 +38,7 @@ Pika is a pure-Python implementation of the AMQP 0-9-1 protocol that
 tries to stay fairly independent of the underlying network support
 library.
 
-This package contains documentation for %modulename.
+This package contains documentation for %oname.
 
 %prep
 %setup
@@ -44,15 +47,15 @@ This package contains documentation for %modulename.
 ln -s ../objects.inv docs/
 
 %build
-%python3_build
+%pyproject_build
 
 # generate html docs
-%__python3 setup.py build_sphinx
+sphinx-build-3 docs html
 # remove the sphinx-build leftovers
-rm -rf build/sphinx/html/.{doctrees,buildinfo}
+rm -rf html/.{doctrees,buildinfo}
 
 %install
-%python3_install
+%pyproject_install
 
 # Delete tests
 rm -fr %buildroot%python3_sitelibdir/tests
@@ -60,12 +63,16 @@ rm -fr %buildroot%python3_sitelibdir/*/tests
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %files docs
-%doc build/sphinx/html/*
+%doc html/*
 
 %changelog
+* Fri Jul 15 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt1
+- Automatically updated to 1.3.0.
+
 * Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
 - Automatically updated to 1.2.1.
 
