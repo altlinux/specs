@@ -5,7 +5,7 @@
 %define optflags_lto %nil
 
 Name: deepin-music
-Version: 6.2.13
+Version: 6.2.17
 Release: alt1
 Summary: Awesome music player with brilliant and tweakful UI Deepin-UI based
 License: GPL-3.0+
@@ -114,6 +114,9 @@ rm -f %buildroot%_libdir/lib%repo.a
 %endif
 
 %changelog
+* Thu Jul 21 2022 Leontiy Volodin <lvol@altlinux.org> 6.2.17-alt1
+- New version (6.2.17).
+
 * Fri May 06 2022 Leontiy Volodin <lvol@altlinux.org> 6.2.13-alt1
 - New version (6.2.13).
 
