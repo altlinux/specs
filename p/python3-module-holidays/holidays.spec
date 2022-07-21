@@ -1,5 +1,5 @@
 Name: python3-module-holidays
-Version: 0.13
+Version: 0.14.2
 Release: alt1
 
 Summary: Holidays calculator
@@ -10,7 +10,9 @@ Url: https://pypi.org/project/holidays/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 A fast, efficient Python library for generating country, province and state
@@ -21,19 +23,21 @@ a specific date is a holiday as fast and flexible as possible.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/holidays
-%python3_sitelibdir/holidays-%version-*-info
+%python3_sitelibdir/holidays-%version.dist-info
 
 %changelog
+* Thu Jul 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.14.2-alt1
+- 0.14.2 released
+
 * Wed May 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.13-alt1
 - 0.13 released
 
 * Thu Sep 24 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.3-alt1
 - initial
-
