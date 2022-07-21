@@ -1,5 +1,5 @@
 Name: python3-module-construct
-Version: 2.10.56
+Version: 2.10.68
 Release: alt1
 
 Summary: A powerful declarative parser/builder for binary data
@@ -10,7 +10,15 @@ Url: https://pypi.org/project/construct/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(pytest)
+BuildRequires: python3(arrow)
+BuildRequires: python3(cloudpickle)
+BuildRequires: python3(lz4)
+BuildRequires: python3(numpy)
+BuildRequires: python3(ruamel)
 
 %description
 Construct is a powerful declarative parser (and builder) for binary
@@ -26,17 +34,23 @@ parse data into Pythonic objects, and in the other direction, convert
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+py.test3 tests/ -k 'not benchmark' --showlocals --verbose
 
 %files
 %doc README.rst LICENSE
 %python3_sitelibdir/construct
-%python3_sitelibdir/construct-%version-*-info
+%python3_sitelibdir/construct-%version.dist-info
 
 %changelog
+* Thu Jul 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.10.68-alt1
+- 2.10.68 released
+
 * Fri Jul 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.10.56-alt1
 - 2.10.56 released
 
