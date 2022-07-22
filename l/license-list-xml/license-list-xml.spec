@@ -1,25 +1,56 @@
-Name: common-licenses
-Version: 1.13
+Name: license-list-xml
+Version: 3.17
 Release: alt1
 
 Summary: Contains the various common licenses used in the %distribution
-License: distributable
+License: CC0-1.0
 Group: System/Base
 BuildArch: noarch
-Packager: Dmitry V. Levin <ldv@altlinux.org>
-Prefix: %prefix
+Url: https://github.com/spdx/license-list-XML
 
-Source: license.tar
+BuildRequires: python3
+
+Source: %name-%version.tar
+
+Patch0001: 0001-Bitstream-Vera-Separate-the-title-from-the-paragraph.patch
+Patch0002: 0002-LGPL-3.0-Remove-optional-GPL-license-from-the-text.patch
+Patch0003: 0003-GCC-exception-2.0-Fix-spacing.patch
+Patch0004: 0004-openvpn-openssl-exception-Fix-spacing.patch
 
 %description
+The SPDX License List is an integral part of the SPDX Specification. The SPDX
+License List itself is a list of commonly found licenses and exceptions used in
+free and open or collaborative software, data, hardware, or documentation.
+
+%package -n common-licenses
+Summary: Contains the various common licenses used in the %distribution in XML format
+Group: System/Base
+
+%description -n common-licenses
 Contains the various common licenses uses by the %distribution.
 Instead of including the COPYING file in every package,
 just refer to this one.
 
 %prep
-%setup -q -n license
+%setup -q
+%autopatch -p1
 
 %build
+mkdir -- .export
+
+rpm/spdx-sync.py .export \
+	rpm/not-spdx \
+	src \
+	src/exceptions
+
+cp -a rpm/license-ambiguous .export/
+
+while read -r alias target; do
+	ln -s -- "$target" ".export/license/$alias"
+done < rpm/symlinks.not-spdx
+
+cd .export
+
 if find license license-ambiguous -mindepth 1 -maxdepth 1 -printf '%%f\n' | sort | uniq -d | grep ^; then
 	echo >&2 'These licenses are listed in both directories simultaneously.'
 	exit 1
@@ -31,22 +62,38 @@ if find license -mindepth 1 -maxdepth 1 -name '*-with-*-exception' |grep ^; then
 fi
 
 %install
-mkdir -p \
+mkdir -p -- \
 	%buildroot%_licensedir \
 	%buildroot%_licensedir-ambiguous \
 	%buildroot%_licensedir-exception
 
-cp -dp license/* %buildroot%_licensedir
-cp -dp license-ambiguous/.desc %buildroot%_licensedir-ambiguous
-cp -dp license-ambiguous/* %buildroot%_licensedir-ambiguous
-cp -dp license-exception/* %buildroot%_licensedir-exception
+cp -dp .export/license/* %buildroot%_licensedir
+cp -dp .export/license-ambiguous/.desc %buildroot%_licensedir-ambiguous
+cp -dp .export/license-ambiguous/* %buildroot%_licensedir-ambiguous
+cp -dp .export/license-exception/* %buildroot%_licensedir-exception
+
+mkdir -p -- \
+	%buildroot%_datadir/%name/exceptions
+
+cp -dp rpm/not-spdx/*.xml   %buildroot%_datadir/%name/
+cp -dp src/*.xml            %buildroot%_datadir/%name/
+cp -dp src/exceptions/*.xml %buildroot%_datadir/%name/exceptions/
 
 %files
+%_datadir/%name
+
+%files -n common-licenses
 %_licensedir
 %_licensedir-ambiguous
 %_licensedir-exception
 
 %changelog
+* Tue Jul 19 2022 Alexey Gladkov <legion@altlinux.ru> 3.17-alt1
+- Change the source repository to license-list-XML.
+- Subpackage common-licenses contains the exported data from the XML format.
+- Change License to CC0-1.0.
+- Remove Packager tag.
+
 * Thu Aug 05 2021 Alexey Gladkov <legion@altlinux.ru> 1.13-alt1
 - Fix formatting of the MPL-2.0 (ALT#40506)
 
