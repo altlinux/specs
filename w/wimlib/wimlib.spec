@@ -1,8 +1,8 @@
 %define libname libwim
 
 Name: wimlib
-Version: 1.13.4
-Release: alt1.1
+Version: 1.13.5
+Release: alt1
 
 Summary: Library to extract, create, modify, and mount WIM files
 License: GPLv3+
@@ -11,7 +11,9 @@ Group: System/Libraries
 Url: https://wimlib.net/
 Source: https://wimlib.net/downloads/wimlib-%version.tar
 
-BuildRequires: libattr-devel libfuse-devel libntfs-3g-devel libssl-devel libxml2-devel mt-st
+
+BuildRequires: patchelf
+BuildRequires: libattr-devel libfuse-devel libntfs-3g-devel libssl-devel libxml2-devel
 
 %description
 wimlib is a C library for creating, extracting, modifying, and mounting
@@ -55,7 +57,7 @@ but this package contains a free implementation of ImageX called
 
 %build
 # helps with rpath
-%autoreconf
+#autoreconf
 
 %configure \
        --disable-static \
@@ -68,6 +70,7 @@ but this package contains a free implementation of ImageX called
 
 %install
 %makeinstall_std
+patchelf --remove-rpath %buildroot%_bindir/wim*
 
 %check
 :>tests/test-imagex-ntfs # this one fails
@@ -88,6 +91,11 @@ make check
 %_pkgconfigdir/wimlib.pc
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 1.13.5-alt1
+- new version 1.13.5 (with rpmrb script)
+- drop mt-st from BR
+- disable autoreconf (broken)
+
 * Fri Sep 24 2021 Michael Shigorin <mike@altlinux.org> 1.13.4-alt1.1
 - drop unneeded ExclusiveArch:
   + verified to build on e2kv4, ppc64le, aarch64, armh
