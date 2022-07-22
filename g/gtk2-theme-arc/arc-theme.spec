@@ -1,22 +1,40 @@
 Name: gtk2-theme-arc
-Version: 20170302
-Release: alt1.git20170302
+Version: 20220405
+Release: alt1
+
 Summary: Arc GTK theme
 
 Group: Graphical desktop/GNOME
-License: GPL3
-Url: https://github.com/horst3180/Arc-theme
+License: GPLv3
+Url: https://github.com/jnsh/arc-theme
 
 Source: %name-%version.tar
 
-BuildArch: noarch
 Packager: Konstantin Artyushkin <akv@altlinux.org>
-BuildRequires: libgtk+3-devel pkg-config
+
+BuildRequires: libgtk+3-devel
+BuildRequires: pkg-config
+BuildRequires: meson
+BuildRequires: sassc
+BuildRequires: cinnamon
+BuildRequires: gnome-shell
+BuildRequires: inkscape
+
 Requires: libgtk-engine-murrine
 
+BuildArch: noarch
+
 %description
-A flat theme with transparent elements for GTK 3, GTK 2 and Gnome-Shell.
-Latest commit from Github
+Arc is a flat theme with transparent elements.
+It supports MATE, GNOME, Budgie, Xfce, and Cinnamon.
+
+%package -n gtk2-theme-Arc-lighter
+Group: Graphical desktop/GNOME
+Summary: Arc-dark GTK theme
+Group: Graphical desktop/GNOME
+Requires: libgtk-engine-murrine
+%description -n gtk2-theme-Arc-lighter
+%summary
 
 %package -n gtk2-theme-Arc-dark
 Group: Graphical desktop/GNOME
@@ -38,17 +56,17 @@ Requires: libgtk-engine-murrine
 %setup
 
 %build
-# workaround for gnome 3.24 support
-ln -s ./3.22 ./common/gtk-3.0/3.24
-ln -s ./3.22 ./common/gnome-shell/3.24
-
-./autogen.sh --prefix=/usr
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %files
 %_datadir/themes/Arc/*
+
+%files -n gtk2-theme-Arc-lighter
+%_datadir/themes/Arc-Lighter/*
 
 %files -n gtk2-theme-Arc-dark
 %_datadir/themes/Arc-Dark/*
@@ -57,6 +75,11 @@ ln -s ./3.22 ./common/gnome-shell/3.24
 %_datadir/themes/Arc-Darker/*
 
 %changelog
+* Fri Jul 22 2022 Grigory Ustinov <grenka@altlinux.org> 20220405-alt1
+- Built new version (Closes: #43040).
+- Built from new upstream.
+- Added Arc-lighter theme.
+
 * Wed Jan 16 2019 Konstantin Artyushkin <akv@altlinux.org> 20170302-alt1.git20170302
 - new version
 
