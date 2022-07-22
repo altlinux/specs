@@ -4,8 +4,8 @@
 %define sover 0
 
 Name: muffin
-Version: 5.4.1
-Release: alt2
+Version: 5.4.3
+Release: alt1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -186,6 +186,9 @@ ln -sf %name/lib%name-cogl-%api_ver.so.%sover \
 %_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 
 %changelog
+* Thu Jul 21 2022 Vladimir Didenko <cow@altlinux.org> 5.4.3-alt1
+- 5.4.3
+
 * Tue Jul 12 2022 Vladimir Didenko <cow@altlinux.org> 5.4.1-alt2
 - 5.4.1-6-gc845b36
 

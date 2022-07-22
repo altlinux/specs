@@ -8,7 +8,7 @@
 %def_enable onlineaccounts
 
 Name: cinnamon-control-center
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Cinnamon Control Center
@@ -148,6 +148,9 @@ you'll want to install this package.
 
 
 %changelog
+* Thu Jul 21 2022 Vladimir Didenko <cow@altlinux.org> 5.4.4-alt1
+- 5.4.4-1-g7f5ba6e
+
 * Tue Jul 12 2022 Vladimir Didenko <cow@altlinux.org> 5.4.3-alt1
 - 5.4.3
 

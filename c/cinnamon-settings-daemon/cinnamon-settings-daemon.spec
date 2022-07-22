@@ -7,8 +7,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: cinnamon-settings-daemon
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: A program that manages general Cinnamon settings
 License: GPLv2+
@@ -116,6 +116,9 @@ developing applications that use %name.
 %_pkgconfigdir/*
 
 %changelog
+* Thu Jul 21 2022 Vladimir Didenko <cow@altlinux.org> 5.4.2-alt1
+- 5.4.2-1-g2a706f0
+
 * Tue Jun 21 2022 Vladimir Didenko <cow@altlinux.org> 5.4.0-alt2
 - 5.4.0-1-g745e720
 

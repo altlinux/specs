@@ -1,7 +1,7 @@
 %define api_ver 3.0
 
 Name: nemo-extensions
-Version: 5.4.0
+Version: 5.4.1
 Release: alt1
 Summary: Extensions for Nemo
 
@@ -247,8 +247,6 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/nemo-terminal/
 %_datadir/glib-2.0/schemas/org.nemo.extensions.nemo-terminal.gschema.xml
 %python3_sitelibdir_noarch/nemo_terminal-*.egg-*
-%python3_sitelibdir_noarch/nemo_terminal.py
-%python3_sitelibdir_noarch/__pycache__/nemo_terminal*
 
 %files -n nemo-preview -f nemo-preview.lang
 %doc nemo-preview/README
@@ -269,6 +267,9 @@ rm -f %buildroot/%_libdir/nemo/extensions-3.0/*.a
 %_datadir/nemo-image-converter/
 
 %changelog
+* Thu Jul 21 2022 Vladimir Didenko <cow@altlinux.org> 5.4.1-alt1
+- 5.4.1
+
 * Fri Jun 17 2022 Vladimir Didenko <cow@altlinux.org> 5.4.0-alt1
 - 5.4.0
 - don't pack nemo-emblems and nemo-compare because of build issues
