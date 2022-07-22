@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 133
+%define centos_release 135
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,27 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Jul 22 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.135-alt1.el9
+- Updated to kernel-5.14.0-135.el9 (fixes: CVE-2022-34918):
+  + ACPI, PCI: Power Management fixes
+  + Additional SCSI updates for 9.1
+  + audit: backport from upstream v5.18 to v5.19-rc3
+  + block drivers: fix build warning on not checking add_disk*
+  + IPv6: 9.1 P2 backports from upstream
+  + kselftest: backport from upstream P2
+  + Make signature verification FIPS compliant
+  + mptcp: backports for 9.1p2
+  + net: backport upstream fixes for IP tunnels
+  + netfilter: 9.1 P2 backports
+  + netfilter: nf_tables: stricter validation of element data
+  + net: openvswitch: fix misuse of the cached connection on tuple changes
+  + net/other: backports for 9.1 p2
+  + net/sched: backports for 9.1 p2
+  + redhat: fix kernel_variant_package option definition
+  + tcp: fix possible divide-by-zero
+  + tipc: backports from upstream, 2nd phase
+  + tipc: move bc link creation back to tipc_node_create
+
 * Wed Jul 20 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.133-alt1.el9
 - Updated to kernel-5.14.0-133.el9 (fixes: CVE-2022-0854, CVE-2022-21123, CVE-2022-21125, CVE-2022-21166, CVE-2022-28893):
   + arm64: Update core arch code to upstream v5.18
