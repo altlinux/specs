@@ -1,5 +1,5 @@
 Name: whatsapp-for-linux
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 
 Summary: An unofficial WhatsApp linux client written in C++ with the help of gtkmm-3.0 and webkit2
@@ -15,7 +15,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 #BuildRequires: pkgconfig(appindicator3-0.1)
 BuildRequires: pkgconfig(ayatana-appindicator3-0.1)
-BuildRequires: pkgconfig(webkit2gtk-4.0)
+BuildRequires: pkgconfig(webkit2gtk-4.0) >= 2.34
 BuildRequires: pkgconfig(gtkmm-3.0)
 
 # just to hide Package libpcre was not found in the pkg-config search path.
@@ -40,8 +40,13 @@ Whatsapp-for-linux is an unofficial WhatsApp linux client written in C++ with th
 %_bindir/whatsapp-for-linux
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*x*/apps/*.png
+%_iconsdir/hicolor/*x*/status/*.png
+/usr/share/metainfo/com.github.eneshecan.WhatsAppForLinux.appdata.xml
 
 %changelog
+* Tue Jul 19 2022 Vitaly Lipatov <lav@altlinux.ru> 1.4.5-alt1
+- new version 1.4.5 (with rpmrb script)
+
 * Tue Jun 28 2022 Vitaly Lipatov <lav@altlinux.ru> 1.4.4-alt1
 - new version 1.4.4 (with rpmrb script)
 
