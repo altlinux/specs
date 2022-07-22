@@ -1,7 +1,7 @@
 
 Name: mame
 Version: 0.245
-Release: alt1
+Release: alt1.1
 Group: Games/Arcade
 Summary: Multiple Arcade Machine Emulator
 Summary(ru_RU.UTF-8): Эмулятор множества аркадных (и не только) машин
@@ -164,7 +164,7 @@ EOF
 # sorry guys, but race of streams is pain:
 # https://github.com/mamedev/mame/issues/5741
 
-make OPTIMISE="%optflags" \
+make -j8 OPTIMISE="%optflags" \
     $MAME_FLAGS \
     TOOLS=1 \
     NOWERROR=1 \
@@ -287,6 +287,8 @@ find %buildroot%_datadir/%name -name LICENSE -exec rm {} \;
 %_datadir/%name/hash/*
 
 %changelog
+* Thu Jul 22 2022 Artyom Bystrov <arbars@altlinux.org> 0.245-alt1.1
+- experimenting with multi-thread building
 
 * Thu Jul 15 2022 Artyom Bystrov <arbars@altlinux.org> 0.245-alt1
 - initial build for ALT Sisyphus
