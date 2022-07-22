@@ -11,14 +11,14 @@ BuildRequires: jpackage-1.8-compat
 %define pkgname		SweetHome3D
 %define pkgmod		3DModels
 %define pkgtextu	Textures
-%define modelver	1.6.4
+%define modelver	1.8
 %define textuver	1.2
-%define texturesver	1.6
-%define furniturever	1.24
+%define texturesver	1.8
+%define furniturever	1.29
 
 Name:		sweethome3d
-Version:	6.1
-Release:	alt3_2jpp8
+Version:	6.6.4
+Release:	alt1
 Summary:	A free interior design application, with a 3D preview
 License:	GPLv2
 Group:		Graphics
@@ -38,7 +38,7 @@ Source11:	http://sourceforge.net/projects/%{name}/files/TexturesLibraryEditor-so
 Source12:	http://sourceforge.net/projects/%{name}/files/FurnitureLibraryEditor-source/FurnitureLibraryEditor-%{furniturever}-src.zip
 Source13:	http://sourceforge.net/projects/%{name}/files/SweetHome3D-textures/Textures-%{textuver}/%{pkgtextu}-Contributions-%{textuver}.zip
 Source14:	http://sourceforge.net/projects/%{name}/files/SweetHome3D-textures/Textures-%{textuver}/%{pkgtextu}-eTeksScopia-%{textuver}.zip
-Patch0:		sweethome3d-6.1-nomacosx.patch
+Patch0:		sweethome3d-6.6.4-nomacosx.patch
 Patch1:		sweethome3d-6.0-build_xml.patch
 Patch2:		sweethome3d-6.1-javadoc.patch
 Patch3:		sweethome3d-6.0-disable_checkForUpdates.patch
@@ -411,6 +411,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %endif
 
 %changelog
+* Fri Jul 22 2022 Evgeny Sinelnikov <sin@altlinux.org> 6.6.4-alt1
+- update to new version
+- add JAVA_HOME to run script (closed: 43326)
+
 * Wed Jun 15 2022 Igor Vlasenko <viy@altlinux.org> 6.1-alt3_2jpp8
 - build with bundled jnlp.jar
 
