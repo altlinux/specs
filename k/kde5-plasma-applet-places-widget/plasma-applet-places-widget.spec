@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 1.4
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -56,6 +56,9 @@ __EOF__
 %_K5data/plasma/plasmoids/org.kde.placesWidget/
 
 %changelog
+* Fri Jul 22 2022 Sergey V Turchin <zerg@altlinux.org> 1.4-alt2
+- update russian translation
+
 * Fri Jul 16 2021 Sergey V Turchin <zerg@altlinux.org> 1.4-alt1
 - new version
 
