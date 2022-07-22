@@ -1,5 +1,5 @@
 Name: seatd
-Version: 0.6.3
+Version: 0.7.0
 Release: alt1
 Summary: Minimal seat management daemon and universal library
 License: MIT
@@ -85,6 +85,9 @@ install -m644 -pD contrib/systemd/seatd.service %buildroot%_unitdir/%name.servic
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jul 22 2022 Alexey Gladkov <legion@altlinux.ru> 0.7.0-alt1
+- New release (0.7.0).
+
 * Tue Nov 02 2021 Alexey Gladkov <legion@altlinux.ru> 0.6.3-alt1
 - New release (0.6.3).
 
