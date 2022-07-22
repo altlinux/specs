@@ -17,7 +17,7 @@ BuildRequires: jpackage-1.8-compat
 %define furniturever	1.29
 
 Name:		sweethome3d
-Version:	6.6.4
+Version:	7.0
 Release:	alt1
 Summary:	A free interior design application, with a 3D preview
 License:	GPLv2
@@ -411,9 +411,12 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %endif
 
 %changelog
+* Sat Jul 23 2022 Evgeny Sinelnikov <sin@altlinux.org> 7.0-alt1
+- update to latest release
+
 * Fri Jul 22 2022 Evgeny Sinelnikov <sin@altlinux.org> 6.6.4-alt1
 - update to new version
-- add JAVA_HOME to run script (closed: 43326)
+- add JAVA_HOME to run script (closes: 43326)
 
 * Wed Jun 15 2022 Igor Vlasenko <viy@altlinux.org> 6.1-alt3_2jpp8
 - build with bundled jnlp.jar
