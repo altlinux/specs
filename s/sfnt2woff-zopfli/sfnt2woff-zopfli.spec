@@ -1,5 +1,5 @@
 Name: sfnt2woff-zopfli
-Version: 1.1.0
+Version: 1.3.1
 Release: alt1
 
 Summary: WOFF utilities with Zopfli compression
@@ -33,12 +33,15 @@ mkdir -p %buildroot%_bindir
 install -m 0755 sfnt2woff-zopfli woff2sfnt-zopfli %buildroot%_bindir/
 
 %files
-%doc LICENSE
+%doc LICENSE*
 %doc README.md
 %_bindir/sfnt2woff-zopfli
 %_bindir/woff2sfnt-zopfli
 
 %changelog
+* Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 1.3.1-alt1
+- new version 1.3.1 (with rpmrb script)
+
 * Tue Apr 25 2017 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
 - new version (1.1.0) with rpmgs script
 
