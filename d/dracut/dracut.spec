@@ -11,7 +11,7 @@
 %filter_from_requires /^\/usr\/share\/pkgconfig/d
 
 Name: dracut
-Version: 056
+Version: 057
 Release: alt1
 
 Summary: Initramfs generator using udev
@@ -221,9 +221,6 @@ rm -fr -- %buildroot%dracutlibdir/modules.d/00dash
 # we do not support mksh in the initramfs
 rm -fr -- %buildroot%dracutlibdir/modules.d/00mksh
 
-# remove gentoo specific modules
-rm -fr -- %buildroot%dracutlibdir/modules.d/50gensplash
-
 # with systemd IMA and selinux modules do not make sense
 rm -fr -- %buildroot%dracutlibdir/modules.d/96securityfs
 rm -fr -- %buildroot%dracutlibdir/modules.d/97masterkey
@@ -342,6 +339,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/50plymouth
 %dracutlibdir/modules.d/62bluetooth
 %dracutlibdir/modules.d/80lvmmerge
+%dracutlibdir/modules.d/80lvmthinpool-monitor
 %dracutlibdir/modules.d/90btrfs
 %dracutlibdir/modules.d/90crypt
 %dracutlibdir/modules.d/90dm
@@ -371,6 +369,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 %dracutlibdir/modules.d/95terminfo
 %dracutlibdir/modules.d/95udev-rules
 %dracutlibdir/modules.d/95virtfs
+%dracutlibdir/modules.d/95virtiofs
 %ifarch s390 s390x
 %dracutlibdir/modules.d/80cms
 %dracutlibdir/modules.d/81cio_ignore
@@ -420,6 +419,7 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 
 %files network
 %dracutlibdir/modules.d/01systemd-networkd
+%dracutlibdir/modules.d/35connman
 %dracutlibdir/modules.d/35network-legacy
 %dracutlibdir/modules.d/35network-wicked
 %dracutlibdir/modules.d/40network
@@ -482,6 +482,9 @@ echo 'dracut_rescue_image="yes"' > %buildroot%dracutlibdir/dracut.conf.d/02-resc
 #%dracutlibdir/modules.d/98integrity
 
 %changelog
+* Sat Jul 23 2022 Alexey Shabalin <shaba@altlinux.org> 057-alt1
+- 057
+
 * Wed Mar 23 2022 Alexey Shabalin <shaba@altlinux.org> 056-alt1
 - 056
 
