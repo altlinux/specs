@@ -2,7 +2,7 @@
 %define sover 9
 
 Name: libmtp
-Version: 1.1.19
+Version: 1.1.20
 Release: alt1
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
 
@@ -14,20 +14,17 @@ Url: http://libmtp.sourceforge.net/
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Sat Apr 18 2009
 BuildRequires: libusb-devel libgcrypt-devel
 
 %package -n %name%sover
 Summary: a library for accessing Media Transfer Protocol devices
 Group: System/Libraries
 Provides: %name = %version-%release
-Obsoletes: %{name}7
-Obsoletes: %name < %version-%release
 
 %package -n %name-devel
 Summary: %name development environment
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name%sover = %version-%release
 
 %package -n %name-devel-static
 Summary: %name static development environment
@@ -37,7 +34,7 @@ Requires: %name-devel = %version-%release
 %package -n %name-examples
 Summary: %name usage examples
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name%sover = %version-%release
 
 %description
 Libmtp is a LGPL library implementation of the Media Transfer Protocol (MTP),
@@ -73,7 +70,7 @@ touch config.rpath
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 # Replace links with relative links
 rm -f %buildroot%_bindir/mtp-{delfile,getfile,newfolder,sendfile,sendtr}
@@ -89,8 +86,8 @@ rm -rf %buildroot%_docdir/%name-%version/html
 
 %files -n %name%sover
 %_libdir/*.so.*
-/lib/udev/hwdb.d/*
-/lib/udev/rules.d/*
+%_udevhwdbdir/*
+%_udevrulesdir/*
 /lib/udev/mtp-probe
 %doc AUTHORS README TODO
 
@@ -108,6 +105,9 @@ rm -rf %buildroot%_docdir/%name-%version/html
 %_bindir/*
 
 %changelog
+* Sat Jul 23 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.20-alt1
+- 1.1.20
+
 * Wed Oct 13 2021 Dmitriy Khanzhin <jinn@altlinux.org> 1.1.19-alt1
 - 1.1.19
 
