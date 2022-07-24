@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
+%global import_path filippo.io/age
+
 Name: age
 Version: 1.0.0
-Release: alt1
+Release: alt2
 
 Summary: simple, modern and secure file encryption tool
 License: BSD-3-Clause
@@ -24,19 +26,24 @@ explicit keys, no config options, and UNIX-style composability.
 %patch0 -p1
 
 %build
-%gobuild -o %_builddir/ ./cmd/*
+export GO111MODULE=off
+export BUILDDIR="$PWD/.build"
+export IMPORT_PATH="%import_path"
+export GOPATH="$BUILDDIR:%go_path"
+
 cp -r LICENSE README.md doc %_builddir/
+%golang_prepare
+
+cd .build/src/%import_path
+%golang_build cmd/*
 
 %install
-mkdir -p %buildroot
+export BUILDDIR="$PWD/.build"
+export IGNORE_SOURCES=1
+%golang_install
 
-cd %_builddir
-
-install -pD -m0644 doc/age.1 %buildroot/%_man1dir/age.1
-install -pD -m0644 doc/age-keygen.1 %buildroot/%_man1dir/age-keygen.1
-
-install -pD age %buildroot%_bindir/age
-install -pD age-keygen %buildroot%_bindir/age-keygen
+install -pD -m0644 doc/age.1 %buildroot%_man1dir/age.1
+install -pD -m0644 doc/age-keygen.1 %buildroot%_man1dir/age-keygen.1
 
 %files
 %doc LICENSE README.md
@@ -44,5 +51,8 @@ install -pD age-keygen %buildroot%_bindir/age-keygen
 %_man1dir/*
 
 %changelog
+* Sun Jul 24 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt2
+- switch to traditional golang building instructions
+
 * Wed May 01 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt1
 - initial build for Sisyphus
