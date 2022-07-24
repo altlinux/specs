@@ -4,7 +4,7 @@
 
 Name: ykclient
 Version: 2.15
-Release: alt1
+Release: alt3
 
 Summary: YubiCloud One-Time-Password Validation Client
 License: BSD-2-Clause
@@ -61,5 +61,8 @@ Development files for libykclient library.
 %_includedir/*
 
 %changelog
+* Sun Jul 24 2022 Anton Zhukharev <ancieg@altlinux.org> 2.15-alt3
+- bump release to override autoimports package
+
 * Sat Jul 23 2022 Anton Zhukharev <ancieg@altlinux.org> 2.15-alt1
 - initial build for Sisyphus
