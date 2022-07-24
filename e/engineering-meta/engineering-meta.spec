@@ -1,6 +1,6 @@
 Name: engineering-meta
 Version: p10
-Release: alt4
+Release: alt5
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -8,13 +8,13 @@ License: GPL-2.0-or-later
 Url: https://altlinux.org/Engineering
 
 Requires: engineering-2D-CAD = %EVR
+%ifnarch %arm ppc64le
 Requires: engineering-3D-CAD = %EVR
+Requires: engineering-CNC = %EVR
+%endif
 Requires: engineering-3D-printing = %EVR
 Requires: engineering-APCS = %EVR
 Requires: engineering-CAM = %EVR
-%ifarch %ix86 x86_64 aarch64
-Requires: engineering-CNC = %EVR
-%endif
 Requires: engineering-EDA = %EVR
 Requires: engineering-misc = %EVR
 
@@ -48,13 +48,10 @@ Summary(ru_RU.UTF-8): Мета-пакет для установки 3D САПР
 Group: Engineering
 
 Requires: freecad
-Requires: povray
-%ifarch %ix86 x86_64 aarch64
 Requires: openscad
 Requires: openscad-MCAD
 Requires: openscad-libraries-mcad
 Requires: meshlab
-%endif
 
 %description -n engineering-3D-CAD
 Metapackage for install 3D CAD (Computer Aided Design)
@@ -144,10 +141,8 @@ Summary: Metapackage for install CNC Applications
 Summary(ru_RU.UTF-8): Metapackage for install CNC Applications
 Group: Engineering
 
-%ifarch %ix86 x86_64 aarch64
 Requires: linuxcnc
 Requires: mesaflash
-%endif
 
 %description -n engineering-CNC
 Metapackage for install CNC (Computer Numerical Control)
@@ -166,7 +161,7 @@ Group: Engineering
 Requires: kicad
 %endif
 Requires: ktechlab
-Requires: qucs
+#Requires: qucs
 Requires: qucs-s
 
 %description -n engineering-EDA
@@ -193,17 +188,22 @@ Engineering applications not included in any category.
 
 %files
 %files -n engineering-2D-CAD
+%ifnarch %arm ppc64le
 %files -n engineering-3D-CAD
+%files -n engineering-CNC
+%endif
 %files -n engineering-3D-printing
 %files -n engineering-APCS
 %files -n engineering-CAM
-%ifarch %ix86 x86_64 aarch64
-%files -n engineering-CNC
-%endif
 %files -n engineering-EDA
 %files -n engineering-misc
 
 %changelog
+* Sun Jul 24 2022 Anton Midyukov <antohami@altlinux.org> p10-alt5
+- engineering-{3D-CAD,CNC}: do not build for %%arm ppc64le
+- engineering-3D-CAD: do not require povray
+- engineering-EDA: do not require qucs
+
 * Wed Jan 05 2022 Anton Midyukov <antohami@altlinux.org> p10-alt4
 - engineering-EDA: not require kicad on armh
 
