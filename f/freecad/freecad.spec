@@ -14,7 +14,7 @@
 # git rev-list --count remotes/upstream/releases/FreeCAD-0-17
 
 Name:    freecad
-Version: 0.19.4
+Version: 0.20
 Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
@@ -30,13 +30,13 @@ Source1: freecad.1
 %if_without bundled_libs
 Patch1: %name-remove-3rdParty.patch
 %endif
-Patch2: %name-0.18.4-alt-boost-1.73.0-compat.patch
-Patch3: freecad-0.19.2-upstream-vtk9-compat.patch
 Patch4: freecad-0.19.2-alt-boost-link.patch
 Patch5: freecad-alt-fix-icon-name-in-menu.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
+
+ExcludeArch: armh
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-xdg
@@ -123,7 +123,6 @@ easy to provide additional functionality without modifying the core system.
 %package docs
 Summary: Documentation for FreeCAD
 Group: Documentation
-#BuildArch: noarch
 Provides:  free-cad-docs = %version-%release
 Obsoletes: free-cad-docs < %version-%release
 Requires: qt5-assistant
@@ -147,8 +146,6 @@ This package contains documentation for FreeCAD.
 %patch1 -p1
 rm -rf src/3rdParty
 %endif
-%patch2 -p1
-%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %ifarch %e2k
@@ -166,7 +163,6 @@ export PATH=$PATH:%_qt5_bindir
 # ninja: error: dependency cycle: src/Mod/TechDraw/Gui/mtextedit.h -> src/Mod/TechDraw/Gui/mtextedit.h
 #cmake_insource -GNinja \
 %cmake_insource \
-	-DBUILD_ENABLE_CXX_STD:STRING="C++14" \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_CXX_FLAGS_RELEASE="-DNDEBUG" \
 	-DCMAKE_INSTALL_DATADIR=%ldir \
@@ -226,6 +222,11 @@ sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python3:' %buildroot%_libdir/freec
 						       %buildroot%_libdir/freecad/Mod/Test/testmakeWireString.py
 sed -i '1s:#!/usr/bin/python:#!/usr/bin/python3:' %buildroot%_libdir/freecad/Mod/Robot/MovieTool.py
 
+# remove static libraries
+rm -f %buildroot%_libdir/freecad/lib/*.a
+
+# remove header file
+rm -f %buildroot%_includedir/E57Format/*.h
 
 %files -f %name.lang
 %doc ChangeLog.txt README.md
@@ -252,6 +253,13 @@ sed -i '1s:#!/usr/bin/python:#!/usr/bin/python3:' %buildroot%_libdir/freecad/Mod
 %ldir/doc
 
 %changelog
+* Thu Jun 16 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.20-alt1
+- New version.
+- Do not build for armh.
+
+* Mon Apr 25 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.19.4-alt2
+- Rebuild with opencascade 7.6.
+
 * Thu Mar 03 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.19.4-alt1
 - New version.
 

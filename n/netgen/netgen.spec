@@ -7,6 +7,7 @@
 %define mpiimpl openmpi-compat
 %define mpidir %_libdir/%mpiimpl
 %define _cmake__builddir BUILD
+%define build_parallel_jobs 1
 
 %def_without shared_togl
 %define togl_ver 2.1
@@ -14,8 +15,8 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: netgen
-Version: 6.2.2104
-Release: alt2
+Version: 6.2.2202
+Release: alt1
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPLv2
 Group: Sciences/Mathematics
@@ -45,7 +46,7 @@ Patch8: 0008-Add-missing-ldl.patch
 Patch10: netgen-6.2-alt-unbundle-pybind11.patch
 Patch11: netgen-alt-fix-return-type.patch
 Patch12: netgen-alt-fix-build-i586.patch
-Patch13: %name-alt-version-detection.patch
+Patch13: netgen-alt-return-type.patch
 
 BuildRequires(pre): rpm-build-tcl
 BuildRequires(pre): rpm-build-python3
@@ -74,6 +75,9 @@ BuildRequires: %mpiimpl-devel
 BuildRequires: tcl-togl-devel 
 %endif
 BuildRequires: libGLU-devel
+BuildRequires: git-core
+BuildRequires: libfreetype-devel
+BuildRequires: fontconfig-devel
 
 Requires: lib%name = %EVR tcl-tix
 
@@ -247,6 +251,7 @@ sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
   CFLAGS="$OPTFLAGS -fno-strict-aliasing" \
   CXXFLAGS="$OPTFLAGS -fno-strict-aliasing" \
   %cmake \
+    -DNETGEN_VERSION_GIT=%version \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DNG_INSTALL_DIR_BIN=%_bindir \
     -DNG_INSTALL_DIR_INCLUDE=%_includedir/%name \
@@ -279,6 +284,7 @@ sed -i 's|<tkInt.h>|<tk/generic/tkInt.h>|' ng/Togl2.1/togl.c
     -DUSE_MPEG=OFF \
 %endif
 
+export NPROCS=%build_parallel_jobs
 %cmake_build
 
 ############################################################################
@@ -398,6 +404,15 @@ rm -rf %buildroot%_datadir/%name/doc
 %endif #openmpi
 
 %changelog
+* Fri Apr 15 2022 Andrey Cherepanov <cas@altlinux.org> 6.2.2202-alt1
+- New version.
+
+* Thu Mar 03 2022 Andrey Cherepanov <cas@altlinux.org> 6.2.2201-alt1
+- New version.
+
+* Sun Oct 03 2021 Andrey Cherepanov <cas@altlinux.org> 6.2.2105-alt1
+- New version.
+
 * Mon Sep 13 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 6.2.2104-alt2
 - Added e2k architecture support.
 - Disabled -flto for Clang on aarch64.

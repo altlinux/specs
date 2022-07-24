@@ -1,6 +1,6 @@
 Name: opencascade
-Version: 7.5.3
-Release: alt3
+Version: 7.6.2
+Release: alt1
 Summary: SDK intended for development of applications dealing with 3D CAD data
 License: LGPL-2.1-only-with-OCCT-exception-1.0
 Group: Development/Tools
@@ -12,7 +12,6 @@ Url: http://www.opencascade.org
 Source: %name-%version.tar
 Patch1: opencascade-cmake.patch
 Patch2: opencascade-alt-arm-build.patch
-Patch3: opencascade-alt-vtk-9.1-compat.patch
 Patch2000: opencascade-e2k-disable-fenv.patch
 
 Requires: lib%name = %version-%release
@@ -82,7 +81,6 @@ This package contains documentation for Open CASCADE.
 %ifarch %arm
 %patch2 -p2
 %endif
-%patch3 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -133,6 +131,12 @@ rm -f /usr/share/doc/opencascade/*
 %_datadir/doc/%name
 
 %changelog
+* Sun May 01 2022 Andrey Cherepanov <cas@altlinux.org> 7.6.2-alt1
+- New version (ALT #42460).
+
+* Fri Feb 04 2022 Andrey Cherepanov <cas@altlinux.org> 7.6.1-alt1
+- New version.
+
 * Mon Jan 24 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 7.5.3-alt3
 - Rebuilt with VTK-9.1.0.
 

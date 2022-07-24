@@ -1,6 +1,6 @@
 Name: horizon
-Version: 1.1.1
-Release: alt2
+Version: 2.2.0
+Release: alt1
 
 Summary: Horizon is a free EDA package
 License: GPL-3.0
@@ -10,7 +10,8 @@ Url: https://github.com/horizon-eda/horizon
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
-Patch: fix_build_without_glm.pc.patch
+Patch1: fix_build_without_glm.pc.patch
+Patch2: disable-link-with-static-libs.patch
 
 BuildRequires: gcc-c++ libgtkmm3-devel
 BuildRequires: libsqlite3-devel
@@ -31,7 +32,7 @@ BuildRequires: opencascade-devel
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 #configure
@@ -48,6 +49,9 @@ BuildRequires: opencascade-devel
 %doc *.md
 
 %changelog
+* Fri Apr 15 2022 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
+- NMU: new version for opencascade-7.1.0
+
 * Wed Dec 29 2021 Anton Midyukov <antohami@altlinux.org> 1.1.1-alt2
 - fix build without glm.pc (thanks aris@)
 

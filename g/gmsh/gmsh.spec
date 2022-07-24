@@ -1,12 +1,14 @@
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
-Version: 4.6.0
-Release: alt3.1
+Version: 4.9.5
+Release: alt1
 Group: Sciences/Mathematics
 License: GPLv2
 URL: https://gmsh.info/
 
 Source: %name-%version.tar
+Source1: %name.watch
+Patch: eigen_mma.patch
 
 Requires: lib%name = %EVR
 
@@ -19,6 +21,7 @@ BuildRequires: libXext-devel libXfixes-devel libXrender-devel
 BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libjpeg-devel zlib-devel libpng-devel
 BuildRequires: libopenblas-devel liblapack-devel opencascade-devel
+BuildRequires: libann-devel getfemxx
 
 %description
 Gmsh is an automatic 3D finite element grid generator with a built-in CAD engine
@@ -54,14 +57,17 @@ This package contains python interface for lib%name.
 
 
 %package demos
-Summary: Tutorial and demo files for Gmsh
+Summary: Tutorial and example files for Gmsh
 Group: Sciences/Mathematics
 BuildArch: noarch
 %description demos
-This package contains tutorial and demo files for %name.
+This package contains tutorial and example files for %name.
 
 %prep
 %setup
+%ifarch ppc64le
+%patch -p2
+%endif
 
 %build
 # 1. Dynamic library and private API is needed for compiling getdb
@@ -101,11 +107,15 @@ rm -f %buildroot%_libdir/*.jl
 %python_sitelibdir_noarch/*
 
 %files demos
-%_docdir/%name/demos
-%_docdir/%name/tutorial
+%_docdir/%name/examples
+%_docdir/%name/tutorials
 
 
 %changelog
+* Mon Mar 21 2022 Andrey Cherepanov <cas@altlinux.org> 4.9.5-alt1
+- New version
+- Add watch file
+
 * Mon May 03 2021 Andrey Cherepanov <cas@altlinux.org> 4.6.0-alt3.1
 - NMU: rebuild with opencascade-devel
 

@@ -4,7 +4,7 @@
 %def_without unittests
 
 Name: ngsolve
-Version: 6.2.2104
+Version: 6.2.2202
 Release: alt1
 Summary: NGSolve Finite Element Library
 License: LGPL-2.1
@@ -156,6 +156,9 @@ doxygen
 %python3_sitelibdir/%name
 
 %changelog
+* Sat Jul 23 2022 Andrey Cherepanov <cas@altlinux.org> 6.2.2202-alt1
+- NMU: New version for opencascade 7.6
+
 * Thu Jul 15 2021 Andrey Cherepanov <cas@altlinux.org> 6.2.2104-alt1
 - New version
 

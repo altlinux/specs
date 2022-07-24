@@ -1,7 +1,7 @@
 %def_without netgen
 
 Name:     smesh
-Version:  9.7.0.1
+Version:  9.8.0.2
 Release:  alt1
 
 Summary:  OpenCascade based MESH framework
@@ -14,6 +14,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   %name-%version.tar
 Source1:  submodules.tar
 Patch1:   smesh-install.patch
+Patch2:   smesh-gcc12.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -67,6 +68,7 @@ Development files and headers for libsmesh.
 %setup
 tar xf %SOURCE1
 %patch1 -p1
+%patch2 -p2
 python3 prepare.py
 
 %build
@@ -88,6 +90,12 @@ python3 prepare.py
 %_libdir/cmake/*.cmake
 
 %changelog
+* Sun Jul 10 2022 Andrey Cherepanov <cas@altlinux.org> 9.8.0.2-alt1
+- New version.
+
+* Mon Apr 25 2022 Andrey Cherepanov <cas@altlinux.org> 9.7.0.2-alt1
+- New version.
+
 * Thu Jan 27 2022 Andrey Cherepanov <cas@altlinux.org> 9.7.0.1-alt1
 - New version.
 
