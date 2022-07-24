@@ -8,7 +8,7 @@
 %def_without gpu
 
 Name: stress-ng
-Version: 0.14.02
+Version: 0.14.03
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -60,14 +60,15 @@ sed -ri 's,"-O([0123])",\1,' stress-ng.h
 %endif
 
 %build
-%add_optflags -flto
 %make_build_ext --no-print-directory --output-sync=none VERBOSE=1
 
 %install
 %makeinstall_std
 
 install -pD kernel-coverage.sh %buildroot%_datadir/stress-ng/kernel-coverage.sh
-install -pD syscalls.txt       %buildroot%_datadir/stress-ng/syscalls.txt
+install -pDm644 syscalls.txt   %buildroot%_datadir/stress-ng/syscalls.txt
+install -pD debian/tests/fast-test-all %buildroot%_datadir/stress-ng/fast-test-all
+install -pD debian/tests/lite-test     %buildroot%_datadir/stress-ng/lite-test
 
 %check
 # getrandom test does not work in sborotschnitza:
@@ -81,6 +82,7 @@ time timeout 300 make lite-test
 banner done
 
 %files
+%define _customdocdir %_docdir/%name
 %doc COPYING README.md mascot/stress-ng.svg debian/changelog
 %_bindir/stress-ng
 %_datadir/bash-completion/completions/stress-ng
@@ -88,6 +90,10 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Sun Jul 24 2022 Vitaly Chikunov <vt@altlinux.org> 0.14.03-alt1
+- Update to V0.14.03 (2022-07-20).
+- Change docdir /usr/share/doc/stress-ng-%%version -> /usr/share/doc/stress-ng.
+
 * Mon Jun 13 2022 Vitaly Chikunov <vt@altlinux.org> 0.14.02-alt1
 - Update to V0.14.02 (2022-06-12).
 
