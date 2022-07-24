@@ -1,11 +1,11 @@
 Summary: An Atari ST emulator suitable for playing games
 Name: hatari
-Version: 2.3.1
+Version: 2.4.0
 Release: alt1
 License: GPLv2+
 Group: Emulators
 Url: http://hatari.tuxfamily.org/
-
+Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: %name-%version.tar.bz2
 Source1: hatari.desktop
 
@@ -128,12 +128,15 @@ ctest -V
 %_datadir/applications/hatariui.desktop
 %_datadir/icons/hicolor/32x32/apps/hatari-icon.png
 %doc python-ui/{README,release-notes.txt,TODO}
-%exclude %_datadir/%name/hatariui/README
-%exclude %_datadir/%name/hatariui/release-notes.txt
-%exclude %_datadir/%name/hatariui/TODO
-%exclude %_datadir/%name/hconsole/release-notes.txt
+#exclude %_datadir/%name/hatariui/README
+#exclude %_datadir/%name/hatariui/release-notes.txt
+#exclude %_datadir/%name/hatariui/TODO
+#exclude %_datadir/%name/hconsole/release-notes.txt
 
 %changelog
+* Sun Jul 24 2022 Ilya Mashkin <oddity@altlinux.ru> 2.4.0-alt1
+- 2.4.0
+
 * Sat Aug 28 2021 Artyom Bystrov <arbars@altlinux.org> 2.3.1-alt1
 - moving from srpms to Gear
 - Update sources to version 2.3.1
