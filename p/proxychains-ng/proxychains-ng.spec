@@ -1,5 +1,7 @@
+%define git_snapshot v4.16-9-g060801d
+
 Name: proxychains-ng
-Version: 4.16
+Version: 4.16.0.9.git060801d
 Release: alt1
 
 Summary: Redirects the connections through SOCKS4a/5 or HTTP proxies
@@ -9,7 +11,7 @@ Group: Networking/Other
 Url: https://github.com/rofl0r/proxychains-ng
 
 VCS: git://github.com/rofl0r/proxychains-ng.git
-Source: %name-%version.tar
+Source: %name-%git_snapshot.tar
 Source1: %name.watch
 
 Provides: proxychains = %version
@@ -28,7 +30,7 @@ a command with proxychains:
 	proxychains4 command
 
 %prep
-%setup
+%setup -n %name-%git_snapshot
 
 %build
 %configure --libdir=%_libdir/%name
@@ -51,6 +53,10 @@ ln -s proxychains4 %buildroot%_bindir/proxychains
 %_libdir/%name/libproxychains4.so
 
 %changelog
+* Sun Jul 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.16.0.9.git060801d-alt1
+- Updated to v4.16-9-g060801d.
+- Fixed watch file.
+
 * Mon Jan 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.16-alt1
 - Updated to 4.16.
 
