@@ -3,8 +3,8 @@
 %global import_path github.com/yggdrasil-network/yggdrasil-go
 
 Name: yggdrasil
-Version: 0.4.3
-Release: alt2
+Version: 0.4.4
+Release: alt1
 
 Summary: End-to-end encrypted IPv6 networking
 License: LGPLv3
@@ -77,6 +77,9 @@ popd
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Sun Jul 24 2022 Anton Zhukharev <ancieg@altlinux.org> 0.4.4-alt1
+- update to 0.4.4
+
 * Tue Jun 07 2022 Anton Zhukharev <ancieg@altlinux.org> 0.4.3-alt2
 - change instructions for golang building
 - add buildName and buildVersion to the output of `yggdrasil -version'
