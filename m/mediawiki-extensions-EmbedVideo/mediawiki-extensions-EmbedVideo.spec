@@ -1,7 +1,7 @@
 %define ShortName EmbedVideo
 
 Name: mediawiki-extensions-%ShortName
-Version: 2.9.0
+Version: 3.0.8
 Release: alt1
 
 Summary: MediaWiki extension which adds a parser function called #ev for embedding video clips
@@ -10,7 +10,7 @@ Group: Networking/WWW
 Url: http://www.mediawiki.org/wiki/Extension:%ShortName
 License: GPLv2
 
-# Source-url: https://gitlab.com/hydrawiki/extensions/EmbedVideo/-/archive/v%version/EmbedVideo-v%version.tar.bz2
+# Source-url: https://github.com/StarCitizenWiki/mediawiki-extensions-EmbedVideo/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -32,6 +32,9 @@ in multiple languages and countries.
 %files -f %ShortName.files
 
 %changelog
+* Sun Jul 24 2022 Vitaly Lipatov <lav@altlinux.ru> 3.0.8-alt1
+- new version 3.0.8 (with rpmrb script)
+
 * Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 2.9.0-alt1
 - new version (2.9.0) with rpmgs script
 
