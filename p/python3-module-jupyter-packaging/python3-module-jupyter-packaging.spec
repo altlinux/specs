@@ -1,7 +1,7 @@
 %define  modulename jupyter-packaging
 
 Name:    python3-module-%modulename
-Version: 0.12.0
+Version: 0.12.2
 Release: alt1
 
 Summary: Tools to help build and install Jupyter Python packages
@@ -12,7 +12,11 @@ URL:     https://github.com/jupyter/jupyter-packaging
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-dev
+BuildRequires: python3-module-pyproject-installer
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling
 
 BuildArch: noarch
 
@@ -26,17 +30,19 @@ pre-build step that may include JavaScript build steps.
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 rm -rf %buildroot%python3_sitelibdir/tests
 
 %files
 %doc *.md
-%python3_sitelibdir/jupyter_packaging/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/jupyter_packaging*
 
 %changelog
+* Mon Jul 25 2022 Andrey Cherepanov <cas@altlinux.org> 0.12.2-alt1
+- New version.
+
 * Mon Apr 25 2022 Andrey Cherepanov <cas@altlinux.org> 0.12.0-alt1
 - Initial build for Sisyphus.
