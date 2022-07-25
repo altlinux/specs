@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nheko
-Version: 0.9.1
+Version: 0.9.3
 Release: alt1
 
 Summary: Desktop client (QT) for the Matrix protocol
@@ -28,6 +28,7 @@ BuildRequires: libblkid-devel
 BuildRequires: libuuid-devel
 BuildRequires: libselinux-devel
 BuildRequires: libxcbutil-icccm-devel
+BuildRequires: asciidoc-a2x
 
 # Additional (runtime) dependencies
 Requires: qt5-graphicaleffects qt5-quickcontrols2 qt5-multimedia
@@ -69,8 +70,12 @@ and less like an IRC client.
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/*/apps/*.svg
 %_datadir/metainfo/*.appdata.xml
+%_man1dir/nheko*
 
 %changelog
+* Tue Jul 19 2022 Vladimir Didenko <cow@altlinux.org> 0.9.3-alt1
+- Updated to v0.9.3.
+
 * Mon Jan 10 2022 Paul Wolneykien <manowar@altlinux.org> 0.9.1-alt1
 - Switch to https://nheko.im/nheko-reborn/nheko.git.
 - Updated to v0.9.1.

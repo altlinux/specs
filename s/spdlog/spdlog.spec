@@ -1,5 +1,5 @@
 Name: spdlog
-Version: 1.9.2
+Version: 1.10.0
 Release: alt1
 
 Summary: Super fast C++ logging library
@@ -70,6 +70,9 @@ export LD_LIBRARY_PATH=$(pwd)/%_cmake__builddir
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jul 19 2022 Vladimir Didenko <cow@altlinux.ru> 1.10.0-alt1
+- 1.10.0 released
+
 * Mon Nov 08 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.9.2-alt1
 - 1.9.2 released
 
