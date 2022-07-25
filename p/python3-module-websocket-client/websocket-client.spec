@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 
 Summary: WebSocket client for Python with low level API options
@@ -14,6 +14,7 @@ Url: https://pypi.python.org/pypi/websocket-client
 
 # https://github.com/liris/websocket-client.git
 Source: %name-%version.tar
+Patch:  61171591b08ee031e02cc6cb129952259062f502.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -46,6 +47,7 @@ This package contains tests for %oname.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %python3_build
@@ -68,6 +70,9 @@ py.test-3 -v websocket/tests
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Jul 15 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.3-alt1
+- Automatically updated to 1.3.3.
+
 * Fri Jun 10 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.2-alt1
 - Automatically updated to 1.3.2.
 
