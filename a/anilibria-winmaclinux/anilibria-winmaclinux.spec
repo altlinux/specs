@@ -1,5 +1,5 @@
 Name: anilibria-winmaclinux
-Version: 1.1.9
+Version: 1.1.10
 Release: alt1
 
 Summary: AniLibria client for major desktop platforms
@@ -60,5 +60,8 @@ popd
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Mon Jul 25 2022 Evgeny Chuck <koi@altlinux.org> 1.1.10-alt1
+- new version (1.1.10) with rpmgs script
+
 * Sat Jun 18 2022 Evgeny Chuck <koi@altlinux.org> 1.1.9-alt1
 - initial build for ALT Linux Sisyphus
