@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist PPI
 Name: perl-%dist
-Version: 1.274
+Version: 1.276
 Release: alt1
 
 Summary: Parse, Analyze and Manipulate Perl (without perl)
@@ -39,6 +39,9 @@ it's also a reverse acronym for "I Parse Perl".
 %perl_vendor_privlib/PPI*
 
 %changelog
+* Mon Jul 25 2022 Igor Vlasenko <viy@altlinux.org> 1.276-alt1
+- automated CPAN update
+
 * Tue May 03 2022 Igor Vlasenko <viy@altlinux.org> 1.274-alt1
 - automated CPAN update
 
