@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist Memoize
 Name: perl-%dist
-Version: 1.03
+Version: 1.05
 Release: alt1
 
 Summary: Perl functions speedup by caching return values
@@ -8,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MJ/MJD/Memoize-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/A/AR/ARISTOTLE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -23,7 +24,7 @@ jumps in and gives you the value out of the table, instead of letting
 the function compute the value all over again.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -32,10 +33,13 @@ the function compute the value all over again.
 %perl_vendor_install
 
 %files
-%doc README
+%doc Changes TODO
 %perl_vendor_privlib/Memoize*
 
 %changelog
+* Mon Jul 25 2022 Igor Vlasenko <viy@altlinux.org> 1.05-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - automated CPAN update
 
