@@ -1,7 +1,7 @@
 %define module_name	virtualbox
-%define module_version	6.1.34
+%define module_version	6.1.36
 
-%define module_release	alt2
+%define module_release	alt1
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -118,6 +118,9 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Jul 25 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.36-alt1
+- Updated template for virtualbox 6.1.36
 
 * Fri Jun 17 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.34-alt2
 - Added patch for kernel 5.19

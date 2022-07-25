@@ -65,8 +65,8 @@
 
 
 Name: virtualbox
-Version: 6.1.34
-Release: alt3
+Version: 6.1.36
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -112,7 +112,6 @@ Source99:	%vboxdbg.in
 %endif
 
 Patch:		%name-%version-alt.patch
-Patch1:		vbox-linux-5.19.patch
 
 BuildPreReq: dev86 iasl gcc-c++ libstdc++-devel-static
 BuildPreReq: libIDL-devel libSDL-devel libpng-devel
@@ -380,7 +379,6 @@ This package contains VirtualBox SDK for XPCOM.
 %prep
 %setup -q -n %distarchive
 %patch -p1
-%patch1
 
 cp %SOURCE15 %SOURCE16 src/VBox/Frontends/VirtualBox/images
 
@@ -957,6 +955,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Mon Jul 25 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.36-alt1
+- Update to newest version 6.1.36
+
 * Thu Jun 16 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.34-alt3
 - Added patch for kernel 5.19
 
