@@ -1,8 +1,8 @@
-%define module_name tornado
+%define oname tornado
 
-Name: python3-module-%module_name
-Version: 6.1.0
-Release: alt2.1
+Name: python3-module-%oname
+Version: 6.2.0
+Release: alt1
 Summary: Scalable, non-blocking web server and tools
 
 License: Apache-2.0
@@ -38,7 +38,7 @@ sed -i.orig -e '/^#!\//, 1d' *py tornado/*.py tornado/*/*.py
 
 %install
 %python3_install
-pushd %buildroot%python3_sitelibdir/%module_name
+pushd %buildroot%python3_sitelibdir/%oname
 rm -rf ca-certificates.crt
 ln -sf /usr/share/ca-certificates/ca-bundle.crt ca-certificates.crt
 
@@ -50,10 +50,14 @@ export ASYNC_TEST_TIMEOUT=120
 %__python3 -m tornado.test.runtests --verbose
 
 %files
-%python3_sitelibdir/*
-%python3_sitelibdir/*.egg-*
+%doc *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-6.2-py%_python3_version.egg-info
 
 %changelog
+* Mon Jul 25 2022 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1
+- Automatically updated to 6.2.0.
+
 * Sat Feb 12 2022 Ivan A. Melnikov <iv@altlinux.org> 6.1.0-alt2.1
 - Increased test timeout (fixes build on riscv64)
 
