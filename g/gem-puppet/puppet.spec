@@ -3,7 +3,7 @@
 %define        confdir ext/redhat
 
 Name:          gem-puppet
-Version:       7.17.0.1
+Version:       7.18.0
 Release:       alt1
 Summary:       A network tool for managing many disparate systems
 License:       Apache-2.0
@@ -51,9 +51,9 @@ Requires:      gem(deep_merge) >= 1.0 gem(deep_merge) < 2
 Requires:      gem(scanf) >= 1.0 gem(scanf) < 2
 Requires:      gem(CFPropertyList) >= 2.2 gem(CFPropertyList) < 4
 Requires:      puppet = %EVR
-Provides:      gem(puppet) = 7.17.0.1
+Provides:      gem(puppet) = %EVR
 
-%ruby_use_gem_version puppet:7.17.0.1
+%ruby_use_gem_version puppet:%version
 
 %description
 Puppet lets you centrally manage every important aspect of your system using a
@@ -63,14 +63,12 @@ with obviously discrete elements like packages, services, and files.
 
 
 %package       -n puppet
-Version:       7.17.0.1
-Release:       alt1
 Summary:       A network tool for managing many disparate systems executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puppet
 Group:         System/Servers
 BuildArch:     noarch
 
-Requires:      gem(puppet) = 7.17.0.1
+Requires:      gem(puppet) = %EVR
 Requires:      shadow-change
 Requires(preun,post): %name = %EVR
 
@@ -87,14 +85,12 @@ with obviously discrete elements like packages, services, and files.
 
 
 %package       -n gem-puppet-doc
-Version:       7.17.0.1
-Release:       alt1
 Summary:       A network tool for managing many disparate systems documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puppet
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puppet) = 7.17.0.1
+Requires:      gem(puppet) = %EVR
 
 %description   -n gem-puppet-doc
 A network tool for managing many disparate systems documentation files.
@@ -109,14 +105,12 @@ with obviously discrete elements like packages, services, and files.
 
 
 %package       -n gem-puppet-devel
-Version:       7.17.0.1
-Release:       alt1
 Summary:       A network tool for managing many disparate systems development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puppet
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puppet) = 7.17.0.1
+Requires:      gem(puppet) = %EVR
 Requires:      gem(gettext-setup) >= 1.0.1 gem(gettext-setup) < 1.1
 Requires:      gem(CFPropertyList) >= 3.0 gem(CFPropertyList) < 4
 
@@ -267,6 +261,9 @@ sed -e "s,sample.server.name,$(hostname)," \
 
 
 %changelog
+* Sat Jul 23 2022 Andrey Cherepanov <cas@altlinux.org> 7.18.0-alt1
+- New version.
+
 * Tue May 31 2022 Pavel Skrylev <majioa@altlinux.org> 7.17.0.1-alt1
 - ^ 7.17.0 -> 7.17.0.1
 
