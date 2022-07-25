@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: libwebsockets
-Version: 4.2.2
+Version: 4.3.2
 Release: alt1
 
 Summary: A lightweight C library for Websockets
@@ -12,8 +14,6 @@ License: LGPLv2 and Public Domain and BSD and MIT and zlib
 Group: Development/C
 Url: http://libwebsockets.org
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 # Source-url: https://github.com/warmcat/libwebsockets/archive/v%version.tar.gz#/%name-%version.tar.gz
 Source: %name-%version.tar
 
@@ -22,6 +22,8 @@ BuildRequires: gcc-c++
 BuildRequires: libssl-devel
 BuildRequires: zlib-devel
 BuildRequires: libev-devel
+BuildRequires: libuv-devel
+BuildRequires: glib2-devel
 BuildRequires: libcap-devel
 
 # https://fedoraproject.org/wiki/Bundled_Libraries
@@ -56,7 +58,10 @@ This package contains the tests for %name applications.
 %build
 %cmake \
     -DLWS_LINK_TESTAPPS_DYNAMIC=ON \
-    -DLWS_USE_LIBEV=OFF \
+    -DLWS_WITH_EVLIB_PLUGINS=ON \
+    -DLWS_WITH_LIBUV=ON \
+    -DLWS_WITH_LIBEV=ON \
+    -DLWS_WITH_GLIB=ON \
     -DLWS_WITHOUT_BUILTIN_GETIFADDRS=ON \
     -DLWS_USE_BUNDLED_ZLIB=OFF \
     -DLWS_WITHOUT_BUILTIN_SHA1=ON \
@@ -77,6 +82,7 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %doc README.md changelog
 %doc LICENSE
 %_libdir/%name.so.*
+%_libdir/%name-evlib_*.so
 
 %files devel
 %doc READMEs/README.coding.md READMEs/ changelog
@@ -94,6 +100,9 @@ find %buildroot -name '*_static.pc' -exec rm -f {} ';'
 %_datadir/%name-test-server/
 
 %changelog
+* Mon Jun 27 2022 Dmitry Lyalyaev <fruktime@altlinux.org> 4.3.2-alt1
+- new version 4.3.2
+
 * Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 4.2.2-alt1
 - new version 4.2.2 (with rpmrb script)
 
