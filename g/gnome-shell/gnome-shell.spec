@@ -15,7 +15,7 @@
 
 Name: gnome-shell
 Version: %ver_major.3.1
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -48,6 +48,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define folks_ver 0.5.2
 %define gi_ver 1.49.1
 %define sn_ver 0.11
+%define gcr_api_ver 3
 %define gcr_ver 3.8
 %define atspi_ver 2.5.91
 %define menus_ver 3.5.3
@@ -86,7 +87,7 @@ Requires: typelib(AccountsService)
 Requires: typelib(Atk)
 Requires: typelib(Atspi)
 Requires: typelib(Clutter)
-Requires: typelib(Gcr)
+Requires: typelib(Gcr) = %gcr_api_ver
 Requires: typelib(GDesktopEnums)
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
@@ -285,6 +286,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Mon Jul 25 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3.1-alt1.1
+- explicitly required typelib(Gcr) = 3 (ALT #43332)
+
 * Mon Jul 04 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3.1-alt1
 - 42.3.1
 
