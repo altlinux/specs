@@ -1,12 +1,12 @@
-Name: 	  fasd
-Version:  1.0.1.0.7.git90b531a
-Release:  alt2
+Name:     fasd
+Version:  1.0.4
+Release:  alt1
 
 Summary:  Command-line productivity booster, offers quick access to files and directories
 
 License:  MIT
 Group:    Other
-Url: 	  https://github.com/clvv/fasd.git
+Url:      https://github.com/whjvenyl/fasd
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
@@ -39,6 +39,9 @@ in the command line.
 %_man1dir/*
 
 %changelog
+* Mon Jul 25 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.4-alt1
+- Automatically updated to 1.0.4.
+
 * Tue Oct 17 2017 Grigory Ustinov <grenka@altlinux.org> 1.0.1.0.7.git90b531a-alt2
 - Fix gnustep-gworkspace dependency.
 
