@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 42
 %define beta %nil
@@ -14,7 +14,7 @@
 
 Name: nautilus
 Version: %ver_major.2
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Nautilus is a network user environment
 License: GPL-3.0
@@ -29,7 +29,7 @@ Source: %name-%version.tar
 
 %define icon_theme_ver 2.10.0
 %define desktop_file_utils_ver 0.8
-%define glib_ver 2.67.1
+%define glib_ver 2.70
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
 %define gtk_ver 3.22.27
@@ -152,10 +152,6 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %check
 %meson_test
 
-%post
-# for mount secure NFS shares
-setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
-
 %files -f %name.lang
 %_bindir/*
 %dir %_libdir/%name
@@ -206,6 +202,10 @@ setcap 'cap_net_bind_service=+ep' %_bindir/%name 2>/dev/null ||:
 
 
 %changelog
+* Mon Jul 25 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt2
+- updated to 42.2-4-g51b454da4 (updated Russian translation)
+- do not set capability to /usr/bin/nautilus to fix ALT#35594
+
 * Fri May 27 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
 - 42.2
 
