@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.31
+Version: 1.4.32
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,21 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Jul 25 2022 Anton Midyukov <antohami@altlinux.org> 1.4.32-alt1
+- Add commits from zerg@ for kworkstation
+- arm-rpi4: use/arm-rpi4/kernel available for aarch64 only
+- regular-vm.mk: *-rpi targets available for aarch64 only
+- Drop aarch64-tegra feature
+- server (starterkit): drop php7, add php8.0, php8.1
+- alt-server: drop un-def kernel from jqt4@
+- alt-server, server-v: enable multipathd by default (from jqt4@, andy@)
+- workstation: Use grubpcboot on i586 and x86_64 from sem@
+- live.mk: update live-privacy.iso
+- distributivs: update lists for support wine 7.13.1-alt1
+- mixin-alt-server.mk: Add all kernel modules through MAIN_KMODULES
+  instead list
+- browser: replace seamonkey with firefox-esr for not x86 platforms
+
 * Mon Jul 11 2022 Anton Midyukov <antohami@altlinux.org> 1.4.31-alt1
 - arm-rpi4: add disabled option 'max_framebuffers=2' to config.txt
 - init: add startup to use/init
