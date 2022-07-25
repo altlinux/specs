@@ -5,7 +5,7 @@
 
 Name: fontconfig
 Version: 2.13.1
-Release: alt3
+Release: alt4
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -156,6 +156,9 @@ fi
 %docdir/%name-devel*
 
 %changelog
+* Mon Jul 25 2022 Sergey V Turchin <zerg@altlinux.org> 2.13.1-alt4
+- using grep instead of egrep for rpm filetrigger (closes: 43328)
+
 * Wed Feb 02 2022 Sergey V Turchin <zerg@altlinux.org> 2.13.1-alt3
 - register font.dtd in system xml catalog (closes: 41849)
 
