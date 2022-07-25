@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist WWW-Mechanize
 Name: perl-%dist
-Version: 2.10
+Version: 2.12
 Release: alt1
 
 Summary: Handy web browsing in a Perl object
@@ -9,7 +9,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SI/SIMBABQUE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -45,6 +45,9 @@ which can be queried and revisited.
 %doc	%perl_vendor_privlib/WWW/Mechanize/*.pod
 
 %changelog
+* Mon Jul 25 2022 Igor Vlasenko <viy@altlinux.org> 2.12-alt1
+- automated CPAN update
+
 * Wed Jul 06 2022 Igor Vlasenko <viy@altlinux.org> 2.10-alt1
 - automated CPAN update
 
