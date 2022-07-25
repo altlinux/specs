@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name HTTP-CookieJar
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(HTTP/Date.pm) perl(Test/Deep.pm) perl(Test/More.pm) perl(Test/Requires.pm) perl(Time/Local.pm) perl(URI.pm) perl(lib.pm) perl(parent.pm) perl(strict.pm) perl(warnings.pm)
@@ -5,11 +6,10 @@ BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl
 # optional recommended
 # BuildRequires: perl(Mozilla/PublicSuffix.pm)
 
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.012
+Version: 0.014
 Release: alt1
 Summary: A minimalist HTTP user agent cookie jar
 Group: Development/Perl
@@ -36,6 +36,9 @@ BuildArch: noarch
 %perl_vendor_privlib/H*
 
 %changelog
+* Mon Jul 25 2022 Igor Vlasenko <viy@altlinux.org> 0.014-alt1
+- automated CPAN update
+
 * Thu Jun 17 2021 Igor Vlasenko <viy@altlinux.org> 0.012-alt1
 - automated CPAN update
 
