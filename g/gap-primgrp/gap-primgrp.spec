@@ -1,14 +1,14 @@
 %define repo primgrp
 
 Name: gap-primgrp
-Version: 3.3.2
+Version: 3.4.2
 Release: alt1
 Summary: GAP: Primitive Permutation Groups Library
 License: GPL-2.0
 Group: Sciences/Mathematics
 Url: https://gap-packages.github.io/primgrp/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/primgrp-%version.tar.bz2
+Source: https://github.com/gap-packages/primgrp/releases/download/v%version/primgrp-%version.tar.gz
 
 BuildArch: noarch
 BuildRequires: rpm-macros-gap
@@ -35,5 +35,8 @@ perl -i -pe 's{#!%_bindir/env }{#!/bin/}' scripts/*
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Mon Jul 25 2022 Leontiy Volodin <lvol@altlinux.org> 3.4.2-alt1
+- New version (3.4.2).
+
 * Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 3.3.2-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).

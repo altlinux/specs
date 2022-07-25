@@ -1,14 +1,14 @@
 %define repo qpa
 
 Name: gap-qpa
-Version: 1.27
+Version: 1.33
 Release: alt1
 Summary: GAP: Quivers and Path Algebras
 License: GPL-2.0
 Group: Sciences/Mathematics
-Url: http://www.math.ntnu.no/~oyvinso/QPA/
+Url: https://folk.ntnu.no/oyvinso/QPA/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/qpa-version-%version.tar.bz2
+Source: https://github.com/gap-packages/%repo/archive/v%version/%repo-%version.tar.gz
 BuildPreReq: rpm-macros-gap
 BuildPreReq: xz
 
@@ -38,5 +38,8 @@ find "%buildroot" -type f "(" -name "*.g?" -o -name "*.xml" ")" \
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Mon Jul 25 2022 Leontiy Volodin <lvol@altlinux.org> 1.33-alt1
+- New version (1.33).
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 1.27-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
