@@ -1,5 +1,5 @@
 Name: tuxpaint-stamps
-Version: 2021.11.25
+Version: 2022.06.04
 Release: alt1
 
 Summary: This is a collection of 'rubber stamp' images for Tux Paint
@@ -31,7 +31,7 @@ Tux Paint - A simple drawing program for children.
 pushd po
     for f in *.po; do
         t=${f#%name-}
-        msgfmt -v -o "${t%.po}.mo" "$f"
+        msgfmt -v -o "${t%%.po}.mo" "$f"
     done
 popd
 
@@ -42,7 +42,7 @@ make install-all PREFIX=%buildroot%_prefix
 # Install locales by hand.
 pushd po
     for f in *.mo; do
-        install -pD -m644 "$f" "$RPM_BUILD_ROOT%_datadir/locale/${f%.mo}/LC_MESSAGES/%name.mo"
+        install -pD -m644 "$f" "%buildroot%_datadir/locale/${f%%.mo}/LC_MESSAGES/%name.mo"
     done
 popd
 
@@ -56,6 +56,9 @@ rm -rf %buildroot%_datadir/tuxpaint/stamps/vehicles/emergency/firetruck.ogg
 %_datadir/tuxpaint/stamps/*
 
 %changelog
+* Fri Jul 22 2022 Grigory Ustinov <grenka@altlinux.org> 2022.06.04-alt1
+- Build new version.
+
 * Mon Dec 27 2021 Grigory Ustinov <grenka@altlinux.org> 2021.11.25-alt1
 - Build new version.
 

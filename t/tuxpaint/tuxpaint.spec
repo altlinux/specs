@@ -1,5 +1,5 @@
 Name: tuxpaint
-Version: 0.9.27
+Version: 0.9.28
 Release: alt1
 
 Summary: A drawing program for young children
@@ -16,9 +16,8 @@ Source1: %name.desktop
 Patch0: desktop.patch
 Patch1: tuxpaint-0.23-e2k-fix_bad_elf_symbol.patch
 
-BuildRequires(pre): rpm-build-python
-BuildRequires: libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_gfx-devel
-BuildRequires: libSDL_pango-devel libSDL_ttf-devel ImageMagick-tools xdg-utils
+BuildRequires: libSDL2-devel libSDL2_image-devel libSDL2_mixer-devel libSDL2_gfx-devel
+BuildRequires: libSDL2_ttf-devel ImageMagick-tools xdg-utils
 BuildRequires: libpng-devel zlib-devel gettext librsvg-devel libpaper-devel libfribidi-devel
 BuildRequires: libimagequant-devel
 BuildPreReq: gperf
@@ -87,6 +86,10 @@ cp -aRf %SOURCE1 %buildroot%_datadir/applications/
 # Remove fonts (see ALT 25339)
 rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 
+# some chineese docs contains wrong shebang
+rm -fv %buildroot%_datadir/doc/%name-%version/outdated/zh_tw/mkTuxpaintIM.py
+rm -fv %buildroot%_datadir/%name/fonts/locale/zh_tw_docs/maketuxfont.py
+
 %files -f %name.lang
 # bin files
 %_bindir/tuxpaint*
@@ -114,6 +117,10 @@ rm -f /usr/share/tuxpaint/fonts/Free*.ttf
 %_man1dir/tp-magic-config*
 
 %changelog
+* Fri Jul 22 2022 Grigory Ustinov <grenka@altlinux.org> 0.9.28-alt1
+- Build new version.
+- Build with SDL2.
+
 * Mon Dec 27 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.27-alt1
 - Build new version.
 
