@@ -1,12 +1,15 @@
 %define oname fiona
 
-%def_disable check
+# check relies on a lot of network
+%def_without check
 
 Name: python3-module-%oname
-Version: 1.8.20
+Version: 1.8.21
 Release: alt1
+
 Summary: Fiona reads and writes spatial data files
-License: BSD
+
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/Fiona/
 
@@ -18,14 +21,17 @@ Patch: use_sphinx-apidoc-3.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: libgdal-devel gcc-c++
-BuildRequires: python3-module-Cython python3-module-pytest
+BuildRequires: python3-module-Cython
 BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-attrs
+BuildRequires: python3-module-click
+BuildRequires: python3-module-cligj
+BuildRequires: python3-module-munch
 
 Conflicts: fio
 Conflicts: python-module-fiona < %EVR
 Obsoletes: python-module-fiona < %EVR
 %py3_provides %oname
-%py3_requires logging json cligj six click click_plugins
 
 %description
 Fiona is OGR's neat, nimble, no-nonsense API for Python programmers.
@@ -82,26 +88,25 @@ ln -s ../objects.inv docs/
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
-
-%install
-%python3_install
+%python3_build
 
 python3 setup.py build_ext -i
 export PYTHONPATH=$PWD
 %make SPHINXBUILD="sphinx-build-3" -C docs pickle
 %make SPHINXBUILD="sphinx-build-3" -C docs html
 
+%install
+%python3_install
+
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-export LC_ALL=en_US.UTF-8
-python3 setup.py test
 
 %files
 %doc CHANGES.txt CREDITS.txt *.rst examples
-%_bindir/*
-%python3_sitelibdir/*
+%_bindir/fio
+%python3_sitelibdir/%oname
+%python3_sitelibdir/Fiona-%version-py%_python3_version.egg-info
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
@@ -111,6 +116,9 @@ python3 setup.py test
 %doc docs/_build/html docs/*.txt
 
 %changelog
+* Thu Mar 24 2022 Grigory Ustinov <grenka@altlinux.org> 1.8.21-alt1
+- Automatically updated to 1.8.21.
+
 * Sat Jun 05 2021 Grigory Ustinov <grenka@altlinux.org> 1.8.20-alt1
 - Automatically updated to 1.8.20.
 
