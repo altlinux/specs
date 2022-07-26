@@ -7,13 +7,15 @@
 
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
+%global commit      6724737f999df9ee0d8ca5c6d7b81f97adc34374
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %set_verify_elf_method unresolved=no
 %add_debuginfo_skiplist %_bindir
 %brp_strip_none %_bindir/*
 
 Name:           runc
-Version:        1.1.2
+Version:        1.1.3
 Release:        alt1
 Summary:        CLI for running Open Containers
 Group:          Development/Other
@@ -44,7 +46,7 @@ export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 
 %golang_prepare
-make COMMIT=%release BUILDTAGS="seccomp selinux" all
+make COMMIT=%shortcommit BUILDTAGS="seccomp selinux" all
 
 %install
 mkdir -p -- %buildroot%_bindir
@@ -73,6 +75,9 @@ EOF
 %_datadir/bash-completion/completions/%name
 
 %changelog
+* Tue Jul 26 2022 Vladimir Didenko <cow@altlinux.ru> 1.1.3-alt1
+- New version
+
 * Thu May 12 2022 Vladimir Didenko <cow@altlinux.ru> 1.1.2-alt1
 - New version (Fixes: CVE-2022-29162)
 
