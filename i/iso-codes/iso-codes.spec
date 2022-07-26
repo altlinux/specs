@@ -1,7 +1,7 @@
 %def_enable check
 
 Name: iso-codes
-Version: 4.10.0
+Version: 4.11.0
 Release: alt1
 
 Group: System/Internationalization
@@ -58,6 +58,9 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Tue Jul 26 2022 Yuri N. Sedunov <aris@altlinux.org> 4.11.0-alt1
+- 4.11.0
+
 * Wed Jun 01 2022 Yuri N. Sedunov <aris@altlinux.org> 4.10.0-alt1
 - 4.10.0
 
