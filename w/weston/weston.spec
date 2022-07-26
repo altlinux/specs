@@ -112,7 +112,7 @@
 %def_disable check
 
 Name: weston
-Version: %ver_major.0.1
+Version: %ver_major.0.2
 Release: alt1
 
 Summary: Reference compositor for Wayland
@@ -123,8 +123,6 @@ Url: http://wayland.freedesktop.org/
 Vcs: https://gitlab.freedesktop.org/wayland/weston.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-# https://gitlab.freedesktop.org/wayland/weston/-/issues/517
-Patch1: weston-9.0.0-alt-ivi-shell-test_LTO.patch
 Patch2: weston-9.0.0-alt-launch-group.patch
 
 Requires: lib%name = %EVR
@@ -212,7 +210,6 @@ Header files for doing development with the weston.
 %prep
 %setup
 %patch -p1
-%patch1 -p1 -b .ivi
 %{?_enable_deprecated_weston_launch:%patch2 -p1 -b .launch_group}
 
 %build
@@ -308,6 +305,9 @@ ln -sf %name/libexec_%{name}.so.0 \
 %_datadir/pkgconfig/lib%name-%api_ver-protocols.pc
 
 %changelog
+* Tue Jul 26 2022 Yuri N. Sedunov <aris@altlinux.org> 10.0.2-alt1
+- 10.0.2
+
 * Fri Jun 24 2022 Yuri N. Sedunov <aris@altlinux.org> 10.0.1-alt1
 - 10.0.1
 
