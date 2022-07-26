@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 6.2.7
+Version: 6.2.8
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -70,7 +70,7 @@ PipeWire filters.
 # system-wide config directory
 mkdir -p %buildroot%_sysconfdir/EasyEffects
 
-%find_lang --with-gnome %name
+%find_lang --with-gnome --output=%name.lang %name %name-news
 
 %files -f %name.lang
 %_bindir/%name
@@ -83,6 +83,9 @@ mkdir -p %buildroot%_sysconfdir/EasyEffects
 %doc README* CHANGELOG.*
 
 %changelog
+* Tue Jul 26 2022 Yuri N. Sedunov <aris@altlinux.org> 6.2.8-alt1
+- 6.2.8
+
 * Tue Jul 19 2022 Yuri N. Sedunov <aris@altlinux.org> 6.2.7-alt1
 - 6.2.7
 
