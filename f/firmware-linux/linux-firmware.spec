@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220718
+Version: 20220722
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,12 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Jul 26 2022 Cronbuild Service <cronbuild@altlinux.org> 20220722-alt1
+- upstream changes (GIT 150864a):
+  + amdgpu partially revert "amdgpu: update beige goby to release
+    22.20" (thx Alex Deucher)
+  + mediatek: Update mt8183/mt8192/mt8195 SCP firmware (thx Tinghan Shen)
+
 * Tue Jul 19 2022 Cronbuild Service <cronbuild@altlinux.org> 20220718-alt1
 - upstream changes (GIT 4421586):
   + amdgpu: update renoir to release 22.20 (thx Alex Deucher)
