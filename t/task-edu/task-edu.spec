@@ -1,5 +1,5 @@
 Name:    task-edu
-Version: 1.5.8
+Version: 1.5.9
 Release: alt1
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
@@ -359,7 +359,8 @@ Requires: kde5-khelpcenter
 %ifarch %ix86 x86_64 aarch64 ppc64le
 Requires: freecad
 %endif
-Requires: python3-module-pip
+Requires: python3-tools
+Requires: pip
 %description highschool
 %{summary}.
 
@@ -398,7 +399,7 @@ Requires: python3-tools
 Requires: python3-module-pygame
 Requires: python3-module-pygame-doc
 Requires: python3-modules-curses
-Requires: python3-module-pip
+Requires: pip
 %description secondary-vocational
 %{summary}.
 
@@ -446,7 +447,7 @@ Requires: python3-tools
 Requires: python3-module-pygame
 Requires: python3-module-pygame-doc
 Requires: python3-modules-curses
-Requires: python3-module-pip
+Requires: pip
 %description university
 %{summary}.
 
@@ -618,6 +619,10 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Jul 26 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt1
+- Used pip instead of python3-module-pip.
+- Added python3-tools to task-edu-highschool.
+
 * Sat May 28 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.8-alt1
 - Excluded chromium for i586.
 
