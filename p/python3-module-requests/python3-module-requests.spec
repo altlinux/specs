@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pkgname requests
 
-%def_disable check
+%def_with check
 
 Name:           python3-module-%pkgname
-Version:        2.27.1
+Version:        2.28.1
 Release:        alt1
 Summary:        HTTP library, written in Python, for human beings
 Group:          Development/Python3
@@ -15,25 +15,37 @@ Source0:        %pkgname-%version.tar
 # Explicitly use the system certificates in ca-certificates.
 # https://bugzilla.redhat.com/show_bug.cgi?id=904614
 Patch0:         patch-requests-certs.py-to-use-the-system-CA-bundle.patch
+Patch1: requests-2.28.1-tests-Skip-tests-requiring-configured-network.patch
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1450608
-Patch2:         Remove-tests-that-use-the-tarpit.patch
+# https://github.com/eventlet/eventlet/issues/616
+Patch2: requests-2.28.1-tests-Xfail-pysocks-tests-conflicting-with-eventle.patch
 
-# Use 127.0.0.1 not localhost for socket.bind() in the Server test
-# class, to fix tests in Koji's no-network environment
-# This probably isn't really upstreamable, because I guess localhost
-# could technically be IPv6 or something, and our no-network env is
-# a pretty odd one so this is a niche requirement.
-Patch3:         requests-2.12.4-tests_nonet.patch
+Patch3: requests-2.28.1-tests-Fix-mocking-of-environment.patch
 
 BuildArch:      noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-chardet
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-urllib3
-%{?_enable_check:BuildRequires: python3-module-httpbin}
-%py3_requires json
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%if_with check
+# direct dependencies
+BuildRequires: python3(charset_normalizer)
+BuildRequires: python3(idna)
+BuildRequires: python3(urllib3)
+
+# extra
+BuildRequires: python3(PySocks)
+BuildRequires: python3(chardet)
+
+BuildRequires: python3(trustme)
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest-mock)
+BuildRequires: python3(pytest-httpbin)
+%endif
+
 %py3_requires charset_normalizer
 
 %description
@@ -45,24 +57,29 @@ designed to make HTTP requests easy for developers.
 %prep
 %setup -n %pkgname-%version
 
-%patch0 -p1
-%patch2 -p1
-%patch3 -p1
+%autopatch -p1
 
 # Unbundle the certificate bundle from mozilla.
 rm -rf requests/cacert.pem
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
 %doc AUTHORS.rst HISTORY.md README.md
-%python3_sitelibdir/*
+%python3_sitelibdir/%pkgname/
+%python3_sitelibdir/%{pyproject_distinfo %pkgname}/
 
 %changelog
+* Mon Jul 25 2022 Stanislav Levin <slev@altlinux.org> 2.28.1-alt1
+- 2.28.1
+
 * Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.27.1-alt1
 - 2.27.1
 
