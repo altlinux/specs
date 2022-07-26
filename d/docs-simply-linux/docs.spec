@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Jul 26 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt4
+- fix some typos
+- update documentation
+
 * Tue Jun 28 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt3
 - fix typo (closes: #43091, #43092)
 
