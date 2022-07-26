@@ -1,5 +1,5 @@
 Name: parallel
-Version: 20220622
+Version: 20220722
 Release: alt1
 
 Summary: A shell tool for executing jobs in parallel
@@ -9,7 +9,6 @@ Group: File tools
 Url: http://www.gnu.org/software/parallel
 Source: http://ftp.gnu.org/gnu/parallel/%name-%version.tar.bz2
 Source100: parallel.watch
-Patch: parallel-20220622-alt-makefile.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Tue Apr 16 2013
@@ -49,7 +48,6 @@ Zsh completion for %name.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -76,6 +74,9 @@ ln -sf parallel %buildroot%_bindir/sem
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Tue Jul 26 2022 Michael Shigorin <mike@altlinux.org> 20220722-alt1
+- new version (watch file uupdate)
+
 * Sat Jun 25 2022 Michael Shigorin <mike@altlinux.org> 20220622-alt1
 - new version (watch file uupdate)
 - fixed completions installation
