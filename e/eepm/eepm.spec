@@ -2,7 +2,7 @@
 %define pkgsystem apt-rpm
 
 Name: eepm
-Version: 3.20.0
+Version: 3.21.3
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -150,6 +150,31 @@ rm -v %buildroot%_bindir/yum
 %endif
 
 %changelog
+* Tue Jul 26 2022 Vitaly Lipatov <lav@altlinux.ru> 3.21.3-alt1
+- epm-check: add support for --auto and --verbose
+- epm-install: revert to old .deb install way
+
+* Tue Jul 26 2022 Vitaly Lipatov <lav@altlinux.ru> 3.21.2-alt1
+- distr_info: fix for RHEL
+- distr_info: stop detect snappy
+- epm-install: always use apt-get for install .deb file packages
+- epm print: fix print name/version/release by string
+
+* Tue Jul 26 2022 Vitaly Lipatov <lav@altlinux.ru> 3.21.1-alt1
+- epm play wine: remove wine-gl and wine-twain packages
+- epm-install: apt need ./ path for install deb packages
+- epm play yandex-browser: add fallback for yandex-browser source URL
+
+* Mon Jul 25 2022 Vitaly Lipatov <lav@altlinux.ru> 3.21.0-alt1
+- epm-update: cd / before apt-get update
+- distr_info: improve override support
+- epm-print: fix arg for distr_info
+- epm-check: add check_updated_repo before fix
+- epm-install: use apt-get install as fallback when install files with dpkg
+- epm repack: fix repack/install rpm on a deb system
+- epm-query-file: fix --short for apt
+- epm-sh-functions: disable eatmydata using
+
 * Tue Jul 19 2022 Vitaly Lipatov <lav@altlinux.ru> 3.20.0-alt1
 - epm play: skip update for hidden packages
 - epm play.d: add rudesktop support
