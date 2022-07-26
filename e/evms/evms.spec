@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt57
+Release: alt58
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Tue Jul 26 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt58
+- btrfs: rework subvolume task for auto-partitioning
+
 * Thu Jul 21 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt57
 - btrfs: trim slashes from subvol path
 

@@ -1,5 +1,5 @@
 Name: alterator-vm
-Version: 0.4.28
+Version: 0.4.29
 Release: alt1
 
 Summary: Alterator module for volume management
@@ -38,6 +38,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Tue Jul 26 2022 Oleg Solovyov <mcpain@altlinux.org> 0.4.29-alt1
+- New feature: autopartitioning with subvolumes
+
 * Thu Jul 21 2022 Oleg Solovyov <mcpain@altlinux.org> 0.4.28-alt1
 - Allow subvolume creating on LUKS'ed volumes
 
