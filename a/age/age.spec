@@ -4,7 +4,7 @@
 
 Name: age
 Version: 1.0.0
-Release: alt2
+Release: alt3
 
 Summary: simple, modern and secure file encryption tool
 License: BSD-3-Clause
@@ -12,7 +12,6 @@ Group: Text tools
 Url: https://github.com/FiloSottile/age
 
 Source: %name-%version.tar
-Patch0: go_mod_vendor.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -23,7 +22,6 @@ explicit keys, no config options, and UNIX-style composability.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 export GO111MODULE=off
@@ -51,6 +49,9 @@ install -pD -m0644 doc/age-keygen.1 %buildroot%_man1dir/age-keygen.1
 %_man1dir/*
 
 %changelog
+* Tue Jul 26 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt3
+- add go vendor modules into source tree instead of using patch
+
 * Sun Jul 24 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt2
 - switch to traditional golang building instructions
 
