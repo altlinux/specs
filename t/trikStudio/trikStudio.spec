@@ -8,7 +8,7 @@
 
 Name: trikStudio
 Version: 2022.1
-Release: alt3
+Release: alt3.1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
@@ -86,6 +86,10 @@ Trik runtime development files for %name
 %prep
 %setup
 %patch -p1
+%ifarch %e2k
+# workaround of SIGILL in ecf_opt64 from LCC 1.25.23
+sed -i "s/QOverload<QObject\*>::of/(void(*)(QObject*))/" qrkernel/settingsListener.h
+%endif
 sed -e '2 a export LD_LIBRARY_PATH=%_libdir\/%name\/' -i installer/platform/trikStudio.sh
 sed -e 's|^trik-studio|%_libdir/%name/trik-studio|' -i installer/platform/trikStudio.sh
 
@@ -200,6 +204,9 @@ popd
 %endif
 
 %changelog
+* Mon Jul 25 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2022.1-alt3.1
+- Fixed build for Elbrus
+
 * Fri Jun 17 2022 Valery Sinelnikov <greh@altlinux.org> 2022.1-alt3
 - Fixed building with gcc-12
 
