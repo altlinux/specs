@@ -2,7 +2,7 @@
 %def_without python2
 
 Name: gwyddion
-Version: 2.60
+Version: 2.61
 Release: alt1
 
 Summary: An SPM data visualization and analysis tool
@@ -256,6 +256,9 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %endif
 
 %changelog
+* Wed Jul 27 2022 Alexei Mezin <alexvm@altlinux.org> 2.61-alt1
+- new version
+
 * Sat Nov 20 2021 Alexei Mezin <alexvm@altlinux.org> 2.60-alt1
 - new version
 
