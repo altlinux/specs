@@ -1,6 +1,6 @@
 Name: volumes-profile-kdesktop
-Version: 0.9.0
-Release: alt2
+Version: 0.10.0
+Release: alt1
 
 Summary: Volumes description for Desktop KDE distribution
 License: GPL
@@ -29,6 +29,9 @@ install -pm755 10-*.sh %buildroot%hook1dir/
 #%hook2dir/*
 
 %changelog
+* Tue Jul 26 2022 Oleg Solovyov <mcpain@altlinux.org> 0.10.0-alt1
+- add timeshift BtrFS profile
+
 * Tue Nov 05 2019 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt2
 - fix space requirement
 
