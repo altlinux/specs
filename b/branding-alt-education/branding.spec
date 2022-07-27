@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt1
+Release: alt2
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -482,6 +482,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Jul 27 2022 Andrey Cherepanov <cas@altlinux.org> 10.1-alt2
+- xfce-settings: Add search action to thunar menu (thanks sem@).
+
 * Thu Apr 07 2022 Andrey Cherepanov <cas@altlinux.org> 10.1-alt1
 - Remove overrided Veyon menu items because they are now localized.
 - Remove unsupported Facebook group.
