@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        102.0
+Version:        103.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -35,11 +35,6 @@ Patch009: 0009-bmo-1559213-Support-system-av1.patch
 Patch010: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch011: 0011-ALT-fix-double_t-redefinition.patch
 Patch012: 0012-build-Disable-Werror.patch
-Patch013: 0013-Prevent-discrimination-of-Russian-services.patch
-Patch014: 0014-Bug-1735929-Linux-Add-support-of-EGL_MESA_image_dma_.patch
-Patch015: 0015-Bug-1735929-Linux-Import-DMABufSurfaceRGBA-from-exis.patch
-Patch016: 0016-Bug-1735929-Linux-Use-EGL_MESA_image_dma_buf_export-.patch
-Patch017: 0017-Bug-1773968-Linux-Release-EGLImages-in-DMABufSurface.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -449,6 +444,18 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Jul 26 2022 Alexey Gladkov <legion@altlinux.ru> 103.0-alt1
+- New release (103.0).
+- Security fixes:
+  + CVE-2022-36319: Mouse Position spoofing with CSS transforms
+  + CVE-2022-36317: Long URL would hang Firefox for Android
+  + CVE-2022-36318: Directory indexes for bundled resources reflected URL parameters
+  + CVE-2022-36314: Opening local <code>.lnk</code> files could cause unexpected network loads
+  + CVE-2022-36315: Preload Cache Bypasses Subresource Integrity
+  + CVE-2022-36316: Performance API leaked whether a cross-site resource is redirecting
+  + CVE-2022-36320: Memory safety bugs fixed in Firefox 103
+  + CVE-2022-2505: Memory safety bugs fixed in Firefox 103 and 102.1
+
 * Wed Jun 29 2022 Alexey Gladkov <legion@altlinux.ru> 102.0-alt1
 - New release (102.0).
 - Use internal libevent.
