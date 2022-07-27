@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-cov
+%define pypi_name pytest-cov
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 3.0.0
-Release: alt2
+Release: alt3
 
 Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
 License: MIT
@@ -18,15 +18,16 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 BuildRequires: /dev/shm
 BuildRequires: python3(coverage)
 BuildRequires: python3(fields)
 BuildRequires: python3(process_tests)
 BuildRequires: python3(pytest-xdist)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -47,25 +48,26 @@ grep -qsF 'time.sleep(1)' tests/test_pytest_cov.py || exit 1
 sed -i 's/time\.sleep(1)/time.sleep(5)/g' tests/test_pytest_cov.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
 export PYTHONPATH_PY3=%_libdir/python3/site-packages
 export TOX_TESTENV_PASSENV='PYTHONPATH_PY3'
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%tox_check_pyproject
 
 %files
 %doc README.rst CHANGELOG.rst
 %python3_sitelibdir/pytest-cov.pth
 %python3_sitelibdir/pytest_cov/
-%python3_sitelibdir/pytest_cov-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jul 26 2022 Stanislav Levin <slev@altlinux.org> 3.0.0-alt3
+- Fixed FTBFS (coverage 6.3.3).
+
 * Wed Mar 02 2022 Stanislav Levin <slev@altlinux.org> 3.0.0-alt2
 - Fixed FTBFS (pytest-xdist 2.5.0).
 
