@@ -5,7 +5,7 @@
 %def_without check
 
 Name: ravada
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
@@ -182,6 +182,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Wed Jul 27 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.7.2-alt1
+- 1.7.2
+
 * Fri Jul 22 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.7.1-alt1
 - 1.7.1
 
