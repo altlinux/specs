@@ -18,6 +18,7 @@
 %def_with python3
 %def_with system_boost
 %def_with system_rocksdb
+%def_without system_fmt
 %def_without mgr_dashboard
 %def_with blustore
 %def_with liburing
@@ -50,7 +51,7 @@
 %global optflags_lto %nil
 
 Name: ceph
-Version: 16.2.9
+Version: 16.2.10
 Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -124,7 +125,7 @@ BuildRequires: libuuid-devel
 BuildRequires: libncurses-devel
 BuildRequires: libicu-devel
 BuildRequires: liboath-devel
-BuildRequires: libfmt-devel >= 5.2.1
+%{?_with_system_fmt:BuildRequires: libfmt-devel >= 5.2.1}
 BuildRequires: jq gperf
 %{?_with_tcmalloc:BuildRequires: libgperftools-devel >= 2.7.90}
 %{?_with_lttng:BuildRequires: liblttng-ust-devel libbabeltrace-devel}
@@ -790,7 +791,9 @@ tar -xf %SOURCE26 -C src/xxHash
 tar -xf %SOURCE28 -C src/c-ares
 tar -xf %SOURCE29 -C src/dmclock
 tar -xf %SOURCE30 -C src/seastar
+%if_without system_fmt
 tar -xf %SOURCE31 -C src/fmt
+%endif
 tar -xf %SOURCE32 -C src/spawn
 tar -xf %SOURCE33 -C src/pybind/mgr/rook/rook-client-python
 tar -xf %SOURCE34 -C src/s3select
@@ -1758,6 +1761,10 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Tue Jul 26 2022 Alexey Shabalin <shaba@altlinux.org> 16.2.10-alt2
+- 16.2.10.
+- build with bundled fmtlib.
+
 * Sun Jul 03 2022 Alexey Shabalin <shaba@altlinux.org> 16.2.9-alt2
 - set version without prefix "v".
 
