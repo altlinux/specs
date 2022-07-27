@@ -1,5 +1,5 @@
 Name: wvkbd
-Version: 0.8.2
+Version: 0.9
 Release: alt1
 
 Summary: On-screen keyboard for wlroots
@@ -34,6 +34,9 @@ install -pm0644 -D wvkbd.1 %buildroot%_man1dir/wvkbd.1
 %_man1dir/wvkbd.1*
 
 %changelog
+* Wed Jul 27 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9-alt1
+- 0.9 released
+
 * Mon Jun 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.2-alt1
 - 0.8.2 released
 
