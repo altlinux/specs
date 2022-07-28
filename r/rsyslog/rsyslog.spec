@@ -25,7 +25,7 @@
 %def_enable impcap
 
 Name: rsyslog
-Version: 8.2204.1
+Version: 8.2206.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -679,6 +679,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Thu Jul 28 2022 Alexey Shabalin <shaba@altlinux.org> 8.2206.0-alt1
+- new version 8.2206.0
+
 * Mon Jun 06 2022 Alexey Shabalin <shaba@altlinux.org> 8.2204.1-alt1
 - 8.2204.1 (Fixes: CVE-2022-24903)
 
