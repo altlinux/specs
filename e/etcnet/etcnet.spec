@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.25
+Version:	0.9.26
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -146,6 +146,9 @@ fi
 %files full
 
 %changelog
+* Thu Jul 28 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.26-alt1
+- vlan: set default reorder_hdr=on (Closes: #43330).
+
 * Sat Apr 30 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.25-alt1
 - Replaced "egrep" with "grep -E", "fgrep" with "grep -F".
 
