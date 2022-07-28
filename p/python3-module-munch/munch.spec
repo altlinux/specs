@@ -1,18 +1,28 @@
-%global modname munch
+%define oname munch
+
+%def_with check
 
 Name:               python3-module-munch
-Version:            2.1.1
-Release:            alt2
+Version:            2.5.0
+Release:            alt1
+
 Summary:            A dot-accessible dictionary (a la JavaScript objects)
 
 Group:              Development/Python3
 License:            MIT
 URL:                https://pypi.io/project/munch
-Source0:            %modname-%version.tar
+
+Source:             %name-%version.tar
 
 BuildArch:          noarch
 
 BuildRequires:      rpm-build-python3
+BuildRequires:      python3-module-pbr
+
+%if_with check
+BuildRequires:      python3-module-pytest
+BuildRequires:      python3-module-six
+%endif
 
 %description
 munch is a fork of David Schoonover's **Bunch** package, providing similar
@@ -24,26 +34,28 @@ Munch is a dictionary that supports attribute-style access, a la
 JavaScript.
 
 %prep
-%setup -n %modname-%version
-
-# Remove shebang to make rpmlint happy.
-sed -i '/\/usr\/bin\/python/d' munch/__init__.py
-
-# Remove bundled egg-info in case it exists
-rm -rf %modname.egg-info
+%setup
 
 %build
+export PBR_VERSION=%version
 %python3_build
 
 %install
+export PBR_VERSION=%version
 %python3_install
+
+%check
+py.test-3 -v
 
 %files
 %doc README.md LICENSE.txt
-%python3_sitelibdir/%modname/
-%python3_sitelibdir/%modname-%{version}*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Jul 28 2022 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
+- Build new version.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt2
 - Drop python2 support.
 
