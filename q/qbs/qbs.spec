@@ -1,7 +1,7 @@
 %define so_version 1
 
 Name: qbs
-Version: 1.21.0
+Version: 1.23.0
 Release: alt1
 
 Summary: Qt Build Suite
@@ -76,6 +76,8 @@ export LD_LIBRARY_PATH=`pwd`/lib
 	QBS_LIB_INSTALL_DIR=%_libdir \
 	QBS_LIBEXEC_INSTALL_DIR=%_libexecdir/%name \
 	QBS_PLUGINS_INSTALL_DIR=%_libdir \
+	QBS_RELATIVE_LIBEXEC_PATH=../lib/%name \
+	QBS_LIBEXEC_DESTDIR=../../../lib/%name \
 	CONFIG+=disable_rpath \
 	CONFIG+=nostrip \
 	QMAKE_LFLAGS="-Wl,--as-needed"
@@ -116,6 +118,9 @@ export LD_LIBRARY_PATH=`pwd`/lib
 %_datadir/%name/examples
 
 %changelog
+* Thu Jul 28 2022 Nazarov Denis <nenderus@altlinux.org> 1.23.0-alt1
+- Version 1.23.0
+
 * Wed Jan 12 2022 Nazarov Denis <nenderus@altlinux.org> 1.21.0-alt1
 - Version 1.21.0
 
