@@ -1,6 +1,6 @@
 Name: alterator-vm
 Version: 0.4.29
-Release: alt2
+Release: alt3
 
 Summary: Alterator module for volume management
 License: GPL
@@ -38,6 +38,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Thu Jul 28 2022 Oleg Solovyov <mcpain@altlinux.org> 0.4.29-alt3
+- fix regression of subvol autocreation
+
 * Wed Jul 27 2022 Oleg Solovyov <mcpain@altlinux.org> 0.4.29-alt2
 - fix crash if volume is not created (e.g. not enough space)
 
