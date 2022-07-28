@@ -1,7 +1,7 @@
 %define  oname mando
 
 Name:    python3-module-%oname
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Python wrapper around argparse, a tool to create CLI apps
@@ -13,18 +13,17 @@ URL:     https://pypi.org/project/mando
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
 
 BuildArch: noarch
 
-Source:  %oname-%version.tar
+Source:  %name-%version.tar
 
 %description
 Mando is a wrapper around argparse, and allows writing CLI
 applications.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
@@ -34,10 +33,13 @@ applications.
 
 %files
 %doc README.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-info/
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Jul 28 2022 Grigory Ustinov <grenka@altlinux.org> 0.7.1-alt1
+- Build new version.
+
 * Fri Jul 31 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1
 - Build new version.
 - Drop python2 support.
