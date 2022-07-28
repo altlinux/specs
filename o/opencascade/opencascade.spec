@@ -1,5 +1,5 @@
 Name: opencascade
-Version: 7.6.2
+Version: 7.6.3
 Release: alt1
 Summary: SDK intended for development of applications dealing with 3D CAD data
 License: LGPL-2.1-only-with-OCCT-exception-1.0
@@ -131,6 +131,9 @@ rm -f /usr/share/doc/opencascade/*
 %_datadir/doc/%name
 
 %changelog
+* Thu Jul 28 2022 Andrey Cherepanov <cas@altlinux.org> 7.6.3-alt1
+- New version.
+
 * Sun May 01 2022 Andrey Cherepanov <cas@altlinux.org> 7.6.2-alt1
 - New version (ALT #42460).
 
