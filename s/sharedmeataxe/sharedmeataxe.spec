@@ -1,7 +1,7 @@
 %define soname 0
 
 Name: sharedmeataxe
-Version: 1.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Matrix representations over finite fields
@@ -11,7 +11,7 @@ Group: Sciences/Mathematics
 Url: https://users.fmi.uni-jena.de/~king/SharedMeatAxe/
 # Watch https://github.com/simon-king-jena/SharedMeatAxe
 
-Source: http://users.minet.uni-jena.de/~king/SharedMeatAxe/shared_meataxe-%version.tar.gz
+Source: https://github.com/simon-king-jena/SharedMeatAxe/archive/v%version/SharedMeatAxe-%version.tar.gz
 
 # BuildPreReq: help2man
 BuildRequires: gcc doxygen texlive-dist
@@ -62,15 +62,16 @@ BuildArch: noarch
 API documentation for %name.
 
 %prep
-%setup -n shared_meataxe-%version
+%setup -n SharedMeatAxe-%version
 
 %build
+%autoreconf
 %configure --disable-silent-rules
 
 # Get rid of undesirable hardcoded rpaths.
-sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
-    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-    -i libtool
+# sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
+#     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
+#     -i libtool
 
 # Build the library and programs
 %make_build
@@ -106,6 +107,9 @@ LD_LIBRARY_PATH=$PWD/src/.libs make check
 %doc html
 
 %changelog
+* Thu Jul 28 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.1-alt1
+- New version (1.0.1).
+
 * Mon Nov 22 2021 Leontiy Volodin <lvol@altlinux.org> 1.0-alt1
 - Initial build for ALT Sisyphus (thanks fedora and archlinux for the spec).
 - Built as require for sagemath.
