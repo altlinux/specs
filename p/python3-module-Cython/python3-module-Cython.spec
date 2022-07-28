@@ -1,8 +1,13 @@
-%define modname Cython
+%define pypi_name Cython
 %def_disable debugger
+%ifarch armh
+%def_disable check
+%else
+%def_enable check
+%endif
 
-Name: python3-module-%modname
-Version: 0.29.30
+Name: python3-module-%pypi_name
+Version: 0.29.31
 Release: alt1
 
 Summary: C-extensions for Python 3
@@ -11,13 +16,17 @@ License: Apache-2.0
 Url: http://www.cython.org
 
 Vcs: https://github.com/cython/cython.git
-#Source: https://pypi.io/packages/source/C/%modname/%modname-%version.tar.gz
-Source: https://github.com/cython/cython/archive/%version/%modname-%version.tar.gz
+#Source: https://pypi.io/packages/source/C/%pypi_name/%pypi_name-%version.tar.gz
+Source: https://github.com/cython/cython/archive/%version/%pypi_name-%version.tar.gz
 
 %add_python3_req_skip IPython IPython.core IPython.core.magic IPython.utils IPython.utils.text
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+%{?_enable_check:BuildRequires: python3-module-tox
+BuildRequires: gcc-c++ libgomp-devel
+BuildRequires: python3-module-coverage python3-module-pycodestyle
+BuildRequires: python3-module-numpy libnumpy-py3-devel}
 
 %description
 Cython is a language that makes writing C extensions for the Python 3
@@ -80,39 +89,47 @@ This package provides modules for debugging Cython programms.
 %setup -n cython-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 for f in cy{thon{,ize},gdb}; do
 ln -s $f %buildroot/%_bindir/"$f"3;
 done
+
+%check
+%tox_check
 
 %files
 %_bindir/cython
 %_bindir/cythonize
 %_bindir/cython3
 %_bindir/cythonize3
-%python3_sitelibdir/%modname/
+%python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/pyximport/
 %python3_sitelibdir/cython.py
 %python3_sitelibdir/__pycache__/cython.*
-%python3_sitelibdir/*egg-info
+%python3_sitelibdir/*.dist-info
+%doc CHANGES* README* USAGE*
 
-%exclude %python3_sitelibdir/%modname/Tests
-%exclude %python3_sitelibdir/%modname/Debugger
+%exclude %python3_sitelibdir/%pypi_name/Tests
+%exclude %python3_sitelibdir/%pypi_name/Debugger
 
 %files tests
-%python3_sitelibdir/%modname/Tests
+%python3_sitelibdir/%pypi_name/Tests
 
 %if_enabled debugger
 %files debugger
-%python3_sitelibdir/%modname/Debugger
+%python3_sitelibdir/%pypi_name/Debugger
 %_bindir/cygdb
 %_bindir/cygdb3
 %endif
 
 %changelog
+* Wed Jul 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.29.31-alt1
+- 0.29.31
+- ported to %%pyproject macros, enabled %%check
+
 * Tue May 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.29.30-alt1
 - 0.29.30
 
