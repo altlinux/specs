@@ -1,6 +1,6 @@
 Name:		system-backup
 Version:	0.1.1
-Release:	alt2
+Release:	alt3
 
 Summary:	Script for local system backup
 License:	GPL-3
@@ -11,6 +11,8 @@ Source:		%name-%version.tar
 BuildArch:	noarch
 
 Packager:	Leonid Krivoshein <klark@altlinux.org>
+
+Requires: pv
 
 %description
 Script for creation full backup of the installed ALT Linux.
@@ -27,6 +29,9 @@ install -pm755 %name %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Thu Jul 28 2022 Anton Midyukov <antohami@altlinux.org> 0.1.1-alt3
+- Requires: pv
+
 * Fri Jun 21 2019 Leonid Krivoshein <klark@altlinux.org> 0.1.1-alt2
 - Exclude backup storage directory for all backups.
 - Change primary digest algo: MD5->SHA256.
