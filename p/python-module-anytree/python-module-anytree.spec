@@ -1,10 +1,10 @@
 %define modname anytree
-%def_disable python2
+%def_enable python2
 %def_disable check
 
 Name: python-module-%modname
 Version: 2.8.0
-Release: alt1.1
+Release: alt2
 
 Summary: Python Tree Data Structure Library
 Group: Development/Python
@@ -80,6 +80,9 @@ popd
 %doc README.rst LICENSE
 
 %changelog
+* Thu Jul 28 2022 Leontiy Volodin <lvol@altlinux.org> 2.8.0-alt2
+- Returned python2 build for mlnx-tools (ALT #41412, #43337).
+
 * Tue Nov 23 2021 Leontiy Volodin <lvol@altlinux.org> 2.8.0-alt1.1
 - Returned into Sisyphus as require for mlnx-tools.
 

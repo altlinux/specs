@@ -1,8 +1,10 @@
 %filter_from_requires /\/etc\/rc.d\/init.d\/openvswitch/d
+%filter_from_requires /\/bin\/systemctl/d
+%filter_from_requires /\/usr\/bin\/systemctl/d
 
 Name: mlnx-tools
 Version: 5.1.3
-Release: alt2
+Release: alt3
 
 Summary: Mellanox userland tools and scripts
 
@@ -10,25 +12,23 @@ License: GPL-2.0
 Group: System/Kernel and hardware
 Url: https://github.com/Mellanox/mlnx-tools
 
-Vendor: Mellanox Technologies
-
 Source: https://github.com/Mellanox/mlnx-tools/releases/download/v%version/%name-%version.tar.gz
 Patch: mlnx-tools-5.1.3-alt-disable-conf-detection.patch
 Patch1: mlnx-tools-5.1.3-alt-syntax.patch
 
-BuildRequires: perl-devel python3-devel
+BuildRequires: perl-devel python-dev
 BuildRequires: openvswitch /usr/bin/systemctl startup
-Requires: openvswitch python3-module-termcolor python3-module-anytree mstflint
+Requires: openvswitch python-module-termcolor python-module-anytree mstflint
 
 %description
 Mellanox userland tools and scripts
 
-%package -n python3-module-mlnx
-Summary: Python3 bindings for %name
-Group: Development/Python3
+%package -n python-module-mlnx
+Summary: Python bindings for %name
+Group: Development/Python
 
-%description -n python3-module-mlnx
-The package provides python3 bindings for %name.
+%description -n python-module-mlnx
+The package provides python bindings for %name.
 
 %prep
 %setup -n %name-%version
@@ -39,9 +39,9 @@ sed -i 's|/etc/init.d/openvswitch-switch|/etc/init.d/openvswitch|' \
     ofed_scripts/mlnx-post-hlk \
     ofed_scripts/mlnx-pre-hlk
 # fix python shebangs
-sed -i 's|/usr/bin/env python|%__python3|' $(find ./ -name '*.py')
-sed -i 's|/usr/bin/python|%__python3|' $(find ./ -name '*.py')
-sed -i 's|/usr/lib/python2.7|%python3_libdir|' $(find ./ -name '*.py')
+sed -i 's|/usr/bin/env python|%__python|' $(find ./ -name '*.py')
+sed -i 's|/usr/bin/python|%__python|' $(find ./ -name '*.py')
+sed -i 's|/usr/lib/python2.7|%python_libdir|' $(find ./ -name '*.py')
 
 %install
 add_env()
@@ -59,11 +59,11 @@ EOF
 }
 
 cd ofed_scripts/utils
-mlnx_python_sitelib=%python3_sitelibdir
+mlnx_python_sitelib=%python_sitelibdir
 if [ "$(echo %prefix | sed -e 's@/@@g')" != "usr" ]; then
-	mlnx_python_sitelib=$(echo %python3_sitelibdir | sed -e 's@/usr@%prefix@')
+	mlnx_python_sitelib=$(echo %python_sitelibdir | sed -e 's@/usr@%prefix@')
 fi
-%__python3 setup.py install -O1 --prefix=%buildroot%prefix --install-lib=%buildroot${mlnx_python_sitelib}
+%__python setup.py install -O1 --prefix=%buildroot%prefix --install-lib=%buildroot${mlnx_python_sitelib}
 cd -
 
 install -d %buildroot/sbin
@@ -101,7 +101,7 @@ if [ "$(echo %prefix | sed -e 's@/@@g')" != "usr" ]; then
 	add_env %buildroot$conf_env PATH %_sbindir
 fi
 
-chmod +x %buildroot%python3_sitelibdir/dcbnetlink.py
+chmod +x %buildroot%python_sitelibdir/dcbnetlink.py
 
 # %%preun
 # %%_bindir/systemctl disable mlnx-bf-ctl.service >/dev/null 2>&1 || :
@@ -123,10 +123,13 @@ chmod +x %buildroot%python3_sitelibdir/dcbnetlink.py
 %_sysconfdir/systemd/system/mlnx-bf-ctl.service
 %_sysconfdir/modprobe.d/mlnx-bf.conf
 
-%files -n python3-module-mlnx
-%python3_sitelibdir/*
+%files -n python-module-mlnx
+%python_sitelibdir/*
 
 %changelog
+* Thu Jul 28 2022 Leontiy Volodin <lvol@altlinux.org> 5.1.3-alt3
+- Built with python2 (ALT #43337).
+
 * Mon Nov 22 2021 Leontiy Volodin <lvol@altlinux.org> 5.1.3-alt2
 - Added requires (ALT #41412).
 - Fixed syntax errors in mlx_fs_dump (ALT #41411).
