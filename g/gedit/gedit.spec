@@ -13,7 +13,7 @@
 %def_enable gtk_doc
 
 Name: gedit
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -217,6 +217,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Thu Jul 28 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
+- 42.2
+
 * Fri May 27 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 
