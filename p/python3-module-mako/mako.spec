@@ -4,8 +4,9 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 1.1.5
+Version: 1.2.1
 Release: alt1
+
 Summary: template library written in Python
 
 Group: Development/Python3
@@ -25,7 +26,6 @@ Obsoletes: python-module-mako < %EVR
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
 
 %if_with check
 # install_requires:
@@ -62,17 +62,18 @@ and scoping semantics.
 %python3_prune
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps --console-scripts -s false -vvr
+py.test-3 -v
 
 %files
 %doc CHANGES LICENSE README*
 %_bindir/mako-render
 %python3_sitelibdir/mako/
-%python3_sitelibdir/Mako-%version-*.egg-info
+%python3_sitelibdir/Mako-%{version}*.egg-info
 
 %changelog
+* Thu Jul 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
+- Automatically updated to 1.2.1.
+
 * Mon Oct 11 2021 Stanislav Levin <slev@altlinux.org> 1.1.5-alt1
 - 1.1.4 -> 1.1.5.
 
