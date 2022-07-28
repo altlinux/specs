@@ -1,5 +1,5 @@
 Name: blackmagic
-Version: 1.8.0
+Version: 1.8.2
 Release: alt1
 
 Summary: In-application debugging tool for embedded microprocessors
@@ -42,6 +42,9 @@ install -pm0644 -D driver/99-blackmagic.rules %buildroot%_udevrulesdir/60-blackm
 %_bindir/swolisten
 
 %changelog
+* Thu Jul 28 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.2-alt1
+- 1.8.2 released
+
 * Thu Jun 02 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.0-alt1
 - 1.8.0 released
 
