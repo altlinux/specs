@@ -1,6 +1,6 @@
 Name: crcutil
 Version: 1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Fast CRC library
 License: Apache-2.0
@@ -36,6 +36,9 @@ Development files for %name.
 
 %prep
 %setup
+%ifarch %e2k
+sed -i "s/-DCRCUTIL_USE_MM_CRC32=1/-DHAVE_AARCH64/;s/-mcrc32/-mno-sse4.2/" autogen.sh
+%endif
 ./autogen.sh
 ./configure --prefix=%_prefix --libdir=%_libdir
 
@@ -64,5 +67,8 @@ install -m644 lib%name.pc %buildroot%_pkgconfigdir
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jul 29 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.0-alt1.1
+- Fixed build for Elbrus.
+
 * Sat Dec 18 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.0-alt1
 - Initial build for ALT.
