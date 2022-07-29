@@ -1,6 +1,6 @@
 %global modname nbxmpp
 Name: python3-module-%modname
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 Summary: Python library for non-blocking use of Jabber/XMPP
 License: GPLv3+
@@ -17,7 +17,7 @@ BuildRequires: python3-devel python3-module-setuptools
 #Requires: python-module-pygobject
 #Requires: python-module-kerberos
 
-# does not work with gajim < 1.3
+# does not work with gajim < 1.4
 Conflicts: gajim < 1.4
 
 %description
@@ -63,6 +63,9 @@ This sub-package contains the developer documentation for python-nbxmpp.
 %doc nbxmpp/examples/
 
 %changelog
+* Sat Jul 30 2022 Ilya Mashkin <oddity@altlinux.ru> 3.1.1-alt1
+- 3.1.1
+
 * Sat Jun 18 2022 Ilya Mashkin <oddity@altlinux.ru> 3.1.0-alt1
 - 3.1.0
 
