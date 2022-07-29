@@ -3,7 +3,7 @@
 %def_disable python
 
 Name: brial
-Version: 1.2.10
+Version: 1.2.11
 Release: alt1
 Summary: Framework for Boolean Rings
 # The entire source code is GPLv2+ except the Cudd directory that is BSD
@@ -75,11 +75,12 @@ Python 3 interface to %name.
 
 %build
 export CPPFLAGS="-DPBORI_NDEBUG"
+%autoreconf
 %configure --enable-shared --disable-static
 # Get rid of undesirable hardcoded rpaths.
-sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
-    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
-    -i libtool
+# sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
+#     -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
+#     -i libtool
 
 %make_build
 
@@ -122,6 +123,9 @@ make check
 %endif
 
 %changelog
+* Fri Jul 29 2022 Leontiy Volodin <lvol@altlinux.org> 1.2.11-alt1
+- New version.
+
 * Wed Nov 10 2021 Leontiy Volodin <lvol@altlinux.org> 1.2.10-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
 - Built as require for sagemath.
