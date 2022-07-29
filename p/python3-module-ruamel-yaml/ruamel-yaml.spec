@@ -1,17 +1,16 @@
 Name: python3-module-ruamel-yaml
 Version: 0.17.21
-Release: alt1
+Release: alt2
 
 Summary: is a YAML 1.2 loader/dumper package for Python
 
 License: GPLv3
 Group: Development/Python3
-Url: https://bitbucket.org/ruamel/yaml
+Url: https://pypi.org/project/ruamel.yaml
 Provides: python3(ruamel)
 
 Packager: Pavel Vainerman <pv@altlinux.ru>
 
-# Source-url: https://bitbucket.org/ruamel/yaml/get/%version.tar.bz2
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -40,6 +39,9 @@ export RUAMEL_NO_PIP_INSTALL_CHECK="1"
 %python3_sitelibdir/ruamel.yaml-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Jul 29 2022 Grigory Ustinov <grenka@altlinux.org> 0.17.21-alt2
+- Fixed Url (Closes: #43377).
+
 * Thu Jul 21 2022 Grigory Ustinov <grenka@altlinux.org> 0.17.21-alt1
 - Build new version.
 
