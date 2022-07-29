@@ -3,7 +3,7 @@
 
 Name: SDL2_ttf
 Version: 2.20.0
-Release: alt1
+Release: alt1.1
 
 Summary: Simple DirectMedia Layer - Sample TrueType Font Library
 License: Zlib
@@ -58,7 +58,7 @@ applications.
 # (2) static -lsupc++, worse
 #sed -i 's/$(TTF_LIBS) @MATHLIB@/& -lsupc++/' Makefile.am
 # (3) only include what's missing
-cat >> "$(echo external/harfbuzz-*/src/hb-common.cc)" << "EOF"
+cat >> "$(echo external/harfbuzz/src/hb-common.cc)" << "EOF"
 extern "C" __attribute__((visibility("hidden")))
 void __cxa_vec_ctor(void *a, size_t n, size_t size,
 		void (*c)(void*), void (*d)(void*)) {
@@ -94,6 +94,9 @@ EOF
 %_libdir/cmake/%name
 
 %changelog
+* Fri Jul 29 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.20.0-alt1.1
+- Corrected fix for Elbrus
+
 * Thu Jul 07 2022 Nazarov Denis <nenderus@altlinux.org> 2.20.0-alt1
 - Version 2.20.0
 
