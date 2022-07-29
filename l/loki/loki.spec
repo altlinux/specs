@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: loki
-Version: 2.4.1
+Version: 2.6.1
 Release: alt1
 Summary: Loki: like Prometheus, but for logs
 License: Apache-2.0
@@ -27,6 +27,7 @@ system inspired by Prometheus.
 %package -n promtail
 Summary: Promtail is an agent which ships the contents of local logs to a Loki instance
 Group: Monitoring
+License: Apache-2.0
 Provides: %name-promtail = %EVR
 
 %description -n promtail
@@ -40,6 +41,16 @@ It primarily:
 
 Currently, Promtail can tail logs from two sources: local log files and the systemd journal
 
+%package docker-driver
+Summary: Loki Docker Logging Driver
+Group: Monitoring
+License: Apache-2.0
+
+%description docker-driver
+Docker logging driver plugins extends Docker's logging capabilities.
+You can use Loki Docker logging driver plugin to send Docker container
+logs directly to your Loki instance or [Grafana Cloud](https://grafana.com/loki).
+
 %prep
 %setup -q
 
@@ -48,7 +59,7 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
-%define buildpkg github.com/grafana/loki/pkg/build
+%define buildpkg github.com/grafana/loki/pkg/util/build
 export CGO_ENABLED=0
 export GOFLAGS="-mod=vendor -buildmode=pie -tags=netgo"
 export DATE=$(date -u '+%%Y-%%m-%%d')
@@ -60,7 +71,10 @@ export GOLDFLAGS="-X %buildpkg.Version=%version \
 
 go build -ldflags="$GOLDFLAGS" ./cmd/loki
 go build -ldflags="$GOLDFLAGS" ./cmd/logcli
+go build -ldflags="$GOLDFLAGS" ./cmd/loki-canary
+go build -ldflags="$GOLDFLAGS" ./cmd/querytee
 CGO_ENABLED=1 go build -ldflags="$GOLDFLAGS" ./clients/cmd/promtail
+go build -ldflags="$GOLDFLAGS" -o %name-docker-driver ./clients/cmd/docker-driver
 
 %install
 # Service files for Loki and promtail
@@ -76,8 +90,11 @@ install -Dm644 %SOURCE6 %buildroot%_sysconfdir/loki/promtail.yaml
 # Binaries
 install -dm755 %buildroot%_bindir
 install -Dm755 loki %buildroot%_bindir
+install -Dm755 loki-canary %buildroot%_bindir
 install -Dm755 promtail %buildroot%_bindir
+install -Dm755 querytee %buildroot%_bindir
 install -Dm755 logcli %buildroot%_bindir
+install -Dm755 %name-docker-driver %buildroot%_bindir
 
 mkdir -p %buildroot%_sharedstatedir/{loki,promtail}
 
@@ -107,6 +124,8 @@ useradd -r -N -g _promtail -G systemd-journal -c 'Promtail log collector' \
 %doc LICENSE README.md
 %_bindir/loki
 %_bindir/logcli
+%_bindir/loki-canary
+%_bindir/querytee
 %_unitdir/loki.service
 %dir %_sysconfdir/loki
 %attr(0640,root,_loki) %config(noreplace) %_sysconfdir/loki/loki.yaml
@@ -121,7 +140,17 @@ useradd -r -N -g _promtail -G systemd-journal -c 'Promtail log collector' \
 %config(noreplace) %_sysconfdir/sysconfig/promtail
 %attr(0770,root,_promtail) %_sharedstatedir/promtail
 
+%files docker-driver
+%_bindir/%name-docker-driver
+%doc clients/cmd/docker-driver/docker-compose.yaml
+%doc clients/cmd/docker-driver/pipeline-example.yaml
+
 %changelog
+* Sat Jul 30 2022 Alexey Shabalin <shaba@altlinux.org> 2.6.1-alt1
+- new version 2.6.1
+- add docker-driver package
+- fix License
+
 * Sun Nov 14 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.1-alt1
 - new version 2.4.1
 
