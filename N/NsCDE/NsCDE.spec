@@ -1,5 +1,5 @@
 Name:		NsCDE
-Version:	2.1
+Version:	2.2
 Release:	alt1
 Summary:	Not so Common Desktop Environment
 Group: Graphical desktop/Other
@@ -7,7 +7,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 License:	GPLv3
 URL:		https://github.com/NsCDE
-Source0:	https://github.com/NsCDE/NsCDE/releases/download/2.1/NsCDE-2.1.tar.gz
+Source0:	https://github.com/NsCDE/NsCDE/releases/download/2.2/NsCDE-2.2.tar.gz
 
 
 BuildRequires:  gcc
@@ -86,6 +86,9 @@ autoreconf -ivf
 
 
 %changelog
+* Sat Jul 30 2022 Ilya Mashkin <oddity@altlinux.ru> 2.2-alt1
+- 2.2
+
 * Wed Apr 13 2022 Ilya Mashkin <oddity@altlinux.ru> 2.1-alt1
 - Build for Sisiphus
 
