@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(Exporter.pm) perl(Test/Pod.pm) perl(base.pm) perl(inc/Module/Package.pm) perl-podlators
@@ -6,14 +7,14 @@ BuildRequires: perl(Exporter.pm) perl(Test/Pod.pm) perl(base.pm) perl(inc/Module
 %define upstream_version 0.25
 
 Name:       perl-%{upstream_name}
-Version:    %{upstream_version}
-Release:    alt3_5
+Version:    0.26
+Release:    alt1
 
 Summary:    Extend File::ShareDir to Local Libraries
 License:    GPL+ or Artistic
 Group:      Development/Perl
 Url:        http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/File/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:    http://www.cpan.org/authors/id/I/IN/INGY/%{upstream_name}-%{version}.tar.gz
 
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 BuildRequires: perl(File/ShareDir.pm)
@@ -31,7 +32,7 @@ there is no well known way to populate per-module share files. This may
 change in the future.
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
@@ -45,10 +46,13 @@ change in the future.
 %makeinstall_std
 
 %files
-%doc CONTRIBUTING Changes LICENSE META.json META.yml  README
+%doc CONTRIBUTING Changes META.json META.yml README
 %perl_vendor_privlib/*
 
 %changelog
+* Fri Jul 29 2022 Igor Vlasenko <viy@altlinux.org> 0.26-alt1
+- automated CPAN update
+
 * Wed Apr 25 2018 Igor Vlasenko <viy@altlinux.ru> 0.25-alt3_5
 - to Sisyphus as perl-Dancer2 dep
 
