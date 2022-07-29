@@ -1,4 +1,4 @@
-%define ver_major 3.38
+%define ver_major 3.40
 %define xdg_name org.gnome.accerciser
 
 Name: accerciser
@@ -17,24 +17,28 @@ BuildArch: noarch
 Requires: python3-module-%name = %version-%release
 
 %add_python3_path %_datadir/%name
-%filter_from_requires '/python3\(gi\.repository\.GLib\)/d'
+%add_python3_req_skip gi.repository.GLib
+%add_python3_req_skip gi.repository.Gio
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: rpm-build-gnome libappstream-glib-devel
+BuildRequires: rpm-build-gnome /usr/bin/appstream-util
 BuildRequires: yelp-tools libgtk+3-devel python3-module-pygobject3-devel
 BuildRequires: desktop-file-utils libat-spi2-core-devel
+BuildRequires: python3-module-ipython
 
 %description
-An interactive Python accessibility explorer.
+An interactive Python accessibility explorer for the GNOME desktop.
 
-%add_python3_req_skip gi.repository.Gio
+It uses AT-SPI2 to inspect and control widgets, allowing you to check
+if an application is providing correct information to assistive
+technologies and automated test frameworks. Accerciser has a simple
+plugin framework which you can use to create custom views of
+accessibility information.
 
 %package -n python3-module-%name
 Summary: Python module for accerciser
 Group: Development/Python3
 BuildArch: noarch
-# The macro below is resolved into an empty string but confuses build process
-#%_python_set_noarch
 
 %description -n python3-module-%name
 An interactive Python accessibility explorer.
@@ -66,12 +70,15 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/icons/hicolor/scalable/apps/accerciser.svg
 %_datadir/icons/hicolor/symbolic/apps/accerciser-symbolic.svg
 %_datadir/metainfo/accerciser.appdata.xml
-%doc AUTHORS README COPYING NEWS
+%doc AUTHORS README* COPYING NEWS
 
 %files -n python3-module-%name
 %python3_sitelibdir/%name/
 
 %changelog
+* Fri Jul 29 2022 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+
 * Thu Sep 10 2020 Yuri N. Sedunov <aris@altlinux.org> 3.38.0-alt1
 - 3.38.0
 
