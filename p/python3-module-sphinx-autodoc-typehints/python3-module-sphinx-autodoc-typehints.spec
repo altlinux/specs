@@ -1,25 +1,28 @@
 %define modname sphinx-autodoc-typehints
-%define _modname sphinx_autodoc_typehints
+%define pypi_name sphinx_autodoc_typehints
 %def_disable check
 
 Name: python3-module-%modname
-Version: 1.18.3
+Version: 1.19.0
 Release: alt1
 
 Summary: Type hints (PEP 484) support for the Sphinx autodoc extension
-Group: Development/Python3
 License: MIT
+Group: Development/Python3
 Url: https://pypi.org/project/%modname
 
 Vcs: https://github.com/tox-dev/sphinx-autodoc-typehints.git
 #Source: https://github.com/tox-dev/%modname/archive/%version/%modname-%version.tar.gz
-Source: https://pypi.io/packages/source/s/%modname/%_modname-%version.tar.gz
+Source: https://pypi.io/packages/source/s/%modname/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm
-%{?_enable_check:BuildRequires: python3-module-pytest python3-module-sphobjinv}
+BuildRequires: python3-module-setuptools_scm python3-module-wheel
+%{?_enable_check:BuildRequires: python3-module-tox
+BuildRequires: python3-module-pytest python3-module-sphobjinv
+BuildRequires: python3-module-coverage python3-module-covdefaults
+BuildRequires: python3-module-diff-cover python3-module-twine}
 
 %description
 This Sphinx extension allows to use Python 3 annotations for
@@ -27,24 +30,28 @@ documenting acceptable argument types and return value types of
 functions.
 
 %prep
-%setup -n %_modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-py.test3
+%tox_check
 
 %files
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/%pypi_name
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %doc README* CHANGELOG*
 
 
 %changelog
+* Fri Jul 29 2022 Yuri N. Sedunov <aris@altlinux.org> 1.19.0-alt1
+- 1.19.0
+- ported to %%pyproject* macros
+
 * Tue Jun 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1.18.3-alt1
 - 1.18.3
 
