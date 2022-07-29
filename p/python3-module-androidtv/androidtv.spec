@@ -1,5 +1,5 @@
 Name: python3-module-androidtv
-Version: 0.0.67
+Version: 0.0.68
 Release: alt1
 
 Summary: State information and control of Android TV  devices via ADB
@@ -10,7 +10,9 @@ Url: https://pypi.org/project/androidtv/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 %summary
@@ -19,16 +21,19 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/androidtv
-%python3_sitelibdir/androidtv-%version-*-info
+%python3_sitelibdir/androidtv-%version.dist-info
 
 %changelog
+* Fri Jul 29 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.68-alt1
+- 0.0.68 released
+
 * Wed May 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.67-alt1
 - 0.0.67 released
 
