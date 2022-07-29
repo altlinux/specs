@@ -6,7 +6,7 @@ BuildRequires: perl(Capture/Tiny.pm) perl(Child.pm) perl(Class/XSAccessor.pm) pe
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.006013
+Version: 0.007006
 Release: alt1
 Summary: Moose-like OO, fast to load, with zero dependencies.
 Group: Development/Perl
@@ -45,6 +45,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Fri Jul 29 2022 Igor Vlasenko <viy@altlinux.org> 0.007006-alt1
+- automated CPAN update
+
 * Sat Jul 16 2022 Igor Vlasenko <viy@altlinux.org> 0.006013-alt1
 - automated CPAN update
 
