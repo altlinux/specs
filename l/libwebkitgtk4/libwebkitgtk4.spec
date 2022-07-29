@@ -34,7 +34,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk4
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Web browser engine
@@ -51,8 +51,6 @@ Patch: webkitgtk-2.26.1-alt-bwrap_check.patch
 Patch1: webkitgtk-2.35.90-alt-python3.patch
 Patch2: webkitgtk-2.30.0-alt-arm64-return-type.patch
 Patch10: webkitgtk-2.33.90-alt-format.patch
-#https://bugs.webkit.org/show_bug.cgi?id=242340
-Patch20: webkitgtk-2.36.4-up-lto.patch
 Patch2000: webkitgtk-2.34.3-alt-e2k.patch
 
 %define bwrap_ver 0.3.1
@@ -242,7 +240,6 @@ GObject introspection devel data for the JavaScriptCore library
 %patch2 -b .arm64
 %endif
 %patch10 -p1 -b .format
-%patch20 -p1
 %ifarch %e2k
 %patch2000 -p2 -b .e2k
 %endif
@@ -373,6 +370,9 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %_girdir/JavaScriptCore-%api_ver.gir
 
 %changelog
+* Fri Jul 29 2022 Yuri N. Sedunov <aris@altlinux.org> 2.36.5-alt1
+- 2.36.5
+
 * Tue Jul 05 2022 Yuri N. Sedunov <aris@altlinux.org> 2.36.4-alt1
 - 2.36.4
 
