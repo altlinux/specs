@@ -12,7 +12,7 @@
 
 Name: unit
 Version: 1.27.0
-Release: alt1
+Release: alt2
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -23,8 +23,6 @@ Vcs: http://hg.nginx.org/unit/
 # Mirror Vcs: https://github.com/nginx/unit
 
 Source: %name-%version.tar
-
-%define restart_flag /var/run/%name.restart
 
 BuildRequires: libssl-devel
 BuildRequires: libpcre-devel
@@ -80,7 +78,14 @@ Ruby module for NGINX Unit
 # "The memfd_create() system call first appeared in Linux 3.17"
 sed -i -e 's/NXT_HAVE_MEMFD_CREATE/NO_&/' auto/shmem
 
+sed -i 's!/var/run/!/run/!' pkg/rpm/rpmbuild/SOURCES/unit.logrotate
+
 %build
+# Test compilation passes with the following options:
+#   %%define optflags_lto %nil
+#   %%add_optflags -fanalyzer -Wno-analyzer-null-argument -Wno-analyzer-null-dereference -Wno-analyzer-malloc-leak -Wno-analyzer-use-of-uninitialized-value
+# Last one is certainly worrisome.
+
 %ifarch %e2k
 # lcc 1.25.12 found some perl/php interpreter header glitches missed by gcc
 %add_optflags -Wno-error=unused-function -Wno-error=ignored-qualifiers
@@ -92,8 +97,8 @@ CONFIGURE_ARGS="
 	--libdir=%_libdir
 	--user=_unit
 	--group=_unit
-	--control=unix:/var/run/unit/control.sock
-	--pid=/var/run/unit/unit.pid
+	--control=unix:/run/unit/control.sock
+	--pid=/run/unit/unit.pid
 	--log=/var/log/unit/unit.log
 	--tmp=/var/tmp
 	--tests
@@ -114,13 +119,11 @@ CFLAGS="%optflags" \
 %if_enabled ruby
   ./configure ruby
 %endif
-%make_build -s
+%make_build
 %if_enabled devel
-  %make_build -s build/libunit.a
+  %make_build build/libunit.a
 %endif
-%make_build -s tests
-
-sed -i -e 's!Environment=.*!EnvironmentFile=/etc/sysconfig/unit!' pkg/rpm/rpmbuild/SOURCES/unit.service
+%make_build tests
 
 %install
 %makeinstall_std unitd-install libunit-install
@@ -138,11 +141,9 @@ sed -i -e 's!Environment=.*!EnvironmentFile=/etc/sysconfig/unit!' pkg/rpm/rpmbui
 %endif
 
 install -pD -m644 pkg/rpm/rpmbuild/SOURCES/unit.logrotate %buildroot%_sysconfdir/logrotate.d/unit
-install -pD -m644 pkg/rpm/rpmbuild/SOURCES/unit.service   %buildroot%systemd_unitdir/unit.service
+install -pD -m644 .gear/unit.service %buildroot%systemd_unitdir/unit.service
 install -pD -m755 .gear/unit.init    %buildroot%_initdir/unit
-install -pD -m755 .gear/unit.sysconf %buildroot%_sysconfdir/sysconfig/unit
 mkdir -p %buildroot%_localstatedir/unit
-mkdir -p %buildroot%_runtimedir/unit
 mkdir -p %buildroot%_logdir/unit
 
 ln NOTICE COPYRIGHT
@@ -174,10 +175,8 @@ build/tests
 %_sbindir/unitd
 %_initdir/unit
 %systemd_unitdir/unit.service
-%config(noreplace) %_sysconfdir/sysconfig/unit
 %config(noreplace) %_sysconfdir/logrotate.d/unit
 %dir %_localstatedir/unit
-%dir %_runtimedir/unit
 %dir %_logdir/unit
 %dir %_libdir/unit
 %dir %_libdir/unit/modules
@@ -214,6 +213,11 @@ build/tests
 %endif
 
 %changelog
+* Fri Jul 29 2022 Vitaly Chikunov <vt@altlinux.org> 1.27.0-alt2
+- Move /var/run -> /run for control.sock and unit.pid (ALT#43362).
+- /etc/sysconfig/unit is not installed but read, because there are no
+  options by default anymore (they are compiled in).
+
 * Fri Jun 03 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.27.0-alt1
 - Update to 1.27.0 (2022-06-02).
 
