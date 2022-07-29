@@ -3,7 +3,7 @@
 Name: bash-completion
 Epoch: 1
 Version: 2.11
-Release: alt1.git.157.g59d2322e
+Release: alt2.git.157.g59d2322e
 
 Summary: bash-completion offers programmable completion for bash
 License: GPL2
@@ -64,6 +64,9 @@ install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
 %_datadir/pkgconfig/bash-completion.pc
 
 %changelog
+* Sat Jul 30 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.11-alt2.git.157.g59d2322e
+- fix completion for apt-get autoremove
+
 * Thu Feb 18 2021 Ildar Mulyukov <ildar@altlinux.ru> 1:2.11-alt1.git.157.g59d2322e
 - new version
 - check is enabled but still failing
