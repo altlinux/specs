@@ -4,7 +4,7 @@
 
 Name: yggdrasil
 Version: 0.4.4
-Release: alt1
+Release: alt2
 
 Summary: End-to-end encrypted IPv6 networking
 License: LGPLv3
@@ -12,7 +12,6 @@ Group: Security/Networking
 Url: https://yggdrasil-network.github.io
 
 Source: %name-%version.tar
-Patch0: go_mod_vendor.patch
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -33,7 +32,6 @@ over either IPv4 or IPv6.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 export GO111MODULE=off
@@ -63,7 +61,7 @@ export IGNORE_SOURCES=1
 %golang_install
 
 pushd %_builddir
-    sed -i yggdrasil-default-config.service -e 's/\/usr\/bin\/chmod/\/bin\/chmod/g'
+    sed -i yggdrasil-default-config.service -e '/chmod/ s|/usr||'
     install -pD yggdrasil.service %buildroot%_unitdir/yggdrasil.service
     install -pD yggdrasil-default-config.service %buildroot%_unitdir/yggdrasil-default-config.service
 popd
@@ -77,6 +75,9 @@ popd
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Sat Jul 30 2022 Anton Zhukharev <ancieg@altlinux.org> 0.4.4-alt2
+- add go vendor modules into source tree instead of using patch
+
 * Sun Jul 24 2022 Anton Zhukharev <ancieg@altlinux.org> 0.4.4-alt1
 - update to 0.4.4
 
