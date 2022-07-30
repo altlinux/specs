@@ -1,21 +1,27 @@
-%define modname pytest_httpserver
+%define pypi_name pytest_httpserver
+
+%def_enable check
 
 Name: python3-module-pytest-httpserver
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: HTTP server for pytest
-Group: Development/Python3
 License: MIT
-Url: http://pypi.python.org/pypi/%modname
-Vcs: https://www.github.com/csernazs/pytest-httpserver.git
+Group: Development/Python3
+Url: https://pypi.python.org/pypi/%pypi_name
 
-Source: http://pypi.io/packages/source/p/%modname/%modname-%version.tar.gz
+Vcs: https://www.github.com/csernazs/pytest-httpserver.git
+Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-wheel python3-module-poetry-core
+%{?_enable_check:
+BuildRequires: python3-module-werkzeug python3-module-pytest python3-module-flake8
+BuildRequires: python3-module-pytest python3-module-pytest-cov python3-module-coverage
+BuildRequires: python3-module-requests python3-module-mypy}
 
 %description
 This library is designed to help to test http clients without contacting
@@ -24,20 +30,28 @@ accessible via localhost can be started with the pre-defined expected
 http requests and their responses.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+py.test3
 
 %files
-%python3_sitelibdir_noarch/%modname/
-%python3_sitelibdir_noarch/*.egg-info
-%doc README* LICENSE
+%python3_sitelibdir_noarch/%pypi_name/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
+%doc CHANGES* README* LICENSE
 
 %changelog
+* Sat Jul 30 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+- ported to %%pyproject* macros, enabled %%check
+
 * Fri Jan 28 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 
