@@ -12,7 +12,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.13
+%define major 7.14
 %define rel %nil
 %define conflictbase wine
 
@@ -677,6 +677,7 @@ fi
 %libwinedir/%winesodir/*.acm.so
 %libwinedir/%winesodir/*.drv.so
 %libwinedir/%winesodir/*.ds.so
+%libwinedir/%winesodir/*.sys.so
 %endif
 
 %if_without build64
@@ -832,6 +833,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sat Jul 30 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.14-alt1
+- new version 7.14 (with rpmrb script)
+
 * Sat Jul 16 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.13-alt1
 - new version 7.13 (with rpmrb script)
 - set strict require wine-gecko 2.47.3
