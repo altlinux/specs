@@ -1,6 +1,6 @@
 Name: poco
 Version: 1.12.1
-Release: alt2
+Release: alt2.1
 Summary: POrtable COmponents C++ Libraries
 License: BSL-1.0
 Group: Development/C++
@@ -291,6 +291,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 %_libdir/cmake/*
 
 %changelog
+* Sat Jul 30 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.12.1-alt2.1
+- fixed e2k patch
+
 * Thu Jul 21 2022 Alexei Takaseev <taf@altlinux.org> 1.12.1-alt2
 - Fix file conflict (Fixes ALT#43291)
 
