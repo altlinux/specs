@@ -1,8 +1,8 @@
-# from rpm-build-intro
+# redefined during rpmbps (originally set from rpm-build-intro)
 %define pkgsystem apt-rpm
 
 Name: eepm
-Version: 3.21.5
+Version: 3.21.6
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -21,10 +21,10 @@ BuildArchitectures: noarch
 # use distr_vendor from it
 BuildRequires: rpm-build-intro
 
+%if "%_vendor" == "alt"
 Obsoletes: epm
 Provides: epm = %EVR
 
-%if "%_vendor" == "alt"
 # FIXHERE: Replace with target platform package manager
 Requires: apt rpm
 %endif
@@ -150,6 +150,14 @@ rm -v %buildroot%_bindir/yum
 %endif
 
 %changelog
+* Sat Jul 30 2022 Vitaly Lipatov <lav@altlinux.ru> 3.21.6-alt1
+- epm-autoremove: add --auto support for apt
+- epm-remove: add missed --auto support for apt
+- epm-install: add --allowerasing for yum/dnf install
+- epm-query: don't use Epoche for hi level form
+- distr_info: use RELS name for ROSA Server, fixes for ROSA
+- eepm.spec: provides/obsoletes epm only on ALT
+
 * Thu Jul 28 2022 Vitaly Lipatov <lav@altlinux.ru> 3.21.5-alt1
 - epm-sh-functions: add sudo_allowed
 - epm-filelist: fix sudo checking
