@@ -1,4 +1,4 @@
-Name: lua5.3-module-dbi
+Name: lua5.1-module-dbi
 Version: 0.7.2
 Release: alt2
 
@@ -10,11 +10,11 @@ Summary: Database interface library for Lua
 Source0: luadbi-%version.tar
 
 Provides: lua-dbi = %EVR
-Provides: lua5.3-dbi = %EVR
-Obsoletes: lua5.3-dbi < %EVR
+Provides: lua5.1-dbi = %EVR
+Obsoletes: lua5.1-dbi < %EVR
 
-BuildRequires: lua5.3
-BuildRequires: liblua5.3-devel
+BuildRequires: lua5.1
+BuildRequires: liblua5.1-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libmariadb-devel
 BuildRequires: postgresql-devel
@@ -45,7 +45,7 @@ make install_free INSTALL='install -p' \
 	MYSQL_LDFLAGS="-L%_libdir/mysql -lmysqlclient"
 
 %check
-lua5.3 -e \
+lua5.1 -e \
 	'package.cpath="%buildroot%lua_modulesdir/?.so;"..package.cpath;
 	package.path="%buildroot%lua_modulesdir_noarch/?.lua;"..package.path;
 	local DBI = require("DBI"); print("Hello from "..DBI._VERSION.."!");'
