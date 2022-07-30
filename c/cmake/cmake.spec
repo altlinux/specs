@@ -11,7 +11,7 @@
 
 Name: cmake
 Version: 3.23.2
-Release: alt1
+Release: alt1.1
 
 Summary: Cross-platform, open-source make system
 
@@ -153,6 +153,11 @@ Set of RPM macros for packaging applications that use cmake.
 %setup
 %patch -p1
 %patch1 -p1
+%ifarch %e2k
+# "Could NOT find OpenMP_C (missing: OpenMP_omp_LIBRARY OpenMP_pthread_LIBRARY)"
+# cmake tries to scan the OpenMP example for libraries, which breaks the build
+sed -i 's/if(CMAKE_${LANG}_VERBOSE_FLAG)/if(false) # &/' Modules/FindOpenMP.cmake
+%endif
 
 # remove bundled sources
 rm -rf cmake/Utilities/{cmbzip2,cmbzip2,cmcurl,cmexpat,cmlibarchive,cmliblzma,cmlibrhash,cmlibuv,cmnghttp2,cmvssetup,cmzlib,cmzstd}/
@@ -335,6 +340,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Sat Jul 30 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.23.2-alt1.1
+- fixed failure of finding OpenMP on e2k
+
 * Tue Jun 07 2022 Vitaly Lipatov <lav@altlinux.ru> 3.23.2-alt1
 - new version
 
