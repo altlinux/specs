@@ -6,7 +6,7 @@
 
 Name: skopeo
 Version: 1.9.1
-Release: alt1
+Release: alt2
 
 Summary: skopeo is a command line utility that performs various operations on container images and image repositories
 License: Apache-2.0
@@ -136,6 +136,10 @@ make check
 %doc *.md
 
 %changelog
+* Sun Jul 31 2022 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt2
+- move registry.altlinux.org after docker.io in registries.conf
+- add quay.io to unqualified-search-registries in registries.conf
+
 * Tue Jul 26 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.9.1-alt1
 - new version 1.9.1
 
