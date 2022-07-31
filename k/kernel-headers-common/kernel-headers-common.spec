@@ -1,9 +1,9 @@
 Name: kernel-headers-common
-Version: 1.2.7
+Version: 1.2.8
 Release: alt1
 
 Summary: Common header files for the Linux kernel
-License: GPL
+License: GPL-2.0-only
 Group: Development/Kernel
 ExclusiveArch: %ix86 x86_64 %arm aarch64 %e2k %mips riscv64 ppc ppcle ppc64 ppc64le
 
@@ -46,9 +46,11 @@ Source4: kheaders.filetrigger
 Requires: glibc-kernheaders
 Conflicts: kernel-headers-alsa
 
+%{?!_without_check:%{?!_disable_check:BuildRequires: shellcheck}}
+
 %description
 This package contains common directories and C header files from
-various versions of the linux kernel.
+various versions of the Linux kernel.
 
 %install
 mkdir -p %buildroot{%_sbindir,%_man8dir,%systemd_unitdir}
@@ -57,13 +59,14 @@ sed -i 's/@VERSION@/%version/g' -- \
 	%buildroot%_sbindir/adjust_kernel_headers
 install -pm644 %_sourcedir/adjust_kernel_headers.8 %buildroot%_man8dir/
 install -pm644 %_sourcedir/kheaders.service %buildroot%systemd_unitdir/
+echo "enable kheaders.service" | tee kheaders.preset
+install -Dpm644 kheaders.preset %buildroot%_presetdir/30-kheaders.preset
 install -pD -m755 %_sourcedir/kheaders.init %buildroot%_initdir/kheaders
 mkdir -p %buildroot%_rpmlibdir/
 install -m755 %_sourcedir/kheaders.filetrigger %buildroot%_rpmlibdir/
 mkdir -p %buildroot%_includedir
 mkdir -p %buildroot%_sysconfdir/sysconfig/kernel
 mkdir -p %buildroot%_prefix/lib/kernel
-mkdir -p %buildroot/var/run/kernel
 
 ln -s %_sysconfdir/sysconfig/kernel/include/asm{,-generic,-%base_arch} \
 	%buildroot%_includedir/
@@ -79,9 +82,11 @@ ln -s %_includedir/linux-default/include \
 
 touch %buildroot%_sysconfdir/sysconfig/kernel/include_manual_mode
 
-for f in {autoconf,modversions,version}.{h,ph} _h2ph_pre.ph; do
-        touch "%buildroot/var/run/kernel/$f"
-done
+%check
+shellcheck -S error \
+	%buildroot%_sbindir/adjust_kernel_headers \
+	%buildroot%_rpmlibdir/kheaders.filetrigger \
+	%buildroot%_initdir/kheaders
 
 %pre
 for n in asm{,-generic,-%base_arch,-%_target_cpu} drm linux mtd sound video; do
@@ -108,6 +113,7 @@ done
 
 %files
 %systemd_unitdir/kheaders.service
+%_presetdir/30-kheaders.preset
 %_rpmlibdir/kheaders.filetrigger
 %_initdir/kheaders
 %_sbindir/adjust_kernel_headers
@@ -127,10 +133,12 @@ done
 %_includedir/sound
 %_includedir/video
 %dir %_prefix/lib/kernel
-%dir /var/run/kernel
-%ghost /var/run/kernel/*
 
 %changelog
+* Sat Jul 09 2022 Vitaly Chikunov <vt@altlinux.org> 1.2.8-alt1
+- Remove support for perl headers (ALT#43185).
+- Enable kheaders.service by default.
+
 * Mon Dec 03 2018 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.7-alt1
 - Added support of mips*, s390x, riscv64, and power* architectures.
 
