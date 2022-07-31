@@ -1,6 +1,6 @@
 Name: cvs
 Version: 1.11.23
-Release: alt7
+Release: alt8
 
 Summary: A version control system
 License: GPLv2+
@@ -252,6 +252,9 @@ install -pm644 \
 %_datadir/cvs
 
 %changelog
+* Sun Jul 31 2022 Dmitry V. Levin <ldv@altlinux.org> 1.11.23-alt8
+- Replaced "egrep" with "grep -E", "fgrep" with "grep -F".
+
 * Thu Oct 18 2018 Dmitry V. Levin <ldv@altlinux.org> 1.11.23-alt7
 - Fixed %%check.
 
