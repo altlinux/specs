@@ -2,7 +2,7 @@
 
 Name:     smesh
 Version:  9.8.0.2
-Release:  alt1
+Release:  alt2
 
 Summary:  OpenCascade based MESH framework
 License:  LGPL-2.1
@@ -15,6 +15,7 @@ Source:   %name-%version.tar
 Source1:  submodules.tar
 Patch1:   smesh-install.patch
 Patch2:   smesh-gcc12.patch
+Patch3:   smesh-link-with-dl.patch
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
@@ -69,6 +70,7 @@ Development files and headers for libsmesh.
 tar xf %SOURCE1
 %patch1 -p1
 %patch2 -p2
+%patch3 -p1
 python3 prepare.py
 
 %build
@@ -90,6 +92,9 @@ python3 prepare.py
 %_libdir/cmake/*.cmake
 
 %changelog
+* Sun Jul 31 2022 Andrey Cherepanov <cas@altlinux.org> 9.8.0.2-alt2
+- Explicitly linked with libdl.
+
 * Sun Jul 10 2022 Andrey Cherepanov <cas@altlinux.org> 9.8.0.2-alt1
 - New version.
 
