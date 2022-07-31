@@ -1,5 +1,5 @@
 Name: corsixth
-Version: 0.65.1
+Version: 0.66
 Release: alt1
 
 Summary: Open source clone of Theme Hospital
@@ -9,8 +9,8 @@ Group: Games/Strategy
 Url: https://github.com/CorsixTH/CorsixTH
 
 Requires: TiMidity++
-Requires: lua5.3-module-luafilesystem
-Requires: lua5.3-module-lpeg
+Requires: lua5.1-module-luafilesystem
+Requires: lua5.1-module-lpeg
 
 # Source-url: https://github.com/CorsixTH/CorsixTH/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
@@ -19,7 +19,7 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libSDL2-devel
 BuildRequires: libluajit-devel
-BuildRequires: liblua5.3-devel
+BuildRequires: liblua5.1-devel
 BuildRequires: libfreetype-devel
 BuildRequires: libSDL2_mixer-devel
 BuildRequires: libswresample-devel
@@ -51,7 +51,7 @@ operating systems (Windows, macOS, Linux, and BSD), high resolution, and more.
 %cmake_install
 
 %files
-%doc README.md changelog.txt CONTRIBUTING.txt README.txt
+%doc README.md changelog.txt CONTRIBUTING.md README.txt
 %_bindir/corsix-th
 %_desktopdir/*.desktop
 %_datadir/corsix-th
@@ -60,5 +60,8 @@ operating systems (Windows, macOS, Linux, and BSD), high resolution, and more.
 %_man6dir/corsix-th.6.*
 
 %changelog
+* Sat Jul 30 2022 Evgeny Chuck <koi@altlinux.org> 0.66-alt1
+- new version (0.66) with rpmgs script
+
 * Thu Jun 23 2022 Evgeny Chuck <koi@altlinux.org> 0.65.1-alt1
 - initial build for ALT Linux Sisyphus
