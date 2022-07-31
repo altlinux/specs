@@ -6,7 +6,7 @@
 
 Name: skopeo
 Version: 1.9.1
-Release: alt2
+Release: alt3
 
 Summary: skopeo is a command line utility that performs various operations on container images and image repositories
 License: Apache-2.0
@@ -15,23 +15,7 @@ Url: https://github.com/containers/skopeo
 
 Source: %name-%version.tar
 
-# The following files stored at https://src.fedoraproject.org/rpms/skopeo/tree/master
-Source1: storage.conf
-Source2: containers-storage.conf.5.md
-Source3: mounts.conf
-Source4: containers-registries.conf.5.md
-Source5: registries.conf
-Source6: containers-policy.json.5.md
-Source7: seccomp.json
-Source8: containers-mounts.conf.5.md
-Source9: containers-signature.5.md
-Source10: containers-transports.5.md
-Source11: containers-certs.d.5.md
-Source12: containers-registries.d.5.md
-Source13: containers.conf
-Source14: containers.conf.5.md
-Source15: containers-auth.json.5.md
-Source16: containers-registries.conf.d.5.md
+Requires: containers-common >= 1:1
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
@@ -58,13 +42,6 @@ operations which consist of:
   skopeo can pass the appropriate credentials and certificates for
   authentication.
 
-%package -n containers-common
-Group:    System/Configuration/Other
-Summary: Configuration files for working with image signatures
-
-%description -n containers-common
-%summary.
-
 %prep
 %setup
 
@@ -78,13 +55,11 @@ export GIT_COMMIT=%commit
 %golang_prepare
 
 pushd .gopath/src/%import_path
-#%%golang_build cmd/%name
+#%%golang_build cmd/%%name
 %make_build bin/skopeo
-
 for doc in $(find docs -name '*.1.md'); do
     go-md2man -in "$doc" -out "docs/$(basename "${doc%%.md}")"
 done
-
 popd
 
 %install
@@ -93,49 +68,24 @@ export GOPATH="%go_path"
 # export IGNORE_SOURCES=1
 #%%golang_install
 pushd .gopath/src/%import_path
-%make DESTDIR=%buildroot PREFIX=%_prefix install
+%make DESTDIR=%buildroot PREFIX=%_prefix install-binary install-docs install-completions
 popd
-
-install -dp %buildroot%_sysconfdir/containers/{certs.d,oci/hooks.d}
-install -m0644 %SOURCE1 %buildroot%_sysconfdir/containers/storage.conf
-install -m0644 %SOURCE5 %buildroot%_sysconfdir/containers/registries.conf
-mkdir -p %buildroot%_man5dir
-go-md2man -in %SOURCE2 -out %buildroot%_man5dir/containers-storage.conf.5
-go-md2man -in %SOURCE4 -out %buildroot%_man5dir/containers-registries.conf.5
-go-md2man -in %SOURCE6 -out %buildroot%_man5dir/containers-policy.json.5
-go-md2man -in %SOURCE8 -out %buildroot%_man5dir/containers-mounts.conf.5
-go-md2man -in %SOURCE9 -out %buildroot%_man5dir/containers-signature.5
-go-md2man -in %SOURCE10 -out %buildroot%_man5dir/containers-transports.5
-go-md2man -in %SOURCE11 -out %buildroot%_man5dir/containers-certs.d.5
-go-md2man -in %SOURCE12 -out %buildroot%_man5dir/containers-registries.d.5
-go-md2man -in %SOURCE14 -out %buildroot%_man5dir/containers.conf.5
-go-md2man -in %SOURCE15 -out %buildroot%_man5dir/containers-auth.json.5
-go-md2man -in %SOURCE16 -out %buildroot%_man5dir/containers-registries.conf.d.5
-
-mkdir -p %buildroot%_datadir/containers
-install -m0644 %SOURCE3 %buildroot%_datadir/containers/mounts.conf
-install -m0644 %SOURCE7 %buildroot%_datadir/containers/seccomp.json
-install -m0644 %SOURCE13 %buildroot%_datadir/containers/containers.conf
-mkdir -p %buildroot%_datadir/alt/secrets
 
 %check
 make check
 
-%files -n containers-common
-%config(noreplace) %_sysconfdir/containers
-%_datadir/containers
-%_datadir/alt
-%_man5dir/*
-
 %files
+%doc README.md
 %_bindir/*
 %_datadir/bash-completion/completions/%name
 %_datadir/fish/vendor_completions.d/skopeo.fish
 %_datadir/zsh/site-functions/_skopeo
 %_man1dir/%{name}*
-%doc *.md
 
 %changelog
+* Sun Jul 31 2022 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt3
+- drop containers-common package
+
 * Sun Jul 31 2022 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt2
 - move registry.altlinux.org after docker.io in registries.conf
 - add quay.io to unqualified-search-registries in registries.conf

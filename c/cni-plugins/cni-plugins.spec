@@ -7,7 +7,7 @@
 
 Name: cni-plugins
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Summary: Container Network Interface plugins
 Group: Development/Other
 License: Apache-2.0
@@ -17,7 +17,7 @@ Source2: %name.tmpfiles
 ExclusiveArch: %go_arches
 
 Provides: containernetworking-plugins = %EVR
-
+Provides: container-network-stack = 1
 BuildRequires(pre): rpm-build-golang
 BuildRequires: /proc
 
@@ -66,6 +66,9 @@ install -p -m0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/*
 
 %changelog
+* Sun Jul 31 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt2
+- add Provides: container-network-stack
+
 * Fri Jun 03 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt1
 - new version 1.1.1
 
