@@ -1,15 +1,15 @@
-Name:           grub-customizer
-Version:        5.2.1
-Release:        alt1
-Summary:        Grub Customizer is a graphical interface to configure the grub2/burg settings
+Name:    grub-customizer
+Version: 5.2.2
+Release: alt1
+Summary: Grub Customizer is a graphical interface to configure the grub2/burg settings
 
-License:        GPL-3.0
-Group: 		System/Configuration/Boot and Init
-URL:            https://launchpad.net/grub-customizer
+License: GPL-3.0
+Group:   System/Configuration/Boot and Init
+URL:     https://launchpad.net/grub-customizer
 
-Source0:        https://launchpad.net/grub-customizer/4.0/%{version}/+download/%{name}_%{version}.tar.gz
-Source1:	%name.watch
-Patch1:		grub-customizer-alt-desktop-l10n.patch
+Source0: https://launchpad.net/grub-customizer/4.0/%{version}/+download/%{name}_%{version}.tar.gz
+Source1: %name.watch
+Patch1:  grub-customizer-alt-desktop-l10n.patch
 
 BuildRequires(pre): cmake
 BuildRequires:  ctest
@@ -22,8 +22,8 @@ BuildRequires:  desktop-file-utils
 
 ExclusiveArch: %ix86 x86_64 aarch64 ppc64le
 
-Requires:       grub-common
-Requires:       hwinfo
+Requires: grub-common
+Requires: hwinfo
 
 %description
 Grub Customizer is a graphical interface to configure the grub2/burg settings
@@ -74,6 +74,9 @@ install -m 0644 grub.cfg %buildroot%_sysconfdir/%name/grub.cfg
 %_datadir/polkit-1/actions/net.launchpad.danielrichter2007.pkexec.grub-customizer.policy
 
 %changelog
+* Sun Jul 31 2022 Andrey Cherepanov <cas@altlinux.org> 5.2.2-alt1
+- New version.
+
 * Sun May 01 2022 Andrey Cherepanov <cas@altlinux.org> 5.2.1-alt1
 - New version.
 
