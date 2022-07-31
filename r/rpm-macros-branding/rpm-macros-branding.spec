@@ -1,5 +1,5 @@
 Name: rpm-macros-branding
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 Summary: RPM helper macros to build branding packages
 License: %gpl2plus
@@ -50,6 +50,7 @@ informika-schoolmaster \
 ivk-chainmail \
 lxde-desktop \
 lxde-school-lite \
+myoffice-plus \
 school-junior \
 school-lite \
 school-master \
@@ -70,6 +71,9 @@ install -m 0644 branding.rpm.macros %buildroot%_rpmmacrosdir/branding
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Jul 29 2022 Andrey Cherepanov <cas@altlinux.org> 1.0.7-alt1
+- Added myoffice-plus.
+
 * Wed Mar 10 2021 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt1
 - Added alt-sisyphus.
 
