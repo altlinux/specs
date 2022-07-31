@@ -1,8 +1,8 @@
-%define pulseaudio_version 16.0
+%define pulseaudio_version 16.1
 
 Name:     pulseaudio-module-xrdp
 Version:  0.6
-Release:  alt2
+Release:  alt3
 
 Summary:  xrdp sink / source pulseaudio modules
 License:  Apache-2.0
@@ -76,6 +76,9 @@ rm -f %buildroot%_libdir/pulseaudio/modules/*.la
 %_libexecdir/pulseaudio-module-xrdp/load_pa_modules.sh
 
 %changelog
+* Sun Jul 31 2022 Andrey Cherepanov <cas@altlinux.org> 0.6-alt3
+- FTBFS: rebuilt with Pulseaudio 16.1.
+
 * Sun Jun 12 2022 Andrey Cherepanov <cas@altlinux.org> 0.6-alt2
 - FTBFS: rebuilt with Pulseaudio 16.0.
 
