@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Exporter.pm) perl(Test/Pod.pm) perl(base.pm) perl(inc/Module/Package.pm) perl-podlators
+BuildRequires: perl(Exporter.pm) perl(Readonly.pm) perl(Test/Pod.pm) perl(base.pm) perl(inc/Module/Package.pm) perl-podlators
 # END SourceDeps(oneline)
 %define upstream_name    File-Share
 %define upstream_version 0.25
 
 Name:       perl-%{upstream_name}
-Version:    0.26
+Version:    0.27
 Release:    alt1
 
 Summary:    Extend File::ShareDir to Local Libraries
@@ -50,6 +50,9 @@ change in the future.
 %perl_vendor_privlib/*
 
 %changelog
+* Mon Aug 01 2022 Igor Vlasenko <viy@altlinux.org> 0.27-alt1
+- automated CPAN update
+
 * Fri Jul 29 2022 Igor Vlasenko <viy@altlinux.org> 0.26-alt1
 - automated CPAN update
 
