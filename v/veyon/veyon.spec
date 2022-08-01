@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: veyon
-Version: 4.7.3
-Release: alt4
+Version: 4.7.4
+Release: alt1
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -124,6 +124,9 @@ sed -i "s/-Werror/-Wno-error/" cmake/modules/SetDefaultTargetProperties.cmake
 %_datadir/%name
 
 %changelog
+* Fri Jul 29 2022 Egor Ignatov <egori@altlinux.org> 4.7.4-alt1
+- new version 4.7.4
+
 * Tue Jul 19 2022 Egor Ignatov <egori@altlinux.org> 4.7.3-alt4
 - cherry-pick commits from alt-fix-builtindirectory-computers-list-display patch
 
