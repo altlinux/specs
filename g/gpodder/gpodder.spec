@@ -2,13 +2,13 @@
 %def_enable check
 
 Name: gpodder
-Version: 3.10.21
+Version: 3.11.0
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
 License: GPL-3.0-or-later
 Group: Sound
-Url: http://gpodder.org
+Url: https://gpodder.org
 
 %if_disabled snapshot
 Source: https://github.com/gpodder/gpodder/archive/%version/%name-%version.tar.gz
@@ -39,7 +39,7 @@ BuildArch: noarch
 %define urllib3_ver 1.26.5
 %define mgpoclient_ver 1.8
 
-Requires: typelib(Gtk) = 3.0
+Requires: typelib(Gtk) = 3.0 typelib(WebKit2) = 4.0
 Requires: python3-module-mygpoclient >= %mgpoclient_ver
 Requires: python3-module-urllib3 >= %urllib3_ver
 Requires: %_bindir/ffmpeg xdg-utils
@@ -47,7 +47,8 @@ Requires: python3-module-eyeD3
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: python3-devel python3-module-mygpoclient
-BuildRequires: python3-module-feedparser help2man intltool desktop-file-utils
+BuildRequires: python3-module-feedparser
+BuildRequires: help2man intltool desktop-file-utils
 %if_enabled check
 BuildRequires: %_bindir/py.test3
 BuildRequires: python3-module-pytest-cov python3-module-pytest-httpserver
@@ -96,6 +97,9 @@ PYTHON=python3 PYTEST=%_bindir/py.test3 %make unittest
 
 
 %changelog
+* Sun Jul 31 2022 Yuri N. Sedunov <aris@altlinux.org> 3.11.0-alt1
+- 3.11.0
+
 * Tue Jul 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.10.21-alt1
 - 3.10.21
 
