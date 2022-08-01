@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -53,6 +53,11 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Fri Jul 22 2022 Anton Midyukov <antohami@altlinux.org> 0.17-alt1
+- grub-disk: show all devices with detect mdraid
+- grub-raid-boot: select first /boot on RAID
+- backend3/grub: refactoring list_devices function
+
 * Wed Dec 16 2020 Nikolai Kostrigin <nickel@altlinux.org> 0.16-alt1
 - fix EFI mode boot variable creation for some malformed UEFI firmwares
   + backend: make default EFI loader option to create EFI\BOOT also
