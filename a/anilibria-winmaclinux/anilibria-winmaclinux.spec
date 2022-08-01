@@ -1,6 +1,6 @@
 Name: anilibria-winmaclinux
 Version: 1.1.10
-Release: alt1
+Release: alt2
 
 Summary: AniLibria client for major desktop platforms
 Summary(ru_RU.UTF-8): Клиент AniLibria для основных настольных платформ
@@ -11,6 +11,7 @@ Url: http://anilibriadesktop.reformal.ru
 ExcludeArch: %not_qt5_qtwebengine_arches
 
 Requires: qt5-graphicaleffects
+Requires: libqt5-multimedia
 
 # Source-url: https://github.com/anilibria/anilibria-winmaclinux/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
@@ -60,6 +61,9 @@ popd
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Mon Aug 01 2022 Evgeny Chuck <koi@altlinux.org> 1.1.10-alt2
+- Added dependency libqt5-multimedia to fix media playback
+
 * Mon Jul 25 2022 Evgeny Chuck <koi@altlinux.org> 1.1.10-alt1
 - new version (1.1.10) with rpmgs script
 
