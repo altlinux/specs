@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.42
+Version: 0.43
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -65,6 +65,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Mon Aug 01 2022 Anton Midyukov <antohami@altlinux.org> 0.43-alt1
+- Add btrfs support (Closes: 43376)
+
 * Tue Jun 28 2022 Anton Midyukov <antohami@altlinux.org> 0.42-alt1
 - replace fgrep to grep -F
 
