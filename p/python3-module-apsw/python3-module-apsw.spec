@@ -1,22 +1,21 @@
-%define _name apsw
-%define rel r1
-%define sqlite_ver 3.38.5
+%define pypi_name apsw
+%define sqlite_ver 3.39.2
 %def_enable check
 
-Name: python3-module-%_name
-Version: 3.38.5
+Name: python3-module-%pypi_name
+Version: 3.39.2.0
 Release: alt1
 
 Summary: Another Python SQLite Wrapper
 #doc/_sources/copyright.rst.txt
 License: Zlib
 Group: Development/Python3
-Url: https://rogerbinns.github.io/apsw
+Url: https://pypi.org/project/%pypi_name
 
 Vcs: https://rogerbinns.github.io/apsw.git
-Source: https://github.com/rogerbinns/apsw/releases/download/%version-%rel/%_name-%version-%rel.zip
+Source: https://github.com/rogerbinns/%pypi_name/releases/download/%version/%pypi_name-%version.zip
 
-BuildRequires: libsqlite3-devel >= %sqlite_ver unzip
+BuildRequires: unzip libsqlite3-devel >= %sqlite_ver
 BuildRequires: python3-devel rpm-build-python3
 
 %description
@@ -26,7 +25,7 @@ being a minimal layer over SQLite attempting just to translate the
 complete SQLite API into Python.
 
 %prep
-%setup -n %_name-%version-%rel
+%setup -n %pypi_name-%version
 find . -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
 
 %build
@@ -47,6 +46,9 @@ gcc %optflags %optflags_shared -shared -o ./testextension.sqlext -I. -Isqlite3 s
 
 
 %changelog
+* Mon Aug 01 2022 Yuri N. Sedunov <aris@altlinux.org> 3.39.2.0-alt1
+- 3.39.2.0
+
 * Mon Jun 06 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.5-alt1
 - 3.38.5
 
