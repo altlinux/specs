@@ -1,5 +1,6 @@
+%define _unpackaged_files_terminate_build 1
 Name: perl-Test-Trap
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: Test::Trap perl module
@@ -29,6 +30,9 @@ BuildArch: noarch
 %doc Changes README
 
 %changelog
+* Mon Aug 01 2022 Igor Vlasenko <viy@altlinux.org> 0.3.5-alt1
+- new version
+
 * Wed Oct 24 2018 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt1
 - automated CPAN update
 
