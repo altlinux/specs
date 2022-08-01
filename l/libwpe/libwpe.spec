@@ -1,7 +1,10 @@
 %define api_ver 1.0
 
+%def_enable check
+%def_enable docs
+
 Name: libwpe
-Version: 1.12.0
+Version: 1.12.2
 Release: alt1
 
 Summary: General-purpose library for the WPE-flavored port of WebKit
@@ -11,9 +14,10 @@ Url: https://github.com/WebPlatformForEmbedded/%name
 
 Source: %url/releases/download/%version/%name-%version.tar.xz
 
-BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++
 BuildRequires: libEGL-devel libxkbcommon-devel
+%{?_enable_docs:BuildRequires: hotdoc}
 
 %description
 %summary
@@ -21,21 +25,35 @@ BuildRequires: libEGL-devel libxkbcommon-devel
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package provides files for developing applications that
 use %name.
 
+%package devel-doc
+Summary: Development documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name < %version
+
+%description devel-doc
+This package contains development documentation for %name.
+
 %prep
 %setup
 
 %build
-%cmake -DCMAKE_BUILD_TYPE="Release"
-%cmake_build
+%meson \
+%{?_enable_docs:-Dbuild-docs=true}
+%nil
+%meson_build
 
 %install
-%cmakeinstall_std
+%meson_install
+
+%check
+%__meson_test
 
 %files
 %_libdir/libwpe-%api_ver.so.*
@@ -46,7 +64,16 @@ use %name.
 %_libdir/libwpe-%api_ver.so
 %_pkgconfigdir/wpe-%api_ver.pc
 
+%if_enabled docs
+%files devel-doc
+%_datadir/doc/%name/
+%endif
+
 %changelog
+* Mon Aug 01 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
+- 1.12.2 (ported to Meson build system)
+- new devel-doc subpackage
+
 * Sun Oct 03 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
