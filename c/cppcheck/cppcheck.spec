@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 2.8
-Release: alt2
+Version: 2.8.2
+Release: alt1
 
 Summary: A tool for static C/C++ code analysis
 License: GPLv3
@@ -125,6 +125,9 @@ grep -l "#\!%__python3" %buildroot%_datadir/Cppcheck/addons/*.py | xargs chmod +
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Aug 01 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2.8.2-alt1
+- Version 2.8.2
+
 * Sun May 22 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2.8-alt2
 - Add cppcheck-2.8-kate.patch
 
