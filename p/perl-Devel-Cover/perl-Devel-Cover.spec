@@ -1,11 +1,11 @@
-BuildRequires: perl-podlators
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl-podlators
 %add_findreq_skiplist %_bindir/cpancover
 %add_findreq_skiplist %perl_vendor_archlib/Devel/Cover/Collection.pm
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 1.36
-Release: alt2
+Version: 1.38
+Release: alt1
 
 Summary: Code coverage metrics for Perl
 License: GPL or Artistic
@@ -15,7 +15,7 @@ URL: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/P/PJ/PJCJ/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Oct 12 2011 (-bi)
-BuildRequires: perl-B-Debug perl-JSON-PP perl-PPI-HTML perl-Parallel-Iterator perl-Perl-Tidy perl-Pod-Coverage perl-Template perl-Test-Differences perl-Test-Warn perl(Sereal/Decoder.pm) perl(Sereal/Encoder.pm) perl(JSON/MaybeXS.pm)
+BuildRequires: perl-B-Debug perl-JSON-PP perl-PPI-HTML perl-Parallel-Iterator perl-Perl-Tidy perl-Pod-Coverage perl-Template perl-Test-Differences perl-Test-Warn perl(Sereal/Decoder.pm) perl(Sereal/Encoder.pm) perl(JSON/MaybeXS.pm) perl(experimental.pm)
 
 %description
 This module provides code coverage metrics for Perl. Code coverage
@@ -67,6 +67,9 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %_man1dir/*
 
 %changelog
+* Mon Aug 01 2022 Igor Vlasenko <viy@altlinux.org> 1.38-alt1
+- automated CPAN update
+
 * Thu Dec 10 2020 Igor Vlasenko <viy@altlinux.ru> 1.36-alt2
 - scripts moved to scripts subpackage (closes: #38533)
 - added conflict with golang to scripts
