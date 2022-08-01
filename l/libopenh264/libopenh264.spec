@@ -1,16 +1,20 @@
 %define oname openh264
 %def_enable check
+%ifarch %ix86 x86_64
+%def_with meson
+%else
 %def_without meson
+%endif
+
 %def_disable static
 
 Name: libopenh264
-Version: 2.2.0
+Version: 2.3.0
 Release: alt1
 
 Summary: H.264 codec library
-
+License: BSD-2-Clause
 Group: System/Libraries
-License: BSD
 Url: http://www.openh264.org/
 
 Vcs: https://github.com/cisco/openh264.git
@@ -82,7 +86,7 @@ sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 %endif
 
 %if_disabled static
-rm -v %buildroot%_libdir/%name.a
+%{?_without_meson:rm -v %buildroot%_libdir/%name.a}
 %endif
 
 %check
@@ -105,6 +109,11 @@ rm -v %buildroot%_libdir/%name.a
 %endif
 
 %changelog
+* Mon Aug 01 2022 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+- used meson for %%ix86 and x86_64 builds
+- fixed License tag
+
 * Tue May 03 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
 - 2.2.0
 
