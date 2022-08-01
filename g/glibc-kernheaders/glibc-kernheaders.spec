@@ -1,4 +1,4 @@
-%define kernel_base_version 5.18
+%define kernel_base_version 5.19
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -121,7 +121,7 @@ building most standard programs and are also needed to build glibc. \
 
 # In the kernel tree:
 # ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|\1|p' | sort | xargs echo %%define kernel_arches
-%define kernel_arches alpha arc arm arm64 csky h8300 hexagon ia64 m68k microblaze mips nios2 openrisc parisc powerpc riscv s390 sh sparc x86 xtensa
+%define kernel_arches alpha arc arm arm64 csky hexagon ia64 loongarch m68k microblaze mips nios2 openrisc parisc powerpc riscv s390 sh sparc x86 xtensa
 
 # ls arch/*/include/uapi/asm/Kbuild | sed -n 's|^arch/\([^/ ]\+\)/.*|%%do_package \1 1|p' | sort
 %do_package alpha 1
@@ -129,9 +129,9 @@ building most standard programs and are also needed to build glibc. \
 %do_package arm 1
 %do_package arm64 1
 %do_package csky 1
-%do_package h8300 1
 %do_package hexagon 1
 %do_package ia64 1
+%do_package loongarch 1
 %do_package m68k 1
 %do_package microblaze 1
 %do_package mips 1
@@ -224,14 +224,13 @@ gen_files()
 		done
 	done < "$a"-specific.list > package-"$a".files
 
-	sed -n 's|^\(/.\+/\)[^/]\+$|%dir \1|p' < package-"$a".files |
-		sort -u > dir-"$a".files
+	{
+		sed -E -n 's|^(/.+/)[^/]+$|%dir \1|p' < package-"$a".files
+		sed -E -n 's|^(/.+/)[^/]+/[^/]+$|%dir \1|p' < package-"$a".files
+		sed -E -n 's|^(/.+/)[^/]+(/[^/]+){2}$|%dir \1|p' < package-"$a".files
+	} > dir-"$a".files
 
-	cat >> package-"$a".files <<-@@@
-	%%dir %hdr_dir/
-	%%dir %hdr_dir/include/
-	@@@
-	cat dir-"$a".files >> package-"$a".files
+	sort -u dir-"$a".files >> package-"$a".files
 }
 
 for hdr_arch in generic %kernel_arches; do
@@ -268,9 +267,9 @@ cd - > /dev/null
 %do_files arm 1
 %do_files arm64 1
 %do_files csky 1
-%do_files h8300 1
 %do_files hexagon 1
 %do_files ia64 1
+%do_files loongarch 1
 %do_files m68k 1
 %do_files microblaze 1
 %do_files mips 1
@@ -295,6 +294,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sun Jul 31 2022 Dmitry V. Levin <ldv@altlinux.org> 5.19-alt1
+- v5.18 -> v5.19.
+
 * Sun May 22 2022 Dmitry V. Levin <ldv@altlinux.org> 5.18-alt1
 - v5.17 -> v5.18.
 
