@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Warn.pm)
 # END SourceDeps(oneline)
 %define dist Chart
 Name: perl-%dist
-Version: 2.403.6
+Version: 2.403.7
 Release: alt1
 
 Summary: A series of charting modules
@@ -40,8 +40,12 @@ all of its graphics primitives calls.
 %perl_vendor_privlib/Chart/*.pm
 %perl_vendor_privlib/Chart/Color
 %perl_vendor_privlib/Chart/Manual*
+%perl_vendor_privlib/Chart/Property
 
 %changelog
+* Mon Aug 01 2022 Igor Vlasenko <viy@altlinux.org> 2.403.7-alt1
+- automated CPAN update
+
 * Mon Jul 25 2022 Igor Vlasenko <viy@altlinux.org> 2.403.6-alt1
 - automated CPAN update
 
