@@ -75,7 +75,7 @@
 %endif
 
 Name:    samba
-Version: 4.15.8
+Version: 4.15.9
 Release: alt1
 
 Group:   System/Servers
@@ -188,7 +188,7 @@ BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.4.3
+%define ldb_version 2.4.4
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -1935,6 +1935,19 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Sun Jul 31 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.15.9-alt1
+- Update to security release of Samba 4.15
+- Security fixes:
+  + CVE-2022-2031:  Samba AD users can bypass certain restrictions associated
+                    with changing passwords (Samba#15047).
+  + CVE-2022-32744: Samba AD users can forge password change requests for any
+                    user (Samba#15074).
+  + CVE-2022-32745: Samba AD users can crash the server process with an LDAP add
+                    or modify request (Samba#15008).
+  + CVE-2022-32746: Samba AD users can induce a use-after-free in the server
+                    process with an LDAP add or modify request (Samba#15009).
+  + CVE-2022-32742: Server memory information leak via SMB1 (Samba#15085).
+
 * Mon Jun 27 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.15.8-alt1
 - Update to maintenance release of Samba 4.15 with latest bugfixes:
   + Setting fruit:resource = stream in vfs_fruit causes a panic (Samba#15099).
