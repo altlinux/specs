@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 135
+%define centos_release 139
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -386,7 +386,6 @@ mkdir -p %buildroot%kbuild_dir/net/mac80211
 mkdir -p %buildroot%kbuild_dir/kernel
 mkdir -p %buildroot%kbuild_dir/lib
 
-cp -a drivers/scsi/scsi.h          %buildroot%kbuild_dir/drivers/scsi/
 cp -a drivers/md/dm*.h             %buildroot%kbuild_dir/drivers/md/
 cp -a drivers/usb/core/*.h         %buildroot%kbuild_dir/drivers/usb/core/
 cp -a drivers/net/wireless/Kconfig %buildroot%kbuild_dir/drivers/net/wireless/
@@ -633,6 +632,52 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Aug 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.139-alt1.el9
+- Updated to kernel-5.14.0-139.el9:
+  + cgroup: Miscellaneous bug fixes and enhancements
+  + drm/mgag200: Add FB damage clips and gamma support
+  + Fix kvm/selftests/rseq_test failure
+  + net: mld: fix reference count leak in mld_{query | report}_work()
+  + RDMA: Bug fixes from v5.19
+  + update the non-x86 portions of drivers/platform to v5.18
+  + vsock: backport latest commits for RHEL-9-1
+
+* Mon Aug 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.138-alt1.el9
+- Updated to kernel-5.14.0-138.el9:
+  + Add support for MaxLinear NICs (GPY115/21x/24x driver)
+  + blk-mq: don't create hctx debugfs dir until q->debugfs_dir is created
+  + block: Fix handling of offline queues in blk_mq_alloc_request_hctx()
+  + bonding: bugfix series from v5.19
+  + Bring MD kernel up to date
+  + CNB: net: Don't include filter.h from net/sock.h
+  + crypto: qat: Update QAT drivers upto v5.19
+  + Documentation: fix udp_wmem_min in ip-sysctl.rst
+  + e1000e: Driver update for RHEL9.1
+  + Enable MediaTek BT Support for RHEL-9 and bug fixes
+  + fscache: Avoid ASSERTCMP if two threads race into fscache_disable_cookie
+  + netdevsim: don't overwrite read only ethtool parms
+  + NFSv4.1 support for NFS4_OPEN_RESULT_PRESERVE_UNLINKED
+  + nvme: fix RCU hole that allowed for endless looping in multipath round robin
+  + redhat/configs/common: Enable CONFIG_LZ4_COMPRESS
+  + redhat: workaround CKI cross compilation for scripts
+  + RHEL-9 nfsd server post_wcc fixes - clients see increased revalidations
+  + sfc: fix efx_separate_tx_channels=y
+  + tools/testing/nvdimm: Fix security_init() symbol collision
+  + Update intel_idle with SPR and ADL support
+  + Update USB and Thunderbolt to v5.19-rc5
+  + vdpa/mlx5: Fix ethtool can not set combined numbers in vm when the vcpu < vqs
+  + XDP/Networking BPF: 9.1 P2 backports from upstream
+
+* Thu Jul 28 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.136-alt1.el9
+- Updated to kernel-5.14.0-136.el9:
+  + arm64: update GIC interrupt controller driver to v5.18 level
+  + bpftool: Enable libbpf's strict mode by default
+  + drivers/base: fix userspace break from using bin_attributes for cpumap and cpulist
+  + ipv4: backport upstream fixes
+  + nfsd: destroy percpu stats counters after reply cache shutdown
+  + x86/kexec: fix memory leak of elf header buffer
+  + xfs: fallocate doesn't drop privileges or capabilities
+
 * Fri Jul 22 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.135-alt1.el9
 - Updated to kernel-5.14.0-135.el9 (fixes: CVE-2022-34918):
   + ACPI, PCI: Power Management fixes
