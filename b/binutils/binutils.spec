@@ -1,8 +1,8 @@
 %define binutils_sourcedir /usr/src/binutils-source
 
 Name: binutils
-Version: 2.37
-Release: alt3
+Version: 2.38
+Release: alt1
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -75,8 +75,6 @@ This package contains source code of GNU Binutils.
 
 %prep
 %setup -n %name-%version-%release
-
-sed -i 's/%%{release}/%release/g' bfd/Makefile{.am,.in}
 
 %build
 %define _configure_target --host=%_target_platform --build=%_target_platform
@@ -219,9 +217,6 @@ GCC_PPN_LTO=$(gcc -print-prog-name=liblto_plugin.so)
 [ "$GCC_PFN_LTO" != 'liblto_plugin.so' -o "$GCC_PPN_LTO" != 'liblto_plugin.so' ] || exit
 RUNTESTFLAGS=
 XFAIL_TESTS=
-%ifarch ppc64le
-XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
-%endif
 
 %make_build -k check CC="$PWD/alt/gcc.sh" CXX="$PWD/alt/g++.sh" \
 	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS" \
@@ -260,6 +255,9 @@ XFAIL_TESTS="$XFAIL_TESTS script_test_12i"
 %binutils_sourcedir
 
 %changelog
+* Mon Aug 01 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.38-alt1
+- Updated to 2.38 20220708.
+
 * Wed Oct 20 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.37-alt3
 - Fixed FTBFS with glibc 2.34 (ALT#41173).
 - glibc-source: excluded source files related to gdb (ALT#41172).
