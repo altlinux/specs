@@ -17,20 +17,21 @@ BuildRequires: gcc-c++
 
 Name:		htmlcxx
 Version:	0.87
-Release:	alt3_2
+Release:	alt3_4
 Summary:	htmlcxx is a simple non-validating css1 and html parser for C++
 Group:		Development/Other 
 License:	LGPLv2
 URL:		http://htmlcxx.sourceforge.net/
 Source0:	https://sourceforge.net/projects/htmlcxx/files/v%{version}/%{name}-%{version}.tar.gz
 Patch0:		htmlcxx-0.86-linking.patch
+Patch1:		htmlcxx-0.87-c++17.patch
 Source44: import.info
 
 %description
 htmlcxx is a simple non-validating css1 and html parser for C++.
 Although there are several other html parsers available, htmlcxx has some
 characteristics that make it unique: - STL like navigation of DOM tree,
-using excelent's tree.hh library from Kasper Peeters.
+using the excellent tree.hh library from Kasper Peeters.
 
 - It is possible to reproduce exactly, character by character, the original
   document from the parse tree
@@ -75,10 +76,10 @@ Libraries containing the libcss_* files
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 
 %build
-%add_optflags -std=c++14
 autoreconf -vfi
 %configure
 %make_build
@@ -114,6 +115,9 @@ find %{buildroot} -name *.*a -delete
 
 
 %changelog
+* Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 0.87-alt3_4
+- update by mgaimport
+
 * Fri Oct 01 2021 Igor Vlasenko <viy@altlinux.org> 0.87-alt3_2
 - fixed build with gcc11
 
