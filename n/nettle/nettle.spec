@@ -4,7 +4,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: nettle
-Version: 3.8.0
+Version: 3.8.1
 Release: alt1
 Summary: A low-level cryptographic library
 
@@ -106,6 +106,9 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %_infodir/*.*
 
 %changelog
+* Tue Aug 02 2022 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt1
+- Updated to 3.8.1.
+
 * Tue Jun 28 2022 Mikhail Efremov <sem@altlinux.org> 3.8.0-alt1
 - Updated to 3.8.0.
 - Updated Vcs tag.
