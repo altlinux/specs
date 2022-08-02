@@ -3,14 +3,16 @@
 
 Name: simplescreenrecorder
 Version: 0.4.4
-Release: alt2
+Release: alt3
 
 Summary: Simple Screen Recording with OpenGL capture
+
 License: GPL-3.0 and ISC and GPL-3.0+ and Zlib
 Group: Video
-
 Url: https://www.maartenbaert.be/simplescreenrecorder/
+
 Source: https://github.com/MaartenBaert/ssr/archive/%version/ssr-%version.tar.gz
+Patch: simplescreenrecorder-0.4.4-alt-hide-window-on-the-screen-recording.patch
 
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
@@ -41,6 +43,7 @@ Obsoletes: simplescreenrecording
 
 %prep
 %setup -n ssr-%version
+%patch -p2
 f="data/simplescreenrecorder.desktop"
 for s in "GenericName=Simple screen recorder" \
 	"GenericName[ru]=Запись видео с экрана" \
@@ -88,6 +91,9 @@ rm -f %buildroot%_libdir/*.la
 %_datadir/metainfo/*
 
 %changelog
+* Tue Aug 02 2022 Leontiy Volodin <lvol@altlinux.org> 0.4.4-alt3
+- Hide the window when the screen recording is started (ALT #43422).
+
 * Mon May 23 2022 Fr. Br. George <george@altlinux.org> 0.4.4-alt2
 - Fix fgrep warning
 
