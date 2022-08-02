@@ -6,10 +6,9 @@ Group: System/Libraries
 %define oldname speexdsp
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define fontpkgname speexdsp
 Name:           libspeexdsp
-Version:        1.2.0
-Release:        alt1_3
+Version:        1.2.1
+Release:        alt1_2
 Summary:        A voice compression format (DSP)
 
 License:        BSD
@@ -19,7 +18,7 @@ Source0:        http://downloads.xiph.org/releases/speex/%{oldname}-%{version}.t
 BuildRequires:  gcc
 # speexdsp was split from speex in 1.2rc2. As speexdsp does not depend on
 # speex, a versioned conflict is required.
-Conflicts: libspeex <= 1.2-0.21.rc1
+Conflicts:      libspeex <= 1.2-0.21.rc1
 Source44: import.info
 Provides: speexdsp = %{version}-%{release}
 Conflicts: libspeex < 1.2-alt0.6
@@ -39,7 +38,7 @@ Summary: 	Development package for %{oldname}
 Requires: 	%{name} = %{version}-%{release}
 # speexdsp was split from speex in 1.2rc2. As speexdsp does not depend on
 # speex, a versioned conflict is required.
-Conflicts: libspeex-devel <= 1.2-0.21.rc1
+Conflicts:      libspeex-devel <= 1.2-0.21.rc1
 Provides: speexdsp-devel = %{version}-%{release}
 Conflicts: libspeex-devel < 1.2-alt0.6
 
@@ -73,16 +72,20 @@ find %{buildroot} -type f -name "*.la" -delete
 
 
 %files
-%doc AUTHORS COPYING TODO ChangeLog README NEWS doc/manual.pdf
+%doc --no-dereference COPYING
+%doc AUTHORS TODO ChangeLog README NEWS doc/manual.pdf
 %doc %{_docdir}/speexdsp/manual.pdf
-%{_libdir}/libspeexdsp.so.*
+%{_libdir}/libspeexdsp.so.1*
 
 %files devel
-%{_includedir}/speex
+%{_includedir}/speex/
 %{_libdir}/pkgconfig/speexdsp.pc
 %{_libdir}/libspeexdsp.so
 
 %changelog
+* Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt1_2
+- update to new release by fcimport
+
 * Tue Jul 27 2021 Igor Vlasenko <viy@altlinux.org> 1.2.0-alt1_3
 - e2k support imported
 
