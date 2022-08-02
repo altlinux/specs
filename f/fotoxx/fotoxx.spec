@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 22.20
+Version: 22.30
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -82,6 +82,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %exclude %_datadir/doc/%name
 
 %changelog
+* Tue Aug 02 2022 Yuri N. Sedunov <aris@altlinux.org> 22.30-alt1
+- 22.30
+
 * Fri Jul 01 2022 Yuri N. Sedunov <aris@altlinux.org> 22.20-alt1
 - 22.20
 
