@@ -12,14 +12,14 @@ BuildRequires: /usr/bin/doxygen
 
 Name:          liblscp
 Summary:       LinuxSampler Control Protocol (LSCP) wrapper library
-Version:       0.9.5
+Version:       0.9.6
 Release:       alt1_1
 License:       LGPLv2
 Group:         System/Libraries
 URL:           http://www.linuxsampler.org/
 Source0:       https://sourceforge.net/projects/qsampler/files/liblscp/%{version}/%{name}-%{version}.tar.gz
 
-BuildRequires: cmake
+BuildRequires: ccmake cmake ctest
 Source44: import.info
 
 %description
@@ -75,6 +75,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 0.9.6-alt1_1
+- update by mgaimport
+
 * Sat Feb 05 2022 Igor Vlasenko <viy@altlinux.org> 0.9.5-alt1_1
 - update by mgaimport
 
