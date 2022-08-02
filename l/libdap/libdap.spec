@@ -11,14 +11,16 @@ Group: Development/Other
 %define _localstatedir %{_var}
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
-Version: 3.20.9
-Release: alt1_1
+Version: 3.20.10
+Release: alt1_2
 
 License: LGPLv2+
 URL: http://www.opendap.org/
 Source0: http://www.opendap.org/pub/source/libdap-%{version}.tar.gz
 #Don't run HTTP tests - builders don't have network connections
 Patch0: libdap-offline.patch
+# Fix for i686 build
+Patch1: https://github.com/OPENDAP/libdap4/pull/192.patch
 
 BuildRequires: gcc-c++
 # For autoreconf
@@ -75,6 +77,7 @@ Documentation of the libdap library.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p1
+%patch1 -p1
 
 iconv -f latin1 -t utf8 < COPYRIGHT_W3C > COPYRIGHT_W3C.utf8
 touch -r COPYRIGHT_W3C COPYRIGHT_W3C.utf8
@@ -140,6 +143,9 @@ done
 
 
 %changelog
+* Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 3.20.10-alt1_2
+- update to new release by fcimport
+
 * Fri Jan 21 2022 Igor Vlasenko <viy@altlinux.org> 3.20.9-alt1_1
 - update to new release by fcimport
 
