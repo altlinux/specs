@@ -1,6 +1,8 @@
+%def_disable check
+
 Name: git-cola
-Version: 3.11.0
-Release: alt2
+Version: 4.0.1
+Release: alt1
 
 Summary: A highly caffeinated git gui
 License: GPL-2.0-or-later
@@ -13,16 +15,12 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx-devel
-#BuildRequires: rpm-build-gir tcl
-BuildRequires: asciidoc
+%if_enabled check
+BuildRequires(pre): python3-module-tox
+%endif
+BuildRequires: python3-module-sphinx-devel python3-module-setuptools python3-module-wheel
 # hasher tests:
 Requires: python3-module-pyinotify python3-module-PyQt5 git-core
-
-AutoReq: no
-AutoProv: yes,nopython
-# skip internal module reqs
-%add_python3_req_skip cola cola.i18n cola.models cola.widgets
 
 %description
 A sweet, carbonated git gui known for its sugary flavour
@@ -30,35 +28,39 @@ and caffeine-inspired features.
 
 %prep
 %setup
-
-# fix python shebangs
-sed -i 's|/usr/bin/env python|%__python3|' $(find ./ -name '*.py')
-sed -i 's|/usr/bin/env python|%__python3|' bin/git-cola bin/git-cola-sequence-editor bin/git-dag
-
 %prepare_sphinx3 share/doc/%name
+sed -i '/Git Cola version/s/%%(cola_version)s/%{version}/' \
+    cola/widgets/about.py
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %find_lang %name
 # because executable script is not executable
 chmod +x %buildroot%python3_sitelibdir/cola/widgets/spellcheck.py
-chmod +x %buildroot%_datadir/git-cola/lib/cola/widgets/spellcheck.py
+chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass
+chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
+
+%if_enabled check
+%check
+%tox_check
+%endif
 
 %files -f %name.lang
 %doc COPYING COPYRIGHT README.md
 %_bindir/*
 %_desktopdir/*.desktop
-%_datadir/git-cola
-%_datadir/metainfo/git-cola.appdata.xml
-%_datadir/metainfo/git-dag.appdata.xml
 %_docdir/git-cola
-#_man1dir/*
+%_iconsdir/hicolor/scalable/apps/git-cola.svg
 %python3_sitelibdir/*
 
 %changelog
+* Tue Aug 02 2022 Leontiy Volodin <lvol@altlinux.org> 4.0.1-alt1
+- New version 4.0.1.
+- Ported to %%pyproject macros.
+
 * Wed Jan 19 2022 Stanislav Levin <slev@altlinux.org> 3.11.0-alt2
 - Fixed FTBFS (setuptools 60+).
 
