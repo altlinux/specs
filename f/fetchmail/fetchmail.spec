@@ -1,7 +1,7 @@
 %define rtdir %_runtimedir/%name
 
 Name: fetchmail
-Version: 6.4.23
+Version: 6.4.32
 Release: alt1
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
@@ -126,7 +126,6 @@ export CPPFLAGS=-I%_includedir/krb5
 %makeinstall
 
 rm -rf contrib/RCS
-chmod 644 contrib/*
 
 install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 install -pDm644 %SOURCE2 %buildroot%_unitdir/%name.service
@@ -155,6 +154,9 @@ EOF
     mkdir -p %buildroot%python3_sitelibdir
     mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
+
+%check
+make check
 
 %pre -n %name-daemon
 %_sbindir/groupadd -f %name ||:
@@ -197,6 +199,9 @@ usermod -d %rtdir %name ||:
 
 
 %changelog
+* Tue Aug 02 2022 Alexey Gladkov <legion@altlinux.ru> 6.4.32-alt1
+- New version (6.4.32).
+
 * Fri Nov 19 2021 Alexey Gladkov <legion@altlinux.ru> 6.4.23-alt1
 - New version (6.4.23).
 
