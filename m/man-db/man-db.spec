@@ -1,27 +1,20 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
-Version: 2.9.4
+Version: 2.10.2
 Release: alt1
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
 License: GPL-2.0-or-later and GPL-3.0-or-later
 Group: System/Base
-URL: http://www.nongnu.org/man-db/
-
-Packager: Alexey Gladkov <legion@altlinux.ru>
+URL: https://gitlab.com/cjwatson/man-db
 
 Source0: %name-%version.tar
-Source1: man-db.crondaily
-Source2: man-db.sysconfig
-Source3: man-db.filetrigger
 
-Patch0: man-db-2.8.5-change-owner-of-man-cache.patch
-# http://lists.nongnu.org/archive/html/man-db-devel/2017-01/msg00013.html
-Patch1: man-db-2.7.6.1-fix-override-dir-handling.patch
+Patch0001: 0001-Change-owner-of-man-cache.patch
 %ifarch %e2k
-Patch2: man-db-2.7.6.1-e2k-mcst-path.patch
+Patch0002: 0002-Add-e2k-specific-path.patch
 %endif
-Patch3: man-db-2.9.0-catman-use-path-env.patch
+Patch0003: 0003-catman-Use-PATH-env.patch
 
 Obsoletes: man < 2.0
 Obsoletes: man-whatis < 2.0
@@ -73,8 +66,6 @@ This package provides periodic update of man-db cache.
 %setup
 %autopatch -p1
 
-sed -i -e 's#^AC_PREREQ(\[2\.63\])#AC_PREREQ([2.64])#' configure.ac
-
 %build
 ./bootstrap \
 	--gnulib-srcdir=%_datadir/gnulib \
@@ -117,15 +108,18 @@ install -d -m 0755  %buildroot/%cache
 
 # install cron script for man-db creation/update
 mkdir -p %buildroot%_sysconfdir/cron.daily
-install -D -p -m 0755 %SOURCE1 %buildroot%_sysconfdir/cron.daily/man-db.cron
+install -Dp -m 0755 .rpm/man-db.crondaily \
+	%buildroot%_sysconfdir/cron.daily/man-db.cron
 
 # config for cron script
 mkdir -p %buildroot%_sysconfdir/sysconfig
-install -D -p -m 0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/man-db
+install -Dp -m 0644 .rpm/man-db.sysconfig \
+	%buildroot%_sysconfdir/sysconfig/man-db
 
 # install filetrigger
 mkdir -p %buildroot%_rpmlibdir
-install -D -p -m 0755 %SOURCE3 %buildroot%_rpmlibdir/man-db.filetrigger
+install -Dp -m 0755 .rpm/man-db.filetrigger \
+	%buildroot%_rpmlibdir/man-db.filetrigger
 
 (
     cd %buildroot
@@ -140,10 +134,10 @@ cat %name.lang %name-gnulib.lang >> %name.files
 
 # clear the old cache
 %post
-%__rm -rf -- %cache/*
+rm -rf -- %cache/*
 
 %files -f %name.files
-%doc README NEWS docs/COPYING
+%doc README.md NEWS.md
 %config(noreplace) %_sysconfdir/man_db.conf
 %config(noreplace) %_tmpfilesdir/man-db.conf
 %_sbindir/*
@@ -161,6 +155,9 @@ cat %name.lang %name-gnulib.lang >> %name.files
 %config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Tue Aug 02 2022 Alexey Gladkov <legion@altlinux.ru> 2.10.2-alt1
+- New version (2.10.2).
+
 * Sat Dec 18 2021 Alexey Gladkov <legion@altlinux.ru> 2.9.4-alt1
 - New version (2.9.4).
 - Build from upstream git repository.
