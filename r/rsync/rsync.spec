@@ -1,20 +1,24 @@
 Name: rsync
-Version: 3.1.3
-Release: alt2
+Version: 3.2.5
+Release: alt0.1
 %define srcname rsync-%version
 
 Summary: A program for synchronizing files over a network
 License: GPLv3+
 Group: Networking/File transfer
-Url: http://rsync.samba.org
-
-# git://git.samba.org/rsync refs/heads/b3.0.x
-Source: %srcname.tar
+Url: https://rsync.samba.org
 
 # git://git.altlinux.org/gears/r/rsync.git
-Patch: rsync-%version-%release.patch
+Source: %name-%version-%release.tar
 
-BuildRequires: libacl-devel libattr-devel libpopt-devel
+BuildRequires: libacl-devel
+BuildRequires: libattr-devel
+BuildRequires: liblz4-devel
+BuildRequires: libpopt-devel
+BuildRequires: libssl-devel
+BuildRequires: libxxhash-devel
+BuildRequires: libzstd-devel
+BuildRequires: python3-module-commonmark
 
 %package server
 Summary: Server environment for the rsync program
@@ -43,14 +47,21 @@ is included in this package.
 This package includes rsyncd daemon functionality.
 
 %prep
-%setup -n %srcname
-%patch -p1
-xz -9 OLDNEWS
+%setup -n %name-%version-%release
 
 %build
 ./prepare-source
 %add_optflags -fno-strict-aliasing
-%configure
+%configure \
+	--enable-lz4 \
+	--enable-openssl \
+	--enable-xxhash \
+	--enable-zstd \
+	--enable-acl-support \
+	--enable-xattr-support \
+	--with-nobody-user=rsyncd \
+	--with-nobody-group=rsyncd \
+	#
 %make_build
 
 %install
@@ -89,7 +100,7 @@ done
 %files
 %_bindir/*
 %_man1dir/*
-%doc support/ tech_report.tex *NEWS* README zlib/README.rsync TODO
+%doc support/ tech_report.tex NEWS.md README.md
 
 %files server
 %config(noreplace) %_sysconfdir/logrotate.d/rsyncd
@@ -103,6 +114,11 @@ done
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Tue Aug 02 2022 Dmitry V. Levin <ldv@altlinux.org> 3.2.5-alt0.1
+- v3.1.3 -> v3.2.5pre1 (fixes: CVE-2022-29154).
+- Removed --noatime option added in 3.1.3-alt1
+  in favour of --open-noatime option added in rsync 3.2.0.
+
 * Wed Dec 02 2020 Dmitry V. Levin <ldv@altlinux.org> 3.1.3-alt2
 - Fixed build with gcc 10.x.
 
