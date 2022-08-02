@@ -10,12 +10,12 @@ BuildRequires:  gcc
 
 Name:		cjose
 Version:	0.6.1
-Release:	alt1_1
+Release:	alt1_3
 Summary:	C library implementing the Javascript Object Signing and Encryption (JOSE)
 Group:		System/Libraries
 License:	MIT
-URL:            https://github.com/cisco/cjose
-Source0:  	https://github.com/cisco/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+URL:		https://github.com/cisco/cjose
+Source0:	https://github.com/cisco/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 
 Patch1: concatkdf.patch
 
@@ -55,6 +55,9 @@ This package contains development files for %{name}.
 
 
 %build
+
+# Undo the effects of -Werror so deprecation warnings don't halt the build
+CFLAGS="$CFLAGS -Wno-error"
 %configure --disable-static
 %make_build
 
@@ -82,6 +85,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 0.6.1-alt1_3
+- update by mgaimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt1_1
 - update by mgaimport
 
