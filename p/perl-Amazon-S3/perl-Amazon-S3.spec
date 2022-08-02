@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Amazon-S3
-Version: 0.53
+Version: 0.55
 Release: alt1
 
 Summary: A portable client library for working with and
@@ -30,7 +30,7 @@ BuildArch: noarch
 Source: %m_distro-%version.tar.gz
 
 # Automatically added by buildreq on Sat Sep 04 2010
-BuildRequires: perl-Class-Accessor perl-Digest-HMAC perl-Digest-MD5-File perl-LWP-UserAgent-Determined perl-XML-Simple perl-devel perl(File/ShareDir/Install.pm) perl(Test/Output.pm) perl(Readonly.pm)
+BuildRequires: perl-Class-Accessor perl-Digest-HMAC perl-Digest-MD5-File perl-LWP-UserAgent-Determined perl-XML-Simple perl-devel perl(File/ShareDir/Install.pm) perl(Test/Output.pm) perl(Readonly.pm) perl(IO/Scalar.pm) perl(Net/Amazon/Signature/V4.pm)
 
 %description
 Amazon::S3 provides a portable client interface to Amazon Simple
@@ -84,6 +84,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Amazon/*
 
 %changelog
+* Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 0.55-alt1
+- new version
+
 * Wed Jun 22 2022 Igor Vlasenko <viy@altlinux.org> 0.53-alt1
 - new version
 
