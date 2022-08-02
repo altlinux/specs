@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 %define dist Module-Find
 
 Name: perl-Module-Find
-Version: 0.15
+Version: 0.16
 Release: alt1
 
 Summary: Module::Find - Find and use installed modules in a (sub)category
@@ -41,6 +42,9 @@ make sure you modify @INC before you call the Module::Find functions.
 %perl_vendor_privlib/Module/Find.pm
 
 %changelog
+* Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 0.16-alt1
+- automated CPAN update
+
 * Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - automated CPAN update
 
