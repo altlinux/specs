@@ -1,5 +1,5 @@
 Name: dvdisaster
-Version: 0.79.9
+Version: 0.79.10
 Release: alt1
 
 Summary: Additional error protection for CD/DVD media
@@ -84,6 +84,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_defaultdocdir/dvdisaster-%version
 
 %changelog
+* Tue Aug 02 2022 Leontiy Volodin <lvol@altlinux.org> 0.79.10-alt1
+- 0.79.10 (with rpmgs script)
+
 * Tue Jun 21 2022 Leontiy Volodin <lvol@altlinux.org> 0.79.9-alt1
 - 0.79.9 (with rpmgs script)
 
