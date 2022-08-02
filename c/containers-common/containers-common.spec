@@ -16,7 +16,7 @@
 Epoch: 1
 Name: containers-common
 Version: 1
-Release: alt1
+Release: alt2
 License: Apache-2.0
 Group: System/Configuration/Other
 BuildArch: noarch
@@ -137,6 +137,9 @@ install -d -p -m 755 %buildroot/%_datadir/alt/secrets
 %dir %_datadir/alt/secrets
 
 %changelog
+* Mon Aug 01 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1:1-alt2
+- Add ALT images to shortnames.conf
+
 * Sun Jul 31 2022 Alexey Shabalin <shaba@altlinux.org> 1:1-alt1
 - Initial build as separated package.
 
