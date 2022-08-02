@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define api_ver 1.0
 %def_disable doc
 %def_enable check
 
 Name: libevdev
-Version: 1.12.1
+Version: 1.13.0
 Release: alt1
 
 Summary: kernel evdev device wrapper library
@@ -72,6 +72,9 @@ that are needed to write applications that use %name.
 %_man3dir/%name.3.*
 
 %changelog
+* Tue Aug 02 2022 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1
+- 1.13.0
+
 * Fri Mar 25 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
 - 1.12.1
 
