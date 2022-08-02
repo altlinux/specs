@@ -3,7 +3,7 @@ Group: System/Kernel and hardware
 %define _localstatedir %{_var}
 Summary:        Simple TTY terminal I/O application
 Name:           tio
-Version:        1.40
+Version:        1.47
 Release:        alt1_1
 License:        GPLv2+
 URL:            https://tio.github.io/
@@ -33,12 +33,15 @@ commandline interface to easily connect to TTY devices for basic input/output.
 
 %files
 %doc --no-dereference LICENSE
-%doc AUTHORS ChangeLog README.md
+%doc AUTHORS NEWS README.md
 %{_bindir}/%{name}
 %{_datadir}/bash-completion/completions/%{name}
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 1.47-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 1.40-alt1_1
 - update to new release by fcimport
 
