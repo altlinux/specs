@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname botocore
+%define pypi_name botocore
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.24.15
+Name: python3-module-%pypi_name
+Version: 1.27.42
 Release: alt1
 
 Summary: The low-level, core functionality of boto 3
@@ -17,9 +17,14 @@ BuildArch: noarch
 
 # Source-git: https://github.com/boto/botocore.git
 Source: %name-%version.tar
+Source1: debundler.py.in
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # required for test_resource_leaks
@@ -36,11 +41,15 @@ BuildRequires: python3(six)
 
 BuildRequires: python3(jsonschema)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
-%py3_provides %oname
+%py3_provides %pypi_name
+
+# vendored
+%py3_requires six
+%py3_requires requests
+
+%filter_from_requires /python3(botocore\.vendored\..*)/d
 
 %description
 A low-level interface to a growing number of Amazon Web Services. The
@@ -50,27 +59,37 @@ botocore package is the foundation for AWS-CLI.
 %setup
 %autopatch -p1
 
-rm -r botocore/vendored
+rm botocore/cacert.pem
+
+VENDORED_PATH='botocore/vendored'
+UNVENDORED_PATH="$VENDORED_PATH/__init__.py"
+rm -r "$VENDORED_PATH"
+mkdir "$VENDORED_PATH"
+cp "%SOURCE1" "$UNVENDORED_PATH"
+sed -i \
+    -e 's/@VENDORED_ROOT@/"botocore.vendored"/' \
+    -e 's/@VENDORED_FAKE_PACKAGES@/{"requests.packages"}/' \
+    "$UNVENDORED_PATH"
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false --develop
+%tox_check_pyproject
 
 %files
 %doc LICENSE.txt
 %doc *.rst
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 01 2022 Stanislav Levin <slev@altlinux.org> 1.27.42-alt1
+- 1.24.15 -> 1.27.42.
+
 * Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 1.24.15-alt1
 - 1.20.96 -> 1.24.15.
 

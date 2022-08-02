@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname boto3
+%define pypi_name boto3
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.21.15
+Name: python3-module-%pypi_name
+Version: 1.24.42
 Release: alt1
 
 Summary: The AWS SDK for Python
@@ -21,18 +21,24 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+# this version includes debundler
+Requires: python3-module-botocore >= 1.27.42-alt1
+
+# botocore.vendored doesn't provide subpackages
+%filter_from_requires /python3(botocore\.vendored\..*)/d
+
 %if_with check
 # install_requires=
 BuildRequires: python3(botocore)
 BuildRequires: python3(jmespath)
 BuildRequires: python3(s3transfer)
 
-# deps on packages bundled by botocore
-BuildRequires: python3(six)
-
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -49,24 +55,24 @@ pull requests on this repository. Thanks!
 %autopatch1 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false --develop
+%tox_check_pyproject
 
 %files
 %doc LICENSE
 %doc *.rst
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 01 2022 Stanislav Levin <slev@altlinux.org> 1.24.42-alt1
+- 1.21.15 -> 1.24.42.
+
 * Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 1.21.15-alt1
 - 1.17.96 -> 1.21.15.
 

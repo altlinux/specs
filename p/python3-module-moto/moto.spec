@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define oname moto
+%define pypi_name moto
 
 %def_with check
 # full testsuite takes too long for now, run it locally
@@ -7,8 +7,8 @@
 # python3-module-moto         20:32  35:22  12:18    25:10   12:09
 %def_without full_testsuite
 
-Name: python3-module-%oname
-Version: 3.0.7
+Name: python3-module-%pypi_name
+Version: 3.1.16
 Release: alt1
 
 Summary: A library that allows your python tests to easily mock out the boto library
@@ -24,6 +24,10 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 # install_requires=
 BuildRequires: python3(boto3)
@@ -37,6 +41,7 @@ BuildRequires: python3(dateutil)
 BuildRequires: python3(responses)
 BuildRequires: python3(jinja2)
 
+# extra
 BuildRequires: python3(sure)
 BuildRequires: python3(freezegun)
 BuildRequires: python3(flask)
@@ -46,10 +51,9 @@ BuildRequires: python3(aws_xray_sdk)
 BuildRequires: python3(yaml)
 BuildRequires: python3(jsondiff)
 BuildRequires: python3(docker)
+BuildRequires: python3(openapi-spec-validator)
 
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 # not detected external dep
@@ -64,22 +68,14 @@ boto library.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export NO_INTERNET=YES
+%tox_create_default_config
 export NO_DOCKERD=YES
-export TOXENV=py3
 export TOX_TESTENV_PASSENV='NO_INTERNET NO_DOCKERD'
 %if_with full_testsuite
 export TESTS=tests
@@ -87,7 +83,7 @@ export TESTS=tests
 export TESTS=tests/test_core
 %endif
 # test_batch_jobs requires internet
-tox.py3 --sitepackages --console-scripts -vvr -s false --develop -- \
+%tox_check_pyproject -- \
     -vra $TESTS \
     -m 'not network' \
     --ignore tests/test_batch/test_batch_jobs.py
@@ -96,10 +92,13 @@ tox.py3 --sitepackages --console-scripts -vvr -s false --develop -- \
 %doc LICENSE
 %doc *.md
 %_bindir/moto_server
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 01 2022 Stanislav Levin <slev@altlinux.org> 3.1.16-alt1
+- 3.0.7 -> 3.1.16.
+
 * Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 3.0.7-alt1
 - 3.0.5 -> 3.0.7.
 
