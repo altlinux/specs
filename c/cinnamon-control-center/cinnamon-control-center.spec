@@ -8,7 +8,7 @@
 %def_enable onlineaccounts
 
 Name: cinnamon-control-center
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: Cinnamon Control Center
@@ -69,6 +69,7 @@ BuildRequires: libpwquality-devel libkrb5-devel
 BuildRequires: libgnomekbd-devel libxklavier-devel
 BuildRequires: libwacom-devel
 BuildRequires: libcinnamon-menus-devel
+BuildRequires: libgudev-devel
 
 BuildRequires: glibc-i18ndata
 BuildRequires: libnm-devel >= %nm_ver
@@ -148,6 +149,9 @@ you'll want to install this package.
 
 
 %changelog
+* Tue Aug 2 2022 Vladimir Didenko <cow@altlinux.org> 5.4.6-alt1
+- 5.4.6
+
 * Thu Jul 21 2022 Vladimir Didenko <cow@altlinux.org> 5.4.4-alt1
 - 5.4.4-1-g7f5ba6e
 

@@ -4,7 +4,7 @@
 %define sover 0
 
 Name: muffin
-Version: 5.4.3
+Version: 5.4.5
 Release: alt1
 
 Summary: Window and compositing manager based on Clutter
@@ -67,6 +67,7 @@ BuildRequires: libxcb-devel libXtst-devel
 BuildRequires: libgudev-devel libinput-devel
 BuildRequires: libEGL-devel
 BuildRequires: libgraphene-devel libgraphene-gir-devel libfribidi-devel libdbus-devel pipewire-libs-devel
+BuildRequires: libwacom-devel
 
 %description
 Muffin is a window and compositing manager that displays and manages
@@ -186,6 +187,9 @@ ln -sf %name/lib%name-cogl-%api_ver.so.%sover \
 %_datadir/glib-2.0/schemas/org.cinnamon.*.xml
 
 %changelog
+* Tue Aug 2 2022 Vladimir Didenko <cow@altlinux.org> 5.4.5-alt1
+- 5.4.5
+
 * Thu Jul 21 2022 Vladimir Didenko <cow@altlinux.org> 5.4.3-alt1
 - 5.4.3
 

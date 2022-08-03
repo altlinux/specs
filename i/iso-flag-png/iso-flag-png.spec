@@ -1,6 +1,6 @@
 Summary: A collection of flags
 Name: iso-flag-png
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 License: Public Domain
 Group: Graphical desktop/GNOME
@@ -29,5 +29,8 @@ cp -Rp usr/share/%name %buildroot%_datadir
 %doc debian/copyright debian/changelog
 
 %changelog
+* Tue Aug 2 2022 Vladimir Didenko <cow@altlinux.org> 1.0.2-alt1
+- new version
+
 * Wed May 23 2017 Vladimir Didenko <cow@altlinux.org> 1.0.1-alt1
 - initial build for Sisyphus
