@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.4.1
+Version: 2.4.2
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -105,7 +105,7 @@ pytest3
 %files
 %doc LICENSE PKG-INFO *.md
 %python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 %if_with docs
 %exclude %python3_sitelibdir/%oname/pickle
 
@@ -118,6 +118,9 @@ pytest3
 %endif
 
 %changelog
+* Wed Aug 03 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.2-alt1
+- Automatically updated to 2.4.2.
+
 * Mon May 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt1
 - Automatically updated to 2.4.1.
 
