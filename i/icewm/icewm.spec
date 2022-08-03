@@ -2,7 +2,7 @@
 %define realname icewm
 
 Name: %realname
-Version: 2.9.7
+Version: 2.9.9
 Release: alt1
 Epoch:3
 
@@ -83,7 +83,8 @@ sed -i 's/\? directory : "."/? (char*)directory : "."/' src/misc.cc
 	-DICESOUND="ALSA,OSS" \
 	-DENABLE_LTO=on \
 	-DXTERMCMD=xvt \
-	-DCONFIG_DEFAULT_THEME="AltClearlooks/default.theme"
+	-DCONFIG_DEFAULT_THEME="AltClearlooks/default.theme" \
+	-DCONFIG_DEFAULT_BACKGROUND="/usr/share/design/current/backgrounds/default.png"
 %cmake_build
 
 %install
@@ -138,6 +139,10 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Wed Aug 03 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.9.9-alt1
+- 2.9.9
+- added default background
+
 * Thu May 05 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.9.7-alt1
 - 2.9.7
 
