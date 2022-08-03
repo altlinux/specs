@@ -6,12 +6,12 @@
 Name: kernel-image-%flavour
 
 %define xenomai_version		3.1.2
-%define ipipe_version		4.19.246-cip75-x86-22
+%define ipipe_version		4.19.252-cip78-x86-23
 %define kernel_base_version	4.19
-%define kernel_sublevel		.246
+%define kernel_sublevel		.252
 %define kernel_extra_version	%nil
-%define kernel_cip_release	cip75
-%define kernel_ipipe_release	22
+%define kernel_cip_release	cip78
+%define kernel_ipipe_release	23
 
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_cip_release.%kernel_ipipe_release
@@ -396,6 +396,9 @@ fi
 %modules_dir/build
 
 %changelog
+* Wed Aug 03 2022 Vitaly Chikunov <vt@altlinux.org> 4.19.252-alt1.cip78.23
+- Update to ipipe-core-4.19.252-cip78-x86-23 (2022-08-03).
+
 * Mon Jun 20 2022 Vitaly Chikunov <vt@altlinux.org> 4.19.246-alt1.cip75.22
 - Update to ipipe-core-4.19.246-cip75-x86-22 (2022-06-20).
 
