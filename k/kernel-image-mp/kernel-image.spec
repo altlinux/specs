@@ -1,5 +1,5 @@
 %define kernel_base_version	5.18
-%define kernel_sublevel        .12
+%define kernel_sublevel        .16
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -14,12 +14,7 @@ Release: alt1
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
 
-# Build options
-# You can change compiler version by editing this line:
-%define kgcc_version	11
-
 ## Don't edit below this line ##################################
-
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
 %define modules_dir	/lib/modules/%kversion-%flavour-%krelease
 
@@ -43,7 +38,6 @@ ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: bc flex kmod lzma-utils
 BuildRequires: libdb4-devel
-BuildRequires: gcc%kgcc_version
 BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeric
 BuildRequires: libelf-devel libssl-devel zlib-devel
 BuildRequires: openssl python3 rsync
@@ -94,7 +88,6 @@ If possible, try to use glibc-kernheaders instead of this package.
 %package -n kernel-headers-modules-%flavour
 Summary: Headers and other files needed for building kernel modules
 Group: Development/Kernel
-Requires: gcc%kgcc_version
 
 %description -n kernel-headers-modules-%flavour
 This package contains header files, Makefiles and other parts of the
@@ -113,12 +106,7 @@ tar -xf %kernel_src/kernel-source-%kernel_base_version.tar
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1
 
-# this file should be usable both with make and sh (for broken modules
-# which do not use the kernel makefile system)
-echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
-
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
-subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := gcc-%kgcc_version/g' Makefile
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
@@ -225,7 +213,6 @@ KbuildFiles="
 	tools/objtool/objtool
 	.config
 	.kernelrelease
-	gcc_version.inc
 	System.map
 "
 for f in $KbuildFiles; do
@@ -275,6 +262,9 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Wed Aug 03 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.18.16-alt1
+- 5.18.16
+
 * Fri Jul 15 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.18.12-alt1
 - 5.18.12
 
