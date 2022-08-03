@@ -1,6 +1,6 @@
 Name: npm
 Version: 8.11.0
-Release: alt1
+Release: alt2
 
 Summary: A package manager for node
 
@@ -12,6 +12,7 @@ Url: http://nodejs.org/
 Source: %name-%version.tar
 
 Patch1: npm-disable-update-notifier.patch
+Patch2: npm-disable-internal-node-gyp.patch
 
 BuildRequires(pre): rpm-macros-nodejs
 
@@ -42,6 +43,9 @@ In most cases it is enough to install appropriate node- package (like node-sass)
 %prep
 %setup
 %patch1 -p2
+%patch2 -p2
+
+# remove all node-gyp deps
 rm -rv bin/node-gyp-bin node_modules/node-gyp/
 
 %build
@@ -60,6 +64,12 @@ cp -a . %buildroot%nodejs_sitelib/%name/
 # remove all tests from workspaces (ALT bug 42037)
 rm -rv %buildroot%nodejs_sitelib/%name/workspaces/*/test/
 
+# remove unused scripts
+rm -rv %buildroot%nodejs_sitelib/%name/{scripts,tap-snapshots,test,configure,Makefile}
+
+# remove all node-gyp deps
+rm -rv %buildroot%nodejs_sitelib/%name/node_modules/@npmcli/run-script/lib/node-gyp-bin
+
 # stop symlinks
 find %buildroot%nodejs_sitelib/%name/ -type l | while read link ; do
     real=$(realpath $link)
@@ -73,6 +83,10 @@ done
 %nodejs_sitelib/%name/
 
 %changelog
+* Wed Aug 03 2022 Vitaly Lipatov <lav@altlinux.ru> 8.11.0-alt2
+- drop node-gyp deps (ALT bug 42036)
+- remove unused scripts makes extra deps
+
 * Tue Jul 12 2022 Vitaly Lipatov <lav@altlinux.ru> 8.11.0-alt1
 - new version 8.11.0 (with rpmrb script)
 
