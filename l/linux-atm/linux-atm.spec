@@ -2,10 +2,10 @@
 
 Name: linux-atm
 Version: 2.5.1
-Release: alt6
+Release: alt7
 
 Summary: Asynchronous Transfer Mode tools
-License: GPL
+License: GPLv2
 Group: System/Libraries
 Url: http://linux-atm.sourceforge.net/
 
@@ -24,7 +24,7 @@ included in 2.4.x series kernels.
 
 %package -n libatm
 Summary: ATM (Asynchronous Transfer Mode) support library
-License: LGPL
+License: LGPLv2
 Group: System/Libraries
 Provides: lib%name = %version-%release
 Obsoletes: lib%name
@@ -36,7 +36,7 @@ networking and some types of DSL modems.
 
 %package -n libatm-devel
 Summary: ATM development library
-License: LGPL
+License: LGPLv2
 Group: Development/C
 Requires: libatm = %version-%release
 Provides: lib%name-devel = %version-%release
@@ -47,7 +47,7 @@ This package contains development files needed to compile programs with libatm.
 
 %package -n libatm-devel-static
 Summary: ATM static library
-License: LGPL
+License: LGPLv2
 Group: Development/C
 Requires: libatm-devel = %version-%release
 Provides: lib%name-devel-static = %version-%release
@@ -89,6 +89,9 @@ bzip2 -9k ChangeLog
 %endif
 
 %changelog
+* Wed Aug 03 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.1-alt7
+- drop support for long obsolete ZN122x ATM devices
+
 * Mon Jul 08 2019 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.1-alt6
 - fixed build with recent glibc-kernheaders, again
 
