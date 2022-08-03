@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 5.18
+%define kernel_base_version 5.19
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/traceevent/plugins/*
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
@@ -246,7 +246,7 @@ sed -i 's/*+/*/' perf/trace/beauty/fsconfig.sh
 sed -i 's/-s\b/-g/' testing/selftests/size/Makefile
 sed -i 's/-std=gnu99/& -g/' testing/selftests/vDSO/Makefile
 sed -Ei '\!^CFLAGS!s!(-Wl,-rpath=)\./!\1/usr/lib/kselftests/rseq!' testing/selftests/rseq/Makefile
-
+sed -i 's/-s\b/-g/' testing/selftests/arm64/abi/Makefile testing/selftests/arm64/fp/Makefile
 sed -i '/ln -s/s/-s $(DESTDIR)/-s /' tracing/rtla/Makefile
 
 %define optflags_lto %nil
@@ -330,7 +330,6 @@ make acpi
 	gpio \
 	iio \
 	leds \
-	objtool \
 	selftests \
 	tmon \
 	tracing \
@@ -457,8 +456,6 @@ install -p -m755 kvm/kvm_stat/kvm_stat		%buildroot%_bindir
 install -p -m755 leds/get_led_device_info.sh	%buildroot%_bindir
 install -p -m755 leds/led_hw_brightness_mon	%buildroot%_bindir
 install -p -m755 leds/uledmon			%buildroot%_bindir
-install -p -m755 objtool/fixdep			%buildroot%_bindir
-install -p -m755 objtool/objtool		%buildroot%_bindir
 install -p -m755 thermal/tmon/tmon		%buildroot%_bindir
 install -p -m755 thermal/tmon/tmon.8		%buildroot%_man8dir
 
@@ -539,8 +536,6 @@ fi
 %_bindir/get_led_device_info.sh
 %_bindir/led_hw_brightness_mon
 %_bindir/uledmon
-%_bindir/fixdep
-%_bindir/objtool
 %_bindir/tmon
 %_man8dir/tmon.*
 %_sbindir/page-types
@@ -635,6 +630,10 @@ fi
 %_man1dir/rtla*
 
 %changelog
+* Mon Aug 01 2022 Vitaly Chikunov <vt@altlinux.org> 5.19-alt1
+- Update to v5.19 (2022-07-31).
+- Do not package objtool and fixdep (use kernel-headers-modules).
+
 * Mon May 23 2022 Vitaly Chikunov <vt@altlinux.org> 5.18-alt1
 - Update to v5.18 (2022-05-22).
 
