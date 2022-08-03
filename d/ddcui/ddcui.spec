@@ -1,5 +1,5 @@
 Name: ddcui
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Summary: Graphical utility to query and update monitor settings
@@ -9,11 +9,12 @@ Url: http://github.com/rockowitz/%name
 
 Source: %url/archive/v%version/%name-%version.tar.gz
 
-%define ddcutil_ver 1.2.0
+%define ddcutil_ver 1.2.2
+%define glib_ver 2.40
 %define qt_ver 5.5
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake pkgconfig(glib-2.0)
+BuildRequires: cmake pkgconfig(glib-2.0) >= %glib_ver
 BuildRequires: libddcutil-devel >= %ddcutil_ver
 BuildRequires: pkgconfig(Qt5Widgets) >= %qt_ver
 BuildRequires: pkgconfig(Qt5Core)
@@ -28,6 +29,7 @@ BuildRequires: pkgconfig(Qt5Help)
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %cmake \
     -DCMAKE_INSTALL_DOCDIR:STRING="%_defaultdocdir/%name-%version"
 %cmake_build
@@ -44,6 +46,9 @@ BuildRequires: pkgconfig(Qt5Help)
 %doc AUTHORS NEWS.md README.md CHANGELOG.md
 
 %changelog
+* Wed Aug 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
+- 0.3.0
+
 * Sat May 07 2022 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
 - first build for Sisyphus
 
