@@ -1,6 +1,6 @@
 Name: python3-module-orjson
 Version: 3.7.7
-Release: alt2
+Release: alt3
 
 Summary: Fast, correct JSON library for Python
 License: Apache-2.0
@@ -10,8 +10,11 @@ Url: https://pypi.org/project/orjson/
 Source0: %name-%version.tar
 Source1: crates.tar
 
-BuildRequires: rpm-build-python3 maturin unzip
-BuildRequires: rust-cargo /proc
+BuildRequires: rust-cargo /proc unzip
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(maturin)
 
 %description
 %summary
@@ -27,17 +30,19 @@ tar xf %SOURCE1
 
 %build
 export CARGO_HOME=${PWD}/cargo
-maturin build --no-sdist --release
+%pyproject_build
 
 %install
-mkdir -p %buildroot%python3_sitelibdir 
-unzip -d %buildroot%python3_sitelibdir target/wheels/*whl
+%pyproject_install
 
 %files
 %python3_sitelibdir/orjson
 %python3_sitelibdir/orjson-%version.dist-info
 
 %changelog
+* Wed Aug 03 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.7.7-alt3
+- rebuilt as pyproject
+
 * Wed Jul 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.7.7-alt2
 - rebuilt on ppc64le
 
