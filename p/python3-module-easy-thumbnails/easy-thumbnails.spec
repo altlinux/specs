@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.8.1
+Version: 2.8.3
 Release: alt1
 
 Summary: Easy thumbnails for Django
@@ -46,9 +46,13 @@ export PYTHONPATH=$PWD
 %__python3 -m django test -v 2
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/easy_thumbnails
+%python3_sitelibdir/easy_thumbnails-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed Aug 03 2022 Grigory Ustinov <grenka@altlinux.org> 2.8.3-alt1
+- Automatically updated to 2.8.3.
+
 * Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 2.8.1-alt1
 - Build new version.
 - Build with check.
