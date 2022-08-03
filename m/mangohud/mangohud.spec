@@ -1,10 +1,10 @@
 %define uname   MangoHud
-%define srcname %uname-v%version-1-Source
-%define srcpath %uname-v%version-1
+%define srcname %uname-v%version-Source
+%define srcpath %uname-v%version
 
 Name: mangohud
-Version: 0.6.6
-Release: alt2
+Version: 0.6.8
+Release: alt1
 
 Summary: A Vulkan overlay layer for monitoring FPS, temperatures, CPU/GPU load and more
 License: MIT
@@ -16,7 +16,7 @@ Source: https://github.com/flightlessmango/MangoHud/releases/download/v%version/
 
 BuildRequires: gcc-c++ cmake
 BuildRequires: meson
-BuildRequires: glslang
+BuildRequires: glslang libspdlog-devel
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(gl)
 BuildRequires: pkgconfig(vulkan)
@@ -40,8 +40,9 @@ The `goverlay` package provides a third-party GUI frontend for MangoHud.
 
 %build
 %meson \
-  -Dinclude_doc=false \
+  -Dinclude_doc=true \
   -Duse_system_vulkan=enabled \
+  -Duse_system_spdlog=enabled \
   -Dwith_nvml=disabled \
   -Dwith_xnvctrl=disabled
 # NVML is nonfree, XNVCtrl is not packaged yet (but could be enabled if it is)
@@ -52,14 +53,20 @@ The `goverlay` package provides a third-party GUI frontend for MangoHud.
 %meson_install
 
 %files
-%doc README.md bin/%uname.conf
+%doc README.md 
 %doc LICENSE
 %_bindir/%name
 %_libdir/%name/
 %_datadir/vulkan/implicit_layer.d/%uname.json
 %_man1dir/%name.1*
+%_datadir/icons/hicolor/scalable/*/*.svg
+%_datadir/vulkan/implicit_layer.d/*Mango*.json
+%_docdir/%name/%uname.conf.example
+%_datadir/metainfo/*.metainfo.xml
 
 %changelog
+* Wed Aug 03 2022 Ilya Mashkin <oddity@altlinux.ru> 0.6.8-alt1
+- 0.6.8
 
 * Wed Oct 27 2021 Ilya Mashkin <oddity@altlinux.ru> 0.6.6-alt2
 - 0.6.6-1
