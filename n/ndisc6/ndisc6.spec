@@ -1,5 +1,5 @@
 Name: ndisc6
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: IPv6 diagnostic tools
@@ -87,6 +87,9 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %ghost %_runtimedir/rdnssd/resolv.conf
 
 %changelog
+* Wed Aug 03 2022 Mikhail Efremov <sem@altlinux.org> 1.0.6-alt1
+- Updated to 1.0.6.
+
 * Tue Jan 11 2022 Mikhail Efremov <sem@altlinux.org> 1.0.5-alt1
 - Added Vcs tag.
 - Don't use rpm-build-licenses.
