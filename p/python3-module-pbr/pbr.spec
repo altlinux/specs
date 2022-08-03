@@ -11,8 +11,8 @@ branches, it seems like a good time to make that code into a proper \
 re-usable library.
 
 Name:       python3-module-%pypi_name
-Version:    5.8.1
-Release:    alt2
+Version:    5.9.0
+Release:    alt1
 
 Summary:    Python Build Reasonableness
 
@@ -76,6 +76,9 @@ rm -fv %buildroot%python3_sitelibdir/%pypi_name/sphinxext.py
 %python3_sitelibdir/%pypi_name
 
 %changelog
+* Wed Aug 03 2022 Grigory Ustinov <grenka@altlinux.org> 5.9.0-alt1
+- Build new version.
+
 * Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 5.8.1-alt2
 - Fixed BuildRequires.
 
