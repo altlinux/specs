@@ -1,6 +1,6 @@
 Name: cups
-Version: 2.3.3
-Release: alt7.op2
+Version: 2.4.2
+Release: alt1
 
 Summary: Common Unix Printing System - server package
 License: Apache-2.0
@@ -9,7 +9,7 @@ Group: System/Servers
 Url: https://openprinting.github.io/cups/
 
 # https://github.com/OpenPrinting/cups/
-Source: %name-%version.tar
+Source: %name-%version.tar.gz
 
 # READMEs
 Source10: README.alt
@@ -32,44 +32,31 @@ Patch3: FC-banners.patch
 Patch4: FC-no-export-ssllibs.patch
 Patch5: FC-direct-usb.patch
 Patch6: FC-driverd-timeout.patch
-Patch7: FC-logrotate.patch
-Patch8: FC-usb-paperout.patch
-Patch9: FC-uri-compat.patch
-Patch13: FC-freebind.patch
-Patch14: FC-ipp-multifile.patch
-Patch15: FC-web-devices-timeout.patch
-Patch18: FC-failover-backend.patch
-Patch19: FC-lspp.patch
-Patch20: FC-filter-debug.patch
-Patch21: FC-dymo-deviceid.patch
+Patch7: FC-usb-paperout.patch
+Patch8: FC-uri-compat.patch
+Patch9: FC-freebind.patch
+Patch10: FC-ipp-multifile.patch
+Patch11: FC-web-devices-timeout.patch
+Patch12: FC-failover-backend.patch
+Patch13: FC-dymo-deviceid.patch
+Patch14: FC-0001-scheduler-ipp.c-Allocate-device_uri-via-cupsdSetStri.patch
+Patch15: FC-lspp.patch
 
 ## Ubuntu patches
-Patch101: Ubuntu-0001-Fix-hyphen-used-as-minus-sign-manpage-errors.patch
-Patch103: Ubuntu-0003-Fix-jobs-with-multiple-files-or-multiple-formats.patch
-Patch106: Ubuntu-0006-Tests-ignore-usb-dnssd-backend-unexpected-exits.patch
-Patch107: Ubuntu-0007-Tests-ignore-loadFile-failures.patch
-Patch108: Ubuntu-0008-Tests-ignore-errors-triggered-on-ipv6-deprived-hosts.patch
-Patch109: Ubuntu-0009-Tests-ignore-the-failure-to-write-uncompressed-data.patch
-Patch110: Ubuntu-0010-Tests-ignore-job-held-message.patch
-Patch113: Ubuntu-0013-Tests-Force-LC_-environment-variables-when-testing-n.patch
-Patch114: Ubuntu-0014-Tests-Use-127.0.0.1-instead-of-localhost-to-help-pbu.patch
-Patch115: Ubuntu-0015-Tests-Force-LC_ALL-C-environment-variable-when-grepp.patch
-Patch117: Ubuntu-0017-Move-cupsd.conf.default-from-SERVERROOT-to-DATADIR.patch
-Patch118: Ubuntu-0018-Patch-to-support-Apple-AirPrint-printing-from-iPhone.patch
-Patch119: Ubuntu-0019-Let-snmp-backend-also-use-manufacturer-specific-MIBs.patch
-Patch121: Ubuntu-0021-Do-not-write-VCS-tags-into-installed-conffiles.patch
-Patch122: Ubuntu-0022-Rename-the-systemd-service-file-from-org.cups.cups.-.patch
-Patch124: Ubuntu-0024-CUPS-removes-the-recommended-comments-of-the-NickNam.patch
-Patch125: Ubuntu-0025-Make-log-files-readable-to-group-adm-if-present.patch
-Patch126: Ubuntu-0026-Deactivate-CUPS-own-log-rotating-as-the-system-alrea.patch
-Patch127: Ubuntu-0027-Do-not-mess-with-the-permissions-of-cupsd.conf.patch
-Patch128: Ubuntu-0028-Show-compile-command-lines.patch
-Patch129: Ubuntu-0029-Set-the-default-for-SyncOnClose-to-Yes.patch
-Patch130: Ubuntu-0030-Set-default-job-error-policy-to-retry-job.patch
-Patch133: Ubuntu-0033-Build-mantohtml-with-the-build-architecture-compiler.patch
-Patch134: Ubuntu-0034-po4a-infrastructure-and-translations-for-manpages.patch
-Patch136: Ubuntu-0006-Fix-leakage-of-ppd.patch
-Patch137: Ubuntu-0025-Add-Requires-cups.socket-to-cups.service-to-make-sur.patch
+Patch101: Ubuntu-0006-Apple-AirPrint-support.patch
+Patch102: Ubuntu-0007-Keep-foomatic-PPDs-recommended-stanzas-in-NickNames.patch
+Patch103: Ubuntu-0008-Debian-Set-LogFileGroup-to-adm.patch
+Patch104: Ubuntu-0009-Debian-Move-cupsd.conf.default-from-SERVERROOT-to-DA.patch
+Patch105: Ubuntu-0010-Debian-Do-not-alter-the-permissions-of-cupsd.conf-ev.patch
+Patch106: Ubuntu-0011-Debian-Show-compile-command-lines.patch
+Patch107: Ubuntu-0012-Debian-Use-dpkg-architecture-in-cups-config-to-make-.patch
+Patch108: Ubuntu-0013-Debian-Build-mantohtml-with-the-build-architecture-c.patch
+Patch109: Ubuntu-0014-Debian-Reproducibility-httpAddrGetHostname-test-fail.patch
+Patch110: Ubuntu-0015-Debian-Reproducibility-Do-not-run-stp-tests-as-root.patch
+Patch111: Ubuntu-0016-Debian-po4a-infrastructure-and-translations-for-manp.patch
+Patch112: Ubuntu-9100-ppd-cache-add-auto-presets.patch
+Patch113: Ubuntu-9110-create-local-printer-localhost-fix.patch
+Patch114: Ubuntu-CVE-2022-26691-2.patch
 
 ## ALT patches
 Patch500: ALT-1.6.1-hardening.patch
@@ -85,6 +72,9 @@ Patch509: ALT-1.7.2-local_ipv6.patch
 Patch510: ALT-config-nolibs.patch
 Patch511: ALT-pwg-raster-attributes.patch
 Patch512: ALT-2.1.0-lpd-sanitizer.patch
+Patch513: ALT-fc-lspp.patch
+Patch514: ALT-checkpo.patch
+
 # ALT SE related patches
 Patch552: ALT-ipp-alt-extension-copy-document.patch
 Patch553: ALT-lspp-context+no-filename.patch
@@ -96,8 +86,6 @@ Patch559: ALT-mime-pjl-pdf.patch
 Patch560: ALT-SE-ippcalls.patch
 
 # Upstream patches
-Patch900: upstream-0001-backend-usb-libusb.c-Use-60s-timeout-for-reading-.patch
-Patch901: upstream-0002-backend-usb-libusb.c-Revert-enforcing-read-limits.patch
 
 ## Provides
 Provides: %name-ppd = %version %name-common = %version
@@ -173,44 +161,31 @@ services using the main CUPS library "libcups".
 %patch4 -p1 -b .no-export-ssllibs
 %patch5 -p1 -b .direct-usb
 %patch6 -p1 -b .driverd-timeout
-%patch7 -p1 -b .logrotate
-%patch8 -p1 -b .usb-paperout
-#patch9 -p1 -b .uri-compat
-%patch13 -p1 -b .freebind
-%patch14 -p1 -b .ipp-multifile
-%patch15 -p1 -b .web-devices-timeout
-%patch18 -p1 -b .failover
-%patch19 -p1 -b .lspp
-%patch20 -p1 -b .filter-debug
-%patch21 -p1 -b .dymo-deviceid
+%patch7 -p1 -b .usb-paperout
+#patch8 -p1 -b .uri-compat
+%patch9 -p1 -b .freebind
+%patch10 -p1 -b .ipp-multifile
+%patch11 -p1 -b .web-devices-timeout
+%patch12 -p1 -b .failover
+%patch13 -p1 -b .dymo-deviceid
+%patch14 -p1 -b .invalid-pointer-uri
+%patch15 -p1 -b .lspp
 
 ## Ubuntu apply patches
 %patch101 -p1
-#patch103 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
 %patch106 -p1
 %patch107 -p1
 %patch108 -p1
 %patch109 -p1
 %patch110 -p1
+#patch111 -p1
+%patch112 -p1
 %patch113 -p1
 %patch114 -p1
-%patch115 -p1
-%patch117 -p1
-%patch118 -p1
-#patch119 -p1
-%patch121 -p1
-#patch122 -p1
-%patch124 -p1
-##patch125 -p1
-%patch126 -p1
-%patch127 -p1
-%patch128 -p1
-#patch129 -p1
-%patch130 -p1
-%patch133 -p1
-#patch134 -p1
-##patch136 -p1
-##patch137 -p1
 
 ## ALT apply patches
 ##patch500 -p1
@@ -226,6 +201,8 @@ services using the main CUPS library "libcups".
 #patch510 -p1
 %patch511 -p1
 %patch512 -p2
+%patch513 -p1
+%patch514 -p1
 
 # ALT SE related patches
 %patch552 -p1
@@ -238,14 +215,16 @@ services using the main CUPS library "libcups".
 %patch560 -p2
 
 # Upstream patches
-# https://github.com/OpenPrinting/cups/pull/174
-%patch900 -p1
-%patch901 -p1
+# https://github.com/OpenPrinting/cups/pull
 
 cp %SOURCE98 %SOURCE97 %SOURCE10 %SOURCE11 .
 cp %SOURCE21 scheduler/cups.sh.in
 
 # TODO help translation injecting
+
+# XXX
+sed -i 's/2[.]71/2.69/' configure.ac
+
 
 %build
 aclocal -I config-scripts
@@ -260,6 +239,7 @@ export LIBS="-laudit -lselinux"
    --enable-relro \
    --enable-dbus \
    --enable-libusb \
+   --with-pkgconfpath=%_pkgconfigdir \
    --with-cups-user=lp \
    --with-cups-group=lp \
    --with-log-file-perm=0600 \
@@ -337,7 +317,6 @@ chmod 755 %buildroot/usr/lib/cups/backend/ipp
 
 %preun
 %preun_service cups
-
 %triggerun -- %name < 2.3.3-alt2.op2
 if [ $2 -gt 0 ]; then
 # This is cups upgrade.
@@ -435,6 +414,7 @@ fi
 %_libdir/*.so
 %_man1dir/ppd*
 %_man5dir/ppd*
+%_pkgconfigdir/*
 
 %files ipptool
 %_bindir/ipptool
@@ -445,6 +425,10 @@ fi
 %config(noreplace) %_sysconfdir/xinetd.d/%name-lpd
 
 %changelog
+* Wed Aug 03 2022 Fr. Br. George <george@altlinux.org> 2.4.2-alt1
+- Autobuild version bump to 2.4.2 (Closes: #43413)
+- Update patchset
+
 * Fri Nov 12 2021 Anton Midyukov <antohami@altlinux.org> 2.3.3-alt7.op2
 - Fixed: can't print on Samsung ML-1640/2010/2240 series with splix driver
   (Closes: #41319)
