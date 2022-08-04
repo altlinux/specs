@@ -1,14 +1,14 @@
 %define oldname python-uinput
 
 Name: python3-module-uinput
-Version: 0.10.1
-Release: alt7
+Version: 0.11.2
+Release: alt1
 
 Summary: Pythonic API to the Linux uinput kernel module
 
 License: GPLv3
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/python-uinput/
+Url: http://pypi.python.org/pypi/python-uinput
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -33,12 +33,6 @@ which allows attaching userspace device drivers into kernel.
 # Use unversioned .so
 %__subst "s/libudev.so.0/libudev.so/" setup.py
 
-
-# https://github.com/tuomasjjrasanen/python-uinput/issues/16
-# use correct input file
-[ -s /usr/include/linux/input-event-codes.h ] && \
-    %__subst "s/input.h/input-event-codes.h/" setup.py
-
 %build
 %python3_build
 
@@ -48,12 +42,15 @@ which allows attaching userspace device drivers into kernel.
 chmod a-x examples/*
 
 %files
-%doc COPYING NEWS README examples
+%doc COPYING examples
 %python3_sitelibdir/*.egg-info
 %python3_sitelibdir/_libsuinput.*.so
 %python3_sitelibdir/uinput/
 
 %changelog
+* Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 0.11.2-alt1
+- Build new version.
+
 * Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.1-alt7
 - Fixed build for python3.10.
 
