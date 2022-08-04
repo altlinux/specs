@@ -5,14 +5,14 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.3.7
-Release: alt3
+Version: 1.4.0
+Release: alt1
 Summary: pyScss is a compiler for the Sass language
 License: MIT
 Group: Development/Python
-Url: https://pypi.org/project/pyScss/
+Url: https://pypi.org/project/pyScss
 
-# https://github.com/Kronuz/pyScss.git
+# https://github.com/Kronuz/pyScss
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
@@ -43,7 +43,7 @@ xargs sed -s -e '1 s/^#!\/usr\/bin\/env python.*$/#!\/usr\/bin\/python3/'
 
 %build
 %add_optflags -I%_includedir/pcre -fno-strict-aliasing
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -86,6 +86,9 @@ tox.py3 --sitepackages -vv -r
 %python3_sitelibdir/scss/extension/
 
 %changelog
+* Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
+- Automatically updated to 1.4.0.
+
 * Fri Dec 17 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.7-alt3
 - Fixed build with python3.10.
 
