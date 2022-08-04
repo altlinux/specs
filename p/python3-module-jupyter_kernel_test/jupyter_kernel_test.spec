@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.4.3
-Release: alt1
+Release: alt1.1
 
 Summary: A tool for testing Jupyter kernels
 
@@ -41,7 +41,6 @@ successful code execution and conformance with the Jupyter Messaging Protocol.
 %python3_install
 
 %check
-PYTHONPATH=%buildroot%python3_sitelibdir
 %__python3 test_ipykernel.py
 
 %files
@@ -50,5 +49,8 @@ PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt1.1
+- Fixed check section.
+
 * Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt1
 - Initial build for Sisyphus.
