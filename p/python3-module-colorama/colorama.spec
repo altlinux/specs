@@ -1,20 +1,27 @@
-%define _unpackaged_files_terminate_build 1
 %define oname colorama
 
-Name: python3-module-%oname
-Version: 0.4.4
-Release: alt2
-Summary: Simple cross-platform colored terminal text in Python
-License: BSD
-Group: Development/Python3
-Url: https://pypi.python.org/pypi/colorama/
+%def_with check
 
-# https://github.com/tartley/colorama.git
+Name: python3-module-%oname
+Version: 0.4.5
+Release: alt1
+
+Summary: Simple cross-platform colored terminal text in Python
+
+License: BSD-3-Clause
+Group: Development/Python3
+Url: https://pypi.python.org/pypi/colorama
+
+# https://github.com/tartley/colorama
 Source0: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-mock
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %oname
 
@@ -43,13 +50,17 @@ library, such as Termcolor.
 %python3_install
 
 %check
-py.test3 ||:
+py.test-3
 
 %files
 %doc *.rst demos
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.5-alt1
+- Automatically updated to 0.4.5.
+
 * Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 0.4.4-alt2
 - Drop python2 support.
 
