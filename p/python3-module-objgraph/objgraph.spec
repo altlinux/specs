@@ -1,19 +1,27 @@
-%define _unpackaged_files_terminate_build 1
 %define oname objgraph
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 3.4.1
-Release: alt2
+Version: 3.5.0
+Release: alt1
+
 Summary: Draws Python object reference graphs with graphviz
+
 License: MIT
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/objgraph/
+Url: http://pypi.python.org/pypi/objgraph
 
 # https://github.com/mgedmin/objgraph
-Source0: %name-%version.tar
+Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: graphviz
+%endif
 
 %description
 objgraph is a module that lets you visually explore Python object
@@ -33,11 +41,20 @@ objgraph will automatically look for it in your PATH.
 %install
 %python3_install
 
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 tests.py
+
 %files
 %doc *.rst docs
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
+- Build new version.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 3.4.1-alt2
 - Drop python2 support.
 
