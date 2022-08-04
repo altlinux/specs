@@ -5,8 +5,8 @@
 %endif
 
 Name:    kmymoney
-Version: 5.1.2
-Release: alt7
+Version: 5.1.3
+Release: alt1
 %K5init no_altplace
 
 Summary: A Personal Finance Manager for KDE
@@ -20,8 +20,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source0: %name-%version.tar
 Source1: ru.po
 Source2: %name.watch
-Patch0: kmymoney-alt-fix-gcc11.patch
-Patch1: kmymoney-new-akonadi.patch
 
 AutoReq: yes, noperl
 
@@ -266,8 +264,6 @@ Internationalization and documentation for KMyMoney
 
 %prep
 %setup -q -n %name-%version
-%patch0 -p2
-%patch1 -p1
 cp %SOURCE1 po/ru/kmymoney.po
 
 %build
@@ -280,6 +276,7 @@ cp %SOURCE1 po/ru/kmymoney.po
 %else
          -DENABLE_WEBENGINE=OFF \
 %endif
+         -DENABLE_WOOB=ON \
          -DENABLE_SQLCIPHER=OFF
 
 %install
@@ -381,8 +378,8 @@ cp %SOURCE1 po/ru/kmymoney.po
 
 %files weboob
 #_datadir/%name/weboob
-%_qt5_plugindir/kmymoney/weboob.so
-%_K5xmlgui/weboob
+%_qt5_plugindir/kmymoney/woob.so
+%_K5xmlgui/woob
 
 %files plugins
 
@@ -392,6 +389,9 @@ cp %SOURCE1 po/ru/kmymoney.po
 %exclude %_K5doc/en
 
 %changelog
+* Sun Jul 31 2022 Andrey Cherepanov <cas@altlinux.org> 5.1.3-alt1
+- New version.
+
 * Thu Feb 03 2022 Sergey V Turchin <zerg@altlinux.org> 5.1.2-alt7
 - Build with qtwebkit instead of qtwebengine on e2k and ppc64le.
 
