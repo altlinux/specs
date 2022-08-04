@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 1.8.2
-Release: alt1
+Release: alt2
 
 Summary: Planar geometries, predicates, and operations
 License: BSD
@@ -16,6 +16,8 @@ Group: Development/Python3
 Url: http://pypi.python.org/pypi/Shapely
 # https://github.com/Toblerity/Shapely.git
 Source: %name-%version.tar
+
+Patch: ef380ba8796702a56e05138ed8599e89f617d2c9.patch
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
 BuildRequires: libgeos-devel
@@ -66,6 +68,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup
+%patch -p1
 
 %if_with doc
 %prepare_sphinx3 .
@@ -117,6 +120,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 1.8.2-alt2
+- Fixed FTBFS.
+
 * Wed May 04 2022 Andrey Cherepanov <cas@altlinux.org> 1.8.2-alt1
 - New version.
 
