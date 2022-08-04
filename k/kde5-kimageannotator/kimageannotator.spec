@@ -4,7 +4,7 @@
 %define libkimageannotator libkimageannotator%sover
 
 Name: kde5-%rname
-Version: 0.5.3
+Version: 0.6.0
 Release: alt1
 %K5init altplace
 
@@ -21,7 +21,7 @@ Patch1: alt-void-return.patch
 #BuildRequires: cmake kde5-kcolorpicker-devel libXScrnSaver-devel libXaw-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxcbutil-devel libxcbutil-icccm-devel libxkbcommon-x11-devel libxkbfile-devel python3-dev python3-module-mpl_toolkits qt5-svg-devel qt5-tools-devel qt5-translations qt5-wayland-devel qt5-webengine-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: cmake
-BuildRequires: qt5-svg-devel qt5-tools-devel qt5-translations qt5-wayland-devel qt5-webengine-devel
+BuildRequires: qt5-svg-devel qt5-tools-devel qt5-translations qt5-wayland-devel
 BuildRequires: kde5-kcolorpicker-devel
 
 %description
@@ -79,6 +79,11 @@ KF5 library
 %_K5lib/libkImageAnnotator.so.*
 
 %changelog
+* Mon Aug 01 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 0.6.0-alt1
+- NMU:
+      + new version
+      + remove BR unneded
+
 * Wed Nov 24 2021 Sergey V Turchin <zerg@altlinux.org> 0.5.3-alt1
 - new version
 

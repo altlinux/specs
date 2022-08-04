@@ -1,7 +1,7 @@
 %global optflags %optflags -I%_includedir/KF5 -L%_libdir/kf5/devel
 
 Name:		ksnip
-Version:	1.9.2
+Version:	1.10.0
 Release:	alt1
 
 Summary:	Window Snipping Tool
@@ -12,9 +12,6 @@ Url:		https://github.com/ksnip/ksnip
 
 # Source-url: https://github.com/ksnip/ksnip/archive/refs/tags/v%version.tar.gz
 Source:	%name-%version.tar
-
-Patch1: ksnip-1.9.2-alt-update-russian-translation.patch
-Patch2: ksnip-1.9.2-alt-desktop-file-russian-translation.patch
 
 BuildRequires: cmake
 BuildRequires: extra-cmake-modules
@@ -43,8 +40,6 @@ Screenshot tool inspired by Windows Snipping Tool and made with Qt5 for Linux.
 
 %prep
 %setup -q -n %name-%version
-%patch1 -p1
-%patch2 -p1
 
 %build
 %cmake
@@ -68,6 +63,10 @@ desktop-file-validate %buildroot%_datadir/applications/*.desktop
 %_datadir/metainfo/org.ksnip.ksnip.appdata.xml
 
 %changelog
+* Mon Aug 01 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.10.0-alt1
+- new version (1.10.0) with rpmgs script
+- Remove patches merged to upstream
+
 * Wed Dec 08 2021 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.9.2-alt1
 - new version (1.9.2) with rpmgs script
 - Update russian translation

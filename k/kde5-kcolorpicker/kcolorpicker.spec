@@ -4,7 +4,7 @@
 %define libkcolorpicker libkcolorpicker%sover
 
 Name: kde5-%rname
-Version: 0.1.6
+Version: 0.2.0
 Release: alt1
 %K5init altplace
 
@@ -19,7 +19,7 @@ Source: %rname-%version.tar
 # optimized out: cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libglvnd-devel libqt5-core libqt5-gui libqt5-widgets libsasl2-3 libssl-devel libstdc++-devel python-modules python2-base python3 python3-base python3-module-paste qt5-base-devel rpm-build-python3 sh4
 #BuildRequires: cmake python3-dev python3-module-mpl_toolkits qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: cmake qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
+BuildRequires: cmake qt5-svg-devel qt5-wayland-devel
 
 %description
 %summary
@@ -72,6 +72,11 @@ KF5 library
 %_K5lib/libkColorPicker.so.*
 
 %changelog
+* Mon Aug 01 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 0.2.0-alt1
+- NMU:
+      + new version
+      + remove BR unneded
+
 * Tue Oct 05 2021 Sergey V Turchin <zerg@altlinux.org> 0.1.6-alt1
 - new version
 
