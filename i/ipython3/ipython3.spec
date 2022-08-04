@@ -8,7 +8,7 @@
 
 Name: ipython3
 Version: 8.0.1
-Release: alt1
+Release: alt1.1
 Summary: An enhanced interactive Python 3 shell
 License: BSD-3-Clause
 Group: Development/Python3
@@ -24,14 +24,13 @@ Patch1: %name-alt-docs.patch
 %add_findreq_skiplist %python3_sitelibdir/IPython/utils/eventful.py
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3(prompt_toolkit)
 BuildRequires: python3(backcall)
 BuildRequires: python3(stack_data)
 
 %if_with doc
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx-devel python3-module-matplotlib-sphinxext python3-module-numpydoc
+BuildRequires: python3-module-sphinx-devel python3-module-matplotlib-sphinxext
 BuildRequires: python3(sphinx_rtd_theme) graphviz
 BuildRequires: python3(traitlets) python3(pexpect) python3(pickleshare) python3(ipykernel) python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3(black) python3(jedi)
@@ -190,6 +189,9 @@ cp -R docs/build/html/* examples %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 8.0.1-alt1.1
+- NMU: Fixed BuildRequires.
+
 * Tue Feb 15 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 8.0.1-alt1
 - Updated to upstream version 8.0.1.
 
