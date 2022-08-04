@@ -1,13 +1,15 @@
 %define oname markdown-checklist
 
 Name: python3-module-%oname
-Version: 0.4.1
-Release: alt2
+Version: 0.4.4
+Release: alt1
 
 Summary: Python Markdown extension for task lists with checkboxes
+
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/markdown-checklist/
+
 BuildArch: noarch
 
 # https://github.com/FND/markdown-checklist.git
@@ -21,7 +23,6 @@ BuildRequires: python3-module-pytest
 %py3_provides markdown_checklist
 %py3_requires markdown
 
-
 %description
 Python Markdown extension for lists of tasks with checkboxes.
 
@@ -29,7 +30,7 @@ Python Markdown extension for lists of tasks with checkboxes.
 %setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -39,10 +40,13 @@ Python Markdown extension for lists of tasks with checkboxes.
 
 %files
 %doc README
-%python3_sitelibdir/*
-
+%python3_sitelibdir/markdown_checklist
+%python3_sitelibdir/markdown_checklist-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.4-alt1
+- Build new version.
+
 * Fri Nov 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.4.1-alt2
 - python2 disabled
 
