@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 5.1.0
-Release: alt2
+Release: alt3
 Summary: Python client for Elasticsearch
 License: Apache-2.0
 Group: Development/Python3
@@ -22,7 +22,7 @@ BuildRequires(pre): rpm-build-python3
 %py3_requires json
 
 BuildRequires(pre): rpm-macros-sphinx3 python3-module-sphinx python3-module-sphinx_rtd_theme
-BuildRequires: python3-module-chardet python3-module-coverage python3-module-html5lib python3-module-nosexcover python3-module-pbr python3-module-pytest python3-module-unittest2 python3-module-urllib3
+BuildRequires: python3-module-chardet python3-module-coverage python3-module-html5lib python3-module-pbr python3-module-pytest python3-module-urllib3
 
 %description
 Official low-level client for Elasticsearch. Its goal is to provide
@@ -103,6 +103,9 @@ python3 setup.py test
 %doc docs/_build/html/*
 
 %changelog
+* Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt3
+- Fixed BuildRequires.
+
 * Tue Jul 13 2021 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt2
 - Drop python2 support.
 
