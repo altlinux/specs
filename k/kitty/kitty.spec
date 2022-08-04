@@ -3,7 +3,7 @@
 
 Name: kitty
 Version: 0.25.2
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -136,11 +136,17 @@ sed -i "s/-Werror//g" setup.py
 %python3_build_debug
 
 %install
+export CFLAGS="${CFLAGS:-%optflags}"
+export CXXFLAGS="${CXXFLAGS:-%optflags}"
+export FFLAGS="${FFLAGS:-%optflags}"
+
 mkdir -p %buildroot%_prefix
 python3 setup.py linux-package \
+    --verbose \
 	--prefix=%buildroot%_prefix \
 	--update-check-interval=0 \
-	--debug
+    %nil
+
 
 python3 __main__.py + complete setup bash | \
 	install -Dm644 /dev/stdin %buildroot%_datadir/bash-completion/completions/kitty
@@ -175,6 +181,9 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_libexecdir/%name/shell-integration
 
 %changelog
+* Thu Aug 04 2022 Egor Ignatov <egori@altlinux.org> 0.25.2-alt2
+- spec: Release build with debug info
+
 * Tue Jun 07 2022 Egor Ignatov <egori@altlinux.org> 0.25.2-alt1
 - new version 0.25.2
 
