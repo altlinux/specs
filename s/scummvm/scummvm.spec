@@ -1,5 +1,5 @@
 Name: scummvm
-Version: 2.5.1
+Version: 2.6.0
 Release: alt1
 
 Summary: Graphic adventure game interpreter
@@ -36,7 +36,6 @@ export CXXFLAGS=-DFS_API_VERSION=0x0202
 	--mandir=%_mandir \
 	--libdir=%_libdir \
 	--enable-release \
-	--enable-c++11 \
 	--enable-plugins --default-dynamic \
 	--disable-nasm --disable-tremor \
 	--enable-text-console \
@@ -73,6 +72,9 @@ install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_datadir/%name/*
 
 %changelog
+* Thu Aug 04 2022 Fr. Br. George <george@altlinux.org> 2.6.0-alt1
+- Autobuild version bump to 2.6.0
+
 * Tue Jan 25 2022 Fr. Br. George <george@altlinux.ru> 2.5.1-alt1
 - Autobuild version bump to 2.5.1
 
