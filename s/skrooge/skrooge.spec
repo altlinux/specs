@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: skrooge
-Version: 2.27.0
+Version: 2.28.0
 Release: alt1
 Summary: Personal finances manager for KF5
 License: %gpl2plus
@@ -111,6 +111,9 @@ cp -f %SOURCE1 po/ru/skrooge.po
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Thu Aug 04 2022 Andrey Cherepanov <cas@altlinux.org> 2.28.0-alt1
+- new version 2.28.0
+
 * Mon Jan 31 2022 Andrey Cherepanov <cas@altlinux.org> 2.27.0-alt1
 - new version 2.27.0
 
