@@ -1,7 +1,7 @@
 %def_with system_locale
 
 Name:    nx-libs
-Version: 3.5.99.26
+Version: 3.5.99.26.1
 Release: alt3
 
 Summary: NX X11 protocol compression libraries
@@ -41,12 +41,21 @@ BuildRequires: libtirpc-devel
 BuildRequires: libxml2-devel
 BuildRequires: xorg-proto-devel
 BuildRequires: zlib-devel
+%if "%_vendor" == "alt"
+BuildRequires: patchelf
+%endif
+BuildRequires(pre): rpm-build-python3
 
 Obsoletes: nx < %EVR
 Provides:  nx = %EVR
 %if_with system_locale
 Requires: libX11-locales
 %endif
+
+Obsoletes: libXcomp
+Provides:  libXcomp = %EVR
+Obsoletes: libNX_X11
+Provides:  libNX_X11 = %EVR
 
 %description
 NX is a software suite which implements very efficient compression of
@@ -59,8 +68,13 @@ nxagent/x2goagent.
 %package devel
 Summary: Header files for development with nx
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
+Obsoletes: nx-devel
 Provides: nx-devel = %EVR
+
+Obsoletes: libNX_X11-devel
+Provides:  libNX_X11-devel = %EVR
+
 
 %description devel
 Header files for development with nx-libs
@@ -105,6 +119,18 @@ Requires: nx-libs = %EVR
 %description -n nxproxy
 This package provides the NX proxy (client) binary.
 
+
+%package -n nxdialog
+Group:   Networking/Remote access
+Summary:        NX Dialog
+
+%description -n nxdialog
+NX is a software suite which implements very efficient compression of
+the X11 protocol. This increases performance when using X
+applications over a network, especially a slow one.
+
+This package provides the nxdialog helper script.
+
 %prep
 %setup
 
@@ -116,7 +142,8 @@ done
 tar -xf %SOURCE2
 # Apply etersoft patches
 for patchfile in $(ls patches.etersoft/*.patch); do
-	test -e $patchfile && patch -p1 < $patchfile
+	test -e $patchfile || exit
+	cat $patchfile | sed -e 's|\([ab]/\)nx-libs/|\1|' | patch -p1
 done
 
 # remove build cruft that is in Git (also taken from roll-tarball.sh)
@@ -184,6 +211,10 @@ make install \
 # TODO: broken upstream with broken linking and strange shell wrappers
 # https://bugs.etersoft.ru/show_bug.cgi?id=14208
 #rm -f %buildroot%_libdir/nx/X11/libX11.so*
+# lib.req: ERROR: /tmp/.private/lav/nx-libs-buildroot/usr/bin/nxagent: library libNX_X11.so.6 not found
+%if "%_vendor" == "alt"
+which patchelf 2>/dev/null >/dev/null && patchelf --remove-needed libNX_X11.so.6 %buildroot%_bindir/nxagent
+%endif
 
 # Remove static libs (they don't exist on SLES, so using -f here)
 rm -f %{buildroot}%{_libdir}/*.a
@@ -204,8 +235,10 @@ rm -r %{buildroot}%{_includedir}/nx-X11/Xtrans
 rm -f %{buildroot}%{_libdir}/*.la
 
 #FIXME: leaving nxdialog integration to Ionic
-rm -f %{buildroot}%{_bindir}/nxdialog
-rm -f %{buildroot}%{_datadir}/man/man1/nxdialog.1*
+#rm -f %{buildroot}%{_bindir}/nxdialog
+#rm -f %{buildroot}%{_datadir}/man/man1/nxdialog.1*
+sed -i '1 s/python$/python3/' %{buildroot}%{_bindir}/nxdialog
+
 
 %if_with system_locale
 rm -rf %buildroot%_datadir/X11/locale
@@ -285,7 +318,28 @@ cp -a nx-X11/programs/Xserver/hw/nxagent/nxagent.xpm %buildroot%_datadir/pixmaps
 #%_man1dir/nxproxy.1*
 %_datadir/nx/VERSION.nxproxy
 
+%files -n nxdialog
+%doc nxdialog/README.md
+%_bindir/nxdialog
+%_man1dir/nxdialog.1*
+
+
 %changelog
+* Thu Aug 04 2022 Vitaly Lipatov <lav@altlinux.ru> 3.5.99.26.1-alt3
+- add patches from Debian
+- fix bare words in the spec
+
+* Tue Apr 05 2022 Konstantin Kondratyuk <kondratyuk@altlinux.org> 3.5.99.26.1-alt2
+- fix build with python3
+
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 3.5.99.26.1-alt1
+- drop libNX_X11.so.6 needed from nxagent (fix build package)
+- packing nxdialog
+- add channels patches
+
+* Fri Feb 04 2022 Vitaly Lipatov <lav@altlinux.ru> 3.5.99.26-alt4
+- add Conflicts/Provides for Fedora based packaging
+
 * Thu Dec 16 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5.99.26-alt3
 - disable -Wpedantic and -Werror*
 - enable parallel build (use make_build)
