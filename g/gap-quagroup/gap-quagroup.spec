@@ -2,13 +2,13 @@
 
 Name: gap-quagroup
 Summary: GAP: a package for doing computations with quantum groups
-Version: 1.8
+Version: 1.8.3
 Release: alt1
 License: GPL-2.0+
 Group: Sciences/Mathematics
-Url: http://www.science.unitn.it/~degraaf/quagroup.html
+Url: https://gap-packages.github.io/quagroup/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/quagroup-%version.tar.bz2
+Source: https://github.com/gap-packages/quagroup/releases/download/v%version/quagroup-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: rpm-macros-gap
@@ -21,16 +21,20 @@ quantized enveloping algebras of finite-dimensional semisimple Lie
 algebras.
 
 %prep
-%setup -n quagroup
+%setup -n quagroup-%version
 
 %build
 %install
 %gappkg_simple_install
 
 %files -f %name.files
-%dir %gap_sitelib/%repo/
-%gap_sitelib/%repo/*
+%dir %gap_sitelib/%repo-%version/
+%gap_sitelib/%repo-%version/*
 
 %changelog
+* Thu Aug 04 2022 Leontiy Volodin <lvol@altlinux.org> 1.8.3-alt1
+- New version.
+- Updated url and source tags.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 1.8-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
