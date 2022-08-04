@@ -3,7 +3,7 @@
 %def_enable check
 
 Name:    yq
-Version: 3.0.2
+Version: 3.1.0
 Release: alt1
 
 Summary: Command-line YAML, XML and TOML processor
@@ -58,6 +58,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Aug 04 2022 Ivan A. Melnikov <iv@altlinux.org> 3.1.0-alt1
+- 3.1.0
+
 * Mon Jul 18 2022 Ivan A. Melnikov <iv@altlinux.org> 3.0.2-alt1
 - 3.0.2
 
