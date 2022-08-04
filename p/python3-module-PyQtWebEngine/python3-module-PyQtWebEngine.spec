@@ -4,7 +4,7 @@
 %define webenginever %(rpm -q --qf '%%{VERSION}' libqt5-webengine | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
-Version: 5.15.5
+Version: 5.15.6
 Release: alt1
 
 Summary: Python bindings for Qt WebEngine 5
@@ -79,6 +79,9 @@ sip-build --no-make --debug \
 %_qt5_datadir/qsci/PyQtWebEngine.api
 
 %changelog
+* Thu Aug 04 2022 Vitaly Lipatov <lav@altlinux.ru> 5.15.6-alt1
+- new version 5.15.6 (with rpmrb script)
+
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 5.15.5-alt1
 - new version 5.15.5 (with rpmrb script)
 

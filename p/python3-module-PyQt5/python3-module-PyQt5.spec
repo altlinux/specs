@@ -8,7 +8,7 @@
 #define qtver %(rpm -q --qf '%%{VERSION}' libqt5-core | sed -e 's|\\.|_|g')
 
 Name: python3-module-%oname
-Version: 5.15.6
+Version: 5.15.7
 Release: alt1
 
 Summary: Python 3 bindings for Qt 5
@@ -181,6 +181,9 @@ rm -rv %buildroot/%python3_sitelibdir/PyQt5/uic/port_v2/
 %python3_sitelibdir/PyQt5/__pycache__/pyrcc*
 
 %changelog
+* Thu Aug 04 2022 Vitaly Lipatov <lav@altlinux.ru> 5.15.7-alt1
+- new version 5.15.7 (with rpmrb script)
+
 * Mon Dec 13 2021 Vitaly Lipatov <lav@altlinux.ru> 5.15.6-alt1
 - new version 5.15.6 (with rpmrb script)
 
