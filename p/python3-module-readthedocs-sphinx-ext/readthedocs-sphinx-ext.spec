@@ -1,23 +1,29 @@
 %define oname readthedocs-sphinx-ext
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.1.1
+Version: 2.1.8
 Release: alt1
 
 Summary: This holds code specific for Read the Docs and Sphinx
-License: BSD
+
+License: BSD-1-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/readthedocs-sphinx-ext/
+Url: https://pypi.python.org/pypi/readthedocs-sphinx-ext
 BuildArch: noarch
 
-# https://github.com/rtfd/readthedocs-sphinx-ext.git
+# https://github.com/rtfd/readthedocs-sphinx-ext
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-sphinx
 
-%py3_provides readthedocs_ext
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
+%py3_provides readthedocs_ext
 
 %description
 Tooling for a better Read the Docs Sphinx build experience.
@@ -26,7 +32,7 @@ Tooling for a better Read the Docs Sphinx build experience.
 %setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -36,9 +42,13 @@ Tooling for a better Read the Docs Sphinx build experience.
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/readthedocs_ext
+%python3_sitelibdir/readthedocs_sphinx_ext-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.8-alt1
+- Automatically updated to 2.1.8.
+
 * Wed Sep 09 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
 - Automatically updated to 2.1.1.
 
