@@ -5,15 +5,16 @@
 
 Name: gimp-plugin-%_name
 Version: 2.0.3
-Release: alt2
+Release: alt3
 
 Summary: Gimp plug-in for manipulating textures
 License: GPLv3+
 Group: Graphics
-
 Url: https://github.com/bootchk/resynthesizer
+
 #Original author's version was at http://logarithmic.net/pfh/resynthesizer
-Source: %_name-%version.tar.gz
+Vcs: https://github.com/bootchk/resynthesizer.git
+Source: %_name-%version.tar
 
 Requires: gimp
 
@@ -27,11 +28,9 @@ to remove an object from am image by inventing a plausable background, or to
 apply a theme to an image (for example to make an image look as though it were
 painted).
 
-
 %prep
 %setup -n %_name-%version
 sed -i 's|\(#!/usr/bin/\)env \(python\)|\1\22|' PluginScripts/*
-#subst '/g_thread_init/d' src/*.{c,h}
 
 %build
 %autoreconf
@@ -40,14 +39,17 @@ sed -i 's|\(#!/usr/bin/\)env \(python\)|\1\22|' PluginScripts/*
 
 %install
 %makeinstall_std
-
 %find_lang %_name
 
 %files -f %_name.lang
 %gimpplugindir/plug-ins/*
 %_datadir/%_name
+%doc README.md NEWS
 
 %changelog
+* Wed Aug 03 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt3
+- updated to v2.0.3-24-gecfc4e7
+
 * Sat Mar 28 2020 Yuri N. Sedunov <aris@altlinux.org> 2.0.3-alt2
 - replaced python by python2
 
