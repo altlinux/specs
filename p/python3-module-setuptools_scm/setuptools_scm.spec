@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname setuptools_scm
+%define pypi_name setuptools_scm
 %def_with check
 
-Name: python3-module-%oname
-Version: 6.4.2
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 7.0.5
+Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python3
@@ -18,6 +18,12 @@ Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(typing_extensions)
+BuildRequires: python3(packaging)
+
 %if_with check
 # install_requires
 BuildRequires: python3(packaging)
@@ -27,9 +33,6 @@ BuildRequires: python3(tomli)
 BuildRequires: git-core
 BuildRequires: mercurial
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %py3_provides setuptools-scm
@@ -63,25 +66,24 @@ git commit -m 'release'
 git tag '%version'
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export TESTS_NO_NETWORK=1
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOX_TESTENV_PASSENV='TESTS_NO_NETWORK'
 export TOXENV=py%{python_version_nodots python3}-test
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/setuptools_scm/
-%python3_sitelibdir/setuptools_scm-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Aug 05 2022 Stanislav Levin <slev@altlinux.org> 7.0.5-alt1
+- 6.4.2 -> 7.0.5 (closes: #43460).
+
 * Thu Apr 07 2022 Stanislav Levin <slev@altlinux.org> 6.4.2-alt2
 - Fixed FTBFS (setuptools 61.0.0+).
 
