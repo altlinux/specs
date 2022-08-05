@@ -4,7 +4,7 @@
 
 Name: python3-module-hyperlink
 Version: 21.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: A featureful, correct URL for Python
 
@@ -50,6 +50,9 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Aug 05 2022 Grigory Ustinov <grenka@altlinux.org> 21.0.0-alt1.1
+- Added gear-remotes.
+
 * Fri Aug 05 2022 Grigory Ustinov <grenka@altlinux.org> 21.0.0-alt1
 - Build new version.
 - Build with check.
