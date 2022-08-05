@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.14
+Version: 0.2.15
 Release: alt1
 
 Summary: Group policy editor
@@ -97,6 +97,10 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Thu Aug 04 2022 Vladimir Rubanov <august@altlinux.org> 0.2.15-alt1
+- Fixes:
+  + #81760 Fix disabled and enabled list in policies.
+
 * Mon Apr 18 2022 Vladimir Rubanov <august@altlinux.org> 0.2.14-alt1
 - Fixes:
   + Vesioning improved.
