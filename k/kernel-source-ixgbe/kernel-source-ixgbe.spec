@@ -1,5 +1,5 @@
 %define module_name ixgbe
-%define module_version 5.15.2
+%define module_version 5.16.5
 
 %define module_source %module_name.tar
 
@@ -33,6 +33,9 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Fri Aug 05 2022 Alexei Takaseev <taf@altlinux.org> 5.16.5-alt1
+- 5.16.5
+
 * Mon May 23 2022 Alexei Takaseev <taf@altlinux.org> 5.15.2-alt1
 - 5.15.2
 
