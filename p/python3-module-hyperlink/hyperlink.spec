@@ -1,9 +1,10 @@
-%def_without check
+%define oname hyperlink
 
-%define modulename hyperlink
+%def_with check
+
 Name: python3-module-hyperlink
-Version: 19.0.0
-Release: alt2
+Version: 21.0.0
+Release: alt1
 
 Summary: A featureful, correct URL for Python
 
@@ -13,12 +14,16 @@ Group: Development/Python3
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://pypi.io/packages/source/h/%modulename/%modulename-%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-idna
+%endif
 
 %description
 The humble, but powerful, URL runs everything around us. Chances
@@ -36,10 +41,19 @@ an emphasis on correctness.
 %install
 %python3_install
 
+%check
+py.test-3 -v
+
 %files
-%python3_sitelibdir/*
+%doc LICENSE *.md
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Aug 05 2022 Grigory Ustinov <grenka@altlinux.org> 21.0.0-alt1
+- Build new version.
+- Build with check.
+
 * Thu Aug 05 2021 Grigory Ustinov <grenka@altlinux.org> 19.0.0-alt2
 - Drop python2 support.
 
