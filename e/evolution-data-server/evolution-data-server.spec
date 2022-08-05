@@ -32,7 +32,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Evolution Data Server
@@ -94,6 +94,7 @@ BuildRequires:libgtk+3-gir-devel libical-glib-gir-devel libgdata-gir-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver}
 %{?_enable_canberra:BuildRequires: libcanberra-gtk3-devel}
+#BuildRequires: libphonenumber-devel
 
 # /usr/libexec/evolution-data-server/csv2vcard uses perl(diagnostics.pm)
 BuildRequires: perl-devel
@@ -284,6 +285,9 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Fri Aug 05 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.4-alt1
+- 3.44.4
+
 * Fri Jul 01 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.3-alt1
 - 3.44.3
 
