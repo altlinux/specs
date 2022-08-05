@@ -1,7 +1,7 @@
 %define modulename telebot
 
 Name: python3-module-%modulename
-Version: 3.7.5
+Version: 4.6.1
 Release: alt1
 
 Summary: Python Telegram bot api
@@ -39,6 +39,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Fri Aug 05 2022 Alexander Makeenkov <amakeenk@altlinux.org> 4.6.1-alt1
+- NMU: updated to version 4.6.1
+
 * Thu Jan 14 2021 Grigory Ustinov <grenka@altlinux.org> 3.7.5-alt1
 - Build new version (Closes: #39533).
 
