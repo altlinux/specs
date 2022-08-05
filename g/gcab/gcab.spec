@@ -1,6 +1,6 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 1.4
+%define ver_major 1.5
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 
@@ -19,7 +19,7 @@ Group: File tools
 License: LGPL-2.1-or-later
 Url: https://wiki.gnome.org/msitools
 
-#VCS: git://git.gnome.org/gcab
+Vcs: git://git.gnome.org/gcab
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 %else
@@ -28,8 +28,8 @@ Source: %name-%version.tar
 
 Requires: lib%name = %version-%release
 
-BuildRequires(pre): meson
-BuildRequires: git gtk-doc libgio-devel >= 2.62
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gtk-doc libgio-devel >= 2.62
 BuildRequires: gobject-introspection-devel zlib-devel
 BuildRequires: vala-tools
 
@@ -91,8 +91,6 @@ Requires: lib%name = %version-%release
 This package provides tests programs that can be used to verify
 the functionality of the installed M$ Cabinet archive library.
 
-
-
 %prep
 %setup
 
@@ -102,6 +100,7 @@ the functionality of the installed M$ Cabinet archive library.
 	%{?_disable_introspection:-Dintrospection=false} \
 	%{?_disable_vala:-Dvapi=false} \
 	%{?_enable_installed_tests:-Dinstalled_tests=true}
+%nil
 %meson_build
 
 %install
@@ -109,8 +108,7 @@ the functionality of the installed M$ Cabinet archive library.
 %find_lang %name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -149,6 +147,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Aug 05 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5-alt1
+- v1.5-1-gad0baea
+
 * Mon Jan 06 2020 Yuri N. Sedunov <aris@altlinux.org> 1.4-alt1
 - 1.4
 
