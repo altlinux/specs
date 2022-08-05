@@ -1,5 +1,5 @@
 Name: 86box
-Version: 3.6
+Version: 3.7
 Release: alt1
 Summary: 86Box is a low level x86 emulator that runs older operating systems and software designed for IBM PC systems.
 Group: Emulators
@@ -41,5 +41,8 @@ install -D -m0755 ./%_arch-alt-linux/src/86Box %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Aug 5 2022 Artyom Bystrov <arbars@altlinux.org> 3.7-alt1
+ - update to new version
+
 * Mon Jul 26 2022 Artyom Bystrov <arbars@altlinux.org> 3.6-alt1
  - initial release
