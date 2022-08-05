@@ -1,6 +1,6 @@
 Name:		mdevctl
-Version:	1.1.0
-Release:	alt3.22
+Version:	1.2.0
+Release:	alt1
 Summary:	Mediated device management and persistence utility
 
 Group:		System/Configuration/Hardware
@@ -60,6 +60,9 @@ cargo test --release --no-fail-fast
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Sat Aug 06 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.2.0-alt1
+- new version 1.2.0
+
 * Sat Apr 16 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.1.0-alt3.22
 - spec: fix build with rst2man
 
