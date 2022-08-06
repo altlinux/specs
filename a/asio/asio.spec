@@ -8,8 +8,8 @@ BuildRequires: gcc-c++ perl(Date/Format.pm)
 %global shortcommit %(c=%commit; echo ${c:0:7})
 
 Name: asio
-Version: 1.21.0
-Release: alt2
+Version: 1.23.0
+Release: alt1
 
 Summary: A cross-platform C++ library for network programming
 License: Boost Software License
@@ -64,8 +64,12 @@ echo "int main() {}" > src/examples/cpp14/executors/pipeline.cpp
 %dir %_includedir/asio
 %_includedir/asio/*
 %_includedir/asio.hpp
+%_libdir/pkgconfig/asio.pc
 
 %changelog
+* Sat Aug 06 2022 Ilya Mashkin <oddity@altlinux.ru> 1.23.0-alt1
+- 1.23.0
+
 * Thu Jan 20 2022 Michael Shigorin <mike@altlinux.org> 1.21.0-alt2
 - E2K: ftbfs workaround (ilyakurdyukov@)
 
