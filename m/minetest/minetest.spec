@@ -1,11 +1,11 @@
 %def_with l10n
 %define _hardened_build 1
 %global gitname celeron55
-%define irrlichtmt_version 1.9.0mt4
+%define irrlichtmt_version 1.9.0mt7
 
 Name: minetest
-Version: 5.5.1
-Release: alt2
+Version: 5.6.0
+Release: alt1
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
 Group: Games/Other
@@ -36,7 +36,7 @@ BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
 #BuildRequires: libirrlicht-devel
 BuildRequires: bzip2-devel jthread-devel libsqlite3-devel
-BuildRequires: libpng-devel libjpeg-devel libXxf86vm-devel libGL-devel
+BuildRequires: libpng-devel libjpeg-devel libXxf86vm-devel libGL-devel libX11-devel libXcm-devel libXi-devel libXv-devel libXext-devel libGLU-devel
 BuildRequires: libopenal-devel libvorbis-devel libzstd-devel doxygen  libgraphviz-devel libgmp-devel
 #libdotconf-devel graphviz
 BuildRequires: libfreetype-devel
@@ -192,6 +192,9 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Sat Aug 06 2022 Ilya Mashkin <oddity@altlinux.ru> 5.6.0-alt1
+- 5.6.0
+
 * Sun May 22 2022 Ilya Mashkin <oddity@altlinux.ru> 5.5.1-alt2
 - add missed game data (Closes: #42822)
 
