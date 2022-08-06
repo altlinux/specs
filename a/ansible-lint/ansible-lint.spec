@@ -1,6 +1,6 @@
 Name: ansible-lint
 Version: 4.3.7
-Release: alt1
+Release: alt1.1
 
 Summary: Best practices checker for Ansible
 
@@ -16,7 +16,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools python3-tools
 BuildRequires: python3-module-tox python3-module-pip python3-module-wheel
 BuildRequires: python3-module-setuptools_scm >= 3.5.0
-BuildRequires: python3-module-setuptools_scm_git_archive >= 1.0
 BuildRequires: python3-module-yaml
 BuildRequires: python3-module-rich
 BuildRequires: python3-module-ruamel-yaml >= 0.15.37
@@ -57,6 +56,9 @@ fi
 %python3_sitelibdir/*
 
 %changelog
+* Sat Aug 06 2022 Grigory Ustinov <grenka@altlinux.org> 4.3.7-alt1.1
+- Fixed build requires.
+
 * Tue Nov 24 2020 Alexey Shabalin <shaba@altlinux.org> 4.3.7-alt1
 - new version 4.3.7
 
