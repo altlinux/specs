@@ -1,6 +1,6 @@
 Name: memtest86+
 Version: 5.31b
-Release: alt1
+Release: alt2
 
 Summary: Memory test for x86 architecture
 License: GPL
@@ -18,6 +18,7 @@ Source: %url/download/%version/%name-%version.tar.gz
 #Patch2:   memtest86+-5.01-compile-fix.patch
 #Patch3:   memtest86+-5.01-array-size-fix.patch
 Patch4:   memtest86+-5.31b-serial-console-fix.patch
+Patch5:   memtest86+-5.31b-gcc-12-fix.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -72,7 +73,7 @@ and avoids the following errors:
 #patch2 -p1 -b .compile-fix
 #patch3 -p1 -b .array-size-fix
 %patch4 -p1 -b .serial-console-fix
-
+%patch5 -p1 -b .gcc-12-fix
 
 sed -i -e's,0x5000,0x100000,' memtest.lds
 %ifarch x86_64
@@ -102,6 +103,9 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %doc README* FAQ
 
 %changelog
+* Sat Aug 06 2022 Anton Midyukov <antohami@altlinux.org> 5.31b-alt2
+- NMU: fix build with gcc12
+
 * Sun Jan 31 2021 Ilya Mashkin <oddity@altlinux.ru> 5.31b-alt1
 - 5.31b
 
