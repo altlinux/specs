@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.342.b07
+%define version 1.8.0.345.b01
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -295,7 +295,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo shenandoah-jdk8u
-%global shenandoah_revision shenandoah-jdk8u342-b07
+%global shenandoah_revision shenandoah-jdk8u345-b01
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -317,7 +317,7 @@ BuildRequires: /proc rpm-build-java
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga           0
+%global is_ga           1
 %if %{is_ga}
 %global milestone          fcs
 %global milestone_version  %{nil}
@@ -2149,6 +2149,9 @@ fi
 %endif
 
 %changelog
+* Sat Aug 06 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.345.b01-alt0_1jpp8
+- New version.
+
 * Wed Aug 03 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.342.b07-alt0_0.1.eajpp8
 - New version.
 - Seciruty fixes:
