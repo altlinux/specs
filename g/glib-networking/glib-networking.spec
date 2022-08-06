@@ -15,7 +15,7 @@
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Networking support for GIO
@@ -38,7 +38,7 @@ Requires: ca-certificates
 %define libproxy_ver 0.3.1
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson libgio-devel >= %glib_ver libsystemd-devel
+BuildRequires: meson libgio-devel >= %glib_ver pkgconfig(systemd)
 %{?_enable_ssl:BuildRequires: libssl-devel}
 %{?_enable_gnome_proxy:BuildRequires: gsettings-desktop-schemas-devel}
 %{?_enable_tls:BuildRequires: libgnutls-devel >= %gnutls_ver libgcrypt-devel}
@@ -82,6 +82,7 @@ the functionality of the installed %name package.
 	%{?_enable_libproxy:-Dlibproxy=enabled} \
 	%{?_enable_gnome_proxy:-Dgnome_proxy=enabled} \
 	%{?_enable_installed_tests:-Dinstalled_tests=true}
+%nil
 %meson_build
 
 %install
@@ -89,7 +90,7 @@ the functionality of the installed %name package.
 %find_lang %name
 
 %check
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %{?_enable_tls:%_libdir/gio/modules/libgiognutls.so}
@@ -116,6 +117,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Sat Aug 06 2022 Yuri N. Sedunov <aris@altlinux.org> 2.72.2-alt1
+- 2.72.2
+
 * Wed Jun 29 2022 Yuri N. Sedunov <aris@altlinux.org> 2.72.1-alt1
 - 2.72.1
 
