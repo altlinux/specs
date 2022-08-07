@@ -1,8 +1,8 @@
-%define module_name     dm-secdel
-%define module_version  1.0.7
-%define module_release  alt6
-%define flavour         std-def
-%define karch %ix86 x86_64 aarch64 ppc64le armh e2k e2kv4 e2kv5 e2kv6
+%define module_name	dm-secdel
+%define module_version	1.0.8
+%define module_release	alt1
+%define flavour		std-def
+%define karch		%ix86 x86_64 aarch64 ppc64le armh e2k e2kv4 e2kv5 e2kv6
 
 %setup_kernel_module %flavour
 
@@ -19,17 +19,20 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 Url: https://github.com/vt-alt/dm-secdel/
 
 ExclusiveOS: Linux
+ExclusiveArch: %karch
+Requires(pre,postun): kernel-image-%flavour = %kepoch%kversion-%krelease
+Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
+Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
+Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
+
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-def
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
-Requires: dmsetup
-Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
-
-PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
-ExclusiveArch: %karch
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: kernel-image-%flavour = %kepoch%kversion-%krelease
+BuildRequires: rpm-build-vm-run
+}}
 
 %description
 Linear device-mapper target with secure deletion on discard.
@@ -43,8 +46,10 @@ tar xf %kernel_src/kernel-source-%module_name-%module_version.tar*
 make VERSION=%version-%release -C %_usrsrc/linux-%kversion-%flavour-%krelease M=$(pwd) modules
 
 %install
-install -d %buildroot/%module_dir
-install -m644 -D dm-secdel.ko %buildroot/%module_dir/
+install -m644 dm-secdel.ko -Dt %buildroot%module_dir
+
+%check
+vm-run --kvm=cond --udevd --kernel=%flavour ./tests.sh
 
 %files
 %module_dir

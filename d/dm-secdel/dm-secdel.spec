@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dm-secdel
-Version: 1.0.7
-Release: alt6
+Version: 1.0.8
+Release: alt1
 
 Summary: dm-linear with secure deletion on discard
 License: GPL-2.0-only
@@ -15,9 +15,12 @@ Url: https://github.com/vt-alt/dm-secdel
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-kernel
+%{?!_without_check:%{?!_disable_check:
 BuildRequires: banner
 BuildRequires: kernel-headers-modules-std-def
 BuildRequires: kernel-headers-modules-un-def
+BuildRequires: rpm-build-vm
+}}
 
 %description
 Linear device-mapper target with secure deletion on discard.
@@ -40,11 +43,16 @@ mkdir %buildroot/etc
 echo '# <target name> <source device> <options>' > %buildroot/etc/secdeltab
 
 %check
-# Do dummy build of the module.
+# Do a dummy build of the module.
 banner std-def
-make KDIR=$(echo /lib/modules/*-std-def-*/build) VERSION=%version all clean
+make KDIR=$(echo /lib/modules/*-std-def-*/build) VERSION=%version clean all
+# Cannot run tests, because "forbidden dependencies: kernel-image-std-def"
+
+# Build and run functional tests
 banner un-def
-make KDIR=$(echo /lib/modules/*-un-def-*/build) VERSION=%version all clean
+make KDIR=$(echo /lib/modules/*-un-def-*/build) VERSION=%version clean all
+timeout 60 \
+vm-run --kvm=cond --sbin --udevd --kernel=un-def ./tests.sh
 
 %files -n kernel-source-%name
 %kernel_src/kernel-source-%name-%version.tar
@@ -63,6 +71,11 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Sun Aug 07 2022 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt1
+- Fix build for v5.18 (bio_alloc), v5.15, and v5.10.
+- Run functional tests on un-def kernel (in %%check).
+- Fix kernel panic when erasing with FF pattern.
+
 * Sat Jun 11 2022 Vitaly Chikunov <vt@altlinux.org> 1.0.7-alt6
 - Fix build for v5.19.
 
