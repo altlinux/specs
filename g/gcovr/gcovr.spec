@@ -1,5 +1,7 @@
+%def_disable check
+
 Name: gcovr
-Version: 5.1
+Version: 5.2
 Release: alt1
 
 Summary: A Python script for summarizing gcov data
@@ -11,11 +13,13 @@ Source: https://pypi.io/packages/source/g/%name/%name-%version.tar.gz
 
 BuildArch: noarch
 
-Requires: %_bindir/gcov
+Requires: /usr/bin/gcov
 Requires: python3-module-jinja2 python3-module-Pygments
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools python3-module-wheel
+%{?_enable_check:BuildRequires: /usr/bin/gcov python3-module-pytest
+BuildRequires: python3-module-jinja2 python3-module-Pygments}
 
 %description
 Gcovr provides a utility for managing the use of the GNU gcov utility
@@ -27,18 +31,25 @@ Python.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+py.test-3
 
 %files
 %_bindir/gcovr
 %python3_sitelibdir_noarch/%name/
-%python3_sitelibdir_noarch/*.egg-info/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %name}
 %doc README.rst PKG-INFO
 
 %changelog
+* Sun Aug 07 2022 Yuri N. Sedunov <aris@altlinux.org> 5.2-alt1
+- 5.2
+- ported to %%pyproject* macros
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 5.1-alt1
 - 5.1
 

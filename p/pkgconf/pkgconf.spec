@@ -1,8 +1,10 @@
-%def_enable snapshot
+%define sover 4
+
+%def_disable snapshot
 %def_disable check
 
 Name: pkgconf
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Summary: Package compiler and linker metadata toolkit
@@ -71,7 +73,7 @@ mkdir -p %buildroot%_datadir/pkgconfig/personality.d
 %doc README.md AUTHORS NEWS
 
 %files -n lib%name
-%_libdir/lib%name.so.*
+%_libdir/lib%name.so.%{sover}*
 
 %files -n lib%name-devel
 %_includedir/%name/
@@ -83,6 +85,9 @@ mkdir -p %buildroot%_datadir/pkgconfig/personality.d
 
 
 %changelog
+* Sun Aug 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
+- 1.9.0
+
 * Tue Jun 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1.8.0-alt1
 - first build for Sisyphus (1.8.0-32-gcf48b61)
 
