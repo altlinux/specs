@@ -1,32 +1,33 @@
 %define oname aniso8601
 
-Summary: Another ISO 8601 parser for Python
+%def_with check
+
 Name: python3-module-%oname
-Version: 4.0.1
-Release: alt2
+Version: 9.0.1
+Release: alt1
+
+Summary: Another ISO 8601 parser for Python
+
 Url: https://bitbucket.org/nielsenb/aniso8601
-Source: https://pypi.python.org/packages/source/a/%oname/%oname-%version.tar.gz
 License: BSD
 Group: Development/Python3
+
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
+
 %description
 This is a Python library for parsing date strings
 in ISO 8601 format into datetime format.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-This package contains tests for %oname.
-
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
 %python3_build
@@ -34,15 +35,18 @@ This package contains tests for %oname.
 %install
 %python3_install
 
+%check
+py.test-3 -v
+
 %files
 %doc README.rst LICENSE
-%python3_sitelibdir/*
-#%exclude %python3_sitelibdir/*/tests
-
-#%files -n python3-module-%oname-tests
-#%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Aug 05 2022 Grigory Ustinov <grenka@altlinux.org> 9.0.1-alt1
+- Build new version.
+
 * Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt2
 - Drop python2 support.
 
