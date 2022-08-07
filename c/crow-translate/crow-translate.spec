@@ -1,12 +1,12 @@
-%define version_SingleApplication v3.3.2
+%define version_SingleApplication v3.3.4
 %define version_QTaskbarControl 2.0.2
 %define version_QOnlineTranslator 1.5.3
 %define version_QHotkey 1.4.2
-%define version_circle_flags v2.3.0
-%define version_Fluent 2021-12-20
+%define version_circle_flags v2.5.2
+%define version_Fluent 2022-02-28
 
 Name: crow-translate
-Version: 2.9.2
+Version: 2.9.10
 Release: alt1
 
 Summary: A Qt GUI for Google, Yandex and Bing translators
@@ -16,7 +16,7 @@ License: GPL-3.0-only and MIT and BSD-3-Clause
 Group: System/Internationalization
 Url: https://crow-translate.github.io
 
-# Source-url: https://github.com/crow-translate/crow-translate/archive/refs/tags/%version.tar.gz
+# Source-url: https://github.com/crow-translate/crow-translate/releases/download/%version/crow-translate-%version-source.tar.gz
 Source: %name-%version.tar
 
 # Source1-url: https://github.com/itay-grudev/SingleApplication/archive/refs/tags/%version_SingleApplication.tar.gz
@@ -37,7 +37,6 @@ Source5: circle-flags.tar
 # Source6-url: https://github.com/vinceliuice/Fluent-icon-theme/archive/refs/tags/%version_Fluent.tar.gz
 Source6: Fluent-icon-theme.tar
 
-Patch: crow-2.9.1-alt-fetchcontent.patch
 Patch1: crow-2.9.1-alt-icon_theme.patch
 
 BuildRequires: extra-cmake-modules
@@ -91,7 +90,9 @@ tar -xf %SOURCE5 -C src/circle-flags/ --strip-components=1
 tar -xf %SOURCE6 -C src/Fluent-icon-theme/ --strip-components=1
 
 %build
-%cmake
+%cmake \
+    -DWITH_KWAYLAND=OFF
+
 %cmake_build
 
 %install
@@ -102,9 +103,16 @@ tar -xf %SOURCE6 -C src/Fluent-icon-theme/ --strip-components=1
 %_bindir/crow
 %_desktopdir/io.crow_translate.CrowTranslate.desktop
 %_datadir/Crow*/*
+%_datadir/metainfo/io.crow_translate.CrowTranslate.metainfo.xml
 %_iconsdir/hicolor/*/*/crow-translate*
 
 %changelog
+* Sun Aug 07 2022 Evgeny Chuck <koi@altlinux.org> 2.9.10-alt1
+- new version (2.9.10) with rpmgs script
+- updated SingleApplication v3.3.4
+- updated circle_flags v2.5.2
+- updated Fluent-icon-theme 2022-02-28
+
 * Fri Mar 11 2022 Evgeny Chuck <koi@altlinux.org> 2.9.2-alt1
 - new version (2.9.2) with rpmgs script
 - updated QOnlineTranslator library version 1.5.3
