@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Net-SSH2
-Version: 0.72
+Version: 0.73
 Release: alt1
 
 Summary: Support for the SSH 2 protocol via libssh2
@@ -8,8 +8,8 @@ License: Perl
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Net-SSH2/
-Source: Net-SSH2-%version.tar
-Patch: %name-%version-%release.patch
+Source0: http://www.cpan.org/authors/id/R/RK/RKITOVER/Net-SSH2-%{version}.tar.gz
+Patch: %name-0.72-alt1.patch
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: libssh2-devel libssl-devel perl-Module-Install-CheckLib zlib-devel
@@ -20,7 +20,7 @@ library.  It supports the SSH2 protocol (there is no support for SSH1)
 with all of the key exchanges, ciphers, and compression of libssh2.
 
 %prep
-%setup -q -n Net-SSH2-%version
+%setup -q -n Net-SSH2-%{version}
 %patch -p1
 
 %build
@@ -35,6 +35,9 @@ with all of the key exchanges, ciphers, and compression of libssh2.
 %perl_vendor_autolib/Net
 
 %changelog
+* Sun Aug 07 2022 Igor Vlasenko <viy@altlinux.org> 0.73-alt1
+- automated CPAN update
+
 * Fri Dec 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.72-alt1
 - new version
 
