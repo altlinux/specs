@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: pkgconf
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary: Package compiler and linker metadata toolkit
@@ -85,6 +85,9 @@ mkdir -p %buildroot%_datadir/pkgconfig/personality.d
 
 
 %changelog
+* Mon Aug 08 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9.1-alt1
+- 1.9.1
+
 * Sun Aug 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9.0-alt1
 - 1.9.0
 
