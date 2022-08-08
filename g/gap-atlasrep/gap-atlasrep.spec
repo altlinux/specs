@@ -1,7 +1,7 @@
 %define repo atlasrep
 
 Name: gap-atlasrep
-Version: 2.1.2
+Version: 2.1.4
 Release: alt1
 Summary: GAP: Interface to the Atlas of Group Representations
 License: GPL-3.0+
@@ -38,6 +38,9 @@ fdupes %buildroot%_prefix
 %gap_sitelib/%repo/*
 
 %changelog
+* Mon Aug 08 2022 Leontiy Volodin <lvol@altlinux.org> 2.1.4-alt1
+- 2.1.4.
+
 * Tue May 17 2022 Leontiy Volodin <lvol@altlinux.org> 2.1.2-alt1
 - 2.1.2.
 - Changed url tag.
