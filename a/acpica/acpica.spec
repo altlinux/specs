@@ -1,6 +1,6 @@
 
 Name: acpica
-Version: 20211217
+Version: 20220331
 Release: alt1
 Summary: ACPICA tools for the development and debug of ACPI tables
 
@@ -15,7 +15,6 @@ Source4: acpibin.1
 Source5: acpidump.1
 Source6: acpiexec.1
 Source7: acpihelp.1
-Source8: acpinames.1
 Source9: acpisrc.1
 Source10: acpixtract.1
 Source11: acpiexamples.1
@@ -39,8 +38,10 @@ Patch109: cve-2017-13694.patch
 Patch110: cve-2017-13695.patch
 Patch111: str-trunc-warn.patch
 Patch112: ptr-cast.patch
-Patch114: armv7-str-fixes.patch
-Patch115: dbtest.patch
+Patch113: armv7-str-fixes.patch
+Patch114: dbtest.patch
+Patch116: dangling-ptr.patch
+Patch117: uuid-len.patch
 
 BuildRequires: bison flex
 
@@ -80,7 +81,6 @@ are installed:
    -- acpidump: write out the current contents of ACPI tables
    -- acpiexec: simulate AML execution in order to debug method definitions
    -- acpihelp: display help messages describing ASL keywords and op-codes
-   -- acpinames: display complete ACPI name space from input AML
    -- acpisrc: manipulate the ACPICA source tree and format source files
       for specific environments
    -- acpixtract: extract binary ACPI tables from acpidump output (see
@@ -97,7 +97,6 @@ cp -p %SOURCE4 acpibin.1
 cp -p %SOURCE5 acpidump.1
 cp -p %SOURCE6 acpiexec.1
 cp -p %SOURCE7 acpihelp.1
-cp -p %SOURCE8 acpinames.1
 cp -p %SOURCE9 acpisrc.1
 cp -p %SOURCE10 acpixtract.1
 cp -p %SOURCE11 acpiexamples.1
@@ -175,6 +174,9 @@ cd tests
 %_man1dir/*
 
 %changelog
+* Mon Aug 08 2022 Alexey Shabalin <shaba@altlinux.org> 20220331-alt1
+- 20220331
+
 * Tue Dec 28 2021 Alexey Shabalin <shaba@altlinux.org> 20211217-alt1
 - 20211217
 - Drop patches for big-endian support.
