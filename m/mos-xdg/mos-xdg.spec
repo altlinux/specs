@@ -5,7 +5,7 @@ Summary: XDG desktop settings for M OS distros
 Summary(ru): Настройки рабочего окружения дистрибутивов М ОС
 License: GPL-3.0
 Group: Graphical desktop/Other
-Version: 2.1
+Version: 2.2
 Release: alt1
 Source0: %name-%version.tar
 Source1: COPYING
@@ -111,6 +111,10 @@ cd scripts
 ./test.sh
 
 %changelog
+* Mon Aug 08 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.2-alt1
+- Prefer R7 Office / OnlyOffice Desktop Editors for Microsoft Office formats
+- Do not duplicate MIME associations
+
 * Tue Apr 26 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.1-alt1
 - Delete power settings: not valid for newer KDE (by tema@)
 - Add MIME associations (by tema@)
