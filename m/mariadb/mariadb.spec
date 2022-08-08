@@ -50,8 +50,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.5.11
-Release: alt2
+Version: 10.6.8
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -106,7 +106,7 @@ Source106: libmarias3.tar
 Patch0: %name-%version.patch
 
 # ALTLinux
-Patch1: mariadb-10.3.15-alt-chroot.patch
+Patch1: mariadb-10.6.8-alt-chroot.patch
 Patch2: mysql-5.0.20-alt-libdir.patch
 Patch4: mariadb-10.1.8-alt-client.patch
 #Patch5: mariadb-10.0.21-alt-load_defaults.patch
@@ -170,6 +170,8 @@ Provides: %name-engine-extra = %EVR
 Obsoletes: %name-engine-extra < %EVR
 Provides: %name-engine-obsolete = %EVR
 Obsoletes: %name-engine-obsolete < %EVR
+Provides: %name-pam = %EVR
+Obsoletes: %name-pam < %EVR
 Conflicts: MySQL-server
 Requires: chrooted %name-server-control
 
@@ -231,15 +233,6 @@ Language) database server. MySQL is a client/server implementation
 that consists of a server daemon (mysqld) and many different client
 programs/libraries.
 This package contents perl utils for MySQL-server.
-
-%package pam
-Summary: PAM authentication plugin for the MariaDB server
-Group: Databases
-Requires: %name-common = %EVR
-Requires: %name-server = %EVR
-
-%description pam
-PAM authentication server-side plugin for MariaDB.
 
 %package oqgraph-engine
 Summary: The Open Query GRAPH engine for MariaDB
@@ -438,7 +431,7 @@ tar -xf %SOURCE106 -C storage/maria/libmarias3
 #%patch34 -p1
 
 %patch101 -p1 -d ./storage/rocksdb/rocksdb
-%patch102 -p1
+#%patch102 -p1
 
 %ifarch %e2k
 %patch2000 -p1
@@ -704,6 +697,7 @@ rm -f %buildroot%_libdir/libmariadbd.a
 rm -f %buildroot%_libdir/libmysqlclient.a
 rm -f %buildroot%_libdir/libmysqlclient_r.a
 rm -f %buildroot%_libdir/libmariadbclient.a
+rm -f %buildroot%_libdir/libmariadb.a
 
 ################################################################################
 # run the tests
@@ -791,7 +785,14 @@ fi
 %exclude %prefix/%plugindir/mysql_clear_password.so
 %exclude %prefix/%plugindir/caching_sha2_password.so
 %exclude %prefix/%plugindir/sha256_password.so
-%exclude %prefix/%plugindir/auth_pam*
+
+# pam
+%config(noreplace) %_sysconfdir/security/user_map.conf
+%_pam_modules_dir/pam_user_map.so
+%attr(755,root,root) %dir %prefix/%plugindir/auth_pam_tool_dir
+%attr(4710,root,mysql) %prefix/%plugindir/auth_pam_tool_dir/auth_pam_tool
+%attr(755,root,root) %dir %ROOT/%prefix/%plugindir/auth_pam_tool_dir
+%attr(4710,root,mysql) %ROOT/%prefix/%plugindir/auth_pam_tool_dir/auth_pam_tool
 
 %attr(3770,root,mysql) %dir %_logdir/mysql
 %dir %_docdir/%name-%version
@@ -826,15 +827,6 @@ fi
 %dir %ROOT/run
 %dir %ROOT/run/systemd
 %ghost %ROOT/run/systemd/notify
-
-%files pam
-%prefix/%plugindir/auth_pam*
-%config(noreplace) %_sysconfdir/security/user_map.conf
-%_pam_modules_dir/pam_user_map.so
-%attr(755,root,root) %dir %prefix/%plugindir/auth_pam_tool_dir
-%attr(4710,root,mysql) %prefix/%plugindir/auth_pam_tool_dir/auth_pam_tool
-%attr(755,root,root) %dir %ROOT/%prefix/%plugindir/auth_pam_tool_dir
-%attr(4710,root,mysql) %ROOT/%prefix/%plugindir/auth_pam_tool_dir/auth_pam_tool
 
 %if_with galera
 %files server-galera
@@ -968,6 +960,7 @@ fi
 
 %_mandir/man?/*
 %exclude %_man1dir/mysql_config.1*
+%exclude %_man1dir/mariadb_config.1*
 %exclude %_man1dir/mysql_client_test_embedded.1*
 %exclude %_man1dir/mariadb-client-test-embedded.1*
 %exclude %_man1dir/mysqltest_embedded.1*
@@ -1020,6 +1013,7 @@ fi
 %_includedir/*
 #_mandir/man1/comp_err.1*
 %_man1dir/mysql_config.1*
+%_man1dir/mariadb_config.1*
 %_aclocaldir/mysql.m4
 %_pkgconfigdir/mariadb.pc
 %_pkgconfigdir/libmariadb.pc
@@ -1042,6 +1036,21 @@ fi
 %endif
 
 %changelog
+* Fri Aug 05 2022 Alexey Shabalin <shaba@altlinux.org> 10.6.8-alt1
+- 10.6.8
+- mariadb-client not requires libmariadb-devel (ALT #42774)
+- Merge pam subpackage to server (ALT #41295, #35242)
+- Fixes: CVE-2022-32088, CVE-2022-32087, CVE-2022-32086, CVE-2022-32085, CVE-2022-32083,
+  CVE-2022-31624, CVE-2022-27458, CVE-2022-27457, CVE-2022-27456, CVE-2022-27455,
+  CVE-2022-27452, CVE-2022-27451, CVE-2022-27449, CVE-2022-27448, CVE-2022-27447,
+  CVE-2022-27446, CVE-2022-27445, CVE-2022-27444, CVE-2022-27387, CVE-2022-27386,
+  CVE-2022-27385, CVE-2022-27384, CVE-2022-27383, CVE-2022-27382, CVE-2022-27381,
+  CVE-2022-27380, CVE-2022-27379, CVE-2022-27378, CVE-2022-27377, CVE-2022-27376,
+  CVE-2022-24052, CVE-2022-24051, CVE-2022-24050, CVE-2022-24048, CVE-2022-0778,
+  CVE-2021-46669, CVE-2021-46668, CVE-2021-46667, CVE-2021-46665, CVE-2021-46664,
+  CVE-2021-46663, CVE-2021-46662, CVE-2021-46661, CVE-2021-46659, CVE-2021-46658,
+  CVE-2021-35604, CVE-2021-2389, CVE-2021-2372
+
 * Tue Sep 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 10.5.11-alt2
 - Proper patch for Elbrus
 - Fixed -flto
