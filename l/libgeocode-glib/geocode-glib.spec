@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: lib%{_name}
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Helper library for geocoding services
@@ -132,6 +132,9 @@ the functionality of the installed %_name library.
 %endif
 
 %changelog
+* Mon Aug 08 2022 Yuri N. Sedunov <aris@altlinux.org> 3.26.4-alt1
+- 3.26.4
+
 * Thu Jun 30 2022 Yuri N. Sedunov <aris@altlinux.org> 3.26.3-alt1
 - 3.26.3
 
