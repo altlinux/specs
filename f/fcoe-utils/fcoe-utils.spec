@@ -3,7 +3,7 @@
 
 Name: fcoe-utils
 Version: 1.0.34
-Release: alt1
+Release: alt2
 Summary: Fibre Channel over Ethernet utilities
 
 Group: Networking/Other
@@ -69,6 +69,9 @@ done
 %_libexecdir/fcoe/
 
 %changelog
+* Mon Aug 08 2022 Alexey Shabalin <shaba@altlinux.org> 1.0.34-alt2
+- Build master snapshot for fix GCC 12 warning.
+
 * Mon Aug 23 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.34-alt1
 - Initial build.
 
