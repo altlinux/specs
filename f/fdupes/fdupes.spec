@@ -1,20 +1,18 @@
 Name: fdupes
-Version: 1.6.1
+Version: 2.1.2
 Epoch: 1
 Release: alt1
 
 Summary: Identifies duplicate files within given directories
 
-License: %mit
+License: MIT
 Group: File tools
-Url: http://netdial.caribe.net/~adrian2/fdupes.html
-
-Packager: Artem Zolochevskiy <azol@altlinux.ru>
+Url: https://github.com/adrianlopezroche/fdupes
 
 # Source-url: https://github.com/adrianlopezroche/fdupes/archive/v%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-licenses
+BuildRequires: libncursesw-devel libpcre2-devel
 
 %description
 FDUPES is a program for identifying or deleting duplicate files
@@ -24,21 +22,29 @@ residing within specified directories.
 %setup
 
 %build
+%autoreconf
+%configure
 %make_build
 
 %install
-%makeinstall PREFIX=%buildroot%prefix MAN_BASE_DIR=%buildroot%_mandir install
+%makeinstall_std
 
 %check
 ./fdupes testdir
 ./fdupes -r testdir
 
 %files
-%doc CHANGES CONTRIBUTORS README TODO
+%doc CHANGES CONTRIBUTORS README
 %_bindir/*
 %_man1dir/*
+%_man7dir/*
 
 %changelog
+* Mon Aug 08 2022 Vitaly Lipatov <lav@altlinux.ru> 1:2.1.2-alt1
+- new version 2.1.2 (with rpmrb script)
+- switch to autoconf/automake
+- change Url
+
 * Sat Mar 30 2019 Vitaly Lipatov <lav@altlinux.ru> 1:1.6.1-alt1
 - new version 1.6.1 (with rpmrb script)
 
