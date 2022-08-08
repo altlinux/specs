@@ -1,5 +1,5 @@
 Name: deepin-desktop-base
-Version: 2021.11.08
+Version: 2022.07.26
 Release: alt1
 Summary: Base component for Deepin
 License: GPL-3.0
@@ -8,7 +8,8 @@ Url: https://github.com/linuxdeepin/deepin-desktop-base
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-desktop-base_2021.3.10_alt_fix-multiarch-build.patch
+Source1: distribution.info
+Patch: deepin-desktop-base-2022.07.26-alt-fix-multiarch-build.patch
 
 BuildArch: noarch
 #Recommends:     deepin-wallpapers
@@ -25,20 +26,7 @@ This package provides some components for Deepin desktop environment.
 
 %prep
 %setup
-%patch -p2
-
-# Remove Deepin distro's lsb-release
-# Don't override systemd timeouts
-# Remove apt-specific templates
-sed -E '/lsb-release|systemd|apt|back/d' Makefile
-
-# Fix data path
-sed -i 's|/usr/lib|%_datadir|' Makefile
-
-# Set deepin type to Desktop
-sed -i 's|Type=.*|Type=Desktop|; /Type\[/d; s|Version=.*|Version=20.3|' files/desktop-version*.in
-
-sed -i 's|/etc/systemd/|/lib/systemd/|' Makefile
+%patch -p1
 
 %build
 %make_build
@@ -46,26 +34,33 @@ sed -i 's|/etc/systemd/|/lib/systemd/|' Makefile
 %install
 %makeinstall_std
 
+install -Dm644 %SOURCE1 -t %buildroot/usr/share/deepin/
+# Remove Deepin distro's lsb-release
+rm %buildroot/etc/lsb-release
+# Don't override systemd timeouts
+rm -r %buildroot/etc/systemd
 # Make a symlink for deepin-version
-mkdir -p %buildroot/etc/
-ln -sfv ..%_datadir/deepin/desktop-version %buildroot/etc/deepin-version
+mkdir -p %buildroot%_sysconfdir/
+ln -sfv ../usr/lib/deepin/desktop-version %buildroot%_sysconfdir/deepin-version
+# Remove apt-specific templates
+rm -r %buildroot/usr/share/python-apt
 
 %files
 %doc LICENSE
 %exclude %_sysconfdir/appstore.json
 %dir %_datadir/deepin/
+%_datadir/deepin/distribution.info
 %_datadir/i18n/i18n_dependent.json
 %_datadir/i18n/language_info.json
-%_datadir/deepin/desktop-version
+%_libexecdir/deepin/desktop-version
 %_sysconfdir/deepin-version
 %exclude %_datadir/plymouth/deepin-logo.png
-%exclude %_sysconfdir/lsb-release
-/lib/systemd/system.conf.d/deepin-base.conf
-/lib/systemd/logind.conf.d/deepin-base.conf
-%exclude %_datadir/python-apt/templates/Deepin.info
-%exclude %_datadir/python-apt/templates/Deepin.mirrors
 
 %changelog
+* Mon Aug 08 2022 Leontiy Volodin <lvol@altlinux.org> 2022.07.26-alt1
+- New version (2022.07.26).
+- Used distribution logo.
+
 * Wed Mar 16 2022 Leontiy Volodin <lvol@altlinux.org> 2021.11.08-alt1
 - New version (2021.11.08).
 
