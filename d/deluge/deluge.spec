@@ -1,7 +1,7 @@
 %define major 2.1
 
 Name: deluge
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: full-featured BitTorrent client
@@ -171,6 +171,9 @@ cp -a %name-web.service %buildroot%_unitdir
 %python3_sitelibdir/%name/ui/web
 
 %changelog
+* Mon Aug 08 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.1-alt1
+- Updated to 2.1.1.
+
 * Wed Jun 29 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.0-alt1
 - Updated to 2.1.0.
 
