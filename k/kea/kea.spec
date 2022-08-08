@@ -9,7 +9,7 @@
 %define _localstatedir /var
 
 Name: kea
-Version: 2.0.2
+Version: 2.2.0
 Release: alt1
 Summary: DHCPv4, DHCPv6 and DDNS server from ISC
 
@@ -229,6 +229,9 @@ rm -f %buildroot%python3_sitelibdir_noarch/kea/kea_connector2.py
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Mon Aug 08 2022 Alexey Shabalin <shaba@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Mon Apr 11 2022 Alexey Shabalin <shaba@altlinux.org> 2.0.2-alt1
 - 2.0.2
 
