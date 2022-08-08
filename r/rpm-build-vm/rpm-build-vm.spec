@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.34
+Version: 1.35
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -191,6 +191,10 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Mon Aug 08 2022 Vitaly Chikunov <vt@altlinux.org> 1.35-alt1
+- Fix (uninstalled) kernels list.
+- Allow to run auditctl.
+
 * Sun Jun 12 2022 Vitaly Chikunov <vt@altlinux.org> 1.34-alt1
 - Fix always 0 exit code. (Add build test for this case.)
 
