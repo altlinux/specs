@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 139
+%define centos_release 143
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,37 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Aug 08 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.143-alt1.el9
+- Updated to kernel-5.14.0-143.el9 (fixes: CVE-2022-23816, CVE-2022-23825, CVE-2022-29900, CVE-2022-29901):
+  + Documentation: add a description for net.core.high_order_alloc_disable
+  + net: ping6: Fix memleak in ipv6_renew_options().
+  + rebase the input and HID stack in RHEL 9.1
+  + [RHEL 9.1.0 BZ 2015209] A couple dma fixes
+  + [RHEL9.1 BZ2100482] Revert dmaengine: idxd: Separate user and kernel pasid enabling
+  + sched, cpuset: Fix dl_cpu_busy() panic due to empty cs->cpus_allowed
+  + sit: do not call ipip6_dev_free() from sit_init_net()
+  + x86: Fix RETBleed Vulnerabilities
+
+* Wed Aug 03 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.141-alt1.el9
+- Updated to kernel-5.14.0-141.el9:
+  + ACPI: VIOT: Fix ACS setup
+  + Documentation: Add an explanation of NFSv4 client identifiers
+  + Documentation: filesystems: proc: update meminfo section
+  + iommu/vt-d:  A couple of late landing fixes
+  + mm: make slab and vmalloc allocators __GFP_NOLOCKDEP aware
+  + mm/munlock: Fix sleeping function called from invalid context bug
+  + powercap: intel_rapl: add support for ALDERLAKE_N
+  + ppc64le: bpf: bpf_perf_event.h field 'regs' has incomplete type (perf:)
+  + scsi: qla2xxx: Fix excessive I/O error messages by default
+  + Update ACPI to match Linux v5.18
+
+* Wed Aug 03 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.140-alt1.el9
+- Updated to kernel-5.14.0-140.el9:
+  + ibmvnic: Properly dispose of all skbs during a failover.
+  + Increase PERF_MAX_TRACE_SIZE to handle Sentinel1 and docker together
+  + perf stat report segfaults
+  + powerpc/fadump: save CPU reg data in vmcore when PHYP terminates LPAR
+
 * Mon Aug 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.139-alt1.el9
 - Updated to kernel-5.14.0-139.el9:
   + cgroup: Miscellaneous bug fixes and enhancements
