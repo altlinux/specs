@@ -1,5 +1,5 @@
 Name: foot
-Version: 1.12.1
+Version: 1.13.0
 Release: alt1
 
 Summary: A fast, lightweight and minimalistic Wayland terminal emulator
@@ -48,6 +48,9 @@ BuildRequires: pkgconfig(systemd)
 %_mandir/*/*
 
 %changelog
+* Mon Aug 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.13.0-alt1
+- 1.13.0 released
+
 * Thu Apr 28 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.12.1-alt1
 - 1.12.1 released
 
