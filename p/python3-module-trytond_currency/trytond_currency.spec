@@ -3,12 +3,12 @@
 
 Name: python3-module-%oname
 Version: 6.2.0
-Release: alt1
+Release: alt2
 
 Summary: Tryton module with currencies
-License: GPL
+License: GPL-3
 Group: Development/Python3
-Url: http://crd.lbl.gov/~dhbailey/mpdist/
+Url: https://pypi.org/project/trytond-currency/
 BuildArch: noarch
 
 Source0: https://files.pythonhosted.org/packages/5a/d3/97635ff5dfb7d90fbd9a3578f3d7e069b6ebf8fd9f553fa409e51f696f12/%{oname}-%{version}.tar.gz
@@ -49,6 +49,9 @@ This package contains tests for %oname.
 
 
 %changelog
+* Tue Aug 09 2022 Danil Shein <dshein@altlinux.org> 6.2.0-alt2
+ - update homepage and license
+
 * Fri Mar 25 2022 Danil Shein <dshein@altlinux.org> 6.2.0-alt1
 - Version updated to 6.2.0
 
