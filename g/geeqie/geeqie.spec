@@ -4,9 +4,10 @@
 
 %def_enable map
 %def_enable ffmpegthumbnailer
+%def_enable lua
 
 Name: geeqie
-Version: 1.7.3
+Version: 2.0
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -16,31 +17,31 @@ Url: https://www.%name.org
 
 %if_disabled snapshot
 Source: https://github.com/BestImageViewer/geeqie/archive/v%version/%name-%version.tar.gz
-#Source: %url/%name-%version.tar.bz2
 %else
 Vcs: https://github.com/BestImageViewer/geeqie.git
 Source: %name-%version.tar
 %endif
-# produced by gen_changelog.sh from git tree
-Source1: ChangeLog
-Source2: ChangeLog.html
-
-Patch: %name-1.5-libdir-fix.patch
 
 Provides: gqview = %version-%release
 Obsoletes: gqview < %version
 
+%define lua_ver 5.3
+
+%{?_enable_lua:Requires: lua%lua_ver}
 Requires: %_bindir/exiftool %_bindir/exiftran
 Requires: %_bindir/convert %_bindir/gphoto2
 Requires: %_bindir/zenity lcms2-utils >= 2.12-alt2
 
-BuildRequires: gcc-c++ yelp-tools intltool libappstream-glib-devel
-BuildRequires: python3-module-markdown
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ yelp-tools /usr/bin/appstream-util
+BuildRequires: python3-module-markdown pandoc
 BuildRequires: libgtk+3-devel libjpeg-devel libtiff-devel libwebp-devel
 BuildRequires: libopenjpeg2.0-devel libdjvu-devel liblcms2-devel
 BuildRequires: libpoppler-glib-devel libheif-devel
 BuildRequires: libraw-devel libgomp-devel
-BuildRequires: libexiv2-devel liblirc-devel zlib-devel libarchive-devel
+BuildRequires: libexiv2-devel zlib-devel libarchive-devel
+BuildRequires: libgspell-devel
+%{?_enable_lua:BuildRequires: liblua%lua_ver-devel}
 %{?_enable_map:BuildRequires: libgps-devel pkgconfig(clutter-gtk-1.0) libchamplain-gtk3-devel}
 %{?_enable_ffmpegthumbnailer:BuildRequires: libffmpegthumbnailer-devel}
 
@@ -52,24 +53,21 @@ ExifTool.
 
 %prep
 %setup
-%patch -b .libdir
-cp %SOURCE1 %SOURCE2 ./
-
-sed -i 's/\-Werror//' configure.ac
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
 %{?_enable_ffmpegthumbnailer:%add_optflags -Wno-error=unused-function}
-%autoreconf
-%configure --enable-lirc \
-	--enable-largefile \
-	--with-readmedir=%_datadir/%name \
-	--disable-lua \
-	%{subst_enable ffmpegthumbnailer}
-%make_build
+
+%meson \
+    -Dgq_bindir='%_lib/%name' \
+    -Dgq_helpdir='share/%name' \
+    %{?_disable_ffmpegthumbnailer:-Dvideothumbnailer=disabled} \
+    %{?_disable_lua:-Dlua=disabled} \
+    %{?_disable_map:-Dmap=disabled}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 
 %find_lang %name
@@ -77,7 +75,18 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %files -f %name.lang
 %_bindir/%name
 %_datadir/%name/
-%_libdir/%name/
+%dir %_libdir/%name
+%_libdir/%name/%name-camera-import
+%_libdir/%name/%name-camera-import-hook-script
+%_libdir/%name/%name-export-jpeg
+%_libdir/%name/%name-image-crop
+%_libdir/%name/%name-random-image
+%_libdir/%name/%name-rotate
+%_libdir/%name/%name-symlink
+%_libdir/%name/%name-tethered-photography
+%_libdir/%name/%name-tethered-photography-hook-script
+%_libdir/%name/geocode-parameters.awk
+%_libdir/%name/lensID
 %_desktopdir/%name.desktop
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/*x*/apps/%name.png
@@ -86,8 +95,11 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Tue Aug 09 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
+- 2.0
+
 * Tue Apr 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
-- 1.7.3
+- 1.7.3 (ported to Meson build system)
 
 * Wed Jan 26 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
 - 1.7.2
