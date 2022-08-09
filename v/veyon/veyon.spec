@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.7.4
-Release: alt1
+Release: alt2
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -124,6 +124,9 @@ sed -i "s/-Werror/-Wno-error/" cmake/modules/SetDefaultTargetProperties.cmake
 %_datadir/%name
 
 %changelog
+* Tue Aug 09 2022 Egor Ignatov <egori@altlinux.org> 4.7.4-alt2
+- fix Screen Lock and Fullscreen Demo
+
 * Fri Jul 29 2022 Egor Ignatov <egori@altlinux.org> 4.7.4-alt1
 - new version 4.7.4
 
