@@ -1,6 +1,6 @@
 Name: rsync
 Version: 3.2.5
-Release: alt0.1
+Release: alt0.2
 %define srcname rsync-%version
 
 Summary: A program for synchronizing files over a network
@@ -114,6 +114,9 @@ done
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Tue Aug 09 2022 Dmitry V. Levin <ldv@altlinux.org> 3.2.5-alt0.2
+- v3.2.5pre1 -> v3.2.5pre2 (fixes: CVE-2022-37434 in the bundled zlib).
+
 * Tue Aug 02 2022 Dmitry V. Levin <ldv@altlinux.org> 3.2.5-alt0.1
 - v3.1.3 -> v3.2.5pre1 (fixes: CVE-2022-29154).
 - Removed --noatime option added in 3.1.3-alt1
