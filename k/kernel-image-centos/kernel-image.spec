@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 143
+%define centos_release 144
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -632,6 +632,18 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Aug 09 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.144-alt1.el9
+- Updated to kernel-5.14.0-144.el9 (fixes: CVE-2022-1184):
+  + ena: update driver to v5.18
+  + ext4: fix use-after-free and memory errors when working with a corrupted directory
+  + Fix outstanding device-mapper bugs from upstream 5.19 and 6.0
+  + ipmi: When handling send message responses, don't process the message
+  + NFS: Fix initialisation of nfs_client cl_flags field
+  + opp: fix broken DT boot on Nvidia Jetson
+  + scsi: qla2xxx: Fix imbalance vha->vref_count
+  + smartpqi updates
+  + xfs: Ensure important RHEL8 fixes are present in RHEL9
+
 * Mon Aug 08 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.143-alt1.el9
 - Updated to kernel-5.14.0-143.el9 (fixes: CVE-2022-23816, CVE-2022-23825, CVE-2022-29900, CVE-2022-29901):
   + Documentation: add a description for net.core.high_order_alloc_disable
