@@ -25,7 +25,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -41,7 +41,7 @@ Source: %_name-%version.tar
 
 Requires: lib%name = %EVR
 Requires: dconf
-%{?_without_bootstrap:Requires:  %_name-miners%api_ver_major >= %ver_major}
+%{?_without_bootstrap:Requires: %_name-miners%api_ver_major >= %ver_major}
 
 %define dbus_ver 1.3.1
 %define glib_ver 2.52.0
@@ -212,6 +212,9 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 %endif
 
 %changelog
+* Tue Aug 09 2022 Yuri N. Sedunov <aris@altlinux.org> 3.3.3-alt1
+- 3.3.3
+
 * Wed Jul 06 2022 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt1
 - 3.3.2
 
