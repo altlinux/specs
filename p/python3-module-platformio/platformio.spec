@@ -1,5 +1,5 @@
 Name: python3-module-platformio
-Version: 6.0.1
+Version: 6.1.3
 Release: alt1
 
 Summary: PlatformIO Core
@@ -10,7 +10,22 @@ Url: https://platformio.org/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(pytest)
+BuildRequires: python3(click)
+BuildRequires: python3(semantic_version)
+BuildRequires: python3(wsproto)
+BuildRequires: python3(bottle)
+BuildRequires: python3(ajsonrpc)
+BuildRequires: python3(elftools)
+BuildRequires: python3(aiofiles)
+BuildRequires: python3(tabulate)
+BuildRequires: python3(zeroconf)
+BuildRequires: python3(marshmallow)
+BuildRequires: python3(uvicorn)
+BuildRequires: python3(starlette)
 
 %description
 %summary
@@ -19,33 +34,33 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # lemme cite requests/packages.py:
 # "I don't like it either. Just look the other way."
 %add_python3_req_skip requests.packages.urllib3.util.retry
-# urllib.parse vs urlparse
-%add_python3_req_skip urlparse
-# builtins: configparser, queue, threading
-%add_python3_req_skip ConfigParser Queue thread
-# optional
-%add_python3_req_skip click_completion
-# just can't happen
+# can't happen
 %add_python3_req_skip msvcrt
 
 %set_python3_req_method strict
+
+%check
+%tox_check_pyproject
 
 %files
 %_bindir/pio
 %_bindir/platformio
 %_bindir/piodebuggdb
 %python3_sitelibdir/platformio
-%python3_sitelibdir/platformio-%version-*-info
+%python3_sitelibdir/platformio-%version.dist-info
 
 %changelog
+* Thu Jul 28 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.3-alt1
+- 6.1.3 released
+
 * Tue May 24 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0.1-alt1
 - 6.0.1 released
 
