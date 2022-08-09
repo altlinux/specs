@@ -4,14 +4,15 @@
 %set_verify_elf_method strict
 
 Name: liburing
-Version: 2.1
+Version: 2.2
 Release: alt1
 
-Summary: Linux-native io_uring I/O access library
+Summary: The io_uring library
 License: (GPL-2.0-only AND LGPL-2.1-or-later) OR MIT
 Group: System/Libraries
 
 Url: http://git.kernel.dk/cgit/liburing
+# Author's Vcs and CI: https://github.com/axboe/liburing
 Source: %name-%version.tar
 BuildRequires: gcc-c++
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
@@ -32,20 +33,11 @@ Group: Development/C
 This package provides header files to include and libraries to link with
 for the Linux-native io_uring.
 
-%package devel-static
-Summary: Static library for developing apps using Linux-native io_uring
-Group: Development/C
-Requires: %name-devel
-
-%description devel-static
-This package contains the static library needed to develop statically
-linked programs that use Linux-native io_uring.
-
 %prep
 %setup
 
 %build
-%add_optflags %(getconf LFS_CFLAGS) -ffat-lto-objects
+%add_optflags %(getconf LFS_CFLAGS) -ffat-lto-objects -fanalyzer
 ./configure \
 	--prefix=%_prefix \
 	--includedir=%_includedir \
@@ -57,11 +49,39 @@ linked programs that use Linux-native io_uring.
 
 %install
 %makeinstall_std V=1
+rm %buildroot%_libdir/liburing.a
 
-%ifnarch ppc64le %e2k
-# Almost all tests fail on ppc64le, so there is no point to even try.
 %check
-make runtests
+# List of available probes
+test/probe.t
+strace -ve io_uring_register test/probe.t 2>&1 >/dev/null | grep -Po '{op.*?}' | sort -u | column -t
+
+# Almost all tests fail on ppc64le, so there is no point to even try.
+%ifnarch ppc64le %e2k
+TEST_EXCLUDE="
+	500f9fbadef8.t
+	accept.t
+	cq-overflow.t
+	eeed8b54e0df.t
+	fc2a85cb02ef.t
+	file-verify.t
+	fpos.t
+	io-cancel.t
+	iopoll.t
+	io_uring_register.t
+	link-timeout.t
+	personality.t
+	read-before-exit.t
+	read-write.t
+	recv-msgall-stream.t
+	ringbuf-read.t
+	rsrc_tags.t
+	sendmsg_fs_cve.t
+	socket.t
+	sq-poll-dup.t
+	sq-poll-share.t
+	xattr.t
+" make runtests
 %endif
 
 %files
@@ -69,7 +89,7 @@ make runtests
 %doc COPYING
 
 %files devel
-%doc README LICENSE
+%doc README LICENSE COPYING.GPL SECURITY.md CHANGELOG examples/*.c
 %_includedir/*
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
@@ -77,10 +97,11 @@ make runtests
 %_man3dir/*
 %_man7dir/*
 
-%files devel-static
-%_libdir/%name.a
-
 %changelog
+* Tue Aug 09 2022 Vitaly Chikunov <vt@altlinux.org> 2.2-alt1
+- Update to liburing-2.2 (2022-06-23).
+- Do not install static library (liburing.a).
+
 * Sun Oct 24 2021 Vitaly Chikunov <vt@altlinux.org> 2.1-alt1
 - Update to liburing-2.1 (2021-09-09).
 - Fix LTO build.
