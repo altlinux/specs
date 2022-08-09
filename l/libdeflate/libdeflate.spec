@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libdeflate
-Version: 1.12
+Version: 1.13
 Release: alt1
 Summary: Heavily optimized library for DEFLATE/zlib/gzip compression and decompression
 License: MIT
@@ -13,7 +13,18 @@ Url: https://github.com/ebiggers/libdeflate
 
 Source: %name-%version.tar
 
+%define valgrind_arches %ix86 x86_64 aarch64
+# armh is excluded due to https://bugzilla.altlinux.org/43475
+# ppc64le is excluded due to requirement on glibc-core-debuginfo
+
 BuildRequires: zlib-devel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: banner
+%ifarch %valgrind_arches
+BuildRequires: /proc
+BuildRequires: valgrind
+%endif
+}}
 
 %description
 libdeflate is a library for fast, whole-buffer DEFLATE-based compression
@@ -54,7 +65,7 @@ streaming support and therefore does not yet support very large files
 sed -i s/-fomit-frame-pointer// Makefile
 
 %build
-%add_optflags %(getconf LFS_CFLAGS)
+%add_optflags %(getconf LFS_CFLAGS) -Werror -fanalyzer
 # It's sensitive to build options, avoid "Rebuilding due to new settings".
 %global build_settings CFLAGS="%optflags" PREFIX=%_prefix LIBDIR=%_libdir USE_SHARED_LIB=1
 %make_build %build_settings all test_programs V=1
@@ -64,7 +75,28 @@ sed -i s/-fomit-frame-pointer// Makefile
 rm %buildroot%_libdir/%name.a
 
 %check
+banner check
 %make_build %build_settings check V=1
+
+export PATH=%buildroot%_bindir:$PATH LD_LIBRARY_PATH=%buildroot%_libdir
+libdeflate-gzip -V
+
+%ifarch %valgrind_arches
+%define valgrind valgrind -q --error-exitcode=2
+# Unfortunately `--extra-debuginfo-path=` does not work with %%buildroot.
+%else
+%define valgrind time
+%endif
+set -o pipefail
+head -11111111c /dev/urandom > test-file
+b2sum test-file | tee test-file.b2sum
+cp test-file test-file-copy
+gzip -c test-file-copy |
+	%valgrind libdeflate-gunzip |
+	%valgrind libdeflate-gzip |
+	gunzip > test-file
+b2sum test-file
+b2sum --check test-file.b2sum
 
 %files
 %doc COPYING
@@ -80,6 +112,9 @@ rm %buildroot%_libdir/%name.a
 %_bindir/libdeflate-*
 
 %changelog
+* Mon Aug 08 2022 Vitaly Chikunov <vt@altlinux.org> 1.13-alt1
+- Update to v1.13 (2022-08-04).
+
 * Mon Jun 13 2022 Vitaly Chikunov <vt@altlinux.org> 1.12-alt1
 - Update to v1.12 (2022-06-12).
 - This release focuses on improving the performance of the CRC-32 and
