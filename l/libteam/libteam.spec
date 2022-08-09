@@ -1,3 +1,6 @@
+%define git_hash .g69a7494
+#define git_hash %nil
+
 %def_disable zmq
 %def_with docs
 %def_with python
@@ -7,7 +10,7 @@
 
 Name: libteam
 Version: 1.31
-Release: alt1
+Release: alt2%git_hash
 
 Summary: Library for controlling team network device
 License: LGPLv2.1+
@@ -132,7 +135,14 @@ cd binding/python
 %install
 %makeinstall_std
 install -pDm 0644 teamd/dbus/teamd.conf %buildroot%_datadir/dbus-1/system.d/teamd.conf
-install -pDm 0644 teamd/redhat/systemd/teamd@.service %buildroot%_unitdir/teamd@.service
+
+mkdir -p %buildroot%_tmpfilesdir
+cat > %buildroot%_tmpfilesdir/teamd.conf <<EOF
+# See tmpfiles.d(5) for details
+# Type(d=directory) Path Mode UID GID Age(until delete when cleaning)
+d /var/run/teamd/ 0755 %_pseudouser_user %_pseudouser_group -
+EOF
+
 %if_with python
 cd binding/python
 %python3_install
@@ -174,7 +184,7 @@ install -pm 0644 team/capi.py %buildroot%python3_sitelibdir/team/
 %files -n teamd
 %doc teamd/example_configs
 %_datadir/dbus-1/system.d/teamd.conf
-%_unitdir/teamd@.service
+%_tmpfilesdir/teamd.conf
 %_bindir/teamd*
 %_man5dir/teamd.conf.5*
 %_man8dir/teamd*.8*
@@ -186,6 +196,13 @@ install -pm 0644 team/capi.py %buildroot%python3_sitelibdir/team/
 %endif
 
 %changelog
+* Tue Aug 09 2022 Mikhail Efremov <sem@altlinux.org> 1.31-alt2.g69a7494
+- Add tmpfiles config for /var/run/teamd/ directory.
+- teamd: better handle failures to chown(TEAMD_RUN_DIR) during
+  teamd_drop_privileges() (patch from openSUSE) (closes: #43269).
+- Don't package teamd@.service (closes: #41998).
+- Upstream git snapshot (closes: #43298).
+
 * Mon Aug 03 2020 Mikhail Efremov <sem@altlinux.org> 1.31-alt1
 - 1.30 -> 1.31.
 
