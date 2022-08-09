@@ -1,5 +1,5 @@
 Name:     theme-mate-windows
-Version:  2.0
+Version:  2.1
 Release:  alt1
 
 Summary:  Mate theme for Windows-like layout
@@ -38,15 +38,15 @@ install -pm644 *.gschema.override \
         %buildroot%_datadir/glib-2.0/schemas/
 install -pDm644 windows.layout \
         %buildroot%_datadir/mate-panel/layouts/windows.layout
-install -Dm0644 applications.list \
-        %buildroot%_datadir/mate-menu/applications.list-themed
 
 %files
 %_datadir/glib-2.0/schemas/*.gschema.override
 %_datadir/mate-panel/layouts/windows.layout
-%_datadir/mate-menu/applications.list-themed
 
 %changelog
+* Tue Aug 09 2022 Andrey Cherepanov <cas@altlinux.org> 2.1-alt1
+- Remove custom favorites for mint-menu.
+
 * Sat Feb 20 2021 Andrey Cherepanov <cas@altlinux.org> 2.0-alt1
 - Change window theme to Dopple (ALT #38488).
 
