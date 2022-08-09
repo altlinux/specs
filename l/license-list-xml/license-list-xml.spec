@@ -1,6 +1,6 @@
 Name: license-list-xml
 Version: 3.17
-Release: alt1
+Release: alt2
 
 Summary: Contains the various common licenses used in the %distribution
 License: CC0-1.0
@@ -88,6 +88,9 @@ cp -dp src/exceptions/*.xml %buildroot%_datadir/%name/exceptions/
 %_licensedir-exception
 
 %changelog
+* Tue Aug 09 2022 Alexey Gladkov <legion@altlinux.ru> 3.17-alt2
+- Add Yandex Browser Software License Agreement (ALT#43480)
+
 * Tue Jul 19 2022 Alexey Gladkov <legion@altlinux.ru> 3.17-alt1
 - Change the source repository to license-list-XML.
 - Subpackage common-licenses contains the exported data from the XML format.
