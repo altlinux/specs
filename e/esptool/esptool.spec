@@ -1,5 +1,5 @@
 Name: esptool
-Version: 4.1
+Version: 4.2
 Release: alt1
 
 Summary: Flasher for Espressif ESP8266 & ESP32 chips
@@ -8,7 +8,9 @@ Group: Development/Other
 Url: https://github.com/espressif/esptool
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 Source: %name-%version-%release.tar
 
@@ -20,10 +22,10 @@ the ROM bootloader in Espressif ESP8266 & ESP32 chips.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 for f in %buildroot%_bindir/*.py;
 	do mv -v $f ${f%.py*}
 done
@@ -38,9 +40,12 @@ done
 %python3_sitelibdir/espefuse
 %python3_sitelibdir/espsecure
 %python3_sitelibdir/esptool
-%python3_sitelibdir/esptool-%version-*-info
+%python3_sitelibdir/esptool-%version.dist-info
 
 %changelog
+* Tue Aug 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.2-alt1
+- 4.2 released
+
 * Tue May 31 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.1-alt1
 - 4.1 released
 
