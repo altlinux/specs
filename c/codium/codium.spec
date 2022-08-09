@@ -1,5 +1,5 @@
 Name:    codium
-Version: 1.67.2
+Version: 1.70.0
 Release: alt1
 
 Summary: Visual Studio Code without MS branding/telemetry/licensing
@@ -95,6 +95,9 @@ install -m644 -D %SOURCE4 %buildroot%_pixmapsdir/codium.png
 %_pixmapsdir/codium.png 
 
 %changelog
+* Mon Aug 08 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.70.0-alt1
+- new version (1.70.0)
+
 * Fri Jun 03 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.67.2-alt1
 - new version (1.67.2)
 - added Provides: vscodium
