@@ -1,5 +1,5 @@
 Name: ccls
-Version: 0.20210330
+Version: 0.20220729
 Release: alt1
 
 Summary: C/C++/Objective-C language server
@@ -33,5 +33,8 @@ export CXX=clang++
 %_bindir/ccls
 
 %changelog
+* Wed Aug 10 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.20220729-alt1
+- 0.20220729 released
+
 * Thu May 05 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.20210330-alt1
 - initial
