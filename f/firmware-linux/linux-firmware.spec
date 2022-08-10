@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220722
+Version: 20220805
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,21 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Aug 10 2022 Cronbuild Service <cronbuild@altlinux.org> 20220805-alt1
+- upstream changes (GIT e6857b6):
+  + amdgpu: Update Yellow Carp VCN firmware (thx Mario Limonciello)
+  + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2010.3020 (thx Petr Machata)
+  + Add firmware for Cirrus CS35L41 (thx Vitaly Rodionov)
+  + i915: Add GuC v70.4.1 for DG2 (thx John Harrison)
+  + i915: Add DMC v2.07 for DG2 (thx Anusha Srivatsa)
+
 * Tue Jul 26 2022 Cronbuild Service <cronbuild@altlinux.org> 20220722-alt1
 - upstream changes (GIT 150864a):
   + amdgpu partially revert "amdgpu: update beige goby to release
