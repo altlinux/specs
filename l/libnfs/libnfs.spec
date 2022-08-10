@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_enable utils
 %define sover 14
 
 Name: libnfs
-Version: 5.0.1
+Version: 5.0.2
 Release: alt1
 
 Summary: NFS client library
@@ -74,6 +74,9 @@ This package provides utilities from LibNFS package.
 %endif
 
 %changelog
+* Wed Aug 10 2022 Yuri N. Sedunov <aris@altlinux.org> 5.0.2-alt1
+- 5.0.2
+
 * Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 5.0.1-alt1
 - updated to libnfs-5.0.1-3-g1703d44
 
