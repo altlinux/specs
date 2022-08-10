@@ -6,10 +6,11 @@
 %def_enable gtk_doc
 %def_enable introspection
 %def_disable sniffer
-%def_enable check
+# no ipv6 in hasher
+%def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -129,6 +130,9 @@ A Device Sniffer tool based on GSSDP framework.
 
 
 %changelog
+* Sun Aug 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
+- 1.5.2
+
 * Fri Jun 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
 - 1.5.1
 
