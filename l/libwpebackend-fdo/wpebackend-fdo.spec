@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A WPE backend designed for Linux desktop systems
@@ -16,8 +16,8 @@ Url: https://github.com/Igalia/WPEBackend-fdo
 
 Source: %url/releases/download/%version/%_name-%version.tar.xz
 
-BuildRequires(pre): meson
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++
 BuildRequires: libgio-devel libEGL-devel
 BuildRequires: libwpe-devel >= %ver_major libepoxy-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-egl-devel
@@ -56,8 +56,7 @@ This package provides development documentation for %_name library.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/libWPEBackend-fdo-%api_ver.so.*
@@ -74,6 +73,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Aug 10 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
+- 1.12.1
+
 * Wed Oct 20 2021 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
 - 1.12.0
 
