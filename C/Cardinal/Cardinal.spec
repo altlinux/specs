@@ -3,7 +3,7 @@
 
 Name:     Cardinal
 Version:  22.07
-Release:  alt1
+Release:  alt2
 
 Summary:  Virtual modular synthesizer plugin
 License:  GPL-3.0-or-later
@@ -421,6 +421,7 @@ sed -i '/^all:/ s/vst[23]//g' src/Makefile.cardinal.mk
     PREFIX=/usr \
     SYSDEPS=true \
     WITH_LTO=true \
+    AR=gcc-ar \
     VERBOSE=1
 
 %install
@@ -459,5 +460,8 @@ install -m 644 docs/*.md docs/*.png %buildroot%_datadir/doc/cardinal/docs/
 %doc %_datadir/doc/cardinal
 
 %changelog
+* Wed Aug 10 2022 Ivan A. Melnikov <iv@altlinux.org> 22.07-alt2
+- Fix build with LTO on certain systems
+
 * Mon Aug 08 2022 Ivan A. Melnikov <iv@altlinux.org> 22.07-alt1
 - Initial build for Sisyphus
