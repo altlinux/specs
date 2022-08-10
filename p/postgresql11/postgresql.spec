@@ -9,7 +9,7 @@
 
 %define prog_name            postgresql
 %define postgresql_major     11
-%define postgresql_minor     16
+%define postgresql_minor     17
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -911,6 +911,9 @@ fi
 %endif
 
 %changelog
+* Wed Aug 10 2022 Alexei Takaseev <taf@altlinux.org> 11.17-alt1
+- 11.17 (Fixes CVE-2022-2625)
+
 * Wed May 11 2022 Alexei Takaseev <taf@altlinux.org> 11.16-alt1
 - 11.16 (Fixes CVE-2022-1552)
 
