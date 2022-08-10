@@ -1,5 +1,5 @@
 Name: dmidecode
-Version: 3.3
+Version: 3.4
 Release: alt1
 
 Summary: Dmidecode is a tool for dumping a computer's DMI table
@@ -7,6 +7,7 @@ License: GPLv2+
 Group: System/Kernel and hardware
 
 URL: http://www.nongnu.org/dmidecode/
+VCS: https://git.savannah.gnu.org/git/dmidecode.git
 Source0: http://download.savannah.gnu.org/releases/dmidecode/dmidecode-%version.tar
 Source1: %name.watch
 
@@ -36,6 +37,9 @@ subst 's/-O./%optflags/' Makefile
 %_man8dir/*
 
 %changelog
+* Tue Aug 09 2022 Anton Farygin <rider@altlinux.ru> 3.4-alt1
+- 3.3 -> 3.4
+
 * Tue Oct 20 2020 Anton Farygin <rider@altlinux.ru> 3.3-alt1
 - 3.3
 
