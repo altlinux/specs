@@ -1,19 +1,19 @@
 %define _unpackaged_files_terminate_build 1
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 3.39
+%define ver_major 3.40
 %define api_ver 2.0
 %define xdg_name org.gnome.Glade
 %def_enable gtk_doc
 %def_enable python
 %def_enable gjs
 %def_enable gladeui
-%def_disable webkit2gtk
-%def_disable check
+%def_enable webkit2gtk
+%def_enable check
 
 Name: glade
 Version: %ver_major.0
-Release: alt0.4
+Release: alt1
 
 Summary: A user interface designer for Gtk+ and GNOME
 Group: Development/GNOME and GTK+
@@ -32,7 +32,7 @@ Requires: libgladeui%api_ver = %version-%release
 %define gjs_ver 1.64
 %define webkit_ver 2.28
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson yelp-tools %_bindir/appstream-util
 BuildRequires: libgtk+3-devel >= %gtk_ver libxml2-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
@@ -42,7 +42,7 @@ BuildRequires: python3-devel python3-module-pygobject3-devel
 %endif
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_gjs:BuildRequires: libgjs-devel >= %gjs_ver}
-%{?_enable_webkit2gtk:BuildRequires: libwebkit2gtk-devel >= %webkit_ver}
+%{?_enable_webkit2gtk:BuildRequires: pkgconfig(webkit2gtk-4.0) >= %webkit_ver}
 %{?_enable_check:BuildRequires: xvfb-run icon-theme-hicolor gnome-icon-theme xmllint}
 
 %description
@@ -100,10 +100,6 @@ GObject introspection devel data for the GladeUI library.
 
 %prep
 %setup
-# fix build with meson >= 0.61
-sed -E -i "/^[[:space:]]*('desktop'|'appdata')\,/d" data/meson.build
-# comment out duplicate "da" entry from help/LINGUAS
-sed -i '0,/^da$/s/\(^da$\)/#\1/' help/LINGUAS
 
 %build
 %meson \
@@ -165,6 +161,11 @@ xvfb-run %__meson_test
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Wed Aug 10 2022 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
+- 3.40.0
+- enabled webkit support again
+- enabled %%check
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.39.0-alt0.4
 - updated to 3.39.0-120-g8d52d1ec (updated translations)
 - fixed build with meson >= 0.61
