@@ -1,6 +1,6 @@
 Name: nfs
-Version: 2.6.1
-Release: alt2
+Version: 2.6.2
+Release: alt1
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -90,6 +90,7 @@ This package provides the Linux NFS stats utilities.
 %build
 [ -f ./autogen.sh ] && sh ./autogen.sh
 %configure \
+    --libexecdir=%_prefix/libexec \
     --enable-nfsv4server \
     --enable-mount \
     --enable-libmount-mount \
@@ -101,6 +102,7 @@ This package provides the Linux NFS stats utilities.
     --with-statdpath=%_localstatedir/nfs/statd \
     --with-systemd=%systemd_unitdir \
     --with-pluginpath=%_libdir/libnfsidmap \
+    --with-modprobedir=/lib/modprobe.d \
     --disable-nfsdcld \
     --disable-static \
     #
@@ -109,8 +111,6 @@ sed -i 's/#define[[:blank:]]\+START_STATD.\+$/#undef START_STATD/' support/inclu
 
 %install
 %make_install DESTDIR=%buildroot install
-
-sed -ri 's,^#!/usr/bin/python$,&3,' %buildroot%_sbindir/{mountstats,nfsiostat}
 
 cp -a altlinux/etc %buildroot
 cp -p systemd/README README.systemd
@@ -289,14 +289,19 @@ touch /var/lock/subsys/rpc.svcgssd
 #-------------------------------------------------------------------------------
 %files utils
 %config %_sysconfdir/control.d/facilities/nfsmount
+%config /lib/modprobe.d/nfs.conf
+%_udevrulesdir/*.rules
 %attr(700,root,root) /sbin/mount.nfs
 /sbin/mount.nfs4
 /sbin/umount.*
 %_bindir/showmount
+%_sbindir/rpcctl
 %_sbindir/rpcdebug
-
+%_prefix/libexec/nfsrahead
 %_man5dir/nfs.5*
 %_man5dir/nfsmount.conf.*
+%_man5dir/nfsrahead.*
+%_man8dir/rpcctl.*
 %_man8dir/rpcdebug.*
 %_man8dir/showmount.*
 %_man8dir/mount.nfs.*
@@ -311,6 +316,9 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Tue Aug 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.2-alt1
+- 2.6.2 released
+
 * Fri Jun 03 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.1-alt2
 - fix build with gcc-12
 
