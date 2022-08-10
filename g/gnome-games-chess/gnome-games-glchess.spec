@@ -8,7 +8,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: A chess game for GNOME
@@ -31,7 +31,7 @@ Requires: gnuchess >= 6.2.3
 
 BuildRequires(pre):rpm-macros-meson
 BuildRequires: meson vala-tools >= %vala_ver
-BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
+BuildRequires: yelp-tools /usr/bin/appstream-util desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: librsvg-devel >= %rsvg_ver gsettings-desktop-schemas-devel
@@ -63,6 +63,9 @@ A chess game which supports several chess engines, with 2D and optionally
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Wed Aug 10 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- 42.1
+
 * Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 
