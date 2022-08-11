@@ -1,8 +1,8 @@
-BuildRequires: perl(Software/LicenseUtils.pm)
 %define _unpackaged_files_terminate_build 1
+BuildRequires: perl(Software/LicenseUtils.pm)
 %define dist Parallel-Iterator
 Name: perl-%dist
-Version: 1.001
+Version: 1.002
 Release: alt1
 
 Summary: Simple parallel execution
@@ -24,7 +24,7 @@ executed simultaneously.
 
 %prep
 %setup -q -n %{dist}-%{version}
-rm boilerplate.pl
+#rm boilerplate.pl
 
 %build
 %perl_vendor_build
@@ -37,6 +37,9 @@ rm boilerplate.pl
 %perl_vendor_privlib/Parallel
 
 %changelog
+* Thu Aug 11 2022 Igor Vlasenko <viy@altlinux.org> 1.002-alt1
+- automated CPAN update
+
 * Sat Jul 16 2022 Igor Vlasenko <viy@altlinux.org> 1.001-alt1
 - automated CPAN update
 
