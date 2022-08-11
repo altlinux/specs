@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name appstream-glib
 %define ver_major 0.8
@@ -15,7 +15,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Library for AppStream metadata
@@ -42,7 +42,7 @@ Provides: %_bindir/appstream-builder
 Obsoletes: libappstream-builder < 0.9.15
 Conflicts: libappstream-builder < 0.9.15
 
-BuildRequires(pre): rpm-macros-meson
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson glib2-devel >= %glib_ver
 BuildRequires: libarchive-devel libcurl-devel >= %curl_ver
 BuildRequires: libgdk-pixbuf-devel libpango-devel pkgconfig(gdk-3.0)
@@ -168,8 +168,11 @@ the functionality of the installed %_name library.
 
 
 %changelog
+* Thu Aug 11 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
+- 0.8.1
+
 * Tue Jul 19 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
-- updated to appstream_glib_0_8_0-5-g674490b
+- updated to appstream_glib_0_8_0-5-g674490b (ported from libsoup to libcurl)
 
 * Mon Sep 07 2020 Yuri N. Sedunov <aris@altlinux.org> 0.7.18-alt1
 - 0.7.18
