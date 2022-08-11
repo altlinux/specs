@@ -4,7 +4,7 @@
 
 %define embedded_soname 19
 %define soname 3
-# default plugin dir is %_libdir/mysql/plugin
+# default plugin dir is %%_libdir/mysql/plugin
 %define plugindir %_lib/%name/plugin
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 10.6.8
-Release: alt1
+Release: alt2
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -128,7 +128,7 @@ Requires: %name-server = %EVR
 Requires: %name-client = %EVR
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI libpam-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
+BuildRequires: gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI perl-DBD-MariaDB libpam-devel libevent-devel cmake ctest bison doxygen groff-base groff-ps dos2unix xsltproc
 BuildRequires: libaio-devel libedit-devel perl-GD perl-threads perl-Memoize perl-devel
 BuildRequires: liblz4-devel zlib-devel bzlib-devel liblzma-devel liblzo2-devel libsnappy-devel libzstd-devel
 BuildRequires: chrooted control
@@ -220,6 +220,7 @@ See control(8) for details.
 Summary: Perl utils for MySQL-server
 Group: Databases
 Requires: %name-server = %EVR
+Requires: perl-DBD-MariaDB
 Conflicts: %name-server < %EVR
 Conflicts: MySQL-server-perl
 Conflicts: mytop
@@ -330,7 +331,6 @@ Summary: Common files used in client and servers
 Group: Databases
 BuildArch: noarch
 Conflicts: MySQL-server
-#Conflicts: %name-server < 5.5.33a
 
 %description common
 This package contains the common files for MariaDB client and servers.
@@ -422,24 +422,24 @@ tar -xf %SOURCE106 -C storage/maria/libmarias3
 %patch1 -p1
 %patch2 -p1
 %patch4 -p1
-#%patch5 -p1
+#%%patch5 -p1
 %patch7 -p1
 %patch30 -p1
-#%patch31 -p1
+#%%patch31 -p1
 %patch32 -p1
-#%patch33 -p1
-#%patch34 -p1
+#%%patch33 -p1
+#%%patch34 -p1
 
 %patch101 -p1 -d ./storage/rocksdb/rocksdb
-#%patch102 -p1
+#%%patch102 -p1
 
 %ifarch %e2k
 %patch2000 -p1
 sed -i 's|-fno-sanitize=shift|""|' \
-	plugin/auth_ed25519/CMakeLists.txt \
-	libmariadb/plugins/auth/CMakeLists.txt
+  plugin/auth_ed25519/CMakeLists.txt \
+  libmariadb/plugins/auth/CMakeLists.txt
 sed -i 's|WSREP_NORETURN|__attribute__((noreturn))|' \
-	wsrep-lib/include/wsrep/thread_service.hpp
+  wsrep-lib/include/wsrep/thread_service.hpp
 %endif
 
 # Replace that horror.
@@ -466,63 +466,63 @@ LDFLAGS="$LDFLAGS -pie -Wl,-z,relro,-z,now"
 export LDFLAGS
 
 %cmake_insource \
-	-DBUILD_CONFIG=mysql_release \
-	-DFEATURE_SET="community" \
-	-DINSTALL_LAYOUT=RPM \
-	-DRPM="fedora29" \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	-DCMAKE_VERBOSE_MAKEFILE=ON \
-	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
-	-DCMAKE_C_FLAGS:STRING="$CFLAGS" \
-	-DCMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
-	-DCMAKE_INSTALL_PREFIX="%prefix" \
-	-DINSTALL_SYSCONFDIR="%_sysconfdir" \
-	-DINSTALL_SYSCONF2DIR="%_sysconfdir/my.cnf.d" \
-	-DINSTALL_SYSTEMD_SYSUSERSDIR:STRING="/lib/sysusers.d" \
-	-DINSTALL_SYSTEMD_TMPFILESDIR:STRING="%_tmpfilesdir" \
-	-DINSTALL_SYSTEMD_UNITDIR:STRING="%_unitdir" \
-	-DMYSQL_UNIX_ADDR="%ROOT/mysql.sock" \
-	-DMYSQL_DATADIR="%ROOT" \
-	-DMYSQL_USER=mysql \
-	-DWITH_READLINE=ON \
-	-DPYTHON_SHEBANG=%__python3 \
-	-DWITH_JEMALLOC=%{?_with_jemalloc:system}%{?_without_jemalloc:NO} \
-	-DWITH_SSL=system \
-	-DWITH_ZLIB=system \
-	%{?_with_pcre:-DWITH_PCRE=system -DPCRE_INCLUDES=/usr/include/pcre} \
-	-DPLUGIN_MROONGA=%{?_with_mroonga:DYNAMIC}%{?_without_mroonga:NO} \
-	-DPLUGIN_OQGRAPH=%{?_with_oqgraph:DYNAMIC}%{?_without_oqgraph:NO} \
-	-DPLUGIN_ROCKSDB=%{?_with_rocksdb:DYNAMIC}%{?_without_rocksdb:NO} \
-	-DPLUGIN_SPHINX=%{?_with_sphinx:DYNAMIC}%{?_without_sphinx:NO} \
-	-DPLUGIN_CONNECT=%{?_with_connect:DYNAMIC}%{?_without_connect:NO} \
-	-DWITH_CASSANDRA=%{?_with_cassandra:TRUE}%{?_without_cassandra:FALSE} \
-	-DDPLUGIN_S3=%{?_with_s3:DYNAMIC}%{?_without_s3:NO} \
-	-DPLUGIN_COLUMNSTORE=NO \
-	-DWITH_PIC=ON \
-	-DWITH_EXTRA_CHARSETS=all \
-	-DWITH_INNOBASE_STORAGE_ENGINE=ON \
-	-DWITH_PARTITION_STORAGE_ENGINE=ON \
-	-DWITH_FEDERATED_STORAGE_ENGINE=ON \
-	-DWITH_WSREP=ON \
-	-DWITH_INNODB_DISALLOW_WRITES=1 \
-	-DENABLED_LOCAL_INFILE=ON \
-	-DPLUGIN_AWS_KEY_MANAGEMENT=NO \
-	-DCONNECT_WITH_MONGO=OFF \
-	-DCONNECT_WITH_JDBC=OFF \
-	-DWITH_EMBEDDED_SERVER=ON \
-	-DWITH_LIBWRAP=%{?_with_libwrap:ON}%{?_without_libwrap:FALSE} \
-	%{?_without_mariabackup:-DWITH_MARIABACKUP=OFF} \
-	%{?_without_libarchive:-DWITH_LIBARCHIVE=OFF} \
-	%{?_without_server:-DWITHOUT_SERVER=ON} \
+    -DBUILD_CONFIG=mysql_release \
+    -DFEATURE_SET="community" \
+    -DINSTALL_LAYOUT=RPM \
+    -DRPM="fedora29" \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_VERBOSE_MAKEFILE=ON \
+    -DCMAKE_SKIP_INSTALL_RPATH:BOOL=ON \
+    -DCMAKE_C_FLAGS:STRING="$CFLAGS" \
+    -DCMAKE_CXX_FLAGS:STRING="$CXXFLAGS" \
+    -DCMAKE_INSTALL_PREFIX="%prefix" \
+    -DINSTALL_SYSCONFDIR="%_sysconfdir" \
+    -DINSTALL_SYSCONF2DIR="%_sysconfdir/my.cnf.d" \
+    -DINSTALL_SYSTEMD_SYSUSERSDIR:STRING="/lib/sysusers.d" \
+    -DINSTALL_SYSTEMD_TMPFILESDIR:STRING="%_tmpfilesdir" \
+    -DINSTALL_SYSTEMD_UNITDIR:STRING="%_unitdir" \
+    -DMYSQL_UNIX_ADDR="%ROOT/mysql.sock" \
+    -DMYSQL_DATADIR="%ROOT" \
+    -DMYSQL_USER=mysql \
+    -DWITH_READLINE=ON \
+    -DPYTHON_SHEBANG=%__python3 \
+    -DWITH_JEMALLOC=%{?_with_jemalloc:system}%{?_without_jemalloc:NO} \
+    -DWITH_SSL=system \
+    -DWITH_ZLIB=system \
+    %{?_with_pcre:-DWITH_PCRE=system -DPCRE_INCLUDES=/usr/include/pcre} \
+    -DPLUGIN_MROONGA=%{?_with_mroonga:DYNAMIC}%{?_without_mroonga:NO} \
+    -DPLUGIN_OQGRAPH=%{?_with_oqgraph:DYNAMIC}%{?_without_oqgraph:NO} \
+    -DPLUGIN_ROCKSDB=%{?_with_rocksdb:DYNAMIC}%{?_without_rocksdb:NO} \
+    -DPLUGIN_SPHINX=%{?_with_sphinx:DYNAMIC}%{?_without_sphinx:NO} \
+    -DPLUGIN_CONNECT=%{?_with_connect:DYNAMIC}%{?_without_connect:NO} \
+    -DWITH_CASSANDRA=%{?_with_cassandra:TRUE}%{?_without_cassandra:FALSE} \
+    -DDPLUGIN_S3=%{?_with_s3:DYNAMIC}%{?_without_s3:NO} \
+    -DPLUGIN_COLUMNSTORE=NO \
+    -DWITH_PIC=ON \
+    -DWITH_EXTRA_CHARSETS=all \
+    -DWITH_INNOBASE_STORAGE_ENGINE=ON \
+    -DWITH_PARTITION_STORAGE_ENGINE=ON \
+    -DWITH_FEDERATED_STORAGE_ENGINE=ON \
+    -DWITH_WSREP=ON \
+    -DWITH_INNODB_DISALLOW_WRITES=1 \
+    -DENABLED_LOCAL_INFILE=ON \
+    -DPLUGIN_AWS_KEY_MANAGEMENT=NO \
+    -DCONNECT_WITH_MONGO=OFF \
+    -DCONNECT_WITH_JDBC=OFF \
+    -DWITH_EMBEDDED_SERVER=ON \
+    -DWITH_LIBWRAP=%{?_with_libwrap:ON}%{?_without_libwrap:FALSE} \
+    %{?_without_mariabackup:-DWITH_MARIABACKUP=OFF} \
+    %{?_without_libarchive:-DWITH_LIBARCHIVE=OFF} \
+    %{?_without_server:-DWITHOUT_SERVER=ON} \
 %if "%_lib" == "lib64"
-	-DCMAKE_SIZEOF_VOID_P=8 \
+    -DCMAKE_SIZEOF_VOID_P=8 \
 %endif
-	-DINSTALL_PLUGINDIR=%plugindir \
-	-DCOMPILATION_COMMENT="(%distribution)" \
-	-DMYSQL_SERVER_SUFFIX="-%release"
+    -DINSTALL_PLUGINDIR=%plugindir \
+    -DCOMPILATION_COMMENT="(%distribution)" \
+    -DMYSQL_SERVER_SUFFIX="-%release"
 
-#	-DWITH_EMBEDDED_SERVER=ON \
-#	-DWITH_PLUGIN_FEEDBACK=ON \
+#    -DWITH_EMBEDDED_SERVER=ON \
+#    -DWITH_PLUGIN_FEEDBACK=ON \
 
 %make_build
 
@@ -603,15 +603,15 @@ pushd %buildroot%_bindir
 popd
 
 # Install configuration files.
-#install -pD -m644 /dev/null %buildroot%_sysconfdir/my.cnf
-#install -pD -m600 %SOURCE5 %buildroot%ROOT/my.cnf
+#install -pD -m644 /dev/null %%buildroot%%_sysconfdir/my.cnf
+#install -pD -m600 %%SOURCE5 %%buildroot%%ROOT/my.cnf
 
-# most current distro packages have it in %_bindir (hello kde4?)
+# most current distro packages have it in %%_bindir (hello kde4?)
 # but the server subpackage obtains /usr/sbin/mysql_install_db autoreq
 ln -sf {../bin,%buildroot%_sbindir}/mysql_install_db
 
 # move pkgconfig file to arch dep path
-#mv %buildroot%_datadir/pkgconfig/mariadb.pc %buildroot%_pkgconfigdir/
+#mv %%buildroot%%_datadir/pkgconfig/mariadb.pc %%buildroot%%_pkgconfigdir/
 # NB: still a problem for cmake on %%e2k as of 10.4.14, do not remove
 # (gave up on figuring out what was the particular crap that
 # generated broken libmariadb/cmake/install.cmake) // mike@
@@ -624,12 +624,12 @@ mkdir -p %buildroot%_pkgconfigdir
 
 # Populate chroot with data to some extent.
 install -pD -m644 %buildroot%_datadir/mysql/charsets/* \
-	     %buildroot%ROOT%_datadir/mysql/charsets
+         %buildroot%ROOT%_datadir/mysql/charsets
 
 (
     cd %buildroot%_datadir/mysql
     for i in */errmsg.sys; do
-	install -pD -m644 $i  %buildroot%ROOT%_datadir/mysql/$i
+    install -pD -m644 $i  %buildroot%ROOT%_datadir/mysql/$i
     done
 )
 
@@ -647,10 +647,10 @@ rm -f %buildroot%_datadir/mysql/mysql{-*.spec,-log-rotate,.server}
 
 rm -rf %buildroot%_datadir/mysql-test
 rm -f %buildroot%prefix/%plugindir/*.la
-#rmdir %buildroot%prefix/%plugindir/debug
+#rmdir %%buildroot%%prefix/%%plugindir/debug
 
 # broken manpages referencing missing paths
-#rm -f %buildroot%_man1dir/mysql{_client_,}test_embedded.1
+#rm -f %%buildroot%%_man1dir/mysql{_client_,}test_embedded.1
 
 %define get_datadir \
 DATADIR=`/usr/bin/my_print_defaults mysqld |sed -ne 's/^--datadir=\\(.*\\)/\\1/pg' |tail -1` \
@@ -666,8 +666,8 @@ rm -f %buildroot%_mandir/man1/mariadb-plugin.1*
 rm -f %buildroot%prefix/%plugindir/daemon_example.ini
 
 # remove more useless plugins
-#rm -f %buildroot%prefix/%plugindir/auth_test_plugin.so
-#rm -f %buildroot%prefix/%plugindir/dialog_examples.so
+#rm -f %%buildroot%%prefix/%%plugindir/auth_test_plugin.so
+#rm -f %%buildroot%%prefix/%%plugindir/dialog_examples.so
 
 
 # house cleaning
@@ -1036,6 +1036,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug 11 2022 Alexey Shabalin <shaba@altlinux.org> 10.6.8-alt2
+- Fix requires on perl-DBD-MariaDB for server-perl package
+
 * Fri Aug 05 2022 Alexey Shabalin <shaba@altlinux.org> 10.6.8-alt1
 - 10.6.8
 - mariadb-client not requires libmariadb-devel (ALT #42774)
@@ -1306,8 +1309,8 @@ fi
 
 * Wed Nov 09 2016 Alexey Shabalin <shaba@altlinux.ru> 10.1.19-alt1
 - 10.1.19
-- rename package libmariadbembedded -> libmysqld%soname (ALT #29389)
-- drop provides and requires lib%name, change to libmysqlclient%soname
+- rename package libmariadbembedded -> libmysqld%%soname (ALT #29389)
+- drop provides and requires lib%%name, change to libmysqlclient%%soname
 
 * Thu Nov 03 2016 Alexey Shabalin <shaba@altlinux.ru> 10.1.18-alt2
 - do not install and delete log files with rpm package
@@ -1423,7 +1426,7 @@ fi
 - New version
 - Fix (ALT#29388) - allocated errmsg files to common subpackage
 - Add /etc/my.cnf.d
-- Add new subpackage %name-engine-tokudb
+- Add new subpackage %%name-engine-tokudb
 - Enable tests
 
 * Mon Sep 16 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.32-alt2
