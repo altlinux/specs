@@ -1,10 +1,10 @@
 %define TOOL_CHAIN_TAG GCC5
-%define openssl_ver 1.1.1m
+%define openssl_ver 1.1.1q
 %def_disable skip_enroll
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20220221
+Version: 20220526
 Release: alt1
 Summary: EFI Development Kit II
 
@@ -19,10 +19,7 @@ Source2: openssl.tar
 #Vcs-Git: https://github.com/ucb-bar/berkeley-softfloat-3.git
 Source3: berkeley-softfloat-3.tar
 Source4: Logo.bmp
-#Vcs-Git: https://github.com/rhuefi/qemu-ovmf-secureboot.git
-Source5: qemu-ovmf-secureboot.tar
 
-Source11: build-iso.sh
 # ALT-specific JSON "descriptor files"
 Source14: 40-edk2-ovmf-x64-sb-enrolled.json
 Source15: 50-edk2-ovmf-x64-sb.json
@@ -31,6 +28,8 @@ Source17: 40-edk2-ovmf-ia32-sb-enrolled.json
 Source18: 50-edk2-ovmf-ia32-sb.json
 Source19: 60-edk2-ovmf-ia32.json
 Source20: 60-edk2-ovmf-x64-microvm.json
+Source21: 60-edk2-ovmf-x64-amdsev.json
+Source22: 60-edk2-ovmf-x64-inteltdx.json
 
 Patch1: %name-%version.patch
 
@@ -40,10 +39,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: iasl nasm gcc-c++
 BuildRequires: python3-devel python3-modules-sqlite3
 BuildRequires: libuuid-devel
-BuildRequires: qemu-img qemu-system-x86 xorriso
+BuildRequires: xorriso dosfstools mtools
 BuildRequires: /proc /dev/pts
 BuildRequires: bc
-BuildRequires: alt-uefi-certs openssl
+BuildRequires: python3-module-virt-firmware
 
 %description
 This package provides tools that are needed to build EFI executables
@@ -78,7 +77,7 @@ Open Virtual Machine Firmware (ia32)
 Summary: EFI Development Kit II
 Group: System/Kernel and hardware
 Provides: efi-shell = 2.2
-Obsoletes: efi-shell
+Obsoletes: efi-shell < 2.2
 
 %description efi-shell
 EFI Development Kit II implementation of UEFI Shell 2.0+
@@ -118,22 +117,10 @@ tar -xf %SOURCE2 --strip-components 1 --directory CryptoPkg/Library/OpensslLib/o
 mkdir -p ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 tar -xf %SOURCE3 --strip-components 1 --directory ArmPkg/Library/ArmSoftFloatLib/berkeley-softfloat-3
 
-# add qemu-ovmf-secureboot
-mkdir -p qemu-ovmf-secureboot
-tar -xf %SOURCE5 --strip-components 1 --directory qemu-ovmf-secureboot
-
-# Extract OEM string from the cert, as described here
-# https://bugzilla.tianocore.org/show_bug.cgi?id=1747#c2
-openssl x509 -inform der -in /etc/pki/uefi/altlinux.cer -out altlinux.pem
-sed \
-  -e 's/^-----BEGIN CERTIFICATE-----$/4e32566d-8e9e-4f52-81d3-5bb9715f9727:/' \
-  -e '/^-----END CERTIFICATE-----$/d' \
-  altlinux.pem \
-| tr -d '\n' \
-> PkKek1.oemstr
-
 %build
 export PYTHON_COMMAND=%__python3
+# for mkdosfs
+export PATH=/sbin:$PATH
 source ./edksetup.sh
 
 # compiler
@@ -147,7 +134,8 @@ CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE"
 CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D TPM_ENABLE"
+CC_FLAGS="${CC_FLAGS} -D TPM2_ENABLE"
+CC_FLAGS="${CC_FLAGS} -D TPM1_ENABLE"
 
 # ovmf features
 OVMF_FLAGS="${CC_FLAGS}"
@@ -174,15 +162,54 @@ unset MAKEFLAGS
 #mkdir -p FatBinPkg/EnhancedFatDxe/{X64,Ia32}
 #source ./edksetup.sh
 
+build_iso() {
+  dir="$1"
+  UEFI_SHELL_BINARY=${dir}/Shell.efi
+  ENROLLER_BINARY=${dir}/EnrollDefaultKeys.efi
+  UEFI_SHELL_IMAGE=uefi_shell.img
+  ISO_IMAGE=${dir}/UefiShell.iso
+ 
+  UEFI_SHELL_BINARY_BNAME=$(basename -- "$UEFI_SHELL_BINARY")
+  UEFI_SHELL_SIZE=$(stat --format=%s -- "$UEFI_SHELL_BINARY")
+  ENROLLER_SIZE=$(stat --format=%s -- "$ENROLLER_BINARY")
+ 
+  # add 1MB then 10% for metadata
+  UEFI_SHELL_IMAGE_KB=$((
+    (UEFI_SHELL_SIZE + ENROLLER_SIZE + 1 * 1024 * 1024) * 11 / 10 / 1024
+  ))
+ 
+  # create non-partitioned FAT image
+  rm -f -- "$UEFI_SHELL_IMAGE"
+  mkdosfs -C "$UEFI_SHELL_IMAGE" -n UEFI_SHELL -- "$UEFI_SHELL_IMAGE_KB"
+ 
+  # copy the shell binary into the FAT image
+  export MTOOLS_SKIP_CHECK=1
+  mmd   -i "$UEFI_SHELL_IMAGE"                       ::efi
+  mmd   -i "$UEFI_SHELL_IMAGE"                       ::efi/boot
+  mcopy -i "$UEFI_SHELL_IMAGE"  "$UEFI_SHELL_BINARY" ::efi/boot/bootx64.efi
+  mcopy -i "$UEFI_SHELL_IMAGE"  "$ENROLLER_BINARY"   ::
+  mdir  -i "$UEFI_SHELL_IMAGE"  -/                   ::
+ 
+  # build ISO with FAT image file as El Torito EFI boot image
+  xorrisofs -input-charset ASCII -J -rational-rock \
+    -e "$UEFI_SHELL_IMAGE" -no-emul-boot \
+    -o "$ISO_IMAGE" "$UEFI_SHELL_IMAGE"
+}
 
-# build ovmf (x64)
+# Build with neither SB nor SMM; include UEFI shell.
 mkdir -p OVMF
 build ${OVMF_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
 cp Build/OvmfX64/*/FV/OVMF_*.fd OVMF
 rm -rf Build/OvmfX64
-# build ovmf with secure boot
+# Build with SB and SMM; exclude UEFI shell.
 build ${OVMF_SB_FLAGS} -a IA32 -a X64 -p OvmfPkg/OvmfPkgIa32X64.dsc
 cp Build/Ovmf3264/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE.secboot.fd
+# Build AmdSev and IntelTdx variants
+touch OvmfPkg/AmdSev/Grub/grub.efi   # dummy
+build ${OVMF_FLAGS} -a X64 -p OvmfPkg/AmdSev/AmdSevX64.dsc
+cp Build/AmdSev/*/FV/OVMF.fd OVMF/OVMF.amdsev.fd
+build ${OVMF_FLAGS} -a X64 -p OvmfPkg/IntelTdx/IntelTdxX64.dsc
+cp Build/IntelTdx/*/FV/OVMF.fd OVMF/OVMF.inteltdx.fd
 
 # build shell
 build ${OVMF_FLAGS} -a X64 -p ShellPkg/ShellPkg.dsc
@@ -190,18 +217,13 @@ build ${OVMF_FLAGS} -a X64 -p ShellPkg/ShellPkg.dsc
 # build ovmf (x64) shell iso with EnrollDefaultKeys
 cp Build/Ovmf3264/*/X64/Shell.efi OVMF/
 cp Build/Ovmf3264/*/X64/EnrollDefaultKeys.efi OVMF/
-sh %_sourcedir/build-iso.sh OVMF
+build_iso OVMF
 
 %if_disabled skip_enroll
-python3 qemu-ovmf-secureboot/ovmf-vars-generator \
-    --qemu-binary /usr/bin/qemu-system-x86_64 \
-    --ovmf-binary OVMF/OVMF_CODE.secboot.fd \
-    --ovmf-template-vars OVMF/OVMF_VARS.fd \
-    --uefi-shell-iso OVMF/UefiShell.iso \
-    --oem-string "$(< PkKek1.oemstr)" \
-    --skip-testing \
-    --print-output \
-    OVMF/OVMF_VARS.secboot.fd
+virt-fw-vars --input OVMF/OVMF_VARS.fd \
+             --output OVMF/OVMF_VARS.secboot.fd \
+             --distro-keys alt --secure-boot
+
 %else
 # This isn't going to actually give secureboot, but makes json files happy
 # if we need to test disabling ovmf-vars-generator
@@ -225,7 +247,7 @@ cp OVMF/OVMF_VARS*.fd ovmf-ia32/
 # build ovmf-ia32 shell iso with EnrollDefaultKeys
 cp Build/OvmfIa32/*/IA32/Shell.efi ovmf-ia32/Shell.efi
 cp Build/OvmfIa32/*/IA32/EnrollDefaultKeys.efi ovmf-ia32/EnrollDefaultKeys.efi
-sh %_sourcedir/build-iso.sh ovmf-ia32/
+build_iso ovmf-ia32
 
 %install
 # For distro-provided firmware packages, the specification
@@ -250,6 +272,12 @@ for f in %_sourcedir/*edk2-ovmf*.json; do
     install -pm 644 $f %buildroot%_datadir/qemu/firmware
 done
 
+%check
+%if_disabled skip_enroll
+virt-fw-vars --input OVMF/OVMF_VARS.secboot.fd \
+             --print | grep "SecureBootEnable.*ON"
+%endif
+
 %files ovmf
 %doc OvmfPkg/License.txt
 %_datadir/OVMF
@@ -266,6 +294,13 @@ done
 %_prefix/lib64/efi/shell.efi
 
 %changelog
+* Wed Aug 10 2022 Alexey Shabalin <shaba@altlinux.org> 20220526-alt1
+- edk2-stable202205
+- build with openssl-1.1.1q
+- switch to virt-firmware for secure boot key enrollment
+- add amdsev and inteltdx builds
+- update BaseALT logo
+
 * Fri Mar 04 2022 Alexey Shabalin <shaba@altlinux.org> 20220221-alt1
 - edk2-stable202202
 
