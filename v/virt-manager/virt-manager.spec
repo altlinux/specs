@@ -2,8 +2,8 @@
 %define _libexecdir /usr/libexec
 
 Name: virt-manager
-Version: 4.0.0
-Release: alt3
+Version: 4.1.0
+Release: alt1
 Summary: Virtual Machine Manager
 
 Group: Emulators
@@ -15,8 +15,7 @@ AutoReqProv: nopython
 # https://github.com/virt-manager/virt-manager
 Source: %name-%version.tar
 Patch0001: 0001-fixed-build-with-python3-module-docutils-on-p9-branch.patch
-Patch0002: 0002-setup-add-bits-for-setuptools-61.patch
-# Patch: %name-%version-%release.patch
+# Patch: %%name-%%version-%%release.patch
 
 Requires: virt-manager-common = %EVR
 Requires: libvirt-client
@@ -72,8 +71,8 @@ AutoReqProv: nopython
 
 Requires: virt-manager-common = %EVR
 
-Provides: virt-clone
-Provides: virt-xml
+Provides: virt-clone = %EVR
+Provides: virt-xml = %EVR
 
 %description -n virt-install
 Package includes several command line utilities, including virt-install
@@ -84,8 +83,6 @@ machine).
 %setup
 #%%patch -p1
 %patch0001 -p1
-%patch0002 -p1
-
 
 %build
 python3 setup.py configure
@@ -136,6 +133,9 @@ done
 %_man1dir/virt-xml.1*
 
 %changelog
+* Thu Aug 11 2022 Alexey Shabalin <shaba@altlinux.org> 4.1.0-alt1
+- new version 4.1.0
+
 * Thu May 12 2022 Alexey Shabalin <shaba@altlinux.org> 4.0.0-alt3
 - fixed build with setuptools >= 61
 

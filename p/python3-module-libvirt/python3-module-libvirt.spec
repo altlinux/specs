@@ -1,7 +1,7 @@
 
 Summary: Python bindings for the libvirt library
 Name: python3-module-libvirt
-Version: 8.0.0
+Version: 8.6.0
 Release: alt1
 Url: https://libvirt.org
 #git://libvirt.org/libvirt-python.git
@@ -12,9 +12,9 @@ Group: Development/Python3
 Requires: libvirt-client
 BuildRequires: libvirt-devel >= 2.0.0
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3(setuptools)
 # For check
-BuildRequires: pytest3
+BuildRequires: pytest3 python3(lxml)
 
 Obsoletes: libvirt-python3 < %version-%release
 Provides: libvirt-python3 = %version-%release
@@ -42,6 +42,9 @@ of recent versions of Linux (and other OSes).
 %doc README COPYING COPYING.LESSER examples
 
 %changelog
+* Thu Aug 11 2022 Alexey Shabalin <shaba@altlinux.org> 8.6.0-alt1
+- new version 8.6.0
+
 * Fri Jan 21 2022 Alexey Shabalin <shaba@altlinux.org> 8.0.0-alt1
 - new version 8.0.0
 
