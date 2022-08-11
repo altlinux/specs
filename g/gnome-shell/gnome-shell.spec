@@ -14,8 +14,8 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.3.1
-Release: alt1.1%beta
+Version: %ver_major.4
+Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -286,6 +286,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Thu Aug 11 2022 Yuri N. Sedunov <aris@altlinux.org> 42.4-alt1
+- 42.4
+
 * Mon Jul 25 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3.1-alt1.1
 - explicitly required typelib(Gcr) = 3 (ALT #43332)
 
