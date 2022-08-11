@@ -3,12 +3,12 @@
 %def_with check
 
 Name: curl
-Version: 7.83.1
-Release: alt1
+Version: 7.84.0
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
-License: MITX
+License: MIT
 Group: Networking/File transfer
 Url: http://curl.haxx.se
 
@@ -155,6 +155,19 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Aug 10 2022 Egor Ignatov <egori@altlinux.org> 7.84.0-alt2
+- backport upstream fixes:
+  + lib3026: reduce the number of threads to 100 (#9172)
+  + easy_lock.h: include sched.h if available to fix build (#9054)
+
+* Mon Jun 27 2022 Anton Farygin <rider@altlinux.ru> 7.84.0-alt1
+- 7.84.0
+- Fixes:
+  * CVE-2022-32208: FTP-KRB bad message verification
+  * CVE-2022-32207: Unpreserved file permissions
+  * CVE-2022-32206: HTTP compression denial of service
+  * CVE-2022-32205: Set-Cookie denial of service
+
 * Wed May 11 2022 Anton Farygin <rider@altlinux.ru> 7.83.1-alt1
 - 7.83.1
 - Fixes:
