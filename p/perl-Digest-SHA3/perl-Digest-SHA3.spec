@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Digest-SHA3
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Carp.pm) perl(Config.pm) perl(Digest/base.pm) perl(DynaLoader.pm) perl(Exporter.pm) perl(Fcntl.pm) perl(XSLoader.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.04
-Release: alt3
+Version: 1.05
+Release: alt1
 Summary: Perl extension for SHA-3
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/MS/MSHELOR/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MS/MSHELOR/%{module_name}-%{version}.tar.gz
 
 %description
 Digest::SHA3 is written in C for speed.  If your platform lacks a C
@@ -89,6 +89,9 @@ scripts for %module_name
 %_man1dir/*
 
 %changelog
+* Thu Aug 11 2022 Igor Vlasenko <viy@altlinux.org> 1.05-alt1
+- automated CPAN update
+
 * Wed Feb 10 2021 Igor Vlasenko <viy@altlinux.ru> 1.04-alt3
 - to Sisyphus as Crypt-CBC dep
 
