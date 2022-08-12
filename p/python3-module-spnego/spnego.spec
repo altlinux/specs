@@ -1,7 +1,7 @@
-%define  modulename spnego
+%define  oname spnego
 
-Name:    python3-module-%modulename
-Version: 0.5.3
+Name:    python3-module-%oname
+Version: 0.5.4
 Release: alt1
 
 Summary: Python SPNEGO authentication library
@@ -37,10 +37,13 @@ decode raw NTLM/SPNEGO/Kerberos tokens into a human readable format.
 %files
 %doc *.md
 %_bindir/pyspnego-parse
-%python3_sitelibdir/%modulename
-%python3_sitelibdir/py%modulename-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname
+%python3_sitelibdir/py%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Aug 12 2022 Grigory Ustinov <grenka@altlinux.org> 0.5.4-alt1
+- Automatically updated to 0.5.4.
+
 * Sat Jul 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.5.3-alt1
 - Automatically updated to 0.5.3.
 
