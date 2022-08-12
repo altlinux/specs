@@ -185,7 +185,7 @@
 
 Name: libvirt
 Version: 8.6.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -816,7 +816,9 @@ tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
     -Dstorage_sheepdog=%{enabled_ifwith storage_sheepdog} \
     -Dnumactl=%{enabled_ifwith numactl} \
     -Dselinux=%{enabled_ifwith selinux} \
+%if_with selinux
     -Dselinux_mount=%selinux_mount \
+%endif
     -Dnetcf=%{enabled_ifwith netcf} \
     -Dudev=%{enabled_ifwith udev} \
     -Dyajl=%{enabled_ifwith yajl} \
@@ -903,10 +905,6 @@ install -pD -m644 %SOURCE21 %buildroot/lib/tmpfiles.d/libvirtd.conf
 %endif
 
 %find_lang %name
-
-%if_without libvirtd
-rm -rf %buildroot%_man7dir
-%endif
 
 %check
 VIR_TEST_DEBUG=1 %__meson_test --no-suite syntax-check --timeout-multiplier 10
@@ -1398,6 +1396,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Fri Aug 12 2022 Ivan A. Melnikov <iv@altlinux.org> 8.6.0-alt2
+- Fix build w/o server_drivers
+
 * Thu Aug 11 2022 Alexey Shabalin <shaba@altlinux.org> 8.6.0-alt1
 - 8.6.0
 
