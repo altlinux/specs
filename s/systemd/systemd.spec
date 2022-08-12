@@ -91,7 +91,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.12
-Release: alt2
+Release: alt3
 Summary: System and Session Manager
 Url: https://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -2272,6 +2272,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Aug 11 2022 Oleg Solovyov <mcpain@altlinux.org> 1:249.12-alt3
+- backport oomd commit from upstream (d784a8d)
+
 * Fri May 06 2022 Alexey Shabalin <shaba@altlinux.org> 1:249.12-alt2
 - Backport fixes nspawn.
 - Don't enable audit by default.

@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.24.6
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -514,6 +514,9 @@ done
 
 
 %changelog
+* Thu Aug 11 2022 Oleg Solovyov <mcpain@altlinux.org> 1:5.24.6-alt3
+- freememorynotifier: show notifications from systemd-oomd
+
 * Wed Jul 20 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.6-alt2
 - disable free memory notifier by default
 
