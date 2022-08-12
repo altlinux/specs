@@ -3,12 +3,12 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.3.8
+Version: 8.4.1
 Release: alt1
 
 Summary: pylama -- Code audit tool for python
 
-License: LGPL
+License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/pylama/
 
@@ -53,7 +53,7 @@ pylama -- Code audit tool for python.
 
 %build
 export LC_ALL=en_US.UTF-8
-%python3_build_debug
+%python3_build
 
 %install
 export LC_ALL=en_US.UTF-8
@@ -69,11 +69,14 @@ py.test3 -v -k 'not test_quotes'
 
 %files
 %doc Changelog *.rst
-%_bindir/*
+%_bindir/%oname
 %python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Aug 12 2022 Grigory Ustinov <grenka@altlinux.org> 8.4.1-alt1
+- Automatically updated to 8.4.1.
+
 * Tue May 24 2022 Grigory Ustinov <grenka@altlinux.org> 8.3.8-alt1
 - Automatically updated to 8.3.8.
 
