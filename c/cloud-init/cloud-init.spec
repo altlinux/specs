@@ -1,8 +1,8 @@
 %def_enable check
 
 Name:    cloud-init
-Version: 21.4
-Release: alt3
+Version: 22.2.2
+Release: alt1
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -12,9 +12,11 @@ Url:     http://launchpad.net/cloud-init
 Source0: %name-%version.tar
 
 Source1: cloud-init-alt.cfg
-Source2: 01_netplan.cfg
-Source3: cloud-init-tmpfiles.conf
+Source2: cloud-init-tmpfiles.conf
+
+Source3: 01_netplan.cfg
 Source4: 01_etcnet.cfg
+Source5: 01_network-manager.cfg
 
 Source11: cloud-config
 Source12: cloud-final
@@ -42,7 +44,8 @@ BuildRequires: /proc
 BuildRequires: python3-module-requests python3-module-jsonpatch
 BuildRequires: python3-module-configobj python3-module-mock
 BuildRequires: python3-module-oauthlib python3-module-pytest
-BuildRequires: python3(netifaces)
+BuildRequires: python3-module-pytest-mock
+BuildRequires: python3(netifaces) python3(jsonschema) python3(responses)
 BuildRequires: shadow-utils passwd
 %endif
 
@@ -53,7 +56,6 @@ Requires: procps
 Requires: iproute net-tools
 Requires: shadow-utils
 Requires: /bin/run-parts
-Requires: netplan
 Requires: dhcp-client
 # add not autoreq'ed
 %py3_requires Cheetah
@@ -76,7 +78,7 @@ License: GPLv3
 
 Requires: cloud-init >= 21.3
 Requires: netplan
-Conflicts: cloud-init-config-etcnet
+Conflicts: cloud-init-config-etcnet cloud-init-config-network-manager
 
 %description config-netplan
 %summary.
@@ -88,9 +90,21 @@ License: GPLv3
 
 Requires: cloud-init >= 21.3
 Requires: etcnet
-Conflicts: cloud-init-config-netplan
+Conflicts: cloud-init-config-netplan cloud-init-config-network-manager
 
 %description config-etcnet
+%summary.
+
+%package config-network-manager
+Summary: Cloud config option use NetworkManager network render
+Group:   System/Configuration/Boot and Init
+License: GPLv3
+
+Requires: cloud-init >= 22.2.2
+Requires: NetworkManager
+Conflicts: cloud-init-config-etcnet cloud-init-config-netplan
+
+%description config-network-manager
 %summary.
 
 %prep
@@ -104,9 +118,13 @@ Conflicts: cloud-init-config-netplan
 %python3_install --init-system=systemd
 
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/cloud/cloud.cfg
-install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
-install -pD -m644 %SOURCE3 %buildroot%_tmpfilesdir/cloud-init.conf
+install -pD -m644 %SOURCE2 %buildroot%_tmpfilesdir/cloud-init.conf
+
+# install network configs
+install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
 install -pD -m644 %SOURCE4 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
+install -pD -m644 %SOURCE5 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
+
 install -pD -m755 %SOURCE11 %buildroot%_initdir/cloud-config
 install -pD -m755 %SOURCE12 %buildroot%_initdir/cloud-final
 install -pD -m755 %SOURCE13 %buildroot%_initdir/cloud-init
@@ -145,6 +163,9 @@ make unittest
 %files config-etcnet
 %config            %_sysconfdir/cloud/cloud.cfg.d/01_etcnet.cfg
 
+%files config-network-manager
+%config            %_sysconfdir/cloud/cloud.cfg.d/01_network-manager.cfg
+
 %files
 %doc ChangeLog TODO.rst
 %dir               %_sysconfdir/cloud
@@ -171,6 +192,10 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Wed Aug 03 2022 Mikhail Gordeev <obirvalger@altlinux.org> 22.2.2-alt1
+- 22.2.2
+- Add config-network-manager package for NetworkManager render
+
 * Wed Jun 08 2022 Mikhail Gordeev <obirvalger@altlinux.org> 21.4-alt3
 - Remove unnecessary build Requires
 
