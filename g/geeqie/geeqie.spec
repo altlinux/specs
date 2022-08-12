@@ -7,7 +7,7 @@
 %def_enable lua
 
 Name: geeqie
-Version: 2.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Graphics file browser utility
@@ -95,6 +95,9 @@ install -pD -m644 %name.png %buildroot%_liconsdir/%name.png
 %doc NEWS README.*
 
 %changelog
+* Fri Aug 12 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Tue Aug 09 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt1
 - 2.0
 
