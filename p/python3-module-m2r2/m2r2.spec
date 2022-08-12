@@ -1,9 +1,9 @@
-%define  modulename m2r2
+%define  oname m2r2
 
 %def_with check
 
-Name:    python3-module-%modulename
-Version: 0.3.2
+Name:    python3-module-%oname
+Version: 0.3.3
 Release: alt1
 
 Summary: Markdown to reStructuredText converter
@@ -49,13 +49,16 @@ Patch: 37832c0254a2413ee666a42b6906361289b50202.patch
 %__python3 setup.py test
 
 %files
-%_bindir/%modulename
-%python3_sitelibdir/%modulename.py
-%python3_sitelibdir/__pycache__/%{modulename}*
-%python3_sitelibdir/*.egg-info
+%_bindir/%oname
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__/%{oname}*
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 %doc *.md
 
 %changelog
+* Fri Aug 12 2022 Grigory Ustinov <grenka@altlinux.org> 0.3.3-alt1
+- Automatically updated to 0.3.3.
+
 * Tue Mar 15 2022 Grigory Ustinov <grenka@altlinux.org> 0.3.2-alt1
 - Automatically updated to 0.3.2.
 - Build with check.
