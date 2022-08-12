@@ -9,7 +9,7 @@ Name: kernel-image-%kflavour
 %define kernel_rt_release	rt72
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
-Release: alt1.%kernel_rt_release
+Release: alt2.%kernel_rt_release
 
 %define krelease	%release
 
@@ -425,6 +425,9 @@ check-pesign-helper /boot/vmlinuz-%kversion-%flavour-%krelease
 %files checkinstall
 
 %changelog
+* Fri Aug 12 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.131-alt2.rt72
+- config: CONFIG_R8188EU=m.
+
 * Sun Jul 17 2022 Vitaly Chikunov <vt@altlinux.org> 5.10.131-alt1.rt72
 - Update to v5.10.131-rt72 (2022-07-15).
 
