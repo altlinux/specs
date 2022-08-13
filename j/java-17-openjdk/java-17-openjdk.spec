@@ -2,7 +2,7 @@
 # Need systemtap-sdt-devel
 %def_without systemtap
 # Bootstrap
-%def_with fresh_libjvm
+%def_without fresh_libjvm
 
 %global include_staticlibs 0
 %global include_normal_build 1
@@ -282,7 +282,8 @@
 %global lts_designator_zip ""
 
 # JDK to use for bootstrapping
-%global bootjdk %{_builddir}/bootstrap
+#global bootjdk #{_builddir}/bootstrap
+%global bootjdk /usr/lib/jvm/java-%{buildjdkver}-openjdk
 
 # Define IcedTea version used for SystemTap tapsets and desktop file
 %global icedteaver      6.0.0pre00-c848b93a8598
@@ -292,7 +293,7 @@
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global top_level_dir_name_backup %{top_level_dir_name}-backup
-%global rpmrelease      1
+%global rpmrelease      2
 # Priority must be 8 digits in total; up to openjdk 1.8, we were using 18..... so when we moved to 11, we had to add another digit
 %if %is_system_jdk
 # Using 10 digits may overflow the int used for priority, so we combine the patch and build versions
@@ -540,7 +541,7 @@ BuildRequires: zip
 BuildRequires: unzip
 BuildRequires: javapackages-filesystem
 # TODO need for bootstrap
-###BuildRequires: java-%{buildjdkver}-openjdk-devel
+BuildRequires: java-%{buildjdkver}-openjdk-devel
 # Zero-assembler build requirement
 %ifarch %{zero_arches}
 BuildRequires: libffi-devel
@@ -2016,5 +2017,8 @@ fi
 %endif
 
 %changelog
+* Fri Aug 12 2022 Andrey Cherepanov <cas@altlinux.org> 0:17.0.4.0.8-alt2
+- Built without bootstrapping.
+
 * Fri Aug 12 2022 Andrey Cherepanov <cas@altlinux.org> 0:17.0.4.0.8-alt1
 - Initial built in Sisyphus (based on Fedora spec file).
