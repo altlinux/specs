@@ -1,6 +1,6 @@
 Name:    libzim
-Version: 7.2.2
-Release: alt1.1
+Version: 8.0.0
+Release: alt1
 Summary: Library for reading/writing ZIM files
 
 License: GPLv2+
@@ -68,6 +68,9 @@ sed -i "s/compiler.get_id()/'gcc'/" meson.build
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Aug 13 2022 Andrey Cherepanov <cas@altlinux.org> 8.0.0-alt1
+- New version.
+
 * Fri May 20 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.2.2-alt1.1
 - Fixed build for Elbrus
 
