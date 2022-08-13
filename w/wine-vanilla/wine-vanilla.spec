@@ -12,7 +12,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.14
+%define major 7.15
 %define rel %nil
 %define conflictbase wine
 
@@ -194,7 +194,7 @@ BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libattr-devel
 BuildRequires: libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libv4l-devel
-BuildRequires: libalsa-devel jackit-devel libpulseaudio-devel libgsm-devel
+BuildRequires: libalsa-devel jackit-devel libpulseaudio-devel
 BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libusb-devel libieee1284-devel
@@ -833,6 +833,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sun Aug 14 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.15-alt1
+- new version 7.15 (with rpmrb script)
+
 * Sat Jul 30 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.14-alt1
 - new version 7.14 (with rpmrb script)
 
