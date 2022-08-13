@@ -1,12 +1,11 @@
 %def_enable snapshot
-
-%define ver_major 6.0
+%define ver_major 6.1
 %define _name terminal
 %define xdg_name org.pantheon.%_name
 %define rdn_name io.elementary.%_name
 
 Name: pantheon-terminal
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Pantheon Terminal
@@ -24,6 +23,7 @@ Source: %_name-%version.tar
 %define granite_ver 6.1.0
 %define handy_ver 1.0
 %define vala_ver 0.40
+%define vte_ver 0.59
 
 Requires: elementary-icon-theme
 Provides: %rdn_name = %version-%release
@@ -31,7 +31,7 @@ Provides: %rdn_name = %version-%release
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson appstream desktop-file-utils
 BuildRequires: libgranite-devel >= %granite_ver libnotify-devel
-BuildRequires: libvte3-devel libpcre2-devel libgee0.8-devel
+BuildRequires: libvte3-devel >= %vte_ver libpcre2-devel libgee0.8-devel
 BuildRequires: vala-tools >= %vala_ver libgranite-vala
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
@@ -56,7 +56,7 @@ This package provides Vala language bindings for the %name.
 %setup -n %_name-%version
 
 %build
-%meson -Dubuntu-bionic-patched-vte=false
+%meson
 %meson_build
 
 %install
@@ -81,6 +81,9 @@ This package provides Vala language bindings for the %name.
 %endif
 
 %changelog
+* Sat Aug 13 2022 Yuri N. Sedunov <aris@altlinux.org> 6.1.0-alt1
+- updated to 6.1.0-4-ga08b1ed4
+
 * Fri May 20 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.2-alt1
 - updated to 6.0.2-1-g9bc0079c
 
