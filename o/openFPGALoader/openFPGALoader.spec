@@ -4,8 +4,8 @@
 %def_with doc
 
 Name:     openFPGALoader
-Version:  0.8.0
-Release:  alt4
+Version:  0.9.0
+Release:  alt1
 
 Summary:  Universal utility for programming FPGA
 License:  Apache-2.0
@@ -23,6 +23,7 @@ BuildRequires: libftdi1-devel
 BuildRequires: libhidapi-devel
 BuildRequires: zlib-ng-devel
 BuildRequires: libudev-devel
+BuildRequires: libgpiod-devel
 %if_with doc
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-yaml
@@ -79,6 +80,9 @@ install -pm644 doc/_build/man/openFPGALoader.1 %buildroot%_man1dir
 %endif
 
 %changelog
+* Sun Aug 14 2022 Anton Midyukov <antohami@altlinux.org> 0.9.0-alt1
+- new version 0.9.0
+
 * Sun Jun 19 2022 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt4
 - add compiler flag -Wno-narrowing for fix build with gcc12
 
