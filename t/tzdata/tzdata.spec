@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2021a
+Version: 2022b
 Release: alt1
 
 Summary: Timezone data
@@ -71,7 +71,8 @@ make -k check
 # test basic glibc compatibility
 cat > expected <<'EOF'
 Mon Aug 17 12:00:00 UTC 2015
-Mon Aug 17 15:00:00 MSK 2015
+Mon Aug 17 15:00:00 IDT 2015
+Mon Aug 17 14:00:00 CEST 2015
 Mon Aug 17 05:00:00 PDT 2015
 EOF
 {
@@ -79,7 +80,8 @@ EOF
 	t='@1439812800'
 
 	TZ=UTC date -d "$t"
-	TZ="$d/Europe/Moscow" date -d "$t"
+	TZ="$d/Asia/Jerusalem" date -d "$t"
+	TZ="$d/Europe/Amsterdam" date -d "$t"
 	TZ="$d/America/Los_Angeles" date -d "$t"
 } > output
 diff -u expected output || {
@@ -98,6 +100,24 @@ diff -u expected output || {
 %srcdir/
 
 %changelog
+* Wed Aug 10 2022 Dmitry V. Levin <ldv@altlinux.org> 2022b-alt1
+- 2022a -> 2022b.
+
+* Wed Mar 16 2022 Dmitry V. Levin <ldv@altlinux.org> 2022a-alt1
+- 2021e -> 2022a.
+
+* Fri Oct 22 2021 Dmitry V. Levin <ldv@altlinux.org> 2021e-alt1
+- 2021d -> 2021e.
+
+* Fri Oct 15 2021 Dmitry V. Levin <ldv@altlinux.org> 2021d-alt1
+- 2021c -> 2021d.
+
+* Fri Oct 01 2021 Dmitry V. Levin <ldv@altlinux.org> 2021c-alt1
+- 2021b -> 2021c.
+
+* Fri Sep 24 2021 Dmitry V. Levin <ldv@altlinux.org> 2021b-alt1
+- 2021a -> 2021b.
+
 * Sun Jan 24 2021 Dmitry V. Levin <ldv@altlinux.org> 2021a-alt1
 - 2020f -> 2021a.
 

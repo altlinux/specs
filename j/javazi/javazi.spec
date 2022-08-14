@@ -1,6 +1,6 @@
 Name: javazi
 Version: %{get_version tzdata}
-Release: %{get_release tzdata}.1
+Release: %{get_release tzdata}
 
 Summary: Timezone data for Java
 License: Public Domain
@@ -96,6 +96,9 @@ install -pm644 tzdata/tzdb.dat %buildroot%_datadir/javazi-1.8/
 %files checkinstall
 
 %changelog
+* Wed Aug 10 2022 Dmitry V. Levin <ldv@altlinux.org> %{get_SVR tzdata}
+- Rebuilt with the latest tzdata.
+
 * Thu Sep 02 2021 Igor Vlasenko <viy@altlinux.org> 2021a-alt1.1
 - java 11 migration: java-devel-default moves to java 11,
   -source 1.5 -target 1.5 no more supported
