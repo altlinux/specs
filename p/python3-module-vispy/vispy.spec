@@ -3,20 +3,20 @@
 
 Name: python3-module-vispy
 Version: 0.6.6
-Release: alt1
+Release: alt2
 Summary: Interactive visualization in Python 3
 License: BSD-3-Clause
 Group: Development/Python3
 URL: https://github.com/vispy/vispy
-# Source-url: https://files.pythonhosted.org/packages/source/v/vispy/vispy-%version.tar.gz
+# Source-url: https://github.com/vispy/vispy/archive/refs/tags/v%version.tar.gz
 Source: vispy-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-setuptools_scm_git_archive
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
-
 BuildRequires: libnumpy-py3-devel
 
 %if_disabled check
@@ -50,10 +50,10 @@ sed -i -e '/^#!\//, 1d' vispy/glsl/build-spatial-filters.py vispy/util/transform
 
 %build
 export CFLAGS="%optflags -fno-strict-aliasing"
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # remove jupyter
 rm -r %buildroot%_prefix%_sysconfdir/jupyter
@@ -88,5 +88,9 @@ py.test3
 %python3_sitelibdir/*
 
 %changelog
+* Sun Aug 14 2022 Anton Midyukov <antohami@altlinux.org> 0.6.6-alt2
+- Migration to PEP517
+- Update Source-url
+
 * Fri Jul 30 2021 Anton Midyukov <antohami@altlinux.org> 0.6.6-alt1
 - initial build
