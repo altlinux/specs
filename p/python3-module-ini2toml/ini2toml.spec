@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Automatically conversion of .ini/.cfg files to TOML equivalents
@@ -17,6 +17,10 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
@@ -31,9 +35,6 @@ BuildRequires: python3(validate-pyproject)
 BuildRequires: python3(pyproject-fmt)
 
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -85,27 +86,27 @@ git commit -m 'release'
 git tag '%version'
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false --develop
+%tox_check_pyproject
 
 %files
 %doc README.rst
 %_bindir/%pypi_name
-%python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/ini2toml/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files lite
 
 %files full
 
 %changelog
+* Fri Aug 12 2022 Stanislav Levin <slev@altlinux.org> 0.11-alt1
+- 0.10 -> 0.11.
+
 * Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 0.10-alt1
 - Initial build for Sisyphus.

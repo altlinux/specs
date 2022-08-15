@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.8.0
+Version: 8.8.1
 Release: alt1
 
 Summary: Install packages and run Python with them
@@ -17,6 +17,10 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
@@ -27,9 +31,6 @@ BuildRequires: python3(path)
 BuildRequires: python3(packaging)
 
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(nbformat)
 BuildRequires: python3(pygments)
 %endif
@@ -50,23 +51,27 @@ interpreter run.
 %setup
 %autopatch -p1
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-# https://github.com/pypa/setuptools_scm/#environment-variables
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
+
+rm -r %buildroot%python3_sitelibdir/pip_run/tests/
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export NO_INTERNET=YES
-export TOXENV=py3
-export TOX_TESTENV_PASSENV='NO_INTERNET'
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc README.rst
@@ -74,8 +79,11 @@ tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
 %python3_sitelibdir/pip-run.py
 %python3_sitelibdir/__pycache__/pip-run.*
 %python3_sitelibdir/pip_run/
-%python3_sitelibdir/pip_run-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 8.8.1-alt1
+- 8.8.0 -> 8.8.1.
+
 * Tue Feb 08 2022 Stanislav Levin <slev@altlinux.org> 8.8.0-alt1
 - Initial build for Sisyphus.

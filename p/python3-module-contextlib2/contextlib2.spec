@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname contextlib2
+%define pypi_name contextlib2
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.6.0
+Name: python3-module-%pypi_name
+Version: 21.6.0
 Release: alt1
 
 Summary: Backports and enhancements for the contextlib module
@@ -20,11 +20,9 @@ Patch0: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-
-%if_with check
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-%endif
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 contextlib2 is a backport of the standard library's contextlib
@@ -38,22 +36,22 @@ future enhancements to the standard library version.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps -vvr -s false
+%tox_check_pyproject
 
 %files
-%python3_sitelibdir/contextlib2.py
-%python3_sitelibdir/__pycache__/contextlib2.cpython-*.py*
-%python3_sitelibdir/contextlib2-*.egg-info/
+%python3_sitelibdir/contextlib2/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 09 2022 Stanislav Levin <slev@altlinux.org> 21.6.0-alt1
+- 0.6.0 -> 21.6.0.
+
 * Mon Apr 26 2021 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
 - 0.5.5 -> 0.6.0.
 - Built Python3 package from its ows src.

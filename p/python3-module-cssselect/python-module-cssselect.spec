@@ -1,26 +1,29 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name cssselect
 
 %def_with check
 
-Name: python3-module-cssselect
-Version: 0.9.1
-Release: alt3
+Name: python3-module-%pypi_name
+Version: 1.1.0
+Release: alt1
 
 Summary: Parses CSS3 Selectors and translates them to XPath 1.0
 Group: Development/Python3
-License: BSD-style
-Url: http://packages.python.org/cssselect/
+License: BSD-3-Clause
+Url: https://pypi.org/project/cssselect/
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-lxml
 
 %if_with check
-BuildRequires: python3(tox)
+BuildRequires: python3(lxml)
 %endif
 
-# http://pypi.python.org/packages/source/c/cssselect/cssselect-%version.tar.gz
-Source: cssselect-%version.tar
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+Source: %name-%version.tar
 
 %description
 Cssselect parses CSS3 Selectors and translates them to XPath 1.0
@@ -28,24 +31,27 @@ expressions.  Such expressions can be used in lxml or another XPath
 engine to find the matching elements in an XML or HTML document.
 
 %prep
-%setup -n cssselect-%version
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
-%python3_sitelibdir/*
-%doc AUTHORS docs README.rst CHANGES LICENSE PKG-INFO
+%doc AUTHORS docs README.rst CHANGES LICENSE
+%python3_sitelibdir/cssselect/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 09 2022 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 0.9.1 -> 1.1.0.
+
 * Mon Apr 26 2021 Stanislav Levin <slev@altlinux.org> 0.9.1-alt3
 - Built Python3 package from its ows src.
 

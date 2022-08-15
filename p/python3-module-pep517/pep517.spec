@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pep517
+%define pypi_name pep517
+%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.12.0
+Name: python3-module-%pypi_name
+Version: 0.13.0
 Release: alt1
 
 Summary: API to call PEP 517 hooks for building Python packages
@@ -19,20 +20,25 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(flit)
+
+# build backend and its deps
+BuildRequires: python3(flit_core)
 
 %if_with check
 # install_requires:
+# tomllib since Python 3.11+
+%if %tomli
 BuildRequires: python3(tomli)
+%endif
 
 # tests
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 %endif
 
+%if %tomli
+# rebuild against Python 3.11 is required to get rid of old dependency
 %py3_requires tomli
+%endif
 
 %description
 PEP 517 specifies a standard API for systems which build Python packages.
@@ -42,37 +48,23 @@ PEP 517 specifies a standard API for systems which build Python packages.
 %autopatch -p1
 
 %build
-# setup.py-less projects
-# flit build backend
-# generate setup.py for legacy builder
-%__python3 - <<-'EOF'
-from pathlib import Path
-from flit.sdist import SdistBuilder
-
-
-with open("setup.py", "wb") as f:
-    sd_builder = SdistBuilder.from_ini_path(Path("pyproject.toml"))
-    f.write(sd_builder.make_setup_py())
-EOF
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-export NO_INTERNET=YES
-export TOX_TESTENV_PASSENV='NO_INTERNET'
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc README.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/pep517/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 0.13.0-alt1
+- 0.12.0 -> 0.13.0.
+
 * Tue Jan 11 2022 Stanislav Levin <slev@altlinux.org> 0.12.0-alt1
 - 0.10.0 -> 0.12.0.
 

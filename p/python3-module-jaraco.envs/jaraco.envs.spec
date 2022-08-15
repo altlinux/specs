@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname jaraco.envs
+%define pypi_name jaraco.envs
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.3.0
+Name: python3-module-%pypi_name
+Version: 2.4.0
 Release: alt1
 
 Summary: Classes for orchestrating Python virtual environments
@@ -17,6 +17,10 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
@@ -26,18 +30,16 @@ BuildRequires: python3(virtualenv)
 BuildRequires: python3(tox)
 
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 %endif
 
 BuildArch: noarch
 
-%py3_provides %oname
+%py3_provides %pypi_name
 %py3_requires virtualenv
 %py3_requires tox
 
 %description
-%oname provides classes for orchestrating Python virtual environments.
+%pypi_name provides classes for orchestrating Python virtual environments.
 
 %prep
 %setup
@@ -54,24 +56,24 @@ git commit -m 'release'
 git tag '%version'
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr --develop -- -vra
+%tox_check_pyproject
 
 %files
 %doc README.rst
 %python3_sitelibdir/jaraco/__pycache__/envs.cpython-*.py*
 %python3_sitelibdir/jaraco/envs.py
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1
+- 2.3.0 -> 2.4.0.
+
 * Tue Apr 05 2022 Stanislav Levin <slev@altlinux.org> 2.3.0-alt1
 - 2.2.0 -> 2.3.0.
 

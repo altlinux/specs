@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname platformdirs
+%define pypi_name platformdirs
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.5.1
+Name: python3-module-%pypi_name
+Version: 2.5.2
 Release: alt1
 
 Summary: Determining appropriate platform-specific dirs
@@ -17,16 +17,15 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(setuptools_scm)
-BuildRequires: python3(toml)
+
+# build backend and its deps
+BuildRequires: python3(hatchling)
+BuildRequires: python3(hatch-vcs)
 
 %if_with check
 BuildRequires: python3(appdirs)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_mock)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -42,27 +41,36 @@ location.
 %setup
 %autopatch -p1
 
+# hatch-vcs can use setuptools_scm which implements a file_finders entry point
+# which returns all files tracked by SCM. Though that is version detection usage
+# only (at least for now), it's safer to provide a real git tree.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- tests
+%tox_check_pyproject -- -vra tests
 
 %files
 %doc README.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/platformdirs/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 2.5.2-alt1
+- 2.5.1 -> 2.5.2.
+
 * Fri Mar 04 2022 Stanislav Levin <slev@altlinux.org> 2.5.1-alt1
 - 2.5.0 -> 2.5.1.
 

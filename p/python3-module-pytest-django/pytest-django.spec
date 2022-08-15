@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-django
+%define pypi_name pytest-django
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 4.5.2
-Release: alt1
+Release: alt2
 
 Summary: A Django plugin for py.test
 
@@ -20,6 +20,10 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
@@ -29,11 +33,9 @@ BuildRequires: python3(pytest)
 BuildRequires: python3-module-django
 BuildRequires: python3-module-django-dbbackend-sqlite3
 BuildRequires: python3(pytest-xdist)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
-%py3_provides %oname
+%py3_provides %pypi_name
 
 # we have several versions of Django
 # so, we cannot rely on auto-requires
@@ -47,36 +49,35 @@ the pytest testing tool.
 %setup
 %autopatch -p1
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
-# its used as the primary source for the version number in which
-# case it will be a unparsed string
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr --console-scripts
+%tox_check_pyproject
 
 %files
 %doc AUTHORS *.rst
 %python3_sitelibdir/pytest_django/
-%python3_sitelibdir/pytest_django-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 15 2022 Stanislav Levin <slev@altlinux.org> 4.5.2-alt2
+- Fixed FTBFS (setuptools 64).
+
 * Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 4.5.2-alt1
 - 4.0.0 -> 4.5.2.
 

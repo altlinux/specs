@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname toml
+%define pypi_name toml
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 0.10.2
-Release: alt2
+Release: alt3
 
 Summary: A Python library for parsing and creating TOML.
 License: MIT
@@ -18,11 +18,13 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 BuildRequires: golang-github-burntsushi-toml-test
 BuildRequires: python3(numpy)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -39,22 +41,23 @@ toml file.
 %patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 ln -s %_datadir/toml-test toml-test
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -- -vra
+%tox_check_pyproject
 
 %files
 %python3_sitelibdir/toml/
-%python3_sitelibdir/toml-*.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 11 2022 Stanislav Levin <slev@altlinux.org> 0.10.2-alt3
+- Modernized packaging.
+
 * Sat Mar 27 2021 Stanislav Levin <slev@altlinux.org> 0.10.2-alt2
 - Dropped runtime dependency on numpy.
 

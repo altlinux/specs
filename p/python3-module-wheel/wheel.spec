@@ -1,13 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-%define oname wheel
-%define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))')
+%define pypi_name wheel
+%define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))' 2>/dev/null || echo unknown)
 
 %def_with check
-%def_without bootstrap
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 0.37.1
-Release: alt1
+Release: alt2
 Summary: A built-package format for Python3
 License: MIT
 Group: Development/Python3
@@ -20,15 +19,18 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+# wheel is build dependency of setuptools backend
+# see https://github.com/pypa/wheel/issues/429
+BuildRequires: python3(wheel)
+
+# namespace package for system seed wheels which will be used within venv
+# created by virtualenv
+BuildRequires: python3(system_seed_wheels)
+
 %if_with check
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-%endif
-
-# dependencies for build wheel
-%if_without bootstrap
-BuildRequires: python3(system_seed_wheels)
 %endif
 
 # hide provides of bundled packages
@@ -43,7 +45,6 @@ step (simply extracting the file onto sys.path), and the unpacked
 archive preserves enough information to "Spread" (copy data and scripts
 to their final locations) at any later time.
 
-%if_without bootstrap
 %package wheel
 Summary: %summary
 Group: Development/Python3
@@ -51,7 +52,6 @@ Group: Development/Python3
 
 %description wheel
 Provides the seed package for virtualenv(packaged as wheel).
-%endif
 
 %prep
 %setup
@@ -61,10 +61,10 @@ Provides the seed package for virtualenv(packaged as wheel).
 # built wheel being installed into virtualenv will lack of unbundled packages
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # since we package python modules as arch dependent
 %if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
@@ -72,29 +72,28 @@ mkdir -p %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
-%if_without bootstrap
-# point to just built and installed wheel package
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%{python3_setup:} bdist_wheel --dist-dir %buildroot%system_wheels_path/
-%endif
+# package a built wheel (will be used within venv created by virtualenv)
+built_wheel=$(cat ./dist/.wheeltracker) || \
+        { echo Make sure you built a pyproject ; exit 1 ; }
+mkdir -p "%buildroot%system_wheels_path"
+cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps -vvr
+%tox_check_pyproject
 
 %files
 %doc *.txt
 %_bindir/wheel
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/wheel/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
-%if_without bootstrap
 %files wheel
-%system_wheels_path/wheel-%version-*.whl
-%endif
+%system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Fri Aug 12 2022 Stanislav Levin <slev@altlinux.org> 0.37.1-alt2
+- Modernized packaging.
+
 * Thu Jan 13 2022 Stanislav Levin <slev@altlinux.org> 0.37.1-alt1
 - 0.37.0 -> 0.37.1.
 

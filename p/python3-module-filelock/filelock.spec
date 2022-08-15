@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname filelock
+%define pypi_name filelock
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.6.0
+Name: python3-module-%pypi_name
+Version: 3.8.0
 Release: alt1
 
 Summary: A platform independent file lock for Python
@@ -16,12 +16,13 @@ Url: https://pypi.org/project/filelock/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(pytest)
 %endif
 
@@ -37,27 +38,35 @@ the same lock object twice, it will not block.
 %prep
 %setup
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false -- -vra tests
+%tox_check_pyproject -- -vra tests
 
 %files
 %doc LICENSE README.md
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/filelock/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 3.8.0-alt1
+- 3.6.0 -> 3.8.0.
+
 * Fri Mar 04 2022 Stanislav Levin <slev@altlinux.org> 3.6.0-alt1
 - 3.4.2 -> 3.6.0.
 

@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name hatchling
-%define wheel_dir %_builddir/dist
+
+%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 Name: python3-module-%pypi_name
-Version: 0.22.0
+Version: 1.7.1
 Release: alt1
 
 Summary: Modern, extensible Python build backend
@@ -12,48 +13,53 @@ Group: Development/Python3
 # Source-git: https://github.com/ofek/hatch.git
 Url: https://pypi.org/project/hatchling
 
-Source: %pypi_name-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-# build frontend
-BuildRequires: python3(build)
-
-# installer
-BuildRequires: python3(installer)
-
-# runtime deps which should be removed from BRs,
-# required due to build from PKG-INFO
+# self-bootstraps deps
+# see backend/src/hatchling/ouroboros.py
 BuildRequires: python3(editables)
+BuildRequires: python3(packaging)
 BuildRequires: python3(pathspec)
 BuildRequires: python3(pluggy)
+%if %tomli
+BuildRequires: python3(tomli)
+%endif
 
 BuildArch: noarch
 
 # try-except import
 %py3_requires editables
+%if %tomli
+# rebuild against Python 3.11 is required to get rid of old dependency
+%py3_requires tomli
+%endif
 
 %description
 %summary.
 
 %prep
-%setup -n %pypi_name-%version
+%setup
 
 %build
-%__python3 -m build --no-isolation --outdir %wheel_dir .
+%pyproject_build
 
 %install
-%__python3 -m installer --destdir %buildroot %wheel_dir/%pypi_name-%version-*.whl
+%pyproject_install
 
 %check
 # Requires Internet, see tests/downstream/integrate.py
 
 %files
 %doc README.md
-%_bindir/%pypi_name
-%python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%_bindir/hatchling
+%python3_sitelibdir/hatchling/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 15 2022 Stanislav Levin <slev@altlinux.org> 1.7.1-alt1
+- 0.22.0 -> 1.7.1.
+
 * Mon Apr 04 2022 Stanislav Levin <slev@altlinux.org> 0.22.0-alt1
 - Initial build for Sisyphus.

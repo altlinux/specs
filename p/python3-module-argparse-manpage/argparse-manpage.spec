@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname argparse-manpage
+%define pypi_name argparse-manpage
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.1
+Name: python3-module-%pypi_name
+Version: 3
 Release: alt1
 
 Summary: Automatically build manpage from argparse
@@ -19,13 +19,15 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 # proc is required for /dev/stdout (/dev/stdout -> /proc/self/fd/1)
 BuildRequires: /proc
 
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -41,32 +43,28 @@ support for (deprecated) optparse objects, too.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 # to avoid conflict with Python2 console script
 mv %buildroot%_bindir/argparse-manpage{,.py3}
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-commands=
-    pytest {posargs:-vra}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc LICENSE README.md
 %_man1dir/argparse-manpage.1.*
 %_bindir/argparse-manpage.py3
-%python3_sitelibdir/argparse_manpage-%version-py%_python3_version.egg-info/
 %python3_sitelibdir/build_manpages/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 15 2022 Stanislav Levin <slev@altlinux.org> 3-alt1
+- 2.1 -> 3.
+
 * Wed Jan 19 2022 Stanislav Levin <slev@altlinux.org> 2.1-alt1
 - 1.5 -> 2.1.
 

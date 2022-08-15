@@ -1,17 +1,19 @@
 %define _unpackaged_files_terminate_build 1
+%define buildpath $PWD/.build
 
 %define import_path github.com/BurntSushi/toml-test
 
 Name: golang-github-burntsushi-toml-test
-Version: 1.1.0
-Release: alt2
+Version: 1.2.0
+Release: alt1
 
 Summary: Language agnostic test suite for TOML
 License: MIT
 Group: Development/Other
 Url: https://github.com/BurntSushi/toml-test.git
 
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
+Source1: vendor.tar
 
 BuildRequires(pre): rpm-build-golang
 
@@ -25,19 +27,18 @@ that accept valid TOML data and output precisely what is expected pass valid
 tests.
 
 %prep
-%setup
+# run `go mod vendor` to update vendored sources
+%setup -a1
 
 %build
-export BUILDDIR="$PWD/.build"
+export BUILDDIR="%buildpath"
 export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 
-cd .build/src/%import_path
-%golang_build ./cmd/toml-test
+%golang_build cmd/*
 
 %install
-export BUILDDIR="$PWD/.build"
+export BUILDDIR="%buildpath"
 export IGNORE_SOURCES=1
 
 %golang_install
@@ -51,6 +52,9 @@ cp -a tests %buildroot%_datadir/toml-test/
 %_datadir/toml-test/
 
 %changelog
+* Thu Aug 11 2022 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.0 -> 1.2.0.
+
 * Wed Mar 16 2022 Stanislav Levin <slev@altlinux.org> 1.1.0-alt2
 - Fixed FTBFS (dropped extra build dep on removed burntsushi-toml).
 

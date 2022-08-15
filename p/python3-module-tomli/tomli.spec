@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname tomli
+%define pypi_name tomli
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: A lil' TOML parser
 License: MIT
@@ -17,14 +17,9 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(flit)
 
-%if_with check
-BuildRequires: golang-github-burntsushi-toml-test
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
-%endif
+# build backend and its deps
+BuildRequires: python3(flit_core)
 
 BuildArch: noarch
 
@@ -36,38 +31,24 @@ v1.0.0.
 %setup
 %autopatch -p1
 
-# make use of system's toml-test
-rm -r tests/data
-ln -s %_datadir/toml-test/tests tests/data
-
 %build
-# generate setup.py for legacy builder(flit build backend)
-%__python3 - <<-'EOF'
-from pathlib import Path
-from flit.sdist import SdistBuilder
-
-
-with open("setup.py", "wb") as f:
-    sd_builder = SdistBuilder.from_ini_path(Path("pyproject.toml"))
-    f.write(sd_builder.make_setup_py())
-EOF
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false -- -v
+%tox_check_pyproject -- -v
 
 %files
 %doc README.md
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/tomli/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 11 2022 Stanislav Levin <slev@altlinux.org> 2.0.1-alt2
+- Modernized packaging.
+
 * Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
 - 2.0.0 -> 2.0.1.
 

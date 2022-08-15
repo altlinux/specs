@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname jaraco.context
+%define pypi_name jaraco.context
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 4.1.1
+Name: python3-module-%pypi_name
+Version: 4.1.2
 Release: alt1
 
 Summary: Context managers by Jaraco
@@ -17,21 +17,22 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 %endif
 
 BuildArch: noarch
 
-%py3_provides %oname
+%py3_provides %pypi_name
 
 %description
-%oname provides context managers by Jaraco.
+%pypi_name provides context managers by Jaraco.
 
 %prep
 %setup
@@ -48,24 +49,24 @@ git commit -m 'release'
 git tag '%version'
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -- -vra
+%tox_check_pyproject
 
 %files
 %doc README.rst
 %python3_sitelibdir/jaraco/__pycache__/context.cpython-*.py*
 %python3_sitelibdir/jaraco/context.py
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 4.1.2-alt1
+- 4.1.1 -> 4.1.2.
+
 * Tue Apr 05 2022 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1
 - 4.0.0 -> 4.1.1.
 

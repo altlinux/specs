@@ -1,13 +1,15 @@
 %define _unpackaged_files_terminate_build 1
-%define mname setuptools
-%define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))')
+%define pypi_name setuptools
+%define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))' 2>/dev/null || echo unknown)
 
 %def_with check
-%def_without bootstrap
 
-Name: python3-module-%mname
+# bootstrap note: it doesn't work for now
+# see https://github.com/pypa/setuptools/issues/2986
+
+Name: python3-module-%pypi_name
 Epoch: 1
-Version: 62.0.0
+Version: 64.0.3
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -20,6 +22,9 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# deps of self-hosted build backend
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: /dev/shm
@@ -46,11 +51,9 @@ BuildRequires: python3-module-ini2toml-lite
 BuildPreReq: python3-dev
 %endif
 
-# dependencies for build wheel
-%if_without bootstrap
-BuildRequires: python3(wheel)
+# namespace package for system seed wheels which will be used within venv
+# created by virtualenv
 BuildRequires: python3(system_seed_wheels)
-%endif
 
 Provides: python3-module-distribute = %EVR
 Requires: python3-module-pkg_resources = %EVR
@@ -77,7 +80,7 @@ Requires: python3-dev
 Summary: Package Discovery and Resource Access for Python3 libraries
 Group: Development/Python3
 # Not separated yet:
-Conflicts: python3-module-%mname < 39.2.0-alt3
+Conflicts: python3-module-%pypi_name < 39.2.0-alt3
 
 # hide bundled packages
 %add_findprov_skiplist %python3_sitelibdir/pkg_resources/_vendor/*
@@ -106,7 +109,6 @@ whose purpose is preparing packages).
 
 This package contains pkg_resources for Python3.
 
-%if_without bootstrap
 %package wheel
 Summary: %summary
 Group: Development/Python3
@@ -114,7 +116,6 @@ Group: Development/Python3
 
 %description wheel
 Provides the seed package for virtualenv(packaged as wheel).
-%endif
 
 %prep
 %setup
@@ -151,11 +152,10 @@ sed -i "s@'pyconfig.h'@'%_pyconfig_h'@" setuptools/_distutils/sysconfig.py
 %endif
 
 %build
-%global python3_setup_buildrequires %nil
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # since we package python modules as arch dependent
 %if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
@@ -163,17 +163,16 @@ mkdir -p %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
-%if_without bootstrap
-%{python3_setup:} bdist_wheel --dist-dir %buildroot%system_wheels_path/
-%endif
+# package a built wheel (will be used within venv created by virtualenv)
+built_wheel=$(cat ./dist/.wheeltracker) || \
+        { echo Make sure you built a pyproject ; exit 1 ; }
+mkdir -p "%buildroot%system_wheels_path"
+cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export NO_INTERNET=YES
-export TOXENV=py3
 export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION NO_INTERNET'
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- -vra
+# tests relies on develop mode (e.g. import setuptools.tests)
+%{tox_check:} -- -vra
 
 %files
 %doc LICENSE *.rst
@@ -192,14 +191,15 @@ tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- -vra
 # if having incomplete setuptools code.
 # Our autoreqs will take over the duty of tracking the real dependencies.
 # (In future, we could patch their requires.txt.)
-%python3_sitelibdir/setuptools-%version-*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
-%if_without bootstrap
 %files wheel
 %system_wheels_path/setuptools-%version-*.whl
-%endif
 
 %changelog
+* Sat Aug 13 2022 Stanislav Levin <slev@altlinux.org> 1:64.0.3-alt1
+- 62.0.0 -> 64.0.3.
+
 * Tue Apr 05 2022 Stanislav Levin <slev@altlinux.org> 1:62.0.0-alt1
 - 61.3.0 -> 62.0.0.
 

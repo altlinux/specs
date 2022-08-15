@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define modulename virtualenv
-%define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))')
+%define pypi_name virtualenv
+%define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))' 2>/dev/null || echo unknown)
 
 %def_with check
 
-Name: python3-module-%modulename
-Version: 20.14.2
+Name: python3-module-%pypi_name
+Version: 20.16.3
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -18,11 +18,14 @@ Source: %name-%version.tar.gz
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
 # install_requires
-BuildRequires: python3(importlib_metadata)
 BuildRequires: python3(platformdirs)
 BuildRequires: python3(distlib)
 BuildRequires: python3(filelock)
@@ -34,8 +37,6 @@ BuildRequires: python3(pytest_freezegun)
 BuildRequires: python3(pytest_mock)
 BuildRequires: python3(pytest_randomly)
 BuildRequires: python3(pytest_timeout)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
 BuildRequires: python3-module-system-seed-wheels-wheels
 %endif
 
@@ -43,6 +44,10 @@ BuildArch: noarch
 
 # system seed wheels
 Requires: python3-module-system-seed-wheels-wheels
+
+# relax deps for windows support,
+# note: don't remove them since some external packages may rely on these modules
+%add_findreq_skiplist %python3_sitelibdir/virtualenv/discovery/windows/*
 
 %description
 Tool to create isolated Python environments.
@@ -71,9 +76,6 @@ in newly created environment by invoking /your/dir/bin/python
 %setup
 %patch -p1
 
-# don't package win module
-rm src/virtualenv/util/subprocess/_win_subprocess.py
-
 # remove all bundled seed wheels
 rm src/virtualenv/seed/wheels/embed/*.whl
 
@@ -88,28 +90,27 @@ git commit -m 'release'
 git tag '%version'
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 mv %buildroot%_bindir/{virtualenv,virtualenv3}
 
 %check
-export PIP_NO_INDEX=YES
-export PIP_NO_BUILD_ISOLATION=no
 export PIP_FIND_LINKS=%system_wheels_path
-export NO_INTERNET=yes
 export TOX_TESTENV_PASSENV='PIP_NO_INDEX PIP_FIND_LINKS NO_INTERNET'
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc README.md
 %_bindir/virtualenv3
 %python3_sitelibdir/virtualenv/
-%python3_sitelibdir/virtualenv-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Aug 12 2022 Stanislav Levin <slev@altlinux.org> 20.16.3-alt1
+- 20.14.2 -> 20.16.3.
+
 * Fri Jun 24 2022 Fr. Br. George <george@altlinux.org> 20.14.2-alt1
 - 20.14.0 -> 20.14.2.
 
@@ -236,7 +237,7 @@ tox.py3 --sitepackages --no-deps -vvr -s false
 - Version 1.11.6
 
 * Mon Aug 18 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt2
-- Added provides '%modulename' for Python 3
+- Added provides '%%modulename' for Python 3
 
 * Thu Nov 28 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt1.1
 - Fixed build

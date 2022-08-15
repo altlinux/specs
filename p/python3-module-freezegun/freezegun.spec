@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname freezegun
+%define pypi_name freezegun
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.1.0
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 1.2.1
+Release: alt1
 Summary: Let your Python tests travel through time
 License: Apache-2.0
 Group: Development/Python3
@@ -17,6 +17,9 @@ Patch0: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires=
@@ -24,8 +27,6 @@ BuildRequires: python3(dateutil)
 
 BuildRequires: python3(sqlite3)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -37,31 +38,24 @@ time by mocking the datetime module.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-# not used in Python3.6+, causes problems
-rm %buildroot%python3_sitelibdir/%oname/_async_coroutine.py
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc *.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Aug 09 2022 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
+- 1.1.0 -> 1.2.1.
+
 * Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 1.1.0-alt2
 - Fixed FTBFS (Python3.10).
 

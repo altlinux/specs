@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname tox
+%define pypi_name tox
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.24.5
+Name: python3-module-%pypi_name
+Version: 3.25.1
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -18,13 +18,18 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-setuptools_scm
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
 BuildRequires: /proc
 # install_requires
 BuildRequires: python3(filelock)
 BuildRequires: python3(packaging)
+BuildRequires: python3(pluggy)
+BuildRequires: python3(py)
 BuildRequires: python3(six)
 BuildRequires: python3(toml)
 BuildRequires: python3(virtualenv)
@@ -57,16 +62,22 @@ can use for:
 %setup
 %patch -p1
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
-# its used as the primary source for the version number in which
-# case it will be a unparsed string
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 pushd %buildroot%_bindir
 for i in $(ls); do
@@ -75,24 +86,30 @@ done
 popd
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOX_TESTENV_PASSENV='SETUPTOOLS_SCM_PRETEND_VERSION PIP_NO_INDEX \
+# NOTE: don't use regular %%tox_check_* RPM macros here due to circular
+# dependency on tox. These macros automatically pull tox and its plugins into
+# build env. Anyway, we want to test tox being packaged with the same tox, not
+# a repo's one.
+%global tox_buildrequires %{?tox_buildrequires:%nil}
+%global _tox_bin %{?_tox_bin:%buildroot%_bindir/tox.py3}
+%global tox_check %{?tox_check:%{tox:} --sitepackages -vvr -s false}
+
+export TOX_TESTENV_PASSENV='PIP_NO_INDEX \
 PIP_NO_BUILD_ISOLATION TOX_LIMITED_SHEBANG'
 export TOX_LIMITED_SHEBANG=1
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
-export TOXENV=py3
-
-%buildroot%_bindir/tox.py3 --sitepackages -vvr -s false -- -m "not internet"
+%tox_check_pyproject -- -m "not internet"
 
 %files
 %_bindir/tox.py3
 %_bindir/tox-quickstart.py3
 %python3_sitelibdir/tox/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jul 21 2022 Stanislav Levin <slev@altlinux.org> 3.25.1-alt1
+- 3.24.5 -> 3.25.1.
+
 * Thu Jan 13 2022 Stanislav Levin <slev@altlinux.org> 3.24.5-alt1
 - 3.24.4 -> 3.24.5.
 

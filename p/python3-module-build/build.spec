@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname build
+%define pypi_name build
+%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.7.0
+Name: python3-module-%pypi_name
+Version: 0.8.0
 Release: alt1
 
 Summary: Simple, correct PEP 517 build frontend
@@ -18,21 +19,30 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 # install_requires:
 BuildRequires: python3(packaging)
 BuildRequires: python3(pep517)
+%if %tomli
 BuildRequires: python3(tomli)
+%endif
 
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_rerunfailures)
 BuildRequires: python3(pytest_mock)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 %endif
 
 BuildArch: noarch
+
+%if %tomli
+# rebuild against Python 3.11 is required to get rid of old dependency
+%py3_requires tomli
+%endif
+%py3_requires packaging
 
 %description
 A simple, correct PEP 517 build frontend.
@@ -44,7 +54,7 @@ simple build tool and does not perform any dependency management.
 Summary: Executable for python-build
 Group: Development/Python3
 # not autodetected dep
-Requires: python3-module-%oname
+Requires: python3-module-%pypi_name
 
 %description -n pyproject-build
 %summary
@@ -54,27 +64,25 @@ Requires: python3-module-%oname
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-export NO_INTERNET=YES
-export TOX_TESTENV_PASSENV='NO_INTERNET'
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc README.md
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/build/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files -n pyproject-build
 %_bindir/pyproject-build
 
 %changelog
+* Tue Aug 09 2022 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
+- 0.7.0 -> 0.8.0.
+
 * Tue Jan 11 2022 Stanislav Levin <slev@altlinux.org> 0.7.0-alt1
 - Initial build for Sisyphus.

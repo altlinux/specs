@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname importlib-metadata
+%define pypi_name importlib-metadata
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 4.11.3
+Name: python3-module-%pypi_name
+Version: 4.12.0
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
@@ -17,6 +17,10 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
@@ -25,13 +29,10 @@ BuildRequires: python3(zipp)
 
 BuildRequires: python3(pyfakefs)
 BuildRequires: python3(test)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 # PyPI name(dash, underscore)
-%py3_provides %oname
+%py3_provides %pypi_name
 Provides: python3-module-importlib_metadata = %EVR
 Obsoletes: python3-module-importlib_metadata <= 1.5.0-alt1
 
@@ -47,40 +48,36 @@ CPython.
 %prep
 %setup
 %patch -p1
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
 
 %build
-# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
-# its used as the primary source for the version number in which
-# case it will be a unparsed string
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-# setup.py less project, PEP517 builds are not supported in sisyphus for now
-cat > setup.py <<'EOF'
-import setuptools
-
-if __name__ == "__main__":
-    setuptools.setup()
-EOF
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
+%tox_check_pyproject -- \
     --ignore exercises.py
 
 %files
 %doc LICENSE README.rst
-%python3_sitelibdir/importlib_metadata-%version-py%_python3_version.egg-info/
 %python3_sitelibdir/importlib_metadata/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 4.12.0-alt1
+- 4.11.3 -> 4.12.0.
+
 * Mon Mar 21 2022 Stanislav Levin <slev@altlinux.org> 4.11.3-alt1
 - 4.11.2 -> 4.11.3.
 

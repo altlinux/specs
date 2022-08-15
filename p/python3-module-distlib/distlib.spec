@@ -1,16 +1,16 @@
 %define _unpackaged_files_terminate_build 1
-%define oname distlib
+%define pypi_name distlib
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.3.4
+Name: python3-module-%pypi_name
+Version: 0.3.5
 Release: alt1
 
 Summary: Low-level functions for packaging and distribution of Python software
 License: Python
 Group: Development/Python3
-# Source-git: https://bitbucket.org/pypa/distlib.git
+# Source-git: https://github.com/pypa/distlib.git
 Url: https://pypi.org/project/distlib/
 
 Source: %name-%version.tar
@@ -18,15 +18,15 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-%if_with check
-BuildRequires: python3(tox)
-%endif
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 BuildArch: noarch
 
 %description
-%oname is a library of packaging functionality which is intended to be used as
-the basis for third-party packaging tools. Using a common layer will improve
+%pypi_name is a library of packaging functionality which is intended to be used
+as the basis for third-party packaging tools. Using a common layer will improve
 interoperability and consistency of user experience across those tools which
 use the library.
 
@@ -38,23 +38,24 @@ use the library.
 rm -v distlib/*.exe
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
 export SKIP_ONLINE=yes
 export TOX_TESTENV_PASSENV='SKIP_ONLINE'
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject
 
 %files
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/distlib/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 0.3.5-alt1
+- 0.3.4 -> 0.3.5.
+
 * Fri Mar 04 2022 Stanislav Levin <slev@altlinux.org> 0.3.4-alt1
 - 0.3.1 -> 0.3.4.
 

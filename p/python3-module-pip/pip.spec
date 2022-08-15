@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))')
+%define pypi_name pip
+%define system_wheels_path %(%__python3 -c 'import os, sys, system_seed_wheels; sys.stdout.write(os.path.dirname(system_seed_wheels.__file__))' 2>/dev/null || echo unknown)
 
 %def_with check
-%def_without bootstrap
 
-Name: python3-module-pip
-Version: 22.0.4
+Name: python3-module-%pypi_name
+Version: 22.2.2
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -18,22 +18,23 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-# dependencies for build wheel
-%if_without bootstrap
+# build backend and its deps
+BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+
+# namespace package for system seed wheels which will be used within venv
+# created by virtualenv
 BuildRequires: python3(system_seed_wheels)
-%endif
 
 %if_with check
 BuildRequires: git-core
 BuildRequires: python3(cryptography)
 BuildRequires: python3(freezegun)
+BuildRequires: python3(installer)
 BuildRequires: python3(pytest)
 BuildRequires: python3(scripttest)
 BuildRequires: python3(werkzeug)
 BuildRequires: python3(tomli_w)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 Obsoletes: python3-module-pip-pickles
@@ -46,7 +47,6 @@ Obsoletes: python3-module-pip-pickles
 # don't allow vendored distributions have deps other than stdlib
 %add_findreq_skiplist %python3_sitelibdir/pip/_vendor/*
 
-%if_without bootstrap
 %package wheel
 Summary: %summary
 Group: Development/Python3
@@ -56,7 +56,6 @@ Group: Development/Python3
 %summary
 
 Packaged as wheel. Provides the seed package for virtualenv.
-%endif
 
 %package -n pip
 Summary: Executable for PIP
@@ -81,10 +80,10 @@ rm -f ./src/pip/_vendor/distlib/*.exe
 # built wheel being installed into virtualenv will lack of unbundled packages
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # since we package python modules as arch dependent
 %if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
@@ -95,24 +94,17 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 # drop deprecated ntlm support
 rm -v %buildroot%python3_sitelibdir/pip/_vendor/urllib3/contrib/ntlmpool.py
 
-%if_without bootstrap
-%{python3_setup:} bdist_wheel --dist-dir %buildroot%system_wheels_path/
-%endif
+# package a built wheel (will be used within venv created by virtualenv)
+built_wheel=$(cat ./dist/.wheeltracker) || \
+        { echo Make sure you built a pyproject ; exit 1 ; }
+mkdir -p "%buildroot%system_wheels_path"
+cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
+%tox_create_default_config
 export NO_LATEST_WHEELS=YES
 export TOX_TESTENV_PASSENV='NO_LATEST_WHEELS'
-tox.py3 --sitepackages --console-scripts -vvr -s false -- \
-    -m 'not network and unit'
+%tox_check_pyproject -- -vra -m 'not network and unit'
 
 %files -n pip
 %_bindir/pip
@@ -122,14 +114,15 @@ tox.py3 --sitepackages --console-scripts -vvr -s false -- \
 %_bindir/pip3
 %_bindir/pip%__python3_version
 %python3_sitelibdir/pip/
-%python3_sitelibdir/pip-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
-%if_without bootstrap
 %files wheel
-%system_wheels_path/pip-%version-*.whl
-%endif
+%system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 22.2.2-alt1
+- 22.0.4 -> 22.2.2.
+
 * Wed Mar 09 2022 Stanislav Levin <slev@altlinux.org> 22.0.4-alt1
 - 22.0.3 -> 22.0.4.
 

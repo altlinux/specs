@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2022.3.30
+Version: 2022.8.7
 Release: alt1
 
 Summary: Canonical source for classifiers on PyPI
@@ -18,10 +18,12 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -44,10 +46,10 @@ classifiers in packages for PyPI upload or download.
 echo '%version' > ./calver_version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 cat > tox.ini <<'EOF'
@@ -57,16 +59,16 @@ commands =
     pytest
     python -m tests.lib
 EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false --develop
+%tox_check_pyproject
 
 %files
 %doc README.md
 %python3_sitelibdir/trove_classifiers/
-%python3_sitelibdir/trove_classifiers-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Aug 11 2022 Stanislav Levin <slev@altlinux.org> 2022.8.7-alt1
+- 2022.3.30 -> 2022.8.7.
+
 * Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 2022.3.30-alt1
 - Initial build for Sisyphus.
