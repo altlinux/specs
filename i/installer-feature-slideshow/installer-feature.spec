@@ -1,6 +1,6 @@
 Name: installer-feature-slideshow
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: Prepare slideshow
 License: GPL
@@ -29,6 +29,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Aug 15 2022 Anton Midyukov <antohami@altlinux.org> 0.2-alt2
+- NMU: replace 'egrep' with 'grep -E'
+
 * Mon May 20 2013 Mikhail Efremov <sem@altlinux.org> 0.2-alt1
 - Setup proper localized slideshow.
 - Rename to installer-feature-slideshow.
