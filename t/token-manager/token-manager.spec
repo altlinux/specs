@@ -4,32 +4,31 @@
 %define cpro_arch ia32
 %endif
 
-%define rev 51687e2
+%define rev c6ec8f5
 
-Name:       token-manager
-Version:    0.12
-Release:    alt7
+Name:    token-manager
+Version: 0.12
+Release: alt8
 
-Summary:    Certificate manager for CryptoPro CSP
-License:    MIT
-Group:      Security/Networking
-URL:        https://github.com/bmakarenko/token-manager
+Summary: Certificate manager for CryptoPro CSP
+License: MIT
+Group:   Security/Networking
+URL:     https://github.com/bmakarenko/token-manager
 
-Packager:   Andrey Cherepanov <cas@altlinux.org>
-BuildArch:  noarch
+Packager: Andrey Cherepanov <cas@altlinux.org>
+BuildArch: noarch
 
-Source:     %name.tar
-Source1:    cpconfig-pam.alt
-Source2:    token-manager
+Source: %name.tar
+Source1: cpconfig-pam.alt
+Source2: token-manager
 
-Patch0:    port-to-python3.patch
+Patch0: token-manager-port-to-python3-and-PyQt5.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libpam-devel python3-module-PyQt5
-BuildRequires: python-tools-2to3
+BuildRequires: libpam-devel
+BuildRequires: python3-module-PyQt5
 
 Requires: consolehelper opensc
-
 
 %description
 A PyQt front-end for Crypto Pro CSP for CentOS 6 and GosLinux by The
@@ -38,13 +37,7 @@ Federal Bailiffs' Service of Russia.
 %prep
 %setup -q
 %patch0 -p1
-
-2to3 -w -n $(find ./ -name '*.py')
-
-sed -i 's|python|python3|' $(find ./ \( -name '%{name}.py' \
-                                     -o -name '%{name}.desktop' \) )
-sed -i 's|PyQt4|PyQt5|' token-manager.py
-sed -i 's|QtGui|QtWidgets|' token-manager.py
+subst 's|python|python3|' %name.desktop
 
 %install
 mkdir -p %buildroot/%_bindir
@@ -63,8 +56,10 @@ install -Dm 0644 cpconfig-%cpro_arch %buildroot%_sysconfdir/security/console.app
 %config(noreplace) %_sysconfdir/pam.d/cpconfig-%cpro_arch
 %config(noreplace) %_sysconfdir/security/console.apps/cpconfig-%cpro_arch
 
-
 %changelog
+* Fri Aug 05 2022 Andrey Cherepanov <cas@altlinux.org> 0.12-alt8
+- Complete port to PyQt5 (ALT #38202).
+
 * Wed Aug 18 2021 Sergey V Turchin <zerg@altlinux.org> 0.12-alt7
 - Ugly port to PyQt5
 
