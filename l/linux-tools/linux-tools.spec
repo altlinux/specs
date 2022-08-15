@@ -4,7 +4,6 @@
 
 %define kernel_base_version 5.19
 %define kernel_source kernel-source-%kernel_base_version
-%add_verify_elf_skiplist %_libexecdir/traceevent/plugins/*
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
 
@@ -14,7 +13,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -30,8 +29,10 @@ BuildRequires: binutils-devel
 BuildRequires: elfutils-devel
 BuildRequires: flex
 BuildRequires: libaudit-devel
+BuildRequires: libbpf-devel
 BuildRequires: libcap-devel
 BuildRequires: libcap-ng-devel
+BuildRequires: libdebuginfod-devel
 BuildRequires: libdw-devel
 BuildRequires: libfuse-devel
 BuildRequires: libhugetlbfs-devel
@@ -47,6 +48,7 @@ BuildRequires: libnuma-devel
 %endif
 BuildRequires: libslang2-devel
 BuildRequires: libssl-devel
+BuildRequires: libtraceevent-devel
 BuildRequires: libtracefs-devel >= 1.3.0
 BuildRequires: libuuid-devel
 BuildRequires: libzstd-devel
@@ -92,6 +94,31 @@ a framework for all things performance analysis. It covers hardware level
 (CPU/PMU, Performance Monitoring Unit) features and software features
 (software counters, tracepoints) as well.
 This package contains performance analysis tools for Linux
+
+%package -n libperf
+Summary: The perf shared library
+Group: System/Libraries
+
+%description -n libperf
+%summary.
+
+%package -n libperf-devel
+Summary: Development files for libperf
+Group: Development/C
+Requires: libperf = %EVR
+
+%description -n libperf-devel
+%summary.
+
+%package -n libperf-devel-checkinstall
+Summary: Checkinstall test for libperf
+Group: Development/Other
+Requires: libperf-devel = %EVR
+Requires: rpm-build
+BuildArch: noarch
+
+%description -n libperf-devel-checkinstall
+%summary.
 
 %package -n python3-module-perf
 Summary: Python bindings for apps which will manipulate perf events
@@ -223,6 +250,10 @@ and root causes of unexpected results.
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar
 cd %kernel_source
+
+# This will make perf ask for kernelversion.
+touch .git
+
 cd tools
 
 # Avoid conflict with trace-cmd which installs same plug-ins in
@@ -249,9 +280,8 @@ sed -Ei '\!^CFLAGS!s!(-Wl,-rpath=)\./!\1/usr/lib/kselftests/rseq!' testing/selft
 sed -i 's/-s\b/-g/' testing/selftests/arm64/abi/Makefile testing/selftests/arm64/fp/Makefile
 sed -i '/ln -s/s/-s $(DESTDIR)/-s /' tracing/rtla/Makefile
 
-%define optflags_lto %nil
-
 %build
+%define optflags_lto %nil
 banner build
 cd %kernel_source/tools
 
@@ -271,9 +301,12 @@ export EXTRA_CFLAGS="%optflags" V=1
 	JOBS=%__nprocs \\\
 	WERROR=0 \\\
 	NO_GTK2=1 \\\
+	NO_LIBUNWIND=1 \\\
 	PYTHON=python3 \\\
 	PYTHON_CONFIG=python3-config \\\
 	LIBPFM4=1 \\\
+	LIBTRACEEVENT_DYNAMIC=1 \\\
+	LIBBPF_DYNAMIC=1 \\\
 	%nil
 
 %define install_opts \\\
@@ -282,13 +315,14 @@ export EXTRA_CFLAGS="%optflags" V=1
 	%nil
 
 ### Build perf
+make -C lib/perf \
+     %perf_opts
 make -C perf \
      %perf_opts \
      VF=1 \
      all \
      man \
-     python \
-     libtraceevent_plugins
+     python
 
 ### build bpf tools
 # runqslower does not build with: `Couldn't find kernel BTF; set VMLINUX_BTF to specify its location.`
@@ -350,8 +384,20 @@ make -C perf \
      install-man \
      install-python_ext
 
-install -d -m 0755 %buildroot%_docdir/%name
-install -m 0644 perf/{CREDITS,design.txt,Documentation/examples.txt,Documentation/tips.txt} %buildroot%_docdir/%name/
+make -C lib/perf \
+     %perf_opts \
+     %install_opts \
+     install \
+     install_headers
+
+rm -rf %buildroot%_libexecdir/perf
+
+# These already in libtraceevent package.
+rm -rf %buildroot%_libexecdir/traceevent
+
+install -d -m 0755 %buildroot%_docdir/perf
+install -m 0644 ../COPYING %buildroot%_docdir/perf/
+install -m 0644 perf/{CREDITS,design.txt,Documentation/examples.txt,Documentation/tips.txt} %buildroot%_docdir/perf/
 
 rm %buildroot/%_docdir/perf-tip/tips.txt
 rmdir %buildroot/%_docdir/perf-tip
@@ -470,11 +516,20 @@ popd
 banner check
 cd %kernel_source/tools
 
-# Simplistic test
+# Simplistic tests
+ldd %buildroot%_bindir/perf | sort -V
+%buildroot%_bindir/perf --version | grep -Fw %version
 %buildroot%_bindir/perf version --build-options
 # To run more comprehensive test run: perf test
 
 make -C bootconfig test
+
+%pre -n libperf-devel-checkinstall
+set -euxo pipefail
+cd /tmp
+cc %_docdir/libperf/examples/counting.c `pkg-config --libs libperf`
+cc %_docdir/libperf/examples/sampling.c `pkg-config --libs libperf`
+# Cannot run due to kernel.perf_event_paranoid=4
 
 %post -n hypervkvpd
 # auto enable service for Hyper-V guest
@@ -518,6 +573,7 @@ fi
 %preun_service hypervfcopyd
 
 %files
+%doc kernel-source-%version/COPYING
 %_sbindir/acpidbg-linux
 %_sbindir/acpidump-linux
 %_sbindir/ec-linux
@@ -548,14 +604,26 @@ fi
 %files -n perf
 %_bindir/perf
 %_bindir/trace
-%_includedir/perf
 %_man1dir/perf*
 %_sysconfdir/bash_completion.d/perf
-%_libexecdir/traceevent
-%_libexecdir/perf
 %_prefix/libexec/perf-core
 %_datadir/perf-core
-%doc %_docdir/%name
+%doc %_docdir/perf
+
+%files -n libperf
+%doc kernel-source-%version/COPYING
+%_libdir/libperf.so.*
+
+%files -n libperf-devel
+%doc kernel-source-%version/COPYING
+%_includedir/perf
+%_libdir/libperf.so
+%_pkgconfigdir/libperf.pc
+%_docdir/libperf
+%_man3dir/libperf.*
+%_man7dir/libperf*.*
+
+%files -n libperf-devel-checkinstall
 
 %files -n python3-module-perf
 %python3_sitelibdir/perf*
@@ -630,6 +698,10 @@ fi
 %_man1dir/rtla*
 
 %changelog
+* Mon Aug 15 2022 Vitaly Chikunov <vt@altlinux.org> 5.19-alt2
+- perf: Fix `version` output, enable debuginfod support, build with dynamic
+  linking to libbpf and libtraceevent. Package libperf and libperf-devel.
+
 * Mon Aug 01 2022 Vitaly Chikunov <vt@altlinux.org> 5.19-alt1
 - Update to v5.19 (2022-07-31).
 - Do not package objtool and fixdep (use kernel-headers-modules).
