@@ -158,8 +158,8 @@
 %endif
 
 Name:		ffmpeg-plugin-browser
-Version:	100
-Release:	alt3
+Version:	102
+Release:	alt1
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -579,7 +579,7 @@ This package contains static development files for libswscale.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -766,6 +766,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Mon Aug 15 2022 Sergey V Turchin <zerg@altlinux.org> 102-alt1
+- new version
+
 * Thu May 26 2022 Sergey V Turchin <zerg@altlinux.org> 100-alt3
 - rename package
 
