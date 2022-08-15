@@ -1,6 +1,6 @@
 Name:    installer-distro-education
 Version: 10.0
-Release: alt2
+Release: alt3
 
 Summary: Installer common files for ALT Education
 License: GPL-2.0
@@ -74,7 +74,6 @@ Requires: installer-feature-repo-add
 Requires: installer-feature-resolver-bind-stage3
 Requires: installer-feature-lightdm-stage3
 Requires: installer-feature-bell-off-stage3
-Requires: installer-feature-efi-stage3
 
 %description stage3
 Installer stage3
@@ -115,6 +114,9 @@ rm -rf %buildroot%_datadir/alterator/help/ru_RU \
 %_datadir/install2/initinstall.d/10-vm-profile.sh
 
 %changelog
+* Mon Aug 15 2022 Andrey Cherepanov <cas@altlinux.org> 10.0-alt3
+- Removed requirement of obsoleted installer-feature-efi-stage3.
+
 * Sun Dec 05 2021 Andrey Cherepanov <cas@altlinux.org> 10.0-alt2
 - Do not enable dnsmasq service by default because it crashes after suspend.
 
