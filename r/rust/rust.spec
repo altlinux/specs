@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.62.1
+Version: 1.63.0
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -453,6 +453,9 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Mon Aug 15 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.63.0-alt1
+- New version (1.63.0).
+
 * Fri Jul 22 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.62.1-alt1
 - New version (1.62.1).
 
