@@ -1,14 +1,16 @@
-BuildRequires: desktop-file-utils
+
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt19
+Release: alt20
+
+Group: System/X11
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
-Group: System/X11
 
 Source: %name-%version.tar
 Source10: ru.po
+
 Patch1: 0001-made-default-realm-the-first-one-in-list.patch
 Patch2: krb5-ticket-watcher-1.0-alt-date-fix.patch
 Patch3: krb5-ticket-watcher-1.0.3-alt-fix-includes.patch
@@ -20,7 +22,9 @@ Patch8: alt-force-kinit.patch
 Patch9: alt-password-dialog-ontop.patch
 Patch10: krb5-ticket-watcher-add-pw-exp-notif.patch
 Patch11: fix-deprecated-krb5-api-meth.patch
+Patch12: alt-crash-1.patch
 
+BuildRequires: desktop-file-utils
 BuildRequires: kde-common-devel rpm-build-licenses rpm-build-xdg libkrb5-devel libkeyutils-devel
 BuildRequires: cmake gcc-c++ libcom_err-devel qt5-base-devel qt5-tools
 
@@ -41,6 +45,7 @@ tickets.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 cat %SOURCE10 > po/ru.po
 
 %build
@@ -66,6 +71,9 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Mon Aug 15 2022 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt20
+- fix crash (closes: 43444)
+
 * Thu Jan 20 2022 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt19
 - update russian translation
 
