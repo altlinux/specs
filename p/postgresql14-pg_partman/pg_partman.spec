@@ -1,7 +1,7 @@
 %define pg_ver 14
 
 Name: postgresql%pg_ver-pg_partman
-Version: 4.6.2
+Version: 4.7.0
 Release: alt1
 
 Summary: pg_partman is an extension to create and manage both time-based and serial-based table partition sets.
@@ -55,6 +55,9 @@ sed -i 's|#!/usr/bin/python|#!/usr/bin/python3|' \
 %doc %_datadir/doc/postgresql/extension/*
 
 %changelog
+* Mon Aug 15 2022 Alexei Takaseev <taf@altlinux.org> 4.7.0-alt1
+- 4.7.0
+
 * Mon May 16 2022 Alexei Takaseev <taf@altlinux.org> 4.6.2-alt1
 - 4.6.2
 
