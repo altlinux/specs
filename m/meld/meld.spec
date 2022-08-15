@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: meld
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Meld Diff Viewer
@@ -23,7 +23,7 @@ Requires: typelib(Gtk) = %gtk_api_ver
 Requires: typelib(GtkSource) = %gtksource_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
-BuildRequires: meson yelp-tools
+BuildRequires: meson yelp-tools /usr/bin/appstream-util desktop-file-utils
 BuildRequires: python3-devel python3-module-pygobject3-devel python3-module-pycairo-devel
 BuildRequires: gir(Gtk) = %gtk_api_ver gir(GtkSource) = %gtksource_api_ver
 
@@ -50,7 +50,7 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %__meson_test
 
 %files -f %name.lang
-%_bindir/%name
+%attr(0755,root,root) %_bindir/%name
 %python3_sitelibdir_noarch/*
 %_datadir/%name/
 %_desktopdir/%xdg_name.desktop
@@ -62,6 +62,9 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %doc NEWS
 
 %changelog
+* Sun Aug 14 2022 Yuri N. Sedunov <aris@altlinux.org> 3.21.3-alt1
+- 3.21.3
+
 * Sat Jun 18 2022 Yuri N. Sedunov <aris@altlinux.org> 3.21.2-alt1
 - 3.21.2 (ported to Meson build system)
 
