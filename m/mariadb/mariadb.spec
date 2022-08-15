@@ -50,8 +50,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.6.8
-Release: alt2
+Version: 10.6.9
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -1036,6 +1036,11 @@ fi
 %endif
 
 %changelog
+* Mon Aug 15 2022 Alexey Shabalin <shaba@altlinux.org> 10.6.9-alt1
+- 10.6.9
+- Fixes: CVE-2022-32082, CVE-2022-32089, CVE-2022-32081, CVE-2018-25032,
+  CVE-2022-32091, CVE-2022-32084
+
 * Thu Aug 11 2022 Alexey Shabalin <shaba@altlinux.org> 10.6.8-alt2
 - Fix requires on perl-DBD-MariaDB for server-perl package
 
