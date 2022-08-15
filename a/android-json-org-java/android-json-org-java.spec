@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 %global oname json
 Name:          android-json-org-java
 Version:       6.0.1
-Release:       alt1_0.6.r22jpp8
+Release:       alt1_0.6.r22jpp11
 Summary:       Androids rewrite of the evil licensed Json.org
 License:       ASL 2.0
 URL:           https://android.googlesource.com/platform/libcore/+/master/json
@@ -65,7 +65,7 @@ rm -rf MODULE_LICENSE_BSD_LIKE
 
 %build
 
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -77,6 +77,9 @@ rm -rf MODULE_LICENSE_BSD_LIKE
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Tue Aug 16 2022 Igor Vlasenko <viy@altlinux.org> 6.0.1-alt1_0.6.r22jpp11
+- jdk17 support
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_0.6.r22jpp8
 - new version
 
