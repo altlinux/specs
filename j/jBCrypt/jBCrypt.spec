@@ -4,12 +4,12 @@ BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           jBCrypt
 Version:        0.4
-Release:        alt1_9jpp8
+Release:        alt1_9jpp11
 Summary:        Strong password hashing for Java
 
 License:        ISC
@@ -41,8 +41,10 @@ This package contains the API documentation for %{name}.
 
 %mvn_file : %{name}/%{name} %{name}
 
+sed -i 's, target="1\.6",,' build.xml
+
 %build
-ant test dist
+ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  test dist
 
 %install
 %mvn_artifact 'org.mindrot:jbcrypt:0.4' jbcrypt.jar
@@ -53,6 +55,9 @@ ant test dist
 %doc LICENSE
 
 %changelog
+* Tue Aug 16 2022 Igor Vlasenko <viy@altlinux.org> 0.4-alt1_9jpp11
+- jdk17 support
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_9jpp8
 - new version
 
