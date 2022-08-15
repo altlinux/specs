@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 22.04.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -14,6 +14,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Source1: add-ru-gwenview.po
 
 # Automatically added by buildreq on Tue Apr 28 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms libxkbfile-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -64,6 +65,14 @@ KF5 library
 %prep
 %setup -n %rname-%version
 
+for f in lib/resize/resizeimagewidget.ui ; do
+    sed -i 's|notr=\"true\"||' $f
+done
+
+msgcat --use-first po/ru/gwenview.po %SOURCE1 > po/ru/gwenview.po.tmp
+cat po/ru/gwenview.po.tmp >po/ru/gwenview.po
+rm -f po/ru/gwenview.po.tmp
+
 %build
 %K5build
 
@@ -102,6 +111,9 @@ KF5 library
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Mon Aug 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt2
+- update russian translation
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 
