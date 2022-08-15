@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.62
+%define ver_major 0.63
 %define libname mesonbuild
 %define pkgdocdir %_docdir/%name-%version
 
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: High productivity build system
@@ -47,6 +47,7 @@ Requires: /proc
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: ninja-build python3-devel >= %python_ver python3-module-setuptools
+BuildRequires: python3-module-wheel
 %{?_with_polkit:BuildRequires: libpolkit-devel}
 %{?_enable_docs:BuildRequires: hotdoc}
 %if_enabled check
@@ -93,7 +94,7 @@ This package provides documentation for Meson build system.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 %{?_enable_docs:
 pushd docs
 mkdir build
@@ -103,7 +104,7 @@ ninja -C build
 popd}
 
 %install
-%python3_install
+%pyproject_install
 install -Dpm 0644 %SOURCE1 %buildroot%_rpmmacrosdir/%name
 install -Dpm 0755 %SOURCE2 %buildroot%_rpmmacrosdir/%name.env
 
@@ -119,7 +120,7 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %files
 %_bindir/%name
 %python3_sitelibdir/%libname/
-%python3_sitelibdir/%name-%ver_major.*-*.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %name}
 %{?_without_polkit:
 %exclude }%_datadir/polkit-1/actions/com.mesonbuild.install.policy
 %_man1dir/%name.1.*
@@ -135,6 +136,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Sat Aug 13 2022 Yuri N. Sedunov <aris@altlinux.org> 0.63.1-alt1
+- 0.63.1
+
 * Thu Jun 02 2022 Yuri N. Sedunov <aris@altlinux.org> 0.62.2-alt1
 - 0.62.2
 
