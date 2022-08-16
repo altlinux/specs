@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel .59
+%define kernel_sublevel .60
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -615,6 +615,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Aug 11 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.60-alt1
+- v5.15.60 (2022-08-11).
+- ASoC: Intel: sof_es8336: add Kraftway ACCORD S15T DMI info for
+  pa-enable lookup quirk.
+
 * Wed Aug 03 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.59-alt1
 - v5.15.59 (2022-08-03).
 - ASoC: Intel: sof_es8336: add support for more laptop models.
