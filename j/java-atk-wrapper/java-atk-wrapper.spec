@@ -1,9 +1,9 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/jar /usr/bin/java /usr/bin/javac imake libXt-devel pkgconfig(dbus-1) xorg-cf-files
+BuildRequires: imake libXt-devel pkgconfig(dbus-1) xorg-cf-files
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global major_version 0.38
@@ -11,7 +11,7 @@ BuildRequires: jpackage-11-compat
 
 Name:       java-atk-wrapper
 Version:    %{major_version}.%{minor_version}
-Release:    alt1_6jpp11
+Release:    alt2_6jpp11
 Summary:    Java ATK Wrapper
 
 License:    LGPLv2+
@@ -27,9 +27,9 @@ BuildRequires:	gcc-c++
 BuildRequires:	clang
 BuildRequires:  libatk-devel libatk-gir-devel
 BuildRequires:  glib2-devel libgio libgio-devel
-BuildRequires:  gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
+BuildRequires:  gtk-builder-convert libgail-devel libgtk+2-devel
 BuildRequires:  xprop
-BuildRequires:  gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel
+BuildRequires:  libgail3-devel libgtk+3-devel libgtk+3-gir-devel
 BuildRequires:  at-spi2-atk-devel
 BuildRequires:  libat-spi2-core-devel libat-spi2-core-gir-devel
 BuildRequires:  gobject-introspection-devel
@@ -82,6 +82,9 @@ ln -s %{_libdir}/%{name}/libatk-wrapper.so \
 
 
 %changelog
+* Tue Aug 16 2022 Igor Vlasenko <viy@altlinux.org> 0.38.0-alt2_6jpp11
+- jdk17 support
+
 * Sat Jun 12 2021 Igor Vlasenko <viy@altlinux.org> 0.38.0-alt1_6jpp11
 - update
 
