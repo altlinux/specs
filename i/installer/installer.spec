@@ -1,6 +1,6 @@
 Name: installer
-Version: 1.11.2
-Release: alt2
+Version: 1.11.3
+Release: alt1
 
 Summary: Installer common parts
 License: GPLv2+
@@ -111,6 +111,11 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Aug 16 2022 Anton Midyukov <antohami@altlinux.org> 1.11.3-alt1
+- 99-cdrom.sh: use variable "$stagename" instead of fixed name "altinst"
+- install2, 99-cdrom.sh: determine cdrom on the actual type of image
+- Add initinstall.d/27-metadata-install-scripts.sh for copy external scripts
+
 * Thu Jun 30 2022 Anton Midyukov <antohami@altlinux.org> 1.11.2-alt2
 - NMU: replace egrep with grep -E, fgrep with grep -F
 
