@@ -5,15 +5,15 @@
 %def_without check
 
 Name: python-module-%oname
-Version: 1.1.6
-Release: alt4
+Version: 1.1.10
+Release: alt1
 Summary: Python 3.4 Enum backported to 3.3, 3.2, 3.1, 2.7, 2.6, 2.5, and 2.4
 License: BSD
 Group: Development/Python
 BuildArch: noarch
 Url: https://pypi.python.org/pypi/enum34/
 
-Source0: https://pypi.python.org/packages/bf/3e/31d502c25302814a7c2f1d3959d2a3b3f78e509002ba91aea64993936876/%{oname}-%{version}.tar.gz
+Source0: https://files.pythonhosted.org/packages/11/c4/2da1f4952ba476677a42f25cd32ab8aaf0e1c0d0e00b89822b835c7e654c/%oname-%version.tar.gz
 
 BuildRequires: python-devel python-module-setuptools
 # BuildRequires: python-module-pytest
@@ -80,7 +80,7 @@ cp -fR . ../python3
 
 %if_with python3
 pushd ../python3
-%python3_build_debug
+%pyproject_build
 popd
 %endif
 
@@ -89,7 +89,7 @@ popd
 
 %if_with python3
 pushd ../python3
-%python3_install
+%pyproject_install
 popd
 %endif
 
@@ -124,6 +124,9 @@ popd
 %endif
 
 %changelog
+* Tue Aug 16 2022 Leontiy Volodin <lvol@altlinux.org> 1.1.10-alt1
+- Version 1.1.10
+
 * Thu Jul 28 2022 Leontiy Volodin <lvol@altlinux.org> 1.1.6-alt4
 - Returned for mlnx-tools (ALT #43337).
 
