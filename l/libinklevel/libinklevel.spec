@@ -1,6 +1,6 @@
 Name: libinklevel
-Version: 0.9.3
-Release: alt2
+Version: 0.9.4
+Release: alt1
 
 Summary: Library for retrieving the ink level of a printer
 License: GPLv2
@@ -49,6 +49,9 @@ ln -sf /usr/share/license/GPL-2 COPYING
 %_includedir/*.h
 
 %changelog
+* Tue Aug 16 2022 Ilya Mashkin <oddity@altlinux.ru> 0.9.4-alt1
+- 0.9.4
+
 * Thu Nov 11 2021 Ilya Mashkin <oddity@altlinux.ru> 0.9.3-alt2
 - add lto options
 - Update License tag to GPLv2
