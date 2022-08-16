@@ -1,6 +1,6 @@
 Name: gource
-Version: 0.51
-Release: alt2
+Version: 0.53
+Release: alt1
 
 Summary: OpenGL-based 3D visualisation tool for source control repositories
 License: GPL-3.0-only
@@ -11,14 +11,13 @@ Url: http://gource.io/
 # git clone git://github.com/acaudwell/Core.git
 Source0: %name-main-%version.tar
 Source1: %name-core-%version.tar
-Patch0: %name-0.43-alt-build.patch
 Patch1: ax_boost_base.patch
 
 Requires: fonts-ttf-freefont
 
 BuildPreReq: libSDL2-devel >= 1.2
 BuildPreReq: libSDL2_image-devel >= 1.2
-BuildPreReq: libpcre-devel
+BuildPreReq: libpcre2-devel
 BuildPreReq: libfreetype-devel
 BuildPreReq: libglew-devel
 BuildPreReq: libglm-devel >= 0.9.3
@@ -42,7 +41,6 @@ files and directories.
 %prep
 %setup
 tar xf %_sourcedir/%name-core-%version.tar -C src/
-%patch0 -p0
 %patch1 -p1
 
 %build
@@ -59,6 +57,10 @@ tar xf %_sourcedir/%name-core-%version.tar -C src/
 %_man1dir/*
 
 %changelog
+* Tue Aug 16 2022 Mikhail Efremov <sem@altlinux.org> 0.53-alt1
+- Dropped obsoleted patch.
+- Updated to 0.53.
+
 * Fri Nov 29 2019 Michael Shigorin <mike@altlinux.org> 0.51-alt2
 - Fixed build on %%e2k.
 
