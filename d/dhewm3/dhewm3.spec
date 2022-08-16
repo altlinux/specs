@@ -1,8 +1,8 @@
-%define git adad73c
+%define git %nil
 
 Name: dhewm3
-Version: 1.5.1
-Release: alt2.g%{git}
+Version: 1.5.2
+Release: alt1
 Summary: DOOM 3 source port
 Summary(ru_RU.UTF-8): Порт движка оригинального Doom 3
 License: GPL-3.0-only
@@ -11,7 +11,6 @@ Url: https://github.com/dhewm/dhewm3
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
-Source1: %name.png
 
 BuildRequires(pre): rpm-macros-cmake ImageMagick-tools
 
@@ -76,34 +75,30 @@ install -m 0664 ./neo/*.so %buildroot%_libdir/%name
 
 # install menu entry
 mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%name.desktop << EOF
-[Desktop Entry]
-Name=dhewm3
-Comment=DOOM 3 source port
-Comment [ru]=порт движка DOOM 3
-Exec=%name
-Icon=%name
-Terminal=false
-Type=Application
-Categories=Game;ArcadeGame;
-EOF
+install -m 0644 dist/linux/share/applications/*.desktop %buildroot%_desktopdir/
 
 # install menu icons
-for N in 16 32 48 64 128;
+for N in 128 256;
 do
-convert %SOURCE1 -scale ${N}x${N} $N.png;
-install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
+mkdir -p %buildroot%_iconsdir/hicolor/${N}x${N}/apps
+install -m 0644 dist/linux/share/icons/hicolor/${N}x${N}/apps/*.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/
 done
+mkdir -p %buildroot%_iconsdir/hicolor/scalable/apps
+install -m 0644 dist/linux/share/icons/hicolor/scalable/apps/*.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 
 %files
 %doc README.md COPYING.txt
 %_gamesbindir/%name
 %_gamesdatadir/%name
 %_libdir/%name
-%_desktopdir/%name.desktop
-%_iconsdir/hicolor/*/apps/%name.png
+%_desktopdir/*.desktop
+%_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Tue Aug 16 2022 L.A. Kostis <lakostis@altlinux.ru> 1.5.2-alt1
+- 1.5.2.
+
 * Sun Mar 27 2022 L.A. Kostis <lakostis@altlinux.ru> 1.5.1-alt2.gadad73c
 - GIT adad73c.
 
