@@ -1,5 +1,5 @@
 Name: fsearch
-Version: 0.1.4
+Version: 0.2
 Release: alt1
 
 Summary: A fast file search utility for Unix-like systems based on GTK+3
@@ -12,8 +12,8 @@ Url: http://cboxdoerfer.github.io/fsearch
 # Source-url: https://github.com/cboxdoerfer/fsearch/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson
+BuildRequires: libpcre2-devel
 BuildRequires: gettext-tools
 BuildRequires: libpango-devel
 BuildRequires: libcairo-devel
@@ -25,13 +25,37 @@ BuildRequires: libicu-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
 
+BuildRequires(pre): rpm-macros-meson
+
 %description
 FSearch is a fast file search utility, inspired by Everything Search Engine.
 It's written in C and based on GTK3.
 
+Functions:
+Instant (as you type) results.
+Support for wildcard symbols.
+Regular expression support.
+Filter support.
+Include and exclude specific folders for indexing.
+Ability to exclude certain files/folders from the index using wildcard
+expressions.
+Quick sort by file name, path, size or modification time.
+Customizable interface.
+
 %description -l ru_RU.UTF-8
-FSearch - это быстрая утилита для поиска файлов, созданная на основе движка 
+FSearch - это быстрая утилита для поиска файлов, созданная на основе движка
 "Everything". Она написана на C и использует графическую библиотеку GTK3.
+
+Функции:
+Мгновенные (по мере ввода) результаты.
+Поддержка подстановочных символов.
+Поддержка регулярных выражений.
+Поддержка фильтров.
+Включать и исключать определенные папки для индексации.
+Возможность исключать из индекса определенные файлы/папки с помощью
+подстановочных выражений.
+Быстрая сортировка по имени файла, пути, размеру или времени модификации.
+Настраиваемый интерфейс.
 
 %prep
 %setup
@@ -53,6 +77,9 @@ FSearch - это быстрая утилита для поиска файлов,
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Aug 16 2022 Evgeny Chuck <koi@altlinux.org> 0.2-alt1
+- new version (0.2) with rpmgs script
+
 * Sun Jul 10 2022 Evgeny Chuck <koi@altlinux.org> 0.1.4-alt1
 - new version (0.1.4) with rpmgs script
 
