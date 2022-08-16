@@ -1,23 +1,24 @@
+%define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 
 %global qt_module qtxmlpatterns
-%def_enable bootstrap
+%def_disable bootstrap
 
 Name: qt5-xmlpatterns
 Version: 5.15.4
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtXmlPatterns component
 Url: http://qt.io/
-License: LGPLv2 / GPLv3
+License: LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
 
 Source: %qt_module-everywhere-src-%version.tar
 
-BuildRequires(pre): rpm-build-ubt rpm-macros-qt5
-BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-declarative-devel
+BuildRequires(pre): rpm-macros-qt5
 %if_disabled bootstrap
-BuildRequires: qt5-tools
+BuildRequires(pre): qt5-tools
 %endif
+BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-declarative-devel
 
 %description
 The Qt XML Patterns module provides support for XPath, XQuery, XSLT,
@@ -68,14 +69,14 @@ Requires: libqt5-core = %_qt5_version
 %build
 %qmake_qt5
 %make_build
-%if_disabled bootstrap
+%if %qdoc_found
 export QT_HASH_SEED=0
 %make docs
 %endif
 
 %install
 %install_qt5
-%if_disabled bootstrap
+%if %qdoc_found
 %make INSTALL_ROOT=%buildroot install_docs ||:
 %endif
 
@@ -98,12 +99,15 @@ export QT_HASH_SEED=0
 %_qt5_archdatadir/mkspecs/modules/*.pri
 
 %files doc
-%if_disabled bootstrap
+%if %qdoc_found
 %_qt5_docdir/*
 %endif
 %_qt5_examplesdir/*
 
 %changelog
+* Tue Aug 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt2
+- build docs
+
 * Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
 - new version
 
@@ -155,40 +159,40 @@ export QT_HASH_SEED=0
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 
-* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1
 - new version
 
-* Thu Aug 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2%ubt
+* Thu Aug 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2
 - build docs
 
-* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1
 - new version
 
-* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1
 - new version
 
-* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1
 - new version
 
-* Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt.2
+* Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1.2
 - build docs
 
-* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt.1
+* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1.1
 - don't build docs
 
-* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1
 - new version
 
-* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1
 - new version
 
-* Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
+* Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2
 - build docs
 
-* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1
 - new version
 
-* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1
 - new version
 
 * Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1

@@ -2,14 +2,14 @@
 
 %define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %global qt_module qttools
-%def_enable bootstrap
+%def_disable bootstrap
 %def_disable qtconfig
 
 %define kf5_bindir %prefix/lib/kf5/bin
 
 Name: qt5-tools
 Version: 5.15.4
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -17,7 +17,7 @@ Release: alt1
 Group: System/Libraries
 Summary: Qt5 - QtTool components
 Url: http://qt.io/
-License: LGPLv2 / GPLv3
+License: LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
 
 Requires: %name-common = %EVR
 
@@ -36,7 +36,7 @@ Patch11: alt-runqttools-with-qt5-suffix.patch
 # Automatically added by buildreq on Tue Oct 01 2013 (-bi)
 # optimized out: elfutils libGL-devel libgst-plugins libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
 #BuildRequires: desktop-file-utils gcc-c++ glibc-devel-static python-module-distribute qt5-webkit-devel rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-build-ubt rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt5
 #ifnarch %e2k
 BuildRequires: clang-devel llvm-devel
 #endif
@@ -51,7 +51,7 @@ BuildRequires: libXext-devel libX11-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
 BuildRequires: rpm-macros-alternatives
 %if_disabled bootstrap
-BuildRequires: qt5-tools
+BuildRequires(pre): qt5-tools
 %endif
 
 %description
@@ -179,20 +179,16 @@ sed -i '/QMAKE_RPATHDIR/d' src/qdoc/qdoc.pro
 
 %qmake_qt5
 %make_build
-%if_disabled bootstrap
 %if %qdoc_found
 export QT_HASH_SEED=0
 %make docs
-%endif
 %endif
 
 %install
 >main.filelist
 %install_qt5
-%if_disabled bootstrap
 %if %qdoc_found
 %make INSTALL_ROOT=%buildroot install_docs ||:
-%endif
 %endif
 
 # fix pc-files
@@ -290,7 +286,7 @@ fi
 %_qt5_bindir/assistant
 %_desktopdir/*assistant.desktop
 %_iconsdir/hicolor/*/apps/assistant*.*
-%if_disabled bootstrap
+%if %qdoc_found
 %_qt5_docdir/qtassistant/
 %_qt5_docdir/qtassistant.qch
 %endif
@@ -343,7 +339,7 @@ fi
 %files  devel-static
 
 %files doc
-%if_disabled bootstrap
+%if %qdoc_found
 %_qt5_docdir/*
 %exclude %_qt5_docdir/qtassistant/
 %exclude %_qt5_docdir/qtassistant.qch
@@ -362,6 +358,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Tue Aug 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt2
+- build docs
+
 * Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
 - new version
 
@@ -435,43 +434,43 @@ fi
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 
-* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1
 - new version
 
-* Thu Aug 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2%ubt
+* Thu Aug 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2
 - build docs
 
-* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1
 - new version
 
-* Thu Jul 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt2%ubt
+* Thu Jul 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt2
 - fix menu items russian translation, icons
 
-* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1
 - new version
 
-* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1
 - new version
 
-* Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt.2
+* Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1.2
 - build docs
 
-* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt.1
+* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1.1
 - don't build docs
 
-* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1
 - new version
 
-* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1
 - new version
 
-* Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
+* Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2
 - build docs
 
-* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1
 - new version
 
-* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1
 - new version
 
 * Fri Oct 21 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt1.M80P.1
