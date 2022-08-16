@@ -4,7 +4,7 @@ BuildRequires(pre): rpm-macros-fedora-compat rpm-macros-generic-compat
 BuildRequires: rpm-build-java zip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 #%% global githash
@@ -13,7 +13,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          sqlite-jdbc
 Version:       3.15.1
-Release:       alt1_8jpp8
+Release:       alt1_8jpp11
 Summary:       SQLite JDBC library
 
 # ASL 2.0:
@@ -133,7 +133,7 @@ sed -i '/SQLiteDataSourceTest/d' src/test/java/org/sqlite/AllTests.java
       <target>
        <javac destdir="lib"
          srcdir="lib"
-         source="1.6" target="1.6" debug="on"
+         source="1.8" target="1.8" debug="on"
          classpathref="maven.plugin.classpath">
          <include name="**/OSInfo.java"/>
        </javac>
@@ -160,6 +160,9 @@ sed -i "s|package org.sqlite.util;|package org.sqlite;|" lib/org/sqlite/OSInfo.j
 %mvn_file org.xerial:%{name} %{name}
 %patch33 -p0
 
+sed -i "s|<source>1.6</source>|<source>1.8</source>|" pom.xml
+sed -i "s|<target>1.6</target>|<target>1.8</target>|" pom.xml
+
 %build
 
 %ifarch %{arm}
@@ -183,6 +186,9 @@ LDFLAGS="${LDFLAGS:-%__global_ldflags}"; export LDFLAGS;
 %doc --no-dereference LICENSE* NOTICE
 
 %changelog
+* Tue Aug 16 2022 Igor Vlasenko <viy@altlinux.org> 3.15.1-alt1_8jpp11
+- jdk17 support
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 3.15.1-alt1_8jpp8
 - new version
 
