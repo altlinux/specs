@@ -4,11 +4,18 @@
 %define api_ver %ver_major
 %define gupnp_api_ver 1.2
 
+%def_disable soup3
 %def_enable lua_factory
 %def_enable tracker3
+# test_lua_theaudiodb failed for
+%ifnarch %ix86 armh aarch64
+%def_enable check
+%else
+%def_disable check
+%endif
 
 Name: grilo-plugins
-Version: %ver_major.14
+Version: %ver_major.15
 Release: alt1
 
 Summary: Plugins for the Grilo framework
@@ -23,23 +30,31 @@ Source: %name-%version.tar
 %endif
 
 %define tracker3_ver 2.99.2
+%define lua_api_ver 5.3
 
 Requires: grilo-tools >= %version
 Requires: tracker3 >= %tracker3_ver
+# chromaprint plugin required
+Requires: gst-plugins-bad1.0 >= 1.20.3-alt2
+%{?_enable_lua:Requires: lua%lua_api_ver lua-module-luajson}
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gperf
 BuildRequires: gtk-doc yelp-tools
-BuildRequires: libgio-devel >= 2.44
-BuildRequires: libgrilo-devel >= %ver_major.13
+BuildRequires: libgio-devel >= 2.68
+BuildRequires: libgrilo-devel >= %ver_major.15
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp%gupnp_api_ver-devel >= 0.13
 BuildRequires: libgssdp%gupnp_api_ver-devel
 BuildRequires: libgupnp-av-devel >= 0.5
 BuildRequires: libsqlite3-devel
-BuildRequires: libgdata-devel >= 0.9.1
+BuildRequires: libgdata-devel >= 0.17
 BuildRequires: libgom-devel >= 0.3.2
-BuildRequires: libsoup-devel
+%if_disabled soup3
+BuildRequires: libsoup-devel >= 2.41.3
+%else
+BuildRequires: libsoup3.0-devel >= 3.0.0
+%endif
 BuildRequires: libgcrypt-devel
 BuildRequires: libgmime3.0-devel
 %{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker3_ver tracker3-tests}
@@ -53,7 +68,9 @@ BuildRequires: libavahi-gobject-devel libavahi-glib-devel libavahi-devel
 BuildRequires: libmediaart2.0-devel
 BuildRequires: librest-devel
 BuildRequires: libarchive-devel
-%{?_enable_lua_factory:BuildRequires: lua-devel >= 5.3}
+%{?_enable_lua_factory:BuildRequires: liblua%lua_api_ver-devel >= 5.3.0}
+%{?_enable_check:BuildRequires: xvfb-run lua%lua_api_ver lua-module-luajson
+BuildRequires: grilo-tools tracker-miners3 gst-plugins-bad1.0}
 
 %description
 Grilo is a framework that provides access to different sources of
@@ -90,15 +107,21 @@ This package contains the pkg-config file for Grilo plugins package.
 %setup
 
 %build
-%meson %{?_enable_lua_factory:-Denable-lua-factory=yes} \
-%{?_disable_tracker:-Dtracker=no} \
-%{?_disable_tracker3:-Dtracker3=no}
+%meson \
+    %{?_enable_lua_factory:-Denable-lua-factory=yes} \
+    %{?_disable_tracker:-Dtracker=no} \
+    %{?_disable_tracker3:-Dtracker3=no}
 %nil
 %meson_build
 
 %install
 %meson_install
 %find_lang --with-gnome --output=%name.lang %name examples
+
+%check
+export LANG=en_US.UTF-8
+xvfb-run %__meson_test
+
 
 %files -f %name.lang
 %dir %_libdir/grilo-%ver_major
@@ -135,6 +158,11 @@ This package contains the pkg-config file for Grilo plugins package.
 
 
 %changelog
+* Tue Aug 16 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt1
+- 0.3.15
+- made libsoup3 build optional
+- enabled %%check
+
 * Tue Oct 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.14-alt1
 - 0.3.14
 

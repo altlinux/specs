@@ -13,6 +13,7 @@
 %def_enable srtp
 %def_disable rtmp
 %def_enable openh264
+%def_enable chromaprint
 
 %ifnarch %e2k
 %def_enable liblilv
@@ -34,7 +35,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -89,6 +90,7 @@ BuildRequires: liborc-test-devel
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
 %{?_enable_rtmp:BuildRequires: librtmp-devel}
+%{?_enable_chromaprint:BuildRequires: libchromaprint-devel}
 # webrtc-audio-processing for webrtcdsp
 BuildRequires: libwebrtc-devel >= 0.3
 # since 1.13.x
@@ -193,6 +195,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue Aug 16 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.3-alt2
+- enabled chromaprint plugin
+
 * Thu Jun 16 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.3-alt1
 - 1.20.3
 
