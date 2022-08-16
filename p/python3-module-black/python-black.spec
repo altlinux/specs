@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define oname black
+%define pypi_name black
 
 %define typing_extensions %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 10)))')
 
@@ -8,8 +8,8 @@
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 22.3.0
+Name: python3-module-%pypi_name
+Version: 22.6.0
 Release: alt1
 
 Summary: The Uncompromising Code Formatter
@@ -22,7 +22,11 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
 # install_requires=
@@ -43,7 +47,6 @@ BuildRequires: python3(aiohttp.test_utils)
 BuildRequires: python3(click.testing)
 BuildRequires: python3(parameterized)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
 %endif
 
 %if %typing_extensions
@@ -70,27 +73,26 @@ Black makes code review faster by producing the smallest diffs possible.
 %setup
 %autopatch -p1
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-commands =
-    {envpython} -m pytest {posargs}
-EOF
-
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc README.md LICENSE
@@ -98,12 +100,15 @@ tox.py3 --sitepackages -vvr
 %_bindir/blackd
 %python3_sitelibdir/__pycache__/_black_version.cpython*
 %python3_sitelibdir/_black_version.py
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/black/
 %python3_sitelibdir/blackd/
 %python3_sitelibdir/blib2to3/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 15 2022 Stanislav Levin <slev@altlinux.org> 22.6.0-alt1
+- 22.3.0 -> 22.6.0.
+
 * Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 22.3.0-alt1
 - 22.1.0 -> 22.3.0.
 

@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.1.2
+Version: 8.1.3
 Release: alt1
 
 Summary: Composable command line interface toolkit
@@ -18,13 +18,14 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -40,27 +41,26 @@ implement an intended CLI API.
 %prep
 %setup
 %autopatch -p1
-rm -vf src/click/_winconsole.py
+rm src/click/_winconsole.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-rm -rfv %buildroot%python3_sitelibdir/click/tests/
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc README.* LICENSE.rst
-%python3_sitelibdir/%pypi_name
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/click/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 15 2022 Stanislav Levin <slev@altlinux.org> 8.1.3-alt1
+- 8.1.2 -> 8.1.3.
+
 * Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 8.1.2-alt1
 - 8.0.3 -> 8.1.2.
 
