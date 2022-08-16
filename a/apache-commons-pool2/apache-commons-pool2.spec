@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          apache-commons-pool2
 Version:       2.4.2
-Release:       alt4_7jpp8
+Release:       alt4_7jpp11
 Summary:       Apache Commons Object Pooling Library 2.x series
 License:       ASL 2.0
 URL:           http://commons.apache.org/proper/commons-pool/
@@ -47,9 +47,12 @@ This package contains javadoc for %{name}.
 
 %mvn_file : %{name} commons-pool2
 
+sed -i "s|<maven.compiler.source>1.6</maven.compiler.source>|<maven.compiler.source>1.8</maven.compiler.source>|" pom.xml
+sed -i "s|<maven.compiler.target>1.6</maven.compiler.target>|<maven.compiler.target>1.8</maven.compiler.target>|" pom.xml
+
 %build
 
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -62,6 +65,9 @@ This package contains javadoc for %{name}.
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Aug 17 2022 Igor Vlasenko <viy@altlinux.org> 2.4.2-alt4_7jpp11
+- jdk17 support
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt4_7jpp8
 - new version
 
