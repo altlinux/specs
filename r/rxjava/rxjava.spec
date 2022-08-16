@@ -3,7 +3,7 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 %define fedora 29
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -20,7 +20,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:          rxjava
 Version:       1.1.8
-Release:       alt1_6jpp8
+Release:       alt1_6jpp11
 Summary:       Reactive Extensions for the JVM
 License:       ASL 2.0
 URL:           https://github.com/ReactiveX/RxJava
@@ -116,6 +116,9 @@ rm src/test/java/rx/internal/operators/OperatorRetryWithPredicateTest.java
 
 %mvn_file io.reactivex:%{name} %{name}
 
+sed -i "s|<source>1.6</source>|<source>1.8</source>|" pom.xml
+sed -i "s|<target>1.6</target>|<target>1.8</target>|" pom.xml
+
 %build
 
 %if %{without checker}
@@ -135,6 +138,9 @@ opts="-f"
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Aug 16 2022 Igor Vlasenko <viy@altlinux.org> 1.1.8-alt1_6jpp11
+- jdk17 support
+
 * Sun May 26 2019 Igor Vlasenko <viy@altlinux.ru> 1.1.8-alt1_6jpp8
 - new version
 
