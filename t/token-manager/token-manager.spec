@@ -8,7 +8,7 @@
 
 Name:    token-manager
 Version: 0.12
-Release: alt8
+Release: alt9
 
 Summary: Certificate manager for CryptoPro CSP
 License: MIT
@@ -57,6 +57,9 @@ install -Dm 0644 cpconfig-%cpro_arch %buildroot%_sysconfdir/security/console.app
 %config(noreplace) %_sysconfdir/security/console.apps/cpconfig-%cpro_arch
 
 %changelog
+* Tue Aug 16 2022 Andrey Cherepanov <cas@altlinux.org> 0.12-alt9
+- Fix delete certificate from local storage.
+
 * Fri Aug 05 2022 Andrey Cherepanov <cas@altlinux.org> 0.12-alt8
 - Complete port to PyQt5 (ALT #38202).
 
