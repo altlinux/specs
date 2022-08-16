@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220805
+Version: 20220815
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,18 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Tue Aug 16 2022 Cronbuild Service <cronbuild@altlinux.org> 20220815-alt1
+- upstream changes (GIT 8413c63):
+  + mediatek: Add new mt8186 SOF firmware (thx Tinghan Shen)
+  + ice: Update package to 1.3.30.0 (thx Tony Nguyen)
+  + QCA: Update Bluetooth WCN685x 2.1 firmware to 2.1.0-00438 (thx Tim Jiang)
+  + brcm: Add nvram for Lenovo Yoga Tablet 2 830F/L and 1050F/L
+    tablets (thx Hans de Goede)
+  + brcm: Add nvram for the Xiaomi Mi Pad 2 tablet (thx Hans de Goede)
+  + brcm: Add nvram for the Asus TF103C tablet (thx Hans de Goede)
+  + qca: Update firmware files for BT chip WCN6750.      This commit
+    will update required firmware files for WCN6750. (thx Suraj Magar)
+
 * Wed Aug 10 2022 Cronbuild Service <cronbuild@altlinux.org> 20220805-alt1
 - upstream changes (GIT e6857b6):
   + amdgpu: Update Yellow Carp VCN firmware (thx Mario Limonciello)
