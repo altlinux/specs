@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          jgoodies-animation
 Version:       1.4.3
-Release:       alt1_7jpp8
+Release:       alt1_7jpp11
 Summary:       Framework for time-based real-time animations in Java
 License:       BSD
 #Alt. URL:     http://java.net/projects/animation
@@ -53,8 +53,11 @@ find -name "*.jar" -delete
 
 sed -i 's|\r||g' LICENSE.txt RELEASE-NOTES.txt
 
+sed -i "s|<source>1.6</source>|<source>1.8</source>|" pom.xml
+sed -i "s|<target>1.6</target>|<target>1.8</target>|" pom.xml
+
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -66,6 +69,9 @@ sed -i 's|\r||g' LICENSE.txt RELEASE-NOTES.txt
 %doc LICENSE.txt
 
 %changelog
+* Wed Aug 17 2022 Igor Vlasenko <viy@altlinux.org> 1.4.3-alt1_7jpp11
+- jdk17 support
+
 * Tue Feb 05 2019 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_7jpp8
 - fc29 update
 
