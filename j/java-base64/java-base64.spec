@@ -3,13 +3,13 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global oname base64
 Name:          java-base64
 Version:       2.3.8
-Release:       alt1_15jpp8
+Release:       alt1_15jpp11
 Summary:       Java class for encoding and decoding Base64 notation
 # pom file license comment
 # I have released this software into the Public Domain. That
@@ -61,6 +61,10 @@ sed -i "s|<version>2.3.9-SNAPSHOT</version>|<version>%{version}</version>|" pom.
 %mvn_file :%{oname} %{name}
 %mvn_file :%{oname} %{oname}
 
+sed -i "s|<source>1.6</source>|<source>1.8</source>|" pom.xml
+sed -i "s|<target>1.6</target>|<target>1.8</target>|" pom.xml
+
+
 %build
 
 %mvn_build
@@ -79,6 +83,9 @@ sed -i "s|<version>2.3.9-SNAPSHOT</version>|<version>%{version}</version>|" pom.
 %{_javadocdir}/%{oname}
 
 %changelog
+* Tue Aug 16 2022 Igor Vlasenko <viy@altlinux.org> 2.3.8-alt1_15jpp11
+- jdk17 support
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 2.3.8-alt1_15jpp8
 - new version
 
