@@ -1,7 +1,7 @@
 %define repo memory_allocator
 
 Name: python3-module-memory-allocator
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 Summary: An extension class to allocate memory easily with cython
 License: LGPL-3.0+ and GPL-3.0
@@ -10,7 +10,7 @@ Url: https://github.com/sagemath/memory_allocator
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires: rpm-build-python3 python3-module-Cython
+BuildRequires: rpm-build-python3 python3-module-Cython python3-module-setuptools python3-module-wheel
 
 %description
 %summary.
@@ -20,16 +20,20 @@ This extension class started as part of the Sage software.
 %setup -n %repo-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc AUTHORS LICENSE README.md
 %python3_sitelibdir/%{repo}*
 
 %changelog
+* Tue Aug 16 2022 Leontiy Volodin <lvol@altlinux.org> 0.1.3-alt1
+- New version (0.1.3).
+- Ported to %%pyproject macros.
+
 * Fri Oct 15 2021 Leontiy Volodin <lvol@altlinux.org> 0.1.2-alt1
 - New version (0.1.2).
 
