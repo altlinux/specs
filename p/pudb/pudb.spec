@@ -1,5 +1,5 @@
 Name: pudb
-Version: 2022.1.1
+Version: 2022.1.2
 Release: alt1
 
 Summary: A full-screen, console-based Python debugger
@@ -13,6 +13,10 @@ Source: %name-%version.tar.gz
 BuildRequires(pre): rpm-build-python3
 Requires: python3(pygments) python3(%name) python3(jedi)
 Provides: %{name}3 = %version.%release
+
+# Automatically added by buildreq on Tue Aug 16 2022
+# optimized out: libgpg-error mpdecimal python3 python3-base python3-dev python3-module-apipkg python3-module-attrs python3-module-iniconfig python3-module-pkg_resources python3-module-pluggy python3-module-py python3-module-pytest python3-modules-curses sh4
+BuildRequires: python3-module-pytest-mock python3-module-setuptools python3-module-urwid
 
 %description
 PuDB is a full-screen, console-based visual debugger for Python.
@@ -46,6 +50,9 @@ IPython plugin for %name
 %build
 %python3_build
 
+%check
+python3 -m pytest
+
 %install
 %python3_install
 
@@ -62,6 +69,10 @@ IPython plugin for %name
 %python3_sitelibdir_noarch/%name/ipython*
 
 %changelog
+* Tue Aug 16 2022 Fr. Br. George <george@altlinux.org> 2022.1.2-alt1
+- Autobuild version bump to 2022.1.2
+- Introduce tests
+
 * Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 2022.1.1-alt1
 - Autobuild version bump to 2022.1.1
 
