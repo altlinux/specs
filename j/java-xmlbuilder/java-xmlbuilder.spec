@@ -4,12 +4,12 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          java-xmlbuilder
 Version:       1.1
-Release:       alt1_8jpp8
+Release:       alt1_8jpp11
 Summary:       XML Builder Java library for creating XML documents
 License:       ASL 2.0
 Url:           https://github.com/jmurty/java-xmlbuilder
@@ -53,11 +53,13 @@ This package contains javadoc for %{name}.
 # Fix CRLF
 sed -i 's/\r//' LICENSE-2.0.txt
 
+#pom_xpath_remove "pom:build/pom:pluginManagement"
+
 %mvn_file :%{name} %{name}
 
 %build
 
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -70,6 +72,9 @@ sed -i 's/\r//' LICENSE-2.0.txt
 %doc --no-dereference LICENSE-2.0.txt
 
 %changelog
+* Tue Aug 16 2022 Igor Vlasenko <viy@altlinux.org> 0:1.1-alt1_8jpp11
+- jdk17 support
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_8jpp8
 - new version
 
