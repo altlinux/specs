@@ -3,13 +3,13 @@ Group: Development/Other
 BuildRequires: rpm-build-java unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           avalon-logkit
 Epoch:          0
 Version:        2.1
-Release:        alt2_32jpp8
+Release:        alt2_32jpp11
 Summary:        Java logging toolkit
 License:        ASL 2.0
 URL:            http://avalon.apache.org/
@@ -79,7 +79,7 @@ rm -rf src/java/org/apache/log/output/lf5
   </plugins>"
 
 %build
-%mvn_build
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -91,6 +91,9 @@ rm -rf src/java/org/apache/log/output/lf5
 %doc --no-dereference LICENSE.txt NOTICE.txt
 
 %changelog
+* Tue Aug 16 2022 Igor Vlasenko <viy@altlinux.org> 0:2.1-alt2_32jpp11
+- jdk17 support
+
 * Mon May 27 2019 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_32jpp8
 - new version
 
