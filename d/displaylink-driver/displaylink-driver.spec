@@ -1,8 +1,8 @@
 %define module_name	 evdi
-%define module_version 1.11.0
+%define module_version 1.12.0
 %define sover 0
 %define stage %nil
-%define rel 59.176
+%define rel 59.184
 
 %ifarch x86_64
 %define dl_dir x64-ubuntu-1604
@@ -18,7 +18,7 @@
 %endif
 
 Name: displaylink-driver
-Version: 5.6.0
+Version: 5.6.1
 Release: alt1.%rel
 Summary: DisplayLink library and tools
 Group: System/Kernel and hardware
@@ -134,7 +134,7 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %dir %attr(0700,root,root) %_logdir/displaylink
 
 %files -n lib%{module_name}%{sover}
-%_libdir/*.so*
+%_libdir/*.so.*
 
 %files firmware
 %_datadir/%name
@@ -143,6 +143,11 @@ install -m 0644 *.spkg %buildroot%_datadir/%name/
 %_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
 %changelog
+* Thu Aug 11 2022 L.A. Kostis <lakostis@altlinux.ru> 5.6.1-alt1.59.184
+- New release (5.6.1).
+- Update evdi drivers version to 1.12.0.
+- Update udev rules.
+
 * Sun May 22 2022 L.A. Kostis <lakostis@altlinux.ru> 5.6.0-alt1.59.176
 - New release (5.6).
 - Update evdi drivers version to 1.11.0.

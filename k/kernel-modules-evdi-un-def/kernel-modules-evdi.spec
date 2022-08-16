@@ -1,5 +1,5 @@
 %define module_name	evdi
-%define module_version	1.11.0
+%define module_version	1.12.0
 %define module_release	alt1
 
 %define flavour		un-def
@@ -65,6 +65,12 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Aug 16 2022 L.A. Kostis <lakostis@altlinux.org> 1.12.0-alt1
+- Updated to 1.12.0.
+
+* Wed Jul 20 2022 L.A. Kostis <lakostis@altlinux.org> 1.11.0-alt2
+- Updated -centos9 patch (due drm backport changes).
 
 * Fri Jun 03 2022 L.A. Kostis <lakostis@altlinux.org> 1.11.0-alt1
 - Updated to 1.11.0.
