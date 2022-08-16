@@ -1,10 +1,11 @@
 %define ver_major 0.3
 %define api_ver %ver_major
+%def_disable soup3
 %def_enable gtk_doc
-%def_disable check
+%def_enable check
 
 Name: grilo
-Version: %ver_major.14
+Version: %ver_major.15
 Release: alt1
 
 Summary: Content discovery framework
@@ -16,16 +17,21 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: meson
-BuildRequires: libgio-devel >= 2.58
+BuildRequires: libgio-devel >= 2.66
 BuildRequires: libxml2-devel
 BuildRequires: libgtk+3-devel >= 3.0
+%if_disabled soup3
 BuildRequires: libsoup-devel >= 2.41.3 libsoup-gir-devel
+%else
+BuildRequires: libsoup3.0-devel >= 3.0.0 libsoup3.0-gir-devel
+%endif
 BuildRequires: liboauth-devel
 BuildRequires: vala-tools >= 0.27 libvala-devel
 BuildRequires: gtk-doc >= 1.10
 BuildRequires: gobject-introspection-devel >= 0.9.0
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
 BuildRequires: gstreamer1.0-devel
+%{?_enable_check:BuildRequires: xvfb-run %name-plugins}
 
 %description
 Grilo is a framework that provides access to different sources of
@@ -93,27 +99,24 @@ Tools for the %name library
 
 %build
 %meson \
+	%{?_disable_soup3:-Dsoup3=false} \
 	-Denable-vala=true \
 	-Denable-gtk-doc=true \
 	-Denable-introspection=true \
 	-Denable-grl-net=true \
 	-Denable-grl-pls=true \
 	-Denable-test-ui=true
-
+%nil
 %meson_build
 
 %install
 %meson_install
 mkdir -p %buildroot%_libdir/grilo-%ver_major %buildroot%_datadir/grilo-%ver_major/plugins
-
 %find_lang %name
 
-# Remove files that will not be packaged
-#rm -f %buildroot%_bindir/grilo-simple-playlist
-
 %check
-# grilo-plugins should be installed for check
-%meson_test
+export LANG=en_US.UTF-8
+xvfb-run %__meson_test
 
 %files tools
 %doc AUTHORS COPYING NEWS README* TODO
@@ -149,6 +152,11 @@ mkdir -p %buildroot%_libdir/grilo-%ver_major %buildroot%_datadir/grilo-%ver_majo
 %endif
 
 %changelog
+* Tue Aug 16 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt1
+- 0.3.15
+- made libsoup3 build optional
+- enabled %%check
+
 * Tue Oct 05 2021 Yuri N. Sedunov <aris@altlinux.org> 0.3.14-alt1
 - 0.3.14
 
