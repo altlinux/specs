@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 22.04.3
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
@@ -60,6 +60,10 @@ Requires: %name-common = %version-%release
 
 %prep
 %setup -n %rname-%version
+for d in po/*/docs/pimsettingexporter ; do
+    b_dir=`dirname "$d"`
+    [ -e "$b_dir/pimdataexporter" ] || cp -ar "$d" "$b_dir/pimdataexporter"
+done
 
 %build
 %K5build
@@ -91,6 +95,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libpimdataexporterprivate.so.*
 
 %changelog
+* Tue Aug 16 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt2
+- fix to show translated help
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 
