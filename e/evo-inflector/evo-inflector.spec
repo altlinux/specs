@@ -3,12 +3,12 @@ Group: Development/Java
 BuildRequires: rpm-build-java
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:          evo-inflector
 Version:       1.2.1
-Release:       alt1_9jpp8
+Release:       alt1_9jpp11
 Summary:       Implements English pluralization algorithm
 License:       ASL 2.0
 URL:           https://github.com/atteo/evo-inflector
@@ -42,11 +42,13 @@ find . -name "*.class" -print -delete
 %pom_remove_parent
 %pom_xpath_inject pom:project "<groupId>org.atteo</groupId>"
 
+%pom_xpath_remove "pom:build/pom:pluginManagement"
+
 %mvn_file :%{name} %{name}
 
 %build
 
-%mvn_build -- -Dproject.build.sourceEncoding=UTF-8
+%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8 -Dproject.build.sourceEncoding=UTF-8
 
 %install
 %mvn_install
@@ -59,6 +61,9 @@ find . -name "*.class" -print -delete
 %doc --no-dereference LICENSE
 
 %changelog
+* Tue Aug 16 2022 Igor Vlasenko <viy@altlinux.org> 1.2.1-alt1_9jpp11
+- jdk17 support
+
 * Sat May 25 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_9jpp8
 - new version
 
