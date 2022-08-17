@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-file-manager
-Version: 5.5.10
-Release: alt2
+Version: 5.6.4
+Release: alt1
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: File tools
@@ -266,10 +266,10 @@ export PATH=%_qt5_bindir:$PATH
 %dir %_includedir/%repo/
 %dir %_includedir/%repo/%repo-plugins/
 %_includedir/%repo/%repo-plugins/*.h
-%dir %_includedir/%repo/gvfs/
-%_includedir/%repo/gvfs/*.h
-%dir %_includedir/%repo/private/
-%_includedir/%repo/private/*.h
+# %%dir %%_includedir/%%repo/gvfs/
+# %%_includedir/%%repo/gvfs/*.h
+# %%dir %%_includedir/%%repo/private/
+# %%_includedir/%%repo/private/*.h
 
 %files -n lib%{repo}5
 %_libdir/lib%repo.so.5*
@@ -306,6 +306,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Tue Aug 16 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt1
+- New version (5.6.4).
+
 * Thu Jun 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.10-alt2
 - Fixed gcc12 build.
 - Returned desktop icons.

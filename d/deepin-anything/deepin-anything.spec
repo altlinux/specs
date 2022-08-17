@@ -1,8 +1,8 @@
-%define _sysusersdir %_prefix/lib/sysusers.d
+%define _sysusersdir /lib/sysusers.d
 
 Name: deepin-anything
 Version: 5.0.13
-Release: alt1
+Release: alt2
 Summary: Global search tool for Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -14,7 +14,7 @@ Source1: deepin-anything-server.sysusers
 # Patch from archlinux
 Patch: 0001-linux-5.6.patch
 
-BuildRequires: gcc-c++ qt5-base-devel udisks2-qt5-devel libmount-devel dtk5-core-devel
+BuildRequires: gcc-c++ qt5-base-devel udisks2-qt5-devel libmount-devel dtk5-core-devel libpcre-devel glib2-devel
 
 %description
 File manager front end of Deepin OS.
@@ -36,15 +36,18 @@ This package provides header files and libraries for %name.
 %prep
 %setup
 #%patch -p1
-sed -i 's|qmake -makefile|qmake-qt5 -makefile|; s|/usr/lib|%_libdir|' Makefile
+sed -i 's|/usr/lib/$(DEB_HOST_MULTIARCH)|%_libdir|; s|/usr/lib/modules-load.d|%_sysconfdir/modules-load.d|' Makefile
+sed -i 's|Anthing|Anything|' server/monitor/systemd.sysusers.d/deepin-anything-monitor.conf
+sed -i 's|$$PREFIX/lib/sysusers.d|/lib/sysusers.d|' server/monitor/src/src.pro
 
 %build
-%make_build
+export PATH=%_qt5_bindir:$PATH
+%make VERSION=%version
 
 %install
 %makeinstall_std
 mv -f %buildroot%_sysconfdir/dbus-1/system.d %buildroot%_datadir/dbus-1/system.d
-install -Dm644 %SOURCE1 %buildroot%_libexecdir/sysusers.d/deepin-anything-server.conf
+install -Dm644 %SOURCE1 %buildroot%_sysusersdir/deepin-anything-server.conf
 rm -rf %buildroot/usr/src/deepin-anything-0.0/
 
 %files
@@ -53,8 +56,8 @@ rm -rf %buildroot/usr/src/deepin-anything-0.0/
 %_datadir/dbus-1/system.d/com.deepin.anything.conf
 %_unitdir/*.service
 %_sysusersdir/*.conf
-%_libdir/modules-load.d/anything.conf
 %_datadir/dbus-1/system-services/com.deepin.anything.service
+%_sysconfdir/modules-load.d/anything.conf
 
 %files -n lib%name
 %_libdir/libanything.so.*
@@ -76,6 +79,9 @@ rm -rf %buildroot/usr/src/deepin-anything-0.0/
 %_datadir/dbus-1/interfaces/com.deepin.anything.xml
 
 %changelog
+* Tue Aug 16 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.13-alt2
+- Changed default paths.
+
 * Fri Feb 25 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.13-alt1
 - New version (5.0.13).
 
