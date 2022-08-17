@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 144
+%define centos_release 146
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -446,6 +446,7 @@ KbuildFiles="
 	scripts/depmod.sh
 	scripts/gcc-plugins/*.so
 	scripts/ld-version.sh
+	scripts/pahole-flags.sh
 	tools/objtool/objtool
 
 	.config
@@ -632,6 +633,20 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Aug 17 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.146-alt1.el9
+- Updated to kernel-5.14.0-146.el9:
+  + bnxt_en: additional commits for RHEL9.1
+  + Chelsio iWARP (iw_cxgb4) update to upstream 5.19-rc4
+  + Chelsio NIC (cxgb4/cxgb4vf/libcxgb) update to upstream 5.19-rc4
+  + igc: Driver Update
+  + KVM: x86: stable fixes since 5.18
+  + mpt3sas: fix a problem with shutdown
+  + qede: Reduce verbosity of ptp tx timestamp
+  + redhat: nvme/tcp mistakenly uses blk_mq_tag_to_rq(nvme_tcp_tagset(queue))
+  + update cpufreq to v5.18
+  + Update Marvell OcteonTX2 device drivers to v5.18
+  + virtio_ring: sync the vritio_ring with upstream
+
 * Tue Aug 09 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.144-alt1.el9
 - Updated to kernel-5.14.0-144.el9 (fixes: CVE-2022-1184):
   + ena: update driver to v5.18
