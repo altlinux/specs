@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.11.3
+Version: 1.11.4
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Wed Aug 17 2022 Anton Midyukov <antohami@altlinux.org> 1.11.4-alt1
+- doc/common.html: fix typo
+
 * Tue Aug 16 2022 Anton Midyukov <antohami@altlinux.org> 1.11.3-alt1
 - 99-cdrom.sh: use variable "$stagename" instead of fixed name "altinst"
 - install2, 99-cdrom.sh: determine cdrom on the actual type of image
