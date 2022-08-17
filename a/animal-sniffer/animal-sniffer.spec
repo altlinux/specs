@@ -1,5 +1,5 @@
 Name:    animal-sniffer
-Version: 1.21
+Version: 1.22
 Release: alt1
 Summary: The Animal Sniffer Plugin is used to build signatures of APIs and to check your classes against previously generated signatures
 
@@ -9,7 +9,7 @@ URL:     https://github.com/mojohaus/animal-sniffer
 Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-java
-BuildRequires:  java-devel >= 1.6.0
+BuildRequires:  java-11-openjdk-devel
 BuildRequires:  /proc
 BuildRequires:  maven-local
 BuildRequires:  mojo-parent
@@ -60,6 +60,9 @@ install -Dpm 644 pom.xml %buildroot%_mavenpomdir/JPP-%name.pom
 %files javadoc -f .mfiles-javadoc
 
 %changelog
+* Tue Aug 16 2022 Andrey Cherepanov <cas@altlinux.org> 1.22-alt1
+- New version.
+
 * Wed Feb 02 2022 Andrey Cherepanov <cas@altlinux.org> 1.21-alt1
 - New version.
 
