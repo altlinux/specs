@@ -4,13 +4,13 @@
 %def_disable check
 
 Name: pkgconf
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary: Package compiler and linker metadata toolkit
 Group: Development/Other
-License: MIT-style
-Url: http://pkgconf.org/
+License: MIT
+Url: https://pkgconf.org/
 
 %if_disabled snapshot
 Source: https://distfiles.dereferenced.org/%name/%name-%version.tar.xz
@@ -85,6 +85,9 @@ mkdir -p %buildroot%_datadir/pkgconfig/personality.d
 
 
 %changelog
+* Wed Aug 17 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9.3-alt1
+- 1.9.3
+
 * Tue Aug 09 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9.2-alt1
 - 1.9.2
 
