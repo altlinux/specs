@@ -7,14 +7,18 @@
 
 Name: zeromq
 Version: 4.3.4
-Release: alt1
+Release: alt2
 
 Summary: a software library that lets you quickly design and implement a fast message-based application
 Group: System/Libraries
-License: GPLv3, LGPLv3
+License: GPLv3 and LGPLv3
 
 Url: http://www.zeromq.org
 Source: %name-%version.tar
+# Fix building with gcc12
+Patch0: 176d72cc9b3bdcc416fd11dbc82e7b386dda32b7.patch
+Patch1: 92b2c38a2c51a1942a380c7ee08147f7b1ca6845.patch
+
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildRequires: gcc-c++ libuuid-devel glib2-devel asciidoc xmlto
@@ -64,6 +68,8 @@ This package contains 0mq library headers
 
 %prep
 %setup
+%patch0 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -98,6 +104,9 @@ This package contains 0mq library headers
 %_man7dir/zmq_*7*
 
 %changelog
+* Wed Aug 17 2022 Grigory Ustinov <grenka@altlinux.org> 4.3.4-alt2
+- Fixed FTBFS with gcc12.
+
 * Mon Feb 14 2022 Grigory Ustinov <grenka@altlinux.org> 4.3.4-alt1
 - 4.3.4 (python3-module-zmq wants it)
 - added some knobs.
