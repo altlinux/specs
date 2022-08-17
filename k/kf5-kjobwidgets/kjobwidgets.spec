@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.96.0
+Version: 5.97.0
 Release: alt1
 %K5init altplace
 
@@ -135,6 +135,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon Aug 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.97.0-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.96.0-alt1
 - new version
 

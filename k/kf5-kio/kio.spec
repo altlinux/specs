@@ -3,7 +3,7 @@
 %def_enable streebog
 
 Name: kf5-%rname
-Version: 5.96.0
+Version: 5.97.0
 Release: alt1
 %K5init altplace
 
@@ -135,7 +135,6 @@ KF5 library
 %_bindir/*5
 %_K5bin/*
 %_K5exec/*
-#%_K5libexecdir/kauth/*
 %_K5plug/kf5/*
 %_K5plug/plasma/kcms/systemsettings*
 %_K5data/kcookiejar/
@@ -144,9 +143,10 @@ KF5 library
 %_K5xdgapp/*.desktop
 %_K5conf_up/*.upd
 %_K5srv/*
-#%config(noreplace) %_K5conf_dbus_sysd/*.conf
 %_K5dbus_srv/*.service
 %_datadir/dbus-1/services/*.service
+#
+#%_K5libexecdir/kauth/*
 #%_K5dbus_sys_srv/*.service
 #%_datadir/polkit-1/actions/*.policy
 
@@ -160,8 +160,7 @@ KF5 library
 %_K5archdata/mkspecs/modules/qt_KIO*.pri
 %_K5archdata/mkspecs/modules/qt_KNTLM.pri
 %_K5dbus_iface/*.xml
-#%_K5data/kdevappwizard/templates/*ioslave*
-%_K5data/kdevfiletemplates/templates/*ioslave*
+%_K5data/kdevfiletemplates/templates/*io*
 
 %files -n libkf5kiocore
 %_K5lib/libKF5KIOCore.so.*
@@ -175,6 +174,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Aug 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.97.0-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.96.0-alt1
 - new version
 
