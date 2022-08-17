@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.97.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -112,6 +112,10 @@ KF5 library
 #cat po/ru/kio5.po.tmp >po/ru/kio5.po
 #rm -f po/ru/kio5.po.tmp
 
+# don't install kcm desktops
+sed -i '/install.*desktop.*DESTINATION.*KDE_INSTALL_KSERVICESDIR/d' src/kcms/*/CMakeLists.txt
+
+
 %build
 %K5build \
 %if_enabled streebog
@@ -174,6 +178,9 @@ KF5 library
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.97.0-alt2
+- exclude extra config modules info
+
 * Mon Aug 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.97.0-alt1
 - new version
 
