@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 3.10.6
+Version: 3.10.7
 Release: alt1
 
 Summary: Python socket mock framework
@@ -27,6 +27,7 @@ BuildRequires: python3-module-requests
 BuildRequires: python3-module-aiohttp
 BuildRequires: python3-module-sure
 BuildRequires: python3-module-redis-py
+BuildRequires: python3-module-httpx
 %endif
 
 BuildArch: noarch
@@ -65,5 +66,8 @@ py.test-3 -k "not test_file_object and \
 %doc LICENSE *.rst
 
 %changelog
+* Wed Aug 17 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.7-alt1
+- Automatically updated to 3.10.7.
+
 * Fri Jun 24 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.6-alt1
 - Initial build for Sisyphus.
