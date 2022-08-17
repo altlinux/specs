@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.5.0
-Release: alt2
+Release: alt3
 
 Summary: Zope contenttype
 
@@ -18,10 +18,7 @@ Source0: https://pypi.python.org/packages/e0/56/25c9ea14b6632a9e90f96ecc88e10caf
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-zope.testrunner
 
-BuildArch: noarch
-
 %py3_requires zope
-
 
 %description
 A utility module for content-type handling.
@@ -45,6 +42,12 @@ This package contains tests for zope.contenttype.
 %install
 %python3_install
 
+%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
+install -d %buildroot%python3_sitelibdir
+mv %buildroot%python3_sitelibdir_noarch/* \
+    %buildroot%python3_sitelibdir/
+%endif
+
 %check
 %__python3 setup.py test -v
 
@@ -59,6 +62,9 @@ This package contains tests for zope.contenttype.
 
 
 %changelog
+* Wed Aug 17 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt3
+- Make package arch dependent back (Closes: #43521).
+
 * Mon Jun 06 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt2
 - Drop 2to3 dependency.
 
