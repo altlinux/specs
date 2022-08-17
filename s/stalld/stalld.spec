@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: stalld
-Version: 1.0
+Version: 1.17.0
 Release: alt1
 Summary: Daemon that finds starving tasks and gives them a temporary boost
 
@@ -14,7 +15,6 @@ Vcs: https://github.com/bristot/stalld.git
 # Presentation: https://linuxplumbersconf.org/event/7/contributions/769/
 # Video: https://youtu.be/JHE_3iU9nTs?t=10608
 # Slides: https://linuxplumbersconf.org/event/7/contributions/769/attachments/572/1010/OSnoise-RT.pdf
-ExclusiveArch: x86_64
 
 Source: %name-%version.tar
 
@@ -29,14 +29,16 @@ for 1 second of clock time.
 %setup
 sed -i s/-lpthread/-pthread/ Makefile
 sed -i /README.md/d Makefile
+sed -i '1s!/usr/bin/bash!/bin/bash!' scripts/throttlectl.sh
 
 %build
-%make_build
+%add_optflags %(getconf LFS_CFLAGS)
+%make_build CFLAGS='%optflags -DVERSION=\"%version\"'
 
 %install
 %makeinstall_std
-install -D -p -m 0644 redhat/stalld.service %buildroot%_unitdir/stalld.service
-install -D -p -m 0644 redhat/stalld.conf %buildroot%_sysconfdir/systemd/stalld.conf
+%makeinstall_std -C redhat UNITDIR=%_unitdir
+rm %buildroot/usr/share/licenses/stalld/gpl-2.0.txt
 
 %post
 %post_service stalld.service
@@ -45,12 +47,16 @@ install -D -p -m 0644 redhat/stalld.conf %buildroot%_sysconfdir/systemd/stalld.c
 %preun_service stalld.service
 
 %files
-%doc README.md
-%config(noreplace) %_sysconfdir/systemd/stalld.conf
+%doc README.md gpl-2.0.txt
+%config(noreplace) %_sysconfdir/sysconfig/stalld
 %_bindir/stalld
+%_bindir/throttlectl
 %_unitdir/stalld.service
 %_man8dir/stalld.8*
 
 %changelog
+* Wed Aug 17 2022 Vitaly Chikunov <vt@altlinux.org> 1.17.0-alt1
+- Update to v1.17.0 (2022-07-14).
+
 * Mon Aug 31 2020 Vitaly Chikunov <vt@altlinux.org> 1.0-alt1
 - First build for ALT.
