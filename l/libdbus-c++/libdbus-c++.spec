@@ -4,7 +4,7 @@
 Summary: A C++ bindings for libdbus and libdbus-glib
 Name: libdbus-c++
 Version: 0.9.0
-Release: alt2
+Release: alt3
 License: LGPLv2.1
 Group: System/Libraries
 URL: http://www.freedesktop.org/wiki/Software/dbus-c++
@@ -25,6 +25,8 @@ Patch10: libdbus-c++-0.9.0-alt-linking.patch
 Patch11: libdbus-c++-0.9.0-alt-is_running.patch
 Patch12: libdbus-c++-0.9.0-alt-enable_auth.patch
 Patch13: libdbus-c++-0.9.0-alt-enable_anon.patch
+# https://github.com/pkgw/dbus-cplusplus/commit/a0b9ef3b469ca23c6a3229d8abb967cbbddcee38
+Patch14: libdbus-c++-0.9.0-pkgw-fix-weird-operators.patch
 
 # Automatically added by buildreq on Mon Feb 18 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel libatk-devel libatkmm-devel libcairo-devel libcairomm-devel libdbus-c++ libdbus-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgtk+2-devel libpango-devel libpangomm-devel libsigc++2-devel libstdc++-devel libsystemd-daemon libwayland-client libwayland-server pkg-config python-base ruby ruby-stdlibs
@@ -81,6 +83,7 @@ Example programs which make use of libdbus-c++
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 ./bootstrap
 
 %build
@@ -125,6 +128,9 @@ make -C examples clean
 %doc examples
 
 %changelog
+* Wed Aug 17 2022 Ivan A. Melnikov <iv@altlinux.org> 0.9.0-alt3
+- Fix FTBFS.
+
 * Tue May 15 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.0-alt2
 - Fixed build with new toolchain.
 
