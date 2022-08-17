@@ -1,11 +1,12 @@
 %def_disable snapshot
+%define xdg_name org.gnome.libgnomekbd
 
-%define ver_major 3.26
+%define ver_major 3.28
 %define api_ver 3.0
 %def_enable introspection
 
 Name: libgnomekbd
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME keyboard shared library
@@ -23,20 +24,17 @@ Obsoletes: gnome-kbd-indicator < 2.22.0
 Provides: gnome-kbd-indicator = %version-%release
 Provides: %_bindir/gkbd-keyboard-display
 
-%define glib_ver 2.28.0
+%define glib_ver 2.44.0
 %define gtk_ver 2.91.6
 %define libxklavier_ver 5.2.1
 
-BuildPreReq: rpm-build-gnome >= 0.4
-BuildPreReq: rpm-build-licenses
-
-# from configure.ac
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libxklavier-devel >= %libxklavier_ver
-BuildPreReq: libX11-devel libXt-devel
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel libxklavier-gir-devel}
+BuildRequires(pre): rpm-build-gnome rpm-build-licenses
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libxklavier-devel >= %libxklavier_ver
+BuildRequires: libX11-devel libXt-devel
+%{?_enable_introspection:BuildRequires(pre): rpm-build-gir
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxklavier-gir-devel}
 
 %description
 GNOME keyboard shared library.
@@ -44,7 +42,7 @@ GNOME keyboard shared library.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 GNOME keyboard shared library.
@@ -54,7 +52,7 @@ This is package contain development files for %name.
 %package gir
 Summary: GObject introspection data for %name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GNOME keyboard library
@@ -63,7 +61,8 @@ GObject introspection data for the GNOME keyboard library
 Summary: GObject introspection devel data for %name
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GNOME keyboard library
@@ -74,13 +73,12 @@ GObject introspection devel data for the GNOME keyboard library
 %build
 %autoreconf
 %configure \
-	--disable-static \
-	--disable-schemas-compile
+    --disable-static \
+    --disable-schemas-compile
 %make_build
 
 %install
 %makeinstall_std
-
 %find_lang --with-gnome %name
 
 %check
@@ -93,9 +91,9 @@ GObject introspection devel data for the GNOME keyboard library
 %_bindir/gkbd-keyboard-display
 %_desktopdir/gkbd-keyboard-display.desktop
 %_datadir/%name/
-%config %_datadir/glib-2.0/schemas/org.gnome.libgnomekbd.desktop.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.libgnomekbd.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.libgnomekbd.keyboard.gschema.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.desktop.gschema.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%config %_datadir/glib-2.0/schemas/%xdg_name.keyboard.gschema.xml
 %_datadir/GConf/gsettings/%name.convert
 
 %files devel
@@ -112,6 +110,9 @@ GObject introspection devel data for the GNOME keyboard library
 %endif
 
 %changelog
+* Wed Aug 17 2022 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
+- 3.28.0
+
 * Thu Feb 07 2019 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 
