@@ -14,7 +14,7 @@
 # git rev-list --count remotes/upstream/releases/FreeCAD-0-17
 
 Name:    freecad
-Version: 0.20
+Version: 0.20.1
 Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
@@ -109,6 +109,7 @@ Requires: openscad
 %endif
 Requires: python3-module-GitPython
 Requires: netgen
+Requires: libredwg
 
 %description
 FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
@@ -210,17 +211,7 @@ rm -rf %buildroot%_prefix/Ext
 %find_lang --with-kde %name
 
 # fix python shebang
-sed -i '1s:^#!/usr/bin/env python$:#!/usr/bin/python3:' %buildroot%_libdir/freecad/Mod/AddonManager/AddonManager.py \
-						       %buildroot%_libdir/freecad/Mod/Spreadsheet/importXLSX.py \
-						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DHatchTest.py \
-						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DProjGroupTest.py \
-						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DVAnnoSymImageTest.py \
-						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DVBalloonTest.py \
-						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DVDimensionTest.py \
-						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DVPartTest.py \
-						       %buildroot%_libdir/freecad/Mod/TechDraw/TDTest/DVSectionTest.py \
-						       %buildroot%_libdir/freecad/Mod/Test/testmakeWireString.py
-sed -i '1s:#!/usr/bin/python:#!/usr/bin/python3:' %buildroot%_libdir/freecad/Mod/Robot/MovieTool.py
+subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' %buildroot%_libdir/freecad/Mod)
 
 # remove static libraries
 rm -f %buildroot%_libdir/freecad/lib/*.a
@@ -253,6 +244,10 @@ rm -f %buildroot%_includedir/E57Format/*.h
 %ldir/doc
 
 %changelog
+* Thu Aug 11 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.20.1-alt1
+- New version.
+- Added support of LibreDWG.
+
 * Thu Jun 16 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.20-alt1
 - New version.
 - Do not build for armh.
