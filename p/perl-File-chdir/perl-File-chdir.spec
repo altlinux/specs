@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 BuildRequires: perl(Module/Build.pm)
 #
 #   - File::chdir -
@@ -15,7 +16,7 @@ BuildRequires: perl(Module/Build.pm)
 %define _enable_test 1
 
 Name: perl-File-chdir
-Version: 0.1010
+Version: 0.1011
 Release: alt1
 
 Summary: a more sensible way to change directories
@@ -27,7 +28,7 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/File-chdir-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Apr 09 2006
 BuildRequires: perl-devel
@@ -44,7 +45,7 @@ File::chdir gives you an alternative, $CWD and @CWD.  These two
 variables combine all the power of "chdir()", File::Spec and Cwd.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -52,9 +53,13 @@ variables combine all the power of "chdir()", File::Spec and Cwd.
 %perl_vendor_install
 
 %files
+%doc README Changes LICENSE examples
 %perl_vendor_privlib/File*
 
 %changelog
+* Thu Aug 18 2022 Igor Vlasenko <viy@altlinux.org> 0.1011-alt1
+- automated CPAN update
+
 * Wed Feb 11 2015 Igor Vlasenko <viy@altlinux.ru> 0.1010-alt1
 - automated CPAN update
 
