@@ -5,17 +5,17 @@
 %define firefox_prefix  %_libdir/firefox
 
 %define gst_version   1.0
-%define nspr_version  4.32
-%define nss_version   3.69.0
-%define rust_version  1.54.0
-%define cargo_version 1.54.0
-%define llvm_version  11.0
+%define nspr_version  4.33
+%define nss_version   3.77
+%define rust_version  1.60.0
+%define cargo_version 1.60.0
+%define llvm_version  12.0
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR version)
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 91.11.0
+Version: 102.1.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -39,22 +39,27 @@ Source12: firefox-privacy-prefs.js
 Source13: policies.json
 
 ### Start Patches
-Patch001: 0001-ALT-Use-system-nspr-headers.patch
-Patch002: 0002-FEDORA-build-arm-libopus.patch
-Patch003: 0003-FEDORA-build-arm.patch
-Patch004: 0004-ALT-ppc64le-fix-clang-error-invalid-memory-operand.patch
-Patch005: 0005-ALT-ppc64le-disable-broken-getProcessorLineSize-code.patch
-Patch006: 0006-ALT-Fix-aarch64-build.patch
-Patch007: 0007-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch008: 0008-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch010: 0010-use-floats-for-audio-on-arm-too.patch
-Patch011: 0011-bmo-847568-Support-system-harfbuzz.patch
-Patch012: 0012-bmo-847568-Support-system-graphite2.patch
-Patch013: 0013-bmo-1559213-Support-system-av1.patch
-Patch014: 0014-VAAPI-Add-extra-frames.patch
-Patch015: 0015-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch016: 0016-ALT-Fix-redefinition-double_t.patch
-Patch017: 0017-ALT-fix-armh-build.patch
+Patch001: 0001-FEDORA-build-arm-libopus.patch
+Patch002: 0002-FEDORA-build-arm.patch
+Patch003: 0003-ALT-Fix-aarch64-build.patch
+Patch004: 0004-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch005: 0005-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
+Patch006: 0006-use-floats-for-audio-on-arm-too.patch
+Patch007: 0007-bmo-847568-Support-system-harfbuzz.patch
+Patch008: 0008-bmo-847568-Support-system-graphite2.patch
+Patch010: 0009-bmo-1559213-Support-system-av1.patch
+Patch011: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch012: 0011-ALT-fix-double_t-redefinition.patch
+Patch013: 0012-build-Disable-Werror.patch
+Patch014: 0013-Prevent-discrimination-of-Russian-services.patch
+Patch015: 0014-Bug-1735929-Linux-Add-support-of-EGL_MESA_image_dma_.patch
+Patch016: 0015-Bug-1735929-Linux-Import-DMABufSurfaceRGBA-from-exis.patch
+Patch017: 0016-Bug-1735929-Linux-Use-EGL_MESA_image_dma_buf_export-.patch
+Patch018: 0017-Bug-1773968-Linux-Release-EGLImages-in-DMABufSurface.patch
+Patch019: 0018-Bug-1776724-fix-wayland-only.patch
+Patch020: 0019-Bug-1778855-gfxEnv_MOZ_GL_DEBUG.patch
+Patch021: 0020-Bug-1783784-Update-packed_simd_2.patch
+Patch022: 0021-Set-offline-build.patch
 ### End Patches
 
 # Hang up on build browser/components/about
@@ -111,6 +116,49 @@ BuildRequires: libdrm-devel
 BuildRequires: libaom-devel
 BuildRequires: libdav1d-devel
 
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(aom)
+BuildRequires: pkgconfig(bzip2)
+BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(dav1d)
+BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(dbus-glib-1)
+BuildRequires: pkgconfig(dri)
+BuildRequires: pkgconfig(fontconfig)
+BuildRequires: pkgconfig(freetype2)
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(graphite2)
+BuildRequires: pkgconfig(gtk+-2.0)
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(hunspell)
+BuildRequires: pkgconfig(icu-i18n)
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(libevent)
+BuildRequires: pkgconfig(libffi)
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libnotify)
+BuildRequires: pkgconfig(libproxy-1.0)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(libstartup-notification-1.0)
+BuildRequires: pkgconfig(opus)
+BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(vpx)
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(xcomposite)
+BuildRequires: pkgconfig(xcursor)
+BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(xft)
+BuildRequires: pkgconfig(xi)
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xscrnsaver)
+BuildRequires: pkgconfig(xt)
+BuildRequires: pkgconfig(xtst)
+BuildRequires: pkgconfig(zlib)
+
 # Python requires
 BuildRequires: /dev/shm
 
@@ -164,7 +212,7 @@ Mozilla, созданная с использованием языка XUL дл�
 %package wayland
 Summary:    Firefox Wayland launcher.
 Group:      Networking/WWW
-Requires:   %name
+Requires: %name >= %version-%release
 Conflicts:  firefox-wayland
 
 %description wayland
@@ -193,22 +241,7 @@ Most likely you don't need to use this package.
 %setup -q -n firefox-%version -c
 
 ### Begin to apply patches
-%patch001 -p1
-%patch002 -p1
-%patch003 -p1
-%patch004 -p1
-%patch005 -p1
-%patch006 -p1
-%patch007 -p1
-%patch008 -p1
-%patch010 -p1
-%patch011 -p1
-%patch012 -p1
-%patch013 -p1
-%patch014 -p1
-%patch015 -p1
-%patch016 -p1
-%patch017 -p1
+%autopatch -p1
 ### Finish apply patches
 
 cd mozilla
@@ -224,8 +257,11 @@ ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
 %ifnarch %{ix86} ppc64le
 ac_add_options --enable-linker=lld
+%ifnarch armh
+ac_add_options --enable-lto=thin
 %endif
-%ifnarch x86_64
+%endif
+%ifarch armh ppc64le
 ac_add_options --disable-webrtc
 %endif
 %ifarch armh %{ix86} x86_64
@@ -234,15 +270,36 @@ ac_add_options --disable-elf-hack
 %ifarch %{ix86}
 ac_add_options --disable-av1
 %endif
+%ifarch armh %{ix86}
+ac_add_options --enable-strip
+ac_add_options --enable-install-strip
+ac_add_options --disable-rust-debug
+ac_add_options --disable-debug-symbols
+%endif
 EOF
 
 find third_party \
-	-type f \( -name '*.so' -o -name '*.o' \) \
-	-print -delete
+	-type f \( -name '*.so' -o -name '*.o' -o -name '*.a' \) \
+	-delete
 
+rm -rf -- obj-x86_64-pc-linux-gnu
+rm -rf -- third_party/python/setuptools/setuptools*
 
 %build
+%add_findprov_lib_path %firefox_prefix
+
+# If MOZ_DEBUG_FLAGS is empty, firefox's build will default it to "-g" which
+# overrides the -g0 from line above and breaks building on s390
+# (OOM when linking, rhbz#1238225)
 export ALTWRAP_LLVM_VERSION="%llvm_version"
+
+export RUST_BACKTRACE=1
+%ifarch armh %{ix86}
+export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
+%else
+export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=2"
+%endif
+
 # compile cbindgen
 CBINDGEN_HOME="$PWD/cbindgen"
 CBINDGEN_BINDIR="$CBINDGEN_HOME/bin"
@@ -271,10 +328,8 @@ fi
 cd mozilla
 
 %add_optflags %optflags_shared
-%add_findprov_lib_path %firefox_prefix
 
 export MOZ_BUILD_APP=browser
-export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE10)"
 
 MOZ_OPT_FLAGS="-pipe -O2 -g0"
 
@@ -305,11 +360,10 @@ export RANLIB="llvm-ranlib"
 export LLVM_PROFDATA="llvm-profdata"
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export srcdir="$PWD"
-export SHELL=/bin/sh
-export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
 export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
 export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
 export PATH="$CBINDGEN_BINDIR:$PATH"
+export MACH_USE_SYSTEM_PYTHON=1
 
 python3 ./mach python --exec-file /dev/null
 python3 ./mach build
@@ -456,6 +510,14 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri Jul 22 2022 Pavel Vasenkov <pav@altlinux.org> 102.1.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2022-36319 Mouse Position spoofing with CSS transforms
+  + CVE-2022-36318 Directory indexes for bundled resources reflected URL parameters
+  + CVE-2022-36314 Opening local <code>.lnk</code> files could cause unexpected network loads
+  + CVE-2022-2505 Memory safety bugs fixed in Firefox 103 and 102.1
+
 * Wed Jun 29 2022 Pavel Vasenkov <pav@altlinux.org> 91.11.0-alt1
 - New ESR version.
 - Security fixes:
