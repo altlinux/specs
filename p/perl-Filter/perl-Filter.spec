@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Filter
 Name: perl-%dist
-Version: 1.62
+Version: 1.64
 Release: alt1
 
 Summary: Source Filters
@@ -38,6 +38,9 @@ mv t/pod.t t/pod.t.orig
 %perl_vendor_autolib/Filter
 
 %changelog
+* Thu Aug 18 2022 Igor Vlasenko <viy@altlinux.org> 1.64-alt1
+- automated CPAN update
+
 * Thu Aug 11 2022 Igor Vlasenko <viy@altlinux.org> 1.62-alt1
 - automated CPAN update
 
