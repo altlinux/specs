@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Sys-Virt
 Name: perl-%dist
-Version: 8.0.0
+Version: 8.5.0
 Release: alt1
 
 Summary: Represent and manage a libvirt hypervisor connection
@@ -36,6 +36,9 @@ export NPROCS=1
 %perl_vendor_autolib/Sys
 
 %changelog
+* Thu Aug 18 2022 Igor Vlasenko <viy@altlinux.org> 8.5.0-alt1
+- automated CPAN update
+
 * Thu Jan 27 2022 Igor Vlasenko <viy@altlinux.org> 8.0.0-alt1
 - automated CPAN update
 
