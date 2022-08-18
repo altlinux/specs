@@ -9,7 +9,7 @@ Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
 Version: 22.7.3.817
-Release: alt1
+Release: alt2
 Group: Networking/WWW
 Vendor: YANDEX LLC
 Url: http://browser.yandex.ru/
@@ -22,7 +22,7 @@ Buildrequires: at-spi2-atk, libalsa, libat-spi2-core, libatk, libcairo, libcups
 Buildrequires: libdbus, libdrm, libexpat, libgbm, libgio, libnspr, libnss
 Buildrequires: libpango, libX11, libXcomposite, libXdamage, libXext, libXfixes
 Buildrequires: libXrandr, libxcb, libxkbcommon
-Requires: ca-certificates,ffmpeg-plugin-browser,xdg-utils
+Requires: ca-certificates,ffmpeg-plugin-browser,xdg-utils, fonts-ttf-google-noto-emoji-color
 Requires(post): %{_sbindir}/update-alternatives
 Requires(preun): %{_sbindir}/update-alternatives
 
@@ -61,6 +61,7 @@ Yandex Browser is a browser that combines a minimal design with sophisticated te
 %install
 # TODO(palar): remove it when libabt-bindings.so is fixed
 %set_verify_elf_method textrel=relaxed
+%add_findreq_skiplist %_libdir/yandex/browser/xdg-*
 
 if [ -z "%{_builddir}/%{name}-%{version}" -o ! \
      -d "%{_builddir}/%{name}-%{version}" ] ; then
@@ -157,5 +158,9 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+* Thu Aug 18 2022 Vasiliy Tsukanov <palar@altlinux.org> 22.7.3.817-alt2
+- removed built-in xdg-utils deps from the package
+- added font with emoji support dependency
+
 * Thu Aug 11 2022 Vasiliy Tsukanov <palar@altlinux.org> 22.7.3.817-alt1
 - initial build for ALT
