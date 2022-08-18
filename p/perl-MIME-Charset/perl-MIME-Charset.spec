@@ -15,7 +15,7 @@
 %define _disable_test 1
 
 Name: perl-MIME-Charset
-Version: 1.013
+Version: 1.013.1
 Release: alt1
 
 Summary: Charset Informations for MIME
@@ -48,6 +48,9 @@ rm %buildroot%perl_vendor_privlib/POD2/JA/MIME/Charset.pod
 %perl_vendor_privlib/MIME
 
 %changelog
+* Thu Aug 18 2022 Igor Vlasenko <viy@altlinux.org> 1.013.1-alt1
+- automated CPAN update
+
 * Thu Aug 11 2022 Igor Vlasenko <viy@altlinux.org> 1.013-alt1
 - automated CPAN update
 
