@@ -17,7 +17,7 @@
 
 Name: zabbix
 Version: 6.0.7
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -86,7 +86,6 @@ Group: Monitoring
 Requires: %name-server-common >= 1:2.0.4-alt1
 Requires: %name-common-database-mysql = %EVR
 Requires: %_sbindir/fping
-Obsoletes: %name-mysql < 1:1.1.7-alt1
 
 %if_with pgsql
 %package server-pgsql
@@ -95,7 +94,6 @@ Group: Monitoring
 Requires: %name-server-common >= 1:2.0.4-alt1
 Requires: %name-common-database-pgsql = %EVR
 Requires: %_sbindir/fping
-Obsoletes: %name-pgsql < 1:1.1.7-alt1
 %endif
 
 %package agent
@@ -154,7 +152,6 @@ BuildArch: noarch
 Summary: zabbix web frontend (php)
 Group: Monitoring
 Requires: php-engine
-Obsoletes: %name-phpfrontend < 1:1.1.7-alt1
 BuildArch: noarch
 
 %package phpfrontend-php7
@@ -507,6 +504,13 @@ bzip2 ChangeLog
 %preun server-mysql
 %preun_service zabbix_mysql
 %if_with pgsql
+%pre server-pgsql
+echo "########################################################################"
+echo "              Attention! Zabbix upgrade to %version"
+echo "########################################################################"
+echo "# Notice: zabbix-server-pgsql require PostgreSQL 13 or newer!          #"
+echo "########################################################################"
+
 %post server-pgsql
 %post_service zabbix_pgsql
 
@@ -521,6 +525,13 @@ bzip2 ChangeLog
 %preun_service zabbix_proxy
 
 %if_with pgsql
+%pre proxy-pgsql
+echo "########################################################################"
+echo "              Attention! Zabbix upgrade to %version"
+echo "########################################################################"
+echo "# Notice: zabbix-server-pgsql require PostgreSQL 13 or newer!          #"
+echo "########################################################################"
+
 %post proxy-pgsql
 %post_service zabbix_proxy_pgsql
 
@@ -678,6 +689,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Aug 18 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.7-alt2
+- Remove unneeded Obsoletes
+- Add notice fo use Postgresql 13 or newer
+
 * Tue Jul 26 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.7-alt1
 - 6.0.7
 
