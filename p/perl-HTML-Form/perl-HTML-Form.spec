@@ -7,12 +7,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-HTML-Form
-Version:        6.07
+Version:        6.09
 Release:        alt1
 Summary:        Class that represents an HTML form element
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/HTML-Form
-Source0:        http://www.cpan.org/authors/id/O/OA/OALDERS/HTML-Form-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/S/SI/SIMBABQUE/HTML-Form-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  coreutils
 BuildRequires:  findutils
@@ -65,6 +65,9 @@ passed to the request() method of LWP::UserAgent.
 %{perl_vendor_privlib}/*
 
 %changelog
+* Thu Aug 18 2022 Igor Vlasenko <viy@altlinux.org> 6.09-alt1
+- automated CPAN update
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 6.07-alt1
 - automated CPAN update
 
