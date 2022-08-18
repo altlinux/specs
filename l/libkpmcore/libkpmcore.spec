@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 22.04.3
+Version: 22.08.0
 Release: alt1
 
 Summary: KDE Partition Manager core library
@@ -18,7 +18,7 @@ Provides: %_name = %version-%release
 
 %define blkid_ver 2.30
 
-Requires: sfdisk polkit
+Requires: sfdisk polkit ntfs-3g
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: gcc-c++ extra-cmake-modules %_bindir/appstreamcli
@@ -68,6 +68,9 @@ using %_name.
 
 
 %changelog
+* Thu Aug 18 2022 Yuri N. Sedunov <aris@altlinux.org> 22.08.0-alt1
+- 22.08.0
+
 * Thu Jul 07 2022 Yuri N. Sedunov <aris@altlinux.org> 22.04.3-alt1
 - 22.04.3
 
