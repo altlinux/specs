@@ -6,7 +6,7 @@ BuildRequires: perl(B.pm) perl(B/Deparse.pm) perl(Benchmark.pm) perl(CPAN/Meta/R
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.016007
+Version: 1.016008
 Release: alt1
 Summary: tiny, yet Moo(se)-compatible type constraint
 Group: Development/Perl
@@ -36,6 +36,9 @@ BuildArch: noarch
 %perl_vendor_privlib/E*
 
 %changelog
+* Thu Aug 18 2022 Igor Vlasenko <viy@altlinux.org> 1.016008-alt1
+- automated CPAN update
+
 * Sun Aug 07 2022 Igor Vlasenko <viy@altlinux.org> 1.016007-alt1
 - automated CPAN update
 
