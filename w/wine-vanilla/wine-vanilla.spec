@@ -67,7 +67,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -380,6 +380,11 @@ Conflicts: libwine <= 6.14.1
 Conflicts: i586-libwine <= 6.14.1
 Conflicts: wine <= 6.14.1
 Conflicts: i586-wine <= 6.14.1
+
+Conflicts: libwine-vanilla <= 6.14.1
+Conflicts: i586-libwine-vanilla <= 6.14.1
+Conflicts: wine-vanilla <= 6.14.1
+Conflicts: i586-wine-vanilla <= 6.14.1
 
 %description common
 Common arch independent wine files and scripts.
@@ -833,6 +838,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Thu Aug 18 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.15-alt2
+- add conflicts to old wine-vanilla packages
+
 * Sun Aug 14 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.15-alt1
 - new version 7.15 (with rpmrb script)
 
