@@ -3,19 +3,18 @@
 %define _stripped_files_terminate_build 1
 
 Name:		codespell
-Version:	2.1.0
+Version:	2.2.0
 Release:	alt1
 Summary:	Check code for common misspellings
 Group:		Development/Tools
 License:	GPL-2.0-only
 Url:		https://github.com/codespell-project/codespell
-Vcs:		https://github.com/codespell-project/codespell.git
 Source:		%name-%version.tar
 BuildArch:	noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: help2man
-BuildRequires: python3-devel
+BuildRequires: python3-devel >= 3.6
 BuildRequires: python3-module-setuptools
 
 %description
@@ -34,7 +33,7 @@ make codespell.1
 %python3_install
 install -D -m644 %name.1 %buildroot%_man1dir/%name.1
 # Compatibility with scripts/checkpatch.pl
-ln -sf -r %buildroot%python3_sitelibdir/codespell_lib/data %buildroot/usr/share/codespell
+ln -sf -r %buildroot%python3_sitelibdir/codespell_lib/data %buildroot%_datadir/codespell
 # I think we don't need this:
 rm -rf %buildroot%python3_sitelibdir/codespell_lib/data/{__pycache__,__init__.py}
 
@@ -51,13 +50,17 @@ echo Millenium  > /tmp/example.txt
   grep -qx Millennium /tmp/example.txt
 
 %files
+%define _customdocdir %_docdir/%name
 %doc COPYING README.rst
 %_bindir/%name
 %_man1dir/%name.1*
 %python3_sitelibdir/*
-/usr/share/codespell
+%_datadir/codespell
 
 %changelog
+* Thu Aug 18 2022 Vitaly Chikunov <vt@altlinux.org> 2.2.0-alt1
+- Update to v2.2.0 (2022-08-17).
+
 * Fri Jun 11 2021 Vitaly Chikunov <vt@altlinux.org> 2.1.0-alt1
 - Update to v2.1.0 (2021-06-10).
 
