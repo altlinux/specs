@@ -1,5 +1,5 @@
 Name: fsearch
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
 Summary: A fast file search utility for Unix-like systems based on GTK+3
@@ -77,6 +77,9 @@ FSearch - это быстрая утилита для поиска файлов,
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Aug 18 2022 Evgeny Chuck <koi@altlinux.org> 0.2.1-alt1
+- new version (0.2.1) with rpmgs script
+
 * Tue Aug 16 2022 Evgeny Chuck <koi@altlinux.org> 0.2-alt1
 - new version (0.2) with rpmgs script
 
