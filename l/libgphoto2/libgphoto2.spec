@@ -4,7 +4,7 @@
 %define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.29
+Version: 2.5.30
 Release: alt1
 
 Group: System/Libraries
@@ -226,6 +226,9 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Fri Aug 19 2022 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.30-alt1
+- 2.5.30
+
 * Mon Mar 07 2022 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.29-alt1
 - 2.5.29
 
