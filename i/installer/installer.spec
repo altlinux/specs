@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.11.4
+Version: 1.12.0
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,21 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Aug 19 2022 Anton Midyukov <antohami@altlinux.org> 1.12.0-alt1
+- 99-cdrom.sh: do nothing if /dev/loop0 is not linked with
+  $image_dir/$stagename
+- install2-init.c: missing of /altinst is not error
+- install2: logging of initinstall and preinstall, error output only
+  to log
+- install2-action-functions: redirect stdout to stderr when run script
+- install2: save logs and screenshots at the end of installation
+- 27-metadata-install-scripts.sh: remove output redirection to
+  install2.log
+- 00-remove-installer-pkgs.sh: enable verbose for rpmi
+
+* Thu Aug 18 2022 Anton Midyukov <antohami@altlinux.org> 1.11.5-alt1
+- 99-cdrom.sh: fixate name altinst for zero image /mnt/altinst
+
 * Wed Aug 17 2022 Anton Midyukov <antohami@altlinux.org> 1.11.4-alt1
 - doc/common.html: fix typo
 
