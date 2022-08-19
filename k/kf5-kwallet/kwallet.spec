@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.97.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -17,6 +17,7 @@ Source: %rname-%version.tar
 Source1: kwalletd5.po
 Patch2: alt-def-blowfish.patch
 Patch3: alt-create-wallet.patch
+Patch4: alt-fix-wallet-format.patch
 
 # Automatically added by buildreq on Fri Feb 13 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libgpg-error libgpg-error-devel libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs
@@ -71,6 +72,7 @@ KF5 library
 %setup -n %rname-%version
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 msgcat --use-first po/ru/kwalletd5.po %SOURCE1 > po/ru/kwalletd5.po.tmp
 cat po/ru/kwalletd5.po.tmp >po/ru/kwalletd5.po
@@ -116,6 +118,9 @@ LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Fri Aug 19 2022 Oleg Solovyov <mcpain@altlinux.org> 5.97.0-alt2
+- fix incorrect format in wallets (patch by ptrnine@)
+
 * Mon Aug 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.97.0-alt1
 - new version
 
