@@ -1,9 +1,9 @@
 Name: anilibria-winmaclinux
-Version: 1.1.10
-Release: alt3
+Version: 1.1.11
+Release: alt1
 
-Summary: AniLibria client for major desktop platforms
-Summary(ru_RU.UTF-8): Клиент AniLibria для основных настольных платформ
+Summary: AniLibria online video player for desktop platforms
+Summary(ru_RU.UTF-8): Онлайн-видеоплеер AniLibria для настольных платформ
 License: GPL-3.0-only
 Group: Video
 Url: http://anilibriadesktop.reformal.ru
@@ -64,6 +64,10 @@ popd
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Fri Aug 19 2022 Evgeny Chuck <koi@altlinux.org> 1.1.11-alt1
+- new version (1.1.11) with rpmgs script
+- Changed the description of the "Summary" tag to be more accurate
+
 * Mon Aug 15 2022 Evgeny Chuck <koi@altlinux.org> 1.1.10-alt3
 - Added dependencies that fix errors when running the QML interface
 
