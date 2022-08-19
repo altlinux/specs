@@ -1,6 +1,6 @@
 Name: yandex-browser-preinstall
-Version: 0.4
-Release: alt4
+Version: 1.0
+Release: alt1
 
 Summary: Set correct environment for Yandex.Browser
 License: GPLv3
@@ -8,25 +8,20 @@ Group: Networking/WWW
 
 Url: http://git.altlinux.org/people/nenderus/packages/yandex-browser-preinstall.git
 Packager: Nazarov Denis <nenderus@altlinux.org>
-BuildArch: noarch
 
-Source0: yandex-browser
-Source1: yandex-browser-beta
+ExclusiveArch: x86_64
 
-Requires: jq
+Requires: yandex-browser-stable
 
 %description
 Set correct environment for Yandex.Browser
 
-%install
-%__install -Dp -m0644 %SOURCE0 %buildroot%_sysconfdir/default/yandex-browser
-%__install -Dp -m0644 %SOURCE1 %buildroot%_sysconfdir/default/yandex-browser-beta
-
 %files
-%_sysconfdir/default/yandex-browser
-%_sysconfdir/default/yandex-browser-beta
 
 %changelog
+* Fri Aug 19 2022 Nazarov Denis <nenderus@altlinux.org> 1.0-alt1
+- Only requires on yandex-browser-stable and nothing more
+
 * Mon Apr 05 2021 Nazarov Denis <nenderus@altlinux.org> 0.4-alt4
 - Add require on jq (ALT #39880)
 
