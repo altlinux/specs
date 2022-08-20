@@ -1,6 +1,6 @@
 Summary: An Atari ST emulator suitable for playing games
 Name: hatari
-Version: 2.4.0
+Version: 2.4.1
 Release: alt1
 License: GPLv2+
 Group: Emulators
@@ -29,7 +29,7 @@ Requires: dosfstools
 Summary: External user interface for Hatari
 Group: Emulators
 Requires: %name = %version
-BuildArch:      noarch
+#BuildArch:      noarch
 Requires: libgtk+3
 Requires: typelib(Gtk) = 3.0
 
@@ -94,7 +94,7 @@ desktop-file-install \
   --add-category Game \
   --add-category Emulator \
   --dir %buildroot%_datadir/applications \
-  %buildroot%_datadir/applications/hatariui.desktop
+  %buildroot%_datadir/applications/hatari.desktop
 
 # Install license among docs
 install -p -m 644 gpl.txt %buildroot%_pkgdocdir
@@ -107,25 +107,25 @@ ctest -V
 %_datadir/%name
 %_mandir/man1/*
 %_mandir/fr/man1/*
-%_datadir/applications/%name.desktop
+#_datadir/applications/%name.desktop
 %_datadir/icons/hicolor/*/apps/%name.png
 %_datadir/icons/hicolor/*/apps/%name.svg
 %_datadir/icons/hicolor/*/mimetypes/*
 %_datadir/mime/packages/hatari.xml
 %doc %_pkgdocdir
-%exclude %_bindir/hatariui
-%exclude %_datadir/%name/hatariui
+%exclude %_bindir/hatari
+%exclude %_datadir/%name/*
 %exclude %_datadir/%name/hconsole
-%exclude %_mandir/man1/hatariui.1*
+%exclude %_mandir/man1/hatari.1*
 %exclude %_mandir/man1/hconsole.1*
 
 %files ui
-%_bindir/hatariui
-%_datadir/%name/hatariui
+%_bindir/hatari
+%_datadir/%name/*
 %_datadir/%name/hconsole
-%_mandir/man1/hatariui.1*
+%_mandir/man1/hatari.1*
 %_mandir/man1/hconsole.1*
-%_datadir/applications/hatariui.desktop
+%_datadir/applications/hatari.desktop
 %_datadir/icons/hicolor/32x32/apps/hatari-icon.png
 %doc python-ui/{README,release-notes.txt,TODO}
 #exclude %_datadir/%name/hatariui/README
@@ -134,6 +134,9 @@ ctest -V
 #exclude %_datadir/%name/hconsole/release-notes.txt
 
 %changelog
+* Sat Aug 20 2022 Ilya Mashkin <oddity@altlinux.ru> 2.4.1-alt1
+- 2.4.1
+
 * Sun Jul 24 2022 Ilya Mashkin <oddity@altlinux.ru> 2.4.0-alt1
 - 2.4.0
 
