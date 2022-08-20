@@ -1,5 +1,5 @@
 Name: rbdoom3bfg
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: Doom 3: BFG Edition with soft shadows, cleaned up source, Linux and 64 bit Support
@@ -13,7 +13,7 @@ Source2: %name.png
 
 ExclusiveArch: %ix86 x86_64 %e2k
 
-BuildRequires: cmake gcc-c++ rpm-macros-cmake libjpeg-devel libSDL2-devel ffmpeg libopenal-devel libavcodec-devel libavformat-devel libavutil-devel libswscale-devel libGLU-devel
+BuildRequires: cmake gcc-c++ rpm-macros-cmake libjpeg-devel libSDL2-devel ffmpeg libopenal-devel libavcodec-devel libavformat-devel libavutil-devel libswscale-devel libGLU-devel libswresample-devel
 
 Summary(ru_RU.UTF-8): Doom 3: BFG Edition с мягкими тенями, приведёнными в порядок исходниками, поддержкой Linux и 64-битной архитектуры
 
@@ -90,6 +90,9 @@ install -Dpm0644 %SOURCE2 %buildroot/%_iconsdir/%name.png
 %_iconsdir/%name.png
 
 %changelog
+* Sat Aug 20 2022 Artyom Bystrov <arbars@altlinux.org> 1.4.0-alt1
+- Update version to 1.3.0
+
 * Fri Nov 12 2021 Artyom Bystrov <arbars@altlinux.org> 1.3.0-alt1
 - Update version to 1.3.0
 
