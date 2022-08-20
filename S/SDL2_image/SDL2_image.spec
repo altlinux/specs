@@ -1,6 +1,6 @@
 Name: SDL2_image
-Version: 2.6.0
-Release: alt2
+Version: 2.6.2
+Release: alt1
 
 Summary: Simple DirectMedia Layer - Image library
 License: Zlib
@@ -74,6 +74,9 @@ to develop SDL applications.
 %_libdir/cmake/%name
 
 %changelog
+* Sat Aug 20 2022 Nazarov Denis <nenderus@altlinux.org> 2.6.2-alt1
+- Version 2.6.2
+
 * Tue Jul 19 2022 Nazarov Denis <nenderus@altlinux.org> 2.6.0-alt2
 - --disable-*-shared: Link, rather than dlopen
 
