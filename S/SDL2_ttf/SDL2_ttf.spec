@@ -2,8 +2,8 @@
 %define harfbuzz_commit 6022fe2f68d028ee178284f297b3902ffdf65b03
 
 Name: SDL2_ttf
-Version: 2.20.0
-Release: alt1.1
+Version: 2.20.1
+Release: alt1
 
 Summary: Simple DirectMedia Layer - Sample TrueType Font Library
 License: Zlib
@@ -94,6 +94,9 @@ EOF
 %_libdir/cmake/%name
 
 %changelog
+* Sat Aug 20 2022 Nazarov Denis <nenderus@altlinux.org> 2.20.1-alt1
+- Version 2.20.1
+
 * Fri Jul 29 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.20.0-alt1.1
 - Corrected fix for Elbrus
 
