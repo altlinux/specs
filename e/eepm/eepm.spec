@@ -2,7 +2,7 @@
 %define pkgsystem apt-rpm
 
 Name: eepm
-Version: 3.24.3
+Version: 3.26.3
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -150,6 +150,41 @@ rm -v %buildroot%_bindir/yum
 %endif
 
 %changelog
+* Mon Aug 22 2022 Vitaly Lipatov <lav@altlinux.ru> 3.26.3-alt1
+- epm play: hide sputnik-browser (ALT bug 15741)
+- epm play: add Master PDF Editor
+- epm repack: fix /opt packing
+
+* Sat Aug 20 2022 Vitaly Lipatov <lav@altlinux.ru> 3.26.2-alt1
+- add epm --short --version
+- epm-autoremove: enable real autoremove on yum based systems
+- fix $@ using for set vars (eterbug 15846)
+- epm repack icq: fix for ignore empty download
+- epm full-upgrade: do fatal on errors
+- epm play: return 0 if a package is already installed from the repo
+
+* Fri Aug 19 2022 Vitaly Lipatov <lav@altlinux.ru> 3.26.1-alt1
+- add epm play virtualhere
+- more strong distro versions
+
+* Thu Aug 18 2022 Vitaly Lipatov <lav@altlinux.ru> 3.26.0-alt1
+- fix: epm-download: always download rpm packages on ALT directly
+- epm play: add slack support
+- big revert "fix quotes in format strings"
+
+* Thu Aug 18 2022 Vitaly Lipatov <lav@altlinux.ru> 3.25.1-alt1
+- epm repack icq: fix URL, ignore empty download
+- epm repack yandex-browser: fix provides
+- add epm play jetbrains-toolbox
+
+* Thu Aug 18 2022 Vitaly Lipatov <lav@altlinux.ru> 3.25.0-alt1
+- epm repack: always set Epoche: 100 to override repository package
+- epm-search: fix support regexp not for apt only
+- epm-download: always download rpm packages on ALT directly
+- epm-tool: add json command support
+- epm play: add pycharm support
+- epm play: add icq support
+
 * Tue Aug 16 2022 Vitaly Lipatov <lav@altlinux.ru> 3.24.3-alt1
 - epm_query_file: fix --short query for rpm
 - epm-query: fix --short query on rpm
