@@ -1,19 +1,21 @@
 # git describe upstream/yuzu
-%define git_descr mainline-636-8872-gac8ca475011
+%define git_descr mainline-636-9297-g03545261806
 
 %define inih_version r52
-%define cpp_httplib_commit 9648f950f5a8a41d18833cf4a85f5821b1bcac54
+%define cpp_httplib_commit 305a7abcb9b4e9e349843c6d563212e6c1bbbf21
 %define cubeb_commit 75d9d125ee655ef80f3bfcd97ae5a805931042b8
-%define dynarmic_commit 57af72a567454b93c757e087b4510a24b81911b1
+%define dynarmic_version 6.2.3
 %define sirit_commit aa292d56650bc28f2b2d75973fab2e61d0136f9c
 %define mbedtls_commit 8c88150ca139e06aa2aae8349df8292a88148ea1
 %define xbyak_version 5.96
 %define vulkan_headers_version 1.3.213
+%define enet_commit 39a72ab1990014eb399cee9d538fd529df99c6a0
+%define cpp_jwt_commit e12ef06218596b52d9b5d6e1639484866a8e7067
 %define sanitizers_cmake_commit aab6948fa863bc1cbe5d0850bc46b9ef02ed4c1a
 %define spirv_headers_commit a3fdfe81465d57efc97cfd28ac6c8190fb31a6c8
 
 Name: yuzu
-Version: 1040
+Version: 1139
 Release: alt1
 
 Summary: Nintendo Switch emulator/debugger
@@ -33,8 +35,8 @@ Source1: inih-%inih_version.tar
 Source2: cpp-httplib-%cpp_httplib_commit.tar
 # https://github.com/mozilla/cubeb/archive/%cubeb_commit/cubeb-%cubeb_commit.tar.gz
 Source3: cubeb-%cubeb_commit.tar
-# https://github.com/merryhime/dynarmic/archive/%dynarmic_commit/dynarmic-%dynarmic_commit.tar.gz
-Source4: dynarmic-%dynarmic_commit.tar
+# https://github.com/merryhime/dynarmic/archive/%dynarmic_version/dynarmic-%dynarmic_version.tar.gz
+Source4: dynarmic-%dynarmic_version.tar
 # https://github.com/ReinUsesLisp/sirit/archive/%sirit_commit/sirit-%sirit_commit.tar.gz
 Source5: sirit-%sirit_commit.tar
 # https://github.com/yuzu-emu/mbedtls/archive/%mbedtls_commit/mbedtls-%mbedtls_commit.tar.gz
@@ -43,12 +45,14 @@ Source6: mbedtls-%mbedtls_commit.tar
 Source7: xbyak-%xbyak_version.tar
 # https://github.com/KhronosGroup/Vulkan-Headers/archive/v%vulkan_headers_version/Vulkan-Headers-%vulkan_headers_version.tar.gz
 Source8: Vulkan-Headers-%vulkan_headers_version.tar
+# https://github.com/lsalzman/enet/archive/%enet_commit/enet-%enet_commit.tar.gz
+Source9: enet-%enet_commit.tar 
+# https://github.com/arun11299/cpp-jwt/archive/%cpp_jwt_commit/cpp-jwt-%cpp_jwt_commit.tar.gz
+Source10: cpp-jwt-%cpp_jwt_commit.tar
 # https://github.com/arsenm/sanitizers-cmake/archive/%sanitizers_cmake_commit/sanitizers-cmake-%sanitizers_cmake_commit.tar.gz
-Source9: sanitizers-cmake-%sanitizers_cmake_commit.tar
+Source11: sanitizers-cmake-%sanitizers_cmake_commit.tar
 # https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_commit/SPIRV-Headers-%spirv_headers_commit.tar.gz
-Source10: SPIRV-Headers-%spirv_headers_commit.tar
-
-Patch0: %name-compile-alt.patch
+Source12: SPIRV-Headers-%spirv_headers_commit.tar
 
 BuildRequires: boost-asio-devel
 BuildRequires: boost-context-devel
@@ -66,7 +70,6 @@ BuildRequires: libfmt-devel
 BuildRequires: libjack-devel
 BuildRequires: liblz4-devel
 BuildRequires: libopus-devel
-BuildRequires: libpulseaudio-devel
 BuildRequires: libspeexdsp-devel
 BuildRequires: libswscale-devel
 BuildRequires: libusb-devel
@@ -76,6 +79,7 @@ BuildRequires: nlohmann-json-devel
 BuildRequires: python-modules-encodings
 BuildRequires: python3-dev
 BuildRequires: python3-module-mpl_toolkits
+BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: zlib-devel
 
@@ -83,17 +87,18 @@ BuildRequires: zlib-devel
 %name is an open source Nintendo Switch emulator/debugger.
 
 %prep
-%setup -n %name-mainline-mainline-0-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
-%patch0 -p1
+%setup -n %name-mainline-mainline-0-%version -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10 -b 11 -b 12
 
 %__mv -Tf ../inih-%inih_version externals/inih/inih
 %__mv -Tf ../cpp-httplib-%cpp_httplib_commit externals/cpp-httplib
 %__mv -Tf ../cubeb-%cubeb_commit externals/cubeb
-%__mv -Tf ../dynarmic-%dynarmic_commit externals/dynarmic
+%__mv -Tf ../dynarmic-%dynarmic_version externals/dynarmic
 %__mv -Tf ../sirit-%sirit_commit externals/sirit
 %__mv -Tf ../mbedtls-%mbedtls_commit externals/mbedtls
 %__mv -Tf ../xbyak-%xbyak_version externals/xbyak
 %__mv -Tf ../Vulkan-Headers-%vulkan_headers_version externals/Vulkan-Headers
+%__mv -Tf ../enet-%enet_commit externals/enet
+%__mv -Tf ../cpp-jwt-%cpp_jwt_commit externals/cpp-jwt
 %__mv -Tf ../sanitizers-cmake-%sanitizers_cmake_commit externals/cubeb/cmake/sanitizers-cmake
 %__mv -Tf ../SPIRV-Headers-%spirv_headers_commit externals/sirit/externals/SPIRV-Headers
 
@@ -128,12 +133,16 @@ src/common/scm_rev.cpp.in
 %doc CONTRIBUTING.md README.md
 %_bindir/%name
 %_bindir/%name-cmd
+%_bindir/%name-room
 %_desktopdir/org.%{name}_emu.%name.desktop
 %_datadir/metainfo/org.%{name}_emu.%name.metainfo.xml
 %_datadir/mime/packages/org.%{name}_emu.%name.xml
 %_iconsdir/hicolor/scalable/apps/org.%{name}_emu.%name.svg
 
 %changelog
+* Sun Aug 21 2022 Nazarov Denis <nenderus@altlinux.org> 1139-alt1
+- Version 1139
+
 * Thu Jun 02 2022 Nazarov Denis <nenderus@altlinux.org> 1040-alt1
 - Version 1040
 
