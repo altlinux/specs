@@ -1,6 +1,6 @@
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
-Version: 4.9.5
+Version: 4.10.5
 Release: alt1
 Group: Sciences/Mathematics
 License: GPLv2
@@ -112,6 +112,9 @@ rm -f %buildroot%_libdir/*.jl
 
 
 %changelog
+* Sun Aug 21 2022 Vladislav Zavjalov <slazav@altlinux.org> 4.10.5-alt1
+- New version
+
 * Mon Mar 21 2022 Andrey Cherepanov <cas@altlinux.org> 4.9.5-alt1
 - New version
 - Add watch file
