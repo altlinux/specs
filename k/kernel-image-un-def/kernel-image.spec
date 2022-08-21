@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	5.18
-%define kernel_sublevel .18
+%define kernel_sublevel .19
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -612,6 +612,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sun Aug 21 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.18.19-alt1
+- v5.18.19 (2022-08-21).
+
 * Wed Aug 17 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.18.18-alt1
 - v5.18.18 (2022-08-17).
 - config: Make landlock, lockdown, and bpf LSMs available by default.
