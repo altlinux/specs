@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 146
+%define centos_release 150
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -633,6 +633,38 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sun Aug 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.150-alt1.el9
+- Updated to kernel-5.14.0-150.el9 (fixes: CVE-2022-2590):
+  + CNB: rebase/update netdevsim for RHEL 9.1
+  + Documentation: Describe net.ipv4.tcp_reflect_tos.
+  + drm/amd/display: Fix new dmub notification enabling in DM
+  + fs: dlm: fix potential recursive spinlock issue
+  + In ACPI v5.18, revert explicit ghes_init() calls to avoid conflict with edac
+  + KVM: selftests: Disable rseq_test for all architectures
+  + KVM: x86: nSVM: implement nested VMLOAD/VMSAVE
+  + megaraid: fix for a cpu hotplug
+  + mm: Fix CVE-2022-2590 by reverting "mm/shmem: unconditionally set pte dirty in mfill_atomic_install_pte"
+  + netfilter: conntrack: rebase to 5.19
+  + nfsd: eliminate the NFSD_FILE_BREAK_* flags
+  + nfs: fix hung DIO writes in -ENOSPC conditions
+  + sfc: fix kernel panic when creating VF
+  + SUNRPC don't resend a task on an offlined transport
+  + vmxnet3: do not reschedule napi for rx processing
+
+* Fri Aug 19 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.148-alt1.el9
+- Updated to kernel-5.14.0-148.el9 (fixes: CVE-2022-21499):
+  + fs: dlm: change posix lock sigint handling
+  + fs: dlm: make dlm_callback_resume quite
+  + lockdown: also lock down previous kgdb use
+  + perf: fix endless loop in BPF tests
+  + scsi: qla2xxx: Fix erroneous mailbox timeout after PCI error injection
+  + vdpasim: control virtqueue support
+
+* Thu Aug 18 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.147-alt1.el9
+- Updated to kernel-5.14.0-147.el9:
+  + ALSA: backport fixes for RHEL 9.1
+  + ALSA: backport for RHEL 9.1
+
 * Wed Aug 17 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.146-alt1.el9
 - Updated to kernel-5.14.0-146.el9:
   + bnxt_en: additional commits for RHEL9.1
