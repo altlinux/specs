@@ -3,8 +3,8 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.4.3
-Release: alt1.1
+Version: 0.4.4
+Release: alt1
 
 Summary: A tool for testing Jupyter kernels
 
@@ -15,6 +15,8 @@ URL:     https://github.com/jupyter/jupyter_kernel_test
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+
+BuildRequires: python3-module-flit
 
 %if_with check
 BuildRequires: python3-module-jupyter_client
@@ -35,10 +37,10 @@ successful code execution and conformance with the Jupyter Messaging Protocol.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 %__python3 test_ipykernel.py
@@ -46,9 +48,12 @@ successful code execution and conformance with the Jupyter Messaging Protocol.
 %files
 %doc *.md *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sun Aug 21 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.4-alt1
+- Automatically updated to 0.4.4.
+
 * Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt1.1
 - Fixed check section.
 
