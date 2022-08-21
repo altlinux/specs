@@ -4,7 +4,7 @@
 %define _vstring %(echo %{version} |tr -d ".")
 
 Name: shotcut
-Version: 20.09.27
+Version: 22.06.23
 Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
@@ -16,9 +16,9 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 ExcludeArch: armh
 
 Source: %name-%version.tar
-# Melt patch /usr/bin/melt
-Patch: mlt_path.patch
+Patch1: shotcut-install-libdir.patch
 
+BuildRequires(pre): cmake
 BuildRequires: gcc-c++
 BuildRequires: desktop-file-utils
 BuildRequires: libappstream-glib
@@ -35,11 +35,14 @@ BuildRequires: pkgconfig(Qt5WebSockets)
 BuildRequires: pkgconfig(Qt5X11Extras)
 BuildRequires: pkgconfig(Qt5Xml)
 BuildRequires: qt5-linguist
-BuildRequires: pkgconfig(mlt++)
+BuildRequires: mlt7xx-devel
 BuildRequires: pkgconfig(mlt-framework)
 BuildRequires: libx264-devel
 BuildRequires: pkgconfig(sdl2)
 BuildRequires: ImageMagick-tools
+BuildRequires: qt5-quickcontrols2-devel
+BuildRequires: qt5-tools-devel
+BuildRequires: libfftw3-devel
 
 Requires: %name-data = %version
 Requires: mlt-utils
@@ -50,9 +53,12 @@ Requires: lame
 Requires: ffmpeg ffprobe ffplay
 Requires: libSDL2
 # see bug 34876
-Requires: qt5-quickcontrols
+Requires: qt5-quickcontrols2
 # see bug 34877
 Requires: qt5-graphicaleffects
+
+Provides: %name-data = %EVR
+Obsoletes: %name-data < %EVR
 
 %description
 These are all currently implemented features:
@@ -99,18 +105,9 @@ These are all currently implemented features:
  * UI themes/skins: native-OS look and custom dark and light;
  * control video zoom in the player.
 
-%package data
-Summary: Data files for %name
-Group: Video
-BuildArch: noarch
-
-%description data
-Data files for %name
-
 %prep
 %setup
-%patch -p0
-
+%patch1 -p1
 # Create version.json from current version
 echo "{" > version.json
 echo " \"version_number\": %{_vstring}02," >> version.json
@@ -123,17 +120,11 @@ echo "" >> version.json
 rm -rf drmingw
 
 %build
-lrelease-qt5 translations/*.ts
-export _VSTRING="%{version}.02"
-%qmake_qt5 \
-    QMAKE_CXXFLAGS=-DSHOTCUT_NOUPGRADE \
-    _VSTRING="%{version}.02" \
-    PREFIX=%buildroot%_prefix
-
-%make_build
+%cmake -DCMAKE_INSTALL_LIBDIR=%_lib
+%cmake_build
 
 %install
-%makeinstall_std
+%cmake_install
 chmod a+x %buildroot/%_datadir/shotcut/qml/export-edl/rebuild.sh
 
 for i in 16 32 48; do
@@ -143,18 +134,21 @@ for i in 16 32 48; do
 done
 
 %files
-%_bindir/%name
-%_desktopdir/org.shotcut.Shotcut.desktop
 %doc COPYING README.md
+%_bindir/%name
+%_libdir/*.so*
+%_datadir/%name
+%_desktopdir/org.shotcut.Shotcut.desktop
 %_iconsdir/hicolor/*/apps/org.shotcut.Shotcut.png
-%_datadir/metainfo/org.shotcut.Shotcut.appdata.xml
 %_datadir/mime/packages/org.shotcut.Shotcut.xml
+%_datadir/metainfo/org.shotcut.Shotcut.metainfo.xml
 %_man1dir/*
 
-%files data
-%_datadir/%name
-
 %changelog
+* Sun Aug 21 2022 Andrey Cherepanov <cas@altlinux.org> 22.06.23-alt1
+- New version (ALT #42375).
+- Joined %name-data in main package.
+
 * Thu Oct 01 2020 Sergey V Turchin <zerg@altlinux.org> 20.09.27-alt1
 - new version
 
