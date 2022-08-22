@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name MetaCPAN-Client
 %define _without_test 1
 # BEGIN SourceDeps(oneline):
@@ -5,18 +6,17 @@ BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl
 #BuildRequires: perl(HTTP/Tiny/Mech.pm)
 #BuildRequires: perl(WWW/Mechanize/Cached.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.029000
-Release: alt2
+Version: 2.030000
+Release: alt1
 Summary: A comprehensive, DWIM-featured client to the MetaCPAN API
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/M/MI/MICKEY/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MI/MICKEY/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -32,10 +32,13 @@ From summary: %summary
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes examples
+%doc README Changes examples
 %perl_vendor_privlib/M*
 
 %changelog
+* Mon Aug 22 2022 Igor Vlasenko <viy@altlinux.org> 2.030000-alt1
+- automated CPAN update
+
 * Wed Feb 17 2021 Igor Vlasenko <viy@altlinux.ru> 2.029000-alt2
 - to Sisyphus as Crypt-CBC dep
 
