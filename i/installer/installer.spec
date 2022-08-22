@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,11 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Aug 22 2022 Anton Midyukov <antohami@altlinux.org> 1.12.1-alt1
+- 10-disk.sh: add to filter partition from which iso was mounted with
+  propagator
+- install2-sh-functions: fix $image_url for booting from iso files
+
 * Fri Aug 19 2022 Anton Midyukov <antohami@altlinux.org> 1.12.0-alt1
 - 99-cdrom.sh: do nothing if /dev/loop0 is not linked with
   $image_dir/$stagename
