@@ -1,18 +1,18 @@
+%define _unpackaged_files_terminate_build 1
 # we need a font
 BuildRequires: fonts-ttf-liberation
-%define _unpackaged_files_terminate_build 1
 %define module GraphViz
 
 Name: perl-%module
-Version: 2.24
-Release: alt2
+Version: 2.25
+Release: alt1
 
 Summary: Interface to the GraphViz graphing tool
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/authors/id/R/RS/RSAVAGE/GraphViz-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/E/ET/ETJ/%{module}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -27,7 +27,7 @@ undirected graphs in a variety of formats (PostScript, PNG, etc.) using the
 "dot", "neato", "twopi", "circo" and "fdp" programs from the GraphViz project.
 
 %prep
-%setup -n %module-%version
+%setup -q -n %{module}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,10 +36,14 @@ undirected graphs in a variety of formats (PostScript, PNG, etc.) using the
 %perl_vendor_install
 
 %files
+%doc Changes README LICENSE examples
 %perl_vendor_privlib/GraphViz*
 %perl_vendor_privlib/Devel/GraphViz*
 
 %changelog
+* Mon Aug 22 2022 Igor Vlasenko <viy@altlinux.org> 2.25-alt1
+- automated CPAN update
+
 * Mon Apr 04 2022 Igor Vlasenko <viy@altlinux.org> 2.24-alt2
 - fixed build
 
