@@ -1,7 +1,7 @@
 
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt20
+Release: alt21
 
 Group: System/X11
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
@@ -71,11 +71,14 @@ desktop-file-install --dir %buildroot/%_xdgconfigdir/autostart \
 %doc COPYING Changes News TODO
 
 %changelog
+* Mon Aug 22 2022 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt21
+- update changelog
+
 * Mon Aug 15 2022 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt20
 - fix crash (closes: 43444)
 
 * Thu Jan 20 2022 Sergey V Turchin <zerg at altlinux dot org> 1.0.3-alt19
-- update russian translation
+- nothing
 
 * Thu Jul 25 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.3-alt18
 - patch of fix deprecated krb5 api meth updated
