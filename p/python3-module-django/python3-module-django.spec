@@ -9,7 +9,7 @@
 
 Summary: A high-level Python 3 Web framework that encourages rapid development and clean, pragmatic design.
 Name: python3-module-%oname
-Version: %branch.13
+Version: %branch.15
 Release: alt1
 Source0: %origname-%version.tar
 License: BSD
@@ -157,8 +157,8 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %_man1dir/*
 %_datadir/bash-completion/completions/*
 %python3_sitelibdir/*
-#exclude %python3_sitelibdir/%oname/core/handlers/modpython.py*
-#exclude %python3_sitelibdir/%oname/contrib/auth/handlers/modpython.py*
+#exclude %%python3_sitelibdir/%%oname/core/handlers/modpython.py*
+#exclude %%python3_sitelibdir/%%oname/contrib/auth/handlers/modpython.py*
 
 %exclude %python3_sitelibdir/%oname/db/backends/mysql
 %exclude %python3_sitelibdir/%oname/db/backends/postgresql
@@ -181,6 +181,12 @@ LANG="en_US.UTF-8" python3 runtests.py --settings=test_sqlite --verbosity=2 --pa
 %python3_sitelibdir/%oname/db/backends/sqlite3
 
 %changelog
+* Mon Aug 22 2022 Alexey Shabalin <shaba@altlinux.org> 3.2.15-alt1
+- new version 3.2.15
+- Fixes for the following security vulnerabilities:
+  + CVE-2022-34265 Potential SQL injection via Trunc(kind) and Extract(lookup_name) arguments.
+  + CVE-2022-36359 Potential reflected file download vulnerability in FileResponse.
+
 * Mon Apr 11 2022 Anton Farygin <rider@altlinux.ru> 3.2.13-alt1
 - 3.2.12 -> 3.2.13
 - Fixes:
