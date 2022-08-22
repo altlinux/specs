@@ -1,12 +1,12 @@
 Name: xfdesktop
-Version: 4.16.0
-Release: alt2
+Version: 4.17.0
+Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
 License: GPLv2+
 Group: Graphical desktop/XFce
-Url: https://www.xfce.org/
+Url: https://docs.xfce.org/xfce/xfdesktop/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/xfce/xfdesktop.git
@@ -38,7 +38,6 @@ Requires: exo-utils
 %xfce4reconf
 %configure \
 	--enable-maintainer-mode \
-	--enable-gio-unix \
 	--enable-notifications \
 	--enable-thunarx \
 	--enable-desktop-icons \
@@ -61,6 +60,11 @@ Requires: exo-utils
 %_datadir/backgrounds/xfce
 
 %changelog
+* Mon Aug 22 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
+- Dropped obsoleted configure option.
+- Updated Url tag.
+- Updated to 4.17.0.
+
 * Thu Apr 28 2022 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt2
 - Fixed Russian translation (closes: #42521).
 
