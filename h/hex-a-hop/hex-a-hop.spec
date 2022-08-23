@@ -1,25 +1,23 @@
 Name: hex-a-hop
-Version: 1.0.0
-Release: alt6
+Version: 1.1.0.76
+Release: alt1
 
 Summary: Puzzle game based on hexagonal tiles
 License: GPLv2+
 Group: Games/Puzzles
 
-Url: http://www.aceinternet.co.uk/~mokona/
+Url: https://sourceforge.net/projects/hexahop/
 Source: %name.tar.gz
-Patch: %name.gcc44.patch
-# http://ftp.de.debian.org/debian/pool/main/h/hex-a-hop/hex-a-hop_0.0.20070315.orig.tar.gz
-# svn export svn://svn.debian.org/svn/pkg-games/packages/trunk/hex-a-hop/ --force
-Patch2: hex-a-hop-1.0.0-fix-translates.patch
+# git clone https://git.code.sf.net/p/hexahop/code hex-a-hop
+# git-describe --tags
 
 #ExclusiveArch: %ix86 x86_64 %e2k
-Packager: Fr. Br. George <george@altlinux.ru>
-
-# Automatically added by buildreq on Fri Aug 01 2008
-BuildRequires: gcc-c++ libSDL-devel libSDL_pango-devel po4a desktop-file-utils
 
 Summary(ru_RU.UTF-8): Игра-головоломка с шестиугольными плитками
+
+# Automatically added by buildreq on Tue Aug 23 2022
+# optimized out: GraphicsMagick GraphicsMagick-common fontconfig glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libSDL-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel perl pkg-config python3 python3-base sh4 shared-mime-info xz
+BuildRequires: ImageMagick-tools gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_pango-devel
 
 %description
 Hex-a-hop is a puzzle game based on hexagonal tiles. There is no time
@@ -39,33 +37,40 @@ Hex-a-hop - это интересная игра-головоломка, в ко
 
 %prep
 %setup -n %name
-for P in `cat debian/patches/series`; do patch -p1 < debian/patches/$P; done
-%patch -p1
-%patch2 -p1
+# for p in debian/patches/*.diff; do patch -dsrc -p1 < $p; done
+
+%define ICONSIZES 128 192 22 24 32 36 48 64 72 96
 
 %build
-%make CXXFLAGS="-Wall -W -g -DUSE_GETTEXT" NAME="%name" DATA_DIR="%_gamesdatadir/%name"
-%make CXXFLAGS="-Wall -W -g -DUSE_GETTEXT" NAME="%name" DATA_DIR="%_gamesdatadir/%name" -C debian/i18n
+%autoreconf
+%configure
+%make_build
+for s in %ICONSIZES; do
+        convert -resize $s data/%name.png $s.png
+done
 
 %install
-mkdir -p %buildroot%_bindir %buildroot%_gamesdatadir/%name %buildroot%_desktopdir/  %buildroot%_niconsdir/
-install %name %buildroot%_bindir/
-desktop-file-install --vendor "" --dir %buildroot%_desktopdir debian/%name.desktop
-install debian/%name.xpm %buildroot%_niconsdir/
-cp -a levels.dat graphics %buildroot%_gamesdatadir/%name/
-%makeinstall -C debian/i18n LOCALEDIR=%buildroot%_datadir/locale/ MANDIR=%buildroot%_mandir/
+%makeinstall_std
+for s in %ICONSIZES; do
+        install -D $s.png %buildroot%_iconsdir/hicolor/${s}x${s}/apps/%name.png
+done
+install -D data/%name-16.png %buildroot%_miconsdir/%name.png
 %find_lang  %name
 
 %files -f %name.lang
-%doc debian/hints.html debian/changelog
+%doc %_defaultdocdir/%name/hints.html
+%doc README* TODO* AUTHORS*
 %_bindir/%name
-%_datadir/locale/*/*/*
-%_gamesdatadir/%name
+%_datadir/%name
 %_desktopdir/*
-%_niconsdir/*
+%_iconsdir/hicolor/*/apps/*
 %_mandir/*/*
+%_datadir/appdata/*
 
 %changelog
+* Tue Aug 23 2022 Fr. Br. George <george@altlinux.org> 1.1.0.76-alt1
+- update to last git (1.1.0 + 76 ahead)
+
 * Fri Jan 28 2022 Alexander Danilov <admsasha@altlinux.org> 1.0.0-alt6
 - fixed FTBFS (corrected translations)
 
