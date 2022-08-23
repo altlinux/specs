@@ -1,5 +1,5 @@
 Name: python3-module-pychromecast
-Version: 12.1.2
+Version: 12.1.4
 Release: alt1
 
 Summary: Python library to communicate with the Google Chromecast
@@ -10,7 +10,9 @@ Url: https://pypi.org/project/PyChromecast/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 %summary
@@ -19,16 +21,19 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/pychromecast
-%python3_sitelibdir/PyChromecast-%version-*-info
+%python3_sitelibdir/PyChromecast-%version.dist-info
 
 %changelog
+* Tue Aug 23 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.1.4-alt1
+- 12.1.4 released
+
 * Wed May 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.1.2-alt1
 - 12.1.2 released
 
