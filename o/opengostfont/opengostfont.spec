@@ -1,6 +1,6 @@
 Name: opengostfont
 Version: 0.3
-Release: alt3
+Release: alt4
 
 Summary: Open-source version of the fonts by Russian standard GOST 2.304-81
 License: OFL-1.1
@@ -25,6 +25,8 @@ GOST 2.304-81 "Letters for drawings"
 %package -n fonts-ttf-opengost
 Group: System/Fonts/True type
 Summary: True Type version of the fonts by Russian standard GOST 2.304-81
+Provides: opengostfont
+
 %description -n fonts-ttf-opengost
 True Type open-source version of the fonts by Russian standard
 GOST 2.304-81 "Letters for drawings"
@@ -32,6 +34,7 @@ GOST 2.304-81 "Letters for drawings"
 %package -n fonts-otf-opengost
 Group: System/Fonts/True type
 Summary: Open Type version of the fonts by Russian standard GOST 2.304-81
+
 %description -n fonts-otf-opengost
 Open Type open-source version of the fonts by Russian standard
 GOST 2.304-81 "Letters for drawings"
@@ -51,9 +54,6 @@ make all
 %otf_fonts_install openfont
 } || exit 1 )
 
-%files
-%doc LICENSE
-
 %files -n fonts-ttf-opengost -f %name-ttf-%version/openfont.files
 %doc LICENSE
 
@@ -61,6 +61,9 @@ make all
 %doc LICENSE
 
 %changelog
+* Tue Aug 23 2022 Fr. Br. George <george@altlinux.org> 0.3-alt4
+- Remove metapackage (Closes: #42464)
+
 * Sat Apr 25 2020 Fr. Br. George <george@altlinux.ru> 0.3-alt3
 - Switch to python3
 
