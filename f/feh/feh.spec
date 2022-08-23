@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: feh
-Version: 3.9
+Version: 3.9.1
 Release: alt1
 Summary: Image viewer using Imlib 2
 Group: Graphics
@@ -58,6 +58,9 @@ export PREFIX="%_prefix"
 %doc COPYING
 
 %changelog
+* Tue Aug 23 2022 Ilya Mashkin <oddity@altlinux.ru> 3.9.1-alt1
+- 3.9.1
+
 * Tue Jun 14 2022 Ilya Mashkin <oddity@altlinux.ru> 3.9-alt1
 - 3.9
 - Build with enabled curl/libmagic/xinerama
