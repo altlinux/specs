@@ -1,5 +1,5 @@
 Name:     guest-account
-Version:  1.0
+Version:  1.1
 Release:  alt1
 
 Summary:  Guest session support in LightDM
@@ -35,6 +35,9 @@ install -Dm755 %SOURCE0 %buildroot%_sbindir/%name
 %_sbindir/%name
 
 %changelog
+* Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
+- Set empty password to avoid locking guest out of itself (ALT #43570).
+
 * Thu Oct 13 2016 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - Initial build in Sisyphus
 
