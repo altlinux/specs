@@ -1,6 +1,6 @@
 Name: devscripts
 Version: 2.22.2
-Release: alt1
+Release: alt2
 Source: %{name}_%version.tar.xz
 Source1: devscripts-po4a.conf
 Patch: devscripts-uscan-no_ssl_namecheck.patch
@@ -81,6 +81,10 @@ install -D cowpoke.conf %buildroot%_sysconfdir/cowpoke.conf
 cp -r lib/Devscripts %buildroot/%perl_vendorlib/
 touch %buildroot%_sysconfdir/cvsdeb.conf
 
+# Fix dmd conflict
+mv %buildroot/%_man1dir/dget.1 %buildroot/%_man1dir/dget-debian.1
+mv %buildroot/%_bindir/dget %buildroot/%_bindir/dget-debian
+
 %files
 %doc README*
 %exclude %_defaultdocdir/%name
@@ -106,6 +110,9 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Tue Aug 23 2022 Fr. Br. George <george@altlinux.org> 2.22.2-alt2
+- Rename rarely used dget in the sake of dmd (Closes: #43534)
+
 * Mon Jun 20 2022 Fr. Br. George <george@altlinux.org> 2.22.2-alt1
 - Autobuild version bump to 2.22.2
 
