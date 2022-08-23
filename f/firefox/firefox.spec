@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        103.0.1
+Version:        104.0
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -41,10 +41,10 @@ Patch012: 0012-build-Disable-Werror.patch
 %set_verify_elf_method relaxed
 
 %define gst_version   1.0
-%define nspr_version  4.33
-%define nss_version   3.77
-%define rust_version  1.60.0
-%define cargo_version 1.60.0
+%define nspr_version  4.34.1
+%define nss_version   3.81
+%define rust_version  1.63.0
+%define cargo_version 1.63.0
 %define llvm_version  12.0
 
 ExcludeArch: ppc64le
@@ -444,6 +444,16 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Aug 16 2022 Alexey Gladkov <legion@altlinux.ru> 104.0-alt1
+- New release (104.0).
+- Security fixes:
+  + CVE-2022-38472: Address bar spoofing via XSLT error handling
+  + CVE-2022-38473: Cross-origin XSLT Documents would have inherited the parent's permissions
+  + CVE-2022-38474: Recording notification not shown when microphone was recording on Android
+  + CVE-2022-38475: Attacker could write a value to a zero-length array
+  + CVE-2022-38477: Memory safety bugs fixed in Firefox 104 and Firefox ESR 102.2
+  + CVE-2022-38478: Memory safety bugs fixed in Firefox 104, Firefox ESR 102.2, and Firefox ESR 91.13
+
 * Mon Aug 01 2022 Alexey Gladkov <legion@altlinux.ru> 103.0.1-alt1
 - New release (103.0.1).
 
