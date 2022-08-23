@@ -10,7 +10,7 @@
 
 Name: grub
 Version: 2.06
-Release: alt7
+Release: alt8
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -62,10 +62,20 @@ Patch23: grub-2.06-debian-grub-install-removable-shim.patch
 Patch24: grub-2.04-alt-grub-install-no-fallback-for-removable.patch
 Patch25: grub-2.04-alt-add-file-with-Russian-translation.patch
 Patch26: grub-2.04-alt-add-strings-and-translation-for-OS-ALT.patch
-Patch27: grub-2.06-alt-fix-build-with-new-gnulib.patch
 Patch28: grub-2.06-alt-gfxterm-backspace-workaround.patch
 Patch29: grub-2.06-upstream-fs-xfs-Fix-unreadable-filesystem-with-v4-superblock.patch
 Patch30: grub-2.06-upstream-grub-mkconfig-Restore-umask-for-the-grub.cfg.patch
+# gnulib adoption
+Patch31: grub-2.06-upstream-0001-config.h.in-Use-visual-indentation.patch
+Patch32: grub-2.06-upstream-0002-config-Where-present-ensure-config-util.h-precedes-c.patch
+Patch33: grub-2.06-upstream-0003-gnulib-Drop-fix-base64.patch.patch
+Patch34: grub-2.06-upstream-0004-gnulib-Drop-no-abort.patch.patch
+Patch35: grub-2.06-upstream-0005-gnulib-Update-gnulib-version-and-drop-most-gnulib-pa.patch
+Patch36: grub-2.06-upstream-0006-gnulib-Handle-warnings-introduced-by-updated-gnulib.patch
+Patch37: grub-2.06-upstream-0007-configure-Fix-various-new-autotools-warnings.patch
+Patch38: grub-2.06-upstream-0008-lib-posix_wrap-errno.h-Add-__set_errno-macro.patch
+
+Patch39: grub-2.06-alt-util-grub.d-switch-from-fgrep-to-grep-F.patch
 
 # add a rhboot/grub-2.02-sb set of patches to ensure SecureBoot safe operation
 # refer to url:  https://github.com/rhboot/grub2/commits/grub-2.02-sb
@@ -235,10 +245,21 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch24 -p2
 %patch25 -p2
 %patch26 -p2
-%patch27 -p2
 %patch28 -p1
 %patch29 -p1
 %patch30 -p1
+
+# gnulib adoption
+%patch31 -p1
+%patch32 -p1
+%patch33 -p1
+%patch34 -p1
+%patch35 -p1
+%patch36 -p1
+%patch37 -p1
+%patch38 -p1
+
+%patch39 -p1
 
 #SB patches
 %patch101 -p1
@@ -513,6 +534,12 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Mon Aug 15 2022 Nikolai Kostrigin <nickel@altlinux.org> 2.06-alt8
+- fix FTBFS with new gnulib (upstream patchset)
+- grub(-efi): switch from 'egrep' to 'grep -E' in filetriggers (closes: #43329)
+- update os-alt patch: switch from 'fgrep' to 'grep -F'
+- add alt-util-grub.d-switch-from-fgrep-to-grep-F patch
+
 * Thu Feb 24 2022 Nikolai Kostrigin <nickel@altlinux.org> 2.06-alt7
 - grub-efi: improve RPM filetrigger and post install script to skip all
   actions in case of being invoked at package installing stage by OS installer
