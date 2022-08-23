@@ -1,7 +1,7 @@
 %define module_name     kvdo
 %define module_version  8.2.0.18
 %define module_release  alt1
-%define flavour         std-def
+%define flavour         un-def
 # Note: This project can only be built on x86_64, ppc, and aarch64.
 %define karch           x86_64 aarch64 ppc64le
 
@@ -22,7 +22,7 @@ Url: http://github.com/dm-vdo/kvdo
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires(pre): kernel-headers-modules-un-def
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release

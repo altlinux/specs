@@ -1,6 +1,6 @@
 Name: kvdo
-Version: 6.2.6.14
-Release: alt2
+Version: 8.2.0.18
+Release: alt1
 
 Summary: Kernel Modules for Virtual Data Optimizer
 License: GPL-2.0-only
@@ -35,6 +35,9 @@ install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/kernel-source-%na
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar
 
 %changelog
+* Tue Aug 23 2022 Alexey Shabalin <shaba@altlinux.org> 8.2.0.18-alt1
+- 8.2.0.18
+
 * Wed Apr 27 2022 Andrew A. Vasilyev <andy@altlinux.org> 6.2.6.14-alt2
 - fix build for 5.17
 

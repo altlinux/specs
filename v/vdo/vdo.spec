@@ -1,8 +1,7 @@
 %define _unpackaged_files_terminate_build 1
-%define _libexecdir %_usr/libexec
 
 Name: vdo
-Version: 6.2.6.14
+Version: 8.2.0.2
 Release: alt1
 
 Summary: Management tools for Virtual Data Optimizer
@@ -11,15 +10,11 @@ Group: System/Base
 
 Url: http://github.com/dm-vdo/vdo
 Source: %name-%version.tar
-Patch0: %name-%version.patch
-Patch1: vdo-6.2.4-e2k.patch
+#Patch0: %%name-%%version.patch
+Patch1: vdo-8.2.0.2-e2k.patch
 
 ExclusiveArch: x86_64 aarch64 ppc64le ppc64 s390 s390x %e2k
 
-Requires: lvm2
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 BuildRequires: libdevmapper-devel libdevmapper-event-devel
 BuildRequires: libuuid-devel libblkid-devel
 BuildRequires: zlib-devel
@@ -43,7 +38,7 @@ This package provides the user-space support tools for VDO.
 
 %prep
 %setup
-%patch0 -p1
+#%%patch0 -p1
 %patch1 -p1
 %ifarch %e2k
 # as of lcc 1.25.12
@@ -55,45 +50,27 @@ sed -i 's,-Werror,& -Wno-error=ignored-qualifiers,' utils/vdo/base/Makefile
 
 %install
 %make install DESTDIR=%buildroot INSTALLOWNER= name=%name \
-  bindir=%_bindir defaultdocdir=%_defaultdocdir libexecdir=%_libexecdir \
-  mandir=%_mandir presetdir=%_presetdir \
-  python3_sitelib=%python3_sitelibdir sysconfdir=%_sysconfdir \
-  unitdir=%_unitdir
+  bindir=%_bindir defaultdocdir=%_defaultdocdir \
+  mandir=%_mandir sysconfdir=%_sysconfdir
 
 # Fix installed
-mkdir -p %buildroot{%_udevrulesdir,%_datadir/bash-completion/completions}
-mv %buildroot%_sysconfdir/udev/rules.d/* %buildroot%_udevrulesdir/
+mkdir -p %buildroot%_datadir/bash-completion/completions
 mv %buildroot%_sysconfdir/bash_completion.d/* %buildroot%_datadir/bash-completion/completions/
 
-%post
-%post_service vdo
-
-%preun
-%preun_service vdo
-
 %files
-%_bindir/vdo
-%_bindir/vdo-by-dev
 %_bindir/vdodmeventd
 %_bindir/vdodumpconfig
 %_bindir/vdoforcerebuild
 %_bindir/vdoformat
 %_bindir/vdosetuuid
 %_bindir/vdostats
-%_libexecdir/vdoprepareforlvm
-%python3_sitelibdir/*
-%_unitdir/*
-%_presetdir/97-vdo.preset
-%_udevrulesdir/69-vdo-start-by-dev.rules
 %dir %_defaultdocdir/%name
 %doc %_defaultdocdir/%name/COPYING
 %_defaultdocdir/%name/examples
-%_man8dir/vdo.8*
 %_man8dir/vdodmeventd.8*
 %_man8dir/vdodumpconfig.8*
 %_man8dir/vdoforcerebuild.8*
 %_man8dir/vdoformat.8*
-%_man8dir/vdoprepareforlvm.8*
 %_man8dir/vdosetuuid.8*
 %_man8dir/vdostats.8*
 %_datadir/bash-completion/completions/vdo*
@@ -106,6 +83,7 @@ mv %buildroot%_sysconfdir/bash_completion.d/* %buildroot%_datadir/bash-completio
 %_bindir/vdodumpmetadata
 %_bindir/vdolistmetadata
 %_bindir/vdoreadonly
+%_bindir/vdorecover
 %_bindir/vdoregenerategeometry
 %_man8dir/adaptlvm.8*
 %_man8dir/vdoaudit.8*
@@ -114,9 +92,13 @@ mv %buildroot%_sysconfdir/bash_completion.d/* %buildroot%_datadir/bash-completio
 %_man8dir/vdodumpmetadata.8*
 %_man8dir/vdolistmetadata.8*
 %_man8dir/vdoreadonly.8*
+%_man8dir/vdorecover.8*
 %_man8dir/vdoregenerategeometry.8*
 
 %changelog
+* Tue Aug 23 2022 Alexey Shabalin <shaba@altlinux.org> 8.2.0.2-alt1
+- 8.2.0.2
+
 * Tue Apr 26 2022 Alexey Shabalin <shaba@altlinux.org> 6.2.6.14-alt1
 - 6.2.6.14
 
