@@ -1,5 +1,5 @@
 Name: installer-distro-alt-workstation
-Version: 10.0.0
+Version: 10.1.0
 Release: alt1
 
 Summary: Installer configuration (ALT Workstation)
@@ -24,7 +24,7 @@ Requires: installer-stage2
 # modules
 Requires: alterator-sysconfig
 Requires: alterator-datetime
-Requires: alterator-pkg
+Requires: installer-alterator-pkg
 Requires: alterator-vm
 Requires: alterator-notes
 Requires: x-cursor-theme-jimmac
@@ -73,6 +73,11 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Aug 24 2022 Mikhail Efremov <sem@altlinux.org> 10.1.0-alt1
+- stage2: Replace vm step with vm-ortodox.
+- stage2: Include user to fuse group.
+- stage2: Requires: alterator-pkg -> installer-alterator-pkg.
+
 * Tue Dec 07 2021 Mikhail Efremov <sem@altlinux.org> 10.0.0-alt1
 - stage3: Only require alterator-grub for arches that have grub.
 - stage3: Drop wrong installer-altlinux-generic-stage3 provides.
