@@ -19,9 +19,9 @@
 %def_with gtk3
 %def_with gtkmm3
 
-%global majorversion    12.0
-%global minorversion    5
-%global toolsbuild      19716617
+%global majorversion    12.1
+%global minorversion    0
+%global toolsbuild      20219665
 %global toolsversion    %majorversion.%minorversion
 %global toolsdaemon     vmtoolsd
 %global vgauthdaemon    vgauthd
@@ -316,6 +316,9 @@ fi
 
 
 %changelog
+* Wed Aug 24 2022 Andrew A. Vasilyev <andy@altlinux.org> 12.1.0-alt1
+- 12.1.0
+
 * Wed May 25 2022 Andrew A. Vasilyev <andy@altlinux.org> 12.0.5-alt1
 - 12.0.5
 - add salt-minion package
