@@ -1,12 +1,15 @@
 # git describe upstream/dolphin-emu | sed 's/-g[0-9a-f]*\(+*\)$/\1/'
-%define git_version 5.0-16380
+%define git_version 5.0-17243
 # git show-ref --heads --hash upstream/dolphin-emu
-%define git_commit 8335ec70e5fe253eb21509408ca6b5736ed57dfc
+%define git_commit b6ac63dc4767512aa53183fae3fa310883302260
 
 %define mgba_commit 40d4c430fc36caeb7ea32fd39624947ed487d2f2
+%define zlib_ng_commit a406284705a462939c7a634119884a31b87d6af9
+%define spirv_cross_version sdk-1.3.216.0
+%define libspng_commit dc5b1032c08efac68ad30170f7ccbf0aa8dd55c9
 
 Name: dolphin-emu
-Version: 5.0.16380
+Version: 5.0.17243
 Release: alt1
 
 Summary: The Gamecube / Wii Emulator
@@ -22,6 +25,12 @@ ExclusiveArch: x86_64 aarch64
 Source0: dolphin-%git_commit.tar
 # https://github.com/mgba-emu/mgba/archive/%mgba_commit/mgba-%mgba_commit.tar.gz
 Source1: mgba-%mgba_commit.tar
+# https://github.com/zlib-ng/zlib-ng/archive/%zlib_ng_commit/zlib-ng-%zlib_ng_commit.tar.gz
+Source2: zlib-ng-%zlib_ng_commit.tar
+# https://github.com/KhronosGroup/SPIRV-Cross/archive/%spirv_cross_version/SPIRV-Cross-%spirv_cross_version.tar.gz
+Source3: SPIRV-Cross-%spirv_cross_version.tar
+# https://github.com/randy408/libspng/archive/$libspng_commit/libspng-%libspng_commit.tar.gz
+Source4: libspng-%libspng_commit.tar
 
 Patch0: %name-alt-git.patch
 
@@ -75,10 +84,13 @@ Dolphin-emu is a emulator for Gamecube, Wii, Triforce that lets
 you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 
 %prep
-%setup -n dolphin-%git_commit -b 1
+%setup -n dolphin-%git_commit -b 1 -b 2 -b 3 -b 4
 %patch0 -p1
 
 %__mv -Tf ../mgba-%mgba_commit Externals/mGBA/mgba
+%__mv -Tf ../zlib-ng-%zlib_ng_commit Externals/zlib-ng/zlib-ng
+%__mv -Tf ../SPIRV-Cross-%spirv_cross_version Externals/spirv_cross/SPIRV-Cross
+%__mv -Tf ../libspng-%libspng_commit Externals/libspng/libspng
 
 %build
 %cmake .. \
@@ -107,6 +119,9 @@ you run Wii/GCN/Tri games on your Windows/Linux/Mac PC system.
 %config %_udevrulesdir/51-%name-usb-device.rules
 
 %changelog
+* Wed Aug 24 2022 Nazarov Denis <nenderus@altlinux.org> 5.0.17243-alt1
+- Version 5.0-17243
+
 * Wed May 25 2022 Nazarov Denis <nenderus@altlinux.org> 5.0.16380-alt1
 - Version 5.0-16380
 
