@@ -1,5 +1,5 @@
 Name: volumes-profile-alt-workstation
-Version: 0.1.1
+Version: 0.2
 Release: alt1
 
 Summary: Volumes description for ALT Workstation
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Aug 24 2022 Mikhail Efremov <sem@altlinux.org> 0.2-alt1
+- Use a common title for profiles.
+
 * Fri Aug 20 2021 Michael Shigorin <mike@altlinux.org> 0.1.1-alt1
 - E2K: increase /boot size from 512 Mb to 1 Gb for serviceability
 
