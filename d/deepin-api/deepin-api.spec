@@ -4,18 +4,13 @@
 # disable for bootstrapping
 %def_without check
 
-# out of memory on armv7hl
-%ifarch %arm
-%global _smp_mflags -j1
-%endif
-
 %global goipath github.com/linuxdeepin/dde-api
 %global forgeurl https://github.com/linuxdeepin/dde-api
 
 Name: deepin-api
-Version: 5.5.12
+Version: 5.5.30
 Release: alt1
-Summary: Go-lang bingding for dde-daemon
+Summary: Golang bingding for dde-daemon
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-api
@@ -23,8 +18,9 @@ Url: https://github.com/linuxdeepin/dde-api
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/dde-api-%version.tar.gz
+Source1: vendor.tar
 
-BuildRequires(pre): rpm-build-golang
+BuildRequires(pre): rpm-build-golang rpm-build-python3
 BuildRequires: libalsa-devel libcairo-devel libgio-devel libgtk+3-devel libgdk-pixbuf-devel libgudev-devel libcanberra-devel libpulseaudio-devel librsvg-devel libpoppler-glib-devel libpolkitqt5-qt5-devel libsystemd-devel libXfixes-devel libXcursor-devel libX11-devel libXi-devel deepin-gettext-tools libgdk-pixbuf-xlib-devel
 Requires: deepin-desktop-base rfkill
 Requires(pre): shadow-utils dbus-tools
@@ -58,22 +54,27 @@ sed -i 's|gobuild|.build|' Makefile
 sed -i 's|/etc/default/locale|%_datadir/locale|' \
     adjust-grub-theme/util.go \
     locale-helper/ifc.go
+sed -i 's|/usr/bin/sh|/bin/sh|' \
+    misc/scripts/deepin-boot-sound.sh
+tar -xf %SOURCE1
 
 %build
-export GOPATH="$(pwd)/.build:$(pwd)/vendor"
-export GO111MODULE=off
-# export GOFLAGS="-mod=vendor"
+export GOPATH="$(pwd)/vendor"
+export GOFLAGS="-mod=vendor"
 
-%make_build
+%make
 
 %install
-export BUILDDIR=$PWD/.build
 export GOPATH="%go_path"
 
 %makeinstall_std SYSTEMD_SERVICE_DIR="%_unitdir" -i
 
 # HOME directory for user deepin-sound-player
 mkdir -p %buildroot%_sharedstatedir/deepin-sound-player
+install -Dm644 archlinux/deepin-api.sysusers %buildroot/lib/sysusers.d/deepin-api.conf
+# Pack golang modules.
+mkdir -p %buildroot%go_path/src/%goipath/vendor/src/
+cp -a vendor/src/* %buildroot%go_path/src/%goipath/vendor/src/
 
 %files
 %doc README.md LICENSE
@@ -87,11 +88,15 @@ mkdir -p %buildroot%_sharedstatedir/deepin-sound-player
 %_unitdir/*.service
 %_var/lib/polkit-1/*
 %_datadir/dde-api/data/*
+/lib/sysusers.d/deepin-api.conf
 
 %files -n golang-%name-devel
 %go_path/src/%goipath
 
 %changelog
+* Wed Aug 24 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.30-alt1
+- New version (5.5.30).
+
 * Mon Apr 11 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.12-alt1
 - New version (5.5.12).
 
