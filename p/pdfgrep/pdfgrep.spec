@@ -1,6 +1,6 @@
 Name:     pdfgrep
 Version:  2.1.2
-Release:  alt1
+Release:  alt3
 
 Summary:  pdfgrep is a tool to search text in PDF files. It works similarly to grep.
 License:  GPLv2
@@ -34,5 +34,8 @@ BuildRequires: libpoppler-cpp-devel libgcrypt-devel libpcre-devel
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Aug 24 2022 Nikolay Burykin <bne@altlinux.org> 2.1.2-alt3
+- update Release to avoid conflicts with Autoimports repo
+
 * Thu Aug 18 2022 Nikolay Burykin <bne@altlinux.org> 2.1.2-alt1
 - Initial build for Sisyphus
