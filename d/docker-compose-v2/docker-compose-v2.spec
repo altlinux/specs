@@ -1,3 +1,5 @@
+%global pkg_name github.com/docker/compose/v2
+
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
@@ -8,7 +10,7 @@
 %define binname docker-compose
 
 Name:		docker-compose-v2
-Version:	2.9.0
+Version:	2.10.0
 Release:	alt1
 Summary:	Multi-container orchestration for Docker
 
@@ -38,20 +40,25 @@ create and start your application with a single command: docker compose up.
 %setup -q
 
 %build
-export GIT_TAG=%version
+export VERSION=%version
 export BUILD_TAGS=e2e,kube
-make -f builder.Makefile
+export PKG_NAME=%pkg_name
+
+go build -ldflags "-s -w -X ${PKG_NAME}/internal.Version=${VERSION}" -mod=vendor -tags "$BUILD_TAGS" -o %binname cmd/main.go
 
 %install
 # install main binary
 mkdir -p -- %buildroot%{_libexecdir}/docker/cli-plugins
-install -Dpm0755 bin/%binname %buildroot%{_libexecdir}/docker/cli-plugins
+install -Dpm0755 %binname %buildroot%{_libexecdir}/docker/cli-plugins
 
 %files
 %doc docs
 %{_libexecdir}/docker/cli-plugins/%binname
 
 %changelog
+* Wed Aug 24 2022 Vladimir Didenko <cow@altlinux.org> 2.10.0-alt1
+- New version
+
 * Tue Aug 2 2022 Vladimir Didenko <cow@altlinux.org> 2.9.0-alt1
 - New version
 
