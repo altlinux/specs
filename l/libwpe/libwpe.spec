@@ -4,7 +4,7 @@
 %def_enable docs
 
 Name: libwpe
-Version: 1.12.2
+Version: 1.12.3
 Release: alt1
 
 Summary: General-purpose library for the WPE-flavored port of WebKit
@@ -70,6 +70,9 @@ This package contains development documentation for %name.
 %endif
 
 %changelog
+* Wed Aug 24 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
+- 1.12.3
+
 * Mon Aug 01 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.2-alt1
 - 1.12.2 (ported to Meson build system)
 - new devel-doc subpackage
