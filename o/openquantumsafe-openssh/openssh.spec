@@ -5,8 +5,8 @@
 %set_verify_elf_method strict
 
 Name: openquantumsafe-openssh
-Version: 8.6p1.202201
-Release: alt2
+Version: 8.9p1.202208
+Release: alt1
 
 Summary: OQS-OpenSSH is a fork of OpenSSH that adds quantum-safe algorithms
 License: SSH-OpenSSH and ALT-Public-Domain and BSD-3-Clause and Beerware
@@ -34,7 +34,7 @@ Conflicts: openssh
 Requires: %name-clients = %EVR
 Requires: %name-server  = %EVR
 
-BuildRequires: liboqs-devel >= 0.7.1
+BuildRequires: liboqs-devel >= 0.7.2
 BuildRequires: libssl-devel
 BuildRequires: pam_userpass-devel
 %{?_with_zlib:BuildRequires: zlib-devel}
@@ -314,6 +314,11 @@ fi
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Thu Aug 11 2022 Vitaly Chikunov <vt@altlinux.org> 8.9p1.202208-alt1
+- OpenSSH source code synced with 8.9p1.
+- Remove Rainbow-I, SIKE (broken algorithms).
+- Re-enable Falcon (SIG).
+
 * Mon Jul 04 2022 Vitaly Chikunov <vt@altlinux.org> 8.6p1.202201-alt2
 - Disable Falcon (SIG) due to problems with liboqs on armh.
 

@@ -4,10 +4,10 @@
 %set_verify_elf_method strict
 
 Name: liboqs
-Version: 0.7.1
-Release: alt3
+Version: 0.7.2
+Release: alt1
 Summary: C library for prototyping and experimenting with quantum-resistant cryptography
-License: MIT
+License: MIT and BSD-3-Clause and Apache-2.0 and ALT-Public-Domain and CC0-1.0
 Group: System/Libraries
 Url: https://openquantumsafe.org/liboqs/
 Vcs: https://github.com/open-quantum-safe/liboqs/
@@ -18,6 +18,7 @@ BuildRequires(pre): rpm-macros-cmake
 BuildRequires(pre): rpm-macros-ninja-build
 BuildRequires: astyle
 BuildRequires: banner
+BuildRequires: chrpath
 BuildRequires: cmake
 BuildRequires: libssl-devel
 BuildRequires: ninja-build
@@ -32,9 +33,9 @@ applications quantum-safe cryptography to facilitate deployment and
 testing in real world contexts.
 
 Supported key encapsulation mechanisms (KEMs): BIKE, Classic McEliece,
-  FrodoKEM, HQC, Kyber, NTRU, NTRU-Prime, SABER, SIKE.
+  FrodoKEM, HQC, CRYSTALS-Kyber, NTRU, NTRU-Prime, SABER.
 
-Supported signature schemes: Dilithium, Falcon, Picnic, Rainbow,
+Supported signature schemes: CRYSTALS-Dilithium, Falcon, Picnic, Rainbow,
   SPHINCS+.
 
 Warning: WE DO NOT CURRENTLY RECOMMEND RELYING ON THIS LIBRARY IN A
@@ -52,25 +53,30 @@ Requires: %name = %EVR
 %description devel
 Development files for %name.
 
+%package tests
+Summary: Tests utilites from liboqs
+Group: Development/Tools
+Requires: %name = %EVR
+
+%description tests
+Tests that run different OQS algorithms.
+
 %prep
 %setup
-sed -i '\!DESTINATION!s!lib!%_libdir!' src/CMakeLists.txt
 # Add armh to the list of supported arm32 arches.
 sed -i '/CMAKE_SYSTEM_PROCESSOR.*armhf/s/")/|armv8l&/' CMakeLists.txt
 
 %build
 %define optflags_lto %nil
 %add_optflags %(getconf LFS_CFLAGS) -Wa,--noexecstack
+%ifarch armh
+# Workaround to https://github.com/open-quantum-safe/liboqs/issues/1288
+%add_optflags -fno-ipa-modref -fno-ipa-pure-const
+%endif
 # CMake options https://github.com/open-quantum-safe/liboqs/wiki/Customizing-liboqs
 # -DOQS_ENABLE_TEST_CONSTANT_TIME=ON -- does not pass.
-# -DOQS_ENABLE_KEM_HQC=OFF is due to https://github.com/open-quantum-safe/liboqs/issues/1244
-# -DOQS_ENABLE_SIG_FALCON=OFF is due to [armh] hasher-priv: master: idle time limit (3600 seconds) exceeded
 %cmake -B build \
 	-GNinja \
-	-DOQS_ENABLE_KEM_HQC=OFF \
-%ifarch armh
-	-DOQS_ENABLE_SIG_FALCON=OFF \
-%endif
 	-DCMAKE_ASM_FLAGS='%optflags' \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DBUILD_SHARED_LIBS=ON \
@@ -80,6 +86,15 @@ sed -i '/CMAKE_SYSTEM_PROCESSOR.*armhf/s/")/|armv8l&/' CMakeLists.txt
 
 %install
 %ninja_install -C build
+
+cp -a build/tests build-tests
+pushd build-tests
+find -maxdepth 1 -type f -perm -1 -printf '%%f\n' | xargs -i -n1 mv {} oqs-{}
+rename '_' '-' oqs-*_*
+rename '_' '-' oqs-*_*
+chrpath -k oqs-* | grep RPATH= | cut -d: -f1 | xargs chrpath -d
+install -Dp oqs-* -t %buildroot%_bindir
+popd
 
 %check
 banner tests
@@ -91,19 +106,29 @@ export LD_LIBRARY_PATH=$PWD/build/lib
 # https://github.com/open-quantum-safe/liboqs/wiki/Minimal-example-of-a-post-quantum-KEM
   cc -Ibuild/include -Lbuild/lib tests/example_kem.c -o example_kem -loqs
   ./example_kem
-%ninja_build -C build run_tests
+timeout 222 %ninja_build -C build run_tests
 
 %files
 %doc LICENSE.txt README.md RELEASE.md
 %_libdir/liboqs.so.*
 
 %files devel
-%doc LICENSE.txt README.md RELEASE.md
+%doc LICENSE.txt README.md RELEASE.md CONTRIBUTORS tests/example_*.c docs/algorithms
 %_includedir/oqs
 %_libdir/cmake/liboqs
 %_libdir/liboqs.so
 
+%files tests
+%_bindir/oqs-*
+
 %changelog
+* Mon Aug 22 2022 Vitaly Chikunov <vt@altlinux.org> 0.7.2-alt1
+- Updated to 0.7.2 (2022-08-21).
+- Re-enable HQC KEM since it's passed into fourth NIST PQC round. Note that
+  this is still non-constant time implementation.
+- Re-enable FALCON SIG on armh.
+- Rainbow-I and SIKE are removed by upstream due to being broken.
+
 * Sun Jul 03 2022 Vitaly Chikunov <vt@altlinux.org> 0.7.1-alt3
 - Disable HQC KEM as it does not build on GCC12 and isn't constant time.
 - Disable FALCON SIG on armh because it's so slow that tests didn't finish.
