@@ -7,13 +7,14 @@
 %def_enable p2p
 %def_enable docs
 %def_enable gtk_doc
+%def_disable selinux
 %def_with system_dbus_proxy
 %def_with systemd
 # cannot run bwrap in hasher
 %def_disable check
 
 Name: flatpak
-Version: 1.12.7
+Version: 1.14.0
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -37,6 +38,8 @@ Patch1: flatpak-1.12.2-alt-flatpak.sh.patch
 %define libarchive_ver 2.8.0
 %define zstd_ver 0.8.1
 %define malcontent_ver 0.4.0
+%define curl_ver 7.29
+%define appstream_ver 0.12
 
 Requires: lib%name = %version-%release
 Requires: %_bindir/fusermount
@@ -52,12 +55,13 @@ BuildRequires: gtk-doc gobject-introspection-devel
 BuildRequires: pkgconfig(gio-unix-2.0) >= %glib_ver
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libarchive) >= %libarchive_ver
-BuildRequires: pkgconfig(libsoup-2.4)
+BuildRequires: pkgconfig(libcurl) >= %curl_ver
 BuildRequires: pkgconfig(ostree-1) >= %ostree_ver
 BuildRequires: pkgconfig(polkit-gobject-1)
 BuildRequires: pkgconfig(libseccomp)
-BuildRequires: pkgconfig(appstream-glib)
+BuildRequires: pkgconfig(appstream) >= %appstream_ver
 BuildRequires: pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(gdk-pixbuf-2.0)
 BuildRequires: pkgconfig(xau)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(dconf)
@@ -70,6 +74,7 @@ BuildRequires: %_bindir/bwrap
 BuildRequires: bubblewrap >= %bwrap_ver
 %{?_with_system_dbus_proxy:BuildRequires: xdg-dbus-proxy}
 %{?_with_systemd:BuildRequires: pkgconfig(systemd)}
+%{?_enable_selinux:BuildRequires: selinux-policy-devel}
 BuildRequires: %_bindir/xsltproc
 %{?_enable_docs:BuildRequires: %_bindir/xmlto docbook-dtds docbook-style-xsl}
 BuildRequires: /proc
@@ -122,6 +127,7 @@ NOCONFIGURE=1 ./autogen.sh
            --with-system-bubblewrap \
            %{?_enable_docs:--enable-docbook-docs} \
            %{?_enable_gtk_doc:--enable-gtk-doc} \
+           %{?_enable_selinux:--enable-selinux-module} \
            %{subst_with systemd} \
            %if_with systemd
            --with-systemdsystemunitdir=%_unitdir \
@@ -156,7 +162,8 @@ install -d %buildroot%_localstatedir/lib/flatpak
 %_bindir/%name
 %_bindir/%name-bisect
 %_bindir/%name-coredumpctl
-%_datadir/bash-completion
+%_datadir/bash-completion/completions/%name
+%_datadir/fish/vendor_conf.d/%name.fish
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/system-services/%xdg_name.SystemHelper.service
 %_datadir/%name
@@ -213,6 +220,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Wed Aug 24 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
+- 1.14.0
+
 * Tue Mar 15 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.7-alt1
 - 1.12.7
 
