@@ -1,5 +1,5 @@
 Name: volumes-profile-regular
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Volumes description for ALT Linux Regular builds
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Aug 24 2022 Anton Midyukov <antohami@altlinux.org> 0.4.3-alt1
+- 10-vm-profile.sh: fix calculation $max_disk for multiple disks
+
 * Tue Mar 01 2022 Anton Midyukov <antohami@altlinux.org> 0.4.2-alt1
 - 10-vm-profile.sh: add support nvme*, mmc*
 
