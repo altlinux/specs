@@ -4,7 +4,7 @@
 
 Name: freeipa-healthcheck
 Version: 0.11
-Release: alt1
+Release: alt2
 
 Summary: Check the health of a FreeIPA installation
 License: GPLv3
@@ -14,16 +14,20 @@ Url: https://github.com/freeipa/freeipa-healthcheck
 Source0: %name-%version.tar.gz
 Patch: %name-%version-alt.patch
 
-ExcludeArch: %ix86
+# Dogtag PKI 11.2.1 requires Java 17 that is not built for armh
+ExcludeArch: %ix86 armh
 
 Requires: python3-module-%name = %EVR
 Requires: dogtag-pki-healthcheck
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-ipaserver
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
-BuildRequires: python3(tox)
+BuildRequires: python3-module-ipaserver
 BuildRequires: python3(pytest)
 BuildRequires: python3(pylint)
 BuildRequires: /proc
@@ -58,10 +62,10 @@ Core plugin system for %name.
 %patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 mkdir -p %buildroot%_sysconfdir/ipahealthcheck
 echo "[default]" > %buildroot%_sysconfdir/ipahealthcheck/ipahealthcheck.conf
 
@@ -94,9 +98,8 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %preun_service ipa-healthcheck
 
 %check
-export PIP_NO_INDEX=YES
 export TOXENV=py3,lint
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject
 
 %files
 %doc README.md COPYING
@@ -113,8 +116,8 @@ tox.py3 --sitepackages -vvr
 
 %files -n python3-module-%name
 %python3_sitelibdir/ipahealthcheck/
-%python3_sitelibdir/ipahealthcheck-%version-py%__python3_version.egg-info/
 %python3_sitelibdir/ipahealthcheck-%version-py%__python3_version-nspkg.pth
+%python3_sitelibdir/ipahealthcheck-%version.dist-info/
 %python3_sitelibdir/ipaclustercheck/
 %exclude %python3_sitelibdir/ipahealthcheck/core/
 
@@ -122,6 +125,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/ipahealthcheck/core/
 
 %changelog
+* Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 0.11-alt2
+- Skipped build on armh (Java 17).
+
 * Mon Jun 27 2022 Stanislav Levin <slev@altlinux.org> 0.11-alt1
 - 0.10 -> 0.11.
 

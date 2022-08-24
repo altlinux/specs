@@ -8,7 +8,7 @@
 
 Name: fleet-commander-admin
 Version: 0.15.1
-Release: alt9
+Release: alt10
 
 Summary: Fleet Commander
 License: LGPLv2+ or MIT or BSD
@@ -18,7 +18,9 @@ Url: https://github.com/fleet-commander/fc-admin
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-ExcludeArch: %ix86
+# Dogtag PKI 11.2.1 requires Java 17 that is not built for armh
+ExcludeArch: %ix86 armh
+
 BuildRequires(pre): rpm-build-xdg
 BuildRequires(pre): rpm-build-python3
 BuildRequires: autoconf-archive
@@ -161,6 +163,9 @@ export TESTS_LOGGER_TIMEOUT=10000
 %_datadir/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/{c73e87a7-b5a1-4b6f-b10b-0bd70241a64d}.xpi
 
 %changelog
+* Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 0.15.1-alt10
+- Skipped build on armh (Java 17).
+
 * Thu Feb 17 2022 Stanislav Levin <slev@altlinux.org> 0.15.1-alt9
 - Fixed FTBFS (Pylint 2.12.2).
 - Raised timeout for logger tests (closes: #40473).

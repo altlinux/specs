@@ -4,13 +4,14 @@
 
 Name: freeipa-%plugin_name
 Version: 0.0.8
-Release: alt3
+Release: alt4
 
 Summary: FleetCommander integration with FreeIPA
 License: GPLv3
 Group: System/Base
 
-ExcludeArch: %ix86
+# Dogtag PKI 11.2.1 requires Java 17 that is not built for armh
+ExcludeArch: %ix86 armh
 Url: https://github.com/abbra/freeipa-desktop-profile
 Source: %name-%version.tar
 
@@ -103,6 +104,9 @@ install -p plugin/updates/75-deskprofile.update \
 %python3_sitelibdir/ipaserver/plugins/__pycache__/deskprofile.*.py*
 
 %changelog
+* Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 0.0.8-alt4
+- Skipped build on armh (Java 17).
+
 * Wed Mar 13 2019 Stanislav Levin <slev@altlinux.org> 0.0.8-alt3
 - Fixed desktop profile renaming.
 

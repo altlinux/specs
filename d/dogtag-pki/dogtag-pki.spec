@@ -11,22 +11,18 @@
 
 %define java_home           %_jvmdir/jre
 
-# tomcatjss built with Java11
-%define tomcatjss_version 8.1.0
-# jss built with Java11
-%define jss_version 5.1.0
-# ldapjdk built with Java11
-%define ldapjdk_version 5.1.0
+%define tomcatjss_version 8.2.0
+%define ldapjdk_version 5.2.0
 
 # https://bugzilla.altlinux.org/40727
-%define java_version 11
+%define java_version 17
 
 # first dogtag-pki renamed from pki-core
 %define pki_rebranded_version 11.0.0-alt1
 
 Name: dogtag-pki
-Version: 11.1.0
-Release: alt2
+Version: 11.2.1
+Release: alt1
 
 Summary: Dogtag PKI Certificate System
 License: %gpl2only
@@ -37,7 +33,9 @@ Url: http://www.dogtagpki.org
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-ExcludeArch: %ix86
+# - upstream doesn't support i586 (Fedora's Java 17 is not built for that arch)
+# - ALT's Java 17 is not built for armh
+ExcludeArch: %ix86 armh
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
@@ -59,9 +57,9 @@ BuildRequires: libnss-devel
 BuildRequires: zlib-devel
 BuildRequires: selinux-policy-alt
 
-BuildRequires: ldapjdk >= %ldapjdk_version
+BuildRequires: dogtag-ldapjdk >= %ldapjdk_version
 BuildRequires: resteasy
-BuildRequires: tomcatjss >= %tomcatjss_version
+BuildRequires: dogtag-tomcatjss >= %tomcatjss_version
 BuildRequires: slf4j-jdk14
 BuildRequires: junit
 
@@ -187,6 +185,9 @@ Obsoletes: pki-tools < %pki_rebranded_version
 This package contains Dogtag PKI executables that can be used to help make
 Certificate System into a more complete and robust PKI solution.
 
+The utility "tpsclient" is a test tool that interacts with TPS.
+This tool is useful to test TPS server without risking an actual smart card.
+
 %package -n dogtag-pki-server
 Summary: Dogtag PKI Server Package
 Group: System/Base
@@ -194,7 +195,7 @@ Requires: dogtag-pki-tools
 Requires: openssl
 # https://bugzilla.altlinux.org/40819
 Requires: tomcat >= 1:9.0.50-alt2_2jpp11
-Requires: tomcatjss >= %tomcatjss_version
+Requires: dogtag-tomcatjss >= %tomcatjss_version
 
 Provides: pki-deploy = %EVR
 Provides: pki-setup = %EVR
@@ -343,10 +344,6 @@ Token Key Service (TKS)) to fulfill the user's requests.
 TPS also interacts with the token database, an LDAP server that stores
 information about individual tokens.
 
-The utility "tpsclient" is a test tool that interacts with TPS.  This
-tool is useful to test TPS server configs without risking an actual
-smart card.
-
 %if_with javadoc
 %package -n dogtag-pki-javadoc
 Summary: Dogtag PKI Javadoc Package
@@ -398,16 +395,7 @@ grep -rlsm1 '^#!/usr/bin/python[[:space:]]*$' | \
 xargs sed -i '1s|^#!/usr/bin/python[[:space:]]*$|#!/usr/bin/python3|'
 
 %build
-# get Java <major>.<minor> version number
-set -o pipefail
-java_version="$(%java_home/bin/java -XshowSettings:properties -version  2>&1 | \
-    sed -n 's/ *java.version *= *\([0-9]\+\.[0-9]\+\).*/\1/p')"
-# if <major> == 1, get <minor> version number
-# otherwise get <major> version number
-java_version="$(echo $java_version | sed -e 's/^1\.//' -e 's/\..*$//')"
-
 app_server=tomcat-9.0
-set +o pipefail
 
 %add_optflags -I/usr/include/apu-1
 %cmake \
@@ -415,18 +403,16 @@ set +o pipefail
     -DVERSION=%version-%release \
     -DVAR_INSTALL_DIR:PATH=%_var \
     -DP11_KIT_TRUST=%_libdir/libnssckbi.so \
-    -DJAVA_VERSION=$java_version \
     -DJAVA_HOME=%java_home \
     -DJAVA_LIB_INSTALL_DIR=%_jnidir \
     -DSYSTEMD_LIB_INSTALL_DIR=%_unitdir \
     -DAPP_SERVER=$app_server \
     -DNSS_DEFAULT_DB_TYPE=%nss_default_db_type \
-    -DBUILD_PKI_CORE:BOOL=ON \
     -DPYTHON_EXECUTABLE=%__python3 \
 %if_with check
-    -DWITH_TEST:BOOL=ON \
+    -DRUN_TESTS:BOOL=ON \
 %else
-    -DWITH_TEST:BOOL=OFF \
+    -DRUN_TESTS:BOOL=OFF \
 %endif
 %if_with javadoc
     -DWITH_JAVADOC:BOOL=ON \
@@ -440,13 +426,6 @@ set +o pipefail
 
 %install
 %cmakeinstall_std
-# Customize client library links in /usr/share/pki/lib
-ln -sf %_datadir/java/jboss-logging/jboss-logging.jar %buildroot%_datadir/pki/lib/jboss-logging.jar
-ln -sf %_datadir/java/jakarta-annotations/jakarta.annotation-api.jar %buildroot%_datadir/pki/lib/jakarta.annotation-api.jar
-
-# Customize server library links in /usr/share/pki/server/common/lib
-ln -sf %_datadir/java/jboss-logging/jboss-logging.jar %buildroot%_datadir/pki/server/common/lib/jboss-logging.jar
-ln -sf %_datadir/java/jakarta-annotations/jakarta.annotation-api.jar %buildroot%_datadir/pki/server/common/lib/jakarta.annotation-api.jar
 
 # from sem@:
 # This file should be sourced only
@@ -520,6 +499,7 @@ then
 fi
 
 %files
+%doc %_docdir/pki/README
 
 %files -n dogtag-pki-base
 %doc %_datadir/doc/pki-base/html
@@ -565,6 +545,7 @@ fi
 %_bindir/setpin
 %_bindir/sslget
 %_bindir/tkstool
+%_bindir/tpsclient
 %_bindir/AtoB
 %_bindir/AuditVerify
 %_bindir/BtoA
@@ -589,6 +570,8 @@ fi
 %_bindir/PrettyPrintCrl
 %_bindir/TokenInfo
 %_javadir/pki/pki-tools.jar
+%_libdir/tps/libtps.so
+%_libdir/libtps.so
 %_datadir/pki/tools/
 %_datadir/pki/lib/p11-kit-trust.so
 %_man1dir/AtoB.1.*
@@ -621,6 +604,7 @@ fi
 %_man1dir/pki-user-membership.1.*
 %_man1dir/PKCS10Client.1.*
 %_man1dir/PKICertImport.1.*
+%_man1dir/tpsclient.1.*
 
 %files -n dogtag-pki-server
 %doc base/common/THIRD_PARTY_LICENSES
@@ -674,6 +658,7 @@ fi
 
 %_datadir/pki/setup/
 %dir %_datadir/pki/server
+%_datadir/pki/server/bin/
 %_datadir/pki/server/common/
 %_datadir/pki/server/conf/
 %_datadir/pki/server/etc/
@@ -707,10 +692,6 @@ fi
 %_datadir/pki/tps/
 %_man5dir/pki-tps-connector.5.*
 %_man5dir/pki-tps-profile.5.*
-%_man1dir/tpsclient.1.*
-%_bindir/tpsclient
-%_libdir/tps/libtps.so
-%_libdir/libtps.so
 
 %if_with javadoc
 %files -n dogtag-pki-javadoc
@@ -748,6 +729,9 @@ fi
 %_datadir/pki/server/webapps/pki/WEB-INF/
 
 %changelog
+* Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 11.2.1-alt1
+- 11.1.0 -> 11.2.1.
+
 * Mon Jun 13 2022 Igor Vlasenko <viy@altlinux.org> 11.1.0-alt2
 - NMU: drop obsolete BR: jackson.
 

@@ -4,21 +4,28 @@
 %def_with check
 
 %define nss_version 3.66
-%define java_version 11
+%define java_version 17
+
+# jss was renamed dogtag-jss
+%define jss_rebranded_version 5.2.0-alt1
 
 Name: jss
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: Java Security Services (JSS)
 License: MPL-1.1 or GPLv2+ or LGPLv2+
 Group: System/Libraries
 # Source-git: https://github.com/dogtagpki/jss.git
-Url: http://www.dogtagpki.org/wiki/JSS
+Url: https://github.com/dogtagpki/jss
 
 Source0: %name-%version.tar
 Source1: jss.watch
 Patch: %name-%version-alt.patch
+
+# - upstream doesn't support i586 (Fedora's Java 17 is not built for that arch)
+# - ALT's Java 17 is not built for armh
+ExcludeArch: %ix86 armh
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires(pre): rpm-macros-cmake
@@ -46,27 +53,28 @@ BuildRequires: ctest
 BuildRequires: nss-utils >= %nss_version
 %endif
 
+%description
+Java Security Services (JSS) is a java native interface which provides a bridge
+for java-based applications to use native Network Security Services (NSS).
+This only works with gcj. Other JREs require that JCE providers be signed.
+
+%package -n dogtag-jss
+Summary: Java Security Services (JSS)
+Group: System/Libraries
+
+Provides: jss = %EVR
+Obsoletes: jss < %jss_rebranded_version
+
 Requires: apache-commons-lang3
 Requires: jaxb-api
 Requires: slf4j
 Requires: libnss >= %nss_version
 Requires: java >= %java_version
 
-%description
-Network Security Services for Java (JSS) is a Java interface to NSS. JSS
-supports most of the security standards and encryption technologies supported by
-NSS. JSS also provides a pure Java interface for ASN.1 types and BER/DER
-encoding.
-
-JSS offers a implementation of Java SSL sockets that uses NSS's SSL/TLS
-implementation rather than Sun's JSSE implementation. You might want to use
-JSS's own SSL classes if you want to use some of the capabilities found in NSS's
-SSL/TLS library but not found in JSSE.
-
-NSS is the cryptographic module where all cryptographic operations are
-performed. JSS essentially provides a Java JNI bridge to NSS C shared libraries.
-When NSS is put in FIPS mode, JSS ensures FIPS compliance by ensuring that all
-cryptographic operations are performed by the NSS cryptographic module.
+%description -n dogtag-jss
+Java Security Services (JSS) is a java native interface which provides a bridge
+for java-based applications to use native Network Security Services (NSS).
+This only works with gcj. Other JREs require that JCE providers be signed.
 
 %prep
 %setup
@@ -96,6 +104,14 @@ export BUILD_OPT=1
 cat > %_cmake__builddir/CTestCustom.cmake <<EOF
 set(CTEST_CUSTOM_TESTS_IGNORE
    Enable_FipsMODE
+   # NSS 3.81 failures
+   # https://github.com/dogtagpki/jss/issues/882
+   SSLClientAuth
+   SSLEngine_RSA
+   TestBufferPRFDSSL_RSA
+   JSS_Test_BufferPRFD
+   SSLClientAuth_FIPSMODE
+   SSLEngine_RSA_FIPSMODE
 )
 EOF
 CTEST_OUTPUT_ON_FAILURE=1 %cmake_build --target test
@@ -104,7 +120,7 @@ CTEST_OUTPUT_ON_FAILURE=1 %cmake_build --target test
 %install
 %cmake_install
 
-%files
+%files -n dogtag-jss
 %dir %_libdir/jss
 %_libdir/jss/jss.jar
 %_libdir/jss/libjss.so
@@ -114,6 +130,9 @@ CTEST_OUTPUT_ON_FAILURE=1 %cmake_build --target test
 %_jnidir/jss-symkey.jar
 
 %changelog
+* Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 5.2.0-alt1
+- 5.1.0 -> 5.2.0.
+
 * Thu Mar 03 2022 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
 - 5.0.0 -> 5.1.0.
 

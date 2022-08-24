@@ -1,7 +1,7 @@
 # build defines
 %define _unpackaged_files_terminate_build 1
 
-%ifarch %ix86
+%ifarch %ix86 armh
 %def_with only_client
 %else
 %def_without only_client
@@ -52,7 +52,7 @@
 Name: freeipa
 # don't forget to update .gear/rules
 Version: 4.9.10
-Release: alt1
+Release: alt2
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -1089,6 +1089,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 4.9.10-alt2
+- Stopped build of server packages on armh (Java 17).
+
 * Thu Jun 23 2022 Stanislav Levin <slev@altlinux.org> 4.9.10-alt1
 - 4.9.8 -> 4.9.10.
 

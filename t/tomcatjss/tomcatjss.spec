@@ -1,22 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 
-# JSS built with Java11
-%define jss_version 5.1.0
+%define jss_version 5.2.0
 %define tomcat_version 9.0.37
-%define java_version 11
+%define java_version 17
+
+# tomcatjss was renamed dogtag-tomcatjss
+%define tomcatjss_rebranded_version 8.2.0-alt1
 
 Name: tomcatjss
-Version: 8.1.0
+Version: 8.2.0
 Release: alt1
 
 Summary: JSSE module for Apache Tomcat that uses JSS
 License: LGPLv2+
 Group: System/Libraries
 # Source-git: https://github.com/dogtagpki/tomcatjss.git
-Url: http://www.dogtagpki.org/wiki/TomcatJSS
+Url: https://github.com/dogtagpki/tomcatjss
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
+
+# - upstream doesn't support i586 (Fedora's Java 17 is not built for that arch)
+# - ALT's Java 17 is not built for armh
+ExcludeArch: %ix86 armh
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: /proc
@@ -24,16 +30,28 @@ BuildRequires: java-devel >= %java_version
 BuildRequires: jpackage-generic-compat
 BuildRequires: apache-commons-logging
 BuildRequires: ant
-BuildRequires: jss >= %jss_version
+BuildRequires: dogtag-jss >= %jss_version
 BuildRequires: tomcat >= %tomcat_version
 
-BuildArch: noarch
-Requires: jss >= %jss_version
+%description
+JSS Connector for Apache Tomcat, installed via the tomcatjss package,
+is a Java Secure Socket Extension (JSSE) module for Apache Tomcat that
+uses Java Security Services (JSS), a Java interface to Network Security
+Services (NSS).
+
+%package -n dogtag-tomcatjss
+Summary: JSS Connector for Apache Tomcat
+Group: System/Libraries
+
+Provides: tomcatjss = %EVR
+Obsoletes: tomcatjss < %tomcatjss_rebranded_version
+
+Requires: dogtag-jss >= %jss_version
 Requires: tomcat >= %tomcat_version
 Requires: apache-commons-logging
 Requires: java >= %java_version
 
-%description
+%description -n dogtag-tomcatjss
 JSS Connector for Apache Tomcat, installed via the tomcatjss package,
 is a Java Secure Socket Extension (JSSE) module for Apache Tomcat that
 uses Java Security Services (JSS), a Java interface to Network Security
@@ -57,15 +75,19 @@ ant -v -f build.xml \
 %install
 ant -v -f build.xml \
     -Dversion=%version \
+    -Dpackage=dogtag-tomcatjss \
     -Dinstall.doc.dir=%buildroot%_docdir \
     -Dinstall.jar.dir=%buildroot%_javadir \
     install
 
-%files
-%doc %_docdir/%name/
+%files -n dogtag-tomcatjss
+%doc %_docdir/dogtag-tomcatjss/
 %_javadir/tomcatjss.jar
 
 %changelog
+* Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 8.2.0-alt1
+- 8.1.0 -> 8.2.0.
+
 * Thu Mar 03 2022 Stanislav Levin <slev@altlinux.org> 8.1.0-alt1
 - 8.0.0 -> 8.1.0.
 

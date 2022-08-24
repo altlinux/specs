@@ -2,24 +2,29 @@
 
 %define _localstatedir  %_var
 
-# JSS built with Java11
-%define jss_version 5.1.0
+# ldapjdk was renamed dogtag-ldapjdk
+%define ldapjdk_rebranded_version 5.2.0-alt1
 
-%define java_version 11
+%define jss_version 5.2.0
+%define java_version 17
 
 Name: ldapjdk
 Epoch: 1
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 
 Summary: LDAP SDK
 License: MPL-1.1 or GPLv2+ or LGPLv2+
 Group: Development/Java
 # Source-git: https://github.com/dogtagpki/ldap-sdk.git
-Url: https://www.dogtagpki.org/wiki/LDAP_SDK
+Url: https://github.com/dogtagpki/ldap-sdk
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+
+# - upstream doesn't support i586 (Fedora's Java 17 is not built for that arch)
+# - ALT's Java 17 is not built for armh
+ExcludeArch: %ix86 armh
 
 BuildRequires(pre): rpm-macros-java
 BuildRequires: rpm-build-java
@@ -29,30 +34,41 @@ BuildRequires: ant
 BuildRequires: java-devel >= %java_version
 BuildRequires: javapackages-local
 BuildRequires: javapackages-tools
-BuildRequires: jss >= %jss_version
-
-BuildArch: noarch
-
-Provides: ldapsdk = 1:%version-%release
-Obsoletes: ldapsdk <= 1:4.18-alt1_2jpp6
-
-Requires: jss >= %jss_version
-Requires: java >= %java_version
+BuildRequires: dogtag-jss >= %jss_version
 
 %description
 The Mozilla LDAP SDKs enable you to write applications which access,
 manage, and update the information stored in an LDAP directory.
 
 ################################################################################
-%package javadoc
-Group: Development/Documentation
-################################################################################
+%package -n dogtag-ldapjdk
+Summary: LDAP SDK
+Group: System/Libraries
 
-Summary: Javadoc for %name
+Provides: ldapjdk = %EVR
+Obsoletes: ldapjdk < %ldapjdk_rebranded_version
+Provides: ldapsdk = 1:%version-%release
+Obsoletes: ldapsdk <= 1:4.18-alt1_2jpp6
+
+Requires: dogtag-jss >= %jss_version
+Requires: java >= %java_version
+
+%description -n dogtag-ldapjdk
+The Mozilla LDAP SDKs enable you to write applications which access,
+manage, and update the information stored in an LDAP directory.
+
+################################################################################
+%package -n dogtag-ldapjdk-javadoc
+Group: Development/Documentation
+
+Summary: Javadoc for dogtag-ldapjdk
 BuildArch: noarch
 
-%description javadoc
-Javadoc for %name
+Provides: ldapjdk-javadoc = %EVR
+Obsoletes: ldapjdk-javadoc < %ldapjdk_rebranded_version
+
+%description -n dogtag-ldapjdk-javadoc
+Javadoc for dogtag-ldapjdk
 
 ################################################################################
 %prep
@@ -89,9 +105,7 @@ cp -r java-sdk/dist/doc/* %buildroot%_javadocdir/%name
 ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 
 ################################################################################
-%files
-################################################################################
-
+%files -n dogtag-ldapjdk
 %_javadir/%name.jar
 %_javadir/ldapsp.jar
 %_javadir/ldapfilt.jar
@@ -103,14 +117,15 @@ ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 %_mavenpomdir/JPP-ldapbeans.pom
 
 ################################################################################
-%files javadoc
-################################################################################
-
+%files -n dogtag-ldapjdk-javadoc
 %dir %_javadocdir/%name
 %_javadocdir/%name/*
 
 ################################################################################
 %changelog
+* Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 1:5.2.0-alt1
+- 5.1.0 -> 5.2.0.
+
 * Fri Mar 04 2022 Stanislav Levin <slev@altlinux.org> 1:5.1.0-alt1
 - 5.0.0 -> 5.1.0.
 
