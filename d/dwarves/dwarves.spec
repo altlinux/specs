@@ -7,7 +7,7 @@
 %define libver 1
 
 Name: dwarves
-Version: 1.23
+Version: 1.24
 Release: alt1
 Summary: Debugging Information Manipulation Tools (pahole & friends)
 Group: Development/Tools
@@ -67,7 +67,7 @@ Debugging information processing library.
 %package -n %libname%libver-devel
 Summary: Debugging information library development files
 Group: Development/C
-Requires: %libname%libver = %version-%release
+Requires: %libname%libver = %EVR
 AutoReqProv: nocpp
 
 %description -n %libname%libver-devel
@@ -78,7 +78,10 @@ Debugging information processing library development files.
 tar xf %SOURCE1 -C lib
 
 %build
-%cmake
+# Explicitly use vendored libbpf (updated using gear-submodule-update).
+# By default is DEBUG build that adds -O0 which we don't want.
+%cmake	-DLIBBPF_EMBEDDED=ON \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo
 %cmake_build
 
 %install
@@ -86,6 +89,7 @@ tar xf %SOURCE1 -C lib
 chmod a+x %buildroot%_datadir/dwarves/runtime/python/ostra.py
 
 %check
+ldd %buildroot%_bindir/pahole
 cd %_cmake__builddir
 export LD_LIBRARY_PATH=$PWD PATH=$PWD:$PATH
 # Pahole examples @ https://lwn.net/Articles/335942/
@@ -93,20 +97,24 @@ pahole -C tag pahole
 pahole --packable pahole
 
 %files
-%doc README.ctracer README.btf NEWS COPYING
+%doc README README.ctracer README.btf NEWS changes-*
 %_bindir/*
 %_datadir/dwarves
 %_man1dir/pahole.1*
 
 %files -n %libname%libver
-%_libdir/%{libname}*.so.*
+%doc COPYING
+%_libdir/%{libname}*.so.%libver
+%_libdir/%{libname}*.so.%libver.*
 
 %files -n %libname%libver-devel
-%doc MANIFEST README
 %_includedir/dwarves
 %_libdir/%{libname}*.so
 
 %changelog
+* Wed Aug 24 2022 Vitaly Chikunov <vt@altlinux.org> 1.24-alt1
+- Update to v1.24 (2022-08-17).
+
 * Thu Dec 09 2021 Vitaly Chikunov <vt@altlinux.org> 1.23-alt1
 - Update to v1.23 (2021-12-08).
 
