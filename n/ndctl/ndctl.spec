@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: ndctl
-Version: 73
+Version: 74
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
@@ -13,7 +13,6 @@ Url: https://github.com/pmem/ndctl
 
 Vcs: https://github.com/pmem/ndctl.git
 Source: %url/archive/v%version/%name-%version.tar.gz
-Patch: %name-73-alt-iniparser.patch
 
 Requires: lib%name = %EVR
 Requires: libdaxctl = %EVR
@@ -123,10 +122,8 @@ communicating with CXL devices.
 
 %prep
 %setup
-%patch -b .iniparser
 
 %build
-%add_optflags %(pkg-config --cflags iniparser)
 %meson \
 	-Dversion-tag='%version' \
 	%{?_disable_keyutils:-Dkeyutils=false} \
@@ -198,6 +195,9 @@ communicating with CXL devices.
 %_man3dir/*cxl*
 
 %changelog
+* Wed Aug 24 2022 Yuri N. Sedunov <aris@altlinux.org> 74-alt1
+- 74
+
 * Tue Mar 08 2022 Yuri N. Sedunov <aris@altlinux.org> 73-alt1
 - 73 (ported to Meson build system)
 
