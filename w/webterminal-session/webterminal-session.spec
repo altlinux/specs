@@ -1,6 +1,6 @@
 
 Name: webterminal-session
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 %K5init no_altplace
 
@@ -44,6 +44,9 @@ install -m 0644 99WEBTERMINAL %buildroot/%_x11sysconfdir/wmsession.d/
 %_datadir/xsessions/webterminal.desktop
 
 %changelog
+* Thu Aug 25 2022 Sergey V Turchin <zerg at altlinux dot org> 0.2.1-alt1
+- fix to start
+
 * Thu Aug 25 2022 Sergey V Turchin <zerg at altlinux dot org> 0.2-alt1
 - move application command to variable to simplify setup
 
