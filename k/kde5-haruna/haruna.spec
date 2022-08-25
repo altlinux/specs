@@ -4,8 +4,8 @@
 %define libharuna libharuna%sover
 
 Name: kde5-%rname
-Version: 0.8.0
-Release: alt2
+Version: 0.9.1
+Release: alt1
 %K5init altplace
 
 Group: Video
@@ -21,7 +21,7 @@ Patch2: alt-dont-switch-empty-list.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: cmake extra-cmake-modules
-BuildRequires: qt5-declarative-devel qt5-quickcontrols2-devel
+BuildRequires: qt5-declarative-devel qt5-quickcontrols2-devel qt5-x11extras-devel
 BuildRequires: libmpv-devel
 BuildRequires: libavformat-devel libavcodec-devel libavutil-devel libavfilter-devel libswscale-devel
 BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-kdoctools-devel kf5-kfilemetadata-devel
@@ -106,6 +106,9 @@ KF5 library
 #%_K5lib/libharuna.so.*
 
 %changelog
+* Thu Aug 25 2022 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt1
+- new version
+
 * Sun Jul 17 2022 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt2
 - prefer yt-dlp over youtube-dl
 
