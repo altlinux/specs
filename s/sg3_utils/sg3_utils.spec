@@ -1,12 +1,12 @@
 Name: sg3_utils
-Version: 1.46
+Version: 1.47
 Release: alt1
 
 Summary: Utilities for devices that use SCSI command sets
 License: GPL-2.0-or-later and BSD-2-Clause
 Group: System/Kernel and hardware
-Url: http://sg.danny.cz/sg/sg3_utils.html
-# http://sg.danny.cz/sg/p/%name-%version.tar.xz
+Url: https://sg.danny.cz/sg/sg3_utils.html
+# https://sg.danny.cz/sg/p/%name-%version.tar.xz
 Source: %name-%version.tar
 Patch: sg3_utils-alt-rescan-scsi-bus.patch
 Requires: libsgutils = %EVR
@@ -41,6 +41,15 @@ Requires: libsgutils = %EVR
 This package contains the development %name library and its header files
 for developing applications.
 
+%package -n udev-rules-sgutils
+Summary: Utilities for devices using the SCSI command set (udev rules)
+Group: System/Kernel and hardware
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description -n udev-rules-sgutils
+Udev rules which are associated with the utilities in the %name package.
+
 %prep
 %setup
 %autopatch -p1
@@ -56,6 +65,12 @@ sed -i s/2:0:0/1:0:0/ lib/Makefile.*
 %makeinstall_std
 # https://bugzilla.altlinux.org/39183
 ln -s libsgutils.so %buildroot%_libdir/libsgutils2.so
+
+mkdir -p %buildroot%_udevrulesdir
+for rulesname in 54-before-scsi-sg3_id 55-scsi-sg3_id 58-scsi-sg3_symlink 40-usb-blacklist 59-fc-wwpn-id; do
+    install -m 644 scripts/$rulesname.rules %buildroot%_udevrulesdir/
+done
+install -m 755 scripts/fc_wwpn_id %buildroot%_udevrulesdir/../
 
 %set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
@@ -74,7 +89,15 @@ ln -s libsgutils.so %buildroot%_libdir/libsgutils2.so
 %_includedir/scsi/*.h
 %_libdir/*.so
 
+%files -n udev-rules-sgutils
+%_udevrulesdir/*
+%_udevrulesdir/../fc_wwpn_id
+
 %changelog
+* Wed Aug 24 2022 Alexey Shabalin <shaba@altlinux.org> 1.47-alt1
+- 1.46 -> 1.47.
+- Add udev-rules-sgutils package.
+
 * Mon Mar 29 2021 Dmitry V. Levin <ldv@altlinux.org> 1.46-alt1
 - 1.45 -> 1.46.
 
