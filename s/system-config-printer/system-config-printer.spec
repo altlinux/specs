@@ -1,6 +1,6 @@
 Name:    system-config-printer
-Version: 1.5.16
-Release: alt3
+Version: 1.5.17
+Release: alt1
 
 Summary: A printer administration tool
 Group:   System/Configuration/Printing
@@ -120,6 +120,9 @@ exit 0
 %python3_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Thu Aug 25 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.17-alt1
+- New version.
+
 * Tue Apr 19 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.16-alt3
 - Fixed cups service name (ALT #42485).
 
