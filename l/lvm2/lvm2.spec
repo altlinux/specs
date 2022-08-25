@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define lvm2version 2.03.13
-%define dmversion 1.02.179
+%define lvm2version 2.03.16
+%define dmversion 1.02.185
 
 %define _sbindir /sbin
 %define usrsbindir %_prefix/sbin
@@ -30,7 +30,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt2
+Release: alt1
 License: GPLv2+ AND LGPL-2.1+
 
 Group: System/Base
@@ -54,7 +54,7 @@ BuildRequires: libreadline-devel libtinfo-devel libudev-devel CUnit-devel
 BuildRequires: libaio-devel
 # libudev-devel >= 205 required for udev-systemd-background-jobs
 BuildRequires: libudev-devel >= 205
-BuildRequires: systemd-devel
+BuildRequires: systemd-devel >= 234
 %if_enabled thin
 BuildRequires: thin-provisioning-tools >= 0.7.0
 %endif
@@ -238,6 +238,8 @@ export ac_cv_path_MODPROBE_CMD=%_sbindir/modprobe
 	--disable-selinux \
 	--disable-blkid_wiping \
 	--disable-nls \
+	--disable-app-machineid \
+	--disable-systemd-journal \
 	--enable-static_link \
 	ac_cv_lib_dl_dlopen=no \
 	--with-optimisation="%optflags -Os" \
@@ -255,7 +257,6 @@ export ac_cv_path_MODPROBE_CMD=%_sbindir/modprobe
 	--with-default-locking-dir=%_lockdir/lvm \
 	--disable-silent-rules
 
-	#
 %make_build libdm
 %make_build lib
 %make_build -C tools lvm.static
@@ -395,8 +396,7 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %_unitdir/lvm2-monitor.service
 %_unitdir/blk-availability.service
 %_initdir/blk-availability
-%_unitdir/lvm2-pvscan@.service
-%_udevrulesdir/69-dm-lvm-metad.rules
+%_udevrulesdir/69-dm-lvm.rules
 %if_enabled lvmpolld
 %_initdir/lvm2-lvmpolld
 %_unitdir/lvm2-lvmpolld*
@@ -406,7 +406,6 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %exclude %_sbindir/lvmlockctl
 %exclude %_man8dir/lvmlockd*
 %endif
-/lib/systemd/system-generators/lvm2-activation-generator
 %_tmpfilesdir/%name.conf
 %dir %_sysconfdir/lvm
 %dir %_sysconfdir/lvm/profile
@@ -449,7 +448,7 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %_sbindir/dmstats
 %_man8dir/dmstats*
 %_udevrulesdir/*
-%exclude %_udevrulesdir/69-dm-lvm-metad.rules
+%exclude %_udevrulesdir/69-dm-lvm.rules
 
 %files -n dmeventd
 %_sbindir/dmeventd
@@ -494,6 +493,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Wed Aug 24 2022 Alexey Shabalin <shaba@altlinux.org> 2.03.16-alt1
+- 2.03.16
+
 * Sat Oct 16 2021 Andrew A. Vasilyev <andy@altlinux.org> 2.03.13-alt2
 - FTBFS: fixed build with lto.
 
