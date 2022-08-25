@@ -3,7 +3,7 @@
 
 Name: libusb
 Version: 1.0.26
-Release: alt1
+Release: alt2
 
 Summary: Libusb is a library which allows userspace access to USB devices
 License: LGPLv2.1
@@ -70,9 +70,12 @@ for f in %buildroot%_libdir/lib*.so; do
 	ln -sf ../../%_lib/"$t" "$f"
 done
 mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
+# make some alien distro packages happy
+ln -srf %buildroot/%_lib/lib*.so.? %buildroot%_libdir/
 
 %files
 /%_lib/%name-*.so.*
+%_libdir/%name-*.so.*
 %doc AUTHORS README NEWS TODO
 
 %files devel
@@ -89,6 +92,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %doc doc/api-1.0
 
 %changelog
+* Fri Aug 19 2022 Nikolai Kostrigin <nickel@altlinux.org> 1.0.26-alt2
+- spec: pack a symlink %_libdir/libusb* -> %_lib/libusb* also (closes: #43536)
+
 * Fri Apr 22 2022 Anton Farygin <rider@altlinux.ru> 1.0.26-alt1
 - 1.0.25 -> 1.0.26
 
