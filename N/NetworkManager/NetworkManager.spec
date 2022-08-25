@@ -58,7 +58,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.36.4
+Version: 1.39.90
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -79,7 +79,8 @@ Patch: %name-%version-%release.patch
 
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildPreReq: dbus dhcpcd dhcp-client}}
-%{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-dbus}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: python3-module-dbus python3-module-pexpect}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
 # For /etc/machine-id
 %{?!_without_check:%{?!_disable_check:BuildRequires: systemd}}
 
@@ -520,7 +521,7 @@ fi
 %files
 
 %files -f %name.lang daemon
-%doc COPYING NEWS AUTHORS README CONTRIBUTING.md TODO
+%doc COPYING NEWS AUTHORS README.md CONTRIBUTING.md
 %_bindir/nm-online
 %_bindir/nmcli
 %_datadir/dbus-1/system-services/*.service
@@ -646,6 +647,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Aug 25 2022 Mikhail Efremov <sem@altlinux.org> 1.39.90-alt1
+- Added /dev/pts to BR.
+- Added python3-module-pexpect to BR.
+- Updated to 1.39.90.
+
 * Wed Mar 30 2022 Mikhail Efremov <sem@altlinux.org> 1.36.4-alt1
 - Updated to 1.36.4.
 
