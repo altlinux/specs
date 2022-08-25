@@ -1,5 +1,5 @@
-%define kernel_base_version	5.18
-%define kernel_sublevel        .16
+%define kernel_base_version	5.19
+%define kernel_sublevel        .4
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -11,8 +11,6 @@ Release: alt1
 %define krelease	%release
 
 %define flavour		%( s='%name'; printf %%s "${s#kernel-image-}" )
-%define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
-%define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
 
 ## Don't edit below this line ##################################
 %define kversion	%kernel_base_version%kernel_sublevel%kernel_extra_version
@@ -262,6 +260,12 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Thu Aug 25 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.19.4-alt1
+- 5.19.4
+
+* Thu Aug 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.19.0-alt1
+- 5.19
+
 * Wed Aug 03 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.18.16-alt1
 - 5.18.16
 
