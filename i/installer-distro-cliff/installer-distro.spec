@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
 Version: 8.2
-Release: alt9
+Release: alt10
 
 License: GPL
 Group: System/Configuration/Other
@@ -58,9 +58,6 @@ Requires: alterator-net-bond alterator-net-bridge
 Requires: installer-feature-nfs-server-stage3
 Requires: installer-feature-powerbutton-stage3
 Requires: installer-integ-stage3
-%ifnarch armh %e2k
-Requires: alterator-grub
-%endif
 Requires: alterator-luks
 
 %description stage3
@@ -89,6 +86,10 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Wed Aug 24 2022 Anton Midyukov <antohami@altlinux.org> 8.2-alt10
+- installer-steps: replace vm with vm-ortodox
+- stage3: do'nt require alterator-grub
+
 * Thu Dec 09 2020 Denis Medvedev <nbr@altlinux.org> 8.2-alt9
 - corrected avahi disable
 
