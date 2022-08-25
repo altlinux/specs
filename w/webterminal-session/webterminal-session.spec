@@ -1,6 +1,6 @@
 
 Name: webterminal-session
-Version: 0.1
+Version: 0.2
 Release: alt1
 %K5init no_altplace
 
@@ -9,7 +9,7 @@ Summary: Start WEB-Terminal application
 License: GPL-2.0-only
 URL: http://git.altlinux.org/gears/w/webterminal-session.git
 
-#BuildArch: noarch
+BuildArch: noarch
 
 Requires: kde5-runtime plasma5-kwin
 
@@ -44,5 +44,8 @@ install -m 0644 99WEBTERMINAL %buildroot/%_x11sysconfdir/wmsession.d/
 %_datadir/xsessions/webterminal.desktop
 
 %changelog
+* Thu Aug 25 2022 Sergey V Turchin <zerg at altlinux dot org> 0.2-alt1
+- move application command to variable to simplify setup
+
 * Tue Aug 23 2022 Sergey V Turchin <zerg at altlinux dot org> 0.1-alt1
 - initial build
