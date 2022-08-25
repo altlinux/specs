@@ -1,5 +1,5 @@
 Name: volumes-profile-alt-workstation
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Volumes description for ALT Workstation
@@ -27,6 +27,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Aug 25 2022 Mikhail Efremov <sem@altlinux.org> 0.3-alt1
+- Add nvme, mmcblk support (by Anton Midyukov).
+
 * Wed Aug 24 2022 Mikhail Efremov <sem@altlinux.org> 0.2-alt1
 - Use a common title for profiles.
 
