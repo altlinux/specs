@@ -1,5 +1,5 @@
 Name: installer-feature-webterminal-setup
-Version: 0.1
+Version: 0.1.1
 Release: alt1
 
 Summary: Setup WEB-Terminal after install
@@ -28,5 +28,8 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Aug 25 2022 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt1
+- fix paths
+
 * Thu Aug 25 2022 Sergey V Turchin <zerg@altlinux.org> 0.1-alt1
 - initial build
