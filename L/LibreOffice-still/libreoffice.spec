@@ -6,8 +6,10 @@
 %def_without fetch
 %def_without lto
 %def_with dconf
-%def_without mdds
-%def_without orcus
+%def_with mdds
+%def_with orcus
+# Uncompatible with zxing-cpp > 1.2
+%def_without zxing
 
 # enable kde5 UI
 %def_enable kde5
@@ -25,8 +27,8 @@
 %def_disable mergelibs
 
 Name: LibreOffice-still
-%define hversion 7.2
-%define urelease 7.2
+%define hversion 7.3
+%define urelease 5.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -177,7 +179,13 @@ BuildRequires: java-devel >= 9.0.0
 BuildRequires: libbox2d-devel
 BuildRequires: libpixman-devel
 # 7.2.5.2
+%if_with zxing
 BuildRequires: libzxing-cpp-devel
+%endif
+# 7.3.5.2
+BuildRequires: libcuckoo-devel
+BuildRequires: libopenjpeg2.0-devel
+BuildRequires: libabseil-cpp-devel
 
 %if_without python
 BuildRequires: python3-dev
@@ -202,6 +210,7 @@ Conflicts: LibreOffice-common
 AutoReqProv: yes, noshell, nopython
 # Strict requirements
 %if_with java
+Requires: java-headless >= 9.0.0
 Requires: pentaho-reporting-flow-engine
 %endif
 
@@ -433,6 +442,7 @@ fi
         --without-system-poppler \
         %{?_without_mdds:--without-system-mdds } \
         %{?_without_orcus:--without-system-orcus } \
+        %{?_without_zxing:--without-system-zxing } \
         %{subst_enable mergelibs} \
         --enable-odk \
 	--disable-firebird-sdbc \
@@ -650,7 +660,7 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_bindir/libreoffice
 %_bindir/unopkg
 %config %conffile
-%lodir/share/extensions/package.txt
+#lodir/share/extensions/package.txt
 %_iconsdir/*/*/apps/libreoffice-*.*g
 %_datadir/metainfo/*.appdata.xml
 %_man1dir/libreoffice.1*
@@ -678,7 +688,7 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 
 %files extensions
 %lodir/share/extensions/*
-%exclude %lodir/share/extensions/package.txt
+#exclude %lodir/share/extensions/package.txt
 
 %files mimetypes
 %_datadir/mime/packages/libreoffice%hversion.xml
@@ -704,6 +714,13 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sun Aug 21 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.5.2-alt1
+- New version.
+- Security fixes:
+  + CVE-2022-26305 Execution of Untrusted Macros Due to Improper Certificate Validation
+  + CVE-2022-26306 Static Initialization Vector Allows to Recover Passwords for Web Connections Without Knowing the Master Password
+  + CVE-2022-26307 Weak Master Keys
+
 * Fri May 27 2022 Andrey Cherepanov <cas@altlinux.org> 7.2.7.2-alt1
 - New version.
 
