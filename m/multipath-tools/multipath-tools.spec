@@ -1,13 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %def_enable libdmmp
 
 %define syslibdir /%_lib
 %define libmpathdir %syslibdir/multipath
 
-%add_verify_elf_skiplist /%_lib/libmpathpersist.so.*
-%add_verify_elf_skiplist /%_lib/libmultipath.so.*
-
 Name: multipath-tools
-Version: 0.8.7
+Version: 0.9.0
 Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
@@ -26,6 +24,7 @@ Patch1: %name-%version.patch
 Requires: libmultipath = %EVR
 Requires: kpartx = %EVR
 Requires: dmsetup
+Requires: udev-rules-sgutils sg3_utils
 
 BuildRequires: libaio-devel libdevmapper-devel libreadline-devel libudev-devel libsystemd-devel
 BuildRequires: libuserspace-rcu-devel
@@ -138,7 +137,7 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 /sbin/mpathpersist
 %_udevrulesdir/*
 %exclude %_udevrulesdir/*kpartx.rules
-#%_modulesloaddir/*
+%_modulesloaddir/*
 %dir %_sysconfdir/multipath
 %config(noreplace) %attr(644,root,root) %_sysconfdir/multipath.conf
 %_initdir/*
@@ -151,6 +150,7 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 /%_lib/libmultipath.so.*
 /%_lib/libmpathcmd.so.*
 /%_lib/libmpathpersist.so.*
+/%_lib/libmpathvalid.so.*
 %dir %libmpathdir
 %libmpathdir/*
 
@@ -158,8 +158,10 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 /%_lib/libmultipath.so
 /%_lib/libmpathpersist.so
 /%_lib/libmpathcmd.so
+/%_lib/libmpathvalid.so
 %_includedir/mpath_cmd.h
 %_includedir/mpath_persist.h
+%_includedir/mpath_valid.h
 %_man3dir/mpath_*
 
 %files -n kpartx
@@ -180,6 +182,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Thu Aug 25 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Mon Oct 11 2021 Alexey Shabalin <shaba@altlinux.org> 0.8.7-alt1
 - 0.8.7
 
