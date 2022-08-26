@@ -2,8 +2,8 @@
 %define dist CryptX
 
 Name: perl-%dist
-Version: 0.076
-Release: alt2
+Version: 0.077
+Release: alt1
 
 Summary: Crypto toolkit with multiple ciphers, hash functions and other
 License: %perl_license
@@ -11,8 +11,6 @@ Group: Development/Perl
 
 Url: %CPAN %dist
 Source0: http://www.cpan.org/authors/id/M/MI/MIK/%{dist}-%{version}.tar.gz
-# Upstream issue: https://github.com/DCIT/perl-CryptX/issues/82
-Patch0:         0001-fix-82-issues-in-tests-by-Math-BigInt-1.999831.patch
 # e2k
 Patch3: CryptX-0.057-alt-uint128.patch
 
@@ -79,13 +77,11 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 
 %prep
 %setup -q -n %{dist}-%{version}
-# Fix issues with new Math::BigInt
-%patch0 -p1
 %ifarch e2k
 %patch3 -p1
 %endif
 
-[ %version = 0.061 ] && rm -f t/mbi_ltm_bugs.t t/mbi_ltm_bigintpm.t
+#[ %version = 0.061 ] && rm -f t/mbi_ltm_bugs.t t/mbi_ltm_bigintpm.t
 
 %build
 %perl_vendor_build
@@ -101,6 +97,9 @@ Cryptography in CryptX is based on https://github.com/libtom/libtomcrypt
 %perl_vendor_archlib/Math
 
 %changelog
+* Fri Aug 26 2022 Igor Vlasenko <viy@altlinux.org> 0.077-alt1
+- automated CPAN update
+
 * Thu Jun 23 2022 Igor Vlasenko <viy@altlinux.org> 0.076-alt2
 - fixed build
 
