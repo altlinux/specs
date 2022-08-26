@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: tig
-Version: 2.5.6
-Release: alt2
+Version: 2.5.7
+Release: alt1
 
 Summary: Text-mode interface for git
 License: GPLv2+
@@ -66,6 +66,9 @@ src/tig -v
 %_datadir/zsh/site-functions/tig-completion.bash
 
 %changelog
+* Fri Aug 26 2022 Vitaly Chikunov <vt@altlinux.org> 2.5.7-alt1
+- Update to tig-2.5.7 (2022-08-25).
+
 * Fri Jul 15 2022 Vitaly Chikunov <vt@altlinux.org> 2.5.6-alt2
 - Package tig-completion.bash for zsh completion.
 
