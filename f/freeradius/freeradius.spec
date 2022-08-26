@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 3.0.25
+Version: 3.2.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
@@ -392,7 +394,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/always
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/attr_filter
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/cache
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/cache_eap
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/cache_auth
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/chap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/counter
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/cui
@@ -417,7 +419,9 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/idn
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/inner-eap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/ippool
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/json
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/ldap
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/ldap_google
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/linelog
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/logintime
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/mac2ip
@@ -425,7 +429,6 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/mschap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/ntlm_auth
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/opendirectory
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/otp
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/pam
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/pap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-available/passwd
@@ -468,7 +471,6 @@ fi
 
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/always
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/attr_filter
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/cache_eap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/chap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/date
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/detail
@@ -528,7 +530,6 @@ fi
 %_libdir/freeradius/rlm_cache_rbtree.so
 %_libdir/freeradius/rlm_chap.so
 %_libdir/freeradius/rlm_counter.so
-%_libdir/freeradius/rlm_cram.so
 %_libdir/freeradius/rlm_date.so
 %_libdir/freeradius/rlm_detail.so
 %_libdir/freeradius/rlm_dhcp.so
@@ -552,7 +553,6 @@ fi
 %_libdir/freeradius/rlm_linelog.so
 %_libdir/freeradius/rlm_logintime.so
 %_libdir/freeradius/rlm_mschap.so
-%_libdir/freeradius/rlm_otp.so
 %_libdir/freeradius/rlm_pam.so
 %_libdir/freeradius/rlm_pap.so
 %_libdir/freeradius/rlm_passwd.so
@@ -579,6 +579,7 @@ fi
 %_libdir/freeradius/rlm_redis.so
 %_libdir/freeradius/rlm_rediswho.so
 %_libdir/freeradius/rlm_rest.so
+%_libdir/freeradius/rlm_json.so
 %_libdir/freeradius/rlm_sql_freetds.so
 
 %files common
@@ -698,6 +699,9 @@ fi
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Fri Aug 26 2022 Alexey Shabalin <shaba@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
 * Thu Nov 11 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.25-alt1
 - 3.0.25
 
