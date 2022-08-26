@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.12.1
+Version: 1.12.2
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,9 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Aug 26 2022 Anton Midyukov <antohami@altlinux.org> 1.12.2-alt1
+- install2: do'nt use find (segfault in automated tests)
+
 * Mon Aug 22 2022 Anton Midyukov <antohami@altlinux.org> 1.12.1-alt1
 - 10-disk.sh: add to filter partition from which iso was mounted with
   propagator
