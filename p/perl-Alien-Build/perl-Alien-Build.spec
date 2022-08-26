@@ -1,4 +1,6 @@
 %define _unpackaged_files_terminate_build 1
+# Alien-MSYS: Tools required for automake scripts in Windows
+%filter_from_requires /^perl.Alien.MSYS.pm/d
 %filter_from_requires /^perl.Alien.gmake.pm/d
 %filter_from_requires /^perl.PkgConfig.pm/d
 %filter_from_requires /^perl.PkgConfig.LibPkgConf.Client.pm/d
@@ -23,7 +25,7 @@ BuildRequires: gcc-c++ perl(AnyEvent.pm) perl(Inline.pm) perl(Module/Build.pm) p
 %{bcond_without perl_Alien_Build_enables_optional_test}
 
 Name:           perl-Alien-Build
-Version:        2.51
+Version:        2.59
 Release:        alt1
 Summary:        Build external dependencies for use in CPAN
 License:        GPL+ or Artistic
@@ -195,6 +197,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Aug 26 2022 Igor Vlasenko <viy@altlinux.org> 2.59-alt1
+- automated CPAN update
+
 * Thu Aug 04 2022 Igor Vlasenko <viy@altlinux.org> 2.51-alt1
 - automated CPAN update
 
