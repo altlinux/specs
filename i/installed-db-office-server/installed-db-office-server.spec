@@ -1,10 +1,11 @@
-%define system_requires apache2-base, apache2-mod_php7, apache2-mod_ssl, mariadb-server
+%define php_version 8.0
+%define system_requires apache2-base, apache2-mod_php%php_version, apache2-mod_ssl, mariadb-server
 %define deploy_requires deploy >= 0.3
 %define rule_requires   python3-module-pymysql, pwgen, curl
 
 Name: installed-db-office-server
 Version: 1.5.3
-Release: alt1
+Release: alt2
 Summary: Databases and config files for moodle, mediawiki and nextcloud
 License: GPL-2.0+
 Group: System/Configuration/Other
@@ -53,8 +54,8 @@ Requires: %deploy_requires
 Requires: %rule_requires
 Requires: nextcloud
 Requires: nextcloud-apache2
-Requires: php7-pcntl
-Requires: php7-pdo_mysql
+Requires: php%php_version-pcntl
+Requires: php%php_version-pdo_mysql
 Provides: %name-owncloud = %EVR
 Obsoletes: %name-owncloud < %EVR
 
@@ -87,6 +88,9 @@ done
 %_libexecdir/alterator/hooks/root.d/nextcloud
 
 %changelog
+* Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt2
+- Use PHP 8.0.
+
 * Thu Oct 28 2021 Andrey Cherepanov <cas@altlinux.org> 1.5.3-alt1
 - Remove empty configuration file of nextcloud.
 

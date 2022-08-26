@@ -1,6 +1,6 @@
 Name:    moodle-qtype_coderunner
-Version: 4.0.2
-Release: alt2
+Version: 4.2.3
+Release: alt1
 
 Summary: A moodle quiz question type that runs student-submitted program code in a sandbox to check if it satisfies a given set of tests
 License: GPL-3.0+
@@ -23,6 +23,8 @@ Requires: moodle-base >= 3.8.0
 Requires: moodle-qbehaviour_adaptive_adapted_for_coderunner
 Requires: jobe
 Requires: jobe-apache2
+
+%filter_from_requires /^composer$/d
 
 %description
 CodeRunner is a Moodle question type that allows teachers to run a program in
@@ -57,6 +59,9 @@ cp -a * %buildroot%moodle_questiondir/type/coderunner
 %moodle_questiondir/type/coderunner
 
 %changelog
+* Tue Aug 16 2022 Andrey Cherepanov <cas@altlinux.org> 4.2.3-alt1
+- New version.
+
 * Tue Aug 17 2021 Andrey Cherepanov <cas@altlinux.org> 4.0.2-alt2
 - Use local jobe server.
 

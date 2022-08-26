@@ -1,5 +1,5 @@
 Name:    moodle-qbehaviour_adaptive_adapted_for_coderunner
-Version: 1.3.9
+Version: 1.4.2
 Release: alt1
 
 Summary: The question behaviour required by the Moodle CodeRunner question type
@@ -33,5 +33,11 @@ cp -a * %buildroot%moodle_questiondir/behaviour/adaptive_adapted_for_coderunner
 %moodle_questiondir/behaviour/adaptive_adapted_for_coderunner
 
 %changelog
+* Tue Aug 16 2022 Andrey Cherepanov <cas@altlinux.org> 1.4.2-alt1
+- New version.
+
+* Sun Nov 28 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt1
+- New version.
+
 * Fri Aug 06 2021 Andrey Cherepanov <cas@altlinux.org> 1.3.9-alt1
 - Initial build for Sisyphus.

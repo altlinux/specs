@@ -1,7 +1,8 @@
+%define php_version 8.0
 %def_without pam
 
 Name: moodle
-Version: 3.11.6
+Version: 3.11.8
 Release: alt1
 
 Summary: The world's open source learning platform
@@ -69,20 +70,20 @@ Requires: %webserver_webappsdir
 Requires: texlive-base-bin ImageMagick
 Requires: iconv
 Requires: php-engine
-Requires: php7-curl
-Requires: php7-dom
-Requires: php7-fileinfo
-Requires: php7-gd2
-Requires: php7-intl
-Requires: php7-ldap
-Requires: php7-mbstring
-Requires: php7-opcache
-Requires: php7-openssl
-Requires: php7-soap
-Requires: php7-sodium
-Requires: php7-xmlreader
-Requires: php7-xmlrpc
-Requires: php7-zip
+Requires: php%php_version-curl
+Requires: php%php_version-dom
+Requires: php%php_version-fileinfo
+Requires: php%php_version-gd2
+Requires: php%php_version-intl
+Requires: php%php_version-ldap
+Requires: php%php_version-mbstring
+Requires: php%php_version-opcache
+Requires: php%php_version-openssl
+Requires: php%php_version-soap
+Requires: php%php_version-sodium
+Requires: php%php_version-xmlreader
+Requires: php%php_version-xmlrpc
+Requires: php%php_version-zip
 Provides: %moodle_dir
 Provides: %moodle_admindir
 Provides: %moodle_authdir
@@ -123,7 +124,7 @@ Requires: %apache2_confdir_inc
 Requires: %name-base = %version-%release
 Requires: %moodle_dir
 Requires: %moodle_datadir
-Requires: apache2-mod_php7
+Requires: apache2-mod_php%php_version
 Provides: %moodle_name-apache2 = %version-%release
 
 %description apache2
@@ -135,7 +136,7 @@ Group: Networking/WWW
 
 Requires: %name-base = %version-%release
 Requires: /usr/sbin/mysqld
-Requires: php7-mysqli
+Requires: php%php_version-mysqli
 Provides: %moodle_name-local-mysql = %version-%release
 
 %description local-mysql
@@ -242,6 +243,10 @@ install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 %endif
 
 %changelog
+* Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 3.11.8-alt1
+- New version.
+- Use PHP 8.0.
+
 * Sun Mar 13 2022 Andrey Cherepanov <cas@altlinux.org> 3.11.6-alt1
 - New version.
 

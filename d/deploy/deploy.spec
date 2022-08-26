@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.3.6
+Version: 0.3.7
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -31,6 +31,9 @@ system services like PostgreSQL or Moodle.
 %_datadir/%name
 
 %changelog
+* Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 0.3.7-alt1
+- Use PHP 8.0.
+
 * Mon Nov 15 2021 Andrey Cherepanov <cas@altlinux.org> 0.3.6-alt1
 - mariadb: fix service run at boot because ansible does not support service aliases.
 

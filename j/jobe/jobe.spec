@@ -1,5 +1,7 @@
+%define php_version 8.0
+
 Name:    jobe
-Version: 1.6.0
+Version: 1.6.7
 Release: alt1
 
 Summary: jobe is a server that runs small programming jobs in a variety of programming languages
@@ -13,7 +15,6 @@ Source: %name-%version.tar
 Source1: %name.conf
 Source2: jobe-sudoers
 Patch1: jobe-alt-fixes.patch
-Patch2: jobe-time.clock-deprecated.patch
 
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-webserver-common
@@ -37,7 +38,7 @@ Requires: %name = %version-%release
 Requires: apache2-common >= 2.2.0
 Requires: %_initdir/%apache2_dname
 Requires: apache2-httpd-prefork
-Requires: apache2-mod_php7 >= 7.0.0
+Requires: apache2-mod_php%php_version >= 7.0.0
 
 %description -n %name-apache2
 Install this package, if you wish to run %name under apache2 webserver
@@ -46,7 +47,7 @@ Install this package, if you wish to run %name under apache2 webserver
 Summary: Virtual package for mysql requires for %name
 Group: Networking/WWW
 Requires: %name = %version-%release
-Requires: php7-mysqli
+Requires: php%php_version-mysqli
 
 %description -n %name-mysql
 Install this package, if you wish to run %name with MySQL database
@@ -54,7 +55,6 @@ Install this package, if you wish to run %name with MySQL database
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
 
 %build
 cd runguard
@@ -110,5 +110,9 @@ a2ensite %name
 %files -n %name-mysql
 
 %changelog
+* Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 1.6.7-alt1
+- New version.
+- Requires PHP 8.0.
+
 * Fri Aug 06 2021 Andrey Cherepanov <cas@altlinux.org> 1.6.0-alt1
 - Initial build for Sisyphus.

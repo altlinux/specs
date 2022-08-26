@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.5.9
-Release: alt1
+Release: alt2
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -510,7 +510,7 @@ Requires: alterator-datetime
 Requires: alterator-console
 Requires: apache2
 Requires: apache2-httpd-worker
-Requires: installed-db-office-server-mediawiki
+#Requires: installed-db-office-server-mediawiki
 Requires: installed-db-office-server-nextcloud
 Requires: installed-db-office-server-moodle
 Requires: moodle-qtype_coderunner
@@ -619,6 +619,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt2
+- Remove mediawiki from task-edu-server-apps because it does not support PHP 8.0.
+
 * Tue Jul 26 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt1
 - Used pip instead of python3-module-pip.
 - Added python3-tools to task-edu-highschool.

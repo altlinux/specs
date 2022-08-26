@@ -1,13 +1,16 @@
+%define _unpackaged_files_terminate_build 1
+%define php_version 8.0
+
 Name: nextcloud
-Version: 22.2.0
-Release: alt2
+Version: 24.0.4
+Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
 
 Summary: Cloud platform
 Group: Networking/WWW
-License: AGPLv3
+License: AGPL-3.0
 Url: https://nextcloud.com/
 
 BuildArch: noarch
@@ -17,17 +20,29 @@ BuildRequires: python3-base
 Requires(pre): webserver-common
 
 # https://docs.nextcloud.com/server/13/admin_manual/installation/source_installation.html#ubuntu-installation-label
-Requires: php7 php7-libs php7-dom php7-gd2 php7-mbstring php7-xmlreader php7-zip
+Requires: php%php_version
+Requires: php%php_version-libs
+Requires: php%php_version-dom
+Requires: php%php_version-gd2
+Requires: php%php_version-mbstring
+Requires: php%php_version-xmlreader
+Requires: php%php_version-zip
 # Highly recommended:
-Requires: php7-curl php7-fileinfo php7-openssl
+Requires: php%php_version-curl
+Requires: php%php_version-fileinfo
+Requires: php%php_version-openssl
 # For SQL DBs
-Requires: php7-pdo-driver
-Requires: php7-pcntl
-Requires: php7-intl
+Requires: php%php_version-pdo-driver
+Requires: php%php_version-pcntl
+Requires: php%php_version-intl
 # Recommended
-Requires: php7-memcached php7-gmp php7-imagick
+Requires: php%php_version-memcached
+Requires: php%php_version-gmp
+Requires: php%php_version-imagick
 
 Source0: %name-%version.tar
+Patch1: nextcloud-simple-check-unicode-locale.patch
+Patch2: nextcloud-fix-openssl-config.patch
 
 # Automatically added by buildreq on Mon Oct 03 2016
 # optimized out: python-base python-modules python3
@@ -41,7 +56,9 @@ calendars, bookmarks and files across all your devices.
 %package apache2
 Summary: Apache 2.x web-server default configuration for %name
 Group: Networking/WWW
-Requires: %name = %EVR apache2-mod_php7 apache2-mod_ssl
+Requires: %name = %EVR
+Requires: apache2-mod_php%php_version
+Requires: apache2-mod_ssl
 Requires(post): cert-sh-functions
 
 %description apache2
@@ -58,6 +75,8 @@ nginx web-server default configuration for %name.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 
 %install
 mkdir -p %buildroot%installdir
@@ -75,11 +94,14 @@ ln -s %_sysconfdir/%name/config %buildroot%installdir/config
 mkdir -p %buildroot%_localstatedir/%name
 ln -s %_localstatedir/%name %buildroot%installdir/data
 
-#install apache2
+# Install apache2
 install -pD -m0644 apache2/default.conf %buildroot%_sysconfdir/httpd2/conf/sites-available/%name.conf
 
-#install nginx
+# Install nginx
 install -pD -m0644 nginx/default.conf %buildroot%_sysconfdir/nginx/sites-available.d/%name.conf
+
+# Remove distribution
+#rm -rf %buildroot%installdir/dist
 
 %post apache2
 a2ensite %name
@@ -109,7 +131,7 @@ ssl_generate "nextcloud"
 %dir %attr(0775,root,_webserver) %installdir/apps
 %installdir/apps/*
 %installdir/core
-#%installdir/l10n
+%installdir/dist
 %installdir/lib
 %installdir/oc*
 %installdir/resources
@@ -135,6 +157,10 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 24.0.4-alt1
+- New version.
+- Use PHP 8.0.
+
 * Mon Nov 15 2021 Andrey Cherepanov <cas@altlinux.org> 22.2.0-alt2
 - Add recommended requirements.
 
