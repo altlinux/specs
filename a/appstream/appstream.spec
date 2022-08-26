@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
-%def_with docs
+%def_without docs
 
 Name:    appstream
-Version: 0.15.4
+Version: 0.15.5
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -40,7 +40,6 @@ BuildRequires: libsoup-devel
 BuildRequires: /proc
 BuildRequires: libxmlb-devel
 BuildRequires: qt5-tools
-BuildRequires: daps
 
 #Requires: appstream-data
 
@@ -165,6 +164,10 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 %_datadir/gtk-doc/html/appstream
 
 %changelog
+* Thu Aug 25 2022 Andrey Cherepanov <cas@altlinux.org> 0.15.5-alt1
+- New version.
+- Build without docs (daps failed to build according to https://github.com/openSUSE/daps/issues/676).
+
 * Tue May 24 2022 Andrey Cherepanov <cas@altlinux.org> 0.15.4-alt1
 - New version.
 
