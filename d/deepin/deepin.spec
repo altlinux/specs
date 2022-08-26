@@ -1,6 +1,6 @@
 Name: deepin
 Version: 5
-Release: alt16
+Release: alt17
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -97,6 +97,7 @@ Requires: deepin-compressor
 Requires: gvfs-backend-smb
 Requires: deepin-shortcut-viewer
 Requires: deepin-picker
+Requires: deepin-network-core
 Requires: kde5-profile
 
 %description default
@@ -135,6 +136,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Fri Aug 26 2022 Leontiy Volodin <lvol@altlinux.org> 5-alt17
+- Added deepin-network-core for network management.
+
 * Wed May 11 2022 Leontiy Volodin <lvol@altlinux.org> 5-alt16
 - Removed deepin-image-viewer for armh architecture.
 
