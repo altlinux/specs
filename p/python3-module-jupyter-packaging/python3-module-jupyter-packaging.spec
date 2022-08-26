@@ -1,7 +1,7 @@
 %define  modulename jupyter-packaging
 
 Name:    python3-module-%modulename
-Version: 0.12.2
+Version: 0.12.3
 Release: alt1
 
 Summary: Tools to help build and install Jupyter Python packages
@@ -41,6 +41,9 @@ rm -rf %buildroot%python3_sitelibdir/tests
 %python3_sitelibdir/jupyter_packaging*
 
 %changelog
+* Fri Aug 26 2022 Andrey Cherepanov <cas@altlinux.org> 0.12.3-alt1
+- New version.
+
 * Mon Jul 25 2022 Andrey Cherepanov <cas@altlinux.org> 0.12.2-alt1
 - New version.
 
