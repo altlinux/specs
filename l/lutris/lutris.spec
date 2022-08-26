@@ -3,23 +3,25 @@
 %define appid net.lutris.Lutris
 
 Name: lutris
-Version: 0.5.10.1
+Version: 0.5.11
 Release: alt1
 Summary: Manager for game installation and execution
 License: GPL-2.0 and GPL-2.0+ and GPL-3.0+ and CC0-1.0 and LGPL-2.1+ and CC-BY-NC-SA-2.0 and CC-BY-SA-3.0
 Group: Games/Other
-Url: http://lutris.net
+Url: https://lutris.net
 
-Source: http://lutris.net/releases/lutris_%version.tar.xz
-Patch: lutris_0.5.8_alt_python3_pixbuf_path.patch
+Source: https://lutris.net/releases/lutris_%version.tar.xz
+Patch: lutris-0.5.11-alt-python3-pixbuf-path.patch
 
 Provides: python3(lutris.util.ubisoft)
 Conflicts: lutris-standalone
 
+BuildRequires: rpm-build-python3
 %if_enabled meson
 BuildPreReq: meson
+%else
+BuildRequires: python3-module-setuptools python3-module-wheel
 %endif
-BuildRequires: rpm-build-python3
 # Automatically added by buildreq on Fri Aug 30 2019 (-bi)
 # optimized out: bash4 bashrc kmod perl python-base python-modules python3 python3-base python3-dev python3-module-pkg_resources rpm-build-python3 sh4 tzdata xz
 #BuildRequires: eject fuse python3-module-setuptools rpm-build-gir unzip xlsfonts
@@ -39,7 +41,7 @@ Recommends for install: psmisc p7zip curl cabextract xrandr glibc-gconv-modules 
 
 %prep
 %setup -n %name
-%patch -p2
+%patch -p1
 # hack for missing GdkPixbuf.InterpType.NEAREST in ALT
 sed -i 's|GdkPixbuf.InterpType.NEAREST|1|' \
     lutris/gui/widgets/utils.py
@@ -49,14 +51,14 @@ sed -i 's|GdkPixbuf.InterpType.NEAREST|1|' \
 %meson
 %meson_build
 %else
-%python3_build
+%pyproject_build
 %endif
 
 %install
 %if_enabled meson
 %meson_install
 %else
-%python3_install
+%pyproject_install
 %endif
 %find_lang %name
 
@@ -74,6 +76,9 @@ sed -i 's|GdkPixbuf.InterpType.NEAREST|1|' \
 %_man1dir/%name.1.xz
 
 %changelog
+* Fri Aug 26 2022 Leontiy Volodin <lvol@altlinux.org> 0.5.11-alt1
+- New version (0.5.11).
+
 * Mon Apr 25 2022 Leontiy Volodin <lvol@altlinux.org> 0.5.10.1-alt1
 - New version (0.5.10.1).
 
