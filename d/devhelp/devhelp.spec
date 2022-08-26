@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define ver_major 41
 %define beta %nil
@@ -10,8 +10,8 @@
 %def_enable plugin_gedit
 
 Name: devhelp
-Version: %ver_major.2
-Release: alt2%beta
+Version: %ver_major.3
+Release: alt1%beta
 
 Summary: Developer's help program
 Group: Development/Other
@@ -35,13 +35,12 @@ Source: %name-%version%beta.tar
 Requires: lib%name = %version-%release
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-python3
-BuildRequires: meson gtk-doc yelp-tools libappstream-glib-devel
+BuildRequires: meson gtk-doc yelp-tools /usr/bin/appstream-util
 BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
 BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(amtk-5) >= %amtk_ver
 BuildRequires: zlib-devel
-# since 3.23.x
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libwebkit2gtk-gir-devel
 BuildRequires: gsettings-desktop-schemas-devel
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
@@ -109,7 +108,7 @@ This plugin for GEdit enables using DevHelp from inside the editor.
 %setup -n %name-%version%beta
 
 %build
-%meson -Dgtk_doc=true \
+%meson \
     %{?_enable_plugin_gedit:-Dplugin_gedit=true} \
     %{?_enable_gtk_doc:-Dgtk_doc=true}
 %nil
@@ -164,6 +163,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*}
 
 %changelog
+* Fri Aug 26 2022 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
+- 41.3
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 41.2-alt2
 - updated to 41.2-48-g14272cae (fixed build with meson >= 0.61,
   updated translations)
