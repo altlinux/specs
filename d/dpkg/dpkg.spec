@@ -2,7 +2,7 @@
 %def_without extbuild
 
 Name: dpkg
-Version: 1.21.8
+Version: 1.21.9
 Release: alt1
 
 Summary: Package maintenance system for Debian Linux
@@ -64,8 +64,17 @@ rm -f %buildroot%_man7dir/deb-version.*
 rm -rf %buildroot%_mandir/??/
 rm -rf %buildroot%_includedir/dpkg/*
 rm -rf %buildroot%_libdir/libdpkg.a
+rm -rf %buildroot/usr/share/aclocal/
 rm -rf %buildroot%_libdir/pkgconfig/libdpkg.pc
 %endif
+
+# remove unpacked files
+rm -v %buildroot/usr/lib/dpkg/dpkg-db-backup
+rm -v %buildroot/usr/sbin/dpkg-fsys-usrunmess
+rm -rf %buildroot/usr/share/doc/dpkg/
+#rm -v %buildroot%_man8dir/dpkg-fsys-usrunmess.8.*
+rm -v %buildroot/usr/share/zsh/vendor-completions/_dpkg-parsechangelog
+
 
 %find_lang %name
 %find_lang dpkg-dev
@@ -77,6 +86,8 @@ cat dpkg-dev.lang >> %name.lang
 %_datadir/%name/*table
 %_datadir/%name/*.mk
 %_datadir/%name/*.specs
+%dir %_datadir/%name/sh
+%_datadir/%name/sh/dpkg-error.sh
 %dir /var/lib/%name/
 /var/lib/%name/*
 %dir %_sysconfdir/%name
@@ -92,6 +103,7 @@ cat dpkg-dev.lang >> %name.lang
 %lang(es) %_mandir/es/man?/*
 %lang(it) %_mandir/it/man?/*
 %_includedir/dpkg/*
+/usr/share/aclocal/*
 %_libdir/libdpkg.a
 %_libdir/pkgconfig/libdpkg.pc
 %endif
@@ -102,6 +114,10 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 1.21.9-alt1
+- new version 1.21.9 (with rpmrb script)
+- remove unpacked files
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1.21.8-alt1
 - Autobuild version bump to 1.21.8
 
