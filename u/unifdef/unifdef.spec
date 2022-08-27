@@ -1,6 +1,6 @@
 Name: unifdef
 Version: 2.12
-Release: alt1
+Release: alt2
 Summary: A tool for removing ifdef'd lines
 License: BSD-2-Clause and BSD-3-Clause
 Group: Development/C
@@ -19,7 +19,8 @@ is inactive because it is inside a comment, or a single or double quote.
 %setup -n %srcname
 
 %build
-%make_build CFLAGS='%optflags'
+# Check about -O0 in https://bugzilla.altlinux.org/43468
+%make_build CFLAGS='%optflags -O0'
 
 %install
 %makeinstall_std prefix=/usr
@@ -32,6 +33,9 @@ make test
 %_man1dir/unifdef*
 
 %changelog
+* Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 2.12-alt2
+- NMU: fix build
+
 * Fri Feb 14 2020 Dmitry V. Levin <ldv@altlinux.org> 2.12-alt1
 - unifdef-2.11-25-g65842ab -> unifdef-2.12.
 
