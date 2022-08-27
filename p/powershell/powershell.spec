@@ -4,7 +4,7 @@
 %define _dotnet_corerelease 6.0*
 
 Name: powershell
-Version: 7.2.5
+Version: 7.2.6
 Release: alt1
 
 Summary: PowerShell for every system!
@@ -154,6 +154,9 @@ ln -s pwsh %buildroot%_bindir/%name
 %doc docs/*
 
 %changelog
+* Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 7.2.6-alt1
+- new version 7.2.6 (with rpmrb script)
+
 * Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 7.2.5-alt1
 - new version 7.2.5 (with rpmrb script)
 
