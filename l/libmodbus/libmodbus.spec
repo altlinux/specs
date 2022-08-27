@@ -1,7 +1,7 @@
 %def_with doc
 Name: libmodbus
-Version: 3.1.6
-Release: alt2
+Version: 3.1.7
+Release: alt1
 
 Summary: A Modbus library in C, which supports RTU communication over a serial line or a TCP link
 
@@ -72,6 +72,9 @@ rm -rfv %buildroot%_docdir/%name/
 %endif
 
 %changelog
+* Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.7-alt1
+99- new version 3.1.7 (with rpmrb script)
+
 * Sat Aug 22 2020 Vitaly Lipatov <lav@altlinux.ru> 3.1.6-alt2
 - really pack 3.1.6 (ALT bug 38837)
 
