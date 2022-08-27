@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 150
+%define centos_release 160
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -61,6 +61,7 @@ Group: System/Kernel and hardware
 Url: https://gitlab.com/redhat/centos-stream/src/kernel/centos-stream-9
 
 Source0: %name.tar
+Patch0: 0001-Fix-build-with-new-pahole-adjust-flags.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: x86_64 aarch64
@@ -633,6 +634,72 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Aug 26 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.160-alt1.el9
+- Updated to kernel-5.14.0-160.el9 (fixes: CVE-2022-1679, CVE-2022-26373):
+  + ath9k: fix use-after-free in ath9k_hif_usb_rx_cb
+  + Chelsio FCoE Initiator Driver (csiostor) update to upstream 5.19-rc4
+  + iavf: Fix VLAN_V2 addition/rejection
+  + net: qcom/emac: Fix improper merge resolution in device_get_mac_address
+  + nvme-fc: restart admin queue if the caller needs to restart queue
+  + Pull updated changes for gve driver from upstream
+  + x86/speculation: Post-barrier Return Stack Buffer Predictions (CVE-2022-26373)
+
+* Thu Aug 25 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.159-alt1.el9
+- Updated to kernel-5.14.0-159.el9:
+  + crypto: allow algs only in specific constructions in FIPS mode
+  + i2c: qcom-geni: Pull up to v5.19-rc5
+  + wireless: stack & drivers bugfixes update from v5.18
+
+* Thu Aug 25 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.158-alt1.el9
+- Updated to kernel-5.14.0-158.el9:
+  + [9.1] DRM stable backport up 5.18.13
+  + clk: qcom: add SC8280XP GCC
+  + drm/nouveau: recognise GA103
+  + interconnect: qcom: add sc8280xp support
+  + iommu/arm-smmu-qcom: Add SC8280XP support
+  + phy: qcom: update to v5.19-rc4
+  + pinctrl: qcom: update to v5.19-rc3
+  + Rebase mlx5 up to kernel 5.18
+  + scsi: ufs: update to v5.19-rc4
+  + soc: qcom: llcc: update to v5.19-rc6
+  + soc: qcom: rpmhpd: update to 5.19-rc5
+  + soc: qcom: smem: update to v5.19-rc6
+  + spi: spi-geni-qcom: Pull up to v5.19-rc5
+
+* Wed Aug 24 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.155-alt1.el9
+- Updated to kernel-5.14.0-155.el9 (fixes: CVE-2022-2586, CVE-2022-36946):
+  + ALSA: AMD - fix the ACPI tables to detect correctly Lenovo products using the DMIC (digital microphone)
+  + be2net: Driver Update
+  + i40e: Fix tunnel checksum offload with fragmented traffic
+  + iavf: Fix deadlock in initialization
+  + ice: bug fixes August 2022
+  + KVM: nVMX: Inject #UD if VMXON is attempted with incompatible CR0/CR4
+  + mm: Fix PASID use-after-free issue
+  + netfilter: nf_queue: do not allow packet truncation below transport header offset
+  + netfilter: nf_tables: do not allow to reference objects in foreign tables
+  + raid1: ensure write behind bio has less than BIO_MAX_VECS sectors
+  + redhat: update kabi tooling
+  + selftests: mptcp: make sendfile selftest work
+  + sfc: fix use after free when disabling sriov
+  + wait: Fix __wait_event_hrtimeout for RT/DL tasks
+
+* Tue Aug 23 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.154-alt1.el9
+- Updated to kernel-5.14.0-154.el9:
+  + AMD Secure Nested Paging (SEV-SNP) Guest Support
+
+* Tue Aug 23 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.153-alt1.el9
+- Updated to kernel-5.14.0-153.el9:
+  + Driver upgrade for mlx4
+  + netfilter: nf_log_syslog: Don't ignore unknown protocols
+  + netfilter: nf_tables: fix crash when nf_trace is enabled
+  + redhat: Use redhatsecureboot701 for ppc64le
+  + Upgrade drivers/base/property.c to support Arm SystemReady IR
+
+* Tue Aug 23 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.152-alt1.el9
+- Updated to kernel-5.14.0-152.el9:
+  + Rebase mlx5 up to kernel 5.17
+  + Upgrade drivers/of to support Arm SystemReady IR
+
 * Sun Aug 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.150-alt1.el9
 - Updated to kernel-5.14.0-150.el9 (fixes: CVE-2022-2590):
   + CNB: rebase/update netdevsim for RHEL 9.1
