@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.27.42
+Version: 1.27.57
 Release: alt1
 
 Summary: The low-level, core functionality of boto 3
@@ -87,6 +87,9 @@ sed -i \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 1.27.57-alt1
+- new version 1.27.57
+
 * Mon Aug 01 2022 Stanislav Levin <slev@altlinux.org> 1.27.42-alt1
 - 1.24.15 -> 1.27.42.
 
