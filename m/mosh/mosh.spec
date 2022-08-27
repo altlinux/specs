@@ -1,6 +1,6 @@
 Name: mosh
 Version: 1.3.2
-Release: alt2.2
+Release: alt2.3
 
 Summary: Mobile shell that supports roaming and intelligent local echo
 License: GPLv3+
@@ -31,7 +31,7 @@ Mosh is a remote terminal application that supports:
 
 %build
 %autoreconf
-%configure --enable-compile-warnings=error
+%configure
 %make_build
 
 %install
@@ -47,6 +47,9 @@ Mosh is a remote terminal application that supports:
 %_mandir/man1/mosh-server.1.*
 
 %changelog
+* Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 1.3.2-alt2.3
+- NMU: disable -Werror
+
 * Mon Sep 30 2019 Michael Shigorin <mike@altlinux.org> 1.3.2-alt2.2
 - E2K: explicit -std=c++11
 
