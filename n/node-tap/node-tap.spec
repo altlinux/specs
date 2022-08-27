@@ -4,7 +4,7 @@
 %{?nodejs_find_provides_and_requires}
 
 Name: node-tap
-Version: 14.10.7
+Version: 16.0.0
 Release: alt1
 
 Summary: Test Anything Protocol tools for node
@@ -38,7 +38,9 @@ AutoProv: no
 
 Requires: node
 
-BuildRequires: node-typescript
+BuildRequires: node-typescript node-eslint
+#nyc uses tap as devDepends
+#Requires: node-nyc
 
 %description
 A TAP test framework for Node.js.
@@ -47,18 +49,19 @@ A TAP test framework for Node.js.
 %setup -a 1
 
 %build
+rm -f node_modules/typescript node_modules/eslint
 
 %check
 npm test || :
-#rm -f node_modules/typescript
-#npm prune --production
 
 %install
 mkdir -p %buildroot%_bindir
 ln -sr %buildroot%nodejs_sitelib/%node_module/bin/run.js %buildroot%_bindir/tap
 mkdir -p %buildroot%nodejs_sitelib/%node_module/
 cp -a * %buildroot/%nodejs_sitelib/%node_module/
-rm -rf %buildroot/%nodejs_sitelib/%node_module/{docs,tap-snaphots}/
+cd %buildroot/%nodejs_sitelib/%node_module/
+npm prune --production
+rm -rfv %buildroot/%nodejs_sitelib/%node_module/{docs,tap-snaphots,docs-content,test}/
 
 %files
 %doc LICENSE README.md
@@ -70,5 +73,8 @@ rm -rf %buildroot/%nodejs_sitelib/%node_module/{docs,tap-snaphots}/
 #doc docs
 
 %changelog
+* Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 16.0.0-alt1
+- new version 16.0.0 (with rpmrb script)
+
 * Fri May 29 2020 Vitaly Lipatov <lav@altlinux.ru> 14.10.7-alt1
 - initial build for ALT Sisyphus
