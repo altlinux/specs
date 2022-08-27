@@ -2,7 +2,7 @@
 %define oname gmpy2
 
 Name: python3-module-%oname
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 
 Summary: GMP/MPIR, MPFR, and MPC interface
@@ -82,6 +82,9 @@ python3 test/runtests.py
 %doc docs/_build/html test*
 
 %changelog
+* Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt1
+- new version 2.1.2 (with rpmrb script)
+
 * Thu Dec 16 2021 Vitaly Lipatov <lav@altlinux.ru> 2.1.1-alt1
 - new version 2.1.1 (with rpmrb script)
 
