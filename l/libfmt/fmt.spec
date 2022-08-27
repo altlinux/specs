@@ -1,7 +1,7 @@
 %define sover 9
 
 Name: libfmt
-Version: 9.0.0
+Version: 9.1.0
 Release: alt1
 
 Summary: An open-source formatting library for C++
@@ -46,11 +46,9 @@ This package contains development part of fmt.
 
 %make_build VERBOSE=1
 
-%ifnarch %ix86
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
 make test
-%endif
 
 %install
 %makeinstall_std
@@ -66,6 +64,9 @@ make test
 %_libdir/libfmt.so
 
 %changelog
+* Sat Aug 27 2022 Nazarov Denis <nenderus@altlinux.org> 9.1.0-alt1
+- Updated to upstream version 9.0.1.
+
 * Wed Jul 06 2022 Nazarov Denis <nenderus@altlinux.org> 9.0.0-alt1
 - Updated to upstream version 9.0.0.
 
