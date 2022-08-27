@@ -1,8 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: libcbor
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: libcbor is a C library for parsing and generating CBOR
 License: MIT
@@ -59,5 +61,8 @@ install -pD -m0644 doc/man/libcbor.3 %buildroot/%_man3dir/libcbor.3
 %_man3dir/*
 
 %changelog
+* Sat Aug 27 2022 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt2
+- add strict ELF verification
+
 * Wed May 01 2022 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
 - initial build for Sisyphus
