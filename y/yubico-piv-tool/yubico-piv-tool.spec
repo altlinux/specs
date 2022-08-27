@@ -2,7 +2,7 @@
 
 Name: yubico-piv-tool
 Version: 2.3.0
-Release: alt1
+Release: alt1.gitd9d05fcc
 
 Summary: Command line tool for the YubiKey PIV application
 License: BSD-2-Clause
@@ -69,6 +69,9 @@ Requires: %name = %EVR
 %_libdir/pkgconfig/ykcs11.pc
 
 %changelog
+* Sat Aug 27 2022 Anton Zhukharev <ancieg@altlinux.org> 2.3.0-alt1.gitd9d05fcc
+- fix tests
+
 * Tue Aug 02 2022 Anton Zhukharev <ancieg@altlinux.org> 2.3.0-alt1
 - initial build for Sisyphus
 
