@@ -3,7 +3,7 @@
 %define oname envisage
 
 Name: python3-module-envisage
-Version: 6.0.1
+Version: 6.1.0
 Release: alt1
 
 Summary: Extensible Application Framework
@@ -90,6 +90,9 @@ This package contains development documentation for Envisage.
 %python3_sitelibdir/*
 
 %changelog
+* Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 6.1.0-alt1
+- new version 6.1.0 (with rpmrb script)
+
 * Sun Sep 12 2021 Vitaly Lipatov <lav@altlinux.ru> 6.0.1-alt1
 - new version 6.0.1 (with rpmrb script)
 
