@@ -13,7 +13,7 @@
 %def_enable libva
 
 Name: libspice-gtk
-Version: 0.40
+Version: 0.41
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -39,7 +39,7 @@ BuildRequires: spice-protocol >= 0.14.3
 BuildRequires: glib2-devel >= 2.52 libgio-devel >= 2.36 libcairo-devel >= 1.2.0
 BuildRequires: libjson-glib-devel
 BuildRequires: libopus-devel >= 0.9.14
-%{?_enable_webdav:BuildRequires: libphodav-devel >= 2.0 glib2-devel >= 2.43.90 libsoup-devel >= 2.49.91}
+%{?_enable_webdav:BuildRequires: pkgconfig(libphodav-3.0) >= 3.0 glib2-devel >= 2.43.90 pkgconfig(libsoup-3.0) >= 3.0.0}
 %{?_with_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vala:BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver vala-tools}
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 2.5.1}
@@ -200,7 +200,8 @@ echo "%version" > .tarball-version
 
 %files -n libspice-glib  -f %_name.lang
 %_libdir/libspice-client-glib-2.0.so.*
-%_libexecdir/spice-gtk/spice-client-glib-usb-acl-helper
+%dir %_libexecdir/spice-gtk
+%attr(4711,root,root) %_libexecdir/spice-gtk/spice-client-glib-usb-acl-helper
 %_datadir/polkit-1/actions/org.spice-space.lowlevelusbaccess.policy
 
 %files -n libspice-glib-devel
@@ -235,6 +236,9 @@ echo "%version" > .tarball-version
 %endif
 
 %changelog
+* Sun Aug 28 2022 Alexey Shabalin <shaba@altlinux.org> 0.41-alt1
+- 0.41
+
 * Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 0.40-alt1
 - 0.40
 

@@ -2,7 +2,7 @@
 %def_with avahi
 
 Name: phodav
-Version: 2.5
+Version: 3.0
 Release: alt1
 Summary: A WebDAV server using libsoup
 
@@ -18,7 +18,7 @@ BuildRequires(pre): meson >= 0.50
 BuildRequires: gtk-doc
 BuildRequires: libattr-devel
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.44
-BuildRequires: pkgconfig(libsoup-2.4) >= 2.48.0 pkgconfig(libxml-2.0)
+BuildRequires: pkgconfig(libsoup-3.0) >= 3.0.0 pkgconfig(libxml-2.0)
 %{?_with_avahi:BuildRequires: pkgconfig(avahi-gobject) pkgconfig(avahi-client)}
 BuildRequires: pkgconfig(systemd) pkgconfig(udev)
 BuildRequires: xmlto asciidoc
@@ -38,6 +38,7 @@ This package provides the library.
 Summary: Header files, libraries and development documentation for %name
 Group: Development/C
 Requires: lib%name = %version-%release
+Requires: pkgconfig(libsoup-3.0) >= 3.0.0
 
 %description -n lib%name-devel
 The libphodav-devel package includes the header files for libphodav.
@@ -73,7 +74,7 @@ echo "%version" > .tarball-version
 install -pD -m755 %SOURCE2 %buildroot%_initdir/spice-webdavd
 install -pD -m644 %SOURCE3 %buildroot/etc/sysconfig/spice-webdavd
 
-%find_lang %name-2.0 --with-gnome
+%find_lang %name-3.0 --with-gnome
 
 %post -n spice-webdavd
 %post_service spice-webdavd
@@ -81,7 +82,7 @@ install -pD -m644 %SOURCE3 %buildroot/etc/sysconfig/spice-webdavd
 %preun -n spice-webdavd
 %preun_service spice-webdavd
 
-%files -n lib%name -f %name-2.0.lang
+%files -n lib%name -f %name-3.0.lang
 %doc NEWS COPYING
 %_libdir/*.so.*
 
@@ -89,7 +90,7 @@ install -pD -m644 %SOURCE3 %buildroot/etc/sysconfig/spice-webdavd
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
-%_datadir/gtk-doc/html/phodav-2.0
+%_datadir/gtk-doc/html/phodav*
 
 %files -n chezdav
 %_bindir/chezdav
@@ -104,6 +105,9 @@ install -pD -m644 %SOURCE3 %buildroot/etc/sysconfig/spice-webdavd
 %config(noreplace) /etc/sysconfig/spice-webdavd
 
 %changelog
+* Mon Aug 29 2022 Alexey Shabalin <shaba@altlinux.org> 3.0-alt1
+- new version 3.0
+
 * Wed Nov 25 2020 Alexey Shabalin <shaba@altlinux.org> 2.5-alt1
 - new version 2.5
 
