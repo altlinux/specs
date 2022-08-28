@@ -2,6 +2,7 @@
 %allow_python3_import_path %_datadir/openuds
 %add_findreq_skiplist %_datadir/openuds/uds/transports/*/scripts/windows/* %_datadir/openuds/uds/transports/*/scripts/macosx/*
 %add_python3_req_skip uds.forward
+%add_python3_req_skip uds.tunnel
 %filter_from_provides /^python3(manage)/d
 %filter_from_provides /^python3(server)/d
 %filter_from_provides /^python3(server\.settings)/d
@@ -9,8 +10,8 @@
 %filter_from_provides /^python3(server\.wsgi)/d
 
 Name: openuds-server
-Version: 3.0.0
-Release: alt13
+Version: 3.5.0
+Release: alt1
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -153,6 +154,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Mon Aug 22 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt1
+- v3.5 snapshot 83394f0d34daf18722923be8d57b35627b330121
+
 * Mon Nov 29 2021 Alexey Shabalin <shaba@altlinux.org> 3.0.0-alt13
 - Add link for download python 3.9 client.
 

@@ -2,8 +2,8 @@
 %allow_python3_import_path %_libexecdir/UDSClient
 
 Name: openuds-client
-Version: 3.0.0
-Release: alt4
+Version: 3.5.0
+Release: alt1
 Summary: Client for Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause
 Group: Networking/Remote access
@@ -42,6 +42,9 @@ popd
 %_desktopdir/UDSClient.desktop
 
 %changelog
+* Mon Aug 22 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt1
+- v3.5 snapshot 83394f0d34daf18722923be8d57b35627b330121
+
 * Wed Sep 15 2021 Andrey Cherepanov <cas@altlinux.org> 3.0.0-alt4
 - Run usbip-export to redirect USB devices before connect to session.
 
