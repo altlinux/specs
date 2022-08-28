@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		442920c8f69
+%define svnrev		e46bcfb8403
 
 %def_with pgsql
 %def_enable java
@@ -16,8 +16,8 @@
 %endif
 
 Name: zabbix
-Version: 6.0.7
-Release: alt2
+Version: 6.0.8
+Release: alt0.rc2
 Epoch: 1
 
 Summary: A network monitor
@@ -689,6 +689,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Sun Aug 28 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.8-alt0.rc2
+- 6.0.8 rc2
+
 * Thu Aug 18 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.7-alt2
 - Remove unneeded Obsoletes
 - Add notice fo use Postgresql 13 or newer
