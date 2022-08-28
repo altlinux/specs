@@ -1,5 +1,5 @@
 Name: whatsapp-for-linux
-Version: 1.4.5
+Version: 1.4.6
 Release: alt1
 
 Summary: An unofficial WhatsApp linux client written in C++ with the help of gtkmm-3.0 and webkit2
@@ -44,6 +44,9 @@ Whatsapp-for-linux is an unofficial WhatsApp linux client written in C++ with th
 /usr/share/metainfo/com.github.eneshecan.WhatsAppForLinux.appdata.xml
 
 %changelog
+* Sun Aug 28 2022 Vitaly Lipatov <lav@altlinux.ru> 1.4.6-alt1
+- new version 1.4.6 (with rpmrb script)
+
 * Tue Jul 19 2022 Vitaly Lipatov <lav@altlinux.ru> 1.4.5-alt1
 - new version 1.4.5 (with rpmrb script)
 
