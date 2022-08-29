@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name Mite
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Capture/Tiny.pm) perl(Child.pm) perl(Class/XSAccessor.pm) perl(Devel/GlobalDestruction.pm) perl(Devel/Hide.pm) perl(ExtUtils/MakeMaker.pm) perl(Fennec.pm) perl(File/Copy/Recursive.pm) perl(Getopt/Kingpin.pm) perl(Import/Into.pm) perl(MRO/Compat.pm) perl(Module/Build.pm) perl(Module/Pluggable.pm) perl(Path/Tiny.pm) perl(Perl/Tidy.pm) perl(Role/Hooks.pm) perl(Role/Tiny.pm) perl(Test/Compile.pm) perl(Test/Deep.pm) perl(Test/FailWarnings.pm) perl(Test/Most.pm) perl(Test/Output.pm) perl(Test/Sims.pm) perl(Test2/V0.pm) perl(Types/Path/Tiny.pm) perl(Types/Standard.pm) perl(YAML/XS.pm) perl(autodie.pm) perl(namespace/autoclean.pm) perl(parent.pm)
+BuildRequires: perl(Capture/Tiny.pm) perl(Child.pm) perl(Class/XSAccessor.pm) perl(Devel/GlobalDestruction.pm) perl(Devel/Hide.pm) perl(ExtUtils/MakeMaker.pm) perl(Fennec.pm) perl(File/Copy/Recursive.pm) perl(Getopt/Kingpin.pm) perl(Import/Into.pm) perl(MRO/Compat.pm) perl(Module/Build.pm) perl(Module/Pluggable.pm) perl(Path/Tiny.pm) perl(Perl/Tidy.pm) perl(Role/Hooks.pm) perl(Role/Tiny.pm) perl(Sub/HandlesVia/CodeGenerator.pm) perl(Test/Compile.pm) perl(Test/Deep.pm) perl(Test/FailWarnings.pm) perl(Test/Most.pm) perl(Test/Output.pm) perl(Test/Sims.pm) perl(Test2/V0.pm) perl(Types/Path/Tiny.pm) perl(Types/Standard.pm) perl(YAML/XS.pm) perl(autodie.pm) perl(namespace/autoclean.pm) perl(parent.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.008003
+Version: 0.010008
 Release: alt1
 Summary: Moose-like OO, fast to load, with zero dependencies.
 Group: Development/Perl
@@ -30,6 +30,8 @@ scripts for %module_name
 %prep
 %setup -q -n %{module_name}-%{version}
 
+[ "%version" == "0.010008" ] && rm -f t/Mite-Attribute/isa.t
+
 %build
 %perl_vendor_build
 
@@ -45,6 +47,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Mon Aug 29 2022 Igor Vlasenko <viy@altlinux.org> 0.010008-alt1
+- automated CPAN update
+
 * Sun Aug 07 2022 Igor Vlasenko <viy@altlinux.org> 0.008003-alt1
 - automated CPAN update
 
