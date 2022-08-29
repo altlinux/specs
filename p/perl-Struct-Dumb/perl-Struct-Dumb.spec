@@ -6,7 +6,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Module/Build.pm) perl(Test/Fatal
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.12
+Version: 0.13
 Release: alt1
 Summary: make simple lightweight record-like structures
 Group: Development/Perl
@@ -33,6 +33,9 @@ BuildArch: noarch
 %perl_vendor_privlib/S*
 
 %changelog
+* Mon Aug 29 2022 Igor Vlasenko <viy@altlinux.org> 0.13-alt1
+- automated CPAN update
+
 * Wed Apr 22 2020 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - automated CPAN update
 
