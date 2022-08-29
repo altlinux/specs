@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define _user _eggdrop
 %define _group _eggdrop
 %define _home %_localstatedir/%name
 
 Name: eggdrop
-Version: 1.9.2
+Version: 1.9.3
 Release: alt1
 
 Summary: Eggdrop is an IRC bot, written in C
@@ -16,7 +17,9 @@ Packager: Vladimir V Kamarzin <vvk@altlinux.ru>
 Source0: %name-%version.tar
 Source1: %name.README.ALT.UTF8
 Source2: %name.init
-Patch1:  %name-fix-config-interpreter.patch
+Source3: %name.tmpfiles
+Patch1: %name-fix-config-interpreter.patch
+Patch2: %name-pathes.patch
 
 BuildRequires: tcl-devel zlib-devel autoconf
 BuildRequires: libssl-devel
@@ -33,6 +36,7 @@ privileged users and let them gain ops, etc.
 %prep
 %setup
 %patch1 -p2
+%patch2 -p1
 
 %build
 %autoreconf
@@ -41,7 +45,7 @@ make config
 %make_build
 
 %install
-install -dm1770 %buildroot%_var/run/%name
+install -dm1770 %buildroot/run/%name
 install -dm1770 %buildroot%_logdir/%name
 
 mkdir -p %buildroot%_libdir/%name/
@@ -73,8 +77,9 @@ sed -i  -e "s,scripts/,%_datadir/%name/scripts/,g" \
 	-e "s,modules/,%_libdir/%name/modules/,g" \
 	-e "s,language/,%_datadir/%name/language/,g" \
 	-e "s,text/,%_datadir/%name/text/,g" %name.conf
-install -pDm0755 eggdrop.conf %buildroot%_datadir/%name/%name.conf
-install -pDm0755 eggdrop.conf %buildroot%_home/eggdrop.conf
+install -pDm0755 eggdrop.conf %buildroot%_sysconfdir/%name.conf
+mkdir -p %buildroot%_home
+ln -s ../../../etc/eggdrop.conf %buildroot%_home/eggdrop.conf
 
 # README.ALT
 install -pDm0644 %SOURCE1 README.ALT.UTF8
@@ -85,12 +90,16 @@ install -dm1770 %buildroot%_home/scripts
 # remove unnedded stuff
 rm -rf %buildroot%_datadir/%name/doc
 
+# install tmpfiles
+install -Dpm644 %SOURCE3 %buildroot%_tmpfilesdir/%name.conf
+
 %pre
 /usr/sbin/groupadd -r -f %_group ||:
 /usr/sbin/useradd -g %_group -c 'The eggdrop' \
         -d %_home -s /dev/null -r %_user >/dev/null 2>&1 ||:
 
 %files
+%doc doc/* README*
 %dir %_libdir/%name
 %dir %_datadir/%name/language
 %dir %_libdir/%name/modules-%version
@@ -101,19 +110,25 @@ rm -rf %buildroot%_datadir/%name/doc
 %dir %_datadir/%name/text
 %dir %attr(1770,root,%_group) %_home
 %dir %attr(1770,root,%_group) %_home/scripts
-%dir %attr(1770,root,%_group) %_var/run/%name
+%dir %attr(1770,root,%_group) /run/%name
 %dir %attr(1770,root,%_group) %_logdir/%name
-%config(noreplace) %_home/%name.conf
+%config(noreplace) %_sysconfdir/%name.conf
 %_initdir/%name
 %_bindir/%name
 %_bindir/%name-%version
 %_libdir/%name/modules
 %_libdir/%name/modules-%version/*.so
 %_datadir/%name/*
+%_home/eggdrop.conf
+%_tmpfilesdir/%name.conf
 %_man1dir/%name.1.*
-%doc doc/* README*
 
 %changelog
+* Thu Aug 11 2022 Andrey Cherepanov <cas@altlinux.org> 1.9.3-alt1
+- New version.
+- Move eggdrop.conf to /etc.
+- Make /run/eggdrop by eggrop tmpfile.
+
 * Sun Mar 06 2022 Andrey Cherepanov <cas@altlinux.org> 1.9.2-alt1
 - New version.
 
