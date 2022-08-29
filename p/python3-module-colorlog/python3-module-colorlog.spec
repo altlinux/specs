@@ -1,21 +1,21 @@
-%define modname colorlog
+%define pypi_name colorlog
 
 %def_enable check
 
-Name: python3-module-%modname
-Version: 6.6.0
+Name: python3-module-%pypi_name
+Version: 6.7.0
 Release: alt1
 
 Summary: Python 3 module for log formatting with colors
 Group: Development/Python3
 License: MIT
-Url: http://pypi.python.org/pypi/%modname
-Source: http://pypi.io/packages/source/c/%modname/%modname-%version.tar.gz
+Url: http://pypi.python.org/pypi/%pypi_name
+Source: http://pypi.io/packages/source/c/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
+BuildRequires: python3-devel python3-module-wheel python3-module-setuptools
 %{?_enable_check:BuildRequires: python3-module-pytest}
 
 %description
@@ -23,25 +23,29 @@ colorlog.ColoredFormatter is a formatter for use with Python's logging
 module that outputs records using terminal colors.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 py.test3
 
 %files
-%python3_sitelibdir_noarch/%modname/
-%python3_sitelibdir_noarch/*.egg-info
+%python3_sitelibdir_noarch/%pypi_name/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %pypi_name}
 %doc README.md
 
 
 %changelog
+* Mon Aug 29 2022 Yuri N. Sedunov <aris@altlinux.org> 6.7.0-alt1
+- 6.7.0
+- ported to %%pyproject* macros
+
 * Wed Nov 17 2021 Yuri N. Sedunov <aris@altlinux.org> 6.6.0-alt1
 - 6.6.0
 
