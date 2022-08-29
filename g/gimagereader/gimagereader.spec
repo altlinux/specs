@@ -2,7 +2,7 @@
 
 Name: gimagereader
 Version: 3.4.0
-Release: alt2
+Release: alt3
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -20,6 +20,7 @@ Source2: manual-ru.html.in
 
 Patch1: gimagereader-cmake-3.17.patch
 Patch2: 6209e25dab20b233e399ff36fabe4252db0f9e44.patch
+Patch3: gimagereader-3.4.0-alt-Add-custom-scan-modes-seen-in-f-imaging-driver.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 
@@ -129,6 +130,7 @@ Common files for %name.
 %setup
 #patch1 -p2
 #patch2 -p1
+%patch3 -p1
 # remove with new version
 # https://redmine.basealt.space/issues/2497
 cp -fv %SOURCE1 po/ru.po
@@ -204,6 +206,9 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Aug 23 2022 Nikolai Kostrigin <nickel@altlinux.org> 3.4.0-alt3
+- add alt-Add-custom-scan-modes-seen-in-f-imaging-driver patch (closes: #43609)
+
 * Mon Jul 11 2022 Vitaly Lipatov <lav@altlinux.ru> 3.4.0-alt2
 - real build 3.4.0
 
