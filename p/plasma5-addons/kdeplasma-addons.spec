@@ -14,7 +14,7 @@
 %define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
 
 Name: plasma5-addons
-Version: 5.24.6
+Version: 5.25.4
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -124,7 +124,7 @@ done
 
 %install
 %K5install
-%K5install_move data kwin kdevappwizard locale knsrcfiles
+%K5install_move data kwin kdevappwizard kdevfiletemplates locale knsrcfiles
 %K5install_move icon all
 %find_lang %name --all-name
 # ensure arch-dependence
@@ -141,35 +141,34 @@ touch touch-%_arch
 %_K5plug/plasma/dataengine/*.so
 %_K5plug/plasma/applets/*.so
 %_K5plug/kpackage/packagestructure/*.so
-%_K5plug/plasmacalendarplugins/*.so
-%_K5plug/plasmacalendarplugins/*/
+%_K5plug/plasmacalendarplugins/*
 %_K5plug/potd/
 %_K5plug/kf5/krunner/*.so
 %_K5qml/org/kde/plasma/private/*/
 %_K5qml/org/kde/plasmacalendar/*/
+%_K5qml/org/kde/plasma/wallpapers/potd/
 %_K5data/plasma/*
 %_K5data/kwin/*
 %_K5srv/*
+%_K5srvtyp/*
 
 %files devel
 %_K5inc/plasma/potdprovider/
 %_K5link/lib*.so
 %_libdir/cmake/PlasmaPotdProvider/
-#%_K5archdata/mkspecs/modules/qt_plasma-desktop.pri
-#%_K5dbus_iface/*.xml
-%_K5data/kdevappwizard/templates/*.tar.bz2
+%_K5data/kdevfiletemplates/templates/*.tar.*
 
-%files -n %libplasmacomicprovidercore
-%_K5lib/libplasmacomicprovidercore.so.*
-%_K5lib/libplasmacomicprovidercore.so.%plasmacomicprovidercore_sover
-#%files -n %libplasmaweatherprivate
-#%_K5lib/libplasmaweatherprivate.so.*
-#%_K5lib/libplasmaweatherprivate.so.%plasmaweatherprivate_sover
+#%files -n %libplasmacomicprovidercore
+#%_K5lib/libplasmacomicprovidercore.so.*
+#%_K5lib/libplasmacomicprovidercore.so.%plasmacomicprovidercore_sover
 %files -n %libplasmapotdprovidercore
 %_K5lib/libplasmapotdprovidercore.so.*
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.6-alt1
 - new version
 

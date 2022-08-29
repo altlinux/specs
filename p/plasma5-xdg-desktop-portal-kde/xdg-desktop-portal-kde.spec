@@ -4,7 +4,7 @@
 
 %define rname xdg-desktop-portal-kde
 Name: plasma5-%rname
-Version: 5.24.6
+Version: 5.25.4
 Release: alt1
 %K5init altplace
 
@@ -26,9 +26,10 @@ Source1: env.sh
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: qt5-wayland-devel
 BuildRequires: libcups-devel glib2-devel libepoxy-devel libgbm-devel libssl-devel pipewire-libs-devel
-BuildRequires: kde5-plasma-wayland-protocols
 BuildRequires: extra-cmake-modules kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel kf5-kirigami-devel
 BuildRequires: kf5-knotifications-devel kf5-kpackage-devel kf5-kwayland-devel kf5-plasma-framework-devel
+BuildRequires: kf5-kiconthemes-devel
+BuildRequires: kde5-plasma-wayland-protocols
 # python3-dev
 
 
@@ -61,6 +62,9 @@ install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}.sh
 %_unitdir_user/*.service
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.4-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.6-alt1
 - new version
 

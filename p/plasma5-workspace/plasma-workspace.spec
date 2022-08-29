@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.24.6
-Release: alt3
+Version: 5.25.4
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -84,7 +84,7 @@ Patch113: alt-breeze-autoupdate-username.patch
 Patch114: alt-menu-search-results-add-genericname.patch
 Patch115: alt-dbus-sessionchange.patch
 #Patch116: alt-refresh-menu.patch
-Patch117: alt-disable-ctrl-alt-r.patch
+#
 Patch118: alt-session-exclude.patch
 Patch119: alt-freespace-thread-timer.patch
 Patch120: alt-desktop-plasmashell.patch
@@ -166,7 +166,8 @@ developing applications that use %name.
 Group: Graphical desktop/KDE
 Summary: Base qml-components for plasma workspace
 Requires: %name-common = %EVR
-Requires: qml(org.kde.plasma.core)
+Requires: qml(QtGraphicalEffects)
+Requires: qml(org.kde.plasma.core) qml(org.kde.kquickcontrols) qml(org.kde.kwin) qml(org.kde.kirigami)
 %description -n %name-qml
 Base qml-components for plasma workspace
 
@@ -282,7 +283,7 @@ popd
 %patch114 -p1
 %patch115 -p1
 #%patch116 -p1
-%patch117 -p1
+#
 %patch118 -p1
 %patch119 -p2
 %patch120 -p1
@@ -428,15 +429,14 @@ done
 %_K5plug/plasmacalendarplugins/
 %_K5plug/plasma/kcms/systemsettings/
 %_K5plug/plasma/kcms/systemsettings_qwidgets/
-%_K5qml/org/kde/plasma/lookandfeel/
-%_K5qml/org/kde/plasma/private/*
-%_K5qml/org/kde/plasma/wallpapers/*
 %_K5qml/org/kde/taskmanager/
 %_K5qml/org/kde/holidayeventshelperplugin/
 %_K5qml/org/kde/colorcorrect/
 %_K5qml/org/kde/notificationmanager/
 %_K5data/knsrcfiles/*.knsrc
 %_K5data/plasma/
+%dir %_K5data/plasma/look-and-feel/
+%exclude %_K5data/plasma/look-and-feel/*
 %_K5data/kglobalaccel/*.desktop
 %_K5data/kio_desktop/
 %_K5data/kpackage/kcms/*/
@@ -470,7 +470,8 @@ done
 %_datadir/polkit-1/actions/*fontinst*.policy
 
 %files -n %name-qml
-%_K5qml/org/kde/plasma/workspace/*/
+%_K5qml/org/kde/plasma/
+%_K5data/plasma/look-and-feel/*
 
 %files -n sddm-theme-breeze
 %_datadir/sddm/themes/breeze/
@@ -514,6 +515,13 @@ done
 
 
 %changelog
+* Fri Aug 26 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt2
+- fix showing textfield with help to unlock session (thanx mcpin@alt)
+- move more qml for sddm-theme-breeze
+
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt1
+- new version
+
 * Thu Aug 11 2022 Oleg Solovyov <mcpain@altlinux.org> 1:5.24.6-alt3
 - freememorynotifier: show notifications from systemd-oomd
 

@@ -1,8 +1,8 @@
 %define rname plasma-nm
-%def_disable openswan
+%def_disable libreswan
 
 Name: plasma5-nm
-Version: 5.24.6
+Version: 5.25.4
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -65,7 +65,7 @@ Requires: %name-connect-openvpn
 Requires: %name-connect-fortisslvpn
 Requires: %name-connect-vpnc
 Requires: %name-connect-openconnect
-Requires: %name-connect-openswan
+Requires: %name-connect-libreswan
 Requires: %name-connect-strongswan
 Requires: %name-connect-iodine
 Requires: %name-connect-l2tp
@@ -137,16 +137,15 @@ Obsoletes: kf5-plasma-nm-connect-iodine < %EVR
 %description connect-iodine
 %summary.
 
-%package connect-openswan
+%package connect-libreswan
 Group: Graphical desktop/KDE
 Summary: Openswan support for %name
 Requires: %name
-%if_enabled openswan
-Requires: NetworkManager-openswan
+%if_enabled libreswan
+Requires: NetworkManager-libreswan
 %endif
-Provides: kf5-plasma-nm-connect-openswan = %EVR
-Obsoletes: kf5-plasma-nm-connect-openswan < %EVR
-%description connect-openswan
+Obsoletes: plasma5-nm-connect-openswan < %EVR
+%description connect-libreswan
 %summary.
 
 %package connect-strongswan
@@ -225,13 +224,13 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %doc LICENSES/*
 %_K5lib/libplasmanm_*.so
 %_K5plug/kf5/kded/networkmanagement.so
-%_K5plug/kcm_networkmanagement.so
+%_K5plug/plasma/kcms/systemsettings_qwidgets/*networkmanagement*.so
 %_K5qml/org/kde/plasma/networkmanagement/
-%_K5data/kcm_networkmanagement/
+%_K5xdgapp/*networkmanagement*.desktop
+%_K5data/*networkmanagement/
 %_K5data/plasma/plasmoids/org.kde.plasma.networkmanagement/
-%_K5data/plasma/updates/*
+%_K5data/plasma/updates/*nm*
 %_K5notif/networkmanagement.notifyrc
-%_K5srv/*.desktop
 %_datadir/qlogging-categories5/*.*categories
 
 %files maxi
@@ -247,8 +246,8 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5plug/plasma/network/vpn/plasmanetworkmanagement_vpncui.so
 %files connect-openconnect
 %_K5plug/plasma/network/vpn/plasmanetworkmanagement_openconnect_*.so
-%files connect-openswan
-%_K5plug/plasma/network/vpn/plasmanetworkmanagement_openswanui.so
+%files connect-libreswan
+%_K5plug/plasma/network/vpn/plasmanetworkmanagement_libreswanui.so
 %files connect-strongswan
 %_K5plug/plasma/network/vpn/plasmanetworkmanagement_strongswanui.so
 %files connect-l2tp
@@ -261,6 +260,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.6-alt1
 - new version
 

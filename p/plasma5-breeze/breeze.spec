@@ -4,7 +4,7 @@
 %define libbreezecommon libbreezecommon%breezecommon_sover
 
 Name: plasma5-%rname
-Version: 5.24.6
+Version: 5.25.4
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -28,7 +28,7 @@ BuildRequires: kf5-frameworkintegration-devel kf5-kauth-devel kf5-kcodecs-devel 
 BuildRequires: kf5-kcoreaddons-devel kf5-kdbusaddons-devel plasma5-kdecoration-devel kf5-kguiaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kiconthemes-devel kf5-kitemviews-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kcmutils-devel kf5-plasma-framework-devel kf5-kpackage-devel
-BuildRequires: kf5-kwayland-devel
+BuildRequires: kf5-kwayland-devel kf5-kirigami-devel
 
 Provides: kf5-breeze = %EVR
 Obsoletes: kf5-breeze < %EVR
@@ -105,6 +105,9 @@ KF5 library
 %_K5lib/libbreezecommon5.so.*
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.6-alt1
 - new version
 

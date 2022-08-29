@@ -15,8 +15,8 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.24.6
-Release: alt2
+Version: 5.25.4
+Release: alt1
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -33,7 +33,7 @@ Source2: env-snap.sh
 Patch1: alt-offline-updates.patch
 Patch2: alt-skip-obsoleted-and-removed-from-upgrade.patch
 Patch3: alt-discover-update-all-packages-from-appstream.patch
-Patch4: alt-pk-launch.patch
+#
 Patch5: alt-soversion.patch
 Patch6: alt-fix-status-after-transaction.patch
 Patch7: alt-pk-disable-launch.patch
@@ -167,7 +167,7 @@ KF5 library
 %patch1 -p1
 %patch2 -p2
 #%patch3 -p2 -b .upd-appstream
-%patch4 -p1
+#
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
@@ -218,6 +218,7 @@ done
 %_K5xdgapp/org.kde.discover.desktop
 %_K5xdgapp/org.kde.discover.urlhandler.desktop
 %_K5xdgapp/org.kde.discover.notifier.desktop
+%_K5xdgapp/kcm_updates.desktop
 %_K5start/org.kde.discover.notifier.desktop
 %_K5xmlgui/*
 %_K5notif/*.notifyrc
@@ -255,7 +256,7 @@ done
 %_K5xdgapp/org.kde.discover.snap.desktop
 %_K5dbus/system.d/org.kde.discover.libsnapclient.conf
 %_datadir/metainfo/org.kde.discover.snap.appdata.xml
-%_K5data/libdiscover/categories/snap-backend-categories.xml
+#%_K5data/libdiscover/categories/snap-backend-categories.xml
 %_datadir/polkit-1/actions/org.kde.discover.libsnapclient.policy
 %endif
 
@@ -273,6 +274,9 @@ done
 
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.4-alt1
+- new version
+
 * Wed Aug 17 2022 Oleg Solovyov <mcpain@altlinux.org> 5.24.6-alt2
 - packagekit backend: fix "Repair System" button
 

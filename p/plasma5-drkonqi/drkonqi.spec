@@ -1,7 +1,11 @@
 %define rname drkonqi
+%define _unit_nedodir /lib/systemd
+%ifndef _unitdir_user
+%define _unitdir_user %prefix/lib/systemd/user
+%endif
 
 Name: plasma5-%rname
-Version: 5.24.6
+Version: 5.25.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -17,10 +21,11 @@ Source: %rname-%version.tar
 # optimized out: cmake cmake-modules elfutils gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3
 #BuildRequires: extra-cmake-modules kf5-kcrash-devel kf5-ki18n-devel kf5-kidletime-devel kf5-kio-devel kf5-knotifications-devel kf5-kwallet-devel kf5-kxmlrpcclient-devel libssl-devel python3-dev qt5-x11extras-devel ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules qt5-base-devel qt5-x11extras-devel
-BuildRequires: libssl-devel
+BuildRequires: extra-cmake-modules qt5-base-devel qt5-x11extras-devel qt5-declarative-devel
+BuildRequires: libssl-devel libsystemd-devel
 BuildRequires: kf5-kcrash-devel kf5-ki18n-devel kf5-kidletime-devel kf5-kio-devel kf5-knotifications-devel
 BuildRequires: kf5-kwallet-devel kf5-kxmlrpcclient-devel kf5-kwindowsystem-devel kf5-syntax-highlighting-devel
+BuildRequires: kf5-kpackage-devel kf5-kdeclarative-devel
 
 %description
 The KDE Crash Handler.
@@ -54,6 +59,8 @@ Requires: %name-common = %version-%release
 %build
 %K5build \
     -DLIBEXEC_INSTALL_DIR=%_K5exec \
+    -DSYSTEMD_UNIT_INSTALL_DIR=%_unit_nedodir \
+    -DSYSTEMD_USER_UNIT_INSTALL_DIR=%_unitdir_user \
     #
 
 %install
@@ -63,12 +70,19 @@ Requires: %name-common = %version-%release
 
 %files -f %name.lang
 %doc LICENSES/*
-%_datadir/qlogging-categories5/*.*categories
-%_K5exec/drkonqi
+%_K5bin/drkonqi*
+%_K5exec/drkonqi*
+%_K5plug/drkonqi/
 %_K5data/drkonqi/
-%_K5xdgapp/*drkonqi.desktop
+%_K5xdgapp/*drkonqi*.desktop
+%_unitdir/*drkonqi*
+%_unitdir_user/*drkonqi*
+%_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.6-alt1
 - new version
 

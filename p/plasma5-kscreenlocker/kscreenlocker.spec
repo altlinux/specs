@@ -6,8 +6,8 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: plasma5-%rname
-Version: 5.24.6
-Release: alt1
+Version: 5.25.4
+Release: alt2
 Epoch: 2
 %K5init altplace
 
@@ -80,7 +80,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p2
+%patch3 -p1
 
 %build
 %K5build \
@@ -105,14 +105,13 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 
 %files
 %config(noreplace) %_sysconfdir/pam.d/kf5-screenlocker
-%_K5exec/*
-%attr(2711,root,chkpwd) %_K5exec/kcheckpass
-%_K5plug/kcms/kcm_screenlocker.so
+%attr(2711,root,chkpwd) %_K5exec/kscreenlocker_greet
+%_K5plug/plasma/kcms/systemsettings/*screenlocker*.so
 %_K5data/ksmserver/screenlocker/
 %_K5data/kpackage/kcms/kcm_screenlocker/
 %_K5conf_up/k*reenlock*
 %_K5notif/*.notifyrc
-%_K5srv/*.desktop
+%_K5xdgapp/*screenlocker*.desktop
 
 %files devel
 #%_K5inc/kscreenlocker_version.h
@@ -121,13 +120,18 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/cmake/KScreenLocker/
 %_K5lib/cmake/ScreenSaverDBusInterface/
 %_K5dbus_iface/*creen?aver*.xml
-#%_K5archdata/mkspecs/modules/qt_KScreenLocker.pri
 
 %files -n %libkscreenlocker
 %_K5lib/libKScreenLocker.so.*
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Fri Aug 26 2022 Sergey V Turchin <zerg@altlinux.org> 2:5.25.4-alt2
+- fix check user password by new screenlocker pam support (thanks mcpain@alt)
+
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 2:5.25.4-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 2:5.24.6-alt1
 - new version
 

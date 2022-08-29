@@ -2,8 +2,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.24.6
-Release: alt4
+Version: 5.25.4
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -37,8 +37,6 @@ Patch16: alt-kicker-custom-btn-img-size.patch
 Patch17: alt-users-use-gost-yescrypt.patch
 Patch18: alt-kxkb-indicator-uppercase.patch
 Patch19: alt-use-background.patch
-# Fix bug #41564
-Patch20: alt-revert-a47ead6.patch
 # Fix bug #42348
 Patch21: alt-re-set-xkb-mappings.patch
 Patch22: alt-i18n.patch
@@ -137,7 +135,7 @@ Common polkit files for %name
 #%patch17 -p1
 %patch18 -p1
 %patch19 -p1
-%patch20 -p1
+#
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
@@ -200,6 +198,7 @@ done
 %_K5plug/kcms/*.so
 %_K5plug/kf5/kded/*.so
 %_K5plug/kf5/krunner/*.so
+%_K5plug/plasma/applets/*.so
 %_K5plug/plasma/dataengine/*.so
 %_K5plug/plasma/kcminit/
 %_K5plug/plasma/kcms/*/*.so
@@ -246,6 +245,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.4-alt1
+- new version
+
 * Fri Jul 29 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.6-alt4
 - rebuild
 

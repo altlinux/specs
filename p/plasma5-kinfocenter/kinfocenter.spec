@@ -4,7 +4,7 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: plasma5-%rname
-Version: 5.24.6
+Version: 5.25.4
 Release: alt1
 %K5init altplace no_appdata
 
@@ -30,6 +30,8 @@ Requires: /usr/bin/lspci
 Requires: /usr/bin/lscpu
 # Vulkan
 Requires: /usr/bin/vulkaninfo
+# About
+Requires: /usr/sbin/dmidecode
 
 Source: %rname-%version.tar
 Patch1: alt-usbids-path.patch
@@ -119,12 +121,20 @@ grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
 %_K5data/kinfocenter/
 %_K5data/kpackage/
 %_K5srvtyp/*
+# kinfocenter/dmidecode-helper
+%_K5libexecdir/kauth/*dmidecode*
+%_K5dbus_sys_srv/*dmidecode*
+%_datadir/dbus-1/system.d/*dmidecode*
+%_datadir/polkit-1/actions/*dmidecode*
 
 %files -n %libkinfocenterinternal
 %_K5lib/libKInfoCenterInternal.so.*
 %_K5lib/libKInfoCenterInternal.so.%kinfocenterinternal_sover
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.4-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.6-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname oxygen
 
 Name: plasma5-%rname
-Version: 5.24.6
+Version: 5.25.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -85,7 +85,7 @@ KF5 library
 %_bindir/*5
 %_K5bin/*
 %_K5plug/org.kde.kdecoration2/*.so
-%_K5snd/Oxygen*
+#%_K5snd/Oxygen*
 %_iconsdir/Oxygen_*/
 %_iconsdir/*/*/apps/oxygen-settings.*
 %_iconsdir/KDE_Classic/
@@ -102,6 +102,9 @@ KF5 library
 %_K5lib/liboxygenstyleconfig5.so.*
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.6-alt1
 - new version
 

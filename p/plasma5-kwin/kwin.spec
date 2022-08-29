@@ -16,7 +16,7 @@
 %define libkcmkwincommon libkcmkwincommon%kcmkwincommon_sover
 
 Name: plasma5-%rname
-Version: 5.24.6
+Version: 5.25.4
 Release: alt1
 %K5init altplace
 
@@ -30,7 +30,7 @@ Obsoletes: kf5-kwin < %EVR
 
 Requires: hwdatabase
 Requires: /usr/bin/Xwayland kf5-kirigami plasma5-kscreenlocker
-Requires: qml(QtMultimedia) qml(QtQuick.VirtualKeyboard) qml(QtQuick.Controls)
+Requires: qml(QtMultimedia) qml(QtQuick.VirtualKeyboard) qt5-quickcontrols qt5-quickcontrols2
 Requires: qml(org.kde.kquickcontrols) qml(org.kde.plasma.components) qml(org.kde.plasma.core)
 Requires(post): /sbin/setcap
 
@@ -51,9 +51,10 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel-static qt5-declarative
 BuildRequires: libqaccessibilityclient-qt5-devel
 BuildRequires: libcap-utils libcap-devel zlib-devel
 BuildRequires: libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-cursor-devel libxcbutil-keysyms-devel
-BuildRequires: libxkbcommon-devel libgbm-devel libdrm-devel libEGL-devel
+BuildRequires: libxkbcommon-devel libgbm-devel libdrm-devel libEGL-devel libxcvt-devel
 BuildRequires: fontconfig-devel libfreetype-devel liblcms2-devel
 BuildRequires: libepoxy-devel libinput-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
+BuildRequires: qt5-wayland-devel kde5-plasma-wayland-protocols wayland-protocols
 BuildRequires: qt5-multimedia-devel qt5-script-devel qt5-tools-devel-static qt5-x11extras-devel qt5-sensors-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel
 BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
@@ -64,7 +65,7 @@ BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf
 BuildRequires: kf5-kservice-devel kf5-ktextwidgets-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel kf5-kidletime-devel
 BuildRequires: kf5-kirigami-devel kf5-krunner-devel
-BuildRequires: plasma5-kscreenlocker-devel plasma5-breeze-devel plasma5-kwayland-server-devel
+BuildRequires: plasma5-kscreenlocker-devel plasma5-breeze-devel
 
 %description
 KDE Window Manager
@@ -143,14 +144,6 @@ KF5 library
 %K5install_move data kconf_update knsrcfiles krunner
 %find_lang %name --with-kde --all-name
 
-# clean doc entries
-for f in \
-    %buildroot/%_K5srv/kcm_kwin_virtualdesktops.desktop \
-    %buildroot/%_K5srv/kwincompositing.desktop \
-    ; do
-    sed -i '/^X-DocPath=/d' $f
-done
-
 %post
 /sbin/setcap CAP_SYS_NICE=+ep %_K5bin/kwin_wayland ||:
 
@@ -164,14 +157,18 @@ done
 %_K5exec/*kwin*
 %_K5plug/kpackage/packagestructure/kwin_*.so
 %_K5plug/kwin/
-%_K5plug/kcms/*.so
+#%_K5plug/kcms/*.so
+#%_K5plug/*.so
+%_K5plug/plasma/kcms/systemsettings/*kwin*.so
+%_K5plug/plasma/kcms/systemsettings/*virtua*.so
+%_K5plug/plasma/kcms/systemsettings_qwidgets/*kwin*.so
 %_K5plug/org.kde.kdecoration2/
 %_K5plug/org.kde.*kwin*/
-%_K5plug/*.so
 %_K5xdgapp/*kwin*.desktop
+%_K5xdgapp/*virtua*.desktop
 %_K5cf_bin/kwin*
 %_K5conf_up/kwin*
-%_K5qml/org/kde/kwin/
+%_K5qml/org/kde/kwin*/
 %_K5cfg/*.kcfg
 %_K5data/kpackage/kcms/kcm_*/
 %_K5data/kwin/
@@ -207,6 +204,9 @@ done
 
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.4-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.6-alt1
 - new version
 

@@ -19,7 +19,7 @@
 %define libksysguardsystemstats libksysguardsystemstats%sover2
 
 Name: plasma5-%rname
-Version: 5.24.6
+Version: 5.25.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -227,6 +227,9 @@ Requires: %name-common
 %_K5lib/libKSysGuardSystemStats.so.*
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.6-alt1
 - new version
 

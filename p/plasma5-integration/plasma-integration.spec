@@ -1,7 +1,7 @@
 %define rname plasma-integration
 
 Name: plasma5-integration
-Version: 5.24.6
+Version: 5.25.4
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -22,12 +22,14 @@ Patch2: alt-acivate-tray-icons.patch
 #BuildRequires: extra-cmake-modules kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kservice-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libXres-devel python-module-google python3-base qt5-declarative-devel qt5-x11extras-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-base-devel-static qt5-declarative-devel qt5-quickcontrols2-devel qt5-x11extras-devel
-BuildRequires: libXres-devel
+BuildRequires: libXres-devel qt5-wayland-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel
 BuildRequires: kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kservice-devel kf5-kwayland-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
-BuildRequires: kf5-kwindowsystem-devel plasma5-breeze-devel
+BuildRequires: kf5-kwindowsystem-devel
+BuildRequires: plasma5-breeze-devel
+BuildRequires: kde5-plasma-wayland-protocols
 
 Provides: kf5-plasma-integration = %EVR
 Obsoletes: kf5-plasma-integration < %EVR
@@ -84,6 +86,9 @@ rm -f %_K5data/kconf_update/fonts_*
 %_libdir/pkgconfig/plasma-key-data.pc
 
 %changelog
+* Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.6-alt1
 - new version
 
