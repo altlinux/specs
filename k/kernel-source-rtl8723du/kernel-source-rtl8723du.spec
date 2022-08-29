@@ -1,9 +1,9 @@
 %define module_name rtl8723du
-%define git_rev b3d0f89
+%define git_rev e0129ae
 
 Name: kernel-source-%module_name
 Version: 5.13.4
-Release: alt1.git%git_rev
+Release: alt2.git%git_rev
 
 Summary: Realtek RTL8723DU WiFi adapter driver
 License: GPL-2.0
@@ -31,5 +31,8 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Aug 29 2022 Andrey Cherepanov <cas@altlinux.org> 5.13.4-alt2.gite0129ae
+- Support for kernel 5.19+
+
 * Thu Jun 23 2022 Andrey Cherepanov <cas@altlinux.org> 5.13.4-alt1.gitb3d0f89
 - Initial build for Sisyphus.
