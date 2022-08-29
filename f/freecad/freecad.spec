@@ -15,7 +15,7 @@
 
 Name:    freecad
 Version: 0.20.1
-Release: alt1
+Release: alt2
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -32,6 +32,7 @@ Patch1: %name-remove-3rdParty.patch
 %endif
 Patch4: freecad-0.19.2-alt-boost-link.patch
 Patch5: freecad-alt-fix-icon-name-in-menu.patch
+Patch6: freecad-version.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -149,6 +150,7 @@ rm -rf src/3rdParty
 %endif
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
 # because "error: cpio archive too big"
@@ -244,6 +246,9 @@ rm -f %buildroot%_includedir/E57Format/*.h
 %ldir/doc
 
 %changelog
+* Sun Aug 28 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.20.1-alt2
+- Fixed application version (ALT #43585).
+
 * Thu Aug 11 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.20.1-alt1
 - New version.
 - Added support of LibreDWG.
