@@ -1,12 +1,12 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Data-Dmp
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(B/Deparse.pm) perl(Data/Dump.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(IO/Handle.pm) perl(IPC/Open3.pm) perl(Pod/Coverage/TrustPod.pm) perl(Regexp/Stringify.pm) perl(Scalar/Util.pm) perl(Test/More.pm) perl(Test/Pod.pm) perl(Test/Pod/Coverage.pm) perl(strict.pm) perl(warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.241
+Version: 0.242
 Release: alt1
 Summary: Dump Perl data structures
 Group: Development/Perl
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/D*
 
 %changelog
+* Mon Aug 29 2022 Igor Vlasenko <viy@altlinux.org> 0.242-alt1
+- automated CPAN update
+
 * Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 0.241-alt1
 - automated CPAN update
 
