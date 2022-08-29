@@ -3,8 +3,8 @@
 %def_with test
 
 Name: range-v3
-Version: 0.11.0
-Release: alt2
+Version: 0.12.0
+Release: alt1
 
 Summary: Range library for C++14/17/20, basis for C++20's std::ranges
 
@@ -27,6 +27,7 @@ BuildRequires: gcc-c++
 
 BuildRequires(pre): rpm-build-intro >= 2.1.14
 BuildRequires: cmake
+BuildRequires: boost-devel-static
 
 %if_with test
 BuildRequires: ctest
@@ -53,8 +54,8 @@ which was merged into the C++20 working drafts in November 2018.
 
 %prep
 %setup
-%patch -p1
-%__subst 's|DESTINATION lib/cmake/range-v3|DESTINATION share/cmake/range-v3|g' CMakeLists.txt
+#patch -p1
+%__subst 's|DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/range-v3|DESTINATION share/cmake/range-v3|g' CMakeLists.txt
 %__subst '/-Werror/d' cmake/ranges_flags.cmake
 
 %build
@@ -85,6 +86,9 @@ rm -vf %buildroot%_includedir/module.modulemap
 %_datadir/cmake/%name
 
 %changelog
+* Sun Aug 28 2022 Vitaly Lipatov <lav@altlinux.ru> 0.12.0-alt1
+- new version 0.12.0 (with rpmrb script)
+
 * Fri Apr 23 2021 Vitaly Lipatov <lav@altlinux.ru> 0.11.0-alt2
 - build with gcc10 on Sisyphus
 
