@@ -17,7 +17,7 @@
 
 Name: zabbix
 Version: 6.0.8
-Release: alt0.rc2
+Release: alt0.rc2.1
 Epoch: 1
 
 Summary: A network monitor
@@ -689,6 +689,9 @@ fi
 %_includedir/%name
 
 %changelog
+* Mon Aug 29 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.8-alt0.rc2.1
+- Fix path to zabbix-agent2 configs and plugins (ALT #43640)
+
 * Sun Aug 28 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.8-alt0.rc2
 - 6.0.8 rc2
 
