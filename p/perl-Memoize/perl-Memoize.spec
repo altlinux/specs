@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Memoize
 Name: perl-%dist
-Version: 1.10
+Version: 1.12
 Release: alt1
 
 Summary: Perl functions speedup by caching return values
@@ -33,10 +33,13 @@ the function compute the value all over again.
 %perl_vendor_install
 
 %files
-%doc Changes
+%doc Changes README
 %perl_vendor_privlib/Memoize*
 
 %changelog
+* Mon Aug 29 2022 Igor Vlasenko <viy@altlinux.org> 1.12-alt1
+- automated CPAN update
+
 * Thu Aug 11 2022 Igor Vlasenko <viy@altlinux.org> 1.10-alt1
 - automated CPAN update
 
