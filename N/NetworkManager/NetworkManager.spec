@@ -58,7 +58,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.39.90
+Version: 1.40.0
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -647,6 +647,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Aug 29 2022 Mikhail Efremov <sem@altlinux.org> 1.40.0-alt1
+- Updated to 1.40.0.
+
 * Thu Aug 25 2022 Mikhail Efremov <sem@altlinux.org> 1.39.90-alt1
 - Added /dev/pts to BR.
 - Added python3-module-pexpect to BR.
