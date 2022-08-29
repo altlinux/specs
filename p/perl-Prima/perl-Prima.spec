@@ -6,7 +6,7 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: /usr/bin/xvfb-run perl(AnyEvent.pm) perl(AnyEvent/Socket.pm) perl-podlators
+BuildRequires: /usr/bin/xvfb-run libheif-devel perl(AnyEvent.pm) perl(AnyEvent/Socket.pm) perl-podlators
 # END SourceDeps(oneline)
 # need installed Prima
 %add_findreq_skiplist %_bindir/VB
@@ -61,8 +61,8 @@ BuildRequires: /usr/bin/xvfb-run perl(AnyEvent.pm) perl(AnyEvent/Socket.pm) perl
 %{bcond_without perl_Prima_enables_wepb}
 
 Name:           perl-Prima
-Version:        1.63
-Release:        alt1_1
+Version:        1.66
+Release:        alt1
 Summary:        Perl graphic toolkit
 # Copying:              BSD text
 # examples/tiger.eps:   AGPLv3+   (bundled from GhostScript? CPAN RT#122271)
@@ -81,7 +81,7 @@ Summary:        Perl graphic toolkit
 # unix/apc_render.c:    MIT
 License:        BSD and MIT and TCL and ImageMagick and LGPLv2+ and AGPLv3+
 URL:            https://metacpan.org/release/Prima
-Source0:        https://cpan.metacpan.org/authors/id/K/KA/KARASIK/Prima-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/K/KA/KARASIK/Prima-%{version}.tar.gz
 BuildRequires:  findutils
 BuildRequires:  libgif-devel
 BuildRequires:  gcc
@@ -289,13 +289,15 @@ unset DISPLAY XDG_SESSION_TYPE
 %endif
 
 %files
-%doc --no-dereference Copying LICENSE AGPLv3
+%doc Copying AGPLv3 examples
 # "examples" directory is installed into perl_vendorarch
 %doc Changes README.md
 %{_bindir}/*
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/prima-gencls.pod
 %{perl_vendor_archlib}/Prima*
+# pod image
+%{perl_vendor_archlib}/vb-large.png
 %exclude %{perl_vendor_archlib}/Prima/Stress.*
 %exclude %{perl_vendor_archlib}/Prima/sys/Test.*
 %{_mandir}/man1/*
@@ -308,6 +310,9 @@ unset DISPLAY XDG_SESSION_TYPE
 %{_libexecdir}/%{name}
 
 %changelog
+* Mon Aug 29 2022 Igor Vlasenko <viy@altlinux.org> 1.66-alt1
+- automated CPAN update
+
 * Fri Nov 26 2021 Igor Vlasenko <viy@altlinux.org> 1.63-alt1_1
 - re-import
 - properly link with libperl
