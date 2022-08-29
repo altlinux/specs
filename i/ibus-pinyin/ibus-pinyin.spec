@@ -1,32 +1,31 @@
+Name:    ibus-pinyin
+Version: 1.5.0
+Release: alt6
+Summary: The Chinese Pinyin and Bopomofo engines for IBus input platform
 
-Name:       ibus-pinyin
-Version:    1.5.0
-Release:    alt5
-Summary:    The Chinese Pinyin and Bopomofo engines for IBus input platform
-
-License:    GPLv2+
-Group:      System/Libraries
-URL:        http://code.google.com/p/ibus
-Source0:    http://ibus.googlecode.com/files/%{name}-%{version}.tar.gz
-Patch0:     ibus-pinyin-fixes-lua-compile.patch
-Patch1:     ibus-pinyin-support-set-content-type-method.patch
-Patch2:     ibus-pinyin-fix-python3.patch
+License: GPL-2.0+
+Group: System/Libraries
+URL: http://code.google.com/p/ibus
+Source0: http://ibus.googlecode.com/files/%{name}-%{version}.tar.gz
+Patch0: ibus-pinyin-fixes-lua-compile.patch
+Patch1: ibus-pinyin-support-set-content-type-method.patch
+Patch2:  ibus-pinyin-fix-python3.patch
 
 Packager:   Andrey Cherepanov <cas@altlinux.org>
 
 %add_python3_path %_datadir/%name
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires:  glib2-devel sqlite3 gcc-c++ python-devel
-BuildRequires:  gnome-common
-BuildRequires:  gettext-devel
-BuildRequires:  intltool
-BuildRequires:  libtool
-BuildRequires:  libsqlite3-devel
-BuildRequires:  libuuid-devel
-BuildRequires:  libibus-devel >= 1.5.4
-BuildRequires:  lua-devel >= 5.1
-BuildRequires:  opencc-devel
-BuildRequires:  pyzy-devel
+BuildRequires: glib2-devel sqlite3 gcc-c++ python-devel
+BuildRequires: gnome-common
+BuildRequires: gettext-devel
+BuildRequires: intltool
+BuildRequires: libtool
+BuildRequires: libsqlite3-devel
+BuildRequires: libuuid-devel
+BuildRequires: libibus-devel >= 1.5.4
+#BuildRequires: lua-devel >= 5.1
+BuildRequires: opencc-devel
+BuildRequires: pyzy-devel
 
 %description
 The Chinese Pinyin and Bopomofo input methods for IBus platform.
@@ -40,9 +39,11 @@ The Chinese Pinyin and Bopomofo input methods for IBus platform.
 %build
 #./autogen.sh
 %autoreconf
-%configure --disable-static --enable-db-open-phrase \
+%configure --disable-static \
+           --enable-db-open-phrase \
            --enable-opencc \
-           --disable-boost
+           --disable-boost \
+           --disable-lua-extension
 
 # make -C po update-gmo
 %make_build
@@ -61,6 +62,9 @@ The Chinese Pinyin and Bopomofo input methods for IBus platform.
 %_desktopdir/*.desktop
 
 %changelog
+* Mon Aug 29 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt6
+- FTBFS: disabled lua extension.
+
 * Tue Jan 14 2020 Anton Midyukov <antohami@altlinux.org> 1.5.0-alt5
 - use python3 interpreter
 
