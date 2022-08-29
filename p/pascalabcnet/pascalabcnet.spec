@@ -1,6 +1,6 @@
 Name:    pascalabcnet
-Version: 3.8.0.2964
-Release: alt2
+Version: 3.8.3.3159
+Release: alt1
 
 Summary: PascalABC.NET programming language  
 License: LGPL-3.0
@@ -43,32 +43,43 @@ find . -name \*.exe -delete
 #find . -name \*.dll -delete
 
 %build
+# Build compiler
 sh -x _RebuildReleaseAndRunTests.sh
+# Build Linux graphical library GraphABCLinux
+mono bin/pabcnetcclear.exe ./bin/Lib/GraphABCLinux.pas
+# Build IDE
+#MONO_IOMAP=case xbuild /p:Configuration=release PascalABCNET.sln
 
 %install
-mkdir -p %buildroot%_libdir/%name
-cp -a bin/* %buildroot%_libdir/%name
+mkdir -p %buildroot%_libexecdir/%name
+cp -a bin/* %buildroot%_libexecdir/%name
 mkdir -p %buildroot%_bindir
 # Executable wrappers
 cat > %buildroot%_bindir/pabcnetc << ENDF
 #!/bin/bash
 export MONO_IOMAP=all
-mono %_libdir/pascalabcnet/pabcnetc.exe \$@
+mono %_libexecdir/pascalabcnet/pabcnetc.exe \$@
 ENDF
 chmod +x %buildroot%_bindir/pabcnetc
 cat > %buildroot%_bindir/pabcnetcclear << ENDF
 #!/bin/bash
 export MONO_IOMAP=all
-mono %_libdir/pascalabcnet/pabcnetcclear.exe \$@
+mono %_libexecdir/pascalabcnet/pabcnetcclear.exe \$@
 ENDF
 chmod +x %buildroot%_bindir/pabcnetcclear
 
 %files
-%doc README.md
+%doc README.md InstallerSamples
 %_bindir/*
-%_libdir/%name
+%_libexecdir/%name
 
 %changelog
+* Mon Aug 29 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3159-alt1
+- New version.
+- Built graphical library GraphABCLinux.
+- Moved binaries and libraries to %_libexecdir/%name.
+- Packaged examples.
+
 * Thu Nov 25 2021 Andrey Cherepanov <cas@altlinux.org> 3.8.0.2964-alt2
 - Requires mono-devel for compilation.
 
