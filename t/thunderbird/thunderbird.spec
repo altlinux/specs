@@ -4,10 +4,16 @@
 %ifndef build_parallel_jobs
 %define build_parallel_jobs 32
 %endif
-%define llvm_version 12.0
+
+%define gst_version   1.0
+%define nspr_version  4.33
+%define nss_version   3.77
+%define rust_version  1.60.0
+%define cargo_version 1.60.0
+%define llvm_version  12.0
 
 Name: 	 thunderbird
-Version: 91.10.0
+Version: 102.2.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -45,66 +51,132 @@ Patch38: Bug-628252-os2.cc-fails-to-compile-against-GCC-4.6-m.patch
 Patch39: Load-dependent-libraries-with-their-real-path-to-avo.patch
 Patch40: Properly-launch-applications-set-in-HOME-.mailcap.patch
 Patch41: fix-function-nsMsgComposeAndSend-to-respect-Replo.patch
+Patch42: fix-packed_simd_2.patch
+Patch43: set-def-event_sizeof_time_t.patch
 
 ExcludeArch: armh
+
+# Hang up on build browser/components/about
+#ExcludeArch: ppc64le
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
 BuildRequires(pre): browser-plugins-npapi-devel
 
-%ifarch %{arm} %{ix86}
-BuildRequires: gcc-c++
-%endif
+BuildRequires: clang%llvm_version
 BuildRequires: clang%llvm_version-devel
 BuildRequires: llvm%llvm_version-devel
 BuildRequires: lld%llvm_version-devel
+%ifarch armh %{ix86}
+BuildRequires: gcc
+BuildRequires: gcc-c++
+%endif
 BuildRequires: libstdc++-devel
-BuildRequires: rust
-BuildRequires: rust-cargo
-BuildRequires: /proc
-BuildRequires: /dev/shm
-BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
+BuildRequires: rpm-macros-alternatives
+BuildRequires: rust >= %rust_version
+BuildRequires: rust-cargo >= %cargo_version
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
-BuildRequires: libXcursor-devel libXi-devel libxkbcommon-devel
-BuildRequires: libcurl-devel
-BuildRequires: libgtk+3-devel >= 3.14
-#BuildRequires: libgtk+2-devel
-BuildRequires: libhunspell-devel libjpeg-devel
+BuildRequires: libXcursor-devel
+BuildRequires: libXi-devel
+BuildRequires: libXcomposite-devel
+BuildRequires: libXdamage-devel
+BuildRequires: libcurl-devel libgtk+2-devel libgtk+3-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
-BuildRequires: bzlib-devel
 BuildRequires: zip unzip
-BuildRequires: gst-plugins1.0-devel
-BuildRequires: libpixman-devel
+BuildRequires: bzlib-devel zlib-devel
+BuildRequires: libcairo-devel libpixman-devel
 BuildRequires: libGL-devel
 BuildRequires: libwireless-devel
 BuildRequires: libalsa-devel
 BuildRequires: libnotify-devel
 BuildRequires: libevent-devel
+BuildRequires: libproxy-devel
+BuildRequires: libshell
 BuildRequires: libvpx-devel
+BuildRequires: libgio-devel
+BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
-BuildRequires: libproxy-devel
+BuildRequires: gstreamer%gst_version-devel gst-plugins%gst_version-devel
 BuildRequires: libopus-devel
 BuildRequires: libpulseaudio-devel
-BuildRequires: libXcomposite-devel
-BuildRequires: libXdamage-devel
-BuildRequires: libdbus-glib-devel
+#BuildRequires: libicu-devel
+BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: node
 BuildRequires: nasm
 BuildRequires: libxkbcommon-devel
 BuildRequires: libdrm-devel
-BuildRequires: libotr-devel
+# 91.0
+BuildRequires: libaom-devel
+BuildRequires: libdav1d-devel
+
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(aom)
+BuildRequires: pkgconfig(bzip2)
+BuildRequires: pkgconfig(cairo)
+BuildRequires: pkgconfig(dav1d)
+BuildRequires: pkgconfig(dbus-1)
+BuildRequires: pkgconfig(dbus-glib-1)
+BuildRequires: pkgconfig(dri)
+BuildRequires: pkgconfig(fontconfig)
+BuildRequires: pkgconfig(freetype2)
+BuildRequires: pkgconfig(gio-2.0)
+BuildRequires: pkgconfig(graphite2)
+BuildRequires: pkgconfig(gtk+-2.0)
+BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(hunspell)
+BuildRequires: pkgconfig(icu-i18n)
+BuildRequires: pkgconfig(libcurl)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(libevent)
+BuildRequires: pkgconfig(libffi)
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(libnotify)
+BuildRequires: pkgconfig(libproxy-1.0)
+BuildRequires: pkgconfig(libpulse)
+BuildRequires: pkgconfig(libstartup-notification-1.0)
+BuildRequires: pkgconfig(opus)
+BuildRequires: pkgconfig(pixman-1)
+BuildRequires: pkgconfig(vpx)
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(xcomposite)
+BuildRequires: pkgconfig(xcursor)
+BuildRequires: pkgconfig(xdamage)
+BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(xft)
+BuildRequires: pkgconfig(xi)
+BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: pkgconfig(xrandr)
+BuildRequires: pkgconfig(xscrnsaver)
+BuildRequires: pkgconfig(xt)
+BuildRequires: pkgconfig(xtst)
+BuildRequires: pkgconfig(zlib)
 
 # Python requires
+BuildRequires: /dev/shm
+
+BuildRequires: python-module-setuptools
+BuildRequires: python-modules-compiler
+BuildRequires: python-modules-logging
+BuildRequires: python-modules-sqlite3
+BuildRequires: python-modules-json
+
 BuildRequires: python3-base
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pip
 BuildRequires: python3-modules-sqlite3
 
+# Rust requires
+BuildRequires: /proc
+
 # Mozilla requires
-BuildRequires: libnspr-devel
-BuildRequires: libnss-devel
+BuildRequires: pkgconfig(nspr) >= %nspr_version
+BuildRequires: pkgconfig(nss) >= %nss_version
 BuildRequires: libnss-devel-static
+
+BuildRequires: autoconf_2.13
+%set_autoconf_version 2.13
 
 Provides: mailclient
 Obsoletes: thunderbird-calendar
@@ -136,9 +208,6 @@ Requires: libnss >= 3.13.1-alt1
 
 # ALT #40907
 Requires: libotr5
-
-BuildRequires: autoconf_2.13
-%set_autoconf_version 2.13
 
 %define tbird_cid        \{3550f703-e582-4d05-9a08-453d09bdfdc6\}
 %define tbird_prefix     %_libdir/%r_name
@@ -196,7 +265,8 @@ tar -xf %SOURCE6
 %patch38 -p1
 %patch39 -p2
 %patch40 -p1
-%patch41 -p1
+%patch42 -p2
+%patch43 -p2
 
 #echo %version > mail/config/version.txt
 
@@ -277,7 +347,7 @@ MOZ_OPT_FLAGS=$(echo "%optflags -g0 -fpermissive" | \
                -e 's/-frecord-gcc-switches/-grecord-gcc-switches/')
 # Disable null pointer gcc6 optimization - workaround for
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1278795
-MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks -fno-schedule-insns2"
+MOZ_OPT_FLAGS="$MOZ_OPT_FLAGS -fno-delete-null-pointer-checks"
 export MOZ_DEBUG_FLAGS=" "
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
@@ -333,7 +403,7 @@ export NPROCS=8
 %endif
 
 #python3 ./mach python --exec-file /dev/null
-export MACH_USE_SYSTEM_PYTHON=yes
+export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 ./mach configure
 
 %if_with mach_build
@@ -509,6 +579,37 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Wed Aug 24 2022 Pavel Vasenkov <pav@altlinux.org> 102.2.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2022-38472 Address bar spoofing via XSLT error handling
+  + CVE-2022-38473 Cross-origin XSLT Documents would have inherited the parent's permissions
+  + CVE-2022-38476 Data race and potential use-after-free in PK11_ChangePW
+  + CVE-2022-38477 Memory safety bugs fixed in Thunderbird 102.2
+  + CVE-2022-38478 Memory safety bugs fixed in Thunderbird 102.2, and Thunderbird 91.13
+
+* Mon Aug 01 2022 Pavel Vasenkov <pav@altlinux.org> 102.1.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2022-36319 Mouse Position spoofing with CSS transforms
+  + CVE-2022-36318 Directory indexes for bundled resources reflected URL parameters
+  + CVE-2022-36314 Opening local <code>.lnk</code> files could cause unexpected network loads
+  + CVE-2022-2505 Memory safety bugs fixed in Thunderbird 102.1
+
+* Wed Jun 29 2022 Pavel Vasenkov <pav@altlinux.org> 102.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2022-34479 A popup window could be resized in a way to overlay the address bar with web content
+  + CVE-2022-34470 Use-after-free in nsSHistory
+  + CVE-2022-34468 CSP sandbox header without `allow-scripts` can be bypassed via retargeted javascript: URI
+  + CVE-2022-2226 An email with a mismatching OpenPGP signature date was accepted as valid
+  + CVE-2022-34481 Potential integer overflow in ReplaceElementsAt
+  + CVE-2022-31744 CSP bypass enabling stylesheet injection
+  + CVE-2022-34472 Unavailable PAC file resulted in OCSP requests being blocked
+  + CVE-2022-34478 Microsoft protocols can be attacked if a user accepts a prompt
+  + CVE-2022-2200 Undesired attributes could be set as part of prototype pollution
+  + CVE-2022-34484 Memory safety bugs fixed in Thunderbird 91.11 and Thunderbird 102
+
 * Fri Jun 03 2022 Pavel Vasenkov <pav@altlinux.org> 91.10.0-alt1
 - New version.
 - Security fixes:
