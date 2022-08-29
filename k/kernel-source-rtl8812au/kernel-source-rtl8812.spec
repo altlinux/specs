@@ -1,21 +1,22 @@
 # -*- rpm-spec -*-
-%define module_name	rtl8812au
-%define module_version  7502.20210405
+%define module_name rl8812au
+%define module_version 5.6.4.2
+%define module_release 20220827.gite7a4a39
 
 #### MODULE SOURCES ####
 Name: kernel-source-rtl8812au
 Version: %module_version
-Release: alt2
+Release: alt1.%module_release
+Epoch: 1
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Realtek 8812 WiFi chipset series module sources
 License: GPLv2
 Group: Development/Kernel
-URL: https://github.com/gnab/rtl8812au
+URL: https://github.com/aircrack-ng/rtl8812au
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 BuildArch: noarch
 
 Source: %name-%module_version.tar
-#Patch:  rtl8812au-tpl-archiver.patch
 
 BuildArch: noarch
 BuildPreReq: rpm-build-kernel
@@ -29,7 +30,6 @@ driver altered to build on Linux kernel version >= 3.10.
 %prep
 %setup -c
 cd %name-%module_version
-#%patch -p1
 
 %install
 mkdir -p %kernel_srcdir
@@ -39,6 +39,12 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Aug 29 2022 Andrey Cherepanov <cas@altlinux.org> 1:5.6.4.2-alt1.20220827.gite7a4a39
+- New version from https://github.com/aircrack-ng/rtl8812au.
+
+* Fri May 13 2022 Andrey Cherepanov <cas@altlinux.org> 7502.20220511-alt1
+- build with kernel >= 5.17
+
 * Fri Nov 12 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 7502.20210405-alt2
 - build with kernel >=5.15 fixed
 
