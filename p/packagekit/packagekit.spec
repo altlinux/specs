@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
+# it's also needed for RPM_LD_PRELOAD_packagekit to work (see below).
 
 Summary:   Package management service
 Name:      packagekit
 Version:   1.2.5
-Release:   alt6
+Release:   alt7
 License:   LGPL-2.1+
 Group:     Other
 URL:       http://www.freedesktop.org/software/PackageKit/
@@ -178,7 +179,7 @@ install -m 0755 %SOURCE2 %buildroot%_sysconfdir/NetworkManager/dispatcher.d/pre-
 #export RPM_LD_PRELOAD_packagekit=%buildroot%_libexecdir/packagekitd
 export RPM_LD_PRELOAD_packagekit=%buildroot%_libexecdir/packagekit-direct
 export RPM_FILES_TO_LD_PRELOAD_packagekit='%_libdir/packagekit-backend/*.so'
-%set_verify_elf_method strict
+# To rely on this feature, one should have set_verify_elf_method strict
 
 %post
 SYSTEMCTL=systemctl
@@ -291,6 +292,11 @@ rm -f %_localstatedir/PackageKit/upgrade_lock ||:
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Wed Aug 24 2022 Ivan Zakharyaschev <imz@altlinux.org> 1.2.5-alt7
+- Rewritten a tiny piece of code to fix build with lcc.
+- Adapted to ALT's apt API a bit further by dropping an unused parameter of
+  MarkInstall(). (In apt, it either has a default value or will be eliminated.)
+
 * Wed Aug 17 2022 Oleg Solovyov <mcpain@altlinux.org> 1.2.5-alt6
 - offline-update: create btrfs snapshot via timeshift before committing changes
 
