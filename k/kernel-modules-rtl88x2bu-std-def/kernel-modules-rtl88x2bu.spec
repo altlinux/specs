@@ -1,6 +1,6 @@
 %define module_name rtl88x2bu
 %define module_version 5.8.7.1
-%define module_release alt2
+%define module_release alt3
 
 %define flavour	std-def
 %define karch %ix86 x86_64
@@ -9,7 +9,7 @@ BuildRequires(pre): kernel-headers-modules-std-def
 
 %setup_kernel_module %flavour
 
-%define module_dir /lib/modules/%kversion-%flavour-%krelease/net/wireless/realtek/rtlwifi/%module_name
+%define _moduledir /lib/modules/%kversion-%flavour-%krelease
 
 Name: kernel-modules-%module_name-%flavour
 Group: System/Kernel and hardware
@@ -51,10 +51,14 @@ tar xvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
     USER_EXTRA_CFLAGS="-Wno-error=date-time -Wno-error=incompatible-pointer-types -Wno-misleading-indentation"
 
 %install
-install -D -m 644 88x2bu.ko %buildroot/%module_dir/%module_name.ko
+install -D -m 644 88x2bu.ko %buildroot%_moduledir/net/wireless/realtek/rtlwifi/%module_name.ko
 
 %files
-%module_dir
+%dir %_moduledir/net
+%dir %_moduledir/net/wireless
+%dir %_moduledir/net/wireless/realtek
+%dir %_moduledir/net/wireless/realtek/rtlwifi
+%_moduledir/net/wireless/realtek/rtlwifi/*
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
