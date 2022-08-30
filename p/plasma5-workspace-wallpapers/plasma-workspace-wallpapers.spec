@@ -1,7 +1,7 @@
 %define rname plasma-workspace-wallpapers
 
 Name: plasma5-workspace-wallpapers
-Version: 5.23.5
+Version: 5.25.4
 Release: alt1
 %K5init
 
@@ -40,6 +40,9 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel
 %_datadir/wallpapers/*
 
 %changelog
+* Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.4-alt1
+- new version
+
 * Mon Jan 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.23.5-alt1
 - new version
 
