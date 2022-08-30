@@ -1,6 +1,6 @@
 Name: drawpile
 Version: 2.1.20
-Release: alt1
+Release: alt2
 
 Summary: A collaborative drawing program
 Summary(ru_RU.UTF-8): Программа для совместного рисования
@@ -10,6 +10,8 @@ Url: https://drawpile.net
 
 # Source-url: https://github.com/drawpile/Drawpile/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
+
+Patch1: %name-2.1.20-alt-desktop.patch
 
 BuildRequires: extra-cmake-modules
 BuildRequires: cmake
@@ -43,6 +45,7 @@ Drawpile поддерживает формат файла изображения
 
 %prep
 %setup
+%autopatch -p2
 
 %build
 %cmake -DTOOLS=on
@@ -64,5 +67,8 @@ Drawpile поддерживает формат файла изображения
 %_datadir/mime/packages/x-drawpile.xml
 
 %changelog
+* Tue Aug 30 2022 Evgeny Chuck <koi@altlinux.org> 2.1.20-alt2
+- Fixed category in desktop file
+
 * Tue Feb 01 2022 Evgeny Chuck <koi@altlinux.org> 2.1.20-alt1
 - initial build for ALT Linux Sisyphus
