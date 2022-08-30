@@ -6,7 +6,7 @@
 
 Name: libabseil-cpp
 Version: 20211102.0
-Release: alt2
+Release: alt3
 
 Summary: C++ Common Libraries
 
@@ -64,6 +64,7 @@ sed -i "/static_assert(value.empty()/{N;d}" absl/strings/internal/string_constan
 # about -DCMAKE_CXX_STANDARD=17 see https://github.com/desktop-app/tg_owt/pull/55#discussion_r599718405
 %cmake_insource -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
 %if_with test
     -DBUILD_TESTING=ON \
     -DABSL_USE_EXTERNAL_GOOGLETEST=ON \
@@ -89,6 +90,10 @@ ctest
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Aug 30 2022 Yuri N. Sedunov <aris@altlinux.org> 20211102.0-alt3
+- rebuilt with -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+  (see https://github.com/abseil/abseil-cpp/issues/225)
+
 * Wed Apr 20 2022 Vitaly Lipatov <lav@altlinux.ru> 20211102.0-alt2
 - add Conflicts: libclickhouse-cpp-devel
 
