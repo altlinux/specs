@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.97.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -14,7 +14,7 @@ Requires: docbook-style-xsl
 
 Source: %rname-%version.tar
 Patch1: alt-find-docbookxml.patch
-Patch2: alt-doc-dirs-fallback-kde4.patch
+Patch2: alt-doc-dirs-fallback.patch
 
 # Automatically added by buildreq on Wed Feb 11 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils libcloog-isl4 libgpg-error libqt5-core libstdc++-devel libxml2-devel pkg-config python-base xml-common xml-utils
@@ -96,6 +96,9 @@ KF5 library
 %_K5lib/libKF5DocTools.so.*
 
 %changelog
+* Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.97.0-alt2
+- add fallback to KF5 docs dir
+
 * Mon Aug 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.97.0-alt1
 - new version
 
