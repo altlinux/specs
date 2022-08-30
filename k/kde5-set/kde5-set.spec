@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-set
-Version: 22.04.0
+Version: 22.04.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -90,6 +90,7 @@ Requires: plasma5-oxygen
 Requires: icon-theme-oxygen
 Requires: plasma5-xdg-desktop-portal-kde
 Requires: plasma5-workspace-wallpapers
+Requires: plasma5-oxygen-sounds
 Requires: plasma5-kwrited
 Requires: plasma5-user-manager kde5-ksystemlog
 Requires: kde5-krdc
@@ -219,6 +220,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
+- add oxygen-sounds
+
 * Fri Jun 03 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.0-alt1
 - drop kipi-plugins
 
