@@ -5,7 +5,7 @@ without parsing/unpacking it first, while still having great forwards/backwards 
 compatibility.
 
 Name: libflatbuffers
-Version: 2.0.6
+Version: 2.0.8
 Release: alt1
 
 Summary: Memory Efficient Serialization Library
@@ -13,7 +13,8 @@ License: APL
 Group: System/Libraries
 Url: https://google.github.io/flatbuffers/
 
-Source: %name-%version.tar
+# https://github.com/google/flatbuffers/archive/v%version/flatbuffers-%version.tar.gz
+Source: flatbuffers-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
@@ -47,7 +48,7 @@ Requires: %name%sover = %EVR
 This package contains python files for %name.
 
 %prep
-%setup
+%setup -n flatbuffers-%version
 %add_optflags -Wno-class-memaccess -Wno-stringop-overflow
 %ifarch %e2k
 sed -i 's,-Werror -Wextra -Werror=shadow,,' CMakeLists.txt
@@ -97,6 +98,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Tue Aug 30 2022 Nazarov Denis <nenderus@altlinux.org> 2.0.8-alt1
+- 2.0.8 released
+
 * Sun Apr 24 2022 Nazarov Denis <nenderus@altlinux.org> 2.0.6-alt1
 - 2.0.6 released
 
