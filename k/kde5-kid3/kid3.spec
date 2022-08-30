@@ -10,7 +10,7 @@
 
 %define rname kid3
 Name: kde5-%rname
-Version: 3.9.1
+Version: 3.9.2
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}%{!?_enable_obsolete_kde4:altplace}
 
@@ -235,6 +235,9 @@ done
 #%_K5dbus_iface/*id3*
 
 %changelog
+* Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 3.9.2-alt1
+- new version
+
 * Wed Mar 02 2022 Sergey V Turchin <zerg@altlinux.org> 3.9.1-alt1
 - new version
 - obsolete kid3-kde4
