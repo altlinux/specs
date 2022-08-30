@@ -1,8 +1,8 @@
 %def_with doc
 
 Name: cifs-utils
-Version: 6.13
-Release: alt3
+Version: 6.15
+Release: alt1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
 License: GPLv3+
@@ -13,7 +13,6 @@ Source: %name-%version.tar
 
 Patch2: cifs-utils-alt-python3.patch
 Patch3: cifs-utils-alt-docutils.patch
-Patch4: cifs-utils-6.13_fix-regression-in-kerberos-mount.patch
 
 BuildRequires(pre): rpm-macros-pam0
 BuildRequires: libcap-ng-devel libkeyutils-devel libkrb5-devel libtalloc-devel libwbclient-devel libpam-devel
@@ -54,7 +53,6 @@ provide these credentials to the kernel automatically at login.
 %setup
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
 %autoreconf
@@ -121,6 +119,11 @@ printf '%_libdir/%name/idmap-plugin\t%_libdir/%name/idmapwb.so\t10\n' > %buildro
 %endif
 
 %changelog
+* Wed Aug 31 2022 Evgeny Sinelnikov <sin@altlinux.org> 6.15-alt1
+- Update to stable release 6.15 (Samba#15025, Samba#15026)
+- mount.cifs: fix length check for ip option parsing (fixes: CVE-2022-27239)
+- mount.cifs: fix verbose messages on option parsing (fixes: CVE-2022-29869)
+
 * Sun Sep 12 2021 Evgeny Sinelnikov <sin@altlinux.org> 6.13-alt3
 - Fix kerberos mount regression in commit e461afd (Arch).
   This is the fix for CVE-2021-20208 (Closes: 40887)
