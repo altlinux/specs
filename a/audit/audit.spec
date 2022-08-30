@@ -5,8 +5,8 @@
 %def_without prelude
 
 Name: audit
-Version: 3.0.8
-Release: alt2
+Version: 3.0.9
+Release: alt1
 Summary: User space tools for Linux kernel 2.6+ auditing
 License: GPL
 Group: Monitoring
@@ -238,6 +238,9 @@ fi
 %endif
 
 %changelog
+* Tue Aug 30 2022 Egor Ignatov <egori@altlinux.org> 3.0.9-alt1
+- new version 3.0.9
+
 * Fri Apr 01 2022 Egor Ignatov <egori@altlinux.org> 3.0.8-alt2
 - Make swig flexible array workaround compatible with p10
 
