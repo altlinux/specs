@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.12.2
+Version: 1.12.3
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,11 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Aug 30 2022 Anton Midyukov <antohami@altlinux.org> 1.12.3-alt1
+- install2-sh-functions: add new function cmdline_get_arg
+- install2-sh-functions: define stagename from /proc/cmdline
+  (fix eject cdrom when bootloading with propagator)
+
 * Fri Aug 26 2022 Anton Midyukov <antohami@altlinux.org> 1.12.2-alt1
 - install2: do'nt use find (segfault in automated tests)
 
