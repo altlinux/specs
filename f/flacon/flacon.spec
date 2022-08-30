@@ -1,6 +1,6 @@
 Name: flacon
-Version: 9.0.0
-Release: alt1.1
+Version: 9.2.0
+Release: alt1
 
 Summary: Audio File Encoder
 Summary(ru_RU.UTF-8): Конвертер аудиофайлов
@@ -73,6 +73,9 @@ Extracts audio tracks from audio CD image to separate tracks.
 %_man1dir/%name.1.*
 
 %changelog
+* Tue Aug 30 2022 Nazarov Denis <nenderus@altlinux.org> 9.2.0-alt1
+- Version 9.2.0
+
 * Mon May 16 2022 Nazarov Denis <nenderus@altlinux.org> 9.0.0-alt1.1
 - Add require on alacenc except %arm and ppc64le (ALT #42737)
 
