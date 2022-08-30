@@ -9,7 +9,7 @@
 
 Name: %parent-%child
 Version: 0.1.5
-Release: alt10
+Release: alt11
 
 Summary: %child modules set for %name
 License: GPL-3.0
@@ -209,6 +209,9 @@ mv -f -- "%buildroot%_datadir/%parent/features/%child-doc" "%buildroot%_docdir/%
 %_docdir/%name
 
 %changelog
+* Wed Aug 31 2022 Leonid Krivoshein <klark@altlinux.org> 0.1.5-alt11
+- cifs, nfs: revert back PREFIX, it repairs work with overlays
+
 * Fri Jun 10 2022 Anton Midyukov <antohami@altlinux.org> 0.1.5-alt10
 - cifs, nfs: set PREFIX to '/' (Closes: 42965)
 
