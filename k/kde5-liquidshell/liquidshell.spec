@@ -6,8 +6,8 @@
 %define libliquidshell liquidshell%liquidshell_sover
 
 Name: kde5-liquidshell
-Version: 1.8.0
-Release: alt2
+Version: 1.8.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -128,6 +128,9 @@ mv %buildroot/%_K5bin/start_liquidshell %buildroot/%_bindir/
 %_datadir/xsessions/liquidshell-session.desktop
 
 %changelog
+* Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 1.8.1-alt1
+- new version
+
 * Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 1.8.0-alt2
 - fix xsession file
 
