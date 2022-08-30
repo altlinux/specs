@@ -2,10 +2,11 @@
 
 Name: mandelbulber2
 Version: 2.28
-Release: alt1
+Release: alt2
 
 Summary: 3D fractal visualization tool
 Summary(ru_RU.UTF-8): Инструмент 3D фрактальной визуализации
+
 License: GPL-3.0-only
 Group: Sciences/Mathematics
 Url: https://mandelbulber.com
@@ -21,6 +22,7 @@ BuildRequires: libgsl-devel
 BuildRequires: liblzo2-devel
 BuildRequires: libgomp-devel
 BuildRequires: libsndfile-devel
+BuildRequires: ImageMagick
 
 BuildRequires(pre): rpm-macros-qt5
 
@@ -56,15 +58,24 @@ mkdir -p %buildroot%_datadir/%name
 cp -a usr/share/%name/* %buildroot%_datadir/%name
 install -D -m 755 makefiles/%name %buildroot%_bindir/%name
 install -D -m 644 %name.desktop %buildroot%_desktopdir/%name.desktop
-install -D -m 644 qt/icons/mandelbulber.png %buildroot%_pixmapsdir/mandelbulber.png
+
+mkdir -p %buildroot{%_miconsdir,%_niconsdir,%_liconsdir}
+convert -size 16x16 qt/icons/mandelbulber.png %buildroot%_miconsdir/mandelbulber.png
+convert -size 32x32 qt/icons/mandelbulber.png %buildroot%_niconsdir/mandelbulber.png
+convert -size 48x48 qt/icons/mandelbulber.png %buildroot%_liconsdir/mandelbulber.png
 
 %files
 %doc NEWS README %manualpdf
 %_bindir/%name
 %_datadir/%name
 %_desktopdir/%name.desktop
-%_pixmapsdir/mandelbulber.png
+%_liconsdir/mandelbulber.png
+%_miconsdir/mandelbulber.png
+%_niconsdir/mandelbulber.png
 
 %changelog
+* Tue Aug 30 2022 Evgeny Chuck <koi@altlinux.org> 2.28-alt2
+- Fixed icon packaging as per policy
+
 * Sat Aug 20 2022 Evgeny Chuck <koi@altlinux.org> 2.28-alt1
 - new version (2.28) with rpmgs script
