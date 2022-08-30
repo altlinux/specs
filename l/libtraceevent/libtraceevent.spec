@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libtraceevent
-Version: 1.5.3
+Version: 1.6.2
 Release: alt1
 Summary: Library to parse raw trace event formats
 License: GPL-2.0-only and LGPL-2.1-only
@@ -17,6 +17,9 @@ Source: %name-%version.tar
 Conflicts: trace-cmd-libs < 2.9.6-alt1
 BuildRequires: asciidoc
 BuildRequires: xmlto
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: CUnit-devel
+}}
 
 %description
 %summary.
@@ -44,18 +47,26 @@ rm %buildroot%_libdir/libtraceevent.a
 # html documentation is duplicating man pages.
 rm -rf %buildroot%_defaultdocdir/%name
 
+%check
+%make_build test V=1
+utest/trace-utest
+
 %files
 %doc LICENSES/*
 %_libdir/libtraceevent.so.*
 %_libdir/traceevent
 
 %files devel
+%doc samples/*.c
 %_includedir/traceevent
 %_libdir/libtraceevent.so
 %_libdir/pkgconfig/libtraceevent.pc
 %_man3dir/*.3.*
 
 %changelog
+* Sat Aug 27 2022 Vitaly Chikunov <vt@altlinux.org> 1.6.2-alt1
+- Updated to libtraceevent-1.6.2 (2022-07-14).
+
 * Sat Mar 26 2022 Vitaly Chikunov <vt@altlinux.org> 1.5.3-alt1
 - Updated to libtraceevent-1.5.3 (2022-03-24).
 

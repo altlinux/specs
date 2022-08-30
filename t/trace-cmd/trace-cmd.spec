@@ -3,11 +3,12 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-# Requires UserDict which we don't have for pytnon3 yet.
+# Python plugin support (not the API).
+# Also requires `unresolved=normal`
 %def_without python
 
 Name:     trace-cmd
-Version:  3.0.3
+Version:  3.1.2
 Release:  alt1
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
@@ -36,6 +37,7 @@ BuildRequires: chrpath
 BuildRequires: libaudit-devel
 BuildRequires: libtraceevent-devel
 BuildRequires: libtracefs-devel
+BuildRequires: libzstd-devel
 BuildRequires: swig
 BuildRequires: xmlto
 %{?!_without_check:%{?!_disable_check:BuildRequires: CUnit-devel rpm-build-vm}}
@@ -87,7 +89,7 @@ export CFLAGS="%optflags -D_GNU_SOURCE"
 %make_build prefix=%_prefix libdir=%_libdir V=1 \
 	libtracecmd.so
 %make_build prefix=%_prefix libdir=%_libdir V=1 \
-	PYTHON_VERS=python3 python_dir=%python3_sitelibdir/%name \
+	PYTHON_VERS=python3 \
 	all_cmd \
 	doc
 %{?!_without_check:%{?!_disable_check:make test}}
@@ -97,7 +99,7 @@ chrpath --delete tracecmd/trace-cmd lib/trace-cmd/libtracecmd.so
 banner install
 export CFLAGS="%optflags -D_GNU_SOURCE"
 %makeinstall_std prefix=%_prefix libdir=%_libdir V=1 \
-	PYTHON_VERS=python3 python_dir=%python3_sitelibdir/%name \
+	PYTHON_VERS=python3 \
 	install \
 	install_libs \
 	install_doc
@@ -112,10 +114,6 @@ rm %buildroot%_datadir/doc/%name/*.html
 # Basic tests
 %buildroot%_bindir/trace-cmd | grep version.%version..%version-%release
 %buildroot%_bindir/trace-cmd options
-
-%if_with python
-PYTHONPATH=%buildroot%python3_sitelibdir %__python3 -c 'import tracecmd'
-%endif
 
 # Internal unit tests
 export LD_LIBRARY_PATH=%buildroot%_libdir
@@ -138,6 +136,7 @@ vm-run --cpu=2 '
 %_libdir/libtracecmd.so.*
 
 %files -n libtracecmd-devel
+%doc LICENSES/*
 %_includedir/trace-cmd
 %_libdir/libtracecmd.so
 %_libdir/pkgconfig/libtracecmd.pc
@@ -146,10 +145,13 @@ vm-run --cpu=2 '
 %if_with python
 %files -n python3-module-tracecmd
 %doc Documentation/README.PythonPlugin
-%python3_sitelibdir/%name
+%_libdir/%name/python
 %endif
 
 %changelog
+* Tue Aug 30 2022 Vitaly Chikunov <vt@altlinux.org> 3.1.2-alt1
+- Updated to trace-cmd-v3.1.2 (2022-07-14).
+
 * Fri Mar 25 2022 Vitaly Chikunov <vt@altlinux.org> 3.0.3-alt1
 - Updated to trace-cmd-v3.0.3 (2022-03-24).
 

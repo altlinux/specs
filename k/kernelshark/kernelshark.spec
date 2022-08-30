@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:     kernelshark
-Version:  2.1.0
+Version:  2.1.1
 Release:  alt1
 # Epoch incremented, because previously kernelshark is packaged from trace-cmd
 # spec which have much bigger version number (2.9.1).
@@ -79,6 +79,9 @@ appstream-util validate-relax --nonet %buildroot%_metainfodir/*.appdata.xml
 %_metainfodir/*.appdata.xml
 
 %changelog
+* Tue Aug 30 2022 Vitaly Chikunov <vt@altlinux.org> 1:2.1.1-alt1
+- Updated to kernelshark-v2.1.1 (2022-04-26).
+
 * Tue Jan 25 2022 Vitaly Chikunov <vt@altlinux.org> 1:2.1.0-alt1
 - Updated to kernelshark-v2.1.0 (2022-01-18).
 - First build as separate package with proper version number.
