@@ -27,10 +27,10 @@
 %define label digiKam
 Name: kde5-%rname
 %define ver_major 7
-%define ver_minor 6
+%define ver_minor 8
 %define ver_bugfix 0
 Version: %ver_major.%ver_minor.%ver_bugfix
-Release: alt3
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 %define sover %version
@@ -104,7 +104,6 @@ Source10: mysql_install_db
 # ALT
 Patch100: alt-libraw-aarch64.patch
 Patch101: alt-own-mysql-install-db.patch
-Patch102: alt-akonadi22.patch
 
 %description
 DigiKam is an advanced digital photo management application for KDE.
@@ -186,7 +185,6 @@ mv %rname-%version core
 pushd core
 %patch100 -p1
 %patch101 -p1
-%patch102 -p1
 popd
 install -m 0644 %SOURCE6 ./
 sed -i '/DIGIKAM_MAJOR_VERSION/s|@VERMAJOR@|%ver_major|' CMakeLists.txt
@@ -253,11 +251,6 @@ sed -i '/set(HAVE_OPENGL TRUE)/ s,TRUE,FALSE,' core/CMakeLists.txt
 %K5install_move data showfoto locale
 %endif
 install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
-rm -f %buildroot/%_K5i18n/*/*/kipiplugin*
-rm -f %buildroot/%_datadir/locale/*/*/kipiplugin*
-rm -f %buildroot/%_K5i18n/*/*/lib*
-rm -f %buildroot/%_datadir/locale/*/*/lib*
-rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %find_lang --with-kde %rname
 %find_lang --with-kde --append --output=%rname.lang showfoto
 
@@ -333,6 +326,9 @@ rm -rf %buildroot/%_K5doc/*/kipi-plugins
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 7.8.0-alt1
+- new version
+
 * Mon May 30 2022 Sergey V Turchin <zerg@altlinux.org> 7.6.0-alt3
 - fix compile with new akonadi
 
