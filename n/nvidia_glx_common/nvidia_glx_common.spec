@@ -14,9 +14,9 @@
 # version-release
 
 %define nv_version 515
-%define nv_release 57
-%define nv_minor %nil
-%define pkg_rel alt254
+%define nv_release 65
+%define nv_minor 01
+%define pkg_rel alt255
 %define set_gl_nvidia_ver 1.6.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -341,6 +341,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 515.65.01-alt255
+- new version
+
 * Fri Jul 08 2022 Sergey V Turchin <zerg@altlinux.org> 515.57-alt254
 - new version
 
