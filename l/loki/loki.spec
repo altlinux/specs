@@ -3,7 +3,7 @@
 
 Name: loki
 Version: 2.6.1
-Release: alt1
+Release: alt2
 Summary: Loki: like Prometheus, but for logs
 License: Apache-2.0
 Group: Monitoring
@@ -146,6 +146,9 @@ useradd -r -N -g _promtail -G systemd-journal -c 'Promtail log collector' \
 %doc clients/cmd/docker-driver/pipeline-example.yaml
 
 %changelog
+* Tue Aug 30 2022 Alexey Shabalin <shaba@altlinux.org> 2.6.1-alt2
+- update loki config (Fixes: ALT#43661)
+
 * Sat Jul 30 2022 Alexey Shabalin <shaba@altlinux.org> 2.6.1-alt1
 - new version 2.6.1
 - add docker-driver package
