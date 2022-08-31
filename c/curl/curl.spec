@@ -3,8 +3,8 @@
 %def_with check
 
 Name: curl
-Version: 7.84.0
-Release: alt2
+Version: 7.85.0
+Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -155,6 +155,11 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Aug 31 2022 Anton Farygin <rider@altlinux.ru> 7.85.0-alt1
+- 7.84.0 -> 7.85.0
+- Fixes:
+  * CVE-2022-35252: control code in cookie denial of service
+
 * Wed Aug 10 2022 Egor Ignatov <egori@altlinux.org> 7.84.0-alt2
 - backport upstream fixes:
   + lib3026: reduce the number of threads to 100 (#9172)
