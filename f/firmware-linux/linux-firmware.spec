@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220815
+Version: 20220817
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,11 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Aug 31 2022 Cronbuild Service <cronbuild@altlinux.org> 20220817-alt1
+- upstream changes (GIT d3c9228):
+  + rtl_bt: Update RTL8852C BT USB firmware to 0xDFB8_5A33 (thx Hilda Wu)
+  + mediatek: reference the LICENCE file for MediaTek firmwares (thx Tinghan Shen)
+
 * Tue Aug 16 2022 Cronbuild Service <cronbuild@altlinux.org> 20220815-alt1
 - upstream changes (GIT 8413c63):
   + mediatek: Add new mt8186 SOF firmware (thx Tinghan Shen)
