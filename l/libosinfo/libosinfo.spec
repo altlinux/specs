@@ -2,13 +2,13 @@
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
 Version: 1.10.0
-Release: alt2
+Release: alt3
 
 License: LGPLv2+
 Group: System/Libraries
 
 Source: %name-%version.tar
-#Patch2: %name-%version-altlinux.patch
+#Patch2: %%name-%%version-altlinux.patch
 Patch0001: 0001-build-Add-option-to-select-libsoup-ABI.patch
 
 Url: https://libosinfo.org
@@ -16,7 +16,7 @@ BuildRequires(pre): meson >= 0.49.0
 BuildRequires: gettext >= 0.19.8
 BuildRequires: gtk-doc
 BuildRequires: pkgconfig(glib-2.0) >= 2.44 pkgconfig(gobject-2.0) pkgconfig(gio-2.0)
-BuildRequires: pkgconfig(libsoup-2.4)
+BuildRequires: pkgconfig(libsoup-3.0)
 BuildRequires: pkgconfig(libxml-2.0) >= 2.6.0
 BuildRequires: pkgconfig(libxslt) >= 1.0.0
 BuildRequires: gobject-introspection-devel >= 0.9.7
@@ -82,7 +82,7 @@ Contains developer documentation for %name.
 %meson \
     -Denable-gtk-doc=true \
     -Denable-tests=true \
-    -Dlibsoup-abi=2.4 \
+    -Dlibsoup-abi=3.0 \
     -Dwith-usb-ids-path=%_datadir/misc/usb.ids \
     -Dwith-pci-ids-path=%_datadir/misc/pci.ids \
     -Denable-introspection=enabled \
@@ -122,6 +122,9 @@ export LD_LIBRARY_PATH=$(pwd)/%{__builddir}/osinfo
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Aug 31 2022 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt3
+- build with libsoup-3.0
+
 * Fri Mar 25 2022 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt2
 - build with libsoup-2.4
 
