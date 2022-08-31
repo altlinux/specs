@@ -1,16 +1,16 @@
 # since 3.29.x depends on modules in %_libdir/%%name
 %set_verify_elf_method unresolved=relaxed
 
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 42
-%define beta %nil
+%define ver_major 43
+%define beta .beta
 %define xdg_name org.gnome.Boxes
 %def_disable installed_tests
 
 Name: gnome-boxes
-Version: %ver_major.3
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -21,24 +21,25 @@ Url: https://wiki.gnome.org/Apps/Boxes
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.50.0
 %define gtk_ver 3.22.20
-%define gtk_vnc_ver 0.4.4
 %define libvirt_glib_ver 4.0.0
 %define libxml2_ver 2.7.8
 %define libusb_ver 1.0.9
-%define spice_gtk_ver 0.32
+%define spice_gtk_ver 0.41
+%define phodav_ver 3.0
 %define gudev_ver 165
 %define osinfo_ver 0.2.12
 %define tracker_ver 3.0
 %define uuid_ver 1.41.3
-%define libsoup_ver 2.38
+%define soup3_ver 3.0.7
 %define libarchive_ver 3.0.0
 %define vte_ver 0.40.2
-%define webkit_ver 2.26
+%define webkit_api_ver 4.1
+%define webkit_ver 2.36
 %define handy_ver 1.5.0
 
 Requires: gnome-keyring dconf
@@ -58,20 +59,20 @@ BuildRequires: libvala-devel >= 0.28.0.16
 BuildRequires: vala-tools
 BuildRequires: glib2-devel >= %glib_ver libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libgtk+3-gir-devel
-BuildRequires: libgtk3vnc-devel >= %gtk_vnc_ver
 BuildRequires: libsecret-devel libsecret-gir-devel
 BuildRequires: libvirt-gobject-devel >= %libvirt_glib_ver
 BuildRequires: libvirt-gconfig-devel >= %libvirt_glib_ver
 BuildRequires: libxml2-devel >= %libxml2_ver
 BuildRequires: libusb-devel >= %libusb_ver
 BuildRequires: pkgconfig(spice-client-gtk-3.0) >= %spice_gtk_ver
+BuildRequires: libphodav-devel >= %phodav_ver
 BuildRequires: libgudev-devel >= %gudev_ver
 BuildRequires: libosinfo-devel >= %osinfo_ver
 BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker_ver
 BuildRequires: libuuid-devel >= %uuid_ver
-BuildRequires: libsoup-devel >= %libsoup_ver
+BuildRequires: libsoup3.0-devel >= %soup3_ver
 BuildRequires: libarchive-devel >= %libarchive_ver
-BuildRequires: libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: libfreerdp-devel
 BuildRequires: libvte3-devel >= %vte_ver
 BuildRequires: pkgconfig(gtksourceview-4)
@@ -131,6 +132,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Wed Aug 31 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.5.beta
+- 43.beta-23-g572883e9 (ported to libsoup-3.0/webkit2gtk-4.1)
+
 * Thu Jul 07 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
 - 42.3
 
