@@ -51,7 +51,7 @@
 
 Name: mariadb
 Version: 10.6.9
-Release: alt1
+Release: alt1.1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -1036,6 +1036,9 @@ fi
 %endif
 
 %changelog
+* Wed Aug 31 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 10.6.9-alt1.1
+- e2k patch update
+
 * Mon Aug 15 2022 Alexey Shabalin <shaba@altlinux.org> 10.6.9-alt1
 - 10.6.9
 - Fixes: CVE-2022-32082, CVE-2022-32089, CVE-2022-32081, CVE-2018-25032,
