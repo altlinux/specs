@@ -1,20 +1,30 @@
-Summary: QEMU GUI written in Qt5
 Name: aqemu
-Version: 0.9.4
-Release: alt3
-Epoch: 1
+Version: 0.9.2
+Release: alt2
+Epoch: 2
+
+Summary: QEMU GUI written in Qt5
+
 License: GPL-2.0 and Zlib and MIT
 Group: Emulators
-Packager: Boris Savelev <boris@altlinux.org>
 Url: https://github.com/tobimensch/aqemu
+
+Packager: Boris Savelev <boris@altlinux.org>
+
 Source: %name-%version.tar
 # Source-url: https://github.com/tobimensch/aqemu/archive/%version/aqemu-%version.tar.gz
+# debian patches
+Patch1: 01_qemu_parallel_typo.diff
+Patch2: 0002-Remove-VLAN-stuff-QEMU-doesn-t-support-it-anymore.patch
+Patch5: 0005-fix-spelling-of-some-words.patch
+Patch7: 0007-Fix-crash-because-of-duplicated-widget-name.patch
+
+Requires: qemu qemu-kvm
 
 BuildRequires(pre): cmake rpm-build-ninja
 BuildRequires: gcc-c++ libvncserver-devel ImageMagick
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools
-Requires: qemu qemu-kvm
 
 %description
 AQEMU is a QEMU GUI written in Qt5.
@@ -22,6 +32,10 @@ The program have user-friendly interface and allows to set up the majority of QE
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+%patch5 -p1
+%patch7 -p1
 # gcc10
 sed -i 's|#include <vector>|#include <vector>\n#include <stdexcept>|' src/docopt/docopt_value.h
 
@@ -48,7 +62,6 @@ rm -rf %buildroot%_datadir/doc/%name
 %_bindir/%name
 %dir %_datadir/%name
 %_datadir/%name/*
-%_datadir/appdata/aqemu.appdata.xml
 %_desktopdir/%name.desktop
 %_liconsdir/%name.png
 %_miconsdir/%name.png
@@ -57,6 +70,14 @@ rm -rf %buildroot%_datadir/doc/%name
 %_pixmapsdir/*.png
 
 %changelog
+* Wed Aug 31 2022 Leontiy Volodin <lvol@altlinux.org> 2:0.9.2-alt2
+- Backported to 0.9.2 version.
+- Applied patches from debian (ALT #42293):
+  + Removed vlan support (it doesn't work anymore).
+  + Fixed spelling of some words.
+  + Fixed crash because of duplicated widget name.
+  + Fixed type when lpt parallel option is selected.
+
 * Tue Mar 29 2022 Leontiy Volodin <lvol@altlinux.org> 1:0.9.4-alt3
 - Fixed errors in some settings (ALT #25201).
 
