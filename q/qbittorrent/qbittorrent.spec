@@ -2,7 +2,7 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 4.4.4
+Version: 4.4.5
 Epoch: 1
 Release: %rel
 
@@ -120,6 +120,9 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Wed Aug 31 2022 Ilya Mashkin <oddity@altlinux.ru> 1:4.4.5-alt1
+- 4.4.5
+
 * Thu Aug 25 2022 Ilya Mashkin <oddity@altlinux.ru> 1:4.4.4-alt1
 - 4.4.4
 
