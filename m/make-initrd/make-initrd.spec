@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.27.2
+Version: 2.28.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -8,6 +8,8 @@ Group: System/Base
 Url: https://github.com/osboot/make-initrd
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
+
+%def_without iscsi
 
 BuildRequires: autoconf
 BuildRequires: udev
@@ -158,6 +160,7 @@ AutoReq: noshell, noshebang
 %description ucode
 CPU microcode autoloading module for %name
 
+%if_with iscsi
 %package iscsi
 Summary: iSCSI module for %name
 Group: System/Base
@@ -168,6 +171,7 @@ AutoReq: noshell, noshebang
 
 %description iscsi
 iSCSI module for %name
+%endif
 
 %package kickstart
 Summary: kickstart module for %name
@@ -317,8 +321,10 @@ fi
 %_datadir/%name/guess/ucode
 %endif
 
+%if_with iscsi
 %files iscsi
 %_datadir/%name/features/iscsi
+%endif
 
 %files kickstart
 %_datadir/%name/features/kickstart
@@ -339,6 +345,19 @@ fi
 %_datadir/%name/features/bootloader
 
 %changelog
+* Wed Aug 31 2022 Alexey Gladkov <legion@altlinux.ru> 2.28.0-alt1
+- New version (2.28.0).
+- Disable iscsi subpackage.
+- Feature lkrg:
+  + Support for LKRG v0.9.3-43-g49a3117.
+- Feature pipeline:
+  + Remove standalone daemon.
+- Runtime:
+  + Make log messages more readable.
+  + Wait until the resume is processed.
+- Misc:
+  + Add more integration tests.
+
 * Mon Jul 11 2022 Alexey Gladkov <legion@altlinux.ru> 2.27.2-alt1
 - New version (2.27.2).
 - Feature luks:
