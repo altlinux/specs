@@ -1,7 +1,8 @@
 %def_disable snapshot
 %define _name shumate
 %define ver_major 1.0
-%define beta .alpha.1
+%define beta .beta
+%define api_ver_major 1
 %define api_ver 1.0
 %define xdg_name org.gnome.Shumate
 
@@ -13,7 +14,7 @@
 
 Name: lib%_name
 Version: %ver_major.0
-Release: alt0.1%beta
+Release: alt0.5%beta
 
 Summary: Library with GTK4 widget to display maps
 Group: System/Libraries
@@ -111,14 +112,14 @@ demonstrates %name.
 
 %install
 %meson_install
-%find_lang %name
+%find_lang --output=%name.lang  %name %_name%api_ver_major
 
 %check
 xvfb-run -s -noreset %__meson_test
 
 %files -f %name.lang
 %_libdir/%name-%api_ver.so.*
-%doc README NEWS
+%doc README* NEWS
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -145,6 +146,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Thu Sep 01 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.5.beta
+- 1.0.0.beta
+
 * Fri Jan 14 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt0.1.alpha.1
 - first build for sisyphus (1.0.0.alpha.1)
 
