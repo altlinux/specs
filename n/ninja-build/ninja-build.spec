@@ -2,7 +2,7 @@
 %def_without tests
 
 Name:           ninja-build
-Version:        1.11.0
+Version:        1.11.1
 Release:        alt1
 
 Summary:        A small build system with a focus on speed
@@ -100,6 +100,9 @@ install -Dpm 644 %SOURCE3 %buildroot%_rpmmacrosdir/ninja-build
 %files -n rpm-build-ninja
 
 %changelog
+* Wed Aug 31 2022 Andrey Cherepanov <cas@altlinux.org> 1.11.1-alt1
+- New version.
+
 * Sat May 28 2022 Andrey Cherepanov <cas@altlinux.org> 1.11.0-alt1
 - New version.
 
