@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1
-%define kernel_base_version	5.18
-%define kernel_sublevel .19
+%define kernel_base_version	5.19
+%define kernel_sublevel .5
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -456,6 +456,7 @@ KbuildFiles="
 	scripts/gcc-plugins/*.so
 	scripts/ld-version.sh
 	scripts/pahole-flags.sh
+	scripts/check-local-export
 	tools/objtool/objtool
 
 	.config
@@ -612,6 +613,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Aug 31 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.19.5-alt1
+- v5.19.5 (2022-08-29).
+
+* Fri Aug 26 2022 Vitaly Chikunov <vt@altlinux.org> 1:5.19.4-alt1
+- Rebase to v5.19.4 (2022-08-25).
+- Apply baikalm-5.19.y patches (Alexey Sheplyakov).
+
 * Sun Aug 21 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.18.19-alt1
 - v5.18.19 (2022-08-21).
 
