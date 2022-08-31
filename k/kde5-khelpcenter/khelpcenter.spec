@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 22.04.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -16,6 +16,7 @@ Obsoletes: kf5-khelpcenter < %EVR kf5-khelpcenter-common < %EVR
 Requires: kf5-kdoctools
 # libgrantlee_templates is needed for search function
 Requires: libgrantlee_templates5
+Requires(post,preun): alternatives >= 0.2
 
 Source: %rname-%version.tar
 
@@ -49,13 +50,19 @@ KDE help center.
 
 %install
 %K5install
-
 %K5install_move data khelpcenter
+
+# install alternatives
+install -d %buildroot/%_sysconfdir/alternatives/packages.d
+cat > %buildroot/%_sysconfdir/alternatives/packages.d/%name <<__EOF__
+%_bindir/khelpcenter       %_K5bin/khelpcenter      5
+__EOF__
 
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc LICENSES/*
+%config /%_sysconfdir/alternatives/packages.d/%name
 %_K5bin/*
 %_K5exec/*
 %_K5xdgapp/*
@@ -66,6 +73,9 @@ KDE help center.
 %_K5dbus_srv/*.service
 
 %changelog
+* Wed Aug 31 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt2
+- add /usr/bin/khelpcenter alternative
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 
