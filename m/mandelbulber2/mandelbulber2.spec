@@ -2,7 +2,7 @@
 
 Name: mandelbulber2
 Version: 2.28
-Release: alt2
+Release: alt3
 
 Summary: 3D fractal visualization tool
 Summary(ru_RU.UTF-8): Инструмент 3D фрактальной визуализации
@@ -14,6 +14,11 @@ Url: https://mandelbulber.com
 # Source-url: https://github.com/buddhi1980/mandelbulber2/releases/download/%version/mandelbulber2-%version.tar.gz
 Source: %name-%version.tar
 
+# russian language files
+Source1: ru.tar
+
+Patch1: %name-2.28-alt-add_language_ru.patch
+
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-multimedia-devel
@@ -22,7 +27,7 @@ BuildRequires: libgsl-devel
 BuildRequires: liblzo2-devel
 BuildRequires: libgomp-devel
 BuildRequires: libsndfile-devel
-BuildRequires: ImageMagick
+BuildRequires: /usr/bin/convert
 
 BuildRequires(pre): rpm-macros-qt5
 
@@ -43,6 +48,7 @@ Mandelbulber2 — это простое в использовании, удоб�
 
 %prep
 %setup
+%autopatch -p2
 
 # Correct doc directory name
 sed -i "s|doc/%name|doc/%name-%version|g" src/system.cpp
@@ -60,9 +66,13 @@ install -D -m 755 makefiles/%name %buildroot%_bindir/%name
 install -D -m 644 %name.desktop %buildroot%_desktopdir/%name.desktop
 
 mkdir -p %buildroot{%_miconsdir,%_niconsdir,%_liconsdir}
-convert -size 16x16 qt/icons/mandelbulber.png %buildroot%_miconsdir/mandelbulber.png
-convert -size 32x32 qt/icons/mandelbulber.png %buildroot%_niconsdir/mandelbulber.png
-convert -size 48x48 qt/icons/mandelbulber.png %buildroot%_liconsdir/mandelbulber.png
+convert -resize 16x16 qt/icons/mandelbulber.png %buildroot%_miconsdir/mandelbulber.png
+convert -resize 32x32 qt/icons/mandelbulber.png %buildroot%_niconsdir/mandelbulber.png
+convert -resize 48x48 qt/icons/mandelbulber.png %buildroot%_liconsdir/mandelbulber.png
+
+tar -xf %SOURCE1 -C %buildroot%_datadir/%name/language/ --strip-components=1
+lconvert-qt5 %buildroot%_datadir/%name/language/ru.ts -o %buildroot%_datadir/%name/language/ru.qm
+lconvert-qt5 %buildroot%_datadir/%name/language/formula_ru.ts -o %buildroot%_datadir/%name/language/formula_ru.qm
 
 %files
 %doc NEWS README %manualpdf
@@ -74,6 +84,9 @@ convert -size 48x48 qt/icons/mandelbulber.png %buildroot%_liconsdir/mandelbulber
 %_niconsdir/mandelbulber.png
 
 %changelog
+* Wed Aug 31 2022 Evgeny Chuck <koi@altlinux.org> 2.28-alt3
+- Added Russian localization
+
 * Tue Aug 30 2022 Evgeny Chuck <koi@altlinux.org> 2.28-alt2
 - Fixed icon packaging as per policy
 
