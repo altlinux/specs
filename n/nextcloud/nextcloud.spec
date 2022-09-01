@@ -3,7 +3,7 @@
 
 Name: nextcloud
 Version: 24.0.4
-Release: alt1
+Release: alt2
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -115,6 +115,8 @@ a2enmod mime
 # Generate SSL key
 . cert-sh-functions
 ssl_generate "nextcloud"
+# Disable mod_php7 if it is enabled
+/usr/sbin/apachectl2 -M | grep -q php7_module && ( a2dismod mod_php7 &>/dev/null ) ||:
 %_initdir/httpd2 condreload
 
 %postun apache2
@@ -157,6 +159,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Thu Sep 01 2022 Andrey Cherepanov <cas@altlinux.org> 24.0.4-alt2
+- Disable mod_php7 if it is enabled.
+
 * Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 24.0.4-alt1
 - New version.
 - Use PHP 8.0.

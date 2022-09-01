@@ -3,7 +3,7 @@
 
 Name: moodle
 Version: 3.11.8
-Release: alt1
+Release: alt2
 
 Summary: The world's open source learning platform
 License: GPLv3
@@ -215,6 +215,10 @@ find %buildroot -name vendor | xargs rm -rf
 # Install cron scripts
 install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 
+%post apache2
+# Disable mod_php7 if it is enabled
+/usr/sbin/apachectl2 -M | grep -q php7_module && ( a2dismod mod_php7 &>/dev/null; %_initdir/httpd2 condreload ) ||:
+
 %files
 
 %files base
@@ -243,6 +247,9 @@ install -Dpm0644 %SOURCE2 %buildroot%_sysconfdir/cron.d/%name
 %endif
 
 %changelog
+* Thu Sep 01 2022 Andrey Cherepanov <cas@altlinux.org> 3.11.8-alt2
+- Disable mod_php7 if it is enabled.
+
 * Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 3.11.8-alt1
 - New version.
 - Use PHP 8.0.
