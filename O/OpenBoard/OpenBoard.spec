@@ -3,7 +3,7 @@
 
 Name: OpenBoard
 Version: 1.6.3
-Release: alt3
+Release: alt4
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
@@ -20,6 +20,12 @@ Patch1: OpenBoard-1.6.3-update-russian-translations.patch
 Patch2: dark-background-color-set-ability-feature.patch
 
 Patch3: Fixed-the-program-version-in-the-text-from-the-copyright-widget.patch
+
+Patch4: 0001-new-icon-images.patch
+
+Patch5: 0001-Draw-dashed-and-dotted-lines.patch
+
+Patch6: run-in-a-window.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -70,6 +76,9 @@ Interactive whiteboard for schools and universities.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
@@ -79,6 +88,9 @@ sed -i -e 's|-lx264 ||' src/podcast/podcast.pri
 sed -i -e '/LIBS += -lquazip5/d' \
 	-e '/INCLUDEPATH += "\/usr\/include\/quazip5"/d' \
 	OpenBoard.pro
+
+# Removed widget GeoInfo because of incorrect display of borders of Ukraine and Russia
+rm -fvr resources/library/applications/GeoInfo.wgt
 
 %build
 %qmake_qt5 \
@@ -168,6 +180,12 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Aug 29 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.3-alt4
+- Adding the patch with new icon images
+- Adding the patch with ability for draw dashed and dotted lines
+- Adding the patch with ability for running in a window
+- Removed widget GeoInfo because of incorrect display of borders of Ukraine and Russia. Will return after fixing the inaccuracy.
+
 * Fri Jul 08 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.3-alt3
 - Fixed the program version in the text from the copyrightTextBrowser widget (Closes: 43124)
 
