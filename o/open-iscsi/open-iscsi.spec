@@ -1,20 +1,22 @@
+%define _unpackaged_files_terminate_build 1
+
 %define Name iSCSI
 %define bname iscsi
 
 Name: open-%bname
-%define module_name %name
-Version: 2.1.4
+Version: 2.1.7
 License: GPL-2.0-or-later
-Release: alt3
+Release: alt1
 Summary: Utils to operate with %Name
 Group: System/Kernel and hardware
 URL: http://%name.org
 Source: %name-%version.tar
-Source1: iscsi-gen-initiatorname.sh
+Source2: open-iscsi.init
 Patch: %name-%version-%release.patch
 Conflicts: linux-iscsi
 Provides: iscsi-initiator-utils = 6.%version-%release
 
+BuildRequires: rpm-macros-systemd
 BuildRequires: libmount-devel
 BuildRequires: libkmod-devel
 BuildRequires: libssl-devel
@@ -60,44 +62,30 @@ developing applications that use libopeniscsiusr.
 %build
 # configure sub-packages from here
 # letting the top level Makefile do it will lose setting from rpm
-cd iscsiuio
-%autoreconf
-%configure --disable-static
-cd ..
+#cd iscsiuio
+#%%autoreconf
+#%%configure --disable-static
+#cd ..
 
-%make_build
+%make_build SBINDIR=/sbin HOMEDIR=%_sysconfdir/%bname DBROOT=%_sharedstatedir/%bname systemddir=%_systemd_util_dir RULESDIR=%_udevrulesdir
 
 %install
-%make_install DESTDIR=%buildroot initddir=%_initdir \
-    install_programs install_initd_alt install_etc install_doc install_libopeniscsiusr
+%makeinstall_std SBINDIR=/sbin HOMEDIR=%_sysconfdir/%bname DBROOT=%_sharedstatedir/%bname systemddir=%_systemd_util_dir RULESDIR=%_udevrulesdir
 
-install -m 0755 %SOURCE1 %buildroot/sbin/iscsi-gen-initiatorname
 
-install -d %buildroot%_lockdir/iscsi
-touch %buildroot%_lockdir/iscsi/lock
-
-install -pm 755 usr/iscsistart %buildroot/sbin/
-install -pm 644 doc/iscsistart.8 %buildroot%_man8dir/
-install -pm 644 doc/iscsi-iname.8 %buildroot%_man8dir/
-install -d %buildroot%_logrotatedir
-install -pm 644 iscsiuio/iscsiuiolog %buildroot%_logrotatedir/
-
+install -D -m 0755 %SOURCE2 %buildroot%_initdir/%name
 mkdir -p %buildroot%_sharedstatedir/%bname/{nodes,send_targets,static,isns,slp,ifaces}
+# create an empty initiatorname file, as a package place holder
+echo > %buildroot%_sysconfdir/%bname/initiatorname.iscsi
 
-install -d %buildroot%_unitdir
-install -pm 644 etc/systemd/iscsi-init.service %buildroot%_unitdir/
-install -pm 644 etc/systemd/iscsi.service %buildroot%_unitdir/
-install -pm 644 etc/systemd/iscsid.service %buildroot%_unitdir/
-install -pm 644 etc/systemd/iscsid.socket %buildroot%_unitdir/
-install -pm 644 etc/systemd/iscsiuio.service %buildroot%_unitdir/
-install -pm 644 etc/systemd/iscsiuio.socket %buildroot%_unitdir/
 install -d %buildroot%_tmpfilesdir
 install -pm 644 etc/systemd/iscsi.tmpfiles %buildroot%_tmpfilesdir/%bname.conf
 
 ln -s iscsid.service %buildroot%_unitdir/open-iscsi.service
 
 %post
-if [ ! -f /etc/iscsi/initiatorname.iscsi ] ; then
+%tmpfiles_create %_tmpfilesdir/%bname.conf
+if [ ! -f /etc/%bname/initiatorname.iscsi ] ; then
     /sbin/iscsi-gen-initiatorname
 fi
 %post_service %name
@@ -114,18 +102,19 @@ fi
 %files
 %doc README THANKS etc/iface.example
 %dir %_sysconfdir/%bname
-%config(noreplace) %_sysconfdir/%bname/%{bname}d.conf
+%attr(0600,root,root) %config(noreplace) %_sysconfdir/%bname/%{bname}d.conf
+%ghost %_sysconfdir/%bname/initiatorname.iscsi
 %_sharedstatedir/%bname
 %_initdir/*
 %_tmpfilesdir/*
+%_systemdgeneratordir/ibft-rule-generator
+%_udevrulesdir/50-iscsi-firmware-login.rules
 %_unitdir/*
 %exclude %_unitdir/iscsiuio.*
 /sbin/*
 %exclude /sbin/iscsiuio
 %_man8dir/*
 %exclude %_man8dir/iscsiuio.8.*
-%dir %_lockdir/iscsi
-%ghost %_lockdir/iscsi/lock
 
 %files iscsiuio
 /sbin/iscsiuio
@@ -140,8 +129,14 @@ fi
 %_libdir/libopeniscsiusr.so
 %_includedir/*
 %_pkgconfigdir/libopeniscsiusr.pc
+%_man3dir/*
 
 %changelog
+* Wed Aug 31 2022 Alexey Shabalin <shaba@altlinux.org> 2.1.7-alt1
+- 2.1.7
+- install iscsi-gen-initiatorname.sh from upstream
+- set default iqn prefix as iqn.2001-04.ru.alt
+
 * Fri Mar 25 2022 Anton Farygin <rider@altlinux.ru> 2.1.4-alt3
 - changed ua.alt to ru.alt default domain name in scsi initiator generator
 
@@ -180,14 +175,14 @@ fi
 
 * Wed Aug 26 2009 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.871-alt2
 - Add "mount -a -O _netdev" during start
-- Add {pre,post}_service %name
+- Add {pre,post}_service %%name
 - Add patch from ubuntu (https://launchpad/bugs/408915)
 
 * Thu Aug 06 2009 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.871-alt1
 - 2.0-871
 
 * Tue May 05 2009 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.870.3-alt3
-- Add %_sysconfdir/%bname to spec
+- Add %%_sysconfdir/%%bname to spec
 
 * Sun May 03 2009 Slava Dubrovskiy <dubrsl@altlinux.ru> 2.0.870.3-alt2
 - Add iscsi-gen-initiatorname.sh
@@ -205,7 +200,7 @@ fi
 
 * Tue May 06 2008 Led <led@altlinux.ru> 2.0.869-alt0.1
 - 2.0-869
-- added kernel-source-%module_name subpackage
+- added kernel-source-%%module_name subpackage
 
 * Tue Nov 20 2007 Led <led@altlinux.ru> 2.0.865.15-alt0.1
 - 2.0-865.15
@@ -227,7 +222,7 @@ fi
 - 2.0-754
 - cleaned up spec
 - fixed License
-- cleaned up %name-alt-init.patch
+- cleaned up %%name-alt-init.patch
 - cleaned up BuildRequires
 - added docs
 
