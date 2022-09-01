@@ -2,21 +2,21 @@
 
 %define llvm_version 13.0
 
-%define git_ver 13833
-%define git_commit 969b9eb89dfd409cee5fa1279e730cbef8d5a5ba
+%define git_ver 14104
+%define git_commit 2cd7238e7696acf856946a3b77bc54b813c70e54
 
 %define glslang_version 11.10.0
-%define asmjit_commit fc2a5d82f7434d7d03161275a764c051f970f41c
+%define asmjit_commit 06d0badec53710a4f572cf5642881ce570c5d274
 %define hidapi_commit c2aa9dd37c7b401b918fd56e18a3bac7f8f00ec2
 %define yaml_cpp_commit 0b67821f307e8c6bf0eba9b6d3250e3cf1441450
 %define llvm_commit 5521155be5c869b0b760e1dec86c41cdbb7a75c0
 %define spirv_headers_version sdk-1.3.211.0
 %define spirv_tools_version 2022.2
-%define cubeb_commit 708f52cccffe69ed1d65b52903237c990db860a9
+%define cubeb_commit dc511c6b3597b6384d28949285b9289e009830ea
 %define soundtouch_commit 83cfba67b6af80bb9bfafc0b324718c4841f2991
 
 Name: rpcs3
-Version: 0.0.23
+Version: 0.0.24
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -26,7 +26,7 @@ Group: Emulators
 Url: https://%name.net/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: x86_64 aarch64
+ExclusiveArch: x86_64
 
 # https://github.com/RPCS3/%name/archive/v%version/%name-%version.tar.gz
 Source0: %name-%version.tar
@@ -166,6 +166,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Thu Sep 01 2022 Nazarov Denis <nenderus@altlinux.org> 0.0.24-alt1
+- Version 0.0.24
+
 * Sat Jul 02 2022 Nazarov Denis <nenderus@altlinux.org> 0.0.23-alt1
 - Version 0.0.23
 
