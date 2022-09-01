@@ -4,8 +4,8 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.5.34
-Release: alt2
+Version: 5.5.144
+Release: alt1
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -54,6 +54,8 @@ BuildRequires: libdeepin-pw-check-devel
 BuildRequires: deepin-desktop-base
 BuildRequires: dtk5-common
 BuildRequires: qt5-wayland-devel kf5-kwayland-devel
+# libQt5XkbCommonSupport.a
+BuildRequires: qt5-base-devel-static
 # ---
 BuildRequires: libpcre-devel
 BuildRequires: libffi-devel
@@ -84,7 +86,7 @@ Group: Development/Other
 %patch4 -p1
 %patch5 -p1
 #patch6 -p1
-%patch10 -p1
+#patch10 -p1
 
 # remove after they obey -DDISABLE_SYS_UPDATE properly
 sed -i '/new UpdateModule/d' src/frame/window/mainwindow.cpp
@@ -157,13 +159,14 @@ mv %buildroot/usr/lib/libdccwidgets.so %buildroot%_libdir/
 %endif
 
 install -Dm644 com.deepin.controlcenter.addomain.policy %buildroot%_datadir/polkit-1/actions/
+# Packed in %%doc.
+rm -f %buildroot%_datadir/dman/dde-control-center/internaltest.md
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 
 %files
-%doc README.md
-%doc LICENSE
+%doc docs/internaltest.md LICENSE README.md
 %_bindir/%repo
 %_bindir/%repo-wapper
 # %%_bindir/abrecovery
@@ -182,9 +185,7 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_libdir/libdccwidgets.so
 %dir %_datadir/dsg/
 %dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/dde-control-center/
 %dir %_datadir/dsg/configs/org.deepin.dde.control-center/
-%_datadir/dsg/configs/dde-control-center/org.deepin.dde.control-center*.json
 %_datadir/dsg/configs/org.deepin.dde.control-center/org.deepin.dde.control-center*.json
 
 %files devel
@@ -192,6 +193,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Mon Aug 29 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.144-alt1
+- New version (5.5.144).
+
 * Fri Jun 03 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.34-alt2
 - Fixed build with new dtkcommon.
 

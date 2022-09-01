@@ -1,7 +1,7 @@
 %define soname 1
 
 Name: deepin-pw-check
-Version: 5.1.8
+Version: 5.1.16
 Release: alt1
 Summary: Verify the validity of the password for DDE
 License: GPL-3.0+
@@ -21,6 +21,7 @@ BuildRequires: libiniparser-devel
 BuildRequires: glib2-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libgio-devel
+BuildRequires: golang-deepin-api-devel
 
 %description
 %summary.
@@ -63,7 +64,7 @@ sed -i 's|${PREFIX}/lib|%_libdir|' Makefile
 sed -i 's|/usr/local/lib/pkgconfig|%_libdir/pkgconfig|' Makefile
 
 %build
-export GOPATH="$(pwd)/vendor:%go_path"
+export GOPATH="%go_path/src/github.com/linuxdeepin/dde-api/vendor"
 export PAM_MODULE_DIR=/%_lib/security
 # export PKG_FILE_DIR=%%_libdir/pkgconfig
 export GO111MODULE=off
@@ -98,6 +99,9 @@ export GO111MODULE=off
 %_libdir/libdeepin_pw_check.a
 
 %changelog
+* Mon Aug 29 2022 Leontiy Volodin <lvol@altlinux.org> 5.1.16-alt1
+- New version (5.1.16).
+
 * Thu Apr 28 2022 Leontiy Volodin <lvol@altlinux.org> 5.1.8-alt1
 - New version (5.1.8).
 - Excluded cracklib.
