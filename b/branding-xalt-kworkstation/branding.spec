@@ -19,7 +19,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -37,8 +37,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel /usr/bin/fribidi
 
 %define Theme_ru Рабочая станция К
 %define Brand_ru Альт
-%define status BETA
-%define status_ru БЕТА
+%define status %nil
+%define status_ru %nil
 %define ProductName %Brand %Theme %altversion
 %define ProductName_ru %Brand_ru %Theme_ru %altversion
 %define branding_data_dir %_datadir/branding-data-current
@@ -476,6 +476,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Sep 01 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.0-alt2
+- remove "beta"
+
 * Thu Sep 01 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.0-alt1
 - new version
 
