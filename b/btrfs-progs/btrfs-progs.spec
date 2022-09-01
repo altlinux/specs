@@ -6,8 +6,8 @@
 
 %define _unpackaged_files_terminate_build 0
 Name: btrfs-progs
-Version: 5.18.1
-Release: alt2
+Version: 5.19
+Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -134,6 +134,9 @@ vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 %_includedir/*
 
 %changelog
+* Thu Sep 01 2022 Egor Ignatov <egori@altlinux.org> 5.19-alt1
+- new version 5.19
+
 * Tue Jun 21 2022 Egor Ignatov <egori@altlinux.org> 5.18.1-alt2
 - fix tests
 
