@@ -1,8 +1,8 @@
 %define vendorzone ru.
 
 Name: chrony
-Version: 4.2
-Release: alt2
+Version: 4.3
+Release: alt1
 
 Summary: Chrony clock synchronization program
 License: GPLv2
@@ -12,7 +12,6 @@ Url: http://chrony.tuxfamily.org
 Source0: http://download.tuxfamily.org/chrony/%name-%version.tar
 Source1: clknetsim-chrony-%version.tar
 Patch0: %name-%version-alt.patch
-Patch1: clknetsim-init_symbols_in_stat.patch
 Source2: chronyd.init
 Source3: chrony.sh
 
@@ -45,9 +44,6 @@ Internet. chronyd can also act as an RFC1305-compatible NTP server.
 %setup -a 1
 %patch0 -p1
 mv clknetsim-chrony-* test/simulation/clknetsim
-pushd test/simulation/clknetsim
-%patch1 -p1
-popd
 # prepare git sources (make_release)
 # version in version.txt file
 echo %version > version.txt
@@ -157,6 +153,9 @@ echo 'd /run/chrony 0750 _chrony _chrony' >> %buildroot%_tmpfilesdir/chronyd.con
 %_man8dir/*
 
 %changelog
+* Thu Sep 01 2022 Anton Farygin <rider@altlinux.ru> 4.3-alt1
+- 4.2 -> 4.3
+
 * Sat May 21 2022 Anton Farygin <rider@altlinux.ru> 4.2-alt2
 - use %%_tmpfilesdir
 
