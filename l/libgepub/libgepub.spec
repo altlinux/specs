@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.6
+%define ver_major 0.7
 %define api_ver %ver_major
 %def_enable introspection
 %def_disable gtk_doc
@@ -20,8 +20,12 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-BuildRequires: meson gcc-c++ gtk-doc libwebkit2gtk-devel libarchive-devel libxml2-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libwebkit2gtk-gir-devel}
+%define webkit_api_ver_major 4.1
+
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ gtk-doc
+BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver_major) libarchive-devel libxml2-devel
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel gir(WebKit2) = %webkit_api_ver_major}
 
 %description
 %name is a GObject based library for handling and rendering epub
@@ -68,7 +72,6 @@ This package contains development documentation for %name
 
 %build
 %meson %{?_disable_introspection:-Dintrospection=false}
-#       %{?_enable_gtk_doc:-Dgtk-doc=true}
 %meson_build
 
 %install
@@ -100,6 +103,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Thu Sep 01 2022 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0 (ported to libsoup-3.0/webkit2gtk-4.1)
+
 * Thu Mar 15 2018 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
