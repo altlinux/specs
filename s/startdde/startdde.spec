@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: startdde
-Version: 5.8.31
-Release: alt1.gita7a2b88
+Version: 5.9.51
+Release: alt1
 Epoch: 1
 Summary: Starter of deepin desktop environment
 License: GPL-3.0+
@@ -13,7 +13,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -27,11 +27,12 @@ Startdde is used for launching DDE components and invoking user's custom applica
 %setup
 sed -i 's/sbin/bin/' Makefile
 sed -i 's|/etc/X11/Xsession.d/|/etc/X11/xinit/xinitrc.d/|' Makefile
-sed -i 's|/usr/lib/|%_libdir/|' startmanager.go
 sed -i 's|/etc/X11/Xresources|/etc/X11|' \
     etc_x11_session_d.go
 sed -i 's|/usr/sbin/|/usr/bin/|' \
     misc/lightdm.conf
+sed -i 's|controlRedshift("disable")|controlRedshift("enable")|' \
+    display/display.go
 
 %build
 %if_enabled clang
@@ -39,12 +40,13 @@ export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
 %endif
-export GOPATH="%go_path:$(pwd)/vendor"
+export GO111MODULE=off
+export GOPATH="%go_path/src/github.com/linuxdeepin/dde-api/vendor:%go_path"
 # export GO_BUILD_FLAGS=-trimpath
 %make
 
 %install
-export GOPATH="%go_path:$(pwd)/vendor"
+export GOPATH="%go_path"
 %makeinstall DESTDIR=%buildroot
 # Conflicts with lightdm.
 rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
@@ -65,8 +67,16 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %_datadir/xsessions/deepin.desktop
 %_datadir/glib-2.0/schemas/com.deepin.dde.display.gschema.xml
 %_datadir/glib-2.0/schemas/com.deepin.dde.startdde.gschema.xml
+%dir %_datadir/dsg/
+%dir %_datadir/dsg/configs/
+%dir %_datadir/dsg/configs/org.deepin.startdde/
+%_datadir/dsg/configs/org.deepin.startdde/org.deepin.startdde.StartManager.json
 
 %changelog
+* Thu Sep 01 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.9.51-alt1
+- New version (5.9.51).
+- Fixed UIAppSched detection.
+
 * Thu Feb 17 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.8.31-alt1.gita7a2b88
 - Checkout to master branch.
 - Updated from commit a7a2b887399d78bc03345ccbaf3f49887d81f604.
