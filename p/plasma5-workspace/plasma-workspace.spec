@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.25.4
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -515,6 +515,12 @@ done
 
 
 %changelog
+* Thu Sep 01 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt3
+- merge p10 changes
+
+* Thu Sep 01 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.6-alt4
+- enable freememorynotifier by default
+
 * Fri Aug 26 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt2
 - fix showing textfield with help to unlock session (thanx mcpin@alt)
 - move more qml for sddm-theme-breeze
