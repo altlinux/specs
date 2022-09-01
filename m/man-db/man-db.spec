@@ -1,7 +1,7 @@
 Summary: Tools for searching and reading man pages
 Name: man-db
 Version: 2.10.2
-Release: alt1
+Release: alt1.1
 # GPLv2+ .. man-db
 # GPLv3+ .. gnulib
 License: GPL-2.0-or-later and GPL-3.0-or-later
@@ -11,9 +11,6 @@ URL: https://gitlab.com/cjwatson/man-db
 Source0: %name-%version.tar
 
 Patch0001: 0001-Change-owner-of-man-cache.patch
-%ifarch %e2k
-Patch0002: 0002-Add-e2k-specific-path.patch
-%endif
 Patch0003: 0003-catman-Use-PATH-env.patch
 
 Obsoletes: man < 2.0
@@ -65,6 +62,9 @@ This package provides periodic update of man-db cache.
 %prep
 %setup
 %autopatch -p1
+%ifarch %e2k
+sed -E -i "s|(MANDATORY_MANPATH\t*)/usr/local/share/man|&\n\\1/opt/mcst/man|" src/man_db.conf.in
+%endif
 
 %build
 ./bootstrap \
@@ -155,6 +155,9 @@ rm -rf -- %cache/*
 %config(noreplace) %_sysconfdir/sysconfig/man-db
 
 %changelog
+* Thu Sep 01 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.10.2-alt1.1
+- Replaced e2k patch with sed, because ifarch around patch declaraion doesn't keep the patch in the srpm.
+
 * Tue Aug 02 2022 Alexey Gladkov <legion@altlinux.ru> 2.10.2-alt1
 - New version (2.10.2).
 
