@@ -13,13 +13,13 @@
 %define fakebrand xalt
 
 %define major 10
-%define minor 0
+%define minor 1
 %define bugfix 0
 %define altversion %major.%minor
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt1
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -37,8 +37,8 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel /usr/bin/fribidi
 
 %define Theme_ru Рабочая станция К
 %define Brand_ru Альт
-%define status %nil
-%define status_ru %nil
+%define status BETA
+%define status_ru БЕТА
 %define ProductName %Brand %Theme %altversion
 %define ProductName_ru %Brand_ru %Theme_ru %altversion
 %define branding_data_dir %_datadir/branding-data-current
@@ -476,6 +476,15 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Sep 01 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.0-alt1
+- new version
+
+* Mon Jul 04 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.0-alt0.2
+- update slideshow
+
+* Tue Jun 14 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.0-alt0.1
+- set version to beta
+
 * Thu Mar 24 2022 Sergey V Turchin <zerg at altlinux dot org> 10.0.0-alt4
 - change facebook link to yandex.zen for indexhtml
 
