@@ -8,7 +8,7 @@
 %def_enable lua_factory
 %def_enable tracker3
 # test_lua_theaudiodb failed for
-%ifnarch %ix86 armh aarch64
+%ifnarch %ix86 armh aarch64 %e2k
 %def_enable check
 %else
 %def_disable check
@@ -16,7 +16,7 @@
 
 Name: grilo-plugins
 Version: %ver_major.15
-Release: alt1
+Release: alt1.1
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -33,7 +33,7 @@ Source: %name-%version.tar
 %define lua_api_ver 5.3
 
 Requires: grilo-tools >= %version
-Requires: tracker3 >= %tracker3_ver
+%{?_enable_tracker3:Requires: tracker-miners3 >= %tracker3_ver}
 # chromaprint plugin required
 Requires: gst-plugins-bad1.0 >= 1.20.3-alt2
 %{?_enable_lua:Requires: lua%lua_api_ver lua-module-luajson}
@@ -158,6 +158,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Sep 01 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt1.1
+- required tracker-miners3 (ALT #43682)
+
 * Tue Aug 16 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt1
 - 0.3.15
 - made libsoup3 build optional
