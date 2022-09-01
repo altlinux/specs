@@ -1,15 +1,14 @@
-%global _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
+%define goipath github.com/linuxdeepin/dde-api
+%define forgeurl https://github.com/linuxdeepin/dde-api
 
 # Run tests in check section
 # disable for bootstrapping
 %def_without check
 
-%global goipath github.com/linuxdeepin/dde-api
-%global forgeurl https://github.com/linuxdeepin/dde-api
-
 Name: deepin-api
 Version: 5.5.30
-Release: alt2
+Release: alt3
 Summary: Golang bingding for dde-daemon
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -94,6 +93,9 @@ cp -a vendor/src/* %buildroot%go_path/src/%goipath/vendor/src/
 %go_path/src/%goipath
 
 %changelog
+* Thu Sep 01 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.30-alt3
+- Packaged golang modules for deepin-daemon.
+
 * Tue Aug 30 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.30-alt2
 - Updated internal golang modules.
 
