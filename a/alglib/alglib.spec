@@ -10,7 +10,7 @@ BuildRequires(pre): rpm-macros-generic-compat rpm-macros-mageia-compat
 %define develname lib%{name}-devel
 
 Name:           alglib
-Version:        3.17.0
+Version:        3.19.0
 Release:        alt1_1
 Summary:        A numerical analysis and data processing library
 Group:          System/Libraries
@@ -22,7 +22,7 @@ Source1:        ALGLIBConfig.cmake
 Source2:        bsd.txt
 
 # Make test output more verbose
-Patch0:         alglib_verbose-tests.patch
+# Patch0:         alglib_verbose-tests.patch
 # From Debian:
 Patch1:         01_add_cmake.patch
 
@@ -78,8 +78,7 @@ The %{name}-doc package contains the %{name} API documentation.
 
 
 %prep
-%setup -q -n cpp
-%patch0 -p1
+%setup -q -n %{name}-cpp
 %patch1 -p1
 
 cp %{SOURCE1} .
@@ -138,6 +137,9 @@ popd
 
 
 %changelog
+* Fri Sep 02 2022 Igor Vlasenko <viy@altlinux.org> 3.19.0-alt1_1
+- update by mgaimport
+
 * Wed Jan 13 2021 Igor Vlasenko <viy@altlinux.ru> 3.17.0-alt1_1
 - update by mgaimport
 
