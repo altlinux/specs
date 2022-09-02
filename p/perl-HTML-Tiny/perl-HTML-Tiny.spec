@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,13 +7,13 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-HTML-Tiny
-Version:        1.05
-Release:        alt2_31
+Version:        1.07
+Release:        alt1
 Summary:        Lightweight, dependency free HTML/XML generation
 License:        GPL+ or Artistic
 
 URL:            https://metacpan.org/release/HTML-Tiny
-Source0:        https://cpan.metacpan.org/authors/id/A/AN/ANDYA/HTML-Tiny-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/A/AR/ARISTOTLE/HTML-Tiny-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  perl-devel
@@ -42,10 +43,13 @@ make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 make test
 
 %files
-%doc Changes README
+%doc Changes README examples
 %{perl_vendor_privlib}/HTML*
 
 %changelog
+* Fri Sep 02 2022 Igor Vlasenko <viy@altlinux.org> 1.07-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_31
 - update to new release by fcimport
 
