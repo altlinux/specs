@@ -5,8 +5,8 @@
 %define  develname	libwcstools-devel
 
 Name:		wcstools
-Version:	3.9.6
-Release:	alt1_2
+Version:	3.9.7
+Release:	alt1_1
 Summary:	Software utilities to display and manipulate the WCS of a FITS image
 License:	GPLv2+
 Group:		Sciences/Astronomy
@@ -14,7 +14,7 @@ URL:		http://tdc-www.harvard.edu/wcstools
 Source0:	http://tdc-www.harvard.edu/software/wcstools/%{name}-%{version}.tar.gz
 # Patch from Debian to create shared lib and rename it to avoid
 # conflicts with Mark Calabretta's wcslib package.
-Patch0:		wcstools-3.9.6-rename-shlib.patch
+Patch0:		wcstools-3.9.7-rename-shlib.patch
 BuildRequires:	gcc
 Source44: import.info
 
@@ -95,6 +95,9 @@ install -p -m 0644 man/man1/* %{buildroot}%{_mandir}/man1
 
 
 %changelog
+* Fri Sep 02 2022 Igor Vlasenko <viy@altlinux.org> 3.9.7-alt1_1
+- update by mgaimport
+
 * Mon Jun 28 2021 Igor Vlasenko <viy@altlinux.org> 3.9.6-alt1_2
 - new version
 
