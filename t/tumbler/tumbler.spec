@@ -4,7 +4,7 @@
 
 Name: tumbler
 Version: 4.17.2
-Release: alt1
+Release: alt2
 
 Summary: A thumbnail D-Bus service
 License: GPLv2+ and LGPLv2+
@@ -93,6 +93,9 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Sep 02 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt2
+- Fixed build gepub plugin with libgepub-7.
+
 * Mon Jun 20 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
 - Updated to 4.17.2.
 
