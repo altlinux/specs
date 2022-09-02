@@ -4,10 +4,10 @@
 %define _vstring %(echo %{version} |tr -d ".")
 
 Name: shotcut
-Version: 22.06.23
+Version: 22.09.01
 Release: alt1
 Summary: A free, open source, cross-platform video editor
-Summary(ru_RU.UTF-8): Свободный кросс-платфоорменный видеоредактор
+Summary(ru_RU.UTF-8): Свободный кросс-платформенный видеоредактор
 License: GPL-3.0+
 Group: Video
 Url: http://www.shotcut.org/
@@ -16,7 +16,6 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 ExcludeArch: armh
 
 Source: %name-%version.tar
-Patch1: shotcut-install-libdir.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
@@ -107,7 +106,6 @@ These are all currently implemented features:
 
 %prep
 %setup
-%patch1 -p1
 # Create version.json from current version
 echo "{" > version.json
 echo " \"version_number\": %{_vstring}02," >> version.json
@@ -145,6 +143,9 @@ done
 %_man1dir/*
 
 %changelog
+* Fri Sep 02 2022 Andrey Cherepanov <cas@altlinux.org> 22.09.01-alt1
+- New version.
+
 * Sun Aug 21 2022 Andrey Cherepanov <cas@altlinux.org> 22.06.23-alt1
 - New version (ALT #42375).
 - Joined %name-data in main package.
