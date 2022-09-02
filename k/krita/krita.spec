@@ -37,7 +37,7 @@
 
 Name: krita
 Version: 5.1.0
-Release: alt2
+Release: alt3
 %K5init no_altplace
 
 Group: Graphics
@@ -108,217 +108,217 @@ Header files and libraries needed for %name development
 %package -n %libkritatext
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritatext
 %name library.
 
 %package -n %libkritacolord
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritacolord
 %name library.
 
 %package -n %libkritacolor
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritacolor
 %name library.
 
 %package -n %libkritapigment
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritapigment
 %name library.
 
 %package -n %libkritalibpaintop
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritalibpaintop
 %name library.
 
 %package -n %libkritaodf
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaodf
 %name library.
 
 %package -n %libkritapsd
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritapsd
 %name library.
 
 %package -n %libkritaplugin
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaplugin
 %name library.
 
 %package -n %libkritaui
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaui
 %name library.
 
 %package -n %libkritatextlayout
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritatextlayout
 %name library.
 
 %package -n %libkritaundo2
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaundo2
 %name library.
 
 %package -n %libkritaflake
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaflake
 %name library.
 
 %package -n %libkritawidgets
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritawidgets
 %name library.
 
 %package -n %libkritalibbrush
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritalibbrush
 %name library
 
 %package -n %libkritaimage
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaimage
 %name library
 
 %package -n %libkritastore
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritastore
 %name library
 
 %package -n %libkritabasicflakes
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritabasicflakes
 %name library
 
 %package -n %libkritaversion
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaversion
 %name library
 
 %package -n %libkritaglobal
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaglobal
 %name library
 
 %package -n %libkritawidgetutils
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritawidgetutils
 %name library
 
 %package -n %libkritacommand
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritacommand
 %name library
 
 %package -n %libkritaimpex
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaimpex
 %name library
 
 %package -n %libkritalibkis
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritalibkis
 %name library
 
 %package -n %libkritalibkra
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritalibkra
 %name library
 
 %package -n %libkritaqml
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaqml
 %name library
 
 %package -n %libkritametadata
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritametadata
 %name library
 
 %package -n %libkritaresourcewidgets
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaresourcewidgets
 %name library
 
 %package -n %libkritaresources
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaresources
 %name library
 
 %package -n %libkritaqmicinterface
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritaqmicinterface
 %name library
 
 %package -n %libkritapsdutils
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritapsdutils
 %name library
 
 %package -n %libkritatiffpsd
 Summary: %name library
 Group: System/Libraries
-Requires: %name-common = %EVR
+Requires: %name-common >= %EVR
 %description -n %libkritatiffpsd
 %name library
 
@@ -487,6 +487,9 @@ done
 %_libdir/libkritatiffpsd.so.*
 
 %changelog
+* Fri Sep 02 2022 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt3
+- update requires
+
 * Mon Aug 29 2022 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt2
 - fix library packaging
 
