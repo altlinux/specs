@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %ifarch armh
@@ -35,7 +35,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.56
+Version: %ver_major.57
 Release: alt1
 
 Summary: Media Sharing Server
@@ -70,8 +70,7 @@ BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
 BuildRequires: libbluez-devel
 # BT codecs
 BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
-# https://github.com/iamthehorker/libfreeaptx
-BuildRequires: libfreeaptx-devel
+BuildRequires: libfreeaptx-devel libopus-devel
 # LC3plus BT codec
 # BuildRequires: lc3plus-devel
 # for pw-top
@@ -172,7 +171,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %find_lang %name media-session --output=%name.lang
 
 %check
-%meson_test
+%__meson_test
 
 %pre
 %_sbindir/groupadd -r -f %name 2>/dev/null ||:
@@ -230,6 +229,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_userunitdir/%name-pulse.service
 %_userunitdir/%name-pulse.socket
 %_userunitdir/%name-media-session.service
+%_userunitdir/filter-chain.service
 
 %{?_enable_systemd_system_service:
 %_unitdir/%name.service
@@ -302,6 +302,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Fri Sep 02 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.57-alt1
+- updated to 0.3.57-3-g3f6fe3920
+
 * Tue Jul 19 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.56-alt1
 - 0.3.56
 
