@@ -9,7 +9,7 @@
 %endif
 
 Name: genimage
-Version: 15
+Version: 16
 Release: alt1
 
 Summary: Tool to generate multiple filesystem and flash images
@@ -63,5 +63,8 @@ config file or from commandline switches.
 %_bindir/%name
 
 %changelog
+* Fri Sep 02 2022 Anton Midyukov <antohami@altlinux.org> 16-alt1
+- new version
+
 * Sun Jan 23 2022 Anton Midyukov <antohami@altlinux.org> 15-alt1
 - Initial build
