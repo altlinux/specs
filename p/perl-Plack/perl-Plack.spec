@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Plack
-Version: 1.0048
+Version: 1.0049
 Release: alt1
 
 Summary: Plack - Perl Superglue for Web frameworks and Web Servers (PSGI toolkit)
@@ -81,6 +81,9 @@ find . -iname 'apache1*' -delete
 %perl_vendor_privlib/Plack/Handler/FCGI.pm
 
 %changelog
+* Fri Sep 02 2022 Igor Vlasenko <viy@altlinux.org> 1.0049-alt1
+- new version
+
 * Fri Dec 11 2020 Igor Vlasenko <viy@altlinux.ru> 1.0048-alt1
 - new version
 
