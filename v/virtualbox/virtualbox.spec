@@ -65,7 +65,7 @@
 
 
 Name: virtualbox
-Version: 6.1.36
+Version: 6.1.38
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -955,6 +955,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Fri Sep 02 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.38-alt1
+- Update to newest version 6.1.38
+
 * Mon Jul 25 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.36-alt1
 - Update to newest version 6.1.36
 
