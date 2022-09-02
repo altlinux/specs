@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.32
+Version: 1.4.33
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,15 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Sep 02 2022 Anton Midyukov <antohami@altlinux.org> 1.4.33-alt1
+- grub: add nosplash for vnc install items
+- base+rescue: add the required minimum applications for rescue
+- firmware: add firmware-ast_dp501 to use/firmware/server
+- Save rpm and srpm lists for chroots of subprofiles and main repo
+- realtime.mk: add kernel-headers and devel packages for linuxcnc
+- regular.mk: remove drm from jeos, enable nomodeset for jeos
+- kworkstation: add commits from zerg@
+
 * Mon Jul 25 2022 Anton Midyukov <antohami@altlinux.org> 1.4.32-alt1
 - Add commits from zerg@ for kworkstation
 - arm-rpi4: use/arm-rpi4/kernel available for aarch64 only
