@@ -1,45 +1,53 @@
-Name: sdl_sopwith
-Version: 1.8.4
+%define __name sopwith
+%define _name sdl-%__name
+
+Name: sdl_%__name
+Version: 2.1.0
 Release: alt1
 
 Summary: Classic scrolling shoot'em
 License: GPLv2+
 Group: Games/Arcade
+Url: https://github.com/fragglet/sdl-sopwith
 
-URL: http://sdl-sopwith.sourceforge.net/
-Source: http://download.sourceforge.net/sdl-sopwith/sopwith-%version.tar.gz
+Vcs: https://github.com/fragglet/sdl-sopwith.git
+Source: %url/releases/download/%_name-%version/%_name-%version.tar.gz
 Source1: sopwith.png
 Source2: sopwith.desktop
 
-BuildRequires: libSDL-devel
+BuildRequires: libSDL2-devel >= 2.0.7 /usr/bin/convert
 
 %description
 This is a port of the classic computer game "Sopwith".
 
 %prep
-%setup -n sopwith-%version
+%setup -n %_name-%version
 
 %build
-
+export orig_CFLAGS="%(getconf LFS_CFLAGS)"
+%autoreconf
 %configure
 %make_build
 
 %install
 %makeinstall_std
-install -pD -m644 %SOURCE1 %buildroot%_pixmapsdir/sopwith.png
-install -pD -m644 %SOURCE2 %buildroot%_desktopdir/sopwith.desktop
-# remove to avoid warnings about unpackaged files
-rm -rf %buildroot/%_docdir/sopwith
+install -pD -m644 %SOURCE1 %buildroot%_pixmapsdir/%__name.png
+install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%__name.desktop
 
 %files
-%_bindir/*
-%_man6dir/*
-%_pixmapsdir/*
-%_desktopdir/*
-# NEWS and ChangeLog now identical
-%doc NEWS doc/keys.txt
+%_bindir/%__name
+%_man5dir/%__name.cfg.*
+%_man6dir/%__name.*
+%_pixmapsdir/%__name.png
+%_desktopdir/%__name.desktop
+%doc NEWS* README* doc/origdoc.txt
+
+%exclude %_docdir/%_name
 
 %changelog
+* Fri Sep 02 2022 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
+- 2.1.0 (new github homepage, ported to SDL2)
+
 * Thu Dec 04 2014 Yuri N. Sedunov <aris@altlinux.org> 1.8.4-alt1
 - 1.8.4
 
