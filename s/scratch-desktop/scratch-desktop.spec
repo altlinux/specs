@@ -4,7 +4,7 @@
 
 Name: %name
 Version: 3.4.0
-Release: alt3
+Release: alt3.1
 
 Group: Education
 License: BSD-3-Clause
@@ -24,6 +24,7 @@ Patch2: 0002-Fix-launch-application.patch
 ExclusiveArch: x86_64 i586 aarch64
 Requires: electron4
 BuildRequires: npm node node-asar electron4
+BuildRequires: node-gyp
 
 %description
 Scratch is a new programming language that makes it easy to create your own
@@ -99,6 +100,9 @@ cp -a static/* %buildroot%_libdir/electron4/resources/static/
 %exclude %dir %_libdir/electron4/resources
 
 %changelog
+* Fri Sep 02 2022 Andrey Cherepanov <cas@altlinux.org> 3.4.0-alt3.1
+- NMU: added node-gyp to build requirements
+
 * Mon Sep 09 2019 Pavel Moseev <mars@altlinux.org> 3.4.0-alt3
 - change path to media files
 
