@@ -1,5 +1,5 @@
 Name: libgc
-Version: 7.6.14
+Version: 8.2.2
 Release: alt1
 
 Summary: The Boehm-Demers-Weiser conservative garbage collector
@@ -101,8 +101,8 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 %_includedir/gc_cpp.h
 %_pkgconfigdir/bdw-gc.pc
 %_man3dir/*
-%doc doc/README.linux doc/README.arm.cross doc/README.autoconf doc/README.cmake
-%doc doc/*.html
+%doc README.md doc/README.linux doc/README.arm.cross doc/README.autoconf doc/README.cmake
+%doc doc/*.md
 
 %if_enabled static
 %files devel-static
@@ -110,6 +110,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 %endif
 
 %changelog
+* Wed Aug 31 2022 Vitaly Lipatov <lav@altlinux.ru> 8.2.2-alt1
+- new version 8.2.2 (with rpmrb script)
+
 * Thu Oct 07 2021 Vitaly Lipatov <lav@altlinux.ru> 7.6.14-alt1
 - new version 7.6.14 (with rpmrb script)
 
