@@ -15,13 +15,13 @@
 %define ROUTER_ROOT %_localstatedir/mysqlrouter
 
 Name: MySQL
-Version: 8.0.29
+Version: 8.0.30
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
 Group: Databases
-License: GPL / LGPL
+License: GPLv2 with exceptions and LGPLv2 and BSD
 Url: http://www.mysql.com/
 Packager: MySQL Development Team <mysql@packages.altlinux.org>
 
@@ -112,7 +112,7 @@ BuildRequires: libssh-devel
 %package -n libmysqlclient%soname
 Summary: Shared libraries for MySQL
 Summary(ru_RU.UTF-8): Динамические библиотеки для MySQL
-License: LGPL
+License: LGPLv2
 Group: System/Libraries
 Provides: libMySQL = %EVR
 Obsoletes: libMySQL < %EVR
@@ -120,7 +120,7 @@ Obsoletes: libMySQL < %EVR
 %package -n libmysqlclient%soname-devel
 Summary: Development header files and libraries for MySQL
 Summary(ru_RU.UTF-8): Интерфейс прикладного уровня для разработки программ с MySQL
-License: LGPL
+License: LGPLv2
 Group: Development/C
 Requires: libmysqlclient%soname = %EVR
 Provides: MySQL-devel = %EVR mysql-devel = %EVR
@@ -133,7 +133,7 @@ Provides: libmysqlclient-devel = %EVR
 %package -n libmysqlclient%soname-devel-static
 Summary: Development static libraries for MySQL
 Summary(ru_RU.UTF-8): Интерфейс прикладного уровня для разработки программ с MySQL
-License: LGPL
+License: LGPLv2
 Group: Development/C
 Requires: libmysqlclient%soname-devel = %EVR
 Provides: libMySQL-devel-static = %EVR
@@ -143,7 +143,7 @@ Conflicts: libmariadb-devel-static
 %package client
 Summary: MySQL Client
 Summary(ru_RU.UTF-8): Клиент MySQL
-License: GPL
+License: GPLv2
 Group: Databases
 Provides: mysql-client = %EVR
 Obsoletes: mysql-client < %EVR
@@ -152,7 +152,7 @@ Conflicts: mariadb-client
 %package server
 Summary: A very fast and reliable SQL database engine
 Summary(ru_RU.UTF-8): Очень быстрый и надежный SQL-сервер
-License: GPL
+License: GPLv2
 Group: Databases
 Requires(pre): MySQL-client = %EVR
 Requires(pre): shadow-utils, coreutils, glibc-locales
@@ -164,7 +164,7 @@ Conflicts: mariadb-server-control mariadb-common
 %package server-perl
 Summary: Perl utils for MySQL-server
 Summary(ru_RU.UTF-8): Perl-утилиты для MySQL-server
-License: GPL
+License: GPLv2
 Group: Databases
 Requires: MySQL-server = %EVR, perl-DBD-mysql
 BuildArch: noarch
@@ -173,7 +173,7 @@ BuildArch: noarch
 %package router
 Summary: MySQL Router
 Summary(ru_RU.UTF-8): MySQL Router
-License: GPL
+License: GPLv2
 Group: Databases
 Provides: mysql-router = %EVR
 Obsoletes: mysql-router < %EVR
@@ -183,7 +183,7 @@ Obsoletes: mysql-router < %EVR
 %package shell
 Summary: MySQL Shell
 Summary(ru_RU.UTF-8): MySQL Shell
-License: GPL
+License: GPLv2
 Group: Databases
 Requires: python3-module-mysqlsh = %EVR
 Provides: mysql-shell = %EVR
@@ -191,7 +191,7 @@ Obsoletes: mysql-shell < %EVR
 
 %package -n python3-module-mysqlsh
 Summary: MySQL Shell python package
-License: GPL
+License: GPLv2
 Group: Databases
 %endif
 
@@ -919,6 +919,17 @@ fi
 %attr(3770,root,mysql) %dir %ROOT/tmp
 
 %changelog
+* Wed Aug 24 2022 Nikolai Kostrigin <nickel@altlinux.org> 8.0.30-alt1
+- new version
+  + (fixes: CVE-2018-25032, CVE-2022-1292, CVE-2022-21455, CVE-2022-21509)
+  + (fixes: CVE-2022-21515, CVE-2022-21517, CVE-2022-21522, CVE-2022-21525)
+  + (fixes: CVE-2022-21526, CVE-2022-21527, CVE-2022-21528, CVE-2022-21529)
+  + (fixes: CVE-2022-21530, CVE-2022-21531, CVE-2022-21534, CVE-2022-21537)
+  + (fixes: CVE-2022-21538, CVE-2022-21539, CVE-2022-21547, CVE-2022-21553)
+  + (fixes: CVE-2022-21556, CVE-2022-21569, CVE-2022-27778)
+- update mysql-shell 8.0.29 -> 8.0.30 (fixes: CVE-2022-21535)
+- spec: fix license ambiguity
+
 * Thu Jun 30 2022 Nikolai Kostrigin <nickel@altlinux.org> 8.0.29-alt1
 - new version
   + (fixes: CVE-2021-22570, CVE-2022-0778, CVE-2022-21454, CVE-2022-21457)
