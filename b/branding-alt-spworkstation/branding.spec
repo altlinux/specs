@@ -7,10 +7,10 @@
 %define status_en %nil
 %define flavour %brand-%theme
 
-%define gtk_theme Clearlooks-Phenix
+%define gtk_theme BlueMenta
 %define kde_theme Breeze
-%define icon_theme SimpleSL
-%define window_theme Clearlooks-Phenix
+%define icon_theme mate
+%define window_theme BlueMenta
 
 %define design_graphics_abi_epoch 0
 %define design_graphics_abi_major 12
@@ -23,7 +23,7 @@
 
 Name: branding-%flavour
 Version: 9.2
-Release: alt1
+Release: alt2
 Url: https://altsp.su
 
 %ifarch %ix86 x86_64
@@ -64,8 +64,8 @@ Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme desig
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme
 %branding_add_conflicts %flavour bootloader
 
-%define grub_normal white/light-blue
-%define grub_high black/light-gray
+%define grub_normal white/black
+%define grub_high black/white
 
 %description bootloader
 Here you find the graphical boot logo for %distro_name.
@@ -148,7 +148,7 @@ Group:    System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
 Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
-Conflicts: altlinux-release-sisyphus altlinux-release-p9
+Conflicts: altlinux-release-sisyphus altlinux-release-p9 altlinux-release-p10
 
 %description release
 %distro_name release file.
@@ -265,6 +265,9 @@ shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.
 #shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
+shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND ''
+# deprecated
+shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 
 %ifarch %ix86 x86_64
 %preun bootloader
@@ -287,9 +290,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 %post bootsplash
 [ "$1" -eq 1 ] || exit 0
 subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
-[ -f /etc/sysconfig/grub2 ] && \
-      subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
-             /etc/sysconfig/grub2 ||:
 
 #release
 %post release
@@ -350,6 +350,12 @@ subst 's/#theme-name=/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.c
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Sep 02 2022 Anton Midyukov <antohami@altlinux.org> 9.2-alt2
+- set gtk_theme=BlueMenta, icon_theme=mate, window_theme=BlueMenta
+- update Conflicts for release
+- set black-white colours for grub
+- disable GRUB_BACKGROUND, GRUB_WALLPAPER
+
 * Fri Oct 22 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 9.2-alt1
 - version bump
 

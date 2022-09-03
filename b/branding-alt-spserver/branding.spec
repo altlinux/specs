@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 8.4
-Release: alt2
+Release: alt3
 Url: https://altsp.su
 
 %ifarch %ix86 x86_64
@@ -59,8 +59,8 @@ Provides:  design-bootloader-system-%theme design-bootloader-livecd-%theme desig
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme
 %branding_add_conflicts %flavour bootloader
 
-%define grub_normal white/light-blue
-%define grub_high black/light-gray
+%define grub_normal white/black
+%define grub_high black/white
 
 %description bootloader
 Here you find the graphical boot logo for %distro_name.
@@ -143,7 +143,7 @@ Group:    System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
 Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
-Conflicts: altlinux-release-sisyphus altlinux-release-p9
+Conflicts: altlinux-release-sisyphus altlinux-release-p9 altlinux-release-p10
 
 %description release
 %distro_name release file.
@@ -237,6 +237,9 @@ shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.
 #shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_NORMAL %grub_normal
 shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
+shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND ''
+# deprecated
+shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 
 %ifarch %ix86 x86_64
 %preun bootloader
@@ -259,9 +262,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_COLOR_HIGHLIGHT %grub_high
 %post bootsplash
 [ "$1" -eq 1 ] || exit 0
 subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
-[ -f /etc/sysconfig/grub2 ] && \
-      subst "s|GRUB_WALLPAPER=.*|GRUB_WALLPAPER=/usr/share/plymouth/themes/%theme/grub.jpg|" \
-             /etc/sysconfig/grub2 ||:
 
 #release
 %post release
@@ -315,6 +315,11 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Sep 02 2022 Anton Midyukov <antohami@altlinux.org> 8.4-alt3
+- update Conflicts for release
+- set black-white colours for grub
+- disable GRUB_BACKGROUND, GRUB_WALLPAPER
+
 * Wed Sep 29 2021 Anton V. Boyarshinov <boyarsh@altlinux.org> 8.4-alt2
 - color scheme in browser-qt fixed
 
