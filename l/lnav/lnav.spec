@@ -1,5 +1,5 @@
 Name: lnav
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: The log file navigator
@@ -16,6 +16,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 # Automatically added by buildreq on Mon Jun 23 2014
 # optimized out: libcloog-isl4 libpcre-devel libstdc++-devel libtinfo-devel python-base
 BuildRequires: bzlib-devel gcc-c++ libncursesw-devel libpcrecpp-devel libreadline-devel libsqlite3-devel sqlite3 zlib-devel
+BuildRequires: libcurl-devel
 # check
 BuildRequires: openssh-common
 
@@ -53,6 +54,12 @@ touch AUTHORS ChangeLog COPYING
 #   (putting out meaningful diags otherwise, e.g. in a chroot)
 
 %changelog
+* Sat Sep 03 2022 Michael Shigorin <mike@altlinux.org> 0.11.0-alt1
+- new version (watch file uupdate)
+
+* Thu Oct 07 2021 Michael Shigorin <mike@altlinux.org> 0.10.1-alt1
+- new version (watch file uupdate)
+
 * Sun Jun 20 2021 Michael Shigorin <mike@altlinux.org> 0.10.0-alt1
 - new version (watch file uupdate)
 
