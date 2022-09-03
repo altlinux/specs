@@ -2,7 +2,7 @@
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 6.2.8
+Version: 6.3.0
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -37,7 +37,7 @@ Requires: lv2-lsp-plugins >= %lsp_ver
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ pkgconfig(sigc++-3.0) >= %sigc_ver libfmt-devel
-BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
+BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
 BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver
 BuildRequires: nlohmann-json-devel
@@ -83,6 +83,9 @@ mkdir -p %buildroot%_sysconfdir/EasyEffects
 %doc README* CHANGELOG.*
 
 %changelog
+* Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 6.3.0-alt1
+- 6.3.0
+
 * Tue Jul 26 2022 Yuri N. Sedunov <aris@altlinux.org> 6.2.8-alt1
 - 6.2.8
 
