@@ -1,19 +1,19 @@
 Name: radeon-profile
 Version: 20200824
-Release: alt2
+Release: alt4
 
 Summary: Application for monitoring equipment of ATi Radeon cards
 Summary(ru_RU.UTF-8): Приложение для мониторинга оборудования карт ATi Radeon
-License: GPL-2.0
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 Url: https://github.com/marazmista/radeon-profile
-Packager: Evgeny Chuck <koi at altlinux.org>
 
-Source: %name-%version.tar
 # Source-url: https://github.com/marazmista/radeon-profile/archive/refs/tags/%version.tar.gz
+Source: %name-%version.tar
 
 Patch: radeon_profile-20200824-alt-translation_fix.patch
 Patch1: radeon_profile-20200824-alt-desktop.patch
+Patch2: radeon_profile-20200824-alt-fix_window_size.patch
 
 Requires: glxinfo
 Requires: xrandr
@@ -56,8 +56,7 @@ Define binaries to run with set of environment variablees
 
 %prep
 %setup
-%patch -p2
-%patch1 -p2
+%autopatch -p2
 
 %build
 lrelease-qt5 %name.pro
@@ -80,6 +79,14 @@ popd
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Sep 01 2022 Evgeny Chuck <koi@altlinux.org> 20200824-alt4
+- Fixed category in desktop file as per policy
+- Increased the size of the dialog_deinetopbaritem window (Closes: 43149)
+
+* Sun Feb 13 2022 Evgeny Chuck <koi@altlinux.org> 20200824-alt3
+- fix License tag (GPL-2.0 -> GPL-2.0-only)
+- cleanup spec
+
 * Tue Jan 18 2022 Evgeny Chuck <koi@altlinux.org> 20200824-alt2
 - Correction of the translation text
 - Added translation into Russian in the file "radeon-profile.desktop"
