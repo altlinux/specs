@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/ParseXS.pm) perl(File/Find.pm) perl(File/Path.pm) perl(File/Spec.pm) perl(Scalar/Util.pm) perl(Test/LongString.pm) perl(Test/More.pm) perl(Test/Warn.pm) perl(XSLoader.pm) perl(Sereal/Decoder.pm)
+BuildRequires: perl(Data/Dumper.pm) perl(ExtUtils/MakeMaker.pm) perl(ExtUtils/ParseXS.pm) perl(File/Find.pm) perl(File/Path.pm) perl(File/Spec.pm) perl(Scalar/Util.pm) perl(Sereal/Decoder.pm) perl(Test/Deep/NoTest.pm) perl(Test/LongString.pm) perl(Test/More.pm) perl(Test/Warn.pm) perl(XSLoader.pm)
 # END SourceDeps(oneline)
 %define module_name Sereal-Encoder
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 4.025
+Version: 5.001
 Release: alt1
 Summary: Fast, compact, powerful binary serialization
 Group: Development/Perl
@@ -49,6 +49,9 @@ export NPROCS=1
 %perl_vendor_autolib/*
 
 %changelog
+* Sat Sep 03 2022 Igor Vlasenko <viy@altlinux.org> 5.001-alt1
+- automated CPAN update
+
 * Fri Jul 29 2022 Igor Vlasenko <viy@altlinux.org> 4.025-alt1
 - automated CPAN update
 
