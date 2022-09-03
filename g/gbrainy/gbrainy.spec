@@ -1,5 +1,5 @@
 Name: gbrainy
-Version: 2.4.4
+Version: 2.4.5
 Release: alt1
 
 Summary: Brain training puzzle game
@@ -14,6 +14,9 @@ ExcludeArch: ppc64le
 
 # Source-url: https://gitlab.gnome.org/GNOME/gbrainy/-/archive/%version/gbrainy-%version.tar.gz
 Source: %name-%version.tar
+
+Patch: %name-2.4.5-alt-makefile.patch
+Patch1: %name-2.4.5-alt-pkgfile.patch
 
 BuildRequires: intltool
 BuildRequires: librsvg-devel
@@ -55,14 +58,19 @@ Development files for the puzzle game gbrainy. Used to create modules.
 
 %prep
 %setup
+%autopatch -p2
 
 %build
 %autoreconf
-%configure
+%configure --libdir=%_monodir
 %make_build
 
 %install
 %makeinstall_std
+
+# Remove icons from the pixmaps directory according to the packaging policy.
+# https://www.altlinux.org/Icon_Paths_Policy
+rm -f %buildroot%_pixmapsdir/*
 
 %find_lang %name
 
@@ -70,18 +78,22 @@ Development files for the puzzle game gbrainy. Used to create modules.
 %doc AUTHORS ChangeLog NEWS README
 %_bindir/%name
 %_datadir/help/*/%name
-%_libdir/%name
+%_monodir/%name
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*
 %_datadir/metainfo/%name.appdata.xml
 %_man6dir/gbrainy.6.*
-%_pixmapsdir/*
 %_gamesdatadir/%name
 
 %files devel
-%_pkgconfigdir/%name.pc
+%_datadir/pkgconfig/%name.pc
 
 %changelog
+* Fri Sep 02 2022 Evgeny Chuck <koi@altlinux.org> 2.4.5-alt1
+- new version (2.4.5) with rpmgs script
+- mono libraries packaged as per policy
+- fixed path to development library in pkg file
+
 * Thu Aug 11 2022 Evgeny Chuck <koi@altlinux.org> 2.4.4-alt1
 - new version (2.4.4) with rpmgs script
 
