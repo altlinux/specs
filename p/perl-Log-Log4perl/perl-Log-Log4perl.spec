@@ -2,7 +2,7 @@
 %add_findreq_skiplist %perl_vendor_privlib/Log/Log4perl/Filter/MDC.pm
 %define dist Log-Log4perl
 Name: perl-%dist
-Version: 1.55
+Version: 1.56
 Release: alt1
 
 Summary: Log4j implementation for Perl
@@ -77,6 +77,9 @@ or rrdtool graph for graphic displays.
 %perl_vendor_privlib/Log/Log4perl/Appender/RRDs.pm
 
 %changelog
+* Sat Sep 03 2022 Igor Vlasenko <viy@altlinux.org> 1.56-alt1
+- automated CPAN update
+
 * Thu Jun 02 2022 Igor Vlasenko <viy@altlinux.org> 1.55-alt1
 - automated CPAN update
 
