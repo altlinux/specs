@@ -1,6 +1,6 @@
 Name:     papirus-icon-theme
-Version:  20220508
-Release:  alt2
+Version:  20220808
+Release:  alt1
 
 Summary:  All Papirus icon themes
 License:  GPLv3
@@ -12,8 +12,6 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source:   %name-%version.tar
 
 BuildArch: noarch
-
-BuildRequires: papirus-folders
 
 Requires: icon-theme-Papirus = %EVR
 Requires: icon-theme-Papirus-Dark = %EVR
@@ -76,18 +74,60 @@ Requires(pre): icon-theme-Papirus
 
 %prep
 %setup
+
+%build
 # Make network menu item in ALT looks like upstream Internet menu item
 for i in 16 22 24 32 48 64;do
     ln -s internet-web-browser.svg Papirus/${i}x${i}/apps/applications-network.svg
 done
 
-cp -a Papirus-Light Papirus-Education
-papirus-folders -C orange -t Papirus-Education
-sed -e 's/Light/Education/g; s/bright themes/ALT Education/g; s/breeze/orange/g' -i Papirus-Education/index.theme ||exit
+# Make new theme Papirus-Education with orange folder icons 
+color=orange
+THEME_DIR=Papirus-Edu
+mkdir $THEME_DIR
+cp Papirus-Light/index.theme $THEME_DIR
+subst 's/Light/Education/g; s/bright themes/ALT Education/g; s/breeze/orange/g' $THEME_DIR/index.theme
+
+# Total copy all directory from Papirus as symlinks except 'places'
+for dir in Papirus/*; do
+	[ -d "$dir" ] || continue
+	size="${dir#*/}"
+	mkdir $THEME_DIR/$size
+	for d in $dir/*; do
+		category="$(basename $d)"
+		if [ "$category" = "places" ]; then
+			# Create directory places and fill it by icon symlinks
+			mkdir $THEME_DIR/$size/places
+			for i in Papirus/$size/places/*.svg; do
+				if [ -L "$i" ]; then
+					# Copy symlinks because its source shoud be local, not base theme (ex. inode-directory.svg)
+					cp -P $i $THEME_DIR/$size/places
+				else
+					# Symlink to icon in base theme
+					ln -s ../../../$i $THEME_DIR/$size/places
+				fi
+			done
+			pushd $THEME_DIR/$size/places
+			# Replaced standard icons by colored variant
+			for prefix in folder user; do
+				for icon in ${prefix}-${color}*.svg; do
+					symlink="${icon/$prefix-$color/$prefix}"
+					[ -e "$symlink" ] || continue
+					rm -f "$symlink"
+					ln -s "$icon" "$symlink"
+				done
+			done
+			popd
+		else
+			# Make symlink to category directory
+			ln -s ../../Papirus/$size/$category $THEME_DIR/$size
+		fi
+	done
+done
 
 %install
 mkdir -p %buildroot%_iconsdir
-cp -a Papirus Papirus-Dark Papirus-Education Papirus-Light ePapirus %buildroot%_iconsdir
+cp -a Papirus Papirus-Dark Papirus-Edu Papirus-Light ePapirus %buildroot%_iconsdir
 
 %files
 %doc AUTHORS LICENSE README.md
@@ -102,7 +142,7 @@ cp -a Papirus Papirus-Dark Papirus-Education Papirus-Light ePapirus %buildroot%_
 
 %files -n icon-theme-Papirus-Education
 %doc AUTHORS LICENSE README.md
-%_iconsdir/Papirus-Education
+%_iconsdir/Papirus-Edu
 
 %files -n icon-theme-Papirus-Light
 %doc AUTHORS LICENSE README.md
@@ -113,6 +153,13 @@ cp -a Papirus Papirus-Dark Papirus-Education Papirus-Light ePapirus %buildroot%_
 %_iconsdir/ePapirus
 
 %changelog
+* Fri Sep 02 2022 Andrey Cherepanov <cas@altlinux.org> 20220808-alt1
+- New version.
+
+* Fri Sep 02 2022 Andrey Cherepanov <cas@altlinux.org> 20220508-alt3
+- Fixed icon color Papirus-Education changing independently of other themes, no dependency on papirus-folders corrected (closes: 42867) (thanks felixz@)
+- Package Papiris-Education theme to Papirus-Edu directory.
+
 * Wed May 11 2022 Kirill Izmestev <felixz@altlinux.org> 20220508-alt2
 - Add new Papirus icon theme: Papirus-Education
 (based on Papirus-Light, but with orange folders).
