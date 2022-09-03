@@ -2,7 +2,7 @@
 
 Name: vdo
 Version: 8.2.0.2
-Release: alt1
+Release: alt2
 
 Summary: Management tools for Virtual Data Optimizer
 License: GPLv2
@@ -40,10 +40,6 @@ This package provides the user-space support tools for VDO.
 %setup
 #%%patch0 -p1
 %patch1 -p1
-%ifarch %e2k
-# as of lcc 1.25.12
-sed -i 's,-Werror,& -Wno-error=ignored-qualifiers,' utils/vdo/base/Makefile
-%endif
 
 %build
 %make
@@ -96,6 +92,9 @@ mv %buildroot%_sysconfdir/bash_completion.d/* %buildroot%_datadir/bash-completio
 %_man8dir/vdoregenerategeometry.8*
 
 %changelog
+* Sat Sep 03 2022 Michael Shigorin <mike@altlinux.org> 8.2.0.2-alt2
+- dropped e2k-specific kludge
+
 * Tue Aug 23 2022 Alexey Shabalin <shaba@altlinux.org> 8.2.0.2-alt1
 - 8.2.0.2
 
