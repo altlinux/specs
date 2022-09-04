@@ -2,7 +2,7 @@
 
 Name: mandelbulber2
 Version: 2.28
-Release: alt3
+Release: alt4
 
 Summary: 3D fractal visualization tool
 Summary(ru_RU.UTF-8): Инструмент 3D фрактальной визуализации
@@ -84,6 +84,9 @@ lconvert-qt5 %buildroot%_datadir/%name/language/formula_ru.ts -o %buildroot%_dat
 %_niconsdir/mandelbulber.png
 
 %changelog
+* Sun Sep 04 2022 Evgeny Chuck <koi@altlinux.org> 2.28-alt4
+- Russian translation fix
+
 * Wed Aug 31 2022 Evgeny Chuck <koi@altlinux.org> 2.28-alt3
 - Added Russian localization
 
