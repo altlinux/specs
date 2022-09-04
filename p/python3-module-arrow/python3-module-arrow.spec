@@ -1,10 +1,11 @@
-%define modname arrow
+%define pypi_name arrow
 %def_disable docs
-#24 failed, 1674 passed, 2 xfailed, 14 errors in 20.22s
+# 25 failed, 1804 passed, 1 xfailed, 1 xpassed in 33.01s
+# probably dateutil too old or need to rebuild
 %def_disable check
 
-Name: python3-module-%modname
-Version: 1.2.2
+Name: python3-module-%pypi_name
+Version: 1.2.3
 Release: alt1
 
 Summary: Better dates & times for Python
@@ -13,12 +14,12 @@ Group: Development/Python3
 Url: https://pypi.python.org/pypi/arrow/
 
 Vcs: https://github.com/crsmithdev/arrow.git
-Source: https://pypi.io/packages/source/a/%modname/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/a/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
 BuildRequires: python3-module-dateutil python3-module-nose
 BuildRequires: python3-module-chai
 BuildRequires: python3-module-simplejson
@@ -37,15 +38,14 @@ that supports many common creation scenarios. Simply put, it helps you
 work with dates and times with fewer imports and a lot less code.
 
 %prep
-%setup -n %modname-%version
-
-sed -i 's/pytest/py.test3/' tox.ini
+%setup -n %pypi_name-%version
+#sed -i 's/pytest/py.test3/' tox.ini
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if_enabled docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -55,15 +55,19 @@ cp -fR docs/_build/html/* man/
 %endif
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
+%tox_check
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc *.rst LICENSE
 %{?_enable_docs: man/}
 
 %changelog
+* Sun Sep 04 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
+- 1.2.3
+- ported to %%pyproject* macros
+
 * Fri Jan 28 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1
 - 1.2.2
 
