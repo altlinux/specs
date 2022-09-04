@@ -2,13 +2,12 @@
 
 Name: kde5-plasma-inactiveblur
 Version: 5
-Release: alt1
+Release: alt2.gitf5c2783
 Summary: A wallpaper plugin for Plasma5
 License: GPL-1
 Group: Graphical desktop/KDE
 Url: https://github.com/Zren/plasma-wallpapers/tree/master/inactiveblur
 Source: %name-%version.tar
-Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildArch: noarch
 
@@ -27,5 +26,9 @@ cp -pr contents %buildroot%_datadir/kf5/plasma/wallpapers/%pluginname
 %_datadir/kf5/plasma/wallpapers/%pluginname
 
 %changelog
+* Sun Sep 04 2022 Alexander Makeenkov <amakeenk@altlinux.org> 5-alt2.gitf5c2783
+- Updated to last upstream git (fixes for Plasma 5.25)
+- Spec: Removed Packager tag
+
 * Wed Mar 25 2020 Alexander Makeenkov <amakeenk@altlinux.org> 5-alt1
 - Initial build for ALT
