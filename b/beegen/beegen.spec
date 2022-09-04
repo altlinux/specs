@@ -1,5 +1,5 @@
 Name: beegen
-Version: 0.2
+Version: 0.4
 Release: alt1
 
 Summary: Automatic hasher bee generator
@@ -38,6 +38,14 @@ fi
 %_initdir/%name
 
 %changelog
+* Fri Sep 02 2022 Dmitry V. Levin <ldv@altlinux.org> 0.4-alt1
+- Amend /etc/hasher-priv/system instead of creating files for pam_limits.
+
+* Sun Nov 15 2020 Dmitry V. Levin <ldv@altlinux.org> 0.3-alt1
+- mkbee: do not change .hasher/config of the target user.
+- beegen: do not re-create /etc/security/limits.d/60-hashman.conf
+- beegen.init: disable by default.
+
 * Mon Jul 06 2020 Dmitry V. Levin <ldv@altlinux.org> 0.2-alt1
 - Added mkbee.
 
