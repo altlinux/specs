@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 160
+%define centos_release 161
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -634,6 +634,12 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Sep 03 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.161-alt1.el9
+- Updated to kernel-5.14.0-161.el9:
+  + Fixes for bz-2121368
+  + random: allow reseeding DRBG with getrandom
+  + redhat: remove GL_DISTGIT_USER, RHDISTGIT and unify dist-git cloning
+
 * Fri Aug 26 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.160-alt1.el9
 - Updated to kernel-5.14.0-160.el9 (fixes: CVE-2022-1679, CVE-2022-26373):
   + ath9k: fix use-after-free in ath9k_hif_usb_rx_cb
