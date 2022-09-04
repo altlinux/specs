@@ -1,7 +1,7 @@
 %define oname luasec
 
 Name: lua5.4-module-%oname
-Version: 1.0.2
+Version: 1.2.0
 Release: alt1
 Summary: A binding for OpenSSL library to provide TLS/SSL communication over LuaSocket
 License: MIT
@@ -48,6 +48,9 @@ popd
 %lua_modulesdir_noarch/*
 
 %changelog
+* Tue Aug 30 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.2.0-alt1
+- Updated to 1.2.0.
+
 * Mon Jul 04 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.0.2-alt1
 - Updated to 1.0.2.
 - Built from tarball.
