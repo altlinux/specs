@@ -1,7 +1,7 @@
 %define py_name yt_dlp
 
 Name: yt-dlp
-Version: 2022.08.19
+Version: 2022.09.01
 Release: alt1
 
 Summary: A tool for downloading from video services for offline watching
@@ -66,6 +66,9 @@ rm %buildroot/usr/share/doc/yt_dlp/README.txt
 %python3_sitelibdir/%py_name-*.egg-info
 
 %changelog
+* Sun Sep 04 2022 Cronbuild Service <cronbuild@altlinux.org> 2022.09.01-alt1
+- Updated to 2022.09.01.
+
 * Fri Aug 19 2022 Cronbuild Service <cronbuild@altlinux.org> 2022.08.19-alt1
 - Updated to 2022.08.19.
 
