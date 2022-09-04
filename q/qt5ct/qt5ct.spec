@@ -1,17 +1,24 @@
 Name: qt5ct
 Version: 1.5
-Release: alt2
+Release: alt3
 
 Summary: Qt5 Configuration Tool
 Summary(ru_RU.UTF-8): Инструмент для настройки оформления приложений Qt5
+
 License: BSD-2-Clause-NetBSD
 Group: System/Configuration/Other
 Url: https://sourceforge.net/projects/qt5ct
 
+ExcludeArch: %not_qt5_qtwebengine_arches
+
 # Source-url: https://sourceforge.net/projects/qt5ct/files/qt5ct-%version.tar.bz2/download
 Source: %name/%name-%version.tar
 
+Patch1: %name-1.5-alt-desktop.patch
+
 BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt5-webengine
+
 BuildRequires: libinput-devel
 BuildRequires: libmtdev-devel
 BuildRequires: libts-devel
@@ -42,6 +49,8 @@ font, icons, etc.) under DE/WM without Qt integration.
 
 %prep
 %setup
+%autopatch -p2
+
 echo "export QT_QPA_PLATFORMTHEME='%name'" > %name.sh
 echo "setenv QT_QPA_PLATFORMTHEME '%name'" > %name.csh
 
@@ -66,6 +75,9 @@ install -Dm 0755 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Sep 04 2022 Evgeny Chuck <koi@altlinux.org> 1.5-alt3
+- Fixed a bug in the description of the desktop file
+
 * Sun Feb 13 2022 Evgeny Chuck <koi@altlinux.org> 1.5-alt2
 - fix License tag (BSD -> BSD-2-Clause-NetBSD)
 - cleanup spec
