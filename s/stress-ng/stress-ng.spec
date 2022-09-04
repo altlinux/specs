@@ -2,14 +2,14 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %ifnarch ppc64le
-%set_verify_elf_method strict
+%set_verify_elf_method strict,lint=relaxed
 %endif
 
 %def_without gpu
 
 Name: stress-ng
 Version: 0.14.03
-Release: alt1
+Release: alt2
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
 License: GPL-2.0-only
@@ -29,7 +29,6 @@ BuildRequires: libjpeg-devel
 BuildRequires: libjudy-devel
 BuildRequires: libkeyutils-devel
 BuildRequires: libkmod-devel
-BuildRequires: liblksctp-devel
 BuildRequires: liblksctp-devel
 BuildRequires: libseccomp-devel
 BuildRequires: libxxhash-devel
@@ -90,6 +89,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Sun Sep 04 2022 Vitaly Chikunov <vt@altlinux.org> 0.14.03-alt2
+- Workaround ALT beekeeper rebuild failure.
+
 * Sun Jul 24 2022 Vitaly Chikunov <vt@altlinux.org> 0.14.03-alt1
 - Update to V0.14.03 (2022-07-20).
 - Change docdir /usr/share/doc/stress-ng-%%version -> /usr/share/doc/stress-ng.
