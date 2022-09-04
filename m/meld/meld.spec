@@ -1,16 +1,16 @@
-%define ver_major 3.21
+%define ver_major 3.22
 %define xdg_name org.gnome.Meld
 
 %def_enable check
 
 Name: meld
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Meld Diff Viewer
 License: GPL-2.0-or-later
 Group: Text tools
-Url: http://meldmerge.org/
+Url: http://meld.app
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
@@ -59,9 +59,12 @@ including Git, Bazaar, Mercurial, Subversion and CVS.
 %_datadir/mime/packages/%xdg_name.xml
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/%name.1.*
-%doc NEWS
+%doc NEWS README*
 
 %changelog
+* Sun Sep 04 2022 Yuri N. Sedunov <aris@altlinux.org> 3.22.0-alt1
+- 3.22.0
+
 * Sun Aug 14 2022 Yuri N. Sedunov <aris@altlinux.org> 3.21.3-alt1
 - 3.21.3
 
