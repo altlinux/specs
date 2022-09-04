@@ -3,8 +3,8 @@
 %def_disable python2
 
 Name: cracklib
-Version: 2.9.7
-Release: alt4
+Version: 2.9.8
+Release: alt1
 
 Summary: A password-checking library.
 License: LGPL-2.1-or-later
@@ -92,6 +92,7 @@ export am_cv_python_version=%__python3_version%_python3_abiflags
 %add_optflags `pkg-config --cflags python3`
 %endif
 
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	--disable-static
@@ -171,6 +172,9 @@ install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 
 
 %changelog
+* Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 2.9.8-alt1
+- 2.9.8
+
 * Fri Sep 18 2020 Yuri N. Sedunov <aris@altlinux.org> 2.9.7-alt4
 - disabled useless python* modules
 
