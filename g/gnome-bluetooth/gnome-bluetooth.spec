@@ -12,7 +12,7 @@
 
 Name: gnome-bluetooth
 Version: %ver_major.5
-Release: alt2
+Release: alt3
 
 Summary: The GNOME Bluetooth Subsystem
 License: GPL-2.0 and LGPL-2.1
@@ -124,10 +124,10 @@ dbus-run-session %meson_test
 %files -f global.lang
 %{?_enable_sendto:%_altdir/%name
 %_bindir/%name-sendto
-%_desktopdir/*.desktop}
+%_desktopdir/*.desktop
+%exclude %_man1dir/bluetooth-sendto.1*}
 %_datadir/%name/
 %_iconsdir/hicolor/*/*/*
-%_man1dir/*.1*
 %doc AUTHORS README* NEWS
 
 %files -n lib%name
@@ -150,6 +150,9 @@ dbus-run-session %meson_test
 %endif
 
 %changelog
+* Mon Sep 05 2022 Yuri N. Sedunov <aris@altlinux.org> 3.34.5-alt3
+- exclude man bluetooth-sendto to avoid conflict with g-b-3.0
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.34.5-alt2
 - updated to 3.34.5-16-g61cfff1c
 - made sendto optional

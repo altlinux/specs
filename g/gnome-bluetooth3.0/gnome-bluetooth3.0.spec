@@ -13,7 +13,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: The GNOME Bluetooth Subsystem
@@ -146,9 +146,9 @@ dbus-run-session %__meson_test
 %files -f %_name.lang
 %{?_enable_sendto:%_altdir/%name
 %_bindir/%name-sendto
-%_desktopdir/%name-bluetooth-sendto.desktop}
+%_desktopdir/%name-bluetooth-sendto.desktop
+%_man1dir/bluetooth-sendto.1*}
 %_datadir/%_name-%api_ver
-%_man1dir/*.1*
 %doc AUTHORS README* NEWS
 
 %files -n lib%name
@@ -178,6 +178,9 @@ dbus-run-session %__meson_test
 %endif
 
 %changelog
+* Mon Sep 05 2022 Yuri N. Sedunov <aris@altlinux.org> 42.4-alt1
+- 42.4
+
 * Wed Aug 24 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
 - 42.3
 
