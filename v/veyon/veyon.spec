@@ -2,7 +2,7 @@
 
 Name: veyon
 Version: 4.7.4
-Release: alt2
+Release: alt2.1
 Group: Education
 License: GPLv2
 Url: https://veyon.io/
@@ -97,6 +97,9 @@ Veyon доступен на разных языках и предоставля�
 
 %ifarch %e2k
 sed -i "s/-Werror/-Wno-error/" cmake/modules/SetDefaultTargetProperties.cmake
+# workaround of SIGILL in ecf_opt64 from LCC 1.25.23
+sed -i "s/QOverload<int>::of(&QComboBox::/(void(QComboBox::*)(int))(\&QComboBox::/" \
+	core/src/Configuration/UiMapping.h
 %endif
 
 %build
@@ -124,6 +127,9 @@ sed -i "s/-Werror/-Wno-error/" cmake/modules/SetDefaultTargetProperties.cmake
 %_datadir/%name
 
 %changelog
+* Mon Sep 05 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.7.4-alt2.1
+- fixed build for Elbrus
+
 * Tue Aug 09 2022 Egor Ignatov <egori@altlinux.org> 4.7.4-alt2
 - fix Screen Lock and Fullscreen Demo
 
