@@ -3,7 +3,7 @@
 %define _customdocdir %_docdir/%name
 
 Name:    libltc
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 Summary: Linear/Longitudinal Time Code (LTC) Library
 
@@ -74,5 +74,8 @@ rm -f %buildroot%_libdir/libltc.{a,la}
 
 
 %changelog
+* Mon Sep 05 2022 Ivan A. Melnikov <iv@altlinux.org> 1.3.2-alt1
+- 1.3.2
+
 * Thu Jun 03 2021 Ivan A. Melnikov <iv@altlinux.org> 1.3.1-alt1
 - Initial build for Sisyphus
