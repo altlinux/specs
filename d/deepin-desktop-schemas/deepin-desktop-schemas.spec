@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 5.10.6
+Version: 5.10.11
 Release: alt1
 Summary: GSettings deepin desktop-wide schemas
 License: GPL-3.0
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-golang
 BuildRequires: python3
 BuildRequires: glib2
 BuildRequires: libgio
-# BuildRequires: golang-deepin-go-lib-devel
+BuildRequires: golang-deepin-api-devel
 # Requires: deepin-sound-theme
 Requires: gnome-backgrounds
 Requires: icon-theme-deepin
@@ -37,9 +37,12 @@ sed -i 's|adwaita-lock.jpg|adwaita-night.jpg|' \
 sed -i 's|uos-browser|chromium-browser|' \
     overrides/common/*/*.override \
     schemas/com.deepin.dde.dock.gschema.xml
+# fix network checker url
+sed -i "s|'http://detect.uniontech.com', 'http://detectportal.deepin.com'|'https://en.altlinux.org'|" \
+    schemas/com.deepin.dde.network-utils.gschema.xml
 
 %build
-export GOPATH="%go_path:$(pwd)/vendor"
+export GOPATH="%go_path/src/github.com/linuxdeepin/dde-api/vendor:%go_path"
 export SYSTYPE=Desktop
 %make_build ARCH=%_arch
 
@@ -85,6 +88,9 @@ dconf update
 %_sysconfdir/dconf/db/local.d/01-deepin-disable-timeout-lockscreen
 
 %changelog
+* Mon Sep 05 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.11-alt1
+- New version (5.10.11).
+
 * Wed May 04 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.6-alt1
 - New version (5.10.6).
 
