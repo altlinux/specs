@@ -1,5 +1,5 @@
 Name: xfce4-pulseaudio-plugin
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: A pulseaudio plugin for the Xfce panel
@@ -8,7 +8,7 @@ Group: Graphical desktop/XFce
 Url: https://docs.xfce.org/panel-plugins/xfce4-pulseaudio-plugin
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-Vcs: git://git.xfce.org/panel-plugins/xfce4-pulseaudio-plugin
+Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-pulseaudio-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -50,7 +50,7 @@ A panel plugin for controlling PulseAudio mixer.
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS NEWS
+%doc README.md AUTHORS NEWS
 %_libdir/xfce4/panel/plugins/*.so
 %_datadir/xfce4/panel/plugins/*.desktop
 %_iconsdir/hicolor/*/*/*.*
@@ -58,6 +58,10 @@ A panel plugin for controlling PulseAudio mixer.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sat Sep 03 2022 Mikhail Efremov <sem@altlinux.org> 0.4.4-alt1
+- Updated Vcs tag.
+- Updated to 0.4.4.
+
 * Mon Mar 30 2020 Mikhail Efremov <sem@altlinux.org> 0.4.3-alt1
 - Added libexo-gtk3-devel to BR.
 - Updated url.
