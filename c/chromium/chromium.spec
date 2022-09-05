@@ -10,7 +10,7 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-%global llvm_version 13.0
+%global llvm_version 14.0
 %global gcc_version %nil
 #set_gcc_version %gcc_version
 
@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        103.0.5060.53
+Version:        105.0.5195.52
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -74,7 +74,10 @@ Patch010: 0010-Move-offending-function-to-chromeos-only.patch
 Patch011: 0011-FEDORA-bootstrap-with-python3.patch
 Patch012: 0012-sql-make-VirtualCursor-standard-layout-type.patch
 Patch013: 0013-GENTOO-Fix-instantiating-fold-expression-error.patch
-Patch014: 0014-Handle-kioslaverc-config-located-in-XDG_CONFIG_DIRS.patch
+Patch014: 0014-ALT-Do-not-mix-internal-and-system-wayland.patch
+Patch015: 0015-IWYU-add-memory-for-std-unique_ptr-in-disk_cache-Bit.patch
+Patch016: 0016-IWYU-add-vector-for-std-vector-in-browser_finder.h.patch
+Patch017: 0017-libstdc-use-math.h-in-blink-AdjustMaskLayerGeometry.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -194,6 +197,10 @@ rm -f -- third_party/depot_tools/ninja
 ln -s %_bindir/ninja third_party/depot_tools/ninja
 ln -s %_bindir/python3 third_party/depot_tools/python
 
+rm -rf -- \
+	third_party/wayland/src \
+	third_party/wayland/include
+
 %build
 %if_enabled clang
 export ALTWRAP_LLVM_VERSION="%llvm_version"
@@ -249,6 +256,9 @@ gn_arg system_libdir=\"%_lib\"
 gn_arg use_allocator=\"none\"
 gn_arg use_icf=false
 gn_arg enable_js_type_check=false
+gn_arg use_xkbcommon=true
+gn_arg use_system_libdrm=true
+gn_arg use_system_minigbm=true
 gn_arg use_system_libwayland=true
 gn_arg use_system_wayland_scanner=true
 gn_arg use_bundled_weston=false
@@ -455,6 +465,32 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Sep 01 2022 Alexey Gladkov <legion@altlinux.ru> 105.0.5195.52-alt1
+- New version (105.0.5195.52).
+- Security fixes:
+  - CVE-2022-3038: Use after free in Network Service.
+  - CVE-2022-3039: Use after free in WebSQL.
+  - CVE-2022-3040: Use after free in Layout.
+  - CVE-2022-3041: Use after free in WebSQL.
+  - CVE-2022-3042: Use after free in PhoneHub.
+  - CVE-2022-3043: Heap buffer overflow in Screen Capture.
+  - CVE-2022-3044: Inappropriate implementation in Site Isolation.
+  - CVE-2022-3045: Insufficient validation of untrusted input in V8.
+  - CVE-2022-3046: Use after free in Browser Tag.
+  - CVE-2022-3047: Insufficient policy enforcement in Extensions API.
+  - CVE-2022-3048: Inappropriate implementation in Chrome OS lockscreen.
+  - CVE-2022-3049: Use after free in SplitScreen.
+  - CVE-2022-3050: Heap buffer overflow in WebUI.
+  - CVE-2022-3051: Heap buffer overflow in Exosphere.
+  - CVE-2022-3052: Heap buffer overflow in Window Manager.
+  - CVE-2022-3053: Inappropriate implementation in Pointer Lock.
+  - CVE-2022-3054: Insufficient policy enforcement in DevTools.
+  - CVE-2022-3055: Use after free in Passwords.
+  - CVE-2022-3056: Insufficient policy enforcement in Content Security Policy.
+  - CVE-2022-3057: Inappropriate implementation in iframe Sandbox.
+  - CVE-2022-3058: Use after free in Sign-In Flow.
+  - CVE-2022-3071: Use after free in Tab Strip.
+
 * Sat Jun 25 2022 Alexey Gladkov <legion@altlinux.ru> 103.0.5060.53-alt1
 - New version (103.0.5060.53).
 - Security fixes:
