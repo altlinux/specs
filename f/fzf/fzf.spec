@@ -5,9 +5,11 @@
 %add_debuginfo_skiplist %_bindir
 %brp_strip_none %_bindir/*
 
+%define fzf_revision e03ac31
+
 Name:		fzf
-Version:	0.32.1
-Release:	alt1
+Version:	0.33.0
+Release:	alt2
 Summary:	A general-purpose command-line fuzzy finder.
 
 Group:		Development/Tools
@@ -23,7 +25,6 @@ ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
 BuildRequires(pre): rpm-build-vim
 BuildRequires: golang
-BuildRequires: golang(golang.org/x/crypto/ssh/terminal)
 
 Provides: bash-completion-%name = %version-%release
 Obsoletes: bash-completion-%name < 0.28.0
@@ -57,20 +58,15 @@ Vim plugin for %name
 %setup -q
 
 %build
-export BUILDDIR="$PWD/.build"
-export IMPORT_PATH="%import_path"
-
-%golang_prepare
-
-cd .build/src
-%golang_build %import_path
+export FZF_VERSION=%version
+export FZF_REVISION=%fzf_revision
+go build -a -ldflags "-s -w -X main.version=${FZF_VERSION} -X main.revision=${FZF_REVISION}" -tags "" -o bin/%name
 
 %install
-export BUILDDIR="$PWD/.build"
-export IGNORE_SOURCES=1
+mkdir -p %buildroot%_bindir
 
-# install main binary
-%golang_install
+#install main binary
+install -Dpm0755 bin/%name %{buildroot}%{_bindir}/
 
 #install tmux support
 install -Dpm0755 bin/%name-tmux %{buildroot}%{_bindir}/
@@ -108,6 +104,12 @@ install -Dpm0644 plugin/fzf.vim %buildroot%vim_runtime_dir/plugin/
 %vim_runtime_dir/plugin/*
 
 %changelog
+* Mon Sep 5 2022 Vladimir Didenko <cow@altlinux.org> 0.33.0-alt2
+- Fix build on armh platform
+
+* Mon Sep 5 2022 Vladimir Didenko <cow@altlinux.org> 0.33.0-alt1
+- New version
+
 * Tue Aug 9 2022 Vladimir Didenko <cow@altlinux.org> 0.32.1-alt1
 - New version
 
