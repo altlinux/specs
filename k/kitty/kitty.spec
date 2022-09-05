@@ -2,8 +2,8 @@
 %def_with check
 
 Name: kitty
-Version: 0.25.2
-Release: alt2
+Version: 0.26.2
+Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -42,6 +42,7 @@ BuildRequires: libwayland-cursor-devel
 
 BuildRequires: libGL-devel
 BuildRequires: libpng-devel
+BuildRequires: libssl-devel
 BuildRequires: libdbus-devel
 BuildRequires: librsync-devel
 BuildRequires: liblcms2-devel
@@ -158,6 +159,13 @@ python3 __main__.py + complete setup fish | \
 	install -Dm644 /dev/stdin %buildroot%_datadir/fish/vendor_completions.d/kitty.fish
 
 %check
+
+%ifarch ppc64le
+# test_elliptic_curve_data_exchange fails on ppc64le due to 64k memlock limit in the
+# chroot environmet which is not enough for 64k pagesize system
+rm kitty_tests/crypto.py
+%endif
+
 python3 setup.py test --prefix=%buildroot%_prefix
 
 %files
@@ -181,6 +189,12 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_libexecdir/%name/shell-integration
 
 %changelog
+* Mon Sep 05 2022 Egor Ignatov <egori@altlinux.org> 0.26.2-alt1
+- new version 0.26.2
+
+* Wed Aug 31 2022 Egor Ignatov <egori@altlinux.org> 0.26.1-alt1
+- new version 0.26.1
+
 * Thu Aug 04 2022 Egor Ignatov <egori@altlinux.org> 0.25.2-alt2
 - spec: Release build with debug info
 
