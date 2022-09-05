@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        105.0.5195.52
+Version:        105.0.5195.102
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -465,6 +465,11 @@ EOF
 %_altdir/%name
 
 %changelog
+* Mon Sep 05 2022 Alexey Gladkov <legion@altlinux.ru> 105.0.5195.102-alt1
+- New version (105.0.5195.102).
+- Security fixes:
+  - CVE-2022-3075: Insufficient data validation in Mojo.
+
 * Thu Sep 01 2022 Alexey Gladkov <legion@altlinux.ru> 105.0.5195.52-alt1
 - New version (105.0.5195.52).
 - Security fixes:
