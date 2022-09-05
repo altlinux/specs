@@ -1,7 +1,7 @@
 %define oname jsonschema
 
 Name:		python3-module-%oname
-Version:	4.5.1
+Version:	4.15.0
 Release:	alt1
 
 Summary:	An implementation of JSON Schema validation for Python
@@ -20,6 +20,8 @@ BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-hatchling python3-module-hatch-fancy-pypi-readme python3-module-hatch-vcs
 
 # https://bugzilla.altlinux.org/38673
 Conflicts: python-module-jsonschema < 2.6.0-alt3
@@ -32,15 +34,18 @@ http://tools.ietf.org/html/draft-zyp-json-schema-03
 %setup
 
 %build
-cat >> setup.py <<EOF
-from setuptools import setup
-setup()
-EOF
-%python3_build
+if [ ! -d .git ]; then
+    git init
+    git config user.email Julian@GrayVines.com
+    git config user.name Julian Berman
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
 rm -rfv %buildroot%python3_sitelibdir/%oname/benchmarks/
 
 %files
@@ -49,6 +54,9 @@ rm -rfv %buildroot%python3_sitelibdir/%oname/benchmarks/
 %python3_sitelibdir/*
 
 %changelog
+* Mon Sep 05 2022 Vladimir Didenko <cow@altlinux.org> 4.15.0-alt1
+- New version
+
 * Fri May 06 2022 Vladimir Didenko <cow@altlinux.org> 4.5.1-alt1
 - Updated to upstream release 4.5.1
 - Disable tests run (running tests using nose is broken)
