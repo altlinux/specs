@@ -8,18 +8,18 @@ BuildRequires: /usr/bin/pod2man rpm-build-python3
 %global spectool_version 1.0.10
 
 Name:           rpmdevtools
-Version:        8.10
+Version:        9.6
 Release:        alt2
 Summary:        RPM Development Tools
 
 # rpmdev-setuptree is GPLv2, everything else GPLv2+
 License:        GPLv2+ and GPLv2
 URL:            https://pagure.io/rpmdevtools
-Source0:        https://releases.pagure.org/rpmdevtools/%{name}-%{version}.tar.xz
+# Sources:      https://releases.pagure.org/rpmdevtools/%{name}-%{version}.tar.xz
+Source:         %name-%version.tar
 
 # Backports from upstream
-Patch0001:      0001-bumpspec-checksig-Avoid-python-3.6-regex-related-dep.patch
-Patch0002:      0001-Limit-newVersion-s-re.sub-to-a-single-replacement.patch
+Patch:          %name-%version-alt.patch
 
 BuildArch:      noarch
 # help2man, pod2man, *python for creating man pages
@@ -29,6 +29,10 @@ BuildRequires:  rpm-build-perl
 BuildRequires:  python3
 BuildRequires:  python3-module-rpm
 BuildRequires:  bash-completion
+# rpmdev-spectool
+BuildRequires:  python3(progressbar)
+BuildRequires:  python3(requests)
+BuildRequires:  python3(rpm)
 Provides:       spectool = %{spectool_version}
 Requires:       curl
 Requires:       diffutils
@@ -72,14 +76,14 @@ rpmdev-bumpspec     Bump revision in specfile
 
 %prep
 %setup -q
-%patch1 -p1
-%patch2 -p1
+%patch -p1
 
 grep -lF "%{_bindir}/python " * \
 | xargs sed -i -e "s|%{_bindir}/python |%{_bindir}/python3 |"
 
 
 %build
+%autoreconf
 %configure --libdir=%{_prefix}/lib
 %make_build
 
@@ -97,11 +101,11 @@ echo %%{_sysconfdir}/bash_completion.d > %{name}.files
 #  ln -s %{_datadir}/rpmdevtools/rpmdev-init.el $RPM_BUILD_ROOT$dir
 #  touch $RPM_BUILD_ROOT$dir/rpmdev-init.elc
 #done
-for rpm404_ghost in %{_emacs_sitestart_dir}/rpmdev-init.elc
-do
-    mkdir -p %buildroot`dirname "$rpm404_ghost"`
-    touch %buildroot"$rpm404_ghost"
-done
+#for rpm404_ghost in %{_emacs_sitestart_dir}/rpmdev-init.elc
+#do
+#    mkdir -p %buildroot`dirname "$rpm404_ghost"`
+#    touch %buildroot"$rpm404_ghost"
+#done
 
 pushd %buildroot%_man1dir
 rm -f spectool* rpmpeek* rpmargs* rpmelfsym* rpmfile* rpmsodiff* rpmsoname*
@@ -122,6 +126,14 @@ popd
 
 
 %changelog
+* Mon Sep 05 2022 Evgeny Sinelnikov <sin@altlinux.org> 9.6-alt2
+- Add support of ALT releases in rpmdev-bumpspec
+- Adopt for ALT first spectemplates: dummy, lib and minimal
+- Adopt rpmdev-newspec support for ALT specific rpm
+
+* Mon Sep 05 2022 Evgeny Sinelnikov <sin@altlinux.org> 9.6-alt1
+- Update to latest release
+
 * Mon May 17 2021 Igor Vlasenko <viy@altlinux.org> 8.10-alt2
 - fixed build
 

@@ -1,8 +1,8 @@
 %define oname progressbar2
 
 Name: python3-module-%oname
-Version: 3.34.4
-Release: alt2
+Version: 3.55.0
+Release: alt1
 
 Summary: Text progress bar library for Python
 License: LGPLv2.1+ or BSD
@@ -13,7 +13,7 @@ BuildArch: noarch
 
 # https://github.com/WoLpH/python-progressbar.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-doc.patch
+Patch1: %oname-3.34.4-alt-doc.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest
@@ -49,6 +49,9 @@ py.test3 progressbar tests ||:
 %python3_sitelibdir/*
 
 %changelog
+* Mon Sep 05 2022 Evgeny Sinelnikov <sin@altlinux.org> 3.55.0-alt1
+- Update to new version with support of python-3.8 and later.
+
 * Tue Apr 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.34.4-alt2
 - Build for python2 disabled.
 
