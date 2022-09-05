@@ -1,7 +1,7 @@
 %define oname docker
 
 Name: python3-module-%oname
-Version: 5.0.3
+Version: 6.0.0
 Release: alt1
 
 Summary: Python client for Docker.
@@ -16,7 +16,8 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute python3-module-pip
-
+BuildRequires: python3-module-setuptools python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
 
 %description
 An API client for docker written in Python
@@ -25,10 +26,10 @@ An API client for docker written in Python
 %setup -n %oname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %filter_from_requires /python3[(]six.moves[)]/d
 
@@ -38,9 +39,12 @@ An API client for docker written in Python
 %exclude %python3_sitelibdir/%oname/transport/npipesocket.py
 %exclude %python3_sitelibdir/%oname/transport/npipeconn.py
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/%oname-*.dist-info
 
 %changelog
+* Mon Sep 5 2022 Vladimir Didenko <cow@altlinux.ru> 6.0.0-alt1
+- 6.0.0
+
 * Mon Dec 6 2021 Vladimir Didenko <cow@altlinux.ru> 5.0.3-alt1
 - 5.0.3
 
