@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel .63
+%define kernel_sublevel .65
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -615,6 +615,15 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Mon Sep 05 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.65-alt1
+- v5.15.65 (2022-09-05).
+- Add Elpitech notebook and SDK-M 5.5 support (Alexey Sheplyakov).
+
+* Thu Sep 01 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.64-alt1
+- v5.15.64 (2022-08-31).
+- Revert "Input: i8042 - enable dumbkbd quirk for HP 15-dy2xxx and
+  15s-fq2xxx".
+
 * Thu Aug 25 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.63-alt1
 - v5.15.63 (2022-08-25).
 
