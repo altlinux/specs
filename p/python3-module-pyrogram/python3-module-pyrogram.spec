@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-pyrogram
-Version: 2.0.35
+Version: 2.0.49
 Release: alt1
 
 Summary: Elegant, modern and asynchronous Telegram MTProto API framework in Python for users and bots
@@ -68,5 +68,11 @@ python3 -m pytest tests
 %python3_sitelibdir_noarch/*.egg-info
 
 %changelog
+* Mon Sep 05 2022 Egor Ignatov <egori@altlinux.org> 2.0.49-alt1
+- new version 2.0.49
+
+* Wed Aug 31 2022 Egor Ignatov <egori@altlinux.org> 2.0.43-alt1
+- new version 2.0.43
+
 * Thu Aug 04 2022 Egor Ignatov <egori@altlinux.org> 2.0.35-alt1
 - First build for ALT
