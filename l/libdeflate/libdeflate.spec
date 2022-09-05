@@ -5,12 +5,13 @@
 
 Name: libdeflate
 Version: 1.13
-Release: alt1
+Release: alt2
+
 Summary: Heavily optimized library for DEFLATE/zlib/gzip compression and decompression
 License: MIT
 Group: System/Libraries
-Url: https://github.com/ebiggers/libdeflate
 
+Url: https://github.com/ebiggers/libdeflate
 Source: %name-%version.tar
 
 %define valgrind_arches %ix86 x86_64 aarch64
@@ -65,7 +66,11 @@ streaming support and therefore does not yet support very large files
 sed -i s/-fomit-frame-pointer// Makefile
 
 %build
-%add_optflags %(getconf LFS_CFLAGS) -Werror -fanalyzer
+%add_optflags %(getconf LFS_CFLAGS) -Werror
+%ifnarch %e2k
+# unsupported as of lcc 1.25
+%add_optflags -fanalyzer
+%endif
 # It's sensitive to build options, avoid "Rebuilding due to new settings".
 %global build_settings CFLAGS="%optflags" PREFIX=%_prefix LIBDIR=%_libdir USE_SHARED_LIB=1
 %make_build %build_settings all test_programs V=1
@@ -112,6 +117,10 @@ b2sum --check test-file.b2sum
 %_bindir/libdeflate-*
 
 %changelog
+* Mon Sep 05 2022 Michael Shigorin <mike@altlinux.org> 1.13-alt2
+- E2K: avoid lcc-unsupported option
+- Minor spec cleanup
+
 * Mon Aug 08 2022 Vitaly Chikunov <vt@altlinux.org> 1.13-alt1
 - Update to v1.13 (2022-08-04).
 
