@@ -3,13 +3,13 @@
 
 Name: systemd-boot-trigger
 Version: 1.0
-Release: alt6
+Release: alt7
 
 Summary: Filetrigger for systemd-boot
 License: GPL-2.0-only
 Group: System/Base
 Url: http://git.altlinux.org/
-BuildArch: noarch
+ExclusiveArch: %ix86 x86_64 armh aarch64
 
 Source: %name-%version.tar
 
@@ -28,6 +28,9 @@ install -p -m755 -D filetrigger %buildroot%_rpmlibdir/systemd-boot.filetrigger
 %_rpmlibdir/systemd-boot.filetrigger
 
 %changelog
+* Mon Sep 05 2022 Alexey Shabalin <shaba@altlinux.org> 1.0-alt7
+- Build for gnu-efi arch only supported.
+
 * Fri May 06 2022 Alexey Shabalin <shaba@altlinux.org> 1.0-alt6
 - Replace egrep by "grep -E".
 

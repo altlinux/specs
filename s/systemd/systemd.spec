@@ -32,14 +32,17 @@
 %def_enable libidn2
 %def_enable libiptc
 %def_enable polkit
-%def_enable efi
 %def_enable homed
 %def_enable pwquality
 %def_enable networkd
 %def_enable timesyncd
 %def_enable resolve
 %ifarch %{ix86} x86_64 aarch64 %arm
+%def_enable efi
 %def_enable gnu_efi
+%else
+%def_disable efi
+%def_disable gnu_efi
 %endif
 %def_disable p11kit
 %def_enable utmp
@@ -86,14 +89,14 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 249
+%define ver_major 251
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.12
-Release: alt3
+Version: %ver_major.4
+Release: alt1
 Summary: System and Session Manager
-Url: https://www.freedesktop.org/wiki/Software/systemd
+Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
 License: LGPLv2.1+
 
@@ -188,7 +191,7 @@ BuildRequires: pkgconfig(mount) >= 2.27
 BuildRequires: pkgconfig(xkbcommon) >= 0.3.0
 BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: libkeyutils-devel
-BuildRequires: pkgconfig(fdisk) >= 2.33
+BuildRequires: pkgconfig(fdisk) >= 2.32
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 2.0.1}
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.4.5 libgpg-error-devel >= 1.12}
@@ -783,6 +786,7 @@ Conflicts: startup < 0.9.9.14
         %{?_enable_utmp:-Dutmp=true} \
         %{?_disable_kill_user_processes:-Ddefault-kill-user-processes=false} \
         -Doomd=true \
+	-Dsysupdate=false \
         -Dfallback-hostname=localhost \
         -Ddefault-dnssec=no \
         -Ddefault-mdns=no \
@@ -1265,8 +1269,8 @@ fi
 %systemd_preun systemd-homed.service
 
 %post boot-efi
-if bootctl is-installed >/dev/null 2>&1 ; then
-        bootctl update || echo "** WARNING: systemd-boot-efi install failed"
+if bootctl --quiet is-installed >/dev/null 2>&1 ; then
+        bootctl --no-variables --graceful update || echo "** WARNING: systemd-boot-efi install failed"
 fi
 
 %post -n libnss-systemd
@@ -1403,6 +1407,7 @@ groupadd -r -f dialout >/dev/null 2>&1 ||:
 groupadd -r -f input >/dev/null 2>&1 ||:
 groupadd -r -f video >/dev/null 2>&1 ||:
 groupadd -r -f render >/dev/null 2>&1 ||:
+groupadd -r -f sgx >/dev/null 2>&1 ||:
 groupadd -r -f vmusers >/dev/null 2>&1 ||:
 
 %post -n udev
@@ -1478,6 +1483,7 @@ fi
 %_rpmlibdir/systemd-user.filetrigger
 
 %dir %_systemd_dir
+%_systemd_dir/libsystemd-core-%ver_major.so
 %_systemd_dir/libsystemd-shared-%ver_major.so
 
 %_modprobedir/README
@@ -1493,9 +1499,15 @@ fi
 /bin/journalctl
 /sbin/journalctl
 %_man1dir/journalctl.*
+%if_enabled sysusers
+%_sysusersdir/systemd-journal.conf
+%endif
 
 /bin/systemd-escape
 %_mandir/*/*escape*
+
+/bin/systemd-creds
+%_man1dir/systemd-creds*
 
 /sbin/systemd-tmpfiles.shared
 %_altdir/systemd-tmpfiles-shared
@@ -1587,18 +1599,25 @@ fi
 %_systemd_dir/systemd-timedated
 %dir %_systemd_dir/ntp-units.d
 %dir %_sysconfdir/systemd/ntp-units.d
-/bin/oomctl
+%_bindir/oomctl
 %_systemd_dir/systemd-oomd
 %config(noreplace) %_sysconfdir/systemd/oomd.conf
+%if_enabled sysusers
+%_sysusersdir/systemd-oom.conf
+%endif
 %_bindir/systemd-stdio-bridge
+%_man1dir/systemd-stdio-bridge*
 %_systemd_dir/systemd
 %_systemd_dir/systemd-ac-power
 %_systemd_dir/systemd-cgroups-agent
 %if_enabled libcryptsetup
 %_systemd_dir/systemd-cryptsetup
+%_systemd_dir/systemd-integritysetup
 %_systemd_dir/systemd-veritysetup
 %_man5dir/crypttab*
+%_man5dir/integritytab*
 %_mandir/*/*cryptsetup*
+%_man8dir/systemd-integritysetup*
 %_man8dir/systemd-veritysetup*
 %endif
 %_systemd_dir/systemd-boot-check-no-failures
@@ -1660,6 +1679,7 @@ fi
 %exclude %_unitdir/systemd-boot-system-token.service
 %exclude %_unitdir/*/systemd-boot-system-token.service
 %exclude %_unitdir/systemd-bless-boot.service
+%exclude %_unitdir/systemd-boot-update.service
 %endif
 %if_enabled coredump
 %exclude %_unitdir/systemd-coredump*
@@ -1738,6 +1758,7 @@ fi
 %exclude %_man7dir/sd-boot*
 %endif
 
+%_man8dir/systemd-boot-check*
 %_man8dir/systemd-debug-generator*
 %_man8dir/systemd-fsck*
 %_man8dir/systemd-fstab-generator*
@@ -1871,7 +1892,6 @@ fi
 %exclude %_datadir/zsh/site-functions/_udevadm
 
 %_defaultdocdir/%name-%version
-%_logdir/README
 # may be need adapt for ALTLinux?
 /sbin/kernel-install
 %_man8dir/kernel-install.*
@@ -1880,6 +1900,7 @@ fi
 %dir %_prefix/lib/kernel
 %dir %_prefix/lib/kernel/install.d
 %_prefix/lib/kernel/install.d/*
+%_prefix/lib/kernel/install.conf
 %exclude %_prefix/lib/kernel/install.d/50-depmod.install
 
 %files -n libsystemd
@@ -1893,6 +1914,7 @@ fi
 %_datadir/pkgconfig/systemd.pc
 %_includedir/systemd
 %_man3dir/*
+%_datadir/dbus-1/interfaces/*
 %exclude %_man3dir/udev*
 %exclude %_man3dir/libudev*
 
@@ -2008,19 +2030,24 @@ fi
 # TODO: Provides: /sbin/resolvconf ?
 %exclude /sbin/resolvconf
 %_tmpfilesdir/systemd-network.conf
+# TODO: package systemd-resolve.conf
+%exclude %_tmpfilesdir/systemd-resolve.conf
 %_unitdir/*networkd*
 %_unitdir/systemd-network-generator.service
 %_unitdir/*resolv*
 %_unitdir/*/*resolv*
+%_systemd_dir/network/80-ethernet.network.example
 %_systemd_dir/network/80-container-host0.network
 %_systemd_dir/network/80-wifi-adhoc.network
 %_systemd_dir/network/80-wifi-ap.network.example
 %_systemd_dir/network/80-wifi-station.network.example
+%_systemd_dir/network/80-6rd-tunnel.network
 %_mandir/*/*networkd*
 %_mandir/*/systemd-network-generator*
 %_mandir/*/*netdev*
 %_mandir/*/*resolved*
 %_mandir/*/*resolve1*
+%_mandir/*/*network1*
 %_mandir/*/*dnssd*
 %_man1dir/networkctl.*
 %_man1dir/resolvectl.*
@@ -2029,6 +2056,10 @@ fi
 %_man5dir/systemd.negative.*
 %_man5dir/systemd.positive.*
 %_man5dir/systemd.network.*
+%if_enabled sysusers
+%_sysusersdir/systemd-network.conf
+%_sysusersdir/systemd-resolve.conf
+%endif
 %endif
 
 %files oomd-defaults
@@ -2105,6 +2136,9 @@ fi
 %_mandir/*/*time-wait-sync*
 %ghost %dir %_localstatedir%_systemd_dir/timesync
 %ghost %_localstatedir%_systemd_dir/timesync/clock
+%if_enabled sysusers
+%_sysusersdir/systemd-timesync.conf
+%endif
 %endif
 
 %files analyze
@@ -2147,12 +2181,14 @@ fi
 %_unitdir/systemd-boot-system-token.service
 %_unitdir/sysinit.target.wants/systemd-boot-system-token.service
 %_unitdir/systemd-bless-boot.service
+%_unitdir/systemd-boot-update.service
 %_man1dir/bootctl.*
 %_man5dir/loader*
 %_man7dir/systemd-boot*
 %_man7dir/sd-boot*
 %_man8dir/systemd-bless*
 %_man8dir/systemd-boot*
+%exclude %_man8dir/systemd-boot-check*
 %if_enabled gnuefi
 %dir %_prefix%_systemd_dir/boot
 %dir %_prefix%_systemd_dir/boot/efi
@@ -2172,6 +2208,9 @@ fi
 %_man5dir/coredump.conf.*
 %_man8dir/systemd-coredump*
 %dir %_localstatedir%_systemd_dir/coredump
+%if_enabled sysusers
+%_sysusersdir/systemd-coredump.conf
+%endif
 %endif
 
 %files stateless
@@ -2185,7 +2224,6 @@ fi
 %_unitdir/systemd-sysusers.service
 %_unitdir/sysinit.target.wants/systemd-sysusers.service
 %dir %_sysusersdir
-%_sysusersdir/systemd.conf
 %_sysusersdir/basic.conf
 %_tmpfilesdir/etc.conf
 %endif
@@ -2272,6 +2310,10 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Fri Sep 02 2022 Alexey Shabalin <shaba@altlinux.org> 1:251.4-alt1
+- 251.4.
+- add group sgx (ALT #41661).
+
 * Thu Aug 11 2022 Oleg Solovyov <mcpain@altlinux.org> 1:249.12-alt3
 - backport oomd commit from upstream (d784a8d)
 
