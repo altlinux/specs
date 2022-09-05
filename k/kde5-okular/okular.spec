@@ -2,6 +2,7 @@
 %define ubt_id %__ubt_branch_id
 
 %define rname okular
+%def_disable progress
 %def_enable msits
 %def_enable mobile
 %_K5if_ver_gteq %ubt_id M90
@@ -15,7 +16,7 @@
 
 Name: kde5-%rname
 Version: 22.04.3
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Office
@@ -109,7 +110,9 @@ KF5 library
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%if_enabled progress
 %patch4 -p2
+%endif
 #%patch5 -p2 -b .csp
 sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
 
@@ -203,6 +206,9 @@ rm -f "$tmp_file"
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Mon Sep 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt2
+- disable document loading progress bar (closes: 43617)
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 
