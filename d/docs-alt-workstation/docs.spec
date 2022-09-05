@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt2
+Release: alt3
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Sep 05 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt3
+- update to ALT Workstation 10.1rc
+
 * Wed Aug 03 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt2
 - fix some typos (ALT 43358, 43369, 43398, 43400, 43394)
 - update documentation
