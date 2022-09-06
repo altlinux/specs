@@ -2,7 +2,7 @@
 %global _localstatedir %_var
 
 Name: cups-filters
-Version: 1.28.15
+Version: 1.28.16
 Release: alt1
 
 Summary: OpenPrinting CUPS filters and backends
@@ -33,6 +33,7 @@ Provides: foomatic-filters
 Conflicts: foomatic-filters
 
 BuildRequires: cups-devel
+BuildRequires: libexif-devel
 BuildRequires: libdbus-devel
 BuildRequires: libldap-devel
 # pdftopdf
@@ -190,6 +191,9 @@ install -D -m 644 %SOURCE3 %buildroot/%_datadir/cups/data/
 %_libdir/libfontembed.so
 
 %changelog
+* Tue Sep 06 2022 Anton Farygin <rider@altlinux.ru> 1.28.16-alt1
+- 1.28.16
+
 * Mon Apr 18 2022 Anton Farygin <rider@altlinux.ru> 1.28.15-alt1
 - 1.28.15
 
