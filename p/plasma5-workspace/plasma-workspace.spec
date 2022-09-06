@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.25.4
-Release: alt3
+Release: alt4
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -515,6 +515,12 @@ done
 
 
 %changelog
+* Tue Sep 06 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt4
+- merge p10 changes
+
+* Tue Sep 06 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.6-alt5
+- move more qml for sddm-theme-breeze
+
 * Thu Sep 01 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt3
 - merge p10 changes
 
