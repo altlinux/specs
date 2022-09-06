@@ -1,5 +1,5 @@
 Name: kraft
-Version: 0.97
+Version: 0.98
 Release: alt1
 
 Summary: Kraft - Software for small business
@@ -55,6 +55,9 @@ subst 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DIR}|' 
 %_datadir/metainfo/*.appdata.xml
 
 %changelog 
+* Sun Sep 04 2022 Andrey Cherepanov <cas@altlinux.org> 0.98-alt1
+- New version.
+
 * Thu Jan 27 2022 Andrey Cherepanov <cas@altlinux.org> 0.97-alt1
 - New version.
 
