@@ -2,7 +2,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: vitastor
-Version: 0.6.16
+Version: 0.8.0
 Release: alt1
 Summary: Vitastor, a fast software-defined clustered block storage
 Group: System/Base
@@ -22,6 +22,7 @@ BuildRequires: pkgconfig(liburing)
 BuildRequires: libgperftools-devel
 BuildRequires: node >= 10
 BuildRequires: libjerasure-devel
+# BuildRequires: libisa-l-devel
 BuildRequires: libgf-complete-devel
 BuildRequires: rdma-core-devel
 
@@ -56,6 +57,7 @@ Summary: Vitastor SDS Object Storage Daemon
 Group: System/Base
 Requires: %name-common = %EVR
 Requires: %name-client = %EVR
+Requires: sfdisk util-linux parted udev
 
 %description osd
 Vitastor SDS Object Storage Daemon is a process that stores data and serves read/write requests.
@@ -72,7 +74,31 @@ Summary: Vitastor SDS NBD proxy
 Group: System/Base
 
 %description nbd
-Vitastor SDS NBD proxy for kernel mounts.
+NBD stands for "Network Block Device", but in fact it also functions as "BUSE"
+(Block Device in UserSpace). NBD is currently required to mount Vitastor via kernel.
+NBD slighly lowers the performance due to additional overhead, but performance still
+remains decent.
+
+Vitastor Kubernetes CSI driver is based on NBD.
+
+%package nfs
+Summary: Vitastor SDS NFS proxy
+Group: System/Base
+
+%description nfs
+Vitastor has a simplified NFS 3.0 proxy for file-based image access emulation. It's not
+suitable as a full-featured file system, at least because all file/image metadata is stored
+in etcd and kept in memory all the time - thus you can't put a lot of files in it.
+
+However, NFS proxy is totally fine as a method to provide VM image access and allows to
+plug Vitastor into, for example, VMWare. It's important to note that for VMWare it's a much
+better access method than iSCSI, because with iSCSI we'd have to put all VM images into one
+Vitastor image exported as a LUN to VMWare and formatted with VMFS. VMWare doesn't use VMFS
+over NFS.
+
+NFS proxy is stateless if you use immediate_commit=all mode (for SSD with capacitors or
+HDDs with disabled cache), so you can run multiple NFS proxies and use a network load
+balancer or any failover method you want to in that case.
 
 %package -n lib%name-client
 Group: System/Libraries
@@ -115,8 +141,13 @@ tar -xf %SOURCE3 -C json11
 %install
 %cmakeinstall_std
 
-mkdir -p %buildroot{%_datadir,%_localstatedir}/%name
-cp -r mon %buildroot%_datadir/%name
+mkdir -p %buildroot{%_sysconfdir,%_libexecdir,%_localstatedir}/%name
+cp -r mon %buildroot%_libexecdir/%name
+mkdir -p %buildroot{%_unitdir,%_udevrulesdir}
+install -m 0644 mon/vitastor.target %buildroot%_unitdir
+install -m 0644 mon/vitastor-mon.service %buildroot%_unitdir
+install -m 0644 mon/vitastor-osd@.service %buildroot%_unitdir
+install -m 0644 mon/90-vitastor.rules %buildroot%_udevrulesdir
 
 %pre common
 groupadd -r -f %name 2>/dev/null ||:
@@ -145,23 +176,32 @@ useradd  -r -g %name -s /sbin/nologin -c "Vitastor daemons" -M -d %_localstatedi
 %files common
 %doc README.md README-ru.md VNPL-1.1.txt GPL-2.0.txt
 %attr(770,root,%name) %dir %_localstatedir/%name
+%attr(770,root,%name) %dir %_sysconfdir/%name
 
 %files osd
-%doc mon/make-osd.sh
 %_bindir/%name-osd
+%_bindir/%name-disk
 # ? may be to utils package?
 %_bindir/%name-dump-journal
 
+%_unitdir/%name-osd@.service
+%_unitdir/%name.target
+%_udevrulesdir/90-%name.rules
+
 %files mon
-%_datadir/%name
+%_libexecdir/%name
+%_unitdir/%name-mon.service
 
 %files client
-%_bindir/vitastor-cli
-%_bindir/vitastor-rm
+%_bindir/%name-cli
+%_bindir/%name-rm
 %_bindir/vita
 
 %files nbd
 %_bindir/%name-nbd
+
+%files nfs
+%_bindir/%name-nfs
 
 %files -n lib%name-blk
 %_libdir/lib%{name}_blk.so.*
@@ -175,6 +215,9 @@ useradd  -r -g %name -s /sbin/nologin -c "Vitastor daemons" -M -d %_localstatedi
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Sep 06 2022 Alexey Shabalin <shaba@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Fri Apr 15 2022 Alexey Shabalin <shaba@altlinux.org> 0.6.16-alt1
 - 0.6.16
 
