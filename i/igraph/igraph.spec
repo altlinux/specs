@@ -1,7 +1,7 @@
-%define soname 0
+%define soname 3
 
 Name: igraph
-Version: 0.9.9
+Version: 0.10.0
 Release: alt1
 Summary: Library for creating and manipulating graphs
 
@@ -17,7 +17,7 @@ BuildRequires: libxml2-devel
 BuildRequires: libgmp-devel
 BuildRequires: libarpack-ng-devel
 BuildRequires: liblapack-devel
-BuildRequires: libblas-devel
+BuildRequires: libopenblas-devel
 BuildRequires: libglpk-devel
 BuildRequires: libsuitesparse-devel
 BuildRequires: flex
@@ -73,7 +73,8 @@ sed -i 's|set(PACKAGE_VERSION "NOTFOUND")|set(PACKAGE_VERSION "%version")|' \
     -DIGRAPH_USE_INTERNAL_GLPK=0 \
     -DIGRAPH_USE_INTERNAL_CXSPARSE=0 \
     -DIGRAPH_USE_INTERNAL_GMP=0 \
-    -DBLAS_LIBRARIES=%_libdir/libblas.so \
+    -DBLA_VENDOR=OpenBLAS \
+    -DBLAS_LIBRARIES=%_libdir/libopenblas.so \
     -DLAPACK_LIBRARIES=%_libdir/liblapack.so \
     -DIGRAPH_GRAPHML_SUPPORT=1 \
     -DCMAKE_INSTALL_INCLUDEDIR=include/ \
@@ -99,6 +100,10 @@ find . -name '.arch-ids' | xargs rm -rf
 %_man3dir/igraph.3*
 
 %changelog
+* Tue Sep 06 2022 Leontiy Volodin <lvol@altlinux.org> 0.10.0-alt1
+- New version (0.10.0).
+- Built with openblas instead blas.
+
 * Tue Jun 07 2022 Leontiy Volodin <lvol@altlinux.org> 0.9.9-alt1
 - New version (0.9.9).
 

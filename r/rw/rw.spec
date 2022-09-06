@@ -1,14 +1,20 @@
 %define soname 0
 
 Name: rw
-Summary: Program that calculates rank-width and rank-decompositions
 Version: 0.9
-Release: alt1
+Release: alt2
+
+Summary: Program that calculates rank-width and rank-decompositions
+Summary(ru): Программа, вычисляющая ранговую ширину и декомпозицию рангов
+
 License: GPL-2.0+
 Group: Sciences/Mathematics
 Url: https://sourceforge.net/projects/rankwidth/
 
 Source: https://downloads.sourceforge.net/rankwidth/%name-%version.tar.gz
+Patch: rw-0.9-alt-fix-build-with-igraph.patch
+
+Provides: rankwidth = %version-%release
 
 BuildRequires: gcc
 BuildRequires: libigraph-devel
@@ -19,6 +25,14 @@ It is based on ideas from "Computing rank-width exactly" by Sang-il Oum,
 "Sopra una formula numerica" by Ernesto Pascal, "Generation of a Vector
 from the Lexicographical Index" by B.P. Buckles and M. Lybanon and
 "Fast additions on masked integers" by Michael D. Adams and David S. Wise.
+
+%description -l ru
+rw - программа, вычисляющая ранговую ширину и декомпозицию рангов.
+rw основана на идеях из «Computing rank-width exactly» Санг-иль Оума,
+"Sopra una formula numerica" Эрнесто Паскаля, "Generation of a Vector
+from the Lexicographical Index" Б.П. Баклза и М. Либанона и
+«Fast additions on masked integers» Майкла Д. Адамса
+и Дэвида С. Уайза.
 
 %package -n lib%name%soname
 Summary: Libraries for %name
@@ -37,6 +51,7 @@ This package contains the header files for %name.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %configure --disable-static
@@ -67,6 +82,9 @@ rm %buildroot%_libdir/*.la
 %_libdir/lib%name.so
 
 %changelog
+* Tue Sep 06 2022 Leontiy Volodin <lvol@altlinux.org> 0.9-alt2
+- Fix build with igraph 0.10.0.
+
 * Fri Oct 22 2021 Leontiy Volodin <lvol@altlinux.org> 0.9-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
 - Built as require for sagemath.
