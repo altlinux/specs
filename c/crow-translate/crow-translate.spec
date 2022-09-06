@@ -1,12 +1,12 @@
 %define version_SingleApplication v3.3.4
 %define version_QTaskbarControl 2.0.2
-%define version_QOnlineTranslator 1.5.3
+%define version_QOnlineTranslator 1.6.0
 %define version_QHotkey 1.4.2
 %define version_circle_flags v2.5.2
 %define version_Fluent 2022-02-28
 
 Name: crow-translate
-Version: 2.9.12
+Version: 2.10.0
 Release: alt1
 
 Summary: A Qt GUI for Google, Yandex and Bing translators
@@ -54,6 +54,7 @@ BuildRequires(pre): rpm-macros-cmake
 
 Requires: tesseract >= 4.0.0
 Requires: icon-theme-breeze
+Requires: libqt5-svg
 
 %description
 A simple and lightweight translator that allows you to translate and voice text
@@ -107,6 +108,13 @@ tar -xf %SOURCE6 -C src/Fluent-icon-theme/ --strip-components=1
 %_iconsdir/hicolor/*/*/crow-translate*
 
 %changelog
+* Tue Sep 06 2022 Evgeny Chuck <koi@altlinux.org> 2.10.0-alt1
+- new version (2.10.0) with rpmgs script
+- new version (1.6.0) QOnlineTranslator with rpmgs script
+
+* Tue Aug 16 2022 Evgeny Chuck <koi@altlinux.org> 2.9.12-alt2
+- Fixed display of interface icons
+
 * Mon Aug 15 2022 Evgeny Chuck <koi@altlinux.org> 2.9.12-alt1
 - new version (2.9.12) with rpmgs script
 
