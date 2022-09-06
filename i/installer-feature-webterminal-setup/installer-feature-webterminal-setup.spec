@@ -1,5 +1,5 @@
 Name: installer-feature-webterminal-setup
-Version: 0.1.2
+Version: 0.2.0
 Release: alt1
 
 Summary: Setup WEB-Terminal after install
@@ -28,6 +28,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Sep 06 2022 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt1
+- setup sddm.conf
+
 * Thu Aug 25 2022 Sergey V Turchin <zerg@altlinux.org> 0.1.2-alt1
 - update kiosk profile
 
