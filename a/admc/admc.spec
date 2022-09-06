@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.9.0
-Release: alt1
+Version: 0.10.0
+Release: alt2
 
-Summary: AD editor
+Summary: Active Directory Management Center
 License: GPLv3+
 Group: Other
 Url: https://github.com/altlinuxteam/admc
@@ -30,6 +30,7 @@ BuildRequires: libkrb5-devel
 
 Requires: libldap
 Requires: libsasl2
+Requires: libsasl2-plugin-gssapi
 Requires: libsmbclient
 Requires: libuuid
 Requires: qt5-base-common
@@ -43,7 +44,9 @@ Summary: Tests for ADMC
 Group: Other
 
 %description
-AD editor
+Active Directory Management Center (ADMC) is integrated complex tool implements
+User and Computers and Group Policy Manager modules of Microsoft Remote Server
+Administration Tools (RSAT).
 
 %description test
 Tests for ADMC
@@ -61,6 +64,7 @@ Tests for ADMC
 %files
 %doc README.md
 %doc CHANGELOG.txt
+%doc CHANGELOG_ru.txt
 %_bindir/admc
 %_libdir/libadldap.so
 %_man1dir/admc*
@@ -69,19 +73,19 @@ Tests for ADMC
 
 %files test
 %_libdir/libadmctest.so
+%_bindir/admc_test_ad_interface
+%_bindir/admc_test_ad_security
 %_bindir/admc_test_unlock_edit
 %_bindir/admc_test_upn_edit
 %_bindir/admc_test_string_edit
 %_bindir/admc_test_string_large_edit
 %_bindir/admc_test_country_edit
 %_bindir/admc_test_gplink
-%_bindir/admc_test_ad_interface
-%_bindir/admc_test_ad_security
 %_bindir/admc_test_select_base_widget
 %_bindir/admc_test_filter_widget
 %_bindir/admc_test_attributes_tab
-%_bindir/admc_test_member_of_tab
 %_bindir/admc_test_members_tab
+%_bindir/admc_test_member_of_tab
 %_bindir/admc_test_select_object_dialog
 %_bindir/admc_test_logon_hours_dialog
 %_bindir/admc_test_logon_computers_edit
@@ -94,22 +98,50 @@ Tests for ADMC
 %_bindir/admc_test_delegation_edit
 %_bindir/admc_test_string_other_edit
 %_bindir/admc_test_account_option_edit
-%_bindir/admc_test_protect_deletion_edit
 %_bindir/admc_test_gpoptions_edit
+%_bindir/admc_test_protect_deletion_edit
 %_bindir/admc_test_octet_attribute_dialog
 %_bindir/admc_test_bool_attribute_dialog
-%_bindir/admc_test_string_attribute_dialog
-%_bindir/admc_test_list_attribute_dialog
 %_bindir/admc_test_datetime_attribute_dialog
+%_bindir/admc_test_string_attribute_dialog
+%_bindir/admc_test_number_attribute_dialog
+%_bindir/admc_test_list_attribute_dialog
 %_bindir/admc_test_edit_query_item_widget
 %_bindir/admc_test_policy_results_widget
+%_bindir/admc_test_policy_ou_results_widget
 %_bindir/admc_test_find_object_dialog
 %_bindir/admc_test_rename_object_dialog
 %_bindir/admc_test_create_object_dialog
 %_bindir/admc_test_select_classes_widget
 %_bindir/admc_test_sam_name_edit
+%_bindir/admc_test_dn_edit
 
 %changelog
+* Wed Sep 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.10.0-alt2
+- Build latest tested release.
+- Adjust package summary and description.
+
+* Thu Jun 30 2022 Dmitry Degtyarev <kevl@altlinux.org> 0.10.0-alt1
+- Properties: Removed "Group tab". Not necessary because
+  policy tree replaces it.
+- Policies: Improved policy tree. Tree now contains OU's in
+  addition to policies. OU's display their child OU's and
+  linked policies. Viewing all policies is still possible in
+  "All policies" folder.
+- Misc: Fixed eliding of long items in scope view. Scope
+  view now correctly displays a scroll bar so that long
+  items can be viewed fully.
+- Misc: Added trimming of spaces from names when creating or
+  renaming policies, query folders and query items.
+- Misc: Fixed a bug where object became unloaded if during
+  rename character '?' was added to it's name.
+- Misc: Increased size of editor for string attributes,
+  which is available in "Attributes" tab. Long strings are
+  now easier to view and edit.
+- Misc: Removed ability to drag and drop policies onto OU's
+  in object tree. This action now can be performed inside
+  policy tree.
+
 * Fri Apr 01 2022 Dmitry Degtyarev <kevl@altlinux.org> 0.9.0-alt1
 - 0.9.0 (See CHANGELOG.txt for details)
 
