@@ -1,7 +1,7 @@
 %def_without ru_doc
 
 Name:    kamoso
-Version: 22.04.3
+Version: 22.08.0
 Release: alt1
 
 Group:   Video
@@ -54,6 +54,8 @@ BuildRequires: kf5-kdoctools
 BuildRequires: libudev-devel
 BuildRequires: gstreamer1.0-devel
 BuildRequires: gst-plugins1.0-devel
+BuildRequires: qt5-quickcontrols
+BuildRequires: qt5-quickcontrols2-devel
 
 Requires: libkf5quickaddons
 Requires: kf5-purpose
@@ -64,7 +66,7 @@ Kamoso is an application to take pictures and videos out of your webcam.
 
 %prep
 %setup
-%patch1 -p1
+#patch1 -p1
 %patch2 -p1
 tar xf %SOURCE2
 # Merge Russian localization to current version
@@ -97,6 +99,12 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5notif/%name.notifyrc
 
 %changelog
+* Sun Sep 04 2022 Andrey Cherepanov <cas@altlinux.org> 22.08.0-alt1
+- New version.
+
+* Fri Jul 15 2022 Andrey Cherepanov <cas@altlinux.org> 22.07.80-alt1
+- New version.
+
 * Sun Jul 10 2022 Andrey Cherepanov <cas@altlinux.org> 22.04.3-alt1
 - New version.
 
