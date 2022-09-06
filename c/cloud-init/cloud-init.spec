@@ -2,7 +2,7 @@
 
 Name:    cloud-init
 Version: 22.2.2
-Release: alt1
+Release: alt2
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -13,15 +13,20 @@ Source0: %name-%version.tar
 
 Source1: cloud-init-alt.cfg
 Source2: cloud-init-tmpfiles.conf
-
-Source3: 01_netplan.cfg
-Source4: 01_etcnet.cfg
-Source5: 01_network-manager.cfg
+Source3: ds-identify.cfg
 
 Source11: cloud-config
 Source12: cloud-final
 Source13: cloud-init
 Source14: cloud-init-local
+
+# Network configs
+Source31: 01_netplan.cfg
+Source32: 01_etcnet.cfg
+Source33: 01_network-manager.cfg
+
+# Other configs
+Source41: 90_datasource-list.cfg
 
 Patch1: %name-%version-%release.patch
 
@@ -119,16 +124,20 @@ Conflicts: cloud-init-config-etcnet cloud-init-config-netplan
 
 install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/cloud/cloud.cfg
 install -pD -m644 %SOURCE2 %buildroot%_tmpfilesdir/cloud-init.conf
-
-# install network configs
-install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
-install -pD -m644 %SOURCE4 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
-install -pD -m644 %SOURCE5 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
+install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/cloud/
 
 install -pD -m755 %SOURCE11 %buildroot%_initdir/cloud-config
 install -pD -m755 %SOURCE12 %buildroot%_initdir/cloud-final
 install -pD -m755 %SOURCE13 %buildroot%_initdir/cloud-init
 install -pD -m755 %SOURCE14 %buildroot%_initdir/cloud-init-local
+
+# Install network configs
+install -pD -m644 %SOURCE31 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
+install -pD -m644 %SOURCE32 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
+install -pD -m644 %SOURCE33 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
+
+# Install other configs
+install -pD -m644 %SOURCE41 %buildroot%_sysconfdir/cloud/cloud.cfg.d/
 
 mkdir -p %buildroot%_libexecdir
 mv %buildroot/usr/libexec/%name %buildroot%_libexecdir/
@@ -169,11 +178,12 @@ make unittest
 %files
 %doc ChangeLog TODO.rst
 %dir               %_sysconfdir/cloud
-%config(noreplace) %_sysconfdir/cloud/cloud.cfg
+%config(noreplace) %_sysconfdir/cloud/*.cfg
 %dir               %_sysconfdir/cloud/cloud.cfg.d
 %config(noreplace) %_sysconfdir/cloud/cloud.cfg.d/*.cfg
 %exclude           %_sysconfdir/cloud/cloud.cfg.d/01_netplan.cfg
 %exclude           %_sysconfdir/cloud/cloud.cfg.d/01_etcnet.cfg
+%exclude           %_sysconfdir/cloud/cloud.cfg.d/01_network-manager.cfg
 %doc               %_sysconfdir/cloud/cloud.cfg.d/README
 %dir               %_sysconfdir/cloud/templates
 %config(noreplace) %_sysconfdir/cloud/templates/*
@@ -192,6 +202,10 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Tue Aug 23 2022 Mikhail Gordeev <obirvalger@altlinux.org> 22.2.2-alt2
+- Exclude network-manager config from main cloud-init package
+- Add datasource list and ds-identify configs
+
 * Wed Aug 03 2022 Mikhail Gordeev <obirvalger@altlinux.org> 22.2.2-alt1
 - 22.2.2
 - Add config-network-manager package for NetworkManager render
