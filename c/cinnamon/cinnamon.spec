@@ -1,7 +1,7 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 5.4.11
+Version: 5.4.12
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -127,8 +127,8 @@ rm -rf debian
 %meson_install
 
 
-rm -f %buildroot/%_man1dir/gnome-session-cinnamon.1
-rm -f %buildroot/%_man1dir/gnome-session-cinnamon2d.1
+rm -f %buildroot/%_man1dir/cinnamon-session-cinnamon.1
+rm -f %buildroot/%_man1dir/cinnamon-session-cinnamon2d.1
 
 desktop-file-validate %buildroot%_desktopdir/cinnamon.desktop
 desktop-file-validate %buildroot%_desktopdir/cinnamon2d.desktop
@@ -193,6 +193,9 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Mon Sep 5 2022 Vladimir Didenko <cow@altlinux.org> 5.4.12-alt1
+- 5.4.12
+
 * Fri Aug 26 2022 Vladimir Didenko <cow@altlinux.org> 5.4.11-alt1
 - 5.4.11
 

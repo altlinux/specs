@@ -8,8 +8,8 @@
 %def_enable onlineaccounts
 
 Name: cinnamon-control-center
-Version: %ver_major.6
-Release: alt2
+Version: %ver_major.7
+Release: alt1
 
 Summary: Cinnamon Control Center
 License: GPLv2+
@@ -17,7 +17,6 @@ Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/cinnamon-control-center
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
 
 # From configure.ac
 %define gtk_ver 3.5.13
@@ -111,7 +110,6 @@ you'll want to install this package.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %meson
@@ -151,6 +149,9 @@ you'll want to install this package.
 
 
 %changelog
+* Mon Sep 5 2022 Vladimir Didenko <cow@altlinux.org> 5.4.7-alt1
+- 5.4.7
+
 * Mon Aug 22 2022 Vladimir Didenko <cow@altlinux.org> 5.4.6-alt2
 - fix build with libgnomekbd 3.28
 
