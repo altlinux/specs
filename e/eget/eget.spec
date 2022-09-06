@@ -1,5 +1,5 @@
 Name: eget
-Version: 5.8
+Version: 5.9
 Release: alt1
 
 Summary: wget like downloader wrapper with wildcard support
@@ -34,6 +34,12 @@ install -D eget %buildroot%_bindir/eget
 %_bindir/eget
 
 %changelog
+* Sun Sep 04 2022 Vitaly Lipatov <lav@altlinux.ru> 5.9-alt1
+- eget: add --check support for check url if accessible
+- eget: improve UserAgent line
+- eget: check for wildcard only if separated mask is missed
+- eget: fix absolute path on a site
+
 * Wed Apr 27 2022 Vitaly Lipatov <lav@altlinux.ru> 5.8-alt1
 - eget: fix making file url from site url and filename
 
