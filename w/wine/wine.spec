@@ -48,7 +48,7 @@
 # [00:01:19] dlls/opencl/opencl_types.h:3:23: error: expected ';' after top level declarator
 # [00:01:19] typedef int32_t cl_int DECLSPEC_ALIGN(4);
 %if_with mingw
-%def_without opencl
+%def_with opencl
 %else
 %def_without opencl
 %endif
@@ -72,7 +72,7 @@
 
 Name: wine
 Version: %major.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -851,6 +851,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Tue Sep 06 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.16.1-alt2
+- build with opencl
+
 * Mon Aug 29 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.16.1-alt1
 - new version 7.16.1 (with rpmrb script)
 
