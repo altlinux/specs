@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-Ping
 Name: perl-%dist
-Version: 2.74
+Version: 2.75
 Release: alt1
 
 Summary: Check a remote host for reachability
@@ -40,6 +40,9 @@ rm -f t/190_alarm.t
 %perl_vendor_privlib/Net
 
 %changelog
+* Tue Sep 06 2022 Igor Vlasenko <viy@altlinux.org> 2.75-alt1
+- automated CPAN update
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 2.74-alt1
 - automated CPAN update
 
