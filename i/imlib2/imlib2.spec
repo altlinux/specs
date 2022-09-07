@@ -1,5 +1,5 @@
 Name: imlib2
-Version: 1.9.0
+Version: 1.9.1
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
@@ -106,6 +106,9 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %endif
 
 %changelog
+* Wed Sep 07 2022 Leontiy Volodin <lvol@altlinux.org> 1.9.1-alt1
+- New version (1.9.1).
+
 * Mon Apr 25 2022 Leontiy Volodin <lvol@altlinux.org> 1.9.0-alt1
 - New version (1.9.0).
 
