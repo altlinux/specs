@@ -3,7 +3,7 @@
 Name: dnsmasq
 Version: 2.86
 
-Release: alt1.qa1
+Release: alt2
 Summary: A lightweight caching nameserver
 License: GPLv2+
 Group: System/Servers
@@ -138,6 +138,10 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Wed Sep 07 2022 Mikhail Efremov <sem@altlinux.org> 2.86-alt2
+- dnsmasq-helper: Fix deadlock during restart from openresolv
+  subsriber (closes: #43229).
+
 * Fri Apr 29 2022 Dmitry V. Levin <ldv@altlinux.org> 2.86-alt1.qa1
 - NMU.
 - Replaced "egrep" with "grep -E".
