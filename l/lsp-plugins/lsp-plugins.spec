@@ -2,17 +2,15 @@
 %define xdg_name in.lsp_plug.lsp_plugins
 
 Name: lsp-plugins
-Version: 1.2.2
-Release: alt1.1
+Version: 1.2.3
+Release: alt1
 
 Summary: Linux Studio Plugins
 Group: Sound
 License: LGPL-3.0
 Url: https://lsp-plug.in/
 
-#Source: https://sourceforge.net/projects/%name/files/%name/%version/%name-src-%version.tar.gz
 Vcs: https://github.com/sadko4u/lsp-plugins
-#Source: https://github.com/sadko4u/%name/archive/%version/%name-%version.tar.gz
 Source: https://github.com/sadko4u/%name/releases/download/%version/%name-src-%version.tar.gz
 
 BuildRequires(pre): rpm-build-xdg
@@ -64,6 +62,14 @@ BuildArch: noarch
 %description doc
 Documentation for LSP (Linux Studio Plugins) plugins.
 
+%package devel
+Summary: Headers for LSP (Linux Studio Plugins) plugins
+Group: Development/C++
+Requires: lv2-%name = %EVR
+
+%description devel
+This package provides headers for LSP-developers.
+
 %prep
 %setup -n %name
 %ifarch %e2k
@@ -114,10 +120,17 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/vst/*
 %doc CHANGELOG* README*
 
+#%files devel
+%exclude %dir %_includedir/lsp-plug.in/r3d
+%exclude %_includedir/lsp-plug.in/r3d/glx/
+
 %files doc
 %_defaultdocdir/%name/
 
 %changelog
+* Thu Sep 08 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt1
+- 1.2.3
+
 * Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.2-alt1.1
 - fixed build for %%e2k (mike@)
 
