@@ -1,5 +1,5 @@
 Name: libdrm
-Version: 2.4.112
+Version: 2.4.113
 Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
@@ -37,12 +37,12 @@ develop programs which make use of %name
 %meson \
 	-Dudev=true \
 %ifarch armh aarch64
-	-Detnaviv=true \
-	-Dexynos=true \
-	-Domap=true \
-	-Dtegra=true \
-	-Dvc4=true \
-	-Dfreedreno=true
+	-Detnaviv=enabled \
+	-Dexynos=enabled \
+	-Domap=enabled \
+	-Dtegra=enabled \
+	-Dvc4=enabled \
+	-Dfreedreno=enabled
 %endif
 
 %meson_build -v
@@ -62,6 +62,9 @@ develop programs which make use of %name
 %_man7dir/*.7*
 
 %changelog
+* Wed Sep 07 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.113-alt1
+- 2.4.113
+
 * Wed Jul 06 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.112-alt1
 - 2.4.112
 
