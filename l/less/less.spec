@@ -2,11 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: less
-Version: 590
-Release: alt2
+Version: 608
+Release: alt1
 
 Summary: A text file browser similar to more, but better
-License: GPLv3+
+License: BSD-2-Clause OR GPL-3.0-or-later
 Group: File tools
 Url: https://www.greenwoodsoftware.com/less/
 Packager: Alexey Gladkov <legion@altlinux.ru>
@@ -32,8 +32,7 @@ Patch001: 0001-ALT-Add-AC_GNU_SOURCE.patch
 Patch002: 0002-Add-old-bot-option-to-manpage.patch
 Patch003: 0003-Add-old-bot-option-to-help.patch
 Patch004: 0004-Process-old-bot-at-start.patch
-Patch005: 0005-Fix-pcre.h-include-path.patch
-Patch006: 0006-Set-LESSCOLOR-env-variable-if-R-was-specified.patch
+Patch005: 0005-Set-LESSCOLOR-env-variable-if-R-was-specified.patch
 
 Requires: file >= 4.26-alt3, mktemp >= 1:1.3.1
 
@@ -55,13 +54,7 @@ example, vi).
 
 %prep
 %setup
-
-%patch001 -p2
-%patch002 -p2
-%patch003 -p2
-%patch004 -p2
-%patch005 -p2
-%patch006 -p2
+%autopatch -p2
 
 install -pm644 %_sourcedir/faq.html .
 bzip2 -9k NEWS
@@ -104,6 +97,9 @@ ln -s lesspipe.1 %buildroot%_man1dir/lessfile.1
 %doc NEWS.bz2 *.html
 
 %changelog
+* Wed Sep 07 2022 Alexey Gladkov <legion@altlinux.ru> 608-alt1
+- New version (608).
+
 * Sat Apr 30 2022 Alexey Gladkov <legion@altlinux.ru> 590-alt2
 - Rebuilt with libpcre2-devel.
 
