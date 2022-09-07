@@ -1,6 +1,6 @@
 Name: slocate
 Version: 0.2.16
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Finds files on a system via central file name database
@@ -43,6 +43,9 @@ install -pD -m644 /dev/null %buildroot%_localstatedir/locate/locatedb
 %attr(640,root,%name) %verify(not md5 mtime size) %ghost %_localstatedir/locate/locatedb
 
 %changelog
+* Tue Jun 07 2022 Fr. Br. George <george@altlinux.org> 1:0.2.16-alt3
+- Fix locate -d dbfile core dump
+
 * Wed Nov 30 2016 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:0.2.16-alt2
 - Enabled large-file support (LFS).
 
