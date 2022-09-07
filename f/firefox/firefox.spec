@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        104.0.1
+Version:        104.0.2
 Release:        alt1
 License:        MPL-2.0
 Group:          Networking/WWW
@@ -42,10 +42,10 @@ Patch012: 0012-build-Disable-Werror.patch
 
 %define gst_version   1.0
 %define nspr_version  4.34.1
-%define nss_version   3.81
+%define nss_version   3.82
 %define rust_version  1.63.0
 %define cargo_version 1.63.0
-%define llvm_version  12.0
+%define llvm_version  14.0
 
 ExcludeArch: ppc64le
 
@@ -444,6 +444,10 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Sep 07 2022 Alexey Gladkov <legion@altlinux.ru> 104.0.2-alt1
+- New release (104.0.2).
+- Use LLVM 14.
+
 * Wed Aug 31 2022 Alexey Gladkov <legion@altlinux.ru> 104.0.1-alt1
 - New release (104.0.1).
 
