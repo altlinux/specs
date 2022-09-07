@@ -3,8 +3,8 @@
 %def_with check
 
 Name: libtdb
-Version: 1.4.4
-Release: alt2
+Version: 1.4.6
+Release: alt1
 
 Summary: A trivial database system
 License: LGPLv3+
@@ -121,6 +121,9 @@ make test
 %python3_sitelibdir/__pycache__/_tdb_text.cpython*.py*
 
 %changelog
+* Sun Aug 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 1.4.6-alt1
+- Update to release for samba-4.16
+
 * Sun Mar 06 2022 Evgeny Sinelnikov <sin@altlinux.org> 1.4.4-alt2
 - Apply patch libtdb-revert-breaking-tdb.h.patch from fedora
   (resolved sssd#5793 on github, rhbz#1983011)
@@ -225,6 +228,6 @@ make test
 - Bumped up the version number
 - changed email addrs.
 
-* Thu May 23 2001 Jonathon D Nelson <jnelson@securepipe.com>
+* Wed May 23 2001 Jonathon D Nelson <jnelson@securepipe.com>
 - Created redhat packages.
 

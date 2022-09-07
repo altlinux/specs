@@ -75,7 +75,7 @@
 %endif
 
 Name:    samba
-Version: 4.15.9
+Version: 4.16.4
 Release: alt1
 
 Group:   System/Servers
@@ -130,6 +130,7 @@ BuildRequires: libncurses-devel
 BuildRequires: libpam-devel
 BuildRequires: perl-devel
 BuildRequires: perl-Parse-Yapp
+BuildRequires: perl-JSON
 BuildRequires: libpopt-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
@@ -178,17 +179,17 @@ BuildRequires: python3-module-talloc-devel
 %endif
 
 %if_without tevent
-BuildRequires: libtevent-devel >= 0.11.0
+BuildRequires: libtevent-devel >= 0.12.0
 BuildRequires: python3-module-tevent
 %endif
 
 %if_without tdb
-BuildRequires: libtdb-devel >= 1.4.4
+BuildRequires: libtdb-devel >= 1.4.6
 BuildRequires: python3-module-tdb
 %endif
 
 %if_without ldb
-%define ldb_version 2.4.4
+%define ldb_version 2.5.2
 BuildRequires: libldb-devel = %ldb_version
 BuildRequires: python3-module-pyldb-devel
 %endif
@@ -1024,8 +1025,8 @@ popd
 # winbind
 %if_with winbind
 mkdir -p %buildroot/%_lib
-ln -sf ..%_samba_libdir/libnss_winbind.so %buildroot/%_lib/libnss_winbind.so.2
-ln -sf ..%_samba_libdir/libnss_wins.so    %buildroot/%_lib/libnss_wins.so.2
+ln -sf ..%_samba_libdir/libnss_winbind.so.2 %buildroot/%_lib/libnss_winbind.so.2
+ln -sf ..%_samba_libdir/libnss_wins.so.2    %buildroot/%_lib/libnss_wins.so.2
 
 mkdir -p  %buildroot%_libdir/krb5/plugins/libkrb5
 mv %buildroot%_samba_mod_libdir/krb5/winbind_krb5_locator.so %buildroot%_libdir/krb5/plugins/libkrb5/
@@ -1145,6 +1146,15 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_sbindir/smbd
 %endif
 %_samba_libexecdir/samba-bgqd
+%_samba_libexecdir/samba-dcerpcd
+%_samba_libexecdir/rpcd_classic
+%_samba_libexecdir/rpcd_epmapper
+%_samba_libexecdir/rpcd_fsrvp
+%_samba_libexecdir/rpcd_lsad
+%_samba_libexecdir/rpcd_mdssvc
+%_samba_libexecdir/rpcd_rpcecho
+%_samba_libexecdir/rpcd_spoolss
+%_samba_libexecdir/rpcd_winreg
 %config(noreplace) %_sysconfdir/samba/smbusers
 %attr(755,root,root) %_initdir/smb
 %attr(755,root,root) %_initdir/nmb
@@ -1372,6 +1382,7 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_man8dir/smbd.8*
 %_man8dir/nmbd.8*
 %_man8dir/samba-bgqd.8*
+%_man8dir/samba-dcerpcd.8*
 %_man8dir/vfs_*.8*
 
 %if_with libcephfs
@@ -1489,7 +1500,6 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %if_without libwbclient
 %_samba_mod_libdir/libreplace-samba4.so
 %_samba_mod_libdir/libwbclient.so.*
-%_samba_mod_libdir/libwinbind-client-samba4.so
 %endif
 %_samba_mod_libdir/libsamba-debug-samba4.so
 %_samba_mod_libdir/libsamba-modules-samba4.so
@@ -1507,6 +1517,9 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_samba_mod_libdir/libutil-setid-samba4.so
 %_samba_mod_libdir/libutil-tdb-samba4.so
 %_samba_mod_libdir/libxattr-tdb-samba4.so
+%_samba_mod_libdir/libREG-FULL-samba4.so
+%_samba_mod_libdir/libRPC-SERVER-LOOP-samba4.so
+%_samba_mod_libdir/libRPC-WORKER-samba4.so
 
 %files libs
 %dir %_samba_mod_libdir/pdb
@@ -1723,7 +1736,6 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %if_with libwbclient
 %files -n libwbclient
 %_libdir/libwbclient.so.*
-%_samba_mod_libdir/libwinbind-client-samba4.so
 %_samba_mod_libdir/libreplace-samba4.so
 
 %files -n libwbclient-devel
@@ -1785,7 +1797,6 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_man1dir/masktest.1*
 %_man1dir/ndrdump.1*
 %_man1dir/smbtorture.1*
-%_man1dir/vfstest.1*
 %_man7dir/traffic_learner.7*
 %_man7dir/traffic_replay.7*
 %endif
@@ -1935,6 +1946,18 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Sun Jul 31 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.4-alt1
+- Update to latest stable release of Samba 4.16
+- Major fixes:
+  + New samba-dcerpcd binary to provide DCERPC in the member server setup.
+  + Heimdal-8.0pre used for Samba Internal Kerberos, adds FAST support.
+  + Certificate Auto Enrollment support with internal group policy mechanism.
+  + Ability to add ports to dns forwarder addresses in internal DNS backend.
+  + Older SMB1 protocol SMBCopy command removed.
+  + SMB1 server-side wildcard expansion removed.
+  + SMB1 protocol has been deprecated, particularly older dialects.
+  + No longer using Linux mandatory locks for sharemodes.
+
 * Sun Jul 31 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.15.9-alt1
 - Update to security release of Samba 4.15
 - Security fixes:
