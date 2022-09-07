@@ -5,8 +5,8 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.36.12
-Release: alt2
+Version: 1.36.25
+Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -168,6 +168,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Wed Sep 07 2022 Anton Farygin <rider@altlinux.ru> 1.36.25-alt1
+- 1.36.12 -> 1.36.25 (Fixes: CVE-2022-29806)
+
 * Mon Dec 27 2021 Michael Shigorin <mike@altlinux.org> 1.36.12-alt2
 - E2K: avoid lcc-unsupported option
 
