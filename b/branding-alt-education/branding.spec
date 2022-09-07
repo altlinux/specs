@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt3
+Release: alt4
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -180,6 +180,8 @@ Group:   Graphical desktop/KDE
 Requires(pre): %name-graphics
 Requires: %name-graphics = %EVR
 Requires: kde5-konsole-colorscheme-SolarizedPastel
+Requires: papirus-icon-theme
+Requires: gtk-theme-breeze-education
 Requires: plasma5-breeze
 Requires: fonts-ttf-liberation
 Requires: fonts-ttf-google-droid-sans-mono
@@ -202,10 +204,7 @@ Requires: fonts-ttf-google-droid-sans-mono
 Requires: fonts-ttf-google-noto-sans
 Requires: gnome-icon-theme
 # Specified themes
-Requires: icon-theme-ePapirus
-Requires: icon-theme-Papirus
-Requires: icon-theme-Papirus-Dark
-Requires: icon-theme-Papirus-Light
+Requires: papirus-icon-theme
 Requires: gtk-theme-breeze-education
 Requires: xfwm4-theme-Smoothwall-Breeze
 Requires(post): lightdm-gtk-greeter
@@ -238,11 +237,8 @@ Group:   Graphical desktop/GNOME
 Requires: beesu
 Requires: dconf
 # Specified themes
-Requires: icon-theme-ePapirus
-Requires: icon-theme-Papirus
-Requires: icon-theme-Papirus-Dark
-Requires: icon-theme-Papirus-Light
-Requires: gtk-theme-breeze
+Requires: papirus-icon-theme
+Requires: gtk-theme-breeze-education
 #
 %branding_add_conflicts %flavour mate-settings
 Requires(post): lightdm-gtk-greeter
@@ -482,6 +478,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Sep 07 2022 Andrey Cherepanov <cas@altlinux.org> 10.1-alt4
+- Required complete icon pack papirus-icon-theme for all desktop environments.
+
 * Fri Sep 02 2022 Andrey Cherepanov <cas@altlinux.org> 10.1-alt3
 - Use icon theme Papirus-Education.
 
