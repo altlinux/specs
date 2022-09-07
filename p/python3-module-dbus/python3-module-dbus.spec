@@ -1,14 +1,14 @@
 %define _libexecdir %_prefix/libexec
 %define modname dbus-python
 
-%def_enable documentation
+%def_enable doc
 %def_enable check
 %def_disable installed_tests
 #%%add_findreq_skiplist %_libexecdir/installed-tests/%modname/test/*.py
 
 Name: python3-module-dbus
-Version: 1.2.18
-Release: alt2
+Version: 1.3.2
+Release: alt1
 
 Summary: Python bindings for D-BUS library
 License: MIT
@@ -19,13 +19,13 @@ Source: https://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.t
 
 %define dbus_ver 1.8
 %define glib_ver 2.40
-%define python3_ver 3.5
+%define python3_ver 3.7
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: autoconf-archive libdbus-devel >= %dbus_ver libgio-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-python3
+BuildRequires: meson libdbus-devel >= %dbus_ver libgio-devel >= %glib_ver
 BuildRequires: python3-devel python3-module-pygobject3
 %{?_enable_check:BuildRequires: /proc dbus-tools dbus-tools-gui glibc-i18ndata python3-module-tappy}
-%{?_enable_documentation:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
+%{?_enable_doc:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
 
 %description
 D-Bus python bindings for use with python programs.
@@ -72,26 +72,23 @@ the functionality of the installed python-dbus package.
 %setup -n %modname-%version
 
 %build
-%define options %{?_enable_installed_tests:--enable-installed-tests} %{subst_enable documentation}
-export am_cv_python_pythondir=%python3_sitelibdir
-export am_cv_python_pyexecdir=%python3_sitelibdir
-%autoreconf
-%configure %options \
-    PYTHON=%__python3
-%make_build
+%meson \
+    %{?_enable_installed_tests:-Dinstalled-tests=true} \
+    %{?_enable_doc:-Ddoc=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-%make check
+%__meson_test
 
 %files
 %python3_sitelibdir/*.so
 %python3_sitelibdir/dbus/
 %doc AUTHORS COPYING NEWS
 
-%exclude %python3_sitelibdir/*.la
 %exclude %python3_sitelibdir/dbus/gi_service.py
 %exclude %python3_sitelibdir/dbus/__pycache__/gi_service.*.pyc
 
@@ -110,12 +107,15 @@ export am_cv_python_pyexecdir=%python3_sitelibdir
 %_datadir/installed-tests/%modname/
 %endif
 
-%if_enabled documentation
+%if_enabled doc
 %files devel-doc
 %_docdir/%modname/
 %endif
 
 %changelog
+* Wed Sep 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
+- 1.3.2 (ported to Meson build system)
+
 * Mon Jul 26 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.18-alt2
 - python3-only build
 - new dbus-python-devel subpackage provides both python{,3}-module-dbus-devel
