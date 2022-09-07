@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220817
+Version: 20220902
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,14 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Sep 07 2022 Cronbuild Service <cronbuild@altlinux.org> 20220902-alt1
+- upstream changes (GIT 2f2f018):
+  + Mellanox: Add new mlxsw_spectrum firmware xx.2010.3146 (thx Petr Machata)
+  + amdgpu: update beige goby VCN firmware (thx Alex Deucher)
+  + amdgpu: update dimgrey cavefish VCN firmware (thx Alex Deucher)
+  + amdgpu: update navy flounder VCN firmware (thx Alex Deucher)
+  + amdgpu: update sienna cichlid VCN firmware (thx Alex Deucher)
+
 * Wed Aug 31 2022 Cronbuild Service <cronbuild@altlinux.org> 20220817-alt1
 - upstream changes (GIT d3c9228):
   + rtl_bt: Update RTL8852C BT USB firmware to 0xDFB8_5A33 (thx Hilda Wu)
