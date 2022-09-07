@@ -3,7 +3,7 @@
 
 Name: kitty
 Version: 0.26.2
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -57,8 +57,10 @@ BuildRequires: python3-module-sphinx-sphinx-build-symlink
 # For tic
 BuildRequires: ncurses
 
-%if_with check
+# + install -Dm644 /dev/stdin .../usr/share/bash-completion/completions/kitty
 BuildRequires: /proc
+
+%if_with check
 BuildRequires: /dev/pts
 BuildRequires: fonts-ttf-gnu-freefont-mono
 %endif
@@ -127,11 +129,6 @@ Shell-integration files for kitty
 find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%__python3|g'  \
                                     -e 's|/usr/bin/env python|%__python3|g'   \
                                     -i "{}" \;
-%ifarch %e2k
-# ftbfs workaround with lcc 1.25.17:
-# kitty/screen.c:1437,1463: pointless comparison of unsigned integer with zero
-sed -i "s/-Werror//g" setup.py
-%endif
 
 %build
 %python3_build_debug
@@ -189,6 +186,9 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_libexecdir/%name/shell-integration
 
 %changelog
+* Wed Sep 07 2022 Michael Shigorin <mike@altlinux.org> 0.26.2-alt2
+- NMU: fix build on e2k and --without check
+
 * Mon Sep 05 2022 Egor Ignatov <egori@altlinux.org> 0.26.2-alt1
 - new version 0.26.2
 
