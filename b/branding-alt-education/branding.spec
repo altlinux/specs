@@ -9,7 +9,7 @@
 
 %define gtk_theme Breeze-Education
 %define kde_theme Breeze
-%define icon_theme Papirus-Education
+%define icon_theme Papirus-Edu
 %define window_theme Smoothwall-Breeze
 
 # Enable compositing on ix86 and x86_64 only
@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt4
+Release: alt5
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -478,6 +478,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Sep 07 2022 Andrey Cherepanov <cas@altlinux.org> 10.1-alt5
+- Used Papirus-Edu name for icon theme.
+
 * Wed Sep 07 2022 Andrey Cherepanov <cas@altlinux.org> 10.1-alt4
 - Required complete icon pack papirus-icon-theme for all desktop environments.
 
