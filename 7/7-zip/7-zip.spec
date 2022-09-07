@@ -1,11 +1,14 @@
 Name: 7-zip
-Version: 21.07
-Release: alt2
+Version: 22.01
+Release: alt1
 Group: Archiving/Compression
-License: LGPLv2+ with UnRAR exception
+License: LGPLv2+ with UnRAR-exception
 Url: https://www.7-zip.org
 Source: %name-%version.tar.xz
+Source1: check.tar
 Patch1: nostrip.patch
+Patch2: dangling-pointer.patch
+Patch3: uninitialized.patch
 Summary: Official 7-zip for linux, the file archiver with a high compression ratio
 Provides: 7zz = %version-%release
 
@@ -21,7 +24,7 @@ BuildRequires: gcc-c++
             HFS, IHEX, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, QCOW2, RAR, RPM,
             SquashFS, UDF, UEFI, VDI, VHD, VMDK, WIM, XAR and Z.
     For ZIP and GZIP formats, 7-Zip provides a compression ratio that is
-        2-10%% better than the ratio provided by PKZip and WinZip
+        2-10 percent better than the ratio provided by PKZip and WinZip
     Strong AES-256 encryption in 7z and ZIP formats
     Self-extracting capability for 7z format
     Integration with Windows Shell
@@ -31,27 +34,56 @@ BuildRequires: gcc-c++
     Localizations for 87 languages
 
 %prep
-%setup
+%setup -a1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
+sed -Ei "s@7zCon.sfx@%_libdir/7z/7zCon.sfx@" CPP/7zip/UI/Console/Main.cpp
+
+sed -Ei '
+s@7zCon.sfx@%buildroot%_libdir/7z/7zCon.sfx@g
+/brotli|zstd|lz[45]|lizard|flzma2|7za433_7zip.7z|7za.exe.lz$/,/^\s*$/s/^/# NOT IN ORIGINAL 7z # /
+' p7zip/check/check.sh
 
 %build
-cd CPP/7zip/Bundles/Alone2
-%make_build -f ../../cmpl_gcc.mak \
-%ifarch %e2k
-	CFLAGS_WARN="-Wno-error -O%_optlevel" \
-%else
-	MY_LIBS="-flto=auto"
+%if_without lto
+%define optflags_lto %nil
 %endif
-	LOCAL_FLAGS="%optflags"
+
+%ifarch %arm
+%define optflags_lto %nil
+%add_optflags -mno-unaligned-access
+%endif
+
+%make_build -C CPP/7zip/Bundles/Alone2 -f ../../cmpl_gcc.mak \
+	LOCAL_FLAGS="%optflags" \
+    MY_LIBS=""
+%ifarch %e2k
+	CFLAGS_WARN="-Wno-error -O%_optlevel"
+%endif
+
+%make_build -C CPP/7zip/Bundles/SFXCon -f makefile.gcc
 
 %install
 install -D CPP/7zip/Bundles/Alone2/b/g/7zz %buildroot%_bindir/7zz
+install -D CPP/7zip/Bundles/SFXCon/_o/7zCon %buildroot%_libdir/7z/7zCon.sfx
 
 %files
 %doc DOC/*
 %_bindir/*
+%_libdir/7z
+
+%check
+cd p7zip/check
+sh check.sh %buildroot%_bindir/7zz
 
 %changelog
+* Wed Sep 07 2022 Fr. Br. George <george@altlinux.org> 22.01-alt1
+- Manual version bump
+- Introduce check section
+- Introduce SFX module
+
 * Thu Jul 07 2022 Vasiliy Tsukanov <palar@altlinux.org> 21.07-alt2
 - FTBFS: description field was fixed
 
