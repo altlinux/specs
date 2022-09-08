@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	5.19
-%define kernel_sublevel .7
+%define kernel_sublevel .8
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -613,6 +613,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Sep 08 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.19.8-alt1
+- v5.19.8 (2022-09-08).
+- Baikal-M: Support for Elpitech laptop.
+
 * Tue Sep 06 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.19.7-alt1
 - v5.19.7 (2022-09-05).
 
