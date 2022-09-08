@@ -2,12 +2,13 @@
 Name: openxcom-extended
 Epoch: 1
 Version: 7.7.0
-Release: alt1
+Release: alt2
+
 Summary: OpenXcom Extended is an open-source clone of the original X-COM
 License: GPLv3+
 Group: Games/Strategy
-Url: http://openxcom.org/
 
+Url: http://openxcom.org/
 Source: https://github.com/SupSuper/OpenXcom/%name-%version.tar
 Source2: openxcom16.png
 Source3: openxcom32.png
@@ -33,6 +34,11 @@ some OpenXcom.org mods such as Pirates!, Area 51 or X-Files.
 %patch1 -p1
 
 sed -i 's,DATADIR}/openxcom",DATADIR}/%name",g' src/CMakeLists.txt
+
+%ifarch %e2k
+# unsupported as of lcc 1.25.23
+sed -i 's,^.*femit-struct-debug-reduced,#&,' src/CMakeLists.txt
+%endif
 
 %build
 cmake --debug-output -D CMAKE_INSTALL_PREFIX="/usr" -D CMAKE_CXX_FLAGS="%optflags" -D CMAKE_C_FLAGS="%optflags" CMakeLists.txt
@@ -65,6 +71,9 @@ mv %buildroot%_man6dir/{openxcom.6,%{name}.6}
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Sep 08 2022 Michael Shigorin <mike@altlinux.org> 1:7.7.0-alt2
+- E2K: avoid lcc-unsupported option
+
 * Mon Aug 29 2022 Igor Vlasenko <viy@altlinux.org> 1:7.7.0-alt1
 - new version
 
