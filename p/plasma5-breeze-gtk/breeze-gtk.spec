@@ -1,7 +1,7 @@
 %define rname breeze-gtk
 
 Name: plasma5-%rname
-Version: 5.25.4
+Version: 5.25.5
 Release: alt1
 %K5init no_altplace
 
@@ -60,6 +60,9 @@ Provides: gtk4-theme-breeze = %version-%release
 %_datadir/themes/Breeze*
 
 %changelog
+* Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt1
+- new version
+
 * Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.4-alt1
 - new version
 

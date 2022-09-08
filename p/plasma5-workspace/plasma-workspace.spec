@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.25.4
-Release: alt4
+Version: 5.25.5
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -167,7 +167,7 @@ Group: Graphical desktop/KDE
 Summary: Base qml-components for plasma workspace
 Requires: %name-common = %EVR
 Requires: qml(QtGraphicalEffects)
-Requires: qml(org.kde.plasma.core) qml(org.kde.kquickcontrols) qml(org.kde.kwin) qml(org.kde.kirigami)
+Requires: qml(org.kde.plasma.core) qml(org.kde.kquickcontrols) qml(org.kde.kirigami) qml(org.kde.kwin)
 %description -n %name-qml
 Base qml-components for plasma workspace
 
@@ -515,6 +515,15 @@ done
 
 
 %changelog
+* Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt2
+- bump release
+
+* Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.24.6-alt6
+- bump release
+
+* Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt1
+- new version
+
 * Tue Sep 06 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt4
 - merge p10 changes
 

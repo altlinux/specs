@@ -4,7 +4,7 @@
 %define libmilou libmilou%milou_sover
 
 Name: plasma5-%rname
-Version: 5.25.4
+Version: 5.25.5
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -93,6 +93,9 @@ KF5 library
 %_K5lib/libmilou.so.%milou_sover
 
 %changelog
+* Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt1
+- new version
+
 * Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.4-alt1
 - new version
 
