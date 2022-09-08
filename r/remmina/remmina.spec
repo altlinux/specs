@@ -5,7 +5,7 @@
 %def_with x2go
 
 Name: remmina
-Version: 1.4.26
+Version: 1.4.27
 Release: alt1
 Summary: Remote Desktop Client
 
@@ -51,7 +51,7 @@ BuildRequires: pkgconfig(xkbfile)
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(spice-client-gtk-3.0)
 BuildRequires: pkgconfig(json-glib-1.0)
-BuildRequires: pkgconfig(libsoup-2.4) pkgconfig(webkit2gtk-4.0)
+BuildRequires: pkgconfig(libsoup-3.0) pkgconfig(webkit2gtk-4.1)
 BuildRequires: pkgconfig(libsodium)
 BuildRequires: pkgconfig(appindicator3-0.1)
 
@@ -357,6 +357,10 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Thu Sep 08 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.27-alt1
+- new version 1.4.27
+- build with libsoup-3.0 and webkit2gtk-4.1
+
 * Wed Jun 15 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.26-alt1
 - new version 1.4.26.
 - new python plugin enabled.
