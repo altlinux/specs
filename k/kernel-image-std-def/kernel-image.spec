@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel .65
+%define kernel_sublevel .67
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -615,6 +615,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Sep 08 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.67-alt1
+- v5.15.67 (2022-09-08).
+
 * Mon Sep 05 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.65-alt1
 - v5.15.65 (2022-09-05).
 - Add Elpitech notebook and SDK-M 5.5 support (Alexey Sheplyakov).
