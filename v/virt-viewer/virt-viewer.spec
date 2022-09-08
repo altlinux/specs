@@ -1,7 +1,8 @@
+%def_without govirt
 
 Name: virt-viewer
 Version: 11.0
-Release: alt2
+Release: alt3
 
 Summary: Virtual Machine Viewer
 Group: System/Configuration/Other
@@ -27,8 +28,7 @@ BuildRequires: pkgconfig(spice-protocol) >= 0.12.7
 BuildRequires: pkgconfig(vte-2.91) >= 0.46.0
 BuildRequires: /usr/bin/pod2man
 BuildRequires: gettext
-BuildRequires: pkgconfig(govirt-1.0) >= 0.3.7
-BuildRequires: pkgconfig(rest-0.7) >= 0.8
+%{?_with_govirt:BuildRequires: pkgconfig(govirt-1.0) >= 0.3.7 pkgconfig(rest-0.7) >= 0.8}
 BuildRequires: bash-completion
 
 %description
@@ -62,6 +62,9 @@ using SSL/TLS encryption.
 %_datadir/bash-completion/completions/virt-viewer
 
 %changelog
+* Thu Sep 08 2022 Alexey Shabalin <shaba@altlinux.org> 11.0-alt3
+- disabled govirt since it is still stuck on soup2
+
 * Thu May 12 2022 Alexey Shabalin <shaba@altlinux.org> 11.0-alt2
 - data: remove bogus param for meson i18n.merge_file
 
