@@ -1,26 +1,14 @@
 Summary:              The Mozilla Firefox project is a redesign of Mozilla's browser
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
-Name:           firefox
-Version:        104.0.2
-Release:        alt1
-License:        MPL-2.0
-Group:          Networking/WWW
-URL:            http://www.mozilla.org/projects/firefox/
+Name: firefox
+Version: 104.0.2
+Release: alt2
+License: MPL-2.0
+Group: Networking/WWW
+URL: https://www.mozilla.org/firefox/
 
-Packager:       Alexey Gladkov <legion@altlinux.ru>
-
-Source0:        firefox-source.tar
-Source4:        firefox-mozconfig
-Source5:        distribution.ini
-Source6:        firefox.desktop
-Source7:        firefox-wayland.desktop
-Source8:        firefox.c
-Source9:        firefox-prefs.js
-Source10:       firefox-l10n.txt
-Source11:       l10n.tar
-Source12:       firefox-privacy-prefs.js
-Source13:       firefox-search-provider.ini
+Source0: firefox-source.tar
 
 ### Start Patches
 Patch001: 0001-FEDORA-build-arm-libopus.patch
@@ -39,6 +27,10 @@ Patch012: 0012-build-Disable-Werror.patch
 
 %define _unpackaged_files_terminate_build 1
 %set_verify_elf_method relaxed
+
+%ifndef build_parallel_jobs
+%global build_parallel_jobs %__nprocs
+%endif
 
 %define gst_version   1.0
 %define nspr_version  4.34.1
@@ -81,7 +73,6 @@ BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(freetype2)
 BuildRequires: pkgconfig(gio-2.0)
 BuildRequires: pkgconfig(graphite2)
-BuildRequires: pkgconfig(gtk+-2.0)
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: pkgconfig(harfbuzz)
 BuildRequires: pkgconfig(hunspell)
@@ -132,10 +123,12 @@ Requires: mozilla-common
 Obsoletes: firefox-ru <= 70.0.1
 Obsoletes: firefox-uk <= 70.0.1
 Obsoletes: firefox-kk <= 70.0.1
+Obsoletes: firefox-wayland <= 104.0.2
 
 Provides: firefox-ru = %EVR
 Provides: firefox-uk = %EVR
 Provides: firefox-kk = %EVR
+Provides: firefox-wayland = %EVR
 
 # ALT#30732
 Requires: gst-plugins-ugly%gst_version
@@ -151,16 +144,6 @@ cross-platform.
 %description -l ru_RU.UTF-8
 Интернет-браузер Mozilla Firefox - кроссплатформенная модификация браузера Mozilla,
 созданная с использованием языка XUL для описания интерфейса пользователя.
-
-%package wayland
-Summary:    Firefox Wayland launcher.
-Group:      Networking/WWW
-
-Requires: %name >= %version-%release
-
-%description wayland
-The firefox-wayland package contains launcher and desktop file
-to run Firefox natively on Wayland.
 
 %package -n firefox-config-privacy
 Summary:	Firefox configuration with the paranoid privacy settings
@@ -185,9 +168,8 @@ Most likely you don't need to use this package.
 %setup -q -n firefox-%version -c
 %autopatch -p1
 
-tar -xf %SOURCE11
-
-cp -f %SOURCE4 .mozconfig
+mv -- .rpm/l10n .
+cp -f .rpm/firefox-mozconfig .mozconfig
 
 tee -a .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
@@ -212,7 +194,11 @@ ac_add_options --enable-strip
 ac_add_options --enable-install-strip
 ac_add_options --disable-rust-debug
 ac_add_options --disable-debug-symbols
+%else
+ac_add_options --disable-strip
+ac_add_options --disable-install-strip
 %endif
+mk_add_options MOZ_MAKE_FLAGS="-j%build_parallel_jobs --no-print-directory"
 EOF
 
 find third_party \
@@ -227,7 +213,7 @@ rm -rf -- third_party/python/setuptools/setuptools*
 %add_findprov_lib_path %firefox_prefix
 
 export MOZ_BUILD_APP=browser
-export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE10)"
+export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < .rpm/firefox-l10n.txt)"
 
 MOZ_OPT_FLAGS="-pipe -O2 -g0"
 %ifarch armh
@@ -248,7 +234,7 @@ export MOZ_DEBUG_FLAGS=" "
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS"
 
-export MOZ_PARALLEL_BUILD=8
+export MOZ_PARALLEL_BUILD=%build_parallel_jobs
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
@@ -290,7 +276,6 @@ fi
 #export WASM_CXX="$CXX --target=wasm32-wasi"
 
 export srcdir="$PWD"
-#export MOZ_MAKE_FLAGS="-j10 --no-print-directory"
 export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
 export MACH_USE_SYSTEM_PYTHON=1
 
@@ -298,7 +283,7 @@ python3 ./mach build
 
 while read -r loc; do
 	python3 ./mach build chrome-$loc
-done < %SOURCE10
+done < .rpm/firefox-l10n.txt
 
 make -C objdir/browser/installer multilocale.txt
 
@@ -307,12 +292,12 @@ $CC $CFLAGS \
 	-DMOZ_PLUGIN_PATH=\"%browser_plugins_path\" \
 	-DMOZ_PROGRAM=\"%firefox_prefix/firefox\" \
 	-DMOZ_DIST_BIN=\"%firefox_prefix\"\
-	%SOURCE8 -o firefox
+	.rpm/firefox.c -o firefox
 
 
 %install
 export SHELL=/bin/sh
-export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < %SOURCE10)"
+export MOZ_CHROME_MULTILOCALE="$(tr '\n' ' ' < .rpm/firefox-l10n.txt)"
 
 mkdir -p \
 	%buildroot/%mozilla_arch_extdir/%firefox_cid \
@@ -327,8 +312,8 @@ make -C objdir \
 	install
 
 # install altlinux-specific configuration
-install -D -m 644 %SOURCE9  %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
-install -D -m 644 %SOURCE12 %buildroot/%_sysconfdir/firefox/pref/all-privacy.js
+install -D -m 644 .rpm/firefox-prefs.js %buildroot/%firefox_prefix/browser/defaults/preferences/all-altlinux.js
+install -D -m 644 .rpm/firefox-privacy-prefs.js %buildroot/%_sysconfdir/firefox/pref/all-privacy.js
 
 sed -i \
 	-e 's#@VERSION@#%{version}#g' \
@@ -354,53 +339,34 @@ if [ ! -e "%buildroot/%firefox_prefix/plugins" ]; then
 fi
 
 install -m755 firefox %buildroot/%_bindir/firefox
+ln -s firefox %buildroot/%_bindir/firefox-wayland
 
-cd %buildroot
+install -D -m 644 .rpm/distribution.ini \
+	%buildroot/%firefox_prefix/distribution/distribution.ini
 
-# Wrapper for wayland
-cat > ./%_bindir/firefox-wayland <<'EOF'
-#!/bin/sh
-export GDK_BACKEND=wayland
-export MOZ_ENABLE_WAYLAND=1
-export MOZ_GTK_TITLEBAR_DECORATION=client
-export XDG_SESSION_TYPE=wayland
+install -D -m 644 .rpm/firefox.desktop \
+	%buildroot/%_datadir/applications/firefox.desktop
 
-unset DISPLAY
-
-BIN="%_bindir/firefox"
-
-exec "$BIN" "$@"
-EOF
-
-chmod +x ./%_bindir/firefox-wayland
-
-# Add distribution.ini
-mkdir -p -- ./%firefox_prefix/distribution
-cp -- %SOURCE5 ./%firefox_prefix/distribution/distribution.ini
-
-# install menu file
-install -D -m 644 %SOURCE6 ./%_datadir/applications/firefox.desktop
-install -D -m 644 %SOURCE7 ./%_datadir/applications/firefox-wayland.desktop
-
-# Install Gnome search provider files
-install -D -m 644 %SOURCE13 ./%_datadir/gnome-shell/search-providers/firefox-search-provider.ini
+install -D -m 644 .rpm/firefox-search-provider.ini \
+	%buildroot/%_datadir/gnome-shell/search-providers/firefox-search-provider.ini
 
 # Add alternatives
-mkdir -p ./%_altdir
-cat >./%_altdir/firefox <<EOF
+mkdir -p %buildroot/%_altdir
+cat >%buildroot/%_altdir/firefox <<EOF
 %_bindir/xbrowser	%_bindir/firefox	200
 %_bindir/x-www-browser	%_bindir/firefox	200
 EOF
 
 rm -f -- \
-	./%firefox_prefix/removed-files
+	%buildroot/%firefox_prefix/removed-files
 
 # Remove devel files
 rm -rf -- \
-	./%_includedir/%name \
-	./%_datadir/idl/%name \
-	./%_libdir/%name-devel \
+	%buildroot/%_includedir/%name \
+	%buildroot/%_datadir/idl/%name \
+	%buildroot/%_libdir/%name-devel \
 #
+
 
 # Add real RPATH
 (set +x
@@ -424,6 +390,7 @@ rm -rf -- \
 %dir %_sysconfdir/firefox/pref
 %_altdir/firefox
 %_bindir/firefox
+%_bindir/firefox-wayland
 %firefox_prefix
 %mozilla_arch_extdir/%firefox_cid
 %mozilla_noarch_extdir/%firefox_cid
@@ -436,14 +403,14 @@ rm -rf -- \
 %_iconsdir/hicolor/48x48/apps/firefox.png
 %_iconsdir/hicolor/256x256/apps/firefox.png
 
-%files wayland
-%_bindir/firefox-wayland
-%_datadir/applications/firefox-wayland.desktop
-
 %files -n firefox-config-privacy
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Sep 08 2022 Alexey Gladkov <legion@altlinux.ru> 104.0.2-alt2
+- Merge firefox-wayland to firefox (ALT#43733).
+- Drop gtk2 support.
+
 * Wed Sep 07 2022 Alexey Gladkov <legion@altlinux.ru> 104.0.2-alt1
 - New release (104.0.2).
 - Use LLVM 14.
