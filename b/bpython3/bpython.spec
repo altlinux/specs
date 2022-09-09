@@ -7,14 +7,15 @@
 %def_with urwid
 
 Name: bpython3
-Version: 0.22.1
+Version: 0.23
 Release: alt1
 
 Summary: Fancy curses interface to the Python 3 interactive interpreter
 
 License: MIT
 Group: Development/Python3
-Url: http://bpython-interpreter.org/
+Url: https://bpython-interpreter.org/
+VCS: https://github.com/bpython/bpython.git
 
 BuildArch: noarch
 
@@ -143,6 +144,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Fri Sep 09 2022 Danil Shein <dshein@altlinux.org> 0.23-alt1
+ - NMU:  new version 0.23
+
 * Mon Apr 18 2022 Danil Shein <dshein@altlinux.org> 0.22.1-alt1
 - NMU: new version 0.22.1
 - NMU: cleanup spec, fix FTBFS
