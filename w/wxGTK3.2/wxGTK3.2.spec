@@ -7,8 +7,8 @@
 %define wxbranch 3.2
 
 Name: wxGTK3.2
-Version: 3.2.0
-Release: alt2
+Version: 3.2.1
+Release: alt1
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -91,19 +91,6 @@ Requires: libwxBase%wxbranch = %EVR
 %description -n lib%name
 Header files for wxGTK, the GTK+ port of the wxWidgets library.
 
-%package -n compat-lib%name-gtk2
-Summary: GTK port of the wxWidgets GUI library
-Group: System/Libraries
-Requires: libwxBase%wxbranch = %EVR
-Requires: %name-i18n = %EVR
-Obsoletes: lib%name-gtk2
-
-%description -n compat-lib%name-gtk2
-wxWidgets is the GTK port of the C++ cross-platform wxWidgets
-GUI library, offering classes for all common GUI controls as well as a
-comprehensive set of helper classes for most common application tasks,
-ranging from networking to HTML display and image manipulation.
-
 %package -n lib%name-gl
 Summary: OpenGL add-on for the wxWidgets library
 Group: System/Libraries
@@ -111,18 +98,6 @@ Requires: lib%name = %EVR
 Conflicts: lib%name < %EVR
 
 %description -n lib%name-gl
-OpenGL (a 3D graphics API) add-on for the wxWidgets library.
-wxWidgets is the GTK port of the C++ cross-platform wxWidgets
-GUI library, offering classes for all common GUI controls as well as a
-comprehensive set of helper classes for most common application tasks,
-ranging from networking to HTML display and image manipulation.
-
-%package -n compat-lib%name-gtk2-gl
-Summary: OpenGL add-on for the wxWidgets library
-Group: System/Libraries
-Requires: compat-lib%name-gtk2 = %EVR
-
-%description -n compat-lib%name-gtk2-gl
 OpenGL (a 3D graphics API) add-on for the wxWidgets library.
 wxWidgets is the GTK port of the C++ cross-platform wxWidgets
 GUI library, offering classes for all common GUI controls as well as a
@@ -166,18 +141,6 @@ GUI library, offering classes for all common GUI controls as well as a
 comprehensive set of helper classes for most common application tasks,
 ranging from networking to HTML display and image manipulation.
 
-%package -n compat-lib%name-gtk2-media
-Summary: Multimedia add-on for the wxWidgets library
-Group: System/Libraries
-Requires: compat-lib%name-gtk2 = %EVR
-
-%description -n compat-lib%name-gtk2-media
-Multimedia add-on for the wxWidgets library.
-wxWidgets is the GTK port of the C++ cross-platform wxWidgets
-GUI library, offering classes for all common GUI controls as well as a
-comprehensive set of helper classes for most common application tasks,
-ranging from networking to HTML display and image manipulation.
-
 %package -n lib%name-devel
 Summary: Development files for wxGTK library
 Group: Development/C++
@@ -195,22 +158,6 @@ Requires: lib%name-sound_sdlu = %EVR
 
 %description -n lib%name-devel
 Header files for wxGTK, the GTK+ port of the wxWidgets library.
-
-%package -n compat-lib%name-gtk2-devel
-Group: Development/C++
-Summary: Development files for the %name library
-Requires: compat-lib%name-gtk2 = %EVR
-Requires: compat-lib%name-gtk2-gl = %EVR
-Requires: lib%name-media = %EVR
-Requires: libwxBase%wxbranch-devel = %EVR
-%add_python_req_skip utils
-
-%description -n compat-lib%name-gtk2-devel
-This package include files needed to link with the %name library.
-wxWidgets is the GTK port of the C++ cross-platform wxWidgets
-GUI library, offering classes for all common GUI controls as well as a
-comprehensive set of helper classes for most common application tasks,
-ranging from networking to HTML display and image manipulation.
 
 %package i18n
 Summary: i18n message catalogs for the wxWidgets library
@@ -372,6 +319,12 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Thu Sep 08 2022 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1
+- new stable release 3.2.1
+
+* Mon Jul 11 2022 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt3
+- cleanup spec
+
 * Fri Jul 08 2022 Anton Midyukov <antohami@altlinux.org> 3.2.0-alt2
 - drop multilib wrapper
 
