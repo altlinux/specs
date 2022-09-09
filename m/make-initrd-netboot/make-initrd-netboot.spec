@@ -1,7 +1,7 @@
 %add_findreq_skiplist /usr/share/make-initrd/features/*
 
 Name: make-initrd-netboot
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: Netboot feature for make-initrd
@@ -14,7 +14,7 @@ Source0: %name-%version.tar
 Requires: make-initrd >= 0.9.0
 
 # Programs packed into initrd
-Requires: coreutils curl dhcpcd >= 9.0.0 grep iproute2 sed tar zstd
+Requires: coreutils curl dhcpcd >= 9.0.0 grep hwclock iproute2 ntpdate sed tar zstd
 
 BuildArch: noarch
 
@@ -38,6 +38,9 @@ cp -a netboot %buildroot/usr/share/make-initrd/features/
 %_datadir/make-initrd/features/netboot
 
 %changelog
+* Wed Aug 10 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.3-alt1
+- Added forced time synchronization to the boot sequence.
+
 * Fri Jul 30 2021 Dmitry V. Levin <ldv@altlinux.org> 0.4.2-alt1
 - Fixed handling of more than a single ntp server (by Gleb Fotengauer-Malinovskiy).
 
