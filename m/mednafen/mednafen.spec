@@ -1,6 +1,6 @@
 Name: mednafen
 Version: 1.31.0
-Release: alt1
+Release: alt2
 
 Summary: Multi-consoles Emulator
 Group: Emulators
@@ -13,7 +13,7 @@ Source: %name-%version-UNSTABLE.tar.xz
 Patch1: mednafen-e2k.patch
 Patch2: libco-ppc64v2-swap-global.patch
 
-BuildRequires: gcc-c++ liblzo2-devel libsndfile-devel libflac-devel
+BuildRequires: gcc-c++ liblzo2-devel libsndfile-devel libflac-devel libzstd-devel
 BuildRequires: libcdio-devel libvorbis-devel libSDL_net-devel
 BuildRequires: libsndfile-devel zlib-devel bison
 BuildRequires: libSDL2-devel libGL-devel libX11-devel libGLU-devel
@@ -69,8 +69,8 @@ export CFLAGS
 export CXXFLAGS
 
 %configure --disable-rpath \
-	    --with-external-lzo
-
+	    --with-external-lzo \
+	    --with-external-libzstd
 
 
 %make_build
@@ -86,6 +86,9 @@ export CXXFLAGS
 
 
 %changelog
+* Sat Sep 10 2022 Ilya Mashkin <oddity@altlinux.ru> 1.31.0-alt2
+- Build with system libzstd
+
 * Sun Sep 04 2022 Ilya Mashkin <oddity@altlinux.ru> 1.31.0-alt1
 - version 1.31.0
 
