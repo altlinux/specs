@@ -1,6 +1,6 @@
 Name: 7-zip
 Version: 22.01
-Release: alt1
+Release: alt1.1
 Group: Archiving/Compression
 License: LGPLv2+ with UnRAR-exception
 Url: https://www.7-zip.org
@@ -58,12 +58,17 @@ s@7zCon.sfx@%buildroot%_libdir/7z/7zCon.sfx@g
 
 %make_build -C CPP/7zip/Bundles/Alone2 -f ../../cmpl_gcc.mak \
 	LOCAL_FLAGS="%optflags" \
-    MY_LIBS=""
+	MY_LIBS="" \
 %ifarch %e2k
-	CFLAGS_WARN="-Wno-error -O%_optlevel"
+	CFLAGS_WARN="-Wno-error -O%_optlevel" \
 %endif
+	%nil
 
-%make_build -C CPP/7zip/Bundles/SFXCon -f makefile.gcc
+%make_build -C CPP/7zip/Bundles/SFXCon -f makefile.gcc \
+%ifarch %e2k
+	CFLAGS_WARN="-Wno-error -O%_optlevel" \
+%endif
+	%nil
 
 %install
 install -D CPP/7zip/Bundles/Alone2/b/g/7zz %buildroot%_bindir/7zz
@@ -79,6 +84,9 @@ cd p7zip/check
 sh check.sh %buildroot%_bindir/7zz
 
 %changelog
+* Fri Sep 09 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 22.01-alt1.1
+- Fixed build for Elbrus
+
 * Wed Sep 07 2022 Fr. Br. George <george@altlinux.org> 22.01-alt1
 - Manual version bump
 - Introduce check section
