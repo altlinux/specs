@@ -1,5 +1,5 @@
 Name:           siril
-Version:        1.0.4
+Version:        1.0.5
 Release:        alt1
 Summary:        Astronomical image processing software
 Group: 		Graphics
@@ -23,7 +23,7 @@ BuildRequires:  desktop-file-utils
 BuildRequires:  ffmpeg libavcodec-devel
 # libffmpegthumbnailer-devel libopenmpt-devel
 BuildRequires:  gcc-c++
-BuildRequires:  libgif-devel libopencv-devel  libgomp-devel
+BuildRequires:  libgif-devel libopencv-devel  libgomp-devel libopenmpt-devel
 BuildRequires:  intltool
 BuildRequires:  libappstream-glib
 BuildRequires:  meson
@@ -95,6 +95,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.free_
 
 
 %changelog
+* Sat Sep 10 2022 Ilya Mashkin <oddity@altlinux.ru> 1.0.5-alt1
+- 1.0.5
+
 * Tue Sep 06 2022 Ilya Mashkin <oddity@altlinux.ru> 1.0.4-alt1
 - 1.0.4
 
