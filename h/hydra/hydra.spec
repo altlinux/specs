@@ -1,5 +1,5 @@
 Name: hydra
-Version: 9.3
+Version: 9.4
 Release: alt1
 
 Summary: A very fast network logon cracker which support many different services
@@ -159,6 +159,9 @@ install -pD -m644 pw-inspector.1.bz2 %buildroot%_man1dir/pw-inspector.1.bz2
 %_man1dir/pw-inspector*
 
 %changelog
+* Fri Sep 09 2022 Ilya Mashkin <oddity@altlinux.ru> 9.4-alt1
+- 9.4
+
 * Fri Feb 04 2022 Ilya Mashkin <oddity@altlinux.ru> 9.3-alt1
 - 9.3
 
