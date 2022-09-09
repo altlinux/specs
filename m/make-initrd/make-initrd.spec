@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.28.0
+Version: 2.29.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -345,6 +345,14 @@ fi
 %_datadir/%name/features/bootloader
 
 %changelog
+* Fri Sep 09 2022 Alexey Gladkov <legion@altlinux.ru> 2.29.0-alt1
+- New version (2.29.0).
+- Runtime:
+  +  Remove shell service.
+- Feature pipeline:
+  + Give resume a chance to run.
+  + Add wait-resume step.
+
 * Wed Aug 31 2022 Alexey Gladkov <legion@altlinux.ru> 2.28.0-alt1
 - New version (2.28.0).
 - Disable iscsi subpackage.
