@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.25.5
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -515,6 +515,13 @@ done
 
 
 %changelog
+* Fri Sep 09 2022 Oleg Solovyov <mcpain@altlinux.org> 1:5.25.5-alt3
+- kscreenlocker passwordless changes:
+  + Remove "Unlock" button after passwordless login
+  + Hide passwordBox unless password requested
+  + Restart fade timer on failed passwordless unlocks
+  + Do not append error messages, start failedUnlock animation
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt2
 - bump release
 
