@@ -1,6 +1,6 @@
 Name: python3-module-sagenb-export
-Version: 3.3
-Release: alt1.gitcb591d4
+Version: 3.4
+Release: alt1
 
 Summary: Python interface for convert SageNB Notebooks
 Group: Development/Python3
@@ -12,7 +12,7 @@ Source: %url/archive/%version/ExportSageNB-%version.tar.gz
 BuildArch: noarch
 
 BuildPreReq: rpm-build-python3
-BuildRequires: python3-module-nbformat python3-module-notebook
+BuildRequires: python3-module-setuptools python3-module-wheel python3-module-nbformat python3-module-notebook
 
 %description
 This is a tool to convert SageNB notebooks to other formats,
@@ -32,27 +32,32 @@ This package contains tests.
 %setup -n ExportSageNB-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-mv -f %buildroot%python3_sitelibdir_noarch/test/ %buildroot%python3_sitelibdir_noarch/sagenb_export/
+mv -f %buildroot%python3_sitelibdir_noarch/test/* %buildroot%python3_sitelibdir_noarch/sagenb_export/
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch/sagenb_export/test/
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch/sagenb_export/
 %__python3 setup.py test
 
 %files
 %doc README.md LICENSE
 %_bindir/sagenb-export
-%python3_sitelibdir_noarch/sagenb_export*
-%exclude %python3_sitelibdir_noarch/sagenb_export/test/
+%dir %python3_sitelibdir_noarch/sagenb_export*/
+%python3_sitelibdir_noarch/sagenb_export*/*
+%exclude %python3_sitelibdir_noarch/sagenb_export/test_*
 
 %files tests
-%python3_sitelibdir_noarch/sagenb_export/test/
+%dir %python3_sitelibdir_noarch/sagenb_export/
+%python3_sitelibdir_noarch/sagenb_export/test_*
 
 %changelog
+* Fri Sep 09 2022 Leontiy Volodin <lvol@altlinux.org> 3.4-alt1
+- New version (3.4).
+
 * Mon Dec 06 2021 Leontiy Volodin <lvol@altlinux.org> 3.3-alt1.gitcb591d4
 - Initial build for ALT Sisyphus.
 - Built as require for sagemath.
