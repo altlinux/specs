@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: libphonenumber
-Version: 8.12.54
+Version: 8.12.55
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -43,6 +43,7 @@ developing applications that use %name.
 %patch1
 
 %build
+# libabseil compiled with -std=gnu++17
 %cmake \
     -DCMAKE_CXX_STANDARD=17 \
     %{?_disable_check:-DBUILD_TESTING=OFF} \
@@ -67,6 +68,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name.so
 
 %changelog
+* Sat Sep 10 2022 Yuri N. Sedunov <aris@altlinux.org> 8.12.55-alt1
+- 8.12.55
+
 * Tue Aug 30 2022 Yuri N. Sedunov <aris@altlinux.org> 8.12.54-alt1
 - first build for Sisyphus
 
