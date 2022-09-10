@@ -2,7 +2,7 @@
 
 Name: python3-module-yubikey-manager
 Version: 4.0.9
-Release: alt2
+Release: alt3
 
 Summary: Tool for managing your YubiKey configuration
 License: BSD-2-Clause
@@ -22,6 +22,7 @@ BuildRequires: python3(makefun)
 BuildRequires: python3(OpenSSL)
 BuildRequires: libpcsclite-devel
 
+Requires: ykpers
 Requires: libykpers-1
 Requires: pcsc-lite-ccid
 
@@ -60,6 +61,9 @@ install -pD -m0644 man/ykman.1 %buildroot%_man1dir/ykman.1
 %_man1dir/*
 
 %changelog
+* Sat Sep 10 2022 Anton Zhukharev <ancieg@altlinux.org> 4.0.9-alt3
+- add ykpers dependency
+
 * Mon Jul 25 2022 Anton Zhukharev <ancieg@altlinux.org> 4.0.9-alt2
 - add pcsc-lite-ccid dependency
 
