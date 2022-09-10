@@ -2,7 +2,7 @@
 
 Name: ykman-gui
 Version: 1.2.4
-Release: alt1
+Release: alt2
 
 Summary: Application for configuring any YubiKey over all USB interfaces
 License: BSD-2-Clause
@@ -20,6 +20,8 @@ BuildRequires: qt5-quickcontrols2-devel
 BuildRequires: libpcsclite-devel
 BuildRequires: desktop-file-utils
 
+Requires: qt5-quickcontrols2
+Requires: qt5-graphicaleffects
 Requires: libyubikey
 Requires: python3(ykman)
 Requires: pyotherside
@@ -55,5 +57,8 @@ desktop-file-install --dir %buildroot%_desktopdir resources/ykman-gui.desktop
 %attr(644,root,root) %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sat Sep 10 2022 Anton Zhukharev <ancieg@altlinux.org> 1.2.4-alt2
+- fix requires
+
 * Sat Jul 23 2022 Anton Zhukharev <ancieg@altlinux.org> 1.2.4-alt1
 - initial build for Sisyphus
