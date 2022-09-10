@@ -1,6 +1,6 @@
 Name: googletest
 Version: 1.12.1
-Release: alt1
+Release: alt1.1
 
 Summary: Google's framework for writing C++ tests
 License: BSD-3-Clause
@@ -72,6 +72,9 @@ Development environment for gmock
 %ifarch %e2k
 # googletest/src/gtest.cc:2806 wrt testing::<unnamed>::TestNameIs::operator()
 %add_optflags -Wno-error=unused-function
+# error: unrecognized argument to attribute "optimize"
+sed -i 's/__attribute__((optimize("no-optimize-sibling-calls")))//' \
+	googletest/include/gtest/internal/gtest-port.h
 %endif
 %cmake -DBUILD_SHARED_LIBS:BOOL=TRUE -Dgmock_build_tests:BOOL=TRUE
 %cmake_build
@@ -108,6 +111,9 @@ Development environment for gmock
 %_includedir/gmock
 
 %changelog
+* Sat Sep 10 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.12.1-alt1.1
+- Fixed build for Elbrus
+
 * Fri Jul 01 2022 Nazarov Denis <nenderus@altlinux.org> 1.12.1-alt1
 - Version 1.12.1
 
