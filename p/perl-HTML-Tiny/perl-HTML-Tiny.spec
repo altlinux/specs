@@ -7,7 +7,7 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-HTML-Tiny
-Version:        1.07
+Version:        1.08
 Release:        alt1
 Summary:        Lightweight, dependency free HTML/XML generation
 License:        GPL+ or Artistic
@@ -47,6 +47,9 @@ make test
 %{perl_vendor_privlib}/HTML*
 
 %changelog
+* Sun Sep 11 2022 Igor Vlasenko <viy@altlinux.org> 1.08-alt1
+- automated CPAN update
+
 * Fri Sep 02 2022 Igor Vlasenko <viy@altlinux.org> 1.07-alt1
 - automated CPAN update
 
