@@ -12,7 +12,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.16
+%define major 7.17
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -72,7 +72,7 @@
 
 Name: wine
 Version: %major.1
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -851,6 +851,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sun Sep 11 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.17.1-alt1
+- new version 7.17.1 (with rpmrb script)
+
 * Tue Sep 06 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.16.1-alt2
 - build with opencl
 
