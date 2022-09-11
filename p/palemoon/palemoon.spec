@@ -4,7 +4,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Name: palemoon
 Version:  31.2.0.1
 
-Release: alt1
+Release: alt2
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -400,11 +400,11 @@ rm -rf -- \
 install -D -m 644 %SOURCE6 ./%_desktopdir/%bname.desktop
 install -d -m 755 %buildroot/%newmoon_bindir/browser/defaults/preferences/
 
-cat > %buildroot/%newmoon_bindir/browser/defaults/preferences/%sname-l10n.js <<EOF
-pref("intl.locale.matchOS",		true);
-pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
-pref("extensions.getAddons.cache.enabled", false);
-EOF
+#cat > %buildroot/%newmoon_bindir/browser/defaults/preferences/%sname-l10n.js <<EOF
+#pref("intl.locale.matchOS",		true);
+#pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
+#pref("extensions.getAddons.cache.enabled", false);
+#EOF
 
 
 cat << EOF >> %buildroot%newmoon_bindir/defaults/pref/prefs.js
@@ -492,6 +492,9 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %exclude %_includedir/*
 
 %changelog
+* Thu Sep 01 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.2.0.1-alt2
+- Remove palemoon-l10n.js
+
 * Fri Aug 12 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.2.0.1-alt1
 - Version 31.2.0.1
 
