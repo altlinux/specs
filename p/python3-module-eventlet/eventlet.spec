@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 0.33.0
+Version: 0.33.1
 Release: alt1
 
 Summary: Highly concurrent networking library
@@ -147,6 +147,9 @@ py.test3 -v -o norecursedirs="tests/*" -k "
 %endif
 
 %changelog
+* Sun Sep 11 2022 Vitaly Lipatov <lav@altlinux.ru> 0.33.1-alt1
+- new version 0.33.1 (with rpmrb script)
+
 * Sat Feb 12 2022 Anton Midyukov <antohami@altlinux.org> 0.33.0-alt1
 - new version (0.33.0) with rpmgs script
 - enable check
