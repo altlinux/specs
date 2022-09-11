@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.26
+Version: 0.2.27
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -63,6 +63,12 @@ install -m644 www/* %buildroot%webserver_htdocsdir/maintenance/
 %config(noreplace) %webserver_htdocsdir/maintenance/*
 
 %changelog
+* Sat Sep 10 2022 Vitaly Lipatov <lav@altlinux.ru> 0.2.27-alt1
+- deny.conf: update rules
+- rewrite-www: skip for .well-known
+- stop-injection.conf: update rules
+- sslonly: skip for .well-known
+
 * Sat Dec 11 2021 Vitaly Lipatov <lav@altlinux.ru> 0.2.26-alt1
 - store-proxy.inc: add http_500 for proxy_cache_use_stale
 - use cached limits for all store
