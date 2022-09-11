@@ -4,14 +4,14 @@
 %set_verify_elf_method strict
 
 Name: libdeflate
-Version: 1.13
-Release: alt2
+Version: 1.14
+Release: alt1
 
 Summary: Heavily optimized library for DEFLATE/zlib/gzip compression and decompression
 License: MIT
 Group: System/Libraries
-
 Url: https://github.com/ebiggers/libdeflate
+
 Source: %name-%version.tar
 
 %define valgrind_arches %ix86 x86_64 aarch64
@@ -117,6 +117,9 @@ b2sum --check test-file.b2sum
 %_bindir/libdeflate-*
 
 %changelog
+* Sun Sep 11 2022 Vitaly Chikunov <vt@altlinux.org> 1.14-alt1
+- Update to v1.14 (2022-09-10).
+
 * Mon Sep 05 2022 Michael Shigorin <mike@altlinux.org> 1.13-alt2
 - E2K: avoid lcc-unsupported option
 - Minor spec cleanup
