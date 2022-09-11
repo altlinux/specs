@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-DBIx-DBSchema
-Version: 0.45
+Version: 0.47
 Release: alt1
 
 Summary: Database-independent schema objects
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/I/IV/IVAN/DBIx-DBSchema-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/I/IV/IVAN/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 24 2005
 BuildRequires: perl-DBD-Pg perl-DBI perl-FreezeThaw perl-Log-Agent perl-Storable perl-devel
@@ -48,7 +48,7 @@ for other databases.  Assistance adding support for other databases is
 welcomed.  See DBIx::DBSchema::DBD, "Driver Writer's Guide and Base Class".
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -56,10 +56,13 @@ welcomed.  See DBIx::DBSchema::DBD, "Driver Writer's Guide and Base Class".
 %perl_vendor_install
 
 %files
-%doc Changes README 
+%doc Changes README
 %perl_vendor_privlib/DBIx/
 
 %changelog
+* Sun Sep 11 2022 Igor Vlasenko <viy@altlinux.org> 0.47-alt1
+- automated CPAN update
+
 * Fri May 22 2015 Igor Vlasenko <viy@altlinux.ru> 0.45-alt1
 - automated CPAN update
 
