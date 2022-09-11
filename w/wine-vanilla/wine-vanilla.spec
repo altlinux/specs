@@ -12,7 +12,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.16
+%define major 7.17
 %define rel %nil
 %define conflictbase wine
 
@@ -38,14 +38,10 @@
 %def_with vulkan
 %endif
 
-# TODO
-# [00:01:19] In file included from dlls/opencl/pe_wrappers.c:22:
-# [00:01:19] dlls/opencl/opencl_types.h:3:23: error: expected ';' after top level declarator
-# [00:01:19] typedef int32_t cl_int DECLSPEC_ALIGN(4);
-%if_with mingw
-%def_without opencl
-%else
-%def_without opencl
+# use rpm-macros-features
+
+%if_feature opencl
+%def_with opencl
 %endif
 
 %if_feature pcap 1.2.1
@@ -838,6 +834,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sat Sep 10 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.17-alt1
+- new version 7.17 (with rpmrb script)
+
 * Mon Aug 29 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.16-alt1
 - new version 7.16 (with rpmrb script)
 
