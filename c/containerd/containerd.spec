@@ -3,12 +3,15 @@
 %global __find_debuginfo_files %nil
 %global _unpackaged_files_terminate_build 1
 
+%global commit      9cd3357b7fd7218e4aec3eae239db1f68a5a6ec6
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+
 %set_verify_elf_method unresolved=no
 %add_debuginfo_skiplist %_bindir
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	1.6.6
+Version:	1.6.8
 Release:	alt1
 Summary:	A daemon to control runC
 
@@ -54,7 +57,7 @@ export GOPATH="%go_path:$PWD"
 mkdir -p src/github.com/containerd
 ln -rTsf $PWD src/github.com/containerd/containerd
 pushd src/github.com/containerd/containerd
-make VERSION=v%version REVISION=%release binaries man
+make VERSION=v%version REVISION=%shortcommit binaries man
 popd
 
 %install
@@ -87,6 +90,9 @@ install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%name/config.toml
 %_man8dir/*
 
 %changelog
+* Mon Sep 12 2022 Vladimir Didenko <cow@altlinux.org> 1.6.8-alt1
+- 1.6.8
+
 * Wed Jun 8 2022 Vladimir Didenko <cow@altlinux.org> 1.6.6-alt1
 - 1.6.6 (Fixes: CVE-2022-31030)
 
