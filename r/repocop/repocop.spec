@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.852
+Version: 0.853
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -31,6 +31,10 @@ Requires: perl-DBD-SQLite sqlite3
 Conflicts: repocop-unittest-unmet-dependency < 0.04
 # statedir
 Conflicts: repocop-collector-specfile < 0.04
+
+# hangs on newer jars...
+Conflicts: repocop-collector-java-jar < 0.06
+
 
 %description
 Repocop is a repository unit tests platform.
@@ -161,6 +165,9 @@ done
 %_man1dir/repocop-report-html.*
 
 %changelog
+* Mon Sep 12 2022 Igor Vlasenko <viy@altlinux.org> 0.853-alt1
+- added conflict with repocop-collector-java-jar
+
 * Mon Sep 12 2022 Igor Vlasenko <viy@altlinux.org> 0.852-alt1
 - new version
 
