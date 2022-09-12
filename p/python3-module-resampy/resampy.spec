@@ -8,7 +8,7 @@
 %endif
 
 Name:    python3-module-%oname
-Version: 0.3.1
+Version: 0.4.1
 Release: alt1
 
 Summary: Efficient signal resampling.
@@ -57,6 +57,9 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Sep 12 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt1
+- Automatically updated to 0.4.1.
+
 * Thu Jul 28 2022 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt1
 - Build new version.
 
