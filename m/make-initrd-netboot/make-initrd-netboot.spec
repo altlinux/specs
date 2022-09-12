@@ -1,7 +1,7 @@
 %add_findreq_skiplist /usr/share/make-initrd/features/*
 
 Name: make-initrd-netboot
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: Netboot feature for make-initrd
@@ -38,6 +38,9 @@ cp -a netboot %buildroot/usr/share/make-initrd/features/
 %_datadir/make-initrd/features/netboot
 
 %changelog
+* Mon Sep 12 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.4-alt1
+- Fixed trivial bug introduced in the previous change (ALT#43752).
+
 * Wed Aug 10 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.3-alt1
 - Added forced time synchronization to the boot sequence.
 
