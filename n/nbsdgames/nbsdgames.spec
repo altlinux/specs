@@ -1,6 +1,6 @@
 Name: nbsdgames
 Version: 5
-Release: alt1
+Release: alt2
 
 Summary: Popular set of 18 modern console games
 Summary(ru_RU.UTF-8): Популярный набор из 18 современных консольных игр
@@ -42,14 +42,19 @@ Miketron, Redsquare (Игра жизни Конвея стала играбел�
 # Key "Encoding" is outdated, remove it
 sed -i "/Encoding=UTF-8/d" nbsdgames.desktop
 
+# Changed the names of the man files as some of them conflict with files in the xscreensaver-modules-gl package
+pushd man
+rename '' nb *.6
+popd
+
 %build
 %make_build
 
 %install
-mkdir -p %buildroot{%_bindir,%_man6dir}
+mkdir -p %buildroot{%_gamesbindir,%_man6dir}
 %makeinstall_std \
     manpages \
-    GAMES_DIR=%buildroot%_bindir \
+    GAMES_DIR=%buildroot%_gamesbindir \
     MAN_DIR=%buildroot%_man6dir
 
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
@@ -61,12 +66,16 @@ convert -resize 48x48 %name.svg %buildroot%_liconsdir/%name.png
 
 %files
 %doc README.md
-%_bindir/*
+%_gamesbindir/*
 %_desktopdir/%name.desktop
 %_man6dir/*.xz
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Mon Sep 12 2022 Evgeny Chuck <koi@altlinux.org> 5-alt2
+- Binary directory changed to /usr/games
+- The man file names have been changed because they conflict with another package
+
 * Thu Sep 08 2022 Evgeny Chuck <koi@altlinux.org> 5-alt1
 - new version (5) with rpmgs script
 - initial build for ALT Linux Sisyphus
