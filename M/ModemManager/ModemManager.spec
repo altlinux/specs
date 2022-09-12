@@ -2,7 +2,7 @@
 # but they work well in a local hasher.
 # Just don't forget to enable them for local build when new version
 # is released,
-%def_disable check
+%def_enable check
 
 #define git_date .git20160601
 %define git_date %nil
@@ -17,7 +17,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.18.10
+Version: 1.18.12
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -246,6 +246,9 @@ fi
 %endif
 
 %changelog
+* Mon Sep 12 2022 Mikhail Efremov <sem@altlinux.org> 1.18.12-alt1
+- Updated to 1.18.12.
+
 * Tue Jun 28 2022 Mikhail Efremov <sem@altlinux.org> 1.18.10-alt1
 - Patch from upstream:
    + mm-sms-part-3gpp: sms_decode_text: avoid decoding an empty.
