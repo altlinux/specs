@@ -1,47 +1,42 @@
-Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python3
-BuildRequires: waf
-# END SourceDeps(oneline)
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
-# %%name and %%version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name lv2
-%define version 1.18.0
-%{!?_pkgdocdir: %global _pkgdocdir %{_docdir}/%{name}-%{version}}
+%def_enable old_headers
+%def_enable check
 
-Name:           lv2
-Version:        1.18.4
-Release:        alt1
-Summary:        Audio Plugin Standard
+Name: lv2
+Version: 1.18.10
+Release: alt1
 
+Summary: Audio Plugin Standard
 # lv2specgen template.html is CC-AT-SA
-License:        ISC
-URL:            http://lv2plug.in
-Source: http://lv2plug.in/spec/lv2-%{version}.tar.bz2
+License: ISC
+Group: System/Libraries
+Url: http://lv2plug.in
 
-BuildRequires:  doxygen
-BuildRequires:  graphviz libgraphviz
-BuildRequires:  libsndfile-devel
-BuildRequires:  gcc
-BuildRequires:  python3-devel
-BuildRequires:  python3-module-Pygments
-Buildrequires:  python3-module-rdflib
-Buildrequires:  python3-module-markdown
-Buildrequires:  python3-module-lxml
-Buildrequires:  asciidoc asciidoc-a2x
-Buildrequires:  libcairo-devel >= 1.8.10
+Vcs: https://github.com/lv2/lv2.git
+Source: http://lv2plug.in/spec/lv2-%version.tar.xz
+Source1: lv2-1.18.4-include-symlinks
 
-# this package replaces lv2core 
-Provides:       lv2core = 6.0-4
-Obsoletes:      lv2core < 6.0-4
-Provides:       lv2-ui = 2.4-5
-Obsoletes:      lv2-ui < 2.4-5
-Source44: import.info
+BuildRequires(pre): rpm-macros-meson rpm-build-python3
+BuildRequires: meson
+BuildRequires: libsndfile-devel
+BuildRequires: libcairo-devel >= 1.8.10
+BuildRequires: python3-devel
+BuildRequires: python3-module-Pygments
+BuildRequires: python3-module-rdflib
+BuildRequires: python3-module-markdown
+BuildRequires: python3-module-lxml
+BuildRequires: doxygen graphviz
+BuildRequires: asciidoc-a2x
+%{?_enable_check:BuildRequires: codespell /usr/bin/serdi}
+
+# this package replaces lv2core
+Provides: lv2core = 6.0-4
+Obsoletes: lv2core < 6.0-4
+Provides: lv2-ui = 2.4-5
+Obsoletes: lv2-ui < 2.4-5
 
 %description
 LV2 is a standard for plugins and matching host applications, mainly
-targeted at audio processing and generation.  
+targeted at audio processing and generation.
 
 There are a large number of open source and free software synthesis
 packages in use or development at this time. This API ('LV2') attempts
@@ -53,19 +48,18 @@ plugin to communicate completely through this interface.
 LV2 is a successor to LADSPA, created to address the limitations of
 LADSPA which many hosts have outgrown.
 
-%package        devel
+%package devel
+Summary: API for the LV2 Audio Plugin Standard
 Group: Development/C
-Summary:        API for the LV2 Audio Plugin Standard
+Requires: %name = %EVR
+Requires: python3-module-rdflib
+Requires: python3-module-markdown
+Provides: lv2core-devel = 6.0-4
+Obsoletes: lv2core-devel < 6.0-4
+Provides: lv2-ui-devel = 2.4-5
+Obsoletes: lv2-ui-devel < 2.4-5
 
-Requires:       %{name} = %{version}-%{release}
-Requires:       python3-module-rdflib
-Requires:       python3-module-markdown
-Provides:       lv2core-devel = 6.0-4
-Obsoletes:      lv2core-devel < 6.0-4
-Provides:       lv2-ui-devel = 2.4-5
-Obsoletes:      lv2-ui-devel < 2.4-5
-
-%description    devel
+%description devel
 lv2-devel contains the lv2.h header file and headers for all of the
 LV2 specification extensions and bundles.
 
@@ -73,71 +67,88 @@ Definitive technical documentation on LV2 plug-ins for both the host
 and plug-in is contained within copious comments within the lv2.h
 header file.
 
-%package        doc
+%package doc
+Summary: Documentation for the LV2 Audio Plugin Standard
 Group: Documentation
-Summary:        Documentation for the LV2 Audio Plugin Standard
-BuildArch:      noarch
-Obsoletes:      %{name}-docs < 1.6.0-2
-Provides:       %{name}-docs = %{version}-%{release}
+BuildArch: noarch
+Conflicts: %name < %version
 
-%description    doc
+%description doc
 Documentation for the LV2 plugin API.
 
-%package        example-plugins
+%package example-plugins
+Summary: Examples of the LV2 Audio Plugin Standard
 Group: Sound
-Summary:        Examples of the LV2 Audio Plugin Standard
+Requires: %name = %EVR
 
-%description    example-plugins
+%description example-plugins
 Example LV2 audio plugins
 
+%{!?_pkgdocdir: %global _pkgdocdir %_docdir/%name-%version}
+
 %prep
-%setup -q
+%setup
 # Fix wrong interpreter in lv2specgen.py
-sed -i '1s|^#!.*|#!%{__python3}|' lv2specgen/lv2specgen.py
+sed -i '1s|^#!.*|#!%__python3|' lv2specgen/lv2specgen.py
 
 %build
-
-%{__python3} waf configure -vv --prefix=%{_prefix} --libdir=%{_libdir} \
-  --docs --docdir=%{_docdir}/%{name} --lv2dir=%{_libdir}/lv2 --no-check-links
-%{__python3} waf -vv %{?_smp_mflags}
+%meson %{?_disable_old_headers:-Dold_headers=false}
+%meson_build
 
 %install
-DESTDIR=%{buildroot} %{__python3} waf -vv install
-mv %{buildroot}%{_docdir}/%{name}/%{name}/* %{buildroot}%{_docdir}/%{name}
-find %{buildroot}%{_docdir}/%{name} -type d -empty | xargs rmdir
-for f in COPYING NEWS README.md build/plugins/book.{txt,html} ; do
-    install -p -m0644 $f %{buildroot}%{_docdir}/%{name}
-done
+%meson_install
+
+%check
+%__meson_test
 
 %files
-# don't include doc files via %%doc here (bz 913540)
-%dir %{_docdir}/%{name}
-%{_docdir}/%{name}/COPYING
-%{_docdir}/%{name}/NEWS
-%{_docdir}/%{name}/README.md
-%{_libdir}/%{name}/
+%_libdir/%name/
+%doc NEWS README*
 
-%exclude %{_libdir}/%{name}/*/*.[ch]
-%exclude %{_libdir}/%{name}/eg-*
+%exclude %_libdir/%name/eg-*
 
 %files devel
-%{_bindir}/lv2specgen.py
-%{_bindir}/lv2_validate
-%{_datadir}/lv2specgen
-%{_includedir}/%{name}.h
-%{_includedir}/%{name}/
-%{_libdir}/%{name}/*/*.[hc]
-%{_libdir}/pkgconfig/%{name}.pc
-
-%exclude %{_libdir}/%{name}/eg-*
+%_bindir/%{name}specgen.py
+%_bindir/%{name}_validate
+%_datadir/%{name}specgen
+%_includedir/%name/atom/
+%_includedir/%name/buf-size/
+%_includedir/%name/core/
+%_includedir/%name/data-access/
+%_includedir/%name/dynmanifest/
+%_includedir/%name/event/
+%_includedir/%name/instance-access/
+%_includedir/%name/log/
+%_includedir/%name/midi/
+%_includedir/%name/morph/
+%_includedir/%name/options/
+%_includedir/%name/parameters/
+%_includedir/%name/patch/
+%_includedir/%name/port-groups/
+%_includedir/%name/port-props/
+%_includedir/%name/presets/
+%_includedir/%name/resize-port/
+%_includedir/%name/state/
+%_includedir/%name/time/
+%_includedir/%name/ui/
+%_includedir/%name/units/
+%_includedir/%name/urid/
+%_includedir/%name/uri-map/
+%_includedir/%name/worker/
+%{?_enable_old_headers:%_includedir/%name.h
+%_includedir/%name/lv2plug.in/}
+%_pkgconfigdir/%name.pc
 
 %files example-plugins
-%{_libdir}/%{name}/eg-*
+%_libdir/%name/eg-*
 
 %files doc
-%{_docdir}/%{name}/
+%_docdir/%name/
 
 %changelog
+* Sat Sep 10 2022 Yuri N. Sedunov <aris@altlinux.org> 1.18.10-alt1
+- 1.18.8 (ported to Meson build system)
+
 * Fri May 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1.18.4-alt1
 - 1.18.4
 

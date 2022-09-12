@@ -1,25 +1,29 @@
+%def_enable snapshot
+%def_enable check
+
 Name: libsndfile
-Version: 1.0.31
+Version: 1.1.0
 Release: alt1
 
 Summary: A library to handle various audio file formats
 Group: System/Libraries
-License: LGPL
-Url: http://www.mega-nerd.com/%name/
+License: LGPL-2.1
+Url: https://libsndfile.github.io/libsndfile
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-# Was: %url/files/%name-%version.tar.gz
-# Now: https://github.com/libsndfile/libsndfile.git
-Source: %name-%version.tar.bz2
+%if_disabled snapshot
+Source: https://github.com/libsndfile/libsndfile/releases/download/%version/%name-%version.tar.xz
+%else
+Vcs: https://github.com/libsndfile/libsndfile.git
+Source: %name-%version.tar
+%endif
+Patch0: libsndfile-1.1.0+-fc-system-gsm.patch
 
-Patch0: libsndfile-1.0.30-system-gsm.patch
-Patch1: libsndfile-1.0.25-zerodivfix.patch
-
-BuildRequires: gcc-c++ libalsa-devel libflac-devel libsqlite3-devel libvorbis-devel libgsm-devel
-BuildRequires: autogen
+BuildRequires: gcc-c++ autogen python3
+BuildRequires: libalsa-devel libflac-devel libsqlite3-devel
+BuildRequires: libogg-devel libvorbis-devel libgsm-devel
+BuildRequires: libmpg123-devel liblame-devel
 BuildRequires: libopus-devel
-# for check
-BuildRequires: python3-module-setuptools
 
 %description
 %name is a C library for reading and writing sound files such as
@@ -32,7 +36,10 @@ This package contains shared library required for %name-based applications.
 %package devel
 Summary: Development environment for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
+Requires: libflac-devel libogg-devel libvorbis-devel
+Requires: libopus-devel libmpg123-devel libgsm-devel
+Requires: liblame-devel
 
 %description devel
 This package contains development files required
@@ -41,21 +48,19 @@ in development of the %name-based applications.
 %package utils
 Summary: Utilities for %name
 Group: Sound
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description utils
 This package contains utilities for %name
 
 %prep
-%setup -q
-%patch0 -p2 -b .systemgsm
-%patch1 -p1 -b .zerodivfix
+%setup
+%patch0 -p1 -b .system-gsm
 rm -r src/GSM610
 
 %build
 %autoreconf
-%configure \
-	--disable-static
+%configure
 %make_build
 
 %install
@@ -64,23 +69,40 @@ rm -r src/GSM610
 
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
-%make check
+%make -k check VERBOSE=1
 
 %files
-%doc AUTHORS NEWS
-%_libdir/*.so.*
+%_libdir/%name.so.*
+%doc AUTHORS NEWS* CHANGELOG* README
 
 %files devel
-%doc %_docdir/%name-devel-%version
 %_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*.pc
+%_libdir/%name.so
+%_pkgconfigdir/sndfile.pc
+%doc %_docdir/%name-devel-%version
 
 %files utils
-%_bindir/*
+%_bindir/sndfile-cmp
+%_bindir/sndfile-concat
+%_bindir/sndfile-convert
+%_bindir/sndfile-deinterleave
+%_bindir/sndfile-info
+%_bindir/sndfile-interleave
+%_bindir/sndfile-metadata-get
+%_bindir/sndfile-metadata-set
+%_bindir/sndfile-play
+%_bindir/sndfile-salvage
 %_man1dir/*.1*
 
 %changelog
+* Fri Sep 09 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- updated to 1.1.0-26-gcefd7b59 (added MP3 support)
+- updated system-gsm patch
+- removed upstreamed zerodivfix patch
+- updated BR
+- updated dependencies for -devel subpackage to make CMake happy
+- fixed License tag
+
 * Tue May 18 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.0.31-alt1
 - 1.0.31
 
