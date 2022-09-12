@@ -2,20 +2,20 @@
 
 Name: admc
 Version: 0.10.0
-Release: alt2
+Release: alt3
 
 Summary: Active Directory Management Center
 License: GPLv3+
 Group: Other
 Url: https://github.com/altlinuxteam/admc
 
-BuildRequires(pre): cmake
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires(pre): gcc-c++
-BuildRequires(pre): qt5-base-devel
-BuildRequires(pre): qt5-tools-devel
-BuildRequires(pre): catch2-devel
-BuildRequires(pre): cmake-modules
+BuildRequires: cmake
+BuildRequires: gcc-c++
+BuildRequires: qt5-base-devel
+BuildRequires: qt5-tools-devel
+#BuildRequires: catch2-devel
+BuildRequires: cmake-modules
 
 BuildRequires: samba-devel
 BuildRequires: libldap-devel
@@ -24,18 +24,10 @@ BuildRequires: libsmbclient-devel
 BuildRequires: qt5-base-common
 BuildRequires: doxygen
 BuildRequires: libuuid-devel
-BuildRequires: glib2-devel
-BuildRequires: libpcre-devel
 BuildRequires: libkrb5-devel
 
-Requires: libldap
 Requires: libsasl2
 Requires: libsasl2-plugin-gssapi
-Requires: libsmbclient
-Requires: libuuid
-Requires: qt5-base-common
-Requires: glib2
-Requires: libkrb5
 
 Source0: %name-%version.tar
 
@@ -117,6 +109,9 @@ Tests for ADMC
 %_bindir/admc_test_dn_edit
 
 %changelog
+* Mon Sep 12 2022 Alexey Shabalin <shaba@altlinux.org> 0.10.0-alt3
+- Cleanup Requires and BuidRequires.
+
 * Wed Sep 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.10.0-alt2
 - Build latest tested release.
 - Adjust package summary and description.
