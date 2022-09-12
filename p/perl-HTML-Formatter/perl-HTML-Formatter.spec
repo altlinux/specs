@@ -9,7 +9,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 2.16
-Release: alt1
+Release: alt2
 Summary: Base class for HTML formatters
 Group: Development/Perl
 License: perl
@@ -17,6 +17,9 @@ URL: https://metacpan.org/release/HTML-Formatter
 
 Source: http://www.cpan.org/authors/id/N/NI/NIGELM/HTML-Formatter-%{version}.tar.gz
 BuildArch: noarch
+
+Conflicts: perl-HTML-Format < 2.10-alt2
+Obsoletes: perl-HTML-Format < 2.10-alt2
 
 %description
 From summary: %summary
@@ -35,6 +38,9 @@ From summary: %summary
 %perl_vendor_privlib/H*
 
 %changelog
+* Mon Sep 12 2022 Igor Vlasenko <viy@altlinux.org> 2.16-alt2
+- added Conflicts: perl-HTML-Format
+
 * Sun Dec 18 2016 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1
 - automated CPAN update
 
