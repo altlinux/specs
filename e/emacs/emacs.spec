@@ -1,10 +1,11 @@
 # -*- coding: utf-8; mode: rpm-spec -*-
-%def_enable gtk3		# actually unconditionally
 %def_enable athena
+%def_enable gtk3
 %def_enable nox
+%def_disable natcomp
 
 Name: emacs
-Version: 28.1
+Version: 28.2
 Release: alt1
 
 Summary: GNU Emacs text editor
@@ -51,22 +52,9 @@ BuildRequires: libgpm-devel
 BuildRequires: libgif-devel
 BuildRequires: inotify-tools-devel
 BuildRequires: libXaw3d-devel libXaw-devel
+%{?_enable_natcomp:BuildRequires: libgccjit12-devel}
 
 %define obsolete_versioned() %(printf 'Provides: emacs26-%{1} = %version-%release\\nObsoletes: emacs26-%{1}\\n')
-
-%package gtk3
-Summary: The GNU Emacs text editor for the X Window System (gtk3)
-Group: Editors
-Requires(pre): alternatives >= 0.2.0
-Requires: emacs-common = %version-%release
-# just can't get enough of it
-Provides: /usr/bin/emacs
-Provides: emacs = %version-%release
-Provides: emacs-X11 = %version-%release
-Provides: emacs-X11-program
-Provides: emacsen
-%obsolete_versioned X11-gtk
-%obsolete_versioned X11-gtk3
 
 %package athena
 Summary: The GNU Emacs text editor for the X Window System (athena)
@@ -79,6 +67,19 @@ Provides: emacs-X11 = %version-%release
 Provides: emacs-X11-program
 Provides: emacsen
 %obsolete_versioned X11-athena
+
+%package gtk3
+Summary: The GNU Emacs text editor for the X Window System (gtk3)
+Group: Editors
+Requires(pre): alternatives >= 0.2.0
+Requires: emacs-common = %version-%release
+Provides: /usr/bin/emacs
+Provides: emacs = %version-%release
+Provides: emacs-X11 = %version-%release
+Provides: emacs-X11-program
+Provides: emacsen
+%obsolete_versioned X11-gtk
+%obsolete_versioned X11-gtk3
 
 %package nox
 Summary: The GNU Emacs text editor without support for the X Window System
@@ -165,18 +166,6 @@ need to install the actual Emacs program package (%name-nox or
 %name-X11).  Install %name-nox if you are not going to use the X
 Window System; install %name-X11 if you will be using X.
 
-%description gtk3
-Emacs-gtk3 includes the GNU Emacs text editor program for use with the X
-Window System using gtk+ toolkit v.3 (it provides support for the mouse and
-other GUI elements).  Emacs-gtk3 will also run GNU Emacs outside of X, but
-it has a larger memory footprint than the 'non-X' GNU Emacs package
-(%name-nox).
-
-Install %name-gtk3 if you are going to use Emacs with the X Window
-System and you like gtk+ look.  You should also install %name-gtk3 if you
-are going to run GNU Emacs both with and without X (it will work fine both
-ways).
-
 %description athena
 Emacs-athena includes the GNU Emacs text editor program for use with the X
 Window System using athena widget set (it provides support for the mouse and
@@ -187,6 +176,18 @@ but it has a larger memory footprint than the 'non-X' GNU Emacs package
 Install %name-athena if you are going to use Emacs with the X Window
 System and you like athena look.  You should also install %name-athena if
 you are going to run GNU Emacs both with and without X (it will work fine both
+ways).
+
+%description gtk3
+Emacs-gtk3 includes the GNU Emacs text editor program for use with the X
+Window System using gtk+ toolkit v.3 (it provides support for the mouse and
+other GUI elements).  Emacs-gtk3 will also run GNU Emacs outside of X, but
+it has a larger memory footprint than the 'non-X' GNU Emacs package
+(%name-nox).
+
+Install %name-gtk3 if you are going to use Emacs with the X Window
+System and you like gtk+ look.  You should also install %name-gtk3 if you
+are going to run GNU Emacs both with and without X (it will work fine both
 ways).
 
 %description nox
@@ -243,103 +244,75 @@ This package contain full description of Emacs Lisp language
 
 %prep
 %setup
-
 sed -ri 's,(\.\./info/[[:alpha:]-]+),\1.info,g' doc/{emacs,misc}/*.texi
 
-%define Substage printf 'Substage #%%s. %%s:\\n'
-
-# We build few binaries (with X and without X support) 
-# in several symmetric substages.
-
-%Substage 0 "Clear and create the build directories"
-[ -d build-nox ] && rm -rf build-nox; mkdir -p build-nox
-[ -d build-athena ] && rm -rf build-athena; mkdir -p build-athena
-[ -d build-gtk3 ] && rm -rf build-gtk3; mkdir -p build-gtk3
-
 %build
+export LIBRARY_PATH=$(dirname $(gcc -print-libgcc-file-name))
 autoreconf -i -I m4
 
-%Substage 1 "Configure"
-
-%define stage3bin gtk3
 %define _configure_script ../configure
 %define _configure_mostly --disable-build-details --sharedstatedir=/var \\\
-	--with-pop --with-wide-int --with-modules
+	--with-pop --with-wide-int --with-modules %{?_enable_natcomp:--with-native-compilation}
 
-pushd build-gtk3
-%configure %_configure_mostly --without-gpm --with-x-toolkit=gtk3
-popd
-
-%if_enabled athena
-pushd build-athena
+mkdir build-athena && pushd build-athena
 %configure %_configure_mostly --without-gpm --without-cairo --without-harfbuzz \
 	--without-rsvg --without-dbus --without-gconf --without-gsettings \
 	--with-x-toolkit=athena
 popd
+
+%if_enabled gtk3
+mkdir -p build-gtk3 && pushd build-gtk3
+%configure %_configure_mostly --without-gpm --with-x-toolkit=gtk3
+popd
 %endif
 
 %if_enabled nox
-pushd build-nox
+mkdir build-nox && pushd build-nox
 %configure %_configure_mostly --without-all --with-gnutls --with-gpm --with-selinux \
 	--with-xml2 --with-zlib --with-x=no
 popd
 %endif
 
-%Substage 2 "Initial make all" 
-%make_build -C build-gtk3
-%if_enabled athena
 %make_build -C build-athena
+%if_enabled gtk3
+%make_build -C build-gtk3
 %endif
 %if_enabled nox
 %make_build -C build-nox
 %endif
 
-%Substage 3 "Make supplementary (and important) things only once (asymmetricly) 
- (for possibly more capabilities -- in the X build)"
-
-pushd build-%stage3bin
-make -C doc/emacs
-make -C doc/misc
-popd # build-%stage3bin
-
-%Substage 4 "Final make all (now that we have all patched Lisp code compiled, 
- also a bit asymmetric), clean previous binaries"
-
-%define override_from_stage3() if [ ! '%stage3bin'=='%{1}' ]; then rm -rf etc leim; ln -s -f ../build-%stage3bin/{etc,leim} . ; fi
-
-%if_enabled athena
-pushd build-athena
-  # Override some data with more complete from the X build
-  # (exactly the X variant of the data will be included in the package,
-  # so emacs-athena has to work correctly in this environment):
-  %override_from_stage3 athena
-  rm -f src/emacs src/emacs-[0-9]*
-  make
-popd
-%endif
-%if_enabled nox
-pushd build-nox
-  # Override some data with more complete from the X build
-  # (exactly the X variant of the data will be included in the package,
-  # so emacs-nox has to work correctly in this environment):
-  %override_from_stage3 nox
-  rm -f src/emacs src/emacs-[0-9]*
-  make
-popd
-%endif
-
 %install
-%makeinstall -C build-%stage3bin
-install -pm0755 build-gtk3/src/emacs %buildroot%_bindir/%name-gtk3
-install -pm0644 build-gtk3/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-gtk3.pdmp
-%if_enabled athena
+%makeinstall -C build-athena
 install -pm0755 build-athena/src/emacs %buildroot%_bindir/%name-athena
 install -pm0644 build-athena/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-athena.pdmp
+%if_enabled natcomp
+echo build-athena/native-lisp/* |sed 's,build-athena/,%_libdir/%name/%version/,' > athena.ls
+%else
+touch athena.ls
 %endif
+
+%if_enabled gtk3
+install -pm0755 build-gtk3/src/emacs %buildroot%_bindir/%name-gtk3
+install -pm0644 build-gtk3/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-gtk3.pdmp
+%if_enabled natcomp
+%make_install libdir=%buildroot%_libdir install-eln -C build-gtk3
+echo build-gtk3/native-lisp/* |sed 's,build-gtk3/,%_libdir/%name/%version/,' > gtk3.ls
+%else
+touch gtk3.ls
+%endif
+%endif
+
 %if_enabled nox
 install -pm0755 build-nox/src/emacs %buildroot%_bindir/%name-nox
 install -pm0644 build-nox/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-nox.pdmp
+%if_enabled natcomp
+%make_install libdir=%buildroot%_libdir install-eln -C build-nox
+echo build-nox/native-lisp/* |sed 's,build-nox/,%_libdir/%name/%version/,' > nox.ls
+%else
+touch nox.ls
 %endif
+%endif
+
 # remove the installed duplicate emacs binaries
 # -- it'll be a link managed by `alternatives':
 rm -vf %buildroot%_bindir/emacs
@@ -347,6 +320,7 @@ rm -vf %buildroot%_bindir/emacs-%version
 rm -vf %buildroot%_emacs_archlibdir/emacs.pdmp
 
 install -pm644 -D .gear/emacs.desktop %buildroot%_desktopdir/emacs.desktop
+sed -i 's,%buildroot,,' %buildroot%_desktopdir/*desktop
 
 # Site start configuration:
 # Link to a file provided by emacsen-startscripts pkg:
@@ -370,9 +344,9 @@ sed -i 's,%buildroot,,' %buildroot%_libexecdir/systemd/user/emacs.service
 ########################
 # Alternatives support #
 ########################
-install -pm644 -D .gear/gtk3.alternatives %buildroot%_altdir/%name-gtk3
-%if_enabled athena
 install -pm644 -D .gear/athena.alternatives %buildroot%_altdir/%name-athena
+%if_enabled gtk3
+install -pm644 -D .gear/gtk3.alternatives %buildroot%_altdir/%name-gtk3
 %endif
 %if_enabled nox
 install -pm644 -D .gear/nox.alternatives %buildroot%_altdir/%name-nox
@@ -383,9 +357,9 @@ install -pm0644 -D .gear/xresources %buildroot%_sysconfdir/X11/app-defaults/Emac
 
 # Substitute emacs-X11.* with emacs-X11 for buildreq
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
-echo emacs-X11 > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-gtk3
-%if_enabled athena
 echo emacs-X11 > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-athena
+%if_enabled gtk3
+echo emacs-X11 > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-gtk3
 %endif
 
 # check-shadows script
@@ -423,22 +397,22 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %set_compress_method skip
 
 #---------------------------------------------------------------
-%files gtk3
-%_sysconfdir/buildreqs/packages/substitute.d/%name-gtk3
-%_altdir/%name-gtk3
-%_bindir/%name-gtk3
-%_emacs_archlibdir/%name-gtk3.pdmp
-
-%if_enabled athena
-%files athena
+%files athena -f athena.ls
 %_sysconfdir/buildreqs/packages/substitute.d/%name-athena
 %_altdir/%name-athena
 %_bindir/%name-athena
 %_emacs_archlibdir/%name-athena.pdmp
+
+%if_enabled gtk3
+%files gtk3 -f gtk3.ls
+%_sysconfdir/buildreqs/packages/substitute.d/%name-gtk3
+%_altdir/%name-gtk3
+%_bindir/%name-gtk3
+%_emacs_archlibdir/%name-gtk3.pdmp
 %endif
 
 %if_enabled nox
-%files nox
+%files nox -f nox.ls
 %_altdir/%name-nox
 %_bindir/%name-nox
 %_emacs_archlibdir/%name-nox.pdmp
@@ -449,9 +423,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %config(noreplace) %_sysconfdir/X11/app-defaults/*
 
 %_bindir/*
-%exclude %_bindir/%name-gtk3
-%if_enabled athena
 %exclude %_bindir/%name-athena
+%if_enabled gtk3
+%exclude %_bindir/%name-gtk3
 %endif
 %if_enabled nox
 %exclude %_bindir/%name-nox
@@ -492,6 +466,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Mon Sep 12 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 28.2-alt1
+- 28.2 released
+
 * Wed Apr 06 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 28.1-alt1
 - 28.1 released
 
