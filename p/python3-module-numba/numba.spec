@@ -4,8 +4,8 @@
 %def_without check
 
 Name:    python3-module-%oname
-Version: 0.56.0
-Release: alt1.1
+Version: 0.56.2
+Release: alt1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
 
@@ -63,6 +63,9 @@ popd
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Sep 12 2022 Grigory Ustinov <grenka@altlinux.org> 0.56.2-alt1
+- Automatically updated to 0.56.2.
+
 * Fri Aug 05 2022 Grigory Ustinov <grenka@altlinux.org> 0.56.0-alt1.1
 - Fix tags filter.
 
