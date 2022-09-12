@@ -16,7 +16,7 @@
 %define nv_version 515
 %define nv_release 65
 %define nv_minor 01
-%define pkg_rel alt255
+%define pkg_rel alt256
 %define set_gl_nvidia_ver 1.6.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -193,6 +193,7 @@ ld --shared nvidianull.o -o libnvidianull.so
 %__mkdir_p %buildroot/%nv_workdirdir
 %__mkdir_p %buildroot/%_datadir/nvidia
 %__mkdir_p %buildroot/%x11_lib_dir/vdpau
+%__mkdir_p %buildroot/%x11_lib_dir/gbm
 
 # prompt user to don't use nvidia-installer
 mkdir -p %buildroot/usr/lib/nvidia/
@@ -229,6 +230,7 @@ install -m 0755 %SOURCE4 %buildroot/%_bindir/
 %__ln_s ../..%nv_etclib_sym_dir/libGLESv1_CM_nvidia.so.1 %buildroot/%x11_lib_dir/libGLESv1_CM_nvidia.so.1
 %__ln_s ../..%nv_etclib_sym_dir/libGLX_nvidia.so.0 %buildroot/%x11_lib_dir/libGLX_nvidia.so.0
 %__ln_s ../..%nv_etclib_sym_dir/libnvidia-allocator.so.1 %buildroot/%x11_lib_dir/libnvidia-allocator.so.1
+%__ln_s ../libnvidia-allocator.so.1 %buildroot/%x11_lib_dir/gbm/nvidia-drm_gbm.so
 
 
 # nvidia_drv.o
@@ -327,6 +329,7 @@ fi
 %x11_lib_dir/libGLESv1_CM_nvidia.so.?
 %x11_lib_dir/libGLX_nvidia.so.?
 %x11_lib_dir/libnvidia-allocator.so.?
+%x11_lib_dir/gbm/nvidia-drm_gbm.so
 #
 %_bindir/nvidia-clean-driver
 %_bindir/nvidia-install-driver
@@ -341,6 +344,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Mon Sep 12 2022 Sergey V Turchin <zerg@altlinux.org> 515.65.01-alt256
+- package nvidia-drm_gbm.so symlink
+
 * Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 515.65.01-alt255
 - new version
 
