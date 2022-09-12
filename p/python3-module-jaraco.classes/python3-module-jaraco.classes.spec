@@ -4,7 +4,7 @@
 %def_enable check
 
 Name:    python3-module-%modulename
-Version: 3.1.0
+Version: 3.2.2
 Release: alt1
 
 Summary: Utility functions for Python class constructs
@@ -13,17 +13,19 @@ Group:   Development/Python3
 URL:     https://github.com/jaraco/jaraco.classes
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools_scm
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
 
 %if_enabled check
+BuildRequires: python3-module-more-itertools
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-pytest
 %endif
 
 BuildArch: noarch
 
-Source:  %name-%version.tar
+Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 %description
@@ -32,48 +34,35 @@ Patch0: %name-%version-%release.patch
 %prep
 %setup
 %patch0 -p1
+# fix version tag handle by SCM
+if [ ! -d .git ]; then
+    git init                                                                         
+    git config user.email author@example.com                                         
+    git config user.name author                                                      
+    git add .                                                                        
+    git commit -m 'release'                                                          
+    git tag '%version'
+fi
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_INDEX=YES
-export PIP_NO_BUILD_ISOLATION=no
-export TOXENV=py%{python_version_nodots python3}
-# replace pytest executable name
-sed -i 's|pytest |py.test3 |g' tox.ini
-
-sed -i '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-setenv =\
-    _PYTEST_BIN = %_bindir\/py.test3\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test3\
-skip_install = True' tox.ini
-# removing development stage testing options
-sed -i 's|addopts=.*|addopts=|' pytest.ini
-# no tests applied now in upstream. added dumb one now
-cat > test_dumb.py <<EOF
-def test_nothing():
-    pass
-EOF
-
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject
 
 %files
 %python3_sitelibdir/jaraco/*
-%python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/jaraco/__init__*
-%exclude %python3_sitelibdir/jaraco/__pycache__/__init__*
+%python3_sitelibdir/%modulename-%version.dist-info/
+
 
 %changelog
+* Mon Sep 12 2022 Danil Shein <dshein@altlinux.org> 3.2.2-alt1
+- update version to 3.2.2
+  + migrate to pyproject macroses
+
 * Wed Nov 18 2020 Danil Shein <dshein@altlinux.org> 3.1.0-alt1
 - update version to 3.1.0
 - build with check enabled
