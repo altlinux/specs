@@ -9,7 +9,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 22.6.0
+Version: 22.8.0
 Release: alt1
 
 Summary: The Uncompromising Code Formatter
@@ -106,6 +106,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 12 2022 Stanislav Levin <slev@altlinux.org> 22.8.0-alt1
+- 22.6.0 -> 22.8.0.
+
 * Mon Aug 15 2022 Stanislav Levin <slev@altlinux.org> 22.6.0-alt1
 - 22.3.0 -> 22.6.0.
 

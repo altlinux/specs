@@ -4,12 +4,12 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9.0
+Version: 0.10.1
 Release: alt1
 Summary: Utility library for gitignore style pattern matching of file paths
 License: MPL-2.0-no-copyleft-exception
 Group: Development/Python
-Url: https://github.com/cpburnz/python-path-specification
+Url: https://github.com/cpburnz/python-pathspec
 
 BuildArch: noarch
 
@@ -17,9 +17,9 @@ Source: %name-%version.tar
 
 BuildRequires: rpm-build-python3
 
-%if_with check
-BuildRequires: python3(tox)
-%endif
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 %pypi_name is a utility library for pattern matching of file paths. So
@@ -31,29 +31,23 @@ gitignore files.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-# don't package tests
-rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    {envpython} -m unittest discover -vv pathspec/tests {posargs}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject
 
 %files
-%python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
 %doc *.rst
+%python3_sitelibdir/%pypi_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 12 2022 Stanislav Levin <slev@altlinux.org> 0.10.1-alt1
+- 0.9.0 -> 0.10.1.
+
 * Tue Sep 07 2021 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1
 - 0.8.1 -> 0.9.0.
 
