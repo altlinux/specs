@@ -1,5 +1,5 @@
 Name: disomaster
-Version: 5.0.7
+Version: 5.0.8
 Release: alt1
 Summary: Library to manipulate DISC burning
 License: GPL-3.0+
@@ -52,6 +52,9 @@ Header files and libraries for %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Sep 13 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.8-alt1
+- New version (5.0.8) with rpmgs script.
+
 * Tue Apr 13 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.7-alt1
 - New version (5.0.7) with rpmgs script.
 
