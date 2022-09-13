@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: libgusb
-Version: 0.3.10
+Version: 0.4.0
 Release: alt1
 
 Summary: GLib wrapper around libusb1
@@ -21,6 +21,7 @@ Source: http://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson libgio-devel >= 2.44 libusb-devel >= 1.0.22
+BuildRequires: libjson-glib-devel
 BuildRequires: gobject-introspection-devel
 %{?_enable_docs:BuildRequires: gtk-doc}
 %{?_enable_vala:
@@ -113,6 +114,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Sep 13 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0
+
 * Mon Jan 10 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.10-alt1
 - 0.3.10
 
