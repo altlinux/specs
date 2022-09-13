@@ -11,16 +11,15 @@
 %def_disable devel
 
 Name: unit
-Version: 1.27.0
-Release: alt2
+Version: 1.28.0
+Release: alt1
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
 Group: System/Servers
 
 Url: https://unit.nginx.org/
-Vcs: http://hg.nginx.org/unit/
-# Mirror Vcs: https://github.com/nginx/unit
+Vcs: https://github.com/nginx/unit
 
 Source: %name-%version.tar
 
@@ -213,6 +212,9 @@ build/tests
 %endif
 
 %changelog
+* Tue Sep 13 2022 Vitaly Chikunov <vt@altlinux.org> 1.28.0-alt1
+- Update to 1.28.0 (2022-09-13).
+
 * Fri Jul 29 2022 Vitaly Chikunov <vt@altlinux.org> 1.27.0-alt2
 - Move /var/run -> /run for control.sock and unit.pid (ALT#43362).
 - /etc/sysconfig/unit is not installed but read, because there are no
