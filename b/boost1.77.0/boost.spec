@@ -2,7 +2,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with boost_build
 %def_with devel_static
@@ -37,11 +37,11 @@
 %endif
 
 # legacy python2 script
-%add_findprov_skiplist %_datadir/b2/src/tools/doxproc.py
-%add_findreq_skiplist  %_datadir/b2/src/tools/doxproc.py
+%add_findprov_skiplist %_datadir/boost-build/src/tools/doxproc.py
+%add_findreq_skiplist  %_datadir/boost-build/src/tools/doxproc.py
 
 %define ver_maj 1
-%define ver_min 80
+%define ver_min 77
 %define ver_rel 0
 
 %define namesuff %{ver_maj}.%{ver_min}.%{ver_rel}
@@ -54,10 +54,10 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 
-Name: boost
+Name: boost%namesuff
 Epoch: 1
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt6
 
 Summary: Boost libraries
 License: BSL-1.0
@@ -66,8 +66,16 @@ Url: https://www.boost.org
 
 Source: boost-%version.tar
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=828856
+# https://bugzilla.redhat.com/show_bug.cgi?id=828857
+# https://svn.boost.org/trac/boost/ticket/6701
+Patch15: boost-1.58.0-fedora-pool.patch
+
+# https://svn.boost.org/trac/boost/ticket/9038
+Patch51: boost-1.58.0-fedora-pool-test_linking.patch
+
 # https://bugzilla.redhat.com/show_bug.cgi?id=1190039
-Patch65: boost-1.80.0-fedora-build-optflags.patch
+Patch65: boost-1.73.0-fedora-build-optflags.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=1318383
 Patch82: boost-1.66.0-fedora-no-rpath.patch
@@ -78,11 +86,16 @@ Patch83: boost-1.73.0-fedora-b2-build-flags.patch
 # https://lists.boost.org/Archives/boost/2020/04/248812.php
 Patch88: boost-1.73.0-fedora-cmakedir.patch
 
-# https://github.com/boostorg/unordered/issues/139
-Patch89: boost-1.80.0-upstream-unordered-valid-after-move.patch
+# https://bugzilla.redhat.com/show_bug.cgi?id=1899888
+# https://github.com/boostorg/locale/issues/52
+Patch94: boost-1.73-fedora-locale-empty-vector.patch
 
 Patch1000: boost-1.63.0-alt-python-paths.patch
+Patch1001: boost-1.77.0-upstream-python-3.10-compat.patch
 Patch2000: boost-1.76-e2k-makecontext.patch
+
+# https://github.com/boostorg/multiprecision/issues/419
+Patch3000: boost-1.77.0-update-gcc-Intel-intrinsic-usage-config.patch
 
 # we use %%_python3_abiflags
 # we use %%requires_python_ABI, introduced in rpm-build-python3-0.1.9.3-alt1
@@ -143,7 +156,7 @@ This package contains header files only.
 Summary: Boost libraries
 Group: Development/C++
 
-Requires(pre,postun): %name-devel-headers = %EVR
+PreReq: %name-devel-headers = %EVR
 Requires: libboost_atomic%version = %EVR
 Requires: libboost_chrono%version = %EVR
 Requires: libboost_container%version = %EVR
@@ -270,13 +283,7 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
-%if_with context
-Requires: %name-context-devel = %EVR
-%if_with coroutine
-Requires: %name-coroutine-devel = %EVR
-%endif
-%endif
+PreReq: %name-devel = %EVR
 
 %description asio-devel
 asio is a cross-platform C++ library for network programming that
@@ -289,7 +296,7 @@ Summary: The Boost Context Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: libboost_context%version = %EVR
 
 %description context-devel
@@ -308,7 +315,7 @@ Summary: The Boost Coroutine Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: %name-context-devel = %EVR
 Requires: libboost_coroutine%version = %EVR
 
@@ -331,7 +338,7 @@ Summary: The Boost Filesystem Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: libboost_filesystem%version = %EVR
 
 %description filesystem-devel
@@ -345,7 +352,7 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: %name-interprocess-devel = %EVR
 
 %description flyweight-devel
@@ -364,7 +371,7 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: %name-polygon-devel = %EVR
 
 %description geometry-devel
@@ -388,7 +395,7 @@ Summary: Development files for Parallel Boost Graph Library
 Group: Development/C++
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: %name-mpi-devel = %EVR
 Requires: libboost_graph%version = %EVR
 Requires: libboost_graph_parallel%version = %EVR
@@ -408,7 +415,7 @@ Summary: The Boost Locale Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: libboost_locale%version = %EVR
 
 %description locale-devel
@@ -424,7 +431,7 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 
 %description lockfree-devel
 Boost.Lockfree library provides lockfree data structures, like
@@ -436,7 +443,7 @@ Summary: The Boost Locale Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: libboost_log%version = %EVR
 
 %description log-devel
@@ -452,7 +459,7 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: %name-intrusive-devel = %EVR
 
 %description interprocess-devel
@@ -466,7 +473,7 @@ It is header-only library. This package contains the headers.
 Summary: The Boost Math Library development files.
 Group: Development/C++
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: libboost_math_c99%version = %EVR
 Requires: libboost_math_c99f%version = %EVR
 %if_with long_double
@@ -489,8 +496,8 @@ Summary: The Boost MPI Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
-Requires(pre,postun): %name-python3-devel = %EVR
+PreReq: %name-devel = %EVR
+PreReq: %name-python3-devel = %EVR
 Requires: libboost_mpi%version = %EVR
 Requires: libboost_mpi_python3-%version = %EVR
 Requires: %mpiimpl-devel
@@ -507,7 +514,7 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 
 %description msm-devel
 Ths Boost Meta State Machine (MSM) is a library allowing you to easily
@@ -522,7 +529,7 @@ Group: Development/C++
 BuildArch: noarch
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 
 %description polygon-devel
 The Boost.Polygon library provides algorithms focused on manipulating
@@ -539,7 +546,7 @@ Summary: The Boost Filesystem Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: libboost_program_options%version = %EVR
 
 Obsoletes: program_options-devel
@@ -569,7 +576,7 @@ Requires: python3-devel = %_python3_abi_version
 Requires: %name-python-headers = %EVR
 Requires: libboost_python3-%version = %EVR
 Requires: libboost_numpy3-%version = %EVR
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 
 %description python3-devel
 Use the Boost Python Library to quickly and easily export a C++ library
@@ -587,7 +594,7 @@ Summary: The Boost Signals Library development files
 Group: Development/C++
 AutoReq: yes, nocpp
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 
 %description signals-devel
 The  Boost.Signals  library  is an implementation of a managed signals
@@ -603,7 +610,7 @@ Group: Development/C++
 AutoReq: yes, nocpp
 
 Requires: libboost_wave%version = %EVR
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: %name-filesystem-devel = %EVR
 
 %description wave-devel
@@ -615,7 +622,7 @@ Summary: Boost libraries documentation
 Group: Development/C++
 BuildArch: noarch
 
-Requires(pre,postun): %name-devel
+PreReq: %name-devel
 
 %description doc
 The Boost web site provides free peer-reviewed portable C++ source
@@ -649,7 +656,7 @@ a number of significant features and is now developed independently.
 Summary: Boost libraries
 Group: Development/C++
 
-Requires(pre,postun): %name-devel = %EVR
+PreReq: %name-devel = %EVR
 Requires: %name-atomic-devel = %EVR
 Requires: %name-chrono-devel = %EVR
 %if_with context
@@ -1210,7 +1217,21 @@ applications. This package contains python module.
 %prep
 
 %setup -n boost-%version
-%autopatch -p2
+%patch15 -p0
+%patch51 -p1
+%patch65 -p2
+%patch82 -p1
+%patch83 -p2
+%patch88 -p1
+%patch94 -p1
+%patch1000 -p2
+pushd tools/boost_install &>/dev/null
+%patch1001 -p1
+popd &>/dev/null
+%ifarch %e2k
+%patch2000 -p1
+%endif
+%patch3000 -p2
 
 COMPILER_FLAGS="%optflags -fno-strict-aliasing"
 
@@ -1355,11 +1376,6 @@ for i in %buildroot%_libdir/*.so; do
     ln -s  `basename $i` ${i%%.so}-mt.so
 done
 
-%if_without long_double
-rm -rf %buildroot%_libdir/*math_c99l*.so*
-rm -rf %buildroot%_libdir/*math_tr1l*.so*
-%endif
-
 mkdir -p %buildroot%boost_doc
 
 #  install examples
@@ -1418,17 +1434,34 @@ boost_make_linker_script filesystem-st system-st
 %endif
 
 %if_with boost_build
+mkdir -p %buildroot%_bindir
+install -Dm755 tools/build/src/engine/bjam %buildroot%_bindir
+ln -s bjam %buildroot%_bindir/boost-jam
+
 pushd tools/build
 ./b2 --prefix=%buildroot%_prefix install
 # Fix some permissions
-chmod +x %buildroot%_datadir/b2/src/tools/doxproc.py
-sed -i -e '1s|^#!/usr/bin/python$|#!/usr/bin/python2|' %buildroot%_datadir/b2/src/tools/doxproc.py
+chmod +x %buildroot%_datadir/boost-build/src/tools/doxproc.py
+sed -i -e '1s|^#!/usr/bin/python$|#!/usr/bin/python2|' %buildroot%_datadir/boost-build/src/tools/doxproc.py
 popd
+%endif
+
+%if_without devel
+rm -f %buildroot%_libdir/*.so || :
+rm -rf %buildroot%_includedir/boost || :
+rm -rf %buildroot%_libdir/cmake/Boost* || :
+rm -rf %buildroot%_libdir/cmake/boost* || :
 %endif
 
 %if_without devel_static
 rm -f %buildroot%_libdir/*.a || :
 %endif
+
+%if_without long_double
+rm -rf %buildroot%_libdir/*math_c99l*.so*
+rm -rf %buildroot%_libdir/*math_tr1l*.so*
+%endif
+
 
 #files
 
@@ -1605,7 +1638,7 @@ rm -f %buildroot%_libdir/*.a || :
 %if_with boost_build
 %files build
 %_bindir/*
-%_datadir/b2
+%_datadir/%{name}-build
 %endif
 
 %if_with devel_static
@@ -1781,8 +1814,8 @@ done
 
 
 %changelog
-* Fri Sep 09 2022 Ivan A. Melnikov <iv@altlinux.org> 1:1.80.0-alt1
-- Updated to upstream version 1.80.0
+* Mon Sep 12 2022 Ivan A. Melnikov <iv@altlinux.org> 1:1.77.0-alt6
+- rebuild as compat package without development files
 
 * Wed Jun 22 2022 Anton Midyukov <antohami@altlinux.org> 1:1.77.0-alt5
 - add upstream patch for fix build packages with CGAL and gcc12 on ppc64le
