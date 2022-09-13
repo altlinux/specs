@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt1
+Release: alt2
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Sep 13 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt2
+- update to ALT Education 10.1rc
+
 * Fri May 06 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt1
 - update to ALT Education 10.1Beta
 
