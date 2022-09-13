@@ -86,7 +86,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 Name: python3
-Version: %{pybasever}.6
+Version: %{pybasever}.7
 Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
@@ -687,9 +687,7 @@ LD_LIBRARY_PATH="$(pwd)" $(pwd)/python -m test.pythoninfo
 WITHIN_PYTHON_RPM_BUILD= \
 LD_LIBRARY_PATH="$(pwd)" \
 $(pwd)/python -m test.regrtest \
-%ifarch %e2k
     -x test_socket -x test_signal \
-%endif
     --verbose --timeout=1800 %_smp_mflags
 
 %files
@@ -991,6 +989,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Mon Sep 12 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.7-alt1
+- Updated to upstream version 3.10.7.
+
 * Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.6-alt1
 - Updated to upstream version 3.10.6.
 
