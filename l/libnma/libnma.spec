@@ -1,11 +1,11 @@
 %define nm_version 1.4.1-alt1.git20160914
 %define _unpackaged_files_terminate_build 1
 
-%def_with gcr
+%def_without gcr_gtk4
 %def_with gtk4
 
 Name: libnma
-Version: 1.8.40
+Version: 1.10.2
 Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: Graphical desktop/GNOME
@@ -24,7 +24,11 @@ BuildRequires: iso-codes-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: mobile-broadband-provider-info
 BuildRequires: gtk-doc
-%{?_with_gcr:BuildRequires: gcr-libs-devel}
+%if_with gcr_gtk4
+BuildRequires: gcr4-libs-devel
+%else
+BuildRequires: gcr-libs-devel
+%endif
 %{?_with_gtk4:BuildRequires: libgtk4-devel libgtk4-gir-devel}
 
 Requires: %name-common = %EVR
@@ -128,11 +132,7 @@ This package contains development documentation for libnma-devel-doc.
 %meson \
 	--libexecdir==%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-%if_with gcr
 	-Dgcr=true \
-%else
-	-Dgcr=false \
-%endif
 	-Dintrospection=true \
 	-Dvapi=false \
 %if_with gtk4
@@ -140,7 +140,11 @@ This package contains development documentation for libnma-devel-doc.
 %else
 	-Dlibnma_gtk4=false \
 %endif
+%if_with gcr_gtk4
+	-Dgcr_gtk4=true \
+%else
 	-Dgcr_gtk4=false \
+%endif
 	-Dmobile_broadband_provider_info=true \
 	-Diso_codes=true \
 	-Dgtk_doc=true
@@ -189,6 +193,10 @@ This package contains development documentation for libnma-devel-doc.
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Mon Sep 12 2022 Mikhail Efremov <sem@altlinux.org> 1.10.2-alt1
+- Added gcr-4 knob (disabled for now).
+- Updated to 1.10.2.
+
 * Tue Jun 28 2022 Mikhail Efremov <sem@altlinux.org> 1.8.40-alt1
 - Updated to 1.8.40.
 
