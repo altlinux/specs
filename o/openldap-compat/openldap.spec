@@ -1,27 +1,30 @@
-%define _unpackaged_files_terminate_build 1
-%define so_ver 2
-%add_verify_elf_skiplist %_libdir/libslapi*
+#%%define _unpackaged_files_terminate_build 1
+%define _sover 2.4
+%define _bname openldap
 ### Build switches for enable or disable fiture ###
 %def_enable doc
-%def_disable sql
-%def_disable perl
+%def_enable sql
+%def_enable perl
+%def_disable shell
 %def_enable sasl
 ### Disable, because while build by rpm is not passed
 %def_disable debug
 %def_disable slapi
-%def_disable slp
+%def_enable slp
 %def_enable overlay
 %def_enable aci
 %def_enable yielding
-%def_enable argon2
-%def_disable static
-%define contrib_slapo_name addpartial allop allowed authzid autogroup cloak datamorph denyop lastbind noopsrch passwd/sha2 passwd/pbkdf2 trace usn variant vc
-Name: openldap
-Version: 2.6.3
-Release: alt1
+%def_enable ntlm
+%def_disable check
 
+Name: openldap-compat
+Version: %_sover.59
+Release: alt2
+
+Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
 
+%define so_maj %_sover
 %define ldap_ssl_dir %_sysconfdir/%name/ssl
 %define ssl_dir %_localstatedir/ssl/certs
 %define ldap_dir %_localstatedir/ldap
@@ -38,50 +41,61 @@ Source: %name-%version.tar
 
 # Docs for this products
 #Source2: %name-README.upgrading
-Source3: %name-README.ALT
-Source4: %name-config-README.ALT
+Source3: %_bname-README.ALT
+Source4: %_bname-config-README.ALT
 
 # System Specific source
-Source11: %name.sysconfig
-Source12: %name-slapd.init
-Source13: %name.logrotate
-Source14: %name-slapd.service
+Source11: %_bname.sysconfig
+Source12: %_bname-slapd.init
+Source13: %_bname.logrotate
+Source14: %_bname-slapd.service
 
 ## Chroot config
-Source15: %name-ldap.all
-Source16: %name-ldap.conf
-Source17: %name-ldap.lib
+Source15: %_bname-ldap.all
+Source16: %_bname-ldap.conf
+Source17: %_bname-ldap.lib
 # This file we need to build from original dynamic
-Source18: %name-slapd.conf
-Source20: %name-slapd-access.conf
-Source21: %name-slapd-mdb-db01.conf
+Source18: %_bname-slapd.conf
+Source19: %_bname-bdb-DB_CONFIG
+Source20: %_bname-slapd-access.conf
+Source21: %_bname-slapd-mdb-db01.conf
+Source22: %_bname-slapd-hdb-db01.conf
+Source23: %_bname-slapd-hdb-db02.conf
 # OLC config directory backup/restore scripts
-Source40: %name-olc-backup
-Source41: %name-olc-restore
+Source40: %_bname-olc-backup
+Source41: %_bname-olc-restore
 
 # Extended OpenLDAP schemas
-Source50: %name-addon-schemas.tar
-Source51: %name-ALT-rootdse.ldif
+Source50: %_bname-addon-schemas.tar
+Source51: %_bname-ALT-rootdse.ldif
 
 ### PATCHES
-Patch1: %name-alt-defaults.patch
+Patch1: %_bname-alt-defaults.patch
 
 ## Patch created by Alexander Bokovoy <ab@altlinux.ru>
-Patch2: %name-2.3.34-alt-pid.patch
+Patch2: %_bname-2.3.34-alt-pid.patch
+Patch3: %_bname-2.3.12-autoconf-2.5-alt.patch
 
-Patch4: %name-2.3.20-alt-makefile.patch
+Patch4: %_bname-2.3.20-alt-makefile.patch
 
-Patch13: %name-2.4.25-rh-ldaprc-currentdir.patch
-Patch14: %name-2.4.25-rh-reentrant-gethostby.patch
-Patch16: %name-2.6.3-rh-ai-addrconfig.patch
-# fix back_perl problems with lt_dlopen()
-# might cause crashes because of symbol collisions
-# the proper fix is to link all perl modules against libperl
-# http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=327585
-Patch18: %name-2.6.3-rh-switch-to-lt_dlopenadvise-to-get-RTLD_GLOBAL-set.patch
-Patch19: %name-2.6.3-rh-add-export-symbols-LDAP_CONNECTIONLESS.patch
+Patch7: %_bname-2.3.34-alt-meta-backend.patch
 
-Patch20: %name-2.6.1-system-mdb.patch
+Patch8: %_bname-2.3.37-alt-ntlm.patch
+
+Patch11: %_bname-2.3.43-fix-ucred.patch
+
+Patch13: %_bname-2.4.25-rh-ldaprc-currentdir.patch
+Patch14: %_bname-2.4.25-rh-reentrant-gethostby.patch
+Patch18: %_bname-2.4.31-rh-nss-allow-ca-dbdir-pemfile.patch
+Patch19: %_bname-2.4.31-rh-tls-unbind-shutdown-order.patch
+Patch20: %_bname-2.4.31-rh-nss-dont-overwrite-verify-cert-error.patch
+Patch21: %_bname-2.4.31-rh-nss-clean-memory-for-token-pin.patch
+Patch22: %_bname-2.4.31-rh-cve-nss-cipher-suite-ignored.patch
+Patch23: %_bname-2.4.31-rh-nss-default-cipher-suite-always-selected.patch
+Patch24: %_bname-2.4.31-rh-nss-multiple-tls-contexts.patch
+Patch25: openldap-2.4.32-alt-gcc5.1.patch
+Patch27: openldap-2.4.42-CVE-2015-3276.patch
+Patch28: openldap-cbinding-ITS-9215-fix-for-glibc-again.patch
 
 ### REQUIRE Section
 
@@ -102,25 +116,22 @@ BuildRequires: perl-devel
 %if_enabled slp
 BuildRequires: libopenslp-devel
 %endif
-%{?_enable_argon2:BuildRequires: libargon2-devel}
 
-BuildRequires: chrooted groff-base libltdl-devel libssl-devel shtool
-BuildRequires: libsystemd-devel
-BuildRequires: libevent-devel libuuid-devel
-BuildRequires: liblmdb-devel
-# for tests
-#BuildRequires: krb5-kdc krb5-kinit cyrus-sasl2 libsasl2-plugin-gssapi openssl
+# Automatically added by buildreq on Tue Oct 18 2011 (-bi)
+BuildRequires: chrooted groff-base libdb4.8-devel libltdl-devel libssl-devel shtool
 
-%package -n libldap%{so_ver}
+%package -n libldap%_sover-compat
 Summary: OpenLDAP libraries
-Group: System/Libraries
-Requires: %name-common = %version-%release
+Group: System/Legacy libraries
+Provides: libldap2.4 = %version-%release
+Obsoletes: libldap2.4 < %version-%release
+Requires: openldap-common >= 2.4.59
 Provides: libldap = %version-%release
 
 %package -n libldap-devel
 Summary: OpenLDAP development libraries and header files
 Group: Development/C
-Requires: libldap%{so_ver} = %version-%release
+Requires: libldap = %version-%release
 
 Provides: openldap-devel = %version-%release
 Obsoletes: openldap-devel < %version-%release
@@ -141,7 +152,7 @@ BuildArch: noarch
 %package servers
 Summary: LDAP servers
 Group: System/Servers
-Requires: libldap%{so_ver} = %version-%release
+Requires: libldap = %version-%release
 
 Provides: openldap2.4-servers = %version-%release
 Obsoletes: openldap2.4-servers < %version-%release
@@ -149,21 +160,20 @@ Obsoletes: openldap2.4-servers < %version-%release
 %package clients
 Summary: LDAP utilities, tools and sample clients
 Group: Networking/Remote access
-Requires: libldap%{so_ver} = %version-%release
+Requires: libldap = %version-%release
 
 Provides: openldap2.4-clients = %version-%release
 Obsoletes: openldap2.4-clients < %version-%release
 
-%package -n %name-doc
+%if_enabled doc
+%package -n %_bname-doc
 Summary: OpenLDAP administration guide
 Group: Books/Computer books
 BuildArch: noarch
-Obsoletes: openldap2.4-doc < %version-%release
 
-%package contrib
-Summary: OpenLDAP Contrib Modules
-Group: System/Servers
-Requires: %name-servers = %version-%release
+Provides: openldap2.4-doc = %version-%release
+Obsoletes: openldap2.4-doc < %version-%release
+%endif
 
 %description
 OpenLDAP is an open source suite of LDAP (Lightweight Directory Access
@@ -175,9 +185,9 @@ over the Internet.  The suite includes a stand-alone LDAP server
 (slapd), libraries for implementing the LDAP protocol, utilities, 
 tools, and sample clients.
 
-Install %name if you need to run LDAP-based applications and tools.
+Install %_bname if you need to run LDAP-based applications and tools.
 
-%description -n libldap%{so_ver}
+%description -n libldap%_sover-compat
 OpenLDAP is an open source suite of LDAP (Lightweight Directory Access
 Protocol) applications and development tools.  LDAP is a set of
 protocols for accessing directory services (usually phone book style
@@ -187,7 +197,7 @@ over the Internet.  The suite includes a stand-alone LDAP server
 (slapd), libraries for implementing the LDAP protocol, utilities, 
 tools, and sample clients.
 
-This package contains shared libraries needed for make works %name-based softare.
+This package contains shared libraries needed for make works %_bname-based softare.
 
 %description -n libldap-devel
 OpenLDAP is an open source suite of LDAP (Lightweight Directory Access
@@ -229,8 +239,7 @@ over the Internet.  The suite includes a stand-alone LDAP server
 (slapd), libraries for implementing the LDAP protocol, utilities, 
 tools, and sample clients.
 
-Install %name-servers if you need LDAP servers.
-The server provides several database backends and overlays.
+Install %_bname-servers if you need LDAP servers.
 
 %description clients
 OpenLDAP is an open source suite of LDAP (Lightweight Directory Access
@@ -242,93 +251,75 @@ over the Internet.  The suite includes a stand-alone LDAP server
 (slapd), libraries for implementing the LDAP protocol, utilities, 
 tools, and sample clients.
 
-Install %name-client if you need LDAP applications and tools.
+Install %_bname-client if you need LDAP applications and tools.
 
-%description doc
+%if_enabled doc
+%description -n %_bname-doc
 OpenLDAP Administration Guide
 HTML and TXT versions
-
-%description contrib
-Various overlays found in contrib/:
- * addpartial    Intercepts ADD requests, applies changes to existing entries
- * allop
- * allowed       Generates attributes indicating access rights
- * autogroup
- * authzid       implements RFC 3829 support
- * cloak
- * datamorph     store enumerated values and fixed size integers
- * denyop
- * lastbind      writes last bind timestamp to entry
- * noopsrch      handles no-op search control
- * pw-sha2       generates/validates SHA-2 password hashes
- * pw-pbkdf2     generates/validates PBKDF2 password hashes
- * smbk5pwd      generates Samba3 password hashes (heimdal krb disabled)
- * trace         traces overlay invocation
- * usn           usnCreated and usnChanged operational attributes
- * variant       allows attributes/values to be shared between several entries
- * vc            implements the verify credentials extended operation
+%endif
 
 %prep
 %setup -q
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %patch4 -p1
+#%%patch7 -p1
+
+%if_enabled ntlm
+%patch8 -p1 -b .ntlm
+%endif
+
+%patch11 -p1
 
 %patch13 -p1
 %patch14 -p1
-%patch16 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-rm -r libraries/liblmdb
+
+%patch27 -p1
+%patch28 -p1
 
 # Add some more schema for the sake of migration scripts and others
 pushd servers/slapd
 tar -xf %SOURCE50
 popd
 
-mv servers/slapd/back-perl/README{,.back_perl}
-
-# fix documentation encoding
-for filename in doc/drafts/draft-ietf-ldapext-acl-model-xx.txt; do
-  iconv -f iso-8859-1 -t utf-8 "$filename" > "$filename.utf8"
-  mv "$filename.utf8" "$filename"
-done
 
 %build
 # Options -lresolv in line below need for some bad configure scripts like in auth_ldap package
 #export LDFLAGS="$LDFLAGS -lresolv"
 export CPPFLAGS="$CPPFLAGS -DLOG_DAEMON=1"
 
-export CFLAGS="%optflags -Wno-format-extra-args -fno-strict-aliasing -DNDEBUG -DSLAP_SCHEMA_EXPOSE -DLDAP_COLLECTIVE_ATTRIBUTES -DOPENSSL_NO_MD2"
-export STRIP=""
 # enable experimental support for LDAP over UDP (LDAP_CONNECTIONLESS)
-export CFLAGS="${CFLAGS} -DLDAP_CONNECTIONLESS"
+export CFLAGS="${CFLAGS} ${LDFLAGS} -Wl,--as-needed -DLDAP_CONNECTIONLESS -DLDAP_USE_NON_BLOCKING_TLS -DOPENSSL_NO_MD2"
 
-#shtoolize all
-#aclocal
-#autoconf
-#libtoolize --force --install
-%autoreconf
+shtoolize all
+aclocal
+autoconf
+libtoolize --force --install
 
 %configure \
-	%{subst_enable static} \
 	--enable-syslog \
+	--enable-proctitle \
 	--enable-dynamic \
-	--enable-versioning \
-	--enable-dynacl \
-	--enable-cleartext \
-	--enable-crypt \
 	--with-tls=openssl \
 	--with-threads \
 	--enable-slapd \
+	--enable-lmpasswd \
+	--enable-crypt \
+	--enable-cleartext \
 	--enable-modules \
-	--enable-backends=mod \
-	--enable-mdb=yes \
-	--disable-ndb \
-	--disable-wt \
-	--enable-balancer=mod \
-	%{subst_enable argon2} \
+	--enable-rewrite \
+	--enable-bdb=mod \
+	--enable-hdb=mod \
+	--enable-dnssrv=mod \
+	--enable-ldap=mod \
+	--enable-relay=mod \
+	--enable-memberof=mod \
+	--enable-meta=mod \
+	--enable-monitor=mod \
+	--enable-null=mod \
+	--enable-passwd=mod \
 	\
 %if_enabled yielding
 	--with-yielding-select \
@@ -350,6 +341,13 @@ export CFLAGS="${CFLAGS} -DLDAP_CONNECTIONLESS"
 %else
 	--disable-slp \
 %endif
+%if_enabled shell
+	--enable-shell=mod \
+	--without-threads \
+%else
+	--disable-shell \
+	--with-threads \
+%endif
 %if_enabled sql
 	--enable-sql=mod \
 %else
@@ -367,9 +365,33 @@ export CFLAGS="${CFLAGS} -DLDAP_CONNECTIONLESS"
 	--disable-perl \
 %endif
 %if_enabled overlay
-	--enable-overlays=mod \
+	--enable-accesslog=mod \
+	--enable-auditlog=mod \
+	--enable-dyngroup=mod \
+	--enable-dynlist=mod \
+	--enable-ppolicy=mod \
+	--enable-proxycache=mod \
+	--enable-refint=mod \
+	--enable-retcode=mod \
+	--enable-rwm=mod \
+	--enable-syncprov=mod \
+	--enable-translucent=mod \
+	--enable-unique=mod \
+	--enable-valsort=mod \
 %else
-	--disable-overlays \
+	--disable-accesslog \
+	--disable-auditlog \
+	--disable-dyngroup \
+	--disable-dynlist \
+	--disable-ppolicy \
+	--disable-proxycache \
+	--disable-refint \
+	--disable-retcode \
+	--disable-rwm \
+	--disable-syncprov \
+	--disable-translucent \
+	--disable-unique \
+	--disable-valsort \
 %endif
 %if_enabled debug
 	--enable-debug \
@@ -378,22 +400,14 @@ export CFLAGS="${CFLAGS} -DLDAP_CONNECTIONLESS"
 
 %__subst 's/^AC_CFLAGS.*/& %optflags_shared/' libraries/librewrite/Makefile
 
-#%make depend
-#export NPROCS=1
+%make depend
+export NPROCS=1
 %make_build
 
 pushd libraries/liblutil
 rm -f libldif.la
 MOD_LIBS="-L../liblber/.libs/ -L../libldap/.libs/ -llber -lldap" make
 popd
-
-# Build selected contrib overlays
-for SLAPO_NAME in %contrib_slapo_name
-do
-  %make_build -C contrib/slapd-modules/${SLAPO_NAME} prefix="%_prefix" libdir="%_libdir" libexecdir="%_libexecdir" 
-done
-# slapo-smbk5pwd only for Samba password hashes
-%make_build -C contrib/slapd-modules/smbk5pwd DEFS="-DDO_SAMBA" HEIMDAL_LIB="" prefix="%_prefix" libdir="%_libdir" libexecdir="%_libexecdir" 
 
 %if_enabled doc
 # Build Administrator Guide in html and text mode
@@ -409,24 +423,18 @@ popd
 ## Install all slapd's file
 ###
 
-# Install selected contrib overlays
-for SLAPO_NAME in %contrib_slapo_name smbk5pwd
-do
-  %make_install -C contrib/slapd-modules/${SLAPO_NAME} STRIP="" DESTDIR="%buildroot" prefix="%_prefix" libdir="%_libdir" libexecdir="%_libexecdir" install
-done
-
 # Create the /var/lib data directory and chroot enviroment.
 mkdir -p -m750 %buildroot%ldap_dir
-mkdir -p -m750 %buildroot%ldap_dir/bases
+#__mkdir_p -m750 %buildroot%ldap_dir/bases
 mkdir -p -m770 %buildroot%ldap_dir/dblogs
 #__mkdir_p -m750 %buildroot%ldap_dir/replica
 mkdir -p -m755 %buildroot%ldap_dir/dev
-mkdir -p -m750 %buildroot%ldap_dir%_sysconfdir/ssl
-mkdir -p -m750 %buildroot%ldap_dir%_sysconfdir/schema
-ln -s . %buildroot%ldap_dir%_sysconfdir/%name
+mkdir -p -m750 %buildroot%ldap_dir/%_sysconfdir/ssl
+mkdir -p -m750 %buildroot%ldap_dir/%_sysconfdir/schema
+ln -s . %buildroot%ldap_dir/%_sysconfdir/%_bname
 mkdir -p -m775 %buildroot%ldap_dir/lib
 ln -s lib %buildroot%ldap_dir/lib64
-mkdir -p -m755 %buildroot%ldap_dir/usr/lib/%name
+mkdir -p -m755 %buildroot%ldap_dir/usr/lib/%_bname
 mkdir -p -m755 %buildroot%ldap_dir/usr/lib/sasl2-3
 ln -s lib %buildroot%ldap_dir/usr/lib64
 mkdir -p -m775 %buildroot%ldap_dir/var/run
@@ -436,117 +444,121 @@ ln -s ../../../dblogs %buildroot%ldap_dir%ldap_dir/
 mksock %buildroot%ldap_dir/dev/log
 
 # Install init scripts.
-install -pD -m644 %SOURCE11 %buildroot%_sysconfdir/sysconfig/ldap
-install -pD -m755 %SOURCE12 %buildroot%_initdir/slapd
-mkdir -p -m750 %buildroot%_sysconfdir/chroot.d
-install -pD -m750 %SOURCE15 %buildroot%_sysconfdir/chroot.d/ldap.all
-install -pD -m750 %SOURCE16 %buildroot%_sysconfdir/chroot.d/ldap.conf
-install -pD -m750 %SOURCE17 %buildroot%_sysconfdir/chroot.d/ldap.lib
-install -pD -m644 %SOURCE14 %buildroot%systemd_unitdir/slapd.service
+install -pD -m644 %SOURCE11 %buildroot/%_sysconfdir/sysconfig/ldap
+install -pD -m755 %SOURCE12 %buildroot/%_initdir/slapd
+mkdir -p -m750 %buildroot/%_sysconfdir/chroot.d
+install -pD -m750 %SOURCE15 %buildroot/%_sysconfdir/chroot.d/ldap.all
+install -pD -m750 %SOURCE16 %buildroot/%_sysconfdir/chroot.d/ldap.conf
+install -pD -m750 %SOURCE17 %buildroot/%_sysconfdir/chroot.d/ldap.lib
+install -pD -m644 %SOURCE14 %buildroot/%systemd_unitdir/slapd.service
 
 # Install OLC (cn=config) directory backup/restore scripts
 install -pD -m750 %SOURCE40 %buildroot%_sbindir/slapd-olc-backup
 install -pD -m750 %SOURCE41 %buildroot%_sbindir/slapd-olc-restore
 
 # log repository and logrotate config
-#__mkdir_p -m750 %buildroot%_logdir/ldap
-#__install -pD -m644 %SOURCE13 %buildroot%_logrotatedir/ldap
+#__mkdir_p -m750 %buildroot/%_logdir/ldap
+#__install -pD -m644 %SOURCE13 %buildroot/%_sysconfdir/logrotate.d/ldap
 
 # syslog.d
 mkdir -pm700 %buildroot%_sysconfdir/syslog.d
 ln -s %ldap_dir/dev/log %buildroot%_sysconfdir/syslog.d/ldap
 
 # config files
-mkdir -p -m750 %buildroot%_sysconfdir/%name/ssl
-install -pD -m640 %SOURCE18 %buildroot%_sysconfdir/%name/slapd.conf
-install -pD -m640 %SOURCE20 %buildroot%_sysconfdir/%name/slapd-access.conf
-install -pD -m640 %SOURCE21 %buildroot%_sysconfdir/%name/slapd-mdb-db01.conf
-install -pD -m644 %SOURCE51 %buildroot%_sysconfdir/%name/rootdse.ldif
+mkdir -p -m750 %buildroot/%_sysconfdir/%_bname/ssl
+install -pD -m640 %SOURCE18 %buildroot/%_sysconfdir/%_bname/slapd.conf
+install -pD -m640 %SOURCE19 %buildroot%ldap_dir/bases/DB_CONFIG
+install -pD -m640 %SOURCE20 %buildroot/%_sysconfdir/%_bname/slapd-access.conf
+install -pD -m640 %SOURCE21 %buildroot/%_sysconfdir/%_bname/slapd-mdb-db01.conf
+install -pD -m640 %SOURCE22 %buildroot/%_sysconfdir/%_bname/slapd-hdb-db01.conf
+install -pD -m640 %SOURCE23 %buildroot/%_sysconfdir/%_bname/slapd-hdb-db02.conf
+install -pD -m644 %SOURCE51 %buildroot/%_sysconfdir/%_bname/rootdse.ldif
 
 # We don't need the default files - let's move it.
-mkdir -p %buildroot%_docdir/%name-servers-%version/default
-mv %buildroot%_sysconfdir/%name/*.default \
-	%buildroot%_docdir/%name-servers-%version/default/
-rm -f %buildroot%_sysconfdir/%name/slapd.ldif
+mkdir -p %buildroot/%_docdir/%_bname-servers-%version/default
+mv %buildroot/%_sysconfdir/%_bname/*.default \
+	%buildroot/%_docdir/%_bname-servers-%version/default/
+mv %buildroot/%_sysconfdir/%_bname/*.example \
+	%buildroot/%_docdir/%_bname-servers-%version/
+rm -f %buildroot%ldap_dir/bases/*.example
+rm -f %buildroot%_sysconfdir/%_bname/slapd.ldif
 
 # Documentations for servers
-mkdir -p %buildroot%_docdir/%name-servers-%version/{back-{null,perl,sql},schema,slapi,overlays}/
+mkdir -p %buildroot/%_docdir/%_bname-servers-%version/{back-{null,perl,sql},schema,slapi,overlays}/
 install -D -m644 servers/slapd/back-ldap/TODO.proxy \
-	%buildroot%_docdir/%name-servers-%version/back-ldap/TODO.proxy
+	%buildroot/%_docdir/%_bname-servers-%version/back-ldap/TODO.proxy
 install -D -m644 servers/slapd/back-monitor/README \
-	%buildroot%_docdir/%name-servers-%version/back-monitor/README
+	%buildroot/%_docdir/%_bname-servers-%version/back-monitor/README
 install -D -m644 servers/slapd/back-null/README \
-	%buildroot%_docdir/%name-servers-%version/back-null/README
+	%buildroot/%_docdir/%_bname-servers-%version/back-null/README
 %if_enabled perl
 install -D -m644 servers/slapd/back-perl/{README,SampleLDAP.pm} \
-	%buildroot%_docdir/%name-servers-%version/back-perl/
+	%buildroot/%_docdir/%_bname-servers-%version/back-perl/
+%endif
+%if_enabled shell
+install -D -m644 servers/slapd/back-shell/searchexample.{conf,sh} \
+	%buildroot/%_docdir/%_bname-servers-%version/back-shell/
 %endif
 
 %if_enabled sql
 install -D -m644 servers/slapd/back-sql/docs/* \
-	%buildroot%_docdir/%name-servers-%version/back-sql/
+	%buildroot/%_docdir/%_bname-servers-%version/back-sql/
 cp -r servers/slapd/back-sql/rdbms_depend \
-	%buildroot%_docdir/%name-servers-%version/back-sql/
+	%buildroot/%_docdir/%_bname-servers-%version/back-sql/
 %endif
 
 %if_enabled slapi
 install -pD -m644 servers/slapd/slapi/TODO \
-        %buildroot%_docdir/%name-servers-%version/slapi/TODO
+        %buildroot/%_docdir/%_bname-servers-%version/slapi/TODO
 %endif
 
 %if_enabled overlay
 install -pD -m644 servers/slapd/overlays/README \
-        %buildroot%_docdir/%name-servers-%version/overlays/README
+        %buildroot/%_docdir/%_bname-servers-%version/overlays/README
 install -pD -m644 servers/slapd/overlays/slapover.txt \
-        %buildroot%_docdir/%name-servers-%version/overlays/slapover.txt
-install -pD -m644 contrib/slapd-modules/smbk5pwd/README \
-        %buildroot%_docdir/%name-servers-%version/overlays/README.smbk5pwd
-install -pD -m644 contrib/slapd-modules/allop/README \
-        %buildroot%_docdir/%name-servers-%version/overlays/README.allop
+        %buildroot/%_docdir/%_bname-servers-%version/overlays/slapover.txt
 %endif
 
 install -p -m644 servers/slapd/schema/README \
-	%buildroot%_docdir/%name-servers-%version/schema/README
+	%buildroot/%_docdir/%_bname-servers-%version/schema/README
 ##slapd
 install -p -m644 %SOURCE3 \
-	%buildroot%_docdir/%name-servers-%version/README.ALT
+	%buildroot/%_docdir/%_bname-servers-%version/README.ALT
 install -p -m644 %SOURCE4 \
-	%buildroot%_docdir/%name-servers-%version/config-README.ALT
+	%buildroot/%_docdir/%_bname-servers-%version/config-README.ALT
 
 %if_enabled doc
 ## Install Administration Guide 
-mkdir -p %buildroot%_docdir/%name-doc-%version/images
+mkdir -p %buildroot/%_docdir/%_bname-doc-%version/images
 install -pD -m644 doc/guide/images/*.gif \
-	%buildroot%_docdir/%name-doc-%version/images
-mkdir -p %buildroot%_docdir/%name-doc-%version/admin-guide
+	%buildroot/%_docdir/%_bname-doc-%version/images
+mkdir -p %buildroot/%_docdir/%_bname-doc-%version/admin-guide
 #install -pD -m644 doc/guide/admin/*.gif \
-#	%buildroot/%_docdir/%name-doc-%version/admin-guide/
+#	%buildroot/%_docdir/%_bname-doc-%version/admin-guide/
 install -pD -m644 doc/guide/admin/*.html \
-	%buildroot%_docdir/%name-doc-%version/admin-guide/
+	%buildroot/%_docdir/%_bname-doc-%version/admin-guide/
 install -p -m644 doc/guide/admin/guide.txt \
-	%buildroot%_docdir/%name-doc-%version/
+	%buildroot/%_docdir/%_bname-doc-%version/
 %endif
 
 # Purge dependency_libs from .la files.
 %__subst -p 's/^\(dependency_libs=\).*/\1'\'\'/ \
-	%buildroot%_libexecdir/%name/*.la
+	%buildroot/%_libexecdir/%_bname/*.la
 
 #======
 # Relocate some shared libraries from %_libdir/ to /%_lib/.
 mkdir -p %buildroot/%_lib
 for n in ldap lber; do
-	for f in %buildroot%_libdir/lib$n.so; do
+	for f in %buildroot/%_libdir/lib$n.so; do
 		t=`objdump -p "$f" |awk '/SONAME/ {print $2}'`
 		[ -n "$t" ]
 		ln -s -nf ../../%_lib/"$t" "$f"
 	done
-    mv %buildroot%_libdir/lib$n.so.* %buildroot/%_lib/
+    mv %buildroot/%_libdir/lib$n-*.so.* %buildroot/%_lib/
 done
 
 %check
-# rm failed tests
-rm -f tests/scripts/test063-delta-multiprovider
-%make SLAPD_DEBUG=0 test
+%make_build test
 
 %pre servers
 # Take care to only do ownership-changing if we're adding the user.
@@ -566,140 +578,14 @@ rm -f /var/lib/ldap/%_lib/*.so*
 
 %post_service slapd
 
+
 %preun servers
 %preun_service slapd
 
-%files -n libldap%{so_ver}
+
+%files -n libldap%_sover-compat
 /%_lib/*.so.*
-
-%files -n libldap-devel
-%_libdir/*.so
-%_includedir/*
-%_pkgconfigdir/*.pc
-%_man3dir/*
-%doc doc/{drafts,rfc,devel}
-
-%if_enabled static
-%files -n libldap-devel-static
-%_libdir/*.a
-%endif
-
-%files common
-%doc ANNOUNCEMENT CHANGES COPYRIGHT LICENSE README
-%dir %_sysconfdir/%name
-%config(noreplace) %_sysconfdir/%name/ldap.conf
-%_man5dir/ld*
-
-%files servers
-%_sysconfdir/chroot.d/ldap.all
-%_sysconfdir/chroot.d/ldap.conf
-%_sysconfdir/chroot.d/ldap.lib
-%_sysconfdir/syslog.d/ldap
-#config(noreplace) %_sysconfdir/logrotate.d/ldap
-
-%_sysconfdir/%name/schema
-%attr(750,root,ldap) %dir %_sysconfdir/%name/ssl
-
-%config(noreplace) %_sysconfdir/%name/rootdse.ldif
-%attr(-,root,ldap)%config(noreplace) %_sysconfdir/%name/slapd-access.conf
-%attr(-,root,ldap)%config(noreplace) %_sysconfdir/%name/slapd-mdb-db01.conf
-%attr(-,root,ldap)%config(noreplace) %_sysconfdir/%name/slapd.conf
-
-%_initdir/slapd
-%systemd_unitdir/slapd.service
-%config(noreplace) %_sysconfdir/sysconfig/ldap
-
-%if_enabled slapi
-%_libdir/libslapi*.so.*
-%endif
-
-%_sbindir/sl*
-%dir %_libexecdir/%name
-%_libexecdir/%name/accesslog*
-%_libexecdir/%name/auditlog*
-%_libexecdir/%name/autoca*
-%_libexecdir/%name/argon2*
-%_libexecdir/%name/back_asyncmeta*
-%_libexecdir/%name/back_dnssrv*
-%_libexecdir/%name/back_ldap*
-%_libexecdir/%name/back_meta*
-%_libexecdir/%name/back_null*
-%_libexecdir/%name/back_passwd*
-%_libexecdir/%name/back_relay*
-%_libexecdir/%name/back_sock*
-%_libexecdir/%name/collect*
-%_libexecdir/%name/constraint*
-%_libexecdir/%name/dds*
-%_libexecdir/%name/deref*
-%_libexecdir/%name/dyngroup*
-%_libexecdir/%name/dynlist*
-%_libexecdir/%name/home*
-%_libexecdir/%name/lloadd*
-%_libexecdir/%name/memberof*
-%_libexecdir/%name/otp*
-%_libexecdir/%name/pcache*
-%_libexecdir/%name/ppolicy*
-%_libexecdir/%name/refint*
-%_libexecdir/%name/remoteauth*
-%_libexecdir/%name/retcode*
-%_libexecdir/%name/rwm*
-%_libexecdir/%name/seqmod*
-%_libexecdir/%name/sssvlv*
-%_libexecdir/%name/syncprov*
-%_libexecdir/%name/translucent*
-%_libexecdir/%name/unique*
-%_libexecdir/%name/valsort*
-
-%_man5dir/sl*
-%_man5dir/ll*
-%_man8dir/*
-
-%doc %_docdir/%name-servers-%version
-#attr(0775,root,ldap) %dir %_logdir/ldap
-
-%attr(0750,root,ldap) %dir %ldap_dir
-%attr(1770,root,ldap) %dir %ldap_dir/bases
-%attr(1770,root,ldap) %ldap_dir/dblogs
-%attr(0775,root,ldap) %dir %ldap_dir/dev
-%ghost %attr(0666,root,root) %ldap_dir/dev/log
-%attr(0755,root,ldap) %ldap_dir/etc
-%attr(0750,root,ldap) %ldap_dir/lib
-%ldap_dir/lib64
-%ldap_dir/usr
-%ldap_dir/var
-%attr(0775,root,ldap) %dir %ldap_dir/var/run
-
-##### CLIENTS
-%files clients
-%_bindir/*
-%_man1dir/*
-
-%if_enabled doc
-##### GUIDE
-%files doc
-%_docdir/%name-doc-%version/*
-%dir %_docdir/%name-doc-%version/
-%endif
-
-##### CONTRIB modules
-%files contrib
-%_libexecdir/%name/addpartial*
-%_libexecdir/%name/allop*
-%_libexecdir/%name/allowed*
-%_libexecdir/%name/authzid*
-%_libexecdir/%name/autogroup*
-%_libexecdir/%name/cloak*
-%_libexecdir/%name/datamorph*
-%_libexecdir/%name/denyop*
-%_libexecdir/%name/lastbind*
-%_libexecdir/%name/noopsrch*
-%_libexecdir/%name/pw-pbkdf2*
-%_libexecdir/%name/pw-sha2*
-%_libexecdir/%name/smbk5pwd*
-%_libexecdir/%name/trace*
-%_libexecdir/%name/usn*
-%_libexecdir/%name/variant*
-%_libexecdir/%name/vc*
+%_libdir/*.so.*
 
 ###
 # TODO for 2.2.x
@@ -721,24 +607,8 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
-* Mon Sep 05 2022 Alexey Shabalin <shaba@altlinux.org> 2.6.3-alt1
-- 2.6.3
-- rename package libldap to libldap%%{so_ver}
-
-* Fri Aug 26 2022 Alexey Shabalin <shaba@altlinux.org> 2.5.13-alt1
-- 2.5.13
-- Retired backends by upstream: bdb, hdb, shell
-- Deprecated backends (and disable build): sql, perl
-- Disable build slp
-- Build new password hashing module argon2
-- Drop ntlm support
-- Disable build static libs
-- Cleanup patches
-- Add patches from RH
-- Build with system liblmdb and libuuid
-- Build all backends modules, exept nbd and wt
-- Build all overlay modules
-- Add contrib package with contrib overlay modules
+* Thu Sep 08 2022 Alexey Shabalin <shaba@altlinux.org> 2.4.59-alt2
+- build libldap only as compat package.
 
 * Mon Aug 16 2021 Andrey Cherepanov <cas@altlinux.org> 2.4.59-alt1
 - 2.4.59
@@ -746,7 +616,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
   + CVE-2021-27212 Fixed slapd validity checks for issuerAndThisUpdateCheck
 - Enable experimental support for LDAP over UDP (LDAP_CONNECTIONLESS)
 - Fix coverity issues
-- Build without MD2 support
+- Build without MP_2 support
 
 * Sat Feb 13 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.57-alt1
 - 2.4.57
@@ -939,7 +809,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
 - new upstream version
 
 * Tue Aug 18 2009 Lebedev Sergey <barabashka@altlinux.org> 2.4.16-alt4.4
-- fixed Provides from %%name to %%name = %%version-%%release
+- fixed Provides from %%_bname to %%_bname = %%version-%%release
 
 * Mon Aug 17 2009 Lebedev Sergey <barabashka@altlinux.org> 2.4.16-alt4.3
 - corrected openldap version provides (thanks ldv)
