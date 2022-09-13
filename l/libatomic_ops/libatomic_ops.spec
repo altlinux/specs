@@ -12,13 +12,14 @@
 %def_enable shared
 
 Name:		libatomic_ops
-Version:	7.6.12
+Version:	7.6.14
 Release:	alt1
 Summary:	A library for accessing hardware provided atomic memory operations
 Group:		Development/C
 # libatomic_ops MIT, libatomic_ops_gpl GPLv2
 License:	GPLv2+ and MIT
 URL:		https://github.com/ivmai/libatomic_ops
+VCS:		git+https://github.com/ivmai/libatomic_ops
 Source0:	https://github.com/ivmai/libatomic_ops/releases/download/v%{version}/%{name}-%{version}.tar
 
 %description
@@ -160,6 +161,9 @@ taskset -c 0 make check
 %_libdir/lib%{rawname}*.so
 
 %changelog
+* Tue Sep 13 2022 Igor Vlasenko <viy@altlinux.org> 7.6.14-alt1
+- new version 7.6.14
+
 * Thu Sep 23 2021 Igor Vlasenko <viy@altlinux.org> 7.6.12-alt1
 - new version 7.6.12
 
