@@ -8,7 +8,7 @@
 %def_disable systemtap
 
 Name: sssd
-Version: 2.7.3
+Version: 2.7.4
 Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
@@ -118,6 +118,7 @@ BuildRequires: uid_wrapper
 BuildRequires: nss_wrapper
 BuildRequires: pam_wrapper
 BuildRequires: softhsm
+BuildRequires: adcli
 %endif
 BuildRequires: po4a
 
@@ -238,6 +239,7 @@ License: GPLv3+
 Requires: %name-krb5-common = %version-%release
 Requires: %name-pac = %version-%release
 Requires: %name-winbind-idmap = %version-%release
+Requires: adcli
 
 %description ad
 Provides the Active Directory back end that the SSSD can utilize to fetch
@@ -876,6 +878,13 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Wed Sep 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.7.4-alt1
+- Update to latest 2.7 major release.
+- Lock-free client support will be only built if libc provides
+  pthread_key_create() and pthread_once().
+  For glibc this means version 2.34+
+- Add requirement of adcli to sssd-ad.
+
 * Fri Jul 15 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.7.3-alt1
 - Update to latest 2.7 major release:
   + CLIENT: use thread local storage for socket to a.void the need for a lock.
