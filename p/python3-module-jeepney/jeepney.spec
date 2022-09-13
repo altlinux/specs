@@ -1,7 +1,7 @@
 %def_with check
 Name: python3-module-jeepney
 Version: 0.8.0
-Release: alt1
+Release: alt1.1
 License: MIT
 Group: Development/Python3
 Url: https://gitlab.com/takluyver/jeepney
@@ -9,12 +9,14 @@ Source: jeepney-%version.tar.gz
 
 Summary: Pure Python DBus interface
 BuildRequires(pre): rpm-build-python3
-%if_with check
-# Automatically added by buildreq on Sun Apr 17 2022
-# optimized out: libgpg-error python3 python3-base python3-dev python3-module-packaging python3-module-pep517 python3-module-pyparsing python3-module-tomli sh4
-BuildRequires: python3-module-build python3-module-flit python3-module-setuptools
 
-BuildRequires: python3-module-async-timeout python3-module-build python3-module-flit python3-module-pytest-asyncio python3-module-setuptools python3-module-trio
+BuildRequires: python3-module-build
+BuildRequires: python3-module-flit
+
+%if_with check
+BuildRequires: python3-module-async-timeout
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-trio
 %endif
 
 BuildRequires: python3-dev
@@ -59,6 +61,9 @@ pip3 install --root=%buildroot --no-deps dist/jeepney-%version-py3-none-any.whl
 %python3_sitelibdir_noarch/jeepney/io/tests
 
 %changelog
+* Tue Sep 13 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.0-alt1.1
+- NMU: Fixed build requires
+
 * Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 0.8.0-alt1
 - Autobuild version bump to 0.8.0
 - Switch build scheme
