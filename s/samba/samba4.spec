@@ -75,8 +75,8 @@
 %endif
 
 Name:    samba
-Version: 4.16.4
-Release: alt2
+Version: 4.16.5
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1946,7 +1946,26 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
-* Sun Jul 31 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.4-alt2
+* Mon Sep 12 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.5-alt1
+- Update to latest stable release of Samba 4.16
+- Major fixes:
+  + Possible use after free of connection_struct when iterating
+    smbd_server_connection->connections (Samba#15128).
+  + Spotlight RPC service returns wrong response when Spotlight is
+    disabled on a share (Samba#15086).
+  + acl_xattr VFS module may unintentionally use filesystem
+    permissions instead of ACL from xattr (Samba#15126).
+  + Missing SMB2-GETINFO access checks from MS-SMB2 3.3.5.20.1.
+    assert failed: !is_named_stream(smb_fname)") at
+    ../../lib/util/fault.c:197 (Samba#15153).
+  + Missing READ_LEASE break could cause data corruption (Samba#15148).
+  + rpcclient can crash using setuserinfo(2) (Samba#15124).
+  + Samba fails to build with glibc 2.36 caused by including
+    <sys/mount.h> in libreplace (Samba#15132).
+  + SMB1 negotiation can fail to handle connection errors (Samba#15152).
+  + samba-tool domain join segfault when joining a samba ad domain (Samba#15078).
+
+* Thu Sep 08 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.4-alt2
 - Add support (Heimdal only) of "ignore requester sid" global option for the
   correct operation of trust relationships with oldest versions of MS AD without
   KB5008380 Authentication updates (CVE-2021-42287).
