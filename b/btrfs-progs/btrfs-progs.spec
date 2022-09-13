@@ -1,12 +1,13 @@
+%define _unpackaged_files_terminate_build 1
+
 %ifarch x86_64 aarch64
 %def_with check
 %else
 %def_without check
 %endif
 
-%define _unpackaged_files_terminate_build 0
 Name: btrfs-progs
-Version: 5.19
+Version: 5.19.1
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -134,6 +135,9 @@ vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 %_includedir/*
 
 %changelog
+* Tue Sep 13 2022 Egor Ignatov <egori@altlinux.org> 5.19.1-alt1
+- new version 5.19.1
+
 * Thu Sep 01 2022 Egor Ignatov <egori@altlinux.org> 5.19-alt1
 - new version 5.19
 
