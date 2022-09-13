@@ -47,8 +47,8 @@
 %define vimspell_version	50.1
 
 Name: vim
-%define branch 8.2
-Version: %branch.5172
+%define branch 9.0
+Version: %branch.0143
 Release: alt1
 Epoch: 4
 
@@ -1053,6 +1053,12 @@ fi
 
 # {{{ changelog
 %changelog
+* Fri Aug  5 2022 Alexander Danilov <admsasha@altlinux.org> 4:9.0.0143-alt1
+- Updated to 9.0.0143 (fixes CVE-2022-2257, CVE-2022-2264, CVE-2022-2284,
+  CVE-2022-2285, CVE-2022-2286, CVE-2022-2287, CVE-2022-2288, CVE-2022-2289,
+  CVE-2022-2304, CVE-2022-2343, CVE-2022-2344, CVE-2022-2345, CVE-2022-2522,
+  CVE-2022-2598, CVE-2022-2581, CVE-2022-2580, CVE-2022-2571).
+
 * Tue Jun 28 2022 Alexander Danilov <admsasha@altlinux.org> 4:8.2.5172-alt1
 - Updated to 8.2.5172 (fixes CVE-2022-2129, CVE-2022-2126, CVE-2022-2125,
   CVE-2022-2124).
