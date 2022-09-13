@@ -63,7 +63,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -264,7 +264,8 @@ Conflicts: %conflictbase
 Requires: libcups
 Requires: libXrender libXi libXext libX11 libICE libXcomposite libXcursor libXinerama libXrandr
 Requires: libssl libgnutls30
-Requires: libXpm libalsa libcups libldap libopenal1 libpulseaudio libudev1 libusb libkrb5
+Requires: libXpm libalsa libcups libopenal1 libpulseaudio libudev1 libusb libkrb5
+#libldap
 
 %if_with gtk3
 Requires: libcairo libgtk+3
@@ -834,6 +835,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Mon Sep 12 2022 Alexey Shabalin <shaba@altlinux.org> 1:7.17-alt2
+- not requires libldap, use autoreq
+
 * Sat Sep 10 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.17-alt1
 - new version 7.17 (with rpmrb script)
 
