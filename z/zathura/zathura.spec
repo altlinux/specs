@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura
-Version: 0.4.9
+Version: 0.5.1
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -59,7 +59,7 @@ mkdir -p %buildroot%_libdir/zathura
 %find_lang %name
 
 %files -f %name.lang
-%doc LICENSE AUTHORS
+%doc LICENSE AUTHORS README.md
 %_bindir/%name
 %dir %_libdir/%name
 %_desktopdir/*
@@ -67,7 +67,6 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/metainfo/*.xml
 %_man1dir/*
 %_man5dir/*
-%_datadir/dbus-1/interfaces/org.pwmt.*
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/site-functions/*
 %_datadir/fish/vendor_completions.d/*
@@ -75,8 +74,13 @@ mkdir -p %buildroot%_libdir/zathura
 %files devel
 %_includedir/*
 %_libdir/pkgconfig/*.pc
+%_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Wed Sep 14 2022 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
+- Moved DBus interface xml files to devel subpackage.
+- Updated to 0.5.1.
+
 * Tue Feb 15 2022 Mikhail Efremov <sem@altlinux.org> 0.4.9-alt1
 - Dropped patch for old libmagic.
 - Updated to 0.4.9.
