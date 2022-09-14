@@ -8,8 +8,8 @@
 %define rev %nil
 
 Name: courier-authlib
-Version: 0.71.3
-Release: alt2.1%rev
+Version: 0.71.5
+Release: alt1%rev
 Summary: Courier authentication library -- tool and utilities
 License: GPL-3
 Group: System/Libraries
@@ -64,6 +64,8 @@ are not needed at runtime.
 Summary: userdb support for the Courier authentication library.
 Group: System/Libraries
 Requires: courier-authlib = %version-%release
+# due /usr/bin/makedatprog
+Requires: courier-maildrop-utils
 Provides: maildrop-userdb = 1.7.0-alt3
 Obsoletes: maildrop-userdb < 1.7.0-alt3
 
@@ -273,7 +275,6 @@ chown courier:courier %_sysconfdir/%name/authdaemon-sqlite.conf
 %_sbindir/authenumerate
 %_sbindir/authtest
 %_sbindir/authpasswd
-%_sbindir/userdb-test-cram-md5
 %_man1dir/authpasswd.1*
 %_man1dir/authtest.1*
 %dir %_prefix/libexec/%name
@@ -350,6 +351,11 @@ chown courier:courier %_sysconfdir/%name/authdaemon-sqlite.conf
 %_libdir/%name/libauthsqlite*.so.*
 
 %changelog
+* Thu Sep 01 2022 L.A. Kostis <lakostis@altlinux.ru> 0.71.5-alt1
+- 0.71.5.
+- add missing /usr/bin/makedatprog deps for -userdb (ALT#43653).
+- userdb: remove userdb-test-cram-md5 (obsoleted by upstream).
+
 * Wed Sep 08 2021 L.A. Kostis <lakostis@altlinux.ru> 0.71.3-alt2.1
 - .service: fix a typo.
 

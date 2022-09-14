@@ -3,7 +3,7 @@
 
 Summary: CONE mail reader
 Name: cone
-Version: 1.2
+Version: 1.6
 Release: alt0.1
 Url: http://www.courier-mta.org/cone
 Source0: %name-%version.tar.bz2
@@ -12,7 +12,7 @@ Group: Networking/Mail
 
 Patch1: cone-alt-sendmail.patch
 Patch2: cone-alt-app-defaults.patch
-Patch3: cone-1.1-alt-m4.patch
+Patch3: cone-1.6-alt-m4.patch
 
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
@@ -20,7 +20,7 @@ BuildRequires: libaspell-devel libxml2-devel
 BuildRequires: zlib-devel libgamin-devel perl libncursesw-devel
 BuildRequires: libstdc++-devel gcc-c++
 BuildRequires: openldap-devel libidn-devel courier-unicode-devel
-BuildRequires: gnupg2
+BuildRequires: gnupg2 libpcre2-devel
 
 %if_enabled openssl
 BuildRequires: openssl
@@ -99,6 +99,11 @@ echo 'and earlier'
 %endif
 
 %changelog
+* Tue Sep 13 2022 L.A. Kostis <lakostis@altlinux.ru> 1.6-alt0.1
+- 1.6.
+- app-defaults: optimize.
+- add pcre2 deps (for maildir filters).
+
 * Tue Sep 07 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2-alt0.1
 - 1.2.
 

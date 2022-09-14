@@ -7,8 +7,15 @@
 %define _pemdir %_ssldir/private
 %define rev %nil
 
+# valgrind doesn't work right on other arches :(
+%ifarch %ix86 x86_64
+%def_enable check
+%else
+%def_disable check
+%endif
+
 Name: courier-imap
-Version: 5.1.4
+Version: 5.1.8
 Release: alt1%rev
 
 Summary: IMAP/POP3 server with Maildir support
@@ -29,21 +36,22 @@ Source7: %name.README-ALT
 Source8: common-login.authpam
 Source9: ssl-sh-functions
 
-Patch0: %name-%version-alt-makefile.patch
+Patch0: %name-5.1.4-alt-makefile.patch
 Patch2: %name-4.17.2-alt-imapaccess.patch
 Patch3: %name-4.17.2-alt-imap-ssl-configure.patch
 Patch4: %name-4.17.2-alt-pamconf.patch
 Patch5: %name-4.17.2-alt-quotawarn.patch
-Patch6: %name-%version-alt-shareddir.patch
-Patch7: %name-4.17.2-alt-sysconftool.patch
-Patch8: %name-%version-alt-tls-enforce-config.patch
+Patch6: %name-5.1.4-alt-shareddir.patch
+Patch7: %name-5.1.8-alt-sysconftool.patch
+Patch8: %name-5.1.4-alt-tls-enforce-config.patch
 Patch9: %name-4.17.2-alt-config.patch
 
 BuildPreReq: libcourier-authlib-devel >= 0.71.0
 
 # Automatically added by buildreq on Sun Apr 27 2008
-BuildRequires: gcc-c++ libdb4-devel libkrb5-devel libpcre-devel libssl-devel openssl libpam-devel pam-config libidn-devel
+BuildRequires: gcc-c++ libdb4-devel libkrb5-devel libpcre2-devel libssl-devel openssl libpam-devel pam-config libidn-devel
 BuildRequires: courier-unicode-devel >= 2.1
+%{?_enable_check:BuildRequires: valgrind}
 
 # Files /etc/pam.d/imap /usr/share/man/man8/imapd.8.xz conflict with the package cyrus-imapd
 Conflicts: cyrus-imapd
@@ -108,6 +116,10 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/courier-imaps
 install -m 0755 %SOURCE3 %buildroot%_initdir/courier-pop3d
 install -m 0755 %SOURCE4 %buildroot%_initdir/courier-pop3s
 
+mkdir -p -m 0755 %buildroot%_sysconfdir/pam.d
+install -m 0644 libs/imap/imapd.pam %buildroot%_sysconfdir/pam.d/imap
+install -m 0644 libs/imap/pop3d.pam %buildroot%_sysconfdir/pam.d/pop3
+
 mkdir -p -m 0755 %buildroot%courier_confdir/ssl
 touch %buildroot%courier_confdir/ssl/{imapd.pem,pop3d.pem,imapd.dh,pop3d.dh}
 
@@ -126,12 +138,10 @@ install -m 0644 NEWS.html    %buildroot%_docdir/%name-%version/html
 # imap documentation
 install -m 0644 libs/imap/BUGS      %buildroot%_docdir/%name-%version
 install -m 0644 libs/imap/ChangeLog %buildroot%_docdir/%name-%version
-install -m 0644 libs/imap/README    %buildroot%_docdir/%name-%version/README.imap
 install -m 0644 libs/imap/README.proxy %buildroot%_docdir/%name-%version
 install -m 0644 libs/imap/BUGS.html    %buildroot%_docdir/%name-%version/html
 install -m 0644 libs/imap/courierpop3d.html %buildroot%_docdir/%name-%version/html
 install -m 0644 libs/imap/courierpop3d.8 %buildroot%_man8dir
-install -m 0644 libs/imap/README.html       %buildroot%_docdir/%name-%version/html/README.imap.html
 install -m 0644 libs/imap/README.proxy.html %buildroot%_docdir/%name-%version/html
 
 # maildir documentation
@@ -151,6 +161,11 @@ install -m 0644 libs/maildir/README.sharedfolders.html %buildroot%_docdir/%name-
 install -m 0644 libs/tcpd/README.couriertls %buildroot%_docdir/%name-%version
 install -m 0644 libs/tcpd/couriertls.html %buildroot%_docdir/%name-%version/html
 install -m 0644 libs/tcpd/couriertls.1 %buildroot%_man1dir
+
+%if_enabled check
+%check
+%make check
+%endif
 
 %triggerun -- courier-imap < 4.18.0
 echo 'WARNING! WARNING! non-UTF-8 friendly configuration detected!'
@@ -233,6 +248,12 @@ done
 %ghost %attr(0600,courier,courier) %courier_localstatedir/couriersslpop3cache
 
 %changelog
+* Mon Sep 12 2022 L.A. Kostis <lakostis@altlinux.ru> 5.1.8-alt1
+- 5.1.8.
+- .spec:
+  + pcre->pcre2
+  + added check with valgrind (only on x86 and x86_64).
+
 * Wed Sep 08 2021 L.A. Kostis <lakostis@altlinux.ru> 5.1.4-alt1
 - .spec:
   + fix permissions for ssl cache.
