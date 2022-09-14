@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 4.7.1
+Version: 4.7.2
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
@@ -71,6 +71,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Wed Sep 14 2022 Mikhail Efremov <sem@altlinux.org> 4.7.2-alt1
+- test: Don't check timezones count.
+
 * Tue May 24 2022 Sergey V Turchin <zerg@altlinux.org> 4.7.1-alt1
 - rearrange installer popup dialog widgets
 
