@@ -1,5 +1,5 @@
 Name: virt-what
-Version: 1.24
+Version: 1.25
 Release: alt1
 
 Summary: Detect if we are running in a virtual machine
@@ -48,6 +48,9 @@ know about or cannot detect.
 %_man1dir/*
 
 %changelog
+* Wed Sep 14 2022 Ilya Mashkin <oddity@altlinux.ru> 1.25-alt1
+- 1.25
+
 * Sun Jul 10 2022 Ilya Mashkin <oddity@altlinux.ru> 1.24-alt1
 - 1.24
 - Update url
