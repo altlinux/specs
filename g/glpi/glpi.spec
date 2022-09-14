@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.2
+Version: 10.0.3
 Release: alt1
 
 Summary: IT and asset management software
@@ -164,6 +164,18 @@ fi
 %files php8.1
 
 %changelog
+* Wed Sep 14 2022 Pavel Zilke <zidex@altlinux.org> 10.0.3-alt1
+- New version 10.0.3
+- This release fixes several critical security issues that has been recently discovered. Update is strongly recommended!
+- Security fixes:
+ + CVE-2022-35945 : XSS through registration API
+ + CVE-2022-31143 : Leak of sensitive information through login page error
+ + CVE-2022-31187 : Stored XSS through global search (CVE-2022-31187)
+ + CVE-2022-35914 : [critical] Command injection using a third-party library script
+ + CVE-2022-35946 : SQL injection through plugin controller
+ + CVE-2022-35947 : [critical] Authentication via SQL injection
+ + CVE-2022-36112 : Blind Server-Side Request Forgery (SSRF) in RSS feeds and planning
+
 * Fri Jul 22 2022 Pavel Zilke <zidex@altlinux.org> 10.0.2-alt1
 - New version 10.0.2
 - This is a security release, upgrading is recommended
