@@ -4,18 +4,19 @@
 %def_with check
 
 Name: python3-module-%modname
-Version: 3.10.0.2
+Version: 4.3.0
 Release: alt1
 Summary: Python Typing Extensions
 Group: Development/Python3
 License: Python
 Url: https://github.com/python/typing/blob/master/typing_extensions
-Source: %modname-%version.tar.gz
+Source: %name-%version.tar
 
 BuildArch: noarch
 Provides: python3-module-typing-extensions = %EVR
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-flit
 
 %if_with check
 BuildRequires: python3-test
@@ -40,13 +41,13 @@ module from PyPi instead of using this one unless specifically writing code that
 must be compatible with multiple Python versions or requires experimental types.
 
 %prep
-%setup -n %modname-%version
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 cat > tox.ini <<EOF
@@ -61,12 +62,15 @@ export TOXENV=py3
 tox.py3 --sitepackages -vvr -s false
 
 %files
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/typing_extensions.py
 %python3_sitelibdir/__pycache__/typing_extensions.cpython*
-%python3_sitelibdir/%modname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Tue Sep 13 2022 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1
+- Build new version.
+
 * Tue Sep 07 2021 Stanislav Levin <slev@altlinux.org> 3.10.0.2-alt1
 - 3.7.4.3 -> 3.10.0.2.
 
