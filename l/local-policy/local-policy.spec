@@ -1,13 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: local-policy
-Version: 0.5.1
+Version: 0.6.0
 Release: alt1
 
-Summary: ALT Local policies
+Summary: ALT Local Policies Default templates
 License: GPLv2+
 Group: Other
-Url: http://git.altlinux.org/people/sin/packages/local-policy.git
+Url: http://git.altlinux.org/gears/l/local-policy.git
 
 BuildArch: noarch
 
@@ -31,6 +31,7 @@ for i in sshd-gssapi-auth \
          krb5-conf-ccache \
          ldap-reverse-dns-lookup \
          ldap-tls-cert-check \
+         local-policy-system-access \
          sssd-ad-gpo-access-control \
          sssd-ad-gpo-ignore-unreadable \
          sssd-ad-update-machine-password \
@@ -55,11 +56,21 @@ install -pD -m755 "controls/functions-local-policy" \
 mkdir -p "%buildroot%_datadir/%name"
 cp -r policies/* "%buildroot%_datadir/%name"
 mkdir -p "%buildroot%_sysconfdir/%name"
+mkdir -p "%buildroot%_sysconfdir/%name-system"
 
 %pre
 %_sbindir/groupadd -r -f remote 2> /dev/null ||:
+%pre_control local-policy-system-access
+if [ ! -f "/var/run/control/local-policy-system-access" ]; then
+    [ ! -d "/var/run/control" ] ||
+        echo restricted > "/var/run/control/local-policy-system-access"
+fi
+
+%post
+%post_control -s restricted local-policy-system-access
 
 %files
+%dir %attr(0700, root, root) %_sysconfdir/%name-system
 %dir %_sysconfdir/%name
 %_sysconfdir/control.d/facilities/*
 %_sysconfdir/control.d/functions-local-policy
@@ -67,6 +78,10 @@ mkdir -p "%buildroot%_sysconfdir/%name"
 %_datadir/%name/*
 
 %changelog
+* Fri Aug 26 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.6.0-alt1
+- New directory /etc/local-policy-system with Local Group Policy Template (GPT)
+- Add control local-policy-system-access
+
 * Mon Jul 04 2022 Ivan Savin <svn17@altlinux.org> 0.5.1-alt1
 - Add control smb-conf-machine-password-timeout
 - Add control sssd-ad-update-machine-password
