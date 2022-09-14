@@ -3,8 +3,8 @@
 %def_enable streebog
 
 Name: kf5-%rname
-Version: 5.97.0
-Release: alt2
+Version: 5.98.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -178,6 +178,9 @@ sed -i '/install.*desktop.*DESTINATION.*KDE_INSTALL_KSERVICESDIR/d' src/kcms/*/C
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Sep 12 2022 Sergey V Turchin <zerg@altlinux.org> 5.98.0-alt1
+- new version
+
 * Wed Aug 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.97.0-alt2
 - exclude extra config modules info
 

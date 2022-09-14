@@ -1,7 +1,7 @@
 %define rname kwayland
 
 Name: kf5-%rname
-Version: 5.97.0
+Version: 5.98.0
 Release: alt1
 %K5init altplace
 
@@ -17,7 +17,7 @@ Patch1: alt-return-statement.patch
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-concurrent libqt5-core libqt5-gui libqt5-test libqt5-widgets libstdc++-devel libwayland-client libwayland-server pkg-config python-base ruby ruby-stdlibs wayland-devel
 #BuildRequires: extra-cmake-modules gcc-c++ libwayland-client-devel libwayland-server-devel python-module-google qt5-base-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-wayland-devel
+BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-base-devel-static qt5-wayland-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel wayland-protocols kde5-plasma-wayland-protocols
 
 %description
@@ -91,6 +91,9 @@ KF5 library
 %_K5lib/libKF5WaylandServer.so.*
 
 %changelog
+* Mon Sep 12 2022 Sergey V Turchin <zerg@altlinux.org> 5.98.0-alt1
+- new version
+
 * Mon Aug 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.97.0-alt1
 - new version
 

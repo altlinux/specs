@@ -1,8 +1,8 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.97.0
-Release: alt2
+Version: 5.98.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -118,6 +118,9 @@ LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Mon Sep 12 2022 Sergey V Turchin <zerg@altlinux.org> 5.98.0-alt1
+- new version
+
 * Fri Aug 19 2022 Oleg Solovyov <mcpain@altlinux.org> 5.97.0-alt2
 - fix incorrect format in wallets (patch by ptrnine@)
 
