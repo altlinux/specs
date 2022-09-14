@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pkgconfig
+%define pypi_name pkgconfig
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 1.5.5
-Release: alt1
+Release: alt2
 
 Summary: Interface Python with pkg-config
 License: MIT
@@ -17,7 +17,9 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(poetry.core)
+
+# build backend and its deps
+BuildRequires: python3(poetry-core)
 
 %if_with check
 BuildRequires: /usr/bin/pkg-config
@@ -25,51 +27,33 @@ BuildRequires: /usr/bin/pkg-config
 BuildRequires: libssl-devel
 
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
-%oname is a Python module to interface with the pkg-config command line tool
+%pypi_name is a Python module to interface with the pkg-config command line tool
 for Python.
 
 %prep
 %setup
 
 %build
-# generate setup.py for legacy builder
-%__python3 - <<-'EOF'
-from pathlib import Path
-
-from poetry.core.factory import Factory
-from poetry.core.masonry.builders.sdist import SdistBuilder
-
-
-poetry = Factory().create_poetry(Path(".").resolve(), with_dev=False)
-builder = SdistBuilder(poetry)
-
-setup = builder.build_setup()
-
-with open("setup.py", "wb") as f:
-    f.write(setup)
-EOF
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false --develop
+%tox_check_pyproject
 
 %files
 %doc *.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/pkgconfig/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 1.5.5-alt2
+- Modernized packaging (fixes FTBFS due to poetry-core 1.1.0).
+
 * Fri Mar 25 2022 Stanislav Levin <slev@altlinux.org> 1.5.5-alt1
 - 1.2.2 -> 1.5.5.
 

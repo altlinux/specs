@@ -5,7 +5,7 @@
 
 Name: python3-module-dirty-equals
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Summary: Doing dirty (but extremely useful) things with equals
 License: MIT
@@ -16,7 +16,7 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3(poetry)
+BuildRequires: python3(poetry-core)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -53,6 +53,9 @@ checking the response to API calls and the contents of a database.
 %python3_sitelibdir/*
 
 %changelog
+* Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 0.4-alt2
+- NMU: Fixed FTBFS (poetry-core 1.1.0).
+
 * Tue Jul 26 2022 Anton Zhukharev <ancieg@altlinux.org> 0.4-alt1
 - initial build for Sisyphus
 

@@ -18,7 +18,7 @@
 %endif
 
 Name: python3-module-%pypi_name
-Version: 1.0.8
+Version: 1.1.0
 Release: alt1
 
 Summary: Poetry Core
@@ -33,19 +33,24 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# this is a build backend and it's built with self-hosted backend,
+# thereby, no external backend is required.
+
 %if_without vendored
 # unvendored packages
-BuildRequires: %build_vendor_buildreq %(echo `cat %{SOURCE1}`)
+BuildRequires: %build_vendor_buildreq %(echo `cat %{SOURCE1} 2>/dev/null || echo unknown`)
 %endif
 
 %if_with check
+# required to build C extension, e.g. test_build_wheel_extended
+BuildRequires: gcc
+BuildRequires: python3-devel
+
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_mock)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 
 BuildRequires: /usr/bin/git
-BuildRequires: python3(pep517)
+BuildRequires: python3(build)
 %endif
 
 BuildArch: noarch
@@ -53,12 +58,21 @@ BuildArch: noarch
 # PEP503 name
 %py3_provides %pypi_name
 
+# namespace root
+%py3_requires poetry
+
 %if_with vendored
 # drop deps on system packages which were bundled
-%filter_from_requires %build_req_filter %(echo `cat %{SOURCE1}`)
+%filter_from_requires %build_req_filter %(echo `cat %{SOURCE1} 2>/dev/null || echo unknown`)
 
 %add_findreq_skiplist %python3_sitelibdir/poetry/core/_vendor/*
 %add_findprov_skiplist %python3_sitelibdir/poetry/core/_vendor/*
+%endif
+
+%if_without vendored
+# unvendored packages that are not found as deps automatically
+%py3_requires jsonschema
+%py3_requires lark
 %endif
 
 %description
@@ -75,7 +89,7 @@ PEP 517 compatible build frontends to build Poetry managed projects.
 set -o pipefail
 PYTHONPATH="$(pwd)" %__python3 - <<-'EOF' | sort -u > actual.pkg.list
 import pkgutil
-for mod in pkgutil.iter_modules(["./poetry/core/_vendor"]):
+for mod in pkgutil.iter_modules(["./src/poetry/core/_vendor"]):
     if not mod.name.startswith("_"):
         print(mod.name)
 EOF
@@ -84,50 +98,28 @@ diff -y expected.pkg.list actual.pkg.list
 
 %if_without vendored
 # unbundle packages
-rm -r poetry/core/_vendor/*
+rm -r ./src/poetry/core/_vendor/*
 %endif
 
-# current working directory will be prepended to sys.path
-# generate legacy setup.py, PEP517 builds are not currently supported
-%__python3 - <<-'EOF'
-from pathlib import Path
-
-from poetry.core.factory import Factory
-from poetry.core.masonry.builders.sdist import SdistBuilder
-
-
-poetry = Factory().create_poetry(Path(".").resolve(), with_dev=False)
-builder = SdistBuilder(poetry)
-
-setup = builder.build_setup()
-
-with open("setup.py", "wb") as f:
-    f.write(setup)
-EOF
-
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+# override upstream's config (they use poetry for tox)
+%tox_create_default_config
+%tox_check_pyproject -- -vra tests/
 
 %files
 %doc README.md
-%python3_sitelibdir/poetry/
-%python3_sitelibdir/poetry_core-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/poetry/core/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 13 2022 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 1.0.8 -> 1.1.0.
+
 * Sat Mar 05 2022 Stanislav Levin <slev@altlinux.org> 1.0.8-alt1
 - 1.0.7 -> 1.0.8.
 

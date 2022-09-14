@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname babelfish
+%define pypi_name babelfish
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: A module to work with countries and languages
 License: BSD
@@ -19,12 +19,9 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(poetry.core)
 
-%if_with check
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-%endif
+# build backend and its deps
+BuildRequires: python3(poetry-core)
 
 %description
 BabelFish is a Python library to work with countries and languages.
@@ -34,45 +31,24 @@ BabelFish is a Python library to work with countries and languages.
 %autopatch -p1
 
 %build
-# generate legacy setup.py, PEP517 builds are not currently supported
-%__python3 - <<-'EOF'
-from pathlib import Path
-
-from poetry.core.factory import Factory
-from poetry.core.masonry.builders.sdist import SdistBuilder
-
-
-poetry = Factory().create_poetry(Path(".").resolve(), with_dev=False)
-builder = SdistBuilder(poetry)
-
-setup = builder.build_setup()
-
-with open("setup.py", "wb") as f:
-    f.write(setup)
-EOF
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc *.md
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/babelfish/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 0.6.0-alt2
+- Modernized packaging (fixes FTBFS due to poetry-core 1.1.0).
+
 * Fri Feb 04 2022 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
 - 0.5.5 -> 0.6.0.
 

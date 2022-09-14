@@ -1,6 +1,6 @@
 Name: python3-module-wakeonlan
 Version: 2.1.0
-Release: alt1
+Release: alt2
 
 Summary: Python WOL implementation
 License: MIT
@@ -11,9 +11,7 @@ Source0: %name-%version-%release.tar
 
 BuildArch: noarch
 BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools)
-BuildRequires: python3(poetry)
-BuildRequires: python3(wheel)
+BuildRequires: python3(poetry-core)
 
 %description
 %summary
@@ -33,6 +31,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/wakeonlan-%version.dist-info
 
 %changelog
+* Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 2.1.0-alt2
+- NMU: Fixed FTBFS (poetry-core 1.1.0).
+
 * Thu Jul 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1.0-alt1
 - 2.1.0 released
 

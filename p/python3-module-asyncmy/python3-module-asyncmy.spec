@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.2.5
-Release: alt1
+Release: alt2
 
 Summary: A fast asyncio MySQL/MariaDB driver with replication protocol support
 License: Apache-2.0
@@ -18,7 +18,7 @@ Source0: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3(cython)
-BuildRequires: python3(poetry)
+BuildRequires: python3(poetry-core)
 BuildRequires: python3(setuptools)
 
 %if_with check
@@ -52,5 +52,8 @@ rm %buildroot%python3_sitelibdir/{README.md,CHANGELOG.md,LICENSE}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 0.2.5-alt2
+- NMU: Fixed FTBFS (poetry-core 1.1.0).
+
 * Sun Aug 14 2022 Anton Zhukharev <ancieg@altlinux.org> 0.2.5-alt1
 - initial build for Sisyphus

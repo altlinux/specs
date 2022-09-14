@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname isort
+%define pypi_name isort
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 5.10.1
-Release: alt1
+Release: alt2
 Summary: Python utility / library to sort Python imports
 Group: Development/Python3
 License: MIT
@@ -16,7 +16,9 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(poetry.core)
+
+# build backend and its deps
+BuildRequires: python3(poetry-core)
 
 %if_with check
 BuildRequires: /usr/bin/git
@@ -26,8 +28,6 @@ BuildRequires: python3(pylama)
 BuildRequires: python3(colorama)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_mock)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %add_python3_req_skip pylama.lint
@@ -54,49 +54,27 @@ rm -r \
 rm -r isort/_vendored/*
 
 %build
-# poetry.core build backend
-# generate setup.py for legacy builder
-%__python3 - <<-'EOF'
-from pathlib import Path
-
-from poetry.core.factory import Factory
-from poetry.core.masonry.builders.sdist import SdistBuilder
-
-
-poetry = Factory().create_poetry(Path(".").resolve(), with_dev=False)
-builder = SdistBuilder(poetry)
-
-setup = builder.build_setup()
-
-with open("setup.py", "wb") as f:
-    f.write(setup)
-EOF
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 mv %buildroot%_bindir/isort{,.py3}
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    # integration tests actively utilizes git clone
-    pytest -s {posargs:-vra} tests/unit/
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%tox_create_default_config
+%tox_check_pyproject -- -vra tests/unit/
 
 %files
 %doc README.md LICENSE
 %_bindir/isort.py3
 %_bindir/isort-identify-imports
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py3*.egg-info
+%python3_sitelibdir/isort/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 5.10.1-alt2
+- Modernized packaging (fixes FTBFS due to poetry-core 1.1.0).
+
 * Wed Feb 09 2022 Stanislav Levin <slev@altlinux.org> 5.10.1-alt1
 - 4.3.21 -> 5.10.1.
 
