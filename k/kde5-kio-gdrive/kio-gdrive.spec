@@ -6,7 +6,7 @@
 %define libktcore libktcore%sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init altplace appdata
 
@@ -31,7 +31,7 @@ BuildRequires: libqtkeychain-qt5-devel
 %else
 BuildRequires: intltool signon-devel accounts-qt5-devel kde5-kaccounts-integration-devel
 %endif
-BuildRequires: kf5-kdoctools-devel kf5-kio-devel kf5-libkgapi-devel
+BuildRequires: kf5-kdoctools-devel kf5-kio-devel kf5-libkgapi-devel kf5-purpose-devel
 BuildRequires: kf5-ki18n-devel kf5-kio-devel kf5-knotifications-devel
 
 %description
@@ -52,7 +52,7 @@ rm -f "$tmp_file"
 
 %install
 %K5install
-%K5install_move data remoteview
+%K5install_move data remoteview purpose
 %find_lang --with-kde --all-name %rname
 
 %files -f %rname.lang
@@ -66,9 +66,13 @@ rm -f "$tmp_file"
 %_K5plug/kf5/kfileitemaction/*.so
 %_datadir/accounts/services/kde/*drive*.service
 %_K5notif/*drive*.notifyrc
+%_K5data/purpose/*gdrive*
 %endif
 
 %changelog
+* Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

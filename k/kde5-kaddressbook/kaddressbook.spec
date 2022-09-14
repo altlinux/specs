@@ -1,7 +1,7 @@
 %define rname kaddressbook
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -56,14 +56,14 @@ developing applications that use %name.
 %package -n %libkaddressbookprivate
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libkaddressbookprivate
 %name library
 
 %package -n %libkpimaddressbookimportexport
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libkpimaddressbookimportexport
 %name library
 
@@ -89,14 +89,13 @@ done
 
 %files
 %_K5bin/kaddressbook
-%_K5plug/pim/kcms/kaddressbook/
+%_K5plug/pim5/kcms/kaddressbook/
 %_K5plug/*kaddressbook*.so
-%_K5plug/kontact5/*kaddressbook*.so
+%_K5plug/pim5/kontact/*kaddressbook*.so
 %_K5xdgapp/*kaddressbook*.desktop
-#%_K5conf_up/*kaddressbook*
 %_K5data/kaddressbook/
-%_K5srv/kontact/kaddressbookplugin.desktop
-%_K5srv/*kaddressbook*.desktop
+#%_K5srv/kontact/kaddressbookplugin.desktop
+#%_K5srv/*kaddressbook*.desktop
 %_K5icon/*/*/apps/kaddressbook.*
 #
 #%_K5data/kontact/ksettingsdialog/*kaddressbook*
@@ -118,6 +117,9 @@ done
 %_K5lib/libKPimAddressbookImportExport.so.*
 
 %changelog
+* Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

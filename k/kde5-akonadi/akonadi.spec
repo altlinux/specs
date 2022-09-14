@@ -3,7 +3,7 @@
 %def_enable tools
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init altplace
 
@@ -218,7 +218,7 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %_K5bin/akonadi2xml
 %_K5bin/akonaditest
 %_K5bin/akonadi_knut_resource
-%_K5plug/akonadi/akonadi_test_searchplugin.so
+%_K5plug/pim5/akonadi/*.so
 %_datadir/akonadi5/agents/knutresource.desktop
 %_K5data/akonadi_knut_resource/
 %endif
@@ -258,7 +258,7 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %files devel
 %_K5bin/asapcat
 %_K5plug/designer/akonadiwidgets.so
-%_K5inc/akonadi_version.h
+#%_K5inc/akonadi_version.h
 %_K5inc/Akonadi*/
 #%_K5inc/akonadi/
 %_K5link/lib*.so
@@ -289,6 +289,9 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %endif
 
 %changelog
+* Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

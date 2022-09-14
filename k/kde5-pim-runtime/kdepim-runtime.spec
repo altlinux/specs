@@ -14,7 +14,7 @@
 %endif
 
 Name: kde5-pim-runtime
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init altplace
 
@@ -149,8 +149,10 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %files
 %_K5bin/gidmigrator
 %_K5bin/akonadi_*
-%_K5plug/akonadi/config/*.so
+%_K5plug/pim5/akonadi/config/*.so
+%_K5plug/pim5/kcms/kaddressbook/*.so
 %_K5plug/kf5/kio/*.so
+%_K5xdgapp/org.kde.akonadi*.desktop
 %_datadir/akonadi5/accountwizard/*
 %_datadir/akonadi5/agents/*
 %_datadir/akonadi5/firstrun/*
@@ -158,8 +160,6 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5srv/akonadi/davgroupware-providers/
 %_K5srvtyp/*provider.desktop
 %_K5notif/akonadi_*
-%_K5plug/pim/kcms/kaddressbook/kcm_ldap.so
-%_K5srv/kcmldap.desktop
 
 %files devel
 #%_K5link/lib*.so
@@ -182,6 +182,9 @@ mv %buildroot/%_K5xdgmime/kdepim{,5}-mime.xml
 %_K5lib/libakonadi-singlefileresource.so.*
 
 %changelog
+* Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

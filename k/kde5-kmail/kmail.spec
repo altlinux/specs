@@ -4,7 +4,7 @@
 %define libkmailprivate libkmailprivate%pim_sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -53,6 +53,7 @@ Conflicts: kde5-pim-common < 16.12
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: %name-common
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -60,7 +61,7 @@ developing applications that use %name.
 %package -n %libkmailprivate
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libkmailprivate
 %name library
 
@@ -87,16 +88,14 @@ Requires: %name-common = %version-%release
 %_K5bin/kmail*
 %_K5bin/akonadi_*_agent
 %_K5plug/*.so
-%_K5plug/pim/kcms/kmail/
-%_K5plug/pim/kcms/summary/*summary*.so
-%_K5plug/kontact5/*.so
-%_K5plug/akonadi/config/*.so
+%_K5plug/pim5/akonadi/config/*.so
+%_K5plug/pim5/kcms/kmail/*.so
+%_K5plug/pim5/kcms/summary/*.so
+%_K5plug/pim5/kontact/*.so
 %_K5xdgapp/org.kde.*.desktop
 %_K5xdgapp/kmail_view.desktop
 %_K5data/kmail2/
 %_K5xmlgui/kontactsummary/*
-#%_K5srv/kontact/*.desktop
-#%_K5srv/*.desktop
 %_K5icon/*/*/apps/kmail.*
 %_K5notif/kmail2.notifyrc
 %_K5notif/akonadi_*_agent.notifyrc
@@ -107,18 +106,22 @@ Requires: %name-common = %version-%release
 %_K5xdgapp/org.kde.ktnef.desktop
 %_K5icon/*/*/apps/ktnef.*
 
-#%files devel
+%files devel
 #%_K5inc/kmail_version.h
 #%_K5inc/kmail/
 #%_K5link/lib*.so
 #%_K5lib/cmake/kmail
 #%_K5archdata/mkspecs/modules/qt_kmail.pri
+%_K5dbus_iface/*kmail*.xml
 
 %files -n %libkmailprivate
 %_K5lib/libkmailprivate.so.%pim_sover
 %_K5lib/libkmailprivate.so.*
 
 %changelog
+* Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

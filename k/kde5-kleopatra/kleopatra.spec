@@ -6,7 +6,7 @@
 %define libkleopatraclientgui libkleopatraclientgui%kleopatraclientgui_sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -93,8 +93,7 @@ mv %buildroot/%_datadir/mime/packages/application-vnd-kde{,5}-kleopatra.xml
 %_K5xdgapp/kleopatra_import.desktop
 %_K5data/kleopatra/
 %_K5cf_upd/*kleopatra*
-%_K5plug/pim/kcms/kleopatra/*.so
-%_K5srv/kleopatra_*.desktop
+%_K5plug/pim5/kcms/kleopatra/kleopatra_config_gnupgsystem.so
 %_K5icon/*/*/apps/kleopatra.*
 %_K5data/kio/servicemenus/*.desktop
 #
@@ -109,6 +108,9 @@ mv %buildroot/%_datadir/mime/packages/application-vnd-kde{,5}-kleopatra.xml
 %_K5lib/libkleopatraclientgui.so.*
 
 %changelog
+* Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

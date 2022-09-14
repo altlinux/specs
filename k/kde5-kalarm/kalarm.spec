@@ -1,10 +1,11 @@
 %define rname kalarm
 
 %define pim_sover 5
-%define libkalarmprivate libkalarmprivate%pim_sover
+%define libkalarmcalendar libkalarmcalendar%pim_sover
+%define libkalarmplugin libkalarmplugin%pim_sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -51,11 +52,18 @@ Summary: Development files for %name
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n %libkalarmprivate
+%package -n %libkalarmcalendar
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common
-%description -n %libkalarmprivate
+%description -n %libkalarmcalendar
+%name library
+
+%package -n %libkalarmplugin
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common
+%description -n %libkalarmplugin
 %name library
 
 %prep
@@ -78,24 +86,30 @@ Requires: %name-common
 %_K5bin/kalarm
 %_K5bin/kalarmautostart
 %_K5libexecdir/kauth/kalarm_helper
+%_K5plug/pim5/kalarm/akonadiplugin.so
 %_K5start/kalarm.autostart.desktop
 %_K5xdgapp/org.kde.kalarm.desktop
 %_K5cfg/*kalarm*.kcfg
-#%_K5cf_upd/*kalarm*
 %_K5data/kalarm/
 %_K5xmlgui/kalarm/
 %_K5icon/*/*/apps/kalarm.*
-#%doc %_K5doc/en/kalarm/
 %_K5dbus_sys_srv/org.kde.kalarm.rtcwake.service
 %_K5dbus/system.d/org.kde.kalarm.rtcwake.conf
 %_K5notif/kalarm.notifyrc
 %_datadir/polkit-1/actions/org.kde.kalarm.rtcwake.policy
 
-%files -n %libkalarmprivate
-%_K5lib/libkalarmprivate.so.%pim_sover
-%_K5lib/libkalarmprivate.so.*
+%files -n %libkalarmcalendar
+%_K5lib/libkalarmcalendar.so.%pim_sover
+%_K5lib/libkalarmcalendar.so.*
+
+%files -n %libkalarmplugin
+%_K5lib/libkalarmplugin.so.%pim_sover
+%_K5lib/libkalarmplugin.so.*
 
 %changelog
+* Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

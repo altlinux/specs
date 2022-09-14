@@ -1,7 +1,7 @@
 %define rname akonadi-search
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init altplace
 
@@ -80,7 +80,8 @@ KF5 library
 %setup -n %rname-%version
 
 # disable krunner by default
-sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' runner/plasma-krunner-pimcontacts.desktop*
+#sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefault=false|' runner/plasma-krunner-pimcontacts.desktop*
+sed -i '/EnabledByDefault/s|true|false|' runner/plasma-krunner-pimcontacts.json.*
 
 %build
 %K5build
@@ -96,7 +97,7 @@ sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefau
 
 %files
 %_K5bin/*
-%_K5plug/akonadi/*.so
+%_K5plug/pim5/akonadi/*.so
 %_K5plug/kf5/krunner/*krunner*.so
 %_K5plug/kf5/krunner/kcms/*krunner*.so
 %_datadir/akonadi5/agents/*.desktop
@@ -116,6 +117,9 @@ sed -i 's|^X-KDE-PluginInfo-EnabledByDefault=.*$|X-KDE-PluginInfo-EnabledByDefau
 %_K5lib/libKF5AkonadiSearchDebug.so.*
 
 %changelog
+* Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

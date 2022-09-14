@@ -16,7 +16,7 @@
 %define libkf5webengineviewer libkf5webengineviewer%sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init
 
@@ -65,6 +65,9 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+%if_enabled qtwebengine
+Requires: qt5-webengine-devel
+%endif
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -151,8 +154,11 @@ done
 %K5install_move data org.kde.syntax-highlighting knsrcfiles
 %find_lang %name --with-kde --all-name
 
+mkdir -p %buildroot/%_K5plug/pim5
+
 %files common -f %name.lang
 %doc LICENSES/*
+%dir %_K5plug/pim5/
 %_datadir/qlogging-categories5/*.*categories
 %_K5data/*/
 
@@ -174,10 +180,10 @@ done
 %files -n %libkf5messageviewer
 %_K5lib/libKF5MessageViewer.so.%sover
 %_K5lib/libKF5MessageViewer.so.*
-%dir %_K5plug/messageviewer/
-%dir %_K5plug/messageviewer/headerstyle/
-%_K5plug/messageviewer/headerstyle/*.so
-%_K5plug/messageviewer/grantlee/
+%dir %_K5plug/pim5/messageviewer/
+%dir %_K5plug/pim5/messageviewer/headerstyle/
+%_K5plug/pim5/messageviewer/headerstyle/*.so
+%_K5plug/pim5/messageviewer/grantlee/
 %files -n %libkf5messageparser
 %_K5lib/libKF5TemplateParser.so.%sover
 %_K5lib/libKF5TemplateParser.so.*
@@ -194,6 +200,9 @@ done
 %_K5lib/libKF5MimeTreeParser.so.*
 
 %changelog
+* Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

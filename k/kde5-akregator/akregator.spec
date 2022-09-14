@@ -5,14 +5,14 @@
 %define libakregatorprivate libakregatorprivate%sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init no_appdata
 
 Group: Networking/News
 Summary: RSS/Atom feed reader
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-or-later
 
 ExcludeArch: %not_qt5_qtwebengine_arches
 
@@ -50,6 +50,7 @@ Conflicts: kde5-pim-common < 16.12
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: %name-common
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -57,14 +58,14 @@ developing applications that use %name.
 %package -n %libakregatorinterfaces
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libakregatorinterfaces
 %name library
 
 %package -n %libakregatorprivate
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libakregatorprivate
 %name library
 
@@ -83,24 +84,24 @@ Requires: %name-common = %version-%release
 %files common -f %name.lang
 %doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
-%_K5srvtyp/*akregator*.desktop
+#%_K5srvtyp/*akregator*.desktop
 
 %files
 %_K5bin/akregator
 %_K5bin/akregatorstorageexporter
-%_K5plug/akregator_*.so
-%_K5plug/akregatorpart.so
-%_K5plug/kontact5/kontact_akregatorplugin.so
-%_K5plug/pim/kcms/akregator/*akregator*.so
+#%_K5plug/pim5/akregator*.so
+%_K5plug/akregator*.so
+%_K5plug/pim5/kontact/*akregator*.so
+%_K5plug/pim5/kcms/akregator/*akregator*.so
 %_K5xdgapp/org.kde.akregator.desktop
 %_K5data/akregator/
 %_K5cfg/*akregator*.kcfg
 %_K5notif/akregator.notifyrc
-#%_K5srv/kontact/akregatorplugin.desktop
-%_K5srv/akregator_*.desktop
+#%_K5srv/akregator_*.desktop
 %_K5icon/*/*/apps/akregator*.*
 
-#%files devel
+%files devel
+%_K5dbus_iface/*akregator*.xml
 #%_K5inc/akregator_version.h
 #%_K5inc/akregator/
 #%_K5link/lib*.so
@@ -115,6 +116,9 @@ Requires: %name-common = %version-%release
 %_K5lib/libakregatorprivate.so.*
 
 %changelog
+* Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

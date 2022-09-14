@@ -4,7 +4,7 @@
 %define libzanshin libzanshin%sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init
 
@@ -46,7 +46,7 @@ A Getting Things Done application which aims at getting your mind like water.
 %doc LICENSES/*
 #%_datadir/qlogging-categories5/*.*categories
 %_K5bin/zanshin*
-%_K5plug/kontact5/*zanshin*.so
+%_K5plug/pim5/kontact/*zanshin*.so
 %_K5plug/*zanshin*.so
 %_K5xdgapp/*zanshin*.desktop
 %_K5srv/kontact/*zanshin*.desktop
@@ -55,6 +55,9 @@ A Getting Things Done application which aims at getting your mind like water.
 %_K5icon/hicolor/*/apps/*zanshin*.*
 
 %changelog
+* Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

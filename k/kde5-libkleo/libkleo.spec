@@ -4,7 +4,7 @@
 %define libkf5libkleo libkf5libkleo%sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init
 
@@ -21,9 +21,9 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: boost-devel extra-cmake-modules
 BuildRequires: libgpgme-devel libassuan-devel
-BuildRequires: kde5-kpimtextedit-devel
 BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel
-BuildRequires: kf5-kwindowsystem-devel kf5-sonnet-devel kf5-kcodecs-devel kf5-kitemmodels-devel
+BuildRequires: kf5-kwindowsystem-devel kf5-sonnet-devel kf5-kcodecs-devel kf5-kitemmodels-devel kf5-kconfigwidgets-devel
+BuildRequires: kde5-kpimtextedit-devel
 
 %description
 %summary.
@@ -79,6 +79,9 @@ KF5 library
 %_K5lib/libKF5Libkleo.so.*
 
 %changelog
+* Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 
