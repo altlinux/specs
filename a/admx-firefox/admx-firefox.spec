@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admx-firefox
-Version: 2.12
+Version: 4.1
 Release: alt1
 
 Summary: Firefox-specific ADMX policy templates
@@ -47,6 +47,17 @@ done
 %_destdir/*/*.adml
 
 %changelog
+* Wed Sep 14 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.1-alt1
+- Update Policy templates for Firefox 103 and Firefox ESR 102.1
+- While these templates will work for Firefox ESR 91, they contain
+  new policies that are not in Firefox ESR 91:
+  + ExemptDomainFileTypePairsFromFileTypeDownloadWarnings
+  + StartDownloadsInTempDirectory
+  + UseSystemPrintDialog
+
+* Mon Sep 06 2021 Alenka Glukhovskaya <alenka@altlinux.org> 3.0-alt1
+- Update to new release
+
 * Sun Jul 18 2021 Evgeny Sinelnikov <sin@altlinux.org> 2.12-alt1
 - Update to new release
 - Add admx-lint check with special workaround:

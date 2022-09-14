@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpupdate
-Version: 0.9.9.1
+Version: 0.9.11
 Release: alt1
 
 Summary: GPT applier
@@ -57,6 +57,7 @@ ln -s %python3_sitelibdir/gpoa/gpoa \
 	%buildroot%_sbindir/gpoa
 ln -s %python3_sitelibdir/gpoa/gpupdate \
 	%buildroot%_bindir/gpupdate
+
 ln -s %python3_sitelibdir/gpoa/gpupdate-setup \
 	%buildroot%_sbindir/gpupdate-setup
 
@@ -65,6 +66,8 @@ mkdir -p \
 
 ln -s %python3_sitelibdir/gpoa/pkcon_runner \
 	%buildroot%_prefix/libexec/%name/pkcon_runner
+ln -s %python3_sitelibdir/gpoa/scripts_runner \
+	%buildroot%_prefix/libexec/%name/scripts_runner
 
 mkdir -p %buildroot%_datadir/%name
 mv %buildroot%python3_sitelibdir/gpoa/templates \
@@ -74,7 +77,11 @@ mkdir -p %buildroot%_sysconfdir/%name
 touch %buildroot%_sysconfdir/%name/environment
 
 install -Dm0644 dist/%name.service %buildroot%_unitdir/%name.service
+install -Dm0644 dist/%name.timer %buildroot%_unitdir/%name.timer
+install -Dm0644 dist/%name-scripts-run.service %buildroot%_unitdir/%name-scripts-run.service
 install -Dm0644 dist/%name-user.service %buildroot/usr/lib/systemd/user/%name-user.service
+install -Dm0644 dist/%name-scripts-run-user.service %buildroot/usr/lib/systemd/user/%name-scripts-run-user.service
+install -Dm0644 dist/%name-user.timer %buildroot/usr/lib/systemd/user/%name-user.timer
 install -Dm0644 dist/system-policy-%name %buildroot%_sysconfdir/pam.d/system-policy-%name
 install -Dm0644 dist/%name-remote-policy %buildroot%_sysconfdir/pam.d/%name-remote-policy
 install -Dm0644 dist/%name.ini %buildroot%_sysconfdir/%name/%name.ini
@@ -94,11 +101,14 @@ done
 
 %post
 %post_service gpupdate
+if [ -x "/bin/systemctl" ]; then
+    gpupdate-setup update
+fi
 
 # Remove storage in case we've lost compatibility between versions.
 # The storage will be regenerated on GPOA start.
 %define active_policy %_sysconfdir/local-policy/active
-%triggerpostun -- %name < 0.9.6
+%triggerpostun -- %name < 0.9.10
 rm -f %_cachedir/%name/registry.sqlite
 if test -L %active_policy; then
 	sed -i "s|^\s*local-policy\s*=.*|local-policy = $(readlink -f %active_policy)|" \
@@ -109,17 +119,23 @@ fi
 %_sbindir/gpoa
 %_sbindir/gpupdate-setup
 %_bindir/gpupdate
+%_prefix/libexec/%name/scripts_runner
 %_prefix/libexec/%name/pkcon_runner
 %attr(755,root,root) %python3_sitelibdir/gpoa/gpoa
 %attr(755,root,root) %python3_sitelibdir/gpoa/gpupdate
 %attr(755,root,root) %python3_sitelibdir/gpoa/gpupdate-setup
+%attr(755,root,root) %python3_sitelibdir/gpoa/scripts_runner
 %attr(755,root,root) %python3_sitelibdir/gpoa/pkcon_runner
 %python3_sitelibdir/gpoa
 %_datadir/%name
 %_unitdir/%name.service
+%_unitdir/%name-scripts-run.service
+%_unitdir/%name.timer
 %_man1dir/gpoa.1.*
 %_man1dir/gpupdate.1.*
 /usr/lib/systemd/user/%name-user.service
+/usr/lib/systemd/user/%name-user.timer
+/usr/lib/systemd/user/%name-scripts-run-user.service
 %dir %_sysconfdir/%name
 %_sysconfdir/control.d/facilities/*
 %config(noreplace) %_sysconfdir/%name/environment
@@ -135,6 +151,18 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Wed Sep 14 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.11-alt1
+- Add Chromium applier
+- Update Firefox applier
+
+* Fri Aug 26 2022 Valery Sinelnikov <greh@altlinux.org> 0.9.10-alt1
+- INI-files preferences implementation
+- Files preferences implementation
+- Scripts (logon logoff startup shutdown) implementation
+- UserPolicyMode set accordingly
+- Folder bugs fixed
+- Firefox app full release
+
 * Thu Mar 03 2022 Valery Sinelnikov <greh@altlinux.org> 0.9.9.1-alt1
 - Fixed method call (Closes: 41994)
 - Removed unnecessary replace
