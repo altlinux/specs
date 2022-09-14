@@ -19,7 +19,7 @@
 
 Name: openldap-compat
 Version: %_sover.59
-Release: alt2
+Release: alt3
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -120,13 +120,14 @@ BuildRequires: libopenslp-devel
 # Automatically added by buildreq on Tue Oct 18 2011 (-bi)
 BuildRequires: chrooted groff-base libdb4.8-devel libltdl-devel libssl-devel shtool
 
-%package -n libldap%_sover-compat
+%package -n libldap
 Summary: OpenLDAP libraries
 Group: System/Legacy libraries
 Provides: libldap2.4 = %version-%release
 Obsoletes: libldap2.4 < %version-%release
 Requires: openldap-common >= 2.4.59
-Provides: libldap = %version-%release
+Provides: libldap%_sover-compat = %version-%release
+Obsoletes: libldap%_sover-compat < %version-%release
 
 %package -n libldap-devel
 Summary: OpenLDAP development libraries and header files
@@ -187,7 +188,7 @@ tools, and sample clients.
 
 Install %_bname if you need to run LDAP-based applications and tools.
 
-%description -n libldap%_sover-compat
+%description -n libldap
 OpenLDAP is an open source suite of LDAP (Lightweight Directory Access
 Protocol) applications and development tools.  LDAP is a set of
 protocols for accessing directory services (usually phone book style
@@ -583,7 +584,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
 %preun_service slapd
 
 
-%files -n libldap%_sover-compat
+%files -n libldap
 /%_lib/*.so.*
 %_libdir/*.so.*
 
@@ -607,6 +608,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Wed Sep 14 2022 Alexey Shabalin <shaba@altlinux.org> 2.4.59-alt3
+- reverted compat package name to libldap.
+
 * Thu Sep 08 2022 Alexey Shabalin <shaba@altlinux.org> 2.4.59-alt2
 - build libldap only as compat package.
 
