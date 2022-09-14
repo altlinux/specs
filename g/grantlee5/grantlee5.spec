@@ -4,8 +4,8 @@
 %define libtextdocument libgrantlee_textdocument%sover
 
 Name: grantlee5
-Version: 5.2.0
-Release: alt3.1
+Version: 5.3.0
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt string template engine based on the Django template system
@@ -130,6 +130,9 @@ cp -prf BUILD*/apidox/* %buildroot%_docdir/HTML/en/grantlee5-apidocs
 %doc %_docdir/HTML/en/grantlee5-apidocs/
 
 %changelog
+* Wed Sep 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.3.0-alt1
+- new version
+
 * Sat Apr 17 2021 Michael Shigorin <mike@altlinux.org> 5.2.0-alt3.1
 - E2K: workaround ftbfs with lcc
 
