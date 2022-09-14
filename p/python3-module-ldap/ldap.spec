@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name python-ldap
 %define mname ldap
 
 %def_with check
 
 Name: python3-module-%mname
-Version: 3.4.0
+Version: 3.4.2
 Release: alt1
 
 Summary: An object-oriented API to access LDAP directory servers from Python programs
@@ -20,16 +21,21 @@ BuildRequires: libldap-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libssl-devel
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 BuildRequires: openldap-servers
 BuildRequires: openldap-clients
 BuildRequires: python3(pyasn1)
 BuildRequires: python3(pyasn1_modules)
-BuildRequires: python3(tox)
 %endif
 
 Provides: python3-module-pyldap = %EVR
 Obsoletes: python3-module-pyldap < %EVR
+
+%py3_provides %pypi_name
 
 %description
 python-ldap provides an object-oriented API to access LDAP
@@ -48,18 +54,15 @@ grep -rl '^#!/usr/bin/env python' | \
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
-
-%check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-export BIN="$PATH:%_sbindir"
-export TOX_TESTENV_PASSENV=BIN
-tox.py3 --sitepackages -r -vv
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+export BIN="$PATH:%_sbindir"
+export TOX_TESTENV_PASSENV=BIN
+%tox_check_pyproject
 
 %files
 %doc LICENCE CHANGES README TODO Demo
@@ -69,9 +72,12 @@ tox.py3 --sitepackages -r -vv
 %python3_sitelibdir/ldapurl.py*
 %python3_sitelibdir/ldif.py*
 %python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/python_ldap-%{version}*-*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 3.4.2-alt1
+- 3.4.0 -> 3.4.2.
+
 * Tue Nov 30 2021 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
 - 3.3.1 -> 3.4.0.
 
