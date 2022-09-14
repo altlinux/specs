@@ -7,8 +7,8 @@
 %def_without check
 
 Name: deepin-api
-Version: 5.5.30
-Release: alt3
+Version: 5.5.31
+Release: alt1
 Summary: Golang bingding for dde-daemon
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -30,7 +30,7 @@ Requires(pre): shadow-utils dbus-tools
 %package -n golang-%name-devel
 Summary: %summary
 Group: Graphical desktop/Other
-BuildArch: noarch
+# BuildArch: noarch
 
 %description -n golang-%name-devel
 %summary.
@@ -53,8 +53,6 @@ sed -i 's|gobuild|.build|' Makefile
 sed -i 's|/etc/default/locale|%_datadir/locale|' \
     adjust-grub-theme/util.go \
     locale-helper/ifc.go
-sed -i 's|/usr/bin/sh|/bin/sh|' \
-    misc/scripts/deepin-boot-sound.sh
 tar -xf %SOURCE1
 
 %build
@@ -93,6 +91,11 @@ cp -a vendor/src/* %buildroot%go_path/src/%goipath/vendor/src/
 %go_path/src/%goipath
 
 %changelog
+* Tue Sep 13 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.31-alt1
+- New version (5.5.31).
+- Packaged new golang modules for deepin-daemon.
+- Updated internal golang modules.
+
 * Thu Sep 01 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.30-alt3
 - Packaged golang modules for deepin-daemon.
 

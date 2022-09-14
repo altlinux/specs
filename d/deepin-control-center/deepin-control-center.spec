@@ -4,7 +4,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.5.144
+Version: 5.5.149
 Release: alt1
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
@@ -158,15 +158,15 @@ mkdir -p %buildroot%_libdir/%repo/plugins
 mv %buildroot/usr/lib/libdccwidgets.so %buildroot%_libdir/
 %endif
 
+mkdir -p %buildroot%_bindir/
+mv -f %buildroot%_K5bin/%{repo}* %buildroot%_bindir/
 install -Dm644 com.deepin.controlcenter.addomain.policy %buildroot%_datadir/polkit-1/actions/
-# Packed in %%doc.
-rm -f %buildroot%_datadir/dman/dde-control-center/internaltest.md
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 
 %files
-%doc docs/internaltest.md LICENSE README.md
+%doc LICENSE README.md
 %_bindir/%repo
 %_bindir/%repo-wapper
 # %%_bindir/abrecovery
@@ -175,6 +175,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_datadir/polkit-1/actions/*.policy
 %_datadir/%repo/
 %_datadir/dict/MainEnglishDictionary_ProbWL.txt
+%dir %_datadir/dman/
+%dir %_datadir/dman/dde-control-center/
+%_datadir/dman/dde-control-center/internaltest.md
 # %%_sysconfdir/xdg/autostart/deepin-ab-recovery.desktop
 %_datadir/glib-2.0/schemas/com.deepin.dde.control-center.gschema.xml
 # %%_libdir/%%repo/
@@ -193,6 +196,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Tue Sep 13 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.149-alt1
+- New version (5.5.149).
+
 * Mon Aug 29 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.144-alt1
 - New version (5.5.144).
 
