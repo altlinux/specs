@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220902
+Version: 20220912
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,18 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Sep 14 2022 Cronbuild Service <cronbuild@altlinux.org> 20220912-alt1
+- upstream changes (GIT f09bebf):
+  + amdgpu: update yellow carp DMCUB firmware (thx Mario Limonciello)
+  + amdgpu: add firmware for VCN 3.1.2 IP block (thx Mario Limonciello)
+  + amdgpu: add firmware for SDMA 5.2.6 IP block (thx Mario Limonciello)
+  + amdgpu: add firmware for PSP 13.0.5 IP block (thx Mario Limonciello)
+  + amdgpu: add firmware for GC 10.3.6 IP block (thx Mario Limonciello)
+  + amdgpu: add firmware for DCN 3.1.5 IP block (thx Mario Limonciello)
+  + qcom: rename Lenovo ThinkPad X13s firmware paths (thx Dmitry Baryshkov)
+  + rtw89: 8852c: update fw to v0.27.42.0 (thx Ping-Ke Shih)
+  + rtw89: 8852c: update fw to v0.27.36.0 (thx Po-Hao Huang)
+
 * Wed Sep 07 2022 Cronbuild Service <cronbuild@altlinux.org> 20220902-alt1
 - upstream changes (GIT 2f2f018):
   + Mellanox: Add new mlxsw_spectrum firmware xx.2010.3146 (thx Petr Machata)
