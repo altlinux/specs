@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 
 Summary: Low-level functions for packaging and distribution of Python software
@@ -53,6 +53,9 @@ export TOX_TESTENV_PASSENV='SKIP_ONLINE'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 0.3.6-alt1
+- 0.3.5 -> 0.3.6.
+
 * Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 0.3.5-alt1
 - 0.3.4 -> 0.3.5.
 
