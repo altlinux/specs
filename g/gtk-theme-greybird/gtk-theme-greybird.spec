@@ -1,7 +1,7 @@
 %define theme_name Greybird
 
 Name: gtk-theme-greybird
-Version: 3.23.1
+Version: 3.23.2
 Release: alt1
 Summary: A clean minimalistic GTK theme for Xfce
 Group: Graphical desktop/XFce
@@ -75,6 +75,14 @@ Requires: %name-common = %version-%release
 %description -n metacity-theme-greybird
 Themes for Metacity as part of the Greybird theme.
 
+%package -n openbox-theme-greybird
+Summary: Greybird Openbox themes
+Group: Graphical desktop/Other
+Requires: %name-common = %version-%release
+
+%description -n openbox-theme-greybird
+Themes for Openbox as part of the Greybird theme.
+
 %package -n xfwm4-theme-greybird
 Summary: Greybird Xfwm4 themes
 Group: Graphical desktop/XFce
@@ -129,6 +137,10 @@ Themes for Xfce4 notifyd as part of the Greybird theme.
 %_datadir/themes/%theme_name/metacity-1/
 %_datadir/themes/%theme_name-dark/metacity-1/
 
+%files -n openbox-theme-greybird
+%_datadir/themes/%theme_name/openbox-3/
+%_datadir/themes/%theme_name-dark/openbox-3/
+
 %files -n xfwm4-theme-greybird
 %_datadir/themes/%theme_name/xfwm4/
 %dir %_datadir/themes/%theme_name-accessibility/
@@ -150,6 +162,10 @@ Themes for Xfce4 notifyd as part of the Greybird theme.
 %exclude %_datadir/themes/%theme_name-dark/unity
 
 %changelog
+* Wed Sep 14 2022 Mikhail Efremov <sem@altlinux.org> 3.23.2-alt1
+- Package Openbox themes.
+- 3.23.2.
+
 * Tue Apr 19 2022 Mikhail Efremov <sem@altlinux.org> 3.23.1-alt1
 - Package GTK4 theme.
 - 3.23.1.
