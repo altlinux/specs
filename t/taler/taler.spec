@@ -1,6 +1,6 @@
 Name:		taler
 Version:	0.15.0.1
-Release:	alt5
+Release:	alt6
 Summary:	Taler - first Belarus cryptocurrency
 Url:		https://taler.site/
 Group:		Office
@@ -14,6 +14,7 @@ Patch1: taler-0.15.0.1-alt-boost-compat.patch
 Patch2: taler-0.15.0.1-alt-boost-compat-2.patch
 Patch3: taler-0.15.0.1-alt-boost-1.73.0-compat.patch
 Patch4: taler-0.15.0.1-alt-qt-5.15-compat.patch
+Patch5: taler-0.15.0.1-alt-fix-build-with-lto.patch
 
 BuildRequires: boost-devel-static boost-interprocess-devel git-core libdb4.8_cxx-devel
 BuildRequires: libevent-devel libminiupnpc-devel libprotobuf-devel libqrencode-devel
@@ -38,6 +39,7 @@ Core software, see https://taler.site.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 %build
 %add_optflags -std=c++11
@@ -68,6 +70,9 @@ convert -resize 16x16 %SOURCE1 %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Wed Sep 14 2022 Ivan A. Melnikov <iv@altlinux.org> 0.15.0.1-alt6
+- NMU: Fix build with LTO on aarch64 and ppcle64
+
 * Thu Sep 17 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.15.0.1-alt5
 - Rebuilt with boost-1.74.0.
 
