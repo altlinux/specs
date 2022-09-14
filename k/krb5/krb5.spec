@@ -1,6 +1,6 @@
 
 %def_without bootstrap
-%def_without doc
+%def_with doc
 %def_with ldap
 %def_with selinux
 %def_with verto
@@ -9,7 +9,7 @@
 
 Name: krb5
 Version: 1.19.3
-Release: alt1.1
+Release: alt1.2
 
 %if_without bootstrap
 %if_with doc
@@ -519,11 +519,14 @@ fi
 # {{{ changelog
 
 %changelog
+* Wed Sep 14 2022 Ivan A. Melnikov <iv@altlinux.org> 1.19.3-alt1.2
+- build with docs again
+
 * Tue Sep 06 2022 Alexey Shabalin <shaba@altlinux.org> 1.19.3-alt1.1
 - bootstrap with new libldap, build without docs
 
 * Tue Mar 15 2022 Ivan A. Melnikov <iv@altlinux.org> 1.19.3-alt1
-- 1.19.2 (Fixes: CVE-2021-37750)
+- 1.19.3 (Fixes: CVE-2021-37750)
 
 * Mon Aug 02 2021 Ivan A. Melnikov <iv@altlinux.org> 1.19.2-alt2
 - Fix documentation build
