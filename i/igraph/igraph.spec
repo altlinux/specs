@@ -1,7 +1,7 @@
 %define soname 3
 
 Name: igraph
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 Summary: Library for creating and manipulating graphs
 
@@ -83,7 +83,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
-install -Dm0644 doc/igraph.3 %buildroot/%_man3dir/igraph.3
+install -Dm0644 doc/igraph.3 %buildroot%_man3dir/igraph.3
 find . -name '.arch-ids' | xargs rm -rf
 
 %files -n lib%name%soname
@@ -100,6 +100,9 @@ find . -name '.arch-ids' | xargs rm -rf
 %_man3dir/igraph.3*
 
 %changelog
+* Wed Sep 14 2022 Leontiy Volodin <lvol@altlinux.org> 0.10.1-alt1
+- New version (0.10.1).
+
 * Tue Sep 06 2022 Leontiy Volodin <lvol@altlinux.org> 0.10.0-alt1
 - New version (0.10.0).
 - Built with openblas instead blas.
