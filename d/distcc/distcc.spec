@@ -2,7 +2,7 @@
 
 Name: distcc
 Version: 3.4
-Release: alt7
+Release: alt8
 
 Summary: distcc is a program to distribute builds C/C++/ Objective C/C++
 
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 Source1: distccd.init
 Source2: distccd.conf
 Source3: distcc.filetrigger
+Source4: distccd.service
 
 BuildRequires: binutils-devel
 BuildRequires: libavahi-devel libpopt-devel
@@ -73,15 +74,19 @@ Python3 module distcc include_server.
 mkdir -p %buildroot%_sysconfigdir/ %buildroot%_initdir/
 mkdir -p -m755 %buildroot%prefix/lib/distcc
 mkdir -p -m755 %buildroot%prefix/lib/rpm
+mkdir -p -m755 %buildroot%_unitdir
 install -p -m 0755 %SOURCE1  %buildroot%_initdir/distccd
 install -p -m 0644 %SOURCE2 %buildroot%_sysconfigdir/distccd
 install -p -m 0755 %SOURCE3 %buildroot%prefix/lib/rpm
+install -p -m 0644 %SOURCE4 %buildroot%_unitdir
 
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/ignore.d/
 touch %buildroot%_sysconfdir/buildreqs/packages/ignore.d/distcc
 
 rm -rf %buildroot/etc/default/
 rm -rf %buildroot/%_docdir/
+rm -f %buildroot%_sysconfigdir/distcc/clients.allow
+rm -f %buildroot%_sysconfigdir/distcc/commands.allow.sh
 
 %preun
 # 0 means "last" unininstall
@@ -121,15 +126,25 @@ rm -rf %buildroot/%_docdir/
 %files server
 %doc doc/*.txt
 %_initdir/distccd
+%_unitdir/distccd.service
 %config(noreplace) %_sysconfigdir/distccd
 %_bindir/distccd
 %_man1dir/distccd.*
-%_sysconfdir/distcc/*allow*
 
 %files -n python3-module-include_server
 %python3_sitelibdir/include_server*
 
 %changelog
+* Thu Sep 16 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.4-alt8
+- Repaired IP based access control (Closes: #42251)
+- Added systemd unit file (Closes: #40669)
+- Improved --allow-private, see https://github.com/distcc/distcc/pull/451
+- Removed clients.allow, commands.allow.sh: these have never ever worked
+- Avoid infinite loop when DISTCC_BACKOFF is disabled, see
+  https://github.com/distcc/distcc/issues/434
+- Refuse to distribute files with the `.incbin` assembler directive, see
+  https://github.com/distcc/distcc/pull/461
+
 * Thu Nov 04 2021 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.4-alt7
 - Use getaddrinfo to resolve host names (Closes: #41291)
 
