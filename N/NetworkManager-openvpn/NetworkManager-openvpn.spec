@@ -1,4 +1,4 @@
-%define nm_version 1.1.90
+%define nm_version 1.7.0
 %define git_date %nil
 #define git_date .git20111101
 
@@ -13,7 +13,7 @@
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.8.18
+Version: 1.10.0
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -23,12 +23,12 @@ Vcs: https://gitlab.gnome.org/GNOME/NetworkManager-openvpn.git
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: intltool
+BuildRequires: gettext
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libsecret-devel
-%{?_with_gtk4:BuildRequires: libgtk4-devel libnma-gtk4-devel xvfb-run}
+%{?_with_gtk4:BuildRequires: libgtk4-devel >= 4.6.3 libnma-gtk4-devel}
 
 Requires: NetworkManager-daemon   >= %nm_version
 Requires: openvpn          >= 2.1
@@ -82,15 +82,10 @@ This package contains files for GTK4 applications to use %name.
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-	--without-libnm-glib \
 	%{subst_with gtk4} \
 	--disable-silent-rules \
 	--enable-more-warnings=%more_warnings
-%if_with gtk4
-xvfb-run %make_build
-%else
 %make_build
-%endif
 
 %install
 %makeinstall_std
@@ -122,6 +117,10 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Thu Sep 15 2022 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
+- Dropped workaround with xvfb-run.
+- Updated to 1.10.0.
+
 * Wed Mar 16 2022 Mikhail Efremov <sem@altlinux.org> 1.8.18-alt1
 - Used xvfb-run.
 - Added gtk4 subpackage.
