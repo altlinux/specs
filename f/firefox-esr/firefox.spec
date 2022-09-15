@@ -16,7 +16,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (верс�
 
 Name: firefox-esr
 Version: 102.2.0
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -510,6 +510,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Thu Sep 15 2022 Pavel Vasenkov <pav@altlinux.org> 102.2.0-alt2
+- Update language support
+
 * Thu Aug 25 2022 Pavel Vasenkov <pav@altlinux.org> 102.2.0-alt1
 - New ESR version.
 - Security fixes:
