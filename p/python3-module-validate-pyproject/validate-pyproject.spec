@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.9
+Version: 0.10.1
 Release: alt1
 
 Summary: Validation pyproject.toml files using JSON Schema
@@ -71,6 +71,9 @@ git tag '%version'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 15 2022 Stanislav Levin <slev@altlinux.org> 0.10.1-alt1
+- 0.9 -> 0.10.1.
+
 * Thu Aug 11 2022 Stanislav Levin <slev@altlinux.org> 0.9-alt1
 - 0.7.1 -> 0.9.
 
