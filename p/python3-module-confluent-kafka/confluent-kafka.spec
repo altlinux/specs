@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 1.9.0
+Version: 1.9.2
 Release: alt1
 
 Summary: Confluent's Kafka Python Client
@@ -56,6 +56,9 @@ py.test-3 -v
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Thu Aug 18 2022 Grigory Ustinov <grenka@altlinux.org> 1.9.2-alt1
+- Automatically updated to 1.9.2.
+
 * Fri Jun 17 2022 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1
 - Automatically updated to 1.9.0.
 

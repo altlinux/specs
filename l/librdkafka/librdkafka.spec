@@ -1,5 +1,7 @@
+%def_with check
+
 Name: librdkafka
-Version: 1.9.1
+Version: 1.9.2
 Release: alt1
 
 Summary: the Apache Kafka C/C++ client library
@@ -14,9 +16,11 @@ Packager: Pavel Vainerman <pv@altlinux.ru>
 Source: %name-%version.tar
 Source1: rdkafka.pc
 
-# Automatically added by buildreq on Fri Nov 09 2018
-# optimized out: cmake-modules libcom_err-devel libkrb5-devel libstdc++-devel pkg-config python-base python-modules python3 python3-base zlib-devel
 BuildRequires: cmake gcc-c++ libssl-devel liblz4-devel libxxhash-devel libsasl2-devel
+
+%if_with check
+BuildRequires: ctest
+%endif
 
 %description
 librdkafka is a C library implementation of the Apache Kafka protocol, containing
@@ -52,6 +56,9 @@ cp %SOURCE1 %buildroot%_libdir/pkgconfig/
 rm -f %buildroot%_libdir/*.a
 rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
 
+%check
+ctest -VV -R RdKafkaTestBrokerLess
+
 %files
 %doc LICENSE README.md
 %_libdir/*.so*
@@ -64,6 +71,10 @@ rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Aug 18 2022 Grigory Ustinov <grenka@altlinux.org> 1.9.2-alt1
+- Automatically updated to 1.9.2.
+- Build with check.
+
 * Fri Jul 15 2022 Grigory Ustinov <grenka@altlinux.org> 1.9.1-alt1
 - Automatically updated to 1.9.1.
 
