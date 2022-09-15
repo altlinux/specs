@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 162
+%define centos_release 164
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -634,6 +634,26 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Sep 15 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.164-alt1.el9
+- Updated to kernel-5.14.0-164.el9:
+  + Fix null pointer reference in nvmem_unregister
+  + iavf: bug fixes August 2022
+  + platform/x86/intel: pmc/core add support for ADL-N
+  + Update Intel Platform Monitoring Technology
+  + Update kernel's PCI subsystem to v5.19
+  + Use final upstream fix for DMAR_UNITS_SUPPORTED
+  + vfio/type1: Unpin zero pages
+
+* Thu Sep 08 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.163-alt1.el9
+- Updated to kernel-5.14.0-163.el9:
+  + CNB: rebase/update devlink for RHEL 9.2 to upstream v5.18
+  + New device IDs for RPL-S: NPK
+  + [s390]: [IBM 9.1 FEAT] Long Kernel Commmand Line for s390x - kernel part
+  + Upgrade drivers/firmware to support Arm SystemReady IR
+  + Upgrade drivers/gpio to support Arm SystemReady IR
+  + vdpa/mlx5: Update Control VQ callback information
+  + x86/cpu: Add new Raptor Lake CPU model number
+
 * Tue Sep 06 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.162-alt1.el9
 - Updated to kernel-5.14.0-162.el9 (fixes: CVE-2022-2585):
   + Fix: posix cpu timer use-after-free
