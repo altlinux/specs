@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libtlsh
-Version: 4.9.3
+Version: 4.11.2
 Release: alt1
 
 Summary: Fuzzy text matching library
@@ -13,6 +13,8 @@ Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
 BuildRequires: gcc-c++ cmake python3-devel ctest libstdc++-devel-static
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %define _description TLSH is a fuzzy matching library. \
 Given a byte stream with a minimum length of 50 bytes \
@@ -48,10 +50,11 @@ Group: Development/Python3
 %cmake_build
 
 pushd py_ext
-%python3_build
+%pyproject_build
 popd
 
 %check
+ln -s tlsh_unittest bin/tlsh
 make -C %_cmake__builddir test
 
 %install
@@ -60,7 +63,7 @@ cp -a lib/libtlsh.so* %buildroot%_libdir/
 cp -a include %buildroot%_includedir/tlsh/
 
 pushd py_ext
-%python3_install
+%pyproject_install
 popd
 
 %files
@@ -79,6 +82,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu Sep 15 2022 Slava Aseev <ptrnine@altlinux.org> 4.11.2-alt1
+- new version
+
 * Wed Sep 22 2021 Slava Aseev <ptrnine@altlinux.org> 4.9.3-alt1
 - update to latest upstream version
 - remove python2 build
