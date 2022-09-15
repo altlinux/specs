@@ -1,0 +1,35 @@
+Name: python3-module-btsocket
+Version: 0.2.0
+Release: alt1
+
+Summary: A Python library to interact with Bluez Bluetooth Management API on Linux.
+License: MIT
+Group: Development/Python
+Url: https://pypi.org/project/btsocket/
+
+Source0: %name-%version-%release.tar
+
+BuildArch: noarch
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%description
+%summary
+
+%prep
+%setup
+
+%build
+%pyproject_build
+
+%install
+%pyproject_install
+
+%files
+%python3_sitelibdir/btsocket
+%python3_sitelibdir/btsocket-%version.dist-info
+
+%changelog
+* Thu Sep 15 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.0-alt1
+- 0.2.0 released
