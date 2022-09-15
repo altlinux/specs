@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.12.3
+Version: 1.12.4
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,10 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Sep 15 2022 Anton Midyukov <antohami@altlinux.org> 1.12.4-alt1
+- install2: add set_device for define $DEVICE variable (Closes: 43793)
+- install2: assign $CDROMDEV variable for /dev/cdrom*|/dev/dvd* also
+
 * Tue Aug 30 2022 Anton Midyukov <antohami@altlinux.org> 1.12.3-alt1
 - install2-sh-functions: add new function cmdline_get_arg
 - install2-sh-functions: define stagename from /proc/cmdline
