@@ -48,7 +48,7 @@
 
 Name: vim
 %define branch 9.0
-Version: %branch.0143
+Version: %branch.0463
 Release: alt1
 Epoch: 4
 
@@ -1053,6 +1053,13 @@ fi
 
 # {{{ changelog
 %changelog
+* Wed Sep 14 2022 Alexander Danilov <admsasha@altlinux.org> 4:9.0.0463-alt1
+- Updated to 9.0.0463 (fixes CVE-2022-2816, CVE-2022-2817, CVE-2022-2819,
+  CVE-2022-2874, CVE-2022-2889, CVE-2022-2923, CVE-2022-2946, CVE-2022-3099,
+  CVE-2022-3037, CVE-2022-3016, CVE-2022-2982, CVE-2022-2980, CVE-2022-2862,
+  CVE-2022-2849, CVE-2022-2845, CVE-2022-3153, CVE-2022-3134, CVE-2021-3984,
+  CVE-2021-4019, CVE-2022-1927).
+
 * Fri Aug  5 2022 Alexander Danilov <admsasha@altlinux.org> 4:9.0.0143-alt1
 - Updated to 9.0.0143 (fixes CVE-2022-2257, CVE-2022-2264, CVE-2022-2284,
   CVE-2022-2285, CVE-2022-2286, CVE-2022-2287, CVE-2022-2288, CVE-2022-2289,
