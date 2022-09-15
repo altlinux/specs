@@ -2,7 +2,7 @@
 %define modname libarchive-c
 
 Name: python3-module-%modname
-Version: 3.1
+Version: 4.0
 Release: alt1
 
 Summary: Python interface to libarchive
@@ -57,6 +57,9 @@ TOX_TESTENV_PASSENV='PYTHONPATH' tox.py3 -e py%{python_version_nodots python3} -
 %python3_sitelibdir/libarchive*
 
 %changelog
+* Thu Sep 15 2022 Slava Aseev <ptrnine@altlinux.org> 4.0-alt1
+- new version
+
 * Mon Oct 25 2021 Slava Aseev <ptrnine@altlinux.org> 3.1-alt1
 - Update to upstream version 3.1
 

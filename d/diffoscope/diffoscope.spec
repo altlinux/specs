@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: diffoscope
-Version: 188
+Version: 220
 Release: alt1
 
 Summary: In-depth comparison of files, archives, and directories
@@ -47,6 +47,9 @@ install -Dm644 doc/diffoscope.1 %buildroot%_man1dir/diffoscope.1
 %_man1dir/diffoscope.1*
 
 %changelog
+* Thu Sep 15 2022 Slava Aseev <ptrnine@altlinux.org> 220-alt1
+- new version
+
 * Mon Oct 25 2021 Slava Aseev <ptrnine@altlinux.org> 188-alt1
 - Update to upstream version 188
 
