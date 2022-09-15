@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: ansible-freeipa
-Version: 1.5.0
+Version: 1.8.4
 Release: alt1
 
 Summary: Ansible roles and modules for FreeIPA
@@ -36,7 +36,10 @@ Tests for FreeIPA Ansible roles and modules
 %patch -p1
 
 # Fix shebangs
-grep -rlE '#!/usr/bin/(env )?python' | xargs subst 's|^#!/usr/bin/\(env \)\?python|#!/usr/bin/python3|'
+grep -rlE '#!/usr/bin/(env )?python$' | xargs subst 's|^#!/usr/bin/\(env \)\?python|#!/usr/bin/python3|'
+
+# Use python3 in sanity.sh
+subst 's|python |python3 |' tests/sanity/sanity.sh
 
 %build
 
@@ -77,6 +80,9 @@ cp -r tests %buildroot%_datadir/%name/
 %_datadir/%name/tests
 
 %changelog
+* Thu Sep 15 2022 Slava Aseev <ptrnine@altlinux.org> 1.8.4-alt1
+- Update to new version
+
 * Tue Dec 07 2021 Slava Aseev <ptrnine@altlinux.org> 1.5.0-alt1
 - Update to new version
 
