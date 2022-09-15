@@ -4,7 +4,7 @@
 
 %define oname Enable
 Name: python3-module-%oname
-Version: 5.3.0
+Version: 5.3.1
 Release: alt1
 
 Summary: Drawing and interaction packages
@@ -28,6 +28,7 @@ BuildRequires: python3-module-Cython
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-traits
+BuildRequires: python3-module-sphinx-copybutton
 %endif
 
 %add_python3_req_skip macport mac_context hypothesis
@@ -83,10 +84,6 @@ This package contains pickles for Enable project.
 #remove bundled freetype2 library
 rm -rf kiva/agg/freetype2
 
-# Very quick fix for python3.10
-sed -i 's/++Py_REFCNT(o)/Py_SET_REFCNT(o, Py_REFCNT(o) + 1)/' kiva/_cython_speedups.cpp
-sed -i 's/--Py_REFCNT(o)/Py_SET_REFCNT(o, Py_REFCNT(o) - 1)/' kiva/_cython_speedups.cpp
-
 %build
 %add_optflags -fno-strict-aliasing
 
@@ -133,6 +130,9 @@ cp -fR pickles %buildroot%python3_sitelibdir/enable/
 %endif
 
 %changelog
+* Thu Sep 15 2022 Grigory Ustinov <grenka@altlinux.org> 5.3.1-alt1
+- Automatically updated to 5.3.1.
+
 * Fri May 20 2022 Grigory Ustinov <grenka@altlinux.org> 5.3.0-alt1
 - Automatically updated to 5.3.0.
 - Build with system freetype.
