@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.853
+Version: 0.854
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -165,6 +165,9 @@ done
 %_man1dir/repocop-report-html.*
 
 %changelog
+* Thu Sep 15 2022 Igor Vlasenko <viy@altlinux.org> 0.854-alt1
+- new version
+
 * Mon Sep 12 2022 Igor Vlasenko <viy@altlinux.org> 0.853-alt1
 - added conflict with repocop-collector-java-jar
 
