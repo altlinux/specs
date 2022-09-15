@@ -3,7 +3,7 @@
 %define oname pytest-testinfra
 
 Name: python3-module-%oname
-Version: 6.4.0
+Version: 6.8.0
 Release: alt1
 Summary: pytest plugin for infrastructure testing
 License: Apache-2.0
@@ -17,7 +17,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 # Testing requirements
 BuildRequires: ansible
@@ -37,11 +38,11 @@ plugin to the powerful Pytest test engine
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
 %__python3 -m pytest test -v
@@ -50,10 +51,13 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %doc LICENSE
 %doc CHANGELOG.rst README.rst
 %python3_sitelibdir/testinfra/
-%python3_sitelibdir/pytest_testinfra-*.egg-info/
+%python3_sitelibdir/pytest_testinfra-*.dist-info/
 
 
 %changelog
+* Thu Sep 15 2022 Slava Aseev <ptrnine@altlinux.org> 6.8.0-alt1
+- new version
+
 * Mon Nov 15 2021 Slava Aseev <ptrnine@altlinux.org> 6.4.0-alt1
 - Initial build for ALT
 
