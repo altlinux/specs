@@ -1,9 +1,10 @@
 %def_without kde4
 %def_without python2
+%def_with ruby
 
 Name: gwyddion
 Version: 2.61
-Release: alt1
+Release: alt1.1
 
 Summary: An SPM data visualization and analysis tool
 Summary(ru_RU.UTF-8):  Программа для визуализации и анализа данных АСМ
@@ -14,13 +15,20 @@ Url: http://gwyddion.net/
 
 # Source-url: http://sourceforge.net/projects/gwyddion/files/gwyddion/%version/gwyddion-%version.tar.xz/download
 Source: %name-%version.tar
+Patch: ruby-dir.patch
 
 BuildRequires(pre): rpm-build-intro rpm-build-python libGConf-devel
 
 BuildRequires: GConf gcc-c++ libfftw3-devel libgtkglext-devel libgtksourceview-devel libicu-devel
 BuildRequires: libxml2-devel
 BuildRequires: libgtk+2-devel pkg-config chrpath libruby-devel
+BuildRequires: libgomp12-devel
+BuildRequires: gtk-doc
 %{?_with_python2:BuildRequires: python-module-distribute python-module-pygtk-devel}
+%if_with ruby
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: libruby-devel
+%endif
 
 # File Format and some features support
 BuildRequires: libminizip-devel libwebp-devel openexr-devel libcfitsio-devel libunique-devel
@@ -102,8 +110,19 @@ files.
 %description  -n python-module-pygwy
 Python tools for Gwyddion module development
 
+%if_with ruby
+%package       -n ruby-%name
+Summary:       Ruby bindings for %name dump script
+Group:         Development/Ruby
+
+%description   -n ruby-%name
+Ruby bindings for %name dump script.
+%endif
+
+
 %prep
 %setup
+%autopatch
 
 # Don't install .la files.
 sed -i '/# Install the pseudo-library/,/^$/d' ltmain.sh
@@ -117,18 +136,18 @@ sed -i 's|#include <pygtk-2.0/pygobject.h>|#include <pygtk/pygobject.h>|' module
 sed -i 's|--ldflags|--libs|' m4/gwy-python.m4
 
 %build
-autoconf -f
+%autoreconf
 %if_with kde4
 %add_optflags -I%_K4includedir
 %endif
 %configure \
 	CFLAGS='%optflags' CXXFLAGS='%optflags' \
 	%{?_with_kde4:--with-kde4-thumbnailer} \
+        %{?_without_ruby:--without-ruby} \
 	--disable-rpath \
 	--enable-library-bloat \
 	--with-gl \
-	--with-gtksourceview \
-	--without-ruby
+	--with-gtksourceview
 %make_build
 
 %install
@@ -149,6 +168,10 @@ rm -f %buildroot%_man3dir/Gwyddion::dump.*
 %if_with python2
 mkdir -p %buildroot%python_sitelibdir
 mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
+%endif
+%if_with ruby
+install -D -m 755 plugins/invert_ruby.rb %buildroot%ruby_vendorlibdir/gwyddion/samples/invert_ruby.rb
+install -D -m 755 plugins/invert_narray.rb %buildroot%ruby_vendorlibdir/gwyddion/samples/invert_narray.rb
 %endif
 
 %files -f %name.lang
@@ -175,6 +198,7 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %pkglibdir/modules/tool/*.so
 %pkglibdir/modules/volume/*.so
 %pkglibdir/modules/xyz/*.so
+%pkglibdir/modules/cmap/*.so
 %pkglibdir/modules/*.so
 %dir %pkglibdir/modules/file
 %dir %pkglibdir/modules/graph
@@ -183,6 +207,7 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %dir %pkglibdir/modules/tool
 %dir %pkglibdir/modules/volume
 %dir %pkglibdir/modules/xyz
+%dir %pkglibdir/modules/cmap
 %dir %pkglibdir/modules
 %dir %pkglibdir
 %_desktopdir/%name.desktop
@@ -221,9 +246,6 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %pkglibdir/python/Gwyddion/*
 %dir %pkglibdir/python/Gwyddion
 %dir %pkglibdir/python
-# pkglibdir/ruby/gwyddion/*
-# dir %pkglibdir/ruby/gwyddion
-# dir %pkglibdir/ruby
 
 %files -n lib%name-doc
 # Documentation
@@ -255,7 +277,18 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %_datadir/gtksourceview-2.0/language-specs/*.lang
 %endif
 
+%if_with ruby
+%files -n ruby-%name
+%ruby_vendorlibdir/gwyddion
+%endif
+
+
 %changelog
+* Sun Aug 28 2022 Pavel Skrylev <majioa@altlinux.org> 2.61-alt1.1
+- + enable ruby module as a package
+- * switch autoreconf on
+- + lost module
+
 * Wed Jul 27 2022 Alexei Mezin <alexvm@altlinux.org> 2.61-alt1
 - new version
 

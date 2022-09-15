@@ -1,7 +1,7 @@
-%define        pkgname bson
+%define        gemname bson
 
-Name: 	       gem-%pkgname
-Version:       4.8.2
+Name:          gem-bson
+Version:       4.14.1
 Release:       alt1
 Summary:       Ruby Implementation of the BSON Specification (2.0.0+)
 License:       Apache-2.0
@@ -15,36 +15,53 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+Obsoletes:     ruby-bson < %EVR
+Provides:      ruby-bson = %EVR
+Provides:      gem(bson) = 4.14.1
+
 
 %description
-%summary.
+An implementation of the BSON specification in Ruby.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-bson-doc
+Version:       4.14.1
+Release:       alt1
+Summary:       Ruby Implementation of the BSON Specification (2.0.0+) documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета bson
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(bson) = 4.14.1
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-bson-doc
+Ruby Implementation of the BSON Specification (2.0.0+) documentation
+files.
+
+An implementation of the BSON specification in Ruby.
+
+%description   -n gem-bson-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета bson.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-bson-devel
+Version:       4.14.1
+Release:       alt1
+Summary:       Ruby Implementation of the BSON Specification (2.0.0+) development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета bson
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   devel
-Development files for %gemname gem.
+Requires:      gem(bson) = 4.14.1
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+%description   -n gem-bson-devel
+Ruby Implementation of the BSON Specification (2.0.0+) development
+package.
+
+An implementation of the BSON specification in Ruby.
+
+%description   -n gem-bson-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета bson.
 
 
 %prep
@@ -60,18 +77,27 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-bson-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-bson-devel
+%doc README.md
 %ruby_includedir/*
 
+
 %changelog
+* Wed Mar 16 2022 Pavel Skrylev <majioa@altlinux.org> 4.14.1-alt1
+- ^ 4.12.0 -> 4.14.1
+
+* Sat Apr 24 2021 Pavel Skrylev <majioa@altlinux.org> 4.12.0-alt1
+- new version 4.12.0
+
 * Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 4.8.2-alt1
 - ^ 4.4.2 -> 4.8.2
 - ! spec tags

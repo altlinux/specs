@@ -2,7 +2,7 @@
 
 Name:          gem-red-colors
 Version:       0.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Red Colors provides a wide array of features for dealing with colors. This includes conversion between colorspaces, desaturation, and parsing colors
 License:       MIT
 Group:         Development/Ruby
@@ -13,7 +13,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(matrix) >= 0
+BuildRequires: gem(matrix) >= 0.4.2
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(test-unit) >= 0
@@ -32,7 +32,7 @@ includes conversion between colorspaces, desaturation, and parsing colors.
 
 %package       -n gem-red-colors-doc
 Version:       0.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Red Colors provides a wide array of features for dealing with colors. This includes conversion between colorspaces, desaturation, and parsing colors documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета red-colors
 Group:         Development/Documentation
@@ -51,7 +51,7 @@ documentation files.
 
 %package       -n gem-red-colors-devel
 Version:       0.3.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Red Colors provides a wide array of features for dealing with colors. This includes conversion between colorspaces, desaturation, and parsing colors development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета red-colors
 Group:         Development/Ruby
@@ -99,5 +99,8 @@ development package.
 
 
 %changelog
+* Wed Jul 13 2022 Pavel Skrylev <majioa@altlinux.org> 0.3.0-alt1.1
+- !fix dep to matrix gem
+
 * Mon Jun 28 2021 Pavel Skrylev <majioa@altlinux.org> 0.3.0-alt1
 - + packaged gem with Ruby Policy 2.0

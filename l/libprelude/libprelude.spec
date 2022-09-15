@@ -17,7 +17,7 @@ Group: System/Libraries
 
 Name:           libprelude
 Version:        5.2.0
-Release:        alt1_12
+Release:        alt1_13
 Summary:        Secure Connections between all Sensors and the Prelude Manager
 License:        LGPL-2.1+
 URL:            https://www.prelude-siem.org/
@@ -306,7 +306,7 @@ patch -d %{buildroot}%{_includedir}/libprelude/ -p0 < %SOURCE1
 %attr(755, root, root) %{perl_vendor_archlib}/auto/Prelude/Prelude.so
 
 %files -n ruby-prelude
-%{ruby_sitearchdir}/Prelude.so
+%{ruby_vendorarchdir}/Prelude.so
 
 %files -n lua-prelude
 %{_libdir}/lua/*/prelude.so
@@ -317,6 +317,9 @@ patch -d %{buildroot}%{_includedir}/libprelude/ -p0 < %SOURCE1
 %doc AUTHORS ChangeLog README NEWS
 
 %changelog
+* Wed Aug 24 2022 Pavel Skrylev <majioa@altlinux.org> 5.2.0-alt1_13
+- !fix path to ruby library
+
 * Tue May 31 2022 Pavel Skrylev <majioa@altlinux.org> 5.2.0-alt1_12
 - !merge with c9f2 branch
 

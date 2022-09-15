@@ -1,8 +1,8 @@
-%define        pkgname ruby-shadow
+%define        gemname ruby-shadow
 
-Name:          gem-%pkgname
-Version:       2.5.0
-Release:       alt5.1
+Name:          gem-ruby-shadow
+Version:       2.5.1
+Release:       alt1
 Summary:       Shadow Password module for Ruby
 License:       ALT-Public-Domain or CC-PDDC
 Group:         Development/Ruby
@@ -15,12 +15,14 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     %pkgname < %EVR
-Provides:      %pkgname = %EVR
+Obsoletes:     ruby-shadow < %EVR
+Provides:      ruby-shadow = %EVR
+Provides:      gem(ruby-shadow) = 2.5.1
+
 
 %description
-This module provides tools to read, and, on Linux, append, information
-related to password files.
+This module provides tools to read, and, on Linux, append, information related
+to password files.
 
 
 %prep
@@ -32,14 +34,20 @@ related to password files.
 %install
 %ruby_install
 
+%check
+%ruby_test
+
 %files
-%doc README*
+%doc README README.euc
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 
 %changelog
+* Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 2.5.1-alt1
+- ^ 2.5.0 -> 2.5.1
+
 * Mon Jul 13 2020 Pavel Skrylev <majioa@altlinux.org> 2.5.0-alt5.1
 - * relicesing Free to ALT-Public-Domain
 

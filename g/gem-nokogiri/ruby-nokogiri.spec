@@ -1,7 +1,7 @@
 %define        gemname nokogiri
 
 Name:          gem-nokogiri
-Version:       1.13.4
+Version:       1.13.6
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
 License:       MIT
@@ -17,31 +17,38 @@ BuildRequires: libxslt-devel
 BuildRequires: zlib-devel
 BuildRequires: gem(mini_portile2) >= 2.8.0 gem(mini_portile2) < 2.9
 BuildRequires: gem(racc) >= 1.4 gem(racc) < 2
-BuildRequires: gem(bundler) >= 2.2 gem(bundler) < 3
+BuildRequires: gem(bundler) >= 2.1.4 gem(bundler) < 3
 BuildRequires: gem(hoe-markdown) >= 1.4 gem(hoe-markdown) < 2
 BuildRequires: gem(minitest) >= 5.15 gem(minitest) < 6
 BuildRequires: gem(minitest-reporters) >= 1.4 gem(minitest-reporters) < 2
 BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
-BuildRequires: gem(rake-compiler) >= 1.1.7 gem(rake-compiler) < 2
-BuildRequires: gem(rake-compiler-dock) >= 1.2 gem(rake-compiler-dock) < 2
-BuildRequires: gem(rdoc) >= 6.3 gem(rdoc) < 7
+BuildRequires: gem(rake-compiler) >= 1.1.2 gem(rake-compiler) < 2
+BuildRequires: gem(rake-compiler-dock) >= 0.7.2 gem(rake-compiler-dock) < 2
+BuildRequires: gem(rdoc) >= 6.1.1 gem(rdoc) < 7
 BuildRequires: gem(rexical) >= 1.0.7 gem(rexical) < 1.1
-BuildRequires: gem(rubocop) >= 1.23 gem(rubocop) < 2
-BuildRequires: gem(rubocop-minitest) >= 0.17 gem(rubocop-minitest) < 1
-BuildRequires: gem(rubocop-performance) >= 1.12 gem(rubocop-performance) < 2
+BuildRequires: gem(rubocop) >= 1.15.0
+BuildRequires: gem(rubocop-minitest) >= 0.13.0 gem(rubocop-minitest) < 1
+BuildRequires: gem(rubocop-performance) >= 1.11.3 gem(rubocop-performance) < 2
 BuildRequires: gem(rubocop-rake) >= 0.6 gem(rubocop-rake) < 1
 BuildRequires: gem(rubocop-shopify) >= 2.3 gem(rubocop-shopify) < 3
 # BuildRequires: gem(ruby_memcheck) >= 1.0 gem(ruby_memcheck) < 2
-BuildRequires: gem(simplecov) >= 0.21 gem(simplecov) < 1
+BuildRequires: gem(simplecov) >= 0.17 gem(simplecov) < 1
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake-compiler >= 1.1.7,rake-compiler < 2
+%ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
+%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
+%ruby_use_gem_dependency rubocop-minitest >= 0.13.0,rubocop-minitest < 1
+%ruby_use_gem_dependency rubocop-performance >= 1.11.3,rubocop-performance < 2
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
 Requires:      gem(mini_portile2) >= 2.8.0 gem(mini_portile2) < 2.9
 Requires:      gem(racc) >= 1.4 gem(racc) < 2
 Obsoletes:     ruby-nokogiri < %EVR
 Provides:      ruby-nokogiri = %EVR
-Provides:      gem(nokogiri) = 1.13.4
+Provides:      gem(nokogiri) = 1.13.6
 
 
 %description
@@ -51,14 +58,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n nokogiri
-Version:       1.13.4
+Version:       1.13.6
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета nokogiri
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.13.4
+Requires:      gem(nokogiri) = 1.13.6
 
 %description   -n nokogiri
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser)
@@ -73,14 +80,14 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n gem-nokogiri-doc
-Version:       1.13.4
+Version:       1.13.6
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета nokogiri
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.13.4
+Requires:      gem(nokogiri) = 1.13.6
 
 %description   -n gem-nokogiri-doc
 Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) documentation
@@ -95,30 +102,30 @@ contanis Ruby libraries for Nokogiri.
 
 
 %package       -n gem-nokogiri-devel
-Version:       1.13.4
+Version:       1.13.6
 Release:       alt1
 Summary:       Ruby libraries for Nokogiri (HTML, XML, SAX, and Reader parser) development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета nokogiri
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(nokogiri) = 1.13.4
-Requires:      gem(bundler) >= 2.2 gem(bundler) < 3
+Requires:      gem(nokogiri) = 1.13.6
+Requires:      gem(bundler) >= 2.1.4 gem(bundler) < 3
 Requires:      gem(hoe-markdown) >= 1.4 gem(hoe-markdown) < 2
 Requires:      gem(minitest) >= 5.15 gem(minitest) < 6
 Requires:      gem(minitest-reporters) >= 1.4 gem(minitest-reporters) < 2
 Requires:      gem(rake) >= 13.0 gem(rake) < 14
-Requires:      gem(rake-compiler) >= 1.1.7 gem(rake-compiler) < 2
-Requires:      gem(rake-compiler-dock) >= 1.2 gem(rake-compiler-dock) < 2
-Requires:      gem(rdoc) >= 6.3 gem(rdoc) < 7
+Requires:      gem(rake-compiler) >= 1.1.2 gem(rake-compiler) < 2
+Requires:      gem(rake-compiler-dock) >= 0.7.2 gem(rake-compiler-dock) < 2
+Requires:      gem(rdoc) >= 6.1.1 gem(rdoc) < 7
 Requires:      gem(rexical) >= 1.0.7 gem(rexical) < 1.1
-Requires:      gem(rubocop) >= 1.23 gem(rubocop) < 2
-Requires:      gem(rubocop-minitest) >= 0.17 gem(rubocop-minitest) < 1
-Requires:      gem(rubocop-performance) >= 1.12 gem(rubocop-performance) < 2
+Requires:      gem(rubocop) >= 1.15.0
+Requires:      gem(rubocop-minitest) >= 0.13.0 gem(rubocop-minitest) < 1
+Requires:      gem(rubocop-performance) >= 1.11.3 gem(rubocop-performance) < 2
 Requires:      gem(rubocop-rake) >= 0.6 gem(rubocop-rake) < 1
 Requires:      gem(rubocop-shopify) >= 2.3 gem(rubocop-shopify) < 3
 Requires:      gem(ruby_memcheck) >= 1.0 gem(ruby_memcheck) < 2
-Requires:      gem(simplecov) >= 0.21 gem(simplecov) < 1
+Requires:      gem(simplecov) >= 0.17 gem(simplecov) < 1
 Requires:      libxml2-devel
 Requires:      libxslt-devel
 Requires:      java-devel
@@ -168,6 +175,9 @@ contanis Ruby libraries for Nokogiri.
 
 
 %changelog
+* Fri Jun 10 2022 Pavel Skrylev <majioa@altlinux.org> 1.13.6-alt1
+- ^ 1.13.4 -> 1.13.6
+
 * Sat Apr 16 2022 Pavel Skrylev <majioa@altlinux.org> 1.13.4-alt1
 - ^ 1.13.2 -> 1.13.4
 - !address CVE-2022-24836

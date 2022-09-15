@@ -2,16 +2,17 @@
 
 Name:          gem-mongrel
 Version:       1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Simple Fast Mostly Ruby Web Server
 License:       MIT
 Group:         Development/Ruby
 Url:           http://rubyforge.org/projects/mongrel/
+Vcs:           https://github.com/evan/mongrel.git
 
 Source:        %name-%version.tar
 Patch:         version.patch
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ragel
+BuildRequires: ragel6
 BuildRequires: gem(gem_plugin) >= 0.2.3 gem(gem_plugin) < 0.3
 BuildRequires: gem(daemons) >= 1.0.10 gem(daemons) < 2
 BuildRequires: gem(rake-compiler) >= 0.7.0 gem(rake-compiler) < 2
@@ -24,7 +25,7 @@ BuildRequires: gem(rspec) >= 0
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
 %ruby_use_gem_dependency daemons >= 1.0.10,daemons < 2
-%ruby_ignore_names cgi_multipart_eof_fix,gem_plugin,/mongrel_,fastthread
+%ruby_ignore_names cgi_multipart_eof_fix,gem_plugin,/mongrel_,fastthread,/project
 Requires:      gem(gem_plugin) >= 0.2.3 gem(gem_plugin) < 0.3
 Requires:      gem(daemons) >= 1.0.10 gem(daemons) < 2
 Obsoletes:     ruby-mongrel < %EVR
@@ -41,7 +42,7 @@ web server.
 
 %package       -n mongrel-rails
 Version:       1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Simple Fast Mostly Ruby Web Server executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета mongrel
 Group:         Other
@@ -63,7 +64,7 @@ web server.
 
 %package       -n gem-mongrel-doc
 Version:       1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Simple Fast Mostly Ruby Web Server documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета mongrel
 Group:         Development/Documentation
@@ -85,7 +86,7 @@ web server.
 
 %package       -n gem-mongrel-devel
 Version:       1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Simple Fast Mostly Ruby Web Server development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета mongrel
 Group:         Development/Ruby
@@ -111,7 +112,7 @@ web server.
 
 %prep
 %setup
-%patch
+%autopatch
 
 %build
 %ruby_build
@@ -123,7 +124,7 @@ web server.
 %ruby_test
 
 %files
-%doc README.rdoc examples/camping/README
+%doc README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
@@ -142,6 +143,9 @@ web server.
 
 
 %changelog
+* Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1.1
+- !fix spec and .gear
+
 * Thu Jul 01 2021 Pavel Skrylev <majioa@altlinux.org> 1.2.0-alt1
 - ^ 1.1.5 -> 1.2.0
 

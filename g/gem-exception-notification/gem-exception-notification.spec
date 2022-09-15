@@ -2,7 +2,7 @@
 
 Name:          gem-exception-notification
 Version:       4.5.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Exception Notifier Plugin for Rails
 License:       MIT
 Group:         Development/Ruby
@@ -24,7 +24,7 @@ BuildRequires: gem(coveralls) >= 0.8.2 gem(coveralls) < 0.9
 # BuildRequires: gem(httparty) >= 0.10.2 gem(httparty) < 0.11
 BuildRequires: gem(mocha) >= 0.13.0
 # BuildRequires: gem(mock_redis) >= 0.19.0 gem(mock_redis) < 0.20
-BuildRequires: gem(net-smtp) >= 0
+BuildRequires: gem(net-smtp) >= 0.3.1
 BuildRequires: gem(rails) >= 5.2 gem(rails) < 8
 BuildRequires: gem(resque) >= 1.8.0 gem(resque) < 3
 BuildRequires: gem(rubocop) >= 0.78.0 gem(rubocop) < 2
@@ -53,7 +53,7 @@ application.
 
 %package       -n gem-exception-notification-doc
 Version:       4.5.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Exception Notifier Plugin for Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета exception_notification
 Group:         Development/Documentation
@@ -74,7 +74,7 @@ application.
 
 %package       -n gem-exception-notification-devel
 Version:       4.5.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Exception Notifier Plugin for Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета exception_notification
 Group:         Development/Ruby
@@ -135,6 +135,9 @@ application.
 
 
 %changelog
+* Wed Jul 13 2022 Pavel Skrylev <majioa@altlinux.org> 4.5.0-alt1.1
+- !fix deps to net-smtp
+
 * Wed Apr 20 2022 Pavel Skrylev <majioa@altlinux.org> 4.5.0-alt1
 - ^ 4.4.0 -> 4.5.0
 

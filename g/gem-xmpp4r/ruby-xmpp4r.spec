@@ -1,10 +1,10 @@
 %define        gemname xmpp4r
 
 Name:          gem-xmpp4r
-Version:       0.5.6
-Release:       alt2.1
+Version:       0.5.6.1
+Release:       alt0.1
 Summary:       XMPP/Jabber library for Ruby
-License:       GPLv2
+License:       Ruby or GPL
 Group:         Development/Ruby
 Url:           http://xmpp4r.github.io/
 Vcs:           https://github.com/xmpp4r/xmpp4r.git
@@ -19,27 +19,29 @@ BuildRequires(pre): rpm-build-ruby
 Obsoletes:     xmpp4r
 Obsoletes:     ruby-xmpp4r < %EVR
 Provides:      ruby-xmpp4r = %EVR
-Provides:      gem(xmpp4r) = 0.5.6
+Provides:      gem(xmpp4r) = 0.5.6.1
 
+%ruby_use_gem_version xmpp4r:0.5.6.1
 
 %description
 XMPP4R is an XMPP/Jabber library for Ruby. Its goal is to provide a complete
 framework to develop Jabber-related applications or scripts in Ruby.
 
-* Fully object-oriented * Aims at being XMPP compliant * Threaded, events-based
+* Fully object-oriented * Aims at being XMPP compliant * Threaded,
+events-based
 * Well unit-tested and documented code * Uses well-known and well-tested
 software like REXML, instead of reinventing the wheel * Very easy to extend
 
 
 %package       -n gem-xmpp4r-doc
-Version:       0.5.6
-Release:       alt2.1
+Version:       0.5.6.1
+Release:       alt0.1
 Summary:       XMPP/Jabber library for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета xmpp4r
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(xmpp4r) = 0.5.6
+Requires:      gem(xmpp4r) = 0.5.6.1
 
 %description   -n gem-xmpp4r-doc
 XMPP/Jabber library for Ruby documentation files.
@@ -69,16 +71,19 @@ software like REXML, instead of reinventing the wheel * Very easy to extend
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc README.rdoc data/doc/xmpp4r/examples/advanced/adventure/README
 %ruby_gemspec
 %ruby_gemlibdir
 
 %files         -n gem-xmpp4r-doc
-%doc README.rdoc
+%doc README.rdoc data/doc/xmpp4r/examples/advanced/adventure/README
 %ruby_gemdocdir
 
 
 %changelog
+* Tue Jul 12 2022 Pavel Skrylev <majioa@altlinux.org> 0.5.6.1-alt0.1
+- ^ 0.5.6 -> 0.5.6[1]
+
 * Tue Jun 22 2021 Pavel Skrylev <majioa@altlinux.org> 0.5.6-alt2.1
 - ! spec
 - * policify names

@@ -1,7 +1,7 @@
 %define        gemname psych
 
 Name:          gem-psych
-Version:       4.0.1
+Version:       4.0.4
 Release:       alt1
 Summary:       A libyaml wrapper for Ruby
 License:       MIT
@@ -12,11 +12,12 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(stringio) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_ignore_names fixtures
-Provides:      gem(psych) = 4.0.1
+Requires:      gem(stringio) >= 0
+Provides:      gem(psych) = 4.0.4
 
 
 %description
@@ -26,14 +27,14 @@ to serialize and de-serialize most Ruby objects to and from the YAML format.
 
 
 %package       -n gem-psych-doc
-Version:       4.0.1
+Version:       4.0.4
 Release:       alt1
 Summary:       A libyaml wrapper for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета psych
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(psych) = 4.0.1
+Requires:      gem(psych) = 4.0.4
 
 %description   -n gem-psych-doc
 A libyaml wrapper for Ruby documentation files.
@@ -47,14 +48,14 @@ to serialize and de-serialize most Ruby objects to and from the YAML format.
 
 
 %package       -n gem-psych-devel
-Version:       4.0.1
+Version:       4.0.4
 Release:       alt1
 Summary:       A libyaml wrapper for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета psych
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(psych) = 4.0.1
+Requires:      gem(psych) = 4.0.4
 
 %description   -n gem-psych-devel
 A libyaml wrapper for Ruby development package.
@@ -95,6 +96,9 @@ to serialize and de-serialize most Ruby objects to and from the YAML format.
 
 
 %changelog
+* Thu Jul 07 2022 Pavel Skrylev <majioa@altlinux.org> 4.0.4-alt1
+- ^ 4.0.1 -> 4.0.4
+
 * Tue Jun 29 2021 Pavel Skrylev <majioa@altlinux.org> 4.0.1-alt1
 - ^ 3.2.0 -> 4.0.1
 

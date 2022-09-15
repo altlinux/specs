@@ -1,7 +1,7 @@
 %define        gemname serverengine
 
 Name:          gem-serverengine
-Version:       2.2.4
+Version:       2.2.5
 Release:       alt1
 Summary:       A framework to implement robust multiprocess servers like Unicorn
 License:       Apache 2.0
@@ -24,11 +24,11 @@ BuildRequires: gem(rake-compiler) >= 0.9.4 gem(rake-compiler) < 2
 %ruby_use_gem_dependency rake >= 13.0.1,rake < 14
 %ruby_use_gem_dependency rspec >= 3.10.0,rspec < 4
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
-%ruby_use_gem_dependency rake-compiler-dock >= 1.1.0,rake-compiler-dock < 2
+%ruby_use_gem_dependency rake-compiler-dock >= 1.2.1,rake-compiler-dock < 2
 Requires:      gem(sigdump) >= 0.2.2 gem(sigdump) < 0.3
 Obsoletes:     ruby-serverengine < %EVR
 Provides:      ruby-serverengine = %EVR
-Provides:      gem(serverengine) = 2.2.4
+Provides:      gem(serverengine) = 2.2.5
 
 
 %description
@@ -37,35 +37,32 @@ Unicorn.
 
 
 %package       -n gem-serverengine-doc
-Version:       2.2.4
+Version:       2.2.5
 Release:       alt1
 Summary:       A framework to implement robust multiprocess servers like Unicorn documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета serverengine
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(serverengine) = 2.2.4
+Requires:      gem(serverengine) = 2.2.5
 
 %description   -n gem-serverengine-doc
 A framework to implement robust multiprocess servers like Unicorn documentation
 files.
-
-ServerEngine is a framework to implement robust multiprocess servers like
-Unicorn.
 
 %description   -n gem-serverengine-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета serverengine.
 
 
 %package       -n gem-serverengine-devel
-Version:       2.2.4
+Version:       2.2.5
 Release:       alt1
 Summary:       A framework to implement robust multiprocess servers like Unicorn development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета serverengine
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(serverengine) = 2.2.4
+Requires:      gem(serverengine) = 2.2.5
 Requires:      gem(rake) >= 11.0 gem(rake) < 14
 Requires:      gem(rspec) >= 2.13.0 gem(rspec) < 4
 Requires:      gem(rake-compiler-dock) >= 0.5.0 gem(rake-compiler-dock) < 2
@@ -74,9 +71,6 @@ Requires:      gem(rake-compiler) >= 0.9.4 gem(rake-compiler) < 2
 %description   -n gem-serverengine-devel
 A framework to implement robust multiprocess servers like Unicorn development
 package.
-
-ServerEngine is a framework to implement robust multiprocess servers like
-Unicorn.
 
 %description   -n gem-serverengine-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета serverengine.
@@ -108,6 +102,9 @@ Unicorn.
 
 
 %changelog
+* Tue Apr 19 2022 Pavel Skrylev <majioa@altlinux.org> 2.2.5-alt1
+- ^ 2.2.4 -> 2.2.5
+
 * Wed Jun 30 2021 Pavel Skrylev <majioa@altlinux.org> 2.2.4-alt1
 - ^ 2.0.7 -> 2.2.4
 

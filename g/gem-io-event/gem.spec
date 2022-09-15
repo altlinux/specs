@@ -1,7 +1,7 @@
-%define        gemname event
+%define        gemname io-event
 
-Name:          gem-event
-Version:       1.0.2
+Name:          gem-io-event
+Version:       1.0.5
 Release:       alt1
 Summary:       An event loop
 License:       MIT
@@ -14,53 +14,55 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(bake) >= 0
 BuildRequires: gem(bundler) >= 0
-# BuildRequires: gem(covered) >= 0
-BuildRequires: gem(rspec) >= 3.0 gem(rspec) < 4
+BuildRequires: gem(covered) >= 0
+BuildRequires: gem(sus) >= 0.6 gem(sus) < 1
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(event) = 1.0.2
+%ruby_ignore_names bench
+Provides:      gem(io-event) = 1.0.5
+
 
 %description
 An event loop.
 
 
-%package       -n gem-event-doc
-Version:       1.0.2
+%package       -n gem-io-event-doc
+Version:       1.0.5
 Release:       alt1
 Summary:       An event loop documentation files
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета event
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета io-event
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(event) = 1.0.2
+Requires:      gem(io-event) = 1.0.5
 
-%description   -n gem-event-doc
+%description   -n gem-io-event-doc
 An event loop documentation files.
 
-%description   -n gem-event-doc -l ru_RU.UTF-8
-Файлы сведений для самоцвета event.
+%description   -n gem-io-event-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета io-event.
 
 
-%package       -n gem-event-devel
-Version:       1.0.2
+%package       -n gem-io-event-devel
+Version:       1.0.5
 Release:       alt1
 Summary:       An event loop development package
-Summary(ru_RU.UTF-8): Файлы для разработки самоцвета event
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета io-event
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(event) = 1.0.2
+Requires:      gem(io-event) = 1.0.5
 Requires:      gem(bake) >= 0
 Requires:      gem(bundler) >= 0
 Requires:      gem(covered) >= 0
-Requires:      gem(rspec) >= 3.0 gem(rspec) < 4
+Requires:      gem(sus) >= 0.6 gem(sus) < 1
 
-%description   -n gem-event-devel
+%description   -n gem-io-event-devel
 An event loop development package.
 
-%description   -n gem-event-devel -l ru_RU.UTF-8
-Файлы для разработки самоцвета event.
+%description   -n gem-io-event-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета io-event.
 
 
 %prep
@@ -80,12 +82,16 @@ An event loop development package.
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         -n gem-event-doc
+%files         -n gem-io-event-doc
 %ruby_gemdocdir
 
-%files         -n gem-event-devel
+%files         -n gem-io-event-devel
+%ruby_includedir/*
 
 
 %changelog
+* Wed Mar 16 2022 Pavel Skrylev <majioa@altlinux.org> 1.0.5-alt1
+- ^ 1.0.2 -> 1.0.5
+
 * Fri Sep 03 2021 Pavel Skrylev <majioa@altlinux.org> 1.0.2-alt1
 - + packaged gem with Ruby Policy 2.0

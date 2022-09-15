@@ -2,7 +2,7 @@
 
 Name:          gem-simple-oauth
 Version:       0.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Simply builds and verifies OAuth headers
 License:       MIT
 Group:         Development/Ruby
@@ -13,8 +13,6 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ruby-test-unit
-BuildRequires: ruby-tool-rdoc
 BuildRequires: gem(bundler) >= 1.0 gem(bundler) < 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -32,7 +30,7 @@ Simply builds and verifies OAuth headers.
 
 %package       -n gem-simple-oauth-doc
 Version:       0.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Simply builds and verifies OAuth headers documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета simple_oauth
 Group:         Development/Documentation
@@ -49,7 +47,7 @@ Simply builds and verifies OAuth headers documentation files.
 
 %package       -n gem-simple-oauth-devel
 Version:       0.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Simply builds and verifies OAuth headers development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета simple_oauth
 Group:         Development/Ruby
@@ -91,6 +89,9 @@ Simply builds and verifies OAuth headers development package.
 
 
 %changelog
+* Fri Jun 17 2022 Pavel Skrylev <majioa@altlinux.org> 0.3.1-alt1.1
+- !fix deps
+
 * Tue Apr 19 2022 Pavel Skrylev <majioa@altlinux.org> 0.3.1-alt1
 - ^ 0.3.0 -> 0.3.1
 

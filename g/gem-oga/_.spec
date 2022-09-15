@@ -3,7 +3,7 @@
 
 Name:          gem-%pkgname
 Version:       3.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Oga is an XML/HTML parser written in Ruby
 License:       MIT
 Group:         Development/Ruby
@@ -24,7 +24,7 @@ BuildRequires: gem-ruby-ll >= 2.1
 BuildRequires: gem(ast)
 BuildRequires: gem-ox
 BuildRequires: gem-nokogiri
-BuildRequires: ragel
+BuildRequires: ragel6
 BuildRequires: /usr/bin/ruby-ll
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
@@ -93,6 +93,9 @@ Development headers for %gemname gem.
 
 
 %changelog
+* Mon Jul 04 2022 Pavel Skrylev <majioa@altlinux.org> 3.3-alt1.1
+- *change to ragel6 to make the extension compilable
+
 * Sun Nov 22 2020 Pavel Skrylev <majioa@altlinux.org> 3.3-alt1
 - ^ 2.17 -> 3.3
 

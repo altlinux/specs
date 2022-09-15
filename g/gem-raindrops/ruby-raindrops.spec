@@ -1,56 +1,91 @@
-%define        pkgname raindrops
+%define        gemname raindrops
 
-Name:          gem-%pkgname
-Version:       0.19.1
+Name:          gem-raindrops
+Version:       0.20.0
 Release:       alt1
 Summary:       real-time stats for preforking Rack servers
+License:       LGPL-2.1+
 Group:         Development/Ruby
-License:       LGPLv2
 Url:           http://raindrops.bogomips.org/
 Vcs:           git://bogomips.org/raindrops.git
+Packager:      Pavel Skrylev <majioa@altlinux.org>
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(aggregate) >= 0.2 gem(aggregate) < 1
+BuildRequires: gem(test-unit) >= 3.0 gem(test-unit) < 4
+BuildRequires: gem(posix_mq) >= 2.0 gem(posix_mq) < 3
+BuildRequires: gem(rack) >= 1.2 gem(rack) < 3
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
-
-%description 
-Raindrops is a real time stats package to show statistics for Rack HTTP
-servers.  It is designed for preforking servers such as Rainbows! and
-Unicorn, but should support any Rack HTTP server under Ruby and possibly
-Rubinius (untested) on platforms supporting POSIX shared memory and
-compiled with GCC (for atomic builtins).  Raindrops includes a
-Struct-like Raindrops::Struct class that may be used standalone to
-create atomic counters shared across any number of forked processes
-under SMP.
+Obsoletes:     ruby-raindrops < %EVR
+Provides:      ruby-raindrops = %EVR
+Provides:      gem(raindrops) = 0.20.0
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%description
+Raindrops is a real time stats package to show statistics for Rack HTTP servers.
+It is designed for preforking servers such as Rainbows! and Unicorn, but should
+support any Rack HTTP server under Ruby and possibly Rubinius (untested) on
+platforms supporting POSIX shared memory and compiled with GCC (for atomic
+builtins). Raindrops includes a Struct-like Raindrops::Struct class that may be
+used standalone to create atomic counters shared across any number of forked
+processes under SMP.
+
+
+%package       -n gem-raindrops-doc
+Version:       0.20.0
+Release:       alt1
+Summary:       real-time stats for preforking Rack servers documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета raindrops
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(raindrops) = 0.20.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-raindrops-doc
+real-time stats for preforking Rack servers documentation files.
+
+Raindrops is a real time stats package to show statistics for Rack HTTP servers.
+It is designed for preforking servers such as Rainbows! and Unicorn, but should
+support any Rack HTTP server under Ruby and possibly Rubinius (untested) on
+platforms supporting POSIX shared memory and compiled with GCC (for atomic
+builtins). Raindrops includes a Struct-like Raindrops::Struct class that may be
+used standalone to create atomic counters shared across any number of forked
+processes under SMP.
+
+%description   -n gem-raindrops-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета raindrops.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-raindrops-devel
+Version:       0.20.0
+Release:       alt1
+Summary:       real-time stats for preforking Rack servers development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета raindrops
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   devel
-Development files for %gemname gem.
+Requires:      gem(raindrops) = 0.20.0
+Requires:      gem(aggregate) >= 0.2 gem(aggregate) < 1
+Requires:      gem(test-unit) >= 3.0 gem(test-unit) < 4
+Requires:      gem(posix_mq) >= 2.0 gem(posix_mq) < 3
+Requires:      gem(rack) >= 1.2 gem(rack) < 3
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+%description   -n gem-raindrops-devel
+real-time stats for preforking Rack servers development package.
+
+Raindrops is a real time stats package to show statistics for Rack HTTP servers.
+It is designed for preforking servers such as Rainbows! and Unicorn, but should
+support any Rack HTTP server under Ruby and possibly Rubinius (untested) on
+platforms supporting POSIX shared memory and compiled with GCC (for atomic
+builtins). Raindrops includes a Struct-like Raindrops::Struct class that may be
+used standalone to create atomic counters shared across any number of forked
+processes under SMP.
+
+%description   -n gem-raindrops-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета raindrops.
 
 
 %prep
@@ -66,19 +101,24 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-raindrops-doc
+%doc README
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-raindrops-devel
+%doc README
 %ruby_includedir/*
 
 
 %changelog
+* Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 0.20.0-alt1
+- ^ 0.19.1 -> 0.20.0
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 0.19.1-alt1
 - ^ 0.19.0 -> 0.19.1
 - ! spec tags and syntax

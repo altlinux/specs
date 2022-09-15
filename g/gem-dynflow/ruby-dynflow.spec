@@ -1,7 +1,7 @@
 %define        gemname dynflow
 
 Name:          gem-dynflow
-Version:       1.6.1
+Version:       1.6.5
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine
 License:       MIT
@@ -11,14 +11,14 @@ Vcs:           https://github.com/dynflow/dynflow.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
-Source:        %name-%version.tar
-Source1:       dynflow
-Source2:       dynflow.sysconfig
 Source3:       dynflow.service
+Source2:       dynflow.sysconfig
+Source1:       dynflow
+Source:        %name-%version.tar
 Patch:         1.4.7.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(multi_json) >= 0
-BuildRequires: gem(msgpack) >= 1.3.3 gem(msgpack) < 1.4
+BuildRequires: gem(msgpack) >= 1.3
 BuildRequires: gem(apipie-params) >= 0
 BuildRequires: gem(algebrick) >= 0.7.0 gem(algebrick) < 0.8
 BuildRequires: gem(concurrent-ruby) >= 1.1.3 gem(concurrent-ruby) < 1.2
@@ -37,17 +37,18 @@ BuildRequires: gem(mocha) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency msgpack >= 1.4.5,msgpack < 2
 %ruby_ignore_names pages
 Requires:      gem(multi_json) >= 0
-Requires:      gem(msgpack) >= 1.3.3 gem(msgpack) < 1.4
+Requires:      gem(msgpack) >= 1.3
 Requires:      gem(apipie-params) >= 0
 Requires:      gem(algebrick) >= 0.7.0 gem(algebrick) < 0.8
 Requires:      gem(concurrent-ruby) >= 1.1.3 gem(concurrent-ruby) < 1.2
 Requires:      gem(concurrent-ruby-edge) >= 0.6.0 gem(concurrent-ruby-edge) < 0.7
 Requires:      gem(sequel) >= 4.0.0
-Obsoletes:     ruby-%gemname < %EVR
-Provides:      ruby-%gemname = %EVR
-Provides:      gem(dynflow) = 1.6.1
+Obsoletes:     ruby-dynflow < %EVR
+Provides:      ruby-dynflow = %EVR
+Provides:      gem(dynflow) = 1.6.5
 
 
 %description
@@ -74,14 +75,14 @@ choosing the right one (providing default implementations as well).
 
 
 %package       -n gem-dynflow-doc
-Version:       1.6.1
+Version:       1.6.5
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета dynflow
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(dynflow) = 1.6.1
+Requires:      gem(dynflow) = 1.6.5
 
 %description   -n gem-dynflow-doc
 DYNamic workFLOW orchestration engine documentation files.
@@ -112,14 +113,14 @@ choosing the right one (providing default implementations as well).
 
 
 %package       -n gem-dynflow-devel
-Version:       1.6.1
+Version:       1.6.5
 Release:       alt1
 Summary:       DYNamic workFLOW orchestration engine development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета dynflow
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(dynflow) = 1.6.1
+Requires:      gem(dynflow) = 1.6.5
 Requires:      gem(rake) >= 0
 Requires:      gem(rack-test) >= 0
 Requires:      gem(minitest) >= 0
@@ -160,14 +161,14 @@ choosing the right one (providing default implementations as well).
 
 
 %package       -n dynflow
-Version:       1.6.1
+Version:       1.6.5
 Release:       alt1
 Summary:       DYNamic workFLOW engine executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета dynflow
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(dynflow) = 1.6.1
+Requires:      gem(dynflow) = 1.6.5
 Requires:      gem-dynflow = %EVR
 
 %description   -n dynflow
@@ -176,7 +177,6 @@ Ruby workflow/orchestration engine
 
 %prep
 %setup
-%patch
 
 %build
 %ruby_build
@@ -204,7 +204,6 @@ exit 0
 %preun         -n dynflow
 %preun_service dynflow
 
-
 %files
 %doc README.md
 %ruby_gemspec
@@ -228,6 +227,9 @@ exit 0
 
 
 %changelog
+* Fri Apr 01 2022 Pavel Skrylev <majioa@altlinux.org> 1.6.5-alt1
+- ^ 1.6.1 -> 1.6.5
+
 * Tue Nov 09 2021 Pavel Skrylev <majioa@altlinux.org> 1.6.1-alt1
 - ^ 1.4.7 -> 1.6.1
 - ! has with indifferent access lost class for rails database env hash

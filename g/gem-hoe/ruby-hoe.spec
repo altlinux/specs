@@ -1,7 +1,7 @@
-%define        pkgname hoe
+%define        gemname hoe
 
-Name:          gem-%pkgname
-Version:       3.22.1
+Name:          gem-hoe
+Version:       3.23.1
 Release:       alt1
 Summary:       Hoe is a rake/rubygems helper for project Rakefiles
 License:       MIT
@@ -13,10 +13,16 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: gem(rake) >= 0.8 gem(rake) < 15.0
+BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Requires:      gem(rake) >= 0.8 gem(rake) < 15.0
+Obsoletes:     ruby-hoe
+Provides:      ruby-hoe
+Provides:      gem(hoe) = 3.23.1
+
 
 %description
 Hoe is a rake/rubygems helper for project Rakefiles. It helps you manage,
@@ -26,24 +32,81 @@ project tasks including rdoc generation, testing, packaging, deployment, and
 announcement.
 
 
-%package       -n gem-%pkgname-doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n sow
+Version:       3.23.1
+Release:       alt1
+Summary:       Hoe is a rake/rubygems helper for project Rakefiles executable(s)
+Summary(ru_RU.UTF-8): Исполнямка для самоцвета hoe
+Group:         Other
+BuildArch:     noarch
+
+Requires:      gem(hoe) = 3.23.1
+
+%description   -n sow
+Hoe is a rake/rubygems helper for project Rakefiles executable(s).
+
+Hoe is a rake/rubygems helper for project Rakefiles. It helps you manage,
+maintain, and release your project and includes a dynamic plug-in system
+allowing for easy extensibility. Hoe ships with plug-ins for all your usual
+project tasks including rdoc generation, testing, packaging, deployment, and
+announcement.
+
+%description   -n sow -l ru_RU.UTF-8
+Исполнямка для самоцвета hoe.
+
+
+%package       -n gem-hoe-doc
+Version:       3.23.1
+Release:       alt1
+Summary:       Hoe is a rake/rubygems helper for project Rakefiles documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета hoe
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   -n gem-%pkgname-doc
-Documentation files for %gemname gem.
+Requires:      gem(hoe) = 3.23.1
 
-%description   -n gem-%pkgname-doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-hoe-doc
+Hoe is a rake/rubygems helper for project Rakefiles documentation files.
+
+Hoe is a rake/rubygems helper for project Rakefiles. It helps you manage,
+maintain, and release your project and includes a dynamic plug-in system
+allowing for easy extensibility. Hoe ships with plug-ins for all your usual
+project tasks including rdoc generation, testing, packaging, deployment, and
+announcement.
+
+%description   -n gem-hoe-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета hoe.
+
+
+%package       -n gem-hoe-devel
+Version:       3.23.1
+Release:       alt1
+Summary:       Hoe is a rake/rubygems helper for project Rakefiles development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета hoe
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(hoe) = 3.23.1
+Requires:      gem(rdoc) >= 4.0 gem(rdoc) < 7
+
+%description   -n gem-hoe-devel
+Hoe is a rake/rubygems helper for project Rakefiles development package.
+
+Hoe is a rake/rubygems helper for project Rakefiles. It helps you manage,
+maintain, and release your project and includes a dynamic plug-in system
+allowing for easy extensibility. Hoe ships with plug-ins for all your usual
+project tasks including rdoc generation, testing, packaging, deployment, and
+announcement.
+
+%description   -n gem-hoe-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета hoe.
 
 
 %prep
 %setup
 
 %build
-%ruby_build --shebang=auto
+%ruby_build
 
 %install
 %ruby_install
@@ -52,15 +115,26 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%_bindir/sow
+%doc README.rdoc template/README.txt.erb
 %ruby_gemspec
 %ruby_gemlibdir
 
-%files         -n gem-%pkgname-doc
+%files         -n sow
+%doc README.rdoc template/README.txt.erb
+%_bindir/sow
+
+%files         -n gem-hoe-doc
+%doc README.rdoc template/README.txt.erb
 %ruby_gemdocdir
+
+%files         -n gem-hoe-devel
+%doc README.rdoc template/README.txt.erb
 
 
 %changelog
+* Fri Mar 18 2022 Pavel Skrylev <majioa@altlinux.org> 3.23.1-alt1
+- ^ 3.22.1 -> 3.23.1
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 3.22.1-alt1
 - updated (^) 3.18.0 -> 3.22.1
 - fixed (!) spec

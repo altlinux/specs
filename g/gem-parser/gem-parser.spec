@@ -2,7 +2,7 @@
 
 Name:          gem-parser
 Version:       3.1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby parser
 License:       MIT
 Group:         Development/Ruby
@@ -13,7 +13,8 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: ragel
+BuildRequires: ragel6
+BuildRequires: racc
 BuildRequires: gem(ast) >= 2.4.1 gem(ast) < 2.5
 BuildRequires: gem(bundler) >= 1.15 gem(bundler) < 3
 BuildRequires: gem(rake) >= 13.0.1 gem(rake) < 14
@@ -45,7 +46,7 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 %package       -n ruby-parse
 Version:       3.1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby parser executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета parser
 Group:         Development/Ruby
@@ -68,7 +69,7 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 %package       -n gem-parser-doc
 Version:       3.1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby parser documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета parser
 Group:         Development/Documentation
@@ -91,7 +92,7 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 %package       -n gem-parser-devel
 Version:       3.1.2.0
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby parser development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета parser
 Group:         Development/Ruby
@@ -107,6 +108,8 @@ Requires:      gem(kramdown) >= 0
 Requires:      gem(minitest) >= 5.10 gem(minitest) < 6
 Requires:      gem(simplecov) >= 0.15.1 gem(simplecov) < 1
 Requires:      gem(gauntlet) >= 0
+Requires:      ragel6
+Requires:      racc
 
 %description   -n gem-parser-devel
 A Ruby parser development package.
@@ -148,6 +151,9 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 
 %changelog
+* Fri Jul 08 2022 Pavel Skrylev <majioa@altlinux.org> 3.1.2.0-alt1.1
+- !fix dep to ragel6, racc
+
 * Sat Apr 16 2022 Pavel Skrylev <majioa@altlinux.org> 3.1.2.0-alt1
 - ^ 3.0.1.1 -> 3.1.2.0
 

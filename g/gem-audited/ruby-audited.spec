@@ -1,7 +1,7 @@
 %define        gemname audited
 
 Name:          gem-audited
-Version:       5.0.1
+Version:       5.0.2
 Release:       alt1
 Summary:       Audited (formerly acts_as_audited) is an ORM extension that logs all changes to your Rails models
 License:       MIT
@@ -13,9 +13,9 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(activerecord) >= 5.0 gem(activerecord) < 6.2
+BuildRequires: gem(activerecord) >= 5.0 gem(activerecord) < 7.1
 BuildRequires: gem(appraisal) >= 0
-BuildRequires: gem(rails) >= 5.0 gem(rails) < 6.2
+BuildRequires: gem(rails) >= 5.0 gem(rails) < 7.1
 BuildRequires: gem(rspec-rails) >= 0
 BuildRequires: gem(standard) >= 0
 BuildRequires: gem(single_cov) >= 0
@@ -25,10 +25,10 @@ BuildRequires: gem(pg) >= 0.18 gem(pg) < 2.0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(activerecord) >= 5.0 gem(activerecord) < 6.2
+Requires:      gem(activerecord) >= 5.0 gem(activerecord) < 7.1
 Obsoletes:     ruby-audited < %EVR
 Provides:      ruby-audited = %EVR
-Provides:      gem(audited) = 5.0.1
+Provides:      gem(audited) = 5.0.2
 
 
 %description
@@ -40,14 +40,14 @@ Audited currently (4.x) works with Rails 6.0, 5.2, 5.1, 5.0 and 4.2.
 
 
 %package       -n gem-audited-doc
-Version:       5.0.1
+Version:       5.0.2
 Release:       alt1
 Summary:       Audited (formerly acts_as_audited) is an ORM extension that logs all changes to your Rails models documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета audited
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(audited) = 5.0.1
+Requires:      gem(audited) = 5.0.2
 
 %description   -n gem-audited-doc
 Audited (formerly acts_as_audited) is an ORM extension that logs all changes to
@@ -64,16 +64,16 @@ Audited currently (4.x) works with Rails 6.0, 5.2, 5.1, 5.0 and 4.2.
 
 
 %package       -n gem-audited-devel
-Version:       5.0.1
+Version:       5.0.2
 Release:       alt1
 Summary:       Audited (formerly acts_as_audited) is an ORM extension that logs all changes to your Rails models development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета audited
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(audited) = 5.0.1
+Requires:      gem(audited) = 5.0.2
 Requires:      gem(appraisal) >= 0
-Requires:      gem(rails) >= 5.0 gem(rails) < 6.2
+Requires:      gem(rails) >= 5.0 gem(rails) < 7.1
 Requires:      gem(rspec-rails) >= 0
 Requires:      gem(standard) >= 0
 Requires:      gem(single_cov) >= 0
@@ -121,6 +121,9 @@ Audited currently (4.x) works with Rails 6.0, 5.2, 5.1, 5.0 and 4.2.
 
 
 %changelog
+* Thu Sep 01 2022 Pavel Skrylev <majioa@altlinux.org> 5.0.2-alt1
+- ^ 5.0.1 -> 5.0.2
+
 * Mon Jun 21 2021 Pavel Skrylev <majioa@altlinux.org> 5.0.1-alt1
 - ^ 4.9.0 -> 5.0.1
 

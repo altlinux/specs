@@ -1,9 +1,8 @@
-%define        pkgname http-parser-rb
 %define        gemname http_parser.rb
 
-Name:          gem-%pkgname
-Version:       0.6.1
-Release:       alt3
+Name:          gem-http-parser-rb
+Version:       0.8.0
+Release:       alt1
 Summary:       A simple callback-based HTTP request/response parser for writing http servers, clients and proxies
 License:       MIT
 Group:         Development/Ruby
@@ -12,54 +11,79 @@ Vcs:           https://github.com/tmm1/http_parser.rb.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
+Patch:         ruby-http-parser-rb.patch
 BuildRequires(pre): rpm-build-ruby
+BuildRequires: libhttp-parser-devel 
+BuildRequires: gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
+BuildRequires: gem(rspec) >= 3 gem(rspec) < 4
+BuildRequires: gem(json) >= 2.1 gem(json) < 3
+BuildRequires: gem(benchmark_suite) >= 1.0 gem(benchmark_suite) < 2
+BuildRequires: gem(ffi) >= 1.9 gem(ffi) < 2
+BuildRequires: gem(yajl-ruby) >= 1.3 gem(yajl-ruby) < 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%gemname < %EVR
-Provides:      ruby-%gemname = %EVR
-Obsoletes:     gem-%gemname < %EVR
-Provides:      gem-%gemname = %EVR
+Obsoletes:     ruby-http_parser.rb < %EVR
+Provides:      ruby-http_parser.rb = %EVR
+Provides:      gem(http_parser.rb) = 0.8.0
+
 
 %description
 Ruby bindings to http://github.com/ry/http-parser and
 http://github.com/a2800276/http-parser.java
 
-A simple callback-based HTTP request/response parser for writing http servers,
-clients and proxies.
 
-This gem is built on top of joyent/http-parser and its java port
-http-parser/http-parser.java.
-
-
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-http-parser-rb-doc
+Version:       0.8.0
+Release:       alt1
+Summary:       A simple callback-based HTTP request/response parser for writing http servers, clients and proxies documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета http_parser.rb
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(http_parser.rb) = 0.8.0
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-http-parser-rb-doc
+A simple callback-based HTTP request/response parser for writing http servers,
+clients and proxies documentation files.
+
+Ruby bindings to http://github.com/ry/http-parser and
+http://github.com/a2800276/http-parser.java
+
+%description   -n gem-http-parser-rb-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета http_parser.rb.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-http-parser-rb-devel
+Version:       0.8.0
+Release:       alt1
+Summary:       A simple callback-based HTTP request/response parser for writing http servers, clients and proxies development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета http_parser.rb
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   devel
-Development files for %gemname gem.
+Requires:      gem(http_parser.rb) = 0.8.0
+Requires:      gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
+Requires:      gem(rspec) >= 3 gem(rspec) < 4
+Requires:      gem(json) >= 2.1 gem(json) < 3
+Requires:      gem(benchmark_suite) >= 1.0 gem(benchmark_suite) < 2
+Requires:      gem(ffi) >= 1.9 gem(ffi) < 2
+Requires:      gem(yajl-ruby) >= 1.3 gem(yajl-ruby) < 2
 
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+%description   -n gem-http-parser-rb-devel
+A simple callback-based HTTP request/response parser for writing http servers,
+clients and proxies development package.
 
+Ruby bindings to http://github.com/ry/http-parser and
+http://github.com/a2800276/http-parser.java
+
+%description   -n gem-http-parser-rb-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета http_parser.rb.
 
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -71,19 +95,24 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-http-parser-rb-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         devel
+%files         -n gem-http-parser-rb-devel
+%doc README.md
 %ruby_includedir/*
 
 
 %changelog
+* Wed Mar 16 2022 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1
+- ^ 0.6.1 -> 0.8.0
+
 * Mon May 25 2020 Pavel Skrylev <majioa@altlinux.org> 0.6.1-alt3
 - ! spec tags
 

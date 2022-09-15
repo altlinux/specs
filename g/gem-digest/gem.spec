@@ -1,7 +1,7 @@
 %define        gemname digest
 
 Name:          gem-digest
-Version:       3.1.0
+Version:       3.1.0.1
 Release:       alt1
 Summary:       Provides a framework for message digest libraries
 License:       Ruby or BSD-2-Clause
@@ -15,8 +15,9 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(digest) = 3.1.0
+Provides:      gem(digest) = 3.1.0.1
 
+%ruby_use_gem_version digest:3.1.0.1
 
 %description
 This module provides a framework for message digest libraries.
@@ -30,14 +31,14 @@ infeasible to generate a message from a digest.
 
 
 %package       -n gem-digest-doc
-Version:       3.1.0
+Version:       3.1.0.1
 Release:       alt1
 Summary:       Provides a framework for message digest libraries documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета digest
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(digest) = 3.1.0
+Requires:      gem(digest) = 3.1.0.1
 
 %description   -n gem-digest-doc
 Provides a framework for message digest libraries documentation files.
@@ -56,14 +57,14 @@ infeasible to generate a message from a digest.
 
 
 %package       -n gem-digest-devel
-Version:       3.1.0
+Version:       3.1.0.1
 Release:       alt1
 Summary:       Provides a framework for message digest libraries development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета digest
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(digest) = 3.1.0
+Requires:      gem(digest) = 3.1.0.1
 
 %description   -n gem-digest-devel
 Provides a framework for message digest libraries development package.
@@ -109,5 +110,8 @@ infeasible to generate a message from a digest.
 
 
 %changelog
+* Tue Jul 05 2022 Pavel Skrylev <majioa@altlinux.org> 3.1.0.1-alt1
+- ^ 3.1.0 -> 3.1.0.1
+
 * Sun Apr 03 2022 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt1
 - + packaged gem with Ruby Policy 2.0

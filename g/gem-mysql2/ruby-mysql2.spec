@@ -1,7 +1,7 @@
 %define        gemname mysql2
 
 Name:          gem-mysql2
-Version:       0.5.4
+Version:       0.5.4.1
 Release:       alt1
 Summary:       A modern, simple and very fast Mysql library for Ruby - binding to libmysql
 License:       MIT
@@ -21,8 +21,9 @@ BuildRequires: libmysqlclient-devel
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 Obsoletes:     ruby-mysql2 < %EVR
 Provides:      ruby-mysql2 = %EVR
-Provides:      gem(mysql2) = 0.5.4
+Provides:      gem(mysql2) = 0.5.4.1
 
+%ruby_use_gem_version mysql2:0.5.4.1
 
 %description
 The Mysql2 gem is meant to serve the extremely common use-case of connecting,
@@ -36,14 +37,14 @@ to that encoding] and uses encoding-aware MySQL API calls where it can.
 
 
 %package       -n gem-mysql2-doc
-Version:       0.5.4
+Version:       0.5.4.1
 Release:       alt1
 Summary:       A modern, simple and very fast Mysql library for Ruby - binding to libmysql documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета mysql2
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(mysql2) = 0.5.4
+Requires:      gem(mysql2) = 0.5.4.1
 
 %description   -n gem-mysql2-doc
 A modern, simple and very fast Mysql library for Ruby - binding to libmysql
@@ -63,14 +64,14 @@ to that encoding] and uses encoding-aware MySQL API calls where it can.
 
 
 %package       -n gem-mysql2-devel
-Version:       0.5.4
+Version:       0.5.4.1
 Release:       alt1
 Summary:       A modern, simple and very fast Mysql library for Ruby - binding to libmysql development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета mysql2
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(mysql2) = 0.5.4
+Requires:      gem(mysql2) = 0.5.4.1
 Requires:      libmysqlclient-devel
 
 %description   -n gem-mysql2-devel
@@ -118,6 +119,9 @@ to that encoding] and uses encoding-aware MySQL API calls where it can.
 
 
 %changelog
+* Fri Jul 01 2022 Pavel Skrylev <majioa@altlinux.org> 0.5.4.1-alt1
+- ^ 0.5.4 -> 0.5.4[1]
+
 * Wed May 18 2022 Pavel Skrylev <majioa@altlinux.org> 0.5.4-alt1
 - ^ 0.5.3 -> 0.5.4
 

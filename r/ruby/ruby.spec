@@ -1,13 +1,13 @@
 %def_without   bootstrap
 %def_enable    shared
 %def_enable    rubygems
-%define        ruby_version 2.7.0
+%define        ruby_version 3.1.0
 %define        libdir %_prefix/lib/%name
 %define        includedir %_includedir
 %define        ridir %_datadir/ri
 %define        vendordir %libdir/vendor_%name
 %define        lname lib%name
-%define        _version 2.7.6
+%define        _version 3.1.1
 
 Name:          ruby
 Version:       %_version
@@ -19,9 +19,15 @@ Url:           http://www.%name-lang.org/
 Vcs:           https://github.com/ruby/ruby.git
 
 Source0:       %name-%_version.tar
-Source4:       miniruby.sh
+Source1:       fakeruby.sh
+Source2:       miniruby.sh
+Source3:       ruby.macros.erb
+Source4:       ruby.env
 Patch:         realpath.patch
-Patch1:        configure.patch
+Patch1:        use_system_dirs.patch
+Patch2:        block_install_gems.patch
+Patch3:        single_instantiating.patch
+Patch4:        support_multiple_gem_trees.patch
 BuildRequires(pre): rpm-build-ruby >= 1:1.0.0
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: /usr/bin/setup.rb
@@ -243,9 +249,20 @@ AutoReq:       yes,noshell
 Ruby gem executable and framework.
 
 
+%package       -n rpm-macros-ruby
+Epoch:         1
+Version:       1.1.0
+Release:       alt1
+Summary:       rpm macros for Ruby packages
+Group:         Development/Ruby
+
+%description   -n rpm-macros-ruby
+rpm macros for Ruby packages.
+
+
 %prep
 %setup -q
-%autopatch
+%autopatch -p1
 #́# More strict shebang
 sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' bin/*
 # Remove $ruby_version from libs path
@@ -253,6 +270,7 @@ sed -i 's|/\$(ruby_version)||g;s|\(/%name/\)#{version}/|\1|g' tool/mkconfig.rb
 sed -i 's|/\${ruby_version}||' template/%name.pc.in configure.ac
 sed -i -r "/ridatadir[[:blank:]]*=/s/[[:blank:]]+CONFIG\['ruby_version'\],//" tool/rbinstall.rb
 sed -i 's|[[:blank:]]*"/"RUBY_LIB_VERSION$||' version.c
+
 # capi-docs
 sed -i -e '/doc\/capi/s|"/capi|"/html/capi|' -e '/doc\/capi/s|doc/capi|&/html|' tool/rbinstall.rb
 # put config.guess and config.sub from /usr/share/gnu-config
@@ -264,8 +282,6 @@ echo "
 #define RUBY_BRANCH_NAME \"%_version\"
 #define RUBY_RELEASE_DATETIME \"2021-07-07T12:06:44Z\"
 " > revision.h
-# NOTE: fix default path to support older ruby versions of gems
-sed "s/path << default_dir/path |= [ default_dir ] | Dir.glob(File.join(RbConfig::CONFIG['rubylibprefix'], 'gems', '*'))/" -i lib/rubygems/defaults.rb
 
 %build
 %define ruby_arch %(echo %_target | sed 's/^ppc/powerpc/')%([ -z "%_gnueabi" ] || echo "-eabi")
@@ -277,16 +293,32 @@ my_configure() {
         %{subst_enable valgrind} \
 %endif
         %{subst_enable rubygems} \
-        --with-rubylibprefix=%libdir \
-        --with-rubyhdrdir=%includedir \
-        --with-sitearchdir=%libdir/site_ruby/%ruby_version/%ruby_arch \
-        --with-vendorarchdir=%libdir/vendor_ruby/%ruby_version/%ruby_arch \
-        --with-archlibdir=%libdir/%{ruby_arch} \
-        --with-rubyarchdir=%libdir/%{ruby_arch} \
-        --with-ridir=%ridir \
+        --enable-use-system-dirs \
+        --enable-single-instantiating \
+        --disable-rpath "$@" \
         --docdir=%_docdir/%name-%ruby_version \
-        %{?ruby_version:--with-ruby-version=%ruby_version} \
-        --disable-rpath "$@"
+        --with-ridir=%ridir \
+        --with-cachedir=%_cachedir/%name \
+        --with-archlibdir=%_libdir/%name \
+        --with-rubylibprefix=%libdir \
+        --with-rubyarchdir=%_libdir/%name \
+        --with-rubyarchprefix=%_libdir/%name \
+        --with-rubysitearchprefix=%_usr/local/%_lib/%name \
+        --with-rubyhdrdir=%_includedir/ruby \
+        --with-rubyarchhdrdir=/usr/include/ruby \
+        --with-vendordir=%libdir/vendor_ruby \
+        --with-vendorlibdir=%libdir/vendor_ruby \
+        --with-vendorarchdir=%_libdir/%name/vendor_ruby/ \
+        --with-vendorhdrdir=%_includedir/vendor_ruby \
+        --with-vendorarchhdrdir=%_includedir/vendor_ruby \
+        --with-sitedir=%_usr/local/lib/%name \
+        --with-sitelibdir=%_usr/local/lib/%name \
+        --with-sitearchdir=%_usr/local/%_lib/%name \
+        --with-sitearchlibdir=%_usr/local/%_lib/%name \
+        --with-sitearchincludedir=%_usr/local/include/site_ruby \
+        --with-sitehdrdir=%_usr/local/include/site_ruby \
+        --with-sitearchhdrdir=%_usr/local/include/site_ruby \
+        %{?ruby_version:--with-ruby-version=%ruby_version}
 }
 
 %if_with bootstrap
@@ -297,22 +329,8 @@ my_configure() {
 cd %_builddir
 cp -a %name-%_version %name-%_version-miniruby
 cd %name-%_version-miniruby
-cp %SOURCE4 .
-
-cat > fakeruby.sh << "EOF"
-#!/bin/bash
-echo "$@" >> ~/fakeruby.log
-case "$@" in
-*"print 42"*) echo 42 ;;
-*"file2lastrev.rb"*) echo "
-#define RUBY_REVISION \"647ee6f091\"
-#define RUBY_FULL_REVISION \"647ee6f091eafcce70ffb75ddf7e121e192ab217\"
-#define RUBY_BRANCH_NAME \"%_version\"
-#define RUBY_RELEASE_DATETIME \"2019-12-25T09:50:58Z\"
-" ;;
-esac
-EOF
-chmod +x fakeruby.sh
+cp %SOURCE1 .
+cp %SOURCE2 .
 
 my_configure --with-baseruby=$PWD/fakeruby.sh
 patch -p1 -l < %_datadir/%name-%_version-miniruby/miniruby-src.patch
@@ -358,17 +376,17 @@ install -d -m 0755 %buildroot%_docdir/%name-%ruby_version
 mkdir -p %buildroot%ridir/%ruby_version
 mv %buildroot%ridir/system %buildroot%ridir/%ruby_version/
 install -d -m 0755 %buildroot%ridir/%ruby_version/site
-install -p -m 0644 COPYING* LEGAL NEWS README* %buildroot%_docdir/%name-%ruby_version/
+install -p -m 0644 COPYING* LEGAL NEWS* README* %buildroot%_docdir/%name-%ruby_version/
 # install compiled header config.h
 install -D -m 0644 $(find .ext/include/ -name config.h) %buildroot%ruby_includedir/ruby/config.h
 # when ruby_arch isn't the same as compilable fix it with symlinks
 find %buildroot%_libexecdir -iregex ".*-linux[^\/]*$" -type d |while read -r i; do ln -s "%ruby_arch" $(dirname "$i")/ 2>/dev/null || true; done
 
 %define ruby_libdir %libdir
-%define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir RUBYLIB=%buildroot%libdir:%buildroot%libdir/%ruby_arch:%buildroot%libdir/site_ruby:%buildroot%libdir/%ruby_arch:%buildroot%libdir/site_ruby/%ruby_version/%ruby_arch:%buildroot%libdir/site_ruby/%ruby_version/%ruby_arch GEM_PATH=%buildroot%libdir/gems/%ruby_version:%buildroot%libdir/gems/%ruby_version:$(echo $(find %libdir/gems/ -maxdepth 1 -mindepth 1) | tr ' ' ':') %buildroot%_bindir/%name
+%define __ruby env LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/%name RUBYLIB=%buildroot%libdir:%buildroot%_libdir/%name:%buildroot %buildroot%_bindir/%name
 
-export RUBYLIB=%buildroot%libdir:%buildroot%libdir/site_ruby/%ruby_version/%ruby_arch
-export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/site_ruby/%ruby_version/%ruby_arch
+export RUBYLIB=%buildroot%libdir:%buildroot%_libdir/%name
+export LD_LIBRARY_PATH=%buildroot%_libdir:%buildroot%_libdir/%name
 
 %if_without bootstrap
 mkdir -p %buildroot%_datadir/%name-%_version-miniruby
@@ -376,9 +394,13 @@ mv %_builddir/miniruby-src.patch %buildroot%_datadir/%name-%_version-miniruby/
 %endif
 
 find %buildroot%libdir
-ruby -e "p $:.grep(/-linux/)"
+%__ruby -e "p $:.grep(/-linux/)"
 %ruby_install
+# TODO keep gem specs conly for default folder with gems
+mv %buildroot%libdir/gemie/specifications/default %buildroot%libdir/specifications
+rm -rf %buildroot%libdir/gemie/{gems,specifications}/*
 
+mkdir -p %buildroot%_cachedir/%name/gemie
 # Make empty dir for ri documentation
 mkdir -p %buildroot%_datadir/ri/site/%ruby_version
 rm -rf %buildroot%_bindir/{ri,rdoc,bundle,bundler,racc}
@@ -390,6 +412,11 @@ mkdir -p "$EX/armh-linux"
 ln -s armh-linux "${EX}/armh-linux-eabi"
 %endif
 
+# install ruby macros
+install -D -p -m 0644 %SOURCE4 %buildroot%_rpmmacrosdir/ruby.env
+%__ruby -rerb -e 'File.open("%buildroot%_rpmmacrosdir/ruby", "w") { |f| f.puts ERB.new(IO.read("%SOURCE3")).result }'
+
+
 %check
 %make_build test
 %ruby_test
@@ -398,16 +425,15 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %doc %dir %_docdir/%name-%ruby_version
 %doc %_docdir/%name-%ruby_version/COPYING
 %doc %_docdir/%name-%ruby_version/LEGAL
-%doc %_docdir/%name-%ruby_version/NEWS
+%doc %_docdir/%name-%ruby_version/NEWS*
 %doc %_docdir/%name-%ruby_version/README.*
 %lang(ja) %doc %_docdir/%name-%ruby_version/*.ja
 %_bindir/%name
-%_bindir/*racc*
-%_man1dir/%name.*
-%_man1dir/bundle*
-%_mandir/%name.*
-%_mandir/bundle*
 %dir %_datadir/ri
+%_mandir/%name.*
+%_man1dir/%name.*
+%dir %_cachedir/%name/gemie
+%dir %ridir
 
 
 %files         -n %lname
@@ -423,11 +449,10 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 
 %files         stdlibs
 %libdir
+%_libdir/%name
 
 %files         -n gem
 %_bindir/gem
-%_man5dir/gemfile.5.xz
-%_mandir/gemfile.5.xz
 
 %files         -n erb
 %_bindir/erb
@@ -453,8 +478,19 @@ ln -s armh-linux "${EX}/armh-linux-eabi"
 %_datadir/%name-%_version-miniruby/miniruby-src.patch
 %endif
 
+%files         -n rpm-macros-ruby
+%_rpmmacrosdir/ruby
+%_rpmmacrosdir/ruby.env
+
 
 %changelog
+* Sat Jul 02 2022 Pavel Skrylev <majioa@altlinux.org> 3.1.1-alt1
+- ^ 2.7.6 -> 3.1.1
+- *split lib64 and lib folders for side and gems using system folder division
+- *single instantiating of ruby to crop out versioning
+- +add rewritten some ruby macros to conform ruby 3x style with single
+  instantiating tree
+
 * Wed Apr 20 2022 Pavel Skrylev <majioa@altlinux.org> 2.7.6-alt1
 - !fix bugs:
  + CVE-2022-28738

@@ -1,7 +1,7 @@
 %define        gemname ruby_gntp
 
 Name:          gem-ruby-gntp
-Version:       0.3.4
+Version:       0.3.4.1
 Release:       alt1
 Summary:       Ruby library for GNTP(Growl Notification Transport Protocol) client
 License:       MIT
@@ -16,21 +16,23 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Provides:      gem(ruby_gntp) = 0.3.4
+%ruby_use_gem_version ruby_gntp:0.3.4.1
+%ruby_alias_names ruby_gntp,ruby-gntp
+Provides:      gem(ruby_gntp) = 0.3.4.1
 
 %description
 Ruby library for GNTP(Growl Notification Transport Protocol) client.
 
 
 %package       -n gem-ruby-gntp-doc
-Version:       0.3.4
+Version:       0.3.4.1
 Release:       alt1
 Summary:       Ruby library for GNTP(Growl Notification Transport Protocol) client documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ruby_gntp
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ruby_gntp) = 0.3.4
+Requires:      gem(ruby_gntp) = 0.3.4.1
 
 %description   -n gem-ruby-gntp-doc
 Ruby library for GNTP(Growl Notification Transport Protocol) client
@@ -63,5 +65,8 @@ documentation files.
 
 
 %changelog
+* Thu Apr 14 2022 Pavel Skrylev <majioa@altlinux.org> 0.3.4.1-alt1
+- ^ 0.3.4 -> 0.3.4[1]
+
 * Tue Jun 22 2021 Pavel Skrylev <majioa@altlinux.org> 0.3.4-alt1
 - + packaged gem with Ruby Policy 2.0

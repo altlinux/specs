@@ -1,6 +1,6 @@
 %def_enable perl
 %def_enable python
-%def_disable ruby
+%def_enable ruby
 %def_disable tcl
 %def_disable static
 %def_disable swig
@@ -18,32 +18,27 @@
 %force_enable swig
 %endif
 
-Summary: ObexFTP implements the Object Exchange (OBEX) protocols file transfer
-Name: obexftp
-Version: 0.24.2
-Release: alt2.6
+Summary:       ObexFTP implements the Object Exchange (OBEX) protocols file transfer
+Name:          obexftp
+Version:       0.24.2.1
+Release:       alt1
+License:       GPLv2
+Group:         Communications
+Url:           https://sourceforge.net/projects/openobex/
+Vcs:           https://github.com/zuckschwerdt/obexftp.git
 
-License: GPLv2
-Group: Communications
-URL: https://sourceforge.net/projects/openobex/
-
-Source: %name-%version.tar
-
+Source:        %name-%version.tar
 # Patches from Fedora
-Patch0: %name-norpath.patch
-Patch1: %name-0.24-fix-absurd-install-path.patch
+Patch0:        %name-norpath.patch
+Patch1:        %name-0.24-fix-absurd-install-path.patch
 
-# ALT Linux patches
-Patch2: %name-alt-fix-library-link.patch
-
-Requires: lib%name = %version-%release
+Requires:      lib%name = %version-%release
 
 BuildRequires(pre): cmake
+BuildRequires(pre): chrpath
 BuildRequires: gcc-c++ libopenobex-devel libgsm-devel libbluez-devel
 BuildRequires: libusb-compat-devel libfuse-devel asciidoc xmlto
 BuildRequires: libexpat-devel
-
-BuildPreReq: chrpath
 
 %if_enabled swig
 BuildRequires: swig
@@ -54,7 +49,10 @@ BuildRequires: perl-devel
 %if_enabled python
 BuildRequires: python-devel
 %endif
-BuildRequires: ruby libruby-devel
+%if_enabled ruby
+BuildRequires(pre): rpm-build-ruby
+BuildRequires: libruby-devel
+%endif
 %if_enabled tcl
 BuildRequires: tcl-devel tcl
 %endif
@@ -95,10 +93,12 @@ Requires: tcl
 %endif
 
 %if_enabled ruby
-%package -n ruby-obexftp
-Summary: Ruby bindings for obexftp
-Group: Development/Ruby
-Requires: ruby
+%package       -n ruby-obexftp
+Summary:       Ruby bindings for obexftp
+Group:         Development/Ruby
+
+%description   -n ruby-obexftp
+Ruby bindings for obexftp.
 %endif
 
 %description
@@ -135,29 +135,16 @@ Perl bindings for obexftp.
 Tcl bindings for obexftp.
 %endif
 
-%if_enabled ruby
-%description -n ruby-obexftp
-Ruby bindings for obexftp.
-%endif
-
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p2
+%autopatch -p1
 
 %build
 %cmake
-export RUBY="ruby -rvendor-specific"
 %cmake_build -t all doc
 
 %install
 %cmake_install
-
-%if_enabled ruby
-install -Dm 0755 %buildroot/usr/lib/ruby/vendor_ruby/*/*/obexftp.so %buildroot%ruby_sitearchdir/obexftp.so
-rm -f %buildroot/usr/lib/ruby/vendor_ruby/*/*/obexftp.so
-%endif
 
 %files
 %doc AUTHORS ChangeLog NEWS README* THANKS TODO
@@ -202,10 +189,15 @@ rm -f %buildroot/usr/lib/ruby/vendor_ruby/*/*/obexftp.so
 
 %if_enabled ruby
 %files -n ruby-obexftp
-%ruby_sitearchdir/*
+%ruby_vendorarchdir/%name.so
 %endif
 
 %changelog
+* Sun Aug 28 2022 Pavel Skrylev <majioa@altlinux.org> 0.24.2.1-alt1
+- ^ 0.24.2 -> 0.24.2[1]
+- *move to github repo
+- +enable ruby module to vendor folder
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.24.2-alt2.6
 - NMU: spec: adapted to new cmake macros.
 

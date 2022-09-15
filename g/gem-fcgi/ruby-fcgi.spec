@@ -1,62 +1,78 @@
-%define        pkgname fcgi
+%define        gemname fcgi
 
-Name:          gem-%pkgname
-Version:       0.9.2.1
-Release:       alt3.1
+Name:          gem-fcgi
+Version:       0.9.2.1.1
+Release:       alt1
 Summary:       FastCGI for ruby
-Group:         Development/Ruby
 License:       MIT
+Group:         Development/Ruby
 Url:           https://github.com/alphallc/ruby-fcgi-ng
 Vcs:           https://github.com/alphallc/ruby-fcgi-ng.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
+Patch:         ruby-3.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libfcgi-devel
+BuildRequires: gem(hrx) = 1.0.0.2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+Obsoletes:     ruby-fcgi < %EVR
+Provides:      ruby-fcgi = %EVR
+Provides:      gem(fcgi) = 0.9.2.1.1
+
+%ruby_use_gem_version fcgi:0.9.2.1.1
 
 %description
-FastCGI is a language independent, scalable, open extension to CGI
-that provides high performance without the limitations of server
-specific APIs.
+FastCGI is a language independent, scalable, open extension to CGI that provides
+high performance without the limitations of server specific APIs.
 
 MoonWolf developed a library for FastCGI in
 http://www.moonwolf.com/ruby/archive/. But now, he is MIA.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-fcgi-doc
+Version:       0.9.2.1.1
+Release:       alt1
+Summary:       FastCGI for ruby documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fcgi
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(fcgi) = 0.9.2.1.1
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-fcgi-doc
+FastCGI for ruby documentation files.
+
+FastCGI is a language independent, scalable, open extension to CGI that provides
+high performance without the limitations of server specific APIs.
+
+MoonWolf developed a library for FastCGI in
+http://www.moonwolf.com/ruby/archive/. But now, he is MIA.
+
+%description   -n gem-fcgi-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета fcgi.
 
 
-%package       devel
-Summary:       Development files for %gemname gem
+%package       -n gem-fcgi-devel
+Version:       0.9.2.1.1
+Release:       alt1
+Summary:       FastCGI for ruby development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета fcgi
 Group:         Development/Ruby
 BuildArch:     noarch
 
+Requires:      gem(fcgi) = 0.9.2.1.1
 Requires:      libfcgi-devel
 
-%description   devel
-Development files for %gemname gem.
-
-%description   devel -l ru_RU.UTF8
-Файлы заголовков для самоцвета %gemname.
+%description   -n gem-fcgi-devel
+FastCGI library for Ruby.
 
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -68,16 +84,23 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.rdoc README.signals
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-fcgi-doc
+%doc README.rdoc README.signals
 %ruby_gemdocdir
+
+%files         -n gem-fcgi-devel
+%doc README.rdoc README.signals
 
 
 %changelog
+* Mon Jul 04 2022 Pavel Skrylev <majioa@altlinux.org> 0.9.2.1.1-alt1
+- ^ 0.9.2.1 -> 0.9.2.1.1
+
 * Sun Apr 05 2020 Pavel Skrylev <majioa@altlinux.org> 0.9.2.1-alt3.1
 - ! spec tags and syntax
 - + devel package

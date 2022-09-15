@@ -1,7 +1,7 @@
-%define        pkgname ox
+%define        gemname ox
 
-Name:          gem-%pkgname
-Version:       2.13.2
+Name:          gem-ox
+Version:       2.14.10
 Release:       alt1
 Summary:       Ruby Optimized XML Parser
 License:       MIT
@@ -14,35 +14,66 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname
-Provides:      ruby-%pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     ruby-ox < %EVR
+Provides:      ruby-ox = %EVR
+Provides:      gem(ox) = 2.14.10
+
 
 %description
-A fast XML parser and object serializer that uses only standard C lib.
-Optimized XML (Ox), as the name implies was written to provide speed
-optimized XML handling. It was designed to be an alternative to Nokogiri
-and other Ruby XML parsers for generic XML parsing and as an alternative
-to Marshal for Object serialization.
+A fast XML parser and object serializer that uses only standard C lib. Optimized
+XML (Ox), as the name implies was written to provide speed optimized XML
+handling. It was designed to be an alternative to Nokogiri and other Ruby XML
+parsers for generic XML parsing and as an alternative to Marshal for Object
+serialization.
 
 
-%package       -n gem-%pkgname-doc
-Summary:       Documentation files for %gemname gem
-Group:         Development/Documentation
-BuildArch:     noarch
-Provides:      ruby-%pkgname-doc
-Obsoletes:     ruby-%pkgname-doc
-
-%description   -n gem-%pkgname-doc
-Documentation files for %gemname gem.
-
-
-%package       -n gem-%pkgname-devel
-Summary:       Development files for %gemname gem
+%package       -n gem-ox-doc
+Version:       2.14.10
+Release:       alt1
+Summary:       Ruby Optimized XML Parser documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ox
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   -n gem-%pkgname-devel
-Development files for %gemname gem.
+Requires:      gem(ox) = 2.14.10
+Obsoletes:     ruby-ox-doc
+Provides:      ruby-ox-doc
+
+%description   -n gem-ox-doc
+Ruby Optimized XML Parser documentation files.
+
+A fast XML parser and object serializer that uses only standard C lib. Optimized
+XML (Ox), as the name implies was written to provide speed optimized XML
+handling. It was designed to be an alternative to Nokogiri and other Ruby XML
+parsers for generic XML parsing and as an alternative to Marshal for Object
+serialization.
+
+%description   -n gem-ox-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета ox.
+
+
+%package       -n gem-ox-devel
+Version:       2.14.10
+Release:       alt1
+Summary:       Ruby Optimized XML Parser development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ox
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      gem(ox) = 2.14.10
+
+%description   -n gem-ox-devel
+Ruby Optimized XML Parser development package.
+
+A fast XML parser and object serializer that uses only standard C lib. Optimized
+XML (Ox), as the name implies was written to provide speed optimized XML
+handling. It was designed to be an alternative to Nokogiri and other Ruby XML
+parsers for generic XML parsing and as an alternative to Marshal for Object
+serialization.
+
+%description   -n gem-ox-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета ox.
 
 
 %prep
@@ -58,19 +89,24 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         -n gem-%pkgname-doc
+%files         -n gem-ox-doc
+%doc README.md
 %ruby_gemdocdir
 
-%files         -n gem-%pkgname-devel
+%files         -n gem-ox-devel
+%doc README.md
 %ruby_includedir/*
 
 
 %changelog
+* Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 2.14.10-alt1
+- ^ 2.13.2 -> 2.14.10
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 2.13.2-alt1
 - updated (^) 2.11.0 -> 2.13.2
 - fixed (!) spec

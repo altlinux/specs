@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       1.17.5
-Release:       alt1
+Release:       alt1.1
 Summary:       ruby bindings for cairo
 Group:         Development/Ruby
 License:       GPLv2
@@ -99,6 +99,8 @@ Documentation files for %gemname gem.
 
 %prep
 %setup
+# TODO fix in setup
+sed 's/s.add_development_dependency("poppler", ">= 3.1.1")//' -i cairo.gemspec
 
 %build
 %ruby_build
@@ -121,6 +123,9 @@ Documentation files for %gemname gem.
 %ruby_gemdocdir
 
 %changelog
+* Tue Jun 28 2022 Pavel Skrylev <majioa@altlinux.org> 1.17.5-alt1.1
+- !dep to gem poppler
+
 * Sat Apr 24 2021 Pavel Skrylev <majioa@altlinux.org> 1.17.5-alt1
 - ^ 1.16.5 -> 1.17.5
 

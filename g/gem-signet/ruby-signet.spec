@@ -1,7 +1,7 @@
 %define        gemname signet
 
 Name:          gem-signet
-Version:       0.15.0
+Version:       0.16.1
 Release:       alt1
 Summary:       Signet is an OAuth 1.0 / OAuth 2.0 implementation
 License:       Apache-2.0
@@ -13,14 +13,15 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(addressable) >= 2.3 gem(addressable) < 3
-BuildRequires: gem(faraday) >= 0.17.3 gem(faraday) < 2.0
-BuildRequires: gem(jwt) >= 1.5 gem(jwt) < 3.0
+BuildRequires: gem(addressable) >= 2.8 gem(addressable) < 3
+BuildRequires: gem(faraday) >= 0.17.5 gem(faraday) < 3.0
+BuildRequires: gem(jwt) >= 1.5 gem(jwt) < 3
 BuildRequires: gem(multi_json) >= 1.10 gem(multi_json) < 2
 BuildRequires: gem(google-style) >= 1.25.1 gem(google-style) < 1.26
 BuildRequires: gem(kramdown) >= 1.5 gem(kramdown) < 3
 BuildRequires: gem(launchy) >= 2.4 gem(launchy) < 3
-BuildRequires: gem(rake) >= 12.0 gem(rake) < 14
+BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
+BuildRequires: gem(redcarpet) >= 3.0 gem(redcarpet) < 4
 BuildRequires: gem(rspec) >= 3.1 gem(rspec) < 4
 BuildRequires: gem(simplecov) >= 0.9 gem(simplecov) < 1
 BuildRequires: gem(yard) >= 0.9.12 gem(yard) < 1
@@ -28,13 +29,13 @@ BuildRequires: gem(yard) >= 0.9.12 gem(yard) < 1
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency kramdown >= 2.3.1,kramdown < 3
-Requires:      gem(addressable) >= 2.3 gem(addressable) < 3
-Requires:      gem(faraday) >= 0.17.3 gem(faraday) < 2.0
-Requires:      gem(jwt) >= 1.5 gem(jwt) < 3.0
+Requires:      gem(addressable) >= 2.8 gem(addressable) < 3
+Requires:      gem(faraday) >= 0.17.5 gem(faraday) < 3.0
+Requires:      gem(jwt) >= 1.5 gem(jwt) < 3
 Requires:      gem(multi_json) >= 1.10 gem(multi_json) < 2
 Obsoletes:     ruby-signet < %EVR
 Provides:      ruby-signet = %EVR
-Provides:      gem(signet) = 0.15.0
+Provides:      gem(signet) = 0.16.1
 
 
 %description
@@ -42,14 +43,14 @@ Signet is an OAuth 1.0 / OAuth 2.0 implementation.
 
 
 %package       -n gem-signet-doc
-Version:       0.15.0
+Version:       0.16.1
 Release:       alt1
 Summary:       Signet is an OAuth 1.0 / OAuth 2.0 implementation documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета signet
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(signet) = 0.15.0
+Requires:      gem(signet) = 0.16.1
 
 %description   -n gem-signet-doc
 Signet is an OAuth 1.0 / OAuth 2.0 implementation documentation files.
@@ -59,18 +60,19 @@ Signet is an OAuth 1.0 / OAuth 2.0 implementation documentation files.
 
 
 %package       -n gem-signet-devel
-Version:       0.15.0
+Version:       0.16.1
 Release:       alt1
 Summary:       Signet is an OAuth 1.0 / OAuth 2.0 implementation development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета signet
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(signet) = 0.15.0
+Requires:      gem(signet) = 0.16.1
 Requires:      gem(google-style) >= 1.25.1 gem(google-style) < 1.26
 Requires:      gem(kramdown) >= 1.5 gem(kramdown) < 3
 Requires:      gem(launchy) >= 2.4 gem(launchy) < 3
-Requires:      gem(rake) >= 12.0 gem(rake) < 14
+Requires:      gem(rake) >= 13.0 gem(rake) < 14
+Requires:      gem(redcarpet) >= 3.0 gem(redcarpet) < 4
 Requires:      gem(rspec) >= 3.1 gem(rspec) < 4
 Requires:      gem(simplecov) >= 0.9 gem(simplecov) < 1
 Requires:      gem(yard) >= 0.9.12 gem(yard) < 1
@@ -108,6 +110,9 @@ Signet is an OAuth 1.0 / OAuth 2.0 implementation development package.
 
 
 %changelog
+* Wed Mar 30 2022 Pavel Skrylev <majioa@altlinux.org> 0.16.1-alt1
+- ^ 0.15.0 -> 0.16.1
+
 * Wed Jun 02 2021 Pavel Skrylev <majioa@altlinux.org> 0.15.0-alt1
 - ^ 0.11.0 -> 0.15.0
 

@@ -2,7 +2,7 @@
 
 Name:          gem-xmlrpc
 Version:       0.3.2
-Release:       alt1
+Release:       alt1.1
 Summary:       The Ruby standard library package 'xmlrpc'
 License:       Ruby or BSD-2-Clause
 Group:         Development/Ruby
@@ -13,7 +13,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(webrick) >= 0
+BuildRequires: gem(webrick) >= 1.7.0
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(test-unit) >= 0
@@ -41,7 +41,7 @@ required to achieve either of these.
 
 %package       -n gem-xmlrpc-doc
 Version:       0.3.2
-Release:       alt1
+Release:       alt1.1
 Summary:       The Ruby standard library package 'xmlrpc' documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета xmlrpc
 Group:         Development/Documentation
@@ -69,7 +69,7 @@ required to achieve either of these.
 
 %package       -n gem-xmlrpc-devel
 Version:       0.3.2
-Release:       alt1
+Release:       alt1.1
 Summary:       The Ruby standard library package 'xmlrpc' development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета xmlrpc
 Group:         Development/Ruby
@@ -124,6 +124,9 @@ required to achieve either of these.
 
 
 %changelog
+* Tue Apr 19 2022 Pavel Skrylev <majioa@altlinux.org> 0.3.2-alt1.1
+- ! spec to fix webrick dep
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 0.3.2-alt1
 - ^ 0.3.0 -> 0.3.2
 

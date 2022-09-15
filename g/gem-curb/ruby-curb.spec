@@ -1,7 +1,7 @@
 %define        gemname curb
 
 Name:          gem-curb
-Version:       0.9.11
+Version:       1.0.0
 Release:       alt1
 Summary:       Ruby bindings for libcurl
 License:       MIT
@@ -19,7 +19,7 @@ BuildRequires: libcurl-devel
 %ruby_ignore_names bench
 Obsoletes:     ruby-curb < %EVR
 Provides:      ruby-curb = %EVR
-Provides:      gem(curb) = 0.9.11
+Provides:      gem(curb) = 1.0.0
 
 
 %description
@@ -32,14 +32,14 @@ Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
 
 
 %package       -n gem-curb-doc
-Version:       0.9.11
+Version:       1.0.0
 Release:       alt1
 Summary:       Ruby bindings for libcurl documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета curb
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(curb) = 0.9.11
+Requires:      gem(curb) = 1.0.0
 
 %description   -n gem-curb-doc
 Ruby bindings for libcurl documentation files.
@@ -56,14 +56,14 @@ Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
 
 
 %package       -n gem-curb-devel
-Version:       0.9.11
+Version:       1.0.0
 Release:       alt1
 Summary:       Ruby bindings for libcurl development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета curb
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(curb) = 0.9.11
+Requires:      gem(curb) = 1.0.0
 
 %description   -n gem-curb-devel
 Ruby bindings for libcurl development package.
@@ -107,6 +107,9 @@ Curb is a work-in-progress, and currently only supports libcurl's 'easy' and
 
 
 %changelog
+* Wed Mar 16 2022 Pavel Skrylev <majioa@altlinux.org> 1.0.0-alt1
+- ^ 0.9.11 -> 1.0.0
+
 * Thu Jul 01 2021 Pavel Skrylev <majioa@altlinux.org> 0.9.11-alt1
 - ^ 0.9.10 -> 0.9.11
 

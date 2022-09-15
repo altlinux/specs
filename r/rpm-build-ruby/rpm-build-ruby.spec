@@ -2,25 +2,22 @@
 
 Name:          rpm-build-ruby
 Epoch:         1
-Version:       1.0.0
-Release:       alt19
+Version:       1.1.0
+Release:       alt1
 Summary:       RPM helper scripts to calculate Ruby dependencies
 License:       GPLv2
 Group:         Development/Ruby
 Source:        %name-%version.tar
 BuildArch:     noarch
 
-Requires:      rpm-macros-ruby = %EVR
-Requires:      ruby >= 1.9
-Conflicts:     rpm-build <= 4.0.4-alt24
-AutoReq:       yes,noruby
-Requires:      ruby >= 1.9
-Requires:      ruby-stdlibs >= 1.9
+Requires:      rpm-macros-ruby
+Requires:      ruby
 Requires:      libruby-devel
 Requires:      /usr/bin/rdoc
 Requires:      /usr/bin/rake
-Requires:      /usr/bin/ruby
 Requires:      /bin/sed
+Conflicts:     rpm-build <= 4.0.4-alt24
+AutoReq:       yes,noruby
 
 %{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
@@ -29,31 +26,23 @@ These helper scripts will look at Ruby source files in your package, and will
 use this information to generate automatic Requires and Provides tags for the
 package.
 
-%package       -n rpm-macros-ruby
-Summary: rpm macros for Ruby packages
-Group: Development/Ruby
-
-%description   -n rpm-macros-ruby
-rpm macros for Ruby packages.
 
 %prep
 %setup -q
 
 %install
-install -d -m 0755 %buildroot{%_rpmlibdir,%_rpmmacrosdir}
+install -d -m 0755 %buildroot%_rpmlibdir
 install -p -m 0755 ruby.{req,prov}* %buildroot%_rpmlibdir/
-install -p -m 0644 ruby.macros %buildroot%_rpmmacrosdir/ruby
-install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 
 %files
 %lang(ru) %doc README.ru
 %_rpmlibdir/ruby*
-%_rpmmacrosdir/ruby.env
 
-%files         -n rpm-macros-ruby
-%_rpmmacrosdir/ruby
 
 %changelog
+* Thu Aug 18 2022 Pavel Skrylev <majioa@altlinux.org> 1:1.1.0-alt1
+- crop out macros in favor of ruby package
+
 * Wed Apr 13 2022 Pavel Skrylev <majioa@altlinux.org> 1:1.0.0-alt19
 - + ignore-path-token-list tag support, plus its defaults
 

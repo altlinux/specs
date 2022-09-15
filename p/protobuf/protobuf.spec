@@ -5,7 +5,7 @@
 %def_disable legacy
 
 %if_disabled legacy
-%define _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 0
 
 # Tests on e2k takes 3-4 days (!)
 %ifarch %e2k
@@ -29,7 +29,7 @@ Name: %oname
 Name: %oname%soversion
 %endif
 Version: 3.16.0
-Release: alt6.1
+Release: alt6.2
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -194,14 +194,14 @@ BuildArch: noarch
 %description javalite
 This package contains Java Protocol Buffers lite runtime library.
 
-%package javadoc
-Summary: Javadocs for %oname-java
-Group: Development/Documentation
-BuildArch: noarch
-Requires: %name-java = %EVR
-
-%description javadoc
-This package contains the API documentation for %oname-java.
+#%package javadoc
+#Summary: Javadocs for %oname-java
+#Group: Development/Documentation
+#BuildArch: noarch
+#Requires: %name-java = %EVR
+#
+#%description javadoc
+#This package contains the API documentation for %oname-java.
 
 %package java-util
 Summary: Utilities for Protocol Buffers
@@ -425,8 +425,8 @@ popd
 
 %files java-util -f .mfiles-protobuf-java-util
 
-%files javadoc -f .mfiles-javadoc
-%doc LICENSE
+# %files javadoc -f .mfiles-javadoc
+# %doc LICENSE
 
 %files parent -f .mfiles-protobuf-parent
 %doc LICENSE
@@ -452,6 +452,9 @@ popd
 
 
 %changelog
+* Fri Aug 26 2022 Pavel Skrylev <majioa@altlinux.org> 3.16.0-alt6.2
+- - disable java documentation package
+
 * Thu Jun 02 2022 Pavel Skrylev <majioa@altlinux.org> 3.16.0-alt6.1
 - !fix deps to rack-compiler gem
 

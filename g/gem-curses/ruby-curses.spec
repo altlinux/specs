@@ -1,7 +1,7 @@
 %define        gemname curses
 
 Name:          gem-curses
-Version:       1.4.2
+Version:       1.4.4
 Release:       alt1
 Summary:       Ruby binding for curses, ncurses, and PDCurses
 License:       Ruby or BSD-2-Clause
@@ -18,9 +18,10 @@ BuildRequires: gem(rake) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_ignore_names bench
 Obsoletes:     ruby-curses < %EVR
 Provides:      ruby-curses = %EVR
-Provides:      gem(curses) = 1.4.2
+Provides:      gem(curses) = 1.4.4
 
 
 %description
@@ -29,14 +30,14 @@ for text UI applications. Formerly part of the Ruby standard library.
 
 
 %package       -n gem-curses-doc
-Version:       1.4.2
+Version:       1.4.4
 Release:       alt1
 Summary:       Ruby binding for curses, ncurses, and PDCurses documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета curses
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(curses) = 1.4.2
+Requires:      gem(curses) = 1.4.4
 
 %description   -n gem-curses-doc
 Ruby binding for curses, ncurses, and PDCurses documentation files.
@@ -49,14 +50,14 @@ for text UI applications. Formerly part of the Ruby standard library.
 
 
 %package       -n gem-curses-devel
-Version:       1.4.2
+Version:       1.4.4
 Release:       alt1
 Summary:       Ruby binding for curses, ncurses, and PDCurses development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета curses
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(curses) = 1.4.2
+Requires:      gem(curses) = 1.4.4
 Requires:      gem(bundler) >= 0
 Requires:      gem(rake) >= 0
 
@@ -97,6 +98,9 @@ for text UI applications. Formerly part of the Ruby standard library.
 
 
 %changelog
+* Wed Mar 16 2022 Pavel Skrylev <majioa@altlinux.org> 1.4.4-alt1
+- ^ 1.4.2 -> 1.4.4
+
 * Fri Oct 08 2021 Pavel Skrylev <majioa@altlinux.org> 1.4.2-alt1
 - ^ 1.4.0 -> 1.4.2
 

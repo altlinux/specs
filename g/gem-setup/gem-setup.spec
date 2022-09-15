@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt1
+Release:       alt2
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,9 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Sat Jun 18 2022 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt2
+- * merge the same named specs
+
 * Sun May 01 2022 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt1
 - + novel yamlto support when YAML parsings
 - + log-level, debug-io, info-io CLI args

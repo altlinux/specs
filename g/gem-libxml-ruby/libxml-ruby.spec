@@ -1,13 +1,12 @@
-%define        pkgname libxml-ruby
 %define        gemname libxml-ruby
 
-Name:          gem-%pkgname
-Version:       3.1.0
-Release:       alt2.3
+Name:          gem-libxml-ruby
+Version:       3.2.3
+Release:       alt1
 Summary:       Ruby language bindings for the GNOME Libxml2 XML toolkit
-Group:         Development/Ruby
 License:       MIT
-URL:           http://xml4r.github.io/libxml-ruby
+Group:         Development/Ruby
+Url:           http://xml4r.github.io/libxml-ruby
 Vcs:           https://github.com/xml4r/libxml-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
@@ -15,34 +14,57 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libxml2-devel
 BuildRequires: zlib-devel
+BuildRequires: gem(rake-compiler) >= 0
+BuildRequires: gem(minitest) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     %pkgname
-Provides:      %pkgname
+%add_findprov_skiplist %ruby_gemslibdir/**/*
+Obsoletes:     libxml-ruby
+Provides:      libxml-ruby
+Provides:      gem(libxml-ruby) = 3.2.3
+
 
 %description
 The LibXML/Ruby project provides Ruby language bindings for the GNOME Libxml2
 XML toolkit.
 
 
-%package       -n gem-%pkgname-doc
-Summary:       Documentation files for %gemname gem
+%package       -n gem-libxml-ruby-doc
+Version:       3.2.3
+Release:       alt1
+Summary:       Ruby language bindings for the GNOME Libxml2 XML toolkit documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета libxml-ruby
 Group:         Development/Documentation
 BuildArch:     noarch
-Obsoletes:     %pkgname-doc
-Provides:      %pkgname-doc
 
-%description   -n gem-%pkgname-doc
-Documentation files for %gemname gem.
+Requires:      gem(libxml-ruby) = 3.2.3
+Obsoletes:     libxml-ruby-doc
+Provides:      libxml-ruby-doc
+
+%description   -n gem-libxml-ruby-doc
+Ruby language bindings for the GNOME Libxml2 XML toolkit documentation files.
+
+%description   -n gem-libxml-ruby-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета libxml-ruby.
 
 
-%package       -n gem-%pkgname-devel
-Summary:       Development files for %gemname gem
+%package       -n gem-libxml-ruby-devel
+Version:       3.2.3
+Release:       alt1
+Summary:       Ruby language bindings for the GNOME Libxml2 XML toolkit development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцвета libxml-ruby
 Group:         Development/Ruby
 BuildArch:     noarch
 
-%description   -n gem-%pkgname-devel
-Development files for %gemname gem.
+Requires:      gem(libxml-ruby) = 3.2.3
+Requires:      gem(rake-compiler) >= 0
+Requires:      gem(minitest) >= 0
+
+%description   -n gem-libxml-ruby-devel
+Ruby language bindings for the GNOME Libxml2 XML toolkit development package.
+
+%description   -n gem-libxml-ruby-devel -l ru_RU.UTF-8
+Файлы для разработки самоцвета libxml-ruby.
 
 
 %prep
@@ -58,20 +80,24 @@ Development files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.rdoc
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
-%_logdir/%pkgname
 
-%files         -n gem-%pkgname-doc
+%files         -n gem-libxml-ruby-doc
+%doc README.rdoc
 %ruby_gemdocdir
 
-%files         -n gem-%pkgname-devel
+%files         -n gem-libxml-ruby-devel
+%doc README.rdoc
 %ruby_includedir/*
 
 
 %changelog
+* Tue Sep 13 2022 Pavel Skrylev <majioa@altlinux.org> 3.2.3-alt1
+- ^ 3.1.0 -> 3.2.3
+
 * Thu Mar 05 2020 Pavel Skrylev <majioa@altlinux.org> 3.1.0-alt2.3
 - fixed (!) spec
 
@@ -119,7 +145,7 @@ Development files for %gemname gem.
 - 2.6.0
 - cleaned up %%description
 - updated URL
-- fixed Group for %%name-doc subpackage
+- fixed Group for %gem-libxml-ruby-doc subpackage
 
 * Fri Dec 07 2012 Led <led@altlinux.ru> 1.1.3-alt2
 - Rebuilt with ruby-1.9.3-alt1
@@ -135,4 +161,3 @@ Development files for %gemname gem.
 
 * Fri Feb 02 2007 Sir Raorn <raorn@altlinux.ru> 0.3.8.4-alt1
 - Built for Sisyphus
-

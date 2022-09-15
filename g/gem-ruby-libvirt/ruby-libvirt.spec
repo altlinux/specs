@@ -1,10 +1,10 @@
 %define        gemname ruby-libvirt
 
-Name:          gem-libvirt
-Version:       0.7.1
-Release:       alt2.1
+Name:          gem-ruby-libvirt
+Version:       0.8.0
+Release:       alt1
 Summary:       Ruby bindings for libvirt
-License:       LGPLv2
+License:       LGPL-2.1-or-later
 Group:         Development/Ruby
 Url:           http://libvirt.org/ruby/
 Vcs:           git://libvirt.org/ruby-libvirt.git
@@ -17,8 +17,10 @@ BuildRequires: libvirt-devel >= 0.4.0
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 Obsoletes:     ruby-libvirt < %EVR
+Obsoletes:     gem-libvirt < %EVR
 Provides:      ruby-libvirt = %EVR
-Provides:      gem(ruby-libvirt) = 0.7.1
+Provides:      gem-libvirt = %EVR
+Provides:      gem(ruby-libvirt) = 0.8.0
 
 
 %description
@@ -26,14 +28,14 @@ The module Libvirt provides bindings to libvirt.
 
 
 %package       -n gem-ruby-libvirt-doc
-Version:       0.7.1
-Release:       alt2.1
+Version:       0.8.0
+Release:       alt1
 Summary:       Ruby bindings for libvirt documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ruby-libvirt
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ruby-libvirt) = 0.7.1
+Requires:      gem(ruby-libvirt) = 0.8.0
 Obsoletes:     ruby-ruby-libvirt-doc
 Provides:      ruby-ruby-libvirt-doc
 
@@ -47,14 +49,14 @@ The module Libvirt provides bindings to libvirt.
 
 
 %package       -n gem-ruby-libvirt-devel
-Version:       0.7.1
-Release:       alt2.1
+Version:       0.8.0
+Release:       alt1
 Summary:       Ruby bindings for libvirt development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ruby-libvirt
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ruby-libvirt) = 0.7.1
+Requires:      gem(ruby-libvirt) = 0.8.0
 
 %description   -n gem-ruby-libvirt-devel
 Ruby bindings for libvirt development package.
@@ -89,9 +91,13 @@ The module Libvirt provides bindings to libvirt.
 
 %files         -n gem-ruby-libvirt-devel
 %doc README README.rdoc
+%ruby_includedir/*
 
 
 %changelog
+* Tue Mar 22 2022 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1
+- ^ 0.7.1 -> 0.8.0
+
 * Sat Jul 17 2021 Pavel Skrylev <majioa@altlinux.org> 0.7.1-alt2.1
 - ! spec
 

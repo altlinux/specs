@@ -1,7 +1,7 @@
 %define        gemname markly
 
 Name:          gem-markly
-Version:       0.6.0
+Version:       0.7.0
 Release:       alt1
 Summary:       CommonMark parser and renderer. Written in C, wrapped in Ruby
 License:       MIT
@@ -20,7 +20,7 @@ BuildRequires: gem(rake-compiler) >= 0.9 gem(rake-compiler) < 2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
-Provides:      gem(markly) = 0.6.0
+Provides:      gem(markly) = 0.7.0
 
 
 %description
@@ -28,14 +28,14 @@ CommonMark parser and renderer. Written in C, wrapped in Ruby.
 
 
 %package       -n markly
-Version:       0.6.0
+Version:       0.7.0
 Release:       alt1
 Summary:       CommonMark parser and renderer. Written in C, wrapped in Ruby executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета markly
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(markly) = 0.6.0
+Requires:      gem(markly) = 0.7.0
 
 %description   -n markly
 CommonMark parser and renderer. Written in C, wrapped in Ruby executable(s).
@@ -45,14 +45,14 @@ CommonMark parser and renderer. Written in C, wrapped in Ruby executable(s).
 
 
 %package       -n gem-markly-doc
-Version:       0.6.0
+Version:       0.7.0
 Release:       alt1
 Summary:       CommonMark parser and renderer. Written in C, wrapped in Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета markly
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(markly) = 0.6.0
+Requires:      gem(markly) = 0.7.0
 
 %description   -n gem-markly-doc
 CommonMark parser and renderer. Written in C, wrapped in Ruby documentation
@@ -63,17 +63,17 @@ files.
 
 
 %package       -n gem-markly-devel
-Version:       0.6.0
+Version:       0.7.0
 Release:       alt1
 Summary:       CommonMark parser and renderer. Written in C, wrapped in Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета markly
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(markly) = 0.6.0
+Requires:      gem(markly) = 0.7.0
 Requires:      gem(bake) >= 0
 Requires:      gem(minitest) >= 5.6 gem(minitest) < 6
-Requires:      gem(rake) >= 0 gem(rake) < 14
+Requires:      gem(rake) >= 0
 Requires:      gem(rake-compiler) >= 0.9 gem(rake-compiler) < 2
 
 %description   -n gem-markly-devel
@@ -112,5 +112,8 @@ package.
 
 
 %changelog
+* Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 0.7.0-alt1
+- ^ 0.6.0 -> 0.7.0
+
 * Sat Sep 04 2021 Pavel Skrylev <majioa@altlinux.org> 0.6.0-alt1
 - + packaged gem with Ruby Policy 2.0
