@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0.8
+Version: 5.0.9
 Release: alt1
 
 Summary: JSON-RPC 2.0 server library
@@ -48,6 +48,9 @@ py.test3
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Sep 15 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.9-alt1
+- Automatically updated to 5.0.9.
+
 * Wed Aug 17 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.8-alt1
 - Automatically updated to 5.0.8.
 - Build with check.
