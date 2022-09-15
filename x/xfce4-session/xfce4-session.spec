@@ -1,6 +1,6 @@
 Name: xfce4-session
-Version: 4.16.0
-Release: alt2
+Version: 4.17.0
+Release: alt1
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
@@ -77,6 +77,9 @@ install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Thu Sep 15 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
+- Updated to 4.17.0.
+
 * Tue Mar 16 2021 Paul Wolneykien <manowar@altlinux.org> 4.16.0-alt2
 - Set XDG_SEAT and XDG_SEAT_PATH in systemd user session
   (closes: 38363).
