@@ -4,11 +4,11 @@
 
 Name: mosquitto
 Version: 1.6.15
-Release: alt1
+Release: alt2
 
 Summary: Mosquitto is an open source implementation of a server for version 3.1 and 3.1.1 of the MQTT protocol
 
-License: This project is dual licensed under the Eclipse Public License 1.0 and the Eclipse Distribution License 1.0 as described in the epl-v10 and edl-v10 files
+License: EPL-2.0 and EPL-1.0
 Group: Development/C++
 Url: http://mosquitto.org
 
@@ -22,7 +22,7 @@ Source3: %name.conf
 
 # Automatically added by buildreq on Mon Feb 01 2016
 # optimized out: libcom_err-devel libkrb5-devel libstdc++-devel
-BuildRequires: gcc-c++ libcares-devel libssl-devel libuuid-devel docbook-style-xsl xsltproc
+BuildRequires: gcc-c++ libcares-devel libssl-devel libuuid-devel docbook-style-xsl xsltproc libwebsockets-devel
 Requires: %lname = %version-%release
 
 %description
@@ -54,7 +54,7 @@ subst 's|Invalid memory_limit value (%%ld)|Invalid memory_limit value (%%zd)|g' 
 %build
 subst 's|prefix?=/usr/local|prefix=/usr|g' config.mk
 subst 's|stylesheet/docbook-xsl/manpages/docbook.xsl|xsl-stylesheets/manpages/docbook.xsl|g' man/manpage.xsl man/html.xsl
-%make_build
+%make_build WITH_WEBSOCKETS=yes
 
 %install
 export LIB_SUFFIX='%_libsuff'
@@ -70,6 +70,9 @@ cp %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 
 mkdir -p %buildroot/%_sysconfdir/%name
 cp %SOURCE3 %buildroot%_sysconfdir/%name
+
+install -pDm644 service/systemd/%name.service.simple \
+	%buildroot/%_unitdir/%name.service
 
 %pre
 %_sbindir/groupadd -r -f %mosquitto_group 2>/dev/null ||:
@@ -93,6 +96,7 @@ cp %SOURCE3 %buildroot%_sysconfdir/%name
 %_man7dir/*
 %_man8dir/*
 %_initdir/*
+%_unitdir/%name.service
 
 %files -n %lname
 %_libdir/*.so.*
@@ -103,6 +107,11 @@ cp %SOURCE3 %buildroot%_sysconfdir/%name
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Sep 15 2022 Nikolay Burykin <bne@altlinux.org> 1.6.15-alt2
+- fix license to EPL-2.0 and EPL-1.0
+- add simple systemd service
+- build with websockets (ALT #43560)
+
 * Sun Jun 20 2021 Pavel Vainerman <pv@altlinux.ru> 1.6.15-alt1
 - new version (1.6.15) with rpmgs script
 
