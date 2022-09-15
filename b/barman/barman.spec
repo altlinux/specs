@@ -1,5 +1,5 @@
 Name: barman
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
@@ -12,6 +12,8 @@ Source1: barman.cron
 Source2: barman.logrotate
 
 BuildArch: noarch
+
+BuildRequires(pre): python3-module-wheel
 BuildRequires: python3-devel python3-module-setuptools
 Requires(pre): shadow-utils
 Requires: python3-module-argcomplete
@@ -71,10 +73,10 @@ by 2ndQuadrant.
 find -type f -executable -exec sed -i '1s=^#!%_bindir/\(python\|env python\)[23]\?=#!%__python3=' {} +
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 mkdir -p %buildroot%_sysconfdir/cron.d/
 mkdir -p %buildroot%_logrotatedir/
 mkdir -p %buildroot/var/lib/barman
@@ -129,7 +131,7 @@ touch %buildroot/var/log/barman/barman.log
 
 %files -n python3-module-barman
 %doc NEWS README.rst
-%python3_sitelibdir/%name-%version%{?extra_version:%extra_version}-py*.egg-info
+%python3_sitelibdir/%name-%version.dist-info/
 %python3_sitelibdir/%name/
 
 %pre
@@ -140,6 +142,9 @@ getent passwd barman >/dev/null || \
 exit 0
 
 %changelog
+* Thu Sep 15 2022 Leontiy Volodin <lvol@altlinux.org> 3.1.0-alt1
+- New version (3.1.0).
+
 * Mon Jul 11 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.1-alt1
 - New version (3.0.1).
 
