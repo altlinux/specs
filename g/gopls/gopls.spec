@@ -4,7 +4,7 @@
 
 Name: gopls
 Version: 0.9.5
-Release: alt1
+Release: alt2
 
 Summary: The Go language server
 License: BSD-3-Clause
@@ -17,8 +17,12 @@ ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
 
 %description
-A simple, modern and secure encryption tool (and Go library) with small
-explicit keys, no config options, and UNIX-style composability.
+Gopls (pronounced "go please") is an LSP server for Go. The Language
+Server Protocol allows any text editor to be extended with IDE-like
+features; see https://langserver.org/ for details.
+
+See https://github.com/golang/tools/blob/master/gopls/README.md for
+the most up-to-date documentation.
 
 %prep
 %setup
@@ -42,6 +46,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Fri Sep 16 2022 Anton Zhukharev <ancieg@altlinux.org> 0.9.5-alt2
+- fix description after copy-paste
+
 * Fri Sep 16 2022 Anton Zhukharev <ancieg@altlinux.org> 0.9.5-alt1
 - initial build for Sisyphus
 
