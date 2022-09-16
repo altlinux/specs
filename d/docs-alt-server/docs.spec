@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,10 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Sep 16 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt5
+- update to ALT Server 10.1rc
+- fix typo (closes: #43710)
+
 * Fri Aug 19 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt4
 - add OpenUDS HA
 - add OpenUDS tunnel
