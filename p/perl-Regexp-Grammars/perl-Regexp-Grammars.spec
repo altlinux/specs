@@ -7,7 +7,7 @@ BuildRequires: perl(Data/Show.pm) perl(IO/Prompter.pm) perl(Smart/Comments.pm) p
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Regexp-Grammars
-Version:	1.057
+Version:	1.058
 Release:	alt1
 Summary:	Add grammatical parsing features to perl regular expressions
 License:	GPL+ or Artistic
@@ -59,6 +59,9 @@ perl Build.PL installdirs=vendor
 %{perl_vendor_privlib}/Regexp/
 
 %changelog
+* Fri Sep 16 2022 Igor Vlasenko <viy@altlinux.org> 1.058-alt1
+- automated CPAN update
+
 * Fri Jun 05 2020 Igor Vlasenko <viy@altlinux.ru> 1.057-alt1
 - automated CPAN update
 
