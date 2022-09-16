@@ -6,7 +6,7 @@
 %def_without ImageMagick
 
 Name: vapoursynth
-Version: 59
+Version: 60
 Release: alt1
 Summary: Video processing framework with simplicity in mind
 License: WTFPL and LGPL-2.1+ and OFL-1.1 and GPL-2.0+ and ISC and MIT
@@ -170,6 +170,9 @@ python3 -m pytest -v
 # %%_libdir/%%name/lib*.so
 
 %changelog
+* Fri Sep 16 2022 Leontiy Volodin <lvol@altlinux.org> 60-alt1
+- New version (60).
+
 * Mon Jun 06 2022 Leontiy Volodin <lvol@altlinux.org> 59-alt1
 - New version (59).
 - Subpackages:
