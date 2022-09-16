@@ -2,7 +2,7 @@
 
 Name: yubioath-desktop
 Version: 5.1.0
-Release: alt2
+Release: alt3
 
 Summary: Yubico Authenticator for Desktop
 License: BSD-2-Clause
@@ -19,6 +19,7 @@ BuildRequires: qt5-quickcontrols2-devel
 BuildRequires: python3-dev
 BuildRequires: desktop-file-utils
 
+Requires: qt5-quickcontrols
 Requires: qt5-quickcontrols2
 Requires: qt5-graphicaleffects
 Requires: pyotherside
@@ -71,6 +72,9 @@ install -pD -m0644 resources/icons/com.yubico.yubioath.svg %buildroot%_iconsdir/
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Sep 16 2022 Anton Zhukharev <ancieg@altlinux.org> 5.1.0-alt3
+- add qt5-quickcontrols dependency
+
 * Sat Sep 10 2022 Anton Zhukharev <ancieg@altlinux.org> 5.1.0-alt2
 - fix requires
 
