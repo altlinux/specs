@@ -2,9 +2,16 @@
 %define  llvm_version 11
 %define  optflags_lto -flto=thin
 
+#[armh] LLVM ERROR: Symbol not found: __aeabi_unwind_cpp_pr0
+%ifnarch armh
+%def_with check
+%else
+%def_without check
+%endif
+
 Name:    python3-module-%oname
-Version: 0.37.0
-Release: alt2
+Version: 0.39.1
+Release: alt1
 
 Summary: A lightweight LLVM python binding for writing JIT compilers
 
@@ -38,9 +45,7 @@ following approach:
 
 %prep
 %setup
-# seems to be fine with 3.10 but we need to remove the guard
-# https://github.com/numba/llvmlite/issues/740
-sed -i 's/max_python_version =.*/max_python_version = "3.11"/' setup.py
+sed -i 's|"version": "0+unknown"|"version": "%version"|' versioneer.py
 
 %build
 %remove_optflags -frecord-gcc-switches
@@ -53,14 +58,19 @@ export LLVM_CONFIG=%_bindir/llvm-config-%llvm_version
 %install
 %python3_install
 
-mv %buildroot%python3_sitelibdir/%oname-*.egg-info %buildroot%python3_sitelibdir/%oname-%version-py$(python3 -V | sed 's|^P.*\(3\.[0-9]\).*|\1|').egg-info
+%check
+%__python3 ./runtests.py
 
 %files
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-info
 %doc *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Sep 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.39.1-alt1
+- Build new version.
+- Build with check.
+
 * Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.37.0-alt2
 - Fixed build with python3.10.
 
