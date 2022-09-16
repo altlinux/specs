@@ -1,5 +1,5 @@
 Name: hass
-Version: 2022.7.5
+Version: 2022.9.4
 Release: alt1
 
 Summary: Home automation platform
@@ -10,7 +10,9 @@ Url: https://www.home-assistant.io/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3(setuptools) python3(wheel)
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %package core
 Summary: Home automation platform
@@ -24,7 +26,7 @@ Requires: python3-module-text-unidecode >= 1.3
 Requires: python3-module-voluptuous >= 0.13.1
 Requires: python3-module-websocket-client >= 0.56.0
 Requires: python3-module-yaml >= 6.0
-Requires: python3-module-hass-frontend >= 20220707.1
+Requires: python3-module-hass-frontend >= 20220907.2
 
 %package -n python3-module-hass
 Summary: Home automation platform
@@ -68,14 +70,12 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 	-c 'Home Assistant' -n _hass &> /dev/null ||:
 
 %set_python3_req_method strict
+%add_python3_req_skip custom_components
 # optional
 %add_python3_req_skip av
 %add_python3_req_skip colorlog colorlog.escape_codes
-%add_python3_req_skip custom_components
-%add_python3_req_skip hbmqtt.broker
-%add_python3_req_skip importlib_metadata
-# deprecated
-%add_python3_req_skip homeassistant.components.zwave
+# stdlib
+%add_python3_req_skip deque
 
 %files core -f core.files
 %_sysconfdir/sysconfig/hass
@@ -90,6 +90,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Thu Sep 15 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.9.4-alt1
+- 2022.9.4 released
+
 * Wed Jul 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.7.5-alt1
 - 2022.7.5 released
 

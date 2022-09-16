@@ -1,5 +1,5 @@
 Name: python3-module-miio
-Version: 0.5.11
+Version: 0.5.12
 Release: alt1
 
 Summary: Python miIO library
@@ -10,7 +10,8 @@ Url: https://pypi.org/project/python-miio/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3
+BuildRequires: python3(poetry-core)
 
 %package -n miio-tools
 Summary: miIO tools
@@ -29,10 +30,10 @@ with devices using Xiaomi's miIO and miOT protocols.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 find %buildroot%python3_sitelibdir -type f -name \*.py |\
 	xargs grep -l 'miio.tests.dummies' |\
 	sed 's,%buildroot,%exclude ,' > tests.files
@@ -41,12 +42,15 @@ find %buildroot%python3_sitelibdir -type d -name tests |\
 
 %files -f tests.files
 %python3_sitelibdir/miio
-%python3_sitelibdir/python_miio-%version-*-info
+%python3_sitelibdir/python_miio-%version.dist-info
 
 %files -n miio-tools
 %_bindir/*
 
 %changelog
+* Thu Jul 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.12-alt1
+- 0.5.12 released
+
 * Wed May 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.11-alt1
 - 0.5.11 released
 

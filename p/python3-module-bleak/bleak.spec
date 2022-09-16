@@ -1,6 +1,6 @@
 Name: python3-module-bleak
 Version: 0.17.0
-Release: alt1
+Release: alt2
 
 Summary: Bluetooth Low Energy platform Agnostic Klient
 License: MIT
@@ -29,7 +29,8 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 
 # filter out non-linux backend's reqs
 %add_python3_req_skip CoreBluetooth Foundation libdispatch objc
-%add_python3_req_skip android.broadcast android.permissions
+%add_python3_req_skip android.broadcast android.permissions jnius sh
+%add_python3_req_skip pythonforandroid.recipe pythonforandroid.toolchain
 %add_python3_req_skip bleak_winrt.windows.devices.bluetooth
 %add_python3_req_skip bleak_winrt.windows.devices.bluetooth.advertisement
 %add_python3_req_skip bleak_winrt.windows.devices.bluetooth.genericattributeprofile
@@ -42,5 +43,8 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 %python3_sitelibdir/bleak-%version.dist-info
 
 %changelog
+* Fri Sep 16 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.17.0-alt2
+- filtered out rest of android-specific reqs
+
 * Wed Sep 14 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.17.0-alt1
 - 0.17.0 released
