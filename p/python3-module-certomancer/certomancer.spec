@@ -3,12 +3,12 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.8.3
+Version: 0.9.0
 Release: alt1
 
 Summary: PKI testing tool
-License: MIT
 
+License: MIT
 Group:   Development/Python3
 URL:     https://github.com/MatthiasValvekens/certomancer
 
@@ -60,6 +60,9 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun Aug 21 2022 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt1
+- Automatically updated to 0.9.0.
+
 * Sat Jul 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.3-alt1
 - Automatically updated to 0.8.3.
 

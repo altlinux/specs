@@ -1,10 +1,14 @@
 %define oname xhtml2pdf
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.2.2
-Release: alt2
+Version: 0.2.8
+Release: alt1
+
 Summary: HTML/CSS to PDF converter based on Python
-License: ASLv2.0
+
+License: Apache-2.0
 Group: Development/Python3
 Url: http://www.xhtml2pdf.com/
 
@@ -13,8 +17,18 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-nose
-Requires: python3-module-PyPDF2
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-html5lib
+Buildrequires: python3-module-Reportlab
+Buildrequires: python3-module-asn1crypto
+BuildRequires: python3-module-arabic-reshaper
+BuildRequires: python3-module-bidi
+BuildRequires: python3-module-PyPDF3
+BuildRequires: python3-module-pyHanko
+BuildRequires: python3-module-Pillow
+%endif
 
 %description
 xhtml2pdf is a html2pdf converter using the ReportLab Toolkit, the
@@ -45,20 +59,29 @@ This package contains demos for %oname.
 %setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -v
+
 %files
-%doc *.txt *.rst doc/*
-%_bindir/*
-%python3_sitelibdir/*
+%doc *.txt *.rst
+%_bindir/pisa
+%_bindir/%oname
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %files demos
 %doc demo/*
 
 %changelog
+* Mon Jun 27 2022 Grigory Ustinov <grenka@altlinux.org> 0.2.8-alt1
+- Build new version.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.2.2-alt2
 - Rename package.
 
