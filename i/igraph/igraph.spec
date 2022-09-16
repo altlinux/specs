@@ -2,7 +2,7 @@
 
 Name: igraph
 Version: 0.10.1
-Release: alt1
+Release: alt1.1
 Summary: Library for creating and manipulating graphs
 
 License: GPL-2.0+
@@ -19,9 +19,10 @@ BuildRequires: libarpack-ng-devel
 BuildRequires: liblapack-devel
 BuildRequires: libopenblas-devel
 BuildRequires: libglpk-devel
-BuildRequires: libsuitesparse-devel
+# CMake Error at src/CMakeLists.txt:28 (flex_target):
+#   Unknown CMake command "flex_target"
 BuildRequires: flex
-BuildRequires: python3
+# BuildRequires: python3
 BuildRequires: /proc
 
 %description
@@ -57,6 +58,15 @@ documentation needed to develop application with %name.
 
 %prep
 %setup
+# Cannot find out the version number of this package; IGRAPH_VERSION is missing.
+#
+# The official igraph tarballs should contain this file, therefore you are
+# most likely trying to compile a development version yourself. The development
+# versions need Git to be able to determine the version number of igraph.
+#
+# It seems like you do have Git but it failed to determine the package version number.
+#
+# We build from git repository instead tarball.
 sed -i 's|set(PACKAGE_VERSION "NOTFOUND")|set(PACKAGE_VERSION "%version")|' \
     etc/cmake/version.cmake
 
@@ -71,8 +81,8 @@ sed -i 's|set(PACKAGE_VERSION "NOTFOUND")|set(PACKAGE_VERSION "%version")|' \
     -DIGRAPH_USE_INTERNAL_LAPACK=0 \
     -DIGRAPH_USE_INTERNAL_ARPACK=0 \
     -DIGRAPH_USE_INTERNAL_GLPK=0 \
-    -DIGRAPH_USE_INTERNAL_CXSPARSE=0 \
     -DIGRAPH_USE_INTERNAL_GMP=0 \
+    -DIGRAPH_USE_INTERNAL_PLFIT=1 \
     -DBLA_VENDOR=OpenBLAS \
     -DBLAS_LIBRARIES=%_libdir/libopenblas.so \
     -DLAPACK_LIBRARIES=%_libdir/liblapack.so \
@@ -100,6 +110,9 @@ find . -name '.arch-ids' | xargs rm -rf
 %_man3dir/igraph.3*
 
 %changelog
+* Fri Sep 16 2022 Leontiy Volodin <lvol@altlinux.org> 0.10.1-alt1.1
+- Applied some suggestions for improvements by upstream.
+
 * Wed Sep 14 2022 Leontiy Volodin <lvol@altlinux.org> 0.10.1-alt1
 - New version (0.10.1).
 
