@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Log-Report
 Name: perl-%dist
-Version: 1.33
+Version: 1.34
 Release: alt1
 
 Summary: Report a problem, pluggable handlers and language support
@@ -73,6 +73,9 @@ Summary: %dist plugin for Dancer2
 %perl_vendor_privlib/Dancer2/Plugin/LogReport/Message.pod
 
 %changelog
+* Fri Sep 16 2022 Igor Vlasenko <viy@altlinux.org> 1.34-alt1
+- automated CPAN update
+
 * Sun Jul 18 2021 Igor Vlasenko <viy@altlinux.org> 1.33-alt1
 - automated CPAN update
 
