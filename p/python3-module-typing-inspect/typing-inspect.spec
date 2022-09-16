@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname typing-inspect
+%define pypi_name typing-inspect
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.6.0
+Name: python3-module-%pypi_name
+Version: 0.8.0
 Release: alt1
 
 Summary: Runtime inspection of types defined in typing module
@@ -18,19 +18,22 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
+# runtime deps
 BuildRequires: python3(mypy_extensions)
-BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(typing_extensions)
+
+BuildRequires: python3(pytest)
 %endif
 
 BuildArch: noarch
 
 # PyPI name(dash, underscore)
-%py3_provides %oname
+%py3_provides %pypi_name
 
 # nested import
 %py3_requires typing_extensions
@@ -45,29 +48,25 @@ types defined in the Python standard typing module. Works with typing version
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-commands =
-    pytest {posargs:-vra}
-EOF
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc README.md
 %python3_sitelibdir/typing_inspect.py
 %python3_sitelibdir/__pycache__/typing_inspect.cpython-*
-%python3_sitelibdir/typing_inspect-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 15 2022 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
+- 0.6.0 -> 0.8.0.
+
 * Fri Apr 16 2021 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
 - Initial build for Sisyphus.
 

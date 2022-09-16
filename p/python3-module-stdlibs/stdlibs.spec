@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2022.3.16
+Version: 2022.6.8
 Release: alt1
 
 Summary: List of packages in the stdlib
@@ -17,11 +17,9 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(flit.sdist)
 
-%if_with check
-BuildRequires: python3(tox)
-%endif
+# build backend and its deps
+BuildRequires: python3(flit_core)
 
 BuildArch: noarch
 
@@ -37,21 +35,10 @@ those for most useful Python versions.
 %autopatch -p1
 
 %build
-# flit build backend
-# generate setup.py for legacy builder
-%__python3 - <<-'EOF'
-from pathlib import Path
-from flit.sdist import SdistBuilder
-
-
-with open("setup.py", "wb") as f:
-    sd_builder = SdistBuilder.from_ini_path(Path("pyproject.toml"))
-    f.write(sd_builder.make_setup_py())
-EOF
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # don't package tests
 rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
@@ -59,21 +46,20 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 %check
 cat > tox.ini <<'EOF'
 [testenv]
-usedevelop=True
 commands =
     python -m stdlibs.tests -v
 EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc README.md
-%python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/stdlibs/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 15 2022 Stanislav Levin <slev@altlinux.org> 2022.6.8-alt1
+- 2022.3.16 -> 2022.6.8.
+
 * Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 2022.3.16-alt1
 - 2022.2.2 -> 2022.3.16.
 

@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname libcst
+%define pypi_name libcst
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.4.1
+Name: python3-module-%pypi_name
+Version: 0.4.7
 Release: alt1
 
 Summary: A Concrete Syntax Tree (CST) parser and serializer library for Python
@@ -18,13 +18,18 @@ Source1: vendor.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(setuptools_rust)
+
 BuildRequires: python3(setuptools_scm)
 
 # rust
 BuildRequires: /proc
 BuildRequires: rust
 BuildRequires: rust-cargo
-BuildRequires: python3(setuptools_rust)
 
 %if_with check
 # install_requires=
@@ -34,7 +39,6 @@ BuildRequires: python3(yaml)
 
 BuildRequires: /usr/bin/ufmt
 BuildRequires: python3(hypothesis)
-BuildRequires: python3(tox)
 %endif
 
 %description
@@ -51,14 +55,22 @@ an AST.
 %setup -a1
 %autopatch -p1
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-# https://github.com/pypa/setuptools_scm/#environment-variables
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 # don't package tests
 find %buildroot%python3_sitelibdir -type d -name tests | \
@@ -68,28 +80,43 @@ find %buildroot%python3_sitelibdir -type d -name tests | \
 # contains CodemodTest class which provides testing facility for Codemods
 
 %check
+# upstream run its test suite with deprecated `setup.py test` and supports
+# only in-tree tests. We run those tests within Python virtualenv and thereby,
+# libcst must be removed, otherwise unittest imports libcst from source
+# directory instead of installed one.
+rm -rf libcst
+
+# ufmt ignores files ignored by VCS and codegen tests fail
+sed -i 's/^\.tox\/$/# &/' .gitignore
+
 cat > tox.ini <<'EOF'
 [testenv]
-setenv   =
+allowlist_externals =
+    /bin/bash
+setenv =
     native: LIBCST_PARSER_TYPE = native
     pure: LIBCST_PARSER_TYPE = pure
     NO_PYRE = yes
-usedevelop=True
+commands_pre =
+    # enforce installation of libcst being tested instead of system-wide one,
+    # pip rejects installation of a package if there is installed one having the
+    # same version
+    /bin/bash -c 'pip install --force-reinstall --no-deps "dist/$(cat dist/.wheeltracker)"'
 commands =
-    python -m unittest -v
+    python -m unittest discover -v libcst
 EOF
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
 export TOXENV=py3-pure,py3-native
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject
 
 %files
 %doc README.rst
 %python3_sitelibdir/libcst/
-%python3_sitelibdir/libcst-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 15 2022 Stanislav Levin <slev@altlinux.org> 0.4.7-alt1
+- 0.4.1 -> 0.4.7.
+
 * Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
 - 0.3.18 -> 0.4.1.
 

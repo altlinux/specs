@@ -4,23 +4,26 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.2
+Version: 1.0.5
 Release: alt1
 
 Summary: A small, safe import sorter
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/facebookexperimental/usort.git
+# Source-git: https://github.com/facebook/usort.git
 Url: https://pypi.org/project/usort
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
-BuildRequires: python3(tox)
 # install_requires=
 BuildRequires: python3(attr)
 BuildRequires: python3(click)
@@ -55,37 +58,43 @@ Requires: %name
 %setup
 %autopatch -p1
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-# https://github.com/pypa/setuptools_scm/#environment-variables
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
 cat > tox.ini <<'EOF'
 [testenv]
-usedevelop=True
 commands =
     python -m usort.tests -v
 EOF
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc README.md
-%python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/usort/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files -n %pypi_name
 %_bindir/%pypi_name
 
 %changelog
+* Thu Sep 15 2022 Stanislav Levin <slev@altlinux.org> 1.0.5-alt1
+- 1.0.2 -> 1.0.5.
+
 * Fri Apr 01 2022 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1
 - 1.0.1 -> 1.0.2.
 

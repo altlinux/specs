@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.2
+Version: 2.0.1
 Release: alt1
 
 Summary: Safe, atomic formatting with black and usort
@@ -17,17 +17,21 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3(flit.sdist)
+
+# build backend and its deps
+BuildRequires: python3(flit_core)
 
 %if_with check
 # install_requires=
 BuildRequires: python3(black)
+BuildRequires: python3(click)
 BuildRequires: python3(moreorless)
 BuildRequires: python3(tomlkit)
 BuildRequires: python3(trailrunner)
 BuildRequires: python3(usort)
-
-BuildRequires: python3(tox)
+BuildRequires: python3(typing_extensions)
+# marked as install_requires but is used only in tests
+BuildRequires: python3(libcst)
 %endif
 
 BuildArch: noarch
@@ -52,21 +56,10 @@ Requires: %name
 %autopatch -p1
 
 %build
-# flit build backend
-# generate setup.py for legacy builder
-%__python3 - <<-'EOF'
-from pathlib import Path
-from flit.sdist import SdistBuilder
-
-
-with open("setup.py", "wb") as f:
-    sd_builder = SdistBuilder.from_ini_path(Path("pyproject.toml"))
-    f.write(sd_builder.make_setup_py())
-EOF
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # don't ship tests
 rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
@@ -74,24 +67,23 @@ rm -r %buildroot%python3_sitelibdir/%pypi_name/tests/
 %check
 cat > tox.ini <<'EOF'
 [testenv]
-usedevelop=True
 commands =
     python -m %pypi_name.tests -v
 EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject
 
 %files
 %doc README.md
-%python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/ufmt/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %files -n %pypi_name
 %_bindir/%pypi_name
 
 %changelog
+* Thu Sep 15 2022 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
+- 1.3.2 -> 2.0.1.
+
 * Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 1.3.2-alt1
 - 1.3.1 -> 1.3.2.
 
