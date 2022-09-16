@@ -1,6 +1,6 @@
 Name: rpm-build-guestfs
 Version: 0.8
-Release: alt1
+Release: alt2
 
 Summary: RPM helper post script for build guestfs appliance
 License: GPL
@@ -51,10 +51,22 @@ cp $VMLINUZ %_libdir/guestfs/vmlinuz.%_arch
 make-initrd --verbose --no-checks --config=/etc/initrd.mk.d/guestfs.mk.example --kernel=$KVER
 chmod 644 %_libdir/guestfs/*
 
+# fix initramfs arch name on i586 and armh
+%ifarch i586
+mv %_libdir/guestfs/initramfs.i686.img %_libdir/guestfs/initramfs.i586.img
+%endif
+
+%ifarch armh
+mv %_libdir/guestfs/initramfs.armv8l.img %_libdir/guestfs/initramfs.armh.img
+%endif
+
 %files
 %dir %_libdir/guestfs
 
 %changelog
+* Fri Sep 16 2022 Egor Ignatov <egori@altlinux.org> 0.8-alt2
+- fix initramfs arch name on i586 and armh
+
 * Wed Nov 17 2021 Alexey Shabalin <shaba@altlinux.org> 0.8-alt1
 - Requires: /proc for fix install check
 

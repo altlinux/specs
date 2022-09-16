@@ -1,6 +1,6 @@
 Name: guestfs-data
 Version: 0.6
-Release: alt2
+Release: alt3
 
 Summary: Virtual machine needed for libguestfs
 License: GPLv2+
@@ -26,22 +26,14 @@ chmod 644 %buildroot%_libdir/guestfs/*
 # ... debuginfo.req will fail if it has no .interp .
 %brp_strip_none %_libdir/guestfs/vmlinuz*
 
-# fix initramfs arch name on i586 and armh
-%ifarch i586
-mv %buildroot%_libdir/guestfs/initramfs.i686.img %buildroot%_libdir/guestfs/initramfs.i586.img
-ln -svf initramfs.i586.img %buildroot%_libdir/guestfs/initramfs.i686.img
-%endif
-
-%ifarch armh
-mv %buildroot%_libdir/guestfs/initramfs.armv8l.img %buildroot%_libdir/guestfs/initramfs.armh.img
-ln -svf initramfs.armh.img %buildroot%_libdir/guestfs/initramfs.armv8l.img
-%endif
-
 %files
 %dir %_libdir/guestfs/
 %_libdir/guestfs/*
 
 %changelog
+* Fri Sep 16 2022 Egor Ignatov <egori@altlinux.org> 0.6-alt3
+- revert changes made in the previous release, move fix to rpm-build-guestfs
+
 * Wed Sep 14 2022 Egor Ignatov <egori@altlinux.org> 0.6-alt2
 - fix initramfs arch name on i586 and armh
 
