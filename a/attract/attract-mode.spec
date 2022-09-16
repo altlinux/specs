@@ -2,7 +2,7 @@
 
 Name: attract
 Version: 2.6.2
-Release: alt1
+Release: alt2
 
 Summary: Arcade-like front-end for emulators
 Summary(ru_RU.UTF-8): Оболочка в стиле аркадных автоматов для эмуляторов
@@ -29,6 +29,7 @@ BuildRequires: libopenal-devel
 BuildRequires: libswscale-devel
 BuildRequires: zlib-devel
 BuildRequires: libXrandr-devel
+BuildRequires: ImageMagick-tools
 
 %description
 Attract-Mode is a graphical frontend for command line emulators such as MAME,
@@ -51,23 +52,31 @@ Mac OS X и Windows.
 
 %install
 %makeinstall
+
+# install menu icons
+for N in 16 32 48 64 128;
+do
+convert util/linux/attract-mode.png -scale ${N}x${N} $N.xpm;
+install -D -m 0644 $N.xpm %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.xpm
+done
+
 install -Dm644 util/linux/attract-mode.appdata.xml %buildroot%_datadir/appdata/%name.appdata.xml
-install -Dm644 util/linux/attract-mode.png         %buildroot%_iconsdir/hicolor/512x512/apps/%name.png
 install -Dm644 util/linux/attract-mode.desktop         %buildroot%_desktopdir/%name.desktop
+
 
 %files
 %dir %_datadir/attract
-%dir %_iconsdir/hicolor/512x512
-%dir %_iconsdir/hicolor/512x512/apps
 %doc License.txt Readme.md Layouts.md
 %_bindir/%name
 %_datadir/%name/*
 %_datadir/appdata/%name.appdata.xml
 %_desktopdir/%name.desktop
-%_iconsdir/hicolor/*/apps/%name.png
-
+%_iconsdir/hicolor/*/apps/%name.xpm
 
 %changelog
+* Fri Sep 16 2022 Artyom Bystrov <arbars@altlinux.org> 2.6.2-alt2
+- Fixing desktop icons
+
 * Mon May 2 2022 Artyom Bystrov <arbars@altlinux.org> 2.6.2-alt1
 - Update to latest state of upstream
 - Fixed build proccess on GCC11
@@ -76,7 +85,6 @@ install -Dm644 util/linux/attract-mode.desktop         %buildroot%_desktopdir/%n
 - Update to latest state of upstream
 - walk-around build on Sisyphus (yes, it's creepy, but it's works)
 
-%changelog
 * Mon Jan 20 2020 Artyom Bystrov <arbars@altlinux.org> 2.6.1-alt1
 - Update version to 2.6.1
 
