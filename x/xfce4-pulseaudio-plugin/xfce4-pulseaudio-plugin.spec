@@ -1,5 +1,5 @@
 Name: xfce4-pulseaudio-plugin
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 
 Summary: A pulseaudio plugin for the Xfce panel
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 %def_disable wnck
+%def_enable libcanberra
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
@@ -21,6 +22,7 @@ BuildRequires: libxfconf-devel
 BuildRequires: libpulseaudio-devel libnotify-devel
 BuildRequires: libkeybinder3-devel
 %{?_enable_wnck:BuildRequires: libwnck3-devel}
+%{?_enable_libcanberra:BuildRequires: libcanberra-devel}
 
 Requires: xfce4-panel >= 4.11
 
@@ -41,6 +43,7 @@ A panel plugin for controlling PulseAudio mixer.
 	--enable-maintainer-mode \
 	--enable-keybinder \
 	%{subst_enable wnck} \
+	%{subst_enable libcanberra} \
 	--disable-silent-rules \
 	--enable-debug=minimum
 %make_build
@@ -58,6 +61,10 @@ A panel plugin for controlling PulseAudio mixer.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Sep 16 2022 Mikhail Efremov <sem@altlinux.org> 0.4.5-alt1
+- Enabled libcanberra support.
+- Updated to 0.4.5.
+
 * Sat Sep 03 2022 Mikhail Efremov <sem@altlinux.org> 0.4.4-alt1
 - Updated Vcs tag.
 - Updated to 0.4.4.
