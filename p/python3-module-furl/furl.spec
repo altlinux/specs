@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 2.1.2
+Version: 2.1.3
 Release: alt1
 
 Summary: URL parsing and manipulation made easy
@@ -48,5 +48,8 @@ py.test-3
 %doc *.md
 
 %changelog
+* Fri Sep 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.3-alt1
+- Automatically updated to 2.1.3.
+
 * Fri Jun 24 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.2-alt1
 - Initial build for Sisyphus.
