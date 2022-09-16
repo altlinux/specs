@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 1.2.3
+Version: 1.3.1
 Release: alt1
 
 Summary: A library to allow customization of the process title
@@ -16,8 +16,11 @@ VCS: https://github.com/dvarrazzo/py-setproctitle.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_enabled check
 BuildRequires: /proc
+BuildRequires: python3-module-tox
 BuildRequires: python3-module-pytest
 %endif
 
@@ -31,22 +34,25 @@ tools such as ps and top).
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir/
-python3 -m pytest -k "not embedded" -vra
+%tox_check_pyproject -- -k "not embedded" -vra
 
 %files
 %doc *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Fri Sep 16 2022 Danil Shein <dshein@altlinux.org> 1.3.1-alt1
+- new version 1.3.1
+  + migrate to pyproject
+
 * Thu Jun 23 2022 Danil Shein <dshein@altlinux.org> 1.2.3-alt1
- - new version 1.2.3
+- new version 1.2.3
 
 * Tue May 12 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.1.10-alt3
 - Deprecation warning fixed (Closes #38459).
