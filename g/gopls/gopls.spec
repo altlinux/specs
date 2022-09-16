@@ -4,7 +4,7 @@
 
 Name: gopls
 Version: 0.9.5
-Release: alt2
+Release: alt3
 
 Summary: The Go language server
 License: BSD-3-Clause
@@ -15,6 +15,8 @@ Source: %name-%version.tar
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
+
+Requires: golang
 
 %description
 Gopls (pronounced "go please") is an LSP server for Go. The Language
@@ -46,6 +48,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Fri Sep 16 2022 Anton Zhukharev <ancieg@altlinux.org> 0.9.5-alt3
+- add golang dependency
+
 * Fri Sep 16 2022 Anton Zhukharev <ancieg@altlinux.org> 0.9.5-alt2
 - fix description after copy-paste
 
