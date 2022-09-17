@@ -5,7 +5,7 @@
 
 Name: librtpkcs11ecp
 Version: 2.4.1.0
-Release: alt2
+Release: alt3
 
 Summary: Rutoken PKCS#11 Library
 License: Proprietary
@@ -40,7 +40,7 @@ Allow users to work with Rutoken ECP through PKCS#11 standard.
 %endif
 %ifarch e2kv6
 # ditto for 16C
-[ -d e2kv6 ] || cp -a e2kv5 e2kv6
+[ -d e2kv6 ] || cp -a e2kv4 e2kv6
 %endif
 
 %install
@@ -57,6 +57,9 @@ install -pDm644 rutokenecp.module \
 %config(noreplace) %_sysconfdir/pkcs11/modules/rutokenecp.module
 
 %changelog
+* Sat Sep 17 2022 Michael Shigorin <mike@altlinux.org> 2.4.1.0-alt3
+- No v5 binaries so far, fallback to v4.
+
 * Thu Sep 15 2022 Michael Shigorin <mike@altlinux.org> 2.4.1.0-alt2
 - Added e2kv6 target.
 
