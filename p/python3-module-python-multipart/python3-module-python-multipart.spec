@@ -4,7 +4,7 @@
 
 Name: python3-module-python-multipart
 Version: 0.0.5
-Release: alt1.gitd4831a3f
+Release: alt2.gitd4831a3f
 
 Summary: A streaming multipart parser for Python
 License: Apache-2.0
@@ -24,6 +24,18 @@ BuildRequires: python3(yaml)
 %endif
 
 BuildArch: noarch
+
+# provide only 'python3(python-multipart)' due to name conflict
+#
+# if you want to use this package, you need to clean up
+# requires list for your package from all of 'python3(multipart*)' packages
+# and specify 'python3(python-multipart)' only
+# in example:
+# 
+#     %filter_from_requires /python(multipart.*)/d
+#     Requires: python3(python-multipart)
+#
+# see https://bugzilla.altlinux.org/43483 for more information
 
 %filter_from_provides /python.*/d
 Provides: python3(python-multipart)
@@ -54,6 +66,10 @@ rm -r %buildroot%python3_sitelibdir/multipart/tests
 %python3_sitelibdir/%{pyproject_distinfo python_multipart}
 
 %changelog
+* Sat Sep 17 2022 Anton Zhukharev <ancieg@altlinux.org> 0.0.5-alt2.gitd4831a3f
+- bump release
+- comment provides (closes: #43483)
+
 * Sat Sep 17 2022 Anton Zhukharev <ancieg@altlinux.org> 0.0.5-alt1.gitd4831a3f
 - initial build for Sisyphus
 
