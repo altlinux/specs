@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: vcmi
-Version: 0.99
-Release: alt6.20200705
+Version: 1.0.0
+Release: alt1
 
 Summary: Open-source project aiming to reimplement HMM3:WoG game engine
 License: GPL-2.0-or-later
@@ -11,10 +11,15 @@ Group: Games/Strategy
 
 Url: http://wiki.vcmi.eu/index.php?title=Main_Page
 Source0: %name-%version.tar
-Source1: fuzzilite-6.0.tar
+#Patch: %name-%version-%release.patch
 
 Packager: Anton Midyukov <antohami@altlinux.org>
 
+# Currently only luajit compiles with VCMI
+ExclusiveArch: %luajit_arches
+
+# for %%luajit_arches macro
+BuildRequires(pre): rpm-macros-luajit
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 BuildRequires: doxygen
@@ -41,6 +46,10 @@ BuildRequires: pkgconfig(SDL2_image)
 BuildRequires: pkgconfig(SDL2_mixer)
 BuildRequires: pkgconfig(SDL2_ttf)
 BuildRequires: pkgconfig(zlib)
+BuildRequires: tbb-devel
+BuildRequires: libfuzzylite-devel >= 6.0
+BuildRequires: libluajit-devel
+#BuildRequires: git-core
 
 Requires: ffmpeg
 
@@ -77,7 +86,8 @@ VCMI - это фанатский проект с открытым исходны
 
 %prep
 %setup
-tar -xf %SOURCE1 -C AI/FuzzyLite
+%autopatch -p1
+rm -rv AI/FuzzyLite
 
 %ifarch %e2k
 # unsupported as of lcc 1.24.11
@@ -88,8 +98,8 @@ tar -xf %SOURCE1 -C AI/FuzzyLite
 %cmake \
        -DCMAKE_INSTALL_LIBDIR=%_lib \
        -DCMAKE_SKIP_RPATH=OFF \
-       -DENABLE_SDL2=ON \
-       -DENABLE_TEST=OFF
+       -DENABLE_TEST=OFF \
+       -DFORCE_BUNDLED_FL=OFF
 
 %cmake_build
 
@@ -102,12 +112,19 @@ rm -f %buildroot%_libdir/*.a
 %doc README.md AUTHORS ChangeLog
 %_bindir/%{name}*
 %_datadir/%name/
+%_datadir/metainfo/eu.vcmi.VCMI.metainfo.xml
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*.png
 %_libdir/lib%name.so
 %_libdir/%name/
 
 %changelog
+* Fri Sep 16 2022 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1
+- new version 1.0.0
+- build with system fuzzylite
+- build with luajit
+- ExclusiveArch: %%luajit_arches
+
 * Wed Jul 29 2020 Anton Midyukov <antohami@altlinux.org> 0.99-alt6.20200705
 - New snapshot
 
