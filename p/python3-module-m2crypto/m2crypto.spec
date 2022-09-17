@@ -2,12 +2,14 @@
 
 %define oname m2crypto
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.30.1
-Release: alt3
+Version: 0.38.0
+Release: alt1
+
 Summary: Support for using OpenSSL in python scripts.
+
 License: BSD
 Group: Development/Python3
 URL: http://wiki.osafoundation.org/bin/view/Projects/MeTooCrypto
@@ -27,6 +29,11 @@ BuildRequires: python3-module-py libnumpy-py3-devel
 %add_python3_req_skip M2Crypto.six.moves.urllib_response
 %add_python3_req_skip M2Crypto.six.moves.xmlrpc_client
 %py3_requires typing
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-parameterized
+%endif
 
 %description
 This package allows you to call OpenSSL functions from python scripts.
@@ -53,13 +60,18 @@ fi
 %python3_build_install
 
 %check
-python3 setup.py test -v
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -v
 
 %files
 %doc CHANGES LICENCE README.rst tests doc/*
-%python3_sitelibdir/*
+%python3_sitelibdir/M2Crypto
+%python3_sitelibdir/M2Crypto-%version-py%_python3_version.egg-info
 
 %changelog
+* Sat Sep 17 2022 Grigory Ustinov <grenka@altlinux.org> 0.38.0-alt1
+- Automatically updated to 0.38.0.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 0.30.1-alt3
 - Drop python2 support.
 
