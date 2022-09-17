@@ -7,7 +7,7 @@
 %define sover 5.2
 
 Name: liballegro5.2
-Version: %major.7
+Version: %major.8
 Release: alt1
 
 Summary: Game programming library
@@ -74,6 +74,9 @@ This package contains files needed to build programs using Allegro.
 %_pkgconfigdir/*
 
 %changelog
+* Sat Sep 17 2022 Vitaly Lipatov <arbars@altlinux.ru> 5.2.8-alt1
+- Update to new version (needs for opensurge engine)
+
 * Mon Aug 16 2021 Vitaly Lipatov <lav@altlinux.ru> 5.2.7-alt1
 - new version 5.2.7 (with rpmrb script)
 - build with gtk3
