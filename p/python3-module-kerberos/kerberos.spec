@@ -1,11 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define mname kerberos
 
+# These tests are crappy
+%def_without check
+
 Name: python3-module-%mname
-Version: 1.3.0
-Release: alt3
+Version: 1.3.1
+Release: alt1
 
 Summary: A high-level wrapper for Kerberos (GSSAPI) operations
+
 License: Apache-2.0
 Group: System/Libraries
 # Source-git: https://github.com/apple/ccs-pykerberos.git
@@ -15,6 +19,13 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libkrb5-devel
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-requests
+BuildRequires: python3-module-psutil
+BuildRequires: /proc
+%endif
 
 %description
 This Python package is a high-level wrapper for Kerberos (GSSAPI) operations.
@@ -35,25 +46,32 @@ Much of the C-code here is adapted from Apache's mod_auth_kerb-5.0rc7.
 %install
 %python3_install
 
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -v
+
 %files
-%doc README.rst
+%doc *.md
 %python3_sitelibdir/kerberos*.so
-%python3_sitelibdir/kerberos-%version-*.egg-info
+%python3_sitelibdir/kerberos-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Sep 16 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.1-alt1
+- Automatically updated to 1.3.1.
+
 * Tue Aug 03 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt3
 - Drop python2 support.
 
 * Wed Jan 16 2019 Evgeny Sinelnikov <sin@altlinux.org> 1.3.0-alt2
 - Disable ubt macros due binary package identity change
 
-* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt1%ubt.1
+* Mon Apr 16 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.0-alt1.S1.1
 - (NMU) Rebuilt with python-3.6.4.
 
-* Fri Mar 16 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1%ubt
+* Fri Mar 16 2018 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1.S1
 - 1.2.5 -> 1.3.0
 
-* Tue Nov 14 2017 Stanislav Levin <slev@altlinux.org> 1.2.5-alt1%ubt
+* Tue Nov 14 2017 Stanislav Levin <slev@altlinux.org> 1.2.5-alt1.S1
 - 1.1.1 -> 1.2.5
 
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1
