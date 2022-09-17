@@ -5,17 +5,18 @@
 %def_without glib
 
 Name: python3-module-pyudev
-Version: 0.23.2
+Version: 0.24.0
 Release: alt1
 
 Group: System/Libraries
 Summary: Udev bindings for Python
-Url: http://packages.python.org/pyudev/
+Url: https://pypi.org/project/pyudev
 License: LGPLv2.1+
 
 BuildArch: noarch
 
-Source: pyudev-%version.tar
+# https://github.com/pyudev/pyudev
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
@@ -71,7 +72,7 @@ A Python Wx binding to libudev, the hardware management library and
 service found in modern linux systems.
 
 %prep
-%setup -n pyudev-%version
+%setup
 
 %build
 %python3_build
@@ -116,6 +117,9 @@ service found in modern linux systems.
 %endif
 
 %changelog
+* Sat Sep 17 2022 Grigory Ustinov <grenka@altlinux.org> 0.24.0-alt1
+- 0.24.0
+
 * Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.23.2-alt1
 - 0.23.2
 
