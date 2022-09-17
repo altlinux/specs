@@ -1,6 +1,6 @@
 %define git	 e7b0afc
 %define ver      1.9.7
-%define rel      alt4.%git
+%define rel      alt5.%git
 
 Summary: Graphics file browser utility
 Name: gliv
@@ -26,6 +26,9 @@ zooming  if  you have an OpenGL accelerated graphics board.
 %prep
 %setup -q -n %name-%version-%git
 %patch -p2
+%ifarch %e2k
+sed -i 's/^#line 0 /#line 1 /' src/gliv-image.c
+%endif
 
 %build
 %autoreconf
@@ -51,6 +54,9 @@ install -m 644 %name.desktop %buildroot%_datadir/applications/%name.desktop
 %_man1dir/%{name}.1*
 
 %changelog
+* Sat Sep 17 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.9.7-alt5.e7b0afc
+- Fixed build for Elbrus.
+
 * Sat Mar 21 2020 L.A. Kostis <lakostis@altlinux.ru> 1.9.7-alt4.e7b0afc
 - Update gettext patch.
 - Update License tag.
