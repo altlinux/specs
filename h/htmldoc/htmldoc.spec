@@ -1,33 +1,31 @@
-%define subversion r1629
-%define sourceversion 1.9.x
+# git commit 929606ce2da8d7fe67de708be900b270e8984077 
 
 Name: htmldoc
-Version: 1.9.0
-Release: alt1.%subversion.5
-Serial: 1
+Version: 1.9.16
+Release: alt1_git_929606c_0
+Epoch: 1
 
 License: GPL with exceptions (see COPYING.txt)
 Group: Text tools
-Url: http://www.easysw.com/htmldoc/
+Url: https://github.com/michaelrsweet/htmldoc
 Summary: htmldoc creates pdf and ps from html
 Summary(ru_RU.UTF8): htmldoc - программа преобразования html в pdf и ps
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-Source: %name-%sourceversion-%subversion.tar.bz2
+Source: %name-%version.tar
 Source2: htmldoc.png
 
-Patch1: htmldoc-1.9.x-%subversion-fix.overflow.patch
-Patch2: htmldoc-1.9.0-alt-libpng15.patch
-Patch3: htmldoc-1.9.0-alt-compat.patch
+Patch1: htmldoc-1.9.16-pd-pdf.patch
 
-PreReq: fontconfig >= 2.4.2
+BuildRequires(pre): fontconfig >= 2.4.2 rpm-build-fonts
 Requires: fonts-type1-htmldoc
 
-BuildPreReq: rpm-build-fonts
+BuildpreReq: libfltk-devel libgnutlsxx-devel libjpeg-devel libpng-devel zlib-devel
 
-# Automatically added by buildreq on Tue Mar 29 2011
-BuildRequires: gcc-c++ libfltk-devel libjpeg-devel libpng-devel libssl-devel
+# Automatically added by buildreq on Sat Sep 17 2022
+# optimized out: fontconfig fontconfig-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libXrender-devel libgpg-error libstdc++-devel perl pkg-config python3 python3-base sh4 xorg-proto-devel zlib-devel
+BuildRequires: gcc-c++ libXcursor-devel libXext-devel libXfixes-devel libXft-devel libXinerama-devel libXpm-devel libfltk-devel libjpeg-devel libpng-devel
 
 %description
 Htmldoc is a HTML processing program that generates HTML, PostScript, and PDF
@@ -46,23 +44,28 @@ This Package provides a htmldoc Type1 fonts
 from Irmologion project.
 
 %prep
-%setup -n %name-%sourceversion-%subversion
+%setup
 %patch1 -p1
-%patch2 -p2
-%patch3 -p2
-autoconf
+
 
 %build
+# %%autoreconf
+autoconf
 export LDFLAGS="-Wl,-rpath-link -Wl,%_x11libdir"
 %configure \
   --disable-localjpeg  \
   --disable-localzlib  \
-  --disable-localpng
+  --disable-localpng   \
+  --enable-maintainer  \
+  --enable-gnutls      \
+  --enable-cdsassl
+# --enable-sanitizer
 
 %make_build
 
 %install
-%makeinstall
+
+%make_install install DESTDIR=/
 
 mkdir -p rpmdoc/html
 install -m 644 doc/*.html rpmdoc/html
@@ -98,17 +101,20 @@ install -D -m 644 %SOURCE2 %buildroot%_niconsdir/%name.png
 install -D -m 644 %SOURCE2 %buildroot%_liconsdir/%name.png
 
 mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
+rm -f %buildroot%_desktopdir/%name.desktop
+cat > %buildroot%_desktopdir/%name.desktop <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
 Name=Htmldoc
 Comment=HTML to PDF/PS/Indexed HTML converter
-Icon=%name
-Exec=%name
+Icon=htmldoc
+TryExec=htmldoc
+Exec=htmldoc %F
 Terminal=false
 Categories=Office;Publishing;
 MimeType=text/html;
+Keywords=HTML;PDF;EPUB;Converter
 EOF
 
 %triggerun -- %name <= 7.0.0-alt1
@@ -131,23 +137,32 @@ fi
 
 %postun
 %files
-%doc COPYING.txt README.txt doc/htmldoc.pdf
+%doc COPYING CHANGES.md README.md doc/htmldoc.pdf
 %doc rpmdoc/html/
 %_bindir/%name
 %_man1dir/*
 %dir %_datadir/%name
 %_datadir/%name/*
 %exclude %_datadir/%name/fonts
-%_desktopdir/%{name}.desktop
-%_liconsdir/%{name}.*
-%_niconsdir/%{name}.*
-
+%_desktopdir/%name.desktop
+%_liconsdir/%name.*
+%_niconsdir/%name.*
+%_iconsdir/hicolor/128x128/apps/%name.*
+%_iconsdir/hicolor/256x256/apps/%name.*
+%_datadir/mime/packages/*
+ 
 %files -n fonts-type1-htmldoc
 %_fontpathdir/
 %_fontsdir/*
 %_datadir/%name/fonts
 
 %changelog
+* Sat Sep 17 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:1.9.16-alt1_git_929606c_0
+- New version
+
+* Sat Sep 17 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:1.9.1-alt1
+- New version
+
 * Thu Feb 08 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1:1.9.0-alt1.r1629.5
 - Fixed build with new toolchain.
 
@@ -203,4 +218,5 @@ fi
 
 * Sat Oct 19 2002 Ott Alex <ott@altlinux.ru> 1.8.22-alt1
 - Initial build
+
 
