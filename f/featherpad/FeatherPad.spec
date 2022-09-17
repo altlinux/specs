@@ -1,5 +1,5 @@
 Name: featherpad
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: A lightweight Qt5 plain-text editor for Linux
@@ -63,6 +63,9 @@ done
 %_datadir/metainfo/featherpad.metainfo.xml
 
 %changelog
+* Sat Sep 17 2022 Leontiy Volodin <lvol@altlinux.org> 1.3.2-alt1
+- new version 1.3.2
+
 * Thu Aug 04 2022 Leontiy Volodin <lvol@altlinux.org> 1.3.1-alt1
 - new version 1.3.1
 - removed qmake support by upstream
