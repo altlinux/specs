@@ -1,6 +1,6 @@
 Name: nbsdgames
 Version: 5
-Release: alt2
+Release: alt3
 
 Summary: Popular set of 18 modern console games
 Summary(ru_RU.UTF-8): Популярный набор из 18 современных консольных игр
@@ -11,6 +11,9 @@ Url: https://github.com/abakh/nbsdgames
 
 # Source-url: https://github.com/abakh/nbsdgames/archive/refs/tags/v%version.tar.gz
 Source: %name-%version.tar
+
+Patch: %name-5-alt-makefile.patch
+Patch1: %name-5-alt-menu_games.patch
 
 BuildRequires: libncurses-devel
 BuildRequires: /usr/bin/convert
@@ -38,6 +41,7 @@ Miketron, Redsquare (Игра жизни Конвея стала играбел�
 
 %prep
 %setup
+%autopatch -p2
 
 # Key "Encoding" is outdated, remove it
 sed -i "/Encoding=UTF-8/d" nbsdgames.desktop
@@ -72,6 +76,10 @@ convert -resize 48x48 %name.svg %buildroot%_liconsdir/%name.png
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Sat Sep 17 2022 Evgeny Chuck <koi@altlinux.org> 5-alt3
+- The names of the games in the start menu have been changed
+- Binary file names have been changed to not match names in other packages
+
 * Mon Sep 12 2022 Evgeny Chuck <koi@altlinux.org> 5-alt2
 - Binary directory changed to /usr/games
 - The man file names have been changed because they conflict with another package
