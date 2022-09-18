@@ -9,9 +9,9 @@
 %def_with systemd
 
 Name: squid
-Version: 4.15
-Release: alt2
-%define langpack_ver 20210511
+Version: 5.7
+Release: alt1
+%define langpack_ver 20220905
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -50,7 +50,7 @@ BuildRequires(pre): rpm-build >= 4.0.4-alt10
 # optimized out: ca-trust cppunit ed elfutils glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libcom_err-devel libcrypt-devel libnfnetlink-devel libp11-kit libsasl2-3 libstdc++-devel perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators pkg-config python-base sh3 xz
 # BuildRequires: cppunit-devel doxygen gcc-c++ libcap-devel libdb4-devel libecap-devel libexpat-devel libgnutls-devel libkrb5-devel libldap-devel libltdl7-devel libnetfilter_conntrack-devel libnettle-devel libpam-devel libsasl2-devel libssl-devel libxml2-devel linuxdoc-tools perl-Crypt-OpenSSL-X509 perl-DBI perl-Digest-SHA perl-Pod-Usage perl-URI samba-client samba-winbind-clients
 
-BuildRequires: cppunit-devel doxygen gcc-c++ libcap-devel libdb4-devel libkrb5-devel libldap-devel libltdl7-devel libnetfilter_conntrack-devel libpam-devel libsasl2-devel libssl-devel linuxdoc-tools perl-Crypt-OpenSSL-X509 perl-DBI perl-Digest-SHA perl-Pod-Usage perl-URI samba-client samba-winbind-clients
+BuildRequires: cppunit-devel doxygen gcc-c++ libcap-devel libtdb-devel libkrb5-devel libldap-devel libltdl7-devel libnetfilter_conntrack-devel libpam-devel libsasl2-devel libssl-devel linuxdoc-tools perl-Crypt-OpenSSL-X509 perl-DBI perl-Digest-SHA perl-Pod-Usage perl-URI samba-client samba-winbind-clients
 %{?_enable_ecap:BuildRequires: libecap-devel >= 1.0}
 %{?_enable_esi:BuildRequires: libxml2-devel libexpat-devel}
 %{?_with_nettle:BuildRequires: libnettle-devel}
@@ -298,6 +298,10 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Sun Sep 18 2022 Alexey Shabalin <shaba@altlinux.org> 5.7-alt1
+- 5.7.
+- Build with TrivialDB instead of outdated BerkleyDB.
+
 * Tue Oct 26 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.15-alt2
 - FTBFS: disable LTO
 - spec cleanup
