@@ -1,63 +1,57 @@
-%define _unpackaged_files_terminate_build 1
-%define pypi_name pydantic
-
 %def_with check
 
-Name: python3-module-%pypi_name
+%define  oname pydantic
+
+Name:    python3-module-%oname
 Version: 1.10.2
-Release: alt2
+Release: alt3
 
 Summary: Data parsing and validation using Python type hints
-License: MIT
-Group: Development/Python3
-Url: https://pypi.org/project/pydantic
 
-Source: %name-%version.tar
+License: MIT
+Group:   Development/Python3
+URL:     https://github.com/pydantic/pydantic
+
+Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3(cython)
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-
 %if_with check
-BuildRequires: python3(pytest)
-BuildRequires: python3(pytest-mock)
-BuildRequires: python3(typing_extensions)
-BuildRequires: python3(mypy)
-BuildRequires: python3(hypothesis)
-BuildRequires: python3(email)
-BuildRequires: python3(email_validator)
-BuildRequires: python3(dotenv)
-BuildRequires: python3(devtools)
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-mock
+BuildRequires: python3-module-typing_extensions
+BuildRequires: python3-module-mypy
+BuildRequires: python3-module-hypothesis
 %endif
 
-%description
-Data validation and settings management using Python type hints.
+BuildArch: noarch
 
-Fast and extensible, pydantic plays nicely with your linters/IDE/brain.
-Define how data should be in pure, canonical Python 3.7+; validate it
-with pydantic.
+Source:  %name-%version.tar
+
+%description
+%summary.
 
 %prep
 %setup
 
 %build
-%pyproject_build
+%python3_build
 
 %install
-%pyproject_install
+%python3_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+py.test-3 -v
 
 %files
 %doc *.md
-%python3_sitelibdir/%pypi_name
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/%oname
+%python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Sep 18 2022 Anton Zhukharev <ancieg@altlinux.org> 1.10.2-alt3
+- rollback to 1.10.2-alt1 state
+
 * Sun Sep 18 2022 Anton Zhukharev <ancieg@altlinux.org> 1.10.2-alt2
 - build with Cython
 - update description
