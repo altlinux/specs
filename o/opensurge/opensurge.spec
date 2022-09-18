@@ -1,7 +1,7 @@
 Name: opensurge
 Summary: 2D retro platformer inspired by Sonic games
 License: GPLv3
-Version: 0.5.2.1
+Version: 0.6.0.2
 Release: alt1
 
 Group: Games/Arcade
@@ -89,15 +89,12 @@ install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
 done
 
 %files
-%dir %_iconsdir/hicolor/64x64
-%dir %_iconsdir/hicolor/64x64/apps
-%dir %_iconsdir/hicolor/128x128
-%dir %_iconsdir/hicolor/128x128/apps
 %doc LICENSE
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_datadir/metainfo/%name.appdata.xml
 %_pixmapsdir/%name.png
+%_iconsdir/hicolor/*/apps/%name.png
 
 %files data
 %doc licenses/CC-BY-3.0-legalcode.txt
@@ -108,6 +105,9 @@ done
 %_datadir/%name/
 
 %changelog
+* Sun Sep 18 2022 Artyom Bystrov <arbars@altlinux.org> 0.6.0.2-alt1
+- update to new version
+
 * Thu Aug 12 2021 Artyom Bystrov <arbars@altlinux.org> 0.5.2.1-alt1
 - initial build for ALT Sisyphus
 
