@@ -2,7 +2,7 @@
 
 Name: htmldoc
 Version: 1.9.16
-Release: alt1_git_929606c_0
+Release: alt1_git_929606c_1
 Epoch: 1
 
 License: GPL with exceptions (see COPYING.txt)
@@ -110,7 +110,7 @@ Name=Htmldoc
 Comment=HTML to PDF/PS/Indexed HTML converter
 Icon=htmldoc
 TryExec=htmldoc
-Exec=htmldoc %F
+Exec=htmldoc %%F
 Terminal=false
 Categories=Office;Publishing;
 MimeType=text/html;
@@ -157,6 +157,9 @@ fi
 %_datadir/%name/fonts
 
 %changelog
+* Sun Sep 18 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:1.9.16-alt1_git_929606c_1
+- Correct desctop file
+
 * Sat Sep 17 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:1.9.16-alt1_git_929606c_0
 - New version
 
