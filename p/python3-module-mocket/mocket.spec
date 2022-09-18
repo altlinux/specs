@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 3.10.7
+Version: 3.10.8
 Release: alt1
 
 Summary: Python socket mock framework
@@ -28,6 +28,7 @@ BuildRequires: python3-module-aiohttp
 BuildRequires: python3-module-sure
 BuildRequires: python3-module-redis-py
 BuildRequires: python3-module-httpx
+BuildRequires: python3-module-fastapi
 %endif
 
 BuildArch: noarch
@@ -66,6 +67,9 @@ py.test-3 -k "not test_file_object and \
 %doc LICENSE *.rst
 
 %changelog
+* Mon Sep 12 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.8-alt1
+- Automatically updated to 3.10.8.
+
 * Wed Aug 17 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.7-alt1
 - Automatically updated to 3.10.7.
 
