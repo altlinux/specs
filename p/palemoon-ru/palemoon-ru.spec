@@ -15,7 +15,7 @@
 Name: palemoon-ru
 
 Version: 31.2.0
-Release: alt2
+Release: alt2.1
 
 ExcludeArch: %ix86 %arm
 
@@ -145,7 +145,13 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %files -n palemoon-searchplugins
 %search_dir
 
+%files -n palemoon-defaults-ru
+
+
 %changelog
+* Sun Sep 18 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.2.0-alt2.1
+- Fix added virtual package palemoon-defaults-ru
+
 * Wed Aug 17 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.2.0-alt2
 - Added virtual package palemoon-defaults-ru
 
