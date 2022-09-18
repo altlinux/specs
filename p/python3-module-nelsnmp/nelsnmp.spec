@@ -1,50 +1,63 @@
 %define _unpackaged_files_terminate_build 1
 %define oname nelsnmp
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.2.5
-Release: alt2
+Version: 0.2.9
+Release: alt1
 
 Summary: A wrapper module for pysnmp
-License: ASLv2.0
+
+License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/nelsnmp/
+
 BuildArch: noarch
 
 # https://github.com/networklore/nelsnmp.git
-Source0: https://pypi.python.org/packages/f9/3a/1e72673d73d7f89cd6948c47e1234a5fcfb7be5134ddd2fa7460a2212a66/%{oname}-%{version}.tar.gz
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pysnmp4
-BuildRequires: python-tools-2to3
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-yaml
+%endif
 
 %py3_provides %oname
 Requires: python3-module-pysnmp4
 
-
 %description
-A wrapper module for pysnmp.
+%summary.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup
 
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+# https://github.com/yaml/pyyaml/wiki/PyYAML-yaml.load(input)-Deprecation
+sed -i 's/yaml.load/yaml.safe_load/' tests/test_device_versions.py
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-%__python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -v
 
 %files
-%doc README.rst HISTORY.rst PKG-INFO
-%python3_sitelibdir/*
-
+%doc *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun Sep 18 2022 Grigory Ustinov <grenka@altlinux.org> 0.2.9-alt1
+- Build new version.
+- Build with check.
+
 * Fri Nov 29 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.2.5-alt2
 - python2 disabled
 
