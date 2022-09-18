@@ -1,6 +1,6 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.9.19
+Version: 0.9.20
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -16,8 +16,7 @@ Source:  %name-%version.tar
 Source1: %name.sysconfig
 Source2: %name.logrotate
 Source3: %name-init-alt
-Source4: libpainter.tar
-Source5: librfxcodec.tar
+Source4: submodules.tar
 Source6: xorgxrdp.tar
 Source7: xrdp-sesman.pam
 Source8: xrdp-polkit-1.rules
@@ -102,7 +101,6 @@ operation, most standard X11 fonts and tools need to be installed.
 %prep
 %setup
 tar xf %SOURCE4
-tar xf %SOURCE5
 tar xf %SOURCE6
 #patch2 -p1
 %patch3 -p1
@@ -276,6 +274,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Sun Sep 18 2022 Andrey Cherepanov <cas@altlinux.org> 0.9.20-alt1
+- New version.
+
 * Thu Mar 17 2022 Andrey Cherepanov <cas@altlinux.org> 0.9.19-alt1
 - New version.
 
