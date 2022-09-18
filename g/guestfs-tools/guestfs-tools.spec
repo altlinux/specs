@@ -1,12 +1,17 @@
-Summary: Tools to access and modify virtual machine disk images
+%define _unpackaged_files_terminate_build 1
+
 Name: guestfs-tools
-Version: 1.48.0
+Version: 1.48.2
 Release: alt1
-Group: File tools
+
+Summary: Tools to access and modify virtual machine disk images
 License: GPLv2+
+Group: File tools
 Url: http://libguestfs.org/
+
 Source0: %name-%version.tar
 Source2: %name-%version-common.tar
+
 BuildRequires: gcc-c++
 BuildRequires: libguestfs-devel >= 1.46.0
 BuildRequires: perl-Pod-Simple
@@ -163,6 +168,9 @@ rm -rf %buildroot%_mandir/{ja,uk}
 %_mandir/man1/virt-dib.1*
 
 %changelog
+* Mon Sep 05 2022 Egor Ignatov <egori@altlinux.org> 1.48.2-alt1
+- 1.48.0 -> 1.48.2
+
 * Wed Mar 16 2022 Anton Farygin <rider@altlinux.ru> 1.48.0-alt1
 - 1.47.5 -> 1.48.0
 

@@ -1,3 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+
+# 1.48.4: libguestfs-test-tool fails on armh
+%ifarch armh
+%def_without check
+%endif
+
 %def_enable daemon
 %def_disable appliance
 %def_enable fuse
@@ -17,10 +24,11 @@
 %def_enable bash_completion
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-Summary: Library for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.46.2
+Version: 1.48.4
 Release: alt2
+
+Summary: Library for accessing and modifying virtual machine disk images
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -72,6 +80,7 @@ BuildRequires: java-devel-default jpackage-utils
 %{?_enable_golang:BuildRequires(pre): rpm-macros-golang}
 %{?_enable_rust:BuildRequires: rust rust-cargo}
 %{?_enable_bash_completion:BuildRequires: bash-completion >= 2.0}
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-guestfs}}
 
 %description
 libguestfs is a set of tools for accessing and modifying virtual
@@ -303,6 +312,9 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 
 %find_lang %name
 
+%check
+test-tool/libguestfs-test-tool
+
 %files -f %name.lang
 %doc COPYING README
 %config(noreplace) %_sysconfdir/libguestfs-tools.conf
@@ -461,6 +473,13 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %endif #erlang
 
 %changelog
+* Mon Sep 12 2022 Egor Ignatov <egori@altlinux.org> 1.48.4-alt2
+- enable basic tests
+
+* Mon Sep 05 2022 Egor Ignatov <egori@altlinux.org> 1.48.4-alt1
+- 1.48.4
+- update libguestfs-1.46.0-alt-fixes patch
+
 * Sat Feb 05 2022 Anton Farygin <rider@altlinux.ru> 1.46.2-alt2
 - the default backend switched to direct (closes: #41783)
 
