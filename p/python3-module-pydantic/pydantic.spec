@@ -1,20 +1,26 @@
+%def_without bootstrap
 %def_with check
 
 %define  oname pydantic
 
 Name:    python3-module-%oname
 Version: 1.10.2
-Release: alt3
+Release: alt4
 
 Summary: Data parsing and validation using Python type hints
 
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/pydantic/pydantic
+URL:     https://pypi.org/project/pydantic
+
+# https://github.com/pydantic/pydantic
+Source:  %name-%version.tar
 
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -22,33 +28,51 @@ BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-typing_extensions
 BuildRequires: python3-module-mypy
 BuildRequires: python3-module-hypothesis
+# These three deps are optional for extra tests
+BuildRequires: python3-module-email_validator
+BuildRequires: python3-module-dotenv
+BuildRequires: python3-module-devtools
 %endif
 
+%if_with bootstrap
 BuildArch: noarch
-
-Source:  %name-%version.tar
+%else
+BuildRequires: python3-module-Cython
+%endif
 
 %description
-%summary.
+Data validation and settings management using Python type hints.
+
+Fast and extensible, pydantic plays nicely with your linters/IDE/brain.
+Define how data should be in pure, canonical Python 3.7+; validate it
+with pydantic.
 
 %prep
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-py.test-3 -v
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
-%doc *.md
+%doc LICENSE *.md
 %python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sun Sep 18 2022 Grigory Ustinov <grenka@altlinux.org> 1.10.2-alt4
+- Build with Cython.
+- Update description.
+- Use modern %%pyproject macros.
+- Add extra BuildRequires for tests.
+- Great thanks for ancieg@.
+
 * Sun Sep 18 2022 Anton Zhukharev <ancieg@altlinux.org> 1.10.2-alt3
 - rollback to 1.10.2-alt1 state
 
