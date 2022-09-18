@@ -1,13 +1,14 @@
 %define oname taskforce
 
 Name: python3-module-%oname
-Version: 0.1.14
-Release: alt2
+Version: 0.6.0
+Release: alt1
 
 Summary: Starts and restarts daemon processes
-License: ASLv2.0
+
+License: Apache-2.0
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/taskforce/
+Url: https://pypi.python.org/pypi/taskforce
 
 BuildArch: noarch
 
@@ -15,11 +16,10 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-yaml python-tools-2to3
+BuildRequires: python3-module-yaml
 
 %py3_provides %oname
 %py3_requires yaml
-
 
 %description
 Taskforce starts and restarts daemon processes. It will detect
@@ -29,26 +29,25 @@ processes. Initially this supports python 2.7 on Unix derivatives.
 %prep
 %setup
 
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     bin/%oname
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
-%check
-%__python3 setup.py test
-
 %files
 %doc README* examples
-%_bindir/*
-%python3_sitelibdir/*
-
+%_bindir/%oname
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun Sep 18 2022 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
+- Automatically updated to 0.6.0.
+
 * Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.1.14-alt2
 - Build for python2 disabled.
 
