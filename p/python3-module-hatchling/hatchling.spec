@@ -4,7 +4,7 @@
 %define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 Name: python3-module-%pypi_name
-Version: 1.9.0
+Version: 1.10.0
 Release: alt1
 
 Summary: Modern, extensible Python build backend
@@ -58,6 +58,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Sep 19 2022 Stanislav Levin <slev@altlinux.org> 1.10.0-alt1
+- 1.9.0 -> 1.10.0.
+
 * Mon Sep 12 2022 Stanislav Levin <slev@altlinux.org> 1.9.0-alt1
 - 1.8.1 -> 1.9.0.
 
