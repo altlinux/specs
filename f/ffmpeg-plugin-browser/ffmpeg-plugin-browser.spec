@@ -159,7 +159,7 @@
 
 Name:		ffmpeg-plugin-browser
 Version:	102
-Release:	alt1
+Release:	alt2
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -174,6 +174,7 @@ Source1: find-provides.sh
 Patch1: chromium.patch
 Patch2: ffmpeg-chromium-100.patch
 Patch3: alt-av_sscanf.patch
+Patch4: alt-sdl2-new.patch
 Patch2000: ffmpeg-e2k-simd.patch
 
 %define __find_provides %SOURCE1
@@ -253,9 +254,6 @@ FFmpeg built specifically for codec support in special browser.
 
 %description
 %common_descr
-
-The ffmpeg is a command line toolbox to manipulate, convert and stream
-multimedia content.
 
 
 %package	doc
@@ -580,6 +578,7 @@ This package contains static development files for libswscale.
 %patch1 -p1
 %patch2 -p1
 #patch3 -p1
+%patch4 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -766,6 +765,9 @@ tests/checkasm/checkasm
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Mon Sep 19 2022 Sergey V Turchin <zerg@altlinux.org> 102-alt2
+- fix to build with new sdl2
+
 * Mon Aug 15 2022 Sergey V Turchin <zerg@altlinux.org> 102-alt1
 - new version
 
