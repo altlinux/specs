@@ -1,5 +1,5 @@
 Name: haveged
-Version: 1.9.14
+Version: 1.9.18
 Release: alt1
 License: GPLv3
 Group: System/Kernel and hardware
@@ -7,7 +7,6 @@ Summary: Feed entropy into random pool
 Url: http://www.issihosts.com/haveged/
 # Source0-url: https://github.com/jirka-h/haveged/archive/refs/tags/v%version.tar.gz
 Source0: http://www.issihosts.com/haveged/haveged-%version.tar.gz
-Source1: haveged.service
 
 %description
 The haveged daemon feeds the linux entropy pool with random
@@ -29,33 +28,38 @@ algorithm and supporting features.
 %build
 %autoreconf
 %configure \
-  --enable-daemon\
+  --enable-daemon \
   --disable-static \
-  --enable-init=sysv.redhat
+  --enable-olt=no
 %make_build
 
 %check
 make check
 
 %install
-mkdir -p %buildroot%_initdir
-ln -s rc.d/init.d %buildroot/etc/init.d
 %makeinstall
-install -pm0644 -D %SOURCE1 %buildroot%_unitdir/haveged.service
+
+#Install systemd service file
+sed -e 's:@SBIN_DIR@:%_sbindir:g' -i contrib/Fedora/*service
+sed -i '/^ConditionKernelVersion/d' contrib/Fedora/*service
+
+install -Dpm 0644 contrib/Fedora/haveged.service %buildroot%_unitdir/%name.service
+install -Dpm 0644 contrib/Fedora/haveged-once.service %buildroot%_unitdir/%name-once.service
+install -Dpm 0644 contrib/Fedora/90-haveged.rules %buildroot%_udevrulesdir/90-%name.rules
 
 %post
 %post_service haveged
 
 %preun
 %preun_service haveged
-
 %files
-%doc README
+%doc AUTHORS COPYING NEWS README.md ChangeLog
 %_man8dir/haveged.8*
 %_sbindir/haveged
-%_initdir/%name
 %_libdir/*.so.*
 %_unitdir/haveged.service
+%_unitdir/haveged-once.service
+%_udevrulesdir/*.rules
 
 %files devel
 %_man3dir/libhavege.3*
@@ -65,6 +69,11 @@ install -pm0644 -D %SOURCE1 %buildroot%_unitdir/haveged.service
 %_libdir/*.so
 
 %changelog
+* Mon Sep 19 2022 L.A. Kostis <lakostis@altlinux.ru> 1.9.18-alt1
+- 1.9.18.
+- Drop init.d service (removed by upstream)
+- Add -once systemd service and udev rules.
+
 * Tue Jul 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.9.14-alt1
 - NMU: new version 1.9.14 (with rpmrb script)
 
