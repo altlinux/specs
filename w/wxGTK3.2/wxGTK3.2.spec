@@ -8,7 +8,7 @@
 
 Name: wxGTK3.2
 Version: 3.2.1
-Release: alt1
+Release: alt2
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets License
@@ -71,8 +71,9 @@ Requires: libwxBase%wxbranch = %EVR
 Conflicts: lib%name-devel < %EVR
 Conflicts: libwxGTK2.9-devel
 Conflicts: libwxGTK3.0-devel
-Conflicts: libwxBase%wxbranch-devel < 3.1.1-alt2.2
+Conflicts: libwxGTK3.1-devel
 Conflicts: libwxBase3.0-devel
+Conflicts: libwxBase3.1-devel
 Conflicts: wxGTK-devel
 Conflicts: libwxGTK-devel
 
@@ -188,9 +189,6 @@ tar -xf %SOURCE3 -C 3rdparty/
 %patch1 -p1
 
 # patch some installed files to avoid conflicts with 2.8.*
-#sed -i -e 's|aclocal)|aclocal/wxwin3.m4)|' Makefile.in
-sed -i -e 's|wxstd.mo|wxstd31.mo|' Makefile.in
-sed -i -e 's|wxmsw.mo|wxmsw31.mo|' Makefile.in
 sed -i -e 's|bakefile/presets|bakefile/presets-\$(WX_RELEASE)|g' Makefile.in
 
 rm -fR src/{expat,jpeg,tiff,zlib,png}
@@ -319,6 +317,10 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Mon Sep 19 2022 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt2
+- add missing conflict with libwxBase3.1-devel, libwxGTK3.1-devel
+  (Closes: 43824)
+
 * Thu Sep 08 2022 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt1
 - new stable release 3.2.1
 
