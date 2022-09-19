@@ -1,26 +1,27 @@
+%define git 470ddaf
+
 Name: xmoto
-Version: 0.5.11
-Release: alt3.r3421
+Version: 0.6.1
+Release: alt2.g%{git}
 
 Summary: A challenging 2D motocross platform game.
-License: GPL
+License: GPLv2
 Group: Games/Arcade
 
 Url: http://xmoto.tuxfamily.org
 Source: %name-%version-src.tar
-Patch: xmoto-0.5.11-alt-build.patch
 Packager: Denis Pynkin <dans@altlinux.ru>
 
-BuildRequires: gcc-c++ libSDL-devel libSDL_mixer-devel libjpeg-devel
+BuildRequires: gcc-c++ libSDL2-devel libSDL2_mixer-devel libjpeg-devel
 BuildRequires: lua-devel libode-devel libpng-devel libstdc++-devel
 BuildRequires: zlib-devel bzlib-devel libcurl-devel
-BuildRequires: libSDL_gfx-devel libsqlite3-devel libSDL_ttf-devel
-BuildRequires: libSDL_net-devel
+BuildRequires: libSDL2_gfx-devel libsqlite3-devel libSDL2_ttf-devel
+BuildRequires: libSDL2_net-devel
 BuildRequires: libxdg-basedir-devel
-BuildRequires: rpm-build-fonts
-BuildRequires: libxml2-devel
+BuildRequires(pre): rpm-build-fonts cmake ninja-build
+BuildRequires: libxml2-devel libGLU-devel
 
-Requires: fonts-ttf-dejavu
+Requires: fonts-ttf-dejavu, %name-data = %EVR
 
 %description
 XMoto is a challenging 2D motocross platform game, where physics play an
@@ -28,25 +29,33 @@ all important role in the gameplay. You need to control your bike to its
 limit, if you want to have a chance finishing the more difficult of the
 challenges.
 
+%package data
+Group: Games/Arcade
+Summary: %name gamepack data
+BuildArch: noarch
+
+%description data
+%summary
+
 %prep
 %setup
-%patch -p3
+#%%patch -p3
 
-%build
+%builD
 %ifarch %e2k
 # -std=c++03 by default as of lcc 1.23.12
 %add_optflags -std=c++11
 %endif
-%autoreconf
-%configure \
-	--bindir=%_gamesbindir \
-	--with-enable-zoom=1 \
-	--with-enable-www=1 \
-	--with-renderer-openGl=1
-%make
+%cmake \
+  -GNinja
+
+ninja \
+  -vvv \
+  -j %__nprocs \
+  -C %_cmake__builddir
 
 %install
-%makeinstall_std
+DESTDIR=%buildroot ninja -C %_cmake__builddir install
 
 mkdir -p %buildroot%_datadir/applications
 cp -a extra/xmoto.desktop %buildroot%_datadir/applications
@@ -60,14 +69,28 @@ ln -sr %buildroot%_ttffontsdir/dejavu/DejaVuSans{,Mono}.ttf \
 %find_lang --output=%name.files %name
 
 %files -f %name.files
-%doc AUTHORS INSTALL README
-%_gamesbindir/*
+%doc ChangeLog COPYING README.md
+%_bindir/*
 %_liconsdir/%name.xpm
 %_datadir/applications/*
-%_datadir/%name
 %_man6dir/*
 
+%files data
+%_datadir/%name
+
 %changelog
+* Mon Sep 19 2022 L.A. Kostis <lakostis@altlinux.ru> 0.6.1-alt2.g470ddaf
+- Fix circular deps for -data.
+
+* Mon Sep 19 2022 L.A. Kostis <lakostis@altlinux.ru> 0.6.1-alt1.g470ddaf
+- GIT 470ddaf (to really enable SDL2).
+- relocate to bin dir.
+- make gamepack noarch.
+
+* Mon Sep 19 2022 L.A. Kostis <lakostis@altlinux.ru> 0.6.1-alt1
+- 0.6.1.
+- use cmake instead of autotools.
+
 * Wed Jun 19 2019 Michael Shigorin <mike@altlinux.org> 0.5.11-alt3.r3421
 - E2K: explicit -std=c++11
 - Spec cleanup
