@@ -2,7 +2,7 @@
 
 Name: xmoto
 Version: 0.6.1
-Release: alt2.g%{git}
+Release: alt3.g%{git}
 
 Summary: A challenging 2D motocross platform game.
 License: GPLv2
@@ -12,6 +12,8 @@ Url: http://xmoto.tuxfamily.org
 Source: %name-%version-src.tar
 Packager: Denis Pynkin <dans@altlinux.ru>
 
+Patch: xmoto-0.6.1-alt-system-ode.patch
+
 BuildRequires: gcc-c++ libSDL2-devel libSDL2_mixer-devel libjpeg-devel
 BuildRequires: lua-devel libode-devel libpng-devel libstdc++-devel
 BuildRequires: zlib-devel bzlib-devel libcurl-devel
@@ -19,7 +21,7 @@ BuildRequires: libSDL2_gfx-devel libsqlite3-devel libSDL2_ttf-devel
 BuildRequires: libSDL2_net-devel
 BuildRequires: libxdg-basedir-devel
 BuildRequires(pre): rpm-build-fonts cmake ninja-build
-BuildRequires: libxml2-devel libGLU-devel
+BuildRequires: libxml2-devel libGLU-devel liblzma-devel
 
 Requires: fonts-ttf-dejavu, %name-data = %EVR
 
@@ -39,7 +41,7 @@ BuildArch: noarch
 
 %prep
 %setup
-#%%patch -p3
+%autopatch -p3
 
 %builD
 %ifarch %e2k
@@ -79,6 +81,10 @@ ln -sr %buildroot%_ttffontsdir/dejavu/DejaVuSans{,Mono}.ttf \
 %_datadir/%name
 
 %changelog
+* Mon Sep 19 2022 L.A. Kostis <lakostis@altlinux.ru> 0.6.1-alt3.g470ddaf
+- Added LZMA support.
+- Use system libode.
+
 * Mon Sep 19 2022 L.A. Kostis <lakostis@altlinux.ru> 0.6.1-alt2.g470ddaf
 - Fix circular deps for -data.
 
