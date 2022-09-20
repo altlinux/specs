@@ -1,26 +1,24 @@
 Name: xfce4-places-plugin
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: This plugin is a menu with quick access to folders, documents, and removable media
-License: %gpl2plus
+License: GPLv2+
 Group: Graphical desktop/XFce
-Url: https://goodies.xfce.org/projects/panel-plugins/%name
+Url: https://docs.xfce.org/panel-plugins/xfce4-places-plugin/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-# git://git.xfce.org/panel-plugins/xfce4-places-plugin
+Vcs: https://gitlab.xfce.org/panel-plugins/xfce4-places-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel
 BuildRequires: libxfconf-devel
 BuildPreReq: libgio-devel libnotify-devel
-BuildRequires: libxml2-devel intltool
+BuildRequires: intltool
 
-Requires: xfce4-panel >= 4.8
+Requires: xfce4-panel >= 4.12
 
 %define _unpackaged_files_terminate_build 1
 
@@ -53,7 +51,7 @@ so that it shares bookmarks with Thunar, Nautilus, the GNOME Panel, etc.
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS
+%doc README.md AUTHORS NEWS
 %_bindir/xfce4-popup-places
 %_libdir/xfce4/panel/plugins/*
 %_datadir/xfce4/panel/plugins/*.desktop
@@ -61,6 +59,13 @@ so that it shares bookmarks with Thunar, Nautilus, the GNOME Panel, etc.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Tue Sep 20 2022 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt1
+- Dropped libxml2-devel from BR.
+- Added Vcs tag.
+- Updated Url tag.
+- Don't use rpm-build-licenses.
+- Updated to 1.8.2.
+
 * Mon Aug 12 2019 Mikhail Efremov <sem@altlinux.org> 1.8.1-alt1
 - Updated to 1.8.1.
 
