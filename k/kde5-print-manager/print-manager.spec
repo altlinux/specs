@@ -4,8 +4,8 @@
 %define libkcupslib libkcupslib%sover
 
 Name: kde5-%rname
-Version: 22.04.3
-Release: alt2
+Version: 22.08.1
+Release: alt1
 %K5init altplace
 
 Group: System/Configuration/Printing
@@ -100,6 +100,9 @@ rm -f "$tmp_file"
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Tue Jul 26 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt2
 - add russian translation of PPDs
 

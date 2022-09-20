@@ -8,8 +8,8 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 22.04.3
-Release: alt2
+Version: 22.08.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -54,7 +54,7 @@ BuildRequires: kf5-kjobwidgets-devel kf5-kjs-devel kf5-knotifications-devel kf5-
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel
 BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel
 BuildRequires: kf5-syntax-highlighting-devel kf5-kactivities-stats-devel
-BuildRequires: kde5-kdsoap-devel
+BuildRequires: kde5-kdsoap-devel kde5-libkexiv2-devel
 
 %description
 Additional kio-slaves.
@@ -148,6 +148,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt2
 - fix connect to samba-4.16 (closes: 43616)
 

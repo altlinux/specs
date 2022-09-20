@@ -10,7 +10,7 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init
 
@@ -91,7 +91,7 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data kglobalaccel knsrcfiles
+%K5install_move data kglobalaccel knsrcfiles kconf_update
 %find_lang %name --with-kde --all-name
 
 desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
@@ -117,6 +117,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5plug/kf5/parts/*dolphin*.so
 %_K5xdgapp/*dolphin*.desktop
 %_K5cfg/dolphin*
+%_K5conf_up/*dolphin*
 %_K5srv/*.desktop
 %_K5srvtyp/*.desktop
 %_K5data/kglobalaccel/*dolphin*
@@ -138,6 +139,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

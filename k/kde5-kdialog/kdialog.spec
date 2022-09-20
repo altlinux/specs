@@ -10,7 +10,7 @@
 %endif
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -57,6 +57,9 @@ The syntax is very much inspired from the "dialog" command
 #%_K5dbus_iface/org.kde.kdialog.ProgressDialog.xml
 
 %changelog
+* Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

@@ -4,9 +4,9 @@
 %define libkrfbprivate libkrfbprivate%sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
-%K5init altplace
+%K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
 Summary: KDE Desktop Sharing
@@ -70,13 +70,13 @@ KF5 library
 %files common -f %name.lang
 %doc COPYING*
 %_datadir/qlogging-categories5/*.*categories
+#%_K5srvtyp/krfb-*.desktop
 
 %files
 %_K5bin/
 %_K5plug/krfb/
 %_K5xdgapp/*krfb*.desktop
 %_K5data/krfb/
-%_K5srvtyp/krfb-*.desktop
 %_K5icon/*/*/apps/krfb.*
 
 #%files devel
@@ -91,6 +91,9 @@ KF5 library
 %_K5lib/libkrfbprivate.so.*
 
 %changelog
+* Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

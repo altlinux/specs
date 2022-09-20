@@ -7,7 +7,7 @@
 %define libkdeconnectsmshelper libkdeconnectsmshelper%sover
 
 Name: kde5-connect
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init
 
@@ -34,6 +34,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: qt5-base-devel qt5-declarative-devel qt5-multimedia-devel
 BuildRequires: qt5-x11extras-devel qt5-quickcontrols2-devel qt5-wayland-devel
 BuildRequires: extra-cmake-modules
+BuildRequires: kde5-plasma-wayland-protocols
 BuildRequires: libfakekey-devel libqca-qt5-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-ki18n-devel
@@ -152,6 +153,9 @@ done
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libaudiocdplugins libaudiocdplugins%sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init
 
@@ -106,6 +106,9 @@ KF5 library
 %_K5lib/libaudiocdplugins.so.*
 
 %changelog
+* Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

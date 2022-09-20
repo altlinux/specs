@@ -1,8 +1,8 @@
 %define rname khelpcenter
 
 Name: kde5-%rname
-Version: 22.04.3
-Release: alt2
+Version: 22.08.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -73,6 +73,9 @@ __EOF__
 %_K5dbus_srv/*.service
 
 %changelog
+* Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Wed Aug 31 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt2
 - add /usr/bin/khelpcenter alternative
 

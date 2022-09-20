@@ -2,8 +2,8 @@
 %define req_samba_pkgs samba,samba-common-tools,samba-client
 
 Name: kde5-network-filesharing
-Version: 22.04.3
-Release: alt2
+Version: 22.08.1
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -43,7 +43,7 @@ Adds Configuration of Samba sharing for folders in Dolphin.
 #%patch1 -p1
 %patch2 -p1
 %patch3 -p1 -b .i18n
-%patch4 -p2 -b .permissions
+#%patch4 -p2 -b .permissions
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
@@ -71,6 +71,9 @@ cat %SOURCE10 >>po/ru/kfileshare.po
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Slava Aseev <ptrnine@altlinux.org> 22.04.3-alt2
 - fix "insufficient permissions" error after a non-zero testparm
   exit code (thanks to Ilya Demyanov)

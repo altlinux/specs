@@ -1,5 +1,6 @@
 %{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
 %define ubt_id %__ubt_branch_id
+%define optflags_lto %nil
 
 %define rname okular
 %def_disable progress
@@ -15,8 +16,8 @@
 %define libokularcore libokular5core%sover
 
 Name: kde5-%rname
-Version: 22.04.3
-Release: alt2
+Version: 22.08.1
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Office
@@ -115,6 +116,7 @@ KF5 library
 %endif
 #%patch5 -p2 -b .csp
 sed -i '/^add_subdirectory.*ooo/d' generators/CMakeLists.txt
+sed -i '/^find_package.*QMobipocket/d' CMakeLists.txt
 
 tmp_file=`mktemp`
 msgcat --use-first po/ru/okular.po %SOURCE10 >"$tmp_file"
@@ -206,6 +208,9 @@ rm -f "$tmp_file"
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Sep 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt2
 - disable document loading progress bar (closes: 43617)
 

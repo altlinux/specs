@@ -4,8 +4,8 @@
 %define libgwenview libgwenviewlib%sover
 
 Name: kde5-%rname
-Version: 22.04.3
-Release: alt2
+Version: 22.08.1
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -24,6 +24,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-phonon-devel qt5-script-devel qt5
 BuildRequires: libexiv2-devel libjpeg-devel liblcms2-devel libpng-devel zlib-devel libtiff-devel
 #BuildRequires: libcfitsio-devel
 BuildRequires: kde5-libkdcraw-devel
+BuildRequires: kde5-kcolorpicker-devel kde5-kimageannotator-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel
 BuildRequires: kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel
 BuildRequires: kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdelibs4support-devel
@@ -111,6 +112,9 @@ rm -f po/ru/gwenview.po.tmp
 %_K5lib/libgwenviewlib.so.*
 
 %changelog
+* Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Aug 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt2
 - update russian translation
 

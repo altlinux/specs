@@ -1,23 +1,24 @@
 %define rname kate
 
 %define sover 5
-%define libkateinterfaces libkateinterfaces%sover
+%define libkateprivate libkateprivate%sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
-%K5init
+%K5init altplace no_appdata
 
 Group: Editors
 Summary: Advanced text editor
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License:  GPL-3.0-or-later
 
 Requires: %name-common
 #Requires: %name-core
 Requires: kf5-syntax-highlighting
 
 Source: %rname-%version.tar
+Patch1: alt-soname.patch
 
 # Automatically added by buildreq on Fri Aug 21 2015 (-bi)
 # optimized out: cmake cmake-modules desktop-file-utils docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils
@@ -67,16 +68,17 @@ Requires: %name-common
 %description -n kde5-kwrite
 Text editor for KDE
 
-%package -n %libkateinterfaces
+%package -n %libkateprivate
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
-%description -n %libkateinterfaces
-KF5 library
+%description -n %libkateprivate
+%name library
 
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -156,10 +158,9 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 #%_K5data/kwrite/
 #%_K5doc/en/kwrite/
 
-#%files -n libkateinterfaces5
-#%_K5lib/libkateinterfaces5.so.*
-#%files -n libkatepartinterfaces5
-#%_K5lib/libkatepartinterfaces5.so.*
+%files -n %libkateprivate
+%_K5lib/libkateprivate.so.%sover
+%_K5lib/libkateprivate.so.*
 
 #%files devel
 #%_K5inc/kate/
@@ -167,6 +168,9 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 #%_K5link/lib*.so
 
 %changelog
+* Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 
