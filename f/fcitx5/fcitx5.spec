@@ -1,6 +1,3 @@
-Provides: cmake(Fcitx5Core)
-Provides: cmake(Fcitx5Utils)
-
 %define _libexecdir %_prefix/libexec
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
@@ -18,7 +15,7 @@ BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr
 
 Name:           fcitx5
 Version:        5.0.19
-Release:        alt2_%autorelease
+Release:        alt3_%autorelease
 Summary:        Next generation of fcitx
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5
@@ -89,6 +86,8 @@ The %{name}-data package provides shared data for Fcitx5.
 Group: Graphical desktop/Other
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
+Provides: cmake(Fcitx5Core)
+Provides: cmake(Fcitx5Utils)
 
 %description devel
 The %{name}-devel package contains libraries and header files necessary for
@@ -179,6 +178,9 @@ EOF
 %config %{_sysconfdir}/profile.d/fcitx5.sh
 
 %changelog
+* Tue Sep 20 2022 Igor Vlasenko <viy@altlinux.org> 5.0.19-alt3_0
+- bootstrap; moved cmake provides
+
 * Tue Sep 20 2022 Igor Vlasenko <viy@altlinux.org> 5.0.19-alt2_0
 - bootstrap; added cmake provides
 
