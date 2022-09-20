@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%mname
-Version: 3.4.2
+Version: 3.4.3
 Release: alt1
 
 Summary: An object-oriented API to access LDAP directory servers from Python programs
@@ -75,6 +75,9 @@ export TOX_TESTENV_PASSENV=BIN
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 20 2022 Stanislav Levin <slev@altlinux.org> 3.4.3-alt1
+- 3.4.2 -> 3.4.3.
+
 * Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 3.4.2-alt1
 - 3.4.0 -> 3.4.2.
 

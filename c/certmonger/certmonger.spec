@@ -5,7 +5,7 @@
 %def_with check
 
 Name: certmonger
-Version: 0.79.15
+Version: 0.79.16
 Release: alt1
 Summary: Certificate status monitor and PKI enrollment client
 
@@ -27,7 +27,7 @@ BuildRequires: libssl-devel
 BuildRequires: libtalloc-devel
 BuildRequires: libtevent-devel
 BuildRequires: libxml2-devel
-BuildRequires: libjansson-devel
+BuildRequires: libjansson-devel >= 2.12
 BuildRequires: libsystemd-devel
 
 %if_with check
@@ -53,6 +53,7 @@ system enrolled with a certificate authority (CA) and keeping it enrolled.
 %autoreconf
 %configure \
         --disable-rpath \
+        --disable-dsa \
 	--enable-systemd \
 	--enable-tmpfiles \
 	--with-homedir=/run/certmonger \
@@ -157,6 +158,9 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Tue Sep 20 2022 Stanislav Levin <slev@altlinux.org> 0.79.16-alt1
+- 0.79.15 -> 0.79.16.
+
 * Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 0.79.15-alt1
 - 0.79.14 -> 0.79.15.
 
