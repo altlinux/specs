@@ -1,3 +1,6 @@
+Provides: cmake(Fcitx5Core)
+Provides: cmake(Fcitx5Utils)
+
 %define _libexecdir %_prefix/libexec
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
@@ -15,7 +18,7 @@ BuildRequires: /usr/bin/Xvfb /usr/bin/desktop-file-install /usr/bin/doxygen /usr
 
 Name:           fcitx5
 Version:        5.0.19
-Release:        alt1_%autorelease
+Release:        alt2_%autorelease
 Summary:        Next generation of fcitx
 License:        LGPLv2+
 URL:            https://github.com/fcitx/fcitx5
@@ -176,6 +179,9 @@ EOF
 %config %{_sysconfdir}/profile.d/fcitx5.sh
 
 %changelog
+* Tue Sep 20 2022 Igor Vlasenko <viy@altlinux.org> 5.0.19-alt2_0
+- bootstrap; added cmake provides
+
 * Fri Sep 16 2022 Igor Vlasenko <viy@altlinux.org> 5.0.19-alt1_0
 - bootstrap build w/o configtool
 
