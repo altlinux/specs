@@ -38,8 +38,8 @@
 %def_enable lua
 
 Name: efl
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.3
+Release: alt1
 
 Summary: Enlightenment Foundation Libraries
 Group: System/Libraries
@@ -437,6 +437,9 @@ export LD_LIBRARY_PATH="$(echo "@eolian:@eina:@eet:@emile:@evas:@ecore:@ecore_fi
 %_iconsdir/Enlightenment-X/
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.26.3-alt1
+- 1.26.3
+
 * Tue Mar 29 2022 Yuri N. Sedunov <aris@altlinux.org> 1.26.2-alt1.1
 - fixed build ephysics against libbullet3-devel (disabled by default)
 

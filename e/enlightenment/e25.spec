@@ -21,8 +21,8 @@
 %def_disable wmsession
 
 Name: enlightenment
-Version: %ver_major.3
-Release: alt1.1
+Version: %ver_major.4
+Release: alt1
 Epoch: 1
 
 Summary: The Enlightenment window manager
@@ -236,6 +236,9 @@ sed -i 's/\(enlightenment\)_start/start_\1/' %buildroot%_datadir/xsessions/%name
 %_rpmmacrosdir/%name
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1:0.25.4-alt1
+- 0.25.4 (fixed CVE-2022-37706)
+
 * Sat May 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1:0.25.3-alt1.1
 - updated libddcutil dependency
 
