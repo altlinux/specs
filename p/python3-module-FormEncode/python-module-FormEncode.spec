@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define modulename FormEncode
+%define pypi_name FormEncode
 
 %def_with check
 
-Name: python3-module-%modulename
+Name: python3-module-%pypi_name
 Version: 2.0.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: HTML form validation, generation, and convertion package for Python
@@ -20,8 +20,11 @@ Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
-BuildRequires: python3(setuptools_scm_git_archive)
 
 %if_with check
 # install_requires=
@@ -30,10 +33,10 @@ BuildRequires: python3(six)
 BuildRequires: python3(dns)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pycountry)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
+
+# PyPI name
+%py3_provides %pypi_name
 
 %description
 FormEncode validates and converts nested structures. It allows for
@@ -44,38 +47,40 @@ for filling and generating forms.
 %setup
 %autopatch -p1
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 # don't ship tests
 rm -r %buildroot/%python3_sitelibdir/formencode/tests/
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-
-# test_unicode_ascii_subgroup requires internet
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false -- \
--k 'not test_unicode_ascii_subgroup'
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc README.rst
 %python3_sitelibdir/formencode/
-%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Tue Sep 20 2022 Stanislav Levin <slev@altlinux.org> 1:2.0.1-alt2
+- Fixed FTBFS (removed obsoleted setuptools-scm-git-archive).
+- Packaged missing i18n data.
+
 * Thu Feb 03 2022 Stanislav Levin <slev@altlinux.org> 1:2.0.1-alt1
 - 2.0.0 -> 2.0.1.
 
