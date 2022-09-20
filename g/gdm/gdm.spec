@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -71,8 +71,8 @@ Provides: %name-user-switch-applet = %version-%release
 Obsoletes: %name-user-switch-applet
 
 Requires(pre): %_rpmlibdir/update-dconf-database.filetrigger
-Requires: %name-libs = %version-%release
-Requires: %name-data = %version-%release
+Requires(pre): %name-libs = %version-%release
+Requires(pre): %name-data = %version-%release
 Requires: gnome-shell >= %shell_ver
 Requires: accountsservice >= %accountsservice_ver
 Requires: coreutils xinitrc iso-codes lsb-release shadow-utils
@@ -295,6 +295,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1.1
+- Requires(pre): -libs, -data subpakages
+
 * Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 
