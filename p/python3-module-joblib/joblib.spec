@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname joblib
+%define pypi_name joblib
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.1.0
+Name: python3-module-%pypi_name
+Version: 1.2.0
 Release: alt1
 
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
@@ -16,26 +16,37 @@ BuildArch: noarch
 
 # https://github.com/joblib/joblib.git
 Source: %name-%version.tar
+Source1: debundler.py.in
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
+# unvendored deps
+BuildRequires: python3(loky)
+BuildRequires: python3(cloudpickle)
+
 BuildRequires: /proc
 BuildRequires: python3(numpy)
 BuildRequires: python3(numpy.testing)
 BuildRequires: python3(threadpoolctl)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 # `distributed` is not packaged yet
 %filter_from_requires /python[3]\(\.[[:digit:]]\)\?(distributed\()\|\..*)\)/d
 
-# TODO: unbundle loky and cloudpickle
-# hide vendored packages
-%add_findprov_skiplist %python3_sitelibdir/%oname/externals/*
+# debundler
+## filter no longer provided self-dependencies
+%filter_from_requires /python3(joblib\.externals\..*)/d
+
+## dependencies on debundled packages
+%py3_requires loky
+%py3_requires cloudpickle
 
 %description
 Joblib is a set of tools to provide lightweight pipelining in Python. In
@@ -53,30 +64,37 @@ and has specific optimizations for numpy arrays.
 %setup
 %autopatch -p1
 
+VENDORED_PATH='joblib/externals'
+UNVENDORED_PATH="$VENDORED_PATH/__init__.py"
+rm -r "$VENDORED_PATH"
+mkdir "$VENDORED_PATH"
+cp "%SOURCE1" "$UNVENDORED_PATH"
+sed -i \
+    -e 's/@VENDORED_ROOT@/"joblib.externals"/' \
+    -e 's/@VENDORED_FAKE_PACKAGES@/None/' \
+    "$UNVENDORED_PATH"
+
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    pytest {posargs:-vra}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc *.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
-%exclude %python3_sitelibdir/%oname/test*
-%exclude %python3_sitelibdir/%oname/__pycache__/test*
+%python3_sitelibdir/joblib/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/joblib/test*
+%exclude %python3_sitelibdir/joblib/__pycache__/test*
 
 %changelog
+* Tue Sep 20 2022 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
+- 1.1.0 -> 1.2.0.
+
 * Tue Mar 01 2022 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - 0.14.1 -> 1.1.0.
 
