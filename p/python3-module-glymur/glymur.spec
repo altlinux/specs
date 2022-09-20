@@ -2,7 +2,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.11.6
+Version: 0.11.7
 Release: alt1
 
 Summary: Python interface to OpenJPEG library for reading and writing JPEG 2000 images.
@@ -57,6 +57,9 @@ py.test3
 %python3_sitelibdir/Glymur-%version.dist-info
 
 %changelog
+* Tue Sep 20 2022 Grigory Ustinov <grenka@altlinux.org> 0.11.7-alt1
+- Automatically updated to 0.11.7.
+
 * Tue Sep 13 2022 Grigory Ustinov <grenka@altlinux.org> 0.11.6-alt1
 - Automatically updated to 0.11.6.
 
