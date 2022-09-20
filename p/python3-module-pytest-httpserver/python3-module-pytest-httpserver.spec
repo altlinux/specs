@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-pytest-httpserver
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: HTTP server for pytest
@@ -17,11 +17,11 @@ Source: https://pypi.io/packages/source/p/%pypi_name/%pypi_name-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-wheel python3-module-poetry-core
+BuildRequires: python3-devel python3-module-wheel python3-module-poetry-core >= 1.1
 %{?_enable_check:
 BuildRequires: python3-module-werkzeug python3-module-pytest python3-module-flake8
 BuildRequires: python3-module-pytest python3-module-pytest-cov python3-module-coverage
-BuildRequires: python3-module-requests python3-module-mypy}
+BuildRequires: python3-module-requests python3-module-mypy python3-module-toml}
 
 %description
 This library is designed to help to test http clients without contacting
@@ -48,6 +48,9 @@ py.test3
 %doc CHANGES* README* LICENSE
 
 %changelog
+* Mon Sep 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.6-alt1
+- 1.0.6
+
 * Sat Jul 30 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
 - 1.0.5
 - ported to %%pyproject* macros, enabled %%check
