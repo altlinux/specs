@@ -1,4 +1,4 @@
-%define ver_major 1.2
+%define ver_major 1.4
 %define api_ver 1
 %define _name d-spy
 %define xdg_name org.gnome.dspy
@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: dspy
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tool to discover and explore D-Bus services
@@ -16,13 +16,13 @@ License: GPL-3.0
 Url: https://wiki.gnome.org/Apps/Builder
 
 Vcs: https://gitlab.gnome.org/GNOME/d-spy.git
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
 Requires: lib%name = %EVR
 Requires: dbus-tools-gui
 
 %define glib_ver 2.68
-%define gtk4_ver 4.2
+%define gtk4_ver 4.6
 %define libadwaita_ver 1.0
 
 BuildRequires(pre): rpm-macros-meson
@@ -61,7 +61,7 @@ This package provides development files for D-Spy library.
 
 
 %prep
-%setup
+%setup -n %_name-%version
 
 %build
 %meson
@@ -90,6 +90,9 @@ This package provides development files for D-Spy library.
 %_pkgconfigdir/%name-%api_ver.pc
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Tue Jul 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - first build for Sisyphus
 
