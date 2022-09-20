@@ -4,18 +4,17 @@
 %define _pkgdocdir %_docdir/%name
 
 Name: pdns
-Version: 4.2.2
-Release: alt4.1
+Version: 4.6.3
+Release: alt1
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
 License: GPLv2
 Url: http://powerdns.com
 Source0: %name-%version.tar
 Patch0: pdns-disable-secpoll.patch
-Patch1: %name-%version-alt-boost-1.73.0-compat.patch
-Patch2: %name-%version-upstream-gcc10-compat-1.patch
-Patch3: %name-%version-upstream-gcc10-compat-2.patch
-Patch4: %name-%version-alt-fix-missing-include.patch
+Patch1: %name-4.2.2-alt-boost-1.73.0-compat.patch
+Patch4: %name-4.2.2-alt-fix-missing-include.patch
+ExcludeArch: %ix86 %arm %mips32 ppc
 
 BuildRequires: gcc-c++ boost-program_options-devel curl libcurl-devel libsqlite3-devel
 BuildRequires: systemd-devel /bin/systemctl
@@ -23,12 +22,14 @@ BuildRequires: boost-devel
 BuildRequires: liblua5-devel
 BuildRequires: bison flex ragel
 BuildRequires: libzeromq-devel
-BuildRequires: openssl-devel
-BuildRequires: libprotobuf-devel
-BuildRequires: protobuf-compiler
+BuildRequires: libssl-devel libsodium-devel
+BuildRequires: libprotobuf-devel protobuf-compiler
 BuildRequires: libkrb5-devel
 Provides: powerdns = %version-%release
-%global backends %backends bind random
+%global backends %backends bind
+
+Obsoletes: pdns-backend-lua < 4.6.3
+Obsoletes: pdns-backend-mydns < 4.6.3
 
 %description
 The PowerDNS Nameserver is a modern, advanced and high performance
@@ -85,20 +86,11 @@ This package contains the remote backend for %name
 Summary: LDAP backend for %name
 Group: System/Servers
 Requires: %name = %version-%release
-BuildRequires: openldap-devel
+BuildRequires: libldap-devel
 %global backends %backends ldap
 
 %description backend-ldap
 This package contains the ldap backend for %name
-
-%package backend-lua
-Summary: LUA backend for %name
-Group: System/Servers
-Requires: %name = %version-%release
-%global backends %backends lua
-
-%description backend-lua
-This package contains the lua backend for %name
 
 %package backend-lua2
 Summary: LUA2 backend for %name
@@ -118,35 +110,16 @@ Requires: %name = %version-%release
 %description backend-sqlite
 This package contains the SQLite backend for %name
 
-%package backend-opendbx
-Summary: OpenDBX backend for %name
-Group: System/Servers
-Requires: %name = %version-%release
-BuildRequires: opendbx-devel
-%global backends %backends opendbx
-
-%description backend-opendbx
-This package contains the opendbx backend for %name
-
 %package backend-geoip
 Summary: GeoIP backend for %name
 Group: System/Servers
 Requires: %name = %version-%release
-BuildRequires: libGeoIP-devel
+BuildRequires: libmaxminddb-devel
 BuildRequires: libyaml-cpp-devel
 %global backends %backends geoip
 
 %description backend-geoip
 This package contains the GeoIP backend for %name
-
-%package backend-mydns
-Summary: MyDNS backend for %name
-Group: System/Servers
-Requires: %name = %version-%release
-%global backends %backends mydns
-
-%description backend-mydns
-This package contains the MyDNS backend for %name
 
 %package backend-tinydns
 Summary: TinyDNS backend for %name
@@ -161,7 +134,6 @@ This package contains the TinyDNS backend for %name
 %package ixfrdist
 Summary: A program to redistribute zones over AXFR and IXFR
 Group: System/Servers
-
 BuildRequires: libyaml-cpp-devel
 
 %description ixfrdist
@@ -172,8 +144,6 @@ This package contains the ixfrdist program.
 %setup
 %patch0 -p1 -b .disable-secpoll
 %patch1 -p2
-%patch2 -p1
-%patch3 -p1
 %patch4 -p1
 
 %build
@@ -192,6 +162,7 @@ export PDNS_TEST_NO_IPV6=1
 	--enable-lua-records \
 	--with-dynmodules='%backends' \
 	--enable-tools \
+	--with-libsodium \
 	--enable-remotebackend-zeromq \
 	--enable-unit-tests \
 	--enable-reproducible \
@@ -255,7 +226,6 @@ mkdir -p %buildroot%_localstatedir/%name
 %_unitdir/pdns.service
 %_unitdir/pdns@.service
 %_libdir/%name/libbindbackend.so
-%_libdir/%name/librandombackend.so
 %dir %_libdir/%name
 %dir %_sysconfdir/%name
 %dir %attr(0750, root, %name) %_localstatedir/%name
@@ -303,6 +273,8 @@ mkdir -p %buildroot%_localstatedir/%name
 %_pkgdocdir/nodnssec-3.x_to_3.4.0_schema.mysql.sql
 %_pkgdocdir/3.4.0_to_4.1.0_schema.mysql.sql
 %_pkgdocdir/4.1.0_to_4.2.0_schema.mysql.sql
+%_pkgdocdir/4.2.0_to_4.3.0_schema.mysql.sql
+%_pkgdocdir/enable-foreign-keys.mysql.sql
 %_libdir/%name/libgmysqlbackend.so
 
 %files backend-postgresql
@@ -311,6 +283,7 @@ mkdir -p %buildroot%_localstatedir/%name
 %_pkgdocdir/nodnssec-3.x_to_3.4.0_schema.pgsql.sql
 %_pkgdocdir/3.4.0_to_4.1.0_schema.pgsql.sql
 %_pkgdocdir/4.1.0_to_4.2.0_schema.pgsql.sql
+%_pkgdocdir/4.2.0_to_4.3.0_schema.pgsql.sql
 %_libdir/%name/libgpgsqlbackend.so
 
 %files backend-pipe
@@ -324,9 +297,6 @@ mkdir -p %buildroot%_localstatedir/%name
 %_pkgdocdir/pdns-domaininfo.schema
 %_libdir/%name/libldapbackend.so
 
-%files backend-lua
-%_libdir/%name/libluabackend.so
-
 %files backend-lua2
 %_libdir/%name/liblua2backend.so
 
@@ -336,17 +306,14 @@ mkdir -p %buildroot%_localstatedir/%name
 %_pkgdocdir/nodnssec-3.x_to_3.4.0_schema.sqlite3.sql
 %_pkgdocdir/3.4.0_to_4.0.0_schema.sqlite3.sql
 %_pkgdocdir/4.0.0_to_4.2.0_schema.sqlite3.sql
+%_pkgdocdir/4.2.0_to_4.3.0_schema.sqlite3.sql
+%_pkgdocdir/4.3.0_to_4.3.1_schema.sqlite3.sql
+%_pkgdocdir/bind-dnssec.4.2.0_to_4.3.0_schema.sqlite3.sql
+%_pkgdocdir/bind-dnssec.schema.sqlite3.sql
 %_libdir/%name/libgsqlite3backend.so
-
-%files backend-opendbx
-%_libdir/%name/libopendbxbackend.so
 
 %files backend-geoip
 %_libdir/%name/libgeoipbackend.so
-
-%files backend-mydns
-%_pkgdocdir/schema.mydns.sql
-%_libdir/%name/libmydnsbackend.so
 
 %files backend-tinydns
 %_libdir/%name/libtinydnsbackend.so
@@ -360,6 +327,11 @@ mkdir -p %buildroot%_localstatedir/%name
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Thu Sep 15 2022 Alexey Shabalin <shaba@altlinux.org> 4.6.3-alt1
+- 4.6.3 (Fixes: CVE-2020-17482, CVE-2020-17482, CVE-2020-24696, CVE-2020-24697, CVE-2020-24698,
+  CVE-2021-36754, CVE-2022-27227)
+- Removed random, lua, mydns, opendbx backends.
+
 * Thu Mar 10 2022 Alexei Takaseev <taf@altlinux.org> 4.2.2-alt4.1
 - Add missing BR: libkrb5-devel
 

@@ -2,7 +2,7 @@
 
 Name: openresolv
 Version: 3.12.0
-Release: alt1
+Release: alt2
 
 Summary: A framework for managing DNS information 
 License: BSD-2-Clause
@@ -19,8 +19,8 @@ Requires: filesystem >= 2.3.5
 
 # pdnsd support
 %def_with pdnsd
-# PowerDNS support
-%def_with pdns
+# PowerDNS Recursor support
+%def_without pdns
 
 %define _unpackaged_files_terminate_build 1
 
@@ -77,10 +77,10 @@ pdnsd subscriber for openresolv
 Summary: PowerDNS subscriber for openresolv
 Group: System/Configuration/Networking
 Requires: %name = %version-%release
-Requires: pdns
+Requires: pdns-recursor
 
 %description pdns
-PowerDNS subscriber for openresolv
+PowerDNS Recursor subscriber for openresolv
 %endif
 
 %prep
@@ -145,6 +145,10 @@ touch %buildroot%_localstatedir/bind/etc/resolvconf-options.conf
 %endif
 
 %changelog
+* Sun Sep 18 2022 Alexey Shabalin <shaba@altlinux.org> 3.12.0-alt2
+- Build without PowerDNS Recursor support.
+  PowerDNS Recursor package does not exist in Sisyphus yet.
+
 * Fri Jan 22 2021 Mikhail Efremov <sem@altlinux.org> 3.12.0-alt1
 - Added Vcs tag.
 - Don't package avahi-daemon and mdnsd libc subscribers.
