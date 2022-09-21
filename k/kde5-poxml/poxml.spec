@@ -1,7 +1,7 @@
 %define rname poxml
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -37,6 +37,9 @@ BuildRequires: kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel kf5-ki18n-d
 %_K5bin/*
 
 %changelog
+* Tue Sep 20 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

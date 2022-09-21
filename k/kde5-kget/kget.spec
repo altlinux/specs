@@ -4,7 +4,7 @@
 %define libkgetcore libkgetcore%sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -81,6 +81,7 @@ sed -i '/^find_package(KF5Torrent/d' CMakeLists.txt
 %files
 %_K5bin/*
 %_K5plug/kget/
+%_K5plug/kget_kcms/
 %_K5icon/*/*/apps/kget.*
 %_K5cfg/kget*
 %_K5data/kget/
@@ -103,6 +104,9 @@ sed -i '/^find_package(KF5Torrent/d' CMakeLists.txt
 %_K5lib/libkgetcore.so.%sover
 
 %changelog
+* Tue Sep 20 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

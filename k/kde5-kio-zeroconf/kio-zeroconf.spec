@@ -1,7 +1,7 @@
-%define rname zeroconf-ioslave
+%define rname kio-zeroconf
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -24,35 +24,12 @@ BuildRequires: kf5-kdbusaddons-devel kf5-kdnssd-devel kf5-ki18n-devel kf5-kio-de
 %description
 DNS-SD Service Discovery for KDE
 
-%package -n kde5-kio-zeroconf
-Summary: DNS-SD Service Discovery for KDE
-Group: Graphical desktop/KDE
-Requires: avahi-daemon libnss-mdns
-%description -n kde5-kio-zeroconf
-DNS-SD Service Discovery for KDE
-
-%package common
-Summary: %name common package
-Group: System/Configuration/Other
-BuildArch: noarch
-Requires: kf5-filesystem
-%description common
-%name common package
-
-%package devel
-Group: Development/KDE and QT
-Summary: Development files for %name
-%description devel
-The %name-devel package contains libraries and header files for
-developing applications that use %name.
-
-%package -n libkf5zeroconf-ioslave
-Group: System/Libraries
-Summary: %name library
-Requires: %name-common = %version-%release
-%description -n libkf5zeroconf-ioslave
-%name library
-
+#%package -n kde5-kio-zeroconf
+#Summary: DNS-SD Service Discovery for KDE
+#Group: Graphical desktop/KDE
+#Requires: avahi-daemon libnss-mdns
+#%description -n kde5-kio-zeroconf
+#DNS-SD Service Discovery for KDE
 
 %prep
 %setup -n %rname-%version
@@ -66,13 +43,17 @@ Requires: %name-common = %version-%release
 %K5install_move data remoteview
 %find_lang %name --with-kde --all-name
 
-%files -n kde5-kio-zeroconf -f %name.lang
+#files -n kde5-kio-zeroconf -f %name.lang
+%files -f %name.lang
 %doc LICENSES/*
 %_K5plug/kf5/kded/dnssdwatcher.so
 %_K5plug/kf5/kio/zeroconf.so
 %_K5data/remoteview/*
 
 %changelog
+* Tue Sep 20 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

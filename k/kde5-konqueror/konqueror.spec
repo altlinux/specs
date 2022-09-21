@@ -1,7 +1,7 @@
 %define rname konqueror
 
 %def_disable text2speech
-%ifarch %e2k ppc64le
+%ifarch %not_qt5_qtwebengine_arches
 %def_disable qtwebengine
 %else
 %def_enable qtwebengine
@@ -15,7 +15,7 @@
 %define libkonqsidebarplugin libkonqsidebarplugin%konqsidebarplugin_sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -34,11 +34,12 @@ Provides: kf5-konqueror-plugins = %version-%release
 Obsoletes: kf5-konqueror-plugins < %version-%release
 
 Source: %rname-%version.tar
+Patch1: alt-cleanup-webengine.patch
 
 # Automatically added by buildreq on Wed Mar 29 2017 (-bi)
 # optimized out: alternatives cmake cmake-modules desktop-file-utils docbook-dtds docbook-style-xsl elfutils fontconfig gcc-c++ gtk-update-icon-cache kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdesignerplugin-devel kf5-kdoctools kf5-kdoctools-devel kf5-kemoticons-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kparts-devel kf5-kservice-devel kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbusmenu-qt52 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-svg libqt5-test libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel perl python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-webchannel-devel rpm-build-python3 ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: extra-cmake-modules kf5-kactivities-devel kf5-kcmutils-devel kf5-kded kf5-kded-devel kf5-kdelibs4support-devel kf5-kdesu-devel kf5-kdoctools-devel kf5-khtml-devel kf5-kio-devel kf5-kjs-devel kf5-kpty-devel libXres-devel libtidy-devel python-module-google python3-dev qt5-script-devel qt5-webengine-devel qt5-x11extras-devel rpm-build-ruby zlib-devel-static
-BuildRequires(pre): rpm-build-kf5
+BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-script-devel qt5-x11extras-devel
 %if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel
@@ -97,6 +98,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %if_disabled qtwebengine
 sed -i '/add_subdirectory.*webenginepart/d' CMakeLists.txt
@@ -220,6 +222,9 @@ done
 %_K5lib/libkonqsidebarplugin.so.*
 
 %changelog
+* Tue Sep 20 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

@@ -4,7 +4,7 @@
 %define libelisalib libelisalib%sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -78,6 +78,7 @@ sed -i '/find_package.*UPNPQT/s|UPNPQT|UPNPQT_disabled|' CMakeLists.txt
 %_K5qml/org/kde/elisa/
 %_K5xdgapp/*elisa*.desktop
 %_K5icon/*/*/apps/elisa.*
+%_K5dbus_srv/org.kde.elisa.service
 
 #%files devel
 #%_K5inc/elisa_version.h
@@ -91,6 +92,9 @@ sed -i '/find_package.*UPNPQT/s|UPNPQT|UPNPQT_disabled|' CMakeLists.txt
 %_K5lib/libelisaLib.so.*
 
 %changelog
+* Tue Sep 20 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Mon Jul 11 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 
