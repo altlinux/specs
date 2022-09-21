@@ -1,6 +1,6 @@
 Name: scummvm-tools
 Version: 2.6.0
-Release: alt1
+Release: alt2
 
 Summary: Utilities for the SCUMM graphic adventure game interpreter
 Group: Games/Adventure
@@ -10,7 +10,7 @@ Url: http://www.scummvm.org
 Source: %name-%version.tar.gz
 
 # Automatically added by buildreq on Thu Mar 12 2009
-BuildRequires: gcc-c++ libflac-devel libpng-devel libvorbis-devel libwxGTK3.1-devel
+BuildRequires: gcc-c++ libflac-devel libpng-devel libvorbis-devel libwxGTK3.0-devel
 
 %description
 This is a collection of various tools that may be useful to use
@@ -35,6 +35,9 @@ mkdir -p %buildroot%_bindir
 %_datadir/scummvm-tools
 
 %changelog
+* Wed Sep 21 2022 Anton Midyukov <antohami@altlinux.org> 2.6.0-alt2
+- rebuild with wxGTK3.0 (Closes: 43838)
+
 * Thu Aug 04 2022 Fr. Br. George <george@altlinux.org> 2.6.0-alt1
 - Autobuild version bump to 2.6.0
 
