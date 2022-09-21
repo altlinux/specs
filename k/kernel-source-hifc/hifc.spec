@@ -2,7 +2,7 @@
 
 Name: kernel-source-hifc
 Version: 3.5.0.11
-Release: alt4
+Release: alt5
 Summary: Huawei Fibre Channel Adapter
 License: GPL-2.0-only
 Group: Development/Kernel
@@ -27,13 +27,16 @@ BuildRequires: kernel-headers-modules-std-def
 install -pDm0644 %_sourcedir/%name-%version.tar %kernel_srcdir/%name-%version.tar
 
 %check
-make -C /lib/modules/*-un-def-*/build  M=$PWD/drivers/scsi/huawei/hifc modules CONFIG_SCSI_FC_HIFC=m -j
+# make -C /lib/modules/*-un-def-*/build  M=$PWD/drivers/scsi/huawei/hifc modules CONFIG_SCSI_FC_HIFC=m -j
 make -C /lib/modules/*-std-def-*/build M=$PWD/drivers/scsi/huawei/hifc modules CONFIG_SCSI_FC_HIFC=m -j
 
 %files
 %kernel_src/%name-%version.tar
 
 %changelog
+* Wed Sep 21 2022 Andrew A. Vasilyev <andy@altlinux.org> 3.5.0.11-alt5
+- disable check for un-def
+
 * Thu Apr 21 2022 Andrew A. Vasilyev <andy@altlinux.org> 3.5.0.11-alt4
 - fix build for 5.17 kernel
 
