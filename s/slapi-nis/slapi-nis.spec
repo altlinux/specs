@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: slapi-nis
-Version: 0.56.7
-Release: alt3
+Version: 0.60.0
+Release: alt1
 
 Summary: NIS Server and Schema Compatibility plugins for Directory Server
-License: GPLv2
+License: GPL-3.0
 Group: System/Base
 Url: http://pagure.io/slapi-nis/
 Source: %name-%version.tar
@@ -71,6 +71,9 @@ sed -i -e 's,%_libdir/dirsrv/plugins/,,g' -e 's,.so$,,g' doc/examples/*.ldif
 %exclude %_libdir/dirsrv/plugins/*.la
 
 %changelog
+* Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 0.60.0-alt1
+- 0.56.7 -> 0.60.0.
+
 * Thu Feb 10 2022 Stanislav Levin <slev@altlinux.org> 0.56.7-alt3
 - Fixed build deps for envs with glibc < 2.32.
 

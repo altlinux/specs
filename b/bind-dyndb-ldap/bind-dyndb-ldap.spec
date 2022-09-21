@@ -2,8 +2,8 @@
 %define bind_version 9.11.5
 
 Name: bind-dyndb-ldap
-Version: 11.1
-Release: alt8
+Version: 11.10
+Release: alt1
 
 Summary: LDAP back-end plug-in for BIND
 License: %gpl2plus
@@ -42,15 +42,6 @@ off of your LDAP server.
 mkdir -p %buildroot%_localstatedir/bind/zone/dyndb-ldap/
 
 %post
-# Transform named.conf if it still has old-style API.
-PLATFORM=$(uname -m)
-
-if [ $PLATFORM == "x86_64" ] ; then
-    LIBPATH=/usr/lib64
-else
-    LIBPATH=/usr/lib
-fi
-
 # The following sed script:
 #   - scopes the named.conf changes to dynamic-db
 #   - replaces arg "name value" syntax with name "value"
@@ -68,8 +59,8 @@ done <<EOF
 
   s/^dynamic-db/dyndb/;
 
-  s@\(dyndb "[^"]\+"\)@\1 "$LIBPATH/bind/ldap.so"@;
-  s@\(dyndb '[^']\+'\)@\1 '$LIBPATH/bind/ldap.so'@;
+  s@\(dyndb "[^"]\+"\)@\1 "%_libdir/bind/ldap.so"@;
+  s@\(dyndb '[^']\+'\)@\1 '%_libdir/bind/ldap.so'@;
 
   /\s*library[^;]\+;/d;
   /\s*cache_ttl[^;]\+;/d;
@@ -97,6 +88,9 @@ systemctl is-enabled --quiet ipa && systemctl restart bind 2>&1 ||:
 %exclude %_libdir/bind/*.la
 
 %changelog
+* Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 11.10-alt1
+- 11.1 -> 11.10.
+
 * Thu Oct 10 2019 Stanislav Levin <slev@altlinux.org> 11.1-alt8
 - Added workaround for LDAP socket error on BIND start.
 
