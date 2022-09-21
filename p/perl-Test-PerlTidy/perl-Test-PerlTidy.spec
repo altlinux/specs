@@ -1,9 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 ## SPEC file for Perl module Test::PerlTidy
 
 %define real_name Test-PerlTidy
 
 Name: perl-Test-PerlTidy
-Version: 20210709
+Version: 20220902
 Release: alt1
 
 Summary: Perl module to check that all project files are tidy
@@ -44,6 +45,9 @@ If you make any changes please remember to tidy them.
 %perl_vendor_privlib/Test/PerlTidy*
 
 %changelog
+* Wed Sep 21 2022 Igor Vlasenko <viy@altlinux.org> 20220902-alt1
+- new version
+
 * Sun Jul 11 2021 Nikolay A. Fetisov <naf@altlinux.org> 20210709-alt1
 - New version
 
