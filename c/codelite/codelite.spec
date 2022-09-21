@@ -1,6 +1,6 @@
 Name:    codelite
 Version: 16.0.0
-Release: alt1
+Release: alt2
 
 Summary: CodeLite is a powerful open-source, cross platform code editor for C/C++
 
@@ -10,12 +10,13 @@ Url:     http://codelite.sourceforge.net
 
 # https://github.com/eranif/codelite
 Source:  %name-%version.tar
+Patch:   %name-%version-%release.patch
 
 Requires: libedit-devel
 
 BuildRequires: rpm-build-python3
 BuildRequires: cmake gcc-c++ libssh-devel libedit-devel libgtk+3-devel
-BuildRequires: libsqlite3-devel libwxGTK3.1-devel libatk-devel libpango-devel
+BuildRequires: libsqlite3-devel libwxGTK3.2-devel libatk-devel libpango-devel
 BuildRequires: libpcre-devel libffi-devel libfribidi-devel libtiff-devel
 BuildRequires: libmount-devel libpixman-devel libblkid-devel libuuid-devel
 BuildRequires: libselinux-devel bzlib-devel libexpat-devel libXdmcp-devel
@@ -39,6 +40,7 @@ programming languages, which runs best on all major platforms
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 cmake . -G "Unix Makefiles" \
@@ -84,6 +86,9 @@ rm -f %buildroot%_bindir/codelite_open_helper.py
 %dir %_iconsdir/hicolor/64x64@2x/apps
 
 %changelog
+* Wed Sep 21 2022 Anton Midyukov <antohami@altlinux.org> 16.0.0-alt2
+- NMU: build with wxGTK3.2
+
 * Thu Apr 28 2022 Grigory Ustinov <grenka@altlinux.org> 16.0.0-alt1
 - Automatically updated to 16.0.0.
 
