@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name blockdev
-%define ver_major 2.27
+%define ver_major 2.28
 %define rev 1
 
 %ifnarch %ix86 x86_64
@@ -643,6 +643,9 @@ find %buildroot -type f -name "*.la" -print0| xargs -r0 rm -f --
 %endif
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 2.28-alt1
+- 2.28
+
 * Wed Jun 01 2022 Yuri N. Sedunov <aris@altlinux.org> 2.27-alt1
 - 2.27
 
