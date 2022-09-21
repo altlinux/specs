@@ -82,8 +82,8 @@
 %vulkan_drivers_add swrast
 %gallium_drivers_add zink
 
-%define ver_major 22.1
-%define ver_minor 7
+%define ver_major 22.2
+%define ver_minor 0
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -361,9 +361,9 @@ Mesa-based DRI drivers
 
 %meson_build -v
 
-for i in $(seq 0 %ver_minor); do
-	rst2html %_builddir/%name-%version/docs/relnotes/%ver_major.$i.rst %_builddir/%name-%version/%ver_major.$i.html
-done
+#for i in $(seq 0 %ver_minor); do
+#	rst2html %_builddir/%name-%version/docs/relnotes/%ver_major.$i.rst %_builddir/%name-%version/%ver_major.$i.html
+#done
 
 %install
 %meson_install
@@ -425,7 +425,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 #define _unpackaged_files_terminate_build 1
 
 %files -n libGLX-mesa
-%doc %ver_major.*.html
+#%doc %ver_major.*.html
 %_libdir/libGLX_mesa.so.*
 %_libdir/libglapi.so.*
 
@@ -585,6 +585,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Wed Sep 21 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.2.0-alt1
+- 22.2.0
+
 * Fri Aug 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.1.7-alt1
 - 22.1.7
 
