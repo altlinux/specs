@@ -6,7 +6,7 @@
 %def_enable packagekit
 
 Name: simple-scan
-Version: %ver_major.1
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: Simple scanning utility
@@ -61,6 +61,9 @@ scanner and quickly have the image/document in an appropriate format.
 %_man1dir/*
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.5-alt1
+- 42.5
+
 * Tue Apr 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 
