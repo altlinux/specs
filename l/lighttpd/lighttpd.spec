@@ -7,6 +7,7 @@
 %def_with pgsql
 %def_with tests
 %def_with maxminddb
+%def_with libdeflate
 
 %define lighttpd_user lighttpd
 %define lighttpd_group lighttpd
@@ -15,7 +16,7 @@
 %define docdir %_docdir/%name-%version-doc
 
 Name: lighttpd
-Version: 1.4.65
+Version: 1.4.67
 Release: alt1
 
 Summary: A fast webserver with minimal memory-footprint
@@ -43,7 +44,8 @@ BuildRequires: bzlib-devel libbrotli-devel libfcgi-devel libpcre2-devel libxxhas
 %{?_with_ldap:BuildPreReq: libldap-devel}
 %{?_with_lua:BuildPreReq: lua-devel}
 %{?_with_gamin:BuildPreReq: libgamin-devel}
-%{?_with_pgsql:BuildPreReq: postgresql-devel}
+%{?_with_pgsql:BuildPreReq: libpq5-devel}
+%{?_with_libdeflate:BuildPreReq: libdeflate-devel}
 %{?_with_tests:BuildPreReq: perl-devel perl-Digest-SHA}
 
 %description
@@ -147,6 +149,7 @@ libtoolize -f -c
     %{?_with_gamin:	  --with-fam} \
     %{?_with_gssapi:	  --with-krb5} \
     %{?_with_maxminddb:	  --with-maxminddb} \
+    %{?_with_libdeflate:  --with-libdeflate} \
     %{?_with_lua:	  LUA_CFLAGS="-I/usr/include/" LUA_LIBS="-llua"}
 
 %make_build
@@ -279,6 +282,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Wed Sep 21 2022 Alexei Takaseev <taf@altlinux.org> 1.4.67-alt1
+- 1.4.67
+
 * Thu Jun 09 2022 Alexei Takaseev <taf@altlinux.org> 1.4.65-alt1
 - 1.4.65
 
