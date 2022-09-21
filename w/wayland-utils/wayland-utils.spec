@@ -1,4 +1,4 @@
-%define ver_major 1.0
+%define ver_major 1.1
 
 Name: wayland-utils
 Version: %ver_major.0
@@ -9,13 +9,14 @@ License: MIT
 Group: System/X11
 Url: https://wayland.freedesktop.org/
 
-Source: https://wayland.freedesktop.org/releases/%name-%version.tar.xz
+Vcs: https://gitlab.freedesktop.org/wayland/wayland-utils.git
+Source: https://gitlab.freedesktop.org/wayland/wayland-utils/-/archive/%version/%name-%version.tar.gz
 
 %define wayland_ver 1.17
 
 BuildRequires(pre): meson
 BuildRequires: libwayland-server-devel >= %wayland_ver
-BuildRequires: libwayland-client-devel wayland-protocols
+BuildRequires: libwayland-client-devel wayland-protocols libdrm-devel
 
 %description
 wayland-info is a utility for displaying information about the Wayland
@@ -40,6 +41,9 @@ protocols supported by a Wayland compositor.
 %doc README.md
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 
 * Sat Aug 1 2020 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - first build for Sisyphus
