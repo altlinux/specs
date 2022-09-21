@@ -1,10 +1,10 @@
 Name: woof
 Version: 10.2.0
-Release: alt1
+Release: alt2
 Summary: continuation of Lee Killough's Doom source port MBF targeted at modern systems
 Group: Games/Arcade
 License: GPLv2
-Url: http://eureka-editor.sourceforge.net/
+Url: https://github.com/fabiangreffrath/woof
 
 Source: %name-%version.tar
 
@@ -41,5 +41,8 @@ cp -r ./%_arch-alt-linux/src/autoload %buildroot%_datadir/%name
 %_datadir/%name/
 
 %changelog
+* Thu Sep 22 2022 Artyom Bystrov <arbars@altlinux.org> 10.2.0-alt2
+- Fix URL of project
+
 * Sun Sep 18 2022 Artyom Bystrov <arbars@altlinux.org> 10.2.0-alt1
 - initial build for ALT Sisyphus
