@@ -1,6 +1,6 @@
 Name:           nss_wrapper
-Version:        1.1.11
-Release:        alt1.1
+Version:        1.1.12
+Release:        alt1
 License:        BSD
 Group:          Development/Other
 Summary:        A wrapper for the user, group and hosts NSS API
@@ -64,6 +64,11 @@ development/testing.
 %_mandir/man1/nss_wrapper.1*
 
 %changelog
+* Sat Sep 17 2022 Evgeny Sinelnikov <sin@altlinux.org> 1.1.12-alt1
+- Fixed possible crash in getaddrinfo()
+- Fixed issues with processes closing all fds when forking
+- Fixed issues with setgrent() and endpwent() nss module support
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 1.1.11-alt1.1
 - NMU: spec: adapted to new cmake macros.
 

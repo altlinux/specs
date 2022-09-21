@@ -1,5 +1,5 @@
 Name:           socket_wrapper
-Version:        1.3.3
+Version:        1.3.4
 Release:        alt1
 Group:          Development/Other
 License:        BSD
@@ -71,6 +71,9 @@ popd
 %_man1dir/%name.1*
 
 %changelog
+* Fri Sep 16 2022 Evgeny Sinelnikov <sin@altlinux.org> 1.3.4-alt1
+- Fixed TOCTOU issue with udp auto binding
+
 * Thu Jul 29 2021 Evgeny Sinelnikov <sin@altlinux.org> 1.3.3-alt1
 - Update to latest release with support for fd-passing via unix sockets
 - Add public libsocket_wrapper_noop library
