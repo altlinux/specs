@@ -1,9 +1,9 @@
 %define xdg_name org.gnome.EasyTAG
-%def_enable nautilus
+%def_disable nautilus
 
 Name: easytag
 Version: 2.4.3
-Release: alt3
+Release: alt4
 
 Summary: Audio files tag viewer/editor
 Summary(ru_RU.UTF-8): Утилита для редактирования тегов звуковых файлов
@@ -82,6 +82,9 @@ Monkey's звуковых файлов.
 %doc ChangeLog HACKING README THANKS TODO
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt4
+- disabled Nautilus support
+
 * Sun Apr 12 2020 Yuri N. Sedunov <aris@altlinux.org> 2.4.3-alt3
 - updated to easytag-2.4.3-19-gb3b7542 from 2-4 branch
 - disabled validating AppData XML file during %%check
