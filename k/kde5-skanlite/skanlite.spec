@@ -10,7 +10,7 @@
 %endif
 
 Name: kde5-%rname
-Version: 2.2.0
+Version: 22.08.1
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -26,7 +26,6 @@ Obsoletes: skanlite < %version-%release
 %endif
 
 Source: %rname-%version.tar
-Patch1: alt-ftbfs.patch
 
 # Automatically added by buildreq on Mon Feb 01 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 python3-base xml-common xml-utils zlib-devel
@@ -48,7 +47,6 @@ with auto-generated names and format.
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 
 %build
 %K5build
@@ -58,11 +56,15 @@ with auto-generated names and format.
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
-%doc src/COPYING*
+%doc LICENSES/*
 %_K5bin/skanlite
-%_K5xdgapp/org.kde.skanlite.desktop
+%_K5xdgapp/*skanlite*.desktop
+%_K5icon/hicolor/*/apps/*skanlite*
 
 %changelog
+* Wed Sep 21 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Tue Jul 14 2020 Sergey V Turchin <zerg@altlinux.org> 2.2.0-alt1
 - new version
 
