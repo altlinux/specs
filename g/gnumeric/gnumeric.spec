@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.52
+Version: %ver_major.53
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -184,6 +184,9 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %_pkgconfigdir/*
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.53-alt1
+- 1.12.53
+
 * Tue Apr 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.52-alt1
 - 1.12.52
 
