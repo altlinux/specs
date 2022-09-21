@@ -1,9 +1,9 @@
 %define rname ksudoku
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Summary: %rname is a logic-based symbol placement puzzle
 License: %gpl2only
@@ -46,9 +46,11 @@ only one instance of each symbol.
 %_K5xdgapp/org.kde.%{rname}.desktop
 %_K5icon/hicolor/*/*/%{rname}*.*
 %_K5data/%{rname}/
-%_K5xmlgui/%{rname}/
 
 %changelog
+* Wed Sep 21 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Tue Jul 12 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

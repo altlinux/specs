@@ -1,9 +1,9 @@
 %define rname lskat
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Group: Games/Cards
 Summary: Lieutnant skat
@@ -54,6 +54,9 @@ where the second player is either live opponent, or built in artificial intellig
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Wed Sep 21 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Tue Jul 12 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

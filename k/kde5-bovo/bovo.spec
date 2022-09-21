@@ -1,9 +1,9 @@
 %define rname bovo
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
-%K5init
+%K5init no_appdata
 
 Group: Games/Boards
 Summary: Classic pen and paper game
@@ -46,6 +46,9 @@ where you try to connect five in a row prior to your opponent.
 #%_K5xmlgui/bovo/
 
 %changelog
+* Wed Sep 21 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Tue Jul 12 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 
