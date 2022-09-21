@@ -1,17 +1,18 @@
 Name: ucblogo
 Version: 6.2.2
-Release: alt1
+Release: alt2
 Summary: An interpreter for the Logo programming language
 Group: Development/Functional
 License: GPLv2+
 Source: %name-%version.tar.gz
 Source1: logo-mode.tar.gz
 Patch: FromUTF8.patch
+Patch1: ucblogo-6.2.2-fix-desktop-file.patch
 Url: http://www.cs.berkeley.edu/~bh
 
 # Automatically added by buildreq on Tue Nov 23 2021
 # optimized out: at-spi2-atk emacs-base emacs-common fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libat-spi2-core libcairo-gobject libgdk-pixbuf libgpg-error libp11-kit libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwxBase3.1-devel openssh-clients perl perl-Encode perl-Text-Unidecode perl-Unicode-EastAsianWidth perl-Unicode-Normalize perl-libintl perl-parent python3 python3-base sh4 tex-common texlive texlive-collection-basic texlive-dist
-BuildRequires: emacs-nox gcc-c++ libX11-devel libwxGTK3.1-devel makeinfo texi2dvi libncursesw-devel
+BuildRequires: emacs-nox gcc-c++ libX11-devel libwxGTK3.2-devel makeinfo texi2dvi libncursesw-devel
 
 BuildRequires: autoconf-archive texi2html tex(manfnt.sty)
 
@@ -37,6 +38,7 @@ Emacs mode for UCBLogo.
 %setup
 %setup -a 1
 %patch -p1
+%patch1 -p2
 
 # no dot files in directories
 sed -i  's|\.logo|dot.logo|g' emacs/dot.*
@@ -98,6 +100,10 @@ rm %buildroot%_datadir/emacs/site-lisp/logo/*.el
 %_datadir/emacs/site-lisp/site-start.d
 
 %changelog
+* Wed Sep 21 2022 Anton Midyukov <antohami@altlinux.org> 6.2.2-alt2
+- NMU: rebuild with wxGTK3.2
+- NMU: fix desktop file (Closes: 43837)
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 6.2.2-alt1
 - Autobuild version bump to 6.2.2
 
