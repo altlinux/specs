@@ -8,8 +8,8 @@
 %define add_libs %(wx-config --libs || :) -lmp3lame
 
 Name: audacity
-Version: 3.1.2
-Release: alt2
+Version: 3.1.3
+Release: alt1
 
 Summary: Cross-platform audio editor
 Summary(ru_RU.UTF-8): Кроссплатформенный звуковой редактор
@@ -33,6 +33,11 @@ Patch0004: 0004-Force-GTK-3.0.patch
 # https://github.com/audacity/audacity/issues/2163
 Patch0005: 0005-Do-not-create-file-in-strange-place.patch
 
+# Patches needed to compile against wxWidgets 3.1.6.
+# Sent upstream in https://github.com/audacity/audacity/pull/2776
+Patch0006: wx316_bitmaps.patch
+Patch0007: wx316_customLanguages.patch
+
 BuildRequires: gcc-c++
 BuildRequires: cmake
 # -Daudacity_conan_enabled=Off is a temporary workaround according to
@@ -48,7 +53,7 @@ BuildRequires: ladspa_sdk
 BuildRequires: liblame-devel
 BuildRequires: libportmidi-devel
 # Requires wxWidgets built without STL
-BuildRequires: libwxGTK3.1-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: zip
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(expat)
@@ -234,6 +239,10 @@ echo "$p" | grep -q libmp3lame
 %_datadir/%name/help
 
 %changelog
+* Mon Sep 19 2022 Anton Midyukov <antohami@altlinux.org> 3.1.3-alt1
+- new version 3.1.3
+- build with wxGTK3.2
+
 * Thu Mar 10 2022 Michael Shigorin <mike@altlinux.org> 3.1.2-alt2
 - E2K: build fix by ilyakurdyukov@ (patchelf is not ported properly yet)
 
