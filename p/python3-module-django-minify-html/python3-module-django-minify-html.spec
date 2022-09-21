@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 1.0.0
+Version: 1.3.0
 Release: alt1
 
 Summary: Use minify-html, the extremely fast HTML + JS + CSS minifier, with Django.
@@ -14,7 +14,6 @@ Group: Development/Python3
 Url: https://github.com/adamchainz/django-minify-html
 ExcludeArch: i586 armh
 
-# VCS:https://github.com/adamchainz/django-minify-html
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
@@ -53,7 +52,7 @@ within Django, at the point of HTML generation.
 %setup
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install --install-lib=%python3_sitelibdir
@@ -68,8 +67,10 @@ tox.py3 --sitepackages --no-deps -e py%{python_version_nodots python3}-$DJANGO_V
 %doc *.rst LICENSE
 %python3_sitelibdir/*
 
-
 %changelog
+* Tue Sep 20 2022 Dmitry Lyalyaev <fruktime@altlinux.org> 1.3.0-alt1
+- New version 1.3.0
+  + Move .spec in the "alt" directory
+
 * Fri Feb 18 2022 Dmitry Lyalyaev <fruktime@altlinux.org> 1.0.0-alt1
 - Initial build for ALT Linux
-
