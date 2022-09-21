@@ -1,6 +1,8 @@
 %define _unpackaged_files_terminate_build 1
+# tomllib is a part of Python's stdlib since 3.11
+%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
-%define  oname mypy
+%define pypi_name mypy
 %def_with check
 
 # mypyc doesn't work on 32bit arches
@@ -11,8 +13,8 @@
 %def_with mypyc
 %endif
 
-Name:    python3-module-%oname
-Version: 0.942
+Name:    python3-module-%pypi_name
+Version: 0.971
 Release: alt1
 
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
@@ -21,7 +23,11 @@ Group:   Development/Python3
 URL:     https://github.com/python/mypy
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3-dev
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 # Needed to generate the man pages
 BuildRequires:  help2man
@@ -33,7 +39,10 @@ BuildRequires: python3-module-typeshed > 0-alt4
 # install_requires=
 BuildRequires: python3(typing_extensions)
 BuildRequires: python3(mypy_extensions)
+
+%if %tomli
 BuildRequires: python3(tomli)
+%endif
 
 # TODO: unbundle googletest
 BuildRequires: /proc
@@ -42,13 +51,19 @@ BuildRequires: python3(lxml)
 BuildRequires: python3(psutil)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_xdist)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(typing)
+BuildRequires: python3(six)
+BuildRequires: python3(attrs)
+BuildRequires: python3(filelock)
 %endif
 
 Source:  %name-%version.tar
 Patch0: %name-%version-alt.patch
+
+%if %tomli
+# rebuild against Python 3.11 is required to get rid of old dependency
+%py3_requires tomli
+%endif
 
 %description
 Mypy is an optional static type checker for Python.  You can add type
@@ -61,7 +76,7 @@ running them!
 %package -n python3-module-mypyc
 Summary: Mypy to Python C Extension Compiler
 Group: Development/Python3
-Requires: python3-module-%oname = %EVR
+Requires: python3-module-%pypi_name = %EVR
 Requires: python3-dev
 
 %description -n python3-module-mypyc
@@ -78,24 +93,19 @@ mypyc. Compiled mypy is about 4x faster than without compilation.
 # Python2 parser
 rm mypy/fastparse2.py
 
-# bundled type stubs for stdlib from typeshed
-rm -r ./mypy/typeshed/stdlib/
-ln -s %python3_sitelibdir_noarch/typeshed/stdlib ./mypy/typeshed/
-
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
     mkdir -p %buildroot%python3_sitelibdir
     mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
-# don't bundle typeshed
-rm -r %buildroot%python3_sitelibdir/%oname/typeshed
-ln -s %python3_sitelibdir_noarch/typeshed %buildroot%python3_sitelibdir/%oname/
+mv %buildroot%python3_sitelibdir/mypy/{typeshed,mypy_typeshed}
+ln -sr %buildroot%python3_sitelibdir/mypy/{mypy_typeshed,typeshed}
 
 # Generate man pages
 mkdir -p %buildroot%_man1dir
@@ -111,7 +121,7 @@ PYTHONPATH=%buildroot%python3_sitelibdir \
         %buildroot%_bindir/stubgen
 
 # don't package tests
-rm -r %buildroot%python3_sitelibdir/%oname/test/
+rm -r %buildroot%python3_sitelibdir/%pypi_name/test/
 rm -r %buildroot%python3_sitelibdir/mypyc/external/googletest/
 rm -r %buildroot%python3_sitelibdir/mypyc/test/
 rm -r %buildroot%python3_sitelibdir/mypyc/test-data/
@@ -127,17 +137,13 @@ TESTS="mypy/test"
 %ifnarch %ix86 armh
 TESTS="$TESTS mypyc/test"
 %endif
-
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps -vvr -s false -- -vv $TESTS
+%tox_check_pyproject -- -vv $TESTS
 
 %files
 %doc README.md
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
-%_bindir/%oname
+%python3_sitelibdir/mypy/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%_bindir/mypy
 %_bindir/dmypy
 %_bindir/stubgen
 %_bindir/stubtest
@@ -151,6 +157,9 @@ tox.py3 --sitepackages --no-deps -vvr -s false -- -vv $TESTS
 %endif
 
 %changelog
+* Thu Aug 18 2022 Stanislav Levin <slev@altlinux.org> 0.971-alt1
+- 0.942 -> 0.971.
+
 * Fri Mar 25 2022 Stanislav Levin <slev@altlinux.org> 0.942-alt1
 - 0.931 -> 0.942.
 
