@@ -3,11 +3,12 @@
 %define ver_major 4.0
 %define beta %nil
 %def_enable noise_tools
+%def_enable system_lua
 %def_enable libavif
 %def_disable libheif
 
 Name: darktable
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
@@ -35,6 +36,7 @@ ExcludeArch: %ix86 armh
 %define pugixml_ver 1.8
 %define libavif_ver 0.8.2
 %define libheif_ver 1.12.0
+%define lua_ver_major 5.4
 
 Requires: iso-codes >= %iso_codes_ver
 Requires: icon-theme-adwaita
@@ -60,6 +62,9 @@ BuildRequires: libosm-gps-map1.0-devel
 BuildRequires: /usr/bin/jsonschema
 BuildRequires: iso-codes-devel >= %iso_codes_ver
 BuildRequires: libgmic-devel libjasper-devel
+%{?_enable_system_lua:BuildRequires(pre): rpm-build-lua
+BuildRequires: liblua%lua_ver_major-devel
+Provides: lua%lua_ver_major(darktable)}
 # since 3.2.0
 %{?_enable_libavif:BuildRequires: libavif-devel >= %libavif_ver}
 %{?_enable_libheif:BuildRequires: libheif-devel}
@@ -88,8 +93,9 @@ light table. It also enables you to develop raw images and enhance them.
 -DRAWSPEED_ENABLE_LTO=ON \
 %{?_enable_noise_tools:-DBUILD_NOISE_TOOLS=ON} \
 %ifarch ppc64le
--DUSE_OPENCL=OFF
+-DUSE_OPENCL=OFF \
 %endif
+%{?_enable_system_lua:-DDONT_USE_INTERNAL_LUA=ON}
 %nil
 %cmake_build
 
@@ -122,6 +128,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
+- 4.0.1
+
 * Sun Jul 03 2022 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
 - 4.0.0
 
