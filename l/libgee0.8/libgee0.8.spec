@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: %_name%api_ver
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: a collection library providing GObject-based interfaces
@@ -113,6 +113,9 @@ applications with %name.
 %endif
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.20.6-alt1
+- 0.20.6
+
 * Wed Mar 02 2022 Yuri N. Sedunov <aris@altlinux.org> 0.20.5-alt1
 - 0.20.5
 
