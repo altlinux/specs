@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 22.08.1
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -35,6 +35,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
+Requires: kde5-ksanecore-devel
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
@@ -72,6 +73,9 @@ KF5 library
 %_K5lib/libKF5Sane.so.*
 
 %changelog
+* Wed Sep 21 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt2
+- update requires
+
 * Thu Sep 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
 - new version
 
