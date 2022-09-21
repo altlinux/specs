@@ -10,9 +10,12 @@
 %define sover 3
 %define libfalkonprivate libfalkonprivate%sover
 
-Name: falkon
-Version: 3.2.0
-Release: alt2
+%define rname falkon
+%def_disable python_plugins
+
+Name: kde5-%rname
+Version: 22.08.1
+Release: alt1
 %K5init no_altplace
 
 Summary: A very fast open source browser based on WebKit core
@@ -22,14 +25,16 @@ Url: https://www.falkon.org/
 
 ExcludeArch: %not_qt5_qtwebengine_arches
 
-Source: %name-%version.tar
+Source: %rname-%version.tar
 # Automatically added by buildreq on Thu Apr 07 2016
 # optimized out: fontconfig gcc-c++ libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-positioning libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-sql libqt5-webchannel libqt5-webenginecore libqt5-webenginewidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel pkg-config python-base python-modules qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-tools qt5-webchannel-devel
 BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
 BuildRequires: extra-cmake-modules
 BuildRequires: libssl-devel libxcbutil-devel
 BuildRequires: qt5-multimedia-devel qt5-script-devel qt5-tools-devel qt5-webengine-devel qt5-websockets-devel qt5-x11extras-devel
-#BuildRequires: python3-devel python3-module-PySide2-devel
+%if_enabled python_plugins
+BuildRequires: python3-devel python3-module-shiboken2-devel python3-module-PySide2-devel
+%endif
 BuildRequires: kf5-kwallet-devel kf5-ki18n-devel kf5-kio-devel kf5-kcrash-devel kf5-kcoreaddons-devel kf5-purpose-devel
 BuildRequires: kf5-karchive-devel
 BuildRequires: libgnome-keyring-devel
@@ -41,55 +46,59 @@ It is a lightweight browser with some advanced functions
 like integrated AdBlock, Search Engines Manager, Theming
 support, Speed Dial and SSL Certificate manager.
 
-%package core
+%package -n %rname-core
 Group: Graphical desktop/KDE
 Summary: Falkon KDE integration
 Requires(post,preun): alternatives >= 0.2
 Provides: webclient
-Provides: %name = %EVR
-Obsoletes: %name < %EVR
-Provides:  qupzilla = %version-%release
+Provides: %rname = %EVR
+Obsoletes: %rname < %EVR
+Provides: qupzilla = %version-%release
 Obsoletes: qupzilla < %version-%release
-%description core
+%description -n %rname-core
 Falkon KDE integration.
 
-%package kde5
+%package -n %rname-kde5
 Group: Graphical desktop/KDE
 Summary: Falkon KDE integration
-Requires: %{name}-core
+Requires: %rname-core
 Provides: webclient
 Provides: %name = %version-%release
-Provides: %name-kde = %version-%release
-Provides:  qupzilla-kde5 = %version-%release
+Provides: %rname = %version-%release
+Provides: %rname-kde = %version-%release
+Provides: qupzilla-kde5 = %version-%release
 Obsoletes: qupzilla-kde5 < %version-%release
 Obsoletes: rekonq < 2.5
-%description kde5
+%description -n %rname-kde5
 Falkon KDE integration.
 
-%package gnome3
+%package -n %rname-gnome3
 Group: Graphical desktop/GNOME
 Summary: Falkon GNOME integration
-Requires: %{name}-core
+Requires: %rname-core
 Provides: webclient
-Provides: %name = %version-%release
-Provides: %name-gnome = %version-%release
-Provides:  qupzilla-gnome3 = %version-%release
+Provides: %rname = %version-%release
+Provides: %rname-gnome = %version-%release
+Provides: qupzilla-gnome3 = %version-%release
 Obsoletes: qupzilla-gnome3 < %version-%release
-%description gnome3
+%description -n %rname-gnome3
 Falkon GNOME integration.
 
 %package -n %libfalkonprivate
 Group: System/Libraries
 Summary: %name library
 #Requires: %name-common
+Requires: kf5-filesystem
 %description -n %libfalkonprivate
 %name library
 
 %prep
-%setup
+%setup -n %rname-%version
 
 %build
-%K5build
+%K5build \
+    -DBUILD_KEYRING:BOO=ON \
+    #
 
 %install
 %K5install
@@ -104,7 +113,7 @@ __EOF__
 
 %find_lang --all-name --with-qt %name
 
-%files core -f %name.lang
+%files -n %rname-core -f %name.lang
 %config /%_sysconfdir/alternatives/packages.d/%name
 %_K5bin/falkon
 %_K5bin/qupzilla
@@ -118,17 +127,20 @@ __EOF__
 %_datadir/falkon/
 %_datadir/bash-completion/completions/falkon
 
-%files kde5
+%files -n %rname-kde5
 %_K5plug/falkon/KDEFrameworksIntegration.so
 
-%files gnome3
+%files -n %rname-gnome3
 %_K5plug/falkon/GnomeKeyringPasswords.so
 
 %files -n %libfalkonprivate
 %_K5lib/libFalkonPrivate.so.%sover
-%_K5lib/libFalkonPrivate.so.%sover.*
+%_K5lib/libFalkonPrivate.so.*
 
 %changelog
+* Wed Sep 21 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 3.2.0-alt2
 - using not_qt5_qtwebengine_arches macro
 
