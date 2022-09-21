@@ -18,7 +18,7 @@
 %def_enable check
 
 Name: fluidsynth
-Version: 2.2.9
+Version: 2.3.0
 Release: alt1
 
 Summary: Software real-time synthesizer
@@ -204,6 +204,10 @@ MIDI-синтезатора. FluidSynth также может воспроизв
 %_includedir/*
 %_libdir/lib%name.so
 %_pkgconfigdir/%name.pc
+%_libdir/cmake/%name/FluidSynthConfig.cmake
+%_libdir/cmake/%name/FluidSynthConfigVersion.cmake
+%_libdir/cmake/%name/FluidSynthTargets-release.cmake
+%_libdir/cmake/%name/FluidSynthTargets.cmake
 %{?_enable_docs:%doc html}
 %doc TODO
 
@@ -213,6 +217,9 @@ MIDI-синтезатора. FluidSynth также может воспроизв
 %endif
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
+- 2.3.0
+
 * Tue Sep 06 2022 Yuri N. Sedunov <aris@altlinux.org> 2.2.9-alt1
 - 2.2.9
 
