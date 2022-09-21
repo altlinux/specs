@@ -2,8 +2,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 104.0.2
-Release: alt2
+Version: 105.0
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: https://www.mozilla.org/firefox/
@@ -407,6 +407,17 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Sep 21 2022 Alexey Gladkov <legion@altlinux.ru> 105.0-alt1
+- New release (105.0).
+- Security fixes:
+  + CVE-2022-40959: Bypassing FeaturePolicy restrictions on transient pages
+  + CVE-2022-40960: Data-race when parsing non-UTF-8 URLs in threads
+  + CVE-2022-40958: Bypassing Secure Context restriction for cookies with __Host and __Secure prefix
+  + CVE-2022-40961: Stack-buffer overflow when initializing Graphics
+  + CVE-2022-40956: Content-Security-Policy base-uri bypass
+  + CVE-2022-40957: Incoherent instruction cache when building WASM on ARM64
+  + CVE-2022-40962: Memory safety bugs fixed in Firefox 105 and Firefox ESR 102.3
+
 * Thu Sep 08 2022 Alexey Gladkov <legion@altlinux.ru> 104.0.2-alt2
 - Merge firefox-wayland to firefox (ALT#43733).
 - Drop gtk2 support.
