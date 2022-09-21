@@ -1,14 +1,14 @@
 Name: jpegoptim
-Version: 1.4.7
+Version: 1.5.0
 Release: alt1
 
 Summary: Utility to optimize jpeg files
 Group: Graphics
-License: GPL-2.0-or-later
+License: GPL-3.0-or-later
 Url: https://github.com/tjko/jpegoptim
 
 Vcs: https://github.com/tjko/jpegoptim.git
-Source: %url/archive/RELEASE.%version/%name-%version.tar.gz
+Source: %url/archive/v%version/%name-%version.tar.gz
 
 BuildRequires: libjpeg-devel
 
@@ -18,7 +18,7 @@ optimizing the Huffman tables) and "lossy" optimization based on setting
 maximum quality factor.
 
 %prep
-%setup -n %name-RELEASE.%version
+%setup -n %name-%version
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -34,6 +34,9 @@ maximum quality factor.
 %doc README
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Tue Apr 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.7-alt1
 - 1.4.7 (new GitHub homepage)
 
