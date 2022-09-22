@@ -16,7 +16,7 @@
 
 Name: plasma5-%rname
 Version: 5.25.5
-Release: alt1
+Release: alt2
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -178,6 +178,10 @@ KF5 library
 %patch12 -p1
 
 %build
+%if "%(%__kf5_if_have_opt altplace yes no)" == "no"
+    %undefine _K5start
+    %define _K5start %_sysconfdir/xdg/autostart
+%endif
 %K5build
 
 %install
@@ -195,6 +199,10 @@ for f in %buildroot/%_K5xdgapp/org.kde.discover*.desktop ; do
 	--remove-key="X-DocPath" \
 	$f
 done
+desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
+	--add-only-show-in="KDE;XFCE;" \
+	--set-key="X-systemd-skip" --set-value="true" \
+	%buildroot/%_K5start/org.kde.discover.notifier.desktop
 
 %find_lang %name --with-kde --all-name
 
@@ -274,6 +282,9 @@ done
 
 
 %changelog
+* Thu Sep 22 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt2
+- allow to autostart DiscoverNotifier in XFCE
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt1
 - new version
 
