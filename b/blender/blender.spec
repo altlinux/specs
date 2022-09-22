@@ -13,7 +13,7 @@
 %def_with jemalloc
 
 Name: blender
-Version: 3.2.2
+Version: 3.3.0
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -263,14 +263,6 @@ pushd doc/doxygen
 doxygen -u Doxyfile
 doxygen
 popd
-
-BLENDER_SYSTEM_SCRIPTS="$(pwd)/release/scripts" \
-BLENDER_SYSTEM_DATAFILES="$(pwd)/release/datafiles" \
-"$(pwd)/%_cmake__builddir/bin/blender" --background --python doc/python_api/sphinx_doc_gen.py -noaudio
-
-pushd doc/python_api
-sphinx-build sphinx-in BPY_API
-popd
 %endif
 
 %install
@@ -292,10 +284,14 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %if_with docs
 %files doc
 %doc doc/doxygen/html
-%doc doc/python_api/BPY_API
 %endif
 
 %changelog
+* Wed Sep 07 2022 Egor Ignatov <egori@altlinux.org> 3.3.0-alt1
+- Update to 3.3.0
+- Update blender-2.80-alt-use-system-glog patch
+- Disable python_api documentation build
+
 * Wed Aug 03 2022 Egor Ignatov <egori@altlinux.org> 3.2.2-alt1
 - Updated to upstream version 3.2.2.
 
