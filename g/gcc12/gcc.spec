@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 12.1.1
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -1230,6 +1230,7 @@ pushd %buildtarget-gccjit
 	--disable-bootstrap \
 	--enable-host-shared \
 	--enable-languages=jit \
+	--with-gcc-major-version-only \
 	#
 
 %make_build MAKEINFOFLAGS=--no-split \
@@ -2099,6 +2100,9 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Mon Sep 19 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.1.1-alt2
+- configured libgccjit with major-version-only (closes: 43840)
+
 * Wed May 18 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 12.1.1-alt1
 - Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
   + vendors/redhat/heads/gcc-11-branch
