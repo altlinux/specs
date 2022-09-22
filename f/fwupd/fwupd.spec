@@ -7,6 +7,7 @@
 # fwupdate is only available on these arches
 %ifarch x86_64 aarch64
 %def_enable uefi
+%def_enable gpio
 %endif
 
 %ifarch x86_64 %ix86
@@ -16,17 +17,16 @@
 # libsmbios is only available on x86, and fwupdate is available on just x86_64
 %ifarch x86_64
 %def_enable dell
-%def_enable pci_psp
 %endif
 
 %def_enable flashrom
 
-%define fwupd_plugins_version 6
+%define fwupd_plugins_version 7
 %define fwupd_pluginsdir %_libdir/fwupd-plugins-%fwupd_plugins_version
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.8.1
+Version: 1.8.4
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -39,12 +39,17 @@ BuildRequires: cmake
 BuildRequires: gcab
 BuildRequires: rpm-build-python3
 BuildRequires: git-core
-BuildRequires: gtk-doc
+BuildRequires: gi-docgen
 BuildRequires: libappstream-glib-devel
+BuildRequires: libmm-glib-devel
+BuildRequires: libqmi-glib-devel
+BuildRequires: libmbim-glib-devel
 BuildRequires: libprotobuf-c-devel
 BuildRequires: /usr/bin/protoc /usr/bin/protoc-gen-c
 BuildRequires: libarchive-devel
 BuildRequires: libcolord-devel
+BuildRequires: liblzma-devel
+BuildRequires: libcbor-devel
 BuildRequires: libcurl-devel
 BuildRequires: libelf-devel
 BuildRequires: libgcab-devel
@@ -112,22 +117,33 @@ Summary: Data files for installed tests
 %description tests
 Data files for installed tests.
 
+%package plugin-modem-manager
+Group: System/Configuration/Hardware
+Summary: fwupd plugin using ModemManger
+Requires: %name = %EVR
+
+%description plugin-modem-manager
+This provides the optional package which is only required on hardware that
+might have mobile broadband hardware. It is probably not required on servers.
+
 %prep
 %setup
 %patch0 -p1
 
 %build
 %meson \
-    -Ddocs=gtkdoc \
+    -Ddocs=enabled \
+    --debug \
     -Dfirmware-packager=true \
     -Dman=true \
     -Dlvfs=true \
-    -Dsupported_build=true \
-    -Dplugin_flashrom=true \
+    -Dgresource_quirks=disabled \
+    -Dsupported_build=enabled \
+    -Dplugin_flashrom=enabled \
 %if_enabled msr
-    -Dplugin_msr=true \
+    -Dplugin_msr=enabled \
 %else
-    -Dplugin_msr=false \
+    -Dplugin_msr=disabled \
 %endif
 %if_enabled tests
     -Dtests=true \
@@ -139,42 +155,49 @@ Data files for installed tests.
 %else
     -Dplugin_dummy=false \
 %endif
-    -Dplugin_thunderbolt=true \
+%if_enabled gpio
+    -Dplugin_gpio=enabled \
+%else
+    -Dplugin_gpio=disabled \
+%endif
 %if_enabled uefi
-    -Dplugin_uefi_capsule=true \
-    -Dplugin_uefi_pk=true \
+    -Dplugin_uefi_capsule=enabled \
+    -Dplugin_uefi_pk=enabled \
     -Defi_binary=false \
 %else
-    -Dplugin_redfish=true \
-    -Dplugin_uefi_capsule=false \
-    -Dplugin_uefi_pk=false \
-    -Dplugin_nvme=true \
+    -Dplugin_redfish=enabled \
+    -Dplugin_uefi_capsule=disabled \
+    -Dplugin_uefi_pk=disabled \
+    -Dplugin_nvme=enabled \
 %endif
 %if_enabled dell
-    -Dplugin_dell=true \
-    -Dplugin_synaptics_mst=true \
+    -Dplugin_dell=enabled \
+    -Dplugin_synaptics_mst=enabled \
 %else
-    -Dplugin_dell=false \
-    -Dplugin_synaptics_mst=false \
+    -Dplugin_dell=disabled \
+    -Dplugin_synaptics_mst=disabled \
 %endif
+    -Dplugin_modem_manager=enabled \
+#
 
-%meson_build
+%__meson_build
 
 %if_enabled tests
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-export FWUPD_PLUGINDIR=%buildroot%fwupd_pluginsdir/  
-%meson_test
+# fix lenovo-thinklmi to run without mounted /sys
+ln -sf ../../../libfwupdplugin/tests/dmi plugins/lenovo-thinklmi/tests/dmi
+%__meson_test
 %endif
 
 %install
-%meson_install
+%__meson_install
 %ifarch %ix86
 rm -f %buildroot%_libexecdir/fwupd/fwupd-detect-cet ||:
 %endif
 
 mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
-rm -rf %buildroot%_docdir/fwupd
+mv %buildroot%_docdir/fwupd %buildroot%_docdir/fwupd-devel-%version
+rm -f %buildroot%_docdir/lib*
 
 %find_lang %name
 
@@ -212,6 +235,7 @@ rm -rf %buildroot%_docdir/fwupd
 %_bindir/fwupdmgr
 %dir %_sysconfdir/fwupd
 %dir %_sysconfdir/fwupd/remotes.d
+%_sysconfdir/fwupd/bios-settings.d
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/*.conf
 %exclude %_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 %_sysconfdir/pki/fwupd
@@ -246,7 +270,9 @@ rm -rf %buildroot%_docdir/fwupd
 /lib/systemd/system-shutdown/fwupd.shutdown
 %dir %_localstatedir/fwupd
 %dir %_datadir/fwupd/quirks.d
+%dir %_datadir/fwupd/host-emulate.d
 %_datadir/fwupd/quirks.d/*.quirk
+%_datadir/fwupd/host-emulate.d/*.json.gz
 %_libdir/libfwupd*.so.*
 %_libdir/girepository-1.0/Fwupd-2.0.typelib
 %_libdir/girepository-1.0/FwupdPlugin-1.0.typelib
@@ -254,7 +280,9 @@ rm -rf %buildroot%_docdir/fwupd
 %dir %fwupd_pluginsdir
 %fwupd_pluginsdir/libfu_plugin_ata.so
 %fwupd_pluginsdir/libfu_plugin_amt.so
+%ifarch %ix86 x86_64
 %fwupd_pluginsdir/libfu_plugin_acpi_facp.so
+%endif
 %fwupd_pluginsdir/libfu_plugin_acpi_phat.so
 %fwupd_pluginsdir/libfu_plugin_bcm57xx.so
 %fwupd_pluginsdir/libfu_plugin_cfu.so
@@ -262,7 +290,9 @@ rm -rf %buildroot%_docdir/fwupd
 %fwupd_pluginsdir/libfu_plugin_ch341a.so
 %fwupd_pluginsdir/libfu_plugin_colorhug.so
 %fwupd_pluginsdir/libfu_plugin_corsair.so
+%ifarch %ix86 x86_64
 %fwupd_pluginsdir/libfu_plugin_cpu.so
+%endif
 %fwupd_pluginsdir/libfu_plugin_cros_ec.so
 %if_enabled dell
 %fwupd_pluginsdir/libfu_plugin_dell.so
@@ -279,7 +309,9 @@ rm -rf %buildroot%_docdir/fwupd
 %fwupd_pluginsdir/libfu_plugin_fresco_pd.so
 %fwupd_pluginsdir/libfu_plugin_flashrom.so
 %fwupd_pluginsdir/libfu_plugin_genesys.so
+%if_enabled gpio
 %fwupd_pluginsdir/libfu_plugin_gpio.so
+%endif
 %fwupd_pluginsdir/libfu_plugin_goodixmoc.so
 %fwupd_pluginsdir/libfu_plugin_hailuck.so
 %if_enabled uefi
@@ -287,11 +319,13 @@ rm -rf %buildroot%_docdir/fwupd
 %endif
 %fwupd_pluginsdir/libfu_plugin_fastboot.so
 %fwupd_pluginsdir/libfu_plugin_jabra.so
+%ifarch %ix86 x86_64
 %fwupd_pluginsdir/libfu_plugin_iommu.so
 %fwupd_pluginsdir/libfu_plugin_linux_lockdown.so
 %fwupd_pluginsdir/libfu_plugin_linux_sleep.so
 %fwupd_pluginsdir/libfu_plugin_linux_swap.so
 %fwupd_pluginsdir/libfu_plugin_linux_tainted.so
+%endif
 %fwupd_pluginsdir/libfu_plugin_logitech_hidpp.so
 %fwupd_pluginsdir/libfu_plugin_logitech_bulkcontroller.so
 %fwupd_pluginsdir/libfu_plugin_logind.so
@@ -308,16 +342,15 @@ rm -rf %buildroot%_docdir/fwupd
 %fwupd_pluginsdir/libfu_plugin_nvme.so
 %fwupd_pluginsdir/libfu_plugin_optionrom.so
 %fwupd_pluginsdir/libfu_plugin_parade_lspcon.so
+%ifarch %ix86 x86_64
 %fwupd_pluginsdir/libfu_plugin_pci_bcr.so
 %fwupd_pluginsdir/libfu_plugin_pci_mei.so
-%if_enabled pci_psp
 %fwupd_pluginsdir/libfu_plugin_pci_psp.so
 %endif
 %fwupd_pluginsdir/libfu_plugin_pixart_rf.so
 %fwupd_pluginsdir/libfu_plugin_powerd.so
 %fwupd_pluginsdir/libfu_plugin_redfish.so
 %config(noreplace)%_sysconfdir/fwupd/redfish.conf
-%_modulesloaddir/fwupd-redfish.conf
 %fwupd_pluginsdir/libfu_plugin_realtek_mst.so
 %fwupd_pluginsdir/libfu_plugin_rts54hid.so
 %fwupd_pluginsdir/libfu_plugin_rts54hub.so
@@ -339,11 +372,15 @@ rm -rf %buildroot%_docdir/fwupd
 %endif
 %fwupd_pluginsdir/libfu_plugin_thelio_io.so
 %fwupd_pluginsdir/libfu_plugin_thunderbolt.so
+%ifarch %ix86 x86_64
 %fwupd_pluginsdir/libfu_plugin_tpm.so
+%endif
 %if_enabled uefi
 %fwupd_pluginsdir/libfu_plugin_bios.so
 %fwupd_pluginsdir/libfu_plugin_uefi_capsule.so
+%ifarch %ix86 x86_64
 %fwupd_pluginsdir/libfu_plugin_uefi_pk.so
+%endif
 %fwupd_pluginsdir/libfu_plugin_uefi_recovery.so
 %fwupd_pluginsdir/libfu_plugin_uefi_dbx.so
 %config(noreplace)%_sysconfdir/fwupd/uefi_capsule.conf
@@ -352,6 +389,7 @@ rm -rf %buildroot%_docdir/fwupd
 %endif
 %fwupd_pluginsdir/libfu_plugin_uf2.so
 %fwupd_pluginsdir/libfu_plugin_usi_dock.so
+%fwupd_pluginsdir/libfu_plugin_vbe.so
 %fwupd_pluginsdir/libfu_plugin_vli.so
 %fwupd_pluginsdir/libfu_plugin_upower.so
 %fwupd_pluginsdir/libfu_plugin_wacom_usb.so
@@ -360,10 +398,13 @@ rm -rf %buildroot%_docdir/fwupd
 
 %ghost %_localstatedir/fwupd/gnupg
 
+%files plugin-modem-manager
+%fwupd_pluginsdir/libfu_plugin_modem_manager.so
+
 %files devel
 %_datadir/gir-1.0/Fwupd-2.0.gir
 %_datadir/gir-1.0/FwupdPlugin-1.0.gir
-%_datadir/gtk-doc/html/fwupd
+%_docdir/fwupd-devel-%version
 %_includedir/fwupd-1
 %_libdir/libfwupd*.so
 %_libdir/pkgconfig/fwupd.pc
@@ -387,6 +428,9 @@ rm -rf %buildroot%_docdir/fwupd
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 
 %changelog
+* Mon Sep 19 2022 Anton Farygin <rider@altlinux.ru> 1.8.4-alt1
+- 1.8.1 -> 1.8.4
+
 * Sat Jun 04 2022 Anton Farygin <rider@altlinux.ru> 1.8.1-alt1
 - 1.8.0 -> 1.8.1
 
