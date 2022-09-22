@@ -1,7 +1,7 @@
 %define rname kdeedu-data
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -41,6 +41,9 @@ BuildRequires: extra-cmake-modules qt5-base-devel kf5-ki18n-devel
 %_K5icon/*/*/actions/*.*
 
 %changelog
+* Wed Sep 21 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Tue Jul 12 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 

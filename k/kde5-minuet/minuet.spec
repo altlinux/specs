@@ -3,7 +3,7 @@
 %define libminuetinterfaces libminuetinterfaces%minuet_sover
 
 Name: kde5-%rname
-Version: 22.04.3
+Version: 22.08.1
 Release: alt1
 %K5init no_appdata
 
@@ -85,6 +85,9 @@ sed -i 's|^#set(FluidSynth_VERSION|set(FluidSynth_VERSION|' cmake/FindFluidSynth
 %_K5inc/minuet/
 
 %changelog
+* Wed Sep 21 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- new version
+
 * Tue Jul 12 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.3-alt1
 - new version
 
