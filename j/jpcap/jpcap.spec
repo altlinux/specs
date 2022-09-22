@@ -1,10 +1,10 @@
 Name: jpcap
 Version: 0.7
-Release: alt4
+Release: alt5
 
 Summary: A Java library for capturing and sending network packets
 Summary(ru_RU.UTF8): Java библиотека для перехвата и отправки сетевых пакетов
-License: LGPL
+License: LGPL-2.1
 Group: Development/Java
 
 Url: http://netresearch.ics.uci.edu/kfujii/jpcap/doc/
@@ -14,11 +14,11 @@ Packager: Rinat Bikov <becase@altlinux.org>
 Source: %url/../%name-%version.tar.gz
 
 BuildRequires(pre): /proc rpm-build-java
-BuildRequires(pre): java-devel >= 1.6.0
+BuildRequires(pre): java-devel >= 1.7.0
 BuildRequires(pre): jpackage-utils
 BuildRequires(pre): ant junit
 BuildRequires(pre): libpcap-devel >= 0.9
-Requires: java >= 1.6
+Requires: java >= 1.7
 Requires: libpcap0.8 >= 0.9
 
 
@@ -37,8 +37,6 @@ Summary: API documentation for %{name}
 Summary(ru_RU.UTF8): API документация для %{name}
 Group: Development/Java
 Requires: java-common
-BuildArch: noarch
-
 
 %description javadoc
 Javadoc for %{name}
@@ -56,8 +54,8 @@ cd src/c
 %make
 cd ../..
 mkdir bin
-%ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 jar
-%ant -Dant.build.javac.source=1.6 -Dant.build.javac.target=1.6 javadoc
+%ant -Dant.build.javac.source=1.7 -Dant.build.javac.target=1.7 jar
+%ant -Dant.build.javac.source=1.7 -Dant.build.javac.target=1.7 javadoc
 
 %install
 install -d $RPM_BUILD_ROOT
@@ -81,6 +79,10 @@ cp -pr doc/javadoc %{buildroot}%{_javadocdir}/%{name}-%{version}/
 %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Thu Sep 22 2022 Andrey Cherepanov <cas@altlinux.org> 0.7-alt5
+- FTBFS: set source version to 1.7.
+- Fixed License tag according to SPDX.
+
 * Mon Feb 7 2011 Rinat Bikov <becase@altlinux.org> 0.7-alt4
 - Fixed build with debug info
 
