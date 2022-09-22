@@ -1,8 +1,8 @@
-%define        pname detect-libs
+%define        pname detect-libc
 
-Name:          npmjs-%pname
+Name:          node-%pname
 Version:       1.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Node.js module to detect the C standard library (libc) for use with prebuild
 License:       Apache-2.0
 Group:         Development/Other
@@ -43,5 +43,8 @@ Currently supports libc detection of glibc and musl.
 
 
 %changelog
+* Thu Sep 22 2022 Pavel Skrylev <majioa@altlinux.org> 1.0.3-alt1.1
+- ! rename in favor of proper name (closes #43435)
+
 * Fri Jan 10 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.3-alt1
 - NPM.js package for %pname built for Sisyphus
