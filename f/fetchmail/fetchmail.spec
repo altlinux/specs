@@ -1,36 +1,34 @@
-%define rtdir %_runtimedir/%name
-
 Name: fetchmail
-Version: 6.4.32
+Version: 6.4.33
 Release: alt1
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
-License: GPLv2
+License: GPL-2.0-or-later
 Group: Networking/Mail
 Url: http://www.fetchmail.info
 
 Source0: %name-%version.tar
-Source1: %name.init
-Source2: %name.service
-Source3: fetchmailrc.example
-Source10: fetchmailconf-large.png
-Source11: fetchmailconf-mini.png
-Source12: fetchmailconf.png
-Source13: fetchmailconf.desktop
-Source100: fetchmail.watch
 
-Patch1: 0001-contrib-Remove-html-quoting-from-the-runfetchmail.patch
-Patch2: 0002-Add-missing-space-in-config-option.patch
-Patch3: 0003-Add-option-to-switch-off-permission-check.patch
-Patch4: 0004-Do-not-check-libssl-version.patch
+Patch0001: 0001-Add-missing-space-in-config-option.patch
+Patch0002: 0002-Add-option-to-switch-off-permission-check.patch
+Patch0003: 0003-Do-not-check-libssl-version.patch
+Patch0004: 0004-Fix-LFS-on-32-bit-systems.patch
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%define rtdir %_runtimedir/%name
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: flex openssl-devel libkrb5-devel python3-devel
+BuildRequires: flex
+BuildRequires: libkrb5-devel
+BuildRequires: openssl-devel
+BuildRequires: python3-devel
 
 Requires: %_sbindir/sendmail
 Requires: setup >= 2.1.9-ipl15mdk
 Requires: service >= 0.5.28-alt1
-
 
 %description
 Fetchmail is a free, full-featured, robust, and well-documented
@@ -98,12 +96,12 @@ neccessary.
 
 %prep
 %setup
-%autopatch -p2
+%autopatch -p1
 
-cp -a %SOURCE3 fetchmailrc.example
+cp -a .rpm/fetchmailrc.example fetchmailrc.example
 
 sed -i 's|@pythondir@/fetchmailconf.py|%python3_sitelibdir/fetchmailconf.py|'\
-    Makefile.in
+	Makefile.am
 
 %build
 export PYTHON=%__python3
@@ -111,6 +109,9 @@ export ac_cv_path_procmail=%_bindir/procmail
 export ac_cv_path_sendmail=%_sbindir/sendmail
 export ac_cv_lib_intl_gettext=no
 export CPPFLAGS=-I%_includedir/krb5
+
+%autoreconf
+
 %configure \
 	--enable-fallback=sendmail \
 	--enable-RPA \
@@ -127,14 +128,14 @@ export CPPFLAGS=-I%_includedir/krb5
 
 rm -rf contrib/RCS
 
-install -pDm755 %SOURCE1 %buildroot%_initdir/%name
-install -pDm644 %SOURCE2 %buildroot%_unitdir/%name.service
+install -pDm755 .rpm/%name.init %buildroot%_initdir/%name
+install -pDm644 .rpm/%name.service %buildroot%_unitdir/%name.service
 touch %buildroot%_sysconfdir/%{name}rc
 
-install -pDm644 %SOURCE10 %buildroot%_liconsdir/%{name}conf.png
-install -pDm644 %SOURCE11 %buildroot%_miconsdir/%{name}conf.png
-install -pDm644 %SOURCE12 %buildroot%_niconsdir/%{name}conf.png
-install -pDm644 %SOURCE13 %buildroot%_desktopdir/%{name}conf.desktop
+install -pDm644 .rpm/fetchmailconf-large.png %buildroot%_liconsdir/%{name}conf.png
+install -pDm644 .rpm/fetchmailconf-mini.png  %buildroot%_miconsdir/%{name}conf.png
+install -pDm644 .rpm/fetchmailconf.png       %buildroot%_niconsdir/%{name}conf.png
+install -pDm644 .rpm/fetchmailconf.desktop   %buildroot%_desktopdir/%{name}conf.desktop
 
 mkdir -p %buildroot%rtdir
 
@@ -174,7 +175,7 @@ usermod -d %rtdir %name ||:
 %files
 %_bindir/%name
 %_man1dir/%name.*
-%doc COPYING FAQ FEATURES NEWS NOTES README README.SSL TODO *.html *.txt
+%doc COPYING NEWS README README.SSL *.html *.txt
 %doc fetchmailrc.example
 
 %files -n %{name}conf
@@ -197,8 +198,12 @@ usermod -d %rtdir %name ||:
 
 %files -f %name.lang locales
 
-
 %changelog
+* Thu Sep 22 2022 Alexey Gladkov <legion@altlinux.ru> 6.4.33-alt1
+- New version (6.4.33).
+- Build from git repository.
+- Update license tag.
+
 * Tue Aug 02 2022 Alexey Gladkov <legion@altlinux.ru> 6.4.32-alt1
 - New version (6.4.32).
 
