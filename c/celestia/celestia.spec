@@ -1,6 +1,6 @@
 Name: celestia
 Version: 1.6.2.2
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: A real-time visual space simulation
@@ -17,15 +17,7 @@ Obsoletes: celestia-qt < %EVR celestia-gtk < %EVR celestia-glut < %EVR
 # Source-url: https://github.com/CelestiaProject/Celestia/archive/master.zip
 Source: %name-%version.tar
 
-Patch1: celestia-1.4.0-desktop-fix.patch
-Patch2: celestia-1.6.1-alt-gcc4.6.patch
-Patch3: celestia-1.6.1-alt-DSO.patch
-Patch4: celestia-1.6.1-alt-libpng15.patch
-Patch5: celestia-1.6.1-alt-glibc-2.16.patch
-Patch6: celestia-1.6.1-alt-fix-build.patch
-Patch7: celestia-1.6.1-alt-fix-subdir-build.patch
-Patch8: celestia-1.6.1-alt-lua5.2.patch
-Patch9: celestia-1.6.1-alt-fix-build-2.patch
+Patch: celestia-1.6.2.2-alt-lua5.4.patch
 
 BuildRequires: cmake gcc-c++ libstdc++-devel
 BuildRequires: libGLEW-devel libXi-devel libXmu-devel libfreeglut-devel
@@ -111,6 +103,7 @@ travelthroughout the solar system, to any of over
 
 %prep
 %setup
+%patch -p2
 %autoreconf
 
 %build
@@ -184,6 +177,10 @@ rm -fv %buildroot%_libdir/libcelmodel.a
 #/etc/alternatives/packages.d/%name-qt
 
 %changelog
+* Thu Sep 22 2022 L.A. Kostis <lakostis@altlinux.ru> 1:1.6.2.2-alt3
+- Fix FTBFS (build w/ lua5.4).
+- Remove obsoleted patches.
+
 * Fri Jul 09 2021 Sergey V Turchin <zerg@altlinux.org> 1:1.6.2.2-alt2
 - fix requires (closes: 40394)
 
