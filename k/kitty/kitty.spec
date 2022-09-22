@@ -2,8 +2,8 @@
 %def_with check
 
 Name: kitty
-Version: 0.26.2
-Release: alt2
+Version: 0.26.3
+Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -186,6 +186,9 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_libexecdir/%name/shell-integration
 
 %changelog
+* Thu Sep 22 2022 Egor Ignatov <egori@altlinux.org> 0.26.3-alt1
+- new version 0.26.3
+
 * Wed Sep 07 2022 Michael Shigorin <mike@altlinux.org> 0.26.2-alt2
 - NMU: fix build on e2k and --without check
 
