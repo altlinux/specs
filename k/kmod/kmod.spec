@@ -1,17 +1,24 @@
 Name:		kmod
-Version:	29
+Version:	30
 Release:	alt1
 Summary:	Linux kernel module management utilities
 
 Group:		System/Kernel and hardware
-License:	GPLv2+
+License:	GPL-2.0-or-later AND LGPL-2.1-or-later
 URL:		http://modules.wiki.kernel.org/
 ExclusiveOS:	Linux
 Requires:	lib%name = %version-%release
 
 Source0:	%name-%version.tar
-Patch0:		%name-manpage.patch
 
+Patch0001: 0001-testsuite-repair-read-of-uninitialized-memory.patch
+Patch0002: 0002-man-Fix-path.patch
+
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+BuildRequires: bash-completion
 BuildRequires: docbook-dtds
 BuildRequires: docbook-style-xsl
 BuildRequires: glibc-devel-static
@@ -33,7 +40,7 @@ examples of loaded and unloaded modules.
 
 %package -n lib%name
 Summary:	Libraries to handle kernel module loading and unloading
-License:	LGPLv2+
+License:	LGPL-2.1-or-later
 Group:		System/Kernel and hardware
 Provides:	%name-libs = %version-%release
 
@@ -44,6 +51,7 @@ wishes to load or unload Linux kernel modules from the running system.
 %package -n lib%name-devel
 Summary:	Header files for kmod development
 Group:		Development/C
+License:	LGPL-2.1-or-later
 Requires:	lib%name = %version-%release
 Provides:	%name-devel = %version-%release
 
@@ -51,8 +59,20 @@ Provides:	%name-devel = %version-%release
 The libkmod-devel package provides header files used for development of
 applications that wish to load or unload Linux kernel modules.
 
+%package -n bash-completion-%name
+Summary:        Bash completion routines for the kmod utilities
+License:        GPL-2.0-or-later AND LGPL-2.1-or-later
+Group:          Shells
+BuildArch:      noarch
+Requires:       %name
+Requires:       bash-completion
+
+%description -n bash-completion-%name
+Contains bash completion support for kmod utilities.
+
 %prep
 %setup -q
+%autopatch -p1
 
 %build
 touch libkmod/docs/gtk-doc.make
@@ -98,16 +118,8 @@ done
 # lsmod was in /bin before
 ln -s kmod %buildroot/bin/lsmod
 
-# unpackaged files
-rm -r %buildroot%_datadir/bash-completion
-
-%define _unpackaged_files_terminate_build 1
-%define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
-
 %check
-make check
-
+make check V=1
 
 %files
 %dir %_sysconfdir/depmod.d
@@ -125,7 +137,7 @@ make check
 /sbin/rmmod
 %_man5dir/*
 %_man8dir/*
-%doc NEWS README TODO COPYING
+%doc NEWS README.md COPYING
 
 %files -n lib%name
 /%_lib/libkmod.so*
@@ -135,7 +147,13 @@ make check
 %_libdir/pkgconfig/libkmod.pc
 %_libdir/libkmod.so
 
+%files -n bash-completion-%name
+%_datadir/bash-completion/completions/*
+
 %changelog
+* Wed Sep 21 2022 Alexey Gladkov <legion@altlinux.ru> 30-alt1
+- Version (30).
+
 * Tue Nov 02 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 29-alt1
 - Version (29).
 - Enabled zstd compression support.
