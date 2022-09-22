@@ -5,7 +5,7 @@
 %def_without check
 
 Name: ravada
-Version: 1.7.3
+Version: 1.7.5
 Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
@@ -18,7 +18,7 @@ Source: %name-%version.tar
 
 Requires: perl-DBD-mysql perl-DBD-SQLite perl-Mojolicious-Plugin-I18N
 Requires: bridge-utils iproute2 iptables iptstate net-tools
-Requires: libvirt mariadb-common qemu-img qemu-kvm openssl guestfs-tools lxc-core
+Requires: libvirt qemu-img qemu-kvm openssl guestfs-tools lxc-core
 # spice-vdagent @ VM
 
 BuildRequires(pre): rpm-build-perl
@@ -182,6 +182,10 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Thu Sep 22 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.7.5-alt1
+- 1.7.5
+- remove explicit dependancy on mariadb-common
+
 * Tue Sep 06 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.7.3-alt1
 - 1.7.3
 
