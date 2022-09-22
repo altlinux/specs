@@ -1,6 +1,6 @@
 Name: tsugaru
 Version: 20220702
-Release: alt1
+Release: alt2
 Summary: It is an emulator of legendary Fujitsu FM TOWNS computer including Marty
 Group: Emulators
 License: BSD3
@@ -15,7 +15,7 @@ BuildRequires: zlib-devel
 BuildRequires: libstdc++-devel-static
 BuildRequires: libopenal-devel
 BuildRequires: libGLU-devel
-BuildRequires: libwxGTK3.1-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: libalsa-devel
 BuildRequires: cmake rpm-macros-cmake
 
@@ -119,5 +119,8 @@ cp -R symtables  %buildroot/%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Thu Sep 22 2022 Artyom Bystrov <arbars@altlinux.org> 20220702-alt2
+ - change libwxGTK3.1-devel to libwxGTK3.2-devel
+
 * Sat Jul 24 2022 Artyom Bystrov <arbars@altlinux.org> 20220702-alt1
  - initial release
