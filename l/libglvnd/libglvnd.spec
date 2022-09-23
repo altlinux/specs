@@ -1,5 +1,5 @@
 Name: libglvnd
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 Epoch: 7
 Group: System/Libraries
@@ -121,6 +121,9 @@ rm -f %buildroot%_pkgconfigdir/glesv1*.pc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Sep 23 2022 Valery Inozemtsev <shrek@altlinux.ru> 7:1.5.0-alt1
+- 1.5.0
+
 * Tue Dec 28 2021 Valery Inozemtsev <shrek@altlinux.ru> 7:1.4.0-alt1
 - 1.4.0
 
