@@ -15,7 +15,7 @@
 
 Name:    python3-module-%pypi_name
 Version: 0.971
-Release: alt1
+Release: alt2
 
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
@@ -31,9 +31,6 @@ BuildRequires: python3(wheel)
 
 # Needed to generate the man pages
 BuildRequires:  help2man
-
-# https://github.com/python/mypy/pull/11905
-BuildRequires: python3-module-typeshed > 0-alt4
 
 %if_with check
 # install_requires=
@@ -157,6 +154,9 @@ TESTS="$TESTS mypyc/test"
 %endif
 
 %changelog
+* Fri Sep 23 2022 Stanislav Levin <slev@altlinux.org> 0.971-alt2
+- Removed build dependency on nonexistent typeshed.
+
 * Thu Aug 18 2022 Stanislav Levin <slev@altlinux.org> 0.971-alt1
 - 0.942 -> 0.971.
 
