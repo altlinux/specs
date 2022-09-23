@@ -5,7 +5,7 @@
 
 Name: pdns
 Version: 4.6.3
-Release: alt1
+Release: alt1.1
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
 License: GPLv2
@@ -145,6 +145,9 @@ This package contains the ixfrdist program.
 %patch0 -p1 -b .disable-secpoll
 %patch1 -p2
 %patch4 -p1
+%ifarch %e2k
+sed -i 's/constexpr QClass QClass/inline &/' pdns/qtype.hh
+%endif
 
 %build
 export CPPFLAGS="-DLDAP_DEPRECATED"
@@ -327,6 +330,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Fri Sep 23 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.6.3-alt1.1
+- Fixed build for Elbrus.
+
 * Thu Sep 15 2022 Alexey Shabalin <shaba@altlinux.org> 4.6.3-alt1
 - 4.6.3 (Fixes: CVE-2020-17482, CVE-2020-17482, CVE-2020-24696, CVE-2020-24697, CVE-2020-24698,
   CVE-2021-36754, CVE-2022-27227)
