@@ -1,23 +1,25 @@
 %define oname flask-login
 
-%def_disable check
+%def_enable check
 
 Name: python3-module-%oname
-Version: 0.3.0
-Release: alt5
+Version: 0.6.2
+Release: alt1
 
 Summary: User session management for Flask
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/Flask-Login/
-# https://github.com/maxcountryman/flask-login.git
+VCS: https://github.com/maxcountryman/flask-login.git
 BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-blinker python3-module-coverage
-BuildRequires: python3-pyflakes
+BuildRequires: python3-module-blinker
+BuildRequires: python3-module-flask
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-semantic_version
 
 
 %description
@@ -33,23 +35,30 @@ extension capable of loading users from their ID.
 %prep
 %setup
 
-sed -i 's|nosetests|nosetests3|' ./run-tests.sh
-
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir/
+# disable warnings judged as errors during tests
+sed "s;    error;    default;" -i setup.cfg
+
+python3 -m pytest -vra ./tests
 
 %files
-%doc CHANGES README* docs/*.rst
+%doc CHANGES.md LICENSE README* docs/*.rst
 %python3_sitelibdir/*
 
 
 %changelog
+* Thu Sep 22 2022 Danil Shein <dshein@altlinux.org> 0.6.2-alt1
+- NMU: new version 0.6.2
+  + compatible with Werkzeug 2.2 and Flask 2.2
+  + enable tests
+
 * Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 0.3.0-alt5
 - Fixed BuildRequires.
 

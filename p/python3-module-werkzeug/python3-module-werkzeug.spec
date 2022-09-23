@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 2.0.3
+Version: 2.2.2
 Release: alt1
 
 Summary: Werkzeug is one of the most advanced WSGI utility modules
@@ -18,16 +18,21 @@ BuildArch: noarch
 
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
+Patch1: alt_tests_conftest_py.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_enabled check
 BuildRequires: /proc
 BuildRequires: pytest3
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-xprocess
+BuildRequires: python3-module-pytest-timeout
 BuildRequires: python3-module-tox
 BuildRequires: python3-module-tox-no-deps
 BuildRequires: python3-module-tox-console-scripts
+BuildRequires: python3-module-cryptography
 %endif
 
 %description
@@ -40,28 +45,28 @@ more structure and patterns for defining powerful applications.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir/
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-# skip: test_debug - unresolved fixtures
-# skip: test_serving - HTTPS and SSL related tests failed, reloader test hangs up
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -- \
--vra --ignore=tests/test_debug.py --ignore=tests/test_serving.py
-
+# skip: test_serving::test_reloader_sys_path (hangs up) and test_serving::test_exclude_patterns (always fails)
+%tox_check_pyproject -- -vra -k "not test_reloader_sys_path and not test_exclude_patterns"
 
 %files
 %doc *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Fri Sep 16 2022 Danil Shein <dshein@altlinux.org> 2.2.2-alt1
+- new version 2.2.2
+  + migrate to pyproject macroses
+  + reduce excluded tests list
+
 * Thu Mar 03 2022 Danil Shein <dshein@altlinux.org> 2.0.3-alt1
 - new version 0.16.1 -> 2.0.3
   + enable tests

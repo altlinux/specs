@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %global modname rich
 
 Summary: Render rich text and beautiful formatting in the terminal
 Name: python3-module-%modname
-Version: 6.0.0
+Version: 12.5.1
 Release: alt1
 Url: https://github.com/willmcgugan/rich
 # Download from https://pypi.org/project/rich
@@ -12,7 +13,6 @@ Group: Development/Python3
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
 BuildRequires: python3-module-setuptools
 
 %description
@@ -31,9 +31,12 @@ code, tracebacks, and more - out of the box.
 %python3_install
 
 %files
-%doc README.md
+%doc README.md LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Fri Sep 23 2022 Danil Shein <dshein@altlinux.org> 12.5.1-alt1
+- NMU: new version 12.5.1
+
 * Sun Sep 06 2020 Alexey Shabalin <shaba@altlinux.org> 6.0.0-alt1
 - Initial build.

@@ -4,8 +4,8 @@
 %def_enable check
 
 Name: python3-module-flask
-Version: 2.0.3
-Release: alt2
+Version: 2.2.2
+Release: alt1
 
 Summary: Flask is a lightweight WSGI web application framework.
 License: BSD-3-Clause
@@ -14,6 +14,8 @@ URL: https://palletsprojects.com/p/flask/
 VCS:  https://github.com/pallets/flask
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_enabled check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-tox
@@ -43,24 +45,24 @@ has become one of the most popular Python web application frameworks.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir/
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -- -vra
+%tox_check_pyproject -- -vra
 
 %files
 %doc *.rst
 %_bindir/flask
-%python3_sitelibdir/flask/
-%python3_sitelibdir/%oname-*.egg-info
+%python3_sitelibdir/*
 
 %changelog
+* Tue Sep 20 2022 Danil Shein <dshein@altlinux.org> 2.2.2-alt1
+- new version 2.2.2
+  + migrate to pyproject macroses
+
 * Mon Mar 14 2022 Danil Shein <dshein@altlinux.org> 2.0.3-alt2
 - spec clean up
 

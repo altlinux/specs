@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 6.2.6
+Version: 6.4.5
 Release: alt1
 
 Summary: Tryton server
@@ -63,7 +63,7 @@ This package contains tests for %oname.
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir/
-trytond/tests/run-tests.py -v -f --no-doctest
+python3 -m unittest discover -s trytond.tests -v
 
 %files
 %doc CHANGELOG LICENSE README.rst COPYRIGHT
@@ -76,6 +76,9 @@ trytond/tests/run-tests.py -v -f --no-doctest
 
 
 %changelog
+* Tue Sep 20 2022 Danil Shein <dshein@altlinux.org> 6.4.5-alt1
+- version updated to 6.4.5
+
 * Fri Mar 25 2022 Danil Shein <dshein@altlinux.org> 6.2.6-alt1
 - version updated to 6.2.6
 - tests enabled
