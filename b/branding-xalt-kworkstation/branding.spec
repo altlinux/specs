@@ -19,7 +19,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -276,7 +276,7 @@ done
 # os-release
 cat >>%buildroot/%_sysconfdir/os-release <<__EOF__
 NAME="%Brand"
-VERSION="%altversion %status"
+VERSION="%altversion%status"
 ID=altlinux
 VERSION_ID=%altversion
 PRETTY_NAME="%ProductName %status (%codename)"
@@ -476,6 +476,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Sep 23 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.0-alt3
+- remove extra space in os-release VERSION
+- update indexhtml infos
+
 * Thu Sep 01 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.0-alt2
 - remove "beta"
 
