@@ -6,7 +6,7 @@
 
 Name: spice-vdagent
 Version: 0.21.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -29,6 +29,7 @@ BuildRequires: pkgconfig(pciaccess) >= 0.10
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig(systemd) pkgconfig(libsystemd) >= 209
 BuildRequires: pkgconfig(udev)
+BuildRequires: desktop-file-utils
 
 %description
 Spice agent for Linux guests offering the following features:
@@ -59,6 +60,16 @@ Features:
 %makeinstall_std
 install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 
+# fix autostart in KDE Plasma
+cp -ar %buildroot/%_sysconfdir/xdg/autostart/spice-vdagent{,-kde}.desktop
+desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
+	--add-not-show-in="KDE" \
+	%buildroot/%_sysconfdir/xdg/autostart/spice-vdagent.desktop
+desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
+	--add-only-show-in="KDE" \
+	--remove-key="X-GNOME-Autostart-Phase" \
+	%buildroot/%_sysconfdir/xdg/autostart/spice-vdagent-kde.desktop
+
 %post
 %post_service spice-vdagentd
 
@@ -73,12 +84,15 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 %_unitdir/*
 %_bindir/spice-vdagent
 %_sbindir/spice-vdagentd
-%_sysconfdir/xdg/autostart/spice-vdagent.desktop
+%_sysconfdir/xdg/autostart/spice-vdagent*.desktop
 %_datadir/gdm/autostart/LoginWindow/spice-vdagent.desktop
 %_datadir/gdm/greeter/autostart/spice-vdagent.desktop
 %_man1dir/*
 
 %changelog
+* Fri Sep 23 2022 Sergey V Turchin <zerg@altlinux.org> 1:0.21.0-alt2
+- fix autostart in KDE Plasma
+
 * Thu Jan 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1:0.21.0-alt1
 - new version 0.21.0 (Fixes CVE-2020-25650, CVE-2020-25651, CVE-2020-25652, CVE-2020-25653).
 
