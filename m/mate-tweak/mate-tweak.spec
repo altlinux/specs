@@ -1,5 +1,5 @@
 Name: mate-tweak
-Version: 22.04.8
+Version: 22.10.0
 Release: alt1
 Epoch:   1
 
@@ -48,6 +48,9 @@ Settings that can be handled via MATE Tweak:
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Fri Sep 23 2022 Andrey Cherepanov <cas@altlinux.org> 1:22.10.0-alt1
+- New version.
+
 * Thu Mar 31 2022 Andrey Cherepanov <cas@altlinux.org> 1:22.04.8-alt1
 - New version.
 
