@@ -1,6 +1,6 @@
 Name: lyx
-Version: 2.3.4.4
-Release: alt2
+Version: 2.3.6.1
+Release: alt1
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
 # LGPL-2.1+: src/support/gzstream.* src/support/weighted_btree.h
@@ -16,10 +16,10 @@ Source3: %{name}32.xpm
 Source4: %{name}48.xpm
 Source5: lyxcat
 
-Patch2: lyx-2.1.2-xdg_open.patch
-Patch3: 0004-Use-python3-internally-in-the-C-code-as-well.patch
-Patch4: 0006-Fix-os.popen-for-Python-3.patch
-Patch5: %name-%version-alt-boost-1.73.0-compat.patch
+Patch0: lyx-2.1.2-xdg_open.patch
+Patch1: 0004-Use-python3-internally-in-the-C-code-as-well.patch
+Patch2: lyx-2.3.6.1-gcc12.patch
+Patch3: lyx-2.3.6.1-python.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++ imake libaspell-devel libSM-devel python3-devel bc
@@ -68,10 +68,7 @@ sed -i 's|#! */usr/bin/env python|#!/usr/bin/env python3|' \
 	lib/lyx2lyx/lyx2lyx \
 	lib/scripts/listerrors \
 	#
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p2
+%autopatch -p1
 
 %build
 %autoreconf
@@ -141,6 +138,11 @@ python3 configure.py
 %files -n lyx-tex
 
 %changelog
+* Fri Sep 23 2022 L.A. Kostis <lakostis@altlinux.ru> 2:2.3.6.1-alt1
+- Updated to 2.3.6.1 (and fix FTBFS).
+- Added patches from gentoo to compile w/ gcc12
+- Added patches from gentoo for python 3.10 compat.
+
 * Thu Jun 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2:2.3.4.4-alt2
 - Rebuilt with boost-1.73.0.
 
