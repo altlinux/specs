@@ -3,7 +3,7 @@
 
 Name: python3-module-sphinxcontrib-spelling
 Version: 7.2.1
-Release: alt1
+Release: alt2
 
 Summary: Sphinx "spelling" extension
 
@@ -67,8 +67,6 @@ Core package of %mname.
 %install
 %python3_install
 %python3_prune
-install -p -m644 %mname/__init__.py \
-	%buildroot%python3_sitelibdir/%mname/
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
@@ -77,20 +75,18 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc AUTHORS ChangeLog README
 %python3_sitelibdir/%mname/*
 %python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/%mname/__init__.py
-%exclude %python3_sitelibdir/%mname/__pycache__/__init__.*
 
 %files -n python3-module-%mname
 %dir %python3_sitelibdir/%mname
-%dir %python3_sitelibdir/%mname/__pycache__
-%python3_sitelibdir/%mname/__init__.py
-%python3_sitelibdir/%mname/__pycache__/__init__.*
 
 %files docs
 %doc docs/build/html/*
 
 
 %changelog
+* Fri Sep 23 2022 Ivan A. Melnikov <iv@altlinux.org> 7.2.1-alt2
+- NMU: fix FTBFS by dropping __init__ hack from spec
+
 * Fri Aug 13 2021 Vitaly Lipatov <lav@altlinux.ru> 7.2.1-alt1
 - new version 7.2.1 (with rpmrb script)
 
