@@ -1,6 +1,6 @@
 Name: firmware-linux
 Version: 20220912
-Release: alt1
+Release: alt2
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -76,6 +76,10 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Fri Sep 23 2022 Anton Midyukov <antohami@altlinux.org> 20220912-alt2
+- .gear/update.sh: check symlink -> dir, dir -> symlink, when updating
+- cronbuild-options: add antohami@ to cronbuild_cc
+
 * Wed Sep 14 2022 Cronbuild Service <cronbuild@altlinux.org> 20220912-alt1
 - upstream changes (GIT f09bebf):
   + amdgpu: update yellow carp DMCUB firmware (thx Mario Limonciello)
