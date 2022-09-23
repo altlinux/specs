@@ -1,98 +1,81 @@
-%define oname pyamg
+%define _unpackaged_files_terminate_build 1
+%define pypi_name pyamg
 
-%def_without docs
+%def_with check
 
-Name: python3-module-%oname
-Version: 4.0.0
+Name: python3-module-%pypi_name
+Version: 4.2.3
 Release: alt1
 
 Summary: PyAMG: Algebraic Multigrid Solvers in Python
-License: BSD
+License: MIT
 Group: Development/Python3
-Url: http://code.google.com/p/pyamg/
+Url: https://pypi.org/project/pyamg/
 
 Source: %name-%version.tar
-Patch0: remove-test-failing-on-i586.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: gcc-c++ libnumpy-py3-devel
-BuildRequires: python3-module-scipy python3-module-pybind11 python3-module-m2r
-BuildRequires: python3-module-nose python3-module-numpy-testing
-%if_with docs
-BuildRequires: python3-module-sphinx
-%endif
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(setuptools_scm)
+BuildRequires: python3(pybind11)
+BuildRequires: python3(wheel)
+
+BuildRequires: gcc-c++
+
+%if_with check
+# deps
+BuildRequires: python3(numpy)
+BuildRequires: python3(scipy)
+
+BuildRequires: python3(numpy.testing)
+BuildRequires: python3(pytest)
+%endif
 
 %description
 PyAMG is a library of Algebraic Multigrid (AMG) solvers with a
 convenient Python interface.
 
-%if_with docs
-%package docs
-Summary: Documentation for PyAMG
-Group: Development/Documentation
-BuildArch: noarch
-
-%description docs
-PyAMG is a library of Algebraic Multigrid (AMG) solvers with a
-convenient Python interface.
-
-This package contains documentation for PyAMG.
-%endif
-
-%package tests
-Summary: Tests for PyAMG
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-PyAMG is a library of Algebraic Multigrid (AMG) solvers with a
-convenient Python interface.
-
-This package contains tests for PyAMG.
-
 %prep
 %setup
-%ifarch i586
-%patch -p2
-%endif
+
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-
-%if_with docs
-export PYTHONPATH=$PWD
-
-pushd Docs/
-make man
-popd
-%endif
+%pyproject_install
 
 %check
-%__python3 setup.py build_ext -i
+# https://github.com/pyamg/pyamg/issues/342
+%ifarch i586
+_PYTEST_ARGS=--ignore=pyamg/tests/test_graph.py
+%endif
+%tox_create_default_config
+%tox_check_pyproject -- -vra --import-mode=importlib . ${_PYTEST_ARGS-}
 
 %files
 %doc *.txt *.md
-%python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/*/tests
-
-%if_with docs
-%files docs
-%doc Docs/build/man
-%endif
-
-%files tests
-%exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/*/tests
-%exclude %python3_sitelibdir/%oname/*/example*
-
+%python3_sitelibdir/pyamg/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/pyamg/tests
+%exclude %python3_sitelibdir/pyamg/*/tests
 
 %changelog
+* Thu Sep 22 2022 Stanislav Levin <slev@altlinux.org> 4.2.3-alt1
+- 4.0.0 -> 4.2.3.
+
 * Wed Jan 15 2020 Andrey Bychkov <mrdrew@altlinux.org> 4.0.0-alt1
 - Version updated to 4.0.0
 - porting on python3
