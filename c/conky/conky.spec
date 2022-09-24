@@ -41,8 +41,8 @@
 %def_enable xshape
 
 Name: conky
-Version: 1.12.2
-Release: alt3
+Version: 1.13.1.0.7.git54672876
+Release: alt1
 
 Summary: lightweight graphical system monitor
 Summary(ru_RU.UTF-8): Легковесный графический системный монитор
@@ -51,7 +51,7 @@ Group: Monitoring
 Url: http://conky.sourceforge.net/
 
 VCS: git://github.com/brndnmtthws/conky.git
-Source: %name-%version.tar
+Source: %name-v1.13.1-7-g54672876.tar
 Source1: conky-dotfiles.tar.bz2
 Source99: conky.watch
 
@@ -106,7 +106,7 @@ mpd, и т.д.) в окне графической системы X11.
 VIm syntax plugin for conky config file.
 
 %prep
-%setup
+%setup -n %name-v1.13.1-7-g54672876
 %autopatch -p1
 
 %build
@@ -197,6 +197,9 @@ rm %buildroot%_libdir/libtcp-portmon.a
 %vim_runtime_dir/syntax/conkyrc.vim
 
 %changelog
+* Sat Sep 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.13.1.0.7.git54672876-alt1
+- Updated to v1.13.1-7-g54672876.
+
 * Sat Jul 16 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.12.2-alt3
 - Fixed FTBFS: changed lua-devel to lua5.3-devel in the BR.
 
