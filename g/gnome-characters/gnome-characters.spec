@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Characters
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_without included_libunistring
@@ -26,7 +26,7 @@ Source: %name-%version.tar
 
 %define gjs_ver 1.50.0
 %define unistring_ver 0.9.5
-%define adwaita_ver 1.0
+%define adwaita_ver 1.2
 
 Requires: libgjs >= %gjs_ver
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
@@ -80,6 +80,9 @@ characters.
 %doc NEWS COPYING README*
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0 (ported to GTK4)
 

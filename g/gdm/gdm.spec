@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define api_ver 1.0
 
@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt1.1%beta
+Release: alt1%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -66,6 +66,7 @@ Provides: gnome-dm
 %define accountsservice_ver 0.6.35
 %define check_ver 0.9.4
 %define session_ver 40
+%define gudev_ver 232
 
 Provides: %name-user-switch-applet = %version-%release
 Obsoletes: %name-user-switch-applet
@@ -87,7 +88,7 @@ BuildRequires: iso-codes-devel
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libaccountsservice-devel >= %accountsservice_ver
-BuildRequires: libgudev-devel
+BuildRequires: libgudev-devel >= %gudev_ver
 BuildRequires: dconf pkgconfig(systemd) libpam-devel
 %{?_with_selinux:BuildPreReq: libselinux-devel libattr-devel}
 %{?_with_libaudit:BuildPreReq: libaudit-devel}
@@ -295,6 +296,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1.1
 - Requires(pre): -libs, -data subpakages
 

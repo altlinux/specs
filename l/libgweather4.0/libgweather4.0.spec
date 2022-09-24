@@ -2,14 +2,13 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name libgweather
-%define ver_major 4.0
+%define ver_major 4.2
 %define beta %nil
 %define api_ver_major 4
 %define api_ver 4.0
 %define xdg_name org.gnome.GWeather%api_ver_major
 
-# while geocode-glib depends on soup-2.4
-%def_enable soup2
+%def_disable soup2
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
@@ -37,18 +36,15 @@ Source: %_name-%version%beta.tar
 %define soup3_ver 2.99.2
 %define gir_ver 0.9.5
 %define vala_ver 0.21.1
-%define geocode_ver 3.26.1
-
-Requires: %name-data = %EVR
+%define geocode_ver 3.26.3
 
 BuildRequires(pre): rpm-build-gnome rpm-macros-meson
 BuildRequires: meson
-BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgeocode-glib-devel >= %geocode_ver libxml2-devel
+BuildRequires: libgio-devel >= %glib_ver libxml2-devel pkgconfig(json-glib-1.0)
 BuildRequires: xsltproc perl-XML-Parser xml-utils gzip
 BuildRequires: python3-module-pygobject3 python3-module-pylint
-%{?_disable_soup2:BuildRequires: libsoup%soup_api_ver-devel >= %soup3_ver}
-%{?_enable_soup2:BuildRequires: libsoup-devel >= %soup2_ver}
+%{?_disable_soup2:BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver pkgconfig(geocode-glib-2.0) >= %geocode_ver}
+%{?_enable_soup2:BuildRequires: libsoup-devel >= %soup2_ver pkgconfig(geocode-glib-1.0)}
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala
@@ -68,12 +64,13 @@ BuildArch: noarch
 libgweather is a library to access weather information from online
 services for numerous locations.
 
-This package contains locations data for %name
+This package contains locations development data for %name.
 
 %package devel
 Summary: Development files for %name
 Group: Development/C
 Requires: %name = %EVR
+Requires: %name-data = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -127,36 +124,34 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 %meson \
     %{?_enable_gtk_doc:-Dgtk_doc=true} \
     %{?_disable_vala:-Denable_vala=false} \
-    %{?_disable_soup2:-Dsoup2=false}
+    %{?_enable_soup2:-Dsoup2=true}
 %nil
 %meson_build
 
 %install
 %meson_install
-%find_lang --output=%name.lang %_name-%api_ver
-%find_lang --output=%name-locations.lang %_name-%api_ver-locations
+%find_lang --output=%name.lang %_name-%api_ver %_name-%api_ver-locations
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %dir %_libdir/%_name-%api_ver_major
 %_libdir/%_name-%api_ver_major/Locations.bin
-%_libdir/*.so.*
+%_libdir/%_name-%api_ver_major.so.*
 %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %doc NEWS README*
 
-%files data -f %name-locations.lang
+%files devel
+%_includedir/%_name-%api_ver
+%_libdir/%_name-%api_ver_major.so
+%_pkgconfigdir/*
+
+%files data
 %dir %_datadir/%_name-%api_ver_major
 %_datadir/%_name-%api_ver_major/Locations.xml
 %_datadir/%_name-%api_ver_major/locations.dtd
-
-%files devel
-%_includedir/%_name-%api_ver
-%_libdir/*.so
-%_pkgconfigdir/*
 
 %if_enabled gtk_doc
 %files devel-doc
@@ -179,6 +174,13 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
+* Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
+- 4.1.1
+- built with libsoup-3.0/geocode-glib-2.0
+
 * Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
 - 4.0.0
 

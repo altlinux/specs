@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.font-viewer
 
@@ -22,11 +22,13 @@ Source: %name-%version.tar
 
 %define glib_ver 2.56.0
 %define gtk4_ver 4.5
-%define adwaita_ver 1.0
+%define adwaita_ver 1.2
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
-BuildRequires: meson libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver
-BuildRequires: fontconfig-devel libfreetype-devel libharfbuzz-devel
+BuildRequires: meson /usr/bin/appstream-util
+BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver
+BuildRequires: fontconfig-devel libfreetype-devel
+BuildRequires: libharfbuzz-devel libfribidi-devel
 BuildRequires: pkgconfig(gnome-desktop-4)
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 
@@ -55,6 +57,9 @@ GNOME Font Viewer is a simple application to preview fonts.
 %doc NEWS
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

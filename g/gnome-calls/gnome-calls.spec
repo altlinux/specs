@@ -1,8 +1,9 @@
 %define _name calls
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.Calls
 
+%def_enable man
 #12/12 sip  TIMEOUT
 %def_disable check
 
@@ -17,7 +18,7 @@ Url: https://gitlab.gnome.org/GNOME/calls
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
 
-%define glib_ver 2.58
+%define glib_ver 2.62
 %define handy_ver 1.4.0
 %define mm_ver 1.12.0
 %define phosh_ver 0.16
@@ -42,7 +43,8 @@ BuildRequires: pkgconfig(sofia-sip-ua-glib)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-audio-1.0)
 BuildRequires: vapi(folks) vapi(libebook-contacts-1.2)
-%{?_enable_check:BuildRequires: xvfb-run libappstream-glib-devel desktop-file-utils}
+%{?_enable_man:BuildRequires: %_bindir/rst2man}
+%{?_enable_check:BuildRequires: xvfb-run /usr/bin/appstreamcli desktop-file-utils libcmocka-devel}
 
 %description
 Calls is a dialer for phone calls, initially PSTN calls but eventually
@@ -52,7 +54,8 @@ other systems like SIP in future.
 %setup -n %_name-%version%beta
 
 %build
-%meson
+%meson \
+%{?_disable_man:-Dmanpages=false}
 %nil
 %meson_build
 
@@ -68,11 +71,14 @@ xvfb-run %__meson_test
 %_bindir/%name
 %dir %_libdir/%_name
 %dir %_libdir/%_name/plugins
-%_libdir/%_name/plugins/dummy/
-%_libdir/%_name/plugins/mm/
-%_libdir/%_name/plugins/ofono/
-%_libdir/%_name/plugins/sip/
+%dir %_libdir/%_name/plugins/provider
+%_libdir/%_name/plugins/provider/dummy/
+%_libdir/%_name/plugins/provider/mm/
+%_libdir/%_name/plugins/provider/ofono/
+%_libdir/%_name/plugins/provider/sip/
+%_datadir/dbus-1/services/%xdg_name.service
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%{?_enable_man:%_man1dir/%name.1*}
 %_desktopdir/%xdg_name.desktop
 %_datadir/icons/hicolor/scalable/apps/%xdg_name.svg
 %_datadir/icons/hicolor/symbolic/apps/%xdg_name-symbolic.svg
@@ -80,6 +86,9 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

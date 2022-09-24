@@ -1,4 +1,4 @@
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 
 Name: gnome-user-docs
@@ -41,9 +41,12 @@ directly associated with any particular GNOME application or package.
 %find_lang --with-gnome --output=%name.lang gnome-help system-admin-guide
 
 %files -f %name.lang
-%doc README NEWS
+%doc README* NEWS
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

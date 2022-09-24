@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.72
+%define ver_major 2.74
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
@@ -11,11 +11,12 @@
 
 %def_enable libproxy
 %def_enable gnome_proxy
+%def_enable environment_proxy
 %def_enable installed_tests
 %def_disable check
 
 Name: glib-networking
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Networking support for GIO
@@ -32,7 +33,7 @@ Source: %name-%version.tar
 %{?_enable_gnome_proxy:Requires: gsettings-desktop-schemas >= 3.2.0}
 Requires: ca-certificates
 
-%define glib_ver 2.70.0
+%define glib_ver 2.73.3
 %define gnutls_ver 3.6.5
 %define p11kit_ver 0.20
 %define libproxy_ver 0.3.1
@@ -81,6 +82,7 @@ the functionality of the installed %name package.
 	%{?_enable_ssl:-Dopenssl=enabled} \
 	%{?_enable_libproxy:-Dlibproxy=enabled} \
 	%{?_enable_gnome_proxy:-Dgnome_proxy=enabled} \
+	%{?_enable_environment_proxy:-Denvironment_proxy=enabled} \
 	%{?_enable_installed_tests:-Dinstalled_tests=true}
 %nil
 %meson_build
@@ -95,7 +97,7 @@ the functionality of the installed %name package.
 %files -f %name.lang
 %{?_enable_tls:%_libdir/gio/modules/libgiognutls.so}
 %{?_enable_gnome_proxy:%_libdir/gio/modules/libgiognomeproxy.so}
-%_libdir/gio/modules/libgioenvironmentproxy.so
+%{?_enable_environment_proxy:%_libdir/gio/modules/libgioenvironmentproxy.so}
 %if_enabled libproxy
 %_libdir/gio/modules/libgiolibproxy.so
 %_libexecdir/glib-pacrunner
@@ -117,6 +119,9 @@ the functionality of the installed %name package.
 %endif
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.0-alt1
+- 2.74.0
+
 * Sat Aug 06 2022 Yuri N. Sedunov <aris@altlinux.org> 2.72.2-alt1
 - 2.72.2
 

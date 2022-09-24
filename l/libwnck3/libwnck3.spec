@@ -1,5 +1,5 @@
 %define _name libwnck
-%define ver_major 40
+%define ver_major 43
 %define api_ver 3.0
 
 %def_enable introspection
@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: libwnck is a Window Navigator Construction Kit
@@ -19,10 +19,10 @@ Url: http://www.gnome.org
 
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires(pre): meson rpm-build-gnome
-BuildRequires: libX11-devel libXres-devel libXi-devel pkgconfig(cairo-xlib-xrender)
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome %{?_enable_introspection:rpm-build-gir}
+BuildRequires: meson libX11-devel libXres-devel libXi-devel pkgconfig(cairo-xlib-xrender)
 BuildRequires: libgtk+3-devel >= 3.22.0
-BuildRequires: glib2-devel >= 2.32.0
+BuildRequires: glib2-devel >= 2.44
 BuildRequires: gtk-doc >= 1.9
 %{?_enable_startup_notification:BuildRequires: libstartup-notification-devel >= 0.4}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
@@ -117,6 +117,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1
 - 40.1
 

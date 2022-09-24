@@ -3,10 +3,10 @@
 
 %def_disable snapshot
 
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 # %%ver_major - 32
-%define api_ver 10
+%define api_ver 11
 %define sover 0
 %define xdg_name org.gnome.mutter
 %define _libexecdir %_prefix/libexec
@@ -18,7 +18,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -67,7 +67,6 @@ Patch: mutter-40.0-alt-gsettings_desktop_schemas_dep.patch
 %define wacom_ver 0.13
 
 Requires: lib%name = %EVR
-Requires: zenity
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
@@ -95,6 +94,7 @@ BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: gnome-settings-daemon-devel
 BuildRequires: pkgconfig(sysprof-capture-4)
 BuildRequires: libgraphene-gir-devel >= %graphene_ver
+BuildRequires: libcolord-devel liblcms2-devel
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
@@ -170,9 +170,10 @@ the functionality of the installed Mutter.
 %patch
 # we have no catchsegv
 sed -i '/catchsegv/d' meson.build
+# https://gitlab.gnome.org/GNOME/mutter/-/issues/2210 (fixed)
 # disable KMS modifiers for radeon
-echo 'DRIVERS=="radeon", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modifiers"' \
->> data/61-%name.rules
+#echo 'DRIVERS=="radeon", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modifiers"' \
+#>> data/61-%name.rules
 # Also disable KMS modifiers for baikal-vdu
 echo 'DRIVERS=="baikal-vdu", SUBSYSTEM=="drm", TAG+="mutter-device-disable-kms-modifiers"' \
 >> data/61-%name.rules
@@ -254,6 +255,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1:43.0-alt1
+- 43.0
+
 * Thu Aug 11 2022 Yuri N. Sedunov <aris@altlinux.org> 1:42.4-alt1
 - 42.4
 

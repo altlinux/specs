@@ -1,4 +1,4 @@
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.DiskUtility
 %define _libexecdir %_prefix/libexec
@@ -21,7 +21,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 
 %define udisks_ver 2.7.6
 %define glib_ver 2.31.0
-%define gtk_ver 3.12.0
+%define gtk_ver 3.16.0
 %define secret_ver 0.7
 %define pwquality_ver 1.0.0
 %define dvdread_ver 4.2.0
@@ -33,16 +33,16 @@ Requires: udisks2 >= %udisks_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson
-BuildRequires: libappstream-glib-devel desktop-file-utils
+BuildRequires: /usr/bin/appstream-util desktop-file-utils
 BuildRequires: libudisks2-devel >= %udisks_ver
 BuildRequires: libgio-devel  >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: libsecret-devel >= %secret_ver
 BuildRequires: libpwquality-devel >= %pwquality_ver
 BuildRequires: libdvdread-devel >= %dvdread_ver
 BuildRequires: liblzma-devel >= %lzma_ver
 BuildRequires: libnotify-devel libcanberra-gtk3-devel
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %{?_enable_libsystemd:BuildRequires: pkgconfig(systemd)}
 BuildRequires: xsltproc docbook-style-xsl
 
@@ -84,6 +84,9 @@ RAID, SMART monitoring, etc
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

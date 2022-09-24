@@ -3,14 +3,12 @@
 
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.Epiphany
 
-%def_enable soup2
-
 Name: epiphany
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Epiphany is a GNOME web browser.
@@ -31,11 +29,11 @@ Obsoletes: %name-extensions
 %add_findprov_lib_path %_libdir/%name
 
 %define glib_ver 2.67.4
-%define webkit_ver 2.33.2
+%define webki_api_ver 4.1
+%define webkit_ver 2.37.90
 %define gtk_ver 3.24.0
 %define nettle_ver 3.4
 %define libxml2_ver 2.6.12
-%define soup_ver 2.48.0
 %define soup3_ver 2.99.4
 %define secret_ver 0.19
 %define gcr_ver 3.5.5
@@ -62,11 +60,7 @@ BuildRequires: libicu-devel libjson-glib-devel
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: libportal-gtk3-devel >= %portal_ver
 BuildRequires: libarchive-devel
-%if_enabled soup2
-BuildRequires: libsoup-devel >= %soup_ver pkgconfig(webkit2gtk-4.0)
-%else
-BuildRequires: libsoup3.0-devel >= %soup3_ver pkgconfig(webkit2gtk-4.1) >= %webkit_ver
-%endif
+BuildRequires: libsoup3.0-devel >= %soup3_ver pkgconfig(webkit2gtk-%webki_api_ver) >= %webkit_ver
 
 %description
 Epiphany is a GNOME web browser based on the Webkit rendering engine.
@@ -88,9 +82,7 @@ This package contains common noarch files needed for Epiphany.
 %setup -n %name-%version%beta
 
 %build
-%meson \
-    %{?_disable_soup2:-Dsoup2=disabled}
-%nil
+%meson
 %meson_build
 
 %install
@@ -102,10 +94,12 @@ This package contains common noarch files needed for Epiphany.
 %dir %_libexecdir/%name
 %_libexecdir/%name/ephy-profile-migrator
 %_libexecdir/%name-search-provider
+%_libexecdir/%name-webapp-provider
 %dir %_libdir/%name
 %_libdir/%name/*.so
 %dir %_libdir/%name/web-process-extensions
 %_libdir/%name/web-process-extensions/libephywebprocessextension.so
+%_libdir/%name/web-process-extensions/libephywebextension.so
 %doc NEWS README* TODO
 
 %files data -f %name.lang
@@ -120,6 +114,9 @@ This package contains common noarch files needed for Epiphany.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sat Aug 06 2022 Yuri N. Sedunov <aris@altlinux.org> 42.4-alt1
 - 42.4
 

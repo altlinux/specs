@@ -1,44 +1,49 @@
 %def_disable snapshot
-%define ver_major 1.2
+%define ver_major 4.0
+%define beta %nil
 
-%def_enable gtk_doc
+%def_enable docs
 
 Name: nautilus-python
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major
+Release: alt1%beta
 
 Summary: Python bindings for Nautilus
 Group: Development/Python3
 License: GPLv2+
-Url: http://www.gnome.org/
+Url: https://www.gnome.org/
 
 Provides: python-module-nautilus = %version-%release
 Obsoletes: python-module-nautilus
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
-Patch: gcc10.patch
+%define ext_api_ver 4
+%define nautilus_extdir %_libdir/nautilus/extensions-%ext_api_ver
+%define _pkgconfigdir %_datadir/pkgconfig
 
 %add_python3_path %nautilus_extdir
 
-%define nautilus_ver 3.0.0
+%define nautilus_ver 43
 %define pygobject_ver 3.0
 
-BuildRequires(pre): rpm-build-gnome rpm-build-python3
-BuildRequires: libnautilus-devel >= %nautilus_ver libnautilus-gir-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-python3 rpm-build-gir
+BuildRequires: meson
+BuildRequires: pkgconfig(libnautilus-extension-%ext_api_ver) >= %nautilus_ver libnautilus-gir-devel
 BuildRequires: python3-devel python3-module-pygobject3-devel >= %pygobject_ver
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_docs:BuildRequires: gtk-doc}
 
 %description
 This package provides Python bindings for the Nautilus extension library.
 
 %package devel
 Summary: Development files for %name
-Group: Development/Python
+Group: Development/Python3
+BuildArch: noarch
 Requires: %name = %version-%release
 Provides: python-module-nautilus-devel = %version-%release
 Obsoletes: python-module-nautilus-devel
@@ -48,7 +53,7 @@ Development files for %name.
 
 %package devel-doc
 Summary: Development documentation for %name
-Group: Development/Python
+Group: Development/Python3
 BuildArch: noarch
 Conflicts: %name-devel < %version
 Provides: python-module-nautilus-devel-doc = %version-%release
@@ -58,38 +63,37 @@ Obsoletes: python-module-nautilus-devel-doc
 Development documentation for %name.
 
 %prep
-%setup
-%patch -p1
+%setup -n %name-%version%beta
 
 %build
-%autoreconf
-export PYTHON=%__python3
-%configure \
-	--disable-static \
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	LIBS="$(python3-config --libs)"
-%make_build
+%meson \
+    %{?_enable_docs:-Ddocs=enabled}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 mkdir -p %buildroot%_datadir/nautilus-python/extensions
-rm -f examples/{Makefile*,README.in}
 
 %files
-%nautilus_extdir/*.so
+%nautilus_extdir/lib%name.so
 %dir %_datadir/nautilus-python/extensions
 
 %files devel
-%_pkgconfigdir/*
-%doc README AUTHORS NEWS examples
+%_pkgconfigdir/%name.pc
+%doc README* AUTHORS NEWS* examples
 
+%if_enabled docs
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
-%exclude %nautilus_extdir/*.la
 %exclude %_docdir/%name
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 4.0-alt1
+- 4.0
+
 * Mon Feb 01 2021 Grigory Ustinov <grenka@altlinux.org> 1.2.3-alt2
 - Fixed build with gcc10.
 

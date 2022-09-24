@@ -1,8 +1,8 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 0.40
-%define api_ver 2.6
+%define ver_major 0.42
+%define api_ver 2.8
 %def_enable external_plugin
 %def_enable mpris_plugin
 %def_disable tracker_plugin
@@ -22,7 +22,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -35,12 +35,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
+Patch: %name-0.42-alt-pkgconfig.patch
 
 %define libxml_ver 2.7
 %define vala_ver 0.36.0
 %define gi_ver 1.33.4
-%define gssdp_ver 1.2.0
-%define gupnp_ver 1.2.0
+%define gssdp_ver 1.6.0
+%define gupnp_ver 1.6.0
 %define gupnp_av_ver 0.12.8
 %define gupnp_dlna_ver 0.9.4
 %define gstreamer_ver 1.0
@@ -72,8 +73,8 @@ Requires: lsdvd
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson
 BuildRequires: gobject-introspection-devel >= %gi_ver
-BuildRequires: pkgconfig(gssdp-1.2) >= %gssdp_ver
-BuildRequires: pkgconfig(gupnp-1.2) >= %gupnp_ver
+BuildRequires: pkgconfig(gssdp-1.6) >= %gssdp_ver
+BuildRequires: pkgconfig(gupnp-1.6) >= %gupnp_ver
 BuildRequires: pkgconfig(gupnp-av-1.0) >= %gupnp_av_ver
 BuildRequires: pkgconfig(gio-2.0) >= %gio_ver
 BuildRequires: pkgconfig(gmodule-2.0)
@@ -98,8 +99,8 @@ BuildRequires: gir(Gst) = 1.0
 %{?_enable_tracker3_plugin:BuildRequires: pkgconfig(tracker-sparql-3.0) >= %tracker_ver}
 %{?_enable_media_export_plugin:BuildRequires: pkgconfig(sqlite3) >= %libsqlite3_ver pkgconfig(gstreamer-tag-1.0) >= %gst_tag_ver pkgconfig(gstreamer-app-1.0) >= %gst_app_ver pkgconfig(gupnp-dlna-2.0) >= %gupnp_dlna_ver pkgconfig(gupnp-dlna-gst-2.0) >= %gupnp_dlna_ver }
 BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver
-BuildRequires: vapi(gupnp-1.2) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix)
-BuildRequires: gir(GUPnP) = 1.2 gir(GUPnPAV) = 1.0 gir(GObject) = 2.0 gir(Gee) = 0.8 gir(Gio) = 2.0 gir(GLib) = 2.0
+BuildRequires: vapi(gupnp-1.6) vapi(gupnp-av-1.0) vapi(gio-2.0) vapi(gee-0.8) vapi(posix)
+BuildRequires: gir(GUPnP) = 1.6 gir(GUPnPAV) = 1.0 gir(GObject) = 2.0 gir(Gee) = 0.8 gir(Gio) = 2.0 gir(GLib) = 2.0
 %{?_enable_gtk:BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver}
 %{?_enable_lms_plugin:BuildRequires: liblightmediascanner-devel libsqlite3-devel}
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
@@ -170,6 +171,7 @@ GObject introspection devel data for the %name
 
 %prep
 %setup
+%patch -p1
 
 %build
 %meson \
@@ -207,7 +209,7 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_datadir/dbus-1/services/*.service
 %_man1dir/*
 %_man5dir/*
-%doc AUTHORS TODO NEWS README*
+%doc AUTHORS NEWS README*
 
 %files tracker
 %_libdir/%name-%api_ver/plugins/librygel-tracker3.so
@@ -237,6 +239,9 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_girdir/*.gir
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
+- 0.42.0
+
 * Fri Jun 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.40.4-alt1
 - 0.40.4
 

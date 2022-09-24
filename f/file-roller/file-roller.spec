@@ -2,15 +2,15 @@
 
 %define xdg_name org.gnome.FileRoller
 %define xdg_name1 org.gnome.ArchiveManager
-%define ver_major 3.42
+%define ver_major 43
+%define beta %nil
 %def_disable packagekit
 %def_enable libarchive
 %def_enable nautilus_actions
-%define nau_api_ver 3.0
 
 Name: file-roller
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: An archive manager for GNOME
 Summary (ru_RU.UTF-8): Архиватор для GNOME
@@ -18,14 +18,17 @@ Group: File tools
 License: %gpl2plus
 Url: http://fileroller.sourceforge.net
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 Patch1: %name-3.3.90-alt-zip_command.patch
 
 %define glib_ver 2.36.0
-%define gtk_ver 3.12.0
-%define handy_ver 1.4
-%define libarchive_ver 3.0.0
+%define gtk_ver 3.22.0
+%define handy_ver 1.5
+%define libarchive_ver 3.2
 %define desktop_file_utils_ver 0.8
+%define nau_api_ver 4
+%define nautilus_ver 43
+%define portal_ver 0.5
 
 Requires: tar gzip bzip2 ncompress lzop binutils arj lha unrar zip unzip p7zip lzma-utils xz
 # Requires: cdrecord # for .iso support
@@ -33,14 +36,13 @@ Requires: dconf gnome-icon-theme
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-licenses
 BuildRequires: meson yelp-tools
-BuildPreReq: glib2-devel >= %glib_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: desktop-file-utils >= %desktop_file_utils_ver
-BuildRequires: libjson-glib-devel libnotify-devel
+BuildRequires: libjson-glib-devel libportal-devel libportal-gtk3-devel >= %portal_ver
 %{?_enable_libarchive:BuildRequires: libarchive-devel >= %libarchive_ver}
-%{?_enable_nautilus_actions:BuildRequires: libnautilus-devel}
+%{?_enable_nautilus_actions:BuildRequires: libnautilus-devel >= 43}
 
 %description
 File Roller is an archive manager for the GNOME environment.  This means that
@@ -85,7 +87,7 @@ File Roller является графической оболочкой к раз
     * Отдельные файлы сжатые при помощи gzip, bzip, bzip2, compress, lzop.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 %patch1
 
 rm -f data/%xdg_name.desktop{,.in}
@@ -113,15 +115,18 @@ rm -f data/%xdg_name.desktop{,.in}
 %dir %_datadir/%name
 %_datadir/%name/*
 %_datadir/dbus-1/services/%xdg_name.service
-%_datadir/dbus-1/services/org.gnome.ArchiveManager1.service
+%_datadir/dbus-1/services/%{xdg_name1}1.service
 %_desktopdir/%xdg_name.desktop
-%_iconsdir/hicolor/*/apps/%{xdg_name1}*.*
+%_iconsdir/hicolor/*/apps/%{xdg_name}*.*
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/metainfo/%xdg_name.appdata.xml
 %{?_enable_nautilus_actions:%_libdir/nautilus/extensions-%nau_api_ver/*.so}
 %doc AUTHORS NEWS README.md
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
 - 3.42.0
 

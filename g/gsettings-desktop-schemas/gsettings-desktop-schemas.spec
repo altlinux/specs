@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %def_enable introspection
 
@@ -15,7 +15,7 @@ Url: ftp://ftp.gnome.org/
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 
 %define gio_ver 2.31.0
 Requires(pre): libgio >= %gio_ver
@@ -42,7 +42,7 @@ shared by various components of a desktop.
 Summary: Development package for %name
 Group: Development/Other
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains development files for %name
@@ -50,7 +50,7 @@ This package contains development files for %name
 %package gir
 Summary: GObject introspection data for %name
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for %name.
@@ -59,8 +59,8 @@ GObject introspection data for %name.
 Summary: GObject introspection devel data for %name
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for %name.
@@ -128,6 +128,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sun Mar 20 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

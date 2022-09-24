@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 1.1
+%define ver_major 1.2
 %define beta %nil
 %define api_ver 1
 %define xdg_name org.gnome.Adwaita%api_ver
@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: libadwaita
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 Epoch: 1
 
@@ -144,6 +144,9 @@ xvfb-run -s -noreset %meson_test
 %endif
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1:1.2.0-alt1
+- 1.2.0
+
 * Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1:1.1.5-alt1
 - 1.1.5
 

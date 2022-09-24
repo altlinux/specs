@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
@@ -44,7 +44,7 @@ Requires(pre): xinitrc libcanberra-gnome libcanberra-gtk3
 Requires: altlinux-freedesktop-menu-gnome3
 Requires: dbus-tools-gui
 Requires: gnome-filesystem
-Requires: upower gcr
+Requires: upower gcr gcr4
 Requires: xdg-user-dirs
 
 Requires: icon-theme-hicolor gnome-icon-theme-symbolic gnome-themes-standard
@@ -181,6 +181,9 @@ export PATH=$PATH:/sbin
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

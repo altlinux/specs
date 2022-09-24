@@ -1,12 +1,14 @@
 %def_enable snapshot
-
 %define _name seahorse
 %define ver_major 3.11
+%define ext_api_ver 4
+%define nautilus_extdir %_libdir/nautilus/extensions-%ext_api_ver
+
 %def_enable libnotify
 
 Name: %_name-nautilus
 Version: %ver_major.92
-Release: alt2
+Release: alt3
 
 Summary: PGP encryption and signing for Nautilus
 License: LGPLv2+
@@ -20,7 +22,8 @@ Source: %name-%version.tar
 %endif
 
 BuildRequires: meson rpm-build-gnome
-BuildRequires: libgtk+3-devel libnautilus-devel libcryptui-devel libgpgme-devel
+BuildRequires: libgtk+3-devel pkgconfig(libnautilus-extension-%ext_api_ver)
+BuildRequires: libcryptui-devel libgpgme-devel
 BuildRequires: libgnome-keyring-devel libdbus-glib-devel gnupg2-gpg gcr-libs-devel
 %{?_enable_libnotify:BuildPreReq: libnotify-devel >= 0.7.2}
 
@@ -53,6 +56,10 @@ and decryption of OpenPGP files using GnuPG.
 %doc AUTHORS NEWS README*
 
 %changelog
+* Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt3
+- updated to 3.11.92-95-g2cc2a06
+- build against new libnautilus-extension-4
+
 * Fri Jan 26 2018 Yuri N. Sedunov <aris@altlinux.org> 3.11.92-alt2
 - updated to 3.11.92-42-g0b57f04
 

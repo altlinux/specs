@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.32
+%define ver_major 1.34
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
@@ -222,6 +222,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.34.0-alt1
+- 1.34.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.32.0-alt1
 - 1.32.0
 

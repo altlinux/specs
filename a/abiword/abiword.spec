@@ -8,13 +8,13 @@
 %def_with goffice
 %def_with champlain
 %def_with libical
-%def_with eds
+%def_without eds
 %def_with python
 %def_enable collabnet
 
 Name: abiword
 Version: %ver_major.5
-Release: alt1
+Release: alt1.1
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -50,7 +50,7 @@ Conflicts: %name-light
 Requires: %name-data = %version-%release
 Requires: %name-docs >= %docs_ver
 
-BuildRequires: autoconf-archive gcc-c++ boost-devel libappstream-glib-devel libreadline-devel flex
+BuildRequires: autoconf-archive gcc-c++ boost-devel /usr/bin/appstream-util libreadline-devel flex
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgsf-gir-devel
 BuildRequires: libgtk+3-devel librsvg-devel libfribidi-devel libredland-devel
 BuildRequires: liblink-grammar-devel libgsf-devel bzlib-devel zlib-devel libjpeg-devel libpng-devel libxslt-devel
@@ -210,6 +210,9 @@ install -p -m 0644 -D %SOURCE13 %buildroot%_datadir/mime/packages/abiword.xml
 %python3_sitelibdir/gi/overrides/*
 
 %changelog
+* Thu Sep 08 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt1.1
+- temporarily disabled e-d-s support to avoid libsoup{2.4,3.0} conflict
+
 * Tue Jul 06 2021 Yuri N. Sedunov <aris@altlinux.org> 3.0.5-alt1
 - 3.0.5
 - built with python3

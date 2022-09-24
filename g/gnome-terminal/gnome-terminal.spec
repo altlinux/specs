@@ -1,6 +1,9 @@
-%define ver_major 3.44
+%def_enable snapshot
+
+%define ver_major 3.46
 %define xdg_name org.gnome.Terminal
 %define _libexecdir %_prefix/libexec
+%define nautilus_extdir %_libdir/nautilus/extensions-4
 
 %def_with nautilus
 
@@ -13,10 +16,14 @@ License: GPL-3.0-or-later
 Group: Terminals
 Url: http://www.gnome.org
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
-%define glib_ver 2.40
-%define gtk_ver 3.12.0
+%define glib_ver 2.52
+%define gtk_ver 3.24
 %define vte_ver 0.68.0
 
 Provides: xvt
@@ -34,7 +41,7 @@ BuildRequires: libvte3-devel >= %vte_ver
 BuildRequires: gsettings-desktop-schemas-devel libSM-devel
 BuildRequires: libdconf-devel libuuid-devel
 BuildRequires: libpcre2-devel
-%{?_with_nautilus:BuildRequires: libnautilus-devel}
+%{?_with_nautilus:BuildRequires: pkgconfig(libnautilus-extension-4)}
 # %%_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider2.xml
 Buildrequires: gnome-shell-data
 
@@ -76,8 +83,10 @@ EOF
 %files -f %name.lang
 %_bindir/%name
 %_libexecdir/%name-server
+%_libexecdir/%name-preferences
 %_prefix/lib/systemd/user/%name-server.service
 %_desktopdir/%xdg_name.desktop
+%_desktopdir/%xdg_name.Preferences.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %dir %_libdir/%name
@@ -97,6 +106,9 @@ EOF
 %endif
 
 %changelog
+* Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.1-alt1
+- 3.46.1-5-gb19b82be
+
 * Sat May 28 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.1-alt1
 - 3.44.1
 

@@ -2,14 +2,14 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define api_ver 3.0
 %define api_ver4 4.0
-%define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
 
 %def_enable gtk4
+%def_enable legacy_library
 %def_enable gtk_doc
 %def_enable introspection
 %def_enable installed_tests
@@ -19,7 +19,7 @@
 %def_enable libseccomp
 
 Name: %{_name}3
-Version: %ver_major.4
+Version: %ver_major
 Release: alt1%beta
 
 Summary: Library with common API for various GNOME 3 modules
@@ -38,20 +38,26 @@ Patch: gnome-desktop-40.3-alt-e2k.patch
 Obsoletes: %_name
 Provides: %_name = %version-%release
 
+%define glib_ver 2.54.0
+%define gdk_pixbuf_ver 2.36.5
+%define gtk3_ver 3.3.6
+%define gtk4_ver 4.4.0
+%define gsds_ver 3.28.0
+
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson yelp-tools
-BuildRequires: libgdk-pixbuf-devel >= 2.36.5
-BuildRequires: libgtk+3-devel >= 3.3.6
-%{?_enable_gtk4:BuildRequires: libgtk4-devel >= 4.4.0}
-BuildRequires: libgio-devel >= 2.54.0
-BuildRequires: gsettings-desktop-schemas-devel >= 3.28.0
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgdk-pixbuf-devel >= %gdk_pixbuf_ver
+BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildRequires: iso-codes-devel
 BuildRequires: xkeyboard-config-devel libxkbcommon-devel
 BuildRequires: libXrandr-devel >= 1.3 libXext-devel >= 1.1
 BuildRequires: libudev-devel pkgconfig(systemd)
+%{?_enable_legacy_library:BuildRequires: libgtk+3-devel >= %gtk3_ver}
+%{?_enable_gtk4:BuildRequires: libgtk4-devel >= %gtk4_ver}
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_libseccomp:BuildRequires: libseccomp-devel}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel %{?_enable_legacy_library:libgtk+3-gir-devel}
 BuildRequires: %{?_enable_gtk4:libgtk4-gir-devel} gsettings-desktop-schemas-gir-devel}
 
 %description
@@ -139,9 +145,9 @@ the functionality of the Gnome 3 desktop library.
 
 %build
 %meson \
+    %{?_disable_legacy_library:-Dlegacy_library=false} \
     %{?_disable_gtk4:-Dgtk4=false} \
     %{?_enable_gtk_doc:-Dgtk_doc=true} \
-    -Dgnome_distributor='%gnome_distributor' \
     %{?_enable_installed_tests:-Dinstalled_tests=true} \
     %{?_enable_udev:-Dudev=enabled}
 %meson_build
@@ -156,7 +162,7 @@ the functionality of the Gnome 3 desktop library.
 %files
 
 %files -n lib%name -f %_name.lang
-%_libdir/lib%_name-3.so.*
+%{?_enable_legacy_library:%_libdir/lib%_name-3.so.*}
 %{?_enable_gtk4:
 %_libdir/lib%_name-4.so.*
 %_libdir/libgnome-bg-4.so.*
@@ -164,16 +170,17 @@ the functionality of the Gnome 3 desktop library.
 %doc AUTHORS NEWS README*
 
 %files -n lib%name-devel
+%{?_enable_legacy_library:
 %_libexecdir/%_name-debug/
 %_includedir/%_name-%api_ver
 %_libdir/lib%_name-3.so
-%_pkgconfigdir/%_name-%api_ver.pc
+%_pkgconfigdir/%_name-%api_ver.pc}
 %{?_enable_gtk4:
 %_includedir/%_name-4.0
 %_libdir/libgnome-bg-4.so
 %_libdir/lib%_name-4.so
 %_libdir/libgnome-rr-4.so
-%_datadir/gnome/gnome-version.xml
+#%_datadir/gnome/gnome-version.xml
 %_pkgconfigdir/gnome-bg-4.pc
 %_pkgconfigdir/%_name-4.pc
 %_pkgconfigdir/gnome-rr-4.pc}
@@ -190,14 +197,14 @@ the functionality of the Gnome 3 desktop library.
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_typelibdir/GnomeDesktop-%api_ver.typelib
+%{?_enable_legacy_library:%_typelibdir/GnomeDesktop-%api_ver.typelib}
 %{?_enable_gtk4:
 %_typelibdir/GnomeBG-4.0.typelib
 %_typelibdir/GnomeDesktop-4.0.typelib
 %_typelibdir/GnomeRR-4.0.typelib}
 
 %files -n lib%name-gir-devel
-%_girdir/GnomeDesktop-%api_ver.gir
+%{?_enable_legacy_library:%_girdir/GnomeDesktop-%api_ver.gir}
 %{?_enable_gtk4:
 %_girdir/GnomeBG-4.0.gir
 %_girdir/GnomeDesktop-4.0.gir
@@ -212,6 +219,9 @@ the functionality of the Gnome 3 desktop library.
 
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt1
+- 43
+
 * Mon Aug 08 2022 Yuri N. Sedunov <aris@altlinux.org> 42.4-alt1
 - 42.4
 

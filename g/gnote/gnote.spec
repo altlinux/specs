@@ -2,16 +2,16 @@
 
 %define rdn_name org.gnome.Gnote
 %define _rdn_name org.gnome.gnote
-%define ver_major 42
+%define ver_major 43
 %define api_ver %ver_major
-%define beta %nil
+%define beta .beta
 %define _libexecdir %_prefix/libexec
 %def_without x11_support
 %def_disable check
 
 Name: gnote
-Version: %ver_major.1
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.5%beta
 
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -25,8 +25,8 @@ Source: %name-%version.tar
 %endif
 
 %define gtk_ver 3.22.20
-%define gtkmm_ver 3.18
-%define glibmm_ver 2.32
+%define gtkmm_ver 3.22.20
+%define glibmm_ver 2.62
 %define gspell_ver 1.6
 %define libsecret_ver 0.8
 
@@ -76,11 +76,14 @@ and consumes fewer resources.
 %_datadir/glib-2.0/schemas/%_rdn_name.gschema.xml
 %_datadir/metainfo/%rdn_name.appdata.xml
 %_datadir/gnome-shell/search-providers/%rdn_name.search-provider.ini
-%doc README TODO NEWS AUTHORS
+%doc README* TODO NEWS AUTHORS
 
 %exclude %_libdir/lib%name-%api_ver.so
 
 %changelog
+* Sun Sep 11 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.5.beta
+- 43.beta
+
 * Sun Jul 31 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 

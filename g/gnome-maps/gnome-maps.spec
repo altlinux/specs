@@ -1,12 +1,12 @@
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define api_ver 1.0
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.3
-Release: alt1
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Maps is a map application for GNOME
 License: GPL-2.0 and LGPL-2.0
@@ -17,29 +17,28 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
-%define glib_ver 2.44
-%define gjs_ver 1.66
-%define geocode_ver 3.22.0
+%define glib_ver 2.66
+%define gjs_ver 1.69.2
+%define gtk_api_ver 4.0
+%define adwaita_ver 1.2
+%define geocode_api_ver 2.0
+%define geocode_ver 3.26.0
 %define geoclue_ver 2.4.0
-%define champlain_ver 0.12.19
-%define handy_ver 1.5
-
-%define gtk_api_ver 3.0
+%define shumate_ver 1.0.0
 %define gweather_api_ver 4.0
-%define soup_api_ver 2.4
-%define webkit_api_ver 4.0
+%define soup_api_ver 3.0
+%define webkit_api_ver 4.1
+%define rest_api_ver 1.0
 
 Requires: geoclue2 >= %geoclue_ver
-Requires: libgeocode-glib-gir >= %geocode_ver
-Requires: libchamplain-gir >= %champlain_ver
+Requires: libgeocode-glib%geocode_api_ver-gir >= %geocode_ver
+Requires: libshumate-gir >= %shumate_ver
 
 # find ./ -name "*.js" |/usr/lib/rpm/gir-js.req |sort|uniq|sed -e 's/^/Requires: /'
-Requires: typelib(Champlain)
-Requires: typelib(Clutter)
 Requires: typelib(Gdk)
 Requires: typelib(GdkPixbuf)
 Requires: typelib(Geoclue)
-Requires: typelib(GeocodeGlib)
+Requires: typelib(GeocodeGlib) = %geocode_api_ver
 Requires: typelib(GFBGraph)
 Requires: typelib(Gio)
 Requires: typelib(GLib)
@@ -47,33 +46,33 @@ Requires: typelib(GnomeMaps)
 Requires: typelib(Goa)
 Requires: typelib(GObject)
 Requires: typelib(Gtk) = %gtk_api_ver
-Requires: typelib(GtkChamplain)
-Requires: typelib(GtkClutter)
 Requires: typelib(GWeather) = %gweather_api_ver
-Requires: typelib(Handy) = 1
+Requires: typelib(Adw) = 1
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
-Requires: typelib(Rest)
+Requires: typelib(Rest) = %rest_api_ver
 Requires: typelib(Secret)
+Requires: typelib(Shumate)
 Requires: typelib(Soup) = %soup_api_ver
 Requires: typelib(WebKit2) = %webkit_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson yelp-tools %_bindir/appstream-util desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
 BuildRequires: pkgconfig(geoclue-2.0) >= %geoclue_ver
-BuildRequires: libgee0.8-devel libfolks-devel libgeocode-glib-devel libchamplain-gtk3-devel
-BuildRequires: libgeocode-glib-gir-devel libgweather%gweather_api_ver-devel
-BuildRequires: libchamplain-gtk3-gir-devel librest-gir-devel
-BuildRequires: libclutter-gir-devel libcogl-gir-devel
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: libgee0.8-devel libgeocode-glib%geocode_api_ver-devel
+BuildRequires: libshumate-devel libxml2-devel
+BuildRequires: libgeocode-glib%geocode_api_ver-gir-devel libgweather%gweather_api_ver-devel
+BuildRequires: libshumate-gir-devel librest%rest_api_ver-gir-devel
 
 %description
 Maps is a map application for GNOME.
 
 %prep
 %setup -n %name-%version%beta
+sed -i 's/\(1.0.0\).beta/\1/' meson.build
 
 %build
 %meson
@@ -99,6 +98,9 @@ Maps is a map application for GNOME.
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sat Jul 02 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
 - 42.3
 

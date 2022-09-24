@@ -3,9 +3,9 @@
 
 %define _name libsoup
 %define api_ver 3.0
-%define ver_major 3.0
+%define ver_major 3.2
 %def_disable static
-%def_enable gtk_doc
+%def_enable docs
 %def_enable introspection
 %def_enable vala
 %def_with gssapi
@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.8
+Version: %ver_major.0
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -31,9 +31,9 @@ Source: %_name-%version.tar
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 
-Requires: glib-networking >= 2.63.90
+Requires: glib-networking >= 2.70
 
-%define glib_ver 2.69.0
+%define glib_ver 2.69.1
 %define gi_ver 1.33.3
 %define psl_ver 0.20.0
 
@@ -44,7 +44,7 @@ BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libxml2-devel libsqlite3-devel zlib-devel
 BuildRequires: docbook-dtds docbook-style-xsl
-BuildRequires: gtk-doc xml-common xsltproc
+BuildRequires: xml-common xsltproc
 BuildRequires: glib-networking libpsl-devel >= %psl_ver
 BuildRequires: libnghttp2-devel
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
@@ -54,6 +54,7 @@ BuildRequires: vala-tools}
 %{?_with_gssapi:BuildRequires: libkrb5-devel}
 %{?_enable_brotli:BuildRequires: libbrotli-devel}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
+%{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_check:BuildRequires: /proc curl}
 
 %description
@@ -137,7 +138,7 @@ This package provides PyGObject overrides for SoupMessageHeaders.
     %{?_enable_debug:--buildtype=debug} \
     %{?_enable_static:--default-library=both} \
     %{?_enable_gnome:-Dgnome=true} \
-    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_disable_docs:-Ddocs=disabled} \
     %{?_enable_snapshot:-Dgtk_doc=true} \
     %{?_disable_introspection:-Dintrospection=disabled} \
     %{?_disable_gssapi:-Dgssapi=disabled} \
@@ -150,8 +151,7 @@ This package provides PyGObject overrides for SoupMessageHeaders.
 %find_lang --output=%_name.lang %_name-%api_ver
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %_name.lang
 %_libdir/%_name-%api_ver.so.*
@@ -164,9 +164,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %{?_enable_vala:%_vapidir/%_name-%api_ver.vapi}
 %{?_enable_vala:%_vapidir/%_name-%api_ver.deps}
 
-%if_enabled gtk_doc
+%if_enabled docs
 %files devel-doc
-%_datadir/gtk-doc/html/*
+%_datadir/doc/%_name-%api_ver/
 %endif
 
 %if_enabled static
@@ -189,6 +189,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
+- 3.2.0
+
+* Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 3.1.4-alt1
+- 3.1.4
+
 * Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.8-alt1
 - 3.0.8
 

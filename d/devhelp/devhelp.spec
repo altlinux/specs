@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 41
+%define ver_major 43
 %define beta %nil
 %define api_ver_major 3
 %define api_ver 3.0
@@ -10,7 +10,7 @@
 %def_enable plugin_gedit
 
 Name: devhelp
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Developer's help program
@@ -27,7 +27,7 @@ Source: %name-%version%beta.tar
 %add_python3_path %_libdir/gedit/plugins
 
 %define gtk_ver 3.22.0
-%define webkit_api_ver 4.0
+%define webkit_api_ver 4.1
 %define webkit_ver 2.26
 %define glib_ver 2.64
 %define amtk_ver 5.0
@@ -41,7 +41,7 @@ BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: pkgconfig(gio-2.0) >= %glib_ver
 BuildRequires: pkgconfig(amtk-5) >= %amtk_ver
 BuildRequires: zlib-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libwebkit2gtk-gir-devel
+BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libwebkit2gtk%webkit_api_ver-gir-devel
 BuildRequires: gsettings-desktop-schemas-devel
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
 
@@ -129,12 +129,12 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %_bindir/*
 %dir %_devhelpdir
 %_devhelpdir/*
-%_desktopdir/%xdg_name.desktop
+%_desktopdir/%{xdg_name}*.desktop
 %_iconsdir/hicolor/*/*/*.svg
-%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/dbus-1/services/%{xdg_name}*.service
 %_datadir/glib-2.0/schemas/org.gnome.devhelp.gschema.xml
 %_man1dir/%name.1.*
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%{xdg_name}*.appdata.xml
 %doc NEWS README*
 
 %files -n lib%name
@@ -163,6 +163,9 @@ mkdir -p %buildroot%_devhelpdir/{specs,books}
 %gedit_pluginsdir/*}
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Fri Aug 26 2022 Yuri N. Sedunov <aris@altlinux.org> 41.3-alt1
 - 41.3
 

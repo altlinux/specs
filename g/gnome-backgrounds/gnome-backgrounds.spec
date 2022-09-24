@@ -1,14 +1,14 @@
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 
 Name: gnome-backgrounds
-Version: %ver_major.0
+Version: %ver_major
 Release: alt1%beta
 
 Summary: A collection of GNOME backgrounds
 License: GPLv2
 Group: Graphical desktop/GNOME
-URL: http://www.gnome.org
+Url: https://www.gnome.org
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 
 BuildArch: noarch
@@ -38,6 +38,9 @@ with the GNOME desktop.
 %doc NEWS README*
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt1
+- 43
+
 * Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

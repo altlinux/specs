@@ -7,12 +7,11 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 3.44
-%define ver_base 3.44
+%define ver_major 3.46
+%define ver_base 3.46
 %define ver_lib 1.2
 %define ver_libecal 2.0
-
-%def_disable gweather4
+%define ver_serverui4 1.0
 
 %def_disable debug
 %def_disable static
@@ -21,8 +20,13 @@
 %def_without static_ldap
 %def_with krb5
 %def_enable goa
+%def_enable gtk3
+%def_enable gtk4
 %def_enable google
+%def_enable oauth2_webkitgtk3
+%def_disable oauth2_webkitgtk4
 %def_enable canberra
+%def_enable phonenumber
 # Ubuntu online accounts support
 %def_disable uoa
 %{?_enable_snapshot:%def_enable gtk_doc}
@@ -32,7 +36,7 @@
 %def_enable installed_tests
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -51,50 +55,54 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 
 %define glib_ver 2.40.0
 %define gtk3_ver 3.10.0
-%define libsoup_ver 2.42
-%define gcr_ver 3.4
+%define gtk4_ver 4.6.6
+%define soup3_ver 3.1.1
+%define gcr_api_ver 4
+%define gcr_ver 3.90.0
 %define secret_ver 0.5
 %define sqlite_ver 3.7.17
-%define gweather_ver 3.10.0
-%define gweather4_ver 3.99.0
+%define gweather4_ver 4.1.0
 %define ical_ver 3.0.7
 %define gdata_ver 0.15.1
 %define goa_ver 3.8.0
 %define vala_ver 0.13.1
-%define webkit_ver 2.13.0
+%define webkit_api_ver 5.0
+%define webkit_ver 2.36.5
 
 Requires: dconf
 
-BuildRequires(pre): cmake rpm-build-gnome rpm-build-licenses rpm-build-xdg rpm-build-gir
-BuildRequires: gcc-c++ intltool
+BuildRequires(pre): rpm-macros-cmake rpm-build-gnome rpm-build-licenses rpm-build-xdg rpm-build-gir
+BuildRequires: cmake gcc-c++
 BuildRequires: gtk-doc >= 1.0
 BuildRequires: gnome-common
 BuildRequires: glib2-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk3_ver
+%{?_enable_gtk3:BuildRequires: libgtk+3-devel >= %gtk3_ver}
+%{?_enable_gtk4:BuildRequires: libgtk4-devel >= %gtk4_ver}
 BuildRequires: libxml2-devel
-BuildRequires: libsoup-devel >= %libsoup_ver
+BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver
 BuildRequires: libsqlite3-devel >= %sqlite_ver
-%if_enabled gweather4
 BuildRequires: libgweather4.0-devel >= %gweather4_ver
-%else
-BuildRequires: libgweather-devel >= %gweather_ver
-%endif
 BuildRequires: libical-glib-devel >= %ical_ver
 BuildRequires: libgdata-devel >= %gdata_ver
 BuildRequires: libsecret-devel >= %secret_ver
-BuildRequires: gcr-libs-devel >= %gcr_ver
+#%{?_enable_gtk3:BuildRequires: pkgconfig(gcr-%gcr_api_ver-gtk3) >= %gcr_ver}
+#%{?_enable_gtk4:BuildRequires: pkgconfig(gcr-%gcr_api_ver-gtk4) >= %gcr_ver}
 BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel libicu-devel
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel libgdata-devel >= %gdata_ver}
-%{?_enable_google:BuildRequires: libwebkit2gtk-devel >= %webkit_ver libjson-glib-devel}
+%{?_enable_oauth2_webkitgtk3:BuildRequires: pkgconfig(webkit2gtk-4.1) >= %webkit_ver}
+%{?_enable_oauth2_webkitgtk4:BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver}
+BuildRequires: libjson-glib-devel
 %{?_enable_uoa:BuildRequires: libaccounts-glib-devel}
 %{?_enable_introspection:
-BuildRequires: gobject-introspection-devel libsoup-gir-devel
-BuildRequires:libgtk+3-gir-devel libical-glib-gir-devel libgdata-gir-devel}
+BuildRequires: gobject-introspection-devel gir(Soup) = 3.0
+%{?_enable_gtk3:BuildRequires: libgtk+3-gir-devel}
+%{?_enable_gtk4:BuildRequires: libgtk4-gir-devel}
+BuildRequires: libical-glib-gir-devel libgdata-gir-devel}
 %{?_with_libdb:BuildRequires: libdb4-devel}
 %{?_with_krb5:BuildRequires: libkrb5-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver}
 %{?_enable_canberra:BuildRequires: libcanberra-gtk3-devel}
-#BuildRequires: libphonenumber-devel
+%{?_enable_phonenumber:BuildRequires: libphonenumber-devel}
 
 # /usr/libexec/evolution-data-server/csv2vcard uses perl(diagnostics.pm)
 BuildRequires: perl-devel
@@ -113,7 +121,7 @@ addressbook and calendar in the GNOME Desktop.
 %package devel
 Summary: Development files for Evolution Data Server
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package provides development files for Evolution Data Server
@@ -121,7 +129,7 @@ This package provides development files for Evolution Data Server
 %package devel-doc
 Summary: Development documentation for Evolution Data Server
 Group: Development/Documentation
-Conflicts: %name < %version-%release
+Conflicts: %name < %version
 BuildArch: noarch
 
 %description devel-doc
@@ -133,7 +141,7 @@ This package contains development documentation for Evolution Data Server.
 %package gir
 Summary: GObject introspection data for the EDS
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Evolution Data Server libraries
@@ -142,7 +150,7 @@ GObject introspection data for the Evolution Data Server libraries
 Summary: GObject introspection devel data for the EDS
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Evolution Data Server libraries
@@ -151,7 +159,7 @@ GObject introspection devel data for the Evolution Data Server libraries
 Summary: Vala language bindings for the EDS libraries
 Group: Development/Other
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description vala
 This package provides Vala language bindings for the EDS libraries
@@ -159,7 +167,7 @@ This package provides Vala language bindings for the EDS libraries
 %package tests
 Summary: Tests for the EDS
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides tests programs that can be used to verify
@@ -184,19 +192,22 @@ the functionality of the installed EDS libraries.
 	-DENABLE_DOT_LOCKING:BOOL=OFF \
 	-DENABLE_SCHEMAS_COMPILE:BOOL=OFF \
 	-DENABLE_SMIME:BOOL=ON \
+	%{?_disable_gtk3:-DENABLE_GTK=OFF} \
 	%{?_with_libdb:-DWITH_LIBDB:BOOL=ON} \
 	%{?_with_openldap:-DWITH_OPENLDAP:BOOL=ON} \
 	%{?_with_static_ldap:-DWITH_STATIC_LDAP:BOOL=ON} \
 	%{?_with_krb5:-DWITH_KRB5:BOOL=ON} \
 	%{?_enable_goa:-DENABLE_GOA:BOOL=ON} \
 	%{?_disable_google:-DENABLE_GOOGLE_AUTH:BOOL=OFF} \
+	%{?_disable_oauth2_webkitgtk3:-DENABLE_OAUTH2_WEBKITGTK=OFF} \
+	%{?_disable_oauth2_webkitgtk4:-DENABLE_OAUTH2_WEBKITGTK4=OFF} \
 	%{?_disable_canberra:-DENABLE_CANBERRA:BOOL=OFF} \
+	%{?_enable_phonenumber:-DWITH_PHONENUMBER=%_libdir} \
 	%{?_disable_uoa:-DENABLE_UOA:BOOL=OFF} \
 	%{?_enable_introspection:-DENABLE_INTROSPECTION:BOOL=ON} \
 	%{?_enable_gtk_doc:-DENABLE_GTK_DOC:BOOL=ON} \
 	%{?_enable_vala:-DENABLE_VALA_BINDINGS:BOOL=ON} \
-	%{?_enable_installed_tests:-DENABLE_INSTALLED_TESTS:BOOL=ON} \
-	%{?_enable_gweather4:-DWITH_GWEATHER4}
+	%{?_enable_installed_tests:-DENABLE_INSTALLED_TESTS:BOOL=ON}
 %nil
 %cmake_build
 
@@ -248,11 +259,11 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 
 %if_enabled introspection
 %files gir
-#%_typelibdir/ECalendar-%ver_lib.typelib
 %_typelibdir/Camel-%ver_lib.typelib
 %_typelibdir/EBookContacts-%ver_lib.typelib
 %_typelibdir/EDataServer-%ver_lib.typelib
-%_typelibdir/EDataServerUI-%ver_lib.typelib
+%{?_enable_gtk3:%_typelibdir/EDataServerUI-%ver_lib.typelib}
+%{?_enable_gtk4:%_typelibdir/EDataServerUI4-%ver_serverui4.typelib}
 %_typelibdir/EBook-%ver_lib.typelib
 %_typelibdir/EBackend-%ver_lib.typelib
 %_typelibdir/ECal-%ver_libecal.typelib
@@ -260,11 +271,11 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %_typelibdir/EDataCal-%ver_libecal.typelib
 
 %files gir-devel
-#%_girdir/ECalendar-%ver_lib.gir
 %_girdir/Camel-%ver_lib.gir
 %_girdir/EBookContacts-%ver_lib.gir
 %_girdir/EDataServer-%ver_lib.gir
-%_girdir/EDataServerUI-%ver_lib.gir
+%{?_enable_gtk3:%_girdir/EDataServerUI-%ver_lib.gir}
+%{?_enable_gtk4:%_girdir/EDataServerUI4-%ver_serverui4.gir}
 %_girdir/EBook-%ver_lib.gir
 %_girdir/EBackend-%ver_lib.gir
 %_girdir/ECal-%ver_libecal.gir
@@ -285,6 +296,15 @@ ln -s camel-lock-helper-%ver_lib %buildroot%_libexecdir/camel-lock-helper
 %endif
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.0-alt1
+- 3.46.0
+
+* Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 3.45.3-alt1
+- 3.45.3
+
+* Fri Aug 05 2022 Yuri N. Sedunov <aris@altlinux.org> 3.45.2-alt1
+- 3.45.2 (ported to libsoup-3.0/gcr-4/gweather-4.0)
+
 * Fri Aug 05 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.4-alt1
 - 3.44.4
 

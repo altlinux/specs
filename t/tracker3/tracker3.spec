@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name tracker
-%define ver_major 3.3
+%define ver_major 3.4
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %{api_ver_major}.0
@@ -14,7 +14,7 @@
 %def_enable upower
 %def_enable stemmer
 %def_enable soup2
-%def_disable soup3
+%def_enable soup3
 %def_enable docs
 %def_enable man
 %def_enable test_utils
@@ -25,7 +25,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: %_name%api_ver_major
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
@@ -36,7 +36,7 @@ Url: http://wiki.gnome.org/Projects/Tracker
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%beta.tar.xz
 %else
-Source: %_name-%version.tar
+Source: %_name-%version%beta.tar
 %endif
 
 Requires: lib%name = %EVR
@@ -184,8 +184,8 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 
 %files -n lib%name
 %_libdir/*.so.*
-%{?_enable_soup2:%_libdir/%_name-%api_ver/lib%_name-remote-soup2.so}
-%{?_enable_soup3:%_libdir/%_name-%api_ver/lib%_name-remote-soup3.so}
+%{?_enable_soup2:%_libdir/%_name-%api_ver/lib%_name-http-soup2.so}
+%{?_enable_soup3:%_libdir/%_name-%api_ver/lib%_name-http-soup3.so}
 
 %files devel
 %_includedir/%_name-%api_ver/
@@ -212,6 +212,13 @@ sed -i 's/tracker_install_rpath/tracker_internal_libs_dir/' src/*/meson.build
 %endif
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
+* Mon Sep 05 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt0.9.rc
+- 3.4.0.rc
+- enabled libsoup-3.0 support
+
 * Tue Aug 09 2022 Yuri N. Sedunov <aris@altlinux.org> 3.3.3-alt1
 - 3.3.3
 

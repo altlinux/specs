@@ -1,12 +1,13 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.38
+%define ver_major 43
+%define beta %nil
 %define xdg_name ca.desrt.dconf-editor
 
 Name: dconf-editor
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: dconf confuguration editor
 Group: Graphical desktop/GNOME
@@ -14,24 +15,28 @@ License: GPL-3.0
 Url: https://wiki.gnome.org/Projects/dconf
 
 %if_disabled snapshot
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
 Source: %name-%version.tar
 %endif
 #https://l10n.gnome.org/media/upload/dconf-editor-master-po-ru-812899_sj2ZdlN.merged.po
 Source1: %name-3.38.3.ru.po.finziyr
 
-%define glib_ver 2.55.1
-%define gtk_ver 3.22.27
+%define glib_ver 2.56
 %define dconf_ver 0.26.1
-%define vala_ver 0.36.11
+%define gtk_ver 3.22.27
+%define handy_ver 1.6
+%define vala_ver 0.40
+
 
 Requires: dconf >= %dconf_ver
 
 BuildRequires(pre): rpm-macros-meson gnome-common
-BuildPreReq: meson libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver libdconf-devel >= %dconf_ver
-BuildPreReq: vala-tools >= %vala_ver
+BuildRequires: meson vala-tools >= %vala_ver
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libdconf-devel >= %dconf_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: libxml2-devel rpm-build-gnome
 BuildRequires: libappstream-glib-devel yelp-tools
 BuildRequires: libdconf-vala
@@ -45,7 +50,7 @@ This package provides graphical dconf configuration editor.
 
 
 %prep
-%setup
+%setup -n %name-%version%beta
 cp %SOURCE1 po/ru.po
 
 %build
@@ -70,6 +75,9 @@ cp %SOURCE1 po/ru.po
 %doc README*
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.3-alt2
 - updated to 3.38.2-34-g41691c16 from master branch
   (fixed build with meson >= 0.61)

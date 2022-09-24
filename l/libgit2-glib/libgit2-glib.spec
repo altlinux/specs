@@ -1,5 +1,5 @@
-%def_enable snapshot
-%define ver_major 1.0
+%def_disable snapshot
+%define ver_major 1.1
 %define api_ver 1.0
 
 %def_enable gtk_doc
@@ -10,7 +10,7 @@
 %def_enable check
 
 Name: libgit2-glib
-Version: %ver_major.0.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Git library for GLib
@@ -29,7 +29,7 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libgio-devel >= %glib_ver libgit2-devel >= %libgit2_ver
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires(pre): rpm-build-vala
@@ -43,7 +43,7 @@ Libgit2-glib is a glib wrapper library around the libgit2 git access library.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Libgit2-glib is a glib wrapper library around the libgit2 git access library.
@@ -54,7 +54,7 @@ developing applications that use %name.
 %package gir
 Summary: GObject introspection data for the Libgit2-glib library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 Libgit2-glib is a glib wrapper library around the libgit2 git access library.
@@ -65,7 +65,7 @@ This package provides GObject introspection data for the Libgit2-glib library.
 Summary: GObject introspection devel data for the Libgit2-glib library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
+Requires: %name-gir = %EVR
 
 %description gir-devel
 Libgit2-glib is a glib wrapper library around the libgit2 git access library.
@@ -102,8 +102,7 @@ sed -i 's/purelib/platlib/' %name/meson.build
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/%name-%api_ver.so.*
@@ -135,6 +134,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Jul 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Thu Dec 23 2021 Yuri N. Sedunov <aris@altlinux.org> 1.0.0.1-alt1
 - updated to v1.0.0.1-1-gf745f88
 

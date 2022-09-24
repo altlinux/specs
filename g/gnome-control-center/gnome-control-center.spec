@@ -3,7 +3,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define _name control-center
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define api_ver 2.0
 %define xdg_name org.gnome.Settings
@@ -15,7 +15,7 @@
 %def_enable doc
 
 Name: gnome-control-center
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Control Center
@@ -50,9 +50,9 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %define grilo_ver 0.3.0
 %define polkit_ver 0.114
 %define snapd_ver 1.49
-%define malcontent_ver 0.10.0
+%define malcontent_ver 0.11.0
 %define gudev_ver 232
-%define pulse_ver 2.0
+%define pulse_ver 12.99.3
 %define adwaita_ver 1.0
 
 Requires: %name-data = %EVR
@@ -67,16 +67,15 @@ Requires: gnome-online-accounts >= %goa_ver
 Requires: gnome-bluetooth%bt_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-systemd
-BuildPreReq: meson desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
-BuildPreReq: fontconfig-devel >= %fontconfig_ver
-BuildPreReq: libgtk4-devel >= %gtk4_ver
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: pkgconfig(gnome-desktop-4) pkgconfig(gnome-bg-4) pkgconfig(gnome-rr-4)
-BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildPreReq: gnome-settings-daemon-devel >= %sett_daemon_ver
-BuildPreReq: libcolord-devel >= %colord_ver pkgconfig(colord-gtk4)
-BuildPreReq: libsoup-devel
-BuildPreReq: libibus-devel >= %ibus_ver libxkbfile-devel
+BuildRequires: meson desktop-file-utils gtk-doc xsltproc libappstream-glib-devel
+BuildRequires: fontconfig-devel >= %fontconfig_ver
+BuildRequires: libgtk4-devel >= %gtk4_ver
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: pkgconfig(gnome-desktop-4) pkgconfig(gnome-bg-4) pkgconfig(gnome-rr-4)
+BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
+BuildRequires: gnome-settings-daemon-devel >= %sett_daemon_ver
+BuildRequires: libcolord-devel >= %colord_ver pkgconfig(colord-gtk4)
+BuildRequires: libibus-devel >= %ibus_ver libxkbfile-devel
 BuildRequires: libupower-devel >= %upower_ver libpolkit1-devel >= %polkit_ver
 BuildRequires: libgio-devel librsvg-devel libxml2-devel
 BuildRequires: libX11-devel libXi-devel
@@ -183,6 +182,12 @@ you'll want to install this package.
 
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
+* Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.9.rc
+- 43.rc
+
 * Fri Jul 01 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
 - 42.3
 

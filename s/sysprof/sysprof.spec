@@ -2,9 +2,10 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define ver_major 3.44
+%define ver_major 3.46
 %define api_ver 4
-%define xdg_name org.gnome.Sysprof%api_ver
+%define ui_api_ver 5
+%define xdg_name org.gnome.Sysprof
 %define _libexecdir %_prefix/libexec
 
 %def_with sysprofd
@@ -28,17 +29,16 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.67.4
-%define gtk_ver 3.22.0
+%define glib_ver 2.73
+%define gtk_ver 4.6
 %define systemd_ver 222
-%define dazzle_ver 3.40
 %define polkit_ver 0.105
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ libappstream-glib-devel yelp-tools
 BuildRequires: glib2-devel >= %glib_ver libjson-glib-devel
 BuildRequires: gobject-introspection-devel
-%{?_enable_gtk:BuildRequires: libgtk+3-devel >= %gtk_ver libdazzle-devel >= %dazzle_ver}
+%{?_enable_gtk:BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(libadwaita-1)}
 %{?_with_sysprofd:BuildRequires: pkgconfig(systemd) libpolkit-devel >= %polkit_ver}
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 
@@ -61,8 +61,8 @@ developing applications that use GtkGHex library.
 
 %build
 %meson \
-	%{?_enable_gtk:-Denable_gtk=true} \
-	%{?_with_sysprofd:-Dwith_sysprofd=bundled} \
+	%{?_enable_gtk:-Dgtk=true} \
+	%{?_with_sysprofd:-Dsysprofd=bundled} \
 	-Ddebugdir=%prefix/lib/debug
 %meson_build
 
@@ -74,11 +74,12 @@ developing applications that use GtkGHex library.
 %files -f %name.lang
 %_bindir/%name-cli
 %_bindir/%name
-%_datadir/applications/org.gnome.Sysprof3.desktop
-%_datadir/glib-2.0/schemas/org.gnome.sysprof3.gschema.xml
+%_bindir/%name-agent
+%_datadir/applications/%xdg_name.desktop
+#%_datadir/glib-2.0/schemas/org.gnome.sysprof3.gschema.xml
 %_iconsdir/hicolor/*/*/*
 %_libdir/lib%name-%api_ver.so
-%_libdir/lib%name-ui-%api_ver.so
+%_libdir/lib%name-ui-%ui_api_ver.so
 %_libdir/lib%name-memory-%api_ver.so
 %_libdir/lib%name-speedtrack-%api_ver.so
 
@@ -86,29 +87,34 @@ developing applications that use GtkGHex library.
 %_libexecdir/sysprofd
 %_unitdir/sysprof2.service
 %_unitdir/sysprof3.service
-%_datadir/dbus-1/system-services/org.gnome.Sysprof2.service
-%_datadir/dbus-1/system-services/org.gnome.Sysprof3.service
-%_datadir/dbus-1/system.d/org.gnome.Sysprof2.conf
-%_datadir/dbus-1/system.d/org.gnome.Sysprof3.conf
+%_datadir/dbus-1/system-services/%{xdg_name}2.service
+%_datadir/dbus-1/system-services/%{xdg_name}3.service
+%_datadir/dbus-1/system.d/%{xdg_name}2.conf
+%_datadir/dbus-1/system.d/%{xdg_name}3.conf
 %_datadir/polkit-1/actions/org.gnome.sysprof3.policy
 
-%_datadir/dbus-1/interfaces/org.gnome.Sysprof2.xml
-%_datadir/dbus-1/interfaces/org.gnome.Sysprof3.Profiler.xml
-%_datadir/dbus-1/interfaces/org.gnome.Sysprof3.Service.xml
+%_datadir/dbus-1/interfaces/%{xdg_name}2.xml
+%_datadir/dbus-1/interfaces/%{xdg_name}3.Profiler.xml
+%_datadir/dbus-1/interfaces/%{xdg_name}3.Service.xml
+%_datadir/dbus-1/interfaces/%{xdg_name}.Agent.xml
 %endif
 
 %_datadir/mime/packages/%name-mime.xml
-%_datadir/metainfo/org.gnome.Sysprof3.appdata.xml
+%_datadir/metainfo/org.gnome.Sysprof.appdata.xml
 %doc AUTHORS NEWS README*
 
 %files devel
 %_libdir/lib%name-capture-%api_ver.a
 %_includedir/%{name}-%api_ver/
+%_includedir/%{name}-ui-%ui_api_ver/
 %_pkgconfigdir/%name-%api_ver.pc
-%_pkgconfigdir/%name-ui-%api_ver.pc
+%_pkgconfigdir/%name-ui-%ui_api_ver.pc
 %_pkgconfigdir/%name-capture-%api_ver.pc
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.0-alt1
+- 3.46.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
 - 3.44.0
 

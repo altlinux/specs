@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: libgnomekbd
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME keyboard shared library
@@ -28,8 +28,8 @@ Provides: %_bindir/gkbd-keyboard-display
 %define gtk_ver 2.91.6
 %define libxklavier_ver 5.2.1
 
-BuildRequires(pre): rpm-build-gnome rpm-build-licenses
-BuildRequires: libgio-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-licenses
+BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libxklavier-devel >= %libxklavier_ver
 BuildRequires: libX11-devel libXt-devel
@@ -71,18 +71,16 @@ GObject introspection devel data for the GNOME keyboard library
 %setup
 
 %build
-%autoreconf
-%configure \
-    --disable-static \
-    --disable-schemas-compile
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+
 %find_lang --with-gnome %name
 
 %check
-%make check
+%__meson_test
 
 %files -f %name.lang
 %_libdir/lib*.so.*
@@ -110,6 +108,9 @@ GObject introspection devel data for the GNOME keyboard library
 %endif
 
 %changelog
+* Sun Sep 04 2022 Yuri N. Sedunov <aris@altlinux.org> 3.28.1-alt1
+- 3.28.1 (ported to Meson build system)
+
 * Wed Aug 17 2022 Yuri N. Sedunov <aris@altlinux.org> 3.28.0-alt1
 - 3.28.0
 

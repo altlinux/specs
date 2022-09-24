@@ -2,7 +2,7 @@
 
 %define _name baobab
 %define xdg_name org.gnome.baobab
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %set_typelibdir %_libdir/%_name/girepository-1.0
 
@@ -21,7 +21,7 @@ Provides: baobab = %version-%release
 
 %define gtk4_ver 4.4.0
 %define vala_ver 0.23.3
-%define adwaita_ver 1.0.0
+%define adwaita_ver 1.2
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson libgtk4-devel >= %gtk4_ver
@@ -61,6 +61,9 @@ popd
 %doc README* NEWS
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

@@ -1,15 +1,15 @@
 %def_disable snapshot
 
-%define ver_major 42
-%define beta %nil
+%define ver_major 43
+%define beta .rc
 %define _libexecdir %_prefix/libexec
 %define gst_api_ver 1.0
-%define _name org.gnome.Contacts
+%define xdg_name org.gnome.Contacts
 %def_without cheese
 
 Name: gnome-contacts
-Version: %ver_major.0
-Release: alt1%beta
+Version: %ver_major
+Release: alt0.9%beta
 
 Summary: Contacts manager for GNOME
 License: GPL-2.0-or-later
@@ -19,34 +19,27 @@ Url: https://wiki.gnome.org/Apps/Contacts
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.58
 %define gtk4_ver 4.6.0
-%define vala_ver 0.40.10
-%define tp_glib_ver 0.22.0
+%define adwaita_ver 1.2
+%define vala_ver 0.54
 %define folks_ver 0.14
 %define eds_ver 3.34
 %define cheese_ver 3.5.90
-%define geocode_ver 3.15.3
-%define handy_ver 1.1.0
-%define portal_ver 0.5
+%define portal_ver 0.6
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson vala-tools
-BuildRequires: yelp-tools xsltproc docbook-dtds docbook-style-xsl libappstream-glib-devel valadoc
-BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1)
-BuildRequires:  libtelepathy-glib-devel >= %tp_glib_ver
-BuildRequires: libfolks-devel >= %folks_ver libvala-devel >= %vala_ver libgnome-desktop3-devel
+BuildRequires: yelp-tools xsltproc docbook-dtds docbook-style-xsl /usr/bin/appstream-util valadoc
+BuildRequires: libgio-devel >= %glib_ver libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: libfolks-devel >= %folks_ver libfolks-vala libvala-devel >= %vala_ver
 BuildRequires: libgnome-online-accounts-devel libgee0.8-devel evolution-data-server-devel >= %eds_ver
-%{?_with_cheese:BuildRequires: gstreamer%gst_api_ver-devel libcheese-devel >= %cheese_ver}
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
-BuildRequires: libportal-devel >= %portal_ver
-
-# for build from git
-BuildRequires: libfolks-vala
+BuildRequires: libportal-gtk4-devel >= %portal_ver
+%{?_with_cheese:BuildRequires: gstreamer%gst_api_ver-devel libcheese-devel >= %cheese_ver}
 
 %description
 %name is a standalone contacts manager for GNOME desktop.
@@ -66,18 +59,23 @@ BuildRequires: libfolks-vala
 
 %files -f %name.lang
 %_bindir/%name
-%_libexecdir/gnome-contacts-search-provider
-%_datadir/applications/%_name.desktop
-%_datadir/glib-2.0/schemas/%_name.gschema.xml
-%_datadir/dbus-1/services/%_name.service
-%_datadir/dbus-1/services/%_name.SearchProvider.service
-%_datadir/gnome-shell/search-providers/%_name.search-provider.ini
+%_libexecdir/%name-search-provider
+%dir %_libexecdir/%name
+%_libexecdir/%name/%name-parser
+%_datadir/applications/%xdg_name.desktop
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/dbus-1/services/%xdg_name.service
+%_datadir/dbus-1/services/%xdg_name.SearchProvider.service
+%_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_iconsdir/hicolor/*/*/*
 %_man1dir/%name.1.*
-%_datadir/metainfo/%_name.appdata.xml
+%_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS README*
 
 %changelog
+* Mon Sep 05 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.9.rc
+- 43.rc
+
 * Tue Mar 22 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

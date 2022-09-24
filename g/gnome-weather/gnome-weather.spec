@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define xdg_name org.gnome.Weather
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 
@@ -29,7 +29,7 @@ Provides:  %name-data = %version-%release
 %define gi_ver 1.36.0
 %define gjs_ver 1.71.0
 %define gweather4_ver 3.90
-%define adwaita_ver 1.0
+%define adwaita_ver 1.2
 
 Requires: libgjs >= %gjs_ver
 Requires: libgweather4.0-gir >= %gweather4_ver
@@ -48,7 +48,7 @@ Requires: typelib(Graphene)
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgtk4-devel >= %gtk4_ver libgjs-devel >= %gjs_ver
-BuildRequires: libgweather4.0-devel >= %gweather4_ver pkgconfig(geoclue-2.0)
+BuildRequires: libgweather4.0-devel >= %gweather4_ver pkgconfig(libgeoclue-2.0)
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: gobject-introspection-devel >= %gi_ver libgtk4-gir-devel libgweather4.0-gir-devel
 
@@ -79,12 +79,14 @@ access updated forecasts provided by various internet services.
 %_iconsdir/hicolor/scalable/apps/%xdg_name.svg
 %_iconsdir/hicolor/symbolic/apps/%xdg_name-symbolic.svg
 %_iconsdir/hicolor/scalable/status/*.svg
-
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc NEWS
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Mon Mar 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

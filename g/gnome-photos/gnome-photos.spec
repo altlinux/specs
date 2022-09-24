@@ -2,7 +2,7 @@
 
 %define _unpackaged_files_terminate_build 1
 %define xdg_name org.gnome.Photos
-%define ver_major 42
+%define ver_major 43
 %define _libexecdir %_prefix/libexec
 %define gegl_api_ver 0.4
 %define tracker_api_ver 3.0
@@ -31,7 +31,6 @@ Source: %name-%version.tar
 %define gegl_ver 0.4.2
 %define grilo_ver 0.3.5
 %define png_ver 1.6
-%define gfbgraph_ver 0.2.4
 %define dazzle_ver 3.28
 %define gexiv2_ver 0.12.1
 %define handy_ver 1.1.90
@@ -40,7 +39,7 @@ Requires: grilo-plugins >= %grilo_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires: meson yelp-tools %_bindir/appstream-util desktop-file-utils
-BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgio-devel >= %glib_ver gsettings-desktop-schemas-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
 BuildRequires: libgdata-devel >= %gdata_ver
@@ -49,13 +48,15 @@ BuildRequires: libgrilo-devel >= %grilo_ver
 BuildRequires: libpng-devel >= %png_ver
 BuildRequires: libgexiv2-devel >= %gexiv2_ver
 BuildRequires: libexempi-devel liblcms2-devel librsvg-devel
-BuildRequires: libjpeg-devel libgfbgraph-devel >= %gfbgraph_ver
+BuildRequires: libjpeg-devel
 BuildRequires: libgnome-desktop3-devel libgnome-online-accounts-devel zlib-devel
-BuildRequires: libgeocode-glib-devel
+BuildRequires: libgeocode-glib2.0-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: libdazzle-devel > %dazzle_ver
 BuildRequires: libdbus-devel
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: pkgconfig(libportal)
+BuildRequires: pkgconfig(libportal-gtk3)
 %{?_enable_check:BuildRequires: dbus dogtail3}
 
 %description
@@ -95,6 +96,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %doc ARTISTS AUTHORS NEWS README
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

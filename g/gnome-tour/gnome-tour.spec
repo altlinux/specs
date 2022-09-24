@@ -1,4 +1,4 @@
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.Tour
 %def_enable check
@@ -54,6 +54,9 @@ A guided tour and greeter for GNOME.
 %doc NEWS README.md
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0 (ported to GTK4)
 

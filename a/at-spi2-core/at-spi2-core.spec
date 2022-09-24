@@ -1,5 +1,9 @@
-%define ver_major 2.44
+%define _name at-spi2
+%define ver_major 2.46
+%define api_ver_major 2
 %define api_ver 2.0
+%define atk_api_ver 1.0
+
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
 %def_enable x11
@@ -7,36 +11,42 @@
 %def_enable doc
 %def_disable check
 
-Name: at-spi2-core
-Version: %ver_major.1
+Name: %_name-core
+Version: %ver_major.0
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
 Group: System/Libraries
 License: LGPL-2.1-or-later
-Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
+Url: https://wiki.gnome.org/Accessibility
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 Requires: lib%name = %version-%release
 Requires: dbus-tools-gui
 
+%define meson_ver 0.56.2
+%define glib_ver 2.67.4
+%define dbus_ver 1.5
+
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-xdg
-BuildRequires: meson libgio-devel >= 2.36.0 libdbus-devel >= 1.5
+BuildRequires: meson >= %meson_ver libgio-devel >= %glib_ver libdbus-devel >= %dbus_ver
+BuildRequires: libxml2-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_x11:BuildRequires: libXtst-devel libXext-devel libXi-devel libICE-devel libSM-devel}
 %{?_enable_xevie:BuildRequires: libXevie-devel}
 %{?_enable_doc:BuildRequires: gtk-doc}
 
 %description
-at-spi allows assistive technologies to access GTK-based
-applications. Essentially it exposes the internals of applications for
-automation, so tools such as screen readers, magnifiers, or even
-scripting interfaces can query and interact with GUI controls.
+The Access Technology Service Provider Interface (AT-SPI) is a set of
+interfaces that allow access technologies such as screen readers to
+programmatically determine what is being displayed on the screen and
+simulate keyboard and mouse events. It can also be used for automated
+testing.
 
-This version of at-spi is a major break from previous versions.
-It has been completely rewritten to use D-Bus rather than
-ORBIT/CORBA for its transport protocol.
+The at-spi2-core module contains the D-Bus specification, the registry
+daemon, and a C library for use by access technologies that provides a
+convenient wrapper around the DBus interfaces.
 
 %package -n lib%name
 Summary: Shared at-spi library
@@ -82,6 +92,83 @@ Conflicts: lib%name-devel < %version
 This package contains documentation for developing applications that use
 %name library.
 
+%package -n libatk
+Summary: Shared ATK library
+Group: System/Libraries
+
+%description -n libatk
+ATK is a library providing interface definitions that are consumed by
+toolkits that wish to integrate with the GNOME accessibility
+infrastructure.
+
+This package provides shared ATK library.
+
+%package -n libatk-devel
+Summary: Development environment for ATK
+Group: Development/C
+Requires: libatk = %EVR
+
+%description -n libatk-devel
+ATK is a library providing interface definitions that are consumed by
+toolkits that wish to integrate with the GNOME accessibility
+infrastructure.
+
+This package contains the necessary components to develop for ATK.
+
+%package -n libatk-devel-doc
+Summary: Development documentation for ATK
+Group: Development/C
+BuildArch: noarch
+Conflicts: libatk < %version-%release
+
+%description -n libatk-devel-doc
+ATK is a library providing interface definitions that are consumed by
+toolkits that wish to integrate with the GNOME accessibility
+infrastructure.
+
+This package contains development documentation for ATK.
+
+%package -n libatk-gir
+Summary: GObject introspection data for the Atk library
+Group: System/Libraries
+Requires: libatk = %EVR
+
+%description -n libatk-gir
+GObject introspection data for the Atk library
+
+%package -n libatk-gir-devel
+Summary: GObject introspection devel data for the Atk library
+Group: Development/Other
+BuildArch: noarch
+Requires: libatk-devel = %EVR
+Requires: libatk-gir = %EVR
+
+%description -n libatk-gir-devel
+GObject introspection devel data for the Atk library.
+
+%package -n %_name-atk
+Summary: Shared at-spi library
+Group: System/Libraries
+Requires: libatk = %EVR
+Requires: lib%name = %EVR
+
+%description -n %_name-atk
+at-spi2-atk is the library used to bridge ATK to AT-SPI, allowing
+applications exposing information via ATK to interface with clients that
+use AT-SPI. This module provides the necessary inter-process
+communication to allow accessibility-oriented software to operate.
+
+This package contains shared library needed to run at-spi daemon.
+
+%package -n %_name-atk-devel
+Summary: Development files for atk-bridge
+Group: Development/C
+Requires: %_name-atk = %EVR
+Requires: lib%name-devel = %EVR
+
+%description -n %_name-atk-devel
+This package provides development files for atk-bridge library.
+
 %prep
 %setup
 
@@ -93,7 +180,6 @@ This package contains documentation for developing applications that use
     %{?_enable_doc:-Ddocs=true}
 %nil
 %meson_build
-
 %install
 %meson_install
 %find_lang %name
@@ -110,15 +196,33 @@ This package contains documentation for developing applications that use
 %_datadir/defaults/at-spi2/accessibility.conf
 %_sysconfdir/xdg/autostart/at-spi-dbus-bus.desktop
 %_prefix/lib/systemd/user/at-spi-dbus-bus.service
-%doc AUTHORS README* NEWS
+%doc README* MAINTAINERS NEWS
 
 %files -n lib%name
 %_libdir/libatspi.so.*
 
 %files -n lib%name-devel
 %_libdir/libatspi.so
-%_includedir/at-spi-%api_ver
-%_pkgconfigdir/atspi-2.pc
+%_includedir/at-spi-%api_ver/
+%_pkgconfigdir/atspi-%api_ver_major.pc
+
+%files -n libatk
+%_libdir/libatk-%atk_api_ver.so.*
+
+%files -n libatk-devel
+%_includedir/atk-%atk_api_ver/
+%_libdir/libatk-%atk_api_ver.so
+%_pkgconfigdir/atk.pc
+
+%files -n %_name-atk
+%_libdir/libatk-bridge-%api_ver.so.*
+%_libdir/gtk-2.0/modules/libatk-bridge.so
+%_libdir/gnome-settings-daemon-3.0/gtk-modules/%_name-atk.desktop
+
+%files -n %_name-atk-devel
+%_includedir/%_name-atk/
+%_libdir/libatk-bridge-%api_ver.so
+%_pkgconfigdir/atk-bridge-%api_ver.pc
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -126,14 +230,26 @@ This package contains documentation for developing applications that use
 
 %files -n lib%name-gir-devel
 %_girdir/Atspi-%api_ver.gir
+
+%files -n libatk-gir
+%_typelibdir/Atk-%atk_api_ver.typelib
+
+%files -n libatk-gir-devel
+%_girdir/Atk-%atk_api_ver.gir
 %endif
 
 %if_enabled doc
 %files -n lib%name-devel-doc
-%_datadir/gtk-doc/html/libatspi
+%_datadir/gtk-doc/html/libatspi/
+
+%files -n libatk-devel-doc
+%_datadir/gtk-doc/html/atk/
 %endif
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.46.0-alt1
+- 2.46.0 (merged with ATK and ati-spi2-atk)
+
 * Fri Apr 22 2022 Yuri N. Sedunov <aris@altlinux.org> 2.44.1-alt1
 - 2.44.1
 

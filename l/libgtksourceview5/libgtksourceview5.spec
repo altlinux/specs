@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _name gtksourceview
-%define ver_major 5.4
+%define ver_major 5.6
 %define api_ver 5
 
 %def_disable static
@@ -20,7 +20,7 @@
 %endif
 
 Name: lib%{_name}%api_ver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -169,6 +169,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 5.6.0-alt1
+- 5.6.0
+
 * Sun Jun 12 2022 Yuri N. Sedunov <aris@altlinux.org> 5.4.2-alt1
 - 5.4.2
 

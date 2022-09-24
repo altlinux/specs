@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define xdg_name org.gnome.clocks
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 
 Name: gnome-clocks
@@ -20,20 +20,20 @@ Source: %name-%version.tar
 
 %define glib_ver 2.68
 %define gweather_ver 3.99
-%define geocode_ver 3.18.0
+%define geocode_ver 3.26.0
 %define geoclue_ver 2.4
 %define gtk4_ver 4.5
-%define adwaita_ver 1.0.0
+%define adwaita_ver 1.2
 
 Requires: geoclue2
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools glib2-devel >= %glib_ver
-BuildRequires: libappstream-glib-devel desktop-file-utils yelp-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools glib2-devel >= %glib_ver
+BuildRequires: /usr/bin/appstream-util desktop-file-utils yelp-tools
 BuildRequires: libgtk4-devel >= %gtk4_ver
 BuildRequires: libgsound-devel pkgconfig(gnome-desktop-4)
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel libgweather4.0-vala
-BuildRequires: libgweather4.0-devel >= %gweather_ver libgeocode-glib-devel >= %geocode_ver
+BuildRequires: libgweather4.0-devel >= %gweather_ver libgeocode-glib2.0-devel >= %geocode_ver
 BuildRequires: libgeoclue2-devel >= %geoclue_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 
@@ -62,6 +62,9 @@ Clock application designed for GNOME 3
 %doc README* NEWS*
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0 (ported to GTK4)
 

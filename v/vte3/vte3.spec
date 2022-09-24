@@ -1,21 +1,25 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define _name vte
-%define ver_major 0.68
+%define ver_major 0.70
 %define api_ver 2.91
+# bindigs version for -gtk4 library
+%define bind_ver 3.91
 
 Name: %{_name}3
 Version: %ver_major.0
 Release: alt1
 
 %def_disable static
+%def_enable gtk3
+%def_enable gtk4
 %def_enable introspection
-%def_enable gtk_doc
+%def_enable docs
 %def_enable glade
 %def_enable check
+# removed in 0.69
 %def_disable sixel
-%def_disable gtk4
 
 Summary: Terminal emulator widget for use with GTK+
 License: LGPL-2.0
@@ -30,7 +34,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 Source: %_name-%version.tar
 %endif
 
-%define gtk3_ver 3.20.0
+%define gtk3_ver 3.24.0
 %define gtk4_ver 4.0.1
 %define glib_ver 2.52.0
 %define pango_ver 1.22
@@ -41,20 +45,19 @@ Source: %_name-%version.tar
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-systemd
 BuildRequires: meson gcc-c++ gperf
 BuildRequires: libncurses-devel libcairo-devel
-BuildRequires: gtk-doc >= 1.1.0
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk3_ver
+%{?_enable_gtk3:BuildRequires: libgtk+3-devel >= %gtk3_ver}
 %{?_enable_gtk4:BuildRequires: libgtk4-devel >= %gtk4_ver}
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libgnutls-devel >= %tls_ver
 BuildRequires: libfribidi-devel
 BuildRequires: libpcre2-devel >= %pcre_ver
 BuildRequires: vala-tools libvala-devel
-BuildRequires:  pkgconfig(systemd)
-
+BuildRequires: pkgconfig(systemd)
 %{?_enable_glade:BuildRequires: libgladeui2.0-devel}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gir_ver %{?_enable_gtk3:libgtk+3-gir-devel}
 %{?_enable_gtk4:BuildRequires:libgtk4-gir-devel}}
+%{?_enable_docs:BuildRequires: gi-docgen}
 
 %description
 VTE is a terminal emulator widget for use with GTK+
@@ -137,9 +140,10 @@ sed -i "1i #define set_child_setup set_child_setup2" src/spawn.cc
 
 %build
 %meson \
+	%{?_disable_gtk3:-Dgtk3=false} \
 	%{?_enable_gtk4:-Dgtk4=true} \
 	%{?_disable introspection:-Dgir=false} \
-	%{?_enable_gtk_doc:-Ddocs=true} \
+	%{?_enable_docs:-Ddocs=true} \
 	%{?_disable_glade:-Dglade=false} \
 	%{?_enable_sixel:-Dsixel=true}
 %nil
@@ -154,9 +158,6 @@ install -d -m755 %buildroot%pkgdocdir
 install -p -m644 AUTHORS README.md %buildroot%pkgdocdir/
 install -p -m644 doc/*.txt %buildroot%pkgdocdir/
 
-# Remove unpackaged files
-find %buildroot -type f -name '*.la' -delete
-
 %find_lang %_name-%api_ver --output=%name.lang
 
 %check
@@ -169,7 +170,8 @@ find %buildroot -type f -name '*.la' -delete
 %dir %pkgdocdir
 %pkgdocdir/AUTHORS
 %pkgdocdir/README.md
-%_libdir/lib%_name-%api_ver.so.*
+%{?_enable_gtk3:%_libdir/lib%_name-%api_ver.so.*}
+%{?_enable_gtk4:%_libdir/lib%_name-%api_ver-gtk4.so.*}
 %_sysconfdir/profile.d/vte.*sh
 %_libexecdir/vte-urlencode-cwd
 %_userunitdir/vte-spawn-.scope.d/defaults.conf
@@ -177,16 +179,22 @@ find %buildroot -type f -name '*.la' -delete
 %files -n lib%name-devel
 %pkgdocdir/*.txt
 %_includedir/*
-%_libdir/lib%_name-%api_ver.so
+%{?_enable_gtk3:%_libdir/lib%_name-%api_ver.so
 %_pkgconfigdir/%_name-%api_ver.pc
-%_vapidir/%_name-%api_ver.*
+%_vapidir/%_name-%api_ver.*}
+%{?_enable_gtk4:%_libdir/lib%_name-%api_ver-gtk4.so
+%_pkgconfigdir/%_name-%api_ver-gtk4.pc
+%_vapidir/%_name-%api_ver-gtk4.*}
 %if_enabled glade
 %_datadir/glade/catalogs/vte-%api_ver.xml
 %_datadir/glade/pixmaps/hicolor/*x*/actions/widget-vte-terminal.png
 %endif
 
+%if_enabled docs
 %files -n lib%name-devel-doc
-%doc %_datadir/gtk-doc/html/*
+%{?_enable_gtk3:%_datadir/doc/%_name-%api_ver}
+%{?_enable_gtk4:%_datadir/doc/%_name-%api_ver-gtk4}
+%endif
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -195,13 +203,18 @@ find %buildroot -type f -name '*.la' -delete
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_typelibdir/Vte-%api_ver.typelib
+%{?_enable_gtk3:%_typelibdir/Vte-%api_ver.typelib}
+%{?_enable_gtk4:%_typelibdir/Vte-%bind_ver.typelib}
 
 %files -n lib%name-gir-devel
-%_girdir/Vte-%api_ver.gir
+%{?_enable_gtk3:%_girdir/Vte-%api_ver.gir}
+%{?_enable_gtk4:%_girdir/Vte-%bind_ver.gir}
 %endif
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 0.70.0-alt1
+- 0.70.0
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.68.0-alt1
 - 0.68.0
 

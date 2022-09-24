@@ -1,11 +1,11 @@
 %def_disable snapshot
 %define _name connections
 %define xdg_name org.gnome.Connections
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 
 Name: gnome-%_name
-Version: %ver_major.1.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Connections
@@ -22,10 +22,10 @@ Source: %name-%version.tar
 
 %define glib_ver 2.58
 %define gtk_ver 3.22.0
-%define handy_ver 1.2
+%define handy_ver 1.6
 
-BuildRequires(pre): meson
-BuildRequires: vala-tools 
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson vala-tools 
 BuildRequires: yelp-tools libappstream-glib-devel desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
@@ -70,6 +70,9 @@ BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 %exclude %_libdir/%name/pkgconfig/
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Wed Apr 13 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1.2-alt1
 - 42.1.2
 

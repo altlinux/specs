@@ -1,8 +1,8 @@
-%def_enable snapshot
+%def_disable snapshot
 %define optflags_lto %nil
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.Totem
 %define parser_ver 3.10.1
@@ -13,9 +13,6 @@
 %define grilo_ver 0.3.13
 %define grilo_plugins_ver 0.3.12
 %define glib_ver 2.36.0
-%define clutter_ver 1.17.3
-%define clutter_gtk_ver 1.5.5
-%define clutter_gst_ver 2.99.2
 %define peas_ver 1.1.0
 %define handy_ver 1.5
 
@@ -40,7 +37,7 @@
 
 Name: totem
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt1%beta
 
 Summary: Movie player for GNOME 3
 Group: Video
@@ -48,11 +45,10 @@ License: GPL-2.0 and LGPL-2.0
 Url: https://wiki.gnome.org/Apps/Videos
 
 %if_enabled snapshot
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %else
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %endif
-Patch: totem-42-alt-format.patch
 
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
 Obsoletes: %name-plugins-mythtv  %name-plugins-galago
@@ -79,36 +75,29 @@ Requires: grilo-plugins >= %grilo_plugins_ver
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson gcc-c++ gtk-doc perl-podlators
 BuildRequires: desktop-file-utils db2latex-xsl yelp-tools
-BuildRequires: libappstream-glib-devel
+BuildRequires: /usr/bin/appstream-util
 %{?_enable_nvtv:BuildRequires: libnvtv-devel >= 0.4.5}
-
 BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver
 BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_plugins_ver
 BuildRequires: gstreamer%gst_api_ver-utils >= %gst_ver
 BuildRequires: gst-plugins-base%gst_api_ver
 BuildRequires: gst-plugins-good%gst_api_ver
 BuildRequires: gst-plugins-bad%gst_api_ver-devel
-
-BuildRequires: iso-codes-devel gnome-icon-theme
 BuildRequires: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgio-devel libpeas-devel >= %peas_ver
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: libtotem-pl-parser-devel >= %parser_ver
-BuildRequires: libXtst-devel libXrandr-devel libXxf86vm-devel xorg-proto-devel
-BuildRequires: libclutter-devel >= %clutter_ver
-BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
-BuildRequires: libclutter-gst3.0-devel >= %clutter_gst_ver
 BuildRequires: libgrilo-devel >= %grilo_ver
-BuildRequires: libgnome-desktop3-devel
+BuildRequires: libgnome-desktop3-devel gsettings-desktop-schemas-devel
+BuildRequires: libX11-devel libXrandr-devel libXi-devel
+BuildRequires: pkgconfig(libportal-gtk3)
 %if_enabled python
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-pygobject3-devel pylint-py3
 %endif
-%{?_enable_vala:BuildRequires: libvala-devel >= 0.14 vala-tools}
-BuildRequires: libdbus-devel gsettings-desktop-schemas-devel
+%{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_lirc:BuildRequires: liblirc-devel}
 %{?_enable_zeitgeist:BuildRequires: libzeitgeist2.0-devel}
-%{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel libclutter-gtk3-gir-devel libpeas-gir-devel}
-BuildRequires: libX11-devel libXrandr-devel libXi-devel
+%{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel libpeas-gir-devel}
 
 %description
 Totem is simple movie player for the Gnome desktop.
@@ -245,9 +234,6 @@ used by other applications like filemanagers.
 
 %prep
 %setup -n %name-%version%beta
-%ifarch %ix86 armh
-%patch -b .format
-%endif
 subst "s|'pylint'|'pylint.py3'|" meson.build
 
 %build
@@ -269,7 +255,6 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %dir %_libdir/%name
 %_desktopdir/%xdg_name.desktop
 %_iconsdir/hicolor/*/*/*.svg
-%_datadir/%name/
 %_man1dir/*
 %exclude %_man1dir/%name-video-thumbnailer.1.*
 %_datadir/dbus-1/services/%xdg_name.service
@@ -300,7 +285,7 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_libdir/%name/plugins/apple-trailers/
 %_libdir/%name/plugins/autoload-subtitles/
 %_libdir/%name/plugins/im-status/
-%_libdir/totem/plugins/mpris/
+%_libdir/%name/plugins/mpris/
 %_libdir/%name/plugins/open-directory/
 %_libdir/%name/plugins/opensubtitles/
 %_libdir/%name/plugins/properties/
@@ -361,6 +346,12 @@ subst "s|'pylint'|'pylint.py3'|" meson.build
 %_datadir/thumbnailers/%name.thumbnailer
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
+* Tue Sep 06 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.9.rc
+- 43.rc
+
 * Thu Apr 07 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt2
 - updated to 42.0-11-gcc6849823
 

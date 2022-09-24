@@ -1,11 +1,11 @@
 %define _name pyatspi
-%define ver_major 2.38
+%define ver_major 2.46
 
 %def_enable tests
 %def_disable check
 
 Name: python3-module-%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Python bindings for at-spi library
@@ -61,6 +61,9 @@ export PYTHON=%__python3
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 2.46.0-alt1
+- 2.46.0
+
 * Thu Dec 09 2021 Yuri N. Sedunov <aris@altlinux.org> 2.38.2-alt1
 - 2.38.2
 

@@ -1,10 +1,14 @@
 %def_disable snapshot
+
 %define _libexecdir %_prefix/libexec
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
-%define api_ver 3.0
+%define api_ver 4.0
+%define ext_api_ver 4
+%define ext_sover 4
 %define xdg_name org.gnome.Nautilus
 
+%def_enable extensions
 %def_enable packagekit
 %def_enable tracker
 %def_enable introspection
@@ -13,7 +17,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -24,15 +28,15 @@ Url: https://wiki.gnome.org/Apps/Nautilus
 %if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
-%define icon_theme_ver 2.10.0
 %define desktop_file_utils_ver 0.8
 %define glib_ver 2.70
-%define desktop_ver 3.3.3
+%define desktop_ver 43
 %define pango_ver 1.28.3
-%define gtk_ver 3.22.27
+%define gtk4_ver 4.7.2
+%define adwaita_ver 1.2
 %define libxml2_ver 2.7.8
 %define gexiv2_ver 0.14
 %define gir_ver 0.10.2
@@ -44,35 +48,35 @@ Source: %name-%version.tar
 
 Requires(post): libcap-utils
 Requires: lib%name = %version-%release
-Requires: gnome-icon-theme >= %icon_theme_ver
 Requires: shared-mime-info
 Requires: common-licenses
 Requires: gvfs >= 1.34
 Requires: %_bindir/bwrap
 Requires: totem-video-thumbnailer
+Requires: gnome-disk-utility
 %{?_enable_tracker:Requires: tracker-miners3}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires: meson desktop-file-utils >= %desktop_file_utils_ver
-BuildRequires: libappstream-glib-devel
+BuildRequires: /usr/bin/appstream-util
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgnome-desktop3-devel >= %desktop_ver
+BuildRequires: pkgconfig(gnome-desktop-4) >= %desktop_ver
 BuildRequires: libpango-devel >= %pango_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libgtk4-devel >= %gtk4_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: libportal-gtk4-devel >= %portal_ver
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: libxml2-devel >= %libxml2_ver
-BuildRequires: libgexiv2-devel >= %gexiv2_ver
 BuildRequires: libgnome-autoar-devel >= %autoar_ver
-BuildRequires: libX11-devel
 BuildRequires: libseccomp-devel
-BuildRequires: pkgconfig(gstreamer-tag-1.0) pkgconfig(gstreamer-pbutils-1.0)
-BuildRequires: libportal-gtk3-devel >= %portal_ver
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
-%{?_enable_docs:BuildRequires: docbook-utils gtk-doc}
+BuildRequires: libcloudproviders-devel
+%{?_enable_extensions:BuildRequires: libgexiv2-devel >= %gexiv2_ver
+BuildRequires: pkgconfig(gstreamer-tag-1.0) pkgconfig(gstreamer-pbutils-1.0)}
+%{?_enable_docs:BuildRequires: docbook-utils gi-docgen}
 %{?_enable_tracker:BuildRequires: pkgconfig(tracker-sparql-3.0) tracker3-sandbox}
 %{?_enable_introspection:
 BuildRequires(pre): rpm-build-gir
-BuildRequires: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
+BuildRequires: gobject-introspection-devel >= %gir_ver libgtk4-gir-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel >= %selinux_ver}
 %{?_enable_check:
 BuildRequires(pre): rpm-build-python3
@@ -132,13 +136,12 @@ GObject introspection devel data for the nautilus-extension library
 
 %prep
 %setup -n %name-%version%beta
-sed -i 's|\(#\!/usr/bin/env python\)|\13|' test/interactive/*.py
 
 %build
 %meson \
     %{?_enable_docs:-Ddocs=true} \
+    %{?_disable_extensions:-Dextensions=false} \
     %{?_disable_packagekit:-Dpackagekit=false} \
-    -Dextensions=true \
     %{?_enable_selinux:-Dselinux=true}
 %meson_build
 
@@ -154,7 +157,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 %files -f %name.lang
 %_bindir/*
-%dir %_libdir/%name
+%{?_enable_extensions:%dir %_libdir/%name}
 %_desktopdir/*.desktop
 %_datadir/dbus-1/services/%xdg_name.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
@@ -176,32 +179,36 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %{?_enable_docs:%_man1dir/*}
 
 %files -n lib%name
-%_libdir/libnautilus-extension.so.*
-%dir %_libdir/%name/extensions-%api_ver
-%_libdir/%name/extensions-%api_ver/libnautilus-sendto.so
-%_libdir/%name/extensions-%api_ver/libnautilus-image-properties.so
-%_libdir/%name/extensions-%api_ver/libtotem-properties-page.so
+%_libdir/lib%name-extension.so.%{ext_sover}*
+%{?_enable_extensions:
+%dir %_libdir/%name/extensions-%ext_api_ver
+#%_libdir/%name/extensions-%ext_api_ver/libnautilus-sendto.so
+%_libdir/%name/extensions-%ext_api_ver/libnautilus-image-properties.so
+%_libdir/%name/extensions-%ext_api_ver/libtotem-properties-page.so}
 
 %files -n lib%name-devel
-%_includedir/*
-%_libdir/*.so
-%_pkgconfigdir/*
+%_includedir/%name
+%_libdir/lib%name-extension.so
+%_pkgconfigdir/lib%name-extension-%ext_sover.pc
 
 %if_enabled docs
 %files -n lib%name-devel-doc
-%_gtk_docdir/*
+%_datadir/doc/%name/
 %endif
 
 %if_enabled introspection
 %files -n lib%name-gir
-%_typelibdir/*
+%_typelibdir/Nautilus-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_girdir/*
+%_girdir/Nautilus-%api_ver.gir
 %endif
 
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 42.5-alt1
 - 42.5
 

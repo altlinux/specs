@@ -1,17 +1,17 @@
 %def_disable snapshot
 
 %define _libexecdir %prefix/libexec
-%define ver_major 1.72
+%define ver_major 1.74
 %define _name gjs
 %define api_ver 1.0
-%define mozjs_ver_major 91
-%define mozjs_ver 91.3.0
+%define mozjs_ver_major 102
+%define mozjs_ver 102.1.0
 
 %def_disable check
 %def_enable installed_tests
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Javascript Bindings for GNOME
@@ -36,7 +36,7 @@ BuildRequires: meson gcc-c++ libffi-devel libcairo-devel
 BuildRequires: libmozjs%mozjs_ver_major-devel >= %mozjs_ver
 BuildRequires: libgio-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
 BuildRequires: libreadline-devel libcairo-gobject-devel
-BuildRequires: libgtk+3-devel libgtk+3-gir-devel
+BuildRequires: libgtk4-devel libgtk4-gir-devel
 BuildRequires: valgrind pkgconfig(sysprof-capture-4)
 %{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools dbus-tools-gui
 BuildRequires: typelib(Clutter) typelib(Gtk) = 3.0 typelib(Gtk) = 4.0}
@@ -109,6 +109,9 @@ xvfb-run %meson_test
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1.74.0-alt1
+- 1.74.0
+
 * Mon Aug 08 2022 Yuri N. Sedunov <aris@altlinux.org> 1.72.2-alt1
 - 1.72.2
 

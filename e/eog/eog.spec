@@ -1,6 +1,6 @@
 %define _libexecdir %_prefix/libexec
 %define oldname eog2
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.eog
 %define api_ver 3.0
@@ -12,7 +12,7 @@
 %def_disable installed_tests
 
 Name: eog
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Eye Of Gnome
@@ -40,19 +40,19 @@ Obsoletes: %oldname < 2.14.2-alt1
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: meson python3-devel yelp-tools libappstream-glib-devel
-BuildPreReq: libgtk+3-devel >= 3.22
-BuildPreReq: libgio-devel >= 2.54
-BuildPreReq: libgnome-desktop3-devel >= 3.0
-BuildPreReq: gnome-icon-theme >= 2.19.1
-BuildPreReq: shared-mime-info >= 0.60
-BuildPreReq: libexempi-devel >= %exempi_ver
-BuildPreReq: libexif-devel >= 0.6.14
-%{?_enable_color_management:BuildPreReq: liblcms2-devel}
+BuildRequires: libgtk+3-devel >= 3.22
+BuildRequires: libgio-devel >= 2.54
+BuildRequires: libgnome-desktop3-devel >= 3.0
+BuildRequires: gnome-icon-theme >= 2.19.1
+BuildRequires: shared-mime-info >= 0.60
+BuildRequires: libexempi-devel >= %exempi_ver
+BuildRequires: libexif-devel >= 0.6.14
+%{?_enable_color_management:BuildRequires: liblcms2-devel}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
 BuildRequires: libjpeg-devel librsvg-devel >= %rsvg_ver
 BuildRequires: libpeas-devel >= %peas_ver
 BuildRequires: libXt-devel libxml2-devel perl-XML-Parser zlib-devel gsettings-desktop-schemas-devel
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel}
 %{?_enable_libportal:BuildRequires: libportal-gtk3-devel >= %portal_ver}
 BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 
@@ -177,6 +177,9 @@ ln -sf %name/lib%name.so \
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sat Aug 06 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
 - 42.3
 

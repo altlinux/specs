@@ -14,11 +14,12 @@
 %def_disable cdrtools
 %def_enable cdrdao
 %def_enable libburnia
+%def_disable nautilus
 %def_enable introspection
 
 Name: brasero
 Version: %ver_major.3
-Release: alt1.1
+Release: alt2
 
 Summary: CD/DVD burning tool for GNOME.
 Group: Archiving/Cd burning
@@ -67,8 +68,7 @@ BuildRequires: libcanberra-gtk3-devel
 BuildRequires: gtk-doc >= 1.11
 BuildRequires: yelp-tools
 BuildRequires: libSM-devel
-# for nautilus extension
-BuildRequires: libnautilus-devel
+%{?_enable_nautilus:BuildRequires: libnautilus-devel}
 # GObject introspection support
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 
@@ -156,6 +156,7 @@ GObject introspection devel data for the Brasero
 	%{subst_enable cdrkit} \
 	%{subst_enable cdrtools} \
 	%{subst_enable cdrdao} \
+	%{subst_enable nautilus} \
 	%{subst_enable introspection} \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--enable-preview \
@@ -211,12 +212,14 @@ GObject introspection devel data for the Brasero
 %_datadir/GConf/gsettings/brasero.convert
 %_datadir/metainfo/%name.appdata.xml
 
-%exclude %_datadir/applications/brasero-nautilus.desktop
+%{?_enable_nautilus:%exclude %_datadir/applications/brasero-nautilus.desktop}
 %exclude %_libdir/%name%brasero_api_ver/plugins/lib%name-*.la
 
+%if_enabled nautilus
 %files nautilus
 %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-brasero-extension.so
 %_datadir/applications/brasero-nautilus.desktop
+%endif
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -237,9 +240,12 @@ GObject introspection devel data for the Brasero
 %_girdir/*.gir
 %endif
 
-%exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
+%{?_enable_nautilus:%exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la}
 
 %changelog
+* Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt2
+- disabled Nautilus support
+
 * Mon Sep 20 2021 Yuri N. Sedunov <aris@altlinux.org> 3.12.3-alt1.1
 - rebuilt with Tracker 3.0 instead of Tracker 2.0
 

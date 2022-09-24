@@ -3,7 +3,7 @@
 %define _name sudoku
 %define xdg_name org.gnome.Sudoku
 %define __name gnome-%_name
-%define ver_major 42
+%define ver_major 43
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
@@ -56,6 +56,9 @@ in popularity.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

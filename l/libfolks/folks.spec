@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name folks
 %define ver_major 0.15
@@ -14,7 +14,7 @@
 
 Name: lib%_name
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: GObject contact aggregation library
 Group: System/Libraries
@@ -171,6 +171,10 @@ the functionality of the Folks library.
 
 
 %changelog
+* Tue Aug 30 2022 Yuri N. Sedunov <aris@altlinux.org> 0.15.5-alt2
+- updated to 0.15.5-7-g74886b1d
+- built against e-d-s-3.45.* libraries
+
 * Wed Mar 23 2022 Yuri N. Sedunov <aris@altlinux.org> 0.15.5-alt1
 - 0.15.5
 

@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 %define xdg_name org.gnome.Builder
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define _libexecdir %_prefix/libexec
 %define api_ver %ver_major.0
@@ -10,7 +10,7 @@
 %def_with clang
 %def_with sysprof
 %def_with flatpak
-%def_with docs
+%def_without docs
 %def_with help
 %def_with autotools
 # disabled by default
@@ -22,7 +22,7 @@
 %def_without gvls
 
 Name: gnome-builder
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
@@ -40,36 +40,36 @@ Source1: %name-ru.po
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
-%define glib_ver 2.69.1
-%define gtk_ver 3.24
-%define gtksourceview_api_ver 4
-%define gtksourceview_ver 4.6.1
-%define git2_ver 0.28.0.1
+%define glib_ver 2.74
+%define gtk_ver 4.8
+%define adwaita_ver 1.2
+%define panel_ver 1.0.0
+%define gtksourceview_api_ver 5
+%define gtksourceview_ver 5.6
+%define git2_ver 1.1.0
 %define devhelp_ver 3.30.0
 %define gjs_ver 1.42
 %define xml_ver 2.9.0
 %define vala_ver 0.37
 %define sysprof_ver 3.34.0
-%define vte_ver 0.46
+%define vte_ver 0.70
 %define gtkmm_ver 3.20
 %define gspell_ver 1.8.0
 %define peas_ver 1.22.0
 %define json_glib_ver 1.2.0
-%define dazzle_ver 3.37.0
-%define template_glib_ver 3.34.0
-%define soup_ver 2.52
-%define webkit_ver 2.26
+%define template_glib_ver 3.36
+%define soup3_ver 3.0
+%define webkit_ver 2.38
 %define portal_ver 0.5
 %define gi_docgen_ver 2021.9
-%define jsonrpc_ver 3.41.0
-%define handy_ver 1.0
+%define jsonrpc_ver 3.42
 
 %add_python3_path %_libdir/%name/plugins
 %add_findreq_skiplist %_datadir/%name/plugins/*_templates/resources/*/*.py
 
 Requires(pre): %name-data = %EVR
 # src/libide/gui/ide-application-plugins.c
-Requires: typelib(WebKit2) = 4.0
+Requires: typelib(WebKit2) = 5.0
 Requires: typelib(Jsonrpc) = 1.0
 
 %{?_with_autotools:Requires: automake autoconf libtool}
@@ -82,26 +82,26 @@ BuildRequires(pre): rpm-macros-meson rpm-build-python3 rpm-build-gir
 BuildRequires: /proc meson gcc-c++ flex mm-common yelp-tools
 BuildRequires: %_bindir/ctags %_bindir/tidy %_bindir/uncrustify
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libappstream-glib-devel desktop-file-utils
-BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: /usr/bin/appstream-util desktop-file-utils
+BuildRequires: libgtk4-devel >= %gtk_ver libadwaita-devel >= %adwaita_ver
+BuildRequires: libpanel-devel >= %panel_ver
 BuildRequires: libgtksourceview%gtksourceview_api_ver-devel >= %gtksourceview_ver
 BuildRequires: libgit2-glib-devel >= %git2_ver libdevhelp-devel >= %devhelp_ver
-BuildRequires: libpcre-devel libgjs-devel >= %gjs_ver libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: libpcre-devel libgjs-devel >= %gjs_ver libwebkitgtk5.0-devel >= %webkit_ver
 BuildRequires: libxml2-devel >= %xml_ver libpeas-devel >= %peas_ver libvte3-devel >= %vte_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver libpcre2-devel
 BuildRequires: python3-devel python3-module-pygobject3-devel
-BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libvte3-gir-devel
+BuildRequires: gobject-introspection-devel libgtk4-gir-devel libpanel-gir-devel libvte3-gir-devel
 BuildRequires: libgtksourceview%gtksourceview_api_ver-gir-devel libgit2-glib-gir-devel libpeas-gir-devel
-BuildRequires: libjson-glib-gir-devel libsoup-devel >= %soup_ver
+BuildRequires: libjson-glib-gir-devel libsoup3.0-gir-devel >= %soup3_ver libwebkit2gtk5.0-gir-devel
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libgspell-devel >= %gspell_ver libenchant2-devel
-BuildRequires: libdazzle-devel >= %dazzle_ver libtemplate-glib-devel >= %template_glib_ver
+BuildRequires: libtemplate-glib-devel >= %template_glib_ver libdspy-devel libeditorconfig-devel
 BuildRequires: libjsonrpc-glib-devel >= %jsonrpc_ver
-BuildRequires: libdazzle-gir-devel libtemplate-glib-gir-devel  libjsonrpc-glib-gir-devel
-BuildRequires: libgtkmm3-devel >= %gtkmm_ver
-BuildRequires: libgladeui2.0-devel cmark-devel
-BuildRequires: libportal-gtk3-devel
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: libtemplate-glib-gir-devel libjsonrpc-glib-gir-devel
+BuildRequires: libgtkmm4-devel >= %gtkmm_ver
+BuildRequires: cmark-devel
+BuildRequires: pkgconfig(libportal-gtk4)
 %{?_with_clang:BuildRequires: llvm-devel clang-devel}
 %{?_with_docs:BuildRequires: gi-docgen >= %gi_docgen_ver}
 %{?_with_help:BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme}
@@ -156,80 +156,8 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %_libexecdir/%name-git
 %_libexecdir/%name-flatpak
 %dir %_libdir/%name
-
 %dir %_libdir/%name/girepository-1.0
-%_libdir/%name/girepository-1.0/Ide-%api_ver.typelib
-
-%dir %_libdir/%name/plugins
-%_libdir/%name/plugins/__pycache__
-%_libdir/%name/plugins/blueprint.plugin
-%_libdir/%name/plugins/blueprint_plugin.py
-%_libdir/%name/plugins/buildstream.plugin
-%_libdir/%name/plugins/buildstream_plugin.py
-%_libdir/%name/plugins/cargo.plugin
-%_libdir/%name/plugins/cargo_plugin.py
-%_libdir/%name/plugins/copyright.plugin
-%_libdir/%name/plugins/copyright_plugin.py
-%_libdir/%name/plugins/eslint.plugin
-%_libdir/%name/plugins/eslint_plugin.py
-%_libdir/%name/plugins/find-other-file.plugin
-%_libdir/%name/plugins/find_other_file.py
-%_libdir/%name/plugins/gjs_symbols.plugin
-%_libdir/%name/plugins/gjs_symbols.py
-%_libdir/%name/plugins/go-langserv.plugin
-%_libdir/%name/plugins/go_langserver_plugin.py
-%_libdir/%name/plugins/gradle.plugin
-%_libdir/%name/plugins/gradle_plugin.py
-%{?_with_gvls:%_libdir/%name/plugins/gvls_plugin.py
-%_libdir/%name/plugins/gvls.plugin}
-%_libdir/%name/plugins/html-preview.plugin
-%_libdir/%name/plugins/html_preview.gresource
-%_libdir/%name/plugins/html_preview.py
-%_libdir/%name/plugins/intelephense.plugin
-%_libdir/%name/plugins/intelephense.py
-%_libdir/%name/plugins/jedi-language-server.plugin
-%_libdir/%name/plugins/jedi_language_server_plugin.py
-%_libdir/%name/plugins/jhbuild.plugin
-%_libdir/%name/plugins/jhbuild_plugin.py
-%_libdir/%name/plugins/make.plugin
-%_libdir/%name/plugins/make_plugin.gresource
-%_libdir/%name/plugins/make_plugin.py
-%_libdir/%name/plugins/maven.plugin
-%_libdir/%name/plugins/maven_plugin.py
-%_libdir/%name/plugins/meson-templates.plugin
-%_libdir/%name/plugins/meson_templates.gresource
-%_libdir/%name/plugins/meson_templates.py
-%_libdir/%name/plugins/mono.plugin
-%_libdir/%name/plugins/mono_plugin.py
-%_libdir/%name/plugins/npm.plugin
-%_libdir/%name/plugins/npm_plugin.py
-%_libdir/%name/plugins/phpize.plugin
-%_libdir/%name/plugins/phpize_plugin.py
-%_libdir/%name/plugins/python-gi-imports-completion.plugin
-%_libdir/%name/plugins/python_gi_imports_completion.py
-%{?_with_rls:%_libdir/%name/plugins/rls.plugin
-%_libdir/%name/plugins/rls_plugin.py}
-%_libdir/%name/plugins/rstcheck.plugin
-%_libdir/%name/plugins/rstcheck_plugin.py
-%_libdir/%name/plugins/rubocop.plugin
-%_libdir/%name/plugins/rubocop_plugin.py
-%_libdir/%name/plugins/stylelint.plugin
-%_libdir/%name/plugins/stylelint_plugin.py
-%_libdir/%name/plugins/ts-language-server.plugin
-%_libdir/%name/plugins/ts_language_server_plugin.py
-%{?_with_vala:%_libdir/%name/plugins/vala-pack.plugin
-%_libdir/%name/plugins/vala_pack_plugin.py}
-%_libdir/%name/plugins/valgrind.plugin
-%_libdir/%name/plugins/valgrind_plugin.gresource
-%_libdir/%name/plugins/valgrind_plugin.py
-%_libdir/%name/plugins/vala_langserv.plugin
-%_libdir/%name/plugins/vala_langserv.py
-%_libdir/%name/plugins/waf.plugin
-%_libdir/%name/plugins/waf_plugin.py
-#%{?_with_autotools_templates:%_libdir/%name/plugins/autotools_templates/}
-#%{?_with_sysprof:%_libdir/%name/plugins/sysprof-plugin.so}
-
-%_includedir/%name/
+%_libdir/%name/girepository-1.0/Ide-%ver_major.typelib
 %_includedir/%name-%ver_major/
 %_pkgconfigdir/%name-%version.pc
 %python3_sitelibdir_noarch/gi/overrides/Ide.py
@@ -247,24 +175,22 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %_datadir/glib-2.0/schemas/org.gnome.builder.build.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.clang.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.code-insight.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.copyright.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.debug.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.editor.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.editor.language.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.extension-type.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.builder.gnome-code-assistance.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.plugin.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.builder.plugins.color_picker_plugin.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.builder.plugins.copyright.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.builder.plugins.eslint.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.builder.plugins.stylelint.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.project.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.project-tree.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.builder.terminal.gschema.xml
-%_datadir/glib-2.0/schemas/org.gnome.builder.workbench.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.builder.rust-analyzer.gschema.xml
-%_datadir/gtksourceview-%gtksourceview_api_ver/styles/*.xml
-%_datadir/gtksourceview-%gtksourceview_api_ver/language-specs/blueprint.lang
-
+%_datadir/glib-2.0/schemas/org.gnome.builder.shellcmd.command.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.shellcmd.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.spelling.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.sysprof.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.terminal.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.builder.valgrind.gschema.xml
 %_datadir/%name/
 %_iconsdir/hicolor/*/*/*.*
 %_datadir/metainfo/%xdg_name.appdata.xml
@@ -273,6 +199,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %{?_with_help:%_datadir/doc/%name/}
 
 %changelog
+* Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Thu Apr 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 

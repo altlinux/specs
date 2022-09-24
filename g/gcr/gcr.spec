@@ -5,14 +5,14 @@
 %define gcr_api_ver 3
 %define gck_api_ver 1
 
-%def_enable ssh_agent
+%def_disable ssh_agent
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable check
 
 Name: gcr
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: A GNOME crypto viewer and prompter
 Group: Graphical desktop/GNOME
@@ -25,9 +25,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 Requires: libtasn1-utils
 %{?_enable_ssh_agent:Requires: %_bindir/ssh-agent %_bindir/ssh-add}
+%{?_disable_ssh_agent:Conflicts: gcr4 < 3.92.0}
 
 %define glib_ver 2.44.0
 %define gtk_ver 3.22
@@ -41,7 +42,7 @@ BuildRequires: meson python3 glib2-devel >= %glib_ver
 BuildRequires: libp11-kit-devel >= %p11kit_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libgcrypt-devel >= %gcrypt_ver libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
 BuildRequires: libvala-devel >= %vala_ver vala-tools
-%{?_enable_ssh_agent:BuildRequires: libsecret-devel >= %secret_ver %_bindir/ssh-agent %_bindir/ssh-add}
+BuildRequires: libsecret-devel >= %secret_ver %_bindir/ssh-agent %_bindir/ssh-add
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools-gui %_bindir/ssh-keygen}
@@ -69,7 +70,7 @@ GCK is a library for accessing PKCS#11 modules like smart cards, in a
 %package libs-devel
 Summary: Development files for GCR
 Group: Development/C
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 
 %description libs-devel
 The gcr-devel package includes the header files for the GCR libraries.
@@ -77,7 +78,7 @@ The gcr-devel package includes the header files for the GCR libraries.
 %package libs-gir
 Summary: GObject introspection data for GCR libraries
 Group: System/Libraries
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 
 %description libs-gir
 GObject introspection data for GCR libraries.
@@ -86,8 +87,8 @@ GObject introspection data for GCR libraries.
 Summary: GObject introspection devel data for the GCR libraries
 Group: System/Libraries
 BuildArch: noarch
-Requires: %name-libs-gir = %version-%release
-Requires: %name-libs-devel = %version-%release
+Requires: %name-libs-gir = %EVR
+Requires: %name-libs-devel = %EVR
 
 %description libs-gir-devel
 GObject introspection devel data for the GCR libraries.
@@ -96,7 +97,7 @@ GObject introspection devel data for the GCR libraries.
 Summary: Vala language bindings for the GCR libraries
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-libs = %version-%release
+Requires: %name-libs = %EVR
 
 %description libs-vala
 This package provides Vala language bindings for the GCR libraries.
@@ -195,6 +196,9 @@ xvfb-run %__meson_test -t 2
 
 
 %changelog
+* Mon Sep 05 2022 Yuri N. Sedunov <aris@altlinux.org> 3.41.1-alt2
+- disabled ssh-agent binary, conflicts gcr4 < 3.92.0
+
 * Thu Jul 14 2022 Yuri N. Sedunov <aris@altlinux.org> 3.41.1-alt1
 - 3.41.1
 

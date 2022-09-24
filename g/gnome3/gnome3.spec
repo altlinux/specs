@@ -1,8 +1,8 @@
 %define ver_major 42
 
 Name: gnome3
-Version: %ver_major.0
-Release: alt1
+Version: %ver_major.1
+Release: alt2
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -140,7 +140,7 @@ Provides: gnome-default = %version-%release
 Requires: %name-minimal = %version-%release
 
 # initial setup
-Requires: gnome-initial-setup
+#Requires: gnome-initial-setup
 
 ## Canberra modules for both GTK+
 Requires: libcanberra-gtk2
@@ -236,7 +236,7 @@ Requires: NetworkManager-gnome >= %network_manager_ver
 ## Bluetooth pairing and control program
 Requires: gnome-bluetooth
 Requires: gnome-remote-desktop
-
+Requires: gnome-nettool >= %ver_major
 Requires: gnome-user-share
 Requires: rygel
 Requires: rygel-tracker
@@ -429,6 +429,12 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Sat Sep 24 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt2
+- default: removed gnome-initial-setup
+
+* Thu Apr 07 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- default: added back gnome-nettool
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - default: gnome-books -> foliate
 

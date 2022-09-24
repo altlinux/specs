@@ -1,5 +1,5 @@
 %define _name gssdp
-%define ver_major 1.5
+%define ver_major 1.6
 %define api_ver 1.6
 
 %def_disable static
@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -130,6 +130,9 @@ A Device Sniffer tool based on GSSDP framework.
 
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Sun Aug 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
 - 1.5.2
 

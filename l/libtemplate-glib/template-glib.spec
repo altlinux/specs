@@ -3,14 +3,14 @@
 %define _name template-glib
 # probably meson bug
 %define libname libtemplate_glib
-%define ver_major 3.34
+%define ver_major 3.36
 %define api_ver 1.0
 
 %def_enable introspection
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A templating library for GLib
@@ -76,7 +76,7 @@ This package contains development documentation for %name
 %setup -n %_name-%version
 
 %build
-%meson %{?_enable_gtk_doc:-Denable_gtk_doc=true}
+%meson %{?_enable_gtk_doc:-Dgtk_doc=true}
 %meson_build
 
 %install
@@ -112,6 +112,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
+- 3.36.0
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 3.34.1-alt1
 - 3.34.1
 

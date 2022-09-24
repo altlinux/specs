@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 4.6
+%define ver_major 4.8
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -18,8 +18,9 @@
 # broadway (HTML5) gdk backend
 %def_enable broadway
 %def_enable cloudproviders
-%def_enable tracker3
-%def_enable vulkan
+# 4.8.0: tracker and vulkan disabled by default. vulkan is still experimental
+%def_disable tracker
+%def_disable vulkan
 # media backends
 # gstreamer enabled by default
 %def_enable gstreamer
@@ -32,7 +33,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.7
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -49,7 +50,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source5: gtk4-icon-cache.filetrigger
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
-%define glib_ver 2.66.0
+%define glib_ver 2.66
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
 %define pango_ver 1.50.0
@@ -65,7 +66,7 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 %define epoxy_ver 1.4
 %define graphene_ver 1.9.1
 %define cloudproviders_ver 0.2.5
-%define rsvg_ver 2.46.0
+%define rsvg_ver 2.52.0
 
 Requires: gtk4-update-icon-cache = %EVR
 Requires: icon-theme-adwaita
@@ -102,7 +103,7 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel >= %xkbcommon_ver wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
-%{?_enable_tracker3:BuildRequires: tracker3-devel}
+%{?_enable_tracker:BuildRequires: tracker3-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
 # for examples
 BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel python3-module-pygobject3
@@ -112,8 +113,8 @@ BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel python3-module-pygobject
 # since 3.94.0 for media backends
 %{?_enable_gstreamer:BuildRequires: pkgconfig(gstreamer-player-1.0)}
 %{?_enable_ffmpeg:
-BuildRequires: libavfilter-devel libavformat-devel
-BuildRequires: libavcodec-devel libavutil-devel libswscale-devel}
+BuildRequires: libavfilter-devel libavformat-devel libavdevice-devel
+BuildRequires: libavcodec-devel libavutil-devel libswscale-devel libswresample-devel}
 
 %description
 GTK is a multi-platform toolkit for creating graphical user interfaces.
@@ -327,12 +328,14 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %files -n gtk4-demo
 %_desktopdir/org.gtk.Demo4.desktop
 %_desktopdir/org.gtk.IconBrowser4.desktop
+%_desktopdir/org.gtk.gtk4.NodeEditor.desktop
 %_desktopdir/org.gtk.WidgetFactory4.desktop
 %_desktopdir/org.gtk.PrintEditor4.desktop
 %_bindir/gtk4-demo
 %_bindir/gtk4-demo-application
 %_bindir/gtk4-widget-factory
 %_bindir/gtk4-icon-browser
+%_bindir/gtk4-node-editor
 %_bindir/gtk4-print-editor
 %_datadir/glib-2.0/schemas/org.gtk.Demo4.gschema.xml
 %_iconsdir/hicolor/scalable/apps/org.gtk.Demo4.svg
@@ -343,17 +346,20 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 %_iconsdir/hicolor/symbolic/apps/org.gtk.IconBrowser4-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg
 %_iconsdir/hicolor/symbolic/apps/org.gtk.WidgetFactory4-symbolic.svg
+%_iconsdir/hicolor/*/*/org.gtk.gtk4.NodeEditor*.svg
 
 %_datadir/metainfo/org.gtk.Demo4.appdata.xml
 %_datadir/metainfo/org.gtk.IconBrowser4.appdata.xml
 %_datadir/metainfo/org.gtk.PrintEditor4.appdata.xml
 %_datadir/metainfo/org.gtk.WidgetFactory4.appdata.xml
+%_datadir/metainfo/org.gtk.gtk4.NodeEditor.appdata.xml
 
 %if_enabled man
 %_man1dir/gtk4-demo.1.*
 %_man1dir/gtk4-demo-application.1.*
 %_man1dir/gtk4-icon-browser.1.*
 %_man1dir/gtk4-widget-factory.1.*
+%_man1dir/gtk4-node-editor.1*
 %endif
 
 %if_enabled gtk_doc
@@ -391,6 +397,12 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 4.8.1-alt1
+- 4.8.1
+
+* Tue Sep 06 2022 Yuri N. Sedunov <aris@altlinux.org> 4.8.0-alt1
+- 4.8.0
+
 * Wed Aug 17 2022 Yuri N. Sedunov <aris@altlinux.org> 4.6.7-alt1
 - 4.6.7
 

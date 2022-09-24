@@ -1,16 +1,16 @@
 # since 3.29.x depends on modules in %_libdir/%%name
 %set_verify_elf_method unresolved=relaxed
 
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
 %define ver_major 43
-%define beta .beta
+%define beta .rc
 %define xdg_name org.gnome.Boxes
 %def_disable installed_tests
 
 Name: gnome-boxes
 Version: %ver_major
-Release: alt0.5%beta
+Release: alt0.9%beta
 
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -132,6 +132,9 @@ the functionality of the Boxes.
 %exclude %_includedir/%name/
 
 %changelog
+* Mon Sep 05 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.9.rc
+- 43.rc
+
 * Wed Aug 31 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.5.beta
 - 43.beta-23-g572883e9 (ported to libsoup-3.0/webkit2gtk-4.1)
 

@@ -1,22 +1,21 @@
 %def_disable snapshot
 
-%define ver_major 3.44
+%define ver_major 3.46
 %define _libexecdir %_prefix/libexec
+
+%def_enable backend
 %def_enable kerberos
 %def_enable owncloud
 %def_enable exchange
-%def_enable facebook
 %def_enable google
-%def_enable flickr
 %def_enable imap_smtp
 %def_enable windows_live
-%def_enable media_server
-%def_enable foursquare
+# disabled by default
+%def_disable media_server
 %def_enable lastfm
-%def_enable webkit
-
 %def_enable gtk_doc
-%def_enable docs
+%def_enable man
+
 %define api_ver 1.0
 
 Name: gnome-online-accounts
@@ -38,23 +37,27 @@ Requires: lib%name = %EVR
 
 %{?_enable_kerberos:Requires: realmd}
 
-%define glib_ver 2.52
+%define glib_ver 2.68
 %define gtk_ver 3.20.0
 %define oauth_ver 0.9.5
-%define rest_ver 0.7.12
-%define soup_ver 2.42
-%define webkit_ver 2.8.0
+%define rest_ver 0.9.1
+%define soup3_ver 3.0.7
+%define webkit_ver 2.36.4
 
-BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: liboauth-devel >= %oauth_ver
-BuildPreReq: librest-devel >= %rest_ver
-BuildPreReq: libsoup-devel >= %soup_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-%{?_enable_webkit:BuildRequires: libwebkit2gtk-devel >= %webkit_ver}
-BuildRequires: gnome-common gtk-doc
-BuildRequires: libjson-glib-devel libgnome-keyring-devel libnotify-devel libsecret-devel
-BuildRequires: libkrb5-devel gcr-libs-devel gobject-introspection-devel
-BuildRequires: vala-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson glib2-devel >= %glib_ver
+BuildRequires: liboauth-devel >= %oauth_ver
+BuildRequires: pkgconfig(rest-1.0) >= %rest_ver
+BuildRequires: pkgconfig(gcr-3)
+BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: libjson-glib-devel libgnome-keyring-devel
+BuildRequires: libnotify-devel libsecret-devel libdbus-devel
+BuildRequires: vala-tools gobject-introspection-devel
+%{?_enable_kerberos:BuildRequires: libkrb5-devel}
+%{?_enable_backend:BuildRequires: pkgconfig(webkit2gtk-4.1) >= %webkit_ver}
+%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_man:BuildRequires: xsltproc}
 
 %description
 gnome-online-accounts provides interfaces so applications and
@@ -107,47 +110,33 @@ This package contains development documentation for the %name libraries.
 %setup
 
 %build
-%if_enabled snapshot
-NOCONFIGURE=1 ./autogen.sh
-%else
-#%autoreconf
-%endif
-%configure --disable-static \
-	--enable-facebook \
-	%{subst_enable kerberos} \
-	%{subst_enable owncloud} \
-	%{?_enable_imap_smtp:--enable-imap-smtp} \
-	%{subst_enable exchange} \
-	%{subst_enable facebook} \
-	%{subst_enable google} \
-	%{subst_enable flickr} \
-	%{?_enable_windows_live:--enable-windows-live} \
-	%{?_enable_media_server:--enable-media-server} \
-	%{subst_enable foursquare} \
-	%{subst_enable lastfm} \
-%if_enabled webkit
-	--enable-backend \
-%else
-	--disable-backend \
-%endif
-	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{?_enable_docs:--enable-documentation}
-
-%make_build
+%meson \
+	%{?_enable_man:-Dman=true} \
+	%{?_enable_gtk_doc:-Dgtk_doc=true} \
+	%{?_disable_backend:-Dbackend=false} \
+	%{?_enable_media_server:-Dmedia_server=true} \
+	%{?_disable_exchange:-Dexchange=false} \
+	%{?_disable_google:-Dgoogle=false} \
+	%{?_disable_imap_smtp:-Dimap_smtp=false} \
+	%{?_disable_kerberos:-Dkerberos=false} \
+	%{?_disable_lastfm:-Dlastfm=false} \
+	%{?_disable_owncloud:-Downcloud=false} \
+	%{?_disable_windows_live:-Dwindows_live=false}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --output=%name.lang %name %{?_enable_telepathy:%name-tpaw}
 
 %files -f %name.lang
-%if_enabled webkit
+%if_enabled backend
 %_libexecdir/goa-daemon
 %_libexecdir/goa-identity-service
 %_datadir/glib-2.0/schemas/org.gnome.online-accounts.gschema.xml
 %_datadir/dbus-1/services/org.gnome.Identity.service
 %_datadir/dbus-1/services/org.gnome.OnlineAccounts.service
-%{?_enable_docs:%_man8dir/goa-daemon.*}
+%{?_enable_man:%_man8dir/goa-daemon.*}
 %endif
 %_iconsdir/hicolor/*/*/*.svg
 %{?_enable_telepathy:%_iconsdir/hicolor/scalable/apps/im-*.svg}
@@ -157,11 +146,10 @@ NOCONFIGURE=1 ./autogen.sh
 %_libdir/libgoa-%api_ver.so.*
 %dir %_libdir/goa-%api_ver
 
-%if_enabled webkit
+%if_enabled backend
 %_libdir/libgoa-backend-%api_ver.so.*
 %dir %_libdir/goa-%api_ver/web-extensions
 %_libdir/goa-%api_ver/web-extensions/libgoawebextension.so
-%exclude %_libdir/goa-%api_ver/web-extensions/*.la
 %endif
 
 %files -n lib%name-devel
@@ -170,7 +158,7 @@ NOCONFIGURE=1 ./autogen.sh
 %_libdir/goa-%api_ver/include/goaconfig.h
 %_libdir/libgoa-%api_ver.so
 
-%if_enabled webkit
+%if_enabled backend
 %_libdir/libgoa-backend-%api_ver.so
 %_pkgconfigdir/goa-backend-%api_ver.pc
 %endif
@@ -185,12 +173,18 @@ NOCONFIGURE=1 ./autogen.sh
 %files -n lib%name-gir-devel
 %_girdir/Goa-%api_ver.gir
 
-%if_enabled webkit
+%if_enabled gtk_doc
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/goa/
 %endif
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.0-alt1
+- 3.46.0
+
+* Tue Aug 09 2022 Yuri N. Sedunov <aris@altlinux.org> 3.45.2-alt1
+- 3.45.2 (ported to Meson build system, rest-1.0/libsoup-3.0)
+
 * Wed Mar 30 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
 - 3.44.0
 

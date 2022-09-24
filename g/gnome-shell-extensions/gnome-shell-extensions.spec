@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define domain gcampax.github.com
 %define _libexecdir %_prefix/libexec
@@ -8,7 +8,7 @@
 %def_enable classic_mode
 
 Name: gnome-shell-extensions
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: GNOME Shell Extensions
@@ -21,7 +21,7 @@ BuildArch: noarch
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 Requires: gnome-shell >= %version
@@ -152,6 +152,9 @@ See %_docdir/%name-%version/README for more information.
 %doc NEWS README.md
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Mon Jul 04 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
 - 42.3
 

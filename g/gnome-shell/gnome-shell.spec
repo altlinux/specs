@@ -2,19 +2,17 @@
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define gst_api_ver 1.0
-# Use Soup 2.4 instead of Soup 3. Must be in sync with libgweather (and WebKit?)
-# enabled by default in 41.rc
-%def_enable soup2
+%def_disable soup2
 %def_disable gtk_doc
 %def_disable check
 # removed in 3.31.x
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -33,8 +31,8 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 
 %define session_ver 3.26
 %define clutter_ver 1.21.5
-%define gjs_ver 1.70.1
-%define mutter_ver 42.3
+%define gjs_ver 1.73.1
+%define mutter_ver 43
 %define gtk_ver 3.16.0
 %define adwaita_ver 1.0
 %define gio_ver 2.56.0
@@ -48,17 +46,20 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 %define folks_ver 0.5.2
 %define gi_ver 1.49.1
 %define sn_ver 0.11
-%define gcr_api_ver 3
-%define gcr_ver 3.8
+%define gcr_api_ver 4
+%define gcr_ver 3.90.0
 %define atspi_ver 2.5.91
 %define menus_ver 3.5.3
 %define desktop_ver 3.35.90
 %define json_glib_ver 0.13.2
 %define nm_ver 1.10.4
-%define ibus_ver 1.5.2
-%define gsds_ver 41
+%define ibus_ver 1.5.19
+%define gsds_ver 42
 %define libsecret_ver 0.18
 %define croco_ver 0.6.8
+%define malcontent_ver 0.11
+%define gweather_api_ver 4.0
+%define webkit_api_ver 4.1
 
 Requires: %name-data = %version-%release
 Requires: mutter-gnome >= %mutter_ver libmutter-gir >= %mutter_ver
@@ -78,7 +79,7 @@ Requires: ibus ibus-gtk3
 # for zipped extensions
 Requires: unzip
 # synce 3.38 
-Requires: malcontent
+Requires: malcontent >= %malcontent_ver
 Requires: pipewire
 Requires: xdg-desktop-portal-gnome
 
@@ -102,7 +103,7 @@ Requires: typelib(Graphene)
 Requires: typelib(Gst)
 Requires: typelib(Gtk) = 3.0
 Requires: typelib(Gvc)
-Requires: typelib(GWeather)
+Requires: typelib(GWeather) = %gweather_api_ver
 Requires: typelib(IBus)
 Requires: typelib(Malcontent)
 Requires: typelib(Meta)
@@ -119,7 +120,7 @@ Requires: typelib(St)
 Requires: typelib(TelepathyGLib)
 Requires: typelib(TelepathyLogger)
 Requires: typelib(UPowerGlib)
-Requires: typelib(WebKit2)
+Requires: typelib(WebKit2) = %webkit_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires(pre): rpm-build-python3 rpm-build-xdg rpm-build-systemd
@@ -140,7 +141,7 @@ BuildRequires: libxml2-devel
 BuildRequires: libgnome-menus-devel >= %menus_ver libgnome-menus-gir-devel
 BuildRequires: libGConf-devel
 BuildRequires: libgnome-desktop3-devel >= %desktop_ver
-BuildRequires: gcr-libs-devel >= %gcr_ver
+BuildRequires: pkgconfig(gcr-%gcr_api_ver) >= %gcr_ver
 BuildRequires: libstartup-notification-devel >= %sn_ver
 BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: libcroco-devel >= %croco_ver
@@ -159,11 +160,11 @@ BuildRequires: libfolks-devel >= %folks_ver libfolks-gir-devel
 BuildRequires: libnm-devel >= %nm_ver libnm-gir-devel
 BuildRequires: libgudev-devel libgudev-gir-devel
 BuildRequires: gsettings-desktop-schemas-devel >= %gsds_ver
-BuildRequires: libsoup-gir-devel ca-certificates
+BuildRequires: libsoup%{?_disable_soup2:3.0}-gir-devel ca-certificates
 BuildRequires: gnome-control-center-devel
 BuildRequires: pkgconfig(systemd)
 BuildRequires: libibus-devel >= %ibus_ver
-BuildRequires: gcr-libs-gir-devel libsecret-devel >= %libsecret_ver libpolkit-gir-devel
+BuildRequires: gir(Gcr) = %gcr_api_ver libsecret-devel >= %libsecret_ver libpolkit-gir-devel
 BuildRequires: libgnome-autoar-devel
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_browser_plugin:BuildRequires: browser-plugins-npapi-devel}
@@ -286,6 +287,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Thu Aug 11 2022 Yuri N. Sedunov <aris@altlinux.org> 42.4-alt1
 - 42.4
 

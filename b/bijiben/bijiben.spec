@@ -1,14 +1,15 @@
-%def_disable snapshot
+%def_enable snapshot
 
-%define ver_major 40
+%define ver_major 41
+%define beta .alpha
 %define xdg_name org.gnome.Notes
 %define _libexecdir %_prefix/libexec
 # dropped since 40.0
 %def_disable zeitgeist
 
 Name: bijiben
-Version: %ver_major.1
-Release: alt1.1
+Version: %ver_major
+Release: alt0.1%beta
 
 Summary: Note editor for GNOME
 License: GPL-3.0
@@ -16,18 +17,18 @@ Group: Graphical desktop/GNOME
 Url: https://wiki.gnome.org/Apps/Bijiben
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
-Patch: bijiben-40.1-up-meson-0.61.patch
 
 %define glib_ver 2.54
 %define gtk_ver 3.20
 %define tracker_api_ver 3.0
 %define tracker_ver 3.0
-%define eds_ver 3.34.0
-%define webkit_ver 2.26
+%define eds_ver 3.45.1
+%define webkit_api_ver 4.1
+%define webkit_ver 2.36
 
 Requires: dconf tracker-miners3 >= %tracker_ver
 
@@ -36,7 +37,7 @@ BuildRequires: meson yelp-tools libappstream-glib-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(tracker-sparql-%tracker_api_ver) >= %tracker_ver
-BuildRequires: libxml2-devel libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: libxml2-devel pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: libgnome-online-accounts-devel libuuid-devel
 BuildRequires: evolution-data-server-devel >= %eds_ver libcurl-devel
 BuildRequires: libical-devel libicu-devel libjson-glib-devel
@@ -48,8 +49,7 @@ Bijiben is an attempt to design an intuitive note editor with strong
 desktop integration.
 
 %prep
-%setup
-%patch -p1
+%setup -n %name-%version%beta
 
 %build
 %meson \
@@ -79,6 +79,9 @@ desktop integration.
 %doc README* AUTHORS NEWS
 
 %changelog
+* Thu Sep 08 2022 Yuri N. Sedunov <aris@altlinux.org> 41-alt0.1.alpha
+- 41.alpha (BIJIBEN_40_0-243-ge700e1a)
+
 * Sun Mar 27 2022 Yuri N. Sedunov <aris@altlinux.org> 40.1-alt1.1
 - fixed build with meson >= 0.61
 

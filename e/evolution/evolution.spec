@@ -5,8 +5,8 @@
 
 %define xdg_name org.gnome.Evolution
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.44
-%define ver_base 3.44
+%define ver_major 3.46
+%define ver_base 3.46
 %define gst_api_ver 1.0
 
 %def_disable gtk_doc
@@ -21,7 +21,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -49,20 +49,22 @@ Provides: camel
 %define eds_ver %version
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
-%define libsoup_ver 2.42.0
+%define soup3_ver 3.0
 %define libnotify_ver 0.7.0
-%define gweather_ver 3.5.0
+%define gweather_ver 3.91
 %define ical_ver 1.0.1
 %define gdata_ver 0.10.0
 %define champlain_ver 0.12
 %define pst_ver 0.6.54
-%define webkit_ver 2.13.90
-%define geocode_ver 3.10.0
-%define gcr_ver 3.4
+%define webkit_api_ver 4.1
+%define webkit_ver 2.34
+%define geocode_ver 3.26.3
+%define gcr4_ver 3.90.0
 %define autoar_ver 0.1.1
 %define sqlite3_ver 3.7.17
+%define enchant_ver 2.2.0
 
-Requires: %name-data = %version-%release
+Requires: %name-data = %EVR
 Requires: evolution-data-server >= %eds_ver
 Requires: gnome-icon-theme
 Requires: gnome-settings-daemon
@@ -77,18 +79,20 @@ BuildRequires: libgail3-devel >= %gtk_ver
 BuildRequires: gnome-icon-theme >= %gnome_icon_ver
 BuildRequires: evolution-data-server-devel >= %eds_ver
 BuildRequires: libgnome-desktop3-devel >= %gnome_desktop_ver
-BuildRequires: libsoup-gnome-devel >= %libsoup_ver
+BuildRequires: pkgconfig(libsoup-3.0) >= %soup3_ver
 BuildRequires: libnotify-devel >= %libnotify_ver
-BuildRequires: libgweather-devel >= %gweather_ver
+BuildRequires: pkgconfig(gweather4) >= %gweather_ver
+BuildRequires: pkgconfig(geocode-glib-2.0) >= %geocode_ver
 BuildRequires: libical-devel >= %ical_ver libicu-devel
 BuildRequires: libgdata-devel >= %gdata_ver
 BuildRequires: libpst-devel >= %pst_ver
-BuildRequires: libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver) >= %webkit_ver
 BuildRequires: libclutter-gtk3-devel >= %clutter_gtk_ver
-BuildRequires: gcr-libs-devel >= %gcr_ver libcryptui-devel
+#BuildRequires: pkgconfig(gcr-4-gtk3) >= %gcr4_ver
+BuildRequires: libcryptui-devel
 BuildRequires: libkrb5-devel libsqlite3-devel >= %sqlite3_ver
 BuildRequires: cmark-devel highlight
-%{?_enable_map:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver libgeocode-glib-devel >= %geocode_ver}
+%{?_enable_map:BuildRequires: libchamplain-gtk3-devel >= %champlain_ver}
 %{?_enable_ytnef:BuildRequires: libytnef-devel}
 %{?_enable_autoar:BuildRequires: libgnome-autoar-devel >= %autoar_ver}
 %{?_with_openldap:BuildRequires: libldap-devel %{?_enable_static_ldap:libldap-devel-static libssl-devel libsasl2-devel}}
@@ -96,7 +100,7 @@ BuildRequires: cmark-devel highlight
 BuildRequires: docbook-utils intltool yelp-tools itstool gtk-doc
 BuildRequires: libSM-devel libcom_err-devel gstreamer%gst_api_ver-devel
 BuildRequires: libnspr-devel libnss-devel libX11-devel libcanberra-gtk3-devel
-BuildRequires: zlib-devel libxml2-devel libgspell-devel
+BuildRequires: zlib-devel libxml2-devel libgspell-devel libenchant2-devel >= %enchant_ver
 
 %description
 Evolution is the GNOME mailer, calendar, contact manager and
@@ -215,6 +219,8 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 %_libdir/evolution-data-server/ui-modules/module-evolution-alarm-notify.so
 %_libexecdir/%name/evolution-backup
 %_libexecdir/%name/killev
+%_libdir/%name-data-server/camel-providers/libcamelrss.so
+%_libdir/%name-data-server/camel-providers/libcamelrss.urls
 %doc AUTHORS ChangeLog NEWS README*
 
 %exclude %evo_module_dir/module-bogofilter.so
@@ -274,6 +280,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.0-alt1
+- 3.46.0 ported to libsoup-3.0/gweather-4.0
+
 * Fri Aug 05 2022 Yuri N. Sedunov <aris@altlinux.org> 3.44.4-alt1
 - 3.44.4
 

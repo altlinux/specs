@@ -2,7 +2,7 @@
 %define xdg_name org.gnome.Evince
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define api_ver_major 3
 %define api_ver %api_ver_major.0
@@ -14,12 +14,12 @@
 %def_enable dbus
 %def_enable introspection
 %def_enable multimedia
-%def_enable nautilus
+%def_disable nautilus
 %def_enable gtk_doc
 %def_disable debug
 
 Name: evince
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A document viewer
@@ -104,7 +104,7 @@ Requires: lib%name = %EVR
 GObject introspection data for the Evince library
 
 %package -n lib%name-devel
-Summary: Development tools for the %name
+Summary: Development files for the %name
 Group: Development/C
 Requires: lib%name = %EVR
 
@@ -227,6 +227,10 @@ using Evince library.
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+- disabled Nautilus plugin
+
 * Mon May 23 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
 - 42.3
 

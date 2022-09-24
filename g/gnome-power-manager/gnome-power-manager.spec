@@ -1,4 +1,4 @@
-%define ver_major 3.32
+%define ver_major 43
 %define xdg_name org.gnome.PowerStats
 
 Name: gnome-power-manager
@@ -6,34 +6,28 @@ Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Power management tools
-License: %gpl2plus
+License: GPL-2.0-or-later
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org/projects/gnome-power-manager/
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-Requires: common-licenses
 Requires: upower >= 0.9.7
 
-BuildPreReq: rpm-build-gnome >= 0.5
-BuildPreReq: rpm-build-licenses
+BuildRequires(pre): rpm-build-gnome rpm-macros-meson
 
-BuildPreReq: meson
-BuildPreReq: glib2-devel >= 2.46.0
-BuildPreReq: libgtk+3-devel >= 3.3.8
-BuildPreReq: libupower-devel >= 0.99.0
-BuildRequires: libappstream-glib-devel
+BuildRequires: meson
+BuildRequires: glib2-devel >= 2.46.0
+BuildRequires: libgtk+3-devel >= 3.3.8
+BuildRequires: libupower-devel >= 0.99.8
+BuildRequires: /usr/bin/appstream-util
 # for docbook2man
-BuildPreReq: docbook-utils
-BuildPreReq: gnome-common
+BuildRequires: docbook-utils
 
 %description
-GNOME Power Manager comes in three parts:
-
-- gnome-settings-daemon plugin: the manager daemon itself
-- gnome-control-center panel:   the control panel program, for configuration
-- gnome-power-statistics:       the statistics graphing program
-
+A tool for viewing present and historical battery usage and related
+statistics. Originally part of GNOME Power Manager and remained as a
+stand alone program after the rest was merged into gnome-settings-daemon.
 
 %prep
 %setup
@@ -49,9 +43,6 @@ GNOME Power Manager comes in three parts:
 %install
 %meson_install
 
-# The license
-ln -sf %_licensedir/GPL-2 COPYING
-
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -62,12 +53,13 @@ ln -sf %_licensedir/GPL-2 COPYING
 %config %_datadir/glib-2.0/schemas/org.gnome.power-manager.gschema.xml
 %_man1dir/*.1.*
 %_datadir/metainfo/%xdg_name.appdata.xml
-
-%doc --no-dereference COPYING
-%doc README AUTHORS
+%doc README* AUTHORS
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Fri Mar 08 2019 Yuri N. Sedunov <aris@altlinux.org> 3.32.0-alt1
 - 3.32.0
 

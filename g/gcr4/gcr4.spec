@@ -2,13 +2,12 @@
 
 %define _name gcr
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.90
+%define ver_major 3.92
 %define gcr_api_ver 4
 %define gck_api_ver 2
 
-%def_enable gtk3
 %def_enable gtk4
-%def_disable ssh_agent
+%def_enable ssh_agent
 %def_enable introspection
 %def_enable gtk_doc
 %def_enable check
@@ -23,7 +22,7 @@ License: LGPLv2+
 Url: https://wiki.gnome.org/Projects/GnomeKeyring
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%_name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 %else
 Source: %_name-%version.tar
 %endif
@@ -31,6 +30,7 @@ Source: %_name-%version.tar
 Requires: %name-libs = %EVR
 Requires: libtasn1-utils
 %{?_enable_ssh_agent:Requires: %_bindir/ssh-agent %_bindir/ssh-add}
+%{?_disable_ssh_agent:Conflicts: gcr < 3.41.1-alt2}
 
 %define meson_ver 0.59
 %define glib_ver 2.44.0
@@ -43,13 +43,11 @@ Requires: libtasn1-utils
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-systemd
 BuildRequires: meson >= %meson_ver glib2-devel >= %glib_ver
 BuildRequires: libp11-kit-devel >= %p11kit_ver
-%{?_enable_gtk3:BuildRequires: libgtk+3-devel >= %gtk_ver}
 %{?_enable_gtk4:BuildRequires: libgtk4-devel}
 BuildRequires: libgcrypt-devel >= %gcrypt_ver libtasn1-devel libtasn1-utils libtasn1-utils gnupg2-gpg
 BuildRequires: libvala-devel >= %vala_ver vala-tools
 BuildRequires: libsecret-devel >= %secret_ver %_bindir/ssh-agent %_bindir/ssh-add
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel
-BuildRequires:%{?_enable_gtk3:libgtk+3-gir-devel} %{?_enable_gtk4:libgtk4-gir-devel}}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_check:BuildRequires: /proc xvfb-run dbus-tools-gui %_bindir/ssh-keygen}
 
@@ -138,7 +136,6 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 xvfb-run %__meson_test -t 2
 
 %files -f %_name-%gcr_api_ver.lang
-%{?_enable_gtk3:%_bindir/%_name-viewer-gtk3}
 %{?_enable_gtk4:%_bindir/%_name-viewer-gtk4}
 %_libexecdir/%name-ssh-askpass
 %{?_enable_ssh_agent:
@@ -149,41 +146,29 @@ xvfb-run %__meson_test -t 2
 %files libs
 %_libdir/libgck-%gck_api_ver.so.*
 %_libdir/lib%_name-%gcr_api_ver.so.*
-%{?_enable_gtk3:%_libdir/lib%_name-%gcr_api_ver-gtk3.so.*}
-%{?_enable_gtk4:%_libdir/lib%_name-%gcr_api_ver-gtk4.so.*}
 
 %files libs-devel
 %_includedir/gck-%gck_api_ver
 %_includedir/%_name-%gcr_api_ver
 %_libdir/libgck-%gck_api_ver.so
 %_libdir/lib%_name-%gcr_api_ver.so
-%{?_enable_gtk3:%_libdir/lib%_name-%gcr_api_ver-gtk3.so}
-%{?_enable_gtk4:%_libdir/lib%_name-%gcr_api_ver-gtk4.so}
 %_pkgconfigdir/gck-%gck_api_ver.pc
 %_pkgconfigdir/%_name-%gcr_api_ver.pc
-%{?_enable_gtk3:%_pkgconfigdir/%_name-%gcr_api_ver-gtk3.pc}
-%{?_enable_gtk4:%_pkgconfigdir/%_name-%gcr_api_ver-gtk4.pc}
 
 %if_enabled gtk_doc
 %files libs-devel-doc
 %_datadir/doc/%_name-%gcr_api_ver
 %_datadir/doc/gck-%gck_api_ver
-%{?_enable_gtk3:%_datadir/doc/%_name-%gcr_api_ver-gtk3}
-%{?_enable_gtk4:%_datadir/doc/%_name-%gcr_api_ver-gtk4}
 %endif
 
 %if_enabled introspection
 %files libs-gir
 %_typelibdir/Gck-%gck_api_ver.typelib
 %_typelibdir/Gcr-%gcr_api_ver.typelib
-%{?_enable_gtk3:%_typelibdir/GcrGtk3-%gcr_api_ver.typelib}
-%{?_enable_gtk4:%_typelibdir/GcrGtk4-%gcr_api_ver.typelib}
 
 %files libs-gir-devel
 %_girdir/Gck-%gck_api_ver.gir
 %_girdir/Gcr-%gcr_api_ver.gir
-%{?_enable_gtk3:%_girdir/GcrGtk3-%gcr_api_ver.gir}
-%{?_enable_gtk4:%_girdir/GcrGtk4-%gcr_api_ver.gir}
 %endif
 
 %files libs-vala
@@ -191,12 +176,12 @@ xvfb-run %__meson_test -t 2
 %_vapidir/gck-%gck_api_ver.vapi
 %_vapidir/%_name-%gcr_api_ver.deps
 %_vapidir/%_name-%gcr_api_ver.vapi
-%{?_enable_gtk3:%_vapidir/%_name-%gcr_api_ver-gtk3.deps
-%_vapidir/%_name-%gcr_api_ver-gtk3.vapi}
-%{?_enable_gtk4:%_vapidir/%_name-%gcr_api_ver-gtk4.deps
-%_vapidir/%_name-%gcr_api_ver-gtk4.vapi}
 
 %changelog
+* Mon Sep 05 2022 Yuri N. Sedunov <aris@altlinux.org> 3.92.0-alt1
+- 3.92.0
+- enabled ssh-agent binary
+
 * Sun Jul 10 2022 Yuri N. Sedunov <aris@altlinux.org> 3.90.0-alt1
 - 3.90.0 (gcr-4, gck-2)
 - temporarily disabled ssh-agent binary

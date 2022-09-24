@@ -1,40 +1,50 @@
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
+%define nautilus_extdir %_libdir/nautilus/extensions-4
 
-%define ver_major 42
+%define ver_major 43
+%define beta .rc
 %define xdg_name org.gnome.Console
 %define binary_name kgx
 
-%def_with nautilus
+%def_without nautilus
 
 Name: gnome-console
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major
+Release: alt0.9%beta
 
 Summary: GNOME Console
 License: GPL-3.0
 Group: Terminals
 Url: https://gitlab.gnome.org/GNOME/console
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%if_disabled snapshot
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
+%else
+Vcs: https://gitlab.gnome.org/GNOME/console.git
+Source: %name-%version%beta.tar
+%endif
 
 %define glib_ver 2.66
-%define gtk_ver 3.24.0
-%define handy_ver 1.5
-%define vte_ver 0.68.0
+%define gtk4_ver 3.24.0
+%define adwaita_ver 1.2
+%define vte_ver 0.69.91
+%define nautilus_ver 43
 
 Requires(pre): libvte3 >= %vte_ver
 Requires: dconf
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson sassc yelp-tools
+BuildRequires: meson yelp-tools
 BuildRequires: desktop-file-utils %_bindir/appstream-util
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: libgtk4-devel >= %gtk4_ver
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(libgtop-2.0)
-BuildRequires: libvte3-devel >= %vte_ver libpcre2-devel
+BuildRequires: pkgconfig(vte-2.91-gtk4) >= %vte_ver libpcre2-devel
 BuildRequires: gsettings-desktop-schemas-devel
-%{?_with_nautilus:BuildRequires: rpm-build-gnome libnautilus-devel}
+%{?_with_nautilus:BuildRequires: rpm-build-gnome
+BuildRequires: pkgconfig(libnautilus-extension-4) >= %nautilus_ver}
 
 %description
 A simple user-friendly terminal emulator for the GNOME desktop.
@@ -49,11 +59,10 @@ This package provides integration with the GNOME Console for the
 Nautilus file manager.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
-%meson \
-    %{?_without_nautilus:-Dnautilus=disabled}
+%meson
 %meson_build
 
 %install
@@ -76,6 +85,9 @@ Nautilus file manager.
 %endif
 
 %changelog
+* Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.9.rc
+- 43.rc (ported to GTK4)
+
 * Thu Jul 14 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
 - 42.2
 

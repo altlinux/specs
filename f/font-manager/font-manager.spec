@@ -6,11 +6,11 @@
 %define xdg_name org.gnome.FontManager
 %define xdg_name1 org.gnome.FontViewer
 
-%def_with nautilus
+%def_without nautilus
 
 Name: font-manager
 Version: 0.8.8
-Release: alt1
+Release: alt2
 
 Summary: A font management application for the GNOME desktop
 License: GPL-3.0
@@ -35,7 +35,7 @@ BuildRequires: vala-tools >= %vala_ver
 BuildRequires: libpango-devel >= %pango_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver libjson-glib-devel
 BuildRequires: libsqlite3-devel libxml2-devel
-BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
+BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
 BuildRequires: gobject-introspection-devel libjson-glib-gir-devel libgtk+3-gir-devel
 BuildRequires: pkgconfig(webkit2gtk-4.0)
 %if_with nautilus
@@ -90,6 +90,9 @@ Enlightenment, and even KDE.
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt2
+- disabled Nautilus support
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.8-alt1
 - 0.8.8
 

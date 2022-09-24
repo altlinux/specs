@@ -3,16 +3,15 @@
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
 %define _libexecdir %_prefix/libexec
-%define ver_major 2.72
+%define ver_major 2.74
 %define api_ver 2.0
-%define pcre_ver 8.31
+%define pcre2_ver 10.32
 %define gtk_doc_ver 1.32.1
 %define gio_module_dir %_libdir/gio/modules
 
 %set_verify_elf_method strict
 %add_verify_elf_skiplist %_libexecdir/installed-tests/glib/*
 
-%def_with sys_pcre
 %def_enable selinux
 %def_disable fam
 %ifarch %e2k
@@ -29,7 +28,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -53,7 +52,7 @@ Source6: gio-compat-2.57.lds
 Source10: glib2.sh
 Source11: glib2.csh
 
-Patch: glib-2.59.3-alt-compat-version-script.patch
+Patch: glib-2.73.2-alt-compat-version-script.patch
 # stop spam about deprecated paths in schemas
 Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.61.3-alt-add-xvt.patch
@@ -79,25 +78,20 @@ Obsoletes: %name-core < %version
 %allow_python3_import_path %_libexecdir/installed-tests/glib
 %endif
 
-
-%if_with sys_pcre
-BuildRequires: libpcre-devel >= %pcre_ver
-Requires: pcre-config(utf8) pcre-config(unicode-properties)
-BuildPreReq: pcre-config(utf8) pcre-config(unicode-properties)
-%endif
+BuildRequires: libpcre2-devel >= %pcre2_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-python3
 BuildRequires: meson gcc-c++ gtk-doc >= %gtk_doc_ver indent
-BuildRequires: glibc-kernheaders libdbus-devel libpcre-devel
+BuildRequires: glibc-kernheaders libdbus-devel
 BuildRequires: libffi-devel zlib-devel libelf-devel
+BuildRequires: pkgconfig(bash-completion)
 %{?_enable_libmount:BuildRequires: libmount-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?_enable_fam:BuildRequires: libgamin-devel}
 %{?_enable_systemtap:BuildRequires: libsystemtap-sdt-devel}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
-
 %{?_enable_check:
-BuildRequires: /proc dbus-tools-gui desktop-file-utils chrpath
+BuildRequires: /proc dbus-tools-gui /bin/dbus-daemon desktop-file-utils chrpath
 BuildRequires: xdg-desktop-portal python3-module-dbusmock}
 
 %description
@@ -246,9 +240,6 @@ install -p -m644 %_sourcedir/gobject-compat.lds gobject/compat.lds
 install -p -m644 %_sourcedir/gio-compat.map gio/compat.map
 install -p -m644 %_sourcedir/gio-compat-2.57.lds gio/compat.lds
 
-# abicheck always ok
-subst '/exit 1/d' check-abis.sh
-
 %build
 %meson \
     %{?_enable_static:--default-library=both} \
@@ -258,7 +249,6 @@ subst '/exit 1/d' check-abis.sh
     %{?_disable_libmount:-Dlibmount=false} \
     %{?_enable_gtk_doc:-Dgtk_doc=true} \
     %{?_enable_man:-Dman=true} \
-    %{?_without_sys_pcre:-Dinternal_pcre=true} \
     %{?_enable_fam:-Dfam=true} \
     %{?_enable_systemtap:-Dsystemtap=true} \
     %{?_enable_sysprof:-Dsysprof=enabled} \
@@ -306,8 +296,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %find_lang glib20
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 /%_lib/libglib-%api_ver.so.0*
@@ -315,7 +304,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/libgmodule-%api_ver.so.0*
 %_libdir/libgthread-%api_ver.so.0*
 %config(noreplace) %_sysconfdir/profile.d/*
-%doc AUTHORS NEWS README
+%doc NEWS README.md
 
 %files locales -f glib20.lang
 
@@ -377,13 +366,13 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %files -n libgio
 %_bindir/gapplication
 %_bindir/gio
-#%_bindir/gio-launch-desktop
 %_bindir/gio-querymodules
 %_bindir/gsettings
 %_bindir/glib-compile-schemas
 %_bindir/gresource
 %_bindir/glib-compile-resources
 %_bindir/gdbus
+%_libexecdir/gio-launch-desktop
 %_libdir/libgio-%api_ver.so.*
 %dir %_libdir/gio
 %dir %_libdir/gio/modules
@@ -441,6 +430,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.0-alt1
+- 2.74.0 (ported to PCRE2)
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 2.72.4-alt1
 - 2.72.4
 

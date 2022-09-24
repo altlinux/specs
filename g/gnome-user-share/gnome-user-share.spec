@@ -1,14 +1,16 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.34
+%define ver_major 43
+%define beta %nil
 %define httpd /usr/sbin/httpd2
 %define modules_path %_sysconfdir/httpd2/modules
 
-%def_enable nautilus
+# removed since 43.alpha
+%def_disable nautilus
 
 Name: gnome-user-share
 Version: %ver_major.0
-Release: alt3
+Release: alt1%beta
 
 Summary: Gnome user file sharing
 Group: Graphical desktop/GNOME
@@ -16,9 +18,9 @@ License: GPLv2+
 Url: https://www.gnome.org
 
 %if_disabled snapshot
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
 
 %define glib_ver 2.58
@@ -50,7 +52,7 @@ Howl is used for mDNS support, so you need to have that installed and
 mDNSResolver running.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson -Dhttpd=%httpd \
@@ -75,6 +77,12 @@ mDNSResolver running.
 
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
+* Thu Sep 08 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.1.alpha
+- 43.alpha (removed Nautilus extension)
+
 * Wed Mar 30 2022 Yuri N. Sedunov <aris@altlinux.org> 3.34.0-alt3
 - updated to 3_34_0-30-gc31b0a8 (fixed build with meson >= 0.61)
 

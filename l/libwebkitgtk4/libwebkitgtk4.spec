@@ -4,12 +4,13 @@
 %def_enable soup2
 %if_enabled soup2
 %define api_ver 4.0
+%def_disable webdriver
 %else
 %define api_ver 4.1
 %endif
 
 %define pkglibexecdir %_libexecdir/webkit2gtk-%api_ver
-%define ver_major 2.36
+%define ver_major 2.38
 %define gtk_ver 3.0
 %define gst_ver 1.14.3
 
@@ -34,7 +35,7 @@
 %def_enable bubblewrap_sandbox
 
 Name: libwebkitgtk4
-Version: %ver_major.7
+Version: %ver_major.0
 Release: alt1
 
 Summary: Web browser engine
@@ -74,7 +75,7 @@ BuildRequires: libsqlite3-devel >= 3.0
 BuildRequires: libxslt-devel >= 1.1.7
 BuildRequires: gstreamer1.0-devel >= %gst_ver gst-plugins1.0-devel >= %gst_ver gst-plugins-bad1.0-devel
 BuildRequires: librsvg-devel >= 2.2.0
-BuildRequires: gtk-doc >= 1.10
+BuildRequires: gi-docgen
 %if_enabled soup2
 BuildRequires: libsoup-devel >= %soup_ver libsoup-gir-devel
 %else
@@ -95,7 +96,7 @@ BuildRequires: libXdmcp-devel libxshmfence-devel libXxf86vm-devel
 BuildRequires: libXinerama-devel libXi-devel libXrandr-devel
 BuildRequires: libXcursor-devel libxkbcommon-devel
 %{?_enable_wayland:BuildRequires: libwayland-server-devel libwayland-cursor-devel libwayland-egl-devel wayland-protocols}
-BuildRequires: libnotify-devel libgnutls-devel libnettle-devel
+BuildRequires: libgnutls-devel libnettle-devel
 BuildRequires: libtasn1-devel libp11-kit-devel libgcrypt-devel
 # for battery status
 BuildRequires: libupower-devel
@@ -237,7 +238,7 @@ GObject introspection devel data for the JavaScriptCore library
 %patch -b .bwrap
 #%%patch1 -p1 -b .python3
 %ifarch aarch64
-%patch2 -b .arm64
+#%%patch2 -b .arm64
 %endif
 %patch10 -p1 -b .format
 %ifarch %e2k
@@ -279,7 +280,7 @@ export PYTHON=%__python3
 -DPYTHON_EXECUTABLE=%__python3 \
 -DCMAKE_BUILD_TYPE=Release \
 -DENABLE_MINIBROWSER=ON \
-%{?_enable_gtkdoc:-DENABLE_GTKDOC:BOOL=ON} \
+%{?_disable_gtkdoc:-DENABLE_DOCUMENTATION:BOOL=OFF} \
 %{?_enable_x11:-DENABLE_X11_TARGET:BOOL=ON} \
 %{?_enable_wayland:-DENABLE_WAYLAND_TARGET:BOOL=ON} \
 %{?_enable_libavif:-DUSE_AVIF:BOOL=ON} \
@@ -300,7 +301,8 @@ export PYTHON=%__python3
 %endif
 -DUSER_AGENT_BRANDING:STRING="ALTLinux" \
 %{?_disable_systemd:-DUSE_SYSTEMD:BOOL=OFF} \
-%{?_enable_soup2:-DUSE_SOUP2=ON}
+%{?_enable_soup2:-DUSE_SOUP2=ON} \
+%{?_disable_webdriver:-DENABLE_WEBDRIVER=OFF}
 %nil
 %ifarch aarch64 x86_64
 [ %__nprocs -lt 64 ] || export NPROCS=64
@@ -316,7 +318,7 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %find_lang WebKit2GTK-%api_ver
 
 %files -n libwebkit2gtk -f WebKit2GTK-%api_ver.lang
-%_bindir/WebKitWebDriver
+%{?!_disable_webdriver:%_bindir/WebKitWebDriver}
 %_libdir/libwebkit2gtk-%api_ver.so.*
 %dir %pkglibexecdir
 %pkglibexecdir/WebKitNetworkProcess
@@ -370,6 +372,12 @@ install -pD -m755 %SOURCE1 %buildroot%_rpmmacrosdir/webki2gtk.env
 %_girdir/JavaScriptCore-%api_ver.gir
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2.38.0-alt1
+- 2.38.0
+
+* Mon Sep 12 2022 Yuri N. Sedunov <aris@altlinux.org> 2.37.91-alt1
+- 2.37.91
+
 * Thu Aug 25 2022 Yuri N. Sedunov <aris@altlinux.org> 2.36.7-alt1
 - 2.36.7
 
