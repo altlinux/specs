@@ -4,7 +4,7 @@
 
 Name: gajim-plugin-pgp
 Version: 1.4.6
-Release: alt1
+Release: alt2
 
 Summary: PGP encryption via XEP-0027 for Gajim
 
@@ -25,7 +25,6 @@ BuildArch: noarch
 
 Requires: python3-module-gajim-pgp
 Requires: %(jq '.requirements[]' %SOURCE2 |sed -E 's,",,g;s,([>=]+), \1 ,g')
-Conflicts: gajim >= 1.5
 
 %description
 %summary.
@@ -51,6 +50,9 @@ cp -a * %buildroot%python3_sitelibdir_noarch/gajim/data/plugins/%oname/
 %python3_sitelibdir_noarch/gajim/data/plugins/%oname
 
 %changelog
+* Fri Sep 23 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.6-alt2
+- Drop needless conflict.
+
 * Thu Jun 02 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.6-alt1
 - Updated to 1.4.6.
 - Dropped cycle dependency.
