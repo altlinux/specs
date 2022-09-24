@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2022b
+Version: 2022d
 Release: alt1
 
 Summary: Timezone data
@@ -39,15 +39,15 @@ This package contains timezone data source for use by tz compilers.
 xz -9k NEWS
 
 %build
-make CFLAGS='%optflags' VERSION=%version
+make MANTXTS= CFLAGS='%optflags' VERSION=%version
 
 %install
 case "$(rpm --eval %%_priority_distbranch)" in
 	'' | %%* | [a-z][0-9] | [a-z][0-9][^0-9]* ) ZFLAGS='-b fat' ;;
 	*) ZFLAGS= ;;
 esac
-%make_install install_default \
-	DESTDIR=%buildroot TZDATA_TEXT= VERSION=%version ZFLAGS="$ZFLAGS"
+%make_install install_default DESTDIR=%buildroot \
+	MANTXTS= TZDATA_TEXT= VERSION=%version ZFLAGS="$ZFLAGS"
 mv %buildroot%_datadir/zoneinfo{-leaps,/right}
 rm %buildroot%_datadir/zoneinfo-posix
 mkdir %buildroot%_datadir/zoneinfo/posix
@@ -56,7 +56,7 @@ cp -al %buildroot%_datadir/zoneinfo/[A-Z]* %buildroot%_datadir/zoneinfo/posix/
 install -pDm755 tzupdate %buildroot%_sbindir/tzupdate
 
 rearguard=tzdata%version-rearguard.tar.gz
-make $rearguard VERSION=%version
+make $rearguard MANTXTS= VERSION=%version
 mkdir -p %buildroot%srcdir
 tar -xf $rearguard -C %buildroot%srcdir
 echo '%name%version' > %buildroot%srcdir/VERSION
@@ -66,7 +66,7 @@ echo '%name%version' > %buildroot%srcdir/VERSION
 
 %check
 for f in *.html; do touch check_"$f"; done
-make -k check
+make -k check MANTXTS=
 
 # test basic glibc compatibility
 cat > expected <<'EOF'
@@ -100,6 +100,9 @@ diff -u expected output || {
 %srcdir/
 
 %changelog
+* Fri Sep 23 2022 Dmitry V. Levin <ldv@altlinux.org> 2022d-alt1
+- 2022b -> 2022d.
+
 * Wed Aug 10 2022 Dmitry V. Levin <ldv@altlinux.org> 2022b-alt1
 - 2022a -> 2022b.
 
