@@ -1,9 +1,9 @@
 %def_without python
-%def_with ruby
+%def_without ruby
 
 Name: libstfl0
 Version: 0.24
-Release: alt9
+Release: alt10
 
 %define oname stfl
 
@@ -108,6 +108,9 @@ rm %buildroot%_libdir/*.a
 %endif # ruby
 
 %changelog
+* Sat Sep 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.24-alt10
+- Disabled ruby module (ALT#43862).
+
 * Mon May 30 2022 Pavel Skrylev <majioa@altlinux.org> 0.24-alt9
 - !enable ruby module
 - !fix build
