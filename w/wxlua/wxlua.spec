@@ -1,7 +1,7 @@
 %define luaver 5.1
 Name: wxlua
 Version: 3.1.0.0
-Release: alt1
+Release: alt2.20220630
 Summary: Lua IDE with a GUI debugger and binding generator
 License: wxWidgets License
 Group: Development/Other
@@ -15,7 +15,7 @@ BuildRequires: lua%luaver lua%luaver-devel
 #BuildRequires: doxygen graphviz
 # Automatically added by buildreq on Thu Oct 05 2017 (-bi)
 # optimized out: at-spi2-atk cmake-modules elfutils fontconfig glibc-kernheaders-x86 libX11-devel libat-spi2-core libcairo-gobject libgdk-pixbuf libgpg-error libgst-plugins1.0 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server lua5.3 perl python-base python-module-mpl_toolkits python-modules xorg-xproto-devel
-BuildRequires: cmake desktop-file-utils gcc-c++ glibc-kernheaders-generic libGL-devel libwxGTK3.1-devel libwxstedit-devel
+BuildRequires: cmake desktop-file-utils gcc-c++ glibc-kernheaders-generic libGL-devel libwxGTK3.2-devel libwxstedit-devel
 
 Provides: lib%name = %version
 Obsoletes: lib%name < 3
@@ -146,6 +146,10 @@ mv %buildroot%_datadir/%name/samples docs2distribute-apps/
 %endif
 
 %changelog
+* Mon Sep 19 2022 Anton Midyukov <antohami@altlinux.org> 3.1.0.0-alt2.20220630
+- new snapshot
+- build with wxGTK3.2
+
 * Wed Jul 07 2021 Ildar Mulyukov <ildar@altlinux.ru> 3.1.0.0-alt1
 - new version
 
