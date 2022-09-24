@@ -1,5 +1,5 @@
 Name: pdfmixtool
-Version: 1.1
+Version: 1.1.1
 Release: alt1
 
 License: LGPL-3.0-only
@@ -8,6 +8,8 @@ Url: https://www.scarpetta.eu/pdfmixtool
 
 # Source-url: https://gitlab.com/scarpetta/pdfmixtool/-/archive/v%version/pdfmixtool-v%version.tar.gz
 Source: %name-%version.tar
+
+Patch: %name-1.1-alt-desktop.patch
 
 BuildRequires: cmake
 BuildRequires: libqpdf-devel
@@ -41,6 +43,7 @@ PDF, извлекать страницы из файла PDF, редактиро
 
 %prep
 %setup
+%autopatch -p2
 
 %build
 %cmake
@@ -57,6 +60,12 @@ PDF, извлекать страницы из файла PDF, редактиро
 %_datadir/metainfo/eu.scarpetta.PDFMixTool.appdata.xml
 
 %changelog
+* Sat Sep 24 2022 Evgeny Chuck <koi@altlinux.org> 1.1.1-alt1
+- new version (1.1.1) with rpmgs script
+
+* Sat Sep 17 2022 Evgeny Chuck <koi@altlinux.org> 1.1-alt2
+- Fixed desktop category
+
 * Sat Jun 18 2022 Evgeny Chuck <koi@altlinux.org> 1.1-alt1
 - new version (1.1) with rpmgs script
 
