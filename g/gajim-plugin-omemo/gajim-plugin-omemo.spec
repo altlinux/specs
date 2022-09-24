@@ -1,8 +1,8 @@
 %define oname omemo
 
 Name: gajim-plugin-omemo
-Version: 2.8.15
-Release: alt2
+Version: 2.8.16
+Release: alt1
 
 Summary: OMEMO Encryption (XEP-0384) for Gajim
 
@@ -55,6 +55,9 @@ find . -mindepth 1 -maxdepth 1 \
 %python3_sitelibdir_noarch/gajim/data/plugins/%oname
 
 %changelog
+* Sat Sep 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.8.16-alt1
+- Updated to 2.8.16.
+
 * Fri Sep 23 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.8.15-alt2
 - Drop needless conflict.
 
