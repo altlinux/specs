@@ -1,7 +1,7 @@
 Summary: Exploring Conway's Game of Life and other cellular automata
 Name: golly
 Version: 4.1
-Release: alt1
+Release: alt2
 
 License: GPL
 Url: http://golly.sourceforge.net/
@@ -16,7 +16,7 @@ Requires: %name-data = %EVR
 
 # Automatically added by buildreq on Wed Dec 15 2021
 # optimized out: at-spi2-atk fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libImageMagick6-common libat-spi2-core libcairo-gobject libgdk-pixbuf libglvnd-devel libgpg-error libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwxBase3.1-devel libwxGTK3.1-gl python3 python3-base sh4
-BuildRequires: ImageMagick-tools gcc-c++ libGLU-devel libSDL2-devel libwxGTK3.1-devel python3-dev zlib-devel
+BuildRequires: ImageMagick-tools gcc-c++ libGLU-devel libSDL2-devel libwxGTK3.2-devel python3-dev zlib-devel
 
 %description
 Welcome to Golly, a sophisticated tool for exploring Conway's
@@ -83,6 +83,9 @@ install -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %_datadir/%name
 
 %changelog
+* Wed Sep 21 2022 Anton Midyukov <antohami@altlinux.org> 4.1-alt2
+- NMU: rebuild with wxGTK3.2
+
 * Tue Dec 14 2021 Fr. Br. George <george@altlinux.ru> 4.1-alt1
 - Autobuild version bump to 4.1
 - Remove already broken PERL support
