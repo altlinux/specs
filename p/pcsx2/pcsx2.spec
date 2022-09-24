@@ -1,19 +1,18 @@
 %define optflags_lto %nil
 
 # git show -s --format=%ci upstream/pcsx2 | sed 's/[ :-]//g' | sed 's/\(.\{,14\}\).*/\1/'
-%define svn_rev 20220529010424
+%define svn_rev 20220924172107
 
 %define libchdr_commit 5de1a59019815ccdbba0fe07c71b31406d023248
 %define gtest_version 1.11.0
 %define libzip_commit bdc03ab23b703fcc516436d6ebcbfb6ac4484033
 %define zstd_version 1.5.2
-%define vulkan_headers_version 1.2.203
-%define cubeb_commit 773f16b7ea308392c05be3e290163d1f636e6024
-%define imgui_commit 60bea052a92cbb4a93b221002fdf04f0da3698e1
+%define vulkan_headers_version 1.3.226
+%define cubeb_commit dc511c6b3597b6384d28949285b9289e009830ea
 %define glslang_version 11.7.1
 
 Name: pcsx2
-Version: 1.7.2828
+Version: 1.7.3332
 Release: alt1
 
 Summary: Playstation 2 console emulator
@@ -62,10 +61,8 @@ Source4: zstd-%zstd_version.tar
 Source5: Vulkan-Headers-%vulkan_headers_version.tar
 # https://github.com/mozilla/cubeb/archive/%cubeb_commit/cubeb-%cubeb_commit.tar.gz
 Source6: cubeb-%cubeb_commit.tar
-# https://github.com/ocornut/imgui/archive/%imgui_commit/imgui-%imgui_commit.tar.gz
-Source7: imgui-%imgui_commit.tar
 # https://github.com/KhronosGroup/glslang/archive/%glslang_version/glslang-%glslang_version.tar.gz
-Source8: glslang-%glslang_version.tar
+Source7: glslang-%glslang_version.tar
 
 BuildRequires: cmake
 BuildRequires: doxygen
@@ -93,7 +90,7 @@ BuildRequires: libsamplerate-devel
 BuildRequires: libsoundtouch-devel
 BuildRequires: libssl-devel
 BuildRequires: libudev-devel
-BuildRequires: libwxGTK3.1-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libzip-devel
 BuildRequires: ninja-build
@@ -103,7 +100,7 @@ PCSX2 is an emulator for the playstation 2 video game console. It is written mos
 There is still lot of on going work to improve compatibility & speed.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7
 
 %__mv -Tf ../libchdr-%libchdr_commit 3rdparty/libchdr/libchdr
 %__mv -Tf ../googletest-release-%gtest_version 3rdparty/gtest
@@ -111,7 +108,6 @@ There is still lot of on going work to improve compatibility & speed.
 %__mv -Tf ../zstd-%zstd_version 3rdparty/zstd/zstd
 %__mv -Tf ../Vulkan-Headers-%vulkan_headers_version 3rdparty/vulkan-headers
 %__mv -Tf ../cubeb-%cubeb_commit 3rdparty/cubeb/cubeb
-%__mv -Tf ../imgui-%imgui_commit 3rdparty/imgui/imgui
 %__mv -Tf ../glslang-%glslang_version 3rdparty/glslang/glslang
 
 %build
@@ -149,6 +145,9 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %_defaultdocdir/Pcsx2/*.pdf
 
 %changelog
+* Sat Sep 24 2022 Nazarov Denis <nenderus@altlinux.org> 1.7.3332-alt1
+- Version 1.7.3332
+
 * Sun May 29 2022 Nazarov Denis <nenderus@altlinux.org> 1.7.2828-alt1
 - Version 1.7.2828
 
