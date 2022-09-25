@@ -3,15 +3,15 @@
 %define nautilus_extdir %_libdir/nautilus/extensions-4
 
 %define ver_major 43
-%define beta .rc
+%define beta %nil
 %define xdg_name org.gnome.Console
 %define binary_name kgx
 
 %def_without nautilus
 
 Name: gnome-console
-Version: %ver_major
-Release: alt0.9%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: GNOME Console
 License: GPL-3.0
@@ -85,6 +85,9 @@ Nautilus file manager.
 %endif
 
 %changelog
+* Sun Sep 25 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.9.rc
 - 43.rc (ported to GTK4)
 
