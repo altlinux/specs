@@ -20,7 +20,7 @@
 %endif
 
 Name: lib%{_name}%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -169,6 +169,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 5.6.1-alt1
+- 5.6.1
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 5.6.0-alt1
 - 5.6.0
 

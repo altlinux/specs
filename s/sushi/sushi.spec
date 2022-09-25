@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 42
+%define ver_major 43
 %define xdg_name org.gnome.NautilusPreviewer
 %define api_ver 1.0
 %define gst_api_ver 1.0
@@ -16,14 +16,14 @@ Release: alt1
 Summary: A quick previewer for Nautilus
 Group: Graphical desktop/GNOME
 License: GPLv2+
-Url: https://live.gnome.org/ThreePointOne/Features/FilePreviewing
+Url: https://gitlab.gnome.org/GNOME/sushi
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define gst_ver 1.0
 %define clutter_ver 1.11.4
-%define webkit_api_ver 4.0
-%define webkit_ver 2.36
+%define webkit_api_ver 4.1
+%define webkit_ver 2.38
 
 Requires: gst-plugins-base%gst_api_ver
 Requires: %lo_bin
@@ -107,6 +107,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Fri Jul 01 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

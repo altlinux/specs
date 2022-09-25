@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 42
+%define ver_major 43
+%define beta %nil
 %define xdg_name org.gnome.Logs
 
 %def_with man
@@ -7,27 +8,24 @@
 
 Name: gnome-logs
 Version: %ver_major.0
-Release: alt1
+Release: alt1%beta
 
 Summary: The GNOME logfile viewer
 Group: Graphical desktop/GNOME
 License: GPL-3.0
 Url: https://wiki.gnome.org/Apps/Logs
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-
-#Obsoletes: gnome-system-log < 3.11
-#Provides: gnome-system-log = %version-%release
+Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 Requires: gsettings-desktop-schemas
 
 %define glib_ver 2.44
-%define gtk_ver 3.22
-%define handy_ver 1.5.0
+%define gtk4_ver 4.6
+%define adwaita_ver 1.2.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome
 BuildRequires: meson libgio-devel >= %glib_ver
-BuildRequires: libgtk+3-devel >= %gtk_ver pkgconfig(libhandy-1) >= %handy_ver
+BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: gsettings-desktop-schemas-devel libsystemd-journal-devel
 BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
 %{?_with_man:BuildRequires: docbook-dtds docbook-style-xsl xsltproc}
@@ -36,7 +34,7 @@ BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
 GNOME Logs is a log viewer for the systemd journal.
 
 %prep
-%setup
+%setup -n %name-%version%beta
 
 %build
 %meson %{?_with_man:-Dman=true}
@@ -62,6 +60,9 @@ GNOME Logs is a log viewer for the systemd journal.
 %doc NEWS README
 
 %changelog
+* Sat Sep 24 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Mon Mar 28 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 

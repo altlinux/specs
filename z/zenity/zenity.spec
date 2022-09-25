@@ -1,11 +1,11 @@
-%define ver_major 3.42
+%define ver_major 3.43
 %define beta %nil
 %def_enable libnotify
 %def_enable webkitgtk
 %def_enable check
 
 Name: zenity
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: The GNOME port of dialog(1)
@@ -17,13 +17,14 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 
 %define glib_ver 2.43.4
 %define gtk_ver 3.16.0
+%define webkit_api_ver 4.1
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson yelp-tools
 BuildRequires: glib2-devel > %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
-%{?_enable_libnotify:BuildPreReq: libnotify-devel >= 0.7.0}
-%{?_enable_webkitgtk:BuildRequires: libwebkit2gtk-devel}
+%{?_enable_libnotify:BuildRequires: libnotify-devel >= 0.7.0}
+%{?_enable_webkitgtk:BuildRequires: pkgconfig(webkit2gtk-%webkit_api_ver)}
 
 %description
 Zenity is a tool that allows you to display Gtk+ dialog boxes from
@@ -54,9 +55,12 @@ a cooler name.
 %_bindir/gdialog
 %_datadir/%name
 %_man1dir/*
-%doc AUTHORS NEWS README THANKS TODO
+%doc AUTHORS NEWS README* THANKS TODO
 
 %changelog
+* Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.43.0-alt1
+- 3.43.0
+
 * Wed Apr 27 2022 Yuri N. Sedunov <aris@altlinux.org> 3.42.1-alt1
 - 3.42.1
 

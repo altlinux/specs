@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.TextEditor
 
@@ -7,7 +7,7 @@
 %def_disable check
 
 Name: gnome-text-editor
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: A simple Text Editor for GNOME
@@ -21,19 +21,20 @@ Source: https://download.gnome.org/sources/%name/%ver_major/%name-%version%beta.
 Source: %name-%version.tar
 %endif
 
-%define glib_ver 2.69
-%define gtk_ver 4.6
-%define gtksource_ver 5.4.2
+%define glib_ver 2.73
+%define gtk_ver 4.7
+%define gtksource_ver 5.5
 %define enchant_ver 2.2.0
+%define adwaita_ver 1.2
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson libappstream-glib-devel desktop-file-utils yelp-tools
+BuildRequires: meson /usr/bin/appstream-util desktop-file-utils yelp-tools
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk4-devel >= %gtk_ver libpcre-devel
 BuildRequires: libgtksourceview5-devel >= %gtksource_ver
 BuildRequires: pkgconfig(enchant-2) >= %enchant_ver
-BuildRequires: pkgconfig(libadwaita-1)
-BuildRequires: libicu-devel
+BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: libeditorconfig-devel
 
 %description
 Text Editor is a simple editor for GNOME focused on being a good
@@ -51,7 +52,7 @@ general purpose default editor.
 %find_lang %name --with-gnome
 
 %check
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/*
@@ -60,11 +61,14 @@ general purpose default editor.
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %_iconsdir/hicolor/*/apps/%{xdg_name}*.svg
-%_iconsdir/hicolor/*/actions/*.svg
+#%_iconsdir/hicolor/*/actions/*.svg
 %_datadir/metainfo/%xdg_name.appdata.xml
 %doc README* NEWS
 
 %changelog
+* Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sun Jun 12 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
 - 42.2
 

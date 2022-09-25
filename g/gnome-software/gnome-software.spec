@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
-%define plugins_ver 18
+%define plugins_ver 19
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Software
 
-%def_enable soup2
+%def_disable soup2
 %def_enable gudev
 %def_enable gnome_desktop
 %def_enable polkit
@@ -39,7 +39,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -50,10 +50,8 @@ Url: https://wiki.gnome.org/Apps/Software
 %if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%beta.tar.xz
 %else
-Source: %name-%version.tar
+Source: %name-%version%beta.tar
 %endif
-
-Patch: %name-3.32.3-alt-unsupported_mime_types.patch
 
 %define glib_ver 2.66
 %define gtk4_ver 4.0.0
@@ -68,10 +66,11 @@ Patch: %name-3.32.3-alt-unsupported_mime_types.patch
 %define ostree_ver 2018.4
 %define xmlb_ver 0.1.4
 %define adwaita_ver 1.0.1
+%define malcontent_ver 0.11
 
 %{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
 %{?_enable_packagekit:Requires: appstream-data}
-%{?_enable_malcontent:Requires: malcontent}
+%{?_enable_malcontent:Requires: malcontent} >= %malcontent_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg rpm-macros-valgrind
 BuildRequires: meson libgio-devel >= %glib_ver
@@ -87,6 +86,7 @@ BuildRequires: yelp-tools gtk-doc xsltproc docbook-style-xsl desktop-file-utils
 BuildRequires: libsqlite3-devel libsecret-devel gsettings-desktop-schemas-devel liboauth-devel
 BuildRequires: libgnome-online-accounts-devel
 BuildRequires: libxmlb-devel >= %xmlb_ver
+BuildRequires: libglib-testing-devel
 %{?_enable sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
 %{?_enable_gudev:BuildRequires: libgudev-devel}
 %{?_enable_gnome_desktop:BuildRequires: gsettings-desktop-schemas >= %gsds_ver}
@@ -97,7 +97,7 @@ BuildRequires: libxmlb-devel >= %xmlb_ver
 %{?_enable_valgrind:BuildRequires: valgrind-tool-devel}
 %{?_enable_rpm_ostree:BuildRequires: libostree-devel >= %ostree_ver}
 %{?_enable_rpm:BuildRequires: librpm-devel}
-%{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-0)}
+%{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
 %{?_enable_check:BuildRequires: gcab}
 
 %description
@@ -125,7 +125,6 @@ GNOME Software.
 
 %prep
 %setup -n %name-%version%beta
-%patch
 
 %build
 %meson \
@@ -153,8 +152,7 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %buildroot%_libdir/libgnomesoftware.so.%plugins_ver
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_xdgconfigdir/autostart/%xdg_name.desktop
@@ -167,19 +165,23 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 #symlink
 %_libdir/libgnomesoftware.so.%plugins_ver
 %_libdir/%name/plugins-%plugins_ver/
-%_desktopdir/%name-local-file.desktop
 %_desktopdir/%xdg_name.desktop
+%_desktopdir/%name-local-file-flatpak.desktop
+%{?_enable_fwupd:%_desktopdir/%name-local-file-fwupd.desktop}
+%_desktopdir/%name-local-file-packagekit.desktop
 %_datadir/swcatalog/xml/%xdg_name.Featured.xml
-%_datadir/swcatalog/xml/%xdg_name.Popular.xml
+%_datadir/swcatalog/xml/gnome-pwa-list-foss.xml
+%_datadir/swcatalog/xml/gnome-pwa-list-proprietary.xml
+%_datadir/swcatalog/xml/%xdg_name.Curated.xml
 %_datadir/dbus-1/services/%xdg_name.service
 %{?_enable_packagekit:%_datadir/dbus-1/services/org.freedesktop.PackageKit.service}
 %{?_enable_external_appstream:%_datadir/polkit-1/actions/org.gnome.software.external-appstream.policy}
 %_datadir/gnome-shell/search-providers/%xdg_name-search-provider.ini
 %_iconsdir/hicolor/*/*/*.svg
 %_datadir/glib-2.0/schemas/org.gnome.software.gschema.xml
-%_datadir/metainfo/%xdg_name.appdata.xml
+%_datadir/metainfo/%xdg_name.metainfo.xml
+%_datadir/metainfo/%xdg_name.Plugin.Epiphany.metainfo.xml
 %{?_enable_flatpak:%_datadir/metainfo/%xdg_name.Plugin.Flatpak.metainfo.xml}
-#%{?_enable_odrs:%_datadir/metainfo/%xdg_name.Plugin.Odrs.metainfo.xml}
 %{?_enable_fwupd:%_datadir/metainfo/%xdg_name.Plugin.Fwupd.metainfo.xml}
 %_man1dir/%name.1.*
 %doc AUTHORS README* NEWS
@@ -192,6 +194,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Fri Aug 05 2022 Yuri N. Sedunov <aris@altlinux.org> 42.4-alt1
 - 42.4
 
