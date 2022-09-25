@@ -8,10 +8,10 @@
 
 Name: wxGTK3.2
 Version: 3.2.1
-Release: alt2
+Release: alt3
 
 Summary: The GTK+ port of the wxWidgets library
-License: wxWidgets License
+License: wxWidgets
 Group: System/Libraries
 Url: https://wxwidgets.org
 
@@ -36,6 +36,7 @@ BuildRequires: libstdc++-devel
 #BuildRequires: libGConf-devel
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel
 BuildRequires: libnotify-devel
+BuildRequires: libcurl-devel
 
 %if_with webkitgtk
 BuildRequires: libwebkit2gtk-devel
@@ -212,6 +213,7 @@ CONF_FLAG=" \
 	--with-regex=yes \
 	--disable-rpath \
 	--disable-joystick \
+        --enable-webrequest \
 	--enable-plugins \
 	--enable-precomp-headers=yes \
 	--enable-mediactrl \
@@ -317,6 +319,10 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Sun Sep 25 2022 Fr. Br. George <george@altlinux.org> 3.2.1-alt3
+- enable webrequest via libcurl
+- fix License field
+
 * Mon Sep 19 2022 Anton Midyukov <antohami@altlinux.org> 3.2.1-alt2
 - add missing conflict with libwxBase3.1-devel, libwxGTK3.1-devel
   (Closes: 43824)
