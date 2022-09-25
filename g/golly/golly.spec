@@ -1,9 +1,9 @@
 Summary: Exploring Conway's Game of Life and other cellular automata
 Name: golly
-Version: 4.1
-Release: alt2
+Version: 4.2
+Release: alt1
 
-License: GPL
+License: GPLv2
 Url: http://golly.sourceforge.net/
 Source: %name-%version-src.tar.gz
 Source1: %name.sh
@@ -83,6 +83,9 @@ install -D %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %_datadir/%name
 
 %changelog
+* Sat Sep 24 2022 Fr. Br. George <george@altlinux.org> 4.2-alt1
+- New version
+
 * Wed Sep 21 2022 Anton Midyukov <antohami@altlinux.org> 4.1-alt2
 - NMU: rebuild with wxGTK3.2
 
