@@ -9,7 +9,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: buildah
-Version: 1.26.1
+Version: 1.27.2
 Release: alt1
 Summary: A command line tool used to creating OCI Images
 Group: Development/Other
@@ -27,6 +27,7 @@ BuildRequires: libbtrfs-devel
 BuildRequires: libassuan-devel
 BuildRequires: libseccomp-devel
 BuildRequires: glib2-devel
+#BuildRequires: shadow-utils-subid-devel
 Requires: runc >= 1.0.0
 Requires: containers-common
 Requires: slirp4netns >= 0.3
@@ -81,6 +82,9 @@ popd
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 1.27.2-alt1
+- new version 1.27.2
+
 * Wed Jun 15 2022 Alexey Shabalin <shaba@altlinux.org> 1.26.1-alt1
 - new version 1.26.1
 
