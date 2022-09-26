@@ -1,10 +1,10 @@
 %def_with l10n
 %define _hardened_build 1
 %global gitname celeron55
-%define irrlichtmt_version 1.9.0mt7
+%define irrlichtmt_version 1.9.0mt8
 
 Name: minetest
-Version: 5.6.0
+Version: 5.6.1
 Release: alt1
 Summary: Multiplayer infinite-world block sandbox with survival mode
 License: LGPL-2.0+ and CC-BY-SA-3.0
@@ -192,6 +192,9 @@ fi
 %_man6dir/minetestserver.6*
 
 %changelog
+* Mon Sep 26 2022 Ilya Mashkin <oddity@altlinux.ru> 5.6.1-alt1
+- 5.6.1
+
 * Sat Aug 06 2022 Ilya Mashkin <oddity@altlinux.ru> 5.6.0-alt1
 - 5.6.0
 
