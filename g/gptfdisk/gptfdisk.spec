@@ -1,12 +1,12 @@
 Name: gptfdisk
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 
 Summary: GPT partitioning and MBR repair software
 License: GPLv2
 Group: System/Configuration/Hardware
 
-Url: http://www.rodsbooks.com/gdisk
+Url: https://www.rodsbooks.com/gdisk
 Source: %name-%version.tar
 # GIT: git://git.code.sf.net/p/gptfdisk/code
 
@@ -80,6 +80,9 @@ install -pm644 *.8 %buildroot%_man8dir/
 %_man8dir/fixparts*
 
 %changelog
+* Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 1.0.9-alt1
+- 1.0.9
+
 * Mon Nov 01 2021 Alexey Shabalin <shaba@altlinux.org> 1.0.8-alt1
 - 1.0.8 (Fixes: CVE-2020-0256, CVE-2021-0308)
 
