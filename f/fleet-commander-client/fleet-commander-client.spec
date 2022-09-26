@@ -5,7 +5,7 @@
 
 Name: fleet-commander-client
 Version: 0.15.0
-Release: alt3
+Release: alt4
 
 Summary: Fleet Commander Client
 License: LGPLv3+ and LGPLv2+ and MIT and BSD
@@ -29,6 +29,8 @@ BuildRequires: python3(samba)
 BuildRequires: libnm-gir
 BuildRequires: libjson-glib-gir
 BuildRequires: samba-common
+
+BuildRequires: /usr/bin/dbus-launch
 %endif
 
 # mark Python code as Python3
@@ -113,6 +115,9 @@ fi
 %_datadir/dbus-1/system-services/org.freedesktop.FleetCommanderClientAD.service
 
 %changelog
+* Mon Sep 26 2022 Stanislav Levin <slev@altlinux.org> 0.15.0-alt4
+- Fixed FTBFS (missing tests dependency on dbus-launch).
+
 * Thu Aug 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.15.0-alt3
 - Policy files access modifier fixed.
 

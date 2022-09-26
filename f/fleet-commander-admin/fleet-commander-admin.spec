@@ -8,7 +8,7 @@
 
 Name: fleet-commander-admin
 Version: 0.15.1
-Release: alt10
+Release: alt11
 
 Summary: Fleet Commander
 License: LGPLv2+ or MIT or BSD
@@ -44,6 +44,8 @@ BuildRequires: python3(pylint)
 BuildRequires: python3(six)
 BuildRequires: python3(sqlite3)
 BuildRequires: samba-common
+
+BuildRequires: /usr/bin/dbus-launch
 %endif
 
 # don't generate Python2 auto requires
@@ -163,6 +165,9 @@ export TESTS_LOGGER_TIMEOUT=10000
 %_datadir/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}/{c73e87a7-b5a1-4b6f-b10b-0bd70241a64d}.xpi
 
 %changelog
+* Mon Sep 26 2022 Stanislav Levin <slev@altlinux.org> 0.15.1-alt11
+- Fixed FTBFS (missing tests dependency on dbus-launch).
+
 * Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 0.15.1-alt10
 - Skipped build on armh (Java 17).
 
