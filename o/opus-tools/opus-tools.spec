@@ -1,6 +1,8 @@
+%define git ecd50e5
+
 Name: opus-tools
 Version: 0.2
-Release: alt2
+Release: alt29.g%{git}
 
 Summary: Opus Audio Codec utilities
 License: BSD-style
@@ -8,7 +10,6 @@ Group: System/Libraries
 Url: http://opus-codec.org/
 # http://downloads.xiph.org/releases/opus/%name-%version.tar.gz
 Source: %name-%version.tar
-Patch: %name-0.2-elbrus.patch
 
 Buildrequires: libogg-devel libflac-devel libopusenc-devel opusfile-devel opusurl-devel libflac-devel libpcap-devel
 
@@ -23,7 +24,6 @@ decode .opus files.
 
 %prep
 %setup
-%patch -p2
 
 %build
 echo PACKAGE_VERSION="%version" > package_version
@@ -44,6 +44,10 @@ echo PACKAGE_VERSION="%version" > package_version
 %doc AUTHORS COPYING README.md
 
 %changelog
+* Mon Sep 26 2022 L.A. Kostis <lakostis@altlinux.ru> 0.2-alt29.gecd50e5
+- v0.2-29-gecd50e5.
+- Remove Elbrus patch (merged by upstream).
+
 * Tue Mar 24 2020 L.A. Kostis <lakostis@altlinux.ru> 0.2-alt2
 - Added Elbrus support (by @mike).
 - Enable SSE on x86

@@ -1,6 +1,6 @@
 Name: opusfile
-Version: 0.12.0.3.4174
-Release: alt2
+Version: 0.12.0.39.0a4c
+Release: alt1
 
 Summary: A high-level API for decoding and seeking within .opus files
 License: BSD-3-Clause
@@ -9,7 +9,7 @@ Url: https://opus-codec.org/
 Vcs: https://gitlab.xiph.org/xiph/opusfile
 Source: %name-%version.tar
 
-BuildRequires: doxygen libogg-devel libopus-devel libssl-devel
+BuildRequires: doxygen graphviz fonts-ttf-dejavu libogg-devel libopus-devel libssl-devel
 
 %def_disable static
 
@@ -126,6 +126,9 @@ EOF
 %endif
 
 %changelog
+* Mon Sep 26 2022 L.A. Kostis <lakostis@altlinux.ru> 0.12.0.39.0a4c-alt1
+- v0.12-3-g4174c26 -> v0.12-39-g0a4cd79.
+
 * Sun Nov 08 2020 Dmitry V. Levin <ldv@altlinux.org> 0.12.0.3.4174-alt2
 - Made libopusfile0 Provide+Obsolete libopusfile to facilitate replacement
   of the removed libopusfile package with libopusfile0 (closes: #39223).

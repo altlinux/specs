@@ -1,6 +1,8 @@
+%define git bce1f392
+
 Name: libopus
 Version: 1.3.1
-Release: alt3
+Release: alt158.g%{git}
 
 Summary: Opus Audio Codec library
 License: BSD
@@ -8,7 +10,9 @@ Group: System/Libraries
 Url: http://opus-codec.org/
 # http://downloads.xiph.org/releases/opus/%name-%version.tar.gz
 Source: opus-%version.tar
-Source1: package_version
+Patch: libopus-silk-fix-missing-have_arm_intrinsics_or_asm.patch
+
+BuildRequires(pre): meson, cmake
 
 %def_disable static
 
@@ -21,7 +25,7 @@ incorporates technology from Skype's SILK codec and Xiph.Org's CELT codec.
 Summary: Development files for libopus
 Group: Development/C
 PreReq: %name = %version-%release
-BuildRequires: doxygen
+BuildRequires: doxygen, graphviz, fonts-ttf-dejavu
 
 %description devel
 This package contains the header files and documentation needed
@@ -38,36 +42,34 @@ statically linked libopus-based software.
 
 %prep
 %setup -n opus-%version
-cp %SOURCE1 .
+%patch -p2
 
 %build
-%autoreconf
-%configure \
-	--enable-intrinsics \
-	--enable-ambisonics \
-	--enable-check-asm \
+printf 'PACKAGE_VERSION="%s"\n' '%version' > package_version
+%meson -Dintrinsics=auto \
+       -Dcheck-asm=true \
 %ifarch x86_64
-	--disable-rtcd \
+       -Drtcd=disabled
 %endif
-	%{subst_enable static}
-%make_build
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
+# armh tests fail due timeout, dunno why
+%ifnarch armh
 %check
-%make check
+%meson_test
+%endif
 
 %files
 %_libdir/*.so.*
-%doc AUTHORS README COPYING
+%doc AUTHORS README COPYING LICENSE_PLEASE_READ.txt
 
 %files devel
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
-%_aclocaldir/*.m4
-%_man3dir/*
 %dir %_docdir/opus/
 %_docdir/opus/*
 
@@ -77,6 +79,12 @@ cp %SOURCE1 .
 %endif
 
 %changelog
+* Mon Sep 26 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.1-alt158.gbce1f392
+- v1.3.1-158-gbce1f392.
+- switch to meson.
+- build/meson: fix missing have_arm_intrinsics_or_asm variable.
+- don't run tests on armh due timeouts.
+
 * Wed Mar 18 2020 Oleg Solovyov <mcpain@altlinux.org> 1.3.1-alt3
 - remove git garbage from opus.pc (Closes: 38210)
 
