@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-sugar
+%define pypi_name pytest-sugar
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.9.4
+Name: python3-module-%pypi_name
+Version: 0.9.5
 Release: alt1
 Summary: Plugin for py.test that shows failures and errors instantly and shows a progress bar
 License: BSD
@@ -18,15 +18,18 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 BuildRequires: python3-module-packaging >= 14.1
 BuildRequires: python3-module-pytest >= 2.9
 BuildRequires: python3-module-termcolor >= 1.1.0
 BuildRequires: python3-module-pytest-xdist
-BuildRequires: python3(tox)
 %endif
 
-%py3_provides pytest_sugar
+%py3_provides %pypi_name
 
 %description
 pytest-sugar is a plugin for py.test that changes the default look and
@@ -37,22 +40,24 @@ feel of py.test (e.g. progressbar, show tests that fail instantly).
 %autopatch -p1
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/pytest_sugar.py
+%python3_sitelibdir/__pycache__/pytest_sugar.*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 22 2022 Stanislav Levin <slev@altlinux.org> 0.9.5-alt1
+- 0.9.4 -> 0.9.5.
+
 * Thu Oct 15 2020 Stanislav Levin <slev@altlinux.org> 0.9.4-alt1
 - 0.9.2 -> 0.9.4.
 - Stopped Python2 package build(Python2 EOL).

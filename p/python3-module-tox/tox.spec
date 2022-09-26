@@ -1,10 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name tox
 
+%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
+
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.25.1
+Version: 3.26.0
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -31,8 +33,10 @@ BuildRequires: python3(packaging)
 BuildRequires: python3(pluggy)
 BuildRequires: python3(py)
 BuildRequires: python3(six)
-BuildRequires: python3(toml)
 BuildRequires: python3(virtualenv)
+%if %tomli
+BuildRequires: python3(tomli)
+%endif
 
 # testing
 BuildRequires: python3(flaky)
@@ -46,6 +50,10 @@ BuildRequires: python3(pytest_randomly)
 BuildArch: noarch
 
 %py3_requires virtualenv
+%if %tomli
+# rebuild against Python 3.11 is required to get rid of old dependency
+%py3_requires tomli
+%endif
 
 %description
 Tox as is a generic virtualenv management and test command line tool you
@@ -107,6 +115,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Sep 22 2022 Stanislav Levin <slev@altlinux.org> 3.26.0-alt1
+- 3.25.1 -> 3.26.0.
+
 * Thu Jul 21 2022 Stanislav Levin <slev@altlinux.org> 3.25.1-alt1
 - 3.24.5 -> 3.25.1.
 

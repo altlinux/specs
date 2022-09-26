@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.8.0
-Release: alt1
+Release: alt2
 
 Summary: Simple, correct PEP 517 build frontend
 License: MIT
@@ -34,6 +34,8 @@ BuildRequires: python3(tomli)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_rerunfailures)
 BuildRequires: python3(pytest_mock)
+BuildRequires: python3(filelock)
+BuildRequires: python3(toml)
 %endif
 
 BuildArch: noarch
@@ -81,6 +83,9 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Mon Sep 26 2022 Stanislav Levin <slev@altlinux.org> 0.8.0-alt2
+- Fixed FTBFS (missing tests dependency on toml).
+
 * Tue Aug 09 2022 Stanislav Levin <slev@altlinux.org> 0.8.0-alt1
 - 0.7.0 -> 0.8.0.
 
