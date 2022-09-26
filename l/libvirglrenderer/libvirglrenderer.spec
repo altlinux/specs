@@ -1,6 +1,6 @@
 
 Name: libvirglrenderer
-Version: 0.9.1
+Version: 0.10.3
 Release: alt1
 
 Summary: Virgl Rendering library
@@ -11,10 +11,11 @@ Url: https://gitlab.freedesktop.org/virgl/virglrenderer.git
 Vcs: https://gitlab.freedesktop.org/virgl/virglrenderer.git
 Source: %name-%version.tar
 
-BuildRequires(pre): meson
+BuildRequires(pre): meson >= 0.53
 BuildRequires: pkgconfig(libdrm) >= 2.4.50
 BuildRequires: pkgconfig(gbm) >= 18.0.0
 BuildRequires: pkgconfig(epoxy) >= 1.5.4
+BuildRequires: pkgconfig(libva) pkgconfig(libva-drm)
 
 %description
 The virgil3d rendering library is a library used by
@@ -45,7 +46,7 @@ driver to test virgl rendering without GL.
 %setup
 
 %build
-%meson
+%meson -Dvideo=true
 %meson_build
 
 %install
@@ -64,6 +65,9 @@ driver to test virgl rendering without GL.
 %_bindir/virgl_test_server
 
 %changelog
+* Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 0.10.3-alt1
+- new version 0.10.3
+
 * Thu Apr 22 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.1-alt1
 - new version 0.9.1
 
