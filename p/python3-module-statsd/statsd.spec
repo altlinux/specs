@@ -1,10 +1,8 @@
 %define oname statsd
 
-%def_disable check
-
 Name: python3-module-%oname
-Version: 3.2.1
-Release: alt2
+Version: 3.3.0
+Release: alt1
 Summary: A simple statsd client
 License: MIT
 Group: Development/Python3
@@ -28,9 +26,6 @@ the statsd daemon.
 %install
 %python3_install
 
-%check
-python3 setup.py test
-
 %files
 %doc AUTHORS CHANGES *.rst
 %python3_sitelibdir/*
@@ -38,6 +33,9 @@ python3 setup.py test
 %exclude %python3_sitelibdir/*/*/tests.*
 
 %changelog
+* Mon Sep 26 2022 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- Build new version.
+
 * Mon Oct 19 2020 Stanislav Levin <slev@altlinux.org> 3.2.1-alt2
 - Stopped Python2 package build.
 
