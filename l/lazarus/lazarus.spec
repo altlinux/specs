@@ -2,8 +2,8 @@
 %define cfg %_builddir/%name-%version/
 
 Name:    lazarus
-Version: 2.2.2.0
-Release: alt2
+Version: 2.2.4
+Release: alt1
 Epoch:   1
 
 Summary: Lazarus Component Library and IDE
@@ -300,6 +300,9 @@ ln -s ../../bin/lazarus %buildroot$LAZARUSDIR/lazarus
 %_libdir/libQt5Pas.so
 
 %changelog
+* Mon Sep 26 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.2.4-alt1
+- New version.
+
 * Thu Jun 09 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.2.2.0-alt2
 - Use FPC documentation in CHM format from fpc-docs.
 
