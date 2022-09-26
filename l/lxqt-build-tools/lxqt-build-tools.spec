@@ -3,7 +3,7 @@
 
 Name: lxqt-build-tools
 Version: 0.11.0
-Release: alt1
+Release: alt2
 
 Summary: Various packaging tools and scripts for LXQt applications
 License: BSD 3-clause
@@ -11,6 +11,8 @@ Group: Graphical desktop/Other
 
 Url: https://lxqt.org
 Source: %name-%version.tar
+# https://github.com/lxqt/lxqt-build-tools/issues/81
+Patch: 0001-FindGLIB.cmake-Use-gdesktopappinfo.h-to-find-gio-uni.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: qt5-base-devel qt5-tools-devel glib2-devel
@@ -43,6 +45,9 @@ sed -i '/-flto/d' cmake/modules/LXQtCompilerSettings.cmake
 %_bindir/*
 
 %changelog
+* Mon Sep 26 2022 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt2
+- add upstream patch for fix find gio-unix-2.0
+
 * Sun Apr 17 2022 Anton Midyukov <antohami@altlinux.org> 0.11.0-alt1
 - new version 0.11.0
 
