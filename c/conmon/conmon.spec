@@ -1,5 +1,5 @@
 Name: conmon
-Version: 2.1.2
+Version: 2.1.4
 Release: alt1
 # due to typo in version :(
 Epoch: 1
@@ -16,7 +16,7 @@ BuildRequires: go-md2man
 BuildRequires: glibc-devel
 BuildRequires: pkgconfig(glib-2.0)
 BuildRequires: pkgconfig(libsystemd)
-BuildRequires: pkgconfig(libseccomp) >= 2.5.0
+BuildRequires: pkgconfig(libseccomp) >= 2.5.2
 
 %description
 %summary.
@@ -38,6 +38,9 @@ export GIT_COMMIT=%release
 %_man8dir/conmon.*
 
 %changelog
+* Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.1.4-alt1
+- new version 2.1.4
+
 * Wed Jun 15 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.1.2-alt1
 - new version 2.1.2
 
