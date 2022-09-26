@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.26
-Release: alt0_2_rc1
+Release: alt0_3_alpha
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -15,28 +15,28 @@ Requires: fonts-ttf-dejavu
 
 # Conflicts: %name-data <=  1:0.0.25-alt1
 
+Packager: Hihin Ruslan <ruslandh@altlinux.ru>
+
 Source: %name-%version.tar
 # Source1: README.ALT
 
-Patch0: 0ad-mozjs78-version.patch
+Patch: 0ad-mozjs78-version.patch
 Patch1: 0ad-mozjs78-PrepareZoneForGC.patch
 Patch2: 0ad-0.0.25-fonts.patch
 # Patch4: 0ad-0.0.26-ppc64le.patch
 Patch5: 0ad-0.0.25-i586.patch
-
 
 # disabled i586 build to unblock wxGTK3.0 rebuild; please remove later
 # ExcludeArch: %ix86
 
 # Automatically added by buildreq on Mon Jul 04 2022
 # optimized out: at-spi2-atk boost-devel boost-devel-headers cmake-modules fontconfig glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libat-spi2-core libcairo-gobject libfreetype-devel libgdk-pixbuf libglvnd-devel libgpg-error libicu-devel libogg-devel libsasl2-3 libssl-devel libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwxBase3.0-devel libwxGTK3.0-gl libwxGTK3.0-webview perl pkg-config python3 python3-base sh4 xorg-proto-devel zlib-devel
-BuildRequires: boost-filesystem-devel boost-flyweight-devel boost-lockfree-devel boost-signals-devel 
+BuildRequires: boost-filesystem-devel boost-flyweight-devel boost-lockfree-devel boost-signals-devel
 BuildRequires: cmake gcc-c++ libSDL2-devel libcurl-devel libenet-devel libfmt-devel libgloox-devel libminiupnpc-devel
 BuildRequires: libmozjs78-devel libopenal-devel libpng-devel libsodium-devel libvorbis-devel libwxGTK3.0-devel libxml2-devel
 BuildRequires: python3-dev
 
-
-BuildRequires: gcc-c++ /usr/bin/python3 cmake
+BuildRequires: gcc-c++ %_bindir/python3 cmake
 BuildRequires: boost-filesystem-devel boost-flyweight-devel boost-signals-devel
 BuildRequires: libjpeg-devel libpng-devel libvorbis-devel libfreetype-devel
 BuildRequires: libopenal-devel libGL-devel libSDL2-devel libwxGTK3.0-devel libXcursor-devel
@@ -75,13 +75,12 @@ educational celebration of game development and ancient history.
 %patch1 -p1
 %patch2 -p1
 
-
 %patch5 -p1
 
 # update shebangs from python to python3
 find . -name '*.py' -o -name 'cxxtestgen' | xargs sed -i \
-	-e '1 s:#!/usr/bin/env python$:#!/usr/bin/env python3:' \
-	-e '1 s:#! /usr/bin/env python$:#! /usr/bin/env python3:' \
+	-e '1 s:#!%_bindir/env python$:#!%_bindir/env python3:' \
+	-e '1 s:#! %_bindir/env python$:#! %_bindir/env python3:' \
 	%nil
 
 ## install -m 644 %%SOURCE1 .
@@ -128,7 +127,6 @@ ln -s pyrogenesis %buildroot%_bindir/0ad
 mkdir -p %buildroot%_datadir/0ad
 cp -a binaries/data/* %buildroot%_datadir/0ad/
 
-
 %files
 %doc README.txt LICENSE.* license*
 %_bindir/0ad
@@ -141,6 +139,9 @@ cp -a binaries/data/* %buildroot%_datadir/0ad/
 %_datadir/0ad/*
 
 %changelog
+* Mon Sep 26 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_3_alpha
+- Version 0.0.26-alpha
+
 * Sun Jul 10 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.0.26-alt0_2_rc1
 - Fix Requires
 
