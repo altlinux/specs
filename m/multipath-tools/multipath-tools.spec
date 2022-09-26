@@ -5,7 +5,7 @@
 %define libmpathdir %syslibdir/multipath
 
 Name: multipath-tools
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
@@ -20,6 +20,8 @@ Source3: multipathd.init
 Source4: multipath.modules
 Source5: multipath.conf
 Patch1: %name-%version.patch
+
+Provides: device-mapper-multipath = %EVR
 
 Requires: libmultipath = %EVR
 Requires: kpartx = %EVR
@@ -130,11 +132,12 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %preun_service multipathd
 
 %files
-%doc README.md README.alua
+%doc README.md
 /sbin/multipath
 /sbin/multipathd
 #/sbin/mpathconf
 /sbin/mpathpersist
+/sbin/multipathc
 %_udevrulesdir/*
 %exclude %_udevrulesdir/*kpartx.rules
 %_modulesloaddir/*
@@ -151,6 +154,7 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 /%_lib/libmpathcmd.so.*
 /%_lib/libmpathpersist.so.*
 /%_lib/libmpathvalid.so.*
+/%_lib/libmpathutil.so.*
 %dir %libmpathdir
 %libmpathdir/*
 
@@ -159,6 +163,7 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 /%_lib/libmpathpersist.so
 /%_lib/libmpathcmd.so
 /%_lib/libmpathvalid.so
+/%_lib/libmpathutil.so
 %_includedir/mpath_cmd.h
 %_includedir/mpath_persist.h
 %_includedir/mpath_valid.h
@@ -182,6 +187,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Tue Sep 27 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.1-alt1
+- 0.9.1
+
 * Thu Aug 25 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.0-alt1
 - 0.9.0
 
