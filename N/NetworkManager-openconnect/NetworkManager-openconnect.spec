@@ -1,5 +1,5 @@
 %define nm_version 1.1.90
-%define nm_applet_version 1.1.90
+%define nm_applet_version 1.2.0
 %define nm_applet_name NetworkManager-applet-gtk
 
 %def_without libnm_glib
@@ -7,7 +7,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-openconnect
-Version: 1.2.6
+Version: 1.2.8
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -22,6 +22,7 @@ Requires: NetworkManager-daemon >= %nm_version
 Requires: openconnect
 
 BuildRequires(pre): rpm-build-licenses
+BuildRequires: pkgconfig(glib-2.0) >= 2.34
 BuildRequires: libopenconnect-devel >= 3.02
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel >= %nm_applet_version
@@ -30,7 +31,7 @@ BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libnm-gtk-devel >= %nm_applet_version
 %endif
-BuildRequires: libgtk+3-devel
+BuildRequires: libgtk+3-devel >= 3.12
 BuildRequires: gcr-libs-devel >= 3.4
 BuildRequires: libsecret-devel >= 0.18
 BuildRequires: intltool gettext
@@ -77,7 +78,8 @@ NetworkManager panel applet.
 
 %files
 %doc AUTHORS ChangeLog COPYING
-%config %_sysconfdir/dbus-1/system.d/nm-openconnect-service.conf
+%_libdir/NetworkManager/libnm-vpn-plugin-openconnect.so
+%_datadir/dbus-1/system.d/nm-openconnect-service.conf
 %_libexecdir/NetworkManager/nm-openconnect-service
 %_libexecdir/NetworkManager/nm-openconnect-service-openconnect-helper
 %if_with libnm_glib
@@ -90,14 +92,15 @@ NetworkManager panel applet.
 %_libdir/NetworkManager/libnm-openconnect-properties.so
 %endif
 %_libexecdir/NetworkManager/nm-openconnect-auth-dialog
-%_datadir/gnome-vpn-properties/openconnect
-%_libdir/NetworkManager/libnm-vpn-plugin-openconnect.so
 %_libdir/NetworkManager/libnm-vpn-plugin-openconnect-editor.so
-%_datadir/appdata/*.xml
+%_datadir/metainfo/network-manager-openconnect.metainfo.xml
 
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 1.2.8-alt1
+- new version 1.2.8
+
 * Wed Aug 21 2019 Alexey Shabalin <shaba@altlinux.org> 1.2.6-alt1
 - new version 1.2.6
 

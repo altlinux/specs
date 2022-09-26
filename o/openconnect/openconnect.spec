@@ -1,31 +1,40 @@
+%define _unpackaged_files_terminate_build 1
+%define _libexecdir %_prefix/libexec
 %def_with libproxy
 %def_with stoken
 # openssl or gnutls
 %def_without openssl
 %def_with gnutls
+%def_with gnutls_tss2
 
 Name: openconnect
-Version: 8.10
+Version: 9.01
 Release: alt1
 Summary: Open client for Cisco AnyConnect VPN
 
 Group: Networking/Remote access
 License: LGPLv2.1+
-Url: http://www.infradead.org/openconnect.html
-
+Url: https://www.infradead.org/openconnect.html
+Vcs: git://git.infradead.org/users/dwmw2/openconnect.git
 Source: %name-%version.tar
+Patch0001: 0001-jsondumpc-include-inttypesh-for-PRId64.patch
 
 Requires: lib%name = %version-%release
+BuildRequires: rpm-build-python3
 BuildRequires: pkgconfig(liblz4)
 BuildRequires: pkgconfig(libxml-2.0)
 BuildRequires: pkgconfig(zlib)
 %{?_with_gnutls:BuildRequires: pkgconfig(gnutls) > 3.2.10 pkgconfig(p11-kit-1) libtrousers-devel pkgconfig(libtasn1)}
+%{?_with_gnutls_tss2:BuildRequires: pkgconfig(tss2-esys) pkgconfig(tss2-mu) pkgconfig(tss2-tctildr) libgcrypt-devel swtpm swtpm-tools}
 %{?_with_openssl:BuildRequires: pkgconfig(openssl) pkgconfig(p11-kit-1) pkgconfig(libp11) >= 0.4.7}
 %{?_with_libproxy:BuildRequires: pkgconfig(libproxy-1.0)}
 %{?_with_stoken:BuildRequires: pkgconfig(stoken)}
 BuildRequires: pkgconfig(libpcsclite)
+BuildRequires: pkgconfig(libpskc) >= 2.2.0
+BuildRequires: pkgconfig(json-parser)
 BuildRequires: vpnc-script
 BuildRequires: libkrb5-devel
+BuildRequires: libgpm-devel
 BuildRequires: python3 groff-extra
 Requires: vpnc-script
 %{?_with_openssl:Requires: openssl >= 1.0.1e}
@@ -52,6 +61,7 @@ developing applications that use %name.
 
 %prep
 %setup -q
+%patch0001 -p1
 
 %build
 %autoreconf
@@ -66,12 +76,16 @@ echo "const char *openconnect_version_str = \"v%version\";" > version.c
 %make_build
 
 %install
-make DESTDIR=%buildroot install
+%makeinstall_std
+rm -f %buildroot%_libexecdir/openconnect/tncc-wrapper.py
+rm -f %buildroot%_libexecdir/openconnect/hipreport-android.sh
 %find_lang %name
 
 %files -f %name.lang
 %doc TODO COPYING.LGPL
 %_sbindir/%name
+%_libexecdir/%name
+%_datadir/bash-completion/completions/%name
 %_man8dir/*
 
 %files -n lib%name
@@ -83,6 +97,12 @@ make DESTDIR=%buildroot install
 %_pkgconfigdir/*
 
 %changelog
+* Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 9.01-alt1
+- new version 9.01
+
+* Fri Mar 18 2022 Alexey Shabalin <shaba@altlinux.org> 8.20-alt1
+- new version 8.20
+
 * Sat May 16 2020 Alexey Shabalin <shaba@altlinux.org> 8.10-alt1
 - new version 8.10
 
