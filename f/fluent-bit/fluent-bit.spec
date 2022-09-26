@@ -2,8 +2,8 @@
 %def_disable check
 
 Name: fluent-bit
-Version: 1.9.5
-Release: alt2
+Version: 1.9.8
+Release: alt1
 Summary: Fast data collector for Linux
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
 Group: Monitoring
@@ -102,6 +102,9 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 1.9.8-alt1
+- new version 1.9.8
+
 * Fri Jul 01 2022 Alexey Shabalin <shaba@altlinux.org> 1.9.5-alt2
 - Build with ElasticSearch support.
 - Disable build shared lib.
