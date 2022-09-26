@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname mkdocs
+%define pypi_name mkdocs
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.3.0
+Name: python3-module-%pypi_name
+Version: 1.3.1
 Release: alt1
 
 Summary: Python tool to create HTML documentation from markdown sources
@@ -18,8 +18,11 @@ Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage
 BuildRequires: fonts-font-awesome
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires:
@@ -34,9 +37,6 @@ BuildRequires: python3(importlib_metadata)
 BuildRequires: python3(packaging)
 BuildRequires: python3(mergedeep)
 BuildRequires: python3(babel)
-
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
 %endif
 
 %description
@@ -48,21 +48,19 @@ configuration file.
 %prep
 %setup
 %autopatch -p1
-# XXX hack in coverage
-sed -i 's@{envbindir}/coverage@coverage@g' tox.ini
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-rm -r %buildroot%python3_sitelibdir/%oname/tests/
+%pyproject_install
+rm -r %buildroot%python3_sitelibdir/mkdocs/tests/
 
 # unbundle font-awesome fonts
 FONT_AWESOME_FONTS='%_datadir/fonts-font-awesome/fonts'
 
 fonts_bundled=
-for f in $(find -P %buildroot%python3_sitelibdir/%oname/themes/*/fonts/ -name 'fontawesome-webfont.*' -type f);
+for f in $(find -P %buildroot%python3_sitelibdir/mkdocs/themes/*/fonts/ -name 'fontawesome-webfont.*' -type f);
 do
     printf "Found fontawesome font: '%%s'\n" "$f"
     font_name="$(basename "$f")"
@@ -79,17 +77,18 @@ done
 [ "$fonts_bundled" != "yes" ] && exit 1
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
 export TOXENV=py%{python_version_nodots python3}-unittests
-tox.py3 --sitepackages --no-deps -vvr -s false
+%tox_check_pyproject
 
 %files
 %_bindir/mkdocs
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/mkdocs/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 23 2022 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
+- 1.3.0 -> 1.3.1.
+
 * Thu May 19 2022 Fr. Br. George <george@altlinux.org> 1.3.0-alt1
 - 1.2.3 -> 1.3.0
 - Hack in external coverage call in tests

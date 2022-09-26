@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname watchdog
+%define pypi_name watchdog
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.1.3
+Name: python3-module-%pypi_name
+Version: 2.1.9
 Release: alt1
 
 Summary: Filesystem events monitoring
@@ -20,17 +20,19 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 BuildRequires: python3(flaky)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_timeout)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
 %endif
 
 %add_python3_req_skip AppKit FSEvents _watchdog_fsevents
 
-Conflicts: python-module-%oname
+Conflicts: python-module-watchdog
 
 %description
 Python API and shell utilities to monitor file system events.
@@ -40,24 +42,26 @@ Python API and shell utilities to monitor file system events.
 %autopatch -p1
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps -vvr -s false
+export NO_SUDO=YES
+export TOX_TESTENV_PASSENV="NO_SUDO"
+%tox_check_pyproject -- -vra
 
 %files
 %doc AUTHORS *.rst
 %_bindir/watchmedo
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/watchdog/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 23 2022 Stanislav Levin <slev@altlinux.org> 2.1.9-alt1
+- 2.1.3 -> 2.1.9.
+
 * Tue Jul 20 2021 Stanislav Levin <slev@altlinux.org> 2.1.3-alt1
 - 0.8.3 -> 2.1.3.
 
