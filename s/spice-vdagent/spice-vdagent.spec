@@ -6,7 +6,7 @@
 
 Name: spice-vdagent
 Version: 0.21.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -68,6 +68,7 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 	--add-only-show-in="KDE" \
 	--remove-key="X-GNOME-Autostart-Phase" \
+	--set-key="Exec" --set-value="/usr/bin/spice-vdagent -x" \
 	%buildroot/%_sysconfdir/xdg/autostart/spice-vdagent-kde.desktop
 
 %post
@@ -90,6 +91,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_sysconfdir/xdg/autostart \
 %_man1dir/*
 
 %changelog
+* Mon Sep 26 2022 Slava Aseev <ptrnine@altlinux.org> 1:0.21.0-alt3
+- fix autostart in KDE Plasma (attempt number 2)
+
 * Fri Sep 23 2022 Sergey V Turchin <zerg@altlinux.org> 1:0.21.0-alt2
 - fix autostart in KDE Plasma
 
