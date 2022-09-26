@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.2.2
+Version: 5.2.3
 Release: alt1
 
 Source:%name-%version.tar
@@ -77,6 +77,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Mon Sep 26 2022 Andrey Cherepanov <cas@altlinux.org> 5.2.3-alt1
+- Put hostname to /etc/hostname for hostnamectl (ALT #42690).
+
 * Tue Mar 15 2022 Andrey Cherepanov <cas@altlinux.org> 5.2.2-alt1
 - Enabled FQDN in computer name in all cases (ALT #41708).
 
