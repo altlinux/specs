@@ -18,7 +18,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -75,7 +75,7 @@ BuildRequires: help2man /proc
 %{?_enable_introspection:BuildRequires(pre): rpm-build-gir
 BuildRequires: gobject-introspection-devel >= %gi_ver libharfbuzz-gir-devel}
 %{?_enable_sysprof:BuildRequires: pkgconfig(sysprof-capture-4)}
-%{?_enable_check:BuildRequires: fonts-otf-abattis-cantarell fonts-otf-adobe-source-sans-pro
+%{?_enable_check:BuildRequires: gcc-c++ fonts-otf-abattis-cantarell fonts-otf-adobe-source-sans-pro
 BuildRequires: fonts-ttf-google-droid-sans fonts-ttf-thai-scalable-waree}
 
 %description
@@ -218,6 +218,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.50.10-alt1
+- 1.50.10
+
 * Wed Aug 10 2022 Yuri N. Sedunov <aris@altlinux.org> 1.50.9-alt1
 - 1.50.9
 

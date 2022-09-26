@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: lib%rname%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: This library provides a C++ interface to pango
@@ -93,6 +93,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Mon Sep 26 2022 Yuri N. Sedunov <aris@altlinux.org> 2.50.1-alt1
+- 2.50.1
+
 * Fri Dec 31 2021 Yuri N. Sedunov <aris@altlinux.org> 2.50.0-alt1
 - 2.50.0
 
