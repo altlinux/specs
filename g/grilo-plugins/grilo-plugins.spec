@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 0.3
 %define api_ver %ver_major
@@ -16,7 +16,7 @@
 
 Name: grilo-plugins
 Version: %ver_major.15
-Release: alt1.1
+Release: alt2
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -158,6 +158,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Tue Sep 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt2
+- updated to 0.3.15-5-g233ed982 (flickr: remove GOA support)
+
 * Thu Sep 01 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt1.1
 - required tracker-miners3 (ALT #43682)
 
