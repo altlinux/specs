@@ -14,8 +14,8 @@
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 0.971
-Release: alt2
+Version: 0.981
+Release: alt1
 
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
@@ -87,9 +87,6 @@ mypyc. Compiled mypy is about 4x faster than without compilation.
 %setup
 %autopatch -p1
 
-# Python2 parser
-rm mypy/fastparse2.py
-
 %build
 %pyproject_build
 
@@ -154,6 +151,9 @@ TESTS="$TESTS mypyc/test"
 %endif
 
 %changelog
+* Tue Sep 27 2022 Stanislav Levin <slev@altlinux.org> 0.981-alt1
+- 0.971 -> 0.981.
+
 * Fri Sep 23 2022 Stanislav Levin <slev@altlinux.org> 0.971-alt2
 - Removed build dependency on nonexistent typeshed.
 
