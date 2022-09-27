@@ -10,7 +10,7 @@
 %define jss_rebranded_version 5.2.0-alt1
 
 Name: jss
-Version: 5.2.0
+Version: 5.2.1
 Release: alt1
 
 Summary: Java Security Services (JSS)
@@ -130,6 +130,9 @@ CTEST_OUTPUT_ON_FAILURE=1 %cmake_build --target test
 %_jnidir/jss-symkey.jar
 
 %changelog
+* Mon Sep 26 2022 Stanislav Levin <slev@altlinux.org> 5.2.1-alt1
+- 5.2.0 -> 5.2.1.
+
 * Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 5.2.0-alt1
 - 5.1.0 -> 5.2.0.
 
