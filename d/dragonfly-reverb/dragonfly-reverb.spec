@@ -5,8 +5,8 @@
 %define _optlevel 3
 
 Name:     dragonfly-reverb
-Version:  3.2.5
-Release:  alt2
+Version:  3.2.7
+Release:  alt1
 
 Summary:  A set of free reverb effects
 License:  GPL-3.0
@@ -16,10 +16,11 @@ URL:      https://michaelwillis.github.io/dragonfly-reverb/
 
 Source:   %name-%version.tar
 
-# https://github.com/DISTRHO/DPF.git
-Source10: DPF-226f219c4d35ca8fa6e82b69d87be823cb785a0d.tar
 
-Patch1:   alt-3.2.5-fix-build-with-lto.patch
+# https://github.com/DISTRHO/DPF.git
+Source1000: DPF-93ce2476d997f524cd2c2e749f7e672905d126b6.tar
+# https://github.com/DISTRHO/pugl.git
+Source1001: pugl-48032d1c3cb59e13deb2c3ec66afcf3ed65d97f4.tar
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(cairo)
@@ -68,12 +69,11 @@ BuildArch: noarch
 
 %prep
 %setup
-tar -xf %SOURCE10 -C 'dpf' --strip-components 1
-
-%autopatch -p1
+tar -xf %SOURCE1000 -C 'dpf' --strip-components 1
+tar -xf %SOURCE1001 -C 'dpf/dgl/src/pugl-upstream' --strip-components 1
 
 # don't build VST targets, we don't ship them
-sed -i '/TARGETS += vst/d'  plugins/*/Makefile
+sed -i '/^TARGETS / s/vst.\|clap//g ' plugins/*/Makefile
 
 %build
 %make_build BASE_OPTS='%optflags' VERBOSE=true SKIP_STRIPPING=true AR=gcc-ar
@@ -105,6 +105,9 @@ find %buildroot%_libdir/lv2 -type f -exec chmod 644 '{}' ';'
 
 
 %changelog
+* Tue Sep 27 2022 Ivan A. Melnikov <iv@altlinux.org> 3.2.7-alt1
+- 3.2.7
+
 * Mon Sep 06 2021 Ivan A. Melnikov <iv@altlinux.org> 3.2.5-alt2
 - Fix build with LTO
 - Mark docs subpackage as noarch (thx repocop@)
