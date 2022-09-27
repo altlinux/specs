@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 42
+%define ver_major 43
 %define api_ver 2
 %define _name GPaste
 %define xdg_name org.gnome.GPaste
@@ -9,7 +9,7 @@
 %def_disable applet
 
 Name: gpaste
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GPaste is a clipboard management system
@@ -32,8 +32,9 @@ Requires: lib%name = %EVR
 %define adwaita_ver 1.1
 %define gi_ver 1.58.0
 %define vala_ver 0.42
-%define mutter_ver 40.0
+%define mutter_ver 43.0
 %define gjs_ver 1.54
+%define gcr_ver 3.41.0
 
 BuildRequires(pre):rpm-macros-meson rpm-build-gir rpm-build-vala rpm-build-systemd
 BuildRequires: meson libappstream-glib-devel desktop-file-utils
@@ -46,6 +47,7 @@ BuildRequires: gnome-control-center-devel
 BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel
 BuildRequires: libgtk4-gir-devel libadwaita-gir-devel
 BuildRequires: vala-tools >= %vala_ver
+BuildRequires: gcr-libs-devel >= %gcr_ver
 
 %description
 This package provides gpaste-daemon is a clipboard management daemon with DBus
@@ -185,6 +187,12 @@ in notification area.
 %_datadir/gnome-shell/search-providers/%xdg_name.search-provider.ini
 
 %changelog
+* Tue Sep 27 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
+* Tue Sep 27 2022 Yuri N. Sedunov <aris@altlinux.org> 42.2-alt1
+- 42.2
+
 * Tue Mar 22 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 
