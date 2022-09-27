@@ -3,7 +3,7 @@
 Name: dnsmasq
 Version: 2.87
 
-Release: alt1
+Release: alt2
 Summary: A lightweight caching nameserver
 License: GPLv2+
 Group: System/Servers
@@ -139,6 +139,10 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Tue Sep 27 2022 Mikhail Efremov <sem@altlinux.org> 2.87-alt2
+- sysconfig: Disable DHCP_LEASE (closes: #39812).
+- Use RPM_OPT_FLAGS when build lease-tools.
+
 * Tue Sep 27 2022 Mikhail Efremov <sem@altlinux.org> 2.87-alt1
 - Use RPM_OPT_FLAGS.
 - Build with -Werror.
