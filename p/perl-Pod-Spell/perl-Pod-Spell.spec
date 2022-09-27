@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Pod-Spell
-Version: 1.20
+Version: 1.23
 Release: alt1
 
 Summary: A formatter for spellchecking Pod
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/dist/Pod-Spell/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/D/DO/DOLMEN/Pod-Spell-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/H/HA/HAARG/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 09 2008
 BuildRequires: perl-Pod-Escapes perl-devel
@@ -57,7 +57,7 @@ and can be supplemented (on a per-document basis) by having
 "=for stopwords" / "=for :stopwords" region(s) in a document.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -65,12 +65,16 @@ and can be supplemented (on a per-document basis) by having
 %perl_vendor_install
 
 %files
+%doc CONTRIBUTING Changes LICENSE README
 %perl_vendor_privlib/*
 %exclude %perl_vendor_archlib
 %_bindir/podspell
 %_man1dir/*
 
 %changelog
+* Tue Sep 27 2022 Igor Vlasenko <viy@altlinux.org> 1.23-alt1
+- automated CPAN update
+
 * Tue May 03 2016 Igor Vlasenko <viy@altlinux.ru> 1.20-alt1
 - automated CPAN update
 
