@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 164
+%define centos_release 168
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -634,6 +634,35 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Sep 27 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.168-alt1.el9
+- Updated to kernel-5.14.0-168.el9 (fixes: CVE-2022-20141, CVE-2022-3077):
+  + ACPI: Improve fwnode serial multi-instantiate driver
+  + assoc_array: Fix BUG_ON during garbage collect
+  + Backport fscache/cachefiles rework for 9.2
+  + BPF and XDP rebase to v5.17
+  + drm/amdgpu: Only disable prefer_shadow on hawaii
+  + drm/hyperv : Removing the restruction of VRAM allocation with PCI bar size
+  + drm/nouveau/kms/nv140-: Disable interlacing
+  + i2c: ismt: prevent memory corruption in ismt_access()
+  + i40e: Fix kernel crash during module removal
+  + ice: Allow operation with reduced device MSI-X
+  + igmp: Add ip_mc_list lock in ip_check_mc_rcu
+  + ixgbe: Add locking to prevent panic when setting sriov_numvfs to zero
+  + Merge tag 'kernel-5.14.0-162.3.1.el9'
+  + nohz/full, sched/rt: Fix missed tick-reenabling bug in dequeue_task_rt()
+  + NUMA related scheduler improvements
+  + nvme-fc: fix the fc_appid_store return value
+  + powerpc/mobility: Extend the NMI watchdog timer during the LPM
+  + powerpc/perf: Optimize clearing the pending PMI and remove WARN_ON for PMI check in power_pmu_disable
+  + rcu: Update RCU code base to v5.19 for 9.2 RT
+  + Revert "net: macsec: update SCI upon MAC address change."
+  + [s390]: [IBM 9.2 FEAT] Static PIE Support - kernel part
+  + [s390]: RHEL9.0 - zfcp: fix missing auto port scan and thus missing target ports
+  + sched/fair: Introduce SIS_UTIL to search idle CPU based on sum of util_avg
+  + scsi: restore setting of scmd->scsi_done() in EH and reset ioctl paths
+  + sysctl: returns -EINVAL when a negative value is passed to proc_doulongvec_minmax
+  + x86/boot: Don't propagate uninitialized boot_params->cc_blob_address
+
 * Thu Sep 15 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.164-alt1.el9
 - Updated to kernel-5.14.0-164.el9:
   + Fix null pointer reference in nvmem_unregister
