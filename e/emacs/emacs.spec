@@ -6,7 +6,7 @@
 
 Name: emacs
 Version: 28.2
-Release: alt1
+Release: alt2
 
 Summary: GNU Emacs text editor
 License: GPLv3+
@@ -45,7 +45,7 @@ BuildRequires: pkgconfig(xpm)
 BuildRequires: pkgconfig(xrandr)
 BuildRequires: pkgconfig(zlib)
 
-BuildRequires: emacs-base rpm-macros-emacs
+BuildRequires: rpm-macros-emacs
 BuildRequires: texinfo
 BuildRequires: sendmail-common
 BuildRequires: libgpm-devel
@@ -94,7 +94,7 @@ Provides: emacsen
 %package common
 Summary: Things needed to run the GNU Emacs text editor
 Group: Editors
-Requires: emacs-base >= 0.0.5-alt2
+%{?_enable_natcomp:Requires: %name-el = %version-%release}
 Provides: %_libexecdir/emacs
 Provides: emacs-cedet = %version-%release
 Provides: emacs-gnus = %version-%release
@@ -247,9 +247,9 @@ This package contain full description of Emacs Lisp language
 sed -ri 's,(\.\./info/[[:alpha:]-]+),\1.info,g' doc/{emacs,misc}/*.texi
 
 %build
-export LIBRARY_PATH=$(dirname $(gcc -print-libgcc-file-name))
 autoreconf -i -I m4
 
+%define AOT %{?_enable_natcomp:NATIVE_FULL_AOT=1}
 %define _configure_script ../configure
 %define _configure_mostly --disable-build-details --sharedstatedir=/var \\\
 	--with-pop --with-wide-int --with-modules %{?_enable_natcomp:--with-native-compilation}
@@ -273,16 +273,16 @@ mkdir build-nox && pushd build-nox
 popd
 %endif
 
-%make_build -C build-athena
+%make_build -C build-athena %AOT
 %if_enabled gtk3
-%make_build -C build-gtk3
+%make_build -C build-gtk3 %AOT
 %endif
 %if_enabled nox
-%make_build -C build-nox
+%make_build -C build-nox %AOT
 %endif
 
 %install
-%makeinstall -C build-athena
+%makeinstall -C build-athena %AOT
 install -pm0755 build-athena/src/emacs %buildroot%_bindir/%name-athena
 install -pm0644 build-athena/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-athena.pdmp
 %if_enabled natcomp
@@ -295,7 +295,7 @@ touch athena.ls
 install -pm0755 build-gtk3/src/emacs %buildroot%_bindir/%name-gtk3
 install -pm0644 build-gtk3/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-gtk3.pdmp
 %if_enabled natcomp
-%make_install libdir=%buildroot%_libdir install-eln -C build-gtk3
+%make_install libdir=%buildroot%_libdir install-eln -C build-gtk3 %AOT
 echo build-gtk3/native-lisp/* |sed 's,build-gtk3/,%_libdir/%name/%version/,' > gtk3.ls
 %else
 touch gtk3.ls
@@ -306,7 +306,7 @@ touch gtk3.ls
 install -pm0755 build-nox/src/emacs %buildroot%_bindir/%name-nox
 install -pm0644 build-nox/src/emacs.pdmp %buildroot%_emacs_archlibdir/%name-nox.pdmp
 %if_enabled natcomp
-%make_install libdir=%buildroot%_libdir install-eln -C build-nox
+%make_install libdir=%buildroot%_libdir install-eln -C build-nox %AOT
 echo build-nox/native-lisp/* |sed 's,build-nox/,%_libdir/%name/%version/,' > nox.ls
 %else
 touch nox.ls
@@ -321,13 +321,6 @@ rm -vf %buildroot%_emacs_archlibdir/emacs.pdmp
 
 install -pm644 -D .gear/emacs.desktop %buildroot%_desktopdir/emacs.desktop
 sed -i 's,%buildroot,,' %buildroot%_desktopdir/*desktop
-
-# Site start configuration:
-# Link to a file provided by emacsen-startscripts pkg:
-ln -srv %buildroot%_sysconfdir/emacs/site-start.el %buildroot%_datadir/emacs/%version/lisp/
-
-# making start scripts
-install -pm0644 -D .gear/emacs21-rus-win-keyboard-alt2.el %buildroot%_emacs_sitestart_dir/rus-win-keyboard.el
 
 #######################
 # Various other stuff #
@@ -361,9 +354,6 @@ echo emacs-X11 > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-at
 %if_enabled gtk3
 echo emacs-X11 > %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-gtk3
 %endif
-
-# check-shadows script
-install -pm0755 .gear/check-shadows %buildroot%_bindir
 
 # file lists
 find %buildroot%_libexecdir/emacs/%version \
@@ -440,9 +430,6 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %dir %_emacs_datadir/%version
 %_emacs_datadir/%version/site-lisp
 
-%_emacs_datadir/%version/lisp/site-start.el
-%_emacs_sitestart_dir/*
-
 %_datadir/metainfo/emacs.*.xml
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
@@ -466,6 +453,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Tue Sep 27 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 28.2-alt2
+- site-start.el relocated to now optional emacs-base
+
 * Mon Sep 12 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 28.2-alt1
 - 28.2 released
 

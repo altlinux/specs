@@ -2,7 +2,7 @@
 # $Id: emacs-base.spec,v 1.10 2006/05/03 08:50:57 eugene Exp $
 
 Name: emacs-base
-Version: 0.0.10
+Version: 0.0.11
 Release: alt1
 
 Group: Editors
@@ -61,12 +61,14 @@ install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/buildreqs/files/ignore.d/%name
 
 mkdir -p %buildroot%_emacslispdir/site-start.d
 mkdir -p %buildroot%_datadir/emacs/etc
+ln -srv %buildroot%_sysconfdir/emacs/site-start.el %buildroot%_emacslispdir/
 
 %files
 %dir %_sysconfdir/emacs
 %dir %_sysconfdir/emacs/site-start.d
 # reserved for future use
 %dir %_emacslispdir/site-start.d
+%_emacslispdir/site-start.el
 %config(noreplace) %_sysconfdir/emacs/site-start.el
 %config(noreplace) %_sysconfdir/emacs/site-start.d/*.el
 %dir %_datadir/emacs
@@ -78,10 +80,11 @@ mkdir -p %buildroot%_datadir/emacs/etc
 %doc doc/inhibit-site-start.txt
 %lang(ru) %doc doc/inhibit-site-start.ru.txt
 
-# TODO:
-# 1. Добавить check-shadows?
-
 %changelog
+* Mon Sep 26 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.11-alt1
+- relocated site-start.el to %%_datadir/emacs/site-lisp/
+- drop superfluous site-start.d support made in previous release
+
 * Sun Jan 09 2022 Igor Vlasenko <viy@altlinux.org> 0.0.10-alt1
 - initial support of /usr/share/emacs/site-lisp/site-start.d
 
