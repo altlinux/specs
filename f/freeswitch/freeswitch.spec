@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
 Version: 1.10.7
-Release: alt1.2
+Release: alt1.3
 Epoch: 1
 ExcludeArch: %arm %ix86
 
@@ -29,7 +29,7 @@ BuildRequires: libilbc1-devel >= 0.0.2-alt3 libjs-devel flite-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
 BuildRequires: libpcap-devel perl-devel
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
-BuildRequires: libopenr2.3-devel libspandsp3-devel libsofia-sip-devel
+BuildRequires: libspandsp3-devel libsofia-sip-devel
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
 BuildRequires: libuuid-devel postgresql-devel libsofia-sip-devel
 BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libavresample-devel libswscale-devel
@@ -544,6 +544,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Mon Sep 26 2022 L.A. Kostis <lakostis@altlinux.ru> 1:1.10.7-alt1.3
+- BR: remove openr2 (since freedtm moved out-of-tree).
+
 * Fri Jul 15 2022 L.A. Kostis <lakostis@altlinux.ru> 1:1.10.7-alt1.2
 - Fix gcc9+ warning (-Werror=stringop-truncation).
 - mod_shout: libshout 2.3+ compatibility fixes.
