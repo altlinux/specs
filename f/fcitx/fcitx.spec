@@ -15,8 +15,8 @@ BuildRequires: /usr/bin/desktop-file-install pkgconfig(cairo-xlib) pkgconfig(fon
 
 Name:			fcitx
 Summary:		An input method framework
-Version:		4.2.9.8
-Release:		alt4_6
+Version:		4.2.9.9
+Release:		alt1
 License:		GPLv2+
 URL:			https://fcitx-im.org/wiki/Fcitx
 Source0:		http://download.fcitx-im.org/fcitx/%{name}-%{version}_dict.tar.xz
@@ -25,7 +25,7 @@ BuildRequires:		gcc-c++
 BuildRequires:		libpango-devel libpango-gir-devel, libdbus-devel, opencc-devel
 BuildRequires:		wget, intltool, chrpath, sysconftool, opencc
 BuildRequires:		ctest cmake, libtool, doxygen icu-utils libicu-devel
-BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel, libicu69
+BuildRequires:		libqt4-declarative libqt4-devel libqt4-help qt4-designer qt4-doc-html qt5-declarative-devel qt5-designer qt5-tools gtk3-demo libgail3-devel libgtk+3 libgtk+3-devel libgtk+3-gir-devel gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel, libicu71
 BuildRequires:		xorg-proto-devel, xorg-xtrans-devel
 BuildRequires:		gobject-introspection-devel, libxkbfile-devel
 BuildRequires:		libenchant-devel, iso-codes-devel icu-utils libicu-devel
@@ -155,7 +155,7 @@ This package contains table engine for Fcitx.
 
 %prep
 %setup -q
-%patch33 -p1
+#patch33 -p1
 # bash4
 sed -i '1s,env bash,env bash4,' data/script/fcitx-diagnose.sh
 
@@ -315,6 +315,11 @@ EOF
 %endif
 
 %changelog
+* Tue Sep 27 2022 Ilya Mashkin <oddity@altlinux.ru> 4.2.9.9-alt1
+- 4.2.9.9
+- Fix FTBFS
+- Drop translate patch (fixed upstream)
+
 * Wed May 25 2022 Igor Vlasenko <viy@altlinux.org> 4.2.9.8-alt4_6
 - ru.po patch from dmitrydmitry761@gmail.com
 
