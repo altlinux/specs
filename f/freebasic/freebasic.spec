@@ -1,6 +1,6 @@
 Name:		freebasic
 Version:	1.09.0
-Release:	alt1
+Release:	alt2
 
 Summary:	FreeBASIC language compiler
 License:	GPL-2.0+ and LGPL-2.0+ with exception and GFDL-1.1-or-later
@@ -28,7 +28,9 @@ BuildRequires:  libXrandr-devel
 BuildRequires:  zlib-devel
 BuildRequires:  unzip
 
-Requires: 	gcc
+Requires: gcc
+Requires: libtinfo-devel
+Requires: libncurses-devel
 
 %description	
 FreeBASIC - is a completely free, open-source, 32-bit BASIC compiler,
@@ -72,6 +74,9 @@ cp -a doc/html/* %buildroot%_docdir/freebasic
 %_man1dir/*
 
 %changelog
+* Tue Sep 27 2022 Andrey Cherepanov <cas@altlinux.org> 1.09.0-alt2
+- Added requirements of libtinfo-devel and libncurses-devel.
+
 * Sun Jan 02 2022 Andrey Cherepanov <cas@altlinux.org> 1.09.0-alt1
 - New version.
 
