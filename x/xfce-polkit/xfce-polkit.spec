@@ -1,18 +1,16 @@
 Name: xfce-polkit
 Version: 0.3
-Release: alt1
+Release: alt2.g820497b
 
 Summary: Simple PolicyKit authentication agent for Xfce
-License: %gpl2plus
+License: GPLv2+
 Group: Graphical desktop/XFce
 Url: https://github.com/ncopa/xfce-polkit
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
-# Upstream: https://github.com/ncopa/xfce-polkit
+Vcs: https://github.com/ncopa/xfce-polkit
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: libxfce4ui-gtk3-devel
 BuildRequires: glib2-devel libpolkit-devel
@@ -45,6 +43,11 @@ Requires: polkit
 %_sysconfdir/xdg/autostart/*.desktop
 
 %changelog
+* Tue Sep 27 2022 Mikhail Efremov <sem@altlinux.org> 0.3-alt2.g820497b
+- Add Vcs tag.
+- Don't use rpm-build-licenses.
+- Upstream git snapshot (closes: #42060).
+
 * Wed Aug 29 2018 Mikhail Efremov <sem@altlinux.org> 0.3-alt1
 - Use _unpackaged_files_terminate_build.
 - 0.2 -> 0.3.
