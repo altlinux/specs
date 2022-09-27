@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Summary: Easily test your HTTP library against a local copy of httpbin
 License: MIT
@@ -66,5 +66,8 @@ fixture.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Sep 26 2022 Danil Shein <dshein@altlinux.org> 1.0.2-alt2
+ - NMU: fix FTBFS due to Flask library version update
+
 * Tue Jul 26 2022 Stanislav Levin <slev@altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus.

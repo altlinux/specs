@@ -1,8 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %define oname httpbin
+
+%def_enable check
 
 Name: python3-module-%oname
 Version: 0.7.0
-Release: alt2
+Release: alt3
 Summary: HTTP Request and Response Service
 License: MIT
 Group: Development/Python3
@@ -13,10 +16,15 @@ BuildArch: noarch
 Source: %oname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-pytest
-BuildPreReq: python3-module-flask
-BuildPreReq: python3-module-six
-BuildPreReq: python3-module-werkzeug
+
+%if_enabled check
+BuildRequires: python3-module-flask
+BuildRequires: python3-module-six
+BuildRequires: python3-module-werkzeug
+BuildRequires: python3-module-raven
+BuildRequires: python3-module-brotlipy
+%endif
+
 
 %py3_provides %oname
 
@@ -37,11 +45,19 @@ All endpoint responses are JSON-encoded.
 %install
 %python3_install
 
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir/
+python3 test_httpbin.py
+
 %files
 %doc AUTHORS *.md LICENSE
 %python3_sitelibdir/*
 
 %changelog
+* Mon Sep 26 2022 Danil Shein <dshein@altlinux.org> 0.7.0-alt3
+- NMU: Fix Werkzeug 2.1.x compatibility
+  + enable tests
+
 * Wed Sep 16 2020 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt2
 - Fixed FTBFS.
 - Fixed packaging.
