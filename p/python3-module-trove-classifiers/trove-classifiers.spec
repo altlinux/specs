@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2022.8.31
+Version: 2022.9.26
 Release: alt1
 
 Summary: Canonical source for classifiers on PyPI
@@ -67,6 +67,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 27 2022 Stanislav Levin <slev@altlinux.org> 2022.9.26-alt1
+- 2022.8.31 -> 2022.9.26.
+
 * Thu Sep 15 2022 Stanislav Levin <slev@altlinux.org> 2022.8.31-alt1
 - 2022.8.7 -> 2022.8.31.
 
