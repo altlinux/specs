@@ -9,7 +9,7 @@ epoch:1
 %define kernel_need_version	5.15
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	5.15
-%define kernel_sublevel .48
+%define kernel_sublevel .70
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -450,6 +450,15 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Sep 27 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.70-alt1
+- Updated to 5.15.70
+- https://github.com/raspberrypi/linux.git rpi-5.15.y commit b5fb803e192afa566351481edf03bb44b56d48e7
+
+* Thu Sep 06 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.65-alt1
+- Updated to 5.15.65
+- https://github.com/raspberrypi/linux.git rpi-5.15.y commit 5ca1fc5dc8d24599e91199602592f52d11ca57d6
+- Baikal-M: Elpitech laptop support: added serio_serdev, enabled ps2mult, iwlwifi
+
 * Thu Jun 23 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.48-alt1
 - Updated to 5.15.48
 - https://github.com/raspberrypi/linux.git rpi-5.15.y commit b0a1e3b995b7d3161a7414dc5fc6d59ae44d910c
