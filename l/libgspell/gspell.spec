@@ -4,7 +4,7 @@
 %def_disable check
 
 %define _name gspell
-%define ver_major 1.10
+%define ver_major 1.12
 %define api_ver 1
 
 Name: lib%_name
@@ -25,6 +25,7 @@ Source: %_name-%version.tar
 %define gtk_ver 3.20.0
 %define enchant_ver 2.2.12
 
+BuildRequires(pre): rpm-build-gir rpm-build-vala
 BuildRequires: autoconf-archive
 BuildRequires: libgtk+3-devel >= %gtk_ver libenchant2-devel >= %enchant_ver libicu-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel vala-tools gtk-doc
@@ -125,6 +126,9 @@ xvfb-run %make -k check VERBOSE=1
 
 
 %changelog
+* Tue Sep 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Tue Apr 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.10.0-alt1
 - 1.10.0
 
