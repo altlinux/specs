@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.29.0
+Version: 2.30.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -256,15 +256,16 @@ make
 %install
 %make_install DESTDIR=%buildroot install
 
-sed -i \
-	-e 's@\.\./features/@%_datadir/%name/features/@g' \
-	Documentation/Features.md
-
 %triggerin -- %name < 0.8.1-alt1
 c="%_sysconfdir/initrd.mk"
 if [ -s "$c" ] && ! grep -qs '^AUTODETECT[[:space:]]*=[[:space:]]*all[[:space:]]*' "$c"; then
 	printf -- 'make-initrd: Migrating to new autodetect scheme ...\n' >&2
 	sed -i -e 's/^\(AUTODETECT[[:space:]]*=.*\)$/# \1\nAUTODETECT = all/' "$c"
+fi
+
+%post
+if [ -d "%_localstatedir/initrd" ]; then
+		rm -rf -- %_localstatedir/initrd
 fi
 
 %files
@@ -345,6 +346,22 @@ fi
 %_datadir/%name/features/bootloader
 
 %changelog
+* Tue Sep 27 2022 Alexey Gladkov <legion@altlinux.ru> 2.30.0-alt1
+- New version (2.30.0).
+- Feature kickstart:
+  + Close luks partition if we need to change partition table.
+  + Add information about what command is being executed.
+- Feature rootfs:
+  + Create fstab more carefully.
+- Feature ucode:
+  + Change path in the archive.
+- Feature multipath:
+  + Add more rules and utils for FC multipath.
+- Drop buildinfo feature.
+- Misc:
+  + Detect separate /usr partition (merged-usr).
+  + Generate wiki from Documentation.
+
 * Fri Sep 09 2022 Alexey Gladkov <legion@altlinux.ru> 2.29.0-alt1
 - New version (2.29.0).
 - Runtime:
