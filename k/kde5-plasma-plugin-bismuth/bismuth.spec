@@ -1,5 +1,5 @@
 Name: kde5-plasma-plugin-bismuth
-Version: 3.1.2
+Version: 3.1.4
 Release: alt1
 
 Summary: KDE Plasma extension that lets you tile your windows automatically
@@ -65,5 +65,10 @@ them via keyboard, just like in classical tiling window managers
 %_datadir/qlogging-categories5/bismuth.categories
 
 %changelog
+* Mon Sep 26 2022 Leontiy Volodin <lvol@altlinux.org> 3.1.4-alt1
+- New version (3.1.4).
+- Upstream:
+  + Use floating geometry to be compatible with KWin 5.26.
+
 * Tue Jul 12 2022 Leontiy Volodin <lvol@altlinux.org> 3.1.2-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
