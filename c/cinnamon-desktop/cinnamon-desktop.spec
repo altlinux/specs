@@ -7,7 +7,7 @@
 
 Name: cinnamon-desktop
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Library with common API for various Cinnamon modules
 License: GPLv2+ and LGPLv2+ and MIT
@@ -154,6 +154,10 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Tue Sep 27 2022 Anton Midyukov <antohami@altlinux.org> 5.4.2-alt2
+- change wallpaper @datadir@/design-current/backgrounds/default.png
+  (Closes: 42286)
+
 * Thu Jul 21 2022 Vladimir Didenko <cow@altlinux.org> 5.4.2-alt1
 - 5.4.2
 
