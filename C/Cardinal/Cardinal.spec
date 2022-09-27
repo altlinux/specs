@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     Cardinal
-Version:  22.07
-Release:  alt2
+Version:  22.09
+Release:  alt1
 
 Summary:  Virtual modular synthesizer plugin
 License:  GPL-3.0-or-later
@@ -38,9 +38,9 @@ Source109: pffft-74d7261be17cf659d5930d4830609406bd7553e3.tar
 # https://github.com/VCVRack/rtmidi.git
 Source110: rtmidi-2c5b0778e38b5030afc80c8e9d7adc9b58ef650e.tar
 # https://github.com/DISTRHO/DPF.git
-Source111: DPF-0c0a4e401c2a552145720904b916da21846c8fc1.tar
+Source111: DPF-dcee933ef595dc62fa9ea79d9d3cadaf85d0d543.tar
 # https://github.com/DISTRHO/pugl.git
-Source112: pugl-856c759e1e360b0a766f61bb2b2cfffe15790368.tar
+Source112: pugl-48032d1c3cb59e13deb2c3ec66afcf3ed65d97f4.tar
 # https://github.com/DLTcollab/sse2neon.git
 Source113: sse2neon-1dfa40113a03a682dc79ba42235c5b0d1c50aaf2.tar
 # https://github.com/VCVRack/Befaco.git
@@ -60,7 +60,7 @@ Source120: stm-audio-bootloader-1ec7d6374e2d305cb710170eb80de9b66e795792.tar
 # https://github.com/pichenettes/avr-audio-bootloader.git
 Source121: avr-audio-bootloader-0de2be5928afdf7fb3e5ada60544ed6c15ab808f.tar
 # https://github.com/AnimatedCircuits/RackModules.git
-Source122: RackModules-76c2912fd6ebdd7c3e33fca88096bea9c67209a1.tar
+Source122: RackModules-bf78cd8ed22970fe9dc5ebff8e3907898904c747.tar
 # https://github.com/mhampton/ZetaCarinaeModules.git
 Source123: ZetaCarinaeModules-7fa3a59e71cf5f541a335e89bc45102923a3fd62.tar
 # https://github.com/dbgrande/GrandeModular.git
@@ -68,11 +68,11 @@ Source124: GrandeModular-3d6524320ce33569e3553a53571c45425ba5d078.tar
 # https://github.com/bogaudio/BogaudioModules.git
 Source125: BogaudioModules-4af2e2d38004b98645deb8a25c7ec74c7c8f1a03.tar
 # https://github.com/CardinalModules/Bidoo.git
-Source126: Bidoo-7579f13bffc11548c857393408f3c2e030ee2483.tar
+Source126: Bidoo-8610d4c86740d9d67ebfa4ded70279df7aeb95be.tar
 # https://github.com/VCVRack/ESeries.git
 Source127: ESeries-cb665989f48db6c4fe96924b9e42c804ee15d5cf.tar
 # https://github.com/jeremywen/JW-Modules.git
-Source128: JW-Modules-f7399c473735c0a5bec95bb40953e781f9a47ca4.tar
+Source128: JW-Modules-356588ddb142dab99837af58681bc0d8afb88e4c.tar
 # https://github.com/CardinalModules/rackwindows.git
 Source129: rackwindows-60dfe5dff94b82fc42a43d971e41e64e296b0220.tar
 # https://github.com/MarcBoule/ImpromptuModular.git
@@ -82,17 +82,17 @@ Source131: AmalgamatedHarmonics-97700c06af7df4d8fcf173ae3670b7907a682627.tar
 # https://github.com/CardinalModules/cf.git
 Source132: cf-b6c4a66ffc153d78c7efa00fa886657eb182b15d.tar
 # https://github.com/MarcBoule/MindMeldModular.git
-Source133: MindMeldModular-cd71f9a4c4a23bdec5666cc78c5bc8b3f936d175.tar
+Source133: MindMeldModular-8e413a445c1c307f356ee96633b7f6f2b4c4749e.tar
 # https://github.com/ValleyAudio/ValleyRackFree.git
-Source134: ValleyRackFree-4507aa7e1b0efc68e33e0ce1530ebd8ac7b7763c.tar
+Source134: ValleyRackFree-b2ed19ad46e91c650d0ba3e18eae9a1bbecb1f3c.tar
 # https://github.com/SVModular/DrumKit.git
-Source135: DrumKit-7681d30ac0b9246605d3d8d71dc7e25030748ec6.tar
+Source135: DrumKit-d44b52e9bf8915c06382bfd1a41a460bafbfd671.tar
 # https://github.com/JerrySievert/SynthDevKit.git
 Source136: SynthDevKit-0f322e58f00f1a04276ecc3eadb610b418f040d5.tar
 # https://github.com/falkTX/Carla.git
-Source137: Carla-f8d7d9afcea4c01aaf502b5af884dde31dfb28a7.tar
+Source137: Carla-8c58d0994cd512263e34db1c8f45c1f1a9689a58.tar
 # https://github.com/falkTX/Carla-Plugins
-Source138: Carla-Plugins-47380b7e7e4bd32685ecc0a36e719c330bc9c1b3.tar
+Source138: Carla-Plugins-e32f21fe9947740592f29401ff2b3f1f951c1d56.tar
 # https://github.com/CardinalModules/mscHack.git
 Source139: mscHack-80883512cc397c173e40e3bc014640b838ab343a.tar
 # https://github.com/zezic/ZZC.git
@@ -102,13 +102,13 @@ Source141: repelzen-428f76c3509e4d71489daf075c48ae4b995a0786.tar
 # https://github.com/CardinalModules/AriaModules.git
 Source142: AriaModules-269ab0f091b18f08ab253bd8af4866e78d770bc0.tar
 # https://github.com/baconpaul/BaconPlugs.git
-Source143: BaconPlugs-9d35b745af8569d6a9d6bc5c3f2c3e64c852d8e0.tar
+Source143: BaconPlugs-adf84fc00a953f8e8a1b378531a08ee68b9a68d7.tar
 # https://github.com/craigsapp/midifile.git
 Source144: midifile-99e87b684f88ebff6417ef25f269f1a95b780ad2.tar
 # https://github.com/RCameron93/FehlerFabrik.git
 Source145: FehlerFabrik-9b5897828dc1b757f42cb707b5979488acb67401.tar
 # https://gitlab.com/sonusdept/sonusmodular.git
-Source146: sonusmodular-b63a685c6c68be188f5a3d5d9f6582eb94d62e53.tar
+Source146: sonusmodular-407829b0341dc04aa8530bd14a739c9f222930ed.tar
 # https://github.com/JustMog/Mog-VCV.git
 Source147: Mog-VCV-00a7e3b01f56da5cfc86720ae6951ecdf8953ee5.tar
 # https://github.com/jatinchowdhury18/ChowDSP-VCV.git
@@ -116,7 +116,7 @@ Source148: ChowDSP-VCV-871f712f3eb95ada1c34bf3d8170690eb4aec8d0.tar
 # https://github.com/Chowdhury-DSP/chowdsp_utils
 Source149: chowdsp_utils-505052501fb64b38519101478628ec5ea32d6a43.tar
 # https://github.com/gluethegiant/gtg-rack.git
-Source150: gtg-rack-2c535bc38d61fd4d776aad7307c1dfbbed062b66.tar
+Source150: gtg-rack-5f05d62ddc2773098daf1044eb6698581acd4eb6.tar
 # https://github.com/mhetrick/hetrickcv.git
 Source151: hetrickcv-2fc83df75154c32b83addd3ed68b35eb6156ca0d.tar
 # https://github.com/LancePutnam/Gamma.git
@@ -126,7 +126,7 @@ Source153: LyraeModules-b21cbe8ee25ddf2a927e0b4ec9f2c97c115857af.tar
 # https://github.com/mgunyho/Little-Utils.git
 Source154: Little-Utils-b7ce2244835fa376201b21b2274937152dcd1121.tar
 # https://github.com/SteveRussell33/Prism.git
-Source155: Prism-4d95ace8b073e9e8e30b8671ecdb04101d943905.tar
+Source155: Prism-8d2796da76e5d7f79bbf461c95a7858035bb0736.tar
 # https://github.com/EaterOfSheep/Extratone.git
 Source156: Extratone-9fb70500b17fe2495aba9f5f77ddf496d5c09f13.tar
 # https://github.com/SteveRussell33/LifeFormModular.git
@@ -134,7 +134,7 @@ Source157: LifeFormModular-c7b8d096f618c421d7d45784b894c0ac2f3395b0.tar
 # https://github.com/netboy3/21kHz-rack-plugins.git
 Source158: 21kHz-rack-plugins-0bee82247151e2fe2885f1e15fbbd74ddb4f48d0.tar
 # https://github.com/DISTRHO/PawPaw.git
-Source159: PawPaw-ae5e26516596024a0268b5f8f1685050a248875a.tar
+Source159: PawPaw-75d86db5d171228247e1297d13090cb11220fe92.tar
 # https://github.com/LomasModules/LomasModules.git
 Source160: LomasModules-b714cdb0c662503bc6cf60c06765b426a4caa17f.tar
 # https://github.com/expertsleepersltd/vcvrack-encoders.git
@@ -156,7 +156,7 @@ Source168: GoodSheperd-636351059f2eec629f3b8a537451dd3d0eb01c30.tar
 # https://gitlab.com/hampton-harmonics/hampton-harmonics-modules.git
 Source169: hampton-harmonics-modules-e5cf81f1c356fdc98fd08584146cda8af7e16b1f.tar
 # https://github.com/martin-lueders/ML_modules.git
-Source170: ML_modules-788ceb73cfabddaff7245b0df072b0e22a19b360.tar
+Source170: ML_modules-311042275900650c0b0cc57fcd2b57333820adde.tar
 # https://github.com/RareBreeds/Orbits.git
 Source171: Orbits-ff0c007feb9ed1de57ea246f86e8b2b68572f5e6.tar
 # https://github.com/aptrn/stocaudio-modules.git
@@ -166,21 +166,21 @@ Source173: catro-modulo-bf6f969c5f7fff6a419a54197fb4318671281ad5.tar
 # https://github.com/grough/lilac-loop-vcv.git
 Source174: lilac-loop-vcv-cf9bb5cfa5fd41ecfc9976bb106c2f4a7667c9d7.tar
 # https://github.com/janne808/kocmoc-rack-modules.git
-Source175: kocmoc-rack-modules-f2a8c19f8aa81769e13d085d69a44de5afaacfaa.tar
+Source175: kocmoc-rack-modules-eb46ce3a8b5795d61c2e3eb60f6ca58799a8cee2.tar
 # https://github.com/patheros/PathSetModules.git
-Source176: PathSetModules-de53c78658c42638b7c356b78d1559634644f733.tar
+Source176: PathSetModules-30e35f9414329ed6545ef328fd5951d4cf583362.tar
 # https://github.com/algoritmarte/AlgoritmarteVCVPlugin.git
 Source177: AlgoritmarteVCVPlugin-9d41fe882ab5029100b55c98ba7f10172d452795.tar
 # https://github.com/aaronstatic/AaronStatic_modules.git
 Source178: AaronStatic_modules-4ace0a1789c577ee4eb12dc03da5271f80598d62.tar
 # https://github.com/netboy3/MSM-vcvrack-plugin.git
-Source179: MSM-vcvrack-plugin-abe3c24d40b11d31f9f38b2125eff9280c77ad1b.tar
+Source179: MSM-vcvrack-plugin-3315c11e8506c28cece304fe4b772383a2820f86.tar
 # https://github.com/mhetrick/nonlinearcircuits.git
 Source180: nonlinearcircuits-57eb090f233c21b2edee541ea17d800f22045d91.tar
 # https://github.com/clone45/voxglitch.git
-Source181: voxglitch-e856cfb4dbc255165d22294e80e13957241d2c80.tar
+Source181: voxglitch-55186974eeb6c068f2687d7bb4f5c5e1884bf7da.tar
 # https://github.com/CardinalModules/ArableInstruments.git
-Source182: ArableInstruments-890448f087e3ab47eac391f9bcfe03f7bbd2123e.tar
+Source182: ArableInstruments-a2de62d0c3b9f764ce6b42441366788d1e52bfcc.tar
 # https://github.com/CardinalModules/eurorack.git
 Source183: eurorack-87bf3b1da88147e3fcc8c57e3072eec67ccd380a.tar
 # https://github.com/pichenettes/avril.git
@@ -204,21 +204,32 @@ Source192: avr-audio-bootloader-52754f878b4883adf565bc3ddf691c5e1c4a9f6d.tar
 # https://github.com/mqtthiqs/stmlib.git
 Source193: stmlib-8ab2aaee77cbacb47b646d46d22ee5d358effe2d.tar
 # https://github.com/CardinalModules/Fundamental.git
-Source194: Fundamental-9ac0cdb93938c3f01aba58ec01fdd01257abf353.tar
+Source194: Fundamental-63d54b6575657c8bd8d221178253c750baf0ed3b.tar
 # https://gitlab.com/unlessgames/unless_modules.git
-Source195: unless_modules-3f895c7663e3e54c4e30c406c56d420ea407133e.tar
+Source195: unless_modules-7c15142c4e7adb174f92d7ad54c819970ac4bda4.tar
 # https://github.com/VegaDeftwing/PinkTromboneVCV.git
-Source196: PinkTromboneVCV-87ecd0ff5212a65b064444362e76c9bf94c01826.tar
+Source196: PinkTromboneVCV-1e96d7b898eca6101f438dfd8224d713985486e2.tar
 # https://github.com/knchaffin/Meander.git
 Source197: Meander-c095824708947630d9db6a6b7afcd51bdaa0a009.tar
 # https://github.com/korfuri/WhatTheRack.git
 Source198: WhatTheRack-e373378491d2cf3b8257137d154aef1d389c5204.tar
 # https://github.com/AScustomWorks/AS.git
-Source199: AS-2284e4a3befb097b42ae30032147fd61226f64ff.tar
+Source199: AS-b5fdb76c79688207e56bd5b07b01e9c63a102797.tar
 # https://github.com/gosub/forsitan-modulare.git
 Source200: forsitan-modulare-056cc2ec9186a4175d9214eee91e4ff5cc2e5fb1.tar
 # https://github.com/Ahineya/vcv-myth-plugin.git
 Source201: vcv-myth-plugin-e511dd95eca830ee74fef23bddc195696603125f.tar
+# https://github.com/alefnull/alefsbits.git
+Source202: alefsbits-af534ff487db6689c3be527f5acb34ea90efc195.tar
+# https://github.com/hannakoppelaar/h4n4-modules.git
+Source203: h4n4-modules-bb1b15870d9dad4dd8a562957f45c2383506795d.tar
+# https://github.com/dBiz/dBiz.git
+Source204: dBiz-88f1bd64cff6e96a1a48566a1692de86b9a7de2a.tar
+# https://github.com/simd-everywhere/simde.git
+Source205: simde-12069d720f43830ae9791e8b0f4c4fa3c88012a0.tar
+# https://github.com/nemequ/munit.git
+Source206: munit-da8f73412998e4f1adf1100dc187533a51af77fd.tar
+
 # }}}
 
 Patch1:   Cardinal-22.07-alt-lv2-in-lib64.patch
@@ -244,7 +255,7 @@ BuildRequires: pkgconfig(xcursor)
 BuildRequires: pkgconfig(xext)
 BuildRequires: pkgconfig(xrandr)
 
-Requires: %name-common
+Requires: %name-common = %EVR
 
 %description
 Cardinal is a free and open-source virtual modular synthesizer
@@ -264,7 +275,7 @@ This package provides Cardinal as standalone jack client.
 %package -n lv2-Cardinal-plugins
 Group:    Sound
 Summary:  Virtual modular synthesizer -- LV2 plugin
-Requires: %name-common
+Requires: %name-common = %EVR
 
 %description -n lv2-Cardinal-plugins
 Cardinal is a free and open-source virtual modular synthesizer
@@ -407,10 +418,15 @@ tar -xf %SOURCE198 -C 'plugins/WhatTheRack' --strip-components 1
 tar -xf %SOURCE199 -C 'plugins/AS' --strip-components 1
 tar -xf %SOURCE200 -C 'plugins/forsitan-modulare' --strip-components 1
 tar -xf %SOURCE201 -C 'plugins/myth-modules' --strip-components 1
+tar -xf %SOURCE202 -C 'plugins/alefsbits' --strip-components 1
+tar -xf %SOURCE203 -C 'plugins/h4n4-modules' --strip-components 1
+tar -xf %SOURCE204 -C 'plugins/dBiz' --strip-components 1
+tar -xf %SOURCE205 -C 'include/simde' --strip-components 1
+tar -xf %SOURCE206 -C 'include/simde/test/munit' --strip-components 1
 # }}}
 
 # don't build VST plugin variants
-sed -i '/^all:/ s/vst[23]//g' src/Makefile.cardinal.mk
+sed -i '/^TARGETS/ s/vst[23]\|clap//g' src/Makefile.cardinal.mk
 
 %patch1 -p0
 
@@ -460,6 +476,9 @@ install -m 644 docs/*.md docs/*.png %buildroot%_datadir/doc/cardinal/docs/
 %doc %_datadir/doc/cardinal
 
 %changelog
+* Mon Sep 19 2022 Ivan A. Melnikov <iv@altlinux.org> 22.09-alt1
+- 22.09
+
 * Wed Aug 10 2022 Ivan A. Melnikov <iv@altlinux.org> 22.07-alt2
 - Fix build with LTO on certain systems
 
