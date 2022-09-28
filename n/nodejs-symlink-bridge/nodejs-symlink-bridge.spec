@@ -1,5 +1,5 @@
 Name: nodejs-symlink-bridge
-Version: 0.0.2
+Version: 0.0.3
 Summary: force node packages to provide node_modules symlinks
 License: ALT-MIT
 Packager: Igor Vlasenko <viy@altlinux.org>
@@ -7,7 +7,8 @@ Group: Development/Other
 Release: alt1
 BuildArch: noarch
 
-BuildRequires: node-yargs node-nodeunit
+BuildRequires: node-yargs
+#BuildRequires: node-nodeunit
 
 %description
 Temporary package to keep symlink provides alive.
@@ -25,6 +26,9 @@ ln -s \
 %_datadir/%name
 
 %changelog
+* Wed Sep 28 2022 Igor Vlasenko <viy@altlinux.org> 0.0.3-alt1
+- removed BR: nodeunit
+
 * Sat Aug 27 2022 Igor Vlasenko <viy@altlinux.org> 0.0.2-alt1
 - removed nodeunit
 
