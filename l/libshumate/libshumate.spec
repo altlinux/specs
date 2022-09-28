@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _name shumate
 %define ver_major 1.0
 %define beta %nil
@@ -13,7 +13,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Library with GTK4 widget to display maps
@@ -146,6 +146,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Wed Sep 28 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- updated to 1.0.1-5-ge819592
+
 * Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
