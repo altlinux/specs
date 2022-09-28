@@ -1,6 +1,6 @@
 Name: firmware-linux
-Version: 20220912
-Release: alt2
+Version: 20220927
+Release: alt1
 
 Summary: Firmware files used by the Linux kernel
 License: GPL+ and GPLv2+ and MIT and Redistributable, no modification permitted
@@ -76,6 +76,22 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Sep 28 2022 Anton Midyukov <antohami@altlinux.org> 20220927-alt1
+- upstream changes (GIT 0958301b):
+  + mediatek: Add new mt8195 SOF firmware (thx Tinghan Shen)
+  + mediatek: Update mt8186 SOF firmware to v0.2.1 (thx Tinghan Shen)
+  + update firmware for mediatek bluetooth chip (MT7922) (thx Sean Wang)
+  + rtl_bt: Update RTL8852A BT USB firmware to 0xD9B8_8207 (thx Hilda Wu)
+  + update firmware for mediatek bluetooth chip (MT7921) (thx Sean Wang)
+  + update firmware for MT7922 WiFi device (thx Deren Wu)
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+  + cxgb4: Update firmware to revision 1.27.0.0 (thx Rahul Lakkireddy)
+  + i915: Add versionless HuC files for current platforms (thx John Harrison)
+  + i915: Add GuC v70.5.1 for DG1, DG2, TGL and ADL-P (thx John Harrison)
+
+* Wed Sep 28 2022 Anton Midyukov <antohami@altlinux.org> 20220912-alt3
+- .gear/update.sh: git diff WHENCE only
+
 * Fri Sep 23 2022 Anton Midyukov <antohami@altlinux.org> 20220912-alt2
 - .gear/update.sh: check symlink -> dir, dir -> symlink, when updating
 - cronbuild-options: add antohami@ to cronbuild_cc
