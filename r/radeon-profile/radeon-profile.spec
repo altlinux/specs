@@ -1,6 +1,6 @@
 Name: radeon-profile
 Version: 20200824
-Release: alt4
+Release: alt5
 
 Summary: Application for monitoring equipment of ATi Radeon cards
 Summary(ru_RU.UTF-8): Приложение для мониторинга оборудования карт ATi Radeon
@@ -61,7 +61,10 @@ Define binaries to run with set of environment variablees
 %build
 lrelease-qt5 %name.pro
 
-%qmake_qt5 %name.pro
+%qmake_qt5 \
+    CONFIG+=debug \
+    %name.pro
+
 %make_build
 
 %install
@@ -79,6 +82,12 @@ popd
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Sep 28 2022 Evgeny Chuck <koi@altlinux.org> 20200824-alt5
+- fixed bounds checks in parseOcTable()
+- add driver level support for multiple temperature sensors
+- fix segfault when parsing pp_od_clk_voltage for navi2x based cards
+- create a debug information package
+
 * Thu Sep 01 2022 Evgeny Chuck <koi@altlinux.org> 20200824-alt4
 - Fixed category in desktop file as per policy
 - Increased the size of the dialog_deinetopbaritem window (Closes: 43149)
