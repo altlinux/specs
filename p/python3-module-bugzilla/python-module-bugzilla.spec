@@ -1,50 +1,70 @@
-%define oname bugzilla
+%define _unpackaged_files_terminate_build 1
+%define pypi_name python-bugzilla
+%define mod_name bugzilla
 
-Name: python3-module-%oname
-Version: 2.3.0
+%def_with check
+
+Name: python3-module-%mod_name
+Version: 3.2.0
 Release: alt1
 
-Summary: A python library.. for bugzilla!
-License: GPLv2.0
+Summary: Library and command line tool for interacting with Bugzilla
+License: GPL-2.0
 Group: Development/Python3
-Url: https://github.com/python-bugzilla/python-bugzilla
+Url: https://pypi.org/project/python-bugzilla/
+
 BuildArch: noarch
 
-# Source-url: https://pypi.io/packages/source/p/python-bugzilla/python-bugzilla-%version.tar.gz
+# Source-url: https://github.com/python-bugzilla/python-bugzilla
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-requests
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%if_with check
+# deps
+BuildRequires: python3(requests)
+
+BuildRequires: python3(pytest)
+%endif
+
+%py3_provides %pypi_name
 
 %description
-This is a python module that provides a nice, python-ish interface to Bugzilla
-over XMLRPC.
-
-It was originally written specifically for Red Hat's Bugzilla instance, but
-now supports the Web Services provided by upstream Bugzilla 3.0 and 3.2 also.
-
-It also includes a 'bugzilla' commandline client which can be used for quick,
-ad-hoc bugzilla jiggery-pokery.
+This package provides two bits:
+- bugzilla python module for talking to a Bugzilla instance over XMLRPC or REST
+- /usr/bin/bugzilla command line tool for performing actions from the command
+line: create or edit bugs, various queries, etc.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
-%doc COPYING *.md examples/*
-%_bindir/*
+%doc NEWS.md README.md examples
+%_bindir/bugzilla
 %_man1dir/bugzilla.*
 %python3_sitelibdir/bugzilla/
-%python3_sitelibdir/python_bugzilla*.egg-info
-
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Sep 27 2022 Stanislav Levin <slev@altlinux.org> 3.2.0-alt1
+- 2.3.0 -> 3.2.0.
+- Modernized packaging.
+- Enabled testing.
+
 * Thu Dec 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.3.0-alt1
 - python2 disabled
 
