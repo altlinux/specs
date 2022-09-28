@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.30.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -9,7 +9,7 @@ Url: https://github.com/osboot/make-initrd
 
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
-%def_without iscsi
+%def_with iscsi
 
 BuildRequires: autoconf
 BuildRequires: udev
@@ -346,6 +346,9 @@ fi
 %_datadir/%name/features/bootloader
 
 %changelog
+* Wed Sep 28 2022 Alexey Gladkov <legion@altlinux.ru> 2.30.0-alt2
+- Enable iscsi subpackage. 
+
 * Tue Sep 27 2022 Alexey Gladkov <legion@altlinux.ru> 2.30.0-alt1
 - New version (2.30.0).
 - Feature kickstart:
