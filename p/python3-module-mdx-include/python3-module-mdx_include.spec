@@ -1,20 +1,22 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name mdx-include
 
-Name: python3-module-mdx_include
-Version: 1.4.1
-Release: alt1.gitd96b9b3
+Name: python3-module-%pypi_name
+Version: 1.4.2
+Release: alt1
 
 Summary: Python Markdown extension to include local or remote files
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://github.com/neurobin/mdx_include
-BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+
+BuildArch: noarch
 
 %description
 Include extension for Python Markdown. It lets you include local or
@@ -44,16 +46,20 @@ one, not both.
 %build
 %pyproject_build
 
-cp LICENSE README.md %_builddir/
-
 %install
 %pyproject_install
 
 %files
 %doc LICENSE README.md
-%python3_sitelibdir/*
+%python3_sitelibdir/mdx_include
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Sep 28 2022 Anton Zhukharev <ancieg@altlinux.org> 1.4.2-alt1
+- 1.4.1 -> 1.4.2
+- clean up spec
+- rename to python3-module-mdx-include
+
 * Mon Jul 25 2022 Anton Zhukharev <ancieg@altlinux.org> 1.4.1-alt1.gitd96b9b3
 - initial build for Sisyphus
 
