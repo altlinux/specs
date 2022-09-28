@@ -1,4 +1,4 @@
-%define git f528107
+%define git %nil
 
 %def_enable systemd
 %def_enable man
@@ -7,17 +7,17 @@
 
 
 Name: gnome-firmware
-Version: 3.36.0
-Release: alt0.1.g%{git}
+Version: 43.0
+Release: alt1
 Summary: Install firmware on devices
 Group: System/Configuration/Hardware
 License: GPLv2
-Url: https://gitlab.gnome.org/hughsie/gnome-firmware-updater
+Url: https://gitlab.gnome.org/World/gnome-firmware
 Source0: %name-%version.tar.gz
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: libgtk+3-devel libgio-devel fwupd-devel libxmlb-devel
+BuildRequires: libgtk4-devel libgio-devel fwupd-devel libxmlb-devel libadwaita-devel
 %{?_enable_systemd:BuildRequires: libsystemd-devel}
 %{?_enable_man:BuildRequires: help2man}
 %{?_enable_consolekit:BuildRequires: libConsoleKit-devel}
@@ -59,5 +59,9 @@ export LIB=%_lib
 %_man1dir/*
 
 %changelog
+* Wed Sep 28 2022 L.A. Kostis <lakostis@altlinux.ru> 43.0-alt1
+- 43.0.
+- BR: switch to gtk4.
+
 * Fri May 28 2021 L.A. Kostis <lakostis@altlinux.ru> 3.36.0-alt0.1.gf528107
 - Initial build for ALTLinux.
