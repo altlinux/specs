@@ -1,6 +1,7 @@
+%define git 22210ca
 %define name speedtest-cli
-%define version 2.1.3
-%define release alt2
+%define version 2.1.4
+%define release alt0.1.g%{git}
 
 Name: %name
 Version: %version
@@ -50,6 +51,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Sep 28 2022 L.A. Kostis <lakostis@altlinux.ru> 2.1.4-alt0.1.g22210ca
+- GIT 22210ca (w/ python 3.10 support).
+
 * Thu Jun 03 2021 L.A. Kostis <lakostis@altlinux.ru> 2.1.3-alt2
 - spec:
    + update BR (add rpm-build-python3);
