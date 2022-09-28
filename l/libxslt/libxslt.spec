@@ -1,6 +1,6 @@
 Name: libxslt
-Version: 1.1.35
-Release: alt2
+Version: 1.1.37
+Release: alt1
 
 Summary: Library providing XSLT support
 License: MIT
@@ -113,10 +113,10 @@ export ac_cv_path_XMLLINT=/usr/bin/xmllint
 export ac_cv_path_XSLTPROC=/usr/bin/xsltproc
 # disable dependency on binutils-devel
 export ac_cv_header_ansidecl_h=no
+%define pkgdocdir %_docdir/%name-%version
 %autoreconf
 %configure \
-	--with-html-dir=%_docdir \
-	--with-html-subdir=%name-%version \
+	--docdir=%pkgdocdir \
 	%{subst_with python} \
 	%{subst_with crypto} \
 	%{subst_enable static}
@@ -131,8 +131,7 @@ cat > %buildroot%_libdir/libexslt.so << '__EOF__'
 /* GNU ld script */
 GROUP(libexslt.so.0 AS_NEEDED(-lxslt))
 __EOF__
-%define pkgdocdir %_docdir/%name-%version
-install -pm644 AUTHORS COPYING FEATURES NEWS README %buildroot%pkgdocdir/
+install -pm644 AUTHORS Copyright FEATURES NEWS README %buildroot%pkgdocdir/
 
 %check
 make check
@@ -141,7 +140,7 @@ make check
 %_libdir/*.so.*
 %dir %pkgdocdir
 %pkgdocdir/AUTHORS
-%pkgdocdir/COPYING
+%pkgdocdir/Copyright
 %pkgdocdir/FEATURES
 %pkgdocdir/NEWS
 %pkgdocdir/README
@@ -163,10 +162,10 @@ make check
 %_man3dir/*
 %dir %pkgdocdir
 %pkgdocdir/*.html
-%pkgdocdir/*.gif
+#pkgdocdir/*.gif
 %pkgdocdir/html
 %pkgdocdir/tutorial*
-%pkgdocdir/EXSLT
+#pkgdocdir/EXSLT
 
 %if_enabled static
 %files devel-static
@@ -185,6 +184,9 @@ make check
 %endif # enabled python
 
 %changelog
+* Tue Sep 27 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.37-alt1
+- Updated to v1.1.37.
+
 * Sat Mar 12 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.1.35-alt2
 - devel: Packed cmake files.
 
