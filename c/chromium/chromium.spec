@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        105.0.5195.102
+Version:        106.0.5249.61
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -75,9 +75,8 @@ Patch011: 0011-FEDORA-bootstrap-with-python3.patch
 Patch012: 0012-sql-make-VirtualCursor-standard-layout-type.patch
 Patch013: 0013-GENTOO-Fix-instantiating-fold-expression-error.patch
 Patch014: 0014-ALT-Do-not-mix-internal-and-system-wayland.patch
-Patch015: 0015-IWYU-add-memory-for-std-unique_ptr-in-disk_cache-Bit.patch
-Patch016: 0016-IWYU-add-vector-for-std-vector-in-browser_finder.h.patch
-Patch017: 0017-libstdc-use-math.h-in-blink-AdjustMaskLayerGeometry.patch
+Patch015: 0015-Fix-some-style-issues-in-AutofillPopupViewPtr.patch
+Patch016: 0016-IWYU-add-cmath-for-std-isnan-and-std-isinf.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -465,6 +464,26 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Sep 28 2022 Alexey Gladkov <legion@altlinux.ru> 106.0.5249.61-alt1
+- New version (106.0.5249.61).
+- Security fixes:
+  - CVE-2022-3201: Insufficient validation of untrusted input in Developer Tools.
+  - CVE-2022-3304: Use after free in CSS.
+  - CVE-2022-3305: Use after free in Survey.
+  - CVE-2022-3306: Use after free in Survey.
+  - CVE-2022-3307: Use after free in Media.
+  - CVE-2022-3308: Insufficient policy enforcement in Developer Tools.
+  - CVE-2022-3309: Use after free in Assistant.
+  - CVE-2022-3310: Insufficient policy enforcement in Custom Tabs.
+  - CVE-2022-3311: Use after free in Import.
+  - CVE-2022-3312: Insufficient validation of untrusted input in VPN.
+  - CVE-2022-3313: Incorrect security UI in Full Screen.
+  - CVE-2022-3314: Use after free in Logging.
+  - CVE-2022-3315: Type confusion in Blink.
+  - CVE-2022-3316: Insufficient validation of untrusted input in Safe Browsing.
+  - CVE-2022-3317: Insufficient validation of untrusted input in Intents.
+  - CVE-2022-3318: Use after free in ChromeOS Notifications.
+
 * Mon Sep 05 2022 Alexey Gladkov <legion@altlinux.ru> 105.0.5195.102-alt1
 - New version (105.0.5195.102).
 - Security fixes:
