@@ -4,7 +4,7 @@
 
 Name: proxmox-backup
 Version: 2.2.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -12,6 +12,10 @@ Group: Archiving/Backup
 URL: https://www.proxmox.com/en/proxmox-backup-server
 Vcs: git://git.proxmox.com/git/proxmox-backup.git
 Source: %name-%version.tar
+
+Source6: basealt_logo.png
+Source8: basealt_favicon.ico
+Source9: basealt_logo-128.png
 
 ExclusiveArch: x86_64 aarch64
 
@@ -87,6 +91,10 @@ export REPOID=alt
 %install
 %makeinstall_std PROXY_USER=%proxy_user
 %makeinstall_std -C docs install_html
+
+install -m0644 %SOURCE6 %buildroot%_datadir/javascript/%name/images/basealt_logo.png
+install -m0644 %SOURCE8 %buildroot%_datadir/javascript/%name/images/favicon.ico
+install -m0644 %SOURCE9 %buildroot%_datadir/javascript/%name/images/logo-128.png
 
 for d in api-viewer prune-simulator lto-barcode ; do
     ln -r -s %buildroot%_jsdir/extjs %buildroot%_datadir/doc/%name/html/$d/extjs
@@ -189,6 +197,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Wed Sep 28 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:2.2.1-alt2
+- add BaseALT logo
+
 * Thu May 19 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:2.2.1-alt1
 - 2.2.1-1
 
