@@ -5,7 +5,7 @@
 
 Name: perl-Test-PerlTidy
 Version: 20220902
-Release: alt1
+Release: alt2
 
 Summary: Perl module to check that all project files are tidy
 
@@ -24,7 +24,7 @@ BuildRequires(pre): perl-devel rpm-build-licenses
 
 # Automatically added by buildreq on Thu Apr 18 2019
 # optimized out: gem-power-assert perl perl-Algorithm-Diff perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Encode perl-HTML-Parser perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Path-Tiny perl-Perl-OSType perl-Perl-Tidy perl-Pod-Escapes perl-Pod-Simple perl-devel perl-parent perl-podlators python-base python-modules python3 python3-base python3-dev ruby ruby-coderay ruby-method_source ruby-pry ruby-rake ruby-rdoc ruby-stdlibs sh4
-BuildRequires: perl-Module-Build perl-PerlIO-utf8_strict perl-Test-Perl-Critic perl-Text-Diff
+BuildRequires: perl-Module-Build perl-PerlIO-utf8_strict perl-Test-Perl-Critic perl-Text-Diff perl(Path/Tiny.pm)
 
 %description
 Perl module Test::PerlTidy provides a check during the tests that
@@ -45,6 +45,9 @@ If you make any changes please remember to tidy them.
 %perl_vendor_privlib/Test/PerlTidy*
 
 %changelog
+* Wed Sep 28 2022 Igor Vlasenko <viy@altlinux.org> 20220902-alt2
+- fixed build - added BR: perl(Path/Tiny.pm)
+
 * Wed Sep 21 2022 Igor Vlasenko <viy@altlinux.org> 20220902-alt1
 - new version
 
