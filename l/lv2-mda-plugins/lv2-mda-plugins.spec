@@ -1,25 +1,28 @@
 %def_disable snapshot
 %define _name mda-lv2
+%def_disable check
 
 Name: lv2-mda-plugins
-Version: 1.2.6
+Version: 1.2.10
 Release: alt1
 
 Summary: A port of the MDA VST plugins to LV2
 Group: Sound
-License: GPL-3.0
+License: GPL-2.0-or-later
 Url: https://drobilla.net/software/mda-lv2
 
 %if_disabled snapshot
-Source: https://download.drobilla.net/%_name-%version.tar.bz2
+Source: https://download.drobilla.net/%_name-%version.tar.xz
 %else
-#VCS: https://git.drobilla.net/mda.lv2.git
+Vcs: https://gitlab.com/drobilla/mda-lv2.git
 Source: %_name-%version.tar
 %endif
 
 Requires: lv2
 
-BuildRequires: python3-devel gcc-c++ lv2-devel libsuil-devel libgtk+2-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson gcc-c++ lv2-devel
+%{?_enable_check:BuildRequires: /usr/bin/autoship /usr/bin/lv2lint /usr/bin/reuse}
 
 %description
 A collection of LV2 plugins including delay, tube distortion, compressor,
@@ -27,22 +30,25 @@ LPF, HPF, phaser, reverb, and utilities, all featuring GUIs.
 
 %prep
 %setup -n %_name-%version
-sed -i 's|\(#!/usr/bin/\)env \(python\)|\1\23|' waf wscript
-#sed -i -e 's|obj.cxxflags = cflags|obj.cxxflags = cflags + "%optflags".split(" ")|' wscript
 
 %build
-export CXXFLAGS="$CXXFLAGS %optflags"
-%__python3 ./waf configure -v --prefix=%prefix --libdir=%_libdir
-%__python3 ./waf -v build %{?_smp_mflags}
+%meson
+%meson_build
 
 %install
-%__python3 ./waf install --destdir=%buildroot
+%meson_install
+
+%check
+%__meson_test
 
 %files
 %_libdir/lv2/mda.lv2
 %doc NEWS README*
 
 %changelog
+* Thu Sep 29 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.10-alt1
+- 1.2.10 (ported to Meson build system)
+
 * Fri Jan 15 2021 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt1
 - 1.2.6
 
