@@ -2,11 +2,12 @@
 
 Name:           perl-Inline-Python
 Version:        0.56
-Release:        alt2
+Release:        alt3
 Summary:        Write Perl subs and classes in Python
 License:        GPL+ or Artistic
 Group: 		Development/Perl
 URL:            https://metacpan.org/release/Inline-Python
+VCS:            git+https://github.com/niner/inline-python-pm
 Source:        	%name-%version.tar
 
 # patch found in Fedora:
@@ -46,6 +47,9 @@ name-space is cached, and subsequent calls use the cached version.
 %perl_vendorarch/Inline*
 
 %changelog
+* Thu Sep 29 2022 Igor Vlasenko <viy@altlinux.org> 0.56-alt3
+- added VCS: tag
+
 * Sun Dec 19 2021 Igor Vlasenko <viy@altlinux.org> 0.56-alt2
 - fixed build
 
