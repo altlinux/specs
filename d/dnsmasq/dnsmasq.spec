@@ -3,7 +3,7 @@
 Name: dnsmasq
 Version: 2.87
 
-Release: alt2
+Release: alt2.1
 Summary: A lightweight caching nameserver
 License: GPLv2+
 Group: System/Servers
@@ -78,7 +78,10 @@ sed -i 's;/\* #define HAVE_IDN \*/;#define HAVE_IDN;' src/config.h
 sed -i 's;/\* #define HAVE_DNSSEC \*/;#define HAVE_DNSSEC;' src/config.h
 
 %build
+# E2K: EDG-based compiler has many false positives
+%ifnarch %e2k
 %add_optflags -Werror
+%endif
 %make_build
 %make_build -C contrib/lease-tools
 
@@ -139,6 +142,9 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Thu Sep 29 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.87-alt2.1
+- Disabled -Werror for Elbrus build.
+
 * Tue Sep 27 2022 Mikhail Efremov <sem@altlinux.org> 2.87-alt2
 - sysconfig: Disable DHCP_LEASE (closes: #39812).
 - Use RPM_OPT_FLAGS when build lease-tools.
