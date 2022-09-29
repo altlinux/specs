@@ -3,8 +3,8 @@
 %define proxy_user backup
 
 Name: proxmox-backup
-Version: 2.2.1
-Release: alt2
+Version: 2.2.6
+Release: alt1
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -197,6 +197,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Thu Sep 29 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.2.6-alt1
+- 2.2.6-1
+
 * Wed Sep 28 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:2.2.1-alt2
 - add BaseALT logo
 
