@@ -7,7 +7,7 @@
 %def_disable documentation
 
 Name: knot
-Version: 3.1.9
+Version: 3.2.1
 Release: alt1
 Summary: High-performance authoritative DNS server
 Group: System/Servers
@@ -133,7 +133,6 @@ install -p -m 0644 -D samples/%name.sample.conf %buildroot%_sysconfdir/%name/%na
 
 # install systemd files
 install -p -m 0644 -D distro/common/%name.service %buildroot%_unitdir/%name.service
-install -p -m 0644 -D distro/common/%name.tmpfiles %buildroot%_tmpfilesdir/%name.conf
 
 # create storage dir and key dir
 install -d %buildroot%_sharedstatedir
@@ -163,7 +162,6 @@ V=1 %make check ||:
 %dir %attr(775,root,%name) %_sharedstatedir/%name
 %dir %attr(770,root,%name) %_sharedstatedir/%name/keys
 %_unitdir/%name.service
-%_tmpfilesdir/%name.conf
 %_bindir/kzone*
 %_sbindir/*
 %_man1dir/kzone*
@@ -202,6 +200,9 @@ V=1 %make check ||:
 %endif
 
 %changelog
+* Thu Sep 29 2022 Alexey Shabalin <shaba@altlinux.org> 3.2.1-alt1
+- new version 3.2.1
+
 * Fri Aug 26 2022 Alexey Shabalin <shaba@altlinux.org> 3.1.9-alt1
 - new version 3.1.9
 
