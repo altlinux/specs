@@ -1,4 +1,4 @@
-%define ver_major 1.6
+%define ver_major 1.7
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-epub-thumbnailer
@@ -14,7 +14,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 Requires: librsvg
 
-BuildRequires: libgio-devel libgdk-pixbuf-devel libxml2-devel libarchive-devel >= 3.1
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson libgio-devel libgdk-pixbuf-devel
+BuildRequires: libxml2-devel libarchive-devel >= 3.1
 
 %description
 This package provides a thumbnailer for EPub and MOBI books files.
@@ -23,12 +25,11 @@ This package provides a thumbnailer for EPub and MOBI books files.
 %setup
 
 %build
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-
+%meson_install
 %find_lang --with-gnome %name
 
 %files -f %name.lang
@@ -36,9 +37,12 @@ This package provides a thumbnailer for EPub and MOBI books files.
 %_bindir/gnome-mobi-thumbnailer
 %_datadir/thumbnailers/gnome-epub-thumbnailer.thumbnailer
 %_datadir/thumbnailers/gnome-mobi-thumbnailer.thumbnailer
-%doc README AUTHORS NEWS
+%doc README NEWS
 
 %changelog
+* Thu Sep 29 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
+- 1.7 (ported to Meson build system)
+
 * Wed Oct 30 2019 Yuri N. Sedunov <aris@altlinux.org> 1.6-alt1
 - 1.6
 
