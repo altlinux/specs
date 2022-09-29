@@ -3,7 +3,7 @@
 %def_disable libxml2
 
 Name: xmlrpc-c
-Version: 1.51.07
+Version: 1.54.06
 Release: alt1
 
 Summary: XML-RPC C library - an implementation of the xmlrpc protocol
@@ -160,6 +160,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Thu Sep 29 2022 Alexey Shabalin <shaba@altlinux.org> 1.54.06-alt1
+- 1.54.06
+
 * Mon Jul 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.51.07-alt1
 - 1.51.07
 
