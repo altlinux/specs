@@ -1,33 +1,36 @@
 Group: System/Base
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-validate pkgconfig(giomm-2.4) pkgconfig(gtkmm-2.4) pkgconfig(libgnome-2.0)
+BuildRequires: /usr/bin/desktop-file-validate
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name: eiciel
-Version: 0.9.13.1
-Release: alt1_1
+Version: 0.10.0
+%global tar_version %{version}-rc2
+
+Release: alt1_0.2.rc2
 Summary: Graphical editor for ACLs and xattr
 License: GPLv2+
 URL: http://rofi.roger-ferrer.org/eiciel
-Source0: http://rofi.roger-ferrer.org/eiciel/files/eiciel-%{version}.tar.bz2
+Source0: http://rofi.roger-ferrer.org/eiciel/files/eiciel-%{tar_version}.tar.gz
 
+BuildRequires: meson
 BuildRequires: gcc-c++
-BuildRequires: libgnomeui-devel
+BuildRequires: pkg-config
+BuildRequires: pkgconfig(gtkmm-4.0)
+BuildRequires: pkgconfig(libnautilus-extension-4)
 BuildRequires: libacl-devel
-BuildRequires: libnautilus-devel libnautilus-gir-devel
-BuildRequires: libgtkmm3-devel
+BuildRequires: itstool
 BuildRequires: desktop-file-utils
 
-%global ext_dir %(eval "pkg-config --variable=extensiondir libnautilus-extension")
+Requires: icon-theme-hicolor
+
+%global ext_dir %(eval "pkg-config --variable=extensiondir libnautilus-extension-4")
 
 # don't "provide" a private shlib
-%{echo 
-
-
-}
+%global __provides_exclude_from ^%{ext_dir}/.*\\.so$
 Source44: import.info
-%add_findprov_skiplist %{ext_dir}/.*\.so$
+
 
 %description
 Graphical editor for access control lists (ACLs) and extended attributes
@@ -36,46 +39,36 @@ utility.
 
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{tar_version}
 
-sed -i -e 's!attr/xattr\.h!sys/xattr\.h!g' configure
-[ "$(cksum ChangeLog|cut -d ' ' -f 1,2)" != "960335718 502" ] && exit -1
-
-iconv -f ISO-8859-1 -t UTF-8 AUTHORS > foo ; mv foo AUTHORS
 
 
 %build
-%add_optflags -std=c++11
-%configure --with-nautilus-extensions-dir=%{ext_dir} \
-    --disable-static
-V=1 make %{?_smp_mflags}
+%meson
+%meson_build
 
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %{name}
-
-rm -f %{buildroot}%{ext_dir}/*.la
-
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 
 
 %files -f %{name}.lang
-%doc AUTHORS README
+%doc AUTHORS
 %doc --no-dereference COPYING
-# ancient gettextize file only / recheck for new releases
-#%doc ChangeLog
 %{_bindir}/%{name}
-%{_datadir}/%{name}/
-%{_datadir}/gnome/help/%{name}/
+%{_datadir}/help/C/%{name}/
 %{_datadir}/applications/*.desktop
-%{_mandir}/man1/%{name}*
 %{ext_dir}/lib%{name}*.so
 %{_datadir}/metainfo/*.appdata.xml
-%{_datadir}/icons/hicolor/*/apps/%{name}.*
+%{_datadir}/icons/hicolor/*/apps/*%{name}.*
 
 
 %changelog
+* Thu Sep 29 2022 Igor Vlasenko <viy@altlinux.org> 0.10.0-alt1_0.2.rc2
+- new version
+
 * Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 0.9.13.1-alt1_1
 - update to new release by fcimport
 
