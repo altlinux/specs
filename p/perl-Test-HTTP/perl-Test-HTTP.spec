@@ -7,14 +7,14 @@ BuildRequires: perl(Carp.pm) perl(Class/Field.pm) perl(Encode.pm) perl(ExtUtils/
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.19
+Version: 0.22
 Release: alt1
 Summary: Testing for HTTP services
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://www.cpan.org/authors/id/M/MM/MML/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/M/MM/MML/%{module_name}/Test-HTTP-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -38,6 +38,9 @@ status codes, headers, and message bodies.
 %perl_vendor_privlib/T*
 
 %changelog
+* Thu Sep 29 2022 Igor Vlasenko <viy@altlinux.org> 0.22-alt1
+- automated CPAN update
+
 * Sat Jan 01 2022 Igor Vlasenko <viy@altlinux.org> 0.19-alt1
 - automated CPAN update
 
