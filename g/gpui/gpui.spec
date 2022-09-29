@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.15
+Version: 0.2.16
 Release: alt1
 
 Summary: Group policy editor
@@ -75,14 +75,6 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 %_libdir/gpui/plugins/libspol-plugin.so
 %_libdir/gpui/plugins/libpol-plugin.so
 
-%_libdir/gpui/plugins/libdrives-plugin.so
-%_libdir/gpui/plugins/libfiles-plugin.so
-%_libdir/gpui/plugins/libfolders-plugin.so
-%_libdir/gpui/plugins/libini-plugin.so
-%_libdir/gpui/plugins/libshares-plugin.so
-%_libdir/gpui/plugins/libshortcuts-plugin.so
-%_libdir/gpui/plugins/libvariables-plugin.so
-
 %_libdir/gpui/plugins/libsmb-storage-plugin.so
 
 %_datadir/icons/hicolor/48x48/apps/gpui.png
@@ -97,6 +89,11 @@ install -v -p -m 644 -D ../setup/man/ru/gpui.1 %buildroot%_mandir/ru/man1/gpui.1
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Thu Sep 29 2022 Vladimir Rubanov <august@altlinux.org> 0.2.16-alt1
+- Fixes:
+  + #84127 Fix invalid types for list enums.
+  + #76835 Fix message on policy state change.
+
 * Thu Aug 04 2022 Vladimir Rubanov <august@altlinux.org> 0.2.15-alt1
 - Fixes:
   + #81760 Fix disabled and enabled list in policies.
