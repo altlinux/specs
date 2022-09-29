@@ -20,8 +20,8 @@
 %define _wesnothd_home     %_runtimedir/wesnothd%wessuffix
 
 Name: wesnoth%wessuffix
-Version: 1.16.3
-Release: alt2
+Version: 1.16.6
+Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -410,6 +410,9 @@ mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot%_datadir/%name/data/t
 %endif
 
 %changelog
+* Thu Sep 29 2022 Igor Vlasenko <viy@altlinux.org> 1.16.6-alt1
+- new version
+
 * Wed Sep 14 2022 Ivan A. Melnikov <iv@altlinux.org> 1.16.3-alt2
 - NMU: fix build with recent boost
 
