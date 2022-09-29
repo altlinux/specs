@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Test-Most
-Version: 0.37
+Version: 0.38
 Release: alt1
 
 Summary: Test::Most - Most commonly needed test functions and features
@@ -8,7 +8,7 @@ Group: Development/Perl
 License: Perl
 
 Url: %CPAN Test-Most
-Source: %name-%version.tar
+Source0: http://www.cpan.org/authors/id/O/OV/OVID/Test-Most-%{version}.tar.gz
 
 BuildArch: noarch
 BuildRequires: perl-devel perl-Test-Deep perl-Test-Warn perl-Exception-Class perl-Test-Differences perl-Test-Exception perl-Module-Build
@@ -18,7 +18,7 @@ Requires: perl-Test-Warn perl-Test-Exception perl-Test-Differences perl-Test-Dee
 %summary
 
 %prep
-%setup -q
+%setup -q -n Test-Most-%{version}
 
 %build
 %perl_vendor_build
@@ -31,6 +31,9 @@ Requires: perl-Test-Warn perl-Test-Exception perl-Test-Differences perl-Test-Dee
 %doc Changes README
 
 %changelog
+* Thu Sep 29 2022 Igor Vlasenko <viy@altlinux.org> 0.38-alt1
+- automated CPAN update
+
 * Sat Apr 04 2020 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
 - new version
 
