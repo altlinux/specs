@@ -11,8 +11,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: libproxy
-Version: 0.4.17
-Release: alt2
+Version: 0.4.18
+Release: alt1
 Summary: A library handling all the details of proxy configuration
 
 Group: System/Libraries
@@ -264,6 +264,9 @@ mkdir -p %buildroot%modilesdir
 %_datadir/cmake/Modules/Findlibproxy.cmake
 
 %changelog
+* Thu Sep 29 2022 Alexey Shabalin <shaba@altlinux.org> 0.4.18-alt1
+- 0.4.18
+
 * Wed Mar 23 2022 Alexey Shabalin <shaba@altlinux.org> 0.4.17-alt2
 - Support Python 3.10 and above
 - Use kf5-config instead of qtpaths
