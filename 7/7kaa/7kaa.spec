@@ -1,5 +1,5 @@
 Name: 7kaa
-Version: 2.14.7
+Version: 2.15.5
 Release: alt1
 Summary: Seven Kingdoms: Ancient Adversaries
 
@@ -51,6 +51,9 @@ Due to license issue, you need to run 7kaa-data-installer install the music.
 %setup
 
 %build
+export CC=gcc
+export CXX=g++
+
 export CXXFLAGS="%optflags -fsigned-char"
 %configure
 %make_build
