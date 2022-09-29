@@ -20,7 +20,7 @@
 %define ciddir %sm_prefix/extensions/%cid
 
 Name: seamonkey
-Version: 2.53.13
+Version: 2.53.14
 Release: alt1
 Epoch: 1
 Summary: Web browser and mail reader
@@ -291,6 +291,7 @@ export srcdir="$PWD"
 export MOZILLA_SRCDIR="$srcdir"
 export SHELL=/bin/sh
 export MOZILLA_OBJDIR="$PWD"
+export CBINDGEN_BINDIR=`pwd`/.cargo/bin
 export PATH="$CBINDGEN_BINDIR:$PATH"
 
 # Do not use desktop notify during build process
@@ -468,6 +469,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 
 
 %changelog
+* Thu Sep 29 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.53.14-alt1
+- New version.
+
 * Thu Jul 14 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.53.13-alt1
 - New version.
 
