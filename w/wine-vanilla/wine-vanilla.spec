@@ -12,7 +12,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.17
+%define major 7.18
 %define rel %nil
 %define conflictbase wine
 
@@ -63,7 +63,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -835,6 +835,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Fri Sep 23 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.18-alt1
+- new version 7.18 (with rpmrb script)
+
 * Mon Sep 12 2022 Alexey Shabalin <shaba@altlinux.org> 1:7.17-alt2
 - not requires libldap, use autoreq
 
