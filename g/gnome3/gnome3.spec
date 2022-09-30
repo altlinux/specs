@@ -1,8 +1,8 @@
-%define ver_major 42
+%define ver_major 43
 
 Name: gnome3
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -20,38 +20,41 @@ BuildRequires(pre): rpm-build-licenses
 
 ## Applications
 %define nautilus_ver %ver_major
-%define seahorse_ver 41.0
+%define seahorse_ver 42.0
 %define utils_ver 3.20
-%define games_ver %ver_major
+%define monitor_ver 42
+%define games_ver 42
 %define weather_ver %ver_major
-%define pm_ver 3.32.0
-%define yelp_ver %ver_major
+%define pm_ver %ver_major
+%define yelp_ver 42.2
 %define dconf_editor_ver %ver_major
 %define contacts_ver %ver_major
-%define bijiben_ver 40.1
+%define bijiben_ver 41
 %define cheese_ver 41.0
-%define roller_ver 3.42
+%define roller_ver %ver_major
 %define eog_ver %ver_major
 %define network_manager_ver 1.26.0
-%define terminal_ver 3.44
+%define terminal_ver 3.46
 %define epiphany_ver %ver_major
 %define pidgin_ver 2.6.3
 %define evince_ver %ver_major
 %define applets_ver %ver_major
-%define gedit_ver %ver_major
-%define gedit_plugins_ver %ver_major
+%define gedit_ver 42.2
+%define gedit_plugins_ver 42.1
 %define gud_ver %ver_major
 %define gdm_ver %ver_major
 %define gdu_ver %ver_major
-%define evo_ver 3.42
+%define evo_ver 3.46
 %define emp_ver 3.12.11
+%define polari_ver 42.1
 %define brasero_ver 3.12.3
-%define accerciser_ver 3.38
-%define recorder_ver %ver_major
+%define accerciser_ver 3.40
+%define recorder_ver 42.0
 %define todo_ver 41.0
 %define characters_ver %ver_major
-%define music_ver %ver_major
+%define music_ver 42.1
 %define photos_ver %ver_major
+%define nettool_ver 42.0
 ## Engines, themes
 %define engines_ver %ver_major
 %define icon_theme_ver %ver_major
@@ -79,9 +82,10 @@ Requires: gnome-control-center >= %ver_major
 Requires: xorg-drv-libinput
 Requires: gnome-shell >= %ver_major
 Requires: gnome-shell-extensions >= %ver_major
+Requires: gnome-browser-connector
 # user settings utility
 Requires: gnome-tweaks >= 40
-Requires: dconf-editor >= 3.38
+Requires: dconf-editor >= %ver_major
 
 # default font
 Requires: fonts-otf-abattis-cantarell
@@ -92,9 +96,9 @@ Requires: gnome-backgrounds
 Requires: yelp >= %yelp_ver
 
 # GNOME Utilities
-Requires: gnome-system-monitor >= %ver_major
-Requires: gnome-logs >= 3.36
-Requires: gucharmap >= 14.0.0
+Requires: gnome-system-monitor >= %monitor_ver
+Requires: gnome-logs >= %ver_major
+Requires: gucharmap >= 15.0.0
 Requires: gnome-calculator >= %ver_major
 Requires: gnome-calendar >= %ver_major
 #Requires: gnome-todo >= %todo_ver
@@ -120,7 +124,7 @@ Requires: libgtk2-engine-adwaita
 
 # And, of course, the documentation
 Requires: gnome-user-docs >= %ver_major
-Requires: gnome-getting-started-docs
+#Requires: gnome-getting-started-docs
 
 %description minimal
 This virtual package installs GNOME Desktop with minimum components. It
@@ -169,7 +173,7 @@ Requires: evolution >= %evo_ver
 ## Default messenger
 Requires: empathy >= %emp_ver
 ## IRC client
-Requires: polari >= %ver_major
+Requires: polari >= %polari_ver
 # Und contacts manager
 Requires: gnome-contacts >= %contacts_ver
 
@@ -223,11 +227,11 @@ Requires: gnome-epub-thumbnailer
 # Nautilus extension for terminal
 Requires: gnome-terminal-nautilus
 # Menu editor
-#Requires: alacarte
+Requires: alacarte
 # Weather application
 Requires: gnome-weather >= %weather_ver
 # Clock application
-Requires: gnome-clocks >= 40
+Requires: gnome-clocks >= %ver_major
 # Maps application
 Requires: gnome-maps >= %ver_major
 # power consumption statistic
@@ -236,7 +240,7 @@ Requires: NetworkManager-gnome >= %network_manager_ver
 ## Bluetooth pairing and control program
 Requires: gnome-bluetooth
 Requires: gnome-remote-desktop
-Requires: gnome-nettool >= %ver_major
+Requires: gnome-nettool >= %nettool_ver
 Requires: gnome-user-share
 Requires: rygel
 Requires: rygel-tracker
@@ -429,6 +433,11 @@ some other useful GNOME and GTK applications.
 %files regular
 
 %changelog
+* Sat Sep 24 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- minimal: added gnome-browser-connector
+           removed gnome-todo, gnome-getting-started-docs
+- default: restore alacarte
+
 * Sat Sep 24 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt2
 - default: removed gnome-initial-setup
 
