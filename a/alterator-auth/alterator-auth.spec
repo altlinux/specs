@@ -1,8 +1,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.43.14
-Release: alt2
+Version: 0.43.15
+Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
 
@@ -174,6 +174,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Sep 28 2022 Andrey Cherepanov <cas@altlinux.org> 0.43.15-alt1
+- Support custom computer OU and Windows 2003 during join to Active Directory.
+
 * Tue Jul 12 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.43.14-alt2
 - task-auth-ad-sssd: add requires for sssd-tools and adcli for machine password
 
