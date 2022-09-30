@@ -2,13 +2,13 @@
 
 Name: neofetch
 Version: 7.1.0
-Release: alt2
+Release: alt3
 Summary: A command-line system information tool
 License: MIT
 Group: Monitoring
 Url: https://github.com/dylanaraps/neofetch
 Source: %name-%version.tar
-Packager: Alexander Makeenkov <amakeenk@altlinux.org>
+Patch1: alt-logo.patch
 
 BuildArch: noarch
 %filter_from_requires /mate-terminal/d
@@ -22,6 +22,7 @@ hardware in an aesthetic and visually pleasing way.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 
@@ -33,6 +34,9 @@ hardware in an aesthetic and visually pleasing way.
 %_man1dir/%name.1.xz
 
 %changelog
+* Fri Sep 30 2022 Alexander Makeenkov <amakeenk@altlinux.org> 7.1.0-alt3
+- Added ALT logo (closes: #43529)
+
 * Thu Dec 23 2021 Alexander Makeenkov <amakeenk@altlinux.org> 7.1.0-alt2
 - Filter requires (closes: #41612)
 
