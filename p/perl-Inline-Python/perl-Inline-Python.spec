@@ -1,24 +1,19 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:           perl-Inline-Python
-Version:        0.56
-Release:        alt3
+Version:        0.57
+Release:        alt1
 Summary:        Write Perl subs and classes in Python
-License:        GPL+ or Artistic
+License:        GPLv2+ or Artistic-2.0
 Group: 		Development/Perl
 URL:            https://metacpan.org/release/Inline-Python
 VCS:            git+https://github.com/niner/inline-python-pm
 Source:        	%name-%version.tar
 
-# patch found in Fedora:
-#               Call Py_Initialize() before calling PyBytes_FromString()
-#               Fixes segmentation fault with python 3.10
-#               https://github.com/niner/inline-python-pm/pull/33
-Patch0:         %{name}-pyinit.patch
 # quick hack not to link with static library
 Patch1: Inline-Python-0.56-use-shared-lib.patch
 
-
+BuildRequires: chrpath
 BuildRequires: python3-devel perl(ExtUtils/MakeMaker.pm) perl(Inline.pm) perl(Test/Number/Delta.pm) perl(Test/Deep.pm) perl(Test/More.pm)
 Requires: perl(Inline.pm)
 
@@ -32,7 +27,6 @@ name-space is cached, and subsequent calls use the cached version.
 
 %prep
 %setup
-%patch0 -p1
 %patch1 -p1
 
 %build
@@ -41,12 +35,17 @@ name-space is cached, and subsequent calls use the cached version.
 %install
 %perl_vendor_install
 
+chrpath -d %buildroot%perl_vendorarch/auto/*/*/*.so
+
 %files
 %doc Changes README ToDo
 %perl_vendorarch/auto/*
 %perl_vendorarch/Inline*
 
 %changelog
+* Fri Sep 30 2022 Igor Vlasenko <viy@altlinux.org> 0.57-alt1
+- new version
+
 * Thu Sep 29 2022 Igor Vlasenko <viy@altlinux.org> 0.56-alt3
 - added VCS: tag
 
