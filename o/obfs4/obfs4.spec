@@ -8,7 +8,7 @@
 %global cmdname obfs4proxy
 
 Name:		obfs4
-Version:	0.0.13
+Version:	0.0.14
 Release:	alt1
 Summary:	The obfourscator, a pluggable transport for Tor
 
@@ -69,6 +69,9 @@ install -Dpm0644 %SOURCE1 %{buildroot}%{_sysconfdir}/tor
 %config(noreplace) %{_sysconfdir}/tor/obfs4.torrc
 
 %changelog
+* Fri Sep 30 2022 Hihin Ruslan <ruslandh@altlinux.ru> 0.0.14-alt1
+- New release
+
 * Thu Feb 10 2022 Vladimir Didenko <cow@altlinux.org> 0.0.13-alt1
 - New release
 
