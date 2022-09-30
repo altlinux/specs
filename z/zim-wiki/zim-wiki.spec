@@ -3,7 +3,7 @@
 %define real_name zim
 
 Name: zim-wiki
-Version: 0.74.3
+Version: 0.75.0
 Release: alt1
 
 Summary: A desktop wiki and outliner
@@ -29,7 +29,7 @@ Requires: python3-module-pyxdg xdg-utils
 Conflicts: zim
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-module-pygobject3 python3-modules-sqlite3
+BuildRequires: python3-module-wheel python3-module-pygobject3 python3-modules-sqlite3
 BuildRequires: typelib(Gtk) = 3.0
 
 %description
@@ -67,6 +67,9 @@ control.
 %doc README.md CHANGELOG.md
 
 %changelog
+* Fri Sep 30 2022 Yuri N. Sedunov <aris@altlinux.org> 0.75.0-alt1
+- 0.75.0
+
 * Fri Dec 10 2021 Yuri N. Sedunov <aris@altlinux.org> 0.74.3-alt1
 - updated to 0.74.3-2-g69fd0c59
 
