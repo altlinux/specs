@@ -18,7 +18,7 @@
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 4.0.4
+Version: 4.2.4
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -32,7 +32,6 @@ Source: %name-%version.tar
 
 Patch1: telegram-desktop-remove-tgvoip.patch
 Patch2: telegram-desktop-set-native-window-frame.patch
-Patch4: telegram-desktop-fix-missed-memory.patch
 Patch5: telegram-desktop-fix-missed-cstdint.patch
 Patch6: telegram-desktop-disabled-icon-checkbox.patch
 
@@ -72,6 +71,9 @@ BuildRequires(pre): rpm-macros-qt5
 BuildRequires: qt5-base-devel >= %tg_qt5_version
 BuildRequires: qt5-svg-devel
 BuildRequires: libqt5-core libqt5-network libqt5-gui qt5-imageformats
+
+BuildRequires: kf5-kcoreaddons-devel
+
 # needs for smiles and emojicons
 Requires: qt5-imageformats
 
@@ -199,7 +201,6 @@ or business messaging needs.
 %setup
 %patch1 -p2
 %patch2 -p2
-%patch4 -p2
 %patch5 -p2
 %if_without qt6
 %patch6 -p2
@@ -312,6 +313,15 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Fri Sep 30 2022 Vitaly Lipatov <lav@altlinux.ru> 4.2.4-alt1
+- new version 4.2.4 (with rpmrb script)
+
+* Fri Sep 30 2022 Vitaly Lipatov <lav@altlinux.ru> 4.2.3-alt1
+- new version 4.2.3 (with rpmrb script)
+
+* Mon Aug 29 2022 Vitaly Lipatov <lav@altlinux.ru> 4.1.1-alt1
+- new version 4.1.1 (with rpmrb script)
+
 * Fri Aug 05 2022 Vitaly Lipatov <lav@altlinux.ru> 4.0.4-alt1
 - new version 4.0.4 (with rpmrb script)
 
