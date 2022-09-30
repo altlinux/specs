@@ -12,9 +12,9 @@ BuildRequires: gcc-c++ perl(Test/More.pm)
 
 Name:		tap
 Version:	1.14.0
-Release:	alt1_3
+Release:	alt1_6
 Summary:	Write tests that implement the Test Anything Protocol
-License:	GPL
+License:	BSD
 Group:		System/Libraries
 URL:		https://www.shlomifish.org/open-source/projects/libtap/
 Source:		https://web-cpan.shlomifish.org/downloads/libtap-%{version}.tar.xz
@@ -52,7 +52,7 @@ This package contains development files for %{name}.
 sed -i 's,@VERSION@,%version,' libtap.pc.in
 
 %build
-%{mageia_cmake}
+%{mageia_cmake} -DCMAKE_SKIP_RPATH:BOOL=ON
 %mageia_cmake_build
 
 %install
@@ -71,6 +71,9 @@ sed -i 's,@VERSION@,%version,' libtap.pc.in
 
 
 %changelog
+* Fri Sep 30 2022 Igor Vlasenko <viy@altlinux.org> 1.14.0-alt1_6
+- update by mgaimport
+
 * Mon Dec 28 2020 Igor Vlasenko <viy@altlinux.ru> 1.14.0-alt1_3
 - mga update
 
