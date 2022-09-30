@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     qt6ct
-Version:  0.5
+Version:  0.6
 Release:  alt1
 
 Summary:  Qt6 Configuration Tool
@@ -41,5 +41,8 @@ icons, etc.) under DE/WM without Qt integration.
 %doc README
 
 %changelog
+* Fri Sep 30 2022 Ivan A. Melnikov <iv@altlinux.org> 0.6-alt1
+- 0.6
+
 * Tue Mar 15 2022 Ivan A. Melnikov <iv@altlinux.org> 0.5-alt1
 - Initial build for Sisyphus
