@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpupdate
-Version: 0.9.11.1
+Version: 0.9.11.2
 Release: alt1
 
 Summary: GPT applier
@@ -151,6 +151,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Fri Sep 30 2022 Valery Sinelnikov <greh@altlinux.org> 0.9.11.2-alt1
+- Fixed formation of the correct path for creating a user directory
+
 * Tue Sep 27 2022 Valery Sinelnikov <greh@altlinux.org> 0.9.11.1-alt1
 - Fixed merge for nodomain_backend
 - Added support for complex types in chromium_applier
