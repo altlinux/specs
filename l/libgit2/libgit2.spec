@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: libgit2
-Version: 1.3.0
+Version: 1.3.2
 Release: alt1
 
 Summary: linkable library for Git
@@ -69,6 +69,9 @@ sed -i 's/LIB_INSTALL_DIR lib/LIB_INSTALL_DIR lib${LIB_SUFFIX}/' CMakeLists.txt
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Fri Sep 30 2022 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
+- 1.3.2
+
 * Tue Oct 12 2021 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
