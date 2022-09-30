@@ -2,7 +2,7 @@
 %global pypi_name pytest-testmon
 
 Name: python3-module-%pypi_name
-Version: 1.3.6
+Version: 1.3.7
 Release: alt1
 Summary: A py.test plug-in which executes only tests affected by recent changes
 Group: Development/Python
@@ -44,6 +44,9 @@ executes only tests affected by recent changes.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 1.3.7-alt1
+- 1.3.6 -> 1.3.7.
+
 * Thu Sep 22 2022 Stanislav Levin <slev@altlinux.org> 1.3.6-alt1
 - 1.3.4 -> 1.3.6.
 

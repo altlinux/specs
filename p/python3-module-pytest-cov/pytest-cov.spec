@@ -4,10 +4,10 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.0.0
-Release: alt3
+Version: 4.0.0
+Release: alt1
 
-Summary: pytest plugin for coverage reporting with support for centralised and distributed testing
+Summary: Pytest plugin for measuring coverage
 License: MIT
 Group: Development/Python3
 # Source-git: https://github.com/pytest-dev/pytest-cov.git
@@ -32,13 +32,17 @@ BuildRequires: python3(pytest-xdist)
 
 BuildArch: noarch
 
-%description
-This plugin produces coverage reports. It supports centralised testing
-and distributed testing in both load and each modes. It also supports
-coverage of subprocesses.
+%py3_provides %pypi_name
 
-All features offered by the coverage package should be available, either
-through pytest-cov or through coverage's config file.
+%description
+This plugin produces coverage reports. Compared to just using coverage run this
+plugin does some extras:
+- Subprocess support: you can fork or run stuff in a subprocess and will get
+  covered without any fuss.
+- Xdist support: you can use all of pytest-xdist's features and still get
+coverage.
+- Consistent pytest behavior. If you run coverage run -m pytest you will have
+  slightly different sys.path (CWD will be in it, unlike when running pytest).
 
 %prep
 %setup
@@ -65,6 +69,9 @@ export TOX_TESTENV_PASSENV='PYTHONPATH_PY3'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 4.0.0-alt1
+- 3.0.0 -> 4.0.0.
+
 * Tue Jul 26 2022 Stanislav Levin <slev@altlinux.org> 3.0.0-alt3
 - Fixed FTBFS (coverage 6.3.3).
 

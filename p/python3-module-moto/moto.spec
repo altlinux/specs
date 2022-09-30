@@ -8,7 +8,7 @@
 %def_without full_testsuite
 
 Name: python3-module-%pypi_name
-Version: 3.1.16
+Version: 4.0.5
 Release: alt1
 
 Summary: A library that allows your python tests to easily mock out the boto library
@@ -40,12 +40,12 @@ BuildRequires: python3(pytz)
 BuildRequires: python3(dateutil)
 BuildRequires: python3(responses)
 BuildRequires: python3(jinja2)
+BuildRequires: python3(flask)
+BuildRequires: python3(flask_cors)
 
 # extra
 BuildRequires: python3(sure)
 BuildRequires: python3(freezegun)
-BuildRequires: python3(flask)
-BuildRequires: python3(flask_cors)
 BuildRequires: python3(jose)
 BuildRequires: python3(aws_xray_sdk)
 BuildRequires: python3(yaml)
@@ -96,6 +96,9 @@ export TESTS=tests/test_core
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 4.0.5-alt1
+- 3.1.16 -> 4.0.5.
+
 * Mon Aug 01 2022 Stanislav Levin <slev@altlinux.org> 3.1.16-alt1
 - 3.0.7 -> 3.1.16.
 

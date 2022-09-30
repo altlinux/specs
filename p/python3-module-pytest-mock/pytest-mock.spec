@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.8.2
+Version: 3.9.0
 Release: alt1
 
 Summary: Thin-wrapper around the mock package for easier use with py.test
@@ -28,7 +28,6 @@ BuildRequires: python3(setuptools_scm)
 BuildRequires: python3(pytest)
 
 BuildRequires: python3(pytest-asyncio)
-BuildRequires: python3(tox)
 %endif
 
 %py3_provides %pypi_name
@@ -65,11 +64,14 @@ fi
 %tox_check_pyproject
 
 %files
-%doc LICENSE *.rst
+%doc CHANGELOG.rst README.rst
 %python3_sitelibdir/pytest_mock/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 3.9.0-alt1
+- 3.8.2 -> 3.9.0.
+
 * Wed Jul 20 2022 Stanislav Levin <slev@altlinux.org> 3.8.2-alt1
 - 3.7.0 -> 3.8.2.
 

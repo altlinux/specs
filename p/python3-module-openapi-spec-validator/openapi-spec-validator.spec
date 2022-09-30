@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.5.1
 Release: alt1
 
 Summary: OpenAPI 2.0 (aka Swagger) and OpenAPI 3.0 spec validator
@@ -26,8 +26,9 @@ BuildRequires: python3(poetry-core)
 BuildRequires: python3(jsonschema)
 BuildRequires: python3(openapi-schema-validator)
 BuildRequires: python3(yaml)
-# actually setuptools, but alt split it into setuptools and pkg_resources
-BuildRequires: python3(pkg_resources)
+BuildRequires: python3(importlib-resources)
+BuildRequires: python3(jsonschema-spec)
+BuildRequires: python3(lazy-object-proxy)
 
 BuildRequires: python3(pytest)
 %endif
@@ -55,7 +56,7 @@ to check for full compliance with the Specification.
 
 %check
 %tox_create_default_config
-%tox_check_pyproject
+%tox_check_pyproject -- -vra -m 'not network'
 
 %files
 %doc README.rst
@@ -64,5 +65,8 @@ to check for full compliance with the Specification.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 0.5.1-alt1
+- 0.4.0 -> 0.5.1.
+
 * Tue Aug 02 2022 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
 - Initial build for Sisyphus.
