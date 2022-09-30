@@ -2,8 +2,8 @@
 %define dist XML-LibXML
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.0207
-Release: alt5
+Version: 2.0208
+Release: alt1
 
 Summary: Perl binding for libxml2
 License: GPL or Artistic
@@ -66,6 +66,9 @@ mv t/48_SAX_Builder_rt_91433.t t/48_SAX_Builder_rt_91433.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Fri Sep 30 2022 Igor Vlasenko <viy@altlinux.org> 2.0208-alt1
+- automated CPAN update
+
 * Mon May 02 2022 Alexey Shabalin <shaba@altlinux.org> 2.0207-alt5
 - unbootstrap
 
