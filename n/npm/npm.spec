@@ -1,6 +1,6 @@
 Name: npm
-Version: 8.11.0
-Release: alt2
+Version: 8.15.0
+Release: alt1
 
 Summary: A package manager for node
 
@@ -83,6 +83,9 @@ done
 %nodejs_sitelib/%name/
 
 %changelog
+* Fri Sep 30 2022 Vitaly Lipatov <lav@altlinux.ru> 8.15.0-alt1
+- new version 8.15.0 (with rpmrb script)
+
 * Wed Aug 03 2022 Vitaly Lipatov <lav@altlinux.ru> 8.11.0-alt2
 - drop node-gyp deps (ALT bug 42036)
 - remove unused scripts makes extra deps

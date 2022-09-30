@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 # check deps/npm/package.json for it
-%define npmver 8.11.0
+%define npmver 8.15.0
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -10,7 +10,7 @@
 %define corepackver 0.10.0
 %def_without corepack
 
-%define major 16.16
+%define major 16.17
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -65,7 +65,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -276,7 +276,7 @@ ln -s %_libexecdir/node_modules/npm deps/npm
 # use rpm's cflags
 %__subst "s|'cflags': \[\],|'cflags': ['%optflags'],|" ./configure.py
 # fix cflags wrap in outputted config.json
-%__subst "s|indent=2|indent=2,width=160|" ./configure.py
+#__subst "s|indent=2|indent=2,width=160|" ./configure.py
 # TODO: move to upstream?
 %ifarch mipsel
 %__subst "s|'libraries': \[\],|'libraries': ['-latomic'],|" ./configure.py
@@ -432,6 +432,14 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Fri Sep 30 2022 Vitaly Lipatov <lav@altlinux.ru> 16.17.1-alt1
+- new version 16.17.1 (with rpmrb script)
+- set npm >= 8.15.0
+- CVE-2022-32212: DNS rebinding in --inspect on macOS (High)
+- CVE-2022-32213: bypass via obs-fold mechanic (Medium)
+- CVE-2022-35255: Weak randomness in WebCrypto keygen
+- CVE-2022-35256: HTTP Request Smuggling - Incorrect Parsing of Header Fields (Medium)
+
 * Tue Jul 12 2022 Vitaly Lipatov <lav@altlinux.ru> 16.16.0-alt1
 - new version 16.16.0 (with rpmrb script)
 - set openssl >= 1.1.1q
