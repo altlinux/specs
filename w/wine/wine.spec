@@ -12,7 +12,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.17
+%define major 7.18
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -23,6 +23,9 @@
 
 # build ping subpackage
 %def_with set_cap_net_raw
+
+# build libwine.so.1 for compatibility
+%def_with libwine
 
 %if_feature llvm 11.0
 # build real PE libraries (.dll, not .dll.so), via clang
@@ -72,7 +75,7 @@
 
 Name: wine
 Version: %major.1
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -435,6 +438,23 @@ Set capability for Wine ping in post install script.
 Also you can control in manually:
 
 $ wine-cap_net_raw [on|off]
+
+
+%if_with libwine
+%package -n lib%name
+Summary: Compatibility library for Wine
+Group: System/Libraries
+Conflicts: lib%conflictbase
+
+
+%description -n lib%name
+This package contains the library needed to run programs dynamically
+linked with Wine.
+
+%description -n lib%name -l ru_RU.UTF-8
+Этот пакет состоит из библиотек, которые реализуют Windows API.
+
+%endif
 
 
 %package devel-tools
@@ -844,6 +864,13 @@ fi
 %_man1dir/winecpp.*
 %_man1dir/winemaker.*
 
+%if_with libwine
+%files -n lib%name
+%doc LICENSE AUTHORS
+# for compatibility only
+%libdir/libwine.so.1
+%libdir/libwine.so.1.0
+%endif
 
 %files devel
 %if_with mingw
@@ -852,6 +879,10 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sat Sep 24 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.18.1-alt1
+- new version 7.18.1 (with rpmrb script)
+- restore libwine.so.1 packing for compatibility reasons
+
 * Mon Sep 12 2022 Alexey Shabalin <shaba@altlinux.org> 1:7.17.1-alt2
 - not requires libldap, use autoreq
 
