@@ -2,8 +2,8 @@
 # Multiplatform spec for autobuild system Korinf
 
 Name: haspd
-Version: 8.23
-Release: alt2
+Version: 8.43
+Release: alt1
 
 Summary: Hardware key protection drivers and license managers
 
@@ -51,7 +51,7 @@ Provides: aksusbd-suse
 %define __find_debuginfo_files %nil
 
 ExclusiveOS: Linux
-ExclusiveArch:  %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 aarch64
 
 %description
 HASP - Hardware Against Software Piracy
@@ -62,7 +62,7 @@ The RPM package contains
 The RPM package prepared in Etersoft for WINE@Etersoft project.
 Please send any comments to hasp@etersoft.ru
 
-(c) 2020 SafeNet, Inc. All rights reserved.
+(c) 2022 SafeNet, Inc. All rights reserved.
 
 
 %prep
@@ -86,10 +86,14 @@ install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80
 %preun_service %name
 
 %files
+%config(noreplace) /etc/sysconfig/haspd
 %_initdir/%name
 %_initdir/haspd.outformat
 
+%ifarch "aarch64"
+%else
 %_sbindir/aksusbd
+%endif
 %dir /etc/hasplm/
 /etc/hasplm/templates/
 %_sbindir/hasplmd
@@ -104,6 +108,13 @@ install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80
 %doc doc/NETHASP.INI.example LICENSE.UTF-8.txt doc/README.UTF-8.txt
 
 %changelog
+* Thu Sep 22 2022 Vitaly Lipatov <lav@altlinux.ru> 8.43-alt1
+- update binaries from 8.43 Sentinel LDK
+- allow build on aarch64
+
+* Sun Aug 21 2022 Vitaly Lipatov <lav@altlinux.ru> 8.23-alt3
+- add /etc/sysconfig/haspd support
+
 * Sun Sep 05 2021 Vitaly Lipatov <lav@altlinux.ru> 8.23-alt2
 - don't pack winehasp (obsoleted, 32bit only)
 
