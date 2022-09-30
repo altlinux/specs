@@ -1,23 +1,25 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libXext-devel pkgconfig(aubio) pkgconfig(lv2) pkgconfig(ogg) pkgconfig(samplerate) pkgconfig(xcb) pkgconfig(zlib)
+BuildRequires(pre): rpm-macros-mageia-compat
+BuildRequires: /usr/bin/desktop-file-install gcc-c++ pkgconfig(aubio) pkgconfig(lv2) pkgconfig(ogg) pkgconfig(samplerate) pkgconfig(xcb) pkgconfig(zlib)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		qtractor
-Version:	0.9.22
+Version:	0.9.28
 Release:	alt1_1
 Summary:	An Audio/MIDI multi-track sequencer
 License:	GPLv2+
 Group:		Sound
 URL:		http://qtractor.sourceforge.io/
 Source0:	http://www.rncbc.org/archive/%{name}-%{version}.tar.gz
-Patch0:		qtractor-0.9.6-mga-qmake-strip.patch
 
-BuildRequires:	pkgconfig(Qt5Core)
-BuildRequires:	pkgconfig(Qt5Widgets)
-BuildRequires:	pkgconfig(Qt5Xml)
-BuildRequires:	pkgconfig(Qt5X11Extras)
+BuildRequires:	qt6-base-devel
+BuildRequires:	qt6-base-devel
+BuildRequires:	qt6-svg-devel
+BuildRequires:	qt6-base-devel
+BuildRequires:	qt6-tools-devel
 BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(gtkmm-2.4)
 BuildRequires:	pkgconfig(jack)
 BuildRequires:	pkgconfig(sndfile)
 BuildRequires:	pkgconfig(mad)
@@ -29,7 +31,8 @@ BuildRequires:	pkgconfig(suil-0)
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(vorbis)
 BuildRequires:	ladspa_sdk
-BuildRequires:	qt5-designer qt5-tools
+BuildRequires:	qt5-tools qt6-designer qt6-tools
+BuildRequires:	ccmake cmake ctest
 
 Requires:	dssi dssi-examples
 Requires:	ladspa_sdk
@@ -47,7 +50,6 @@ specially dedicated to the personal home-studio.
 
 %prep
 %setup -q
-%patch0 -p1
 # E2K: fixed SSE detection code (ilyakurdyukov@)
 %ifarch %e2k
 sed -i "/#if defined(__GNUC__)/s|#|#ifdef __e2k__\nreturn true;\n#el|" \
@@ -57,46 +59,42 @@ sed -i "/#if defined(__GNUC__)/s|#|#ifdef __e2k__\nreturn true;\n#el|" \
 
 
 %build
-%configure
-
-%make_build
+%{mageia_cmake}
+%mageia_cmake_build
 
 %install
-%makeinstall_std
+%mageia_cmake_install
 
 desktop-file-install \
 	--remove-key="X-SuSE-translate" \
 	--remove-key="Version" \
 	--set-key=Exec --set-value="%{name}" \
 	--dir %{buildroot}%{_datadir}/applications \
-	%{buildroot}%{_datadir}/applications/%{name}.desktop
+	%{buildroot}%{_datadir}/applications/org.rncbc.%{name}.desktop
 
-%files
-%doc AUTHORS ChangeLog README TODO TRANSLATORS
-%{_bindir}/%{name}
-%{_libdir}/%{name}/
-%{_datadir}/applications/%{name}.desktop
-%{_datadir}/mime/packages/%{name}.xml
-%{_datadir}/metainfo/%{name}.appdata.xml
-%{_iconsdir}/hicolor/32x32/apps/%{name}.png
-%{_iconsdir}/hicolor/32x32/mimetypes/*.png
-%{_iconsdir}/hicolor/scalable/apps/%{name}.svg
-%{_iconsdir}/hicolor/scalable/mimetypes/application-x-%{name}-*.svg
-%{_mandir}/man1/%{name}*.1*
-%lang(fr) %{_mandir}/fr/man1/%{name}*.1*
+%find_lang %{name} --with-man --with-qt
+
+%files -f %{name}.lang
+%doc README LICENSE TRANSLATORS ChangeLog
+%dir %{_libdir}/%{name}
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/translations
-%lang(cs) %{_datadir}/%{name}/translations/%{name}_cs.qm
-%lang(de) %{_datadir}/%{name}/translations/%{name}_de.qm
-%lang(es) %{_datadir}/%{name}/translations/%{name}_es.qm
-%lang(fr) %{_datadir}/%{name}/translations/%{name}_fr.qm
-%lang(it) %{_datadir}/%{name}/translations/%{name}_it.qm
-%lang(ja) %{_datadir}/%{name}/translations/%{name}_ja.qm
-%lang(pt) %{_datadir}/%{name}/translations/%{name}_pt.qm
-%lang(ru) %{_datadir}/%{name}/translations/%{name}_ru.qm
+%{_bindir}/%{name}
+%{_libdir}/%{name}/%{name}_plugin_scan
+%{_datadir}/mime/packages/org.rncbc.%{name}.xml
+%{_datadir}/applications/org.rncbc.%{name}.desktop
+%{_datadir}/icons/hicolor/32x32/apps/org.rncbc.%{name}.png
+%{_datadir}/icons/hicolor/scalable/apps/org.rncbc.%{name}.svg
+%{_datadir}/icons/hicolor/32x32/mimetypes/org.rncbc.%{name}.application-x-%{name}*.png
+%{_datadir}/icons/hicolor/scalable/mimetypes/org.rncbc.%{name}.application-x-%{name}*.svg
+%{_datadir}/metainfo/org.rncbc.%{name}.metainfo.xml
+%{_datadir}/man/man1/%{name}.1*
 
 
 %changelog
+* Fri Sep 30 2022 Igor Vlasenko <viy@altlinux.org> 0.9.28-alt1_1
+- update by mgaimport
+
 * Fri Jun 25 2021 Igor Vlasenko <viy@altlinux.org> 0.9.22-alt1_1
 - new version
 
