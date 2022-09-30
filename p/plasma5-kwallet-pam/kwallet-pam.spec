@@ -6,7 +6,7 @@
 
 Name: plasma5-%rname
 Version: 5.25.5
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -75,6 +75,10 @@ mv %buildroot/%_K5start/pam_kwallet_init.desktop \
 sed -i '/^Exec=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
     %buildroot/%_K5start/pam_kwallet5_init.desktop
 
+# fix executable path in systemd user service
+sed -i '/^ExecStart=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
+    %buildroot/%_unitdir_user/plasma-kwallet-pam.service
+
 %files -n pam0_kwallet5
 %doc LICENSES/*
 %_pam_modules_dir/pam_kwallet5.so
@@ -83,6 +87,9 @@ sed -i '/^Exec=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
 %_unitdir_user/*.service
 
 %changelog
+* Fri Sep 30 2022 Slava Aseev <ptrnine@altlinux.org> 5.25.5-alt2
+- fix executable path in systemd user service
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt1
 - new version
 
