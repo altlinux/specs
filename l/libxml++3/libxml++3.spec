@@ -6,7 +6,7 @@
 %def_enable check
 
 Name: %{_name}3
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
@@ -16,8 +16,8 @@ Url: https://libxmlplusplus.sourceforge.net/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires(pre): meson
-BuildRequires: mm-common gcc-c++ 
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson mm-common gcc-c++ 
 BuildRequires: libglibmm-devel >= 2.32.0
 BuildRequires: libxml2-devel >= 2.7.7
 %{?_enable_docs:BuildRequires: doxygen graphviz docbook-style-xsl xsltproc}
@@ -59,8 +59,7 @@ This package contains the development documentation for libxml++ library.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/%_name-%api_ver.so.*
@@ -79,6 +78,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Sep 30 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.4-alt1
+- 3.2.4
+
 * Thu May 27 2021 Yuri N. Sedunov <aris@altlinux.org> 3.2.3-alt1
 - 3.2.3
 
