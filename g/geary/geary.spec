@@ -1,6 +1,6 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %_prefix/libexec
-%define ver_major 40
+%define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.Geary
 # see meson_options.txt
@@ -13,7 +13,7 @@
 
 Name: geary
 Version: %ver_major.0
-Release: alt2%beta
+Release: alt1%beta
 
 Summary: Email client
 License: LGPL-2.1-or-later
@@ -35,7 +35,9 @@ Source: %name-%version.tar
 %define gmime_ver 3.2.4
 %define peas_ver 1.24
 %define icu_ver 60
+%define gee_ver 0.8.5
 %define handy_ver 1.2.1
+%define webkit_api_ver 4.1
 
 Requires: dconf gnome-keyring gcr
 
@@ -43,20 +45,20 @@ BuildRequires(pre): meson
 BuildRequires: vala-tools >= %vala_ver libvala-devel
 BuildRequires: desktop-file-utils yelp-tools libappstream-glib-devel
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
+BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: libsqlite3-devel >= %sqlite_ver
 BuildRequires: libpeas-devel >= %peas_ver
 BuildRequires: iso-codes-devel libgmime3.0-devel >= %gmime_ver
-BuildRequires: libnotify-devel libcanberra-devel libgee0.8-devel
-BuildRequires: libsoup-devel libwebkit2gtk-devel >= %webkit_ver
+BuildRequires: libnotify-devel libcanberra-devel libgee0.8-devel >= %gee_ver
+BuildRequires: pkgconfig(libsoup-3.0) libwebkit2gtk%webkit_api_ver-devel >= %webkit_ver
 BuildRequires: libgnome-online-accounts-devel libjson-glib-devel
 BuildRequires: libenchant-devel libsecret-devel libxml2-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
-BuildRequires: libsoup-gir-devel libwebkit2gtk-gir-devel libcanberra-vala
+BuildRequires: gir(Soup) = 3.0 libwebkit2gtk%webkit_api_ver-gir-devel libcanberra-vala
 BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala
-BuildRequires: libfolks-devel  libfolks-vala libenchant2-devel
+BuildRequires: libfolks-devel libfolks-vala libenchant2-devel
 BuildRequires: libytnef-devel libdbus-devel libgspell-devel
 BuildRequires: pkgconfig(icu-uc) >= %icu_ver
-BuildRequires: pkgconfig(libhandy-1) >= %handy_ver
 BuildRequires: libgsound-devel libstemmer-devel
 %{?_enable_libunwind:BuildRequires: libunwind-devel}
 %{?_enable_valadoc:BuildRequires: valadoc}
@@ -99,6 +101,9 @@ Geary's development.
 %doc AUTHORS NEWS README* THANKS
 
 %changelog
+* Fri Sep 30 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Thu Mar 24 2022 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt2
 - updated to 40.0-52-gc8c7e5e8c from mainline branch
   (fixed build with vala-0.56, updated translations)
