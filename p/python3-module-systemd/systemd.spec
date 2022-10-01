@@ -1,28 +1,41 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name systemd-python
+%define mod_name systemd
 
 %def_with check
 
-Name: python3-module-systemd
+Name: python3-module-%mod_name
 Epoch: 1
-Version: 234
-Release: alt3
+Version: 235
+Release: alt1
 Summary: Python module wrapping systemd functionality
 Group: Development/Python3
 
 License: LGPLv2+
-Url: https://github.com/systemd/python-systemd
+Url: https://pypi.org/project/systemd-python/
+VCS: https://github.com/systemd/python-systemd
 Source: %name-%version.tar
 Patch1: %name-snapshot.patch
 
 BuildPreReq: rpm-build-python3
-BuildRequires: python3-devel python3-module-lxml
+BuildRequires: python3-devel
 BuildRequires: libsystemd-devel
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
+
+# id128.get_machine() => sd_id128_get_machine() => /etc/machine-id
+BuildRequires: systemd
+
+# id128.get_boot() => sd_id128_get_boot() => /proc/sys/kernel/random/boot_id
+BuildRequires: /proc
 %endif
+
+%py3_provides %pypi_name
 
 %description
 Python module for native access to the systemd facilities.
@@ -36,31 +49,27 @@ provided by libsystemd is also wrapped.
 %patch1 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # don't package tests
 rm -r %buildroot%python3_sitelibdir/systemd/test/
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    {envbindir}/pytest {posargs:-vra systemd/test}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr
+%tox_create_default_config
+%tox_check_pyproject -- -vra systemd/test
 
 %files
 %doc README.md LICENSE.txt
 %python3_sitelibdir/systemd/
-%python3_sitelibdir/systemd_python-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Sep 28 2022 Stanislav Levin <slev@altlinux.org> 1:235-alt1
+- 234 -> 235.
+
 * Mon Jan 24 2022 Stanislav Levin <slev@altlinux.org> 1:234-alt3
 - Applied upstream patches (fixed build against Python3.10).
 
