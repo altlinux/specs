@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 3.40
 %define api_ver 2.0
@@ -13,7 +13,7 @@
 
 Name: glade
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A user interface designer for Gtk+ and GNOME
 Group: Development/GNOME and GTK+
@@ -43,7 +43,9 @@ BuildRequires: python3-devel python3-module-pygobject3-devel
 %{?_enable_gtk_doc:BuildRequires: gtk-doc}
 %{?_enable_gjs:BuildRequires: libgjs-devel >= %gjs_ver}
 %{?_enable_webkit2gtk:BuildRequires: pkgconfig(webkit2gtk-4.0) >= %webkit_ver}
-%{?_enable_check:BuildRequires: xvfb-run icon-theme-hicolor gnome-icon-theme xmllint}
+%{?_enable_check:BuildRequires: /bin/dbus-run-session /bin/dbus-launch xvfb-run
+BuildRequires: at-spi2-core devhelp
+BuildRequires: fonts-otf-abattis-cantarell icon-theme-hicolor gnome-icon-theme xmllint}
 
 %description
 Glade is a Widget builder for Gtk/gnome. It allows to create a GTK+/GNOME
@@ -115,7 +117,7 @@ GObject introspection devel data for the GladeUI library.
 %find_lang --with-gnome %name
 
 %check
-xvfb-run %__meson_test
+dbus-run-session xvfb-run %__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -161,6 +163,10 @@ xvfb-run %__meson_test
 %_girdir/Gladeui-%api_ver.gir
 
 %changelog
+* Sat Oct 01 2022 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt2
+- GLADE_3_40_0-13-gfa7224e4 (updated translations)
+- fixed %%check
+
 * Wed Aug 10 2022 Yuri N. Sedunov <aris@altlinux.org> 3.40.0-alt1
 - 3.40.0
 - enabled webkit support again
