@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 168
+%define centos_release 171
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -634,6 +634,26 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Oct 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.171-alt1.el9
+- Updated to kernel-5.14.0-171.el9:
+  + Add Device IDs for Raptor Lake and Raptor Lake S
+  + bonding: fixes for 9.2
+  + drm/bochs: fix blanking
+  + irqchip/qcom-pdc: update to v5.19-rc4
+  + opp: backport changes from v5.19-rc8
+
+* Thu Sep 29 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.170-alt1.el9
+- Updated to kernel-5.14.0-170.el9:
+  + Backport scheduler related v5.19 and earlier commits for kernel-rt
+  + bonding: fix NULL deref in bond_rr_gen_slave_id
+  + configs: enable CONFIG_HP_ILO for aarch64
+  + iwlwifi: limit fw version for AC9560 to avoid fw crash
+  + Merge tag 'kernel-5.14.0-162.4.1.el9_1'
+  + NFSv4.1+ session trunking discovery
+  + [s390]: RHEL9.2 - KVM: PV: ext call delivered twice when receiver in PSW wait
+  + [s390]: RHEL9.2 - s390/hugetlb: fix prepare_hugepage_range() check for 2 GB
+  + [s390]: RHEL9.2 - s390/mm: do not trigger write fault when vma does not allow
+
 * Tue Sep 27 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.168-alt1.el9
 - Updated to kernel-5.14.0-168.el9 (fixes: CVE-2022-20141, CVE-2022-3077):
   + ACPI: Improve fwnode serial multi-instantiate driver
