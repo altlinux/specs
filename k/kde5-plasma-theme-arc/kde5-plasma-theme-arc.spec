@@ -1,15 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kde5-plasma-theme-arc
-Version: 20180614
-Release: alt4
+Version: 20220908
+Release: alt1
 Summary: Arc KDE customization
 License: GPLv3
 Group: Graphical desktop/KDE
 Url: https://github.com/PapirusDevelopmentTeam/arc-kde
 Source: %name-%version.tar
 Patch1: alt-fix-install-dir.patch
-Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildArch: noarch
 
@@ -41,11 +40,17 @@ for Plasma 5 desktop with a few additions and extras.
 %_datadir/kf5/plasma/look-and-feel/com.github.varlesh.arc-dark
 %_datadir/kf5/wallpapers/Arc
 %_datadir/kf5/wallpapers/Arc-Dark
+%_datadir/kf5/wallpapers/Arc-Mountains
 %_datadir/kf5/yakuake/skins/arc
 %_datadir/kf5/yakuake/skins/arc-dark
+%_datadir/kf5/plasma/look-and-feel/com.github.varlesh.arc
+%_datadir/kf5/plasma/look-and-feel/com.github.varlesh.arc-darker
 %doc LICENSE AUTHORS
 
 %changelog
+* Sat Oct 01 2022 Alexander Makeenkov <amakeenk@altlinux.org> 20220908-alt1
+- Updated to version 20220908
+
 * Thu Feb 06 2020 Alexander Makeenkov <amakeenk@altlinux.org> 20180614-alt4
 - Fix installation directory
 
