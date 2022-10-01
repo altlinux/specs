@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.1.1
+Version: 8.2.0
 Release: alt1
 
 Summary: Sort lists naturally
@@ -110,6 +110,9 @@ tox.py3 --sitepackages -p auto -o -rv
 
 
 %changelog
+* Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 8.2.0-alt1
+- 7.1.1 -> 8.2.0.
+
 * Fri Apr 02 2021 Grigory Ustinov <grenka@altlinux.org> 7.1.1-alt1
 - Automatically updated to 7.1.1.
 - Build with docs.
