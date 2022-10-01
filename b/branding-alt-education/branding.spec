@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt5
+Release: alt6
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -478,6 +478,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Fri Sep 30 2022 Andrey Cherepanov <cas@altlinux.org> 10.1-alt6
+- Added wallpapers from ALT Education 9.0.
+
 * Wed Sep 07 2022 Andrey Cherepanov <cas@altlinux.org> 10.1-alt5
 - Used Papirus-Edu name for icon theme.
 
