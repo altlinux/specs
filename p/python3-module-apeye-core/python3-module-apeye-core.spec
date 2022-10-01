@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.0.0
-Release: alt2
+Release: alt3
 
 Summary: Core (offline) functionality for the apeye library
 License: MIT
@@ -32,6 +32,8 @@ BuildRequires: python3(coincidence)
 
 BuildArch: noarch
 
+%py3_provides %pypi_name
+
 %description
 %summary
 
@@ -53,6 +55,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt3
+- add convenient 'python3(apeye-core)' provide
+
 * Fri Sep 30 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt2
 - enable tests
 
