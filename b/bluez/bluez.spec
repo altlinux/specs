@@ -8,8 +8,8 @@
 %def_enable experimental
 
 Name: bluez
-Version: 5.64
-Release: alt2
+Version: 5.65
+Release: alt1
 
 Summary: Bluetooth utilities
 License: GPL-2.0-or-later
@@ -113,6 +113,7 @@ mkdir ell ||:
 %makeinstall_std
 %{?_enable_deprecated:install -m755 attrib/gatttool %buildroot%_bindir/}
 %{?_enable_btpclient:install -m755 tools/btpclient %buildroot%_bindir/}
+%{?_enable_obex:install -m755 tools/obexctl %buildroot%_bindir/}
 install -m755 tools/bneptest %buildroot%_bindir/
 install -pD -m755 scripts/bluetooth.alt.init %buildroot%_initdir/bluetoothd
 ln -s bluetooth.service %buildroot%_unitdir/bluetoothd.service
@@ -160,6 +161,7 @@ fi
 %_bindir/mpris-proxy
 %_bindir/rctest
 %_bindir/bneptest
+%{?_enable_obex:%_bindir/obexctl}
 
 %if_enabled deprecated
 %_bindir/ciptool
@@ -200,6 +202,10 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Sat Oct 01 2022 L.A. Kostis <lakostis@altlinux.ru> 5.65-alt1
+- 5.65.
+- Add obexctl (ALT #38747).
+
 * Thu May 19 2022 Anton Midyukov <antohami@altlinux.org> 5.64-alt2
 - fix enable obex.service with first install into chroot (ALT #42742)
 - clean old triggerin, actual for p9 only
