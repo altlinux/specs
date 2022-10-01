@@ -1,10 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name mkdocs-material
 
-%define _docsdir %_datadir/docs
-
 Name: python3-module-%pypi_name
-Version: 8.4.1
+Version: 8.5.3
 Release: alt1
 
 Summary: Documentation that simply works
@@ -16,8 +14,9 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3(hatchling)
+BuildRequires: python3(hatch_nodejs_version)
+BuildRequires: python3(hatch_requirements_txt)
 
 BuildArch: noarch
 
@@ -41,5 +40,9 @@ more than 50 languages, for all devices.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 8.5.3-alt1
+- 8.4.1 -> 8.5.3
+- clean up spec
+
 * Fri Aug 26 2022 Anton Zhukharev <ancieg@altlinux.org> 8.4.1-alt1
 - initial build for Sisyphus
