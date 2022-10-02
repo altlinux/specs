@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.5.9
-Release: alt2
+Release: alt3
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -44,6 +44,7 @@ Requires: freebasic
 Requires: fpc
 Requires: fpc-ide
 Requires: pascalabcnet
+Requires: kchmviewer
 %endif
 Requires: geany
 Requires: geany-themes
@@ -619,6 +620,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Sun Oct 02 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt3
+- Add kchmviewer as help viewer for IDE for pascalabcnet.
+
 * Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt2
 - Remove mediawiki from task-edu-server-apps because it does not support PHP 8.0.
 
