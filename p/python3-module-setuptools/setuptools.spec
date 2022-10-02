@@ -9,7 +9,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 65.3.0
+Version: 65.4.1
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -197,6 +197,9 @@ export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION NO_INTERNET'
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 1:65.4.1-alt1
+- 65.3.0 -> 65.4.1.
+
 * Thu Sep 22 2022 Stanislav Levin <slev@altlinux.org> 1:65.3.0-alt1
 - 64.0.3 -> 65.3.0.
 
