@@ -1,6 +1,6 @@
 Name:    pascalabcnet
-Version: 3.8.3.3159
-Release: alt1
+Version: 3.8.3.3177
+Release: alt1.gitd7d6d24d
 
 Summary: PascalABC.NET programming language  
 License: LGPL-3.0
@@ -11,6 +11,9 @@ Url:     http://pascalabc.net/
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar
+Source1: PascalABCNETLinux.desktop
+Source2: icons.tar
+Source3: Samples.tar
 
 ExcludeArch: ppc64le
 
@@ -41,19 +44,22 @@ rm -rf bin/PT4
 find . -name \*.exe -delete
 # TODO remove bundled libraries
 #find . -name \*.dll -delete
+tar xf %SOURCE2
+tar xf %SOURCE3
 
 %build
 # Build compiler
 sh -x _RebuildReleaseAndRunTests.sh
-# Build Linux graphical library GraphABCLinux
-mono bin/pabcnetcclear.exe ./bin/Lib/GraphABCLinux.pas
+# Build Linux graphical library GraphABC
+mono bin/pabcnetcclear.exe ./bin/Lib/GraphABC.pas
 # Build IDE
-#MONO_IOMAP=case xbuild /p:Configuration=release PascalABCNET.sln
+MONO_IOMAP=case xbuild /p:Configuration=release PascalABCNETLinux.sln
 
 %install
 mkdir -p %buildroot%_libexecdir/%name
 cp -a bin/* %buildroot%_libexecdir/%name
 mkdir -p %buildroot%_bindir
+
 # Executable wrappers
 cat > %buildroot%_bindir/pabcnetc << ENDF
 #!/bin/bash
@@ -61,6 +67,7 @@ export MONO_IOMAP=all
 mono %_libexecdir/pascalabcnet/pabcnetc.exe \$@
 ENDF
 chmod +x %buildroot%_bindir/pabcnetc
+
 cat > %buildroot%_bindir/pabcnetcclear << ENDF
 #!/bin/bash
 export MONO_IOMAP=all
@@ -68,12 +75,38 @@ mono %_libexecdir/pascalabcnet/pabcnetcclear.exe \$@
 ENDF
 chmod +x %buildroot%_bindir/pabcnetcclear
 
+cat > %buildroot%_bindir/PascalABCNETLinux << ENDF
+#!/bin/bash
+export MONO_IOMAP=all
+export MONO_REGISTRY_PATH=\$HOME/PABCWork.NET
+export MONO_HELP_VIEWER=kchmviewer
+[ -d "\$MONO_REGISTRY_PATH" ] || mkdir -p "\$MONO_REGISTRY_PATH"
+mono %_libexecdir/pascalabcnet/PascalABCNETLinux.exe "\$@"
+ENDF
+chmod +x %buildroot%_bindir/PascalABCNETLinux
+
+# Install desktop file and icons
+install -Dpm0644 %SOURCE1 %buildroot%_desktopdir/PascalABCNETLinux.desktop
+pushd icons
+for icon in *.png; do
+	size="${icon#pascalabcnet-}"
+	size="${size%.png}"
+	install -Dpm0644 $icon %buildroot%_iconsdir/hicolor/${size}x${size}/apps/pascalabcnet.png
+done
+popd
+
 %files
-%doc README.md InstallerSamples
+%doc README.md Samples
 %_bindir/*
 %_libexecdir/%name
+%_desktopdir/*.desktop
+%_iconsdir/hicolor/*/apps/pascalabcnet.png
 
 %changelog
+* Fri Sep 30 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3177-alt1.gitd7d6d24d
+- New version.
+- Package IDE.
+
 * Mon Aug 29 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3159-alt1
 - New version.
 - Built graphical library GraphABCLinux.
