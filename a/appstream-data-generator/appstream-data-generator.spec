@@ -3,7 +3,7 @@
 # Use current date as version
 
 Name:    appstream-data-generator
-Version: 20220402
+Version: 20221002
 Release: alt1
 Summary: Collection of tools for generation of appstream-data
 Group:   System/Configuration/Packaging
@@ -38,6 +38,9 @@ Collection of tools for generation of appstream-data
 %_bindir/*
 
 %changelog
+* Sun Oct 02 2022 Andrey Cherepanov <cas@altlinux.org> 20221002-alt1
+- Show missing icon name from desktop file.
+
 * Fri Feb 04 2022 Andrey Cherepanov <cas@altlinux.org> 20220402-alt1
 - Show XML parse error text.
 - Parse appdata files of any types (for example, fonts).
