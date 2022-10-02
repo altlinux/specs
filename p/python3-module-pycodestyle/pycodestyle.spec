@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.8.0
+Version: 2.9.1
 Release: alt1
 
 Summary: Python style guide checker
@@ -52,6 +52,9 @@ tox.py3 --sitepackages -vvr
 %python3_sitelibdir/pycodestyle-%version-py%_python3_version.egg-info/
 
 %changelog
+* Sun Oct 02 2022 Anton Zhukharev <ancieg@altlinux.org> 2.9.1-alt1
+- 2.8.0 -> 2.9.1.
+
 * Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 2.8.0-alt1
 - 2.7.0 -> 2.8.0.
 
