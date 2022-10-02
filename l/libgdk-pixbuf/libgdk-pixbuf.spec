@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gdk-pixbuf
 %define api_ver 2.0
@@ -12,10 +12,10 @@
 %def_enable man
 %def_enable introspection
 %def_enable installed_tests
-%def_enable check
+%def_disable check
 
 Name: lib%_name
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -42,11 +42,12 @@ Requires: %name-locales = %version
 Provides: %name-loaders = %version
 Obsoletes: %name-loaders <= %version
 
-BuildRequires(pre): meson >= %meson_ver rpm-build-gir
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson >= %meson_ver
 BuildRequires: /proc libgio-devel >= %glib_ver
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel
 %{?_enable_gtk_doc:BuildRequires: gtk-doc gi-docgen}
-%{?_enable_man:BuildRequires: docbook-utils xsltproc}
+%{?_enable_man:BuildRequires: /usr/bin/rst2man}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 
 %description
@@ -160,7 +161,6 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %find_lang %_name
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
 %__meson_test -t %timeout
 
 %files
@@ -226,6 +226,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Sep 28 2022 Yuri N. Sedunov <aris@altlinux.org> 2.42.9-alt1
+- updated to 2.42.9-7-g6550872a
+
 * Fri Mar 18 2022 Yuri N. Sedunov <aris@altlinux.org> 2.42.8-alt1
 - 2.42.8
 

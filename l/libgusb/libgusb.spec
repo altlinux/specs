@@ -4,11 +4,11 @@
 %def_enable docs
 %def_enable introspection
 %def_enable vala
-# failed to init libusb in hasher
+# gusb-self-test failed in hasher
 %def_disable check
 
 Name: libgusb
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: GLib wrapper around libusb1
@@ -19,14 +19,15 @@ Url: https://gitorious.org/gusb/
 Vcs: https://github.com/hughsie/libgusb.git
 Source: http://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
 
-BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson libgio-devel >= 2.44 libusb-devel >= 1.0.22
 BuildRequires: libjson-glib-devel
-BuildRequires: gobject-introspection-devel
-%{?_enable_docs:BuildRequires: gtk-doc}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libjson-glib-gir-devel}
+%{?_enable_docs:BuildRequires: gi-docgen}
 %{?_enable_vala:
 BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools}
+%{?_enable_tests:BuildRequires: libumockdev-devel}
 
 %description
 GUsb is a GObject wrapper for libusb that makes it easy to do
@@ -36,7 +37,7 @@ cancellation and integration into a mainloop.
 %package devel
 Summary: Libraries and headers for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 GLib headers and libraries for the GUsb library.
@@ -44,7 +45,7 @@ GLib headers and libraries for the GUsb library.
 %package gir
 Summary: GObject introspection data for GUsb
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the GUsb library.
@@ -53,8 +54,8 @@ GObject introspection data for the GUsb library.
 Summary: GObject introspection devel data for GUsb
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-devel = %version-%release
-Requires: %name-gir = %version-%release
+Requires: %name-devel = %EVR
+Requires: %name-gir = %EVR
 
 %description gir-devel
 GObject introspection devel data for the GUsb library.
@@ -86,8 +87,7 @@ applications that use GUsb library.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_libdir/%name.so.*
@@ -110,10 +110,13 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %if_enabled docs
 %files devel-doc
-%_datadir/gtk-doc/html/gusb/
+%_datadir/doc/%name/
 %endif
 
 %changelog
+* Sun Oct 02 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Tue Sep 13 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0
 
