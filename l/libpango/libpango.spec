@@ -18,7 +18,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.10
+Version: %ver_major.11
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -218,6 +218,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Mon Oct 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.50.11-alt1
+- 1.50.11
+
 * Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.50.10-alt1
 - 1.50.10
 
