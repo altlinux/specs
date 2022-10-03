@@ -1,7 +1,7 @@
 Name: librados2-perl
 Summary: Perl bindings for librados
 Version: 1.2.1
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -11,7 +11,8 @@ ExclusiveArch: x86_64 aarch64
 
 Source: librados2-perl.tar
 
-BuildRequires: pve-common librados2-devel perl-devel perl(PVE/RPCEnvironment.pm) perl(JSON.pm)
+BuildRequires: pve-common librados2-devel perl-devel
+BuildRequires: perl(PVE/Cluster.pm) perl(PVE/RPCEnvironment.pm) perl(JSON.pm)
 
 %description
 This package contains librados perl binding used by PVE
@@ -27,6 +28,9 @@ This package contains librados perl binding used by PVE
 %perl_vendor_autolib/PVE
 
 %changelog
+* Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 1.2.1-alt2
+- Fixed FTBFS: update BR:
+
 * Wed Jul 28 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.2.1-alt1
 - 1.2-1
 
