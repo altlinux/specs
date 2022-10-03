@@ -2,7 +2,7 @@
 
 Name: proxmox-i18n
 Summary: Internationalization support for Proxmox
-Version: 2.7.1
+Version: 2.7.2
 Release: alt1
 License: AGPL-3.0+
 Group: System/Internationalization
@@ -56,6 +56,9 @@ Group: System/Internationalization
 %_datadir/pve-i18n
 
 %changelog
+* Tue Oct 04 2022 Alexey Shabalin <shaba@altlinux.org> 2.7.2-alt1
+- 2.7-2
+
 * Thu May 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 2.7.1-alt1
 - 2.7-1
 
