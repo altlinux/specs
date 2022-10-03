@@ -2,34 +2,60 @@
 %define oname ujson
 
 Name: python3-module-%oname
-Version: 1.35
-Release: alt2
+Version: 5.5.0
+Release: alt1
+
 Summary: Ultra fast JSON encoder and decoder for Python
-License: BSD
+
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/ujson/
+Url: https://pypi.python.org/pypi/ujson
 
 # https://github.com/esnme/ultrajson.git
-Source0: https://pypi.python.org/packages/16/c4/79f3409bc710559015464e5f49b9879430d8f87498ecdc335899732e5377/%{oname}-%{version}.tar.gz
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
+BuildRequires: gcc-c++ libdouble-conversion-devel
+
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
+
 %description
-UltraJSON is an ultra fast JSON encoder and decoder written in pure C
-with bindings for Python 2.5+ and 3.
+UltraJSON is an ultra fast JSON encoder and decoder written in pure C with
+bindings for Python.
 
 %prep
-%setup -n %{oname}-%{version}
+%setup
+# Remove bundled double-conversion
+rm -vrf deps
+
+%build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+export UJSON_BUILD_NO_STRIP=1
+export UJSON_BUILD_DC_INCLUDES='%{_includedir}/double-conversion'
+export UJSON_BUILD_DC_LIBS='-ldouble-conversion'
+%pyproject_build
 
 %install
-%add_optflags -fno-strict-aliasing
-%python3_build_install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_install
+
+%check
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc *.md
+%python3_sitelibdir/%oname.cpython-*.so
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Oct 03 2022 Grigory Ustinov <grenka@altlinux.org> 5.5.0-alt1
+- Build new version (Closes: #43920).
+- Build with check.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 1.35-alt2
 - Drop python2 support.
 
