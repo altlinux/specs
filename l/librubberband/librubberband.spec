@@ -1,5 +1,5 @@
 Name: librubberband
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 
 Summary: high quality library for audio time-stretching and pitch-shifting
@@ -79,6 +79,9 @@ An audio time-stretching and pitch-shifting LADSPA plugin
 %_datadir/ladspa/rdf/ladspa-rubberband*
 
 %changelog
+* Mon Oct 03 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.1.0-alt1
+- 3.1.0 released
+
 * Fri Sep 23 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.0-alt1
 - 3.0.0 released
 
