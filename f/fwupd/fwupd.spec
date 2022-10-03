@@ -26,7 +26,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.8.4
+Version: 1.8.5
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -197,7 +197,8 @@ rm -f %buildroot%_libexecdir/fwupd/fwupd-detect-cet ||:
 
 mkdir -p --mode=0700 %buildroot%_localstatedir/fwupd/gnupg
 mv %buildroot%_docdir/fwupd %buildroot%_docdir/fwupd-devel-%version
-rm -f %buildroot%_docdir/lib*
+rm -f %buildroot%_docdir/%name-devel-%version/lib*
+mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 
 %find_lang %name
 
@@ -212,7 +213,9 @@ rm -f %buildroot%_docdir/lib*
 %_man1dir/dbxtool.1*
 %endif
 %config(noreplace)%_sysconfdir/fwupd/daemon.conf
+%ifarch x86_64 %ix86
 %config(noreplace)%_sysconfdir/fwupd/thunderbolt.conf
+%endif
 %dir %_libexecdir/fwupd
 %dir %_iconsdir/hicolor/scalable/apps
 %_libexecdir/fwupd/fwupd
@@ -284,6 +287,7 @@ rm -f %buildroot%_docdir/lib*
 %fwupd_pluginsdir/libfu_plugin_acpi_facp.so
 %endif
 %fwupd_pluginsdir/libfu_plugin_acpi_phat.so
+%fwupd_pluginsdir/libfu_plugin_android_boot.so
 %fwupd_pluginsdir/libfu_plugin_bcm57xx.so
 %fwupd_pluginsdir/libfu_plugin_cfu.so
 %fwupd_pluginsdir/libfu_plugin_ccgx.so
@@ -314,6 +318,7 @@ rm -f %buildroot%_docdir/lib*
 %endif
 %fwupd_pluginsdir/libfu_plugin_goodixmoc.so
 %fwupd_pluginsdir/libfu_plugin_hailuck.so
+%fwupd_pluginsdir/libfu_plugin_intel_usb4.so
 %if_enabled uefi
 %fwupd_pluginsdir/libfu_plugin_lenovo_thinklmi.so
 %endif
@@ -343,6 +348,7 @@ rm -f %buildroot%_docdir/lib*
 %fwupd_pluginsdir/libfu_plugin_optionrom.so
 %fwupd_pluginsdir/libfu_plugin_parade_lspcon.so
 %ifarch %ix86 x86_64
+%fwupd_pluginsdir/libfu_plugin_amd_pmc.so
 %fwupd_pluginsdir/libfu_plugin_pci_bcr.so
 %fwupd_pluginsdir/libfu_plugin_pci_mei.so
 %fwupd_pluginsdir/libfu_plugin_pci_psp.so
@@ -371,8 +377,8 @@ rm -f %buildroot%_docdir/lib*
 %fwupd_pluginsdir/libfu_plugin_test_ble.so
 %endif
 %fwupd_pluginsdir/libfu_plugin_thelio_io.so
-%fwupd_pluginsdir/libfu_plugin_thunderbolt.so
 %ifarch %ix86 x86_64
+%fwupd_pluginsdir/libfu_plugin_thunderbolt.so
 %fwupd_pluginsdir/libfu_plugin_tpm.so
 %endif
 %if_enabled uefi
@@ -428,6 +434,9 @@ rm -f %buildroot%_docdir/lib*
 %config(noreplace)%_sysconfdir/fwupd/remotes.d/fwupd-tests.conf
 
 %changelog
+* Sun Sep 25 2022 Anton Farygin <rider@altlinux.ru> 1.8.5-alt1
+- 1.8.4 -> 1.8.5
+
 * Mon Sep 19 2022 Anton Farygin <rider@altlinux.ru> 1.8.4-alt1
 - 1.8.1 -> 1.8.4
 
