@@ -17,7 +17,7 @@
 
 Name: plasma5-%rname
 Version: 5.25.5
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -132,6 +132,10 @@ KF5 library
 %patch4 -p1 -b .hwinfo
 %patch5 -p1 -b .xkb
 
+for f in src/kcmkwin/kwincompositing/metadata.json ; do
+    sed -i '/X-DocPath/d' $f
+done
+
 %build
 %K5build \
     -DINCLUDE_INSTALL_DIR=%_K5inc \
@@ -204,6 +208,9 @@ KF5 library
 
 
 %changelog
+* Mon Oct 03 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt2
+- remove help button from compositing settings module
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt1
 - new version
 
