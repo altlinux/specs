@@ -1,28 +1,37 @@
 %define oname flask-wtf
 
+# https://github.com/wtforms/flask-wtf/issues/531
+%def_without check
+
 Name: python3-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt2
 
 Summary: Simple integration of Flask and WTForms
-License: BSD
+
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/Flask-WTF/
-BuildArch: noarch
 
 # https://github.com/lepture/flask-wtf.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose python3-module-flask
-BuildRequires: python3-module-werkzeug python3-module-wtforms
-BuildRequires: python3-module-flask-babel python3-module-speaklater
+BuildRequires: python3-module-flask
+BuildRequires: python3-module-werkzeug
+BuildRequires: python3-module-wtforms
+BuildRequires: python3-module-flask-babel
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx-issues
 BuildRequires: python3-module-pallets-sphinx-themes
 BuildRequires: python3-module-sphinxcontrib-log-cabinet
 
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 %py3_provides flask_wtf
+
+BuildArch: noarch
 
 %description
 Simple integration of Flask and WTForms, including CSRF, file upload and
@@ -55,10 +64,10 @@ This package contains documentation for %oname.
 sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle
@@ -68,11 +77,12 @@ install -d %buildroot%python3_sitelibdir/%oname
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-py.test3 ||:
+%tox_check_pyproject
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/flask_wtf
+%python3_sitelibdir/Flask_WTF-%version.dist-info
 %exclude %python3_sitelibdir/*/pickle
 
 %files pickles
@@ -82,6 +92,9 @@ py.test3 ||:
 %doc docs/_build/html examples
 
 %changelog
+* Mon Oct 03 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt2
+- Fixed build requires.
+
 * Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
 - Automatically updated to 1.0.1.
 
