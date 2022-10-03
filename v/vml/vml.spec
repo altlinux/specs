@@ -1,5 +1,5 @@
 Name:     vml
-Version:  0.1.7
+Version:  0.1.8
 Release:  alt1
 
 Summary:  Tool for easily and transparently work with qemu virtual machines
@@ -57,6 +57,15 @@ mkdir -p %buildroot%_datadir/fish/vendor_completions.d
 %doc doc *.md
 
 %changelog
+* Tue Oct 04 2022 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.8-alt1
+- Fix vml show --all wrong state output
+- Fix version show
+- Add option to set ssh user on creation of a vm
+- Add properties flag to pass vm properties on creation
+- Add Rocky Linux image
+- Add centos-9-stream
+- Add AlmaLinux
+
 * Mon Jun 27 2022 Mikhail Gordeev <obirvalger@altlinux.org> 0.1.7-alt1
 - Improve work with gui images
 
