@@ -1,7 +1,7 @@
 %def_disable check
 
 Name: git-cola
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -54,9 +54,13 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %_desktopdir/*.desktop
 %_docdir/git-cola
 %_iconsdir/hicolor/scalable/apps/git-cola.svg
+%_datadir/metainfo/git-*.appdata.xml
 %python3_sitelibdir/*
 
 %changelog
+* Mon Oct 03 2022 Leontiy Volodin <lvol@altlinux.org> 4.0.2-alt1
+- New version 4.0.2.
+
 * Tue Aug 02 2022 Leontiy Volodin <lvol@altlinux.org> 4.0.1-alt1
 - New version 4.0.1.
 - Ported to %%pyproject macros.
