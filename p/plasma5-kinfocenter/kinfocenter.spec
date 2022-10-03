@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.25.5
-Release: alt1
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -34,8 +34,10 @@ Requires: /usr/bin/vulkaninfo
 Requires: /usr/sbin/dmidecode
 
 Source: %rname-%version.tar
+Source10: ansi2html.sh
 Patch1: alt-usbids-path.patch
 Patch2: alt-mark-usb-drives.patch
+Patch3: alt-no-aha-tool.patch
 
 # Automatically added by buildreq on Thu Mar 26 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils glibc-devel-static kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libraw1394-11 libstdc++-devel libwayland-client libwayland-server libxcbutil-keysyms pkg-config python-base ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
@@ -90,6 +92,7 @@ KF5 library
 %setup -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
  && echo 'set_target_properties(KInfoCenterInternal PROPERTIES VERSION 0.0.0 SOVERSION 0)' >>src/CMakeLists.txt \
@@ -100,10 +103,9 @@ grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
 
 %install
 %K5install
-
-#K5install_move data all
 %K5install_move data desktop-directories kcmusb kcmview1394 kpackage kinfocenter
 %K5install_move menu all
+install -Dm 0755 %SOURCE10 %buildroot/%_K5bin/kinfocenter5-ansi2html.sh
 
 %find_lang %name --with-kde --all-name
 
@@ -132,6 +134,12 @@ grep -e 'add_library.*KInfoCenterInternal' src/CMakeLists.txt \
 %_K5lib/libKInfoCenterInternal.so.%kinfocenterinternal_sover
 
 %changelog
+* Mon Oct 03 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt3
+- using color output for firmware security info
+
+* Mon Oct 03 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt2
+- don't use aha tool (closes: 43914)
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt1
 - new version
 
