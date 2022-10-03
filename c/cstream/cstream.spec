@@ -1,17 +1,18 @@
 Name: cstream
-Version: 3.0.0
+Version: 3.2.1
 Release: alt1
 
 Summary: General-purpose stream-handling tool
 License: MIT
 Group: File tools
-Url: http://www.cons.org/cracauer/cstream.html
-# http://www.cons.org/cracauer/download/%name-%version.tar.gz
+Url: https://www.cons.org/cracauer/cstream.html
+# https://www.cons.org/cracauer/download/%%name-%%version.tar.gz
 Source: %name-%version.tar
+
 Patch2: %name-%version-rh-Wextra.patch
 Patch3: %name-%version-rh-double-assignment.patch
-Patch4: %name-%version-rh-configure-fix.patch
 Patch5: %name-%version-rh-meh.patch
+Patch6: %name-%version-rh-Werror=tautological-compare.patch
 
 %description
 cstream filters data streams, much like the UNIX tool dd(1).
@@ -25,8 +26,8 @@ Data limits and throughput rate calculation will work for files > 4 GB.
 %setup
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 %configure
@@ -41,6 +42,9 @@ Data limits and throughput rate calculation will work for files > 4 GB.
 %doc CHANGES COPYRIGHT README TODO
 
 %changelog
+* Tue Oct 04 2022 Alexey Shabalin <shaba@altlinux.org> 3.2.1-alt1
+- Updated to 3.2.1, synced patches with Fedora.
+
 * Wed Apr 17 2013 Dmitry V. Levin <ldv@altlinux.org> 3.0.0-alt1
 - Updated to 3.0.0, synced patches with Fedora.
 
