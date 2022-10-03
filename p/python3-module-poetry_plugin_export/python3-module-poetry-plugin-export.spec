@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.0.7
+Version: 1.1.1
 Release: alt1
 
 Summary: Poetry plugin that allows the export of locked packages to various formats.
@@ -31,11 +31,11 @@ Requires: python3-module-poetry-core >= %core_ver
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(wheel) python3(poetry-core)
 
-%{?_enable_check: BuildRequires: python3(pytest)
+%{?_enable_check:BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_mock)
 BuildRequires: python3(mypy)
-BuildRequires: python3(poetry-core) >= %core_ver
-BuildRequires: python3(poetry) >= %poetry_ver}
+BuildRequires: python3-module-poetry-core >= %core_ver
+BuildRequires: python3(poetry)}
 
 %description
 This package is a plugin that allows the export of locked
@@ -64,6 +64,9 @@ Poetry which it will eventually replace.
 %doc README.md CHANGELOG.md 
 
 %changelog
+* Mon Oct 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Tue Sep 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.7-alt1
 - 1.0.7
 
