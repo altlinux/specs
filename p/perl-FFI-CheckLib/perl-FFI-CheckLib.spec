@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name FFI-CheckLib
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Capture/Tiny.pm) perl(Config.pm) perl(DynaLoader.pm) perl(Env.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(Test/Exit.pm) perl(Test2/API.pm) perl(Test2/Mock.pm) perl(Test2/Require/Module.pm) perl(Test2/V0.pm) perl(base.pm)
+BuildRequires: perl(Capture/Tiny.pm) perl(Config.pm) perl(DynaLoader.pm) perl(Env.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Basename.pm) perl(File/Spec.pm) perl(File/Which.pm) perl(Test/Exit.pm) perl(Test2/API.pm) perl(Test2/Mock.pm) perl(Test2/Require/Module.pm) perl(Test2/V0.pm) perl(base.pm)
 # END SourceDeps(oneline)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.30
+Version: 0.31
 Release: alt1
 Summary: Check that a library is available for FFI
 Group: Development/Perl
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/F*
 
 %changelog
+* Mon Oct 03 2022 Igor Vlasenko <viy@altlinux.org> 0.31-alt1
+- automated CPAN update
+
 * Tue Sep 27 2022 Igor Vlasenko <viy@altlinux.org> 0.30-alt1
 - automated CPAN update
 
