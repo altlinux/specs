@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: fluent-bit
-Version: 1.9.8
+Version: 1.9.9
 Release: alt1
 Summary: Fast data collector for Linux
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
@@ -22,7 +22,7 @@ BuildRequires: ctest
 %endif
 # libudev-devel BR is needed for systemd input plugin
 BuildRequires: libudev-devel
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ binutils
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: flex
@@ -33,6 +33,7 @@ BuildRequires: libssl-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libyaml-devel
 BuildRequires: libsystemd-devel
+BuildRequires: libcares-devel
 
 # Exclude armv7hl temporarily because of failing runtime tests
 # https://github.com/fluent/fluent-bit/issues/4395
@@ -52,6 +53,8 @@ data manipulation and analytics using SQL queries.
 %patch -p1
 %patch1 -p1
 #patch2 -p1
+sed -i 's|c-ares|cares|' src/CMakeLists.txt
+sed -i '/FLB_PATH_LIB_CARES/d' CMakeLists.txt cmake/headers.cmake cmake/libraries.cmake
 
 %build
 %cmake \
@@ -102,6 +105,10 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Mon Oct 03 2022 Leontiy Volodin <lvol@altlinux.org> 1.9.9-alt1
+- New version.
+- Built with external c-ares instead built-in (ALT #43888).
+
 * Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 1.9.8-alt1
 - new version 1.9.8
 
