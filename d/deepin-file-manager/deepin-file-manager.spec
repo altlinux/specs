@@ -4,7 +4,7 @@
 
 Name: deepin-file-manager
 Version: 5.6.4
-Release: alt1
+Release: alt2
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: File tools
@@ -155,6 +155,8 @@ sed -i 's|/usr/lib|%_libdir|' \
     tests/dde-file-manager-lib/views/ut_dfileview.cpp
 #     dde-file-manager-lib/3rdParty/wv2/wv2.pri \
 #     dde-file-manager-lib/3rdParty/charsetdetect/charsetdetect.pri
+sed -i 's|#include <pcre.h>|#include <pcre/pcre.h>|' \
+    3rdparty/fsearch/database_search.c
 
 sed -i 's|/usr/bin/file-manager.sh|/usr/bin/dde-file-manager|' \
     src/dde-file-manager/mips/dde-file-manager.desktop
@@ -306,6 +308,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Mon Oct 03 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt2
+- Fixed build with pcre.
+
 * Tue Aug 16 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt1
 - New version (5.6.4).
 
