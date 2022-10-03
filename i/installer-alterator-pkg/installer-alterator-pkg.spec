@@ -1,5 +1,5 @@
 Name: installer-alterator-pkg
-Version: 3.0.1
+Version: 3.0.3
 Release: alt1
 
 %add_findreq_skiplist %_libexecdir/alterator/backend3/pkg-init
@@ -58,6 +58,13 @@ additional package installation
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Oct 03 2022 Anton Midyukov <antohami@altlinux.org> 3.0.3-alt1
+- initinstall.d/90-pkg.sh: fix identations
+- initinstall.d/90-pkg.sh: cleanup /etc/apt/sources.list.d/*.list
+
+* Tue Sep 20 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.0.2-alt1
+- Support installation from ISO via HTTP/FTP (Closes: #43831)
+
 * Thu Jul 14 2022 Anton Midyukov <antohami@altlinux.org> 3.0.1-alt1
 - add multiple lists support in X-Alterator-PackageList (Closes: 43186)
 

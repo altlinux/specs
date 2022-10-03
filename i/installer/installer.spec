@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.12.4
+Version: 1.12.6
 Release: alt1
 
 Summary: Installer common parts
@@ -111,6 +111,12 @@ APT::Cache-Limit "$((32*1024*1024))";
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Sep 30 2022 Anton Midyukov <antohami@altlinux.org> 1.12.6-alt1
+- postinstall.d/65-setup-services.sh: add systemd-logind support
+
+* Tue Sep 20 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1.12.5-alt1
+- Support installation from ISO via HTTP/FTP (closes: #43832)
+
 * Thu Sep 15 2022 Anton Midyukov <antohami@altlinux.org> 1.12.4-alt1
 - install2: add set_device for define $DEVICE variable (Closes: 43793)
 - install2: assign $CDROMDEV variable for /dev/cdrom*|/dev/dvd* also
