@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname requests-mock
+%define pypi_name requests-mock
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.9.3
+Name: python3-module-%pypi_name
+Version: 1.10.0
 Release: alt1
 Summary: Mock out responses from the requests package
 License: Apache-2.0
@@ -18,19 +18,23 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(pbr)
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
-BuildRequires: python3(stestr)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(pytest)
+# deps
+BuildRequires: python3(six)
 BuildRequires: python3(requests)
+
+BuildRequires: python3(stestr)
+BuildRequires: python3(pytest)
 BuildRequires: python3(purl)
 BuildRequires: python3(urllib3)
 BuildRequires: python3(testtools)
 %endif
 
-%py3_provides %oname
+%py3_provides %pypi_name
 
 %description
 The requests-mock library at its core is simply a transport adapter that
@@ -50,25 +54,23 @@ whatever ways works best for your project.
 
 %build
 export PBR_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export PBR_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-export PBR_VERSION=%version
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-export TOX_TESTENV_PASSENV='PBR_VERSION'
-tox.py3 --sitepackages --console-scripts --no-deps -vvr --develop
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/requests_mock/
-%python3_sitelibdir/requests_mock-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 03 2022 Stanislav Levin <slev@altlinux.org> 1.10.0-alt1
+- 1.9.3 -> 1.10.0.
+
 * Tue Mar 22 2022 Stanislav Levin <slev@altlinux.org> 1.9.3-alt1
 - 1.8.0 -> 1.9.3.
 

@@ -1,12 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-
-%define oname requests-unixsocket
+%define pypi_name requests-unixsocket
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.1.5
-Release: alt4.git5d83b0f
+Name: python3-module-%pypi_name
+Version: 0.3.0
+Release: alt1
 
 Summary: Use requests to talk HTTP via a UNIX domain socket
 License: Apache-2.0
@@ -22,11 +21,19 @@ BuildRequires: git-core
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
-BuildRequires: python3-module-pytest
+# deps
 BuildRequires: python3-module-requests
+
+BuildRequires: python3-module-pytest
 BuildRequires: python3-module-waitress
 %endif
+
+%py3_provides %pypi_name
 
 %description
 Use requests to talk HTTP via a UNIX domain socket.
@@ -45,25 +52,27 @@ find ./ -type f -name '*.py' -exec \
 	sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' '{}' +
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # don't package tests
-rm -r %buildroot%python3_sitelibdir/requests_unixsocket/testutils.py
-rm %buildroot%python3_sitelibdir/requests_unixsocket/__pycache__/testutils.*
+rm %buildroot%python3_sitelibdir/requests_unixsocket/testutils.py
 rm -r %buildroot%python3_sitelibdir/requests_unixsocket/tests/
 
 %check
-PYTHONPATH=$(pwd) py.test3
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/requests_unixsocket/
-%python3_sitelibdir/requests_unixsocket-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 03 2022 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
+- 0.1.5 -> 0.3.0.
+
 * Fri Oct 16 2020 Stanislav Levin <slev@altlinux.org> 0.1.5-alt4.git5d83b0f
 - Applied upstream fixes.
 
