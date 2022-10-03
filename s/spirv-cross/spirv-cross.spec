@@ -1,11 +1,10 @@
-%define build_type RelWithDebInfo
-%define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_INSTALL_LIBDIR=%_datadir
 %define sover 0
 %def_disable static
 
 Name: spirv-cross
-Version: 2021.01.15
-Release: alt0.2
+Version: 0.49.0
+Release: alt0.1
+Serial: 1
 
 Summary: tool to parse and convert SPIR-V to other shader languages
 Group: Development/C++
@@ -48,7 +47,7 @@ sed -i "s/make_msl_version(1, 2)/make_msl_version(1, 2, 0)/" spirv_msl.hpp
 %endif
 
 %build
-%_cmake \
+%cmake \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
 %if_disabled static
   -DSPIRV_CROSS_STATIC=OFF \
@@ -56,7 +55,7 @@ sed -i "s/make_msl_version(1, 2)/make_msl_version(1, 2, 0)/" spirv_msl.hpp
 %endif
   -DSPIRV_CROSS_SHARED=ON
 %cmake_build
-%cmakeinstall_std
+%cmake_install
 
 %files -n lib%{name}-c-shared%{sover}
 %_libdir/*.so.*
@@ -68,6 +67,11 @@ sed -i "s/make_msl_version(1, 2)/make_msl_version(1, 2, 0)/" spirv_msl.hpp
 %_datadir/cmake/*
 
 %changelog
+* Mon Oct 03 2022 L.A. Kostis <lakostis@altlinux.ru> 1:0.49.0-alt0.1
+- Updated to sdk-1.3.224.1.
+- Bump serial.
+- Remove cmake hacks.
+
 * Tue Aug 03 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2021.01.15-alt0.2
 - e2k: compiler bug workaround.
 
