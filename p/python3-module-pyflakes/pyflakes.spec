@@ -1,28 +1,25 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pyflakes
+%define pypi_name pyflakes
 
-%def_with check
-
-Name: python3-module-%oname
-Version: 2.4.0
+Name: python3-module-%pypi_name
+Version: 2.5.0
 Release: alt1
 
 Summary: A simple program which checks Python source files for errors
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pyflakes
+Url: https://pypi.org/project/pyflakes/
 BuildArch: noarch
 
 # https://github.com/PyCQA/pyflakes.git
 Source: %name-%version.tar
-Source1: pyflakes.1
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-%if_with check
-BuildRequires: python3(tox)
-%endif
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 Provides: python3-pyflakes = %EVR
 Obsoletes: python3-pyflakes < %EVR
@@ -40,12 +37,10 @@ check on style.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
-install -Dpm 644 %SOURCE1 %buildroot%_man1dir/python3-pyflakes.1
+%pyproject_install
 
 mv %buildroot%_bindir/{pyflakes,pyflakes-py3}
 
@@ -53,18 +48,18 @@ mv %buildroot%_bindir/{pyflakes,pyflakes-py3}
 rm -r %buildroot%python3_sitelibdir/pyflakes/test
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject
 
 %files
 %doc AUTHORS LICENSE README.rst
-%_man1dir/python3-pyflakes.1*
 %_bindir/pyflakes-py3
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/pyflakes/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Aug 15 2022 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
+- 2.4.0 -> 2.5.0.
+
 * Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 2.4.0-alt1
 - 2.3.1 -> 2.4.0.
 

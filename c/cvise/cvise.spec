@@ -1,6 +1,8 @@
+%def_with check
+
 Name: cvise
 Version: 2.4.0
-Release: alt1
+Release: alt2
 
 Summary: Super-parallel Python port of the C-Reduce
 
@@ -30,7 +32,7 @@ BuildRequires: llvm-devel-static >= 10
 BuildRequires: clang-devel-static >= 10
 %endif
 
-BuildRequires: cmake ctest
+BuildRequires: cmake
 BuildRequires: flex
 BuildRequires: gcc-c++
 BuildRequires: indent
@@ -38,13 +40,17 @@ BuildRequires: libncurses-devel
 BuildRequires: zlib-devel
 #BuildRequires: ninja
 
-BuildRequires: python3-module-pebble
-BuildRequires: python3-module-psutil
-BuildRequires: python3-module-pytest python3-module-pytest-flake8
-BuildRequires: python3-module-pytest-shutil python3-module-pytest-xdist python3-module-pytest-cov
-BuildRequires: unifdef
-#BuildRequires: pytest3
+%if_with check
+# deps
+BuildRequires: python3(chardet)
+BuildRequires: python3(pebble)
+BuildRequires: /usr/bin/unifdef
+# psutil
+BuildRequires: /proc
+BuildRequires: python3(psutil)
 
+BuildRequires: python3(pytest)
+%endif
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-build-intro >= 2.1.5
@@ -79,18 +85,21 @@ and report bugs in compilers and other tools that process C/C++ or OpenCL code.
 # TODO: https://bugzilla.altlinux.org/show_bug.cgi?id=38660
 #__subst '14ilist(APPEND CMAKE_PREFIX_PATH "/usr/share/cmake/Modules")' CMakeLists.txt
 
+# skip flake8
+sed -i 's/--flake8/ /' setup.cfg
+
 %build
 %cmake -DCMAKE_INSTALL_LIBEXECDIR=%_libexecdir
 %cmake_build
-
-%check
-# run ctest -> python3 -m pytest
-#make -C BUILD test
 
 %install
 %cmake_install
 rm -rfv %buildroot%_datadir/cvise/tests/
 
+%check
+# assume _cmake__builddir   %%_target_platform
+cd %_target_platform
+py.test3 -vra .
 
 %files
 %doc COPYING
@@ -104,6 +113,9 @@ rm -rfv %buildroot%_datadir/cvise/tests/
 %_libexecdir/cvise/topformflat
 
 %changelog
+* Mon Oct 03 2022 Stanislav Levin <slev@altlinux.org> 2.4.0-alt2
+- NMU: Dropped build dependency on removed pytest-flake8.
+
 * Sun Dec 19 2021 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt1
 - new version 2.4.0 (with rpmrb script)
 

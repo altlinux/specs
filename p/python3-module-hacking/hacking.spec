@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname hacking
+%define pypi_name hacking
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Hacking Guideline Enforcement
 License: Apache-2.0
@@ -20,16 +20,16 @@ Patch0: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(pbr)
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 # install_requires=
 BuildRequires: python3(flake8)
 
 BuildRequires: python3(stestr)
 BuildRequires: python3(ddt)
-
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %py3_requires flake8
@@ -38,17 +38,6 @@ BuildRequires: python3(tox_console_scripts)
 hacking is a set of flake8 plugins that test and enforce the OpenStack
 Style Guidlines.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-hacking is a set of flake8 plugins that test and enforce the OpenStack
-Style Guidlines.
-
-This package contains tests for %oname.
-
 %prep
 %setup
 %autopatch -p1
@@ -56,29 +45,29 @@ This package contains tests for %oname.
 %build
 # https://docs.openstack.org/pbr/latest/user/packagers.html#versioning
 export PBR_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export PBR_VERSION=%version
-%python3_install
+%pyproject_install
+
+# don't ship tests
+rm -r %buildroot%python3_sitelibdir/hacking/tests/
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
 export PBR_VERSION=%version
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%tox_check_pyproject
 
 %files
 %doc *.rst doc/source/*.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
-%exclude %python3_sitelibdir/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/hacking/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 03 2022 Stanislav Levin <slev@altlinux.org> 4.1.0-alt2
+- Fixed FTBFS (Flake8 5.0).
+- Modernized packaging.
+
 * Wed Jan 26 2022 Stanislav Levin <slev@altlinux.org> 4.1.0-alt1
 - 3.2.0 -> 4.1.0.
 

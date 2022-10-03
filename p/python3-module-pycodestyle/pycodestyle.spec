@@ -1,11 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pycodestyle
+%define pypi_name pycodestyle
 
-%def_with check
-
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 2.9.1
-Release: alt1
+Release: alt2
 
 Summary: Python style guide checker
 License: Expat
@@ -19,9 +17,9 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-%if_with check
-BuildRequires: python3(tox)
-%endif
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 pycodestyle is a tool to check your Python code against some of the style
@@ -32,26 +30,27 @@ conventions in PEP 8.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 mv %buildroot%_bindir/pycodestyle{,.py3}
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_check_pyproject
 
 %files
 %doc README.rst LICENSE CONTRIBUTING.rst CHANGES.txt
 %_bindir/pycodestyle.py3
 %python3_sitelibdir/pycodestyle.py
 %python3_sitelibdir/__pycache__/pycodestyle.cpython-*
-%python3_sitelibdir/pycodestyle-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 03 2022 Stanislav Levin <slev@altlinux.org> 2.9.1-alt2
+- Modernized packaging.
+
 * Sun Oct 02 2022 Anton Zhukharev <ancieg@altlinux.org> 2.9.1-alt1
 - 2.8.0 -> 2.9.1.
 
