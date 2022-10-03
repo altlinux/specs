@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: pve-storage
 Summary: PVE storage management library
-Version: 7.2.5
+Version: 7.2.10
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -10,7 +12,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 ExclusiveArch: x86_64 aarch64
 
 Provides: libpve-storage-perl = %EVR
-Requires: open-iscsi gdisk parted hdparm
+Requires: gdisk parted hdparm
 Requires: multipath-tools lvm2 thin-provisioning-tools
 Requires: ceph-common >= 12.2.1 ceph-fuse
 Requires: cifs-utils samba-client
@@ -18,6 +20,7 @@ Requires: cstream
 Requires: glusterfs-client >= 3.4.2
 Requires: zfs-utils
 Requires: nfs-clients nfs-utils
+Requires: /usr/bin/iscsi-ls open-iscsi
 Requires: proxmox-backup-client >= 1.0 proxmox-backup-file-restore
 Requires: smartmontools
 
@@ -45,14 +48,19 @@ rbd
 __EOF__
 
 %files
-%_sysconfdir/modules-load.d/pve-storage.conf
+%config(noreplace) %_sysconfdir/modules-load.d/pve-storage.conf
 %_sbindir/pvesm
+%_udevrulesdir/*.rules
+%_prefix/libexec/ceph-rbdnamer-pve
 %perl_vendor_privlib/PVE
 %_datadir/bash-completion/completions/*
 %_datadir/zsh/vendor-completions/*
 %_man1dir/pvesm.1*
 
 %changelog
+* Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.10-alt1
+- 7.2-10
+
 * Wed Jul 06 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.5-alt1
 - 7.2-5
 

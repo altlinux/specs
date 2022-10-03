@@ -2,7 +2,7 @@
 
 Name: pve-http-server
 Summary: Proxmox Asynchrounous HTTP Server Implementation
-Version: 4.1.3
+Version: 4.1.4
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -46,6 +46,9 @@ This package is used as base to implement the REST API in all perl based
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 4.1.4-alt1
+- 4.1-4
+
 * Thu Jul 07 2022 Andrew A. Vasilyev <andy@altlinux.org> 4.1.3-alt1
 - 4.1-3
 

@@ -1,8 +1,8 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: proxmox-perl-rs
-Version: 0.1.0
-Release: alt1.2
+Version: 0.2.1
+Release: alt1
 Summary: PVE and PMG common parts which have been ported to Rust
 License: AGPL-3.0+
 Group: Development/Other
@@ -25,7 +25,7 @@ libpve-rs-perl and libpmg-rs-perl, loading whichever is available.
 
 %package -n libproxmox-rs-perl
 Summary: PVE/PMG common parts which have been ported to Rust
-Version: 0.1.0
+Version: 0.2.1
 Group: Development/Other
 Provides: proxmox-perl-rs = %EVR
 Provides: proxmox-rs-perl = %EVR
@@ -35,7 +35,7 @@ Provides: proxmox-rs-perl = %EVR
 
 %package -n libpve-rs-perl
 Summary: PVE parts which have been ported to Rust
-Version: 0.6.1
+Version: 0.7.2
 Group: Development/Other
 Provides: pve-perl-rs = %EVR
 Provides: pve-rs-perl = %EVR
@@ -45,7 +45,7 @@ Provides: pve-rs-perl = %EVR
 
 %package -n libpmg-rs-perl
 Summary: Components of Proxmox Mail Gateway which have been ported to Rust
-Version: 0.5.1
+Version: 0.6.2
 Group: Development/Other
 Provides: pmg-perl-rs = %EVR
 Provides: pmg-rs-perl = %EVR
@@ -87,6 +87,11 @@ install -m0644 Proxmox/Lib/{Common,PVE}.pm %buildroot%perl_vendor_privlib/Proxmo
 
 
 %changelog
+* Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 0.2.1-alt1
+- Update:
+  + libproxmox-rs-perl 0.2.1
+  + libpve-rs-perl 0.7.2
+
 * Fri May 06 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.1.0-alt1.2
 - add %%set_perl_req_method relaxed
 

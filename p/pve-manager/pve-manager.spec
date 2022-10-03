@@ -4,7 +4,7 @@
 
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 7.2.6
+Version: 7.2.11
 Release: alt1
 License: AGPL-3.0+ AND GPLv3 AND MIT
 Group: System/Servers
@@ -19,6 +19,7 @@ Requires: perl-LWP-Protocol-https
 Requires: pve-vncterm pve-novnc >= 1.2.2 pve-spiceterm pve-xtermjs >= 4.7.1 pve-acme
 Requires: pve-cluster >= 7.0.4 pve-container >= 4.0.9 pve-firewall pve-ha-manager pve-qemu-server >= 6.2.17 pve-i18n >= 1.0.3 pve-docs
 Requires: proxmox-widget-toolkit >= 3.4.9 proxmox-mini-journalreader fonts-font-awesome javascript-extjs javascript-qrcodejs
+Requires: libproxmox-rs-perl >= 0.2.0 libpve-rs-perl >= 0.7.1
 
 Source: %name-%version.tar
 
@@ -119,6 +120,9 @@ rm -f  %buildroot%_bindir/pvemailforward
 %_man8dir/*
 
 %changelog
+* Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.11-alt1
+- 7.2-11
+
 * Wed Jul 06 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.6-alt1
 - 7.2-6
 

@@ -3,15 +3,14 @@
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 7.2.2
+Version: 7.2.4
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
 Vcs: git://git.proxmox.com/git/qemu-server.git
 Source: %name-%version.tar
-Source71: basealt_bootsplash_yellow.jpg
-Source72: basealt_bootsplash_blue.jpg
+Source71: basealt_bootsplash.jpg
 
 ExclusiveArch: x86_64 aarch64
 
@@ -37,11 +36,10 @@ This package contains the Qemu Server tools used by Proxmox VE.
 %install
 %makeinstall_std
 install -m0644 %SOURCE71 %buildroot%_datadir/qemu-server/bootsplash.jpg
-install -m0644 %SOURCE72 %buildroot%_datadir/qemu-server/bootsplash_invert.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-cirrus.jpg
-ln -s bootsplash_invert.jpg %buildroot%_datadir/qemu-server/bootsplash-std.jpg
-ln -s bootsplash_invert.jpg %buildroot%_datadir/qemu-server/bootsplash-vmware.jpg
-ln -s bootsplash_invert.jpg %buildroot%_datadir/qemu-server/bootsplash-qxl.jpg
+ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-std.jpg
+ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-vmware.jpg
+ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-qxl.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial0.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial1.jpg
 ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-serial2.jpg
@@ -69,6 +67,10 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/*.pm
 
 %changelog
+* Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.4-alt1
+- 7.2-4
+- update basealt logo
+
 * Sat May 07 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.2-alt1
 - 7.2-2
 
