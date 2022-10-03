@@ -1,6 +1,6 @@
 Name:       s3cmd
-Version:    2.0.2
-Release:    alt2
+Version:    2.3.0
+Release:    alt1
 
 Summary:    S3cmd is a tool for managing Amazon S3 storage space
 License:    GPL
@@ -10,7 +10,7 @@ Url:        http://s3tools.org/s3cmd
 BuildArch:  noarch
 
 Source:     %name-%version-%release.tar
-Patch0:     port-to-python3.patch
+Patch0:     0001-httplib.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -33,7 +33,7 @@ directory tree synchronization.
 %python3_install
 
 %files
-%doc INSTALL NEWS README.md
+%doc INSTALL.md NEWS README.md
 %_bindir/*
 %_man1dir/*.1*
 %python3_sitelibdir/*
@@ -41,6 +41,9 @@ directory tree synchronization.
 
 
 %changelog
+* Mon Oct 03 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.3.0-alt1
+- v.2.3.0 (closes #43928)
+
 * Tue Feb 18 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.0.2-alt2
 - Porting to python3.
 
