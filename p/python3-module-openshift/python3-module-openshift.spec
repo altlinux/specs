@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version:  0.13.1
-Release:  alt1
+Release:  alt2
 
 Summary:  OpenShift python client
 License:  Apache-2.0
@@ -45,6 +45,9 @@ make test PYTHON=%__python3
 %python3_sitelibdir/*
 
 %changelog
+* Tue Oct 04 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.13.1-alt2
+- fix FTBFS
+
 * Thu Feb 10 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.13.1-alt1
 - 0.13.1
 
