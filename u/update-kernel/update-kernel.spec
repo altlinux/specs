@@ -1,6 +1,6 @@
 Name: update-kernel
 Version: 1.4
-Release: alt1
+Release: alt2
 
 Summary: Update kernel and modules
 License: GPL-2.0+
@@ -39,6 +39,8 @@ mkdir -p %buildroot%_sbindir
 install -pm755 update-kernel %buildroot%_sbindir/
 install -pm755 remove-old-kernels %buildroot%_sbindir/
 install -pm755 analyze-kmodules %buildroot%_sbindir/
+install -Dp update-kernel.8 -t %buildroot%_man8dir/
+install -Dp update-kernel.8.ru %buildroot%_mandir/ru/man8/update-kernel.8
 
 %check
 make check
@@ -47,8 +49,13 @@ make check
 %_sbindir/update-kernel
 %_sbindir/remove-old-kernels
 %_sbindir/analyze-kmodules
+%_man8dir/*.8*
+%_mandir/ru/man8/*.8*
 
 %changelog
+* Tue Oct 04 2022 Vitaly Chikunov <vt@altlinux.org> 1.4-alt2
+- Add update-kernel(8) man page (Anton Shevtsov, ALT#43934).
+
 * Sat Jul 16 2022 Vitaly Chikunov <vt@altlinux.org> 1.4-alt1
 - update-kernel: Only check booted kernel for external modules compatibility
   and remove red colored warnings.
