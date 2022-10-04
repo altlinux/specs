@@ -12,7 +12,7 @@
 
 Name: unit
 Version: 1.28.0
-Release: alt1
+Release: alt2
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -27,7 +27,7 @@ BuildRequires: libssl-devel
 BuildRequires: libpcre-devel
 %{?_enable_ruby:BuildRequires: ruby libruby-devel}
 %{?_enable_perl:BuildRequires: perl-devel perl-base}
-%{?_enable_php:BuildRequires: php7 php7-devel php-base}
+%{?_enable_php:BuildRequires: php8.1 php8.1-devel php-base}
 %{?_enable_python:BuildRequires: python3-devel}
 
 Provides: nginx-unit = %EVR
@@ -113,7 +113,7 @@ CFLAGS="%optflags" \
   ./configure python --config=python3-config
 %endif
 %if_enabled php
-  ./configure php
+  ./configure php --config=/usr/bin/php-config8.1
 %endif
 %if_enabled ruby
   ./configure ruby
@@ -212,6 +212,9 @@ build/tests
 %endif
 
 %changelog
+* Tue Oct 04 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.28.0-alt2
+- Switch to PHP 8.1
+
 * Tue Sep 13 2022 Vitaly Chikunov <vt@altlinux.org> 1.28.0-alt1
 - Update to 1.28.0 (2022-09-13).
 
