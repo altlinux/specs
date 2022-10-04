@@ -1,5 +1,4 @@
 
-
 %define oneadmin_home /var/lib/one
 %define oneadmin_uid 9869
 %define oneadmin_gid 9869
@@ -11,13 +10,15 @@
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
-Version: 6.0.0.3
+Version: 6.2.0.1
 Release: alt1
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
 
 Source0: %name-%version.tar
+# Failed build js webpack for fireedge
+ExcludeArch: %ix86
 
 BuildRequires(pre): rpm-build-ruby rpm-build-python3 rpm-macros-nodejs rpm-macros-systemd
 BuildRequires(pre): rpm-build-java
@@ -41,7 +42,7 @@ BuildRequires: scons
 BuildRequires: python3-module-setuptools /usr/bin/pathfix.py
 BuildRequires: java-openjdk-devel ws-commons-util xmlrpc-common xmlrpc-client
 BuildRequires: zlib-devel
-BuildRequires: node node-gyp npm node-devel node-sass libsass libzeromq-devel
+BuildRequires: node node-bower node-gyp npm node-devel node-sass libsass libzeromq-devel
 BuildRequires: ronn
 BuildRequires: groff-base
 
@@ -80,6 +81,7 @@ Requires: curl
 Requires: rsync
 Requires: iputils
 Requires: sqlite3
+Requires: jq
 Requires: %name-common = %EVR
 Requires: gem-%name-cli = %EVR
 Obsoletes: %name-addon-markets < %EVR
@@ -305,7 +307,7 @@ Configures an OpenNebula node providing LXC.
 %package provision
 Summary: OpenNebula infrastructure provisioning
 Group: System/Servers
-BuildArch: noarch
+#BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: %name-server = %EVR
 Requires: %name-provision-data = %EVR
@@ -323,7 +325,8 @@ OpenNebula infrastructure provisioning data
 
 %prep
 %setup
-
+rm -rf src/sunstone/public/node_modules/node-gyp
+rm -rf src/sunstone/public/node_modules/node-sass
 ln -sf %nodejs_sitelib/node-gyp src/sunstone/public/node_modules/node-gyp
 ln -sf %nodejs_sitelib/node-sass src/sunstone/public/node_modules/node-sass
 
@@ -403,12 +406,13 @@ rm -f  %buildroot%_libexecdir/one/ruby/opennebula.rb
 rm -f  %buildroot%_libexecdir/one/ruby/vcenter_driver.rb
 rm -f  %buildroot%_libexecdir/one/ruby/cloud/CloudClient.rb
 
-## oennebula-cli
+## opennebula-cli
 #rm -rf  %buildroot%_libexecdir/one/ruby/cli
 
 # delete docs
 rm -rf %buildroot%_libexecdir/ruby/gems/*/doc
 rm -rf %buildroot%_datadir/doc/one
+rm -rf %buildroot%_datadir/ri
 
 # systemd units
 install -p -D -m 644 share/pkgs/ALT/opennebula.service %buildroot%_unitdir/opennebula.service
@@ -482,6 +486,11 @@ rm -rf %buildroot%_libexecdir/one/fireedge/node_modules
 
 # fix placement
 mv %buildroot%_libexecdir/flow %buildroot%_datadir/flow
+## opennebula-flow
+rm -rf %buildroot/usr/local
+rm -rf %buildroot/etc/flow
+rm -f %buildroot%_datadir/flow/etc
+rm -f %buildroot%_datadir/flow/lib
 
 # Python
 pushd src/oca/python
@@ -800,6 +809,18 @@ fi
 
 %defattr(0640, root, oneadmin, 0750)
 %config(noreplace) %_sysconfdir/one/fireedge-server.conf
+%dir %_sysconfdir/one/fireedge
+%dir %_sysconfdir/one/fireedge/provision
+%config %_sysconfdir/one/fireedge/provision/provision-server.conf
+%dir %_sysconfdir/one/fireedge/provision/providers.d
+%config %_sysconfdir/one/fireedge/provision/providers.d/*
+%dir %_sysconfdir/one/fireedge/sunstone
+%config %_sysconfdir/one/fireedge/sunstone/sunstone-server.conf
+%config %_sysconfdir/one/fireedge/sunstone/sunstone-views.yaml
+%dir %_sysconfdir/one/fireedge/sunstone/admin
+%config %_sysconfdir/one/fireedge/sunstone/admin/*
+%dir %_sysconfdir/one/fireedge/sunstone/user
+%config %_sysconfdir/one/fireedge/sunstone/user/*
 
 %files gate
 %config(noreplace) %attr(0640, root, oneadmin) %_sysconfdir/one/onegate-server.conf
@@ -817,17 +838,13 @@ fi
 %files provision
 %_bindir/oneprovision
 %_bindir/oneprovider
-%_bindir/oneprovision-template
 %config(noreplace) %_sysconfdir/one/cli/oneprovision.yaml
 %config(noreplace) %_sysconfdir/one/cli/oneprovider.yaml
-%config(noreplace) %_sysconfdir/one/cli/oneprovision_template.yaml
 %_libexecdir/one/ruby/cli/one_helper/oneprovision_helper.rb
 %_libexecdir/one/ruby/cli/one_helper/oneprovider_helper.rb
-%_libexecdir/one/ruby/cli/one_helper/oneprovision_template_helper.rb
 %_libexecdir/one/oneprovision
 %_man1dir/oneprovision.1*
 %_man1dir/oneprovider.1*
-%_man1dir/oneprovision-template.1*
 
 %files provision-data
 %_datadir/one/oneprovision
@@ -868,13 +885,13 @@ fi
 %_libexecdir/one/ruby/az_driver.rb
 %_libexecdir/one/ruby/ec2_driver.rb
 %_libexecdir/one/ruby/aws_vnm.rb
-%_libexecdir/one/ruby/packet_vnm.rb
+%_libexecdir/one/ruby/equinix_vnm.rb
 %_libexecdir/one/ruby/vultr_vnm.rb
 %_libexecdir/one/ruby/onedb
 %_libexecdir/one/ruby/one_vnm.rb
 %_libexecdir/one/ruby/opennebula_driver.rb
 %_libexecdir/one/ruby/ssh_stream.rb
-%_libexecdir/one/ruby/packet_driver.rb
+%_libexecdir/one/ruby/equinix_driver.rb
 %_libexecdir/one/ruby/PublicCloudDriver.rb
 %_libexecdir/one/sh
 %_libexecdir/one/onecfg
@@ -912,7 +929,6 @@ fi
 %config(noreplace) %_sysconfdir/one/cli/*
 %exclude %_sysconfdir/one/cli/oneprovision.yaml
 %exclude %_sysconfdir/one/cli/oneprovider.yaml
-%exclude %_sysconfdir/one/cli/oneprovision_template.yaml
 %_datadir/bash-completion/completions/one
 
 %_bindir/oneacct
@@ -943,7 +959,6 @@ fi
 %_libexecdir/one/ruby/cli
 %exclude %_libexecdir/one/ruby/cli/one_helper/oneprovision_helper.rb
 %exclude %_libexecdir/one/ruby/cli/one_helper/oneprovider_helper.rb
-%exclude %_libexecdir/one/ruby/cli/one_helper/oneprovision_template_helper.rb
 
 #%ruby_gemspecdir/opennebula-cli*
 #%ruby_sitelibdir/cli_helper.rb
@@ -957,9 +972,11 @@ fi
 %exclude %_man1dir/onedb.1.*
 %exclude %_man1dir/oneprovision.1*
 %exclude %_man1dir/oneprovider.1*
-%exclude %_man1dir/oneprovision-template.1*
 
 %changelog
+* Wed Sep 28 2022 Alexey Shabalin <shaba@altlinux.org> 6.2.0.1-alt1
+- 6.2.0.1
+
 * Wed Jan 12 2022 Alexey Shabalin <shaba@altlinux.org> 6.0.0.3-alt1
 - 6.0.0.3
 
