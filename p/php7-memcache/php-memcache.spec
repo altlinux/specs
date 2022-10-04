@@ -1,6 +1,6 @@
 %define		php_extension	memcache
 Name:	 	php%_php_suffix-%php_extension
-Version:	4.0.5.2
+Version:	8.0.1
 Release:	alt%php_version.%php_release
 Summary:	memcached extension for php7
 License:	PHP-3.0
@@ -65,6 +65,9 @@ NO_INTERACTION=1 make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Mon Oct 03 2022 Anton Farygin <rider@altlinux.ru> 8.0.1-alt1
+- 4.0.5.2 -> 8.0.1
 
 * Thu Feb  6 2020 Anton Farygin <rider@altlinux.ru> 4.0.5.2-alt1 
 - 4.0.4 -> 4.0.5.2

@@ -9,7 +9,7 @@
 %define _php_version  %version
 %define _php_major  7
 %define _php_minor  4
-%define _php_release_version 30
+%define _php_release_version 32
 %define _php_suffix %_php_major
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -19,7 +19,7 @@
 Summary: The PHP7 scripting language
 Name:	 php%_php_suffix
 Version: %_php_major.%_php_minor.%_php_release_version
-Release: alt2
+Release: alt1
 
 
 License: PHP-3.01
@@ -451,6 +451,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Sun Oct 02 2022 Anton Farygin <rider@altlinux.ru> 7.4.32-alt1
+- 7.4.30 -> 7.4.32 (Fixes: CVE-2022-31628, CVE-2022-31629)
+
 * Thu Jul 14 2022 Anton Farygin <rider@altlinux.ru> 7.4.30-alt2
 - added conflicts with the installer-stage3 to avoid using php7
   in distributios: The first stage of EOL plan
