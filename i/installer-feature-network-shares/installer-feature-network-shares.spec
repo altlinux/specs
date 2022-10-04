@@ -1,5 +1,5 @@
 Name: installer-feature-network-shares
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 %define hookdir %_datadir/install2/postinstall.d
@@ -38,6 +38,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Oct 04 2022 Dmitry Terekhin <jqt4@altlinux.org> 0.8.2-alt1
+- Remove smb.conf fix causing the problem
+
 * Tue Jun 23 2015 Andrey Cherepanov <cas@altlinux.org> 0.8.1-alt1
 - Return 0 in any case in last conditionals
 
