@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.5.9
-Release: alt3
+Release: alt4
 License: GPL-3.0+
 URL:     https;//www.altlinux.org/Education
 Group:   Education
@@ -50,7 +50,6 @@ Requires: geany
 Requires: geany-themes
 %ifnarch %e2k
 Requires: geany-plugins
-Requires: freeplane
 %else
 Requires: freemind
 %endif
@@ -175,7 +174,6 @@ Requires: basic256
 Requires: geany
 Requires: geany-themes
 Requires: geany-plugins
-Requires: freeplane
 Requires: gnome-games-klotski
 Requires: gnome-games-mahjongg
 Requires: gnome-games-aisleriot
@@ -620,6 +618,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Tue Oct 04 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt4
+- Delete deprecated freeplane.
+
 * Sun Oct 02 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt3
 - Add kchmviewer as help viewer for IDE for pascalabcnet.
 
