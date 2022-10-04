@@ -1,4 +1,4 @@
-%define kernel_base_version 5.19
+%define kernel_base_version 6.0
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -6,30 +6,33 @@ Version: %kernel_base_version
 Release: alt1
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
-# grep -Fhwr SPDX-License-Identifier: /usr/include/linux-default/include |sort |uniq -c |sort -n
+# git grep -Fh SPDX-License-Identifier: include/uapi arch/*/include/uapi |sort |uniq -c |sort -n
 #   1 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) AND MIT) */
+#   1 /* SPDX-License-Identifier: ((GPL-2.0+ WITH Linux-syscall-note) OR MIT) */
 #   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) */
 #   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause */
-#   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
+#   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR Linux-OpenIB */
 #   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) or BSD-3-Clause */
 #   1 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note
-#   1 /* SPDX-License-Identifier: GPL-2.0-or-later WITH Linux-syscall-note */
 #   2 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR CDDL-1.0) */
-#   2 /* SPDX-License-Identifier: BSD-3-Clause */
 #   3 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR MIT) */
-#   3 /* SPDX-License-Identifier: LGPL-2.1 WITH Linux-syscall-note */
-#   3 /* SPDX-License-Identifier: MIT */
-#   4 /* SPDX-License-Identifier: ((GPL-2.0+ WITH Linux-syscall-note) OR BSD-3-Clause) */
-#   4 /* SPDX-License-Identifier: LGPL-2.0+ WITH Linux-syscall-note */
-#   5 /* SPDX-License-Identifier: ((GPL-2.0-only WITH Linux-syscall-note) OR BSD-3-Clause) */
-#   5 /* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
+#   4 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
+#   4 /* SPDX-License-Identifier: GPL-2.0-or-later WITH Linux-syscall-note */
+#   4 /* SPDX-License-Identifier: LGPL-2.1 WITH Linux-syscall-note */
+#   4 /* SPDX-License-Identifier: MIT */
+#   5 /* SPDX-License-Identifier: ((GPL-2.0+ WITH Linux-syscall-note) OR BSD-3-Clause) */
+#   5 /* SPDX-License-Identifier: BSD-3-Clause */
+#   5 /* SPDX-License-Identifier: LGPL-2.0+ WITH Linux-syscall-note */
 #   6 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-2-Clause) */
-#  12 /* SPDX-License-Identifier: GPL-1.0+ WITH Linux-syscall-note */
-#  15 /* SPDX-License-Identifier: LGPL-2.1+ WITH Linux-syscall-note */
-#  17 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
-#  17 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR Linux-OpenIB) */
-# 118 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
-# 569 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+#   6 /* SPDX-License-Identifier: ((GPL-2.0-only WITH Linux-syscall-note) OR BSD-3-Clause) */
+#  11 /* SPDX-License-Identifier: GPL-1.0+ WITH Linux-syscall-note */
+#  15 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR Linux-OpenIB) */
+#  16 /* SPDX-License-Identifier: LGPL-2.1+ WITH Linux-syscall-note */
+#  21 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
+#  21 /* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
+#  24 # SPDX-License-Identifier: GPL-2.0
+# 165 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
+# 992 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 License: GPL-2.0-only with Linux-syscall-note
 Group: Development/Kernel
 Url: https://www.kernel.org/
@@ -40,11 +43,11 @@ Source1: cyclades.h
 #Patch: %name-%version-%release.patch
 
 Patch1: 0001-uapi-fix-linux-sysctl.h-userspace-compilation-errors.patch
-Patch2: 0002-uapi-fix-linux-vm_sockets.h-userspace-compilation-er.patch
-Patch3: 0003-uapi-fix-linux-sctp.h-userspace-compilation-errors.patch
-Patch4: 0004-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
-Patch5: 0005-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
-Patch6: 0006-uapi-fix-linux-sysctl.h-Obsolete-types-detected-warn.patch
+Patch2: 0002-uapi-fix-linux-sysctl.h-Obsolete-types-detected-warn.patch
+Patch3: 0003-uapi-fix-linux-vm_sockets.h-userspace-compilation-er.patch
+Patch4: 0004-uapi-fix-linux-sctp.h-userspace-compilation-errors.patch
+Patch5: 0005-uapi-fix-linux-omapfb.h-userspace-compilation-error.patch
+Patch6: 0006-uapi-fix-linux-usb-audio.h-userspace-compilation-err.patch
 
 BuildRequires: rpm-build-kernel rsync
 BuildRequires: %kernel_source = 1.0.0
@@ -294,6 +297,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sun Oct 02 2022 Dmitry V. Levin <ldv@altlinux.org> 6.0-alt1
+- v5.19 -> v6.0.
+
 * Sun Jul 31 2022 Dmitry V. Levin <ldv@altlinux.org> 5.19-alt1
 - v5.18 -> v5.19.
 
