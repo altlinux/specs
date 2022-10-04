@@ -30,7 +30,7 @@ Name: kde5-%rname
 %define ver_minor 8
 %define ver_bugfix 0
 Version: %ver_major.%ver_minor.%ver_bugfix
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 %define sover %version
@@ -133,28 +133,28 @@ Requires: kf5-filesystem
 %package -n %libdigikamdatabase
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libdigikamdatabase
 %name library
 
 %package -n %libdigikamcore
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libdigikamcore
 %name library
 
 %package -n %libdigikamgui
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libdigikamgui
 %name library
 
 %package data
 Group: Graphics
 Summary: A Photo Management Application for KDE
-Requires: %name-common = %version-%release
+Requires: %name-common
 BuildArch: noarch
 %description data
 %label is an advanced digital photo management application for KDE.
@@ -176,6 +176,7 @@ its functionalities.
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %label
+Requires: %name-common
 %description devel
 Development files for %label.
 
@@ -326,6 +327,9 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Tue Oct 04 2022 Sergey V Turchin <zerg@altlinux.org> 7.8.0-alt2
+- update requires
+
 * Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 7.8.0-alt1
 - new version
 
