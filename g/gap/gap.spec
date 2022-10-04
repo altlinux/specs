@@ -1,6 +1,6 @@
 Name: gap
-Version: 4.11.1
-Release: alt2
+Version: 4.12.0
+Release: alt1
 Summary: System for Computational Discrete Algebra
 License: Zlib and LGPL-3.0+ and GPL-2.0+ and GPL-3.0+
 Group: Sciences/Mathematics
@@ -41,7 +41,7 @@ Obsoletes: gap-data < %version
 Provides: gap-data = %version
 #Requires: gap-gapdoc >= 1.5.1
 
-%define lname libgap0
+%define soname 8
 %global gap_sitearch %_libdir/gap/pkg
 %global gap_sitelib  %_datadir/gap/pkg
 
@@ -54,18 +54,18 @@ libraries of algebraic objects. GAP is used in research and teaching
 for studying groups and their representations, rings, vector spaces,
 algebras, combinatorial structures, and more.
 
-%package -n %lname
+%package -n lib%name%soname
 Summary: Kernel for the GAP computation algebra system
 Group: System/Libraries
 
-%description -n %lname
+%description -n lib%name%soname
 This package contains the GAP kernel in a C library that can be
 linked to.
 
 %package devel
 Summary: Development environment for GAP
 Group: Development/Tools
-Requires: %lname = %version
+Requires: lib%name%soname = %version
 
 %description devel
 GAP is a system for computational discrete algebra, with particular
@@ -137,16 +137,24 @@ This subpackage will pull in all optional packages of the GAP distribution.
 %setup
 #%%patch -p0
 %patch1 -p0
-%patch2 -p0
+#%%patch2 -p0
 #%%patch3 -p0
 %patch4 -p0
-
-subst 's/\#$(INSTALL) gac/$(INSTALL) gac/' Makefile.rules
-# Fixed version
-subst 's|4.11.0|4.11.1|; s|29-Feb|Feb|; s|2020|2021|' configure.ac
+sed -i 's|2.4.6|%{get_version libtool_2.4}|' \
+  cnf/ltmain.sh \
+  cnf/m4/ltversion.m4 \
+  extern/gmp/aclocal.m4 \
+  extern/gmp/configure \
+  extern/gmp/ltmain.sh \
+  hpcgap/extern/gc/configure \
+  hpcgap/extern/gc/ltmain.sh \
+  hpcgap/extern/gc/m4/ltversion.m4 \
+  hpcgap/extern/libatomic_ops/configure \
+  hpcgap/extern/libatomic_ops/ltmain.sh \
+  hpcgap/extern/libatomic_ops/m4/ltversion.m4
 
 %build
-#%%autoreconf
+%autoreconf
 %configure
 %make_build V=1
 
@@ -190,7 +198,7 @@ cat >"$b/%_libdir/gap/sysinfo.gap" <<-EOF
 	GAP_LIBS="-lgap"
 	GAP_OBJS=""
 EOF
-ln -s . "$b/%_includedir/gap/src"
+# ln -s . "$b/%%_includedir/gap/src"
 ln -s sysinfo.gap "$b/%_libdir/gap/sysinfo.gap-default$GAP_ABI"
 mkdir -pv "$b/%gap_sitearch/../bin/$GAParch"
 ln -s "%_bindir/gac" "$b/%gap_sitearch/../bin/$GAParch/"
@@ -207,7 +215,8 @@ cat >>"$b/%_libexecdir/rpm/macros.d/gap" <<-EOF
 	%%gapdir %_libdir/gap
 EOF
 
-install -p -m 0644 gen/config.h %buildroot%_includedir/gap
+install -p -m 0644 build/config.h %buildroot%_includedir/gap/
+chmod +x %buildroot%_datadir/gap/etc/convert.pl
 
 %files
 %doc CITATION CONTRIBUTING.md COPYRIGHT INSTALL.md LICENSE README*
@@ -215,10 +224,11 @@ install -p -m 0644 gen/config.h %buildroot%_includedir/gap
 %dir %_libexecdir/%name/
 %_libexecdir/%name/gap.bin
 %dir %_libdir/gap/
+%_libdir/gap/gap
 %_datadir/gap/
 
-%files -n %lname
-%_libdir/libgap.so.0*
+%files -n lib%name%soname
+%_libdir/libgap.so.%{soname}*
 
 %files devel
 %_bindir/gac*
@@ -233,6 +243,9 @@ install -p -m 0644 gen/config.h %buildroot%_includedir/gap
 
 %files full
 %changelog
+* Tue Oct 04 2022 Leontiy Volodin <lvol@altlinux.org> 4.12.0-alt1
+- New version (4.12.0).
+
 * Tue Nov 30 2021 Leontiy Volodin <lvol@altlinux.org> 4.11.1-alt2
 - Packed config.h for sagemath.
 - Added buildrequires.

@@ -1,5 +1,5 @@
 Name: gap-4ti2interface
-Version: 2019.09.02
+Version: 2022.09.01
 Release: alt1
 Summary: GAP: Interface to 4ti2
 License: GPL-2.0+
@@ -31,5 +31,8 @@ geometric and combinational problems on linear spaces.
 %gap_sitelib/4ti2Interface-%version/*
 
 %changelog
+* Tue Oct 04 2022 Leontiy Volodin <lvol@altlinux.org> 2022.09.01-alt1
+- New version.
+
 * Thu Jun 10 2021 Leontiy Volodin <lvol@altlinux.org> 2019.09.02-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
