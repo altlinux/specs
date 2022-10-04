@@ -3,7 +3,7 @@
 
 Name: %realname
 Version: 3.0.0
-Release: alt1
+Release: alt2
 Epoch:3
 
 Summary: X11 Window Manager
@@ -139,6 +139,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Tue Oct 04 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.0.0-alt2
+- added Yandex Browser support into toolbar
+
 * Tue Oct 04 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.0.0-alt1
 - 3.0.0
 
