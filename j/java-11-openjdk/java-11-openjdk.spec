@@ -40,7 +40,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.16.0.8
+%define version 11.0.17.0.1
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -277,7 +277,7 @@ BuildRequires: /proc rpm-build-java
 # Used via new version scheme. JDK 11 was
 # GA'ed in September 2018 => 18.9
 %global vendor_version_string 18.9
-%global securityver 16
+%global securityver 17
 # buildjdkver is usually same as %%{majorver},
 # but in time of bootstrap of next jdk, it is majorver-1, 
 # and this it is better to change it here, on single place
@@ -299,7 +299,7 @@ BuildRequires: /proc rpm-build-java
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global minorver        0
-%global buildver        8
+%global buildver        1
 %global rpmrelease      1
 %global dist		jpp11
 #%%global tagsuffix      ""
@@ -318,7 +318,7 @@ BuildRequires: /proc rpm-build-java
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga           1
+%global is_ga           0
 %if %{is_ga}
 %global ea_designator ""
 %global ea_designator_zip ""
@@ -617,7 +617,7 @@ Requires: ca-trust
 Requires: javapackages-filesystem
 # Require zone-info data provided by tzdata-java sub-package
 # 2020a required as of JDK-8243541 in 11.0.8+4
-Requires: tzdata-java >= 2020b
+Requires: tzdata-java >= 2022a
 # for support of kernel stream control
 # libsctp.so.1 is being `dlopen`ed on demand
 Requires: liblksctp lksctp-tools
@@ -1228,8 +1228,7 @@ if ! echo $suffix | grep -q "debug" ; then
   # Install Javadoc documentation
   install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}
   cp -a %{buildoutputdir}/images/docs $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}
-  #cp -a %{buildoutputdir}/bundles/jdk-%{newjavaver}%{ea_designator_zip}+%{buildver}%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
-  cp -a %{buildoutputdir}/bundles/jdk-11.0.16.1+1%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
+  cp -a %{buildoutputdir}/bundles/jdk-*%{lts_designator_zip}-docs.zip $RPM_BUILD_ROOT%{_javadocdir}/%{uniquejavadocdir}.zip
 fi
 
 # Install release notes
@@ -1779,6 +1778,9 @@ fi
 %endif
 
 %changelog
+* Tue Oct 04 2022 Andrey Cherepanov <cas@altlinux.org> 0:11.0.17.0.1-alt1_0.1.eajpp11
+- New version.
+
 * Wed Aug 03 2022 Andrey Cherepanov <cas@altlinux.org> 0:11.0.16.0.8-alt1_1jpp11
 - New version.
 - Security fixes
