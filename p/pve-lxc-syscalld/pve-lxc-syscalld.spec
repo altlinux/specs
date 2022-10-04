@@ -1,49 +1,52 @@
+%global _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
 Name: pve-lxc-syscalld
 Summary: PVE LXC syscall daemon
-Version: 1.0.0
+Version: 1.2.2.1
 Release: alt1
-License: GPL
+License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source0: %name.tar.xz
-Source1: cargo.tar
-Patch0: pve-lxc-syscalld-aarch64-u8.patch
+Vcs: git://git.proxmox.com/git/pve-lxc-syscalld.git 
+Source: %name-%version.tar
+Patch: pve-lxc-syscalld-aarch64-u8.patch
 
 ExclusiveArch: x86_64 aarch64
-BuildRequires: /proc rust-cargo libsystemd-devel
+BuildRequires(pre): rpm-macros-rust
+BuildRequires: rpm-build-rust libsystemd-devel
+BuildRequires: /proc
 
 %description
 A daemon which handles a selected subset of syscalls for unprivileged
 containers.
 
 %prep
-%setup -q -n %name
-
+%setup
 %ifarch aarch64
 %patch -p0 -b .u8
 %endif
-
-rm -fr .cargo
-tar -xf %SOURCE1 -C %_builddir/%name
 sed -i 's|roxmox ||' etc/pve-lxc-syscalld.service.in
 
 %build
-CARGO_HOME=%_builddir/%name/cargo cargo build --release --offline
+export BUILD_MODE=release
+%make_build
 
 %install
-install -pD -m755 target/release/%name %buildroot%_libexecdir/pve-lxc-syscalld/pve-lxc-syscalld
-mkdir -p %buildroot%systemd_unitdir
-sed "s|%LIBEXECDIR%|%_libexecdir|" etc/pve-lxc-syscalld.service.in > %buildroot%systemd_unitdir/pve-lxc-syscalld.service
+%makeinstall_std
+install -dm755 %buildroot%_unitdir
+install -m644 etc/%name.service %buildroot%_unitdir/
 
 %files
-%systemd_unitdir/pve-lxc-syscalld.service
-%_libexecdir/pve-lxc-syscalld/pve-lxc-syscalld
+%_unitdir/%name.service
+%_libexecdir/%name/%name
 
 %changelog
+* Tue Oct 04 2022 Alexey Shabalin <shaba@altlinux.org> 1.2.2.1-alt1
+- 1.2.2-1
+
 * Wed Sep 29 2021 Valery Inozemtsev <shrek@altlinux.ru> 1.0.0-alt1
 - 1.0.0-1
 
