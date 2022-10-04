@@ -11,7 +11,7 @@
 
 Name: openuds-server
 Version: 3.5.0
-Release: alt1
+Release: alt2
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -154,6 +154,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Tue Oct 04 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt2
+- Build release-v3.5
+
 * Mon Aug 22 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt1
 - v3.5 snapshot 83394f0d34daf18722923be8d57b35627b330121
 
