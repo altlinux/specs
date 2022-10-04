@@ -5,7 +5,7 @@
 
 Name: plasma5-%rname
 Version: 5.25.5
-Release: alt3
+Release: alt4
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -134,6 +134,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K5bin/kinfocenter5-ansi2html.sh
 %_K5lib/libKInfoCenterInternal.so.%kinfocenterinternal_sover
 
 %changelog
+* Tue Oct 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt4
+- fix run fwupdmgr
+
 * Mon Oct 03 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt3
 - using color output for firmware security info
 
