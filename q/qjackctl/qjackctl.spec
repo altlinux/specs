@@ -7,7 +7,7 @@
 %define rdn_name org.rncbc.qjackctl
 
 Name: qjackctl
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 
 Summary: Qjackctl is a programm to control the JACK sound server daemon
@@ -32,7 +32,7 @@ BuildRequires: cmake gcc-c++ libalsa-devel
 %{?_enable_portaudio:BuildRequires: pkgconfig(portaudio-2.0)}
 BuildRequires: libX11-devel libXext-devel
 %if_enabled qt6
-BuildRequires: qt6-base-devel qt6-tools-devel
+BuildRequires: qt6-base-devel qt6-tools-devel qt6-svg-devel
 %else
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-tools-devel
 %endif
@@ -77,6 +77,9 @@ JACK-клиентов.
 %doc ChangeLog README
 
 %changelog
+* Tue Oct 04 2022 Yuri N. Sedunov <aris@altlinux.org> 0.9.8-alt1
+- 0.9.8
+
 * Sun Apr 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.9.7-alt1
 - 0.9.7
 
