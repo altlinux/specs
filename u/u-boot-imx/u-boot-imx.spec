@@ -1,5 +1,5 @@
 Name: u-boot-imx
-Version: 2022.07
+Version: 2022.10
 Release: alt1
 
 Summary: Das U-Boot
@@ -34,7 +34,7 @@ This package supports some of iMX6|iMX8 family boards.
 export BL31=%_datadir/atf/imx8mq/bl31.bin
 boards='pico-imx8mq imx8mq_evk imx8mq_phanbell'
 %else
-rm configs/imx6q_bosch_acc_defconfig
+rm configs/imx6q_bosch_acc_defconfig configs/display5_defconfig
 boards=$(grep -lr ARCH_MX6 configs|xargs grep -l ^CONFIG_SPL=y|sed 's,^configs/\(.\+\)_defconfig,\1,'|sort)
 %endif
 for board in $boards; do
@@ -66,6 +66,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Oct 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.10-alt1
+- 2022.10 released
+
 * Tue Jul 12 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.07-alt1
 - 2022.07 released
 
