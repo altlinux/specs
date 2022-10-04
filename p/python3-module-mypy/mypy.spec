@@ -14,7 +14,7 @@
 %endif
 
 Name:    python3-module-%pypi_name
-Version: 0.981
+Version: 0.982
 Release: alt1
 
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
@@ -151,6 +151,9 @@ TESTS="$TESTS mypyc/test"
 %endif
 
 %changelog
+* Tue Oct 04 2022 Stanislav Levin <slev@altlinux.org> 0.982-alt1
+- 0.981 -> 0.982.
+
 * Tue Sep 27 2022 Stanislav Levin <slev@altlinux.org> 0.981-alt1
 - 0.971 -> 0.981.
 
