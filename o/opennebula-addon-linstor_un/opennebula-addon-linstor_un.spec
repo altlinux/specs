@@ -5,7 +5,7 @@
 Summary: Community driven full-feature Linstor storage driver for OpenNebula
 Name: opennebula-addon-linstor_un
 Version: 1.8.2
-Release: alt1
+Release: alt2
 License: Apache-2.0
 Group: System/Servers
 Url: https://github.com/OpenNebula/addon-linstor_un
@@ -15,7 +15,8 @@ Patch: %name-%version.patch
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
 BuildArch: noarch
 
-Requires: jq linstor-satellite opennebula-server >= 5.8
+Requires: jq linstor-satellite
+Conflicts: opennebula-server < 5.8
 
 %description
 Community driven full-feature Linstor storage driver for OpenNebula.
@@ -37,7 +38,7 @@ install -m755 datastore/linstor_un/linstor_un.conf %buildroot%_destination/etc/d
 %pre
 
 %post
-if [ "$1" -eq 1 ]; then
+if [ "$1" -eq 1 -a -f /etc/one/oned.conf ]; then
 # In install, not update
 # Update oned.conf
 
@@ -70,6 +71,9 @@ fi
 %config(noreplace) %_destination/etc/datastore/linstor_un/linstor_un.conf
 
 %changelog
+* Tue Oct 04 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.8.2-alt2
+- remove explicit require to opennebula-server
+
 * Fri Nov 19 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.8.2-alt1
 - 1.8.2
 
