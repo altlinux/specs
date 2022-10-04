@@ -1,5 +1,5 @@
 Name: u-boot-tools
-Version: 2022.07
+Version: 2022.10
 Release: alt1
 
 Summary: Das U-Boot
@@ -39,6 +39,9 @@ ln -s fw_printenv %buildroot%_bindir/fw_setenv
 %_bindir/*
 
 %changelog
+* Tue Oct 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.10-alt1
+- 2022.10 released
+
 * Wed Jul 13 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.07-alt1
 - 2022.07 released
 
