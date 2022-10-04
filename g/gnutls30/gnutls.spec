@@ -3,7 +3,7 @@
 %define libgnutls_openssl_soname 27
 
 Name: gnutls%libgnutls_soname
-Version: 3.7.7
+Version: 3.7.8
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -326,6 +326,9 @@ make -k check
 %endif
 
 %changelog
+* Mon Oct 03 2022 Mikhail Efremov <sem@altlinux.org> 3.7.8-alt1
+- Updated to 3.7.8.
+
 * Tue Aug 02 2022 Mikhail Efremov <sem@altlinux.org> 3.7.7-alt1
 - Updated to 3.7.7 (fixes: CVE-2022-2509).
 
