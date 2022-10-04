@@ -271,8 +271,8 @@
 %global featurever 17
 %global interimver 0
 %global updatever 4
-%global patchver 0
-%global buildver 8
+%global patchver 1
+%global buildver 1
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -293,7 +293,7 @@
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global top_level_dir_name_backup %{top_level_dir_name}-backup
-%global rpmrelease      2
+%global rpmrelease      1
 # Priority must be 8 digits in total; up to openjdk 1.8, we were using 18..... so when we moved to 11, we had to add another digit
 %if %is_system_jdk
 # Using 10 digits may overflow the int used for priority, so we combine the patch and build versions
@@ -301,7 +301,7 @@
 # This means 11.0.9.0+11 would have had a priority of 11000911 as before
 # A 11.0.9.1+1 would have had a priority of 11000921 (20 * 1 + 1), thus ensuring it is bigger than 11.0.9.0+11
 # TODO hardcoded
-%global priority 17000408
+%global priority 17000411
 %else
 # for techpreview, using 1, so slowdebugs can have 0
 %global priority %( printf '%08d' 1 )
@@ -311,7 +311,7 @@
 
 # Strip up to 6 trailing zeros in newjavaver, as the JDK does, to get the correct version used in filenames
 # TODO hardcoded
-%global filever %{featurever}.%{interimver}.%{updatever}
+%global filever %{featurever}.%{interimver}.%{updatever}.%{patchver}
 
 # The tag used to create the OpenJDK tarball
 %global vcstag jdk-%{filever}+%{buildver}%{?tagsuffix:-%{tagsuffix}}
@@ -547,8 +547,7 @@ BuildRequires: java-%{buildjdkver}-openjdk-devel
 BuildRequires: libffi-devel
 %endif
 # 2022a required as of JDK-8283350 in 17.0.4
-#BuildRequires: tzdata-java >= 2022a
-BuildRequires: tzdata-java >= 2021a
+BuildRequires: tzdata-java >= 2022a
 # Earlier versions have a bug in tree vectorization on PPC
 BuildRequires: gcc >= 4.8.3-8
 
@@ -2017,6 +2016,9 @@ fi
 %endif
 
 %changelog
+* Tue Oct 04 2022 Andrey Cherepanov <cas@altlinux.org> 0:17.0.4.1.1-alt1
+- New version.
+
 * Fri Aug 12 2022 Andrey Cherepanov <cas@altlinux.org> 0:17.0.4.0.8-alt2
 - Built without bootstrapping.
 
