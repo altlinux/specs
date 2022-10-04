@@ -2,7 +2,7 @@
 %define realname icewm
 
 Name: %realname
-Version: 2.9.9
+Version: 3.0.0
 Release: alt1
 Epoch:3
 
@@ -139,6 +139,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Tue Oct 04 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.0.0-alt1
+- 3.0.0
+
 * Wed Aug 03 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:2.9.9-alt1
 - 2.9.9
 - added default background
