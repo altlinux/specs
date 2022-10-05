@@ -1,5 +1,7 @@
+%define rdn_name net.sourceforge.liferea
+
 Name: liferea
-Version: 1.13.1
+Version: 1.13.9
 Release: alt1
 
 Summary: A RSS News Reader for GNOME
@@ -9,15 +11,13 @@ Url: https://lzone.de/liferea
 
 Obsoletes: %name-gtkhtml < %version-%release %name-xulrunner < %version-%release
 Provides: %name-backend = %version-%release %name-gtkhtml = %version-%release %name-xulrunner = %version-%release
-# https://github.com/lwindolf/liferea.git
+
+Vcs: https://github.com/lwindolf/liferea.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Requires: dconf gnome-icon-theme
 
-# use python3
-AutoReqProv: nopython
-%define __python %nil
 %add_python3_path %_libdir/%name/plugins
 
 BuildRequires(pre): gobject-introspection-devel rpm-build-gir >= 0.7.3-alt3
@@ -26,6 +26,7 @@ BuildRequires: python3-module-pygobject3-devel
 BuildRequires: xvfb-run gcc-c++ intltool
 BuildRequires: pkgconfig(gtk+-3.0) >= 3.22.0
 BuildRequires: pkgconfig(glib-2.0) >= 2.50.0 pkgconfig(gio-2.0) >= 2.50.0 pkgconfig(gmodule-2.0) >= 2.0.0 pkgconfig(gthread-2.0)
+BuildRequires: pkgconfig(fribidi)
 BuildRequires: pkgconfig(pango) >= 1.4.0
 BuildRequires: pkgconfig(libxml-2.0) >= 2.6.27 pkgconfig(libxslt) >= 1.1.19
 BuildRequires: pkgconfig(sqlite3) >= 3.7.0
@@ -72,23 +73,21 @@ xvfb-run %make_build
 %install
 %makeinstall_std
 
-%find_lang --with-gnome %name
+%find_lang --with-gnome --with-man %name
 
 %files -f %name.lang
 %doc AUTHORS COPYING ChangeLog
-%dir %_libdir/%name/plugins
 %_bindir/*
 %_libdir/%name/girepository-1.0/*.typelib
-%_datadir/%name
+%_datadir/%name/
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/GConf/gsettings/%name.convert
-%_datadir/appdata/%name.appdata.xml
-%_datadir/applications/net.sourceforge.liferea.desktop
-%_datadir/dbus-1/services/net.sourceforge.liferea.service
+%_datadir/metainfo/%rdn_name.appdata.xml
+%_desktopdir/%rdn_name.desktop
+%_datadir/dbus-1/services/%rdn_name.service
 %_datadir/icons/hicolor/*/apps/*
 %_man1dir/%name.*
 %_libdir/%name/web-extension/*.so
-
 
 %dir %_libdir/%name/plugins
 %dir %_libdir/%name/plugins/__pycache__
@@ -96,12 +95,16 @@ xvfb-run %make_build
 # plugins. may be separated packages?
 %_libdir/%name/plugins/bold-unread.*
 %_libdir/%name/plugins/__pycache__/bold-unread.*
+%_libdir/%name/plugins/getfocus.*
+%_libdir/%name/plugins/__pycache__/getfocus.*
 %_libdir/%name/plugins/headerbar.*
 %_libdir/%name/plugins/__pycache__/headerbar.*
 %_libdir/%name/plugins/libnotify.*
 %_libdir/%name/plugins/__pycache__/libnotify.*
 %_libdir/%name/plugins/plugin-installer.*
 %_libdir/%name/plugins/__pycache__/plugin-installer.*
+%_libdir/%name/plugins/pane.*
+%_libdir/%name/plugins/__pycache__/pane.*
 %_libdir/%name/plugins/trayicon.*
 %_libdir/%name/plugins/__pycache__/trayicon.*
 
@@ -114,6 +117,9 @@ xvfb-run %make_build
 %_libdir/%name/plugins/__pycache__/media-player.*
 
 %changelog
+* Wed Oct 05 2022 Yuri N. Sedunov <aris@altlinux.org> 1.13.9-alt1
+- updated to v1.13.9-41-g49174d5cd
+
 * Sun Jun 28 2020 Alexey Shabalin <shaba@altlinux.org> 1.13.1-alt1
 - 1.13.1
 
