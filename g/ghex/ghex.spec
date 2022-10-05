@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: ghex
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Binary editor for GNOME
@@ -22,17 +22,18 @@ Url: https://wiki.gnome.org/Apps/Ghex
 Vcs: https://gitlab.gnome.org/GNOME/ghex.git
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major%beta/%name-%version%beta.tar.xz
 
-%define glib_ver 2.66
-%define gtk4_ver 4.0.0
+%define glib_ver 2.68
+%define gtk4_ver 4.4.0
 
 Requires: libgtkhex = %EVR
-Requires: dconf
+Requires: dconf yelp
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson glib2-devel >= %glib_ver libgtk4-devel >= %gtk4_ver
+BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: yelp-tools
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk4-gir-devel}
-%{?_enable_check:BuildRequires: desktop-file-utils libappstream-glib-devel}
+%{?_enable_check:BuildRequires: desktop-file-utils /usr/bin/appstream-util}
 
 %description
 GHex is a hex editor for the GNOME desktop.
@@ -102,6 +103,7 @@ GObject introspection devel data for the GtkGHex library.
 %files -n libgtkhex
 %dir %_libdir/gtkhex-%api_ver
 %_libdir/gtkhex-%api_ver/libhex-buffer-mmap.so
+%_libdir/gtkhex-%api_ver/libhex-buffer-direct.so
 %_libdir/lib%libname.so.*
 
 %files -n libgtkhex-devel
@@ -118,6 +120,9 @@ GObject introspection devel data for the GtkGHex library.
 %endif
 
 %changelog
+* Wed Oct 05 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Mon Jun 13 2022 Yuri N. Sedunov <aris@altlinux.org> 42.3-alt1
 - 42.3
 
