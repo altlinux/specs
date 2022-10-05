@@ -83,7 +83,6 @@
 %def_with storage_mpath
 %def_with storage_gluster
 %def_with storage_zfs
-%def_without storage_sheepdog
 %def_without storage_vstorage
 %ifarch %ix86 x86_64 ppc64le aarch64 s390x
 %def_with numactl
@@ -127,7 +126,6 @@
 %def_without storage_mpath
 %def_without storage_gluster
 %def_without storage_zfs
-%def_without storage_sheepdog
 %def_without storage_vstorage
 %def_without numactl
 %def_with selinux
@@ -184,8 +182,8 @@
 %def_without modular_daemons
 
 Name: libvirt
-Version: 8.6.0
-Release: alt2
+Version: 8.8.0
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -222,7 +220,7 @@ BuildRequires(pre): meson >= 0.54.0
 %{?_with_network:BuildRequires: iptables iptables-nft iptables-ipv6 openvswitch}
 %{?_with_nwfilter:BuildRequires: ebtables}
 %{?_with_sasl:BuildRequires: libsasl2-devel >= 2.1.6}
-%{?_with_libssh:BuildRequires: pkgconfig(libssh) >= 0.7}
+%{?_with_libssh:BuildRequires: pkgconfig(libssh) >= 0.8.1}
 %{?_with_libssh2:BuildRequires: pkgconfig(libssh2) >= 1.3}
 %{?_with_polkit:BuildRequires: polkit}
 %{?_with_storage_fs:BuildRequires: util-linux}
@@ -404,9 +402,6 @@ Requires: %name-daemon-driver-storage-gluster = %EVR
 %if_with storage_rbd
 Requires: %name-daemon-driver-storage-rbd = %EVR
 %endif
-%if_with storage_sheepdog
-Requires: %name-daemon-driver-storage-sheepdog = %EVR
-%endif
 
 %description daemon-driver-storage
 The storage driver plugin for the libvirtd daemon, providing
@@ -513,16 +508,6 @@ Requires: libvirt-daemon-driver-storage-core = %EVR
 %description daemon-driver-storage-rbd
 The storage driver backend adding implementation of the storage APIs for rbd
 volumes using the ceph protocol.
-
-%package daemon-driver-storage-sheepdog
-Summary: Storage driver plugin for sheepdog
-Group: System/Libraries
-Requires: libvirt-daemon-driver-storage-core = %EVR
-Requires: sheepdog
-
-%description daemon-driver-storage-sheepdog
-The storage driver backend adding implementation of the storage APIs for
-sheepdog volumes using.
 
 %package daemon-driver-storage-zfs
 Summary: Storage driver plugin for zfs
@@ -813,7 +798,6 @@ tar -xf %SOURCE2 -C src/keycodemapdb --strip-components 1
     -Dstorage_gluster=%{enabled_ifwith storage_gluster} \
     -Dstorage_zfs=%{enabled_ifwith storage_zfs} \
     -Dstorage_vstorage=%{enabled_ifwith storage_vstorage} \
-    -Dstorage_sheepdog=%{enabled_ifwith storage_sheepdog} \
     -Dnumactl=%{enabled_ifwith numactl} \
     -Dselinux=%{enabled_ifwith selinux} \
 %if_with selinux
@@ -1021,7 +1005,7 @@ fi
 %_libexecdir/libvirt-guests.sh
 %config(noreplace) %_sysconfdir/libvirt/libvirtd.conf
 %config(noreplace) %_sysconfdir/libvirt/virtproxyd.conf
-%_sysctldir/*
+%_sysctldir/60-libvirtd.conf
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd
 %_rpmlibdir/%name.filetrigger
 #virtlockd
@@ -1220,11 +1204,6 @@ fi
 %_libdir/%name/storage-backend/libvirt_storage_backend_rbd.so
 %endif
 
-%if_with storage_sheepdog
-%files daemon-driver-storage-sheepdog
-%_libdir/%name/storage-backend/libvirt_storage_backend_sheepdog.so
-%endif
-
 %if_with storage_zfs
 %files daemon-driver-storage-zfs
 %_libdir/%name/storage-backend/libvirt_storage_backend_zfs.so
@@ -1396,6 +1375,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Wed Oct 05 2022 Alexey Shabalin <shaba@altlinux.org> 8.8.0-alt1
+- 8.8.0
+
 * Fri Aug 12 2022 Ivan A. Melnikov <iv@altlinux.org> 8.6.0-alt2
 - Fix build w/o server_drivers
 
