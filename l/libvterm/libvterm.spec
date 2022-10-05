@@ -1,5 +1,5 @@
 Name: libvterm
-Version: 0.1.4
+Version: 0.3.0
 Release: alt1
 Epoch: 1
 
@@ -11,7 +11,6 @@ Url: http://www.leonerd.org.uk/code/libvterm/
 
 Source: %name-%version.tar
 Source1: %name.watch
-Patch1: 0001-ALT-Fix-CVE-2018-20786.patch
 
 %package devel
 Summary: Development files needed for %name
@@ -43,7 +42,6 @@ This package contains %name tools.
 
 %prep
 %setup
-%patch1 -p2
 
 %build
 %make_build PREFIX=%_prefix LIBDIR=%_libdir CFLAGS="%optflags"
@@ -68,6 +66,9 @@ make test
 %_bindir/*
 
 %changelog
+* Wed Oct 05 2022 Vladimir Didenko <cow@altlinux.org> 1:0.3.0-alt1
+- Updated to 0.3.0.
+
 * Fri Jan 15 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:0.1.4-alt1
 - Updated to 0.1.4.
 
