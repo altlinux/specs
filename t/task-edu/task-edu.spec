@@ -1,23 +1,51 @@
 Name:    task-edu
 Version: 1.5.9
-Release: alt4
+Release: alt5
 License: GPL-3.0+
-URL:     https;//www.altlinux.org/Education
+URL:     https://www.altlinux.org/Education
 Group:   Education
 
 # Education (base part)
-Requires: audacity
+Requires: task-edu-lite = %EVR
 %ifarch x86_64 aarch64
 Requires: blender
 %endif
-Requires: bluefish
 Requires: clamav
 Requires: clamav-db
 Requires: clamtk
+Requires: dosbox
+%ifarch %ix86 x86_64
+Requires: freebasic
+Requires: fpc
+Requires: fpc-ide
+Requires: pascalabcnet
+Requires: kchmviewer
+%endif
+Requires: brasero
+%ifarch %ix86 x86_64 %e2k
+Requires: veyon
+%endif
+# Big educational software
+%ifarch %ix86 x86_64
+Requires: lazarus
+Requires: gambas-full
+%endif
+
+Summary(ru_RU.UTF-8): Базовый образовательный комплект
+Summary: Educational software (base set)
+%description
+%{summary}.
+
+%package lite
+Summary(ru_RU.UTF-8): Базовый набор образовательного ПО, облегчённый для rootfs
+Summary: Basic set of educational software, lightweight for rootfs
+Group: Education
+# Education (base part)
+Requires: audacity
+Requires: bluefish
 Requires: codeblocks
 Requires: codeblocks-contrib
 Requires: dia
-Requires: dosbox
 Requires: fbreader
 %ifnarch %e2k
 Requires: goldendict
@@ -39,13 +67,6 @@ Requires: shotwell
 %endif
 Requires: logisim
 Requires: basic256
-%ifarch %ix86 x86_64
-Requires: freebasic
-Requires: fpc
-Requires: fpc-ide
-Requires: pascalabcnet
-Requires: kchmviewer
-%endif
 Requires: geany
 Requires: geany-themes
 %ifnarch %e2k
@@ -62,7 +83,6 @@ Requires: xsane
 Requires: xsane-gimp2
 Requires: xsane-doc-ru
 Requires: simple-scan
-Requires: brasero
 %ifnarch armh
 Requires: imagination
 %endif
@@ -71,9 +91,6 @@ Requires: connector
 Requires: chromium
 %endif
 Requires: fonts-otf-mozilla-fira
-%ifarch %ix86 x86_64 %e2k
-Requires: veyon
-%endif
 Requires: itest
 Requires: kumir2
 # Big educational software
@@ -81,10 +98,6 @@ Requires: octave
 Requires: gnuplot-qt
 %ifnarch ppc64le
 Requires: wxMaxima
-%endif
-%ifarch %ix86 x86_64
-Requires: lazarus
-Requires: gambas-full
 %endif
 # OCR
 Requires: gimagereader-gtk
@@ -113,8 +126,8 @@ Requires: puppet
 %endif
 %ifarch x86_64 aarch64
 Requires: x11spice
-%endif
 Requires: openssh-server
+%endif
 # LibreOffice
 %ifnarch %e2k
 %define lo_name LibreOffice-still
@@ -138,98 +151,6 @@ Requires: postgresql-jdbc
 Requires: mysql-connector-java
 # Mozilla
 %ifnarch armh
-Requires: thunderbird
-%endif
-Summary(ru_RU.UTF-8): Базовый образовательный комплект
-Summary: Educational software (base set)
-%description
-%{summary}.
-
-%package lite
-Summary(ru_RU.UTF-8): Базовый набор образовательного ПО, облегчённый для RPi4
-Summary: Basic set of educational software, lightweight for RPi4
-Group: Other
-%ifarch aarch64
-# Education (base part)
-Requires: audacity
-Requires: bluefish
-Requires: codeblocks
-Requires: codeblocks-contrib
-Requires: dia
-Requires: fbreader
-Requires: goldendict
-Requires: dict-mueller7-utf8
-Requires: gcc
-Requires: inkscape
-Requires: gimp
-Requires: gimp-help-ru
-Requires: gimp-plugin-gutenprint
-Requires: gimp-plugin-refocus-it
-Requires: java-devel
-Requires: kdenlive
-Requires: scribus
-Requires: shotwell
-Requires: logisim
-Requires: basic256
-Requires: geany
-Requires: geany-themes
-Requires: geany-plugins
-Requires: gnome-games-klotski
-Requires: gnome-games-mahjongg
-Requires: gnome-games-aisleriot
-Requires: xsane
-Requires: xsane-gimp2
-Requires: xsane-doc-ru
-Requires: simple-scan
-Requires: imagination
-Requires: connector
-%ifarch x86_64 aarch64
-Requires: chromium
-%endif
-Requires: fonts-otf-mozilla-fira
-Requires: itest
-Requires: kumir2
-# Big educational software
-Requires: octave
-Requires: gnuplot-qt
-Requires: wxMaxima
-# OCR
-Requires: gimagereader-gtk
-Requires: tesseract
-Requires: tesseract-langpack-ru
-Requires: tesseract-langpack-en
-# KDE5 localization and profile
-Requires: kde5-profile
-Requires: qt5-translations
-Requires: kde5-khelpcenter
-# Content filter and antivirus
-Requires: netpolice-filter
-Requires: netpolice-main
-# For Skydns
-Requires: ddclient
-Requires: perl-IO-Socket-SSL
-# For search exercises
-Requires: docx2txt odt2txt
-# Mass management and remote assistance
-Requires: puppet
-Requires: x11spice
-Requires: openssh-server
-# LibreOffice
-%define lo_name LibreOffice-still
-Requires: %{lo_name}-extensions
-Requires: %{lo_name}-integrated
-Requires: %{lo_name}-gtk3
-Requires: %{lo_name}-langpack-ru
-Requires: libreoffice-languagetool
-Requires: mythes-ru
-Requires: hyphen-ru
-Requires: gst-plugins-bad
-Requires: gst-plugins-ugly
-Requires: pentaho-reporting-flow-engine
-Requires: perl-DBD-mysql
-Requires: postgresql-jdbc
-Requires: mysql-connector-java
-# Mozilla
 Requires: thunderbird
 %endif
 %description lite
@@ -618,6 +539,12 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed Oct 05 2022 Anton Midyukov <antohami@altlinux.org> 1.5.9-alt5
+- Make the task-edu-lite subpackage the base for task-edu
+- Fix description of lite subpackage
+- Fix Group field of task-edu-lite subpackage (Other -> Education)
+- Fix typo in URL field
+
 * Tue Oct 04 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt4
 - Delete deprecated freeplane.
 
