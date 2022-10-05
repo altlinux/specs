@@ -1,8 +1,8 @@
 %define _sysusersdir /lib/sysusers.d
 
 Name: deepin-anything
-Version: 5.0.13
-Release: alt2
+Version: 5.0.18
+Release: alt1
 Summary: Global search tool for Deepin
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -14,7 +14,7 @@ Source1: deepin-anything-server.sysusers
 # Patch from archlinux
 Patch: 0001-linux-5.6.patch
 
-BuildRequires: gcc-c++ qt5-base-devel udisks2-qt5-devel libmount-devel dtk5-core-devel libpcre-devel glib2-devel
+BuildRequires: gcc-c++ qt5-base-devel udisks2-qt5-devel libmount-devel dtk5-core-devel libpcre-devel glib2-devel libpcre-devel
 
 %description
 File manager front end of Deepin OS.
@@ -39,6 +39,7 @@ This package provides header files and libraries for %name.
 sed -i 's|/usr/lib/$(DEB_HOST_MULTIARCH)|%_libdir|; s|/usr/lib/modules-load.d|%_sysconfdir/modules-load.d|' Makefile
 sed -i 's|Anthing|Anything|' server/monitor/systemd.sysusers.d/deepin-anything-monitor.conf
 sed -i 's|$$PREFIX/lib/sysusers.d|/lib/sysusers.d|' server/monitor/src/src.pro
+sed -i 's|#include <pcre.h>|#include <pcre/pcre.h>|' library/src/fs_buf.c
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -79,6 +80,9 @@ rm -rf %buildroot/usr/src/deepin-anything-0.0/
 %_datadir/dbus-1/interfaces/com.deepin.anything.xml
 
 %changelog
+* Wed Oct 05 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.18-alt1
+- New version (5.0.18).
+
 * Tue Aug 16 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.13-alt2
 - Changed default paths.
 
