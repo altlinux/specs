@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220928
+Version: 20220930
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,10 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Oct 05 2022 Cronbuild Service <cronbuild@altlinux.org> 20220930-alt1
+- upstream changes (GIT fdf1a652):
+  + Update AMD cpu microcode (thx John Allen)
+
 * Thu Sep 29 2022 Cronbuild Service <cronbuild@altlinux.org> 20220928-alt1
 - upstream changes (GIT 8d198465):
   + mediatek: mt8195: Update scp.img to v2.0.11956 (thx Tinghan Shen)
