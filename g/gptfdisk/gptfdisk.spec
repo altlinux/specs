@@ -1,5 +1,5 @@
 Name: gptfdisk
-Version: 1.0.9
+Version: 1.0.9.1
 Release: alt1
 
 Summary: GPT partitioning and MBR repair software
@@ -80,6 +80,9 @@ install -pm644 *.8 %buildroot%_man8dir/
 %_man8dir/fixparts*
 
 %changelog
+* Wed Oct 05 2022 Alexey Shabalin <shaba@altlinux.org> 1.0.9.1-alt1
+- Fix NULL dereference when duplicating string argument (ALT#43956)
+
 * Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 1.0.9-alt1
 - 1.0.9
 
