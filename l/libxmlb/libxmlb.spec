@@ -2,7 +2,7 @@
 %define soversion 2
 Summary: Library for querying compressed XML metadata
 Name: libxmlb
-Version: 0.3.9
+Version: 0.3.10
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -95,6 +95,9 @@ Files for development with %name.
 %_libdir/pkgconfig/xmlb.pc
 
 %changelog
+* Wed Oct 05 2022 Anton Farygin <rider@altlinux.ru> 0.3.10-alt1
+- 0.3.9 -> 0.3.10
+
 * Sat Jun 04 2022 Anton Farygin <rider@altlinux.ru> 0.3.9-alt1
 - 0.3.8 -> 0.3.9
 
