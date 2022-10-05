@@ -3,7 +3,7 @@
 
 Name: plasma5-%rname
 Version: 5.25.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -96,6 +96,9 @@ EOF
 #%_K5xdgapp/org.kde.ksshaskpass.desktop
 
 %changelog
+* Wed Oct 05 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt2
+- update autostart desktop-file
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt1
 - new version
 
