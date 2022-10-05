@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	5.19
-%define kernel_sublevel	.13
+%define kernel_sublevel	.14
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -613,6 +613,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Oct 05 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.19.14-alt1
+- v5.19.14 (2022-10-05).
+
 * Wed Oct 05 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.19.13-alt1
 - v5.19.13 (2022-10-04).
 - config: Enable DRM_AMDGPU_SI, DRM_RADEON_USERPTR (ALT#43916).
