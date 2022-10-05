@@ -4,14 +4,14 @@
 %define _rdn_name org.gnome.gnote
 %define ver_major 43
 %define api_ver %ver_major
-%define beta .beta
+%define beta %nil
 %define _libexecdir %_prefix/libexec
 %def_without x11_support
 %def_disable check
 
 Name: gnote
-Version: %ver_major
-Release: alt0.5%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -81,6 +81,9 @@ and consumes fewer resources.
 %exclude %_libdir/lib%name-%api_ver.so
 
 %changelog
+* Wed Oct 05 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sun Sep 11 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.5.beta
 - 43.beta
 
