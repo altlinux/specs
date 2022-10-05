@@ -1,7 +1,7 @@
 %define rname krecorder
 
 Name: kde5-%rname
-Version: 22.06
+Version: 22.09
 Release: alt1
 %K5init no_appdata
 
@@ -73,6 +73,9 @@ Requires: %name-common
 #%_K5lib/libkrecorder.so.*
 
 %changelog
+* Wed Oct 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt1
+- new version
+
 * Tue Jul 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.06-alt1
 - new version
 

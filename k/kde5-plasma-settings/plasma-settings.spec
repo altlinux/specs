@@ -1,7 +1,7 @@
 %define rname plasma-settings
 
 Name: kde5-%rname
-Version: 22.06
+Version: 22.09
 Release: alt1
 %K5init altplace no_appdata
 
@@ -90,17 +90,14 @@ Requires: %name-common
 %exclude %_K5data/kpackage/kcms/*keyboard*/
 %_K5plug/kcms/*.so
 %exclude %_K5plug/kcms/*keyboard*.so
-#%_K5srv/*.desktop
-#%exclude %_K5srv/*virtualkeyboard*.desktop
 
 %files core
 %_K5bin/plasma-settings
-%_K5data/kpackage/genericqml/org.kde.plasma.settings/
+#%_K5data/kpackage/genericqml/org.kde.plasma.settings/
 
 %files virtualkeyboard
 %_K5data/kpackage/kcms/*keyboard*/
 %_K5plug/kcms/*keyboard*.so
-#%_K5srv/*virtualkeyboard*.desktop
 
 #%files devel
 #%_K5inc/plasma-settings_version.h
@@ -113,6 +110,9 @@ Requires: %name-common
 #%_K5lib/libplasma-settings.so.*
 
 %changelog
+* Wed Oct 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt1
+- new version
+
 * Tue Jul 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.06-alt1
 - new version
 
