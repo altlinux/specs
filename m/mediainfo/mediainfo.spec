@@ -1,7 +1,7 @@
 %def_disable kde4
 
 Name: mediainfo
-Version: 22.06
+Version: 22.09
 Release: alt1
 
 Group: File tools
@@ -22,7 +22,7 @@ BuildRequires: zlib-devel
 BuildRequires: libpango-devel
 BuildRequires: libzen-devel >= 0.4.39
 BuildRequires: libmediainfo-devel >= %version
-BuildRequires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: sgml-common
 
 %description
@@ -152,6 +152,9 @@ rm -f %buildroot%_datadir/kde4/services/ServiceMenus/mediainfo-gui.desktop
 %_K5srv/ServiceMenus/%name-gui.desktop
 
 %changelog
+* Wed Oct 05 2022 Yuri N. Sedunov <aris@altlinux.org> 22.09-alt1
+- 22.09
+
 * Fri Jun 24 2022 Yuri N. Sedunov <aris@altlinux.org> 22.06-alt1
 - 22.06
 
