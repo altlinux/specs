@@ -22,7 +22,7 @@
 %def_without gvls
 
 Name: gnome-builder
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Builder - Develop software for GNOME
@@ -199,6 +199,9 @@ sed -i 's|\(#\!/usr/bin/env python\)$|\13|' src/plugins/*/*.py
 %{?_with_help:%_datadir/doc/%name/}
 
 %changelog
+* Wed Oct 05 2022 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
+- 43.2
+
 * Tue Sep 27 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 
