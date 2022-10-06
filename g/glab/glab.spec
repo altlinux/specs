@@ -4,7 +4,7 @@
 
 Name: glab
 Version: 1.22.0
-Release: alt1
+Release: alt2
 
 Summary: A GitLab CLI tool bringing GitLab to your command line
 License: MIT
@@ -15,6 +15,9 @@ Source: %name-%version.tar
 
 ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
+
+BuildRequires: python3(sphinx)
+BuildRequires: python3(sphinx_rtd_theme)
 
 %description
 GLab is an open source GitLab CLI tool bringing GitLab to your terminal
@@ -41,15 +44,26 @@ export GOPATH="$BUILDDIR:%go_path"
 cd .build/src/%import_path
 %golang_build cmd/glab
 
+%make SPHINXBUILD=sphinx-build-3 -C docs man
+
 %install
 export BUILDDIR="$PWD/.build"
 export IGNORE_SOURCES=1
 %golang_install
 
+mkdir -p %buildroot%_man1dir/
+cd $BUILDDIR/src/%import_path/docs/build/man
+install -p -m0644 glab.1 %buildroot%_man1dir/glab.1
+
 %files
+%doc LICENSE README.md
 %_bindir/%name
+%_man1dir/%name.1.*
 
 %changelog
+* Thu Oct 06 2022 Anton Zhukharev <ancieg@altlinux.org> 1.22.0-alt2
+- build with docs
+
 * Wed Sep 28 2022 Anton Zhukharev <ancieg@altlinux.org> 1.22.0-alt1
 - initial build for Sisyphus
 
