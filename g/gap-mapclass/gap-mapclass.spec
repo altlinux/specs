@@ -1,7 +1,7 @@
 %define repo MapClass
 
 Name: gap-mapclass
-Version: 1.4.5
+Version: 1.4.6
 Release: alt1
 Summary: GAP: Package for Mapping Class Orbit Computation
 License: GPL-2.0+
@@ -31,6 +31,9 @@ rm -Rf scripts
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Thu Oct 06 2022 Leontiy Volodin <lvol@altlinux.org> 1.4.6-alt1
+- New version.
+
 * Tue May 24 2022 Leontiy Volodin <lvol@altlinux.org> 1.4.5-alt1
 - New version.
 
