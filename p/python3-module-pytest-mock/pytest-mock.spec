@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.9.0
+Version: 3.10.0
 Release: alt1
 
 Summary: Thin-wrapper around the mock package for easier use with py.test
@@ -69,6 +69,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 06 2022 Stanislav Levin <slev@altlinux.org> 3.10.0-alt1
+- 3.9.0 -> 3.10.0.
+
 * Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 3.9.0-alt1
 - 3.8.2 -> 3.9.0.
 
