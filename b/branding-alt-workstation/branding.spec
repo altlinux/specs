@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt1
+Release: alt2
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -357,11 +357,31 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
-* Tue Apr 19 2022 Paul Wolneykien <manowar@altlinux.org> 10.1-alt1
-- Lighten the background of list boxes (closes: 41514).
+* Thu Oct 06 2022 Mikhail Efremov <sem@altlinux.org> 10.1-alt2
+- Add fake changelog entry and bump release.
+- alterator: Add logo_48.png to browser-qt rcc.
+- notes: Use https everywhere.
+- indexhtml: Fix bugzilla.altllinux.org link.
+- indexhtml: Use https everywhere.
+
+* Wed Aug 17 2022 Mikhail Efremov <sem@altlinux.org> 10.0.910-alt1
+- slideshow: Replace broken Youtube QR-code with Yandex.Zen.
+- bootsplash: more narrow and short progressbar (by Andrey Cherepanov).
+- indexhtml: Fix background colour for distro name.
+- indexhtml: Show distro name on index.html.
+- indexhtml: Update social networks banners (closes: #43552).
+
+* Wed Jul 13 2022 Mikhail Efremov <sem@altlinux.org> 10.0.900-alt1
+- indexhtml: Fix basealt.ru links.
+- indexhtml: Add Yandex.Zen link.
+- indexhtml: Drop Facebook link.
+- Lighten the background of list boxes (closes: 41514) (by Paul Wolneykien).
 - Fix: Don't specify extra horizontal margins for inputs in
-  alterator-listbox tables.
-- Fix: Don't restrict the width of the top panel buttons.
+  alterator-listbox tables (by Paul Wolneykien).
+- Fix: Don't restrict the width of the top panel buttons (by Paul Wolneykien).
+
+* Tue Apr 19 2022 Paul Wolneykien <manowar@altlinux.org> 10.1-alt1
+- sem@: Fake changelog entry.
 
 * Mon Dec 06 2021 Mikhail Efremov <sem@altlinux.org> 10.0-alt2
 - bootloader: Fix grub colors.
