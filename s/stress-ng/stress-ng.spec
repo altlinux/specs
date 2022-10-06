@@ -5,11 +5,11 @@
 %set_verify_elf_method strict,lint=relaxed
 %endif
 
-%def_without gpu
+%def_with gpu
 
 Name: stress-ng
-Version: 0.14.03
-Release: alt2
+Version: 0.14.06
+Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
 License: GPL-2.0-only
@@ -89,6 +89,10 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Mon Oct 03 2022 Vitaly Chikunov <vt@altlinux.org> 0.14.06-alt1
+- Update to V0.14.06 (2022-09-27).
+- Enable GPU stressors.
+
 * Sun Sep 04 2022 Vitaly Chikunov <vt@altlinux.org> 0.14.03-alt2
 - Workaround ALT beekeeper rebuild failure.
 
