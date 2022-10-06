@@ -1,6 +1,6 @@
 Name: make-initrd
-Version: 2.30.0
-Release: alt2
+Version: 2.31.0
+Release: alt1
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -346,8 +346,29 @@ fi
 %_datadir/%name/features/bootloader
 
 %changelog
+* Thu Oct 06 2022 Alexey Gladkov <legion@altlinux.ru> 2.31.0-alt1
+- New version (2.31.0).
+- Runtime:
+  + Check more carefully for the presence of the INIT= inside new root partition.
+- Feature kickstart:
+  + Start all luks after partitioning.
+  + Add simple reqpart that automatically creates partitions required by your
+    hardware platform.
+  + Add part --fstype=efi to create EFI partition with custom mountpoint.
+  + Add --hibernation option to part/logvol/raid commands.  This option can be
+    used to automatically determine the size of the swap partition big enough
+    for hibernation.
+  + Add support for fat/vfat filesystem.
+  + Add support for zstd/lz4-compressed tarballs in liveimg.
+- Feature qemu:
+  + Try to add e1000e module.
+- Feature network:
+  + Fix permissions of /etc/resolv.conf (ALT#43929).
+- Misc:
+  + Relax check of /usr. This will allow to migrate the filesystem to /usr.
+
 * Wed Sep 28 2022 Alexey Gladkov <legion@altlinux.ru> 2.30.0-alt2
-- Enable iscsi subpackage. 
+- Enable iscsi subpackage.
 
 * Tue Sep 27 2022 Alexey Gladkov <legion@altlinux.ru> 2.30.0-alt1
 - New version (2.30.0).
