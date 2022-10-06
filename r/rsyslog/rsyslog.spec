@@ -23,9 +23,10 @@
 %def_enable clickhouse
 %def_enable imdocker
 %def_enable impcap
+%def_enable libzstd
 
 Name: rsyslog
-Version: 8.2206.0
+Version: 8.2208.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -68,6 +69,7 @@ BuildRequires: liblognorm-devel >= 2.0.3
 %{?_enable_clickhouse:BuildRequires: libcurl-devel}
 %{?_enable_imdocker:BuildRequires: libcurl-devel >= 7.40.0}
 %{?_enable_impcap:BuildRequires: libpcap-devel}
+%{?_enable_libzstd:BuildRequires: libzstd-devel >= 1.4.0}
 
 BuildRequires: iproute2
 BuildRequires: /usr/bin/rst2man
@@ -401,6 +403,7 @@ export HIREDIS_LIBS=-lhiredis
 	%{subst_enable openssl} \
 	%{subst_enable gnutls} \
 	%{?_enable_gssapi:--enable-gssapi-krb5} \
+	%{subst_enable libzstd} \
 	--enable-imdiag \
 	--enable-imbatchreport \
 	--enable-imfile \
@@ -523,6 +526,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/lmregexp.so
 %mod_dir/lmtcpclt.so
 %mod_dir/lmzlibw.so
+%if_enabled libzstd
+%mod_dir/lmzstdw.so
+%endif
 %mod_dir/lmtcpsrv.so
 %mod_dir/ommail.so
 %mod_dir/omruleset.so
@@ -679,6 +685,10 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Thu Oct 06 2022 Alexey Shabalin <shaba@altlinux.org> 8.2208.0-alt1
+- new version 8.2208.0
+- build with libzstd support
+
 * Thu Jul 28 2022 Alexey Shabalin <shaba@altlinux.org> 8.2206.0-alt1
 - new version 8.2206.0
 
