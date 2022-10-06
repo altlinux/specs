@@ -3,7 +3,7 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 13
+Version: 14
 Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
@@ -51,6 +51,10 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Thu Oct 06 2022 Vitaly Chikunov <vt@altlinux.org> 14-alt1
+- Skiplist additions because of armh: epoll01, ioctl01_02, request_key03,
+  sendmsg03.
+
 * Tue Oct 04 2022 Vitaly Chikunov <vt@altlinux.org> 13-alt1
 - Skiplist update for ltp-20220930-alt1.
 
