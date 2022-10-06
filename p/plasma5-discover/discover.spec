@@ -16,7 +16,7 @@
 
 Name: plasma5-%rname
 Version: 5.25.5
-Release: alt3
+Release: alt4
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -282,6 +282,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Thu Oct 06 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt4
+- update russian translation
+
 * Fri Sep 23 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt3
 - fix autostart DiscoverNotifier (closes: 43782)
 
