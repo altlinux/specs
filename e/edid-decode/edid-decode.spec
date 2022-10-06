@@ -1,5 +1,5 @@
 Name:		edid-decode
-Version:	20211104
+Version:	20221006
 Release:	alt1
 
 Summary:	EDID decoder and conformance tester
@@ -18,7 +18,7 @@ BuildRequires:	gcc-c++
 %setup
 
 %build
-%make
+%make CFLAGS='%optflags'
 
 %install
 %makeinstall
@@ -28,6 +28,9 @@ BuildRequires:	gcc-c++
 %_man1dir/edid-decode.1*
 
 %changelog
+* Thu Oct  6 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 20221006-alt1
+- updated from git.f63a945
+
 * Tue Nov 23 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 20211104-alt1
 - updated from git.b00755e
 
@@ -45,4 +48,3 @@ BuildRequires:	gcc-c++
 
 * Tue May 25 2010 Fr. Br. George <george@altlinux.ru> 20100205-alt1
 - Initial build
-
