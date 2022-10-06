@@ -1,5 +1,5 @@
 Name: libcodec2
-Version: 1.0.3
+Version: 1.0.5
 Release: alt1
 
 Summary: libcodec2 is a library for the codec2 low bit rate speech codec
@@ -64,6 +64,9 @@ EOF
 %_libdir/pkgconfig/codec2.pc
 
 %changelog
+* Thu Oct 06 2022 Anton Farygin <rider@altlinux.ru> 1.0.5-alt1
+- 1.0.3 -> 1.0.5
+
 * Sat Jan 29 2022 Anton Farygin <rider@altlinux.ru> 1.0.3-alt1
 - 1.0.1 -> 1.0.3
 
