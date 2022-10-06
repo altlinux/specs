@@ -19,7 +19,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -210,6 +210,7 @@ Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
 Obsoletes: indexhtml-desktop indexhtml-Desktop
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-indexhtml ";done )
 Requires: xdg-utils
+Requires: docs-alt-%smalltheme
 Requires(post): indexhtml-common
 %description indexhtml
 ALT index.html welcome page.
@@ -468,14 +469,15 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 
 %files indexhtml
 %ghost %indexhtmldir/index.html
-%indexhtmldir/index-*.html
-%indexhtmldir/index.css
-%indexhtmldir/images
+%indexhtmldir/*
 %_desktopdir/indexhtml.desktop
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Oct 06 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.0-alt4
+- fix indexhtml docs url
+
 * Fri Sep 23 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.0-alt3
 - remove extra space in os-release VERSION
 - update indexhtml infos
