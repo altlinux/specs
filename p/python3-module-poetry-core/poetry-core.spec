@@ -1,24 +1,29 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name poetry-core
 
-%def_without bootstrap
 %def_with check
 
-%if_with bootstrap
 # poetry bundles several packages some of which require poetry to be built
-%def_with vendored
-%else
+# enable to bootstrap poetry-core
 %def_without vendored
-%endif
 
-%if_with vendored
-%define build_req_filter() %(for mod in %{*}; do echo -n "/python3(${mod}\\(\\..*\\)\\?)/d;"; done; )
-%else
-%define build_vendor_buildreq() %(for mod in %{*}; do echo -n "python3(${mod}) "; done; )
-%endif
+%define build_filter_python_deps() %(for mod in %{*}; do echo -n "/python3(${mod}\\(\\..*\\)\\?)/d;"; done; )
+%define python_deps() %(for mod in %{*}; do echo -n "python3(${mod}) "; done; )
+
+%define vendored_list \\\
+attr \\\
+attrs \\\
+packaging \\\
+jsonschema \\\
+lark \\\
+pyparsing \\\
+pyrsistent \\\
+tomlkit \\\
+typing_extensions \\\
+%nil
 
 Name: python3-module-%pypi_name
-Version: 1.2.0
+Version: 1.3.1
 Release: alt1
 
 Summary: Poetry Core
@@ -28,7 +33,6 @@ Group: Development/Python3
 Url: https://pypi.org/project/poetry-core
 
 Source0: %name-%version.tar
-Source1: vendored_pkg.list
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -38,7 +42,7 @@ BuildRequires(pre): rpm-build-python3
 
 %if_without vendored
 # unvendored packages
-BuildRequires: %build_vendor_buildreq %(echo `cat %{SOURCE1} 2>/dev/null || echo unknown`)
+BuildRequires: %python_deps %vendored_list
 %endif
 
 %if_with check
@@ -62,8 +66,8 @@ BuildArch: noarch
 %py3_requires poetry
 
 %if_with vendored
-# drop deps on system packages which were bundled
-%filter_from_requires %build_req_filter %(echo `cat %{SOURCE1} 2>/dev/null || echo unknown`)
+# drop deps on system packages which were bundled, poetry patches sys.path
+%filter_from_requires %build_filter_python_deps %vendored_list
 
 %add_findreq_skiplist %python3_sitelibdir/poetry/core/_vendor/*
 %add_findprov_skiplist %python3_sitelibdir/poetry/core/_vendor/*
@@ -84,7 +88,6 @@ PEP 517 compatible build frontends to build Poetry managed projects.
 %setup
 %autopatch -p1
 
-%build
 # check if actual bundled modules list is synced to expected one
 set -o pipefail
 PYTHONPATH="$(pwd)" %__python3 - <<-'EOF' | sort -u > actual.pkg.list
@@ -93,7 +96,8 @@ for mod in pkgutil.iter_modules(["./src/poetry/core/_vendor"]):
     if not mod.name.startswith("_"):
         print(mod.name)
 EOF
-cat %SOURCE1 | sort -u > expected.pkg.list
+
+echo "%vendored_list" | sed 's/[ ]*$//' | tr ' ' '\n' | sort -u > expected.pkg.list
 diff -y expected.pkg.list actual.pkg.list
 
 %if_without vendored
@@ -101,6 +105,7 @@ diff -y expected.pkg.list actual.pkg.list
 rm -r ./src/poetry/core/_vendor/*
 %endif
 
+%build
 %pyproject_build
 
 %install
@@ -117,6 +122,9 @@ rm -r ./src/poetry/core/_vendor/*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 06 2022 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
+- 1.2.0 -> 1.3.1.
+
 * Mon Sep 19 2022 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
 - 1.1.0 -> 1.2.0.
 
