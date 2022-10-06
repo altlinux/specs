@@ -3,7 +3,7 @@
 %def_with check
 
 Name: apache2-mod_wsgi
-Version: 4.9.0
+Version: 4.9.4
 Release: alt1
 
 Summary: Python WSGI module for Apache2
@@ -13,7 +13,7 @@ License: Apache-2.0
 Url: http://www.modwsgi.org
 
 Source: %name-%version.tar
-Patch0: 0001-Add-basic-tests.patch
+Patch: %name-%version.patch
 
 BuildRequires(pre): apache2-devel
 BuildRequires: python3-dev
@@ -22,7 +22,6 @@ BuildRequires: python3-dev
 BuildRequires: nss_wrapper
 BuildRequires: socket_wrapper
 BuildRequires: pytest3
-BuildRequires: python3-module-nose
 BuildRequires: python3-module-requests
 %endif
 
@@ -42,7 +41,7 @@ host any Python3 web application which supports the Python3 WSGI specification.
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -68,6 +67,9 @@ echo -e '<IfModule !wsgi_module>\n\tLoadModule wsgi_module %apache2_moduledir/mo
 %config(noreplace) %apache2_mods_available/wsgi-py3.load
 
 %changelog
+* Thu Oct 06 2022 Stanislav Levin <slev@altlinux.org> 4.9.4-alt1
+- 4.9.0 -> 4.9.4.
+
 * Wed Sep 01 2021 Stanislav Levin <slev@altlinux.org> 4.9.0-alt1
 - 4.8.0 -> 4.9.0.
 

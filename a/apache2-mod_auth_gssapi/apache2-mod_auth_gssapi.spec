@@ -4,8 +4,8 @@
 %def_with check
 
 Name: apache2-%modname
-Version: 1.6.3
-Release: alt2
+Version: 1.6.5
+Release: alt1
 
 Summary: A GSSAPI Authentication module for Apache2
 Group: System/Servers
@@ -70,6 +70,9 @@ echo "LoadModule auth_gssapi_module modules/mod_auth_gssapi.so" > %buildroot%apa
 %config(noreplace) %apache2_mods_available/auth_gssapi.load
 
 %changelog
+* Thu Oct 06 2022 Stanislav Levin <slev@altlinux.org> 1.6.5-alt1
+- 1.6.3 -> 1.6.5.
+
 * Mon Nov 01 2021 Stanislav Levin <slev@altlinux.org> 1.6.3-alt2
 - Fixed FTBFS (requests-2.26).
 
