@@ -6,7 +6,7 @@
 
 Name: zuo
 Version: 1.0
-Release: alt1.gitd12bbec6
+Release: alt2.gitd12bbec6
 
 Summary: A tiny Racket for scripting
 License: Apache-2.0 MIT
@@ -37,6 +37,7 @@ the early layers implements macros.
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -49,6 +50,9 @@ the early layers implements macros.
 %_bindir/%name
 
 %changelog
+* Thu Oct 06 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0-alt2.gitd12bbec6
+- add %%autoreconf
+
 * Thu Oct 06 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0-alt1.gitd12bbec6
 - initial build for Sisyphus
 
