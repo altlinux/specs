@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: xsecurelock
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 URL: https://github.com/google/xsecurelock
 Summary: X11 screen lock utility with security in mind
@@ -74,6 +74,9 @@ the usual pitfalls of screen locking utility design on X11.
 %_man1dir/xsecurelock.1*
 
 %changelog
+* Fri Sep 16 2022 Vitaly Chikunov <vt@altlinux.org> 1.8.0-alt1
+- Update to v1.8.0 (2022-09-14).
+
 * Mon Jul 05 2021 Vitaly Chikunov <vt@altlinux.org> 1.7.0-alt1
 - Update to v1.7.0 (2020-01-15).
 
