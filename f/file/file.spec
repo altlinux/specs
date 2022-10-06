@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: file
-Version: 5.42
+Version: 5.43
 Release: alt1
 
 Summary: File type guesser
@@ -20,8 +20,13 @@ BuildRequires: bzlib-devel
 BuildRequires: libcap-devel
 BuildRequires: liblzma-devel
 BuildRequires: libseccomp-devel
+BuildRequires: libzstd-devel
 BuildRequires: zlib-devel
-%{?!_without_check:%{?!_disable_check:BuildRequires: strace}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: lzip
+BuildRequires: ncompress
+BuildRequires: strace
+}}
 
 %description
 The file command is "a file type guesser", that is, a command-line tool that
@@ -68,7 +73,6 @@ cat <<EOF > %buildroot%_sysconfdir/magic
 
 EOF
 cat magic/magic/* > %buildroot%_datadir/file/magic
-xz ChangeLog
 
 %check
 set -o pipefail
@@ -76,25 +80,36 @@ strace_file() {
 	local ret=0
 	strace -nfo strace.log -- src/file "$@" > stdout.log || ret=$?
 	! grep -w -e ENOSYS strace.log >&2 || ret=$?
+	# Check seccomp was enabled.
+	grep -q 'prctl(PR_SET_NO_NEW_PRIVS, 1,.* = 0' strace.log
+	grep -q 'seccomp(SECCOMP_SET_MODE_FILTER,.* = 0' strace.log
+	# Check capabilities are dropping.
+	grep -q 'capset(.*{effective=0, permitted=0, inheritable=0}.* = 0' strace.log
+	# Print output to stderr for debugging.
 	cat < stdout.log >&2
+	# Finally, print to stdout for grep.
 	cat < stdout.log
 	return $ret
 }
+xz -k ChangeLog
 strace_file -m /dev/null	  ChangeLog.xz | grep ': data'
 strace_file -m magic/magic/	  ChangeLog.xz | grep ': XZ compressed data'
 strace_file -m magic/magic.mgc	  ChangeLog.xz | grep ': XZ compressed data'
 strace_file -m magic/magic.mgc -z ChangeLog.xz | grep ': ASCII text (XZ compressed data'
-# Zstd uses external helper.
+# Zstd is built-in.
 tar cf ChangeLog.tar.zst ChangeLog.xz --zstd
-strace_file -m magic/magic.mgc -z ChangeLog.tar.zst |
-    grep ': POSIX tar archive (GNU) (Zstandard compressed data'
-
-# Check seccomp was enabled.
-grep 'prctl(PR_SET_NO_NEW_PRIVS, 1,.* = 0' strace.log
-grep 'seccomp(SECCOMP_SET_MODE_FILTER,.* = 0' strace.log
-
-# Check capabilities are dropping.
-grep 'capset(.*{effective=0, permitted=0, inheritable=0}.* = 0' strace.log
+strace_file -m magic/magic.mgc -z ChangeLog.tar.zst | grep ': POSIX tar archive (GNU) (Zstandard compressed data'
+# lzip uses external helper.
+lzip -k ChangeLog
+strace_file -m magic/magic.mgc    ChangeLog.lz | grep ': lzip compressed data'
+strace_file -m magic/magic.mgc -z ChangeLog.lz | grep ': ASCII text (lzip compressed data'
+%ifnarch armh
+# compress does not work on armh: https://bugzilla.altlinux.org/43803
+# Z uses external helper (gzip).
+compress ChangeLog
+strace_file -m magic/magic.mgc    ChangeLog.Z  | grep ': compress.d data'
+strace_file -m magic/magic.mgc -z ChangeLog.Z  | grep ': ASCII text (compress.d data'
+%endif
 
 make check
 
@@ -116,6 +131,10 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Wed Sep 14 2022 Vitaly Chikunov <vt@altlinux.org> 5.43-alt1
+- Update to FILE5_43-2-g37d21b82 (2022-09-14).
+- Zstd decompression is built-in now.
+
 * Tue Jun 14 2022 Vitaly Chikunov <vt@altlinux.org> 5.42-alt1
 - Update to FILE5_42-4-g7a1f533c (2022-06-13).
 
