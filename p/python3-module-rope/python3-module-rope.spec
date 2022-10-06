@@ -1,52 +1,63 @@
-%define real_name rope
+%define _unpackaged_files_terminate_build 1
+%define pypi_name rope
 
-Summary: python refactoring library
-Name: python3-module-%real_name
-Version: 0.9.4.1
-Release: alt1.2
-License: GPL
-Group: Development/Python
-Url: https://pypi.python.org/pypi/rope_py3k
-BuildArch: noarch
+# unfortunately, 1 test is broken,
+# see https://github.com/python-rope/rope/issues/478
+%def_without check
 
-Source: %real_name-%version.tar.gz
+Name: python3-module-%pypi_name
+Version: 1.3.0
+Release: alt1
+
+Summary: A python refactoring library
+License: LGPL-3.0+
+Group: Development/Python3
+Url: https://pypi.org/project/rope/
+Vcs: https://github.com/python-rope/rope
+
+Source: %pypi_name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest_timeout)
+BuildRequires: python3(pytoolconfig)
+BuildRequires: python3(build)
+BuildRequires: python3(sqlite3)
+%endif
+
+BuildArch: noarch
 
 %description
 %summary
 
-%package tests
-Summary: Tests for rope
-Group: Development/Python
-Requires: %name = %version-%release
-
-%description tests
-%summary
-
-This package contains tests for rope.
-
 %prep
-%setup -n %real_name-%version
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install -O1 --prefix="%prefix"
+%pyproject_install
 
-cp -fR ropetest %buildroot%python3_sitelibdir/
+%check
+%__python3 -m pytest .
 
 %files
-%doc COPYING README.txt docs
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/ropetest
-
-%files tests
-%python3_sitelibdir/ropetest
+%doc COPYING README.rst CHANGELOG.md docs
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Oct 06 2022 Anton Zhukharev <ancieg@altlinux.org> 1.3.0-alt1
+- 0.9.4.1 -> 1.3.0
+- rewrite spec from a scratch
+- do not pack tests
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 0.9.4.1-alt1.2
 - (NMU) rebuild with python3.6
 
