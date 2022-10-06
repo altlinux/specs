@@ -10,7 +10,7 @@
 
 Name: xapian-bindings
 Version: 1.4.15
-Release: alt4
+Release: alt5
 
 Summary: Xapian search engine bindings
 
@@ -96,15 +96,6 @@ add advanced indexing and search facilities to applications.
 This package provides the files needed for developing Ruby scripts
 which use Xapian.
 
-%package -n ruby-xapian-checkinstall
-Summary: Checkinstall test for Ruby bindings for Xapian search engine
-Group: Development/Other
-BuildArch: noarch
-Requires(pre): ruby-xapian
-
-%description -n ruby-xapian-checkinstall
-%summary.
-
 %prep
 %setup
 %if_without doc
@@ -130,9 +121,17 @@ export RUBY_LIB_ARCH=%ruby_vendorarchdir
 %makeinstall_std
 rm -rf %buildroot%_defaultdocdir/%name/
 
-%pre -n ruby-xapian-checkinstall
-set -xe
-ruby -rxapian -e '(p Xapian.version_string) == "%version"'
+%check
+%if_with ruby
+  ruby -Iruby -Iruby/.libs -rxapian -e '(p Xapian.version_string) == "%version"'
+  make -C ruby check
+%endif
+%if_with python
+  make -C python check
+%endif
+%if_with python3
+  make -C python3 check
+%endif
 
 %if_with python
 %files -n python-module-xapian
@@ -153,8 +152,6 @@ ruby -rxapian -e '(p Xapian.version_string) == "%version"'
 %ruby_vendorlibdir/xapian.rb
 %endif
 
-%files -n ruby-xapian-checkinstall
-
 # TODO:
 # - package other bindings (perl, tcl...)
 # - package docs/examples properly
@@ -164,6 +161,11 @@ ruby -rxapian -e '(p Xapian.version_string) == "%version"'
 #   I use watch file and it's more convenient to do that with srpms
 
 %changelog
+* Mon Sep 26 2022 Vitaly Chikunov <vt@altlinux.org> 1.4.15-alt5
+- Rebuild with newer libruby(2->3).
+- Remove checkinstall test and replace it with tests run in %%check, so that
+  ALT beekeeper will try them too.
+
 * Tue Mar 22 2022 Vitaly Chikunov <vt@altlinux.org> 1.4.15-alt4
 - spec: Build ruby module in vendor directories.
 - spec: Build ruby-xapian-checkinstall with a simple test.
