@@ -1,9 +1,9 @@
 %def_disable snapshot
-%define modname pyxdg
+%define pypi_name pyxdg
 %def_enable check
 
-Name: python3-module-%modname
-Version: 0.27
+Name: python3-module-%pypi_name
+Version: 0.28
 Release: alt1
 
 Summary: Implementations of freedesktop.org standards in Python 3
@@ -14,10 +14,10 @@ Packager: Python Development Team <python@packages.altlinux.org>
 
 %if_disabled snapshot
 Vcs: https://github.com/takluyver/pyxdg.git
-Source: https://github.com/takluyver/pyxdg/archive/rel-%version/%modname-%version.tar.gz
+Source: https://github.com/takluyver/pyxdg/archive/rel-%version/%pypi_name-%version.tar.gz
 %else
 Vcs: https://gitlab.freedesktop.org/xdg/pyxdg.git
-Source: %modname-%version.tar
+Source: %pypi_name-%version.tar
 %endif
 
 BuildArch: noarch
@@ -26,30 +26,35 @@ Requires: shared-mime-info
 Provides: pyxdg = %version-%release
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
 %{?_enable_check:BuildRequires: python3-module-nose shared-mime-info}
 
 %description
 PyXDG contains implementations of freedesktop.org standards in Python 3.
 
 %prep
-%setup -n %modname%{?_disable_snapshot:-rel}-%version
+%setup -n %pypi_name%{?_disable_snapshot:-rel}-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 PYTHONPATH=%buildroot%python3_sitelibdir nosetests-3
 
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/xdg/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %doc AUTHORS ChangeLog README TODO
 
 
 %changelog
+* Thu Oct 06 2022 Yuri N. Sedunov <aris@altlinux.org> 0.28-alt1
+- 0.28 (added $XDG_STATE_DIR support)
+- ported to %%pyproject* macros
+
 * Wed Dec 09 2020 Yuri N. Sedunov <aris@altlinux.org> 0.27-alt1
 - 0.27 (python3-only)
 
