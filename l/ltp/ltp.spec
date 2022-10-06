@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: ltp
-Version: 20220527
+Version: 20220930
 Release: alt1
 
 Summary: Linux Test Project
@@ -93,30 +93,39 @@ Requires(pre): rpm-build-vm
 %add_optflags -Werror=implicit-function-declaration -fno-common
 # Just reduce amount of warnings for too old code.
 %add_optflags -Wno-unused-parameter -Wno-unused-result -Wno-old-style-declaration
+
 %build
-%autoreconf
-%configure --prefix=/usr/lib/ltp
+unset MAKEFLAGS
+export V=1
 banner ltp
-%make_build --output-sync=none
+  %autoreconf
+  %configure --prefix=/usr/lib/ltp
+  %make_build
 banner posix
-%make_build --output-sync=none -C testcases/open_posix_testsuite
+pushd testcases/open_posix_testsuite
+  %configure
+  %make_build
+popd
 banner rt
-cd testcases/realtime
-%autoreconf
-%configure --prefix=/usr/lib/realtime_testsuite
-%make_build
-cd ../..
+pushd testcases/realtime
+  %autoreconf
+  %configure --prefix=/usr/lib/realtime_testsuite
+  %make_build
+popd
 
 %install
-%makeinstall_std -s -j%__nprocs --output-sync=none
+unset MAKEFLAGS
+export V=1
+banner install
+%makeinstall_std -s -j%__nprocs
 mkdir -p %buildroot/usr/lib/openposix_testsuite/bin
-%makeinstall_std -s --output-sync=none -C testcases/open_posix_testsuite prefix=/usr/lib/openposix_testsuite
-%makeinstall_std -s --output-sync=none -C testcases/realtime prefix=/usr/lib/realtime_testsuite
+%makeinstall_std -s -C testcases/open_posix_testsuite prefix=/usr/lib/openposix_testsuite
+%makeinstall_std -s -C testcases/realtime prefix=/usr/lib/realtime_testsuite
 find %buildroot/usr/lib/{ltp,openposix_testsuite,realtime_testsuite} -perm /g+w | xargs chmod g-w
 # Create output dirs (will have tmp-like permissions).
 mkdir %buildroot/usr/lib/ltp/{output,results}
 # EZ-Lanucher for LTP.
-! test -e %buildroot%_bindir/runltp 
+! test -e %buildroot%_bindir/runltp
 cat > %buildroot%_bindir/runltp <<-EOF
 	#!/bin/sh
 	exec /usr/lib/ltp/runltp "\$@"
@@ -134,7 +143,7 @@ set -ex
 # 'LD_PRELOAD=libfakeroot.so' hangs some binaries (including 'bash' and excluding
 # 'id' for example) in vm-run, and it's set under rooter.
 unset LD_PRELOAD
-vm-run runltp -f io 
+vm-run runltp -f io
 if [ $(arch) = x86_64 ]; then
 	# Other arches will skip kvm test (for example on i586 with "This arch 'x86' is not
 	# supported for test!") thus it's not suitable for a false positive testing.
@@ -157,6 +166,8 @@ fi
 %files open-posix-testsuite
 %doc testcases/open_posix_testsuite/{AUTHORS,README,COPYING,NEWS,QUICK-START}
 %doc testcases/open_posix_testsuite/Documentation
+%_bindir/run-all-posix-option-group-tests.sh
+%_bindir/run-posix-option-group-test.sh
 /usr/lib/openposix_testsuite
 
 %files realtime-testsuite
@@ -166,6 +177,9 @@ fi
 %files checkinstall
 
 %changelog
+* Tue Oct 04 2022 Vitaly Chikunov <vt@altlinux.org> 20220930-alt1
+- Update to 20220930.
+
 * Wed Jun 15 2022 Vitaly Chikunov <vt@altlinux.org> 20220527-alt1
 - Update to 20220527.
 - Now have installed ltp.json with tests metadata.
