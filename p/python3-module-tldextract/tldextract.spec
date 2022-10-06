@@ -1,16 +1,16 @@
 %define oname tldextract
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 3.3.1
+Version: 3.4.0
 Release: alt1
 
 Summary: Accurately separate the TLD from the registered domain and subdomains of a URL
 
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/tldextract/
+Url: https://pypi.python.org/pypi/tldextract
 
 # https://github.com/john-kurkowski/tldextract.git
 Source: %name-%version.tar
@@ -19,13 +19,15 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-requests-file
+BuildRequires: python3-module-responses
+BuildRequires: python3-module-pytest-mock
+%endif
 
 %py3_provides %oname
-
-BuildRequires: python3-module-pytest
-
-Conflicts: python-module-%oname
-Obsoletes: python-module-%oname
 
 %description
 tldextract accurately separates the gTLD or ccTLD (generic or country
@@ -37,23 +39,29 @@ URL, using the Public Suffix List.
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
+# deprecated code check, see task #307207
+sed -i 's/--pylint//g' tox.ini
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-python3 setup.py test
+%tox_check_pyproject
 
 %files
 %doc *.md
-%_bindir/*
+%_bindir/%oname
 %python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Oct 06 2022 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
+- Automatically updated to 3.4.0.
+- Build with check.
+
 * Sat Jul 16 2022 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
 - Automatically updated to 3.3.1.
 
