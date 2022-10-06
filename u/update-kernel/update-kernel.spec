@@ -1,6 +1,6 @@
 Name: update-kernel
 Version: 1.4
-Release: alt2
+Release: alt3
 
 Summary: Update kernel and modules
 License: GPL-2.0+
@@ -41,6 +41,8 @@ install -pm755 remove-old-kernels %buildroot%_sbindir/
 install -pm755 analyze-kmodules %buildroot%_sbindir/
 install -Dp update-kernel.8 -t %buildroot%_man8dir/
 install -Dp update-kernel.8.ru %buildroot%_mandir/ru/man8/update-kernel.8
+install -Dp bash_completion %buildroot/usr/share/bash-completion/completions/update-kernel
+ln -sf update-kernel %buildroot/usr/share/bash-completion/completions/remove-old-kernels
 
 %check
 make check
@@ -51,8 +53,12 @@ make check
 %_sbindir/analyze-kmodules
 %_man8dir/*.8*
 %_mandir/ru/man8/*.8*
+%_datadir/bash-completion/completions/*
 
 %changelog
+* Wed Oct 05 2022 Vitaly Chikunov <vt@altlinux.org> 1.4-alt3
+- Add simple bash_completion support.
+
 * Tue Oct 04 2022 Vitaly Chikunov <vt@altlinux.org> 1.4-alt2
 - Add update-kernel(8) man page (Anton Shevtsov, ALT#43934).
 
