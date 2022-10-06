@@ -1,6 +1,6 @@
 Name: codeblocks
 Version: 20.03
-Release: alt8
+Release: alt9
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -24,12 +24,27 @@ Patch4: %name-%version-multi-arch.patch
 Patch5: %name-%version-fix-empty-arduino-page.patch
 Patch6: 0001-Do-not-call-wxChoice::GetString-with-wxNOT_FOUND.patch
 Patch7: 0001-Fix-build-with-wxWidgets-3.1.4.patch
+# Fix build with libwxGTK3.2
+Patch8: sc_wxtypes-normalize.patch
+# These patches should be applied before patch14
+# patch9 was slightly edited
+Patch9: 56ac0396fad7a5b4bbb40bb8c4b5fe1755078aef.patch
+patch10: 40eb88e3f2b933f19f9933e06c8d0899c54f5e25.patch
+Patch11: remove_code_for_wxWidgets_less_3.0.0_part1.patch
+Patch12: remove_code_for_wxWidgets_less_3.0.0_part2.patch
+Patch13: remove_code_for_wxWidgets_less_3.0.0_part3.patch
+# Fix compilation of notebookstyles.cpp
+Patch14: 29315df024251850832583f73e67e515dae10830.patch
+# Fix regexp. Without this patch program doesnt start
+Patch15: 46720043319758cb0e798eb23520063583c40eaa.patch
+# Fix Assert failure when exit program first time
+Patch16: f700ec868532f4fd6784702ba086d900189864e8.patch
 
-Requires: automake >= 1.7 libwxGTK3.1 gcc gcc-c++ gdb xterm gamin mythes-en
+Requires: automake >= 1.7 libwxGTK3.2 gcc gcc-c++ gdb xterm gamin mythes-en
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: boost-devel gcc-c++ libICE-devel libgamin-devel libgtk+3-devel
-BuildRequires: libhunspell-devel libwxGTK3.1-devel
+BuildRequires: libhunspell-devel libwxGTK3.2-devel
 BuildRequires: tinyxml-devel zip zlib-devel bzlib-devel
 
 %description
@@ -83,6 +98,15 @@ cp %SOURCE4 .
 %patch5 -p2
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
 
 # https://sourceforge.net/p/codeblocks/tickets/936/
 sed -ri '/^\s+#pragma implementation/ s,cbkeybinder,cbKeyConfigPanel,' src/plugins/contrib/keybinder/cbkeyConfigPanel.cpp
@@ -316,6 +340,9 @@ install -m 644 -D %name.mo %buildroot%_datadir/%name/locale/ru_RU/%name.mo
 %_libdir/pkgconfig/wxsmith-contrib.pc
 
 %changelog
+* Wed Sep 21 2022 Grigory Ustinov <grenka@altlinux.org> 20.03-alt9
+- Fixed build with libwxGTK3.2.
+
 * Sat Dec 25 2021 Grigory Ustinov <grenka@altlinux.org> 20.03-alt8
 - Fixed BuildRequires.
 
