@@ -1,7 +1,7 @@
 %define oname idna
 
 Name: python3-module-%oname
-Version: 3.3
+Version: 3.4
 Release: alt1
 
 Summary: A library to support the Internationalised Domain Names in Applications (IDNA)
@@ -13,7 +13,8 @@ Url: https://github.com/kjd/idna
 Source: %oname-%version.tar
 BuildArch: noarch
 
-BuildRequires: python3-module-setuptools rpm-build-python3
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-flit
 
 %description
 A library to support the Internationalised Domain Names in Applications (IDNA)
@@ -25,16 +26,19 @@ to as "IDNA2008" and can produce different results from the earlier standard fro
 
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/%oname-*.dist-info
 
 %changelog
+* Thu Oct 6 2022 Vladimir Didenko <cow@altlinux.org> 3.4-alt1
+- New version
+
 * Wed Nov 3 2021 Vladimir Didenko <cow@altlinux.org> 3.3-alt1
 - New version
 
