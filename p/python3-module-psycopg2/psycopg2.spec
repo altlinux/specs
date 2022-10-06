@@ -1,7 +1,10 @@
 %define oname psycopg2
 
+# tests require running PGSQL
+%def_without check
+
 Name: python3-module-%oname
-Version: 2.9.3
+Version: 2.9.4
 Release: alt1
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python3
@@ -15,6 +18,9 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: postgresql-devel python3-devel
+
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 psycopg is a PostgreSQL database adapter for the Python programming
@@ -39,19 +45,23 @@ echo "include_dirs=.:/usr/include/pgsql" >> setup.cfg
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
+%doc LICENSE AUTHORS NEWS *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %files doc
 %doc AUTHORS INSTALL README* doc
 
 %changelog
+* Thu Oct 06 2022 Grigory Ustinov <grenka@altlinux.org> 2.9.4-alt1
+- Automatically updated to 2.9.4.
+
 * Thu Apr 14 2022 Grigory Ustinov <grenka@altlinux.org> 2.9.3-alt1
 - Automatically updated to 2.9.3.
 
