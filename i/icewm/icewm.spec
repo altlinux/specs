@@ -2,8 +2,8 @@
 %define realname icewm
 
 Name: %realname
-Version: 3.0.0
-Release: alt2
+Version: 3.0.1
+Release: alt1
 Epoch:3
 
 Summary: X11 Window Manager
@@ -139,6 +139,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Thu Oct 06 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.0.1-alt1
+- 3.0.1
+
 * Tue Oct 04 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.0.0-alt2
 - added Yandex Browser support into toolbar
 
