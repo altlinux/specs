@@ -4,27 +4,29 @@
 
 Name: python3-module-%oname
 Version: 0.8.1
-Release: alt1
+Release: alt2
 
 Summary: Simple VTXXX-compatible terminal emulator
 
 License: LGPLv3
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pyte/
+Url: https://pypi.python.org/pypi/pyte
 
 # https://github.com/selectel/pyte.git
 Source: %name-%version.tar
-BuildArch: noarch
 
 %py3_provides %oname
 
 BuildRequires(pre): rpm-build-python3
 
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 %if_with check
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-runner
 BuildRequires: python3-module-wcwidth
 %endif
+
+BuildArch: noarch
 
 %description
 It's an in memory VTXXX-compatible terminal emulator. XXX stands for a
@@ -37,19 +39,24 @@ the suit.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc AUTHORS CHANGES README examples
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Oct 06 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt2
+- Use modern macros.
+
 * Thu Apr 14 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1
 - Automatically updated to 0.8.1.
 
