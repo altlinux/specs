@@ -1,6 +1,6 @@
 %define module_name	evdi
 %define module_version	1.12.0
-%define module_release	alt1
+%define module_release	alt2
 
 %define flavour		un-def
 %define karch %ix86 x86_64 armh aarch64
@@ -32,6 +32,7 @@ PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 ExclusiveArch: %karch
 
 Patch1: %module_name-1.11.0-centos9.patch
+Patch2: %module_name-1.12.0-drm-framebuffer.patch
 
 %description
 Extensible Virtual Display Interface
@@ -50,6 +51,7 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 if [ %flavour == "centos" ]; then
 %patch1 -p1
 fi
+%patch2 -p1
 
 %build
 %make_build -C %_usrsrc/linux-%kversion-%flavour M=`pwd` modules
@@ -65,6 +67,9 @@ install evdi.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Thu Oct 06 2022 L.A. Kostis <lakostis@altlinux.org> 1.12.0-alt2
+- Add patch to compile w/ kernel 6.0+.
 
 * Tue Aug 16 2022 L.A. Kostis <lakostis@altlinux.org> 1.12.0-alt1
 - Updated to 1.12.0.
