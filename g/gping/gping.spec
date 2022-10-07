@@ -1,15 +1,13 @@
 Name: gping
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 Summary: Ping, but with a graph
 License: MIT
 Group: Networking/Other
 Url: https://github.com/orf/gping
 Source: %name-%version.tar
-Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildRequires: rust-cargo
-BuildRequires: /proc
 
 %description
 %summary.
@@ -37,6 +35,9 @@ install -m 0755 target/release/%name %buildroot%_bindir
 %doc readme.md LICENSE
 
 %changelog
+* Fri Oct 07 2022 Alexander Makeenkov <amakeenk@altlinux.org> 1.4.0-alt1
+- Updated to version 1.4.0
+
 * Mon Jun 27 2022 Alexander Makeenkov <amakeenk@altlinux.org> 1.3.2-alt1
 - Updated to version 1.3.2
 
