@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: The GNOME Display Manager
 License: GPL-2.0
@@ -174,6 +174,7 @@ This package contains user documentation for Gdm.
 
 %prep
 %setup -n %name-%version%beta
+sed -i 's|/usr\(/bin/touch\)|\1|' data/61-gdm.rules.in
 %patch2 -p1 -b .XSession
 %patch7 -p1 -b .Init
 
@@ -296,6 +297,9 @@ dbus-run-session %__meson_test
 
 
 %changelog
+* Fri Oct 07 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt2
+- data/61-gdm.rules.in: /usr/bin/touch -> /bin/touch (reported by shaba@)
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 
