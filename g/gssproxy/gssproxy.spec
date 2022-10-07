@@ -7,7 +7,7 @@
 %def_with check
 
 Name: gssproxy
-Version: 0.8.4
+Version: 0.9.1
 Release: alt1
 Summary: GSSAPI Proxy
 
@@ -33,7 +33,7 @@ BuildRequires: libkeyutils-devel
 BuildRequires: libini_config-devel >= 1.3.1
 BuildRequires: libverto-devel
 BuildRequires: libpopt-devel
-BuildRequires: systemd
+BuildRequires: libsystemd-devel
 BuildRequires: po4a
 BuildRequires: libcap-devel
 
@@ -108,9 +108,9 @@ GSSAPI Proxy configuration for NFS client
 install -d -m0755 %buildroot%_sysconfdir/gssproxy
 install -m0644 examples/gssproxy.conf %buildroot%_sysconfdir/gssproxy/gssproxy.conf
 install -m0644 examples/24-nfs-server.conf %buildroot%_sysconfdir/gssproxy/
-install -m0644 examples/99-nfs-client.conf %buildroot%_sysconfdir/gssproxy/
-mkdir -p %buildroot%_sysconfdir/gss/mech.d
-install -m0644 examples/mech %buildroot%_sysconfdir/gss/mech.d/gssproxy.conf
+install -m0644 examples/99-network-fs-clients.conf %buildroot%_sysconfdir/gssproxy/
+install -d -m755 %buildroot%_sysconfdir/gss/mech.d
+install -m644 examples/proxymech.conf %buildroot%_sysconfdir/gss/mech.d/
 mkdir -p %buildroot%gpstatepath/rcache
 mkdir -p %buildroot%_runtimedir
 install -d -m0770 %buildroot%_runtimedir/gssproxy
@@ -151,9 +151,11 @@ echo 'run_as_user = %gssproxy_user' >> %buildroot%_sysconfdir/gssproxy/gssproxy.
 %files
 %_unitdir/%name.service
 %_sbindir/%name
+%_userunitdir/gssuserproxy.service
+%_userunitdir/gssuserproxy.socket
 %attr(0755,root,%gssproxy_user) %dir %pubconfpath
 %attr(0640,root,%gssproxy_user) %config(noreplace) %_sysconfdir/gssproxy/gssproxy.conf
-%attr(0644,root,root) %config(noreplace) %_sysconfdir/gss/mech.d/gssproxy.conf
+%attr(0644,root,root) %config(noreplace) %_sysconfdir/gss/mech.d/proxymech.conf
 %attr(0775,root,%gssproxy_user) %dir %gpstatepath
 %attr(0770,root,%gssproxy_user) %dir %gpstatepath/clients
 %attr(0770,root,%gssproxy_user) %dir %gpstatepath/rcache
@@ -167,9 +169,12 @@ echo 'run_as_user = %gssproxy_user' >> %buildroot%_sysconfdir/gssproxy/gssproxy.
 %attr(0640,root,%gssproxy_user) %config(noreplace) %_sysconfdir/gssproxy/24-nfs-server.conf
 
 %files nfs-client
-%attr(0640,root,%gssproxy_user) %config(noreplace) %_sysconfdir/gssproxy/99-nfs-client.conf
+%attr(0640,root,%gssproxy_user) %config(noreplace) %_sysconfdir/gssproxy/99-network-fs-clients.conf
 
 %changelog
+* Thu Oct 06 2022 Stanislav Levin <slev@altlinux.org> 0.9.1-alt1
+- 0.8.4 -> 0.9.1.
+
 * Thu Jan 21 2021 Stanislav Levin <slev@altlinux.org> 0.8.4-alt1
 - 0.8.3 -> 0.8.4.
 

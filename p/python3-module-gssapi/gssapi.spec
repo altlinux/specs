@@ -1,24 +1,28 @@
 %define _unpackaged_files_terminate_build 1
-%define mname gssapi
+%define pypi_name gssapi
 
 %def_with check
 
-Name: python3-module-%mname
-Version: 1.7.3
+Name: python3-module-%pypi_name
+Version: 1.8.1
 Release: alt1
 
-Summary: Python Bindings for GSSAPI (RFC 2743/2744 and extensions)
+Summary: Python GSSAPI Wrapper
 License: ISC
 Group: Development/Python3
-# Source-git: https://github.com/pythongssapi/python-gssapi
-Url: https://pypi.python.org/pypi/gssapi
+VCS: https://github.com/pythongssapi/python-gssapi.git
+Url: https://pypi.org/project/gssapi/
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(Cython)
+
 BuildRequires: libkrb5-devel >= 1.15
 
 %if_with check
@@ -27,18 +31,15 @@ BuildRequires: python3(decorator)
 
 BuildRequires: python3(k5test)
 BuildRequires: python3(parameterized)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
 BuildRequires: krb5-kdc >= 1.15
 %endif
 
 Requires: libkrb5 >= 1.15
 
 %description
-A set of Python bindings to the GSSAPI C library providing both
-a high-level pythonic interfaces and a low-level interfaces
-which more closely matches RFC 2743.  Includes support for
-RFC 2743, as well as multiple extensions.
+Python-GSSAPI provides both low-level and high level wrappers around the GSSAPI
+C libraries. While it focuses on the Kerberos mechanism, it should also be
+useable with other GSSAPI mechanisms.
 
 %prep
 %setup
@@ -46,24 +47,32 @@ RFC 2743, as well as multiple extensions.
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -r -vvr --no-deps -s false
+# see ci/test.sh
+cat > tox.ini <<'EOF'
+[testenv]
+allowlist_externals = bash
+commands =
+    bash -c 'cd gssapi/tests && python -m unittest'
+EOF
+%tox_check_pyproject -c tox.ini
 
 %files
 %doc LICENSE.txt README.rst
-%python3_sitelibdir/%mname
-%python3_sitelibdir/%mname-%version-*.egg-info
+%python3_sitelibdir/gssapi/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
-%exclude %python3_sitelibdir/%mname/tests/
+%exclude %python3_sitelibdir/gssapi/tests/
 
 %changelog
+* Thu Oct 06 2022 Stanislav Levin <slev@altlinux.org> 1.8.1-alt1
+- 1.7.3 -> 1.8.1.
+
 * Thu Feb 24 2022 Stanislav Levin <slev@altlinux.org> 1.7.3-alt1
 - 1.7.2 -> 1.7.3.
 
