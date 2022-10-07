@@ -1,12 +1,11 @@
 Name: bat
-Version: 0.21.0
+Version: 0.22.1
 Release: alt1
 Summary: A cat(1) clone with syntax highlighting and Git integration
 License: MIT or Apache-2.0
 Group: File tools
 Url: https://github.com/sharkdp/bat
 Source: %name-%version.tar
-Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildRequires: rust-cargo
 BuildRequires: /proc
@@ -49,6 +48,9 @@ install -Dm 0644 target/release/build/%name-*/out/assets/completions/bat.fish %b
 %doc README.md LICENSE-MIT LICENSE-APACHE
 
 %changelog
+* Fri Oct 07 2022 Alexander Makeenkov <amakeenk@altlinux.org> 0.22.1-alt1
+- Updated to version 0.22.1
+
 * Sat May 14 2022 Alexander Makeenkov <amakeenk@altlinux.org> 0.21.0-alt1
 - Updated to version 0.21.0
 
