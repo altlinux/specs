@@ -1,6 +1,6 @@
 Name: corectrl
 Version: 1.3.0
-Release: alt3
+Release: alt4
 Summary: Core control application
 Group: System/Configuration/Hardware
 License: GPLv3
@@ -67,12 +67,16 @@ fi
 %_datadir/polkit-1/actions/org.%name.*.policy
 
 %changelog
+* Sat Oct 08 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.0-alt4
+- Apply a proper patch from upstream to fix compilation w/
+  linux 6.0+ headers (upstream #325).
+
 * Wed Oct 05 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.0-alt3
 - Fix build w/ recent linux headers.
 
 * Mon Oct 03 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.0-alt1
 - Sync with existing package from lav@.
-- Applied a fix from master (Fix CPU performance scaling mode 
+- Applied a fix from master (Fix CPU performance scaling mode
   not being restored from file).
 
 * Sun Oct 02 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.0-alt0.1
