@@ -8,7 +8,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dhcp
-Version: 4.4.3
+Version: 4.4.3.P1
 Release: alt1
 Epoch: 1
 
@@ -565,6 +565,9 @@ fi
 # }}}
 
 %changelog
+* Fri Oct 07 2022 Mikhail Efremov <sem@altlinux.org> 1:4.4.3.P1-alt1
+- Updated to 4.4.3-P1 (fixes: CVE-2022-2928,CVE-2022-2929).
+
 * Thu Mar 10 2022 Mikhail Efremov <sem@altlinux.org> 1:4.4.3-alt1
 - Updated patches.
 - Updated to 4.4.3.
