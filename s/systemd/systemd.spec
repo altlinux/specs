@@ -93,7 +93,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -2310,6 +2310,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Oct 06 2022 Alexey Shabalin <shaba@altlinux.org> 1:251.5-alt1
+- 251.5
+
 * Fri Sep 02 2022 Alexey Shabalin <shaba@altlinux.org> 1:251.4-alt1
 - 251.4.
 - add group sgx (ALT #41661).
