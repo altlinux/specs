@@ -1,6 +1,6 @@
 Name: cadabra2
-Version: 2.3.8
-Release: alt2
+Version: 2.4.0.2
+Release: alt1
 
 %def_with gui
 %def_without jupiter
@@ -102,6 +102,9 @@ kernel for Jupyter
 %endif
 
 %changelog
+* Fri Oct 07 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.4.0.2-alt1
+- v.2.4.0.2
+
 * Sat Feb 26 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.3.8-alt2
 - current upstream snapshot (ce5bc98) with a few important fixes
 - add RPATH to binaries to fix "cadabra2.cpython-310.so not found" error
