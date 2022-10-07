@@ -1,10 +1,10 @@
 Name: gap
 Version: 4.12.0
-Release: alt1
+Release: alt1.1
 Summary: System for Computational Discrete Algebra
 License: Zlib and LGPL-3.0+ and GPL-2.0+ and GPL-3.0+
 Group: Sciences/Mathematics
-Url: http://gap-system.org/
+Url: https://gap-system.org/
 
 Source: https://www.gap-system.org/pub/gap/gap4core/gap-%version-core.zip
 Source2: macros.gap
@@ -243,6 +243,9 @@ chmod +x %buildroot%_datadir/gap/etc/convert.pl
 
 %files full
 %changelog
+* Fri Oct 07 2022 Leontiy Volodin <lvol@altlinux.org> 4.12.0-alt1.1
+- Fixed url tag.
+
 * Tue Oct 04 2022 Leontiy Volodin <lvol@altlinux.org> 4.12.0-alt1
 - New version (4.12.0).
 
