@@ -1,6 +1,6 @@
 Name: pcb2gcode
-Version: 2.4.0
-Release: alt3
+Version: 2.5.0
+Release: alt1
 Summary: Command-line software for the isolation, routing and drilling of PCBs
 
 Group: Engineering
@@ -47,6 +47,9 @@ export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS -I%_includedir/librsvg-2.0"
 %doc AUTHORS README.md
 
 %changelog
+* Fri Oct 07 2022 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- new version 2.5.0
+
 * Sat Dec 11 2021 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt3
 - add -I%_includedir/librsvg-2.0 to CXXFLAGS (fix FTBFS)
 
