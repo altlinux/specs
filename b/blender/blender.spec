@@ -13,7 +13,7 @@
 %def_with jemalloc
 
 Name: blender
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -287,6 +287,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Fri Oct 07 2022 Egor Ignatov <egori@altlinux.org> 3.3.1-alt1
+- Update to 3.3.1
+
 * Wed Sep 07 2022 Egor Ignatov <egori@altlinux.org> 3.3.0-alt1
 - Update to 3.3.0
 - Update blender-2.80-alt-use-system-glog patch
