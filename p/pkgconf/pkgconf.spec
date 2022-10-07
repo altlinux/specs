@@ -1,11 +1,16 @@
 %define sover 4
 
 %def_disable snapshot
+# have no kyua for armh
+%ifarch armh
 %def_disable check
+%else
+%def_enable check
+%endif
 
 Name: pkgconf
 Version: 1.9.3
-Release: alt1
+Release: alt1.1
 
 Summary: Package compiler and linker metadata toolkit
 Group: Development/Other
@@ -27,7 +32,7 @@ BuildRequires(pre): meson
 
 %description
 pkgconf is a program which helps to configure compiler and linker flags
-for development libraries.  It is similar to pkg-config from
+for development libraries. It is similar to pkg-config from
 freedesktop.org.
 
 %package -n lib%name
@@ -85,6 +90,9 @@ mkdir -p %buildroot%_datadir/pkgconfig/personality.d
 
 
 %changelog
+* Fri Oct 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9.3-alt1.1
+- enabled %%check
+
 * Wed Aug 17 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9.3-alt1
 - 1.9.3
 

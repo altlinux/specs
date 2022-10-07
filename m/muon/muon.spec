@@ -7,20 +7,21 @@
 %def_disable check
 %def_enable docs
 %def_enable libpkgconf
+%def_disable tracy
 
 Name: muon
 Version: %ver_major.1
-Release: alt0.91
+Release: alt0.92
 
 Summary: C-implemetation of Meson build system
-License: GPLv3+
+License: GPL-3.0-only
 Group: Development/Other
 Url: https://github.com/annacrombie/muon
 
 Vcs: https://github.com/annacrombie/muon.git
 Source: %name-%version.tar
-Source1: https://mochiro.moe/wrap/samurai-1.2-27-g92711f7.tar.gz
-Source2: https://mochiro.moe/wrap/meson-docs-0.63.0-40-g280f3423b.tar.gz
+Source1: https://mochiro.moe/wrap/samurai-1.2-28-g4e3a595.tar.gz
+Source2: https://mochiro.moe/wrap/meson-docs-0.63.0-116-g8a45c81cf.tar.gz
 Source3: %name.macros
 Source4: %name.env
 
@@ -30,6 +31,7 @@ Requires: pkgconf >= %pkgconf_ver ninja-build
 BuildRequires: ninja-build libcurl-devel libarchive-devel
 %{?_enable_libpkgconf:BuildRequires: libpkgconf-devel}
 %{?_enable_docs:BuildRequires: python3-module-yaml scdoc}
+%{?_enable_tracy:BuildRequires: pkgconfig(tracy) gcc-c++}
 %{?_enable_check:BuildRequires: python3 gcc-c++ ...}
 
 %description
@@ -59,10 +61,12 @@ mkdir %__builddir
 
 %build
 CC=gcc ./bootstrap.sh
+CFLAGS="${CFLAGS:-%optflags %(getconf LFS_CFLAGS)}"; export CFLAGS;
 ./muon setup \
     -Dprefix=%{_prefix} \
     -Dbindir=%{_bindir} \
     -Dsamurai=enabled \
+    %{?_disable_tracy:-Dtracy=disabled} \
     %__builddir
 ninja-build %_smp_mflags -C %__builddir
 cp -f %__builddir/muon ./
@@ -92,6 +96,9 @@ install -Dpm 0755 %SOURCE4 %buildroot%_rpmmacrosdir/%name.env
 
 
 %changelog
+* Fri Oct 07 2022 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt0.92
+- updated to 2021ab4a
+
 * Tue Aug 16 2022 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt0.91
 - updated to 6b2758d3
 
