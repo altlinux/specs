@@ -1,6 +1,6 @@
 Name: sunxi-tools
 Version: 1.5
-Release: alt0.20210315
+Release: alt0.20220729
 Epoch: 1
 
 Summary: Tools for use with Allwinner SoC based devices
@@ -31,8 +31,12 @@ tar xf %SOURCE1 -C %buildroot%_datadir/sunxi-tools
 %doc README.md
 %_bindir/*
 %_datadir/sunxi-tools
+%_man1dir/sunxi-fel.1*
 
 %changelog
+* Fri Oct 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.5-alt0.20220729
+- up to 5cf618a
+
 * Wed Aug 11 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.5-alt0.20210315
 - updated from git.6c02224
 
