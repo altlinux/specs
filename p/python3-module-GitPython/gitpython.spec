@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname GitPython
+%define pypi_name GitPython
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.1.27
+Name: python3-module-%pypi_name
+Version: 3.1.28
 Release: alt1
 
 Summary: GitPython is a python library used to interact with Git repositories
@@ -21,6 +21,10 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 # install_requires=
 BuildRequires: python3(gitdb)
@@ -31,8 +35,6 @@ BuildRequires: /usr/sbin/git-daemon
 BuildRequires: /proc
 BuildRequires: python3(ddt)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 Requires: /usr/bin/git
@@ -54,10 +56,10 @@ built on top of the standard library optparse module.
 rm -vr git/ext/*
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 # Tests expect project's own git repo + submodules
@@ -77,31 +79,24 @@ TRAVIS=yes ../init-tests-after-clone.sh
 popd
 export GIT_PYTHON_TEST_GIT_REPO_BASE="$TEST_REPO"
 
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
 # /usr/sbin/git-daemon
 export PATH=$PATH:%_sbindir
 export NO_SUBMODULES=YES
-export NO_INTERNET=YES
 export TOX_TESTENV_PASSENV='PATH GIT_PYTHON_TEST_GIT_REPO_BASE NO_SUBMODULES NO_INTERNET GIT_CONFIG_GLOBAL'
-
-tox.py3 --sitepackages --console-scripts -vvr -s false -- \
+%tox_create_default_config
+%tox_check_pyproject -- \
     -vra \
     --ignore test/test_installation.py \
     --ignore test/test_submodule.py
 
 %files
 %python3_sitelibdir/git/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Fri Oct 07 2022 Stanislav Levin <slev@altlinux.org> 3.1.28-alt1
+- 3.1.27 -> 3.1.28.
+
 * Fri Feb 25 2022 Stanislav Levin <slev@altlinux.org> 3.1.27-alt1
 - 3.1.14 -> 3.1.27.
 
