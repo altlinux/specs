@@ -9,7 +9,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 22.8.0
+Version: 22.10.0
 Release: alt1
 
 Summary: The Uncompromising Code Formatter
@@ -24,9 +24,9 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 
 # build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
+BuildRequires: python3(hatchling)
+BuildRequires: python3(hatch-vcs)
+BuildRequires: python3(hatch-fancy-pypi-readme)
 
 %if_with check
 # install_requires=
@@ -106,6 +106,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 07 2022 Stanislav Levin <slev@altlinux.org> 22.10.0-alt1
+- 22.8.0 -> 22.10.0.
+
 * Mon Sep 12 2022 Stanislav Levin <slev@altlinux.org> 22.8.0-alt1
 - 22.6.0 -> 22.8.0.
 
