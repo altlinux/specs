@@ -3,7 +3,7 @@
 
 Name: OpenBoard
 Version: 1.6.3
-Release: alt4
+Release: alt6
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
@@ -26,6 +26,16 @@ Patch4: 0001-new-icon-images.patch
 Patch5: 0001-Draw-dashed-and-dotted-lines.patch
 
 Patch6: run-in-a-window.patch
+
+Patch7: change-dash-line-spaces.patch
+
+Patch8: change-lineItem-delegation.patch
+
+Patch9: background-grid-size-save.patch
+
+Patch10: new-vector-item.patch
+
+Patch11: new-vector-item-ru-translation.patch 
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -79,6 +89,11 @@ Interactive whiteboard for schools and universities.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
@@ -180,6 +195,14 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Fri Sep 30 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.3-alt6
+- Adding the patch with a new drawing element - vector and the patch with russian translation of it
+
+* Mon Sep 26 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.3-alt5
+- Adding the patch for increasing the gaps in the dotted line style
+- Adding the patch with ability for changing line selection using StrokesGroup item
+- Adding the patch with ability for saving background grid size when it has been changed
+
 * Mon Aug 29 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.3-alt4
 - Adding the patch with new icon images
 - Adding the patch with ability for draw dashed and dotted lines
