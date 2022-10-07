@@ -7,15 +7,14 @@
 %define appname trik-studio
 
 Name: trikStudio
-Version: 2022.1
-Release: alt3.1
+Version: 2022.2
+Release: alt1
 Summary: Intuitive programming environment robots
 Summary(ru_RU.UTF-8): Интуитивно-понятная среда программирования роботов
 License: Apache-2.0
 Group: Education
 Url: https://github.com/trikset/trik-studio
 
-Packager: Evgeny Sinelnikov <sin@altlinux.org>
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 Patch1: gamepad.patch
@@ -24,7 +23,7 @@ Patch3: fix-build-with-qt5-quazip1.patch
 Patch4: trikRuntime.patch
 
 BuildRequires: gcc-c++ qt5-base-devel qt5-svg-devel qt5-script-devel qt5-multimedia-devel libusb-devel libudev-devel libgmock-devel
-BuildRequires: libqscintilla2-qt5-devel zlib-devel python3-dev libhidapi-devel libusb-devel quazip-qt5-devel
+BuildRequires: libqscintilla2-qt5-devel zlib-devel python3-dev libhidapi-devel quazip-qt5-devel qt5-serialport-devel p7zip-standalone
 # Workaround due project build with -fsanitize=undefined natively
 # https://bugzilla.altlinux.org/show_bug.cgi?id=38106
 #if_with sanitize
@@ -34,7 +33,7 @@ BuildRequires: libubsan-devel-static
 #endif
 BuildRequires: rsync qt5-tools
 
-Requires: libhidapi
+Requires: libhidapi lego-mindstorms-udev-rules
 Requires: %name-data = %version-%release
 Conflicts: lib%name
 
@@ -204,6 +203,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 27 2022 Valery Sinelnikov <greh@altlinux.org> 2022.2-alt1
+- Update to 2022.2
+
 * Mon Jul 25 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2022.1-alt3.1
 - Fixed build for Elbrus
 
