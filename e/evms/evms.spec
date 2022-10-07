@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt59
+Release: alt60
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -184,6 +184,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Fri Oct 07 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt60
+- fix crash when mkfs'ing btrfs with subvolumes
+
 * Tue Sep 13 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt59
 - Suppress build warnings, fix possible segfaults and memory leaks (thx ptrnine@)
 - fix crash: remove subvolumes + unmkfs btrfs
