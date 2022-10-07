@@ -2,7 +2,7 @@
 
 Name: gzdoom
 Version: 4.8.2
-Release: alt1
+Release: alt2
 
 Summary: Enhanced Doom engine
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom
@@ -11,7 +11,7 @@ Group: Games/Arcade
 
 Url: http://zdoom.org
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 e2k
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
@@ -106,6 +106,9 @@ done
 %_datadir/%name/soundfonts/%name.sf2
 
 %changelog
+
+* Sat Jul 09 2022 Artyom Bystrov <arbars@altlinux.org> 4.8.2-alt2
+- Add "e2k" to ExclusiveArch
 
 * Sat Jul 09 2022 Artyom Bystrov <arbars@altlinux.org> 4.8.2-alt1
 - Update to new version
