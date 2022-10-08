@@ -4,7 +4,7 @@
 
 Name: ltp
 Version: 20220930
-Release: alt1
+Release: alt1.1
 
 Summary: Linux Test Project
 License: GPL-2.0-only
@@ -82,6 +82,12 @@ Requires(pre): rpm-build-vm
 
 %prep
 %setup
+%ifarch %e2k
+# error: case label value has already appeared in this switch
+sed -i "s/case SIGRESTART://" lib/tst_sig.c
+# The presence of "emmintrin.h" shouldn't be used for x86 detection.
+sed -i "s/#ifdef HAVE_EMMINTRIN_H/#if 0/" testcases/cve/meltdown.c
+%endif
 
 # /usr/include/sys/wait.h:88:16: error: variable 'wait' redeclared as function
 #    88 | extern __pid_t wait (int *__stat_loc);
@@ -177,6 +183,9 @@ fi
 %files checkinstall
 
 %changelog
+* Sat Oct 08 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20220930-alt1.1
+- Fixed build for Elbrus.
+
 * Tue Oct 04 2022 Vitaly Chikunov <vt@altlinux.org> 20220930-alt1
 - Update to 20220930.
 
