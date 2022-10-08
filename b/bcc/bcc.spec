@@ -20,8 +20,8 @@
 #   (merge) git merge --continue
 
 Name:		bcc
-Version:	0.24.0
-Release:	alt2
+Version:	0.25.0
+Release:	alt1
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -30,6 +30,8 @@ Vcs:		https://github.com/iovisor/bcc.git
 
 Source:		%name-%version.tar
 Source1: libbpf-0.tar
+Source2: bpftool-0.tar
+Source3: libbpf-1.tar
 
 # bcc does not support 32-bit arches
 # See https://github.com/iovisor/bcc/issues/3241
@@ -149,7 +151,9 @@ linked (and built in bcc package).
 
 %prep
 %setup -q
-tar xf %SOURCE1 -C src/cc
+tar xf %SOURCE1 -C libbpf-tools/bpftool
+tar xf %SOURCE2 -C libbpf-tools
+tar xf %SOURCE3 -C src/cc
 
 %build
 %define optflags_lto %nil
@@ -268,6 +272,9 @@ fi
 %endif
 
 %changelog
+* Sun Oct 09 2022 Vitaly Chikunov <vt@altlinux.org> 0.25.0-alt1
+- Update to v0.25.0 (2022-08-10).
+
 * Sat Oct 08 2022 Vitaly Chikunov <vt@altlinux.org> 0.24.0-alt2
 - Revert to use built-in libbpf (submodule).
 - Build with libdebuginfod.
