@@ -3,7 +3,7 @@
 
 Epoch: 1
 Name: lua5.3-module-%oname
-Version: 3.0.0
+Version: 3.1.0
 Release: alt1
 Summary: Network support for the Lua language
 License: MIT
@@ -74,6 +74,9 @@ sleep 1
 %_includedir/luasocket
 
 %changelog
+* Sat Oct 08 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:3.1.0-alt1
+- Updated to 3.1.0.
+
 * Sun Jul 03 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:3.0.0-alt1
 - Updated to 3.0.0.
 - Added devel subpackage.
