@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 5.19
+%define kernel_base_version 6.0
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
@@ -13,7 +13,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -56,8 +56,9 @@ BuildRequires: perl-devel
 BuildRequires: rsync
 BuildRequires: xmlto
 
-BuildRequires: %kernel_source = 1.0.0
+BuildRequires: %kernel_source
 BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
 BuildRequires: readline-devel
 # python3-module-docutils is just for rst2man.py
 BuildRequires: python3-module-docutils
@@ -77,6 +78,7 @@ Source23: hypervfcopyd.service
 Source31: hypervkvpd.rules
 Source32: hypervvssd.rules
 Source33: hypervfcopyd.rules
+Patch1: 0001-libperf-Remove-reference-to-non-uapi-header.patch
 
 %description
 Various tools from the Linux Kernel source tree.
@@ -250,6 +252,7 @@ and root causes of unexpected results.
 %setup -cT
 tar -xf %kernel_src/%kernel_source.tar
 cd %kernel_source
+%autopatch -p1
 
 # This will make perf ask for kernelversion.
 touch .git
@@ -698,6 +701,9 @@ fi
 %_man1dir/rtla*
 
 %changelog
+* Sat Oct 08 2022 Vitaly Chikunov <vt@altlinux.org> 6.0-alt1
+- Update to v6.0 (2022-10-02).
+
 * Mon Aug 15 2022 Vitaly Chikunov <vt@altlinux.org> 5.19-alt2
 - perf: Fix `version` output, enable debuginfod support, build with dynamic
   linking to libbpf and libtraceevent. Package libperf and libperf-devel.
