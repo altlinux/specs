@@ -8,7 +8,7 @@
 %define rdn_name com.github.GradienceTeam.Gradience
 
 Name: gradience
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: GNOME ecosystem customizer
@@ -72,6 +72,9 @@ more things.
 %doc README*
 
 %changelog
+* Sat Oct 08 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
+- 0.3.1-27-gc3eb085
+
 * Mon Oct 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.0-alt1
 - first build for Sisyphus
 
