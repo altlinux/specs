@@ -1,16 +1,14 @@
 Name: aqemu
 Version: 0.9.2
-Release: alt2
+Release: alt2.1
 Epoch: 2
 
 Summary: QEMU GUI written in Qt5
-
 License: GPL-2.0 and Zlib and MIT
 Group: Emulators
+
 Url: https://github.com/tobimensch/aqemu
-
 Packager: Boris Savelev <boris@altlinux.org>
-
 Source: %name-%version.tar
 # Source-url: https://github.com/tobimensch/aqemu/archive/%version/aqemu-%version.tar.gz
 # debian patches
@@ -26,9 +24,11 @@ BuildRequires: gcc-c++ libvncserver-devel ImageMagick
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-tools
 
+ExcludeArch: e2k e2kv4 e2kv5
+
 %description
 AQEMU is a QEMU GUI written in Qt5.
-The program have user-friendly interface and allows to set up the majority of QEMU options.
+It has user-friendly interface and allows to set up the majority of QEMU options.
 
 %prep
 %setup
@@ -70,6 +70,10 @@ rm -rf %buildroot%_datadir/doc/%name
 %_pixmapsdir/*.png
 
 %changelog
+* Sat Oct 08 2022 Michael Shigorin <mike@altlinux.org> 2:0.9.2-alt2.1
+- E2K: exclude <v6 (no virtualization support)
+- minor spec cleanup
+
 * Wed Aug 31 2022 Leontiy Volodin <lvol@altlinux.org> 2:0.9.2-alt2
 - Backported to 0.9.2 version.
 - Applied patches from debian (ALT #42293):
