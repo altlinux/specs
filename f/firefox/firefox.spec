@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 105.0.2
+Version: 105.0.3
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -407,6 +407,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Sat Oct 08 2022 Alexey Gladkov <legion@altlinux.ru> 105.0.3-alt1
+- New release (105.0.3).
+
 * Thu Oct 06 2022 Alexey Gladkov <legion@altlinux.ru> 105.0.2-alt1
 - New release (105.0.2).
 
