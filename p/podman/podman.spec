@@ -4,7 +4,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     podman
-Version:  4.1.1
+Version:  4.2.1
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -89,6 +89,8 @@ export GIT_COMMIT=%release
 %golang_prepare
 
 pushd .gopath/src/%import_path
+#%%make test/version/version
+go build -o test/version/version ./test/version/
 %make_build PREFIX=%_prefix TMPFILESDIR=%_tmpfilesdir SYSTEMDDIR=%_unitdir MODULESLOADDIR=%_modulesloaddir
 %make docs docker-docs
 popd
@@ -115,7 +117,6 @@ pushd .gopath/src/%import_path
 popd
 
 echo br_netfilter >> %buildroot%_modulesloaddir/podman-iptables.conf
-
 rm -f %buildroot%_man5dir/dockerignore*
 rm -f %buildroot%_man5dir/dockerfile*
 
@@ -130,7 +131,6 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_man1dir/*
 %exclude %_man1dir/%name-remote*
 %exclude %_man1dir/docker*
-%_man5dir/*
 %doc *.md
 %_tmpfilesdir/%name.conf
 %_libexecdir/%name
@@ -150,6 +150,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_tmpfilesdir/%name-docker.conf
 
 %changelog
+* Sat Oct 08 2022 Alexey Shabalin <shaba@altlinux.org> 4.2.1-alt1
+- new version 4.2.1
+
 * Sat Jul 30 2022 Alexey Shabalin <shaba@altlinux.org> 4.1.1-alt1
 - new version 4.1.1
 

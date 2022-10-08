@@ -38,7 +38,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.18.7
+Version: 1.19.2
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -48,7 +48,6 @@ URL:     http://golang.org/
 Source0: golang-%version.tar
 Source1: golang-gdbinit
 Patch2:  golang-alt-certs-path.patch
-Patch100: 0001-Don-t-use-the-bundled-tzdata-at-runtime-except-for-t.patch
 Patch101: 0001-avoid-requires-libselinux-utils.patch
 
 ExclusiveArch: %go_arches
@@ -148,7 +147,6 @@ BuildArch: noarch
 %setup -q
 
 %patch2 -p1
-%patch100 -p1
 %patch101 -p1
 
 %build
@@ -325,7 +323,7 @@ mkdir -p -- \
 
 
 %files docs
-%doc AUTHORS CONTRIBUTORS LICENSE PATENTS VERSION
+%doc LICENSE PATENTS VERSION
 %dir %_datadir/%name
 %_datadir/%name/src
 %go_root/doc
@@ -341,6 +339,10 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Sat Oct 08 2022 Alexey Shabalin <shaba@altlinux.org> 1.19.2-alt1
+- New version (1.19.2).
+- Remove tzdata patch.
+
 * Thu Oct 06 2022 Alexey Shabalin <shaba@altlinux.org> 1.18.7-alt1
 - New version (1.18.7) (Fixes: CVE-2022-2879, CVE-2022-2880, CVE-2022-41715).
 
