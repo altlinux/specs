@@ -2,7 +2,7 @@
 
 Name: ipmiutil
 Version: 3.1.3
-Release: alt3
+Release: alt4
 
 Summary: IPMI server management utilities
 License: BSD
@@ -77,10 +77,11 @@ the SEL must be done occasionally, as needed.
 sed -i "s|TMPDIR|TMPDIR1|g" Makefile*
 
 %build
-export NPROCS=8
 ./beforeconf.sh
 %configure --enable-gpl %{subst_enable static}
-%make_build
+#make_build
+# SMP incompatible build, see #27254 (2 shaba: still true as of 2022)
+make
 
 %install
 %makeinstall_std
@@ -114,6 +115,9 @@ rm -v %buildroot%_libdir/*.a
 %_sysconfdir/cron.daily/checksel
 
 %changelog
+* Sat Oct 08 2022 Michael Shigorin <mike@altlinux.org> 3.1.3-alt4
+- *disable* parallel build: it's still broken (the same #27254)
+
 * Tue Sep 21 2021 Vitaly Lipatov <lav@altlinux.ru> 3.1.3-alt3
 - disable devel-static subpackage
 
