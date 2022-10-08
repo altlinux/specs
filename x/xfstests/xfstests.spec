@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: xfstests
-Version: 1.1.1
+Version: 2022.09.25
 Release: alt1
 Summary: XFS QA testsuite
 License: GPL-2.0-or-later
@@ -75,5 +75,8 @@ tests for userspace & kernelspace.
 # It's v1.1.1 released at 2012-12-12 - ecdb4d61 ("xfstests: update version and changelog")
 # there just no approrpiate upstream tag.
 %changelog
+* Sat Oct 08 2022 Vitaly Chikunov <vt@altlinux.org> 2022.09.25-alt1
+- Update to v2022.09.25 (2022-09-22).
+
 * Sun Oct 17 2021 Vitaly Chikunov <vt@altlinux.org> 1.1.1-alt1
 - First import of v1.1.0-3481-g47a1238b (2021-10-07).
