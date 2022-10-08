@@ -21,7 +21,7 @@
 
 Name:		bcc
 Version:	0.24.0
-Release:	alt1
+Release:	alt2
 Summary:	BPF Compiler Collection (BCC)
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -29,6 +29,7 @@ URL:		https://www.iovisor.org/technology/bcc
 Vcs:		https://github.com/iovisor/bcc.git
 
 Source:		%name-%version.tar
+Source1: libbpf-0.tar
 
 # bcc does not support 32-bit arches
 # See https://github.com/iovisor/bcc/issues/3241
@@ -40,10 +41,10 @@ BuildRequires: banner
 BuildRequires: bpftool
 BuildRequires: cmake
 BuildRequires: flex
+BuildRequires: libdebuginfod-devel
 BuildRequires: libstdc++-devel
 BuildRequires: clang-devel
 BuildRequires: clang-devel-static
-BuildRequires: libbpf-devel
 BuildRequires: llvm-devel
 BuildRequires: llvm-devel-static
 BuildRequires: lld
@@ -148,6 +149,7 @@ linked (and built in bcc package).
 
 %prep
 %setup -q
+tar xf %SOURCE1 -C src/cc
 
 %build
 %define optflags_lto %nil
@@ -174,13 +176,12 @@ export CXX=clang++
 	-DUSINGISYSTEM:BOOL=no \
 	-DPYTHON_CMD=python3 \
 	-DENABLE_LLVM_SHARED=ON \
-	-DCMAKE_USE_LIBBPF_PACKAGE=ON \
 	%{?lua_config}
 %cmake_build
 
 %ifarch x86_64
 # LIBBPF_OBJ expects libbpf.a, but...
-%make_build -C libbpf-tools BPFTOOL=/usr/sbin/bpftool LIBBPF_OBJ=%_libdir/libbpf.so V=1
+%make_build -C libbpf-tools BPFTOOL=/usr/sbin/bpftool V=1
 %endif
 
 %install
@@ -207,10 +208,14 @@ rm -rf %buildroot/usr/share/bcc/man
 rm -rf %buildroot%_bindir/libbcc-loader-static.a
 
 %ifarch x86_64
-cd libbpf-tools
+pushd libbpf-tools
 make -p | sed -n /^APPS/s/APPS.=//p | tr ' ' '\n' \
 	| xargs -i install -v -Dp {} %buildroot%_sbindir/bpf-{}
+popd
 %endif
+
+install -Dp .gear/bcc.sh %buildroot%_sbindir/bcc
+install -Dp .gear/bcc.bash_completion %buildroot%_datadir/bash-completion/completions/bcc
 
 %check
 banner test
@@ -252,7 +257,9 @@ fi
 
 %files -n bcc-tools
 %_bindir/bps
+%_sbindir/bcc
 %_datadir/bcc
+%_datadir/bash-completion/completions/bcc
 %_man8dir/*
 
 %ifarch x86_64
@@ -261,6 +268,11 @@ fi
 %endif
 
 %changelog
+* Sat Oct 08 2022 Vitaly Chikunov <vt@altlinux.org> 0.24.0-alt2
+- Revert to use built-in libbpf (submodule).
+- Build with libdebuginfod.
+- Add bcc tools launcher.
+
 * Sat May 28 2022 Vitaly Chikunov <vt@altlinux.org> 0.24.0-alt1
 - Update to v0.24.0 (2022-01-14).
 - Replace built-in with system libbpf package.
