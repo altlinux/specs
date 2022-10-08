@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1
 
 Summary: Python tool to create HTML documentation from markdown sources
@@ -33,7 +33,6 @@ BuildRequires: python3(yaml)
 BuildRequires: python3(watchdog)
 BuildRequires: python3-module-ghp-import
 BuildRequires: python3(yaml_env_tag)
-BuildRequires: python3(importlib_metadata)
 BuildRequires: python3(packaging)
 BuildRequires: python3(mergedeep)
 BuildRequires: python3(babel)
@@ -86,6 +85,9 @@ export TOXENV=py%{python_version_nodots python3}-unittests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 07 2022 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.3.1 -> 1.4.0.
+
 * Fri Sep 23 2022 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
 - 1.3.0 -> 1.3.1.
 
