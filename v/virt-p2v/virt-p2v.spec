@@ -6,15 +6,18 @@
 %filter_from_requires /^.usr.bin.virt-p2v/d
 %filter_from_requires /^.etc.os-release/d
 
+%qemu_check
+
 Name: virt-p2v
 Version: 1.42.0
-Release: alt1
+Release: alt2
+
 Summary: Convert a physical machine to run on KVM
-Group: Development/Other
 License: GPLv2+
+Group: Development/Other
 
 Url: http://libguestfs.org/
-Source0: http://download.libguestfs.org/%name/%name-%version.tar.gz
+Source: http://download.libguestfs.org/%name/%name-%version.tar.gz
 
 # Basic build requirements.
 BuildRequires: gcc
@@ -28,8 +31,11 @@ BuildRequires: bash-completion
 BuildRequires: xz
 BuildRequires: libgtk+3-devel
 BuildRequires: libdbus-devel
+%if_with check
 # Test suite requirements.
 BuildRequires: /usr/bin/qemu-nbd
+%endif
+BuildRequires(pre): rpm-macros-qemu
 
 Requires: gawk
 Requires: gzip
@@ -44,8 +50,8 @@ Obsoletes: virt-p2v-maker < 1.41.5
 Virt-p2v converts (virtualizes) physical machines so they can be run
 as virtual machines under KVM.
 
-This package contains the tools needed to make a virt-p2v boot CD or
-USB key which is booted on the physical machine to perform the
+This package contains the tools needed to make a virt-p2v boot CD
+or USB key which is booted on the physical machine to perform the
 conversion.  You also need virt-v2v installed somewhere else to
 complete the conversion.
 
@@ -70,6 +76,13 @@ rm -f %buildroot%_man1dir/p2v-building.1*
 rm -f %buildroot%_man1dir/p2v-hacking.1*
 rm -f %buildroot%_man1dir/p2v-release-notes.1*
 
+%check
+# sh: udevadm: command not found
+# lscpu: failed to determine number of CPUs: /sys/devices/system/cpu/possible: No such file or directory
+# /dev/rtc: No such file or directory
+SKIP_TEST_VIRT_P2V_CMDLINE_SH=1 \
+%make check
+
 %files
 %doc README COPYING
 %_bindir/virt-p2v*
@@ -79,6 +92,9 @@ rm -f %buildroot%_man1dir/p2v-release-notes.1*
 %_man1dir/virt-p2v*
 
 %changelog
+* Sun Oct 09 2022 Michael Shigorin <mike@altlinux.org> 1.42.0-alt2
+- Use rpm-macros-qemu for good.
+
 * Sun May 10 2020 Alexey Shabalin <shaba@altlinux.org> 1.42.0-alt1
 - Initial release of separate virt-v2v program, was part of libguestfs.
 
