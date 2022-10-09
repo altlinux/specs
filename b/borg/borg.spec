@@ -1,5 +1,5 @@
 Name: borg
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Deduplicating backup program with compression and authenticated encryption
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-python3
 
 BuildRequires: gcc-c++
 BuildRequires: libacl-devel ipython3 python3-module-Cython libssl-devel python3-dev
-BuildRequires: python3-module-setuptools_scm python3-module-pytest python3-module-msgpack python3-module-pkgconfig
+BuildRequires: python3-module-setuptools-wheel python3-module-setuptools_scm python3-module-pytest python3-module-msgpack python3-module-pkgconfig
 BuildRequires: liblz4-devel libzstd-devel libb2-devel libxxhash-devel
 
 Requires: python3-module-zmq python3-module-msgpack
@@ -42,16 +42,20 @@ fully trusted targets.
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export BORG_OPENSSL_PREFIX="/usr/include/openssl"
+#pyproject_build
 %python3_build
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 export BORG_OPENSSL_PREFIX="/usr/include/openssl"
+#pyproject_install
 %python3_install
 
 %check
 export LANG=en_US.UTF-8
-export PYTHONPATH="$(pwd)/build/lib.linux-$(uname -m)-%__python3_version"
+#export PYTHONPATH="$(pwd)/build/lib.linux-$(uname -m)-%__python3_version"
+export PYTHONVER="%__python3_version"
+export PYTHONPATH="$(pwd)/build/lib.linux-$(uname -m)-cpython-${PYTHONVER//./}"
 
 # copy missing files
 cp -a src/borg/testsuite/attic.tar.gz $PYTHONPATH/borg/testsuite/
@@ -69,6 +73,9 @@ py.test-3 -x -vk "$TEST_SELECTOR" $PYTHONPATH/borg/testsuite/*.py
 
 
 %changelog
+* Mon Aug 22 2022 Dmitry D. Shadrinov <shadrinov@altlinux.org> 1.2.2-alt1
+- 1.2.2 release
+
 * Tue Aug 02 2022 Dmitriy D. Shadrinov <shadrinov@altlinux.org> 1.2.1-alt1
 - 1.2.1 release
 
