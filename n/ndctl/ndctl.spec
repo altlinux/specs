@@ -4,7 +4,7 @@
 
 Name: ndctl
 Version: 74
-Release: alt1
+Release: alt1.1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
 License: LGPL-2.1
@@ -122,6 +122,7 @@ communicating with CXL devices.
 
 %prep
 %setup
+sed -i 's|/usr\(/bin/systemd-escape\)|\1|' daxctl/90-daxctl-device.rules
 
 %build
 %meson \
@@ -195,6 +196,9 @@ communicating with CXL devices.
 %_man3dir/*cxl*
 
 %changelog
+* Sat Oct 08 2022 Yuri N. Sedunov <aris@altlinux.org> 74-alt1.1
+- daxctl/90-daxctl-device.rules: /usr/bin/systemd-escape -> /bin/systemd-escape
+
 * Wed Aug 24 2022 Yuri N. Sedunov <aris@altlinux.org> 74-alt1
 - 74
 
