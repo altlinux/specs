@@ -9,7 +9,7 @@
 %define glut_release alt3
 
 Name: lib%_name
-Version: 3.2.2
+Version: 3.4.0
 Release: alt1
 
 Summary: A freely licensed alternative to the GLUT library
@@ -20,10 +20,10 @@ Url: http://%_name.sourceforge.net/
 %if_disabled snapshot
 Source: http://download.sourceforge.net/%_name/%_name-%version.tar.gz
 %else
-# VCS: https://github.com/dcnieho/FreeGLUT.git
+Vcs: https://github.com/dcnieho/FreeGLUT.git
 Source: %_name-%version.tar
 %endif
-Patch1: libfreeglut-alt-fix-visibility-hidden.patch
+Patch1: libfreeglut-3.4.0-alt-fix-visibility-hidden.patch
 Patch2: libfreeglut-alt-enable-visibility-hidden.patch
 
 Provides: libglut = %version %_name = %version
@@ -33,7 +33,8 @@ Obsoletes: libGLUT <= %glut_version-%glut_release
 Provides: libGLUT = %glut_version-alt4
 Conflicts: libmesaglut
 
-BuildRequires: ccmake ctest gcc-c++ libGLU-devel libXcomposite-devel libXcursor-devel libXdamage-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake ninja-build gcc-c++ ctest libGLU-devel libXcomposite-devel libXcursor-devel libXdamage-devel
 BuildRequires: libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel
 BuildRequires: libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
 %{?_enable_wayland:BuildRequires: libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel libEGL-devel libxkbcommon-devel}
@@ -75,6 +76,7 @@ license.
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %cmake \
+       -G Ninja \
        -DCMAKE_BUILD_TYPE="Release" \
        -DFREEGLUT_BUILD_STATIC_LIBS:BOOL=OFF \
        %{?_enable_replace_glut:-DFREEGLUT_REPLACE_GLUT:BOOL=ON} \
@@ -119,6 +121,10 @@ ln -s lib%_name.so %buildroot%_libdir/libglut.so
 %_libdir/cmake/FreeGLUT/
 
 %changelog
+* Sat Oct 08 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
+- 3.4.0
+- built with Ninja
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
 - 3.2.2
 
