@@ -1,5 +1,5 @@
 Name: anilibria-winmaclinux
-Version: 1.1.12
+Version: 1.2.0
 Release: alt1
 
 Summary: AniLibria online video player for desktop platforms
@@ -48,7 +48,7 @@ Linux\Windows\Mac клиент для онлайн просмотра мульт
 
 %build
 pushd src
-%qmake_qt5
+%qmake_qt5 CONFIG+=debug
 %make_build
 popd
 
@@ -64,6 +64,10 @@ popd
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Sun Oct 09 2022 Evgeny Chuck <koi@altlinux.org> 1.2.0-alt1
+- new version (1.2.0) with rpmgs script
+- create debug package
+
 * Sat Sep 10 2022 Evgeny Chuck <koi@altlinux.org> 1.1.12-alt1
 - new version (1.1.12) with rpmgs script
 
