@@ -1,12 +1,12 @@
 %def_disable snapshot
 
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.Polari
 %define mozjs_ver 91
 
 Name: polari
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Internet Relay Chat client for GNOME
@@ -23,8 +23,7 @@ Source: %name-%version.tar
 %endif
 
 %define gtk4_ver 4.6.0
-%define gspell_ver 1.3.2
-%define gjs_ver 1.69.2
+%define gjs_ver 1.73.1
 
 Requires: libgjs >= %gjs_ver
 Requires: telepathy-logger
@@ -42,7 +41,6 @@ Requires: typelib(GLib)
 Requires: typelib(GObject)
 Requires: typelib(Graphene)
 Requires: typelib(Gspell)
-Requires: typelib(Gtk) = 3.0
 Requires: typelib(Gtk) = 4.0
 Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
@@ -50,9 +48,8 @@ Requires: typelib(Polari)
 Requires: typelib(Secret)
 Requires: typelib(TelepathyGLib)
 Requires: typelib(TelepathyLogger)
-Requires: typelib(Soup) = 2.4
-Requires: typelib(Gtk) = 3.0
-Requires: typelib(WebKit2) = 4.0
+Requires: typelib(Soup) = 3.0
+Requires: typelib(WebKit2) = 4.1
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson gtk-doc yelp-tools
@@ -95,6 +92,9 @@ with GNOME 3 Desktop.
 
 
 %changelog
+* Sun Oct 09 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Mon Jul 04 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 
