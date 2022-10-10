@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.9.0
+Version: 5.10.0
 Release: alt1
 
 Summary: Read resources from Python packages
@@ -75,5 +75,8 @@ rm -r %buildroot%python3_sitelibdir/importlib_resources/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 10 2022 Stanislav Levin <slev@altlinux.org> 5.10.0-alt1
+- 5.9.0 -> 5.10.0.
+
 * Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 5.9.0-alt1
 - Restored back for Sisyphus.
