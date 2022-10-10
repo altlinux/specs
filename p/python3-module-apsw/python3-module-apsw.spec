@@ -1,9 +1,9 @@
 %define pypi_name apsw
-%define sqlite_ver 3.39.3
+%define sqlite_ver 3.39.4
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 3.39.3.0
+Version: 3.39.4.0
 Release: alt1
 
 Summary: Another Python SQLite Wrapper
@@ -50,6 +50,9 @@ gcc %optflags %optflags_shared -shared -o ./testextension.sqlext -I. -Isqlite3 s
 %doc doc/*
 
 %changelog
+* Mon Oct 10 2022 Yuri N. Sedunov <aris@altlinux.org> 3.39.4.0-alt1
+- 3.39.4.0
+
 * Mon Sep 12 2022 Yuri N. Sedunov <aris@altlinux.org> 3.39.3.0-alt1
 - 3.39.3.0
 
