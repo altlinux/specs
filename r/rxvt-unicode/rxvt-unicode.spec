@@ -1,5 +1,5 @@
 Name: rxvt-unicode
-Version: 9.26
+Version: 9.30
 Release: alt1
 
 Summary:  rxvt-unicode is a clone of the well known terminal emulator rxvt
@@ -22,11 +22,9 @@ Source: http://dist.schmorp.de/%name/%name-%version.tar.bz2
 Source1: %name.alternatives
 Source2: %name.desktop
 
-Patch1: rxvt-unicode-alt-change-cutchars.patch
-Patch2: handle-new-tic-and-dont-install-terminfo.patch
-Patch3: perl-avoiding-recursive-loading.patch
-Patch4: rxvt-unicode-0001-Prefer-XDG_RUNTIME_DIR-over-the-HOME.patch
-Patch5: rxvt-unicode-9.21-xsubpp.patch
+Patch0001: 0001-ALT-Change-cutchars.patch
+Patch0002: 0002-Prefer-XDG_RUNTIME_DIR-over-the-HOME.patch
+Patch0003: 0003-ALT-Fix-path-to-the-xsubpp-utility.patch
 
 BuildRequires: alternatives
 BuildRequires: gcc-c++
@@ -35,6 +33,7 @@ BuildRequires: perl-podlators
 BuildRequires: pkgconfig(fontconfig)
 BuildRequires: pkgconfig(gdk-pixbuf-2.0)
 BuildRequires: pkgconfig(gobject-2.0)
+BuildRequires: pkgconfig(libptytty)
 BuildRequires: pkgconfig(libstartup-notification-1.0)
 BuildRequires: pkgconfig(x11)
 BuildRequires: pkgconfig(xft)
@@ -49,7 +48,7 @@ Xft fonts.
 
 %prep
 %setup -q
-%autopatch -p1
+%autopatch -p2
 
 %build
 #autoreconf
@@ -76,6 +75,9 @@ install -pD -m644 %SOURCE2 %buildroot/%_desktopdir/%name.desktop
 %_libdir/urxvt/
 
 %changelog
+* Mon Oct 10 2022 Alexey Gladkov <legion@altlinux.ru> 9.30-alt1
+- New release (9.30).
+
 * Sat Oct 16 2021 Alexey Gladkov <legion@altlinux.ru> 9.26-alt1
 - New release (9.26).
 - Update license tag.
