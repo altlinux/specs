@@ -35,7 +35,7 @@
 %def_disable backtrace
 
 Name: frr
-Version: 8.2.2
+Version: 8.3.1
 Release: alt1
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -46,6 +46,7 @@ Source0: %name-%version.tar
 Source1: %name-tmpfiles.conf
 #Patch: %%name-%%version.patch
 Patch0001: 0001-update-init-script.patch
+Patch0002: 0002-ospfd-Adding-SUPPORT_OSPF_API-define-in-ospf_spf.c.patch
 
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires: gcc-c++
@@ -68,7 +69,7 @@ BuildRequires: makeinfo
 %{?_enable_config_rollbacks:BuildRequires: pkgconfig(sqlite3)}
 %{?_enable_grpc:BuildRequires: pkgconfig(grpc) >= 6.0.0 pkgconfig(grpc++) >= 1.16.1 pkgconfig(protobuf) >= 3.6.1 /usr/bin/protoc}
 %{?_enable_zeromq:BuildRequires: pkgconfig(libzmq) >= 4.0.0}
-%{?_enable_rpki:BuildRequires: pkgconfig(rtrlib) >= 0.5.0}
+%{?_enable_rpki:BuildRequires: pkgconfig(rtrlib) >= 0.8.0}
 %{?_enable_backtrace:BuildRequires: pkgconfig(libunwind)}
 %{?_enable_protobuf:BuildRequires: /usr/bin/protoc /usr/bin/protoc-c pkgconfig(libprotobuf-c) >= 0.14}
 
@@ -90,6 +91,7 @@ FRRouting is a fork of Quagga.
 %setup
 #%%patch -p1
 %patch0001 -p1
+%patch0002 -p1
 
 %build
 %autoreconf
@@ -145,7 +147,7 @@ install -d %buildroot%_docdir/%name
 # remove stray buildinfo files
 find %buildroot%_docdir/%name -type f -name .buildinfo -delete
 
-install -d -m 0750 %buildroot%_logdir/%name
+install -d -m 0755 %buildroot%_logdir/%name
 
 rm -rf %buildroot%_infodir/dir
 
@@ -220,7 +222,7 @@ fi
 %config(noreplace) %attr(640,%frr_user,%frr_group) %_sysconfdir/%name/[!v]*.conf*
 %config(noreplace) %attr(640,%frr_user,%frrvty_group) %_sysconfdir/%name/vtysh.conf
 %config(noreplace) %_sysconfdir/pam.d/frr
-%dir %attr(750,root,%frr_group) %_logdir/%name
+%dir %attr(755,root,%frr_group) %_logdir/%name
 %_bindir/*
 %_mandir/man?/*
 %_infodir/*.info*
@@ -233,6 +235,9 @@ fi
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Mon Oct 10 2022 Alexey Shabalin <shaba@altlinux.org> 8.3.1-alt1
+- 8.3.1
+
 * Mon Mar 21 2022 Alexey Shabalin <shaba@altlinux.org> 8.2.2-alt1
 - 8.2.2
 
