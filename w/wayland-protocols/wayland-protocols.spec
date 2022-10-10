@@ -1,4 +1,4 @@
-%define ver_major 1.26
+%define ver_major 1.27
 
 %if "%__gcc_version_major" < "11"
 %ifarch ppc64le
@@ -15,7 +15,9 @@ License: MIT
 Group: System/X11
 Url: https://wayland.freedesktop.org/
 
-Source: https://wayland.freedesktop.org/releases/%name-%version.tar.xz
+Vcs: https://gitlab.freedesktop.org/wayland/wayland-protocols.git
+Source: https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/%version/downloads/%name-%version.tar.xz
+#Source: https://wayland.freedesktop.org/releases/%name-%version.tar.xz
 
 BuildArch: noarch
 
@@ -50,6 +52,9 @@ protocol either in Wayland core, or some other protocol in wayland-protocols.
 %doc README.md
 
 %changelog
+* Mon Oct 10 2022 Yuri N. Sedunov <aris@altlinux.org> 1.27-alt1
+- 1.27
+
 * Fri Jul 08 2022 Yuri N. Sedunov <aris@altlinux.org> 1.26-alt1
 - 1.26
 
