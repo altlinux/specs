@@ -1,6 +1,6 @@
 Group: Engineering
 Name:           lego-mindstorms-udev-rules
-Version:        0.0.1
+Version:        0.0.2
 Release:        alt1
 Summary:        Rules for udev to allow normal users access to work with lego mindstorms controllers
 License:        GPLv3+
@@ -24,7 +24,7 @@ Rules for udev to allow normal users access to work with lego mindstorms control
 %install
 
 install -Dp -m644 %name/%file_name %buildroot%_udevrulesdir/%file_name
-install -Dp -m755 %name/mindstorms-role %buildroot%_controldir/mindstorms-role
+install -Dp -m755 %name/role-mindstormusers %buildroot%_controldir/role-mindstormusers
 install -Dp -m644 %name/lego-mindstorms.role %buildroot%_sysconfdir/role.d/lego-mindstorms.role
 
 %pre
@@ -32,10 +32,15 @@ install -Dp -m644 %name/lego-mindstorms.role %buildroot%_sysconfdir/role.d/lego-
 
 %files
 %_udevrulesdir/%file_name
-%_controldir/mindstorms-role
+%_controldir/role-mindstormusers
 %config(noreplace) %_sysconfdir/role.d/lego-mindstorms.role
 
 
 %changelog
+* Fri Oct 07 2022 Valery Sinelnikov <greh@altlinux.org> 0.0.2-alt1
+- Removed localadmins assignments in role management rules
+- Rename the control to role-mindstormusers for understanding
+- Fixed the control for stability
+
 * Thu Sep 29 2022 Valery Sinelnikov <greh@altlinux.org> 0.0.1-alt1
 - Initial build for ALT Linux
