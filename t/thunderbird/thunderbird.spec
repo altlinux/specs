@@ -13,7 +13,7 @@
 %define llvm_version  12.0
 
 Name: 	 thunderbird
-Version: 102.2.1
+Version: 102.3.1
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -265,7 +265,7 @@ tar -xf %SOURCE6
 %patch38 -p1
 %patch39 -p2
 %patch40 -p1
-%patch42 -p2
+# %patch42 -p2
 %patch43 -p2
 
 #echo %version > mail/config/version.txt
@@ -579,6 +579,26 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Mon Oct 10 2022 Pavel Vasenkov <pav@altlinux.org> 102.3.1-alt1
+- New version.
+- Security fixes:
+  + CVE-2022-39249 Matrix SDK bundled with Thunderbird vulnerable to an impersonation attack by malicious server administrators
+  + CVE-2022-39250 Matrix SDK bundled with Thunderbird vulnerable to a device verification attack
+  + CVE-2022-39251 Matrix SDK bundled with Thunderbird vulnerable to an impersonation attack
+  + CVE-2022-39236 Matrix SDK bundled with Thunderbird vulnerable to a data corruption issue
+
+* Sun Oct 09 2022 Pavel Vasenkov <pav@altlinux.org> 102.3.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2022-3266 Out of bounds read when decoding H264
+  + CVE-2022-40959 Bypassing FeaturePolicy restrictions on transient pages
+  + CVE-2022-40960 Data-race when parsing non-UTF-8 URLs in threads
+  + CVE-2022-40958 Bypassing Secure Context restriction for cookies with __Host and __Secure prefix
+  + CVE-2022-40956 Content-Security-Policy base-uri bypass
+  + CVE-2022-40957 Incoherent instruction cache when building WASM on ARM64
+  + CVE-2022-3155 Attachment files saved to disk on macOS could be executed without warning
+  + CVE-2022-40962 Memory safety bugs fixed in Thunderbird 102.3
+
 * Tue Sep 06 2022 Pavel Vasenkov <pav@altlinux.org> 102.2.1-alt1
 - New version.
 - Security fixes:
