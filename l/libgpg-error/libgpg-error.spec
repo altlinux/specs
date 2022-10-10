@@ -1,5 +1,5 @@
 Name: libgpg-error
-Version: 1.45
+Version: 1.46
 Release: alt1
 
 Group: System/Libraries
@@ -85,12 +85,14 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_libdir/*.so
 %_includedir/*
 %_aclocaldir/*
-%_man1dir/gpgrt-config.1.*
 %_infodir/gpgrt.*
 %_pkgconfigdir/*.pc
 %_datadir/common-lisp/source/gpg-error
 
 %changelog
+* Mon Oct 10 2022 Alexey Gladkov <legion@altlinux.ru> 1.46-alt1
+- New version (1.46).
+
 * Fri Jul 22 2022 Alexey Gladkov <legion@altlinux.ru> 1.45-alt1
 - New version (1.45).
 

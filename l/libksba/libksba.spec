@@ -1,5 +1,5 @@
 Name: libksba
-Version: 1.6.0
+Version: 1.6.2
 Release: alt1
 
 Group: System/Libraries
@@ -61,7 +61,6 @@ EOF
 %_libdir/*.so.*
 
 %files -n %name-devel
-%_bindir/*
 %_aclocaldir/*
 %_includedir/*.h
 %_libdir/*.so
@@ -69,6 +68,9 @@ EOF
 %_infodir/*.info*
 
 %changelog
+* Mon Oct 10 2022 Alexey Gladkov <legion@altlinux.ru> 1.6.2-alt1
+- New version (1.6.2).
+
 * Wed Jun 23 2021 Alexey Gladkov <legion@altlinux.ru> 1.6.0-alt1
 - New version (1.6.0).
 
