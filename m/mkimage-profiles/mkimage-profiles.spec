@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.33
+Version: 1.4.34
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,23 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Oct 10 2022 Anton Midyukov <antohami@altlinux.org> 1.4.34-alt1
+- regular.mk: add to jeos 'xdriver=vesa' for Legacy, 'xdriver=fbdev' for EFI
+- live: add use/live/runapp; live.mk: initial distro/live-blender with runapp
+  (thanks mike@)
+- build-ve: fix /run and /run/lock for ve images (thanks obirvalger@)
+- rescue: add gostsum, use alt repo
+- regular: use alt repo
+- services: add logind services, add defaults for SYSTEMD services
+- sound: add pipewire support
+- x11: replace pulseaudio with pipewire for gnome3
+- regular.mk: add gnome3-install
+- alt-server: add commits from jqt4@
+- server-v: add commits from andy@
+- education: add commits from cas@
+- workstation: add commits from sem@
+- slinux: change light-locker to xfce4-screensaver (from jqt4@)
+
 * Fri Sep 02 2022 Anton Midyukov <antohami@altlinux.org> 1.4.33-alt1
 - grub: add nosplash for vnc install items
 - base+rescue: add the required minimum applications for rescue
