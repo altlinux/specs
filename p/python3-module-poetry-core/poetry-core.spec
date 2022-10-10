@@ -23,7 +23,7 @@ typing_extensions \\\
 %nil
 
 Name: python3-module-%pypi_name
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Poetry Core
@@ -122,6 +122,9 @@ rm -r ./src/poetry/core/_vendor/*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 10 2022 Stanislav Levin <slev@altlinux.org> 1.3.2-alt1
+- 1.3.1 -> 1.3.2.
+
 * Thu Oct 06 2022 Stanislav Levin <slev@altlinux.org> 1.3.1-alt1
 - 1.2.0 -> 1.3.1.
 
