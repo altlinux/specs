@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libyang
-Version: 2.0.194
+Version: 2.0.231
 Release: alt1
 Summary: YANG data modeling language library
 Url: https://github.com/CESNET/libyang
@@ -38,7 +38,7 @@ YANG validator tools.
 %setup
 
 %build
-%cmake 
+%cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo
 %cmake_build
 
 %install
@@ -47,7 +47,7 @@ mkdir -p %buildroot%_datadir/yang
 
 %files
 %_libdir/*.so.*
-%dir %_datadir/yang
+%_datadir/yang
 
 %files tools
 %_bindir/*
@@ -59,6 +59,9 @@ mkdir -p %buildroot%_datadir/yang
 %_includedir/%name
 
 %changelog
+* Mon Oct 10 2022 Alexey Shabalin <shaba@altlinux.org> 2.0.231-alt1
+- new version 2.0.231
+
 * Fri Jun 03 2022 Alexey Shabalin <shaba@altlinux.org> 2.0.194-alt1
 - new version 2.0.194
 
