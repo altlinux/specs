@@ -1,5 +1,5 @@
 Name: weechat
-Version: 3.6
+Version: 3.7
 Release: alt1
 
 Summary: fast, light & extensible IRC client
@@ -151,6 +151,9 @@ find %buildroot -name '*.a' -delete
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Mon Oct 10 2022 Alexey Gladkov <legion@altlinux.ru> 3.7-alt1
+- New version (3.7)
+
 * Fri Jul 22 2022 Alexey Gladkov <legion@altlinux.ru> 3.6-alt1
 - New version (3.6)
 
