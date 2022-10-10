@@ -30,7 +30,7 @@ Name: kde5-%rname
 %define ver_minor 8
 %define ver_bugfix 0
 Version: %ver_major.%ver_minor.%ver_bugfix
-Release: alt2
+Release: alt3
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 %define sover %version
@@ -134,6 +134,7 @@ Requires: kf5-filesystem
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
+Obsoletes: libdigikamdatabase7.6.0
 %description -n %libdigikamdatabase
 %name library
 
@@ -141,6 +142,7 @@ Requires: %name-common >= %EVR
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
+Obsoletes: libdigikamcore7.6.0
 %description -n %libdigikamcore
 %name library
 
@@ -148,6 +150,7 @@ Requires: %name-common >= %EVR
 Group: System/Libraries
 Summary: %name library
 Requires: %name-common >= %EVR
+Obsoletes: libdigikamgui7.6.0
 %description -n %libdigikamgui
 %name library
 
@@ -327,6 +330,10 @@ install -m 0755 %SOURCE10 %buildroot/%_K5bin/digikam_mysql_install_db
 %_K5lib/libdigikamgui.so.*
 
 %changelog
+* Mon Oct 10 2022 Sergey V Turchin <zerg@altlinux.org> 7.8.0-alt3
+- fix upgrade from previous version
+- update russian translation
+
 * Tue Oct 04 2022 Sergey V Turchin <zerg@altlinux.org> 7.8.0-alt2
 - update requires
 
