@@ -37,7 +37,7 @@
 
 Name: krita
 Version: 5.1.0
-Release: alt3
+Release: alt4
 %K5init no_altplace
 
 Group: Graphics
@@ -109,6 +109,7 @@ Header files and libraries needed for %name development
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritatext17
 %description -n %libkritatext
 %name library.
 
@@ -116,6 +117,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritacolord17
 %description -n %libkritacolord
 %name library.
 
@@ -123,6 +125,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritacolor17
 %description -n %libkritacolor
 %name library.
 
@@ -130,6 +133,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritapigment17
 %description -n %libkritapigment
 %name library.
 
@@ -137,6 +141,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritalibpaintop17
 %description -n %libkritalibpaintop
 %name library.
 
@@ -144,6 +149,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaodf17
 %description -n %libkritaodf
 %name library.
 
@@ -151,6 +157,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritapsd17
 %description -n %libkritapsd
 %name library.
 
@@ -158,6 +165,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaplugin17
 %description -n %libkritaplugin
 %name library.
 
@@ -165,6 +173,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaui17
 %description -n %libkritaui
 %name library.
 
@@ -172,6 +181,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritatextlayout17
 %description -n %libkritatextlayout
 %name library.
 
@@ -179,6 +189,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaundo217
 %description -n %libkritaundo2
 %name library.
 
@@ -186,6 +197,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaflake17
 %description -n %libkritaflake
 %name library.
 
@@ -193,6 +205,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritawidgets17
 %description -n %libkritawidgets
 %name library.
 
@@ -200,6 +213,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritalibbrush17
 %description -n %libkritalibbrush
 %name library
 
@@ -207,6 +221,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaimage17
 %description -n %libkritaimage
 %name library
 
@@ -214,6 +229,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritastore17
 %description -n %libkritastore
 %name library
 
@@ -221,6 +237,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritabasicflakes17
 %description -n %libkritabasicflakes
 %name library
 
@@ -228,6 +245,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaversion17
 %description -n %libkritaversion
 %name library
 
@@ -235,6 +253,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaglobal17
 %description -n %libkritaglobal
 %name library
 
@@ -242,6 +261,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritawidgetutils17
 %description -n %libkritawidgetutils
 %name library
 
@@ -249,6 +269,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritacommand17
 %description -n %libkritacommand
 %name library
 
@@ -256,6 +277,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaimpex17
 %description -n %libkritaimpex
 %name library
 
@@ -263,6 +285,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritalibkis17
 %description -n %libkritalibkis
 %name library
 
@@ -270,6 +293,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritalibkra17
 %description -n %libkritalibkra
 %name library
 
@@ -277,6 +301,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaqml17
 %description -n %libkritaqml
 %name library
 
@@ -284,6 +309,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritametadata17
 %description -n %libkritametadata
 %name library
 
@@ -291,6 +317,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaresourcewidgets17
 %description -n %libkritaresourcewidgets
 %name library
 
@@ -298,6 +325,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaresources17
 %description -n %libkritaresources
 %name library
 
@@ -305,6 +333,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritaqmicinterface17
 %description -n %libkritaqmicinterface
 %name library
 
@@ -312,6 +341,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritapsdutils17
 %description -n %libkritapsdutils
 %name library
 
@@ -319,6 +349,7 @@ Requires: %name-common >= %EVR
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common >= %EVR
+Obsoletes: libkritatiffpsd17
 %description -n %libkritatiffpsd
 %name library
 
@@ -393,7 +424,6 @@ done
 %files -n %libkritaresourcewidgets
 %_libdir/libkritaresourcewidgets.so.%sover
 %_libdir/libkritaresourcewidgets.so.*
-
 %files -n %libkritacommand
 %_libdir/libkritacommand.so.%sover
 %_libdir/libkritacommand.so.*
@@ -409,84 +439,68 @@ done
 %files -n %libkritaqml
 %_libdir/libkritaqml.so.%sover
 %_libdir/libkritaqml.so.*
-
 %files -n %libkritacolord
 %_libdir/libkritacolord.so.%sover
 %_libdir/libkritacolord.so.*
-
 %files -n %libkritacolor
 %_libdir/libkritacolor.so.%sover
 %_libdir/libkritacolor.so.*
-
 %files -n %libkritapigment
 %_libdir/libkritapigment.so.%sover
 %_libdir/libkritapigment.so.*
-
 %files -n %libkritalibpaintop
 %_libdir/libkritalibpaintop.so.%sover
 %_libdir/libkritalibpaintop.so.*
-
 %files -n %libkritapsd
 %_libdir/libkritapsd.so.%sover
 %_libdir/libkritapsd.so.*
-
 %files -n %libkritaplugin
 %_libdir/libkritaplugin.so.%sover
 %_libdir/libkritaplugin.so.*
-
 %files -n %libkritaui
 %_libdir/libkritaui.so.%sover
 %_libdir/libkritaui.so.*
-
 %files -n %libkritaflake
 %_libdir/libkritaflake.so.%sover
 %_libdir/libkritaflake.so.*
-
 %files -n %libkritawidgets
 %_libdir/libkritawidgets.so.%sover
 %_libdir/libkritawidgets.so.*
-
 %files -n %libkritalibbrush
 %_libdir/libkritalibbrush.so.%sover
 %_libdir/libkritalibbrush.so.*
-
 %files -n %libkritaimage
 %_libdir/libkritaimage.so.%sover
 %_libdir/libkritaimage.so.*
-
 %files -n %libkritastore
 %_libdir/libkritastore.so.%sover
 %_libdir/libkritastore.so.*
-
 %files -n %libkritabasicflakes
 %_libdir/libkritabasicflakes.so.%sover
 %_libdir/libkritabasicflakes.so.*
-
 %files -n %libkritaversion
 %_libdir/libkritaversion.so.%sover
 %_libdir/libkritaversion.so.*
-
 %files -n %libkritaglobal
 %_libdir/libkritaglobal.so.%sover
 %_libdir/libkritaglobal.so.*
-
 %files -n %libkritawidgetutils
 %_libdir/libkritawidgetutils.so.%sover
 %_libdir/libkritawidgetutils.so.*
-
 %files -n %libkritametadata
 %_libdir/libkritametadata.so.%sover
 %_libdir/libkritametadata.so.*
-
 %files -n %libkritapsdutils
 %_libdir/libkritapsdutils.so.%sover
 %_libdir/libkritapsdutils.so.*
-
 %files -n %libkritatiffpsd
 %_libdir/libkritatiffpsd.so.%sover
 %_libdir/libkritatiffpsd.so.*
 
 %changelog
+* Mon Oct 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt4
+- fix upgrade from previous version
+
 * Fri Sep 02 2022 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt3
 - update requires
 
