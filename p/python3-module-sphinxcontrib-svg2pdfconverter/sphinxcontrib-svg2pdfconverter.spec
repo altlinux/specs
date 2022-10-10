@@ -2,10 +2,10 @@
 %define  modulename svg2pdfconverter
 
 # https://github.com/missinglinkelectronics/sphinxcontrib-svg2pdfconverter/issues/14
-%def_disable check
+%def_without check
 
 Name:    %prefixname-%modulename
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Sphinx SVG to PDF converter extension
@@ -110,6 +110,9 @@ This package contains converter using CairoSVG.
 %python3_sitelibdir/sphinxcontrib/cairosvgconverter.py
 
 %changelog
+* Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 1.2.1-alt1
+- Automatically updated to 1.2.1.
+
 * Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.2.0-alt1
 - Automatically updated to 1.2.0.
 
