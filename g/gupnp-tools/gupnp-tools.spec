@@ -1,11 +1,11 @@
 %def_disable snapshot
-%define ver_major 0.10
+%define ver_major 0.12
 
 Name: gupnp-tools
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
-Summary: A collection of developer tools utilising GUPnP and GTK+3
+Summary: GUPnP Tools
 Group: Development/Other
 License: GPLv2+
 Url: http://www.gupnp.org/
@@ -16,19 +16,22 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source: %name-%version.tar
 %endif
 
-%define gssdp_api_ver 1.2
-%define gupnp_api_ver 1.2
-%define gssdp_ver 1.2
-%define gupnp_ver 1.4
+%define glib_ver 2.68
+%define gssdp_api_ver 1.6
+%define gupnp_api_ver 1.6
+%define gssdp_ver 1.6
+%define gupnp_ver 1.6
 %define gtk_ver 3.10
-%define soup_ver 2.42
+%define soup_api_ver 3.0
+%define soup_ver 3.0
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson desktop-file-utils
+BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgssdp%gssdp_api_ver-devel >= %gssdp_ver
 BuildRequires: libgupnp%gupnp_api_ver-devel >= %gupnp_ver
 BuildRequires: libgupnp-av-devel
-BuildRequires: libgtk+3-devel >= %gtk_ver libsoup-devel >= %soup_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver libsoup%soup_api_ver-devel >= %soup_ver
 BuildRequires: libxml2-devel libuuid-devel
 BuildRequires: libgtksourceview4-devel
 
@@ -58,6 +61,7 @@ test and debug one's UPnP devices and control points.
 
 %files -f %name.lang
 %_bindir/gssdp-discover
+%_bindir/gupnp-event-dumper
 %_bindir/gupnp-network-light
 %_bindir/gupnp-universal-cp
 %_bindir/gupnp-av-cp
@@ -70,6 +74,9 @@ test and debug one's UPnP devices and control points.
 %doc AUTHORS README* NEWS
 
 %changelog
+* Wed Oct 12 2022 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt1
+- 0.12.0 (ported to GUPnP-1.6/Libsoup-3.0)
+
 * Fri May 20 2022 Yuri N. Sedunov <aris@altlinux.org> 0.10.3-alt1
 - 0.10.3
 
