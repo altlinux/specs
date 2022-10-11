@@ -15,8 +15,8 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 102.2.0
-Release: alt2
+Version: 102.3.0
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -51,15 +51,13 @@ Patch010: 0009-bmo-1559213-Support-system-av1.patch
 Patch011: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch012: 0011-ALT-fix-double_t-redefinition.patch
 Patch013: 0012-build-Disable-Werror.patch
-Patch014: 0013-Prevent-discrimination-of-Russian-services.patch
-Patch015: 0014-Bug-1735929-Linux-Add-support-of-EGL_MESA_image_dma_.patch
-Patch016: 0015-Bug-1735929-Linux-Import-DMABufSurfaceRGBA-from-exis.patch
-Patch017: 0016-Bug-1735929-Linux-Use-EGL_MESA_image_dma_buf_export-.patch
-Patch018: 0017-Bug-1773968-Linux-Release-EGLImages-in-DMABufSurface.patch
-Patch019: 0018-Bug-1776724-fix-wayland-only.patch
-Patch020: 0019-Bug-1778855-gfxEnv_MOZ_GL_DEBUG.patch
-Patch021: 0020-Bug-1783784-Update-packed_simd_2.patch
-Patch022: 0021-Set-offline-build.patch
+Patch014: 0014-Bug-1735929-Linux-Add-support-of-EGL_MESA_image_dma_.patch
+Patch015: 0015-Bug-1735929-Linux-Import-DMABufSurfaceRGBA-from-exis.patch
+Patch016: 0016-Bug-1735929-Linux-Use-EGL_MESA_image_dma_buf_export-.patch
+Patch017: 0017-Bug-1773968-Linux-Release-EGLImages-in-DMABufSurface.patch
+Patch018: 0018-Bug-1776724-fix-wayland-only.patch
+Patch019: 0019-Bug-1778855-gfxEnv_MOZ_GL_DEBUG.patch
+Patch020: 0021-Set-offline-build.patch
 ### End Patches
 
 # Hang up on build browser/components/about
@@ -510,6 +508,17 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Mon Oct 10 2022 Pavel Vasenkov <pav@altlinux.org> 102.3.0-alt1
+- New ESR version.
+- Security fixes:
+  + CVE-2022-3266 Out of bounds read when decoding H264
+  + CVE-2022-40959 Bypassing FeaturePolicy restrictions on transient pages
+  + CVE-2022-40960 Data-race when parsing non-UTF-8 URLs in threads
+  + CVE-2022-40958 Bypassing Secure Context restriction for cookies with __Host and __Secure prefix
+  + CVE-2022-40956 Content-Security-Policy base-uri bypass
+  + CVE-2022-40957 Incoherent instruction cache when building WASM on ARM64
+  + CVE-2022-40962 Memory safety bugs fixed in Firefox 105 and Firefox ESR 102.3
+
 * Thu Sep 15 2022 Pavel Vasenkov <pav@altlinux.org> 102.2.0-alt2
 - Update language support
 
