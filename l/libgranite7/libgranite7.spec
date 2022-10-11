@@ -4,7 +4,7 @@
 
 %define _name granite
 %define rdn_name io.elementary.%_name-%api_ver_major
-%define ver_major 7.0
+%define ver_major 7.1
 %define api_ver_major 7
 %define api_ver 7.0
 %define sover 7
@@ -126,6 +126,9 @@ GObject introspection devel data for the Granite library.
 
 
 %changelog
+* Tue Oct 11 2022 Yuri N. Sedunov <aris@altlinux.org> 7.1.0-alt1
+- 7.1.0
+
 * Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 7.0.0-alt1
 - 7.0.0 (ported to GTK4)
 

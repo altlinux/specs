@@ -1,5 +1,5 @@
 %define _name elementaryicons
-%define ver_major 7.0
+%define ver_major 7.1
 %define rdn_name io.elementary.icons
 %def_disable palettes
 
@@ -12,15 +12,17 @@ Group: Graphical desktop/Other
 License: GPL-3.0
 Url: https://github.com/elementary/icons
 
-# VCS:https://github.com/elementary/icons.git
+Vcs: https://github.com/elementary/icons.git
 Source: %url/archive/%version/icons-%version.tar.gz
+# missing icon
+Source1: video-x-generic16.svg
 
 BuildArch: noarch
 
 Requires: icon-theme-hicolor
 
-BuildRequires(pre): meson
-BuildRequires: inkscape xcursorgen /usr/bin/rsvg-convert
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson inkscape xcursorgen /usr/bin/rsvg-convert
 
 %description
 The official elementary icons are designed to be simple and appealing.
@@ -31,6 +33,8 @@ theme.
 %prep
 %setup -n icons-%version
 
+[ -f mimes/16/video-x-generic.svg ] || cp %SOURCE1 mimes/16/video-x-generic.svg
+
 %build
 %meson %{?_disable_palettes:-Dpalettes=false}
 %meson_build
@@ -39,7 +43,7 @@ theme.
 %meson_install
 
 %files
-%_iconsdir/elementary
+%_iconsdir/elementary/
 %if_enabled palettes
 %_datadir/gimp/2.0/palettes/elementary.gpl
 %_datadir/inkscape/palettes/elementary.gpl
@@ -48,6 +52,9 @@ theme.
 %doc README*
 
 %changelog
+* Tue Oct 11 2022 Yuri N. Sedunov <aris@altlinux.org> 7.1.0-alt1
+- 7.1.0
+
 * Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 7.0.0-alt1
 - 7.0.0
 
