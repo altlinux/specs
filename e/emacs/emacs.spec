@@ -4,9 +4,14 @@
 %def_enable nox
 %def_disable natcomp
 
+%ifarch %e2k
+# on default -O3 crashes with SIGILL in lucid_event_type_list_p
+%global _optlevel 2
+%endif
+
 Name: emacs
 Version: 28.2
-Release: alt2
+Release: alt2.1
 
 Summary: GNU Emacs text editor
 License: GPLv3+
@@ -14,6 +19,7 @@ Group: Editors
 Url: http://www.gnu.org/software/emacs/
 
 Source: %name-%version-%release.tar
+Patch2000: %name-e2k.patch
 
 BuildRequires: pkgconfig(alsa)
 BuildRequires: pkgconfig(cairo)
@@ -244,6 +250,9 @@ This package contain full description of Emacs Lisp language
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+%endif
 sed -ri 's,(\.\./info/[[:alpha:]-]+),\1.info,g' doc/{emacs,misc}/*.texi
 
 %build
@@ -453,6 +462,9 @@ sed -ne '/\/leim\//p' < elgz.ls > leim.el.ls
 %_infodir/elisp*
 
 %changelog
+* Tue Oct 11 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 28.2-alt2.1
+- added patch for Elbrus
+
 * Tue Sep 27 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 28.2-alt2
 - site-start.el relocated to now optional emacs-base
 
