@@ -13,25 +13,32 @@
 %define cockpit_version 247
 %endif
 
+%define get_dep_ge() %(rpm -q --qf '%%{NAME} >= %%{EVR}' %1 2>/dev/null || echo '%1 >= unknown')
+
 Name: 389-ds-base
-Version: 1.4.3.28
-Release: alt3
+Version: 2.2.3
+Release: alt1
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
 Group: System/Servers
-# Source-git: https://pagure.io/389-ds-base.git
+# Source-git: https://github.com/389ds/389-ds-base
 Url: http://port389.org
-Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version.tar
 %if_with cockpit
-Source1: node_modules.tar.gz
+Source1: vendor_nodejs.tar
 %endif
+Source2: vendor_rust.tar
 Patch: %name-%version-alt.patch
 
 ExcludeArch: %ix86
+
+# python deps
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 BuildRequires: cracklib-devel
 BuildRequires: doxygen
@@ -40,6 +47,7 @@ BuildRequires: gcc-c++
 BuildRequires: libasan5
 %endif
 BuildRequires: libdb5.3-devel
+BuildRequires: liblmdb-devel
 BuildRequires: libevent-devel
 BuildRequires: libicu-devel
 BuildRequires: libkrb5-devel
@@ -48,28 +56,34 @@ BuildRequires: libnet-snmp-devel
 BuildRequires: libnspr-devel
 BuildRequires: libnss-devel
 BuildRequires: libpam0-devel
-BuildRequires: libpcre-devel
+BuildRequires: libpcre2-devel
 BuildRequires: libsasl2-devel
 BuildRequires: libsystemd-devel
+# log compression
+BuildRequires: zlib-devel
+# audit logs
+BuildRequires: libjson-c-devel
 
 BuildRequires: python3(build_manpages)
 BuildRequires: python3(argcomplete)
 BuildRequires: python3(dateutil)
 BuildRequires: python3(ldap)
-BuildRequires: python3(six)
 
 BuildRequires: rsync
 
 %if_with cockpit
 BuildRequires: npm
-# https://bugzilla.altlinux.org/42036
-BuildRequires: node-gyp
 %endif
 
 %if_with check
 BuildRequires: /proc
 BuildRequires: libcmocka-devel
 %endif
+
+# rust deps
+BuildRequires: /proc
+BuildRequires: rust
+BuildRequires: rust-cargo
 
 %add_findprov_skiplist %_datadir/%pkgname/script-templates/*
 %add_findreq_skiplist %_datadir/%pkgname/script-templates/* %_sbindir/*-%pkgname
@@ -90,6 +104,9 @@ BuildRequires: libcmocka-devel
 %filter_from_requires /python3(gdb\(\..*\)\?)/d
 # requires self
 %add_python3_req_skip __main__
+
+# shell.req wrongly marks restorecon as a dep
+%add_findreq_skiplist %_libexecdir/%pkgname/ds_selinux_restorecon.sh
 
 Requires: libjemalloc2
 Requires: cracklib-words
@@ -130,6 +147,7 @@ Summary: A library for accessing, testing, and configuring the 389 Directory Ser
 BuildArch: noarch
 Group: Development/Python3
 Requires: nss-utils
+Requires: %get_dep_ge libnss
 
 %description -n python3-module-lib389
 This module contains tools and libraries for accessing, testing, and
@@ -157,14 +175,8 @@ A cockpit UI Plugin for configuring and administering the 389 Directory Server
 %endif
 
 %prep
-%setup
+%setup %{?_with_cockpit:-a1} -a2
 %patch -p1
-
-%if_with cockpit
-# node modules are intended for building Cockpit plugin
-# and are not utilized in runtime
-tar -xzf %SOURCE1 -C "./src/cockpit/389-console"
-%endif
 
 grep -qsF 'sysctldir = @prefixdir@/lib/sysctl.d' Makefile.am || exit 1
 sed -i 's|sysctldir = .*|sysctldir = %_sysctldir|' Makefile.am
@@ -194,14 +206,16 @@ export LDFLAGS='-latomic'
 %add_optflags -U__SSE4_2__
 %endif
 
+# replace hardcoded version = "1.4.0.1",
+# https://github.com/389ds/389-ds-base/issues/5203
+sed -i 's/^version[[:space:]]*=.*$/version = "%version"/' src/lib389/setup.py
+
 %autoreconf
 
 %configure  \
-	--with-openldap \
         %{subst_with selinux} \
 	--localstatedir=/var \
         --libexecdir=%_libexecdir/%pkgname \
- 	--enable-autobind \
 	--with-systemd \
 	--with-systemdsystemunitdir=%_unitdir \
 	--with-systemdsystemconfdir=%_sysconfdir/systemd/system \
@@ -212,20 +226,21 @@ export LDFLAGS='-latomic'
         --enable-debug \
 %endif
         %{?_with_check:--enable-cmocka } \
-        --disable-legacy \
-        --disable-perl \
+        %{?_without_cockpit:--disable-cockpit } \
+        --enable-rust-offline \
+        --with-libldap-r=no \
         %nil
 
 %make_build
 
 %if_with cockpit
 # cockpit plugin
-SKIP_AUDIT_CI=yes %make 389-console
+SKIP_AUDIT_CI=yes NODE_ENV=production %make 389-console
 %endif
 
 # Python3 bindings
 pushd ./src/lib389
-%python3_build
+%pyproject_build
 popd
 
 # argparse-manpage dynamic man pages have hardcoded man v1 in header,
@@ -233,19 +248,26 @@ popd
 sed -i  "1s/\"1\"/\"8\"/" ./src/lib389/man/ds{conf,ctl,idm,create}.8
 
 %check
-%make check || { cat test-suite.log; exit 1; }
+%make VERBOSE=1 check
 
 %install
 %makeinstall_std
 
 # python stuff
 pushd src/lib389
-%python3_install
+%pyproject_install
 popd
 
-# do not package lib389's tests
-rm -r %buildroot%python3_sitelibdir_noarch/lib389/tests
-rm %buildroot%python3_sitelibdir_noarch/lib389/topologies.py
+# doesn't support PEP517
+# upstream ticket: TBD
+chmod +x %buildroot%python3_sitelibdir_noarch/%_sbindir/*
+chmod +x %buildroot%python3_sitelibdir_noarch/%_libexecdir/%pkgname/*
+
+for d in %_sbindir %_man8dir %_libexecdir; do
+    mkdir -p %buildroot/$d
+    cp -a %buildroot%python3_sitelibdir_noarch/$d/* -t %buildroot/$d/
+done
+rm -r %buildroot%python3_sitelibdir_noarch/%_usr
 
 mkdir -p %buildroot/{%_lockdir,%_localstatedir,%_logdir}/%pkgname
 
@@ -318,13 +340,14 @@ fi
 %_bindir/ldclt
 %_bindir/logconv.pl
 %_bindir/pwdhash
-%_bindir/readnsstate
 
 %_sbindir/ldap-agent
 %_sbindir/ns-slapd
+%_sbindir/openldap_to_ds
 
 %dir %_libexecdir/%pkgname
 %_libexecdir/%pkgname/ds_systemd_ask_password_acl
+%_libexecdir/%pkgname/ds_selinux_restorecon.sh
 %dir %_libdir/%pkgname/python
 %_libdir/%pkgname/python/*.py*
 %dir %_libdir/%pkgname/plugins
@@ -340,7 +363,6 @@ fi
 %_man1dir/ldclt.1.*
 %_man1dir/logconv.pl.1.*
 %_man1dir/pwdhash.1.*
-%_man1dir/readnsstate.1.*
 %_man1dir/ldap-agent.1.*
 %_man8dir/ns-slapd.8.*
 %_man5dir/99user.ldif.5.*
@@ -348,6 +370,7 @@ fi
 %_man5dir/slapd-collations.conf.5.*
 %_man5dir/dirsrv.5.*
 %_man5dir/dirsrv.systemd.5.*
+%_man8dir/openldap_to_ds.8.*
 
 %files devel
 %_includedir/%pkgname/
@@ -355,19 +378,16 @@ fi
 %_libdir/libsvrcore.so
 %_libdir/libslapd.so
 %_libdir/libns-dshttpd.so
-%_libdir/libsds.so
 %_libdir/libldaputil.so
 %_libdir/librewriters.so
 %_pkgconfigdir/dirsrv.pc
-%_pkgconfigdir/libsds.pc
 %_pkgconfigdir/svrcore.pc
 %_man3dir/*.3.*
 
 %files libs
 %dir %_libdir/%pkgname
 %_libdir/libsvrcore.so.*
-%_libdir/libns-dshttpd-*.so
-%_libdir/libsds.so.*
+%_libdir/libns-dshttpd.so.*
 %_libdir/libslapd.so.*
 %_libdir/libldaputil.so.*
 %_libdir/librewriters.so.*
@@ -383,7 +403,7 @@ fi
 %_man8dir/dsctl.8.*
 %_man8dir/dsidm.8.*
 %python3_sitelibdir_noarch/lib389/
-%python3_sitelibdir_noarch/lib389-*-py%_python3_version.egg-info/
+%python3_sitelibdir_noarch/lib389-%version.dist-info/
 
 %if_with cockpit
 %files -n cockpit-389-ds
@@ -391,13 +411,16 @@ fi
 %_datadir/metainfo/389-console/org.port389.cockpit_console.metainfo.xml
 %dir %_datadir/cockpit/389-console
 %_datadir/cockpit/389-console/manifest.json
-%_datadir/cockpit/389-console/*.html
-%_datadir/cockpit/389-console/*.js
-%_datadir/cockpit/389-console/*.js.map
-%_datadir/cockpit/389-console/css/
+%_datadir/cockpit/389-console/*.html.gz
+%_datadir/cockpit/389-console/*.js.gz
+%_datadir/cockpit/389-console/*.css.gz
+%exclude %_datadir/cockpit/389-console/index.js.LICENSE.txt.gz
 %endif
 
 %changelog
+* Tue Sep 27 2022 Stanislav Levin <slev@altlinux.org> 2.2.3-alt1
+- 1.4.3.28 -> 2.2.3.
+
 * Mon Mar 21 2022 Stanislav Levin <slev@altlinux.org> 1.4.3.28-alt3
 - Fixed FTBFS (ALT's npm 8, #42036).
 
