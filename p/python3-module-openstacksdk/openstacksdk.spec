@@ -1,33 +1,66 @@
 %define oname openstacksdk
+%def_without check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 0.46.0
+Version: 0.61.0
 Release: alt1
+
 Summary: An SDK for building applications to work with OpenStack
 
-Group: Development/Python3
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/%oname
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Group: Development/Python3
+Url: https://docs.openstack.org/openstacksdk/latest
+
+Source: %name-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-six >= 1.10.0
-BuildRequires: python3-module-stevedore >= 1.17.1
+BuildRequires: python3-module-yaml >= 3.13
+BuildRequires: python3-module-appdirs >= 1.3.0
+BuildRequires: python3-module-requestsexceptions >= 1.2.0
+BuildRequires: python3-module-jsonpatch >= 1.16
+BuildRequires: python3-module-os-service-types >= 1.7.0
 BuildRequires: python3-module-keystoneauth1 >= 3.18.0
-BuildRequires: python3-module-deprecation >= 1.0
+BuildRequires: python3-module-munch >= 2.1.0
+BuildRequires: python3-module-decorator >= 4.4.1
+BuildRequires: python3-module-jmespath >= 0.9.0
+BuildRequires: python3-module-iso8601 >= 0.1.11
+BuildRequires: python3-module-netifaces >= 0.10.4
+BuildRequires: python3-module-dogpile.cache >= 0.6.5
+BuildRequires: python3-module-cryptography >= 2.7
+BuildRequires: python3-module-importlib-metadata
+
+%if_with check
+BuildRequires: python3-module-hacking >= 3.1.0
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-ddt >= 1.0.1
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-jsonschema >= 3.2.0
+BuildRequires: python3-module-oslo.config >= 6.1.0
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-statsd >= 3.3.0
+BuildRequires: python3-module-stestr >= 1.0.0
+BuildRequires: python3-module-testscenarios >= 0.4
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-prometheus_client
+%endif
+
+%if_with docs
+BuildRequires: python3-module-openstackdocstheme
+BuildRequires: python3-module-sphinxcontrib-rsvgconverter
+%endif
 
 %description
-The python-openstacksdk is a collection of libraries for building applications to work with OpenStack clouds.
-The project aims to provide a consistent and complete set of interactions
-with OpenStack's many services, along with complete documentation, examples, and tools.
-
-This SDK is under active development, and in the interests of providing a high-quality interface,
-the APIs provided in this release may differ from those provided in future release.
+The openstacksdk is a library for building applications to work
+with OpenStack clouds.
+The project aims to provide a consistent and complete set of
+interactions with OpenStack's many services, along with complete
+documentation, examples, and tools.
 
 %package tests
 Summary: Tests for %oname
@@ -37,51 +70,59 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Documentation for OpenStack SDK
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-The python-openstacksdk is a collection of libraries for building applications to work with OpenStack clouds.
-The project aims to provide a consistent and complete set of interactions 
-with OpenStack's many services, along with complete documentation, examples, and tools.
-
-This package contains auto-generated documentation.
+This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n %oname-%version
-
-# We handle requirements ourselves, pkg_resources only bring pain
-rm -rf requirements.txt test-requirements.txt
+%setup
 
 # Remove bundled egg-info
-#rm -rf *.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
 
+%if_with docs
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+%endif
+
 %install
 %python3_install
 
-#export PYTHONPATH="$( pwd ):$PYTHONPATH"
-#sphinx-build -b html doc/source html
-#sphinx-build -b man doc/source man
-
-# Fix hidden-file-or-dir warnings
-#rm -fr html/.doctrees html/.buildinfo
+%check
+%__python3 -m stestr run
 
 %files
-%doc LICENSE README.rst
+%doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/openstack-inventory
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
-%doc examples
 %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/tests/functional/examples
 
+%if_with docs
+%files doc
+%doc LICENSE *.rst html
+%endif
+
 %changelog
+* Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 0.61.0-alt1
+- Automatically updated to 0.61.0.
+- Unified (thx for felixz@).
+- Build without check.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 0.46.0-alt1
 - Automatically updated to 0.46.0.
 - Renamed spec file.

@@ -1,40 +1,65 @@
 %define oname os-brick
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.2
+Version: 5.2.0
 Release: alt1
+
 Summary: OpenStack Cinder brick library for managing local volume attaches
-Group: Development/Python3
+
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/%oname
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
-Source1: os-brick.watch
+Group: Development/Python3
+Url: https://docs.openstack.org/os-brick/latest
+
+Source: %name-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-babel >= 2.3.4
-BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-oslo.concurrency >= 3.26.0
-BuildRequires: python3-module-oslo.log >= 3.36.0
-BuildRequires: python3-module-oslo.i18n >= 3.15.3
-BuildRequires: python3-module-oslo.privsep >= 1.32.0
-BuildRequires: python3-module-oslo.service >= 1.24.0
-BuildRequires: python3-module-oslo.utils >= 3.33.0
-BuildRequires: python3-module-requests >= 2.14.2
-BuildRequires: python3-module-retrying >= 1.2.3
-BuildRequires: python3-module-six >= 1.10.0
-BuildRequires: python3-module-os-win >= 3.0.0
+BuildRequires: python3-module-pbr >= 5.8.0
+BuildRequires: python3-module-eventlet >= 0.30.1
+BuildRequires: python3-module-oslo.concurrency >= 4.5.0
+BuildRequires: python3-module-oslo.context >= 3.4.0
+BuildRequires: python3-module-oslo.log >= 4.6.1
+BuildRequires: python3-module-oslo.i18n >= 5.1.0
+BuildRequires: python3-module-oslo.privsep >= 2.6.2
+BuildRequires: python3-module-oslo.service >= 2.8.0
+BuildRequires: python3-module-oslo.utils >= 4.12.1
+BuildRequires: python3-module-requests >= 2.25.1
+BuildRequires: python3-module-os-win >= 5.5.0
 
+%if_with check
+BuildRequires: python3-module-hacking >= 4.0.0
+BuildRequires: python3-module-flake8-import-order
+BuildRequires: python3-module-coverage >= 5.5
+BuildRequires: python3-module-ddt >= 1.4.1
+BuildRequires: python3-module-oslotest >= 4.5.0
+BuildRequires: python3-module-testscenarios >= 0.5.0
+BuildRequires: python3-module-testtools >= 2.4.0
+BuildRequires: python3-module-stestr >= 3.2.1
+BuildRequires: python3-module-oslo.vmware >= 3.10.0
+BuildRequires: python3-module-castellan >= 3.10.0
+BuildRequires: python3-module-pycodestyle
+BuildRequires: python3-module-doc8 >= 0.8.1
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-mypy >= 0.910
+BuildRequires: python3-module-castellan-tests
+%endif
+
+%if_with docs
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno >= 0.8.0
 BuildRequires: python3-module-openstackdocstheme
+BuildRequires: python3-module-reno >= 0.8.0
+BuildRequires: python3-module-oslo.serialization >= 4.2.0
+BuildRequires: python3-module-tenacity >= 6.3.1
+%endif
 
 %description
-OpenStack Cinder brick library for managing local volume attaches
+This project containing classes that help with volume discovery and removal
+from a host.
 
 %package tests
 Summary: Tests for %oname
@@ -44,26 +69,28 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Documentation for OpenStack os-brick library
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-Documentation for OpenStack os-brick library
+This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n %oname-%version
-# Let RPM handle the dependencies
-rm -f test-requirements.txt requirements.txt
-
-sed -i '/warning-is-error/d' setup.cfg
+%setup
 
 %build
 %python3_build
 
-python3 setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.buildinfo
+%if_with docs
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
@@ -72,20 +99,30 @@ rm -fr doc/build/html/.buildinfo
 install -d -m 755 %buildroot%_sysconfdir/%oname/rootwrap.d
 mv %buildroot/usr/etc/os-brick/rootwrap.d/*.filters %buildroot%_sysconfdir/%oname/rootwrap.d/
 
+%check
+%__python3 -m stestr run
+
 %files
-%python3_sitelibdir/*
+%doc LICENSE AUTHORS ChangeLog *.rst
 %dir %_sysconfdir/%oname
 %dir %_sysconfdir/%oname/rootwrap.d
 %config(noreplace) %_sysconfdir/%oname/rootwrap.d/*
+%python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
+%if_with docs
 %files doc
-%doc README.rst doc/build/html
+%doc LICENSE *.rst html
+%endif
 
 %changelog
+* Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1
+- Automatically updated to 5.2.0.
+- Unified (thx for felixz@).
+
 * Tue Jun 16 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.2-alt1
 - Automatically updated to 3.0.2.
 

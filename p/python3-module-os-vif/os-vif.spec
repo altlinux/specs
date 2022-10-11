@@ -1,24 +1,23 @@
 %define oname os-vif
-
+%def_without check
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.0.0
+Version: 3.0.0
 Release: alt1
 
 Summary: A library for plugging and unplugging virtual interfaces in OpenStack
 
-Group: Development/Python3
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/%oname
+Group: Development/Python3
+Url: https://docs.openstack.org/os-vif/latest
 
-Source: https://tarballs.openstack.org/%oname/os_vif-%version.tar.gz
+Source: %name-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-oslo.concurrency >= 3.20.0
@@ -27,13 +26,24 @@ BuildRequires: python3-module-oslo.log >= 3.30.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.privsep >= 1.23.0
 BuildRequires: python3-module-oslo.versionedobjects >= 1.28.0
+BuildRequires: python3-module-ovsdbapp >= 0.12.1
 BuildRequires: python3-module-pyroute2 >= 0.5.2
-BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-stevedore >= 1.20.0
-BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-debtcollector >= 1.19.0
+
+%if_with check
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-oslotest >= 1.10.0
+BuildRequires: python3-module-openvswitch >= 2.9.2
+BuildRequires: python3-module-stestr >= 1.0.0
+BuildRequires: python3-module-testscenarios >= 0.4
+%endif
+
+%if_with docs
+BuildRequires: python3-module-sphinx >= 2.0.0
 BuildRequires: python3-module-reno >= 1.8.0
-BuildRequires: python3-module-openstackdocstheme
-BuildRequires: python3-module-sphinxcontrib-apidoc
+BuildRequires: python3-module-openstackdocstheme >= 2.2.1
+%endif
 
 %description
 A library for plugging and unplugging virtual interfaces in OpenStack.
@@ -44,37 +54,46 @@ Features:
 %package tests
 Summary: Tests for %oname
 Group: Development/Python3
-Requires: python3-module-%oname = %EVR
+Requires: %name = %EVR
 
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Documentation for OpenStack %oname library
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-Documentation for OpenStack %oname library
+This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n os_vif-%version
+%setup
 
-# Let RPM handle the dependencies
-rm -f test-requirements.txt requirements.txt
+# Remove bundled egg-info
+rm -rfv %oname.egg-info
 
 %build
 %python3_build
 
 %if_with docs
-python3 setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-rm -fr build/sphinx/html/.buildinfo
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
 
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 -m stestr run
+
 %files
+%doc LICENSE AUTHORS ChangeLog *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -83,10 +102,15 @@ rm -fr build/sphinx/html/.buildinfo
 
 %if_with docs
 %files doc
-%doc README.rst build/sphinx/html
+%doc LICENSE *.rst html
 %endif
 
 %changelog
+* Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+- Unified (thx for felixz@).
+- Built without check.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Automatically updated to 2.0.0.
 - Renamed spec file.

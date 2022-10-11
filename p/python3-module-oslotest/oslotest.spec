@@ -1,82 +1,80 @@
 %define oname oslotest
-
-%def_enable check
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 4.2.0
-Release: alt2.1
-Summary: OpenStack test framework
-License: ASLv2.0
-Group: Development/Python3
-Url: https://pypi.python.org/pypi/oslotest/
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
-Source1: oslotest.watch
-BuildArch: noarch
+Version: 4.5.0
+Release: alt1
 
-BuildRequires: git-core
+Summary: OpenStack test framework
+
+License: Apache-2.0
+Group: Development/Python3
+Url: https://docs.openstack.org/oslotest/latest
+
+Source: %name-%version.tar
+Source1: %oname.watch
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
-
-%if_enabled check
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-subunit
 BuildRequires: python3-module-six >= 1.10.0
-BuildRequires: python3-module-testscenarios
+
+%if_with check
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-mock >= 2.0.0
-BuildRequires: python3-module-mox3 >= 0.20.0
-BuildRequires: python3-module-hacking
-BuildRequires: python3-module-coverage
-BuildRequires: python3-module-mimeparse
-BuildRequires: python3-module-mccabe
-BuildRequires: python3-module-flake8
-BuildRequires: python3-pyflakes
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-os-client-config >= 1.28.0
-BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-openstackdocstheme
-BuildRequires: python3-module-reno
-BuildRequires: python3-module-oslo.config
+BuildRequires: python3-module-hacking >= 2.0.0
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
-%py3_provides %oname
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-openstackdocstheme
+BuildRequires: python3-module-reno
+BuildRequires: python3-module-sphinxcontrib-apidoc
+%endif
 
 %description
-OpenStack test framework and test fixtures.
+%summary.
 
-%package pickles
-Summary: Pickles for %oname
+%package tests
+Summary: Tests for %oname
 Group: Development/Python3
+Requires: %name = %EVR
 
-%description pickles
-OpenStack test framework and test fixtures.
+%description tests
+This package contains tests for %oname.
 
-This package contains pickles for %oname.
-
-%package docs
+%if_with docs
+%package doc
 Summary: Documentation for %oname
 Group: Development/Documentation
-BuildArch: noarch
 
-%description docs
-OpenStack test framework and test fixtures.
-
+%description doc
 This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n %oname-%version
-rm -rf {test-,}requirements.txt
+%setup
+
+# Remove bundled egg-info
+rm -rfv %oname.egg-info
 
 %build
 %python3_build
 
-#python setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-#rm -fr doc/build/html/.buildinfo
+%if_with docs
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
@@ -89,14 +87,29 @@ done
 popd
 
 %check
-python3 setup.py test
+%__python3 -m stestr run
 
 %files
-%doc *.rst
-%_bindir/*
+%doc LICENSE AUTHORS ChangeLog *.rst
+%_bindir/oslo_debug_helper
+%_bindir/oslo_run_cross_tests
+%_bindir/oslo_run_pre_release_tests
 %python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files tests
+%python3_sitelibdir/*/tests
+
+%if_with docs
+%files doc
+%doc LICENSE *.rst html
+%endif
 
 %changelog
+* Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
+- Automatically updated to 4.5.0.
+- Unified.
+
 * Thu Mar 31 2022 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt2.1
 - Fixed build.
 

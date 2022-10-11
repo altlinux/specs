@@ -1,41 +1,40 @@
 %define oname stestr
 
-# We have too new sphinx for it
-%def_disable check
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 2.5.1
+Version: 4.0.1
 Release: alt1
 
 Summary: stestr is parallel Python test runner
 
 Group: Development/Python3
-License: ASL 2.0
-Url: http://stestr.readthedocs.io/en/latest
+License: Apache-2.0
+Url: https://pypi.org/project/stestr
 
-# https://pypi.org/project/stestr
-Source: %oname-%version.tar.gz
+# https://github.com/mtreinish/stestr
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-six >= 1.10.0
-BuildRequires: python3-module-future
-BuildRequires: python3-module-cliff >= 2.8.0
-BuildRequires: python3-module-subunit >= 1.3.0
-BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-testtools >= 2.2.0
-BuildRequires: python3-module-yaml >= 3.10.0
-BuildRequires: python3-module-voluptuous >= 0.8.9
 
-BuildRequires: python3-module-sphinx >= 1.5.1
-BuildRequires: python3-module-subunit2sql >= 1.8.0
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-pbr
+
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-cliff
+BuildRequires: python3-module-testtools
+BuildRequires: python3-module-subunit
+BuildRequires: python3-module-voluptuous
+%endif
 
 %if_with check
-BuildRequires: python3-module-doc8 python3-module-ddt python3-module-coverage
+BuildRequires: python3-module-future
+BuildRequires: python3-module-ddt
 %endif
 
 %description
@@ -71,39 +70,50 @@ Group: Development/Documentation
 Documentation for stestr.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 # Remove bundled egg-info
 rm -rf %oname.egg-info
 
 %build
-%python3_build
+export PBR_VERSION=%version
+%pyproject_build
 
-# disabling git call for last modification date from git repo
-#sed '/^html_last_updated_fmt.*/,/.)/ s/^/#/' -i doc/source/conf.py
-python3 setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.buildinfo
+%if_with docs
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%buildroot%_bindir/%oname init
+%tox_create_default_config
+%tox_check_pyproject -- -k 'not test_history_list and not test_history_remove'
 
 %files
-%doc AUTHORS ChangeLog LICENSE PKG-INFO README.rst
+%doc LICENSE *.rst
 %_bindir/%oname
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
 %files doc
-%doc doc/build/html
+%doc LICENSE html
 
 %changelog
+* Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
+- Build new version.
+- Build with check.
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1
 - Automatically updated to 2.5.1.
 

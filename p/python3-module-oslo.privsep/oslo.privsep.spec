@@ -1,36 +1,50 @@
 %define oname oslo.privsep
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 2.1.1
+Version: 2.8.0
 Release: alt1
 
 Summary: OpenStack library for privilege separation
 
-Group: Development/Python3
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/%oname
+Group: Development/Python3
+Url: https://docs.openstack.org/oslo.privsep/latest
 
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
+Provides: python3-module-oslo-privsep = %EVR
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-greenlet >= 0.4.14
-BuildRequires: python3-module-msgpack >= 0.6.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
-BuildRequires: python3-module-cffi >= 1.7.0
-BuildRequires: python3-module-six >= 1.9.0
+BuildRequires: python3-module-cffi >= 1.14.0
+BuildRequires: python3-module-eventlet >= 0.21.0
+BuildRequires: python3-module-greenlet >= 0.4.14
+BuildRequires: python3-module-msgpack >= 0.6.0
+
+%if_with check
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-pbr >= 1.8
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
+%endif
+
+%if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-reno
 BuildRequires: python3-module-openstackdocstheme
 BuildRequires: python3-module-sphinxcontrib-apidoc
+%endif
 
 %description
 This library helps applications perform actions which require more or less privileges
@@ -46,33 +60,42 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Oslo service documentation
+Summary: Documentation for %oname
 Group: Development/Documentation
+Provides: python3-module-oslo-privsep-doc = %EVR
 
 %description doc
-Documentation for %oname
+This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n %oname-%version
+%setup
+
 # Remove bundled egg-info
-rm -rf %oname.egg-info
+rm -rfv %oname.egg-info
 
 %build
 %python3_build
 
+%if_with docs
 export PYTHONPATH="$PWD"
-
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 -m stestr run
+
 %files
-%doc *.rst LICENSE
+%doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/privsep-helper
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
@@ -80,10 +103,16 @@ rm -rf html/.{doctrees,buildinfo}
 %files tests
 %python3_sitelibdir/*/tests
 
+%if_with docs
 %files doc
-%doc LICENSE html
+%doc LICENSE *.rst html
+%endif
 
 %changelog
+* Mon May 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.8.0-alt1
+- Automatically updated to 2.8.0.
+- Unified (thx for felixz@).
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
 - Automatically updated to 2.1.1.
 - Renamed spec file.

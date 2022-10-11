@@ -1,88 +1,100 @@
-%define sname automaton
+%define oname automaton
+%def_with check
+%def_with docs
 
-%def_without check
-
-Name: python3-module-%sname
-Version: 2.2.0
+Name: python3-module-%oname
+Version: 2.5.0
 Release: alt1
 
 Summary: Friendly state machines for python
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://wiki.openstack.org/wiki/Oslo#automaton
+Url: https://docs.openstack.org/automaton/latest
 
-# Source-url: %__pypi_url %sname
 Source: %name-%version.tar
-
-BuildRequires(pre): rpm-build-intro
-BuildRequires(pre): rpm-build-python3
-
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-sphinx >= 1.1.2
-BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-pbr > 2.1.0
-BuildRequires: python3-module-six >= 1.10.0
-BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-prettytable >= 0.7.2
-BuildRequires: python3-module-reno >= 3.1.0
-
-%if_with check
-BuildRequires: python3-module-testtools python3-module-stestr python3-module-oslotest python3-module-hacking python3-module-coverage
-%endif
+Source1: %oname.watch
 
 BuildArch: noarch
 
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-pbr >= 2.0.0
+BuildRequires: python3-module-prettytable >= 0.7.2
+
+%if_with check
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-reno >= 3.1.0
+%endif
+
+%if_with docs
+BuildRequires: python3-module-sphinx >= 1.1.2
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+%endif
+
 %description
-Friendly state machines for python.
+%summary.
 
 %package tests
-Summary: Tests for %sname
+Summary: Tests for %oname
 Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
-This package contains tests for %sname.
+This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Friendly state machines for python - documentation
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-Friendly state machines for python (documentation)
+This package contains documentation for %oname.
+%endif
 
 %prep
 %setup
 
 # Remove bundled egg-info
-rm -rfv %sname.egg-info
+rm -rfv %oname.egg-info
 
 %build
 %python3_build
 
-%install
-%python3_install
-
+%if_with docs
+export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
+
+%install
+%python3_install
 
 %check
-%__python3 setup.py test
+%__python3 -m stestr run
 
 %files
+%doc LICENSE AUTHORS ChangeLog *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
+%if_with docs
 %files doc
-%doc html README.rst
+%doc LICENSE *.rst html
+%endif
 
 %changelog
+* Fri Oct 07 2022 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
+- Automatically updated to 2.5.0.
+- Unified (thx for felixz@).
+
 * Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 2.2.0-alt1
 - NMU: new version 2.2.0 (with rpmrb script), cleanup spec
 - NMU: temp. disable tests (needs old coverage module)

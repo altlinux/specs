@@ -1,31 +1,54 @@
 %define oname keystoneauth1
+%def_with check
+%def_without docs
 
 Name: python3-module-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt2
+
 Summary: OpenStack authenticating tools
-Group: Development/Python3
+
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/%oname
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Group: Development/Python3
+Url: https://docs.openstack.org/keystoneauth/latest
+
+Source: %name-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-iso8601 >= 0.1.11
-BuildRequires: python3-module-positional >= 1.1.1
 BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-stevedore >= 1.20.0
-BuildRequires: python3-module-requests-kerberos >= 0.8.0
-BuildRequires: python3-module-lxml >= 2.4.1
+BuildRequires: python3-module-os-service-types >= 1.2.0
+
+%if_with check
+BuildRequires: python3-module-lxml >= 3.4.1
 BuildRequires: python3-module-oauthlib >= 0.6.2
 BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-hacking >= 3.0
+BuildRequires: python3-module-flake8-import-order >= 0.17.1
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-mock >= 2.0.0
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-betamax >= 0.7.0
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-stestr >= 1.0.0
+BuildRequires: python3-module-testresources >= 2.0.0
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-requests-kerberos >= 0.8.0
+%endif
 
-%add_python3_req_skip betamax
+%if_with docs
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-sphinxcontrib-apidoc
+%endif
 
 %description
 Tools for authenticating to an OpenStack-based cloud. These tools include:
@@ -42,39 +65,56 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Documentation for OpenStack authenticating tools
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-Documentation for OpenStack authenticating tools.
+This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n %oname-%version
+%setup
+
+# Remove bundled egg-info
+rm -rfv %oname.egg-info
 
 %build
 %python3_build
 
+%if_with docs
+export PYTHONPATH=$PWD
 # generate html docs
-#sphinx-build-3 doc/source html
+sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
-#rm -rf html/.{doctrees,buildinfo}
+rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
+%check
+%__python3 -m stestr run
+
 %files
-%doc AUTHORS ChangeLog README.rst
+%doc LICENSE AUTHORS ChangeLog *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
-#%%files doc
-#%%doc html
+%if_with docs
+%files doc
+%doc LICENSE *.rst html
+%endif
 
 %changelog
+* Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt2
+- Unified (thx for felixz@).
+- Built without docs.
+
 * Thu Jun 04 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - Automatically updated to 4.0.0.
 - Renamed spec file.

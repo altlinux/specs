@@ -1,45 +1,114 @@
 %define  oname oslo.upgradecheck
-%define  mname oslo_upgradecheck
+%def_with check
+%def_with docs
 
 Name:    python3-module-%oname
-Version: 1.0.1
+Version: 2.0.0
 Release: alt1
 
 Summary: Common code for writing OpenStack upgrade checks
 
-License: MIT
+License: Apache-2.0
 Group:   Development/Python3
-URL:     https://github.com/openstack/oslo.upgradecheck
+URL:     https://docs.openstack.org/oslo.upgradecheck/latest
 
-Packager: Grigory Ustinov <grenka@altlinux.org>
-
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr
+Source: %name-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
-Source:  %mname-%version.tar
+Provides: python3-module-oslo-upgradecheck = %EVR
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
+BuildRequires: python3-module-prettytable >= 0.7.1
+BuildRequires: python3-module-oslo.utils >= 4.5.0
+BuildRequires: python3-module-oslo.policy >= 2.0.0
+
+%if_with check
+BuildRequires: python3-module-hacking >= 3.0
+BuildRequires: python3-module-oslotest >= 3.5.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
+BuildRequires: python3-module-oslo.serialization >= 2.21.1
+%endif
+
+%if_with docs
+BuildRequires: python3-module-openstackdocstheme >= 2.2.0
+BuildRequires: python3-module-reno >= 3.1.0
+BuildRequires: python3-module-sphinx >= 2.0.0
+%endif
 
 %description
-%summary
+This project can be used to assist with the implementation of a $SERVICE-status
+command that responds to parameters of upgrade check by running upgrade check
+functions on the existing installation. For further details see Usage and
+the Nova documentation on upgrade checks.
+
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
+
+%if_with docs
+%package doc
+Summary: Documentation for %oname
+Group: Development/Documentation
+Provides: python3-module-oslo-upgradecheck-doc = %EVR
+
+%description doc
+This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n %mname-%version
+%setup
+
+# Remove bundled egg-info
+rm -rfv %oname.egg-info
 
 %build
 %python3_build
 
+%if_with docs
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+%endif
+
 %install
 %python3_install
 
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 -m stestr run
+
 %files
-%python3_sitelibdir/%mname/
-%python3_sitelibdir/*.egg-info
-%doc *.rst
+%doc LICENSE AUTHORS ChangeLog *.rst
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*/tests
+
+%files tests
+%python3_sitelibdir/*/tests
+
+%if_with docs
+%files doc
+%doc LICENSE *.rst html
+%endif
 
 %changelog
+* Wed Oct 05 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+- Unified (thx for felixz@).
+
+* Mon May 16 2022 Grigory Ustinov <grenka@altlinux.org> 1.5.0-alt1
+- Automatically updated to 1.5.0.
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
 - Automatically updated to 1.0.1.
 - Renamed spec file.

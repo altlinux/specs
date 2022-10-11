@@ -1,46 +1,67 @@
-%global oname oslo.service
-
-%def_without docs
+%define oname oslo.service
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 2.1.1
-Release: alt2
+Version: 2.8.0
+Release: alt1
 
 Summary: Oslo service library
 
-Group: Development/Python3
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/%oname
+Group: Development/Python3
+Url: https://docs.openstack.org/oslo.service/latest
 
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source: %name-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
+Provides: python3-module-oslo-service = %EVR
+
+# Very strange thing, idk where it came from :)
+%add_python3_req_skip __original_module_threading
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-webob >= 1.7.1
-BuildRequires: python3-module-eventlet >= 0.22.0
-BuildRequires: python3-module-greenlet >= 0.4.10
-BuildRequires: python3-module-monotonic >= 0.6
+BuildRequires: python3-module-debtcollector >= 1.2.0
+BuildRequires: python3-module-eventlet >= 0.25.2
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-greenlet >= 0.4.15
 BuildRequires: python3-module-oslo.utils >= 3.40.2
 BuildRequires: python3-module-oslo.concurrency >= 3.25.0
 BuildRequires: python3-module-oslo.config >= 5.1.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
-BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-PasteDeploy >= 1.5.0
 BuildRequires: python3-module-routes >= 2.3.1
 BuildRequires: python3-module-paste >= 2.0.2
-BuildRequires: python3-module-yappi
+BuildRequires: python3-module-yappi >= 1.0
 
+%if_with check
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-requests >= 2.14.2
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-doc8 >= 0.6.0
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
+BuildRequires: /proc
+%endif
+
+%if_with docs
+BuildRequires: python3-module-monotonic >= 0.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno >= 2.5.0
+%endif
 
 %description
-Library for running OpenStack services
+This project provides a framework for defining new long-running services
+using the patterns established by other OpenStack applications. It also includes
+utilities long-running applications might need for working with SSL or WSGI,
+performing periodic operations, interacting with systemd, etc.
 
 %package tests
 Summary: Tests for %oname
@@ -52,18 +73,19 @@ This package contains tests for %oname.
 
 %if_with docs
 %package doc
-Summary: Oslo service documentation
+Summary: Documentation for %oname
 Group: Development/Documentation
+Provides: python3-module-oslo-service-doc = %EVR
 
 %description doc
-Documentation for oslo.service
+This package contains documentation for %oname.
 %endif
 
 %prep
-%setup -n %oname-%version
+%setup
 
 # Remove bundled egg-info
-rm -rf %oname.egg-info
+rm -rfv %oname.egg-info
 
 %build
 %python3_build
@@ -79,8 +101,11 @@ rm -rf html/.{doctrees,buildinfo}
 %install
 %python3_install
 
+%check
+%__python3 -m stestr run
+
 %files
-%doc *.rst LICENSE
+%doc LICENSE AUTHORS ChangeLog *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -89,10 +114,14 @@ rm -rf html/.{doctrees,buildinfo}
 
 %if_with docs
 %files doc
-%doc LICENSE html
+%doc LICENSE *.rst html
 %endif
 
 %changelog
+* Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 2.8.0-alt1
+- Automatically updated to 2.8.0.
+- Unified (thx for felixz@).
+
 * Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt2
 - Build without docs.
 

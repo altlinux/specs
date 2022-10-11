@@ -1,31 +1,44 @@
 %define oname oslo.context
+%def_with check
+%def_with docs
 
-Name:       python3-module-%oname
-Version:    3.0.2
-Release:    alt1
+Name: python3-module-%oname
+Version: 4.1.0
+Release: alt1
 
-Summary:    OpenStack oslo.context library
+Summary: OpenStack oslo.context library
 
-Group:      Development/Python3
-License:    Apache-2.0
-Url:        http://docs.openstack.org/developer/%oname
+License: Apache-2.0
+Group: Development/Python3
+Url: https://docs.openstack.org/oslo.context/latest
 
-Source:     https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source:  %name-%version.tar
+Source1: %oname.watch
 
-BuildArch:  noarch
+BuildArch: noarch
 
 Provides: python3-module-oslo-context = %EVR
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
 
+%if_with check
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-mypy >= 0.761
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
+%endif
+
+%if_with docs
+BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-sphinx >= 1.6.2
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
+%endif
 
 %description
 The Oslo context library has helpers to maintain useful information
@@ -40,45 +53,57 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Documentation for the Oslo context handling library
+Summary: Documentation for %oname
 Group: Development/Documentation
-Provides: python-module-oslo-context-doc = %EVR
+Provides: python3-module-oslo-context-doc = %EVR
 
 %description doc
-Documentation for the Oslo context handling library.
+This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n %oname-%version
+%setup
 
 # Remove bundled egg-info
-rm -rf %oname.egg-info
+rm -rfv %oname.egg-info
 
 %build
 %python3_build
 
+%if_with docs
 export PYTHONPATH="$PWD"
-
 # generate html docs
 sphinx-build-3 doc/source html
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
+%check
+%__python3 -m stestr run
+
 %files
-%doc *.rst LICENSE
+%doc LICENSE AUTHORS ChangeLog *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
 %files tests
 %python3_sitelibdir/*/tests
 
+%if_with docs
 %files doc
-%doc LICENSE html
+%doc LICENSE *.rst html
+%endif
 
 %changelog
+* Fri Oct 07 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
+- Automatically updated to 4.1.0.
+- Unified (thx for felixz@).
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.2-alt1
 - Automatically updated to 3.0.2.
 - Renamed spec file.
