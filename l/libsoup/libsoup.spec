@@ -15,7 +15,7 @@
 %def_disable check
 
 Name: libsoup
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -239,6 +239,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Tue Oct 11 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.3-alt1
+- 2.74.3
+
 * Thu Nov 25 2021 Yuri N. Sedunov <aris@altlinux.org> 2.74.2-alt1
 - 2.74.2
 
