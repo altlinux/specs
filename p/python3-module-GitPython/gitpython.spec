@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.28
+Version: 3.1.29
 Release: alt1
 
 Summary: GitPython is a python library used to interact with Git repositories
@@ -94,6 +94,9 @@ export TOX_TESTENV_PASSENV='PATH GIT_PYTHON_TEST_GIT_REPO_BASE NO_SUBMODULES NO_
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 3.1.29-alt1
+- 3.1.28 -> 3.1.29.
+
 * Fri Oct 07 2022 Stanislav Levin <slev@altlinux.org> 3.1.28-alt1
 - 3.1.27 -> 3.1.28.
 
