@@ -2,13 +2,15 @@
 %define libhogweed_soname 6
 
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: nettle
 Version: 3.8.1
-Release: alt1
+Release: alt2
 Summary: A low-level cryptographic library
 
-License: LGPLv2.1+
+License: GPL-2.0-or-later or LGPL-3.0-or-later
 Group: System/Libraries
 Url: https://www.lysator.liu.se/~nisse/nettle/
 
@@ -76,6 +78,7 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
        -e 's/libhogweed\.a/\$(LIBHOGWEED_FORLINK)/' */Makefile.in
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	--disable-static
@@ -93,7 +96,7 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %files -n %libnettle
 %_libdir/libnettle.so.%{libnettle_soname}
 %_libdir/libnettle.so.%{libnettle_soname}.*
-%doc AUTHORS NEWS README
+%doc AUTHORS NEWS README COPYING*
 
 %files -n %libhogweed
 %_libdir/libhogweed.so.%{libhogweed_soname}
@@ -106,6 +109,10 @@ sed -i -e 's/libnettle\.a/\$(LIBNETTLE_FORLINK)/' \
 %_infodir/*.*
 
 %changelog
+* Tue Oct 11 2022 Vitaly Chikunov <vt@altlinux.org> 3.8.1-alt2
+- Enabled LFS on 32-bit systems.
+- Updated License tag.
+
 * Tue Aug 02 2022 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt1
 - Updated to 3.8.1.
 
