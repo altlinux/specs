@@ -1,22 +1,24 @@
 %define _unpackaged_files_terminate_build 1
-%define modulename tempora
+%define pypi_name tempora
 
 %def_with check
 
-Name: python3-module-%modulename
-Version: 4.1.1
+Name: python3-module-%pypi_name
+Version: 5.0.2
 Release: alt1
 
 Summary: Objects and routines pertaining to date and time (tempora)
 License: MIT
 Group: Development/Python3
-Url: https://github.com/jaraco/tempora
-
-Packager: Andrey Cherepanov <cas@altlinux.org>
+Url: https://pypi.org/project/tempora/
+VCS: https://github.com/jaraco/tempora
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
-BuildRequires: python3(toml)
 
 %if_with check
 # install_requires:
@@ -26,9 +28,6 @@ BuildRequires: python3(jaraco.functools)
 BuildRequires: python3(freezegun)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_freezegun)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -41,30 +40,38 @@ Objects and routines pertaining to date and time (tempora).
 %prep
 %setup
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 # don't package tests
-rm -r %buildroot%python3_sitelibdir/%modulename/tests/
+rm -r %buildroot%python3_sitelibdir/tempora/tests/
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
+%tox_check_pyproject
 
 %files
 %_bindir/calc-prorate
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/tempora/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 5.0.2-alt1
+- 4.1.1 -> 5.0.2.
+
 * Wed Jul 21 2021 Stanislav Levin <slev@altlinux.org> 4.1.1-alt1
 - 1.12 -> 4.1.1.
 - Enabled testing.
