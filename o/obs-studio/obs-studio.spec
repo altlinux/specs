@@ -7,8 +7,8 @@
 Name: obs-studio
 Summary: Free and open source software for video recording and live streaming
 Summary(ru_RU.UTF-8): Свободная программа для записи и трансляции видеопотока
-Version: 27.2.4
-Release: alt2
+Version: 28.0.3
+Release: alt1
 License: GPLv2+
 Group: Video
 Url: https://github.com/jp9000/obs-studio.git
@@ -59,7 +59,7 @@ BuildRequires: pkgconfig(luajit)
 
 Requires: %name-base = %EVR
 Requires: %name-plugin-pulseaudio = %EVR
-Requires: %name-plugin-jack = %EVR
+#Requires: %name-plugin-jack = %EVR
 
 Obsoletes: %name-plugin-frontend-tools <= 0.26.0
 Obsoletes: %name-plugin-image-source <= 0.26.0
@@ -128,9 +128,18 @@ Requires: %name-base = %EVR
 %description plugin-pulseaudio
 PulseAudio plugin for Open Broadcaster Software.
 
+%package plugin-pipewire
+Summary: pipewire plugin for Open Broadcaster Software.
+Group: Video
+Requires: %name-base = %EVR
+
+%description plugin-pipewire
+pipewire plugin for Open Broadcaster Software.
+
 %prep
 %setup
 %patch1 -p0
+touch plugins/obs-{browser,websocket}/CMakeLists.txt
 
 # rpmlint reports E: hardcoded-library-path
 # replace OBS_MULTIARCH_SUFFIX by LIB_SUFFIX
@@ -142,7 +151,10 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 	-DUNIX_STRUCTURE=1 \
 	-DWITH_RTMPS=ON \
 	-DBUILD_BROWSER=OFF \
-	-DBUILD_VST=OFF
+	-DBUILD_VST=OFF \
+	-DENABLE_NEW_MPEGTS_OUTPUT=OFF \
+	-DENABLE_AJA=OFF \
+	-DENABLE_JACK=ON
 
 %cmake_build
 
@@ -165,6 +177,8 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 %exclude %_datadir/obs/obs-plugins/linux-jack/
 %exclude %_libdir/obs-plugins/linux-pulseaudio.so
 %exclude %_datadir/obs/obs-plugins/linux-pulseaudio/
+%exclude %_libdir/obs-plugins/linux-pipewire.so
+%exclude %_datadir/obs/obs-plugins/linux-pipewire/
 
 %files -n libobs
 %dir %_datadir/obs
@@ -176,7 +190,8 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 %_includedir/obs/
 %_libdir/*.so
 %exclude %_libdir/libobs-scripting.so
-%_libdir/cmake/LibObs/
+%_libdir/cmake/libobs/
+%_libdir/cmake/obs-frontend-api/
 %_libdir/pkgconfig/libobs.pc
 
 %files plugin-jack
@@ -187,7 +202,16 @@ sed -i 's|OBS_MULTIARCH_SUFFIX|LIB_SUFFIX|g' cmake/Modules/ObsHelpers.cmake
 %_libdir/obs-plugins/linux-pulseaudio.so
 %_datadir/obs/obs-plugins/linux-pulseaudio/
 
+%files plugin-pipewire
+%_libdir/obs-plugins/linux-pipewire.so
+%_datadir/obs/obs-plugins/linux-pipewire/
+
 %changelog
+* Tue Oct 11 2022 Anton Midyukov <antohami@altlinux.org> 28.0.3-alt1
+- new version 28.0.3
+- new subpackage plugin-pipewire
+- obs-studio: remove Requires: %name-plugin-jack
+
 * Tue May 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 27.2.4-alt2
 - NMU: Fixed certificate bundle path (Closes: 42827).
 
