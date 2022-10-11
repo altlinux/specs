@@ -1,8 +1,8 @@
 %define oname triggers
 
 Name: gajim-plugin-triggers
-Version: 1.4.5
-Release: alt2
+Version: 1.4.7
+Release: alt1
 
 Summary: Configure Gajim's behavior on some events
 
@@ -46,6 +46,9 @@ cp -a * %buildroot%python3_sitelibdir_noarch/gajim/data/plugins/%oname/
 %python3_sitelibdir_noarch/gajim/data/plugins/%oname
 
 %changelog
+* Tue Oct 11 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.7-alt1
+- Updated to 1.4.7.
+
 * Fri Sep 23 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.5-alt2
 - Drop needless conflict.
 
