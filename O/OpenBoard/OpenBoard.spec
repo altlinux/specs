@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: OpenBoard
-Version: 1.6.3
-Release: alt6
+Version: 1.6.4
+Release: alt1
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
@@ -15,27 +15,25 @@ Source: %name-%version.tar
 
 Source1: %name.svg
 
-Patch1: OpenBoard-1.6.3-update-russian-translations.patch
+Patch1: 0001-OpenBoard-1.6.3-update-russian-translations.patch
 
-Patch2: dark-background-color-set-ability-feature.patch
+Patch2: 0002-dark-background-color-set-ability-feature.patch
 
-Patch3: Fixed-the-program-version-in-the-text-from-the-copyright-widget.patch
+Patch3: 0003-new-icon-images.patch
 
-Patch4: 0001-new-icon-images.patch
+Patch4: 0004-Draw-dashed-and-dotted-lines.patch
 
-Patch5: 0001-Draw-dashed-and-dotted-lines.patch
+Patch5: 0005-run-in-a-window.patch
 
-Patch6: run-in-a-window.patch
+Patch6: 0006-change-dash-line-spaces.patch
 
-Patch7: change-dash-line-spaces.patch
+Patch7: 0007-change-lineItem-delegation.patch
 
-Patch8: change-lineItem-delegation.patch
+Patch8: 0008-background-grid-size-save.patch
 
-Patch9: background-grid-size-save.patch
+Patch9: 0009-new-vector-item.patch
 
-Patch10: new-vector-item.patch
-
-Patch11: new-vector-item-ru-translation.patch 
+Patch10: 0010-new-vector-item-ru-translation.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -93,7 +91,6 @@ Interactive whiteboard for schools and universities.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
@@ -195,6 +192,10 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Oct 10 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.4-alt1
+- new version 1.6.4
+- Patches adapted and assembled into a patchset. Unnecessary patches removed
+
 * Fri Sep 30 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.3-alt6
 - Adding the patch with a new drawing element - vector and the patch with russian translation of it
 
