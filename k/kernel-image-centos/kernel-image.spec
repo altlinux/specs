@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 171
+%define centos_release 175
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -318,7 +318,7 @@ KVER=`make --no-print-directory kernelversion EXTRAVERSION=`
 # Generate a config.
 %make_build -C redhat dist-configs-commit \
 	FLAVOR=rhel \
-	KVERSION="$KVER" \
+	SPECVERSION="$KVER" \
 	TOPDIR="$PWD"
 
 cp -vf redhat/configs/kernel-$KVER-%_target_cpu.config .config
@@ -634,6 +634,27 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Oct 11 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.175-alt1.el9
+- Updated to kernel-5.14.0-175.el9 (fixes: CVE-2021-26341):
+  + bpf: Use bpf_capable() instead of CAP_SYS_ADMIN for blinding decision
+  + Cleanup int3400 thermal OSC handling
+  + crypto: qat: Update QAT drivers upto v6.1-rc1
+  + gfs2: Use TRY lock in gfs2_inode_lookup for UNLINKED inodes
+  + IPMI updates and bug fixes
+  + Merge tag 'kernel-5.14.0-162.6.1.el9_1'
+  + netfilter: late backports from upstream
+  + nvme-tcp: handle number of queue changes
+  + Raspberry Pi: fix irq-bcm2835/36 build errors
+  + redhat: change default dist suffix for RHEL 9.1
+  + redhat: fix elf got hardening for vm tools
+  + [redhat] kabi: add symbols to stablelist
+  + [redhat] kabi: re-enable build-time kabi-checks
+  + redhat: Update directory with ARK changes
+  + [s390]: [IBM 9.2 FEAT] Support IBM z16 Processor-Activity-Instrumentation Facility - kernel part
+  + sfc: fix TX channel offset when using legacy interrupts
+  + x86,config: Enable straight-line-speculation fix
+  + xfs: sync to upstream v5.15
+
 * Sat Oct 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.171-alt1.el9
 - Updated to kernel-5.14.0-171.el9:
   + Add Device IDs for Raptor Lake and Raptor Lake S
