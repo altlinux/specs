@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname deprecated
+%define pypi_name Deprecated
+%define mod_name deprecated
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.2.12
+Name: python3-module-%mod_name
+Version: 1.2.13
 Release: alt1
 
 Summary: Decorators to deprecate old python classes, functions or methods
@@ -18,14 +19,15 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 # install_requires
 BuildRequires: python3(wrapt)
 
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -42,22 +44,22 @@ methods.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc README.md CHANGELOG.rst
 %python3_sitelibdir/deprecated/
-%python3_sitelibdir/Deprecated-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 1.2.13-alt1
+- 1.2.12 -> 1.2.13.
+
 * Tue Jun 22 2021 Stanislav Levin <slev@altlinux.org> 1.2.12-alt1
 - Initial build for Sisyphus.
