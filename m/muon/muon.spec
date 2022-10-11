@@ -1,6 +1,6 @@
 %define __builddir %_target_platform
 
-%define ver_major 0.0
+%define ver_major 0.1
 %define _libexecdir %_prefix/libexec
 %define pkgconf_ver 1.8.0
 
@@ -10,8 +10,8 @@
 %def_disable tracy
 
 Name: muon
-Version: %ver_major.1
-Release: alt0.92
+Version: %ver_major.0
+Release: alt1
 
 Summary: C-implemetation of Meson build system
 License: GPL-3.0-only
@@ -21,7 +21,7 @@ Url: https://github.com/annacrombie/muon
 Vcs: https://github.com/annacrombie/muon.git
 Source: %name-%version.tar
 Source1: https://mochiro.moe/wrap/samurai-1.2-28-g4e3a595.tar.gz
-Source2: https://mochiro.moe/wrap/meson-docs-0.63.0-116-g8a45c81cf.tar.gz
+Source2: https://mochiro.moe/wrap/meson-docs-0.63.0-239-g41a05ff93.tar.gz
 Source3: %name.macros
 Source4: %name.env
 
@@ -96,6 +96,9 @@ install -Dpm 0755 %SOURCE4 %buildroot%_rpmmacrosdir/%name.env
 
 
 %changelog
+* Tue Oct 11 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
+- 0.1.0-5-gab1e044c
+
 * Fri Oct 07 2022 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt0.92
 - updated to 2021ab4a
 
