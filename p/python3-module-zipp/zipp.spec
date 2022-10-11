@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.8.1
+Version: 3.9.1
 Release: alt1
 
 Summary: A pathlib-compatible Zipfile object wrapper
@@ -29,6 +29,8 @@ BuildRequires: python3(setuptools_scm)
 %if_with check
 BuildRequires: python3(pytest)
 BuildRequires: python3(jaraco.itertools)
+BuildRequires: python3(jaraco.functools)
+BuildRequires: python3(more_itertools)
 %endif
 
 %description
@@ -64,6 +66,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 10 2022 Stanislav Levin <slev@altlinux.org> 3.9.1-alt1
+- 3.8.1 -> 3.9.1.
+
 * Tue Aug 09 2022 Stanislav Levin <slev@altlinux.org> 3.8.1-alt1
 - 3.7.0 -> 3.8.1.
 
