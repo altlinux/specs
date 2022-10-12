@@ -1,7 +1,7 @@
 %define oname libcloud
 
 Name: python3-module-%oname
-Version: 3.6.0
+Version: 3.6.1
 Release: alt1
 
 Summary: Library for interacting with popular cloud service
@@ -17,7 +17,6 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-requests
-BuildPreReq: python3-module-pytest-runner
 BuildPreReq: python3-module-urllib3
 
 %py3_provides libcloud.compute.drivers.vsphere
@@ -82,6 +81,9 @@ export PYTHONPATH=$PWD
 
 
 %changelog
+* Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 3.6.1-alt1
+- Automatically updated to 3.6.1.
+
 * Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 3.6.0-alt1
 - Automatically updated to 3.6.0.
 
