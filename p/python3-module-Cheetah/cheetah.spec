@@ -1,26 +1,21 @@
 %define origname Cheetah
 
-%def_disable check
+Name: python3-module-%origname
+Version: 3.3.0
+Release: alt1
 
 Summary: Template engine and code-generator
-Name: python3-module-%origname
-Version: 3.2.6
-Release: alt2
-Source0: Cheetah-%version.tar
+
 License: MIT
 Group: Development/Python3
 URL: http://cheetahtemplate.org/
+
 # https://github.com/CheetahTemplate3/cheetah3
-#BuildArch: noarch
+Source: Cheetah-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: time
-BuildPreReq: python3-module-distribute
-BuildPreReq: python3-module-markdown
-BuildPreReq: python3-module-sphinx
-
-Conflicts: python-module-Cheetah < %EVR
-Obsoletes: python-module-Cheetah < %EVR
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 Cheetah is an open source template engine and code generation tool, written
@@ -47,23 +42,13 @@ This package contains tests for Cheetah.
 %setup -n Cheetah-%version
 
 %build
-%python3_build
-
-export PYTHONPATH=$PWD
-%make SPHINXBUILD="sphinx-build-3" -C docs html
-mkdir man
-cp -fR docs/_build/html/* man/
+%pyproject_build
 
 %install
-%python3_install
-
-%check
-export PATH="%buildroot/%_bindir:$PATH"
-export PYTHONPATH="%buildroot/%python3_sitelibdir"
-%buildroot/%_bindir/cheetah test
+%pyproject_install
 
 %files
-%doc *.rst man/
+%doc *.rst
 %_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/Cheetah/Tests
@@ -71,7 +56,11 @@ export PYTHONPATH="%buildroot/%python3_sitelibdir"
 %files tests
 %python3_sitelibdir/Cheetah/Tests
 %exclude %python3_sitelibdir/Cheetah/Tests/Performance.py*
+
 %changelog
+* Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- Automatically updated to 3.3.0.
+
 * Mon Dec 06 2021 Grigory Ustinov <grenka@altlinux.org> 3.2.6-alt2
 - Disable check for python3.10.
 
