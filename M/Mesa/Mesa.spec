@@ -17,8 +17,8 @@
 %define armsoc_arches %arm aarch64
 %define svga_arches %ix86 x86_64
 
-%define opencl_arches %ix86 x86_64 aarch64
-%define gallium_pipe_arches %ix86 x86_64 aarch64 mipsel
+%define gallium_opencl_arches %nil
+#%ix86 x86_64 aarch64 mipsel
 
 #VDPAU state tracker requires at least one of the following gallium drivers: r300, r600, radeonsi, nouveau
 %define vdpau_arches %radeon_arches %nouveau_arches
@@ -83,7 +83,7 @@
 %gallium_drivers_add zink
 
 %define ver_major 22.2
-%define ver_minor 0
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -106,8 +106,9 @@ BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-d
 BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel libunwind-devel
-BuildRequires: libclc-devel libglvnd-devel >= 1.2.0 llvm-devel >= 11.0.0 clang-devel >= 11.0.0
+BuildRequires: libglvnd-devel >= 1.2.0 llvm-devel >= 11.0.0
 BuildRequires: rpm-build-python3 glslang python3-module-docutils
+#BuildRequires: libclc-devel clang-devel >= 11.0.0
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -317,6 +318,7 @@ Mesa-based DRI drivers
 	-Dgallium-drivers='%{?gallium_drivers}' \
 	-Dvulkan-drivers='%{?vulkan_drivers}' \
 	-Dvulkan-layers='device-select, overlay' \
+	-Dvideo-codecs='vc1dec, h264dec, h264enc, h265dec, h265enc' \
 %ifarch %vdpau_arches
 	-Dgallium-vdpau=enabled \
 %endif
@@ -324,9 +326,6 @@ Mesa-based DRI drivers
 	-Dgallium-xvmc=enabled \
 %endif
 	-Ddri3=enabled \
-%ifarch %opencl_arches
-	-Dgallium-opencl=icd \
-%endif
 %ifarch %radeon_arches
 	-Dllvm=enabled \
 	-Dshared-llvm=enabled \
@@ -357,20 +356,22 @@ Mesa-based DRI drivers
 	-Dglvnd=true \
 	-Ddri-drivers-path=%_libdir/X11/modules/dri \
 	-Db_ndebug=true \
+%ifarch %gallium_opencl_arches
+	-Dgallium-opencl=icd \
+%endif
 #
 
 %meson_build -v
 
-#for i in $(seq 0 %ver_minor); do
-#	rst2html %_builddir/%name-%version/docs/relnotes/%ver_major.$i.rst %_builddir/%name-%version/%ver_major.$i.html
-#done
+for i in $(seq 0 %ver_minor); do
+	rst2html %_builddir/%name-%version/docs/relnotes/%ver_major.$i.rst %_builddir/%name-%version/%ver_major.$i.html
+done
 
 %install
 %meson_install
 
 mkdir -p %buildroot%_sysconfdir
 touch %buildroot%_sysconfdir/drirc
-rm -f %buildroot%_libdir/gallium-pipe/*.la
 
 shopt -s nullglob
 m="%buildroot%_libdir/X11/modules/dri %buildroot%_libdir/dri"
@@ -411,7 +412,8 @@ d=%buildroot%_libdir
 
 %ifarch %armsoc_arches
 find %buildroot%_libdir/X11/modules/dri/ -type l | sed -ne "s|^%buildroot||p" > xorg-dri-armsoc.list
-%ifarch %gallium_pipe_arches
+%ifarch %gallium_opencl_arches
+rm -f %buildroot%_libdir/gallium-pipe/*.la
 find %buildroot%_libdir/gallium-pipe/ -type f | sed -ne "s|^%buildroot||p" >> xorg-dri-armsoc.list
 sed -i '/.*pipe_r[a236].*/d' xorg-dri-armsoc.list
 %endif
@@ -425,7 +427,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 #define _unpackaged_files_terminate_build 1
 
 %files -n libGLX-mesa
-#%doc %ver_major.*.html
+%doc %ver_major.*.html
 %_libdir/libGLX_mesa.so.*
 %_libdir/libglapi.so.*
 
@@ -464,7 +466,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_pkgconfigdir/xatracker.pc
 %endif
 
-%ifarch %opencl_arches
+%ifarch %gallium_opencl_arches
 %files -n libMesaOpenCL
 %dir %_sysconfdir/OpenCL
 %dir %_sysconfdir/OpenCL/vendors
@@ -496,7 +498,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/*swrast*_dri.so
 %_libdir/X11/modules/dri/libgallium_dri.so
 %_libdir/X11/modules/dri/zink_dri.so
-%ifarch %gallium_pipe_arches
+%ifarch %gallium_opencl_arches
 %dir %_libdir/gallium-pipe
 %_libdir/gallium-pipe/pipe_swrast.so
 %endif
@@ -530,7 +532,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %ifarch %vulkan_intel_arches
 %_libdir/libvulkan_intel.so
 %_datadir/vulkan/icd.d/intel_icd*.json
-%ifarch %gallium_pipe_arches
+%ifarch %gallium_opencl_arches
 %_libdir/gallium-pipe/pipe_i9?5.so
 %_libdir/gallium-pipe/pipe_crocus.so
 %_libdir/gallium-pipe/pipe_iris.so
@@ -544,7 +546,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/dri/nouveau_drv_video.so
 %_libdir/vdpau/libvdpau_nouveau.so*
 %_libdir/libXvMCnouveau.so.*
-%ifarch %gallium_pipe_arches
+%ifarch %gallium_opencl_arches
 %_libdir/gallium-pipe/pipe_nouveau.so
 %endif
 %endif
@@ -556,7 +558,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/vdpau/libvdpau_r*.so*
 %_libdir/dri/r*_drv_video.so
 %_libdir/libXvMCr*.so.*
-%ifarch %gallium_pipe_arches
+%ifarch %gallium_opencl_arches
 %_libdir/gallium-pipe/pipe_r*.so
 %endif
 %ifarch %vulkan_radeon_arches
@@ -569,7 +571,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %ifarch %svga_arches
 %files -n xorg-dri-vmwgfx
 %_libdir/X11/modules/dri/vmwgfx_dri.so
+%ifarch %gallium_opencl_arches
 %_libdir/gallium-pipe/pipe_vmwgfx.so
+%endif
 %endif
 
 %ifarch %armsoc_arches
@@ -585,6 +589,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Tue Oct 11 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.2.1-alt1
+- 22.2.1
+
 * Wed Sep 21 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.2.0-alt1
 - 22.2.0
 
@@ -609,11 +616,17 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 * Tue May 24 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.1.0-alt2
 - enabled zink gallium driver (closes: #42849)
 
+* Mon May 23 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.4-alt1
+- 22.0.4
+
 * Thu May 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.1.0-alt1
 - 22.1.0
 
 * Thu May 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.3-alt2
 - enabled swrast vulkan driver
+
+* Fri May 06 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.3-alt0.1
+- build for p10 branch
 
 * Thu May 05 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.0.3-alt1
 - 22.0.3
