@@ -1,6 +1,6 @@
 Name: unzip
 Version: 6.0
-Release: alt4
+Release: alt5
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -39,7 +39,7 @@ Patch9: unzip-6.0-caseinsensitive.patch
 # upstream doesn't want hear about this option again
 Patch10: unzip-6.0-format-secure.patch
 
-Patch11: unzip-6.0-valgrind.patch
+#Patch11: unzip-6.0-valgrind.patch
 Patch12: unzip-6.0-x-option.patch
 Patch13: unzip-6.0-overflow.patch
 Patch14: unzip-6.0-cve-2014-8139.patch
@@ -73,6 +73,9 @@ Patch29: unzip-zipbomb-manpage.patch
 
 Patch30: CVE-2015-7697-part_from_opensuse.patch
 
+# fix CVE-2021-4217
+Patch31: 0001-Fix-null-pointer-dereference-and-use-of-uninitialized-data.patch
+
 # Automatically added by buildreq on Mon Aug 10 2009
 BuildRequires: libnatspec-devel
 BuildRequires: bzip2-devel
@@ -99,7 +102,7 @@ default behaviors do differ in some respects.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
+#%patch11 -p1
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
@@ -125,6 +128,7 @@ default behaviors do differ in some respects.
 #patch29 -p1
 
 %patch30 -p1
+%patch31 -p1
 
 ln -s unix/Makefile .
 
@@ -160,6 +164,9 @@ ln -s unzip %buildroot%_bindir/zipinfo
 %doc BUGS LICENSE
 
 %changelog
+* Wed Oct 12 2022 Alexander Danilov <admsasha@altlinux.org> 6.0-alt5
+- fixes CVE-2021-4217
+
 * Fri Nov 13 2020 Evgeny Sinelnikov <sin@altlinux.org> 6.0-alt4
 - Build with bzip2 compression method support
 - Massive apply security patches from Fedora and openSUSE
