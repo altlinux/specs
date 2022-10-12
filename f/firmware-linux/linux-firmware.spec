@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20220930
+Version: 20221012
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,22 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Oct 12 2022 Cronbuild Service <cronbuild@altlinux.org> 20221012-alt1
+- upstream changes (GIT 8b07c1fb):
+  + rtl_bt: Update RTL8852C BT USB firmware to 0xD5B8_A40A (thx Hilda Wu)
+  + amdgpu: update GC 10.3.6 RLC firmware (thx Alex Deucher)
+  + amdgpu: update GC 10.3.7 RLC firmware (thx Alex Deucher)
+  + amdgpu: update Yellow Carp RLC firmware (thx Alex Deucher)
+  + amdgpu: update Beige Goby RLC firmware (thx Alex Deucher)
+  + amdgpu: update Dimgrey Cavefish RLC firmware (thx Alex Deucher)
+  + amdgpu: update Navy Flounder RLC firmware (thx Alex Deucher)
+  + amdgpu: update Sienna Cichlid RLC firmware (thx Alex Deucher)
+  + mediatek: Update mt8195 SOF firmware to v0.4.1 (thx Tinghan Shen)
+  + qcom: add squashed version of a530 zap shader (thx Dmitry Baryshkov)
+  + rtw89: 8852c: update fw to v0.27.56.1 (thx Chin-Yen Lee)
+  + rtw89: 8852c: update fw to v0.27.56.0 (thx Chin-Yen Lee)
+  + mediatek: Update mt8186 SCP firmware (thx Allen-KH Cheng)
+
 * Wed Oct 05 2022 Cronbuild Service <cronbuild@altlinux.org> 20220930-alt1
 - upstream changes (GIT fdf1a652):
   + Update AMD cpu microcode (thx John Allen)
