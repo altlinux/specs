@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.3.0
+Version: 5.0.0
 Release: alt1
 
 Summary: OpenStack oslo.serialization library
@@ -12,7 +12,7 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://docs.openstack.org/oslo.serialization/latest
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -26,19 +26,18 @@ BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-pytz >= 2013.6
 
 %if_with check
-BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 %endif
 
@@ -68,7 +67,7 @@ This package contains documentation for %oname.
 %setup
 
 # Remove bundled egg-info
-rm -rfv %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -77,12 +76,19 @@ rm -rfv %oname.egg-info
 export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/osloserialization.1 %buildroot%_man1dir/osloserialization.1
+%endif
 
 %check
 %__python3 -m stestr run
@@ -98,9 +104,13 @@ rm -rf html/.{doctrees,buildinfo}
 %if_with docs
 %files doc
 %doc LICENSE *.rst html
+%_man1dir/osloserialization.1.xz
 %endif
 
 %changelog
+* Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 4.3.0-alt1
 - Automatically updated to 4.3.0.
 - Unified (thx for felixz@).

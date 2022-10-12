@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Common code for writing OpenStack upgrade checks
 
@@ -12,7 +12,7 @@ License: Apache-2.0
 Group:   Development/Python3
 URL:     https://docs.openstack.org/oslo.upgradecheck/latest
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -30,8 +30,8 @@ BuildRequires: python3-module-oslo.policy >= 2.0.0
 BuildRequires: python3-module-hacking >= 3.0
 BuildRequires: python3-module-oslotest >= 3.5.0
 BuildRequires: python3-module-stestr >= 2.0.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: python3-module-oslo.serialization >= 2.21.1
+BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -68,7 +68,7 @@ This package contains documentation for %oname.
 %setup
 
 # Remove bundled egg-info
-rm -rfv %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -77,12 +77,19 @@ rm -rfv %oname.egg-info
 export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/osloupgradecheck.1 %buildroot%_man1dir/osloupgradecheck.1
+%endif
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -99,9 +106,13 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %if_with docs
 %files doc
 %doc LICENSE *.rst html
+%_man1dir/osloupgradecheck.1.xz
 %endif
 
 %changelog
+* Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt2
+- Added manual.
+
 * Wed Oct 05 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
 - Automatically updated to 2.0.0.
 - Unified (thx for felixz@).

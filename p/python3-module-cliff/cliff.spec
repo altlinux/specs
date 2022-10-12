@@ -1,35 +1,44 @@
 %global oname cliff
-
 %def_with docs
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 3.1.0
+Version: 4.0.0
 Release: alt1
 
 Summary: Command Line Interface Formulation Framework
 
-Group: Development/Python3
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/%oname
+Group: Development/Python3
+Url: https://docs.openstack.org/cliff/latest
 
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source: %oname-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-prettytable >= 0.7.2
-BuildRequires: python3-module-pyparsing >= 2.1.0
-BuildRequires: python3-module-cmd2 >= 0.8.0
-BuildRequires: python3-module-stevedore >= 1.20.0
-BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-cmd2 >= 1.0.0
+BuildRequires: python3-module-stevedore >= 2.0.1
 BuildRequires: python3-module-yaml >= 3.10.0
-BuildRequires: python3-module-nose
+
+%if_with check
+BuildRequires: python3-module-sphinx >= 2.0.0
 BuildRequires: python3-module-mock
-BuildRequires: python3-module-testtools
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-stestr >= 1.0.0
+BuildRequires: python3-module-testscenarios >= 0.4
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-bandit >= 1.1.0
+%endif
+
+%if_with docs
+BuildRequires: python3-module-sphinx >= 2.0.0
+BuildRequires: python3-module-autopage
+BuildRequires: python3-module-importlib-metadata
+%endif
 
 %description
 cliff is a framework for building command line programs. It uses setuptools
@@ -44,21 +53,20 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Documentation for the Command Line Interface Formulation Framework
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-Documentation for the Command Line Interface Formulation Framework.
+This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n %oname-%version
-
-# Let RPM handle the dependencies
-rm -f test-requirements.txt requirements.txt
+%setup
 
 # Remove bundled egg info
-rm -rf *.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -67,6 +75,8 @@ rm -rf *.egg-info
 # generate html docs
 export PYTHONPATH="$(pwd)"
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
@@ -74,12 +84,16 @@ rm -rf html/.{doctrees,buildinfo}
 %install
 %python3_install
 
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
+
 %check
-sed -i 's/nosetests/nosetests3/' cliff/tests/test_help.py
-PYTHONPATH=. nosetests3
+%__python3 -m stestr run
 
 %files
-%doc AUTHORS ChangeLog *.rst
+%doc LICENSE AUTHORS ChangeLog *.rst
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 
@@ -88,10 +102,15 @@ PYTHONPATH=. nosetests3
 
 %if_with docs
 %files doc
-%doc html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
 %endif
 
 %changelog
+* Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+- Unified.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
 - Automatically updated to 3.1.0.
 - Build with docs.

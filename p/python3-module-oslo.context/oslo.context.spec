@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.1.0
+Version: 5.0.0
 Release: alt1
 
 Summary: OpenStack oslo.context library
@@ -12,7 +12,7 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://docs.openstack.org/oslo.context/latest
 
-Source:  %name-%version.tar
+Source:  %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -35,7 +35,6 @@ BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-sphinx >= 1.6.2
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 %endif
@@ -67,7 +66,7 @@ This package contains documentation for %oname.
 %setup
 
 # Remove bundled egg-info
-rm -rfv %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -76,12 +75,19 @@ rm -rfv %oname.egg-info
 export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/oslocontext.1 %buildroot%_man1dir/oslocontext.1
+%endif
 
 %check
 %__python3 -m stestr run
@@ -97,9 +103,13 @@ rm -rf html/.{doctrees,buildinfo}
 %if_with docs
 %files doc
 %doc LICENSE *.rst html
+%_man1dir/oslocontext.1.xz
 %endif
 
 %changelog
+* Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Fri Oct 07 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
 - Automatically updated to 4.1.0.
 - Unified (thx for felixz@).

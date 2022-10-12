@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.8.0
+Version: 3.0.0
 Release: alt1
 
 Summary: Oslo service library
@@ -12,7 +12,7 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://docs.openstack.org/oslo.service/latest
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -33,7 +33,6 @@ BuildRequires: python3-module-oslo.concurrency >= 3.25.0
 BuildRequires: python3-module-oslo.config >= 5.1.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
-BuildRequires: python3-module-PasteDeploy >= 1.5.0
 BuildRequires: python3-module-routes >= 2.3.1
 BuildRequires: python3-module-paste >= 2.0.2
 BuildRequires: python3-module-yappi >= 1.0
@@ -51,10 +50,8 @@ BuildRequires: /proc
 %endif
 
 %if_with docs
-BuildRequires: python3-module-monotonic >= 0.6
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
 %endif
 
 %description
@@ -85,7 +82,7 @@ This package contains documentation for %oname.
 %setup
 
 # Remove bundled egg-info
-rm -rfv %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -94,12 +91,19 @@ rm -rfv %oname.egg-info
 export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/osloservice.1 %buildroot%_man1dir/osloservice.1
+%endif
 
 %check
 %__python3 -m stestr run
@@ -115,9 +119,13 @@ rm -rf html/.{doctrees,buildinfo}
 %if_with docs
 %files doc
 %doc LICENSE *.rst html
+%_man1dir/osloservice.1.xz
 %endif
 
 %changelog
+* Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 2.8.0-alt1
 - Automatically updated to 2.8.0.
 - Unified (thx for felixz@).

@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.10.0
+Version: 4.0.1
 Release: alt1
 
 Summary: Oslo VMware library for OpenStack projects
@@ -12,7 +12,7 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://docs.openstack.org/oslo.vmware/latest
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -21,11 +21,9 @@ Provides: python3-module-oslo-vmware = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.utils >= 3.33.0
-BuildRequires: python3-module-pyaml >= 3.13
 BuildRequires: python3-module-lxml >= 4.5.0
 BuildRequires: python3-module-suds >= 0.6
 BuildRequires: python3-module-eventlet >= 0.18.2
@@ -33,6 +31,7 @@ BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-urllib3 >= 1.21.1
 BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-oslo.context >= 2.19.2
+BuildRequires: python3-module-stevedore >= 1.20.0
 
 %if_with check
 BuildRequires: python3-module-hacking >= 3.0.1
@@ -48,7 +47,6 @@ BuildRequires: python3-module-pre-commit >= 2.6.0
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-sphinxcontrib-apidoc
 %endif
 
@@ -82,7 +80,7 @@ This package contains documentation for %oname.
 %setup
 
 # Remove bundled egg-info
-rm -rfv %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -91,12 +89,19 @@ rm -rfv %oname.egg-info
 export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/oslovmware.1 %buildroot%_man1dir/oslovmware.1
+%endif
 
 %check
 %__python3 -m stestr run
@@ -112,9 +117,13 @@ rm -rf html/.{doctrees,buildinfo}
 %if_with docs
 %files doc
 %doc LICENSE *.rst html
+%_man1dir/oslovmware.1.xz
 %endif
 
 %changelog
+* Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
+- Automatically updated to 4.0.1.
+
 * Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.0-alt1
 - Automatically updated to 3.10.0.
 - Unified (thx for felixz@).

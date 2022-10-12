@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.8.0
+Version: 3.0.1
 Release: alt1
 
 Summary: OpenStack library for privilege separation
@@ -12,7 +12,7 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://docs.openstack.org/oslo.privsep/latest
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -26,7 +26,6 @@ BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-cffi >= 1.14.0
 BuildRequires: python3-module-eventlet >= 0.21.0
-BuildRequires: python3-module-greenlet >= 0.4.14
 BuildRequires: python3-module-msgpack >= 0.6.0
 
 %if_with check
@@ -41,7 +40,6 @@ BuildRequires: python3-module-pre-commit >= 2.6.0
 
 %if_with docs
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno
 BuildRequires: python3-module-openstackdocstheme
 BuildRequires: python3-module-sphinxcontrib-apidoc
 %endif
@@ -74,7 +72,7 @@ This package contains documentation for %oname.
 %setup
 
 # Remove bundled egg-info
-rm -rfv %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -83,12 +81,19 @@ rm -rfv %oname.egg-info
 export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/osloprivsep.1 %buildroot%_man1dir/osloprivsep.1
+%endif
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -106,9 +111,13 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %if_with docs
 %files doc
 %doc LICENSE *.rst html
+%_man1dir/osloprivsep.1.xz
 %endif
 
 %changelog
+* Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Automatically updated to 3.0.1.
+
 * Mon May 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.8.0-alt1
 - Automatically updated to 2.8.0.
 - Unified (thx for felixz@).

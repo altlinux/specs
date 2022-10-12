@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.12.1
+Version: 4.0.0
 Release: alt1
 
 Summary: RBAC policy enforcement library for OpenStack
@@ -12,7 +12,7 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://docs.openstack.org/oslo.policy/latest
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -27,21 +27,19 @@ BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-oslo.utils >= 3.40.0
-BuildRequires: python3-module-pyaml >= 5.1
+BuildRequires: python3-module-yaml >= 3.12
 
 %if_with check
 BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-sphinx >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-requests-mock >= 1.2.0
 %endif
 
 %if_with docs
-BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-openstackdocstheme
 BuildRequires: python3-module-sphinxcontrib-apidoc
-BuildRequires: python3-module-yaml >= 3.12
 %endif
 
 %description
@@ -69,7 +67,7 @@ This package contains documentation for %oname.
 %setup
 
 # Remove bundled egg-info
-rm -rfv %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -78,12 +76,22 @@ rm -rfv %oname.egg-info
 export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/oslopolicy-checker.1 %buildroot%_man1dir/oslopolicy-checker.1
+install -pDm 644 man/oslopolicy-list-redundant.1 %buildroot%_man1dir/oslopolicy-list-redundant.1
+install -pDm 644 man/oslopolicy-policy-generator.1 %buildroot%_man1dir/oslopolicy-policy-generator.1
+install -pDm 644 man/oslopolicy-sample-generator.1 %buildroot%_man1dir/oslopolicy-sample-generator.1
+%endif
 
 %check
 %__python3 -m stestr run
@@ -106,9 +114,16 @@ rm -rf html/.{doctrees,buildinfo}
 %if_with docs
 %files doc
 %doc LICENSE *.rst html
+%_man1dir/oslopolicy-checker.1.xz
+%_man1dir/oslopolicy-list-redundant.1.xz
+%_man1dir/oslopolicy-policy-generator.1.xz
+%_man1dir/oslopolicy-sample-generator.1.xz
 %endif
 
 %changelog
+* Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+
 * Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 3.12.1-alt1
 - Automatically updated to 3.12.1.
 - Unified (thx for felixz@).

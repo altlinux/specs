@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.0
-Release: alt1
+Release: alt2
 
 Summary: A library for plugging and unplugging virtual interfaces in OpenStack
 
@@ -12,7 +12,7 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://docs.openstack.org/os-vif/latest
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -72,7 +72,7 @@ This package contains documentation for %oname.
 %setup
 
 # Remove bundled egg-info
-rm -rfv %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -81,12 +81,19 @@ rm -rfv %oname.egg-info
 export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/os_vif.1 %buildroot%_man1dir/%oname.1
+%endif
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -103,9 +110,13 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %if_with docs
 %files doc
 %doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
 %endif
 
 %changelog
+* Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt2
+- Added manual.
+
 * Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 - Unified (thx for felixz@).

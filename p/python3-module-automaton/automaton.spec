@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.5.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Friendly state machines for python
@@ -12,7 +12,7 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://docs.openstack.org/automaton/latest
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -25,8 +25,6 @@ BuildRequires: python3-module-prettytable >= 0.7.2
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
-BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-reno >= 3.1.0
 %endif
 
 %if_with docs
@@ -58,7 +56,7 @@ This package contains documentation for %oname.
 %setup
 
 # Remove bundled egg-info
-rm -rfv %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -67,12 +65,19 @@ rm -rfv %oname.egg-info
 export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
 
 %check
 %__python3 -m stestr run
@@ -88,9 +93,13 @@ rm -rf html/.{doctrees,buildinfo}
 %if_with docs
 %files doc
 %doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
 %endif
 
 %changelog
+* Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Automatically updated to 3.0.1.
+
 * Fri Oct 07 2022 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
 - Automatically updated to 2.5.0.
 - Unified (thx for felixz@).

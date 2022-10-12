@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.13.0
+Version: 6.0.1
 Release: alt1
 
 Summary: OpenStack Oslo Utility library
@@ -12,7 +12,7 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://docs.openstack.org/oslo.utils/latest
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -31,7 +31,6 @@ BuildRequires: python3-module-pyparsing >= 2.1.0
 BuildRequires: python3-module-packaging >= 20.4
 
 %if_with check
-BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-eventlet >= 0.18.2
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
@@ -41,13 +40,14 @@ BuildRequires: python3-module-ddt >= 1.0.1
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme
-BuildRequires: python3-module-reno
 %endif
 
 %description
@@ -76,7 +76,7 @@ This package contains documentation for %oname.
 %setup
 
 # Remove bundled egg-info
-rm -rfv %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -85,12 +85,19 @@ rm -rfv %oname.egg-info
 export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/osloutils.1 %buildroot%_man1dir/osloutils.1
+%endif
 
 %check
 %__python3 -m stestr run
@@ -106,9 +113,13 @@ rm -rf html/.{doctrees,buildinfo}
 %if_with docs
 %files doc
 %doc LICENSE *.rst html
+%_man1dir/osloutils.1.xz
 %endif
 
 %changelog
+* Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 6.0.1-alt1
+- Automatically updated to 6.0.1.
+
 * Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 4.13.0-alt1
 - Automatically updated to 4.13.0.
 - Unified (thx for felixz@).

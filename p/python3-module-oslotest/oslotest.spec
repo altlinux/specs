@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.5.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack test framework
 
@@ -12,7 +12,7 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://docs.openstack.org/oslotest/latest
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -35,7 +35,6 @@ BuildRequires: python3-module-pre-commit >= 2.6.0
 %if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme
-BuildRequires: python3-module-reno
 BuildRequires: python3-module-sphinxcontrib-apidoc
 %endif
 
@@ -63,7 +62,7 @@ This package contains documentation for %oname.
 %setup
 
 # Remove bundled egg-info
-rm -rfv %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -72,12 +71,20 @@ rm -rfv %oname.egg-info
 export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
+
 pushd %buildroot%_bindir
 for i in $(ls); do
        sed -i 's|python|python3|g' $i
@@ -103,9 +110,13 @@ popd
 %if_with docs
 %files doc
 %doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
 %endif
 
 %changelog
+* Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt2
+- Added manual.
+
 * Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
 - Automatically updated to 4.5.0.
 - Unified.

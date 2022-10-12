@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.11.0
+Version: 3.1.0
 Release: alt1
 
 Summary: Cache storage for Openstack projects
@@ -12,7 +12,7 @@ License: Apache-2.0
 Group: Development/Python3
 Url: https://docs.openstack.org/oslo.cache/latest
 
-Source: %name-%version.tar
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -35,13 +35,13 @@ BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-pifpaf >= 0.10.0
 BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-stestr >= 2.0.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: python3-module-pymemcache >= 3.5.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
+BuildRequires: python3-module-binary-memcached
 %endif
 
 %if_with docs
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno >= 1.8.0
 BuildRequires: python3-module-openstackdocstheme
 BuildRequires: python3-module-sphinxcontrib-apidoc
 %endif
@@ -73,7 +73,7 @@ This package contains documentation for %oname.
 %setup
 
 # Remove bundled egg-info
-rm -rvf %oname.egg-info
+rm -rvf *.egg-info
 
 %build
 %python3_build
@@ -82,12 +82,19 @@ rm -rvf %oname.egg-info
 export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
+
+%if_with docs
+# install man page
+install -pDm 644 man/oslocache.1 %buildroot%_man1dir/oslocache.1
+%endif
 
 %check
 %__python3 -m stestr run
@@ -103,9 +110,13 @@ rm -rf html/.{doctrees,buildinfo}
 %if_with docs
 %files doc
 %doc LICENSE *.rst html
+%_man1dir/oslocache.1.xz
 %endif
 
 %changelog
+* Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 2.11.0-alt1
 - Automatically updated to 2.11.0.
 - Unified (thx for felixz@).
