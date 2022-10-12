@@ -65,8 +65,8 @@
 
 
 Name: virtualbox
-Version: 6.1.38
-Release: alt2
+Version: 6.1.40
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPLv2
@@ -112,8 +112,6 @@ Source99:	%vboxdbg.in
 %endif
 
 Patch:		%name-%version-alt.patch
-Patch1:		USBPROXYURBLNX_1.patch
-Patch2:		USBPROXYURBLNX_2.patch
 
 BuildPreReq: dev86 iasl gcc-c++ libstdc++-devel-static
 BuildPreReq: libIDL-devel libSDL-devel libpng-devel
@@ -380,8 +378,6 @@ This package contains VirtualBox SDK for XPCOM.
 %prep
 %setup -q -n %distarchive
 %patch -p1
-%patch1
-%patch2
 
 cp %SOURCE15 %SOURCE16 src/VBox/Frontends/VirtualBox/images
 
@@ -958,6 +954,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Wed Oct 12 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.40-alt1
+- Update to newest version 6.1.40
+
 * Wed Oct 05 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.38-alt2
 - Added patchs for error: flexible array member
   usbdevfs_urb::iso_frame_desc not at end of struct USBPROXYURBLNX
