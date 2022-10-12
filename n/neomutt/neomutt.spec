@@ -5,7 +5,7 @@
 
 Name: neomutt
 Version: 20220429
-Release: alt1
+Release: alt2
 Summary: A version of Mutt with added features
 License: GPL-2.0-only and ALT-Public-Domain
 Group: Networking/Mail
@@ -61,6 +61,7 @@ sed -i 's/armle-/armh-/' autosetup/autosetup-config.sub
 	--idn2 --disable-idn \
 	--lua \
 	--notmuch \
+	--pkgconf \
 	--sasl \
 	--sqlite \
 	--ssl \
@@ -96,6 +97,9 @@ make -s test
 %_pixmapsdir/neomutt.xpm
 
 %changelog
+* Wed Oct 12 2022 Vitaly Chikunov <vt@altlinux.org> 20220429-alt2
+- spec: Fix build with libgpg-error-1.46.
+
 * Tue May 03 2022 Vitaly Chikunov <vt@altlinux.org> 20220429-alt1
 - Update to 20220429.
 - Enable Native Language Support (NLS).
