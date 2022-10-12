@@ -1,31 +1,33 @@
-%define ver_major 3.26
+%define ver_major 43
+%define xdg_name org.gnome.KrbAuthDialog
 %define gtk_api_ver 3.0
+
 %def_with pkcs11
 
 Name: krb5-auth-dialog
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Kerberos 5 authentication dialog
 License: GPLv2+
 Group: Graphical desktop/GNOME
-Url: http://redhat.com
+Url: https://redhat.com
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.28
-%define gtk_ver 3.14.0
-%define nm_ver 0.8.997
-%define notify_ver 0.7
+%define glib_ver 2.58
+%define gtk_ver 3.14
+%define gcr_ver 3.5.5
 
 %{?_with_pkcs11:Requires: libopensc}
 
-BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libnotify-devel >= %notify_ver
-BuildPreReq: libnm-devel >= %nm_ver
-BuildRequires: flex libkrb5-devel libcap-devel libcap-utils libpam-devel
-BuildRequires: intltool yelp-tools
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson flex
+BuildRequires: libgio-devel >= %glib_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: pkgconfig(gcr-3) >= %gcr_ver
+BuildRequires: libkrb5-devel libpam-devel
+BuildRequires: yelp-tools /usr/bin/appstream-util
 %{?_with_pkcs11:BuildRequires: libopensc}
 
 %description
@@ -36,38 +38,39 @@ pops up a dialog when they are about to expire.
 %setup
 
 %build
-%configure \
-	--disable-schemas-compile \
-	--disable-static \
-	--enable-network-manager \
-	%{?_with_pkcs11:--with-pkcs11=%_libdir/pkcs11/opensc-pkcs11.so}
-
-%make_build
+%meson \
+    %{?_with_pkcs11:-Dpkcs11='%_libdir/pkcs11/opensc-pkcs11.so'}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang --with-gnome %name
+
+%check
+%__meson_test
 
 %files -f %name.lang
 %_bindir/*
 %dir %_libdir/%name/plugins
-%_libdir/%name/plugins/libka-plugin-dummy.so
-%_libdir/%name/plugins/libka-plugin-pam.so
 %_libdir/%name/plugins/libka-plugin-afs.so
+%_libdir/%name/plugins/libka-plugin-dummy.so
 %_libdir/%name/plugins/libka-plugin-gnomelock.so
-%_datadir/applications/%name.desktop
-%_datadir/dbus-1/services/org.gnome.KrbAuthDialog.service
+%_libdir/%name/plugins/libka-plugin-pam.so
+%_desktopdir/%xdg_name.desktop
+%_datadir/dbus-1/services/%xdg_name.service
 %_iconsdir/hicolor/*/*/*.*
-%_datadir/glib-2.0/schemas/org.gnome.KrbAuthDialog.gschema.xml
-%_datadir/GConf/gsettings/org.gnome.KrbAuthDialog.convert
-%_datadir/appdata/%name.appdata.xml
-%_sysconfdir/xdg/autostart/*.desktop
+%_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
+%_datadir/metainfo/%name.metainfo.xml
+%_sysconfdir/xdg/autostart/%name.desktop
 %_man1dir/*
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS NEWS README*
 
-%exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Wed Oct 12 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0 (ported to Meson build system)
+
 * Sat Nov 11 2017 Yuri N. Sedunov <aris@altlinux.org> 3.26.1-alt1
 - 3.26.1
 
