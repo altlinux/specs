@@ -4,14 +4,14 @@
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
 Version: 14
-Release: alt1
+Release: alt2
 License: GPL-2.0-only
 Group: Development/Tools
 Url: https://git.altlinux.org/gears/l/ltp-alt-lists.git
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: ltp
+BuildRequires: ltp-testsuite
 
 %description
 %summary.
@@ -51,6 +51,9 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Tue Oct 11 2022 Vitaly Chikunov <vt@altlinux.org> 14-alt2
+- Remove circular dependency on ltp package.
+
 * Thu Oct 06 2022 Vitaly Chikunov <vt@altlinux.org> 14-alt1
 - Skiplist additions because of armh: epoll01, ioctl01_02, request_key03,
   sendmsg03.

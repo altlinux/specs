@@ -4,7 +4,7 @@
 
 Name: ltp
 Version: 20220930
-Release: alt1.1
+Release: alt2
 
 Summary: Linux Test Project
 License: GPL-2.0-only
@@ -13,6 +13,7 @@ Url: http://linux-test-project.github.io/
 Vcs: https://github.com/linux-test-project/ltp.git
 
 Requires: ltp-alt-lists
+Requires: ltp-testsuite = %EVR
 
 Source: %name-%version.tar
 BuildRequires: rpm-build-python3
@@ -31,13 +32,6 @@ BuildRequires: libxfs-devel
 
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 
-# No Reqs at all, because there is tons of them.
-# Idea is - all tests are optional, so we should not provide ready-to-go
-# ability to run any tests. Install required dependencies manually just
-# for the tests you want to run.
-AutoReqProv: off
-%add_verify_elf_skiplist /usr/lib/ltp/testcases/*
-
 %description
 The Linux Test Project has a goal to deliver test suites to the
 open source community that validate the reliability, robustness,
@@ -49,6 +43,22 @@ kernel and system libraries by bringing test automation to the testing
 effort. Interested open source contributors are encouraged to join.
 
 Testing Linux, one syscall at a time (tm).
+
+%package testsuite
+Summary: %summary
+Group: Development/Tools
+# No Reqs at all, because there is tons of them.
+# Idea is - all tests are optional, so we should not provide ready-to-go
+# ability to run any tests. Install required dependencies manually just
+# for the tests you want to run.
+AutoReqProv: off
+%add_verify_elf_skiplist /usr/lib/ltp/testcases/*
+
+%description testsuite
+The LTP testsuite contains a collection of tools for testing the
+Linux kernel and related features. Our goal is to improve the Linux
+kernel and system libraries by bringing test automation to the testing
+effort. Interested open source contributors are encouraged to join.
 
 %package open-posix-testsuite
 Summary: Open POSIX Test Suite
@@ -70,14 +80,14 @@ AutoReqProv: off
 Realtime tests is an open-source testsuite for testing real-time Linux.
 This testsuite is maintained by the IBM Real-Time team.
 
-%package checkinstall
+%package testsuite-checkinstall
 Summary: Checkinstall for %name
 Group: Development/Other
 BuildArch: noarch
-Requires(pre): %name = %EVR
+Requires(pre): %name-testsuite = %EVR
 Requires(pre): rpm-build-vm
 
-%description checkinstall
+%description testsuite-checkinstall
 %summary.
 
 %prep
@@ -144,24 +154,24 @@ uname01
 uname02
 uname04
 
-%pre checkinstall
-set -ex
+%pre testsuite-checkinstall
+set -exo pipefail
 # 'LD_PRELOAD=libfakeroot.so' hangs some binaries (including 'bash' and excluding
 # 'id' for example) in vm-run, and it's set under rooter.
 unset LD_PRELOAD
-vm-run runltp -f io
-if [ $(arch) = x86_64 ]; then
-	# Other arches will skip kvm test (for example on i586 with "This arch 'x86' is not
-	# supported for test!") thus it's not suitable for a false positive testing.
-	! vm-run runltp -f kvm
-fi
+vm-run runltp -q -f io
+# False positive test.
+echo 'expected_to_fail' false > /usr/lib/ltp/runtest/failpass
+! vm-run runltp -q -f failpass
 
-%post
+%post testsuite
 if [ -d /.host -a -d /.in -a -d /.out ]; then
 	chmod 1777 /usr/lib/ltp/{output,results}
 fi
 
 %files
+
+%files testsuite
 %doc COPYING README.*
 /usr/lib/ltp
 %_bindir/runltp
@@ -180,9 +190,14 @@ fi
 %doc testcases/realtime/{00_Descriptions.txt,README,doc}
 /usr/lib/realtime_testsuite
 
-%files checkinstall
+%files testsuite-checkinstall
 
 %changelog
+* Tue Oct 11 2022 Vitaly Chikunov <vt@altlinux.org> 20220930-alt2
+- Fix circular dependence on ltp-alt-lists by creating ltp-testsuite
+  subpackage. ltp now is just umbrella package.
+- Make checkinstall test more robust.
+
 * Sat Oct 08 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20220930-alt1.1
 - Fixed build for Elbrus.
 
