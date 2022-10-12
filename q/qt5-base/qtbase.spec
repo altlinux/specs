@@ -10,7 +10,7 @@
 %define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 
 #def_enable qtchooser
-%def_disable bootstrap
+%def_enable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -37,7 +37,7 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.4
+Version: 5.15.6
 Release: alt1
 %define libname  lib%gname
 
@@ -577,7 +577,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.15.4
+Version: 5.15.6
 __EOF__
 
 # rpm macros
@@ -854,6 +854,9 @@ make check -k ||:
 
 
 %changelog
+* Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
+- new version
+
 * Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
 - new version
 

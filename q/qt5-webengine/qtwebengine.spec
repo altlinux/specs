@@ -29,7 +29,7 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.15.10
+Version: 5.15.11
 Release: alt1
 
 Group: System/Libraries
@@ -422,6 +422,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Mon Oct 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.11-alt1
+- new version
+
 * Wed Jul 06 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.10-alt1
 - new version
 

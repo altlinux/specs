@@ -1,15 +1,14 @@
 %define optflags_lto %nil
 
-%define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %global qt_module qttools
-%def_disable bootstrap
+%def_enable bootstrap
 %def_disable qtconfig
 
 %define kf5_bindir %prefix/lib/kf5/bin
 
 Name: qt5-tools
-Version: 5.15.4
-Release: alt2
+Version: 5.15.6
+Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -19,7 +18,7 @@ Summary: Qt5 - QtTool components
 Url: http://qt.io/
 License: LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
 
-Requires: %name-common = %EVR
+Requires: %name-common
 
 Source: %qt_module-everywhere-src-%version.tar
 
@@ -51,7 +50,7 @@ BuildRequires: libXext-devel libX11-devel
 BuildRequires: libxslt-devel libudev-devel libgio-devel libsqlite3-devel
 BuildRequires: rpm-macros-alternatives
 %if_disabled bootstrap
-BuildRequires(pre): qt5-tools
+BuildRequires: qt5-tools
 %endif
 
 %description
@@ -68,7 +67,7 @@ Common package for %name
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: qt5-base-devel
 Requires: %name
 Provides: %name-devel-static = %EVR
@@ -80,7 +79,7 @@ Obsoletes: %name-devel-static < %EVR
 Group: Development/KDE and QT
 Summary: Development files for %name
 BuildArch: noarch
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: %name-devel
 %description devel-static
 %summary.
@@ -88,14 +87,14 @@ Requires: %name-devel
 %package doc
 Summary: Document for developing apps which will use Qt5 %qt_module
 Group: Development/KDE and QT
-Requires: %name-common = %EVR
+Requires: %name-common
 %description doc
 This package contains documentation for Qt5 %qt_module
 
 %package -n qt5-assistant
 Group: Text tools
 Summary: Documentation browser for Qt5
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: %name = %EVR
 %description -n qt5-assistant
 %summary.
@@ -103,7 +102,7 @@ Requires: %name = %EVR
 %package -n qt5-designer
 Group: Development/KDE and QT
 Summary: Designer for the Qt5
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: %name = %EVR
 Provides: qt5-linguist = %EVR
 %description -n qt5-designer
@@ -112,35 +111,35 @@ Provides: qt5-linguist = %EVR
 %package -n qt5-dbus
 Group: System/Configuration/Other
 Summary: This package contains D-Bus utilities for Qt5
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n qt5-dbus
 This package contains D-Bus utilities for Qt5.
 
 %package -n qt5-qtconfig
 Group: System/Configuration/Other
 Summary: A configuration tool for Qt5
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n qt5-qtconfig
 This package contains a configuration tool for Qt5.
 
 %package -n libqt5-uitools
 Group: System/Libraries
 Summary: Qt5 library
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n libqt5-uitools
 %summary
 
 %package -n libqt5-clucene
 Group: System/Libraries
 Summary: Qt5 library
-Requires: %name-common = %EVR
+Requires: %name-common
 %description -n libqt5-clucene
 %summary
 
 %package -n libqt5-designer
 Group: System/Libraries
 Summary: Qt5 library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt5-core = %_qt5_version
 %description -n libqt5-designer
 %summary
@@ -148,7 +147,7 @@ Requires: libqt5-core = %_qt5_version
 %package -n libqt5-designercomponents
 Group: System/Libraries
 Summary: Qt5 library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt5-core = %_qt5_version
 %description -n libqt5-designercomponents
 %summary
@@ -156,7 +155,7 @@ Requires: libqt5-core = %_qt5_version
 %package -n libqt5-help
 Group: System/Libraries
 Summary: Qt5 library
-Requires: %name-common = %EVR
+Requires: %name-common
 Requires: libqt5-core = %_qt5_version
 %description -n libqt5-help
 %summary
@@ -172,6 +171,8 @@ Requires: libqt5-core = %_qt5_version
 sed -i '/QMAKE_RPATHDIR/d' src/qdoc/qdoc.pro
 
 %build
+%define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+
 # needed for documentation generation
 # when some Qt header include paths
 # are specified using '-isystem $path' arguments
@@ -358,6 +359,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
+- new version
+
 * Tue Aug 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt2
 - build docs
 

@@ -1,11 +1,9 @@
-%define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
-
 %global qt_module qtxmlpatterns
-%def_disable bootstrap
+%def_enable bootstrap
 
 Name: qt5-xmlpatterns
-Version: 5.15.4
-Release: alt2
+Version: 5.15.6
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtXmlPatterns component
@@ -16,7 +14,7 @@ Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-macros-qt5
 %if_disabled bootstrap
-BuildRequires(pre): qt5-tools
+BuildRequires: qt5-tools
 %endif
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel qt5-declarative-devel
 
@@ -67,6 +65,8 @@ Requires: libqt5-core = %_qt5_version
 %setup -qn %qt_module-everywhere-src-%version
 
 %build
+%define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+
 %qmake_qt5
 %make_build
 %if %qdoc_found
@@ -105,6 +105,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
+- new version
+
 * Tue Aug 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt2
 - build docs
 

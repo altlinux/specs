@@ -1,12 +1,12 @@
 
 %global qt_module qtdeclarative
-%def_disable bootstrap
+%def_enable bootstrap
 
 %define optflags_lto %nil
 
 Name: qt5-declarative
-Version: 5.15.4
-Release: alt2
+Version: 5.15.6
+Release: alt1
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -162,10 +162,12 @@ sed -i -E 's|MODULE_VERSION[[:space:]]+.*$|MODULE_VERSION = %version|' .qmake.co
 syncqt.pl-qt5 -version %version
 
 %build
+%define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+
 export PATH=$PWD/bin_add:$PATH
 %qmake_qt5
 %make_build
-%if_disabled bootstrap
+%if %qdoc_found
 %make docs
 %endif
 
@@ -178,7 +180,7 @@ popd
 
 %install
 %install_qt5
-%if_disabled bootstrap
+%if %qdoc_found
 %make INSTALL_ROOT=%buildroot install_docs ||:
 %endif
 
@@ -208,7 +210,7 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 
 
 %files doc
-%if_disabled bootstrap
+%if %qdoc_found
 %_qt5_docdir/*
 %endif
 %_qt5_examplesdir/*
@@ -285,6 +287,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
+- new version
+
 * Tue Aug 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt2
 - build docs
 

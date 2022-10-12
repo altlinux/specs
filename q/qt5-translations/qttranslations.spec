@@ -2,7 +2,7 @@
 %global qt_module qttranslations
 
 Name: qt5-translations
-Version: 5.15.4
+Version: 5.15.6
 Release: alt1
 
 Group: System/Libraries
@@ -11,6 +11,7 @@ Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 BuildArch: noarch
+Requires: qt5-base-common
 
 Source: %qt_module-everywhere-src-%version.tar
 
@@ -44,6 +45,9 @@ done
 %files -f %name.lang
 
 %changelog
+* Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
+- new version
+
 * Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
 - new version
 

@@ -3,7 +3,7 @@
 %define major 5
 
 Name: qt5-webglplugin
-Version: 5.15.4
+Version: 5.15.6
 Release: alt1
 
 Group: System/Libraries
@@ -71,6 +71,7 @@ Requires: libqt5-core = %_qt5_version
 
 %prep
 %setup -qn %qt_module-everywhere-src-%version
+syncqt.pl-qt5 -version %version
 
 %build
 %qmake_qt5
@@ -88,6 +89,9 @@ Requires: libqt5-core = %_qt5_version
 %_qt5_libdir/cmake/Qt%{major}Gui/*WebGL*.cmake
 
 %changelog
+* Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
+- new version
+
 * Mon Jul 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.4-alt1
 - new version
 
