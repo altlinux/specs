@@ -1,6 +1,6 @@
 Name: lrzsz
 Version: 0.12.20
-Release: alt1.qa1
+Release: alt2
 Epoch: 1
 
 Summary: Programs for communicating over Z-, Y- & X-modem protocols.
@@ -10,6 +10,7 @@ Group: Communications
 Url: http://www.ohse.de/uwe/software/%name.html
 Source: http://www.ohse.de/uwe/releases/%name-%version.tar.bz2
 Patch: %name-%version-glibc21.patch.bz2
+Patch2: lrzsz-0.12.20.patch.bz2
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Summary(ru_RU.KOI8-R): Программы для передачи данных по протоколам Z-, Y- & X- modem.
@@ -40,6 +41,7 @@ rzsz.
 %prep
 %setup
 %patch -p1 -b .glibc21
+%patch2 -p1
 
 %build
 %configure \
@@ -57,6 +59,9 @@ rzsz.
 %_man1dir/*
 
 %changelog
+* Wed Oct 12 2022 Alexander Danilov <admsasha@altlinux.org> 1:0.12.20-alt2
+- fixes CVE-2018-10195.
+
 * Wed Apr 17 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1:0.12.20-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
