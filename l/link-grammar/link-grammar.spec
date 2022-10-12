@@ -12,8 +12,8 @@
 %define dictdir %_datadir/myspell
 
 Name: link-grammar
-Version: 5.9.1
-Release: alt1.1
+Version: 5.11.0
+Release: alt1
 
 Summary: The link grammar parsing system for Unix
 License: BSD-3-Clause and LGPL-2.1
@@ -32,6 +32,7 @@ Requires: lib%name = %version-%release
 
 BuildRequires: gcc-c++ autoconf-archive swig flex
 BuildRequires: libedit-devel libsqlite3-devel zlib-devel
+BuildRequires: libpcre2-devel
 %{?_enable_aspell:BuildRequires:libaspell-devel}
 %{?_enable_hunspell:BuildRequires:libhunspell-devel}
 %{?_enable_perl:BuildRequires: perl-devel}
@@ -68,6 +69,7 @@ Perl bindings for %name library.
 
 %build
 %autoreconf
+%add_optflags %(getconf LFS_CFLAGS)
 %configure \
 	%{subst_enable static} \
 	--with-hunspell-dictdir=%dictdir \
@@ -106,6 +108,12 @@ Perl bindings for %name library.
 %endif
 
 %changelog
+* Wed Oct 12 2022 Yuri N. Sedunov <aris@altlinux.org> 5.11.0-alt1
+- 5.11.0
+
+* Fri Jul 01 2022 Yuri N. Sedunov <aris@altlinux.org> 5.10.5-alt1
+- 5.10.5
+
 * Fri Aug 27 2021 Yuri N. Sedunov <aris@altlinux.org> 5.9.1-alt1.1
 - disabled build of static libraries
 
