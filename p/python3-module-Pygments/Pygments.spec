@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname Pygments
+%define pypi_name Pygments
 
 %def_with check
 
 Name: python3-module-Pygments
-Version: 2.12.0
+Version: 2.13.0
 Release: alt1
 
 Summary: Pygments is a syntax highlighting package written in Python
@@ -12,6 +12,7 @@ Summary: Pygments is a syntax highlighting package written in Python
 License: BSD
 Group: Development/Python3
 Url: https://pygments.org/
+VCS: https://github.com/pygments/pygments.git
 
 BuildArch: noarch
 
@@ -21,16 +22,19 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 BuildRequires: python3(lxml)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 %endif
 
 # PEP503 normalized name
 Provides: python3-module-pygments = %EVR
+# PyPI well known name
+%py3_provides %pypi_name
 
 %description
 It is a generic syntax highlighter for general use in all kinds of
@@ -47,10 +51,10 @@ to prettify source code. Highlights are:
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 mv %buildroot%_bindir/pygmentize %buildroot%_bindir/pygmentize3
 ln -s pygmentize3 %buildroot%_bindir/pygmentize.py3
 
@@ -58,19 +62,19 @@ ln -s pygmentize3 %buildroot%_bindir/pygmentize.py3
 rm -fv %buildroot%python3_sitelibdir/pygments/sphinxext.py
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%tox_check_pyproject -- -vra
 
 %files
 %doc LICENSE
 %_bindir/pygmentize3
 %_bindir/pygmentize.py3
 %python3_sitelibdir/pygments/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 2.13.0-alt1
+- 2.12.0 -> 2.13.0.
+
 * Tue Jun 21 2022 Fr. Br. George <george@altlinux.org> 2.12.0-alt1
 - 2.11.2 -> 2.12.0
 
