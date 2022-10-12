@@ -87,7 +87,7 @@
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -363,8 +363,13 @@ Mesa-based DRI drivers
 
 %meson_build -v
 
+if [ -x %_bindir/rst2html ]; then
+	RST2HTML=rst2html
+else
+	RST2HTML=rst2html.py
+fi
 for i in $(seq 0 %ver_minor); do
-	rst2html %_builddir/%name-%version/docs/relnotes/%ver_major.$i.rst %_builddir/%name-%version/%ver_major.$i.html
+	$RST2HTML %_builddir/%name-%version/docs/relnotes/%ver_major.$i.rst %_builddir/%name-%version/%ver_major.$i.html
 done
 
 %install
@@ -589,6 +594,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Wed Oct 12 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.2.1-alt2
+- fixed build docs
+
 * Tue Oct 11 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.2.1-alt1
 - 22.2.1
 
