@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname paramiko
+%define pypi_name paramiko
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.8.1
+Name: python3-module-%pypi_name
+Version: 2.11.0
 Release: alt1
 
 Summary: SSH2 protocol for python
@@ -18,16 +18,24 @@ Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
+# deps
+BuildRequires: python3(six)
 BuildRequires: python3(bcrypt)
 BuildRequires: python3(cryptography)
+BuildRequires: python3(nacl)
+
+# extras
 BuildRequires: python3(gssapi)
-BuildRequires: python3(invoke)
 BuildRequires: python3(pyasn1)
+BuildRequires: python3(invoke)
+
 BuildRequires: python3(k5test)
 BuildRequires: python3(mock)
-BuildRequires: python3(nacl)
-BuildRequires: python3(tox)
 %endif
 
 BuildArch: noarch
@@ -42,27 +50,24 @@ entirely in python (no C or platform-dependent code).
 %patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands =
-    {envpython} -m pytest {posargs:-vra}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vv -r -- -v -ra
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc README.rst LICENSE
 %python3_sitelibdir/paramiko/
-%python3_sitelibdir/paramiko-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 2.11.0-alt1
+- 2.8.1 -> 2.11.0 (fixes: CVE-2022-24302).
+
 * Thu Dec 02 2021 Stanislav Levin <slev@altlinux.org> 2.8.1-alt1
 - 2.7.2 -> 2.8.1.
 

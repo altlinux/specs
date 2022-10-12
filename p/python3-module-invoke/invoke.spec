@@ -1,9 +1,9 @@
 %define _unpackaged_files_terminate_build 1
-%define oname invoke
+%define pypi_name invoke
 
-Name: python3-module-%oname
-Version: 1.6.0
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 1.7.3
+Release: alt1
 
 Summary: Simple Python task execution
 License: BSD-2-Clause
@@ -16,6 +16,10 @@ Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %py3_requires lexicon
 %py3_requires six
@@ -30,30 +34,28 @@ feature set.
 %setup
 %autopatch -p1
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
-    $(find ./ -name '*.py')
-
-# remove some vendored stuff
-rm -r invoke/vendor/yaml{2,3}
-rm -r invoke/vendor/lexicon
-rm invoke/vendor/six.py
-rm invoke/vendor/decorator.py
-
-find . -name '*.py' | xargs sed -i \
-   -e 's|from invoke\.vendor\.six\(.*\) import |from six\1 import |g'
+# drop everything except fluidity (not packaged (unmaintained))
+find invoke/vendor/ \
+    -mindepth 1 -maxdepth 1 \
+    \( ! \( -name '__init__.py' -type f \) -a ! \( -name 'fluidity' -type d \) \) \
+    -exec rm -rfv '{}' +
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc *.rst
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/invoke/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 1.7.3-alt1
+- 1.6.0 -> 1.7.3.
+
 * Mon Jul 19 2021 Stanislav Levin <slev@altlinux.org> 1.6.0-alt2
 - Restored back runtime dep on lexicon.
 
