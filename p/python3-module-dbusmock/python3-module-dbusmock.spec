@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-dbusmock
-Version: 0.28.4
+Version: 0.28.6
 Release: alt1
 
 Summary: mock D-Bus objects for tests
@@ -18,7 +18,8 @@ BuildArch: noarch
 Requires: dbus
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-wheel
 %if_enabled check
 BuildRequires: /proc dbus-tools-gui %_bindir/notify-send %_bindir/nmcli upower bluez
 BuildRequires: polkit iio-sensor-proxy notification-daemon
@@ -54,6 +55,9 @@ See %_docdir/%name-%version/README.rst for more information.
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Wed Oct 12 2022 Yuri N. Sedunov <aris@altlinux.org> 0.28.6-alt1
+- 0.28.6
+
 * Wed Jul 20 2022 Yuri N. Sedunov <aris@altlinux.org> 0.28.4-alt1
 - 0.28.4
 - ported to %%pyproject macros
