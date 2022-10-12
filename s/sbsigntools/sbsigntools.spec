@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: sbsigntools
 Version: 0.9.4
-Release: alt1
+Release: alt2
 Summary: Signing utility for UEFI secure boot
 License: GPL-3.0-or-later
 Url: https://git.kernel.org/pub/scm/linux/kernel/git/jejb/sbsigntools.git
@@ -23,12 +24,13 @@ BuildRequires: openssl
 BuildRequires: openssl-devel
 
 %description
-Tools to add signatures to EFI binaries and Drivers.
+Tools to add signatures to EFI binaries and drivers.
 
 %prep
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure
 %make_build
@@ -50,5 +52,8 @@ Tools to add signatures to EFI binaries and Drivers.
 %_man1dir/*.1*
 
 %changelog
+* Wed Oct 12 2022 Vitaly Chikunov <vt@altlinux.org> 0.9.4-alt2
+- Update to v0.9.4-3-g25af2eb5 (2021-06-04).
+
 * Sat Feb 13 2021 Vitaly Chikunov <vt@altlinux.org> 0.9.4-alt1
 - First import of v0.9.4 (2020-06-11) + update (2020-08-12).
