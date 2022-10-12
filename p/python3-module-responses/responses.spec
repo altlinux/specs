@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.21.0
+Version: 0.22.0
 Release: alt1
 
 Summary: A utility library for mocking out the requests Python library
@@ -28,10 +28,11 @@ BuildRequires: python3(wheel)
 %if_with check
 # deps
 BuildRequires: python3(requests)
+BuildRequires: python3(toml)
 
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest-asyncio)
-BuildRequires: python3(pytest-localserver)
+BuildRequires: python3(pytest_httpserver)
 %endif
 
 %description
@@ -58,6 +59,9 @@ rm -r %buildroot%python3_sitelibdir/responses/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 12 2022 Stanislav Levin <slev@altlinux.org> 0.22.0-alt1
+- 0.21.0 -> 0.22.0.
+
 * Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 0.21.0-alt1
 - 0.12.0 -> 0.21.0.
 
