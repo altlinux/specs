@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Needs.pm)
 # END SourceDeps(oneline)
 %define dist HTTP-Message
 Name: perl-%dist
-Version: 6.38
+Version: 6.39
 Release: alt1
 
 Summary: HTTP style messages
@@ -12,7 +12,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/O/OA/OALDERS/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/S/SI/SIMBABQUE/%{dist}-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
 
@@ -39,6 +39,9 @@ The following methods are available:
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Wed Oct 12 2022 Igor Vlasenko <viy@altlinux.org> 6.39-alt1
+- automated CPAN update
+
 * Sat Oct 08 2022 Igor Vlasenko <viy@altlinux.org> 6.38-alt1
 - automated CPAN update
 
