@@ -4,7 +4,7 @@
 
 %global import_path github.com/xtaci/kcptun
 Name:     kcptun
-Version:  20220628
+Version:  20221008
 Release:  alt1
 
 Summary:  A Stable & Secure Tunnel based on KCP with N:M multiplexing and FEC
@@ -75,6 +75,10 @@ install -m0640 .gear/*.json  %buildroot%_sysconfdir/%name
 %_unitdir/*.service
 
 %changelog
+* Wed Oct 12 2022 Vitaly Chikunov <vt@altlinux.org> 20221008-alt1
+- Update to v20221008:
+  + Add multi-port support.
+
 * Sat Aug 20 2022 Vitaly Chikunov <vt@altlinux.org> 20220628-alt1
 - Update to v20220628.
 
