@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: usbredir
-Version: 0.12.0
+Version: 0.13.0
 Release: alt1
 Summary: USB network redirection protocol libraries
 Group: System/Libraries
@@ -60,14 +60,15 @@ Requires: lib%name = %version-%release
 The lib%name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package server
-Summary: Simple usb-host tcp server
+%package tools
+Summary: usbredir utility tools
 Group: Networking/Other
 License: GPLv2+
 Requires: lib%name = %version-%release
 
-%description server
-A simple usb-host tcp server, using libusbredirhost.
+%description tools
+Includes usbredirect that uses libusbredirhost to export an USB device for use
+in another (virtual) machine
 
 %prep
 %setup
@@ -89,13 +90,17 @@ A simple usb-host tcp server, using libusbredirhost.
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
-%files server
+%files tools
 %_bindir/usbredirect
-%_sbindir/usbredirserver
 %_man1dir/usbredirect.1*
-%_man1dir/usbredirserver.*
 
 %changelog
+* Thu Oct 13 2022 Alexey Shabalin <shaba@altlinux.org> 0.13.0-alt1
+- new version 0.13.0
+  Release 0.13.0 drops usbredirserver binary so we now have renamed
+  usbredir-server pacakge to usbredir-tools which is more befitting what it
+  contains
+
 * Thu Dec 02 2021 Alexey Shabalin <shaba@altlinux.org> 0.12.0-alt1
 - new version 0.12.0
 
