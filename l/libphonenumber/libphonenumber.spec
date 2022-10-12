@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: libphonenumber
-Version: 8.12.55
+Version: 8.12.57
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -23,6 +23,7 @@ BuildRequires: protobuf-compiler
 BuildRequires: libprotobuf-devel
 # required libabseil-cpp built with -DCMAKE_POSITION_INDEPENDENT_CODE=ON
 BuildRequires: libabseil-cpp-devel >= 20211102.0-alt3
+BuildRequires: /usr/bin/java /proc
 %{?_enable_check:BuildRequires: ctest libgtest-devel}
 
 %description
@@ -68,6 +69,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name.so
 
 %changelog
+* Wed Oct 12 2022 Yuri N. Sedunov <aris@altlinux.org> 8.12.57-alt1
+- 8.12.57
+
 * Sat Sep 10 2022 Yuri N. Sedunov <aris@altlinux.org> 8.12.55-alt1
 - 8.12.55
 
