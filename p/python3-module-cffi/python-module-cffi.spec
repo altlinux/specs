@@ -1,29 +1,33 @@
 %define _unpackaged_files_terminate_build 1
-%define modulename cffi
+%define pypi_name cffi
 
 %def_with check
 
-Name: python3-module-cffi
-Version: 1.15.0
+Name: python3-module-%pypi_name
+Version: 1.15.1
 Release: alt1
 
 Summary: Foreign Function Interface for Python calling C code
 
 Group: Development/Python3
 License: MIT
-Url: https://pypi.org/project/%modulename/
+Url: https://pypi.org/project/%pypi_name/
 
-Source: https://files.pythonhosted.org/packages/00/9e/92de7e1217ccc3d5f352ba21e52398372525765b2e0c4530e6eb2ba9282a/%modulename-%version.tar.gz
+Source: %pypi_name-%version.tar
 Patch: cffi-0.8.6-alt-link.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 BuildRequires: libffi-devel
 
 %if_with check
 BuildRequires: gcc-c++
 BuildRequires: python3(pycparser)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
 %endif
 
 %py3_requires pycparser
@@ -32,32 +36,30 @@ BuildRequires: python3(tox)
 Foreign Function Interface for Python calling C code.
 
 %prep
-%setup -n %modulename-%version
+%setup -n %pypi_name-%version
 %patch -p2
 
 %build
 %add_optflags -fno-strict-aliasing
 
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-commands = {envpython} -m pytest {posargs:.}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %python3_sitelibdir/_cffi_backend.cpython-%{python_version_nodots python3}.so
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/cffi/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 1.15.1-alt1
+- 1.15.0 -> 1.15.1.
+
 * Mon Dec 13 2021 Egor Ignatov <egori@altlinux.org> 1.15.0-alt1
 - 1.14.5 -> 1.15.0.
 
