@@ -3,7 +3,7 @@
 
 Name: qt5-virtualkeyboard
 Version: 5.15.6
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtQuick virtual keyboard component
@@ -61,6 +61,7 @@ This package contains documentation for Qt5 %qt_module
 %package -n libqt5-virtualkeyboard
 Summary: Qt5 library
 Group: System/Libraries
+Requires: libqt5-core = %_qt5_version
 Requires: %name-common = %EVR
 %description -n libqt5-virtualkeyboard
 %summary
@@ -68,6 +69,7 @@ Requires: %name-common = %EVR
 %package -n libqt5-hunspellinputmethod
 Summary: Qt5 library
 Group: System/Libraries
+Requires: libqt5-core = %_qt5_version
 Requires: %name-common = %EVR
 %description -n libqt5-hunspellinputmethod
 %summary
@@ -122,6 +124,9 @@ export QT_HASH_SEED=0
 %_qt5_libdir/libQt?HunspellInputMethod.so.*
 
 %changelog
+* Thu Oct 13 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt2
+- fix requires
+
 * Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
 - new version
 
