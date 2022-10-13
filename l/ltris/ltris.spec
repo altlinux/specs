@@ -1,5 +1,5 @@
 Name: ltris
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 Serial: 1
 
@@ -80,6 +80,9 @@ sed -i -e 's,^Icon=.*,Icon=%name,' %buildroot%_desktopdir/%name.desktop
 %_liconsdir/%name.xpm
 
 %changelog
+* Fri Oct 14 2022 Ilya Mashkin <oddity@altlinux.ru> 1:1.2.6-alt1
+- 1.2.6
+
 * Wed Jun 22 2022 Ilya Mashkin <oddity@altlinux.ru> 1:1.2.5-alt1
 - 1.2.5
 
