@@ -19,7 +19,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -36,7 +36,9 @@ BuildRequires: meson gcc-c++ orc nasm liborc-devel
 BuildRequires: bzlib-devel gst-plugins%api_ver-devel >= %version
 BuildRequires: libSM-devel libXdamage-devel libXext-devel libXfixes-devel
 BuildRequires: libXv-devel libavc1394-devel libcairo-devel libdv-devel libflac-devel libiec61883-devel libjpeg-devel
-BuildRequires: libshout2-devel libsoup-devel libtag-devel libv4l-devel libwavpack-devel
+BuildRequires: libshout2-devel libtag-devel libv4l-devel libwavpack-devel
+BuildRequires: libsoup-devel
+BuildRequires: libsoup3.0-devel
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel zlib-devel libvpx-devel
 BuildRequires: libmpg123-devel liblame-devel libtwolame-devel
@@ -109,6 +111,9 @@ This package contains development documentation for GStreamer Good Plugins
 %endif
 
 %changelog
+* Thu Oct 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.4-alt1
+- 1.20.4
+
 * Thu Jun 16 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.3-alt1
 - 1.20.3
 
