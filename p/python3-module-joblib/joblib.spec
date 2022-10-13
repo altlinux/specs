@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: Lightweight pipelining: using Python functions as pipeline jobs
 License: BSD
@@ -92,6 +92,9 @@ sed -i \
 %exclude %python3_sitelibdir/joblib/__pycache__/test*
 
 %changelog
+* Thu Oct 13 2022 Stanislav Levin <slev@altlinux.org> 1.2.0-alt2
+- Fixed build without check.
+
 * Tue Sep 20 2022 Stanislav Levin <slev@altlinux.org> 1.2.0-alt1
 - 1.1.0 -> 1.2.0.
 
