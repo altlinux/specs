@@ -11,7 +11,7 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-%global llvm_version 13.0
+%global llvm_version 14.0
 %global gcc_version %nil
 #set_gcc_version %gcc_version
 
@@ -30,8 +30,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        102.0.5005.61
-Release:        alt2
+Version:        106.0.5249.103
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -76,13 +76,12 @@ Patch007: 0007-ALT-allow-to-override-clang-through-env-variables.patch
 Patch008: 0008-ALT-Hack-to-avoid-build-error-with-clang7.patch
 Patch009: 0009-ALT-disable-asm-on-x86-in-dav1d.patch
 Patch010: 0010-Move-offending-function-to-chromeos-only.patch
-Patch011: 0011-ALT-Disable-NOMERGE-attribute.patch
-Patch012: 0012-FEDORA-bootstrap-with-python3.patch
-Patch013: 0013-sql-make-VirtualCursor-standard-layout-type.patch
-Patch014: 0014-IWYU-add-cstring-for-std-strlen-in-fenced_frame_util.patch
-Patch015: 0015-IWYU-add-utility-for-std-exchange.patch
-Patch016: 0016-GENTOO-Fix-instantiating-fold-expression-error.patch
-Patch017: 0017-Handle-kioslaverc-config-located-in-XDG_CONFIG_DIRS.patch
+Patch011: 0011-FEDORA-bootstrap-with-python3.patch
+Patch012: 0012-sql-make-VirtualCursor-standard-layout-type.patch
+Patch013: 0013-GENTOO-Fix-instantiating-fold-expression-error.patch
+Patch014: 0014-ALT-Do-not-mix-internal-and-system-wayland.patch
+Patch015: 0015-Fix-some-style-issues-in-AutofillPopupViewPtr.patch
+Patch016: 0016-IWYU-add-cmath-for-std-isnan-and-std-isinf.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -227,6 +226,10 @@ sed -i '1i#define PROCESSOR_TYPE -1\
 #define PROC_TYPE_I386 1' third_party/boringssl/src/include/WinCryptEx.h 
 %endif
 
+rm -rf -- \
+	third_party/wayland/src \
+	third_party/wayland/include
+
 %build
 %if_enabled clang
 export ALTWRAP_LLVM_VERSION="%llvm_version"
@@ -282,6 +285,9 @@ gn_arg system_libdir=\"%_lib\"
 gn_arg use_allocator=\"none\"
 gn_arg use_icf=false
 gn_arg enable_js_type_check=false
+gn_arg use_xkbcommon=true
+gn_arg use_system_libdrm=true
+gn_arg use_system_minigbm=true
 gn_arg use_system_libwayland=true
 gn_arg use_system_wayland_scanner=true
 gn_arg use_bundled_weston=false
@@ -497,7 +503,83 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Oct 13 2022 Fr. Br. George <george@altlinux.org> 106.0.5249.103-alt1
+- GOST version
+
+* Mon Oct 10 2022 Alexey Gladkov <legion@altlinux.ru> 106.0.5249.103-alt1
+- New version (106.0.5249.103).
+- Security fixes:
+  - CVE-2022-3370: Use after free in Custom Elements.
+  - CVE-2022-3373: Out of bounds write in V8.
+
+* Wed Sep 28 2022 Alexey Gladkov <legion@altlinux.ru> 106.0.5249.61-alt1
+- New version (106.0.5249.61).
+- Security fixes:
+  - CVE-2022-3201: Insufficient validation of untrusted input in Developer Tools.
+  - CVE-2022-3304: Use after free in CSS.
+  - CVE-2022-3305: Use after free in Survey.
+  - CVE-2022-3306: Use after free in Survey.
+  - CVE-2022-3307: Use after free in Media.
+  - CVE-2022-3308: Insufficient policy enforcement in Developer Tools.
+  - CVE-2022-3309: Use after free in Assistant.
+  - CVE-2022-3310: Insufficient policy enforcement in Custom Tabs.
+  - CVE-2022-3311: Use after free in Import.
+  - CVE-2022-3312: Insufficient validation of untrusted input in VPN.
+  - CVE-2022-3313: Incorrect security UI in Full Screen.
+  - CVE-2022-3314: Use after free in Logging.
+  - CVE-2022-3315: Type confusion in Blink.
+  - CVE-2022-3316: Insufficient validation of untrusted input in Safe Browsing.
+  - CVE-2022-3317: Insufficient validation of untrusted input in Intents.
+  - CVE-2022-3318: Use after free in ChromeOS Notifications.
+
+* Mon Sep 05 2022 Alexey Gladkov <legion@altlinux.ru> 105.0.5195.102-alt1
+- New version (105.0.5195.102).
+- Security fixes:
+  - CVE-2022-3075: Insufficient data validation in Mojo.
+
+* Thu Sep 01 2022 Alexey Gladkov <legion@altlinux.ru> 105.0.5195.52-alt1
+- New version (105.0.5195.52).
+- Security fixes:
+  - CVE-2022-3038: Use after free in Network Service.
+  - CVE-2022-3039: Use after free in WebSQL.
+  - CVE-2022-3040: Use after free in Layout.
+  - CVE-2022-3041: Use after free in WebSQL.
+  - CVE-2022-3042: Use after free in PhoneHub.
+  - CVE-2022-3043: Heap buffer overflow in Screen Capture.
+  - CVE-2022-3044: Inappropriate implementation in Site Isolation.
+  - CVE-2022-3045: Insufficient validation of untrusted input in V8.
+  - CVE-2022-3046: Use after free in Browser Tag.
+  - CVE-2022-3047: Insufficient policy enforcement in Extensions API.
+  - CVE-2022-3048: Inappropriate implementation in Chrome OS lockscreen.
+  - CVE-2022-3049: Use after free in SplitScreen.
+  - CVE-2022-3050: Heap buffer overflow in WebUI.
+  - CVE-2022-3051: Heap buffer overflow in Exosphere.
+  - CVE-2022-3052: Heap buffer overflow in Window Manager.
+  - CVE-2022-3053: Inappropriate implementation in Pointer Lock.
+  - CVE-2022-3054: Insufficient policy enforcement in DevTools.
+  - CVE-2022-3055: Use after free in Passwords.
+  - CVE-2022-3056: Insufficient policy enforcement in Content Security Policy.
+  - CVE-2022-3057: Inappropriate implementation in iframe Sandbox.
+  - CVE-2022-3058: Use after free in Sign-In Flow.
+  - CVE-2022-3071: Use after free in Tab Strip.
+
+* Sat Jun 25 2022 Alexey Gladkov <legion@altlinux.ru> 103.0.5060.53-alt1
+- New version (103.0.5060.53).
+- Security fixes:
+  - CVE-2022-2156: Use after free in Base.
+  - CVE-2022-2157: Use after free in Interest groups.
+  - CVE-2022-2158: Type Confusion in V8.
+  - CVE-2022-2160: Insufficient policy enforcement in DevTools.
+  - CVE-2022-2161: Use after free in WebApp Provider.
+  - CVE-2022-2162: Insufficient policy enforcement in File System API.
+  - CVE-2022-2163: Use after free in Cast UI and Toolbar.
+  - CVE-2022-2164: Inappropriate implementation in Extensions API.
+  - CVE-2022-2165: Insufficient data validation in URL formatting.
+
 * Wed Jun 15 2022 Slava Aseev <ptrnine@altlinux.org> 102.0.5005.61-alt2
+- Handle kioslaverc config located in XDG_CONFIG_DIRS.
+
+* Wed Jun 01 2022 Alexey Gladkov <legion@altlinux.ru> 102.0.5005.61-alt2
 - Handle kioslaverc config located in XDG_CONFIG_DIRS.
 
 * Wed Jun 01 2022 Fr. Br. George <george@altlinux.org> 102.0.5005.61-alt1
