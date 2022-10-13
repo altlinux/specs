@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        106.0.5249.103
+Version:        106.0.5249.119
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -464,6 +464,16 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Oct 13 2022 Alexey Gladkov <legion@altlinux.ru> 106.0.5249.119-alt1
+- New version (106.0.5249.119).
+- Security fixes:
+  - CVE-2022-3445: Use after free in Skia.
+  - CVE-2022-3446: Heap buffer overflow in WebSQL.
+  - CVE-2022-3447: Inappropriate implementation in Custom Tabs.
+  - CVE-2022-3448: Use after free in Permissions API.
+  - CVE-2022-3449: Use after free in Safe Browsing.
+  - CVE-2022-3450: Use after free in Peer Connection.
+
 * Mon Oct 10 2022 Alexey Gladkov <legion@altlinux.ru> 106.0.5249.103-alt1
 - New version (106.0.5249.103).
 - Security fixes:
