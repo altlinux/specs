@@ -3,7 +3,7 @@
 
 Name: qt6-virtualkeyboard
 Version: 6.2.4
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt6 - QtQuick virtual keyboard component
@@ -60,6 +60,7 @@ This package contains documentation for Qt6 %qt_module
 Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common = %EVR
+Requires: libqt6-core = %_qt6_version
 %description -n libqt6-virtualkeyboard
 %summary
 
@@ -67,6 +68,7 @@ Requires: %name-common = %EVR
 Summary: Qt6 library
 Group: System/Libraries
 Requires: %name-common = %EVR
+Requires: libqt6-core = %_qt6_version
 %description -n libqt6-hunspellinputmethod
 %summary
 
@@ -135,5 +137,8 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 %_qt6_libdir/libQt?HunspellInputMethod.so.*
 
 %changelog
+* Thu Oct 13 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
+- fix requires
+
 * Tue Jun 07 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - initial build
