@@ -1,25 +1,27 @@
-%define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
-
 %global qt_module qtshadertools
-%def_enable bootstrap
 
 Name: qt6-shadertools
 Version: 6.2.4
-Release: alt1
+Release: alt2
+%if "%version" == "%_qt6_version"
+%def_disable need_bootstrap
+%else
+%def_enable need_bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt6 - QtShaderTools component
 Url: http://qt.io/
-License: GPL-3.0
+License: GPL-3.0-or-later
 
 Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-macros-qt6
-BuildRequires: cmake gcc-c++ glibc-devel qt6-base-devel
-BuildRequires: glslang libGLU-devel libxkbcommon-devel
-%if_disabled bootstrap
+%if_disabled need_bootstrap
 BuildRequires: qt6-tools
 %endif
+BuildRequires: cmake gcc-c++ glibc-devel qt6-base-devel
+BuildRequires: glslang libGLU-devel libxkbcommon-devel
 
 %description
 APIs and tools in this module provide the producer functionality for the shader pipeline
@@ -68,19 +70,17 @@ Requires: libqt6-core = %_qt6_version
 %setup -n %qt_module-everywhere-src-%version
 
 %build
+%define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
+
 %Q6build
-%if_disabled bootstrap
 %if %qdoc_found
 %make -C BUILD docs
-%endif
 %endif
 
 %install
 %Q6install_qt
-%if_disabled bootstrap
 %if %qdoc_found
 %make -C BUILD DESTDIR=%buildroot install_docs ||:
-%endif
 %endif
 
 %files common
@@ -103,14 +103,15 @@ Requires: libqt6-core = %_qt6_version
 %_qt6_libdir/metatypes/qt*.json
 
 %files doc
-%if_disabled bootstrap
 %if %qdoc_found
 %_qt6_docdir/*
-%endif
 %endif
 #%_qt6_examplesdir/*
 
 %changelog
+* Thu Oct 13 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
+- add automatic package bootstrap mode
+
 * Wed May 25 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt1
 - new version
 
