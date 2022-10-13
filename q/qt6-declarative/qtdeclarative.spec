@@ -7,7 +7,7 @@
 
 Name: qt6-declarative
 Version: 6.2.4
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt6 - QtDeclarative component
@@ -310,11 +310,11 @@ popd
 
 #install rpm-build-qml
 pushd src/rpm-build-qml
-%if FIXME
+
+# FIXME rpmbqml-qmlinfo
 ln -s /bin/true %buildroot/%_bindir/rpmbqml6-qmlinfo
-%else
-install -pD -m755 rpmbqml-qmlinfo %buildroot/%_bindir/rpmbqml6-qmlinfo
-%endif
+#install -pD -m755 rpmbqml-qmlinfo %buildroot/%_bindir/rpmbqml6-qmlinfo
+# end FIXME
 install -pD -m755 rpmbqml6-prov-enum.pl %buildroot/%_bindir/rpmbqml6-prov-enum.pl
 install -pD -m755 qml6.prov %buildroot/%_rpmlibdir/qml6.prov
 install -pD -m755 qml6.prov.files %buildroot/%_rpmlibdir/qml6.prov.files
@@ -426,6 +426,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Thu Oct 13 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt3
+- fix prov/req names
+
 * Thu Jul 14 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
 - fix build requires for rpm-build-qml6
 
