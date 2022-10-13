@@ -2,7 +2,7 @@
 
 %define _name gcr
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.92
+%define ver_major 4.0
 %define gcr_api_ver 4
 %define gck_api_ver 2
 
@@ -132,8 +132,7 @@ This package contains development documentation for GCR libraries.
 %find_lang %_name-%gcr_api_ver
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-xvfb-run %__meson_test -t 2
+xvfb-run %__meson_test -t 3
 
 %files -f %_name-%gcr_api_ver.lang
 %{?_enable_gtk4:%_bindir/%_name-viewer-gtk4}
@@ -178,6 +177,9 @@ xvfb-run %__meson_test -t 2
 %_vapidir/%_name-%gcr_api_ver.vapi
 
 %changelog
+* Wed Oct 12 2022 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
+- 4.0.0
+
 * Mon Sep 05 2022 Yuri N. Sedunov <aris@altlinux.org> 3.92.0-alt1
 - 3.92.0
 - enabled ssh-agent binary
