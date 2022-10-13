@@ -2,11 +2,11 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.3
+%define _dotnet_corerelease 6.0.7
 # used for build
-%define _dotnet_sdkrelease 6.0.103
+%define _dotnet_sdkrelease 6.0.107
 %define preview %nil
-%define _dotnet_sdkshortrelease 6.0.103%preview
+%define _dotnet_sdkshortrelease 6.0.107%preview
 
 %define commithash %version-%release
 
@@ -20,8 +20,8 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 6.0.3%preview
-Release: alt2
+Version: 6.0.7%preview
+Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
 
@@ -69,7 +69,7 @@ Requires: libssl >= 1.1
 BuildRequires: dotnet-bootstrap-sdk-%_dotnet_major = %_dotnet_sdkshortrelease
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 %else
-BuildRequires: dotnet
+BuildRequires: dotnet-%_dotnet_major
 %define bootstrapdir %_dotnetdir
 %endif
 
@@ -375,6 +375,13 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Fri Aug 05 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.7-alt1
+- .NET 6.0.7
+- CVE-2022-30184: .NET Information Disclosure Vulnerability
+- CVE-2022-29117: .NET Denial of Service Vulnerability
+- CVE-2022-29145: .NET Denial of Service Vulnerability
+- CVE-2022-23267: .NET Denial of Service Vulnerability
+
 * Tue Apr 12 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.3-alt2
 - provide dotnet package (as recommended dotnet package)
 

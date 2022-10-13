@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.3
-%define _dotnet_aspnetcorerelease 6.0.3
-%define _dotnet_aspnetcoreapprefrelease 6.0.3
+%define _dotnet_corerelease 6.0.7
+%define _dotnet_aspnetcorerelease 6.0.7
+%define _dotnet_aspnetcoreapprefrelease 6.0.7
 %define preview %nil
-%define _dotnet_coreshortrelease 6.0.3%preview
+%define _dotnet_coreshortrelease 6.0.7%preview
 
 # FIXME: build from sources
 %def_with bootstrap
 
 Name: dotnet-aspnetcore-%_dotnet_major
-Version: 6.0.3%preview
+Version: 6.0.7%preview
 Release: alt1
 
 Summary: ASP.NET is a cross-platform .NET framework for building modern cloud-based web application
@@ -130,6 +130,9 @@ cp -a %bootstrapdir/packs/Microsoft.AspNetCore.App.Ref/%_dotnet_aspnetcoreappref
 %_dotnet_aspnetcoreappref/
 
 %changelog
+* Fri Aug 05 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.7-alt1
+- ASP.NET 6.0.7
+
 * Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.3-alt1
 - ASP.NET 6.0.3
 

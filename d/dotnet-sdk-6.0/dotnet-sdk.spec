@@ -1,22 +1,23 @@
 # TODO: build from sources
 %define _unpackaged_files_terminate_build 1
 %def_disable netstandart
+%def_enable dotnet_host
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.3
+%define _dotnet_corerelease 6.0.7
 %define _dotnet_sdkmanifestsrelease 6.0.100
-%define _dotnet_sdkrelease 6.0.103
-%define _dotnet_templatesrelease 6.0.3
-%define _dotnet_coreapprefrelease 6.0.3
+%define _dotnet_sdkrelease 6.0.107
+%define _dotnet_templatesrelease 6.0.7
+%define _dotnet_coreapprefrelease 6.0.7
 %define _dotnet_netstandartrelease 2.1.0
 %define preview %nil
-%define _dotnet_coreshortrelease 6.0.3%preview
-%define _dotnet_sdkshortrelease 6.0.103%preview
+%define _dotnet_coreshortrelease 6.0.7%preview
+%define _dotnet_sdkshortrelease 6.0.107%preview
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 6.0.103%preview
+Version: 6.0.107%preview
 Release: alt1
 
 Summary: SDK for the .NET
@@ -54,6 +55,11 @@ Requires: dotnet-common
 
 AutoReq: yes,nomingw32,nomingw64,nomono,nomonolib
 AutoProv: no
+
+%if_enabled dotnet_host
+Provides: dotnet-sdk = %EVR
+%endif
+
 
 %description
 SDK for the .NET runtime and libraries.
@@ -137,6 +143,10 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Fri Aug 05 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.107-alt1
+- .NET SDK 6.0.107
+- provide dotnet package (as recommended dotnet package)
+
 * Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.103-alt1
 - .NET SDK 6.0.103
 
