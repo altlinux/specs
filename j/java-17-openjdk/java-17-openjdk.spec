@@ -293,7 +293,7 @@
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
 %global top_level_dir_name_backup %{top_level_dir_name}-backup
-%global rpmrelease      1
+%global rpmrelease      2
 # Priority must be 8 digits in total; up to openjdk 1.8, we were using 18..... so when we moved to 11, we had to add another digit
 %if %is_system_jdk
 # Using 10 digits may overflow the int used for priority, so we combine the patch and build versions
@@ -1052,6 +1052,12 @@ export NUM_PROC=${NUM_PROC:-1}
 %if 0%{?_smp_ncpus_max}
 # Honor %%_smp_ncpus_max
 [ ${NUM_PROC} -gt %{?_smp_ncpus_max} ] && export NUM_PROC=%{?_smp_ncpus_max}
+%endif
+
+%add_optflags -fPIC
+%ifarch %ix86
+%add_optflags -msse2 -mfpmath=sse
+%set_verify_elf_method textrel=relaxed
 %endif
 
 %ifarch s390x sparc64 alpha %{power64} %{aarch64}
@@ -2016,6 +2022,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 13 2022 Andrey Cherepanov <cas@altlinux.org> 0:17.0.4.1.1-alt2
+- Fixed build on i586.
+
 * Tue Oct 04 2022 Andrey Cherepanov <cas@altlinux.org> 0:17.0.4.1.1-alt1
 - New version.
 
