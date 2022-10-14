@@ -1,5 +1,5 @@
 Name: i3
-Version: 4.20.1
+Version: 4.21
 Release: alt1
 
 Summary: I3 window manager
@@ -17,7 +17,7 @@ Packager: %packager
 Requires: dmenu
 
 # Automatically added by buildreq on Tue Mar 03 2015
-BuildRequires: libev-devel libpango-devel libpcre-devel libstartup-notification-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libxkbcommon-x11-devel libyajl-devel libxcbutil-xrm-devel xmlto asciidoc meson ninja-build
+BuildRequires: libev-devel libpango-devel libpcre2-devel libstartup-notification-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libxkbcommon-x11-devel libyajl-devel libxcbutil-xrm-devel xmlto asciidoc meson ninja-build
 
 # Добавлено вручную - автоматика, увы, не находит.
 BuildRequires: perl-Pod-Parser perl-AnyEvent-I3
@@ -121,6 +121,9 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Fri Oct 14 2022 Andrey Bergman <vkni@altlinux.org> 4.21-alt1
+- Version update
+
 * Sun Feb 06 2022 Andrey Bergman <vkni@altlinux.org> 4.20.1-alt1
 - Version update
 
