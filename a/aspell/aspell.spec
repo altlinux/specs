@@ -1,6 +1,6 @@
 Name: aspell
 Version: 0.60.8
-Release: alt1
+Release: alt2
 
 Summary: An Open Source interactive spelling checker program
 License: LGPL-2.1
@@ -9,6 +9,8 @@ Url: http://%name.net/
 
 Source: http://ftp.gnu.org/gnu/%name/%name-%version.tar.gz
 Source101: %name-ispell.alternatives
+
+Patch1: CVE-2019-25051-objstack-assert-that-the-alloc-size-will-fit-within-.patch
 
 BuildRequires(pre): rpm-macros-alternatives
 BuildRequires: gcc-c++ libncursesw-devel
@@ -68,6 +70,7 @@ Static library needed to build statically linked applications with %name.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %autoreconf
@@ -124,6 +127,9 @@ rm -rf %buildroot%_libdir/%name/*.la
 %_man1dir/*.1.*
 
 %changelog
+* Fri Oct 14 2022 Alexander Danilov <admsasha@altlinux.org> 0.60.8-alt2
+- fixes CVE-2019-25051
+
 * Mon Nov 16 2020 Alexei Takaseev <taf@altlinux.org> 0.60.8-alt1
 - 0.60.8 (ALT #39290)
 - Fix License
