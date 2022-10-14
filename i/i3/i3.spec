@@ -1,6 +1,6 @@
 Name: i3
-Version: 4.19
-Release: alt2
+Version: 4.20.1
+Release: alt1
 
 Summary: I3 window manager
 License: BSD-like
@@ -121,6 +121,9 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Sun Feb 06 2022 Andrey Bergman <vkni@altlinux.org> 4.20.1-alt1
+- Version update
+
 * Sat Feb 05 2022 Andrey Bergman <vkni@altlinux.org> 4.19-alt2
 - Correct buildreq.
 
