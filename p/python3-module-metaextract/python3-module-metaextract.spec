@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.0.9
-Release: alt1
+Release: alt2
 
 Summary: Get metadata for python modules
 License: Apache-2.0
@@ -12,8 +12,6 @@ URL:     https://github.com/toabctl/metaextract
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3-module-pytest-runner
 
 BuildArch: noarch
 
@@ -42,6 +40,9 @@ too.
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Oct 14 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.9-alt2
+- NMU: Fixed build requires.
+
 * Fri Oct 14 2022 Andrey Cherepanov <cas@altlinux.org> 1.0.9-alt1
 - New version.
 
