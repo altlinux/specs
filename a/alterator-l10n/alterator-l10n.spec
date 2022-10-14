@@ -1,5 +1,5 @@
 Name: alterator-l10n
-Version: 2.9.116
+Version: 2.9.117
 Release: alt1
 
 Summary: translations for all alterator modules
@@ -120,6 +120,12 @@ make check
 %lang(da) %_datadir/alterator/help/da_DK/*.html
 
 %changelog
+* Fri Oct 14 2022 Mikhail Efremov <sem@altlinux.org> 2.9.117-alt1
+- alterator-datetime: Update translation.
+- tzone: Update from tzdata-2022d.
+- tzone_extract: Use zone1970.tab.
+- tzone_extract: Add region names for translation.
+
 * Tue Jul 26 2022 Oleg Solovyov <mcpain@altlinux.org> 2.9.116-alt1
 - alterator-vm: translation for new profile
 

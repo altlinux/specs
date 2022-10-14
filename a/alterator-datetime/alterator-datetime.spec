@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 4.7.2
+Version: 4.8.0
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
@@ -16,7 +16,7 @@ License: GPL
 Group: System/Configuration/Other
 Requires: alterator >= 5.2-alt1 alterator-sh-functions >= 0.6-alt5
 Requires: alterator-service-functions >= 2.0.0-alt1
-Requires: alterator-l10n >= 1.5-alt5
+Requires: alterator-l10n >= 2.9.117-alt1
 Requires: ntp-server glibc-timezones
 Conflicts: alterator-lookout < 2.7
 Conflicts: alterator-standalone < 7.4
@@ -71,6 +71,13 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Fri Oct 14 2022 Mikhail Efremov <sem@altlinux.org> 4.8.0-alt1
+- datetime-functions: Group old country* functions together.
+- timezone: Rename 'Ok' button to 'Apply' (closes: #25311).
+- datetime-functions: Don't use word 'region' for lang code.
+- datetime-functions: Sort timezone list by name (closes: #42992).
+- all: Change timezone interface (closes: #37913).
+
 * Wed Sep 14 2022 Mikhail Efremov <sem@altlinux.org> 4.7.2-alt1
 - test: Don't check timezones count.
 
