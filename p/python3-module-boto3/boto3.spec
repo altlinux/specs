@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.24.42
+Version: 1.24.90
 Release: alt1
 
 Summary: The AWS SDK for Python
@@ -70,6 +70,9 @@ pull requests on this repository. Thanks!
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 14 2022 Stanislav Levin <slev@altlinux.org> 1.24.90-alt1
+- 1.24.42 -> 1.24.90.
+
 * Mon Aug 01 2022 Stanislav Levin <slev@altlinux.org> 1.24.42-alt1
 - 1.21.15 -> 1.24.42.
 
