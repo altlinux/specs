@@ -3,7 +3,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-datetime
-Version: 4.8.0
+Version: 4.8.1
 Release: alt1
 
 %add_findreq_skiplist %_datadir/install2/postinstall.d/*
@@ -71,6 +71,9 @@ alterator module for date/time setup
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Fri Oct 14 2022 Mikhail Efremov <sem@altlinux.org> 4.8.1-alt1
+- datetime-functions,postinstall: Replace egrep with grep -E.
+
 * Fri Oct 14 2022 Mikhail Efremov <sem@altlinux.org> 4.8.0-alt1
 - datetime-functions: Group old country* functions together.
 - timezone: Rename 'Ok' button to 'Apply' (closes: #25311).
