@@ -34,7 +34,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -714,6 +714,10 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Oct 14 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.6.2-alt2
+- Security fixes in 7.3.6.2:
+  + CVE-2022-3140 Macro URL arbitrary script execution
+
 * Wed Sep 14 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.6.2-alt1
 - New version.
 
@@ -732,6 +736,8 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 
 * Wed Feb 23 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.2.5.2-alt4
 - NMU: - adapted spec for kf5-kcoreaddons-devel-5.91.0-alt1 and kf5-kcoreaddons-devel-5.90.0-alt1
+- Security fixes:
+  + CVE-2021-25636 Incorrect trust validation of signature with ambiguous KeyInfo children
 
 * Wed Feb 23 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.2.5.2-alt3
 - NMU: Fix build (ftbfs)
