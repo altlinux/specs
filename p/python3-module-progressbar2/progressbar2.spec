@@ -1,24 +1,29 @@
 %define oname progressbar2
+%def_with check
 
 Name: python3-module-%oname
-Version: 3.55.0
+Version: 4.0.0
 Release: alt1
 
 Summary: Text progress bar library for Python
+
 License: LGPLv2.1+ or BSD
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/progressbar2/
-
-BuildArch: noarch
+Url: https://pypi.python.org/pypi/progressbar2
 
 # https://github.com/WoLpH/python-progressbar.git
 Source: %name-%version.tar
 Patch1: %oname-3.34.4-alt-doc.patch
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-runner
+BuildRequires: python3-module-freezegun
 BuildRequires: python3-module-python_utils
+%endif
+
+BuildArch: noarch
 
 Conflicts: python3-module-progressbar
 
@@ -35,20 +40,24 @@ display differently depending on the state of the progress bar.
 %patch1 -p1
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
+sed -i '/cov/d' pytest.ini
 export PYTHONPATH=$PWD
-py.test3 progressbar tests ||:
+py.test-3 -v
 
 %files
 %doc examples.py *.rst
 %python3_sitelibdir/*
 
 %changelog
+* Fri Oct 14 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+
 * Mon Sep 05 2022 Evgeny Sinelnikov <sin@altlinux.org> 3.55.0-alt1
 - Update to new version with support of python-3.8 and later.
 
