@@ -1,6 +1,6 @@
 Name: corectrl
-Version: 1.3.0
-Release: alt4
+Version: 1.3.1
+Release: alt1
 Summary: Core control application
 Group: System/Configuration/Hardware
 License: GPLv3
@@ -24,8 +24,6 @@ be flexible, comfortable and accessible to regular users.
 %patch -p1
 # stdc++fs is a part of libstdc++ on linux
 find . -name CMakeLists.txt -exec sed -i -e 's/stdc++fs/stdc++/g' {} \;
-# correct lib prefix
-sed -i -e 's,LIBRARY\ DESTINATION\ lib),LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}),g' src/CMakeLists.txt
 
 %build
 %cmake \
@@ -67,6 +65,9 @@ fi
 %_datadir/polkit-1/actions/org.%name.*.policy
 
 %changelog
+* Fri Oct 14 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.1-alt1
+- 1.3.1.
+
 * Sat Oct 08 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.0-alt4
 - Apply a proper patch from upstream to fix compilation w/
   linux 6.0+ headers (upstream #325).
