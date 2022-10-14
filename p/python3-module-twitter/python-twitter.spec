@@ -2,7 +2,7 @@
 
 Name: python3-module-%modname
 Version: 3.5
-Release: alt1
+Release: alt2
 
 Summary: Python Interface for Twitter API
 License: Apache-2.0
@@ -14,7 +14,7 @@ Source: twitter-%version.tar
 Patch0: fix-build-for-python3.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest-runner python3-module-sphinx
+BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
 
 %py3_requires rfc822py3 requests requests_oauthlib
@@ -28,6 +28,8 @@ This library provides a pure python interface for the Twitter API.
 %prep
 %setup -n twitter-%version
 %patch0 -p1
+# commited in f4d9161adb44b1fab7a6d88de00b4ddcf196fd55
+sed -i '/pytest-runner/d' setup.py
 
 sed -i 's|#!/usr/bin/env python.*|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -50,6 +52,9 @@ cp -fR doc/_build/html/* man/
 
 
 %changelog
+* Fri Oct 14 2022 Grigory Ustinov <grenka@altlinux.org> 3.5-alt2
+- Fixed build requires.
+
 * Fri Dec 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.5-alt1
 - Version updated to 3.5
 - build for python2 disabled
