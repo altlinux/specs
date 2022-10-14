@@ -2,7 +2,7 @@
 
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %define xdg_name org.gnome.seahorse
 
@@ -16,7 +16,8 @@
 %def_enable man
 
 %if_enabled hkp
-%def_enable sharing
+# disabled by default and will possibly be removed in the future
+%def_disable sharing
 %endif
 
 Name: seahorse
@@ -38,7 +39,7 @@ Source1: %name.ru.po
 
 %define glib_ver 2.66
 %define gtk_ver 3.24
-%define soup_ver 2.34
+%define soup3_ver 3.0.0
 %define secret_ver 0.16
 %define avahi_ver 0.6
 %define gcr_ver 3.38
@@ -63,10 +64,10 @@ BuildRequires: libgpg-error-devel
 BuildRequires: vala-tools
 BuildRequires: pkgconfig(pwquality)
 %{?_enable_ldap:BuildRequires: libldap-devel}
-%{?_enable_hkp:BuildRequires: libsoup-devel >= %soup_ver}
+%{?_enable_hkp:BuildRequires: libsoup3.0-devel >= %soup3_ver}
 %{?_enable_gnome_keyring:BuildRequires: libsecret-devel >= %secret_ver}
 %{?_enable_pkcs11:BuildRequires: gcr-libs-devel >= %gcr_ver gcr-libs-vala}
-%{?_enable_sharing:BuildRequires: libavahi-glib-devel >= %avahi_ver libavahi-devel }
+%{?_enable_sharing:BuildRequires:libsoup3.0-devel >= %soup3_ver libavahi-glib-devel >= %avahi_ver libavahi-devel}
 %{?_enable_ssh:BuildRequires: openssh openssh-clients}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 %{?_enable_man:BuildRequires: xsltproc docbook-dtds docbook-style-xsl}
@@ -108,9 +109,12 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.manager.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.seahorse.window.gschema.xml
 %_datadir/metainfo/%{xdg_name}*.appdata.xml
-%doc AUTHORS NEWS README* THANKS
+%doc NEWS README* THANKS
 
 %changelog
+* Fri Oct 14 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Sat May 21 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 - enabled LTO
