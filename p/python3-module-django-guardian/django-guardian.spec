@@ -1,28 +1,33 @@
 %define _unpackaged_files_terminate_build 1
 %define oname django-guardian
-
-%def_disable check
-%def_disable tests
+%def_with check
 
 Name: python3-module-%oname
-Version: 2.1.0
-Release: alt2
+Version: 2.4.0
+Release: alt1
 
 Summary: Implementation of per object permissions for Django 1.2 or later
-License: BSD
-Group: Development/Python3
-Url: https://pypi.python.org/pypi/django-guardian/
-BuildArch: noarch
 
-# https://github.com/lukaszb/django-guardian.git
+License: BSD-2-Clause
+Group: Development/Python3
+Url: https://pypi.python.org/pypi/django-guardian
+
+# https://github.com/lukaszb/django-guardian
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage python3-module-django
-BuildRequires: python3-module-pytest-runner
+BuildRequires: python3-module-django
+
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-django
+BuildRequires: python3-module-django-environ
+BuildRequires: python3-module-django-dbbackend-sqlite3
+%endif
 
 %py3_provides %oname
 
+BuildArch: noarch
 
 %description
 django-guardian is implementation of per object permissions as
@@ -48,7 +53,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
@@ -56,9 +61,7 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 install -d %buildroot%python3_sitelibdir/%oname
 
 %check
-%__python3 setup.py test
-sed -i 's|coverage|coverage3|g' run_test_and_report.sh
-./run_test_and_report.sh
+py.test-3 -v
 
 %files
 %doc AUTHORS CHANGES *.rst
@@ -67,14 +70,15 @@ sed -i 's|coverage|coverage3|g' run_test_and_report.sh
 %exclude %python3_sitelibdir/guardian/test*
 %exclude %python3_sitelibdir/guardian/*/test*
 
-%if_enabled tests
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/guardian/test*
 %python3_sitelibdir/guardian/*/test*
-%endif
-
 
 %changelog
+* Fri Oct 14 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1
+- Automatically updated to 2.4.0.
+- Build with check.
+
 * Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt2
 - Fixed BuildRequires.
 
