@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: tree
-Version: 2.0.2
+Version: 2.0.4
 Release: alt1
 Epoch: 1
 
@@ -24,7 +24,7 @@ LS_COLORS environment variable is set and output is to tty.
 
 %build
 # Upstream have LDFLAGS=-s causing binaries to be stripped.
-%make_build CFLAGS="%optflags %(getconf LFS_CFLAGS)" LDFLAGS=
+%make_build CFLAGS="%optflags %(getconf LFS_CFLAGS) -fanalyzer" LDFLAGS=
 
 %install
 install -Dpm755 -t %buildroot%_bindir  tree
@@ -36,6 +36,9 @@ install -Dpm644 -t %buildroot%_man1dir doc/tree.1
 %_man1dir/tree.1*
 
 %changelog
+* Fri Oct 14 2022 Vitaly Chikunov <vt@altlinux.org> 1:2.0.4-alt1
+- Update to 2.0.4 (09/06/2022).
+
 * Fri Feb 25 2022 Vitaly Chikunov <vt@altlinux.org> 1:2.0.2-alt1
 - Change upstream and update to 2.0.2 (02/16/2022).
 
