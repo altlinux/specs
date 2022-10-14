@@ -7,11 +7,11 @@
 %global servicename     docker
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      e42327a6d3c55ceda3bd5475be7aae6036d02db3
+%global commit      c964641a0d76733c071d606c72541b263da84a3e
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 20.10.18
+Version: 20.10.19
 Release: alt1
 Summary: The open-source application container engine
 License: Apache-2.0
@@ -137,6 +137,9 @@ exit 0
 %{_sysconfdir}/udev/rules.d/80-docker.rules
 
 %changelog
+* Fri Oct 14 2022 Vladimir Didenko <cow@altlinux.org> 20.10.19-alt1
+- 20.10.19
+
 * Mon Sep 12 2022 Vladimir Didenko <cow@altlinux.org> 20.10.18-alt1
 - 20.10.18 (Fixes: CVE-2022-36109)
 
