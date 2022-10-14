@@ -48,7 +48,7 @@
 
 Name: vim
 %define branch 9.0
-Version: %branch.0735
+Version: %branch.0749
 Release: alt1
 Epoch: 4
 
@@ -1053,6 +1053,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Fri Oct 14 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.0.0749-alt1
+- Updated to v9.0.0749.
+- Fixed vimrc loading regression (ALT#44022).
+
 * Thu Oct 13 2022 Alexander Danilov <admsasha@altlinux.org> 4:9.0.0735-alt1
 - Updated to 9.0.0735 (fixes CVE-2022-3234, CVE-2022-3235, CVE-2022-3256,
   CVE-2022-3278, CVE-2022-3296, CVE-2022-3297, CVE-2022-3297, CVE-2022-3352).
