@@ -9,7 +9,7 @@ epoch:1
 %define kernel_need_version	5.15
 # Used when kernel-source-x.y does not currently exist in repository.
 %define kernel_base_version	5.15
-%define kernel_sublevel .70
+%define kernel_sublevel .73
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -450,6 +450,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Oct 14 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.73-alt1
+- Updated to 5.15.73
+- https://github.com/raspberrypi/linux.git rpi-5.15.y commit ab70db591ba6a3688192e773e967cd5015a693a8
+- AQBM1000: realtek phy leds configuration via device tree
+
+* Thu Sep 29 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.70-alt2
+- Added forgotten serdev-serio driver (necessary for Elpitech laptop)
+
 * Tue Sep 27 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.15.70-alt1
 - Updated to 5.15.70
 - https://github.com/raspberrypi/linux.git rpi-5.15.y commit b5fb803e192afa566351481edf03bb44b56d48e7
