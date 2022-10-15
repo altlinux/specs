@@ -3,10 +3,10 @@
 
 Name: stream-mem
 Version: 5.10
-Release: alt1
+Release: alt3
 
 Summary: STREAM: Sustainable Memory Bandwidth in High Performance Computers
-License: GPL
+License: distributable
 Group: Monitoring
 
 Url: http://www.cs.virginia.edu/stream/
@@ -14,8 +14,9 @@ Source: stream-%version.tar.gz
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: libgomp-devel
-
+%if_with fortran
 BuildRequires: gcc-fortran
+%endif
 
 %description
 The STREAM benchmark is a simple synthetic benchmark program that
@@ -31,12 +32,18 @@ computation rate for simple vector kernels.
 %define _optlevel 4
 %endif
 
-export CFLAGS="%optflags -fopenmp -D_OPENMP"
-
-%make stream_c.exe
+%make CFLAGS="-O%_optlevel -fopenmp -D_OPENMP" stream_c.exe
 %if_with fortran
-%make stream_f.exe
+%make FFLAGS="-O%_optlevel" stream_f.exe
 %endif
+
+cat > README.ALT << EOF
+Multiprocessor runs (find out the optimal factor by experimenting):
+
+OMP_NUM_THREADS=4 stream_c
+
+See also http://www.cs.virginia.edu/stream/ref.html#runrules
+EOF
 
 %install
 install -pDm755 stream_c.exe %buildroot%_bindir/stream_c
@@ -46,10 +53,20 @@ install -pDm755 stream_f.exe %buildroot%_bindir/stream_f
 
 %files
 %_bindir/*
+%doc HISTORY.txt LICENSE.txt READ.ME TO_DO
+%doc README.ALT 
 
 # TODO: cover MPI version as well
 
 %changelog
+* Sat Oct 15 2022 Michael Shigorin <mike@altlinux.org> 5.10-alt3
+- fixed License:, dang!
+
+* Sat Oct 15 2022 Michael Shigorin <mike@altlinux.org> 5.10-alt2
+- fixed effective optlevel
+- added the missing docs
+- fixed fortran knob
+
 * Sat Oct 15 2022 Michael Shigorin <mike@altlinux.org> 5.10-alt1
 - updated to sources from 2013 (as of today)
 - build with OpenMP
