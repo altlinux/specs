@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	5.19
-%define kernel_sublevel	.15
+%define kernel_sublevel	.16
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -613,6 +613,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Oct 15 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.19.16-alt1
+- v5.19.16 (2022-10-15).
+
 * Wed Oct 12 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.19.15-alt1
 - v5.19.15 (2022-10-12).
 
