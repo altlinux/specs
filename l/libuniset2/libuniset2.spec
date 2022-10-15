@@ -25,7 +25,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.21.1
+Version: 2.22.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -594,6 +594,10 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Sat Oct 15 2022 Pavel Vainerman <pv@altlinux.ru> 2.22.1-alt1
+- (modbus): supported "parity"
+- some fixes for c++17
+
 * Sun May 15 2022 Pavel Vainerman <pv@altlinux.ru> 2.21.1-alt1
 - (unet): minor optimization (check crc)
 - (unet): use int32_t for ID
