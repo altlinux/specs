@@ -1,9 +1,10 @@
 %define oname PasteDeploy
 %def_without bootstrap
+%def_with check
 
 Name: python3-module-%oname
-Version: 2.0.1
-Release: alt2
+Version: 2.1.1
+Release: alt1
 Epoch: 1
 
 Summary: Load, configure, and compose WSGI applications and servers
@@ -13,7 +14,7 @@ Group: Development/Python3
 BuildArch: noarch
 Url: https://github.com/Pylons/pastedeploy
 
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 %py3_provides %oname
 %py3_requires Paste
@@ -22,9 +23,13 @@ Source: %oname-%version.tar
 %endif
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+
 BuildRequires: python3-module-setuptools
-BuildRequires: python3-module-pytest-runner
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-pytest-cov
+%endif
 
 %description
 This tool provides code to load WSGI applications and servers from
@@ -33,19 +38,26 @@ files. Paste Script provides commands to serve applications based on
 this configuration file.
 
 %prep
-%setup -n %oname-%version
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
 %python3_sitelibdir/paste/deploy
-%python3_sitelibdir/%oname-*
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 1:2.1.1-alt1
+- Automatically updated to 2.1.1.
+- Build with check.
+
 * Tue May 25 2021 Anton Midyukov <antohami@altlinux.org> 1:2.0.1-alt2
 - build python3 module only
 
