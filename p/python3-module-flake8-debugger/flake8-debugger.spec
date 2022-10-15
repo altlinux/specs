@@ -1,25 +1,30 @@
 %define _unpackaged_files_terminate_build 1
 %define oname flake8-debugger
+%def_with check
 
 Name: python3-module-%oname
-Version: 3.1.0
+Version: 4.1.2
 Release: alt1
 
 Summary: ipdb/pdb statement checker plugin for flake8
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/flake8-debugger/
+Url: https://pypi.python.org/pypi/flake8-debugger
 BuildArch: noarch
 
 # https://github.com/JBKahn/flake8-debugger.git
-Source0: %name-%version.tar.gz
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flake8 python3-module-nose
-BuildRequires: python3-module-pytest-runner python3-module-pytest
+
+BuildRequires: python3-module-poetry-core
+
+%if_with check
+BuildRequires: python3-module-pycodestyle
+BuildRequires: python3-module-flake8
+%endif
 
 %py3_provides flake8_debugger
-
 
 %description
 Check for pdb;idbp imports and set traces.
@@ -30,22 +35,23 @@ This module provides a plugin for ``flake8``, the Python code checker.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%if 0
-%__python3 setup.py test
-%endif
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
-%doc *.rst
+%doc *.md
 %python3_sitelibdir/*
 
-
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.2-alt1
+- Build new version.
+
 * Fri Dec 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.1.0-alt1
 - Version updated to 3.1.0
 - build for python2 disabled
