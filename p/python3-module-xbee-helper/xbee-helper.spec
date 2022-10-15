@@ -1,6 +1,6 @@
 Name: python3-module-xbee-helper
 Version: 0.0.7
-Release: alt1
+Release: alt1.1
 
 Summary: XBee serial communication API helpers
 License: BSD
@@ -10,13 +10,14 @@ Url: https://pypi.org/project/xbee-helper/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools python3-module-pytest-runner
+BuildRequires: rpm-build-python3 python3-module-setuptools
 
 %description
 %summary
 
 %prep
 %setup
+sed -i '/pytest-runner/d' setup.py
 
 %build
 %python3_build
@@ -30,5 +31,8 @@ BuildRequires: rpm-build-python3 python3-module-setuptools python3-module-pytest
 %python3_sitelibdir/xbee_helper-%version-*-info
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 0.0.7-alt1.1
+- NMU: updated build dependencies
+
 * Fri Jan 17 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.7-alt1
 - initial
