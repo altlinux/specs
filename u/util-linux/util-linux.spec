@@ -1,7 +1,7 @@
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.37.3
-Release: alt2
+Version: 2.38.1
+Release: alt1
 License: GPL-2.0 and GPL-2.0-or-later and LGPL-2.1-or-later and BSD-3-Clause and BSD-4-Clause-UC and ALT-Public-Domain
 Group: System/Base
 URL: https://kernel.org/pub/linux/utils/util-linux/
@@ -27,6 +27,7 @@ URL: https://kernel.org/pub/linux/utils/util-linux/
 %def_disable eject
 
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 %undefine __libtoolize
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -542,6 +543,10 @@ klcc \
 # lsblk: 'failed to access sysfs directory: /sys/dev/block: No such file or directory' in hasher.
 rm -rf tests/ts/{cal,fincore,login,look,ipcs/limits*,libmount/{lock,utils},lsblk,misc/{setarch,ionice},more/regexp}
 rm -rf tests/ts/lsns/ioctl_ns
+
+# The default is sha256, or memcmp if Linux Crypto API is not available.
+sed -i -e 's#sha256#memcmp#g' tests/expected/hardlink/options-maximum-size-819{1,2}
+
 LANG=C %make check
 
 %install
@@ -944,6 +949,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Sat Oct 15 2022 Alexey Gladkov <legion@altlinux.ru> 2.38.1-alt1
+- New version (2.38.1) (fixes: CVE-2023-0563).
+
 * Tue Jan 25 2022 Alexey Gladkov <legion@altlinux.ru> 2.37.3-alt2
 - Set restricted execution mode to mount/umount/write by default.
 
