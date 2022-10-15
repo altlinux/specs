@@ -1,6 +1,6 @@
 Name: libgpg-error
 Version: 1.46
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Error library for GnuPG and related projects
@@ -53,6 +53,7 @@ rm -f -- m4/po.m4 po/Makefile.in.in
 %build
 %autoreconf
 %configure \
+	--enable-install-gpg-error-config \
 	--disable-static \
 	--with-pic
 %make_build
@@ -88,8 +89,12 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_infodir/gpgrt.*
 %_pkgconfigdir/*.pc
 %_datadir/common-lisp/source/gpg-error
+%_man1dir/gpg-error-config.1*
 
 %changelog
+* Sat Oct 15 2022 Alexey Gladkov <legion@altlinux.ru> 1.46-alt2
+- Pack gpg-error-config again.
+
 * Mon Oct 10 2022 Alexey Gladkov <legion@altlinux.ru> 1.46-alt1
 - New version (1.46).
 

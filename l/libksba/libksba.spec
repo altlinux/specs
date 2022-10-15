@@ -1,6 +1,6 @@
 Name: libksba
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: X.509 library
@@ -61,6 +61,7 @@ EOF
 %_libdir/*.so.*
 
 %files -n %name-devel
+%_bindir/ksba-config
 %_aclocaldir/*
 %_includedir/*.h
 %_libdir/*.so
@@ -68,6 +69,9 @@ EOF
 %_infodir/*.info*
 
 %changelog
+* Sat Oct 15 2022 Alexey Gladkov <legion@altlinux.ru> 1.6.2-alt2
+- Pack ksba-config again.
+
 * Mon Oct 10 2022 Alexey Gladkov <legion@altlinux.ru> 1.6.2-alt1
 - New version (1.6.2).
 
