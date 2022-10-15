@@ -4,7 +4,7 @@
 
 Name: mpv
 Version: 0.34.1
-Release: alt1
+Release: alt2
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
@@ -30,7 +30,7 @@ BuildRequires: libenca-devel libuchardet-devel libvulkan-devel libwayland-egl-de
 
 BuildRequires: libgbm-devel libplacebo-devel libSDL2-devel libavdevice-devel
 
-BuildRequires: libzimg-devel vapoursynth-devel libshaderc-devel
+BuildRequires: libzimg-devel vapoursynth-devel libshaderc-devel nv-codec-headers
 
 BuildRequires: /usr/bin/rst2man
 
@@ -143,6 +143,9 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Mon Oct 03 2022 L.A. Kostis <lakostis@altlinux.ru> 0.34.1-alt2
+- BR: added nv-codec-headers (for CUDA support).
+
 * Mon Jun 06 2022 Leontiy Volodin <lvol@altlinux.org> 0.34.1-alt1
 - 0.34.1.
 - Fix build with python3-module-docutils.

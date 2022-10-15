@@ -1,12 +1,10 @@
-%define build_type RelWithDebInfo
-%define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_INSTALL_LIBDIR=%_datadir
-%define git 4995a2f
+%define git 85a1ed2
 
 Name: spirv-headers
-Version: 1.6.0
-# sdk-1.3.211
-Release: alt1.g%{git}
-Epoch: 1
+Version: 1.5.5
+# sdk-1.3.231
+Release: alt4.g%{git}
+Epoch: 2
 
 Summary: machine-readable files for the SPIR-V Registry
 Group: Development/C++
@@ -34,9 +32,9 @@ This repository contains machine-readable files for the SPIR-V Registry. This in
 %setup -n %name-%version
 
 %build
-%_cmake
+%cmake
 %cmake_build
-%cmakeinstall_std
+%cmake_install
 
 %files
 %doc *.md example
@@ -47,6 +45,17 @@ This repository contains machine-readable files for the SPIR-V Registry. This in
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Sat Oct 15 2022 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt4.g85a1ed2
+- Updated to GIT 85a1ed2 (for spirv-tools 2022.4).
+
+* Mon Oct 03 2022 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt3.g0bcc624
+- Updated to GIT 0bcc624 (as required by shaderc).
+- Remove cmake hacks.
+
+* Mon Oct 03 2022 L.A. Kostis <lakostis@altlinux.ru> 2:1.5.5-alt2.gb2a156e
+- Updated to GIT b2a156e (tag sdk-1.3.224.1).
+- Downgrade version again (as 1.6.0 is not here yet).
+
 * Sat Apr 09 2022 L.A. Kostis <lakostis@altlinux.ru> 1:1.6.0-alt1.g4995a2f
 - Updated to GIT 4995a2f (tag sdk-1.3.211).
 

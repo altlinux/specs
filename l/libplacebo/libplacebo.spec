@@ -1,8 +1,8 @@
-%define sover 157
+%define sover 208
 
 Name: libplacebo
-Version: 4.157.0
-Release: alt0.2
+Version: 4.208.0
+Release: alt0.1
 Summary: libplacebo is essentially the core rendering algorithms and ideas of mpv turned into a library
 Group: System/Libraries
 License: LGPL-2.1+
@@ -53,6 +53,10 @@ developing applications that use %name.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Mon Oct 03 2022 L.A. Kostis <lakostis@altlinux.ru> 4.208.0-alt0.1
+- v4.208.0.
+- Update soname.
+
 * Tue Nov 16 2021 L.A. Kostis <lakostis@altlinux.ru> 4.157.0-alt0.2
 - Use libshaderc instead glslang.
 
@@ -65,4 +69,3 @@ developing applications that use %name.
 
 * Mon Jul 20 2020 L.A. Kostis <lakostis@altlinux.ru> 2.88.0-alt0.1
 - Initial build for ALTLinux.
-

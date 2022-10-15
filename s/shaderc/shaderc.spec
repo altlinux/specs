@@ -1,13 +1,11 @@
-%define build_type RelWithDebInfo
-%define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_INSTALL_LIBDIR=%_datadir
 %define sover 1
-%define glslang_ver 11.7.0
-%define spirv_tools_ver 2021.4
+%define glslang_ver 11.12.0
+%define spirv_tools_ver 2022.4
 %def_disable static
 %def_with doc
 
 Name: shaderc
-Version: 2021.3
+Version: 2022.3
 Release: alt0.1
 
 Summary: A collection of tools, libraries and tests for shader compilation 
@@ -65,7 +63,7 @@ Command line compiler for GLSL/HLSL to SPIR-V
 %patch1 -p1
 
 %build
-%_cmake \
+%cmake \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
   -DSHADERC_SKIP_TESTS:BOOL=ON \
   -DSHADERC_SKIP_EXAMPLES:BOOL=ON \
@@ -91,7 +89,11 @@ echo '"glslang v%glslang_ver v%glslang_ver\\n"' >> %_target_platform/build-versi
 %_bindir/*
 
 %changelog
+* Sat Oct 15 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.3-alt0.1
+- v2022.3.
+
+* Mon Oct 03 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.2-alt0.1
+- v2022.2.
+
 * Sat Nov 13 2021 L.A. Kostis <lakostis@altlinux.ru> 2021.3-alt0.1
 - Initial build for ALTLinux.
-
-

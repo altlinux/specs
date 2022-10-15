@@ -1,10 +1,8 @@
 %define sover 0
 %define git %nil
-%define build_type RelWithDebInfo
-%define _cmake %cmake -GNinja -DCMAKE_BUILD_TYPE:STRING="%build_type" -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 Name: spirv-tools
-Version: 2022.2
+Version: 2022.4
 Release: alt1
 Epoch: 1
 
@@ -23,7 +21,7 @@ BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
 # due sdk requires
-BuildRequires: spirv-headers >= 1.6.0-alt1.g4995a2f
+BuildRequires: spirv-headers >= 2:1.5.5-alt4.g85a1ed2
 
 %description
 The package includes an assembler, binary module parser,
@@ -58,7 +56,8 @@ integration into other code bases directly.
 # will check protobuf support later
 # for fuzzler
 %build
-%_cmake \
+%cmake \
+  -GNinja \
   -DSPIRV_BUILD_COMPRESSION=OFF \
   -DSPIRV_BUILD_FUZZER=OFF \
   -DSPIRV_TOOLS_BUILD_STATIC=OFF \
@@ -94,6 +93,15 @@ ninja \
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
+* Sat Oct 15 2022 L.A. Kostis <lakostis@altlinux.ru> 1:2022.4-alt1
+- Updated to 2022.4.
+
+* Mon Oct 03 2022 L.A. Kostis <lakostis@altlinux.ru> 1:2022.3-alt1
+- Updated to 2022.3.
+- Applied 0001-Fix-array-copy-propagation-4890.patch from -stable.
+- Bump spirv-headers requires.
+- Remove cmake hacks.
+
 * Sun Apr 10 2022 L.A. Kostis <lakostis@altlinux.ru> 1:2022.2-alt1
 - Updated to v2022.2 (tag sdk-1.3.211).
 - Update -soname patch.

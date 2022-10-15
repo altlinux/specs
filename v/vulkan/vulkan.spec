@@ -1,8 +1,5 @@
-%define build_type RelWithDebInfo
-%define _cmake %cmake -DCMAKE_BUILD_TYPE=%build_type -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
-
 Name: vulkan
-Version: 1.3.211
+Version: 1.3.231
 Release: alt1
 Summary: Khronos group Vulkan API SDK
 
@@ -25,9 +22,9 @@ BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
 BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 # strict requires due internal dependency
-BuildRequires: glslang-devel = 11.9.0
-BuildRequires: libspirv-tools-devel = 2022.2
-BuildRequires: spirv-headers >= 1.6.0-alt1.g4995a2f
+BuildRequires: glslang-devel = 11.12.0
+BuildRequires: libspirv-tools-devel = 2022.4
+BuildRequires: spirv-headers >= 2:1.5.5-alt4
 # -layers need it
 BuildRequires: librobin-hood-hashing-devel
 # - tolls need it
@@ -116,7 +113,7 @@ popd
 %endif
 # vulkan-headers first
 pushd %_builddir/vulkan-headers
-%_cmake
+%cmake
 %cmake_build
 %cmakeinstall_std
 popd
@@ -124,14 +121,14 @@ popd
 # then vulkan-loader and layers
 for dir in loader layers; do
 pushd %_builddir/vulkan-"$dir"
-%_cmake \
+%cmake \
            -DSPIRV_TOOLS_SEARCH_PATH=%_libdir \
            -DSPIRV_TOOLS_OPT_SEARCH_PATH=%_libdir \
 	   -DVULKAN_HEADERS_INSTALL_DIR=%buildroot \
 	   -DGLSLANG_INSTALL_DIR=%_prefix \
 	   -DSPIRV_HEADERS_INSTALL_DIR=%_prefix \
 	   -DVulkanHeaders_INCLUDE_DIR=%buildroot%_includedir \
-	   -DVulkanRegistry_DIR=%buildroot%_datadir \
+	   -DVulkanRegistry_DIR=%buildroot%_datadir/vulkan/registry \
 	   -DROBIN_HOOD_HASHING_INCLUDE_DIR=%_includedir
 %cmake_build
 %cmakeinstall_std
@@ -140,7 +137,7 @@ done
 
 # end finally -tools
 pushd %_builddir/vulkan-tools
-%_cmake \
+%cmake \
 	   -DCMAKE_PREFIX_PATH=%buildroot%prefix \
 	   -DGLSLANG_INSTALL_DIR=%_prefix
 %cmake_build
@@ -195,6 +192,14 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Sat Oct 15 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.231-alt1
+- Bump BR.
+- Updated to sdk-1.3.231:
+  + vulkan-layers: Updated to sdk-1.3.231.
+  + vulkan-headers: Updated to v1.3.231.
+  + vulkan-loader: Updated to v1.3.231.
+  + vulkan-tools: Updated to v1.3.231.
+
 * Sun Apr 10 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.211-alt1
 - Updated to sdk-1.3.211:
   + vulkan-layers: Updated to 5e090d28c.
