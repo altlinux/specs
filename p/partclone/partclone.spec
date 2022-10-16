@@ -5,8 +5,8 @@
 %def_enable checkfs
 
 Name: partclone
-Version: 0.3.17
-Release: alt1
+Version: 0.3.20
+Release: alt0.1.gitgf5082c4
 
 Summary: File System Clone Utilities
 License: GPLv2+
@@ -16,8 +16,7 @@ Url: http://partclone.org
 # Upstream: git://github.com/Thomas-Tsai/partclone.git
 Source: http://download.sourceforge.net/%name/%name-%version.tar
 Patch1: partclone-0.3.6-no_fail_mbr.patch
-Patch2: partclone-0.3.17-few_warns.patch
-Patch3: partclone-0.3.12-checkfs.patch
+Patch2: partclone-0.3.20-checkfs.patch
 
 # Automatically added by buildreq on Fri Dec 04 2015
 # optimized out: libaal-devel libcom_err-devel libncurses-devel libntfs-3g libtinfo-devel pkg-config xz
@@ -35,6 +34,7 @@ BuildRequires: libreiser4-devel
 
 # Checkfs requires
 %if_enabled checkfs
+BuildRequires: /dev/kvm
 BuildRequires: rpm-build-vm
 BuildRequires: e2fsprogs btrfs-progs dosfstools reiserfsprogs hfsprogs ntfs-3g
 %if_enabled xfs
@@ -55,7 +55,6 @@ reiserfs,%{?_enable_reiser4: reiser4,}%{?_enable_apfs: apfs,} btrfs, ntfs, fat a
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 echo '#define git_version "%version"' > src/version.h
 
 %build
@@ -87,11 +86,11 @@ echo '#define git_version "%version"' > src/version.h
 %if_enabled checkfs
 %ifnarch ppc64le
 pushd tests
-vm-run make check || {
+make check || {
 	for fname in *.log; do
 		if [ "$fname" != "test-suite.log" ]; then
 			echo "*** ${fname%%.log} results ***"
-			cat "$fname"
+			cat -- "$fname"
 			echo "******************************"
 			echo
 		fi
@@ -107,6 +106,10 @@ popd
 %_man8dir/*
 
 %changelog
+* Sun Oct 16 2022 Leonid Krivoshein <klark@altlinux.org> 0.3.20-alt0.1.gitgf5082c4
+- Updated to upstream version 0.3.20 from github.
+- Improved test suite.
+
 * Sun Dec 20 2020 Leonid Krivoshein <klark@altlinux.org> 0.3.17-alt1
 - Updated to upstream version 0.3.17 from SourceForge.
 - Dropped VMFS support.
