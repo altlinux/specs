@@ -2,7 +2,7 @@
 %define  modulename cairocffi
 
 Name:    python3-module-%modulename
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: CFFI-based cairo bindings for Python.
@@ -15,7 +15,6 @@ BuildRequires: python3-dev python3-module-setuptools
 BuildRequires: python3-module-cffi
 BuildRequires: python3-module-xcffib
 BuildRequires: libxcb-devel
-BuildRequires: python3-module-pytest-runner
 
 BuildArch: noarch
 
@@ -58,6 +57,9 @@ touch %buildroot%python3_sitelibdir/%modulename/_generated/__init__.py
 %python3_sitelibdir/%modulename/__pycache__/test_*
 
 %changelog
+* Sun Oct 16 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
+- Automatically updated to 1.4.0.
+
 * Tue Dec 14 2021 Egor Ignatov <egori@altlinux.org> 1.3.0-alt1
 - 1.3.0
 - Build with xcffib support
