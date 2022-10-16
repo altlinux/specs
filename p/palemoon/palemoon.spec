@@ -2,7 +2,7 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version:  31.2.0.1
+Version:  31.3.0.1
 
 Release: alt2
 
@@ -56,6 +56,7 @@ Patch22: palemoon_rpath-29.4.6.patch
 
 Patch23: palemoon_version-29.4.6.patch
 Patch24: palemoon-31.0.0-ui_picker_false.patch
+Patch25: palemoon-31.3.0.1-lock_impl_posix.patch
 
 # Patch from Rosa
 Patch103: palemoon-29.4.6-disable-check-default-browser.patch
@@ -70,7 +71,7 @@ Patch113: palemoon-29.4.6-kde-background.patch
 
 Patch114: nemoon_branding-31.0.0.patch
 
-#set_gcc_version 8
+#set_gcc_version 10
 %set_autoconf_version 2.13
 
 BuildpreReq: libXcomposite-devel libXdamage-devel
@@ -96,7 +97,7 @@ BuildRequires(pre): browser-plugins-npapi-devel
 BuildPreReq: python-module-future python-modules-json python-modules-wsgiref
 BuildPreReq: libnss-devel
 
-# BuildRequires: gcc%%_gcc_version-c++
+#BuildRequires: gcc%%_gcc_version-c++
 
 BuildPreReq: chrpath
 BuildPreReq: autoconf_%_autoconf_version
@@ -172,6 +173,7 @@ popd
 %setup -T -D -a 11
 
 %patch24 -p1
+%patch25 -p1
 
 #patch21 -p1
 
@@ -492,6 +494,12 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %exclude %_includedir/*
 
 %changelog
+* Sun Oct 16 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.3.0.1-alt2
+- Add palemoon-31.3.0.1-lock_impl_posix.patch
+
+* Sun Oct 02 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.3.0.1-alt1
+- Version 31.3.0.1
+
 * Thu Sep 01 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.2.0.1-alt2
 - Remove palemoon-l10n.js
 
@@ -877,3 +885,4 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
+

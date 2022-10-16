@@ -4,8 +4,8 @@
 %define cid_dict       ru@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	31.1.0
-%define max_version	31.2.*
+%define min_version	31.2.0
+%define max_version	31.3.*
 
 %define bname		newmoon
 %define sdir		searchplugins
@@ -14,8 +14,8 @@
 
 Name: palemoon-ru
 
-Version: 31.2.0
-Release: alt2.1
+Version: 31.3.0
+Release: alt1
 
 ExcludeArch: %ix86 %arm
 
@@ -60,22 +60,6 @@ The set of search plugins for Palemoon
 
 %description -n palemoon-searchplugins -l ru_RU.UTF8
 Набор Поисковых плагинов для Palemoon
-
-%package -n palemoon-defaults-ru
-Summary: palemoon/newmoon (dependencies package)
-
-Group: Networking/WWW
-Requires:  palemoon >= %version
-Requires: palemoon-ru
-Requires: palemoon-searchplugins
-
-ExcludeArch: %ix86 %arm
-
-%description -n palemoon-defaults-ru
-Recommended setplugins to russina  newmoon
-
-%description -n palemoon-defaults-ru -l ru_RU.UTF8
-Рекомендуемый набор раширений newmoon для русской локали  
 
 
 %prep
@@ -145,15 +129,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %files -n palemoon-searchplugins
 %search_dir
 
-%files -n palemoon-defaults-ru
-
-
 %changelog
-* Sun Sep 18 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.2.0-alt2.1
-- Fix added virtual package palemoon-defaults-ru
-
-* Wed Aug 17 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.2.0-alt2
-- Added virtual package palemoon-defaults-ru
+* Sun Oct 16 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.3.0-alt1
+- Uppdate to release 31.3.0
 
 * Fri Aug 12 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.2.0-alt1
 - Uppdate to release 31.1.0
