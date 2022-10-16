@@ -3,7 +3,7 @@
 
 Name: python3-module-%oldname
 Version: 0.4.3
-Release: alt1
+Release: alt1.1
 
 Summary: Python 3 client to Neovim
 
@@ -18,7 +18,6 @@ AutoReqProv: nopython
 %define __python %nil
 
 BuildRequires(pre): rpm-build-python3 rpm-build-licenses
-BuildRequires: python3-module-pytest-runner
 
 %description
 Pynvim implements support for python plugins in Nvim. It also works as a library
@@ -39,6 +38,9 @@ for connecting to and scripting Nvim processes through its msgpack-rpc API.
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Sun Oct 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.3-alt1.1
+- NMU: updated build dependencies
+
 * Thu Mar 4 2021 Vladimir Didenko <cow@altlinux.org> 0.4.3-alt1
 - new release
 
