@@ -8,8 +8,8 @@
 
 
 Name: dotnet-hostfxr-%_dotnet_major
-Version: 3.1.23
-Release: alt2
+Version: 3.1.26
+Release: alt1
 
 Summary: Installer packages for the .NET Core runtime and libraries
 
@@ -131,6 +131,9 @@ install -m644 %exedir/nethost.h %buildroot%_dotnet_shared/
 %files -n dotnet-%_dotnet_major
 
 %changelog
+* Sun Oct 16 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.26-alt1
+- new version 3.1.26 (with rpmrb script)
+
 * Wed Apr 20 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.23-alt2
 - don't use -Werror
 
