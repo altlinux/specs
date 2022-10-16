@@ -1,9 +1,12 @@
 %define username guacd
 %def_with ffmpeg
+%ifarch %ix86 %arm
+%def_disable check
+%endif
 
 Name: guacamole-server
-Version: 1.3.0
-Release: alt3
+Version: 1.4.0
+Release: alt1
 Summary: Server-side native components that form the Guacamole proxy
 License: Apache-2.0
 Url: http://guac-dev.org/
@@ -242,6 +245,9 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %attr(750,%username,%username) %_sharedstatedir/guacd
 
 %changelog
+* Thu Oct 13 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
+- new version 1.4.0
+
 * Thu Apr 15 2021 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt3
 - Build with libuuid instead ossp-uuid.
 

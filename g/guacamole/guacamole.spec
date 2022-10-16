@@ -1,7 +1,7 @@
 %define appdir %_var/lib/tomcat/webapps
 
 Name: guacamole
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 Summary: Clientless remote desktop gateway
 License: Apache-2.0
@@ -12,15 +12,12 @@ Url: https://guac-dev.org/
 Source2: https://www.apache.org/dist/%name/%version/binary/%name-%version.war
 Source3: guacamole.properties
 Source4: user-mapping.xml
-Source10: https://www.apache.org/dist/%name/%version/binary/%name-auth-cas-%version.tar.gz
+Source10: https://www.apache.org/dist/%name/%version/binary/%name-auth-sso-%version.tar.gz
 Source11: https://www.apache.org/dist/%name/%version/binary/%name-auth-duo-%version.tar.gz
-#Source12: https://www.apache.org/dist/%name/%version/binary/%name-auth-header-%version.tar.gz
-Source12: https://www.apache.org/dist/%name/%version/binary/%name-auth-header-1.2.0.tar.gz
+Source12: https://www.apache.org/dist/%name/%version/binary/%name-auth-header-%version.tar.gz
 Source13: https://www.apache.org/dist/%name/%version/binary/%name-auth-jdbc-%version.tar.gz
 Source14: https://www.apache.org/dist/%name/%version/binary/%name-auth-ldap-%version.tar.gz
-Source15: https://www.apache.org/dist/%name/%version/binary/%name-auth-openid-%version.tar.gz
 Source16: https://www.apache.org/dist/%name/%version/binary/%name-auth-quickconnect-%version.tar.gz
-Source17: https://www.apache.org/dist/%name/%version/binary/%name-auth-saml-%version.tar.gz
 Source18: https://www.apache.org/dist/%name/%version/binary/%name-auth-totp-%version.tar.gz
 
 BuildRequires: /proc rpm-build-java java-devel
@@ -53,20 +50,29 @@ AutoReqProv: noosgi, noosgi-fc
 The Guacamole web application, providing authentication and an HTML5
 remote desktop client.
 
-%package auth-cas
-Summary: Guacamole CAS Authentication Extension
+%package auth-sso
+Summary: Guacamole support for secondary SSO providers
 Group: Networking/Remote access
 Requires: %name-client = %EVR
 AutoReqProv: noosgi, noosgi-fc
+Provides: %name-auth-cas = %EVR
+Provides: %name-auth-openid = %EVR
+Provides: %name-auth-saml = %EVR
+Obsoletes: %name-auth-cas < 1.4.0
+Obsoletes: %name-auth-openid < 1.4.0
+Obsoletes: %name-auth-saml < 1.4.0
 
-%description auth-cas
-CAS is an open-source Single Sign On (SSO) provider
-that allows multiple applications and services to authenticate
-against it and brokers those authentication requests
-to a back-end authentication provider.
-This module allows Guacamole to redirect to CAS for authentication and user services.
-This module must be layered on top of other authentication extensions
-that provide connection information, as it only provides user authentication.
+%description auth-sso
+Guacamole's support for single sign-on has historically been all-or-nothing,
+with either all users using SSO to authenticate or none at all.
+This is no longer the case: Guacamole may now be configured to allow
+normal username/password authentication in addition to SSO,
+and multiple SSO providers may be used at the same time.
+
+Included:
+ * CAS Authentication
+ * OpenID Connect Authentication
+ * SAML Authentication
 
 %package auth-duo
 Summary: Guacamole Duo TFA Authentication Backend
@@ -137,25 +143,6 @@ If you have a centralized authentication system that uses LDAP,
 Guacamole's LDAP support can be a good way to allow your users
 to use their existing usernames and passwords to log into Guacamole.
 
-%package auth-openid
-Summary: Guacamole OpenID Authentication Extension
-Group: Networking/Remote access
-Requires: %name-client = %EVR
-AutoReqProv: noosgi, noosgi-fc
-
-%description auth-openid
-OpenID Connect is a widely-adopted open standard for implementing single sign-on (SSO).
-Not to be confused with OAuth, which is not an authentication protocol,
-OpenID Connect defines an authentication protocol in the form of a simple identity layer on top of OAuth 2.0.
-
-Guacamole's OpenID Connect support implements the "implicit flow"
-of the OpenID Connect standard, and allows authentication of Guacamole users
-to be delegated to an identity provider which implements OpenID Connect,
-removing the need for users to log into Guacamole directly.
-This module must be layered on top of other authentication extensions
-that provide connection information, such as the database authentication extension,
-as it only provides user authentication.
-
 %package auth-quickconnect
 Summary: Guacamole Adhoc Connections Extension
 Group: Networking/Remote access
@@ -170,21 +157,6 @@ The purpose of the extension is to allow situations where administrators
 want to allow users the flexibility of establishing their own connections
 without having to grant them access to edit connections or even to have to create
 the connections at all, aside from typing the URI.
-
-%package auth-saml
-Summary: Guacamole SAML Authentication Extension
-Group: Networking/Remote access
-Requires: %name-client = %EVR
-AutoReqProv: noosgi, noosgi-fc
-
-%description auth-saml
-SAML is a widely implemented and used Single Sign On (SSO) provider
-that allows applications and services to authenticate in a standard way,
-and brokers those authentication requests to one or more back-end authentication providers.
-The SAML authentication extension allows Guacamole to redirect
-to a SAML Identity Provider (IdP) for authentication and user services.
-This module does not provide any capability for storing or retrieving connections,
-and must be layered with other authentication extensions that provide connection management.
 
 %package auth-totp
 Summary: Guacamole TOTP TFA Authentication Extension
@@ -202,21 +174,18 @@ of their authentication device.
 
 %prep
 #%setup -T -D -b 1  -n %name-client-%version
-%setup -T -D -b 10 -n %name-auth-cas-%version
+%setup -T -D -b 10 -n %name-auth-sso-%version
 %setup -T -D -b 11 -n %name-auth-duo-%version
-#%setup -T -D -b 12 -n %name-auth-header-%version
-%setup -T -D -b 12 -n %name-auth-header-1.2.0
+%setup -T -D -b 12 -n %name-auth-header-%version
 %setup -T -D -b 13 -n %name-auth-jdbc-%version
 %setup -T -D -b 14 -n %name-auth-ldap-%version
-%setup -T -D -b 15 -n %name-auth-openid-%version
 %setup -T -D -b 16 -n %name-auth-quickconnect-%version
-%setup -T -D -b 17 -n %name-auth-saml-%version
 %setup -T -D -b 18 -n %name-auth-totp-%version
 
 %build
 %install
 mkdir -p %buildroot%_docdir/%name
-mkdir -p %buildroot%_sysconfdir/%name/{extensions,lib}
+mkdir -p %buildroot{%_sysconfdir,%_datadir}/%name/{extensions,lib}
 mkdir -p %buildroot%_datadir/tomcat
 cp %SOURCE3 %buildroot%_sysconfdir/%name
 cp %SOURCE4 %buildroot%_sysconfdir/%name
@@ -227,36 +196,35 @@ pushd %buildroot%appdir/%name
 %jar -xf %SOURCE2
 popd
 
-#for prov in cas duo header ldap openid quickconnect saml totp; do
-for prov in cas duo ldap openid quickconnect saml totp; do
+for prov in duo header ldap quickconnect totp; do
 	mkdir -p %buildroot%_docdir/%name/auth-${prov}
 	pushd %_builddir/%name-auth-${prov}-%version
-	mv %name-auth-${prov}-%version.jar %buildroot%_sysconfdir/%name/extensions
+	mv %name-auth-${prov}-%version.jar %buildroot%_datadir/%name/extensions
+	ln -r -s %buildroot%_datadir/%name/extensions/%name-auth-${prov}-%version.jar %buildroot%_sysconfdir/%name/extensions
 	cp -r * %buildroot%_docdir/%name/auth-${prov}/
 	popd
 done
 
-# header 1.3.0 not released
-	mkdir -p %buildroot%_docdir/%name/auth-header
-	pushd %_builddir/%name-auth-header-1.2.0
-	mv %name-auth-header-1.2.0.jar %buildroot%_sysconfdir/%name/extensions
-	cp -r * %buildroot%_docdir/%name/auth-header/
-	popd
-
+pushd %_builddir/%name-auth-sso-%version
+for sso in cas openid saml; do
+	mv ${sso}/%name-auth-sso-${sso}-%version.jar %buildroot%_datadir/%name/extensions
+	ln -r -s %buildroot%_datadir/%name/extensions/%name-auth-sso-${sso}-%version.jar %buildroot%_sysconfdir/%name/extensions
+done
 
 pushd %_builddir/%name-auth-jdbc-%version
 for db in mysql postgresql sqlserver; do
 	mkdir -p %buildroot%_docdir/%name/auth-jdbc-${db}
-	mv ${db}/%name-auth-jdbc-${db}-%version.jar %buildroot%_sysconfdir/%name/extensions
+	mv ${db}/%name-auth-jdbc-${db}-%version.jar %buildroot%_datadir/%name/extensions
+	ln -r -s %buildroot%_datadir/%name/extensions/%name-auth-jdbc-${db}-%version.jar %buildroot%_sysconfdir/%name/extensions
 	cp -r ${db}/* %buildroot%_docdir/%name/auth-jdbc-${db}/
 done
 popd
 
 # LIB
 # install/symlink mysql-jdbc
-ln -s %_datadir/java/mysql-connector-java.jar %buildroot%_sysconfdir/%name/lib/mysql-connector-java.jar
+ln -r -s %buildroot%_datadir/java/mysql-connector-java.jar %buildroot%_sysconfdir/%name/lib/mysql-connector-java.jar
 # install/symlink postgresql-jdbc
-ln -s %_datadir/java/postgresql-jdbc.jar %buildroot%_sysconfdir/%name/lib/postgresql-jdbc.jar
+ln -r -s %buildroot%_datadir/java/postgresql-jdbc.jar %buildroot%_sysconfdir/%name/lib/postgresql-jdbc.jar
 
 %files client
 %dir %_docdir/%name
@@ -265,58 +233,67 @@ ln -s %_datadir/java/postgresql-jdbc.jar %buildroot%_sysconfdir/%name/lib/postgr
 %config(noreplace) %attr(0640,root,tomcat) %_sysconfdir/%name/%name.properties
 %dir %_sysconfdir/%name/extensions
 %dir %_sysconfdir/%name/lib
+%dir %_datadir/%name/extensions
 %_datadir/tomcat/.guacamole
 #%appdir/%name.war
 %defattr(0644,tomcat,tomcat,0755)
 %appdir/%name
 
-%files auth-cas
-%_sysconfdir/%name/extensions/%name-auth-cas-%version.jar
-%doc %_docdir/%name/auth-cas
+%files auth-sso
+%_sysconfdir/%name/extensions/%name-auth-sso-cas-%version.jar
+%_sysconfdir/%name/extensions/%name-auth-sso-saml-%version.jar
+%_sysconfdir/%name/extensions/%name-auth-sso-openid-%version.jar
+%_datadir/%name/extensions/%name-auth-sso-cas-%version.jar
+%_datadir/%name/extensions/%name-auth-sso-saml-%version.jar
+%_datadir/%name/extensions/%name-auth-sso-openid-%version.jar
 
 %files auth-duo
 %_sysconfdir/%name/extensions/%name-auth-duo-%version.jar
+%_datadir/%name/extensions/%name-auth-duo-%version.jar
 %doc %_docdir/%name/auth-duo
 
 %files auth-header
-%_sysconfdir/%name/extensions/%name-auth-header-*.jar
+%_sysconfdir/%name/extensions/%name-auth-header-%version.jar
+%_datadir/%name/extensions/%name-auth-header-%version.jar
 %doc %_docdir/%name/auth-header
 
 %files auth-jdbc-mysql
 %_sysconfdir/%name/extensions/%name-auth-jdbc-mysql-%version.jar
 %_sysconfdir/%name/lib/mysql-connector-java.jar
+%_datadir/%name/extensions/%name-auth-jdbc-mysql-%version.jar
 %doc %_docdir/%name/auth-jdbc-mysql
 
 %files auth-jdbc-postgresql
 %_sysconfdir/%name/extensions/%name-auth-jdbc-postgresql-%version.jar
 %_sysconfdir/%name/lib/postgresql*.jar
+%_datadir/%name/extensions/%name-auth-jdbc-postgresql-%version.jar
 %doc %_docdir/%name/auth-jdbc-postgresql
 
 %files auth-jdbc-sqlserver
 %_sysconfdir/%name/extensions/%name-auth-jdbc-sqlserver-%version.jar
+%_datadir/%name/extensions/%name-auth-jdbc-sqlserver-%version.jar
 %doc %_docdir/%name/auth-jdbc-sqlserver
 
 %files auth-ldap
 %_sysconfdir/%name/extensions/%name-auth-ldap-%version.jar
+%_datadir/%name/extensions/%name-auth-ldap-%version.jar
 %doc %_docdir/%name/auth-ldap
-
-%files auth-openid
-%_sysconfdir/%name/extensions/%name-auth-openid-%version.jar
-%doc %_docdir/%name/auth-openid
 
 %files auth-quickconnect
 %_sysconfdir/%name/extensions/%name-auth-quickconnect-%version.jar
+%_datadir/%name/extensions/%name-auth-quickconnect-%version.jar
 %doc %_docdir/%name/auth-quickconnect
-
-%files auth-saml
-%_sysconfdir/%name/extensions/%name-auth-saml-%version.jar
-%doc %_docdir/%name/auth-saml
 
 %files auth-totp
 %_sysconfdir/%name/extensions/%name-auth-totp-%version.jar
+%_datadir/%name/extensions/%name-auth-totp-%version.jar
 %doc %_docdir/%name/auth-totp
 
 %changelog
+* Thu Oct 13 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
+- 1.4.0
+- Moved extensions from /etc to /usr/share
+
 * Tue Jan 19 2021 Alexey Shabalin <shaba@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
