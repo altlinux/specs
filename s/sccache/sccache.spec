@@ -1,13 +1,23 @@
+
+%define _unpackaged_files_terminate_build 1
+%define _customdocdir %_docdir/%name
+
+%ifarch x86_64 aarch64 %ix86
+%def_with gcs
+%else
+# gcs feature depends on ring crate, which is not very portable
+%def_without gcs
+%endif
+
 Name:    sccache
 Version: 0.3.0
-Release: alt1
+Release: alt2
 
 Summary: sccache is ccache with cloud storage
 License: Apache-2.0
 Group:   Development/Tools
 Url:     https://github.com/mozilla/sccache
 
-ExcludeArch: ppc64le %arm
 
 Source:   %name-%version.tar
 
@@ -48,7 +58,11 @@ directory = "vendor"
 EOF
 
 %build
-%rust_build
+features=dist-client,redis,s3,memcached,azure
+%if_with gcs
+features="$features",gcs
+%endif
+%rust_build --no-default-features --features="$features"
 
 %install
 %rust_install
@@ -58,5 +72,8 @@ EOF
 %doc README.md docs
 
 %changelog
+* Sun Oct 16 2022 Ivan A. Melnikov <iv@altlinux.org> 0.3.0-alt2
+- Restrict use of gcs feature to build on more architectures
+
 * Wed Oct 12 2022 Ivan A. Melnikov <iv@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus
