@@ -12,7 +12,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.18
+%define major 7.19
 %define rel %nil
 %define conflictbase wine
 
@@ -835,6 +835,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sun Oct 16 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.19-alt1
+- new version 7.19 (with rpmrb script)
+
 * Fri Sep 23 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.18-alt1
 - new version 7.18 (with rpmrb script)
 
