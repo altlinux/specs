@@ -1,34 +1,34 @@
 %define _unpackaged_files_terminate_build 1
-%define appdir %_var/lib/tomcat/webapps
+%add_python3_path %_datadir/openuds/tunnel
 
 Name: openuds-tunnel
-Version: 2.5.0
-Release: alt2.1
+Version: 3.5.0
+Release: alt1
 Summary: Clientless remote desktop gateway
 License: Apache-2.0
 Group: Networking/Remote access
 Url: https://github.com/dkmstr/openuds
+BuildArch: noarch
 
-Source: ssh-tunnel.tar
-Source2: transport.war
-Source3: uds.conf
-Source4: sshd_uds.pam
-Source5: sshd_uds.conf
-Source6: sshd_uds.service
+Source: tunnel-server.tar
+Source2: guacamole-auth-uds-2.5.0.jar
+# Source2: guacamole-auth-uds.tar
+Source6: openuds-tunnel.service
 
-BuildRequires(pre): rpm-macros-cmake rpm-build-java
-BuildRequires: /proc
-BuildRequires: java-devel
-#BuildRequires: maven-local
-#BuildRequires: maven
-BuildRequires: tomcat
-BuildRequires: cmake gcc-c++
-BuildRequires: libcurl-devel libpam-devel
+#BuildRequires(pre): rpm-build-java
+#BuildRequires: /proc
+#BuildRequires: java-devel
+#BuildRequires: maven-local maven
+#BuildRequires: maven-plugin-plugin maven-resources-plugin maven-compiler-plugin maven-dependency-plugin
+#BuildRequires: google-guice
+#BuildRequires: tomcat
 
-Requires: openssh-server
-Requires: openuds-guacamole-tunnel
-Requires: pam_uds
-Requires: libnss_uds
+BuildRequires(pre): rpm-build-python3
+
+Requires: guacamole-auth-openuds
+Requires: cert-sh-functions
+Obsoletes: pam_uds
+Obsoletes: libnss_uds
 
 %description
 Guacamole is an HTML5 web application that provides access
@@ -41,125 +41,73 @@ This is the client-part.
 
 This portion of UDS (HTML5 tunnel) is based on Apache Guacamole.
 
-%package -n openuds-guacamole-tunnel
-Summary: Clientless remote desktop gateway
+%package -n guacamole-auth-openuds
+Summary: OpenUDS Integration Extension for Apache Guacamole
 License: Apache-2.0
+Version: 2.5.0
+Release: alt3
 Group: Networking/Remote access
-Provides: tomcat-transport-webapps = %EVR
+Provides: guacamole-auth-uds = %EVR
 Provides: guacamole-openuds = %EVR
-Requires: tomcat
-Requires: java-headless
+Requires: guacamole-client >= 1.4.0
 Requires: guacamole-server
-BuildArch: noarch
 AutoReqProv: noosgi, noosgi-fc
+Obsoletes: openuds-guacamole-tunnel
 
-%description -n openuds-guacamole-tunnel
-Guacamole is an HTML5 web application that provides access
-to desktop environments using remote desktop protocols such as VNC or RDP.
-A centralized server acts as a tunnel and proxy,
-allowing access to multiple desktops through a web browser.
-No plugins are needed: the client requires nothing more than a web browser
-supporting HTML5 and AJAX.
-This is the client-part.
-
-This portion of UDS (HTML5 tunnel) is based on Apache Guacamole.
-
-%package -n pam_uds
-Summary: PAM for OpenUDS
-Group: System/Base
-License: GPLv2+
-
-%description -n pam_uds
-%summary.
-
-%package -n libnss_uds
-Summary: NSS module for OpenUDS
-Group: System/Base
-License: GPLv2+
-
-%description -n libnss_uds
-%summary.
-
-It is necessary to change "passwd" in /etc/nsswitch.conf to
-passwd: files uds
+%description -n guacamole-auth-openuds
+OpenUDS Integration Extension for Apache Guacamole.
 
 %prep
-%setup -n pam-http
+#%%setup -c -a 2
+%setup -c
 
 %build
-%cmake
-%cmake_build
+#mvn -o package
 
 %install
-#%%cmake_install
-install -p -D -m 644 %_cmake__builddir/src/libnss_uds.so %buildroot/%_lib/libnss_uds.so.2
-install -p -D -m 644 %_cmake__builddir/src/pam_uds.so %buildroot/%_lib/security/pam_uds.so
-
-# Tmcat webapps
-mkdir -p %buildroot%_datadir/tomcat
-mkdir -p %buildroot%appdir/%name
-#cp %SOURCE2 %buildroot/%appdir/transport.war
-pushd %buildroot%appdir/%name
-%jar -xf %SOURCE2
-popd
-
+mkdir -p %buildroot%_datadir/openuds/tunnel
+cp -r uds_tunnel %buildroot%_datadir/openuds/tunnel/
+cp udstunnel.py %buildroot%_datadir/openuds/tunnel/
 # config
-install -p -D -m 644 %SOURCE3 %buildroot%_sysconfdir/uds.conf
+install -p -D -m 644 udstunnel.conf %buildroot%_sysconfdir/udstunnel.conf
+# systemd unit
+install -p -D -m 644 %SOURCE6 %buildroot%_unitdir/openuds-tunnel.service
 
-# sshd_uds
-mkdir %buildroot%_sbindir
-ln -s sshd %buildroot%_sbindir/sshd_uds
-install -p -D -m 600 %SOURCE4 %buildroot%_sysconfdir/pam.d/sshd_uds
-install -p -D -m 600 %SOURCE5 %buildroot%_sysconfdir/openssh/sshd_uds_config
-install -p -D -m 644 %SOURCE6 %buildroot%_unitdir/sshd_uds.service
+# guacamole-auth-openuds
+mkdir -p %buildroot{%_datadir,%_sysconfdir}/guacamole/extensions
+install -p -D -m 644 %SOURCE2 %buildroot%_datadir/guacamole/extensions/guacamole-auth-uds-2.5.0.jar
+ln -r -s %buildroot%_datadir/guacamole/extensions/guacamole-auth-uds-2.5.0.jar %buildroot%_sysconfdir/guacamole/extensions
 
-%post -n libnss_uds
-if [ -f /etc/nsswitch.conf ] ; then
-            grep -E -q '^passwd:.* uds' /etc/nsswitch.conf ||
-            sed -i.rpmorig -r -e '
-                s/^passwd:(.*)/\1:\2 uds/
-                ' /etc/nsswitch.conf >/dev/null 2>&1 || :
-fi
-update_chrooted all
-
-%postun -n libnss_uds
-if [ "$1" = "0" ]; then
-        if [ -f /etc/nsswitch.conf ] ; then
-                sed -i.rpmorig -e '
-                        /^passwd:/ !b
-                        s/[[:blank:]]\+uds\>//
-                        ' /etc/nsswitch.conf >/dev/null 2>&1 || :
-        fi
-fi
-update_chrooted all
-
+%pre
+groupadd -r -f openuds >/dev/null 2>&1 ||:
+useradd -M -r -g openuds -c 'OpenUDS Tunnel Daemon' \
+        -s /bin/false  -d %_sharedstatedir/openuds openuds >/dev/null 2>&1 ||:
 
 %post
-%post_service sshd_uds
+# Create SSL certificate for openuds-tunnel server
+cert-sh generate openuds-tunnel ||:
+cert-sh ssl_make_dhparam ||:
+%post_service openuds-tunnel
 
 %preun
-%preun_service sshd_uds
+%preun_service openuds-tunnel
+
+%post -n guacamole-auth-openuds
+grep -q uds-base-url %_sysconfdir/guacamole/guacamole.properties || echo "uds-base-url=https://www.example.org" >> %_sysconfdir/guacamole/guacamole.properties
 
 %files
-%config(noreplace) %attr(0644, root, root) %_sysconfdir/uds.conf
-%config(noreplace) %attr(0600, root, root) %_sysconfdir/pam.d/sshd_uds
-%config(noreplace) %attr(0600, root, root) %_sysconfdir/openssh/sshd_uds_config
-%_sbindir/sshd_uds
-%_unitdir/sshd_uds.service
+%config(noreplace) %attr(0644, root, root) %_sysconfdir/udstunnel.conf
+%_unitdir/openuds-tunnel.service
+%_datadir/openuds/tunnel
 
-%files -n libnss_uds
-/%_lib/libnss_uds.so.2
-%exclude /%_lib/libnss_uds.so
-
-%files -n pam_uds
-/%_lib/security/pam_uds.so
-
-%files -n openuds-guacamole-tunnel
-#%appdir/%name.war
-%defattr(0644,tomcat,tomcat,0755)
-%appdir/%name
+%files -n guacamole-auth-openuds
+%_sysconfdir/guacamole/extensions/guacamole-auth-uds-2.5.0.jar
+%_datadir/guacamole/extensions/guacamole-auth-uds-2.5.0.jar
 
 %changelog
+* Fri Oct 14 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt1
+- 3.5.0
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 2.5.0-alt2.1
 - NMU: spec: adapted to new cmake macros.
 
