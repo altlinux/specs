@@ -1,7 +1,7 @@
 %define oname numpy-stl
 
 Name: python3-module-%oname
-Version: 2.10.1
+Version: 2.17.1
 Release: alt1
 
 Summary: Library to make reading, writing and modifying both binary and ascii STL files easy
@@ -14,9 +14,13 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 BuildRequires: python3-module-matplotlib
 BuildRequires: python3-module-python_utils
-BuildRequires: python3-module-pytest python3-module-pytest-runner
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-docutils python3-module-sphinx
 
 %py3_provides stl
@@ -35,24 +39,27 @@ fastest STL editing libraries for Python available.
 sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %make -C docs html
 
 %check
-rm -fR build conf.py*
-%__python3 setup.py test
+sed -i '/--flake8/d' pytest.ini
+py.test-3 -v
 
 %files
 %doc *.rst docs/_build/html
 %_bindir/*
 %python3_sitelibdir/stl
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*.dist-info
 
 %changelog
+* Sun Oct 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.17.1-alt1
+- Automatically updated to 2.17.1.
+
 * Fri Jan 24 2020 Andrey Bychkov <mrdrew@altlinux.org> 2.10.1-alt1
 - Porting on Python3.
 
