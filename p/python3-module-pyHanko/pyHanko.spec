@@ -1,10 +1,10 @@
 %define  modulename pyHanko
 
-# only 2 tests fail
+# Tests are broken, some of them need internet connection
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 0.13.1
+Version: 0.15.0
 Release: alt1
 
 Summary: pyHanko: sign and stamp PDF files
@@ -16,7 +16,6 @@ URL:     https://github.com/MatthiasValvekens/pyHanko
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest-runner
 BuildRequires: python3-module-wheel
 
 %if_with check
@@ -37,6 +36,8 @@ BuildRequires: python3-module-certomancer-csc-dummy
 BuildRequires: python3-module-pkcs11
 Buildrequires: python3-module-pytest-aiohttp
 Buildrequires: python3-module-aiohttp-tests
+Buildrequires: python3-module-defusedxml
+Buildrequires: python3-module-pytest-asyncio
 %endif
 
 BuildArch: noarch
@@ -48,6 +49,7 @@ Source:  %name-%version.tar
 
 %prep
 %setup
+sed -i "s/, 'pytest-runner'//" setup.py
 
 %build
 %python3_build
@@ -66,5 +68,8 @@ py.test-3
 %python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun Oct 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.15.0-alt1
+- Automatically updated to 0.15.0.
+
 * Fri Sep 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.13.1-alt1
 - Initial build for Sisyphus.
