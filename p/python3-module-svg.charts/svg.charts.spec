@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 6.1
-Release: alt3
+Release: alt4
 
 Summary: Python SVG Charting Library
 
@@ -23,13 +23,13 @@ BuildRequires: python3-module-jaraco.packaging
 %endif
 
 %if_with check
-BuildRequires: python3-module-jaraco.itertools 
+BuildRequires: python3-module-jaraco.itertools
 %endif
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-cssutils python3-module-dateutil
 BuildRequires: python3-module-lxml python3-module-six
-BuildRequires: python3-module-pytest-runner python3-module-setuptools_scm
+BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-pytest python3-module-tempora
 
 %py3_provides %oname
@@ -107,6 +107,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Sun Oct 16 2022 Grigory Ustinov <grenka@altlinux.org> 6.1-alt4
+- Updated build dependencies.
+
 * Sun May 08 2022 Grigory Ustinov <grenka@altlinux.org> 6.1-alt3
 - Build without docs.
 
