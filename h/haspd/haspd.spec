@@ -3,7 +3,7 @@
 
 Name: haspd
 Version: 8.43
-Release: alt1
+Release: alt2
 
 Summary: Hardware key protection drivers and license managers
 
@@ -90,8 +90,7 @@ install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80
 %_initdir/%name
 %_initdir/haspd.outformat
 
-%ifarch "aarch64"
-%else
+%ifarch %ix86 x86_64
 %_sbindir/aksusbd
 %endif
 %dir /etc/hasplm/
@@ -108,6 +107,11 @@ install -m0644 -D aksusbd/udev/rules.d/80-hasp.rules %buildroot%_udevrulesdir/80
 %doc doc/NETHASP.INI.example LICENSE.UTF-8.txt doc/README.UTF-8.txt
 
 %changelog
+* Sat Oct 15 2022 Vitaly Lipatov <lav@altlinux.ru> 8.43-alt2
+- haspd.init: fix missed SourceIfNotEmpty
+- build.sh: fix install aksusbd for aarch64 (no install)
+- not pack aksusbd for aarch64
+
 * Thu Sep 22 2022 Vitaly Lipatov <lav@altlinux.ru> 8.43-alt1
 - update binaries from 8.43 Sentinel LDK
 - allow build on aarch64
