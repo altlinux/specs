@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Script/Singleton.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 #
 #   - IPC::Shareable -
@@ -13,7 +16,7 @@
 %def_disable test
 
 Name: perl-IPC-Shareable
-Version: 1.12
+Version: 1.13
 Release: alt1
 
 Summary: %m_name - share Perl variables between processes
@@ -51,6 +54,9 @@ arrays, hashes of hashes, etc.
 %doc CREDITS DISCLAIMER README
 
 %changelog
+* Wed Oct 12 2022 Igor Vlasenko <viy@altlinux.org> 1.13-alt1
+- automated CPAN update
+
 * Fri Mar 25 2022 Igor Vlasenko <viy@altlinux.org> 1.12-alt1
 - automated CPAN update
 
