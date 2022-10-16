@@ -4,7 +4,7 @@
 
 Name: apparmor
 Version: 3.0.7
-Release: alt2
+Release: alt3
 
 Summary: Name-based Mandatory Access Control
 
@@ -148,6 +148,7 @@ fi
 %_bindir/*
 %_datadir/apparmor
 %_man1dir/*
+%_man5dir/*
 %_man7dir/*
 %_man8dir/*
 
@@ -178,6 +179,9 @@ fi
 %python3_sitelibdir/LibAppArmor-%version-py3*.egg-info
 
 %changelog
+* Sun Oct 16 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.7-alt3
+- Packed man pages for 5 section.
+
 * Sun Oct 16 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.7-alt2
 - SysVInit: Added condrestart.
 - Added post-install and pre-uninstall scripts.
