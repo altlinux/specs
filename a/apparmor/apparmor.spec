@@ -4,11 +4,11 @@
 
 Name: apparmor
 Version: 3.0.7
-Release: alt1
+Release: alt2
 
 Summary: Name-based Mandatory Access Control
 
-License: GPL-2.0-or-later
+License: GPL-2.0-or-later and LGPL-2.1-or-later
 Group: System/Base
 Url: https://apparmor.net
 
@@ -121,10 +121,27 @@ make check -C binutils
 
 make -C profiles check-parser
 
+%post
+if [ $1 -ge 2 ]; then
+	/sbin/service apparmor condrestart ||:
+else
+	/sbin/chkconfig --add apparmor ||:
+fi
+
+%preun
+if [ $1 = 0 ]; then
+	/sbin/chkconfig --del apparmor ||:
+fi
+
 %files -f apparmor.lang
-%_initdir/apparmor
-%_sysconfdir/apparmor
-%_sysconfdir/apparmor.d
+%config(noreplace) %_sysconfdir/apparmor
+%dir %_sysconfdir/apparmor.d
+%dir %_sysconfdir/apparmor.d/disable
+%dir %_sysconfdir/apparmor.d/local
+%_sysconfdir/apparmor.d/abi
+%_sysconfdir/apparmor.d/abstractions
+%_sysconfdir/apparmor.d/tunables
+
 /sbin/*
 /usr/sbin/*
 /lib/apparmor
@@ -134,7 +151,8 @@ make -C profiles check-parser
 %_man7dir/*
 %_man8dir/*
 
-/lib/systemd/system/apparmor.service
+%_initdir/apparmor
+%_unitdir/apparmor.service
 
 %files -n libapparmor%sover
 /%_lib/libapparmor.so.%sover
@@ -160,5 +178,11 @@ make -C profiles check-parser
 %python3_sitelibdir/LibAppArmor-%version-py3*.egg-info
 
 %changelog
+* Sun Oct 16 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.7-alt2
+- SysVInit: Added condrestart.
+- Added post-install and pre-uninstall scripts.
+- Fixed configs.
+- Fixed license.
+
 * Sat Oct 15 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.7-alt1
 - Initial build with a basic support for ALT Sisyphus.
