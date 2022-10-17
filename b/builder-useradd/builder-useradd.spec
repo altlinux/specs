@@ -1,5 +1,5 @@
 Name: builder-useradd
-Version: 1.4
+Version: 1.5
 Release: alt1
 Summary: Add user and configure hasher and gear for him/her
 License: GPLv2+
@@ -35,6 +35,9 @@ install -m 644 %SOURCE2 ./
 %_sbindir/%name
 
 %changelog
+* Fri Oct 14 2022 Anton Midyukov <antohami@altlinux.org> 1.5-alt1
+- add settings for for comfortable work
+
 * Thu Mar 03 2022 Anton Midyukov <antohami@altlinux.org> 1.4-alt1
 - fix $HOME directory definition for not x86 systems
 
