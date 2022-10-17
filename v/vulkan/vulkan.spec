@@ -1,6 +1,6 @@
 Name: vulkan
 Version: 1.3.231
-Release: alt1
+Release: alt1.1
 Summary: Khronos group Vulkan API SDK
 
 Group: System/Libraries
@@ -104,13 +104,14 @@ pushd ../vulkan-layers
 # sigh inttypes
 sed -i 's/inttypes.h/cinttypes/' layers/*.{cpp,h}
 popd
+%ifarch %e2k
+# -Werror=unknown-pragmas vs loader/dev_ext_trampoline.c:24 @ lcc 1.25.23
+# was the last drop, let's tear all of 'em off
+sed -i "s/-Werror/-Wno-error/g" \
+	%_builddir/vulkan-{layers,loader,tools}/CMakeLists.txt
+%endif
 
 %build
-%ifarch %e2k
-# lcc 1.24.11 considers parameter_validation_utils.cpp partially meaningless
-# and vk_mem_alloc.h somewhat pointless and overdeclaring
-%add_optflags -Wno-error=ignored-qualifiers -Wno-error=type-limits -Wno-error=unused-variable
-%endif
 # vulkan-headers first
 pushd %_builddir/vulkan-headers
 %cmake
@@ -192,6 +193,9 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Sun Oct 16 2022 Michael Shigorin <mike@altlinux.org> 1.3.231-alt1.1
+- E2K: ftbfs workaround (ilyakurdyukov@; -Wno-error).
+
 * Sat Oct 15 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.231-alt1
 - Bump BR.
 - Updated to sdk-1.3.231:
