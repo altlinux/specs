@@ -1,9 +1,10 @@
 Name: mksh
-Version: 52b
+Version: 59c
 Release: alt1
 
 Summary: MirBSD enhanced version of the Korn Shell
-License: BSD
+# ISC (strlcpy.c) and MirOS (the rest)
+License: MirOS AND ISC
 Group: Shells
 
 URL: http://www.mirbsd.de/mksh.htm
@@ -11,8 +12,6 @@ URL: http://www.mirbsd.de/mksh.htm
 # http://www.mirbsd.org/MirOS/dist/mir/%{name}/%{name}-R%{version}.tgz
 Source0: %{name}-%{version}.tar
 Source1: %{name}.watch
-
-Packager: Alexey Gladkov <legion@altlinux.ru>
 
 %description
 mksh is the MirBSD enhanced version of the Public Domain Korn shell (pdksh),
@@ -38,6 +37,10 @@ install -D -m 644 %name.1 %buildroot/%_man1dir/%name.1
 %doc dot.mkshrc
 
 %changelog
+* Mon Oct 17 2022 Alexey Gladkov <legion@altlinux.ru> 59c-alt1
+- New version (R59c).
+- Update license tag.
+
 * Thu Feb 11 2016 Alexey Gladkov <legion@altlinux.ru> 52b-alt1
 - new version (R52b).
 
