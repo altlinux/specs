@@ -5,7 +5,7 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.36.26
+Version: 1.36.29
 Release: alt1
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
@@ -168,6 +168,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Mon Oct 17 2022 Anton Farygin <rider@altlinux.ru> 1.36.29-alt1
+- 1.36.26 -> 1.36.29
+
 * Tue Oct 04 2022 Anton Farygin <rider@altlinux.ru> 1.36.26-alt1
 - 1.36.25 -> 1.36.26
 
