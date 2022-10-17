@@ -3,7 +3,7 @@
 %define oname lazr.restfulclient
 
 Name: python3-module-%oname
-Version: 0.14.4
+Version: 0.14.5
 Release: alt1
 
 Summary: A programmable lazr.restful client library
@@ -46,7 +46,7 @@ Requires: %name = %version-%release
 %python3_install
 
 %files
-%doc HACKING.rst README.rst
+%doc *.rst
 %python3_sitelibdir/lazr/restfulclient
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 %python3_sitelibdir/%oname-%version-py%_python3_version-nspkg.pth
@@ -56,6 +56,9 @@ Requires: %name = %version-%release
 %python3_sitelibdir/lazr/restfulclient/tests
 
 %changelog
+* Sun Oct 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.14.5-alt1
+- Automatically updated to 0.14.5.
+
 * Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.14.4-alt1
 - Automatically updated to 0.14.4.
 
