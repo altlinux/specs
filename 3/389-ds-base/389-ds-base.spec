@@ -17,7 +17,7 @@
 
 Name: 389-ds-base
 Version: 2.2.3
-Release: alt1
+Release: alt2
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -418,6 +418,9 @@ fi
 %endif
 
 %changelog
+* Mon Oct 17 2022 Stanislav Levin <slev@altlinux.org> 2.2.3-alt2
+- Fixed build against Rust 1.56.
+
 * Tue Sep 27 2022 Stanislav Levin <slev@altlinux.org> 2.2.3-alt1
 - 1.4.3.28 -> 2.2.3.
 
