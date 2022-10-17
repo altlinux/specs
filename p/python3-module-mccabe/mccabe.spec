@@ -3,7 +3,7 @@
 
 Name:               python3-module-%oname
 Version:            0.7.0
-Release:            alt1
+Release:            alt1.1
 
 Summary:            McCabe complexity checker
 
@@ -17,7 +17,6 @@ Source: %name-%version.tar
 BuildArch:          noarch
 
 BuildRequires: python3-module-setuptools rpm-build-python3
-BuildRequires: python3-module-pytest-runner
 
 %description
 Ned's script to check McCabe complexity.
@@ -41,6 +40,9 @@ checker.
 %python3_sitelibdir/__pycache__/%{oname}.*
 
 %changelog
+* Mon Oct 17 2022 Grigory Ustinov <grenka@altlinux.org> 0.7.0-alt1.1
+- NMU: updated build dependencies.
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
 - new version 0.7.0 (with rpmrb script)
 
