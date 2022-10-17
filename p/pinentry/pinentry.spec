@@ -5,7 +5,7 @@
 
 Name: pinentry
 Version: 1.1.0
-Release: alt6
+Release: alt7
 
 Summary: Simple PIN or passphrase entry dialog
 License: GPLv2+
@@ -254,6 +254,9 @@ install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
 %_infodir/*.info*
 
 %changelog
+* Mon Oct 17 2022 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt7
+- drop ubt macro
+
 * Mon Jun 28 2021 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt6
 - disable qt4 UI
 
@@ -274,13 +277,13 @@ install -pDm755 pinentry-wrapper %buildroot/%_bindir/pinentry
   + dropped unused macros
   + dropped %%ubt
 
-* Thu Apr 19 2018 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1%ubt
+* Thu Apr 19 2018 Sergey V Turchin <zerg@altlinux.org> 1.1.0-alt1
 - new version
 
-* Thu Dec 07 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt2%ubt
+* Thu Dec 07 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt2
 - fix detect pinentry-qt5 (ALT#34290)
 
-* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt1%ubt
+* Mon Apr 17 2017 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt1
 - new version
 
 * Fri Apr 29 2016 Sergey V Turchin <zerg@altlinux.org> 0.9.7-alt2
