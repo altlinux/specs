@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Python tool to create HTML documentation from markdown sources
@@ -21,8 +21,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: fonts-font-awesome
 
 # build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3(hatchling)
 
 %if_with check
 # install_requires:
@@ -76,7 +75,12 @@ done
 [ "$fonts_bundled" != "yes" ] && exit 1
 
 %check
-export TOXENV=py%{python_version_nodots python3}-unittests
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    # see tool.hatch.envs.test.scripts.test
+    python -m unittest discover -p '*tests.py' mkdocs --top-level-directory .
+EOF
 %tox_check_pyproject
 
 %files
@@ -85,6 +89,9 @@ export TOXENV=py%{python_version_nodots python3}-unittests
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 17 2022 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1
+- 1.4.0 -> 1.4.1.
+
 * Fri Oct 07 2022 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.3.1 -> 1.4.0.
 

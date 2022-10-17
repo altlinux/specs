@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname ghp-import
+%define pypi_name ghp-import
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.0.1
+Name: python3-module-%pypi_name
+Version: 2.1.0
 Release: alt1
 Summary: Copy your docs directly to the gh-pages branch
 License: Apache-2.0
@@ -18,11 +18,13 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 # install_requires:
 BuildRequires: python3(dateutil)
-
-BuildRequires: python3(tox)
 %endif
 
 Provides: ghp-import.py3 = %EVR
@@ -32,7 +34,7 @@ Obsoletes: ghp-import.py3 < 0.5.5
 Conflicts: ghp-import
 
 # PyPI name(dash, underscore)
-%py3_provides %oname
+%py3_provides %pypi_name
 
 Requires: git
 
@@ -47,10 +49,10 @@ a bit more robust.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 # upstream doesn't provide tests, at least, install it and run `--help`
@@ -60,16 +62,19 @@ usedevelop=True
 commands =
     {envbindir}/ghp-import --help
 EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc LICENSE README.md
 %_bindir/ghp-import
-%python3_sitelibdir/*
+%python3_sitelibdir/ghp_import.py
+%python3_sitelibdir/__pycache__/ghp_import.*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 17 2022 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
+- 2.0.1 -> 2.1.0.
+
 * Mon Jul 19 2021 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
 - 0.5.4 -> 2.0.1 (closes: #40448).
 - Stopped build for Python2(EOL).
