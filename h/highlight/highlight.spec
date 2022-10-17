@@ -1,6 +1,6 @@
 Name:    highlight
 Summary: Universal source code to formatted text converter
-Version: 4.1
+Version: 4.3
 Release: alt1
 Group:   Development/Tools
 License: GPL-3.0
@@ -99,6 +99,9 @@ rm -rf -- %buildroot/%_datadir/doc/%name
 %perl_vendor_archlib/*
 
 %changelog
+* Mon Oct 17 2022 Alexey Gladkov <legion@altlinux.ru> 4.3-alt1
+- New version (4.3).
+
 * Wed Jun 23 2021 Alexey Gladkov <legion@altlinux.ru> 4.1-alt1
 - New version (4.1).
 
