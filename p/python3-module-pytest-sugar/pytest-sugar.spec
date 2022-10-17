@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 0.9.5
-Release: alt1
+Release: alt2
 Summary: Plugin for py.test that shows failures and errors instantly and shows a progress bar
 License: BSD
 Group: Development/Python3
@@ -46,7 +46,8 @@ feel of py.test (e.g. progressbar, show tests that fail instantly).
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%tox_create_default_config
+%tox_check_pyproject -- -vra test_sugar.py
 
 %files
 %doc *.rst
@@ -55,6 +56,9 @@ feel of py.test (e.g. progressbar, show tests that fail instantly).
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 17 2022 Stanislav Levin <slev@altlinux.org> 0.9.5-alt2
+- Fixed FTBFS (pip 22.3).
+
 * Thu Sep 22 2022 Stanislav Levin <slev@altlinux.org> 0.9.5-alt1
 - 0.9.4 -> 0.9.5.
 
