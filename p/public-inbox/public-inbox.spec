@@ -1,7 +1,7 @@
 Summary: An "archives first" approach to mailing lists
 
 Name: public-inbox
-Version: 1.8.0
+Version: 1.9.0
 Release: alt1
 
 Group: Networking/Mail
@@ -9,6 +9,7 @@ License: AGPL-3.0
 URL: https://public-inbox.org
 
 Source0: %name-%version.tar
+Source1: %name.watch
 
 Patch1: 0001-Do-not-show-loose-matches.patch
 Patch2: 0002-Hide-from-thread-missing-messages.patch
@@ -125,6 +126,9 @@ mkdir -p "$HOME/.cache/public-inbox/inline-c"
 %_man8dir/*
 
 %changelog
+* Mon Oct 17 2022 Alexey Gladkov <legion@altlinux.ru> 1.9.0-alt1
+- New version (1.9.0).
+
 * Wed May 04 2022 Alexey Gladkov <legion@altlinux.ru> 1.8.0-alt1
 - New version (1.8.0).
 
