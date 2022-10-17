@@ -1,9 +1,10 @@
+%def_without kde4
 Name: altlinux-mime-defaults
-Version: 0.437
+Version: 0.438
 Release: alt1
 
 Summary: System-wide MIME preferences.
-License: BSD
+License: ALT-Public-Domain
 Group: Graphical desktop/Other
 
 URL: http://altlinux.org/
@@ -25,11 +26,13 @@ System-wide MIME preferences.
 
 %install
 install -D -m 644 %{SOURCE0} %buildroot%_desktopdir/mimeapps.list
-install -D -m 644 %{S:1} %buildroot/%_datadir/kde4/applications/kde4/mimeapps.list
 install -D -m 644 %{S:2} %buildroot/%_datadir/gnome/applications/defaults.list
 install -D -m 644 %{S:3} %buildroot/%_datadir/mate/applications/defaults.list
-ln -s kde4/mimeapps.list %buildroot/%_datadir/kde4/applications/mimeapps.list
 install -D -m 644 %{S:4} %buildroot/%_datadir/kf5/applications/mimeapps.list
+%if_with kde4
+install -D -m 644 %{S:1} %buildroot/%_datadir/kde4/applications/kde4/mimeapps.list
+ln -s kde4/mimeapps.list %buildroot/%_datadir/kde4/applications/mimeapps.list
+%endif
 
 touch %buildroot/%_desktopdir/defaults.list
 
@@ -39,12 +42,18 @@ touch %buildroot/%_desktopdir/defaults.list
 %_desktopdir/mimeapps.list
 %_desktopdir/defaults.list
 %_datadir/kf5/applications/mimeapps.list
-%_datadir/kde4/applications/kde4/mimeapps.list
-%_datadir/kde4/applications/mimeapps.list
 %_datadir/gnome/applications/defaults.list
 %_datadir/mate/applications/defaults.list
+%if_with kde4
+%_datadir/kde4/applications/kde4/mimeapps.list
+%_datadir/kde4/applications/mimeapps.list
+%endif
 
 %changelog
+* Mon Oct 17 2022 Igor Vlasenko <viy@altlinux.org> 0.438-alt1
+- updated mime defaults
+- moved up thunderbird for mail (closes: #44040)
+
 * Fri May 13 2022 Igor Vlasenko <viy@altlinux.org> 0.437-alt1
 - updated mime defaults
 
