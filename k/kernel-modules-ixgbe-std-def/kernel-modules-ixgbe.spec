@@ -1,5 +1,5 @@
 %define module_name             ixgbe
-%define module_version          5.16.5
+%define module_version          5.17.1
 %define module_release          alt1
 
 %define flavour std-def
@@ -79,6 +79,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Oct 17 2022 Alexei Takaseev <taf@altlinux.org> 5.17.1-alt1
+- 5.17.1
 
 * Fri Aug 05 2022 Alexei Takaseev <taf@altlinux.org> 5.16.5-alt1
 - 5.16.5
