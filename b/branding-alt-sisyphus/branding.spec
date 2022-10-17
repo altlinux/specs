@@ -1,6 +1,8 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+#def_with slideshow
+
 %define theme sisyphus
 %define Theme Sisyphus
 %define codename sisyphus
@@ -12,7 +14,7 @@
 
 Name: branding-%flavour
 Version: 20220110
-Release: alt2
+Release: alt3
 
 Url: http://en.altlinux.org
 
@@ -314,8 +316,12 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %files notes
 %_datadir/alt-notes/*
 
+%if_with slideshow
 %files slideshow
 /usr/share/install2/slideshow
+%else
+%exclude /usr/share/install2/slideshow
+%endif
 
 %define indexhtmldir %_defaultdocdir/indexhtml
 
@@ -331,6 +337,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Mon Oct 17 2022 Anton Midyukov <antohami@altlinux.org> 20220110-alt3
+- disable slideshow subpackage
+
 * Tue Jan 11 2022 Anton Midyukov <antohami@altlinux.org> 20220110-alt2
 - save initial release
 - drop conflict with system-logo
