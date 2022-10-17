@@ -1,7 +1,7 @@
-%define lng_list af ar as ast be be@latin bg bn bn_IN br bs ca ca@valencia crh cs csb cy da de el en en_GB en_US eo es es_AR et eu fa fi fr fy ga gd gl gu ha he hi hne hr hsb hu hy ia id is it ja ka kk km kn ko ku lb lt lv mai mk ml mr ms nb nds ne nl nn oc or pa pl ps pt pt_BR ro ru se si sk sl sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta te tg th tr tt ug uk uz uz@cyrillic vi wa xh zh_CN zh_HK zh_TW
+%define lng_list af ar as ast be be@latin bg bn bn_IN br bs ca ca@valencia crh cs csb cy da de el en en_GB en_US eo es es_AR et eu fa fi fr fy ga gd gl gu ha he hi hne hr hsb hu hy ia id is it ja ka kk km kn ko ku lb lt lv mai mk ml mr ms my nb nds ne nl nn oc or pa pl ps pt pt_BR ro ru se si sk sl sq sr sr@ijekavian sr@ijekavianlatin sr@latin sv ta te tg th tok tr tt ug uk uz uz@cyrillic vi wa xh zh_CN zh_HK zh_TW
 
 %define major 5
-%define minor 90
+%define minor 98
 %define bugfix 0
 
 Name: kf5-filesystem
@@ -71,11 +71,13 @@ mkdir -p %buildroot/%_K5xdgconf/{autostart,colors,menus,ui}
 
 mkdir -p %buildroot/%_datadir/{qlogging-categories5,}
 
-mkdir -p %buildroot/%_K5data/{katepart5,knotifications5,kservices5/ServiceMenus,kservicetypes5,kxmlgui5,knsrcfiles}
+mkdir -p %buildroot/%_K5data/{katepart5,knotifications5,kservicetypes5,kxmlgui5,knsrcfiles,ksmserver}
+mkdir -p %buildroot/%_K5data/{kpackage/genericqml,plasma/kinfocenter,kio_desktop/DesktopLinks}
+mkdir -p %buildroot/%_K5data/{kservices5/ServiceMenus,icons/breeze,icons/breeze-dark}
 
-mkdir -p %buildroot/%_K5i18n/
 for l in %lng_list
 do
+    mkdir -p %buildroot/%_datadir/locale/$l/LC_SCRIPTS
     mkdir -p %buildroot/%_K5i18n/$l/{LC_MESSAGES,LC_SCRIPTS}
 done
 
@@ -104,6 +106,7 @@ install -m 0644 %SOURCE10 %buildroot/%_K5xdgconf/
 #%config %_K5conf_dbus_sysd/kf5.conf
 %_bindir/kde5
 %_datadir/*5/
+%_datadir/locale/*/LC_SCRIPTS/
 %_K5plug/kf5
 %dir %_sysconfdir/kf5
 %dir %_sysconfdir/kf5/*
@@ -118,6 +121,10 @@ install -m 0644 %SOURCE10 %buildroot/%_K5xdgconf/
 %dir %_desktopdir/kf5
 
 %changelog
+* Mon Oct 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.98.0-alt1
+- package /usr/share/locale/*/LC_SCRIPTS/ (closes: 30947)
+- package more dirs from /usr/share/kf5/
+
 * Mon Mar 21 2022 Sergey V Turchin <zerg@altlinux.org> 5.90.0-alt1
 - disable GHNS by default
 
