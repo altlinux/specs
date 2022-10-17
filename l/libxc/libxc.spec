@@ -1,5 +1,5 @@
 Name:     libxc
-Version:  5.2.3
+Version:  6.0.0
 Release:  alt1
 
 Summary:  Library of exchange-correlation functionals for density-functional theory
@@ -42,7 +42,6 @@ Group: Development/C
 %files
 %doc README.md AUTHORS
 %_bindir/xc-info
-%_bindir/xc-threshold
 %_libdir/*.so.*
 
 %files devel
@@ -51,5 +50,8 @@ Group: Development/C
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Oct 17 2022 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
+- New version.
+
 * Mon Jun 06 2022 Andrey Cherepanov <cas@altlinux.org> 5.2.3-alt1
 - Initial build for Sisyphus.
