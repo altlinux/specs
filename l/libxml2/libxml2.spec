@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libxml2
-Version: 2.9.14
+Version: 2.10.3
 Release: alt1
 Epoch: 1
 
@@ -155,11 +155,9 @@ pushd build
 ln -s ../xmlconf
 mkdir -p fuzz
 %define _configure_script ../configure
+export PYTHON="%__python3"
 %configure \
-    --with-python=%_bindir/python3 \
-    --with-python-install-dir=%python3_sitelibdir \
-    --with-html-dir=%_docdir \
-    --with-html-subdir=%name-%version \
+    --with-python \
     %{subst_enable static} \
     --disable-silent-rules
 %make_build DOC_MODULE=%name-%version
@@ -167,11 +165,9 @@ popd
 %if_with python2
 mkdir python2
 pushd python2
+export PYTHON="%__python"
 %configure \
-	--with-python=%_bindir/python2 \
-	--with-python-install-dir=%python_sitelibdir \
-	--with-html-dir=%_docdir \
-	--with-html-subdir=%name-%version \
+	--with-python \
 	--disable-static \
 	--disable-silent-rules
 cp -la ../build/{*.la,.libs} .
@@ -191,8 +187,8 @@ find %buildroot -type f -name '*.la' -print -delete
 mv %buildroot%_datadir/aclocal/libxml{,2}.m4
 
 %define pkgdocdir %_docdir/%name-%version
+mv %buildroot%_defaultdocdir/%name %buildroot%pkgdocdir
 install -p -m644 Copyright NEWS README.md %buildroot%pkgdocdir/
-install -p -m644 doc/*.html %buildroot%pkgdocdir/
 rm -rf %buildroot%_defaultdocdir/%name
 
 %files
@@ -211,13 +207,11 @@ rm -rf %buildroot%_defaultdocdir/%name
 %files devel
 %_bindir/*-config
 %_libdir/*.so
-%_libdir/*.sh
 %_includedir/*
 %_pkgconfigdir/*
 %_libdir/cmake/*
 %_aclocaldir/*
 %_man1dir/*-config*
-%_man3dir/*
 
 %if_enabled static
 %files devel-static
@@ -235,15 +229,18 @@ rm -rf %buildroot%_defaultdocdir/%name
 %files doc
 %dir %pkgdocdir
 %pkgdocdir/*.html
-%pkgdocdir/*.gif
-%pkgdocdir/*.png
-%pkgdocdir/html
 %pkgdocdir/examples
 %pkgdocdir/tutorial
 %pkgdocdir/python
-%doc %_datadir/gtk-doc/html/libxml2/
+%_datadir/gtk-doc/html/libxml2
 
 %changelog
+* Fri Oct 14 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.10.3-alt1
+- 2.10.3 (Fixes: CVE-2022-40303,CVE-2022-40304)
+
+* Wed Aug 17 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.10.0-alt1
+- 2.10.0 (Fixes: CVE-2022-2309)
+
 * Mon May 02 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.9.14-alt1
 - 2.9.14 (Fixes: CVE-2022-29824, CVE-2022-23308)
 
