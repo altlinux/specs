@@ -2,7 +2,7 @@
 
 Name: lm_sensors3
 Version: 3.6.0
-Release: alt2
+Release: alt3
 
 Summary: Hardware Health Monitoring Tools
 License: LGPLv2+ and GPLv3+ and GPLv2+ and Verbatim and Public Domain
@@ -20,6 +20,8 @@ Source5: lm_sensors-modprobe-r-wrapper
 Source6: sensord.service
 Source7: sensord.sysconfig
 Source8: sensord-service-wrapper
+Source9: fancontrol.init
+Source10: sensord.init
 
 Patch1: lm_sensors3-3.4.0-alt-set_limit.patch
 Patch2: lm_sensors3-3.1.0-makefile-norpath.patch
@@ -134,7 +136,7 @@ sed -i "s|\@WRAPPER_DIR\@|%_libexecdir/%name|" sensord.service
       EXLDFLAGS= \
       install
 
-mkdir -p %buildroot%_sysconfdir/sysconfig
+mkdir -p %buildroot{%_sysconfdir/sysconfig,%_initdir}
 install -pm 644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/lm_sensors
 install -pm 644 %SOURCE7 %buildroot%_sysconfdir/sysconfig/sensord
 
@@ -152,8 +154,11 @@ install -pm 755 %SOURCE5 %buildroot%_libexecdir/%name/lm_sensors-modprobe-r-wrap
 # sensord service wrapper
 install -pm 755 %SOURCE8 %buildroot%_libexecdir/%name/sensord-service-wrapper
 
-install -pD -m755 prog/init/sensord.init %buildroot%_datadir/%name/sensord.init
-install -pD -m755 prog/init/fancontrol.init %buildroot%_datadir/%name/fancontrol.init
+# fancontrol init.d service
+touch %buildroot%_sysconfdir/fancontrol
+install -pm 755 %SOURCE9 %buildroot%_initdir/fancontrol
+# sensord init.d service
+install -pm 755 %SOURCE10 %buildroot%_initdir/sensord
 
 install -pD -m755 prog/init/sysconfig-lm_sensors-convert %buildroot%_datadir/%name/sysconfig-lm_sensors-convert
 
@@ -162,6 +167,9 @@ cp -ar prog/tellerstats %buildroot%_datadir/%name
 
 # remove static library
 rm %buildroot%_libdir/*.a
+
+# egrep is obsolete
+subst 's,egrep,grep -E,g' %buildroot%_sbindir/pwmconfig
 
 %post
 %post_service lm_sensors
@@ -206,8 +214,10 @@ fi
 %files utils
 %_sbindir/sensord
 %_unitdir/sensord.service
+%_initdir/sensord
 %_sbindir/fancontrol
 %_unitdir/fancontrol.service
+%_initdir/fancontrol
 %ifarch %ix86 x86_64
 %_sbindir/isadump
 %_sbindir/isaset
@@ -225,6 +235,7 @@ fi
 %exclude %_datadir/%name/sysconfig-lm_sensors-convert
 %_libexecdir/%name/sensord-service-wrapper
 %config(noreplace) %{_sysconfdir}/sysconfig/sensord
+%ghost %attr(0600,root,root) %config(noreplace,missingok) %_sysconfdir/fancontrol
 
 %files -n libsensors3
 %_libdir/*.so.*
@@ -241,6 +252,10 @@ fi
 %endif #static
 
 %changelog
+* Mon Oct 17 2022 L.A. Kostis <lakostis@altlinux.ru> 3.6.0-alt3
+- Added init.d files for sensord and fancontrol (closes ALT #38131).
+- pwmconfig: get rid of egrep.
+
 * Sat Oct 30 2021 Anton Midyukov <antohami@altlinux.org> 3.6.0-alt2
 - remove static library (fix FTBFS with LTO)
 - drop old obsoletes, conflicts
