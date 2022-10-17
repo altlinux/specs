@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     Cardinal
-Version:  22.09
+Version:  22.10
 Release:  alt1
 
 Summary:  Virtual modular synthesizer plugin
@@ -38,7 +38,7 @@ Source109: pffft-74d7261be17cf659d5930d4830609406bd7553e3.tar
 # https://github.com/VCVRack/rtmidi.git
 Source110: rtmidi-2c5b0778e38b5030afc80c8e9d7adc9b58ef650e.tar
 # https://github.com/DISTRHO/DPF.git
-Source111: DPF-dcee933ef595dc62fa9ea79d9d3cadaf85d0d543.tar
+Source111: DPF-48eb45016b67547b02d2ac644cd2a147da7cf7b9.tar
 # https://github.com/DISTRHO/pugl.git
 Source112: pugl-48032d1c3cb59e13deb2c3ec66afcf3ed65d97f4.tar
 # https://github.com/DLTcollab/sse2neon.git
@@ -90,7 +90,7 @@ Source135: DrumKit-d44b52e9bf8915c06382bfd1a41a460bafbfd671.tar
 # https://github.com/JerrySievert/SynthDevKit.git
 Source136: SynthDevKit-0f322e58f00f1a04276ecc3eadb610b418f040d5.tar
 # https://github.com/falkTX/Carla.git
-Source137: Carla-8c58d0994cd512263e34db1c8f45c1f1a9689a58.tar
+Source137: Carla-dc9b58b4cb148f5f38654defe19b1fe2556acc21.tar
 # https://github.com/falkTX/Carla-Plugins
 Source138: Carla-Plugins-e32f21fe9947740592f29401ff2b3f1f951c1d56.tar
 # https://github.com/CardinalModules/mscHack.git
@@ -134,7 +134,7 @@ Source157: LifeFormModular-c7b8d096f618c421d7d45784b894c0ac2f3395b0.tar
 # https://github.com/netboy3/21kHz-rack-plugins.git
 Source158: 21kHz-rack-plugins-0bee82247151e2fe2885f1e15fbbd74ddb4f48d0.tar
 # https://github.com/DISTRHO/PawPaw.git
-Source159: PawPaw-75d86db5d171228247e1297d13090cb11220fe92.tar
+Source159: PawPaw-1fcfa969e98624dd3d98a30a0925eb1c3991e4d2.tar
 # https://github.com/LomasModules/LomasModules.git
 Source160: LomasModules-b714cdb0c662503bc6cf60c06765b426a4caa17f.tar
 # https://github.com/expertsleepersltd/vcvrack-encoders.git
@@ -229,7 +229,6 @@ Source204: dBiz-88f1bd64cff6e96a1a48566a1692de86b9a7de2a.tar
 Source205: simde-12069d720f43830ae9791e8b0f4c4fa3c88012a0.tar
 # https://github.com/nemequ/munit.git
 Source206: munit-da8f73412998e4f1adf1100dc187533a51af77fd.tar
-
 # }}}
 
 Patch1:   Cardinal-22.07-alt-lv2-in-lib64.patch
@@ -476,6 +475,9 @@ install -m 644 docs/*.md docs/*.png %buildroot%_datadir/doc/cardinal/docs/
 %doc %_datadir/doc/cardinal
 
 %changelog
+* Sat Oct 15 2022 Ivan A. Melnikov <iv@altlinux.org> 22.10-alt1
+- 22.10
+
 * Mon Sep 19 2022 Ivan A. Melnikov <iv@altlinux.org> 22.09-alt1
 - 22.09
 
