@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.27
+Version: 0.5.28
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,9 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Thu Aug 04 2022 Anton Midyukov <antohami@altlinux.org> 0.5.28-alt1
+- Disable swap outside of the chroot when umount_chroot
+
 * Tue Aug 02 2022 Anton Midyukov <antohami@altlinux.org> 0.5.27-alt1
 - Fix condition for "remount: unable to re-identify rootfs device"
 - Do not remount if $destdir is not defined
