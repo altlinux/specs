@@ -9,7 +9,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 65.4.1
+Version: 65.5.0
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -40,9 +40,6 @@ BuildRequires: python3(pytest_xdist)
 BuildRequires: python3(pytest_virtualenv)
 BuildRequires: python3(pytest_enabler)
 BuildRequires: python3(tomli)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(virtualenv)
 BuildRequires: python3(wheel)
 BuildRequires: python3-module-ini2toml-lite
@@ -197,6 +194,9 @@ export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION NO_INTERNET'
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Fri Oct 14 2022 Stanislav Levin <slev@altlinux.org> 1:65.5.0-alt1
+- 65.4.1 -> 65.5.0.
+
 * Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 1:65.4.1-alt1
 - 65.3.0 -> 65.4.1.
 
