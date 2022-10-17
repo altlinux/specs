@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libcpuid
-Version: 0.5.1
-Release: alt3.20220828
+Version: 0.6.0
+Release: alt1
 Summary: libcpuid provides CPU identification for the x86 (and x86_64)
 License: BSD-2-Clause
 Group: Development/C
@@ -54,6 +54,9 @@ on the project's site (http://libcpuid.sourceforge.net/)
 %_prefix/lib/cmake/cpuid
 
 %changelog
+* Mon Oct 17 2022 Anton Midyukov <antohami@altlinux.org> 0.6.0-alt1
+- new version 0.6.0
+
 * Mon Aug 29 2022 Anton Midyukov <antohami@altlinux.org> 0.5.1-alt3.20220828
 - new snapshot
 - exclusive arch ix86, x86_64
