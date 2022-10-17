@@ -159,7 +159,7 @@
 
 Name:		ffmpeg-plugin-browser
 Version:	102
-Release:	alt2
+Release:	alt3
 
 Summary:	FFmpeg built specifically for codec support in special browser
 License:	GPLv3
@@ -762,9 +762,13 @@ tests/checkasm/checkasm
 
 %files
 %doc README.* MAINTAINERS Changelog* LICENSE.md CREDITS*
+%dir %_libdir/ffmpeg-plugin-browser/
 %_libdir/ffmpeg-plugin-browser/libffmpeg.so
 
 %changelog
+* Mon Oct 17 2022 Sergey V Turchin <zerg@altlinux.org> 102-alt3
+- package plugin directory
+
 * Mon Sep 19 2022 Sergey V Turchin <zerg@altlinux.org> 102-alt2
 - fix to build with new sdl2
 
