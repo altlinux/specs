@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.12.6
+Version: 1.13.1
 Release: alt1
 
 Summary: Installer common parts
@@ -74,8 +74,6 @@ BuildArch: noarch
 Provides: %name-stage3 = %version-%release
 Obsoletes: %name-stage3 < %version-%release
 Requires: alterator-notes
-# stage2 and stage3 are mutually exclusive
-Conflicts: %name-common-stage2
 
 Provides: installer-feature-eth-by-mac-stage3
 Obsoletes: installer-feature-eth-by-mac-stage3
@@ -95,22 +93,29 @@ This package contains common installer stage3 files and dependencies.
 
 %install
 %makeinstall
-mkdir -p %buildroot%_sysconfdir/apt/apt.conf.d/
-cat > %buildroot%_sysconfdir/apt/apt.conf.d/installer-cache-limit.conf <<@@@
-APT::Cache-Limit "$((32*1024*1024))";
-@@@
 
 %files common-stage2
 %_bindir/*
 %_sbindir/*
 %_datadir/install2
-%_sysconfdir/apt/apt.conf.d/installer-cache-limit.conf
 %exclude %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %files common-stage3
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Oct 17 2022 Anton Midyukov <antohami@altlinux.org> 1.13.1-alt1
+- remove x11vnc, if the package was not installed by the installer
+
+* Fri Oct 14 2022 Anton Midyukov <antohami@altlinux.org> 1.13.0-alt1
+- postinstall: fix typo in comment
+- postinstall: copy postinstall scripts from $destdir
+- postinstall: do not touch /etc/mtab
+- installer.spec: remove conflict between installer-common-stage{2,3}
+- postinstall.d: fix remove installer pkgs, if alterator-postinstall not installed
+- create apt-cache limit config in initinstall script
+- postinstall.d: remove livecd* packages also
+
 * Fri Sep 30 2022 Anton Midyukov <antohami@altlinux.org> 1.12.6-alt1
 - postinstall.d/65-setup-services.sh: add systemd-logind support
 
