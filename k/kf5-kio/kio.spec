@@ -3,7 +3,7 @@
 %def_enable streebog
 
 Name: kf5-%rname
-Version: 5.98.0
+Version: 5.99.0
 Release: alt1
 %K5init altplace
 
@@ -164,7 +164,7 @@ sed -i '/install.*desktop.*DESTINATION.*KDE_INSTALL_KSERVICESDIR/d' src/kcms/*/C
 %_K5archdata/mkspecs/modules/qt_KIO*.pri
 %_K5archdata/mkspecs/modules/qt_KNTLM.pri
 %_K5dbus_iface/*.xml
-%_K5data/kdevfiletemplates/templates/*io*
+%_K5data/kdevappwizard/templates/*io*
 
 %files -n libkf5kiocore
 %_K5lib/libKF5KIOCore.so.*
@@ -178,6 +178,9 @@ sed -i '/install.*desktop.*DESTINATION.*KDE_INSTALL_KSERVICESDIR/d' src/kcms/*/C
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Tue Oct 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.99.0-alt1
+- new version
+
 * Mon Sep 12 2022 Sergey V Turchin <zerg@altlinux.org> 5.98.0-alt1
 - new version
 

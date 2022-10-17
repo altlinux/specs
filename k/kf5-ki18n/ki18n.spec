@@ -7,7 +7,7 @@
 %add_python3_path %_libdir/cmake
 
 Name: kf5-%rname
-Version: 5.98.0
+Version: 5.99.0
 Release: alt1
 %K5init altplace
 
@@ -151,6 +151,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Tue Oct 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.99.0-alt1
+- new version
+
 * Mon Sep 12 2022 Sergey V Turchin <zerg@altlinux.org> 5.98.0-alt1
 - new version
 

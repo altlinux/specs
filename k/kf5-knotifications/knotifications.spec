@@ -1,7 +1,7 @@
 %define rname knotifications
 
 Name: kf5-%rname
-Version: 5.98.0
+Version: 5.99.0
 Release: alt1
 %K5init altplace
 
@@ -87,6 +87,9 @@ KF5 library
 #%_K5srvtyp/*.desktop
 
 %changelog
+* Tue Oct 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.99.0-alt1
+- new version
+
 * Mon Sep 12 2022 Sergey V Turchin <zerg@altlinux.org> 5.98.0-alt1
 - new version
 
