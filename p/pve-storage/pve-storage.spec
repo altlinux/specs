@@ -3,7 +3,7 @@
 Name: pve-storage
 Summary: PVE storage management library
 Version: 7.2.10
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -14,7 +14,7 @@ ExclusiveArch: x86_64 aarch64
 Provides: libpve-storage-perl = %EVR
 Requires: gdisk parted hdparm
 Requires: multipath-tools lvm2 thin-provisioning-tools
-Requires: ceph-common >= 12.2.1 ceph-fuse
+Requires: ceph >= 12.2.1 ceph-fuse
 Requires: cifs-utils samba-client
 Requires: cstream
 Requires: glusterfs-client >= 3.4.2
@@ -58,6 +58,9 @@ __EOF__
 %_man1dir/pvesm.1*
 
 %changelog
+* Tue Oct 18 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.10-alt2
+- add ceph requires
+
 * Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.10-alt1
 - 7.2-10
 
