@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 4.5.0
-Release: alt2
+Release: alt3
 
-Summary: OpenStack test framework
+Summary: OpenStack Oslo test framework
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/oslotest/latest
+Url: https://pypi.org/project/oslotest
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -39,7 +39,8 @@ BuildRequires: python3-module-sphinxcontrib-apidoc
 %endif
 
 %description
-%summary.
+The Oslo Test framework provides common fixtures, support for debugging,
+and better support for mocking results.
 
 %package tests
 Summary: Tests for %oname
@@ -59,7 +60,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -101,11 +102,12 @@ popd
 %_bindir/oslo_debug_helper
 %_bindir/oslo_run_cross_tests
 %_bindir/oslo_run_pre_release_tests
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
 %if_with docs
 %files doc
@@ -114,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt3
+- Spec refactoring.
+
 * Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt2
 - Added manual.
 

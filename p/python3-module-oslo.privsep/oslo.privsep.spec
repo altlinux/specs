@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 3.0.1
-Release: alt1
+Release: alt2
 
 Summary: OpenStack library for privilege separation
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/oslo.privsep/latest
+Url: https://pypi.org/project/oslo.privsep
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -69,7 +69,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -102,11 +102,12 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/privsep-helper
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_privsep
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/oslo_privsep/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_privsep/tests
 
 %if_with docs
 %files doc
@@ -115,6 +116,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
+- Spec refactoring.
+
 * Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Automatically updated to 3.0.1.
 

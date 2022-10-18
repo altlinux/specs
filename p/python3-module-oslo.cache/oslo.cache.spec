@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 3.1.0
-Release: alt1
+Release: alt2
 
-Summary: Cache storage for Openstack projects
+Summary: Cache storage for OpenStack projects
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/oslo.cache/latest
+Url: https://pypi.org/project/oslo.cache
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -49,7 +49,10 @@ BuildRequires: python3-module-sphinxcontrib-apidoc
 %py3_requires dogpile.cache
 
 %description
-%summary.
+oslo.cache aims to provide a generic caching mechanism for OpenStack projects
+by wrapping the dogpile.cache library. The dogpile.cache library provides
+support memoization, key value storage and interfaces to common caching backends
+such as Memcached.
 
 %package tests
 Summary: Tests for %oname
@@ -70,7 +73,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rvf *.egg-info
@@ -101,11 +104,12 @@ install -pDm 644 man/oslocache.1 %buildroot%_man1dir/oslocache.1
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_cache
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/oslo_cache/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_cache/tests
 
 %if_with docs
 %files doc
@@ -114,6 +118,9 @@ install -pDm 644 man/oslocache.1 %buildroot%_man1dir/oslocache.1
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt2
+- Spec refactoring.
+
 * Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
 - Automatically updated to 3.1.0.
 

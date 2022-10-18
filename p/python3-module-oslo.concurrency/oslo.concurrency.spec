@@ -5,13 +5,13 @@
 
 Name: python3-module-%oname
 Version: 5.0.1
-Release: alt2
+Release: alt3
 
-Summary: OpenStack oslo.concurrency library
+Summary: OpenStack Oslo Concurrency library
 
 Group: Development/Python3
 License: Apache-2.0
-Url: https://docs.openstack.org/oslo.concurrency/latest
+Url: https://pypi.org/project/oslo.concurrency
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -68,7 +68,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -100,11 +100,12 @@ install -pDm 644 man/osloconcurrency.1 %buildroot%_man1dir/osloconcurrency.1
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/lockutils-wrapper
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_concurrency
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/oslo_concurrency/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_concurrency/tests
 
 %if_with docs
 %files doc
@@ -113,6 +114,9 @@ install -pDm 644 man/osloconcurrency.1 %buildroot%_man1dir/osloconcurrency.1
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt3
+- Spec refactoring.
+
 * Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt2
 - Added manual.
 

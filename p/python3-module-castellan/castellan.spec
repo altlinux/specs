@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: Generic Key Manager interface for OpenStack
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/castellan/latest
+Url: https://pypi.org/project/castellan
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -71,7 +71,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -102,11 +102,12 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
 %if_with docs
 %files doc
@@ -115,6 +116,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt2
+- Spec refactoring.
+
 * Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - Automatically updated to 4.0.0.
 

@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 5.1.0
-Release: alt2
+Release: alt3
 
-Summary: OpenStack Oslo Internationalization Utilities
+Summary: OpenStack Oslo i18n library
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/oslo.i18n/latest
+Url: https://pypi.org/project/oslo.i18n
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -63,7 +63,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -94,11 +94,12 @@ install -pDm 644 man/osloi18n.1 %buildroot%_man1dir/osloi18n.1
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_i18n
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/oslo_i18n/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_i18n/tests
 
 %if_with docs
 %files doc
@@ -107,6 +108,9 @@ install -pDm 644 man/osloi18n.1 %buildroot%_man1dir/osloi18n.1
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt3
+- Spec refactoring.
+
 * Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt2
 - Added manual.
 

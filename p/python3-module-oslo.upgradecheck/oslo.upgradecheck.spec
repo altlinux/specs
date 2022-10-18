@@ -1,16 +1,16 @@
-%define  oname oslo.upgradecheck
+%define oname oslo.upgradecheck
 %def_with check
 %def_with docs
 
-Name:    python3-module-%oname
+Name: python3-module-%oname
 Version: 2.0.0
-Release: alt2
+Release: alt3
 
-Summary: Common code for writing OpenStack upgrade checks
+Summary: OpenStack Common code for writing OpenStack upgrade checks
 
 License: Apache-2.0
-Group:   Development/Python3
-URL:     https://docs.openstack.org/oslo.upgradecheck/latest
+Group: Development/Python3
+Url: https://pypi.org/project/oslo.upgradecheck
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -41,10 +41,9 @@ BuildRequires: python3-module-sphinx >= 2.0.0
 %endif
 
 %description
-This project can be used to assist with the implementation of a $SERVICE-status
-command that responds to parameters of upgrade check by running upgrade check
-functions on the existing installation. For further details see Usage and
-the Nova documentation on upgrade checks.
+This project contains the common code necessary for writing upgrade checks
+in OpenStack projects. It includes a module for the common code as well as an
+example of integrating that code into a project.
 
 %package tests
 Summary: Tests for %oname
@@ -65,7 +64,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -97,11 +96,12 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_upgradecheck
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/oslo_upgradecheck/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_upgradecheck/tests
 
 %if_with docs
 %files doc
@@ -110,6 +110,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt3
+- Spec refactoring.
+
 * Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt2
 - Added manual.
 

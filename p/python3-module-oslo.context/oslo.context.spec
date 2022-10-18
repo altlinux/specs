@@ -4,15 +4,15 @@
 
 Name: python3-module-%oname
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
-Summary: OpenStack oslo.context library
+Summary: OpenStack Oslo Context library
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/oslo.context/latest
+Url: https://pypi.org/project/oslo.context
 
-Source:  %oname-%version.tar
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -63,7 +63,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -94,11 +94,12 @@ install -pDm 644 man/oslocontext.1 %buildroot%_man1dir/oslocontext.1
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_context
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/oslo_context/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_context/tests
 
 %if_with docs
 %files doc
@@ -107,6 +108,9 @@ install -pDm 644 man/oslocontext.1 %buildroot%_man1dir/oslocontext.1
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt2
+- Spec refactoring.
+
 * Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
 - Automatically updated to 5.0.0.
 

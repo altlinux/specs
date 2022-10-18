@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 2.6.2
-Release: alt1
+Release: alt2
 
-Summary: OpenStackClient (aka OSC) is a command-line client for OpenStack
+Summary: OpenStackClient Library
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/osc-lib/latest
+Url: https://pypi.org/project/osc-lib
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -65,7 +65,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -96,11 +96,12 @@ install -pDm 644 man/openstackclientclibase.1 %buildroot%_man1dir/openstackclien
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/osc_lib
+%python3_sitelibdir/osc_lib-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/osc_lib/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/osc_lib/tests
 
 %if_with docs
 %files doc
@@ -109,6 +110,9 @@ install -pDm 644 man/openstackclientclibase.1 %buildroot%_man1dir/openstackclien
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt2
+- Spec refactoring.
+
 * Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt1
 - Automatically updated to 2.6.2.
 

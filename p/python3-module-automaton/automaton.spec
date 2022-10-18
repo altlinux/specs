@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 3.0.1
-Release: alt1
+Release: alt2
 
-Summary: Friendly state machines for python
+Summary: OpenStack Friendly state machines for python
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/automaton/latest
+Url: https://pypi.org/project/automaton
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -33,7 +33,12 @@ BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 %endif
 
 %description
-%summary.
+Friendly state machines for python. The goal of this library is to provide well
+documented state machine classes and associated utilities. The state machine
+pattern (or the implemented variation there-of) is a commonly used pattern
+and has a multitude of various usages. Some of the usages for this library
+include providing state & transition validation and running/scheduling/analyzing
+the execution of tasks.
 
 %package tests
 Summary: Tests for %oname
@@ -53,7 +58,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -84,11 +89,12 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
 %if_with docs
 %files doc
@@ -97,6 +103,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
+- Spec refactoring.
+
 * Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Automatically updated to 3.0.1.
 

@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
-Summary: Command Line Interface Formulation Framework
+Summary: OpenStack Command Line Interface Formulation Framework
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/cliff/latest
+Url: https://pypi.org/project/cliff
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -42,8 +42,7 @@ BuildRequires: python3-module-importlib-metadata
 
 %description
 cliff is a framework for building command line programs. It uses setuptools
-entry points to provide subcommands, output formatters, and other
-extensions.
+entry points to provide subcommands, output formatters, and other extensions.
 
 %package tests
 Summary: Tests for %oname
@@ -63,7 +62,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg info
 rm -rfv *.egg-info
@@ -94,11 +93,12 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
 %if_with docs
 %files doc
@@ -107,6 +107,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt2
+- Spec refactoring.
+
 * Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - Automatically updated to 4.0.0.
 - Unified.

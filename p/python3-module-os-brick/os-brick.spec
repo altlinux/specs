@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 6.1.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Cinder brick library for managing local volume attaches
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/os-brick/latest
+Url: https://pypi.org/project/os-brick
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -78,7 +78,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -116,11 +116,12 @@ mv %buildroot/usr/etc/os-brick/rootwrap.d/*.filters %buildroot%_sysconfdir/%onam
 %dir %_sysconfdir/%oname
 %dir %_sysconfdir/%oname/rootwrap.d
 %config(noreplace) %_sysconfdir/%oname/rootwrap.d/*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/os_brick
+%python3_sitelibdir/os_brick-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/os_brick/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/os_brick/tests
 
 %if_with docs
 %files doc
@@ -129,6 +130,9 @@ mv %buildroot/usr/etc/os-brick/rootwrap.d/*.filters %buildroot%_sysconfdir/%onam
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt2
+- Spec refactoring.
+
 * Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
 - Automatically updated to 6.1.0.
 

@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 6.0.1
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Oslo Utility library
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/oslo.utils/latest
+Url: https://pypi.org/project/oslo.utils
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -73,7 +73,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -104,11 +104,12 @@ install -pDm 644 man/osloutils.1 %buildroot%_man1dir/osloutils.1
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_utils
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/oslo_utils/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_utils/tests
 
 %if_with docs
 %files doc
@@ -117,6 +118,9 @@ install -pDm 644 man/osloutils.1 %buildroot%_man1dir/osloutils.1
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 6.0.1-alt2
+- Spec refactoring.
+
 * Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 6.0.1-alt1
 - Automatically updated to 6.0.1.
 

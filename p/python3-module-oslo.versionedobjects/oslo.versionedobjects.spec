@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 3.0.1
-Release: alt1
+Release: alt2
 
-Summary: OpenStack oslo.versionedobjects library
+Summary: OpenStack Oslo Versioned Objects library
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/oslo.versionedobjects/latest
+Url: https://pypi.org/project/oslo.versionedobjects
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -50,12 +50,11 @@ BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 %endif
 
 %description
-oslo.versionedobjects library deals with DB schema being at different versions
-than the code expects, allowing services to be operated safely during upgrades.
-It enables DB independent schema by providing an abstraction layer, which
-allows us to support SQL and NoSQL Databases. oslo.versionedobjects is also
-used in RPC APIs, to ensure upgrades happen without spreading version dependent
-code across different services and projects.
+The oslo.versionedobjects library provides a generic versioned object model
+that is RPC-friendly, with inbuilt serialization, field typing, and remotable
+method calls. It can be used to define a data model within a project independent
+of external APIs or database schema for the purposes of providing upgrade
+compatibility across distributed services.
 
 %package tests
 Summary: Tests for %oname
@@ -76,7 +75,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -107,13 +106,14 @@ install -pDm 644 man/osloversionedobjects.1 %buildroot%_man1dir/osloversionedobj
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/test.py
+%python3_sitelibdir/oslo_versionedobjects
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/oslo_versionedobjects/tests
+%exclude %python3_sitelibdir/oslo_versionedobjects/test.py
 
 %files tests
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/test.py
+%python3_sitelibdir/oslo_versionedobjects/tests
+%python3_sitelibdir/oslo_versionedobjects/test.py
 
 %if_with docs
 %files doc
@@ -122,6 +122,9 @@ install -pDm 644 man/osloversionedobjects.1 %buildroot%_man1dir/osloversionedobj
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
+- Spec refactoring.
+
 * Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Automatically updated to 3.0.1.
 

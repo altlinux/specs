@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 3.0.0
-Release: alt2
+Release: alt3
 
 Summary: A library for plugging and unplugging virtual interfaces in OpenStack
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/os-vif/latest
+Url: https://pypi.org/project/os-vif
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -69,7 +69,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -101,11 +101,21 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/os_vif
+%python3_sitelibdir/vif_plug_linux_bridge
+%python3_sitelibdir/vif_plug_noop
+%python3_sitelibdir/vif_plug_ovs
+%python3_sitelibdir/os_vif-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/os_vif/tests
+%exclude %python3_sitelibdir/vif_plug_linux_bridge/tests
+%exclude %python3_sitelibdir/vif_plug_noop/tests
+%exclude %python3_sitelibdir/vif_plug_ovs/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/os_vif/tests
+%python3_sitelibdir/vif_plug_linux_bridge/tests
+%python3_sitelibdir/vif_plug_noop/tests
+%python3_sitelibdir/vif_plug_ovs/tests
 
 %if_with docs
 %files doc
@@ -114,6 +124,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt3
+- Spec refactoring.
+
 * Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt2
 - Added manual.
 

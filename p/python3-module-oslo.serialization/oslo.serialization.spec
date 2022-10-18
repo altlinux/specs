@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 5.0.0
-Release: alt1
+Release: alt2
 
-Summary: OpenStack oslo.serialization library
+Summary: OpenStack Oslo Serialization library
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/oslo.serialization/latest
+Url: https://pypi.org/project/oslo.serialization
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -64,7 +64,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -95,11 +95,12 @@ install -pDm 644 man/osloserialization.1 %buildroot%_man1dir/osloserialization.1
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_serialization
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/oslo_serialization/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_serialization/tests
 
 %if_with docs
 %files doc
@@ -108,6 +109,9 @@ install -pDm 644 man/osloserialization.1 %buildroot%_man1dir/osloserialization.1
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt2
+- Spec refactoring.
+
 * Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
 - Automatically updated to 5.0.0.
 
