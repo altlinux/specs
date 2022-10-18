@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 22.09
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -11,6 +11,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: qt5-qmltermwidget
+Requires: qml(org.kde.kirigamiaddons.labs.mobileform)
 Conflicts: cool-retro-term <= 1.0.1-alt1
 
 Source: %rname-%version.tar
@@ -75,6 +76,9 @@ Requires: %name-common
 #%_K5lib/libqmlkonsole.so.*
 
 %changelog
+* Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt2
+- fix requires
+
 * Wed Oct 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt1
 - new version
 
