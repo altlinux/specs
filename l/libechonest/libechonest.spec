@@ -7,21 +7,25 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 
+%define qt4 0
 %define qt5 1
 #define tests 1
 
 Name:		libechonest
-Version: 	2.3.0
-Release:	alt1_17
+Version: 	2.3.1
+Release:	alt1
 Summary:	C++ wrapper for the Echo Nest API
 
 License:	GPLv2+
 URL:		https://projects.kde.org/projects/playground/libs/libechonest
-Source0:	http://files.lfranchi.com/libechonest-%{version}.tar.bz2
+#	http://files.lfranchi.com/libechonest-%{version}.tar.bz2
+Source0:	libechonest-%{version}.tar
 
 BuildRequires:	ctest cmake
+%if 0%{?qt4}
 BuildRequires:	pkgconfig(QJson)
 BuildRequires:	pkgconfig(QtNetwork)
+%endif
 %if 0%{?qt5}
 BuildRequires:  pkgconfig(Qt5Network)
 %endif
@@ -63,12 +67,14 @@ Requires: libechonest-qt5 = %{version}-%{release}
 
 %build
 export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
+
+%if 0%{?qt4}
 %global _vpath_builddir %{_target_platform}
 %{fedora_v2_cmake} .. \
   -DBUILD_WITH_QT4:BOOL=ON \
   -DECHONEST_BUILD_TESTS:BOOL=%{?tests:ON}%{!?tests:OFF}
-
 %fedora_v2_cmake_build
+%endif
 
 %if 0%{?qt5}
 %global _vpath_builddir %{_target_platform}-qt5
@@ -83,12 +89,16 @@ export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 %if 0%{?qt5}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}-qt5
 %endif
+%if 0%{?qt4}
 make install/fast DESTDIR=%{buildroot} -C %{_target_platform}
+%endif
 
 
 %check
 export PKG_CONFIG_PATH=%{buildroot}%{_libdir}/pkgconfig
+%if 0%{?qt4}
 test "$(pkg-config --modversion libechonest)" = "%{version}" 
+%endif
 %if 0%{?qt5}
 test "$(pkg-config --modversion libechonest5)" = "%{version}"
 %endif
@@ -100,30 +110,32 @@ time make test -C %{_target_platform} ARGS="--timeout 300 --output-on-failure" |
 
 
 
+%if 0%{?qt4}
 %files
 %doc AUTHORS COPYING README TODO
 %{_libdir}/libechonest.so.2.3*
-
 %files devel
 %{_includedir}/echonest/
 %{_libdir}/libechonest.so
 %{_libdir}/pkgconfig/libechonest.pc
+%endif
 
 %if 0%{?qt5}
-
-
 %files -n libechonest-qt5
 %doc AUTHORS COPYING README TODO
 %{_libdir}/libechonest5.so.2.3*
-
 %files -n libechonest-qt5-devel
-%{_includedir}/echonest/
+%{_includedir}/echonest5/
 %{_libdir}/libechonest5.so
 %{_libdir}/pkgconfig/libechonest5.pc
 %endif
 
 
 %changelog
+* Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 2.3.1-alt1
+- new version
+- drop Qt4 support (closes: 44037)
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 2.3.0-alt1_17
 - update to new release by fcimport
 
