@@ -1,7 +1,7 @@
 %define rname mbox-importer
 
 Name: kde5-%rname
-Version: 22.08.1
+Version: 22.08.2
 Release: alt1
 %K5init
 
@@ -81,6 +81,9 @@ KF5 library
 #%_K5lib/libmbox-importer.so.*
 
 %changelog
+* Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
+- new version
+
 * Thu Sep 08 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
 - new version
 

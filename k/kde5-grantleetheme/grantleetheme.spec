@@ -4,8 +4,8 @@
 %define libkf5grantleetheme libkf5grantleetheme%sover
 
 Name: kde5-%rname
-Version: 22.08.1
-Release: alt2
+Version: 22.08.2
+Release: alt1
 %K5init
 
 Group: System/Libraries
@@ -82,6 +82,9 @@ KF5 library
 %_libdir/grantlee/5.?/*grantlee_*.so
 
 %changelog
+* Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
+- new version
+
 * Fri Sep 16 2022 Oleg Solovyov <mcpain@altlinux.org> 22.08.1-alt2
 - fix crash (Closes: #43805)
 
