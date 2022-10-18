@@ -1,8 +1,8 @@
 
 Name: adcli
-Version: 0.9.1
+Version: 0.9.2
 
-Release: alt2
+Release: alt1
 Summary: Active Directory enrollment
 License: LGPLv2+
 Group: Networking/Other
@@ -58,6 +58,18 @@ documentation.
 %doc %_datadir/doc/adcli
 
 %changelog
+* Mon Oct 17 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.2-alt1
+- Add support LDAP add/mod operation to set/change password:
+ + fix unable to join to active directory after KB5008380/CVE-2021-42287 with
+   option '--ldap-passwd';
+ + https://gitlab.freedesktop.org/realmd/adcli/-/issues/27
+- Add support fall back to LDAPS if CLDAP ping was not successful
+ + If the --use-ldaps option is used and there is no reply on the CLDAP 389/udp
+   port adcli will try to send the request to the LDAPS port 636/tcp.
+- Fix write SID before secret to Samba's db looks like 'net changesecretpw'
+- Add passwd-user sub-command for (re)set a user password.
+- Add dont-expire-password option for computer.
+
 * Sat Oct 30 2021 Alexey Shabalin <shaba@altlinux.org> 0.9.1-alt2
 - Upstream master snapshot.
 

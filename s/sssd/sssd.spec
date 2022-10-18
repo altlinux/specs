@@ -8,7 +8,7 @@
 %def_disable systemtap
 
 Name: sssd
-Version: 2.7.4
+Version: 2.8.0
 Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
@@ -743,6 +743,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %_man8dir/sssd_krb5_locator_plugin*
 %_mandir/*/man8/sssd_krb5_locator_plugin*
 %_man8dir/sssd_krb5_localauth_plugin*
+%_mandir/*/man8/sssd_krb5_localauth_plugin*
 
 %files -n libsss_sudo
 %_libdir/libsss_sudo.so*
@@ -878,6 +879,33 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Sat Oct 15 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.8.0-alt1
+- AD GPO: Fix support processing referrals for hostname
+- New features
+  + Introduced the dbus function
+    org.freedesktop.sssd.infopipe.Users.ListByAttr(attr, value, limit)
+    listing upto limit users matching the filter attr=value.
+  + sssctl is now able to create, list and delete indexes on the local caches.
+    Indexes are useful for the new D-Bus ListByAttr() function.
+  + sssctl is now able to read and set each component's debug level
+    independently.
+- Important fixes
+  + domains option in [sssd] section can now be completely omitted if domains
+    are enabled via domains/enabled option.
+- New options:
+  + core_dumpable, ldap_enumeration_refresh_offset,
+    subdomain_refresh_interval_offset, dyndns_refresh_interval_offset
+    refresh_expired_interval_offset, ldap_purge_cache_offset.
+- Configuration changes:
+  + Option 'ad_machine_account_password_renewal_opts' now accepts an optional
+    third part as the maximum deviation in the provided period (first part) and
+    initial delay (second part). If the period and initial delay are provided
+    but not the offset, the offset is assumed to be 0. If no part is provided,
+    the default is 86400:750:300.
+  + override_homedir now recognizes the %h template which is replaced by the
+    original home directory retrieved from the identity provider, but in lower
+    case.
+
 * Wed Sep 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.7.4-alt1
 - Update to latest 2.7 major release.
 - Lock-free client support will be only built if libc provides
