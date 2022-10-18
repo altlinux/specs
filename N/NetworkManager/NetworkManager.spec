@@ -58,7 +58,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.40.0
+Version: 1.40.2
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -470,20 +470,10 @@ make check
 rm -rf %_var/lib/NetworkManager/timestamps/ ||:
 
 %post daemon
-#post_service %name
-SYSTEMCTL=systemctl
-if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-	"$SYSTEMCTL" daemon-reload ||:
-	if [ "$1" -eq 1 ]; then
-		"$SYSTEMCTL" -q preset %name.service %name-wait-online.service %name-dispatcher.service nm-priv-helper.service ||:
-	fi
-else
-	if [ "$1" -eq 1 ]; then
-		/sbin/chkconfig --add NetworkManager ||:
-	else
-		/sbin/chkconfig NetworkManager resetpriorities ||:
-	fi
-fi
+%post_service_posttrans_restart %name
+%post_service_posttrans_restart %name-wait-online.service
+%post_service_posttrans_restart %name-dispatcher.service
+%post_service_posttrans_restart nm-priv-helper.service
 
 %preun daemon
 #preun_service %name
@@ -647,6 +637,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Oct 18 2022 Mikhail Efremov <sem@altlinux.org> 1.40.2-alt1
+- daemon: Use %%post_service_posttrans_restart macro.
+- nm-drivers.rules: Fixed sed path.
+- Updated to 1.40.2.
+
 * Mon Aug 29 2022 Mikhail Efremov <sem@altlinux.org> 1.40.0-alt1
 - Updated to 1.40.0.
 
