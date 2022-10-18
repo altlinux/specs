@@ -1,5 +1,5 @@
 Name: git
-Version: 2.33.4
+Version: 2.33.5
 Release: alt1
 
 Summary: Git core and tools
@@ -534,6 +534,9 @@ popd
 %endif #doc
 
 %changelog
+* Thu Oct 06 2022 Dmitry V. Levin <ldv@altlinux.org> 2.33.5-alt1
+- 2.33.4 -> 2.33.5 (fixes: CVE-2022-39253, CVE-2022-39260).
+
 * Thu Jun 23 2022 Dmitry V. Levin <ldv@altlinux.org> 2.33.4-alt1
 - 2.33.3 -> 2.33.4 (fixes: CVE-2022-29187).
 
