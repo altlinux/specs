@@ -1,7 +1,7 @@
 %def_disable snapshot
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 53
+%define ver_major 54
 %define beta %nil
 %define domain gsconnect@andyholmes.github.io
 %define xdg_name org.gnome.Shell.Extensions.GSConnect
@@ -33,10 +33,11 @@ Requires: gnome-shell >= 42
 Requires: /usr/bin/ffmpeg /usr/bin/fusermount
 Requires: /usr/bin/ssh-keygen /usr/bin/ssh-add
 Requires: fuse-sshfs /usr/bin/openssl
+Requires: libadwaita-gir >= 1.2
 
-BuildRequires(pre): meson rpm-build-gir rpm-build-python3
-BuildRequires: eslint libgio-devel libdbus-devel
-%{?_enable_check:BuildRequires: xvfb-run %_bindir/gjs typelib(Gdk) = 3.0}
+BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
+BuildRequires: meson eslint libgio-devel libdbus-devel libgtk4-devel
+%{?_enable_check:BuildRequires: xvfb-run %_bindir/gjs typelib(Gdk) = 3.0 typelib(Adw) = 1}
 
 %add_python3_path %_datadir/gnome-shell/extensions/%domain %_datadir/nautilus-python/extensions
 # imports.gi.St.Settings.get()
@@ -96,6 +97,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Tue Oct 18 2022 Yuri N. Sedunov <aris@altlinux.org> 54-alt1
+- 54
+
 * Fri Mar 25 2022 Yuri N. Sedunov <aris@altlinux.org> 53-alt1
 - 53
 
