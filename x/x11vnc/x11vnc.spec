@@ -1,6 +1,6 @@
 Name: x11vnc
 Version: 0.9.16
-Release: alt2
+Release: alt3
 
 %def_with avahi
 
@@ -28,6 +28,18 @@ x11vnc allows one to remotely view and interact with real X displays
 with any VNC viewer. In this way it plays the role for Unix/X11 that
 WinVNC plays for Windows.
 
+%package gui
+License: GPL
+Group: Networking/Remote access
+BuildArch: noarch
+Summary: GUI for x11vnc running
+
+# /usr/bin/wish
+Requires: tk
+
+%description gui
+%summary.
+
 %package scripts
 License: GPL
 Group: Networking/Remote access
@@ -35,7 +47,7 @@ BuildArch: noarch
 Summary: Various x11vnc wrappers
 
 %description scripts
-%summary
+%summary.
 
 In this directory you'll find a hodgepodge of wrapper scripts and
 utility programs that have found some use with x11vnc.
@@ -59,8 +71,10 @@ install tkx11vnc %buildroot%_bindir/
 %files
 %_bindir/%name
 %_man1dir/%name.*
-%_desktopdir/*
 %doc README NEWS
+
+%files gui
+%_desktopdir/%name.desktop
 
 %files scripts
 %_bindir/tkx11vnc
@@ -68,6 +82,9 @@ install tkx11vnc %buildroot%_bindir/
 %exclude  %_bindir/Xdummy
 
 %changelog
+* Tue Oct 18 2022 Anton Midyukov <antohami@altlinux.org> 0.9.16-alt3
+- separate subpackage %%name-gui with %%_desktopdir/%%name.desktop
+
 * Wed Jan 20 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.16-alt2
 - Applied security fix from upstream (Fixes: CVE-2020-29074).
 
