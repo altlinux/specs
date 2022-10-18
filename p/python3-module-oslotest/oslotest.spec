@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.5.0
-Release: alt3
+Release: alt4
 
 Summary: OpenStack Oslo test framework
 
@@ -116,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt4
+- Fixed watch file.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt3
 - Spec refactoring.
 
