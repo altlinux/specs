@@ -5,7 +5,7 @@
 %def_without check
 
 Name: ravada
-Version: 1.7.5
+Version: 1.7.7
 Release: alt1
 Summary: Remote Virtual Desktops Manager
 License: AGPL-3.0
@@ -182,6 +182,9 @@ fi
 %config(noreplace)%_sysconfdir/rvd_front.conf
 
 %changelog
+* Tue Oct 18 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.7.7-alt1
+- 1.7.7
+
 * Thu Sep 22 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.7.5-alt1
 - 1.7.5
 - remove explicit dependancy on mariadb-common
