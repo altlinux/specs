@@ -9,8 +9,8 @@
 %def_enable malcontent
 
 Name: gnome-initial-setup
-Version: %ver_major.0
-Release: alt1%beta
+Version: %ver_major.1
+Release: alt1
 
 Summary: GNOME Initial Setup
 Group: Graphical desktop/GNOME
@@ -113,6 +113,9 @@ useradd -rM -d %_localstatedir/lib/%name -s /sbin/nologin %name &>/dev/null || :
 %doc README* NEWS
 
 %changelog
+* Tue Oct 18 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
+- 43.1
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 
