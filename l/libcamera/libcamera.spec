@@ -1,15 +1,24 @@
+%define _libexecdir %_prefix/libexec
+
+%def_enable test
+%def_disable check
+
 Name: libcamera
-Version: 0.0.20210204
-Release: alt3
+Version: 0.0.1
+Release: alt1
+Epoch: 1
 
 Summary: A complex camera support library for Linux
 License: LGPL-2.1-or-later
 Group: Video
 Url: https://libcamera.org/
 
-Source: %name-%version-%release.tar
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ meson >= 0.51 openssl boost-devel qt5-tools-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: gcc-c++ meson >= 0.56
+BuildRequires: openssl boost-devel qt5-tools-devel
 BuildRequires: pkgconfig(gnutls)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-video-1.0)
@@ -19,9 +28,16 @@ BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Gui)
 BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(udev)
+BuildRequires: pkgconfig(yaml-0.1)
+BuildRequires: pkgconfig(libexif)
+BuildRequires: pkgconfig(libtiff-4)
+BuildRequires: pkgconfig(libdrm)
+BuildRequires: pkgconfig(libjpeg)
+BuildRequires: pkgconfig(sdl2)
 BuildRequires: python3(jinja2)
 BuildRequires: python3(yaml)
 BuildRequires: python3(ply)
+%{?_enable_test:BuildRequires: pkgconfig(gtest)}
 
 %package -n gst-plugins-libcamera1.0
 Summary: A complex camera support library for Linux
@@ -52,6 +68,8 @@ This package contains development part of libcamera.
 
 %prep
 %setup
+%patch -p1
+
 %ifarch %e2k
 sed -i "s|_symbol('QOpenGLWidget', |(|" src/qcam/meson.build
 # workaround for EDG frontend
@@ -73,18 +91,40 @@ sed -i "s|\"caps\", caps|\"caps\", (GstCaps*)caps|" src/gstreamer/gstlibcamerapr
 %endif
 
 %build
-%meson -Dpipelines=%platdefs -Dv4l2=true -Dwerror=false
+%add_optflags %(getconf LFS_CFLAGS)
+%meson \
+    -Dpipelines=%platdefs \
+    -Dv4l2=true \
+    -Dwerror=false \
+    %{?_enable_test:-Dtest=true}
+%nil
 %meson_build
 
 %install
 %meson_install
 mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 
+%check
+%__meson_test -v
+
 %files
 %_bindir/cam
-%_libexecdir/libcamera/ipa_proxy_linux
+%{?_enable_test:%_bindir/lc-compliance
+%_libexecdir/libcamera/vimc_ipa_proxy}
+%_bindir/libcamerify
+%ifarch %ix86 x86_64
+%_libexecdir/libcamera/ipu3_ipa_proxy
+%endif
+%ifarch aarch64
+%_libexecdir/libcamera/raspberrypi_ipa_proxy
+%_libexecdir/libcamera/rkisp1_ipa_proxy
+%endif
+%ifarch armh
+%_libexecdir/libcamera/raspberrypi_ipa_proxy
+%endif
 %_libdir/libcamera
-%_libdir/libcamera.so
+%_libdir/libcamera-base.so.*
+%_libdir/libcamera.so.*
 %_libdir/v4l2-compat.so
 %_datadir/libcamera
 
@@ -96,9 +136,15 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 
 %files devel
 %_includedir/libcamera
-%_pkgconfigdir/camera.pc
+%_libdir/libcamera-base.so
+%_libdir/libcamera.so
+%_pkgconfigdir/libcamera-base.pc
+%_pkgconfigdir/libcamera.pc
 
 %changelog
+* Mon Oct 17 2022 Yuri N. Sedunov <aris@altlinux.org> 1:0.0.1-alt1
+- v0.0.1 release
+
 * Thu Sep 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.0.20210204-alt3
 - fixes for Elbrus build
 

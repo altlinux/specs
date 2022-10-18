@@ -11,17 +11,19 @@
 %define api_ver 0.3
 %define spa_api_ver 0.2
 %define gst_api_ver 1.0
+%define libcamera_ver 1:0.0.1
 
 %def_enable gstreamer
 %def_enable systemd
 %def_disable wireplumber
 %def_enable libusb
-%def_disable libcamera
+%def_enable libcamera
 %def_enable avahi
 %def_enable webrtc
 %def_enable sdl
 %def_enable lv2
 %def_enable libcanberra
+%def_enable lc3
 #system service: not recommended and disabled by default
 %def_disable systemd_system_service
 %def_enable vulkan
@@ -36,7 +38,7 @@
 
 Name: pipewire
 Version: %ver_major.59
-Release: alt1
+Release: alt2
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -57,6 +59,7 @@ Patch: %name-0.3.19-alt-rpath.patch
 Requires: %name-libs = %version-%release
 %{?_enable_wireplumber:Requires: wireplumber}
 Requires: rtkit
+%{?_enable_gstreamer:%{?_enable_libcamera:Requires: gst-plugins-libcamera1.0}}
 
 %define meson_ver 0.59
 %define gst_ver 1.10
@@ -71,6 +74,7 @@ BuildRequires: libbluez-devel
 # BT codecs
 BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
 BuildRequires: libfreeaptx-devel libopus-devel
+%{?_enable_lc3:BuildRequires: liblc3-devel}
 # LC3plus BT codec
 # BuildRequires: lc3plus-devel
 # for pw-top
@@ -88,7 +92,7 @@ BuildRequires: pkgconfig(gstreamer-allocators-%gst_api_ver)
 %{?_enable_wireplumber:BuildRequires: libwireplumber-devel}
 %{?_enable_vulkan:BuildRequires: libvulkan-devel}
 %{?_enable_libusb:BuildRequires: pkgconfig(libusb-1.0)}
-%{?_enable_libcamera:BuildRequires: libcamera-devel libdrm-devel}
+%{?_enable_libcamera:BuildRequires: libcamera-devel >= %libcamera_ver libdrm-devel}
 %{?_enable_avahi:BuildRequires: pkgconfig(avahi-client)}
 %{?_enable_webrtc:BuildRequires: pkgconfig(webrtc-audio-processing)}
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
@@ -158,6 +162,7 @@ export LIB=%_lib
 	%{?_disable_sdl:-Dsdl=disabled} \
 	%{?_disable_lv2:-Dlv2=disabled} \
 	%{?_disable_libcanberra:-Dlibcanberra=disabled} \
+	%{?_enable_lc3:-Dbluez5-codec-lc3=enabled} \
 	%{?_disable_systemd:-Dsystemd=disabled} \
 	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
 	%{?_disable_examples:-Dexamples=disabled} \
@@ -302,6 +307,10 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Mon Oct 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.59-alt2
+- enabled libcamera support again
+- enabled LC3 BT codec support
+
 * Fri Sep 30 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.59-alt1
 - 0.3.59
 
