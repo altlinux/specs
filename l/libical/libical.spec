@@ -18,7 +18,7 @@
 %def_without system_tzdata
 
 Name: libical
-Version: 3.0.15
+Version: 3.0.16
 Release: alt1
 
 Summary: An implementation of basic iCAL protocols
@@ -209,6 +209,9 @@ library.
 
 
 %changelog
+* Tue Oct 18 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.16-alt1
+- 3.0.16
+
 * Fri Oct 07 2022 Yuri N. Sedunov <aris@altlinux.org> 3.0.15-alt1
 - 3.0.15
 
