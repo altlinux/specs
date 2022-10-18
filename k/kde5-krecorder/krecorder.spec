@@ -2,13 +2,15 @@
 
 Name: kde5-%rname
 Version: 22.09
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
 Summary: Audio recording
 Url: http://www.kde.org
 License: GPL-2.0-or-later
+
+Requires: qml(org.kde.kirigamiaddons.labs.mobileform)
 
 Source: %rname-%version.tar
 
@@ -73,6 +75,9 @@ Requires: %name-common
 #%_K5lib/libkrecorder.so.*
 
 %changelog
+* Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt2
+- fix requires
+
 * Wed Oct 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt1
 - new version
 
