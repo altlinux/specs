@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.99.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -61,10 +61,9 @@ KF5 library
 %patch2 -p1
 
 %build
-%K5build ||:
 # hack against ALTBUG#32378
-sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD//src/lex.c
-%K5make
+#sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD/src/lex.c
+%K5build
 
 %install
 %K5install
@@ -89,6 +88,9 @@ sed -i '/num_to_alloc.*\/\//s|//\(.*\)|/* \1 */|' BUILD//src/lex.c
 %_K5srvtyp/*.desktop
 
 %changelog
+* Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.99.0-alt2
+- fix build faster
+
 * Tue Oct 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.99.0-alt1
 - new version
 
