@@ -4,13 +4,13 @@
 
 Name: python3-module-%oname
 Version: 0.101.0
-Release: alt1
+Release: alt2
 
 Summary: An SDK for building applications to work with OpenStack
 
 License: Apache-2.0
 Group: Development/Python3
-Url: https://docs.openstack.org/openstacksdk/latest
+Url: https://pypi.org/project/openstacksdk
 
 Source: %oname-%version.tar
 Source1: %oname.watch
@@ -55,11 +55,17 @@ BuildRequires: python3-module-sphinxcontrib-rsvgconverter
 %endif
 
 %description
-The openstacksdk is a library for building applications to work
-with OpenStack clouds.
-The project aims to provide a consistent and complete set of
-interactions with OpenStack's many services, along with complete
-documentation, examples, and tools.
+The openstacksdk is a client library for building applications to work with
+OpenStack clouds. The project aims to provide a consistent and complete set of
+interactions with OpenStack's many services, along with complete documentation,
+examples, and tools.
+
+It also contains an abstraction interface layer. Clouds can do many things,
+but there are probably only about 10 of them that most people care about
+with any regularity. If you want to do complicated things, the per-service
+oriented portions of the SDK are for you. However, if what you want is
+to be able to write an application that talks to any OpenStack cloud regardless
+of configuration, then the Cloud Abstraction layer is for you.
 
 %package tests
 Summary: Tests for %oname
@@ -79,7 +85,7 @@ This package contains documentation for %oname.
 %endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -111,12 +117,13 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/openstack-inventory
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/openstack
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/openstack/tests
 
 %files tests
-%python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/tests/functional/examples
+%python3_sitelibdir/openstack/tests
+%exclude %python3_sitelibdir/openstack/tests/functional/examples
 
 %if_with docs
 %files doc
@@ -125,6 +132,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 0.101.0-alt2
+- Spec refactoring.
+
 * Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 0.101.0-alt1
 - Automatically updated to 0.101.0.
 
