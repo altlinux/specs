@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.1
+Version: 1.2.1
 Release: alt1
 
 Summary: A tiny CSS parser
@@ -63,6 +63,9 @@ CSS modules.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Oct 18 2022 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
+- 1.1.1 -> 1.2.1.
+
 * Mon Oct 03 2022 Stanislav Levin <slev@altlinux.org> 1.1.1-alt1
 - 1.0.2 -> 1.1.1.
 - Enabled testing.
