@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 175
+%define centos_release 177
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -634,6 +634,18 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Oct 17 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.177-alt1.el9
+- Updated to kernel-5.14.0-177.el9:
+  + Backport printk v5.19 and earlier commits for kernel-rt
+  + cpufreq: intel_pstate: Support Sapphire Rapids OOB mode
+  + crypto: disallow plain DH and ECDH usage in FIPS mode
+  + FS fixes for 9.2 on inotify
+  + random: trigger reseeding DRBG on more occasions
+  + target: Update to the latest upstream version
+  + Update drivers/pinctrl for use with Arm SystemReady IR and other Edge platforms
+  + Update turbostat to upstream 6.0
+  + watchdog: Fix SBSA watchdog accesses
+
 * Tue Oct 11 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.175-alt1.el9
 - Updated to kernel-5.14.0-175.el9 (fixes: CVE-2021-26341):
   + bpf: Use bpf_capable() instead of CAP_SYS_ADMIN for blinding decision
