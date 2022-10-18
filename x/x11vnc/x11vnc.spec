@@ -1,6 +1,6 @@
 Name: x11vnc
 Version: 0.9.16
-Release: alt3
+Release: alt3.1
 
 %def_with avahi
 
@@ -32,8 +32,9 @@ WinVNC plays for Windows.
 License: GPL
 Group: Networking/Remote access
 BuildArch: noarch
-Summary: GUI for x11vnc running
+Summary: GUI to run x11vnc
 
+Requires: %name = %EVR
 # /usr/bin/wish
 Requires: tk
 
@@ -82,6 +83,10 @@ install tkx11vnc %buildroot%_bindir/
 %exclude  %_bindir/Xdummy
 
 %changelog
+* Tue Oct 18 2022 Anton Midyukov <antohami@altlinux.org> 0.9.16-alt3.1
+- fix description
+- add missing requires
+
 * Tue Oct 18 2022 Anton Midyukov <antohami@altlinux.org> 0.9.16-alt3
 - separate subpackage %%name-gui with %%_desktopdir/%%name.desktop
 
