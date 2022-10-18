@@ -14,7 +14,7 @@
 
 Name: libwacom
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A Wacom tablets library
 Group: System/Libraries
@@ -29,6 +29,7 @@ Source: %name-%version.tar
 %endif
 
 Requires: %name-data = %version-%release
+Requires: python3-module-pyudev python3-module-libevdev
 
 BuildRequires(pre): rpm-macros-meson rpm-macros-valgrind rpm-build-python3
 BuildRequires: /proc meson glib2-devel libgudev-devel libxml2-devel
@@ -123,6 +124,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Oct 18 2022 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt2
+- explicitly required python3{libev,pyu}dev for libwacom-show-stylus
+
 * Fri Oct 14 2022 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt1
 - 2.5.0
 
