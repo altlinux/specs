@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 22.09
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -50,6 +50,7 @@ Summary: Core files needed for %rname
 Group: Graphical desktop/KDE
 Requires: %name-common
 Requires: qml(org.kde.kcm)
+Requires: qml(org.kde.kirigamiaddons.labs.mobileform)
 Requires: /usr/bin/vulkaninfo
 Requires: /usr/bin/wayland-info
 %description core
@@ -110,6 +111,9 @@ Requires: %name-common
 #%_K5lib/libplasma-settings.so.*
 
 %changelog
+* Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt2
+- fix requires
+
 * Wed Oct 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt1
 - new version
 
