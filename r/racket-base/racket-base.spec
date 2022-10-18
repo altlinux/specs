@@ -1,25 +1,24 @@
 %define _unpackaged_files_terminate_build 1
+%set_verify_elf_method strict
 
-# FIXME: this macro doesn't work, but we need .rackboot section
-# to make Racket work
-# %%global _find_debuginfo_opts --keep-section .rackboot
-# Temporary solution: strip files during building process, because
-# inner strip doesn't remove .rackboot section.
-%def_enable strip
+# We need to save '.rackboot' section in these binaries to make them work.
+%brp_strip_debug %_bindir/*
+%brp_strip_debug %racket_libdir/*
 
 # Disable static libs installation.
 %def_disable libs
 
+%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 %add_optflags -ffat-lto-objects
 
 %define zuo zuo -X /usr/share/zuo
 
 Name: racket-base
 Version: 8.6
-Release: alt1
+Release: alt2
 
-Summary: Racket is a general-purpose programming language (base package)
-License: GPL-3.0 or LGPL-3.0 or Apache-2.0 or MIT
+Summary: Racket, the programming language (base package)
+License: Apache-2.0 or MIT
 Group: Development/Scheme
 Url: https://racket-lang.org/
 Vcs: https://github.com/racket/racket
@@ -39,13 +38,14 @@ BuildRequires: libncurses-devel
 BuildRequires: libffi-devel
 
 # ATTENTION!
-# Building on ppc64le takes a very long time!
+# Building on ppc64le takes a very long time (2-2.5 hours)!
+# It is related to usage of portable bytecode.
 ExclusiveArch: %racket_arches
 
 %description
 %summary.
 
-This package contain base which can install packages.
+This package contains minimal Racket which can install packages for itself.
 
 %prep
 %setup
@@ -53,11 +53,11 @@ This package contain base which can install packages.
 %build
 mkdir -p racket/src/build && cd racket/src/build
 
-# We can't use %%configure macro due to it uses ./configure, but
+# We can't use %%configure macro because it uses ./configure, but
 # we need ../configure.
 export CFLAGS='%optflags'
 ../configure \
-        --prefix=%_prefix \
+        --prefix=%prefix \
         --bindir=%_bindir \
         --sysconfdir=%_sysconfdir \
         --datarootdir=%_datadir \
@@ -66,7 +66,8 @@ export CFLAGS='%optflags'
         --libdir=%_libdir \
         --mandir=%_mandir \
         --enable-pthread \
-        %{subst_enable strip} \
+	--enable-sharezo \
+        --disable-strip \
         %{subst_enable libs} \
 	--docdir=%racket_docdir \
 	--collectsdir=%racket_collectsdir \
@@ -84,8 +85,11 @@ cd racket/src/build
 %zuo . install-cs DESTDIR=%buildroot JOBS=%__nprocs
 
 # Move Racket licenses files to our docs location.
+# Also remove unused licenses (we build CS variant, so need MIT and Apache2.0
+# only - others should be removed).
 mkdir -p %buildroot%_datadir/doc/%name-%version
 mv %buildroot%_datadir/racket/LICENSE* %buildroot%_datadir/doc/%name-%version
+rm %buildroot%_datadir/doc/%name-%version/LICENSE-{GPL,LGPL,libscheme}.txt
 
 %files
 %doc LICENSE*
@@ -95,10 +99,7 @@ mv %buildroot%_datadir/racket/LICENSE* %buildroot%_datadir/doc/%name-%version
 %racket_collectsdir/*
 %racket_libdir/*.rktd
 %racket_libdir/gracket
-%racket_libdir/starter
-# Exclude empty 'starter-sh' file.
-%exclude %racket_libdir/starter-sh
-%racket_compiled%racket_collectsdir/*
+%racket_libdir/starter*
 
 %if_disabled libs
 # Do we really need C-headers without C-libraries? We don't, I think.
@@ -106,5 +107,14 @@ mv %buildroot%_datadir/racket/LICENSE* %buildroot%_datadir/doc/%name-%version
 %endif
 
 %changelog
+* Tue Oct 18 2022 Anton Zhukharev <ancieg@altlinux.org> 8.6-alt2
+- clean up spec
+- do not remove 'starter-sh' file
+- save needed section in binaries
+- update license
+- ship only used licenses
+- save .zo files in /usr/lib
+- set strict elf verifying method
+
 * Sun Oct 16 2022 Anton Zhukharev <ancieg@altlinux.org> 8.6-alt1
 - base Racket package
