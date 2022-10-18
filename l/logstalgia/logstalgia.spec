@@ -1,5 +1,5 @@
 Name: logstalgia
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 
 Summary: Web server access log visualizer
@@ -13,7 +13,11 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed Apr 23 2014
 # optimized out: boost-devel-headers gnu-config libGL-devel libGLU-devel libSDL2-devel libX11-devel libcloog-isl4 libstdc++-devel pkg-config xorg-xproto-devel
-BuildRequires: boost-devel gcc-c++ libSDL2_image-devel libfreetype-devel libglew-devel libglm-devel libpcre-devel libpng-devel
+BuildRequires: boost-devel gcc-c++ libSDL2_image-devel libfreetype-devel libglew-devel libglm-devel libpcre2-devel libpng-devel
+BuildRequires: boost-filesystem-devel
+
+# [#300236] configure: error: Could not link against -lGLU !
+ExcludeArch: ppc64le
 
 %description
 Logstalgia (aka ApachePong) replays or streams a standard website
@@ -36,6 +40,10 @@ access log (eg access.log) as a retro arcade game-like simulation.
 %_man1dir/%name.1*
 
 %changelog
+* Tue Oct 18 2022 Michael Shigorin <mike@altlinux.org> 1.1.3-alt1
+- new version (watch file uupdate)
+- ExcludeArch: ppc64le due to ftbfs
+
 * Sat Jun 16 2018 Michael Shigorin <mike@altlinux.org> 1.1.2-alt1
 - new version (watch file uupdate)
 
