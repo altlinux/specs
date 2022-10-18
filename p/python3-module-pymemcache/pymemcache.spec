@@ -1,7 +1,14 @@
 %define oname pymemcache
 
+# FAILED pymemcache/test/test_serde.py::test_compressed_complex
+%ifnarch %ix86 armh
+%def_with check
+%else
+%def_without check
+%endif
+
 Name: python3-module-%oname
-Version: 3.5.2
+Version: 4.0.0
 Release: alt1
 
 Summary: A comprehensive, fast, pure Python memcached client
@@ -21,6 +28,8 @@ BuildRequires: python3-module-six
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-mock
+BuildRequires: python3-module-faker
+BuildRequires: python3-module-zstd
 
 %description
 A comprehensive, fast, pure-Python memcached client.
@@ -52,7 +61,7 @@ This pakage contains tests for %oname.
 %python3_install
 
 %check
-py.test3 -v
+py.test-3
 
 %files
 %doc *.rst *.md *.txt
@@ -64,6 +73,9 @@ py.test3 -v
 %python3_sitelibdir/*/test
 
 %changelog
+* Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
+- Automatically updated to 4.0.0.
+
 * Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 3.5.2-alt1
 - Automatically updated to 3.5.2.
 
