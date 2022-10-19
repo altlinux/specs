@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 105.0.3
+Version: 106.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -23,6 +23,7 @@ Patch009: 0009-bmo-1559213-Support-system-av1.patch
 Patch010: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch011: 0011-ALT-fix-double_t-redefinition.patch
 Patch012: 0012-build-Disable-Werror.patch
+Patch013: 0013-ALT-aarch64-do-not-have-sysctl.h.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -50,6 +51,7 @@ BuildRequires: clang%llvm_version-devel
 BuildRequires: llvm%llvm_version-devel
 BuildRequires: lld%llvm_version-devel
 BuildRequires: libstdc++-devel
+BuildRequires: glibc-kernheaders-generic
 BuildRequires: rpm-macros-alternatives
 BuildRequires: rust >= %rust_version
 BuildRequires: rust-cargo >= %cargo_version
@@ -180,7 +182,7 @@ ac_add_options --enable-linker=lld
 ac_add_options --enable-lto=thin
 %endif
 %endif
-%ifarch armh ppc64le
+%ifarch armh ppc64le %{ix86}
 ac_add_options --disable-webrtc
 %endif
 %ifarch armh %{ix86} x86_64
@@ -407,6 +409,16 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Oct 18 2022 Alexey Gladkov <legion@altlinux.ru> 106.0-alt1
+- New release (106.0).
+- Security fixes:
+  + CVE-2022-42927: Same-origin policy violation could have leaked cross-origin URLs
+  + CVE-2022-42928: Memory Corruption in JS Engine
+  + CVE-2022-42929: Denial of Service via window.print
+  + CVE-2022-42930: Race condition in DOM Workers
+  + CVE-2022-42931: Username saved to a plaintext file on disk
+  + CVE-2022-42932: Memory safety bugs fixed in Firefox 106 and Firefox ESR 102.4
+
 * Sat Oct 08 2022 Alexey Gladkov <legion@altlinux.ru> 105.0.3-alt1
 - New release (105.0.3).
 
