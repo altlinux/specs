@@ -1,25 +1,28 @@
 %define _unpackaged_files_terminate_build 1
-%define oname crc32c
+%define pypi_name crc32c
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.2
+Name: python3-module-%pypi_name
+Version: 2.3
 Release: alt1
 Summary: Exposes the Intel SSE4.2 CRC32C instruction
 License: LGPLv2.1
 Group: Development/Python3
 Url: https://pypi.org/project/crc32c/
+VCS: https://github.com/ICRAR/crc32c.git
 
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -31,23 +34,28 @@ instruction set of Intel CPUs.
 %patch -p1
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-%define py3_nodot py%{python_version_nodots python3}
-export TOXENV=%py3_nodot,%py3_nodot-sw
-%_bindir/tox.py3 --sitepackages -p auto -o -vr -s false --console-scripts
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    python -u run-tests.py
+EOF
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/crc32c.cpython-*.so
-%python3_sitelibdir/crc32c-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 19 2022 Stanislav Levin <slev@altlinux.org> 2.3-alt1
+- 2.2 -> 2.3.
+
 * Mon Apr 26 2021 Stanislav Levin <slev@altlinux.org> 2.2-alt1
 - 1.7 -> 2.2.
 - Stopped build for Python2.

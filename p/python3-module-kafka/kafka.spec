@@ -1,33 +1,42 @@
 %define _unpackaged_files_terminate_build 1
-%define oname kafka
+%define pypi_name kafka-python
+%define mod_name kafka
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.4.6
-Release: alt2
+Name: python3-module-%mod_name
+Version: 2.0.2
+Release: alt1
 Summary: Pure Python client for Apache Kafka
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/kafka-python/
+VCS: https://github.com/dpkp/kafka-python.git
 
-# https://github.com/dpkp/kafka-python.git
-Source: %name-%version.tar.gz
+Source: %name-%version.tar
+Source1: debundler.py.in
 Patch: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
-BuildRequires: liblz4
 BuildRequires: python3(crc32c)
 BuildRequires: python3(lz4)
 BuildRequires: python3(mock)
 BuildRequires: python3(pytest-mock)
 BuildRequires: python3(snappy)
-BuildRequires: python3(tox)
 BuildRequires: python3(xxhash)
 %endif
+
+%filter_from_requires /python3(kafka\.vendor\..*)/d
+%py3_requires six
+
+%py3_provides %pypi_name
 
 %description
 This module provides low-level protocol support for Apache Kafka as well
@@ -39,67 +48,38 @@ and Snappy compression is also supported for message sets.
 %setup
 %patch -p1
 
-# remove bundled packages, raise an error on unexpected one
-rm %oname/vendor/{__init__,enum34,selectors34,six,socketpair}.py
-rmdir %oname/vendor || { echo "There is a new bundled package: $(ls -A \
-%oname/vendor)"; exit 1; }
-grep -rlEZ \
--e 'from kafka\.vendor( import|\.)' \
--e 'import kafka\.vendor\.' | \
-xargs -0 sed -i \
--e '/from kafka\.vendor import socketpair/d' \
--e 's/from kafka\.vendor import /import /g' \
--e 's/from kafka\.vendor\./from /g' \
--e 's/import kafka\.vendor\./import /g'
-
-# check unbundling result
-find -name '*.py' -print0 | xargs -0 \
-grep -qsF 'kafka.vendor' && { echo "There is the usage of bundled package"; \
-exit 1; }
-
-# unpin Pytest
-grep -qsF 'pytest<4.0' tox.ini || exit 1
-sed -i 's/pytest<4\.0/pytest/g' tox.ini
+VENDORED_PATH='kafka/vendor'
+UNVENDORED_PATH="$VENDORED_PATH/__init__.py"
+rm -r "$VENDORED_PATH"
+mkdir "$VENDORED_PATH"
+cp "%SOURCE1" "$UNVENDORED_PATH"
+sed -i \
+    -e 's/@VENDORED_ROOT@/"kafka.vendor"/' \
+    -e 's/@VENDORED_FAKE_PACKAGES@/None/' \
+    "$UNVENDORED_PATH"
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # since we are packaging example.py as doc
 sed -i '1{/#!/d}' example.py
 chmod -x example.py
 
 %check
-sed -i -e '/\[testenv\]$/a whitelist_externals =\
-    \/bin\/cp\
-    \/bin\/sed\
-commands_pre =\
-    \/bin\/cp {env:_PYTEST_BIN:} \{envbindir\}\/py.test\
-    \/bin\/sed -i \x271c #!\{envpython\}\x27 \{envbindir\}\/py.test' \
--e '/setenv =$/a\
-    py3: _PYTEST_BIN=%_bindir\/py.test3' \
-tox.ini
-export PIP_NO_INDEX=YES
-
-# set the CRC32C_SW_MODE environment variable before loading the package to
-# one of the following values:
-#
-#  * 'auto' to use software implementation if no CPU hardware support is found.
-#  * 'force' to use software implementation regardless of CPU hardware support.
-#  * '1' means 'force', but will be eventually discontinued.
-export CRC32C_SW_MODE=auto
-export TOX_TESTENV_PASSENV='CRC32C_SW_MODE'
-export TOXENV=py3
-%_bindir/tox.py3 --sitepackages -vvr -- -ra
+%tox_check_pyproject -- -vra
 
 %files
 %doc *.md example.py
 %python3_sitelibdir/kafka/
-%python3_sitelibdir/kafka_python-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 19 2022 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1
+- 1.4.6 -> 2.0.2.
+
 * Tue Sep 08 2020 Stanislav Levin <slev@altlinux.org> 1.4.6-alt2
 - Stopped Python2 package build.
 

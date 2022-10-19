@@ -1,15 +1,16 @@
 %define _unpackaged_files_terminate_build 1
-%define oname xxhash
+%define pypi_name xxhash
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.0.2
+Name: python3-module-%pypi_name
+Version: 3.1.0
 Release: alt1
 Summary: Binding for xxHash
 License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/xxhash/
+VCS: https://github.com/ifduyue/python-xxhash.git
 
 Source: %name-%version.tar.gz
 Patch: %name-%version-alt.patch
@@ -17,9 +18,10 @@ Patch: %name-%version-alt.patch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libxxhash-devel
 
-%if_with check
-BuildRequires: python3(tox)
-%endif
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(setuptools_scm)
 
 %description
 xxhash is a Python binding for the xxHash library.
@@ -31,36 +33,45 @@ xxhash is a Python binding for the xxHash library.
 # remove bundled libs
 rm -r deps
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
 # make use of system xxhash library
 export XXHASH_LINK_SO=1
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[tox]
-envlist = py%{python_version_nodots python},py%{python_version_nodots python3}
-
+cat > tox.ini <<'EOF'
 [testenv]
+allowlist_externals =
+    bash
 commands =
-    python setup.py test -v
+    bash -c 'cd tests && python -m unittest -v'
 EOF
-export PIP_NO_INDEX=YES
-export XXHASH_LINK_SO=1
-export TOX_TESTENV_PASSENV='XXHASH_LINK_SO'
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -s false
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/xxhash/
-%python3_sitelibdir/xxhash-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Oct 19 2022 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
+- 2.0.2 -> 3.1.0.
+
 * Tue Apr 27 2021 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1
 - 1.4.3 -> 2.0.2.
 
