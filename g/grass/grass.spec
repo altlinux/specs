@@ -1,8 +1,8 @@
-%define shortver 80
-%define libver 8.0
+%define shortver 82
+%define libver 8.2
 
 Name:    grass
-Version: 8.0.1
+Version: 8.2.0
 Release: alt1
 
 %def_with mysql
@@ -74,7 +74,7 @@ BuildRequires: liblapack-devel
 BuildRequires: lesstif-devel
 BuildRequires: libGLw-devel
 BuildRequires: libunixODBC-devel
-BuildRequires: libwxGTK3.1-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: libmariadbd-devel
 BuildRequires: xorg-glproto-devel
 BuildRequires: desktop-file-utils
@@ -309,6 +309,12 @@ rm -f %_libdir/%grassdir/locks
 %_libdir/lib%{name}_*.so
 
 %changelog
+* Tue Jun 07 2022 Andrey Cherepanov <cas@altlinux.org> 8.2.0-alt1
+- New version.
+
+* Fri May 13 2022 Andrey Cherepanov <cas@altlinux.org> 8.0.2-alt1
+- New version.
+
 * Fri Feb 25 2022 Andrey Cherepanov <cas@altlinux.org> 8.0.1-alt1
 - New version.
 
