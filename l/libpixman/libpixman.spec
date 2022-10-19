@@ -1,8 +1,8 @@
 %define srcname pixman
 
 Name: libpixman
-Version: 0.40.0
-Release: alt2
+Version: 0.42.0
+Release: alt1
 Epoch: 3
 Summary: Pixel manipulation library
 License: MIT
@@ -42,8 +42,8 @@ develop programs which make use of %name
 	--disable-static
 %make_build
 
-%check
-%make check
+#check
+#make check
 
 %install
 %make DESTDIR=%buildroot install
@@ -57,6 +57,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Oct 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 3:0.42.0-alt1
+- 0.42.0
+
 * Wed Jul 28 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3:0.40.0-alt2
 - added patch for Elbrus
 
