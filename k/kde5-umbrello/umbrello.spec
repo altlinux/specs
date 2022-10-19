@@ -7,7 +7,7 @@
 #%endif
 
 Name: kde5-%rname
-Version: 22.08.1
+Version: 22.08.2
 Release: alt1
 %K5init no_appdata
 
@@ -79,6 +79,9 @@ sed -i '/^#!\/usr\/bin\/env/s|python|%__python3|' umbrello/headings/heading.py
 
 
 %changelog
+* Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
+- new version
+
 * Tue Sep 20 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname kdesdk-thumbnailers
 
 Name: kde5-sdk-thumbnailers
-Version: 22.08.1
+Version: 22.08.2
 Release: alt1
 %K5init no_appdata
 
@@ -43,6 +43,9 @@ BuildRequires: kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel
 %_K5srv/*thumbnail*.desktop
 
 %changelog
+* Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
+- new version
+
 * Tue Sep 20 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
 - new version
 

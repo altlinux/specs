@@ -2,8 +2,8 @@
 %define rname skanpage
 
 Name: kde5-%rname
-Version: 22.08.1
-Release: alt2
+Version: 22.08.2
+Release: alt1
 %K5init altplace
 
 Group: Graphics
@@ -50,6 +50,9 @@ It supports saving to image and PDF files.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
+- new version
+
 * Thu Sep 22 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt2
 - disable OCR on save by default
 

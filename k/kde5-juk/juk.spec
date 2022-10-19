@@ -2,7 +2,7 @@
 %def_disable tunepimp
 
 Name: kde5-%rname
-Version: 22.08.1
+Version: 22.08.2
 Release: alt1
 %K5init no_appdata
 
@@ -77,6 +77,9 @@ sed -i '/^find_package.*TunePimp/d' CMakeLists.txt
 %_K5notif/juk.notifyrc
 
 %changelog
+* Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
+- new version
+
 * Tue Sep 20 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
 - new version
 
