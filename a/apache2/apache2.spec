@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.54
-Release: alt1
+Release: alt2
 Epoch: 1
 
 License: %asl
@@ -1539,6 +1539,10 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Wed Oct 19 2022 Anton Midyukov <antohami@altlinux.org> 1:2.4.54-alt2
+- NMU: tmpfiles.conf: substitution /var/lock with /run/lock
+  (closes: #44078)
+
 * Sun Jun 19 2022 Anton Farygin <rider@altlinux.ru> 1:2.4.54-alt1
 - 2.4.54 (Fixes: CVE-2022-31813, CVE-2022-30556, CVE-2022-30522, CVE-2022-29404, 
 	  CVE-2022-28615, CVE-2022-28614, CVE-2022-28330, CVE-2022-26377)
