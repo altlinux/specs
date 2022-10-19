@@ -2,11 +2,11 @@
 
 Name: qt6-shadertools
 Version: 6.2.4
-Release: alt2
-%if "%version" == "%_qt6_version"
-%def_disable need_bootstrap
+Release: alt3
+%if "%version" == "%{get_version qt6-tools-common}"
+%def_disable bootstrap
 %else
-%def_enable need_bootstrap
+%def_enable bootstrap
 %endif
 
 Group: System/Libraries
@@ -16,8 +16,8 @@ License: GPL-3.0-or-later
 
 Source: %qt_module-everywhere-src-%version.tar
 
-BuildRequires(pre): rpm-macros-qt6
-%if_disabled need_bootstrap
+BuildRequires(pre): rpm-macros-qt6 qt6-tools-common
+%if_disabled bootstrap
 BuildRequires: qt6-tools
 %endif
 BuildRequires: cmake gcc-c++ glibc-devel qt6-base-devel
@@ -109,6 +109,9 @@ Requires: libqt6-core = %_qt6_version
 #%_qt6_examplesdir/*
 
 %changelog
+* Wed Oct 19 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt3
+- fix automatic package bootstrap mode
+
 * Thu Oct 13 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt2
 - add automatic package bootstrap mode
 
