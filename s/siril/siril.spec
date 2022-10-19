@@ -1,5 +1,5 @@
 Name:           siril
-Version:        1.0.5
+Version:        1.0.6
 Release:        alt1
 Summary:        Astronomical image processing software
 Group: 		Graphics
@@ -95,6 +95,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.free_
 
 
 %changelog
+* Wed Oct 19 2022 Ilya Mashkin <oddity@altlinux.ru> 1.0.6-alt1
+- 1.0.6
+
 * Sat Sep 10 2022 Ilya Mashkin <oddity@altlinux.ru> 1.0.5-alt1
 - 1.0.5
 
