@@ -4,7 +4,7 @@
 %define mname mdit_py_plugins
 
 Name: python3-module-%oname
-Version: 0.3.0
+Version: 0.3.1
 Release: alt1
 Summary: Collection of core plugins for markdown-it-py 
 License: MIT
@@ -17,7 +17,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-module-flit
 BuildRequires: /usr/bin/py.test3
 BuildRequires: python3(markdown_it)
 BuildRequires: python3-module-pytest-regressions
@@ -30,10 +30,10 @@ Collection of core plugins for markdown-it-py.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -53,9 +53,12 @@ py.test3 -vv \
 %doc LICENSE
 %doc README.md
 %python3_sitelibdir/%mname
-%python3_sitelibdir/%mname-%version-py3*.egg-info
+%python3_sitelibdir/%mname-%version.dist-info
 
 %changelog
+* Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt1
+- Automatically updated to 0.3.1.
+
 * Tue Sep 13 2022 Grigory Ustinov <grenka@altlinux.org> 0.3.0-alt1
 - Automatically updated to 0.3.0.
 
