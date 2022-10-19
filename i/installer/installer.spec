@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.13.1
+Version: 1.13.2
 Release: alt1
 
 Summary: Installer common parts
@@ -104,6 +104,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Wed Oct 19 2022 Anton Midyukov <antohami@altlinux.org> 1.13.2-alt1
+- install2: redirect systemd-tmpfiles and udevd output to logs
+
 * Mon Oct 17 2022 Anton Midyukov <antohami@altlinux.org> 1.13.1-alt1
 - remove x11vnc, if the package was not installed by the installer
 
