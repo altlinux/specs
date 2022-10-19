@@ -1,9 +1,9 @@
-%def_enable snapshot
+%def_disable snapshot
 %add_typelib_req_skiplist typelib(Gnome)
 %define ver_major 2.1
 
 Name: terminator
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Store and run multiple GNOME terminals in one window
@@ -28,7 +28,10 @@ BuildArch: noarch
 Requires: typelib(Gtk) = 3.0
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: python3-devel python3-module-setuptools python3-module-pytest-runner intltool
+
+BuildRequires: python3-module-wheel python3-module-setuptools
+BuildRequires: python3-module-pytest-runner
+BuildRequires: intltool
 
 %description
 Multiple GNOME terminals in one window. This is a project to produce an
@@ -43,16 +46,17 @@ sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %patch
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/%name
 %_bindir/remotinator
 %python3_sitelibdir_noarch/terminatorlib/
+%python3_sitelibdir_noarch/%{pyproject_distinfo %name}
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/*/*.*
@@ -63,9 +67,11 @@ sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %_man5dir/%{name}_config.*
 %doc README* CHANGELOG*
 
-%exclude %python3_sitelibdir_noarch/%name-%version-py*.egg-info
-
 %changelog
+* Wed Oct 19 2022 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
+- 2.1.2
+- ported to %%pyproject* macros
+
 * Mon Apr 12 2021 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
 - updated to v2.1.1-2-gebe58449
 
