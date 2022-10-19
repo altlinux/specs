@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1
 %define kernel_base_version	5.19
 %define kernel_sublevel	.16
@@ -613,6 +613,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Oct 19 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.19.16-alt2
+- ext4: fix check for block being out of directory size (Fixes:
+  CVE-2022-1184).
+- io_uring/af_unix: defer registered files gc to io_uring release
+  (Fixes: CVE-2022-2602).
+
 * Sat Oct 15 2022 Kernel Bot <kernelbot@altlinux.org> 1:5.19.16-alt1
 - v5.19.16 (2022-10-15).
 
