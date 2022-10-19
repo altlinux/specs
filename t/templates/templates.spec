@@ -1,5 +1,5 @@
 Name: templates
-Version: 1.1
+Version: 1.2
 Release: alt1
 Summary: Standard templates for the user directory
 Summary(ru_RU.UTF-8): Стандартные шаблоны для каталога пользователя
@@ -26,9 +26,9 @@ chmod 755 make-lang.sh
 ./make-lang.sh
 
 %install
-install -D -m755 templates.sh %buildroot/%_sysconfdir/profile.d/templates.sh
+install -D -m755 templates.sh %buildroot/%_sysconfdir/X11/profile.d/templates.sh
 install -d -m755 %buildroot/%_sysconfdir/xdg/autostart/
-install -m644 update_templates.desktop.desktop %buildroot/%_sysconfdir/xdg/autostart/
+install -m644 update_templates.desktop %buildroot/%_sysconfdir/xdg/autostart/
 install -d -m755 %buildroot/%_datadir/Templates
 install -m644 Templates/* %buildroot/%_datadir/Templates
 cp -R locale %buildroot/%_datadir
@@ -42,10 +42,13 @@ cp -R locale %buildroot/%_datadir
 
 %files -f %name.lang
 %_datadir/Templates
-%_sysconfdir/profile.d/templates.sh
-%_sysconfdir/xdg/autostart/update_templates.desktop.desktop
+%_sysconfdir/X11/profile.d/templates.sh
+%_sysconfdir/xdg/autostart/update_templates.desktop
 
 %changelog
+* Wed Oct 19 2022 Anton Midyukov <antohami@altlinux.org> 1.2-alt1
+- replace script from %_sysconfdir/profile.d to %_sysconfdir/X11/profile.d
+
 * Fri Sep 25 2015 Anton Midyukov <antohami@altlinux.org> 1.1-alt1
 - New version.
 
