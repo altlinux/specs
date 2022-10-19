@@ -4,7 +4,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.5.149
+Version: 5.5.157
 Release: alt1
 Summary: New control center for Linux Deepin
 License: GPL-3.0+
@@ -196,6 +196,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Mon Oct 17 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.157-alt1
+- New version (5.5.157).
+
 * Tue Sep 13 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.149-alt1
 - New version (5.5.149).
 

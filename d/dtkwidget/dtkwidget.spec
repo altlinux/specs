@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkwidget
-Version: 5.5.46
+Version: 5.6.0.2
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+ and GPL-3.0+
@@ -12,10 +12,13 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %endif
+BuildRequires(pre): rpm-build-ninja
+BuildRequires: cmake
 BuildRequires: qt5-linguist
 BuildRequires: qt5-base-devel-static
+BuildRequires: qt5-tools-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: dtk5-core-devel
@@ -34,7 +37,8 @@ BuildRequires: libxkbcommon-devel
 BuildRequires: libXrender-devel
 BuildRequires: libcups-devel
 BuildRequires: libgtest-devel
-# libQt5Gui.so.5(Qt_5_PRIVATE_API)(64bit) needed by dtkwidget
+BuildRequires: doxygen qt5-tools
+# libQt5Gui.so.5(Qt_5_PRIVATE_API) needed by dtkwidget
 BuildRequires: libqt5-gui
 
 %description
@@ -63,30 +67,45 @@ Group: Development/KDE and QT
 DtkWidget is Deepin graphical user interface for deepin desktop development.
 Examples for %name.
 
+%package -n dtk5-widget-doc
+Summary: %name documantation
+Group: Documentation
+BuildArch: noarch
+
+%description -n dtk5-widget-doc
+This package provides %name documantation.
+
 %prep
 %setup
 sed -i "s|'/lib'|'/%_lib'|" conanfile.py
-sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|' \
-    src/src.pro
-sed -i 's|$$QT.dtkcore.libs/examples|$$QT.dtkcore.libs/dtkwidget5-examples|' \
-    examples/dwidget-examples/collections/collections.pro
+# sed -i 's|$$QT.dtkcore.libs/examples|$$QT.dtkcore.libs/dtkwidget5-examples|' \
+#     examples/dwidget-examples/collections/collections.pro
+sed -i 's|CMAKE_INSTALLL_PREFIX|CMAKE_INSTALL_PREFIX|' \
+  docs/CMakeLists.txt
 
 %build
-export PATH=%{_qt5_bindir}:$PATH
-%qmake_qt5 \
 %if_enabled clang
-    QMAKE_STRIP= -spec linux-clang \
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
 %endif
-    CONFIG+=nostrip \
-    PREFIX=%_prefix \
-    LIB_INSTALL_DIR=%_libdir \
-    VERSION=%version \
+export PATH=%_qt5_bindir:$PATH
+%cmake \
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/modules/ \
+  -DCMAKE_INSTALL_PREFIX=%_prefix \
+  -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DDTK_VERSION=%version \
+  -DVERSION=%version \
+  -DLIB_INSTALL_DIR=%_libdir \
 #
-
-%make_build
+cmake --build %_cmake__builddir -j%__nprocs
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+%cmake_install
 
 %files -n libdtk5-widget
 %doc README.md LICENSE
@@ -104,9 +123,18 @@ export PATH=%{_qt5_bindir}:$PATH
 %_libdir/lib%name.so
 
 %files -n dtk5-widget-examples
-%_libdir/dtkwidget5-examples/
+%dir %_libdir/libdtk-5*/DWidget/
+%_libdir/libdtk-5*/DWidget/examples/
+
+%files -n dtk5-widget-doc
+%_qt5_datadir/doc/dtkwidget.qch
 
 %changelog
+* Mon Oct 17 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.0.2-alt1
+- New version.
+- Upstream:
+  + use cmake instead qmake.
+
 * Wed Jun 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.46-alt1
 - New version.
 - Upstream:

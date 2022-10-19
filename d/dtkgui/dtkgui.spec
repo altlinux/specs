@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.5.24
+Version: 5.6.0.2
 Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0
@@ -15,7 +15,8 @@ Patch: dtkgui-5.5.17.1-alt-fix-build-ppc64le.patch
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %endif
-BuildRequires: dtk5-core-devel dtk5-common librsvg-devel libgtest-devel libgmock-devel
+BuildRequires(pre): rpm-build-ninja
+BuildRequires: cmake dtk5-core-devel dtk5-common librsvg-devel libgtest-devel libgmock-devel libqtxdg-devel
 
 %description
 Deepin Toolkit, gui module for DDE look and feel.
@@ -40,25 +41,37 @@ Header files and libraries for %name.
 # %%ifarch ppc64le
 # %%patch -p1
 # %%endif
-sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|' \
-    src/src.pro
 sed -i '/*build-*/d' .gitignore
+%if_disabled clang
+# fix: XdgIcon crashed in release mode
+# 0abaada3ce3a17ccd8f4417321cabe300eed9e37
+sed -i 's|XdgIconLoader::instance()->followColorScheme();|return XdgIconLoader::instance()->followColorScheme();|' \
+  src/util/private/xdgiconproxyengine.cpp
+%endif
 
 %build
-%qmake_qt5 \
 %if_enabled clang
-    QMAKE_STRIP= -spec linux-clang \
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
 %endif
-    CONFIG+=nostrip \
-    PREFIX=%_prefix \
-    unix:LIBS+='-L/%_lib -lglib-2.0' \
-    LIB_INSTALL_DIR=%_libdir \
-    DTK_VERSION=%version
-
-%make_build
+export PATH=%_qt5_bindir:$PATH
+%cmake \
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/modules/ \
+  -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DDTK_VERSION=%version \
+  -DVERSION=%version \
+  -DLIB_INSTALL_DIR=%_libdir \
+  -DBUILD_DOCS=OFF \
+#
+cmake --build %_cmake__builddir -j%__nprocs
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+%cmake_install
 
 %files -n libdtk5-gui
 %doc README.md
@@ -76,6 +89,11 @@ sed -i '/*build-*/d' .gitignore
 %_libdir/libdtkgui.so
 
 %changelog
+* Mon Oct 17 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.0.2-alt1
+- New version.
+- Upstream:
+  + use cmake instead qmake.
+
 * Wed Jun 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.24-alt1
 - New version.
 - Upstream:

@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcore
-Version: 5.5.32
+Version: 5.6.2
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -16,14 +16,17 @@ BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
+BuildRequires(pre): rpm-build-ninja
+BuildRequires: cmake
 BuildRequires: rpm-build-python3
 BuildRequires: git-core
 BuildRequires: glibc-core
 BuildRequires: fdupes
-BuildRequires: qt5-base-devel
+BuildRequires: qt5-base-devel qt5-tools
 BuildRequires: gsettings-qt-devel
 BuildRequires: libgtest-devel
 BuildRequires: dtk5-common
+BuildRequires: doxygen
 
 %description
 Deepin tool kit core modules.
@@ -53,30 +56,42 @@ Requires: qt5-base-devel
 %description -n dtk5-core-devel
 Header files and libraries for %name.
 
+%package -n dtk5-core-doc
+Summary: %name documantation
+Group: Documentation
+BuildArch: noarch
+
+%description -n dtk5-core-doc
+This package provides %name documantation.
+
 %prep
 %setup
-chmod +x tools/script/dtk-{license,translate}.py
-sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|'  \
-    src/src.pro
+# Don't exist.
+# sed -i '/\/docs\/html\/dtkcore.qch/d' \
+#   docs/CMakeLists.txt
 
 %build
-%qmake_qt5 \
 %if_enabled clang
-    QMAKE_STRIP= -spec linux-clang \
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
 %endif
-    CONFIG+=nostrip \
-    PREFIX=%prefix \
-    DTK_VERSION=%version \
-    VERSION=%version \
-    LIB_INSTALL_DIR=%_libdir \
-    unix:LIBS+="-ldl" \
-    DEEPIN_OS_TYPE=Desktop \
-    DEEPIN_OS_VERSION=20.4 \
+export PATH=%_qt5_bindir:$PATH
+%cmake \
+  -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/modules/ \
+  -DCMAKE_INSTALL_LIBDIR=%_libdir \
+  -DDTK_VERSION=%version \
+  -DVERSION=%version \
+  -DLIB_INSTALL_DIR=%_libdir \
 #
-%make_build
+cmake --build %_cmake__builddir -j%__nprocs
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+%cmake_install
 
 %files -n dtk5-core
 %doc README.md LICENSE
@@ -88,7 +103,7 @@ sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|'  \
 %_libdir/libdtk-5*/DCore/
 
 %files -n dtk5-core-devel
-%doc doc/Specification.md
+%doc docs/Specification.md
 %_libdir/lib%name.so
 %_includedir/libdtk-*/
 %_qt5_archdatadir/mkspecs/modules/*.pri
@@ -97,7 +112,15 @@ sed -i 's|dtkBuildMultiVersion(5.5)|dtkBuildMultiVersion|'  \
 %_libdir/cmake/DtkTools/
 %_pkgconfigdir/dtkcore.pc
 
+%files -n dtk5-core-doc
+%_qt5_datadir/doc/dtkcore.qch
+
 %changelog
+* Fri Oct 14 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.2-alt1
+- New version.
+- Upstream:
+  + use cmake instead qmake.
+
 * Wed Jun 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.32-alt1
 - New version.
 - Upstream:
