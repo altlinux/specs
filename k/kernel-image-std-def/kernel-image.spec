@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt2
 epoch:2 
 %define kernel_base_version	5.15
 %define kernel_sublevel	.74
@@ -615,6 +615,12 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Oct 19 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.74-alt2
+- ext4: fix check for block being out of directory size (Fixes:
+  CVE-2022-1184).
+- io_uring/af_unix: defer registered files gc to io_uring release
+  (Fixes: CVE-2022-2602).
+
 * Sat Oct 15 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.74-alt1
 - v5.15.74 (2022-10-15).
 
