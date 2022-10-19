@@ -1,5 +1,5 @@
 Name: libXtst
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 Summary: The Xtst Library
 License: MIT/X11
@@ -38,6 +38,7 @@ develop programs which make use of %name
 %make DESTDIR=%buildroot install
 
 %files
+%doc COPYING README.md
 %_libdir/*.so.*
 
 %files devel
@@ -49,6 +50,9 @@ develop programs which make use of %name
 %_man3dir/*.3*
 
 %changelog
+* Wed Oct 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.2.4-alt1
+- 1.2.4
+
 * Tue Nov 17 2020 Valery Inozemtsev <shrek@altlinux.ru> 1.2.3-alt1
 - 1.2.3
 - securuty fixes: CVE-2016-7951, CVE-2016-7952

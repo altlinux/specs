@@ -1,5 +1,5 @@
 Name: libXpresent
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 Summary: X Present Extension
 License: MIT/X11
@@ -37,7 +37,7 @@ develop programs which make use of %name
 %make DESTDIR=%buildroot install
 
 %files
-%doc AUTHORS COPYING README
+%doc AUTHORS COPYING README.md
 %_libdir/*.so.*
 
 %files devel
@@ -47,6 +47,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Wed Oct 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Mon Mar 12 2018 Valery Inozemtsev <shrek@altlinux.ru> 1.0.0-alt1
 - initial build
 

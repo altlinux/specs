@@ -1,5 +1,5 @@
 Name: libXft
-Version: 2.3.4
+Version: 2.3.6
 Release: alt1
 
 Summary: X FreeType Library
@@ -48,6 +48,9 @@ develop programs which make use of %name.
 %_man3dir/*
 
 %changelog
+* Wed Oct 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 2.3.6-alt1
+- 2.3.6
+
 * Mon Sep 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 2.3.4-alt1
 - 2.3.4
 
