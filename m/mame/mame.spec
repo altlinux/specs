@@ -1,6 +1,6 @@
 
 Name: mame
-Version: 0.246
+Version: 0.248
 Release: alt1
 Group: Games/Arcade
 Summary: Multiple Arcade Machine Emulator
@@ -23,7 +23,7 @@ BuildRequires: libexpat-devel rapidjson libsqlite3-devel libutf8proc-devel zlib-
 BuildRequires: libflac-devel libglm-devel libportaudio2-devel libportmidi-devel fontconfig-devel 
 BuildRequires: git-core libxcb libSDL2_ttf-devel libXi-devel libXinerama-devel libalsa-devel python-modules-compiler 
 BuildRequires: python-modules-encodings python-modules-logging python-modules-xml qt5-base-devel libpulseaudio-devel
-BuildRequires: libuv-devel asio-devel
+BuildRequires: libuv-devel asio-devel gettext-tools
 
 Provides:       bundled(lua) = 5.3.4
 Provides:       bundled(luafilesystem)
@@ -181,6 +181,9 @@ make -j8 OPTIMISE="%optflags" \
     USE_SYSTEM_LIB_UTF8PROC=1 \
     USE_SYSTEM_LIB_ZLIB=1 
 
+#pushd docs
+#    %%make_build html
+#popd
 
 %install
 # create directories
@@ -242,6 +245,8 @@ install -pm 644 mame.6 %buildroot%_man6dir
 popd
 find %buildroot%_datadir/%name -name LICENSE -exec rm {} \;
 
+%find_lang %name
+
 %files
 %config(noreplace) %_sysconfdir/%name/%name.ini
 %dir %_sysconfdir/%name
@@ -287,6 +292,9 @@ find %buildroot%_datadir/%name -name LICENSE -exec rm {} \;
 %_datadir/%name/hash/*
 
 %changelog
+* Mon Oct 18 2022 Artyom Bystrov <arbars@altlinux.org> 0.248-alt1
+- Update to new version
+
 * Thu Aug 04 2022 Artyom Bystrov <arbars@altlinux.org> 0.246-alt1
 - Update to new version
 
