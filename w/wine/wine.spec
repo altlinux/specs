@@ -12,7 +12,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.18
+%define major 7.19
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -879,6 +879,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Wed Oct 19 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.19.1-alt1
+- new version 7.19.1 (with rpmrb script)
+
 * Sat Sep 24 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.18.1-alt1
 - new version 7.18.1 (with rpmrb script)
 - restore libwine.so.1 packing for compatibility reasons
