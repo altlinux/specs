@@ -1,6 +1,6 @@
 Name: autofs
 Version: 5.1.8
-Release: alt4
+Release: alt5
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPLv2
@@ -93,6 +93,10 @@ if /sbin/start-stop-daemon --stop --quiet \
 /sbin/service autofs start ||:
 fi
 
+%triggerun ldap -- autofs-ldap < 5.1.8-alt5
+[ $2 -gt 0 ] || exit 0
+chmod 0600 %_sysconfdir/autofs_ldap_auth.conf ||:
+
 %files
 %dir %docdir
 %dir %docdir/samples
@@ -122,11 +126,10 @@ fi
 %_mandir/man?/*
 
 %files ldap
-%docdir/samples/autofs.schema
-%docdir/samples/auto.master.ldap
-%docdir/samples/ldap-*
+%docdir/samples/*ldap*
+%docdir/samples/*schema*
 
-%_sysconfdir/autofs_ldap_auth.conf
+%attr(600,root,root) %config(noreplace) %_sysconfdir/autofs_ldap_auth.conf
 
 %_libdir/%name/lookup_ldaps.so
 %_libdir/%name/lookup_ldap.so
@@ -135,6 +138,9 @@ fi
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Thu Oct 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.8-alt5
+- fixed autofs_ldap_auth.conf file permissions (closes: 44091)
+
 * Wed Feb 09 2022 Oleg Solovyov <mcpain@altlinux.org> 5.1.8-alt4
 - apply mount-hidden-samba-shares.patch
 - sync auto.smb from upstream (Closes: #33965)
