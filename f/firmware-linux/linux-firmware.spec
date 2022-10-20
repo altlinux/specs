@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20221012
+Version: 20221017
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,14 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Oct 20 2022 Cronbuild Service <cronbuild@altlinux.org> 20221017-alt1
+- upstream changes (GIT 48407ffd):
+  + cnm: update chips&media wave521c firmware. (thx Nas Chung)
+  + brcm: add symlink for Pi Zero 2 W NVRAM file (thx Peter Robinson)
+  + rtw89: 8852b: add initial fw v0.27.32.0 (thx Ping-Ke Shih)
+  + iwlwifi: add new FWs from core72-129 release (thx Gregory Greenman)
+  + iwlwifi: update 9000-family firmwares to core72-129 (thx Gregory Greenman)
+
 * Wed Oct 12 2022 Cronbuild Service <cronbuild@altlinux.org> 20221012-alt1
 - upstream changes (GIT 8b07c1fb):
   + rtl_bt: Update RTL8852C BT USB firmware to 0xD5B8_A40A (thx Hilda Wu)
