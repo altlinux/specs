@@ -1,9 +1,9 @@
-%define modname dateparser
-#module 'logging' has no attribute 'config'
+%define pypi_name dateparser
+#regex!=2019.02.19,!=2021.8.27,<2022.3.15
 %def_disable check
 
-Name: python3-module-%modname
-Version: 1.1.1
+Name: python3-module-%pypi_name
+Version: 1.1.2
 Release: alt1
 
 Summary: Python parser for human readable dates 
@@ -12,19 +12,20 @@ Group: Development/Python3
 Url: https://pypi.python.org/pypi/dateparser
 
 Vcs: https://github.com/scrapinghub/dateparser.git
-Source: https://github.com/scrapinghub/dateparser/archive/v%version/%modname-%version.tar.gz
+Source: https://github.com/scrapinghub/dateparser/archive/v%version/%pypi_name-%version.tar.gz
 BuildArch: noarch
 
 #grep calendars setup.py 
 #'calendars': ['convertdate', 'umalqurra', 'jdatetime', 'ruamel.yaml'],
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3-devel python3-module-wheel  python3-module-setuptools
 BuildRequires: python3-module-nose python3-module-mock
-BuildRequires: python3-module-parameterized python3-module-wheel
+BuildRequires: python3-module-parameterized
 BuildRequires: python3-module-dateutil python3-module-tzlocal python3-module-regex
 BuildRequires: python3-module-sphinx-devel python3-module-sphinx_rtd_theme
-%{?_enable_check:BuildRequires: python3-module-flake8 python3-module-pytest
+%{?_enable_check:BuildRequires: python3-module-tox
+BuildRequires: python3-module-flake8 python3-module-pytest
 BuildRequires: python3-module-pytest-cov python3-module-parameterized
 BuildRequires: python3-module-orderedset python3-module-convertdate
 BuildRequires: python3-module-ruamel-yaml python3-module-umalqurra
@@ -35,46 +36,45 @@ BuildRequires: python3-module-fasttext}
 Date parsing library designed to parse dates from HTML pages.
 
 %package pickles
-Summary: Pickles for %modname
+Summary: Pickles for %pypi_name
 Group: Development/Python3
 
 %description pickles
 Date parsing library designed to parse dates from HTML pages.
 
-This package contains pickles for %modname.
+This package contains pickles for %pypi_name.
 
 %package docs
-Summary: Documentation for %modname
+Summary: Documentation for %pypi_name
 Group: Development/Documentation
 BuildArch: noarch
 
 %description docs
 Date parsing library designed to parse dates from HTML pages.
 
-This package contains documentation for %modname.
+This package contains documentation for %pypi_name.
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-
+%pyproject_install
 export PYTHONPATH=$PWD
 %make -C docs pickle html SPHINXBUILD=sphinx-build-3
 
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%modname/
+cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%pypi_name/
 
 %check
-%__python3 setup.py test
+%tox_check
 
 %files
-%_bindir/%modname-download
+%_bindir/%pypi_name-download
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/pickle
 %doc *.rst
@@ -87,6 +87,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%modname/
 
 
 %changelog
+* Thu Oct 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
+- 1.1.2
+
 * Thu Mar 17 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
