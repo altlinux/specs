@@ -10,8 +10,8 @@
 %def_disable clang
 
 Name: deepin-kwin
-Version: 5.4.26
-Release: alt3
+Version: 5.5.11
+Release: alt1
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -23,13 +23,9 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 
 # upstream patches
 Patch: kwin-greater-than.patch
-Patch1: deepin-kwin-5.3.14-fix-library-links.patch
 Patch2: dde-kwin.5.4.26.patch
 # archlinux patches
-Patch3: %name-added-functions-from-their-forked-kwin.patch
 Patch4: %name-tabbox-chameleon-rename.patch
-Patch5: %name-unload-blur.patch
-Patch6: deepin-kwin-crash.patch
 # ALT patches
 Patch11: deepin-kwin-5.3.7-ALT-cmake-bad-elfs.patch
 
@@ -41,7 +37,7 @@ BuildRequires(pre): gcc-c++
 BuildRequires(pre): rpm-build-kf5 rpm-build-ninja
 BuildRequires(pre): plasma5-kwin-devel libkwin5
 BuildRequires: cmake extra-cmake-modules qt5-tools qt5-tools-devel qt5-base-devel plasma5-kdecoration-devel qt5-x11extras-devel qt5-declarative-devel kf5-kwindowsystem-devel kf5-kcoreaddons-devel dtk5-gui-devel dtk5-common kf5-kconfig-devel kf5-kglobalaccel-devel kf5-ki18n-devel gsettings-qt-devel plasma5-kwin-devel plasma5-kwayland-server-devel kf5-kwayland-devel
-BuildRequires: zlib-devel bzlib-devel libpng-devel libpcre-devel libbrotli-devel libuuid-devel libexpat-devel
+BuildRequires: zlib-devel bzlib-devel libpng-devel libpcre-devel libbrotli-devel libuuid-devel libexpat-devel libdrm-devel libgbm-devel
 BuildRequires: libxcb-devel libglvnd-devel libX11-devel
 Requires: plasma5-kwin
 # libkwineffects12 libkwinglutils12 libxcb libGL libX11
@@ -60,12 +56,8 @@ Header files and libraries for %name.
 %prep
 %setup -n %repo-%version
 #%%patch -p1
-#%%patch1 -p1
-%patch2 -p1
-%patch3 -R -p1
+#%%patch2 -p1
 %patch4 -p1
-#%%patch5 -p1
-#%%patch6 -p1
 #%%patch11 -p2
 
 # sed -i 's|lrelease|lrelease-qt5|' plugins/platforms/plugin/translate_generation.sh
@@ -75,6 +67,8 @@ sed -i 's|${CMAKE_INSTALL_PREFIX}/share/kwin/tabbox|%_K5data/kwin/tabbox|' \
     tabbox/CMakeLists.txt
 sed -i 's|/usr/include/KWaylandServer|%_K5inc/KWaylandServer|' CMakeLists.txt
 sed -i 's|${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}|${CMAKE_INSTALL_LIBDIR}|' \
+    plugins/platforms/lib/dde-kwin.pc.in
+sed -i 's| -L/usr/X11R6/lib64| -L%_libdir|' \
     plugins/platforms/lib/dde-kwin.pc.in
 sed -i '1icmake_minimum_required(VERSION 3.23)' CMakeLists.txt
 # sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
@@ -109,10 +103,10 @@ ln -s %_K5lib/libkwin.so.5 libs/libkwin.so
     -DUSE_WINDOW_TOOL=ON \
 %else
     -DUSE_PLUGINS=OFF \
+    -DUSE_WINDOW_TOOL=OFF \
     -DUSE_SCRIPTS=OFF \
     -DUSE_DEEPIN_WM_DBUS=ON \
     -DUSE_TABBOX=ON \
-    -DUSE_WINDOW_TOOL=OFF \
     -DUSE_DEEPIN_WAYLAND=OFF \
     -DUSE_KWIN_NO_SCALE=ON \
     -DENABLE_BUILTIN_BLUR=OFF \
@@ -135,6 +129,7 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/interfaces/*.xml
 %_K5data/kwin/tabbox/*
+# %%_K5data/kwin/scripts/*
 %if_enabled kwin_ext
 %_K5plug/platforms/lib%repo-xcb.so
 %_K5data/kwin/scripts/*
@@ -163,6 +158,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %endif
 
 %changelog
+* Thu Oct 06 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.11-alt1
+- New version (5.5.11).
+
 * Thu Jun 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.26-alt3
 - Fixed multitasking using the dock panel.
 - Rebuilt with gcc12.

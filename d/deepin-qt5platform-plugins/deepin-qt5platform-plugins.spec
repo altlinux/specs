@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.0.65
+Version: 5.0.70
 Release: alt1
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 License: GPL-2.0+ and LGPL-3.0 and MIT
@@ -46,6 +46,7 @@ BuildRequires: qt5-base-devel-static
 %setup -n %repo-%version
 # Disable wayland for now: https://github.com/linuxdeepin/qt5platform-plugins/issues/47
 sed -i '/wayland/d' qt5platform-plugins.pro
+rm -r xcb/libqt5xcbqpa-dev wayland/qtwayland-dev
 sed -i 's|error(Not support Qt Version: .*)|INCLUDEPATH += %_qt5_headerdir/QtXcb|' xcb/linux.pri
 
 %build
@@ -68,6 +69,28 @@ export PATH=%_qt5_bindir:$PATH
 %_qt5_plugindir/platforms/libdxcb.so
 
 %changelog
+* Thu Oct 20 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.70-alt1
+- New version.
+- Upstream:
+  + fix: lock screen interface network panel display abnormal,
+  background color overlapping black shadow.
+  + fix: missing QPainterPath header.
+  + fix: wayland control center time zone background fuzzy problem.
+  + feat(libqt5xcbqpa-dev): support Qt 5.15.5.
+  + fix: update to xsettings when the home screen changes.
+  + fix: cache issue not updated after screen removal.
+  + chore: judging support xdg-shell-v6.
+  + chore: update Licenses.
+  + fix: fix to no response signal after home screen changes.
+  + end the start queue when startid is not used.
+  + chore: remove hook using std::bind.
+  + chore: there is an extra comma when the functionCache
+  data is initialized.
+  + fix: supportForSplittingWindow return error.
+  + fix: fix setting taskbar to follow home screen,
+  switch display mode, probability taskbar is not on home
+  screen problem.
+
 * Tue Jul 12 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.65-alt1
 - New version.
 - Upstream:

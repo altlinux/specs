@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-qt5integration
-Version: 5.5.23.1
+Version: 5.5.24
 Release: alt1
 Summary: Qt platform theme integration plugins for DDE
 # The entire source code is GPLv3+ except styles/ which is BSD,
@@ -77,6 +77,14 @@ make -j1
 %_qt5_plugindir/imageformats/libdsvg.so
 
 %changelog
+* Thu Oct 20 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.24-alt1
+- New version.
+- Upstream:
+  + fix: reduces the distance between menu item icons and text.
+  + chore: spinner of dtoolbutton dropdown arrow with menu.
+  + feat: configurable proxy icon engine.
+  + fix: editable combobox has no background color.
+
 * Tue Jul 12 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.23.1-alt1
 - New version.
 - Upstream:
