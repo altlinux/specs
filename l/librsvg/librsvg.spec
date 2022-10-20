@@ -1,5 +1,7 @@
+%def_disable bootstrap
+
 %define bname librsvg
-%define ver_major 2.54
+%define ver_major 2.55
 %define api_ver 2.0
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
@@ -16,7 +18,7 @@
 %def_disable check
 
 Name: %bname
-Version: %ver_major.5
+Version: %ver_major.1
 Release: alt1
 Epoch: 1
 
@@ -26,10 +28,12 @@ Group: System/Libraries
 Url: https://wiki.gnome.org/action/show/Projects/LibRsvg
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.tar.xz
+# since 2.55 no longer contains vendored Rust dependencies
+%{?_disable_bootstrap:Source1: %name-%version-cargo.tar}
 
 # From configure.ac
 # since 2.53.1 rust-1.56 required
-%define rust_ver 1.56
+%define rust_ver 1.58
 %define glib_ver 2.52.0
 %define pango_ver 1.46
 %define gtk3_ver 3.10.0
@@ -135,7 +139,11 @@ This package provides tests programs that can be used to verify
 the functionality of the installed %name.
 
 %prep
-%setup -n %bname-%version
+%setup -n %bname-%version %{?_disable_bootstrap:-a1}
+%{?_enable_bootstrap:
+mkdir .cargo
+cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config.toml
+tar -cf %_sourcedir/%name-%version-cargo.tar .cargo/ vendor/}
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -202,6 +210,9 @@ the functionality of the installed %name.
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Tue Sep 06 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.55.1-alt1
+- 2.55.1
+
 * Sat Aug 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1:2.54.5-alt1
 - 2.54.5
 
