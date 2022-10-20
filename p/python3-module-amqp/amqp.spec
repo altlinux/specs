@@ -1,23 +1,34 @@
-%define module_name amqp
+%define _unpackaged_files_terminate_build 1
+%define pypi_name amqp
 
-%def_without check
+%def_with check
 
-Name: python3-module-%module_name
-Version: 2.5.2
+Name: python3-module-%pypi_name
+Version: 5.1.1
 Epoch: 1
-Release: alt3
+Release: alt1
 Group: Development/Python3
-License: GPLv2
-Summary: fork of amqplib used by Kombu containing additional features and improvements
-URL: http://github.com/celery/py-amqp.git
+License: BSD
+Summary: Low-level AMQP client for Python
+URL: https://pypi.org/project/amqp/
+VCS: http://github.com/celery/py-amqp.git
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-sugar >= 0.9.1
-BuildRequires: python3-module-pytest-rerunfailures
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%if_with check
+# deps
 BuildRequires: python3(vine)
+
+BuildRequires: python3(pytest)
+%endif
+
+BuildArch: noarch
 
 %description
 This is a fork of amqplib_ which was originally written by Barry Pederson.
@@ -28,24 +39,25 @@ alternative when librabbitmq is not available.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-
-%if "%_target_libdir_noarch" != "%_libdir"
-mv %buildroot%_target_libdir_noarch %buildroot%_libdir
-%endif
+%pyproject_install
 
 %check
-python3 setup.py test
+# override upstream's config (it's too much to patch)
+%tox_create_default_config
+%tox_check_pyproject -- -vra t/unit
 
 %files
 %doc AUTHORS Changelog LICENSE README.rst
-%python3_sitelibdir/%module_name
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/amqp/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 20 2022 Stanislav Levin <slev@altlinux.org> 1:5.1.1-alt1
+- 2.5.2 -> 5.1.1.
+
 * Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 1:2.5.2-alt3
 - Fixed BuildRequires.
 - Build without check.
