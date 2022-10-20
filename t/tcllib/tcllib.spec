@@ -19,7 +19,7 @@
 %add_tcl_req_skip twapi
 
 Name: tcllib
-Version: 1.20
+Version: 1.21
 Release: alt1
 Epoch: 1
 
@@ -39,6 +39,7 @@ Conflicts: tcl-trf < 2.1-alt8
 Source: %name-%version.tar
 Patch1: 0001-sync-d-with-reality-i-hope.patch
 Patch2: 0002-ALT-TEA.patch
+Patch3: 0003-ALT-filetypes.tcl-fix-package-requirement.patch
 
 %description
 Tcllib is a collection of utility modules for tcl. These modules provide
@@ -57,10 +58,14 @@ rely on to be available and stable.
 
 find examples -type f -print0 |xargs -r0 chmod 0644 --
 
+%check
+make check
+
 %files
 %doc ChangeLog README* license* devdoc examples support/releases/history support/releases/PACKAGES
 %_bindir/dtplite
 %_bindir/page
+%_bindir/mkdoc
 %_bindir/nns*
 %_bindir/page
 %_bindir/pt
@@ -69,6 +74,10 @@ find examples -type f -print0 |xargs -r0 chmod 0644 --
 %_mandir/mann/*
 
 %changelog
+* Thu Oct 20 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.21-alt1
+- Updated to 1.21.
+- Enabled tests.
+
 * Mon Dec 02 2019 Vladimir D. Seleznev <vseleznv@altlinux.org> 1:1.20-alt1
 - Updated to 1.20.
 
