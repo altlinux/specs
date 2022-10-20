@@ -5,12 +5,12 @@
 
 Name: python3-module-%oname
 Version: 5.0.1
-Release: alt3
+Release: alt3.1
 
 Summary: OpenStack Oslo Concurrency library
 
-Group: Development/Python3
 License: Apache-2.0
+Group: Development/Python3
 Url: https://pypi.org/project/oslo.concurrency
 
 Source: %oname-%version.tar
@@ -114,6 +114,9 @@ install -pDm 644 man/osloconcurrency.1 %buildroot%_man1dir/osloconcurrency.1
 %endif
 
 %changelog
+* Fri Oct 21 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt3.1
+- Little spec fix.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt3
 - Spec refactoring.
 

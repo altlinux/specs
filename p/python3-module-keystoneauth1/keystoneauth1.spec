@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.0.0
-Release: alt2
+Release: alt2.1
 
 Summary: Authentication Library for OpenStack Identity
 
@@ -85,7 +85,7 @@ rm -rfv *.egg-info
 %python3_build
 
 %if_with docs
-export PYTHONPATH=$PWD
+export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
 # generate man page
@@ -121,6 +121,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Oct 21 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt2.1
+- Little spec fix.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt2
 - Spec refactoring.
 

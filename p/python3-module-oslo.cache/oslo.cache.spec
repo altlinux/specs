@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.1.0
-Release: alt2
+Release: alt2.1
 
 Summary: Cache storage for OpenStack projects
 
@@ -76,7 +76,7 @@ This package contains documentation for %oname.
 %setup -n %oname-%version
 
 # Remove bundled egg-info
-rm -rvf *.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -118,6 +118,9 @@ install -pDm 644 man/oslocache.1 %buildroot%_man1dir/oslocache.1
 %endif
 
 %changelog
+* Fri Oct 21 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt2.1
+- Little spec fix.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt2
 - Spec refactoring.
 

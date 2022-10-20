@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.0.0
-Release: alt2
+Release: alt2.1
 
 Summary: OpenStack Command Line Interface Formulation Framework
 
@@ -64,15 +64,15 @@ This package contains documentation for %oname.
 %prep
 %setup -n %oname-%version
 
-# Remove bundled egg info
+# Remove bundled egg-info
 rm -rfv *.egg-info
 
 %build
 %python3_build
 
 %if_with docs
+export PYTHONPATH="$PWD"
 # generate html docs
-export PYTHONPATH="$(pwd)"
 sphinx-build-3 doc/source html
 # generate man page
 sphinx-build-3 -b man doc/source man
@@ -107,6 +107,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Fri Oct 21 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt2.1
+- Little spec fix.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt2
 - Spec refactoring.
 
