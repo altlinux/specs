@@ -1,6 +1,6 @@
 Name: arj
 Version: 3.10.22
-Release: alt7
+Release: alt8
 Epoch: 1
 
 Summary: An compressor and uncompressor for .arj format archive files
@@ -17,6 +17,11 @@ Patch3: arj-3.10.22-safe_strcpy.patch
 # optimization is disabled.
 Patch4: arj-3.10.22-drop-static.patch
 
+Patch5: CVE-2015-0556-security-traversal-symlink.patch
+Patch6: CVE-2015-0557-security-traversal-dir.patch
+Patch7: CVE-2015-2782-security-afl.patch
+
+
 %description
 The ARJ program is used to compress and uncompress .arj format archives.
 The .arj format archive was mostly used on DOS machines.
@@ -30,6 +35,9 @@ The .arj format archive was mostly used on DOS machines.
 %ifarch %e2k
 %patch4 -p1
 %endif
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 for i in debian/patches/00*.patch; do
   patch -p1 < $i
@@ -63,6 +71,9 @@ install -pD -m 644 resource/rearj.cfg.example $RPM_BUILD_ROOT%_sysconfdir/rearj.
 %doc doc/*.txt resource/en/*.txt
 
 %changelog
+* Thu Oct 20 2022 Alexander Danilov <admsasha@altlinux.org> 1:3.10.22-alt8
+- (Fixes CVE-2015-0556, CVE-2015-0557, CVE-2015-2782)
+
 * Wed Jun 06 2018 Mikhail Efremov <sem@altlinux.org> 1:3.10.22-alt7
 - Drop packager from spec.
 - Fix build on e2k.
