@@ -26,20 +26,21 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2022.Q2.3
-Release: alt1
+Version: 2022.Q3.5
+Release: alt1.1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
 Group: System/X11
 
-ExclusiveArch: %ix86 x86_64
+# x86 is broken https://github.com/GPUOpen-Drivers/gpurt/issues/5
+ExclusiveArch: x86_64
 
 Requires: vulkan-filesystem
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake python3-devel curl libxcb-devel libssl-devel llvm-devel
-BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel spirv-headers libspirv-tools-devel libspirv-cross-devel glslang-devel
+BuildRequires: cmake ninja-build python3-devel curl libxcb-devel libssl-devel llvm-devel
+BuildRequires: libX11-devel libxshmfence-devel libXrandr-devel glslang libdxcompiler-devel
 %if_with wayland
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 BuildRequires: libffi-devel
@@ -53,13 +54,11 @@ BuildRequires: gcc9-c++ libstdc++9-devel
 Source0: xgl.tar
 Source1: pal.tar
 Source2: llpc.tar
-Source3: spvgen.tar
+Source3: gpurt.tar
 Source4: llvm.tar
 Source5: metrohash.tar
 Source6: amd_icd.json
 Source7: cwpack.tar
-
-Patch1: spvgen-alt-shared.patch
 
 %description
 The AMD Open Source Driver for Vulkan(r) is an open-source Vulkan driver for
@@ -75,16 +74,10 @@ AMD developer tools.
 mkdir -p %_builddir/llvm-project
 mv %_builddir/llvm/llvm %_builddir/llvm-project
 cp -ar %_builddir/llvm/{cmake,third-party} %_builddir/llvm-project/
-pushd %_builddir/spvgen
-%patch1 -p2
-popd
 
 %build
-# FIXME! should be fixed in next build
-#%%add_optflags -Wno-error=return-type
-
 # build amdvlk.so
-pushd %_builddir/xgl
+# according https://github.com/GPUOpen-Drivers/AMDVLK#build-driver-and-generate-json-files
 %if_with clang
 export ALTWRAP_LLVM_VERSION=%{llvm_ver} \
 %cmake \
@@ -109,10 +102,10 @@ export GCC_VERSION=9 \
 	-DCMAKE_BUILD_TYPE=Release \
         -DXGL_METROHASH_PATH=%_builddir/metrohash \
         -DXGL_CWPACK_PATH=%_builddir/cwpack \
-        -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+        -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+        -G Ninja
 
 %cmake_build
-popd
 
 %install
 mkdir -p %buildroot{%_vkdir,%_libdir,%_sysconfdir/amd}
@@ -128,6 +121,20 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Fri Oct 21 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q3.5-alt1.1
+- disable i586 build (it's broken now).
+
+* Sat Oct 15 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q3.5-alt1
+- Update build scheme.
+- BR: add dxcompiler dependency.
+- 2022-9-30 update:
+  + icd: bump vulkan API version
+  + xgl: Updated to 4118707939c2f4783d28ce2a383184a3794ca477
+  + pal: Updated to ae55b19b7553bf204b4945de9c11c5b05bc0e167
+  + llpc: Updated to 7857f2e209fc65374f2891be52e3a4a22fbae483
+  + gpurt: Updated to b89f22aadd0a335be632055434a7f8ba152fcb37
+  + llvm-project: Updated to 5c82ef808fd269c95f5bd166d1846149e3afadc2
+
 * Tue Jul 12 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q2.3-alt1
 - .spec: play with optlevel on x86_64
 - .spec: remove llvm optflags hack
