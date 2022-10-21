@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4.1
-Release: alt1
+Release: alt2
 
 Summary: Python tool to create HTML documentation from markdown sources
 License: BSD-2-Clause
@@ -23,6 +23,9 @@ BuildRequires: fonts-font-awesome
 # build backend and its deps
 BuildRequires: python3(hatchling)
 
+# build MO from PO (similar to msgfmt)
+BuildRequires: python3(babel)
+
 %if_with check
 # install_requires:
 BuildRequires: python3(click)
@@ -34,7 +37,6 @@ BuildRequires: python3-module-ghp-import
 BuildRequires: python3(yaml_env_tag)
 BuildRequires: python3(packaging)
 BuildRequires: python3(mergedeep)
-BuildRequires: python3(babel)
 %endif
 
 %description
@@ -89,6 +91,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Oct 21 2022 Stanislav Levin <slev@altlinux.org> 1.4.1-alt2
+- Fixed build without check.
+
 * Mon Oct 17 2022 Stanislav Levin <slev@altlinux.org> 1.4.1-alt1
 - 1.4.0 -> 1.4.1.
 
