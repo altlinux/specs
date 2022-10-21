@@ -1,33 +1,35 @@
 %define oname tempest
-
-%def_without docs
+%def_without check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 19.0.0
-Release: alt5
-Summary: OpenStack Integration Testing Suite
+Version: 32.0.0
+Release: alt1
 
-Group: Development/Python3
+Summary: OpenStack Integration Testing
+
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/%oname
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Group: Development/Python3
+Url: https://pypi.org/project/tempest
+
+Source: %oname-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-cliff >= 2.8.0
-BuildRequires: python3-module-jsonschema >= 2.6.0
+BuildRequires: python3-module-jsonschema >= 3.2.0
 BuildRequires: python3-module-testtools >= 2.2.0
-BuildRequires: python3-module-paramiko >= 2.0
+BuildRequires: python3-module-paramiko >= 2.7.0
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-stestr >= 1.0.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
-BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslo.utils >= 4.7.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-yaml >= 3.12
 BuildRequires: python3-module-subunit
@@ -36,14 +38,22 @@ BuildRequires: python3-module-prettytable >= 0.7.1
 BuildRequires: python3-module-urllib3 >= 1.21.1
 BuildRequires: python3-module-debtcollector >= 1.2.0
 
-# for build doc and tests
+%if_with check
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-mock >= 2.0
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-cryptography >= 2.1
+BuildRequires: python3-module-pycodestyle >= 2.0.0
+BuildRequires: python3-module-flake8-import-order
+%endif
+
+%if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno >= 2.5.0
-BuildRequires: python3-module-hacking >= 0.11.0
-BuildRequires: python3-module-mock >= 2.0
-BuildRequires: python3-module-coverage >= 3.6
-BuildRequires: python3-module-oslotest >= 1.10.0
+BuildRequires: python3-module-sphinxcontrib-rsvgconverter
+%endif
 
 %description
 This is a set of integration tests to be run against a live OpenStack
@@ -61,45 +71,61 @@ This package contains tests for %oname.
 
 %if_with docs
 %package doc
-Summary: Documentation for OpenStack Integration Testing Suite
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-Documentation for OpenStack Integration Testing Suite.
+This package contains documentation for %oname.
 %endif
 
 %prep
 %setup -n %oname-%version
 
-find -name "*.py" | xargs subst "s|pep8|pycodestyle|"
-
 # Remove bundled egg-info
-rm -rf %{oname}.egg-info
+rm -rfv *.egg-info
 
-# Remove the requirements file so that pbr hooks don't add it
-# to distutils requires_dist config
-rm -rf {test-,}requirements.txt
+find -name "*.py" | xargs subst "s|pep8|pycodestyle|"
 
 %build
 %python3_build
 
 %if_with docs
-python3 setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-rm -fr build/sphinx/html/.buildinfo
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
-mkdir -p %buildroot%_sysconfdir/tempest
-mv %buildroot/usr/etc/tempest/* %buildroot%_sysconfdir/tempest/
-rm -rf %buildroot/usr/etc/tempest
+
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
+
+# Move config files to proper location
+install -d -m 755 %buildroot%_sysconfdir/%oname
+mv %buildroot/usr/etc/%oname/*.sample %buildroot%_sysconfdir/%oname
+mv %buildroot/usr/etc/%oname/allow-list.yaml %buildroot%_sysconfdir/%oname
+
+%check
+%__python3 -m stestr --test-path ./tempest/tests run
 
 %files
-%doc README.rst LICENSE ChangeLog
-%_sysconfdir/tempest
-%_bindir/*
-%python3_sitelibdir/*
+%doc LICENSE AUTHORS ChangeLog *.rst
+%_bindir/check-uuid
+%_bindir/skip-tracker
+%_bindir/subunit-describe-calls
+%_bindir/tempest
+%dir %_sysconfdir/%oname
+%config(noreplace) %_sysconfdir/%oname/*.sample
+%config(noreplace) %_sysconfdir/%oname/allow-list.yaml
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 %exclude %python3_sitelibdir/%oname/tests
 
 %files tests
@@ -107,10 +133,17 @@ rm -rf %buildroot/usr/etc/tempest
 
 %if_with docs
 %files doc
-%doc build/sphinx/html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
 %endif
 
 %changelog
+* Tue Oct 11 2022 Grigory Ustinov <grenka@altlinux.org> 32.0.0-alt1
+- Automatically updated to 32.0.0.
+- Renamed spec file.
+- Unified.
+- Build without check.
+
 * Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 19.0.0-alt5
 - Drop unneeded BR: python3-module-unittest2.
 - Build without docs.

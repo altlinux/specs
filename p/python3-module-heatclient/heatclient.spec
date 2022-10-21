@@ -1,23 +1,27 @@
 %define oname heatclient
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 2.5.1
+Version: 3.1.0
 Release: alt1
 
-Summary: Python API and CLI for OpenStack Heat
+Summary: OpenStack Orchestration API Client Library
 
-Group: Development/Python3
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/python-heatclient
+Group: Development/Python3
+Url: https://pypi.org/project/python-heatclient
 
-Source: python-%oname-%version.tar.gz
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-babel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-cliff >= 2.8.0
+BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-osc-lib >= 1.14.0
 BuildRequires: python3-module-prettytable >= 0.7.2
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
@@ -27,25 +31,26 @@ BuildRequires: python3-module-keystoneauth1 >= 3.8.0
 BuildRequires: python3-module-swiftclient >= 3.2.0
 BuildRequires: python3-module-yaml >= 3.12
 BuildRequires: python3-module-requests >= 2.14.2
-BuildRequires: python3-module-six >= 1.10.0
 
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno >= 2.5.0
-BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-babel
-BuildRequires: python3-module-iso8601 >= 0.1.11
+%if_with check
 BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-tempest >= 17.1.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-requests-mock >= 1.2.0
+%endif
+
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+%endif
 
 %description
-This is a client for the OpenStack Heat API. There's a Python API
-(the heatclient module), and a command-line script (heat).
+There's a Python API (the heatclient module), and a command-line script (heat).
 Each implements 100 percent of the OpenStack Heat API.
 
 %package tests
@@ -58,25 +63,18 @@ This package contains tests for %oname.
 
 %if_with docs
 %package doc
-Summary: Documentation for OpenStack Heat API Client
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-This is a client for the OpenStack Heat API. There's a Python API
-(the heatclient module), and a command-line script (heat).
-Each implements 100 percent of the OpenStack Heat API.
-
 This package contains documentation for %oname.
 %endif
 
 %prep
-%setup -n python-%oname-%version
+%setup -n %oname-%version
 
-# Remove the requirements file so that pbr hooks don't add it
-# to distutils requires_dist config.
-rm -rf {test-,}requirements.txt tools/{pip,test}-requires
-
-sed -i 's/^warning-is-error.*/warning-is-error = 0/g' setup.cfg
+# Remove bundled egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
@@ -93,34 +91,40 @@ rm -rf html/.{doctrees,buildinfo}
 
 %install
 %python3_install
-echo "%version" > %buildroot%python3_sitelibdir/heatclient/versioninfo
 
 %if_with docs
 # install man page
-install -p -D -m 644 man/heat.1 %buildroot%_man1dir/heat.1
+install -pDm 644 man/heat.1 %buildroot%_man1dir/%oname.1
 %endif
 
 # install bash completion
-install -p -D -m 644 tools/heat.bash_completion \
-    %buildroot%_sysconfdir/bash_completion.d/heat.bash_completion
+install -pDm 644 tools/heat.bash_completion \
+  %buildroot%_sysconfdir/bash_completion.d/heat.bash_completion
+
+%check
+%__python3 -m stestr run
 
 %files
-%doc *.rst LICENSE
+%doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/heat
-#_man1dir/heat*
-%python3_sitelibdir/*
-%_sysconfdir/bash_completion.d/heat*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/python_heatclient-%version-py%_python3_version.egg-info
+%_sysconfdir/bash_completion.d/heat.bash_completion
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
 %if_with docs
 %files doc
-%doc LICENSE html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
 %endif
 
 %changelog
+* Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1
 - Automatically updated to 2.5.1.
 - Build without docs.

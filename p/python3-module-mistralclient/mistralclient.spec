@@ -1,22 +1,23 @@
 %define oname mistralclient
+%def_with check
+%def_with docs
 
-Name:       python3-module-%oname
-Version:    4.0.1
-Release:    alt2
+Name: python3-module-%oname
+Version: 4.5.0
+Release: alt1
 
-Summary:    Client Library for OpenStack Mistral Workflow Service API
+Summary: OpenStack Mistral Client Library
 
-Group:      Development/Python3
-License:    Apache-2.0
-Url:        http://docs.openstack.org/developer/python-%oname
+License: Apache-2.0
+Group: Development/Python3
+Url: https://pypi.org/project/python-mistralclient
 
-Source:     https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
+Source: %oname-%version.tar
+Source1: %oname.watch
 
-BuildArch:  noarch
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-cliff >= 2.8.0
 BuildRequires: python3-module-osc-lib >= 1.8.0
@@ -26,22 +27,42 @@ BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
 BuildRequires: python3-module-yaml >= 3.12
 BuildRequires: python3-module-requests >= 2.14.2
-BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-stevedore >= 1.20.0
 
+%if_with check
 BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-osprofiler >= 1.4.0
-BuildRequires: python3-module-tempest
+BuildRequires: python3-module-tempest >= 17.1.0
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-docutils >= 0.11
+BuildRequires: python3-module-os-client-config >= 1.28.0
+%endif
 
+%if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-sphinxcontrib-apidoc
+%endif
 
 %description
 This is a Python library for accessing the API (mistralclient module),
 and a command-line script (mistral).
+
+Mistral is a workflow service. Most business processes consist of multiple
+distinct interconnected steps that need to be executed in a particular order in
+a distributed environment. A user can describe such a process as a set of tasks
+and their transitions. After that, it is possible to upload such a description
+to Mistral, which will take care of state management, correct execution order,
+parallelism, synchronization and high availability.
+
+Mistral also provides flexible task scheduling so that it can run a process
+according to a specified schedule (for example, every Sunday at 4.00pm) instead
+of running it immediately. In Mistral terminology such a set of tasks and
+relations between them is called a workflow.
 
 %package tests
 Summary: Tests for %oname
@@ -51,67 +72,70 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Documentation for OpenStack Mistral Workflow Service API
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-This is a Python library for accessing the API (mistralclient module),
-and a command-line script (mistral).
-
 This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n python-%oname-%version
-
-# Let RPM handle the dependencies
-rm -f test-requirements.txt requirements.txt
+%setup -n %oname-%version
 
 # Remove bundled egg-info
-rm -rf *.egg-info
-# let RPM handle deps
-sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
-
-# Prevent doc build warnings from causing a build failure
-sed -i '/warning-is-error/d' setup.cfg
+rm -rfv *.egg-info
 
 %build
 %python3_build
 
+%if_with docs
 export PYTHONPATH="$PWD"
-
 # generate html docs
 sphinx-build-3 doc/source html
 # generate man page
 sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
+%if_with docs
 # install man page
-install -p -D -m 644 man/mistral_client.1 %buildroot%_man1dir/mistralclient.1
+install -pDm 644 man/mistral_client.1 %buildroot%_man1dir/%oname.1
+%endif
 
 # install bash completion
-install -p -D -m 644 tools/mistral.bash_completion \
-    %buildroot%_sysconfdir/bash_completion.d/mistral.bash_completion
+install -pDm 644 tools/mistral.bash_completion \
+  %buildroot%_sysconfdir/bash_completion.d/mistral.bash_completion
+
+%check
+%__python3 -m stestr run
 
 %files
-%doc *.rst LICENSE
+%doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/mistral
-%_man1dir/mistralclient*
-%python3_sitelibdir/*
-%_sysconfdir/bash_completion.d/mistral*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/python_mistralclient-%version-py%_python3_version.egg-info
+%_sysconfdir/bash_completion.d/mistral.bash_completion
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
+%if_with docs
 %files doc
-%doc LICENSE html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
+%endif
 
 %changelog
+* Thu Oct 20 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
+- Automatically updated to 4.5.0.
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt2
 - Unify documentation building.
 
@@ -144,7 +168,7 @@ install -p -D -m 644 tools/mistral.bash_completion \
 
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
-  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+ (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
 
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt1.1
 - NMU: Use buildreq for BR.

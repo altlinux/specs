@@ -1,53 +1,61 @@
 %define oname novaclient
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 17.0.0
-Release: alt4
+Version: 18.1.0
+Release: alt1
 
-Summary: Python API and CLI for OpenStack Nova
+Summary: Client library for OpenStack Compute API
 
-Group: Development/Python3
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/python-%oname
+Group: Development/Python3
+Url: https://pypi.org/project/python-novaclient
 
-Source: https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
+Source: %oname-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
-# ALT 38677
-Conflicts: python-module-novaclient
-Obsoletes: python-module-novaclient
-
-Requires: python3-module-simplejson >= 3.5.1
-Requires: python3-module-keystoneclient
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-keystoneauth1 >= 3.5.0
 BuildRequires: python3-module-iso8601 >= 0.1.11
+BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-prettytable >= 0.7.2
-BuildRequires: python3-module-simplejson >= 3.5.1
-BuildRequires: python3-module-six >= 1.10.0
-BuildRequires: python3-module-babel >= 2.3.4
+BuildRequires: python3-module-stevedore >= 2.0.1
 
+%if_with check
 BuildRequires: python3-module-keystoneclient >= 3.8.0
 BuildRequires: python3-module-cinderclient >= 3.3.0
 BuildRequires: python3-module-glanceclient >= 2.8.0
 BuildRequires: python3-module-neutronclient >= 6.7.0
+BuildRequires: python3-module-bandit >= 1.1.0
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-ddt >= 1.0.1
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-openstacksdk >= 0.11.2
+BuildRequires: python3-module-osprofiler >= 1.4.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-testscenarios >= 0.4
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-tempest >= 17.1.0
+BuildRequires: openssl
+%endif
 
+%if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-sphinxcontrib-apidoc
+%endif
 
 %description
-This is a client for the OpenStack Nova API. There's a Python API (the
-novaclient module), and a command-line script (nova). Each implements
-100 percent of the OpenStack Nova API.
+There's a Python API (the novaclient module), and a command-line script (nova).
+Each implements 100 percent of the OpenStack Nova API.
 
 %package tests
 Summary: Tests for %oname
@@ -57,66 +65,70 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Documentation for OpenStack Nova API Client
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-This is a client for the OpenStack Nova API. There's a Python API (the
-novaclient module), and a command-line script (nova). Each implements
-100 percent of the OpenStack Nova API.
-
 This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n python-%oname-%version
+%setup -n %oname-%version
 
 # Remove bundled egg-info
-rm -rf python_novaclient.egg-info
-
-# Let RPM handle the requirements
-rm -f {,test-}requirements.txt
-
-# Prevent doc build warnings from causing a build failure
-sed -i '/warning-is-error/d' setup.cfg
+rm -rfv *.egg-info
 
 %build
 %python3_build
 
+%if_with docs
 export PYTHONPATH="$PWD"
-
 # generate html docs
-#sphinx-build-3 doc/source html
+sphinx-build-3 doc/source html
 # generate man page
-#sphinx-build-3 -b man doc/source man
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
-#rm -rf html/.{doctrees,buildinfo}
+rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
+%if_with docs
 # install man page
-#install -p -D -m 644 man/nova.1 %buildroot%_man1dir/nova.1
+install -pDm 644 man/nova.1 %buildroot%_man1dir/%oname.1
+%endif
 
 # install bash completion
-install -p -D -m 644 tools/nova.bash_completion \
-    %buildroot%_sysconfdir/bash_completion.d/nova.bash_completion
+install -pDm 644 tools/nova.bash_completion \
+  %buildroot%_sysconfdir/bash_completion.d/nova.bash_completion
+
+%check
+%__python3 -m stestr run
 
 %files
-%doc *.rst LICENSE
+%doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/nova
-#_man1dir/nova*
-%_sysconfdir/bash_completion.d/nova*
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/python_novaclient-%version-py%_python3_version.egg-info
+%_sysconfdir/bash_completion.d/nova.bash_completion
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
+%if_with docs
 %files doc
-#doc LICENSE html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
+%endif
 
 %changelog
+* Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 18.1.0-alt1
+- Automatically updated to 18.1.0.
+
 * Wed May 26 2021 Grigory Ustinov <grenka@altlinux.org> 17.0.0-alt4
 - Fixed FTBFS (disabled docs).
 

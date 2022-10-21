@@ -1,47 +1,56 @@
 %define oname glanceclient
+%def_with check
+%def_with docs
 
-Name:    python3-module-%oname
-Version: 3.1.1
-Release: alt2
+Name: python3-module-%oname
+Version: 4.1.0
+Release: alt1
 
-Summary: Python API and CLI for OpenStack Glance
+Summary: OpenStack Image API Client Library
 
-Group:   Development/Python3
 License: Apache-2.0
-Url:     http://docs.openstack.org/developer/python-%oname
+Group: Development/Python3
+Url: https://pypi.org/project/python-glanceclient
 
-Source:  https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
-
-Patch:   workaround-requests.patch
+Source: %oname-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
-%py3_requires urllib3
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-babel >= 2.3.4
 BuildRequires: python3-module-prettytable >= 0.7.1
 BuildRequires: python3-module-keystoneauth1 >= 3.6.2
 BuildRequires: python3-module-requests >= 2.14.2
-BuildRequires: python3-module-warlock >= 1.0.1
-BuildRequires: python3-module-six >= 1.10.0
+BuildRequires: python3-module-warlock >= 1.2.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-wrapt >= 1.7.0
 BuildRequires: python3-module-OpenSSL >= 17.1.0
 
+%if_with check
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-os-client-config >= 1.28.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-testscenarios >= 0.4
+BuildRequires: python3-module-ddt >= 1.2.1
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-tempest >= 17.1.0
+%endif
+
+%if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-sphinxcontrib-apidoc
+%endif
 
 %description
-This is a client for the OpenStack Glance API. There's a Python API (the
-glanceclient module), and a command-line script (glance). Each implements
-100 percent of the OpenStack Glance API.
+There's a Python API (the glanceclient module), and a command-line script
+(glance). Each implements 100 percent of the OpenStack Glance API.
 
 %package tests
 Summary: Tests for %oname
@@ -51,67 +60,70 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Documentation for OpenStack Glance API Client
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-This is a client for the OpenStack Glance API. There's a Python API (the
-glanceclient module), and a command-line script (glance). Each implements
-100 percent of the OpenStack Glance API.
-
-This package contains auto-generated documentation.
-
 This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n python-%oname-%version
-%patch -p1
+%setup -n %oname-%version
 
 # Remove bundled egg-info
-rm -rf python_glanceclient.egg-info
-# let RPM handle deps
-sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
-rm -rf {,test-}requirements.txt
+rm -rfv *.egg-info
 
 %build
 %python3_build
 
+%if_with docs
 export PYTHONPATH="$PWD"
-
 # generate html docs
 sphinx-build-3 doc/source html
 # generate man page
 sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
+%if_with docs
 # install man page
-install -p -D -m 644 man/glance.1 %buildroot%_man1dir/glance.1
+install -pDm 644 man/glance.1 %buildroot%_man1dir/%oname.1
+%endif
 
 # install bash completion
-install -p -D -m 644 tools/glance.bash_completion \
-    %buildroot%_sysconfdir/bash_completion.d/glance.bash_completion
+install -pDm 644 tools/glance.bash_completion \
+  %buildroot%_sysconfdir/bash_completion.d/glance.bash_completion
 
+%check
+%__python3 -m stestr run
 
 %files
-%doc *.rst LICENSE
+%doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/glance
-%_man1dir/glance*
-%python3_sitelibdir/*
-%_sysconfdir/bash_completion.d/glance*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/python_glanceclient-%version-py%_python3_version.egg-info
+%_sysconfdir/bash_completion.d/glance.bash_completion
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
+%if_with docs
 %files doc
-%doc LICENSE html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
+%endif
 
 %changelog
+* Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
+- Automatically updated to 4.1.0.
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt2
 - Unify documentation building.
 
@@ -152,7 +164,7 @@ install -p -D -m 644 tools/glance.bash_completion \
 
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.1.0-alt2.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
-  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+ (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
 
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.1.0-alt2.1
 - NMU: Use buildreq for BR.

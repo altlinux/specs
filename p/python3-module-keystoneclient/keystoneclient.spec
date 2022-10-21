@@ -1,23 +1,23 @@
 %define oname keystoneclient
+%def_with check
+%def_with docs
 
-Name:       python3-module-%oname
-Version:    4.0.0
-Release:    alt2
+Name: python3-module-%oname
+Version: 5.0.1
+Release: alt1
 
-Summary:    Client library for OpenStack Identity API
+Summary: Client Library for OpenStack Identity
 
-Group:      Development/Python3
-License:    Apache-2.0
-Url:        http://docs.openstack.org/developer/python-%oname
+License: Apache-2.0
+Group: Development/Python3
+Url: https://pypi.org/project/python-keystoneclient
 
-Source:     https://tarballs.openstack.org/python-%oname/python-%oname-%version.tar.gz
+Source: %oname-%version.tar
+Source1: %oname.watch
 
-BuildArch:  noarch
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
@@ -28,15 +28,34 @@ BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-stevedore >= 1.20.0
+BuildRequires: python3-module-packaging >= 20.4
 
-# doc
+%if_with check
+BuildRequires: python3-module-lxml >= 4.5.0
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-keyring >= 5.5.1
+BuildRequires: python3-module-oauthlib >= 0.6.2
+BuildRequires: python3-module-os-client-config >= 1.28.0
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-tempest >= 17.1.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-testresources >= 2.0.0
+BuildRequires: python3-module-testscenarios >= 0.4
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-bandit >= 1.1.0
+BuildRequires: python3-module-keystoneauth1-tests
+BuildRequires: openssl
+%endif
+
+%if_with docs
 BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno >= 2.5.0
-BuildRequires: python3-module-lxml >= 3.4.1
-BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-requests-mock >= 1.1
+BuildRequires: python3-module-sphinxcontrib-apidoc
+%endif
 
 %description
 Client library and command line utility for interacting with Openstack
@@ -50,58 +69,64 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary:    Documentation for OpenStack Identity API Client
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-Client library and command line utility for interacting with Openstack
-Identity API.
-
 This package contains documentation for %oname.
+%endif
 
 %prep
-%setup -n python-%oname-%version
+%setup -n %oname-%version
 
-# Let RPM handle the dependencies
-rm -f test-requirements.txt requirements.txt
+# Remove bundled egg-info
+rm -rfv *.egg-info
 
-%prepare_sphinx3 doc/source
+%build
+%python3_build
 
-# Prevent doc build warnings from causing a build failure
-sed -i '/warning-is-error/d' setup.cfg
-
+%if_with docs
 export PYTHONPATH="$PWD"
-
 # generate html docs
 sphinx-build-3 doc/source html
 # generate man page
 sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
-
-%build
-%python3_build
+%endif
 
 %install
 %python3_install
 
+%if_with docs
 # install man page
-install -p -D -m 644 man/python-keystoneclient.1 %buildroot%_man1dir/keystoneclient.1
+install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
+%endif
+
+%check
+%__python3 -m stestr run
 
 %files
-%doc *.rst LICENSE
-%python3_sitelibdir/*
-%_man1dir/keystoneclient*
-%exclude %python3_sitelibdir/*/tests
+%doc LICENSE AUTHORS ChangeLog *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/python_keystoneclient-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
+%if_with docs
 %files doc
-%doc LICENSE html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
+%endif
 
 %changelog
+* Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.1-alt1
+- Automatically updated to 5.0.1.
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt2
 - Unify documentation building.
 
@@ -144,7 +169,7 @@ install -p -D -m 644 man/python-keystoneclient.1 %buildroot%_man1dir/keystonecli
 
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 1.7.2-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
-  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+ (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
 
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 1.7.2-alt1.1
 - NMU: Use buildreq for BR.
