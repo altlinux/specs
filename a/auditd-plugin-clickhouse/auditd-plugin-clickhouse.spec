@@ -8,8 +8,8 @@
 #    fields are added, removed or their types are changed.
 
 Name:    auditd-plugin-clickhouse
-Version: 20210217.4.1
-Release: alt2
+Version: 20221004.1.4
+Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
 License: GPLv3+
@@ -55,6 +55,35 @@ popd
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Tue Oct 18 2022 Paul Wolneykien <manowar@altlinux.org> 20221004.1.4-alt1
+- Sort array values prior to generate JSON.
+- Fixed split value processing: don't skip the first part.
+- Don't log reading of each saved record.
+- Protect the main loop: skip records on exceptions.
+- Throw a custom exception on string decode error.
+- Added "istring" type for non-encoded string fields.
+- Fixed an inopportune and harmful flush of audit data!
+- Check and throw error on incomplete split records.
+- Fixed sorting of array values.
+- Fixed DB table creation (added the missing "type" field).
+- Added database test (should be run manually).
+
+* Thu Oct 06 2022 Paul Wolneykien <manowar@altlinux.org> 20221004.1.3-alt1
+- Fixed "none" type handling in table structure and migration code.
+
+* Wed Oct 05 2022 Paul Wolneykien <manowar@altlinux.org> 20221004.1.2-alt1
+- Fixed datatypes for unknown fields and automatic migration.
+- Added "interp_array" datatype.
+
+* Tue Oct 04 2022 Paul Wolneykien <manowar@altlinux.org> 20221004.1.1-alt1
+- Skip "aN_len" fields.
+- Add datatype "none" to explicitly skip fields.
+- Added a special array type for SYSCALL/EXECVE argument values.
+- Added the log file unit-test.
+- Accumulate split EXECVE records to produce one complete record.
+- Make the "type" field be a selected property field.
+- Use encoded strings instead of interpreted for datatype "string".
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 20210217.4.1-alt2
 - NMU: spec: adapted to new cmake macros.
 
