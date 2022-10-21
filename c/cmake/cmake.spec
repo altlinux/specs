@@ -11,7 +11,7 @@
 
 Name: cmake
 Version: 3.23.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Cross-platform, open-source make system
 
@@ -157,6 +157,8 @@ Set of RPM macros for packaging applications that use cmake.
 # "Could NOT find OpenMP_C (missing: OpenMP_omp_LIBRARY OpenMP_pthread_LIBRARY)"
 # cmake tries to scan the OpenMP example for libraries, which breaks the build
 sed -i 's/if(CMAKE_${LANG}_VERBOSE_FLAG)/if(false) # &/' Modules/FindOpenMP.cmake
+# -O3 is our recommended optlevel as of lcc 1.25 (see rpm-build)
+sed -i 's/ -O2/ -O%_optlevel/g' Modules/Compiler/{LCC,GNU}*
 %endif
 
 # remove bundled sources
@@ -340,6 +342,9 @@ popd
 %filter_from_requires /^gnustep-Backbone.*/d
 
 %changelog
+* Fri Oct 21 2022 Michael Shigorin <mike@altlinux.org> 3.23.2-alt1.2
+- E2K: default to -O%%_optlevel instead of hardwired -O2
+
 * Sat Jul 30 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.23.2-alt1.1
 - fixed failure of finding OpenMP on e2k
 
