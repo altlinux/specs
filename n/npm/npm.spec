@@ -1,6 +1,6 @@
 Name: npm
 Version: 8.19.2
-Release: alt1
+Release: alt2
 
 Summary: A package manager for node
 
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 
 Patch1: npm-disable-update-notifier.patch
 Patch2: npm-disable-internal-node-gyp.patch
+Patch3: npm-fix-user-agent-output.patch
 
 BuildRequires(pre): rpm-macros-nodejs
 
@@ -44,6 +45,7 @@ In most cases it is enough to install appropriate node- package (like node-sass)
 %setup
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 # remove all node-gyp deps
 rm -rv bin/node-gyp-bin node_modules/node-gyp/
@@ -83,6 +85,9 @@ done
 %nodejs_sitelib/%name/
 
 %changelog
+* Fri Oct 21 2022 Vitaly Lipatov <lav@altlinux.ru> 8.19.2-alt2
+- fix  npm config get user-agent output (ALT bug 43430)
+
 * Sun Oct 16 2022 Vitaly Lipatov <lav@altlinux.ru> 8.19.2-alt1
 - new version 8.19.2 (with rpmrb script)
 
