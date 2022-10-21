@@ -1,8 +1,8 @@
 %define realname firefox
 
-Summary: The Mozilla Firefox project is a redesign of Mozilla's browser
+Summary: Empty firefox dependency holder on platforms that don't have one
 Name: %realname-unmet-holder
-Version: 106.0
+Version: 106.0.1
 Release: alt1
 Group: Networking/WWW
 License: GPL-3.0
@@ -10,11 +10,16 @@ Provides: %realname = %version-%release
 ExclusiveArch: ppc64le
 
 %description
-%summary
+Empty firefox dependency holder on platforms that don't have one. Most likely,
+firefox addons have noarch architecture. To avoid unmets on architectures where
+firefox does not exist, something must provide such a dependency.
 
 %files
 
 %changelog
+* Fri Oct 21 2022 Alexey Gladkov <legion@altlinux.ru> 106.0.1-alt1
+- New release (106.0.1).
+
 * Tue Oct 18 2022 Alexey Gladkov <legion@altlinux.ru> 106.0-alt1
 - New release (106.0).
 
