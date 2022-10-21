@@ -1,8 +1,8 @@
 %def_enable doc
 
 Name:     bup
-Version:  0.32
-Release:  alt2
+Version:  0.33
+Release:  alt1
 
 Summary:  Very efficient backup system based on the git packfile format
 # all of the code is licensed as GNU Lesser General Public License v2, except:
@@ -36,6 +36,7 @@ BuildRequires: pandoc
 %add_findreq_skiplist %_libexecdir/%name/cmd/bup*
 %add_python3_path %_libexecdir/%name/
 %py3_requires xattr posix1e fuse
+%filter_from_requires /python3(bup_main)/d
 
 Requires: git-core
 
@@ -125,11 +126,9 @@ rm -f %buildroot%_libexecdir/%name/bup/py2raise.py
 %_man1dir/%{name}*
 %exclude %_man1dir/bup-web.1*
 %endif
-%exclude %_libexecdir/%name/cmd/bup-web
 %exclude %_libexecdir/%name/web/
 
 %files web
-%_libexecdir/%name/cmd/bup-web
 %_libexecdir/%name/web/
 %_unitdir/bup-web.service
 %if_enabled doc
@@ -137,6 +136,9 @@ rm -f %buildroot%_libexecdir/%name/bup/py2raise.py
 %endif
 
 %changelog
+* Mon Oct 17 2022 Andrey Cherepanov <cas@altlinux.org> 0.33-alt1
+- New version.
+
 * Sun Aug 15 2021 Michael Shigorin <mike@altlinux.org> 0.32-alt2
 - introduce doc knob
 - spec cleanup
