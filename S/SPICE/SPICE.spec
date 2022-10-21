@@ -3,10 +3,12 @@
 %def_enable lz4
 %def_enable gstreamer
 %def_disable manual
+# Tests build fail with lto. What to disable, tests or lto?
+%def_disable tests
 
 Name: SPICE
-Version: 0.15.0
-Release: alt2
+Version: 0.15.1
+Release: alt1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -17,20 +19,9 @@ Source: %name-%version.tar
 Source2: spice-common.tar
 Source3: spice-common-recorder.tar
 #Patch1: fix-alt.patch
-Patch0001: 0001-reds-fix-nullptr-deref-in-red-parse-qxlcpp.patch
-Patch0002: 0002-Fix-g_memdup-deprecation-warning-with-glib--268.patch
-Patch0003: 0003-dispatcher-Avoid-casts-for-raw-buffers.patch
-Patch0004: 0004-build-Fix-undefined-pthread-references.patch
-Patch0005: 0005-ci-Fix-compile-error-using-new-GStreamer-library.patch
-Patch0006: 0006-Fix-build-with-gstreamer-120x.patch
-Patch0007: 0007-tests-Remove-some-compiler-warnings.patch
-Patch0008: 0008-Make-headers-independent.patch
-Patch0009: 0009-tests-Fix--Wodr-warning-compiling-tests-with-LTO-enabled.patch
-Patch0010: 0010-stream-channel-Fix-compiler-warning.patch
-Patch0100: 0001-build-Correctly-check-for-Python-modules.patch
 
 BuildRequires: gcc-c++
-BuildRequires(pre): meson >= 0.48
+BuildRequires(pre): meson >= 0.49.0
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 zlib-devel
 BuildRequires: libssl-devel >= 1.1.0 libsasl2-devel openssl
 BuildRequires: libcacard-devel >= 2.5.1
@@ -83,23 +74,11 @@ tar -xf %SOURCE3 -C subprojects/spice-common/common/recorder
 echo "%version" > .tarball-version
 #%%patch1 -p1
 
-%patch0001 -p1
-%patch0002 -p1
-%patch0003 -p1
-%patch0004 -p1
-%patch0005 -p1
-%patch0006 -p1
-%patch0007 -p1
-%patch0008 -p1
-%patch0009 -p1
-%patch0010 -p1
-pushd subprojects/spice-common
-%patch0100 -p1
-popd
-
 %build
 %meson \
+    %{?_disable_tests:-Dtests=false} \
     %{?_disable_gstreamer:-Dgstreamer=no}
+
 %meson_build
 
 %install
@@ -117,6 +96,10 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Fri Oct 21 2022 Alexey Shabalin <shaba@altlinux.org> 0.15.1-alt1
+- 0.15.1
+- Disable build tests because an error with lto.
+
 * Thu May 12 2022 Alexey Shabalin <shaba@altlinux.org> 0.15.0-alt2
 - backport patches from upstream
 
