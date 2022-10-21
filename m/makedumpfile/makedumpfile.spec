@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    makedumpfile
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 Summary: Make vmcore smaller by filtering and compressing pages
 Group:   System/Kernel and hardware
@@ -23,6 +23,7 @@ BuildRequires: liblzma-devel
 BuildRequires: liblzo2-devel
 BuildRequires: libncurses-devel
 BuildRequires: libsnappy-devel
+BuildRequires: libzstd-devel
 BuildRequires: perl-Math-BigInt
 BuildRequires: zlib-devel
 
@@ -36,7 +37,9 @@ The makedumpfile can make a Linux crash dump smaller.
 %setup
 
 %build
+export CFLAGS="%optflags"
 export USELZO=on
+export USEZSTD=on
 export USESNAPPY=on
 export LINKTYPE=dynamic
 %make_build
@@ -50,7 +53,6 @@ mv %buildroot%_datadir/makedumpfile-%version %buildroot%_datadir/makedumpfile
 
 %files
 %doc COPYING README IMPLEMENTATION
-/etc/makedumpfile.conf.sample
 %_sbindir/makedumpfile
 %_sbindir/makedumpfile-R.pl
 %_man5dir/makedumpfile.conf.5.xz
@@ -59,6 +61,9 @@ mv %buildroot%_datadir/makedumpfile-%version %buildroot%_datadir/makedumpfile
 %_libdir/%name
 
 %changelog
+* Fri Oct 21 2022 Vitaly Chikunov <vt@altlinux.org> 1.7.2-alt1
+- Update to 1.7.2 (2022-10-20).
+
 * Mon May 02 2022 Vitaly Chikunov <vt@altlinux.org> 1.7.1-alt1
 - Update to 1.7.1 (2022-04-18).
 
