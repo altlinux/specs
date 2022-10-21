@@ -1,45 +1,46 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 %define _libexecdir %_prefix/libexec
 
 %define ver_major 3.36
-%def_enable packagekit
 # tests require colord running and g-c-m installed
 %def_disable check
 
 Name: gnome-color-manager
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Color profile manager for the GNOME desktop
 License: GPL-2.0
 Group: Graphical desktop/GNOME
 Url: http://www.gnome.org/projects/gnome-color-manager/
 
+%if_disabled snapshot
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 
 Obsoletes: libcolor-glib
 Requires: common-licenses gnome-filesystem
+Requires: colord icc-profiles
 
 %define gio_ver 2.31.10
-%define gtk_ver 3.0
-%define vte_ver 0.37.1
-%define notify_ver 0.7.3
+%define gtk_ver 3.4
 %define colord_ver 1.3.1
 %define colord_gtk_ver 0.1.20
 %define lcms_ver 2.2
 
-BuildRequires(pre): meson rpm-build-gnome
-BuildRequires: gcc-c++ yelp-tools libappstream-glib-devel
+
+
+BuildRequires(pre): rpm-macros-meson rpm-build-gnome
+BuildRequires: meson gcc-c++ yelp-tools /usr/bin/appstream-util
 BuildRequires: docbook-utils xsltproc
-BuildPreReq: libgio-devel >= %gio_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libvte3-devel >= %vte_ver
-BuildPreReq: libnotify-devel >= %notify_ver
-BuildPreReq: colord-devel >= %colord_ver
-BuildPreReq: libcolord-gtk-devel >= %colord_gtk_ver
-BuildRequires: libgnome-desktop3-devel libexif-devel libexiv2-devel libcanberra-gtk3-devel
-BuildRequires: libtiff-devel liblcms2-devel >= %lcms_ver libXrandr-devel
-%{?_enable_packagekit:BuildRequires: libexiv2-devel}
+BuildRequires: libgio-devel >= %gio_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
+BuildRequires: colord-devel >= %colord_ver
+BuildRequires: libcolord-gtk-devel >= %colord_gtk_ver
+BuildRequires: liblcms2-devel >= %lcms_ver libXrandr-devel
 %{?_enable_check:BuildRequires: /proc xvfb-run}
 
 %description
@@ -102,6 +103,11 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README AUTHORS
 
 %changelog
+* Fri Oct 21 2022 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt2
+- updated to GNOME_COLOR_MANAGER_3_36_0-41-gb96372b4
+- updated BR
+- requires colord, icc-profiles
+
 * Wed Apr 01 2020 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
