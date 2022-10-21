@@ -1,6 +1,6 @@
 Name: gap
-Version: 4.12.0
-Release: alt2
+Version: 4.12.1
+Release: alt1
 Summary: System for Computational Discrete Algebra
 License: Zlib and LGPL-3.0+ and GPL-2.0+ and GPL-3.0+
 Group: Sciences/Mathematics
@@ -176,7 +176,6 @@ cat >>"%buildroot%_libexecdir/rpm/macros.d/gap" <<-EOF
 	%%gapdir %_libdir/gap
 EOF
 
-chmod +x %buildroot%_datadir/gap/etc/convert.pl
 rm -rf %buildroot%_libdir/libgap.la
 
 # config.h is needed for sagemath.
@@ -208,6 +207,9 @@ rm -rf %buildroot%_datadir/gap/{CITATION,CONTRIBUTING.md,COPYRIGHT,INSTALL.md,LI
 %files full
 
 %changelog
+* Fri Oct 21 2022 Leontiy Volodin <lvol@altlinux.org> 4.12.1-alt1
+- New version (4.12.1).
+
 * Fri Oct 14 2022 Leontiy Volodin <lvol@altlinux.org> 4.12.0-alt2
 - Applied some suggestions for improvements by upstream.
 
