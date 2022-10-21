@@ -6,7 +6,7 @@
 
 Name: dovecot
 Version: 2.3.19.1
-Release: alt1
+Release: alt2
 
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -29,6 +29,7 @@ Patch2: dovecot-2.0-defaultconfig.patch
 #Patch3: dovecot-2.1-privatetmp.patch
 Patch4: dovecot-2.1.4-postreleasefix.patch
 Patch5: dovecot-2.3-systemd_firsttime.patch
+Patch6: CVE-2022-30550.patch
 
 Requires(pre,postun): mailboxes-control
 
@@ -82,6 +83,7 @@ Libraries and headers for Dovecot
 #patch3 -p1
 %patch4 -p1
 %patch5 -p2
+%patch6 -p1
 
 sed -i 's@/usr/local@/usr@g' src/plugins/fts/decode2text.sh
 sed -i 's@/usr/local@/usr@g' doc/example-config/conf.d/90-quota.conf
@@ -219,6 +221,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Tue Sep 13 2022 Alexander Danilov <admsasha@altlinux.org> 2.3.19.1-alt2
+- Fixes: CVE-2022-30550.
+
 * Wed Jun 15 2022 Andrey Cherepanov <cas@altlinux.org> 2.3.19.1-alt1
 - Updated to 2.3.19.1.
 
