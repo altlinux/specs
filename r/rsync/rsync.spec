@@ -1,5 +1,5 @@
 Name: rsync
-Version: 3.2.6
+Version: 3.2.7
 Release: alt1
 %define srcname rsync-%version
 
@@ -114,6 +114,9 @@ done
 %ghost %attr(640,root,adm) %verify(not md5 mtime size) %_logdir/rsyncd/rsyncd.log
 
 %changelog
+* Fri Oct 21 2022 Dmitry V. Levin <ldv@altlinux.org> 3.2.7-alt1
+- v3.2.6 -> v3.2.7.
+
 * Fri Sep 09 2022 Dmitry V. Levin <ldv@altlinux.org> 3.2.6-alt1
 - v3.2.5 -> v3.2.6.
 
