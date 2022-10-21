@@ -4,7 +4,7 @@
 #============================================================================
 Name: nginx
 Summary: Fast HTTP server
-Version: 1.22.0
+Version: 1.22.1
 Release: alt1
 License: BSD
 Group: System/Servers
@@ -352,6 +352,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Fri Oct 21 2022 Anton Farygin <rider@altlinux.ru> 1.22.1-alt1
+- 1.22.1 (Fixes: CVE-2022-41741, CVE-2022-41742)
+
 * Tue Jul 12 2022 Anton Farygin <rider@altlinux.ru> 1.22.0-alt1
 - 1.22.0 (Fixes: CVE-2021-3618)
 
