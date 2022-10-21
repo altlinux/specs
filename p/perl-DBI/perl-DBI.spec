@@ -2,7 +2,7 @@
 %define dist DBI
 Name: perl-%dist
 Version: 1.643
-Release: alt1
+Release: alt2
 
 Summary: Database independent interface for Perl
 License: GPL or Artistic
@@ -11,6 +11,7 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: %dist-%version.tar
 Patch: %name-%version-%release.patch
+Patch2: lib-DBD-File.pm-fix-CVE-2014-10401.patch
 
 # requires Apache; not required by any package
 %add_findreq_skiplist */DBI/ProfileDumper/Apache.pm
@@ -121,6 +122,7 @@ using the remote driver directly.
 %prep
 %setup -q -n %dist-%version
 %patch -p1
+%patch2 -p1
 
 %build
 %perl_vendor_build
@@ -206,6 +208,9 @@ rm blib/lib/dbixs_rev.pl
 	%perl_vendor_archlib/DBD/Gofer*
 
 %changelog
+* Fri Oct 21 2022 Alexander Danilov <admsasha@altlinux.org> 1.643-alt2
+- fixes CVE-2014-10401
+
 * Mon Feb 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.643-alt1
 - new version
 
