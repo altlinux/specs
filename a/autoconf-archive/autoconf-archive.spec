@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: autoconf-archive
-Version: 2022.02.11
+Version: 2022.09.03
 Release: alt1
 Summary: The Autoconf Macro Archive
 
@@ -27,8 +27,6 @@ supporters of the cause from all over the Internet.
 %prep
 %setup -q
 %patch -p1
-
-sed -i 's|python|python3|' cfg.mk
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -63,6 +61,9 @@ rm -rf %buildroot%_defaultdocdir/%name
 %_infodir/autoconf-archive.info*
 
 %changelog
+* Fri Oct 21 2022 Alexey Shabalin <shaba@altlinux.org> 2022.09.03-alt1
+- 2022.09.03
+
 * Mon Aug 15 2022 Alexey Shabalin <shaba@altlinux.org> 2022.02.11-alt1
 - 2022.02.11
 
