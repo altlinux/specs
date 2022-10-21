@@ -1,6 +1,6 @@
 
 Name: virt-firmware
-Version: 1.4
+Version: 1.5
 Release: alt1
 Summary: Tools for virtual machine firmware volumes
 Group: Emulators
@@ -47,6 +47,9 @@ to enroll secure boot certificates.
 %python3_sitelibdir/*
 
 %changelog
+* Fri Oct 21 2022 Alexey Shabalin <shaba@altlinux.org> 1.5-alt1
+- new version 1.5
+
 * Thu Sep 29 2022 Alexey Shabalin <shaba@altlinux.org> 1.4-alt1
 - new version 1.4
 
