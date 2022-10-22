@@ -6,7 +6,7 @@ BuildRequires: perl(Devel/Peek.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.005
+Version: 0.007
 Release: alt1
 Summary: B::COW additional B helpers to check COW status
 Group: Development/Perl
@@ -33,6 +33,9 @@ B::COW provides some naive additional B helpers to check the COW status of one S
 %perl_vendor_autolib/*
 
 %changelog
+* Sat Oct 22 2022 Igor Vlasenko <viy@altlinux.org> 0.007-alt1
+- automated CPAN update
+
 * Sun Oct 16 2022 Igor Vlasenko <viy@altlinux.org> 0.005-alt1
 - automated CPAN update
 
