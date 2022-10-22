@@ -3,7 +3,7 @@
 
 Name:     bottles
 Version:  2022.5.28
-Release:  alt1.trento.3
+Release:  alt2.trento.3
 
 Summary:  Easily manage wine prefixes in a new way. Run Windows software and games on Linux
 License:  GPL-3.0
@@ -20,6 +20,9 @@ BuildRequires(pre): meson
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libhandy1-devel
 BuildRequires: libappstream-glib
+
+Requires: libgtksourceview4-gir
+Requires: libwebkit2gtk-gir
 
 %add_python3_path %_datadir/%name
 
@@ -51,5 +54,8 @@ echo %_datadir/locale/zh_Hant/LC_MESSAGES/bottles.mo >> %name.lang
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Sat Oct 22 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 2022.5.28-alt2.trento.3
+- NMU: Added needed Requires (ALT #44023).
+
 * Sun Jun 05 2022 Andrey Cherepanov <cas@altlinux.org> 2022.5.28-alt1.trento.3
 - Initial build for Sisyphus (ALT #42935).
