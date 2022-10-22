@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Future
-Version: 0.48
+Version: 0.49
 Release: alt1
 
 Summary: represent an operation awaiting completion
@@ -32,6 +32,9 @@ BuildRequires: perl-devel perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Test
 %doc Changes README
 
 %changelog
+* Sat Oct 22 2022 Igor Vlasenko <viy@altlinux.org> 0.49-alt1
+- new version
+
 * Thu Jan 27 2022 Igor Vlasenko <viy@altlinux.org> 0.48-alt1
 - new version
 
