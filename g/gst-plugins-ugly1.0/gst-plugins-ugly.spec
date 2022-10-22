@@ -7,13 +7,15 @@
 %define _gtk_docdir %_datadir/gtk-doc/html
 
 %def_disable doc
+# GPL-licensed plugins
+%def_enable gpl
 %def_disable debug
 %def_disable examples
 %def_disable check
 
 Name: %_name-ugly%api_ver
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: A set of encumbered GStreamer plugins
 Group: System/Libraries
@@ -62,6 +64,7 @@ collection.
 %meson \
 	%{?_enable_check:-Dtests=enabled} \
 	%{?_disable_doc:-Ddoc=disabled} \
+	%{?_enable_gpl:-Dgpl=enabled} \
 	%{?_enable_debug:-Dgst_debug=true}
 %nil
 %meson_build
@@ -74,7 +77,18 @@ collection.
 %__meson_test
 
 %files -f %_name-ugly-%api_ver.lang
-%_gst_libdir/*.so
+%_gst_libdir/libgsta52dec.so
+%_gst_libdir/libgstamrnb.so
+%_gst_libdir/libgstamrwbdec.so
+%_gst_libdir/libgstasf.so
+%{?_enable_gpl:%_gst_libdir/libgstcdio.so
+%_gst_libdir/libgstdvdread.so
+%_gst_libdir/libgstmpeg2dec.so
+%_gst_libdir/libgstx264.so}
+%_gst_libdir/libgstdvdlpcmdec.so
+%_gst_libdir/libgstdvdsub.so
+%_gst_libdir/libgstrealmedia.so
+%_gst_libdir/libgstxingmux.so
 %_datadir/gstreamer-%api_ver/*
 %doc AUTHORS NEWS README* RELEASE
 
@@ -84,6 +98,14 @@ collection.
 %endif
 
 %changelog
+* Sun Oct 23 2022 Yuri N. Sedunov <aris@altlinux.org>  1.20.4-alt2
+- built explicitly required by proprietary OnlyOffice GPL-licensed plugins:
+  libgstcdio.so
+  libgstdvdread.so
+  libgstmpeg2dec.so
+  libgstx264.so
+  (reported by neurofreak@, fixed ALT#44120)
+
 * Thu Oct 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.4-alt1
 - 1.20.4
 
