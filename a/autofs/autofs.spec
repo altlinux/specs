@@ -1,6 +1,9 @@
+# glibc >= 2.34-alt
+%def_with rpcgen
+
 Name: autofs
 Version: 5.1.8
-Release: alt5
+Release: alt6
 
 Summary: A tool for automatically mounting and unmounting filesystems
 License: GPLv2
@@ -13,7 +16,9 @@ BuildRequires: bison flex
 BuildRequires: libkrb5-devel libldap-devel libsasl2-devel
 BuildRequires: libssl-devel libxml2-devel libtirpc-devel >= 1.0.1-alt1
 BuildRequires: libsss_autofs libsystemd-devel
+%if_with rpcgen
 BuildRequires: rpcgen rpcsvc-proto-devel
+%endif
 
 %package ldap
 Summary: A tool for automatically mounting and unmounting filesystems
@@ -138,6 +143,10 @@ chmod 0600 %_sysconfdir/autofs_ldap_auth.conf ||:
 %_libdir/%name/lookup_sss.so
 
 %changelog
+* Sat Oct 22 2022 Michael Shigorin <mike@altlinux.org> 5.1.8-alt6
+- added e2k to pure 64-bit arches (closes: #42862; thanks ilyakurdyukov@)
+- introduce rpcgen knob for older glibc
+
 * Thu Oct 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.1.8-alt5
 - fixed autofs_ldap_auth.conf file permissions (closes: 44091)
 
