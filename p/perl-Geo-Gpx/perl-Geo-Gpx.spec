@@ -18,7 +18,7 @@ BuildRequires: perl(Geo/Calc.pm) perl(Geo/Coordinates/Transform.pm)
 %define _enable_test 1
 
 Name: perl-Geo-Gpx
-Version: 1.02
+Version: 1.04
 Release: alt1
 
 Summary: Geo-Gpx - Perl module
@@ -53,6 +53,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Geo/*
 
 %changelog
+* Sat Oct 22 2022 Igor Vlasenko <viy@altlinux.org> 1.04-alt1
+- automated CPAN update
+
 * Wed Oct 12 2022 Igor Vlasenko <viy@altlinux.org> 1.02-alt1
 - automated CPAN update
 
