@@ -1,90 +1,118 @@
 %define oname debtcollector
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 2.0.1
+Version: 2.5.0
 Release: alt1
+
 Summary: A collection of Python deprecation patterns and strategies
-Group: Development/Python3
 
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/debtcollector
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Group: Development/Python3
+Url: https://pypi.org/project/debtcollector
+
+Source: %oname-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-wrapt >= 1.7.0
 
-BuildRequires: python3-module-fixtures
+%if_with check
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-hacking >= 3.0
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
+%endif
 
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno >= 2.5.0
-BuildRequires: python3-module-doc8 >= 0.6.0
-BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+%if_with docs
+BuildRequires: python3-module-sphinx >= 2.0.0
+BuildRequires: python3-module-reno >= 3.1.0
+BuildRequires: python3-module-doc8 >= 0.8.1
+BuildRequires: python3-module-openstackdocstheme >= 2.2.1
+%endif
 
 %description
-It is a collection of functions/decorators which is used to signal a user when
-*  a method (static method, class method, or regular instance method) or a class
-    or function is going to be removed at some point in the future.
-* to move a instance method/property/class from an existing one to a new one
-* a keyword is renamed
-* further customizing the emitted messages
+A collection of Python deprecation patterns and strategies that help you collect
+your technical debt in a non-destructive manner. The goal of this library is to
+provide well documented developer facing deprecation patterns that start of with
+a basic set and can expand into a larger set of patterns as time goes on.
+The desired output of these patterns is to apply the warnings module to emit
+DeprecationWarning or PendingDeprecationWarning or similar derivative
+to developers using libraries (or potentially applications) about future
+deprecations.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
+
+%if_with docs
 %package doc
-Summary: Documentation for the debtcollector module
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-Documentation for the debtcollector module
-
-%package tests
-Summary: Tests for %oname library
-Group: Development/Python3
-BuildArch: noarch
-
-%description tests
-Tests for %oname library.
+This package contains documentation for %oname.
+%endif
 
 %prep
 %setup -n %oname-%version
 
 # Remove bundled egg-info
-rm -rf %oname.egg-info
-
-# let RPM handle deps
-sed -i '/setup_requires/d; /install_requires/d; /dependency_links/d' setup.py
-
-rm -rf {test-,}requirements.txt
+rm -rfv *.egg-info
 
 %build
 %python3_build
 
-# doc
+%if_with docs
+export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
+
+%check
+%__python3 -m stestr run
+
 %files
-%doc README.rst CONTRIBUTING.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%doc LICENSE AUTHORS ChangeLog *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
+%if_with docs
 %files doc
-%doc html
-%doc LICENSE
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
+%endif
 
 %changelog
+* Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
+- Automatically updated to 2.5.0.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt1
 - Automatically updated to 2.0.1.
 

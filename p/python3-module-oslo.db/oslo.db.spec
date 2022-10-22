@@ -1,102 +1,130 @@
 %define oname oslo.db
+%def_without check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 11.3.0
+Version: 12.1.0
 Release: alt1
 
-Summary: OpenStack oslo.db library
+Summary: OpenStack Oslo Database library
 
-Group: Development/Python3
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/oslo.db
+Group: Development/Python3
+Url: https://pypi.org/project/oslo.db
 
-Source: %oname-%version.tar.gz
-Source1: oslo.db.watch
+Source: %oname-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
 Provides: python3-module-oslo-db = %EVR
 
-Requires: python3-module-oslo.i18n >= 3.15.3
-Requires: python3-module-migrate
-Requires: python3-module-stevedore >= 1.20.0
-Requires: python3-module-SQLAlchemy
-Requires: python3-module-iso8601
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-alembic >= 0.9.6
 BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.context >= 2.19.2
-BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-sqlalchemy
 BuildRequires: python3-module-migrate
-BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-stevedore >= 1.20.0
-
 BuildRequires: python3-module-testresources >= 2.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
-BuildRequires: python3-module-sqlalchemy
+
+%if_with check
+BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-eventlet >= 0.18.2
+BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-stestr >= 2.0.0
-BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-pifpaf >= 0.10.0
-BuildRequires: python3-module-pymysql
 BuildRequires: python3-module-psycopg2 >= 2.8.0
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-pymysql
 BuildRequires: python3-module-pre-commit >= 2.6.0
+%endif
+
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-sphinxcontrib-apidoc
+%endif
 
 %description
 The OpenStack Oslo database handling library. Provides database connectivity
 to the different backends and helper utils.
 
-%package doc
-Summary: Documentation for the Oslo database handling library
-Group: Development/Documentation
-Provides: python-module-oslo-db-doc = %EVR
-
-%description doc
-Documentation for the Oslo database handling library.
-
 %package tests
-Summary: Tests for the Oslo database handling library
+Summary: Tests for %oname
 Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
-Tests for the Oslo database handling library.
+This package contains tests for %oname.
+
+%if_with docs
+%package doc
+Summary: Documentation for %oname
+Group: Development/Documentation
+Provides: python3-module-oslo-db-doc = %EVR
+
+%description doc
+This package contains documentation for %oname.
+%endif
 
 %prep
 %setup -n %oname-%version
 
+# Remove bundled egg-info
+rm -rfv *.egg-info
+
 %build
 %python3_build
 
+%if_with docs
+export PYTHONPATH="$PWD"
 # generate html docs
-#python setup.py build_sphinx
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
-#rm -rf doc/build/html/.{doctrees,buildinfo}
+rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
+%if_with docs
+# install man page
+install -pDm 644 man/oslodb.1 %buildroot%_man1dir/oslodb.1
+%endif
+
+%check
+%__python3 -m stestr run
+
 %files
-%doc CONTRIBUTING.rst HACKING.rst LICENSE PKG-INFO README.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
-%exclude %python3_sitelibdir/*/*/test*
+%doc LICENSE AUTHORS ChangeLog *.rst
+%python3_sitelibdir/oslo_db
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/oslo_db/tests
 
 %files tests
-%python3_sitelibdir/*/test*
-%python3_sitelibdir/*/*/test*
+%python3_sitelibdir/oslo_db/tests
+
+%if_with docs
+%files doc
+%doc LICENSE *.rst html
+%_man1dir/oslodb.1.xz
+%endif
 
 %changelog
+* Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 12.1.0-alt1
+- Automatically updated to 12.1.0.
+
 * Mon May 16 2022 Grigory Ustinov <grenka@altlinux.org> 11.3.0-alt1
 - Automatically updated to 11.3.0.
 

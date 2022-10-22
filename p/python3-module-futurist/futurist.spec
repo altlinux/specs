@@ -1,74 +1,116 @@
 %define oname futurist
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 2.1.1
+Version: 2.4.1
 Release: alt1
+
 Summary: Useful additions to futures, from the future
-Group: Development/Python3
+
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/futurist
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Group: Development/Python3
+Url: https://pypi.org/project/futurist
+
+Source: %oname-%version.tar
+Source1: %oname.watch
+
 BuildArch: noarch
 
-Requires: python3-module-monotonic >= 0.6
-Requires: python3-module-contextlib2 >= 0.4.0
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-six >= 1.10.0
-BuildRequires: python3-module-monotonic >= 0.6
+
+%if_with check
 BuildRequires: python3-module-contextlib2 >= 0.4.0
 BuildRequires: python3-module-prettytable >= 0.7.1
+BuildRequires: python3-module-eventlet >= 0.18.2
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-testscenarios >= 0.4
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
+%endif
+
+%if_with docs
+BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme
+BuildRequires: python3-module-doc8 >= 0.6.0
+%endif
 
 %description
-Code from the future, delivered to you in the now.
+Code from the future, delivered to you in the now. The goal of this library
+would be to provide a well documented futures classes/utilities/additions that
+allows for providing a level of transparency in how asynchronous work
+gets executed. This library currently adds statistics gathering,
+an eventlet executor, a synchronous executor etc.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+This package contains tests for %oname.
+
+%if_with docs
 %package doc
-Summary: Documentation for futurist library
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-Documentation for futurist library.
-
-%package tests
-Summary: Tests for futurist library
-Group: Development/Python3
-BuildArch: noarch
-
-%description tests
-Tests for futurist library.
+This package contains documentation for %oname.
+%endif
 
 %prep
 %setup -n %oname-%version
 
+# Remove bundled egg-info
+rm -rfv *.egg-info
+
 %build
 %python3_build
 
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
-pushd doc
-PBR_VERSION=$(pbr.py3 --version) sphinx-build-3 -b html -d build/doctrees source build/html
-popd
-# Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.buildinfo
+%if_with docs
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
+
+%check
+%__python3 -m stestr run
+
 %files
-%doc README.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%doc LICENSE AUTHORS ChangeLog *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
+%if_with docs
 %files doc
-%doc doc/build/html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
+%endif
 
 %changelog
+* Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt1
+- Automatically updated to 2.4.1.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.1.1-alt1
 - Automatically updated to 2.1.1.
 - Renamed spec file.

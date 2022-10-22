@@ -1,52 +1,74 @@
 %define oname glance_store
+%def_without check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 1.0.1
+Version: 4.1.0
 Release: alt1
+
 Summary: OpenStack Image Service Store Library
+
+License: Apache-2.0
 Group: Development/Python3
-License: ASL 2.0
-Url: http://docs.openstack.org/developer/%oname
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Url: https://pypi.org/project/glance_store
+
+Source: %oname-%version.tar
+Source1: %oname.watch
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 1.8
-BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
-BuildRequires: python3-module-oslo.utils >= 3.33.0
+BuildRequires: python3-module-oslo.utils >= 4.7.0
 BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-stevedore >= 1.20.0
-BuildRequires: python3-module-doc8 >= 0.6.0
 BuildRequires: python3-module-eventlet >= 0.18.2
-BuildRequires: python3-module-jsonschema >= 2.6.0
+BuildRequires: python3-module-jsonschema >= 3.2.0
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
 BuildRequires: python3-module-keystoneclient >= 3.8.0
 BuildRequires: python3-module-requests >= 2.14.2
 
-BuildRequires: python3-module-oslo.vmware >= 2.17.0
-BuildRequires: python3-module-httplib2 >= 0.9.1
+%if_with check
+BuildRequires: python3-module-oslo.vmware >= 3.6.0
 BuildRequires: python3-module-swiftclient >= 3.2.0
 BuildRequires: python3-module-cinderclient >= 3.3.0
-BuildRequires: python3-module-os-brick >= 2.2.0
-BuildRequires: python3-module-oslo.rootwrap >= 5.8.0
+BuildRequires: python3-module-os-brick >= 2.6.0
 BuildRequires: python3-module-oslo.privsep >= 1.23.0
-BuildRequires: python3-module-oslotest
-BuildRequires: python3-module-requests-mock
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-requests-mock >= 1.2.0
+BuildRequires: python3-module-retrying >= 1.3.3
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-testscenarios >= 0.4
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-boto3 >= 1.9.199
+BuildRequires: python3-module-httplib2 >= 0.9.1
+BuildRequires: python3-module-oslo.rootwrap >= 5.8.0
+BuildRequires: python3-module-os-service-types
+%endif
 
+%if_with docs
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinxcontrib-apidoc >= 0.2.0
 BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-
-%add_findreq_skiplist %python3_sitelibdir/glance_store/tests/functional/hooks/post_test_hook.sh
+BuildRequires: python3-module-doc8 >= 0.6.0
+%endif
 
 %description
-OpenStack Image Service Store Library
+Glance's stores library
+
+This library has been extracted from the Glance source code for the specific
+use of the Glance and Glare projects.
+
+The API it exposes is not stable, has some shortcomings, and is not a general
+purpose interface. We would eventually like to change this, but for now using
+this library outside of Glance or Glare will not be supported by the core team.
 
 %package tests
 Summary: Tests for %oname
@@ -56,50 +78,78 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Documentation for OpenStack Image Service Store Library
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-Documentation for OpenStack Image Service Store Library
+This package contains documentation for %oname.
+%endif
 
 %prep
 %setup -n %oname-%version
 
 # Remove bundled egg-info
-#rm -rf %oname.egg-info
+rm -rfv *.egg-info
+
 sed 's/requests.packages.urllib3.util/urllib3.util/' -i glance_store/_drivers/vmware_datastore.py
 
 %build
 %python3_build
 
-python3 setup.py build_sphinx
-# Fix hidden-file-or-dir warnings
-rm -fr build/sphinx/html/.buildinfo
+%if_with docs
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
+# remove the sphinx-build leftovers
+rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
+
+# Move config files to proper location
+install -d -m 755 %buildroot%_sysconfdir/glance/rootwrap.d
+mv %buildroot/usr/etc/glance/rootwrap.conf %buildroot%_sysconfdir/glance/rootwrap.conf
+mv %buildroot/usr/etc/glance/rootwrap.d/glance_cinder_store.filters \
+  %buildroot%_sysconfdir/glance/rootwrap.d/glance_cinder_store.filters
+
+%check
+%__python3 -m stestr run
+
 %files
-%doc AUTHORS ChangeLog LICENSE PKG-INFO README.rst
+%doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/glance-rootwrap
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests/etc/
-%exclude %python3_sitelibdir/*/tests/functional/
-%exclude %python3_sitelibdir/*/tests/unit/
-%exclude %python3_sitelibdir/*/tests/base.py*
-%exclude %python3_sitelibdir/*/tests/utils.py*
-%exclude %python3_sitelibdir/*/tests/__pycache__/
+%dir %_sysconfdir/glance
+%dir %_sysconfdir/glance/rootwrap.d
+%config(noreplace) %_sysconfdir/glance/rootwrap.conf
+%config(noreplace) %_sysconfdir/glance/rootwrap.d/glance_cinder_store.filters
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/tests/__init__.py*
-%exclude %python3_sitelibdir/*/tests/fakes.py*
+%python3_sitelibdir/%oname/tests
 
+%if_with docs
 %files doc
-%doc build/sphinx/html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
+%endif
 
 %changelog
+* Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
+- Automatically updated to 4.1.0.
+- Renamed spec file.
+
 * Wed Nov 13 2019 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
 - Automatically updated to 1.0.1.
 

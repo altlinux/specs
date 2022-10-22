@@ -1,51 +1,37 @@
 %define oname oslo.config
+%def_without check
+%def_with docs
 
-%def_without bootstrap
+Name: python3-module-%oname
+Version: 9.0.0
+Release: alt1
 
-%if_with bootstrap
-%def_disable check
-%else
-%def_enable check
-%endif
+Summary: OpenStack Oslo Configuration API
 
-Name:       python3-module-%oname
-Version:    8.8.0
-Release:    alt1
+License: Apache-2.0
+Group: Development/Python3
+Url: https://pypi.org/project/oslo.config
 
-Summary:    OpenStack common configuration library
+Source: %oname-%version.tar
+Source1: %oname.watch
 
-Group:      Development/Python3
-License:    Apache-2.0
-URL:        http://docs.openstack.org/developer/oslo.config
-
-Source:     https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
-Source1:    %oname.watch
-
-BuildArch:  noarch
+BuildArch: noarch
 
 Provides: python3-module-oslo-config = %EVR
-Obsoletes: python3-module-oslo-config < %EVR
 %py3_provides oslo
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr
-
-%if_without bootstrap
 BuildRequires: python3-module-debtcollector >= 1.2.0
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-rfc3986 >= 1.2.0
-BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-mock >= 2.0
 BuildRequires: python3-module-requests >= 2.18.0
 
-BuildRequires: python3-module-sphinx >= 1.2.1
-BuildRequires: python3-module-openstackdocstheme
-BuildRequires: python3-module-sphinxcontrib-apidoc
-BuildRequires: python3-module-reno >= 2.5.0
-
-%if_enabled check
+%if_with check
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-mock >= 2.0
 BuildRequires: python3-module-stestr >= 2.1.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
@@ -58,6 +44,12 @@ BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: python3-module-requests-mock
 %endif
+
+%if_with docs
+BuildRequires: python3-module-sphinx >= 1.2.1
+BuildRequires: python3-module-openstackdocstheme
+BuildRequires: python3-module-sphinxcontrib-apidoc
+BuildRequires: python3-module-reno >= 2.5.0
 %endif
 
 %description
@@ -77,29 +69,31 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary:    Documentation for OpenStack common configuration library
+Summary: Documentation for %oname
 Group: Development/Documentation
 Provides: python3-module-oslo-config-doc = %EVR
-Obsoletes: python3-module-oslo-config-doc < %EVR
 
 %description doc
-Documentation for the oslo-config library.
+This package contains documentation for %oname.
+%endif
 
 %prep
 %setup -n %oname-%version
 
 # Remove bundled egg-info
-#rm -rf %{oname}.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
 
+%if_with docs
 export PYTHONPATH="$PWD"
-
-%if_without bootstrap
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
@@ -107,25 +101,35 @@ rm -rf html/.{doctrees,buildinfo}
 %install
 %python3_install
 
+%if_with docs
+# install man page
+install -pDm 644 man/osloconfig.1 %buildroot%_man1dir/osloconfig.1
+%endif
+
 %check
-stestr run
+%__python3 -m stestr run
 
 %files
-%doc *.rst LICENSE
+%doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/oslo-config-generator
 %_bindir/oslo-config-validator
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_config
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/oslo_config/tests
 
-%if_without bootstrap
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_config/tests
 
+%if_with docs
 %files doc
-%doc LICENSE html
+%doc LICENSE *.rst html
+%_man1dir/osloconfig.1.xz
 %endif
 
 %changelog
+* Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 9.0.0-alt1
+- Automatically updated to 9.0.0.
+
 * Mon May 16 2022 Grigory Ustinov <grenka@altlinux.org> 8.8.0-alt1
 - Automatically updated to 8.8.0.
 
@@ -174,7 +178,7 @@ stestr run
 
 * Sun Mar 13 2016 Ivan Zakharyaschev <imz@altlinux.org> 2.4.0-alt1.1.1
 - (NMU) rebuild with rpm-build-python3-0.1.9
-  (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
+ (for common python3/site-packages/ and auto python3.3-ABI dep when needed)
 
 * Thu Jan 28 2016 Mikhail Efremov <sem@altlinux.org> 2.4.0-alt1.1
 - NMU: Use buildreq for BR.

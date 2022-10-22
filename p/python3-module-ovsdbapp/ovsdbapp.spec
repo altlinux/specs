@@ -1,14 +1,18 @@
 %define oname ovsdbapp
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 1.16.0
+Version: 2.1.0
 Release: alt1
-Summary: A library for creating OVSDB applications
 
-Group: Development/Python3
+Summary: OpenStack library for creating OVSDB applications
+
 License: Apache-2.0
-Url: https://docs.openstack.org/ovsdbapp/latest
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Group: Development/Python3
+Url: https://pypi.org/project/ovsdbapp
+
+Source: %oname-%version.tar
 Source1: %oname.watch
 
 BuildArch: noarch
@@ -19,14 +23,20 @@ BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-openvswitch >= 2.8.0
 
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-reno >= 2.5.0
-BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+%if_with check
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: openvswitch
+%endif
+
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-reno >= 2.5.0
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+%endif
 
 %description
 A library for creating OVSDB applications
@@ -43,45 +53,65 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
 Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-Documentation for %oname.
+This package contains documentation for %oname.
+%endif
 
 %prep
 %setup -n %oname-%version
-# Remove bundled egg-info
-rm -rf %oname.egg-info
 
-# Prevent doc build warnings from causing a build failure
-sed -i '/warning-is-error/d' setup.cfg
+# Remove bundled egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
 
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
+%if_with docs
+export PYTHONPATH="$PWD"
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
+
+%check
+export OS_TEST_PATH=ovsdbapp/tests/unit
+%__python3 -m stestr run
+
 %files
-%doc README.rst LICENSE ChangeLog
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%doc LICENSE AUTHORS ChangeLog *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
+%if_with docs
 %files doc
-%doc html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
+%endif
 
 %changelog
+* Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
+- Automatically updated to 2.1.0.
+
 * Mon May 16 2022 Grigory Ustinov <grenka@altlinux.org> 1.16.0-alt1
 - Automatically updated to 1.16.0.
 

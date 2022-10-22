@@ -1,20 +1,23 @@
-%global oname pycadf
+%define oname pycadf
+%def_with check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.0
+Version: 3.1.1
 Release: alt1
-Summary: DMTF Cloud Audit (CADF) data model
 
-Group: Development/Python3
+Summary: CADF Library
+
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/%oname
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Group: Development/Python3
+Url: https://pypi.org/project/pycadf
+
+Source: %oname-%version.tar
+Source1: %oname.watch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
@@ -22,13 +25,25 @@ BuildRequires: python3-module-pytz >= 2013.6
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
 
-BuildRequires: python3-module-sphinx >= 1.1.2
-BuildRequires: python3-module-reno >= 1.8.0
-BuildRequires: python3-module-openstackdocstheme
-BuildRequires: python3-module-sphinxcontrib-apidoc
+%if_with check
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-testtools >= 2.2.0
+%endif
+
+%if_with docs
+BuildRequires: python3-module-sphinx >= 2.0.0
+BuildRequires: python3-module-openstackdocstheme >= 2.2.1
+BuildRequires: python3-module-sphinxcontrib-apidoc >= 0.2.0
+%endif
 
 %description
-DMTF Cloud Audit (CADF) data model
+This library provides an auditing data model based on the
+Cloud Auditing Data Federation specification, primarily for use by OpenStack.
+The goal is to establish strict expectations about what auditors can expect
+from audit notifications.
 
 %package tests
 Summary: Tests for %oname
@@ -38,47 +53,76 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Documentation for DMTF Cloud Audit (CADF) data model
+Summary: Documentation for %oname
 Group: Development/Documentation
 
 %description doc
-Documentation for the DMTF Cloud Audit (CADF) data model.
+This package contains documentation for %oname.
+%endif
 
 %prep
 %setup -n %oname-%version
+
 # Remove bundled egg-info
-rm -rf %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
 
+%if_with docs
+export PYTHONPATH="$PWD"
 # generate html docs
-export PYTHONPATH="$( pwd ):$PYTHONPATH"
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
-mkdir -p %buildroot%_sysconfdir
-mv %buildroot/usr/etc/%oname %buildroot%_sysconfdir
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
+
+# Move config files to proper location
+install -d -m 755 %buildroot%_sysconfdir/%oname
+mv %buildroot/usr/etc/%oname/*_api_audit_map.conf %buildroot%_sysconfdir/%oname
+
+%check
+%__python3 -m stestr run
 
 %files
-%doc README.rst LICENSE
+%doc LICENSE AUTHORS ChangeLog *.rst
 %dir %_sysconfdir/%oname
-%config(noreplace) %_sysconfdir/%oname/*.conf
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%config(noreplace) %_sysconfdir/%oname/ceilometer_api_audit_map.conf
+%config(noreplace) %_sysconfdir/%oname/cinder_api_audit_map.conf
+%config(noreplace) %_sysconfdir/%oname/glance_api_audit_map.conf
+%config(noreplace) %_sysconfdir/%oname/neutron_api_audit_map.conf
+%config(noreplace) %_sysconfdir/%oname/nova_api_audit_map.conf
+%config(noreplace) %_sysconfdir/%oname/swift_api_audit_map.conf
+%config(noreplace) %_sysconfdir/%oname/trove_api_audit_map.conf
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
+%if_with docs
 %files doc
-%doc html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
+%endif
 
 %changelog
+* Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.1-alt1
+- Automatically updated to 3.1.1.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 - Renamed spec file.

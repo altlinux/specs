@@ -1,38 +1,29 @@
-%define     oname openstackdocstheme
-
-%def_with docs
-# problems with hacking < 3.1.0
+%define oname openstackdocstheme
+# checking theme is quite strange
 %def_without check
+%def_with docs
 
-Name:       python3-module-%oname
-Version:    2.3.1
-Release:    alt1
+Name: python3-module-%oname
+Version: 3.0.0
+Release: alt1
 
-Summary:    Sphinx theme for RST-sourced documentation published to docs.openstack.org
+Summary: OpenStack Docs Theme
 
-License:    Apache-2.0
-Group:      Development/Python3
-Url:        https://pypi.org/project/openstackdocstheme
-#           https://github.com/openstack/openstackdocstheme
+License: Apache-2.0
+Group: Development/Python3
+Url: https://pypi.org/project/openstackdocstheme
 
-Packager:   Grigory Ustinov <grenka@altlinux.org>
+Source: %oname-%version.tar
+Source1: %oname.watch
 
-Source:     %name-%version.tar
-
-BuildArch:  noarch
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pbr
+BuildRequires: python3-module-pbr >= 2.0.0
 
 %if_with docs
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-dulwich
-%endif
-
-%if_with check
-BuildRequires: python3-module-pip
-BuildRequires: python3-module-pre-commit
-BuildRequires: python3-module-hacking
+BuildRequires: python3-module-sphinx >= 2.0.0
+BuildRequires: python3-module-dulwich >= 0.15.0
 %endif
 
 %description
@@ -41,51 +32,64 @@ OpenStack Sphinx Theme
 Theme and extension support for Sphinx documentation that is published to
 docs.openstack.org. Intended for use by OpenStack projects.
 
+%if_with docs
 %package doc
-Summary:    %oname documentation
-Group:      Development/Documentation
+Summary: Documentation for %oname
+Group: Development/Documentation
+
 %description doc
-Documentation for %oname
+This package contains documentation for %oname.
+%endif
 
 %prep
-%setup
+%setup -n %oname-%version
 
-# Prevent doc build warnings from causing a build failure
-sed -i '/warning-is-error/d' setup.cfg
+# Remove bundled egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
 
 %if_with docs
-export PYTHONPATH=.
-sphinx-build-3 -b html doc/source doc/build/html
+export PYTHONPATH="$PWD"
+# generate html docs
+sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
 %python3_install
-mkdir -p %buildroot%python3_sitelibdir_noarch/%oname/theme
-cp -r %oname/theme/* \
-%buildroot%python3_sitelibdir_noarch/%oname/theme
 
-%check
-python3 setup.py test
+# Move theme files to proper location
+# somehow they aren't installed automatically
+mv %oname/theme %buildroot%python3_sitelibdir/%oname/theme
+
+%if_with docs
+# install man page
+install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
+%endif
 
 %files
-%doc README.rst
+%doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/docstheme-build-pdf
 %_bindir/docstheme-build-translated.sh
 %_bindir/docstheme-lang-display-name.py
 %python3_sitelibdir_noarch/%oname
-%python3_sitelibdir_noarch/*.egg-info
+%python3_sitelibdir_noarch/%oname-%version-py%_python3_version.egg-info
 
 %if_with docs
 %files doc
-%doc doc/build/html
+%doc LICENSE *.rst html
+%_man1dir/%oname.1.xz
 %endif
 
 %changelog
+* Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Tue Feb 08 2022 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt1
 - Build new version.
 

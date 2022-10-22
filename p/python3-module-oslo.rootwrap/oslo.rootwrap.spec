@@ -1,33 +1,45 @@
 %define oname oslo.rootwrap
+%def_without check
+%def_with docs
 
 Name: python3-module-%oname
-Version: 6.0.2
+Version: 6.3.1
 Release: alt1
 
-Summary: Oslo Rootwrap
+Summary: OpenStack Oslo Rootwrap
 
-Group: Development/Python3
 License: Apache-2.0
-Url: http://docs.openstack.org/developer/%oname
+Group: Development/Python3
+Url: https://pypi.org/project/oslo.rootwrap
 
-Source: https://tarballs.openstack.org/%oname/%oname-%version.tar.gz
+Source: %oname-%version.tar
+Source1: %oname.watch
 
-BuildArch:      noarch
+BuildArch: noarch
 
 Provides: python3-module-oslo-rootwrap = %EVR
-Obsoletes: python3-module-oslo-rootwrap < %EVR
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-six >= 1.10.0
 
-BuildRequires: python3-module-sphinx >= 1.6.2
-BuildRequires: python3-module-openstackdocstheme >= 1.18.1
-BuildRequires: python3-module-reno >= 2.5.0
+%if_with check
 BuildRequires: python3-module-mock >= 2.0.0
 BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-eventlet >= 0.18.2
+BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
+BuildRequires: /proc
+%endif
+
+%if_with docs
+BuildRequires: python3-module-sphinx >= 1.6.2
+BuildRequires: python3-module-openstackdocstheme >= 1.18.1
+BuildRequires: python3-module-reno >= 3.1.0
+%endif
 
 %description
 The Oslo Rootwrap allows fine filtering of shell commands to run as `root`
@@ -41,48 +53,68 @@ Requires: %name = %EVR
 %description tests
 This package contains tests for %oname.
 
+%if_with docs
 %package doc
-Summary: Documentation for the Oslo rootwrap handling library
+Summary: Documentation for %oname
 Group: Development/Documentation
-Provides: python-module-oslo-rootwrap-doc = %EVR
+Provides: python3-module-oslo-rootwrap-doc = %EVR
 
 %description doc
-Documentation for the Oslo rootwrap handling library.
-
+This package contains documentation for %oname.
+%endif
 
 %prep
 %setup -n %oname-%version
 
 # Remove bundled egg-info
-rm -rf %oname.egg-info
+rm -rfv *.egg-info
 
 %build
 %python3_build
 
+%if_with docs
 export PYTHONPATH="$PWD"
-
 # generate html docs
 sphinx-build-3 doc/source html
+# generate man page
+sphinx-build-3 -b man doc/source man
 # remove the sphinx-build leftovers
 rm -rf html/.{doctrees,buildinfo}
+%endif
 
 %install
 %python3_install
 
+%if_with docs
+# install man page
+install -pDm 644 man/oslorootwrap.1 %buildroot%_man1dir/oslorootwrap.1
+%endif
+
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+%__python3 -m stestr run
+
 %files
-%doc *.rst LICENSE
+%doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/oslo-rootwrap
 %_bindir/oslo-rootwrap-daemon
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_rootwrap
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/oslo_rootwrap/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/oslo_rootwrap/tests
 
+%if_with docs
 %files doc
-%doc LICENSE html
+%doc LICENSE *.rst html
+%_man1dir/oslorootwrap.1.xz
+%endif
 
 %changelog
+* Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 6.3.1-alt1
+- Automatically updated to 6.3.1.
+
 * Fri Jun 19 2020 Grigory Ustinov <grenka@altlinux.org> 6.0.2-alt1
 - Automatically updated to 6.0.2.
 - Fix license.
