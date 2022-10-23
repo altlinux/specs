@@ -1,5 +1,5 @@
 Name: alanmi-abc
-Version: 20180617.0.g28a1307
+Version: 20221019.0.70cb339f
 Release: alt1
 
 Summary: System for Sequential Logic Synthesis and Formal Verification
@@ -14,9 +14,6 @@ Patch0: trivial-functions-fix-assert.patch
 Patch1: use-external-bzlib-zlib.patch
 
 BuildRequires(pre): rpm-build-licenses
-
-# Automatically added by buildreq on Tue Jun 19 2018
-# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libstdc++-devel python-base
 BuildRequires: gcc-c++ libreadline-devel
 
 Provides: berkeley-abc
@@ -49,6 +46,9 @@ install -p -m 755 abc %buildroot/%_bindir/
 %_bindir/abc
 
 %changelog
+* Sun Oct 23 2022 Anton Midyukov <antohami@altlinux.org> 20221019.0.70cb339f-alt1
+- New snapshot
+
 * Tue Jun 19 2018 Elvira Khabirova <lineprinter@altlinux.org> 20180617.0.g28a1307-alt1
 - New version
 - Upstream moved to github

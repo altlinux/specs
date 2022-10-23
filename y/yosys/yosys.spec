@@ -1,7 +1,7 @@
 # do not forget to update Git revision in setup section
 
 Name: yosys
-Version: 0.21
+Version: 0.22
 Release: alt1
 
 Summary: Yosys Open SYnthesis Suite
@@ -62,6 +62,7 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_bindir/%name
 %_bindir/%name-filterlib
 %_bindir/%name-smtbmc
+%_bindir/%name-witness
 %_datadir/%name
 %_man1dir/%name.1*
 %_man1dir/%name-filterlib.1*
@@ -73,6 +74,9 @@ mv %buildroot%_datadir/%name/include/ %buildroot%_includedir/%name
 %_man1dir/%name-config.1*
 
 %changelog
+* Sun Oct 23 2022 Anton Midyukov <antohami@altlinux.org> 0.22-alt1
+- new version 0.22
+
 * Fri Sep 09 2022 Anton Midyukov <antohami@altlinux.org> 0.21-alt1
 - new version 0.21
 
