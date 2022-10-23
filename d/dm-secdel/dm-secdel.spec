@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: dm-secdel
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 
 Summary: dm-linear with secure deletion on discard
@@ -71,6 +71,9 @@ systemctl -q enable secdeltab
 %preun_service secdeltab
 
 %changelog
+* Mon Oct 24 2022 Vitaly Chikunov <vt@altlinux.org> 1.0.9-alt1
+- Fix incorrect build for Linux v5.16.
+
 * Sun Aug 07 2022 Vitaly Chikunov <vt@altlinux.org> 1.0.8-alt1
 - Fix build for v5.18 (bio_alloc), v5.15, and v5.10.
 - Run functional tests on un-def kernel (in %%check).
