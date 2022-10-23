@@ -26,14 +26,14 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2022.Q3.5
-Release: alt1.1
+Version: 2022.Q4.1
+Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
 Group: System/X11
 
-# x86 is broken https://github.com/GPUOpen-Drivers/gpurt/issues/5
+# gpurt is broken on x86 https://github.com/GPUOpen-Drivers/gpurt/issues/5
 ExclusiveArch: x86_64
 
 Requires: vulkan-filesystem
@@ -121,6 +121,15 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Sat Oct 22 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q4.1-alt1
+- 2022-10-21 update:
+  + icd: bump vulkan API version
+  + llvm-project: Updated to d2b67605e4dd
+  + gpurt: Updated to 2874e509b677
+  + llpc: Updated to 9db0ba4c968b
+  + pal: Updated to c2af6fc4c14e
+  + xgl: Updated to 8a67c76eedb8
+
 * Fri Oct 21 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q3.5-alt1.1
 - disable i586 build (it's broken now).
 
