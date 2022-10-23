@@ -1,8 +1,9 @@
+%define statusdir /var/run/control
 %def_enable python
 
 Name: sudo
-Version: 1.9.8p2
-Release: alt1
+Version: 1.9.11p3
+Release: alt2
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -106,7 +107,7 @@ configure_options='
 --libexecdir=%_libdir
 --with-secure-path=/sbin:/usr/sbin:/usr/local/sbin:/bin:/usr/bin:/usr/local/bin'
 
-%configure $configure_options --with-passprompt='[sudo] password for %%u:'
+%configure $configure_options --with-passprompt='[sudo] password for %%p:'
 %make_build
 
 %install
@@ -142,19 +143,15 @@ fi
 %post
 %post_control -s wheelonly sudo
 %post_control -s strict sudoers
-if [ ! -f "/var/run/control/sudoreplay" ]; then
+if [ ! -f "%statusdir/sudoreplay" ]; then
     if [ "$1" -gt 1 ]; then
-        %pre_control sudowheel
-    else
-        echo wheelonly > "/var/run/control/sudoreplay"
+        %pre_control sudoreplay
     fi
 fi
 %post_control -s wheelonly sudoreplay
-if [ ! -f "/var/run/control/sudowheel" ]; then
+if [ ! -f "%statusdir/sudowheel" ]; then
     if [ "$1" -gt 1 ]; then
         %pre_control sudowheel
-    else
-        echo disabled > "/var/run/control/sudowheel"
     fi
 fi
 %post_control -s disabled sudowheel
@@ -209,9 +206,9 @@ fi
 %attr(700,root,root) %_sysconfdir/sudoers.d
 %_bindir/cvtsudoers
 %_mandir/man?/*
-%exclude %_man8dir/sudo_plugin.8*
+%exclude %_man5dir/sudo_plugin.5*
 %if_enabled python
-%exclude %_man8dir/sudo_plugin_python.8*
+%exclude %_man5dir/sudo_plugin_python.5*
 %endif
 %exclude %_man5dir/sudo_logsrv.proto.5*
 %exclude %_man5dir/sudo_logsrvd.conf.5*
@@ -231,15 +228,36 @@ fi
 %if_enabled python
 %files python
 %_libdir/sudo/python_plugin.so
-%_man8dir/sudo_plugin_python.8*
+%_man5dir/sudo_plugin_python.5*
 %endif
 
 %files devel
 %doc plugins/sample/sample_plugin.c
 %_includedir/sudo_plugin.h
-%_man8dir/sudo_plugin.8*
+%_man5dir/sudo_plugin.5*
 
 %changelog
+* Fri Oct 21 2022 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.11p3-alt2
+- Fix sudowheel control to be more flexible and supported the default 'ALL:ALL'
+  Runas_Spec with group alias specified.
+- Fix initialization error in post-scripts for sudoreplay and sudowheel controls
+  during first installation process (closes: 41907).
+
+* Thu Oct 20 2022 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.11p3-alt1
+- Update to latest stable release.
+- Major improvemnents from latest Sisyphus release:
+ + Added new log_passwords and passprompt_regex settings to sudo_logsrvd that
+   operate like the sudoers options when logging terminal input.
+ + A new noninteractive_auth sudoers option has been added to enable PAM
+   authentication in non-interactive mode.
+ + When sudo is run in non-interactive mode (with the -n option), it will now
+   attempt PAM authentication and only exit with an error if user interaction is
+   required.
+ + The intercept and log_subcmds functionality can now use ptrace(2) on Linux
+   systems that support seccomp(2) filtering.
+- Tweak default password prompt as %%u doesn't make sense. Improve it by old fix
+  from Patrick Schoenfeld that adds a %%p and uses it by default (closes: 38612).
+
 * Mon Oct 11 2021 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.8p2-alt1
 - Fixed minor troubles and regressions.
 
