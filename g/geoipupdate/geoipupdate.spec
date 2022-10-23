@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geoipupdate
-Version: 4.9.0
+Version: 4.10.0
 Release: alt1
 
 Summary: GeoIP update client code
 Group: Networking/Other
-License: Apache-2.0
+License: Apache-2.0 or MIT
 URL: https://github.com/maxmind/geoipupdate
 
 Source0: %name-%version.tar
@@ -24,27 +24,27 @@ GeoIP Legacy binary databases. CSV databases are not supported.
 %setup -a 1
 
 %build
-
 export BUILDDIR="$PWD/.build"
-export IMPORT_PATH="github.com/gofrs"
+export IMPORT_PATH="github.com/maxmind/geoipupdate"
 export GOPATH="%go_path"
 export GOFLAGS="-mod=vendor"
-
 %golang_prepare
-
 %golang_build cmd/%name
 rm -rf $BUILDDIR/src
 
 %install
 export BUILDDIR="$PWD/.build"
 export GOPATH="%go_path"
-
 %golang_install
 
 %files
+%doc README.md
 %_bindir/%name
 
 %changelog
+* Sun Oct 23 2022 Egor Ignatov <egori@altlinux.org> 4.10.0-alt1
+- new version 4.10.0
+
 * Tue Mar 01 2022 Egor Ignatov <egori@altlinux.org> 4.9.0-alt1
 - new version 4.9.0
 
