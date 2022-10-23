@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: widelands
-Version: 1.0
-Release: alt1.20220605
+Version: 1.1
+Release: alt1
 Epoch: 1
 Summary: Open source realtime-strategy game
 
@@ -75,6 +75,12 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/*.appdata.xml
 %_datadir/%name
 
 %changelog
+* Sun Oct 23 2022 Anton Midyukov <antohami@altlinux.org> 1:1.1-alt1
+- New version 1.1
+
+* Wed Jul 20 2022 Anton Midyukov <antohami@altlinux.org> 1:1.0-alt1.20220719
+- New snapshot
+
 * Mon Jun 06 2022 Anton Midyukov <antohami@altlinux.org> 1:1.0-alt1.20220605
 - New snapshot version 1.0
 - use embedded fonts
