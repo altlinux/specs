@@ -4,7 +4,7 @@
 
 Name: ogre
 Version: 13.2.4
-Release: alt2
+Release: alt3
 Summary: Object-Oriented Graphics Rendering Engine
 # CC-BY-SA is for devel docs
 License: MIT
@@ -93,6 +93,9 @@ pushd %_cmake__builddir &>/dev/null
 tar xvf %SOURCE1
 popd
 
+mv CMake/{,Ogre}FeatureSummary.cmake
+sed -i 's/FeatureSummary/Ogre&/' CMakeLists.txt
+
 %ifarch %e2k
 # strip UTF-8 BOM for lcc < 1.24
 find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
@@ -154,6 +157,9 @@ find -type f -print0 -name '*.cpp' -o -name '*.hpp' -name '*.h' |
 %_libdir/OGRE/Samples
 
 %changelog
+* Mon Oct 24 2022 Artyom Bystrov <arbars@altlinux.org> 13.2.4-alt3
+- Fixed build.
+
 * Wed Feb 09 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 13.2.4-alt2
 - Fixed build.
 
