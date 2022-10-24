@@ -1,16 +1,17 @@
 %define _unpackaged_files_terminate_build 1
-%define oname path
+%define pypi_name path
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 16.4.0
+Name: python3-module-%pypi_name
+Version: 16.5.0
 Release: alt1
 
 Summary: A module wrapper for os.path
 License: MIT
 Group: Development/Python
-Url: https://github.com/jaraco/path
+Url: https://pypi.org/project/path/
+VCS: https://github.com/jaraco/path
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -18,19 +19,19 @@ Patch: %name-%version-alt.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
-BuildRequires: python3(toml)
 
 %if_with check
 BuildRequires: python3(appdirs)
 BuildRequires: python3(packaging)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
-%py3_provides %oname
+%py3_provides %pypi_name
 Provides: python3-module-path.py = %EVR
 Obsoletes: python3-module-path.py < %EVR
 
@@ -53,23 +54,23 @@ git commit -m 'release'
 git tag '%version'
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
+%tox_check_pyproject -- -vra
 
 %files
 %doc *.rst
 %python3_sitelibdir/path/
-%python3_sitelibdir/path-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 24 2022 Stanislav Levin <slev@altlinux.org> 16.5.0-alt1
+- 16.4.0 -> 16.5.0.
+
 * Tue Apr 05 2022 Stanislav Levin <slev@altlinux.org> 16.4.0-alt1
 - 16.3.0 -> 16.4.0.
 
