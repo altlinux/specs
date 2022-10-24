@@ -3,11 +3,11 @@
 %define llvm_version 12.0
 %endif
 
-%def_with bootstrap
+%def_without bootstrap
 
 Name: ghc8.10.7
 Version: 8.10.7
-Release: alt1
+Release: alt2
 
 Summary: Glasgow Haskell Compilation system
 License: BSD-3-Clause and HaskellReport
@@ -282,6 +282,9 @@ sed -i 's/@GHC_VERSION@/%version/' %buildroot%_rpmmacrosdir/ghc
 %exclude %docdir/[AR]*
 
 %changelog
+* Mon Oct 24 2022 Evgeny Sinelnikov <sin@altlinux.org> 8.10.7-alt2
+- Rebuild with ghc 8.10.7
+
 * Mon Oct 24 2022 Evgeny Sinelnikov <sin@altlinux.org> 8.10.7-alt1
 - Bootstrap to version 8.10.7
 
