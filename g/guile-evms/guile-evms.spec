@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.6.3
-Release: alt4
+Release: alt5
 
 Summary: Guile bindings for EVMS
 License: GPLv2
@@ -33,6 +33,9 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Mon Oct 24 2022 Oleg Solovyov <mcpain@altlinux.org> 0.6.3-alt5
+- fix: subvol is marked for destroy; their mountpoint should not be busy
+
 * Tue Jul 26 2022 Oleg Solovyov <mcpain@altlinux.org> 0.6.3-alt4
 - fix: subvolume auto-partitioning did not give any mount options
 
