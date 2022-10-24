@@ -1,12 +1,14 @@
 %def_disable check
+%def_disable docs
+%def_disable domU
 
 Name: kernel-image-rpi-un
 Release: alt1
 epoch:1
-%define kernel_need_version	5.18
+%define kernel_need_version	6.0
 # Used when kernel-source-x.y does not currently exist in repository.
-%define kernel_base_version	5.18
-%define kernel_sublevel .7
+%define kernel_base_version	6.0
+%define kernel_sublevel .2
 %define kernel_extra_version	%nil
 # kernel version is need version
 Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
@@ -25,15 +27,6 @@ Version: %kernel_need_version%kernel_sublevel%kernel_extra_version
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version	10
-
-# Enable/disable SGML docs formatting
-%if "%sub_flavour" == "def" && %kgcc_version > 5
-%def_enable docs
-%else
-%def_disable docs
-%endif
-
-%def_disable domU
 
 #Remove oss
 %def_disable oss
@@ -54,7 +47,6 @@ Group: System/Kernel and hardware
 Url: http://www.kernel.org/
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 Source0: %name-%version.tar
-Source1: config-%_target_cpu
 Patch0: %name-%version-%release.patch
 
 ExclusiveArch: aarch64
@@ -83,6 +75,10 @@ BuildRequires: bc
 BuildRequires: rsync
 BuildRequires: openssl-devel
 BuildRequires: u-boot-tools
+%if_with cross_toolchain_aarch64
+BuildRequires: gcc-aarch64-linux-gnu
+%endif
+
 # for check
 %{?!_without_check:%{?!_disable_check:BuildRequires: qemu-system-%qemu_pkg-core ipxe-roms-qemu glibc-devel-static}}
 Provides:  kernel-modules-v4l-%kversion-%flavour-%krelease = %version-%release
@@ -194,14 +190,15 @@ in the kernel and update the documentation to reflect these changes.
 %prep
 %setup
 %patch0 -p1
-cp %SOURCE1 .
 
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
 echo 'export GCC_VERSION=%kgcc_version' > gcc_version.inc
 
 subst 's/EXTRAVERSION[[:space:]]*=.*/EXTRAVERSION = %kernel_extra_version-%flavour-%krelease/g' Makefile
+%if_without cross_toolchain_aarch64
 subst 's/CC.*$(CROSS_COMPILE)gcc/CC         := $(shell echo $${GCC_USE_CCACHE:+ccache}) gcc-%kgcc_version/g' Makefile
+%endif
 
 # get rid of unwanted files resulting from patch fuzz
 find . -name "*.orig" -delete -or -name "*~" -delete
@@ -211,6 +208,9 @@ chmod +x tools/objtool/sync-check.sh
 %build
 export ARCH=%base_arch
 export NPROCS=%__nprocs
+%if_with cross_toolchain_aarch64
+export CROSS_COMPILE=aarch64-linux-gnu-
+%endif
 KernelVer=%kversion-%flavour-%krelease
 
 echo "Building Kernel $KernelVer"
@@ -441,6 +441,11 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Thu Oct 20 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:6.0.2-alt1
+- Updated to 6.0.2
+- https://github.com/raspberrypi/linux.git rpi-6.0.y commit 45681bb2eec45e87e4907348e04cb151595a5dcd
+- Baikal-M support git.alt/people/asheplyakov/linux.git commit d7ce44a27cf36dfbfe5dde1d4abda71b97d3ecf7
+
 * Tue Jun 28 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 1:5.18.7-alt1
 - Updated to 5.18.7
 - https://github.com/raspberrypi/linux.git rpi-5.18.y commit 66742fe5d8a4ecd489f11aa315b6530c32eb126b
