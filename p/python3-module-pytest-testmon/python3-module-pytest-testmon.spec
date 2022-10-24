@@ -2,12 +2,14 @@
 %global pypi_name pytest-testmon
 
 Name: python3-module-%pypi_name
-Version: 1.3.7
+Version: 1.4.0
 Release: alt1
 Summary: A py.test plug-in which executes only tests affected by recent changes
 Group: Development/Python
 License: AGPL-3.0
 Url: http://testmon.org/
+VCS: https://github.com/tarpas/pytest-testmon.git
+
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 BuildArch: noarch
@@ -44,6 +46,9 @@ executes only tests affected by recent changes.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Oct 24 2022 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.3.7 -> 1.4.0.
+
 * Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 1.3.7-alt1
 - 1.3.6 -> 1.3.7.
 
