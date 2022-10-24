@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.13.2
+Version: 1.13.3
 Release: alt1
 
 Summary: Installer common parts
@@ -104,6 +104,12 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Oct 24 2022 Sergey V Turchin <zerg@altlinux.org> 1.13.3-alt1
+- merge p10 changes
+
+* Mon Oct 24 2022 Sergey V Turchin <zerg@altlinux.org> 1.12.4-alt2
+- allow to force XOrg 96 DPI by cmdline option xorg96dpi
+
 * Wed Oct 19 2022 Anton Midyukov <antohami@altlinux.org> 1.13.2-alt1
 - install2: redirect systemd-tmpfiles and udevd output to logs
 
