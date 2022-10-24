@@ -2,7 +2,7 @@
 %def_disable qt5
 
 Name: strawberry
-Version: 1.0.9
+Version: 1.0.10
 Release: alt1
 Summary: Audio player and music collection organizer
 
@@ -36,6 +36,7 @@ Requires: gst-plugins-good1.0 vlc-mini
 Provides: bundled(SPMediaKeyTap)
 Provides: bundled(singleapplication)
 Provides: bundled(macdeployqt)
+Provides: bundled(getopt)
 
 %description
 Strawberry is a audio player and music collection organizer.
@@ -115,6 +116,9 @@ appstream-util validate-relax --nonet %buildroot%_datadir/metainfo/org.strawberr
 %_man1dir/strawberry-tagreader.1.*
 
 %changelog
+* Mon Oct 24 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.10-alt1
+- New version (1.0.10).
+
 * Mon Sep 05 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.9-alt1
 - New version (1.0.9).
 
