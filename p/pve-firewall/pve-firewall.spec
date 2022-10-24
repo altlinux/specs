@@ -3,7 +3,7 @@
 Name: pve-firewall
 Summary: Proxmox VE Firewall
 Version: 4.2.6
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://www.proxmox.com
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 ExclusiveArch: x86_64 aarch64
 
 # from debian/control
-Conflicts: ulogd
+#Conflicts: ulogd
 
 Requires: ebtables ipset iptables iptables-ipv6 iproute2 
 
@@ -69,6 +69,9 @@ __EOF__
 %_man8dir/*
 
 %changelog
+* Mon Oct 24 2022 Alexey Shabalin <shaba@altlinux.org> 4.2.6-alt2
+- delete conflicts with ulogd
+
 * Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 4.2.6-alt1
 - 4.2-6
 
