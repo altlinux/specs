@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: python3-module-wadllib
-Version: 1.3.5
+Version: 1.3.6
 Release: alt1
 Summary: Python library for navigating WADL files
 License: LGPLv3
@@ -49,12 +49,15 @@ Requires: %name = %version-%release
 %files
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/wadllib/tests
-%doc HACKING.txt README.txt
+%doc CONTRIBUTING.rst NEWS.rst README.rst
 
 %files tests
 %python3_sitelibdir/wadllib/tests
 
 %changelog
+* Fri Oct 21 2022 Anatoly Kitaykin <cetus@altlinux.org> 1.3.6-alt1
+- Release 1.3.6
+
 * Tue Feb 02 2021 Anatoly Kitaykin <cetus@altlinux.org> 1.3.5-alt1
 - Release 1.3.5
 

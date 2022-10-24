@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: python3-module-fastbencode
-Version: 0.0.8
-Release: alt2
+Version: 0.0.15
+Release: alt1
 
 Summary: An implementation of the bencode serialization format originally used by BitTorrent
 License: GPLv2
@@ -42,6 +42,9 @@ This module is built for python %__python_version
 %doc CODE_OF_CONDUCT.md README.md SECURITY.md
 
 %changelog
+* Fri Oct 21 2022 Anatoly Kitaykin <cetus@altlinux.org> 0.0.15-alt1
+- Release 0.0.15
+
 * Wed Apr 13 2022 Anatoly Kitaykin <cetus@altlinux.org> 0.0.8-alt2
 - Fix build requirements
 
