@@ -5,7 +5,7 @@
 
 Name: file
 Version: 5.43
-Release: alt1
+Release: alt2
 
 Summary: File type guesser
 License: BSD-2-Clause
@@ -74,6 +74,8 @@ cat <<EOF > %buildroot%_sysconfdir/magic
 EOF
 cat magic/magic/* > %buildroot%_datadir/file/magic
 
+xz -k ChangeLog
+
 %check
 set -o pipefail
 strace_file() {
@@ -91,7 +93,6 @@ strace_file() {
 	cat < stdout.log
 	return $ret
 }
-xz -k ChangeLog
 strace_file -m /dev/null	  ChangeLog.xz | grep ': data'
 strace_file -m magic/magic/	  ChangeLog.xz | grep ': XZ compressed data'
 strace_file -m magic/magic.mgc	  ChangeLog.xz | grep ': XZ compressed data'
@@ -131,6 +132,9 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Tue Oct 25 2022 Michael Shigorin <mike@altlinux.org> 5.43-alt2
+- Fix build --without check.
+
 * Wed Sep 14 2022 Vitaly Chikunov <vt@altlinux.org> 5.43-alt1
 - Update to FILE5_43-2-g37d21b82 (2022-09-14).
 - Zstd decompression is built-in now.
