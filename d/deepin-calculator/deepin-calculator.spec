@@ -2,7 +2,7 @@
 
 Name: deepin-calculator
 Version: 5.7.21
-Release: alt1
+Release: alt2.gite1d1d55
 Summary: An easy to use calculator for ordinary users
 License: GPL-2.0+ and GPL-3.0+
 
@@ -64,6 +64,11 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/calculator/*/*
 
 %changelog
+* Tue Oct 25 2022 Leontiy Volodin <lvol@altlinux.org> 5.7.21-alt2.gite1d1d55
+- Git version (commit: e1d1d55db3045a552812c7a549960f16be53854b).
+- Upstream:
+  + fix build with dtk 5.6.
+
 * Wed May 04 2022 Leontiy Volodin <lvol@altlinux.org> 5.7.21-alt1
 - New version (5.7.21).
 - Checkout from dev to master branch.
