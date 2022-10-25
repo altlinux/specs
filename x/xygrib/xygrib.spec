@@ -1,15 +1,15 @@
 %define binname XyGrib
 
 Name: xygrib
-Version: 1.2.6
-Release: alt4
+Version: 1.2.7
+Release: alt1
 
 Summary: Visualisation of meteo data from files in GRIB formats
 
 License: GPL-3.0-only
 Group: Networking/Other
 Url: https://opengribs.org
-Source0: %binname-%version.tar.gz
+Source0: %binname-%version-20220516.tar.gz
 Source1: %binname.desktop
 
 Patch1: XyGrib-1.2.6-71e6ce91da79.diff
@@ -46,13 +46,15 @@ home page: http://www.geonames.org/
 
 %prep
 
-%setup -q -n %binname-%version
+%setup -q -n %binname-%version-20220516
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+#patch1 -p1
+#patch2 -p1
+#patch3 -p1
+#patch4 -p1
+#patch5 -p1
+
+sed -i 's/PATH_SUFFIXES openjpeg-2.3 openjpeg-2.2 openjpeg-2.1/PATH_SUFFIXES openjpeg-2.5 openjpeg-2.4 openjpeg-2.3 openjpeg-2.2 openjpeg-2.1/' CMakeLists.txt
 
 %build
 # -DNO_UPDATE=1 deactivates XyGrib internal SW update
@@ -90,6 +92,9 @@ find %buildroot \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 %_datadir/openGribs
 
 %changelog
+* Wed Oct 26 2022 Sergey Y. Afonin <asy@altlinux.org> 1.2.7-alt1
+- New (development) version, 20221025 snapshot
+
 * Mon May 16 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.6-alt4
 - fixed build with openjpeg 2.5 (XyGrib-1.2.6-openjpeg-2.5.patch)
 
