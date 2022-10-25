@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gdk-pixbuf
 %define api_ver 2.0
@@ -15,7 +15,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -226,6 +226,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 
 
 %changelog
+* Tue Oct 25 2022 Yuri N. Sedunov <aris@altlinux.org> 2.42.10-alt1
+- 2.42.10
+
 * Wed Sep 28 2022 Yuri N. Sedunov <aris@altlinux.org> 2.42.9-alt1
 - updated to 2.42.9-7-g6550872a
 
