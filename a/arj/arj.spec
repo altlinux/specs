@@ -1,6 +1,6 @@
 Name: arj
 Version: 3.10.22
-Release: alt8
+Release: alt9
 Epoch: 1
 
 Summary: An compressor and uncompressor for .arj format archive files
@@ -71,6 +71,9 @@ install -pD -m 644 resource/rearj.cfg.example $RPM_BUILD_ROOT%_sysconfdir/rearj.
 %doc doc/*.txt resource/en/*.txt
 
 %changelog
+* Tue Oct 25 2022 Alexander Danilov <admsasha@altlinux.org> 1:3.10.22-alt9
+- Fixes patch CVE-2015-0557-security-traversal-dir (ALT #44143).
+
 * Thu Oct 20 2022 Alexander Danilov <admsasha@altlinux.org> 1:3.10.22-alt8
 - (Fixes CVE-2015-0556, CVE-2015-0557, CVE-2015-2782)
 
