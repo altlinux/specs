@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Summary: Simple cross-platform colored terminal text in Python
@@ -18,6 +18,7 @@ Source0: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-hatchling
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -44,10 +45,10 @@ library, such as Termcolor.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 py.test-3
@@ -55,9 +56,12 @@ py.test-3
 %files
 %doc *.rst demos
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Tue Oct 25 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.6-alt1
+- Automatically updated to 0.4.6.
+
 * Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.5-alt1
 - Automatically updated to 0.4.5.
 
