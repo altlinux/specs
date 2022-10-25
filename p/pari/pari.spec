@@ -1,9 +1,7 @@
-%set_verify_elf_method rpath=relaxed
-
 Name: pari
-%define sover 7
-%define lname   libpari-gmp-tls%sover
-Version: 2.13.4
+%define sover 8
+%define lname libpari-gmp-tls%sover
+Version: 2.15.0
 Release: alt1
 Summary: Computer Algebra System for computations in Number Theory
 License: GPL-2.0-only
@@ -70,16 +68,19 @@ functions.
 
 %prep
 %setup
+# Get rid of undesirable hardcoded rpaths.
+sed -i "s|runpathprefix='.*'|runpathprefix=''|" \
+  config/get_ld
 
 %build
 ./Configure --prefix="%prefix" \
-        --bindir="%_bindir" --includedir="%_includedir" \
-        --libdir="%_libdir" \
-        --sysdatadir="%_libdir" --datadir="%_datadir/%name" \
-        --mt=pthread
+  --bindir="%_bindir" --includedir="%_includedir" \
+  --libdir="%_libdir" \
+  --sysdatadir="%_libdir" --datadir="%_datadir/%name" \
+  --mt=pthread
 %make_build all \
-        CFLAGS="%optflags -fno-strict-aliasing" \
-        STRIP=true
+  CFLAGS="%optflags -fno-strict-aliasing" \
+  STRIP=true
 
 %install
 %makeinstall_std
@@ -102,6 +103,9 @@ functions.
 %_libdir/libpari.so
 
 %changelog
+* Tue Oct 25 2022 Leontiy Volodin <lvol@altlinux.org> 2.15.0-alt1
+- New version (2.15.0).
+
 * Thu Apr 07 2022 Leontiy Volodin <lvol@altlinux.org> 2.13.4-alt1
 - New version (2.13.4) with rpmgs script.
 

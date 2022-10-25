@@ -1,12 +1,12 @@
-%define tarver 1.7.0-13
+%define tarver 1.9.0-27
 %define mainver %( echo %tarver | sed 's/-.*//' )
 %define soname  0
 
 %def_with cocoa
 
 Name: giac
-Version: 1.7.0.13
-Release: alt1.1
+Version: 1.9.0.27
+Release: alt1
 
 Summary: Computer algebra system
 
@@ -110,7 +110,8 @@ sed -i "1i #include <alloca.h>" micropython-1.12/py/obj.h
 find . -type f -iname '.*' -delete
 
 %build
-export CXXFLAGS+=' -std=c++14'
+# Fix crashes
+export CXXFLAGS+=' -std=c++14 -Wp,-U_GLIBCXX_ASSERTIONS'
 # %%ifarch armh ppc64le
 # %%add_optflags -no-pie
 # %%remove_optflags -fPIC
@@ -219,6 +220,10 @@ rm %buildroot%_docdir/giac/Makefile.am
 %_docdir/giac/*/
 
 %changelog
+* Tue Oct 25 2022 Leontiy Volodin <lvol@altlinux.org> 1.9.0.27-alt1
+- New version.
+- Fixed build with pari 2.15.0.
+
 * Thu Apr 28 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.7.0.13-alt1.1
 - Fixed build for Elbrus.
 
