@@ -19,7 +19,7 @@ tomli_w \\\
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: A PEP 517 backend for PDM that supports PEP 621 metadata
@@ -120,5 +120,8 @@ sed -i \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Oct 24 2022 Stanislav Levin <slev@altlinux.org> 1.0.5-alt1
+- 1.0.4 -> 1.0.5.
+
 * Wed Oct 05 2022 Stanislav Levin <slev@altlinux.org> 1.0.4-alt1
 - Initial build for Sisyphus.
