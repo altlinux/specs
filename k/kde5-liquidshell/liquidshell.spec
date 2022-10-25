@@ -7,8 +7,8 @@
 
 Name: kde5-liquidshell
 Version: 1.8.1
-Release: alt1
-%K5init altplace
+Release: alt2
+%K5init no_altplace appdata
 
 Group: Graphical desktop/KDE
 Summary: KDE 5 plasma dekstop shell alternative
@@ -32,6 +32,7 @@ Patch9: alt-start_liquidshell.patch
 # optimized out: cmake cmake-modules elfutils gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgio-devel libgpg-error libnm-devel libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms perl python-base python-modules python3 python3-base qt5-base-devel rpm-build-python3
 #BuildRequires: extra-cmake-modules git-core gtk-update-icon-cache kf5-bluez-qt-devel kf5-karchive-devel kf5-kcmutils-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kwindowsystem-devel kf5-networkmanager-qt-devel libssl-devel python3-dev qt5-x11extras-devel ruby ruby-stdlibs
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires: desktop-file-utils
 BuildRequires: extra-cmake-modules qt5-x11extras-devel qt5-base-devel-static
 BuildRequires: kf5-bluez-qt-devel kf5-karchive-devel kf5-kcmutils-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-knewstuff-devel kf5-knotifications-devel
@@ -90,7 +91,8 @@ Requires: %name-common = %version-%release
 %patch8 -p1
 %patch9 -p1 -b .start
 
-sed -i 's|@CMAKE_INSTALL_FULL_BINDIR@|/usr/bin|' liquidshell-session.desktop
+sed -i 's|@CMAKE_INSTALL_FULL_BINDIR@|%_bindir|' liquidshell-session.desktop
+sed -i 's|@ALT_KDE5_XDG_APPS_INSTALL_DIR@|%_K5xdgapp|' start_liquidshell
 
 %build
 %K5build
@@ -105,15 +107,23 @@ mkdir -p %buildroot/%_x11sysconfdir/wmsession.d/
 cat <<__EOF__ >%buildroot/%_x11sysconfdir/wmsession.d/02LIQUIDSHELL
 NAME=Liquidshell
 DESC=Liquid Desktop Workspace
-ICON=/usr/share/kf5/icons/hicolor/48x48/apps/liquidshell.png
+ICON=%_K5icon/hicolor/48x48/apps/liquidshell.png
 EXEC=/usr/bin/start_liquidshell
 SCRIPT:
 exec /usr/bin/start_liquidshell
 __EOF__
-install -Dm 0755 org.kde.liquidshell.desktop %buildroot/%_kf5_xdgapp/
+#install -Dm 0755 org.kde.liquidshell.desktop %buildroot/%_kf5_xdgapp/
 install -Dm 0644 liquidshell-session.desktop %buildroot/%_datadir/xsessions/liquidshell-session.desktop
 mkdir -p %buildroot/%_bindir/
-mv %buildroot/%_K5bin/start_liquidshell %buildroot/%_bindir/
+[ -e %buildroot/%_bindir/start_liquidshell ] \
+    || mv %buildroot/%_kf5_bin/start_liquidshell %buildroot/%_bindir/start_liquidshell
+
+desktop-file-install --mode=0644 --dir %buildroot/%_datadir/xsessions/ \
+	--set-key=Type \
+	--set-value=Application \
+	--set-icon=liquidshell \
+	%buildroot/%_datadir/xsessions/liquidshell-session.desktop
+sed -i 's|^Type=.*|Type=XSession|' %buildroot/%_datadir/xsessions/liquidshell-session.desktop
 
 %find_lang %name --with-kde --all-name
 
@@ -126,8 +136,13 @@ mv %buildroot/%_K5bin/start_liquidshell %buildroot/%_bindir/
 %_x11sysconfdir/wmsession.d/02LIQUIDSHELL
 %_bindir/start_liquidshell
 %_datadir/xsessions/liquidshell-session.desktop
+%_datadir/metainfo/*liquidshell*
 
 %changelog
+* Tue Oct 25 2022 Sergey V Turchin <zerg@altlinux.org> 1.8.1-alt2
+- install to standart place
+- add Icon to xsession desktop-file
+
 * Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 1.8.1-alt1
 - new version
 
