@@ -1,5 +1,5 @@
 Name: fetchmail
-Version: 6.4.33
+Version: 6.4.34
 Release: alt1
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
@@ -199,6 +199,9 @@ usermod -d %rtdir %name ||:
 %files -f %name.lang locales
 
 %changelog
+* Tue Oct 25 2022 Alexey Gladkov <legion@altlinux.ru> 6.4.34-alt1
+- New version (6.4.34).
+
 * Thu Sep 22 2022 Alexey Gladkov <legion@altlinux.ru> 6.4.33-alt1
 - New version (6.4.33).
 - Build from git repository.
