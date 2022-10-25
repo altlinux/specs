@@ -21,8 +21,10 @@
 %endif
 
 Name: nvidia_glx_src
-Version: 515.65.01
+Version: 515.76
 Release: alt1
+
+ExclusiveArch: %ix86 x86_64 aarch64
 
 Source0: null
 Source201: http://http.download.nvidia.com/XFree86/Linux-x86_64/%version/%tbname-%version.run
@@ -32,8 +34,6 @@ BuildRequires: rpm-macros-alternatives
 BuildRequires: libXext-devel libEGL-devel
 BuildRequires: libwayland-client-devel libwayland-server-devel
 #BuildRequires: libGLdispatch libGLX
-ExclusiveArch: %ix86 x86_64 aarch64
-
 
 Group: System/Kernel and hardware
 Summary: NVIDIA drivers and OpenGL libraries for XOrg X-server
@@ -152,6 +152,9 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 %_libdir/libnvidia-encode.so.%version
 
 %changelog
+* Tue Oct 25 2022 Sergey V Turchin <zerg@altlinux.org> 515.76-alt1
+- new version
+
 * Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 515.65.01-alt1
 - new version
 

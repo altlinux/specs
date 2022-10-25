@@ -14,9 +14,9 @@
 # version-release
 
 %define nv_version 515
-%define nv_release 65
-%define nv_minor 01
-%define pkg_rel alt256
+%define nv_release 76
+%define nv_minor %nil
+%define pkg_rel alt257
 %define set_gl_nvidia_ver 1.6.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
@@ -344,6 +344,9 @@ fi
 %_udevrulesdir/*nvidia*.rules
 
 %changelog
+* Tue Oct 25 2022 Sergey V Turchin <zerg@altlinux.org> 515.76-alt257
+- new version
+
 * Mon Sep 12 2022 Sergey V Turchin <zerg@altlinux.org> 515.65.01-alt256
 - package nvidia-drm_gbm.so symlink
 
