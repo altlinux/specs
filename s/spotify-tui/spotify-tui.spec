@@ -2,7 +2,7 @@
 
 Name: spotify-tui
 Version: 0.25.0
-Release: alt1
+Release: alt2
 
 Summary: Spotify for the terminal written in Rust
 License: MIT
@@ -13,7 +13,6 @@ Source0: %name-%version.tar
 Source1: crates.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires: /proc
 BuildRequires: python3
 BuildRequires: libssl-devel
 BuildRequires: libxcb-devel
@@ -42,5 +41,8 @@ cargo test --release
 %_bindir/spt
 
 %changelog
+* Thu Oct 20 2022 Ivan Alekseev <qwetwe@altlinux.org> 0.25.0-alt2
+- socket2 dependency updated
+
 * Sun Dec 12 2021 Ivan Alekseev <qwetwe@altlinux.org> 0.25.0-alt1
 - Initial build
