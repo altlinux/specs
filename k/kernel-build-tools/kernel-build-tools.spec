@@ -1,26 +1,33 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: kernel-build-tools
-Version: 0.116
-Release: alt2
+Version: 0.117
+Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
-License: GPL
+License: GPL-2.0-or-later
 Group: Development/Kernel
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source: %name-%version.tar
 
-Requires: rpm-build-kernel = %version-%release
+Requires: rpm-build-kernel = %EVR
 
 # due to RPM macro expansion support
 Requires: gear >= 1.3.1
 
 BuildRequires: help2man
+BuildRequires: shellcheck
 
 %package -n rpm-build-kernel
 Summary: RPM macros to build kernel packages
 Group: Development/Kernel
 Conflicts: rpm-build < 4.0.4-alt1
 
+# ExclusiveArch / ExcludeArch are evaluated after BuildRequires(pre) is
+# satisfied, but kernel-modules-s have kernel-headers-modules-@kflavour@
+# there causing unmet. As a workaround hack this package creates fake
+# provides on the _excluded_ arches.
 %ifnarch %ix86 x86_64 ppc64le aarch64
 Provides: kernel-headers-modules-std-def
 %endif
@@ -67,10 +74,9 @@ kernel packaging conventions.
 
 %install
 %makeinstall_std
-install -Dpm644 kernel-macros \
-	%buildroot%_rpmmacrosdir/kernel
-install -Dpm0755 query-kEVR.sh \
-	-t %buildroot%_rpmlibdir/
+
+%check
+%make_build check
 
 %files
 %_bindir/*
@@ -83,6 +89,11 @@ install -Dpm0755 query-kEVR.sh \
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Tue Oct 25 2022 Vitaly Chikunov <vt@altlinux.org> 0.117-alt1
+- Do not install obsoleted scripts: buildkernel, buildmodules, updatemodules,
+  merge-all-branches.
+- Slightly improve packaging: add %%check, unify install.
+
 * Mon Nov 29 2021 L.A. Kostis <lakostis@altlinux.ru> 0.116-alt2
 - Added -centos kernel to the list of fake providers.
 
