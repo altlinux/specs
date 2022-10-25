@@ -13,9 +13,9 @@
 
 %define zuo zuo -X /usr/share/zuo
 
-Name: racket-base
+Name: racket-core
 Version: 8.6
-Release: alt2
+Release: alt3
 
 Summary: Racket, the programming language (base package)
 License: Apache-2.0 or MIT
@@ -107,6 +107,9 @@ rm %buildroot%_datadir/doc/%name-%version/LICENSE-{GPL,LGPL,libscheme}.txt
 %endif
 
 %changelog
+* Mon Oct 24 2022 Anton Zhukharev <ancieg@altlinux.org> 8.6-alt3
+- rename from racket-base to racket-core
+
 * Tue Oct 18 2022 Anton Zhukharev <ancieg@altlinux.org> 8.6-alt2
 - clean up spec
 - do not remove 'starter-sh' file
