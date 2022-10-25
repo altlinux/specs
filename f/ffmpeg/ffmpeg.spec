@@ -4,6 +4,13 @@
 %define set_disable() %{expand:%%force_disable %{1}} %{expand:%%undefine _enable_%{1}}
 %define set_enable() %{expand:%%force_enable %{1}} %{expand:%%undefine _disable_%{1}}
 %define subst_enable_with() %{expand:%%{?_enable_%{1}:--enable-%{2}} } %{expand:%%{?_disable_%{1}:--disable-%{2}} }
+%if "%(rpmvercmp '%{get_version glibc-kernheaders}' '6.0')" <= "0"
+%def_enable v4l2_m2m
+%def_enable v4l2_request 
+%else
+%def_disable v4l2_m2m
+%def_disable v4l2_request
+%endif
 
 # License
 %def_enable gpl
@@ -156,7 +163,7 @@
 
 Name:		ffmpeg
 Epoch:		2
-Version:	4.4.2
+Version:	4.4.3
 Release:	alt1
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
@@ -591,8 +598,8 @@ xz Changelog
 	--docdir=%_docdir/%name-%version \
 	--disable-rpath \
 %ifarch armh aarch64
-	--enable-v4l2_m2m \
-	--enable-v4l2-request \
+	%{subst_enable v4l2_m2m} \
+	%{subst_enable_with v4l2_request v4l2-request} \
 %endif
 %ifarch mips mipsel mips64 mips64el
 	--disable-mipsdsp \
@@ -890,6 +897,11 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Sat Oct 22 2022 Anton Farygin <rider@altlinux.ru> 2:4.4.3-alt1
+- 4.4.2 -> 4.4.3
+- rebased to kernel-6.0 request-api
+- disabled request-api for glibc-kernheaders < 6.0
+
 * Thu Jun 23 2022 Anton Farygin <rider@altlinux.ru> 2:4.4.2-alt1
 - 4.4.1 -> 4.4.2
 
