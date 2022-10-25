@@ -65,7 +65,7 @@
 
 
 Name: virtualbox
-Version: 6.1.40
+Version: 7.0.2
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -127,11 +127,11 @@ BuildRequires: makeself
 BuildRequires: qt5-tools
 BuildRequires: qt5-connectivity-devel
 BuildRequires: qt5-declarative-devel
-BuildRequires: qt5-location-devel 
+BuildRequires: qt5-location-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-phonon-devel
-BuildRequires: qt5-quick1-devel 
-BuildRequires: qt5-quickcontrols2-devel 
+BuildRequires: qt5-quick1-devel
+BuildRequires: qt5-quickcontrols2-devel
 BuildRequires: qt5-script-devel
 BuildRequires: qt5-sensors-devel
 BuildRequires: qt5-serialbus-devel
@@ -149,6 +149,8 @@ BuildRequires: xorg-xf86driproto-devel xorg-glproto-devel
 BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 BuildRequires(pre): xorg-sdk
 BuildPreReq: yasm kBuild >= 0.1.9998.r3178
+BuildRequires: glslang-devel
+BuildRequires: qt5-tools-devel
 %if_with webservice
 BuildRequires: libgsoap-devel libgsoap-devel-static > 2.8.0
 %endif
@@ -440,6 +442,8 @@ echo "VBOX_PATH_PACKAGE_DOCS     := \$(VBOX_PATH_APP_DOCS)" >> LocalConfig.kmk
 echo "VBOX_VENDOR                := ALT Linux Team" >> LocalConfig.kmk
 echo "VBOX_VENDOR_SHORT          := ALT" >> LocalConfig.kmk
 echo "VBOX_PRODUCT               := VM VirtualBox OSE" >> LocalConfig.kmk
+echo "VBOX_WITH_VBOXSDL          := 1" >> LocalConfig.kmk
+echo "VBOX_WITH_WEBSERVICES      := 1" >> LocalConfig.kmk
 
 # disable build with bundled xorg/mesa headers
 echo "VBOX_USE_SYSTEM_XORG_HEADERS := 1" >> LocalConfig.kmk
@@ -476,10 +480,10 @@ echo "VBOX_CHMCMD                :=" >> LocalConfig.kmk
 %if_with vboximg
 echo "VBOX_WITH_VBOX_IMG         := 1" >> LocalConfig.kmk
 %endif
-%if_with manualbuild
+#%if_with manualbuild
 echo "VBOX_PATH_DOCBOOK          := /usr/share/xml/docbook/xsl-stylesheets" >> LocalConfig.kmk
 echo "VBOX_PATH_DOCBOOK_DTD      := /usr/share/xml/docbook/dtd/4.5" >> LocalConfig.kmk
-%endif
+#%endif
 
 #source env.sh
 [ -n "$NPROCS" ] || NPROCS=%__nprocs
@@ -542,12 +546,10 @@ cp -a \
     VBoxSDL \
     VBoxSVC \
     VBoxTestOGL \
-    VBoxTunctl \
     VBoxVolInfo \
     VBoxXPCOMIPCD \
     VirtualBox \
     VirtualBoxVM \
-    iPxeBaseBin \
     xpidl \
     *.r0 \
 %ifarch %ix86
@@ -589,10 +591,9 @@ cp -a \
 # create links
 for n in VBoxAutostart \
          VBoxBalloonCtrl \
-	 VBoxHeadless \
+         VBoxHeadless \
          VBoxManage \
          VBoxSDL \
-         VBoxTunctl \
          VBoxVolInfo \
          VirtualBoxVM \
          VirtualBox; do
@@ -606,8 +607,6 @@ for n in VBoxAutostart \
          vboxmanage \
          VBoxSDL \
          vboxsdl \
-         VBoxTunctl \
-         vboxtunctl \
          VBoxVolInfo \
          vboxvolinfo \
          VirtualBox \
@@ -954,6 +953,12 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Fri Oct 21 2022 Valery Sinelnikov <greh@altlinux.org> 7.0.2-alt1
+- Update to newest version 7.0.2
+
+* Mon Oct 17 2022 Valery Sinelnikov <greh@altlinux.org> 7.0.0-alt1
+- Update to newest version 7.0.0
+
 * Wed Oct 12 2022 Valery Sinelnikov <greh@altlinux.org> 6.1.40-alt1
 - Update to newest version 6.1.40
 
