@@ -6,8 +6,8 @@
 %define version_Fluent 2022-02-28
 
 Name: crow-translate
-Version: 2.10.0
-Release: alt2
+Version: 2.10.1
+Release: alt1
 
 Summary: A Qt GUI for Google, Yandex and Bing translators
 Summary(ru_RU.UTF-8): GUI интерфейс Qt для переводчиков Google, Yandex и Bing
@@ -109,6 +109,9 @@ tar -xf %SOURCE6 -C src/Fluent-icon-theme/ --strip-components=1
 %_iconsdir/hicolor/*/*/crow-translate*
 
 %changelog
+* Tue Oct 25 2022 Evgeny Chuck <koi@altlinux.org> 2.10.1-alt1
+- new version (2.10.1) with rpmgs script
+
 * Sat Sep 17 2022 Evgeny Chuck <koi@altlinux.org> 2.10.0-alt2
 - Fixed desktop category as per policy
 
