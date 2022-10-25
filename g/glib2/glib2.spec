@@ -6,6 +6,7 @@
 %define ver_major 2.74
 %define api_ver 2.0
 %define pcre2_ver 10.32
+%define meson_ver 0.60
 %define gtk_doc_ver 1.32.1
 %define gio_module_dir %_libdir/gio/modules
 
@@ -28,7 +29,7 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -81,7 +82,7 @@ Obsoletes: %name-core < %version
 BuildRequires: libpcre2-devel >= %pcre2_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-python3
-BuildRequires: meson gcc-c++ gtk-doc >= %gtk_doc_ver indent
+BuildRequires: meson >= %meson_ver gcc-c++ gtk-doc >= %gtk_doc_ver indent
 BuildRequires: glibc-kernheaders libdbus-devel
 BuildRequires: libffi-devel zlib-devel libelf-devel
 BuildRequires: pkgconfig(bash-completion)
@@ -252,8 +253,8 @@ install -p -m644 %_sourcedir/gio-compat-2.57.lds gio/compat.lds
     %{?_enable_fam:-Dfam=true} \
     %{?_enable_systemtap:-Dsystemtap=true} \
     %{?_enable_sysprof:-Dsysprof=enabled} \
-    %{?_enable_installed_tests:-Dinstalled_tests=true} \
-    -Diconv='libc'
+    %{?_enable_installed_tests:-Dinstalled_tests=true}
+%nil
 %meson_build
 
 %install
@@ -430,6 +431,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Tue Oct 25 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.1-alt1
+- 2.74.1
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.0-alt1
 - 2.74.0 (ported to PCRE2)
 

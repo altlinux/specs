@@ -33,7 +33,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -50,6 +50,7 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Source5: gtk4-icon-cache.filetrigger
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
+%define meson_ver 0.60
 %define glib_ver 2.66
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
@@ -76,7 +77,7 @@ Requires: librsvg >= %rsvg_ver
 %{?_enable_colord:Requires: colord}
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
-BuildRequires: meson gcc-c++ sassc
+BuildRequires: meson >= %meson_ver gcc-c++ sassc
 BuildRequires: glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libcairo-gobject-devel >= %cairo_ver
@@ -397,6 +398,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Mon Oct 24 2022 Yuri N. Sedunov <aris@altlinux.org> 4.8.2-alt1
+- 4.8.2
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 4.8.1-alt1
 - 4.8.1
 
