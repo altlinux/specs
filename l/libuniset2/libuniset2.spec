@@ -25,7 +25,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.23.1
+Version: 2.24.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -594,6 +594,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Mon Oct 24 2022 Pavel Vainerman <pv@altlinux.ru> 2.24.1-alt1
+- (timers): used steady_clock instead high_resolution_clock (critical)
+
 * Sun Oct 16 2022 Pavel Vainerman <pv@altlinux.ru> 2.23.1-alt1
 - (modbus): supported "stopbits","charsize"
 
