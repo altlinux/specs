@@ -27,7 +27,7 @@
 %define nv_version 390
 %define nv_release 154
 %define nv_minor %nil
-%define pkg_rel alt222
+%define pkg_rel alt223
 %define nv_version_full %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
 %define nv_version_full %{nv_version}.%{nv_release}
@@ -102,6 +102,7 @@ Patch1: alt-fix-build-kernel.patch
 Patch2: alt-ignore-dma-remap.patch
 Patch3: buildfix_kernel_5.19.patch
 Patch4: buildfix_kernel_5.19_uvm.patch
+Patch5: buildfix_kernel_6.0.patch
 
 BuildRequires(pre): rpm-build-ubt
 BuildRequires: rpm-build-kernel rpm-macros-alternatives
@@ -173,6 +174,7 @@ pushd kernel
 if [ -e nvidia-uvm/nvidia-uvm.Kbuild ] ; then
 %patch4 -p1
 fi
+%patch5 -p1
 rm -rf precompiled
 popd
 
@@ -360,6 +362,9 @@ fi
 %endif
 
 %changelog
+* Tue Oct 25 2022 Sergey V Turchin <zerg@altlinux.org> 390.154-alt223
+- add fix against 6.0 kernel
+
 * Mon Aug 29 2022 Sergey V Turchin <zerg@altlinux.org> 390.154-alt222
 - new version
 
