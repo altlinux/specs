@@ -3,7 +3,7 @@
 
 Name: blackbox-terminal
 Version: 0.12.1
-Release: alt1
+Release: alt2
 
 Summary: A beautiful GTK 4 terminal.
 License: GPL-3.0
@@ -11,6 +11,8 @@ Group: Terminals
 
 Url: https://gitlab.gnome.org/raggesilver/blackbox
 Source: %name-%version.tar
+# See https://gitlab.gnome.org/raggesilver/blackbox/-/issues/177
+Patch: %name-2.12.1-alt-fix-selection.patch
 Packager: Vladimir Didenko <cow@altlinux.org>
 
 Provides: xvt
@@ -40,6 +42,7 @@ A beautiful GTK 4 terminal.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -61,6 +64,9 @@ A beautiful GTK 4 terminal.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Mon Oct 24 2022 Vladimir Didenko <cow@altlinux.org> 0.12.1-alt2
+- Fix text selection
+
 * Wed Oct 5 2022 Vladimir Didenko <cow@altlinux.org> 0.12.1-alt1
 - New version
 
