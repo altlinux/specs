@@ -1,32 +1,19 @@
 Name: memtest86+
-Version: 5.31b
-Release: alt2
+Version: 6.00
+Release: alt1
 
 Summary: Memory test for x86 architecture
-License: GPL
+License: GPL-2.0-or-later
 Group: System/Kernel and hardware
 
 Url: http://www.memtest.org
 Source: %url/download/%version/%name-%version.tar.gz
-# reported upstream
-#Patch0:   memtest86+-5.01-no-scp.patch
-# patches to get memtest86+ working with gcc-4.7.2 or later + PCI scan fix
-# these patches were taken from Mageia
-# upstream report containing link to the patches:
-# http://forum.canardpc.com/threads/83443-Memtest86-V5.01-crashes-with-gcc-4.7.2-or-later
-#Patch1:   memtest86+-5.01-no-optimization.patch
-#Patch2:   memtest86+-5.01-compile-fix.patch
-#Patch3:   memtest86+-5.01-array-size-fix.patch
-Patch4:   memtest86+-5.31b-serial-console-fix.patch
-Patch5:   memtest86+-5.31b-gcc-12-fix.patch
+# Source-url: https://github.com/memtest86plus/memtest86plus/archive/refs/tags/v%version.tar.gz
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
 ExclusiveArch: %ix86 x86_64
 Requires(post,preun): bootloader-utils >= 0.3
-BuildRequires: dev86
-
-#set_gcc_version 4.9
 
 %description
 Memtest86 is thorough, standalone memory test for x86 systems. It is
@@ -68,24 +55,25 @@ and avoids the following errors:
 
 %prep
 %setup
-#patch0 -p1 -b .no-scp
-#patch1 -p1 -b .no-optimization
-#patch2 -p1 -b .compile-fix
-#patch3 -p1 -b .array-size-fix
-%patch4 -p1 -b .serial-console-fix
-%patch5 -p1 -b .gcc-12-fix
-
-sed -i -e's,0x5000,0x100000,' memtest.lds
-%ifarch x86_64
-sed -i -e's,$(LD) -s -T memtest.lds,$(LD) -s -T memtest.lds -z max-page-size=0x1000,' Makefile
-%endif
 
 %build
-make
+%ifarch %ix86
+cd build32
+%else
+cd build64
+%endif
+%make_build LD=/usr/bin/ld.bfd
 
 %install
+%ifarch %ix86
+cd build32
+%else
+cd build64
+%endif
 install -pDm644 memtest.bin %buildroot/boot/memtest-%version.bin
-install -pDm644 memtest %buildroot/boot/elf-memtest-%version
+%ifnarch %ix86
+install -pDm644 memtest.efi %buildroot/boot/memtest-%version.efi
+%endif
 mkdir -p %buildroot%_sbindir
 ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 	%buildroot%_sbindir/installmemtest86+
@@ -98,11 +86,18 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 
 %files
 /boot/memtest-%version.bin
-/boot/elf-memtest-%version
+%ifnarch %ix86
+/boot/memtest-%version.efi
+%endif
 %_sbindir/installmemtest86+
-%doc README* FAQ
+%doc README.md
 
 %changelog
+* Tue Oct 25 2022 Anton Midyukov <antohami@altlinux.org> 6.00-alt1
+- new version (6.00) with rpmgs script (Closes: 44133)
+- cleanup spec
+- update license field
+
 * Sat Aug 06 2022 Anton Midyukov <antohami@altlinux.org> 5.31b-alt2
 - NMU: fix build with gcc12
 
