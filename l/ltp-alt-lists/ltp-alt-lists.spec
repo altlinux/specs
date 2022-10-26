@@ -3,8 +3,8 @@
 
 Name: ltp-alt-lists
 Summary: ALT specific testcase and skiplist for LTP
-Version: 14
-Release: alt2
+Version: 15
+Release: alt1
 License: GPL-2.0-only
 Group: Development/Tools
 Url: https://git.altlinux.org/gears/l/ltp-alt-lists.git
@@ -51,6 +51,9 @@ install -p -m644 skiplist-alt-vm %buildroot/usr/lib/ltp/
 /usr/lib/ltp/runtest/kernel-alt-vm
 
 %changelog
+* Wed Oct 26 2022 Vitaly Chikunov <vt@altlinux.org> 15-alt1
+- Skip tests that timeout testing kernel-image-std-debug on armh.
+
 * Tue Oct 11 2022 Vitaly Chikunov <vt@altlinux.org> 14-alt2
 - Remove circular dependency on ltp package.
 
