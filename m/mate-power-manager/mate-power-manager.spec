@@ -2,7 +2,7 @@
 
 Name: mate-power-manager
 Version: 1.26.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: MATE power management service
 License: GPLv3+
@@ -56,6 +56,9 @@ displaying icons and handling user callbacks in an interactive MATE session.
 %_man1dir/mate-power-*.1*
 
 %changelog
+* Wed Oct 26 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
+- update russian translation
+
 * Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
 - 1.26.0
 
