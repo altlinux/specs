@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Python SPNEGO authentication library
@@ -54,6 +54,9 @@ py.test-3 -v
 %python3_sitelibdir/py%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Wed Oct 26 2022 Grigory Ustinov <grenka@altlinux.org> 0.6.1-alt1
+- Automatically updated to 0.6.1.
+
 * Thu Aug 18 2022 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
 - Automatically updated to 0.6.0.
 - Build with check.
