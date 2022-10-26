@@ -1,20 +1,20 @@
-%define sover 2
+%define sover 22
 %define desc FlatBuffers is a cross platform serialization library architected \
 for maximum memory efficiency. It allows you to directly access serialized data \
 without parsing/unpacking it first, while still having great forwards/backwards \
 compatibility.
 
-Name: libflatbuffers
-Version: 2.0.8
+Name: flatbuffers
+Version: 22.10.25
 Release: alt1
 
 Summary: Memory Efficient Serialization Library
 License: APL
 Group: System/Libraries
-Url: https://google.github.io/flatbuffers/
+Url: https://google.github.io/%name/
 
-# https://github.com/google/flatbuffers/archive/v%version/flatbuffers-%version.tar.gz
-Source: flatbuffers-%version.tar
+# https://github.com/google/%name/archive/v%version/%name-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires:  python3-devel
@@ -24,31 +24,31 @@ BuildRequires: cmake ctest gcc-c++
 %description
 %desc
 
-%package -n %name%sover
+%package -n lib%name%sover
 Summary: Memory Efficient Serialization Library
 Group: System/Libraries
 
-%description -n %name%sover
+%description -n lib%name%sover
 %desc
 
-%package devel
+%package  -n lib%name-devel
 Summary: Memory Efficient Serialization Library
 Group: Development/C++
 
-%description devel
+%description -n lib%name-devel
 %desc
 This package contains development part of FlatBuffers.
 
-%package -n python3-module-flatbuffers
+%package -n python3-module-%name
 Summary: Python3 files for %name
 Group: Development/Python3
-Requires: %name%sover = %EVR
+Requires: lib%name%sover = %EVR
 
-%description -n python3-module-flatbuffers
+%description -n python3-module-%name
 This package contains python files for %name.
 
 %prep
-%setup -n flatbuffers-%version
+%setup
 %add_optflags -Wno-class-memaccess -Wno-stringop-overflow
 %ifarch %e2k
 sed -i 's,-Werror -Wextra -Werror=shadow,,' CMakeLists.txt
@@ -84,20 +84,23 @@ popd
     mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir
   )
 
-%files -n %name%sover
-%_libdir/%name.so.*
+%files -n lib%name%sover
+%_libdir/lib%name.so.*
 
-%files devel
+%files -n lib%name-devel
 %_bindir/flatc
-%_includedir/flatbuffers
-%_libdir/cmake/flatbuffers
-%_libdir/%name.so
-%_pkgconfigdir/flatbuffers.pc
+%_includedir/%name
+%_libdir/cmake/%name
+%_libdir/lib%name.so
+%_pkgconfigdir/%name.pc
 
-%files -n python3-module-flatbuffers
+%files -n python3-module-%name
 %python3_sitelibdir/*
 
 %changelog
+* Wed Oct 26 2022 Nazarov Denis <nenderus@altlinux.org> 22.10.25-alt1
+- 22.10.25 released
+
 * Tue Aug 30 2022 Nazarov Denis <nenderus@altlinux.org> 2.0.8-alt1
 - 2.0.8 released
 
