@@ -4,7 +4,7 @@
 
 Name: libvzctl
 Summary: OpenVZ Containers API library
-Version: 7.0.714
+Version: 7.0.717
 Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
@@ -73,6 +73,9 @@ export CFLAGS="%optflags -Wno-error=format-truncation -Wno-error=stringop-trunca
 %_includedir/vzctl
 
 %changelog
+* Wed Oct 26 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.0.717-alt1
+- 7.0.717
+
 * Tue Jun 28 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.0.714-alt1
 - 7.0.714
 
