@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.9.3.0.41.gitcbd4198
+%define module_version	0.9.5.0.7.gitf32f627
 %define module_release	alt1
 
 %define flavour		centos
@@ -63,7 +63,7 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %make_build -C %_usrsrc/linux-%kversion-%flavour modules M=$(pwd)
 
 %install
-install -D -p -m0644 p_lkrg.ko %buildroot%module_dir/p_lkrg.ko
+install -D -p -m0644 lkrg.ko %buildroot%module_dir/lkrg.ko
 
 %check
 # based on %%check of kernel-image-%%flavour.spec
@@ -86,10 +86,10 @@ failmsg="LKRG test failed"
 #define delete_module(name, flags) syscall(__NR_delete_module, name, flags)
 int main()
 {
-	int fd = open("p_lkrg.ko", O_RDONLY);
+	int fd = open("lkrg.ko", O_RDONLY);
 
 	if (fd == -1) {
-		perror("$failmsg p_lkrg.ko");
+		perror("$failmsg lkrg.ko");
 		goto exit;
 	}
 
@@ -131,16 +131,16 @@ int main()
 
 exit:
 	delete_module("fuse", 0);
-	delete_module("p_lkrg", 0);
+	delete_module("lkrg", 0);
 
 	reboot(RB_POWER_OFF);
 	pause();
 }
 __EOF__
 mkdir -p proc
-cp -a %buildroot%module_dir/p_lkrg.ko p_lkrg.ko
+cp -a %buildroot%module_dir/lkrg.ko lkrg.ko
 cp -a /lib/modules/%kversion-%flavour-%krelease/kernel/fs/fuse/fuse.ko fuse.ko
-find init fuse.ko p_lkrg.ko proc -print | cpio -H newc -o | gzip -8n > initrd.img.gz
+find init fuse.ko lkrg.ko proc -print | cpio -H newc -o | gzip -8n > initrd.img.gz
 qemu_arch=%_arch
 qemu_opts=""
 console=ttyS0
@@ -206,11 +206,15 @@ fi
 %files
 %doc README
 %dir %module_dir
-%module_dir/p_lkrg.ko
+%module_dir/lkrg.ko
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Mon Oct 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.5.0.7.gitf32f627-alt1
+- Updated to v0.9.5-7-gf32f627.
+- ud-def: temporary do not build for aarch64.
 
 * Wed Jul 20 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.3.0.41.gitcbd4198-alt1
 - Updated to v0.9.3-41-gcbd4198 (closes: 43005).

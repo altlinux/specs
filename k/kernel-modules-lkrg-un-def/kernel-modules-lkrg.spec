@@ -2,10 +2,10 @@
 %define module_version	0.9.5.0.7.gitf32f627
 %define module_release	alt1
 
-%define flavour		std-def
-%define karch		aarch64 %arm %ix86 x86_64
+%define flavour		un-def
+%define karch		%arm %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires(pre): kernel-headers-modules-un-def
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc

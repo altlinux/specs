@@ -1,5 +1,10 @@
 %define module_name lkrg
-%define module_version 0.9.3.0.41.gitcbd4198
+%define module_version 0.9.5.0.7.gitf32f627
+
+# remove me in the next release
+%ifarch aarch64
+%def_without check
+%endif
 
 Name: kernel-source-lkrg
 Version: %module_version
@@ -121,6 +126,10 @@ fi
 %_presetdir/30-lkrg.preset
 
 %changelog
+* Mon Oct 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.5.0.7.gitf32f627-alt1
+- Updated to v0.9.5-7-gf32f627.
+- Temporally disable %%check for aarch64.
+
 * Wed Jul 20 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.3.0.41.gitcbd4198-alt1
 - Updated to v0.9.3-41-gcbd4198 (closes: 43005).
 
