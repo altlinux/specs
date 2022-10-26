@@ -32,7 +32,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:   	claws-mail
-Version:	4.1.0
+Version:	4.1.1
 Release: 	alt1
 
 Summary:	Claws Mail is a GTK+ based, user-friendly, lightweight, and fast email client.
@@ -766,6 +766,9 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %if_enabled fancy
 %files plugin-fancy
 %_claws_plugins_path/fancy.so
+%dir %_claws_plugins_path/web_extensions/
+%_claws_plugins_path/web_extensions/fancywebextension.so
+%exclude %_claws_plugins_path/web_extensions/*.la
 %endif
 
 %files plugin-fetchinfo
@@ -856,6 +859,10 @@ install -p -m644 src/plugins/litehtml_viewer/litehtml/LICENSE %buildroot%_defaul
 %exclude %_datadir/doc/%name/RELEASE_NOTES
 
 %changelog
+* Wed Oct 26 2022 Mikhail Efremov <sem@altlinux.org> 4.1.1-alt1
+- textviewer.sh: Replaced egrep with grep -E.
+- Updated to 4.1.1.
+
 * Tue Apr 05 2022 Mikhail Efremov <sem@altlinux.org> 4.1.0-alt1
 - Dropped appdata support from spec.
 - Packaged keywordwarner plugin.
