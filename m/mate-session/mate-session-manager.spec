@@ -3,7 +3,7 @@
 
 Name: mate-session
 Version: 1.26.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: MATE Desktop session manager
 License: GPLv2+
@@ -49,6 +49,8 @@ __EOF__
 %install
 %make DESTDIR=%buildroot install
 
+sed -i 's,^Icon=$,Icon=mate-desktop,' %buildroot%_datadir/xsessions/mate.desktop
+
 mkdir -p %buildroot%_sysconfdir/X11/wmsession.d/
 cat << __EOF__ > %buildroot%_sysconfdir/X11/wmsession.d/02Mate
 NAME=Mate
@@ -75,6 +77,9 @@ __EOF__
 %_man1dir/*.1*
 
 %changelog
+* Wed Oct 26 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
+- merged p10 branch
+
 * Fri Aug 06 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
 - 1.26.0
 
