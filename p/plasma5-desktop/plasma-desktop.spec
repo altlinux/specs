@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.25.5
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -37,6 +37,7 @@ Patch16: alt-kicker-custom-btn-img-size.patch
 Patch17: alt-users-use-gost-yescrypt.patch
 Patch18: alt-kxkb-indicator-uppercase.patch
 Patch19: alt-use-background.patch
+Patch20: alt-knetattach-test-unlock-ui.patch
 # Fix bug #42348
 Patch21: alt-re-set-xkb-mappings.patch
 Patch22: alt-i18n.patch
@@ -135,7 +136,7 @@ Common polkit files for %name
 #%patch17 -p1
 %patch18 -p1
 %patch19 -p1
-#
+%patch20 -p1
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
@@ -245,6 +246,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Oct 26 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt2
+- disable knetattach connection test because dialogs blocks ui with new KIO
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt1
 - new version
 
