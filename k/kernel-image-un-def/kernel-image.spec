@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.0
-%define kernel_sublevel		.3
+%define kernel_sublevel	.5
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -613,6 +613,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Wed Oct 26 2022 Kernel Bot <kernelbot@altlinux.org> 1:6.0.5-alt1
+- v6.0.5 (2022-10-26).
+
 * Mon Oct 24 2022 Vitaly Chikunov <vt@altlinux.org> 1:6.0.3-alt1
 - Rebase to v6.0.3 (2022-10-21).
 - Enable AMD ST support for ES8336 (ALT#43224).
