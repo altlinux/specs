@@ -1,7 +1,7 @@
 %def_with check
 
 Name:    vcmmd
-Version: 8.0.5
+Version: 8.0.68
 Release: alt1
 
 Summary: Virtuozzo containers memory management daemon
@@ -37,11 +37,13 @@ Virtuozzo containers memory management daemon
 %patch -p1
 
 %build
-%python3_build
+%__python3 setup.py build --executable="/usr/bin/python3"
 
 %install
 # Local setup.py fails to parse "--root=path" option, only "--root path" variant:
 %__python3 setup.py install --skip-build --root %buildroot --install-scripts %_sbindir
+mv %buildroot/usr/lib %buildroot/usr/lib64
+mkdir %buildroot%_sysconfdir/vz/vcmmd.d/
 
 %if_with check
 %check
@@ -63,6 +65,9 @@ popd
 %config %_tmpfilesdir/vcmmd-tmpfiles.conf
 
 %changelog
+* Wed Oct 26 2022 Andrew A. Vasilyev <andy@altlinux.org> 8.0.68-alt1
+- 8.0.68
+
 * Fri Mar 19 2021 Andrew A. Vasilyev <andy@altlinux.org> 8.0.5-alt1
 - 8.0.5
 
