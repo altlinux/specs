@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.0.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -47,11 +47,11 @@ BuildRequires: gem(will_paginate) >= 3.1.7 gem(will_paginate) < 4
 BuildRequires: gem(ancestry) >= 3.0.7 gem(ancestry) < 5
 BuildRequires: gem(scoped_search) >= 4.1.8 gem(scoped_search) < 5
 BuildRequires: gem(ldap_fluff) >= 0.5.0 gem(ldap_fluff) < 1.0
-BuildRequires: gem(apipie-rails) >= 0.5.19 gem(apipie-rails) < 0.6.0
+BuildRequires: gem(apipie-rails) >= 0.5.19 gem(apipie-rails) < 1
 BuildRequires: gem(apipie-dsl) >= 2.2.6
 BuildRequires: gem(rdoc) >= 0
 BuildRequires: gem(rabl) >= 0.14.2 gem(rabl) < 1
-BuildRequires: gem(oauth) >= 0.5.4 gem(oauth) < 1
+BuildRequires: gem(oauth) >= 0.5.4 gem(oauth) < 2
 BuildRequires: gem(deep_cloneable) >= 3 gem(deep_cloneable) < 4
 BuildRequires: gem(validates_lengths_from_database) >= 0.5 gem(validates_lengths_from_database) < 1
 BuildRequires: gem(friendly_id) >= 5.3.0 gem(friendly_id) < 6
@@ -81,14 +81,14 @@ BuildRequires: gem(dynflow) >= 1.4.4 gem(dynflow) < 2.0.0
 BuildRequires: gem(daemons) >= 0
 BuildRequires: gem(bcrypt) >= 3.1 gem(bcrypt) < 4
 BuildRequires: gem(get_process_mem) >= 0
-BuildRequires: gem(rack-cors) >= 1.0.2 gem(rack-cors) < 2
+BuildRequires: gem(rack-cors) >= 1.0.2 gem(rack-cors) < 3
 BuildRequires: gem(jwt) >= 2.2.1 gem(jwt) < 3
 BuildRequires: gem(graphql) >= 1.8.0 gem(graphql) < 2
 BuildRequires: gem(graphql-batch) >= 0
 BuildRequires: gem(fog-aws) >= 3.6.2 gem(fog-aws) < 4
 BuildRequires: gem(fog-ovirt) >= 2.0.1 gem(fog-ovirt) < 3
 BuildRequires: gem(fog-libvirt) >= 0.9.0
-BuildRequires: gem(ruby-libvirt) >= 0.5 gem(ruby-libvirt) < 1
+BuildRequires: gem(ruby-libvirt) >= 0.8
 BuildRequires: gem(fog-vsphere) >= 3.5.0 gem(fog-vsphere) < 4.0
 BuildRequires: gem(rbvmomi) >= 2.0 gem(rbvmomi) < 3
 BuildRequires: gem(logging-journald) >= 2.0 gem(logging-journald) < 3
@@ -102,7 +102,7 @@ BuildRequires: gem(sidekiq) >= 5.0 gem(sidekiq) < 7
 BuildRequires: gem(gitlab-sidekiq-fetcher) >= 0
 BuildRequires: gem(sd_notify) >= 0.1 gem(sd_notify) < 1
 BuildRequires: gem(rack-openid) >= 1.3 gem(rack-openid) < 2
-BuildRequires: gem(prometheus-client) >= 1.0 gem(prometheus-client) < 3
+BuildRequires: gem(prometheus-client) >= 1.0 gem(prometheus-client) < 5
 BuildRequires: gem(statsd-instrument) >= 3.0 gem(statsd-instrument) < 4
 BuildRequires: gem(maruku) >= 0.7 gem(maruku) < 1
 BuildRequires: gem(gettext) >= 3.2.1 gem(gettext) < 4.0.0
@@ -138,8 +138,8 @@ BuildRequires: gem(minitest) >= 5.1 gem(minitest) < 6
 BuildRequires: gem(minitest-retry) >= 0
 BuildRequires: gem(minitest-spec-rails) >= 6.0 gem(minitest-spec-rails) < 7
 BuildRequires: gem(ci_reporter_minitest) >= 0
-BuildRequires: gem(capybara) >= 3.0 gem(capybara) < 3.32.1
-BuildRequires: gem(show_me_the_cookies) >= 5.0 gem(show_me_the_cookies) < 6
+BuildRequires: gem(capybara) >= 3.0 gem(capybara) < 4
+BuildRequires: gem(show_me_the_cookies) >= 5.0 gem(show_me_the_cookies) < 7
 BuildRequires: gem(database_cleaner) >= 1.3 gem(database_cleaner) < 3
 BuildRequires: gem(launchy) >= 2.4 gem(launchy) < 3
 BuildRequires: gem(factory_bot_rails) >= 5.0 gem(factory_bot_rails) < 7
@@ -158,14 +158,14 @@ BuildRequires: gem(webmock) >= 0 gem(webmock) < 4
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %_libexecdir/%name/**/*
 %ruby_use_gem_dependency statsd-instrument >= 3.0,statsd-instrument < 4
-%ruby_use_gem_dependency rack-cors >= 1.0,rack-cors < 2
+%ruby_use_gem_dependency rack-cors >= 2.0.0.rc1,rack-cors < 3
 %ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
 %ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
 %ruby_use_gem_dependency jwt >= 2.2.1,jwt < 3
 %ruby_use_gem_dependency audited >= 5.0.1,audited < 6
 %ruby_use_gem_dependency net-ssh >= 6.1.0,net-ssh < 7
 %ruby_use_gem_dependency rails >= 6.1.3.2,rails < 7
-%ruby_use_gem_dependency prometheus-client >= 2.0.0,prometheus-client < 3
+%ruby_use_gem_dependency prometheus-client >= 4.0.0,prometheus-client < 5
 %ruby_use_gem_dependency puma >= 5.2.2,puma < 6
 %ruby_use_gem_dependency graphql >= 1.9.6,graphql < 2
 %ruby_use_gem_dependency fog-core >= 2.2.4,fog-core < 3
@@ -177,6 +177,10 @@ BuildRequires: gem(webmock) >= 0 gem(webmock) < 4
 %ruby_use_gem_dependency factory_bot_rails >= 6.2.0,factory_bot_rails < 7
 %ruby_use_gem_dependency shoulda-matchers >= 4.5.1,shoulda-matchers < 5
 %ruby_use_gem_dependency shoulda-context >= 2.0.0,shoulda-context < 3
+%ruby_use_gem_dependency capybara >= 3.37.1,capybara < 4
+%ruby_use_gem_dependency apipie-rails >= 0.8.2,apipie-rails < 1
+%ruby_use_gem_dependency oauth >= 1.1.0.1,oauth < 2
+%ruby_use_gem_dependency show_me_the_cookies >= 6.0.0,show_me_the_cookies < 7
 %ruby_use_gem_dependency rabl >= 0.15,rabl < 1
 %ruby_use_gem_dependency sidekiq >= 6.0.0,sidekiq < 7
 Requires:      gem(rails) >= 6.0.3.1 gem(rails) < 7
@@ -186,11 +190,11 @@ Requires:      gem(will_paginate) >= 3.1.7 gem(will_paginate) < 4
 Requires:      gem(ancestry) >= 3.0.7 gem(ancestry) < 5
 Requires:      gem(scoped_search) >= 4.1.8 gem(scoped_search) < 5
 Requires:      gem(ldap_fluff) >= 0.5.0 gem(ldap_fluff) < 1.0
-Requires:      gem(apipie-rails) >= 0.5.19 gem(apipie-rails) < 0.6.0
+Requires:      gem(apipie-rails) >= 0.5.19 gem(apipie-rails) < 1
 Requires:      gem(apipie-dsl) >= 2.2.6
 Requires:      gem(rdoc) >= 0 gem(rdoc) < 7
 Requires:      gem(rabl) >= 0.14.2 gem(rabl) < 1
-Requires:      gem(oauth) >= 0.5.4 gem(oauth) < 1
+Requires:      gem(oauth) >= 0.5.4 gem(oauth) < 2
 Requires:      gem(deep_cloneable) >= 3 gem(deep_cloneable) < 4
 Requires:      gem(validates_lengths_from_database) >= 0.5 gem(validates_lengths_from_database) < 1
 Requires:      gem(friendly_id) >= 5.3.0 gem(friendly_id) < 6
@@ -220,14 +224,14 @@ Requires:      gem(dynflow) >= 1.4.4 gem(dynflow) < 2.0.0
 Requires:      gem(daemons) >= 0
 Requires:      gem(bcrypt) >= 3.1 gem(bcrypt) < 4
 Requires:      gem(get_process_mem) >= 0
-Requires:      gem(rack-cors) >= 1.0.2 gem(rack-cors) < 2
+Requires:      gem(rack-cors) >= 1.0.2 gem(rack-cors) < 3
 Requires:      gem(jwt) >= 2.2.1 gem(jwt) < 3
 Requires:      gem(graphql) >= 1.8.0 gem(graphql) < 2
 Requires:      gem(graphql-batch) >= 0
 Requires:      gem(fog-aws) >= 3.6.2 gem(fog-aws) < 4
 Requires:      gem(fog-ovirt) >= 2.0.1 gem(fog-ovirt) < 3
 Requires:      gem(fog-libvirt) >= 0.9.0
-Requires:      gem(ruby-libvirt) >= 0.5 gem(ruby-libvirt) < 1
+Requires:      gem(ruby-libvirt) >= 0.8
 Requires:      gem(fog-vsphere) >= 3.5.0 gem(fog-vsphere) < 4.0
 Requires:      gem(rbvmomi) >= 2.0 gem(rbvmomi) < 3
 Requires:      gem(logging-journald) >= 2.0 gem(logging-journald) < 3
@@ -241,7 +245,7 @@ Requires:      gem(sidekiq) >= 5.0 gem(sidekiq) < 7
 Requires:      gem(gitlab-sidekiq-fetcher) >= 0
 Requires:      gem(sd_notify) >= 0.1 gem(sd_notify) < 1
 Requires:      gem(rack-openid) >= 1.3 gem(rack-openid) < 2
-Requires:      gem(prometheus-client) >= 1.0 gem(prometheus-client) < 3
+Requires:      gem(prometheus-client) >= 1.0 gem(prometheus-client) < 5
 Requires:      gem(statsd-instrument) >= 3.0 gem(statsd-instrument) < 4
 Requires:      gem(maruku) >= 0.7 gem(maruku) < 1
 Requires:      gem(gettext) >= 3.2.1 gem(gettext) < 4.0.0
@@ -278,8 +282,8 @@ Requires:      gem(minitest) >= 5.1 gem(minitest) < 6
 Requires:      gem(minitest-retry) >= 0.0 gem(minitest-retry) < 1
 Requires:      gem(minitest-spec-rails) >= 6.0 gem(minitest-spec-rails) < 7
 Requires:      gem(ci_reporter_minitest) >= 0
-Requires:      gem(capybara) >= 3.0 gem(capybara) < 3.32.1
-Requires:      gem(show_me_the_cookies) >= 5.0 gem(show_me_the_cookies) < 6
+Requires:      gem(capybara) >= 3.0 gem(capybara) < 4
+Requires:      gem(show_me_the_cookies) >= 5.0 gem(show_me_the_cookies) < 7
 Requires:      gem(database_cleaner) >= 1.3 gem(database_cleaner) < 3
 Requires:      gem(launchy) >= 2.4 gem(launchy) < 3
 Requires:      gem(factory_bot_rails) >= 5.0 gem(factory_bot_rails) < 7
@@ -458,6 +462,9 @@ railsctl cleanup %name
 
 
 %changelog
+* Tue Oct 18 2022 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1.2
+- !fix deps to novel gems
+
 * Fri Apr 22 2022 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1.1
 - !fix deps
 

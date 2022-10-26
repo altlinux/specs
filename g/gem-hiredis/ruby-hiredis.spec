@@ -1,7 +1,7 @@
 %define        gemname hiredis
 
 Name:          gem-hiredis
-Version:       0.6.3.1
+Version:       0.6.3.2
 Release:       alt0.1
 Summary:       Ruby wrapper for hiredis
 License:       BSD-3-Clause
@@ -14,20 +14,19 @@ Source:        %name-%version.tar
 Patch:         sysbuild.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libhiredis-devel
-BuildRequires: gem(rake) >= 10.0 gem(rake) < 14
+BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rake-compiler) >= 0.7.1 gem(rake-compiler) < 2
 BuildRequires: gem(minitest) >= 5.5.1 gem(minitest) < 6
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
+%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
 %ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
-%ruby_use_gem_dependency minitest >= 5.15,minitest < 6
 Obsoletes:     ruby-hiredis < %EVR
 Provides:      ruby-hiredis = %EVR
-Provides:      gem(hiredis) = 0.6.3.1
+Provides:      gem(hiredis) = 0.6.3
 
-%ruby_use_gem_version hiredis:0.6.3.1
+%ruby_use_gem_version hiredis:0.6.3.2
 
 %description
 Ruby extension that wraps hiredis. Both the synchronous connection API and a
@@ -36,14 +35,14 @@ parsing multi bulk replies.
 
 
 %package       -n gem-hiredis-doc
-Version:       0.6.3.1
+Version:       0.6.3.2
 Release:       alt0.1
 Summary:       Ruby wrapper for hiredis documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета hiredis
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(hiredis) = 0.6.3.1
+Requires:      gem(hiredis) = 0.6.3.2
 
 %description   -n gem-hiredis-doc
 Ruby wrapper for hiredis documentation files.
@@ -57,15 +56,15 @@ parsing multi bulk replies.
 
 
 %package       -n gem-hiredis-devel
-Version:       0.6.3.1
+Version:       0.6.3.2
 Release:       alt0.1
 Summary:       Ruby wrapper for hiredis development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета hiredis
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(hiredis) = 0.6.3.1
-Requires:      gem(rake) >= 10.0 gem(rake) < 14
+Requires:      gem(hiredis) = 0.6.3.2
+Requires:      gem(rake) >= 0
 Requires:      gem(rake-compiler) >= 0.7.1 gem(rake-compiler) < 2
 Requires:      gem(minitest) >= 5.5.1 gem(minitest) < 6
 Requires:      libhiredis-devel
@@ -110,6 +109,9 @@ parsing multi bulk replies.
 
 
 %changelog
+* Wed Sep 21 2022 Pavel Skrylev <majioa@altlinux.org> 0.6.3.2-alt0.1
+- ^ 0.6.3[1] -> 0.6.3[2]
+
 * Wed Apr 06 2022 Pavel Skrylev <majioa@altlinux.org> 0.6.3.1-alt0.1
 - ^ 0.6.3 -> 0.6.3[1]
 

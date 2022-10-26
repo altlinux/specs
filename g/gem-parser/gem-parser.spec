@@ -1,8 +1,8 @@
 %define        gemname parser
 
 Name:          gem-parser
-Version:       3.1.2.0
-Release:       alt1.1
+Version:       3.1.2.1
+Release:       alt1
 Summary:       A Ruby parser
 License:       MIT
 Group:         Development/Ruby
@@ -14,27 +14,27 @@ BuildArch:     noarch
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ragel6
-BuildRequires: racc
+%if_with check
 BuildRequires: gem(ast) >= 2.4.1 gem(ast) < 2.5
 BuildRequires: gem(bundler) >= 1.15 gem(bundler) < 3
 BuildRequires: gem(rake) >= 13.0.1 gem(rake) < 14
-BuildRequires: gem(racc) >= 1.4.15 gem(racc) < 2
+BuildRequires: gem(racc) >= 1.4.15
 BuildRequires: gem(cliver) >= 0.3.2 gem(cliver) < 0.4
 BuildRequires: gem(yard) >= 0
 BuildRequires: gem(kramdown) >= 0
 BuildRequires: gem(minitest) >= 5.10 gem(minitest) < 6
 BuildRequires: gem(simplecov) >= 0.15.1 gem(simplecov) < 1
 BuildRequires: gem(gauntlet) >= 0
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency racc >= 1.4.15,racc < 2
 %ruby_use_gem_dependency rake >= 13.0.1,rake < 14
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
+%ruby_use_gem_dependency racc >= 1.6,racc < 2
 Requires:      gem(ast) >= 2.4.1 gem(ast) < 2.5
-Provides:      gem(parser) = 3.1.2.0
+Provides:      gem(parser) = 3.1.2.1
 
-%ruby_on_build_rake_tasks build
 
 %description
 Parser is a production-ready Ruby parser written in pure Ruby. It recognizes as
@@ -45,14 +45,14 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 
 %package       -n ruby-parse
-Version:       3.1.2.0
-Release:       alt1.1
+Version:       3.1.2.1
+Release:       alt1
 Summary:       A Ruby parser executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета parser
-Group:         Development/Ruby
+Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(parser) = 3.1.2.0
+Requires:      gem(parser) = 3.1.2.1
 
 %description   -n ruby-parse
 A Ruby parser executable(s).
@@ -68,14 +68,14 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 
 %package       -n gem-parser-doc
-Version:       3.1.2.0
-Release:       alt1.1
+Version:       3.1.2.1
+Release:       alt1
 Summary:       A Ruby parser documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета parser
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(parser) = 3.1.2.0
+Requires:      gem(parser) = 3.1.2.1
 
 %description   -n gem-parser-doc
 A Ruby parser documentation files.
@@ -91,17 +91,17 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 
 %package       -n gem-parser-devel
-Version:       3.1.2.0
-Release:       alt1.1
+Version:       3.1.2.1
+Release:       alt1
 Summary:       A Ruby parser development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета parser
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(parser) = 3.1.2.0
+Requires:      gem(parser) = 3.1.2.1
 Requires:      gem(bundler) >= 1.15 gem(bundler) < 3
 Requires:      gem(rake) >= 13.0.1 gem(rake) < 14
-Requires:      gem(racc) >= 1.4.15 gem(racc) < 2
+Requires:      gem(racc) >= 1.4.15
 Requires:      gem(cliver) >= 0.3.2 gem(cliver) < 0.4
 Requires:      gem(yard) >= 0
 Requires:      gem(kramdown) >= 0
@@ -151,6 +151,9 @@ You can also use unparser to produce equivalent source code from Parser's ASTs.
 
 
 %changelog
+* Tue Oct 11 2022 Pavel Skrylev <majioa@altlinux.org> 3.1.2.1-alt1
+- ^ 3.1.2.0 -> 3.1.2.1
+
 * Fri Jul 08 2022 Pavel Skrylev <majioa@altlinux.org> 3.1.2.0-alt1.1
 - !fix dep to ragel6, racc
 

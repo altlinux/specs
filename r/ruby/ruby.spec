@@ -7,7 +7,7 @@
 %define        ridir %_datadir/ri
 %define        vendordir %libdir/vendor_%name
 %define        lname lib%name
-%define        _version 3.1.1
+%define        _version 3.1.2
 
 Name:          ruby
 Version:       %_version
@@ -28,7 +28,7 @@ Patch1:        use_system_dirs.patch
 Patch2:        block_install_gems.patch
 Patch3:        single_instantiating.patch
 Patch4:        support_multiple_gem_trees.patch
-BuildRequires(pre): rpm-build-ruby >= 1:1.0.0
+BuildRequires(pre): rpm-build-ruby >= 1:1.0.0-alt1
 BuildRequires(pre): rpm-macros-valgrind
 BuildRequires: /usr/bin/setup.rb
 BuildRequires: doxygen
@@ -233,13 +233,13 @@ on different arches.
 
 %package       -n gem
 Epoch:         2
-Version:       3.1.6
-Release:       alt1.5
+Version:       3.3.7
+Release:       alt1
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
 Requires:      %name-stdlibs = %_version
-Provides:      %{name}gems = 3.1.2
+Provides:      %{name}gems = %version
 Provides:      %name-tools
 Obsoletes:     %{name}gems
 Obsoletes:     %name-tools
@@ -255,6 +255,7 @@ Version:       1.1.0
 Release:       alt1
 Summary:       rpm macros for Ruby packages
 Group:         Development/Ruby
+BuildArch:     noarch
 
 %description   -n rpm-macros-ruby
 rpm macros for Ruby packages.
@@ -484,6 +485,13 @@ install -D -p -m 0644 %SOURCE4 %buildroot%_rpmmacrosdir/ruby.env
 
 
 %changelog
+* Wed Sep 21 2022 Pavel Skrylev <majioa@altlinux.org> 3.1.2-alt1
+- ^ 3.1.1 -> 3.1.2
+- ! fix call to irb/erb (closes #43110)
+- ! fix CVEs
+ + CVE-2022-28738: Double free in Regexp compilation
+ + CVE-2022-28739: Buffer overrun in String-to-Float conversion
+
 * Sat Jul 02 2022 Pavel Skrylev <majioa@altlinux.org> 3.1.1-alt1
 - ^ 2.7.6 -> 3.1.1
 - *split lib64 and lib folders for side and gems using system folder division

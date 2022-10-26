@@ -1,8 +1,8 @@
 %define        gemname ffi-yajl
 
 Name:          gem-ffi-yajl
-Version:       2.4.0.1
-Release:       alt1
+Version:       2.4.0.2
+Release:       alt0.1
 Summary:       ffi-yajl is a Ruby adapter for the yajl JSON parser/generator library
 License:       MIT
 Group:         Development/Ruby
@@ -13,16 +13,16 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 Patch:         use-system-yajl-without-wrapper.patch
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(libyajl2) >= 1.2
 BuildRequires: libyajl-devel
+BuildRequires: gem(libyajl2) >= 1.2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_version ffi-yajl:2.4.0.1
+%ruby_use_gem_version ffi-yajl:2.4.0.2
 Requires:      gem(libyajl2) >= 1.2
 Obsoletes:     ruby-ffi-yajl < %EVR
 Provides:      ruby-ffi-yajl = %EVR
-Provides:      gem(ffi-yajl) = 2.4.0.1
+Provides:      gem(ffi-yajl) = 2.4.0.2
 
 
 %description
@@ -33,14 +33,14 @@ as possible while providing good performance where possible.
 
 
 %package       -n ffi-yajl-bench
-Version:       2.4.0.1
-Release:       alt1
+Version:       2.4.0.2
+Release:       alt0.1
 Summary:       ffi-yajl is a Ruby adapter for the yajl JSON parser/generator library executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета ffi-yajl
 Group:         Development/Other
 BuildArch:     noarch
 
-Requires:      gem(ffi-yajl) = 2.4.0.1
+Requires:      gem(ffi-yajl) = 2.4.0.2
 
 %description   -n ffi-yajl-bench
 ffi-yajl is a Ruby adapter for the yajl JSON parser/generator library
@@ -56,14 +56,14 @@ as possible while providing good performance where possible.
 
 
 %package       -n gem-ffi-yajl-doc
-Version:       2.4.0.1
-Release:       alt1
+Version:       2.4.0.2
+Release:       alt0.1
 Summary:       ffi-yajl is a Ruby adapter for the yajl JSON parser/generator library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ffi-yajl
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(ffi-yajl) = 2.4.0.1
+Requires:      gem(ffi-yajl) = 2.4.0.2
 
 %description   -n gem-ffi-yajl-doc
 ffi-yajl is a Ruby adapter for the yajl JSON parser/generator library
@@ -79,14 +79,14 @@ as possible while providing good performance where possible.
 
 
 %package       -n gem-ffi-yajl-devel
-Version:       2.4.0.1
-Release:       alt1
+Version:       2.4.0.2
+Release:       alt0.1
 Summary:       ffi-yajl is a Ruby adapter for the yajl JSON parser/generator library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ffi-yajl
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(ffi-yajl) = 2.4.0.1
+Requires:      gem(ffi-yajl) = 2.4.0.2
 Requires:      libyajl-devel
 
 %description   -n gem-ffi-yajl-devel
@@ -133,8 +133,11 @@ as possible while providing good performance where possible.
 
 
 %changelog
+* Wed Sep 21 2022 Pavel Skrylev <majioa@altlinux.org> 2.4.0.2-alt0.1
+- ^ 2.4.0[1] -> 2.4.0[2]
+
 * Fri Sep 03 2021 Pavel Skrylev <majioa@altlinux.org> 2.4.0.1-alt1
-- ^ 2.4.0 -> 2.4.0.1
+- ^ 2.4.0 -> 2.4.0[1]
 
 * Sat Apr 24 2021 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt1
 - ^ 2.3.3 -> 2.4.0

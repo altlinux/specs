@@ -2,7 +2,7 @@
 
 Name:          gem-unicorn
 Version:       6.1.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Unicorn: Rack HTTP server for fast clients and Unix
 License:       GPL-2.0+ or Ruby-1.8
 Group:         System/Servers
@@ -11,6 +11,7 @@ Vcs:           https://bogomips.org/unicorn.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
+Patch:         patch.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: ragel6
 BuildRequires: gem(rack) >= 0
@@ -24,6 +25,7 @@ Requires:      gem(kgio) >= 2.6 gem(kgio) < 3
 Requires:      gem(raindrops) >= 0.7 gem(raindrops) < 1
 Provides:      gem(unicorn) = 6.1.0
 
+%ruby_on_build_rake_tasks build
 
 %description
 Unicorn is an HTTP server for Rack applications designed to only serve fast
@@ -35,7 +37,7 @@ response in between Unicorn and slow clients.
 
 %package       -n unicorn
 Version:       6.1.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Unicorn: Rack HTTP server for fast clients and Unix executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета unicorn
 Group:         Development/Ruby
@@ -59,7 +61,7 @@ response in between Unicorn and slow clients.
 
 %package       -n gem-unicorn-doc
 Version:       6.1.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Unicorn: Rack HTTP server for fast clients and Unix documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета unicorn
 Group:         Development/Documentation
@@ -83,7 +85,7 @@ response in between Unicorn and slow clients.
 
 %package       -n gem-unicorn-devel
 Version:       6.1.0
-Release:       alt1.1
+Release:       alt2
 Summary:       Unicorn: Rack HTTP server for fast clients and Unix development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета unicorn
 Group:         Development/Ruby
@@ -110,6 +112,7 @@ response in between Unicorn and slow clients.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %ruby_build
@@ -130,6 +133,8 @@ response in between Unicorn and slow clients.
 %doc README
 %_bindir/unicorn
 %_bindir/unicorn_rails
+%_mandir/unicorn.1.xz
+%_mandir/unicorn_rails.1.xz
 
 %files         -n gem-unicorn-doc
 %doc README
@@ -141,6 +146,9 @@ response in between Unicorn and slow clients.
 
 
 %changelog
+* Thu Sep 22 2022 Pavel Skrylev <majioa@altlinux.org> 6.1.0-alt2
+- !fix rakefile to build a ragel task (closes #43835)
+
 * Mon Jul 11 2022 Pavel Skrylev <majioa@altlinux.org> 6.1.0-alt1.1
 - !fix dep to ragel6
 
@@ -148,7 +156,7 @@ response in between Unicorn and slow clients.
 - ^ 6.0.0 -> 6.1.0
 
 * Sat Apr 24 2021 Pavel Skrylev <majioa@altlinux.org> 6.0.0-alt1
-- new version 6.0.0
+- ^ 5.5.4 -> 6.0.0
 
 * Tue Mar 31 2020 Pavel Skrylev <majioa@altlinux.org> 5.5.4-alt1
 - ^ 5.5.0 -> 5.5.4

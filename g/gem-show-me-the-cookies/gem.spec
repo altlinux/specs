@@ -1,7 +1,7 @@
 %define        gemname show_me_the_cookies
 
 Name:          gem-show-me-the-cookies
-Version:       5.0.1
+Version:       6.0.0
 Release:       alt1
 Summary:       Cookie manipulation for Capybara drivers
 License:       MIT
@@ -17,8 +17,9 @@ BuildRequires: gem(capybara) >= 2 gem(capybara) < 4
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_alias_names show_me_the_cookies,show-me-the-cookies
 Requires:      gem(capybara) >= 2 gem(capybara) < 4
-Provides:      gem(show_me_the_cookies) = 5.0.1
+Provides:      gem(show_me_the_cookies) = 6.0.0
 
 
 %description
@@ -26,14 +27,14 @@ Cookie manipulation for Capybara drivers -- viewing, deleting, ...
 
 
 %package       -n gem-show-me-the-cookies-doc
-Version:       5.0.1
+Version:       6.0.0
 Release:       alt1
 Summary:       Cookie manipulation for Capybara drivers documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета show_me_the_cookies
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(show_me_the_cookies) = 5.0.1
+Requires:      gem(show_me_the_cookies) = 6.0.0
 
 %description   -n gem-show-me-the-cookies-doc
 Cookie manipulation for Capybara drivers documentation files.
@@ -45,14 +46,14 @@ Cookie manipulation for Capybara drivers -- viewing, deleting, ...
 
 
 %package       -n gem-show-me-the-cookies-devel
-Version:       5.0.1
+Version:       6.0.0
 Release:       alt1
 Summary:       Cookie manipulation for Capybara drivers development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета show_me_the_cookies
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(show_me_the_cookies) = 5.0.1
+Requires:      gem(show_me_the_cookies) = 6.0.0
 
 %description   -n gem-show-me-the-cookies-devel
 Cookie manipulation for Capybara drivers development package.
@@ -89,5 +90,8 @@ Cookie manipulation for Capybara drivers -- viewing, deleting, ...
 
 
 %changelog
+* Thu Sep 15 2022 Pavel Skrylev <majioa@altlinux.org> 6.0.0-alt1
+- ^ 5.0.1 -> 6.0.0
+
 * Wed Jun 23 2021 Pavel Skrylev <majioa@altlinux.org> 5.0.1-alt1
 - + packaged gem with Ruby Policy 2.0

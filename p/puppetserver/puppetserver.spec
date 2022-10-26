@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:       puppetserver
-Version:    6.13.0
-Release:    alt3.1
+Version:    6.20.0
+Release:    alt1
 Summary:    Server automation framework and application
 License:    Apache-2.0
 Group:      Other
@@ -33,7 +33,6 @@ Requires: gem-fast-gettext
 Requires: gem-gettext
 Requires: gem-semantic-puppet
 Requires: gem-concurrent-ruby >= 1.1.6-alt1.1
-Conflicts: gem-oj
 
 %description
 Puppet Server is the next-generation application for managing Puppet agents.
@@ -172,6 +171,11 @@ fi
 %_sysconfdir/default/%name
 
 %changelog
+* Wed Sep 21 2022 Pavel Skrylev <majioa@altlinux.org> 6.20.0-alt1
+- ^ 6.13.0 -> 6.20.0
+- - remove conflict to gem-oj
+- ! fix alt patch to conform ruby new style
+
 * Tue Feb 09 2021 Pavel Skrylev <majioa@altlinux.org> 6.13.0-alt3.1
 - ! keeping sysconfig data from an old releases
 

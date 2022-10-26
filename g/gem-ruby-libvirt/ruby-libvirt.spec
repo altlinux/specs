@@ -2,7 +2,7 @@
 
 Name:          gem-ruby-libvirt
 Version:       0.8.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby bindings for libvirt
 License:       LGPL-2.1-or-later
 Group:         Development/Ruby
@@ -13,6 +13,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libvirt-devel >= 0.4.0
+BuildRequires: libruby-devel
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -29,7 +30,7 @@ The module Libvirt provides bindings to libvirt.
 
 %package       -n gem-ruby-libvirt-doc
 Version:       0.8.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby bindings for libvirt documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета ruby-libvirt
 Group:         Development/Documentation
@@ -50,13 +51,15 @@ The module Libvirt provides bindings to libvirt.
 
 %package       -n gem-ruby-libvirt-devel
 Version:       0.8.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby bindings for libvirt development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета ruby-libvirt
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(ruby-libvirt) = 0.8.0
+Requires:      libvirt-devel >= 0.4.0
+Requires:      libruby-devel
 
 %description   -n gem-ruby-libvirt-devel
 Ruby bindings for libvirt development package.
@@ -95,6 +98,9 @@ The module Libvirt provides bindings to libvirt.
 
 
 %changelog
+* Thu Sep 22 2022 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1.1
+- ! add lost dep for devel package
+
 * Tue Mar 22 2022 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1
 - ^ 0.7.1 -> 0.8.0
 

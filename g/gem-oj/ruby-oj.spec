@@ -1,7 +1,7 @@
 %define        gemname oj
 
 Name:          gem-oj
-Version:       3.13.11
+Version:       3.13.21
 Release:       alt1
 Summary:       A fast JSON parser and Object marshaller as a Ruby gem
 License:       MIT
@@ -15,14 +15,12 @@ BuildRequires(pre): rpm-build-ruby
 BuildRequires: gem(rake-compiler) >= 0.9 gem(rake-compiler) < 2
 BuildRequires: gem(minitest) >= 5 gem(minitest) < 6
 BuildRequires: gem(test-unit) >= 3.0 gem(test-unit) < 4
-BuildRequires: gem(wwtd) >= 0 gem(wwtd) < 2
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency wwtd >= 1.4.1,wwtd < 2
 Obsoletes:     ruby-oj < %EVR
 Provides:      ruby-oj = %EVR
-Provides:      gem(oj) = 3.13.11
+Provides:      gem(oj) = 3.13.21
 
 
 %description
@@ -31,14 +29,14 @@ also provides additional optimization options.
 
 
 %package       -n gem-oj-doc
-Version:       3.13.11
+Version:       3.13.21
 Release:       alt1
 Summary:       A fast JSON parser and Object marshaller as a Ruby gem documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета oj
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(oj) = 3.13.11
+Requires:      gem(oj) = 3.13.21
 
 %description   -n gem-oj-doc
 A fast JSON parser and Object marshaller as a Ruby gem documentation
@@ -52,18 +50,17 @@ also provides additional optimization options.
 
 
 %package       -n gem-oj-devel
-Version:       3.13.11
+Version:       3.13.21
 Release:       alt1
 Summary:       A fast JSON parser and Object marshaller as a Ruby gem development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета oj
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(oj) = 3.13.11
+Requires:      gem(oj) = 3.13.21
 Requires:      gem(rake-compiler) >= 0.9 gem(rake-compiler) < 2
 Requires:      gem(minitest) >= 5 gem(minitest) < 6
 Requires:      gem(test-unit) >= 3.0 gem(test-unit) < 4
-Requires:      gem(wwtd) >= 0 gem(wwtd) < 2
 
 %description   -n gem-oj-devel
 A fast JSON parser and Object marshaller as a Ruby gem development
@@ -104,6 +101,9 @@ also provides additional optimization options.
 
 
 %changelog
+* Wed Sep 21 2022 Pavel Skrylev <majioa@altlinux.org> 3.13.21-alt1
+- ^ 3.13.11 -> 3.13.21
+
 * Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 3.13.11-alt1
 - ^ 3.11.5 -> 3.13.11
 

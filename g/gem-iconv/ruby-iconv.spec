@@ -1,8 +1,8 @@
-%define        pkgname iconv
+%define        gemname iconv
 
-Name:          gem-%pkgname
-Version:       1.0.8
-Release:       alt2
+Name:          gem-iconv
+Version:       1.0.8.1
+Release:       alt0.1
 Summary:       iconv wrapper, used to be ext/iconv
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -15,25 +15,35 @@ BuildRequires(pre): rpm-build-ruby
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Obsoletes:     ruby-%pkgname < %EVR
-Provides:      ruby-%pkgname = %EVR
+Obsoletes:     ruby-iconv < %EVR
+Provides:      ruby-iconv = %EVR
+Provides:      gem(iconv) = 1.0.8.1
+
+%ruby_use_gem_version iconv:1.0.8.1
 
 %description
 Iconv is a wrapper class for the UNIX 95 iconv() function family, which
 translates string between various encoding systems.
 
 
-%package       doc
-Summary:       Documentation files for %gemname gem
-Summary(ru_RU.UTF-8): Файлы сведений для самоцвета %gemname
+%package       -n gem-iconv-doc
+Version:       1.0.8.1
+Release:       alt0.1
+Summary:       iconv wrapper, used to be ext/iconv documentation files
+Summary(ru_RU.UTF-8): Файлы сведений для самоцвета iconv
 Group:         Development/Documentation
 BuildArch:     noarch
 
-%description   doc
-Documentation files for %gemname gem.
+Requires:      gem(iconv) = 1.0.8.1
 
-%description   doc -l ru_RU.UTF8
-Файлы сведений для самоцвета %gemname.
+%description   -n gem-iconv-doc
+iconv wrapper, used to be ext/iconv documentation files.
+
+Iconv is a wrapper class for the UNIX 95 iconv() function family, which
+translates string between various encoding systems.
+
+%description   -n gem-iconv-doc -l ru_RU.UTF-8
+Файлы сведений для самоцвета iconv.
 
 
 %prep
@@ -49,15 +59,20 @@ Documentation files for %gemname gem.
 %ruby_test
 
 %files
-%doc README*
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
-%files         doc
+%files         -n gem-iconv-doc
+%doc README.md
 %ruby_gemdocdir
 
+
 %changelog
+* Wed Sep 21 2022 Pavel Skrylev <majioa@altlinux.org> 1.0.8.1-alt0.1
+- ^ 1.0.8 -> 1.0.8[1]
+
 * Wed Apr 01 2020 Pavel Skrylev <majioa@altlinux.org> 1.0.8-alt2
 - ! spec tags
 

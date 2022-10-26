@@ -1,6 +1,6 @@
 Name:          ruby-gnome2
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby bindings for GNOME
 License:       LGPL-2.1+
 Group:         Development/Ruby
@@ -58,7 +58,30 @@ BuildRequires: gst-plugins-devel
 BuildRequires: gcc-c++
 BuildRequires: libbrotli-devel
 BuildRequires: gem-cairo-devel
-# BuildRequires: gem(cairo) >= 1.16.2
+BuildRequires: libcairo-devel
+BuildRequires: glib2-devel
+BuildRequires: libpixman-devel
+BuildRequires: xorg-glproto-devel
+BuildRequires: xorg-dri2proto-devel
+BuildRequires: libXau-devel
+BuildRequires: libXdmcp-devel
+BuildRequires: libXext-devel
+BuildRequires: libXdamage-devel
+BuildRequires: libXxf86vm-devel
+BuildRequires: libpcre-devel
+BuildRequires: libuuid-devel
+BuildRequires: libffi-devel
+BuildRequires: bzlib-devel
+BuildRequires: libossp-uuid-dce-devel
+BuildRequires: libdrm-devel
+BuildRequires: pkgconfig(expat)
+BuildRequires: pkgconfig(harfbuzz)
+BuildRequires: pkgconfig(xshmfence)
+BuildRequires: pkgconfig(libpcre2-8)
+BuildRequires: gem(native-package-installer) >= 1.0.3
+BuildRequires: gem(pkg-config) >= 1.2.2
+#
+BuildRequires: gem(cairo) >= 1.16.2
 BuildRequires: gem(fiddle) >= 0
 BuildRequires: gem(webrick) >= 1.7.0
 BuildRequires: gem(pkg-config) >= 1.3.5
@@ -71,7 +94,7 @@ BuildRequires: gem(test-unit) >= 0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_ignore_names /-no-gi
+%ruby_ignore_path_tokens atk-no-gi,/-no-gi
 Requires:      gem(cairo) >= 0
 Requires:      gem(native-package-installer) >= 0
 Requires:      gem(pkg-config) >= 0
@@ -87,7 +110,7 @@ This is a set of bindings for the GNOME 2.x and 3.x libraries to use from Ruby
 
 %package       -n gem-gegl
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GEGL is a Ruby binding of GEGL
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -101,7 +124,7 @@ Ruby/GEGL is a Ruby binding of GEGL.
 
 %package       -n gem-gegl-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GEGL is a Ruby binding of GEGL documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gegl
 Group:         Development/Documentation
@@ -118,13 +141,14 @@ Ruby/GEGL is a Ruby binding of GEGL documentation files.
 
 %package       -n gem-gegl-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GEGL is a Ruby binding of GEGL development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gegl
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gegl) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gegl-devel
 Ruby/GEGL is a Ruby binding of GEGL development package.
@@ -135,7 +159,7 @@ Ruby/GEGL is a Ruby binding of GEGL development package.
 
 %package       -n gem-gobject-introspection
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GObjectIntrospection is a Ruby binding of GObject Introspect
 Group:         Development/Ruby
 
@@ -148,7 +172,7 @@ Ruby/GObjectIntrospection is a Ruby binding of GObject Introspect.
 
 %package       -n gem-gobject-introspection-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GObjectIntrospection is a Ruby binding of GObject Introspect documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gobject-introspection
 Group:         Development/Documentation
@@ -166,13 +190,14 @@ files.
 
 %package       -n gem-gobject-introspection-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GObjectIntrospection is a Ruby binding of GObject Introspect development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gobject-introspection
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gobject-introspection) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gobject-introspection-devel
 Ruby/GObjectIntrospection is a Ruby binding of GObject Introspect development
@@ -184,7 +209,7 @@ package.
 
 %package       -n gem-gdk4
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GDK4 is a Ruby binding of GDK 4
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -200,7 +225,7 @@ Ruby/GDK4 is a Ruby binding of GDK 4.
 
 %package       -n gem-gdk4-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GDK4 is a Ruby binding of GDK 4 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gdk4
 Group:         Development/Documentation
@@ -217,13 +242,14 @@ Ruby/GDK4 is a Ruby binding of GDK 4 documentation files.
 
 %package       -n gem-gdk4-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GDK4 is a Ruby binding of GDK 4 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gdk4
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gdk4) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gdk4-devel
 Ruby/GDK4 is a Ruby binding of GDK 4 development package.
@@ -234,7 +260,7 @@ Ruby/GDK4 is a Ruby binding of GDK 4 development package.
 
 %package       -n gem-cairo-gobject
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/CairoGObject is a Ruby binding of cairo-gobject
 Group:         Development/Ruby
 
@@ -248,7 +274,7 @@ Ruby/CairoGObject is a Ruby binding of cairo-gobject.
 
 %package       -n gem-cairo-gobject-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/CairoGObject is a Ruby binding of cairo-gobject documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета cairo-gobject
 Group:         Development/Documentation
@@ -266,13 +292,14 @@ files.
 
 %package       -n gem-cairo-gobject-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/CairoGObject is a Ruby binding of cairo-gobject development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета cairo-gobject
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(cairo-gobject) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-cairo-gobject-devel
 Ruby/CairoGObject is a Ruby binding of cairo-gobject development
@@ -284,7 +311,7 @@ package.
 
 %package       -n gem-rsvg2
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/RSVG2 is a Ruby binding of librsvg based on GObject-Introspection
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -299,7 +326,7 @@ Ruby/RSVG2 is a Ruby binding of librsvg based on GObject-Introspection.
 
 %package       -n gem-rsvg2-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/RSVG2 is a Ruby binding of librsvg based on GObject-Introspection documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rsvg2
 Group:         Development/Documentation
@@ -317,13 +344,14 @@ documentation files.
 
 %package       -n gem-rsvg2-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/RSVG2 is a Ruby binding of librsvg based on GObject-Introspection development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rsvg2
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(rsvg2) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-rsvg2-devel
 Ruby/RSVG2 is a Ruby binding of librsvg based on GObject-Introspection
@@ -335,7 +363,7 @@ development package.
 
 %package       -n gem-gio2
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Graphic InterfaceO2 is a Ruby binding of gio-2.0.x
 Group:         Development/Ruby
 
@@ -349,7 +377,7 @@ Ruby/Graphic InterfaceO2 is a Ruby binding of gio-2.0.x.
 
 %package       -n gem-gio2-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Graphic InterfaceO2 is a Ruby binding of gio-2.0.x documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gio2
 Group:         Development/Documentation
@@ -367,13 +395,14 @@ files.
 
 %package       -n gem-gio2-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Graphic InterfaceO2 is a Ruby binding of gio-2.0.x development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gio2
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gio2) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gio2-devel
 Ruby/Graphic InterfaceO2 is a Ruby binding of gio-2.0.x development
@@ -385,7 +414,7 @@ package.
 
 %package       -n gem-wnck3
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Executable file for wnck3 gem
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -399,7 +428,7 @@ Executable file for wnck3 gem.
 
 %package       -n gem-wnck3-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Executable file for wnck3 gem documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета wnck3
 Group:         Development/Documentation
@@ -416,13 +445,14 @@ Executable file for wnck3 gem documentation files.
 
 %package       -n gem-wnck3-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Executable file for wnck3 gem development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета wnck3
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(wnck3) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-wnck3-devel
 Executable file for wnck3 gem development package.
@@ -433,7 +463,7 @@ Executable file for wnck3 gem development package.
 
 %package       -n gem-gnumeric
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Gnumeric is a Ruby binding of Gnumeric
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -447,7 +477,7 @@ Ruby/Gnumeric is a Ruby binding of Gnumeric.
 
 %package       -n gem-gnumeric-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Gnumeric is a Ruby binding of Gnumeric documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gnumeric
 Group:         Development/Documentation
@@ -464,13 +494,14 @@ Ruby/Gnumeric is a Ruby binding of Gnumeric documentation files.
 
 %package       -n gem-gnumeric-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Gnumeric is a Ruby binding of Gnumeric development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gnumeric
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gnumeric) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gnumeric-devel
 Ruby/Gnumeric is a Ruby binding of Gnumeric development package.
@@ -481,7 +512,7 @@ Ruby/Gnumeric is a Ruby binding of Gnumeric development package.
 
 %package       -n gem-gtk3
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GTK3 is a Ruby binding of GTK+ 3
 Group:         Development/Ruby
 
@@ -498,7 +529,7 @@ Ruby/GTK3 is a Ruby binding of GTK+ 3.
 
 %package       -n gem-gtk3-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GTK3 is a Ruby binding of GTK+ 3 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gtk3
 Group:         Development/Documentation
@@ -515,13 +546,14 @@ Ruby/GTK3 is a Ruby binding of GTK+ 3 documentation files.
 
 %package       -n gem-gtk3-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GTK3 is a Ruby binding of GTK+ 3 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gtk3
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gtk3) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gtk3-devel
 Ruby/GTK3 is a Ruby binding of GTK+ 3 development package.
@@ -532,7 +564,7 @@ Ruby/GTK3 is a Ruby binding of GTK+ 3 development package.
 
 %package       -n gem-goffice
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GOffice is a Ruby binding of GOffice
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -547,7 +579,7 @@ Ruby/GOffice is a Ruby binding of GOffice.
 
 %package       -n gem-goffice-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GOffice is a Ruby binding of GOffice documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета goffice
 Group:         Development/Documentation
@@ -564,13 +596,14 @@ Ruby/GOffice is a Ruby binding of GOffice documentation files.
 
 %package       -n gem-goffice-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GOffice is a Ruby binding of GOffice development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета goffice
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(goffice) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-goffice-devel
 Ruby/GOffice is a Ruby binding of GOffice development package.
@@ -581,7 +614,7 @@ Ruby/GOffice is a Ruby binding of GOffice development package.
 
 %package       -n gem-vte3
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/VTE3 is a Ruby binding of VTE for use with GTK3
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -595,7 +628,7 @@ Ruby/VTE3 is a Ruby binding of VTE for use with GTK3.
 
 %package       -n gem-vte3-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/VTE3 is a Ruby binding of VTE for use with GTK3 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета vte3
 Group:         Development/Documentation
@@ -613,13 +646,14 @@ files.
 
 %package       -n gem-vte3-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/VTE3 is a Ruby binding of VTE for use with GTK3 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета vte3
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(vte3) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-vte3-devel
 Ruby/VTE3 is a Ruby binding of VTE for use with GTK3 development
@@ -631,7 +665,7 @@ package.
 
 %package       -n gem-clutter-gdk
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/ClutterGDK is a Ruby binding of GDK specific API of Clutter
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -646,7 +680,7 @@ Ruby/ClutterGDK is a Ruby binding of GDK specific API of Clutter.
 
 %package       -n gem-clutter-gdk-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/ClutterGDK is a Ruby binding of GDK specific API of Clutter documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета clutter-gdk
 Group:         Development/Documentation
@@ -664,13 +698,14 @@ files.
 
 %package       -n gem-clutter-gdk-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/ClutterGDK is a Ruby binding of GDK specific API of Clutter development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета clutter-gdk
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(clutter-gdk) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-clutter-gdk-devel
 Ruby/ClutterGDK is a Ruby binding of GDK specific API of Clutter development
@@ -682,7 +717,7 @@ package.
 
 %package       -n gem-gtksourceview4
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GtkSourceView4 is a Ruby binding of gtksourceview-4.x
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -696,7 +731,7 @@ Ruby/GtkSourceView4 is a Ruby binding of gtksourceview-4.x.
 
 %package       -n gem-gtksourceview4-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GtkSourceView4 is a Ruby binding of gtksourceview-4.x documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gtksourceview4
 Group:         Development/Documentation
@@ -714,13 +749,14 @@ files.
 
 %package       -n gem-gtksourceview4-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GtkSourceView4 is a Ruby binding of gtksourceview-4.x development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gtksourceview4
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gtksourceview4) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gtksourceview4-devel
 Ruby/GtkSourceView4 is a Ruby binding of gtksourceview-4.x development
@@ -732,7 +768,7 @@ package.
 
 %package       -n gem-poppler
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Poppler is a Ruby binding of poppler-glib
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -747,7 +783,7 @@ Ruby/Poppler is a Ruby binding of poppler-glib.
 
 %package       -n gem-poppler-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Poppler is a Ruby binding of poppler-glib documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета poppler
 Group:         Development/Documentation
@@ -764,13 +800,14 @@ Ruby/Poppler is a Ruby binding of poppler-glib documentation files.
 
 %package       -n gem-poppler-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Poppler is a Ruby binding of poppler-glib development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета poppler
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(poppler) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-poppler-devel
 Ruby/Poppler is a Ruby binding of poppler-glib development package.
@@ -781,7 +818,7 @@ Ruby/Poppler is a Ruby binding of poppler-glib development package.
 
 %package       -n gem-gdk-pixbuf2
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GdkPixbuf2 is a Ruby binding of GdkPixbuf-2.x
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -795,7 +832,7 @@ Ruby/GdkPixbuf2 is a Ruby binding of GdkPixbuf-2.x.
 
 %package       -n gem-gdk-pixbuf2-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GdkPixbuf2 is a Ruby binding of GdkPixbuf-2.x documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gdk_pixbuf2
 Group:         Development/Documentation
@@ -813,13 +850,14 @@ files.
 
 %package       -n gem-gdk-pixbuf2-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GdkPixbuf2 is a Ruby binding of GdkPixbuf-2.x development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gdk_pixbuf2
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gdk_pixbuf2) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gdk-pixbuf2-devel
 Ruby/GdkPixbuf2 is a Ruby binding of GdkPixbuf-2.x development
@@ -831,7 +869,7 @@ package.
 
 %package       -n gem-gstreamer
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GStreamer is a Ruby binding for GStreamer
 Group:         Development/Ruby
 
@@ -844,7 +882,7 @@ Ruby/GStreamer is a Ruby binding for GStreamer.
 
 %package       -n gem-gstreamer-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GStreamer is a Ruby binding for GStreamer documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gstreamer
 Group:         Development/Documentation
@@ -861,13 +899,14 @@ Ruby/GStreamer is a Ruby binding for GStreamer documentation files.
 
 %package       -n gem-gstreamer-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GStreamer is a Ruby binding for GStreamer development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gstreamer
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gstreamer) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gstreamer-devel
 Ruby/GStreamer is a Ruby binding for GStreamer development package.
@@ -878,7 +917,7 @@ Ruby/GStreamer is a Ruby binding for GStreamer development package.
 
 %package       -n gem-webkit-gtk
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/WebKitGTK is a Ruby binding of WebKitGTK+
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -892,7 +931,7 @@ Ruby/WebKitGTK is a Ruby binding of WebKitGTK+.
 
 %package       -n gem-webkit-gtk-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/WebKitGTK is a Ruby binding of WebKitGTK+ documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета webkit-gtk
 Group:         Development/Documentation
@@ -909,13 +948,14 @@ Ruby/WebKitGTK is a Ruby binding of WebKitGTK+ documentation files.
 
 %package       -n gem-webkit-gtk-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/WebKitGTK is a Ruby binding of WebKitGTK+ development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета webkit-gtk
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(webkit-gtk) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-webkit-gtk-devel
 Ruby/WebKitGTK is a Ruby binding of WebKitGTK+ development package.
@@ -926,7 +966,7 @@ Ruby/WebKitGTK is a Ruby binding of WebKitGTK+ development package.
 
 %package       -n gem-webkit2-gtk
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/WebKit2GTK is a Ruby binding of WebKit2GTK+
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -940,7 +980,7 @@ Ruby/WebKit2GTK is a Ruby binding of WebKit2GTK+.
 
 %package       -n gem-webkit2-gtk-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/WebKit2GTK is a Ruby binding of WebKit2GTK+ documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета webkit2-gtk
 Group:         Development/Documentation
@@ -957,7 +997,7 @@ Ruby/WebKit2GTK is a Ruby binding of WebKit2GTK+ documentation files.
 
 %package       -n gem-webkit2-gtk-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/WebKit2GTK is a Ruby binding of WebKit2GTK+ development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета webkit2-gtk
 Group:         Development/Ruby
@@ -965,6 +1005,7 @@ BuildArch:     noarch
 
 Requires:      gem(webkit2-gtk) = 3.5.1
 Requires:      gem(webrick) >= 0
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-webkit2-gtk-devel
 Ruby/WebKit2GTK is a Ruby binding of WebKit2GTK+ development package.
@@ -975,7 +1016,7 @@ Ruby/WebKit2GTK is a Ruby binding of WebKit2GTK+ development package.
 
 %package       -n gem-libsecret
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Executable file for libsecret gem
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -989,7 +1030,7 @@ Executable file for libsecret gem.
 
 %package       -n gem-libsecret-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Executable file for libsecret gem documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета libsecret
 Group:         Development/Documentation
@@ -1006,13 +1047,14 @@ Executable file for libsecret gem documentation files.
 
 %package       -n gem-libsecret-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Executable file for libsecret gem development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета libsecret
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(libsecret) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-libsecret-devel
 Executable file for libsecret gem development package.
@@ -1023,7 +1065,7 @@ Executable file for libsecret gem development package.
 
 %package       -n gem-atk
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/ATK is a Ruby binding of ATK-1.12.x or later based on GObject-Introspection
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1037,7 +1079,7 @@ Ruby/ATK is a Ruby binding of ATK-1.12.x or later based on GObject-Introspection
 
 %package       -n gem-atk-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/ATK is a Ruby binding of ATK-1.12.x or later based on GObject-Introspection documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета atk
 Group:         Development/Documentation
@@ -1055,13 +1097,14 @@ documentation files.
 
 %package       -n gem-atk-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/ATK is a Ruby binding of ATK-1.12.x or later based on GObject-Introspection development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета atk
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(atk) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-atk-devel
 Ruby/ATK is a Ruby binding of ATK-1.12.x or later based on GObject-Introspection
@@ -1073,7 +1116,7 @@ development package.
 
 %package       -n gem-gtk4
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GTK4 is a Ruby binding of GTK+ 4
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1091,7 +1134,7 @@ Ruby/GTK4 is a Ruby binding of GTK+ 4.
 
 %package       -n gem-gtk4-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GTK4 is a Ruby binding of GTK+ 4 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gtk4
 Group:         Development/Documentation
@@ -1108,13 +1151,14 @@ Ruby/GTK4 is a Ruby binding of GTK+ 4 documentation files.
 
 %package       -n gem-gtk4-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GTK4 is a Ruby binding of GTK+ 4 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gtk4
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gtk4) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gtk4-devel
 Ruby/GTK4 is a Ruby binding of GTK+ 4 development package.
@@ -1125,7 +1169,7 @@ Ruby/GTK4 is a Ruby binding of GTK+ 4 development package.
 
 %package       -n gem-pango
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Pango is a Ruby binding of pango based on GObject-Introspection
 Group:         Development/Ruby
 
@@ -1139,7 +1183,7 @@ Ruby/Pango is a Ruby binding of pango based on GObject-Introspection.
 
 %package       -n gem-pango-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Pango is a Ruby binding of pango based on GObject-Introspection documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета pango
 Group:         Development/Documentation
@@ -1157,13 +1201,14 @@ documentation files.
 
 %package       -n gem-pango-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Pango is a Ruby binding of pango based on GObject-Introspection development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета pango
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(pango) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-pango-devel
 Ruby/Pango is a Ruby binding of pango based on GObject-Introspection development
@@ -1175,7 +1220,7 @@ package.
 
 %package       -n gem-clutter-gtk
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/ClutterGTK is a Ruby binding of Clutter-GTK
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1191,7 +1236,7 @@ Ruby/ClutterGTK is a Ruby binding of Clutter-GTK.
 
 %package       -n gem-clutter-gtk-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/ClutterGTK is a Ruby binding of Clutter-GTK documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета clutter-gtk
 Group:         Development/Documentation
@@ -1208,13 +1253,14 @@ Ruby/ClutterGTK is a Ruby binding of Clutter-GTK documentation files.
 
 %package       -n gem-clutter-gtk-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/ClutterGTK is a Ruby binding of Clutter-GTK development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета clutter-gtk
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(clutter-gtk) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-clutter-gtk-devel
 Ruby/ClutterGTK is a Ruby binding of Clutter-GTK development package.
@@ -1225,7 +1271,7 @@ Ruby/ClutterGTK is a Ruby binding of Clutter-GTK development package.
 
 %package       -n gem-clutter-gstreamer
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/ClutterGStreamer is a Ruby binding of Clutter-GStreamer
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1241,7 +1287,7 @@ Ruby/ClutterGStreamer is a Ruby binding of Clutter-GStreamer.
 
 %package       -n gem-clutter-gstreamer-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/ClutterGStreamer is a Ruby binding of Clutter-GStreamer documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета clutter-gstreamer
 Group:         Development/Documentation
@@ -1259,13 +1305,14 @@ files.
 
 %package       -n gem-clutter-gstreamer-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/ClutterGStreamer is a Ruby binding of Clutter-GStreamer development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета clutter-gstreamer
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(clutter-gstreamer) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-clutter-gstreamer-devel
 Ruby/ClutterGStreamer is a Ruby binding of Clutter-GStreamer development
@@ -1277,7 +1324,7 @@ package.
 
 %package       -n gem-gsf
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GSF is a Ruby binding of GSF which is needed by GOffice
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1291,7 +1338,7 @@ Ruby/GSF is a Ruby binding of GSF which is needed by GOffice.
 
 %package       -n gem-gsf-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GSF is a Ruby binding of GSF which is needed by GOffice documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gsf
 Group:         Development/Documentation
@@ -1309,13 +1356,14 @@ files.
 
 %package       -n gem-gsf-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GSF is a Ruby binding of GSF which is needed by GOffice development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gsf
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gsf) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gsf-devel
 Ruby/GSF is a Ruby binding of GSF which is needed by GOffice development
@@ -1327,7 +1375,7 @@ package.
 
 %package       -n gem-gdk3
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GDK3 is a Ruby binding of GDK 3
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1343,7 +1391,7 @@ Ruby/GDK3 is a Ruby binding of GDK 3.
 
 %package       -n gem-gdk3-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GDK3 is a Ruby binding of GDK 3 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gdk3
 Group:         Development/Documentation
@@ -1360,13 +1408,14 @@ Ruby/GDK3 is a Ruby binding of GDK 3 documentation files.
 
 %package       -n gem-gdk3-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GDK3 is a Ruby binding of GDK 3 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gdk3
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gdk3) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gdk3-devel
 Ruby/GDK3 is a Ruby binding of GDK 3 development package.
@@ -1377,7 +1426,7 @@ Ruby/GDK3 is a Ruby binding of GDK 3 development package.
 
 %package       -n gem-gvlc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/VLC is a Ruby binding of libVLC for Ruby/GTK
 Group:         Development/Ruby
 
@@ -1390,7 +1439,7 @@ Ruby/VLC is a Ruby binding of libVLC for Ruby/GTK.
 
 %package       -n gem-gvlc-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/VLC is a Ruby binding of libVLC for Ruby/GTK documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gvlc
 Group:         Development/Documentation
@@ -1408,13 +1457,14 @@ files.
 
 %package       -n gem-gvlc-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/VLC is a Ruby binding of libVLC for Ruby/GTK development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gvlc
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gvlc) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gvlc-devel
 Ruby/VLC is a Ruby binding of libVLC for Ruby/GTK development
@@ -1426,7 +1476,7 @@ package.
 
 %package       -n gem-glib2
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       GLib 2 bindings for the Ruby language
 Group:         Development/Ruby
 
@@ -1445,7 +1495,7 @@ such as GTK+.
 
 %package       -n gem-glib2-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       GLib 2 bindings for the Ruby language documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета glib2
 Group:         Development/Documentation
@@ -1469,7 +1519,7 @@ such as GTK+.
 
 %package       -n gem-glib2-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       GLib 2 bindings for the Ruby language development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета glib2
 Group:         Development/Ruby
@@ -1477,8 +1527,7 @@ BuildArch:     noarch
 
 Requires:      gem(glib2) = 3.5.1
 Requires:      gem(test-unit) >= 2
-Obsoletes:     ruby-gnome2-devel
-Provides:      ruby-gnome2-devel
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-glib2-devel
 GLib 2 bindings for the Ruby language development package.
@@ -1494,7 +1543,7 @@ such as GTK+.
 
 %package       -n gem-gtksourceview3
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GtkSourceView3 is a Ruby binding of gtksourceview-3.x
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1508,7 +1557,7 @@ Ruby/GtkSourceView3 is a Ruby binding of gtksourceview-3.x.
 
 %package       -n gem-gtksourceview3-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GtkSourceView3 is a Ruby binding of gtksourceview-3.x documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gtksourceview3
 Group:         Development/Documentation
@@ -1526,13 +1575,14 @@ files.
 
 %package       -n gem-gtksourceview3-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/GtkSourceView3 is a Ruby binding of gtksourceview-3.x development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gtksourceview3
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(gtksourceview3) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-gtksourceview3-devel
 Ruby/GtkSourceView3 is a Ruby binding of gtksourceview-3.x development
@@ -1544,7 +1594,7 @@ package.
 
 %package       -n gem-clutter
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Clutter is a Ruby binding of Clutter
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -1560,7 +1610,7 @@ Ruby/Clutter is a Ruby binding of Clutter.
 
 %package       -n gem-clutter-doc
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Clutter is a Ruby binding of Clutter documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета clutter
 Group:         Development/Documentation
@@ -1577,19 +1627,116 @@ Ruby/Clutter is a Ruby binding of Clutter documentation files.
 
 %package       -n gem-clutter-devel
 Version:       3.5.1
-Release:       alt1.2
+Release:       alt1.3
 Summary:       Ruby/Clutter is a Ruby binding of Clutter development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета clutter
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(clutter) = 3.5.1
+Requires:      ruby-gnome2-devel
 
 %description   -n gem-clutter-devel
 Ruby/Clutter is a Ruby binding of Clutter development package.
 
 %description   -n gem-clutter-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета clutter.
+
+
+%package       -n ruby-gnome2-devel
+Version:       3.5.1
+Release:       alt1.3
+Summary:       Ruby GNOME2/3/4 common development package
+Summary(ru_RU.UTF-8): Файлы для разработки самоцветаов в Ruby GNOME2
+Group:         Development/Ruby
+BuildArch:     noarch
+
+Requires:      libgtk+2-devel
+Requires:      libgtk+3-devel
+Requires:      libpixman-devel
+Requires:      libexpat-devel
+Requires:      libharfbuzz-devel
+Requires:      libdrm-devel
+Requires:      libpcre-devel
+Requires:      libXdmcp-devel
+Requires:      libXdamage-devel
+Requires:      libXxf86vm-devel
+Requires:      libvte3-devel
+Requires:      libvte-devel
+Requires:      libvlc-devel
+Requires:      libuuid-devel
+Requires:      libgtksourceview-devel
+Requires:      libfribidi-devel
+Requires:      libtiff-devel
+Requires:      libmount-devel
+Requires:      libblkid-devel
+Requires:      libat-spi2-core-devel
+Requires:      libepoxy-devel
+Requires:      libXinerama-devel
+Requires:      libXi-devel
+Requires:      libXrandr-devel
+Requires:      libXcursor-devel
+Requires:      libXcomposite-devel
+Requires:      libpng-devel
+Requires:      libxml2-devel
+Requires:      libwayland-cursor-devel
+Requires:      libwayland-egl-devel
+Requires:      wayland-protocols
+Requires:      libxkbcommon-devel
+Requires:      gstreamer1.0-devel
+Requires:      gobject-introspection-devel
+Requires:      at-spi2-atk-devel
+Requires:      libselinux-devel
+Requires:      libXtst-devel
+Requires:      libthai-devel
+Requires:      libdatrie-devel
+Requires:      bzlib-devel
+Requires:      glib2-devel
+Requires:      libgio-devel
+Requires:      libpango-devel
+Requires:      libjpeg-devel
+Requires:      gst-plugins-devel
+Requires:      gcc-c++
+Requires:      libbrotli-devel
+Requires:      libcairo-devel
+Requires:      glib2-devel
+Requires:      libpixman-devel
+Requires:      xorg-glproto-devel
+Requires:      xorg-dri2proto-devel
+Requires:      libXau-devel
+Requires:      libXdmcp-devel
+Requires:      libXext-devel
+Requires:      libXdamage-devel
+Requires:      libXxf86vm-devel
+Requires:      libpcre-devel
+Requires:      libuuid-devel
+Requires:      libffi-devel
+Requires:      bzlib-devel
+Requires:      libossp-uuid-dce-devel
+Requires:      libdrm-devel
+Requires:      gem-cairo-devel
+Requires:      pkgconfig(expat)
+Requires:      pkgconfig(harfbuzz)
+Requires:      pkgconfig(xshmfence)
+Requires:      pkgconfig(libpcre2-8)
+Requires:      gem(native-package-installer) >= 1.0.3
+Requires:      gem(pkg-config) >= 1.2.2
+Requires:      gem(cairo) >= 1.16.2
+Requires:      gem(fiddle) >= 0
+Requires:      gem(webrick) >= 1.7.0
+Requires:      gem(pkg-config) >= 1.3.5
+Requires:      gem(native-package-installer) >= 1.0.3
+Requires:      gem(test-unit) >= 2
+Requires:      gem(native-package-installer) >= 0
+Requires:      gem(pkg-config) >= 0
+Requires:      gem(rake) >= 0
+Requires:      gem(test-unit) >= 0
+
+%description   -n ruby-gnome2-devel
+Ruby GNOME 2/3/4 common development package.
+
+%description   -n ruby-gnome2-devel -l ru_RU.UTF-8
+Файлы для разработки самоцветов в ruby GNOME2.
 
 
 %prep
@@ -1648,7 +1795,7 @@ Ruby/Clutter is a Ruby binding of Clutter development package.
 %doc README.md
 %ruby_gemspecdir/cairo-gobject-3.5.1.gemspec
 %ruby_gemslibdir/cairo-gobject-3.5.1
-%ruby_gemsextdir/cairo-gobject-3.5.1
+# %ruby_gemsextdir/cairo-gobject-3.5.1
 
 %files         -n gem-cairo-gobject-doc
 %doc README.md
@@ -1982,8 +2129,14 @@ Ruby/Clutter is a Ruby binding of Clutter development package.
 %files         -n gem-clutter-devel
 %doc README.md
 
+%files         -n ruby-gnome2-devel
+
 
 %changelog
+* Mon Sep 26 2022 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt1.3
+- + lost dep to pkgconfig(libpcre2-8)
+- + ruby-gnome2-devel package with uplinks form devel subpackage
+
 * Mon Jun 27 2022 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt1.2
 - comment out dep to gem cairo
 

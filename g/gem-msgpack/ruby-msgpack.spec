@@ -1,7 +1,7 @@
 %define        gemname msgpack
 
 Name:          gem-msgpack
-Version:       1.4.5
+Version:       1.5.6
 Release:       alt1
 Summary:       MessagePack implementation for Ruby
 License:       Apache 2.0
@@ -18,14 +18,15 @@ BuildRequires: gem(rake-compiler) >= 1.1.2
 BuildRequires: gem(rspec) >= 3.3 gem(rspec) < 4
 BuildRequires: gem(yard) >= 0
 BuildRequires: gem(json) >= 0
+BuildRequires: gem(benchmark-ips) >= 2.10.0 gem(benchmark-ips) < 2.11
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
 %ruby_use_gem_dependency rubocop >= 1.27.0,rubocop < 2
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
 Obsoletes:     ruby-msgpack < %EVR
 Provides:      ruby-msgpack = %EVR
-Provides:      gem(msgpack) = 1.4.5
+Provides:      gem(msgpack) = 1.5.6
 
 
 %description
@@ -41,14 +42,14 @@ is a perfect replacement.
 
 
 %package       -n gem-msgpack-doc
-Version:       1.4.5
+Version:       1.5.6
 Release:       alt1
 Summary:       MessagePack implementation for Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета msgpack
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(msgpack) = 1.4.5
+Requires:      gem(msgpack) = 1.5.6
 Obsoletes:     msgpack-doc
 Provides:      msgpack-doc
 
@@ -70,20 +71,21 @@ is a perfect replacement.
 
 
 %package       -n gem-msgpack-devel
-Version:       1.4.5
+Version:       1.5.6
 Release:       alt1
 Summary:       MessagePack implementation for Ruby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета msgpack
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(msgpack) = 1.4.5
+Requires:      gem(msgpack) = 1.5.6
 Requires:      gem(bundler) >= 0
 Requires:      gem(rake) >= 0
 Requires:      gem(rake-compiler) >= 1.1.2
 Requires:      gem(rspec) >= 3.3 gem(rspec) < 4
 Requires:      gem(yard) >= 0
 Requires:      gem(json) >= 0
+Requires:      gem(benchmark-ips) >= 2.10.0 gem(benchmark-ips) < 2.11
 Conflicts:     libmsgpack-devel
 
 %description   -n gem-msgpack-devel
@@ -131,6 +133,9 @@ is a perfect replacement.
 
 
 %changelog
+* Wed Sep 21 2022 Pavel Skrylev <majioa@altlinux.org> 1.5.6-alt1
+- ^ 1.4.5 -> 1.5.6
+
 * Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 1.4.5-alt1
 - ^ 1.3.3 -> 1.4.5
 
