@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20221017
+Version: 20221024
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,13 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Oct 26 2022 Cronbuild Service <cronbuild@altlinux.org> 20221024-alt1
+- upstream changes (GIT 0cac82d3):
+  + rtw89: 8852b: update fw to v0.27.32.1 (thx Ping-Ke Shih)
+  + rtlwifi: update firmware for rtl8192eu to v35.7 (thx James Hilliard)
+  + rtlwifi: Add firmware v4.0 for RTL8188FU (thx Bitterblue Smith)
+  + i915: Add HuC 7.10.3 for DG2 (thx Daniele Ceraolo Spurio)
+
 * Thu Oct 20 2022 Cronbuild Service <cronbuild@altlinux.org> 20221017-alt1
 - upstream changes (GIT 48407ffd):
   + cnm: update chips&media wave521c firmware. (thx Nas Chung)
