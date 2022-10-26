@@ -11,7 +11,7 @@
 Name: libvncserver
 %define libname %name
 Version: 0.9.13
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: An easy API to write one's own VNC server
@@ -22,6 +22,8 @@ Packager: Sergey V Turchin <zerg@altlinux.org>
 Requires: %libvncserver %libvncclient
 
 Source: http://downloads.sourceforge.net/libvncserver/%tname-%version.tar.gz
+
+Patch2: CVE-2020-29260-libvncclient-free-vncRec-memory-in-rfbClientCleanup.patch
 # SuSE
 Patch20: redef-keysym.patch
 
@@ -98,6 +100,7 @@ Conflicts: libvncserver < %EVR
 
 %prep
 %setup -n %tname-%version
+%patch2 -p1
 %patch20 -p1
 
 # set so version
@@ -136,6 +139,9 @@ make -C BUILD install DESTDIR=%buildroot
 
 
 %changelog
+* Wed Oct 26 2022 Alexander Danilov <admsasha@altlinux.org> 0.9.13-alt3
+- security (fixes: CVE-2020-29260)
+
 * Tue Jun 15 2021 Sergey V Turchin <zerg@altlinux.org> 0.9.13-alt2
 - compatable with p9
 
