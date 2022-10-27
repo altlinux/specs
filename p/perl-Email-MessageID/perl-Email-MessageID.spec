@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-MessageID
 Name: perl-%dist
-Version: 1.406
+Version: 1.407
 Release: alt1
 
 Summary: Generate world unique message-ids
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-MessageID-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ Message-ids are optional, but highly recommended, headers that identify
 a message uniquely. This software generates a unique message-id.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +34,9 @@ a message uniquely. This software generates a unique message-id.
 %perl_vendor_privlib/Email*
 
 %changelog
+* Fri Oct 28 2022 Igor Vlasenko <viy@altlinux.org> 1.407-alt1
+- automated CPAN update
+
 * Sun Oct 11 2015 Igor Vlasenko <viy@altlinux.ru> 1.406-alt1
 - automated CPAN update
 
