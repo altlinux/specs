@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 2.9.4
+Version: 2.9.5
 Release: alt1
 
 Summary: psycopg2 is a PostgreSQL database adapter for Python3
@@ -59,6 +59,9 @@ echo "include_dirs=.:/usr/include/pgsql" >> setup.cfg
 %doc AUTHORS INSTALL README* doc
 
 %changelog
+* Thu Oct 27 2022 Grigory Ustinov <grenka@altlinux.org> 2.9.5-alt1
+- Automatically updated to 2.9.5.
+
 * Thu Oct 06 2022 Grigory Ustinov <grenka@altlinux.org> 2.9.4-alt1
 - Automatically updated to 2.9.4.
 
