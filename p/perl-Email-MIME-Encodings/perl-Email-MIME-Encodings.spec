@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-MIME-Encodings
 Name: perl-%dist
-Version: 1.315
+Version: 1.316
 Release: alt1
 
 Summary: A unified interface to MIME encoding and decoding
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-MIME-Encodings-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ so that you can throw the contents of a Content-Transfer-Encoding
 header at some text and have the right thing happen.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ header at some text and have the right thing happen.
 %perl_vendor_privlib/Email
 
 %changelog
+* Fri Oct 28 2022 Igor Vlasenko <viy@altlinux.org> 1.316-alt1
+- automated CPAN update
+
 * Mon Sep 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.315-alt1
 - automated CPAN update
 
