@@ -1,5 +1,5 @@
 Name: hasher-priv
-Version: 1.6.1
+Version: 2.0.7
 Release: alt1
 
 Summary: A privileged helper for the hasher project
@@ -13,13 +13,12 @@ Source: %name-%version.tar
 %define configdir %_sysconfdir/%name
 
 Provides: %helperdir
-PreReq: coreutils, shadow-utils, glibc-utils
-Obsoletes: pkg-build-priv
 
 # Due to makedev removal.
 Conflicts: hasher < 1.4.0
 
 BuildPreReq: help2man, sisyphus_check >= 0:0.7.11
+BuildRequires: setproctitle-devel
 
 %description
 This package provides helpers for executing privileged operations
@@ -32,16 +31,27 @@ required by hasher utilities.
 %make_build CC="%__cc" CFLAGS="%optflags" libexecdir="%_libexecdir"
 
 %install
-%makeinstall
+%makeinstall_std \
+	libexecdir="%_libexecdir" \
+	tmpfilesdir="%_tmpfilesdir" \
+	systemd_unitdir="%_unitdir" \
+	#
 
 %pre
-if getent group pkg-build > /dev/null; then
-	groupmod -n hashman pkg-build
-fi
-if [ -d %_sysconfdir/pkg-build-priv -a ! -d %configdir ]; then
-	mv %_sysconfdir/pkg-build-priv %configdir
-fi
 groupadd -r -f hashman
+
+%post
+%post_service hasher-privd
+
+%preun
+%preun_service hasher-privd
+
+%triggerpostun -- %name < 2.0
+/sbin/chkconfig --add hasher-privd
+if [ -n "$(getent group hashman |cut -d: -f4)" ]; then
+	/sbin/chkconfig hasher-privd on
+	/sbin/service hasher-privd start
+fi
 
 %files
 %_sbindir/hasher-useradd
@@ -51,14 +61,53 @@ groupadd -r -f hashman
 %attr(750,root,hashman) %dir %configdir/user.d
 %attr(640,root,hashman) %config(noreplace) %configdir/fstab
 %attr(640,root,hashman) %config(noreplace) %configdir/system
+%attr(640,root,hashman) %config(noreplace) %configdir/daemon.conf
 # helpers
 %attr(750,root,hashman) %dir %helperdir
-%attr(6710,root,hashman) %helperdir/%name
+%attr(710,root,hashman) %helperdir/%name
 %attr(755,root,root) %helperdir/*.sh
+# daemon
+%_sbindir/hasher-privd
+%_unitdir/hasher-privd.service
+%_initdir/hasher-privd
+# socketdir
+%_tmpfilesdir/%name.conf
+%attr(710,root,hashman) %dir /run/%name/
 
 %doc DESIGN
 
 %changelog
+* Wed Oct 26 2022 Dmitry V. Levin <ldv@altlinux.org> 2.0.7-alt1
+- hasher-privd(8): added a note on cgroup handling
+  (by Arseny Maslennikov).
+
+* Fri Oct 21 2022 Dmitry V. Levin <ldv@altlinux.org> 2.0.6-alt1
+- Packaged socket directory.
+- chrootuid.sh: moved systemd-run invocation to the hasher project
+  (by Arseny Maslennikov).
+
+* Fri Oct 14 2022 Dmitry V. Levin <ldv@altlinux.org> 2.0.5-alt1
+- hasher-privd(8): added an overview of the hasher-privd architecture
+  (by Arseny Maslennikov).
+- mount: allowed non-dev subdirectories to be owned by rooter.
+
+* Sat Sep 03 2022 Dmitry V. Levin <ldv@altlinux.org> 2.0.4-alt1
+- killuid: robustify by removing the limit on the number of processes.
+
+* Fri Sep 02 2022 Dmitry V. Levin <ldv@altlinux.org> 2.0.3-alt1
+- Robustify the service daemon by rejecting clients passing strings
+  of total size exceeding the kernel limit for string arguments.
+
+* Thu Sep 01 2022 Dmitry V. Levin <ldv@altlinux.org> 2.0.2-alt1
+- Harden the service daemon further by setting PR_SET_NO_NEW_PRIVS flag.
+
+* Thu Sep 01 2022 Dmitry V. Levin <ldv@altlinux.org> 2.0.1-alt1
+- Forward the process personality from the client to the server.
+
+* Wed Aug 31 2022 Dmitry V. Levin <ldv@altlinux.org> 2.0-alt1
+- Rewritten using a client-server architecture
+  (by Alexey Gladkov, Arseny Maslennikov, Gleb Fotengauer-Malinovskiy, and me).
+
 * Thu Jul 29 2021 Dmitry V. Levin <ldv@altlinux.org> 1.6.1-alt1
 - sanitize_fds: changed to use close_range(2) if available (by Arseny Maslennikov).
 - hasher-useradd: added new option: -r/--system (by Arseny Maslennikov).

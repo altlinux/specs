@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.4.8
+Version: 1.5.1
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -61,6 +61,15 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Mon Oct 24 2022 Dmitry V. Levin <ldv@altlinux.org> 1.5.1-alt1
+- Unshare systemd scope with systemd-run(1) if applicable
+  (by Arseny Maslennikov).
+
+* Mon Sep 05 2022 Dmitry V. Levin <ldv@altlinux.org> 1.5.0-alt1
+- Introduced --workdir command line option (by Arseny Maslennikov).
+- Added support for hasher-priv 2.0 (by Gleb Fotengauer-Malinovskiy).
+- Updated documentation.
+
 * Tue Apr 26 2022 Dmitry V. Levin <ldv@altlinux.org> 1.4.8-alt1
 - create_chroot: run rpmdb --rebuilddb after ldconfig.
 - Replaced "egrep" with "grep -E".
