@@ -1,8 +1,10 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %define realname icewm
+# Choose markdown or asciidoc to generate manual html
+%def_with markdown
 
 Name: %realname
-Version: 3.0.1
+Version: 3.1.0
 Release: alt1
 Epoch:3
 
@@ -11,6 +13,8 @@ Group: Graphical desktop/Icewm
 License: LGPLv2
 Url: https://ice-wm.org
 Packager: Dmitriy Khanzhin <jinn@altlinux.org>
+
+%define _icewmdocdir %_datadir/doc/%realname-%version
 
 Provides: %realname-githubmod = %version-%release
 Provides: %realname-light = %version-%release
@@ -35,10 +39,15 @@ Patch0: %realname-%version-%release.patch
 BuildRequires(pre): rpm-macros-cmake
 
 # Automatically added by buildreq on Sun Jun 27 2021
-BuildRequires: asciidoctor cmake gcc-c++ imlib2-devel libSM-devel
-BuildRequires: libXcomposite-devel libXdamage-devel libXft-devel libXinerama-devel
-BuildRequires: libXpm-devel libXrandr-devel libalsa-devel libfribidi-devel
+BuildRequires: cmake gcc-c++ imlib2-devel libSM-devel libXcomposite-devel
+BuildRequires: libXdamage-devel libXft-devel libXinerama-devel libXpm-devel
+BuildRequires: libXrandr-devel libalsa-devel libao-devel libfribidi-devel
 BuildRequires: librsvg-devel libsndfile-devel perl-Pod-Usage perl-devel
+%if_with markdown
+BuildRequires: discount
+%else
+BuildRequires: asciidoctor
+%endif
 
 %description
  Window Manager for X Window System. Can emulate the look of Windows'95, OS/2
@@ -76,11 +85,11 @@ sed -i 's/\? directory : "."/? (char*)directory : "."/' src/misc.cc
 %cmake	-DPREFIX=%_prefix \
 	-DCFGDIR=%_sysconfdir/X11/%realname \
 	-DLIBDIR=%_x11x11dir/%realname \
-	-DDOCDIR=%_datadir/doc/%realname-%version \
+	-DDOCDIR=%_icewmdocdir \
 	-DCONFIG_IMLIB2=on \
 	-DCONFIG_LIBRSVG=on \
 	-DCONFIG_GUIEVENTS=on \
-	-DICESOUND="ALSA,OSS" \
+	-DICESOUND="AO,ALSA,OSS" \
 	-DENABLE_LTO=on \
 	-DXTERMCMD=xvt \
 	-DCONFIG_DEFAULT_THEME="AltClearlooks/default.theme" \
@@ -103,7 +112,10 @@ install -pD -m644 %SOURCE5 %buildroot%_liconsdir/%realname.png
 install -pD -m644 %SOURCE7 %buildroot%_pixmapsdir/IceWM.xpm
 install -pD -m644 %SOURCE8 %buildroot%_sysconfdir/X11/wmsession.d/04IceWM
 install -m644 %SOURCE9 README.ALT
-install -m644 %SOURCE12 icewm-old-changelog.bz2
+install -m644 %SOURCE12 %buildroot%_icewmdocdir/icewm-old-changelog.bz2
+install -m644 AUTHORS %buildroot%_icewmdocdir/AUTHORS
+install -m644 NEWS %buildroot%_icewmdocdir/NEWS
+install -m644 README.md %buildroot%_icewmdocdir/README.md
 
 mkdir -p %buildroot%_sysconfdir/X11/%realname
 
@@ -132,13 +144,18 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_man1dir/*
 %_man5dir/*
 %_datadir/xsessions/*.desktop
-
-%doc AUTHORS NEWS README.ALT README.md %_cmake__builddir/*.html %_cmake__builddir/man/*.html icewm-old-changelog.bz2
+%_icewmdocdir/*
 
 %files themes
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Thu Oct 27 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.1.0-alt1
+- 3.1.0
+- added a choise of markdown or asciidoc to generate manual html
+- added libao support for icesound
+- redesigned the documentation packaging
+
 * Thu Oct 06 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.0.1-alt1
 - 3.0.1
 
