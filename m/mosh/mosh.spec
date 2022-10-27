@@ -1,25 +1,33 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: mosh
-Version: 1.3.2
-Release: alt2.3
+Version: 1.4.0
+Release: alt1
 
 Summary: Mobile shell that supports roaming and intelligent local echo
 License: GPLv3+
 Group: Networking/Remote access
+Url: https://mosh.org/
+VCS: https://github.com/mobile-shell/mosh
 
-Url: http://mosh.org/
-Source: https://github.com/downloads/keithw/mosh/mosh-%version.tar
+Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires: gcc-c++ protobuf-compiler libprotobuf-devel libutempter-devel zlib-devel ncurses-devel perl-IO-Tty libssl-devel perl-devel
+BuildRequires: gcc-c++ 
+BuildRequires: libprotobuf-devel
+BuildRequires: libssl-devel
+BuildRequires: libutempter-devel
+BuildRequires: ncurses-devel
+BuildRequires: perl-devel
+BuildRequires: protobuf-compiler
+BuildRequires: zlib-devel
 
 Requires: openssh-clients
 
 %description
-Mosh is a remote terminal application that supports:
-  - intermittent network connectivity,
-  - roaming to different IP address without dropping the connection, and
-  - intelligent local echo and line editing to reduce the effects
-    of "network lag" on high-latency connections.
+Mosh  is  a remote  terminal  application  that supports  intermittent
+connectivity, allows roaming, and  provides speculative local echo and
+line editing of user keystrokes.
 
 %prep
 %setup
@@ -47,6 +55,9 @@ Mosh is a remote terminal application that supports:
 %_mandir/man1/mosh-server.1.*
 
 %changelog
+* Thu Oct 27 2022 Egor Ignatov <egori@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 1.3.2-alt2.3
 - NMU: disable -Werror
 
