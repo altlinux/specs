@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Test/Needs.pm)
+BuildRequires: perl(Clone.pm) perl(Test/Needs.pm)
 # END SourceDeps(oneline)
 %define dist HTTP-Message
 Name: perl-%dist
-Version: 6.42
+Version: 6.44
 Release: alt1
 
 Summary: HTTP style messages
@@ -39,6 +39,9 @@ The following methods are available:
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Fri Oct 28 2022 Igor Vlasenko <viy@altlinux.org> 6.44-alt1
+- automated CPAN update
+
 * Sat Oct 22 2022 Igor Vlasenko <viy@altlinux.org> 6.42-alt1
 - automated CPAN update
 
