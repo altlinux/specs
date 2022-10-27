@@ -1,33 +1,33 @@
 %define _unpackaged_files_terminate_build 1
-%define oname lazy-object-proxy
+%define pypi_name lazy-object-proxy
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.7.1
+Name: python3-module-%pypi_name
+Version: 1.8.0
 Release: alt1
 
 Summary: A fast and thorough lazy object proxy
 License: BSD-2-Clause
 Group: Development/Python3
-# Source-git: https://github.com/ionelmc/python-lazy-object-proxy.git
 Url: https://pypi.org/project/lazy-object-proxy/
+VCS: https://github.com/ionelmc/python-lazy-object-proxy.git
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_benchmark)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
-%py3_provides lazy-object-proxy
+%py3_provides %pypi_name
 
 Provides: python3-module-lazy_object_proxy = %EVR
 Obsoletes: python3-module-lazy_object_proxy < %EVR
@@ -41,28 +41,37 @@ wrapt.ObjectProxy just forwards the method calls to the target object.
 %setup
 %autopatch -p1
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export PIP_NO_BUILD_ISOLATION=no
 export TOXENV=py3-nocov
-tox.py3 --sitepackages -vvr --no-deps --console-scripts -s false
+%tox_check_pyproject
 
 %files
 %doc AUTHORS.rst README.rst CHANGELOG.rst
-%dir %python3_sitelibdir/lazy_object_proxy
-%python3_sitelibdir/lazy_object_proxy/*.py
-%python3_sitelibdir/lazy_object_proxy/__pycache__/
-%python3_sitelibdir/lazy_object_proxy/cext.cpython-*.so
-%python3_sitelibdir/lazy_object_proxy-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/lazy_object_proxy/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 27 2022 Stanislav Levin <slev@altlinux.org> 1.8.0-alt1
+- 1.7.1 -> 1.8.0.
+
 * Thu Jan 27 2022 Stanislav Levin <slev@altlinux.org> 1.7.1-alt1
 - 1.6.0 -> 1.7.1.
 
