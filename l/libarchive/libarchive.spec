@@ -5,7 +5,7 @@
 
 Name: libarchive
 Version: 3.6.0
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: A library for handling streaming archive formats
@@ -15,9 +15,14 @@ Url: http://www.libarchive.org
 # https://github.com/libarchive/libarchive.git
 Source: %name-%version.tar
 
+# upstream
+Patch2: CVE-2022-26280-ZIP-reader-fix-possible-out-of-bounds-read-in-zipx_l.patch
+
 # SuSE
 # ALT
 Patch100: alt-disable-lzma-mt.patch
+
+
 
 BuildRequires: bzlib-devel glibc-devel libacl-devel libattr-devel libe2fs-devel liblzma-devel liblzo2-devel libssl-devel libxml2-devel zlib-devel
 BuildRequires: libzstd-devel
@@ -71,6 +76,7 @@ developing applications that use %name.
 
 %prep
 %setup
+%patch2 -p1
 %patch100 -p1
 
 %build
@@ -114,6 +120,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Oct 26 2022 Alexander Danilov <admsasha@altlinux.org> 3.6.0-alt2
+- security (fixes: CVE-2022-26280)
+
 * Wed Mar 09 2022 Sergey V Turchin <zerg@altlinux.org> 3.6.0-alt1
 - new version
 
