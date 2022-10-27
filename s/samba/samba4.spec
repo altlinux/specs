@@ -75,7 +75,7 @@
 %endif
 
 Name:    samba
-Version: 4.16.5
+Version: 4.16.6
 Release: alt1
 
 Group:   System/Servers
@@ -97,6 +97,9 @@ Source12: ctdb.init
 Source13: samba.limits
 Source20: samba.init
 Source21: smbusers
+Source22: smb.conf.example
+Source23: usershares.conf
+Source24: smb-conf-usershares.control
 
 Source200: README.dc
 Source201: README.downgrade
@@ -582,6 +585,18 @@ Obsoletes: %dcname-test < 4.10
 %rname-test provides testing tools for both the server and client
 packages of Samba.
 
+%package usershares
+Summary: Provides support for non-root user shares
+Group: System/Servers
+PreReq: control
+Requires: %name = %version-%release
+Requires: %name-common-tools = %version-%release
+
+%description usershares
+Installing this package will provide a configuration file, group and
+directories to support non-root user shares. You can configure them
+as a user using the `net usershare` command.
+
 %package winbind-common
 Summary: Files used by MIT and Heimdal Winbind servers
 Group: System/Servers
@@ -949,7 +964,7 @@ mkdir -p %buildroot/%_lib/security
 mkdir -p %buildroot/var/lib/samba
 mkdir -p %buildroot/var/lib/ctdb
 mkdir -p %buildroot%_localstatedir/cache/samba
-mkdir -p %buildroot/var/lib/samba/{private,winbindd_privileged,scripts,sysvol}
+mkdir -p %buildroot/var/lib/samba/{private,winbindd_privileged,scripts,sysvol,drivers,usershares}
 mkdir -p %buildroot/var/log/samba/old
 mkdir -p %buildroot/var/spool/samba
 mkdir -p %buildroot%_samba_piddir/winbindd
@@ -971,12 +986,15 @@ mkdir -p %buildroot/lib/tmpfiles.d
 # Install other stuff
 install -m644 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/samba
 install -m644 %SOURCE9 %buildroot%_sysconfdir/samba/smb.conf
+install -m644 %SOURCE22 %buildroot%_sysconfdir/samba/smb.conf.example
+install -m644 %SOURCE23 %buildroot%_sysconfdir/samba/usershares.conf
 install -m644 %SOURCE11 %buildroot%_sysconfdir/security
 install -m644 %SOURCE6 %buildroot%_sysconfdir/pam.d/samba
 echo 127.0.0.1 localhost > %buildroot%_sysconfdir/samba/lmhosts
 mkdir -p %buildroot%_sysconfdir/openldap/schema
 install -m644 examples/LDAP/samba.schema %buildroot%_sysconfdir/openldap/schema/samba.schema
 install -m755 packaging/printing/smbprint %buildroot%_bindir/smbprint
+install -Dm755 %SOURCE24 %buildroot%_controldir/smb-conf-usershares
 
 cp packaging/systemd/samba.sysconfig packaging/systemd/samba.sysconfig.alt
 echo "KRB5CCNAME=FILE:/run/samba/krb5cc_samba" >>packaging/systemd/samba.sysconfig.alt
@@ -1111,6 +1129,9 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %preun_service smb
 %preun_service nmb
 
+%pre common
+%_sbindir/groupadd -f -r printadmin >/dev/null 2>&1 || :
+
 %if_with dc
 %post dc
 %post_service samba
@@ -1129,6 +1150,9 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %preun winbind
 %preun_service winbind
 %endif
+
+%pre usershares
+%_sbindir/groupadd -f -r usershares >/dev/null 2>&1 || :
 
 %files
 %doc COPYING README.md WHATSNEW.txt
@@ -1178,6 +1202,8 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 
 %dir %_samba_mod_libdir/auth
 %_samba_mod_libdir/auth/unix.so
+
+%attr(775,root,printadmin) %dir /var/lib/samba/drivers
 
 %if_with dc
 %files -n admx-samba
@@ -1348,6 +1374,7 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %files common-client
 %attr(755,root,root) %dir %_sysconfdir/samba
 %config(noreplace) %_sysconfdir/samba/smb.conf
+%_sysconfdir/samba/smb.conf.example
 %config(noreplace) %_sysconfdir/samba/lmhosts
 
 %if_with doc
@@ -1808,6 +1835,11 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_samba_mod_libdir/libuid-wrapper-samba4.so
 %endif
 
+%files usershares
+%config(noreplace) %_sysconfdir/samba/usershares.conf
+%attr(1770,root,usershares) %dir /var/lib/samba/usershares
+%_controldir/smb-conf-usershares
+
 %if_with winbind
 %files winbind-common
 %attr(750,root,wbpriv) %dir /var/lib/samba/winbindd_privileged
@@ -1946,6 +1978,17 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Thu Oct 27 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.6-alt1
+- Update to maintenance release of Samba 4.16 (Samba#15134)
+- Security fixes:
+  + CVE-2022-3437: There is a limited write heap buffer overflow in the GSSAPI
+                   unwrap_des() and unwrap_des3() routines of Heimdal (included
+                   in Samba).
+                   https://www.samba.org/samba/security/CVE-2022-3437.html
+- Add samba-usershares package for support for non-root user shares.
+- Default smb.conf simplified - homes, printers and print$ shares enabled by
+  default. Original large default example smb.conf replaced to smb.conf.example.
+
 * Mon Sep 12 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.5-alt1
 - Update to latest stable release of Samba 4.16
 - Major fixes:
