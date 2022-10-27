@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.11.1
+Version: 0.1.11.2
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,9 @@ done
 %_destdir
 
 %changelog
+* Mon Oct 24 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.1.11.2-alt1
+- Fix en_US adml for script execution module for users policy.
+
 * Wed Sep 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.1.11.1-alt1
 - Fix machine part of file-copy group policy engine.
 

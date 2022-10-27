@@ -1,14 +1,14 @@
 %define _destdir %_datadir/PolicyDefinitions
 %define _unpackaged_files_terminate_build 1
 
-Name: admx-chromium
-Version: 106.0
-Release: alt1
+Name: admx-yandex-browser
+Version: 104.0
+Release: alt2
 
-Summary: Chromium-specific ADMX policy templates
+Summary: YandexBrowser-specific ADMX policy templates
 License: CC-BY-2.5
 Group: System/Configuration/Other
-Url: https://www.chromium.org/administrators/policy-templates
+Url: https://yandex.ru/support/browser-corporate/deployment/deployment.html
 BuildArch: noarch
 
 BuildRequires: admx-lint
@@ -17,21 +17,26 @@ BuildRequires: iconv
 Source0: policy_templates.tar
 
 %description
-Chromium-specific ADMX files, which are registry-based policy settings provide
-an XML-based structure for defining the display of the Administrative Template
-policy settings in the Group Policy Object Editor.
+YandexBrowser-specific ADMX files, which are registry-based policy settings
+provide an XML-based structure for defining the display of the Administrative
+Template policy settings in the Group Policy Object Editor.
 
 %prep
 %setup -q -n policy_templates
 
 %install
-mkdir -p %buildroot%_datadir
-cp -a windows/admx/ %buildroot%_destdir
+mkdir -p %buildroot%_destdir
+cp -a ./* %buildroot%_destdir
+
+[ -d %buildroot%_destdir/en-US ] ||
+    cp -a %buildroot%_destdir/ru-RU %buildroot%_destdir/en-US
+
 for file in %buildroot%_destdir/*.admx %buildroot%_destdir/*-*/*.adml; do
-    if echo "$(basename "$file")" | grep -q "^chrome"; then
+    if echo "$(basename "$file")" | grep -q "\.admx$"; then
         mv "$file" "$file.utf16"
-        iconv -f UTF-16 -t UTF-8 <"$file.utf16" >"$file"
-        rm -f "$file.utf16"
+        iconv -f UTF-16 -t UTF-8 <"$file.utf16" >"$file.cr"
+        tr -d '\r' <"$file.cr" >"$file"
+        rm -f "$file.utf16" "$file.cr"
     fi
     grep -q "^\(<policyDefinitions\|<policyDefinitionResources\) .*xmlns:xsd=" "$file" ||
         sed -i 's/\(<policyDefinitions\|<policyDefinitionResources\)/\1 xmlns:xsd="http:\/\/www.w3.org\/2001\/XMLSchema"/' "$file"
@@ -53,23 +58,8 @@ done
 %_destdir/*/*.adml
 
 %changelog
-* Tue Oct 25 2022 Evgeny Sinelnikov <sin@altlinux.org> 106.0-alt1
-- Update to latest release 106.0-5249.119
+* Tue Oct 25 2022 Evgeny Sinelnikov <sin@altlinux.org> 104.0-alt2
+- Update installation process for release 104.0.5112.114
 
-* Thu Sep 15 2022 Evgeny Sinelnikov <sin@altlinux.org> 105.0-alt1
-- Update to latest release 105.0-5195.127
-
-* Sun Jul 18 2021 Evgeny Sinelnikov <sin@altlinux.org> 91.0-alt1
-- Update to latest release 91.0-4472.164
-- Add admx-lint check with special workaround:
-  https://github.com/altlinux/admx-lint/issues/1
-- Convert UTF-16 chrome.adm files to UTF-8
-
-* Fri May 07 2021 Evgeny Sinelnikov <sin@altlinux.org> 90.0-alt1
-- Update to latest release
-- Fix installation to /usr/share/PolicyDefinitions
-- Set right License and URL of upstream project
-
-* Fri Apr 02 2021 Alenka Glukhovskaya <alenka@altlinux.org> 89.0-alt1
+* Tue Oct 11 2022 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 104.0-alt1
 - Initial release
-
