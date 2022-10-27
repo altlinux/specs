@@ -6,14 +6,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.26.0
+Version: 3.27.0
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/tox-dev/tox.git
 Url: https://pypi.python.org/pypi/tox/
+VCS: https://github.com/tox-dev/tox
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -115,6 +115,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 27 2022 Stanislav Levin <slev@altlinux.org> 3.27.0-alt1
+- 3.26.0 -> 3.27.0.
+
 * Thu Sep 22 2022 Stanislav Levin <slev@altlinux.org> 3.26.0-alt1
 - 3.25.1 -> 3.26.0.
 

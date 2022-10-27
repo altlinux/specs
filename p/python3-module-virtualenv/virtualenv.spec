@@ -5,14 +5,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 20.16.5
+Version: 20.16.6
 Release: alt1
 
 Summary: Virtual Python Environment builder
 License: MIT
 Group: Development/Python3
-# git://github.com/pypa/virtualenv.git
 Url: https://pypi.org/project/virtualenv/
+VCS: https://github.com/pypa/virtualenv
 
 Source: %name-%version.tar.gz
 Patch: %name-%version-alt.patch
@@ -108,6 +108,9 @@ export TOX_TESTENV_PASSENV='PIP_NO_INDEX PIP_FIND_LINKS NO_INTERNET'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 27 2022 Stanislav Levin <slev@altlinux.org> 20.16.6-alt1
+- 20.16.5 -> 20.16.6.
+
 * Thu Sep 22 2022 Stanislav Levin <slev@altlinux.org> 20.16.5-alt1
 - 20.16.3 -> 20.16.5.
 
