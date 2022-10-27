@@ -29,7 +29,7 @@
 %define Name Erlang
 Name: erlang
 Epoch: 1
-Version: 24.3.3
+Version: 25.1.1
 Release: alt1
 Summary: A programming language developed by Ericsson
 License: Apache-2.0
@@ -68,47 +68,109 @@ BuildRequires: libsystemd-devel
 %{?_with_termcap:BuildRequires: libncurses-devel}
 
 %description
-%Name is a programming language developed at Ericsson Computer Science
-Laboratory. %Name provides many features which are more commonly
+Erlang is a programming language developed at Ericsson Computer Science
+Laboratory. Erlang provides many features which are more commonly
 associated with an operating system: concurrent processes, scheduling,
 memory management, distribution, networking, etc.
 
+
 %package devel
-Summary: Libs and headers for devel for %Name
+Summary: Libs and headers for devel for Erlang
 Group: Development/C
 Requires: %name = %EVR
 
 %description devel
-%Name is a programming language developed at Ericsson Computer Science
-Laboratory. %Name provides many features which are more commonly
+Erlang is a programming language developed at Ericsson Computer Science
+Laboratory. Erlang provides many features which are more commonly
 associated with an operating system: concurrent processes, scheduling,
 memory management, distribution, networking, etc.
-This package contains Libs and headers for devel for %Name.
+This package contains Libs and headers for devel for Erlang.
 
 
-%package megaco-drivers
-Summary: H.248 support for %Name - drivers
+%package full
+Summary: Full Erlang/OTP package
 Group: Development/Erlang
+BuildArch: noarch
+Requires: %name-otp-full = %EVR
+Requires: %name-examples = %EVR
+%{?_with_java:Requires: %name-jinterface = %EVR}
+
+%description full
+Erlang is a programming language developed at Ericsson Computer Science
+Laboratory. Erlang provides many features which are more commonly
+associated with an operating system: concurrent processes, scheduling,
+memory management, distribution, networking, etc.
+This package requires all standard Erlang/OTP subpackages.
+
+
+%package otp-full
+Summary: Full Erlang OTP package
+Group: Development/Erlang
+BuildArch: noarch
+Requires: %name-otp = %EVR
 Requires: %name-megaco = %EVR
+Requires: %name-odbc = %EVR
+Requires: %name-visual = %EVR
+Requires: %name-common_test = %EVR
 
-%description megaco-drivers
-Megaco (aka H.248) is a signalling protocol used in VoIP networks.
-This package contains drivers for %Name/OTP Megaco files.
+%description otp-full
+Erlang is a programming language developed at Ericsson Computer Science
+Laboratory. Erlang provides many features which are more commonly
+associated with an operating system: concurrent processes, scheduling,
+memory management, distribution, networking, etc.
+This package requires all standard Erlang OTP subpackages.
 
 
-%package megaco-devel
-Summary: Headers for %Name megaco modules
+%package otp
+Summary: Standard Erlang OTP
+BuildArch: noarch
+Group: Development/Erlang
+Provides: %name-otp-modules = %EVR
+Provides: otp = %EVR
+Requires: %name-otp-common = %EVR
+Requires: %name-otp-bin = %EVR
+
+%description otp
+Standard Erlang OTP.
+
+
+%package otp-common
+Summary: Standard Erlang OTP - common files
 Group: Development/Erlang
 BuildArch: noarch
 Requires: %name = %EVR
-Requires: %name-megaco = %EVR
+Provides: otp-common = %EVR
 
-%description megaco-devel
-Headers for %Name megaco modules.
+%description otp-common
+Standard Erlang OTP.
+This package contains common Erlang OTP files.
+
+
+%package otp-bin
+Summary: Standard Erlang OTP - arch-depend binaries
+Group: Development/Erlang
+Provides: otp-bin = %EVR
+Requires: %name-otp-common = %EVR
+
+%description otp-bin
+Standard Erlang OTP.
+This package contains arch-depend binaries Erlang OTP files.
+
+
+%package otp-devel
+Summary: Headers for standard Erlang OTP
+Group: Development/Erlang
+BuildArch: noarch
+Provides: otp-devel = %EVR
+Requires: %name-otp-common = %EVR
+Requires: %name-otp-modules = %EVR
+
+%description otp-devel
+Headers for standard Erlang OTP.
 
 
 %package megaco
-Summary: H.248 support for %Name
+Summary: H.248 support for Erlang
 Group: Development/Erlang
 BuildArch: noarch
 Provides: %name-megaco-modules = %EVR
@@ -117,115 +179,137 @@ Requires: %name-visual = %EVR
 
 %description megaco
 Megaco (aka H.248) is a signalling protocol used in VoIP networks.
-This package contains modules for %Name Megaco.
+This package contains modules for Erlang Megaco.
 
 
-%package visual-common
-Summary: Standart visual applications for %Name - common files
+%package megaco-drivers
+Summary: H.248 support for Erlang - drivers
 Group: Development/Erlang
-Requires: %name-otp = %EVR
-Requires: tk
+Requires: %name-megaco = %EVR
 
-%description visual-common
-Standard visual applications for %Name programming language.
-This package contains common files for %Name visual applications.
-
-
-%package visual-devel
-Summary: Headers for standart visual %Name modules
-Group: Development/Erlang
-BuildArch: noarch
-Requires: %name-visual = %EVR
-
-%description visual-devel
-Headers for standart visual %Name modules.
+%description megaco-drivers
+Megaco (aka H.248) is a signalling protocol used in VoIP networks.
+This package contains drivers for Erlang/OTP Megaco files.
 
 
-%package visual
-Summary: Standart visual applications for %Name
-Group: Development/Erlang
-BuildArch: noarch
-Provides: %name-visual-modules = %EVR
-Requires: %name-visual-common = %EVR
-
-%description visual
-Standard visual applications and modules for %Name programming
-language.
-
-
-%package odbc-server
-Summary: Server for %Name/OTP ODBC driver
-Group: Development/Erlang
-Requires: %name-odbc = %EVR
-
-%description odbc-server
-ODBC support for %Name programming language.
-This package contains Server for %Name/OTP ODBC driver.
-
-
-%package odbc-devel
-Summary: Headers for %Name ODBC modules
+%package megaco-devel
+Summary: Headers for Erlang megaco modules
 Group: Development/Erlang
 BuildArch: noarch
 Requires: %name = %EVR
-Requires: %name-odbc-modules = %EVR
+Requires: %name-megaco = %EVR
 
-%description odbc-devel
-Headers for %Name ODBC modules.
+%description megaco-devel
+Headers for Erlang megaco modules.
 
 
 %package odbc
-Summary: ODBC support for %Name
+Summary: ODBC support for Erlang
 Group: Development/Erlang
 BuildArch: noarch
 Provides: %name-odbc-modules = %EVR
 Requires: %name-odbc-server = %EVR
 
 %description odbc
-ODBC support for %Name programming language.
+ODBC support for Erlang programming language.
 
 
-%package common_test-common
-Summary: A portable framework for automatic testing %Name applications - common files
+%package odbc-server
+Summary: Server for Erlang/OTP ODBC driver
+Group: Development/Erlang
+Requires: %name-odbc = %EVR
+
+%description odbc-server
+ODBC support for Erlang programming language.
+This package contains Server for Erlang/OTP ODBC driver.
+
+
+%package odbc-devel
+Summary: Headers for Erlang ODBC modules
 Group: Development/Erlang
 BuildArch: noarch
 Requires: %name = %EVR
+Requires: %name-odbc-modules = %EVR
 
-%description common_test-common
-A portable framework for automatic testing %Name applications.
-This package contains common %Name common_test files.
+%description odbc-devel
+Headers for Erlang ODBC modules.
 
 
-%package common_test-devel
-Summary: Headers for %Name common_test modules
+%package visual
+Summary: Standart visual applications for Erlang
 Group: Development/Erlang
 BuildArch: noarch
-Requires: %name = %EVR
-Requires: %name-common_test-modules = %EVR
+Provides: %name-visual-modules = %EVR
+Requires: %name-visual-common = %EVR
 
-%description common_test-devel
-Headers for %Name common_test modules.
+%description visual
+Standard visual applications and modules for Erlang programming
+language.
+
+
+%package visual-common
+Summary: Standart visual applications for Erlang - common files
+Group: Development/Erlang
+Requires: %name-otp = %EVR
+Requires: tk
+
+%description visual-common
+Standard visual applications for Erlang programming language.
+This package contains common files for Erlang visual applications.
+
+
+%package visual-devel
+Summary: Headers for standart visual Erlang modules
+Group: Development/Erlang
+BuildArch: noarch
+Requires: %name-visual = %EVR
+
+%description visual-devel
+Headers for standart visual Erlang modules.
 
 
 %package common_test
-Summary: A portable framework for automatic testing %Name applications
+Summary: A portable framework for automatic testing Erlang applications
 Group: Development/Erlang
 BuildArch: noarch
 Provides: %name-common_test-modules = %EVR
 Requires: %name-common_test-common = %EVR
 
 %description common_test
-A portable framework for automatic testing %Name applications.
+A portable framework for automatic testing Erlang applications.
+
+
+%package common_test-common
+Summary: A portable framework for automatic testing Erlang applications - common files
+Group: Development/Erlang
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description common_test-common
+A portable framework for automatic testing Erlang applications.
+This package contains common Erlang common_test files.
 
 
 %package common_test-bin
-Summary: A portable framework for automatic testing %Name applications arch-depend binaries.
+Summary: A portable framework for automatic testing Erlang applications arch-depend binaries.
 Group: Development/Erlang
 Conflicts: speech-dispatcher
 Requires: %name-common_test = %EVR
 
 %description common_test-bin
-A portable framework for automatic testing %Name applications arch-depend binaries.
+A portable framework for automatic testing Erlang applications arch-depend binaries.
+
+
+%package common_test-devel
+Summary: Headers for Erlang common_test modules
+Group: Development/Erlang
+BuildArch: noarch
+Requires: %name = %EVR
+Requires: %name-common_test-modules = %EVR
+
+%description common_test-devel
+Headers for Erlang common_test modules.
+
 
 %package examples
 Summary: OTP examples
@@ -239,6 +323,7 @@ AutoReq: no
 %description examples
 OTP examples.
 
+
 %package emacs
 Summary: Compiled elisp files for erlang-mode under GNU Emacs.
 Group: Development/Erlang
@@ -249,123 +334,41 @@ Requires: %name-otp = %EVR
 Compiled elisp files for erlang-mode under GNU Emacs.
 
 
-%package otp-common
-Summary: Standard %Name OTP - common files
-Group: Development/Erlang
-BuildArch: noarch
-Requires: %name = %EVR
-Provides: otp-common = %EVR
-
-%description otp-common
-Standard %Name OTP.
-This package contains common %Name OTP files.
-
-
-%package otp-bin
-Summary: Standard %Name OTP - arch-depend binaries
-Group: Development/Erlang
-Provides: otp-bin = %EVR
-Requires: %name-otp-common = %EVR
-
-%description otp-bin
-Standard %Name OTP.
-This package contains arch-depend binaries %Name OTP files.
-
-
-%package otp-devel
-Summary: Headers for standard %Name OTP
-Group: Development/Erlang
-BuildArch: noarch
-Provides: otp-devel = %EVR
-Requires: %name-otp-common = %EVR
-Requires: %name-otp-modules = %EVR
-
-%description otp-devel
-Headers for standard %Name OTP.
-
-
-%package otp
-Summary: Standard %Name OTP
-BuildArch: noarch
-Group: Development/Erlang
-Provides: %name-otp-modules = %EVR
-Provides: otp = %EVR
-Requires: %name-otp-common = %EVR
-Requires: %name-otp-bin = %EVR
-
-%description otp
-Standard %Name OTP.
-
-
 %if_with java
 %package jinterface
-Summary: %Name's level interface to Java
+Summary: Erlang's level interface to Java
 Group: Development/Erlang
 BuildArch: noarch
 Requires: %name-otp = %EVR
 
 %description jinterface
-%Name's level interface to Java.
+Erlang's level interface to Java.
 
 
 %package jinterface-debug
-Summary: %Name's level interface to Java - modules with debug information
+Summary: Erlang's level interface to Java - modules with debug information
 Group: Development/Erlang
 BuildArch: noarch
 Requires: %name-jinterface = %EVR
 
 %description jinterface-debug
-%Name's level interface to Java modeles with debug information.
+Erlang's level interface to Java modeles with debug information.
 
 
 %package jinterface-native
-Summary: %Name's level interface to Java - modules with native CPU code
+Summary: Erlang's level interface to Java - modules with native CPU code
 Group: Development/Erlang
 BuildArch: noarch
 Requires: %name-jinterface = %EVR
 
 %description jinterface-native
-%Name's level interface to Java modules with native CPU code.
+Erlang's level interface to Java modules with native CPU code.
 %endif
-
-
-%package otp-full
-Summary: Full %Name OTP package
-Group: Development/Erlang
-BuildArch: noarch
-Requires: %name-otp = %EVR
-Requires: %name-megaco = %EVR
-Requires: %name-odbc = %EVR
-Requires: %name-visual = %EVR
-Requires: %name-common_test = %EVR
-
-%description otp-full
-%Name is a programming language developed at Ericsson Computer Science
-Laboratory. %Name provides many features which are more commonly
-associated with an operating system: concurrent processes, scheduling,
-memory management, distribution, networking, etc.
-This package requires all standard %Name OTP subpackages.
-
-
-%package full
-Summary: Full %Name/OTP package
-Group: Development/Erlang
-BuildArch: noarch
-Requires: %name-otp-full = %EVR
-Requires: %name-examples = %EVR
-%{?_with_java:Requires: %name-jinterface = %EVR}
-
-%description full
-%Name is a programming language developed at Ericsson Computer Science
-Laboratory. %Name provides many features which are more commonly
-associated with an operating system: concurrent processes, scheduling,
-memory management, distribution, networking, etc.
-This package requires all standard %Name/OTP subpackages.
 
 
 %if_with otp_debug
 %package otp-debug
-Summary: Standard %Name OTP modules with debug information
+Summary: Standard Erlang OTP modules with debug information
 Group: Development/Erlang
 BuildArch: noarch
 Provides: %name-otp-modules-debug = %EVR
@@ -375,11 +378,11 @@ Requires: %name-otp-bin = %EVR
 Conflicts: %name-eunit-debug = 2.0
 
 %description otp-debug
-Standard %Name OTP modules with debug information.
+Standard Erlang OTP modules with debug information.
 
 
 %package megaco-debug
-Summary: H.248 support for %Name - modules with debug information
+Summary: H.248 support for Erlang - modules with debug information
 Group: Development/Erlang
 BuildArch: noarch
 Provides: %name-megaco-modules-debug = %EVR
@@ -387,11 +390,23 @@ Requires: %name-megaco-drivers = %EVR
 
 %description megaco-debug
 Megaco (aka H.248) is a signalling protocol used in VoIP networks.
-This package contains modules for %Name Megaco with debug information.
+This package contains modules for Erlang Megaco with debug information.
+
+
+%package odbc-debug
+Summary: ODBC support for Erlang - modules with debug information
+Group: Development/Erlang
+BuildArch: noarch
+Provides: %name-odbc-modules-debug = %EVR
+Requires: %name-odbc-server = %EVR
+
+%description odbc-debug
+ODBC support for Erlang programming language.
+This package contains modules for odbc with debug information.
 
 
 %package visual-debug
-Summary: Standart visual applications for %Name - modules with debug information
+Summary: Standart visual applications for Erlang - modules with debug information
 Group: Development/Erlang
 BuildArch: noarch
 Provides: %name-visual-modules-debug = %EVR
@@ -399,39 +414,27 @@ Requires: %name-otp-debug = %EVR
 Requires: %name-visual-common = %EVR
 
 %description visual-debug
-Standard visual applications for %Name programming language.
+Standard visual applications for Erlang programming language.
 This package contains modules for visual applications with debug
 information.
 
 
-%package odbc-debug
-Summary: ODBC support for %Name - modules with debug information
-Group: Development/Erlang
-BuildArch: noarch
-Provides: %name-odbc-modules-debug = %EVR
-Requires: %name-odbc-server = %EVR
-
-%description odbc-debug
-ODBC support for %Name programming language.
-This package contains modules for odbc with debug information.
-
-
 %package common_test-debug
-Summary: A portable framework for automatic testing %Name applications - modules with debug information
+Summary: A portable framework for automatic testing Erlang applications - modules with debug information
 Group: Development/Erlang
 BuildArch: noarch
 Provides: %name-common_test-modules-debug = %EVR
 Requires: %name-common_test-common = %EVR
 
 %description common_test-debug
-A portable framework for automatic testing %Name applications.
+A portable framework for automatic testing Erlang applications.
 This package contains modules for common_test with debug information.
 %endif
 
 
 %if_with otp_native
 %package otp-native
-Summary: Standard %Name OTP modules with native CPU code
+Summary: Standard Erlang OTP modules with native CPU code
 Group: Development/Erlang
 BuildArch: noarch
 Provides: %name-otp-modules-native = %EVR
@@ -439,13 +442,12 @@ Provides: otp-native = %EVR
 Requires: %name-otp-common = %EVR
 Requires: %name-otp-bin = %EVR
 
-
 %description otp-native
-Standard %Name OTP modules with native CPU code.
+Standard Erlang OTP modules with native CPU code.
 
 
 %package megaco-native
-Summary: H.248 support for %Name - modules with native CPU code
+Summary: H.248 support for Erlang - modules with native CPU code
 Group: Development/Erlang
 BuildArch: noarch
 Provides: %name-megaco-modules-native = %EVR
@@ -453,11 +455,23 @@ Requires: %name-megaco-drivers = %EVR
 
 %description megaco-native
 Megaco (aka H.248) is a signalling protocol used in VoIP networks.
-This package contains modules for %Name Megaco with native CPU code.
+This package contains modules for Erlang Megaco with native CPU code.
+
+
+%package odbc-native
+Summary: ODBC support for Erlang - modules with native CPU code
+Group: Development/Erlang
+BuildArch: noarch
+Provides: %name-odbc-modules-native = %EVR
+Requires: %name-odbc-server = %EVR
+
+%description odbc-native
+ODBC support for Erlang programming language.
+This package contains modules for odbc with native CPU code.
 
 
 %package visual-native
-Summary: Standart visual applications for %Name - modules with native CPU code
+Summary: Standart visual applications for Erlang - modules with native CPU code
 Group: Development/Erlang
 BuildArch: noarch
 Provides: %name-visual-modules-native = %EVR
@@ -465,55 +479,42 @@ Requires: %name-otp-native = %EVR
 Requires: %name-visual-common = %EVR
 
 %description visual-native
-Standard visual applications for %Name programming language.
+Standard visual applications for Erlang programming language.
 This package contains modules for visual applications with native
 CPU code.
 
 
-%package odbc-native
-Summary: ODBC support for %Name - modules with native CPU code
-Group: Development/Erlang
-BuildArch: noarch
-Provides: %name-odbc-modules-native = %EVR
-Requires: %name-odbc-server = %EVR
-
-%description odbc-native
-ODBC support for %Name programming language.
-This package contains modules for odbc with native CPU code.
-
-
 %package common_test-native
-Summary: A portable framework for automatic testing %Name applications - modules with native CPU code
+Summary: A portable framework for automatic testing Erlang applications - modules with native CPU code
 Group: Development/Erlang
 BuildArch: noarch
 Provides: %name-common_test-modules-native = %EVR
 Requires: %name-common_test-common = %EVR
 
 %description common_test-native
-A portable framework for automatic testing %Name applications.
+A portable framework for automatic testing Erlang applications.
 This package contains modules for common_test with native CPU code.
 %endif
 
 
 %if_enabled docs
-
 %package man
-Summary: Man pages for %Name/OTP
+Summary: Man pages for Erlang/OTP
 Group: Development/Documentation
 BuildArch: noarch
 AutoReq: no
 AutoProv: no
 
 %description man
-%Name is a programming language developed at Ericsson Computer Science
-Laboratory. %Name provides many features which are more commonly
+Erlang is a programming language developed at Ericsson Computer Science
+Laboratory. Erlang provides many features which are more commonly
 associated with an operating system: concurrent processes, scheduling,
 memory management, distribution, networking, etc.
-This package contains man pages for %Name.
+This package contains man pages for Erlang.
 
 
 %package doc
-Summary: Documentation for %Name/OTP.
+Summary: Documentation for Erlang/OTP.
 License: EPL
 Group: Development/Documentation
 BuildArch: noarch
@@ -523,15 +524,15 @@ Requires: %name-doc-chunks = %EVR
 AutoReq: no
 
 %description doc
-%Name is a programming language developed at Ericsson Computer Science
-Laboratory. %Name provides many features which are more commonly
+Erlang is a programming language developed at Ericsson Computer Science
+Laboratory. Erlang provides many features which are more commonly
 associated with an operating system: concurrent processes, scheduling,
 memory management, distribution, networking, etc.
-This is %Name/OTP documentation virtual package.
+This is Erlang/OTP documentation virtual package.
 
 
 %package doc-html
-Summary: Documentation for %Name/OTP in HTML format
+Summary: Documentation for Erlang/OTP in HTML format
 Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name-manual < R11B.4-alt0.1
@@ -542,15 +543,15 @@ AutoReq: no
 AutoProv: no
 
 %description doc-html
-%Name is a programming language developed at Ericsson Computer Science
-Laboratory. %Name provides many features which are more commonly
+Erlang is a programming language developed at Ericsson Computer Science
+Laboratory. Erlang provides many features which are more commonly
 associated with an operating system: concurrent processes, scheduling,
 memory management, distribution, networking, etc.
-This package contains documentation for %Name/OTP in HTML format.
+This package contains documentation for Erlang/OTP in HTML format.
 
 
 %package doc-pdf
-Summary: Documentation for %Name/OTP in PDF format
+Summary: Documentation for Erlang/OTP in PDF format
 Group: Development/Documentation
 BuildArch: noarch
 Requires:  %name-visual-common = %EVR
@@ -565,14 +566,15 @@ AutoReq: no
 AutoProv: no
 
 %description doc-pdf
-%Name is a programming language developed at Ericsson Computer Science
-Laboratory. %Name provides many features which are more commonly
+Erlang is a programming language developed at Ericsson Computer Science
+Laboratory. Erlang provides many features which are more commonly
 associated with an operating system: concurrent processes, scheduling,
 memory management, distribution, networking, etc.
-This package contains documentation for %Name/OTP in PDF format.
+This package contains documentation for Erlang/OTP in PDF format.
+
 
 %package doc-chunks
-Summary: Documentation for %Name/OTP in chunk format
+Summary: Documentation for Erlang/OTP in chunk format
 Group: Development/Documentation
 BuildArch: noarch
 Requires:  %name-visual-common = %EVR
@@ -587,19 +589,18 @@ AutoReq: no
 AutoProv: no
 
 %description doc-chunks
-%Name is a programming language developed at Ericsson Computer Science
-Laboratory. %Name provides many features which are more commonly
+Erlang is a programming language developed at Ericsson Computer Science
+Laboratory. Erlang provides many features which are more commonly
 associated with an operating system: concurrent processes, scheduling,
 memory management, distribution, networking, etc.
-This package contains documentation for %Name/OTP in chunk format.
-
+This package contains documentation for Erlang/OTP in chunk format.
 %endif
 
 
 %prep
 %setup -n otp_src_OTP-%version
 
-sed -i 's,armv7hl,armh,' erts/aclocal.m4
+#sed -i 's,armv7hl,armh,' erts/aclocal.m4
 
 %ifarch %e2k
 # beam/erl_bif_lists.c:779: non-void subtract_continue() w/o return
@@ -619,8 +620,6 @@ sed -i 's/MG_FLAG=-MG/MG_FLAG=/' erts/emulator/Makefile.in
 # if you get this error, you need to increase the limit returned by "ulimit -u"
 # which is 512 in the default ALT Linux configuration
 export NPROCS=16
-
-./otp_build update_configure
 
 %configure \
 	--libdir=%_libexecdir \
@@ -689,8 +688,7 @@ for n in 1 4 6 7; do
 done
 
 %define _compress_method xz
-
-%endif
+%endif #docs
 
 install -d -m 0755 %buildroot{%_otpdir/usr/include,%_includedir}
 ln -sf %buildroot%_otpdir/{erts-*/include/*.h,usr/include/}
@@ -824,40 +822,43 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %files
+%_bindir/*
+%exclude %_bindir/ct_run
+%dir %_otpdir
+%dir %_otpdir/bin
+%dir %_otplibdir
+%_otpdir/bin/*
+%_otpdir/releases
+%dir %_otplibdir/erts-*
+%dir %_otpdir/erts-*
+%_otpdir/erts-*/bin
+%_unitdir/*
+
 %dir %_docdir/%name-%version
 %_docdir/%name-%version/AUTHORS
 %_docdir/%name-%version/LICENSE.txt
+%_docdir/%name-%version/README.md
 %if_enabled docs
 %_docdir/%name-%version/COPYRIGHT
 %_docdir/%name-%version/PR.template
 %dir %_erldocdir
 %endif
-%_docdir/%name-%version/README.md
-%_bindir/*
-%exclude %_bindir/ct_run
-%_unitdir/*
-%dir %_otpdir
-##dir %_otpdir/doc
-%dir %_otpdir/bin
-%dir %_otplibdir
-%_otpdir/bin/*
-%dir %_otpdir/erts-*
-%_otpdir/erts-*/bin
-%_otpdir/releases
-%dir %_otplibdir/erts-*
-%if_with otp_debug
-%exclude %_otpdir/bin/*.debug
-%exclude %_bindir/*.debug
-%endif
-%if_with otp_native
-%exclude %_otpdir/bin/*.native
-%exclude %_bindir/*.native
-%endif
+
 %exclude %_otpdir/bin/typer*
 %exclude %_bindir/typer*
 %exclude %_otpdir/erts-*/bin/typer
 %exclude %_otpdir/bin/ct_run
 %exclude %_otpdir/erts-*/bin/ct_run
+
+%if_with otp_debug
+%exclude %_otpdir/bin/*.debug
+%exclude %_bindir/*.debug
+%endif
+
+%if_with otp_native
+%exclude %_otpdir/bin/*.native
+%exclude %_bindir/*.native
+%endif
 
 
 %files devel
@@ -878,8 +879,8 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 %_otplibdir/diameter-*/bin
 %_otplibdir/os_mon-*/priv/bin
 %_otplibdir/runtime_tools-*/priv
-%_otplibdir/tools-*/bin
 %_otplibdir/edoc-*/bin
+
 
 %files emacs
 %_otplibdir/tools-*/emacs
@@ -1179,7 +1180,6 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 %files jinterface-debug
 %_otplibdir/jinterface-*/ebin.debug
-
 %endif
 
 
@@ -1220,6 +1220,9 @@ useradd -r -g epmd -d /tmp -s /sbin/nologin \
 
 
 %changelog
+* Sun Oct 23 2022 Egor Ignatov <egori@altlinux.org> 1:25.1.1-alt1
+- new version 25.1.1
+
 * Wed Mar 30 2022 Egor Ignatov <egori@altlinux.org> 1:24.3.3-alt1
 - new version 24.3.3
 

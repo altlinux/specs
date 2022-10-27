@@ -5,18 +5,16 @@
 
 Name: rebar
 Epoch: 1
-Version: 3.17.0
+Version: 3.20.0
 Release: alt1
 Summary: A sophisticated build-tool for Erlang projects that follows OTP principles.
 License: Apache-2.0
 Group: Development/Erlang
 BuildArch: noarch
 URL: https://www.rebar3.org
-#https://github.com/erlang/rebar3.git
+VCS: https://github.com/erlang/rebar3.git
 
 Source: %name-%version.tar
-Source1: %name-modules.tar
-Source2: _build.tar
 
 BuildRequires(pre): rpm-build-erlang rpm-build-licenses
 BuildRequires: erlang-devel erlang-otp-devel
@@ -39,8 +37,6 @@ locations (git, hg, etc).
 
 %prep
 %setup
-tar -xf %SOURCE1
-tar -xf %SOURCE2
 
 %build
 HOME="." ./bootstrap
@@ -54,6 +50,9 @@ install -m755 %_rebar_builddir/bin/rebar3 %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Tue Oct 25 2022 Egor Ignatov <egori@altlinux.org> 1:3.20.0-alt1
+- 3.20.0
+
 * Thu Oct 21 2021 Egor Ignatov <egori@altlinux.org> 1:3.17.0-alt1
 - 3.17.0
 

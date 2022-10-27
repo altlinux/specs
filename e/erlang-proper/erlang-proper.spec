@@ -3,16 +3,16 @@
 %global realname proper
 
 Name: erlang-%realname
-Version: 1.4
+Version: 1.4.0.19.3bbd
 Release: alt1
 Summary: A QuickCheck-inspired property-based testing tool for Erlang
 Group: Development/Erlang
 License: GPLv3+
 Url: https://proper-testing.github.io/
+VCS: https://github.com/proper-testing/proper
 
 BuildArch: noarch
 
-# https://github.com/proper-testing/proper
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-erlang
@@ -27,7 +27,7 @@ open-source property-based testing tool for Erlang.
 %setup
 
 %build
-%make compile
+%make
 
 %install
 mkdir -p %buildroot/%_erllibdir/%realname-%version/ebin
@@ -46,6 +46,9 @@ export ERL_LIBS=%buildroot%_erllibdir
 %_erllibdir/%realname-%version
 
 %changelog
+* Tue Oct 25 2022 Egor Ignatov <egori@altlinux.org> 1.4.0.19.3bbd-alt1
+- Merge with upstream/master to fix build with OTP-25.1.1
+
 * Tue Oct 12 2021 Egor Ignatov <egori@altlinux.org> 1.4-alt1
 - 1.4
 

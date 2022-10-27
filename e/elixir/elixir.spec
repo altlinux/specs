@@ -1,27 +1,29 @@
 %define _unpackaged_files_terminate_build 1
 
+%def_with check
+
 Name: elixir
-Version: 1.12.3
+Version: 1.14.1
 Release: alt1
 Summary: A modern approach to programming for the Erlang VM
 License: Apache-2.0
 Group: Development/Other
 Url: http://elixir-lang.org/
+VCS: https://github.com/elixir-lang/elixir.git
+
 BuildArch: noarch
 
-# https://github.com/elixir-lang/elixir.git
 Source: %name-%version.tar
-
-Patch0: elixir-alt-exception_test-gt_cookie.patch
 
 BuildRequires(pre): rpm-build-erlang
 BuildRequires: erlang-devel
 BuildRequires: erlang-otp-devel
 BuildRequires: rebar
 
-# for tests
+%if_with check
 BuildRequires: /dev/pts
 BuildRequires: git
+%endif
 
 %description
 Elixir is a programming language built on top of the Erlang VM.
@@ -31,8 +33,6 @@ fault-tolerant, non-stop applications with hot code swapping.
 %prep
 %setup
 find -name '*.bat' -exec rm \{\} \;
-
-%patch0 -p1
 
 %build
 export LANG="en_US.UTF-8"
@@ -63,6 +63,9 @@ cp -a man/elixir.1 man/elixirc.1 man/iex.1 man/mix.1 %buildroot/%_mandir/man1
 %_mandir/man1/*
 
 %changelog
+* Tue Oct 25 2022 Egor Ignatov <egori@altlinux.org> 1.14.1-alt1
+- 1.14.1
+
 * Tue Oct 12 2021 Egor Ignatov <egori@altlinux.org> 1.12.3-alt1
 - 1.12.3
 
