@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-Date-Format
 Name: perl-%dist
-Version: 1.005
+Version: 1.006
 Release: alt1
 
 Summary: Produce RFC 2822 date strings
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Date-Format-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/R/RJ/RJBS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ datetime string.  (In case you care, they're not RFC 822 dates, because
 they use a four digit year, which is not allowed in RFC 822.)
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -35,6 +35,9 @@ they use a four digit year, which is not allowed in RFC 822.)
 %perl_vendor_privlib/Email
 
 %changelog
+* Fri Oct 28 2022 Igor Vlasenko <viy@altlinux.org> 1.006-alt1
+- automated CPAN update
+
 * Mon Oct 20 2014 Igor Vlasenko <viy@altlinux.ru> 1.005-alt1
 - automated CPAN update
 
