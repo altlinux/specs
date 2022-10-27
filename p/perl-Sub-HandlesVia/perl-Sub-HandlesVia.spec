@@ -6,7 +6,7 @@ BuildRequires: perl(Class/Method/Modifiers.pm) perl(Class/Tiny.pm) perl(Eval/Typ
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.038
+Version: 0.040
 Release: alt1
 Summary: alternative handles_via implementation
 Group: Development/Perl
@@ -44,6 +44,9 @@ fi
 %perl_vendor_privlib/S*
 
 %changelog
+* Fri Oct 28 2022 Igor Vlasenko <viy@altlinux.org> 0.040-alt1
+- automated CPAN update
+
 * Sat Oct 22 2022 Igor Vlasenko <viy@altlinux.org> 0.038-alt1
 - automated CPAN update
 
