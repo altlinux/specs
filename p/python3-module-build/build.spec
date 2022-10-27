@@ -5,14 +5,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.8.0
-Release: alt2
+Version: 0.9.0
+Release: alt1
 
 Summary: Simple, correct PEP 517 build frontend
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/pypa/build.git
 Url: https://pypi.org/project/build
+VCS: https://github.com/pypa/build.git
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -83,6 +83,9 @@ Requires: python3-module-%pypi_name
 %_bindir/pyproject-build
 
 %changelog
+* Thu Oct 27 2022 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1
+- 0.8.0 -> 0.9.0.
+
 * Mon Sep 26 2022 Stanislav Levin <slev@altlinux.org> 0.8.0-alt2
 - Fixed FTBFS (missing tests dependency on toml).
 
