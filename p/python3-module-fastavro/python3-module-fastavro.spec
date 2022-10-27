@@ -1,7 +1,7 @@
 %define  modulename fastavro
 
 Name:    python3-module-%modulename
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 
 Summary: Fast Avro for Python
@@ -43,6 +43,9 @@ export FASTAVRO_USE_CYTHON=1
 %python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Oct 27 2022 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt1
+- Automatically updated to 1.7.0.
+
 * Mon Sep 12 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt1
 - Automatically updated to 1.6.1.
 
