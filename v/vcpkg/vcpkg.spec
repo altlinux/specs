@@ -1,7 +1,7 @@
 %define oname vcpkg-tool
 
 Name: vcpkg
-Version: 2022.07.14
+Version: 2022.10.17
 Release: alt1
 
 Summary: C++ Library Manager
@@ -70,6 +70,9 @@ install -D -m 0644 -p "%SOURCE1" "%buildroot%_sysconfdir/profile.d/%name.sh"
 %config(noreplace) %_sysconfdir/profile.d/%name.sh
 
 %changelog
+* Thu Oct 27 2022 Vitaly Lipatov <lav@altlinux.ru> 2022.10.17-alt1
+- new version 2022.10.17 (with rpmrb script)
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 2022.07.14-alt1
 - new version (2022.07.14) with rpmgs script
 
