@@ -2,7 +2,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.1.1
+Version: 4.2.0
 Release: alt1
 
 Summary: Text progress bar library for Python
@@ -55,6 +55,9 @@ py.test-3 -v
 %python3_sitelibdir/*
 
 %changelog
+* Thu Oct 27 2022 Grigory Ustinov <grenka@altlinux.org> 4.2.0-alt1
+- Automatically updated to 4.2.0.
+
 * Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.1-alt1
 - Automatically updated to 4.1.1.
 
