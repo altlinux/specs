@@ -28,7 +28,7 @@
 # which shouldn't be visible by normal users.
 Name: %(sed -Ee 's/(-checkinstall|)$/-checkinstall/' <<<'apt-BuildPreReq-under-pkdirect-checkinstall')
 Version: 1
-Release: alt2
+Release: alt2.1
 
 Summary: Empty package only useful during its build: it installs (and checks) another pkg
 Group: Development/Other
@@ -43,6 +43,10 @@ BuildArch: noarch
 # (Normally, the "checkinstall" component is not available for installation
 # of the build dependencies. Luckily, the e2k Girar, which is the reason for
 # the existence of this package, doesn't separate *-checkinstall packages.)
+BuildRequires(pre): apt-clear-sources-filetrigger-for-checkinstall
+# BuildRequires(pre) for a pkg that--to have effect--must be in another
+# transaction or at least definitely ordered before our *-checkinstall pkg
+# that requires this effect.
 %if_without install_check_in_girar
 BuildPreReq: %other_pkg
 %define confirm_that_other_pkg_has_been_checked \
@@ -116,6 +120,10 @@ rpminstall-checkinstall isn't usually built in the same task as rpm.)
 %files
 
 %changelog
+* Fri Oct 28 2022 Ivan Zakharyaschev <imz@altlinux.org> 1-alt2.1
+- Clear APT's sources before the test for repositories where
+  there are uncommented external sources in the default build env (like e2k).
+
 * Thu Dec 09 2021 Ivan Zakharyaschev <imz@altlinux.org> 1-alt2
 - Added an URL.
 
