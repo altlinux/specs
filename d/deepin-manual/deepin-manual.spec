@@ -1,4 +1,3 @@
-#%%set_verify_elf_method relaxed
 %ifarch %e2k ppc64le
 %def_disable qtwebengine
 %else
@@ -6,10 +5,15 @@
 %endif
 
 Name: deepin-manual
-Version: 5.8.8
+Version: 5.8.15
 Release: alt1
 Summary: Help files for DDE
-License: GPL-3.0+ and (BSD-3-Clause and Qt.Commercial) and ISC
+License: GPL-3.0+ and CC0-1.0 and BSD-3-Clause
+# LICENSES/: CC0-1.0 and CC-BY-4.0 and MIT and BSD-3-Clause and LGPL-3.0 and GPL-3.0
+# tools/: CC0-1.0
+# tests/: CC0-1.0 and GPL-3.0+
+# src/: GPL-3.0+ and CC0-1.0 and BSD-3-Clause
+# src/web*/*/qwebchannel.js: BSD-3-Clause or Qt.Commercial
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-manual
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -75,6 +79,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Fri Oct 28 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.15-alt1
+- New version (5.8.15).
+- Updated license tag.
+
 * Wed Jun 01 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.8-alt1
 - New version (5.8.8).
 
