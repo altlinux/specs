@@ -1,6 +1,6 @@
 Name:    pascalabcnet
-Version: 3.8.3.3177
-Release: alt1.gitd7d6d24d
+Version: 3.8.3.3197
+Release: alt1
 
 Summary: PascalABC.NET programming language  
 License: LGPL-3.0
@@ -45,7 +45,6 @@ find . -name \*.exe -delete
 # TODO remove bundled libraries
 #find . -name \*.dll -delete
 tar xf %SOURCE2
-tar xf %SOURCE3
 
 %build
 # Build compiler
@@ -95,14 +94,20 @@ for icon in *.png; do
 done
 popd
 
+# Install Samples
+tar xf %SOURCE3 -C %buildroot%_libexecdir/%name
+
 %files
-%doc README.md Samples
+%doc README.md doc/*
 %_bindir/*
 %_libexecdir/%name
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/pascalabcnet.png
 
 %changelog
+* Fri Oct 28 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3197-alt1
+- New version (closes: 43942, 43943, 43944, 43945, 43946).
+
 * Fri Sep 30 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3177-alt1.gitd7d6d24d
 - New version.
 - Package IDE.
