@@ -1,6 +1,6 @@
 Name: libpgm-index
 Version: 1.0
-Release: alt1
+Release: alt1.1
 
 Summary: State-of-the-art learned data structure that enables fast lookup, predecessor, range searches and updates in arrays
 
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %e2k
 
 %description
 The Piecewise Geometric Model index (PGM-index) is a data structure that enables fast lookup,
@@ -49,5 +49,8 @@ cp -a include/pgm %buildroot/%_includedir/
 %_includedir/pgm/
 
 %changelog
+* Fri Oct 28 2022 Michael Shigorin <mike@altlinux.org> 1.0-alt1.1
+- build for e2k as well
+
 * Mon Jun 27 2022 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
 - initial build for ALT Sisyphus
