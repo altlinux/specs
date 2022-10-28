@@ -1,6 +1,6 @@
 Name: sdcv
-Version: 0.5.3
-Release: alt1.1
+Version: 0.5.4
+Release: alt1
 
 Summary: A console version of StarDict the international dictionary
 
@@ -11,7 +11,6 @@ Url: https://dushistov.github.io/sdcv/
 Source: %name-%version.tar
 Patch0: %name-t_interactive.patch
 Patch1: %name-t_list.patch
-Patch2: %name-synonyms-bin-search.patch
 
 BuildPreReq: rpm-macros-cmake
 BuildRequires: gcc-c++
@@ -31,8 +30,6 @@ dictionary.
 # fix tests to run in isolated environment
 %patch0 -p1
 %patch1 -p1
-# pick upstream patchset for massive binsearch speedup
-%patch2 -p1
 # make output readable on dark terminals
 sed -i 's/;34m/;36m/' src/libwrapper.cpp
 
@@ -60,6 +57,9 @@ popd
 %_mandir/uk/man1/*
 
 %changelog
+* Fri Oct 28 2022 Andrew Savchenko <bircoph@altlinux.org> 0.5.4-alt1
+- Version bump.
+
 * Mon May 31 2021 Arseny Maslennikov <arseny@altlinux.org> 0.5.3-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
