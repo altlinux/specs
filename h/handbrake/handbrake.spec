@@ -3,7 +3,7 @@
 
 Name: handbrake
 Version: 1.4.2
-Release: alt1
+Release: alt1.1
 Summary: Multithreaded Video Transcoder
 Packager: Motsyo Gennadi <drool@altlinux.ru>
 Source0: HandBrake-%version.tar.bz2
@@ -31,8 +31,9 @@ BuildRequires: bzlib-devel doxygen gcc-c++ intltool libass-devel libdbus-glib-de
 BuildRequires: libharfbuzz-devel libjansson-devel liblame-devel libnotify-devel libopus-devel libsamplerate-devel libssl-devel libtheora-devel
 BuildRequires: libvorbis-devel libx264-devel libxml2-devel python-modules-json cmake libspeex-devel liblzma-devel libnuma-devel libvpx-devel
 BuildRequires: nasm meson libturbojpeg-devel
+BuildRequires: nv-codec-headers
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %e2k
 
 %description
 HandBrake is an open-source, GPL-licensed, multiplatform, multithreaded video
@@ -81,10 +82,15 @@ export CXXFLAGS="%optflags"
 %__cp "%{S:200}" contrib/x265_10bit/A99-x265-x32.patch
 %__cp "%{S:200}" contrib/x265_12bit/A99-x265-x32.patch
 
-./configure	--prefix="%buildroot%prefix" \
-		--release \
-		--disable-gtk-update-checks \
-		--enable-fdk-aac
+./configure \
+	--prefix="%buildroot%prefix" \
+	--release \
+	--disable-gtk-update-checks \
+	--enable-fdk-aac \
+%ifarch %e2k
+	--disable-nvenc \
+%endif
+	%nil
 pushd build
 %__make build
 popd
@@ -112,6 +118,9 @@ popd
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sat Oct 08 2022 Michael Shigorin <mike@altlinux.org> 1.4.2-alt1.1
+- E2K: disable nvenc (no nvidia blobs anyways)
+
 * Mon Oct 18 2021 Motsyo Gennadi <drool@altlinux.ru> 1.4.2-alt1
 - 1.4.2
 
