@@ -1,14 +1,12 @@
 Name: libelfin
 Version: 0.3
-Release: alt1
-
-Packager: %packager
+Release: alt2
 
 Summary: C++11 library for reading ELF binaries and DWARFv4 debug information.
 License: GPL
 Group: Terminals
-URL: https://github.com/aclements/libelfin
 
+Url: https://github.com/aclements/libelfin
 Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Oct 17 2020
@@ -53,6 +51,10 @@ which use Elfin library.
 
 %prep
 %setup
+%ifarch %e2k
+# lcc 1.25.23 ftbfs workaround
+sed -i 's,-Werror,& -Wno-error=return-type,g' */Makefile
+%endif
 
 %build
 %make PREFIX=%_exec_prefix LIBDIR=/%_lib MANPREFIX=%_mandir
@@ -60,7 +62,7 @@ which use Elfin library.
 %install
 %define docdir %_docdir/%name-%version
 
-%makeinstall DESTDIR=%buildroot LIBDIR=/%_lib PREFIX=%_exec_prefix MANPREFIX=%_mandir
+%makeinstall_std LIBDIR=/%_lib PREFIX=%_exec_prefix MANPREFIX=%_mandir
 
 mkdir -p %buildroot%docdir
 install -pm644 README.md %buildroot%docdir/
@@ -85,5 +87,9 @@ install -pm644 examples/* %buildroot%docdir/examples/
 %_libdir/*.a
 
 %changelog
+* Fri Oct 28 2022 Michael Shigorin <mike@altlinux.org> 0.3-alt2
+- E2K: lcc 1.25.23 ftbfs workaround.
+- Minor spec cleanup.
+
 * Sat Oct 17 2020 Andrey Bergman <vkni@altlinux.org> 0.3-alt1
 - Initial release for Sisyphus.
