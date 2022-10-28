@@ -2,8 +2,8 @@
 %define php_version 8.0
 
 Name: nextcloud
-Version: 24.0.4
-Release: alt2
+Version: 25.0.0
+Release: alt1
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -159,6 +159,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Wed Oct 26 2022 Andrey Cherepanov <cas@altlinux.org> 25.0.0-alt1
+- New version.
+
 * Thu Sep 01 2022 Andrey Cherepanov <cas@altlinux.org> 24.0.4-alt2
 - Disable mod_php7 if it is enabled.
 
