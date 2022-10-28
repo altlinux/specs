@@ -2,7 +2,7 @@
 
 Name: openslp
 Version: 2.0.0
-Release: alt2
+Release: alt3
 
 Summary: OpenSLP implementation of Service Location Protocol V2
 License: BSD-style
@@ -19,6 +19,7 @@ Patch5: openslp-2.0.0-cleanup_libslp_namespace.patch
 Patch6: openslp-2.0.0-CVE-2016-4912.patch
 Patch7: openslp-2.0.0-CVE-2017-17833.patch
 Patch8: openslp-2.0.0-openssl_1.1.0.patch
+Patch9: openslp-2.0.0-CVE-2019-5544.patch
 
 BuildRequires: flex gcc-c++ libssl-devel zlib-devel
 
@@ -87,6 +88,7 @@ application.  This package contains openslp project development headers.
 %patch6 -p2
 %patch7 -p1
 %patch8 -p2
+%patch9 -p1
 #sed -i '/OPTFLAGS/ s/-O3/$RPM_OPT_FLAGS/' configure.in
 
 %build
@@ -141,6 +143,9 @@ mkdir -p %buildroot%_sysconfdir/slp.reg.d
 %_includedir/slp.h
 
 %changelog
+* Fri Oct 28 2022 Alexander Danilov <admsasha@altlinux.org> 2.0.0-alt3
+- Applied security fixes (fixes CVE-2021-4217).
+
 * Sat Dec 01 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2
 - Fixed libslp namespace (closes: #35692).
 - Enabled SLPv2 Security.
