@@ -1,11 +1,10 @@
 %def_with check
-%def_with pdfdoc
 
-%define soname 28
+%define soname 29
 Summary: Command-line tools and library for transforming PDF files
 Name: qpdf
-Version: 10.6.3
-Release: alt2
+Version: 11.1.0
+Release: alt1
 License: Apache-2.0
 Group: System/Base
 Url: http://qpdf.sourceforge.net/
@@ -19,16 +18,8 @@ BuildRequires: pcre-devel
 BuildRequires: libjpeg-devel
 BuildRequires: perl-base
 BuildRequires: libgnutls-devel
-
-# for autoreconf
-BuildRequires: autoconf
-BuildRequires: automake
-BuildRequires: libtool
 BuildRequires: gcc-c++
-
-%if_with pdfdoc
-BuildRequires: /usr/bin/fop
-%endif
+BuildRequires: cmake ctest
 
 %if_with check
 # for testing
@@ -48,11 +39,6 @@ Summary: Development files for QPDF library
 Group: Development/C
 Requires: lib%name%soname = %EVR
 
-%package doc
-Summary: QPDF Manual
-Group: Documentation
-BuildArch: noarch
-
 %description
 QPDF is a command-line program that does structural, content-preserving
 transformations on PDF files. It could have been called something
@@ -69,36 +55,25 @@ and do many other operations useful to PDF developers.
 Header files and libraries necessary
 for developing programs using the QPDF library.
 
-%description doc
-QPDF Manual
-
 %prep
 %setup
 %patch0 -p1
 
 %build
-%autoreconf -fisv -I m4/
-
-%configure --disable-static \
-	   --enable-html-doc \
-	   --enable-crypto-gnutls \
-	   --disable-implicit-crypto \
-	   --disable-check-autofiles \
-%if_with check
-	   --enable-show-failed-test-output \
-	   --enable-test-compare-images \
-           --enable-show-failed-test-output \
-%endif
-	   --with-docbook-xsl=%_datadir/xml/docbook/xsl-stylesheets
-
-%make
+%cmake -DBUILD_STATIC_LIBS=0 \
+       -DREQUIRE_CRYPTO_GNUTLS=1 \
+       -DUSE_IMPLICIT_CRYPTO=0 \
+       -DSHOW_FAILED_TEST_OUTPUT=1 \
+       -DINSTALL_EXAMPLES=0 \
+       -DINSTALL_CMAKE_PACKAGE=0
+%cmake_build
 
 %install
-%makeinstall
+%cmake_install
 rm -rf %buildroot%_docdir/qpdf
 
 %check
-make check
+make test -C %_target_platform
 
 
 %files
@@ -117,10 +92,11 @@ make check
 %_libdir/libqpdf*.so
 %_libdir/pkgconfig/libqpdf.pc
 
-%files doc
-%doc manual/build/singlehtml/index.html  manual/build/singlehtml/_static
-
 %changelog
+* Fri Oct 07 2022 Anton Farygin <rider@altlinux.ru> 11.1.0-alt1
+- 11.1.0
+- removed documentation package
+
 * Mon Jun 20 2022 Anton Farygin <rider@altlinux.ru> 10.6.3-alt2
 - FTBFS: replace egrep to grep -E
 

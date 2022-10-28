@@ -1,5 +1,5 @@
 Name: pdfarranger
-Version: 1.8.2
+Version: 1.9.1
 Release: alt1
 Url: https://github.com/pdfarranger/pdfarranger
 Group: Publishing
@@ -48,6 +48,9 @@ cp -a data/icons/* %buildroot/%_iconsdir/
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Fri Oct 28 2022 Fr. Br. George <george@altlinux.org> 1.9.1-alt1
+- Autobuild version bump to 1.9.1
+
 * Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 1.8.2-alt1
 - Autobuild version bump to 1.8.2
 
