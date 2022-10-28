@@ -1,5 +1,5 @@
 # Variable _tnt_version is `git describe --long` from original Tarantool repo for this version
-%define _tnt_version %version-0-g47e6bd362
+%define _tnt_version %version-32-gec3eb5256
 
 %def_disable static
 %def_enable check
@@ -7,7 +7,7 @@
 ExclusiveArch: x86_64
 
 Name: tarantool
-Version: 2.8.4
+Version: 2.10.3
 Release: alt1
 
 Summary: In-memory database and Lua application server
@@ -30,6 +30,16 @@ Source9: %name-%version-test-run-lib-checks.tar
 Source10: %name-%version-test-run-lib-luatest.tar
 Source11: %name-%version-test-run-lib-msgpack-python.tar
 Source12: %name-%version-test-run-lib-tarantool-python.tar
+Source13: %name-%version-third_party-c-ares.tar
+Source14: %name-%version-third_party-c-dt.tar
+Source15: %name-%version-third_party-curl.tar
+Source16: %name-%version-third_party-libunwind.tar
+Source17: %name-%version-third_party-luazip.tar
+Source18: %name-%version-third_party-lua-zlib.tar
+Source19: %name-%version-third_party-nghttp2.tar
+Source20: %name-%version-third_party-tz.tar
+Source21: %name-%version-third_party-xxHash.tar
+Source22: %name-%version-third_party-zstd.tar
 
 BuildRequires: git
 BuildRequires: cmake
@@ -41,6 +51,7 @@ BuildRequires: libicu-devel
 BuildRequires: libtool
 BuildRequires: zlib-devel
 BuildRequires: perl-podlators
+BuildRequires: tzdata
 
 BuildRequires: libcurl-devel
 BuildRequires: libcares-devel
@@ -86,7 +97,7 @@ This package provides server development files needed to create
 C and Lua/C modules.
 
 %prep
-%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12
+%setup -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12 -a13 -a14 -a15 -a16 -a17 -a18 -a19 -a20 -a21 -a22
 
 %build
 
@@ -141,6 +152,15 @@ cmake . \
 %check
 ulimit -n $(ulimit -Hn)
 
+# for test
+export TEST_RUN_RETRIES=3
+export SERVER_START_TIMEOUT=400
+export REPLICATION_SYNC_TIMEOUT=400
+export TEST_TIMEOUT=400
+export NO_OUTPUT_TIMEOUT=400
+sed -i "s/disabled =/disabled = net.box_wait_connected_gh-3856.test.lua/g" test/box/suite.ini
+#
+
 %if_enabled static
     pushd static-build/
     ctest -V
@@ -182,6 +202,9 @@ make test-force
 %_includedir/tarantool/*.h
 
 %changelog
+* Tue Oct 25 2022 Dmitry Kibirev <kdy@altlinux.org> 2.10.3-alt1
+- New stable version
+
 * Fri May 27 2022 Dmitry Kibirev <kdy@altlinux.org> 2.8.4-alt1
 - New stable version
 
