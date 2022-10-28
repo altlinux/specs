@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Oct 28 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt5
+- update to ALT Workstation 10.1
+
 * Mon Oct 24 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt4
 - fix some typos (ALT #43731)
 - update documentation
