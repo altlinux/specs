@@ -1,7 +1,7 @@
 %define modname setuptools_rust
 
 Name: python3-module-%modname
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 
 Summary: Setuptools helpers for rust Python extensions.
@@ -37,6 +37,9 @@ were written in C.
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Fri Oct 28 2022 Vladimir Didenko <cow@altlinux.org> 1.5.2-alt1
+- new version
+
 * Wed Aug 24 2022 Vladimir Didenko <cow@altlinux.org> 1.5.1-alt1
 - new version
 
