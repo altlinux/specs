@@ -3,7 +3,7 @@
 
 Name: kde5-network-filesharing
 Version: 22.08.2
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Graphical desktop/KDE
@@ -48,7 +48,9 @@ Adds Configuration of Samba sharing for folders in Dolphin.
 %patch6 -p1
 %patch7 -p1
 
-cat %SOURCE10 >>po/ru/kfileshare.po
+mv po/ru/kfileshare.po{,.old}
+msgcat --use-first po/ru/kfileshare.po.old %SOURCE10 > po/ru/kfileshare.po
+rm -f po/ru/kfileshare.po.old
 
 %build
 %K5build \
@@ -71,6 +73,9 @@ cat %SOURCE10 >>po/ru/kfileshare.po
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Fri Oct 28 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt2
+- fix russian translation
+
 * Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
 - new version
 
