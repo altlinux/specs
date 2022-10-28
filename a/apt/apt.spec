@@ -3,7 +3,7 @@
 
 Name: apt
 Version: 0.5.15lorg2
-Release: alt81
+Release: alt82
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -470,8 +470,26 @@ if [ $TRIES -lt ${NPROCS:-0} ]; then
 	TRIES=$NPROCS
 fi
 
-seq 0 $((TRIES-1)) | xargs -I'{}' ${NPROCS:+-P$NPROCS --process-slot-var=PARALLEL_SLOT} \
-	-- sh -efuo pipefail -c '%runtests '${NPROCS:+'|& sed --unbuffered -e "s/^/[$PARALLEL_SLOT {}] /"'}
+already_once=0
+for (( try = 0; try < TRIES; )); do
+    # all methods (you might want to update the list if there are new ones)
+    for method in file cdrom http https; do
+	# do the same method several times in parallel (to provoke races)
+	for (( repeat = 0; repeat < 2; ++repeat )); do
+	    echo "$((try++)):$method"
+	    if (( already_once && (try >= TRIES) )); then
+		break 2
+	    fi
+	done
+    done
+    already_once=1
+done |
+    xargs -d'\n' -I'{}' ${NPROCS:+-P$NPROCS --process-slot-var=PARALLEL_SLOT} \
+	  -- sh -efuo pipefail \
+	  -c 'APT_TEST_METHODS={}
+              APT_TEST_METHODS="${APT_TEST_METHODS#*:}"
+              export APT_TEST_METHODS
+              %runtests '${NPROCS:+'|& sed --unbuffered -e "s/^/[$PARALLEL_SLOT {}] /"'}
 
 %package under-pkdirect-checkinstall
 Summary: Immediately test %name+PK when installing this package (via packagekit-direct)
@@ -563,6 +581,14 @@ exec 1>&2
 %_datadir/%name/tests/
 
 %changelog
+* Fri Sep 02 2022 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt82
+- tests:
+  + Enhanced to be able to work with test packages containing some files.
+    (This will be useful for testing the work with large RPM archives.)
+  + Shortened the run time of apt-xxtra-heavy-load-checkinstall.
+  + Shortened the run time of other *-checkinstall scripts
+    (by shortening the the test with zillion packages).
+
 * Wed Aug 03 2022 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt81
 - Fixed bad behavior when satisfying "Conflicts" or "Obsoletes" dependencies
   (discovered in ALT#42415), namely:
@@ -572,8 +598,9 @@ exec 1>&2
     with non-matching version.
 - Enriched the output of Debug::pkgMarkInstall with the versions of
   the dependency targets and the targets being considered during the search.
-- Complemented it with a new option (Debug::pkgMarkAllCalls) -- to understand
-  better why the result of resolving a broken dep is unexpected in some cases.
+- Complemented it with new options (Debug::pkgMarkAllCalls,
+  Debug::pkgMarkShallow) -- to understand better why the result of
+  resolving a broken dep is unexpected in some cases.
 
 * Thu Jun 02 2022 Ivan Zakharyaschev <imz@altlinux.org> 0.5.15lorg2-alt80
 - Fixed the new compilation warnings by simplifying the ALT-specific code
