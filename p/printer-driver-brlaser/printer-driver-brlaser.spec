@@ -2,12 +2,14 @@
 
 Name: printer-driver-brlaser
 Version: 6
-Release: alt4
+Release: alt5
 
 Source: %name-%version.tar
 
 Summary: Brother laser printer driver
-Url: https://github.com/pdewacht/brlaser
+# old url https://github.com/pdewacht/brlaser
+# See https://github.com/pdewacht/brlaser/issues/145
+Url: https://github.com/ondrejbudai/brlaser
 License: GPL-2.0-or-later
 Group: System/Configuration/Printing
 
@@ -23,42 +25,69 @@ If you have a monochrome Brother laser printer (or multi-function device)
 and the other open source drivers don't work, this one might help.
 
 This driver has been reported to work with these printers:
-
-Brother DCP-1510
-Brother DCP-1600 series
-Brother DCP-7030
-Brother DCP-7040
-Brother DCP-7055
-Brother DCP-7055W
-Brother DCP-7060D
-Brother DCP-7065DN
-Brother DCP-7080
-Brother DCP-7080D
-Brother DCP-L2500D
-Brother DCP-L2520D
-Brother DCP-L2520DW
-Brother DCP-L2540DW
-Brother HL-1110
-Brother HL-1200
-Brother HL-2030 series
-Brother HL-2140 series
-Brother HL-2220 series
-Brother HL-2270DW series
-Brother HL-5030 series
-Brother HL-L2300D
-Brother HL-L2320D
-Brother HL-L2340D
-Brother HL-L2360D
-Brother HL-L2375DW
-Brother HL-L2390DW
-Brother MFC-1910W
-Brother MFC-7240
-Brother MFC-7360N
-Brother MFC-7365DN
-Brother MFC-7420
-Brother MFC-7460DN
-Brother MFC-L2710DW series
-Lenovo M7605D
+* Brother DCP-1510 series
+* Brother DCP-1600 series
+* Brother DCP-7020
+* Brother DCP-7030
+* Brother DCP-7040
+* Brother DCP-7055
+* Brother DCP-7055W
+* Brother DCP-7060D
+* Brother DCP-7065DN
+* Brother DCP-7070DW
+* Brother DCP-7080
+* Brother DCP-L2500D series
+* Brother DCP-L2510D series 
+* Brother DCP-L2520D series
+* Brother DCP-L2520DW series
+* Brother DCP-L2537DW
+* Brother DCP-L2540DW series
+* Brother DCP-L2550DW series
+* Brother HL-1110 series
+* Brother HL-1200 series
+* Brother HL-2030 series
+* Brother HL-2130 series
+* Brother HL-2140 series
+* Brother HL-2220 series
+* Brother HL-2230 series
+* Brother HL-2240D series
+* Brother HL-2250DN series
+* Brother HL-2270DW series
+* Brother HL-2280DW
+* Brother HL-5030 series
+* Brother HL-5040 series
+* Brother HL-L2300D series
+* Brother HL-L2305  series
+* Brother HL-L2310D series
+* Brother HL-L2320D series
+* Brother HL-L2340D series
+* Brother HL-L2350DW series
+* Brother HL-L2360D series
+* Brother HL-L2375DW series
+* Brother HL-L2380DW series
+* Brother HL-L2390DW
+* Brother MFC-1810 series
+* Brother MFC-1910W
+* Brother MFC-7240
+* Brother MFC-7320
+* Brother MFC-7340
+* Brother MFC-7360N
+* Brother MFC-7365DN
+* Brother MFC-7420
+* Brother MFC-7440N
+* Brother MFC-7460DN
+* Brother MFC-7840W
+* Brother MFC-8710DW
+* Brother MFC-8860DN
+* Brother MFC-L2700DN series
+* Brother MFC-L2700DW series
+* Brother MFC-L2710DN series
+* Brother MFC-L2710DW series
+* Brother MFC-L2750DW series
+* Brother MFC-L3750CDW series
+* Lenovo LJ2650DN
+* Lenovo M7605D
+* Fuji Xerox DocuPrint P265 dw
 
 %prep
 %setup
@@ -82,6 +111,9 @@ install -Dm644 BUILD/ppd/* -t %buildroot/%_datadir/cups/model/brlaser
 %_datadir/cups/model/brlaser
 
 %changelog
+* Fri Oct 28 2022 Sergey V Turchin <zerg@altlinux.org> 6-alt5
+- using github.com/ondrejbudai/brlaser fork
+
 * Tue Mar 29 2022 Sergey V Turchin <zerg@altlinux.org> 6-alt4
 - update package description from brlaser.drv
 
