@@ -1,4 +1,4 @@
-# 7.3.3.2
+# 7.4.2.1
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -21,14 +21,14 @@
 %def_disable mergelibs
 
 Name: LibreOffice
-%define hversion 7.3
-%define urelease 3.2
+%define hversion 7.4
+%define urelease 2.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -36,7 +36,6 @@ URL: http://www.libreoffice.org
 
 Requires: %name-integrated = %EVR
 Requires: %name-common = %EVR
-Requires: %name-mimetypes = %EVR
 Requires: %name-extensions = %EVR
 %if_with java
 Requires: libreoffice-languagetool
@@ -47,9 +46,7 @@ Provides: libreoffice = %EVR
 Obsoletes: libreoffice < 3.99
 Obsoletes: %name-full < %EVR
 
-%define with_lang ru be de fr uk pt-BR es kk tt
-#Requires: java xdg-utils hunspell-en hyphen-en mythes-en
-#Requires: gst-plugins-bad1.0 gst-plugins-good1.0 gst-plugins-nice1.0 gst-plugins-ugly1.0 gst-plugins-base1.0
+%define with_lang en-US ru be de fr uk pt-BR es kk tt
 Requires: gst-libav
 
 Source:         libreoffice-%version.tar.xz
@@ -67,11 +64,7 @@ Patch1: FC-0001-don-t-suppress-crashes.patch
 Patch2: FC-0001-disble-tip-of-the-day-dialog-by-default.patch
 Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
 Patch4: FC-0001-Revert-tdf-101630-gdrive-support-w-oAuth-and-Drive-A.patch
-Patch5: FC-0001-workaround-x86-ICE-with-gcc-12.patch
-Patch6: FC-0001-s390x-canvas-test-fails.patch
-Patch7: FC-0001-tdf-144862-use-resolution-independent-positions-for-.patch
-Patch8: FC-0001-vertical-text-test-fails-with-latest-harfbuzz.patch
-Patch9: FC-0001-disable-libe-book-support.patch
+Patch5: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -92,6 +85,10 @@ Patch600: LibreOffice-7.3.3.2-update-russian-translation.patch
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
 %add_findreq_skiplist %lodir/sdk/examples/python/toolpanel/toolpanel.py 
+%add_findreq_skiplist %lodir/sdk/classes
+%add_findreq_skiplist %lodir/sdk/docs
+%add_findreq_skiplist %lodir/sdk/idl
+%add_findreq_skiplist %lodir/sdk/include
 %filter_from_requires /com[.]sun[.]/d
 %add_python3_req_skip pyuno strings
 
@@ -110,6 +107,9 @@ BuildRequires: libpixman-devel
 
 # 7.3
 BuildRequires: libcuckoo-devel libopenjpeg2.0-devel libabseil-cpp-devel
+
+# 7.4
+BuildRequires: libwebp-devel libtiff-devel
 
 %if_with java
 BuildRequires: java-devel >= 9.0.0 junit ant bsh pentaho-reporting-flow-engine 
@@ -155,6 +155,7 @@ Requires: %name-common = %EVR
 %if_with java
 Requires: pentaho-reporting-flow-engine
 %endif
+Provides: %name-mimetypes
 %description integrated
 Wrapper scripts, icons and desktop files for running %name
 
@@ -225,14 +226,6 @@ Additional extensions for %name.
 One can choose either to install this package at once,
 or to download and install (possibly newer) extensions manually.
 
-%package mimetypes
-Summary: Mimetype keys support for %name
-Group: Office
-BuildArch: noarch
-%description mimetypes
-%name is distributed along with some mimetype settings and files.
-This package installs them.
-
 %package sdk
 Group: Development/Other
 Summary: Software Development Kit for LibreOffice
@@ -252,11 +245,17 @@ components, CalcAddin functions). It is compatible over several
 versions because the API remains unaffected and will only be extended
 with new functions.
 
+%package postgresql
+Group:  Office
+Summary: PostgrSQL connector for LibreOffice
+%description postgresql
+%summary
 
 # TODO redefine %%lang adding corr langpack
 # define macro for quick langpack description
-%define langpack(l:n:mh) \
+%define langpack(l:n:mhs:) \
 %define lang %{-l:%{-l*}}%{!-l:%{error:Language code not defined}} \
+%define lng %{-s:%{-s*}}%{!-s:%{lang}} \
 %define pkgname langpack-%{lang} \
 %define langname %{-n:%{-n*}}%{!-n:%{error:Language name not defined}} \
 \
@@ -264,8 +263,8 @@ with new functions.
 Summary: %{langname} language pack for %name \
 Group:  Office \
 Requires: %uname = %EVR \
-%{-m:Requires: mythes-%lang} \
-%{-h:Requires: hyphen-%lang} \
+%{-m:Requires: mythes-%lng} \
+%{-h:Requires: hyphen-%lng} \
 %description %{pkgname} \
 Provides additional %{langname} translations and resources for %name. \
 \
@@ -280,11 +279,7 @@ Provides additional %{langname} translations and resources for %name. \
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-#patch9 -p1
+#patch5 -p1
 
 ## Long-term FC patches applying
 
@@ -293,16 +288,22 @@ Provides additional %{langname} translations and resources for %name. \
 %patch402 -p1
 %patch404 -p1
 %patch405 -p1
-%patch406 -p1
+##patch406 -p1 # Doesn't compile
 %patch407 -p1
 
 %patch500 -p0
 # Patch with russian translation update
-%patch600 -p1
+##patch600 -p1
 
-# TODO move officebeans to SDK or separate package
+# TODO move officebean to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
 sed -i 's@JAVA_HOME/lib/ -ljawt@JAVA_HOME/lib/ -Wl,-rpath=/usr/lib/jvm/jre/lib -ljawt@' configure.ac
+
+# Hack out lowercasing install_dirname
+sed -i 's/\(^INSTALLDIRNAME=\).*/\1AC_PACKAGE_NAME/' configure.ac
+sed -i 's/\(^add_wrapper.*"\)libreoffice-/\1%name-/
+s/\(gid_Module_Optional_Xsltfiltersamples.*\)libreoffice-/\1%name-/' bin/distro-install-desktop-integration
+
 %filter_from_requires /libjawt[.]so/d
 
 # Choose right path to kcoreaddons_version.h
@@ -326,29 +327,21 @@ sed -i 's@/libreoffice/@/LibreOffice/@g' libreofficekit/Library_libreofficekitgt
 for f in `grep -rl '/usr/sbin/lsattr' *`; do sed -i 's@/usr/sbin/lsattr@/usr/bin/lsattr@g' $f; done
 
 # Hack in MimeType=application/vnd.ms-visio.drawing.main+xml
-fgrep -q "application/vnd.ms-visio.drawing.main+xml" sysui/desktop/menus/draw.desktop || sed -i 's@MimeType=@MimeType=application/vnd.ms-visio.drawing.main+xml;@' sysui/desktop/menus/draw.desktop
+grep -Fq "application/vnd.ms-visio.drawing.main+xml" sysui/desktop/menus/draw.desktop || sed -i 's@MimeType=@MimeType=application/vnd.ms-visio.drawing.main+xml;@' sysui/desktop/menus/draw.desktop
 
 # hack hardcoded libodbc version
 sed -i 's/libodbc.so.1/libodbc.so.2/g' connectivity/source/drivers/odbc/OFunctions.cxx
 
+# Hack in relative ln -s
+sed -i '/program.soffice/s/ln -sf \("*\$\)/ln --relative -sf $DESTDIR\1/' sysui/desktop/share/create_tree.sh
+sed -i '/share.xdg/s/ln -sf \("*\$\)/cp -va $DESTDIR\1/' sysui/desktop/share/create_tree.sh
+sed -i 's/ln -sf \("*\$\)/ln --relative -sf $DESTDIR\1/' bin/distro-install-sdk
+sed -i 's/ln -sf \("*\$\)/ln --relative -sf $DESTDIR\1/' bin/distro-install-desktop-integration
+
 rm -fr %name-tnslations/git-hooks
 
-# create shell wrappers
-for n in office writer impress calc base draw math qstart; do
-        oname=lo$n
-        case "$n" in 
-                office) opt=""; oname=libreoffice%hversion;;
-                qstart) opt="--quickstart --nologo --nodefault";;
-                *) opt="--$n";;
-        esac
-        cat > $oname.sh <<@@@
-#!/bin/sh
-exec %lodir/program/soffice $opt "\$@"
-@@@
-done
-
 # Now create a config file
-grep -r getenv * | sed -n 's/.*getenv *( *"\([^"]*\).*/\1/p' | sort -u | egrep 'STAR_|SAL_|OOO_' > %name.config.ENV
+grep -r getenv * | sed -n 's/.*getenv *( *"\([^"]*\).*/\1/p' | sort -u | grep -E 'STAR_|SAL_|OOO_' > %name.config.ENV
 
 sed -n '/# STAR_PROFILE_LOCKING_DISABLED/,/#.*JITC_PROCESSOR_TYPE_EXPORT/p' < desktop/scripts/soffice.sh > libreoffice.config
 test -n "libreoffice.config"
@@ -400,14 +393,12 @@ export ac_cv_prog_LO_CLANG_CC=""
         --with-external-dict-dir=%_datadir/myspell \
         --with-external-hyph-dir=%_datadir/hyphen \
         --with-external-thes-dir=%_datadir/mythes \
-        --with-lang="en-US %with_lang" \
+        --with-lang="%with_lang" \
         --with-external-tar=`pwd`/ext_sources \
         \
         --enable-ext-nlpsolver \
         --enable-ext-numbertext \
         --enable-ext-wiki-publisher \
-        --enable-ext-ct2n \
-        --disable-ext-languagetool \
   \
         --enable-release-build \
         --with-help \
@@ -438,10 +429,14 @@ export ac_cv_prog_LO_CLANG_CC=""
 %else
         --with-system-libs \
         --without-system-poppler \
+        --without-system-dragonbox \
+        --without-system-libfixmath \
         --disable-fetch-external
 %endif
 
-# TODO  --enable-vlc --enable-zxing
+        ## --without-system-libtiff \
+
+# TODO  --enable-vlc --enable-zxing --with-system-dragonbox
 
 %make bootstrap
 
@@ -449,10 +444,8 @@ export ac_cv_prog_LO_CLANG_CC=""
 export _JAVA_OPTIONS="-XX:ParallelGCThreads=4 $_JAVA_OPTIONS"
 %endif
 
-%make verbose=true build-nocheck
+%make verbose=true build
 
-# Generate typelib files
-## TODO use stuff generated here
 export DESTDIR=../output
 export KDEMAINDIR=/usr
 export GNOMEDIR=/usr
@@ -460,24 +453,25 @@ export GNOME_MIME_THEME=hicolor
 export PREFIXDIR=/usr
 . ./bin/get_config_variables PRODUCTVERSIONSHORT PRODUCTVERSION SRCDIR WORKDIR PKG_CONFIG INSTDIR
 export PRODUCTVERSIONSHORT PRODUCTVERSION SRCDIR WORKDIR PKG_CONFIG INSTDIR
-cd $WORKDIR/CustomTarget/sysui/share/libreoffice
-./create_tree.sh
+$WORKDIR/CustomTarget/sysui/share/libreoffice/create_tree.sh
 
 %install
-%makeinstall DESTDIR=%buildroot INSTALLDIR=%lodir
-%if_with python
-# Ignore dull /usr/local/bin/python hack
-chmod -x %buildroot%lodir/program/python-core*/lib/cgi.py
-%endif
+unset RPM_PYTHON
+
+%make DESTDIR=%buildroot INSTALLDIR=%lodir distro-pack-install
+rm -f %buildroot%lodir/sdk/config.*
 
 # Pick up LOO-generated file lists
 for l in %with_lang; do
         ll="`echo "$l" | tr '-' '_'`"
-        cat %buildroot/gid_*_$ll | sort -u > $l.lang
+        grep -v '^%%dir' file-lists/lang_${ll}_list.txt > $ll.lang
 done
 
-# Create gtk3 plugin list
-find %buildroot%lodir -name "*gtk3lo*" | sed 's@^%buildroot@@' > files.gtk3
+# Reuse upstream SDK plugin list
+grep -vh '^%%dir' file-lists/sdk_doc_list.txt file-lists/sdk_list.txt | grep -vF '/sdk/config.' > files.sdk
+
+# Reuse upstream "GNOME" plugin list
+grep -vh '^%%dir' file-lists/gnome_list.txt > files.gtk3
 
 # Create qt5 plugin list
 find %buildroot%lodir -name "*qt5*"   | sed 's@^%buildroot@@' > files.qt5
@@ -488,49 +482,35 @@ find %buildroot%lodir -name "*kf5*" | sed 's@^%buildroot@@' > files.kde5
 # Create gkt3-kde5 plugin list
 find %buildroot%lodir -name "*kde5*" | sed 's@^%buildroot@@' > files.gtk3-kde5
 
-# Generate base filelist by removing files from  separated packages
-{ cat %buildroot/gid_* | sort -u ; cat *.lang files.gtk3-kde5 files.gtk3 files.kde5 files.qt5; echo %lodir/program/liblibreofficekitgtk.so; } | sort | uniq -u | grep -v '~$' | egrep -v '/share/extensions/.|%lodir/sdk/.' > files.nolang
+grep %lodir file-lists/common_list.txt | \
+        grep -Ev '/share/extensions/.|%lodir/sdk/.|so[.]debug$|libreofficekit' | \
+        cat > files.common
+# TODO lo5 or something for stand-alone
 
-unset RPM_PYTHON
-
-# Install wrappers
-for n in lo*.sh; do install -m755 -D $n %buildroot%_bindir/${n%%.sh}; done
-install -m755 -D libreoffice%hversion.sh %buildroot%_bindir/loffice
-ln -s loffice %buildroot%_bindir/soffice
-install -m755 -D libreoffice%hversion.sh %buildroot%_bindir/libreoffice
-install -m755 libreoffice%hversion.sh %buildroot%_bindir/libreoffice%hversion
-
-# install icons
-for f in `( cd sysui/desktop/icons; find hicolor -type f )`; do
-        d=`dirname "$f"`; n=`basename "$f"`
-        install -D sysui/desktop/icons/$f \
-            %buildroot%_iconsdir/$d/libreoffice%hversion-$n
-        ln -sr %buildroot%_iconsdir/$d/libreoffice%hversion-$n \
-            %buildroot%_iconsdir/$d/libreoffice-$n
-    case "$n" in
-        *calc*) ;;
-        *) ln -sr %buildroot%_iconsdir/$d/libreoffice%hversion-$n \
-            %buildroot%_iconsdir/$d/$n ;;
-    esac
-done
-
-# TODO icon-themes/
+grep -v %lodir file-lists/common_list.txt | \
+        sed -E 's@(/man/.*)[.]gz@\1.*@' | \
+        cat > files.integrated
 
 # Hack out "Education" category from Math
 sed -i 's/Education;//' %buildroot%lodir/share/xdg/math.desktop
 
-mkdir -p %buildroot%_desktopdir
-for n in writer impress calc base draw math;  do
-        #ln %buildroot%lodir/share/xdg/$n.desktop %buildroot%_desktopdir/$n.desktop
-    sed "s/%hversion-/-/" < %buildroot%lodir/share/xdg/$n.desktop > %buildroot%_desktopdir/$n.desktop
-done
-
 # TODO some other hack with sysui/desktop/ stuff ?
-mkdir -p %buildroot%_datadir/metainfo
-install sysui/desktop/appstream-appdata/*.xml %buildroot%_datadir/metainfo/
-
-# Install mime package bundle for LibreOffice MIME types
-install -Dm0644 workdir/CustomTarget/sysui/share/output/usr/share/mime/packages/libreoffice%hversion.xml %buildroot%_datadir/mime/packages/libreoffice%hversion.xml
+mkdir %buildroot%_datadir/mimelnk
+install sysui/desktop/mimetypes/*.desktop %buildroot%_datadir/mimelnk/
+find %buildroot%_iconsdir -type f -name LibreOffice-oasis-\* | while read File; do
+        Name=`basename $File`
+        Dir=`dirname $File`
+        Ext=${File##*.}
+        Target=""
+        case $Name in
+               LibreOffice-oasis-web.*) Target=text-html;;
+               LibreOffice-oasis-drawing.*) Target=image-x-generic;;
+               LibreOffice-oasis-document.*) Target=x-office-document;;
+               LibreOffice-oasis-presentation.*) Target=x-office-presentation;;
+               LibreOffice-oasis-spreadsheet.*) Target=x-office-spreadsheet;;
+        esac
+        test -z "$Target" || ln -sr "$Dir/$Name" "$Dir/$Target.$Ext"
+done
 
 # Config file
 install -D libreoffice.config %buildroot%conffile
@@ -539,31 +519,28 @@ install -D libreoffice.config %buildroot%conffile
 
 install -D workdir/CustomTarget/sysui/share/libreofficedev/*.typelib %buildroot%_typelibdir/LOKDocView-0.1.typelib
 install -D workdir/CustomTarget/sysui/share/libreofficedev/*.gir %buildroot%_girdir/LOKDocView-0.1.gir
-mv %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_libdir/
+ln -s --relative %buildroot%lodir/program/liblibreofficekitgtk.so %buildroot%_libdir/
 mkdir -p %buildroot%_includedir/LibreOfficeKit
 install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 
 %files
 
-%files sdk
-%lodir/sdk
+%files sdk -f files.sdk
 
-%files common -f files.nolang
-%exclude /gid_Module*
-%_bindir/libreoffice%hversion
+%files postgresql -f file-lists/postgresql_list.txt
+
+%files common -f files.common
 %config %conffile
-#lodir/share/extensions/package.txt
-#lodir/share/extensions/presentation-minimizer
-%_iconsdir/*/*/apps/libreoffice%{hversion}-*.*g
+%if_with java
+%lodir/program/classes/ScriptProviderForBeanShell.jar
+%lodir/program/services/scriptproviderforbeanshell.rdb
+%endif
 
-%files integrated
-%_bindir/*
-%exclude %_bindir/libreoffice%hversion
-%_desktopdir/*
-%_iconsdir/*/*/mimetypes/*
-%_iconsdir/*/*/apps/*
-%exclude %_iconsdir/*/*/apps/libreoffice%{hversion}-*.*g
-%_datadir/metainfo/*
+%files integrated -f files.integrated
+%_datadir/metainfo/LibreOffice*
+%_datadir/mimelnk/*
+%_iconsdir/*/*/mimetypes/[^Ll]*.*
+%_bindir/%name
 
 %files gtk3 -f files.gtk3
 
@@ -573,35 +550,40 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 
 %if_enabled kf5
 %files kde5 -f files.kde5
+%_datadir/metainfo/*kde*
+
 %files gtk3-kde5 -f files.gtk3-kde5
 %endif
 
 %files extensions
 %lodir/share/extensions/*
-#exclude %lodir/share/extensions/package.txt
 
-%files mimetypes
-%_datadir/mime/packages/libreoffice%hversion.xml
-
-%langpack -m -h -l ru -n Russian
-%langpack -h -l be -n Belorussian
-%langpack -m -h -l de -n German
-%langpack -m -h -l fr -n French
-%langpack -m -h -l uk -n Ukrainian
-%langpack -l pt-BR -n Brazilian Portuguese
-%langpack -h -m -l es -n Espanian
-%langpack -l kk -n Kazakh
-%langpack -h -l tt -n Tatar
+%langpack -m -h -l en_US -s en -n English
+%langpack -m -h -l ru          -n Russian
+%langpack    -h -l be          -n Belorussian
+%langpack -m -h -l de          -n German
+%langpack -m -h -l fr          -n French
+%langpack -m -h -l uk          -n Ukrainian
+%langpack -m -h -l pt_BR -s pt -n Brazilian Portuguese
+%langpack -m -h -l es          -n Espanian
+%langpack       -l kk          -n Kazakh
+%langpack    -h -l tt          -n Tatar
 
 %files -n libreofficekit
 %_typelibdir/LOKDocView-*.typelib
+%lodir/program/liblibreofficekitgtk.so
 %_libdir/liblibreofficekitgtk.so
+%lodir/share/libreofficekit
 
 %files -n libreofficekit-devel
 %_girdir/LOKDocView-*.gir
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sun Oct 23 2022 Fr. Br. George <george@altlinux.ru> 7.4.2.1-alt1
+- Update to 7.4.2.1
+- Use install scheme provided by upstream
+
 * Tue Jul 05 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.3.3.2-alt2
 - NMU: Update russian translation for 7.3.3.2
 
