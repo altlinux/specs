@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.8.0
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -879,6 +879,10 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Sat Oct 29 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.8.0-alt2
+- Redesign become_user patch to should assign supplementary groups for server
+  part of code only (due race condition in krb5_child, for example).
+
 * Sat Oct 15 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.8.0-alt1
 - AD GPO: Fix support processing referrals for hostname
 - New features
