@@ -1,5 +1,5 @@
 Name: hasher-priv
-Version: 2.0.7
+Version: 2.0.8
 Release: alt1
 
 Summary: A privileged helper for the hasher project
@@ -77,6 +77,9 @@ fi
 %doc DESIGN
 
 %changelog
+* Sat Oct 29 2022 Dmitry V. Levin <ldv@altlinux.org> 2.0.8-alt1
+- Fixed build with lcc (reported by Ilya Kurdyukov).
+
 * Wed Oct 26 2022 Dmitry V. Levin <ldv@altlinux.org> 2.0.7-alt1
 - hasher-privd(8): added a note on cgroup handling
   (by Arseny Maslennikov).
