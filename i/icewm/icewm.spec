@@ -5,7 +5,7 @@
 
 Name: %realname
 Version: 3.1.0
-Release: alt1
+Release: alt2
 Epoch:3
 
 Summary: X11 Window Manager
@@ -93,7 +93,9 @@ sed -i 's/\? directory : "."/? (char*)directory : "."/' src/misc.cc
 	-DENABLE_LTO=on \
 	-DXTERMCMD=xvt \
 	-DCONFIG_DEFAULT_THEME="AltClearlooks/default.theme" \
-	-DCONFIG_DEFAULT_BACKGROUND="/usr/share/design/current/backgrounds/default.png"
+	-DCONFIG_DEFAULT_BACKGROUND="/usr/share/design/current/backgrounds/default.png" \
+	-DICEHELPIDX=%_icewmdocdir/ru/icewm.html \
+	-DUSE_DOC_LANG=ru
 %cmake_build
 
 %install
@@ -143,6 +145,7 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_pixmapsdir/*
 %_man1dir/*
 %_man5dir/*
+%_mandir/ru/*
 %_datadir/xsessions/*.desktop
 %_icewmdocdir/*
 
@@ -150,6 +153,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Sat Oct 29 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.1.0-alt2
+- started packaging russian translations of IceWM documentation
+
 * Thu Oct 27 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.1.0-alt1
 - 3.1.0
 - added a choise of markdown or asciidoc to generate manual html
