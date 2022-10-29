@@ -1,6 +1,6 @@
 Name: coz
 Version: 0.2.2
-Release: alt3
+Release: alt4
 
 Packager: %packager
 
@@ -23,8 +23,15 @@ code will have the greatest impact on performance.
 
 %prep
 %setup
+%ifarch %e2k
+# unsupported as of lcc 1.25.23
+sed -i '/-gdwarf-3/d' CMakeLists.txt libcoz/Makefile
+%endif
 
 %build
+%ifarch %e2k
+export CFLAGS="-I`pwd`/include %optflags -fPIC -Wl,--no-warn-shared-textrel"
+%endif
 %make prefix=%_exec_prefix bindir=%_bindir MANPREFIX=%_mandir
 
 %install
@@ -50,6 +57,9 @@ cp -R benchmarks %buildroot%docdir/
 %docdir/*
 
 %changelog
+* Sat Oct 29 2022 Michael Shigorin <mike@altlinux.org> 0.2.2-alt4
+- E2K: fix ftbfs with lcc
+
 * Mon Jul 04 2022 Andrey Bergman <vkni@altlinux.org> 0.2.2-alt3
 - Slightly update from upstream, update buildreq.
 
