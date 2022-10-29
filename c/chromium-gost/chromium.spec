@@ -30,7 +30,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        106.0.5249.103
+Version:        106.0.5249.119
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -82,6 +82,7 @@ Patch013: 0013-GENTOO-Fix-instantiating-fold-expression-error.patch
 Patch014: 0014-ALT-Do-not-mix-internal-and-system-wayland.patch
 Patch015: 0015-Fix-some-style-issues-in-AutofillPopupViewPtr.patch
 Patch016: 0016-IWYU-add-cmath-for-std-isnan-and-std-isinf.patch
+Patch666: 0666-no-customize_backgrounds.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -503,6 +504,19 @@ EOF
 %_altdir/%name
 
 %changelog
+* Sat Oct 29 2022 Fr. Br. George <george@altlinux.org> 106.0.5249.119-alt1
+- GOST version
+
+* Thu Oct 13 2022 Alexey Gladkov <legion@altlinux.ru> 106.0.5249.119-alt1
+- New version (106.0.5249.119).
+- Security fixes:
+  - CVE-2022-3445: Use after free in Skia.
+  - CVE-2022-3446: Heap buffer overflow in WebSQL.
+  - CVE-2022-3447: Inappropriate implementation in Custom Tabs.
+  - CVE-2022-3448: Use after free in Permissions API.
+  - CVE-2022-3449: Use after free in Safe Browsing.
+  - CVE-2022-3450: Use after free in Peer Connection.
+
 * Thu Oct 13 2022 Fr. Br. George <george@altlinux.org> 106.0.5249.103-alt1
 - GOST version
 
@@ -575,9 +589,6 @@ EOF
   - CVE-2022-2163: Use after free in Cast UI and Toolbar.
   - CVE-2022-2164: Inappropriate implementation in Extensions API.
   - CVE-2022-2165: Insufficient data validation in URL formatting.
-
-* Wed Jun 15 2022 Slava Aseev <ptrnine@altlinux.org> 102.0.5005.61-alt2
-- Handle kioslaverc config located in XDG_CONFIG_DIRS.
 
 * Wed Jun 01 2022 Alexey Gladkov <legion@altlinux.ru> 102.0.5005.61-alt2
 - Handle kioslaverc config located in XDG_CONFIG_DIRS.
