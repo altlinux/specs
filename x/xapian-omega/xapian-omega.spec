@@ -1,16 +1,24 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 Name: xapian-omega
-Version: 1.4.5
-Release: alt2
+Version: 1.4.21
+Release: alt1
 
 Summary: A CGI search frontend and indexers built on Xapian
-License: GPLv2+
+License: GPL-2.0-or-later
 Group: Networking/WWW
 
 Url: http://www.xapian.org
 Source: http://www.oligarchy.co.uk/xapian/%version/%name-%version.tar.bz2
 
-# Automatically added by buildreq on Sun Jan 03 2010 (-bi)
-BuildRequires: gcc-c++ glibc-devel-static libxapian-devel perl-DBI libpcre-devel zlib-devel libmagic-devel
+BuildRequires: gcc-c++
+BuildRequires: libmagic-devel
+BuildRequires: libpcre2-devel
+BuildRequires: libxapian-devel = %version
+BuildRequires: perl-DBI
+BuildRequires: zlib-devel
 
 Requires: xapian-core >= %version
 
@@ -79,6 +87,9 @@ rm -rf %buildroot%_docdir/%name/
 %_man1dir/scriptindex.1*
 
 %changelog
+* Sun Oct 23 2022 Vitaly Chikunov <vt@altlinux.org> 1.4.21-alt1
+- Update to 1.4.21 (2022-09-22).
+
 * Thu Jun 13 2019 Michael Shigorin <mike@altlinux.org> 1.4.5-alt2
 - E2K: avoid lcc-unsupported options
 - minor spec cleanup

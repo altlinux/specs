@@ -2,42 +2,43 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%def_disable static
-
 Name: xapian-core
-Version: 1.4.15
-Release: alt2
+Version: 1.4.21
+Release: alt1
+%define sover 30
 
-Summary: The Xapian Probabilistic Information Retrieval Library
+Summary: Xapian is an open source search engine library
 
-License: GPL
+License: GPL-2.0-or-later
 Group: Databases
 Url: http://www.xapian.org
+Vcs: https://github.com/xapian/xapian/
 
 Source: http://www.oligarchy.co.uk/xapian/%version/%{name}-%{version}.tar
 Source100: %name.watch
-
-Patch1: xapian-core-alt-gcc11-compat.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gcc-c++ zlib-devel libuuid-devel
 
 %description
-Xapian is an Open Source Probabilistic Information Retrieval Library.
-It offers a highly adaptable toolkit that allows developers to easily
-add advanced indexing and search facilities to applications.
+Xapian is a highly adaptable toolkit which allows developers to easily
+add advanced indexing and search facilities to their own applications.
+It has built-in support for several families of weighting models
+and also supports a rich set of boolean query operators.
 
 This is core package.
 
-%package -n libxapian
+%package -n libxapian%sover
 Summary: Xapian search engine libraries
 Group: System/Libraries
+Obsoletes: libxapian < %EVR
 
-%description -n libxapian
-Xapian is an Open Source Probabilistic Information Retrieval Library.
-It offers a highly adaptable toolkit that allows developers to easily
-add advanced indexing and search facilities to applications.
+%description -n libxapian%sover
+Xapian is a highly adaptable toolkit which allows developers to easily
+add advanced indexing and search facilities to their own applications.
+It has built-in support for several families of weighting models and
+also supports a rich set of boolean query operators.
 
 This package provides the libraries for applications using Xapian
 functionality.
@@ -45,23 +46,16 @@ functionality.
 %package -n libxapian-devel
 Group: Development/C++
 Summary: Files needed for building packages which use Xapian
-Requires: libxapian = %EVR
+Requires: libxapian%sover = %EVR
 
 %description -n libxapian-devel
+Xapian is a highly adaptable toolkit which allows developers to easily
+add advanced indexing and search facilities to their own applications.
+It has built-in support for several families of weighting models and
+also supports a rich set of boolean query operators.
+
 This package provides the files needed for building packages which
 use Xapian library.
-
-%if_enabled static
-%package -n libxapian-devel-static
-Group: Development/C++
-Summary: Files needed for building packages which use Xapian statically
-Requires: libxapian-devel = %EVR
-
-%description -n libxapian-devel-static
-This package provides the files needed for building packages which
-link against Xapian library statically or use XO_LIB_XAPIAN macroo
-and build with libtool.
-%endif
 
 %package -n %name-doc
 Group: Development/Documentation
@@ -71,15 +65,16 @@ Provides: xapian-doc = %EVR
 BuildArch: noarch
 
 %description -n %name-doc
-Xapian is an Open Source Probabilistic Information Retrieval Library.
-It offers a highly adaptable toolkit that allows developers to easily
-add advanced indexing and search facilities to applications.
+Xapian is a highly adaptable toolkit which allows developers to easily
+add advanced indexing and search facilities to their own applications.
+It has built-in support for several families of weighting models and
+also supports a rich set of boolean query operators.
 
 This package contains API reference in HTML and PostScript.
 
 %prep
 %setup
-%patch1 -p2
+%autopatch
 %ifarch %e2k
 # current lcc doesn't know these
 sed -i  -e 's,-fno-gnu-keywords,,;s,-Wstrict-null-sentinel,,' \
@@ -90,8 +85,16 @@ sed -i  -e 's,-fno-gnu-keywords,,;s,-Wstrict-null-sentinel,,' \
 %endif
 
 %build
+%define optflags_lto %nil
+%ifarch %ix86
+%add_optflags -ffloat-store
+%endif
 %autoreconf
-%configure %{subst_enable static}
+%configure \
+%ifarch %ix86
+	--disable-sse
+%endif
+
 %make_build
 gzip -9nf ChangeLog
 
@@ -99,11 +102,9 @@ gzip -9nf ChangeLog
 %makeinstall_std
 rm -rf %buildroot%_datadir/doc/xapian-core/
 
-%if_enabled static
-# should we still support this?
-%else
-rm -f %buildroot%_libdir/libxapian.a
-%endif
+%check
+unset MAKEFLAGS
+time %make_build check
 
 %files
 %_bindir/copydatabase
@@ -125,8 +126,9 @@ rm -f %buildroot%_libdir/libxapian.a
 %exclude %_man1dir/xapian-config.1*
 %doc AUTHORS ChangeLog* NEWS PLATFORMS README
 
-%files -n libxapian
-%_libdir/*.so.*
+%files -n libxapian%sover
+%_libdir/*.so.%sover
+%_libdir/*.so.%sover.*
 
 %files -n libxapian-devel
 %_bindir/xapian-config
@@ -138,21 +140,26 @@ rm -f %buildroot%_libdir/libxapian.a
 %_man1dir/xapian-config.1*
 %_pkgconfigdir/*.pc
 
-%if_enabled static
-%files -n libxapian-devel-static
-%_libdir/libxapian.a
-%endif
-
 %files -n %name-doc
 %doc docs/*.html
 %doc docs/apidoc/html/
 %doc HACKING
 
 # NOTE:
-# - do NOT build this package from git unless you want to maintain it,
+# - do NOT build this package from git unless you want to maintain it
+#   with xapian-bindings, and perhaps xapian-omega too.
 #   I use watch file and it's more convenient to do that with srpms
 
 %changelog
+* Sun Oct 23 2022 Vitaly Chikunov <vt@altlinux.org> 1.4.21-alt1
+- Update to 1.4.21 (2022-09-22).
+- spec: Update Summary, License, and %%description (it's not "Probabilistic"
+  anymore) tags.
+- Disable LTO build (as it triggered compiler bug).
+- Rename libxapian to libxapian30 so that ABI change is tracked better.
+- Build IA-32 without SSE to match microarchitecture baseline.
+- spec: Add %%check section with tests run.
+
 * Thu Oct 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.4.15-alt2
 - Fixed build with gcc-11
 

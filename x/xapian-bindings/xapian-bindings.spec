@@ -9,62 +9,54 @@
 %def_without doc
 
 Name: xapian-bindings
-Version: 1.4.15
-Release: alt5
-
+Version: 1.4.21
+Release: alt1
 Summary: Xapian search engine bindings
-
-License: GPL-2.0+
+License: GPL-2.0-or-later
 Group: Development/Databases
 Url: http://www.xapian.org/
 Vcs: git://git.xapian.org/xapian
 
 Source: http://www.oligarchy.co.uk/xapian/%version/%name-%version.tar
 Source100: xapian-bindings.watch
+Patch1: xapian-bindings-1.4.15-alt-no-docs.patch
 
-Patch1: %name-%version-alt-no-docs.patch
-
-%setup_python_module %name
-
-BuildRequires: gcc-c++ libruby-devel libxapian-devel
-
-%if_with doc
-BuildRequires: python-module-sphinx-devel python-module-sphinx
-%endif
+BuildRequires: gcc-c++
+BuildRequires: libruby-devel
+BuildRequires: libxapian-devel = %version
 %if_with ruby
-BuildRequires(pre): rpm-macros-ruby
 BuildRequires(pre): rpm-build-ruby
+BuildRequires(pre): rpm-macros-ruby
+%endif
+%if_with python
+%setup_python_module %name
 %endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
+%endif
 %if_with doc
-BuildRequires: python3-module-sphinx-devel python3-module-sphinx
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx-devel
 %endif
-%endif
-
-%{?_with_python:BuildRequires: python-devel}
-%{?_with_ruby:BuildRequires: libruby-devel}
-
-BuildRequires: libxapian-devel = %version
 
 %description
-Xapian is an Open Source Probabilistic Information Retrieval framework.
-It offers a highly adaptable toolkit that allows developers to easily
-add advanced indexing and search facilities to applications.
+Xapian is a highly adaptable toolkit which allows developers to easily
+add advanced indexing and search facilities to their own applications.
+It has built-in support for several families of weighting models
+and also supports a rich set of boolean query operators.
 
 This package contains programming language bindings.
 
 %package -n python-module-xapian
 Summary: Python bindings for Xapian search engine
 Group: Development/Python
-# force rebuild with libxapian
-Requires: libxapian = %version
 
 %description -n python-module-xapian
-Xapian is an Open Source Probabilistic Information Retrieval framework.
-It offers a highly adaptable toolkit that allows developers to easily
-add advanced indexing and search facilities to applications.
+Xapian is a highly adaptable toolkit which allows developers to easily
+add advanced indexing and search facilities to their own applications.
+It has built-in support for several families of weighting models
+and also supports a rich set of boolean query operators.
 
 This package provides the files needed for developing Python scripts
 which use Xapian.
@@ -72,13 +64,12 @@ which use Xapian.
 %package -n python3-module-xapian
 Summary: Python 3 bindings for Xapian search engine
 Group: Development/Python3
-# force rebuild with libxapian
-Requires: libxapian = %version
 
 %description -n python3-module-xapian
-Xapian is an Open Source Probabilistic Information Retrieval framework.
-It offers a highly adaptable toolkit that allows developers to easily
-add advanced indexing and search facilities to applications.
+Xapian is a highly adaptable toolkit which allows developers to easily
+add advanced indexing and search facilities to their own applications.
+It has built-in support for several families of weighting models
+and also supports a rich set of boolean query operators.
 
 This package provides the files needed for developing Python 3 scripts
 which use Xapian.
@@ -86,12 +77,12 @@ which use Xapian.
 %package -n ruby-xapian
 Summary: Ruby bindings for Xapian search engine
 Group: Development/Ruby
-Requires: libxapian = %version
 
 %description -n ruby-xapian
-Xapian is an Open Source Probabilistic Information Retrieval framework.
-It offers a highly adaptable toolkit that allows developers to easily
-add advanced indexing and search facilities to applications.
+Xapian is a highly adaptable toolkit which allows developers to easily
+add advanced indexing and search facilities to their own applications.
+It has built-in support for several families of weighting models
+and also supports a rich set of boolean query operators.
 
 This package provides the files needed for developing Ruby scripts
 which use Xapian.
@@ -101,9 +92,11 @@ which use Xapian.
 %if_without doc
 %patch1 -p2
 %endif
-sed -i '/puts/d' ruby/xapian.rb ruby/docs/xapian.rb
 # Link to the libruby for a proper dependency.
 sed -i '/_xapian_la_LDFLAGS/s/$/ -lruby/' ruby/Makefile.am
+
+# Workaround to https://bugzilla.altlinux.org/44173
+%define ruby_vendorarchdir %(ruby -rrubygems -rrbconfig -e 'puts RbConfig::CONFIG["vendorarchdir"]')
 
 %build
 %ifarch %e2k
@@ -115,7 +108,6 @@ export RUBY_LIB=%ruby_vendorlibdir
 export RUBY_LIB_ARCH=%ruby_vendorarchdir
 %configure %{subst_with python} %{subst_with python3} %{subst_with ruby}
 %make_build
-# FIXME: maybe we should drop %version there as well and get rid of this
 
 %install
 %makeinstall_std
@@ -152,15 +144,10 @@ rm -rf %buildroot%_defaultdocdir/%name/
 %ruby_vendorlibdir/xapian.rb
 %endif
 
-# TODO:
-# - package other bindings (perl, tcl...)
-# - package docs/examples properly
-
-# NOTE:
-# - do NOT build this package from git unless you want to maintain it,
-#   I use watch file and it's more convenient to do that with srpms
-
 %changelog
+* Sun Oct 23 2022 Vitaly Chikunov <vt@altlinux.org> 1.4.21-alt1
+- Update to 1.4.21 (2022-09-22).
+
 * Mon Sep 26 2022 Vitaly Chikunov <vt@altlinux.org> 1.4.15-alt5
 - Rebuild with newer libruby(2->3).
 - Remove checkinstall test and replace it with tests run in %%check, so that
