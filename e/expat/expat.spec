@@ -1,5 +1,5 @@
 Name: expat
-Version: 2.4.9
+Version: 2.5.0
 Release: alt1
 
 %def_disable static
@@ -106,6 +106,11 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %endif	# enabled static
 
 %changelog
+* Sat Oct 29 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.0-alt1
+- Updated to 2.5.0 (fixes: CVE-2022-43680 Fix heap use-after-free after
+  overeager destruction of a shared DTD in function XML_ExternalEntityParserCreate
+  in out-of-memory situations, DoS or potentially ACE).
+
 * Sat Sep 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.4.9-alt1
 - Updated to 2.4.9 (fixes: CVE-2022-40674 Heap use-after-free vulnerability in
   function doContent).
