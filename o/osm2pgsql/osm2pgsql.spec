@@ -1,26 +1,32 @@
-Summary: Imports map data from www.OpenStreetMap.org to a PostgresSQL database
+%define _unpackaged_files_terminate_build 1
+%def_enable proj
+
 Name: osm2pgsql
+Summary: Imports map data from www.OpenStreetMap.org to a PostgresSQL database
 Group: Databases
-Version: 0.96.0
-Release: alt3
+Version: 1.7.1
+Release: alt1
 
 License: GPLv2+
 Url: https://github.com/openstreetmap/osm2pgsql
 
 Source: %name-%version.tar
-
-BuildRequires(pre): cmake
+Patch1: fix-install-osm2pgsql-replication.patch
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake >= 3.5.0
+BuildRequires: rpm-build-python3
 BuildRequires: gcc-c++
-BuildRequires: boost-devel
-BuildRequires: boost-filesystem-devel
+BuildRequires: boost-devel boost-filesystem-devel boost-geometry-devel
 BuildRequires: libexpat-devel
 BuildRequires: libgeos-devel
 BuildRequires: liblua5.3-devel
 BuildRequires: libxml2-devel
-BuildRequires: postgresql-devel
-BuildRequires: bzlib-devel zlib-devel
-BuildRequires: libproj-devel
+BuildRequires: postgresql-devel >= 9.5
+BuildRequires: bzlib-devel zlib-devel liblz4-devel
+%{?_enable_proj:BuildRequires: libproj-devel}
 BuildRequires: libprotobuf-c-devel
+# TODO: external system libs
+#BuildRequires: libfmt-devel libosmium-devel libprotozero-devel rapidjson-devel
 
 %description
 Processes the planet file from the communtiy mapping project at
@@ -31,9 +37,9 @@ geospatial analysis.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
-%add_optflags -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H=1
 %cmake
 %cmake_build
 
@@ -41,12 +47,17 @@ geospatial analysis.
 %cmakeinstall_std
 
 %files
-%doc docs README.md ChangeLog AUTHORS COPYING install-postgis-osm-db.sh install-postgis-osm-user.sh
+%doc docs README.md AUTHORS COPYING
 %_bindir/%name
+%_bindir/%name-replication
 %_datadir/%name
 %_man1dir/%name.*
+%_man1dir/%name-replication.*
 
 %changelog
+* Fri Oct 28 2022 Alexey Shabalin <shaba@altlinux.org> 1.7.1-alt1
+- new version 1.7.1
+
 * Sun Oct 06 2019 Vladislav Zavjalov <slazav@altlinux.org> 0.96.0-alt3
 - Rebuild with libproj 6.2.0 (use ACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
 

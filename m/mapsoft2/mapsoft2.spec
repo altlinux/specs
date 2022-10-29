@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      1.7
+Version:      1.8
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -38,6 +38,12 @@ export SKIP_IMG_DIFFS=1
 %_datadir/mapsoft2/*
 
 %changelog
+* Sun Oct 23 2022 Vladislav Zavjalov <slazav@altlinux.org> 1.8-alt1
+- switch to new libproj API;
+- ms2conv: modify --join option
+- ms2geofig: add srtm data, add raster maps
+- ms2view: a few fixes of panoramic veiw
+
 * Thu Jun 16 2022 Vladislav Zavjalov <slazav@altlinux.org> 1.7-alt1
 - Drawing tracks: --trk_draw_width option
 - Downloading tiled maps: --insecure, --user_agent, --http_ref options

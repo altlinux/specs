@@ -10,7 +10,7 @@
 
 Name: merkaartor
 Version: 0.19.0
-Release: alt1
+Release: alt2
 
 Summary: an OpenStreetMap editor
 License: GPLv2
@@ -43,7 +43,6 @@ rm -rf 3rdparty
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
-%add_optflags -DACCEPT_USE_OF_DEPRECATED_PROJ_API_H=1
 %add_optflags -I%_includedir/qt5/QtSolutions
 
 lrelease-qt5 Merkaartor.pro
@@ -73,6 +72,9 @@ lrelease-qt5 Merkaartor.pro
 %_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Wed Oct 19 2022 Vladislav Zavjalov <slazav@altlinux.org> 0.19.0-alt2
+- Use new proj interface
+
 * Tue Mar 01 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.19.0-alt1
 - Updated to upstream version 0.19.0.
 

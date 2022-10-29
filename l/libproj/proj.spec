@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libproj
-Version: 6.3.1
-Release: alt2
+Version: 9.1.0
+Release: alt1
 
 Summary: PROJ.4 - cartographic projections library
 Group: Sciences/Geosciences
@@ -10,6 +10,8 @@ License: MIT
 Url: https://proj4.org/
 Source: proj-%version.tar.gz
 
+BuildPreReq: rpm-macros-cmake
+BuildRequires: cmake libgtest-devel libtiff-devel libcurl-devel
 BuildRequires: gcc-c++ libstdc++-devel libsqlite3-devel sqlite3
 
 %description
@@ -26,6 +28,7 @@ This package contains PROJ.4 programs.
 Summary: PROJ.4 development files
 Group: Sciences/Geosciences
 Requires: %name = %version-%release
+Requires: libcurl-devel
 Obsoletes: proj-devel
 Provides:  proj-devel
 %description devel
@@ -51,14 +54,11 @@ Empty package. US and Canadian datum shift grids moved to libproj
 %setup
 
 %build
-# do autoreconf to avoid RPATH with standard paths
-# see: http://lists.altlinux.org/pipermail/devel/2011-December/192727.html
-%autoreconf
-%configure %{subst_enable static}
-%make_build
+%cmake_insource -DUSE_EXTERNAL_GTEST=TRUE
+%cmake_build
 
 %install
-%makeinstall
+%cmake_install
 
 %files
 %doc NEWS AUTHORS COPYING README ChangeLog
@@ -67,16 +67,20 @@ Empty package. US and Canadian datum shift grids moved to libproj
 %dir %_datadir/proj
 
 %files -n proj
+%doc NEWS AUTHORS COPYING
 %_bindir/*
 %_mandir/man1/*.1*
 
 %files devel
-%_mandir/man3/*.3*
 %_includedir/*.h
 %_includedir/proj/*.hpp
 %dir %_includedir/proj
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_libdir/cmake/proj/*.cmake
+%dir %_libdir/cmake/proj
+%_libdir/cmake/proj4/*.cmake
+%dir %_libdir/cmake/proj4
 
 %if_enabled static
 %files devel-static
@@ -86,6 +90,9 @@ Empty package. US and Canadian datum shift grids moved to libproj
 %files nad
 
 %changelog
+* Wed Oct 19 2022 Vladislav Zavjalov <slazav@altlinux.org> 9.1.0-alt1
+- 9.1.0
+
 * Mon Sep 20 2021 Vladislav Zavjalov <slazav@altlinux.org> 6.3.1-alt2
 - fix build with LTO by disabling static library
 

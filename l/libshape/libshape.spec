@@ -2,8 +2,8 @@
 
 %define oname shapelib
 Name: libshape
-Version: 1.4.1
-Release: alt3
+Version: 1.5.0
+Release: alt1
 Summary: API in "C" for Shapefile handling
 Group: Development/C
 # No version of the LGPL is given.
@@ -51,6 +51,10 @@ This package contains libshp and the appropriate header files.
 %_pkgconfigdir/*
 
 %changelog
+* Wed Oct 19 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.0-alt1
+- NMU: New version.
+- Rebuilt with libproj 9.1.0.
+
 * Fri Oct 04 2019 Vladislav Zavjalov <slazav@altlinux.org> 1.4.1-alt3
 - fix build with libproj 6.2.0 (use DACCEPT_USE_OF_DEPRECATED_PROJ_API_H)
 
@@ -127,7 +131,7 @@ This package contains libshp and the appropriate header files.
 * Mon Apr 11 2005 Michael Schwendt <mschwendt[AT]users.sf.net> - 1.2.10-8
 - Fix "invalid lvalue in assignment" for GCC4.
 
-* Fri Apr  7 2005 Michael Schwendt <mschwendt[AT]users.sf.net>
+* Thu Apr  7 2005 Michael Schwendt <mschwendt[AT]users.sf.net>
 - rebuilt
 
 * Sun Feb 13 2005 David Woodhouse <dwmw2@infradead.org> 0:1.2.10-6
