@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_enable	gtk3
+%def_disable	devel
 
 Name: opencpn
-Version: 5.2.4
-Release: alt1.1
+Version: 5.7.1
+Release: alt0.1
 Summary: A free and open source software for marine navigation
 
 Group: Other
@@ -17,17 +18,13 @@ ExcludeArch: ppc64le
 
 Requires: %name-data
 
-#Errara
-Patch100: opencpn-5.0.0-mga-missing_glx_include.patch
-Patch101: opencpn-5.2.4-dashboard.cpp.patch
-
 # Automatically added by buildreq on Mon Mar 25 2013
 # optimized out: cmake-modules fontconfig fontconfig-devel glib2-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXrender-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel pkg-config xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
 BuildRequires: bzlib-devel cmake gcc-c++ libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel zlib-devel
 BuildRequires: lsb-release libflac-devel libogg-devel libvorbis-devel libopus-devel
 
 %if_enabled gtk3
-BuildRequires: libwxGTK3.1-devel libgtk+3-devel
+BuildRequires: libwxGTK3.2-devel libgtk+3-devel
 BuildConflicts: compat-libwxGTK3.1-gtk2-devel libgtk+2-devel
 
 BuildRequires: libcairo-devel libdrm-devel libtiff-devel libmount-devel libblkid-devel
@@ -39,12 +36,19 @@ BuildConflicts: libwxGTK3.1-devel libgtk+3-devel
 
 Requires: libgtk2-engine-adwaita
 %endif
-BuildRequires: libpcre-devel libffi-devel libfribidi-devel libuuid-devel libpixman-devel
+BuildRequires: libffi-devel libfribidi-devel libuuid-devel libpixman-devel
 BuildRequires: libthai-devel libdatrie-devel
 
 BuildRequires: tinyxml-devel libgps-devel libportaudio2-devel libcurl-devel libexpat-devel
 BuildRequires: liblz4-devel liblzma-devel libsndfile-devel libarchive-devel libelf-devel
-BuildRequires: libexif-devel libwxsvg-devel libsqlite3-devel
+BuildRequires: libexif-devel libwxsvg-devel libsqlite3-devel libusb-devel
+BuildRequires: libjpeg-devel libjasper-devel libbrotli-devel
+
+#Sisyphus:
+#[x86_64] Package 'libpcre2-8', required by 'glib-2.0', not found
+#[x86_64] Package libpcre2-8 was not found in the pkg-config search path.
+#[x86_64] Perhaps you should add the directory containing `libpcre2-8.pc'
+BuildRequires: libpcre2-devel
 
 # use bundled wxcurl: none in Sisyphus 20190327
 # use bundled unarr : none in Sisyphus 20190327
@@ -67,25 +71,22 @@ Requires: icon-theme-hicolor
 %description data
 Architecture independent files for OpenCPN.
 
+%if_enabled devel
+%package devel
+Summary: The Google C++ Testing and Mocking Framework files
+Group: Development/C
+
+%description devel
+The Google C++ Testing and Mocking Framework files
+%endif
+
 %prep
 %setup -n OpenCPN-%version
 
-%patch100 -p1
-%patch101 -p2
-
-#rm -f src/tinyxml*.cpp include/tinyxml.h
-#rm -rf plugins/grib_pi/src/zlib-1.2.3
-#rm -rf plugins/grib_pi/src/bzip2
-
-sed -i 's/lwx_gtk3u_aui-3.0/lwx_gtk3u_aui-3.1/' CMakeLists.txt
-sed -i 's/wx_gtk3u_gl-3.0/wx_gtk3u_gl-3.1/' CMakeLists.txt
-
-# https://github.com/OpenCPN/OpenCPN/issues/2160
-sed -i 's|po/opencpn_zh_CN.po zh_TW|po/opencpn_zh_CN.po zh_CN|' CMakeLists.txt
-
 %build
 #add_optflags %(pkg-config --cflags pango)
-%cmake -DBUNDLE_DOCS=1 -DBUNDLE_TCDATA=1 -DBUNDLE_GSHHS=1
+#-DOCPN_BUILD_TEST=0: https://github.com/OpenCPN/OpenCPN/issues/2799
+%cmake -DBUNDLE_DOCS=1 -DBUNDLE_TCDATA=1 -DBUNDLE_GSHHS=1 -DOCPN_BUILD_TEST=0
 %cmake_build
 
 %install
@@ -103,6 +104,13 @@ rm -rf %buildroot/%_datadir/doc
 %find_lang --append --output=%name.lang %name-wmm_pi
 %find_lang --append --output=%name.lang %name-chartdldr_pi
 
+%if_disabled devel
+rm -rf %buildroot/%_libdir/cmake
+rm -rf %buildroot/%_includedir
+rm -rf %buildroot/%_libdir/*.a
+rm -rf %buildroot/%_pkgconfigdir
+%endif
+
 %files
 %doc data/license.txt
 %doc data/copyright
@@ -110,6 +118,7 @@ rm -rf %buildroot/%_datadir/doc
 %doc LICENSING
 
 %_bindir/opencpn
+%_bindir/opencpn-cmd
 
 %dir %_libdir/%name
 %_libdir/opencpn/*_pi.so
@@ -118,7 +127,7 @@ rm -rf %buildroot/%_datadir/doc
 %doc data/doc/*
 %_man1dir/opencpn.*
 
-%_datadir/metainfo/opencpn.metainfo.xml
+%_datadir/metainfo/opencpn.appdata.xml
 
 %dir %_datadir/%name
 %dir %_datadir/%name/sounds
@@ -158,7 +167,22 @@ rm -rf %buildroot/%_datadir/doc
 %_datadir/%name/authors.html
 %_datadir/%name/license.html
 
+%if_enabled devel
+%files devel
+%_libdir/cmake
+%_includedir/*
+%_libdir/*.a
+%_pkgconfigdir/*.pc
+%endif
+
 %changelog
+* Sat Oct 29 2022 Sergey Y. Afonin <asy@altlinux.org> 5.7.1-alt0.1
+- New (development) version, 20221029 snapshot (due to build with libwxGTK 3.2)
+- removed patches:
+  + opencpn-5.0.0-mga-missing_glx_include.patch
+  + opencpn-5.2.4-dashboard.cpp.patch
+- switched to libpcre2-devel (due to same change of glib-2.0)
+
 * Wed Apr 28 2021 Arseny Maslennikov <arseny@altlinux.org> 5.2.4-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
