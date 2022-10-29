@@ -1,10 +1,11 @@
+# git commit 89e277c7092145f8b3db750563b8ba36147b4c33
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version:  31.3.0.1
+Version:  31.3.1
 
-Release: alt2
+Release: alt0_git1_89e277
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -56,7 +57,7 @@ Patch22: palemoon_rpath-29.4.6.patch
 
 Patch23: palemoon_version-29.4.6.patch
 Patch24: palemoon-31.0.0-ui_picker_false.patch
-Patch25: palemoon-31.3.0.1-lock_impl_posix.patch
+#Patch25: palemoon-31.3.0.1-lock_impl_posix.patch
 
 # Patch from Rosa
 Patch103: palemoon-29.4.6-disable-check-default-browser.patch
@@ -79,10 +80,9 @@ BuildpreReq: libXcomposite-devel libXdamage-devel
 # Automatically added by buildreq on Wed Jul 13 2022
 # optimized out: alt-os-release alternatives fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base sh4 xorg-proto-devel zlib-devel
 BuildRequires: doxygen gcc-c++ libGConf-devel libXt-devel libalsa-devel
-BuildRequires: libdbus-glib-devel libgtk+2-devel libhunspell-devel
-BuildRequires: libpulseaudio-devel libsocket
-BuildRequires: python-modules-distutils python-modules-json
-BuildRequires: unzip yasm zip
+BuildRequires: libdbus-glib-devel libgtk+2-devel libhunspell-devel 
+BuildRequires: libpulseaudio-devel libsocket python-modules-distutils
+BuildRequires: python-modules-json python-modules-wsgiref unzip yasm zip
 
 BuildRequires: /usr/bin/python2.7 python2-base
 
@@ -97,7 +97,7 @@ BuildRequires(pre): browser-plugins-npapi-devel
 BuildPreReq: python-module-future python-modules-json python-modules-wsgiref
 BuildPreReq: libnss-devel
 
-#BuildRequires: gcc%%_gcc_version-c++
+#BuildRequires: gcc%%{_gcc_version}-c++
 
 BuildPreReq: chrpath
 BuildPreReq: autoconf_%_autoconf_version
@@ -173,7 +173,7 @@ popd
 %setup -T -D -a 11
 
 %patch24 -p1
-%patch25 -p1
+#patch25 -p1
 
 #patch21 -p1
 
@@ -261,6 +261,11 @@ echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
 %ifarch %ix86
  echo "ac_add_options --with-arch=i586" >> .mozconfig
  echo 'ac_add_options --enable-optimize=" -march=i586 -msse2 -mfpmath=sse"' >> .mozconfig
+%endif
+
+%ifarch x86_64
+ echo "ac_add_options --with-arch=x86-64" >> .mozconfig
+ echo 'ac_add_options --enable-optimize=" -march=x86-64 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
 
 
@@ -494,6 +499,12 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %exclude %_includedir/*
 
 %changelog
+* Sat Oct 29 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.3.1-alt0_git1_89e277
+-  Version 31.3.1_RC1
+
+* Tue Oct 25 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.3.0.1-alt2.2
+- Build with gcc10
+
 * Sun Oct 16 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.3.0.1-alt2
 - Add palemoon-31.3.0.1-lock_impl_posix.patch
 
