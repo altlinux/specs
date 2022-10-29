@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 177
+%define centos_release 181
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -61,7 +61,8 @@ Group: System/Kernel and hardware
 Url: https://gitlab.com/redhat/centos-stream/src/kernel/centos-stream-9
 
 Source0: %name.tar
-Patch0: 0001-Fix-build-with-new-pahole-adjust-flags.patch
+Patch0001: 0001-Fix-build-with-new-pahole-adjust-flags.patch
+Patch0002: 0002-fscache-Convert-fscache_set_page_dirty-to-fscache_di.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: x86_64 aarch64
@@ -634,6 +635,54 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Oct 26 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.181-alt1.el9
+- Updated to kernel-5.14.0-181.el9 (fixes: CVE-2022-1462, CVE-2022-1882, CVE-2022-30594, CVE-2022-39188):
+  + ACPI: processor idle: Practically limit "Dummy wait" workaround to old Intel systems
+  + amd64_edac: add support for systems with different types of memory modules
+  + arm64: kexec_file: use more system keyrings to verify kernel image signature
+  + arm64/kexec: Fix missing extra range for crashkres_low
+  + Backport selected PM commits for kernel-rt
+  + block: update with upstream v6.0
+  + cgroup: cgroup_get_from_id() must check the looked-up kn is a directory
+  + crypto: cryptd - Protect per-CPU resource by disabling BH
+  + dmaengine: Updates for 9.2
+  + exfat: Stable update and fixes
+  + fix pinctrl errors on Raspberry Pi 4
+  + Fix UAF error in watch_queue
+  + intel_idle: make SPR C1 and C1E be independent
+  + io_uring: update to v5.15
+  + irqdomain: Export irq_domain_disconnect_hierarchy()
+  + Merge remote-tracking branch 'centos-stream-9/merge-requests/1299' into temporary-branch
+  + Merge remote-tracking branch 'origin/merge-requests/1116' into HEAD
+  + mm changes through v5.18 for 9.2
+  + mm: prevent page_frag_alloc() from corrupting the memory
+  + mmu_gather: Fix munmap() & unmap_mapping_range() race (CVE-2022-39188)
+  + net: add skb drop reasons
+  + net: stable backports for 9.2
+  + nfp: driver update to kernel version 5.18
+  + NFS refresh for RHEL-9.2
+  + nvme update to v6.0
+  + perf test: Record only user callchains on the "Check Arm64 callgraphs are complete in fp mode" test
+  + ptrace: Check PTRACE_O_SUSPEND_SECCOMP permission on PTRACE_SEIZE
+  + RDMA: update to v6.0
+  + redhat/configs: enable UINPUT on aarch64
+  + redhat/Makefile: Remove hardcoded BUILD_TARGET entries
+  + replace CONFIG_PTE_MARKER with CONFIG_PTE_MARKER_UFFD_WP
+  + [s390]: [IBM 9.2 FEAT] Support Processor Activity Instrumentation Extension 1 (IBM z16) - kernel part
+  + [s390]: [IBM 9.2 FEAT] Transparent DASD PPRC (Peer-to-Peer Remote Copy) handling - kernel part
+  + [s390]: ['[IBM 9.2 FEAT] Upgrade the QETH driver to latest from upstream', ' e.g. kernel 5.20']
+  + scsi: bnx2fc: update driver to latest upstream
+  + scsi: qedf: update driver to latest upstream
+  + SCSI updates for RHEL 9.2
+  + tty: fix possible race condition in drivers/tty/tty_buffers.c
+  + Update drivers/i2c for known edge platforms
+  + Update drivers/phy to support Arm SystemReady IR
+  + Update DTS bindings for known edge platforms
+  + Updates to drivers/perf to support Arm SystemReady IR
+  + VFIO 9.2 backports
+  + wireguard: netlink: avoid variable-sized memcpy on sockaddr
+  + Various changes and improvements that are poorly described in merge.
+
 * Mon Oct 17 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.177-alt1.el9
 - Updated to kernel-5.14.0-177.el9:
   + Backport printk v5.19 and earlier commits for kernel-rt
