@@ -1,11 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_enable	gtk3
-%def_disable	devel
+%def_disable	build_test
 
 Name: opencpn
 Version: 5.7.1
-Release: alt0.1
+Release: alt0.2
 Summary: A free and open source software for marine navigation
 
 Group: Other
@@ -23,19 +22,12 @@ Requires: %name-data
 BuildRequires: bzlib-devel cmake gcc-c++ libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel zlib-devel
 BuildRequires: lsb-release libflac-devel libogg-devel libvorbis-devel libopus-devel
 
-%if_enabled gtk3
 BuildRequires: libwxGTK3.2-devel libgtk+3-devel
-BuildConflicts: compat-libwxGTK3.1-gtk2-devel libgtk+2-devel
 
 BuildRequires: libcairo-devel libdrm-devel libtiff-devel libmount-devel libblkid-devel
 BuildRequires: libselinux-devel libxkbcommon-devel libwayland-cursor-devel libwayland-egl-devel
 BuildRequires: libepoxy-devel at-spi2-atk-devel libat-spi2-core-devel
-%else
-BuildRequires: compat-libwxGTK3.1-gtk2-devel libgtk+2-devel
-BuildConflicts: libwxGTK3.1-devel libgtk+3-devel
 
-Requires: libgtk2-engine-adwaita
-%endif
 BuildRequires: libffi-devel libfribidi-devel libuuid-devel libpixman-devel
 BuildRequires: libthai-devel libdatrie-devel
 
@@ -71,22 +63,18 @@ Requires: icon-theme-hicolor
 %description data
 Architecture independent files for OpenCPN.
 
-%if_enabled devel
-%package devel
-Summary: The Google C++ Testing and Mocking Framework files
-Group: Development/C
-
-%description devel
-The Google C++ Testing and Mocking Framework files
-%endif
-
 %prep
 %setup -n OpenCPN-%version
 
 %build
-#add_optflags %(pkg-config --cflags pango)
+
 #-DOCPN_BUILD_TEST=0: https://github.com/OpenCPN/OpenCPN/issues/2799
+%if_enabled build_test
+%cmake -DBUNDLE_DOCS=1 -DBUNDLE_TCDATA=1 -DBUNDLE_GSHHS=1
+%else
 %cmake -DBUNDLE_DOCS=1 -DBUNDLE_TCDATA=1 -DBUNDLE_GSHHS=1 -DOCPN_BUILD_TEST=0
+%endif
+
 %cmake_build
 
 %install
@@ -104,7 +92,7 @@ rm -rf %buildroot/%_datadir/doc
 %find_lang --append --output=%name.lang %name-wmm_pi
 %find_lang --append --output=%name.lang %name-chartdldr_pi
 
-%if_disabled devel
+%if_enabled build_test
 rm -rf %buildroot/%_libdir/cmake
 rm -rf %buildroot/%_includedir
 rm -rf %buildroot/%_libdir/*.a
@@ -167,15 +155,12 @@ rm -rf %buildroot/%_pkgconfigdir
 %_datadir/%name/authors.html
 %_datadir/%name/license.html
 
-%if_enabled devel
-%files devel
-%_libdir/cmake
-%_includedir/*
-%_libdir/*.a
-%_pkgconfigdir/*.pc
-%endif
-
 %changelog
+* Sun Oct 30 2022 Sergey Y. Afonin <asy@altlinux.org> 5.7.1-alt0.2
+- changes in spec file:
+  + removed build time switch for switching gtk+2/gtk+3
+  + added build time switch for enable build tests
+
 * Sat Oct 29 2022 Sergey Y. Afonin <asy@altlinux.org> 5.7.1-alt0.1
 - New (development) version, 20221029 snapshot (due to build with libwxGTK 3.2)
 - removed patches:
