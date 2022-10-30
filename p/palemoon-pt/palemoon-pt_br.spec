@@ -15,7 +15,7 @@
 Name: palemoon-pt
 
 Version: 31.3.0
-Release: alt1
+Release: alt1.1
 
 Summary: Portuguese (Brazilian) Language Pack for Pale Moon
 License: MPL-2.0
@@ -38,7 +38,6 @@ BuildRequires(pre):	rpm-build-palemoon
 # Automatically added by buildreq on Mon Jul 13 2015
 BuildRequires: libdb4-devel unzip
 
-Requires: hunspell-pt
 
 %description
 Portuguese (Brazilian) Language Pack for Pale Moon
@@ -100,8 +99,6 @@ cat > %buildroot/%cid_dict_dir/install.rdf <<-EOF
 	  </Description>
 	</RDF>
 EOF
-ln -s %_datadir/myspell/el_GR.aff %buildroot/%cid_dict_dir/dictionaries/el.aff
-ln -s %_datadir/myspell/el_GR.dic %buildroot/%cid_dict_dir/dictionaries/el.dic
 
 %files
 %cid_dir
@@ -111,5 +108,8 @@ ln -s %_datadir/myspell/el_GR.dic %buildroot/%cid_dict_dir/dictionaries/el.dic
 %search_dir
 
 %changelog
+* Sun Oct 30 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.3.0-alt1.1
+- Fix Build 
+
 * Sun Oct 16 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.3.0-alt1
 - initial build for ALT Linux Sisyphus
