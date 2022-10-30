@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.352.b07
+%define version 1.8.0.352.b08
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -295,7 +295,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo shenandoah-jdk8u
-%global shenandoah_revision shenandoah-jdk8u352-b07
+%global shenandoah_revision shenandoah-jdk8u352-b08
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -317,7 +317,7 @@ BuildRequires: /proc rpm-build-java
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga           0
+%global is_ga           1
 %if %{is_ga}
 %global milestone          fcs
 %global milestone_version  %{nil}
@@ -2149,6 +2149,14 @@ fi
 %endif
 
 %changelog
+* Sun Oct 30 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.352.b08-alt0_1jpp8
+- New version.
+- Seciruty fixes:
+  + JDK-8286526, CVE-2022-21619: Improve NTLM support
+  + JDK-8286533, CVE-2022-21626: Key X509 usages
+  + JDK-8286910, CVE-2022-21624: Improve JNDI lookups
+  + JDK-8286918, CVE-2022-21628: Better HttpServer service
+
 * Fri Oct 14 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.352.b07-alt0_0.1.eajpp8
 - New version.
 
