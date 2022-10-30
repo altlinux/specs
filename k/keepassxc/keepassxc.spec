@@ -1,5 +1,5 @@
 Name: keepassxc
-Version:  2.7.3
+Version:  2.7.4
 Release:  alt1
 
 Summary: KeePassXC Password Safe - light-weight cross-platform password manager
@@ -98,6 +98,9 @@ make -j%__nprocs test ARGS+="-E test\(cli\|gui\) --output-on-failure"
 %endif
 
 %changelog
+* Sun Oct 30 2022 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.4-alt1
+- updated to v2.7.4
+
 * Mon Oct 24 2022 Pavel Nakonechnyi <zorg@altlinux.org> 2.7.3-alt1
 - updated to v2.7.3
 
