@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-pywlroots
-Version: 0.15.22
+Version: 0.15.24
 Release: alt1
 
 Summary: Python binding to the wlroots library using cffi
@@ -55,6 +55,9 @@ find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Oct 30 2022 Egor Ignatov <egori@altlinux.org> 0.15.24-alt1
+- new version 0.15.24
+
 * Thu Sep 22 2022 Egor Ignatov <egori@altlinux.org> 0.15.22-alt1
 - new version 0.15.22
 
