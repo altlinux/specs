@@ -9,7 +9,7 @@
 %define soversion 0
 
 Name: wireplumber
-Version: 0.4.9
+Version: 0.4.12
 Release: alt1
 
 Summary: a modular session/policy manager for PipeWire
@@ -23,7 +23,7 @@ BuildRequires: pkgconfig(gobject-2.0) >= 2.62
 BuildRequires: pkgconfig(gmodule-2.0) >= 2.62
 BuildRequires: pkgconfig(gio-2.0) >= 2.62
 BuildRequires: pkgconfig(gio-unix-2.0) >= 2.62
-BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.48
+BuildRequires: pkgconfig(libpipewire-0.3) >= 0.3.52
 BuildRequires: liblua5.3-devel
 %if_enabled introspection
 BuildRequires(pre): gobject-introspection-devel
@@ -64,6 +64,7 @@ Requires: lib%name = %EVR
 %package -n lib%name-gir-devel
 Summary: GObject introspection development data for lib%name
 Group: Development/Other
+BuildArch: noarch
 Requires: lib%name-gir = %EVR
 Requires: lib%name-devel = %EVR
 
@@ -148,7 +149,9 @@ cp -v NEWS.rst README.rst %buildroot%{docdir %name}/
 mkdir -p %buildroot%{docdir %name-doc}/
 mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 %define docdir() %_defaultdocdir/%1-%version
 %{docdir %name}
 %_bindir/wireplumber
@@ -185,6 +188,9 @@ mv -v %buildroot%_datadir/doc/%name %buildroot%{docdir %name-doc}
 %endif
 
 %changelog
+* Thu Oct 20 2022 Arseny Maslennikov <arseny@altlinux.org> 0.4.12-alt1
+- 0.4.9 -> 0.4.12.
+
 * Sun Mar 27 2022 Arseny Maslennikov <arseny@altlinux.org> 0.4.9-alt1
 - 0.4.8 -> 0.4.9.
 
