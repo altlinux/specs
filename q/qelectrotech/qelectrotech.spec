@@ -1,6 +1,6 @@
 Name: qelectrotech
 Version: 0.8.0
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: An electric diagrams editor
@@ -11,6 +11,7 @@ Group: Engineering
 Url: http://qelectrotech.org/
 # Download from https://git.tuxfamily.org/qet/qet.git/
 Source0: qet-%version.tar.gz
+Source1: qet_ru.ts
 
 BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++
@@ -131,6 +132,7 @@ Colecção de elementos para QElectroTech.
 
 %prep
 %setup -n qet-%version
+cp -a %SOURCE1 lang/qet_ru.ts
 
 sed -e s,/usr/local/,%prefix/, \
     -e /QET_MAN_PATH/s,'man/','share/man', \
@@ -188,6 +190,9 @@ rm -f %buildroot%_datadir/%name/lang/qt_*.qm
 %_datadir/%name/titleblocks
 
 %changelog
+* Sun Oct 30 2022 Andrey Cherepanov <cas@altlinux.org> 2:0.8.0-alt2
+- Update Russian translation (thanks Olesya Gerasimenko).
+
 * Thu Jan 27 2022 Andrey Cherepanov <cas@altlinux.org> 2:0.8.0-alt1
 - New version.
 - Fix license according to SPDX.
