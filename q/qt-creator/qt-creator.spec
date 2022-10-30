@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
 %def_with ClangCodeModel
-%define llvm_version 12.0
+%define llvm_version 13.0
 %define qt_version 5.15.2
 
 %add_findreq_skiplist  %_datadir/qtcreator/*
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 8.0.1
+Version: 8.0.2
 Release: alt1
 
 Summary: Cross-platform IDE for Qt
@@ -54,12 +54,10 @@ BuildRequires: kf5-syntax-highlighting-devel
 %if_with ClangCodeModel
 BuildRequires: clang%llvm_version
 BuildRequires: clang%llvm_version-devel
-BuildRequires: clang%llvm_version-devel-static
 BuildRequires: clang%llvm_version-tools
 BuildRequires: clangd%llvm_version
 BuildRequires: lld%llvm_version
 BuildRequires: llvm%llvm_version-devel
-BuildRequires: llvm%llvm_version-devel-static
 BuildRequires: llvm%llvm_version-tools
 %endif
 BuildRequires: libsystemd-devel
@@ -198,6 +196,10 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Sat Oct 29 2022 Andrey Cherepanov <cas@altlinux.org> 8.0.2-alt1
+- New version.
+- Used LLVM 13.0.
+
 * Mon Aug 15 2022 Andrey Cherepanov <cas@altlinux.org> 8.0.1-alt1
 - New version.
 
