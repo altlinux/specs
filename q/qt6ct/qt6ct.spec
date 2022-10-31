@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     qt6ct
-Version:  0.6
+Version:  0.7
 Release:  alt1
 
 Summary:  Qt6 Configuration Tool
@@ -41,6 +41,9 @@ icons, etc.) under DE/WM without Qt integration.
 %doc README
 
 %changelog
+* Mon Oct 31 2022 Ivan A. Melnikov <iv@altlinux.org> 0.7-alt1
+- 0.7
+
 * Fri Sep 30 2022 Ivan A. Melnikov <iv@altlinux.org> 0.6-alt1
 - 0.6
 
