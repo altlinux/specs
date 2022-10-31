@@ -7,7 +7,7 @@
 
 Name: kde5-kcm-grub2
 Version: 0.6.4
-Release: alt6
+Release: alt7
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -19,8 +19,6 @@ Source: %rname-%version.tar
 Source1: po.tar
 Patch1: alt-no-details-btn.patch
 Patch2: alt-wallpaper.patch
-Patch3: alt-parent-category.patch
-Patch4: alt-combobox-colors.patch
 
 BuildRequires(pre): rpm-build-kf5
 
@@ -40,8 +38,6 @@ A KDE Control Module for configuring the GRUB2 bootloader.
 %setup -n %rname-%version -a1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 %K5build \
@@ -64,15 +60,18 @@ A KDE Control Module for configuring the GRUB2 bootloader.
 
 %files -f %name.lang
 %doc README
-%_K5plug/kcm_grub2.so
 %_K5libexecdir/kauth/kcmgrub2helper
-%_K5srv/kcm_grub2.desktop
+%_K5plug/plasma/kcms/systemsettings_qwidgets/*grub*.so
+%_K5xdgapp/*grub*.desktop
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmgrub2.policy
 %_K5dbus_sys_srv/org.kde.kcontrol.kcmgrub2.service
 %_K5dbus/system.d/org.kde.kcontrol.kcmgrub2.conf
 
 
 %changelog
+* Mon Oct 31 2022 Sergey V Turchin <zerg@altlinux.org> 0.6.4-alt7
+- update to master branch bdb458c9
+
 * Mon Mar 14 2022 Slava Aseev <ptrnine@altlinux.org> 0.6.4-alt6
 - fix combobox colors
 
