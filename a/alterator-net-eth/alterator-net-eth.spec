@@ -1,5 +1,5 @@
 Name: alterator-net-eth
-Version: 5.2.3
+Version: 5.2.4
 Release: alt1
 
 Source:%name-%version.tar
@@ -77,6 +77,9 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Mon Oct 31 2022 Sergey V Turchin <zerg@altlinux.org> 5.2.4-alt1
+- Extend adding IP label text
+
 * Mon Sep 26 2022 Andrey Cherepanov <cas@altlinux.org> 5.2.3-alt1
 - Put hostname to /etc/hostname for hostnamectl (ALT #42690).
 
