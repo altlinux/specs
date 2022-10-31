@@ -3,7 +3,7 @@
 %define repo dde-launcher
 
 Name: deepin-launcher
-Version: 5.5.27
+Version: 5.5.35
 Release: alt1
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
@@ -76,6 +76,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/org.deepin.dde.launcher/org.deepin.dde.launcher.json
 
 %changelog
+* Mon Oct 31 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.35-alt1
+- New version (5.5.35).
+
 * Tue Aug 09 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.27-alt1
 - New version (5.5.27).
 
