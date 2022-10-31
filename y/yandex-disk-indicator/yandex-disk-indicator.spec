@@ -1,18 +1,15 @@
-Name:	    yandex-disk-indicator
-Version:	1.11.0
-Release:	alt2
-Summary:	Panel indicator for YandexDisk CLI client for Linux
-Group:		Communications
-License:    GPL-3.0
-URL:        https://github.com/slytomcat/yandex-disk-indicator
-Source0:	%name-%version.tar
-BuildArch:	noarch
+Name:  yandex-disk-indicator
+Version: 1.11.0
+Release: alt2.git561c25c
+Summary: Panel indicator for YandexDisk CLI client for Linux
+Group: Communications
+License: GPL-3.0
+URL: https://github.com/slytomcat/yandex-disk-indicator
+
+Source0: %name-%version.tar
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-#Requires: typelib(AppIndicator3)
-#Requires: python3-module-pyinotify
-#Requires: python3-module-pygobject3
-#Requires: libnotify-gir
 %add_python3_req_skip gi.repository.GLib
 %add_python3_req_skip gi.repository.GdkPixbuf
 
@@ -37,6 +34,9 @@ chmod 0644 %buildroot%_desktopdir/*.desktop
 %_datadir/yd-tools
 
 %changelog
+* Mon Oct 31 2022 Andrey Cherepanov <cas@altlinux.org> 1.11.0-alt2.git561c25c
+- New snapshot from upstream (ALT #44129).
+
 * Fri Aug 13 2021 Andrey Cherepanov <cas@altlinux.org> 1.11.0-alt2
 - Fix URL and License tags.
 
