@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 181
+%define centos_release 183
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,18 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Oct 31 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.183-alt1.el9
+- Updated to kernel-5.14.0-183.el9:
+  + cgroup/cpuset: Add isolated partition type for disabling load balancing
+  + crypto: ccp: update ccp driver upto v6.0
+  + Follow on fixes for bz2120352
+  + IPv6: 9.2 P1 backport from upstream
+  + iwlwifi: mvm: fix double list_add at iwl_mvm_mac_wake_tx_queue
+  + KVM: x86: Rebase to upstream 6.0
+  + selftests: bpf: test_kmod.sh: Pass parameters to the module
+  + Support for EFI confidential computing secret area in AMD SEV guests
+  + tracing: Disable interrupt or preemption before acquiring arch_spinlock_t
+
 * Wed Oct 26 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.181-alt1.el9
 - Updated to kernel-5.14.0-181.el9 (fixes: CVE-2022-1462, CVE-2022-1882, CVE-2022-30594, CVE-2022-39188):
   + ACPI: processor idle: Practically limit "Dummy wait" workaround to old Intel systems
