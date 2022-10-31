@@ -1,6 +1,6 @@
 Name: xfce4-dev-tools
-Version: 4.17.0
-Release: alt3
+Version: 4.17.1
+Release: alt1
 
 Summary: Development tools for Xfce
 Summary (ru): Инструменты для разработчика Xfce
@@ -52,6 +52,9 @@ make check
 %_man1dir/*
 
 %changelog
+* Mon Oct 31 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
+- Updated to 4.17.1.
+
 * Wed May 04 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt3
 - Updated Url tag.
 - Don't use egrep.
