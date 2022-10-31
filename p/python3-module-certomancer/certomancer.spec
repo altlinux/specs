@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.9.0
+Version: 0.9.1
 Release: alt1
 
 Summary: PKI testing tool
@@ -16,7 +16,7 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-pytest-runner
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
@@ -29,6 +29,8 @@ BuildRequires: python3-module-freezegun
 BuildRequires: python3-module-tzlocal
 BuildRequires: python3-module-werkzeug
 BuildRequires: python3-module-requests-mock
+BuildRequires: python3-module-tzdata
+BuildRequires: python3-module-pytest-asyncio
 %endif
 
 BuildArch: noarch
@@ -44,22 +46,25 @@ service provisioning.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc *.md
 %_bindir/%oname
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt1
+- Automatically updated to 0.9.1.
+
 * Sun Aug 21 2022 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt1
 - Automatically updated to 0.9.0.
 
