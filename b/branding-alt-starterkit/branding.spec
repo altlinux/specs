@@ -1,6 +1,8 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+#def_with slideshow
+
 %define theme starterkit
 %define Theme starter kit
 %define codename Hypericum
@@ -12,7 +14,7 @@
 
 Name: branding-%flavour
 Version: p10
-Release: alt3
+Release: alt4
 
 Url: http://en.altlinux.org/starterkits
 
@@ -313,8 +315,12 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %files notes
 %_datadir/alt-notes/*
 
+%if_with slideshow
 %files slideshow
 /usr/share/install2/slideshow
+%else
+%exclude /usr/share/install2/slideshow
+%endif
 
 %define indexhtmldir %_defaultdocdir/indexhtml
 
@@ -330,6 +336,9 @@ subst "s/Theme=.*/Theme=bgrt-alt/" /etc/plymouth/plymouthd.conf
 %_sysconfdir/skel/.config/autostart/*
 
 %changelog
+* Mon Oct 31 2022 Anton Midyukov <antohami@altlinux.org> p10-alt4
+- disable slideshow subpackage
+
 * Fri Feb 25 2022 Anton Midyukov <antohami@altlinux.org> p10-alt3
 - bootsplash: set theme bgrt-alt
 - graphics: added system-logo
