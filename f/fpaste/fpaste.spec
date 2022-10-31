@@ -1,13 +1,12 @@
 Name: fpaste
-Version: 0.4.2.0
-Release: alt2
+Version: 0.4.3.0
+Release: alt1
 Summary: A simple tool for pasting info onto the Fedora community paste server
-License: GPLv3+
+License: GPL-3.0+
 Group: Networking/WWW
-URL: https://pagure.io/%{name}
+URL: https://pagure.io/fpaste
 
-Source0: https://pagure.io/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
-Source44: import.info
+Source0: https://pagure.io/fpaste/archive/%{version}/fpaste-%{version}.tar.gz
 
 BuildArch:  noarch
 
@@ -35,6 +34,9 @@ make install BINDIR=%buildroot%_bindir MANDIR=%buildroot%_mandir
 %_man1dir/%name.1*
 
 %changelog
+* Mon Oct 31 2022 Andrey Cherepanov <cas@altlinux.org> 0.4.3.0-alt1
+- New version.
+
 * Fri Jan 14 2022 Andrey Cherepanov <cas@altlinux.org> 0.4.2.0-alt2
 - Initial build for Sisyphus.
 
