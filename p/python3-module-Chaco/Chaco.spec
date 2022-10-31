@@ -1,8 +1,8 @@
 %define oname Chaco
 
 Name: python3-module-%oname
-Version: 4.8.0.0.91.git22972069
-Release: alt2
+Version: 5.0.0
+Release: alt1
 
 Summary: Interactive 2-Dimensional Plotting
 License: BSD and GPLv2
@@ -10,7 +10,7 @@ Group: Development/Python3
 URL: http://code.enthought.com/projects/chaco/
 
 # https://github.com/enthought/chaco.git
-Source: %oname-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
@@ -91,11 +91,14 @@ xvfb-run sphinx-build-3 -E -a -b html -c docs/source -d doctrees docs/source htm
 %endif
 
 %files doc
-%doc docs/*.txt docs/*.pdf docs/*.tgz docs/chaco* docs/scipy_tutorial
+%doc docs/*.txt docs/*.pdf
 %doc examples html
 
 
 %changelog
+* Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Build new version.
+
 * Thu Jun 17 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.8.0.0.91.git22972069-alt2
 - Fixed build with new traits.
 
