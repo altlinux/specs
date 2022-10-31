@@ -1,6 +1,6 @@
 Name: openocd
 Version: 0.12.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: Debugging, in-system programming and boundary-scan testing for embedded devices
 License: GPLv2
@@ -79,6 +79,9 @@ install -pm644 -D contrib/60-openocd.rules %buildroot%_udevrulesdir/60-openocd.r
 %_mandir/man1/*
 
 %changelog
+* Mon Oct 31 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.0-alt0.2
+- v0.12.0-rc2
+
 * Wed Sep 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.0-alt0.1
 - v0.12.0-rc1
 
