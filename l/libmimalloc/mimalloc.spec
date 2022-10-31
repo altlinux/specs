@@ -1,25 +1,22 @@
 Group: System/Libraries
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-# END SourceDeps(oneline)
+
+BuildRequires(pre): rpm-macros-cmake
+
 %define oldname mimalloc
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%undefine __cmake_in_source_build
 
 Name:           libmimalloc
-Version:        2.0.3
-Release:        alt1_1
+Version:        2.0.6
+Release:        alt1
 Summary:        A general purpose allocator with excellent performance
 
 License:        MIT
 URL:            https://github.com/microsoft/mimalloc
-Source0:        %{url}/archive/v%{version}/%{oldname}-%{version}.tar.gz
+Source:         %name-%version.tar
 
 BuildRequires:  ctest cmake
 BuildRequires:  gcc-c++
-Source44: import.info
-Patch33: mimalloc-2.0.3-alt-soname.patch
 
 %description
 mimalloc (pronounced "me-malloc")
@@ -39,7 +36,7 @@ This package contains the shared library.
 
 %package -n libmimalloc-devel
 Group: Development/C
-Summary:        Development environment for %oldname
+Summary:        Development files for %oldname
 Requires:       libmimalloc2 = %EVR
 Provides: %oldname-devel = %EVR
 
@@ -47,31 +44,28 @@ Provides: %oldname-devel = %EVR
 Development package for mimalloc.
 
 %prep
-%setup -n %{oldname}-%{version} -q
+%setup
 
-# Remove unneded binary from sources
+# Remove unneeded binaries from source tree.
 rm -rf bin
 
-%if "%version" == "2.0.3"
-%patch33 -p1
-%else
-echo update release in patch
-exit 1
-%endif
-
 %build
-%{fedora_v2_cmake} \
+%cmake \
     -DMI_BUILD_OBJECT=OFF \
     -DMI_OVERRIDE=OFF \
     -DMI_INSTALL_TOPLEVEL=ON \
     -DMI_BUILD_STATIC=OFF \
-    -DMI_BUILD_TESTS=OFF \
+    -DMI_BUILD_TESTS=ON \
     -DCMAKE_BUILD_TYPE=Release
-%fedora_v2_cmake_build
+%cmake_build
 
 
 %install
-%fedora_v2_cmake_install
+%cmake_install
+
+
+%check
+cd %_cmake__builddir; ctest -V; cd -
 
 
 %files -n libmimalloc2
@@ -81,12 +75,15 @@ exit 1
 %_libdir/libmimalloc.so.2.*
 
 %files -n libmimalloc-devel
-%{_libdir}/lib%{oldname}.so
-%{_libdir}/cmake/%{oldname}/
-%{_includedir}/*
+%_libdir/libmimalloc.so
+%_libdir/cmake/%oldname
+%_includedir/*
 
 
 %changelog
+* Mon Oct 31 2022 Arseny Maslennikov <arseny@altlinux.org> 2.0.6-alt1
+- 2.0.3 -> 2.0.6.
+
 * Sat Nov 27 2021 Igor Vlasenko <viy@altlinux.org> 2.0.3-alt1_1
 - new version
 
