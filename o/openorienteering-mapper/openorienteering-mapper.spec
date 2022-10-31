@@ -4,7 +4,7 @@
 
 Name: openorienteering-mapper
 Version: 0.9.5
-Release: alt2
+Release: alt3
 
 Summary: OpenOrienteering Mapper program for orienteering mapmaking
 License: GPLv3
@@ -28,9 +28,6 @@ BuildRequires: qt5-tools-devel
 BuildRequires: qt5-serialport-devel
 BuildRequires: sqlite3
 %if_with check
-# NAD grids are needed for tests (github #1062).
-# File BETA2007.gsb from proj-datumgrid is also used for tests
-BuildRequires: proj-datumgrid
 BuildRequires: ctest
 %endif
 
@@ -93,6 +90,11 @@ cmake --build %_cmake__builddir/test -j%__nprocs
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Oct 31 2022 Nikolai Kostrigin <nickel@altlinux.org> 0.9.5-alt3
+- Fix build failure due to proj-datumgrid removal from Sisyphus
+  + spec: remove proj-datumgrid from BR:
+  + spec: remove an orphaned comment on NAD grids necessity
+
 * Mon Sep 27 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.5-alt2
 - Fixed build for Elbrus
 
