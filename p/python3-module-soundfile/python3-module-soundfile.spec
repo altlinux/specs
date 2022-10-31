@@ -1,7 +1,7 @@
-%define modulename soundfile
+%define oname soundfile
 
-Name:    python3-module-%modulename
-Version: 0.10.3.post1
+Name:    python3-module-%oname
+Version: 0.11.0
 Release: alt1
 
 Summary: An audio library based on libsndfile, CFFI and NumPy.
@@ -17,13 +17,13 @@ Requires: python3-module-cffi
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar.gz
+Source:  %oname-%version.tar.gz
 
 %description
 %summary
 
 %prep
-%setup -n %modulename-%version
+%setup -n %oname-%version
 
 %build
 %python3_build
@@ -38,5 +38,8 @@ Source:  %modulename-%version.tar.gz
 %doc *.rst LICENSE PKG-INFO
 
 %changelog
+* Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 0.11.0-alt1
+- Build new version.
+
 * Sun Oct 04 2020 Grigory Ustinov <grenka@altlinux.org> 0.10.3.post1-alt1
 - Initial build for Sisyphus.
