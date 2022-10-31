@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 %define oname h5netcdf
 
-%def_enable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.10.0
+Version: 1.0.2
 Release: alt1
 
 Summary: Pythonic interface to netCDF4 via h5py
@@ -19,7 +19,9 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-h5py python3-module-netCDF4
 BuildRequires: python3-module-Cython
-%if_enabled check
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
+%if_with check
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-cftime
@@ -42,13 +44,14 @@ tested for compatibility with other netCDF4 interfaces.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test -v
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc *.rst
@@ -56,6 +59,10 @@ python3 setup.py test -v
 
 
 %changelog
+* Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
+- Automatically updated to 1.0.2.
+- Build with check.
+
 * Wed Mar 24 2021 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
 - Build new version.
 - Fixed Build Requires (Fixed FTBFS).
