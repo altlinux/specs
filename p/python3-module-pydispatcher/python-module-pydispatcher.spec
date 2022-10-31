@@ -1,9 +1,11 @@
 %define oname PyDispatcher
 %define sname pydispatcher
 
+%def_with check
+
 Name: python3-module-%sname
-Version: 2.0.5
-Release: alt2.bzr20150114
+Version: 2.0.6
+Release: alt1
 
 Summary: Multi-producer-multi-consumer signal dispatching mechanism
 
@@ -19,6 +21,10 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py3_provides %sname
 
@@ -48,12 +54,19 @@ This package contains documentation for %oname.
 %install
 %python3_install
 
+%check
+py.test-3 -v
+
 %files
 %doc license.txt
 %python3_sitelibdir/pydispatch/
 %python3_sitelibdir/*egg-info
 
 %changelog
+* Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.6-alt1
+- Build new version.
+- Build with check.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 2.0.5-alt2.bzr20150114
 - Drop python2 support.
 
