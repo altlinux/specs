@@ -50,8 +50,8 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.6.9
-Release: alt1.1
+Version: 10.6.10
+Release: alt1
 
 Summary: A very fast and reliable SQL database engine
 License: GPLv2 and LGPLv2
@@ -1036,6 +1036,9 @@ fi
 %endif
 
 %changelog
+* Mon Oct 31 2022 Alexey Shabalin <shaba@altlinux.org> 10.6.10-alt1
+- 10.6.10
+
 * Wed Aug 31 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 10.6.9-alt1.1
 - e2k patch update
 
