@@ -5,8 +5,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
-%define kernel_sublevel	.145
-%define kernel_rt_release	rt74
+%define kernel_sublevel	.152
+%define kernel_rt_release	rt75
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -425,6 +425,10 @@ check-pesign-helper /boot/vmlinuz-%kversion-%flavour-%krelease
 %files checkinstall
 
 %changelog
+* Mon Oct 31 2022 Kernel Bot <kernelbot@altlinux.org> 5.10.152-alt1.rt75
+- v5.10.152-rt75 (2022-10-30).
+- config-rt: Enable ZRAM=m (ALT#40762).
+
 * Tue Sep 27 2022 Kernel Bot <kernelbot@altlinux.org> 5.10.145-alt1.rt74
 - v5.10.145-rt74 (2022-09-23).
 
