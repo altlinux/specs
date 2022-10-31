@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 5.5.23
+Version: 5.5.37
 Release: alt1
 Summary: Deepin desktop-environment - Session UI module
 License: GPL-3.0+
@@ -104,6 +104,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libexecdir/deepin-daemon/dde-welcome
 %_libexecdir/deepin-daemon/dnetwork-secret-dialog
 %_datadir/%repo/
+%_desktopdir/dde-osd.desktop
 #_iconsdir/hicolor/*/apps/deepin-*
 %_iconsdir/hicolor/scalable/devices/computer.svg
 %_datadir/dbus-1/services/*.service
@@ -113,6 +114,42 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/dde-dock/plugins/libnotifications.so
 
 %changelog
+* Mon Oct 31 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.37-alt1
+- New version.
+- Upstream:
+  + fix: wayland the touch screen collapses.
+  + fix: After repairing the special effects under the arm structure,
+  switching the capital and tabloid caused the white box display
+  in the upper left corner of the screen.
+  + fix: The silent state of the prompt does not match the control center.
+  + feat: Increase backlight mode switching.
+  + fix: The lock screen interface does not show notice.
+  + fix: Solve the problem of system notification collapse.
+  + fix: Notify the window to get the focus when locking the screen,
+  and interrupt the current focus input.
+  + fix: wayland lock screen does not show OSD.
+  + chore: adapt license and copyright.
+  + fix: Modify the start method of the dde-osd program.
+  + fix: Problems not shown by osd in the case of repair part.
+  + fix: Repair the Bluetooth connection with PIN code problem.
+  + fix: Switch user anomalies.
+  + fix: Abnormal interaction between low-volume interface and lock screen.
+  + fix: Repair the A user's activation or no-touch board, and enter
+  the B user's login page, which will automatically pop the osd bullet
+  window problem.
+  + fix: Correct and participate in the correction of the number
+  of Bluetooth bullet window parameters.
+  + fix: It is necessary to readjust the interface size when displaying
+  different types of OSD.
+  + fix: The version prompts incorrect information when logging
+  on the desktop in the community version.
+  + fix: memory leak.
+  + fix: After repairing standby sleep, osd cannot show the problem.
+  + chore: Update translation.
+  + fix: Repair notification center mouse click or roller will cause
+  hidden problems.
+  + fix: The window attributes need to be set according to X11 or wayland.
+
 * Fri Jun 10 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.23-alt1
 - New version.
 - Upstream:
