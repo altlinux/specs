@@ -1,6 +1,6 @@
 Name: wxMaxima
-Version: 22.05.0
-Release: alt2
+Version: 22.09.0
+Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
 License: GPL-2.0+
@@ -88,6 +88,9 @@ install -pD -m644 data/wxmaxima-32.xpm %buildroot%_niconsdir/%name.xpm
 %_datadir/metainfo/*wxMaxima.appdata.xml
 
 %changelog
+* Fri Sep 02 2022 Andrey Cherepanov <cas@altlinux.org> 22.09.0-alt1
+- New version.
+
 * Tue Jul 19 2022 Andrey Cherepanov <cas@altlinux.org> 22.05.0-alt2
 - Rebuilt with libwxGTK3.2-devel.
 
