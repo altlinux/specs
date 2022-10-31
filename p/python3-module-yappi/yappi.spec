@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%oname
-Version: 1.3.6
+Version: 1.4.0
 Release: alt1
 
 Summary: Yet Another Python Profiler, but this time support Multithread/CPU time profiling
@@ -43,6 +43,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/__pycache__/
 
 %changelog
+* Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt1
+- Automatically updated to 1.4.0.
+
 * Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 1.3.6-alt1
 - Automatically updated to 1.3.6.
 
