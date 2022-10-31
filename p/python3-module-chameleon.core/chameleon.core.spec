@@ -1,7 +1,7 @@
 %define oname chameleon
 
 Name: python3-module-%oname.core
-Version: 3.8.1
+Version: 3.10.1
 Release: alt1
 
 Summary: Chameleon Template Compiler
@@ -18,6 +18,7 @@ BuildRequires: time
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools
 BuildPreReq: python3-module-sphinx
+BuildPreReq: python3-module-sphinx_rtd_theme
 
 %description
 Attribute language template compiler.
@@ -83,6 +84,9 @@ python3 setup.py test
 %doc _build/html/*
 
 %changelog
+* Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.1-alt1
+- Build new version.
+
 * Tue Sep 01 2020 Grigory Ustinov <grenka@altlinux.org> 3.8.1-alt1
 - Build new version.
 - Drop python2 support.
