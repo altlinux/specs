@@ -1,5 +1,5 @@
 Name: supertuxkart-data
-Version: 1.3
+Version: 1.4
 Release: alt1
 
 License: GPL-3.0-or-later and CC-BY-SA-3.0 and CC-BY-SA-4.0
@@ -50,6 +50,9 @@ rm %buildroot%_datadir/supertuxkart/data/check_licenses.php
 %_datadir/supertuxkart/data
 
 %changelog
+* Tue Nov 01 2022 Leontiy Volodin <lvol@altlinux.org> 1.4-alt1
+- New version (1.4).
+
 * Tue Sep 28 2021 Leontiy Volodin <lvol@altlinux.org> 1.3-alt1
 - New version (1.3).
 

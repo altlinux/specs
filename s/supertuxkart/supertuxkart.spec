@@ -1,6 +1,8 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
+
 Name: supertuxkart
-Version: 1.3
-Release: alt1.1
+Version: 1.4
+Release: alt1
 
 License: GPL-2.0-or-later and GPL-3.0-or-later and CC-BY-SA-3.0
 Url: http://supertuxkart.sourceforge.net
@@ -10,15 +12,13 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # https://github.com/supertuxkart/stk-code
 Source: %name-%version-src.tar.gz
-#Patch: supertuxkart-0.9.3-debian-irrlicht.patch
-Patch: supertuxkart-1.2-debian-ftbfs_sdl.patch
 
 BuildRequires(pre): rpm-build-ninja
 # for aarch64 support
 BuildRequires(pre): libGLES
 # Automatically added by buildreq on Thu Jan 30 2020 (-bi)
 # optimized out: bash4 bashrc cmake-modules elfutils glibc-kernheaders-generic glibc-kernheaders-x86 libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXrender-devel libcrypt-devel libglvnd-devel libharfbuzz-devel libogg-devel libsasl2-3 libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl pkg-config python-modules python2-base python3 python3-base rpm-build-gir sh4 tzdata wayland-devel xorg-proto-devel xorg-xf86miscproto-devel zlib-devel
-BuildRequires: bzlib-devel cmake gcc-c++ libGLEW-devel libXi-devel libXrandr-devel libXt-devel libXxf86misc-devel libXxf86vm-devel libcurl-devel libfreetype-devel libfribidi-devel libjpeg-devel libopenal-devel libpng-devel libsqlite3-devel libssl-devel libvorbis-devel libwayland-cursor-devel libwayland-egl-devel libxkbcommon-devel libxkbfile-devel poppler rpm-build-python3 libSDL2-devel
+BuildRequires: bzlib-devel cmake gcc-c++ libGLEW-devel libXi-devel libXrandr-devel libXt-devel libXxf86misc-devel libXxf86vm-devel libcurl-devel libfreetype-devel libfribidi-devel libjpeg-devel libopenal-devel libpng-devel libsqlite3-devel libssl-devel libvorbis-devel libwayland-cursor-devel libwayland-egl-devel libxkbcommon-devel libxkbfile-devel poppler rpm-build-python3 libSDL2-devel libmcpp-devel
 # use system libraries instead build-in
 BuildRequires: libwiiuse-devel libraqm-devel
 
@@ -29,9 +29,27 @@ SuperTuxCart is a kart racing game
 
 %prep
 %setup -n %name-%version
-# %%patch -p1
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' data/po/update_po_authors.py
+sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' \
+    data/po/update_po_authors.py \
+    lib/shaderc/third_party/glslang/build_info.py \
+    lib/shaderc/third_party/glslang/gen_extension_headers.py \
+    lib/shaderc/third_party/glslang/update_glslang_sources.py \
+    lib/shaderc/third_party/re2/benchlog/benchplot.py \
+    lib/shaderc/third_party/spirv-tools/utils/check_copyright.py \
+    lib/shaderc/third_party/spirv-tools/utils/check_symbol_exports.py \
+    lib/shaderc/third_party/spirv-tools/utils/fixup_fuzz_result.py \
+    lib/shaderc/third_party/spirv-tools/utils/generate_grammar_tables.py \
+    lib/shaderc/third_party/spirv-tools/utils/generate_language_headers.py \
+    lib/shaderc/third_party/spirv-tools/utils/generate_registry_tables.py \
+    lib/shaderc/third_party/spirv-tools/utils/generate_vim_syntax.py \
+    lib/shaderc/third_party/spirv-tools/utils/update_build_version.py \
+    lib/shaderc/utils/add_copyright.py \
+    lib/shaderc/utils/remove-file-by-suffix.py \
+    lib/shaderc/utils/update_build_version.py \
+    tools/check_textures.py \
+    tools/compute_client_error.py \
+    tools/generate-country-names.py
 
 %build
 %cmake \
@@ -40,9 +58,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/python3|' data/po/update_po_authors.p
     -DUSE_SYSTEM_ANGELSCRIPT=OFF \
     -DBUILD_RECORDER=OFF \
     -DCHECK_ASSETS=OFF \
+    -DPROJECT_VERSION=%version \
 #
 cmake --build %_cmake__builddir -j%__nprocs
-#%%cmake_build
 
 %install
 #install -d %%buildroot%%_niconsdir
@@ -77,6 +95,9 @@ rm -f %buildroot%_includedir/wiiuse.h
 %_iconsdir/hicolor/1024x1024/apps/*
 
 %changelog
+* Tue Nov 01 2022 Leontiy Volodin <lvol@altlinux.org> 1.4-alt1
+- New version (1.4).
+
 * Sun Jan 16 2022 Leontiy Volodin <lvol@altlinux.org> 1.3-alt1.1
 - Removed libmcpp from requires.
 
