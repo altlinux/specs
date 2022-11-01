@@ -8,7 +8,7 @@
 %define __jar_repack %nil
 
 Name: linstor
-Version: 1.16.0
+Version: 1.20.0
 Release: alt1
 Summary: DRBD replicated volume manager
 Group: System/Servers
@@ -62,6 +62,8 @@ cp %_builddir/%NAME_VERS/scripts/linstor-resources.res %buildroot%_sysconfdir/dr
 #touch %buildroot%LS_PREFIX/{.server,.satellite,.controller}
 mkdir -p %buildroot%_sysconfdir/linstor
 cp %_builddir/%NAME_VERS/docs/linstor.toml-example %buildroot%_sysconfdir/linstor/
+touch %buildroot%_sysconfdir/linstor/linstor.toml
+mkdir -p %buildroot/var/lib/linstor
 
 ### common
 %package common
@@ -76,8 +78,11 @@ Linstor shared components between linstor-controller and linstor-satellite
 %dir %LS_PREFIX
 %dir %LS_PREFIX/lib
 %LS_PREFIX/lib/server-%version.jar
+%LS_PREFIX/lib/jclcrypto-%version.jar
 %dir %LS_PREFIX/lib/conf
 %LS_PREFIX/lib/conf/logback.xml
+%dir /var/lib/linstor
+%dir %_sysconfdir/linstor
 
 ### controller
 %package controller
@@ -99,6 +104,7 @@ Linstor controller manages linstor satellites and persistant data storage.
 %_unitdir/linstor-controller.service
 %FIREWALLD_SERVICES/linstor-controller.xml
 %_sysconfdir/linstor/linstor.toml-example
+%ghost %config(noreplace) %_sysconfdir/linstor/linstor.toml
 
 
 %post controller
@@ -140,6 +146,9 @@ and creates drbd resource files.
 %preun_service linstor-satellite
 
 %changelog
+* Mon Oct 31 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.20.0-alt1
+- 1.20.0
+
 * Thu Nov 11 2021 Alexey Shabalin <shaba@altlinux.org> 1.16.0-alt1
 - 1.16.0
 
