@@ -1,5 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 %global llvm_version 13.0
+%global clang_version 13
 %global __nprocs 8
 
 %def_with clang
@@ -20,7 +21,7 @@ ExclusiveArch: aarch64 x86_64 ppc64le
 %endif
 
 Name: clickhouse
-Version: 22.8.6.71
+Version: 22.8.8.3
 Release: alt1
 Summary: Open-source distributed column-oriented DBMS
 License: Apache-2.0
@@ -249,9 +250,9 @@ rm -rf contrib/sysroot/linux*
 export ALTWRAP_LLVM_VERSION="%llvm_version"
 %cmake \
 %if_with clang
-	-DCMAKE_C_COMPILER=clang \
+	-DCMAKE_C_COMPILER=clang-%clang_version \
 	-DENABLE_CCACHE=0 \
-	-DCMAKE_CXX_COMPILER=clang++ \
+	-DCMAKE_CXX_COMPILER=clang++-%clang_version \
 	-DUSE_LIBCXX:BOOL=ON \
 	-DPARALLEL_COMPILE_JOBS=$NPROCS \
 	-DPARALLEL_LINK_JOBS=1 \
@@ -361,6 +362,9 @@ fi
 %_datadir/clickhouse-test
 
 %changelog
+* Tue Nov 01 2022 Anton Farygin <rider@altlinux.ru> 22.8.8.3-alt1
+- 22.8.6.71 -> 22.8.8.3
+
 * Sat Oct 22 2022 Anton Farygin <rider@altlinux.ru> 22.8.6.71-alt1
 - 22.3.9.19 -> 22.8.6.71
 
