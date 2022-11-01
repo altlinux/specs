@@ -2,8 +2,8 @@
 %define openssh_askpass_dir %_libexecdir/openssh
 
 Name: plasma5-%rname
-Version: 5.25.5
-Release: alt2
+Version: 5.26.2
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -96,6 +96,9 @@ EOF
 #%_K5xdgapp/org.kde.ksshaskpass.desktop
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.2-alt1
+- new version
+
 * Wed Oct 05 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt2
 - update autostart desktop-file
 

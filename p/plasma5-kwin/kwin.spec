@@ -4,20 +4,20 @@
 
 %define rname kwin
 
-%define kwineffects_sover 13
-%define libkwineffects libkwineffects%kwineffects_sover
-%define kwinglutils_sover 13
-%define libkwinglutils libkwinglutils%kwinglutils_sover
 %define kwin_sover 5
 %define libkwin libkwin%kwin_sover
-%define kwinxrenderutils_sover 13
-%define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 %define kcmkwincommon_sover 5
 %define libkcmkwincommon libkcmkwincommon%kcmkwincommon_sover
+%define kwineffects_sover 14
+%define libkwineffects libkwineffects%kwineffects_sover
+%define kwinglutils_sover 14
+%define libkwinglutils libkwinglutils%kwinglutils_sover
+%define kwinxrenderutils_sover 14
+%define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: plasma5-%rname
-Version: 5.25.5
-Release: alt2
+Version: 5.26.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -89,38 +89,38 @@ Obsoletes: kf5-kwin-devel < %EVR
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
-%package -n %libkwineffects
-Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
-%description -n %libkwineffects
-KF5 library
-
-%package -n %libkwinglutils
-Group: System/Libraries
-Summary: KF5 library
-Requires: %name-common = %version-%release
-%description -n %libkwinglutils
-KF5 library
-
 %package -n %libkwin
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libkwin
 KF5 library
 
 %package -n %libkcmkwincommon
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libkcmkwincommon
+KF5 library
+
+%package -n %libkwineffects
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common >= %EVR
+%description -n %libkwineffects
+KF5 library
+
+%package -n %libkwinglutils
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common >= %EVR
+%description -n %libkwinglutils
 KF5 library
 
 %package -n %libkwinxrenderutils
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common >= %EVR
 %description -n %libkwinxrenderutils
 KF5 library
 
@@ -132,7 +132,7 @@ KF5 library
 %patch4 -p1 -b .hwinfo
 %patch5 -p1 -b .xkb
 
-for f in src/kcmkwin/kwincompositing/metadata.json ; do
+for f in src/kcmkwin/kwincompositing/kwincompositing.json ; do
     sed -i '/X-DocPath/d' $f
 done
 
@@ -167,7 +167,7 @@ done
 %_K5plug/plasma/kcms/systemsettings/*virtua*.so
 %_K5plug/plasma/kcms/systemsettings_qwidgets/*kwin*.so
 %_K5plug/org.kde.kdecoration2/
-%_K5plug/org.kde.*kwin*/
+#%_K5plug/org.kde.*kwin*/
 %_K5xdgapp/*kwin*.desktop
 %_K5xdgapp/*virtua*.desktop
 %_K5cf_bin/kwin*
@@ -178,7 +178,7 @@ done
 %_K5data/kwin/
 %_K5data/knsrcfiles/*.knsrc
 %_K5data/krunner/dbusplugins/*.desktop
-%_K5srv/*.desktop
+#%_K5srv/*.desktop
 %_K5srv/kwin/
 %_K5srvtyp/*.desktop
 %_K5notif/*.notifyrc
@@ -199,15 +199,18 @@ done
 %files -n %libkwin
 %_K5lib/libkwin.so.%kwin_sover
 %_K5lib/libkwin.so.*
-%files -n %libkwinxrenderutils
-%_K5lib/libkwinxrenderutils.so.%kwinxrenderutils_sover
-%_K5lib/libkwinxrenderutils.so.*
+#%files -n %libkwinxrenderutils
+#%_K5lib/libkwinxrenderutils.so.%kwinxrenderutils_sover
+#%_K5lib/libkwinxrenderutils.so.*
 %files -n %libkcmkwincommon
 %_K5lib/libkcmkwincommon.so.%kcmkwincommon_sover
 %_K5lib/libkcmkwincommon.so.*
 
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt1
+- new version
+
 * Mon Oct 03 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt2
 - remove help button from compositing settings module
 

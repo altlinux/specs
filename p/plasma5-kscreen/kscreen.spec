@@ -1,7 +1,11 @@
 %define rname kscreen
 
+%ifndef _unitdir_user
+%define _unitdir_user %prefix/lib/systemd/user
+%endif
+
 Name: plasma5-%rname
-Version: 5.25.5
+Version: 5.26.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -13,6 +17,8 @@ License: GPL-2.0-or-later
 
 Requires: xrandr iio-sensor-proxy
 Requires: plasma5-libkscreen-utils
+Provides: kf5-kscreen = %EVR
+Obsoletes: kf5-kscreen < %EVR
 
 Source: %rname-%version.tar
 Patch1: alt-enable-per-screen-scaling.patch
@@ -29,9 +35,7 @@ BuildRequires: kf5-ki18n-devel kf5-kiconthemes-devel kf5-kitemviews-devel kf5-ks
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel plasma5-libkscreen-devel
 BuildRequires: kf5-sonnet-devel kf5-kdeclarative-devel kf5-plasma-framework-devel kf5-kpackage-devel
 BuildRequires: kf5-kcmutils-devel
-
-Provides: kf5-kscreen = %EVR
-Obsoletes: kf5-kscreen < %EVR
+BuildRequires: plasma5-layer-shell-qt-devel
 
 %description
 KCM and KDED modules for managing displays in KDE.
@@ -72,15 +76,18 @@ sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 
 %files -f %name.lang
 %_datadir/qlogging-categories5/*.*categories
-%_K5bin/*
-%_K5plug/kcms/kcm_kscreen.so
-%_K5plug/kf5/kded/*.so
+%_K5bin/*kscreen*
+%_K5plug/plasma/kcms/systemsettings/*kscreen*.so
+%_K5plug/kf5/kded/*kscreen*.so
 %_K5plug/plasma/applets/*kscreen*.so
+%_K5xdgapp/*kscreen*.desktop
 %_K5data/kpackage/kcms/kcm_kscreen/
 %_K5data/kded_kscreen/
 %_K5data/plasma/plasmoids/org.kde.kscreen/
-%_K5srv/*.desktop
-#%_K5icon/*/*/actions/*.*
+%_K5srv/*kscreen*.desktop
+%_unitdir_user/*kscreen*.service
+%_K5libexecdir/kscreen_osd_service
+%_K5dbus_srv/*kscreen*.service
 
 #%files devel
 #%_K5inc/kscreen_version.h
@@ -90,6 +97,9 @@ sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 #%_K5archdata/mkspecs/modules/qt_KScreen.pri
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.2-alt1
+- new version
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt1
 - new version
 

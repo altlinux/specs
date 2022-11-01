@@ -19,7 +19,7 @@
 %define libksysguardsystemstats libksysguardsystemstats%sover2
 
 Name: plasma5-%rname
-Version: 5.25.5
+Version: 5.26.2
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -88,21 +88,21 @@ Common polkit files for %name
 %package -n %libksgrd
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libksgrd
 %name library
 
 %package -n %libksignalplotter
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libksignalplotter
 %name library
 
 %package -n %libprocesscore
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 Requires: polkit-kde-ksysguard
 %description -n %libprocesscore
 %name library
@@ -110,7 +110,7 @@ Requires: polkit-kde-ksysguard
 %package -n %liblsofui
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 Requires: lsof
 %description -n %liblsofui
 %name library
@@ -118,35 +118,35 @@ Requires: lsof
 %package -n %libprocessui
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libprocessui
 %name library
 
 %package -n %libksysguardformatter
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libksysguardformatter
 %name library
 
 %package -n %libksysguardfaces
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libksysguardfaces
 %name library
 
 %package -n %libksysguardsensors
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libksysguardsensors
 %name library
 
 %package -n %libksysguardsystemstats
 Group: System/Libraries
 Summary: %name library
-Requires: %name-common
+Requires: %name-common >= %EVR
 %description -n %libksysguardsystemstats
 %name library
 
@@ -194,13 +194,12 @@ Requires: %name-common
 #%_K5archdata/mkspecs/modules/qt_libKSysGuard.pri
 %_K5dbus_iface/*.xml
 
-%files -n %libprocesscore
-%_K5lib/libprocesscore.so.%sover
-%_K5lib/libprocesscore.so.*
-
 %files -n polkit-kde-ksysguard
 %_datadir/polkit-1/actions/org.kde.ksysguard.processlisthelper.policy
 
+%files -n %libprocesscore
+%_K5lib/libprocesscore.so.%sover
+%_K5lib/libprocesscore.so.*
 %files -n %libprocessui
 %_K5lib/libprocessui.so.%sover
 %_K5lib/libprocessui.so.*
@@ -227,6 +226,9 @@ Requires: %name-common
 %_K5lib/libKSysGuardSystemStats.so.*
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.2-alt1
+- new version
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt1
 - new version
 

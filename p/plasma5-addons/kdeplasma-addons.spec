@@ -14,7 +14,7 @@
 %define libplasmapotdprovidercore libplasmapotdprovidercore%plasmapotdprovidercore_sover
 
 Name: plasma5-addons
-Version: 5.25.5
+Version: 5.26.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -138,7 +138,6 @@ touch touch-%_arch
 %files
 %_K5data/knsrcfiles/*.knsrc
 %_K5plug/kf5/krunner/kcms/*.so
-%_K5plug/plasma/dataengine/*.so
 %_K5plug/plasma/applets/*.so
 %_K5plug/kpackage/packagestructure/*.so
 %_K5plug/plasmacalendarplugins/*
@@ -149,14 +148,13 @@ touch touch-%_arch
 %_K5qml/org/kde/plasma/wallpapers/potd/
 %_K5data/plasma/*
 %_K5data/kwin/*
-%_K5srv/*
 %_K5srvtyp/*
 
 %files devel
 %_K5inc/plasma/potdprovider/
 %_K5link/lib*.so
 %_libdir/cmake/PlasmaPotdProvider/
-%_K5data/kdevfiletemplates/templates/*.tar.*
+%_K5data/kdev*/templates/*.tar.*
 
 #%files -n %libplasmacomicprovidercore
 #%_K5lib/libplasmacomicprovidercore.so.*
@@ -166,6 +164,9 @@ touch touch-%_arch
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.2-alt1
+- new version
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt1
 - new version
 

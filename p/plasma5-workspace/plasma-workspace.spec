@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.25.5
-Release: alt4
+Version: 5.26.2
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -51,7 +51,7 @@ Obsoletes: kf5-plasma-workspace < %EVR
 Provides: plasma5-user-manager = %EVR
 Obsoletes: plasma5-user-manager < %EVR
 
-#Requires: KIOFuse
+#Requires: kde5-kio-fuse
 Requires: %name-qml
 Requires: /usr/share/design/current xdg-user-dirs
 Requires: iso-codes
@@ -61,6 +61,7 @@ Requires: kf5-kinit kf5-kconfig kf5-kded kf5-kglobalaccel kf5-kdeclarative
 Requires: kf5-kwallet kf5-solid kf5-kimageformats kf5-kdbusaddons kf5-kio kf5-kio-extras
 Requires: kf5-kquickcharts kf5-kirigami
 Requires: plasma5-polkit-kde-agent plasma5-kwin plasma5-kactivitymanagerd
+Requires: plasma5-kpipewire
 
 Source: %rname-%version.tar
 Source1: freememorynotifier.po
@@ -70,7 +71,7 @@ Source3: plasma_lookandfeel_org.kde.lookandfeel-ru-add.po
 Patch100: alt-startkde.patch
 Patch101: alt-menu-add-tooltip.patch
 Patch102: alt-def-wallpaper-image.patch
-Patch103: alt-plasma-konsole.patch
+#
 Patch104: alt-def-digital-clock.patch
 Patch105: alt-lock-widgets.patch
 Patch106: alt-digital-clock-date.patch
@@ -100,7 +101,7 @@ Patch129: alt-def-icons.patch
 Patch130: alt-sddm-check-username.patch
 Patch131: alt-kscreenlocker-theme-pam-support.patch
 Patch132: alt-fix-virtualkeyboard.patch
-Patch133: alt-no-remove-krunner.patch
+Patch133: alt-dont-remove-desktop-actions.patch
 Patch134: alt-zonetab.patch
 Patch135: alt-fix-virtualkeyboard-size.patch
 Patch136: alt-users-use-gost-yescrypt.patch
@@ -112,7 +113,7 @@ Patch137: alt-systemd-boot.patch
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: extra-cmake-modules gcc-c++
 BuildRequires: qt5-base-devel-static qt5-phonon-devel qt5-script-devel qt5-svg-devel qt5-x11extras-devel qt5-wayland-devel
-BuildRequires: libgps-devel libpam0-devel zlib-devel
+BuildRequires: libgps-devel libpam0-devel zlib-devel libpolkitqt5-qt5-devel
 %if_enabled qalculate
 BuildRequires: libqalculate-devel
 %endif
@@ -140,6 +141,7 @@ BuildRequires: kf5-networkmanager-qt-devel kf5-kpeople-devel kf5-kactivities-sta
 BuildRequires: kf5-kded kf5-kded-devel
 BuildRequires: kde5-kholidays-devel kde5-plasma-wayland-protocols
 BuildRequires: plasma5-kscreenlocker-devel plasma5-breeze-devel plasma5-layer-shell-qt-devel
+BuildRequires: plasma5-kpipewire-devel
 
 %description
 KDE Plasma Workspace
@@ -268,7 +270,7 @@ Requires: %name-common
 %patch100 -p1 -b .startkde
 %patch101 -p1
 %patch102 -p1
-%patch103 -p1
+#
 %patch104 -p1
 ###%patch105 -p1
 %patch106 -p1
@@ -277,7 +279,7 @@ Requires: %name-common
 %patch109 -p1
 %patch110 -p1
 %patch111 -p1
-pushd sddm-theme
+pushd lookandfeel/sddm-theme
 %patch112 -p1
 popd
 %patch113 -p1
@@ -345,9 +347,10 @@ done
 
 %install
 %K5install
-%K5install_move data ksplash kstyle solid kdevappwizard kpackage kglobalaccel
+%K5install_move data kstyle solid kdevappwizard kpackage kglobalaccel
 %K5install_move data desktop-directories doc kconf_update kio_desktop knsrcfiles
 %K5install_move data kcontrol kdisplay kfontinst krunner konqsidebartng plasma/avatars locale
+%K5install_move data plasma//nightcolor kio
 
 # fix dbus service
 sed -i 's|^Exec=.*|Exec=%_K5bin/krunner|' %buildroot/%_K5dbus_srv/org.kde.krunner.service
@@ -440,10 +443,10 @@ done
 %dir %_K5data/plasma/look-and-feel/
 %exclude %_K5data/plasma/look-and-feel/*
 %_K5data/kglobalaccel/*.desktop
+%_K5data/kio/servicemenus/*
 %_K5data/kio_desktop/
 %_K5data/kpackage/kcms/*/
 %_K5data/krunner/
-%_K5data/ksplash/
 %_K5data/kstyle/
 %_K5data/kfontinst/
 %_K5data/konqsidebartng/
@@ -470,6 +473,7 @@ done
 
 %files -n polkit-kde-plasma-workspace
 %_datadir/polkit-1/actions/*fontinst*.policy
+%_datadir/polkit-1/actions/*locale*.policy
 
 %files -n %name-qml
 %_K5qml/org/kde/plasma/
@@ -517,6 +521,9 @@ done
 
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.2-alt1
+- new version
+
 * Thu Oct 06 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt4
 - temporary turn off systemd boot by default
 

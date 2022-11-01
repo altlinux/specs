@@ -1,7 +1,7 @@
 %define rname plasma-integration
 
 Name: plasma5-integration
-Version: 5.25.5
+Version: 5.26.2
 Release: alt1
 Epoch: 1
 %K5init altplace
@@ -67,13 +67,12 @@ developing applications that use %name.
     -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
     #
 
-# cleanup
-rm -f %_K5data/kconf_update/fonts_*
-
 %install
 %K5install
 %K5install_move data kconf_update
 %find_lang %name --all-name
+# cleanup
+rm -f %_K5data/kconf_update/fonts_* ||:
 
 %files common -f %name.lang
 %files
@@ -86,6 +85,9 @@ rm -f %_K5data/kconf_update/fonts_*
 %_libdir/pkgconfig/plasma-key-data.pc
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.2-alt1
+- new version
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt1
 - new version
 

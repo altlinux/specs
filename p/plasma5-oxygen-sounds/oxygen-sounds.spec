@@ -1,7 +1,7 @@
 %define rname oxygen-sounds
 
 Name: plasma5-oxygen-sounds
-Version: 5.25.5
+Version: 5.26.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -55,6 +55,9 @@ developing applications that use %name.
 %_K5snd/*
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.2-alt1
+- new version
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt1
 - new version
 

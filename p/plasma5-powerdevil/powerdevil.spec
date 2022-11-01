@@ -12,7 +12,7 @@
 %define libpowerdevilcore libpowerdevilcore%powerdevilcore_sover
 
 Name: plasma5-%rname
-Version: 5.25.5
+Version: 5.26.2
 Release: alt1
 %K5init altplace
 
@@ -45,7 +45,7 @@ BuildRequires: kf5-knotifications-devel kf5-knotifyconfig-devel kf5-kparts-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kxmlgui-devel plasma5-workspace-devel kf5-solid-devel kf5-sonnet-devel
 BuildRequires: kf5-kactivities-devel kf5-kwayland-devel kf5-kirigami-devel
-BuildRequires: kf5-networkmanager-qt-devel kf5-bluez-qt-devel
+BuildRequires: kf5-networkmanager-qt-devel kf5-bluez-qt-devel kf5-kcmutils-devel
 # tmp
 BuildRequires: libnm-devel
 
@@ -129,14 +129,14 @@ done
 %files
 #%config %_K5conf_dbus_sysd/*.conf
 %_K5dbus/system.d/*.conf
-%_K5libexecdir/kauth/*
+%_K5libexecdir/kauth/*helper*
 %_K5exec/*powerdevil*
-%_K5plug/kf5/powerdevil/
 %_K5plug/*.so
+%_K5plug/kf5/powerdevil/
+%_K5plug/powerdevil/
+%_K5plug/plasma/kcms/systemsettings_qwidgets/*powerdevil*.so
 %_K5start/powerdevil.desktop
-#%_K5plug/kf5/kded/*.so
-%_K5srv/*.desktop
-%_K5srvtyp/*.desktop
+%_K5xdgapp/*powerdevil*.desktop
 %_K5notif/*.notifyrc
 %_K5dbus_sys_srv/*.service
 %_datadir/polkit-1/actions/*.policy
@@ -160,6 +160,9 @@ done
 %_K5lib/libpowerdevilcore.so.%powerdevilcore_sover
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt1
+- new version
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt1
 - new version
 

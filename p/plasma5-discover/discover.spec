@@ -1,6 +1,3 @@
-%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
-%define ubt_id %__ubt_branch_id
-
 %define rname discover
 
 %ifarch armh
@@ -8,15 +5,22 @@
 %else
 %def_enable fwupd
 %endif
+#
 %def_enable snap
+#
+%ifarch %qt5_qtwebengine_arches
+%def_enable qtwebengine
+%else
+%def_disable qtwebengine
+%endif
 
 %define sover 0
 %define libdiscovercommon libdiscovercommon%sover
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.25.5
-Release: alt5
+Version: 5.26.2
+Release: alt1
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -47,10 +51,14 @@ Patch13: alt-fix-notifications.patch
 # Automatically added by buildreq on Tue Aug 07 2018 (-bi)
 # optimized out: appstream appstream-qt cmake cmake-modules elfutils fontconfig gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gtk-update-icon-cache kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-common kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-common kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-common kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgio-devel libgpg-error libjson-glib libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-common qt5-base-devel rpm-build-python3 rpm-build-qml ruby ruby-stdlibs sh3
 #BuildRequires: appstream-qt-devel extra-cmake-modules kf5-karchive-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kio-devel kf5-kirigami-devel kf5-kitemmodels-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel kf5-plasma-framework-devel libflatpak-devel libssl-devel packagekit-qt-devel python3-dev qt5-declarative-devel qt5-translations rpm-build-ruby
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5 rpm-macros-qt5-webengine
 BuildRequires: libssl-devel qt5-declarative-devel qt5-x11extras-devel
 BuildRequires: desktop-file-utils
 BuildRequires: pkgconfig(libmarkdown)
+%if_enabled qtwebengine
+#BuildRequires: qt5-webengine-devel
+BuildRequires: qt5-webview-devel
+%endif
 %if_enabled fwupd
 BuildRequires: pkgconfig(fwupd)
 %endif
@@ -63,7 +71,7 @@ BuildRequires: libflatpak-devel
 BuildRequires: extra-cmake-modules kf5-karchive-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kio-devel
 BuildRequires: kf5-kirigami-devel kf5-kitemmodels-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel
 BuildRequires: kf5-kdeclarative-devel kf5-kcmutils-devel kf5-kidletime-devel
-BuildRequires: kf5-plasma-framework-devel
+BuildRequires: kf5-plasma-framework-devel kf5-purpose-devel
 
 %description
 KDE and Plasma resources management GUI.
@@ -86,7 +94,7 @@ Plasma Discover maximum package.
 %package core
 Summary: Plasma Discover core files
 Group: System/Configuration/Packaging
-Requires: %name-common = %version-%release
+Requires: %name-common
 Requires: kf5-kirigami appstream-data
 %description core
 Plasma Discover core files.
@@ -102,14 +110,14 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description devel
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 %package kns
 Summary: Plasma Discover KDE New Stuff support
 Group: System/Configuration/Packaging
-Requires: %name-core = %version-%release
+Requires: %name-core
 #Requires: plasma5-workspace
 %description kns
 Integrates  KDE New Stuff into Discover.
@@ -117,7 +125,7 @@ Integrates  KDE New Stuff into Discover.
 %package flatpak
 Summary: Plasma Discover flatpak support
 Group: System/Configuration/Packaging
-Requires: %name-core = %version-%release
+Requires: %name-core
 Requires: flatpak
 %description flatpak
 Integrates Flatpak applications into Discover.
@@ -126,7 +134,7 @@ Integrates Flatpak applications into Discover.
 %package snap
 Summary: Plasma Discover flatpak support
 Group: System/Configuration/Packaging
-Requires: %name-core = %version-%release
+Requires: %name-core
 Requires: snapd
 %description snap
 Integrates Snap applications into Discover.
@@ -135,7 +143,7 @@ Integrates Snap applications into Discover.
 %package fwupd
 Summary: Plasma Discover fwupd support
 Group: System/Configuration/Packaging
-Requires: %name-core = %version-%release
+Requires: %name-core
 Requires: fwupd
 %description fwupd
 Integrates Fwupd firmware updater into Discover.
@@ -143,7 +151,7 @@ Integrates Fwupd firmware updater into Discover.
 %package packagekit
 Summary: Plasma Discover PackageKit support
 Group: System/Configuration/Packaging
-Requires: %name-core = %version-%release
+Requires: %name-core
 Requires: packagekit
 %description packagekit
 Integrates PackageKit package manager into Discover.
@@ -151,14 +159,14 @@ Integrates PackageKit package manager into Discover.
 %package -n %libdiscovercommon
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libdiscovercommon
 KF5 library
 
 %package -n %libdiscovernotifiers
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libdiscovernotifiers
 KF5 library
 
@@ -190,7 +198,7 @@ KF5 library
 %K5install
 mv %buildroot/%_libdir/plasma-discover/lib*.so* %buildroot/%_libdir/
 
-%K5install_move data libdiscover discover locale kpackage
+%K5install_move data libdiscover kpackage
 
 mkdir -p %buildroot/%_K5xdgconf/plasma-workspace/env/
 install -m 0755 %SOURCE1 %buildroot/%_K5xdgconf/plasma-workspace/env/%{name}-flatpak.sh
@@ -217,7 +225,6 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 %dir %_K5data/libdiscover/categories/
 %dir %_K5plug/discover-notifier/
 %dir %_K5plug/discover/
-%dir %_K5data/discover/
 %_datadir/qlogging-categories5/*.*categories
 %_K5icon/*/*/apps/plasmadiscover.*
 
@@ -243,7 +250,6 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 %files packagekit
 %_K5plug/discover/packagekit-backend.so
 %_K5plug/discover-notifier/DiscoverPackageKitNotifier.so
-%_K5data/discover/pkcategories/
 %_K5data/libdiscover/categories/packagekit-backend-categories.xml
 %_datadir/metainfo/org.kde.discover.packagekit.appdata.xml
 
@@ -284,6 +290,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt1
+- new version
+
 * Thu Oct 06 2022 Oleg Solovyov <mcpain@altlinux.org> 5.25.5-alt5
 - fix repair failed offline update notifications
 

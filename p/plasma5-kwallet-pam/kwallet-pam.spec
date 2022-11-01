@@ -5,8 +5,8 @@
 %define rname kwallet-pam
 
 Name: plasma5-%rname
-Version: 5.25.5
-Release: alt2
+Version: 5.26.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -87,6 +87,9 @@ sed -i '/^ExecStart=/s|/pam_kwallet_init|/pam_kwallet5_init|' \
 %_unitdir_user/*.service
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt1
+- new version
+
 * Fri Sep 30 2022 Slava Aseev <ptrnine@altlinux.org> 5.25.5-alt2
 - fix executable path in systemd user service
 

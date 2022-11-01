@@ -1,7 +1,7 @@
 %define rname kwayland-integration
 
 Name: plasma5-%rname
-Version: 5.25.5
+Version: 5.26.2
 Release: alt1
 %K5init altplace
 
@@ -9,6 +9,10 @@ Group: Graphical desktop/KDE
 Summary: KDE Workspace 5 Wayland integration plugins
 Url: http://www.kde.org
 License: GPL-2.0-or-later
+
+Provides: kf5-kwayland-integration = %EVR
+Obsoletes: kf5-kwayland-integration < %EVR
+Requires: xorg-xwayland qt5-wayland
 
 Source: %rname-%version.tar
 
@@ -20,10 +24,6 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-base-devel-static 
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: kf5-kidletime-devel kf5-kwayland-devel kf5-kwindowsystem-devel kf5-kguiaddons-devel
 
-Requires: xorg-xwayland wayland-protocols qt5-wayland
-
-Provides: kf5-kwayland-integration = %EVR
-Obsoletes: kf5-kwayland-integration < %EVR
 
 %description
 Provides integration plugins for various KDE frameworks for the wayland windowing system.
@@ -46,6 +46,9 @@ Provides integration plugins for various KDE frameworks for the wayland windowin
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt1
+- new version
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt1
 - new version
 

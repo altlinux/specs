@@ -4,8 +4,8 @@
 %define libkinfocenterinternal libkinfocenterinternal%kinfocenterinternal_sover
 
 Name: plasma5-%rname
-Version: 5.25.5
-Release: alt4
+Version: 5.26.2
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -122,7 +122,6 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K5bin/kinfocenter5-ansi2html.sh
 %_K5xdgmenu/*.menu
 %_K5data/kinfocenter/
 %_K5data/kpackage/
-%_K5srvtyp/*
 # kinfocenter/dmidecode-helper
 %_K5libexecdir/kauth/*dmidecode*
 %_K5dbus_sys_srv/*dmidecode*
@@ -134,6 +133,9 @@ install -Dm 0755 %SOURCE10 %buildroot/%_K5bin/kinfocenter5-ansi2html.sh
 %_K5lib/libKInfoCenterInternal.so.%kinfocenterinternal_sover
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt1
+- new version
+
 * Tue Oct 04 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt4
 - fix run fwupdmgr
 

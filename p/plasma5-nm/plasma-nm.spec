@@ -2,7 +2,7 @@
 %def_disable libreswan
 
 Name: plasma5-nm
-Version: 5.25.5
+Version: 5.26.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -36,6 +36,8 @@ Patch14: alt-revert.patch
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel qt5-tools-devel-static
 BuildRequires: mobile-broadband-provider-info libqca-qt5-devel
+BuildRequires: ModemManager-devel libopenconnect-devel
+BuildRequires: libnm-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdeclarative-devel kf5-kdesignerplugin-devel
@@ -47,9 +49,7 @@ BuildRequires: kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-
 BuildRequires: kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel
 BuildRequires: kf5-kxmlgui-devel kf5-plasma-framework-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel
-BuildRequires: ModemManager-devel libopenconnect-devel
-BuildRequires: libnm-devel
-BuildRequires: kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel
+BuildRequires: kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel kf5-kcmutils-devel
 
 %description
 Plasma applet and editor for managing your network connections in KDE using
@@ -260,6 +260,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.2-alt1
+- new version
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt1
 - new version
 

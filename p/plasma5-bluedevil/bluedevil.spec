@@ -1,7 +1,7 @@
 %define rname bluedevil
 
 Name: plasma5-%rname
-Version: 5.25.5
+Version: 5.26.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -26,7 +26,7 @@ BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-de
 BuildRequires: kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel
 BuildRequires: kf5-kjobwidgets-devel kf5-knotifications-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-kdeclarative-devel
-BuildRequires: kf5-solid-devel kf5-sonnet-devel
+BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kdoctools-devel kf5-kcmutils-devel
 BuildRequires: kf5-kded kf5-kded-devel kf5-plasma-framework-devel kf5-kpackage-devel
 
 Provides: kf5-bluedevil = %EVR
@@ -76,11 +76,11 @@ KF5 library
 
 %install
 %K5install
-%K5install_move data bluedevilwizard remoteview kpackage
+%K5install_move data locale bluedevilwizard remoteview kpackage
 
 mv %buildroot/%_K5xdgmime/bluedevil-mime.xml %buildroot/%_K5xdgmime/kf5-bluedevil-mime.xml
 
-%find_lang %name --all-name
+%find_lang %name --with-kde --all-name
 
 %files -f %name.lang
 %doc LICENSES/*
@@ -108,6 +108,9 @@ else
 fi
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.2-alt1
+- new version
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.25.5-alt1
 - new version
 

@@ -4,7 +4,7 @@
 
 %define rname libkscreen
 Name: plasma5-%rname
-Version: 5.25.5
+Version: 5.26.2
 Release: alt1
 %K5init altplace
 
@@ -24,8 +24,9 @@ Patch1: alt-pnp-ids-path.patch
 #BuildRequires: extra-cmake-modules gcc-c++ python-module-google qt5-x11extras-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules
-BuildRequires: qt5-x11extras-devel
+BuildRequires: qt5-x11extras-devel qt5-tools-devel
 BuildRequires: qt5-wayland-devel kf5-kwayland-devel kde5-plasma-wayland-protocols
+BuildRequires: kf5-kconfig-devel
 
 %description
 LibKScreen is a library that provides access to current configuration
@@ -77,7 +78,9 @@ export PATH=%_qt5_bindir:$PATH
 
 %install
 %K5install
+%K5install_move data locale
 %find_lang %name --all-name
+%K5find_qtlang %name --append --all-name
 
 %files common -f %name.lang
 %doc LICENSES/*
@@ -102,6 +105,9 @@ export PATH=%_qt5_bindir:$PATH
 %_unitdir_user/*.service
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt1
+- new version
+
 * Wed Sep 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt1
 - new version
 

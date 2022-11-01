@@ -6,8 +6,8 @@
 %define libkscreenlocker libkscreenlocker%sover
 
 Name: plasma5-%rname
-Version: 5.25.5
-Release: alt2
+Version: 5.26.2
+Release: alt1
 Epoch: 2
 %K5init altplace
 
@@ -23,8 +23,6 @@ Obsoletes: kf5-kscreenlocker < %EVR
 
 Source: %rname-%version.tar
 Source2: kcheckpass.tar
-Source3: authenticator.cpp
-Source4: authenticator.h
 Source10: pam-kf5-screenlocker
 Patch1: alt-def-screenlocker.patch
 Patch2: alt-greeter-path.patch
@@ -85,10 +83,10 @@ KF5 library
 %patch2 -p1
 %patch3 -p1
 
-%build
 tar xf %SOURCE2 kcheckpass/
-cp %SOURCE3 greeter/
-cp %SOURCE4 greeter/
+mv kcheckpass/authenticator.* greeter/
+
+%build
 %K5build \
     -DINCLUDE_INSTALL_DIR=%_K5inc \
     -DKDE4_KSCREENSAVER_PAM_SERVICE="kf5-screenlocker" \
@@ -133,6 +131,9 @@ install -m 0644 %SOURCE10 %buildroot/%_sysconfdir/pam.d/kf5-screenlocker
 %_K5lib/libKScreenLocker.so.%sover
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 2:5.26.2-alt1
+- new version
+
 * Mon Sep 12 2022 Oleg Solovyov <mcpain@altlinux.org> 2:5.25.5-alt2
 - restore kcheckpass, avoid SGID'ing greeter
 

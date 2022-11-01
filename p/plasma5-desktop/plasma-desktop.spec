@@ -2,8 +2,8 @@
 
 
 Name: plasma5-desktop
-Version: 5.25.5
-Release: alt2
+Version: 5.26.2
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -36,7 +36,7 @@ Patch15: alt-menu-add-tooltip.patch
 Patch16: alt-kicker-custom-btn-img-size.patch
 Patch17: alt-users-use-gost-yescrypt.patch
 Patch18: alt-kxkb-indicator-uppercase.patch
-Patch19: alt-use-background.patch
+#
 Patch20: alt-knetattach-test-unlock-ui.patch
 # Fix bug #42348
 Patch21: alt-re-set-xkb-mappings.patch
@@ -57,6 +57,7 @@ BuildRequires: libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-
 BuildRequires: libxcbutil-devel libxcbutil-image-devel libxkbcommon-devel
 BuildRequires: xorg-drv-synaptics-devel xorg-sdk xorg-drv-evdev-devel xkeyboard-config-devel xorg-drv-libinput-devel
 BuildRequires: iceauth mkfontdir xset /usr/bin/intltool-merge
+BuildRequires: wayland-devel qt5-wayland-devel wayland-protocols kde5-plasma-wayland-protocols
 BuildRequires: accounts-qt5-devel kde5-kaccounts-integration-devel signon-devel
 BuildRequires: kf5-baloo-devel kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel
 BuildRequires: kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel
@@ -135,7 +136,7 @@ Common polkit files for %name
 # use-gost-yescrypt
 #%patch17 -p1
 %patch18 -p1
-%patch19 -p1
+#
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
@@ -199,7 +200,6 @@ done
 %_K5plug/kcms/*.so
 %_K5plug/kf5/kded/*.so
 %_K5plug/kf5/krunner/*.so
-%_K5plug/plasma/applets/*.so
 %_K5plug/plasma/dataengine/*.so
 %_K5plug/plasma/kcminit/
 %_K5plug/plasma/kcms/*/*.so
@@ -246,6 +246,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt1
+- new version
+
 * Wed Oct 26 2022 Sergey V Turchin <zerg@altlinux.org> 5.25.5-alt2
 - disable knetattach connection test because dialogs blocks ui with new KIO
 
