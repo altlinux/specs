@@ -1,6 +1,6 @@
 Name: xfwm4
-Version: 4.16.1
-Release: alt2
+Version: 4.17.1
+Release: alt1
 
 %def_enable epoxy
 %def_enable xi2
@@ -9,12 +9,11 @@ Summary: Window manager for Xfce
 Summary (ru_RU.UTF8): Менеджер окон для окружения рабочего стола Xfce
 License: GPLv2+
 Group: Graphical desktop/XFce
-Url: https://www.xfce.org/
+Url: https://docs.xfce.org/xfce/xfwm4/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/xfce/xfwm4.git
 Source: %name-%version.tar
-Source1: ru-xfce-4.16-branch.po
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
@@ -44,12 +43,6 @@ Xfce.
 %prep
 %setup
 %patch -p1
-
-# Merge Russian translations from xfce-4.16 branch and from the release.
-# We are can't directly use updated ru.po from the branch: code is changed
-# and some lines are gone.
-msgcat --use-first -o merged_ru.po po/ru.po %SOURCE1
-mv -f merged_ru.po po/ru.po
 
 %build
 # Don't use git tag in version.
@@ -87,6 +80,11 @@ mv -f merged_ru.po po/ru.po
 %_libdir/xfce4/*
 
 %changelog
+* Tue Nov 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
+- Updated Url tag.
+- Dropped ALT Russian translation.
+- Updated to 4.17.1.
+
 * Mon May 16 2022 Mikhail Efremov <sem@altlinux.org> 4.16.1-alt2
 - Don't check ENABLE_NLS macro.
 - Updated Russian translation from xfce-4.16 branch (closes: #42772).
