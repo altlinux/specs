@@ -2,7 +2,7 @@
 %def_enable vala
 
 Name: libxfce4util
-Version: 4.17.2
+Version: 4.17.3
 Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
@@ -73,8 +73,6 @@ Vala bindings for %name.
 %setup
 
 %build
-# Don't use git tag in version.
-%xfce4_drop_gitvtag libxfce4util_version_tag configure.ac.in
 %xfce4reconf
 %configure \
 	--disable-static \
@@ -115,6 +113,10 @@ Vala bindings for %name.
 %endif
 
 %changelog
+* Tue Nov 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.3-alt1
+- Dropped %%xfce4_drop_gitvtag macro.
+- Updated to 4.17.3.
+
 * Tue Feb 22 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
 - Updated to 4.17.2.
 

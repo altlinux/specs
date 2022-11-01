@@ -5,7 +5,7 @@
 %def_disable gsettings
 
 Name: lib%_name
-Version: 4.16.0
+Version: 4.17.0
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -28,6 +28,8 @@ BuildRequires: libgio-devel libdbus-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 BuildRequires: gtk-doc intltool
+# For tests:
+%{?!_without_check:%{?!_disable_check:BuildRequires: dbus-tools-gui xvfb-run}}
 
 %description
 Xfconf is a hierarchical (tree-like) configuration system where the
@@ -119,9 +121,8 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %makeinstall_std
 %find_lang %_name
 
-# Tests can't work without dbus and X11 $DISPLAY
-#check
-#make check
+%check
+xvfb-run make -k check
 
 %files -f %_name.lang
 %doc AUTHORS NEWS
@@ -159,6 +160,10 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml
 %endif
 
 %changelog
+* Tue Nov 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
+- Enabled tests.
+- Updated to 4.17.0.
+
 * Wed Dec 23 2020 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
 - Updated to 4.16.0.
 
