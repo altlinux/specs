@@ -2,7 +2,7 @@
 #based on fedora spec
 Name: pybind11
 Version: 2.9.2
-Release: alt1
+Release: alt2
 
 Summary: Seamless operability between C++11 and Python
 License: BSD-3-Clause
@@ -10,7 +10,6 @@ Group: Development/Other
 
 Url: https://github.com/pybind/pybind11
 Source: %name-%version.tar
-Patch2000: alt-e2k-workaround-for-broken-tests.patch
 
 BuildRequires(pre): rpm-build-python3
 # Automatically added by buildreq on Thu May 10 2018
@@ -59,9 +58,6 @@ This package contains the Python 3 files.
 
 %prep
 %setup
-%ifarch %e2k
-%patch2000 -p1
-%endif
 
 %build
 %define _cmake__builddir python3/BUILD
@@ -97,6 +93,9 @@ export SKIP_E2K=1
 %python3_sitelibdir/%name-%version-*.egg-info
 
 %changelog
+* Tue Nov 01 2022 Michael Shigorin <mike@altlinux.org> 2.9.2-alt2
+- E2K: drop the kludge
+
 * Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 2.9.2-alt1
 - New version
 
