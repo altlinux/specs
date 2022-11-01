@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 183
+%define centos_release 184
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Nov 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.184-alt1.el9
+- Updated to kernel-5.14.0-184.el9:
+  + DRM 6.0 backport dependencies
+  + MDRAID - Update to the latest upstream
+  + platform/x86/intel: pmc/core: Add Raptor Lake support to pmc core driver
+  + powercap: intel_rapl: Add support for RAPTORLAKE_P
+  + [RHEL 9.2] IOMMU and DMA Mapping Updates
+
 * Mon Oct 31 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.183-alt1.el9
 - Updated to kernel-5.14.0-183.el9:
   + cgroup/cpuset: Add isolated partition type for disabling load balancing
