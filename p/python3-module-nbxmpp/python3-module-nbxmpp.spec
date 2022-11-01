@@ -1,6 +1,6 @@
 %global modname nbxmpp
 Name: python3-module-%modname
-Version: 3.2.4
+Version: 3.2.5
 Release: alt1
 Summary: Python library for non-blocking use of Jabber/XMPP
 License: GPLv3+
@@ -63,6 +63,9 @@ This sub-package contains the developer documentation for python-nbxmpp.
 %doc nbxmpp/examples/
 
 %changelog
+* Tue Nov 01 2022 Ilya Mashkin <oddity@altlinux.ru> 3.2.5-alt1
+- 3.2.5
+
 * Mon Oct 10 2022 Ilya Mashkin <oddity@altlinux.ru> 3.2.4-alt1
 - 3.2.4
 
