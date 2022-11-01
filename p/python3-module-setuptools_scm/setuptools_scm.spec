@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 7.0.5
-Release: alt1
+Release: alt2
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python3
@@ -24,13 +24,14 @@ BuildRequires: python3(wheel)
 BuildRequires: python3(typing_extensions)
 BuildRequires: python3(packaging)
 
+BuildRequires: git-core
+
 %if_with check
 # install_requires
 BuildRequires: python3(packaging)
 BuildRequires: python3(setuptools)
 BuildRequires: python3(tomli)
 
-BuildRequires: git-core
 BuildRequires: mercurial
 BuildRequires: python3(pytest)
 %endif
@@ -81,6 +82,9 @@ export TOXENV=py%{python_version_nodots python3}-test
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 01 2022 Michael Shigorin <mike@altlinux.org> 7.0.5-alt2
+- fixed build --without check
+
 * Fri Aug 05 2022 Stanislav Levin <slev@altlinux.org> 7.0.5-alt1
 - 6.4.2 -> 7.0.5 (closes: #43460).
 
