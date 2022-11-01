@@ -1,11 +1,11 @@
 Name: xfce4-settings
-Version: 4.16.3
+Version: 4.17.0
 Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
 License: GPLv2+
-Url: https://www.xfce.org/
+Url: https://docs.xfce.org/xfce/xfce4-settings/start
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
@@ -88,6 +88,10 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Tue Nov 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
+- Updated Url tag.
+- Updated to 4.17.0.
+
 * Tue Jul 05 2022 Mikhail Efremov <sem@altlinux.org> 4.16.3-alt1
 - Updated to 4.16.3.
 
