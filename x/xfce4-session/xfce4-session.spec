@@ -1,5 +1,5 @@
 Name: xfce4-session
-Version: 4.17.0
+Version: 4.17.1
 Release: alt1
 
 Summary: Session manager for Xfce desktop environment
@@ -77,6 +77,9 @@ install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Tue Nov 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
+- Updated to 4.17.1.
+
 * Thu Sep 15 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
 - Updated to 4.17.0.
 
