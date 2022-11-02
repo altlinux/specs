@@ -1,6 +1,7 @@
+%define git 5e9dd41
 %define module_name	v4l2loopback
-%define module_version	0.12.5
-%define module_release	alt1
+%define module_version	0.12.7
+%define module_release	alt1.g%{git}
 %define module_source_dir %nil
 
 Name: %module_name
@@ -59,7 +60,7 @@ mkdir -p %buildroot%_udevrulesdir
 mkdir -p %buildroot%_usrsrc/kernel/sources/
 cp -a udev/*.rules %buildroot%_udevrulesdir/
 mkdir kernel-source-%module_name-%module_version
-cp -a *.{c,h} Makefile* kernel-source-%module_name-%module_version/
+cp -a *.{c,h} Kbuild Makefile* kernel-source-%module_name-%module_version/
 tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
 	%buildroot%_usrsrc/kernel/sources/kernel-source-%module_name-%module_version.tar.bz2
 
@@ -73,6 +74,8 @@ tar -c kernel-source-%module_name-%module_version | bzip2 -c > \
 %attr(644,root,root) %_usrsrc/kernel/sources/kernel-source-%module_name-%version.tar.bz2
 
 %changelog
+* Wed Nov 02 2022 L.A. Kostis <lakostis@altlinux.ru> 0.12.7-alt1.g5e9dd41
+- Updated to GIT 5e9dd41.
+
 * Sat Dec 05 2020 L.A. Kostis <lakostis@altlinux.ru> 0.12.5-alt1
 - Initial build for Sisyphus.
-

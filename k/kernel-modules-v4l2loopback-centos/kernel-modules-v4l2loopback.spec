@@ -1,6 +1,7 @@
+%define git 5e9dd41
 %define module_name	v4l2loopback
-%define module_version	0.12.5
-%define module_release	alt2
+%define module_version	0.12.7
+%define module_release	alt1.g%{git}
 
 %define flavour		centos
 %define karch x86_64
@@ -61,6 +62,9 @@ install v4l2loopback.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Nov 2 2022 L.A. Kostis <lakostis@altlinux.org> 0.12.7-alt1.g5e9dd41
+- GIT 5e9dd41.
 
 * Fri Nov 26 2021 L.A. Kostis <lakostis@altlinux.org> 0.12.5-alt2
 - Added -centos kernel arches.
