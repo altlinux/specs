@@ -5,7 +5,7 @@
 
 Name: neomutt
 Version: 20220429
-Release: alt2
+Release: alt2.1
 Summary: A version of Mutt with added features
 License: GPL-2.0-only and ALT-Public-Domain
 Group: Networking/Mail
@@ -49,6 +49,12 @@ for color terminals, MIME, OpenPGP, and a threaded sorting mode.
 sed -i 's/armle-/armh-/' autosetup/autosetup-config.sub
 %endif
 %autopatch -p1
+%ifarch %e2k
+# can't find BerkeleyDB due to silly warning from LCC
+sed -i 's/-E | tail -1/-w &/' auto.def
+%endif
+# obvious bug in the source, failed test because of this
+sed -i 's/TEST_CASE(imap_tests\[i\])/TEST_CASE(imap_tests[i].str)/' test/date/mutt_date_parse_imap.c
 
 %build
 %define docdir %_docdir/%name
@@ -97,6 +103,9 @@ make -s test
 %_pixmapsdir/neomutt.xpm
 
 %changelog
+* Wed Nov 02 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 20220429-alt2.1
+- Fixed build for Elbrus.
+
 * Wed Oct 12 2022 Vitaly Chikunov <vt@altlinux.org> 20220429-alt2
 - spec: Fix build with libgpg-error-1.46.
 
