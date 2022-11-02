@@ -1,5 +1,5 @@
 Name: thunar
-Version: 4.17.10
+Version: 4.17.11
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-xfce4 >= 0.1.0
 BuildRequires: xfce4-dev-tools
 BuildRequires: libxfce4panel-gtk3-devel >= 4.12.0 libxfconf-devel >= 4.12.0 libexo-gtk3-devel >= 4.17.0
 BuildRequires: libxfce4util >= 4.17.2 libxfce4ui-gtk3-devel >= 4.17.6
-BuildRequires: gtk-doc intltool libSM-devel libexif-devel libpcre-devel
+BuildRequires: gtk-doc intltool libSM-devel libexif-devel libpcre2-devel
 BuildRequires: libpango-devel
 BuildRequires: libnotify4-devel libgudev-devel
 BuildRequires: desktop-file-utils
@@ -89,7 +89,7 @@ cp -a %SOURCE1 po/ru.po
 	--enable-maintainer-mode \
 	--enable-largefile \
 	--enable-exif \
-	--enable-pcre \
+	--enable-pcre2 \
 	--enable-gio-unix \
 	--with-custom-thunarx-dirs-enabled=no \
 	--enable-gtk-doc \
@@ -141,6 +141,9 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Tue Nov 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.11-alt1
+- Updated to 4.17.11.
+
 * Mon Oct 17 2022 Mikhail Efremov <sem@altlinux.org> 4.17.10-alt1
 - Updated to 4.17.10.
 
