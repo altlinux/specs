@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 5.12.5
+Version: 5.12.10
 Release: alt1
 Summary: Archive Manager for Deepin Desktop Environment
 License: GPL-3.0+ and (GPL-2.0+ and LGPL-2.1+ and MPL-1.1) and BSD-2-Clause and Apache-2.0
@@ -54,12 +54,9 @@ BuildRequires: libgmock-devel
 sed -i 's|/usr/bin/cp|/bin/cp|' \
     tests/FuzzyTest/libfuzzer/CMakeLists.txt
 sed -i 's|/usr/lib|%_libdir|' \
-    src/source/common/pluginmanager.cpp \
-    tests/UnitTest/CMakeLists.txt
+    src/source/common/pluginmanager.cpp
 sed -i 's|#include <zip.h>|#include <libzip/zip.h>|' \
     3rdparty/libzipplugin/libzipplugin.h
-sed -i 's|lib/|%_lib/|' \
-    CMakeLists.txt
 
 %build
 %if_enabled clang
@@ -77,11 +74,16 @@ export PATH=%_qt5_bindir:$PATH
     -DAPP_VERSION=%version \
     -DVERSION=%version \
     -DLIB_INSTALL_DIR=%_libdir \
+    -DCOMPRESSOR_PLUGIN_PATH=%_libdir/%name/plugins \
     %nil
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
+
+# Fix path.
+mkdir -p %buildroot%_bindir
+mv -f %buildroot%_K5bin/%name %buildroot%_bindir/%name
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%name.desktop
@@ -106,6 +108,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
 
 %changelog
+* Wed Nov 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.12.10-alt1
+- New version (5.12.10).
+
 * Tue Apr 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.12.5-alt1
 - New version (5.12.5).
 - Checkout from euler to dev/1050 branch.
