@@ -1,13 +1,14 @@
-%define nm_version 1.2.0
-%define nm_applet_version 1.2.0
+%define nm_version 1.2.28
+%define nm_applet_version 1.2.28
 %define nm_applet_name NetworkManager-applet-gtk
 
+%def_with gtk4
 %def_without libnm_glib
 
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager-fortisslvpn
-Version: 1.2.10
+Version: 1.4.0
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -26,7 +27,12 @@ BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: libnm-glib-vpn-devel >= %nm_version
 BuildRequires: libnm-gtk-devel >= %nm_applet_version
 %endif
+%if_with gtk4
+BuildRequires: libgtk4-devel
+BuildRequires: libnma-gtk4-devel
+%else
 BuildRequires: libgtk+3-devel
+%endif
 BuildRequires: libsecret-devel
 BuildRequires: ppp-devel
 
@@ -50,6 +56,17 @@ Provides: %name-gnome = %version-%release
 This package contains applications for use with
 NetworkManager panel applet.
 
+%package gtk4
+License: %gpl2plus
+Summary: Applications for use %name with %nm_applet_name
+Group: Graphical desktop/GNOME
+Requires: %nm_applet_name >= %nm_applet_version
+Requires: NetworkManager-fortisslvpn = %version-%release
+
+%description gtk4
+This package contains applications for use with
+NetworkManager panel applet build with gtk4.
+
 %prep
 %setup
 %patch -p1
@@ -63,6 +80,9 @@ NetworkManager panel applet.
 %if_without libnm_glib
 	--without-libnm-glib \
 %endif
+%if_with gtk4
+	--with-gtk4 \
+%endif
 	--disable-silent-rules
 %make_build
 
@@ -73,9 +93,10 @@ NetworkManager panel applet.
 %check
 make check
 
-%files
+%files -f %name.lang
 %doc AUTHORS README
 %_libexecdir/NetworkManager/nm-fortisslvpn-service
+%_libexecdir/NetworkManager/nm-fortisslvpn-pinentry
 %_libdir/NetworkManager/libnm-vpn-plugin-fortisslvpn.so
 %_libdir/pppd/*/*-plugin.so
 %config %_sysconfdir/dbus-1/system.d/nm-fortisslvpn-service.conf
@@ -84,19 +105,24 @@ make check
 %endif
 %config %_libexecdir/NetworkManager/VPN/nm-fortisslvpn-service.name
 %attr(700,root,root) %dir %_localstatedir/%name
+%_datadir/appdata/*.xml
+%exclude %_libdir/pppd/*/*-plugin.la
+%exclude %_libdir/NetworkManager/*.la
 
-%files gtk -f %name.lang
+%files gtk
 %if_with libnm_glib
 %_libdir/NetworkManager/libnm-fortisslvpn-properties.so*
 %endif
 %_libexecdir/NetworkManager/nm-fortisslvpn-auth-dialog
 %_libdir/NetworkManager/libnm-vpn-plugin-fortisslvpn-editor.so
-%_datadir/appdata/*.xml
 
-%exclude %_libdir/pppd/*/*-plugin.la
-%exclude %_libdir/NetworkManager/*.la
+%files gtk4
+%_libdir/NetworkManager/libnm-gtk4-vpn-plugin-fortisslvpn-editor.so
 
 %changelog
+* Wed Nov 02 2022 L.A. Kostis <lakostis@altlinux.ru> 1.4.0-alt1
+- Build with gtk4 support.
+
 * Thu Jan 07 2021 L.A. Kostis <lakostis@altlinux.ru> 1.2.10-alt1
 - 1.2.10.
 
