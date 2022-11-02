@@ -3,8 +3,8 @@
 %endif
 
 Name: mongo
-Version: 4.4.10
-Release: alt1
+Version: 4.4.17
+Release: alt2
 Summary: mongo client shell and tools
 License: SSPL-1.0
 
@@ -16,7 +16,7 @@ Packager: Vladimir Didenko <cow@altlinux.org>
 
 # From https://docs.mongodb.com/manual/installation
 # Changed in version 3.4: MongoDB no longer supports 32-bit x86 platforms.
-ExclusiveArch: x86_64 aarch64 ppc64el %e2k
+ExclusiveArch: x86_64 aarch64 ppc64le %e2k
 
 BuildRequires(pre): rpm-macros-valgrind
 
@@ -109,9 +109,9 @@ scons %build_opts --install-mode=legacy core
 
 # cow@: It seems that mongo 4.2 + scons 3.1.1 doesn't provide a clean way to
 # specify location to install binaries (at least I wasn't able to find it).
-install -p -D -m 755 build/opt/mongo/mongod %buildroot%_bindir/mongod
-install -p -D -m 755 build/opt/mongo/mongos %buildroot%_bindir/mongos
-install -p -D -m 755 build/opt/mongo/mongo %buildroot%_bindir/mongo
+install -p -D -m 755 mongod %buildroot%_bindir/mongod
+install -p -D -m 755 mongos %buildroot%_bindir/mongos
+install -p -D -m 755 mongo %buildroot%_bindir/mongo
 
 mkdir -p %buildroot%_logdir/%name
 mkdir -p %buildroot%_runtimedir/%name
@@ -195,6 +195,13 @@ rm -fr build
 %attr(0750,mongod,mongod) %dir %_runtimedir/%name
 
 %changelog
+* Wed Nov 02 2022 Alexei Takaseev <taf@altlinux.org> 4.4.17-alt2
+- Fix typo ppc64le arch
+
+* Fri Oct 28 2022 Alexei Takaseev <taf@altlinux.org> 4.4.17-alt1
+- Fix compile with GCC 12
+- 4.4.17
+
 * Thu Dec 09 2021 Alexei Takaseev <taf@altlinux.org> 4.4.10-alt1
 - 4.4.10
 
