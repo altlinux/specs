@@ -1,8 +1,11 @@
 %define rname plasma-remotecontrollers
 
+%def_disable cec
+%def_disable xwiimote
+
 Name: plasma5-remotecontrollers
 Version: 5.26.2
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -12,6 +15,9 @@ License: GPL-2.0-or-later
 
 Requires: %name-common
 Requires: qml(org.kde.plasma.core)
+%if_enabled cec
+Requires: libcec
+%endif
 
 Source: %rname-%version.tar
 
@@ -20,7 +26,13 @@ Source: %rname-%version.tar
 #BuildRequires: appstream extra-cmake-modules icon-theme-breeze kde5-plasma-wayland-protocols kf5-kcmutils-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kitemmodels-devel kf5-knotifications-devel kf5-kpackage-devel libXScrnSaver-devel libXaw-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcec-devel libevdev-devel libkf5plasmaquick libqtxdg libxcbutil-devel libxcbutil-icccm-devel libxkbcommon-x11-devel libxkbfile-devel lua5.3 plasma5-workspace-devel python-modules-compiler python3-module-setuptools python3-module-zope qt5-imageformats qt5-svg-devel qt5-translations qt5-wayland-devel rpm-build-qml6 tbb-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules rpm-build-qml
-BuildRequires: libcec-devel libevdev-devel
+BuildRequires: libevdev-devel
+%if_enabled cec
+BuildRequires: libcec-devel
+%endif
+%if_enabled xwiimote
+BuildRequires: libxwiimote-devel
+%endif
 BuildRequires: kde5-plasma-wayland-protocols qt5-wayland-devel
 BuildRequires: kf5-kcmutils-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kitemmodels-devel
 BuildRequires: kf5-knotifications-devel kf5-kpackage-devel
@@ -93,5 +105,8 @@ mv %buildroot/%_libdir/udev/rules.d/40-uinput.rules %buildroot/%_udevrulesdir/40
 %_K5dbus_iface/*remotecontrollers*
 
 %changelog
+* Wed Nov 02 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt2
+- build without libcec
+
 * Tue Nov 01 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt1
 - initial build
