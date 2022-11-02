@@ -1,6 +1,6 @@
 Name: zlib
-Version: 1.2.12
-Release: alt3
+Version: 1.2.13
+Release: alt1
 
 Summary: The zlib compression and decompression library
 Summary(ru_RU.UTF-8): Библиотека сжатия данных zlib
@@ -65,7 +65,6 @@ that use the minizip zip file manipulation library.
 %prep
 %setup -n %name-%version-%release
 
-fgrep -B999 @ zlib.h >License
 xz -9k FAQ doc/algorithm.txt
 iconv -fcp1252 -tutf8 < ChangeLog | xz -9 > ChangeLog.xz
 
@@ -112,7 +111,7 @@ mv %buildroot%_libdir/libz.so.* %buildroot/%_lib/
 
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
-install -pm644 License README {FAQ,ChangeLog,doc/algorithm.txt}.xz \
+install -pm644 LICENSE README {FAQ,ChangeLog,doc/algorithm.txt}.xz \
 	test/example.c test/minigzip.c %buildroot%docdir/
 cp -a examples %buildroot%docdir/
 
@@ -122,7 +121,7 @@ make test
 %files
 /%_lib/libz.so.*
 %dir %docdir
-%docdir/License
+%docdir/LICENSE
 %docdir/README
 
 %files devel
@@ -131,7 +130,7 @@ make test
 %_pkgconfigdir/zlib.pc
 %_mandir/man?/*
 %docdir
-%exclude %docdir/License
+%exclude %docdir/LICENSE
 %exclude %docdir/README
 
 %files devel-static
@@ -146,6 +145,9 @@ make test
 %_pkgconfigdir/minizip.pc
 
 %changelog
+* Thu Oct 13 2022 Dmitry V. Levin <ldv@altlinux.org> 1.2.13-alt1
+- v1.2.12 -> v1.2.13.
+
 * Mon Aug 08 2022 Dmitry V. Levin <ldv@altlinux.org> 1.2.12-alt3
 - Backported upstream fix for inflate (fixes: CVE-2022-37434).
 
