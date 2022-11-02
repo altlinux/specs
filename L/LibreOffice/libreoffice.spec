@@ -1,4 +1,4 @@
-# 7.4.2.1
+# 7.4.2.3
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -22,7 +22,7 @@
 
 Name: LibreOffice
 %define hversion 7.4
-%define urelease 2.1
+%define urelease 2.3
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
@@ -461,6 +461,13 @@ unset RPM_PYTHON
 %make DESTDIR=%buildroot INSTALLDIR=%lodir distro-pack-install
 rm -f %buildroot%lodir/sdk/config.*
 
+# XXX create versioned links (mentioned in desktop files)
+ln -sr %buildroot%lodir/program/soffice %buildroot%_bindir/%uname%hversion
+for F in `find %buildroot%_iconsdir/*/*/apps -type f -name "%name-*.*"`; do
+        ll=`echo "$F" | sed "s@apps/%name-@apps/%uname%hversion-@"`
+        ln -sr "$F" "$ll"
+done
+
 # Pick up LOO-generated file lists
 for l in %with_lang; do
         ll="`echo "$l" | tr '-' '_'`"
@@ -531,6 +538,8 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 
 %files common -f files.common
 %config %conffile
+%_bindir/%uname%hversion
+%_iconsdir/*/*/apps/%uname%hversion-*
 %if_with java
 %lodir/program/classes/ScriptProviderForBeanShell.jar
 %lodir/program/services/scriptproviderforbeanshell.rdb
@@ -580,6 +589,10 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Nov 02 2022 Fr. Br. George <george@altlinux.ru> 7.4.2.3-alt1
+- Update to 7.4.2.3
+- Fix desktop binary naming (Closes: #44176)
+
 * Sun Oct 23 2022 Fr. Br. George <george@altlinux.ru> 7.4.2.1-alt1
 - Update to 7.4.2.1
 - Use install scheme provided by upstream
