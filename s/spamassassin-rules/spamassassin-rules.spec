@@ -1,7 +1,7 @@
-%define rev r1887800
+%define rev r1888502
 
 Name: spamassassin-rules
-Version: 3.4.5
+Version: 3.4.6
 Release: alt1
 
 Summary: Rules for SpamAssassin
@@ -34,6 +34,9 @@ install -pm644 *.cf %buildroot%_datadir/spamassassin
 %_datadir/spamassassin
 
 %changelog
+* Wed Nov 02 2022 L.A. Kostis <lakostis@altlinux.ru> 3.4.6-alt1
+- 3.4.6 (r1888502).
+
 * Thu Mar 25 2021 L.A. Kostis <lakostis@altlinux.ru> 3.4.5-alt1
 - 3.4.5 (r1887800)
 

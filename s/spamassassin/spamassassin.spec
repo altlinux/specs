@@ -4,15 +4,15 @@
 %def_enable ssl
 
 Name: spamassassin
-Version: 3.4.5
-Release: alt2
+Version: 3.4.6
+Release: alt1
 
 Summary: Spam filter for email written in perl
 License: Apache-2.0
 Group: Networking/Mail
 
 URL: http://www.spamassassin.org/
-Source0: http://www.cpan.org/authors/id/K/KM/KMCGRAIL/SpamAssassin/Mail-SpamAssassin-%{version}.tar.bz2
+Source0: https://dlcdn.apache.org//spamassassin/source/%{pname}-%{version}.tar.bz2
 Source1: spamd.init
 Source2: spamassassin_local.cf
 Source3: spamd.sysconfig
@@ -264,6 +264,9 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 #%_man3dir/*
 
 %changelog
+* Wed Nov 02 2022 L.A. Kostis <lakostis@altlinux.ru> 3.4.6-alt1
+- 3.4.6.
+
 * Wed May 19 2021 L.A. Kostis <lakostis@altlinux.ru> 3.4.5-alt2
 - sa-update cron: don't trigger spamd update if missing.
 
