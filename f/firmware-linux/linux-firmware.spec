@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20221024
+Version: 20221031
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,16 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Nov 02 2022 Cronbuild Service <cronbuild@altlinux.org> 20221031-alt1
+- upstream changes (GIT 8bb75626):
+  + Add firmware for Cirrus CS35L41 on new ASUS Laptop (thx Stefan Binding)
+  + iwlwifi: add new PNVM binaries from core74-44 release (thx Gregory Greenman)
+  + iwlwifi: add new FWs from core69-81 release (thx Gregory Greenman)
+  + qcom: update venus firmware files for VPU-2.0 (thx Nathan Hebert)
+  + qcom: remove split SC7280 venus firmware images (thx Nathan Hebert)
+  + qcom: update venus firmware file for v5.4 (thx Nathan Hebert)
+  + qcom: replace split SC7180 venus firmware images with symlink (thx Nathan Hebert)
+
 * Wed Oct 26 2022 Cronbuild Service <cronbuild@altlinux.org> 20221024-alt1
 - upstream changes (GIT 0cac82d3):
   + rtw89: 8852b: update fw to v0.27.32.1 (thx Ping-Ke Shih)
