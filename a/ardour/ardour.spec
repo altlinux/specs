@@ -1,6 +1,6 @@
 Name: ardour
 Version: 7.0
-Release: alt1
+Release: alt2
 
 Summary: Professional multi-track audio recording application
 License: GPLv2+
@@ -129,6 +129,9 @@ done
 %_man1dir/ardour.1*
 
 %changelog
+* Wed Nov 02 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.0-alt2
+- added workaround for broken gtk2 themes (closes: 44184)
+
 * Mon Oct 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.0-alt1
 - 7.0 released
 
