@@ -8,8 +8,8 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 22.7.3.817
-Release: alt2
+Version: 22.9.3.920
+Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
 Url: http://browser.yandex.ru/
@@ -22,7 +22,7 @@ Buildrequires: at-spi2-atk, libalsa, libat-spi2-core, libatk, libcairo, libcups
 Buildrequires: libdbus, libdrm, libexpat, libgbm, libgio, libnspr, libnss
 Buildrequires: libpango, libX11, libXcomposite, libXdamage, libXext, libXfixes
 Buildrequires: libXrandr, libxcb, libxkbcommon
-Requires: ca-certificates,ffmpeg-plugin-browser,xdg-utils, fonts-ttf-google-noto-emoji-color
+Requires: ca-certificates,ffmpeg-plugin-browser, xdg-utils, fonts-ttf-google-noto-emoji-color
 Requires(post): %{_sbindir}/update-alternatives
 Requires(preun): %{_sbindir}/update-alternatives
 
@@ -158,6 +158,12 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+* Wed Nov 2 2022 Vasiliy Tsukanov <palar@altlinux.org> 22.9.3.920-alt1
+- browser updated to 22.9.3
+
+* Mon Sep 5 2022 Vasiliy Tsukanov <palar@altlinux.org> 22.7.3.817-alt3
+- removed comment at yandex-browser.appdata.xml (closes: 43673)
+
 * Thu Aug 18 2022 Vasiliy Tsukanov <palar@altlinux.org> 22.7.3.817-alt2
 - removed built-in xdg-utils deps from the package
 - added font with emoji support dependency
