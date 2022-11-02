@@ -5,7 +5,7 @@
 
 Name: spamassassin
 Version: 3.4.6
-Release: alt1
+Release: alt2
 
 Summary: Spam filter for email written in perl
 License: Apache-2.0
@@ -28,7 +28,7 @@ Patch13: spamassassin-deb-90_pod_cleanup.patch
 # normal method nukes on errors :(
 %define _perl_req_method relaxed
 
-%{?_enable_ssl:BuildRequires: LibreSSL-devel}
+%{?_enable_ssl:BuildRequires: libssl-devel}
 
 # Automatically added by buildreq on Thu Jul 21 2011
 # optimized out: libcom_err-devel libkrb5-devel perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Digest-SHA perl-Digest-SHA1 perl-Encode perl-Error perl-HTML-Parser perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-IO-Socket-INET6 perl-IO-String perl-IO-Zlib perl-Net-DNS perl-Net-SSLeay perl-NetAddr-IP perl-Package-Constants perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-Socket6 perl-URI perl-libnet perl-podlators
@@ -152,7 +152,7 @@ subpackages versions with.
 cp -f spamc/spamc.pod spamc/spamc
 %perl_vendor_build LOCALRULESDIR=%_sysconfdir/spamassassin INSTALLMAN1DIR=%_man1dir BUILD_SPAMC=no
 
-# Rebuild spamc wirh SSL
+# Rebuild spamc with SSL
 pushd spamc
 %autoreconf
 %configure \
@@ -264,6 +264,9 @@ sed "s/^[0-9]\+ \+[0-9]\+/$RNDM1 $RNDM2/" -i %_sysconfdir/cron.d/sa-update >/dev
 #%_man3dir/*
 
 %changelog
+* Wed Nov 02 2022 L.A. Kostis <lakostis@altlinux.ru> 3.4.6-alt2
+- Rebuild with libssl (closes #41733).
+
 * Wed Nov 02 2022 L.A. Kostis <lakostis@altlinux.ru> 3.4.6-alt1
 - 3.4.6.
 
