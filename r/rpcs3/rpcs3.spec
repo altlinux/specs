@@ -2,21 +2,21 @@
 
 %define llvm_version 13.0
 
-%define git_ver 14104
-%define git_commit 2cd7238e7696acf856946a3b77bc54b813c70e54
+%define git_ver 14358
+%define git_commit a00f9e42115527aa9654870f194cf2c64329f2ef
 
-%define glslang_version 11.10.0
+%define glslang_version sdk-1.3.224.1
 %define asmjit_commit 06d0badec53710a4f572cf5642881ce570c5d274
 %define hidapi_commit c2aa9dd37c7b401b918fd56e18a3bac7f8f00ec2
 %define yaml_cpp_commit 0b67821f307e8c6bf0eba9b6d3250e3cf1441450
-%define llvm_commit 5521155be5c869b0b760e1dec86c41cdbb7a75c0
-%define spirv_headers_version sdk-1.3.211.0
-%define spirv_tools_version 2022.2
+%define llvm_commit 9b52b6c39ae9f0759fbce7dd0db4b3290d6ebc56
+%define spirv_headers_commit b2a156e1c0434bc8c99aaebba1c7be98be7ac580
+%define spirv_tools_commit 5e61ea2098220059e89523f1f47b0bcd8c33b89a
 %define cubeb_commit dc511c6b3597b6384d28949285b9289e009830ea
 %define soundtouch_commit 83cfba67b6af80bb9bfafc0b324718c4841f2991
 
 Name: rpcs3
-Version: 0.0.24
+Version: 0.0.25
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -26,7 +26,7 @@ Group: Emulators
 Url: https://%name.net/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 aarch64
 
 # https://github.com/RPCS3/%name/archive/v%version/%name-%version.tar.gz
 Source0: %name-%version.tar
@@ -40,10 +40,10 @@ Source3: hidapi-%hidapi_commit.tar
 Source4: yaml-cpp-%yaml_cpp_commit.tar
 # https://github.com/RPCS3/llvm-mirror/archive/%llvm_commit/llvm-mirror-%llvm_commit.tar.gz
 Source5: llvm-mirror-%llvm_commit.tar
-# https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_version/SPIRV-Headers-%spirv_headers_version.tar.gz
-Source6: SPIRV-Headers-%spirv_headers_version.tar
-# https://github.com/KhronosGroup/SPIRV-Tools/archive/v%spirv_tools_version/SPIRV-Tools-%spirv_tools_version.tar.gz
-Source7: SPIRV-Tools-%spirv_tools_version.tar
+# https://github.com/KhronosGroup/SPIRV-Headers/archive/%spirv_headers_commit/SPIRV-Headers-%spirv_headers_commit.tar.gz
+Source6: SPIRV-Headers-%spirv_headers_commit.tar
+# https://github.com/KhronosGroup/SPIRV-Tools/archive/v%spirv_tools_commit/SPIRV-Tools-%spirv_tools_commit.tar.gz
+Source7: SPIRV-Tools-%spirv_tools_commit.tar
 # https://github.com/mozilla/cubeb/archive/%cubeb_commit/cubeb-%cubeb_commit.tar.gz
 Source8: cubeb-%cubeb_commit.tar
 # https://github.com/RPCS3/soundtouch/archive/%soundtouch_commit/soundtouch-%soundtouch_commit.tar.gz
@@ -105,8 +105,8 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../hidapi-%hidapi_commit 3rdparty/hidapi/hidapi
 %__mv -Tf ../yaml-cpp-%yaml_cpp_commit 3rdparty/yaml-cpp/yaml-cpp
 %__mv -Tf ../llvm-mirror-%llvm_commit llvm
-%__mv -Tf ../SPIRV-Headers-%spirv_headers_version 3rdparty/SPIRV/SPIRV-Headers
-%__mv -Tf ../SPIRV-Tools-%spirv_tools_version 3rdparty/SPIRV/SPIRV-Tools
+%__mv -Tf ../SPIRV-Headers-%spirv_headers_commit 3rdparty/SPIRV/SPIRV-Headers
+%__mv -Tf ../SPIRV-Tools-%spirv_tools_commit 3rdparty/SPIRV/SPIRV-Tools
 %__mv -Tf ../cubeb-%cubeb_commit 3rdparty/cubeb/cubeb
 %__mv -Tf ../soundtouch-%soundtouch_commit 3rdparty/SoundTouch/soundtouch
 
@@ -166,6 +166,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Wed Nov 02 2022 Nazarov Denis <nenderus@altlinux.org> 0.0.25-alt1
+- Version 0.0.25
+
 * Thu Sep 01 2022 Nazarov Denis <nenderus@altlinux.org> 0.0.24-alt1
 - Version 0.0.24
 
