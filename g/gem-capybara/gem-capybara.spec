@@ -2,7 +2,7 @@
 
 Name:          gem-capybara
 Version:       3.37.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Acceptance test framework for web applications
 License:       MIT
 Group:         Development/Ruby
@@ -47,6 +47,7 @@ BuildRequires: gem(yard) >= 0.9.0
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency regexp_parser >= 2.6.0,regexp_parser < 3
 Requires:      gem(addressable) >= 0
 Requires:      gem(matrix) >= 0
 Requires:      gem(mini_mime) >= 0.1.3
@@ -72,7 +73,7 @@ through an external gem.
 
 %package       -n gem-capybara-doc
 Version:       3.37.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Acceptance test framework for web applications documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета capybara
 Group:         Development/Documentation
@@ -97,7 +98,7 @@ through an external gem.
 
 %package       -n gem-capybara-devel
 Version:       3.37.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Acceptance test framework for web applications development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета capybara
 Group:         Development/Ruby
@@ -169,6 +170,9 @@ through an external gem.
 
 
 %changelog
+* Wed Nov 02 2022 Pavel Skrylev <majioa@altlinux.org> 3.37.1-alt1.1
+- !fix dep to regexp_parser gem
+
 * Thu Sep 15 2022 Pavel Skrylev <majioa@altlinux.org> 3.37.1-alt1
 - ^ 3.31.0 -> 3.37.1
 
