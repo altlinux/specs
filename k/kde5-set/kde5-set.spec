@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-set
-Version: 22.04.1
+Version: 22.08.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -72,7 +72,7 @@ Requires: plasma5-khotkeys plasma5-kinfocenter plasma5-addons plasma5-browser-in
 Requires: plasma5-disks
 Requires: kde5-khelpcenter kde5-kolourpaint kde5-kio-audiocd kde5-kgpg
 Requires: plasma5-kmenuedit plasma5-kgamma plasma5-thunderbolt
-Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-ktimer kde5-spectacle
+Requires: kde5-kfind kde5-filelight kde5-kcharselect kde5-kteatime kde5-spectacle
 Requires: kde5-kamera kde5-network-filesharing kde5-ktorrent
 ##Requires: kde5-kget
 Requires: kde5-kio-zeroconf kde5-sweeper
@@ -115,7 +115,7 @@ Requires: kde5-scanning
 Requires: plasma5-discover-maxi
 Requires: plasma5-desktop-maxi
 Requires: kde5-konqueror kde5-keditbookmarks
-Requires: kde5-kfloppy
+Requires: kde5-kfloppy kde5-ktimer
 Requires: kde5-dragon
 Requires: kde5-kmousetool kde5-kmag
 Requires: kde5-juk kde5-kmouth
@@ -220,6 +220,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Wed Nov 02 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.0-alt1
+- remove kde5-ktimer from default kde5
+
 * Tue Aug 30 2022 Sergey V Turchin <zerg@altlinux.org> 22.04.1-alt1
 - add oxygen-sounds
 
