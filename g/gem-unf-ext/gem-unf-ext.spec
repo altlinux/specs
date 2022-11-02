@@ -1,7 +1,7 @@
 %define        gemname unf_ext
 
 Name:          gem-unf-ext
-Version:       0.0.8.1
+Version:       0.0.8.2
 Release:       alt1
 Summary:       Unicode Normalization Form support library for CRuby
 License:       MIT
@@ -13,20 +13,28 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: gcc-c++
+%if_with check
 BuildRequires: gem(rake) >= 0.9.2.2
 BuildRequires: gem(test-unit) >= 0
 BuildRequires: gem(rdoc) > 2.4.2
 BuildRequires: gem(bundler) >= 1.2
 BuildRequires: gem(rake-compiler) >= 1.1.1
-BuildRequires: gem(rake-compiler-dock) >= 0.7.2
+BuildRequires: gem(rake-compiler-dock) >= 0.7
+BuildRequires: gem(rake) >= 0.9.2.2
+BuildRequires: gem(test-unit) >= 0
+BuildRequires: gem(rdoc) > 2.4.2
+BuildRequires: gem(bundler) >= 1.2
+BuildRequires: gem(rake-compiler) >= 1.1.1
+BuildRequires: gem(rake-compiler-dock) >= 0.7
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake-compiler-dock >= 0.7.2,rake-compiler-dock < 1
+%ruby_use_gem_dependency rake-compiler-dock >= 0.7,rake-compiler-dock < 1
 %ruby_alias_names unf_ext,unf-ext
 Obsoletes:     ruby-unf_ext < %EVR
 Provides:      ruby-unf_ext = %EVR
-Provides:      gem(unf_ext) = 0.0.8.1
+Provides:      gem(unf_ext) = 0.0.8.2
 
 
 %description
@@ -34,44 +42,42 @@ Unicode Normalization Form support library for CRuby.
 
 
 %package       -n gem-unf-ext-doc
-Version:       0.0.8.1
+Version:       0.0.8.2
 Release:       alt1
 Summary:       Unicode Normalization Form support library for CRuby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета unf_ext
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(unf_ext) = 0.0.8.1
+Requires:      gem(unf_ext) = 0.0.8.2
 Obsoletes:     ruby-unf-ext-doc
 Provides:      ruby-unf-ext-doc
 
 %description   -n gem-unf-ext-doc
-Unicode Normalization Form support library for CRuby documentation
-files.
+Unicode Normalization Form support library for CRuby documentation files.
 
 %description   -n gem-unf-ext-doc -l ru_RU.UTF-8
 Файлы сведений для самоцвета unf_ext.
 
 
 %package       -n gem-unf-ext-devel
-Version:       0.0.8.1
+Version:       0.0.8.2
 Release:       alt1
 Summary:       Unicode Normalization Form support library for CRuby development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета unf_ext
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(unf_ext) = 0.0.8.1
+Requires:      gem(unf_ext) = 0.0.8.2
 Requires:      gem(rake) >= 0.9.2.2
 Requires:      gem(test-unit) >= 0
 Requires:      gem(rdoc) > 2.4.2
 Requires:      gem(bundler) >= 1.2
 Requires:      gem(rake-compiler) >= 1.1.1
-Requires:      gem(rake-compiler-dock) >= 0.7.2
+Requires:      gem(rake-compiler-dock) >= 0.7
 
 %description   -n gem-unf-ext-devel
-Unicode Normalization Form support library for CRuby development
-package.
+Unicode Normalization Form support library for CRuby development package.
 
 %description   -n gem-unf-ext-devel -l ru_RU.UTF-8
 Файлы для разработки самоцвета unf_ext.
@@ -104,6 +110,9 @@ package.
 
 
 %changelog
+* Thu Oct 27 2022 Pavel Skrylev <majioa@altlinux.org> 0.0.8.2-alt1
+- ^ 0.0.8.1 -> 0.0.8.2
+
 * Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 0.0.8.1-alt1
 - ^ 0.0.7.6 -> 0.0.8.1
 

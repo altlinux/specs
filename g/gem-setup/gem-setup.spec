@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt3
+Release:       alt4
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,9 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Sun Sep 30 2022 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt4
+- ! fix hoe loading with version detection
+
 * Wed Sep 21 2022 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt3
 - ! fix to gem build file placement
 
