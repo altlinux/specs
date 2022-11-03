@@ -1,5 +1,7 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: liberasurecode
-Version: 1.6.1
+Version: 1.6.3
 Release: alt1
 Summary: Erasure Code API library written in C with pluggable backends
 Group: System/Libraries
@@ -9,7 +11,6 @@ Url: https://github.com/openstack/liberasurecode.git
 Source: %name-%version.tar
 Patch1: liberasurecode-1.6.1-Fix-linking.patch
 Patch2: liberasurecode-1.6.0-docs.patch
-Patch4: liberasurecode-1.6.1-nostrncpy.patch
 
 BuildRequires: doxygen
 BuildRequires: zlib-devel
@@ -38,7 +39,6 @@ developing applications that use %name.
 %setup
 %patch1 -p1
 %patch2 -p2
-%patch4 -p1
 
 %build
 %autoreconf
@@ -61,6 +61,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Nov 03 2022 Alexey Shabalin <shaba@altlinux.org> 1.6.3-alt1
+- Build new version.
+
 * Wed May 13 2020 Alexey Shabalin <shaba@altlinux.org> 1.6.1-alt1
 - Build new version.
 - Add a patch for using strncpy on binary data.
