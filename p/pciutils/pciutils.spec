@@ -1,7 +1,7 @@
 %define libname libpci
 
 Name: pciutils
-Version: 3.7.0
+Version: 3.8.0
 Release: alt1
 
 Summary: Linux PCI utilities
@@ -61,6 +61,7 @@ This package contains PCI library headers.
 %build
 %make_build \
 	SHARED=yes \
+	LIBDIR=%_libdir \
 	OPT="%optflags" \
 	PREFIX=%_prefix \
 	IDSDIR=%_datadir/misc
@@ -68,18 +69,16 @@ This package contains PCI library headers.
 %install
 %make_install \
 	SHARED=yes \
-	DESTDIR=%buildroot \
 	PREFIX=%_prefix \
+	LIBDIR=%_libdir \
+	DESTDIR=%buildroot \
+	SBINDIR=%_sbindir \
+	BINDIR=%_bindir \
 	install install-lib
-
-mv %buildroot%_sbindir %buildroot%_bindir
-[ "%_libdir" = "%_prefix/lib" ] || {
-	mv %buildroot%_prefix/lib %buildroot%_libdir
-}
 
 %files
 %_bindir/lspci
-%_bindir/setpci
+%_sbindir/setpci
 %_man8dir/lspci*
 %_man8dir/setpci*
 %doc README TODO ChangeLog *.lsm
@@ -94,6 +93,9 @@ mv %buildroot%_sbindir %buildroot%_bindir
 %_man7dir/pcilib*
 
 %changelog
+* Mon Oct 17 2022 Anton Farygin <rider@altlinux.ru> 3.8.0-alt1
+- 3.8.0
+
 * Mon Jun 15 2020 Anton Farygin <rider@altlinux.ru> 3.7.0-alt1
 - 3.7.0
 
