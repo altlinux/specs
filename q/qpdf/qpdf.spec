@@ -3,7 +3,7 @@
 %define soname 29
 Summary: Command-line tools and library for transforming PDF files
 Name: qpdf
-Version: 11.1.0
+Version: 11.1.1
 Release: alt1
 License: Apache-2.0
 Group: System/Base
@@ -93,6 +93,9 @@ make test -C %_target_platform
 %_libdir/pkgconfig/libqpdf.pc
 
 %changelog
+* Thu Nov 03 2022 Anton Farygin <rider@altlinux.ru> 11.1.1-alt1
+- 11.1.1
+
 * Fri Oct 07 2022 Anton Farygin <rider@altlinux.ru> 11.1.0-alt1
 - 11.1.0
 - removed documentation package
