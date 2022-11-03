@@ -7,7 +7,7 @@
 
 Name: crow-translate
 Version: 2.10.1
-Release: alt1
+Release: alt1.1
 
 Summary: A Qt GUI for Google, Yandex and Bing translators
 Summary(ru_RU.UTF-8): GUI интерфейс Qt для переводчиков Google, Yandex и Bing
@@ -74,6 +74,11 @@ Recommended icons for the Breeze app.
 %prep
 %setup
 %autopatch -p2
+%ifarch %e2k
+# workaround of SIGILL in ecf_opt64 from LCC 1.25.23
+sed -i -E "s/qOverload<([^>]*)>\(&([^:]*::)/(void(\\2*)(\\1))(\&\\2/" \
+	src/mainwindow.cpp
+%endif
 
 # preparing external libraries for building
 mkdir -p \
@@ -109,6 +114,9 @@ tar -xf %SOURCE6 -C src/Fluent-icon-theme/ --strip-components=1
 %_iconsdir/hicolor/*/*/crow-translate*
 
 %changelog
+* Thu Nov 03 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.10.1-alt1.1
+- Fixed build for Elbrus
+
 * Tue Oct 25 2022 Evgeny Chuck <koi@altlinux.org> 2.10.1-alt1
 - new version (2.10.1) with rpmgs script
 
