@@ -1,7 +1,7 @@
 %define oname Chaco
 
 Name: python3-module-%oname
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 
 Summary: Interactive 2-Dimensional Plotting
@@ -18,6 +18,7 @@ BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-sphinx python3-module-Pygments
 BuildRequires: python3-module-traits
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-sphinx-copybutton
 BuildRequires: xvfb-run
 
 
@@ -96,6 +97,9 @@ xvfb-run sphinx-build-3 -E -a -b html -c docs/source -d doctrees docs/source htm
 
 
 %changelog
+* Thu Nov 03 2022 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
+- Automatically updated to 5.1.0.
+
 * Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
 - Build new version.
 
