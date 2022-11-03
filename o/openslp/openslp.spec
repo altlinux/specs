@@ -2,7 +2,7 @@
 
 Name: openslp
 Version: 2.0.0
-Release: alt3
+Release: alt4
 
 Summary: OpenSLP implementation of Service Location Protocol V2
 License: BSD-style
@@ -143,8 +143,11 @@ mkdir -p %buildroot%_sysconfdir/slp.reg.d
 %_includedir/slp.h
 
 %changelog
+* Thu Nov  3 2022 Alexander Danilov <admsasha@altlinux.org> 2.0.0-alt4
+- Fixes changelog.
+
 * Fri Oct 28 2022 Alexander Danilov <admsasha@altlinux.org> 2.0.0-alt3
-- Applied security fixes (fixes CVE-2021-4217).
+- Applied security fixes (fixes CVE-2019-5544).
 
 * Sat Dec 01 2018 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2
 - Fixed libslp namespace (closes: #35692).
