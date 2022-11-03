@@ -7,7 +7,7 @@
 %def_without check
 
 Name: deepin-api
-Version: 5.5.31
+Version: 5.5.32
 Release: alt1
 Summary: Golang bingding for dde-daemon
 License: GPL-3.0+
@@ -53,7 +53,13 @@ sed -i 's|gobuild|.build|' Makefile
 sed -i 's|/etc/default/locale|%_datadir/locale|' \
     adjust-grub-theme/util.go \
     locale-helper/ifc.go
+# Unpacked vendor/ into the source (used .gear/tags).
 tar -xf %SOURCE1
+# Fixed paths in vendor/.
+sed -i 's|/usr/share/locale/locale.alias|/usr/share/X11/locale/locale.alias|' \
+    vendor/src/github.com/linuxdeepin/go-lib/locale/locale.go
+sed -i 's|/usr/share/icons/deepin/|/usr/share/icons/bloom/|' \
+    vendor/src/github.com/linuxdeepin/go-x11-client/util/cursor/cursor_test.go
 
 %build
 export GOPATH="$(pwd)/vendor"
@@ -91,6 +97,12 @@ cp -a vendor/src/* %buildroot%go_path/src/%goipath/vendor/src/
 %go_path/src/%goipath
 
 %changelog
+* Thu Nov 03 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.32-alt1
+- New version (5.5.32).
+- Upstream:
+  + fix: Repair the dde-open analysis part of url cannot get
+  the scheme problem.
+
 * Tue Sep 13 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.31-alt1
 - New version (5.5.31).
 - Packaged new golang modules for deepin-daemon.
