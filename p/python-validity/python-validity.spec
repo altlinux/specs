@@ -1,8 +1,8 @@
 %global pypi_name validity
 
 Name: python-%pypi_name
-Version: 0.12
-Release: alt0.3
+Version: 0.14
+Release: alt0.1
 Summary: Validity fingerprint sensor driver
 Group: Development/Python
 
@@ -16,7 +16,7 @@ Patch1: python-validity-0.12-restart-always.patch
 BuildArch: noarch
 
 BuildRequires: python3-devel
-BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools python3-module-wheel
 
 %package -n python3-module-%pypi_name
 Summary: %summary
@@ -36,10 +36,10 @@ Validity fingerprint sensor driver.
 %patch1 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 install -d -m 0700 %buildroot%_sysconfdir/%name
 install -d -m 0755 %buildroot%_unitdir/
@@ -59,7 +59,7 @@ install -m 0644 scripts/factory-reset.py %buildroot%_datadir/%name/playground/
 %_unitdir/*.service
 %_udevrulesdir/40-python3-validity.udev
 %python3_sitelibdir/validitysensor/
-%python3_sitelibdir/python_%pypi_name-%version-py*.egg-info/
+%python3_sitelibdir/python_%pypi_name-%version.dist-info/
 %_bindir/validity-led-dance
 %_bindir/validity-sensors-firmware
 %dir %_libexecdir/%name
@@ -69,6 +69,10 @@ install -m 0644 scripts/factory-reset.py %buildroot%_datadir/%name/playground/
 %_datadir/%name/playground
 
 %changelog
+* Thu Nov 03 2022 L.A. Kostis <lakostis@altlinux.ru> 0.14-alt0.1
+- 0.14.
+- update python macros.
+
 * Wed May 11 2022 L.A. Kostis <lakostis@altlinux.ru> 0.12-alt0.3
 - Create -resume unit for -validity service to fix non-working sensor after
   resume (see https://github.com/uunicorn/python-validity/issues/106).
