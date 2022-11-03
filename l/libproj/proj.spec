@@ -2,7 +2,7 @@
 
 Name: libproj
 Version: 9.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: PROJ.4 - cartographic projections library
 Group: Sciences/Geosciences
@@ -52,6 +52,8 @@ Empty package. US and Canadian datum shift grids moved to libproj
 
 %prep
 %setup
+# remove after updating sources (fixed in upstream)
+echo 'target_link_libraries(geodtest m)' >> src/tests/CMakeLists.txt
 
 %build
 %cmake_insource -DUSE_EXTERNAL_GTEST=TRUE
@@ -90,6 +92,9 @@ Empty package. US and Canadian datum shift grids moved to libproj
 %files nad
 
 %changelog
+* Thu Nov 03 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 9.1.0-alt1.1
+- fixed build for Elbrus
+
 * Wed Oct 19 2022 Vladislav Zavjalov <slazav@altlinux.org> 9.1.0-alt1
 - 9.1.0
 
