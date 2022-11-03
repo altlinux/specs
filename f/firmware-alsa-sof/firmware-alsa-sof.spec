@@ -1,9 +1,9 @@
 %global _firmwarepath  /lib/firmware
-%define version_major 2.0
+%define version_major 2.2.2
 Summary: Firmware and topology files for Sound Open Firmware project
 Name: firmware-alsa-sof
 Version: %version_major
-Release: alt2
+Release: alt1
 # See later in the spec for a breakdown of licensing
 License: BSD
 Group: Sound
@@ -41,20 +41,18 @@ alsatplg -c /usr/share/alsa/topology/hda-dsp/skl_hda_dsp_generic-tplg.conf \
 
 %install
 mkdir -p  %buildroot%_firmwarepath/intel/
-cp -a v%version_major.x/sof-tplg-v%version  %buildroot%_firmwarepath/intel/sof-tplg-v%version
+cp -a sof-tplg-v%version  %buildroot%_firmwarepath/intel/sof-tplg-v%version
 install %SOURCE2 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
 install %SOURCE3 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
 install %SOURCE4 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
 install %SOURCE5 %buildroot%_firmwarepath/intel/sof-tplg-v%version/
-cp -a v%version_major.x/sof-v%version  %buildroot%_firmwarepath/intel/sof
+cp -a sof-v%version  %buildroot%_firmwarepath/intel/sof
 ln -s sof-tplg-v%version %buildroot%_firmwarepath/intel/sof-tplg
 install -m0644 skl_hda_dsp_generic-tplg.bin %buildroot%_firmwarepath/
 
 # gather files and directories
 FILEDIR=$(pwd)
 pushd %buildroot/%_firmwarepath
-# remove all broken symlinks
-find . -xtype l -type l -print -delete
 find -P . -name "*.ri" | sed -e '/^.$/d' > $FILEDIR/alsa-sof-firmware.files
 find -P . -name "*.tplg" | sed -e '/^.$/d' >> $FILEDIR/alsa-sof-firmware.files
 find -P . -name "*.ldc" | sed -e '/^.$/d' > $FILEDIR/alsa-sof-firmware.debug-files
@@ -75,6 +73,9 @@ cat alsa-sof-firmware.files
 %files debug -f alsa-sof-firmware.debug-files
 
 %changelog
+* Thu Nov 03 2022 Anton Farygin <rider@altlinux.ru> 2.2.2-alt1
+- 2.0 -> 2.2.2
+
 * Thu Apr 07 2022 Nikolai Kostrigin <nickel@altlinux.org> 2.0-alt2
 - added extra topologies for es83x6, from upstream and OEM patners
 
