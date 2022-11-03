@@ -1,5 +1,5 @@
 Name: elfutils
-Version: 0.187
+Version: 0.188
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
@@ -371,6 +371,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Nov 02 2022 Dmitry V. Levin <ldv@altlinux.org> 0.188-alt1
+- elfutils-0.187 -> elfutils-0.188.
+
 * Mon Apr 25 2022 Dmitry V. Levin <ldv@altlinux.org> 0.187-alt1
 - elfutils-0.186 -> elfutils-0.187.
 
