@@ -6,7 +6,7 @@
 
 Name: giac
 Version: 1.9.0.27
-Release: alt1
+Release: alt1.1
 
 Summary: Computer algebra system
 
@@ -25,7 +25,9 @@ BuildRequires: byacc
 BuildRequires: flex
 BuildRequires: libfltk-devel
 BuildRequires: gcc-c++
+%ifnarch %e2k
 BuildRequires: gcc-fortran
+%endif
 BuildRequires: libglpk-devel
 BuildRequires: libgmp-devel
 BuildRequires: libecm-devel
@@ -220,6 +222,9 @@ rm %buildroot%_docdir/giac/Makefile.am
 %_docdir/giac/*/
 
 %changelog
+* Thu Nov 03 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.9.0.27-alt1.1
+- E2K: Fortran excluded from BuildRequires
+
 * Tue Oct 25 2022 Leontiy Volodin <lvol@altlinux.org> 1.9.0.27-alt1
 - New version.
 - Fixed build with pari 2.15.0.
