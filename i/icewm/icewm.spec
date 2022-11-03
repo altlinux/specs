@@ -4,8 +4,8 @@
 %def_with markdown
 
 Name: %realname
-Version: 3.1.0
-Release: alt2
+Version: 3.2.0
+Release: alt1
 Epoch:3
 
 Summary: X11 Window Manager
@@ -153,6 +153,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Fri Nov 04 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.2.0-alt1
+- 3.2.0
+
 * Sat Oct 29 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.1.0-alt2
 - started packaging russian translations of IceWM documentation
 
