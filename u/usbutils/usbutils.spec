@@ -1,13 +1,13 @@
 Name: usbutils
-Version: 014
-Release: alt2
+Version: 015
+Release: alt1
 
 Summary: Linux USB utilities
 License: GPLv2+
 Group: System/Kernel and hardware
 
 Url: http://sourceforge.net/projects/linux-usb/
-# git://github.com/gregkh/usbutils.git
+Vcs: https://github.com/gregkh/usbutils.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -38,6 +38,9 @@ rm -f %buildroot%_bindir/lsusb.py
 %doc NEWS README.md
 
 %changelog
+* Thu Nov 03 2022 Alexey Shabalin <shaba@altlinux.org> 015-alt1
+- new version 015
+
 * Mon Nov 15 2021 Alexey Shabalin <shaba@altlinux.org> 014-alt2
 - add install usbreset
 
