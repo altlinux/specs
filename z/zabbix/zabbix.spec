@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		e46bcfb8403
+%define svnrev		e35d7dceead
 
 %def_with pgsql
 %def_enable java
@@ -16,8 +16,8 @@
 %endif
 
 Name: zabbix
-Version: 6.0.8
-Release: alt0.rc2.1
+Version: 6.0.10
+Release: alt1
 Epoch: 1
 
 Summary: A network monitor
@@ -160,6 +160,18 @@ Group: Monitoring
 Requires: php7-gd2 php7-mysqli php7-pgsql php7-sockets php7-mbstring php7-dom php7-openssl
 BuildArch: noarch
 
+%package phpfrontend-php8.0
+Summary: zabbix web frontend, edition for php8.0
+Group: Monitoring
+Requires: php8.0-gd php8.0-libs php8.0-mbstring php8.0-mysqli php8.0-openssl php8.0-pgsql php8.0-sockets
+BuildArch: noarch
+
+%package phpfrontend-php8.1
+Summary: zabbix web frontend, edition for php8.0
+Group: Monitoring
+Requires: php8.1-gd php8.1-libs php8.1-mbstring php8.1-mysqli php8.1-openssl php8.1-pgsql php8.1-sockets
+BuildArch: noarch
+
 %package phpfrontend-apache2
 Summary: %name-phpfrontend's apache2 config files
 Group: Monitoring
@@ -172,6 +184,22 @@ Group: Monitoring
 Requires: %name-phpfrontend-apache2
 Requires: apache2-httpd-prefork-like
 Requires: apache2-mod_php7
+BuildArch: noarch
+
+%package phpfrontend-apache2-mod_php8.0
+Summary: Requirements for the use of apache2-mod_php8.0
+Group: Monitoring
+Requires: %name-phpfrontend-apache2
+Requires: apache2-httpd-prefork-like
+Requires: apache2-mod_php8.0
+BuildArch: noarch
+
+%package phpfrontend-apache2-mod_php8.1
+Summary: Requirements for the use of apache2-mod_php8.1
+Group: Monitoring
+Requires: %name-phpfrontend-apache2
+Requires: apache2-httpd-prefork-like
+Requires: apache2-mod_php8.1
 BuildArch: noarch
 
 %package doc
@@ -282,11 +310,25 @@ zabbix's apache2 config files
 Contains requirements for the use of apache2-mod_php7
 in to zabbix phpfrontend
 
+%description phpfrontend-apache2-mod_php8.0
+Contains requirements for the use of apache2-mod_php8.0
+in to zabbix phpfrontend
+
+%description phpfrontend-apache2-mod_php8.1
+Contains requirements for the use of apache2-mod_php8.1
+in to zabbix phpfrontend
+
 %description phpfrontend-engine
 a php frontend for zabbix - core
 
 %description phpfrontend-php7
 zabbix web frontend, edition for php7
+
+%description phpfrontend-php8.0
+zabbix web frontend, edition for php8.0
+
+%description phpfrontend-php8.1
+zabbix web frontend, edition for php8.1
 
 %description doc
 %name network monitor (README, ChangeLog)
@@ -388,6 +430,7 @@ export GOFLAGS="-mod=vendor"
 	%{subst_with ssh2} \
 	%{subst_with unixodbc} \
 	--sysconfdir=/etc/zabbix
+%make dbschema
 %make
 
 # adjust in several files /home/zabbix
@@ -673,11 +716,15 @@ fi
 %doc add_new_language.sh make_mo.sh update_po.sh
 
 %files phpfrontend-php7
+%files phpfrontend-php8.0
+%files phpfrontend-php8.1
 
 %files phpfrontend-apache2
 %config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %files phpfrontend-apache2-mod_php7
+%files phpfrontend-apache2-mod_php8.0
+%files phpfrontend-apache2-mod_php8.1
 
 %files doc
 %doc AUTHORS NEWS README INSTALL ChangeLog.bz2
@@ -689,6 +736,12 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Nov 03 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.10-alt1
+- 6.0.10
+
+* Thu Sep 22 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.9-alt1
+- 6.0.9
+
 * Mon Aug 29 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.8-alt0.rc2.1
 - Fix path to zabbix-agent2 configs and plugins (ALT #43640)
 
