@@ -3,7 +3,7 @@
 %def_with check
 
 Name: curl
-Version: 7.85.0
+Version: 7.86.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -155,6 +155,14 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Oct 26 2022 Anton Farygin <rider@altlinux.ru> 7.86.0-alt1
+- 7.85.0 -> 7.86.0
+- Fixes:
+  * CVE-2022-32221: POST following PUT confusion
+  * CVE-2022-35260: .netrc parser out-of-bounds access
+  * CVE-2022-42915: HTTP proxy double-free
+  * CVE-2022-42916: HSTS bypass via IDN
+
 * Wed Aug 31 2022 Anton Farygin <rider@altlinux.ru> 7.85.0-alt1
 - 7.84.0 -> 7.85.0
 - Fixes:
