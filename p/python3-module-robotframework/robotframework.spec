@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 6.0
+Version: 6.0.1
 Release: alt1
 Summary: A generic test automation framework
 License: Apache-2.0
@@ -66,6 +66,9 @@ tox.py3 --sitepackages -vvr --develop
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
 
 %changelog
+* Fri Nov 04 2022 Grigory Ustinov <grenka@altlinux.org> 6.0.1-alt1
+- Automatically updated to 6.0.1.
+
 * Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 6.0-alt1
 - Automatically updated to 6.0.
 
