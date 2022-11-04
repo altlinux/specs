@@ -5,7 +5,7 @@
 
 Name: libcaca
 Version: 0.99
-Release: alt22
+Release: alt23
 Summary: Text mode graphics library
 Group: System/Libraries
 License: WTFPL
@@ -13,6 +13,7 @@ Url: http://caca.zoy.org/wiki/libcaca
 Vcs: https://github.com/cacalabs/libcaca.git
 # git://git.altlinux.org/gears/l/libcaca.git
 Source: %name-%version-%release.tar
+Patch: ruby-paths.patch
 # Automatically added by buildreq on Thu Apr 09 2020 (-bi)
 BuildRequires: gcc-c++ imlib2-devel libncurses-devel libslang2-devel zlib-devel
 %if_enabled doc
@@ -100,6 +101,7 @@ This package contains python3 module bindings for libcaca.
 
 %prep
 %setup -n %name-%version-%release
+%autopatch
 # fix python shebangs
 find . -type f -print0 |
 	xargs -r0 grep -lZ '^#![[:space:]]*%_bindir/.*python\>' -- |
@@ -165,8 +167,8 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 
 %if_enabled ruby
 %files -n ruby-caca
-%ruby_sitelibdir/caca.rb
-%ruby_sitearchdir/caca.*
+%ruby_vendorlibdir/caca.rb
+%ruby_vendorarchdir/caca.*
 %endif
 
 %if_enabled python
@@ -176,6 +178,9 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %endif
 
 %changelog
+* Sat Oct 29 2022 Pavel Skrylev <majioa@altlinux.org> 0.99-alt23
+- ruby-caca: fixed install paths (closes #44113, #43828).
+
 * Fri Aug 27 2021 Pavel Skrylev <majioa@altlinux.org> 0.99-alt22
 - Reenabled packaging of ruby site module.
 - Fixed ruby sitelibdir variable name.
