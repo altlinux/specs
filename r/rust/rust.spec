@@ -1,10 +1,10 @@
 Name: rust
 Epoch: 1
-Version: 1.64.0
+Version: 1.65.0
 Release: alt1
 Summary: The Rust Programming Language
 
-%define r_ver 1.63.0
+%define r_ver 1.64.0
 
 Group: Development/Other
 License: Apache-2.0 and MIT
@@ -19,7 +19,7 @@ Patch2: rust-disable-lint-tests.patch
 %def_without bootstrap
 %def_without bundled_llvm
 %def_without debuginfo
-%global llvm_version 14.0
+%global llvm_version 15.0
 
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
@@ -94,9 +94,12 @@ BuildRequires: rust rust-cargo
 %define rustlibdir %_libdir/rustlib
 %define _libexecdir /usr/libexec
 
-# Since 1.12.0: striping debuginfo damages *.so files
+# While we don't want to encourage dynamic linking to rust shared libraries, as
+# there's no stable ABI, we still need the unallocated metadata (.rustc)
+# to support custom-derive plugins like #[proc_macro_derive(Foo)].
 %if_without debuginfo
-%add_debuginfo_skiplist %_libdir %_bindir
+# Since 1.12.0: striping debuginfo damages *.so files
+%add_debuginfo_skiplist %_libdir/* %_bindir/*
 %endif
 
 %description
@@ -157,12 +160,15 @@ Summary: Rust Language Server for IDE integration
 Group: Development/Tools
 Requires: rust-analysis
 Requires: %name = %epoch:%version-%release
+Provides: rust-analyzer = %epoch:%version-%release
 
 %description -n rls
 The Rust Language Server provides a server that runs in the background,
 providing IDEs, editors, and other tools with information about Rust programs.
 It supports functionality such as 'goto definition', symbol search,
 reformatting, and code completion, and enables renaming and refactorings.
+
+RLS is being deprecated in favor of rust-analyzer.
 
 %package -n clippy
 Summary: Lints to catch common mistakes and improve your Rust code
@@ -267,6 +273,7 @@ export ALTWRAP_LLVM_VERSION="%llvm_version"
 EOF
 
 cat > config.toml <<EOF
+changelog-seen = 2
 [build]
 cargo = "%cargo"
 rustc = "%rustc"
@@ -276,7 +283,7 @@ docs = true
 verbose = 2
 vendor = true
 extended = true
-tools = ["cargo", "rls", "clippy", "rustfmt", "analysis", "src"]
+tools = ["cargo", "rust-analyzer", "clippy", "rustfmt", "analysis", "src"]
 build-stage = 2
 test-stage = 2
 doc-stage = 2
@@ -346,6 +353,7 @@ while read -r n rustlib; do
 		continue
 
 	ln -s -f -- "$(relative "$lib" "$rustlib")" "$rustlib"
+	#ln -s -f -- "$(relative "$rustlib" "$lib")" "$lib"
 done
 
 # Remove installer artifacts (manifests, uninstall scripts, etc.)
@@ -366,6 +374,8 @@ find %buildroot/%_libdir \
 	-name 'librustc_driver-*.so' -execdir objdump -p '{}' '+' |
 	grep -qs 'NEEDED.*LLVM'
 %endif
+
+export LD_LIBRARY_PATH="%buildroot/%_libdir${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
 
 # https://rustc-dev-guide.rust-lang.org/tests/intro.html
 failed=
@@ -440,8 +450,8 @@ rm -rf %rustdir
 %doc src/tools/rustfmt/{README.md,CHANGELOG.md,Configurations.md,LICENSE-APACHE,LICENSE-MIT}
 
 %files -n rls
-%_bindir/rls
-%doc src/tools/rls/{README.md,COPYRIGHT,debugging.md,LICENSE-APACHE,LICENSE-MIT}
+%_bindir/rust-analyzer
+%doc src/tools/rust-analyzer/{README.md,LICENSE-APACHE,LICENSE-MIT}
 
 %files -n clippy
 %_bindir/cargo-clippy
@@ -455,6 +465,10 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Thu Nov 03 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.65.0-alt1
+- New version (1.65.0).
+- Use llvm15.0.
+
 * Thu Sep 22 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.64.0-alt1
 - New version (1.64.0).
 
