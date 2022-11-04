@@ -1,8 +1,8 @@
 %def_disable libgtop
 
 Name: xfce4-systemload-plugin
-Version: 1.3.1
-Release: alt2
+Version: 1.3.2
+Release: alt1
 
 Summary: System load plugin for the Xfce panel
 Summary(ru_RU.UTF-8): Отображение использования ресурсов системы на панели Xfce
@@ -16,12 +16,12 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libxfce4util-devel libxfce4ui-gtk3-devel libxfce4panel-gtk3-devel libxfconf-devel
-
+BuildRequires: libxfce4util-devel >= 4.17.2 libxfce4ui-gtk3-devel >= 4.16.0 libxfce4panel-gtk3-devel >= 4.16.0 libxfconf-devel >= 4.14.0
+BuildRequires: gcc-c++
 BuildRequires: libX11-devel libgtk+3-devel libstartup-notification libupower-devel
 %{?_enable_libgtop:BuildRequires: libgtop-devel}
 
-Requires: xfce4-panel >= 4.12
+Requires: xfce4-panel >= 4.17
 
 %define _unpackaged_files_terminate_build 1
 
@@ -60,6 +60,11 @@ Requires: xfce4-panel >= 4.12
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Nov 03 2022 Mikhail Efremov <sem@altlinux.org> 1.3.2-alt1
+- Fixed build on 32bit arches.
+- Updated BR.
+- Updated to 1.3.2.
+
 * Wed Jan 12 2022 Mikhail Efremov <sem@altlinux.org> 1.3.1-alt2
 - Disabled libgtop support.
 
