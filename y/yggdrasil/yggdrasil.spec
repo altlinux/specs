@@ -3,8 +3,8 @@
 %global import_path github.com/yggdrasil-network/yggdrasil-go
 
 Name: yggdrasil
-Version: 0.4.4
-Release: alt2
+Version: 0.4.6
+Release: alt1
 
 Summary: End-to-end encrypted IPv6 networking
 License: LGPLv3
@@ -75,6 +75,9 @@ popd
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Fri Nov 04 2022 Anton Zhukharev <ancieg@altlinux.org> 0.4.6-alt1
+- update to 0.4.6
+
 * Sat Jul 30 2022 Anton Zhukharev <ancieg@altlinux.org> 0.4.4-alt2
 - add go vendor modules into source tree instead of using patch
 
