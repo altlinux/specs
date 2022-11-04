@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.3
+Version: 10.0.5
 Release: alt1
 
 Summary: IT and asset management software
@@ -120,7 +120,7 @@ fi
 %dir %installdir
 %dir %attr(2770,root,%webserver_group) %installdir/config
 %dir %attr(2770,root,%webserver_group) %installdir/files
-%attr(2770,root,%webserver_group) %installdir/files/*
+%attr(0770,root,%webserver_group) %installdir/files/*
 %dir %attr(2770,root,%webserver_group) %installdir/marketplace
 %installdir/ajax
 %installdir/bin
@@ -164,6 +164,22 @@ fi
 %files php8.1
 
 %changelog
+* Fri Nov 04 2022 Pavel Zilke <zidex@altlinux.org> 10.0.5-alt1
+- New version 10.0.4
+- This release fixes several security issues that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2022-39276 : Blind SSRF in RSS feeds and planning
+ + CVE-2022-39372 : Stored XSS in user information
+ + CVE-2022-39373 : Stored XSS in entity name
+ + CVE-2022-39376 : Improper input validation on emails links
+ + CVE-2022-39370 : Improper access to debug panel
+ + CVE-2022-39234 : User's session persist after permanently deleting his account
+ + CVE-2022-39262 : Stored XSS on login page
+ + CVE-2022-39277 : XSS in external links
+ + CVE-2022-39375 : XSS through public RSS feed
+ + CVE-2022-39323 : SQL Injection on REST API
+ + CVE-2022-39371 : Stored XSS through asset inventory
+
 * Wed Sep 14 2022 Pavel Zilke <zidex@altlinux.org> 10.0.3-alt1
 - New version 10.0.3
 - This release fixes several critical security issues that has been recently discovered. Update is strongly recommended!
