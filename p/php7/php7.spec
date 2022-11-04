@@ -9,7 +9,7 @@
 %define _php_version  %version
 %define _php_major  7
 %define _php_minor  4
-%define _php_release_version 32
+%define _php_release_version 33
 %define _php_suffix %_php_major
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -451,6 +451,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Thu Nov 03 2022 Anton Farygin <rider@altlinux.ru> 7.4.33-alt1
+- 7.4.32 -> 7.4.33 (Fixes: CVE-2022-31630, CVE-2022-37454)
+
 * Sun Oct 02 2022 Anton Farygin <rider@altlinux.ru> 7.4.32-alt1
 - 7.4.30 -> 7.4.32 (Fixes: CVE-2022-31628, CVE-2022-31629)
 
