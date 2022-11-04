@@ -8,7 +8,7 @@
 #    fields are added, removed or their types are changed.
 
 Name:    auditd-plugin-clickhouse
-Version: 20221004.1.4
+Version: 20221102.1.1
 Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
@@ -47,7 +47,7 @@ ctest
 popd
 
 %files
-%config(noreplace) %_sysconfdir/audit/auditd-clickhouse-datatypes.json
+%config(noreplace) %_datadir/%name/auditd-clickhouse-datatypes.json
 %config(noreplace) %attr(600,root,root) %_sysconfdir/audit/auditd-clickhouse.conf
 %config(noreplace) %_sysconfdir/audit/plugins.d/auditd-plugin-clickhouse.conf
 %config(noreplace) %_sysconfdir/logrotate.d/auditd-plugin-clickhouse-logrotate.conf
@@ -55,6 +55,24 @@ popd
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Wed Nov 02 2022 Paul Wolneykien <manowar@altlinux.org> 20221102.1.1-alt1
+- Improve: Use AUPARSE_ESC_SHELL for unambiguous string decoding.
+- Log the record line number on exception.
+- Log the record text on exception.
+
+* Sat Oct 29 2022 Paul Wolneykien <manowar@altlinux.org> 20221028.1.2-alt1
+- Put the datatype map file into /usr/share/auditd-plugin-clickhouse.
+
+* Fri Oct 28 2022 Paul Wolneykien <manowar@altlinux.org> 20221028.1.1-alt1
+- Fix/update the datatype map using the auparse/typetab.h as
+  a reference.
+- Fix encoded string detection: check for hex digits first.
+- Added `-e` option to abort and terminate on exceptions.
+- Output the time.milli:serial ID of the event when there is an
+  exception in record processing.
+- Fixed infinite loop on exception while iterating over an event
+  records.
+
 * Tue Oct 18 2022 Paul Wolneykien <manowar@altlinux.org> 20221004.1.4-alt1
 - Sort array values prior to generate JSON.
 - Fixed split value processing: don't skip the first part.
