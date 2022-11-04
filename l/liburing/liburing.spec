@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: liburing
-Version: 2.2
+Version: 2.3
 Release: alt1
 
 Summary: The io_uring library
@@ -15,7 +15,7 @@ Url: http://git.kernel.dk/cgit/liburing
 # Author's Vcs and CI: https://github.com/axboe/liburing
 Source: %name-%version.tar
 BuildRequires: gcc-c++
-%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: strace /proc}}
 
 %description
 Provides native async IO for the Linux 5.1+ kernel, in a fast
@@ -37,7 +37,7 @@ for the Linux-native io_uring.
 %setup
 
 %build
-%add_optflags %(getconf LFS_CFLAGS) -ffat-lto-objects -fanalyzer
+%add_optflags %(getconf LFS_CFLAGS) -ffat-lto-objects
 ./configure \
 	--prefix=%_prefix \
 	--includedir=%_includedir \
@@ -54,7 +54,7 @@ rm %buildroot%_libdir/liburing.a
 %check
 # List of available probes
 test/probe.t
-strace -ve io_uring_register test/probe.t 2>&1 >/dev/null | grep -Po '{op.*?}' | sort -u | column -t
+strace -v test/probe.t
 
 # Almost all tests fail on ppc64le, so there is no point to even try.
 %ifnarch ppc64le %e2k
@@ -63,7 +63,6 @@ TEST_EXCLUDE="
 	accept.t
 	cq-overflow.t
 	eeed8b54e0df.t
-	fc2a85cb02ef.t
 	file-verify.t
 	fpos.t
 	io-cancel.t
@@ -76,11 +75,9 @@ TEST_EXCLUDE="
 	recv-msgall-stream.t
 	ringbuf-read.t
 	rsrc_tags.t
-	sendmsg_fs_cve.t
-	socket.t
 	sq-poll-dup.t
 	sq-poll-share.t
-	xattr.t
+	sync-cancel.t
 " make runtests
 %endif
 
@@ -98,6 +95,10 @@ TEST_EXCLUDE="
 %_man7dir/*
 
 %changelog
+* Thu Nov 03 2022 Vitaly Chikunov <vt@altlinux.org> 2.3-alt1
+- Update to liburing-2.3 (2022-10-26).
+- spec: Better strace run in %%check.
+
 * Tue Aug 09 2022 Vitaly Chikunov <vt@altlinux.org> 2.2-alt1
 - Update to liburing-2.2 (2022-06-23).
 - Do not install static library (liburing.a).
