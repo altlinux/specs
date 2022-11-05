@@ -28,7 +28,7 @@
 %endif
 
 Name:    hplip
-Version: 3.22.6
+Version: 3.22.10
 Release: alt1
 Epoch:   1
 
@@ -248,7 +248,6 @@ Patch156: hplip-revert-plugins.patch
 #Patch157: hplip-thread-isalive-removed.patch
 #Patch158: hplip-timeb-removed.patch
 #Patch159: hplip-check-userperms.patch
-Patch160: hplip-fab-import.patch
 Patch161: hplip-hpsetup-noscanjets.patch
 Patch162: hplip-systray-qt5.patch
 # end fedora patches
@@ -538,7 +537,6 @@ rm prnt/hpcups/ErnieFilter.{cpp,h} prnt/hpijs/ernieplatform.h
 #patch157 -p1 -b .thread-isalive-removed
 #patch158 -p1 -b .timed-removed
 #patch159 -p1 -b .check-userperms
-%patch160 -p1 -b .fab-import
 %patch161 -p1 -b .hpsetup-noscanjets
 %patch162 -p1 -b .systray-qt5
 
@@ -1121,6 +1119,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Sat Nov 05 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.22.10-alt1
+- New version.
+
 * Wed Jun 29 2022 Andrey Cherepanov <cas@altlinux.org> 1:3.22.6-alt1
 - New version.
 - Added support for the following new printers:
