@@ -1,7 +1,7 @@
 %def_without ru_doc
 
 Name:    kamoso
-Version: 22.08.2
+Version: 22.08.3
 Release: alt1
 
 Group:   Video
@@ -99,6 +99,9 @@ itstool -m $TMPDIR/kamoso.mo -o ru/ doc/index.docbook
 %_K5notif/%name.notifyrc
 
 %changelog
+* Sat Nov 05 2022 Andrey Cherepanov <cas@altlinux.org> 22.08.3-alt1
+- New version.
+
 * Fri Oct 14 2022 Andrey Cherepanov <cas@altlinux.org> 22.08.2-alt1
 - New version.
 
