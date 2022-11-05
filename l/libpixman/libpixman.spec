@@ -1,7 +1,7 @@
 %define srcname pixman
 
 Name: libpixman
-Version: 0.42.0
+Version: 0.42.2
 Release: alt1
 Epoch: 3
 Summary: Pixel manipulation library
@@ -42,8 +42,8 @@ develop programs which make use of %name
 	--disable-static
 %make_build
 
-#check
-#make check
+%check
+%make check
 
 %install
 %make DESTDIR=%buildroot install
@@ -57,6 +57,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Nov 05 2022 Valery Inozemtsev <shrek@altlinux.ru> 3:0.42.2-alt1
+- 0.42.2 (fixed CVE-2022-44638)
+
 * Wed Oct 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 3:0.42.0-alt1
 - 0.42.0
 
