@@ -1,6 +1,6 @@
 Name: anilibria-winmaclinux
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: AniLibria online video player for desktop platforms
 Summary(ru_RU.UTF-8): Онлайн-видеоплеер AniLibria для настольных платформ
@@ -20,6 +20,7 @@ Requires: libqt5-svg
 Source: %name-%version.tar
 
 Patch: %name-1.1.9-alt-config.patch
+Patch1: %name-1.2.1-alt-window_alignment.patch
 
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-multimedia-devel
@@ -64,6 +65,9 @@ popd
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Sat Nov 05 2022 Evgeny Chuck <koi@altlinux.org> 1.2.1-alt2
+- Fix window right alignment (Closes: 44087)
+
 * Fri Nov 04 2022 Evgeny Chuck <koi@altlinux.org> 1.2.1-alt1
 - new version (1.2.1) with rpmgs scrip
 - Remove unused toggle from settings menu (Closes: 44086)
