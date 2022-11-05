@@ -6,7 +6,7 @@
 
 Name:		rr
 Version:	5.6.0
-Release:	alt1
+Release:	alt2
 Summary:	Record and Replay Framework
 Group:		Development/Debuggers
 License:	MIT and BSD and Apache-2.0
@@ -71,6 +71,9 @@ rm -rf %buildroot%_datadir/rr/src
 %_libdir/rr
 
 %changelog
+* Sat Nov 05 2022 Vitaly Chikunov <vt@altlinux.org> 5.6.0-alt2
+- Fix rebuild after kernel headers update in v6.0.
+
 * Tue Aug 16 2022 Vitaly Chikunov <vt@altlinux.org> 5.6.0-alt1
 - Update to 5.6.0-10-g336edc30 (2022-08-16).
 

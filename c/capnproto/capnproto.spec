@@ -4,17 +4,23 @@
 %set_verify_elf_method strict
 
 Name: capnproto
-Version: 0.9.1
+Version: 0.10.2
 Release: alt1
 Summary: A data interchange format and capability-based RPC system
+Group: Development/C
 License: MIT
 Url: https://capnproto.org
+Vcs: https://github.com/capnproto/capnproto
+
 Source: %name-%version.tar
 Patch2000: %name-e2k.patch
-Group: Development/C
 
-BuildRequires: cmake >= 3.1.0 rpm-macros-cmake ctest
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: ctest
 BuildRequires: gcc-c++
+BuildRequires: libssl-devel
+BuildRequires: zlib-devel
 
 %description
 Cap'n Proto is data interchange format and capability-based RPC system.
@@ -62,7 +68,7 @@ developing applications that use %name.
 # too many warnings of this type on tests
 %add_optflags -Wno-unused-variable
 %endif
-%add_optflags %(getconf LFS_CFLAGS) -pthread
+%add_optflags %(getconf LFS_CFLAGS)
 cd c++
 %autoreconf
 %configure --disable-static
@@ -87,14 +93,19 @@ subst '/TEST(AsyncIo, AncillaryMessageHandler)/,/^}/s/^/\/\//' src/kj/async-io-t
 
 %files libs
 %doc LICENSE CONTRIBUTORS README.md
-%_libdir/*.so*
+%_libdir/*-%version.so
 
 %files devel
 %_includedir/*
 %_libdir/pkgconfig/*.pc
-%_libdir/cmake/CapnProto/
+%_libdir/cmake/CapnProto
+%exclude %_libdir/*-%version.so
+%_libdir/lib*.so
 
 %changelog
+* Wed Aug 31 2022 Vitaly Chikunov <vt@altlinux.org> 0.10.2-alt1
+- Update to v0.10.2 (2022-06-29).
+
 * Fri Oct 01 2021 Vitaly Chikunov <vt@altlinux.org> 0.9.1-alt1
 - Update to v0.9.1 (2021-09-22).
 
