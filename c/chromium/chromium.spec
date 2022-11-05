@@ -1,7 +1,7 @@
 %def_enable  clang
 %def_disable shared_libraries
 %def_enable  widevine
-%def_disable ffmpeg
+%def_enable  ffmpeg
 %def_enable  google_api_keys
 
 %ifndef build_parallel_jobs
@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        106.0.5249.119
+Version:        107.0.5304.87
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -38,6 +38,7 @@ Group:          Networking/WWW
 Url:            https://www.chromium.org
 
 Source0:        chromium.tar.zst
+Source1:        chromium.watch
 
 Source30:       master_preferences
 Source31:       default_bookmarks.html
@@ -75,21 +76,42 @@ Patch011: 0011-FEDORA-bootstrap-with-python3.patch
 Patch012: 0012-sql-make-VirtualCursor-standard-layout-type.patch
 Patch013: 0013-GENTOO-Fix-instantiating-fold-expression-error.patch
 Patch014: 0014-ALT-Do-not-mix-internal-and-system-wayland.patch
-Patch015: 0015-Fix-some-style-issues-in-AutofillPopupViewPtr.patch
-Patch016: 0016-IWYU-add-cmath-for-std-isnan-and-std-isinf.patch
+Patch015: 0015-IWYU-add-cmath-for-std-isnan-and-std-isinf.patch
+Patch016: 0016-ALT-use-system-zlib.patch
+Patch017: 0017-ALT-use-system-libdrm-library.patch
+Patch018: 0018-GENTOO-Fix-gtk4-build.patch
+Patch019: 0019-DEBIAN-allow-building-against-system-libraries-even-.patch
+Patch020: 0020-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
+Patch021: 0021-DEBIAN-use-system-opus-library-instead-of-embedded.patch
+Patch022: 0022-DEBIAN-build-using-system-openjpeg.patch
+Patch023: 0023-DEBIAN-use-system-jpeg-library.patch
+Patch024: 0024-DEBIAN-use-system-libevent-library.patch
+#Patch025: 0025-SUSE-Do-not-try-to-build-a-private-copy.patch
+Patch026: 0026-ALT-Use-system-libusb-libsecret-flatbuffers.patch
 ### End Patches
 
 BuildRequires: /proc
 BuildRequires: /dev/shm
 
 BuildRequires:  bison
+BuildRequires:  brotli
 BuildRequires:  bzlib-devel
-BuildRequires:  flex
 BuildRequires:  chrpath
 BuildRequires:  elfutils
+BuildRequires:  flex
+BuildRequires:  glibc-kernheaders
+BuildRequires:  gperf
+BuildRequires:  libcups-devel
+BuildRequires:  libdouble-conversion-devel
 BuildRequires:  libstdc++-devel
 BuildRequires:  libstdc++-devel-static
-BuildRequires:  glibc-kernheaders
+BuildRequires:  ninja-build
+BuildRequires:  node
+BuildRequires:  nvidia-settings-devel
+BuildRequires:  perl-Switch
+BuildRequires:  pkg-config
+BuildRequires:  usbids
+BuildRequires:  xdg-utils
 %if_enabled clang
 BuildRequires:  clang%{llvm_version}
 BuildRequires:  clang%{llvm_version}-devel
@@ -98,11 +120,6 @@ BuildRequires:  lld%{llvm_version}-devel
 %else
 BuildRequires:  gcc%gcc_version-c++
 %endif
-BuildRequires:  ninja-build
-BuildRequires:  gperf
-BuildRequires:  libcups-devel
-BuildRequires:  perl-Switch
-BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(atk)
 BuildRequires:  pkgconfig(atk-bridge-2.0)
@@ -110,57 +127,73 @@ BuildRequires:  pkgconfig(atspi-2)
 BuildRequires:  pkgconfig(cairo) >= 1.6
 BuildRequires:  pkgconfig(dbus-1)
 BuildRequires:  pkgconfig(dbus-glib-1)
+BuildRequires:  pkgconfig(dri)
+BuildRequires:  pkgconfig(epoxy)
+BuildRequires:  pkgconfig(expat)
+BuildRequires:  pkgconfig(flac)
+BuildRequires:  pkgconfig(flatbuffers)
+BuildRequires:  pkgconfig(fontconfig)
+BuildRequires:  pkgconfig(freetype2)
+BuildRequires:  pkgconfig(gbm)
 BuildRequires:  pkgconfig(gconf-2.0)
 BuildRequires:  pkgconfig(glib-2.0)
 BuildRequires:  pkgconfig(gnome-keyring-1)
-BuildRequires:  pkgconfig(gtk+-3.0)
-%if_enabled ffmpeg
-BuildRequires:  pkgconfig(opus)
-BuildRequires:  pkgconfig(libavresample)
-BuildRequires:  pkgconfig(libavfilter)
-BuildRequires:  pkgconfig(libavformat)
-BuildRequires:  pkgconfig(libavcodec)
-BuildRequires:  pkgconfig(libavutil)
-%endif
-BuildRequires:  pkgconfig(libcurl)
-BuildRequires:  pkgconfig(freetype2)
-BuildRequires:  pkgconfig(fontconfig)
-BuildRequires:  pkgconfig(expat)
-BuildRequires:  pkgconfig(libffi)
-BuildRequires:  pkgconfig(libpulse)
-BuildRequires:  pkgconfig(libpci)
-BuildRequires:  pkgconfig(libva)
+BuildRequires:  pkgconfig(gtk4)
+BuildRequires:  pkgconfig(harfbuzz)
+BuildRequires:  pkgconfig(jsoncpp)
 BuildRequires:  pkgconfig(krb5-gssapi)
+BuildRequires:  pkgconfig(lcms2)
+BuildRequires:  pkgconfig(libbrotlidec)
+BuildRequires:  pkgconfig(libcurl)
+BuildRequires:  pkgconfig(libdrm)
+BuildRequires:  pkgconfig(libevent)
+BuildRequires:  pkgconfig(libffi)
+BuildRequires:  pkgconfig(libjpeg)
+BuildRequires:  pkgconfig(libopenjp2)
+BuildRequires:  pkgconfig(libpci)
+BuildRequires:  pkgconfig(libpipewire-0.3)
+BuildRequires:  pkgconfig(libpng)
+BuildRequires:  pkgconfig(libpulse)
+BuildRequires:  pkgconfig(libsecret-1)
+BuildRequires:  pkgconfig(libusb-1.0)
+BuildRequires:  pkgconfig(libva)
+BuildRequires:  pkgconfig(libwebp)
+BuildRequires:  pkgconfig(libwoff2dec)
+BuildRequires:  pkgconfig(libxslt)
+BuildRequires:  pkgconfig(minizip)
 BuildRequires:  pkgconfig(nspr)
 BuildRequires:  pkgconfig(nss)
+BuildRequires:  pkgconfig(openh264)
+BuildRequires:  pkgconfig(re2)
+BuildRequires:  pkgconfig(snappy)
+BuildRequires:  pkgconfig(wayland-client)
+BuildRequires:  pkgconfig(wayland-cursor)
+BuildRequires:  pkgconfig(wayland-egl)
+BuildRequires:  pkgconfig(wayland-scanner)
+BuildRequires:  pkgconfig(wayland-server)
 BuildRequires:  pkgconfig(x11)
+BuildRequires:  pkgconfig(xcb-proto)
 BuildRequires:  pkgconfig(xcomposite)
 BuildRequires:  pkgconfig(xcursor)
 BuildRequires:  pkgconfig(xdamage)
 BuildRequires:  pkgconfig(xext)
 BuildRequires:  pkgconfig(xfixes)
 BuildRequires:  pkgconfig(xi)
-BuildRequires:  pkgconfig(xtst)
 BuildRequires:  pkgconfig(xkbcommon)
 BuildRequires:  pkgconfig(xrandr)
 BuildRequires:  pkgconfig(xrender)
 BuildRequires:  pkgconfig(xscrnsaver)
-BuildRequires:  pkgconfig(xt)
-BuildRequires:  pkgconfig(xcb-proto)
 BuildRequires:  pkgconfig(xshmfence)
-BuildRequires:  pkgconfig(libdrm)
-BuildRequires:  pkgconfig(gbm)
-BuildRequires:  pkgconfig(wayland-client)
-BuildRequires:  pkgconfig(wayland-server)
-BuildRequires:  pkgconfig(wayland-egl)
-BuildRequires:  pkgconfig(wayland-cursor)
-BuildRequires:  pkgconfig(wayland-scanner)
-BuildRequires:  pkgconfig(dri)
-BuildRequires:  pkgconfig(libpipewire-0.3)
-BuildRequires:  pkgconfig(epoxy)
-BuildRequires:  node
-BuildRequires:  usbids
-BuildRequires:  xdg-utils
+BuildRequires:  pkgconfig(xt)
+BuildRequires:  pkgconfig(xtst)
+%if_enabled ffmpeg
+BuildRequires:  pkgconfig(libavcodec)
+BuildRequires:  pkgconfig(libavfilter)
+BuildRequires:  pkgconfig(libavformat)
+BuildRequires:  pkgconfig(libavresample)
+BuildRequires:  pkgconfig(libavutil)
+BuildRequires:  pkgconfig(opus)
+%endif
 
 BuildRequires:  python3
 BuildRequires:  python3(bs4)
@@ -168,6 +201,10 @@ BuildRequires:  python3(html5lib)
 BuildRequires:  python3(markupsafe)
 BuildRequires:  python3(ply)
 BuildRequires:  python3(simplejson)
+
+# We do not build an internal version of libvulkan but we want to have it on the
+# system.
+#Requires: libvulkan1
 
 Requires: libva
 Requires: xdg-utils
@@ -227,82 +264,101 @@ FLAGS='-Wno-unknown-warning-option'
 export CFLAGS="$FLAGS"
 export CXXFLAGS="$FLAGS"
 
-CHROMIUM_GN_DEFINES=
-gn_arg() { CHROMIUM_GN_DEFINES="$CHROMIUM_GN_DEFINES $*"; }
+gn_arg=()
+gn_arg+=( custom_toolchain=\"//build/toolchain/linux/unbundle:default\" )
+gn_arg+=( host_toolchain=\"//build/toolchain/linux/unbundle:default\" )
+gn_arg+=( is_official_build=true )
+gn_arg+=( use_custom_libcxx=false )
+gn_arg+=( use_sysroot=false )
+gn_arg+=( use_gio=true )
+gn_arg+=( use_glib=true )
+gn_arg+=( use_libpci=true )
+gn_arg+=( use_pulseaudio=true )
+gn_arg+=( use_aura=true )
+gn_arg+=( use_cups=true )
+gn_arg+=( use_kerberos=true )
+gn_arg+=( use_gold=false )
+gn_arg+=( use_vaapi=true )
+gn_arg+=( use_system_freetype=true )
+gn_arg+=( use_system_harfbuzz=true )
+gn_arg+=( use_system_lcms2=true )
+gn_arg+=( use_system_libdrm=true )
+gn_arg+=( use_system_libjpeg=true )
+gn_arg+=( use_system_libopenjpeg2=true )
+gn_arg+=( use_system_libpng=true )
+gn_arg+=( use_system_minigbm=true )
+gn_arg+=( use_system_zlib=true )
+gn_arg+=( use_system_libwayland=true )
+gn_arg+=( use_system_wayland_scanner=true )
+gn_arg+=( use_system_libwayland_server=true )
+gn_arg+=( use_system_libwayland_client=true )
+gn_arg+=( use_bundled_weston=false )
+gn_arg+=( use_xkbcommon=true )
+gn_arg+=( use_icf=false )
+gn_arg+=( use_allocator=\"none\" )
+gn_arg+=( enable_linux_installer=false )
+gn_arg+=( optimize_webui=false )
+gn_arg+=( link_pulseaudio=true )
+gn_arg+=( enable_hangout_services_extension=true )
+gn_arg+=( treat_warnings_as_errors=false )
+gn_arg+=( fatal_linker_warnings=false )
+gn_arg+=( system_libdir=\"%_lib\" )
+gn_arg+=( enable_js_type_check=false )
 
-gn_arg custom_toolchain=\"//build/toolchain/linux/unbundle:default\"
-gn_arg host_toolchain=\"//build/toolchain/linux/unbundle:default\"
-gn_arg is_official_build=true
-gn_arg use_custom_libcxx=false
-gn_arg use_sysroot=false
-gn_arg use_gio=true
-gn_arg use_glib=true
-gn_arg use_libpci=true
-gn_arg use_pulseaudio=true
-gn_arg use_aura=true
-gn_arg use_cups=true
-gn_arg use_kerberos=true
-gn_arg use_gold=false
-gn_arg use_vaapi=true
-gn_arg optimize_webui=false
-gn_arg use_system_freetype=false
-gn_arg use_system_harfbuzz=false
-gn_arg link_pulseaudio=true
-gn_arg enable_hangout_services_extension=true
-gn_arg treat_warnings_as_errors=false
-gn_arg fatal_linker_warnings=false
-gn_arg system_libdir=\"%_lib\"
-gn_arg use_allocator=\"none\"
-gn_arg use_icf=false
-gn_arg enable_js_type_check=false
-gn_arg use_xkbcommon=true
-gn_arg use_system_libdrm=true
-gn_arg use_system_minigbm=true
-gn_arg use_system_libwayland=true
-gn_arg use_system_wayland_scanner=true
-gn_arg use_bundled_weston=false
+# toolkit
+gn_arg+=( use_qt=false )
+gn_arg+=( use_gtk=true )
+gn_arg+=( gtk_version=4 )
+
+# ozone
+gn_arg+=( use_ozone=true )
+gn_arg+=( ozone_platform=\"x11\" )
+gn_arg+=( ozone_platform_x11=true )
+gn_arg+=( ozone_platform_wayland=true )
+#gn_arg+=( angle_enable_gl=true )
+#gn_arg+=( angle_enable_vulkan=true )
 
 # ffmpeg
-gn_arg ffmpeg_branding=\"Chrome\"
-gn_arg proprietary_codecs=true
+gn_arg+=( ffmpeg_branding=\"Chrome\" )
+gn_arg+=( proprietary_codecs=true )
 
 # Remove debug
-gn_arg is_debug=false
-gn_arg symbol_level=0
+gn_arg+=( is_debug=false )
+gn_arg+=( symbol_level=0 )
 
-gn_arg enable_nacl=false
-gn_arg is_component_ffmpeg=%{is_enabled shared_libraries}
-gn_arg is_component_build=%{is_enabled shared_libraries}
-gn_arg enable_widevine=%{is_enabled widevine}
+gn_arg+=( enable_nacl=false )
+gn_arg+=( is_component_ffmpeg=%{is_enabled shared_libraries} )
+gn_arg+=( is_component_build=%{is_enabled shared_libraries} )
+gn_arg+=( enable_widevine=%{is_enabled widevine} )
 
-gn_arg rtc_use_pipewire=true
-gn_arg rtc_link_pipewire=true
+gn_arg+=( rtc_use_pipewire=true )
+gn_arg+=( rtc_link_pipewire=true )
 
 %if_enabled clang
-gn_arg clang_base_path=\"%_prefix/lib/llvm-%{llvm_version}\"
-gn_arg is_clang=true
-gn_arg clang_use_chrome_plugins=false
-gn_arg use_lld=true
+gn_arg+=( clang_base_path=\"%_prefix/lib/llvm-%{llvm_version}\" )
+gn_arg+=( is_clang=true )
+gn_arg+=( clang_use_chrome_plugins=false )
+gn_arg+=( use_lld=true )
 if [ "$bits" = 64 ]; then
-    gn_arg use_thin_lto=true
+    gn_arg+=( use_thin_lto=true )
 else
-    gn_arg use_thin_lto=false
+    gn_arg+=( use_thin_lto=false )
 fi
-gn_arg is_cfi=false
-gn_arg use_cfi_icall=false
-gn_arg chrome_pgo_phase=0
+gn_arg+=( is_cfi=false )
+gn_arg+=( use_cfi_icall=false )
+gn_arg+=( chrome_pgo_phase=0 )
 %else
-gn_arg is_clang=false
+gn_arg+=( is_clang=false )
 %endif
 
 %ifnarch x86_64
-gn_arg icu_use_data_file=false
+gn_arg+=( icu_use_data_file=false )
 %endif
 
 %ifnarch x86_64 aarch64
-gn_arg enable_vulkan=false
+gn_arg+=( enable_vulkan=false )
 %else
-gn_arg enable_vulkan=true
+gn_arg+=( enable_vulkan=true )
 %endif
 
 %if_enabled google_api_keys
@@ -317,26 +373,17 @@ gn_arg enable_vulkan=true
 ### and "google_default_client_secret" to comply with their changes.
 ###
 ### We can still use the api key though. For now.
-gn_arg google_api_key=\"%api_key\"
+gn_arg+=( google_api_key=\"%api_key\" )
 
-#gn_arg google_default_client_id=\"%default_client_id\"
-#gn_arg google_default_client_secret=\"%default_client_secret\"
+#gn_arg+=( google_default_client_id=\"%default_client_id\" )
+#gn_arg+=( google_default_client_secret=\"%default_client_secret\" )
 %endif
 
-unbundle=
-unbundle_lib() { unbundle="$unbundle $*"; }
+# Remove bundled libraries for which we will use the system copies.
+.rpm/scripts/unbundle
 
-unbundle_lib fontconfig
-unbundle_lib freetype
-%if_enabled ffmpeg
-unbundle_lib ffmpeg opus
-%endif
-
-[ -z "$unbundle" ] ||
-	build/linux/unbundle/replace_gn_files.py --system-libraries $unbundle
-
-tools/gn/bootstrap/bootstrap.py --gn-gen-args="$CHROMIUM_GN_DEFINES" --build-path=%target
-%target/gn --script-executable=%__python3 gen --args="$CHROMIUM_GN_DEFINES" %target
+tools/gn/bootstrap/bootstrap.py --gn-gen-args="${gn_arg[*]}" --build-path=%target
+%target/gn --script-executable=%__python3 gen --args="${gn_arg[*]}" %target
 
 n=%build_parallel_jobs
 [ "$n" -lt 20 ] || n=20
@@ -464,6 +511,21 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Nov 01 2022 Alexey Gladkov <legion@altlinux.ru> 107.0.5304.87-alt1
+- New version (107.0.5304.87).
+- Security fixes:
+  - CVE-2022-3723: Type Confusion in V8.
+  - CVE-2022-3652: Type Confusion in V8.
+  - CVE-2022-3653: Heap buffer overflow in Vulkan.
+  - CVE-2022-3654: Use after free in Layout.
+  - CVE-2022-3655: Heap buffer overflow in Media Galleries.
+  - CVE-2022-3656: Insufficient data validation in File System.
+  - CVE-2022-3657: Use after free in Extensions.
+  - CVE-2022-3658: Use after free in Feedback service on Chrome OS.
+  - CVE-2022-3659: Use after free in Accessibility.
+  - CVE-2022-3660: Inappropriate implementation in Full screen mode.
+  - CVE-2022-3661: Insufficient data validation in Extensions.
+
 * Thu Oct 13 2022 Alexey Gladkov <legion@altlinux.ru> 106.0.5249.119-alt1
 - New version (106.0.5249.119).
 - Security fixes:
