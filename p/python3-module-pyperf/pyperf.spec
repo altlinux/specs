@@ -1,7 +1,7 @@
 %define oname pyperf
 
 Name: python3-module-%oname
-Version: 2.4.1
+Version: 2.5.0
 Release: alt1
 
 Summary: Python module to run and analyze benchmarks
@@ -40,6 +40,9 @@ rm -rfv %buildroot%python3_sitelibdir/pyperf/tests/
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sat Nov 05 2022 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
+- Automatically updated to 2.5.0.
+
 * Sun Aug 07 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.1-alt1
 - Automatically updated to 2.4.1.
 
