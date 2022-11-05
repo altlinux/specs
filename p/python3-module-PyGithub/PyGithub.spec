@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.56
+Version: 1.57
 Release: alt1
 
 Summary: Typed interactions with the GitHub API v3
@@ -54,6 +54,9 @@ and organizations in your Python applications.
 %doc *.md
 
 %changelog
+* Sat Nov 05 2022 Grigory Ustinov <grenka@altlinux.org> 1.57-alt1
+- Automatically updated to 1.57.
+
 * Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 1.56-alt1
 - Automatically updated to 1.56.
 - Build with check.
