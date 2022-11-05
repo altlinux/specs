@@ -28,13 +28,13 @@
 
 Name: LibreOffice-still
 %define hversion 7.3
-%define urelease 6.2
+%define urelease 7.2
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt1
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -714,6 +714,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Sat Nov 05 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.7.2-alt1
+- New version.
+
 * Fri Oct 14 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.6.2-alt2
 - Security fixes in 7.3.6.2:
   + CVE-2022-3140 Macro URL arbitrary script execution
