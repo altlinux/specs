@@ -1,7 +1,7 @@
 %define oname libressl
-%define libcrypto_sover 49
-%define libssl_sover 52
-%define libtls_sover 25
+%define libcrypto_sover 50
+%define libssl_sover 53
+%define libtls_sover 26
 
 # to avoid colission with OpenSSL pkgconfig provides
 %filter_from_provides /^pkgconfig(libcrypto)/d
@@ -11,7 +11,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 3.5.3
+Version: 3.6.1
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -101,6 +101,7 @@ LibreSSL libssl shared library
 %package -n libtls%libtls_sover
 Summary: TLS library from LibreSSL
 Group: Security/Networking
+Requires: %_sysconfdir/%oname
 
 %description -n libtls%libtls_sover
 %common_descr
@@ -280,6 +281,11 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Sat Nov 05 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.6.1-alt1
+- Updated to 3.6.1.
+- libtls26: requires /etc/libressl.
+- Set watchfile to monitor 3.6 branch.
+
 * Fri May 20 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.5.3-alt1
 - Updated to 3.5.3.
 
