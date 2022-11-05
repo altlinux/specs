@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method rpath=relaxed
 
 Name: zig
-Version: 0.9.1
+Version: 0.10.0
 Release: alt1
 Summary: General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
 # TODO: Zig lib is bundled with a lot of third party with other licenses.
@@ -12,25 +13,30 @@ Group: Development/C
 Url: https://ziglang.org/
 Vcs: https://github.com/ziglang/zig/
 
-# https://ziglang.org/download/0.8.0/release-notes.html#Support-Table
-#  armh: allocation failed
-#  i586: allocation failed
-#  ppc64le: error: example crashed
-ExcludeArch: %ix86 armh ppc64le
+# https://ziglang.org/download/0.10.0/release-notes.html#Support-Table
+# aarch64: ld.lld: error: undefined symbol: __aarch64_ldadd4_acq_rel
+#    armh: allocation failed
+#    i586: allocation failed
+# ppc64le: OK 1:02:43
+#  x86-64: OK   20:32
+ExcludeArch: %ix86 armh ppc64le aarch64
 
 Source: %name-%version.tar
 
-%define minimal_llvm_ver 13
+%define llvm_ver 15
 BuildRequires(pre): rpm-macros-cmake
 # /proc is required or zig will output FileNotFound
 BuildRequires: /proc
-BuildRequires: clang-devel >= %minimal_llvm_ver
+BuildRequires: chrpath
+BuildRequires: clang%llvm_ver.0-devel
 BuildRequires: cmake
-BuildRequires: gcc
 BuildRequires: gcc-c++
-BuildRequires: lld-devel >= %minimal_llvm_ver
-BuildRequires: llvm-devel >= %minimal_llvm_ver
-BuildRequires: llvm-devel-static >= %minimal_llvm_ver
+BuildRequires: libstdc++-devel
+BuildRequires: libtinfo-devel
+BuildRequires: libxml2-devel
+BuildRequires: lld%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: zlib-devel
 
 %description
 %summary.
@@ -40,17 +46,18 @@ BuildRequires: llvm-devel-static >= %minimal_llvm_ver
 
 %build
 %define optflags_lto %nil
+export CC=clang-%llvm_ver CXX=clang++-%llvm_ver LDFLAGS="-fuse-ld=lld $LDFLAGS"
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	-DLLD_INCLUDE_DIRS=$(llvm-config --includedir) \
-	-DCLANG_LIBRARIES=$(llvm-config --libdir)/libclang-cpp.so \
-	-DLLD_LIBDIRS=$(llvm-config --libdir) \
+	-DZIG_USE_LLVM_CONFIG=ON \
 	-DZIG_PREFER_CLANG_CPP_DYLIB=true \
 	-DZIG_VERSION="%version"
 %cmake_build
 
 %install
+export ZIG_VERBOSE_LINK=y ZIG_VERBOSE_CC=y
 %cmake_install
+chrpath -d %buildroot%_bindir/zig
 
 %files
 %doc LICENSE README.md
@@ -58,6 +65,9 @@ BuildRequires: llvm-devel-static >= %minimal_llvm_ver
 %_prefix/lib/zig
 
 %changelog
+* Wed Nov 02 2022 Vitaly Chikunov <vt@altlinux.org> 0.10.0-alt1
+- Update to 0.10.0 (2022-10-31).
+
 * Sat Apr 16 2022 Vitaly Chikunov <vt@altlinux.org> 0.9.1-alt1
 - Updated to 0.9.1 (2022-02-14).
 
