@@ -1,5 +1,5 @@
 Name:     qtxdg-tools
-Version:  3.9.1
+Version:  3.10.0
 Release:  alt1
 
 Summary:  libqtxdg user tools
@@ -37,5 +37,8 @@ Obsoletes: qtxdg-mat <= %version
 %doc *.md
 
 %changelog
+* Sat Nov 05 2022 Anton Midyukov <antohami@altlinux.org> 3.10.0-alt1
+- new version 3.10.0
+
 * Mon Jun 20 2022 Anton Midyukov <antohami@altlinux.org> 3.9.1-alt1
 - Initial build for Sisyphus
