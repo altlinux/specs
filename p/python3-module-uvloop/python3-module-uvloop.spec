@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.16.0
+Version: 0.17.0
 Release: alt1
 
 Summary: Ultra fast asyncio event loop
@@ -70,6 +70,9 @@ export PYTHONPATH="%buildroot%python3_sitelibdir"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Nov 06 2022 Anton Zhukharev <ancieg@altlinux.org> 0.17.0-alt1
+- update to 0.17.0
+
 * Thu Aug 11 2022 Anton Zhukharev <ancieg@altlinux.org> 0.16.0-alt1
 - initial build for Sisyphus
 
