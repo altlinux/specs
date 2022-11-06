@@ -1,5 +1,5 @@
 Name: make
-Version: 4.3.0
+Version: 4.4.0
 Release: alt1
 Epoch: 2
 
@@ -15,10 +15,6 @@ Patch02: 0002-ALT-job_slots.patch
 Patch03: 0003-REDHAT-newlines.patch
 Patch04: 0004-REDHAT-weird-shell.patch
 Patch05: 0005-ALT-disable-test.patch
-Patch06: 0006-Obey-order-of-multiple-print-no-print-directory-opti.patch
-Patch07: 0007-Only-set-APPEND-mode-for-regular-files.patch
-Patch08: 0008-Change-directories-before-checking-jobserver-auth.patch
-Patch09: 0009-Use-the-system-default-PATH-if-PATH-is-not-set.patch
 
 BuildRequires: /proc
 BuildRequires: makeinfo
@@ -33,15 +29,7 @@ makefile.
 
 %prep
 %setup
-%patch01 -p2
-%patch02 -p2
-%patch03 -p2
-%patch04 -p2
-%patch05 -p2
-%patch06 -p2
-%patch07 -p2
-%patch08 -p2
-%patch09 -p2
+%autopatch -p2
 
 find -type f -name \*.orig -delete -print
 rm doc/*.info*
@@ -70,6 +58,9 @@ ln -sf make %buildroot%_bindir/gmake
 %doc AUTHORS NEWS README
 
 %changelog
+* Sat Nov 05 2022 Alexey Gladkov <legion@altlinux.ru> 2:4.4.0-alt1
+- New version (4.4).
+
 * Wed Apr 01 2020 Alexey Gladkov <legion@altlinux.ru> 2:4.3.0-alt1
 - New version (4.3).
 
