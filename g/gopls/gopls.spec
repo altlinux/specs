@@ -3,8 +3,8 @@
 %global import_path golang.org/x/tools/gopls
 
 Name: gopls
-Version: 0.9.5
-Release: alt3
+Version: 0.10.1
+Release: alt1
 
 Summary: The Go language server
 License: BSD-3-Clause
@@ -48,6 +48,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Sun Nov 06 2022 Anton Zhukharev <ancieg@altlinux.org> 0.10.1-alt1
+- update to 0.10.1
+
 * Fri Sep 16 2022 Anton Zhukharev <ancieg@altlinux.org> 0.9.5-alt3
 - add golang dependency
 
