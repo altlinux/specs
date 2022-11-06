@@ -1,5 +1,5 @@
 Name: rlwrap
-Version: 0.46
+Version: 0.46.1
 Release: alt1
 Epoch: 1
 
@@ -42,6 +42,9 @@ install -D -m644 %SOURCE1 %buildroot/%_datadir/%name/completions/sbcl
 %_datadir/%name
 
 %changelog
+* Sun Nov 06 2022 Ilya Mashkin <oddity@altlinux.ru> 1:0.46.1-alt1
+- 0.46.1
+
 * Sat Oct 22 2022 Ilya Mashkin <oddity@altlinux.ru> 1:0.46-alt1
 - 0.46
 
