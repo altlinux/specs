@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt6
+Release: alt7
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -478,6 +478,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Mon Nov 07 2022 Andrey Cherepanov <cas@altlinux.org> 10.1-alt7
+- indexhtml: rewrite indexhtml pages.
+
 * Fri Sep 30 2022 Andrey Cherepanov <cas@altlinux.org> 10.1-alt6
 - Added wallpapers from ALT Education 9.0.
 
