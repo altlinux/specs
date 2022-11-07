@@ -8,8 +8,8 @@
 %def_disable systemtap
 
 Name: sssd
-Version: 2.8.0
-Release: alt2
+Version: 2.8.1
+Release: alt1
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -879,6 +879,14 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Mon Nov 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.8.1-alt1
+- Update to latest 2.8 major release.
+- Important fixes:
+  + A regression when running sss_cache when no SSSD domain is enabled would
+    produce a syslog critical message was fixed.
+  + Several fixes in D-Bus infopipe functions:
+    ListByName(), Groups.ListByName() and Groups.ListByDomainAndName().
+
 * Sat Oct 29 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.8.0-alt2
 - Redesign become_user patch to should assign supplementary groups for server
   part of code only (due race condition in krb5_child, for example).
@@ -893,7 +901,7 @@ chown root:root %_sysconfdir/sssd/sssd.conf
     Indexes are useful for the new D-Bus ListByAttr() function.
   + sssctl is now able to read and set each component's debug level
     independently.
-- Important fixes
+- Important fixes:
   + domains option in [sssd] section can now be completely omitted if domains
     are enabled via domains/enabled option.
 - New options:
