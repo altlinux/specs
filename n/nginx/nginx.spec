@@ -5,7 +5,7 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.22.1
-Release: alt1
+Release: alt2
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel libkrb5-devel
@@ -352,6 +352,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Thu Nov 03 2022 Arseny Maslennikov <arseny@altlinux.org> 1.22.1-alt2
+- NMU: Merge mime.types with upstream. (Closes: 38603)
+
 * Fri Oct 21 2022 Anton Farygin <rider@altlinux.ru> 1.22.1-alt1
 - 1.22.1 (Fixes: CVE-2022-41741, CVE-2022-41742)
 
