@@ -1,5 +1,5 @@
 Name: python3-module-mutagen
-Version: 1.45.1
+Version: 1.46.0
 Release: alt1
 
 Summary: Python module to handle audio metadata
@@ -10,7 +10,10 @@ Url: https://github.com/quodlibet/mutagen.git
 Source0: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3
+BuildRequires: python3(poetry-core)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(pytest) python3(hypothesis)
 
 %description
@@ -32,27 +35,30 @@ Requires: python3-module-mutagen = %version-%release
 
 %prep
 %setup
-rm tests/quality/test_*.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 LC_ALL=en_US.UTF-8 \
 python3 setup.py test
 
 %files
-%doc COPYING NEWS README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/mutagen
+%python3_sitelibdir/mutagen-%version.dist-info
 
 %files -n mutagen
+%doc COPYING NEWS README.rst
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Mon Nov 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.46.0-alt1
+- 1.46.0 released
+
 * Tue Sep 22 2020 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.45.1-alt1
 - 1.45.1 released
 
