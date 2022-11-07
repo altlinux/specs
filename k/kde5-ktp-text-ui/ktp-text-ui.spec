@@ -6,7 +6,7 @@
 %endif
 
 Name: kde5-%rname
-Version: 22.08.2
+Version: 22.08.3
 Release: alt1
 %K5init altplace
 
@@ -124,6 +124,9 @@ KF5 library
 %_K5lib/libktpimagesharer.so.*
 
 %changelog
+* Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
+- new version
+
 * Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
 - new version
 
