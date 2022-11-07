@@ -2,7 +2,7 @@
 %define _localstatedir /var
 
 Name: sanlock
-Version: 3.8.4
+Version: 3.8.5
 Release: alt1
 Summary: A shared storage lock manager
 
@@ -16,7 +16,8 @@ Patch1: %name-%version-%release.patch
 Requires: lib%name = %version-%release
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libblkid-devel libuuid-devel libaio-devel python3-devel
+BuildRequires: libblkid-devel libuuid-devel libaio-devel
+BuildRequires: python3-devel python3(setuptools)
 
 %description
 The sanlock daemon manages leases for applications running on a cluster
@@ -202,6 +203,9 @@ install -Dd -m 0775 %buildroot/run/fence_sanlockd
 %_man8dir/sanlk-reset*
 
 %changelog
+* Thu Nov 03 2022 Alexey Shabalin <shaba@altlinux.org> 3.8.5-alt1
+- 3.8.5
+
 * Mon Aug 23 2021 Alexey Shabalin <shaba@altlinux.org> 3.8.4-alt1
 - 3.8.4
 
