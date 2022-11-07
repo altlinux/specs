@@ -2,17 +2,25 @@
 %def_enable python
 
 Name: sudo
-Version: 1.9.11p3
-Release: alt2
+Version: 1.9.12p1
+Release: alt1
 Epoch: 1
 
 Summary: Allows command execution as another user
 License: ISC
 Group: System/Base
-Url: http://www.courtesan.com/sudo/
+Url: https://www.sudo.ws
 
 # ftp://ftp.courtesan.com/pub/sudo/sudo-%version.tar.gz
 Source: sudo-%version.tar
+
+Source1: pam.conf
+Source2: sudo.control
+Source3: sudoers.control
+Source4: sudoreplay.control
+Source5: sudowheel.control
+Source6: sudopw.config
+Source7: sudopw.control
 
 Patch: sudo-%version-alt.patch
 
@@ -112,13 +120,15 @@ configure_options='
 
 %install
 %makeinstall_std INSTALL_OWNER=
-install -pD -m600 examples/pam.conf %buildroot%_sysconfdir/pam.d/sudo
+install -pD -m600 %SOURCE1 %buildroot%_sysconfdir/pam.d/sudo
 mkdir -p %buildroot%_sysconfdir/sudoers.d
+install -pD -m644 %SOURCE6 %buildroot%_sysconfdir/sudoers.d/99-sudopw
 chmod u+rwx %buildroot%prefix/*bin/*
-install -pD -m755 sudo.control %buildroot/etc/control.d/facilities/sudo
-install -pD -m755 sudoers.control %buildroot/etc/control.d/facilities/sudoers
-install -pD -m755 sudoreplay.control %buildroot/etc/control.d/facilities/sudoreplay
-install -pD -m755 sudowheel.control %buildroot/etc/control.d/facilities/sudowheel
+install -pD -m755 %SOURCE2 %buildroot%_controldir/sudo
+install -pD -m755 %SOURCE3 %buildroot%_controldir/sudoers
+install -pD -m755 %SOURCE4 %buildroot%_controldir/sudoreplay
+install -pD -m755 %SOURCE5 %buildroot%_controldir/sudowheel
+install -pD -m755 %SOURCE7 %buildroot%_controldir/sudopw
 bzip2 -9 %buildroot%_datadir/doc/%name-%version/ChangeLog
 
 %find_lang sudo
@@ -139,22 +149,30 @@ fi
 if [ -f "%_controldir/sudowheel" ]; then
     %pre_control sudowheel
 fi
+if [ -f "%_controldir/sudopw" ]; then
+    %pre_control sudopw
+fi
 
 %post
+if [ -f %_sysconfdir/sudoers.d/99-sudopw.rpmnew ]; then
+    mv -f %_sysconfdir/sudoers.d/99-sudopw.rpmnew %_sysconfdir/sudoers.d_99-sudopw.rpmnew
+    echo "warning: created config %_sysconfdir/sudoers.d/99-sudopw.rpmnew"
+    echo "         has been moved as %_sysconfdir/sudoers.d_99-sudopw.rpmnew"
+fi
 %post_control -s wheelonly sudo
 %post_control -s strict sudoers
 if [ ! -f "%statusdir/sudoreplay" ]; then
-    if [ "$1" -gt 1 ]; then
-        %pre_control sudoreplay
-    fi
+    %pre_control sudoreplay
 fi
 %post_control -s wheelonly sudoreplay
 if [ ! -f "%statusdir/sudowheel" ]; then
-    if [ "$1" -gt 1 ]; then
-        %pre_control sudowheel
-    fi
+    %pre_control sudowheel
 fi
 %post_control -s disabled sudowheel
+if [ ! -f "%statusdir/sudopw" ]; then
+    %pre_control sudopw
+fi
+%post_control -s default sudopw
 
 %triggerpostun -- %name < 1:1.8.0
 cp -a %_sysconfdir/sudoers %_sysconfdir/sudoers.rpmsave
@@ -189,6 +207,7 @@ fi
 
 %files -f sudo_all.lang
 %config %_controldir/sudo*
+%config(noreplace) %_sysconfdir/sudoers.d/99-sudopw
 %attr(600,root,root) %config(noreplace) %_sysconfdir/sudo.conf
 %attr(400,root,root) %config(noreplace) %_sysconfdir/sudoers
 %attr(600,root,root) %config(noreplace) %_sysconfdir/pam.d/sudo
@@ -237,6 +256,46 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Mon Nov 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.12p1-alt1
+- Update to latest stable bugfix and security release (fixes: CVE-2022-43995).
+- Major improvements from latest Sisyphus release:
+ + For ptrace-based intercept mode, sudo will now attempt to verify that the
+   command path name, arguments and environment have not changed from the time
+   when they were authorized by the security policy. The new intercept_verify
+   sudoers setting can be used to control this behavior.
+ + Sudo now supports passing the execve(2) system call the NULL pointer for the
+   argv and/or envp arguments when in intercept mode. Linux treats a NULL pointer
+   like an empty array.
+ + Neovim has been added to the list of visudo editors that support passing the
+   line number on the command line.
+ + Added a new -N (no-update) command line option to sudo which can be used to
+   prevent sudo from updating the user's cached credentials.
+ + PAM approval modules are no longer invoked when running sub-commands in
+   intercept mode unless the intercept_authenticate option is set. There is a
+   substantial performance penalty for calling into PAM for each command run.
+   PAM approval modules are still called for the initial command.
+ + Intercept mode on Linux now uses process_vm_readv(2) and process_vm_writev(2)
+   if available.
+ + The XDG_CURRENT_DESKTOP environment variable is now preserved by default.
+   This makes it possible for graphical applications to choose the correct theme
+   when run via sudo.
+ + The cvtsudoers manual now documents the JSON and CSV output formats.
+ + The new log_stdin, log_stdout, log_stderr, log_ttyin, and log_ttyout sudoers
+   settings can be used to support more fine-grained I/O logging. The sudo
+   front-end no longer allocates a pseudo-terminal when running a command if the
+   I/O logging plugin requests logging of stdin, stdout, or stderr but not
+   terminal input/output.
+ + Added the -I option to visudo which only edits the main sudoers file.
+   Include files are not edited unless a syntax error is found.
+
+* Mon Nov 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.11p3-alt4
+- Rebuild with upstream sources from https://github.com/sudo-project/sudo
+  (manual import of archives no more needed).
+
+* Mon Oct 24 2022 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.11p3-alt3
+- Add sudopw control with rule Defaults for user, root, target or runas type
+  of user account password credentials that are verified during authentication.
+
 * Fri Oct 21 2022 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.11p3-alt2
 - Fix sudowheel control to be more flexible and supported the default 'ALL:ALL'
   Runas_Spec with group alias specified.
