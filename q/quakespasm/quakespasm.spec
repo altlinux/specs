@@ -1,5 +1,5 @@
 Name: quakespasm
-Version: 0.95.0
+Version: 0.95.1
 Release: alt1
 
 Summary: Quake engine
@@ -52,6 +52,9 @@ install -pm644 %SOURCE1 %buildroot%docdir/
 %docdir/README.maintainer
 
 %changelog
+* Sun Nov 06 2022 Andrey Bergman <vkni@altlinux.org> 0.95.1-alt1
+- Version update.
+
 * Sun Oct 02 2022 Andrey Bergman <vkni@altlinux.org> 0.95.0-alt1
 - Version update.
 
