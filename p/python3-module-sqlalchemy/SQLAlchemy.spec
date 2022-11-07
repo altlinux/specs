@@ -1,16 +1,12 @@
-%define oname SQLAlchemy
-
 Name: python3-module-sqlalchemy
-Version: 1.4.40
+Version: 1.4.43
 Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
-
 License: MIT
 Group: Development/Python3
 Url: http://www.sqlalchemy.org/
 
-# Source-url: %__pypi_url %oname
 Source: SQLAlchemy-%version.tar
 
 Provides: python3-module-SQLAlchemy = %EVR
@@ -68,6 +64,9 @@ This package contains tests for SQLAlchemy.
 %python3_sitelibdir/*/testing
 
 %changelog
+* Mon Nov  7 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.43-alt1
+- 1.4.43 released
+
 * Wed Sep 14 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.40-alt1
 - 1.4.40 released
 
