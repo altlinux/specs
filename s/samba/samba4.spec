@@ -76,7 +76,7 @@
 
 Name:    samba
 Version: 4.16.6
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1978,6 +1978,11 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Nov 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.6-alt2
+- Don't treat a missing include file as an error in handle_include().
+  This behavior differs between the source3 and source4 parts of Samba.
+  So, it should be the same and just not an error (Closes #44214).
+
 * Thu Oct 27 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.6-alt1
 - Update to maintenance release of Samba 4.16 (Samba#15134)
 - Security fixes:
