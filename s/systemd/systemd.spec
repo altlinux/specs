@@ -93,7 +93,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.5
+Version: %ver_major.7
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -197,7 +197,7 @@ BuildRequires: pkgconfig(fdisk) >= 2.32
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.4.5 libgpg-error-devel >= 1.12}
 %{?_enable_openssl:BuildRequires: pkgconfig(openssl) >= 1.1.0}
 %{?_enable_p11kit:BuildRequires: pkgconfig(p11-kit-1) >= 0.23.3}
-%{?_enable_qrencode:BuildRequires: libqrencode-devel >= 4}
+%{?_enable_qrencode:BuildRequires: libqrencode-devel >= 3}
 %{?_enable_microhttpd:BuildRequires: pkgconfig(libmicrohttpd) >= 0.9.33}
 %{?_enable_gnutls:BuildRequires: pkgconfig(gnutls) >= 3.1.4}
 %{?_enable_libcurl:BuildRequires: pkgconfig(libcurl) >= 7.32.0}
@@ -208,7 +208,7 @@ BuildRequires: pkgconfig(fdisk) >= 2.32
 %{?_enable_gnu_efi:BuildRequires: gnu-efi}
 %{?_enable_pstore:BuildRequires: libacl-devel libdw-devel liblzma-devel liblz4-devel}
 %{?_enable_pwquality:BuildRequires: pkgconfig(pwquality)}
-%{?_enable_bpf_framework:BuildRequires: pkgconfig(libbpf) >= 0.2 /usr/bin/clang /usr/bin/llvm-strip bpftool}
+%{?_enable_bpf_framework:BuildRequires: pkgconfig(libbpf) >= 0.1.0 /usr/bin/clang /usr/bin/llvm-strip bpftool}
 # for make check
 #BuildRequires: /proc
 #BuildRequires: lz4
@@ -2310,6 +2310,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Nov 03 2022 Alexey Shabalin <shaba@altlinux.org> 1:251.7-alt1
+- 251.7
+
 * Thu Oct 06 2022 Alexey Shabalin <shaba@altlinux.org> 1:251.5-alt1
 - 251.5
 
