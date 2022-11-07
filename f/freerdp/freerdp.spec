@@ -8,7 +8,7 @@
 
 Name: freerdp
 Version: 2.8.1
-Release: alt1
+Release: alt1.1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -74,7 +74,9 @@ BuildRequires: libuuid-devel
 BuildRequires: libudev-devel
 BuildRequires: libusb-devel
 BuildRequires: libdbus-glib-devel
-%ifnarch %e2k
+%ifarch %e2k
+BuildRequires: chrpath
+%else
 BuildRequires: patchelf
 %endif
 
@@ -209,7 +211,12 @@ the RDP protocol.
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_SHARED_LIBS=ON \
     -DCMAKE_SKIP_RPATH=FALSE \
+%ifarch %e2k
+    -DCMAKE_SKIP_INSTALL_RPATH=FALSE \
+    -DCMAKE_INSTALL_RPATH:PATH='$ORIGIN' \
+%else
     -DCMAKE_SKIP_INSTALL_RPATH=TRUE \
+%endif
     -DWITH_ALSA=ON \
     -DWITH_CAIRO=ON \
     -DWITH_CUPS=ON \
@@ -286,18 +293,18 @@ rm -f %buildroot%_libdir/*.a \
 # workaround, add compat
 ln -s freerdp2.pc %buildroot%_pkgconfigdir/freerdp.pc
 
-%ifnarch %e2k
-# Set rpath to %_libdir/freerdp2 for freerdp-proxy executable
-patchelf --set-rpath %_libdir/freerdp2 %buildroot%_bindir/freerdp-proxy
+%ifarch %e2k
+# patchelf damages e2k binaries
+setrpath="chrpath -r"
 %else
-# Set rpath to %_libdir/freerdp2 for freerdp-proxy executable (without using patchelf)
-pushd %_cmake__builddir/server/proxy
-%__cc %optflags -rdynamic CMakeFiles/freerdp-proxy.dir/*.c.o -o %buildroot%_bindir/freerdp-proxy -Wl,-rpath,%_libdir/freerdp2 ../common/libfreerdp-server2.so.%version ../../client/common/libfreerdp-client2.so.%version ../../channels/rdpgfx/client/librdpgfx-client.so ../../libfreerdp/libfreerdp2.so.%version ../../winpr/libwinpr/libwinpr2.so.%version 
-popd
+setrpath="patchelf --set-rpath"
 %endif
 
+# Set rpath to %_libdir/freerdp2 for freerdp-proxy executable
+$setrpath %_libdir/freerdp2 %buildroot%_bindir/freerdp-proxy
+
 # Set rpath to library
-patchelf --set-rpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
+$setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 
 %files
 
@@ -363,6 +370,9 @@ patchelf --set-rpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libu
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Mon Nov 07 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.8.1-alt1.1
+- E2K: use chrpath instead of patchelf
+
 * Fri Oct 14 2022 Andrey Cherepanov <cas@altlinux.org> 2.8.1-alt1
 - New version.
 - Security fixes for CVE-2022-39282, CVE-2022-39283.
