@@ -1,36 +1,41 @@
 Name: python3-module-yarl
-Version: 1.7.2
+Version: 1.8.1
 Release: alt1
 
-Summary: Yet another URL library http://yarl.readthedocs.io
+Summary: Yet another URL library
 License: Apache-2.0
-Group: Development/Python3
+Group: Development/Python
 Url: https://github.com/aio-libs/yarl
 
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildRequires: python3-module-Cython
+BuildRequires: rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(Cython)
 
 %description
 The module provides handy URL class for url parsing and changing.
+See http://yarl.readthedocs.io for more
 
 %prep
 %setup
 
 %build
 python3 -mcython -3 -o yarl/_quoting_c.c yarl/_quoting_c.pyx
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc *.rst LICENSE
-%python3_sitelibdir/*
+%python3_sitelibdir/yarl
+%python3_sitelibdir/yarl-%version.dist-info
 
 %changelog
+* Mon Nov 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.1-alt1
+- 1.8.1 released
+
 * Tue Feb 08 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.2-alt1
 - 1.7.2 released
 
