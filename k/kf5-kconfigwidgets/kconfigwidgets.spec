@@ -7,7 +7,7 @@
 
 Name: kf5-%rname
 Version: 5.99.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -17,6 +17,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-klanguagebutton-dups.patch
 
 # Automatically added by buildreq on Thu Feb 12 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libcloog-isl4 libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel python-base ruby ruby-stdlibs xml-common xml-utils
@@ -98,9 +99,10 @@ Sip files for python3-module-%rname
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
-%K5cmake
+%K5build
 
 %install
 %K5install
@@ -144,6 +146,9 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %endif
 
 %changelog
+* Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.99.0-alt2
+- remove KLanguageButton langs list duplicates
+
 * Tue Oct 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.99.0-alt1
 - new version
 
