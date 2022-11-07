@@ -2,7 +2,7 @@
 
 Name:          gem-apipie-rails
 Version:       0.8.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails API documentation tool
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -13,6 +13,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%if_with check
 BuildRequires: gem(actionpack) >= 5.0
 BuildRequires: gem(activesupport) >= 5.0
 BuildRequires: gem(rspec-rails) >= 3.0 gem(rspec-rails) < 6
@@ -24,6 +25,7 @@ BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rdoc) >= 0
 BuildRequires: gem(simplecov) >= 0
 BuildRequires: gem(json-schema) >= 2.8 gem(json-schema) < 3
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -54,7 +56,7 @@ data in JSON.
 
 %package       -n gem-apipie-rails-doc
 Version:       0.8.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails API documentation tool documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета apipie-rails
 Group:         Development/Documentation
@@ -86,7 +88,7 @@ data in JSON.
 
 %package       -n gem-apipie-rails-devel
 Version:       0.8.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails API documentation tool development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета apipie-rails
 Group:         Development/Ruby
@@ -151,6 +153,9 @@ data in JSON.
 
 
 %changelog
+* Mon Oct 10 2022 Pavel Skrylev <majioa@altlinux.org> 0.8.2-alt1.1
+- ! closes gem build requires into check enable condition
+
 * Thu Sep 29 2022 Pavel Skrylev <majioa@altlinux.org> 0.8.2-alt1
 - ^ 0.5.19 -> 0.8.2
 

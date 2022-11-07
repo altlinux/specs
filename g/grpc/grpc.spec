@@ -3,7 +3,7 @@
 
 Name: grpc
 Version: 1.38.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Modern, open source, high-performance remote procedure call (RPC) framework
 
@@ -28,12 +28,14 @@ BuildRequires: libre2-devel
 #BuildRequires: gflags-devel
 #BuildRequires: gtest-devel
 #BuildRequires: gperftools-devel
+%if_with check
 BuildRequires: gem(google-protobuf) >= 3.15 gem(google-protobuf) < 4
 BuildRequires: gem(googleapis-common-protos-types) >= 1.0 gem(googleapis-common-protos-types) < 2
 BuildRequires: gem(bundler) >= 1.9 gem(bundler) < 3
 BuildRequires: gem(simplecov) >= 0.14.1 gem(simplecov) < 1
 BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
 BuildRequires: gem(rubocop) >= 0.49.1 gem(rubocop) < 2
+%endif
 
 Patch1: grpc-0001-enforce-system-crypto-policies.patch
 Patch2: 0001-CMakeLists.txt-introduce-a-cache-variable-for-pkg-config.patch
@@ -156,7 +158,7 @@ Python3 bindings for gRPC library.
 
 %package       -n gem-grpc
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.2
 Summary:       GRPC system in Ruby
 Group:         Development/Ruby
 
@@ -170,7 +172,7 @@ protoc and the Ruby gRPC protoc plugin
 
 %package       -n gem-grpc-doc
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.2
 Summary:       GRPC system in Ruby documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета grpc
 Group:         Development/Documentation
@@ -189,7 +191,7 @@ Send RPCs from Ruby using GRPC
 
 %package       -n gem-grpc-tools
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.2
 Summary:       Development tools for Ruby gRPC
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -202,7 +204,7 @@ protoc and the Ruby gRPC protoc plugin
 
 %package       -n grpc-tools-ruby-protoc
 Version:       1.38.0
-Release:       alt1
+Release:       alt1.2
 Summary:       Development tools for Ruby gRPC executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета grpc-tools
 Group:         Other
@@ -221,9 +223,7 @@ protoc and the Ruby gRPC protoc plugin
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3
+%autopatch -p1
 
 %build
 rm -f Makefile
@@ -352,6 +352,9 @@ rm -rf %buildroot/%ruby_gemsextdir/grpc-%version/*-linux* %buildroot/%ruby_gemsl
 
 
 %changelog
+* Sat Jul 24 2021 Pavel Skrylev <majioa@altlinux.org> 1.38.0-alt1.2
+- ! closes gem build requires with check condition
+
 * Sat Jul 24 2021 Pavel Skrylev <majioa@altlinux.org> 1.38.0-alt1.1
 - + ruby packages
 
