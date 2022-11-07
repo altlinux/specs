@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.26.4
+Version: 0.26.5
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -186,6 +186,9 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_libexecdir/%name/shell-integration
 
 %changelog
+* Mon Nov 07 2022 Egor Ignatov <egori@altlinux.org> 0.26.5-alt1
+- new version 0.26.5
+
 * Tue Oct 18 2022 Egor Ignatov <egori@altlinux.org> 0.26.4-alt1
 - new version 0.26.4
 
