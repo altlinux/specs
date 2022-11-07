@@ -1,5 +1,5 @@
 Name: python3-module-wsproto
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: Python WebSocket implementation
@@ -37,6 +37,9 @@ BuildRequires: python3(h11)
 %python3_sitelibdir/wsproto-%version.dist-info
 
 %changelog
+* Mon Nov 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt1
+- 1.2.0 released
+
 * Thu Jul 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt1
 - 1.1.0 released
 
