@@ -1,5 +1,5 @@
 Name: python3-module-av
-Version: 9.2.0
+Version: 10.0.0
 Release: alt1
 
 Summary: Python bindings for ffmpeg libraries
@@ -10,7 +10,9 @@ Url: https://pypi.org/project/pyav/
 Source0: %name-%version-%release.tar
 
 BuildRequires: rpm-build-python3
-BuildRequires: python3(setuptools) python3(Cython)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(Cython)
 BuildRequires: pkgconfig(libavformat)
 BuildRequires: pkgconfig(libavcodec)
 BuildRequires: pkgconfig(libavdevice)
@@ -26,16 +28,19 @@ BuildRequires: pkgconfig(libswresample)
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/av
-%python3_sitelibdir/av-%version-*-info
+%python3_sitelibdir/av-%version.dist-info
 
 %changelog
+* Mon Nov 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 10.0.0-alt1
+- 10.0.0 released
+
 * Wed May 11 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 9.2.0-alt1
 - 9.2.0 released
 
