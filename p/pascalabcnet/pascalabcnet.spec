@@ -1,6 +1,6 @@
 Name:    pascalabcnet
-Version: 3.8.3.3197
-Release: alt1
+Version: 3.8.3.3199
+Release: alt1.git75237b4c
 
 Summary: PascalABC.NET programming language  
 License: LGPL-3.0
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 Source1: PascalABCNETLinux.desktop
 Source2: icons.tar
 Source3: Samples.tar
+Source4: PascalABCNETLinux.appdata.xml
 
 ExcludeArch: ppc64le
 
@@ -97,14 +98,22 @@ popd
 # Install Samples
 tar xf %SOURCE3 -C %buildroot%_libexecdir/%name
 
+# Install appdata.xml
+install -Dpm 0644 %SOURCE4 %buildroot%_datadir/metainfo/PascalABCNETLinux.appdata.xml
+
 %files
 %doc README.md doc/*
 %_bindir/*
 %_libexecdir/%name
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/pascalabcnet.png
+%_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Tue Nov 08 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3199-alt1.git75237b4c
+- New version.
+- Packaged appdata.xml file for appstream-data.
+
 * Fri Oct 28 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3197-alt1
 - New version (closes: 43942, 43943, 43944, 43945, 43946).
 
