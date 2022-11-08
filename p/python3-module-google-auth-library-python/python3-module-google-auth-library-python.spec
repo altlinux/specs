@@ -1,7 +1,7 @@
 %define  modulename google-auth-library-python
 
 Name:    python3-module-%modulename
-Version: 2.14.0
+Version: 2.14.1
 Release: alt1
 
 Summary: Google Auth Python Library
@@ -38,6 +38,9 @@ mechanisms to access Google APIs.
 %doc *.md
 
 %changelog
+* Tue Nov 08 2022 Andrey Cherepanov <cas@altlinux.org> 2.14.1-alt1
+- New version.
+
 * Tue Nov 01 2022 Andrey Cherepanov <cas@altlinux.org> 2.14.0-alt1
 - New version.
 
