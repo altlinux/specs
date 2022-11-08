@@ -7,7 +7,7 @@
 %def_enable lua
 
 Name: haproxy
-Version: 2.3.9
+Version: 2.6.6
 Release: alt1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
@@ -53,13 +53,13 @@ regparm_opts="USE_REGPARM=1"
 addlib_opts=ADDLIB=-latomic
 %endif
 
-%make_build CPU="generic" TARGET="linux-glibc" USE_OPENSSL=1 USE_PCRE2=1 USE_ZLIB=1 USE_SYSTEMD=1 %{?_enable_lua:USE_LUA=1} \
-	${regparm_opts:-} ${addlib_opts:-} PREFIX="%_prefix" ADDINC="$(pcre2-config --cflags)" CFLAGS="%optflags" \
-	EXTRA_OBJS="contrib/prometheus-exporter/service-prometheus.o"
+%make_build CPU="generic" TARGET="linux-glibc" USE_OPENSSL=1 USE_PCRE2=1 USE_ZLIB=1 USE_SYSTEMD=1 USE_PROMEX=1 %{?_enable_lua:USE_LUA=1} \
+	${regparm_opts:-} ${addlib_opts:-} PREFIX="%_prefix" ADDINC="$(pcre2-config --cflags)" CFLAGS="%optflags"
 
-pushd contrib/halog
-%make halog OPTIMIZE="%optflags"
-popd
+#pushd admin/halog
+#%make halog OPTIMIZE="%optflags"
+#popd
+%make admin/halog/halog OPTIMIZE="%optflags"
 
 #pushd contrib/iprange
 #%make iprange OPTIMIZE="%optflags"
@@ -76,7 +76,7 @@ install -p -D -m 0644 %SOURCE3 %buildroot%_logrotatedir/%name
 install -d -m 0755 %buildroot%haproxy_home
 install -d -m 0755 %buildroot%haproxy_datadir
 install -d -m 0755 %buildroot%_bindir
-install -p -m 0755 contrib/halog/halog %buildroot%_bindir/halog
+install -p -m 0755 admin/halog/halog %buildroot%_bindir/halog
 #install -p -m 0755 contrib/iprange/iprange %buildroot%_bindir/iprange
 cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 
@@ -93,7 +93,7 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %preun_service haproxy
 
 %files
-%doc CHANGELOG LICENSE README ROADMAP doc/architecture.txt doc/configuration.txt doc/intro.txt doc/management.txt doc/proxy-protocol.txt examples/*.cfg
+%doc CHANGELOG LICENSE README doc/architecture.txt doc/configuration.txt doc/intro.txt doc/management.txt doc/proxy-protocol.txt examples/*.cfg
 %dir %haproxy_confdir
 %config(noreplace) %haproxy_confdir/%name.cfg
 %dir %haproxy_datadir
@@ -107,6 +107,12 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Sat Nov 05 2022 Petr Usoltsev <prohorp@altlinux.org> 2.6.6-alt1
+- 2.6.6
+
+* Fri Sep 16 2022 Alexey Shabalin <shaba@altlinux.org> 2.6.5-alt1
+- 2.6.5
+
 * Tue Apr 20 2021 Alexey Shabalin <shaba@altlinux.org> 2.3.9-alt1
 - 2.3.9
 
