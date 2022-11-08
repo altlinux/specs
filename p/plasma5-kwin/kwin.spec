@@ -17,7 +17,7 @@
 
 Name: plasma5-%rname
 Version: 5.26.2
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -41,6 +41,8 @@ Patch2: alt-def-nocompositing.patch
 Patch3: alt-def-qcompositing.patch
 Patch4: alt-hwdatabase.patch
 Patch5: alt-def-xkb.patch
+# upstream
+Patch20: kdebug461032.patch
 
 # Automatically added by buildreq on Thu Mar 05 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils glibc-devel-static kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-multimedia libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-script libqt5-sql libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libxcb-devel libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxcbutil-keysyms-devel libxkbfile-devel pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-tools-devel ruby ruby-stdlibs wayland-devel xml-common xml-utils xorg-kbproto-devel xorg-xextproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
@@ -131,6 +133,8 @@ KF5 library
 #%patch3 -p1 -b .qcompositing
 %patch4 -p1 -b .hwinfo
 %patch5 -p1 -b .xkb
+#
+%patch20 -p1
 
 for f in src/kcmkwin/kwincompositing/kwincompositing.json ; do
     sed -i '/X-DocPath/d' $f
@@ -208,6 +212,9 @@ done
 
 
 %changelog
+* Tue Nov 08 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt2
+- add fix against kdebug#461032 (closes: 44246)
+
 * Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt1
 - new version
 
