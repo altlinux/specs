@@ -2,7 +2,7 @@
 %add_findreq_skiplist %_K5data/parley/plugins/*.py
 
 Name: kde5-%rname
-Version: 22.08.2
+Version: 22.08.3
 Release: alt1
 %K5init no_appdata
 
@@ -63,6 +63,9 @@ also known as flash cards.
 %_K5data/knsrcfiles/*parley*.knsrc
 
 %changelog
+* Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
+- new version
+
 * Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
 - new version
 

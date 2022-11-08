@@ -1,7 +1,7 @@
 %define rname khangman
 
 Name: kde5-%rname
-Version: 22.08.2
+Version: 22.08.3
 Release: alt1
 %K5init no_appdata
 
@@ -62,6 +62,9 @@ echo 'add_subdirectory(ru/data/khangman)' >> po/CMakeLists.txt
 %_K5icon/*/*/apps/khangman*.*
 
 %changelog
+* Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
+- new version
+
 * Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
 - new version
 
