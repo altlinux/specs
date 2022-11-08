@@ -1,7 +1,7 @@
 %define rname knights
 
 Name: kde5-%rname
-Version: 22.08.2
+Version: 22.08.3
 Release: alt1
 %K5init no_altplace
 
@@ -88,6 +88,9 @@ Requires: %name-common = %version-%release
 #%_K5dbus_iface/*nights*.xml
 
 %changelog
+* Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
+- new version
+
 * Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
 - new version
 
