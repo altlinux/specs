@@ -1,7 +1,7 @@
 
 Name: pve-storage-linstor
 Version: 6.1.0
-Release: alt1
+Release: alt2
 
 Summary: LINSTOR Proxmox Plugin
 Group: System/Servers
@@ -37,6 +37,7 @@ LINSTOR Proxmox Plugin.
 	install -D -m 0644 ./LINSTORPlugin.pm %buildroot%perl_vendor_privlib/PVE/Storage/Custom/LINSTORPlugin.pm
 	install -D -m 0644 ./LINBIT/Linstor.pm %buildroot%perl_vendor_privlib/LINBIT/Linstor.pm
 	install -D -m 0644 ./LINBIT/PluginHelper.pm %buildroot%perl_vendor_privlib/LINBIT/PluginHelper.pm
+	mkdir -p %buildroot%_cachedir/linstor-proxmox
 
 %post
 /sbin/service pvedaemon condrestart ||:
@@ -53,8 +54,12 @@ fi
 %dir %perl_vendor_privlib/LINBIT
 %perl_vendor_privlib/LINBIT/Linstor.pm
 %perl_vendor_privlib/LINBIT/PluginHelper.pm
+%_cachedir/linstor-proxmox/
 
 %changelog
+* Tue Nov 08 2022 Andrew A. Vasilyev <andy@altlinux.org> 6.1.0-alt2
+- pack /var/cache/linstor-proxmox directory
+
 * Fri Oct 14 2022 Andrew A. Vasilyev <andy@altlinux.org> 6.1.0-alt1
 - 6.1.0
 
