@@ -1,26 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-%define oname tabulate
+%define pypi_name tabulate
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 0.8.9
+Name: python3-module-%pypi_name
+Version: 0.9.0
 Release: alt1
 Summary: Pretty-print tabular data
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/tabulate/
+VCS: https://github.com/astanin/python-tabulate.git
 
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(setuptools_scm)
+
 %if_with check
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 %endif
 
 %description
@@ -29,26 +32,36 @@ Pretty-print tabular data in Python.
 %prep
 %setup
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts --no-deps -vvr -s false
+%tox_check_pyproject -- -vra
 
 %files
 %doc CHANGELOG README
-%_bindir/%oname
-%python3_sitelibdir/%oname.py
-%python3_sitelibdir/__pycache__/%oname.*
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%_bindir/tabulate
+%python3_sitelibdir/tabulate/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 08 2022 Stanislav Levin <slev@altlinux.org> 0.9.0-alt1
+- 0.8.9 -> 0.9.0.
+
 * Mon Feb 14 2022 Stanislav Levin <slev@altlinux.org> 0.8.9-alt1
 - 0.8.7 -> 0.8.9 (closes: #41933).
 
