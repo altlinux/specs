@@ -8,7 +8,7 @@
 %define git_date %nil
 
 %define dbus_version 1.1
-%define libgudev_version 143
+%define libgudev_version 232
 
 %def_with qrtr
 %def_with qmi
@@ -17,7 +17,7 @@
 %def_disable vala
 
 Name: ModemManager
-Version: 1.18.12
+Version: 1.20.0
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -29,17 +29,20 @@ Patch: %name-%version-%release.patch
 
 Requires: dbus >= %dbus_version
 
+BuildRequires(pre): meson
+
 BuildRequires: libgudev-devel >= %libgudev_version
 BuildRequires: libgio-devel
 %{?_with_qrtr:BuildRequires: libqrtr-glib-devel >= 1.0.0}
-%{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.30.8}
-%{?_with_mbim:BuildRequires: libmbim-glib-devel >= 1.26.0}
+%{?_with_qmi:BuildRequires: libqmi-glib-devel >= 1.32.0}
+%{?_with_mbim:BuildRequires: libmbim-glib-devel >= 1.28.0}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 BuildRequires: ppp-devel
 BuildRequires: libpolkit-devel
 BuildRequires: libsystemd-devel >= 209
-BuildRequires: gtk-doc
+BuildRequires: libdbus-devel
+BuildRequires: gtk-doc bash-completion
 
 # For tests
 %{?!_without_check:%{?!_disable_check:BuildRequires: /dev/pts}}
@@ -133,49 +136,52 @@ Requires: libmm-glib-devel = %version-%release
 %patch -p1
 
 %build
-%ifarch %e2k
-%define more_warnings no
+%meson \
+	-Dudevdir=/lib/udev \
+	-Dpolkit=strict \
+	-Dsystemdsystemunitdir=%_unitdir \
+	-Dsystemd_suspend_resume=true \
+	-Dsystemd_journal=true \
+	-Dudev=true \
+%if_with qrtr
+	-Dqrtr=true \
 %else
-%define more_warnings yes
+	-Dqrtr=false \
 %endif
-GTKDOCIZE="true" %autoreconf
-%configure \
-	--disable-static \
-	--with-udev-base-dir=/lib/udev \
-	--with-polkit \
-	--with-systemdsystemunitdir=%_unitdir \
-	--with-systemd-suspend-resume=yes \
-	--with-systemd-journal=yes \
-	--with-udev \
-	%{subst_with qrtr} \
-	%{subst_with qmi} \
-	%{subst_with mbim} \
-	%{subst_enable introspection} \
-	%{subst_enable vala} \
-	--enable-gtk-doc \
-	--disable-silent-rules \
-	--enable-compile-warnings=%more_warnings
+%if_with qmi
+	-Dqmi=true \
+%else
+	-Dqmi=false \
+%endif
+%if_with mbim
+	-Dmbim=true \
+%else
+	-Dmbim=false \
+%endif
+%if_enabled introspection
+	-Dintrospection=true \
+%else
+	-Dintrospection=false \
+%endif
+%if_enabled vala
+	-Dvapi=true \
+%else
+	-Dvapi=false \
+%endif
+	-Dgtk_doc=true
 
-%make_build
-
-%check
-make check
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 %find_lang %name
 
+%check
+%meson_test
+
 %post
-# Don't restart service during upgrade:
-# the network can be via modem controlled
-# by ModemManager itself.
-#post_service %name
-SYSTEMCTL=systemctl
-if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
-	"$SYSTEMCTL" daemon-reload ||:
-	if [ "$1" -eq 1 ]; then
-		"$SYSTEMCTL" -q preset %name.service||:
-	fi
+if sd_booted; then
+	%post_service_posttrans_restart %name.service
 fi
 
 %preun
@@ -211,8 +217,6 @@ fi
 %doc %_man1dir/*.*
 %doc %_man8dir/*.*
 
-%exclude %_libdir/ModemManager/*.la
-
 %files devel
 %_includedir/%name
 %_pkgconfigdir/%name.pc
@@ -246,6 +250,11 @@ fi
 %endif
 
 %changelog
+* Tue Nov 08 2022 Mikhail Efremov <sem@altlinux.org> 1.20.0-alt1
+- Use %%post_service_posttrans_restart macro.
+- Use meson build system.
+- Updated to 1.20.0.
+
 * Mon Sep 12 2022 Mikhail Efremov <sem@altlinux.org> 1.18.12-alt1
 - Updated to 1.18.12.
 

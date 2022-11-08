@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.30.8
+Version: 1.32.0
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -13,8 +13,9 @@ Group: System/Libraries
 URL: https://gitlab.freedesktop.org/mobile-broadband/libqmi
 Vcs: https://gitlab.freedesktop.org/mobile-broadband/libqmi.git
 Source: %name-%version.tar
-
 Patch: %_name-%version-%release.patch
+
+BuildRequires(pre): meson
 
 BuildRequires: glib2-devel libgio-devel
 BuildRequires: libmbim-glib-devel >= 1.18.0
@@ -22,7 +23,7 @@ BuildRequires: libgudev-devel
 BuildRequires: libqrtr-glib-devel
 BuildRequires: python3
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libqrtr-glib-gir-devel}
-BuildRequires: gtk-doc help2man
+BuildRequires: gtk-doc help2man bash-completion
 
 %define _unpackaged_files_terminate_build 1
 
@@ -82,33 +83,25 @@ This package contains development documentation for %name
 touch README ChangeLog
 
 %build
-%ifarch %e2k
-%define more_warnings no
+%meson \
+	-Dmbim_qmux=true \
+	-Dfirmware_update=true \
+	-Dudev=true \
+	-Dqrtr=true \
+%if_enabled introspection
+    -Dintrospection=true \
 %else
-%define more_warnings error
+    -Dintrospection=false \
 %endif
+    -Dgtk_doc=true
 
-GTKDOCIZE="true" %autoreconf
-%configure \
-	--disable-static \
-	--enable-mbim-qmux \
-	--enable-firmware-update \
-	--with-udev \
-	--enable-qrtr \
-	%{subst_enable introspection} \
-	--enable-gtk-doc \
-	--enable-compile-warnings=%more_warnings
-%make_build
-
-# Fix names in the man pages
-sed -i 's;lt\\-qmicli;qmicli;' docs/man/qmicli.1
-sed -i -r 's;lt\\-(qmi\\-firmware\\-update);\1;' docs/man/qmi-firmware-update.1
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-make check
+%meson_test
 
 %files
 %_libdir/*.so.*
@@ -136,6 +129,11 @@ make check
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Nov 07 2022 Mikhail Efremov <sem@altlinux.org> 1.32.0-alt1
+- Use meson build system.
+- Dropped obsoleted patch.
+- Updated to 1.32.0.
+
 * Tue Jun 28 2022 Mikhail Efremov <sem@altlinux.org> 1.30.8-alt1
 - Updated to 1.30.8.
 

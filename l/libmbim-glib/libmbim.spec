@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.26.4
+Version: 1.28.0
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -16,10 +16,12 @@ Source: %name-%version.tar
 
 Patch: %_name-%version-%release.patch
 
+BuildRequires(pre): meson
+
 BuildRequires: glib2-devel libgio-devel
 BuildRequires: python-modules-json
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
-BuildRequires: gtk-doc help2man
+BuildRequires: gtk-doc help2man bash-completion
 
 %define _unpackaged_files_terminate_build 1
 
@@ -81,31 +83,23 @@ This package contains development documentation for %name
 %prep
 %setup
 %patch -p1
-touch README ChangeLog
 
 %build
-%ifarch %e2k
-%define more_warnings no
+%meson \
+%if_enabled introspection
+	-Dintrospection=true \
 %else
-%define more_warnings error
+	-Dintrospection=false \
 %endif
+	-Dgtk_doc=true
 
-GTKDOCIZE="true" %autoreconf
-%configure \
-	--disable-static \
-	%{subst_enable introspection} \
-	--enable-gtk-doc \
-	--enable-compile-warnings=%more_warnings
-%make_build
-
-# Fix mbimcli name in the man page
-sed -i 's;lt\\-mbimcli;mbimcli;' docs/man/mbimcli.1
+%meson_build -v
 
 %install
-%makeinstall_std
+%meson_install
 
 %check
-make check
+%meson_test
 
 %files
 %_libdir/*.so.*
@@ -134,6 +128,11 @@ make check
 
 
 %changelog
+* Mon Nov 07 2022 Mikhail Efremov <sem@altlinux.org> 1.28.0-alt1
+- Use meson build system.
+- Dropped obsoleted patches.
+- Updated to 1.28.0.
+
 * Wed May 11 2022 Mikhail Efremov <sem@altlinux.org> 1.26.4-alt1
 - Updated to 1.26.4.
 
