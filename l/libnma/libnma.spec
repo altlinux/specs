@@ -1,11 +1,11 @@
 %define nm_version 1.4.1-alt1.git20160914
 %define _unpackaged_files_terminate_build 1
 
-%def_without gcr_gtk4
+%def_with gcr
 %def_with gtk4
 
 Name: libnma
-Version: 1.10.2
+Version: 1.10.4
 Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: Graphical desktop/GNOME
@@ -24,14 +24,13 @@ BuildRequires: iso-codes-devel
 BuildRequires: gobject-introspection-devel libgtk+3-gir-devel
 BuildRequires: mobile-broadband-provider-info
 BuildRequires: gtk-doc
-%if_with gcr_gtk4
-BuildRequires: gcr4-libs-devel
-%else
-BuildRequires: gcr-libs-devel
-%endif
+%{?_with_gcr:BuildRequires: gcr4-libs-devel}
 %{?_with_gtk4:BuildRequires: libgtk4-devel libgtk4-gir-devel}
 
 Requires: %name-common = %EVR
+
+# org.gnome.nm-applet.gschema.xml is moved to nm-applet
+Conflicts: NetworkManager-applet-gtk < 1.30.0-alt1
 
 %description
 This package contains the library used for integrating GUI tools with
@@ -132,18 +131,17 @@ This package contains development documentation for libnma-devel-doc.
 %meson \
 	--libexecdir==%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
+%if_with gcr
 	-Dgcr=true \
+%else
+	-Dgcr=false \
+%endif
 	-Dintrospection=true \
 	-Dvapi=false \
 %if_with gtk4
 	-Dlibnma_gtk4=true \
 %else
 	-Dlibnma_gtk4=false \
-%endif
-%if_with gcr_gtk4
-	-Dgcr_gtk4=true \
-%else
-	-Dgcr_gtk4=false \
 %endif
 	-Dmobile_broadband_provider_info=true \
 	-Diso_codes=true \
@@ -156,8 +154,10 @@ This package contains development documentation for libnma-devel-doc.
 %find_lang %name
 
 %files
-%_datadir/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.nm-applet.eap.gschema.xml
 %_libdir/libnma.so.*
+
+%exclude %_datadir/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
 
 %files devel
 %_includedir/libnma/
@@ -193,6 +193,11 @@ This package contains development documentation for libnma-devel-doc.
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Tue Nov 08 2022 Mikhail Efremov <sem@altlinux.org> 1.10.4-alt1
+- Don't package org.gnome.nm-applet.gschema.xml.
+- Build with gcr4.
+- Updated to 1.10.4.
+
 * Mon Sep 12 2022 Mikhail Efremov <sem@altlinux.org> 1.10.2-alt1
 - Added gcr-4 knob (disabled for now).
 - Updated to 1.10.2.

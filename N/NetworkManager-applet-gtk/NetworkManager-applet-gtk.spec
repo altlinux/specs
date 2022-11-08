@@ -8,14 +8,8 @@
 %def_with team
 %def_without selinux
 
-%ifarch %e2k
-%define more_warnings no
-%else
-%define more_warnings error
-%endif
-
 Name: NetworkManager-applet-gtk
-Version: 1.28.0
+Version: 1.30.0
 Release: alt1%git_hash
 License: GPLv2+
 Group: Graphical desktop/GNOME
@@ -28,7 +22,6 @@ Patch: nm-applet-%version-%release.patch
 BuildRequires(pre): meson
 
 BuildRequires: libgtk+3-devel libtool
-BuildRequires: libnotify-devel
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnm-gir-devel >= %nm_version
 BuildRequires: libgudev-devel
@@ -43,6 +36,9 @@ Requires: NetworkManager-daemon >= %nm_version
 Requires: dbus-tools-gui
 Requires: mobile-broadband-provider-info
 Requires: iso-codes
+
+# org.gnome.nm-applet.gschema.xml is moved from libnma
+Requires: libnma >= 1.10.4-alt1
 
 Obsoletes: NetworkManager-gnome < 0.9.8.4
 Provides: NetworkManager-gnome = %version-%release
@@ -91,14 +87,19 @@ mkdir -p %buildroot/%_datadir/gnome-vpn-properties
 %_bindir/*
 %_iconsdir/hicolor/*/apps/*
 %_sysconfdir/xdg/autostart/nm-applet.desktop
+%_datadir/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
 %_datadir/GConf/gsettings/nm-applet.convert
 %doc %_man1dir/*.*
-
 %_datadir/applications/*.desktop
 %_datadir/metainfo/*.xml
 %dir %_datadir/gnome-vpn-properties
 
 %changelog
+* Tue Nov 08 2022 Mikhail Efremov <sem@altlinux.org> 1.30.0-alt1
+- Packaged org.gnome.nm-applet.gschema.xml.
+- Dropped libnotify-devel from BR.
+- Updated to 1.30.0.
+
 * Tue Jun 28 2022 Mikhail Efremov <sem@altlinux.org> 1.28.0-alt1
 - Updated to 1.28.0.
 
