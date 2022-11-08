@@ -1,5 +1,5 @@
 Name: waybar
-Version: 0.9.13.41.g0f95db0
+Version: 0.9.15
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -47,8 +47,11 @@ BuildRequires: pkgconfig(libudev)
 BuildRequires: pkgconfig(libnl-3.0)
 BuildRequires: pkgconfig(libnl-genl-3.0)
 
+# upower module
+BuildRequires: pkgconfig(upower-glib)
+
 # mpd module
-# BuildRequires: libmpdclient-devel
+BuildRequires: pkgconfig(libmpdclient)
 
 %define _libexecdir %_prefix/libexec
 %define helperdir %_libexecdir/%name
@@ -81,6 +84,9 @@ BuildRequires: pkgconfig(libnl-genl-3.0)
 %_man5dir/*
 
 %changelog
+* Tue Nov 08 2022 Alexey Gladkov <legion@altlinux.ru> 0.9.15-alt1
+- New version (0.9.15).
+
 * Fri Jul 22 2022 Alexey Gladkov <legion@altlinux.ru> 0.9.13.41.g0f95db0-alt1
 - New snapshot.
 
