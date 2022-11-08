@@ -5,7 +5,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: 7.2.11
-Release: alt1
+Release: alt2
 License: AGPL-3.0+ AND GPLv3 AND MIT
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -120,6 +120,9 @@ rm -f  %buildroot%_bindir/pvemailforward
 %_man8dir/*
 
 %changelog
+* Tue Nov 08 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.11-alt2
+- fix for Help button in Notes Editor
+
 * Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.11-alt1
 - 7.2-11
 
