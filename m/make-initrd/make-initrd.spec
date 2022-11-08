@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.32.0
+Version: 2.32.1
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -346,6 +346,10 @@ fi
 %_datadir/%name/features/bootloader
 
 %changelog
+* Tue Nov 08 2022 Alexey Gladkov <legion@altlinux.ru> 2.32.1-alt1
+- New version (2.32.1).
+- mk: do not expand functions out of '$(call ...)' context (ALT#44226).
+
 * Wed Oct 26 2022 Alexey Gladkov <legion@altlinux.ru> 2.32.0-alt1
 - New version (2.32.0).
 - Runtime:
