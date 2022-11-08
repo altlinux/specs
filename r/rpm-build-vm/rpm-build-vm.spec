@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.35
+Version: 1.36
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -17,12 +17,14 @@ Source: %name-%version.tar
 
 %ifarch %supported_arches
 # We need static libs to build initramfs /init binary:
-#   klibc-devel        - cannot call arbitrary syscall.
+#   klibc-devel        - cannot call arbitrary syscall, cannot link with libblkid.
 #   musl-devel         - does not cover all arches.
 #   glibc-devel-static - binaries are bigger.
-BuildRequires: klibc-devel
+BuildRequires: glibc-devel-static
+BuildRequires: libblkid-devel-static
 # For %%check.
 BuildRequires: /dev/kvm
+BuildRequires: shellcheck
 
 # Try to load un-def kernel this way to avoid "forbidden dependencies"
 # from sisyphus_check.
@@ -92,11 +94,21 @@ This package is a stub instead of RPM helper to run QEMU inside hasher
 on supported architectures (this one (%_arch) is unsupported).
 %endif
 
+%package createimage
+Summary: Filetrigger to create ext4 image for vm-run
+Group: Development/Other
+BuildArch: noarch
+Requires: %name = %EVR
+
+%description createimage
+This is optional package containing a filetrigger to create an ext4 image
+at "/tmp/vm-ext4.img" out of your hasher root to run vm-run with it as rootfs.
+
 %package checkinstall
 Summary: Checkinstall for vm-run
 Group: Development/Other
 BuildArch: noarch
-Requires(pre): %name = %EVR
+Requires(pre): %name-createimage = %EVR
 Requires(pre): time
 
 %description checkinstall
@@ -113,20 +125,19 @@ Run checkinstall tests for vm-run.
 CFLAGS="%optflags" make
 %endif
 
-bash -n vm-run
-bash -n vm-resize
-bash -n vm-run-stub
-bash -n vm-init
-bash -n filetrigger
+make check
 
 %install
 %ifnarch %supported_arches
 install -D -p -m 0755 vm-run-stub %buildroot%_bindir/vm-run
 %else
 install -D -p -m 0755 vm-run      %buildroot%_bindir/vm-run
+install -D -p -m 0755 vm-create-image %buildroot%_bindir/vm-create-image
 install -D -p -m 0755 vm-init     %buildroot%_libexecdir/vm-run/vm-init
 install -D -p -m 0755 initrd-init %buildroot%_libexecdir/vm-run/initrd-init
 install -D -p -m 0755 filetrigger %buildroot%_rpmlibdir/vm-run.filetrigger
+install -D -p -m 0755 createimage %buildroot%_rpmlibdir/z-vm-createimage.filetrigger
+install -Dp bash_completion %buildroot%_sysconfdir/bashrc.d/vm_completion.sh
 %endif
 install -D -p -m 0755 vm-resize   %buildroot%_bindir/vm-resize
 
@@ -141,17 +152,20 @@ install -D -p -m 0755 vm-resize   %buildroot%_bindir/vm-resize
 
 %files checkinstall
 
+%files createimage
+%ifarch %supported_arches
+%_rpmlibdir/z-vm-createimage.filetrigger
+%endif
+
 %files run
 %_bindir/vm-run
 %_bindir/vm-resize
 
 %ifarch %supported_arches
+%_bindir/vm-create-image
 %_libexecdir/vm-run
 %_rpmlibdir/vm-run.filetrigger
-
-%post
-# Fix permissions to boot the installed kernel
-find /boot /lib/modules -type f,d \! -perm -444 -print0 | xargs -0r chmod a+rX
+%_sysconfdir/bashrc.d/vm*.sh
 
 %post run
 # Required in case of --udevd option to vm-run
@@ -164,6 +178,9 @@ chmod a+twx /run/dbus
 
 # u&mount should to be readable to use inside vm
 control mount unprivileged
+
+# Useful for enable audit for some kernel-modules tests
+[ ! -x /sbin/auditctl ] || chmod a+rx /sbin/auditctl
 
 # For --overlay=
 chmod a+twx /mnt
@@ -180,9 +197,15 @@ set -ex
 ls -l /dev/kvm
 set | grep ^LD_
 %endif
+
+# Simualte filetrigger run
+find /boot > /tmp/filelist
+%_rpmlibdir/posttrans-filetriggers /tmp/filelist
+
 timeout 300 vm-run --verbose uname -a
 timeout 300 vm-run --verbose --overlay=ext4 uname -a
 ! timeout --preserve-status 300 vm-run --verbose exit 1
+timeout 300 vm-run --rootfs --verbose df
 
 %ifarch %ix86 x86_64 ppc64le aarch64 armh
 %check
@@ -191,6 +214,19 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Mon Nov 07 2022 Vitaly Chikunov <vt@altlinux.org> 1.36-alt1
+- Add vm-create-image tool that can generate ext4 image out of hasher root.
+- vm-run: Support for booting from ext4 image using --rootfs=
+  (or --create-rootfs=) option(s). This way you have rull root access to the
+  system tree.
+  Note that 9p is still (bind) mounted over '/usr/src', so you can place your
+  test artifacts there.
+- Add rpm-build-vm-createimage package with filetrigger to automatically
+  generate that ext4 rootfs image. (If you need super precise uids/gids on
+  the copies of hasher files, otherwise they maybe roughed to root:root.)
+- Bunch of small code and help text improvements.
+- Simplistic bash completion support.
+
 * Mon Aug 08 2022 Vitaly Chikunov <vt@altlinux.org> 1.35-alt1
 - Fix (uninstalled) kernels list.
 - Allow to run auditctl.
