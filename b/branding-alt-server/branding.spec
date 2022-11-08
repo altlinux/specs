@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt3
+Release: alt4
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -338,6 +338,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Nov 08 2022 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt4
+- import contents of indexhtml from Alexey Osotov
+
 * Mon Jun 27 2022 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt3
 - add /usr/share/install3/lightdm-gtk-greeter.conf
   to change the keyboard layout in greeter
