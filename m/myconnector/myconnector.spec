@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.3
+Version:  2.4
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -138,6 +138,13 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Tue Nov 08 2022 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4-alt1
+- [SPICE] Added Virt Viewer support
+- [webkiosk] Added Chromium Gost and Yandex Browser support (ALT #43115)
+- Added the use of the default text editor (ALT #43114)
+- Tiny typo docs and l10n (ALT #43118)
+- Fixed clear autofill data
+
 * Fri May 20 2022 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.3-alt1
 - Added global settings and a global list of connections
 - Added stealth mode
