@@ -1,14 +1,14 @@
 %define repo transgrp
 
 Name: gap-transgrp
-Version: 2.0.2
+Version: 3.6.3
 Release: alt1
 Summary: GAP: Transitive Groups Library
 License: Artistic-2.0 AND GPL-2.0-only AND GPL-3.0-only
 Group: Sciences/Mathematics
-Url: http://www.math.colostate.edu/~hulpke/transgrp
+Url: https://www.math.colostate.edu/~hulpke/transgrp
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/transgrp%version.tar.bz2
+Source: https://www.math.colostate.edu/~hulpke/transgrp/transgrp%version.tar.gz
 
 BuildArch: noarch
 BuildRequires: rpm-macros-gap
@@ -30,5 +30,8 @@ The TransGrp package provides the library of transitive groups.
 %gap_sitelib/%repo/*
 
 %changelog
+* Tue Nov 08 2022 Leontiy Volodin <lvol@altlinux.org> 3.6.3-alt1
+- 3.6.3.
+
 * Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 2.0.2-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
