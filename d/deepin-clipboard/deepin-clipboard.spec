@@ -3,7 +3,7 @@
 %def_disable qmake
 
 Name: deepin-clipboard
-Version: 5.4.23
+Version: 5.4.24
 Release: alt1
 Summary: Clipboard for DDE
 License: GPL-3.0+
@@ -83,6 +83,9 @@ mv -f %buildroot/lib/systemd/user/%repo-daemon.service %buildroot%_libexecdir/sy
 %_libexecdir/systemd/user/%repo-daemon.service
 
 %changelog
+* Tue Nov 08 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.24-alt1
+- New version (5.4.24).
+
 * Fri Oct 07 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.23-alt1
 - New version (5.4.23).
 
