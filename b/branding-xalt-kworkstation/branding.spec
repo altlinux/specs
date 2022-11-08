@@ -14,12 +14,12 @@
 
 %define major 10
 %define minor 1
-%define bugfix 0
+%define bugfix 1
 %define altversion %major.%minor
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt1
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -475,6 +475,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Nov 08 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.1-alt1
+- update indexhtml
+
 * Thu Oct 06 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.0-alt4
 - fix indexhtml docs url
 
