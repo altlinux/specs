@@ -2,8 +2,8 @@
 %define req_samba_pkgs samba,samba-common-tools,samba-client
 
 Name: kde5-network-filesharing
-Version: 22.08.2
-Release: alt2
+Version: 22.08.3
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -73,6 +73,9 @@ rm -f po/ru/kfileshare.po.old
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
+- new version
+
 * Fri Oct 28 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt2
 - fix russian translation
 
