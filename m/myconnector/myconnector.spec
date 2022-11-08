@@ -3,7 +3,7 @@
 
 Name:     myconnector
 Version:  2.4
-Release:  alt1
+Release:  alt2
 
 Summary:  MyConnector - remote desktop client
 License:  GPL-2.0
@@ -120,6 +120,7 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %_datadir/mime/packages/%name.xml
 %_iconsdir/hicolor/*/apps/%name.png
 %_datadir/bash-completion/completions/%name
+%dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/%name.conf
 
 %files kiosk -f %name-kiosk.lang
@@ -127,7 +128,6 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %basedir/ui/kiosk.ui
 %python3_sitelibdir/%name/kiosk.py
 %python3_sitelibdir/%name/__pycache__/kiosk.*
-%dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/kiosk.conf
 %_man1dir/%name-kiosk.*
 
@@ -138,6 +138,9 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Tue Nov 08 2022 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4-alt2
+- Fixed unowned /etc/myconnector
+
 * Tue Nov 08 2022 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4-alt1
 - [SPICE] Added Virt Viewer support
 - [webkiosk] Added Chromium Gost and Yandex Browser support (ALT #43115)
