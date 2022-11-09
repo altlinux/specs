@@ -1,6 +1,6 @@
 Name: clawsker
-Version: 1.3.5
-Release: alt2
+Version: 1.3.7
+Release: alt1
 
 Summary: Clawsker is an applet to edit Claws Mail's hidden preferences
 License: GPLv3+
@@ -10,9 +10,6 @@ BuildArch: noarch
 
 Vcs: https://git.claws-mail.org/readonly/clawsker.git
 Source: %name-%version.tar
-# Patch from upstream git. Must be droppen when new version
-# will be released.
-Patch1: Fix-bug-4571-impossible-to-set-white-colour.patch
 
 BuildRequires: perl-podlators perl-Locale-gettext perl-Gtk3 perl-File-Which
 BuildRequires: desktop-file-utils
@@ -31,7 +28,6 @@ preventing users from raw editing of configuration files.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 sed -i -e 's|^all: build|all: build/clawsker|' \
@@ -57,6 +53,10 @@ make test
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Nov 09 2022 Mikhail Efremov <sem@altlinux.org> 1.3.7-alt1
+- Dropped obsoleted patch.
+- Updated to 1.3.7.
+
 * Thu Feb 24 2022 Mikhail Efremov <sem@altlinux.org> 1.3.5-alt2
 - Patch from upstream git:
   + Fix bug 4571: impossible to set white colour (closes: #41985).
