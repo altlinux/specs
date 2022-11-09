@@ -1,7 +1,7 @@
 %define  modulename aiofiles
 
 Name:    python3-module-%modulename
-Version: 0.8.0
+Version: 22.1.0
 Release: alt1
 
 Summary: File support for asyncio
@@ -17,7 +17,7 @@ BuildArch: noarch
 Source:  %modulename-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3(poetry-core)
 
 %description
 %summary
@@ -26,17 +26,20 @@ BuildRequires: python3-devel python3-module-setuptools
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files -n python3-module-%modulename
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%modulename-%version.dist-info
 %doc *.rst LICENSE
 
 %changelog
+* Wed Nov 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 22.1.0-alt1
+- 22.1.0
+
 * Thu Mar 03 2022 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt1
 - new version (0.8.0) with rpmgs script
 

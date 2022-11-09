@@ -1,7 +1,7 @@
 %define  modulename starlette
 
 Name:    python3-module-%modulename
-Version: 0.20.4
+Version: 0.21.0
 Release: alt1
 
 Summary: The little ASGI framework that shines
@@ -16,7 +16,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source:  %modulename-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(hatchling)
 
 BuildArch: noarch
 
@@ -43,16 +45,19 @@ Zero hard dependencies.
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/*.egg-info/
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%modulename-%version.dist-info
 
 %changelog
+* Wed Nov 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.21.0-alt1
+- 0.21.0
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 0.20.4-alt1
 - new version 0.20.4 (with rpmrb script)
 

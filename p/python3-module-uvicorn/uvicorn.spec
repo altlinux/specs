@@ -1,6 +1,6 @@
 Name: python3-module-uvicorn
-Version: 0.18.2
-Release: alt2
+Version: 0.19.0
+Release: alt1
 
 %def_with check
 
@@ -15,6 +15,7 @@ BuildArch: noarch
 BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+BuildRequires: python3(hatchling)
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -63,6 +64,9 @@ Uvicorn supports HTTP/1.1 and WebSockets.
 %python3_sitelibdir/uvicorn-%version.dist-info
 
 %changelog
+* Wed Nov 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.19.0-alt1
+- 0.19.0 released
+
 * Thu Aug 04 2022 Anton Zhukharev <ancieg@altlinux.org> 0.18.2-alt2
 - update summary and description
 - add check
