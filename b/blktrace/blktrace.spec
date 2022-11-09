@@ -5,7 +5,7 @@
 
 Name: blktrace
 Version: 1.3.0
-Release: alt2
+Release: alt3
 Summary: Block queue IO tracer
 License: GPL-2.0-only
 Group: Development/Debuggers
@@ -14,7 +14,7 @@ Vcs: git://git.kernel.dk/blktrace.git
 
 Source: %name-%version.tar
 BuildRequires: libaio-devel
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm fio}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-vm >= 1.36 fio}}
 
 # Avoid: "forbidden requires: python-base
 # sisyphus_check: check-deps ERROR: package dependencies violation"
@@ -56,10 +56,8 @@ information about request queue operations up to user space.
 # blktrace itself will just segfault, becasue no access to `/sys/devices/system/cpu/online`.
 # Other proggies do not support `-V`.
 
-truncate -s 11M disk.img
 PATH=%buildroot%_bindir:$PATH
-# 9p have bugs which prevent blktrace correctly working
-vm-run --kvm=cond --udevd --drive=$PWD/disk.img,format=raw "cd /tmp; $PWD/.gear/tests.sh"
+vm-run --kvm=cond --udevd --create-rootfs=i --no-bind .gear/tests.sh
 
 %files
 %doc README doc/blktrace.tex
@@ -68,6 +66,9 @@ vm-run --kvm=cond --udevd --drive=$PWD/disk.img,format=raw "cd /tmp; $PWD/.gear/
 %_man8dir/*
 
 %changelog
+* Wed Nov 09 2022 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt3
+- spec: Simplify %%check for rpm-build-vm-1.36-alt1.
+
 * Sat May 28 2022 Vitaly Chikunov <vt@altlinux.org> 1.3.0-alt2
 - Update to blktrace-1.3.0-3-g7f5d2c5 (2021-10-21).
 - Fix %%check failure on 9pfs.
