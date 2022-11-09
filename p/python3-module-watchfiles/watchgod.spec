@@ -1,5 +1,5 @@
 Name: python3-module-watchfiles
-Version: 0.16.1
+Version: 0.18.1
 Release: alt1
 
 Summary: Simple, modern file watching and code reload in python.
@@ -42,6 +42,9 @@ export CARGO_HOME=${PWD}/cargo
 %python3_sitelibdir/watchfiles-%version.dist-info
 
 %changelog
+* Wed Nov 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.18.1-alt1
+- 0.18.1 released
+
 * Wed Aug 03 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.16.1-alt1
 - 0.16.1 released
 

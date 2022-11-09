@@ -1,6 +1,6 @@
 Name: python3-module-orjson
-Version: 3.7.7
-Release: alt3
+Version: 3.8.1
+Release: alt1
 
 Summary: Fast, correct JSON library for Python
 License: Apache-2.0
@@ -40,6 +40,9 @@ export CARGO_HOME=${PWD}/cargo
 %python3_sitelibdir/orjson-%version.dist-info
 
 %changelog
+* Wed Nov 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.8.1-alt1
+- 3.8.1 released
+
 * Wed Aug 03 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.7.7-alt3
 - rebuilt as pyproject
 
