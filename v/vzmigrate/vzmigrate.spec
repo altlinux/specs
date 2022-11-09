@@ -10,25 +10,27 @@
 
 Name:     vzmigrate
 Version:  7.0.149
-Release:  alt1
+Release:  alt2
 
 Summary:  Virtuozzo migration tool
 License:  GPLv2+
-Group:    Other
+Group:    System/Servers
 Url:      https://src.openvz.org/scm/ovz/vzmigrate.git
-
-Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
 ExclusiveArch: x86_64
 
-# these reqs are for vz helper scripts
 Requires: ploop >= 7.0.160
-Requires: network-config-subsystem
+# Requires: network-config-subsystem
 Requires: libvzctl >= 7.0.645
-Requires: libvztt
+Requires: tar
+Requires: rsync-ovz
+Requires: phaul-ovz
+Requires: vztt
+
+Provides: pmigrate.c2c = %EVR
 
 BuildRequires: gcc-c++
 BuildRequires: glibc-devel libuuid-devel
@@ -76,6 +78,10 @@ make install \
 %doc *.md
 
 %changelog
+* Wed Nov 09 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.0.149-alt2
+- use rsync-ovz with redirected descriptors
+- several logging and build fixes
+
 * Mon Jan 17 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.0.149-alt1
 - 7.0.149
 
