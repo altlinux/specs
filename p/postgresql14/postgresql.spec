@@ -1,5 +1,5 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_with devel
+%def_without devel
 
 # Use ICU
 %def_with icu
@@ -9,7 +9,7 @@
 
 %define prog_name            postgresql
 %define postgresql_major     14
-%define postgresql_minor     5
+%define postgresql_minor     6
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -37,6 +37,7 @@ Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 
 Source0: %name-%version.tar
 
+Patch0: 0007-e2k.patch
 Patch2: 0002-Fix-search-for-setproctitle.patch
 Patch3: 0003-Use-terminfo-not-termcap.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
@@ -307,6 +308,7 @@ goal of accelerating analytics queries.
 %prep
 %setup
 
+%patch0 -p1
 %patch2 -p1
 %patch3 -p2
 %patch6 -p2
@@ -924,6 +926,11 @@ fi
 %endif
 
 %changelog
+* Wed Nov 09 2022 Alexei Takaseev <taf@altlinux.org> 14.6-alt1
+- 14.6
+- Add patch for E2K
+- Disable -devel
+
 * Wed Aug 10 2022 Alexei Takaseev <taf@altlinux.org> 14.5-alt1
 - 14.5 (Fixes CVE-2022-2625)
 

@@ -1,12 +1,15 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
-%def_without devel
+%def_with devel
 
 # Use ICU
-%def_without icu
+%def_with icu
+
+# Use JIT
+%def_with jit
 
 %define prog_name            postgresql
-%define postgresql_major     10
-%define postgresql_minor     23
+%define postgresql_major     15
+%define postgresql_minor     1
 %define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
@@ -53,6 +56,9 @@ BuildRequires: postgresql-devel
 %endif
 %if_with icu
 BuildRequires: libicu-devel
+%endif
+%if_with jit
+BuildRequires: llvm12.0-devel clang12.0-devel gcc-c++
 %endif
 
 %description
@@ -181,8 +187,11 @@ Summary: PostgreSQL development header files
 Group: Development/Databases
 Requires: %libpq_name-devel
 Requires: %libecpg_name-devel
+%if_with jit
+Requires: llvm12.0-devel clang12.0-devel gcc-c++
+%endif
 %if_with devel
-Provides: postgresql-server-devel = %EVR
+Provides: %prog_name-server-devel = %EVR
 Obsoletes: %prog_name-server-devel < %EVR
 %endif
 %filter_from_requires /^\/usr\/include\/pgsql\/libpq-fe\.h/d
@@ -281,6 +290,21 @@ system.  The postgresql-python package includes a module for
 developers to use when writing Python code for accessing a PostgreSQL
 database.
 
+%if_with jit
+%package llvmjit
+Summary: Just-in-time compilation support for PostgreSQL
+Group: Databases
+Requires: %name-server = %EVR
+Requires: llvm12.0
+Provides: %prog_name-llvmjit = %EVR
+
+%description llvmjit
+The postgresql-llvmjit package contains support for
+just-in-time compiling parts of PostgreSQL queries. Using LLVM it
+compiles e.g. expressions and tuple deforming into native code, with the
+goal of accelerating analytics queries.
+%endif
+
 %prep
 %setup
 
@@ -291,6 +315,11 @@ database.
 %patch8 -p1
 
 %build
+%if_with jit
+export LLVM_CONFIG=/usr/bin/llvm-config-12
+export CLANG=/usr/bin/clang-12
+%endif
+
 %ifnarch armh
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %else
@@ -307,6 +336,9 @@ database.
     --enable-thread-safety \
 %if_with icu
     --with-icu \
+%endif
+%if_with jit
+    --with-llvm \
 %endif
     --with-docdir=%docdir \
     --with-includes=%_includedir/krb5 \
@@ -387,15 +419,17 @@ popd
 cp -a %buildroot%_bindir/pg_config %buildroot%_bindir/pg_server_config
 
 cp -a COPYRIGHT README README.git \
-    doc/{KNOWN_BUGS,MISSING_FEATURES,TODO,bug.template} \
+    doc/{KNOWN_BUGS,MISSING_FEATURES,TODO} \
     src/tutorial %buildroot%docdir/
 
 %find_lang ecpglib%libecpg_major-%postgresql_major
 %find_lang ecpg-%postgresql_major
 %find_lang initdb-%postgresql_major
 %find_lang libpq%libpq_major-%postgresql_major
+%find_lang pg_amcheck-%postgresql_major
 %find_lang pg_archivecleanup-%postgresql_major
 %find_lang pg_basebackup-%postgresql_major
+%find_lang pg_checksums-%postgresql_major
 %find_lang pg_config-%postgresql_major
 %find_lang pg_controldata-%postgresql_major
 %find_lang pg_ctl-%postgresql_major
@@ -413,16 +447,21 @@ cp -a COPYRIGHT README README.git \
 %find_lang pltcl-%postgresql_major
 %find_lang postgres-%postgresql_major
 %find_lang psql-%postgresql_major
+%find_lang pg_verifybackup-%postgresql_major
+
 
 cat psql-%postgresql_major.lang \
     pg_dump-%postgresql_major.lang \
     pgscripts-%postgresql_major.lang \
     pg_basebackup-%postgresql_major.lang \
+    pg_verifybackup-%postgresql_major.lang \
     pg_test_fsync-%postgresql_major.lang \
-    pg_test_timing-%postgresql_major.lang > main.lang
+    pg_test_timing-%postgresql_major.lang \
+    pg_amcheck-%postgresql_major.lang > main.lang
 
 cat postgres-%postgresql_major.lang \
     pg_controldata-%postgresql_major.lang \
+    pg_checksums-%postgresql_major.lang \
     initdb-%postgresql_major.lang \
     pg_ctl-%postgresql_major.lang \
     plpgsql-%postgresql_major.lang \
@@ -519,6 +558,7 @@ fi
 %_bindir/createuser
 %_bindir/dropdb
 %_bindir/dropuser
+%_bindir/pg_amcheck
 %_bindir/pg_dump
 %_bindir/pg_dumpall
 %_bindir/pg_restore
@@ -526,6 +566,7 @@ fi
 %_bindir/reindexdb
 %_bindir/vacuumdb
 %_bindir/pg_basebackup
+%_bindir/pg_verifybackup
 %_bindir/pg_test_fsync
 %_bindir/pg_test_timing
 %_bindir/pg_isready
@@ -535,6 +576,7 @@ fi
 %_man1dir/createuser.1*
 %_man1dir/dropdb.1*
 %_man1dir/dropuser.1*
+%_man1dir/pg_amcheck.1*
 %_man1dir/pg_dump.1*
 %_man1dir/pg_restore.1*
 %_man1dir/pg_dumpall.1*
@@ -546,6 +588,7 @@ fi
 %_man1dir/pg_basebackup.1*
 %_man1dir/pg_isready.1*
 %_man1dir/pg_recvlogical.1*
+%_man1dir/pg_verifybackup.1*
 %_man7dir/*
 %dir %docdir
 %docdir/KNOWN_BUGS
@@ -554,32 +597,29 @@ fi
 %docdir/COPYRIGHT
 %docdir/README
 %docdir/README.git
-%docdir/bug.template
 
 %files docs
 %dir %docdir
 %dir %docdir/html
 %docdir/html/*.html
 %docdir/html/*.css
+%docdir/html/*.svg
 %dir %docdir/tutorial
 %docdir/tutorial/*
 %docdir/extension
 
 %files -f contrib.lang contrib
 %_bindir/oid2name
-%_bindir/pg_standby
 %_bindir/pgbench
 %_bindir/vacuumlo
 %_bindir/pg_archivecleanup
 
 %_man1dir/oid2name.1*
 %_man1dir/pg_archivecleanup.1*
-%_man1dir/pg_standby.1*
 %_man1dir/pgbench.1*
 %_man1dir/vacuumlo.1*
 
 %dir %_datadir/%PGSQL/contrib
-%dir %_libdir/pgsql
 
 %_libdir/%PGSQL/_int.so
 %_datadir/%PGSQL/extension/intarray-*.sql
@@ -604,9 +644,6 @@ fi
 %_libdir/%PGSQL/btree_gist.so
 %_datadir/%PGSQL/extension/btree_gist-*.sql
 %_datadir/%PGSQL/extension/btree_gist.control
-%_libdir/%PGSQL/chkpass.so
-%_datadir/%PGSQL/extension/chkpass-*.sql
-%_datadir/%PGSQL/extension/chkpass.control
 %_libdir/%PGSQL/citext.so
 %_datadir/%PGSQL/extension/citext-*.sql
 %_datadir/%PGSQL/extension/citext.control
@@ -637,9 +674,6 @@ fi
 %_libdir/%PGSQL/hstore_plperl.so
 %_datadir/%PGSQL/extension/hstore_plperl*.sql
 %_datadir/%PGSQL/extension/hstore_plperl*.control
-%_libdir/%PGSQL/hstore_plpython3.so
-%_datadir/%PGSQL/extension/hstore_plpython3u-*.sql
-%_datadir/%PGSQL/extension/hstore_plpython3u.control
 %_libdir/%PGSQL/insert_username.so
 %_datadir/%PGSQL/extension/insert_username-*.sql
 %_datadir/%PGSQL/extension/insert_username.control
@@ -648,18 +682,23 @@ fi
 %_libdir/%PGSQL/isn.so
 %_datadir/%PGSQL/extension/isn-*.sql
 %_datadir/%PGSQL/extension/isn.control
+%_libdir/%PGSQL/jsonb_plperl.so
+%_datadir/%PGSQL/extension/jsonb_plperl-*.sql
+%_datadir/%PGSQL/extension/jsonb_plperl.control
+%_datadir/%PGSQL/extension/jsonb_plperlu-*.sql
+%_datadir/%PGSQL/extension/jsonb_plperlu.control
 %_libdir/%PGSQL/lo.so
 %_datadir/%PGSQL/extension/lo-*.sql
 %_datadir/%PGSQL/extension/lo.control
 %_libdir/%PGSQL/ltree.so
 %_datadir/%PGSQL/extension/ltree-*.sql
 %_datadir/%PGSQL/extension/ltree.control
-%_libdir/%PGSQL/ltree_plpython3.so
-%_datadir/%PGSQL/extension/ltree_plpython3u-*.sql
-%_datadir/%PGSQL/extension/ltree_plpython3u.control
 %_libdir/%PGSQL/moddatetime.so
 %_datadir/%PGSQL/extension/moddatetime-*.sql
 %_datadir/%PGSQL/extension/moddatetime.control
+%_libdir/%PGSQL/old_snapshot.so
+%_datadir/%PGSQL/extension/old_snapshot-*.sql
+%_datadir/%PGSQL/extension/old_snapshot.control
 %_libdir/%PGSQL/pageinspect.so
 %_datadir/%PGSQL/extension/pageinspect-*.sql
 %_datadir/%PGSQL/extension/pageinspect.control
@@ -676,12 +715,18 @@ fi
 %_libdir/%PGSQL/pg_stat_statements.so
 %_datadir/%PGSQL/extension/pg_stat_statements-*.sql
 %_datadir/%PGSQL/extension/pg_stat_statements.control
+%_libdir/%PGSQL/pg_surgery.so
+%_datadir/%PGSQL/extension/pg_surgery-*.sql
+%_datadir/%PGSQL/extension/pg_surgery.control
 %_libdir/%PGSQL/pg_trgm.so
 %_datadir/%PGSQL/extension/pg_trgm-*.sql
 %_datadir/%PGSQL/extension/pg_trgm.control
 %_libdir/%PGSQL/pg_visibility.so
 %_datadir/%PGSQL/extension/pg_visibility-*.sql
 %_datadir/%PGSQL/extension/pg_visibility.control
+%_libdir/%PGSQL/pg_walinspect.so
+%_datadir/%PGSQL/extension/pg_walinspect-*.sql
+%_datadir/%PGSQL/extension/pg_walinspect.control
 %_libdir/%PGSQL/pgcrypto.so
 %_datadir/%PGSQL/extension/pgcrypto-*.sql
 %_datadir/%PGSQL/extension/pgcrypto.control
@@ -716,9 +761,6 @@ fi
 %_datadir/%PGSQL/extension/tcn-*.sql
 %_datadir/%PGSQL/extension/tcn.control
 %_libdir/%PGSQL/test_decoding.so
-%_libdir/%PGSQL/timetravel.so
-%_datadir/%PGSQL/extension/timetravel-*.sql
-%_datadir/%PGSQL/extension/timetravel.control
 %_libdir/%PGSQL/tsm_system_rows.so
 %_datadir/%PGSQL/extension/tsm_system_rows-*.sql
 %_datadir/%PGSQL/extension/tsm_system_rows.control
@@ -736,6 +778,7 @@ fi
 %config %_initdir/%prog_name
 %_bindir/initdb
 %_bindir/postgresql-check-db-dir
+%_bindir/pg_checksums
 %_bindir/pg_controldata
 %_bindir/pg_ctl
 %_bindir/postgres
@@ -748,6 +791,7 @@ fi
 
 %_man1dir/initdb.1*
 %_man1dir/pg_controldata.1*
+%_man1dir/pg_checksums.1*
 %_man1dir/pg_ctl.1*
 %_man1dir/pg_upgrade.1*
 %_man1dir/postgres.1*
@@ -762,11 +806,14 @@ fi
 %_libdir/%PGSQL/plpgsql.so
 %_datadir/%PGSQL/extension/plpgsql-*.sql
 %_datadir/%PGSQL/extension/plpgsql.control
+%_libdir/%PGSQL/basebackup_to_shell.so
+%_libdir/%PGSQL/basic_archive.so
 %_libdir/%PGSQL/dict_snowball.so
 %_libdir/%PGSQL/*_and_*.so
 %_libdir/%PGSQL/euc2004_sjis2004.so
 %_libdir/%PGSQL/libpqwalreceiver.so
 %dir %_datadir/%PGSQL
+%_datadir/%PGSQL/errcodes.txt
 %dir %_datadir/%PGSQL/timezone
 %_datadir/%PGSQL/timezone/*
 %dir %_datadir/%PGSQL/timezonesets
@@ -774,12 +821,11 @@ fi
 %dir %_datadir/%PGSQL/tsearch_data
 %_datadir/%PGSQL/tsearch_data/*
 %_datadir/%PGSQL/postgres.bki
-%_datadir/%PGSQL/postgres.description
-%_datadir/%PGSQL/postgres.shdescription
 %_datadir/%PGSQL/*.sample
-%_datadir/%PGSQL/conversion_create.sql
 %_datadir/%PGSQL/information_schema.sql
 %_datadir/%PGSQL/sql_features.txt
+%_datadir/%PGSQL/system_constraints.sql
+%_datadir/%PGSQL/system_functions.sql
 %_datadir/%PGSQL/system_views.sql
 %_datadir/%PGSQL/snowball_create.sql
 %_localstatedir/%PGSQL
@@ -808,12 +854,25 @@ fi
 %_datadir/%PGSQL/extension/plperl.control
 %_datadir/%PGSQL/extension/plperlu-*.sql
 %_datadir/%PGSQL/extension/plperlu.control
+%_libdir/%PGSQL/bool_plperl.so
+%_datadir/%PGSQL/extension/bool_plperl-*.sql
+%_datadir/%PGSQL/extension/bool_plperl.control
+%_datadir/%PGSQL/extension/bool_plperlu-*.sql
+%_datadir/%PGSQL/extension/bool_plperlu.control
 
 %files -f plpython-%postgresql_major.lang python
-%dir %docdir
 %_libdir/%PGSQL/plpython3.so
 %_datadir/%PGSQL/extension/plpython3u-*.sql
 %_datadir/%PGSQL/extension/plpython3u.control
+%_libdir/%PGSQL/hstore_plpython3.so
+%_datadir/%PGSQL/extension/hstore_plpython3u-*.sql
+%_datadir/%PGSQL/extension/hstore_plpython3u.control
+%_libdir/%PGSQL/jsonb_plpython3.so
+%_datadir/%PGSQL/extension/jsonb_plpython3u-*.sql
+%_datadir/%PGSQL/extension/jsonb_plpython3u.control
+%_libdir/%PGSQL/ltree_plpython3.so
+%_datadir/%PGSQL/extension/ltree_plpython3u-*.sql
+%_datadir/%PGSQL/extension/ltree_plpython3u.control
 
 %if_with devel
 %files -n %prog_name-devel
@@ -864,24 +923,43 @@ fi
 %_rpmmacrosdir/postgresql
 %endif
 
+%if_with jit
+%files llvmjit
+%_libdir/pgsql/bitcode
+%_libdir/pgsql/llvmjit.so
+%_libdir/pgsql/llvmjit_types.bc
+%endif
+
 %changelog
-* Wed Nov 09 2022 Alexei Takaseev <taf@altlinux.org> 10.23-alt1
-- 10.23
+* Wed Nov 09 2022 Alexei Takaseev <taf@altlinux.org> 15.1-alt1
+- 15.1
 - Add patch for E2K
 
-* Wed Aug 10 2022 Alexei Takaseev <taf@altlinux.org> 10.22-alt1
-- 10.22 (Fixes CVE-2022-2625)
+* Wed Oct 12 2022 Alexei Takaseev <taf@altlinux.org> 15.0-alt1
+- 15.0
 
-* Wed May 11 2022 Alexei Takaseev <taf@altlinux.org> 10.21-alt1
-- 10.21 (Fixes CVE-2022-1552)
+* Wed Aug 10 2022 Alexei Takaseev <taf@altlinux.org> 14.5-alt1
+- 14.5 (Fixes CVE-2022-2625)
 
-* Thu Feb 24 2022 Alexei Takaseev <taf@altlinux.org> 10.20-alt2
+* Sat Jun 18 2022 Alexei Takaseev <taf@altlinux.org> 14.4-alt1
+- 14.4
+
+* Wed May 11 2022 Alexei Takaseev <taf@altlinux.org> 14.3-alt1
+- 14.3 (Fixes CVE-2022-1552)
+
+* Wed Apr 13 2022 Alexei Takaseev <taf@altlinux.org> 14.2-alt4
+- Build with llvm 12
+
+* Sat Feb 26 2022 Alexei Takaseev <taf@altlinux.org> 14.2-alt3
+- Build with JIT feature
+
+* Thu Feb 24 2022 Alexei Takaseev <taf@altlinux.org> 14.2-alt2
 - Conflicts: 13-1C -> 14-1C
 
-* Mon Feb 21 2022 Alexei Takaseev <taf@altlinux.org> 10.20-alt1
-- 10.20
+* Mon Feb 21 2022 Alexei Takaseev <taf@altlinux.org> 14.2-alt1
+- 14.2
 
-* Thu Jan 27 2022 Alexei Takaseev <taf@altlinux.org> 10.19-alt2
+* Thu Jan 27 2022 Alexei Takaseev <taf@altlinux.org> 14.1-alt2
 - Move %_includedir/%PGSQL/server and %_libdir/%PGSQL/pgxs to
   separe server-devel subpackage.
 - Remove 0004-Fix-includedirs.patch patch
@@ -892,59 +970,70 @@ fi
   libecpg-devel-static
 - Add Requires: postgresql-server-devel to postgresql-devel
 
-* Wed Nov 10 2021 Alexei Takaseev <taf@altlinux.org> 10.19-alt1
-- 10.19 (Fixes CVE-2021-23214, CVE-2021-23222)
+* Wed Nov 10 2021 Alexei Takaseev <taf@altlinux.org> 14.1-alt1
+- 14.1 (Fixes CVE-2021-23214, CVE-2021-23222)
 
-* Wed Sep 29 2021 Alexei Takaseev <taf@altlinux.org> 10.18-alt3
-- Add %%triggerpostun for PG 14
+* Wed Sep 29 2021 Alexei Takaseev <taf@altlinux.org> 14.0-alt1
+- 14.0
 
-* Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 10.18-alt2
+* Wed Aug 25 2021 Alexei Takaseev <taf@altlinux.org> 13.4-alt2
 - Change conflict 1C 12 -> 1C 13
-- Added -ffat-lto-objects to -flto=auto -ffat-lto-objects
+- Added -ffat-lto-objects to %optflags_lto
 
-* Wed Aug 11 2021 Alexei Takaseev <taf@altlinux.org> 10.18-alt1
-- 10.18
+* Wed Aug 11 2021 Alexei Takaseev <taf@altlinux.org> 13.4-alt1
+- 13.4 (Fixes CVE-2021-3677)
 
-* Thu Jun 10 2021 Alexei Takaseev <taf@altlinux.org> 10.17-alt2
-- Build without ICU (Do not build with ICU > 68)
-
-* Mon May 17 2021 Alexei Takaseev <taf@altlinux.org> 10.17-alt1
-- 10.17 (Fixes CVE-2021-32027, CVE-2021-32028)
+* Mon May 17 2021 Alexei Takaseev <taf@altlinux.org> 13.3-alt1
+- 13.3 (Fixes CVE-2021-32027, CVE-2021-32028, CVE-2021-32029)
 - Build with python3
 
-* Thu Feb 11 2021 Alexei Takaseev <taf@altlinux.org> 10.16-alt1
-- 10.16
+* Thu Feb 11 2021 Alexei Takaseev <taf@altlinux.org> 13.2-alt1
+- 13.2 (Fixes CVE-2021-20229, CVE-2021-3393)
 
-* Wed Nov 18 2020 Alexei Takaseev <taf@altlinux.org> 10.15-alt2
+* Wed Nov 18 2020 Alexei Takaseev <taf@altlinux.org> 13.1-alt2
 - Change conflict 1C 11 -> 1C 12 (ALT #39313)
 - Add %%triggerpostun for PG 13
 
-* Mon Nov 16 2020 Alexei Takaseev <taf@altlinux.org> 10.15-alt1
-- 10.15 (Fixes CVE-2020-25694, CVE-2020-25695, CVE-2020-25696)
+* Mon Nov 16 2020 Alexei Takaseev <taf@altlinux.org> 13.1-alt1
+- 13.1 (Fixes CVE-2020-25694, CVE-2020-25695, CVE-2020-25696)
 
-* Wed Aug 12 2020 Alexei Takaseev <taf@altlinux.org> 10.14-alt1
-- 10.14 (Fixes CVE-2020-14349, CVE-2020-14350)
+* Wed Sep 23 2020 Alexei Takaseev <taf@altlinux.org> 13.0-alt1
+- 13.0
 
-* Fri May 22 2020 Alexei Takaseev <taf@altlinux.org> 10.13-alt1
-- 10.13
+* Wed Aug 12 2020 Alexei Takaseev <taf@altlinux.org> 12.4-alt1
+- 12.4 (Fixes CVE-2020-14349, CVE-2020-14350)
 
-* Wed Feb 12 2020 Alexei Takaseev <taf@altlinux.org> 10.12-alt1
-- 10.12 (Fixes CVE-2020-1720)
+* Fri May 22 2020 Alexei Takaseev <taf@altlinux.org> 12.3-alt1
+- 12.3
 
-* Wed Nov 13 2019 Alexei Takaseev <taf@altlinux.org> 10.11-alt1
-- 10.11
+* Wed Feb 12 2020 Alexei Takaseev <taf@altlinux.org> 12.2-alt1
+- 12.2 (Fixes CVE-2020-1720)
 
-* Wed Aug 07 2019 Alexei Takaseev <taf@altlinux.org> 10.10-alt1
-- 10.10 (Fixes CVE-2019-10208)
+* Wed Nov 13 2019 Alexei Takaseev <taf@altlinux.org> 12.1-alt1
+- 12.1
 
-* Thu Jun 20 2019 Alexei Takaseev <taf@altlinux.org> 10.9-alt1
-- 10.9 (Fixes CVE-2019-10164)
+* Mon Oct 07 2019 Alexei Takaseev <taf@altlinux.org> 12.0-alt2
+- Add temporary provides libpq-devel and libecpg-devel to
+  postgresql-devel (ALT #37297)
 
-* Wed May 08 2019 Alexei Takaseev <taf@altlinux.org> 10.8-alt1
-- 10.8
-- (Fixes CVE-2019-10130)
+* Wed Oct 02 2019 Alexei Takaseev <taf@altlinux.org> 12.0-alt1
+- 12.0
 
-* Thu Apr 04 2019 Alexei Takaseev <taf@altlinux.org> 10.7-alt2
+* Wed Aug 07 2019 Alexei Takaseev <taf@altlinux.org> 11.5-alt1
+- 11.5 (Fixes CVE-2019-10208, CVE-2019-10209)
+
+* Thu Jun 20 2019 Alexei Takaseev <taf@altlinux.org> 11.4-alt1
+- 11.4 (Fixes CVE-2019-10164)
+
+* Wed May 08 2019 Alexei Takaseev <taf@altlinux.org> 11.3-alt1
+- 11.3
+- (Fixes CVE-2019-10129, CVE-2019-10130)
+
+* Fri Apr 05 2019 Alexei Takaseev <taf@altlinux.org> 11.2-alt3
+- Add temporary provides libpq-devel and libecpg-devel to
+  postgresql-devel
+
+* Fri Mar 29 2019 Alexei Takaseev <taf@altlinux.org> 11.2-alt2
 - Move *.control and *.sql files from -server to -contrib subpackage
   (Fixes ALT#36271)
 - Removed unnecessary minor version in package name libpq and libecpg
@@ -956,22 +1045,23 @@ fi
 - Add Requires to -server for -contrib, -perl, -python and -tcl and subpackages
 - Remove unneeded Requires tcl >= 8.4.0-alt1 for -tcl subpackages
 
-* Thu Feb 14 2019 Alexei Takaseev <taf@altlinux.org> 10.7-alt1
-- 10.7
+* Thu Feb 14 2019 Alexei Takaseev <taf@altlinux.org> 11.2-alt1
+- 11.2
 - Build with ICU
-- (ALT #35986)
 
-* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 10.6-alt1.1
+* Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 11.1-alt1.1
 - rebuild with new perl 5.28.1
 
-* Thu Nov 08 2018 Alexei Takaseev <taf@altlinux.org> 10.6-alt1
-- 10.6
+* Thu Nov 08 2018 Alexei Takaseev <taf@altlinux.org> 11.1-alt1
+- 11.1
 - (Fixes CVE-2018-16850)
 
-* Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt8
+* Fri Oct 19 2018 Alexei Takaseev <taf@altlinux.org> 11.0-alt2
 - Disable package libs for --without devel. This will provide
   one set of libraries for all versions of the PG.
-- Disable -devel and lib subpackages
+
+* Thu Oct 18 2018 Alexei Takaseev <taf@altlinux.org> 11.0-alt1
+- 11.0
 
 * Thu Sep 27 2018 Alexei Takaseev <taf@altlinux.org> 10.5-alt7
 - Drop online_analyze and plantuner contribs - performance
@@ -1035,7 +1125,7 @@ fi
 
 * Wed Aug 09 2017 Alexei Takaseev <taf@altlinux.org> 9.6.4-alt1
 - 9.6.4
-- (Fixes CVE-2017-7547)
+- (Fix CVE-2017-7547)
 
 * Thu May 11 2017 Alexei Takaseev <taf@altlinux.org> 9.6.3-alt2
 - Add conflict with postgresql for 1C
