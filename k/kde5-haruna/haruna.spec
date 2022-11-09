@@ -4,7 +4,7 @@
 %define libharuna libharuna%sover
 
 Name: kde5-%rname
-Version: 0.9.1
+Version: 0.9.3
 Release: alt1
 %K5init altplace
 
@@ -106,6 +106,9 @@ KF5 library
 #%_K5lib/libharuna.so.*
 
 %changelog
+* Wed Nov 09 2022 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt1
+- new version
+
 * Thu Aug 25 2022 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt1
 - new version
 
