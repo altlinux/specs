@@ -19,7 +19,7 @@
 
 Name: branding-%fakebrand-%smalltheme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define theme %name
 %define design_graphics_abi_epoch 0
@@ -270,7 +270,7 @@ __EOF__
 # release
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/ignore.d/
 install -pD -m644 /dev/null %buildroot%_sysconfdir/buildreqs/packages/ignore.d/%name-release
-echo "%ProductName %status (%codename)" >%buildroot%_sysconfdir/altlinux-release
+echo "%ProductName%status (%codename)" >%buildroot%_sysconfdir/altlinux-release
 for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
@@ -280,7 +280,7 @@ NAME="%Brand"
 VERSION="%altversion%status"
 ID=altlinux
 VERSION_ID=%altversion
-PRETTY_NAME="%ProductName %status (%codename)"
+PRETTY_NAME="%ProductName%status (%codename)"
 ANSI_COLOR="1;33"
 CPE_NAME="cpe:/o:%brand:%smalltheme:%altversion"
 BUILD_ID="%Brand %altversion%status"
@@ -475,6 +475,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kf5/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Nov 09 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.1-alt2
+- remove extra space in os-release PRETTY_NAME
+
 * Tue Nov 08 2022 Sergey V Turchin <zerg at altlinux dot org> 10.1.1-alt1
 - update indexhtml
 
