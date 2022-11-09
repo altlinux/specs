@@ -8,11 +8,11 @@
 
 %def_without vanilla
 %define gecko_version 2.47.3
-%define mono_version 7.3.0
+%define mono_version 7.4.0
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.19
+%define major 7.20
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -879,6 +879,10 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sun Nov 06 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.20.1-alt1
+- new version 7.20.1 (with rpmrb script)
+- set strict require wine-mono 7.4.0
+
 * Wed Oct 19 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.19.1-alt1
 - new version 7.19.1 (with rpmrb script)
 
