@@ -17,8 +17,7 @@
 %define armsoc_arches %arm aarch64
 %define svga_arches %ix86 x86_64
 
-%define gallium_opencl_arches %nil
-#%ix86 x86_64 aarch64 mipsel
+%define gallium_opencl_arches %ix86 x86_64 aarch64 mipsel ppc64le
 
 #VDPAU state tracker requires at least one of the following gallium drivers: r300, r600, radeonsi, nouveau
 %define vdpau_arches %radeon_arches %nouveau_arches
@@ -87,7 +86,7 @@
 
 Name: Mesa
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -108,7 +107,7 @@ BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwaylan
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel libunwind-devel
 BuildRequires: libglvnd-devel >= 1.2.0 llvm-devel >= 11.0.0
 BuildRequires: rpm-build-python3 glslang python3-module-docutils
-#BuildRequires: libclc-devel clang-devel >= 11.0.0
+BuildRequires: libclc-devel clang-devel
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -594,6 +593,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Wed Nov 09 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.2.3-alt2
+- enabled gallium-opencl (closes: #44249)
+
 * Tue Nov 08 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.2.3-alt1
 - 22.2.3
 
