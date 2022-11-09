@@ -7,7 +7,7 @@
 %endif
 
 Name: btrfs-progs
-Version: 5.19.1
+Version: 6.0.1
 Release: alt1
 
 Summary: Utilities for managing the Btrfs filesystem
@@ -114,6 +114,10 @@ rm -rf tests/mkfs-tests/009-special-files-for-rootdir
 # don't run all fuzzing tests
 rm -rf tests/fuzz-tests/0*
 
+# Needs 'null_blk' kernel module
+rm -rf tests/mkfs-tests/025-zoned-parallel
+
+rm -rf "$HOME/new_tmp"
 mkdir "$HOME/new_tmp"
 TMPDIR="$HOME/new_tmp"
 vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
@@ -135,6 +139,9 @@ vm-run --sbin --udevd --kvm=cond make V=1 TEST_LOG=dump test-mkfs
 %_includedir/*
 
 %changelog
+* Mon Nov 07 2022 Egor Ignatov <egori@altlinux.org> 6.0.1-alt1
+- new version 6.0.1
+
 * Tue Sep 13 2022 Egor Ignatov <egori@altlinux.org> 5.19.1-alt1
 - new version 5.19.1
 
