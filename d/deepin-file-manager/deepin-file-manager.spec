@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-file-manager
-Version: 5.6.4
-Release: alt2
+Version: 5.8.0
+Release: alt1
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: File tools
@@ -17,7 +17,6 @@ Patch3: deepin-file-manager-5.2.0.87-alt-qterminal-instead-xterm.patch
 Patch4: deepin-file-manager-5.5.1-hide-lockscreen-checkbox.patch
 Patch5: deepin-file-manager-5.5.1-gcc11-fix-segfault.patch
 Patch6: deepin-file-manager-5.5.1-alt-aarch64.patch
-Patch7: deepin-file-manager-5.5.10-alt-gcc12.patch
 
 ExcludeArch: armh ppc64le
 
@@ -72,6 +71,7 @@ BuildRequires: libhtmlcxx-devel
 BuildRequires: libgsf-devel
 BuildRequires: libmimetic-devel
 BuildRequires: libdocparser-devel
+BuildRequires: libcryptsetup-devel
 
 # run command by QProcess
 # Requires: deepin-shortcut-viewer deepin-terminal deepin-desktop file-roller gvfs samba xdg-user-dirs gst-plugins-good1.0-qt5
@@ -130,8 +130,7 @@ Deepin desktop environment - desktop module.
 # %%patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
-%patch7 -p1
+# %%patch6 -p1
 
 # sed -i 's|"groups":|"groups"\ :|' dde-file-manager-lib/configure/global-setting-template*.js
 
@@ -142,7 +141,7 @@ sed -i 's|/usr/lib/gvfs|/usr/libexec/gvfs|' \
 sed -i 's|/lib/dde-dock/plugins|/%_lib/dde-dock/plugins|' \
     src/dde-dock-plugins/disk-mount/disk-mount.pro
 
-sed -i '/systembusconf.path/s|%_sysconfdir/dbus-1/system.d|%_datadir/dbus-1/system.d|' \
+sed -i '/systembusconf.path/s|/etc/dbus-1/system.d|%_datadir/dbus-1/system.d|' \
     src/dde-file-manager-daemon/dde-file-manager-daemon.pro \
     tests/dde-file-manager-daemon/test-dde-file-manager-daemon.pro
 sed -i 's|/usr/lib/systemd/system|%_unitdir|' \
@@ -152,7 +151,9 @@ sed -i 's|$$PREFIX/lib/systemd/system|%_unitdir|' \
 sed -i 's|/usr/lib32/libc.so.6|/%_lib/libc.so.6|' \
    tests/dde-file-manager-lib/io/ut_dfilestatisticsjob.cpp
 sed -i 's|/usr/lib|%_libdir|' \
-    tests/dde-file-manager-lib/views/ut_dfileview.cpp
+    src/dde-file-manager-lib/plugins/schemepluginmanager.cpp \
+    tests/dde-file-manager-lib/views/ut_dfileview.cpp \
+    tests/dde-desktop/src/grandsearchdaemon/ut_daemonplugin.cpp
 #     dde-file-manager-lib/3rdParty/wv2/wv2.pri \
 #     dde-file-manager-lib/3rdParty/charsetdetect/charsetdetect.pri
 sed -i 's|#include <pcre.h>|#include <pcre/pcre.h>|' \
@@ -164,6 +165,7 @@ sed -i 's|/usr/bin/file-manager.sh|/usr/bin/dde-file-manager|' \
 %if_enabled clang
 # Fix build on aarch64
 sed -i 's/| isEqual(ARCH, aarch64)//' \
+    src/common/common.pri \
     src/dde-file-manager-lib/dde-file-manager-lib.pro
 %endif
 
@@ -213,7 +215,7 @@ export PATH=%_qt5_bindir:$PATH
 # desktop-file-validate %%buildroot%%_desktopdir/dde-trash.desktop ||:
 
 %files
-%doc README.md LICENSE
+%doc README.md LICENSE.txt
 %_bindir/%repo
 %_bindir/%repo-daemon
 %_bindir/%repo-pkexec
@@ -243,12 +245,13 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/polkit-1/actions/com.deepin.filemanager.daemon.policy
 %_datadir/polkit-1/actions/com.deepin.pkexec.dde-file-manager.policy
 %_datadir/applications/context-menus/.readme
-%ifnarch aarch64
+%_datadir/dsg/configs/org.deepin.dde.file-manager/org.deepin.dde.file-manager.json
+# %%ifnarch aarch64
 %dir %_libdir/deepin-anything-server-lib/
 %dir %_libdir/deepin-anything-server-lib/plugins/
 %dir %_libdir/deepin-anything-server-lib/plugins/handlers/
 %_libdir/deepin-anything-server-lib/plugins/handlers/libdde-anythingmonitor.so
-%endif
+# %%endif
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %dir %_libdir/dde-dock/plugins/system-trays/
@@ -308,6 +311,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Wed Nov 09 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.0-alt1
+- New version (5.8.0).
+
 * Mon Oct 03 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt2
 - Fixed build with pcre.
 
