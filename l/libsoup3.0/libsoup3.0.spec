@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -189,6 +189,9 @@ This package provides PyGObject overrides for SoupMessageHeaders.
 %endif
 
 %changelog
+* Thu Nov 10 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
+- 3.2.2
+
 * Tue Oct 11 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
 - 3.2.1
 
