@@ -1,11 +1,11 @@
-%def_disable snapshot
+%def_enable snapshot
 %def_disable static
 %def_enable check
 
 %define rname lcms2
 
 Name: lib%rname
-Version: 2.13.1
+Version: 2.14
 Release: alt1
 
 Summary: Little cms color engine, version 2
@@ -20,7 +20,7 @@ Vcs: https://github.com/mm2/Little-CMS.git
 Source: %rname-%version.tar
 %endif
 
-# Automatically added by buildreq on Sat Nov 06 2010
+BuildRequires: autoconf-archive
 BuildRequires: gcc-c++ libjpeg-devel libtiff-devel zlib-devel
 
 %package devel
@@ -105,6 +105,9 @@ This package contains various %name-based utilities
 %endif
 
 %changelog
+* Thu Nov 10 2022 Yuri N. Sedunov <aris@altlinux.org> 2.14-alt1
+- updated to lcms2.14-2-gc26d3d2
+
 * Tue Mar 01 2022 Yuri N. Sedunov <aris@altlinux.org> 2.13.1-alt1
 - 2.13.1
 
