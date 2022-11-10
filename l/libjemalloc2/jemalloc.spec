@@ -1,22 +1,28 @@
-%def_disable static
-
 %define title jemalloc
 %define sorev 2
 
+%def_with check
+
 Name: libjemalloc2
-Version: 5.2.1
+Version: 5.3.0
 Release: alt1
 Summary: A general-purpose scalable concurrent malloc(3) implementation
 Group: System/Libraries
 License: BSD
 Url: http://jemalloc.net/
+VCS: https://github.com/jemalloc/jemalloc
 
-Source: %title-%version.tar
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 # Automatically added by buildreq on Mon May 14 2018
 # optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 gnu-config libstdc++-devel python-base
 BuildRequires: gcc-c++
 BuildRequires: xsltproc docbook-style-xsl
+
+%if_with check
+BuildRequires: /proc
+%endif
 
 %description
 jemalloc is a general-purpose scalable concurrent malloc(3)
@@ -46,50 +52,40 @@ Requires: %name = %EVR
 Starting up wrapper for use %title.
 
 %package -n libjemalloc-devel
-Summary: Development files, debugging and profiling version of %title
+Summary: Development files of %title
 Group: System/Libraries
 License: BSD
 
 %description -n libjemalloc-devel
-Development files, debugging and profiling version of %title
+Development files of %title
 
 %prep
-%setup -n %title-%version
-# XXX hack out "restrict keyword"
-##for f in `fgrep -rl '*restrict ' .`; do sed -i 's/\*restrict /\*/g' $f; done
+%setup
+%autopatch -p1
 
 %build
-CONF="--enable-swap --enable-xmalloc --enable-dss --enable-sysv --enable-autogen --enable-log --enable-utrace --with-xslroot=/usr/share/xml/docbook/xsl-stylesheets"
-%configure $CONF --enable-debug
+%autoreconf
+
+%configure \
+    --with-version='%version-0-g0' \
+    --with-xslroot=/usr/share/xml/docbook/xsl-stylesheets \
+
 %make_build
 %make doc
-mkdir -p debug
-cp -a lib/lib* debug
-%configure $CONF --enable-prof --enable-stats
-%make_build install_suffix=_profiler
-mkdir -p prof
-cp -a lib/lib* prof
-%configure $CONF
-%make_build
 
 %install
-%makeinstall DESTDIR=%buildroot
-mkdir -p %buildroot%_libdir/debug %buildroot%_libdir/prof
-cp -a debug/* %buildroot%_libdir/debug
-cp -a prof/* %buildroot%_libdir/
+%makeinstall_std
 
-#mv %buildroot%_bindir/pprof %buildroot%_bindir/pprof.%title
-mv %buildroot%_defaultdocdir/jemalloc %buildroot%_defaultdocdir/jemalloc%sorev
+mv %buildroot%_defaultdocdir/jemalloc{,%sorev}
 
 # add so.2 -> so.2.0
-mv %buildroot%_libdir/libjemalloc.so.%sorev %buildroot%_libdir/libjemalloc.so.%sorev.0
+mv %buildroot%_libdir/libjemalloc.so.%sorev{,.0}
 ln -s libjemalloc.so.%sorev.0 %buildroot%_libdir/libjemalloc.so.%sorev
-mv %buildroot%_libdir/libjemalloc_profiler.so.%sorev %buildroot%_libdir/libjemalloc_profiler.so.%sorev.0
-ln -s libjemalloc_profiler.so.%sorev.0 %buildroot%_libdir/libjemalloc_profiler.so.%sorev
 
-%if_disabled static
-rm -rf %buildroot%_libdir/debug/*.a %buildroot%_libdir/*.a
-%endif
+rm -r %buildroot%_libdir/*.a
+
+%check
+%make_build VERBOSE=1 check
 
 %files
 %doc %_defaultdocdir/jemalloc2
@@ -105,15 +101,13 @@ rm -rf %buildroot%_libdir/debug/*.a %buildroot%_libdir/*.a
 %_includedir/*
 %_man3dir/*
 %_libdir/libjemalloc.so
-%_libdir/libjemalloc_profiler.so*
-%if_enabled static
-%_libdir/lib*.a
-%endif
-%_libdir/debug/lib*
 %_bindir/*config
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Oct 12 2022 Stanislav Levin <slev@altlinux.org> 5.3.0-alt1
+- 5.2.1 -> 5.3.0.
+
 * Wed Jun 02 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.2.1-alt1
 - Updated to upstream version 5.2.1
 
