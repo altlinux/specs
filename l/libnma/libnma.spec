@@ -6,7 +6,7 @@
 
 Name: libnma
 Version: 1.10.4
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2.1+
 Group: Graphical desktop/GNOME
 Summary: NetworkManager GUI library
@@ -154,10 +154,7 @@ This package contains development documentation for libnma-devel-doc.
 %find_lang %name
 
 %files
-%_datadir/glib-2.0/schemas/org.gnome.nm-applet.eap.gschema.xml
 %_libdir/libnma.so.*
-
-%exclude %_datadir/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
 
 %files devel
 %_includedir/libnma/
@@ -188,11 +185,18 @@ This package contains development documentation for libnma-devel-doc.
 
 %files common -f %name.lang
 %doc NEWS CONTRIBUTING
+%_datadir/glib-2.0/schemas/org.gnome.nm-applet.eap.gschema.xml
+
+%exclude %_datadir/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
 
 %files devel-doc
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Fri Nov 11 2022 Mikhail Efremov <sem@altlinux.org> 1.10.4-alt2
+- Move gschema to common subpackage.
+- Drop path from eap schema (closes: #44273).
+
 * Tue Nov 08 2022 Mikhail Efremov <sem@altlinux.org> 1.10.4-alt1
 - Don't package org.gnome.nm-applet.gschema.xml.
 - Build with gcr4.
