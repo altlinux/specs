@@ -5,7 +5,7 @@
 %def_disable gsettings
 
 Name: lib%_name
-Version: 4.17.0
+Version: 4.17.1
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -13,7 +13,7 @@ Summary (ru_RU.UTF-8): Система конфигурации Xfce
 License: GPL-2.0-only and LGPL-2.0-only
 Group: Graphical desktop/XFce
 Vcs: https://gitlab.xfce.org/xfce/xfconf.git
-Url: https://www.xfce.org/
+Url: https://docs.xfce.org/xfce/xfconf/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Source: %_name-%version.tar
@@ -160,6 +160,10 @@ xvfb-run make -k check
 %endif
 
 %changelog
+* Thu Nov 10 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
+- Updated Url tag.
+- Updated to 4.17.1.
+
 * Tue Nov 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
 - Enabled tests.
 - Updated to 4.17.0.
