@@ -2,7 +2,7 @@
 %define beta %nil
 
 Name: yelp-tools
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Collection of tools for building and converting documentation
@@ -44,9 +44,12 @@ package just wraps things up in a developer-friendly way.
 %_bindir/yelp-new
 %_datadir/yelp-tools/
 %_datadir/aclocal/yelp.m4
-%doc AUTHORS README
+%doc AUTHORS NEWS
 
 %changelog
+* Tue Nov 01 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
+- 42.1
+
 * Sat Mar 19 2022 Yuri N. Sedunov <aris@altlinux.org> 42.0-alt1
 - 42.0
 
