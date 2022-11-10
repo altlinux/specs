@@ -1,21 +1,45 @@
+%define _unpackaged_files_terminate_build 1
+
+# build rules
+%def_with docs
+%def_with openssl
+%def_with libjson
+%def_without python
+%def_with check
+%def_without system_tests
+
+# common directory for documentation
+%define docdir %_docdir/bind-%version
+# root directory for chrooted environment
+%define _chrootdir %_localstatedir/bind
+%define run_dir /run/named
+%define log_dir %_logdir/named
+%define restart_flag /run/named/named.restart
+
+%define named_user named
+%define named_group named
+
+%ifndef timestamp
+%define timestamp %(TZ=UTC LC_TIME=C date +%%Y%%m%%d)
+%endif
+
 Name: bind
-Version: 9.11.37
-%define src_version 9.11.37
+Version: 9.16.34
+%define src_version 9.16.34
 Release: alt1
 
 Summary: ISC BIND - DNS server
 License: MPL-2.0
 Group: System/Servers
-Url: http://www.isc.org/products/BIND/
+Url: https://www.isc.org/bind/
+VCS: https://gitlab.isc.org/isc-projects/bind9.git
 
-# ftp://ftp.isc.org/isc/bind9/%src_version/bind-%src_version.tar.gz
+# ftp://ftp.isc.org/isc/bind9/%src_version/bind-%src_version.tar.xz
 Source0: %name-%version.tar
-Source2: rfc1912.txt
-Source3: bind.README.bind-devel
-Source4: bind.README.ALT
+Source3: README.bind-devel
+Source4: README.ALT
 
 Source11: bind.init
-Source12: lwresd.init
 
 Source21: rndc.conf
 Source22: rndc.key
@@ -34,35 +58,43 @@ Source43: bind.127.in-addr.arpa
 Source44: bind.empty
 
 Source50: bind.service
+Source51: bind.tmpfiles.conf
 
 # NB: there must be at least one patch :)
-Patch0001: 0001-owl-warnings.patch
-Patch0002: 0002-openbsd-owl-pidfile.patch
-Patch0003: 0003-openbsd-owl-chroot-defaults.patch
-Patch0004: 0004-alt-owl-chroot.patch
-Patch0005: 0005-owl-checkconf-chroot.patch
-Patch0006: 0006-alt-man.patch
-Patch0007: 0007-alt-nofile.patch
-Patch0008: 0008-alt-ads-remove.patch
-Patch0009: 0009-Minimize-linux-capabilities.patch
-Patch0010: 0010-Link-libirs-with-libdns-libisc-and-libisccfg.patch
-Patch0011: 0011-ALT-Make-it-possible-to-retain-Linux-capabilities-of.patch
+Patch0001: 0001-ALT-defaults-Reintroduce-chrooted-named-by-default.patch
+Patch0002: 0002-ALT-Minimize-linux-capabilities.patch
+Patch0003: 0003-ALT-Make-it-possible-to-retain-Linux-capabilities-of.patch
+Patch0004: 0004-ALT-named-Allow-non-writable-working-directory.patch
+Patch0005: 0005-ALT-tests-Unchroot-named-for-tests.patch
+Patch0006: 0006-ALT-tests-Add-tests-for-signing-with-custom-OpenSSL.patch
+Patch0007: 0007-ALT-tests-Raise-expected-delta-time-for-cds.patch
+Patch0008: 0008-ALT-tests-Wait-up-to-30sec-for-the-server-start.patch
 
-# root directory for chrooted environment.
-%define _chrootdir %_localstatedir/bind
-
-# common directory for documentation.
-%define docdir %_docdir/bind-%version
-
-%ifndef timestamp
-%define timestamp %(TZ=UTC LC_TIME=C date +%%Y%%m%%d)
+%if_with docs
+BuildRequires: python3(sphinx)
+BuildRequires: python3(sphinx_rtd_theme)
 %endif
 
-%def_disable static
-%def_enable ipv6
-%def_with openssl
-%def_with libjson
-%def_without python
+%if_with check
+%if_with system_tests
+BuildRequires: python3(dns)
+BuildRequires: python3(hypothesis)
+# requires only for pkcs11 tests
+BuildRequires: softhsm
+BuildRequires: libp11
+BuildRequires: opensc
+%else
+BuildRequires: rpm-build-vm
+BuildRequires: /sbin/runuser
+BuildRequires: /dev/kvm
+%endif
+
+BuildRequires: iproute2
+BuildRequires: perl-Net-DNS
+BuildRequires: perl-File-Fetch
+BuildRequires: perl-Digest-HMAC
+BuildRequires: python3(pytest)
+%endif
 
 Provides: bind-chroot(%_chrootdir)
 Obsoletes: bind-chroot, bind-debug, bind-slave, caching-nameserver
@@ -82,6 +114,8 @@ BuildPreReq: libcap-devel
 %{?_with_openssl:BuildPreReq: libssl-devel}
 %{?_with_libjson:BuildPreReq: libjson-c-devel}
 BuildPreReq: libkrb5-devel
+BuildRequires: libuv-devel
+BuildRequires: libidn2-devel
 
 %package utils
 Summary: Utilities provided by ISC BIND
@@ -95,9 +129,8 @@ Provides: libdns = %EVR
 Provides: libisc = %EVR
 Provides: libisccc = %EVR
 Provides: libisccfg = %EVR
-Provides: liblwres = %EVR
 Obsoletes: libdns8, libdns9, libdns10, libdns11, libdns16
-Obsoletes: libisc4, libisc7, libisccc0, libisccfg0, liblwres1
+Obsoletes: libisc4, libisc7, libisccc0, libisccfg0
 
 %package devel
 Summary: ISC BIND development libraries and headers
@@ -106,21 +139,13 @@ Requires: libbind = %EVR
 Provides: libisc-export-devel = %EVR
 Obsoletes: libisc-export-devel < %version
 
-%package devel-static
-Summary: ISC BIND static development libraries
-Group: Development/C
-Requires: %name-devel = %EVR
-
+%if_with docs
 %package doc
 Summary: Documentation for ISC BIND
 Group: Development/Other
 BuildArch: noarch
 Prefix: %prefix
-
-%package -n lwresd
-Summary: Lightweight resolver daemon
-Group: System/Servers
-Requires: libbind = %EVR
+%endif
 
 %description
 The Berkeley Internet Name Domain (BIND) implements an Internet domain
@@ -141,28 +166,16 @@ daemons and clients.
 
 %description devel
 This package contains development libraries, header files, and API man
-pages for libdns, libisc, libisccc, libisccfg and liblwres. These are
+pages for libdns, libisc, libisccc, libisccfg. These are
 only needed if you want to compile packages that need more BIND
 %src_version nameserver API than the resolver code provided by
 glibc.
 
-%description devel-static
-This package contains development static libraries, header files, and
-API man pages for libdns, libisc, libisccc, libisccfg and liblwres.
-These are only needed if you want to compile statically linked packages
-that need more BIND %src_version nameserver API than the resolver
-code provided by glibc.
-
+%if_with docs
 %description doc
 This package provides various documents that are useful for maintaining
 a working BIND %src_version installation.
-
-%description -n lwresd
-This package contains lwresd, the daemon providing name lookup services
-to clients that use the BIND %src_version lightweight resolver
-library. It is essentially a stripped-down, caching-only name server
-that answers queries using the BIND 9 lightweight resolver protocol
-rather than the DNS protocol.
+%endif
 
 %prep
 %setup
@@ -170,55 +183,65 @@ rather than the DNS protocol.
 # NB: there must be at least one patch :)
 %autopatch -p2
 
-install -D -pm644 %_sourcedir/rfc1912.txt doc/rfc/rfc1912.txt
-install -pm644 %_sourcedir/bind.README.bind-devel README.bind-devel
-install -pm644 %_sourcedir/bind.README.ALT README.ALT
-
 mkdir addon
-install -pm644 %_sourcedir/{bind,lwresd}.init addon/
-install -pm644 %_sourcedir/bind.{named,options,rndc,local,rfc1912,rfc1918}.conf \
-	addon/
-install -pm644 %_sourcedir/bind.{localhost,localdomain,127.in-addr.arpa,empty,sysconfig,service} \
-	addon/
-install -pm644 %_sourcedir/rndc.{conf,key} addon/
+install -pm644 \
+    %_sourcedir/bind.init \
+    %_sourcedir/bind.named.conf \
+    %_sourcedir/bind.options.conf \
+    %_sourcedir/bind.rndc.conf \
+    %_sourcedir/bind.local.conf \
+    %_sourcedir/bind.rfc1912.conf \
+    %_sourcedir/bind.rfc1918.conf \
+    %_sourcedir/bind.localhost \
+    %_sourcedir/bind.localdomain \
+    %_sourcedir/bind.127.in-addr.arpa \
+    %_sourcedir/bind.empty \
+    %_sourcedir/bind.sysconfig \
+    %_sourcedir/bind.service \
+    %_sourcedir/bind.tmpfiles.conf \
+    %_sourcedir/rndc.conf \
+    %_sourcedir/rndc.key \
+    addon/
 
 find -type f -print0 |
 	xargs -r0 grep -lZ '@[A-Z_]\+@' -- |
 	xargs -r0 sed -i \
 '
 s,@ROOT@,%_chrootdir,g;
-s,@LWRESD_ROOT@,/var/resolv,g;
-s,@DOCDIR@,%docdir,g;
-s,@SBINDIR@,%_sbindir,g;
+s,@DISTRO_OPTIONS@,-u %named_user,g;
+s,@RUN_DIR@,%run_dir,g;
+s,@NAMED_USER@,%named_user,g;
+s,@LOG_DIR@,%log_dir,g;
 ' --
 
-sed -i '/# Large File/iAC_SYS_LARGEFILE/' configure.ac
-
 %build
+%if_with docs
+# see HTMLTARGET in configure.ac and doc/arm/Makefile.in
+export SPHINX_BUILD=/usr/bin/sphinx-build-3
+%endif
+
 %autoreconf
 %configure \
 	--localstatedir=/var \
-	--with-randomdev=/dev/random \
-	--enable-threads \
+	--with-libidn2 \
 	--enable-linux-caps \
 	--enable-fixed-rrset \
-	--disable-seccomp \
 	 %{subst_with openssl} \
-	 %{subst_with libjson} \
+%if_with libjson
+	--with-json-c=yes \
+%endif
 	 %{subst_with python} \
-	 %{subst_enable ipv6} \
-	 %{subst_enable static} \
+	--disable-static \
 	--includedir=%{_includedir}/bind9 \
 	--with-libtool \
 	--with-gssapi=yes \
 	#
 
 %make_build
-# Build queryperf
-pushd contrib/queryperf
-	%configure
-	%make_build
-popd # contrib/queryperf
+
+%if_with docs
+%make doc
+%endif
 
 %install
 %makeinstall_std
@@ -226,22 +249,22 @@ popd # contrib/queryperf
 # Install additional headers.
 install -pm644 lib/isc/unix/errno2result.h %buildroot%_includedir/bind9/isc/
 
-# Install queryperf.
-install -pm755 contrib/queryperf/queryperf %buildroot%_sbindir/
-
 # Install startup scripts.
 install -pD -m755 addon/bind.init %buildroot%_initdir/bind
-install -pD -m755 addon/lwresd.init %buildroot%_initdir/lwresd
 
 # Install systemd service
 install -pD -m644 addon/bind.service %buildroot%_unitdir/bind.service
+install -pD -m644 addon/bind.tmpfiles.conf %buildroot%_tmpfilesdir/bind.conf
 
 # Install configurations files
 install -pm640 addon/rndc.conf %buildroot%_sysconfdir/
 install -pD -m644 addon/bind.sysconfig %buildroot%_sysconfdir/sysconfig/bind
 
+mkdir -p %buildroot%run_dir
+mkdir -p %buildroot%log_dir
+
 # Create a chrooted environment...
-mkdir -p %buildroot%_chrootdir/{dev,%_sysconfdir,var/{run,tmp},session,zone/slave}
+mkdir -p %buildroot%_chrootdir/{dev,%_sysconfdir,var/run,session,zone/slave}
 for n in named options rndc local rfc1912 rfc1918; do
 	install -pm640 "addon/bind.$n.conf" \
 		"%buildroot%_chrootdir%_sysconfdir/$n.conf"
@@ -268,29 +291,117 @@ mkdir %buildroot%_sysconfdir/syslog.d
 ln -s %_chrootdir/dev/log %buildroot%_sysconfdir/syslog.d/bind
 #... end of the chroot configuration.
 
-# Create ndc compatibility symlinks.
-ln -s rndc %buildroot%_sbindir/ndc
-ln -s rndc.8 %buildroot%_man8dir/ndc.8
-
-# Create ghost files
-touch %buildroot/var/run/{named,lwresd}.pid
-
-# Package documentation files
+# ALT docs
 mkdir -p %buildroot%docdir
-cp -a CHANGES COPYRIGHT README* \
-	doc/{arm,misc,rfc} \
-	%buildroot%docdir/
-install -pm644 contrib/queryperf/README %buildroot%docdir/README.queryperf
+cp -a README %SOURCE3 %SOURCE4 CHANGES %buildroot%docdir/
 
-xz -9 %buildroot%docdir/{*/*.txt,CHANGES}
-rm -v %buildroot%docdir/*/{Makefile*,README-SGML,*.xml}
+%if_with docs
+mkdir -p %buildroot%docdir/arm
+cp -a doc/arm/_build/html %buildroot%docdir/arm/
+%endif
 
-%define _unpackaged_files_terminate_build 1
+# legacy path for plugins (for example, bind-dyndb-ldap)
+mkdir -p %buildroot%_libdir/bind
+
+# filetrigger: delayed restart of named if named or its plugins were
+# installed/upgraded
+mkdir -p %buildroot%_rpmlibdir
+cat > %buildroot%_rpmlibdir/%name-restart.filetrigger <<'EOF'
+#!/bin/sh -u
+# delayed restart of named if its plugins were installed/upgraded
+
+grep -qsE -- '^%_libdir/(named|bind)/' && [ -f '%restart_flag' ] || exit 0
+rm -f '%restart_flag'
+
+service bind start
+exit 0
+EOF
+chmod 0755 %buildroot%_rpmlibdir/%name-restart.filetrigger
+
+%check
+%if_with system_tests
+# setup and teardown require root
+perl bin/tests/system/testsock.pl || sudo sh -x bin/tests/system/ifconfig.sh up
+
+# setup softhsm
+export SOFTHSM_MODULE_PATH=%_libdir/softhsm/libsofthsm2.so
+export SOFTHSM2_CONF=/tmp/softhsm2/softhsm2.conf
+export OPENSSL_CONF=/tmp/softhsm2/openssl.cnf
+export PKCS11_ENGINE=pkcs11
+export SLOT=$(sh -eu bin/tests/prepare-softhsm2.sh)
+
+# tests are run as current user
+# see .gitlab-ci.yml
+pushd bin/tests/system
+# named must be unchrooted for upstream tests
+export ALT_NAMED_OPTIONS=' -t / '
+SYSTEMTEST_NO_CLEAN=1 %make_build -k test V=1
+
+# depends on PKCS11_TEST, which is only defined if named is built with native
+# PKCS11
+SYSTEMTEST_NO_CLEAN=1 sh run.sh pkcs11
+
+# teardown
+popd
+sudo sh bin/tests/system/ifconfig.sh down
+
+%else
+# today's (2021) vm-run (underlying KVM) is relatively slow.
+# The complete tests suite takes ~1h on x86_64 and results are not stable atm.
+# I tried to filter out some expected heavy tests by roughly the number of
+# named instances they use (<=2). The expected acceptable tests time is ~10min
+# on x86_64.
+
+cat > run_smoke.sh <<'_EOF'
+# setup
+runas="$1"
+perl bin/tests/system/testsock.pl || sh -x bin/tests/system/ifconfig.sh up
+ip a
+
+# tests
+# named must be unchrooted for upstream tests
+export ALT_NAMED_OPTIONS=' -t / '
+
+pushd bin/tests/system
+source ./conf.sh
+for testdir in $SUBDIRS; do
+    subns=$(find "$testdir" -maxdepth 1 -type d -name "ns[0-9]" | wc -l)
+    if [ $subns -lt 2 ]; then
+        runuser -u "$runas" -- sh run.sh "$testdir"
+    fi
+done
+
+# teardown
+popd
+sh bin/tests/system/ifconfig.sh down
+_EOF
+time vm-run --kvm=cond --sbin -- /bin/bash --norc --noprofile -eu run_smoke.sh "$(id -un)"
+%endif
 
 %pre
-/usr/sbin/groupadd -r -f named
-/usr/sbin/useradd -r -g named -d %_chrootdir -s /dev/null -n -c "Domain Name Server" named >/dev/null 2>&1 ||:
+/usr/sbin/groupadd -r -f %named_group
+/usr/sbin/useradd -r -g %named_group -d %_chrootdir -s /dev/null -n \
+    -c "Domain Name Server" %named_user >/dev/null 2>&1 ||:
 [ -f %_initdir/named -a ! -L %_initdir/named ] && /sbin/chkconfig --del named ||:
+
+# save running status and use it in post-transaction
+rm -f '%restart_flag'
+
+if [ "$1" -gt 1 ]; then
+    SYSTEMCTL=systemctl
+    if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+        "$SYSTEMCTL" is-active bind.service >/dev/null 2>&1 &&
+        "$SYSTEMCTL" stop bind.service 2>/dev/null &&
+        mkdir -p "$(dirname '%restart_flag')" &&
+        touch '%restart_flag' 2>/dev/null ||:
+    else
+        %_initdir/bind status >/dev/null 2>&1 &&
+        %_initdir/bind stop 2>/dev/null &&
+        mkdir -p "$(dirname '%restart_flag')" &&
+        touch '%restart_flag' 2>/dev/null ||:
+    fi
+fi
+
 %pre_control bind-chroot bind-debug bind-slave bind-caps
 
 %preun
@@ -309,17 +420,22 @@ fi
 
 %post_control -s enabled bind-chroot
 %post_control -s disabled bind-debug bind-slave bind-caps
-%post_service bind
 
-%pre -n lwresd
-/usr/sbin/groupadd -r -f lwresd
-/usr/sbin/useradd -r -g lwresd -d / -s /dev/null -n -c "Lightweight Resolver Daemon" lwresd >/dev/null 2>&1 ||:
-
-%post -n lwresd
-%post_service lwresd
-
-%preun -n lwresd
-%preun_service lwresd
+# next section is the copy of post_service, but
+# it doesn't restart named since this is responsibility of filetrigger
+SYSTEMCTL=systemctl
+if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+    "$SYSTEMCTL" daemon-reload
+    if [ "$1" -eq 1 ]; then
+        "$SYSTEMCTL" -q preset bind
+    fi
+else
+    if [ "$1" -eq 1 ]; then
+        chkconfig --add bind
+    else
+        chkconfig bind resetpriorities
+    fi
+fi
 
 %triggerun -- bind < 9.11.19-alt3
 F=/etc/sysconfig/bind
@@ -329,69 +445,69 @@ if [ $2 -gt 0 -a -f $F ]; then
 fi
 
 %files -n libbind
-%_libdir/lib*.so.*
-%dir %docdir
-%docdir/COPYRIGHT
-
-%files -n lwresd
-%config %_initdir/lwresd
-%_sbindir/lwresd
-%_man8dir/lwresd.*
-%ghost %attr(644,root,root) /var/run/lwresd.pid
+%_libdir/libbind9-%version.so
+%_libdir/libdns-%version.so
+%_libdir/libirs-%version.so
+%_libdir/libisc-%version.so
+%_libdir/libisccc-%version.so
+%_libdir/libisccfg-%version.so
+%_libdir/libns-%version.so
 
 %files devel
-%_libdir/*.so
-%_bindir/bind9-config
-%_bindir/isc-config.sh
-%_includedir/bind9
-%_man1dir/bind9-config.1*
-%_man3dir/*
 %dir %docdir
 %docdir/README.bind-devel
-
-%if_enabled static
-%files devel-static
-%_libdir/*.a
-%endif
+%_libdir/libbind9.so
+%_libdir/libdns.so
+%_libdir/libirs.so
+%_libdir/libisc.so
+%_libdir/libisccc.so
+%_libdir/libisccfg.so
+%_libdir/libns.so
+%_includedir/bind9
 
 %files
+%dir %docdir
+%docdir/CHANGES
+%docdir/README
+%docdir/README.ALT
+# plugins
+%dir %_libdir/named
+%_libdir/named/filter-aaaa.so
+# legacy path for plugins (for example, bind-dyndb-ldap)
+%dir %_libdir/bind
+
 %_bindir/arpaname
 %_bindir/named-rrchecker
-%exclude %_sbindir/lwresd
-%exclude %_man8dir/lwresd*
 %_sbindir/*
 %_sysconfdir/bind
 %_sysconfdir/bind.keys
 %_sysconfdir/named.conf
 %config %_initdir/bind
-%config %_sysconfdir/sysconfig/bind
-%config(noreplace) %attr(640,root,named) %_sysconfdir/rndc.conf
+%config(noreplace) %_sysconfdir/sysconfig/bind
+%config(noreplace) %attr(640,root,%named_group) %_sysconfdir/rndc.conf
+%dir %attr(770,root,%named_group) %run_dir
+%dir %attr(770,root,%named_group) %log_dir
 %_unitdir/bind.service
+%_tmpfilesdir/bind.conf
+
+%_rpmlibdir/%name-restart.filetrigger
 
 %_man1dir/named-rrchecker.1*
 %_man5dir/*
 %_man8dir/*
 %_man1dir/arpaname*
 
-%dir %docdir
-%docdir/README*
-%docdir/misc
-%exclude %docdir/README.bind-devel
-
-%ghost %attr(644,root,root) /var/run/named.pid
-
 #chroot
 %_sysconfdir/syslog.d/*
-%defattr(640,root,named,710)
+%defattr(640,root,%named_group,710)
 %dir %_chrootdir
 %dir %_chrootdir/dev
 %dir %_chrootdir%_sysconfdir
-%dir %_chrootdir/zone
-%dir %attr(700,root,named) %verify(not mode) %_chrootdir/zone/slave
-%dir %attr(700,root,named) %verify(not mode) %_chrootdir/var
-%dir %attr(1770,root,named) %_chrootdir/var/run
-%dir %attr(1770,root,named) %_chrootdir/var/tmp
-%dir %attr(700,root,named) %_chrootdir/session
+%dir %attr(1770,root,%named_group) %_chrootdir/zone
+%dir %attr(700,root,%named_group) %verify(not mode) %_chrootdir/zone/slave
+%dir %attr(700,root,%named_group) %verify(not mode) %_chrootdir/var
+%dir %attr(1770,root,%named_group) %_chrootdir/var/run
+%dir %attr(700,root,%named_group) %_chrootdir/session
 %config(noreplace) %_chrootdir%_sysconfdir/*.conf
 %config(noreplace) %verify(not md5 mtime size) %_chrootdir%_sysconfdir/rndc.key
 %_chrootdir%_sysconfdir/bind.keys
@@ -417,15 +533,19 @@ fi
 %_man1dir/host.*
 %_man1dir/nslookup.*
 %_man1dir/nsupdate.*
-%_man1dir/isc-config.sh.*
 
+%if_with docs
 %files doc
-%docdir
-%exclude %docdir/README*
-%exclude %docdir/misc
-%exclude %docdir/COPYRIGHT
+%dir %docdir
+%docdir/arm
+%endif
 
 %changelog
+* Tue Oct 25 2022 Stanislav Levin <slev@altlinux.org> 9.16.34-alt1
+- 9.11.37 -> 9.16.34 (closes: #40170).
+- Built with libidn2 (closes: #24573).
+- Fixed Url (closes: #43556).
+
 * Thu Mar 17 2022 Stanislav Levin <slev@altlinux.org> 9.11.37-alt1
 - 9.11.36 -> 9.11.37 (fixes: CVE-2021-25220).
 

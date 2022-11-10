@@ -1,9 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define bind_version 9.11.5
+%define bind_version 9.16.34
+
+%define restart_flag /run/named/named.restart
 
 Name: bind-dyndb-ldap
 Version: 11.10
-Release: alt1
+Release: alt2
 
 Summary: LDAP back-end plug-in for BIND
 License: %gpl2plus
@@ -34,12 +36,35 @@ off of your LDAP server.
 
 %build
 %autoreconf
+export BIND9_CFLAGS='-I/usr/include/bind9'
 %configure
 %make_build
 
 %install
 %makeinstall_std
 mkdir -p %buildroot%_localstatedir/bind/zone/dyndb-ldap/
+
+%pre
+# upgrade
+
+# Previously, during an upgrade transaction named failed on restart
+# with binary incompatible dyndb plugin (not updated yet). So the
+# special file-flag is created if named was running before upgrade.
+# Later, named's filetrigger checks it for restart.
+if [ "$1" -gt 1 ] && [ ! -f '%restart_flag' ]; then
+    SYSTEMCTL=systemctl
+    if sd_booted && "$SYSTEMCTL" --version >/dev/null 2>&1; then
+        "$SYSTEMCTL" is-active bind.service >/dev/null 2>&1 &&
+        "$SYSTEMCTL" stop bind.service 2>/dev/null &&
+        mkdir -p "$(dirname '%restart_flag')" &&
+        touch '%restart_flag' 2>/dev/null ||:
+    else
+        %_initdir/bind status >/dev/null 2>&1 &&
+        %_initdir/bind stop 2>/dev/null &&
+        mkdir -p "$(dirname '%restart_flag')" &&
+        touch '%restart_flag' 2>/dev/null ||:
+    fi
+fi
 
 %post
 # The following sed script:
@@ -71,14 +96,6 @@ done <<EOF
 EOF
 
 sed -i.bak --follow-symlinks -e "$SEDSCRIPT" /etc/named.conf
-# restart bind due to upgrade issue caused by binary incompatibility
-# of new installed version of bind and old not removed yet version of
-# dyndb ldap
-systemctl is-enabled --quiet bind && systemctl restart bind 2>&1 ||:
-# actually, FreeIPA installer disables all depended services to
-# explicitly control them via ipa.service/ipactl. Therefore in this
-# case named is always in disabled state.
-systemctl is-enabled --quiet ipa && systemctl restart bind 2>&1 ||:
 
 %files
 %_defaultdocdir/%name
@@ -88,6 +105,9 @@ systemctl is-enabled --quiet ipa && systemctl restart bind 2>&1 ||:
 %exclude %_libdir/bind/*.la
 
 %changelog
+* Fri Nov 04 2022 Stanislav Levin <slev@altlinux.org> 11.10-alt2
+- Fixed build with Bind 9.16.
+
 * Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 11.10-alt1
 - 11.1 -> 11.10.
 
