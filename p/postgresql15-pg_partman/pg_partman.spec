@@ -1,4 +1,4 @@
-%define pg_ver 11
+%define pg_ver 15
 %def_with jit
 
 Name: postgresql%pg_ver-pg_partman
