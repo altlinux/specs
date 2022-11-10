@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 22.08.3
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Configuration/Printing
@@ -16,6 +16,7 @@ License: GPL-2.0-or-later
 Requires: cups
 #Requires: printer-drivers-X11
 Requires: system-config-printer-lib
+Requires: system-config-printer-udev
 
 Source: %rname-%version.tar
 Source10: add-ppdtranslations-ru.po
@@ -100,6 +101,9 @@ rm -f "$tmp_file"
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Thu Nov 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt2
+- update requires
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
