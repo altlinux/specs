@@ -4,8 +4,8 @@
 %def_disable xwiimote
 
 Name: plasma5-remotecontrollers
-Version: 5.26.2
-Release: alt2
+Version: 5.26.3
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -105,6 +105,9 @@ mv %buildroot/%_libdir/udev/rules.d/40-uinput.rules %buildroot/%_udevrulesdir/40
 %_K5dbus_iface/*remotecontrollers*
 
 %changelog
+* Tue Nov 08 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.3-alt1
+- new version
+
 * Wed Nov 02 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt2
 - build without libcec
 

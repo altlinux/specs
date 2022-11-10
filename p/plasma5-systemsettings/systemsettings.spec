@@ -4,8 +4,8 @@
 %define libsystemsettingsview libsystemsettingsview%systemsettingsview_sover
 
 Name: plasma5-%rname
-Version: 5.26.2
-Release: alt2
+Version: 5.26.3
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -119,6 +119,9 @@ mv %buildroot/%_kf5_xdgapp/kdesystemsettings.desktop %buildroot/%_desktopdir/kf5
 %_K5lib/libsystemsettingsview.so.*
 
 %changelog
+* Tue Nov 08 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.3-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.2-alt2
 - fix russian translation
 
