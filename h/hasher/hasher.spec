@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.5.1
+Version: 1.6.0
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -61,6 +61,12 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Tue Nov 08 2022 Dmitry V. Levin <ldv@altlinux.org> 1.6.0-alt1
+- Fixed regression introduced in the previous release
+  in handling of optional parameters to CLI options (by Arseny Maslennikov).
+- hsh-copy: new tool (by Arseny Maslennikov).
+- Simplified workdir checks.
+
 * Mon Oct 24 2022 Dmitry V. Levin <ldv@altlinux.org> 1.5.1-alt1
 - Unshare systemd scope with systemd-run(1) if applicable
   (by Arseny Maslennikov).
