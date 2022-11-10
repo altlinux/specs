@@ -1,5 +1,5 @@
 Name: gear
-Version: 2.5.1
+Version: 2.6.0
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -67,18 +67,18 @@ make check
 %install
 %makeinstall_std
 install -pDm644 contrib/gear-bash_completion \
-	%buildroot/etc/bash_completion.d/gear
+	%buildroot%_datadir/bash-completion/completions/gear
 ln -s gear-store-tags %buildroot%_bindir/gear-update-tag
 ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 
 %define _unpackaged_files_terminate_build 1
 
 %files
-%config /etc/bash_completion.d/*
 %_bindir/gear*
 %exclude %_bindir/gear-sh-functions
 %_datadir/%name
 %_mandir/man?/gear*
+%_datadir/bash-completion/completions/gear
 %doc docs/QUICKSTART* docs/ABOUT*
 
 %files sh-functions
@@ -89,6 +89,10 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %_man1dir/describe-specfile*
 
 %changelog
+* Thu Nov 10 2022 Dmitry V. Levin <ldv@altlinux.org> 2.6.0-alt1
+- Relocated bash completion (closes: #41720).
+- Introduced "type" directive support.
+
 * Fri Jan 14 2022 Dmitry V. Levin <ldv@altlinux.org> 2.5.1-alt1
 - gear-rules.5: added references to git glob syntax (closes: #39804).
 - gear-store-tags: fixed the warning about specsubst directive (closes: #39898).
