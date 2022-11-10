@@ -8,7 +8,7 @@
 
 Name: kde5-connect
 Version: 22.08.3
-Release: alt1
+Release: alt2
 %K5init
 
 Group: Communications
@@ -34,7 +34,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: qt5-base-devel qt5-declarative-devel qt5-multimedia-devel
 BuildRequires: qt5-x11extras-devel qt5-quickcontrols2-devel qt5-wayland-devel
 BuildRequires: extra-cmake-modules
-BuildRequires: kde5-plasma-wayland-protocols
+BuildRequires: pulseaudio-qt5-devel
 BuildRequires: libfakekey-devel libqca-qt5-devel
 BuildRequires: kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-ki18n-devel
@@ -42,7 +42,7 @@ BuildRequires: kf5-kiconthemes-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjob
 BuildRequires: kf5-kservice-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel
 BuildRequires: kf5-kdoctools-devel kf5-kirigami-devel kf5-kpeople-devel kf5-qqc2-desktop-style-devel
 BuildRequires: kf5-kpackage-devel
-# KF5PulseAudioQt
+BuildRequires: kde5-plasma-wayland-protocols
 
 %description
 KDE Connect adds communication between KDE and your smartphone.
@@ -153,6 +153,9 @@ done
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Thu Nov 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt2
+- build with pulseaudio-qt5
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
