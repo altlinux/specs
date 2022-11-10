@@ -4,7 +4,7 @@
 
 Name: gmp
 Version: 6.2.1
-Release: alt4
+Release: alt5
 
 Summary: GNU MP arbitrary precision arithmetic library
 License: LGPLv3+
@@ -281,6 +281,10 @@ install -pm644 gmp-mparam.h rand/randmt.h %buildroot%_includedir/
 %endif #cxx && static
 
 %changelog
+* Thu Nov 10 2022 Alexander Danilov <admsasha@altlinux.org> 6.2.1-alt5
+- Backported upstream commit "mpz/inp_raw.c: Avoid bit size overflows"
+  (thx Marco Bodrato) (fixes CVE-2021-43618).
+
 * Fri Oct 29 2021 Leontiy Volodin <lvol@altlinux.org> 6.2.1-alt4
 - Enabled visibility for __gmpn_fft_best_k and __gmpn_mul_fft,
   which are used in gmp-ecm (ALT#41248).
