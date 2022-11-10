@@ -2,7 +2,7 @@
 
 Name: plasma5-oxygen-sounds
 Version: 5.26.3
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -55,6 +55,9 @@ developing applications that use %name.
 %_K5snd/*
 
 %changelog
+* Thu Nov 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.3-alt2
+- fix internal version
+
 * Tue Nov 08 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.3-alt1
 - new version
 
