@@ -15,7 +15,7 @@
 
 Name: plasma5-addons
 Version: 5.26.3
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -29,6 +29,8 @@ Requires: %name-common = %version-%release
 Requires: kf5-purpose
 # plasma.diskquota
 Requires: quota
+Provides: kf5-kdeplasma-addons = %EVR
+Obsoletes: kf5-kdeplasma-addons < %EVR
 
 Source: %rname-%version.tar
 Patch2: alt-sover.patch
@@ -55,11 +57,8 @@ BuildRequires: kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmode
 BuildRequires: kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-krunner-devel kf5-kservice-devel kf5-ktextwidgets-devel
 BuildRequires: kf5-kunitconversion-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kross-devel kf5-knewstuff-devel kf5-kactivities-devel
-BuildRequires: kf5-kdeclarative-devel kf5-kholidays-devel
+BuildRequires: kf5-kdeclarative-devel kf5-kholidays-devel kf5-networkmanager-qt-devel
 BuildRequires: plasma5-workspace-devel plasma5-libksysguard-devel
-
-Provides: kf5-kdeplasma-addons = %EVR
-Obsoletes: kf5-kdeplasma-addons < %EVR
 
 %description
 Plasma addons.
@@ -164,6 +163,9 @@ touch touch-%_arch
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Thu Nov 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.3-alt2
+- fix build requires
+
 * Tue Nov 08 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.3-alt1
 - new version
 
