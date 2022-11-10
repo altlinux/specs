@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name amtk
-%define ver_major 5.4
+%define ver_major 5.6
 %define api_ver 5
 
 %def_disable static
@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Actions, Menus and Toolbars Kit for GTK+3 applications
@@ -21,11 +21,12 @@ Url:  https://wiki.gnome.org/Projects/Amtk
 Vcs: https://gitlab.gnome.org/swilmet/amtk.git
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
+%define meson_ver 0.53
 %define gtk_ver 3.22
 %define gi_ver 1.42
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
-BuildRequires: meson gtk-doc
+BuildRequires: meson >= %meson_ver gtk-doc
 BuildRequires: libgtk+3-devel >= %gtk_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libgtk+3-gir-devel}
 
@@ -128,6 +129,12 @@ GObject introspection devel data for the Amtk library.
 %endif
 
 %changelog
+* Thu Nov 10 2022 Yuri N. Sedunov <aris@altlinux.org> 5.6.0-alt1
+- 5.6.0
+
+* Mon Oct 24 2022 Yuri N. Sedunov <aris@altlinux.org> 5.5.2-alt1
+- 5.5.2
+
 * Wed May 25 2022 Yuri N. Sedunov <aris@altlinux.org> 5.4.1-alt1
 - 5.4.1
 

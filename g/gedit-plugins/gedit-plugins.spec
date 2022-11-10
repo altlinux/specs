@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 42
+%define ver_major 43
 %define beta %nil
 %def_enable python
 # removed since 3.36
@@ -24,9 +24,9 @@ Source: %name-%version.tar
 %endif
 
 %define glib_ver 2.40.0
-%define gtk_ver 3.14.0
-%define gtksourceview_ver 4.0.2
-%define gedit_ver 40.0
+%define gtk_ver 3.24
+%define gtksourceview_ver 4.8.4
+%define gedit_ver 43.1
 %define peas_ver 1.14.1
 %define git2_ver 0.0.12
 %define vte_ver 0.38
@@ -86,11 +86,17 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.drawspaces.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.terminal.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.wordcompletion.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.translate.gschema.xml
+#%config %_datadir/glib-2.0/schemas/org.gnome.gedit.plugins.translate.gschema.xml
 %_datadir/metainfo/gedit-*.metainfo.xml
 
 
 %changelog
+* Thu Nov 10 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
+- 43.1
+
+* Thu Nov 10 2022 Yuri N. Sedunov <aris@altlinux.org> 41.1-alt1
+- 41.1
+
 * Fri May 27 2022 Yuri N. Sedunov <aris@altlinux.org> 42.1-alt1
 - 42.1
 

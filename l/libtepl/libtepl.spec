@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name tepl
-%define ver_major 6.0
+%define ver_major 6.2
 %define api_ver 6
 
 %def_enable gtk_doc
@@ -12,7 +12,7 @@
 %def_disable installed_tests
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+ Text Editor Framework
@@ -37,6 +37,7 @@ BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
 BuildRequires: meson glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgtksourceview4-devel >= %gtksource_ver
 BuildRequires: libxml2-devel libuchardet-devel gtk-doc >= %gtk_doc_ver
 BuildRequires: pkgconfig(amtk-5) >= %amtk_ver
+BuildRequires: pkgconfig(gsettings-desktop-schemas)
 BuildRequires: vala-tools
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.6.7 libgtk+3-gir-devel libgtksourceview4-gir-devel libamtk-gir-devel}
 
@@ -143,6 +144,9 @@ the functionality of the installed Tepl library.
 
 
 %changelog
+* Thu Nov 10 2022 Yuri N. Sedunov <aris@altlinux.org> 6.2.0-alt1
+- 6.2.0
+
 * Fri May 27 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.2-alt1
 - 6.0.2
 
