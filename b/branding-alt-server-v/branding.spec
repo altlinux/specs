@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt3
+Release: alt4
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -320,6 +320,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Wed Nov 09 2022 Andrew A. Vasilyev <andy@altlinux.org> 10.1-alt4
+- import contents of indexhtml from Alexey Osotov
+
 * Tue May 17 2022 Alexey Shabalin <shaba@altlinux.org> 10.1-alt3
 - not provides /etc/os-release
 
