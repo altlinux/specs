@@ -28,7 +28,7 @@ Requires: %docdir
 
 BuildRequires: php-devel = %php_version
 
-BuildRequires(pre): rpm-build-php7-version
+BuildRequires(pre): rpm-build-php8.0-version
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache2
 BuildPreReq: rpm-build-licenses >= 2.0.4
