@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.26.3
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -135,14 +135,14 @@ BuildRequires: kf5-kiconthemes-devel kf5-kidletime-devel kf5-kinit-devel kf5-kio
 BuildRequires: kf5-kjobwidgets-devel kf5-kjsembed-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-knotifyconfig-devel
 BuildRequires: kf5-kpackage-devel kf5-kparts-devel kf5-kpty-devel kf5-krunner-devel kf5-kservice-devel kf5-ktexteditor-devel
 BuildRequires: kf5-ktextwidgets-devel kf5-kunitconversion-devel kf5-kwallet-devel kf5-kwayland-devel kf5-kwidgetsaddons-devel
-BuildRequires: plasma5-kwin-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel plasma5-libkscreen-devel plasma5-libksysguard-devel kf5-plasma-framework-devel
+BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kxmlrpcclient-devel kf5-prison-devel
 BuildRequires: kf5-networkmanager-qt-devel kf5-kpeople-devel kf5-kactivities-stats-devel
 BuildRequires: kf5-kded kf5-kded-devel
-BuildRequires: kde5-kholidays-devel kde5-plasma-wayland-protocols
+BuildRequires: kde5-kholidays-devel kde5-plasma-wayland-protocols kde5-libkexiv2-devel
 BuildRequires: plasma5-kscreenlocker-devel plasma5-breeze-devel plasma5-layer-shell-qt-devel
-BuildRequires: plasma5-kpipewire-devel
-
+BuildRequires: plasma5-kpipewire-devel plasma5-kwin-devel plasma5-libkscreen-devel plasma5-libksysguard-devel
+ 
 %description
 KDE Plasma Workspace
 
@@ -521,6 +521,9 @@ done
 
 
 %changelog
+* Thu Nov 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.3-alt2
+- build with kexiv2
+
 * Tue Nov 08 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.3-alt1
 - new version
 
