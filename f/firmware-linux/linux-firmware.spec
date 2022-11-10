@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20221031
+Version: 20221109
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,28 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Nov 10 2022 Cronbuild Service <cronbuild@altlinux.org> 20221109-alt1
+- upstream changes (GIT 60310c2d):
+  + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + amdgpu: update DMCUB firmware for DCN 3.1.6 (thx Alex Deucher)
+  + rtl_bt: Update RTL8822C BT UART firmware to 0xFFB8_ABD6 (thx Hilda Wu)
+  + rtl_bt: Update RTL8822C BT USB firmware to 0xFFB8_ABD3 (thx Hilda Wu)
+  + WHENCE: mrvl: prestera: Add WHENCE entries for newly updated
+    4.1 FW images (thx Oleksandr Mazur)
+  + mrvl: prestera: Update Marvell Prestera Switchdev FW to v4.1 (thx Oleksandr Mazur)
+  + iwlwifi: add new FWs from core74_pv-60 release (thx Gregory Greenman)
+  + qcom: drop split a530_zap firmware file (thx Dmitry Baryshkov)
+  + qcom/vpu-1.0: drop split firmware in favour of the mbn file (thx Dmitry Baryshkov)
+  + qcom/venus-4.2: drop split firmware in favour of the mbn file (thx Dmitry Baryshkov)
+  + qcom/venus-4.2: replace split firmware with the mbn file (thx Dmitry Baryshkov)
+  + qcom/venus-1.8: replace split firmware with the mbn file (thx Dmitry Baryshkov)
+
 * Wed Nov 02 2022 Cronbuild Service <cronbuild@altlinux.org> 20221031-alt1
 - upstream changes (GIT 8bb75626):
   + Add firmware for Cirrus CS35L41 on new ASUS Laptop (thx Stefan Binding)
