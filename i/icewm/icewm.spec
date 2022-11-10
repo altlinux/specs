@@ -4,7 +4,7 @@
 %def_with markdown
 
 Name: %realname
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 Epoch:3
 
@@ -153,6 +153,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Thu Nov 10 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.2.1-alt1
+- 3.2.1
+
 * Fri Nov 04 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.2.0-alt1
 - 3.2.0
 
