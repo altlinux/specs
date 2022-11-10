@@ -1,5 +1,5 @@
 Name: gtk-theme-qogir
-Version: 2022.10.16
+Version: 2022.11.09
 Release: alt1
 Epoch: 1
 Summary: Qogir GTK theme
@@ -35,6 +35,16 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 %_datadir/themes/Qogir*
 
 %changelog
+* Thu Nov 10 2022 Leontiy Volodin <lvol@altlinux.org> 1:2022.11.09-alt1
+- New version.
+- Upstream:
+  + Update login screen.
+  + Add gnome screenshot ui support.
+  + Use red color for close buttons.
+  + Fix title in gnome software.
+  + Fix popup menu selected colors.
+  + Add rtl support for nautilus.
+
 * Tue Oct 18 2022 Leontiy Volodin <lvol@altlinux.org> 1:2022.10.16-alt1
 - New version.
 - Upstream:
