@@ -5,7 +5,7 @@
 
 Name: pdns
 Version: 4.6.3
-Release: alt1.1
+Release: alt2
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
 License: GPLv2
@@ -180,9 +180,7 @@ export PDNS_TEST_NO_IPV6=1
 rm -f %buildroot%_libdir/%name/*.la
 mv %buildroot%_sysconfdir/%name/pdns.conf{-dist,}
 
-chmod 600 %buildroot%_sysconfdir/%name/pdns.conf
-
-# rename zone2ldap to pdns-zone2ldap (#1193116)
+# rename zone2ldap to pdns-zone2ldap (rhbz#1193116)
 mv %buildroot%_bindir/zone2ldap %buildroot%_bindir/pdns_zone2ldap
 mv %buildroot%_man1dir/zone2ldap.1 %buildroot%_man1dir/pdns_zone2ldap.1
 
@@ -202,11 +200,15 @@ mkdir -p %buildroot%_localstatedir/%name
 %make_build -C pdns check || cat pdns/test-suite.log
 
 %pre
-
 %_sbindir/groupadd -r -f %name
 %_sbindir/useradd -M -r -d %_localstatedir/%name -s /bin/false -c "PowerDNS user" -g %name %name >/dev/null 2>&1 ||:
 
 %post
+# Fix permissions for config on update
+if [ $1 -eq 2 ]; then
+    chown --quiet --from=root:root root:%name %_sysconfdir/%name/pdns.conf 
+    chmod --quiet g+r %_sysconfdir/%name/pdns.conf
+fi
 %post_service pdns
 
 %preun
@@ -230,9 +232,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_unitdir/pdns@.service
 %_libdir/%name/libbindbackend.so
 %dir %_libdir/%name
-%dir %_sysconfdir/%name
+%dir %attr(-,root,%name) %_sysconfdir/%name
 %dir %attr(0750, root, %name) %_localstatedir/%name
-%config(noreplace) %_sysconfdir/%name/pdns.conf
+%attr(0640,root,%name) %config(noreplace) %_sysconfdir/%name/pdns.conf
 
 %files tools
 %_bindir/calidns
@@ -330,6 +332,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Fri Nov 11 2022 Alexey Shabalin <shaba@altlinux.org> 4.6.3-alt2
+- Fixed permissions for pdns.conf config.
+
 * Fri Sep 23 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.6.3-alt1.1
 - Fixed build for Elbrus.
 
