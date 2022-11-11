@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 22.3
+Version: 22.3.1
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
@@ -120,6 +120,9 @@ export TOX_TESTENV_PASSENV='NO_LATEST_WHEELS'
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 22.3.1-alt1
+- 22.3 -> 22.3.1.
+
 * Mon Oct 17 2022 Stanislav Levin <slev@altlinux.org> 22.3-alt1
 - 22.2.2 -> 22.3.
 
