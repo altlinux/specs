@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcore
-Version: 5.6.2
+Version: 5.6.2.1
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -116,6 +116,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_datadir/doc/dtkcore.qch
 
 %changelog
+* Fri Nov 11 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.2.1-alt1
+- New version.
+
 * Fri Oct 14 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.2-alt1
 - New version.
 - Upstream:
