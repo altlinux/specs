@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: lib%_name
-Version: 22.08.2
+Version: 22.08.3
 Release: alt1
 
 Summary: KDE Partition Manager core library
@@ -68,6 +68,9 @@ using %_name.
 
 
 %changelog
+* Fri Nov 11 2022 Yuri N. Sedunov <aris@altlinux.org> 22.08.3-alt1
+- 22.08.3
+
 * Thu Oct 13 2022 Yuri N. Sedunov <aris@altlinux.org> 22.08.2-alt1
 - 22.08.2
 
