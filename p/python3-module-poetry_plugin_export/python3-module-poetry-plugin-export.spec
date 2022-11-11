@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.1.2
+Version: 1.2.0
 Release: alt1
 
 Summary: Poetry plugin that allows the export of locked packages to various formats.
@@ -64,6 +64,9 @@ Poetry which it will eventually replace.
 %doc README.md CHANGELOG.md 
 
 %changelog
+* Sat Nov 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Mon Oct 10 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
 - 1.1.2
 

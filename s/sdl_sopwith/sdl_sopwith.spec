@@ -2,7 +2,7 @@
 %define _name sdl-%__name
 
 Name: sdl_%__name
-Version: 2.1.0
+Version: 2.1.1
 Release: alt1
 
 Summary: Classic scrolling shoot'em
@@ -31,7 +31,7 @@ export orig_CFLAGS="%(getconf LFS_CFLAGS)"
 
 %install
 %makeinstall_std
-install -pD -m644 %SOURCE1 %buildroot%_pixmapsdir/%__name.png
+install -pD -m644 icon.png %buildroot%_pixmapsdir/%__name.png
 install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%__name.desktop
 
 %files
@@ -45,6 +45,9 @@ install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%__name.desktop
 %exclude %_docdir/%_name
 
 %changelog
+* Sat Nov 12 2022 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt1
+- 2.1.1
+
 * Fri Sep 02 2022 Yuri N. Sedunov <aris@altlinux.org> 2.1.0-alt1
 - 2.1.0 (new github homepage, ported to SDL2)
 

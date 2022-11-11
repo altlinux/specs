@@ -3,7 +3,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: XML/HTML parsing library
@@ -20,7 +20,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-wheel python3-module-setuptools
 %{?_enable_check:BuildRequires: python3-module-pytest python3-module-w3lib
 BuildRequires: python3-module-pytest-cov python3-module-sybil
-BuildRequires: python3-module-six python3-module-lxml}
+BuildRequires: python3-module-six python3-module-lxml
+BuildRequires: python3-module-psutil /proc}
 
 %description
 Parsel is a Python library to extract and remove data from HTML and XML
@@ -46,6 +47,9 @@ py.test3
 %doc README*
 
 %changelog
+* Sat Nov 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Thu Oct 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - first build for Sisyphus
 

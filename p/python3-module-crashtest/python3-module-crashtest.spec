@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Crashtest is a Python library that makes exceptions handling and inspection easier.
@@ -52,6 +52,9 @@ py.test3
 %doc README.md
 
 %changelog
+* Sat Nov 12 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Mon Sep 12 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - first build for Sisyphus
 
