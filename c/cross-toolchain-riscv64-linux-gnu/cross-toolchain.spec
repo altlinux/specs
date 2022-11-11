@@ -42,7 +42,7 @@
 
 Name: cross-toolchain-%target
 Version: 20220112
-Release: alt1
+Release: alt2
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
 Group: Development/C
@@ -51,6 +51,9 @@ ExclusiveArch: x86_64
 
 # gcc patches
 Patch5: gcc-alt-riscv64-not-use-lp64d.patch
+
+# glibc:
+Patch6: glibc-ustream-fix-make-4.4.patch
 
 %define gcc_version 10.3.1
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
@@ -138,6 +141,10 @@ rm -rf stage
 %if "%target_arch" == "riscv64"
 pushd gcc
 %patch5 -p1
+popd
+
+pushd glibc
+%patch6 -p1
 popd
 %endif
 
@@ -568,6 +575,9 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Fri Nov 11 2022 Ivan A. Melnikov <iv@altlinux.org> 20220112-alt2
+- Fix build with make 4.4.
+
 * Wed Jan 12 2022 Ivan A. Melnikov <iv@altlinux.org> 20220112-alt1
 - Sync sources with sisyphus_riscv64:
   - update binutils to 2.37-alt3.rv64.1;
