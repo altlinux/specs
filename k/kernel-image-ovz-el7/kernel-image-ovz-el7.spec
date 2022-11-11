@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.66.1.vz7.188.11
-%define orelease 1160.66.1.vz7.188.11
+#     rh7-3.10.0-1160.76.1.vz7.189.6
+%define orelease 1160.76.1.vz7.189.6
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -25,7 +25,7 @@ Epoch: 1
 # Build options
 # You can change compiler version by editing this line:
 #%%define kgcc_version %__gcc_version_base
-%define kgcc_version 11
+%define kgcc_version 10
 %define __nprocs 4
 
 %def_disable verbose
@@ -600,6 +600,10 @@ grep beancounter boot.log
 
 
 %changelog
+* Fri Nov 11 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.76.1.vz7.189.6
+- Build rh7-3.10.0-1160.76.1.vz7.189.6
+- Use GCC 10
+
 * Thu Sep 08 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.66.1.vz7.188.11
 - Build rh7-3.10.0-1160.66.1.vz7.188.11
 
