@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.36
+Version: 1.37
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -16,10 +16,6 @@ Source: %name-%version.tar
 %define supported_arches %ix86 x86_64 ppc64le aarch64 armh
 
 %ifarch %supported_arches
-# We need static libs to build initramfs /init binary:
-#   klibc-devel        - cannot call arbitrary syscall, cannot link with libblkid.
-#   musl-devel         - does not cover all arches.
-#   glibc-devel-static - binaries are bigger.
 BuildRequires: glibc-devel-static
 BuildRequires: libblkid-devel-static
 # For %%check.
@@ -120,8 +116,6 @@ Run checkinstall tests for vm-run.
 %ifarch %supported_arches
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
-[ -x /usr/bin/musl-gcc ] && export CC=musl-gcc
-[ -x /usr/bin/klcc     ] && export CC=klcc
 CFLAGS="%optflags" make
 %endif
 
@@ -135,6 +129,7 @@ install -D -p -m 0755 vm-run      %buildroot%_bindir/vm-run
 install -D -p -m 0755 vm-create-image %buildroot%_bindir/vm-create-image
 install -D -p -m 0755 vm-init     %buildroot%_libexecdir/vm-run/vm-init
 install -D -p -m 0755 initrd-init %buildroot%_libexecdir/vm-run/initrd-init
+install -D -p -m 0755 fakesudo    %buildroot%_libexecdir/vm-run/vm-fakesudo
 install -D -p -m 0755 filetrigger %buildroot%_rpmlibdir/vm-run.filetrigger
 install -D -p -m 0755 createimage %buildroot%_rpmlibdir/z-vm-createimage.filetrigger
 install -Dp bash_completion %buildroot%_sysconfdir/bashrc.d/vm_completion.sh
@@ -214,10 +209,19 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Wed Nov 09 2022 Vitaly Chikunov <vt@altlinux.org> 1.37-alt1
+- Add more rootfs boot testing options (--no-virtio, --scsi). Note: they will
+  not work on all architectures equally.
+- Add --sudo option (making fake sudo work inside rootfs vm). Requires and
+  enables rootfs mode.
+- Add --user option to run vm commands under builder instead of root (implies
+  --sudo and sudo use).
+- Both above options auto-create rootfs if it does not exist.
+
 * Mon Nov 07 2022 Vitaly Chikunov <vt@altlinux.org> 1.36-alt1
 - Add vm-create-image tool that can generate ext4 image out of hasher root.
 - vm-run: Support for booting from ext4 image using --rootfs=
-  (or --create-rootfs=) option(s). This way you have rull root access to the
+  (or --create-rootfs=) option(s). This way you have full root access to the
   system tree.
   Note that 9p is still (bind) mounted over '/usr/src', so you can place your
   test artifacts there.

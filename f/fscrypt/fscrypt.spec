@@ -2,7 +2,7 @@
 
 Name:		fscrypt
 Version:	0.3.1.0.2.360467d
-Release:	alt1
+Release:	alt2
 Summary:	A high-level tool for the management of Linux kernel filesystem encryption
 
 Group:		System/Kernel and hardware
@@ -43,9 +43,7 @@ install -Dm0644 .gear/%name.pam %buildroot%_sysconfdir/pam.d/%name
 
 %check
 sed -i 's/go test /\0 -mod=vendor /' Makefile
-mkdir -p /usr/src/bin
-ln -sf /usr/bin/time /usr/src/bin/sudo
-vm-run --kvm=cond --sbin --udevd \
+vm-run --kvm=cond --sbin --user --udevd \
 	make test-setup test test-teardown
 
 %files
@@ -56,6 +54,9 @@ vm-run --kvm=cond --sbin --udevd \
 %doc *.md
 
 %changelog
+* Fri Nov 11 2022 Vitaly Chikunov <vt@altlinux.org> 0.3.1.0.2.360467d-alt2
+- Unimportant update to simplify %%check.
+
 * Wed Dec 01 2021 Andrew Savchenko <bircoph@altlinux.org> 0.3.1.0.2.360467d-alt1
 - Version bump.
 - Enable LTO with fixed cgo in golang >= 1.17.
