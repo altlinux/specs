@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt3
+Release: alt4
 
 Summary: Group policy editor
 License: GPLv2+
@@ -108,6 +108,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Fri Nov 11 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt4
+- 0.2.17-alt4
+- Features:
+  + Add custom tree view for preferences.
+
 * Fri Nov 11 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt3
 - 0.2.17-alt3
 - Fixes:
