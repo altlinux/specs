@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %ifarch armh
@@ -37,8 +37,8 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.59
-Release: alt2
+Version: %ver_major.60
+Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -52,7 +52,7 @@ Vcs: https://github.com/PipeWire/pipewire.git
 Source: %name-%version.tar
 %endif
 #https://gitlab.freedesktop.org/pipewire/media-session.git
-# 0.4.1-10-gf71506321
+# 0.4.1-15
 Source1: media-session-%ms_ver.tar
 Patch: %name-0.3.19-alt-rpath.patch
 
@@ -166,7 +166,7 @@ export LIB=%_lib
 	%{?_disable_systemd:-Dsystemd=disabled} \
 	%{?_enable_systemd_system_service:-Dsystemd-system-service=enabled} \
 	%{?_disable_examples:-Dexamples=disabled} \
-	%{?_enable_wireplumber:-Dsession-managers=['media-session', 'wireplumber']}
+	-Dsession-managers='media-session'
 %nil
 %meson_build
 
@@ -307,6 +307,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Nov 10 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.60-alt1
+- 0.3.60-2-g518ccdf62 + media-session-0.4.1-15-ge380ca4d7
+
 * Mon Oct 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.59-alt2
 - enabled libcamera support again
 - enabled LC3 BT codec support
