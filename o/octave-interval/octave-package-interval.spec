@@ -4,8 +4,8 @@ BuildRequires: libgmp-devel makeinfo texinfo
 %def_with _octave_arch
 %define octpkg interval
 Name: octave-%octpkg
-Version: 3.2.0
-Release: alt2
+Version: 3.2.1
+Release: alt1
 Summary: Real-valued interval arithmetic
 
 Group: Sciences/Mathematics
@@ -52,6 +52,9 @@ The interval package for real-valued interval arithmetic allows
 %endif
 
 %changelog
+* Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 3.2.1-alt1
+- new version
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.2.0-alt2
 - rebuild with octave 5
 

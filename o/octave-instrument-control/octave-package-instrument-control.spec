@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/octave-config /usr/bin/rpcgen libtirpc-devel linux-gpib-
 %def_with _octave_arch
 %define octpkg instrument-control
 Name: octave-%octpkg
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 Summary: Instrument Control
 
@@ -46,6 +46,9 @@ Low level I/O functions for serial, i2c, spi, parallel, tcp, gpib, vxi11, udp an
 %endif
 
 %changelog
+* Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 0.7.1-alt1
+- new version
+
 * Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 0.7.0-alt1
 - regenerated from template by package builder
 

@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/octave makeinfo texinfo
 %define octpkg communications
 Epoch: 1
 Name: octave-%octpkg
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 Summary: Communications
 
@@ -47,6 +47,9 @@ Digital Communications, Error Correcting Codes (Channel Code), Source Code funct
 %endif
 
 %changelog
+* Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.2.4-alt1
+- new version
+
 * Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 1:1.2.3-alt1
 - regenerated from template by package builder
 

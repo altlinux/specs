@@ -4,8 +4,8 @@
 %endif
 
 Name: octave
-Version: 6.4.0
-Release: alt2
+Version: 7.3.0
+Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -237,6 +237,12 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Sun Nov 06 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.0-alt1
+- New version.
+
+* Thu Apr 07 2022 Andrey Cherepanov <cas@altlinux.org> 7.1.0-alt1
+- New version.
+
 * Tue Jan 25 2022 Vladislav Zavjalov <slazav@altlinux.org> 6.4.0-alt2
 - Use octave-cli in filetrigger (closes: #38242)
 

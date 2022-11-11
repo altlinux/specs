@@ -4,7 +4,7 @@ BuildRequires: makeinfo
 %define octpkg generate_html
 Epoch: 1
 Name: octave-%octpkg
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 Summary: Generate HTML web page from help texts
 
@@ -49,6 +49,9 @@ This package provides functions for generating HTML pages that
 %endif
 
 %changelog
+* Tue Nov 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.3.3-alt1
+- new version
+
 * Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:0.3.2-alt1
 - regenerated from template by package builder
 

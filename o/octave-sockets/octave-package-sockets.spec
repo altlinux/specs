@@ -5,7 +5,7 @@ BuildRequires: makeinfo
 %define octpkg sockets
 Epoch: 1
 Name: octave-%octpkg
-Version: 1.2.1
+Version: 1.4.0
 Release: alt1
 Summary: Sockets
 
@@ -47,6 +47,9 @@ Socket functions for networking from within octave.
 %endif
 
 %changelog
+* Tue Nov 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.4.0-alt1
+- new version
+
 * Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:1.2.1-alt1
 - regenerated from template by package builder
 

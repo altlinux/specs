@@ -5,7 +5,7 @@ BuildRequires: makeinfo
 %define octpkg io
 Epoch: 1
 Name: octave-%octpkg
-Version: 2.6.3
+Version: 2.6.4
 Release: alt1
 Summary: Input/Output
 
@@ -47,6 +47,9 @@ Input/Output in external formats.
 %endif
 
 %changelog
+* Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.6.4-alt1
+- new version
+
 * Tue Dec 01 2020 Igor Vlasenko <viy@altlinux.ru> 1:2.6.3-alt1
 - regenerated from template by package builder
 

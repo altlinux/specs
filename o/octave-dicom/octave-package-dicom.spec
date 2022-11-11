@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/octave-config makeinfo texinfo
 %def_with _octave_arch
 %define octpkg dicom
 Name: octave-%octpkg
-Version: 0.4.0
-Release: alt2
+Version: 0.4.1
+Release: alt1
 Summary: dicom: file io for medical images and other data
 
 Group: Sciences/Mathematics
@@ -50,6 +50,9 @@ Digital communications in medicine (DICOM) file io.
 %endif
 
 %changelog
+* Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 0.4.1-alt1
+- new version
+
 * Tue May 18 2021 Igor Vlasenko <viy@altlinux.org> 0.4.0-alt2
 - fixed build
 

@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/octave-config makeinfo texinfo
 %def_with _octave_arch
 %define octpkg parallel
 Name: octave-%octpkg
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 Summary: Parallel Computing.
 
@@ -54,6 +54,9 @@ mv %buildroot%_datadir/octave/packages/parallel-%version/bin/octave-pserver %bui
 %endif
 
 %changelog
+* Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1
+- new version
+
 * Mon Dec 14 2020 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
 - new version
 

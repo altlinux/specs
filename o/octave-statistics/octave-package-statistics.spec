@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/octave-cli makeinfo
 %define octave_pkg_name statistics
 Epoch: 1
 Name: octave-%octave_pkg_name
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 Summary: Additional statistics functions for Octave
 
@@ -53,6 +53,9 @@ octave -q -H --no-window-system --no-site-file --eval "pkg prefix %buildroot%_da
 %endif
 
 %changelog
+* Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.4.3-alt1
+- new version
+
 * Mon Jan 18 2021 Andrey Cherepanov <cas@altlinux.org> 1:1.4.2-alt1
 - New version.
 - Fix License tag.
