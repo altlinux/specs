@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: libpanel
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Library with GTK4 widgets for IDE-like applications
@@ -140,6 +140,9 @@ xvfb-run -s -noreset %__meson_test
 %endif
 
 %changelog
+* Fri Nov 11 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Tue Sep 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
