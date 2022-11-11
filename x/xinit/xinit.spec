@@ -1,6 +1,6 @@
 Name: xinit
 Version: 1.4.1
-Release: alt1
+Release: alt2
 Summary: X Window System initializer
 License: MIT/X11
 Group: System/X11
@@ -41,6 +41,9 @@ nate.
 %_man1dir/*
 
 %changelog
+* Fri Nov 11 2022 Sergey V Turchin <zerg at altlinux dot org> 1.4.1-alt2
+- don't require xterm (closes: 43833)
+
 * Mon Mar 11 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.4.1-alt1
 - 1.4.1
 - removed ck-xinit-session
