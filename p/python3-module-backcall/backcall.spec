@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name backcall
 
-%define oname backcall
+%def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 0.2.0
-Release: alt1
+Release: alt2
 Summary: Specifications for callback functions passed in to an API
 License: BSD-3-Clause
 Group: Development/Python3
@@ -16,8 +17,13 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit
-BuildRequires: /usr/bin/py.test3
+
+# build backend and its deps
+BuildRequires: python3(flit_core)
+
+%if_with check
+BuildRequires: python3(pytest)
+%endif
 
 %description
 Specifications for callback functions passed in to an API
@@ -54,24 +60,24 @@ For more details, see the docs or the Demo notebook.
 %setup
 
 %build
-flit build
+%pyproject_build
 
 %install
-pip%{_python3_version} install -I dist/%oname-%version-*-none-any.whl --root %buildroot --prefix %prefix --no-deps
+%pyproject_install
 
 %check
-export PYTHONDONTWRITEBYTECODE=1
-export PYTEST_ADDOPTS='-p no:cacheprovider'
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test3 -v tests \
-	%nil
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc LICENSE
 %doc README.rst
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/backcall/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 0.2.0-alt2
+- Fixed FTBFS (flit_core 3.7.1).
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.2.0-alt1
 - Initial build for ALT.

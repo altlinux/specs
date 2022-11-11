@@ -1,6 +1,9 @@
-Name: python3-module-mike
+%define _unpackaged_files_terminate_build 1
+%define pypi_name mike
+
+Name: python3-module-%pypi_name
 Version: 1.1.2
-Release: alt1
+Release: alt2
 
 Summary: Deploy multiple versions of your MkDocs
 
@@ -8,13 +11,15 @@ License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/mike
 
-Source: mike-%version.tar.gz
+Source: mike-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Sun Apr 17 2022
-# optimized out: libgpg-error python3 python3-base python3-dev python3-module-Pygments python3-module-docutils python3-module-filelock python3-module-packaging python3-module-pep517 python3-module-pkg_resources python3-module-platformdirs python3-module-pyparsing python3-module-six python3-module-system-seed-wheels python3-module-tomli sh4
-BuildRequires: python3-module-build python3-module-flit python3-module-setuptools python3-module-virtualenv python3-module-wheel
+BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 Mike is a Python utility to easily deploy multiple versions of your
@@ -27,17 +32,21 @@ to creating and executing
 %setup -n mike-%version
 
 %build
-python3 -m build -n
+%pyproject_build
 
 %install
-pip3 install --ignore-installed --root=%buildroot --no-deps dist/mike-%version-py3-none-any.whl
+%pyproject_install
 
 %files
 %doc *.md
-%python3_sitelibdir/*
-%_bindir/*
+%python3_sitelibdir/mike/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%_bindir/mike
 
 %changelog
+* Wed Nov 09 2022 Stanislav Levin <slev@altlinux.org> 1.1.2-alt2
+- Fixed FTBFS (flit_core 3.7.1).
+
 * Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 1.1.2-alt1
 - Autobuild version bump to 1.1.2
 

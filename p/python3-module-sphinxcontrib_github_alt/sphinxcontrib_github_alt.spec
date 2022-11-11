@@ -1,8 +1,9 @@
-%define oname sphinxcontrib_github_alt
+%define _unpackaged_files_terminate_build 1
+%define pypi_name sphinxcontrib_github_alt
 
-Name:           python3-module-%oname
+Name:           python3-module-%pypi_name
 Version:        1.2
-Release:        alt1
+Release:        alt2
 Summary:        Github roles for Sphinx docs
 Group:          Development/Python3
 License:        BSD-2-Clause
@@ -14,7 +15,9 @@ BuildArch:      noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit
+
+# build backend and its deps
+BuildRequires: python3(flit_core)
 
 %description
 Link to GitHub issues, pull requests, commits and users for a particular project.
@@ -23,19 +26,22 @@ Link to GitHub issues, pull requests, commits and users for a particular project
 %setup
 
 %build
-flit build
+%pyproject_build
 
 %install
-pip%{_python3_version} install -I dist/%oname-%version-*-none-any.whl --root %buildroot --prefix %prefix --no-deps
+%pyproject_install
 
 %files
 %doc COPYING.md
 %doc README.rst
-%python3_sitelibdir/%oname.py
-%python3_sitelibdir/__pycache__/%oname.*
-%python3_sitelibdir/%oname-%version.dist-info
+%python3_sitelibdir/sphinxcontrib_github_alt.py
+%python3_sitelibdir/__pycache__/sphinxcontrib_github_alt.*
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 1.2-alt2
+- Fixed FTBFS (flit_core 3.7.1).
+
 * Mon Sep 14 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2-alt1
 - Updated to upstream version 1.2.
 - Disabled build for python-2.

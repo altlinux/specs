@@ -2,9 +2,11 @@
 
 %define oname traitlets
 
+%def_with check
+
 Name: python3-module-%oname
 Version: 5.3.0
-Release: alt1
+Release: alt2
 
 Summary: Traitlets Python config system
 
@@ -16,13 +18,19 @@ Url: https://pypi.python.org/pypi/traitlets
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3 rpm-macros-sphinx3
-BuildRequires: python3-module-decorator python3-module-ipython_genutils-tests python3-module-pytest
-BuildRequires: python3-module-sphinx_rtd_theme python3(enum) python3-module-mock
-BuildRequires: python3-module-sphinx
-BuildRequires: python3-module-flit
+
+# build backend and its deps
+BuildRequires: python3(hatchling)
+
+# docs build
+BuildRequires: python3(sphinx)
+BuildRequires: python3(sphinx_rtd_theme)
+
+%if_with check
+BuildRequires: python3(pytest)
+%endif
 
 %py3_provides %oname
-%py3_requires ipython_genutils decorator
 
 %description
 A configuration system for Python applications.
@@ -53,23 +61,25 @@ This package contains pickles for %oname.
 ln -s ../objects.inv docs/source/
 
 %build
-%__python3 -m flit build --format wheel
-export PYTHONPATH=%buildroot%python3_sitelibdir
+%pyproject_build
+
+export PYTHONPATH=$(pwd)
 %make SPHINXBUILD="sphinx-build-3" -C docs pickle
 %make SPHINXBUILD="sphinx-build-3" -C docs html
 
 %install
-pip3 install -I dist/%oname-%version-*-none-any.whl --root %buildroot --prefix %prefix --no-deps
+%pyproject_install
 
 cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname
 
 %check
-rm -fR build
-py.test3 -vv
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc examples docs/build/html
-%python3_sitelibdir/*
+%python3_sitelibdir/traitlets/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 %exclude %python3_sitelibdir/*/pickle
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/*/tests
@@ -82,6 +92,9 @@ py.test3 -vv
 %python3_sitelibdir/*/pickle
 
 %changelog
+* Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 5.3.0-alt2
+- Fixed FTBFS (flit_core 3.7.1).
+
 * Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 5.3.0-alt1
 - Build new version.
 

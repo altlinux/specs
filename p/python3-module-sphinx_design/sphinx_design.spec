@@ -1,35 +1,42 @@
-%define oname sphinx_design
-Name: python3-module-%oname
+%define _unpackaged_files_terminate_build 1
+%define pypi_name sphinx_design
+
+Name: python3-module-%pypi_name
 Version: 0.2.0
-Release: alt1
+Release: alt2
 Summary: A sphinx extension for designing beautiful, view size responsive web components
 Group: Development/Python3
 License: MIT
 Url: https://pypi.org/project/sphinx_design
-Source0: %oname-%version.tar.gz
+Source0: %pypi_name-%version.tar
 BuildArch: noarch
 
-# Automatically added by buildreq on Wed Jun 15 2022
-# optimized out: libgpg-error python3 python3-base python3-dev python3-module-packaging python3-module-pep517 python3-module-pyparsing python3-module-tomli sh4
-BuildRequires: python3-module-build python3-module-flit python3-module-setuptools
+BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(flit_core)
 
 %description
 %summary
 
 %prep
-%setup -n %oname-%version
+%setup -n %pypi_name-%version
 
 %build
-python3 -m build -w -n
+%pyproject_build
 
 %install
-pip3 install --no-deps --root=%buildroot -I dist/*.whl
+%pyproject_install
 
 %files
 %doc *.md
-%python3_sitelibdir/%{oname}*
+%python3_sitelibdir/sphinx_design/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 0.2.0-alt2
+- Fixed FTBFS (flit_core 3.7.1).
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 0.2.0-alt1
 - Autobuild version bump to 0.2.0
 

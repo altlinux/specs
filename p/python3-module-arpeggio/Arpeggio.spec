@@ -1,9 +1,11 @@
-%define oname arpeggio
+%define _unpackaged_files_terminate_build 1
+%define pypi_name Arpeggio
+%define mod_name arpeggio
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%mod_name
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Parser interpreter based on PEG grammars written in Python
 License: MIT
@@ -11,16 +13,22 @@ Group: Development/Python3
 Url: https://github.com/igordejanovic/Arpeggio
 BuildArch: noarch
 
-Source0: Arpeggio-%version.tar.gz
+Source0: Arpeggio-%version.tar
 
-# Automatically added by buildreq on Sun Apr 17 2022
-# optimized out: alt-os-release fonts-font-awesome libgpg-error mpdecimal python3 python3-base python3-dev python3-module-Pygments python3-module-apipkg python3-module-attrs python3-module-babel python3-module-click python3-module-dateutil python3-module-ghp-import python3-module-importlib-metadata python3-module-iniconfig python3-module-jinja2 python3-module-markdown python3-module-markupsafe python3-module-mergedeep python3-module-mkdocs python3-module-packaging python3-module-pep517 python3-module-pkg_resources python3-module-pluggy python3-module-py python3-module-pyparsing python3-module-pytest python3-module-pytz python3-module-pyyaml-env-tag python3-module-six python3-module-tomli python3-module-verspec python3-module-watchdog python3-module-yaml python3-module-zipp sh4 xz
-BuildRequires: python3-module-build python3-module-flit python3-module-mike python3-module-setuptools python3-module-wheel python3-module-pytest-runner
+BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+# docs build
+BuildRequires: python3(mike)
 
 %if_with check
-BuildRequires: pytest3
+BuildRequires: python3(pytest)
 %endif
+
+%py3_provides %pypi_name
 
 %description
 Arpeggio is a recursive descent parser with memoization based on PEG
@@ -38,27 +46,29 @@ Group: Development/Python3
 ## python3 -c "import configparser; config = configparser.ConfigParser(); config.read('setup.cfg'); config['options']['setup_requires']=''; print(config['options']['setup_requires']); config.write(open('setup.cfg', 'w'))"
 
 %build
-python3 -m build -n -w
+%pyproject_build
 mkdocs build
 
-%if_with check
-%check
-pytest3
-%endif
-
 %install
-pip3 install --root=%buildroot --no-deps -I dist/Arpeggio-%version-*py3-none-any.whl
+%pyproject_install
+
+%check
+%tox_create_default_config
+%tox_check_pyproject -- -vra arpeggio/tests
 
 %files
 %doc site examples
-%python3_sitelibdir_noarch/%oname
-%exclude %python3_sitelibdir_noarch/%oname/tests
-%python3_sitelibdir_noarch/Arpeggio-*
+%python3_sitelibdir/%mod_name
+%exclude %python3_sitelibdir/%mod_name/tests/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %files tests
-%python3_sitelibdir_noarch/%oname/tests
+%python3_sitelibdir_noarch/%mod_name/tests/
 
 %changelog
+* Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2
+- Fixed FTBFS (flit_core 3.7.1).
+
 * Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 2.0.0-alt1
 - Autobuild version bump to 2.0.0
 - Switch to modern build scheme

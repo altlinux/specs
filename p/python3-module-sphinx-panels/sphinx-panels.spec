@@ -1,15 +1,22 @@
-Name: python3-module-sphinx-panels
+%define _unpackaged_files_terminate_build 1
+%define pypi_name sphinx-panels
+
+Name: python3-module-%pypi_name
 Version: 0.6.0
-Release: alt1
+Release: alt2
 License: MIT
-Source: sphinx-panels-%version.tar.gz
+Source: sphinx-panels-%version.tar
 Group: Development/Python3
 BuildArch: noarch
 Summary: A sphinx extension for creating document components optimised for HTML+CSS
 
-# Automatically added by buildreq on Sun Apr 17 2022
-# optimized out: libgpg-error python3 python3-base python3-dev python3-module-packaging python3-module-pep517 python3-module-pkg_resources python3-module-pyparsing python3-module-tomli sh4
-BuildRequires: python3-module-build python3-module-flit python3-module-setuptools python3-module-wheel
+BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%py3_provides %pypi_name
 
 %description
 A sphinx extension for creating document components optimised for HTML+CSS.
@@ -26,15 +33,19 @@ A sphinx extension for creating document components optimised for HTML+CSS.
 %setup -n sphinx-panels-%version
 
 %build
-python3 -m build -w -n
+%pyproject_build
 
 %install
-pip3 install --no-deps --root=%buildroot -I dist/sphinx_panels*%{version}*.whl
+%pyproject_install
 
 %files
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir/sphinx_panels/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 0.6.0-alt2
+- Fixed FTBFS (flit_core 3.7.1).
+
 * Sun Apr 17 2022 Fr. Br. George <george@altlinux.org> 0.6.0-alt1
 - Autobuild version bump to 0.6.0
 

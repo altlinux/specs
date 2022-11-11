@@ -1,29 +1,47 @@
+%define _unpackaged_files_terminate_build 1
 %def_with check
 %def_with docs
 
+%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
+
 Name: python3-module-pikepdf
 Version: 6.2.1
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Url: https://github.com/pikepdf/pikepdf
 Summary: A Python library for reading and writing PDF files
 Group: Development/Python
-Source: pikepdf-%version.tar.gz
+Source: pikepdf-%version.tar
 Patch: pikepdf-jbig2dec.patch
 Requires: libpoppler-gir
 
-# Automatically added by buildreq on Wed Jun 15 2022
-# optimized out: alt-os-release ca-trust git-core glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libp11-kit libstdc++-devel mercurial mpdecimal python3 python3-base python3-dev python3-module-PasteDeploy python3-module-Pillow python3-module-Pygments python3-module-alabaster python3-module-attrs python3-module-babel python3-module-cffi python3-module-charset-normalizer python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-lxml python3-module-markupsafe python3-module-packaging python3-module-paste python3-module-pep517 python3-module-pip python3-module-pkg_resources python3-module-pyparsing python3-module-pytz python3-module-requests python3-module-setuptools python3-module-sphinx python3-module-tomli python3-module-urllib3 sh4 xz
-BuildRequires: gcc-c++ libqpdf-devel python3-module-PasteScript python3-module-build python3-module-flit python3-module-mpl_toolkits python3-module-pybind11 python3-module-setuptools_scm python3-module-sphinxcontrib python3-module-wheel jbig2dec
+BuildRequires: gcc-c++ libqpdf-devel jbig2dec
+
+BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(setuptools-scm)
+BuildRequires: python3(pybind11)
 
 %if_with docs
-BuildRequires: ctags python3-module-sphinx-issues python3-module-sphinx_design python3-module-sphinx_rtd_theme python3-module-sphinxcontrib python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml python3-module-wheel
+BuildRequires: ctags python3-module-sphinx-issues python3-module-sphinx_design python3-module-sphinx_rtd_theme python3-module-sphinxcontrib python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-qthelp python3-module-sphinxcontrib-serializinghtml python3-module-Pillow
 %endif
 
 %if_with check
+# deps
+BuildRequires: python3(PIL)
+BuildRequires: python3(lxml)
+BuildRequires: python3(packaging)
 
-BuildRequires: pytest3 python3-module-hypothesis python3-module-psutil
+BuildRequires: python3(pytest)
+BuildRequires: python3(hypothesis)
+BuildRequires: python3(psutil)
 BuildRequires: /proc
+%if %tomli
+BuildRequires: python3(tomli)
+%endif
 %endif
 
 %description
@@ -34,42 +52,48 @@ Say it out loud, and it sounds like "pikepdf".
 %prep
 %setup -n pikepdf-%version
 %patch -p0
-# XXX what's that?
-sed -i '/"-n auto"/d' pyproject.toml
+# disable pytest-xdist (unstable results)
+sed -i 's/-n auto//' pyproject.toml
 
 # XXX don't want IPython as dependency
 sed -i '/autodoc_mock_imports/s/\]/, "IPython"]/
 /IPython.sphinxext/d
 ' docs/conf.py
 
+# https://github.com/pikepdf/pikepdf/issues/417
+sed -i '/[[:space:]]*deprecation[[:space:]]*/d' setup.cfg
+
 %build
-python3 -m build -n -w
-%if_with docs
-pip3 install --no-deps --root=build -I dist/pikepdf*%{version}*.whl
-PYTHONPATH=`pwd`/build%python3_sitelibdir make SPHINXBUILD=sphinx-build-3 -C docs html
-%endif
+%pyproject_build
 
 %install
-pip3 install --no-deps --root=%buildroot -I dist/pikepdf*%{version}*.whl
+%pyproject_install
+%if_with docs
+# docs build requires built C extension, but we can't control the path of build
+# artifacts
+PYTHONPATH="%buildroot%python3_sitelibdir" make SPHINXBUILD=sphinx-build-3 \
+    -C docs html
+%endif
 
-%if_with check
 %check
-%ifnarch armh
-PYTHONPATH=%buildroot%python3_sitelibdir pytest3
-%else
-# XXX this SEGFAULTs deep in there
-PYTHONPATH=%buildroot%python3_sitelibdir pytest3 -k 'not test_build_instructions'
+%ifarch armh
+%define pytest_opts -k 'not test_build_instructions'
 %endif
-%endif
+%tox_create_default_config
+%tox_check_pyproject -- -vra %{?pytest_opts}
 
 %files
 %if_with docs
 %doc docs/_build/html
 %endif
 %doc *.md
-%python3_sitelibdir/*pikepdf*
+%python3_sitelibdir/pikepdf/
+%python3_sitelibdir/%{pyproject_distinfo pikepdf}/
 
 %changelog
+* Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 6.2.1-alt2
+- Fixed FTBFS (flit_core 3.7.1).
+
 * Fri Oct 28 2022 Fr. Br. George <george@altlinux.org> 6.2.1-alt1
 - Autobuild version bump to 6.2.1
 

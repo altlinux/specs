@@ -1,25 +1,28 @@
+%define _unpackaged_files_terminate_build 1
 %def_with check
+
 Name: python3-module-jeepney
 Version: 0.8.0
-Release: alt1.1
+Release: alt2
 License: MIT
 Group: Development/Python3
 Url: https://gitlab.com/takluyver/jeepney
-Source: jeepney-%version.tar.gz
+Source: jeepney-%version.tar
 
 Summary: Pure Python DBus interface
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-module-build
-BuildRequires: python3-module-flit
+# build backend and its deps
+BuildRequires: python3(flit_core)
 
 %if_with check
+BuildRequires: python3(pytest)
+BuildRequires: python3(testpath)
 BuildRequires: python3-module-async-timeout
 BuildRequires: python3-module-pytest-asyncio
 BuildRequires: python3-module-trio
 %endif
 
-BuildRequires: python3-dev
 BuildArch: noarch
 
 %description
@@ -39,18 +42,18 @@ Extra dependencies for jeepney, namely tests and trio I/O
 %setup -n jeepney-%version
 
 %build
-python3 -m build -n
-
-%if_with check
-%check
-python3 -m pytest
-%endif
+%pyproject_build
 
 %install
-pip3 install --root=%buildroot --no-deps dist/jeepney-%version-py3-none-any.whl
+%pyproject_install
+
+%check
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir_noarch/jeepney/
+%python3_sitelibdir_noarch/%{pyproject_distinfo jeepney}/
 %exclude %python3_sitelibdir_noarch/jeepney/io/trio.py
 %exclude %python3_sitelibdir_noarch/jeepney/tests
 %exclude %python3_sitelibdir_noarch/jeepney/io/tests
@@ -61,6 +64,9 @@ pip3 install --root=%buildroot --no-deps dist/jeepney-%version-py3-none-any.whl
 %python3_sitelibdir_noarch/jeepney/io/tests
 
 %changelog
+* Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 0.8.0-alt2
+- Fixed FTBFS (flit_core 3.7.1).
+
 * Tue Sep 13 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.0-alt1.1
 - NMU: Fixed build requires
 

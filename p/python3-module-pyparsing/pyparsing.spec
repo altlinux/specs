@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %def_with check
 
 Name: python3-module-pyparsing
 Version: 3.0.9
-Release: alt1
+Release: alt2
 
 Summary: Python parsing module
 
@@ -10,16 +11,20 @@ License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pyparsing
 
-Source: pyparsing-%version.tar.gz
+Source: pyparsing-%version.tar
+Patch0: 0001-ALT-tests-Skip-coverage.patch
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Sun Apr 17 2022
-# optimized out: libgpg-error python3 python3-base python3-dev python3-module-filelock python3-module-packaging python3-module-pep517 python3-module-pkg_resources python3-module-platformdirs python3-module-six python3-module-system-seed-wheels python3-module-tomli sh4
-BuildRequires: python3-module-build python3-module-flit python3-module-setuptools python3-module-virtualenv
+BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(flit_core)
 
 %if_with check
-BuildRequires: python3-module-coverage python3-module-jinja2 python3-module-railroad-diagrams python3-module-setuptools python3-module-tox
+# optional deps:
+BuildRequires: python3-module-railroad-diagrams
+BuildRequires: python3(jinja2)
 %endif
 
 %description
@@ -30,23 +35,26 @@ that client code uses to construct the grammar directly in Python code.
 
 %prep
 %setup -n pyparsing-%version
+%autopatch -p2
 
 %build
-python3 -m build -n
+%pyproject_build
 
 %install
-pip3 install --ignore-installed --root=%buildroot --no-deps dist/pyparsing-%version-py3-none-any.whl
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -p auto -v --skip-pkg-instal
+%tox_check_pyproject
 
 %files
 %doc CHANGES README.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/pyparsing/
+%python3_sitelibdir/%{pyproject_distinfo pyparsing}/
 
 %changelog
+* Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 3.0.9-alt2
+- Fixed FTBFS (flit_core 3.7.1).
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 3.0.9-alt1
 - Autobuild version bump to 3.0.9
 

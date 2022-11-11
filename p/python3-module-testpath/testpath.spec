@@ -2,7 +2,7 @@
 
 Name:           python3-module-%oname
 Version:        0.6.0
-Release:        alt1
+Release:        alt2
 
 Summary:        Test utilities for code working with files and commands
 
@@ -14,7 +14,10 @@ URL:            https://pypi.org/project/testpath
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit
+
+# build backend and its deps
+BuildRequires: python3(flit_core)
+
 BuildRequires: python3(pytest) python3(pathlib2)
 BuildRequires: python3-module-sphinx
 
@@ -41,26 +44,28 @@ Documentation for %name.
 rm -f %oname/*.exe
 
 %build
-# https://bugzilla.altlinux.org/show_bug.cgi?id=39907
-python3 -m flit build --format wheel
+%pyproject_build
 # generate html docs
 make SPHINXBUILD="sphinx-build-3" -C doc html
 
 %install
-pip3 install -I dist/%oname-%version-*-none-any.whl --root %buildroot --prefix %prefix --no-deps
+%pyproject_install
 
 %check
 %__python3 -m pytest -v
 
 %files
 %doc README.rst LICENSE
-%python3_sitelibdir/%oname
-%python3_sitelibdir/*.dist-info
+%python3_sitelibdir/testpath/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %files doc
 %doc doc/_build/html
 
 %changelog
+* Wed Nov 09 2022 Stanislav Levin <slev@altlinux.org> 0.6.0-alt2
+- Fixed FTBFS (flit_core 3.7.1).
+
 * Tue Mar 15 2022 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
 - Automatically updated to 0.6.0.
 

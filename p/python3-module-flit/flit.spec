@@ -1,78 +1,94 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name flit
+%define pypi_name_core flit-core
 
-%define oname flit
+%def_with check
 
-%def_disable bootstrap
-
-Name: python3-module-%oname
-Version: 3.6.0
+Name: python3-module-%pypi_name
+Version: 3.7.1
 Release: alt1
-Summary: Simplified packaging of Python modules
-# ./flit/logo.py  under ASL 2.0 license
-# ./flit/upload.py under PSF license
-License: BSD-3-Clause and Apache-2.0 and Python
+Summary: A simple packaging tool for simple packages
+License: BSD-3-Clause
 Group: Development/Python3
-URL: https://flit.readthedocs.io/en/latest/
+URL: https://pypi.org/project/flit/
+VCS: https://github.com/pypa/flit
 
 BuildArch: noarch
 
-# https://github.com/takluyver/flit
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pip python3-module-requests python3-module-docutils
-BuildRequires: python3(pygments)
-BuildRequires: python3(toml)
 
-%if_enabled bootstrap
-%add_python3_req_skip requests_download
+%if_with check
+# deps
+BuildRequires: python3(requests)
+BuildRequires: python3(docutils)
+BuildRequires: python3(tomli-w)
+
+BuildRequires: python3(pytest)
+BuildRequires: python3(testpath)
+BuildRequires: python3(responses)
+BuildRequires: python3(tomli)
 %endif
 
-%py3_requires pip
-%py3_requires pygments
-
 %description
-Flit is a simple way to put Python packages and modules on PyPI.
+Flit is a simple way to put Python packages and modules on PyPI. It tries to
+require less thought about packaging and help you avoid common mistakes
 
-Flit only creates packages in the new 'wheel' format. People using older
-versions of pip (<1.5) or easy_install will not be able to install them.
+%package -n python3-module-%pypi_name_core
+Summary: Distribution-building parts of Flit
+License: BSD
+Group: Development/Python3
+# previously flit_core was a part of flit
+Conflicts: python3-module-flit <= 3.6.0
+%py3_provides %pypi_name_core
 
-Flit packages a single importable module or package at a time, using the import
-name as the name on PyPI. All subpackages and data files within a package are
-included automatically.
-
-Flit requires Python 3, but you can use it to distribute modules for Python 2,
-so long as they can be imported on Python 3.
+%description -n python3-module-%pypi_name_core
+Distribution-building parts of Flit.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
+# build PEP517 backend
+pushd flit_core
+%pyproject_build
+popd
+
+# actually it should be built with self-hosted backend
 export PYTHONPATH=$(pwd)/flit_core
-export FLIT_NO_NETWORK=1
-
-pushd flit_core &>/dev/null
-python3 -c 'from flit_core.buildapi import build_wheel; build_wheel(".")'
-mkdir ../dist
-mv flit_core-%version-*-none-any.whl ../dist
-popd &>/dev/null
-
-python3 -m flit build --format wheel
+%pyproject_build
 
 %install
-pip3 install -I dist/flit_core-%version-*-none-any.whl --root %buildroot --prefix %prefix --no-deps
-pip3 install -I dist/%oname-%version-*-none-any.whl --root %buildroot --prefix %prefix --no-deps
+pushd flit_core
+%pyproject_install
+popd
+%pyproject_install
+
+# don't ship tests
+rm -r %buildroot%python3_sitelibdir/flit_core/tests/
+
+%check
+%tox_check_pyproject
 
 %files
 %doc LICENSE
 %doc README.rst
-%python3_sitelibdir/flit
-%python3_sitelibdir/flit-%version.dist-info
-%python3_sitelibdir/flit_core
-%python3_sitelibdir/flit_core-%version.dist-info
 %_bindir/flit
+%python3_sitelibdir/flit/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+
+%files -n python3-module-%pypi_name_core
+%python3_sitelibdir/flit_core/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name_core}/
 
 %changelog
+* Thu Oct 27 2022 Stanislav Levin <slev@altlinux.org> 3.7.1-alt1
+- 3.6.0 -> 3.7.1.
+- Subpackaged PEP517 build backend (flit_core).
+
 * Tue Feb 15 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.6.0-alt1
 - Updated to upstream version 3.6.0.
 

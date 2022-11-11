@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 
-%define oname sphinx-inline-tabs
+%define pypi_name sphinx-inline-tabs
+%define norm_version 2022.1.2b11
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 2022.01.02.beta11
-Release: alt1
+Release: alt2
 Summary: Add inline tabbed content to your Sphinx documentation. 
 License: MIT
 Group: Development/Python3
@@ -16,8 +17,13 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flit
+
+# build backend and its deps
+BuildRequires: python3(flit_core)
+
 BuildRequires: python3-module-sphinx
+
+%py3_provides %pypi_name
 
 %description
 Add inline tabbed content to your Sphinx documentation.
@@ -26,17 +32,20 @@ Add inline tabbed content to your Sphinx documentation.
 %setup
 
 %build
-flit build
+%pyproject_build
 
 %install
-pip%{_python3_version} install -I dist/sphinx_inline_tabs-*-none-any.whl --root %buildroot --prefix %prefix --no-deps
+%pyproject_install
 
 %files
 %doc LICENSE README.md
 %python3_sitelibdir/sphinx_inline_tabs
-%python3_sitelibdir/sphinx_inline_tabs-*dist-info
+%python3_sitelibdir/sphinx_inline_tabs-%norm_version.dist-info/
 
 %changelog
+* Wed Nov 09 2022 Stanislav Levin <slev@altlinux.org> 2022.01.02.beta11-alt2
+- Fixed FTBFS (flit_core 3.7.1).
+
 * Thu Apr 14 2022 Egor Ignatov <egori@altlinux.org> 2022.01.02.beta11-alt1
 - new version 2022.01.02.beta11
 
