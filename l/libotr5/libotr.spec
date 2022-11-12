@@ -1,14 +1,17 @@
 %define sover 5
 Name: libotr%sover
 Version: 4.1.1
-Release: alt1.2
+Release: alt2
 
 Group: System/Libraries
 Summary: Off-The-Record Messaging library and toolkit
-License: LGPL/GPL
-Url: http://www.cypherpunks.ca/otr/
+# SrcLicense: LGPL-2.1-only and GPL-2.0-only
+License: LGPL-2.1-only
+Url: https://otr.cypherpunks.ca/
 
-Source0: http://www.cypherpunks.ca/otr/libotr-%version.tar.gz
+# Repacked https://www.cypherpunks.ca/otr/libotr-%version.tar.gz
+Source0: libotr-%version.tar
+Patch0: libotr-4.1.1-debian-fix-include-socket.h.patch
 
 # Automatically added by buildreq on Wed Mar 09 2016
 # optimized out: gnu-config libgpg-error libgpg-error-devel
@@ -41,7 +44,7 @@ OTR allows you to have private conversations over IM by providing:
 %package -n libotr-devel
 Summary: Development related files of %name
 Group: Development/C
-License: LGPL
+License: LGPL-2.1-only
 Requires: %name = %version-%release
 Requires: libgcrypt-devel
 Provides: libotr5-devel = %EVR
@@ -54,7 +57,7 @@ Messaging. This package contains development related files of %name.
 %package -n libotr-utils
 Summary: Helper utilities of %name
 Group: Networking/Instant messaging
-License: GPL
+License: GPL-2.0-only
 Requires: %name = %version-%release
 Provides: libotr5-utils = %EVR
 
@@ -64,6 +67,9 @@ Messaging. This package contains various helper utilities from %name.
 
 %prep
 %setup -q -n libotr-%version
+
+%patch -p1
+
 # This test is unstable.
 sed '/random-msg-disconnect-frag-auth.sh$/d' -i tests/test_list
 
@@ -99,6 +105,11 @@ LD_LIBRARY_PATH=$PWD/src/.libs %make check ||:
 %_man1dir/*
 
 %changelog
+* Sat Nov 12 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.1-alt2
+- Applied patch from Debian (thx Rhonda D'Vine) to fix FTBFS with
+  libgcrypt >= 1.10.0.
+- Fixed License: tags.
+
 * Thu Jan 10 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.1-alt1.2
 - Fixed testsuite:
   + added BR: /proc to fix test;
