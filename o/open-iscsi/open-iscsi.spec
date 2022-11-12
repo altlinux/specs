@@ -4,7 +4,7 @@
 %define bname iscsi
 
 Name: open-%bname
-Version: 2.1.7
+Version: 2.1.8
 License: GPL-2.0-or-later
 Release: alt1
 Summary: Utils to operate with %Name
@@ -16,6 +16,8 @@ Patch: %name-%version-%release.patch
 Conflicts: linux-iscsi
 Provides: iscsi-initiator-utils = 6.%version-%release
 
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson >= 0.54.0
 BuildRequires: rpm-macros-systemd
 BuildRequires: libmount-devel
 BuildRequires: libkmod-devel
@@ -60,18 +62,17 @@ developing applications that use libopeniscsiusr.
 %patch -p1
 
 %build
-# configure sub-packages from here
-# letting the top level Makefile do it will lose setting from rpm
-#cd iscsiuio
-#%%autoreconf
-#%%configure --disable-static
-#cd ..
+%meson \
+    -Dsystemddir=%_systemd_util_dir \
+    -Dhomedir=%_sysconfdir/%bname \
+    -Ddbroot=%_sharedstatedir/%bname \
+    -Drulesdir=%_udevrulesdir \
+    -Discsi_sbindir=/sbin
 
-%make_build SBINDIR=/sbin HOMEDIR=%_sysconfdir/%bname DBROOT=%_sharedstatedir/%bname systemddir=%_systemd_util_dir RULESDIR=%_udevrulesdir
+%meson_build
 
 %install
-%makeinstall_std SBINDIR=/sbin HOMEDIR=%_sysconfdir/%bname DBROOT=%_sharedstatedir/%bname systemddir=%_systemd_util_dir RULESDIR=%_udevrulesdir
-
+%meson_install
 
 install -D -m 0755 %SOURCE2 %buildroot%_initdir/%name
 mkdir -p %buildroot%_sharedstatedir/%bname/{nodes,send_targets,static,isns,slp,ifaces}
@@ -113,11 +114,13 @@ fi
 %exclude %_unitdir/iscsiuio.*
 /sbin/*
 %exclude /sbin/iscsiuio
+%exclude /sbin/brcm_iscsiuio
 %_man8dir/*
 %exclude %_man8dir/iscsiuio.8.*
 
 %files iscsiuio
 /sbin/iscsiuio
+/sbin/brcm_iscsiuio
 %_unitdir/iscsiuio.*
 %config(noreplace) %_logrotatedir/iscsiuiolog
 %_man8dir/iscsiuio.8.*
@@ -132,6 +135,9 @@ fi
 %_man3dir/*
 
 %changelog
+* Sat Nov 12 2022 Alexey Shabalin <shaba@altlinux.org> 2.1.8-alt1
+- 2.1.8
+
 * Wed Aug 31 2022 Alexey Shabalin <shaba@altlinux.org> 2.1.7-alt1
 - 2.1.7
 - install iscsi-gen-initiatorname.sh from upstream
