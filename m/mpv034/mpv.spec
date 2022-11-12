@@ -2,17 +2,19 @@
 %def_enable lua
 %endif
 
-Name: mpv
-Version: 0.35.0
-Release: alt1
+%define oname mpv
+
+Name: mpv034
+Version: 0.34.1
+Release: alt3
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
 License: GPLv2+
 Group: Video
 
 Url: http://mpv.io/
-Source: %name-%version.tar
-Patch: %name-%version-alt.patch
+Source: %oname-%version.tar
+Patch: %oname-%version-alt.patch
 
 Packager: %packager
 
@@ -28,9 +30,9 @@ BuildRequires: libsmbclient-devel libswresample-devel libxkbcommon-devel libdrm-
 
 BuildRequires: libenca-devel libuchardet-devel libvulkan-devel libwayland-egl-devel libwayland-cursor-devel libwayland-client-devel wayland-protocols python3-base
 
-BuildRequires: libgbm-devel libplacebo-devel libSDL2-devel libavdevice-devel libXpresent-devel
+BuildRequires: libgbm-devel libplacebo-devel libSDL2-devel libavdevice-devel
 
-BuildRequires: libzimg-devel vapoursynth-devel libshaderc-devel nv-codec-headers pipewire-libs-devel
+BuildRequires: libzimg-devel vapoursynth-devel libshaderc-devel nv-codec-headers
 
 BuildRequires: /usr/bin/rst2man
 
@@ -50,42 +52,15 @@ mpv - это медиапроигрыватель, основанный на п�
 MPlayer и mplayer2. Он поддерживает большое количество
 видеоформатов, аудио и видео кодеков и форматов субтитров.
 
-%package -n zsh-completion-%name
-Summary: Zsh completion for %name
-Group: Shells
-BuildArch: noarch
-Requires: %name = %version-%release
-
-%description -n zsh-completion-%name
-Zsh completion for %name.
-
-%package -n bash-completion-%name
-Summary: Bash completion for %name
-Group: Shells
-BuildArch: noarch
-Requires: bash-completion
-Requires: %name = %version-%release
-
-%description -n bash-completion-%name
-Bash completion for %name.
-
-%package -n libmpv-devel
-Summary: Header files for %name
-Group: Development/C
-Requires: %name = %version-%release
-
-%description -n libmpv-devel
-Header files for %name
-
-%package -n libmpv2
-Summary: %name shared library
+%package -n libmpv1
+Summary: %oname shared library
 Group: System/Libraries
 
-%description -n libmpv2
-This package contains %name shared library
+%description -n libmpv1
+This package contains %oname shared library
 
 %prep
-%setup -n %name-%version
+%setup -n %oname-%version
 %patch -p1
 
 ls
@@ -104,7 +79,6 @@ chmod ugo+rx waf
 --enable-vulkan \
 --enable-sdl2 \
 --enable-vapoursynth \
---enable-pipewire \
 #
 
 %build
@@ -116,39 +90,12 @@ chmod ugo+rx waf
 rm -rfv %buildroot/share/
 rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 
-%files
-%dir %_sysconfdir/%name
-%config %_sysconfdir/%name/encoding-profiles.conf
-%_bindir/%name
-%_man1dir/%name.1.*
-%_miconsdir/%name.png
-%_niconsdir/%name.png
-%_iconsdir/hicolor/64x64/apps/%name.png
-%_iconsdir/hicolor/128x128/apps/%name.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
-%_desktopdir/%name.desktop
-%doc Copyright README.md RELEASE_NOTES etc/input.conf etc/mplayer-input.conf etc/mpv.conf etc/restore-old-bindings.conf
-
-%files -n zsh-completion-%name
-%_datadir/zsh/site-functions/_mpv
-
-%files -n bash-completion-%name
-%_datadir/bash-completion/completions/*
-
-%files -n libmpv-devel
-%_libdir/libmpv.so
-%_includedir/%name
-%_pkgconfigdir/*.pc
-
-%files -n libmpv2
+%files -n libmpv1
 %_libdir/libmpv.so.*
 
 %changelog
-* Sat Nov 12 2022 L.A. Kostis <lakostis@altlinux.ru> 0.35.0-alt1
-- 0.35.0.
-- enable pipewire support.
-- BR: added libXpresent-devel (for xpresent support).
-- libmpv: bump soname.
+* Sat Nov 12 2022 L.A. Kostis <lakostis@altlinux.ru> 0.34.1-alt3
+- Compat build to ease transition to libmpv2 library.
 
 * Mon Oct 03 2022 L.A. Kostis <lakostis@altlinux.ru> 0.34.1-alt2
 - BR: added nv-codec-headers (for CUDA support).
