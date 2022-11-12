@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: fossology-nomos
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 
 Summary: Architecture for analyzing software, nomos standalone
@@ -18,8 +18,11 @@ Provides: nomos
 Provides: nomossa
 
 BuildRequires: glib2-devel
+BuildRequires: libicu-devel
 BuildRequires: libjson-c-devel
+BuildRequires: perl-Text-Template
 BuildRequires: postgresql-devel
+BuildRequires: /usr/bin/php
 
 %description
 The FOSSology project is a web based framework that allows you to
@@ -33,29 +36,36 @@ This package contains the nomos agent programs and their resources.
 %prep
 %setup
 
+sed -i 's/egrep/grep -E/g' $(grep -rl egrep src/nomos/agent)
+sed -i 's/fgrep/grep -F/g' $(grep -rl fgrep src/nomos/agent)
+
 %build
-# Hackish way to build. Build nomos (required to fulfill all dependencies)
-# and then rebuild agent in standalone way. `rm *.o` to rebuild, so there
-# is no weird errors, such as `FATAL nomos_utils.c.803: "" is not a plain file'.
-%make_build -C src/nomos
-rm -f src/nomos/agent/*.o
-%make_build -C src/nomos/agent -f Makefile.sa nomossa \
-	VERSION=%version COMMIT_HASH=%release
+make build-lib
+make -C src/nomos/agent -f Makefile.sa all \
+       VERSION=%version COMMIT_HASH=%release
 
 %install
 install -Dm0755 -p src/nomos/agent/nomossa %buildroot%_bindir/nomossa
 
 %check
-src/nomos/agent/nomossa LICENSE  | grep ' GPL-2\.0,LGPL-2\.1$'
-src/nomos/agent/nomossa Makefile | grep ' No_license_found$'
+PATH=%buildroot%_bindir:$PATH
+cp -a LICENSE /tmp
+pushd /tmp
+  date > no_lice
+  time nomossa LICENSE | grep ' GPL-2\.0,LGPL-2\.1$'
+  time nomossa no_lice | grep ' No_license_found$'
+popd
 # Crash test.
-src/nomos/agent/nomossa -d .gear
+nomossa -d .gear
 
 %files
 %doc README.md LICENSE src/nomos/agent/README src/nomos/agent/Notes
 %_bindir/nomossa
 
 %changelog
+* Sat Nov 12 2022 Vitaly Chikunov <vt@altlinux.org> 4.2.0-alt1
+- Updated to 4.2.0 (2022-11-11).
+
 * Thu May 26 2022 Vitaly Chikunov <vt@altlinux.org> 4.1.0-alt1
 - Updated to 4.1.0 (2022-05-20).
 
