@@ -2,7 +2,7 @@
 
 Name: glibc
 Version: 2.35.0.6.491f2e
-Release: alt1
+Release: alt2
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -574,6 +574,7 @@ export test-xfail-tst-rwlock9=yes
 export test-xfail-tst-rwlock18=yes
 %endif
 %ifarch ppc64le
+export test-xfail-test-ibm128-y1=yes
 export test-xfail-tst-pkey=yes
 %endif
 
@@ -785,6 +786,14 @@ fi
 %glibc_sourcedir
 
 %changelog
+* Sat Nov 12 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.35.0.6.491f2e-alt2
+- Backported upstream commits:
+  + "Makerules: fix MAKEFLAGS assignment for upcoming make-4.4" to fix build with
+  make 4.4 (thx Sergei Trofimovich) (ALT#44277);
+  + "Avoid undefined behaviour in ibm128 implementation of llroundl"
+  (thx Aurelien Jarno) to fix test-ibm128-llround test regression on ppc64le.
+- ppc64le: xfailed test-ibm128-y1 test.
+
 * Wed Feb 09 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 6:2.35.0.6.491f2e-alt1
 - Updated to glibc-2.35-6-g491f2ef1f0.
 - Applied patch to fix sw#28868 (thx Adhemerval Zanella).
