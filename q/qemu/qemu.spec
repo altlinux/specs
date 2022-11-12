@@ -36,7 +36,7 @@
 %def_enable tools
 %def_enable spice
 %def_enable libiscsi
-%ifarch %ix86 %arm %mips32 ppc
+%ifarch %ix86 %arm %mips32 ppc riscv64
 %def_disable rbd
 %else
 %def_enable rbd
@@ -131,7 +131,7 @@
 
 Name: qemu
 Version: 7.0.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -165,7 +165,7 @@ Requires: %name-user = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: meson >= 0.59.3
-BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre-devel-static libattr-devel-static
+BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre2-devel-static libattr-devel-static
 BuildRequires: glib2-devel >= 2.56 libgio-devel
 BuildRequires: makeinfo perl-devel python3-module-sphinx python3-module-sphinx_rtd_theme
 BuildRequires: libcap-ng-devel
@@ -174,6 +174,9 @@ BuildRequires: zlib-devel libcurl-devel >= 7.29.0 libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu >= 1:20161208-alt1.git26050fd seavgabios seabios >= 1.7.4-alt2 libfdt-devel >= 1.5.0.0.20.2431 qboot
 BuildRequires: libpixman-devel >= 0.21.8
 BuildRequires: python3-devel
+%ifarch riscv64
+BuildRequires: libatomic-devel-static
+%endif
 %{?_enable_sdl:BuildRequires: libSDL2-devel}
 %{?_enable_curses:BuildRequires: libncursesw-devel}
 %{?_enable_alsa:BuildRequires: libalsa-devel}
@@ -754,6 +757,11 @@ run_configure() {
 	--disable-debug-tcg \
 	--disable-sparse \
 	--disable-strip \
+%if "%__gcc_version_major" >= "11"
+	--enable-lto \
+%else
+	--disable-lto \
+%endif
 	--firmwarepath="%firmwaredirs" \
 	 "$@"
 }
@@ -919,9 +927,6 @@ run_configure \
 	--enable-user \
 	--enable-linux-user \
 	--enable-pie \
-%if "%__gcc_version_major" >= "11"
-	--enable-lto \
-%endif
 	--enable-modules \
 	%{?_enable_sdl:--enable-sdl} \
 	%{?_disable_curses:--disable-curses} \
@@ -1336,6 +1341,12 @@ fi
 %exclude %docdir/LICENSE
 
 %changelog
+* Sat Nov 05 2022 Ivan A. Melnikov <iv@altlinux.org> 7.0.0-alt2
+- fix FTBFS: switch to libpcre2 as glib2 did
+  (see also: altbug #44217)
+- explicitly disable LTO for older GCC versions
+- experimental build on riscv64
+
 * Tue Jun 07 2022 Alexey Shabalin <shaba@altlinux.org> 7.0.0-alt1
 - 7.0.0.
 - Split out qemu-virtiofsd subpackage.
