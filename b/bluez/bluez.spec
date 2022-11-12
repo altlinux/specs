@@ -8,7 +8,7 @@
 %def_enable experimental
 
 Name: bluez
-Version: 5.65
+Version: 5.66
 Release: alt1
 
 Summary: Bluetooth utilities
@@ -19,9 +19,6 @@ Url: http://www.bluez.org/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: L.A. Kostis <lakostis@altlinux.org>
-
-# Change firmware path to correct /lib/firmware
-Patch1: bluez-5.55-alt-firmware-path-fixes.patch
 
 # fc
 Patch10: 0001-Allow-using-obexd-without-systemd-in-the-user-sessio.patch
@@ -86,15 +83,12 @@ Zsh completion for %name.
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 %patch10 -p1
 
 %build
 %autoreconf
+export CFLAGS="%optflags -DFIRMWARE_DIR=\\\"\"/lib/firmware\"\\\""
 export MISC_CFLAGS="%optflags %(getconf LFS_CFLAGS)"
-# ugly workaround until
-# https://github.com/bluez/bluez/issues/125 fixed
-mkdir ell ||:
 %configure \
 	--enable-library \
 	--enable-threads \
@@ -202,6 +196,11 @@ fi
 %_datadir/zsh/site-functions/_bluetoothctl
 
 %changelog
+* Fri Nov 11 2022 L.A. Kostis <lakostis@altlinux.ru> 5.66-alt1
+- 5.66.
+- remove ell hacks (fixed upstream).
+- remove firmware patch (fixed upstream).
+
 * Sat Oct 01 2022 L.A. Kostis <lakostis@altlinux.ru> 5.65-alt1
 - 5.65.
 - Add obexctl (ALT #38747).
