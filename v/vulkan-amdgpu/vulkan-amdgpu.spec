@@ -26,7 +26,7 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2022.Q4.1
+Version: 2022.Q4.2
 Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
@@ -121,6 +121,15 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Sat Nov 12 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q4.2-alt1
+- 2022-11-10 update:
+  + icd: bump vulkan version
+  + llvm-project: Updated to 3c87d1ffe0db
+  + gpurt: Updated to 889dd8db7228
+  + llpc: Updated to 83e59f978821
+  + pal: Updated to 0f44ced5384c
+  + xgl: Updated to 0387177d6143
+
 * Sat Oct 22 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q4.1-alt1
 - 2022-10-21 update:
   + icd: bump vulkan API version
