@@ -2,11 +2,12 @@
 
 %define zmuser apache2
 %define zmgroup _webserver
+%define phpver 8.1
 ExcludeArch: armh
 
 Name: zoneminder
 Version: 1.36.31
-Release: alt1
+Release: alt2
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
 License: GPLv2
@@ -20,13 +21,13 @@ Source4: zoneminder.conf
 Source5: README.alt
 Source6: README-nginx-ru.alt
 Source7: nginx-zoneminder.conf.sample
-Source8: zm-fcgi.inc
-Source9: php7-fpm-zoneminder.conf
+Source8: zm-fcgi.inc.in
+Source9: php-fpm-zoneminder.conf.in
 
 Conflicts: zm <= 1.22.3
 BuildRequires(pre): rpm-macros-webserver-common
 Requires: libgnutls libgnutls-openssl zlib ffmpeg
-Requires: php7-pdo_mysql php7-openssl php7-gd php7-apcu
+Requires: php%phpver-pdo_mysql php%phpver-openssl php%phpver-gd php%phpver-apcu php%phpver-intl
 Requires: su
 Requires: perl-Data-Entropy perl-Crypt-Eksblowfish perl-Sys-Mmap webserver perl-Pod-Usage 
 Requires: perl-Sys-MemInfo perl-Number-Bytes-Human perl-JSON-MaybeXS perl-Sys-CPU 
@@ -48,7 +49,7 @@ too much degradation of performance. This package includes cambozola.jar.
 %package api
 Summary: Zoneminder Web API
 Group: Networking/WWW
-Requires: zoneminder php7-apcu
+Requires: zoneminder php%phpver-apcu
 
 %description api
 The API is built in CakePHP and lives under the /api directory. It provides a RESTful service 
@@ -58,7 +59,7 @@ Zones and Config.
 %package nginx
 Summary: Zoneminder configuration file and requires for nginx
 Group: Networking/WWW
-Requires: php7-fpm-fcgi fcgiwrap nginx
+Requires: php8.1-fpm-fcgi fcgiwrap nginx
 BuildArch: noarch
 %description nginx
 Zoneminder configuration file and requires for nginx
@@ -73,7 +74,8 @@ cp %SOURCE6 README-nginx-ru.alt
 
 cat <<EOF >> db/zm_create.sql.in
 use mysql;
-grant select,insert,update,delete on zm.* to 'zmuser'@localhost identified by 'zmpass';
+CREATE user 'zmuser'@localhost identified by 'zmpass';
+grant select,insert,update,delete on zm.* to 'zmuser'@localhost;
 EOF
 
 ./utils/zmeditconfigdata.sh ZM_OPT_CAMBOZOLA yes
@@ -110,10 +112,12 @@ install -D -m 644 %zm_builddir/misc/zoneminder-tmpfiles.conf %buildroot/%_tmpfil
 install -D -m 644 %SOURCE4 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/zoneminder.conf
 install -D -m 644 %SOURCE7 %buildroot%_sysconfdir/nginx/sites-enabled.d/nginx-zoneminder.conf.sample
 install -D -m 644 %SOURCE8 %buildroot%_sysconfdir/nginx/sites-enabled.d/zm-fcgi.inc
-install -D -m 644 %SOURCE9 %buildroot%_sysconfdir/fpm/fpm.d/fpm-zm.conf
+sed -si 's,@phpver@,%phpver,g' %buildroot%_sysconfdir/nginx/sites-enabled.d/zm-fcgi.inc
+install -D -m 644 %SOURCE9 %buildroot%_sysconfdir/fpm%phpver/php-fpm.d/fpm-zm.conf
+sed -si 's,@phpver@,%phpver,g' %buildroot%_sysconfdir/fpm%phpver/php-fpm.d/fpm-zm.conf
 mkdir -p %buildroot/%_cachedir/%name
 
-ln -s %_cachedir/%name %buildroot%_datadir/%name/www/cache
+ln -s ../../../../..%_cachedir/%name %buildroot%_datadir/%name/www/cache
 
 
 rm -f %buildroot%perl_vendor_archlib/perllocal.pod
@@ -162,12 +166,18 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %files nginx
 %doc README-nginx-ru.alt
 %config(noreplace) %_sysconfdir/nginx/sites-enabled.d/*
-%config(noreplace) %_sysconfdir/fpm/fpm.d/*
+%config(noreplace) %_sysconfdir/fpm%phpver/php-fpm.d/*
 
 %files api
 %_datadir/%name/www/api
 
 %changelog
+* Sat Nov 12 2022 Anton Farygin <rider@altlinux.ru> 1.36.31-alt2
+- migrated to php8.1 by default
+- fixed socket path in zm-fcgi.inc (closes: #44190)
+- updated initial sql agains MySQL-8
+- added php8.1-intl to requires
+
 * Tue Nov 01 2022 Anton Farygin <rider@altlinux.ru> 1.36.31-alt1
 - 1.36.29 -> 1.36.31
 
