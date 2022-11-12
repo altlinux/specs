@@ -1,5 +1,5 @@
 Name: powertop
-Version: 2.14
+Version: 2.15
 Release: alt1
 Epoch: 1
 
@@ -66,6 +66,9 @@ touch %cachedir/saved_{parameters,results}.powertop
 %_initdir/%name
 
 %changelog
+* Sat Nov 12 2022 Anton Farygin <rider@altlinux.ru> 1:2.15-alt1
+- 2.15
+
 * Tue Apr 20 2021 Anton Farygin <rider@altlinux.ru> 1:2.14-alt1
 - 2.14
 
