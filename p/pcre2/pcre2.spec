@@ -1,10 +1,10 @@
-%def_disable static
+%def_enable static
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 %def_enable check
 
 Name: pcre2
 Version: 10.40
-Release: alt1
+Release: alt2
 
 Summary: Perl-compatible regular expression library
 Group: System/Libraries
@@ -68,7 +68,7 @@ Utilities demonstrating PCRE2 capabilities like pcre2grep or pcre2test.
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
-%ifnarch %e2k
+%ifnarch %e2k riscv64
     --enable-jit \
     --enable-pcre2grep-jit \
 %endif
@@ -139,6 +139,10 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 %exclude %_docdir/%name
 
 %changelog
+* Sat Nov 05 2022 Ivan A. Melnikov <iv@altlinux.org> 10.40-alt2
+- enable static libraries (altbug #44217);
+- don't force-enable jit on riscv64 to fix build there.
+
 * Sat Apr 16 2022 Yuri N. Sedunov <aris@altlinux.org> 10.40-alt1
 - 10.40
 
