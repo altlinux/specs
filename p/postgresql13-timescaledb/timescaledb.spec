@@ -1,8 +1,9 @@
 %define pg_ver 13
 
+
 Name: postgresql%pg_ver-timescaledb
 Version: 2.8.1
-Release: alt1
+Release: alt2
 Summary: Open-source time-series database powered by PostgreSQL
 Group: Databases
 License: Apache-2.0 and Timescale License
@@ -30,7 +31,7 @@ support.
     -DSEND_TELEMETRY_DEFAULT=OFF \
     -DREGRESS_CHECKS=OFF \
     -DAPACHE_ONLY=OFF \
-    -DPG_CONFIG=%_bindir/pg_config
+    -DPG_CONFIG=%_bindir/pg_server_config
 
 %cmake_build
 
@@ -47,6 +48,9 @@ echo "ALTER EXTENSION timescaledb UPDATE;                                       
 %_datadir/pgsql/extension/*
 
 %changelog
+* Sat Nov 12 2022 Alexei Takaseev <taf@altlinux.org> 2.8.1-alt2
+- Use server depended pg_server_config for build
+
 * Mon Nov 07 2022 Alexei Takaseev <taf@altlinux.org> 2.8.1-alt1
 - 2.8.1
 
