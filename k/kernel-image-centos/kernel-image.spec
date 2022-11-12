@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 184
+%define centos_release 192
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,71 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Nov 11 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.192-alt1.el9
+- Updated to kernel-5.14.0-192.el9 (fixes: CVE-2022-2663, CVE-2022-3028, CVE-2022-42703):
+  + af_key: Do not call xfrm_probe_algs in parallel
+  + audit: backport fixes and cleanups up to upstream v6.1
+  + Backport fs v6.0 and earlier commits for kernel-rt
+  + block: update with v6.1-rc2
+  + CNB: ethernet: add a helper for assigning port addresses
+  + CNB: inet: Separate DSCP from ECN bits and use dscp_t for TOS fields
+  + CNB: net: disambiguate the TSO and GSO limits
+  + CNB: net: HW counters for soft devices
+  + CNB: net/sched: act_police: allow 'continue' action offload
+  + crypto: xts - restrict key lengths to approved values in FIPS mode
+  + drm: fix duplicated code in drm_connector_register
+  + drm/mgag200: Fix PLL setup for G200_SE_A rev >=4
+  + Enable the RTC rv8803 driver
+  + Fix and stabilize vm selftests results before including in CI
+  + iavf: Fix adminq error handling
+  + iomap update to v5.16
+  + io_uring: update to v5.16
+  + io_uring: update to v5.17
+  + io_uring: update to v5.18
+  + ipv4: Backport upstream fixes.
+  + kselftests 9.2 P1 backport
+  + KVM on s390x resync, Protected dump, Enhanced Interpretation for PCI Functions and  CPU topology
+  + KVM: selftests: replace assertion with warning in access_tracking_perf_test
+  + KVM: VMX: fully disable SGX if SECONDARY_EXEC_ENCLS_EXITING unavailable
+  + memcg: Add memory.reclaim support
+  + memcg: Backport some useful upstream patches
+  + Merge commit '0e769f75b4fb40e853ac8c3a8974516424a57c23'
+  + Merge commit '5df889efab934c03c35799d3338d36bd722e093c'
+  + mm/rmap: Fix use-after-free related to leaf anon_vma double reuse (CVE-2022-42703)
+  + mm: slub: fix flush_cpu_slab()/__free_slab() invocations in task context.
+  + netfilter: 9.2 phase 1 backports
+  + netfilter: fix message handling flaw
+  + net: team: Unsync device addresses on ndo_stop
+  + NFS/SUNRPC:  Client needs to handle session trunking group membership changes
+  + owners: Remove Inaki Malerba from the owner's list as he is leaving the company
+  + PCI: hv: Do not set PCI_COMMAND_MEMORY to reduce VM boot time
+  + perf/arm-cmn:  cmn updates, cmn650/700 support
+  + perf: Sync with upstream v5.19
+  + powerpc/pseries: Use lparcfg to reconfig VAS windows for DLPAR CPU
+  + powerpc/pseries/vas: Pass hw_cpu_id to node associativity HCALL
+  + redhat: create /boot symvers link if it doesn't exist
+  + redhat: fix the branch we pull from the documentation tree
+  + redhat/Makefile: Rename LOCALVERSION to DISTLOCALVERSION
+  + remoteproc: imx_rproc : updates
+  + [RHEL-9.2] iommu: amd: Updates for 9.2
+  + scsi: fix mpi3mr: for rt-kernels
+  + scsi: iscsi: driver updates
+  + scsi: qedi: update driver to latest upstream
+  + scsi: scsi_transport_fc: Use %u for dev_loss_tmo
+  + selftests/bpf: Limit unroll_count for pyperf600 test
+  + spec: fix path to `installing_core` stamp file for subpackages
+  + tipc: backports from upstream
+  + Update ACPI to match Linux v6.0
+  + Update drivers/rtc for known edge platforms
+  + Update kernel's PCI subsystem to v6.0
+  + Update objtool to v5.19
+  + Update USB And Thunderbolt to v6.0
+  + watchdog: imx7ulp: updates
+  + x86/fpu: Do not leak fpstate pointer on fork
+  + x86/fpu: Prevent FPU state corruption
+  + xfrm: backports from upstream
+  + Various changes and improvements that are poorly described in merge.
+
 * Tue Nov 01 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.184-alt1.el9
 - Updated to kernel-5.14.0-184.el9:
   + DRM 6.0 backport dependencies
