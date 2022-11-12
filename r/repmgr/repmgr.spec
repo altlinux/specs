@@ -2,7 +2,7 @@
 %define pg_ver %(c=%{full_ver}; echo ${c%%.*})
 
 Name: repmgr
-Version: 5.3.0
+Version: 5.3.3
 Release: alt1
 Summary: Replication Manager for PostgreSQL Clusters
 Group: Databases
@@ -106,6 +106,9 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %doc doc/html
 
 %changelog
+* Sat Nov 12 2022 Alexey Shabalin <shaba@altlinux.org> 5.3.3-alt1
+- 5.3.3
+
 * Thu Feb 10 2022 Alexey Shabalin <shaba@altlinux.org> 5.3.0-alt1
 - 5.3.0
 
