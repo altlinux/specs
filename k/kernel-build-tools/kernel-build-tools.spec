@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: kernel-build-tools
-Version: 0.117
+Version: 0.118
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -11,13 +11,20 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Source: %name-%version.tar
 
+Requires: describe-specfile
 Requires: rpm-build-kernel = %EVR
+Requires: rpm-utils
 
 # due to RPM macro expansion support
 Requires: gear >= 1.3.1
 
 BuildRequires: help2man
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: describe-specfile
+BuildRequires: faketime
+BuildRequires: rpm-utils
 BuildRequires: shellcheck
+}}
 
 %package -n rpm-build-kernel
 Summary: RPM macros to build kernel packages
@@ -76,7 +83,12 @@ kernel packaging conventions.
 %makeinstall_std
 
 %check
+%ifarch i586 armh
+# FAKETIME does not work on armh and i586
+%make_build shellcheck
+%else
 %make_build check
+%endif
 
 %files
 %_bindir/*
@@ -89,6 +101,10 @@ kernel packaging conventions.
 %_rpmlibdir/kernel.req*
 
 %changelog
+* Sun Nov 13 2022 Vitaly Chikunov <vt@altlinux.org> 0.118-alt1
+- Install safe-add-changelog (with safe-stamp-spec) tool(s) a safer version of
+  add_changelog (and stamp_spec) which works with kernel-image.spec.
+
 * Tue Oct 25 2022 Vitaly Chikunov <vt@altlinux.org> 0.117-alt1
 - Do not install obsoleted scripts: buildkernel, buildmodules, updatemodules,
   merge-all-branches.
