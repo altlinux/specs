@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.184
+Version: 4.0.4.185
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -384,6 +384,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Tue Oct 11 2022 Vitaly Chikunov <vt@altlinux.org> 4.0.4.185-alt1
+- Backport packaging '%pretrans' Lua scriptlets (ALT#36628).
+
 * Thu Jul 07 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.0.4.184-alt1
 - build: fixed double timezone adjustment of CHANGELOGTIME tag value.
 
