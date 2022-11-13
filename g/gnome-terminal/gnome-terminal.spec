@@ -8,7 +8,7 @@
 %def_with nautilus
 
 Name: gnome-terminal
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: GNOME Terminal
@@ -88,6 +88,7 @@ EOF
 %_desktopdir/%xdg_name.desktop
 %_desktopdir/%xdg_name.Preferences.desktop
 %_datadir/dbus-1/services/%xdg_name.service
+%_datadir/xdg-terminals/%xdg_name.desktop
 %config %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
 %dir %_libdir/%name
 %_libdir/%name/gschemas.compiled
@@ -106,6 +107,9 @@ EOF
 %endif
 
 %changelog
+* Sun Nov 13 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.5-alt1
+- 3.46.5
+
 * Sat Oct 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.3-alt1
 - 3.46.3
 
