@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-preinstall
-Version: 0.7.5
+Version: 0.8.0
 Release: alt1
 
 Summary: Alterator preinstall hooks runner module
@@ -37,6 +37,11 @@ This is an alterator preinstall hooks runner module.
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Nov 14 2022 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt1
+- copy preinstall scripts from $destdir in order to:
+  + execute scripts strictly by numbering
+  + do not execute duplicate scripts from $destdir
+
 * Fri Aug 19 2022 Anton Midyukov <antohami@altlinux.org> 0.7.5-alt1
 - backend3/preinstall: redirect output of running preinstall scripts
   to /tmp/preinstall.log
