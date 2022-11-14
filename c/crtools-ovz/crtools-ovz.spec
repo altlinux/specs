@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 Name: crtools-ovz
-Version: 3.15.4.13
+Version: 3.15.4.14
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
@@ -50,6 +50,9 @@ An utility to checkpoint/restore tasks for OpenVZ containers.
 %setup -n criu-%version
 
 %build
+# Upstream claims that stack protection break criu
+# https://github.com/checkpoint-restore/criu/issues/1744#issuecomment-1031605370
+%add_optflags -fno-stack-protector -fno-stack-clash-protection
 export CFLAGS="%optflags -fcommon -Wno-stringop-overflow"
 export PYTHON=python3
 %make_build \
@@ -93,6 +96,10 @@ vm-run --kvm=cond --sbin --udevd make test || :
 %_man8dir/crtools.8*
 
 %changelog
+* Mon Nov 14 2022 Andrew A. Vasilyev <andy@altlinux.org> 3.15.4.14-alt1
+- 3.15.4.14
+- build without stack protection
+
 * Wed Oct 26 2022 Andrew A. Vasilyev <andy@altlinux.org> 3.15.4.13-alt1
 - 3.15.4.13
 
