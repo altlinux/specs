@@ -5,7 +5,7 @@
 
 Name: nagiosdigger
 Version: 0.9
-Release: alt6
+Release: alt7
 
 Url: https://www.vanheusden.com/nagiosdigger/
 Packager: Paul Wolneykien <manowar@altlinux.org>
@@ -21,13 +21,14 @@ License: GPL-2.0
 Group: Monitoring
 
 Requires: nagios-www >= 3.0.6-alt12
-Requires: apache2-base apache2-mod_php7
+Requires: apache2-base apache2-mod_%php_name
 Requires: perl-DBI
-Requires: php7-jpgraph
+Requires: %{php_name}-jpgraph
 Conflicts: nagios < 3.0.6-alt12
 
 Requires: %name-dbi = %version-%release
 
+BuildRequires(pre): rpm-build-php-version
 BuildRequires: perl-DBI perl-DBD-mysql perl-DBD-Pg perl-Config-INI
 
 %description
@@ -46,7 +47,7 @@ License: GPL-2.0
 Group: Monitoring
 
 Requires: perl-DBD-mysql
-Requires: php7-mysqli
+Requires: %{php_name}-mysqli
 Requires: %name = %version-%release
 Provides: %name-dbi = %version-%release
 Obsoletes: %name < 0.9-alt5
@@ -60,7 +61,7 @@ License: GPL-2.0
 Group: Monitoring
 
 Requires: perl-DBD-Pg
-Requires: php7-pgsql
+Requires: %{php_name}-pgsql
 Requires: %name = %version-%release
 Provides: %name-dbi = %version-%release
 
@@ -101,6 +102,10 @@ a2enextra httpd-addon.d
 %files pgsql
 
 %changelog
+* Mon Nov 14 2022 Paul Wolneykien <manowar@altlinux.org> 0.9-alt7
+- Switch to build with a major PHP version whatever it is by using
+  %%php_name (closes: 44192).
+
 * Tue Jul 28 2020 Paul Wolneykien <manowar@altlinux.org> 0.9-alt6
 - Hint a 'Pg' driver name for Postgres in config.ini.
 - Fix: Make nagiosdigger-mysql obsolete nagiosdigger < 0.9-alt5
