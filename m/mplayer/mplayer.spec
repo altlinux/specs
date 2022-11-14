@@ -315,7 +315,7 @@
 
 Name: %lname
 Version: 1.5
-Release: alt1
+Release: alt1.1
 %ifdef svnrev
 %define pkgver svn-r%svnrev
 %else
@@ -367,9 +367,7 @@ Patch18: 0018-stream-stream_smb.c-include-time.h.patch
 Patch19: 0019-ppc-disable-vsx-on-little-endian-systems.patch
 Patch20: 0020-fix-tools-build-with-shared-ffmpeg.patch
 Patch21: 0021-fix-usage-mp_msg.patch
-%ifarch %e2k
-Patch2000: mplayer-e2k.patch
-%endif
+Source2000: mplayer-e2k.patch
 
 %if_enabled gui
 Provides: %name-gui = %version-%release
@@ -668,6 +666,9 @@ Ukrainian language support for %Name.
 %prep
 %setup -q -n %Name-%pkgver
 %autopatch -p2
+%ifarch %e2k
+patch -p2 < %SOURCE2000
+%endif
 
 %{?svnrev:subst 's/UNKNOWN/%svnrev/' version.sh}
 
@@ -1154,6 +1155,9 @@ install -pD -m 0644 {etc/%lname,%buildroot%_desktopdir/%gname}.desktop
 
 
 %changelog
+* Mon Nov 14 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5-alt1.1
+- Fixed patch for Elbrus.
+
 * Sun Mar 06 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.5-alt1
 - Updated to 1.5.
 - Disabled live555 support by upstream.
