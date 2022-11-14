@@ -5,7 +5,7 @@
 
 Name: fossology-nomos
 Version: 4.2.0
-Release: alt1
+Release: alt2
 
 Summary: Architecture for analyzing software, nomos standalone
 License: GPL-2.0-or-later
@@ -22,6 +22,7 @@ BuildRequires: libicu-devel
 BuildRequires: libjson-c-devel
 BuildRequires: perl-Text-Template
 BuildRequires: postgresql-devel
+BuildRequires: gcc-c++
 BuildRequires: /usr/bin/php
 
 %description
@@ -63,6 +64,9 @@ nomossa -d .gear
 %_bindir/nomossa
 
 %changelog
+* Mon Nov 14 2022 Michael Shigorin <mike@altlinux.org> 4.2.0-alt2
+- Explicit BR: gcc-c++.
+
 * Sat Nov 12 2022 Vitaly Chikunov <vt@altlinux.org> 4.2.0-alt1
 - Updated to 4.2.0 (2022-11-11).
 
