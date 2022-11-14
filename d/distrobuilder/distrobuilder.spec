@@ -1,8 +1,7 @@
 %global import_path github.com/lxc/distrobuilder
 Name:     distrobuilder
-Version:  1.2
-# number of commits, hash of commit, alt release
-Release:  alt120.21dde21.2
+Version:  2.1
+Release:  alt1
 
 Summary:  System container image builder for LXC and LXD
 License:  Apache-2.0
@@ -12,6 +11,8 @@ Url:      https://github.com/lxc/distrobuilder
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
 Source:   %name-%version.tar
+
+Patch1: unset-tmpdir-in-alt-ci-example.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -23,6 +24,7 @@ Requires: squashfs-tools
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -45,6 +47,9 @@ export IGNORE_SOURCES=1
 %doc *.md doc
 
 %changelog
+* Mon Nov 14 2022 Mikhail Gordeev <obirvalger@altlinux.org> 2.1-alt1
+- new version 2.1
+
 * Wed Jul 14 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.2-alt120.21dde21.2
 - Add require to squashfs-tools
 - Fix alt package manager to clean properly
