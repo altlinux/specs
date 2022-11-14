@@ -3,7 +3,7 @@
 
 Name: openuds-tunnel
 Version: 3.5.0
-Release: alt1
+Release: alt2
 Summary: Clientless remote desktop gateway
 License: Apache-2.0
 Group: Networking/Remote access
@@ -45,7 +45,7 @@ This portion of UDS (HTML5 tunnel) is based on Apache Guacamole.
 Summary: OpenUDS Integration Extension for Apache Guacamole
 License: Apache-2.0
 Version: 2.5.0
-Release: alt3
+Release: alt4
 Group: Networking/Remote access
 Provides: guacamole-auth-uds = %EVR
 Provides: guacamole-openuds = %EVR
@@ -69,7 +69,8 @@ mkdir -p %buildroot%_datadir/openuds/tunnel
 cp -r uds_tunnel %buildroot%_datadir/openuds/tunnel/
 cp udstunnel.py %buildroot%_datadir/openuds/tunnel/
 # config
-install -p -D -m 644 udstunnel.conf %buildroot%_sysconfdir/udstunnel.conf
+mkdir -p %buildroot%_sysconfdir/%name/ssl/{certs,private}
+install -p -D -m 644 udstunnel.conf %buildroot%_sysconfdir/%name/udstunnel.conf
 # systemd unit
 install -p -D -m 644 %SOURCE6 %buildroot%_unitdir/openuds-tunnel.service
 
@@ -85,18 +86,29 @@ useradd -M -r -g openuds -c 'OpenUDS Tunnel Daemon' \
 
 %post
 # Create SSL certificate for openuds-tunnel server
-cert-sh generate openuds-tunnel ||:
-cert-sh ssl_make_dhparam ||:
+SSLDIR=%_sysconfdir/%name/ssl cert-sh generate openuds-tunnel ||:
+SSLDIR=%_sysconfdir/%name/ssl cert-sh make_dhparam openuds-tunnel ||:
+chown openuds:tomcat %_sysconfdir/%name/ssl/private/openuds-tunnel.* ||:
+chmod 640 %_sysconfdir/%name/ssl/private/openuds-tunnel.* ||:
+if [ $1 -eq 1 ]; then
+# ugly hack to set a unique uds_token
+	UDS_TOKEN=$(openssl rand -hex 24)
+	sed -i "/^uds_token.*$/{s/^.*$/uds_token = $UDS_TOKEN/}" %_sysconfdir/%name/udstunnel.conf
+	grep -q uds-base-url %_sysconfdir/guacamole/guacamole.properties || echo "uds-base-url=http://172.27.0.1:8000/uds/guacamole/auth/$UDS_TOKEN" >> %_sysconfdir/guacamole/guacamole.properties
+fi
 %post_service openuds-tunnel
+%post_service tomcat
 
 %preun
 %preun_service openuds-tunnel
 
-%post -n guacamole-auth-openuds
-grep -q uds-base-url %_sysconfdir/guacamole/guacamole.properties || echo "uds-base-url=https://www.example.org" >> %_sysconfdir/guacamole/guacamole.properties
-
 %files
-%config(noreplace) %attr(0644, root, root) %_sysconfdir/udstunnel.conf
+%dir %_sysconfdir/%name
+%dir %_sysconfdir/%name/ssl
+%dir %_sysconfdir/%name/ssl/certs
+%attr(0750, openuds, tomcat) %dir %_sysconfdir/%name/ssl/private
+%config(noreplace) %attr(0640, root, openuds) %_sysconfdir/%name/udstunnel.conf
+
 %_unitdir/openuds-tunnel.service
 %_datadir/openuds/tunnel
 
@@ -105,6 +117,12 @@ grep -q uds-base-url %_sysconfdir/guacamole/guacamole.properties || echo "uds-ba
 %_datadir/guacamole/extensions/guacamole-auth-uds-2.5.0.jar
 
 %changelog
+* Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt2
+- Moved config files to /etc/openuds-tunnel dir.
+- Generate ssl cert and key to /etc/openuds-tunnel/ssl dir.
+- Allow read ssl private key for tomcat user.
+- Generate uds tunnel token in %%post.
+
 * Fri Oct 14 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt1
 - 3.5.0
 
