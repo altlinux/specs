@@ -13,7 +13,7 @@
 
 Name:    apache2
 Version: 2.4.54
-Release: alt2
+Release: alt3
 Epoch: 1
 
 License: %asl
@@ -458,7 +458,7 @@ This package contains the Apache server test-cgi scripts.
 
 %package cgi-bin-printenv
 Summary: cgi-bin/printenv for Apache
-Summary(ru_RU.UTF-8): cgi-bin/printenv для Apac`he
+Summary(ru_RU.UTF-8): cgi-bin/printenv для Apache
 Group: System/Servers
 BuildArch: noarch
 Requires(pre): webserver-common
@@ -1539,6 +1539,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Mon Nov 14 2022 Egor Ignatov <egori@altlinux.org> 1:2.4.54-alt3
+- a2enmod: enable mod also in mods-start.d (closes: #44044)
+
 * Wed Oct 19 2022 Anton Midyukov <antohami@altlinux.org> 1:2.4.54-alt2
 - NMU: tmpfiles.conf: substitution /var/lock with /run/lock
   (closes: #44078)
