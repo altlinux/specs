@@ -1,7 +1,7 @@
 %define Name QXmlEdit
 Name: qxmledit
-Version: 0.9.16
-Release: alt2
+Version: 0.9.17
+Release: alt1
 
 Summary: Simple XML editor and XSD viewer
 
@@ -11,7 +11,6 @@ URL: https://github.com/lbellonda/%name
 
 # Source-url: https://github.com/lbellonda/qxmledit/archive/%version.tar.gz
 Source: %name-%version.tar
-Patch0: add-translation-units.patch
 
 Provides: %Name = %version-%release
 
@@ -46,7 +45,6 @@ Main features:
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 lrelease-qt5 src/QXmlEdit.pro
@@ -77,7 +75,8 @@ install -pD -m 0644 src/images/icon.png %buildroot%_niconsdir/%name.png
 install -pD -m 0644 ./src/images/icon.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 
 install -d -m 0755 %buildroot%_desktopdir
-mv %buildroot%_datadir/%name/%Name.desktop %buildroot%_desktopdir/%Name.desktop
+#mv %buildroot%_datadir/%name/%Name.desktop %buildroot%_desktopdir/%Name.desktop
+install -D -m 0644 install_scripts/environment/desktop/QXmlEdit.desktop %buildroot/%_desktopdir/
 
 
 %files
@@ -92,6 +91,9 @@ mv %buildroot%_datadir/%name/%Name.desktop %buildroot%_desktopdir/%Name.desktop
 
 
 %changelog
+* Mon Nov 14 2022 Sergey V Turchin <zerg@altlinux.org> 0.9.17-alt1
+- new version
+
 * Tue Sep 14 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.9.16-alt2
 - fixed build for Elbrus
 - fixed -flto
