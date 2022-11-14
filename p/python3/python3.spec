@@ -32,7 +32,7 @@
 %global pylibdir %__python3_libdir
 %global dynload_dir %__python3_dynlibdir
 %global include_dir %__python3_includedir
-%global tool_dir %__python3_tooldir
+%global tool_dir %_datadir/python%pybasever/Tools
 %global pylibdir_noarch %__python3_libdir_noarch
 
 %global pyarch %{expand:%(echo %{_arch}-linux-gnu | \
@@ -87,7 +87,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 Name: python3
 Version: %{pybasever}.7
-Release: alt1
+Release: alt2
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -160,8 +160,8 @@ Patch1007: python3-sslv2-compat.patch
 # 'Trust mode': optional modules loading paths restriction
 Patch1011: python3-ignore-env-trust-security.patch
 
-# set shebang to explicit python2
-Patch1012: python3-alt-2to3-python-version.patch
+# Replaces absolute import with relative ones.
+Patch1012: python3-lib2to3-import.patch
 
 # ======================================================
 # Additional metadata, and subpackages
@@ -253,12 +253,23 @@ Group: Development/Python3
 Requires: %name = %EVR
 Requires: %name-modules-tkinter = %EVR
 Requires: %name-modules-curses = %EVR
-# No real need in python-base in this package
-%filter_from_requires /^python-base/d
-%filter_from_requires /^python2-base/d
 
 %description tools
 This package contains several tools included with Python 3
+
+%package module-gdb_libpython
+Summary: Helper for gdb and libpython
+Group: Development/Python3
+Requires: gdb
+
+%allow_python3_import_path %_datadir/gdb/python
+
+%description module-gdb_libpython
+This python module deals with the case when the process being debugged (the
+"inferior process" in gdb parlance) is itself python, or more specifically,
+linked against libpython.  In this situation, almost every item of data is a
+(PyObject*), and having the debugger merely print their addresses is not very
+enlightening.
 
 %package modules-tkinter
 Summary: A GUI toolkit for Python 3
@@ -303,6 +314,7 @@ Requires: %name-modules-curses = %EVR
 Requires: %name-modules-sqlite3 = %EVR
 Requires: %name-tools = %EVR
 %add_python3_req_skip test.test_warnings.data msvcrt _winapi
+%add_python3_self_prov_path %buildroot%pylibdir/test/test_import/
 
 %description test
 The test modules from the main %name package.
@@ -350,6 +362,7 @@ done
 %patch1007 -p2
 
 %patch1011 -p2
+
 %patch1012 -p2
 
 %ifarch %e2k
@@ -460,15 +473,44 @@ install -m755 -d %buildroot%tool_dir
 install Tools/README %buildroot%tool_dir/
 cp -ar Tools/freeze %buildroot%tool_dir/
 cp -ar Tools/i18n %buildroot%tool_dir/
-cp -ar Tools/pynche %buildroot%tool_dir/
+cp -ar Tools/unittestgui %buildroot%tool_dir/
+cp -ar Tools/clinic %buildroot%tool_dir/
+
+# Benchmarks
+cp -ar Tools/ccbench %buildroot%tool_dir/
+cp -ar Tools/iobench %buildroot%tool_dir/
+cp -ar Tools/stringbench %buildroot%tool_dir/
+cp -ar Tools/importbench %buildroot%tool_dir/
+
+# Demo/simple scripts
+cp -ar Tools/demo %buildroot%tool_dir/
 cp -ar Tools/scripts %buildroot%tool_dir/
 
 # Documentation tools
 install -m755 -d %buildroot%pylibdir/Doc
 cp -ar Doc/tools %buildroot%pylibdir/Doc/
 
-# Demo scripts
-cp -ar Tools/demo %buildroot%tool_dir/
+# libpython.py for gdb
+mkdir -p %buildroot/%_datadir/gdb/python
+cp -ar Tools/gdb/* %buildroot/%_datadir/gdb/python
+
+file_list='%tool_dir/clinic/cpp.py
+    %tool_dir/freeze/bkfile.py
+    %tool_dir/freeze/checkextensions.py
+    %tool_dir/freeze/makeconfig.py
+    %tool_dir/freeze/makefreeze.py
+    %tool_dir/freeze/makemakefile.py
+    %tool_dir/freeze/parsesetup.py
+    %_datadir/gdb/python/libpython.py
+    %tool_dir/scripts/2to3
+    %tool_dir/scripts/smelly.py'
+
+for file_name in $file_list
+do
+    sed -i '1 i#!/usr/bin/env python3
+    \@^#!/usr/bin@d' %buildroot$file_name
+    chmod +x %buildroot$file_name
+done
 
 install -d -m 0755 %buildroot%python3_sitelibdir/__pycache__
 %if "%_lib" != "lib"
@@ -943,6 +985,9 @@ $(pwd)/python -m test.regrtest \
 %exclude %tool_dir/scripts/run_tests.py
 %doc %pylibdir/Doc
 
+%files module-gdb_libpython
+%_datadir/gdb/python/
+
 %if_with tk
 %files modules-tkinter
 %pylibdir/idlelib
@@ -989,6 +1034,15 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Thu Nov 10 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.10.7-alt2
+- Moved Tools to /usr/share/%pybasever
+- Removed pynche (its pypi version is newer)
+- Moved libpython.py to the separate package
+- Used %add_python3_import_path to exclude self-provides from %name-test dependencies
+- Added shebang to some files from %name-tools and %name-module-gdb_libpython,
+  made them executable to discard rpm-build-python
+- Added patch to replace absolute import with relative ones.
+
 * Mon Sep 12 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.7-alt1
 - Updated to upstream version 3.10.7.
 
