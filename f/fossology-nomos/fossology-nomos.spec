@@ -5,34 +5,22 @@
 
 Name: fossology-nomos
 Version: 4.2.0
-Release: alt2
-
-Summary: Architecture for analyzing software, nomos standalone
+Release: alt3
+Summary: Nomos detects licenses and copyrights in a file
 License: GPL-2.0-or-later
-Group: Other
+Group: Development/Other
 Url: https://github.com/fossology/fossology
-
-Source: %name-%version.tar
 
 Provides: nomos
 Provides: nomossa
 
+Source: %name-%version.tar
+
 BuildRequires: glib2-devel
-BuildRequires: libicu-devel
 BuildRequires: libjson-c-devel
-BuildRequires: perl-Text-Template
-BuildRequires: postgresql-devel
-BuildRequires: gcc-c++
-BuildRequires: /usr/bin/php
 
 %description
-The FOSSology project is a web based framework that allows you to
-upload software to be picked apart and then analyzed by software
-agents which produce results that are then browsable via the web
-interface. Existing agents include license analysis, metadata
-extraction, and MIME type identification.
-
-This package contains the nomos agent programs and their resources.
+%summary.
 
 %prep
 %setup
@@ -40,8 +28,18 @@ This package contains the nomos agent programs and their resources.
 sed -i 's/egrep/grep -E/g' $(grep -rl egrep src/nomos/agent)
 sed -i 's/fgrep/grep -F/g' $(grep -rl fgrep src/nomos/agent)
 
+# Unhide building steps.
+sed -i '/(MAKE).* -s /s/ -s / /g' $(grep -rl '\$(MAKE).* -s ' --include=Makefile'*' )
+
+# Skip linking what is not needed for nomossa - libfossology with postgresql
+# interface.
+sed -i '/FO_LDFLAGS/s/-lfossology//' Makefile.conf
+sed -i '/FO_LDFLAGS/s/-lpq//' Makefile.conf
+# Without PG this creates empty `-I' option which consumes next option (where
+# is by the luck glib-2.0 include dir).
+sed -i '/FO_CFLAGS/s/-I\$(PG_INCLUDEDIR)//' Makefile.conf
+
 %build
-make build-lib
 make -C src/nomos/agent -f Makefile.sa all \
        VERSION=%version COMMIT_HASH=%release
 
@@ -64,6 +62,9 @@ nomossa -d .gear
 %_bindir/nomossa
 
 %changelog
+* Mon Nov 14 2022 Vitaly Chikunov <vt@altlinux.org> 4.2.0-alt3
+- spec: Remove needless BR on postgresql-devel and php.
+
 * Mon Nov 14 2022 Michael Shigorin <mike@altlinux.org> 4.2.0-alt2
 - Explicit BR: gcc-c++.
 
