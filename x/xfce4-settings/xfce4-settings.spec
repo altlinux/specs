@@ -1,5 +1,5 @@
 Name: xfce4-settings
-Version: 4.17.1
+Version: 4.17.2
 Release: alt1
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
@@ -88,6 +88,9 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Mon Nov 14 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
+- Updated to 4.17.2.
+
 * Tue Nov 08 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
 - Updated to 4.17.1.
 
