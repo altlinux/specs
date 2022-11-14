@@ -1,5 +1,5 @@
 Name: installer-feature-setup-plymouth
-Version: 0.5.8
+Version: 0.5.9
 Release: alt1
 
 Summary: Set up plymouth
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Mon Nov 14 2022 Anton Midyukov <antohami@altlinux.org> 0.5.9-alt1
+- don't add vga=0x314, if not available drm_kms_helper
+
 * Wed Sep 09 2020 Oleg Solovyov <mcpain@altlinux.org> 0.5.8-alt1
 - don't setup plymouth if there are encrypted volumes
 
