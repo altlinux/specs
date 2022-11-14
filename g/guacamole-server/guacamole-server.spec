@@ -6,7 +6,7 @@
 
 Name: guacamole-server
 Version: 1.4.0
-Release: alt1
+Release: alt2
 Summary: Server-side native components that form the Guacamole proxy
 License: Apache-2.0
 Url: http://guac-dev.org/
@@ -104,6 +104,7 @@ in Kubernetes pods.
 Summary: RDP support for guacd
 Group: System/Libraries
 Requires: libguac = %EVR
+Requires: freerdp-plugins-standard
 
 %description -n libguac-client-rdp
 libguac-client-rdp is a protocol support plugin for the Guacamole proxy (guacd)
@@ -245,6 +246,9 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %attr(750,%username,%username) %_sharedstatedir/guacd
 
 %changelog
+* Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt2
+- Add requires on freerdp-plugins-standard for libguac-client-rdp package.
+
 * Thu Oct 13 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
 - new version 1.4.0
 
