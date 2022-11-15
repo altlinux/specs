@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
-%define oname djangorestframework
+%define pypi_name djangorestframework
 
 %def_with docs
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.13.1
+Name: python3-module-%pypi_name
+Version: 3.14.0
 Release: alt1
 Summary: Web APIs for Django, made easy
 License: BSD
@@ -19,6 +19,10 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with docs
 BuildRequires: python3-module-mkdocs >= 1.0.4-alt2
 BuildRequires: python3(tornado)
@@ -30,8 +34,6 @@ BuildRequires: python3(livereload)
 BuildRequires: python3(pytz)
 BuildRequires: python3-module-django
 
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(pytest_django)
 BuildRequires: python3-module-django-tests
 BuildRequires: python3-module-django-dbbackend-sqlite3
@@ -46,14 +48,14 @@ Web APIs.
 
 %if_with docs
 %package docs
-Summary: Documentation for %oname
+Summary: Documentation for %pypi_name
 Group: Development/Documentation
 
 %description docs
 Django REST framework is a powerful and flexible toolkit for building
 Web APIs.
 
-This package contains documentation for %oname.
+This package contains documentation for %pypi_name.
 %endif
 
 %prep
@@ -61,32 +63,32 @@ This package contains documentation for %oname.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 mkdocs build
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps -vvr
+%tox_check_pyproject
 
 %files
-%doc *.md
+%doc README.md
 %python3_sitelibdir/rest_framework/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %if_with docs
 %files docs
 %doc site/*
 %endif
 
-
 %changelog
+* Mon Nov 14 2022 Stanislav Levin <slev@altlinux.org> 3.14.0-alt1
+- 3.13.1 -> 3.14.0.
+
 * Mon Feb 28 2022 Stanislav Levin <slev@altlinux.org> 3.13.1-alt1
 - 3.12.4 -> 3.13.1.
 

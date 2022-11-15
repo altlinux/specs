@@ -1,17 +1,20 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name pytest
 
+%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
+%define exceptiongroup %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
+
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.1.3
+Version: 7.2.0
 Release: alt1
 
 Summary: Python test framework
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/pytest-dev/pytest.git
 Url: https://pypi.org/project/pytest/
+VCS: https://github.com/pytest-dev/pytest.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -25,12 +28,16 @@ BuildRequires: python3(setuptools_scm)
 
 %if_with check
 # install_requires:
+%if %tomli
+BuildRequires: python3(tomli)
+%endif
+%if %exceptiongroup
+BuildRequires: python3(exceptiongroup)
+%endif
 BuildRequires: python3(attr)
 BuildRequires: python3(iniconfig)
 BuildRequires: python3(packaging)
 BuildRequires: python3(pluggy)
-BuildRequires: python3(py)
-BuildRequires: python3(tomli)
 
 # extras_require:
 BuildRequires: python3(argcomplete)
@@ -52,9 +59,16 @@ BuildRequires: python3(pexpect)
 
 BuildArch: noarch
 
-%py3_requires py
-%py3_requires tomli
 %py3_requires packaging
+%if %tomli
+%py3_requires tomli
+%endif
+%if %exceptiongroup
+%py3_requires exceptiongroup
+%endif
+
+# don't provide limited compat shim for python3(py) from python3-module-py
+%add_findprov_skiplist %python3_sitelibdir/py.py
 
 %description
 The pytest framework makes it easy to write small tests, yet
@@ -101,18 +115,23 @@ export TERM=xterm
 %tox_check_pyproject -- -vra
 
 %files
-%doc AUTHORS LICENSE *.rst
+%doc CHANGELOG.rst README.rst
 %_bindir/py.test3
 %_bindir/py.test-3
 %python3_sitelibdir/pytest/
 %python3_sitelibdir/_pytest/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%python3_sitelibdir/py.py
+%python3_sitelibdir/__pycache__/py.*
 
 %files -n pytest3
 %_bindir/pytest3
 %_bindir/pytest-3
 
 %changelog
+* Fri Nov 11 2022 Stanislav Levin <slev@altlinux.org> 7.2.0-alt1
+- 7.1.3 -> 7.2.0.
+
 * Wed Sep 21 2022 Stanislav Levin <slev@altlinux.org> 7.1.3-alt1
 - 7.1.2 -> 7.1.3.
 

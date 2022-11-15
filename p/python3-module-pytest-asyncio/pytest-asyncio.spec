@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.20.1
+Version: 0.20.2
 Release: alt1
 
 Summary: Pytest support for asyncio
@@ -68,6 +68,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 14 2022 Stanislav Levin <slev@altlinux.org> 0.20.2-alt1
+- 0.20.1 -> 0.20.2.
+
 * Mon Oct 24 2022 Stanislav Levin <slev@altlinux.org> 0.20.1-alt1
 - 0.19.0 -> 0.20.1.
 

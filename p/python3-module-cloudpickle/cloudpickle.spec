@@ -2,7 +2,7 @@
 
 Name:           python3-module-%oname
 Version:        2.0.0
-Release:        alt1
+Release:        alt2
 Summary:        Extended pickling support for Python objects
 Group:          Development/Python
 License:        BSD
@@ -19,6 +19,8 @@ BuildRequires: python3(psutil) python3(typing_extensions) python3(numpy)
 BuildRequires: python3(numpy.testing)
 BuildRequires: pytest3
 BuildRequires: /proc
+# https://github.com/cloudpipe/cloudpickle/issues/487
+BuildRequires: python3(py)
 
 %description
 cloudpickle makes it possible to serialize Python constructs
@@ -50,6 +52,9 @@ pytest3 -v -k "not file_handles"
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Mon Nov 14 2022 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2
+- Fixed FTBFS (pytest 7.2).
+
 * Thu Feb 03 2022 Anton Midyukov <antohami@altlinux.org> 2.0.0-alt1
 - New version 2.0.0
 - fix packaging with python >= 3.10
