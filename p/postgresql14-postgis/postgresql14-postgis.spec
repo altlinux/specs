@@ -1,16 +1,17 @@
+%define _unpackaged_files_terminate_build 1
 %define pg_ver 14
 
-Name: postgis
-Version: 3.3.1
+Name: postgresql%pg_ver-postgis
+Version: 3.3.2
 Release: alt1
 
-Summary: Geographic Information Systems Extensions to PostgreSQL
-Summary(ru_RU.UTF-8): Геоинформационные расширения для PostgreSQL
+Summary: Geographic Information Systems Extensions to PostgreSQL %pg_ver
+Summary(ru_RU.UTF-8): Геоинформационные расширения для PostgreSQL %pg_ver
 License: GPL-2.0
 Group: Databases
 Url: http://postgis.refractions.net
 
-Source: %name-%version.tar
+Source: postgis-%version.tar.gz
 Source1: create_template_postgis
 Source2: postgis.watch
 
@@ -24,14 +25,15 @@ BuildRequires: libgeos-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: libproj-devel
 BuildRequires: libxml2-devel
-BuildRequires: postgresql-devel
+BuildRequires: postgresql%pg_ver-server-devel
 BuildRequires: libjson-c-devel
 BuildRequires: libprotobuf-c-devel
 BuildRequires: protobuf-c-compiler
 BuildRequires: libpcre-devel
 BuildRequires: xsltproc
 
-Requires: postgresql%pg_ver-%name = %EVR
+Requires: postgresql%pg_ver-server
+Provides: postgis
 
 %description
 PostGIS adds support for geographic objects to the PostgreSQL
@@ -45,24 +47,14 @@ PostGIS добавляет поддержку географических об�
 позволяющим использовать его для хранения и обработки геоданных в
 геоинформационных системах (ГИС).
 
-%package -n postgresql%pg_ver-%name
-Summary: The PostGIS extension for PostgreSQL
-Group: Databases
-Requires: postgresql%pg_ver-server
-
-%description -n postgresql%pg_ver-%name
-This package contains shared library for PostgreSQL server
-
-%description -n postgresql%pg_ver-%name -l ru_RU.UTF-8
-Подгружаемая postgis библиотека для PostgreSQL сервера
-
 %prep
-%setup
+%setup -n postgis-%version
 subst "s|PGSQL_DOCDIR|DOCDIR|g" doc/Makefile.in
 
 %build
 export PCRE_CPPFLAGS=-I/usr/include/pcre
 ./autogen.sh
+subst 's/PGSQL_FULL_VERSION=.*/PGSQL_FULL_VERSION="PostgreSQL %pg_ver.0"/' configure
 %configure \
 	--disable-static \
 	--with-gui \
@@ -75,29 +67,30 @@ install -pD -m0755 %SOURCE1 %buildroot%_bindir/create_template_postgis
 install -d %buildroot%_libdir/pgsql/
 install -d %buildroot%_includedir
 %makeinstall_std
-%makeinstall_std -C doc docs-install comments-install man-install DOCDIR=%_docdir/%name-%version
+%makeinstall_std -C doc docs-install comments-install man-install DOCDIR=%_docdir/postgis-%version
 
 rm -rf %buildroot%_libdir/liblwgeom.a
 
 %files
-%doc %_docdir/%name-%version
-%_bindir/pgsql2shp
-%_bindir/shp2pgsql*
-%_bindir/raster2pgsql
+%doc %_docdir/postgis-%version
+%doc %_datadir/doc/postgresql/extension/README.address_standardizer
+%_bindir/*
 %_man1dir/*
 %_datadir/pgsql/applications/shp2pgsql-gui.desktop
 %_datadir/pgsql/icons/hicolor/*/apps/shp2pgsql-gui.png
-
-%files -n postgresql%pg_ver-%name
 %_bindir/create_template_postgis
-%_libdir/pgsql/%{name}*.so
+%_libdir/pgsql/postgis*.so
+%_libdir/pgsql/bitcode
 %_libdir/pgsql/address_standardizer*.so
 %_datadir/pgsql/contrib/postgis-*/*.sql
 %_datadir/pgsql/contrib/postgis-*/*.pl
 %_datadir/pgsql/extension
-%doc %_datadir/doc/postgresql/extension/README.address_standardizer
 
 %changelog
+* Mon Nov 14 2022 Andrey Cherepanov <cas@altlinux.org> 3.3.2-alt1
+- New version.
+- Packaged as one package postgresql14-postgis.
+
 * Wed Sep 14 2022 Andrey Cherepanov <cas@altlinux.org> 3.3.1-alt1
 - New version.
 
