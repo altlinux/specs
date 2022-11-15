@@ -1,6 +1,6 @@
 Name:    alterator-net-domain
 Version: 0.7.3
-Release: alt1
+Release: alt2
 Source:  %name-%version.tar
 
 Summary: Alterator module to provision system network domain
@@ -46,6 +46,9 @@ and FreeIPA domain.
 %_bindir/*-sh-functions
 
 %changelog
+* Tue Nov 15 2022 Dmitry Terekhin <jqt4@altlinux.org> 0.7.3-alt2
+- Enable bind-caps
+
 * Thu Jun 09 2022 Ivan Savin <svn17@altlinux.org> 0.7.3-alt1
 - Add ability to restore default configuration file.
 
