@@ -1,7 +1,7 @@
 %define distro cliff
 Name: installer-distro-%distro
-Version: 8.2
-Release: alt10
+Version: 10.0
+Release: alt1
 
 License: GPL
 Group: System/Configuration/Other
@@ -86,6 +86,10 @@ cp -a steps.d/* %buildroot%install2dir/steps
 %files stage3
 
 %changelog
+* Tue Nov 15 2022 Anton Midyukov <antohami@altlinux.org> 10.0-alt1
+- bump version
+- 90-remove-unused-officer-steps: fix for SP Release 10.x
+
 * Wed Aug 24 2022 Anton Midyukov <antohami@altlinux.org> 8.2-alt10
 - installer-steps: replace vm with vm-ortodox
 - stage3: do'nt require alterator-grub
