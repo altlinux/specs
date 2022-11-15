@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.75
-Release: alt1
+Release: alt2
 
 Summary: Launcher for the Steam software distribution service
 License: ALT-Steam
@@ -16,6 +16,7 @@ Source1: %{name}_install_agreement.txt
 
 Patch0: %name-apt-alt.patch
 Patch1: %name-desktop-alt.patch
+Patch2: %name-xvt-alt.patch
 
 BuildRequires(Pre): rpm-build-python3
 
@@ -41,6 +42,7 @@ savegame and screenshot functionality, and many social features.
 %setup -n %name-launcher
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %install
 %makeinstall_std
@@ -64,6 +66,9 @@ savegame and screenshot functionality, and many social features.
 %config %_udevrulesdir/60-%name-vr.rules
 
 %changelog 
+* Tue Nov 15 2022 Nazarov Denis <nenderus@altlinux.org> 1.0.0.75-alt2
+- Remove require on xterm (ALT #44303)
+
 * Sun Jul 17 2022 Nazarov Denis <nenderus@altlinux.org> 1.0.0.75-alt1
 - Version 1.0.0.75
 
