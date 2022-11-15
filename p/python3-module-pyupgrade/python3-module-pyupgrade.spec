@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.38.2
+Version: 3.2.2
 Release: alt1
 
 Summary: A tool (and pre-commit hook) to automatically upgrade syntax for newer versions of the language
@@ -50,6 +50,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 15 2022 Anton Zhukharev <ancieg@altlinux.org> 3.2.2-alt1
+- 2.38.2 -> 3.2.2
+
 * Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 2.38.2-alt1
 - initial build for Sisyphus
 
