@@ -1,6 +1,6 @@
 Name:    pascalabcnet
-Version: 3.8.3.3199
-Release: alt1.git75237b4c
+Version: 3.8.3.3204
+Release: alt1.git5c1df570
 
 Summary: PascalABC.NET programming language  
 License: LGPL-3.0
@@ -13,8 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 Source: %name-%version.tar
 Source1: PascalABCNETLinux.desktop
 Source2: icons.tar
-Source3: Samples.tar
-Source4: PascalABCNETLinux.appdata.xml
+Source3: PascalABCNETLinux.appdata.xml
 
 ExcludeArch: ppc64le
 
@@ -50,14 +49,37 @@ tar xf %SOURCE2
 %build
 # Build compiler
 sh -x _RebuildReleaseAndRunTests.sh
-# Build Linux graphical library GraphABC
-mono bin/pabcnetcclear.exe ./bin/Lib/GraphABC.pas
 # Build IDE
 MONO_IOMAP=case xbuild /p:Configuration=release PascalABCNETLinux.sln
 
 %install
-mkdir -p %buildroot%_libexecdir/%name
-cp -a bin/* %buildroot%_libexecdir/%name
+# Install executables and modules
+mkdir -p %buildroot%_libexecdir/%name/{Lib,LibSource,Lng,Highlighting,Samples/Graphics}
+cp -a bin/*.{exe,dll,chm,config} %buildroot%_libexecdir/%name
+cp -a bin/template.pct %buildroot%_libexecdir/%name
+cp -a bin/Highlighting/PascalABCNET.xshd %buildroot%_libexecdir/%name/Highlighting
+cp -a bin/Lib/*.pcu %buildroot%_libexecdir/%name/Lib
+cp -a bin/Lng/* %buildroot%_libexecdir/%name/Lng
+
+# Install sources 
+cp -a bin/Lib/*.pas %buildroot%_libexecdir/%name/LibSource
+
+# Install samples
+cp -a InstallerSamples/!MainFeatures %buildroot%_libexecdir/%name/Samples
+cp -a InstallerSamples/!Tutorial  %buildroot%_libexecdir/%name/Samples
+cp -a InstallerSamples/!РусскиеИсполнители %buildroot%_libexecdir/%name/Samples
+cp -a InstallerSamples/Algorithms %buildroot%_libexecdir/%name/Samples
+cp -a InstallerSamples/Applications %buildroot%_libexecdir/%name/Samples
+cp -a InstallerSamples/Games %buildroot%_libexecdir/%name/Samples
+cp -a InstallerSamples/LanguageFeatures %buildroot%_libexecdir/%name/Samples
+cp -a InstallerSamples/LINQ %buildroot%_libexecdir/%name/Samples
+cp -a InstallerSamples/NETLibraries %buildroot%_libexecdir/%name/Samples
+cp -a InstallerSamples/Other %buildroot%_libexecdir/%name/Samples
+cp -a InstallerSamples/StandardUnits %buildroot%_libexecdir/%name/Samples
+cp -a InstallerSamples/WhatsNew %buildroot%_libexecdir/%name/Samples
+cp -a InstallerSamples/Graphics/GraphABC %buildroot%_libexecdir/%name/Samples/Graphics
+
+# Install executable wrappers
 mkdir -p %buildroot%_bindir
 
 # Executable wrappers
@@ -95,11 +117,8 @@ for icon in *.png; do
 done
 popd
 
-# Install Samples
-tar xf %SOURCE3 -C %buildroot%_libexecdir/%name
-
 # Install appdata.xml
-install -Dpm 0644 %SOURCE4 %buildroot%_datadir/metainfo/PascalABCNETLinux.appdata.xml
+install -Dpm 0644 %SOURCE3 %buildroot%_datadir/metainfo/PascalABCNETLinux.appdata.xml
 
 %files
 %doc README.md doc/*
@@ -110,6 +129,11 @@ install -Dpm 0644 %SOURCE4 %buildroot%_datadir/metainfo/PascalABCNETLinux.appdat
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Tue Nov 15 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3204-alt1.git5c1df570
+- New version.
+- Built all modules.
+- Used install scheme from upstream (_GenerateLinuxVersion.bat).
+
 * Tue Nov 08 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3199-alt1.git75237b4c
 - New version.
 - Packaged appdata.xml file for appstream-data.
