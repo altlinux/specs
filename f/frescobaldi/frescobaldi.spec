@@ -1,6 +1,6 @@
 Name: frescobaldi
 Version: 3.1.3
-Release: alt5
+Release: alt5.1
 
 Summary: LilyPond music score editor
 License: %gpl2plus
@@ -21,6 +21,8 @@ AutoProv:yes,nopython,nopython3
 
 # Source-url: https://github.com/wbsoft/frescobaldi/archive/v%version.tar.gz
 Source: %name-%version.tar
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/frescobaldi_app
 
 %description
 Frescobaldi is a LilyPond music score editor, with following features:
@@ -77,6 +79,9 @@ rsvg-convert -w 48 -h 48  \
 %_man1dir/*
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.1.3-alt5.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Fri Feb 18 2022 Sergey V Turchin <zerg@altlinux.org> 3.1.3-alt5
 - using not_qt5_qtwebengine_arches macro
 

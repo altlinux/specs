@@ -10,7 +10,7 @@
 
 Name: libteam
 Version: 1.31
-Release: alt2%git_hash
+Release: alt2%git_hash.1
 
 Summary: Library for controlling team network device
 License: LGPLv2.1+
@@ -92,6 +92,8 @@ This package contains team network device control daemon.
 Summary: Team network device library bindings for Python3
 Group: Development/Python3
 Requires: %name = %version-%release
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/
 
 %description -n python3-module-team
 This package contains a module that permits applications
@@ -196,6 +198,9 @@ install -pm 0644 team/capi.py %buildroot%python3_sitelibdir/team/
 %endif
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.31-alt2.g69a7494.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Tue Aug 09 2022 Mikhail Efremov <sem@altlinux.org> 1.31-alt2.g69a7494
 - Add tmpfiles config for /var/run/teamd/ directory.
 - teamd: better handle failures to chown(TEAMD_RUN_DIR) during

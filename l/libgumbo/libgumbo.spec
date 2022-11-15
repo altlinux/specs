@@ -4,7 +4,7 @@
 
 Name: libgumbo
 Version: 0.10.1
-Release: alt2
+Release: alt2.1
 
 Summary: An HTML5 parsing library
 License: %asl-2.0
@@ -57,6 +57,8 @@ Summary: Python3 bindings to %name
 Group: Development/Python3
 Requires: %name = %version-%release
 BuildArch: noarch
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir_noarch
 
 %description -n python3-module-gumbo
 This package contains a module that permits applications
@@ -120,6 +122,9 @@ make check
 %endif
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.10.1-alt2.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Sat Aug 31 2019 Michael Shigorin <mike@altlinux.org> 0.10.1-alt2
 - Fixed build without check (gcc-c++ is requisite).
 

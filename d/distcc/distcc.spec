@@ -2,7 +2,7 @@
 
 Name: distcc
 Version: 3.4
-Release: alt8
+Release: alt8.1
 
 Summary: distcc is a program to distribute builds C/C++/ Objective C/C++
 
@@ -58,6 +58,8 @@ Group: Development/Python
 
 %description -n python3-module-include_server
 Python3 module distcc include_server.
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/include_server/
 
 %prep
 %setup
@@ -135,6 +137,9 @@ rm -f %buildroot%_sysconfigdir/distcc/commands.allow.sh
 %python3_sitelibdir/include_server*
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.4-alt8.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Thu Sep 16 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 3.4-alt8
 - Repaired IP based access control (Closes: #42251)
 - Added systemd unit file (Closes: #40669)

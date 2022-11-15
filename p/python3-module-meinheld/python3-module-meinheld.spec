@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.6.1
-Release: alt3
+Release: alt3.1
 
 Summary: meinheld is a high performance asynchronous WSGI Web Server (based on picoev)
 License: BSD
@@ -28,6 +28,8 @@ Source:  %oname-%version.tar
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/
 
 %description tests
 %summary
@@ -62,6 +64,9 @@ mv tests/ %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.6.1-alt3.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Oct 30 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.6.1-alt3
 - fix build
 

@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 2.4
-Release: alt1
+Release: alt1.1
 
 Summary: Find dead Python code
 License: MIT
@@ -24,6 +24,9 @@ BuildRequires: python3-module-toml
 BuildArch: noarch
 
 Source:  %name-%version.tar
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%modulename/whitelists/whitelist_utils.py
+
 
 %description
 Vulture finds unused classes, functions and variables in your code.
@@ -53,5 +56,8 @@ py.test3 -v tests
 %doc *.md
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.4-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Tue May 24 2022 Grigory Ustinov <grenka@altlinux.org> 2.4-alt1
 - Initial build for Sisyphus

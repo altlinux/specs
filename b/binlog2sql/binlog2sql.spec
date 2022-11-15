@@ -1,6 +1,6 @@
 Name: binlog2sql
 Version: 0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Parse MySQL binlog to SQL
 
@@ -21,6 +21,7 @@ BuildRequires(pre): rpm-build-python3
 #py3_use wheel >= 0.29.0
 %py3_use mysql-replication >= 0.13
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/
 %description
 Parse MySQL binlog to SQL.
 
@@ -44,5 +45,8 @@ ln -s %python3_sitelibdir/binlog2sql/binlog2sql.py %buildroot%_bindir/%name
 %python3_sitelibdir/%name/
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Sun Jan 24 2021 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
 - initial build for ALT Sisyphus

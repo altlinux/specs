@@ -1,6 +1,6 @@
 Name: python3-module-ajsonrpc
 Version: 1.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Async JSON-RPC 2.0 protocol
 License: MIT
@@ -11,6 +11,8 @@ Source0: %name-%version-%release.tar
 
 BuildArch: noarch
 BuildRequires: rpm-build-python3 python3-module-setuptools
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/ajsonrpc/backend/
 
 %description
 %summary
@@ -33,6 +35,9 @@ sed -i '/^__version__/ s,0\.0\.0,%version,' ajsonrpc/__init__.py
 %python3_sitelibdir/ajsonrpc-%version-*-info
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.2.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed May 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.0-alt1
 - 1.2.0 released
 

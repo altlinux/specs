@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.2.2
-Release: alt2
+Release: alt2.1
 
 Summary: Easy Twitter integration for Django
 License: MIT
@@ -22,6 +22,7 @@ BuildRequires: python3-module-django
 BuildRequires: python3-module-sphinx
 %endif
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname
 
 %description
 ECL Twitter is an awesome Twitter library for Python 2.7+. It makes the
@@ -78,6 +79,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.2.2-alt2.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Thu Jan 23 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.2.2-alt2
 - Porting on Python3.
 

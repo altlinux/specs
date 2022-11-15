@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 3004
-Release: alt4
+Release: alt4.1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -57,6 +57,8 @@ Summary: Management component for salt, a parallel remote execution system
 Group: Development/Python
 Obsoletes: python-module-salt 
 %py3_requires yaml msgpack pycryptodomex contextvars
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%name/ext/vsan/vsanmgmtObjects.py
 
 %description  -n python3-module-salt
 Salt is a distributed remote execution system used to execute commands
@@ -246,6 +248,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3004-alt4.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Mon Jul 25 2022 Andrey Cherepanov <cas@altlinux.org> 3004-alt4
 - Removed pacman from autorequirements.
 

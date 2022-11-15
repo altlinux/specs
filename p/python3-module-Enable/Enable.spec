@@ -5,7 +5,7 @@
 %define oname Enable
 Name: python3-module-%oname
 Version: 5.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: Drawing and interaction packages
 
@@ -33,6 +33,8 @@ BuildRequires: python3-module-sphinx-copybutton
 
 %add_python3_req_skip macport mac_context hypothesis
 %add_python3_req_skip wx.aui wx.glcanvas wx.grid wx.py.shell
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/kiva
 
 %description
 The Enable project provides two related multi-platform packages for
@@ -130,6 +132,9 @@ cp -fR pickles %buildroot%python3_sitelibdir/enable/
 %endif
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 5.3.1-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Thu Sep 15 2022 Grigory Ustinov <grenka@altlinux.org> 5.3.1-alt1
 - Automatically updated to 5.3.1.
 

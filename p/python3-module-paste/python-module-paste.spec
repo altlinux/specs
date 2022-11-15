@@ -3,7 +3,7 @@
 
 Name: python3-module-paste
 Version: 3.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Tools for using a Web Server Gateway Interface stack
 
@@ -26,6 +26,8 @@ BuildRequires: python3-module-setuptools
 %add_python3_req_skip flup.middleware.session hotshot.stats
 # FIXME:mask python2 modules
 %add_python3_req_skip cStringIO thread urlparse
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/paste/wsgilib.py
 
 %description
 These provide several pieces of "middleware" (or filters) that can be
@@ -51,6 +53,9 @@ touch %buildroot%python3_sitelibdir/paste/__init__.py
 
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.5.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Sat Jul 10 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5.0-alt1
 - build python3 module separately, cleanup build
 

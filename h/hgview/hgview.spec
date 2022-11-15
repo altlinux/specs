@@ -2,7 +2,7 @@
 
 Name: hgview
 Version: 1.14.0
-Release: alt2
+Release: alt2.1
 
 Summary: Qt5 based Mercurial log navigator
 License: GPLv2+
@@ -20,6 +20,8 @@ Requires: mercurial mercurial-hgext
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: mercurial mercurial-hgext asciidoc xmlto python3-module-PyQt5-devel
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/hgviewlib/qt5
 
 %description
 hgview is a simple tool aiming at visually navigate in a Mercurial
@@ -49,6 +51,9 @@ rm -rf %buildroot%python3_sitelibdir/hgext3rd/
 %doc ChangeLog README.rst COPYING
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.14.0-alt2.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.14.0-alt2
 - fix BR: python3-module-PyQt5-devel
 

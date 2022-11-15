@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 2.8.0
-Release: alt1
+Release: alt1.1
 Summary: AWS X-Ray SDK for the Python programming language
 Group: Development/Python3
 License: Apache-2.0
@@ -28,6 +28,7 @@ BuildRequires: python3(sqlite3) python3(sqlalchemy) python3(mock) python3(flask)
 BuildRequires: python3(pg8000) python3(flask_sqlalchemy) python3(bottle) python3(webtest) python3(django)
 
 %add_python3_req_skip aiobotocore.client flask_sqlalchemy.model
+%add_python3_self_prov_path  %buildroot%python3_sitelibdir/%modname/ext
 
 %description
 The AWS X-Ray SDK for Python (the SDK) enables Python developers
@@ -74,6 +75,9 @@ pytest-3 -vv \
 %python3_sitelibdir/%modname-%version-py*.egg-info
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.8.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Aug 25 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.0-alt1
 - Updated to upstream version 2.8.0.
 - Enabled tests.

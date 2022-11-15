@@ -18,7 +18,7 @@ BuildRequires: /usr/bin/desktop-file-install python3(sqlite3) python3-module-set
 Name:		mnemosyne
 Summary:	Flash-card learning tool
 Version:	2.6.1
-Release:	alt3_4
+Release:	alt3_4.1
 URL:		https://www.mnemosyne-proj.org/
 Source0:	https://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
 # contains missing tests and LICENSE files from upstream repo
@@ -54,6 +54,8 @@ Requires:	python3-module-webob
 Requires:	python3-module-Pillow
 Requires:       python3-module-OpenGL python3-module-OpenGL_accelerate
 Source44: import.info
+
+%add_python3_self_prov_path %buildroot%{python3_sitelibdir}/%{name}/libmnemosyne/renderers/
 
 %description
 Mnemosyne resembles a traditional flash-card program but with an
@@ -112,6 +114,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.6.1-alt3_4.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Fri Feb 04 2022 Igor Vlasenko <viy@altlinux.org> 2.6.1-alt3_4
 - support for qt5_qtwebengine_arches (closes: #41870)
 

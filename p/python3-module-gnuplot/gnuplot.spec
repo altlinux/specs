@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.8
-Release: alt1.git20120706.1.2
+Release: alt1.git20120706.1.3
 
 Summary: Python interface to Gnuplot
 
@@ -26,6 +26,8 @@ BuildRequires: gnuplot python3-module-numpy-testing rpm-build-python3 xvfb-run
 
 %py3_provides Gnuplot
 Requires: gnuplot
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/Gnuplot
 
 %description
 Gnuplot.py is a Python package that allows you to create graphs
@@ -87,6 +89,9 @@ xvfb-run python3 test.py -v
 %_docdir/%name
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.8-alt1.git20120706.1.3
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.8-alt1.git20120706.1.2
 - (NMU) rebuild with python3.6
 

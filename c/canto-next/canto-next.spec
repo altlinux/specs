@@ -3,7 +3,7 @@
 
 Name: canto-next
 Version: 0.9.7
-Release: alt1
+Release: alt1.1
 
 Summary: The next generation Canto RSS daemon.
 License: GPLv2
@@ -48,6 +48,8 @@ This package contains python3 module for %name.
 %package -n python3-module-%name-tests
 Summary: Tests for %name
 Group: Development/Python3
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/
 
 %description -n python3-module-%name-tests
 This is the RSS backend for Canto clients.
@@ -113,6 +115,9 @@ mv tests/ %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.9.7-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Tue Nov 19 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.9.7-alt1
 - Version updated to 0.9.7
 - porting on python3

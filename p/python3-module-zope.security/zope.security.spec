@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 5.1.1
-Release: alt2
+Release: alt2.1
 Summary: Zope Security Framework
 License: ZPL-2.1
 Group: Development/Python3
@@ -49,6 +49,8 @@ security policies on Python objects.
 Summary: Examples for Zope Security Framework
 Group: Development/Python3
 Requires: %name = %EVR
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/zope/security/examples/sandbox.py
 
 %description examples
 The Security framework provides a generic mechanism to implement
@@ -159,6 +161,9 @@ tox.py3 --sitepackages -e py%{python_version_nodots python3} -v
 %endif
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 5.1.1-alt2.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Mon Nov 23 2020 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt2
 - Bootstrap for python3.9.
 

@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 6.36.0
-Release: alt2
+Release: alt2.1
 
 Summary: A library for property based testing
 
@@ -48,6 +48,8 @@ BuildRequires: python3(pexpect)
 BuildRequires: python3(pytest_xdist)
 %endif
 
+%add_python3_req_skip dpcontracts
+
 %description
 Hypothesis is an advanced testing library for Python. It lets you write tests
 which are parametrized by a source of examples, and then generates simple and
@@ -80,6 +82,9 @@ tox.py3 --sitepackages -vvr --no-deps -- --numprocesses auto tests
 %python3_sitelibdir/_hypothesis_pytestplugin.py
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 6.36.0-alt2.1
+- NMU: used %%add_python3_req_skip because Sisyphus does not provide debugpy.
+
 * Wed Feb 02 2022 Stanislav Levin <slev@altlinux.org> 6.36.0-alt2
 - Fixed FTBFS (Python3.10).
 

@@ -2,7 +2,7 @@
 
 Name:		python3-module-%modname
 Version:	0.12.1
-Release:	alt2
+Release:	alt2.1
 Summary:	Format agnostic tabular data library (XLS, JSON, YAML, CSV)
 
 Group:		Development/Python3
@@ -15,6 +15,7 @@ BuildArch:	noarch
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-html5lib python3-module-pbr python3-module-yaml
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%modname/packages/dbfpy3/utils.py
 
 %description
 Tablib is a format-agnostic tabular dataset library, written in Python.
@@ -49,6 +50,9 @@ popd
 
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.12.1-alt2.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Sun Aug 30 2020 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt2
 - Transfer on python3.
 

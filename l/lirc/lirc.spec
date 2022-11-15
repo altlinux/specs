@@ -1,7 +1,7 @@
 %add_python3_path /usr/share/lirc/python-pkg/
 Name: lirc
 Version: 0.10.1
-Release: alt6
+Release: alt6.1
 
 Summary: The Linux Infrared Remote Control package
 License: GPL-2.0-or-later and MIT
@@ -53,6 +53,8 @@ Requires: lirc = %version-%release
 Group: System/Base
 Requires: python3-module-pygobject3-pygtkcompat
 Requires: python3-module-yaml
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/lirc
 
 %description config
 The LIRC config package contains tools and data  to ease the
@@ -168,6 +170,9 @@ fi
 %python3_sitelibdir/lirc-setup
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.10.1-alt6.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Jun 22 2022 Egor Ignatov <egori@altlinux.org> 0.10.1-alt6
 - Fix FTBFS.
 

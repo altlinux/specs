@@ -1,6 +1,6 @@
 Name: onboard
 Version: 1.4.1
-Release: alt3
+Release: alt3.1
 
 Summary: Simple on-screen Keyboard
 License: GPL-3.0+
@@ -30,7 +30,7 @@ Requires: python3-module-dbus
 # see ALT bug #35174
 Requires: iso-codes
 
-%filter_from_requires /^python3(pypredict.lm)/d
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/Onboard/pypredict
 
 %description
 An on-screen keyboard useful on tablet PCs or for mobility impaired
@@ -92,6 +92,9 @@ rm -rf %buildroot%_iconsdir/ubuntu-mono-*
 %_datadir/gnome-shell/extensions/Onboard_Indicator@onboard.org
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.4.1-alt3.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Mon Apr 26 2021 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt3
 - Complete Russian translation (thanks Olesya Gerasimenko).
 - Remove Accessability category from desktop files.

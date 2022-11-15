@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.3.0
-Release: alt2
+Release: alt2.1
 
 Summary: Python interface for GNU Scientific Library (GSL)
 License: GPLv2
@@ -16,6 +16,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: libgsl-devel libnumpy-py3-devel
 BuildRequires: python3-module-numpy swig
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/gsl_dist
 
 %description
 This project provides a python interface for the GNU scientific library
@@ -102,6 +103,9 @@ rm -f swig_src/*
 
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.3.0-alt2.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Mon Mar 16 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt2
 - Fixed build with numpy.
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.19.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python Geocoding Toolbox
 License: MIT
@@ -41,6 +41,8 @@ classes are located in geopy.geocoders.
 Summary: Tests %name
 Group: Development/Python3
 Requires: %name = %EVR
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/test
 
 %description tests
 geopy is a Python 2 and 3 client for several popular geocoding web
@@ -93,6 +95,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.19.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Thu Dec 05 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.19.0-alt1
 - Version updated to 1.19.0
 - python2 disabled

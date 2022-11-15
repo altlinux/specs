@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.5.11
-Release: alt6
+Release: alt6.1
 
 Summary: Python library for AXON
 License: MIT
@@ -34,6 +34,8 @@ Group: Development/Python3
 Requires: %name = %EVR
 %py3_requires yaml
 %add_python3_req_skip test_construct test_anonymous
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/axon/test/
 
 %description tests
 pyaxon is an MIT Licensed python library for AXON. AXON is eXtended
@@ -73,6 +75,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.5.11-alt6.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 0.5.11-alt6
 - drop unused BR: rpm-macros-sphinx
 

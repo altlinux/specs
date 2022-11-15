@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.1.5
-Release: alt3
+Release: alt3.1
 
 Summary: Drop-in facebook comments for django
 License: MIT
@@ -18,6 +18,7 @@ Patch: porting-on-python3.patch
 
 BuildRequires(pre): rpm-build-python3
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/facebook_comments
 
 %description
 django-facebook-comments is a reusable Django app to place facebook
@@ -47,6 +48,9 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.5-alt3.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Dec 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1.5-alt3
 - porting on python3
 

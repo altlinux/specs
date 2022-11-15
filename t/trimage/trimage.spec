@@ -1,6 +1,6 @@
 Name: trimage
 Version: 1.0.6
-Release: alt1
+Release: alt1.1
 License: MIT
 Summary: Tool for Losslessly Optimizing PNG and JPEG Files
 Url: http://trimage.org/
@@ -15,6 +15,8 @@ Requires: optipng
 Requires: pngcrush
 Requires: icon-theme-hicolor
 BuildArch: noarch
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%name
 
 %description
 Trimage is a cross-platform GUI and command-line interface to optimize
@@ -44,6 +46,9 @@ dragging and dropping and various command line options.
 %_iconsdir/hicolor/scalable/apps/trimage.svg
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.0.6-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Sun Jan 26 2020 Anton Midyukov <antohami@altlinux.org> 1.0.6-alt1
 - new version 1.0.6
 - build with python3

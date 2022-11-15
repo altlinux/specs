@@ -4,7 +4,7 @@
 
 Name: opensnitch
 Version: 1.0.0
-Release: alt5.b.git.5c8f710
+Release: alt5.b.git.5c8f710.1
 Summary: OpenSnitch is a GNU/Linux port of the Little Snitch application firewall
 License: GPLv3
 Group: Networking/Other
@@ -47,6 +47,8 @@ Summary: OpenSnitch is a GNU/Linux port of the Little Snitch application firewal
 Group: Networking/Other
 BuildArch: noarch
 Requires: %name-daemon = %EVR
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir_noarch
 
 %description ui
 OpenSnitch is a GNU/Linux port of the Little Snitch application firewall.
@@ -115,6 +117,9 @@ mkdir -p %buildroot%_pseudouser_home
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.0.0-alt5.b.git.5c8f710.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Jul 14 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt5.b.git.5c8f710
 - fix BR: python3-module-PyQt5-devel
 

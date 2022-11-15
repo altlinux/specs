@@ -2,7 +2,7 @@
 
 Name: python3-module-pycparser
 Version: 2.21
-Release: alt1
+Release: alt1.1
 
 Summary: C parser in Python
 
@@ -19,6 +19,8 @@ BuildRequires(pre): rpm-build-intro >= 2.2.5
 BuildRequires(pre): rpm-build-python3
 
 BuildArch: noarch
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/
 
 %description
 pycparser is a complete parser of the C language, written in pure Python
@@ -40,6 +42,9 @@ It parses C code into an AST and can serve as a front-end for C compilers or ana
 %python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.21-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 2.21-alt1
 - new version 2.21 (with rpmrb script)
 

@@ -2,7 +2,7 @@
 
 Name: odfpy
 Version: 1.4.1
-Release: alt1
+Release: alt1.1
 Summary: Python scripts for manipulating OpenDocument files
 
 Group: Development/Python3
@@ -37,6 +37,8 @@ Obsoletes: python3-module-odf < %EVR
 Summary: Python3 library for manipulating OpenDocument files
 Group: Development/Python3
 License: GPLv2+
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/odf/
 
 %description -n python3-module-%name
 Odfpy aims to be a complete API for OpenDocument in Python. Unlike
@@ -78,6 +80,9 @@ py.test3
 %python3_sitelibdir/odf/
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.4.1-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Mon Oct 25 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
 - Built new version.
 - Dropped python2 support.

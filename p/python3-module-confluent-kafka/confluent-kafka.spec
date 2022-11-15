@@ -5,7 +5,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.9.2
-Release: alt1
+Release: alt1.1
 
 Summary: Confluent's Kafka Python Client
 
@@ -30,6 +30,8 @@ BuildRequires: python3-module-pyflakes
 %endif
 
 Source:  %name-%version.tar
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/confluent_kafka/kafkatest/verifiable_client.py
 
 %description
 confluent-kafka-python is Confluent's Python client for Apache Kafka
@@ -56,6 +58,9 @@ py.test-3 -v
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.9.2-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Thu Aug 18 2022 Grigory Ustinov <grenka@altlinux.org> 1.9.2-alt1
 - Automatically updated to 1.9.2.
 

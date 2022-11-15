@@ -6,7 +6,7 @@
 
 Name: crtools
 Version: 3.17
-Release: alt1
+Release: alt1.1
 
 Summary: Utility to checkpoint/restore tasks
 License: GPL-2.0-only
@@ -74,6 +74,8 @@ Provides: crit = %EVR
 Provides: python-module-criu
 Obsoletes: crtools-pycriu
 Obsoletes: python-module-criu
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir_noarch/pycriu/images
 
 %description -n python3-module-criu
 Python library library of checkpoint/restore.
@@ -155,6 +157,9 @@ find %buildroot -name 'lib*.a' -delete
 %endif
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.17-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Fri May 20 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.17-alt1
 - Updated to 3.17.
 - Built without stack protection (upstream claims it break criu).

@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 2.3.0
-Release: alt1
+Release: alt1.1
 Summary: Coordination library for distributed systems
 Group: Development/Python3
 License: Apache-2.0
@@ -36,6 +36,8 @@ BuildRequires: python3-module-redis-py
 BuildRequires: python3-module-kazoo
 BuildRequires: python3-module-zake
 BuildRequires: python3-module-stevedore >= 1.16.0
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/drivers
 
 %description
 The Tooz project aims at centralizing the most common distributed
@@ -87,6 +89,9 @@ rm -fr build/sphinx/html/.buildinfo
 %doc build/sphinx/html
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.3.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Fri May 15 2020 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
 - Automatically updated to 2.3.0.
 

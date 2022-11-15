@@ -1,6 +1,6 @@
 Name: flowblade
 Version: 2.8.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: non-linear video editor
 Summary(ru_RU.utf8): Редактор нелинейного видео монтажа
@@ -17,6 +17,8 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): libappindicator-gtk3-gir-devel librsvg-devel
 BuildRequires: intltool python3-module-chardet python3-module-setuptools
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/Flowblade
 
 #Filtered because there is no blender package on i586 and armh architectures
 %filter_from_requires /^python3(bpy)/d
@@ -55,6 +57,9 @@ To use Blender projects in Flowblade you should install Blender.
 %_datadir/mime/packages/io.github.jliljebl.Flowblade.xml
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.8.0.2-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Sat Mar 27 2021 Andrey Sokolov <keremet@altlinux.ru> 2.8.0.2-alt1
 - Updated to 2.8.0.2
 

@@ -6,7 +6,7 @@
 
 Name: python3-module-%modulename
 Version: 0.12.4
-Release: alt1
+Release: alt1.1
 
 Summary: Scientific Graphics and GUI Library for Python
 License: MIT
@@ -45,6 +45,8 @@ BuildRequires: mesa-dri-drivers
 %add_python3_req_skip PySide2 PySide2.QtCore PySide2.QtGui PySide2.QtWidgets
 %add_python3_req_skip PySide6.QtCore PySide6.QtGui PySide6.QtWidgets
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%modulename/canvas
+
 %description
 PyQtGraph is a pure-python graphics and GUI library built on PyQt5 / PySide2
 and numpy. It is intended for use in mathematics / scientific /engineering
@@ -74,6 +76,9 @@ py.test3 -v -k "not (test_reload) and not (test_PolyLineROI)"
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.12.4-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Mon Mar 07 2022 Anton Midyukov <antohami@altlinux.org> 0.12.4-alt1
 - 0.12.4
 

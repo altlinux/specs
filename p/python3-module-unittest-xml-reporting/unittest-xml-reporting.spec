@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: unittest-based test runner with Ant/JUnit like XML reporting
 License: BSD
@@ -30,6 +30,8 @@ as build systems, IDEs and continuous integration servers.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: %name = %EVR
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/xmlrunner/tests/
 
 %description tests
 unittest-xml-reporting is a unittest test runner that can save test
@@ -65,6 +67,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/xmlrunner
 
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.0.2-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.0.2-alt1
 - Version updated to 3.0.2.
 

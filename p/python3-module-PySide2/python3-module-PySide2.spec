@@ -6,7 +6,7 @@
 
 Name: python3-module-PySide2
 Version: 5.15.2
-Release: alt2
+Release: alt2.1
 
 Summary: Python bindings for the Qt 5 cross-platform application and UI framework
 Group: Development/Python3
@@ -105,6 +105,8 @@ the previous versions (without the 2) refer to Qt 4.
 %package -n shiboken2
 Summary: Python/C++ bindings generator for PySide2
 Group: Development/Python3
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/shiboken2/files.dir/shibokensupport
 
 %description -n shiboken2
 Shiboken is the Python binding generator that Qt for Python uses to create the
@@ -213,6 +215,9 @@ done
 %python3_sitelibdir/shiboken2_generator-*.egg-info/
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 5.15.2-alt2.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Tue Feb 01 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.2-alt2
 - build wth qtwebkit instead of qtwebengine on e2k and ppc64le
 

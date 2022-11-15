@@ -2,7 +2,7 @@
 
 Name:       python3-module-PAM
 Version:    2.0.2
-Release:    alt1
+Release:    alt1.1
 
 Summary:    PAM bindings for Python
 
@@ -16,6 +16,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname
 
 %description
 PAM (Pluggable Authentication Module) bindings for Python.
@@ -41,6 +42,9 @@ echo 'import setuptools; setuptools.setup()' > setup.py
 %python3_sitelibdir/python_%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.0.2-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Fri May 20 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
 - Automatically updated to 2.0.2.
 

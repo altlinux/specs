@@ -2,7 +2,7 @@
 
 Name: redis-rdb-tools
 Version: 0.1.15
-Release: alt1
+Release: alt1.1
 
 Summary: Parse Redis dump.rdb files, Analyze Memory, and Export Data to JSON
 
@@ -55,6 +55,8 @@ Summary: Tests for %pyname
 Group: Development/Python3
 Requires: python3-module-%pyname = %EVR
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%pyname/tests/
+
 %description -n python3-module-%pyname-tests
 This package contains tests for %pyname.
 
@@ -81,6 +83,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/%pyname/
 
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.15-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Mon Jun 29 2020 Vitaly Lipatov <lav@altlinux.ru> 0.1.15-alt1
 - new version 0.1.15 (with rpmrb script)
 

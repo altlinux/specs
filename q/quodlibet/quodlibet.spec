@@ -5,7 +5,7 @@
 
 Name: quodlibet
 Version: 4.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: audio library tagger, manager, and player for GTK+
 Group: Sound
@@ -55,6 +55,8 @@ searching capabilities.
 Summary: audio tag editor for GTK+
 Group: Sound
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir_noarch/%name/packages/senf
+
 %description -n exfalso
 exfalso lets you display and edit any tags you want in the file. And it
 lets you do this for all the file formats it supports -- Ogg Vorbis,
@@ -100,6 +102,9 @@ subst "s|\('share', '\)appdata'|\1metainfo'|" gdist/appdata.py
 %python3_sitelibdir_noarch/%name-%version-py*
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 4.5.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Mar 30 2022 Yuri N. Sedunov <aris@altlinux.org> 4.5.0-alt1
 - 4.5.0
 

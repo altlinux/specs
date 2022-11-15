@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 1.4.0
-Release: alt2
+Release: alt2.1
 Summary: z/VM cloud management library in Python
 
 Group: Development/Python3
@@ -21,6 +21,8 @@ BuildRequires: python3-module-jwt >= 1.0.1
 BuildRequires: python3-module-requests >= 2.6.0
 BuildRequires: python3-module-routes >= 2.2
 BuildRequires: python3-module-webob >= 1.2.3
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/zvmsdk/dist.py
 
 %description
 z/VM cloud connector is a development sdk for manage z/VM.
@@ -62,6 +64,9 @@ rm -rf *.egg-info
 %python3_sitelibdir/*/tests
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.4.0-alt2.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Jun 02 2021 Grigory Ustinov <grenka@altlinux.org> 1.4.0-alt2
 - Drop python2 support.
 - Fix url tag.

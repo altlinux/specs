@@ -2,7 +2,7 @@
 
 Name: falcon
 Version: 1.4.1
-Release: alt1
+Release: alt1.1
 
 Summary: Framework for building high-performance microservices and app backends.
 License: Apache-2.0
@@ -47,6 +47,8 @@ style, and tries to do as little as possible while remaining highly effective.
 
 This package contain python modules for %name.
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/falcon/bench/
+
 %prep
 %setup
 
@@ -66,5 +68,8 @@ This package contain python modules for %name.
 
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.4.1-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Thu Feb 07 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.4.1-alt1
 - Initial build for Sisyphus

@@ -7,7 +7,7 @@
 Name: gnuhealth
 
 Version: %majorver.3
-Release: alt0.1
+Release: alt0.1.1
 Url: https://health.gnu.org
 Summary: A Health and Hospital Information System
 License: GPLv3+
@@ -49,6 +49,8 @@ BuildArch: noarch
 # mygnuhealth
 
 %{?systemd_ordering}
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/trytond/modules/
 
 %description
 GNU Health is the Hospital Information System adopted by the United
@@ -159,6 +161,9 @@ done
 %python3_sitelibdir/*
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 4.0.3-alt0.1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Sat May 28 2022 Ilya Mashkin <oddity@altlinux.ru> 4.0.3-alt0.1
 - Build for Sisyphus based on suse spec
 

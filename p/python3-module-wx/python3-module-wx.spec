@@ -8,7 +8,7 @@
 %endif
 Name:		python3-module-wx
 Version:	4.0.7
-Release:	alt6
+Release:	alt6.1
 Group:		Development/Python3
 Summary:	The cross-platform GUI toolkit for the Python language
 URL:		https://pypi.org/project/wxPython
@@ -46,6 +46,8 @@ Group: Development/Python3
 License:	GPL-2.0+ WITH WxWindows-exception-3.1
 %description demo
 %summary
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/wx/demo
 
 %package utils
 Summary: Development tools for wxPython
@@ -127,6 +129,9 @@ cp -a demo %buildroot%python3_sitelibdir/wx/demo
 %_bindir/*
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 4.0.7-alt6.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Mon Oct 11 2021 Igor Vlasenko <viy@altlinux.org> 4.0.7-alt6
 - NMU: disabled docs on armh (fix rebuild)
 

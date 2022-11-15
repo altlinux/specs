@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 2.0.0
-Release: alt1
+Release: alt1.1
 Summary: Class based template tags for Django
 License: BSD
 Group: Development/Python3
@@ -23,6 +23,8 @@ Class based template tags for Django.
 Summary: tests for Django classytags
 Group: Development/Python3
 Requires: %name = %version-%release
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/classytags/tests
 
 %description tests
 Class based template tags for Django.
@@ -47,6 +49,9 @@ mv %buildroot%python3_sitelibdir/tests %buildroot%python3_sitelibdir/classytags/
 %python3_sitelibdir/classytags/tests
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.0.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Tue Jul 13 2021 Alexey Shabalin <shaba@altlinux.org> 2.0.0-alt1
 - 2.0.0
 - Build python3 only

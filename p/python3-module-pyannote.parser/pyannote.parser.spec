@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 0.8
-Release: alt1
+Release: alt1.1
 
 Summary: PyAnnote parsers
 License: MIT
@@ -19,6 +19,7 @@ BuildRequires: python3-module-six python3-module-%mname.core
 %py3_provides %oname
 %py3_requires %mname
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%mname/parser/base.py
 
 %description
 PyAnnote is a Python module for collaborative annotation of multimodal
@@ -51,6 +52,9 @@ mv %buildroot%_libexecdir %buildroot%_libdir
 
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.8-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Mon Jan 27 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.8-alt1
 - Version updated to 0.8
 - porting on python3.

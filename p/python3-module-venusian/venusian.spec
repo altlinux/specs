@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: A library for deferring decorator actions
 License: BSD-derived
@@ -26,6 +26,7 @@ BuildRequires: python3-module-sphinx
 %add_python3_req_skip doesnt.exist
 %endif
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests
 
 %description
 Venusian is a library which allows framework authors to defer decorator
@@ -118,6 +119,9 @@ cp -fR tests/ %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.0.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Thu Dec 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.0.0-alt1
 - Version updated to 3.0.0
 - build for python2 disabled

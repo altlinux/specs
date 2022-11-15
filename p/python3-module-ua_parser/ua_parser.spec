@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 0.4.1
-Release: alt3
+Release: alt3.1
 Summary: Python port of Browserscope's user agent parser
 License: ASLv2.0
 Group: Development/Python3
@@ -16,6 +16,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pytest python3-module-yaml
 
 %py3_provides %oname
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/user_agent_parser.py
 
 %description
 The crux of the original parser--the data collected by Steve Souders
@@ -48,6 +50,9 @@ py.test
 %python3_sitelibdir/*
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.4.1-alt3.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Fri Jul 23 2021 Grigory Ustinov <grenka@altlinux.org> 0.4.1-alt3
 - Drop python2 support.
 

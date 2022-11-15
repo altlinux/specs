@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 21.12.0
-Release: alt1
+Release: alt1.1
 
 Summary: Coroutine-based network library
 
@@ -50,6 +50,8 @@ Features include:
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: %name = %EVR
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/
 
 %description -n python3-module-%oname-tests
 This package contains tests for %oname.
@@ -143,6 +145,9 @@ cp -fR src/greentest %buildroot%python3_sitelibdir/
 #doc examples
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 21.12.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Sun Jan 30 2022 Grigory Ustinov <grenka@altlinux.org> 21.12.0-alt1
 - Build new version for python3.10.
 

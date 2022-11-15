@@ -10,7 +10,7 @@
 
 Name: python3-module-%pypi_name
 Version: 22.10.0
-Release: alt1
+Release: alt1.1
 
 Summary: The Uncompromising Code Formatter
 License: MIT
@@ -56,6 +56,8 @@ BuildRequires: python3(pytest)
 %if %tomli
 %py3_requires tomli
 %endif
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/blib2to3/pgen2
 
 %description
 Black is the uncompromising Python code formatter. By using it, you agree to
@@ -106,6 +108,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 22.10.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Fri Oct 07 2022 Stanislav Levin <slev@altlinux.org> 22.10.0-alt1
 - 22.8.0 -> 22.10.0.
 

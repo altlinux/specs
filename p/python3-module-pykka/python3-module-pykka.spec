@@ -3,7 +3,7 @@
 
 Name: python3-module-%mname
 Version: 2.0.2
-Release: alt1
+Release: alt1.1
 Summary: Python implementation of the actor model
 License: Apache-2.0
 Group: Development/Python3
@@ -37,6 +37,8 @@ Summary: Python implementation of the actor model
 Group: Development/Python3
 BuildArch: noarch
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%mname/tests
+
 %description -n %name-docs
 This package contains docs for %name.
 
@@ -69,5 +71,8 @@ cp -pr docs/_build/html/* %buildroot%python3_sitelibdir/%mname/docs
 %python3_sitelibdir/%mname/docs
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.0.2-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Mon Jan 27 2020 Alexander Makeenkov <amakeenk@altlinux.org> 2.0.2-alt1
 - Initial build for ALT

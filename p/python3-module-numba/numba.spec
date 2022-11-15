@@ -5,7 +5,7 @@
 
 Name:    python3-module-%oname
 Version: 0.56.4
-Release: alt1
+Release: alt1.1
 
 Summary: A Just-In-Time Compiler for Numerical Functions in Python
 
@@ -19,6 +19,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++ libgomp-devel libnumpy-py3-devel
 
 Source:  %name-%version.tar
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/pycc_distutils_usecase/
 
 %description
 Numba is an open source, NumPy-aware optimizing compiler for Python sponsored by
@@ -63,6 +65,9 @@ popd
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.56.4-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Fri Nov 04 2022 Grigory Ustinov <grenka@altlinux.org> 0.56.4-alt1
 - Automatically updated to 0.56.4.
 

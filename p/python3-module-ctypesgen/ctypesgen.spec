@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Python wrapper generator for ctypes
 License: BSD
@@ -17,6 +17,7 @@ Source: %{oname}-%{version}.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-nose
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/test
 
 %description
 ctypesgen is a pure-python ctypes wrapper generator. It can also
@@ -44,6 +45,9 @@ rm -f ctypesgen/printer_python/preamble/2_*.py
 
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.0.2-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Feb 05 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.2-alt1
 - Version updated to 1.0.2
 - porting on python3.

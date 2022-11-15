@@ -2,7 +2,7 @@
 
 Name:           python3-module-django-%pypi_name
 Version:        12.0.1
-Release:        alt1
+Release:        alt1.1
 
 Summary:        Bootstrap support for Django projects
 License:        Apache
@@ -23,6 +23,8 @@ Write Django as usual, and let django-bootstrap3 make template output into Boots
 Summary: Tests %pypi_name
 Group: Development/Python3
 Requires: %name = %EVR
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%pypi_name/tests/
 
 %description tests
 Write Django as usual, and let django-bootstrap3 make template output into Bootstrap 3 code
@@ -56,6 +58,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 12.0.1-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Dec 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 12.0.1-alt1
 - Version updated to 12.0.1
 - build for python2 disabled

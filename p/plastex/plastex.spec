@@ -2,7 +2,7 @@
 
 Name: plastex
 Version: 2.1
-Release: alt1
+Release: alt1.1
 
 Summary: Plastex is a Python-based LaTeX document processing framework
 Summary(ru_RU.UTF-8): Plastex - средство для обработки документов LaTex, написанное на Python
@@ -21,6 +21,7 @@ Requires: dvipng
 Requires: ghostscript
 Requires: texlive-latex-base
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/plasTeX/Base/LaTeX/
 
 %description
 plasTeX is a LaTeX document processing framework written entirely in Python. 
@@ -55,6 +56,9 @@ cp %{SOURCE1} %buildroot/%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.1-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Dec 11 2019 Andrey Bychkov <mrdrew@altlinux.org> 2.1-alt1
 - Version updated to 2.1
 - porting on python3

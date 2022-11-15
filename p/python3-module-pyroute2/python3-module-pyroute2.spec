@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.5.19
-Release: alt2
+Release: alt2.1
 
 Summary: Python Netlink library
 
@@ -31,6 +31,9 @@ so the name is pyroute2, but now it supports many netlink protocols.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: %name = %EVR
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/pytest/pr2test
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/utils.py
 
 %description tests
 This package contains tests for %oname.
@@ -65,6 +68,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %python3_sitelibdir/*/tests
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.5.19-alt2.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Sat Aug 14 2021 Vitaly Lipatov <lav@altlinux.ru> 0.5.19-alt2
 - NMU: make mitogen requirement optional, as in README
 

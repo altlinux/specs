@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 18.8.1
-Release: alt3
+Release: alt3.1
 
 Summary: Compatibility API between asyncio/Twisted/Trollius
 License: MIT
@@ -27,6 +27,8 @@ BuildRequires: python3-module-mock
 BuildRequires: python3-test
 
 %py3_requires asyncio
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/test/util.py
 
 %description
 txaio is a helper library for writing code that runs unmodified on both
@@ -110,6 +112,9 @@ py.test3 test/ -vv
 %python3_sitelibdir/*/pickle
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 18.8.1-alt3.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Fri Apr 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 18.8.1-alt3
 - Build for python2 disabled.
 

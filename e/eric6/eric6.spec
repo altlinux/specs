@@ -1,7 +1,7 @@
 Name: eric6
 Summary: Python IDE
 Version: 19.8
-Release: alt4
+Release: alt4.1
 
 License: GPLv3+
 Group: Development/Python3
@@ -41,6 +41,7 @@ BuildRequires: libappstream-glib
 
 # See ALT Bug ???
 %add_python3_req_skip PyQt5.QtWebKit PyQt5.QtWebKitWidgets
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/eric6/
 
 %description
 eric6 is a full featured Python IDE.
@@ -94,6 +95,9 @@ desktop-file-validate %buildroot%_desktopdir/eric6.desktop
 %_qt5_datadir/qsci/api/*/*
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 19.8-alt4.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Feb 02 2022 Anton Midyukov <antohami@altlinux.org> 19.8-alt4
 - ExcludeArch: ppc64le
 

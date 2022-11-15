@@ -6,7 +6,7 @@
 
 Name: vtk
 Version: %ver.0
-Release: alt1
+Release: alt1.1
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -202,6 +202,8 @@ Requires: lib%name%ver-python3 = %EVR
 Provides: python3-module-vtk8.2 = %EVR
 Obsoletes: python3-module-vtk8.2 < %EVR
 Conflicts: python3-module-vtk8.2 < %EVR
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/vtkmodules/web/wslink.py
 
 %description -n python3-module-%name
 VTK is an open-source software system for image processing, 3D graphics, volume
@@ -409,6 +411,9 @@ export LD_LIBRARY_PATH=$PWD/%_cmake__builddir/%_lib
 %endif
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 9.1.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Jan 19 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 9.1.0-alt1
 - Updated to upstream version 9.1.0.
 

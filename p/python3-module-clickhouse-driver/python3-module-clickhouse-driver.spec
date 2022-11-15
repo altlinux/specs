@@ -3,7 +3,7 @@
 
 Name:       python3-module-%oname
 Version:    0.2.4
-Release:    alt2
+Release:    alt2.1
 License:    %mit
 Group:      Development/Python3
 Summary:    ClickHouse Python Driver with native interface support.
@@ -19,6 +19,8 @@ Requires: python3-module-numpy
 Requires: python3-module-tzlocal
 
 %add_python3_req_skip pandas pandas.api.types
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/clickhouse_driver/tests/
 
 %description
 ClickHouse Python Driver with native (TCP) interface support.
@@ -61,6 +63,9 @@ install -pm0644 docs/*/man/*.1 %buildroot/%_man1dir/
 %python3_sitelibdir/clickhouse_driver/tests/
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.2.4-alt2.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Nov 02 2022 Paul Wolneykien <manowar@altlinux.org> 0.2.4-alt2
 - Fix: Added python3-module-tzlocal to the package requirements.
 

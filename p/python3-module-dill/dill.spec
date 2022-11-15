@@ -4,7 +4,7 @@
 
 Name:           python3-module-%oname
 Version:        0.3.4
-Release:        alt1
+Release:        alt1.1
 Summary:        Serialize all of Python
 Group:          Development/Python3
 License:        BSD
@@ -20,6 +20,8 @@ BuildRequires: python3-dev python3-module-setuptools
 %else
 BuildRequires: python3-module-pytest
 %endif
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/
 
 %description
 Dill extends python's 'pickle' module for serializing and de-serializing
@@ -51,6 +53,9 @@ py.test3 -v
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.3.4-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Thu Feb 03 2022 Anton Midyukov <antohami@altlinux.org> 0.3.4-alt1
 - New version 0.3.4
 - fix packaging with python >= 3.10

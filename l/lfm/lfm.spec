@@ -1,7 +1,7 @@
 Summary: Powerful file manager for the console
 Name: lfm
 Version: 3.1
-Release: alt3
+Release: alt3.1
 License: GPL
 Group: Development/Python
 URL: https://inigo.katxi.org/devel/lfm/
@@ -11,6 +11,8 @@ Source: %name-%version.tar
 Patch1: %name-%version-alt-prefs.patch
 
 BuildRequires: python3-devel
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%name
 
 %description
 Last File Manager is a simple but powerful file manager for the UNIX console.
@@ -34,6 +36,9 @@ export LC_ALL=en_US.UTF-8
 %_man1dir/%name.1*
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.1-alt3.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Sun Jun 23 2019 Igor Vlasenko <viy@altlinux.ru> 3.1-alt3
 - NMU: remove rpm-build-ubt from BR:
 

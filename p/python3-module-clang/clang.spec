@@ -5,7 +5,7 @@
 
 Name:       python3-module-%oname
 Version:    6.0.0.2
-Release:    alt1
+Release:    alt1.1
 
 Summary:    libclang python bindings
 License:    MIT
@@ -32,6 +32,8 @@ This is a fork. Mainly for Pypi packaging purposes.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname/tests/
 
 %description tests
 This is the python bindings subdir of llvm clang repository.
@@ -67,6 +69,9 @@ mv tests/ %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 6.0.0.2-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.0.0.2-alt1
 - Version updated to 6.0.0.2
 - build for python2 disabled.

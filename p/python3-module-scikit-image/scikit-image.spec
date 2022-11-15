@@ -7,7 +7,7 @@
 
 Name: python3-module-%oname
 Version: 0.18.2
-Release: alt1
+Release: alt1.1
 Summary: Image processing routines for SciPy
 License: BSD-3-Clause and MIT
 Group: Development/Python3
@@ -53,6 +53,8 @@ BuildRequires: python3-module-seaborn
 
 %py3_provides skimage
 %py3_requires numpy scipy networkx matplotlib
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/skimage/data
 
 %description
 Image processing algorithms for SciPy, including IO, morphology,
@@ -142,6 +144,9 @@ pytest-3 -v skimage
 %endif
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.18.2-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.18.2-alt1
 - Updated to upstream version 0.18.2.
 

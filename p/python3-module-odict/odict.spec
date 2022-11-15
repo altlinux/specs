@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.9.0
-Release: alt1
+Release: alt1.1
 
 Summary: Ordered dictionary
 
@@ -34,6 +34,8 @@ existing item keeps it at its original position.
 Summary: Tests for %oname
 Group: Development/Python3
 Requires: %name = %EVR
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname
 
 %description tests
 Dictionary in which the insertion order of items is preserved (using an
@@ -65,6 +67,9 @@ This package contains tests for %oname.
 %python3_sitelibdir/*/*/tests.*
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.9.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Jun 08 2022 Grigory Ustinov <grenka@altlinux.org> 1.9.0-alt1
 - Automatically updated to 1.9.0.
 

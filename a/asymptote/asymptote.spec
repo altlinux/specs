@@ -1,6 +1,6 @@
 Name: asymptote
 Version: 2.70
-Release: alt1
+Release: alt1.1
 
 Summary: Descriptive vector graphics language
 
@@ -29,6 +29,7 @@ BuildRequires: /proc
 BuildRequires: texlive-collection-latexrecommended
 BuildRequires: ghostscript-utils >= 9.53
 BuildRequires: python3-module-PyQt5
+BuildRequires: python3-module-PyQt5-devel
 #BuildRequires: python3-module-mpl_toolkits python3-module-yieldfrom
 # explicitly added texinfo for info files
 BuildRequires: texinfo
@@ -37,6 +38,7 @@ BuildRequires: texi2dvi
 %add_python3_path %_datadir/%name/GUI/
 %add_python3_lib_path %_datadir/%name/GUI/
 %add_python3_req_skip configs
+%add_python3_self_prov_path %buildroot%_datadir/asymptote/GUI/pyUIClass/
 
 %description
 Asymptote is a powerful descriptive vector graphics language for technical
@@ -94,6 +96,11 @@ mv %buildroot%_man1dir/asy.1 %buildroot%_man1dir/asy-asymptote.1
 %_infodir/%name/*.info*
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.70-alt1.1
+- NMU:
+    + used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+    + added python3-module-PyQt5-devel as a BR to provide pyuic5 to the build environment.
+
 * Mon Mar 22 2021 Vitaly Lipatov <lav@altlinux.ru> 2.70-alt1
 - new version 2.70 (with rpmrb script)
 

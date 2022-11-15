@@ -3,7 +3,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Drop-in replacement for django's many to many field with sorted relations
 License: BSD
@@ -15,6 +15,8 @@ BuildArch: noarch
 Source0: %name-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python3
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/sortedm2m/test_project
 
 
 %description
@@ -60,6 +62,9 @@ mv sortedm2m_tests/ test_project/ %buildroot%python3_sitelibdir/sortedm2m/
 
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.0.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Wed Dec 18 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.0.0-alt1
 - Version updated to 3.0.0
 - build for python2 disabled

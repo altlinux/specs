@@ -2,7 +2,7 @@
 
 Name: gajim-plugin-triggers
 Version: 1.4.7
-Release: alt1
+Release: alt1.1
 
 Summary: Configure Gajim's behavior on some events
 
@@ -23,6 +23,8 @@ BuildArch: noarch
 
 %description
 %summary.
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir_noarch/gajim/data/plugins/%oname
 
 %package -n python3-module-gajim-triggers
 Summary: Python module for %name
@@ -46,6 +48,9 @@ cp -a * %buildroot%python3_sitelibdir_noarch/gajim/data/plugins/%oname/
 %python3_sitelibdir_noarch/gajim/data/plugins/%oname
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.4.7-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Tue Oct 11 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.7-alt1
 - Updated to 1.4.7.
 

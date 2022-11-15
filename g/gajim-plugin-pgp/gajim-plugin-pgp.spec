@@ -4,7 +4,7 @@
 
 Name: gajim-plugin-pgp
 Version: 1.4.9
-Release: alt1
+Release: alt1.1
 
 Summary: PGP encryption via XEP-0027 for Gajim
 
@@ -34,6 +34,8 @@ Summary: Python module for %name
 Group: Development/Python
 BuildArch: noarch
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir_noarch/gajim/data/plugins/%oname
+
 %description -n python3-module-gajim-pgp
 %summary.
 
@@ -50,6 +52,9 @@ cp -a * %buildroot%python3_sitelibdir_noarch/gajim/data/plugins/%oname/
 %python3_sitelibdir_noarch/gajim/data/plugins/%oname
 
 %changelog
+* Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.4.9-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Tue Oct 11 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.9-alt1
 - Updated to 1.4.9.
 

@@ -2,7 +2,7 @@
 
 Name: python3-module-kivy
 Version: 2.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Open source UI framework written in Python
 
@@ -31,6 +31,8 @@ Requires: python3 > 3.6
 %py3_use docutils
 %py3_use Pygments
 
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/kivy/tools/pep8checker/
+
 %description
 Kivy - Open source Python library for rapid development of applications
 that make use of innovative user interfaces, such as multi-touch apps.
@@ -52,6 +54,9 @@ rm -vrf %buildroot/usr/share/kivy-examples/
 
 
 %changelog
+* Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.1.0-alt1.1
+- NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1.0-alt1
 - new version 2.1.0 (with rpmrb script)
 
