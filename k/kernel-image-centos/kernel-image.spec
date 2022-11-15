@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 192
+%define centos_release 196
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,34 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Nov 15 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.196-alt1.el9
+- Updated to kernel-5.14.0-196.el9:
+  + blk-mq: avoid double ->queue_rq() because of early timeout
+  + cifs: bring us close to 6.0
+  + CNB: devlink: Add support for line cards
+  + CNB: flow_dissector: add support to dissect PPPoE fields and number of VLAN tags
+  + CNB: net: drop the weight argument from netif_napi_add
+  + dm: sync with upstream 6.1
+  + Fix KVM selftests build failure on s390x
+  + fs: dlm: -EINVAL, queue_work() race and DLM_LKF_VALBLK
+  + gfs2: Register fs after creating workqueues
+  + [IBM 9.2 FEAT] KVM: Crypto Passthrough Hotplug - kernel part
+  + lpfc updates for centos-stream / rh9.2
+  + Merge commit '8d69da5faaf1b2150e78b7b6227e7d46a3cacfdf'
+  + Merge commit 'a5bd923742456b8cc6b55261868d65fc643532b9'
+  + mmc: sdhci-esdhc-imx: updates for SDHCI Freescale eSDHC/uSDHC i.MX controller
+  + mm/kmemleak: Fix kmemleak hang problem
+  + mm: Proactive Fixes for 9.2
+  + netfilter: nft_fib: Fix for rpath check with VRF devices
+  + net/mptcp: phase-1  rebase for RHEL-9.2
+  + scsi: core: Fix a use-after-free
+  + scsi: qla2xxx: update driver to latest upstream
+  + soc: qcom: update to v6.0-rc3
+  + Sync rtla with upstream v5.19
+  + tcp: phase-1 backports for RHEL-9.2
+  + vdpa_sim_blk: set number of address spaces and virtqueue groups
+  + Various changes and improvements that are poorly described in merge.
+
 * Fri Nov 11 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.192-alt1.el9
 - Updated to kernel-5.14.0-192.el9 (fixes: CVE-2022-2663, CVE-2022-3028, CVE-2022-42703):
   + af_key: Do not call xfrm_probe_algs in parallel
