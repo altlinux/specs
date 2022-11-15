@@ -4,7 +4,7 @@
 
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
 Name: percona-xtrabackup
-Version: 8.0.28
+Version: 8.0.30
 Release: alt1
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
@@ -19,13 +19,13 @@ Obsoletes: xtrabackup < 2.0.0
 # Automatically added by buildreq on Mon Jul 25 2022
 # optimized out: alt-os-release cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libgpg-error-devel libncurses-devel libprotobuf-devel libprotobuf27-lite libsasl2-3 libstdc++-devel libtinfo-devel mpdecimal pkg-config python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-charset-normalizer python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-packaging python3-module-pytz python3-module-requests python3-module-sphinx python3-module-urllib3 sh4 xz
 BuildRequires: cmake gcc-c++ libaio-devel libcurl-devel libev-devel libgcrypt-devel libicu-devel
-BuildRequires: libldap-devel libprotobuf-lite-devel libsasl2-devel libssl-devel libudev-devel
+BuildRequires: libldap-devel libprocps-devel libprotobuf-lite-devel libsasl2-devel libssl-devel libudev-devel
 BuildRequires: protobuf-compiler python3-dev python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp
 BuildRequires: python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-qthelp
 BuildRequires: python3-module-sphinxcontrib-serializinghtml python3-tools xxd
 
-ExcludeArch: ppc64le
+ExcludeArch: ppc64le %ix86 %arm %mips32 ppc
 
 %description
 Online backup for InnoDB/XtraDB in MySQL, MariaDB and Percona Server.
@@ -75,13 +75,13 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_mandir/man1/xtrabackup.1.*
 %_mandir/man1/xbstream.1.*
 %_mandir/man1/xbcrypt.1.*
-%_libdir/xtrabackup/plugin/keyring_file.so
-%_libdir/xtrabackup/plugin/keyring_vault.so
-%_libdir/xtrabackup/plugin/component_keyring_file.so
-%_libdir/xtrabackup/plugin/component_keyring_kmip.so
-%_libdir/xtrabackup/plugin/component_keyring_kms.so
+%_libdir/xtrabackup
 
 %changelog
+* Tue Nov 15 2022 Alexei Takaseev <taf@altlinux.org> 8.0.30-alt1
+- 8.0.30-23
+- Build only 64-bit arch.
+
 * Mon Jul 25 2022 Alexei Takaseev <taf@altlinux.org> 8.0.28-alt1
 - Build for ALT Linux Sisyphus
 
