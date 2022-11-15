@@ -5,7 +5,7 @@
 
 Name: rpm-build-vm
 Version: 1.37
-Release: alt1
+Release: alt2
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -117,9 +117,9 @@ Run checkinstall tests for vm-run.
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 CFLAGS="%optflags" make
-%endif
 
 make check
+%endif
 
 %install
 %ifnarch %supported_arches
@@ -202,13 +202,16 @@ timeout 300 vm-run --verbose --overlay=ext4 uname -a
 ! timeout --preserve-status 300 vm-run --verbose exit 1
 timeout 300 vm-run --rootfs --verbose df
 
-%ifarch %ix86 x86_64 ppc64le aarch64 armh
+%ifarch %supported_arches
 %check
 # Verify availability of KVM in girar & beehiver.
 ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Tue Nov 15 2022 Vitaly Chikunov <vt@altlinux.org> 1.37-alt2
+- spec: Do not run make check on e2k.
+
 * Wed Nov 09 2022 Vitaly Chikunov <vt@altlinux.org> 1.37-alt1
 - Add more rootfs boot testing options (--no-virtio, --scsi). Note: they will
   not work on all architectures equally.
