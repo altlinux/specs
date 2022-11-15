@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.28.0
+Version: 1.28.2
 Release: alt1
 
 Summary: MBIM modem protocol helper library
@@ -102,6 +102,7 @@ This package contains development documentation for %name
 %meson_test
 
 %files
+%doc NEWS README.md AUTHORS
 %_libdir/*.so.*
 %_libexecdir/mbim-proxy
 
@@ -128,6 +129,10 @@ This package contains development documentation for %name
 
 
 %changelog
+* Tue Nov 15 2022 Mikhail Efremov <sem@altlinux.org> 1.28.2-alt1
+- Packaged NEWS, README.md and AUTHORS files.
+- Updated to 1.28.2.
+
 * Mon Nov 07 2022 Mikhail Efremov <sem@altlinux.org> 1.28.0-alt1
 - Use meson build system.
 - Dropped obsoleted patches.

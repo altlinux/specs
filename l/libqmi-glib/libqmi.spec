@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: %_name-glib
-Version: 1.32.0
+Version: 1.32.2
 Release: alt1
 
 Summary: QMI modem protocol helper library
@@ -104,6 +104,7 @@ touch README ChangeLog
 %meson_test
 
 %files
+%doc NEWS README.md AUTHORS
 %_libdir/*.so.*
 %_libexecdir/qmi-proxy
 
@@ -129,6 +130,10 @@ touch README ChangeLog
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Nov 15 2022 Mikhail Efremov <sem@altlinux.org> 1.32.2-alt1
+- Packaged NEWS, README.md and AUTHORS files.
+- Updated to 1.32.2.
+
 * Mon Nov 07 2022 Mikhail Efremov <sem@altlinux.org> 1.32.0-alt1
 - Use meson build system.
 - Dropped obsoleted patch.
