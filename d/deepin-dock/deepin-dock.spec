@@ -3,8 +3,8 @@
 %def_disable clang
 
 Name: deepin-dock
-Version: 5.5.9.1
-Release: alt2
+Version: 5.5.73
+Release: alt1
 Epoch: 1
 Summary: Deepin desktop-environment - Dock module
 License: GPL-3.0+
@@ -13,7 +13,6 @@ Url: https://github.com/linuxdeepin/dde-dock
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: deepin-dock-5.5.9.1-upstream-fix-undefined-elfs.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -56,13 +55,14 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-%patch -p1
-
 sed -i '/TARGETS/s|lib/|%_lib/|' plugins/*/CMakeLists.txt
-sed -i 's|${prefix}/lib/@HOST_MULTIARCH@|%_libdir|' dde-dock.pc.in
 sed -i 's|/usr/lib|%_libdir|' \
     frame/controller/dockpluginscontroller.cpp \
-    plugins/tray/system-trays/systemtrayscontroller.cpp
+    plugins/tray/system-trays/systemtrayscontroller.cpp \
+    tests/controller/ut_dockplugincontroller.cpp
+# Hide broken options.
+sed -i 's| "Suspend", "Hibernate", "Lock",||' \
+    configs/org.deepin.dde.dock.plugin.power.json
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -70,17 +70,21 @@ export PATH=%_qt5_bindir:$PATH
 export CC="clang"
 export CXX="clang++"
 export AR="llvm-ar"
-%define optflags_lto %nil
 %endif
 
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DARCHITECTURE=%_arch
+    -DARCHITECTURE=%_arch \
+    -DCMAKE_INSTALL_FULL_LIBDIR=%_libdir \
+    -DCMAKE_INSTALL_FULL_INCLUDEDIR=%_includedir
 cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
+
+mkdir -p %buildroot%_sysconfdir/%repo/indicator/
+mv -f %buildroot/usr/etc/dde-dock/indicator/keybord_layout.json %buildroot%_sysconfdir/%repo/indicator/
 
 %files
 %doc LICENSE README.md
@@ -94,13 +98,12 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %dir %_sysconfdir/%repo/indicator/
 %_sysconfdir/%repo/indicator/keybord_layout.json
 %dir %_datadir/dsg/
-%dir %_datadir/dsg/apps/
 %dir %_datadir/dsg/configs/
-%dir %_datadir/dsg/configs/dde-control-center/
-%_datadir/dsg/configs/dde-control-center/dde.dock.plugin.dconfig.json
-%dir %_datadir/dsg/apps/dde-dock/
-%dir %_datadir/dsg/apps/dde-dock/configs/
-%_datadir/dsg/apps/dde-dock/configs/com.deepin.dde.dock.dconfig.json
+%dir %_datadir/dsg/configs/org.deepin.dde.control-center/
+%_datadir/dsg/configs/org.deepin.dde.control-center/org.deepin.dde.dock.plugin.json
+%dir %_datadir/dsg/configs/org.deepin.dde.dock/
+%_datadir/dsg/configs/org.deepin.dde.dock/org.deepin.dde.dock.json
+%_datadir/dsg/configs/org.deepin.dde.dock/org.deepin.dde.dock.plugin.power.json
 %_libdir/dde-control-center/modules/libdcc-dock-plugin.so
 
 %files devel
@@ -110,6 +113,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Tue Nov 15 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.5.73-alt1
+- 5.5.73.
+- Fixed deepin-network-core.
+
 * Fri Jun 03 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.5.9.1-alt2
 - Fixed build with new dtkcommon.
 

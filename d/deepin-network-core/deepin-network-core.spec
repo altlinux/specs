@@ -4,7 +4,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 1.0.61
+Version: 1.0.71
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: GPL-3.0+
@@ -56,6 +56,8 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %ifnarch i586 armh
 mv -f %buildroot/usr/lib/{dde-control-center,dde-dock,dde-session-shell} %buildroot%_libdir
 %endif
+mkdir -p %buildroot%_bindir
+mv -f %buildroot%_K5bin/dde-network-dialog %buildroot%_bindir
 
 %files
 %_bindir/dde-network-dialog
@@ -86,5 +88,9 @@ mv -f %buildroot/usr/lib/{dde-control-center,dde-dock,dde-session-shell} %buildr
 %_pkgconfigdir/dde-network-core.pc
 
 %changelog
+* Tue Nov 15 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.71-alt1
+- New version.
+- Fixed FTBFS.
+
 * Fri Aug 26 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.61-alt1
 - Initial build for ALT Sisyphus.
