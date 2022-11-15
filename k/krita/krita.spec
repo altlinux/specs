@@ -36,8 +36,8 @@
 %define libkritatiffpsd libkritatiffpsd%sover
 
 Name: krita
-Version: 5.1.0
-Release: alt4
+Version: 5.1.3
+Release: alt1
 %K5init no_altplace
 
 Group: Graphics
@@ -80,6 +80,7 @@ BuildRequires: quazip-qt5-devel
 BuildRequires: libopencolorio2.0-devel
 BuildRequires: libXres-devel libxcbutil-devel
 BuildRequires: libjpeg-devel libpng-devel libpoppler-qt5-devel libraw-devel libtiff-devel libwebp-devel
+BuildRequires: libturbojpeg-devel pkgconfig(libopenjp2)
 #BuildRequires: libheif-devel openexr-devel
 BuildRequires: libexiv2-devel liblcms2-devel
 #BuildRequires: libmypaint-devel
@@ -498,6 +499,9 @@ done
 %_libdir/libkritatiffpsd.so.*
 
 %changelog
+* Mon Nov 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.1.3-alt1
+- new version
+
 * Mon Oct 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.1.0-alt4
 - fix upgrade from previous version
 
