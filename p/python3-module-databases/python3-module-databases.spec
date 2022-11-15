@@ -5,7 +5,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: Async database support for Python
@@ -14,6 +14,7 @@ Group: Development/Python3
 Url: https://pypi.org/project/databases
 
 Source0: %name-%version.tar
+Patch0: databases-0.6.2-alt-fix_breaking_changes_in_sqlalchemy_cursor.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -37,6 +38,7 @@ such as Starlette, Sanic, Responder, Quart, aiohttp, Tornado, or FastAPI.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %pyproject_build
@@ -54,6 +56,9 @@ such as Starlette, Sanic, Responder, Quart, aiohttp, Tornado, or FastAPI.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Nov 15 2022 Anton Zhukharev <ancieg@altlinux.org> 0.6.2-alt1
+- 0.6.1 -> 0.6.2
+
 * Sun Aug 14 2022 Anton Zhukharev <ancieg@altlinux.org> 0.6.1-alt1
 - initial build for Sisyphus
 
