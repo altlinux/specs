@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.11.0
+Version: 2.12.0
 Release: alt1
 
 Summary: SSH2 protocol for python
 License: LGPL-2.1
 Group: Development/Python3
-# Source-git: https://github.com/paramiko/paramiko.git
 Url: http://www.paramiko.org/
+VCS: https://github.com/paramiko/paramiko.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -60,11 +60,14 @@ entirely in python (no C or platform-dependent code).
 %tox_check_pyproject
 
 %files
-%doc README.rst LICENSE
+%doc README.rst
 %python3_sitelibdir/paramiko/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 15 2022 Stanislav Levin <slev@altlinux.org> 2.12.0-alt1
+- 2.11.0 -> 2.12.0.
+
 * Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 2.11.0-alt1
 - 2.8.1 -> 2.11.0 (fixes: CVE-2022-24302).
 

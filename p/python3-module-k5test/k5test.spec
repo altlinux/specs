@@ -2,7 +2,7 @@
 %define pypi_name k5test
 
 Name: python3-module-%pypi_name
-Version: 0.10.2
+Version: 0.10.3
 Release: alt1
 Summary: Library for setting up self-contained Kerberos 5 environments
 
@@ -46,6 +46,9 @@ same name found alongside the MIT Kerberos 5 unit tests.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Nov 15 2022 Stanislav Levin <slev@altlinux.org> 0.10.3-alt1
+- 0.10.2 -> 0.10.3.
+
 * Thu Oct 27 2022 Stanislav Levin <slev@altlinux.org> 0.10.2-alt1
 - 0.10.1 -> 0.10.2.
 
