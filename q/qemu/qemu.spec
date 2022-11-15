@@ -12,7 +12,7 @@
 %def_enable vnc
 %def_enable vnc_sasl
 %def_enable vnc_jpeg
-%def_enable vnc_png
+%def_enable png
 %def_enable xkbcommon
 %def_disable vde
 %def_enable alsa
@@ -27,9 +27,6 @@
 %def_enable usb_redir
 %def_enable vhost_crypto
 %def_enable vhost_net
-%def_enable vhost_scsi
-%def_enable vhost_vsock
-%def_enable vhost_user_fs
 %def_enable bpf
 %def_enable opengl
 %def_enable guest_agent
@@ -119,7 +116,7 @@
 %define ui_spice_list %{?_enable_spice:app core}
 %define device_usb_list redirect %{?_enable_smartcard:smartcard} host
 %define device_display_list virtio-gpu-pci %{?_enable_virglrenderer:virtio-gpu virtio-gpu-gl virtio-gpu-pci-gl virtio-vga-gl} virtio-vga %{?_enable_spice:qxl}
-%define qemu_arches aarch64 alpha arm avr cris hppa m68k microblaze mips nios2 or1k ppc riscv rx s390x sh4 sparc tricore x86 xtensa
+%define qemu_arches aarch64 alpha arm avr cris hppa m68k microblaze mips nios2 or1k ppc riscv rx s390x sh4 sparc tricore x86 xtensa loongarch
 
 %global _group vmusers
 %global rulenum 90
@@ -130,8 +127,8 @@
 # }}}
 
 Name: qemu
-Version: 7.0.0
-Release: alt2
+Version: 7.1.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -184,7 +181,7 @@ BuildRequires: libatomic-devel-static
 %{?_enable_jack:BuildRequires: libjack-devel jack-audio-connection-kit}
 %{?_enable_vnc_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vnc_jpeg:BuildRequires: libjpeg-devel}
-%{?_enable_vnc_png:BuildRequires: libpng-devel}
+%{?_enable_png:BuildRequires: libpng-devel >= 1.6.34}
 %{?_enable_xkbcommon:BuildRequires: libxkbcommon-devel}
 %{?_enable_vde:BuildRequires: libvde-devel}
 %{?_enable_aio:BuildRequires: libaio-devel}
@@ -209,7 +206,7 @@ BuildRequires: libuuid-devel
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 BuildRequires: libpam-devel
 BuildRequires: libtasn1-devel
-BuildRequires: libslirp-devel
+BuildRequires: libslirp-devel >= 4.1.0
 %{?_enable_virglrenderer:BuildRequires: pkgconfig(virglrenderer)}
 %{?_enable_libssh:BuildRequires: libssh-devel >= 0.8.7}
 %{?_enable_libusb:BuildRequires: libusb-devel >= 1.0.13}
@@ -871,16 +868,13 @@ run_configure \
 	--disable-vhost-crypto \
 	--disable-vhost-kernel \
 	--disable-vhost-net \
-	--disable-vhost-scsi \
 	--disable-vhost-user \
 	--disable-vhost-vdpa \
-	--disable-vhost-vsock \
-	--disable-vhost-user-fs \
 	--disable-virglrenderer \
 	--disable-virtfs \
 	--disable-vnc \
 	--disable-vnc-jpeg \
-	--disable-vnc-png \
+	--disable-png \
 	--disable-vnc-sasl \
 	--disable-vte \
 	--disable-vvfat \
@@ -890,6 +884,7 @@ run_configure \
 	--disable-xkbcommon \
 	--disable-zstd \
 	--disable-fuse \
+	--disable-libvduse \
 	--without-default-devices
 
 # Please do not touch this
@@ -936,7 +931,7 @@ run_configure \
 	%{?_disable_vnc_tls:--disable-vnc-tls} \
 	%{?_disable_vnc_sasl:--disable-vnc-sasl} \
 	%{?_disable_vnc_jpeg:--disable-vnc-jpeg} \
-	%{?_disable_vnc_png:--disable-vnc-png} \
+	%{subst_enable png} \
 	%{?_disable_xkbcommon:--disable-xkbcommon} \
 	%{?_disable_vde:--disable-vde} \
 	%{?_disable_aio:--disable-linux-aio} \
@@ -952,9 +947,6 @@ run_configure \
 	%{subst_enable xen} \
 	%{?_enable_vhost_crypto:--enable-vhost-crypto} \
 	%{?_enable_vhost_net:--enable-vhost-net} \
-	%{?_enable_vhost_scsi:--enable-vhost-scsi } \
-	%{?_enable_vhost_vsock:--enable-vhost-vsock} \
-	%{?_enable_vhost_user_fs:--enable-vhost-user-fs} \
 	--enable-slirp=system \
 	%{subst_enable smartcard} \
 	%{subst_enable libusb} \
@@ -1341,6 +1333,9 @@ fi
 %exclude %docdir/LICENSE
 
 %changelog
+* Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 7.1.0-alt1
+- 7.1.0 (Fixes: CVE-2020-14394, CVE-2022-0216).
+
 * Sat Nov 05 2022 Ivan A. Melnikov <iv@altlinux.org> 7.0.0-alt2
 - fix FTBFS: switch to libpcre2 as glib2 did
   (see also: altbug #44217)
