@@ -6,7 +6,7 @@
 %endif
 
 Name: bubblewrap
-Version: 0.6.2
+Version: 0.7.0
 Release: alt1
 
 Summary: Unprivileged sandboxing tool
@@ -79,6 +79,9 @@ setcap -q "cap_sys_admin,cap_net_admin,cap_sys_chroot,cap_setuid,cap_setgid=ep" 
 %_datadir/zsh/site-functions/_bwrap
 
 %changelog
+* Tue Nov 15 2022 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
+- 0.7.0
+
 * Thu May 12 2022 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
 - 0.6.2
 
