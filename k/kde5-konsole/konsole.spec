@@ -15,7 +15,7 @@
 
 Name: kde5-%rname
 Version: 22.08.3
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -129,6 +129,7 @@ done
 install -d %buildroot/%_sysconfdir/alternatives/packages.d
 cat > %buildroot/%_sysconfdir/alternatives/packages.d/kde5-konsole <<__EOF__
 %_x11bindir/xvt %_K5bin/konsole        55
+%_x11bindir/x-terminal-emulator %_K5bin/konsole        55
 __EOF__
 
 %find_lang %name --with-kde --all-name
@@ -177,6 +178,9 @@ __EOF__
 %_K5lib/libkonsoleapp.so.%sover
 
 %changelog
+* Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt2
+- add alternative for x-terminal-emulator
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
