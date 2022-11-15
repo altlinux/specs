@@ -1,7 +1,7 @@
 %define brand alt
 %define Brand ALT
 %define theme spworkstation
-%define Theme SPWorkstation
+%define Theme SP Workstation
 %define codename cliff
 %define status %nil
 %define status_en %nil
@@ -22,8 +22,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 9.2
-Release: alt2
+Version: 10.1
+Release: alt1
 Url: https://altsp.su
 
 %ifarch %ix86 x86_64
@@ -44,8 +44,8 @@ Group: Graphics
 Summary: System/Base
 License: GPLv2+
 
-%define distro_name ALT 8 SP Workstation
-%define distro_name_ru Альт 8 СП Рабочая Станция
+%define distro_name ALT SP Workstation
+%define distro_name_ru Альт СП Рабочая Станция
 
 %description
 Distro-specific packages with design and texts for %distro_name.
@@ -149,6 +149,7 @@ Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "
 Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
 Conflicts: altlinux-release-sisyphus altlinux-release-p9 altlinux-release-p10
+Requires: alt-os-release
 
 %description release
 %distro_name release file.
@@ -213,8 +214,8 @@ Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
 Obsoletes: indexhtml-desktop indexhtml-Desktop
 %branding_add_conflicts %flavour indexhtml
 
-Requires: docs-alt-spworkstation
 Requires(post): indexhtml-common
+Requires: shared-desktop-icons
 
 %description indexhtml
 %distro_name welcome page.
@@ -291,10 +292,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 [ "$1" -eq 1 ] || exit 0
 subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
-#release
-%post release
-cp -a %data_cur_dir/release/*-release %_sysconfdir/
-
 #notes
 %post notes
 if ! [ -e %_datadir/alt-notes/license.all.html ]; then
@@ -313,17 +310,16 @@ subst 's/#theme-name=/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.c
 %files graphics
 %config /etc/alternatives/packages.d/%name-graphics
 %_datadir/design
-#_iconsdir/hicolor/*/apps/alt-%theme.png
+%_iconsdir/hicolor/*/apps/alt-%theme.png
 
 %files bootsplash
 %_datadir/plymouth/themes/%theme/*
 %_pixmapsdir/system-logo.png
 
 %files release
-%dir %data_cur_dir
-%data_cur_dir/release/
 %_sysconfdir/buildreqs/packages/ignore.d/*
-%ghost %config(noreplace) %_sysconfdir/*-release
+%_sysconfdir/*-release
+%prefix/lib/os-release
 
 %files notes
 %dir %data_cur_dir
@@ -350,6 +346,15 @@ subst 's/#theme-name=/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.c
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Nov 11 2022 Anton Midyukov <antohami@altlinux.org> 10.1-alt1
+- version bump
+- replace distro_name 'ALT 8 SP Workstation' with 'ALT SP Workstation'
+- save BUILD_ID in /etc/os-release with alt-os-release
+- indexhtml: update for new release
+- indexhtml: do not require docs-alt-spworkstation
+- add icons for indexhtml.desktop
+- do not create symlinks on documentation
+
 * Fri Sep 02 2022 Anton Midyukov <antohami@altlinux.org> 9.2-alt2
 - set gtk_theme=BlueMenta, icon_theme=mate, window_theme=BlueMenta
 - update Conflicts for release

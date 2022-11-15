@@ -1,7 +1,7 @@
 %define brand alt
 %define Brand ALT
 %define theme spserver
-%define Theme SPServer
+%define Theme SP Server
 %define codename cliff
 %define status %nil
 %define status_en %nil
@@ -17,8 +17,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 8.4
-Release: alt3
+Version: 10.1
+Release: alt1
 Url: https://altsp.su
 
 %ifarch %ix86 x86_64
@@ -39,8 +39,8 @@ Group: Graphics
 Summary: System/Base
 License: GPLv2+
 
-%define distro_name ALT 8 SP Server
-%define distro_name_ru Альт 8 СП Сервер
+%define distro_name ALT SP Server
+%define distro_name_ru Альт СП Сервер
 
 %description
 Distro-specific packages with design and texts for %distro_name.
@@ -144,6 +144,7 @@ Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "
 Obsoletes: %obsolete_list
 %branding_add_conflicts %flavour release
 Conflicts: altlinux-release-sisyphus altlinux-release-p9 altlinux-release-p10
+Requires: alt-os-release
 
 %description release
 %distro_name release file.
@@ -193,7 +194,6 @@ Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
 Obsoletes: indexhtml-desktop indexhtml-Desktop
 %branding_add_conflicts %flavour indexhtml
 
-Requires: docs-alt-spworkstation
 Requires(post): indexhtml-common
 
 %description indexhtml
@@ -263,10 +263,6 @@ shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 [ "$1" -eq 1 ] || exit 0
 subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 
-#release
-%post release
-cp -a %data_cur_dir/release/*-release %_sysconfdir/
-
 #notes
 %post notes
 if ! [ -e %_datadir/alt-notes/license.all.html ]; then
@@ -288,10 +284,9 @@ fi
 %_pixmapsdir/system-logo.png
 
 %files release
-%dir %data_cur_dir
-%data_cur_dir/release/
 %_sysconfdir/buildreqs/packages/ignore.d/*
-%ghost %config(noreplace) %_sysconfdir/*-release
+%_sysconfdir/*-release
+%prefix/lib/os-release
 
 %files notes
 %dir %data_cur_dir
@@ -315,6 +310,14 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Fri Nov 11 2022 Anton Midyukov <antohami@altlinux.org> 10.1-alt1
+- version bump
+- replace distro_name 'ALT 8 SP Server' with 'ALT SP Server'
+- save BUILD_ID in /etc/os-release with alt-os-release
+- indexhtml: update for new release
+- indexhtml: do not require docs-alt-spworkstation
+- do not create symlinks on documentation
+
 * Fri Sep 02 2022 Anton Midyukov <antohami@altlinux.org> 8.4-alt3
 - update Conflicts for release
 - set black-white colours for grub
