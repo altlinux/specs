@@ -1,8 +1,8 @@
 %def_enable check
 
 Name:    cloud-init
-Version: 22.2.2
-Release: alt2
+Version: 22.3.4
+Release: alt1
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -178,6 +178,8 @@ make unittest
 %files
 %doc ChangeLog TODO.rst
 %dir               %_sysconfdir/cloud
+%dir               %_sysconfdir/cloud/clean.d
+%doc               %_sysconfdir/cloud/clean.d/README
 %config(noreplace) %_sysconfdir/cloud/*.cfg
 %dir               %_sysconfdir/cloud/cloud.cfg.d
 %config(noreplace) %_sysconfdir/cloud/cloud.cfg.d/*.cfg
@@ -202,6 +204,9 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Tue Nov 08 2022 Mikhail Gordeev <obirvalger@altlinux.org> 22.3.4-alt1
+- 22.3.4
+
 * Tue Aug 23 2022 Mikhail Gordeev <obirvalger@altlinux.org> 22.2.2-alt2
 - Exclude network-manager config from main cloud-init package
 - Add datasource list and ds-identify configs
