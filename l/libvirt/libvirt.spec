@@ -182,7 +182,7 @@
 %def_without modular_daemons
 
 Name: libvirt
-Version: 8.8.0
+Version: 8.9.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -209,7 +209,7 @@ Patch1: %name-%version.patch
 Requires: %name-client = %EVR
 Requires: %name-libs = %EVR
 
-BuildRequires(pre): meson >= 0.54.0
+BuildRequires(pre): meson >= 0.56.0
 %{?_with_libxl:BuildRequires: xen-devel}
 %{?_with_udev:BuildRequires: udev libudev-devel >= 219 libpciaccess-devel}
 %{?_with_yajl:BuildRequires: libyajl-devel >= 2.0.1}
@@ -567,7 +567,6 @@ The vbox driver plugin for the libvirtd daemon, providing
 an implementation of the hypervisor driver APIs using
 VirtualBox
 
-
 %package qemu-common
 Summary: Server side daemon, driver & default configs required to run QEMU or KVM guests
 Group: System/Servers
@@ -677,6 +676,15 @@ Conflicts: %name < 0.9.11
 %description client
 The client binaries needed to access the virtualization
 capabilities of recent versions of Linux (and other OSes).
+
+%package client-qemu
+Summary: Additional client side utilities for QEMU
+Group: System/Libraries
+Requires: %name-libs = %EVR
+
+%description client-qemu
+The additional client binaries are used to interact
+with some QEMU specific features of libvirt.
 
 %package libs
 Summary: Client side libraries
@@ -974,6 +982,12 @@ fi
 %_man1dir/virt-pki-validate.*
 %_man7dir/virkey*
 %_datadir/bash-completion/completions/virsh
+
+%if_with qemu
+%files client-qemu
+%_man1dir/virt-qemu-qmp-proxy.*
+%_bindir/virt-qemu-qmp-proxy
+%endif
 
 %files libs -f %name.lang
 %doc COPYING COPYING.LESSER
@@ -1375,6 +1389,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Tue Nov 15 2022 Alexey Shabalin <shaba@altlinux.org> 8.9.0-alt1
+- 8.9.0
+
 * Wed Oct 05 2022 Alexey Shabalin <shaba@altlinux.org> 8.8.0-alt1
 - 8.8.0
 
