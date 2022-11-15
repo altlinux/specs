@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.7.1
+Version: 3.8.0
 Release: alt1
 Summary: A simple packaging tool for simple packages
 License: BSD-3-Clause
@@ -85,6 +85,9 @@ rm -r %buildroot%python3_sitelibdir/flit_core/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name_core}/
 
 %changelog
+* Tue Nov 15 2022 Stanislav Levin <slev@altlinux.org> 3.8.0-alt1
+- 3.7.1 -> 3.8.0.
+
 * Thu Oct 27 2022 Stanislav Levin <slev@altlinux.org> 3.7.1-alt1
 - 3.6.0 -> 3.7.1.
 - Subpackaged PEP517 build backend (flit_core).
