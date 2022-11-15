@@ -3,7 +3,7 @@
 
 Name: pve-guest-common
 Summary: PVE common guest-related modules
-Version: 4.1.3
+Version: 4.2.1
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -38,6 +38,9 @@ This package contains a common code base used by pve-container and qemu-server
 %perl_vendor_privlib/PVE/*
 
 %changelog
+* Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 4.2.1-alt1
+- 4.2-1
+
 * Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 4.1.3-alt1
 - 4.1-3
 

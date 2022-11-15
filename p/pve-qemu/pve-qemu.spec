@@ -8,8 +8,8 @@
 %global firmwaredirs "%_datadir/qemu:%_datadir/seabios:%_datadir/seavgabios:%_datadir/ipxe:%_datadir/ipxe.efi"
 
 Name: pve-%rname
-Version: 6.2.0
-Release: alt2
+Version: 7.1.0
+Release: alt1
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -29,7 +29,6 @@ Source5: qemu-kvm.sh
 Source12: bridge.conf
 
 Patch100: cpu-add-Kunpeng-920-cpu-support.patch
-Patch101: 0003-cpu-add-Cortex-A72-processor-kvm-target-support.patch
 
 %set_verify_elf_method fhs=relaxed
 %add_verify_elf_skiplist %_datadir/%rname/*
@@ -47,7 +46,7 @@ BuildRequires: libcap-ng-devel libcurl-devel libfdt-devel libgnutls-devel libisc
 BuildRequires: liblzo2-devel libncurses-devel libnettle-devel libnuma-devel libpci-devel libpixman-devel libpng-devel ceph-devel
 BuildRequires: libsasl2-devel libseccomp-devel libspice-server-devel libusbredir-devel libxfs-devel libepoxy-devel libgbm-devel
 BuildRequires: makeinfo perl-Pod-Usage pkgconfig(glusterfs-api) pkgconfig(virglrenderer) liburing-devel libuuid-devel
-BuildRequires: libsystemd-devel libtasn1-devel libpmem-devel libzstd-devel spice-protocol
+BuildRequires: libsystemd-devel libtasn1-devel libpmem-devel libzstd-devel zlib-devel spice-protocol
 BuildRequires: ipxe-roms-qemu seavgabios seabios edk2-ovmf edk2-aarch64 qboot
 #BuildRequires: librdmacm-devel libibverbs-devel libibumad-devel
 BuildRequires: python3-module-sphinx python3-module-sphinx_rtd_theme ninja-build meson
@@ -119,7 +118,6 @@ for p in `cat debian/patches/series`; do
 done
 
 %patch100 -p1
-%patch101 -p1
 
 cp -f %SOURCE2 qemu-kvm.control.in
 
@@ -127,18 +125,24 @@ cp -f %SOURCE2 qemu-kvm.control.in
 export CFLAGS="%optflags"
 # non-GNU configure
 ./configure \
-	--with-git-submodules=ignore \
-	--target-list=x86_64-softmmu,aarch64-softmmu \
-	--prefix=%_prefix \
-	--sysconfdir=%_sysconfdir \
-	--libdir=%_libdir \
-	--mandir=%_mandir \
-	--libexecdir=%_libexecdir \
-	--localstatedir=%_localstatedir \
-	--extra-cflags="%optflags" \
-	--firmwarepath="%firmwaredirs" \
-	--disable-werror \
-	--disable-debug-tcg \
+        --with-git-submodules=ignore \
+        --target-list=x86_64-softmmu,aarch64-softmmu \
+        --prefix=%_prefix \
+        --sysconfdir=%_sysconfdir \
+        --libdir=%_libdir \
+        --mandir=%_mandir \
+        --libexecdir=%_libexecdir \
+        --localstatedir=%_localstatedir \
+        --extra-cflags="%optflags" \
+        --with-pkgversion=%name-%version-%release \
+        --firmwarepath="%firmwaredirs" \
+%if "%__gcc_version_major" >= "11"
+        --enable-lto \
+%else
+        --disable-lto \
+%endif
+        --disable-werror \
+        --disable-debug-tcg \
         --audio-drv-list="alsa" \
         --disable-capstone \
         --disable-gtk \
@@ -146,7 +150,6 @@ export CFLAGS="%optflags"
         --disable-guest-agent-msi \
         --disable-libnfs \
         --disable-libssh \
-        --disable-libxml2 \
         --disable-sdl \
         --disable-smartcard \
         --disable-strip \
@@ -168,7 +171,6 @@ export CFLAGS="%optflags"
         --enable-virglrenderer \
         --enable-virtfs \
         --enable-virtiofsd \
-        --enable-xfsctl \
         --enable-zstd
 
 %make_build V=1
@@ -321,6 +323,11 @@ fi
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 1:7.1.0-alt1
+- 7.1.0-3 (Fixes: CVE-2020-14394, CVE-2022-0216, CVE-2021-3507
+   CVE-2021-4206, CVE-2021-4207, CVE-2021-3611, CVE-2022-26353
+   CVE-2022-26354, CVE-2021-3929)
+
 * Wed Jun 22 2022 Alexey Shabalin <shaba@altlinux.org> 1:6.2.0-alt2
 - 6.2.0-11
 

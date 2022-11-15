@@ -2,7 +2,7 @@
 
 Name: pve-common
 Summary: PVE base library
-Version: 7.2.3
+Version: 7.2.7
 Release: alt1
 License: GPLv3
 Group: Development/Perl
@@ -70,6 +70,9 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.7-alt1
+- 7.2-7
+
 * Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.3-alt1
 - 7.2-3
 

@@ -4,8 +4,8 @@
 
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: 7.2.11
-Release: alt2
+Version: 7.2.12
+Release: alt1
 License: AGPL-3.0+ AND GPLv3 AND MIT
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -16,6 +16,7 @@ ExclusiveArch: x86_64 aarch64
 
 Requires: cstream lzop zstd wget schedutils gdisk hdparm rsync pciutils
 Requires: perl-LWP-Protocol-https
+Requires: pve-common >= 7.2.6 pve-guest-common >= 4.2.1
 Requires: pve-vncterm pve-novnc >= 1.2.2 pve-spiceterm pve-xtermjs >= 4.7.1 pve-acme
 Requires: pve-cluster >= 7.0.4 pve-container >= 4.0.9 pve-firewall pve-ha-manager pve-qemu-server >= 6.2.17 pve-i18n >= 1.0.3 pve-docs
 Requires: proxmox-widget-toolkit >= 3.4.9 proxmox-mini-journalreader fonts-font-awesome javascript-extjs javascript-qrcodejs
@@ -76,8 +77,6 @@ rm -f  %buildroot%_bindir/pveupgrade
 rm -f  %buildroot%_datadir/doc/pve-manager/aplinfo.dat
 rm -f  %buildroot%_man1dir/pvesubscription.1*
 rm -f  %buildroot%_man1dir/pveupgrade.1*
-# ???
-rm -f  %buildroot%_bindir/pvemailforward
 
 %post
 %post_service pvedaemon
@@ -120,6 +119,9 @@ rm -f  %buildroot%_bindir/pvemailforward
 %_man8dir/*
 
 %changelog
+* Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.12-alt1
+- 7.2-12
+
 * Tue Nov 08 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.11-alt2
 - fix for Help button in Notes Editor
 

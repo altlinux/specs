@@ -3,7 +3,7 @@
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 7.2.4
+Version: 7.2.7
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -67,6 +67,9 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/*.pm
 
 %changelog
+* Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.7-alt1
+- 7.2-7
+
 * Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.4-alt1
 - 7.2-4
 - update basealt logo
