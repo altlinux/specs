@@ -1,29 +1,37 @@
 Name: RHVoice
-Version: 0.7.1
+Version: 1.8.0
 Release: alt1
 
 Summary: RHVoice is a Russian speech synthesizer written by Olga Yakovleva
-
-Packager: Michael Pozhidaev <msp@altlinux.org>
-
-License: %gpl3plus
+License: LGPL-2.1+
 Group: Sound
-Url: https://github.com/Olga-Yakovleva/RHVoice
+URL: https://rhvoice.org/
+VCS: https://github.com/RHVoice/RHVoice
 
-BuildPreReq: rpm-macros-tts
+BuildRequires(pre): rpm-macros-tts
+# BuildRequires(pre): cmake
+# BuildRequires(pre): rpm-build-ninja
+BuildRequires: gcc-c++
+BuildRequires: scons
+BuildRequires: flite-devel
+BuildRequires: libao-devel
+BuildRequires: libglibmm-devel
+BuildRequires: libportaudio2-devel
+BuildRequires: libpulseaudio-devel
+BuildRequires: libtclap-devel
+BuildRequires: libunistring-devel
+BuildRequires: libunistring-devel
+BuildRequires: libspeechd-devel
+BuildRequires: libpcre2-devel
+BuildRequires: libdbus-devel
+BuildRequires: boost-devel
 
-# manually removed: cmdtest cvs dblatex distcc-pump dmd dreampie fail2ban flex genbackupdata ghostscript-utils gitum gyp meld mercurial mydbf2mysql patool python-module-9ML python-module-BeautifulSoup python-module-ClientForm
-# Automatically added by buildreq on Sun Apr 24 2016
-# optimized out: bzr ghostscript-classic glib2-devel ipython libgio-devel libgpg-error libjson-c libsigc++2-devel libstdc++-devel pkg-config policycoreutils python-base python-devel python-module-4Suite-XML python-module-BTrees python-module-Fabric python-module-FormEncode python-module-GitDB python-module-GitPython python-module-IPy python-module-MySQLdb python-module-OpenGL python-module-OpenGL_accelerate python-module-OpenSSL python-module-Pillow python-module-PyStemmer python-module-Pygments python-module-Reportlab python-module-SQLAlchemy python-module-SQLObject python-module-ZODB python-module-acme python-module-apsw python-module-babel python-module-backports.ssl_match_hostname python-module-beaker python-module-boto python-module-certifi python-module-cffi python-module-chameleon.core python-module-chardet python-module-cheetah python-module-cherrypy2 python-module-cliapp python-module-cliff python-module-cmd2 python-module-configargparse python-module-configobj python-module-coverage python-module-cryptography python-module-cssselect python-module-cups python-module-cycler python-module-dateutil python-module-debtcollector python-module-decorator python-module-dexml python-module-dialog python-module-distribute python-module-django python-module-django-appconf python-module-dns python-module-docutils python-module-ecdsa python-module-ed25519 python-module-elementtree python-module-enum34 python-module-extras python-module-fixtures python-module-flup python-module-fs python-module-funcsigs python-module-functools32 python-module-fuse python-module-future python-module-futures python-module-gdata python-module-genshi python-module-gevent python-module-geventutil python-module-gflags python-module-google python-module-google-apputils python-module-greenlet python-module-httplib2 python-module-idna python-module-ipaddress python-module-ipykernel python-module-ipython_genutils python-module-iso8601 python-module-itsdangerous python-module-jinja2 python-module-jsonpatch python-module-jsonpointer python-module-jsonschema python-module-jupyter_client python-module-jupyter_core python-module-keyczar python-module-keystoneclient python-module-libarchive python-module-linecache2 python-module-lingua python-module-lxml python-module-m2crypto python-module-markdown python-module-markupsafe python-module-matplotlib python-module-mimeparse python-module-mistune python-module-mock python-module-monotonic python-module-mpmath python-module-msgpack python-module-mwclient python-module-nbconvert python-module-nbformat python-module-ndg python-module-ndg-httpsclient python-module-netaddr python-module-netifaces python-module-nose python-module-notebook python-module-nss python-module-ntlm python-module-numpy python-module-odfpy python-module-openid python-module-oslo.config python-module-oslo.i18n python-module-oslo.policy python-module-oslo.serialization python-module-oslo.utils python-module-paramiko python-module-parsedatetime python-module-paste python-module-path python-module-pbr python-module-peak python-module-persistent python-module-pexpect python-module-pickleshare python-module-pluggy python-module-ply python-module-polib python-module-prettytable python-module-protocols python-module-psutil python-module-psycopg2 python-module-ptyprocess python-module-py python-module-pyasn1 python-module-pyasn1-modules python-module-pycares python-module-pycparser python-module-pycrypto python-module-pycryptopp python-module-pycurl python-module-pyftpdlib python-module-pyglet python-module-pygobject3 python-module-pyinotify python-module-pymongo python-module-pyparsing python-module-pypdf python-module-pyrfc3339 python-module-pytest python-module-pytz python-module-qserve python-module-requests python-module-roman python-module-scapy python-module-scipy python-module-serial python-module-simplegeneric python-module-simplejson python-module-six python-module-slip python-module-smmap python-module-snappy python-module-snowballstemmer python-module-sphinx python-module-sphinx_rtd_theme python-module-stevedore python-module-sympy python-module-tempita python-module-terminado python-module-testtools python-module-timelib python-module-tinyec python-module-tornado python-module-tornado_xstatic python-module-traceback2 python-module-tracing python-module-traitlets python-module-transaction python-module-trollius python-module-ttystatus python-module-twisted-core python-module-unicodecsv python-module-unittest2 python-module-urllib3 python-module-versiontools python-module-warlock python-module-webob python-module-werkzeug python-module-whoosh python-module-wrapt python-module-wx2.9 python-module-xlwt python-module-xstatic python-module-xstatic-term.js python-module-yaml python-module-ydbf python-module-z3c python-module-z3c.recipe python-module-zc python-module-zc.buildout python-module-zc.lockfile python-module-zc.recipe python-module-zc.recipe.egg python-module-zc.zlibstorage python-module-zconfig python-module-zdaemon python-module-zmq python-module-zodbpickle python-module-zope python-module-zope.event python-module-zope.hookable python-module-zope.interface python-module-zope.proxy python-modules python-modules-compiler python-modules-wsgiref python3 python3-base ruby ruby-stdlibs texlive-base-bin texlive-latex-base
-BuildRequires: gcc-c++ libao-devel libglibmm-devel libportaudio2-devel libpulseaudio-devel scons
-
-BuildRequires: flite-devel libunistring-devel scons
-BuildRequires: rpm-build-licenses
-
+Provides: rhvoice = %EVR
 Requires: tts-base
 
 # Source-url: https://github.com/Olga-Yakovleva/RHVoice/archive/%version.tar.gz
 Source: RHVoice-%version.tar
+Source1: submodules.tar
 Source2: rhvoice.voiceman
 Source3: rhvoice-en.voiceman
 
@@ -71,13 +79,13 @@ Development files for %name
 
 %prep
 %setup
+tar xf %SOURCE1
+cp /usr/share/license/LGPL-2.1 licenses/lgpl-2.1.txt
 
 %build
-%add_optflags -std=c++11
 scons %_smp_mflags CXXFLAGS="%optflags" prefix=%_prefix libdir=%_libdir sysconfdir=%_sysconfdir
 
 %install
-#make DESTDIR=%buildroot install
 scons install DESTDIR=%buildroot prefix=%_prefix libdir=%_libdir sysconfdir=%_sysconfdir
 %__install -pD -m 644 %SOURCE2 %buildroot%_ttsdir/rhvoice.voiceman
 %__install -pD -m 644 %SOURCE3 %buildroot%_ttsdir/rhvoice-en.voiceman
@@ -87,13 +95,13 @@ scons install DESTDIR=%buildroot prefix=%_prefix libdir=%_libdir sysconfdir=%_sy
 %tts_unregister rhvoice-en
 
 %files
-%doc NEWS README
+%doc README.md
 %dir %_sysconfdir/RHVoice/
 %config(noreplace) %_sysconfdir/RHVoice/RHVoice.conf
 %_ttsdir/*
 %_bindir/*
 %_datadir/%name/
-#_datadir/dbus-1/services/*
+%_libdir/speech-dispatcher-modules/sd_rhvoice
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -104,6 +112,11 @@ scons install DESTDIR=%buildroot prefix=%_prefix libdir=%_libdir sysconfdir=%_sy
 %_includedir/RHVoice_common.h
 
 %changelog
+* Wed Nov 16 2022 Leontiy Volodin <lvol@altlinux.org> 1.8.0-alt1
+- New version.
+- Built from upstream Git tag (by cas@).
+- Fixed URL, Git upstram and license (by cas@).
+
 * Tue Dec 04 2018 Vitaly Lipatov <lav@altlinux.ru> 0.7.1-alt1
 - new version 0.7.1 (with rpmrb script)
 

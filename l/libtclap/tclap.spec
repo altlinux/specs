@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libtclap
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 Summary: Templatized C++ Command Line Parser Library
 Url: http://tclap.sourceforge.net/
@@ -70,6 +70,9 @@ strictly compliant with the GNU or POSIX standards, it is close.
 %_defaultdocdir/tclap
 
 %changelog
+* Wed Nov 16 2022 Leontiy Volodin <lvol@altlinux.org> 1.2.5-alt1
+- New version.
+
 * Mon Jun 28 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.2.4-alt1
 - Updated to upstream version 1.2.4.
 - Enabled tests.
