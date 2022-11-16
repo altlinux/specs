@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt4
+Release: alt5
 
 Summary: Group policy editor
 License: GPLv2+
@@ -108,6 +108,13 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Wed Nov 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt5
+- 0.2.17-alt5
+- Fixes:
+  + #88226 Fix inability to create folders.
+  + #88226 Fix inability to create files.
+  + Restore n option.
+
 * Fri Nov 11 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt4
 - 0.2.17-alt4
 - Features:
