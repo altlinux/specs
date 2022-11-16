@@ -7,7 +7,7 @@
 %define libreviewboardhelpers libreviewboardhelpers%sover
 
 Name: kf5-%rname
-Version: 5.99.0
+Version: 5.100.0
 Release: alt1
 %K5init altplace
 
@@ -63,28 +63,28 @@ developing applications that use %name.
 %package -n libkf5purposewidgets
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n libkf5purposewidgets
 KF5 library
 
 %package -n libkf5purpose
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n libkf5purpose
 KF5 library
 
 %package -n %libphabricatorhelpers
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libphabricatorhelpers
 KF5 library
 
 %package -n %libreviewboardhelpers
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n %libreviewboardhelpers
 KF5 library
 
@@ -106,7 +106,7 @@ sed -i 's|KAccounts|KAccounts_BUILD_DEPS_LOOP_WITH_APPS|' CMakeLists.txt
 mkdir -p %buildroot/%_datadir/accounts/services/kde/
 
 %find_lang %name --all-name
-%K5find_qtlang %name --all-name
+%K5find_qtlang %name --append --all-name
 
 %files common -f %name.lang
 %doc LICENSES/* README.md
@@ -144,6 +144,9 @@ mkdir -p %buildroot/%_datadir/accounts/services/kde/
 %_K5lib/libKF5PurposeWidgets.so.*
 
 %changelog
+* Mon Nov 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt1
+- new version
+
 * Tue Oct 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.99.0-alt1
 - new version
 

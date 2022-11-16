@@ -1,7 +1,7 @@
 %define rname kiconthemes
 
 Name: kf5-%rname
-Version: 5.99.0
+Version: 5.100.0
 Release: alt1
 %K5init altplace
 
@@ -79,6 +79,9 @@ KF5 library
 %_K5plug/iconengines/KIconEnginePlugin.so
 
 %changelog
+* Mon Nov 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt1
+- new version
+
 * Tue Oct 11 2022 Sergey V Turchin <zerg@altlinux.org> 5.99.0-alt1
 - new version
 

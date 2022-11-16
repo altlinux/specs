@@ -6,8 +6,8 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.99.0
-Release: alt2
+Version: 5.100.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -146,6 +146,9 @@ mkdir -p %buildroot/%_K5data/kconfigwidgets/
 %endif
 
 %changelog
+* Mon Nov 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.99.0-alt2
 - remove KLanguageButton langs list duplicates
 
