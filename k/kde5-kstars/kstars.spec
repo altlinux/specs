@@ -4,7 +4,7 @@
 %define optflags_lto %nil
 
 Name: kde5-%rname
-Version: 3.5.8
+Version: 3.6.1
 Release: alt2
 Epoch: 1
 %K5init
@@ -13,6 +13,8 @@ Group: Education
 Summary: Desktop Planetarium
 Url: http://www.kde.org
 License: GPL-2.0-or-later AND GPL-3.0-or-later
+
+ExcludeArch: armh
 
 %if_enabled indi
 Requires: indi
@@ -78,6 +80,12 @@ planets, the Sun and Moon, and thousands of comets and asteroids.
 %_K5cfg/kstars.kcfg
 
 %changelog
+* Wed Nov 16 2022 Sergey V Turchin <zerg@altlinux.org> 1:3.6.1-alt2
+- update code from stable-3.6.1 branch
+
+* Mon Oct 10 2022 Sergey V Turchin <zerg@altlinux.org> 1:3.6.1-alt1
+- new version
+
 * Thu Apr 14 2022 Sergey V Turchin <zerg@altlinux.org> 1:3.5.8-alt2
 - require xplanet
 
