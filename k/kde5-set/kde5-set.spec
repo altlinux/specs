@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-set
-Version: 22.08.0
+Version: 22.08.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -149,7 +149,11 @@ Requires: kde5-parley
 %endif
 Requires: kde5-kanagram kde5-khangman
 Requires: kde5-kwordquiz kde5-kturtle kde5-marble
-Requires: kde5-step kde5-kstars kde5-kig kde5-kmplot kde5-kalgebra kde5-cantor kde5-rocs
+Requires: kde5-step
+%ifnarch armh
+Requires: kde5-kstars
+%endif
+Requires: kde5-kig kde5-kmplot kde5-kalgebra kde5-cantor kde5-rocs
 Requires: kde5-kbruch kde5-kgeography kde5-ktouch
 # openbabel Requires: kde5-kalzium
 Requires: kde5-minuet
@@ -220,6 +224,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Wed Nov 16 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
+- exclude kde5-kstars for armh
+
 * Wed Nov 02 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.0-alt1
 - remove kde5-ktimer from default kde5
 
