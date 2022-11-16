@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20221109
+Version: 20221110
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,12 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Nov 16 2022 Cronbuild Service <cronbuild@altlinux.org> 20221110-alt1
+- upstream changes (GIT daff4049):
+  + update firmware for MT7986 (thx Shayne Chen)
+  + update firmware for mediatek bluetooth chip (MT7921) (thx Sean Wang)
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+
 * Thu Nov 10 2022 Cronbuild Service <cronbuild@altlinux.org> 20221109-alt1
 - upstream changes (GIT 60310c2d):
   + Update firmware file for Intel Bluetooth 9462 (thx Kiran K)
