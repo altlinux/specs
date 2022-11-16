@@ -1,6 +1,6 @@
 Name: RHVoice
-Version: 1.8.0
-Release: alt1
+Version: 1.10.0
+Release: alt0.1.git5d7cb73
 
 Summary: RHVoice is a Russian speech synthesizer written by Olga Yakovleva
 License: LGPL-2.1+
@@ -8,11 +8,11 @@ Group: Sound
 URL: https://rhvoice.org/
 VCS: https://github.com/RHVoice/RHVoice
 
-BuildRequires(pre): rpm-macros-tts
-# BuildRequires(pre): cmake
-# BuildRequires(pre): rpm-build-ninja
+# BuildRequires(pre): rpm-macros-tts
+BuildRequires(pre): cmake
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: gcc-c++
-BuildRequires: scons
+#BuildRequires: scons
 BuildRequires: flite-devel
 BuildRequires: libao-devel
 BuildRequires: libglibmm-devel
@@ -27,13 +27,13 @@ BuildRequires: libdbus-devel
 BuildRequires: boost-devel
 
 Provides: rhvoice = %EVR
-Requires: tts-base
+# Requires: tts-base
 
 # Source-url: https://github.com/Olga-Yakovleva/RHVoice/archive/%version.tar.gz
 Source: RHVoice-%version.tar
-Source1: submodules.tar
 Source2: rhvoice.voiceman
 Source3: rhvoice-en.voiceman
+Patch: RHVoice-alt-fix-undefined-elfs.patch
 
 %description
 RHVoice is a Russian speech synthesizer written by Olga Yakovleva.
@@ -79,28 +79,37 @@ Development files for %name
 
 %prep
 %setup
-tar xf %SOURCE1
+%patch -p1
 cp /usr/share/license/LGPL-2.1 licenses/lgpl-2.1.txt
 
 %build
-scons %_smp_mflags CXXFLAGS="%optflags" prefix=%_prefix libdir=%_libdir sysconfdir=%_sysconfdir
+%add_optflags -fsanitize=address
+%cmake -GNinja \
+       -DVERSION_FROM_GIT=%version \
+       -DISO639_1_NAME2CODE_Polish=pl \
+       -DVOICE_magda_LANG=pl \
+       -DVOICE_natan_LANG=pl \
+       -DVOICE_suze_LANG=mk \
+       -Dcommon_doc_dir=%_datadir/doc/%name-%version
+%ninja_build -C "%_cmake__builddir"
 
 %install
-scons install DESTDIR=%buildroot prefix=%_prefix libdir=%_libdir sysconfdir=%_sysconfdir
-%__install -pD -m 644 %SOURCE2 %buildroot%_ttsdir/rhvoice.voiceman
-%__install -pD -m 644 %SOURCE3 %buildroot%_ttsdir/rhvoice-en.voiceman
+%ninja_install -C "%_cmake__builddir"
+#__install -pD -m 644 %SOURCE2 %buildroot%_ttsdir/rhvoice.voiceman
+#__install -pD -m 644 %SOURCE3 %buildroot%_ttsdir/rhvoice-en.voiceman
 
-%preun
-%tts_unregister rhvoice
-%tts_unregister rhvoice-en
+# %%preun
+# %%tts_unregister rhvoice
+# %%tts_unregister rhvoice-en
 
 %files
-%doc README.md
+%doc LICENSE.md README.md
 %dir %_sysconfdir/RHVoice/
 %config(noreplace) %_sysconfdir/RHVoice/RHVoice.conf
-%_ttsdir/*
+# %%_ttsdir/*
 %_bindir/*
 %_datadir/%name/
+%_datadir/dbus-1/services/com.github.OlgaYakovleva.RHVoice.service
 %_libdir/speech-dispatcher-modules/sd_rhvoice
 
 %files -n lib%name
@@ -108,10 +117,14 @@ scons install DESTDIR=%buildroot prefix=%_prefix libdir=%_libdir sysconfdir=%_sy
 
 %files -n lib%name-devel
 %_libdir/*.so
-%_includedir/RHVoice.h
-%_includedir/RHVoice_common.h
 
 %changelog
+* Wed Nov 16 2022 Leontiy Volodin <lvol@altlinux.org> 1.10.0-alt0.1.git5d7cb73
+- Built from git commit 5d7cb73935590fabf8131f0f19f894df92895823:
+  + Fixed missing languages.
+- Built via cmake instead scons:
+  + Fixed missing binaries.
+
 * Wed Nov 16 2022 Leontiy Volodin <lvol@altlinux.org> 1.8.0-alt1
 - New version.
 - Built from upstream Git tag (by cas@).
