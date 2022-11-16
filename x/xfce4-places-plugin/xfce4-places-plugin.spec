@@ -1,5 +1,5 @@
 Name: xfce4-places-plugin
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 
 Summary: This plugin is a menu with quick access to folders, documents, and removable media
@@ -59,6 +59,9 @@ so that it shares bookmarks with Thunar, Nautilus, the GNOME Panel, etc.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Nov 16 2022 Mikhail Efremov <sem@altlinux.org> 1.8.3-alt1
+- Updated to 1.8.3 (closes: #43933).
+
 * Tue Sep 20 2022 Mikhail Efremov <sem@altlinux.org> 1.8.2-alt1
 - Dropped libxml2-devel from BR.
 - Added Vcs tag.
