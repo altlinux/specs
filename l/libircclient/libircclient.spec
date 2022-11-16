@@ -3,20 +3,22 @@
 
 Name: libircclient
 Version: 1.10
-Release: alt1
+Release: alt2
 
 Summary: Library that implements the client-server IRC protocol
-License: %lgpl2plus
+License: LGPLv2+
 Group: System/Libraries
 
-URL: http://www.ulduzsoft.com/linux/libircclient/
+URL: https://www.ulduzsoft.com/linux/libircclient/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Patch2: libircclient-1.6-fedora-rfc.patch
 # https://sourceforge.net/p/libircclient/bugs/24/
 Patch3: debian-fix-ipv6-socaddr.patch
 
-BuildRequires(pre): rpm-build-licenses
+# Patch from upstream
+Patch4: openssl-1.1-compatibility.patch
+
 BuildRequires: gcc-c++
 %{?_enable_openssl:BuildRequires: libssl-devel}
 
@@ -42,6 +44,7 @@ developing applications that use %name.
 %patch -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p3
 
 %build
 export CFLAGS="%optflags -fPIC"
@@ -63,6 +66,12 @@ export CFLAGS="%optflags -fPIC"
 %_libdir/*.so
 
 %changelog
+* Wed Nov 16 2022 Mikhail Efremov <sem@altlinux.org> 1.10-alt2
+- Updated Url tag.
+- Don't use rpm-build-licenses.
+- Patch from upstream:
+  + Fix SSL 1.1 compatibility.
+
 * Wed Aug 29 2018 Mikhail Efremov <sem@altlinux.org> 1.10-alt1
 - Use _unpackaged_files_terminate_build.
 - Fix ipv6.
