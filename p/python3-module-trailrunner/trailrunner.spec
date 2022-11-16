@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: Run things on paths
 License: MIT
@@ -21,10 +21,8 @@ BuildRequires(pre): rpm-build-python3
 # build backend and its deps
 BuildRequires: python3(flit_core)
 
-%if_with check
 # install_requires=
 BuildRequires: python3(pathspec)
-%endif
 
 BuildArch: noarch
 
@@ -63,6 +61,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 16 2022 Michael Shigorin <mike@altlinux.org> 1.2.1-alt2
+- BR: python3(pathspec) is requisite for %%build, not just %%check.
+
 * Mon Sep 12 2022 Stanislav Levin <slev@altlinux.org> 1.2.1-alt1
 - 1.1.3 -> 1.2.1.
 
