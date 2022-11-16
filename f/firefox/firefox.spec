@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 106.0.5
+Version: 107.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -23,7 +23,6 @@ Patch009: 0009-bmo-1559213-Support-system-av1.patch
 Patch010: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch011: 0011-ALT-fix-double_t-redefinition.patch
 Patch012: 0012-build-Disable-Werror.patch
-Patch013: 0013-ALT-aarch64-do-not-have-sysctl.h.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -409,6 +408,29 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Nov 15 2022 Alexey Gladkov <legion@altlinux.ru> 107.0-alt1
+- New release (107.0).
+- Security fixes:
+  + CVE-2022-45403: Service Workers might have learned size of cross-origin media files
+  + CVE-2022-45404: Fullscreen notification bypass
+  + CVE-2022-45405: Use-after-free in InputStream implementation
+  + CVE-2022-45406: Use-after-free of a JavaScript Realm
+  + CVE-2022-45407: Loading fonts on workers was not thread-safe
+  + CVE-2022-45408: Fullscreen notification bypass via windowName
+  + CVE-2022-45409: Use-after-free in Garbage Collection
+  + CVE-2022-45410: ServiceWorker-intercepted requests bypassed SameSite cookie policy
+  + CVE-2022-45411: Cross-Site Tracing was possible via non-standard override headers
+  + CVE-2022-45412: Symlinks may resolve to partially uninitialized buffers
+  + CVE-2022-45413: SameSite=Strict cookies could have been sent cross-site via intent URLs
+  + CVE-2022-40674: Use-after-free vulnerability in expat
+  + CVE-2022-45415: Downloaded file may have been saved with malicious extension
+  + CVE-2022-45416: Keystroke Side-Channel Leakage
+  + CVE-2022-45417: Service Workers in Private Browsing Mode may have been written to disk
+  + CVE-2022-45418: Custom mouse cursor could have been drawn over browser UiI
+  + CVE-2022-45419: Deleting a security exception did not take effect immediately
+  + CVE-2022-45420: Iframe contents could be rendered outside the iframe
+  + CVE-2022-45421: Memory safety bugs fixed in Firefox 107 and Firefox ESR 102.5
+
 * Sat Nov 05 2022 Alexey Gladkov <legion@altlinux.ru> 106.0.5-alt1
 - New release (106.0.5).
 
