@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.5.2
+Version: 2.5.4
 Release: alt1
 
 Summary: Determining appropriate platform-specific dirs
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/platformdirs/platformdirs.git
 Url: https://pypi.org/project/platformdirs
+VCS: https://github.com/platformdirs/platformdirs.git
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -68,6 +68,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 14 2022 Stanislav Levin <slev@altlinux.org> 2.5.4-alt1
+- 2.5.2 -> 2.5.4.
+
 * Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 2.5.2-alt1
 - 2.5.1 -> 2.5.2.
 

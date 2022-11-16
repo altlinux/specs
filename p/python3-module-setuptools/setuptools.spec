@@ -9,7 +9,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 65.5.0
+Version: 65.5.1
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -28,7 +28,6 @@ BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: /dev/shm
-BuildRequires: python3(mock)
 BuildRequires: python3(jaraco.envs)
 BuildRequires: python3(jaraco.path)
 BuildRequires: python3(pip)
@@ -39,6 +38,7 @@ BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_xdist)
 BuildRequires: python3(pytest_virtualenv)
 BuildRequires: python3(pytest_enabler)
+BuildRequires: python3(pytest_timeout)
 BuildRequires: python3(tomli)
 BuildRequires: python3(virtualenv)
 BuildRequires: python3(wheel)
@@ -168,8 +168,7 @@ cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 
 %check
 export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION NO_INTERNET'
-# tests relies on develop mode (e.g. import setuptools.tests)
-%{tox_check:} -- -vra
+%tox_check_pyproject -- -vra
 
 %files
 %doc LICENSE *.rst
@@ -194,6 +193,9 @@ export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION NO_INTERNET'
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Fri Nov 11 2022 Stanislav Levin <slev@altlinux.org> 1:65.5.1-alt1
+- 65.5.0 -> 65.5.1.
+
 * Fri Oct 14 2022 Stanislav Levin <slev@altlinux.org> 1:65.5.0-alt1
 - 65.4.1 -> 65.5.0.
 

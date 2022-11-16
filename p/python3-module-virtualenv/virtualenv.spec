@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 20.16.6
+Version: 20.16.7
 Release: alt1
 
 Summary: Virtual Python Environment builder
@@ -108,6 +108,9 @@ export TOX_TESTENV_PASSENV='PIP_NO_INDEX PIP_FIND_LINKS NO_INTERNET'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 14 2022 Stanislav Levin <slev@altlinux.org> 20.16.7-alt1
+- 20.16.6 -> 20.16.7.
+
 * Thu Oct 27 2022 Stanislav Levin <slev@altlinux.org> 20.16.6-alt1
 - 20.16.5 -> 20.16.6.
 

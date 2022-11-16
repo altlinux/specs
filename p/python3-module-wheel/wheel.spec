@@ -5,15 +5,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.37.1
-Release: alt2
+Version: 0.38.4
+Release: alt1
 Summary: A built-package format for Python3
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/wheel/
-Packager: Python Development Team <python@packages.altlinux.org>
+Url: https://pypi.org/project/wheel/
+VCS: https://github.com/pypa/wheel.git
 
-# Source-url: https://github.com/pypa/wheel.git
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -21,9 +20,8 @@ BuildRequires(pre): rpm-build-python3
 
 # build backend and its deps
 BuildRequires: python3(setuptools)
-# wheel is build dependency of setuptools backend
+# wheel is build dependency of setuptools backend, but we skip it for bootstrap
 # see https://github.com/pypa/wheel/issues/429
-BuildRequires: python3(wheel)
 
 # namespace package for system seed wheels which will be used within venv
 # created by virtualenv
@@ -61,6 +59,9 @@ Provides the seed package for virtualenv(packaged as wheel).
 # built wheel being installed into virtualenv will lack of unbundled packages
 
 %build
+# wheel is build dependency of setuptools backend, so build wheel with wheel
+export PYTHONPATH="$(pwd)/src"
+export WHEEL_BOOTSTRAP=1
 %pyproject_build
 
 %install
@@ -91,6 +92,9 @@ cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Fri Nov 11 2022 Stanislav Levin <slev@altlinux.org> 0.38.4-alt1
+- 0.37.1 -> 0.38.4.
+
 * Fri Aug 12 2022 Stanislav Levin <slev@altlinux.org> 0.37.1-alt2
 - Modernized packaging.
 

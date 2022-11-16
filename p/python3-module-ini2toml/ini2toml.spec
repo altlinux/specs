@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11
+Version: 0.11.1
 Release: alt1
 
 Summary: Automatically conversion of .ini/.cfg files to TOML equivalents
@@ -105,6 +105,9 @@ git tag '%version'
 %files full
 
 %changelog
+* Tue Nov 15 2022 Stanislav Levin <slev@altlinux.org> 0.11.1-alt1
+- 0.11 -> 0.11.1.
+
 * Fri Aug 12 2022 Stanislav Levin <slev@altlinux.org> 0.11-alt1
 - 0.10 -> 0.11.
 

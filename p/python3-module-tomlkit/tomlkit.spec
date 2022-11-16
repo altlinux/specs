@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.5
+Version: 0.11.6
 Release: alt1
 
 Summary: Style preserving TOML library
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/sdispater/tomlkit.git
 Url: https://pypi.org/project/tomlkit
+VCS: https://github.com/sdispater/tomlkit.git
 
 Source: %name-%version.tar
 Source1: toml-test.tar
@@ -55,6 +55,9 @@ documents from scratch using the provided helpers.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Oct 27 2022 Stanislav Levin <slev@altlinux.org> 0.11.6-alt1
+- 0.11.5 -> 0.11.6.
+
 * Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 0.11.5-alt1
 - 0.11.4 -> 0.11.5.
 

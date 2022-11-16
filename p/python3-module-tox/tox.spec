@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.27.0
+Version: 3.27.1
 Release: alt1
 
 Summary: virtualenv-based automation of test activities
@@ -115,6 +115,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 14 2022 Stanislav Levin <slev@altlinux.org> 3.27.1-alt1
+- 3.27.0 -> 3.27.1.
+
 * Thu Oct 27 2022 Stanislav Levin <slev@altlinux.org> 3.27.0-alt1
 - 3.26.0 -> 3.27.0.
 
