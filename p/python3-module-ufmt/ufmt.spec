@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Safe, atomic formatting with black and usort
 License: MIT
@@ -20,15 +20,15 @@ BuildRequires(pre): rpm-build-python3
 
 # build backend and its deps
 BuildRequires: python3(flit_core)
-
-%if_with check
-# install_requires=
 BuildRequires: python3(black)
-BuildRequires: python3(click)
 BuildRequires: python3(moreorless)
 BuildRequires: python3(tomlkit)
 BuildRequires: python3(trailrunner)
 BuildRequires: python3(usort)
+
+%if_with check
+# install_requires=
+BuildRequires: python3(click)
 BuildRequires: python3(typing_extensions)
 # marked as install_requires but is used only in tests
 BuildRequires: python3(libcst)
@@ -81,6 +81,9 @@ EOF
 %_bindir/%pypi_name
 
 %changelog
+* Wed Nov 16 2022 Michael Shigorin <mike@altlinux.org> 2.0.1-alt2
+- Fix BR: requisite for %%build, not just %%check.
+
 * Thu Sep 15 2022 Stanislav Levin <slev@altlinux.org> 2.0.1-alt1
 - 1.3.2 -> 2.0.1.
 
