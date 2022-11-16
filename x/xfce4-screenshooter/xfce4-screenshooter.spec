@@ -2,7 +2,7 @@
 %define git_date %nil
 
 Name: xfce4-screenshooter
-Version: 1.9.11
+Version: 1.10.0
 Release: alt1%git_date
 
 Summary: Screenshot Xfce4 panel plugin
@@ -17,14 +17,11 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel
+BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel libxfconf-devel
 BuildPreReq: libxml2-devel libXi-devel
 BuildRequires: libpango-devel >= 1.44.0
-BuildRequires: intltool libsoup-devel libXext-devel libICE-devel libXfixes-devel libSM-devel
-# Seems GTK-based programs needed X server even to display a version.
-# So don't install help2man and use pre-generated man page from upstream
-# instead.
-#BuildRequires: help2man
+BuildRequires: intltool libsoup-devel libXext-devel libXfixes-devel
+BuildRequires: help2man
 
 Provides:  xfce4-screenshooter-plugin = %version-%release
 Obsoletes: xfce4-screenshooter-plugin < %version-%release
@@ -78,6 +75,11 @@ mkdir m4/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Nov 16 2022 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
+- Don't require X display for printing version.
+- Updated BR.
+- Updated to 1.10.0.
+
 * Fri Aug 12 2022 Mikhail Efremov <sem@altlinux.org> 1.9.11-alt1
 - Updated to 1.9.11.
 
