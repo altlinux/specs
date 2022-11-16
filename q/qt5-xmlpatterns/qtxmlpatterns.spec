@@ -1,9 +1,13 @@
 %global qt_module qtxmlpatterns
-%def_enable bootstrap
 
 Name: qt5-xmlpatterns
 Version: 5.15.7
-Release: alt1
+Release: alt2
+%if "%version" == "%{get_version qt5-tools-common}"
+%def_disable bootstrap
+%else
+%def_enable bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt5 - QtXmlPatterns component
@@ -12,7 +16,7 @@ License: LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
 
 Source: %qt_module-everywhere-src-%version.tar
 
-BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt5 qt5-tools-common
 %if_disabled bootstrap
 BuildRequires: qt5-tools
 %endif
@@ -106,6 +110,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Wed Nov 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt2
+- automate bootstrap mode
+
 * Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
 - new version
 
