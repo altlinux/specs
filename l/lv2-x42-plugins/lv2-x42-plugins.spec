@@ -3,7 +3,7 @@
 %define oname x42-plugins
 
 Name: lv2-%oname
-Version: 20220923
+Version: 20221101
 Release: alt1
 Summary: Collection of LV2 plugins
 
@@ -78,6 +78,9 @@ auto-tune, awesome meters collection and others.
 %_man1dir/*
 
 %changelog
+* Wed Nov 16 2022 Ivan A. Melnikov <iv@altlinux.org> 20221101-alt1
+- 20221101
+
 * Thu Sep 29 2022 Ivan A. Melnikov <iv@altlinux.org> 20220923-alt1
 - 20220923
 
