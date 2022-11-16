@@ -1,6 +1,6 @@
 Name:           siril
 Version:        1.0.6
-Release:        alt1
+Release:        alt2
 Summary:        Astronomical image processing software
 Group: 		Graphics
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -58,6 +58,15 @@ SER files)
 #setup -c -n siril-%version
 %setup
 #patch1 -p1
+%ifarch %e2k
+sed -i -E "/^[[:space:]]*#pragma omp.*\\\\$/N;\
+/^[[:space:]]*#pragma omp .*(num_threads| if)\(/{s/#/for(long &/;\
+s/(#.*num_threads\()([^()]*)\)/_xxxn=\\2,\\1_xxxn)/;\
+s/(#.*if *\()([^()]*(\([^()]*(\([^()]*\)[^()]*)*\)[^()]*)*)\)/_xxxi=\\2,\\1_xxxi)/;\
+s/(#.*schedule\([^()]*, *)([^()]*)\)/_xxxs=\\2,\\1_xxxs)/;\
+s/#/_xxxc=1;_xxxc;_xxxc=0)\n&/}" \
+ src/{registration,filters,stacking,rt,algos,gui,compositing,pixelMath,core,io}/*.c
+%endif
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
@@ -95,6 +104,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/org.free_
 
 
 %changelog
+* Thu Nov 17 2022 Ilya Mashkin <oddity@altlinux.ru> 1.0.6-alt2
+- fix build on Elbrus (Ilya Kurdyukov)
+
 * Wed Oct 19 2022 Ilya Mashkin <oddity@altlinux.ru> 1.0.6-alt1
 - 1.0.6
 
