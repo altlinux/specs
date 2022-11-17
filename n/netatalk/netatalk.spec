@@ -1,6 +1,6 @@
 Name: netatalk
-Version: 3.1.12
-Release: alt5
+Version: 3.1.13
+Release: alt1
 
 Summary: Open Source Apple Filing Protocol(AFP) File Server
 
@@ -129,6 +129,10 @@ sh test/afpd/test.sh
 %_mandir/man*/netatalk-config.1*
 
 %changelog
+* Thu Nov 17 2022 Yuri N. Sedunov <aris@altlinux.org> 3.1.13-alt1
+- 3.1.13 (fixed CVE-2021-31439, CVE-2022-23121, CVE-2022-23122,
+  CVE-2022-23123, CVE-2022-23124, CVE-2022-23125 and CVE-2022-0194)
+
 * Wed May 12 2021 Grigory Ustinov <grenka@altlinux.org> 3.1.12-alt5
 - Fixed FTBFS.
 
