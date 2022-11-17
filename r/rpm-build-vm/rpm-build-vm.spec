@@ -5,7 +5,7 @@
 
 Name: rpm-build-vm
 Version: 1.37
-Release: alt2
+Release: alt3
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -209,6 +209,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Thu Nov 17 2022 Nikolai Kostrigin <nickel@altlinux.org> 1.37-alt3
+- vm-run: Define MAXCPU=255 for x86_64 (closes: #44337).
+
 * Tue Nov 15 2022 Vitaly Chikunov <vt@altlinux.org> 1.37-alt2
 - spec: Do not run make check on e2k.
 
