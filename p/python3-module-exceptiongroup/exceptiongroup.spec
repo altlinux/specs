@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.1
+Version: 1.0.4
 Release: alt1
 
 Summary: Backport of PEP 654 (exception groups)
@@ -62,5 +62,8 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Nov 16 2022 Stanislav Levin <slev@altlinux.org> 1.0.4-alt1
+- 1.0.1 -> 1.0.4.
+
 * Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
 - Initial build for Sisyphus.
