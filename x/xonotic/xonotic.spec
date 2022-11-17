@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: xonotic
-Version: 0.8.2
-Release: alt2
+Version: 0.8.5
+Release: alt1
 Summary: A free multi-player first person shooter
 Group: Games/Arcade
 License: GPLv2+
@@ -89,6 +89,9 @@ EOF
 %_iconsdir/hicolor/*/apps/%name.svg
 
 %changelog
+* Wed Nov 16 2022 Artyom Bystrov <arbars@altlinux.org> 0.8.5-alt1
+- Updated to upstream version 0.8.5
+
 * Wed Oct 06 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.2-alt2
 - Fixed build with gcc-11.
 
