@@ -7,8 +7,8 @@
 %define _pseudouser_home     %_sharedstatedir/opendnssec
 
 Name: opendnssec
-Version: 2.1.10
-Release: alt3
+Version: 2.1.12
+Release: alt1
 
 Summary: DNSSEC key and zone management software
 License: BSD-2-Clause
@@ -32,6 +32,7 @@ BuildRequires: xml-utils xsltproc
 BuildRequires: libxml2-devel libsqlite3-devel libldns-devel
 BuildRequires: doxygen sqlite3
 BuildRequires: java
+BuildRequires: autoconf-archive
 
 # softhsm 2.6.1-alt1 provides /usr/lib64/softhsm/libsofthsm2.so
 Requires: softhsm >= 2.6.1-alt1
@@ -157,6 +158,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Wed Nov 16 2022 Stanislav Levin <slev@altlinux.org> 2.1.12-alt1
+- 2.1.10 -> 2.1.12.
+
 * Thu Feb 10 2022 Stanislav Levin <slev@altlinux.org> 2.1.10-alt3
 - Fixed FTBFS (Pylint 2.12.2).
 
