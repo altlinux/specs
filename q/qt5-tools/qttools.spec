@@ -1,17 +1,21 @@
 %define optflags_lto %nil
 
 %global qt_module qttools
-%def_enable bootstrap
 %def_disable qtconfig
 
 %define kf5_bindir %prefix/lib/kf5/bin
 
 Name: qt5-tools
 Version: 5.15.7
-Release: alt1
+Release: alt2
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
+%if "%version" == "%{get_version qt5-tools-common}"
+%def_disable bootstrap
+%else
+%def_enable bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt5 - QtTool components
@@ -35,7 +39,7 @@ Patch11: alt-runqttools-with-qt5-suffix.patch
 # Automatically added by buildreq on Tue Oct 01 2013 (-bi)
 # optimized out: elfutils libGL-devel libgst-plugins libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-printsupport libqt5-qml libqt5-quick libqt5-sql libqt5-v8 libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-xml libstdc++-devel pkg-config python-base python3 python3-base qt5-base-devel qt5-declarative-devel ruby ruby-stdlibs
 #BuildRequires: desktop-file-utils gcc-c++ glibc-devel-static python-module-distribute qt5-webkit-devel rpm-build-python3 rpm-build-ruby
-BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt5 qt5-tools-common
 #ifnarch %e2k
 BuildRequires: clang-devel llvm-devel
 #endif
@@ -360,6 +364,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Thu Nov 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt2
+- automate bootstrap mode
+
 * Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
 - new version
 
