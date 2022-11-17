@@ -1,5 +1,5 @@
 Name: libXft
-Version: 2.3.6
+Version: 2.3.7
 Release: alt1
 
 Summary: X FreeType Library
@@ -39,6 +39,7 @@ develop programs which make use of %name.
 %make DESTDIR=%buildroot install
 
 %files
+%doc AUTHORS COPYING README.md
 %_libdir/*.so.*
 
 %files devel
@@ -48,6 +49,9 @@ develop programs which make use of %name.
 %_man3dir/*
 
 %changelog
+* Thu Nov 17 2022 Valery Inozemtsev <shrek@altlinux.ru> 2.3.7-alt1
+- 2.3.7
+
 * Wed Oct 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 2.3.6-alt1
 - 2.3.6
 
