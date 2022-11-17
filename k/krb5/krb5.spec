@@ -8,8 +8,8 @@
 %def_enable check
 
 Name: krb5
-Version: 1.19.3
-Release: alt1.2
+Version: 1.19.4
+Release: alt1
 
 %if_without bootstrap
 %if_with doc
@@ -519,6 +519,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Wed Nov 16 2022 Ivan A. Melnikov <iv@altlinux.org> 1.19.4-alt1
+- 1.19.4 (Fixes: CVE-2022-42898)
+
 * Wed Sep 14 2022 Ivan A. Melnikov <iv@altlinux.org> 1.19.3-alt1.2
 - build with docs again
 
