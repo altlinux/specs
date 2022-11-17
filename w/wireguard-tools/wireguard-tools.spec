@@ -3,7 +3,7 @@
 Name: wireguard-tools
 
 Version: 1.0.20210914
-Release: alt1
+Release: alt2
 
 Summary: Tools for WireGuard: fast, modern, secure VPN tunnel
 Summary(ru_RU.UTF-8): Утилиты для WireGuard, быстрого, современного, защищенного VPN-туннеля
@@ -29,6 +29,8 @@ Provides: wg-quick = %EVR
 Obsoletes: wg-quick < %EVR
 Conflicts: bash-completion-wireguard < %EVR
 BuildArch: noarch
+
+%filter_from_requires /^sudo$/d
 
 %package examples
 Summary: Example scripts for WireGuard: fast, modern, secure VPN tunnel
@@ -94,11 +96,17 @@ popd
 %_unitdir/wg-quick@.service
 %_unitdir/wg-quick.target
 %_datadir/bash-completion/completions/wg-quick
+%dir %_sysconfdir/wireguard
 
 %files examples
 %doc contrib/*
 
 %changelog
+* Thu Nov 17 2022 Nikolai Kostrigin <nickel@altlinux.org> 1.0.20210914-alt2
+- Spec: remove sudo from Requires as not all users welcome it (closes: #42192)
+- Spec: pack /etc/wireguard into wg-quick subpackage to guide users to expected
+  config file location
+
 * Mon Sep 20 2021 Nikolai Kostrigin <nickel@altlinux.org> 1.0.20210914-alt1
 - New version
 
