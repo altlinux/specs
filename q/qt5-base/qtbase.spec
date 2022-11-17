@@ -38,7 +38,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.7
-Release: alt1
+Release: alt2
 %define libname  lib%gname
 
 Group: System/Libraries
@@ -88,7 +88,6 @@ Patch1013: alt-QTBUG-88599.patch
 # Automatically added by buildreq on Fri Sep 20 2013 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel glibc-devel-static gstreamer-devel libEGL-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXrender-devel libatk-devel libcairo-devel libcom_err-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libssl-devel libstdc++-devel libwayland-client libwayland-server libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxml2-devel pkg-config python-base python3 python3-base ruby ruby-stdlibs xorg-fixesproto-devel xorg-inputproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: firebird-devel gcc-c++ gst-plugins-devel libXi-devel libalsa-devel libcups-devel libdbus-devel libfreetds-devel libgtk+2-devel libicu-devel libjpeg-devel libmysqlclient-devel libpcre-devel libpulseaudio-devel libsqlite3-devel libudev-devel libunixODBC-devel libxcb-render-util-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel postgresql-devel python-module-distribute rpm-build-python3 rpm-build-ruby zlib-devel-static
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): libharfbuzz-devel
 BuildRequires: gcc-c++ glibc-devel libcups-devel libdbus-devel libicu-devel libjpeg-devel libpng-devel
 BuildRequires: libproxy-devel libssl-devel libkrb5-devel
@@ -437,6 +436,7 @@ popd
 sed -i 's|htmlinfo||' examples/xml/xml.pro
 
 %build
+%define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 unset QTDIR QTLIB QTINC
 export QT_DIR="$PWD"
 export PATH=$QT_DIR/bin:$PATH
@@ -517,13 +517,14 @@ export QT_PLUGIN_PATH=$QT_DIR/plugins
     #
 
 %make_build
-%if_disabled bootstrap
+%if %qdoc_found
 [ -d doc/qtcore ] || %make docs ||:
 %endif
 
+
 %install
 make install INSTALL_ROOT=%buildroot
-%if_disabled bootstrap
+%if %qdoc_found
 [ -d doc/qtcore ] && %make INSTALL_ROOT=%buildroot install_docs ||:
 %endif
 
@@ -578,7 +579,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.15.7
+%{nil}Version: %version
 __EOF__
 
 # rpm macros
@@ -697,7 +698,7 @@ make check -k ||:
 %_qt5_datadir/qtlogging.ini
 
 %files doc
-%if_disabled bootstrap
+%if %qdoc_found
 %doc %_qt5_docdir/*
 %exclude %_qt5_docdir/config/
 %exclude %_qt5_docdir/global/
@@ -855,6 +856,9 @@ make check -k ||:
 
 
 %changelog
+* Thu Nov 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt2
+- automate bootstrap mode
+
 * Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
 - new version
 
@@ -998,90 +1002,90 @@ make check -k ||:
 * Wed Oct 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt3
 - rebuild with new icu
 
-* Wed Oct 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.11.2-alt2%ubt
+* Wed Oct 03 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 5.11.2-alt2
 - NMU: fixed debuginfo generation.
 
-* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1
 - new version
 
-* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt3%ubt
+* Wed Aug 29 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt3
 - link with openssl
 
-* Thu Aug 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2%ubt
+* Thu Aug 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2
 - build docs
 
-* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1
 - new version
 
-* Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt2%ubt
+* Thu Jul 26 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt2
 - rebuild with new icu
 
-* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1
 - new version
 
-* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1
 - new version
 
-* Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt.2
+* Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1.2
 - build docs
 
-* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt.1
+* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1.1
 - use iconv with icu < 60
 - don't build docs
 
-* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1
 - new version
 
-* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1
 - new version
 
-* Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
+* Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2
 - build docs
 
-* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1
 - new version
 
-* Thu Oct 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt14%ubt
+* Thu Oct 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt14
 - decrease iconloader fallback icon names depth
 
-* Fri Aug 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt13%ubt
+* Fri Aug 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt13
 - fix compile qt-based apps with lcc compiler
 
-* Tue Aug 22 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt12%ubt
+* Tue Aug 22 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt12
 - add e2k support
 
-* Fri Aug 18 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt11%ubt
+* Fri Aug 18 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt11
 - revert previous changes
 
-* Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt10%ubt
+* Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt10
 - fix hidpi scaling when factor == 1
 
-* Fri Jul 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt9%ubt
+* Fri Jul 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt9
 - sync patches with FC
 
-* Fri Jun 30 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt8%ubt
+* Fri Jun 30 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt8
 - disable debug messages via /usr/share/qt5/qtlogging.ini by default
 
-* Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt7%ubt
+* Mon Jun 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt7
 - fix to build with session management
 
 * Mon Jun 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt6.S1
 - ignore GTK3 dependencies
 
-* Fri Jun 02 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt5%ubt
+* Fri Jun 02 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt5
 - fix calculate pixel density
 
-* Thu Jun 01 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt4%ubt
+* Thu Jun 01 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt4
 - calculate pixel density like GNOME
 
-* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt3%ubt
+* Wed Mar 29 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt3
 - disable debug output by default
 - update SuSE patches
 
-* Wed Mar 22 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2%ubt
+* Wed Mar 22 2017 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt2
 - rebuild
 
-* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1
 - new version
 
 * Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
