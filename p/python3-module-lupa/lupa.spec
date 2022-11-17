@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname lupa
+%define pypi_name lupa
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.9
+Name: python3-module-%pypi_name
+Version: 1.14.1
 Release: alt1
 
 Summary: Integrates the runtimes of Lua or LuaJIT2 into CPython
@@ -18,17 +18,16 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(Cython)
+
 %ifarch ppc64le
 # luajit doesn't officially support ppc64le
 BuildRequires: liblua-devel
 %else
 BuildRequires: libluajit-devel
-%endif
-
-BuildRequires: python3-module-Cython
-
-%if_with check
-BuildRequires: python3(tox)
 %endif
 
 %description
@@ -45,25 +44,32 @@ rm -r ./third-party/*
 
 %build
 %ifarch ppc64le
-export PY_LUA_ARGS=--no-luajit
+%define build_lua_args --backend-config-settings='{"--build-option": ["--no-luajit"]}'
 %endif
 
-%python3_build $PY_LUA_ARGS
+%pyproject_build %{?build_lua_args}
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages -vvr -- -v
+# override upstream config to avoid patching
+cat > tox.ini <<'EOF'
+[testenv]
+allowlist_externals = bash
+commands =
+    bash -c 'cd lupa/tests && python -m unittest {posargs:}'
+EOF
+%tox_check_pyproject
 
 %files
 %doc README.rst CHANGES.rst LICENSE.txt
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/lupa/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 17 2022 Stanislav Levin <slev@altlinux.org> 1.14.1-alt1
+- 1.9 -> 1.14.1.
+
 * Thu Oct 15 2020 Stanislav Levin <slev@altlinux.org> 1.9-alt1
 - Initial build for Sisyphus.
