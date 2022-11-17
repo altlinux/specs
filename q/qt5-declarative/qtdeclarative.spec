@@ -6,7 +6,12 @@
 
 Name: qt5-declarative
 Version: 5.15.7
-Release: alt1
+Release: alt2
+%if "%version" == "%{get_version qt5-tools-common}"
+%def_disable bootstrap
+%else
+%def_enable bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt5 - QtDeclarative component
@@ -30,8 +35,7 @@ Patch12: alt-multiscreen-applet-sigsegv-fix.patch
 %define __find_provides %SOURCE3
 %define __find_requires %SOURCE4
 
-BuildRequires(pre): rpm-build-ubt
-BuildRequires(pre): rpm-macros-qt5
+BuildRequires(pre): rpm-macros-qt5 qt5-tools-common
 BuildRequires: rpm-build-python3
 BuildRequires: gcc-c++ glibc-devel qt5-base-devel
 %if_disabled bootstrap
@@ -287,6 +291,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Thu Nov 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt2
+- automate bootstrap mode
+
 * Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
 - new version
 
@@ -387,43 +394,43 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 * Thu Dec 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 
-* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+* Mon Sep 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1
 - new version
 
-* Thu Aug 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2%ubt
+* Thu Aug 16 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt2
 - build docs
 
-* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1%ubt
+* Fri Aug 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.1-alt1
 - new version
 
-* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1%ubt
+* Wed Jun 13 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.6-alt1
 - new version
 
-* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+* Tue Apr 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1
 - new version
 
-* Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt.2
+* Wed Mar 07 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1.2
 - build docs
 
-* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt.1
+* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1.1
 - don't build docs
 
-* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+* Thu Jan 25 2018 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1
 - new version
 
-* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+* Tue Dec 05 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1
 - new version
 
-* Wed Oct 25 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.2-alt3%ubt
+* Wed Oct 25 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.2-alt3
 - add rpm-build-qml package
 
-* Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
+* Mon Oct 23 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2
 - build docs
 
-* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+* Fri Oct 06 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1
 - new version
 
-* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1%ubt
+* Thu Dec 15 2016 Sergey V Turchin <zerg@altlinux.org> 5.7.1-alt1
 - new version
 
 * Sun Oct 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.6.2-alt0.M80P.1
