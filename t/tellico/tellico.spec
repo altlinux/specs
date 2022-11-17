@@ -1,18 +1,17 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 	 tellico
-Version: 3.4.4
+Version: 3.4.5
 Release: alt1
 
 Summary: A collection manager for KDE
 License: GPL-2.0+
 Group:   Graphical desktop/KDE
 Url:     http://tellico-project.org/
-# VCS:	 https://invent.kde.org/office/tellico.git
+VCS:	 https://invent.kde.org/office/tellico.git
 
 Source: %name-%version.tar
 Source1: %name-po.tar
-Patch: %name-i18n.patch
 
 ExclusiveArch: %ix86 x86_64
 
@@ -54,6 +53,9 @@ BuildRequires: libxslt-devel
 BuildRequires: libyaz-devel
 BuildRequires: qimageblitz5-devel
 BuildRequires: qjson-qt5-devel
+BuildRequires: qt5-webengine-devel
+BuildRequires: qt5-charts-devel
+BuildRequires: libcdio-devel
 
 %description
 Tellico is a KDE application for organizing your collections. It
@@ -63,7 +65,6 @@ video games, coins, stamps, trading cards, comic books, and wines.
 %prep
 %setup
 tar xf %SOURCE1
-%patch -p1
 
 %build
 %K5init no_altplace
@@ -95,6 +96,9 @@ find %buildroot -type f -print0 |
 %_datadir/knsrcfiles/tellico-*.knsrc
 
 %changelog
+* Wed Nov 16 2022 Andrey Cherepanov <cas@altlinux.org> 3.4.5-alt1
+- New version.
+
 * Thu Feb 17 2022 Andrey Cherepanov <cas@altlinux.org> 3.4.4-alt1
 - New version.
 
