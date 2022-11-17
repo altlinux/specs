@@ -7,7 +7,7 @@
 %define kf5_bindir %prefix/lib/kf5/bin
 
 Name: qt5-tools
-Version: 5.15.6
+Version: 5.15.7
 Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
@@ -166,6 +166,7 @@ Requires: libqt5-core = %_qt5_version
 %patch10 -p1
 %endif
 %patch11 -p1
+syncqt.pl-qt5 -version %version
 
 # don't add rpath
 sed -i '/QMAKE_RPATHDIR/d' src/qdoc/qdoc.pro
@@ -359,6 +360,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
+- new version
+
 * Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
 - new version
 

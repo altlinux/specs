@@ -2,7 +2,7 @@
 %global qt_module qtsvg
 
 Name: qt5-svg
-Version: 5.15.6
+Version: 5.15.7
 Release: alt1
 
 Group: System/Libraries
@@ -62,6 +62,7 @@ Provides: %name = %EVR
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+syncqt.pl-qt5 -version %version
 
 %build
 %qmake_qt5
@@ -103,6 +104,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
+- new version
+
 * Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
 - new version
 

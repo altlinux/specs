@@ -2,7 +2,7 @@
 %global qt_module qtnetworkauth
 
 Name: qt5-networkauth
-Version: 5.15.6
+Version: 5.15.7
 Release: alt1
 
 Group: System/Libraries
@@ -91,6 +91,9 @@ syncqt.pl-qt5 -version %version
 %_qt5_examplesdir/*
 
 %changelog
+* Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
+- new version
+
 * Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
 - new version
 

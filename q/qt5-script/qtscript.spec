@@ -4,7 +4,7 @@
 %define optflags_lto %nil
 
 Name: qt5-script
-Version: 5.15.6
+Version: 5.15.7
 Release: alt1
 
 Group: System/Libraries
@@ -61,6 +61,8 @@ Requires: libqt5-core = %_qt5_version
 
 %prep
 %setup -qn %qt_module-everywhere-src-%version
+sed -i -E 's|MODULE_VERSION[[:space:]]+.*$|MODULE_VERSION = %version|' .qmake.conf
+syncqt.pl-qt5 -version %version
 
 # workaround against gcc8
 %if "%__gcc_version_major" == "8"
@@ -101,6 +103,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
+- new version
+
 * Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
 - new version
 

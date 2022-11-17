@@ -37,7 +37,7 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.6
+Version: 5.15.7
 Release: alt1
 %define libname  lib%gname
 
@@ -416,6 +416,7 @@ EGL integration library for the Qt%major toolkit
 %patch1011 -p1
 %patch1012 -p1
 %patch1013 -p1
+bin/syncqt.pl -version %version
 
 # install optflags
 %add_optflags %optflags_shared
@@ -577,7 +578,7 @@ translationdir=%_qt5_translationdir
 
 Name: Qt%major
 Description: Qt%major Configuration
-Version: 5.15.6
+Version: 5.15.7
 __EOF__
 
 # rpm macros
@@ -854,6 +855,9 @@ make check -k ||:
 
 
 %changelog
+* Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
+- new version
+
 * Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
 - new version
 

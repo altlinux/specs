@@ -2,7 +2,7 @@
 %global qt_module qttranslations
 
 Name: qt5-translations
-Version: 5.15.6
+Version: 5.15.7
 Release: alt1
 
 Group: System/Libraries
@@ -25,7 +25,8 @@ BuildRequires: qt5-base-devel qt5-tools
 %{summary}.
 
 %prep
-%setup -qn %qt_module-everywhere-src-%version
+%setup -n %qt_module-everywhere-src-%version
+syncqt.pl-qt5 -version %version
 
 %build
 %qmake_qt5
@@ -45,6 +46,9 @@ done
 %files -f %name.lang
 
 %changelog
+* Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
+- new version
+
 * Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
 - new version
 

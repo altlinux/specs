@@ -2,7 +2,7 @@
 %global qt_module qtquickcontrols
 
 Name: qt5-quickcontrols
-Version: 5.15.6
+Version: 5.15.7
 Release: alt1
 
 Group: System/Libraries
@@ -45,6 +45,7 @@ This package contains documentation for Qt5 %qt_module
 %prep
 %setup -qn %qt_module-everywhere-src-%version
 %patch -p1
+syncqt.pl-qt5 -version %version
 
 %build
 %qmake_qt5
@@ -70,6 +71,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
+- new version
+
 * Fri Oct 07 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.6-alt1
 - new version
 
