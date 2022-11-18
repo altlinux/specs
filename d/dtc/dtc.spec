@@ -1,9 +1,9 @@
 %def_without docs
-%def_without python
+%def_with python3
 
 Name: dtc
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: Device Tree Compiler for Flat Device Trees
 License: GPL-2.0-or-later
@@ -11,9 +11,10 @@ Group: Development/Tools
 
 Url: https://git.kernel.org/cgit/utils/dtc/dtc.git
 Source: %name-%version.tar
+Patch1: dtc-1.6.1-alt-fix-python-module-install.patch
 
 BuildRequires: flex bison
-%{?_with_python:BuildRequires: swig python-devel}
+%{?_with_python3:BuildRequires: swig python3-devel}
 %{?_with_docs:BuildRequires: texlive-base texlive-latex-extra}
 
 %description
@@ -59,16 +60,17 @@ This is a library containing functions for manipulating Flat Device
 Trees.
 This package contains documentation for development against libfdt.
 
-%package -n python-module-libfdt
+%package -n python3-module-libfdt
 Summary: Python bindings for device tree library
 Group: Development/Python
 Requires: libfdt = %EVR
 
-%description -n python-module-libfdt
+%description -n python3-module-libfdt
 This package provides python bindings for libfdt
 
 %prep
 %setup
+%patch1 -p1
 %ifarch %e2k
 # lcc 1.23 doesn't do -MG and there's -Werror=pointer-arith there
 sed -i 's,-MG ,,;s,-Werror,,' Makefile
@@ -109,9 +111,9 @@ rm -f %buildroot%_bindir/ftdump
 %files -n libfdt-devel-static
 %_libdir/libfdt.a
 
-%if_with python
-%files -n python-module-libfdt
-%python_sitelibdir/*
+%if_with python3
+%files -n python3-module-libfdt
+%python3_sitelibdir/*
 %endif
 
 %if_with docs
@@ -123,6 +125,12 @@ rm -f %buildroot%_bindir/ftdump
 %endif
 
 %changelog
+* Fri Nov 18 2022 Ivan A. Melnikov <iv@altlinux.org> 1.6.1-alt2
+- build python3 libfdt module
+  + switch to python3
+  + fix python module build and install
+  + enable building of the module by default
+
 * Wed Jun 09 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.6.1-alt1
 - 1.6.1
 
