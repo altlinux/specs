@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.14.1
-Release: alt1
+Release: alt1.1
 
 Summary: Integrates the runtimes of Lua or LuaJIT2 into CPython
 License: MIT
@@ -23,8 +23,8 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: python3(Cython)
 
-%ifarch ppc64le
-# luajit doesn't officially support ppc64le
+%ifarch ppc64le riscv64
+# luajit doesn't officially support ppc64le and riscv64
 BuildRequires: liblua-devel
 %else
 BuildRequires: libluajit-devel
@@ -43,7 +43,7 @@ coroutine support.
 rm -r ./third-party/*
 
 %build
-%ifarch ppc64le
+%ifarch ppc64le riscv64
 %define build_lua_args --backend-config-settings='{"--build-option": ["--no-luajit"]}'
 %endif
 
@@ -68,6 +68,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 18 2022 Ivan A. Melnikov <iv@altlinux.org> 1.14.1-alt1.1
+- fix build on riscv64
+
 * Thu Nov 17 2022 Stanislav Levin <slev@altlinux.org> 1.14.1-alt1
 - 1.9 -> 1.14.1.
 
