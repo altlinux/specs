@@ -4,7 +4,7 @@
 
 Name: proxmox-backup
 Version: 2.2.6
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Proxmox Backup Server daemon with tools and GUI
 License: AGPL-3.0+
@@ -197,6 +197,9 @@ usermod -a -G tape %proxy_user ||:
 %_datadir/doc/%name
 
 %changelog
+* Thu Nov 17 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:2.2.6-alt2
+- disable repository/subscription status
+
 * Thu Sep 29 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.2.6-alt1
 - 2.2.6-1
 
