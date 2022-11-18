@@ -1,8 +1,8 @@
 %def_without floppyd
 
 Name: mtools
-Version: 4.0.32
-Release: alt3
+Version: 4.0.42
+Release: alt1
 Epoch: 1
 
 Summary: Programs for accessing FAT formatted media without mounting it
@@ -139,6 +139,9 @@ touch EFI/BOOT/bootia32.efi EFI/enroll/cert
 # - review, rediff and send upstream patch1, patch2
 
 %changelog
+* Fri Nov 18 2022 Anton Midyukov <antohami@altlinux.org> 1:4.0.42-alt1
+- new version (4.0.42) with rpmgs script via gear-uupdate
+
 * Mon Jul 19 2021 Anton Midyukov <antohami@altlinux.org> 1:4.0.32-alt3
 - add check mcopy to image with FAT12
 
