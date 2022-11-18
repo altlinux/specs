@@ -7,8 +7,8 @@
 %def_without mbedtls
 
 Name: freerdp
-Version: 2.8.1
-Release: alt1.1
+Version: 2.9.0
+Release: alt1
 
 Group: Networking/Remote access
 Summary: Remote Desktop Protocol functionality
@@ -370,6 +370,12 @@ $setrpath '$ORIGIN' %buildroot%_libdir/freerdp2/liburbdrc-client-libusb.so
 %_pkgconfigdir/freerdp*.pc
 
 %changelog
+* Fri Nov 18 2022 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt1
+- New version.
+- Fixed multiple client side input validation issues
+  (CVE-2022-39316, CVE-2022-39317, CVE-2022-39318, CVE-2022-39319,
+  CVE-2022-39320, CVE-2022-41877, CVE-2022-39347).
+
 * Mon Nov 07 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.8.1-alt1.1
 - E2K: use chrpath instead of patchelf
 
