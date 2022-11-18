@@ -4,7 +4,7 @@
 
 Name: sysstat
 Version: 12.7.1
-Release: alt1
+Release: alt2
 
 Summary: Performance monitoring tools for Linux
 License: GPL-2.0-or-later
@@ -147,7 +147,7 @@ if [ -d /run/systemd/system ]; then
 	# User can disable the service and in that case it will not
 	# be started.
 	$SYSTEMCTL is-enabled --quiet %name &&
-	$SYSTEMCTL start %name
+	$SYSTEMCTL start %name || :
 fi
 
 %preun
@@ -182,6 +182,9 @@ fi
 %_desktopdir/isag.desktop
 
 %changelog
+* Sat Nov 19 2022 Vitaly Chikunov <vt@altlinux.org> 12.7.1-alt2
+- Fix 'scriptlet failed' during update.
+
 * Fri Nov 18 2022 Vitaly Chikunov <vt@altlinux.org> 12.7.1-alt1
 - Update to v12.7.1 (2022-11-06).
 
