@@ -1,5 +1,5 @@
 %define module_name	virtualbox-addition
-%define module_version  7.0.2
+%define module_version  7.0.4
 %define module_release	alt1
 
 %define flavour		un-def
@@ -99,8 +99,11 @@ install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko 
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+* Fri Nov 18 2022 Valery Sinelnikov <greh@altlinux.org> 7.0.4-alt1
+- Updated template for virtualbox 7.0.4
+
 * Fri Oct 21 2022 Valery Sinelnikov <greh@altlinux.org> 7.0.2-alt1
-- Updated template for virtualbox 7.0.2 
+- Updated template for virtualbox 7.0.2
 
 * Wed Oct 19 2022 Valery Sinelnikov <greh@altlinux.org> 7.0.0-alt1
 - Updated template for virtualbox 7.0.0
