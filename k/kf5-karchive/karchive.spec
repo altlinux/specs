@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.100.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -74,6 +74,9 @@ KF5 library
 %_K5lib/libKF5Archive.so.*
 
 %changelog
+* Fri Nov 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt2
+- update russian translation
+
 * Mon Nov 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt1
 - new version
 
