@@ -1,6 +1,6 @@
 Name: RHVoice
 Version: 1.10.0
-Release: alt0.1.git5d7cb73
+Release: alt0.2.git5d7cb73
 
 Summary: RHVoice is a Russian speech synthesizer written by Olga Yakovleva
 License: LGPL-2.1+
@@ -83,7 +83,9 @@ Development files for %name
 cp /usr/share/license/LGPL-2.1 licenses/lgpl-2.1.txt
 
 %build
+%ifnarch %e2k
 %add_optflags -fsanitize=address
+%endif
 %cmake -GNinja \
        -DVERSION_FROM_GIT=%version \
        -DISO639_1_NAME2CODE_Polish=pl \
@@ -119,6 +121,9 @@ cp /usr/share/license/LGPL-2.1 licenses/lgpl-2.1.txt
 %_libdir/*.so
 
 %changelog
+* Thu Nov 17 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.10.0-alt0.2.git5d7cb73
+- Fixed build for Elbrus.
+
 * Wed Nov 16 2022 Leontiy Volodin <lvol@altlinux.org> 1.10.0-alt0.1.git5d7cb73
 - Built from git commit 5d7cb73935590fabf8131f0f19f894df92895823:
   + Fixed missing languages.
