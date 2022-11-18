@@ -2,7 +2,7 @@
 
 Name:    cloud-init
 Version: 22.3.4
-Release: alt1
+Release: alt2
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -44,9 +44,10 @@ BuildRequires: systemd-devel
 BuildRequires: python3-module-httpretty python3-module-serial iproute2
 BuildRequires: util-linux net-tools python3-module-jinja2
 BuildRequires: python3-module-contextlib2 python3-module-prettytable
+BuildRequires: python3-module-requests
 %if_enabled check
 BuildRequires: /proc
-BuildRequires: python3-module-requests python3-module-jsonpatch
+BuildRequires: python3-module-jsonpatch
 BuildRequires: python3-module-configobj python3-module-mock
 BuildRequires: python3-module-oauthlib python3-module-pytest
 BuildRequires: python3-module-pytest-mock
@@ -204,6 +205,9 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Fri Nov 18 2022 Michael Shigorin <mike@altlinux.org> 22.3.4-alt2
+- Fix BR: for --disable check case
+
 * Tue Nov 08 2022 Mikhail Gordeev <obirvalger@altlinux.org> 22.3.4-alt1
 - 22.3.4
 
