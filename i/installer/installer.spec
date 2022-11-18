@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.13.3
+Version: 1.13.4
 Release: alt1
 
 Summary: Installer common parts
@@ -104,6 +104,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Nov 17 2022 Anton Midyukov <antohami@altlinux.org> 1.13.4-alt1
+- 00-remove-installer-pkgs.sh: remove alterator-vm, libevms
+
 * Mon Oct 24 2022 Sergey V Turchin <zerg@altlinux.org> 1.13.3-alt1
 - merge p10 changes
 
