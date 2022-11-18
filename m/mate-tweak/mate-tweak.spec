@@ -1,6 +1,6 @@
 Name: mate-tweak
 Version: 22.10.0
-Release: alt1
+Release: alt2
 Epoch:   1
 
 Summary: Mate desktop configuration tool
@@ -15,7 +15,9 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildPreReq: python3-module-setuptools python3-module-distutils-extra intltool
+BuildRequires: python3-module-setuptools python3-module-distutils-extra intltool
+
+%filter_from_requires /nvidia-settings/d
 
 %description
 Configures some aspects of the MATE desktop not exposed via the
@@ -48,6 +50,9 @@ Settings that can be handled via MATE Tweak:
 %_datadir/polkit-1/actions/*
 
 %changelog
+* Fri Nov 18 2022 Andrey Cherepanov <cas@altlinux.org> 1:22.10.0-alt2
+- Do not require nvidia-settings (ALT #44356).
+
 * Fri Sep 23 2022 Andrey Cherepanov <cas@altlinux.org> 1:22.10.0-alt1
 - New version.
 
