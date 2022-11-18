@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: sysstat
-Version: 12.6.0
-Release: alt2
+Version: 12.7.1
+Release: alt1
 
 Summary: Performance monitoring tools for Linux
 License: GPL-2.0-or-later
@@ -15,9 +15,8 @@ Vcs: https://github.com/sysstat/sysstat.git
 Source: %name-%version.tar
 Source1: sysstat.init
 
-Patch1: CVE-2022-39377.patch
-
 BuildRequires: libsensors3-devel
+BuildRequires: libsystemd-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc desktop-file-utils}}
 
 %description
@@ -61,7 +60,6 @@ by a previous sar run.
 
 %prep
 %setup
-%patch1 -p1
 
 sed -i '/\[Service\]/a\
 LogsDirectory=sa\
@@ -184,6 +182,9 @@ fi
 %_desktopdir/isag.desktop
 
 %changelog
+* Fri Nov 18 2022 Vitaly Chikunov <vt@altlinux.org> 12.7.1-alt1
+- Update to v12.7.1 (2022-11-06).
+
 * Fri Nov 18 2022 Alexander Danilov <admsasha@altlinux.org> 12.6.0-alt2
 - fixes CVE-2022-39377
 
