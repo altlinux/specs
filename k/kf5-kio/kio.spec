@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.100.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -173,6 +173,9 @@ sed -i '/install.*desktop.*DESTINATION.*KDE_INSTALL_KSERVICESDIR/d' src/kcms/*/C
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Fri Nov 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt3
+- update russian translation
+
 * Thu Nov 17 2022 Michael Shigorin <mike@altlinux.org> 5.100.0-alt2
 - E2K: revert 5.91.0-alt2 change, looks fixed upstream (mcst#7002)
 
