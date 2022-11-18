@@ -1,5 +1,5 @@
 Name: libupnpp
-Version: 0.22.2
+Version: 0.22.3
 Release: alt1
 
 Summary: C++ wrapper for libupnp
@@ -49,6 +49,9 @@ rm -vf %buildroot%_libdir/*.a
 %_pkgconfigdir/libupnpp.pc
 
 %changelog
+* Fri Nov 18 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.22.3-alt1
+- 0.22.3 released
+
 * Mon Aug 15 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.22.2-alt1
 - 0.22.2 released
 
