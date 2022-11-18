@@ -1,23 +1,21 @@
 %define _name pwquality
-%def_disable python2
 
 Name: lib%_name
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 
 Summary: A library for password generation and password quality checking
-License: BSD or GPL-2.0
+License: BSD or GPL-2.0-or-later
 Group: System/Libraries
 Url: https://github.com/%name/%name/
 
 Source: %url/releases/download/%name-%version/%name-%version.tar.bz2
 
-Provides: pam_%_name = %version-%release
+Provides: pam_%_name = %EVR
 Requires: cracklib-words pam
 
 BuildRequires: cracklib-devel pam-devel
 BuildRequires: rpm-build-python3 python3-devel
-%{?_enable_python2:BuildRequires: python-devel}
 
 %description
 This is a library for password quality checks and generation of random
@@ -28,27 +26,16 @@ of the checks.
 %package devel
 Group: Development/C
 Summary: Develompent files for %name
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Files needed for development of applications using the %name library.
 See the pwquality.h header file for the API.
 
-%package -n python-module-%_name
-Group: Development/Python
-Summary: Python bindings for the %name library
-Requires: %name = %version-%release
-
-%description -n python-module-%_name
-This is %_name Python module that provides Python bindings for the
-%name library. These bindings can be used for easy password
-quality checking and generation of random pronounceable passwords from
-Python applications.
-
 %package -n python3-module-%_name
 Group: Development/Python
 Summary: Python3 bindings for the %name library
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n python3-module-%_name
 This is %_name Python3 module that provides Python3 bindings for the
@@ -58,12 +45,10 @@ Python3 applications.
 
 
 %prep
-%setup %{?_enable_python2:-a0
-mv %name-%version py2build}
+%setup
 
 %build
 %define opts --with-securedir=%_pam_modules_dir --disable-static
-
 
 %configure \
 	%opts \
@@ -71,24 +56,8 @@ mv %name-%version py2build}
 	--with-pythonsitedir=%python3_sitelibdir
 %make_build
 
-%if_enabled python2
-pushd py2build
-%configure \
-	%opts \
-	--with-python-rev=2.7 \
-	--with-pythonsitedir=%python_sitelibdir
-%make_build
-popd
-%endif
-
 %install
 %makeinstall_std
-
-%if_enabled python2
-pushd py2build
-%makeinstall_std
-popd
-%endif
 
 # relocate %name.so.1 to %_lib
 mkdir -p %buildroot/%_lib
@@ -119,17 +88,15 @@ ln -sf ../../%_lib/%name.so.1 %buildroot%_libdir/%name.so
 %_pkgconfigdir/%_name.pc
 %_man3dir/pwquality.3.*
 
-%if_enabled python2
-%files -n python-module-%_name
-%python_sitelibdir/%_name.so
-%python_sitelibdir/*.egg-info
-%endif
-
 %files -n python3-module-%_name
 %python3_sitelibdir/%{_name}*.so
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Nov 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.5-alt1
+- 1.4.5
+- removed obsolete python2 part
+
 * Mon Oct 26 2020 Yuri N. Sedunov <aris@altlinux.org> 1.4.4-alt1
 - 1.4.4
 
