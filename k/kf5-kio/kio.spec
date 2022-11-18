@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.100.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -17,7 +17,6 @@ Source10: ru-kio5.po
 Patch1: alt-def-trash.patch
 Patch2: alt-kio-help-fallback-kde4.patch
 Patch10: alt-streebog-support.patch
-Patch2000: alt-kio-e2k.patch
 
 # Automatically added by buildreq on Tue Feb 17 2015 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds elfutils kf5-kdoctools-devel libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libcloog-isl4 libcom_err-devel libgpg-error libjson-c libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-script libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms libxml2-devel pkg-config python-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -104,10 +103,6 @@ KF5 library
 %patch10 -p2 -b .streebog
 %endif
 
-%ifarch %e2k
-%patch2000 -p2
-%endif
-
 #msgcat --use-first po/ru/kio5.po %SOURCE10 > po/ru/kio5.po.tmp
 #cat po/ru/kio5.po.tmp >po/ru/kio5.po
 #rm -f po/ru/kio5.po.tmp
@@ -178,6 +173,9 @@ sed -i '/install.*desktop.*DESTINATION.*KDE_INSTALL_KSERVICESDIR/d' src/kcms/*/C
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Thu Nov 17 2022 Michael Shigorin <mike@altlinux.org> 5.100.0-alt2
+- E2K: revert 5.91.0-alt2 change, looks fixed upstream (mcst#7002)
+
 * Mon Nov 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt1
 - new version
 
