@@ -1,5 +1,5 @@
 Name: clight
-Version: 4.8
+Version: 4.9
 Release: alt1
 
 Summary: Monitor brightness control daemon
@@ -14,8 +14,8 @@ Requires: clightd
 # Source-url: https://github.com/FedeDP/Clight/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
-Patch1: %name-4.8-alt-desktop.patch
-Patch2: %name-4.8-alt-desktop_translation.patch
+Patch1: %name-4.9-alt-desktop.patch
+Patch2: %name-4.9-alt-desktop_translation.patch
 
 BuildRequires: cmake
 BuildRequires: libpopt-devel
@@ -94,6 +94,10 @@ killall clight >/dev/null 2>&1 ||:
 %_includedir/%name/*.h
 
 %changelog
+* Fri Nov 18 2022 Evgeny Chuck <koi@altlinux.org> 4.9-alt1
+- new version (4.9) with rpmgs script
+- Fixed patches of the old version v4.8 under the new v4.9
+
 * Thu Sep 15 2022 Evgeny Chuck <koi@altlinux.org> 4.8-alt1
 - new version (4.8) with rpmgs script
 - Fixed desktop category
