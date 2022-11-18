@@ -8,7 +8,7 @@
 
 Name: libclip
 Version: 1.2.0cvs
-Release: alt6
+Release: alt7
 
 Summary: XBASE/Clipper compatible program compiler - runtime library
 Summary(ru_RU.KOI8-R): Совместимый с XBASE/Clipper компилятор программ -- дополнительные библиотеки
@@ -19,7 +19,8 @@ Url: http://www.itk.ru
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-ExclusiveArch: %ix86 x86_64
+# see clip.spec
+ExcludeArch: aarch64 armh
 
 Source: %name-%version.tar.bz2
 #Source10: %name-%version-2005-02-03.tar.bz2
@@ -356,6 +357,9 @@ mv %buildroot%FCLIPDIR/locale.po %buildroot%VCLIPDIR
 %exclude %FCLIPDIR/lib/*.a
 
 %changelog
+* Fri Nov 18 2022 Michael Shigorin <mike@altlinux.org> 1.2.0cvs-alt7
+- upgrade ExclusiveArch: to ExcludeArch:, see clip.spec
+
 * Wed Sep 12 2018 Andrey Cherepanov <cas@altlinux.org> 1.2.0cvs-alt6
 - Rebuild with openssl 1.1.
 
