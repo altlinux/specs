@@ -4,7 +4,7 @@
 
 Name: sysstat
 Version: 12.6.0
-Release: alt1
+Release: alt2
 
 Summary: Performance monitoring tools for Linux
 License: GPL-2.0-or-later
@@ -14,6 +14,8 @@ URL: http://sebastien.godard.pagesperso-orange.fr/
 Vcs: https://github.com/sysstat/sysstat.git
 Source: %name-%version.tar
 Source1: sysstat.init
+
+Patch1: CVE-2022-39377.patch
 
 BuildRequires: libsensors3-devel
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc desktop-file-utils}}
@@ -59,6 +61,7 @@ by a previous sar run.
 
 %prep
 %setup
+%patch1 -p1
 
 sed -i '/\[Service\]/a\
 LogsDirectory=sa\
@@ -181,6 +184,9 @@ fi
 %_desktopdir/isag.desktop
 
 %changelog
+* Fri Nov 18 2022 Alexander Danilov <admsasha@altlinux.org> 12.6.0-alt2
+- fixes CVE-2022-39377
+
 * Tue Jun 28 2022 Vitaly Chikunov <vt@altlinux.org> 12.6.0-alt1
 - Update to v12.6.0 (2022-05-29).
 - Fixed 'egrep is obsolescent' warning (actually since v12.5.5).
