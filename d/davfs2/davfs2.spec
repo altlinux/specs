@@ -1,6 +1,6 @@
 Name: davfs2
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: Linux file system driver that allows you to mount a WebDAV server as a local file system.
 License: GPLv3+
@@ -36,16 +36,21 @@ via proxy server.
 
 %install
 %make_install install DESTDIR=%buildroot
+mkdir -p %buildroot/sbin
+ln -s ..%_sbindir/mount.davfs %buildroot/sbin/mount.davfs
+ln -s ..%_sbindir/umount.davfs %buildroot/sbin/umount.davfs
 %find_lang %name
 
 %pre
-# Add davfs2 group
+# Add davfs2 group and user
 %_sbindir/groupadd -r -f davfs2 2>/dev/null || :
+%_sbindir/useradd -r -s /bin/false -d / -g davfs2 davfs2 ||:
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog FAQ INSTALL NEWS README TODO THANKS
 %config %_sysconfdir/%name/
-%_sbindir/*
+/sbin/*.davfs
+%_sbindir/*.davfs
 %_man5dir/*
 %_man8dir/*
 %_datadir/%name/
@@ -54,6 +59,10 @@ via proxy server.
 %exclude %_mandir/es
 
 %changelog
+* Fri Nov 18 2022 Anton Farygin <rider@altlinux.ru> 1.7.0-alt2
+- restored symlinks from /sbin to /usr/sbin for mount/umount tools (closes: #44299)
+- added the creation of user davfs2 from post-script (closes: #31427)
+
 * Wed Nov 09 2022 Anton Farygin <rider@altlinux.ru> 1.7.0-alt1
 - 1.6.1 -> 1.7.0
 
