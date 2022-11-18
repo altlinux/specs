@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.65
+Version: 0.8.66
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Wed Nov 16 2022 Vitaly Chikunov <vt@altlinux.org> 0.8.66-alt1
+- Add /var/crash for kdump-tools.
+
 * Tue Apr 26 2022 Dmitry V. Levin <ldv@altlinux.org> 0.8.65-alt1
 - Replaced "egrep" with "grep -E", "fgrep" with "grep -F".
 
