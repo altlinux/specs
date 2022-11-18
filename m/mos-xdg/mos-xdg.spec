@@ -6,7 +6,7 @@ Summary(ru): Настройки рабочего окружения дистри
 License: GPL-3.0
 Group: Graphical desktop/Other
 Version: 2.2
-Release: alt1
+Release: alt2
 Source0: %name-%version.tar
 Source1: COPYING
 BuildArch: noarch
@@ -44,6 +44,7 @@ Can be used separately from M OS.
 %files core
 %doc COPYING
 %dir /etc/xdg/mos
+%dir /etc/xdg/mos/autostart
 %dir /usr/share/mos
 %_bindir/mos-xdg-env
 %_user_env_gen_dir/10-mos-xdg.sh
@@ -101,7 +102,7 @@ install -m0755 scripts/profile.sh %buildroot/etc/profile.d/10-mos-xdg.sh
 # for dbus services
 install -m0755 scripts/systemd.sh %buildroot%_user_env_gen_dir/10-mos-xdg.sh
 
-mkdir -p %buildroot/etc/xdg/mos
+mkdir -p %buildroot/etc/xdg/mos/autostart
 cp -rv plasma5/XDG_CONFIG_DIRS/* %buildroot/etc/xdg/mos
 mkdir -p %buildroot/usr/share/mos
 cp -rv plasma5/XDG_DATA_DIRS/* %buildroot/usr/share/mos
@@ -111,6 +112,9 @@ cd scripts
 ./test.sh
 
 %changelog
+* Fri Nov 18 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.2-alt2
+- Own directory /etc/xdg/mos/autostart (will be used in other packages)
+
 * Mon Aug 08 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.2-alt1
 - Prefer R7 Office / OnlyOffice Desktop Editors for Microsoft Office formats
 - Do not duplicate MIME associations
