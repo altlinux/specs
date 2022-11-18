@@ -1,5 +1,5 @@
 Name: clightd
-Version: 5.6
+Version: 5.7
 Release: alt1
 
 Summary: Linux DBUS interface for the Clight daemon
@@ -74,6 +74,9 @@ Systemd. Поддержка только systemd.
 %_datadir/polkit-1/actions/org.%name.%name.policy
 
 %changelog
+* Fri Nov 18 2022 Evgeny Chuck <koi@altlinux.org> 5.7-alt1
+- new version (5.7) with rpmgs script
+
 * Mon Sep 19 2022 Evgeny Chuck <koi@altlinux.org> 5.6-alt1
 - new version (5.6) with rpmgs script
 - initial build for ALT Linux Sisyphus
