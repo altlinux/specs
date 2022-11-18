@@ -4,8 +4,8 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.37
-Release: alt3
+Version: 1.38
+Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
 License: GPL-2.0-only
@@ -18,8 +18,11 @@ Source: %name-%version.tar
 %ifarch %supported_arches
 BuildRequires: glibc-devel-static
 BuildRequires: libblkid-devel-static
-# For %%check.
+# For %%check. This does not verify the package but verifies
+# that girar on supported_arches have writable /dev/kvm
+# This should run even if check is disabled.
 BuildRequires: /dev/kvm
+# shellchek is used in %%build as pre-install syntax check.
 BuildRequires: shellcheck
 
 # Try to load un-def kernel this way to avoid "forbidden dependencies"
@@ -118,7 +121,12 @@ Run checkinstall tests for vm-run.
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 CFLAGS="%optflags" make
 
+# This is pre-install syntax check for bash scripts. This does not
+# run any functional tests.
 make check
+%else
+# Still useful to verify stub script even in absence of shellcheck.
+bash -n vm-run
 %endif
 
 %install
@@ -133,8 +141,8 @@ install -D -p -m 0755 fakesudo    %buildroot%_libexecdir/vm-run/vm-fakesudo
 install -D -p -m 0755 filetrigger %buildroot%_rpmlibdir/vm-run.filetrigger
 install -D -p -m 0755 createimage %buildroot%_rpmlibdir/z-vm-createimage.filetrigger
 install -Dp bash_completion %buildroot%_sysconfdir/bashrc.d/vm_completion.sh
-%endif
 install -D -p -m 0755 vm-resize   %buildroot%_bindir/vm-resize
+%endif
 
 %pre run
 # Only allow to install inside of hasher.
@@ -154,9 +162,9 @@ install -D -p -m 0755 vm-resize   %buildroot%_bindir/vm-resize
 
 %files run
 %_bindir/vm-run
-%_bindir/vm-resize
 
 %ifarch %supported_arches
+%_bindir/vm-resize
 %_bindir/vm-create-image
 %_libexecdir/vm-run
 %_rpmlibdir/vm-run.filetrigger
@@ -209,6 +217,10 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Fri Nov 18 2022 Vitaly Chikunov <vt@altlinux.org> 1.38-alt1
+- Limit maximum CPU to 4 if there's no KVM.
+- Add NPROCS/--nprocs support.
+
 * Thu Nov 17 2022 Nikolai Kostrigin <nickel@altlinux.org> 1.37-alt3
 - vm-run: Define MAXCPU=255 for x86_64 (closes: #44337).
 
