@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        107.0.5304.87
+Version:        107.0.5304.110
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -511,6 +511,16 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Nov 18 2022 Alexey Gladkov <legion@altlinux.ru> 107.0.5304.110-alt1
+- New version (107.0.5304.110).
+- Security fixes:
+  - CVE-2022-3885: Use after free in V8.
+  - CVE-2022-3886: Use after free in Speech Recognition.
+  - CVE-2022-3887: Use after free in Web Workers.
+  - CVE-2022-3888: Use after free in WebCodecs.
+  - CVE-2022-3889: Type Confusion in V8.
+  - CVE-2022-3890: Heap buffer overflow in Crashpad.
+
 * Tue Nov 01 2022 Alexey Gladkov <legion@altlinux.ru> 107.0.5304.87-alt1
 - New version (107.0.5304.87).
 - Security fixes:
