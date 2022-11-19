@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: timeshift
-Version: 22.06.1
+Version: 22.06.6
 Summary: System restore tool for Linux
 Release: alt1
 License: GPLv3
@@ -25,7 +25,7 @@ running or from Live CD/USB.
 %setup
 
 %build
-%make_build
+%make
 
 %install
 %makeinstall_std
@@ -47,6 +47,9 @@ rm -f %buildroot%_bindir/%name-uninstall
 %doc README.md
 
 %changelog
+* Fri Nov 11 2022 Alexander Makeenkov <amakeenk@altlinux.org> 22.06.6-alt1
+- Updated to version 22.06.6
+
 * Mon May 30 2022 Alexander Makeenkov <amakeenk@altlinux.org> 22.06.1-alt1
 - Updated to version 22.06.1
 
