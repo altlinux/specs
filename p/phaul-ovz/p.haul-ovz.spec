@@ -3,8 +3,8 @@
 %def_without check
 
 Name:    %oname-ovz
-Version: 0.1.93.1
-Release: alt1.1
+Version: 0.1.95
+Release: alt1
 
 Summary: Process HAULer -- a tool to live-migrate containers and processes
 License: LGPL-2.1
@@ -62,6 +62,9 @@ popd
 %python3_sitelibdir_noarch/*
 
 %changelog
+* Sat Nov 19 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.1.95-alt1
+- 0.1.95
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.93.1-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
