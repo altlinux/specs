@@ -1,7 +1,7 @@
 %define testsdir %{_localstatedir}/%{name}/tests
 
 Name: libtree
-Version: 0.8.0
+Version: 0.9.0
 Release: alt1
 
 Summary: C++ lib that helps to work with tree-like data structures
@@ -102,6 +102,11 @@ cd -
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 %changelog
+* Sat Nov 05 2022 Alexey Appolonov <alexey@altlinux.org> 0.9.0-alt1
+- Empty node names are allowed;
+- Empty branch drafts are allowed;
+- Node names are accepted as a value if no value is found.
+
 * Wed Nov 10 2021 Alexey Appolonov <alexey@altlinux.org> 0.8.0-alt1
 - Ability to customize the format of a string representation of selected data.
 
