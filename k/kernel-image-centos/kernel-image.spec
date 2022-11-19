@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 196
+%define centos_release 198
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,24 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Nov 19 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.198-alt1.el9
+- Updated to kernel-5.14.0-198.el9:
+  + Add fixes to drivers/firmware for NVIDIA Orin support
+  + atlantic: fix deadlock at aq_nic_stop
+  + CNB: net: add skb_[inner_]tcp_all_headers helpers
+  + crypto: ccp - Add support for new CCP/PSP device ID
+  + megaraid_sas: driver update
+  + Merge remote-tracking branch 'origin/merge-requests/1372' into bz2115520
+  + mm, oom: do not trigger out_of_memory from the #PF
+  + powerpc/pseries: Enable POWER Architecture Platform Watchdog Driver
+  + sched: Persistent user requested cpu affinity
+  + Scheduler updates for 9.2
+  + scsi: mpi3mr: driver update
+  + scsi: mpt3sas: driver update
+  + tcp: BIG TCP implementation
+  + tg3: Driver update for RHEL-9.2.0
+  + Update drivers/powercap to enable support for Arm SystemReady IR platforms
+
 * Tue Nov 15 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.196-alt1.el9
 - Updated to kernel-5.14.0-196.el9:
   + blk-mq: avoid double ->queue_rq() because of early timeout
