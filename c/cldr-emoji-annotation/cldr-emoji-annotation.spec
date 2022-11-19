@@ -1,8 +1,9 @@
-%define tag_ver release-40
+%define ver_major 42
+%define tag_ver release-%ver_major
 %def_enable check
 
 Name: cldr-emoji-annotation
-Version: 40.0
+Version: %ver_major
 Release: alt1
 
 # Annotation files are in Unicode license
@@ -12,7 +13,7 @@ License: LGPL-2.0-or-later and Unicode
 Url: https://github.com/unicode-org/cldr
 
 Vcs: https://github.com/unicode-org/cldr.git
-Source: %url/releases/download/%tag_ver/cldr-common-%version.zip
+Source: %url/archive/%tag_ver.zip
 
 BuildArch: noarch
 
@@ -32,7 +33,7 @@ This package contains the pkg-config files for development
 when building programs that use cldr-annotations.
 
 %prep
-%setup -c -n cldr-%tag_ver
+%setup -n cldr-%tag_ver
 
 %install
 pushd $PWD
@@ -88,12 +89,16 @@ done
 %dir %_datadir/unicode/cldr
 %dir %_datadir/unicode/cldr/common
 %_datadir/unicode/cldr/common/dtd
-%doc README-common.md
+%doc README.md readme.html
+%doc docs
 
 %files devel
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Thu Nov 17 2022 Yuri N. Sedunov <aris@altlinux.org> 42-alt1
+- 42
+
 * Mon Mar 14 2022 Yuri N. Sedunov <aris@altlinux.org> 40.0-alt1
 - 40.0 (adapted fc spec)
 
