@@ -4,7 +4,7 @@
 
 Name: deepin-qt5platform-plugins
 Version: 5.0.70
-Release: alt1
+Release: alt2.gitfc3d1f1
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 License: GPL-2.0+ and LGPL-3.0 and MIT
 Group: Graphical desktop/Other
@@ -69,6 +69,10 @@ export PATH=%_qt5_bindir:$PATH
 %_qt5_plugindir/platforms/libdxcb.so
 
 %changelog
+* Sat Nov 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.70-alt2.gitfc3d1f1
+- Built from commit fc3d1f1a84220848c988ac85429b39a500a61d70.
+- Fixed DDE startup with Qt 5.15.7.
+
 * Thu Oct 20 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.70-alt1
 - New version.
 - Upstream:
