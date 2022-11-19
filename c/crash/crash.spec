@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,unresolved=normal
 
 Name:    crash
-Version: 8.0.1
+Version: 8.0.2
 Release: alt1
 Summary: Linux kernel crash utility
 Group:   Development/Debuggers
@@ -64,6 +64,9 @@ install -p -m0644 extensions/*.so %buildroot%_libdir/crash/extensions
 %_libdir/crash
 
 %changelog
+* Sat Nov 19 2022 Vitaly Chikunov <vt@altlinux.org> 8.0.2-alt1
+- Update to 8.0.2 (2022-11-16).
+
 * Mon May 02 2022 Vitaly Chikunov <vt@altlinux.org> 8.0.1-alt1
 - Update to 8.0.1 (2022-04-26).
 
