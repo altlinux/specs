@@ -2,8 +2,8 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.13.2
-Release: alt1.1
+Version: 2.14.0
+Release: alt1
 
 Group:   System/Configuration/Other
 License: GPL-3.0
@@ -42,8 +42,6 @@ AutoProv: yes,nopython3
 %filter_from_requires /python3(ansible\./d
 %filter_from_requires /yum/d
 
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/ansible_test/_util/controller/sanity/validate-modules/validate_modules
-
 Conflicts: ansible
 
 %description
@@ -72,7 +70,7 @@ cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
 
 # Fix shebangs
 grep -Rl '^#!.*python$' %buildroot | xargs subst 's|^#!.*python$|#!%__python3|'
-find %buildroot%python3_sitelibdir/ansible_test/_data -name \*.ps1 -delete
+rm -rf %buildroot%python3_sitelibdir/ansible_test
 
 %files
 %doc examples
@@ -83,6 +81,10 @@ find %buildroot%python3_sitelibdir/ansible_test/_data -name \*.ps1 -delete
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Fri Nov 18 2022 Andrey Cherepanov <cas@altlinux.org> 2.14.0-alt1
+- New version.
+- Removed ansible_test module.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.13.2-alt1.1
 - NMU:
     + Removed %%add_python3_req_skip __main__ due to new rpm-build-python3.
