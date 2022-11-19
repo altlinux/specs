@@ -2,7 +2,7 @@
 
 Name: distcc
 Version: 3.4
-Release: alt8.1
+Release: alt9
 
 Summary: distcc is a program to distribute builds C/C++/ Objective C/C++
 
@@ -137,6 +137,10 @@ rm -f %buildroot%_sysconfigdir/distcc/commands.allow.sh
 %python3_sitelibdir/include_server*
 
 %changelog
+* Sat Nov 19 2022 Ivan A. Melnikov <iv@altlinux.org> 3.4-alt9
+- update-distcc-symlinks: add ALT-specific GCC location;
+- replace deprecated egrep call with grep -E.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.4-alt8.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
