@@ -4,7 +4,7 @@
 
 %define modname cairo
 %define oname py%modname
-%define ver_major 1.21
+%define ver_major 1.22
 
 Name: python3-module-%oname
 Version: %ver_major.0
@@ -64,6 +64,7 @@ Documentation for pycairo.
 Summary: Examples for pycairo
 Group: Development/Python3
 Requires: %name = %EVR
+%add_python3_req_skip snippets
 
 %description examples
 Examples for pycairo.
@@ -149,6 +150,9 @@ rm -fR %python3_sitelibdir/%oname/pickle
 %endif
 
 %changelog
+* Sat Nov 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Thu May 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.21.0-alt1
 - 1.21.0 (ported to Meson build system)
 
