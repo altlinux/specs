@@ -1,6 +1,6 @@
 Name:    pascalabcnet
-Version: 3.8.3.3204
-Release: alt1.git5c1df570
+Version: 3.8.3.3205
+Release: alt1.git88d903bb
 
 Summary: PascalABC.NET programming language  
 License: LGPL-3.0
@@ -129,6 +129,9 @@ install -Dpm 0644 %SOURCE3 %buildroot%_datadir/metainfo/PascalABCNETLinux.appdat
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Sun Nov 20 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3205-alt1.git88d903bb
+- New version (ALT #44328).
+
 * Tue Nov 15 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3204-alt1.git5c1df570
 - New version.
 - Built all modules.
