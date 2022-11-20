@@ -143,7 +143,7 @@ There are some kernel variants in ALT systems:
 * std-def: standard longterm kernel without preemption;
 * std-pae: variant of std-def kernel for i686 with 64G memory support;
 * std-debug: variant of std-def kernel kernel with some DEBUG options enabled;
-* un-def: more modern then std-def and with voluntary (on ppc64le) and
+* un-def: more modern than std-def and with voluntary (on ppc64le) and
   forced (on x86) preemption enabled.
 * sn-def: insecure kernel for SecretNet only
 
