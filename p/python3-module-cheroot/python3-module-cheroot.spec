@@ -1,11 +1,12 @@
-%define  modulename cheroot
+%define modulename cheroot
 
 # there is no ipv6 support on our build system and cheroot tests do not support this configuration
 # ERROR: Could not find a version that satisfies the requirement pytest-cov==2.10.1
 %def_disable check
+%def_without tests
 
 Name:    python3-module-%modulename
-Version: 8.5.2
+Version: 9.0.0
 Release: alt1
 
 Summary: Cheroot is the high-performance, pure-Python HTTP server used by CherryPy
@@ -62,6 +63,10 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
+%if_without tests
+rm -rf %python3_sitelibdir/%{modulename}/test
+rm -f %python3_sitelibdir/%{modulename}/testing.py
+%endif
 
 %check
 rm -f pyproject.toml
@@ -77,11 +82,20 @@ tox.py3 --sitepackages -v
 %exclude %python3_sitelibdir/%{modulename}/test
 %exclude %python3_sitelibdir/%{modulename}/testing.py
 
+%if_with tests
 %files tests
 %python3_sitelibdir/%{modulename}/test
 %python3_sitelibdir/%{modulename}/testing.py
+%endif
 
 %changelog
+* Sun Nov 20 2022 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
+- New version.
+- Disabled tests packaging.
+
+* Tue Jan 04 2022 Andrey Cherepanov <cas@altlinux.org> 8.6.0-alt1
+- New version.
+
 * Tue Jul 13 2021 Andrey Cherepanov <cas@altlinux.org> 8.5.2-alt1
 - New version.
 - Disable %%check for all architectures (ALT #40332).
