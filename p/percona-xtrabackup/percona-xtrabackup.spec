@@ -5,7 +5,7 @@
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
 Name: percona-xtrabackup
 Version: 8.0.30
-Release: alt1
+Release: alt2
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
 Group: Databases
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Source1: boost_1_77_0.tar.bz2
 Source2: libkmip.tar
 Patch0: percona-xtrabackup-8.0.28-missing-memory-header.patch
+Patch2000: percona-xtrabackup-e2k.patch
 
 Provides: %name-%pxbu_major_minor
 Obsoletes: xtrabackup < 2.0.0
@@ -24,6 +25,7 @@ BuildRequires: protobuf-compiler python3-dev python3-module-sphinx-sphinx-build-
 BuildRequires: python3-module-sphinxcontrib-applehelp python3-module-sphinxcontrib-devhelp
 BuildRequires: python3-module-sphinxcontrib-htmlhelp python3-module-sphinxcontrib-qthelp
 BuildRequires: python3-module-sphinxcontrib-serializinghtml python3-tools xxd
+BuildRequires: zlib-devel libzstd-devel
 
 ExcludeArch: ppc64le %ix86 %arm %mips32 ppc
 
@@ -33,6 +35,11 @@ Online backup for InnoDB/XtraDB in MySQL, MariaDB and Percona Server.
 %prep
 %setup -n %name-%version
 %patch0 -p1
+
+%ifarch %e2k
+%patch2000 -p1
+sed -i "/using __base/{N;N;s/^.*using __base.*EncodeBase.*friend __base.*$/EncodeBase_EDG/}" router/src/mysql_protocol/include/mysqlrouter/classic_protocol_codec_*.h
+%endif
 
 mkdir -p %_build/../libboost
 cp %SOURCE1 %_build/../libboost/
@@ -44,6 +51,7 @@ pathfix.py -pni "%__python3 -s" . ./storage/innobase/xtrabackup/test/subunit2jun
   -DCMAKE_INSTALL_PREFIX=%prefix -DWITH_SSL=system -DINSTALL_MANDIR=%_mandir -DWITH_MAN_PAGES=1 \
   -DINSTALL_MYSQLTESTDIR=%_datadir/percona-xtrabackup-test-%pxbu_major_minor \
   -DINSTALL_PLUGINDIR="%_lib/xtrabackup/plugin" -DFORCE_INSOURCE_BUILD=1 \
+  -DWITH_ZLIB=system -DWITH_ZSTD=system \
   -DWITH_ICU=system
 
 %cmake_build
@@ -78,6 +86,11 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_libdir/xtrabackup
 
 %changelog
+* Sun Nov 20 2022 Alexei Takaseev <taf@altlinux.org> 8.0.30-alt2
+- Do not pack .gear/ to SRPM tar
+- Add e2k patch
+- Build with system zlib and libzstd
+
 * Tue Nov 15 2022 Alexei Takaseev <taf@altlinux.org> 8.0.30-alt1
 - 8.0.30-23
 - Build only 64-bit arch.
