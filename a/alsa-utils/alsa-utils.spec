@@ -1,7 +1,7 @@
 %def_with systemd
 
 Name: alsa-utils
-Version: 1.2.6
+Version: 1.2.8
 Release: alt1
 Epoch: 1
 
@@ -76,7 +76,8 @@ touch config.rpath
 %exclude %_bindir/arecord
 %exclude %_bindir/amixer
 %_sbindir/*
-%_datadir/alsa/speaker-test
+%_bindir/speaker-test
+%_libdir/alsa-topology/*.so
 %_datadir/alsa/init
 %_datadir/sounds/alsa
 %_man1dir/*.1*
@@ -103,6 +104,10 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Sun Nov 20 2022 Michael Shigorin <mike@altlinux.org> 1:1.2.8-alt1
+- 1.2.8
+- NB: speaker-test moved into %_bindir
+
 * Wed Dec 08 2021 Michael Shigorin <mike@altlinux.org> 1:1.2.6-alt1
 - 1.2.6
 
