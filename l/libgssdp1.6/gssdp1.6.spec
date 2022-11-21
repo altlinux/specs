@@ -5,12 +5,12 @@
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
-%def_disable sniffer
+%def_enable sniffer
 # no ipv6 in hasher
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -27,7 +27,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %define soup_ver 3.0.6
 
 BuildRequires(pre): rpm-macros-meson >= %meson_ver rpm-build-gir rpm-build-vala
-BuildRequires: meson vala-tools
+BuildRequires: meson vala-tools pandoc
 BuildRequires: libgio-devel >= %glib_ver libsoup%soup_api_ver-devel >= %soup_ver
 %{?_enable_gtk_doc:BuildRequires: gtk-doc gi-docgen}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libsoup%soup_api_ver-gir-devel}
@@ -126,10 +126,14 @@ A Device Sniffer tool based on GSSDP framework.
 %if_enabled sniffer
 %files -n %_name%ver_major-tools
 %_bindir/%_name-device-sniffer
+%_man1dir/%_name-device-sniffer.1.*
 %endif
 
 
 %changelog
+* Mon Nov 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
+- 1.6.2
+
 * Fri Nov 11 2022 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
 - 1.6.1
 
