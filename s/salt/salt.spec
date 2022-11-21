@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3004
-Release: alt4.1
+Version: 3004.2
+Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -21,7 +21,6 @@ Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
 Patch2: salt-python3.10.patch
-Patch3: 0001-Fix-Jinja2-3.1.0.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
@@ -57,8 +56,7 @@ Summary: Management component for salt, a parallel remote execution system
 Group: Development/Python
 Obsoletes: python-module-salt 
 %py3_requires yaml msgpack pycryptodomex contextvars
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/%name/ext/vsan/vsanmgmtObjects.py
+%add_python3_req_skip vsanmgmtObjects
 
 %description  -n python3-module-salt
 Salt is a distributed remote execution system used to execute commands
@@ -100,7 +98,6 @@ with XMLRPC or even a Websocket API.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 # Remove local copy documentation mention
 subst 's| file:///usr/share/doc/salt/html/contents.html||' pkg/*.service
 
@@ -248,6 +245,11 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Mon Nov 21 2022 Andrey Cherepanov <cas@altlinux.org> 3004.2-alt1
+- New version.
+- Security fixes: CVE-2022-22967, CVE-2022-22941, CVE-2022-22936,
+  CVE-2022-22935, CVE-2022-22934.
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3004-alt4.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
@@ -263,6 +265,7 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 
 * Mon Oct 18 2021 Andrey Cherepanov <cas@altlinux.org> 3004-alt1
 - New version.
+- Security fixes: CVE-2021-22004, CVE-2021-21996.
 
 * Wed Oct 06 2021 Ivan A. Melnikov <iv@altlinux.org> 3003.2-alt2
 - Skip pyrax.exceptions dependency (fixes build on mipsel)
