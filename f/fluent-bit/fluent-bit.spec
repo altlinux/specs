@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: fluent-bit
-Version: 1.9.9
+Version: 2.0.5
 Release: alt1
 Summary: Fast data collector for Linux
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
@@ -14,8 +14,8 @@ Source: %name-%version.tar
 Patch: 0001-mbedtls-disable-Werror-in-prod-build.patch
 # Fix up some install paths in CMake. Not upstream
 Patch1: 0002-CMake-fix-up-install-paths.patch
-# Add -fPIC to onigomo build. Not upstream
-Patch2: 0003-onigmo-add-fPIC-to-CFLAGS.patch
+# Add -fPIC to jemalloc build. Not upstream
+Patch2: 0003-jemalloc-add-fPIC-to-CFLAGS.patch
 
 %if_enabled check
 BuildRequires: ctest
@@ -34,10 +34,10 @@ BuildRequires: libsasl2-devel
 BuildRequires: libyaml-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libcares-devel
+# temporarily in-source (by upstream)
+# BuildRequires: libsqlite3-devel
 
-# Exclude armv7hl temporarily because of failing runtime tests
-# https://github.com/fluent/fluent-bit/issues/4395
-# ExcludeArch: ppc64le
+ExcludeArch: armh ppc64le
 
 %description
 Fluent Bit is a fast Log Processor and Forwarder.
@@ -50,11 +50,17 @@ data manipulation and analytics using SQL queries.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 %patch1 -p1
-#patch2 -p1
-sed -i 's|c-ares|cares|' src/CMakeLists.txt
-sed -i '/FLB_PATH_LIB_CARES/d' CMakeLists.txt cmake/headers.cmake cmake/libraries.cmake
+%patch2 -p1
+sed -i 's|c-ares|cares|' \
+    src/CMakeLists.txt
+sed -i '/FLB_PATH_LIB_CARES/d' \
+    CMakeLists.txt \
+    cmake/headers.cmake \
+    cmake/libraries.cmake
+sed -i '/include(ExternalProject)/i include(CheckIncludeFiles)' \
+    CMakeLists.txt
 
 %build
 %cmake \
@@ -66,7 +72,7 @@ sed -i '/FLB_PATH_LIB_CARES/d' CMakeLists.txt cmake/headers.cmake cmake/librarie
     -DFLB_OUT_ES=On \
     -DFLB_OUT_PGSQL=On \
     -DFLB_OUT_KAFKA=On \
-    -DFLB_IN_KAFKA=On \
+    -DFLB_IN_KAFKA=Off \
     -DFLB_SHARED_LIB=Off \
     -DFLB_TESTS_RUNTIME=On \
     -DFLB_TESTS_INTERNAL=Off \
@@ -105,6 +111,12 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Mon Nov 21 2022 Leontiy Volodin <lvol@altlinux.org> 2.0.5-alt1
+- New version.
+- Updated the patches.
+- Disabled in_kafka module.
+- Excluded armh and ppc64le.
+
 * Mon Oct 03 2022 Leontiy Volodin <lvol@altlinux.org> 1.9.9-alt1
 - New version.
 - Built with external c-ares instead built-in (ALT #43888).
