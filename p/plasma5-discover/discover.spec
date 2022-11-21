@@ -20,7 +20,7 @@
 
 Name: plasma5-%rname
 Version: 5.26.3
-Release: alt1
+Release: alt2
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -95,7 +95,7 @@ Plasma Discover maximum package.
 Summary: Plasma Discover core files
 Group: System/Configuration/Packaging
 Requires: %name-common
-Requires: kf5-kirigami appstream-data
+Requires: kf5-kirigami kde5-runtime appstream-data
 %description core
 Plasma Discover core files.
 
@@ -290,6 +290,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Mon Nov 21 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.3-alt2
+- update requires
+
 * Tue Nov 08 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.3-alt1
 - new version
 
