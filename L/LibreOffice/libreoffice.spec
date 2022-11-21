@@ -28,7 +28,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -80,7 +80,7 @@ Patch407: alt-007-svg-icons-3.patch
 Patch500: alt-010-mips-fix-linking-with-libatomic.patch
 
 # content of patch shared to Weblate-LibreOffice by @NeuroFreak
-Patch600: LibreOffice-7.3.3.2-update-russian-translation.patch
+Patch600: LibreOffice-7.4.2.3-update-russian-translation.patch
 
 %set_verify_elf_method unresolved=relaxed
 %add_findreq_skiplist %lodir/share/config/webcast/*
@@ -293,7 +293,7 @@ Provides additional %{langname} translations and resources for %name. \
 
 %patch500 -p0
 # Patch with russian translation update
-##patch600 -p1
+%patch600 -p1
 
 # TODO move officebean to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
@@ -589,6 +589,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Nov 21 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.4.2.3-alt2
+- NMU: Update russian translation for 7.4.2.3
+
 * Wed Nov 02 2022 Fr. Br. George <george@altlinux.ru> 7.4.2.3-alt1
 - Update to 7.4.2.3
 - Fix desktop binary naming (Closes: #44176)
