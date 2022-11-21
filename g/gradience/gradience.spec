@@ -8,7 +8,7 @@
 %define rdn_name com.github.GradienceTeam.Gradience
 
 Name: gradience
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: GNOME ecosystem customizer
@@ -72,6 +72,9 @@ more things.
 %doc README*
 
 %changelog
+* Mon Nov 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2-8-g1b7c089
+
 * Sat Oct 08 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1-27-gc3eb085
 
