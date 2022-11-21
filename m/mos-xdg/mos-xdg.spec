@@ -5,8 +5,8 @@ Summary: XDG desktop settings for M OS distros
 Summary(ru): Настройки рабочего окружения дистрибутивов М ОС
 License: GPL-3.0
 Group: Graphical desktop/Other
-Version: 2.2
-Release: alt2
+Version: 2.3
+Release: alt1
 Source0: %name-%version.tar
 Source1: COPYING
 BuildArch: noarch
@@ -77,10 +77,7 @@ KDE 5 desktop settings for classic variant of M OS
 /etc/xdg/mos/mimeapps.list
 %dir /usr/share/mos/kxmlgui5
 %dir /usr/share/mos/kxmlgui5/dolphin
-%dir /usr/share/mos/kservices5
-%dir /usr/share/mos/kservices5/ServiceMenus
 /usr/share/mos/kxmlgui5/dolphin/dolphinui.rc
-/usr/share/mos/kservices5/ServiceMenus/setAsWallpaper.desktop
 
 #--------------------------------------------------------------
 
@@ -112,6 +109,11 @@ cd scripts
 ./test.sh
 
 %changelog
+* Mon Nov 21 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3-alt1
+- remove setAsWallpaper.desktop, it now exists in plasma5-workspace
+  $ rpm -qf /usr/share/kservices5/ServiceMenus/setaswallpaper.desktop
+  plasma5-workspace-5.24.6-alt6.x86_64
+
 * Fri Nov 18 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.2-alt2
 - Own directory /etc/xdg/mos/autostart (will be used in other packages)
 
