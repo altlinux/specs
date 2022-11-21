@@ -1,5 +1,5 @@
 Name: libXrandr
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 
 Summary: X RandR Library
@@ -19,7 +19,6 @@ X RandR Library
 %package devel
 Summary: X RandR Library and Header Files
 Group: Development/C
-Requires: %name = %version-%release
 
 %description devel
 %name-devel contains the libraries and header files needed to
@@ -48,6 +47,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Mon Nov 21 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.5.3-alt1
+- 1.5.3
+
 * Mon Mar 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.5.2-alt1
 - 1.5.2
 
