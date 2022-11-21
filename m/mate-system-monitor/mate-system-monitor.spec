@@ -3,7 +3,7 @@
 
 Name: mate-system-monitor
 Version: 1.26.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: Process and resource monitor
 License: GPLv2+
@@ -56,6 +56,9 @@ sed -i "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g}" s
 %_man1dir/*.1*
 
 %changelog
+* Mon Nov 21 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt3
+- fixed translate desktop file
+
 * Thu Sep 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:1.26.0-alt2
 - Fixes for Elbrus build.
 
