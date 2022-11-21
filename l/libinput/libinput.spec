@@ -8,7 +8,7 @@
 %def_enable install_tests
 
 Name: libinput
-Version: 1.21.0
+Version: 1.22.0
 Release: alt1
 
 Summary: Input devices library
@@ -18,7 +18,6 @@ Url: http://www.freedesktop.org/wiki/Software/libinput/
 
 %if_disabled snapshot
 Source: https://gitlab.freedesktop.org/%name/%name/-/archive/%version/%name-%version.tar.bz2
-#Source: http://www.freedesktop.org/software/%name/%name-%version.tar.xz
 %else
 Vcs: https://gitlab.freedesktop.org/libinput/libinput.git
 Source: %name-%version.tar
@@ -27,20 +26,21 @@ Source: %name-%version.tar
 %add_python3_path %_libexecdir/%name
 
 %define mtdev_ver 1.1.0
-%define evdev_ver 0.4
+%define evdev_ver 1.10
 
-BuildRequires(pre): meson rpm-build-python3
+BuildRequires(pre): rpm-macros-meson rpm-build-python3
 # for %%valgrind_arches
 BuildRequires(pre): rpm-macros-valgrind
-BuildRequires: gcc-c++
+BuildRequires: meson gcc-c++
 BuildRequires: libmtdev-devel >= %mtdev_ver libevdev-devel >= %evdev_ver
-BuildRequires: libudev-devel libsystemd-devel
+BuildRequires: libudev-devel pkgconfig(systemd)
 BuildRequires: libcheck-devel
 %{?_enable_libwacom:BuildRequires: libwacom-devel}
 %{?_enable_debug_gui:BuildRequires: libgtk4-devel wayland-protocols}
 %{?_enable_documentation:BuildRequires: doxygen graphviz}
 %{?!_without_check:%{?!_disable_check:
-BuildRequires: /proc gdb python3-module-pyparsing
+BuildRequires: /proc gdb  python3-module-pytest python3-module-pytest-xdist
+BuildRequires: python3-module-pyparsing
 %ifarch %valgrind_arches
 BuildRequires: valgrind
 %endif
@@ -61,7 +61,7 @@ pointer events from touchpads, pointer acceleration, etc.
 %package devel
 Summary: libinput development package
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 This package contains development libraries and header files
@@ -70,7 +70,7 @@ that are needed to write applications that use %name.
 %package tools
 Summary: tools for %name
 Group: Development/Tools
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tools
 This package contains commandline tools from %name package.
@@ -78,11 +78,20 @@ This package contains commandline tools from %name package.
 %package tools-gui
 Summary: libinput visual debug helper
 Group: Development/Tools
-Requires: %name = %version-%release
-Requires: %name-tools = %version-%release
+Requires: %name = %EVR
+Requires: %name-tools = %EVR
 
 %description tools-gui
 This package contains visual debug helper for %name.
+
+%package tests
+Summary: Tests for libinput
+Group: Development/Other
+Requires: %name = %EVR
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed libinput library.
 
 %prep
 %setup
@@ -100,9 +109,10 @@ This package contains visual debug helper for %name.
 %meson_install
 
 %check
-%__meson_test
+%__meson_test -t 4 --no-suite hardware --no-suite root
 
 %files
+%dir %_sysconfdir/%name
 %_libdir/%name.so.*
 /lib/udev/%name-device-group
 /lib/udev/%name-fuzz-extract
@@ -120,7 +130,24 @@ This package contains visual debug helper for %name.
 %files tools
 %_bindir/%name
 %dir %_libexecdir/%name
-%_libexecdir/%name/*
+%_libexecdir/%name/libinput-analyze
+%_libexecdir/%name/libinput-analyze-per-slot-delta
+%_libexecdir/%name/libinput-analyze-recording
+%_libexecdir/%name/libinput-analyze-touch-down-state
+%_libexecdir/%name/libinput-debug-events
+%_libexecdir/%name/libinput-debug-gui
+%_libexecdir/%name/libinput-debug-tablet
+%_libexecdir/%name/libinput-list-devices
+%_libexecdir/%name/libinput-measure
+%_libexecdir/%name/libinput-measure-fuzz
+%_libexecdir/%name/libinput-measure-touchpad-pressure
+%_libexecdir/%name/libinput-measure-touchpad-size
+%_libexecdir/%name/libinput-measure-touchpad-tap
+%_libexecdir/%name/libinput-measure-touch-size
+%_libexecdir/%name/libinput-quirks
+%_libexecdir/%name/libinput-record
+%_libexecdir/%name/libinput-replay
+%_libexecdir/%name/libinput-test
 %{?_enable_debug_gui:%exclude %_libexecdir/%name/%name-debug-gui}
 %_man1dir/%name.1.*
 %_man1dir/%name-analyze.1*
@@ -142,7 +169,6 @@ This package contains visual debug helper for %name.
 %_man1dir/%name-record.1.*
 %_man1dir/%name-replay.1.*
 %_man1dir/%name-test.1.*
-%{?_enable_tests:%_man1dir/%name-test-suite.1.*}
 %_datadir/zsh/site-functions/_%{name}
 
 %if_enabled debug_gui
@@ -151,8 +177,18 @@ This package contains visual debug helper for %name.
 %_man1dir/%name-debug-gui.1.*
 %endif
 
+%if_enabled install_tests
+%files tests
+%_libexecdir/%name/libinput-test-suite
+%_libexecdir/%name/libinput-test-utils
+%_man1dir/%name-test-suite.1.*
+%endif
 
 %changelog
+* Sun Nov 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
+- 1.22.0
+- new tests subpackage
+
 * Sun Jun 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.21.0-alt1
 - 1.21.0
 
