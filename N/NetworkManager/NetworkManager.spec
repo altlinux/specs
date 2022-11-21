@@ -58,7 +58,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.40.2
+Version: 1.40.4
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -471,9 +471,11 @@ rm -rf %_var/lib/NetworkManager/timestamps/ ||:
 
 %post daemon
 %post_service_posttrans_restart %name
-%post_service_posttrans_restart %name-wait-online.service
-%post_service_posttrans_restart %name-dispatcher.service
-%post_service_posttrans_restart nm-priv-helper.service
+if sd_booted; then
+	%post_service_posttrans_restart %name-wait-online.service
+	%post_service_posttrans_restart %name-dispatcher.service
+	%post_service_posttrans_restart nm-priv-helper.service
+fi
 
 %preun daemon
 #preun_service %name
@@ -637,6 +639,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Nov 21 2022 Mikhail Efremov <sem@altlinux.org> 1.40.4-alt1
+- daemon: Don't try to restart systemd-only services with SysVinit.
+- Updated to 1.40.4.
+
 * Tue Oct 18 2022 Mikhail Efremov <sem@altlinux.org> 1.40.2-alt1
 - daemon: Use %%post_service_posttrans_restart macro.
 - nm-drivers.rules: Fixed sed path.
