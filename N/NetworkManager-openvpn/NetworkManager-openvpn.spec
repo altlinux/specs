@@ -13,7 +13,7 @@
 %endif
 
 Name: NetworkManager-openvpn
-Version: 1.10.0
+Version: 1.10.2
 Release: alt1%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
@@ -117,6 +117,9 @@ make check
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Nov 21 2022 Mikhail Efremov <sem@altlinux.org> 1.10.2-alt1
+- Updated to 1.10.2.
+
 * Thu Sep 15 2022 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
 - Dropped workaround with xvfb-run.
 - Updated to 1.10.0.
