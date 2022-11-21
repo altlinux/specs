@@ -1,7 +1,7 @@
 %define oname xapp
 
 Name: python3-module-%oname
-Version: 2.2.2
+Version: 2.4.0
 Release: alt1
 
 Summary: Python Xapp Library
@@ -15,6 +15,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: rpm-build-gir
+BuildRequires: meson
 
 %description
 Python Xapp Library
@@ -23,16 +24,19 @@ Python Xapp Library
 %setup -n python-%oname-%version
 
 %build
-%python3_build
+%meson
+%meson_build
 
 %install
-%python3_install
+%meson_install
 
 %files
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-*
 
 %changelog
+* Fri Nov 18 2022 Vladimir Didenko <cow@altlinux.org> 2.4.0-alt1
+- New version
+
 * Fri Jun 10 2022 Vladimir Didenko <cow@altlinux.org> 2.2.2-alt1
 - New version
 

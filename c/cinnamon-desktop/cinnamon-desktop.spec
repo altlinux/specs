@@ -1,13 +1,13 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 5.4
+%define ver_major 5.6
 %define api_ver 3.0
 %def_disable static
 %def_enable gtk_doc
 %def_enable introspection
 
 Name: cinnamon-desktop
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: Library with common API for various Cinnamon modules
 License: GPLv2+ and LGPLv2+ and MIT
@@ -154,6 +154,9 @@ GObject introspection devel data for the %name library
 
 
 %changelog
+* Mon Nov 21 2022 Vladimir Didenko <cow@altlinux.org> 5.6.0-alt1
+- 5.6.0
+
 * Tue Sep 27 2022 Anton Midyukov <antohami@altlinux.org> 5.4.2-alt2
 - change wallpaper @datadir@/design-current/backgrounds/default.png
   (Closes: 42286)
