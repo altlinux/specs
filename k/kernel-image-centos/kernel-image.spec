@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 198
+%define centos_release 200
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,16 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Nov 22 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.200-alt1.el9
+- Updated to kernel-5.14.0-200.el9:
+  + arm64: kdump: Reimplement crashkernel=X fixup
+  + bnx2x: driver updates
+  + BPF and XDP rebase to v5.18
+  + ipvlan/macvlan: phase-1 backports for RHEL-9.2
+  + net: raw: Convert to raw sockets to RCU.
+  + qed*: driver update
+  + soc: imx: add i.MX93 SRC power domain and media blk ctrl drivers
+
 * Sat Nov 19 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.198-alt1.el9
 - Updated to kernel-5.14.0-198.el9:
   + Add fixes to drivers/firmware for NVIDIA Orin support
