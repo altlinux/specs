@@ -1,7 +1,7 @@
 Summary: Inotify cron system
 Name: incron
 Version: 0.5.12
-Release: alt3
+Release: alt4
 
 Group: System/Base
 License: GPLv2
@@ -70,6 +70,9 @@ make install-man MANPATH="%buildroot%_mandir" INSTALL="install -D -p"
 %_unitdir/incrond.service
 
 %changelog
+* Tue Nov 22 2022 Anton Farygin <rider@altlinux.ru> 0.5.12-alt4
+- added patch from upstream against zombie processes (closes: #43764)
+
 * Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 0.5.12-alt3
 - fixed FTBFS: force C++14
 
