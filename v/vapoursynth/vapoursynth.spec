@@ -6,7 +6,7 @@
 %def_without ImageMagick
 
 Name: vapoursynth
-Version: 60
+Version: 61
 Release: alt1
 Summary: Video processing framework with simplicity in mind
 License: WTFPL and LGPL-2.1+ and OFL-1.1 and GPL-2.0+ and ISC and MIT
@@ -17,8 +17,6 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: https://github.com/%name/%name/archive/R%version/%name-R%version.tar.gz
 Patch: %name-version-info.patch
-
-#ExclusiveArch: %%ix86 x86_64
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: autoconf
@@ -129,10 +127,10 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' setup.py
     --enable-vivtc
 
 %make_build LIBDIR=%_libdir
-# %%python3_build
+# %%pyproject_build
 
 %install
-%python3_install
+%__python3 setup.py install --skip-build --root=%buildroot --force
 %makeinstall_std
 find %buildroot -type f -name "*.la" -delete
 
@@ -170,6 +168,9 @@ python3 -m pytest -v
 # %%_libdir/%%name/lib*.so
 
 %changelog
+* Tue Nov 22 2022 Leontiy Volodin <lvol@altlinux.org> 61-alt1
+- New version (61).
+
 * Fri Sep 16 2022 Leontiy Volodin <lvol@altlinux.org> 60-alt1
 - New version (60).
 
