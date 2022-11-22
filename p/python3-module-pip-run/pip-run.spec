@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.8.1
+Version: 8.8.2
 Release: alt1
 
 Summary: Install packages and run Python with them
@@ -82,6 +82,9 @@ rm -r %buildroot%python3_sitelibdir/pip_run/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 21 2022 Stanislav Levin <slev@altlinux.org> 8.8.2-alt1
+- 8.8.1 -> 8.8.2.
+
 * Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 8.8.1-alt1
 - 8.8.0 -> 8.8.1.
 

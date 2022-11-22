@@ -4,13 +4,13 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: A library to create a command-line program from a function
 License: LGPLv3
 Group: Development/Python3
-# Source-git: https://github.com/Lucretiel/autocommand.git
+VCS: https://github.com/Lucretiel/autocommand.git
 Url: https://pypi.org/project/autocommand
 
 Source: %name-%version.tar
@@ -18,10 +18,12 @@ Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_with check
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -35,28 +37,23 @@ function signatures.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Nov 21 2022 Stanislav Levin <slev@altlinux.org> 2.2.2-alt1
+- 2.2.1 -> 2.2.2.
+
 * Tue Feb 08 2022 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
 - Initial build for Sisyphus.

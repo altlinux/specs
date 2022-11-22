@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.1.2
+Version: 4.2.0
 Release: alt1
 
 Summary: Context managers by Jaraco
@@ -64,6 +64,9 @@ git tag '%version'
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Mon Nov 21 2022 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1
+- 4.1.2 -> 4.2.0.
+
 * Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 4.1.2-alt1
 - 4.1.1 -> 4.1.2.
 
