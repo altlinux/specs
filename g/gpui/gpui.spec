@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt5
+Release: alt7
 
 Summary: Group policy editor
 License: GPLv2+
@@ -38,6 +38,8 @@ BuildRequires: desktop-file-utils ImageMagick-tools
 BuildRequires: libqt-mvvm-devel
 
 BuildRequires: xorg-xvfb xvfb-run
+
+Requires: admx-basealt
 
 Source0: %name-%version.tar
 
@@ -108,6 +110,20 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Wed Nov 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt7
+- 0.2.17-alt7
+- Fixes:
+  + #88813 Fix restore dependency on admx-basealt.
+  + #88495 Fix translations in environment variable widget.
+  + #88226 Fix folder creation.
+  + #88143 Fix folder attributes during deletion of folders.
+  + #88586 Fix russian translation of mapped drive context menu.
+
+* Wed Nov 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt6
+- 0.2.17-alt6
+  Features:
+  + Add mapped drives for computers and network shares for user.
+
 * Wed Nov 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt5
 - 0.2.17-alt5
 - Fixes:
