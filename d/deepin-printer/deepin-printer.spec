@@ -2,7 +2,7 @@
 %define repo dde-printer
 
 Name: deepin-printer
-Version: 0.9.13
+Version: 0.9.16
 Release: alt1
 Summary: Printing utility for DDE
 License: GPL-3.0+
@@ -32,15 +32,9 @@ Graphical interface to configure the printing system for DDE.
 
 %prep
 %setup -n %repo-%version
-sed -i 's|lrelease|lrelease-qt5|' \
-	src/{Printer,Deamon}/translate_generation.sh
-sed -i 's|lupdate|lupdate-qt5|' \
-	src/{Printer,Deamon}/translate_generation.sh \
-	src/{Printer,Deamon}/translate_update.sh
-sed -i '1i #include <stdexcept>' \
-	src/cppcups/cupssnmp.cpp
 
 %build
+export PATH=%_qt5_bindir:$PATH
 %qmake_qt5 \
 %if_enabled clang
     QMAKE_STRIP= -spec linux-clang \
@@ -72,6 +66,9 @@ chmod +x %buildroot%_sysconfdir/xdg/autostart/%repo-watch.desktop
 %_datadir/deepin-manual/manual-assets/application/%repo/print-manager/
 
 %changelog
+* Tue Nov 22 2022 Leontiy Volodin <lvol@altlinux.org> 0.9.16-alt1
+- New version (0.9.16).
+
 * Thu May 19 2022 Leontiy Volodin <lvol@altlinux.org> 0.9.13-alt1
 - New version (0.9.13).
 
