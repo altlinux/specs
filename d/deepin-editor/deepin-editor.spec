@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-editor
-Version: 5.10.23
+Version: 5.10.40
 Release: alt1
 Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
@@ -9,15 +9,14 @@ Group: Editors
 Url: https://github.com/linuxdeepin/deepin-editor
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-editor-5.10.18-gcc11.patch
-Patch1: deepin-editor-5.10.21-alt-aarch64-armh.patch
+Patch: deepin-editor-5.10.21-alt-aarch64-armh.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires(pre): rpm-build-ninja desktop-file-utils
+BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake
 BuildRequires: libfreeimage-devel
 BuildRequires: kf5-kcodecs-devel
@@ -47,17 +46,7 @@ BuildRequires: libchardet-devel
 
 %prep
 %setup
-%if_disabled clang
 %patch -p1
-%endif
-%patch1 -p1
-# use system libuchardet.a
-# sed -i 's|${CMAKE_CURRENT_SOURCE_DIR}/../3rdparty/lib/lib/libuchardet.a|%%_libdir/libuchardet.a|' \
-# 	src/CMakeLists.txt \
-# 	tests/CMakeLists.txt
-sed -i 's|KF5/KSyntaxHighlighting/|KF5/KSyntaxHighlighting/KSyntaxHighlighting/|' \
-    src/editor/dtextedit.cpp \
-    src/editor/showflodcodewidget.h
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -72,7 +61,7 @@ export READELF="llvm-readelf"
 %cmake \
     -GNinja \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DAPP_VERSION=%version \
     -DVERSION=%version \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
@@ -90,11 +79,8 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %cmake_install
 %find_lang %name
 
-%check
-desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
-
 %files -f %name.lang
-%doc README.md LICENSE
+%doc README.md LICENSE.txt
 %_bindir/%name
 %_datadir/%name/
 %_desktopdir/%name.desktop
@@ -106,6 +92,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Tue Nov 22 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.40-alt1
+- New version (5.10.40).
+
 * Thu May 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.23-alt1
 - New version (5.10.23).
 
