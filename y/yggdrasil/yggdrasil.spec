@@ -3,7 +3,7 @@
 %global import_path github.com/yggdrasil-network/yggdrasil-go
 
 Name: yggdrasil
-Version: 0.4.6
+Version: 0.4.7
 Release: alt1
 
 Summary: End-to-end encrypted IPv6 networking
@@ -75,6 +75,9 @@ popd
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Tue Nov 22 2022 Anton Zhukharev <ancieg@altlinux.org> 0.4.7-alt1
+- update to 0.4.7
+
 * Fri Nov 04 2022 Anton Zhukharev <ancieg@altlinux.org> 0.4.6-alt1
 - update to 0.4.6
 
