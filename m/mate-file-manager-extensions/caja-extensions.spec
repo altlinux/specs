@@ -1,7 +1,7 @@
 %define rname caja-extensions
 
 Name: mate-file-manager-extensions
-Version: 1.26.0
+Version: 1.26.1
 Release: alt1
 Epoch: 1
 Summary: Set of extensions for caja file manager
@@ -165,6 +165,9 @@ find %buildroot%_libdir -name \*.la -delete
 #_datadir/caja/extensions/libcaja-xattr-tags.caja-extension
 
 %changelog
+* Tue Nov 22 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
+- 1.26.1
+
 * Sun Aug 08 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
 - 1.26.0
 
