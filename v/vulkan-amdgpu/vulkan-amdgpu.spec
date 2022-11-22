@@ -3,7 +3,8 @@
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %define optflags_debug -g1
 # As ubuntu
-%define llvm_ver 11.0
+%define llvm_ver 13.0
+%define gcc_ver 9
 
 %def_with clang
 %def_with wayland
@@ -14,9 +15,11 @@
 %define _optlevel 3
 %endif
 
-%if_with clang
-%define optflags_lto -flto=thin
-%endif
+%define optflags_lto %nil
+
+#%%if_with clang
+#%%define optflags_lto -flto=thin
+#%%endif
 
 %ifarch x86_64
 %define bits 64
@@ -27,7 +30,7 @@
 
 Name: vulkan-amdgpu
 Version: 2022.Q4.2
-Release: alt1
+Release: alt4
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -48,7 +51,7 @@ BuildRequires: libffi-devel
 %if_with clang
 BuildRequires: clang%{llvm_ver} lld%{llvm_ver} llvm%{llvm_ver}-devel gcc-c++ libstdc++-devel
 %else
-BuildRequires: gcc9-c++ libstdc++9-devel
+BuildRequires: gcc%{gcc_ver}-c++ libstdc++%{gcc_ver}-devel
 %endif
 
 Source0: xgl.tar
@@ -81,17 +84,10 @@ cp -ar %_builddir/llvm/{cmake,third-party} %_builddir/llvm-project/
 %if_with clang
 export ALTWRAP_LLVM_VERSION=%{llvm_ver} \
 %cmake \
-	-DCMAKE_C_COMPILER=clang \
-	-DCMAKE_CXX_COMPILER=clang++ \
-	-DLLVM_USE_LINKER=lld \
-	-DCMAKE_EXE_LINKER_FLAGS='-fuse-ld=lld' \
-	-DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=lld' \
+	-DXGL_USE_CLANG=ON \
 %else	
-export GCC_VERSION=9 \
+export GCC_VERSION=%{gcc_ver} \
 %cmake \
-	-DCMAKE_AR:PATH=%_bindir/gcc-ar \
-	-DCMAKE_NM:PATH=%_bindir/gcc-nm \
-	-DCMAKE_RANLIB:PATH=%_bindir/gcc-ranlib \
 %endif
 %if_with wayland
 	-DBUILD_WAYLAND_SUPPORT=ON \
@@ -109,7 +105,7 @@ export GCC_VERSION=9 \
 
 %install
 mkdir -p %buildroot{%_vkdir,%_libdir,%_sysconfdir/amd}
-touch %buildroot%_sysconfdir/amd/amdPalSettings.cfg
+touch %buildroot%_sysconfdir/amd/amdVulkanSettings.cfg
 
 install -p -m644 %_builddir/xgl/%_cmake__builddir/icd/%_vklib%bits.so %buildroot%_libdir/%_vklib.so
 install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
@@ -121,6 +117,15 @@ install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Mon Nov 21 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q4.2-alt4
+- Use upstream switches for clang.
+
+* Mon Nov 21 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q4.2-alt3
+- Rebuild w/ llvm 13.0 (to be in pair with mesa).
+
+* Sun Nov 20 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q4.2-alt2
+- Disable LTO (it uses own LTO flags).
+
 * Sat Nov 12 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q4.2-alt1
 - 2022-11-10 update:
   + icd: bump vulkan version
