@@ -1,7 +1,7 @@
 Summary: TDS Foreign data wrapper
 Name: tds_fdw
-Version: 2.0.2
-Release: alt2
+Version: 2.0.3
+Release: alt1
 License: PostgreSQL
 Group: Development/Databases
 Url: https://github.com/tds-fdw/tds_fdw
@@ -39,6 +39,9 @@ This is a PostgreSQL foreign data wrapper that can connect to databases that use
 %_datadir/pgsql/extension/*
 
 %changelog
+* Tue Nov 22 2022 Pavel Vasenkov <pav@altlinux.org> 2.0.3-alt1
+- New version
+
 * Fri Nov 27 2020 Pavel Vasenkov <pav@altlinux.org> 2.0.2-alt2
 - Set package name and descriptions
 
