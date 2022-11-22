@@ -3,8 +3,8 @@
 %def_with check
 
 Name: elixir
-Version: 1.14.1
-Release: alt1
+Version: 1.14.2
+Release: alt2
 Summary: A modern approach to programming for the Erlang VM
 License: Apache-2.0
 Group: Development/Other
@@ -34,14 +34,14 @@ fault-tolerant, non-stop applications with hot code swapping.
 %setup
 find -name '*.bat' -exec rm \{\} \;
 
+# Fix build with make 4.4
+# https://github.com/elixir-lang/elixir/pull/12244
+sed -i '/.NOTPARALLEL/ s/ compile//' Makefile
+
 %build
 export LANG="en_US.UTF-8"
 %make_build compile
 %make_build build_man
-
-%check
-export LANG="en_US.UTF-8"
-%make_build test
 
 %install
 mkdir -p %buildroot/%_datadir/%name/%version
@@ -53,6 +53,10 @@ ln -s %_datadir/%name/%version/bin/{elixir,elixirc,iex,mix} %buildroot/%_bindir/
 mkdir -p %buildroot/%_mandir/man1
 cp -a man/elixir.1 man/elixirc.1 man/iex.1 man/mix.1 %buildroot/%_mandir/man1
 
+%check
+export LANG="en_US.UTF-8"
+%make_build test
+
 %files
 %doc LICENSE
 %_bindir/elixir
@@ -63,6 +67,12 @@ cp -a man/elixir.1 man/elixirc.1 man/iex.1 man/mix.1 %buildroot/%_mandir/man1
 %_mandir/man1/*
 
 %changelog
+* Mon Nov 21 2022 Egor Ignatov <egori@altlinux.org> 1.14.2-alt2
+- Fix build with make 4.4
+
+* Fri Nov 11 2022 Egor Ignatov <egori@altlinux.org> 1.14.2-alt1
+- 1.14.2
+
 * Tue Oct 25 2022 Egor Ignatov <egori@altlinux.org> 1.14.1-alt1
 - 1.14.1
 
