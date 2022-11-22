@@ -1,7 +1,7 @@
 %define        gemname loofah
 
 Name:          gem-loofah
-Version:       2.12.0
+Version:       2.19.0
 Release:       alt1
 Summary:       HTML/XML manipulation and sanitization based on Nokogiri
 License:       MIT
@@ -13,6 +13,14 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%if_with check
+BuildRequires: gem(hoe-markdown) >= 1.3 gem(hoe-markdown) < 2
+BuildRequires: gem(json) >= 2.2 gem(json) < 3
+BuildRequires: gem(minitest) >= 5.14 gem(minitest) < 6
+BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
+BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
+BuildRequires: gem(rr) >= 1.2.0 gem(rr) < 4
+BuildRequires: gem(rubocop) >= 1.1 gem(rubocop) < 2
 BuildRequires: gem(crass) >= 1.0.2 gem(crass) < 1.1
 BuildRequires: gem(nokogiri) >= 1.5.9
 BuildRequires: gem(hoe-markdown) >= 1.3 gem(hoe-markdown) < 2
@@ -22,16 +30,18 @@ BuildRequires: gem(rake) >= 13.0 gem(rake) < 14
 BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
 BuildRequires: gem(rr) >= 1.2.0 gem(rr) < 4
 BuildRequires: gem(rubocop) >= 1.1 gem(rubocop) < 2
+BuildRequires: gem(crass) >= 1.0.2 gem(crass) < 1.1
+BuildRequires: gem(nokogiri) >= 1.5.9
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rr >= 3.0.4,rr < 4
-%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 Requires:      gem(crass) >= 1.0.2 gem(crass) < 1.1
 Requires:      gem(nokogiri) >= 1.5.9
 Obsoletes:     ruby-loofah < %EVR
 Provides:      ruby-loofah = %EVR
-Provides:      gem(loofah) = 2.12.0
+Provides:      gem(loofah) = 2.19.0
 
 
 %description
@@ -48,14 +58,14 @@ loofah-activerecord gem.
 
 
 %package       -n gem-loofah-doc
-Version:       2.12.0
+Version:       2.19.0
 Release:       alt1
 Summary:       HTML/XML manipulation and sanitization based on Nokogiri documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета loofah
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(loofah) = 2.12.0
+Requires:      gem(loofah) = 2.19.0
 
 %description   -n gem-loofah-doc
 HTML/XML manipulation and sanitization based on Nokogiri documentation
@@ -77,14 +87,14 @@ loofah-activerecord gem.
 
 
 %package       -n gem-loofah-devel
-Version:       2.12.0
+Version:       2.19.0
 Release:       alt1
 Summary:       HTML/XML manipulation and sanitization based on Nokogiri development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета loofah
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(loofah) = 2.12.0
+Requires:      gem(loofah) = 2.19.0
 Requires:      gem(hoe-markdown) >= 1.3 gem(hoe-markdown) < 2
 Requires:      gem(json) >= 2.2 gem(json) < 3
 Requires:      gem(minitest) >= 5.14 gem(minitest) < 6
@@ -138,6 +148,9 @@ loofah-activerecord gem.
 
 
 %changelog
+* Tue Nov 22 2022 Pavel Skrylev <majioa@altlinux.org> 2.19.0-alt1
+- ^ 2.12.0 -> 2.19.0
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 2.12.0-alt1
 - ^ 2.4.0 -> 2.12.0
 

@@ -1,7 +1,7 @@
 %define        gemname tins
 
 Name:          gem-tins
-Version:       1.31.1
+Version:       1.32.1
 Release:       alt1
 Summary:       All the stuff that isn't good/big enough for a real library
 License:       MIT
@@ -13,18 +13,32 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(gem_hadar) >= 1.12.0 gem(gem_hadar) < 1.13
+%if_with check
+BuildRequires: gem(gem_hadar) >= 1.12.0 gem(gem_hadar) < 2
 BuildRequires: gem(utils) >= 0
+BuildRequires: gem(all_images) >= 0
+BuildRequires: gem(debug) >= 0
+BuildRequires: gem(term-ansicolor) >= 0
 BuildRequires: gem(test-unit) >= 3.1 gem(test-unit) < 4
 BuildRequires: gem(simplecov) >= 0
 BuildRequires: gem(sync) >= 0
+BuildRequires: gem(gem_hadar) >= 1.12.0 gem(gem_hadar) < 2
+BuildRequires: gem(utils) >= 0
+BuildRequires: gem(all_images) >= 0
+BuildRequires: gem(debug) >= 0
+BuildRequires: gem(term-ansicolor) >= 0
+BuildRequires: gem(test-unit) >= 3.1 gem(test-unit) < 4
+BuildRequires: gem(simplecov) >= 0
+BuildRequires: gem(sync) >= 0
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency gem_hadar >= 1.12.0,gem_hadar < 2
 Requires:      gem(sync) >= 0
 Obsoletes:     ruby-tins < %EVR
 Provides:      ruby-tins = %EVR
-Provides:      gem(tins) = 1.31.1
+Provides:      gem(tins) = 1.32.1
 
 
 %description
@@ -32,14 +46,14 @@ All the stuff that isn't good/big enough for a real library.
 
 
 %package       -n gem-tins-doc
-Version:       1.31.1
+Version:       1.32.1
 Release:       alt1
 Summary:       All the stuff that isn't good/big enough for a real library documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета tins
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(tins) = 1.31.1
+Requires:      gem(tins) = 1.32.1
 
 %description   -n gem-tins-doc
 All the stuff that isn't good/big enough for a real library documentation files.
@@ -49,16 +63,19 @@ All the stuff that isn't good/big enough for a real library documentation files.
 
 
 %package       -n gem-tins-devel
-Version:       1.31.1
+Version:       1.32.1
 Release:       alt1
 Summary:       All the stuff that isn't good/big enough for a real library development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета tins
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(tins) = 1.31.1
-Requires:      gem(gem_hadar) >= 1.12.0 gem(gem_hadar) < 1.13
+Requires:      gem(tins) = 1.32.1
+Requires:      gem(gem_hadar) >= 1.12.0 gem(gem_hadar) < 2
 Requires:      gem(utils) >= 0
+Requires:      gem(all_images) >= 0
+Requires:      gem(debug) >= 0
+Requires:      gem(term-ansicolor) >= 0
 Requires:      gem(test-unit) >= 3.1 gem(test-unit) < 4
 Requires:      gem(simplecov) >= 0
 
@@ -95,6 +112,9 @@ All the stuff that isn't good/big enough for a real library development package.
 
 
 %changelog
+* Tue Nov 22 2022 Pavel Skrylev <majioa@altlinux.org> 1.32.1-alt1
+- ^ 1.31.1 -> 1.32.1
+
 * Wed Jul 06 2022 Pavel Skrylev <majioa@altlinux.org> 1.31.1-alt1
 - ^ 1.29.0 -> 1.31.1
 
