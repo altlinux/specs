@@ -2,7 +2,7 @@
 
 Name: skrooge
 Version: 2.28.0
-Release: alt1
+Release: alt2
 Summary: Personal finances manager for KF5
 License: %gpl2plus
 Group: Office
@@ -74,6 +74,8 @@ BuildRequires: qt5-webkit-devel
 Requires: libgrantlee_templates5
 Requires: kf5-kinit kf5-kio
 
+Requires: libqt5-core = %_qt5_version
+
 %description
 Skrooge is a personal finances manager for KF5, aiming at being simple
 and intuitive.
@@ -111,6 +113,9 @@ cp -f %SOURCE1 po/ru/skrooge.po
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Tue Nov 22 2022 Andrey Cherepanov <cas@altlinux.org> 2.28.0-alt2
+- Set strict requirement of libqt5-core version (ALT #43522).
+
 * Thu Aug 04 2022 Andrey Cherepanov <cas@altlinux.org> 2.28.0-alt1
 - new version 2.28.0
 
