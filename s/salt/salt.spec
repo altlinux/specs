@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 3004.2
-Release: alt1
+Release: alt2
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -21,6 +21,7 @@ Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
 Patch2: salt-python3.10.patch
+Patch3: salt-alt-disable-internal-contextvars.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
@@ -98,6 +99,7 @@ with XMLRPC or even a Websocket API.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 # Remove local copy documentation mention
 subst 's| file:///usr/share/doc/salt/html/contents.html||' pkg/*.service
 
@@ -245,6 +247,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Wed Nov 23 2022 Andrey Cherepanov <cas@altlinux.org> 3004.2-alt2
+- Removed internal contextvars from runtime requirements.
+
 * Mon Nov 21 2022 Andrey Cherepanov <cas@altlinux.org> 3004.2-alt1
 - New version.
 - Security fixes: CVE-2022-22967, CVE-2022-22941, CVE-2022-22936,
