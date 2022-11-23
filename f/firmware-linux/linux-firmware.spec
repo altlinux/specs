@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20221110
+Version: 20221123
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,13 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Nov 23 2022 Cronbuild Service <cronbuild@altlinux.org> 20221123-alt1
+- upstream changes (GIT cdf9499c):
+  + update firmware for MT7916 (thx Shayne Chen)
+  + update firmware for MT7915 (thx Shayne Chen)
+  + amdgpu: update green sardine DMCUB firmware (thx Alex Deucher)
+  + i915: Add DMC v2.10 for MTL (thx Madhumitha Tolakanahalli Pradeep)
+
 * Wed Nov 16 2022 Cronbuild Service <cronbuild@altlinux.org> 20221110-alt1
 - upstream changes (GIT daff4049):
   + update firmware for MT7986 (thx Shayne Chen)
