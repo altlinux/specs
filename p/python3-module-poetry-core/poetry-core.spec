@@ -23,14 +23,14 @@ typing_extensions \\\
 %nil
 
 Name: python3-module-%pypi_name
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 
 Summary: Poetry Core
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/python-poetry/poetry-core.git
 Url: https://pypi.org/project/poetry-core
+VCS: https://github.com/python-poetry/poetry-core.git
 
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -122,6 +122,9 @@ rm -r ./src/poetry/core/_vendor/*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 23 2022 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
+- 1.3.2 -> 1.4.0.
+
 * Mon Oct 10 2022 Stanislav Levin <slev@altlinux.org> 1.3.2-alt1
 - 1.3.1 -> 1.3.2.
 
