@@ -2,7 +2,7 @@
 
 Name: mate-file-manager-extensions
 Version: 1.26.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Set of extensions for caja file manager
 License: GPLv2+
@@ -165,6 +165,9 @@ find %buildroot%_libdir -name \*.la -delete
 #_datadir/caja/extensions/libcaja-xattr-tags.caja-extension
 
 %changelog
+* Wed Nov 23 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt2
+- fixed translate image converter dialogs
+
 * Tue Nov 22 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
 - 1.26.1
 
