@@ -1,6 +1,6 @@
 Name: alsa-ucm-conf
 Version: 1.2.8
-Release: alt1
+Release: alt2
 
 Summary: Advanced Linux Sound Architecture (ALSA) Use Case Manager data
 License: BSD-3-Clause
@@ -8,6 +8,12 @@ Group: System/Libraries
 
 Url: http://www.alsa-project.org
 Source: %name-%version.tar
+
+Patch8: 0008-tegra-Add-UCM-for-RT5631-based-ASUS-Transformers.patch
+Patch9: 0009-tegra-Add-UCM-for-WM8903-based-ASUS-Transformers.patch
+Patch10: 0010-rt5631-add-headset-support.patch
+Patch11: 0011-wm8903-replace-amic-control-element.patch
+
 BuildArch: noarch
 
 %define alsadata %_datadir/alsa
@@ -19,6 +25,10 @@ in a standalone repository.
 
 %prep
 %setup
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
 
 %build
 
@@ -31,6 +41,9 @@ cp -at %buildroot%alsadata -- ucm*
 %doc LICENSE
 
 %changelog
+* Wed Nov 23 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.8-alt2
+- readd support for ASUS Transformers
+
 * Sun Nov 20 2022 Michael Shigorin <mike@altlinux.org> 1.2.8-alt1
 - 1.2.8
 
