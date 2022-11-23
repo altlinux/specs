@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.38
+Version: 1.39
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -217,6 +217,10 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Wed Nov 23 2022 Vitaly Chikunov <vt@altlinux.org> 1.39-alt1
+- vm-run: --rootfs can be extended with --no-snapshot.
+- vm-create-image: Allow relative --size= arguments.
+
 * Fri Nov 18 2022 Vitaly Chikunov <vt@altlinux.org> 1.38-alt1
 - Limit maximum CPU to 4 if there's no KVM.
 - Add NPROCS/--nprocs support.
