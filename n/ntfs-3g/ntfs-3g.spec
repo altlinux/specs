@@ -1,6 +1,6 @@
 Name: ntfs-3g
 Version: 2021.8.22
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: third generation Linux NTFS driver
 URL: http://www.ntfs-3g.org/
@@ -100,6 +100,11 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Nov  8 2022 Alexander Danilov <admsasha@altlinux.org> 2:2021.8.22-alt2
+- Fixes (CVE-2021-46790, CVE-2022-30783, CVE-2022-30784, CVE-2022-30785,
+  CVE-2022-30786, CVE-2022-30787, CVE-2022-30788, CVE-2022-30789,
+  CVE-2022-40284)
+
 * Tue Aug 31 2021 Valery Inozemtsev <shrek@altlinux.ru> 2:2021.8.22-alt1
 - 2021.8.22 (Fixes: CVE-2021-33285, CVE-2021-35269, CVE-2021-35268, CVE-2021-33289,
   CVE-2021-33286, CVE-2021-35266, CVE-2021-33287, CVE-2021-35267, CVE-2021-39251,
