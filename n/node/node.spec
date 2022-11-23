@@ -65,7 +65,7 @@
 %define oversion %version
 
 Name: node
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: Evented I/O for V8 Javascript
@@ -432,6 +432,10 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Wed Nov 23 2022 Vitaly Lipatov <lav@altlinux.ru> 16.18.1-alt1
+- new version 16.18.1 (with rpmrb script)
+- CVE-2022-43548: DNS rebinding in --inspect via invalid octal IP address (Medium)
+
 * Sun Oct 16 2022 Vitaly Lipatov <lav@altlinux.ru> 16.18.0-alt1
 - new version 16.18.0 (with rpmrb script)
 - set npm >= 8.19.2
