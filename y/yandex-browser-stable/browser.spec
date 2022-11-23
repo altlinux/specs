@@ -8,7 +8,7 @@
 Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
-Version: 22.9.3.920
+Version: 22.11.0.2485
 Release: alt1
 Group: Networking/WWW
 Vendor: YANDEX LLC
@@ -158,6 +158,9 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+* Wed Nov 23 2022 Vasiliy Tsukanov <palar@altlinux.org> 22.11.0.2485-alt1
+- browser updated to 22.11.0
+
 * Wed Nov 2 2022 Vasiliy Tsukanov <palar@altlinux.org> 22.9.3.920-alt1
 - browser updated to 22.9.3
 
