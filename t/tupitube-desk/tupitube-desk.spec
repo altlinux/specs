@@ -1,6 +1,6 @@
 Name:     tupitube-desk
 Version:  0.2.18
-Release:  alt3
+Release:  alt3.1
 
 Summary:  TupiTube Desk is vector editor for images, storyboards and animations
 License:  GPL-2.0
@@ -19,7 +19,8 @@ BuildRequires: qt5-base-devel
 BuildRequires: qt5-multimedia-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: ruby
-BuildRequires: ruby-gem(os)
+BuildRequires: gem(os)
+BuildRequires: gem(rexml)
 BuildRequires: libavformat-devel
 BuildRequires: quazip-qt5-devel
 BuildRequires: zlib-devel
@@ -55,6 +56,9 @@ subst 's|@LIBDIR@|%_libdir|' src/framework/gui/gui.pro
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Wed Nov 23 2022 Pavel Skrylev <majioa@altlinux.org> 0.2.18-alt3.1
+- ! fix ruby gem build deps
+
 * Fri Mar 04 2022 Andrey Cherepanov <cas@altlinux.org> 0.2.18-alt3
 - FTBFS: linked libraries in subdirectories.
 
