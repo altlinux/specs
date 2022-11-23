@@ -13,13 +13,14 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt1
+Release: alt2
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
 Group: Development/Tools
 URL: http://www.kernel.org/
 Requires: perf
+Requires: bootconfig
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): rpm-build-python3
@@ -238,8 +239,6 @@ and booting a kernel.
 %package -n rtla
 Summary: An interface for osnoise/timerlat tracers
 Group: Development/Tools
-AutoReq: noperl,nopython,noshebang,nolib,noshell
-AutoProv: no
 
 %description -n rtla
 The rtla(1) is a meta-tool that includes a set of commands that
@@ -247,6 +246,16 @@ aims to analyze the real-time properties of Linux. But instead of
 testing Linux as a black box, rtla leverages kernel tracing
 capabilities to provide precise information about the properties
 and root causes of unexpected results.
+
+%package -n bootconfig
+Summary: Apply, delete or show boot config to initrd
+Group: System/Kernel and hardware
+AutoReq: noshebang,noshell
+
+%description -n bootconfig
+The boot configuration expands the current kernel command line to support
+additional key-value data when booting the kernel in an efficient way.
+This allows administrators to pass a structured-Key config file.
 
 %prep
 %setup -cT
@@ -507,6 +516,8 @@ install -p -m755 leds/led_hw_brightness_mon	%buildroot%_bindir
 install -p -m755 leds/uledmon			%buildroot%_bindir
 install -p -m755 thermal/tmon/tmon		%buildroot%_bindir
 install -p -m755 thermal/tmon/tmon.8		%buildroot%_man8dir
+install -p -m755 bootconfig/scripts/* -Dt	%buildroot%_libexecdir/bootconfig
+install -p -m644 ../Documentation/admin-guide/bootconfig.rst -Dt %buildroot%_libexecdir/bootconfig
 
 pushd testing/selftests
 mkdir -p %buildroot%_libexecdir/kselftests
@@ -600,7 +611,6 @@ fi
 %_sbindir/page-types
 %_sbindir/slabinfo
 %_sbindir/page_owner_sort
-%_bindir/bootconfig
 %_sbindir/pfrut
 %_man8dir/pfrut.*
 
@@ -700,7 +710,14 @@ fi
 %_sbindir/latency-collector
 %_man1dir/rtla*
 
+%files -n bootconfig
+%_bindir/bootconfig
+%_libexecdir/bootconfig
+
 %changelog
+* Wed Nov 23 2022 Vitaly Chikunov <vt@altlinux.org> 6.0-alt2
+- Split bootconfig into a package.
+
 * Sat Oct 08 2022 Vitaly Chikunov <vt@altlinux.org> 6.0-alt1
 - Update to v6.0 (2022-10-02).
 
