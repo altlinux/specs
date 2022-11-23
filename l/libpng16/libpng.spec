@@ -1,5 +1,5 @@
 Name: libpng16
-Version: 1.6.38
+Version: 1.6.39
 Release: alt1
 
 Summary: A library of functions for manipulating PNG image format files
@@ -10,7 +10,6 @@ Url: http://www.libpng.org/pub/png/
 Provides: libpng = %version
 Conflicts: libpng15 < 1.5.28-alt2
 
-# git://git.altlinux.org/gears/l/%name.git
 Source: %name-%version-%release.tar
 
 BuildRequires: zlib-devel
@@ -74,6 +73,9 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %exclude %docdir/[CLR]*
 
 %changelog
+* Wed Nov 23 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.39-alt1
+- 1.6.39
+
 * Thu Sep 22 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.38-alt1
 - 1.6.38
 
