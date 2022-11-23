@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name:    drgn
-Version: 0.0.16
+Version: 0.0.21
 Release: alt1
 Summary: Scriptable debugger library
 License: GPL-3.0-or-later
@@ -22,14 +22,15 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: bzip2-devel
 BuildRequires: flex
-BuildRequires: git-core
 BuildRequires: libdw-devel
 BuildRequires: libelf-devel
 BuildRequires: libgomp-devel
+BuildRequires: libkdumpfile-devel
 BuildRequires: liblzma-devel
 BuildRequires: libstdc++-devel
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
 BuildRequires: zlib-devel
-# BuildRequires: libkdumpfile
 %{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 # Note: Bundled with own version of elfutils.
 
@@ -42,14 +43,15 @@ scripting in Python. For example, you can debug the Linux kernel.
 %setup
 
 %build
-git init # Fool it to believe it's installing from the git
-sed -i '/local_version.*unknown/s/+unknown/-%release/' setup.py
-%python3_build
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_install
 
 %check
+test -d /proc/self
 # Build-in tests (require /proc)
 %__python3 setup.py test
 
@@ -60,11 +62,13 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %files
 %doc COPYING README.rst
 %_bindir/drgn
-%python3_sitelibdir/drgn*.egg-info
-%python3_sitelibdir/drgn
+%python3_sitelibdir/drgn*
 %python3_sitelibdir/_drgn.*
 
 %changelog
+* Wed Nov 23 2022 Vitaly Chikunov <vt@altlinux.org> 0.0.21-alt1
+- Update to v0.0.21 (2022-10-12).
+
 * Sun Dec 26 2021 Vitaly Chikunov <vt@altlinux.org> 0.0.16-alt1
 - Updated to v0.0.16 (2021-12-09).
 - Built on all architectures.
