@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 0.63
+%define ver_major 0.64
 %define libname mesonbuild
 %define pkgdocdir %_docdir/%name-%version
 
@@ -12,7 +12,7 @@
 %def_disable check
 
 Name: meson
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 
 Summary: High productivity build system
@@ -78,6 +78,7 @@ reports, Valgrind, CCache and the like.
 %package -n rpm-macros-%name
 Summary: RPM macros for Meson build system
 Group: Development/Other
+BuildArch: noarch
 
 %description -n rpm-macros-%name
 This package provides RPM macros for Meson build system.
@@ -136,6 +137,9 @@ MESON_PRINT_TEST_OUTPUT=1 ./run_tests.py
 %endif
 
 %changelog
+* Wed Nov 23 2022 Yuri N. Sedunov <aris@altlinux.org> 0.64.1-alt1
+- 0.64.1
+
 * Thu Oct 06 2022 Yuri N. Sedunov <aris@altlinux.org> 0.63.3-alt1
 - 0.63.3
 
