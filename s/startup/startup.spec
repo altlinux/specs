@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.9.15
+Version: 0.9.9.16
 Release: alt1
 
 Summary: The system startup scripts
@@ -149,6 +149,9 @@ done
 %ghost %config(noreplace,missingok) %verify(not md5 mtime size) %attr(600,root,root) %_localstatedir/random/random-seed
 
 %changelog
+* Tue Nov 22 2022 Alexey Gladkov <legion@altlinux.ru> 0.9.9.16-alt1
+- Do not check mounted filesystems (ALT#44394).
+
 * Sun May 01 2022 Alexey Gladkov <legion@altlinux.ru> 0.9.9.15-alt1
 - Replace obsolete egrep/fgrep by a grep call with an argument -E/-F.
 
