@@ -11,7 +11,7 @@
 
 Name: deepin-kwin
 Version: 5.5.11
-Release: alt1
+Release: alt2
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -57,10 +57,9 @@ Header files and libraries for %name.
 %setup -n %repo-%version
 #%%patch -p1
 #%%patch2 -p1
-%patch4 -p1
+#%%patch4 -p1
 #%%patch11 -p2
 
-# sed -i 's|lrelease|lrelease-qt5|' plugins/platforms/plugin/translate_generation.sh
 sed -i 's|${CMAKE_INSTALL_PREFIX}/share/kwin/scripts|%_K5data/kwin/scripts/|' \
     scripts/CMakeLists.txt
 sed -i 's|${CMAKE_INSTALL_PREFIX}/share/kwin/tabbox|%_K5data/kwin/tabbox|' \
@@ -68,14 +67,12 @@ sed -i 's|${CMAKE_INSTALL_PREFIX}/share/kwin/tabbox|%_K5data/kwin/tabbox|' \
 sed -i 's|/usr/include/KWaylandServer|%_K5inc/KWaylandServer|' CMakeLists.txt
 sed -i 's|${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}|${CMAKE_INSTALL_LIBDIR}|' \
     plugins/platforms/lib/dde-kwin.pc.in
-sed -i 's| -L/usr/X11R6/lib64| -L%_libdir|' \
+sed -i 's| -L/usr/X11R6/lib64| -L%_libdir|; s| -lpthread| -L%_libdir -lpthread|' \
     plugins/platforms/lib/dde-kwin.pc.in
 sed -i '1icmake_minimum_required(VERSION 3.23)' CMakeLists.txt
 # sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
 #     plugins/kwineffects/multitasking/background.cpp \
 #     deepin-wm-dbus/deepinwmfaker.cpp
-sed -i 's|/usr/lib/deepin-daemon|%_libexecdir/deepin-daemon|' \
-    deepin-wm-dbus/deepinwmfaker.cpp
 sed -i 's|/usr/lib|%_libdir|' \
     plugins/platforms/plugin/main_wayland.cpp \
     plugins/platforms/plugin/main.cpp
@@ -158,6 +155,10 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %endif
 
 %changelog
+* Wed Nov 23 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.11-alt2
+- New version (5.5.11-deepin).
+- Restored blur.
+
 * Thu Oct 06 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.11-alt1
 - New version (5.5.11).
 
