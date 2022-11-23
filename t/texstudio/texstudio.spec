@@ -1,4 +1,4 @@
-Group: Other
+Group: Publishing
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libqt4-devel pkgconfig(lcms2) pkgconfig(libopenjp2) pkgconfig(libtiff-4) qt5-phonon-devel
 # END SourceDeps(oneline)
@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libqt4-devel p
 %define _localstatedir %{_var}
 %define fontpkgname texstudio
 Name:           texstudio
-Version:        4.3.1
+Version:        4.4.0
 Release:        alt1
 
 Summary:        A feature-rich editor for LaTeX documents
@@ -108,8 +108,14 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %files -f %{name}.lang
 %{_bindir}/texstudio
 %dir %{_datadir}/texstudio/
+%dir %{_datadir}/texstudio/_images/
+%dir %{_datadir}/texstudio/_sphinx_design_static/
+%dir %{_datadir}/texstudio/_static/
+%{_datadir}/texstudio/_sphinx_design_static/*
+%{_datadir}/texstudio/_static/*
+%{_datadir}/texstudio/_images/*
 %{_datadir}/texstudio/*.png
-%{_datadir}/texstudio/usermanual.css
+%{_datadir}/texstudio/*.css
 %{_datadir}/texstudio/latex2e.*
 %{_datadir}/texstudio/*.stopWords
 %{_datadir}/texstudio/*.stopWords.level2
@@ -119,7 +125,7 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %{_datadir}/texstudio/*.json
 %{_datadir}/texstudio/*.js
 %{_datadir}/texstudio/th_*.dat
-%{_datadir}/texstudio/usermanual_*.html
+%{_datadir}/texstudio/*.html
 %{_datadir}/applications/texstudio.desktop
 %{_datadir}/metainfo/texstudio.metainfo.xml
 %{_datadir}/icons/hicolor/*/apps/*.png
@@ -128,6 +134,10 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %doc utilities/AUTHORS utilities/COPYING utilities/manual/CHANGELOG.txt
 
 %changelog
+* Wed Nov 23 2022 Ilya Mashkin <oddity@altlinux.ru> 4.4.0-alt1
+- 4.4.0
+- Change Group to Publishing
+
 * Mon Aug 29 2022 Ilya Mashkin <oddity@altlinux.ru> 4.3.1-alt1
 - 4.3.1
 
