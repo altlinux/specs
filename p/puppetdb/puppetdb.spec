@@ -4,7 +4,7 @@
 
 Name:     puppetdb
 Version:  6.13.0
-Release:  alt2
+Release:  alt2.1
 
 Summary:  Centralized Puppet Storage
 License:  Apache-2.0
@@ -84,22 +84,22 @@ install -m 0755 ext/cli/ssl-setup %buildroot%_javadir/%name/cli/apps/ssl-setup
 install -m 0755 ext/cli/config-migration %buildroot%_javadir/%name/cli/apps/config-migration
 install -m 0755 ext/cli/upgrade %buildroot%_javadir/%name/cli/apps/upgrade
 
-install -Dm 0644 puppet/reports/puppetdb.rb %buildroot%ruby_sitelibdir/puppet/reports/puppetdb.rb
-install -Dm 0644 puppet/indirector/resource/puppetdb.rb %buildroot%ruby_sitelibdir/puppet/indirector/resource/puppetdb.rb
-install -Dm 0644 puppet/indirector/node/puppetdb.rb %buildroot%ruby_sitelibdir/puppet/indirector/node/puppetdb.rb
-install -Dm 0644 puppet/indirector/catalog/puppetdb.rb %buildroot%ruby_sitelibdir/puppet/indirector/catalog/puppetdb.rb
-install -Dm 0644 puppet/indirector/facts/puppetdb_apply.rb %buildroot%ruby_sitelibdir/puppet/indirector/facts/puppetdb_apply.rb
-install -Dm 0644 puppet/indirector/facts/puppetdb.rb %buildroot%ruby_sitelibdir/puppet/indirector/facts/puppetdb.rb
-install -Dm 0644 puppet/util/puppetdb.rb %buildroot%ruby_sitelibdir/puppet/util/puppetdb.rb
-install -Dm 0644 puppet/util/puppetdb/atom.rb %buildroot%ruby_sitelibdir/puppet/util/puppetdb/atom.rb
-install -Dm 0644 puppet/util/puppetdb/command_names.rb %buildroot%ruby_sitelibdir/puppet/util/puppetdb/command_names.rb
-install -Dm 0644 puppet/util/puppetdb/command.rb %buildroot%ruby_sitelibdir/puppet/util/puppetdb/command.rb
-install -Dm 0644 puppet/util/puppetdb/http.rb %buildroot%ruby_sitelibdir/puppet/util/puppetdb/http.rb
-install -Dm 0644 puppet/util/puppetdb/char_encoding.rb %buildroot%ruby_sitelibdir/puppet/util/puppetdb/char_encoding.rb
-install -Dm 0644 puppet/util/puppetdb/config.rb %buildroot%ruby_sitelibdir/puppet/util/puppetdb/config.rb
-install -Dm 0644 puppet/face/node/deactivate.rb %buildroot%ruby_sitelibdir/puppet/face/node/deactivate.rb
-install -Dm 0644 puppet/face/node/status.rb %buildroot%ruby_sitelibdir/puppet/face/node/status.rb
-install -Dm 0644 puppet/functions/puppetdb_query.rb %buildroot%ruby_sitelibdir/puppet/functions/puppetdb_query.rb
+install -Dm 0644 puppet/reports/puppetdb.rb %buildroot%ruby_vendorlibdir/puppet/reports/puppetdb.rb
+install -Dm 0644 puppet/indirector/resource/puppetdb.rb %buildroot%ruby_vendorlibdir/puppet/indirector/resource/puppetdb.rb
+install -Dm 0644 puppet/indirector/node/puppetdb.rb %buildroot%ruby_vendorlibdir/puppet/indirector/node/puppetdb.rb
+install -Dm 0644 puppet/indirector/catalog/puppetdb.rb %buildroot%ruby_vendorlibdir/puppet/indirector/catalog/puppetdb.rb
+install -Dm 0644 puppet/indirector/facts/puppetdb_apply.rb %buildroot%ruby_vendorlibdir/puppet/indirector/facts/puppetdb_apply.rb
+install -Dm 0644 puppet/indirector/facts/puppetdb.rb %buildroot%ruby_vendorlibdir/puppet/indirector/facts/puppetdb.rb
+install -Dm 0644 puppet/util/puppetdb.rb %buildroot%ruby_vendorlibdir/puppet/util/puppetdb.rb
+install -Dm 0644 puppet/util/puppetdb/atom.rb %buildroot%ruby_vendorlibdir/puppet/util/puppetdb/atom.rb
+install -Dm 0644 puppet/util/puppetdb/command_names.rb %buildroot%ruby_vendorlibdir/puppet/util/puppetdb/command_names.rb
+install -Dm 0644 puppet/util/puppetdb/command.rb %buildroot%ruby_vendorlibdir/puppet/util/puppetdb/command.rb
+install -Dm 0644 puppet/util/puppetdb/http.rb %buildroot%ruby_vendorlibdir/puppet/util/puppetdb/http.rb
+install -Dm 0644 puppet/util/puppetdb/char_encoding.rb %buildroot%ruby_vendorlibdir/puppet/util/puppetdb/char_encoding.rb
+install -Dm 0644 puppet/util/puppetdb/config.rb %buildroot%ruby_vendorlibdir/puppet/util/puppetdb/config.rb
+install -Dm 0644 puppet/face/node/deactivate.rb %buildroot%ruby_vendorlibdir/puppet/face/node/deactivate.rb
+install -Dm 0644 puppet/face/node/status.rb %buildroot%ruby_vendorlibdir/puppet/face/node/status.rb
+install -Dm 0644 puppet/functions/puppetdb_query.rb %buildroot%ruby_vendorlibdir/puppet/functions/puppetdb_query.rb
 
 install -m 0755 ext/ezbake-functions.sh %buildroot%_javadir/%name/ezbake-functions.sh
 install -m 0644 ext/ezbake.manifest %buildroot%_javadir/%name/ezbake.manifest
@@ -138,10 +138,13 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 %config(noreplace) %attr(0660,_puppetdb,_puppetdb) %_sysconfdir/%name/logback.xml
 
 %files terminus
-%ruby_sitelibdir/*
+%ruby_vendorlibdir/*
 
 
 %changelog
+* Thu Nov 24 2022 Pavel Skrylev <majioa@altlinux.org> 6.13.0-alt2.1
+- ! ruby script folder to proper ones from site to vendor
+
 * Mon Sep 13 2021 Danil Shein <dshein@altlinux.org> 6.13.0-alt2
 - fix build errors
 
