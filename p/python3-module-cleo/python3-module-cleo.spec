@@ -5,8 +5,8 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.0.0a5
-Release: alt0.1
+Version: 2.0.1
+Release: alt1
 
 Summary: Command-line interfaces Python library
 License: MIT
@@ -31,7 +31,7 @@ BuildRequires: python3(pytest_cov)
 BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(crashtest)
-BuildRequires: python3(pylev)
+BuildRequires: python3(rapidfuzz)
 BuildRequires: /usr/bin/poetry}
 
 %description
@@ -39,7 +39,7 @@ Cleo allows you to create beautiful and testable command-line interfaces.
 
 %prep
 %setup -n %pypi_name-%version
-sed -i 's|\(crashtest = "^0.\)3.1|\14.0|' pyproject.toml
+#sed -i 's|\(crashtest = "^0.\)3.1|\14.0|' pyproject.toml
 
 %build
 %pyproject_build
@@ -48,7 +48,6 @@ sed -i 's|\(crashtest = "^0.\)3.1|\14.0|' pyproject.toml
 %pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
 %tox_check
 
 %files
@@ -57,6 +56,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc README.md CHANGELOG.md 
 
 %changelog
+* Wed Nov 23 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- 2.0.1
+
 * Mon Sep 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.0a5-alt0.1
 - 1.0.0a5
 
