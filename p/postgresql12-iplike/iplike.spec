@@ -1,46 +1,47 @@
-Name: iplike
-Version: 2.0.6
+%define pg_ver 12
+%define prog_name iplike
+
+Name: postgresql%pg_ver-%prog_name
+Version: 2.3.0
 Release: alt1
 License: GPL
 Group: Databases
 Summary: PostgreSQL complex IP Address text field query
-Source: %name-%version.tar.gz
+Source: %prog_name-%version.tar.gz
 URL: http://www.opennms.org
 
 # Automatically added by buildreq on Thu Jun 21 2007
-BuildRequires: gcc-c++ postgresql-devel
+#BuildRequires: gcc-c++ postgresql%pg_ver-server-devel
+BuildRequires: postgresql%pg_ver-server-devel
+
+Requires: postgresql%pg_ver-server
 
 %description
 PostgreSQL function for doing complex IP address queries
 on a text field.
 
-%package -n lib%name
-Summary: PostgreSQL complex IP Address text field query
-Group: Databases
-Provides: %name = %version-%release
-Requires: postgresql-server
-
-%description -n lib%name
-PostgreSQL function for doing complex IP address queries
-on a text field.
-
 %prep
-%setup -n %name-%version
+%setup -n %prog_name-%version
 
 %build
 %autoreconf
-%configure --libdir=%_libdir/pgsql --libexecdir=%_libdir/pgsql
-%make libdir=%_libdir/pgsql libexecdir=%_libdir/pgsql
+%configure --with-pgsql=%_bindir/pg_server_config
+%make
 
 %install
-%makeinstall_std libdir=%_libdir/pgsql libexecdir=%_libdir/pgsql
+%makeinstall_std
 
-
-%files -n lib%name
-%_libdir/pgsql/iplike*so*
-#_sbindir/install_iplike.sh
+%post
+echo "Execute the following psql command inside any database that you want to install or update:"
+echo "CREATE OR REPLACE FUNCTION iplike(i_ipaddress text,i_rule text) RETURNS bool AS '$$libdir/iplike.so' LANGUAGE 'c' RETURNS NULL ON NULL INPUT;"
+%files
+%_libdir/pgsql/*.so
 
 %changelog
+* Wed Nov 23 2022 Alexei Takaseev <taf@altlinux.org> 2.3.0-alt1
+- Version 2.3.0
+- Use server depended pg_server_config for build
+
 * Mon Sep 08 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.6-alt1
 - Version 2.0.6
 
