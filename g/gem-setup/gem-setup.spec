@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt4
+Release:       alt5
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,9 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Thu Nov 24 2022 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt5
+- ! ridir to docdir with ri arg, to support old rubies
+
 * Sun Sep 30 2022 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt4
 - ! fix hoe loading with version detection
 
