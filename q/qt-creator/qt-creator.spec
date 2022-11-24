@@ -4,12 +4,18 @@
 %define llvm_version 13.0
 %define qt_version 5.15.2
 
+%ifarch %not_qt5_qtwebengine_arches
+%def_disable qtwebengine
+%else
+%def_enable qtwebengine
+%endif
+
 %add_findreq_skiplist  %_datadir/qtcreator/*
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
 Version: 8.0.2
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -18,8 +24,6 @@ Group:   Development/Tools
 URL: http://qt-project.org/wiki/Category:Tools::QtCreator
 VCS: git://code.qt.io/qt-creator/qt-creator.git
 Packager: Andrey Cherepanov <cas@altlinux.org>
-
-ExcludeArch: %not_qt5_qtwebengine_arches
 
 Source: %name-%version.tar
 Source1: submodules.tar
@@ -39,15 +43,13 @@ BuildRequires: gcc-c++
 BuildRequires: qt5-designer >= %qt_version
 BuildRequires: qt5-script-devel >= %qt_version
 BuildRequires: qt5-declarative-devel >= %qt_version
-%ifnarch %e2k
-# NB: there's rpm-macros-qt5-webengine out there
-BuildRequires: qt5-webkit-devel >= %qt_version
-%endif
 BuildRequires: qt5-x11extras-devel >= %qt_version
 BuildRequires: qt5-xmlpatterns-devel >= %qt_version
 BuildRequires: qt5-tools-devel >= %qt_version
 BuildRequires: qt5-serialport-devel
+%if_enabled qtwebengine
 BuildRequires: qt5-webengine-devel >= %qt_version
+%endif
 BuildRequires: qt5-svg-devel >= %qt_version
 BuildRequires: qt5-quickcontrols2-devel
 BuildRequires: kf5-syntax-highlighting-devel
@@ -106,7 +108,7 @@ This is core part of IDE without Qt5 build environment.
 %package doc
 Summary: %name docs
 Group: Documentation
-%ifnarch %not_qt5_qtwebengine_arches
+%if_enabled qtwebengine
 Requires: %name
 %endif
 Requires: qt5-base-doc
@@ -118,8 +120,8 @@ Documentation for %name
 %package data
 Summary: Data files for %name
 Group: Development/Tools
-%ifnarch %not_qt5_qtwebengine_arches
-Requires: %name-core = %EVR
+%if_enabled qtwebengine
+Requires: %name-core
 %endif
 
 %description data
@@ -196,6 +198,9 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Thu Nov 24 2022 Sergey V Turchin <zerg@altlinux.org> 8.0.2-alt2
+- allow to build without QtWebEngine
+
 * Sat Oct 29 2022 Andrey Cherepanov <cas@altlinux.org> 8.0.2-alt1
 - New version.
 - Used LLVM 13.0.
