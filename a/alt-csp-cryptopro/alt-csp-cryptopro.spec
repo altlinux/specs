@@ -1,5 +1,5 @@
 Name: alt-csp-cryptopro
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 
 Group: File tools
@@ -42,6 +42,9 @@ install -m 0644 %_cmake__builddir/*.qm %buildroot/%_qt5_translationdir/
 %_datadir/file-manager/actions/alt-csp-cryptopro.desktop
 
 %changelog
+* Thu Nov 24 2022 Oleg Solovyov <mcpain@altlinux.org> 0.2.7-alt1
+- support aarch64
+
 * Fri Sep 03 2021 Oleg Solovyov <mcpain@altlinux.org> 0.2.6-alt1
 - minor fixes and improvements:
   + automatically select file and signature when archive is selected
