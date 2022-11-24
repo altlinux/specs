@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: flatpak
-Version: 1.14.0
+Version: 1.14.1
 Release: alt1
 
 Summary: Application deployment framework for desktop apps
@@ -32,7 +32,7 @@ Patch1: flatpak-1.12.2-alt-flatpak.sh.patch
 %define flatpak_group %name
 %define flatpak_user %name
 
-%define glib_ver 2.44
+%define glib_ver 2.60
 %define ostree_ver 2020.8
 %define bwrap_ver 0.4.1
 %define libarchive_ver 2.8.0
@@ -220,6 +220,9 @@ install -d %buildroot%_localstatedir/lib/flatpak
 
 
 %changelog
+* Thu Nov 24 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
+- 1.14.1
+
 * Wed Aug 24 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
 - 1.14.0
 
