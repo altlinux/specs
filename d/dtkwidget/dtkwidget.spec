@@ -2,7 +2,7 @@
 
 Name: dtkwidget
 Version: 5.6.0.2
-Release: alt1
+Release: alt2
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+ and GPL-3.0+
 Group: Graphical desktop/Other
@@ -10,6 +10,7 @@ Url: https://github.com/linuxdeepin/dtkwidget
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: 0001-fixtranslate-path-of-translate.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -77,9 +78,8 @@ This package provides %name documantation.
 
 %prep
 %setup
+%patch -p1
 sed -i "s|'/lib'|'/%_lib'|" conanfile.py
-# sed -i 's|$$QT.dtkcore.libs/examples|$$QT.dtkcore.libs/dtkwidget5-examples|' \
-#     examples/dwidget-examples/collections/collections.pro
 sed -i 's|CMAKE_INSTALLL_PREFIX|CMAKE_INSTALL_PREFIX|' \
   docs/CMakeLists.txt
 
@@ -130,6 +130,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_datadir/doc/dtkwidget.qch
 
 %changelog
+* Thu Nov 24 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.0.2-alt2
+- Fixed translations.
+
 * Mon Oct 17 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.0.2-alt1
 - New version.
 - Upstream:
