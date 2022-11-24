@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: libcamera
-Version: 0.0.1
+Version: 0.0.2
 Release: alt1
 Epoch: 1
 
@@ -142,6 +142,9 @@ mkdir -p %buildroot%_libdir/libcamera %buildroot%_datadir/libcamera
 %_pkgconfigdir/libcamera.pc
 
 %changelog
+* Thu Nov 24 2022 Yuri N. Sedunov <aris@altlinux.org> 1:0.0.2-alt1
+- 0.0.2
+
 * Mon Oct 17 2022 Yuri N. Sedunov <aris@altlinux.org> 1:0.0.1-alt1
 - v0.0.1 release
 
