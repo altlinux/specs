@@ -1,10 +1,12 @@
+%define pg_ver 10
+
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict,lfs=relaxed
 
-Name: pg_rman
+Name: pg_rman%pg_ver
 Version: 1.3.14
-Release: alt1
+Release: alt2
 Summary: pg_rman is an online backup and restore tool for PostgreSQL
 License: BSD-3-Clause
 Group: Databases
@@ -15,8 +17,16 @@ Source: %name-%version.tar
 
 # Automatically added by buildreq on Sat Apr 19 2014 (-bi)
 # optimized out: elfutils libcloog-isl4 libcom_err-devel libkrb5-devel libpq-devel libsasl2-3 postgresql-devel python-base setproctitle
-BuildRequires: libecpg-devel-static libpam-devel libreadline-devel libselinux-devel libssl-devel postgresql-devel-static setproctitle-devel zlib-devel
+BuildRequires: libecpg-devel-static libpq5-devel-static libpam-devel libreadline-devel libselinux-devel libssl-devel setproctitle-devel zlib-devel
+BuildRequires: postgresql%pg_ver-server-devel
 BuildRequires: libkrb5-devel
+
+Requires: postgresql%pg_ver-server
+
+Conflicts: pg_rman11
+Conflicts: pg_rman12
+Conflicts: pg_rman13
+Conflicts: pg_rman14
 
 %description
 The goal of the pg_rman project is providing a method for online
@@ -28,10 +38,10 @@ including archive logs with one command.
 %setup
 
 %build
-%make_build
+%make_build PG_CONFIG=%_bindir/pg_server_config
 
 %install
-install -pD -m 755 %name %buildroot%_bindir/%name
+install -pD -m 755 pg_rman %buildroot%_bindir/pg_rman
 
 mkdir examples
 cp -r sql examples/
@@ -43,6 +53,9 @@ cp -r sql examples/
 %_bindir/*
 
 %changelog
+* Tue Nov 22 2022 Alexei Takaseev <taf@altlinux.org> 1.3.14-alt2
+- Use server depended pg_server_config for build
+
 * Wed Mar 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.3.14-alt1
 - Updated to upstream version 1.3.14.
 
