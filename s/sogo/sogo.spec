@@ -4,7 +4,7 @@
 Summary: SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:    sogo
 Version: 5.7.1
-Release: alt2
+Release: alt3
 
 License: GPL-2.0+ and LGPL-2.1+
 URL:     https://sogo.nu/
@@ -28,7 +28,7 @@ Patch2: sogo-alt-fixes.patch
 Patch4: sogo-alt-fix-timeZoneWithAbbreviation.patch
 Patch5: sogo-alt-libzip-includes.patch
 Patch6: sogo-alt-libytnef-includes.patch
-Patch7: sogo-fix-safeStringByEscapingXMLString.patch
+Patch7: sogo-fix-5416.patch
 
 Requires: stmpclean
 Requires: tzdata
@@ -441,6 +441,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Thu Nov 24 2022 Andrey Cherepanov <cas@altlinux.org> 5.7.1-alt3
+- Fixed empty patch to fix https://bugs.sogo.nu/view.php?id=5416 (ALT #44407).
+
 * Mon Nov 14 2022 Andrey Cherepanov <cas@altlinux.org> 5.7.1-alt2
 - Fixed safeStringByEscapingXMLString on gnustep-base-1.28.
 
