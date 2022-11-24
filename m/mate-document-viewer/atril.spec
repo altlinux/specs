@@ -6,7 +6,7 @@
 
 Name: mate-document-viewer
 Version: 1.26.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Document viewer
 License: GPLv2+ and LGPLv2+ and MIT
@@ -195,6 +195,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Nov 24 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
+- updated translation
+
 * Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
 - 1.26.0
 
