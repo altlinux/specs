@@ -1,7 +1,7 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define sover 1.0.0
+%define sover 1.1.0
 
 %def_with devel
 
@@ -12,7 +12,7 @@ Name: hiredis
 %else
 Name: hiredis%sover
 %endif
-Version: 1.0.2
+Version: 1.1.0
 Release: alt1
 Summary: The official C client for Redis
 Group: System/Libraries
@@ -110,6 +110,9 @@ cp hiredis-test %buildroot%_bindir/
 %endif
 
 %changelog
+* Wed Nov 23 2022 Anton Farygin <rider@altlinux.ru> 1.1.0-alt1
+- 1.0.2 -> 1.1.0
+
 * Mon Mar 28 2022 Anton Farygin <rider@altlinux.ru> 1.0.2-alt1
 - 0.14.1 -> 1.0.2
 
