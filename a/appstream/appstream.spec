@@ -3,7 +3,7 @@
 
 Name:    appstream
 Version: 0.15.5
-Release: alt1
+Release: alt2
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
 # lib LGPLv2+, tools GPLv2+
@@ -12,6 +12,8 @@ Group:   System/Configuration/Packaging
 URL:     http://www.freedesktop.org/wiki/Distributions/AppStream/
 Source0: appstream-%{version}.tar
 # VCS:   https://github.com/ximion/appstream
+#
+Patch1: appstream-0.15.5-meson-build.patch
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++
@@ -94,6 +96,7 @@ BuildArch: noarch
 
 %prep
 %setup
+%patch1 -p1
 %ifarch %e2k
 # workaround for EDG frontend
 sed -i "s|g_autofree gchar \*\*|g_autofree_edg(gchar*)|" qt/pool.cpp
@@ -164,6 +167,9 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 %_datadir/gtk-doc/html/appstream
 
 %changelog
+* Thu Nov 24 2022 Sergey V Turchin <zerg@altlinux.org> 0.15.5-alt2
+- allow to build with meson-0.59
+
 * Thu Aug 25 2022 Andrey Cherepanov <cas@altlinux.org> 0.15.5-alt1
 - New version.
 - Build without docs (daps failed to build according to https://github.com/openSUSE/daps/issues/676).
