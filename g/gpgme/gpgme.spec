@@ -17,7 +17,7 @@
 
 Name: gpgme
 Version: 1.16.0
-Release: alt2
+Release: alt3
 
 Summary: GnuPG Made Easy is a library designed to make access to GnuPG easier for applications
 License: LGPLv2.1+
@@ -41,10 +41,12 @@ Patch3: gpgme-D546-python310.patch
 Patch11: gpgme-1.4.3-alt-version-script.patch
 Patch15: alt-revision.patch
 
+%define gostversion 1.0.0
+Patch16: gost-constants.patch
+
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
-BuildRequires(pre): rpm-build-ubt
 BuildRequires(pre): python-devel python3-devel
 BuildRequires: /proc gcc-c++ gnupg2 libgpg-error-devel libpth-devel libstdc++-devel libassuan-devel >= 2.0
 BuildRequires: texinfo
@@ -154,12 +156,14 @@ GPGME-based statically linked applications.
 %patch3 -p1
 %patch11 -p1
 %patch15 -p2
+%patch16 -p1
 
 %if_disabled beta
 sed -i -e 's/@BETA@/no/' configure.ac
 %else
 sed -i -e 's/@BETA@/yes/' configure.ac
 %endif
+sed -i -e 's/@REVISION@/gost-%gostversion/' -e 's/@REVISION_DESC@/ALT/' configure.ac
 
 %autoreconf
 
@@ -234,6 +238,9 @@ export PATH=$PWD/tmp_bin:$PATH
 %_libdir/libqgpgme.so.%qgpgme_sover.*
 
 %changelog
+* Thu Nov 24 2022 Sergey V Turchin <zerg@altlinux.org> 1.16.0-alt3
+- return gost-constants.patch (closes: 44376)
+
 * Wed Jan 26 2022 Grigory Ustinov <grenka@altlinux.org> 1.16.0-alt2
 - Fix build with python3.10.
 
@@ -250,7 +257,7 @@ export PATH=$PWD/tmp_bin:$PATH
 - Fresh up to v 1.13.1.
 
 * Wed Jan 30 2019 Paul Wolneykien <manowar@altlinux.org> 1.11.1-alt2
-- Remove the redundant %%ubt macro.
+- Remove the redundant ubt macro.
 - Added GOST hash constants from libgcrypt (308--311).
 
 * Mon Apr 23 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.1-alt1.1
