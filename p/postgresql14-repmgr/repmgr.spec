@@ -1,9 +1,10 @@
-%define full_ver %(pkg-config --modversion libpq)
-%define pg_ver %(c=%{full_ver}; echo ${c%%.*})
+%define pg_ver 14
+%define prog_name repmgr
+%def_with jit
 
-Name: repmgr
+Name: postgresql%pg_ver-%prog_name
 Version: 5.3.3
-Release: alt1
+Release: alt2
 Summary: Replication Manager for PostgreSQL Clusters
 Group: Databases
 License: GPL-3.0
@@ -19,27 +20,19 @@ Source5: repmgr.sysconfig
 Patch: %name-%version.patch
 
 Requires: postgresql-common
+Requires: postgresql%pg_ver-server
+
+Provides: %prog_name = %EVR
+Obsoletes: %prog_name < %EVR
 
 BuildRequires: flex
 BuildRequires: libssl-devel
-BuildRequires: postgresql-devel postgresql-devel-static
+BuildRequires: libecpg-devel-static libpq5-devel-static postgresql%pg_ver-server-devel
 # for build doc
 BuildRequires: docbook-dtds docbook-style-xsl
 BuildRequires: /usr/bin/xmllint /usr/bin/xsltproc
 
-
 %description
-Repmgr is an open-source tool suite for managing replication and failover in a
-cluster of PostgreSQL servers. It enhances PostgreSQL's built-in hot-standby
-capabilities with tools to set up standby servers, monitor replication, and
-perform administrative tasks such as failover or manual switchover operations.
-
-%package -n postgresql%pg_ver-%name
-Summary: Replication Manager for PostgreSQL Clusters
-Group: Databases
-Requires: postgresql%pg_ver-server
-
-%description -n postgresql%pg_ver-%name
 Repmgr is an open-source tool suite for managing replication and failover in a
 cluster of PostgreSQL servers. It enhances PostgreSQL's built-in hot-standby
 capabilities with tools to set up standby servers, monitor replication, and
@@ -59,7 +52,7 @@ The package contains documentation for the Replication Manager for PostgreSQL Cl
 
 %build
 %autoreconf
-%configure
+%configure PG_CONFIG=%_bindir/pg_server_config
 USE_PGXS=1 %make_build
 %make doc
 %make doc-repmgr.html
@@ -67,20 +60,18 @@ USE_PGXS=1 %make_build
 %install
 USE_PGXS=1 %makeinstall_std
 
-mkdir -p %buildroot/{%_initdir,%_unitdir,%_tmpfilesdir,%_sysconfdir/{sysconfig,sudoers.d,%name},%_logdir/%name}
-install -p -m755 %SOURCE1 %buildroot%_initdir/%name
-install -p -m644 %SOURCE2 %buildroot%_sysconfdir/sudoers.d/%name
-install -p -m644 %SOURCE3 %buildroot%_unitdir/%name.service
-install -p -m644 %SOURCE4 %buildroot%_tmpfilesdir/%name.conf
-install -p -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name
-install -p -m644 repmgr.conf.sample %buildroot%_sysconfdir/%name/%name.conf
-
-%post -n postgresql%pg_ver-%name
-echo "Execute the following psql command inside any database that you want to update:"
-echo "ALTER EXTENSION repmgr UPDATE;                                                 "
+mkdir -p %buildroot/{%_initdir,%_unitdir,%_tmpfilesdir,%_sysconfdir/{sysconfig,sudoers.d,%prog_name},%_logdir/%prog_name}
+install -p -m755 %SOURCE1 %buildroot%_initdir/%prog_name
+install -p -m644 %SOURCE2 %buildroot%_sysconfdir/sudoers.d/%prog_name
+install -p -m644 %SOURCE3 %buildroot%_unitdir/%prog_name.service
+install -p -m644 %SOURCE4 %buildroot%_tmpfilesdir/%prog_name.conf
+install -p -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%prog_name
+install -p -m644 repmgr.conf.sample %buildroot%_sysconfdir/%prog_name/%prog_name.conf
 
 %post
 %post_service %name
+echo "Execute the following psql command inside any database that you want to update:"
+echo "ALTER EXTENSION repmgr UPDATE;                                                 "
 
 %preun
 %preun_service %name
@@ -89,23 +80,30 @@ echo "ALTER EXTENSION repmgr UPDATE;                                            
 %doc README.md LICENSE
 %_bindir/repmgr
 %_bindir/repmgrd
-%config(noreplace) %_sysconfdir/sysconfig/%name
-%config(noreplace) %_sysconfdir/sudoers.d/%name
-%dir %attr(750,root,postgres) %_sysconfdir/%name
-%config(noreplace) %attr(640,root,postgres) %_sysconfdir/%name/%name.conf
-%_initdir/%name
-%_unitdir/%name.service
-%_tmpfilesdir/%name.conf
-%attr(1775,root,postgres) %dir %_logdir/%name
-
-%files -n postgresql%pg_ver-%name
-%_libdir/pgsql/*
+%config(noreplace) %_sysconfdir/sysconfig/%prog_name
+%config(noreplace) %_sysconfdir/sudoers.d/%prog_name
+%dir %attr(750,root,postgres) %_sysconfdir/%prog_name
+%config(noreplace) %attr(640,root,postgres) %_sysconfdir/%prog_name/%prog_name.conf
+%_initdir/%prog_name
+%_unitdir/%prog_name.service
+%_tmpfilesdir/%prog_name.conf
+%attr(1775,root,postgres) %dir %_logdir/%prog_name
+%_libdir/pgsql/*.so
+%if %pg_ver >= 11
+%if_with jit
+%_libdir/pgsql/bitcode/*
+%endif
+%endif
 %_datadir/pgsql/extension/*
 
 %files doc
 %doc doc/html
 
 %changelog
+* Tue Nov 22 2022 Alexei Takaseev <taf@altlinux.org> 5.3.3-alt2
+- Join repmgr and postgresqlXY-repmgr subpackages to one
+  postgresqlXY-repmgr
+
 * Sat Nov 12 2022 Alexey Shabalin <shaba@altlinux.org> 5.3.3-alt1
 - 5.3.3
 
