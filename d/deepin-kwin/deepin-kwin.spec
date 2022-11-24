@@ -11,7 +11,7 @@
 
 Name: deepin-kwin
 Version: 5.5.11
-Release: alt2
+Release: alt2.1
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -69,7 +69,7 @@ sed -i 's|${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}|${CMAKE_INSTALL_LIBDIR
     plugins/platforms/lib/dde-kwin.pc.in
 sed -i 's| -L/usr/X11R6/lib64| -L%_libdir|; s| -lpthread| -L%_libdir -lpthread|' \
     plugins/platforms/lib/dde-kwin.pc.in
-sed -i '1icmake_minimum_required(VERSION 3.23)' CMakeLists.txt
+# sed -i '1icmake_minimum_required(VERSION 3.23)' CMakeLists.txt
 # sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
 #     plugins/kwineffects/multitasking/background.cpp \
 #     deepin-wm-dbus/deepinwmfaker.cpp
@@ -155,6 +155,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %endif
 
 %changelog
+* Thu Nov 24 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.11-alt2.1
+- Removed hard mention of the cmake build version.
+
 * Wed Nov 23 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.11-alt2
 - New version (5.5.11-deepin).
 - Restored blur.
