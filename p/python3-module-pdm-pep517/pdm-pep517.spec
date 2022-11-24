@@ -19,7 +19,7 @@ tomli_w \\\
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 
 Summary: A PEP 517 backend for PDM that supports PEP 621 metadata
@@ -42,6 +42,7 @@ BuildRequires: %python_deps %vendored_list
 
 %if_with check
 BuildRequires: python3(pytest)
+BuildRequires: python3(setuptools)
 BuildRequires: python3-devel
 BuildRequires: /usr/bin/git
 %endif
@@ -120,6 +121,9 @@ sed -i \
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Thu Nov 24 2022 Stanislav Levin <slev@altlinux.org> 1.0.6-alt1
+- 1.0.5 -> 1.0.6.
+
 * Mon Oct 24 2022 Stanislav Levin <slev@altlinux.org> 1.0.5-alt1
 - 1.0.4 -> 1.0.5.
 
