@@ -3,7 +3,7 @@
 
 Name: mate-text-editor
 Version: 1.26.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Text editor for the MATE desktop
 License: GPLv3+
@@ -83,6 +83,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gir-1.0/Pluma-1.0.gir
 
 %changelog
+* Thu Nov 24 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt2
+- updated translations
+
 * Tue Aug 10 2021 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt1
 - 1.26.0
 
