@@ -1,7 +1,7 @@
 %define  modulename kubernetes-client
 
 Name:     python3-module-%modulename
-Version:  21.7.0
+Version:  25.3.0
 Release:  alt1
 
 Summary:  Kubernetes Python Client
@@ -41,6 +41,9 @@ rm -rf %buildroot%python3_sitelibdir/kubernetes/dynamic/test_client.py
 %python3_sitelibdir/*
 
 %changelog
+* Thu Nov 24 2022 Andrew A. Vasilyev <andy@altlinux.org> 25.3.0-alt1
+- 25.3.0
+
 * Wed Jan 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 21.7.0-alt1
 - 21.7.0
 
