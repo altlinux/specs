@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.5
+Version: 0.4.1
 Release: alt1
 
 Summary: Format pyproject.toml file
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/tox-dev/pyproject-fmt.git
 Url: https://pypi.org/project/pyproject-fmt
+VCS: https://github.com/tox-dev/pyproject-fmt.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -71,6 +71,12 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Nov 24 2022 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
+- 0.4.0 -> 0.4.1.
+
+* Wed Nov 23 2022 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
+- 0.3.5 -> 0.4.0.
+
 * Sat Aug 13 2022 Stanislav Levin <slev@altlinux.org> 0.3.5-alt1
 - 0.3.3 -> 0.3.5.
 

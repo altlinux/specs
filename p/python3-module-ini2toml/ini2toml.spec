@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.11.1
+Version: 0.11.3
 Release: alt1
 
 Summary: Automatically conversion of .ini/.cfg files to TOML equivalents
 License: MPL-2.0
 Group: Development/Python3
-# Source-git: https://github.com/abravalheri/ini2toml.git
 Url: https://pypi.org/project/ini2toml
+VCS: https://github.com/abravalheri/ini2toml.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -105,6 +105,9 @@ git tag '%version'
 %files full
 
 %changelog
+* Thu Nov 24 2022 Stanislav Levin <slev@altlinux.org> 0.11.3-alt1
+- 0.11.1 -> 0.11.3.
+
 * Tue Nov 15 2022 Stanislav Levin <slev@altlinux.org> 0.11.1-alt1
 - 0.11 -> 0.11.1.
 
