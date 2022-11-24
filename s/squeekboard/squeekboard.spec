@@ -1,5 +1,5 @@
 Name: squeekboard
-Version: 1.17.1
+Version: 1.20.0
 Release: alt1
 
 Summary: A Wayland on-screen keyboard
@@ -33,7 +33,7 @@ tar xf %SOURCE1
 
 %build
 export CARGO_HOME=${PWD}/cargo
-%meson -Donline=false
+%meson -Donline=false -Dnewer=true
 %meson_build
 
 %install
@@ -46,5 +46,8 @@ export CARGO_HOME=${PWD}/cargo
 %_desktopdir/*.desktop
 
 %changelog
+* Thu Oct 06 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.20.0-alt1
+- 1.20.0 released
+
 * Wed Apr 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.17.1-alt1
 - initial
