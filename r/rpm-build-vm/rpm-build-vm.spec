@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.39
+Version: 1.40
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -209,6 +209,7 @@ timeout 300 vm-run --verbose uname -a
 timeout 300 vm-run --verbose --overlay=ext4 uname -a
 ! timeout --preserve-status 300 vm-run --verbose exit 1
 timeout 300 vm-run --rootfs --verbose df
+timeout 300 vm-run --hvc --no-quiet 'dmesg -r | grep Unknown'
 
 %ifarch %supported_arches
 %check
@@ -217,6 +218,10 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Thu Nov 24 2022 Vitaly Chikunov <vt@altlinux.org> 1.40-alt1
+- Enable high speed virtio console with --hvc.
+- Add --rsync= option for rootfs.
+
 * Wed Nov 23 2022 Vitaly Chikunov <vt@altlinux.org> 1.39-alt1
 - vm-run: --rootfs can be extended with --no-snapshot.
 - vm-create-image: Allow relative --size= arguments.
