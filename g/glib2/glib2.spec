@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %def_enable static
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
@@ -29,18 +29,20 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
 Group: System/Libraries
-Url: ftp://ftp.gnome.org
+Url: https://gitlab.gnome.org/GNOME/glib
 
 %if_enabled snapshot
+Vcs: https://gitlab.gnome.org/GNOME/glib.git
 Source: glib-%version.tar
 %else
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glib/%ver_major/glib-%version.tar.xz
+#Source: %url/-/archive/%version/glib-%version.tar.gz
 %endif
 
 Source1: glib-compat.map
@@ -431,6 +433,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Fri Nov 25 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.2-alt1
+- 2.74.2
+
 * Tue Oct 25 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.1-alt1
 - 2.74.1
 
