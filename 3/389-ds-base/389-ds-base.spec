@@ -16,8 +16,8 @@
 %define get_dep_ge() %(rpm -q --qf '%%{NAME} >= %%{EVR}' %1 2>/dev/null || echo '%1 >= unknown')
 
 Name: 389-ds-base
-Version: 2.2.3
-Release: alt2
+Version: 2.2.4
+Release: alt1
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
@@ -418,6 +418,9 @@ fi
 %endif
 
 %changelog
+* Mon Nov 21 2022 Stanislav Levin <slev@altlinux.org> 2.2.4-alt1
+- 2.2.3 -> 2.2.4.
+
 * Mon Oct 17 2022 Stanislav Levin <slev@altlinux.org> 2.2.3-alt2
 - Fixed build against Rust 1.56.
 
