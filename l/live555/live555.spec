@@ -1,5 +1,5 @@
 Name: live555
-Version: 20211020
+Version: 20221119
 Release: alt1
 
 Summary: Live555.com Streaming Media Library Utilities
@@ -77,6 +77,9 @@ done
 %_includedir/liveMedia
 
 %changelog
+* Fri Nov 25 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 20221119-alt1
+- 2022.11.19 released
+
 * Wed Oct 27 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 20211020-alt1
 - 2021.10.20 released
 

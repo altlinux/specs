@@ -1,6 +1,6 @@
 Name: v4l2onvif
-Version: 0.0.20200924
-Release: alt2
+Version: 0.0.20221106
+Release: alt1
 
 Summary: V4L2-based ONVIF implementation
 License: GPLv3
@@ -48,6 +48,9 @@ make install DESTDIR=%buildroot%_bindir
 %_bindir/onvif-server
 
 %changelog
+* Fri Nov 25 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20221106-alt1
+- updated to git.897ca50
+
 * Tue Nov 02 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.20200924-alt2
 - rebuilt with recent live555
 
