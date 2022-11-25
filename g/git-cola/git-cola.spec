@@ -1,7 +1,7 @@
-%def_disable check
+%def_enable check
 
 Name: git-cola
-Version: 4.0.3
+Version: 4.0.4
 Release: alt1
 
 Summary: A highly caffeinated git gui
@@ -16,7 +16,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 %if_enabled check
-BuildRequires(pre): python3-module-tox
+BuildRequires(pre): python3-module-pytest python3-module-tox-pip-version python3-module-qtpy python3-module-PyQt5 python3-module-flake8 python3-module-GitPython
 %endif
 BuildRequires: python3-module-sphinx-devel python3-module-setuptools python3-module-wheel
 # hasher tests:
@@ -31,6 +31,9 @@ and caffeine-inspired features.
 %prepare_sphinx3 share/doc/%name
 sed -i '/Git Cola version/s/%%(cola_version)s/%{version}/' \
     cola/widgets/about.py
+# Not needed with virtualenv.
+sed -i '/tox-venv/d' tox.ini
+sed -i 's/ --flake8//' pytest.ini
 
 %build
 %pyproject_build
@@ -45,7 +48,7 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 
 %if_enabled check
 %check
-%tox_check
+%tox_check_pyproject
 %endif
 
 %files -f %name.lang
@@ -58,6 +61,10 @@ chmod +x %buildroot%python3_sitelibdir/cola/bin/ssh-askpass-darwin
 %python3_sitelibdir/*
 
 %changelog
+* Fri Nov 25 2022 Leontiy Volodin <lvol@altlinux.org> 4.0.4-alt1
+- New version 4.0.4.
+- Enabled tests.
+
 * Mon Nov 14 2022 Leontiy Volodin <lvol@altlinux.org> 4.0.3-alt1
 - New version 4.0.3.
 
