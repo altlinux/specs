@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _name metronome
-%define ver_major 1.1
+%define ver_major 1.2
 %define rdn_name com.adrienplazas.Metronome
 
 %def_disable bootstrap
@@ -12,11 +12,15 @@ Release: alt1
 Summary: Metronome for GNOME Desktop
 License: GPL-3.0-or-later
 Group: Graphical desktop/GNOME
-Url: https://gitlab.gnome.org/World/metronome.git
+Url: https://gitlab.gnome.org/World/metronome
 
+%if_disabled snapshot
+Source: %url/-/archive/%version/%name-%version.tar.gz
+%else
 Vcs: https://gitlab.gnome.org/World/metronome.git
 Source: %_name-%version.tar
-Source1: %_name-%version-cargo.tar
+%endif
+%{?_disable_bootstrap:Source1: %_name-%version-cargo.tar}
 
 %define gtk_ver 4.0.0
 %define adwaita_ver 1.0.0
@@ -40,10 +44,6 @@ required time signature and beats per minutes.
 
 %prep
 %setup -n %_name-%version %{?_disable_bootstrap:-a1}
-# old libadwita required
-# libadwaita-1', version: '== 1.0.0-alpha.2
-sed -i 's/=\(= 1.0.0\)/>\1/' meson.build
-
 %{?_enable_bootstrap:
 mkdir .cargo
 cargo vendor | sed 's/^directory = ".*"/directory = "vendor"/g' > .cargo/config
@@ -68,6 +68,9 @@ tar -cf %_sourcedir/%_name-%version-cargo.tar .cargo/ vendor/}
 
 
 %changelog
+* Fri Nov 25 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0-15-g4f49660
+
 * Thu Jan 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - first build for Sisyphus (1.1.0-33-g633d84d)
 
