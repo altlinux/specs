@@ -4,15 +4,15 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
 Group: Development/Python3
 BuildArch: noarch
 Url: https://pypi.org/project/importlib-metadata/
+VCS: https://github.com/python/importlib_metadata.git
 
-# Source-git: https://github.com/python/importlib_metadata.git
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
@@ -70,11 +70,14 @@ fi
     --ignore exercises.py
 
 %files
-%doc LICENSE README.rst
+%doc README.rst
 %python3_sitelibdir/importlib_metadata/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 25 2022 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
+- 5.0.0 -> 5.1.0.
+
 * Fri Oct 07 2022 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
 - 4.12.0 -> 5.0.0.
 
