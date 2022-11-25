@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  0
-%define _php_release_version 25
+%define _php_release_version 26
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -457,6 +457,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Thu Nov 24 2022 Anton Farygin <rider@altlinux.ru> 8.0.26-alt1
+- 8.0.25 -> 8.0.26
+
 * Wed Oct 26 2022 Anton Farygin <rider@altlinux.ru> 8.0.25-alt1
 - 8.0.24 -> 8.0.25 (Fixes: CVE-2022-31630, CVE-2022-37454)
 
