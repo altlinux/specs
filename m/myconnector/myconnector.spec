@@ -2,8 +2,8 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.4
-Release:  alt2
+Version:  2.4.1
+Release:  alt1
 
 Summary:  MyConnector - remote desktop client
 License:  GPL-2.0
@@ -28,6 +28,7 @@ Requires: tigervnc
 Requires: xdg-utils
 Requires: xfreerdp
 Requires: zenity
+Requires: /usr/bin/xvt
 
 Provides:  connector = %EVR
 Obsoletes: connector
@@ -45,7 +46,6 @@ Group:   Networking/Remote access
 
 Requires: myconnector = %EVR
 Requires: xinitrc
-Requires: xterm
 
 Provides:  connector-kiosk = %EVR
 Obsoletes: connector-kiosk
@@ -138,6 +138,12 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Fri Nov 25 2022 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4.1-alt1
+- xterm replaced with xvt(ALT #44441)
+- The default text editor is not specified now (ALT #43114)
+- Updated myconnector.conf
+- [FS] Fixed if no program is specified
+
 * Tue Nov 08 2022 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4-alt2
 - Fixed unowned /etc/myconnector
 
