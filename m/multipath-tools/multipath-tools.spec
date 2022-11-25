@@ -5,7 +5,7 @@
 %define libmpathdir %syslibdir/multipath
 
 Name: multipath-tools
-Version: 0.9.1
+Version: 0.9.3
 Release: alt1
 
 Summary: Tools to manage multipath devices with device-mapper
@@ -99,6 +99,7 @@ sed -i "s|-Werror -Wall|-Wall|" Makefile.inc
 %build
 unset RPM_OPT_FLAGS
 %make_build \
+	prefix=%_prefix \
 	LIB=%_lib \
 	RUN=run \
 	%{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
@@ -107,6 +108,7 @@ unset RPM_OPT_FLAGS
 %install
 mkdir -p %buildroot{/sbin,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,%_modulesloaddir,%_sysconfdir/multipath}
 %makeinstall_std \
+	prefix=%_prefix \
 	DESTDIR=%buildroot \
 	SYSTEMDPATH=lib \
 	%{?_disable_libdmmp: ENABLE_LIBDMMP=0} \
@@ -118,11 +120,12 @@ mkdir -p %buildroot{/sbin,%_libdir,%_man8dir,%_initdir,%_unitdir,%_udevrulesdir,
 	usr_prefix=%_prefix \
 	rcdir=%_initrddir \
 	udevrulesdir=%_udevrulesdir \
-	unitdir=%_unitdir
+	unitdir=%_unitdir \
+	libudevdir=/lib/udev \
+	tmpfilesdir=%_tmpfilesdir \
+	modulesloaddir=%_modulesloaddir
 
-#install -pm644 %SOURCE2 %buildroot%_udevrulesdir/56-multipath.rules
 install -pm755 %SOURCE3 %buildroot%_initdir/multipathd
-#install -pm644 %SOURCE4 %buildroot%_modulesloaddir/multipath.conf
 install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 
 %post
@@ -145,6 +148,7 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %config(noreplace) %attr(644,root,root) %_sysconfdir/multipath.conf
 %_initdir/*
 %_unitdir/*
+%_tmpfilesdir/*
 %_man5dir/*
 %_man8dir/*
 %exclude %_man8dir/kpartx.8.*
@@ -187,6 +191,9 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 %_pkgconfigdir/libdmmp.pc
 
 %changelog
+* Fri Nov 25 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.3-alt1
+- 0.9.3 (Fexes: CVE-2022-41973, CVE-2022-41974) (ALT #44440)
+
 * Tue Sep 27 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.1-alt1
 - 0.9.1
 
@@ -222,7 +229,7 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 
 * Mon Apr 01 2019 Alexey Shabalin <shaba@altlinux.org> 0.8.0-alt1
 - 0.8.0
-- removed ALT glibc functions from util, since  ALT build glibc has its own
+- removed ALT glibc functions from util, since ALT build glibc has its own
   implementation of the strlcat, strlcpy and strnlen functions (closes: #36411)
 
 * Mon Sep 03 2018 Michael Shigorin <mike@altlinux.org> 0.7.4-alt2
@@ -332,7 +339,7 @@ install -pm644 %SOURCE5 %buildroot%_sysconfdir/multipath.conf
 * Mon Apr 09 2007 Michael Shigorin <mike@altlinux.org> 0.4.7-alt2
 - fixed build
 - spec cleanup
-- added %_sysconfdir/udev/rules.d/multipath.rules
+- added %%_sysconfdir/udev/rules.d/multipath.rules
 
 * Thu Mar 30 2006 Eugene Prokopiev <enp@altlinux.ru> 0.4.7-alt1
 - build with new version and without external patches
