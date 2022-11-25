@@ -5,7 +5,7 @@
 
 Name: %_name
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Listen to ambient sounds
 License: GPL-3.0-or-later
@@ -55,6 +55,9 @@ ambient sounds. Or allows you to fall asleep in a noisy environment.
 
 
 %changelog
+* Fri Nov 25 2022 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt2
+- updated to 0.6.0-34-g9b0a1dc
+
 * Sun Apr 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
