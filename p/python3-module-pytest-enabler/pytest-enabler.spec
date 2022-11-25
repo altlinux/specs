@@ -4,13 +4,13 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.3.0
+Version: 2.0.0
 Release: alt1
 
 Summary: Pytest plugin for configuration of another plugins
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/jaraco/pytest-enabler.git
+VCS: https://github.com/jaraco/pytest-enabler.git
 Url: https://pypi.org/project/pytest-enabler/
 
 Source: %name-%version.tar
@@ -71,6 +71,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Nov 25 2022 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
+- 1.3.0 -> 2.0.0.
+
 * Wed Jul 20 2022 Stanislav Levin <slev@altlinux.org> 1.3.0-alt1
 - 1.2.1 -> 1.3.0.
 
