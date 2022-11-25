@@ -6,7 +6,7 @@
 %def_with pulse
 
 Name: SDL2
-Version: 2.24.2
+Version: 2.26.0
 Release: alt1
 
 Summary: Simple DirectMedia Layer
@@ -18,9 +18,6 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 # https://www.libsdl.org/release/%name-%version.tar.gz
 Source: %name-%version.tar
-
-# RH: ptrdiff_t is not the same as khronos defines on 32bit arches
-Patch0: %name-2.0.9-rh-khrplatform.patch
 
 BuildRequires: libXext-devel
 BuildRequires: libdbus-devel
@@ -88,7 +85,6 @@ This is the static libraries you can use to develop SDL applications.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
@@ -120,6 +116,9 @@ This is the static libraries you can use to develop SDL applications.
 %_libdir/lib%{name}*.a
 
 %changelog
+* Fri Nov 25 2022 Nazarov Denis <nenderus@altlinux.org> 2.26.0-alt1
+- Version 2.26.0
+
 * Tue Nov 01 2022 Nazarov Denis <nenderus@altlinux.org> 2.24.2-alt1
 - Versiom 2.24.2
 
