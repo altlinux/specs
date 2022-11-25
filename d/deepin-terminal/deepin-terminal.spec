@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: deepin-terminal
-Version: 5.4.30
+Version: 5.4.38
 Release: alt1
 Summary: Default terminal emulation application for Deepin
 License: GPL-3.0+ and (LGPL-2.0+ and GPL-2.0+ and BSD-3-Clause)
@@ -27,7 +27,7 @@ BuildRequires: libgtest-devel
 BuildRequires: libgmock-devel
 BuildRequires: libxcbutil-icccm-devel
 # right-click menu style
-Requires: deepin-menu
+# Requires: deepin-menu
 # run command by create_from_commandline
 Requires: deepin-shortcut-viewer expect xdg-utils
 Requires: icon-theme-hicolor
@@ -126,6 +126,14 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/terminalwidget5/
 
 %changelog
+* Fri Nov 25 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.38-alt1
+- New version.
+- Upstream:
+  + fix (theme switch): theme switch bug repair.
+  + fix (terminal): the terminal command does not show the result.
+  + fix: select copy.
+  + fix: terminal width.
+
 * Thu May 26 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.30-alt1
 - New version.
 - Upstream:
