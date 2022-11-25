@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define oname gitdb
+%define pypi_name gitdb
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 4.0.9
+Name: python3-module-%pypi_name
+Version: 4.0.10
 Release: alt1
 
 Summary: IO of git-style object databases
@@ -12,21 +12,24 @@ Summary: IO of git-style object databases
 License: BSD
 Group: Development/Python3
 Url: https://pypi.org/project/gitdb/
+VCS: https://github.com/gitpython-developers/gitdb.git
 
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires=
 BuildRequires: python3(smmap)
 
-BuildRequires: python3(nose)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 BuildRequires: /usr/bin/git
 %endif
 
@@ -34,23 +37,24 @@ BuildRequires: /usr/bin/git
 IO of git-style object databases.
 
 %package tests
-Summary: Tests for %oname
+Summary: Tests for %pypi_name
 Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
 IO of git-style object databases.
 
-This package contains tests for %oname.
+This package contains tests for %pypi_name.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # unbundle
 rm -vr gitdb/ext/*
@@ -63,30 +67,22 @@ git config user.name "someone"
 git add -A
 git commit -m "%version"
 
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-# see gitdb/test/lib.py::skip_on_travis_ci
-export TRAVIS=YES
-export TOX_TESTENV_PASSENV='TRAVIS'
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc AUTHORS *.rst
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
-%python3_sitelibdir/%oname/
-%exclude %python3_sitelibdir/%oname/test/
+%python3_sitelibdir/gitdb/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/gitdb/test/
 
 %files tests
-%python3_sitelibdir/%oname/test/
+%python3_sitelibdir/gitdb/test/
 
 %changelog
+* Fri Nov 25 2022 Stanislav Levin <slev@altlinux.org> 4.0.10-alt1
+- 4.0.9 -> 4.0.10.
+
 * Fri Jan 28 2022 Stanislav Levin <slev@altlinux.org> 4.0.9-alt1
 - 4.0.7 -> 4.0.9.
 
