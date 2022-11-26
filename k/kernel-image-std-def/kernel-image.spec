@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel	.79
+%define kernel_sublevel	.80
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -615,6 +615,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Nov 26 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.80-alt1
+- v5.15.80 (2022-11-26).
+
 * Wed Nov 16 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.79-alt1
 - v5.15.79 (2022-11-16).
 - config: Enable CONFIG_CRASH_DUMP.
