@@ -6,7 +6,7 @@
 Name: kdump-tools
 Summary: Scripts and configuration files to use kdump
 Version: 1.8
-Release: alt1
+Release: alt2
 Group: System/Kernel and hardware
 License: GPL-2.0-or-later
 Vcs: https://salsa.debian.org/debian/kdump-tools.git
@@ -99,6 +99,7 @@ install -d -m755 /var/crash
 %files
 %doc README debian/changelog debian/copyright
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%_bindir/kdumpctl
 %_sbindir/kdump-config
 %_udevrulesdir/50-kdump-tools.rules
 %_sysconfdir/init.d/%name
@@ -108,5 +109,8 @@ install -d -m755 /var/crash
 # NB: We don't install /var/lib/kdump
 
 %changelog
+* Fri Nov 25 2022 Vitaly Chikunov <vt@altlinux.org> 1.8-alt2
+- Add kdumpctl tool to view or debug kdumps.
+
 * Tue Nov 22 2022 Vitaly Chikunov <vt@altlinux.org> 1.8-alt1
 - First import and adaptation for ALT.
