@@ -1,6 +1,6 @@
 Name: bmap-tools
 Version: 3.6
-Release: alt1
+Release: alt2
 
 Summary: The better dd for embedded projects, based on block maps.
 
@@ -28,12 +28,18 @@ tools, like dd or cp.
 
 %install
 %python3_install
+install -d %{buildroot}/%{_mandir}/man1
+install -m644 docs/man1/bmaptool.1 %{buildroot}/%{_mandir}/man1
 
 %files
 %_bindir/bmaptool
+%{_mandir}/man1/bmaptool.1*
 %python3_sitelibdir/bmaptools/
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Sat Nov 26 2022 Vladimir Didenko <cow@altlinux.org> 3.6-alt2
+- Pack man page
+
 * Fri Nov 25 2022 Vladimir Didenko <cow@altlinux.org> 3.6-alt1
 - Initial build for Sisyphus
