@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.40
+Version: 1.41
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -218,6 +218,9 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Sat Nov 26 2022 Vitaly Chikunov <vt@altlinux.org> 1.41-alt1
+- Set up console earlier (fixes --hvc mode).
+
 * Thu Nov 24 2022 Vitaly Chikunov <vt@altlinux.org> 1.40-alt1
 - Enable high speed virtio console with --hvc.
 - Add --rsync= option for rootfs.
