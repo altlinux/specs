@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.0
-%define kernel_sublevel	.9
+%define kernel_sublevel	.10
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -613,6 +613,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Nov 26 2022 Kernel Bot <kernelbot@altlinux.org> 1:6.0.10-alt1
+- v6.0.10 (2022-11-26).
+
 * Wed Nov 16 2022 Kernel Bot <kernelbot@altlinux.org> 1:6.0.9-alt1
 - v6.0.9 (2022-11-16).
 - config: Enable CONFIG_CRASH_DUMP.
