@@ -1,9 +1,11 @@
 %define sover 0
 %define git %nil
 
+%define optflags_lto %nil
+
 Name: spirv-tools
 Version: 2022.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: API and commands for processing SPIR-V modules
@@ -93,6 +95,9 @@ ninja \
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
+* Wed Nov 23 2022 L.A. Kostis <lakostis@altlinux.ru> 1:2022.4-alt2
+- Disable LTO on (cause issues on ix86).
+
 * Sat Oct 15 2022 L.A. Kostis <lakostis@altlinux.ru> 1:2022.4-alt1
 - Updated to 2022.4.
 

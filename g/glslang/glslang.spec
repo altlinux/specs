@@ -1,8 +1,10 @@
 %define soname 11
 
+%define optflags_lto %nil
+
 Name: glslang
 Version: 11.12.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: OpenGL and OpenGL ES shader front end and validator
@@ -80,6 +82,9 @@ popd
 %_includedir/SPIRV
 
 %changelog
+* Wed Nov 23 2022 L.A. Kostis <lakostis@altlinux.ru> 1:11.12.0-alt2
+- Disable LTO (cause problems on ix86).
+
 * Sat Oct 15 2022 L.A. Kostis <lakostis@altlinux.ru> 1:11.12.0-alt1
 - 11.12.0 (branch sdk-1.3.231).
 

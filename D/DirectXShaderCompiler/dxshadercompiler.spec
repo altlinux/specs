@@ -1,10 +1,17 @@
 %define sover 3
 %define git 6f204c7
 %define rname dxcompiler
+%define llvm_ver 13.0
+%define gcc_ver 9
+
+%define optflags_lto %nil
+
+%def_without clang
+%def_with gcc
 
 Name: DirectXShaderCompiler
 Version: 1.6.2112
-Release: alt0.1.g%{git}
+Release: alt0.4.g%{git}
 
 Summary: DirectX Shader Compiler
 Group: Development/C++
@@ -14,14 +21,17 @@ URL: https://github.com/microsoft/DirectXShaderCompiler
 Packager: L.A. Kostis <lakostis@altlinux.org>
 
 Source: %name-%version.tar
-Patch: alt-spirv-tools-shared.patch
+Patch0: alt-spirv-tools-shared.patch
 
-# same as AMDVLK
-# anyway ppc64le doesn't compile
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 aarch64
 
 BuildRequires(pre): cmake
-BuildRequires: gcc-c++ ninja-build spirv-headers libspirv-tools-devel python3-devel git-core
+BuildRequires: ninja-build spirv-headers libspirv-tools-devel python3-devel git-core
+%if_with clang
+BuildRequires: clang%{llvm_ver} llvm%{llvm_ver}-devel libstdc++-devel
+%else
+BuildRequires: gcc%{gcc_ver}-c++ libstdc++%{gcc_ver}-devel
+%endif
 
 %description
 The DirectX Shader Compiler project includes a compiler and related tools used
@@ -47,13 +57,23 @@ Provides: lib%{rname} = %EVR
 
 %prep
 %setup -n %name-%version
-%patch -p1
+%autopatch -p1
 
 %build
+%if_with gcc
+export GCC_VERSION=%{gcc_ver} \
+%endif
 %cmake \
   -GNinja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+%if_with clang
+  -DCMAKE_C_COMPILER=clang \
+  -DCMAKE_CXX_COMPILER=clang++ \
+%else
   -DCMAKE_C_COMPILER=gcc \
   -DCMAKE_CXX_COMPILER=c++ \
+%endif
   -DSPIRV-Headers_SOURCE_DIR=%_prefix \
   -DSPIRV_BUILD_TESTS=OFF \
   -C ./cmake/caches/PredefinedParams.cmake
@@ -72,6 +92,20 @@ cp -ar %_cmake__builddir/bin/dxc* %buildroot%_bindir/
 %_libdir/lib%{rname}.so
 
 %changelog
+* Fri Nov 25 2022 L.A. Kostis <lakostis@altlinux.ru> 1.6.2112-alt0.4.g6f204c7
+- Compile w/ gcc9.
+- Add clang support (still doesn't compile).
+
+* Fri Nov 25 2022 L.A. Kostis <lakostis@altlinux.ru> 1.6.2112-alt0.3.g6f204c7
+- Added some fixes from upstream:
+  + Fix-incorrect-REGDB_E_CLASSNOTREG-value
+  + DxbcConverter-Fix-corruption-of-ICB-integer-values
+- Enable aarch64.
+
+* Wed Nov 23 2022 L.A. Kostis <lakostis@altlinux.ru> 1.6.2112-alt0.2.g6f204c7
+- Disable LTO (cause problems on ix86).
+- Set cmake release target.
+
 * Sat Oct 15 2022 L.A. Kostis <lakostis@altlinux.ru> 1.6.2112-alt0.1.g6f204c7
 - initial build for ALTLinux.
 - Compile only library and dxc tool (as required by AMDVLK driver).

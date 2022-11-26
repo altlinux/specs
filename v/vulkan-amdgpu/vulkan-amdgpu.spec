@@ -1,5 +1,6 @@
 %define _vklib amdvlk
 %define _vkdir %_datadir/vulkan/icd.d
+%define _vkldir %_datadir/vulkan/implicit_layer.d
 # Decrease debuginfo verbosity to reduce memory consumption during final library linking
 %define optflags_debug -g1
 # As ubuntu
@@ -10,16 +11,7 @@
 %def_with wayland
 %def_with shader_cache
 
-# play with optlevel
-%ifarch x86_64
-%define _optlevel 3
-%endif
-
 %define optflags_lto %nil
-
-#%%if_with clang
-#%%define optflags_lto -flto=thin
-#%%endif
 
 %ifarch x86_64
 %define bits 64
@@ -30,14 +22,13 @@
 
 Name: vulkan-amdgpu
 Version: 2022.Q4.2
-Release: alt4
+Release: alt5
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
 Group: System/X11
 
-# gpurt is broken on x86 https://github.com/GPUOpen-Drivers/gpurt/issues/5
-ExclusiveArch: x86_64
+ExclusiveArch: x86_64 %ix86
 
 Requires: vulkan-filesystem
 
@@ -62,6 +53,7 @@ Source4: llvm.tar
 Source5: metrohash.tar
 Source6: amd_icd.json
 Source7: cwpack.tar
+Source8: VK_LAYER_AMD_switchable_graphics.json
 
 %description
 The AMD Open Source Driver for Vulkan(r) is an open-source Vulkan driver for
@@ -101,22 +93,33 @@ export GCC_VERSION=%{gcc_ver} \
         -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
         -G Ninja
 
-%cmake_build
+ninja \
+	-vvv \
+	-j %__nprocs \
+	-C "%_cmake__builddir"
 
 %install
-mkdir -p %buildroot{%_vkdir,%_libdir,%_sysconfdir/amd}
+mkdir -p %buildroot{%_vkdir,%_vkldir,%_libdir,%_sysconfdir/amd}
 touch %buildroot%_sysconfdir/amd/amdVulkanSettings.cfg
 
 install -p -m644 %_builddir/xgl/%_cmake__builddir/icd/%_vklib%bits.so %buildroot%_libdir/%_vklib.so
-install -p -m644 %SOURCE6 %buildroot%_vkdir/amd_icd.json
+install -p -m644 %SOURCE6 %buildroot%_vkdir/
+install -p -m644 %SOURCE8 %buildroot%_vkldir/
 
 %files
 %_libdir/*.so
 %_vkdir/*.json
+%_vkldir/*.json
 %dir %_sysconfdir/amd
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Wed Nov 23 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q4.2-alt5
+- Add implicit switchable_graphics layers, apparently, libvulkan doesn't read
+  it from ICD json.
+- Disable excessive optimisation.
+- Restore i586 build (as dxc fixed now).
+
 * Mon Nov 21 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q4.2-alt4
 - Use upstream switches for clang.
 
