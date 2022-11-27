@@ -3,13 +3,13 @@
 %def_with test
 %define major 8.6
 %define tcloo 1.1.0
-%define itcl 4.2.2
-%define tdbc 1.1.3
-%define thread 2.8.7
+%define itcl 4.2.3
+%define tdbc 1.1.5
+%define thread 2.8.8
 %define zlib 2.0.1
 
 Name: tcl
-Version: 8.6.12
+Version: 8.6.13
 Release: alt1
 
 Summary: The Tool Command Language (TCL)
@@ -312,6 +312,9 @@ EOF
 %files pkgs-devel
 
 %changelog
+* Sun Nov 27 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.13-alt1
+- Updated to 8.6.13.
+
 * Mon Nov 08 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 8.6.12-alt1
 - Updated to 8.6.12.
 
