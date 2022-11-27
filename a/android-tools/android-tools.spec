@@ -3,7 +3,7 @@
 
 Name: android-tools
 Version: 10.0.0
-Release: alt4.r36
+Release: alt5.r36
 
 Summary: Android Debug CLI tools
 License: APL
@@ -43,6 +43,9 @@ Patch32: 20150704-CVE-2015-3239_dwarf_i.h.patch
 # patch from OpenMandriva
 Patch100: libcrypto_utils-openssl-1.1.patch
 Patch101: adb-system-openssl.patch
+
+# misc patches
+Patch150: adb-usb_linux-fix-usb_handle.patch
 
 # ALT patches
 Patch200: alt-libbacktrace-fix-GetErrorString-return.patch
@@ -114,6 +117,10 @@ pushd system/core
 %patch204 -p1
 %patch205 -p1
 %patch206 -p1
+popd
+
+pushd system/core/adb
+%patch150 -p1
 popd
 
 pushd system/extras
@@ -276,6 +283,11 @@ done
 %aprefix
 
 %changelog
+* Sun Nov 27 2022 Pavel Nakonechnyi <zorg@altlinux.org> 10.0.0-alt5.r36
+- Fix build failure with new Linux kernel headers
+  See https://github.com/torvalds/linux/commit/94dfc73e7cf4a31da66b8843f0b9283ddd6b8381
+  https://github.com/nmeum/android-tools/issues/74
+
 * Sat Mar 19 2022 Pavel Nakonechnyi <zorg@altlinux.org> 10.0.0-alt4.r36
 - remove p7zip from link dependencies: replacing it with llzma (from Debian)
 
