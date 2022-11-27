@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
-%define mname imap_tools
+%define module_name imap_tools
 
-Name: python3-module-%mname
-Version: 0.55.0
+Name: python3-module-%module_name
+Version: 1.0.0
 Release: alt1
-Summary: Working with email and mailbox using IMAP protocol
+Summary: High level lib for work with email by IMAP
 License: Apache-2.0
 Group: Development/Python3
 Url: https://github.com/ikvk/imap_tools
@@ -12,45 +12,38 @@ Source: %name-%version.tar
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
-Features:
+High level lib for work with email by IMAP:
+- Basic message operations: fetch, uids, numbers
 - Parsed email message attributes
-- Query builder for searching emails
-- Work with emails in folders (copy, delete, flag, move, seen)
-- Work with mailbox folders (list, set, get, create, exists, rename, delete, status)
-- No dependencies
-
-%package -n %name-tests
-Summary: Tests for %name
-Group: Development/Python3
-BuildArch: noarch
-
-%description -n %name-tests
-This package contains tests for %name.
+- Query builder for search criteria
+- Actions with emails: copy, delete, flag, move, append
+- Actions with folders: list, set, get, create, exists, rename, subscribe, delete, status
+- IDLE commands: start, poll, stop, wait
+- Exceptions on failed IMAP operations
+- No external dependencies, tested
 
 %prep
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-cp -pr tests %buildroot%python3_sitelibdir/%mname
-rm -rf %buildroot%python3_sitelibdir/tests
+%pyproject_install
 
 %files
-%python3_sitelibdir/%mname
-%python3_sitelibdir/%mname-%version-py%_python3_version.egg-info
-%exclude %python3_sitelibdir/%mname/tests
+%python3_sitelibdir/%module_name
+%python3_sitelibdir/%module_name-%version.dist-info
 %doc LICENSE README.rst
 
-%files -n %name-tests
-%python3_sitelibdir/%mname/tests
-
 %changelog
+* Sat Nov 26 2022 Alexander Makeenkov <amakeenk@altlinux.org> 1.0.0-alt1
+- Updated to version 1.0.0
+
 * Thu Jun 02 2022 Alexander Makeenkov <amakeenk@altlinux.org> 0.55.0-alt1
 - Updated to version 0.55.0
 
