@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: timeshift
-Version: 22.06.6
+Version: 22.11.1
 Summary: System restore tool for Linux
 Release: alt1
 License: GPLv3
 Group: Archiving/Backup
-URL: https://github.com/teejee2008/timeshift.git
+URL: https://github.com/linuxmint/timeshift
 Source: %name-%version.tar
 
 BuildRequires: vala
@@ -36,7 +36,6 @@ rm -f %buildroot%_bindir/%name-uninstall
 %_bindir/%name
 %_bindir/%name-gtk
 %_bindir/%name-launcher
-%_man1dir/%name.1.xz
 %_datadir/%name/images/*
 %_sysconfdir/%name/default.json
 %_desktopdir/%name-gtk.desktop
@@ -44,9 +43,14 @@ rm -f %buildroot%_bindir/%name-uninstall
 %_datadir/metainfo/%name.appdata.xml
 %_pixmapsdir/%name.png
 %_datadir/polkit-1/actions/in.teejeetech.pkexec.timeshift.policy
+%exclude %_man1dir/%name.1.gz.xz
 %doc README.md
 
 %changelog
+* Sun Nov 27 2022 Alexander Makeenkov <amakeenk@altlinux.org> 22.11.1-alt1
+- Updated to version 22.11.1
+- Switched to new upstream
+
 * Fri Nov 11 2022 Alexander Makeenkov <amakeenk@altlinux.org> 22.06.6-alt1
 - Updated to version 22.06.6
 
