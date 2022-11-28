@@ -1,12 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Amon2
-Version: 6.15
+Version: 6.16
 Release: alt1
 Summary: Amon2 - lightweight web application framework
 
 Group: Development/Perl
 License: Perl
 Url: %CPAN Amon2
+VCS: https://github.com/tokuhirom/Amon.git
 
 BuildArch: noarch
 Source: %name-%version.tar
@@ -34,6 +35,9 @@ BuildRequires: perl-Module-Build-Tiny perl-Module-CPANfile perl-Router-Boom perl
 %doc Changes
 
 %changelog
+* Mon Nov 28 2022 Igor Vlasenko <viy@altlinux.org> 6.16-alt1
+- new version 6.16
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 6.15-alt1
 - new version
 
