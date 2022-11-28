@@ -8,8 +8,8 @@
 %define xdg_name com.rawtherapee.RawTherapee
 
 Name: rawtherapee
-Version: 5.8%{?_enable_snapshot:.%git_distance}
-Release: alt2
+Version: 5.9%{?_enable_snapshot:.%git_distance}
+Release: alt1
 
 Summary: THe Experimental RAw Photo Editor
 License: GPLv3+
@@ -25,18 +25,15 @@ Source: rawtherapee-%version.tar
 Source: https://github.com/Beep6581/RawTherapee/releases/download/%version/%name-%version.tar.xz
 %endif
 
-#https://github.com/Beep6581/RawTherapee/issues/6324
-# backport of https://github.com/Beep6581/RawTherapee/commit/2e0137d54243eb729d4a5f939c4320ec8f8f415d.patch by fc
-Patch: %name-5.8-fc-glibc-2.34.patch
-
-%define gtk_ver 3.24.7
+%define gtk_ver 3.22.24
 %define tiff_ver 4.0.4
 %define rsvg_ver 2.40
 
 Requires: %name-data = %version-%release
 Requires: libgtk+3 >= %gtk_ver
 
-BuildRequires(pre): cmake >= 2.8.8
+BuildRequires(pre): rpm-macros-cmake >= 2.8.8
+BuildRequires: cmake >= 2.8.8
 %{?_enable_snapshot:BuildRequires: git}
 BuildRequires: libgtk+3-devel >= %gtk_ver librsvg-devel >= %rsvg_ver
 BuildRequires: libtiff-devel >= %tiff_ver
@@ -60,12 +57,12 @@ This package provides noarch data needed for Raw Therapee to work.
 
 %prep
 %setup
-%patch -p1
 # Do not install useless rtstart:
 subst "s|install (PROGRAMS rtstart|\#install (PROGRAMS rtstart|" CMakeLists.txt
 
 %build
-%define optflags -O3 -g
+%define _optlevel 3
+%define optflags -O%_optlevel -g
 %add_optflags %(getconf LFS_CFLAGS)
 %cmake -DCMAKE_BUILD_TYPE:STRING="Release" \
 	%{?_disable_snapshot:-DCACHE_NAME_SUFFIX=""} \
@@ -80,7 +77,7 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %files
 %_bindir/%name
 %_bindir/%name-cli
-%doc AUTHORS.txt LICENSE.txt RELEASE_NOTES.txt
+%doc AUTHORS.txt LICENSE RELEASE_NOTES.txt
 
 %files data
 %_desktopdir/%name.desktop
@@ -90,6 +87,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Mon Nov 28 2022 Yuri N. Sedunov <aris@altlinux.org> 5.9-alt1
+- 5.9
+
 * Thu Oct 14 2021 Yuri N. Sedunov <aris@altlinux.org> 5.8-alt2
 - fixed build with glibc-2.34
 
