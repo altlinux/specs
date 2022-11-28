@@ -1,6 +1,6 @@
 %define soname 1
 Name: srt
-Version: 1.4.4
+Version: 1.5.1
 Release: alt1
 Summary: Secure Reliable Transport protocol tools
 Group: Networking/Other
@@ -13,6 +13,7 @@ BuildRequires: cmake gcc-c++
 BuildRequires: libgnutls-devel libnettle-devel libp11-kit-devel libidn2-devel libtasn1-devel
 BuildRequires: libgmock-devel
 BuildRequires: libgtest-devel
+BuildRequires: zlib-devel
 
 Requires: libsrt%soname = %EVR
 
@@ -27,13 +28,6 @@ Summary: Secure Reliable Transport protocol libraries
 
 %description -n libsrt%soname
 Secure Reliable Transport protocol libraries.
-
-%package tests
-Group: Development/Other
-Summary: Tests for the %name
-
-%description tests
-Test suite for Secure Reliable Transport protocol libraries.
 
 %package -n libsrt-devel
 Group: Development/Other
@@ -75,9 +69,6 @@ rm -f %buildroot/%_libdir/pkgconfig/haisrt.pc
 %_bindir/srt-live-transmit
 %_bindir/srt-tunnel
 
-%files tests
-%_bindir/*test*
-
 %files -n libsrt%soname
 %doc LICENSE
 %_libdir/libsrt.so.%{soname}*
@@ -89,6 +80,9 @@ rm -f %buildroot/%_libdir/pkgconfig/haisrt.pc
 %_libdir/pkgconfig/srt.pc
 
 %changelog
+* Mon Nov 28 2022 Anton Farygin <rider@altlinux.ru> 1.5.1-alt1
+- 1.5.1
+
 * Sun Oct 10 2021 Anton Farygin <rider@altlinux.ru> 1.4.4-alt1
 - 1.4.4
 
