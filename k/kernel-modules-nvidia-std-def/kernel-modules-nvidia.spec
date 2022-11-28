@@ -7,10 +7,10 @@
 %define modesetmodule_name	nvidia-modeset
 %define uvmmodule_name		nvidia-uvm
 %define drmmodule_name		nvidia-drm
-%define package_version	515.76
+%define package_version	515.86.01
 %define module_version	%package_version
 %ifarch %ix86 armh
-%define module_version	390.154
+%define module_version	390.157
 %endif
 %define module_release	alt1
 %define flavour		std-def
@@ -25,13 +25,13 @@
 
 %define legacy7 %nil
 %nvIF_ver_lt %xorg_ver 99
-%define legacy7 470.141.03
+%define legacy7 470.161.03
 %endif
 %define legacy7_src %(echo %legacy7 | tr -d .)
 
 %define legacy6 %nil
 %nvIF_ver_lt %xorg_ver 99
-%define legacy6 390.154
+%define legacy6 390.157
 %endif
 %define legacy6_src %(echo %legacy6 | tr -d .)
 
@@ -294,6 +294,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Nov 28 2022 Sergey V Turchin <zerg at altlinux dot org> 515.86.01-alt1
+- new releases (515.86.01, 470.161.03, 390.157)
 
 * Tue Oct 25 2022 Sergey V Turchin <zerg at altlinux dot org> 515.76-alt1
 - new release (515.76)

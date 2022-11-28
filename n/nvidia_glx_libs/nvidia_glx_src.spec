@@ -6,11 +6,7 @@
 %endif
 %define dirsuffix %nil
 
-%define nvidia_ml_sover 1
-%define nvidia_ptxjitcompiler_sover 1
-%define nvidia_cuda_sover 1
-%define nvidia_opencl_sover 1
-%define nvidia_egl_wayland_sover 1
+%define nvidia_sover 1
 %define nvidia_egl_wayland_libver 1.0.2
 %define libnvidia_egl_wayland libnvidia-egl-wayland%nvidia_egl_wayland_sover
 
@@ -20,8 +16,8 @@
 %define subd ./
 %endif
 
-Name: nvidia_glx_src
-Version: 515.76
+Name: nvidia_glx_libs
+Version: 515.86.01
 Release: alt1
 
 ExclusiveArch: %ix86 x86_64 aarch64
@@ -89,10 +85,23 @@ Provides: libnvidia-nvcuvid = %version-%release
 %description -n libnvcuvid
 nvidia library
 
+%package -n libnvoptix
+Group: System/Libraries
+Summary: nvidia library
+Provides: libnvidia-nvcuvid = %version-%release
+%description -n libnvoptix
+nvidia library
+
 %package -n libnvidia-encode
 Group: System/Libraries
 Summary: nvidia library
 %description -n libnvidia-encode
+nvidia library
+
+%package -n libnvidia-ngx
+Group: System/Libraries
+Summary: nvidia library
+%description -n libnvidia-ngx
 nvidia library
 
 %prep
@@ -121,6 +130,10 @@ install -m 0644 %subd/libnvidia-ptxjitcompiler.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-ml.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvcuvid.so.%version %buildroot/%_libdir/
 install -m 0644 %subd/libnvidia-encode.so.%version %buildroot/%_libdir/
+%if "%_lib" != "lib"
+install -m 0644 %subd/libnvoptix.so.%version %buildroot/%_libdir/
+install -m 0644 %subd/libnvidia-ngx.so.%version %buildroot/%_libdir/
+%endif
 mkdir -p %buildroot/%_sysconfdir/OpenCL/vendors/
 install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 
@@ -128,30 +141,43 @@ install -m 0644 nvidia.icd %buildroot/%_sysconfdir/OpenCL/vendors/
 
 %files -n libnvidia-ptxjitcompiler
 %_libdir/libnvidia-ptxjitcompiler.so.%version
-%_libdir/libnvidia-ptxjitcompiler.so.%{nvidia_ptxjitcompiler_sover}
+%_libdir/libnvidia-ptxjitcompiler.so.%{nvidia_sover}
 
 %files -n libnvidia-ml
 %_libdir/libnvidia-ml.so.%version
-%_libdir/libnvidia-ml.so.%{nvidia_ml_sover}
+%_libdir/libnvidia-ml.so.%{nvidia_sover}
 
 %files -n libcuda
-%_libdir/libcuda.so.%{nvidia_cuda_sover}
+%_libdir/libcuda.so.%{nvidia_sover}
 %_libdir/libcuda.so.%version
 
 %files -n libnvidia-opencl
-%_libdir/libnvidia-opencl.so.%{nvidia_opencl_sover}
+%_libdir/libnvidia-opencl.so.%{nvidia_sover}
 %_libdir/libnvidia-opencl.so.%version
 %_sysconfdir/OpenCL/vendors/nvidia.icd
 
 %files -n libnvcuvid
-%_libdir/libnvcuvid.so.%{nvidia_opencl_sover}
+%_libdir/libnvcuvid.so.%{nvidia_sover}
 %_libdir/libnvcuvid.so.%version
 
 %files -n libnvidia-encode
-%_libdir/libnvidia-encode.so.%{nvidia_opencl_sover}
+%_libdir/libnvidia-encode.so.%{nvidia_sover}
 %_libdir/libnvidia-encode.so.%version
 
+%if "%_lib" != "lib"
+%files -n libnvidia-ngx
+%_libdir/libnvidia-ngx.so.%{nvidia_sover}
+%_libdir/libnvidia-ngx.so.%version
+%files -n libnvoptix
+%_libdir/libnvoptix.so.%{nvidia_sover}
+%_libdir/libnvoptix.so.%version
+%endif
+
 %changelog
+* Fri Nov 25 2022 Sergey V Turchin <zerg@altlinux.org> 515.86.01-alt1
+- new version
+- package libnvoptix and libnvidia-ngx
+
 * Tue Oct 25 2022 Sergey V Turchin <zerg@altlinux.org> 515.76-alt1
 - new version
 
