@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.76.1.vz7.189.6
-%define orelease 1160.76.1.vz7.189.6
+#     rh7-3.10.0-1160.76.1.vz7.189.9
+%define orelease 1160.76.1.vz7.189.9
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -600,6 +600,10 @@ grep beancounter boot.log
 
 
 %changelog
+* Tue Nov 29 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.76.1.vz7.189.9
+- Build rh7-3.10.0-1160.76.1.vz7.189.9
+- config: add E100 eth driver (ALT #44396)
+
 * Fri Nov 11 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.76.1.vz7.189.6
 - Build rh7-3.10.0-1160.76.1.vz7.189.6
 - Use GCC 10
