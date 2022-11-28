@@ -4,8 +4,8 @@
 %define cid_dict       ru@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	31.2.0
-%define max_version	31.3.*
+%define min_version	31.3.0
+%define max_version	31.4.*
 
 %define bname		newmoon
 %define sdir		searchplugins
@@ -14,7 +14,7 @@
 
 Name: palemoon-ru
 
-Version: 31.3.0
+Version: 31.4.0
 Release: alt1
 
 ExcludeArch: %ix86 %arm
@@ -34,8 +34,9 @@ Source2: searchplugins.tar
 Patch:   %name-31.1.0-search.patch
 #Patch2:	 %name-27.3.0-advanced.patch
 
-Requires: palemoon >= 31.2.0
+Requires: palemoon >= 31.3.0
 Requires: hunspell-ru
+Requires: palemoon-searchplugins
 
 Obsoletes: palemoon-ru_yo-dictionary palemoon-ru_ie-dictionary
 Provides: palemoon-ru_yo-dictionary palemoon-ru_ie-dictionary
@@ -70,7 +71,6 @@ The set of search plugins for Palemoon
 #patch2 -p2
 
 tar -xf %SOURCE2
-
 
 
 %install
@@ -130,6 +130,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%cid_dict_dir/dictionaries/ru.dic
 %search_dir
 
 %changelog
+* Mon Nov 28 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.4.0-alt1
+- Version 31.4.0
+
 * Sun Oct 16 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.3.0-alt1
 - Uppdate to release 31.3.0
 
