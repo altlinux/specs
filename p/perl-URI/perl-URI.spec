@@ -1,10 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Test/Fatal.pm) perl(Test/Warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 %define dist URI
 Name: perl-%dist
-Version: 5.16
+Version: 5.17
 Release: alt1
 
 Summary: A Perl interface for URI objects
@@ -40,6 +40,9 @@ Resource Identifier (URI) references as specified in RFC 2396.
 %perl_vendor_privlib/URI*
 
 %changelog
+* Mon Nov 28 2022 Igor Vlasenko <viy@altlinux.org> 5.17-alt1
+- automated CPAN update
+
 * Wed Oct 12 2022 Igor Vlasenko <viy@altlinux.org> 5.16-alt1
 - automated CPAN update
 
