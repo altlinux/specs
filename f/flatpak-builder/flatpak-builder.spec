@@ -9,7 +9,7 @@
 %{?_enable_docs:%def_enable docbook_docs}
 
 Name: flatpak-builder
-Version: 1.2.2
+Version: 1.2.3
 Release: alt1
 Epoch:1
 
@@ -91,6 +91,9 @@ See http://flatpak.org/ for more information.
 %{?_enable_docbook_docs:%doc %_docdir/%name}}
 
 %changelog
+* Mon Nov 28 2022 Yuri N. Sedunov <aris@altlinux.org> 1:1.2.3-alt1
+- 1.2.3
+
 * Wed Jan 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1:1.2.2-alt1
 - 1.2.2 (fixed CVE-2022-21682)
 
