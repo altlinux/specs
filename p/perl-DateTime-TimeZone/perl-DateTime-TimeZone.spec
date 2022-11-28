@@ -5,7 +5,7 @@ BuildRequires: perl(DateTime/Locale.pm)
 %define dist DateTime-TimeZone
 %def_without bootstrap
 Name: perl-%dist
-Version: 2.55
+Version: 2.56
 Release: alt1
 
 Summary: Time zone object base class and factory
@@ -87,6 +87,9 @@ fi
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Mon Nov 28 2022 Igor Vlasenko <viy@altlinux.org> 2.56-alt1
+- automated CPAN update
+
 * Wed Oct 12 2022 Igor Vlasenko <viy@altlinux.org> 2.55-alt1
 - automated CPAN update
 
