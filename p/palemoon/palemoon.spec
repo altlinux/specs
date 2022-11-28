@@ -1,11 +1,11 @@
-# git commit 89e277c7092145f8b3db750563b8ba36147b4c33
+# git commit ebb86b36d8e5ad3e39a8ea74e07ec8cac80598b5
 Summary: The New Moon browser, an unofficial branding of the Pale Moon project browser
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version:  31.3.1
+Version:  31.4.0
 
-Release: alt0_git1_89e277
+Release: alt1
 
 License: MPL-2.0 GPL-3.0 and LGPL-2.1+
 Group: Networking/WWW
@@ -286,7 +286,7 @@ MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS | \
                 sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
 
 export CFLAGS="$MOZ_OPT_FLAGS"
-export CXXFLAGS="$MOZ_OPT_FLAGS -Wmaybe-uninitialized -Wreorder -D_GNUC_"
+export CXXFLAGS="$MOZ_OPT_FLAGS -Wno-error=format-overflow -Wmaybe-uninitialized -Wreorder -D_GNUC_"
 
 
 # Add fake RPATH
@@ -499,8 +499,11 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %exclude %_includedir/*
 
 %changelog
+* Mon Nov 28 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.4.0-alt1
+- Version 31.4.0
+
 * Sat Oct 29 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.3.1-alt0_git1_89e277
--  Version 31.3.1_RC1
+- Version 31.3.1_RC1
 
 * Tue Oct 25 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.3.0.1-alt2.2
 - Build with gcc10
@@ -896,4 +899,3 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 
 * Sun Jun 28 2015 Hihin Ruslan <ruslandh@altlinux.ru> 25.5.01-alt0.1
 - initial build for ALT Linux Sisyphus
-
