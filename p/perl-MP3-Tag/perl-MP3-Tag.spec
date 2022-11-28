@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 BuildRequires: unzip
 %add_findreq_skiplist %perl_vendor_privlib/MP3/Tag/ID3v2.pm
 
@@ -17,7 +18,7 @@ BuildRequires: unzip
 %def_enable test
 
 Name: perl-MP3-Tag
-Version: 1.15
+Version: 1.16
 Release: alt1
 
 Summary: Module for reading tags of MP3 audio files
@@ -52,13 +53,16 @@ obtained by parsing CDDB files, .inf file and the filename).
 %perl_vendor_install
 
 %files
-%doc README.shrink Changes README.txt TODO examples
+%doc README.shrink Changes README.txt examples
 %perl_vendor_privlib/MP3*
 %perl_vendor_privlib/Normalize
 %perl_vendor_privlib/Encode/transliterate_win1251.pm
 
 
 %changelog
+* Mon Nov 28 2022 Igor Vlasenko <viy@altlinux.org> 1.16-alt1
+- automated CPAN update
+
 * Wed Mar 27 2019 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
 - automated CPAN update
 
