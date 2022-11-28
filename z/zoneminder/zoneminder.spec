@@ -6,7 +6,7 @@
 ExcludeArch: armh
 
 Name: zoneminder
-Version: 1.36.31
+Version: 1.36.32
 Release: alt2
 Summary: A camera monitoring and analysis tool
 Group: System/Servers 
@@ -172,6 +172,9 @@ cp db/*.sql %buildroot%_datadir/%name/db
 %_datadir/%name/www/api
 
 %changelog
+* Mon Nov 28 2022 Anton Farygin <rider@altlinux.ru> 1.36.32-alt2
+- 1.36.31 -> 1.36.32
+
 * Sat Nov 12 2022 Anton Farygin <rider@altlinux.ru> 1.36.31-alt2
 - migrated to php8.1 by default
 - fixed socket path in zm-fcgi.inc (closes: #44190)
