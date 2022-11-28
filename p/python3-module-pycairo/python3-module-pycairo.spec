@@ -4,7 +4,7 @@
 
 %define modname cairo
 %define oname py%modname
-%define ver_major 1.22
+%define ver_major 1.23
 
 Name: python3-module-%oname
 Version: %ver_major.0
@@ -150,6 +150,9 @@ rm -fR %python3_sitelibdir/%oname/pickle
 %endif
 
 %changelog
+* Mon Nov 28 2022 Yuri N. Sedunov <aris@altlinux.org> 1.23.0-alt1
+- 1.23.0
+
 * Sat Nov 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
 - 1.22.0
 
