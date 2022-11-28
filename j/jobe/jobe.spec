@@ -1,7 +1,7 @@
 %define php_version 8.0
 
 Name:    jobe
-Version: 1.6.7
+Version: 1.7.0
 Release: alt1
 
 Summary: jobe is a server that runs small programming jobs in a variety of programming languages
@@ -110,6 +110,9 @@ a2ensite %name
 %files -n %name-mysql
 
 %changelog
+* Mon Nov 28 2022 Andrey Cherepanov <cas@altlinux.org> 1.7.0-alt1
+- New version.
+
 * Tue Aug 23 2022 Andrey Cherepanov <cas@altlinux.org> 1.6.7-alt1
 - New version.
 - Requires PHP 8.0.
