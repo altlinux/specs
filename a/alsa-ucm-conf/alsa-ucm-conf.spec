@@ -1,6 +1,6 @@
 Name: alsa-ucm-conf
 Version: 1.2.8
-Release: alt2
+Release: alt3
 
 Summary: Advanced Linux Sound Architecture (ALSA) Use Case Manager data
 License: BSD-3-Clause
@@ -13,6 +13,7 @@ Patch8: 0008-tegra-Add-UCM-for-RT5631-based-ASUS-Transformers.patch
 Patch9: 0009-tegra-Add-UCM-for-WM8903-based-ASUS-Transformers.patch
 Patch10: 0010-rt5631-add-headset-support.patch
 Patch11: 0011-wm8903-replace-amic-control-element.patch
+Patch12: 0012-ucm2-sof-essx8336-HiFi_fix_disdevall_and_EN_headset.patch
 
 BuildArch: noarch
 
@@ -29,6 +30,7 @@ in a standalone repository.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %build
 
@@ -41,6 +43,15 @@ cp -at %buildroot%alsadata -- ucm*
 %doc LICENSE
 
 %changelog
+* Mon Nov 28 2022 Vasiliy Kovalev <kovalev@altlinux.org> 1.2.8-alt3
+- sof-essx8336: remove unneeded upstream patches and add patch for
+  HiFi.conf instead:
+  + it forbids disabling all devices in the EnableSequence section,
+    which blocked the detection of hdmi audio outputs and normal
+    configuration in general
+  + fix operation sequence section of the headset for correct
+    configuration and avoiding conflict with the built-in microphone
+
 * Wed Nov 23 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.8-alt2
 - readd support for ASUS Transformers
 
