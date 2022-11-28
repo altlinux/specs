@@ -8,7 +8,7 @@
 %define rev %nil
 
 Name: courier-authlib
-Version: 0.71.5
+Version: 0.71.6
 Release: alt1%rev
 Summary: Courier authentication library -- tool and utilities
 License: GPL-3
@@ -24,14 +24,14 @@ Source1: courier-authdaemon.init
 Source2: courier-authlib.README-ALT.utf8
 Source3: courier-authdaemon.service
 
-Patch0: %name-%version-alt-makefiles.patch
+Patch0: %name-0.71.5-alt-makefiles.patch
 Patch1: %name-0.71.3-alt-dat2db.patch
 Patch2: %name-0.66.4-alt-config.patch
 Patch3: %name-0.59.1-alt-addlock.patch
 
 # Automatically added by buildreq on Mon May 23 2005
 BuildRequires: gcc-c++ libMySQL-devel libssl-devel libdb4-devel libldap-devel libltdl-devel
-BuildRequires: libpam-devel libstdc++-devel postgresql-devel zlib-devel expect
+BuildRequires: libpam-devel libstdc++-devel libpq-devel zlib-devel expect
 BuildRequires: libsqlite3-devel courier-unicode-devel >= 2.2.3 libidn-devel
 
 %add_findprov_lib_path %_libdir/%name
@@ -351,6 +351,10 @@ chown courier:courier %_sysconfdir/%name/authdaemon-sqlite.conf
 %_libdir/%name/libauthsqlite*.so.*
 
 %changelog
+* Mon Nov 28 2022 L.A. Kostis <lakostis@altlinux.ru> 0.71.6-alt1
+- 0.71.6.
+- BR: Replace postgresql-devel -> libpq-devel.
+
 * Thu Sep 01 2022 L.A. Kostis <lakostis@altlinux.ru> 0.71.5-alt1
 - 0.71.5.
 - add missing /usr/bin/makedatprog deps for -userdb (ALT#43653).

@@ -15,8 +15,8 @@
 %endif
 
 Name: courier-imap
-Version: 5.1.8
-Release: alt1%rev
+Version: 5.1.9
+Release: alt2%rev
 
 Summary: IMAP/POP3 server with Maildir support
 License: GPL-3
@@ -248,6 +248,16 @@ done
 %ghost %attr(0600,courier,courier) %courier_localstatedir/couriersslpop3cache
 
 %changelog
+* Mon Nov 28 2022 L.A. Kostis <lakostis@altlinux.ru> 5.1.9-alt2
+- disable valgrind check on aarch64 (our valgrind lacks
+  needed suppresions).
+
+* Mon Nov 28 2022 L.A. Kostis <lakostis@altlinux.ru> 5.1.9-alt1
+- 5.1.9.
+
+* Wed Sep 14 2022 L.A. Kostis <lakostis@altlinux.ru> 5.1.8-alt2
+- enable valgrind check on aarch64.
+
 * Mon Sep 12 2022 L.A. Kostis <lakostis@altlinux.ru> 5.1.8-alt1
 - 5.1.8.
 - .spec:

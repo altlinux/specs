@@ -3,7 +3,7 @@
 
 Summary: CONE mail reader
 Name: cone
-Version: 1.6
+Version: 1.7
 Release: alt0.1
 Url: http://www.courier-mta.org/cone
 Source0: %name-%version.tar.bz2
@@ -99,6 +99,9 @@ echo 'and earlier'
 %endif
 
 %changelog
+* Mon Nov 28 2022 L.A. Kostis <lakostis@altlinux.ru> 1.7-alt0.1
+- 1.7.
+
 * Tue Sep 13 2022 L.A. Kostis <lakostis@altlinux.ru> 1.6-alt0.1
 - 1.6.
 - app-defaults: optimize.
