@@ -1,8 +1,8 @@
 %define optflags_lto %nil
 
 Name: gzdoom
-Version: 4.8.2
-Release: alt2
+Version: 4.9.0
+Release: alt1
 
 Summary: Enhanced Doom engine
 Summary(ru_RU.UTF-8): Продвинутый порт движка Doom
@@ -106,6 +106,8 @@ done
 %_datadir/%name/soundfonts/%name.sf2
 
 %changelog
+* Mon Nov 28 2022 Artyom Bystrov <arbars@altlinux.org> 4.9.0-alt1
+- Update to new version
 
 * Sat Jul 09 2022 Artyom Bystrov <arbars@altlinux.org> 4.8.2-alt2
 - Add "e2k" to ExclusiveArch
