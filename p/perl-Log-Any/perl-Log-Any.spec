@@ -3,7 +3,7 @@
 BuildRequires: perl(ExtUtils/MakeMaker.pm)
 # END SourceDeps(oneline)
 Name: perl-Log-Any
-Version: 1.710
+Version: 1.711
 Release: alt1
 
 Summary: Log::Any - bringing loggers and listeners together
@@ -44,6 +44,9 @@ The application, in turn, may choose one or more logging mechanisms via Log::Any
 %perl_vendor_privlib/Log/Any*
 
 %changelog
+* Mon Nov 28 2022 Igor Vlasenko <viy@altlinux.org> 1.711-alt1
+- automated CPAN update
+
 * Tue Aug 17 2021 Igor Vlasenko <viy@altlinux.org> 1.710-alt1
 - automated CPAN update
 
