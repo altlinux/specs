@@ -13,7 +13,7 @@
 
 Name: bluez-alsa
 Version: 4.0.0
-Release: alt0.1
+Release: alt0.2
 Epoch: 5
 Summary: BlueZ ALSA backend for Linux
 License: MIT
@@ -34,6 +34,8 @@ BuildRequires: systemd-devel libdbus-glib-devel, libbluez-devel, libalsa-devel, 
 BuildRequires: libspandsp3-devel
 # Helper library for dumping incoming BT data
 BuildRequires: libsndfile-devel
+# bash-completion
+BuildRequires: bash-completion
 %{?_enable_aptx:BuildRequires: libfreeaptx-devel}
 %{?_enable_aac:BuildRequires: libfdk-aac-devel}
 %{?_enable_ldac:BuildRequires: libldac-devel}
@@ -42,6 +44,8 @@ BuildRequires: libsndfile-devel
 %{?_enable_test:BuildRequires: libcheck-devel}
 %{?_enable_l3plus:BuildRequires: libl3plus-devel}
 %{?_enable_cli:BuildRequires: libreadline-devel}
+# for hcitop
+BuildRequires: libbsd-devel libncurses-devel
 
 %description
 This project is a rebirth of a direct integration between Bluez and ALSA.
@@ -62,6 +66,15 @@ Requires: %name = %version-%release
 
 %description -n bash-completion-%name
 Bash completion for %name.
+
+%package -n hcitop
+Summary: a simple dynamic view of HCI activity
+Group: System/Configuration/Other
+
+%description -n hcitop
+hcitop provides a dynamic real-time view of activity statistics for each
+HCI interface. The view is refreshed at regular intervals, and also on demand
+by pressing a key. To quit the program press the 'q' key, or use Ctrl-C.
 
 %prep
 %setup -q
@@ -89,7 +102,8 @@ Bash completion for %name.
 	--enable-manpages \
 	--enable-msbc \
 	--enable-faststream \
-	--enable-rfcomm
+	--enable-rfcomm \
+	--enable-hcitop
 
 %install
 %make DESTDIR=%buildroot install
@@ -102,18 +116,27 @@ Bash completion for %name.
 %files
 %doc README.md NEWS LICENSE AUTHORS
 %_bindir/*
+%exclude %_bindir/hcitop
 %_libdir/alsa-lib/*.so
 %_datadir/alsa/alsa.conf.d/*.conf
 %_sysconfdir/dbus-1/system.d/*.conf
 %_unitdir/*.service
 %_man1dir/*
+%exclude %_man1dir/hcitop.1*
 %_man7dir/*
 %_man8dir/*
+
+%files -n hcitop
+%_bindir/hcitop
+%_man1dir/hcitop.1*
 
 %files -n bash-completion-%name
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Mon Nov 28 2022 L.A. Kostis <lakostis@altlinux.ru> 5:4.0.0-alt0.2
+- Enable hcitop.
+
 * Sun Nov 27 2022 L.A. Kostis <lakostis@altlinux.ru> 5:4.0.0-alt0.1
 - 4.0.0.
 - Enable -cli/-rfcomm utils.
