@@ -1,6 +1,6 @@
 %def_enable snapshot
 
-%define ver_major 0.4
+%define ver_major 0.6
 %define beta %nil
 %define pypi_name blueprintcompiler
 %def_disable docs
@@ -55,6 +55,9 @@ See also https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/
 %doc NEWS* README*
 
 %changelog
+* Sun Nov 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Mon Oct 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - first build for Sisyphus
 
