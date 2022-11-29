@@ -1,16 +1,15 @@
 Name: iputils
-%define timestamp 20211215
+%define timestamp 20221126
 Version: %timestamp
 Release: alt1
 
 Summary: Utilities for IPv4/IPv6 networking
-License: BSD-3-Clause and GPL-2.0+ and Rdisc
+License: BSD-3-Clause and GPL-2.0+
 Group: Networking/Other
 Url: https://github.com/iputils/iputils
 
 Source0: %name-%version.tar
 Source1: ping.control
-Source2: ninfod.init
 Patch: %name-%version-%release.patch
 
 Conflicts: netkit-base
@@ -33,20 +32,9 @@ BuildRequires: docbook5-style-xsl xsltproc
 %description
 The iputils package contains basic utilities for monitoring a network:
 + clockdiff - measures clock difference;
-+ ping/ping6 - sends ICMP ECHO_REQUEST packets to network hosts;
++ ping - sends ICMP ECHO_REQUEST packets to network hosts;
 + arping - ping by ARP packets;
-+ rdisc - classic router discovery daemon;
-+ tracepath/tracepath6 - traces path to destination discovering MTU
-along this path.
-
-%package -n ninfod
-Group: Networking/Other
-Summary: Node Information Query Daemon
-License: BSD-3-Clause
-
-%description -n ninfod
-Node Information Query (RFC4620) daemon. Responds to IPv6 Node Information
-Queries.
++ tracepath - traces path to destination discovering MTU along this path.
 
 %prep
 %setup
@@ -87,8 +75,6 @@ install -pD -m755 %SOURCE1 %buildroot%_controldir/ping
 mkdir -p %buildroot%_sysctldir/
 touch %buildroot%sysctl_conf_file
 
-install -pD -m755 %SOURCE2 %buildroot%_initdir/ninfod
-
 ln -s tracepath %buildroot%_bindir/tracepath6
 # for backward compatibility
 mkdir -p %buildroot/bin/
@@ -118,22 +104,6 @@ fi
 
 %post_control ping
 
-# There is no rdisk init script
-if sd_booted; then
-	%post_service rdisc
-fi
-
-%preun
-if sd_booted; then
-	%preun_service rdisc
-fi
-
-%post -n ninfod
-%post_service ninfod
-
-%preun -n ninfod
-%preun_service ninfod
-
 %files
 %config %_controldir/ping
 %attr(700,root,netadmin) %verify(not mode) %dir %ping_real_dir/
@@ -141,20 +111,15 @@ fi
 %ghost %config %sysctl_conf_file
 /bin/*
 %_bindir/*
-%_unitdir/rdisc.service
 %_sbindir/*
 %_mandir/man?/*
-%exclude %_sbindir/ninfod
-%exclude %_man8dir/ninfod.*
-
-%files -n ninfod
-%doc ninfod/COPYING
-%_unitdir/ninfod.service
-%_initdir/ninfod
-%_sbindir/ninfod
-%_man8dir/ninfod.*
 
 %changelog
+* Tue Nov 29 2022 Mikhail Efremov <sem@altlinux.org> 20221126-alt1
+- Updated description.
+- Dropped ninfod subpackage (closes: #37138).
+- 20211215 -> 20221126.
+
 * Fri Jan 14 2022 Mikhail Efremov <sem@altlinux.org> 20211215-alt1
 - Dropped obsoleted patch.
 - 20210722 -> 20211215.
