@@ -9,7 +9,7 @@
 %def_disable static
 
 Name: libopenh264
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: H.264 codec library
@@ -109,6 +109,9 @@ sed -i -e 's|^SHAREDLIB_DIR=.*$|SHAREDLIB_DIR=%{_libdir}|' Makefile
 %endif
 
 %changelog
+* Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 2.3.1-alt1
+- 2.3.1 (bumped soname)
+
 * Mon Aug 01 2022 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 - used meson for %%ix86 and x86_64 builds
