@@ -4,8 +4,8 @@
 %endif
 
 Name:       hedgewars
-Version:    1.0.0
-Release:    alt6
+Version:    1.0.2
+Release:    alt1
 
 Summary:    Game with heavily armed fighting hedgehogs
 Summary(ru_RU.UTF-8): Игра в битвы тяжело-вооружённых боевых ёжиков
@@ -18,18 +18,10 @@ Packager:   Grigory Ustinov <grenka@altlinux.org>
 
 Source:     %name-%version.tar
 Patch:      fix_non_inline_ShiftWorld.patch
-# This patch fixes hGetContents: invalid argument (invalid byte sequence) on i586 arch
-# Should be removed in next version
-Patch1:     15474.patch
-# This patch fixes build with Qt 5.15
-# Should be removed in next version
-Patch2:     15589.patch
 
 Requires:   %name-data = %EVR
 Requires:   fonts-ttf-wqy-zenhei fonts-ttf-dejavu
 
-
-# Automatically added by buildreq on Fri Aug 30 2019
 BuildRequires(pre): cmake
 BuildRequires: fpc-units-gtk2 fpc-units-misc fpc-units-net
 %{?_with_server:
@@ -107,8 +99,6 @@ This package contains all the data files for %name.
 %prep
 %setup
 %patch -p2
-%patch1 -p1
-%patch2 -p1
 
 # Make sure that we don't use bundled libraries
 rm -r misc/liblua
@@ -150,6 +140,8 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_libdir/libphyslayer.so
 %_datadir/applications/%name.desktop
 %_datadir/icons/hicolor/32x32/apps/%name.png
+%dir %_datadir/icons/hicolor/512x512
+%dir %_datadir/icons/hicolor/512x512/apps
 %_datadir/icons/hicolor/512x512/apps/%name.png
 %_datadir/appdata/%name.appdata.xml
 %_pixmapsdir/%name.xpm
@@ -158,6 +150,9 @@ chrpath --delete %buildroot%_bindir/hwengine
 %_datadir/%name
 
 %changelog
+* Tue Nov 29 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
+- Automatically updated to 1.0.2.
+
 * Wed Nov 17 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.0-alt6
 - Fixed FTBFS.
 
