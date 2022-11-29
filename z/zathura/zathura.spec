@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: zathura
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -77,6 +77,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_datadir/dbus-1/interfaces/org.pwmt.*
 
 %changelog
+* Tue Nov 29 2022 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt1
+- Updated to 0.5.2.
+
 * Wed Sep 14 2022 Mikhail Efremov <sem@altlinux.org> 0.5.1-alt1
 - Moved DBus interface xml files to devel subpackage.
 - Updated to 0.5.1.

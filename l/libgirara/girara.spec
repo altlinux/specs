@@ -3,7 +3,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: lib%_name
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -60,6 +60,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Nov 29 2022 Mikhail Efremov <sem@altlinux.org> 0.3.8-alt1
+- Updated to 0.3.8.
+
 * Tue Feb 15 2022 Mikhail Efremov <sem@altlinux.org> 0.3.7-alt1
 - Updated to 0.3.7.
 

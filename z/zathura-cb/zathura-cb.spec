@@ -2,7 +2,7 @@
 
 Name: zathura-cb
 Version: 0.1.10
-Release: alt1
+Release: alt2
 
 Summary: Comic book support for zathura
 License: Zlib
@@ -43,6 +43,9 @@ The zathura-cb plugin adds comic book support to zathura.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Nov 29 2022 Mikhail Efremov <sem@altlinux.org> 0.1.10-alt2
+- Rebuild with zatura-0.5.2.
+
 * Wed May 11 2022 Mikhail Efremov <sem@altlinux.org> 0.1.10-alt1
 - Updated to 0.1.10.
 
