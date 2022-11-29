@@ -1,7 +1,7 @@
 %define oname docker
 
 Name: python3-module-%oname
-Version: 6.0.0
+Version: 6.0.1
 Release: alt1
 
 Summary: Python client for Docker.
@@ -42,6 +42,9 @@ An API client for docker written in Python
 %python3_sitelibdir/%oname-*.dist-info
 
 %changelog
+* Tue Nov 29 2022 Vladimir Didenko <cow@altlinux.ru> 6.0.1-alt1
+- 6.0.1
+
 * Mon Sep 5 2022 Vladimir Didenko <cow@altlinux.ru> 6.0.0-alt1
 - 6.0.0
 
