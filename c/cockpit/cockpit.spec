@@ -6,28 +6,46 @@
 %define cockpit_group  _cockpit-ws
 %define cockpit_wsinstance_user  _cockpit-wsinstance
 
-%def_with optional
 %def_with doc
+
+%def_with optional
+%define with_pcp 1
+%define with_packagekit 1
+
+%if_without optional
+# force disable
+%define with_pcp 0
+%define with_packagekit 0
+%endif
+
+%if %with_pcp
 %def_with pcp
+%else
+%def_without pcp
+%endif
+
+%if %with_packagekit
 %def_with packagekit
+%else
+%def_without packagekit
+%endif
 
 %def_with check
 
 ###############################################################################
 
 Name: cockpit
-Version: 253
+Version: 280.1
 Release: alt1
 
 Summary: Web Console for Linux servers
 License: LGPLv2+
 Group: System/Base
-# Source-git: https://github.com/cockpit-project/cockpit.git
+VCS: https://github.com/cockpit-project/cockpit.git
 Url: https://cockpit-project.org/
 Source0: %name-%version.tar
 Source1: cockpit.alt.pam
-Source2: node_modules.tar.gz
-Source3: package-lock.json.tar.gz
+Source2: vendor_nodejs.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires: node
@@ -39,9 +57,9 @@ BuildRequires: libkrb5-devel
 BuildRequires: libpam0-devel
 
 BuildRequires: libssh-devel >= 0.8.5
+BuildRequires: xsltproc
 
 %if_with doc
-BuildRequires: xsltproc
 BuildRequires: xmlto
 %endif
 
@@ -58,6 +76,9 @@ BuildRequires: dbus
 BuildRequires: /proc
 BuildRequires: /dev/pts
 %endif
+
+# e.g. cockpit-client is written in Python
+BuildRequires: rpm-build-python3
 
 Requires: cockpit-bridge
 Requires: cockpit-ws
@@ -308,18 +329,17 @@ via PackageKit.
 ###############################################################################
 
 %prep
-%setup -a 2 -a 3
+%setup -a2
 %patch -p1
 
-echo '%version' > .tarball
-# newusers executable is not on the user PATH
-grep -q 'if newusers --help ' configure.ac || exit 1
-sed -i 's/if newusers --help |/if "$NEWUSERS" --help |/' configure.ac
+echo 'm4_define(VERSION_NUMBER, [%version])' > version.m4
+
+[ -e package-lock.json ] || touch package-lock.json
 
 # systemd tmpfiles in ALTLinux are packaged into /lib/tmpfiles.d
-grep -q 'tempconfdir = $(prefix)/lib/tmpfiles.d' src/ws/Makefile-ws.am || exit 1
+grep -q 'tempconfdir = $(prefix)/lib/tmpfiles.d' src/systemd/Makefile.am || exit 1
 sed -i '/tempconfdir = $(prefix)\/lib\/tmpfiles.d/{s@$(prefix)/lib/tmpfiles.d@%_tmpfilesdir@}' \
-src/ws/Makefile-ws.am
+src/systemd/Makefile.am
 
 # ALT uses /etc/openssh directory, not /etc/ssh one
 grep -qr '/ssh/ssh_known_hosts' || exit 1
@@ -357,10 +377,13 @@ sed -i \
     --with-pamdir=%_pam_modules_dir \
     %nil
 
-%make -j4 all
+# run eslint even in production mode to catch any breakages caused by ALT's
+# changes and new upstream's code
+export ESLINT=1
+%make_build all
 
 %check
-TMPDIR=/tmp %make -j4 VERBOSE=1 check
+%make_build VERBOSE=1 check
 
 %install
 %makeinstall_std
@@ -374,8 +397,6 @@ rm -r %buildroot/%_datadir/cockpit/apps
 %endif
 
 %if_without pcp
-rm %buildroot%_libexecdir/cockpit-pcp
-rm %buildroot%_sharedstatedir/pcp/config/pmlogconf/tools/cockpit
 rm -r %buildroot%_datadir/cockpit/pcp/
 %endif
 
@@ -386,11 +407,10 @@ rm -r %buildroot/%_datadir/cockpit/selinux
 rm %buildroot%_datadir/metainfo/org.cockpit-project.cockpit-selinux.metainfo.xml
 
 %if_without optional
-for pkg in apps packagekit pcp playground storaged; do
+for pkg in playground storaged; do
     rm -r %buildroot/%_datadir/cockpit/$pkg
 done
-rm -r %buildroot%_usr/lib/cockpit-test-assets
-rm -r %buildroot/%_libexecdir/cockpit-pcp %buildroot%_sharedstatedir/pcp/
+rm %buildroot%_pam_modules_dir/mock-pam-conv-mod.so
 rm %buildroot%_datadir/metainfo/org.cockpit-project.cockpit-storaged.metainfo.xml
 %endif
 
@@ -399,14 +419,14 @@ pushd %buildroot/%_datadir/cockpit/branding
 ls -1 | (. /etc/os-release; grep -v "default\|$ID") | xargs rm -vr
 popd
 
-# for backward compatibility
-ln -s cockpit.css.gz %buildroot%_datadir/cockpit/base1/patternfly.css.gz
+# ghost files
+mkdir -p %buildroot%_sysconfdir/cockpit
+touch %buildroot%_sysconfdir/cockpit/disallowed-users
 
 ###############################################################################
 
 %files
 %doc AUTHORS COPYING README.md
-%dir %_datadir/cockpit
 %_datadir/metainfo/cockpit.appdata.xml
 %_datadir/pixmaps/cockpit.png
 %doc %_man1dir/cockpit.1.*
@@ -414,6 +434,7 @@ ln -s cockpit.css.gz %buildroot%_datadir/cockpit/base1/patternfly.css.gz
 %files bridge
 %doc %_man1dir/cockpit-bridge.1.*
 %_sysconfdir/cockpit/machines.d/
+%dir %_datadir/cockpit
 %_datadir/cockpit/base1/
 %_datadir/polkit-1/actions/org.cockpit-project.cockpit-bridge.policy
 %_bindir/cockpit-bridge
@@ -455,6 +476,7 @@ ln -s cockpit.css.gz %buildroot%_datadir/cockpit/base1/patternfly.css.gz
 # managed by post script
 %ghost %_sysconfdir/issue.d/cockpit.issue
 %ghost %_sysconfdir/motd.d/cockpit
+%ghost %attr(0644, root, root) %_sysconfdir/cockpit/disallowed-users
 
 %_datadir/cockpit/motd/update-motd
 %_datadir/cockpit/motd/inactive.motd
@@ -463,8 +485,6 @@ ln -s cockpit.css.gz %buildroot%_datadir/cockpit/base1/patternfly.css.gz
 %_unitdir/cockpit.socket
 %_unitdir/cockpit-wsinstance-http.socket
 %_unitdir/cockpit-wsinstance-http.service
-%_unitdir/cockpit-wsinstance-http-redirect.socket
-%_unitdir/cockpit-wsinstance-http-redirect.service
 %_unitdir/cockpit-wsinstance-https-factory.socket
 %_unitdir/cockpit-wsinstance-https-factory@.service
 %_unitdir/cockpit-wsinstance-https@.socket
@@ -476,6 +496,8 @@ ln -s cockpit.css.gz %buildroot%_datadir/cockpit/base1/patternfly.css.gz
 %_libexecdir/cockpit-ws
 %_libexecdir/cockpit-wsinstance-factory
 %_libexecdir/cockpit-tls
+%_libexecdir/cockpit-client
+%_libexecdir/cockpit-client.ui
 %_libexecdir/cockpit-desktop
 %_libexecdir/cockpit-certificate-helper
 %_libexecdir/cockpit-certificate-ensure
@@ -497,8 +519,11 @@ if [ "$1" -eq 1 ]; then
     # in ALT nothing provides these dirs yet
     mkdir -p %_sysconfdir{motd.d,issue.d}
 
-    ln -s /run/cockpit/motd %_sysconfdir/motd.d/cockpit
-    ln -s /run/cockpit/motd %_sysconfdir/issue.d/cockpit.issue
+    ln -s ../../run/cockpit/motd %_sysconfdir/motd.d/cockpit
+    ln -s ../../run/cockpit/motd %_sysconfdir/issue.d/cockpit.issue
+
+    printf '# List of users which are not allowed to login to Cockpit\nroot\n' > %_sysconfdir/cockpit/disallowed-users
+    chmod 644 %_sysconfdir/cockpit/disallowed-users
 fi
 systemd-tmpfiles --create cockpit-tempfiles.conf >/dev/null 2>&1 ||:
 %post_service cockpit.socket
@@ -528,7 +553,7 @@ systemd-tmpfiles --create cockpit-tempfiles.conf >/dev/null 2>&1 ||:
 
 %files tests
 %_datadir/cockpit/playground/
-%_usr/lib/cockpit-test-assets/
+%_pam_modules_dir/mock-pam-conv-mod.so
 
 %if_with pcp
 %files pcp
@@ -549,6 +574,12 @@ systemd-tmpfiles --create cockpit-tempfiles.conf >/dev/null 2>&1 ||:
 %endif # build optional extension packages
 
 %changelog
+* Tue Nov 29 2022 Stanislav Levin <slev@altlinux.org> 280.1-alt1
+- 280 -> 280.1.
+
+* Mon Nov 21 2022 Stanislav Levin <slev@altlinux.org> 280-alt1
+- 253 -> 280.
+
 * Mon Sep 20 2021 Stanislav Levin <slev@altlinux.org> 253-alt1
 - 247 -> 253.
 
