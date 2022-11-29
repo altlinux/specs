@@ -1,7 +1,7 @@
 %define oname texttable
 
 Name: python3-module-%oname
-Version: 1.6.4
+Version: 1.6.7
 Release: alt1
 
 Summary: Module for creating simple ASCII tables
@@ -36,6 +36,9 @@ texttable is a module to generate a formatted text table, using ASCII characters
 %python3_sitelibdir/__pycache__/*
 
 %changelog
+* Tue Nov 29 2022 Vladimir Didenko <cow@altlinux.ru> 1.6.7-alt1
+- 1.6.7
+
 * Mon Dec 6 2021 Vladimir Didenko <cow@altlinux.ru> 1.6.4-alt1
 - 1.6.4
 
