@@ -1,7 +1,7 @@
 %define soname 1
 
 Name: deepin-pw-check
-Version: 5.1.16
+Version: 5.1.17
 Release: alt1
 Summary: Verify the validity of the password for DDE
 License: GPL-3.0+
@@ -56,23 +56,23 @@ This package provides static libraries for %name.
 %prep
 %setup
 %patch -p1
+patch -p1 < rpm/0001-fix-for-UonioTech.patch
 sed -i 's|/usr/lib|%_libdir|' \
-    Makefile \
-    misc/pkgconfig/libdeepin_pw_check.pc \
-    misc/system-services/com.deepin.daemon.PasswdConf.service
-sed -i 's|${PREFIX}/lib|%_libdir|' Makefile
-sed -i 's|/usr/local/lib/pkgconfig|%_libdir/pkgconfig|' Makefile
+  misc/pkgconfig/libdeepin_pw_check.pc
 
 %build
 export GOPATH="%go_path/src/github.com/linuxdeepin/dde-api/vendor"
 export PAM_MODULE_DIR=/%_lib/security
-# export PKG_FILE_DIR=%%_libdir/pkgconfig
+export PKG_FILE_DIR=%_libdir/pkgconfig
+export LIBDIR=%_lib
 export GO111MODULE=off
 %make
 
 %install
 export GOPATH=/usr/share/gocode
 export PAM_MODULE_DIR=/%_lib/security
+export PKG_FILE_DIR=%_libdir/pkgconfig
+export LIBDIR=%_lib
 export GO111MODULE=off
 %makeinstall_std
 
@@ -84,10 +84,10 @@ export GO111MODULE=off
 %_datadir/dbus-1/system-services/com.deepin.daemon.PasswdConf.service
 %_datadir/dbus-1/system.d/com.deepin.daemon.PasswdConf.conf
 %_datadir/polkit-1/actions/com.deepin.daemon.passwdconf.policy
+%dir %_libexecdir/%name/
+%_libexecdir/%name/%name
 
 %files -n lib%name%soname
-%dir %_libdir/%name
-%_libdir/%name/%name
 %_libdir/libdeepin_pw_check.so.%{soname}*
 
 %files -n lib%name-devel
@@ -99,6 +99,9 @@ export GO111MODULE=off
 %_libdir/libdeepin_pw_check.a
 
 %changelog
+* Tue Nov 29 2022 Leontiy Volodin <lvol@altlinux.org> 5.1.17-alt1
+- New version (5.1.17).
+
 * Mon Aug 29 2022 Leontiy Volodin <lvol@altlinux.org> 5.1.16-alt1
 - New version (5.1.16).
 
