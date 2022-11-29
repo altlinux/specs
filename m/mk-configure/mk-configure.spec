@@ -1,7 +1,7 @@
 %define clang_arches %ix86 x86_64 aarch64 ppc64el armh mipsel
 
 Name: mk-configure
-Version: 0.38.1
+Version: 0.38.2
 Release: alt1
 
 Summary: Lightweight replacement for GNU autotools
@@ -123,6 +123,9 @@ bmake nodeps-cleandir-tests
 # - add %%config %%_sysconfdir/rpm/macros.mkcmake (extra source)
 
 %changelog
+* Tue Nov 29 2022 Aleksey Cheusov <cheusov@altlinux.org> 0.38.2-alt1
+- 0.38.2
+
 * Sun Nov 27 2022 Aleksey Cheusov <cheusov@altlinux.org> 0.38.1-alt1
 - 0.38.1
 
