@@ -3,7 +3,7 @@
 
 Name: pve-container
 Summary: Proxmox VE Container management tool
-Version: 4.3.1
+Version: 4.3.3
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 ExclusiveArch: x86_64 aarch64
 
 Requires(pre,postun): shadow-submap
-Requires: pve-lxc dtach pve-lxc-syscalld xz
+Requires: pve-lxc dtach pve-lxc-syscalld xz file binutils
 
 BuildRequires: pve-common pve-guest-common pve-qemu-server pve-storage pve-firewall pve-cluster libpve-cluster-perl pve-doc-generator xmlto pve-lxc
 BuildRequires: perl(Crypt/Eksblowfish/Bcrypt.pm) perl(UUID.pm)
@@ -51,6 +51,9 @@ mv %buildroot/usr/lib/sysctl.d/10-pve-ct-inotify-limits.conf %buildroot%_sysctld
 %_man5dir/*
 
 %changelog
+* Tue Nov 29 2022 Andrew A. Vasilyev <andy@altlinux.org> 4.3.3-alt1
+- 4.3-3
+
 * Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 4.3.1-alt1
 - 4.3-1
 
