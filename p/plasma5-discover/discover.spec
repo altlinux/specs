@@ -20,7 +20,7 @@
 
 Name: plasma5-%rname
 Version: 5.26.3
-Release: alt2
+Release: alt3
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -29,7 +29,7 @@ Url: http://www.kde.org
 License: GPL-2.0-or-later
 
 Requires: %name-core
-Requires: %name-kns
+Requires: %name-packagekit
 
 Source: %rname-%version.tar
 Source1: env-flatpak.sh
@@ -79,8 +79,8 @@ KDE and Plasma resources management GUI.
 %package maxi
 Summary: Plasma Discover maximum package
 Group: System/Configuration/Packaging
+Requires: %name
 Requires: %name-kns
-Requires: %name-packagekit
 Requires: %name-flatpak
 %if_enabled fwupd
 Requires: %name-fwupd
@@ -290,6 +290,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Tue Nov 29 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.3-alt3
+- update requires
+
 * Mon Nov 21 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.3-alt2
 - update requires
 
