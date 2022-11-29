@@ -1,5 +1,5 @@
 Name: xfce4-appfinder
-Version: 4.17.0
+Version: 4.17.2
 Release: alt1
 
 Summary: Application finder for the Xfce4 Desktop Environment
@@ -13,9 +13,9 @@ Vcs: https://gitlab.xfce.org/xfce/xfce4-appfinder.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4ui-gtk3-devel libxfconf-devel >= 4.6.0 libgarcon-devel >= 0.1.2
-BuildRequires: intltool libstartup-notification-devel
+BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: libxfce4util-devel >= 4.15.2 libxfce4ui-gtk3-devel >= 4.14.0
+BuildRequires: libxfconf-devel >= 4.14.0 libgarcon-devel >= 0.3.0
 
 # xfrun4 was replaced with xfce4-appfinder
 Conflicts: xfce-utils < 4.8.3-alt3
@@ -56,6 +56,10 @@ Desktop entry format.
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Nov 29 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
+- Updated BR.
+- Updated to 4.17.2.
+
 * Wed Sep 22 2021 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
 - Updated to 4.17.0.
 
