@@ -75,7 +75,7 @@
 %endif
 
 Name:    samba
-Version: 4.16.6
+Version: 4.16.7
 Release: alt2
 
 Group:   System/Servers
@@ -100,6 +100,8 @@ Source21: smbusers
 Source22: smb.conf.example
 Source23: usershares.conf
 Source24: smb-conf-usershares.control
+Source25: role-usershares.control
+Source26: samba-usershares.role
 
 Source200: README.dc
 Source201: README.downgrade
@@ -591,6 +593,7 @@ Group: System/Servers
 PreReq: control
 Requires: %name = %version-%release
 Requires: %name-common-tools = %version-%release
+Requires: libnss-role
 
 %description usershares
 Installing this package will provide a configuration file, group and
@@ -995,6 +998,8 @@ mkdir -p %buildroot%_sysconfdir/openldap/schema
 install -m644 examples/LDAP/samba.schema %buildroot%_sysconfdir/openldap/schema/samba.schema
 install -m755 packaging/printing/smbprint %buildroot%_bindir/smbprint
 install -Dm755 %SOURCE24 %buildroot%_controldir/smb-conf-usershares
+install -Dm755 %SOURCE25 %buildroot%_controldir/role-usershares
+install -Dm644 %SOURCE26 %buildroot%_sysconfdir/role.d/samba-usershares.role
 
 cp packaging/systemd/samba.sysconfig packaging/systemd/samba.sysconfig.alt
 echo "KRB5CCNAME=FILE:/run/samba/krb5cc_samba" >>packaging/systemd/samba.sysconfig.alt
@@ -1837,8 +1842,10 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 
 %files usershares
 %config(noreplace) %_sysconfdir/samba/usershares.conf
+%config(noreplace) %_sysconfdir/role.d/samba-usershares.role
 %attr(1770,root,usershares) %dir /var/lib/samba/usershares
 %_controldir/smb-conf-usershares
+%_controldir/role-usershares
 
 %if_with winbind
 %files winbind-common
@@ -1978,6 +1985,24 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Tue Nov 29 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.7-alt2
+- Add role-usershares control allow or disallow for group users using of
+  samba usershares as privilege.
+- Add compatibility support for sambashare group as common privilege assigned
+  to usershares group (Closes: #44379).
+
+* Tue Nov 22 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.7-alt1
+- Update to maintenance release of Samba 4.16 (Samba#15203)
+- Security fixes:
+  + CVE-2022-42898: Samba's Kerberos libraries and AD DC failed to guard against
+                    integer overflows when parsing a PAC on a 32-bit system, which
+                    allowed an attacker with a forged PAC to corrupt the heap.
+                    https://www.samba.org/samba/security/CVE-2022-42898.html
+    Workaround and mitigations:
+    * No workaround on 32-bit systems as an AD DC
+    * file servers are only impacted if in a non-AD domain
+    * 64-bit systems are not exploitable
+
 * Mon Nov 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.6-alt2
 - Don't treat a missing include file as an error in handle_include().
   This behavior differs between the source3 and source4 parts of Samba.
