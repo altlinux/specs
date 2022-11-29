@@ -20,7 +20,7 @@
 
 Name: plasma5-%rname
 Version: 5.26.3
-Release: alt3
+Release: alt4
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -37,7 +37,7 @@ Source2: env-snap.sh
 Patch1: alt-offline-updates.patch
 Patch2: alt-skip-obsoleted-and-removed-from-upgrade.patch
 Patch3: alt-discover-update-all-packages-from-appstream.patch
-#
+Patch4: alt-hide-reviews.patch
 Patch5: alt-soversion.patch
 Patch6: alt-fix-status-after-transaction.patch
 Patch7: alt-pk-disable-launch.patch
@@ -176,7 +176,7 @@ KF5 library
 %patch1 -p1
 %patch2 -p2
 #%patch3 -p2 -b .upd-appstream
-#
+%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
@@ -290,6 +290,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Tue Nov 29 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.3-alt4
+- hide reviews
+
 * Tue Nov 29 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.3-alt3
 - update requires
 
