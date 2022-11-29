@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt7
+Release: alt8
 
 Summary: Group policy editor
 License: GPLv2+
@@ -110,6 +110,16 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Tue Nov 29 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt8
+- 0.2.17-alt8
+- Fixes:
+  + #88602 Fix creation of network share's attributes.
+  + #88794 Fix drive map's xml structure.
+  + #44378 Allow empty section name in ini widget.
+  + #74009 Remove labels in empty widget.
+  + #88711 Modify model builder of network shares to write only required fields.
+  + #88844 Fix save of admx path setting.
+
 * Wed Nov 16 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt7
 - 0.2.17-alt7
 - Fixes:
