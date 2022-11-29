@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-polkit-agent
-Version: 5.4.12
+Version: 5.5.21
 Release: alt1
 Summary: Deepin Polkit Agent
 License: GPL-3.0+
@@ -14,11 +14,12 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
-BuildRequires: dtk5-widget-devel deepin-qt-dbus-factory-devel libpolkitqt5-qt5-devel qt5-base-devel qt5-linguist qt5-tools gsettings-qt-devel qt5-multimedia-devel qt5-x11extras-devel
+BuildRequires(pre): rpm-build-ninja
+BuildRequires: cmake dtk5-core-devel dtk5-widget-devel dtk5-common deepin-qt-dbus-factory-devel libpolkitqt5-qt5-devel qt5-tools-devel
 
 %description
 DDE Polkit Agent is the polkit agent used in Deepin Desktop Environment.
@@ -33,26 +34,24 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
-sed -i 's|lupdate|lupdate-qt5|' lupdate.sh
-# sed -i 's|/usr/lib|/usr/libexec|' dde-polkit-agent.pro polkit-dde-authentication-agent-1.desktop \
-#     pluginmanager.cpp
-# https://github.com/linuxdeepin/developer-center/issues/1721
-sed -i 's/bool is_deepin = true/bool is_deepin = false/' policykitlistener.cpp
-# https://github.com/linuxdeepin/dde-polkit-agent/issues/26
-sed -i '/setCancel/d' policykitlistener.cpp
 
 %build
-%qmake_qt5 \
+export PATH=%_qt5_bindir:$PATH
 %if_enabled clang
-    QMAKE_STRIP= -spec linux-clang \
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
 %endif
-    CONFIG+=nostrip \
-    PREFIX=%prefix
-%make_build
+%cmake \
+	-GNinja \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	%nil
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+%cmake_install
 
 %files
 %doc README.md
@@ -67,6 +66,9 @@ sed -i '/setCancel/d' policykitlistener.cpp
 %_includedir/dpa/agent-extension.h
 
 %changelog
+* Tue Nov 29 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.21-alt1
+- New version (5.5.21).
+
 * Fri Aug 20 2021 Leontiy Volodin <lvol@altlinux.org> 5.4.12-alt1
 - New version (5.4.12).
 
