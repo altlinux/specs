@@ -1,7 +1,7 @@
 Summary: An Atari ST emulator suitable for playing games
 Name: hatari
 Version: 2.4.1
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: Emulators
 Url: http://hatari.tuxfamily.org/
@@ -83,6 +83,9 @@ desktop-file-install \
   --dir %buildroot%_datadir/applications \
   %SOURCE1
 
+#Add translation of description in desktop file
+sed -i '4 a Comment\[ru\]=Эмулятор компьютеров Atari ST'  %buildroot%_datadir/applications/hatari.desktop
+
 install -m 644 python-ui/hatari-icon.png \
     %buildroot%_datadir/icons/hicolor/32x32/apps/hatari-icon.png
 
@@ -134,6 +137,9 @@ ctest -V
 #exclude %_datadir/%name/hconsole/release-notes.txt
 
 %changelog
+* Tue Nov 29 2022 Artyom Bystrov <arbars@altlinux.org> 2.4.1-alt2
+- Add translation of description in desktop file
+
 * Sat Aug 20 2022 Ilya Mashkin <oddity@altlinux.ru> 2.4.1-alt1
 - 2.4.1
 
