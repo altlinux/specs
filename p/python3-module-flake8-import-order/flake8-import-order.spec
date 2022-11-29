@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 0.18.1
+Version: 0.18.2
 Release: alt1
 
 Summary: Flake8 plugin that checks import order against various Python Style Guides
@@ -55,5 +55,8 @@ cryptography project, with this style remaining the default.
 %doc *.rst
 
 %changelog
+* Tue Nov 29 2022 Grigory Ustinov <grenka@altlinux.org> 0.18.2-alt1
+- Automatically updated to 0.18.2.
+
 * Thu Apr 28 2022 Grigory Ustinov <grenka@altlinux.org> 0.18.1-alt1
 - Initial build for Sisyphus.
