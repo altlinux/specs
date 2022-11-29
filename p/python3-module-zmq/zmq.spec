@@ -1,12 +1,12 @@
 %define oname zmq
 
-%def_without bootstrap
+%def_with bootstrap
 # included patch totally destroys tests=(
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 22.3.0
-Release: alt4
+Version: 24.0.1
+Release: alt1
 
 Summary: Software library for fast, message-based applications
 
@@ -16,12 +16,10 @@ Url: http://www.zeromq.org/bindings:python
 # http://github.com/zeromq/pyzmq.git
 Source: %name-%version.tar
 
-# Fixes ALT#42033
-# see also https://github.com/zeromq/pyzmq/issues/1460
-Patch: zmq_force_use_cffi_backend.patch
-
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libzeromq-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
 %if_without bootstrap
 BuildRequires: python3-module-cffi
@@ -73,20 +71,16 @@ This package contains the headers for the python bindings.
 
 %prep
 %setup
-%patch -p1
 cp setup.cfg.template setup.cfg
 subst "s|/usr/local/lib|%_libdir|" setup.cfg
 subst "s|/usr/local/include|%_includedir|" setup.cfg
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build build_ext --inplace
+%pyproject_build
 
 %install
-%python3_install
-
-# Force install the result of patch
-install zmq/backend/cffi/_cffi.cpython-310.so %buildroot%python3_sitelibdir/%oname/backend/cffi
+%pyproject_install
 
 %check
 # This test wants to build a custom cython extension, but does
@@ -97,11 +91,13 @@ install zmq/backend/cffi/_cffi.cpython-310.so %buildroot%python3_sitelibdir/%ona
 # Tests are not passing in %%buildroot%%python3_sitelibdir
 # because zmq's asyncio conflicts with python3-base's asyncio
 # Maybe it somehow tied with paths
-py.test3 -v -k "not test_cython" %oname/tests
+export PYTHONPATH=%buildroot%python3_sitelibdir
+cd ..
+py.test3 --pyargs zmq -v -k "not test_cython"
 
 %files
 %doc README.md COPYING.LESSER COPYING.BSD CONTRIBUTING.md AUTHORS.md examples/
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/*.dist-info
 %python3_sitelibdir/%oname
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/*/*.h
@@ -113,6 +109,10 @@ py.test3 -v -k "not test_cython" %oname/tests
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Thu Nov 24 2022 Grigory Ustinov <grenka@altlinux.org> 24.0.1-alt1
+- Automatically updated to 24.0.1.
+- Bootstrap for python3.11.
+
 * Thu Mar 24 2022 Grigory Ustinov <grenka@altlinux.org> 22.3.0-alt4
 - Force use cffi backend (Closes: #42033).
 - Build without check.
