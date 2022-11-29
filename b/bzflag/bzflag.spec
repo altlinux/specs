@@ -1,6 +1,6 @@
 # commit a249151e4508704be8db9856627f61018862cb66
 
-%define git_commit a24915
+%undefine git_commit
 
 %def_disable plugins
 
@@ -9,13 +9,13 @@
 %undefine cvs
 
 Name: bzflag
-Version: 2.4.25
+Version: 2.4.26
 
-# %%ifndef git_commit
-#Release: alt1
-# %%else
+%ifndef git_commit
+Release: alt1
+%else
 Release: alt0.git_1_%git_commit
-# %%endif
+%endif
 
 Summary: A multiplayer 3D tank battle game
 License: LGPLv2.1
@@ -25,11 +25,11 @@ Packager: Motsyo Gennadi <drool@altlinux.ru>
 Url: http://www.bzflag.org
 
 # commit e2fefdbb30154605c61fb85315d1d39e9be34689
-#ifdef git_commit
+%ifdef git_commit
 Source: %name-%version-%release.tar.bz2
-#%else
-#Source: %name-%version.tar.bz2
-#endif
+%else
+Source: %name-%version.tar.bz2
+%endif
 
 
 # Source2:  bzflag_ru_utf8.po
@@ -236,6 +236,9 @@ mkdir -p %buildroot/var/run/%name
 %_initdir/bzfs
 
 %changelog
+* Tue Nov 29 2022 Ilya Mashkin <oddity@altlinux.ru> 2.4.26-alt1
+- 2.4.26 Release
+
 * Sun May 01 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2.4.25-alt0.git_1_a24915
 - Update from git
 
