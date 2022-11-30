@@ -23,7 +23,7 @@
 %define rname k3b
 Name: kde5-%rname
 Version: 22.08.3
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Archiving/Cd burning
@@ -136,12 +136,18 @@ KDE 4 library.
 mv %buildroot/%_K5xdgmime/x-k3b.xml \
     %buildroot/%_K5xdgmime/kde5-x-k3b.xml
 
+if [ -n "`ls -1d %buildroot/%_K5data/knsrcfiles/*k3b*`" ] ; then
+    mkdir -p %buildroot/%_K5xdgconf/
+    mv %buildroot/%_K5data/knsrcfiles/*k3b* %buildroot/%_K5xdgconf/
+fi
+
 
 %find_lang --with-kde --all-name %name
 
 
 %files -f %name.lang
 %doc LICENSES/* README.txt FAQ.txt PERMISSIONS.txt
+%config %_K5xdgconf/*k3b*
 %_K5bin/%rname
 %_K5plug/k3b_plugins/
 %_K5xdgapp/org.kde.%rname.desktop
@@ -158,7 +164,6 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 #
 %_K5plug/kf5/kio/videodvd.so
 %_K5data/konqsidebartng/virtual_folders/services/videodvd.desktop
-%_K5data/knsrcfiles/k3btheme.knsrc
 # permhelper
 #%_K5libexecdir/kauth/k3bhelper
 #%_K5dbus_sys_srv/org.kde.k3b.service
@@ -178,6 +183,9 @@ mv %buildroot/%_K5xdgmime/x-k3b.xml \
 %_K5inc/k3b*.h
 
 %changelog
+* Wed Nov 30 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt2
+- fix to build with KF-5.100
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
