@@ -5,7 +5,7 @@
 %def_disable gsettings
 
 Name: lib%_name
-Version: 4.17.1
+Version: 4.17.2
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -21,15 +21,17 @@ Patch: %_name-%version-%release.patch
 
 %define _unpackaged_files_terminate_build 1
 
-Requires: xfce4-common
-Requires: dbus-tools-gui
-BuildPreReq: rpm-build-xfce4 libxfce4util-devel xfce4-dev-tools
-BuildRequires: libgio-devel libdbus-devel
+BuildRequires: rpm-build-xfce4 libxfce4util-devel xfce4-dev-tools
+BuildRequires: libxfce4util-devel >= 4.17.3
+BuildRequires: libgio-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 BuildRequires: gtk-doc intltool
 # For tests:
 %{?!_without_check:%{?!_disable_check:BuildRequires: dbus-tools-gui xvfb-run}}
+
+Requires: xfce4-common
+Requires: dbus-tools-gui
 
 %description
 Xfconf is a hierarchical (tree-like) configuration system where the
@@ -160,6 +162,9 @@ xvfb-run make -k check
 %endif
 
 %changelog
+* Wed Nov 30 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
+- Updated to 4.17.2.
+
 * Thu Nov 10 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
 - Updated Url tag.
 - Updated to 4.17.1.
