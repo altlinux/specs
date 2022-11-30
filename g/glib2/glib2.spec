@@ -30,7 +30,7 @@
 
 Name: glib2
 Version: %ver_major.2
-Release: alt1.1
+Release: alt2
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -61,9 +61,6 @@ Patch1: glib-2.53.5-alt-deprecated_paths-nowarning.patch
 Patch2: glib-2.61.3-alt-add-xvt.patch
 Patch3: glib-2.71.3-alt-lfs.patch
 Patch4: glib-2.50.1-alt-dbus_socket_path.patch
-
-Patch10: glib-2.74.2-i2820-g_str_equal-macro.patch
-
 Patch2000: glib-2.64.5-1-alt-e2k.patch
 
 %def_with locales
@@ -232,9 +229,6 @@ the functionality of the installed glib2/libgio packages.
 %patch2 -p1 -b .xvt
 %patch3 -p1
 %patch4
-
-%patch10
-
 %ifarch %e2k
 subst "/subdir('fuzzing')/d" meson.build
 %patch2000 -p1
@@ -439,6 +433,10 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Wed Nov 30 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.2-alt2
+- updated to 2.74.2-2-g60d1ebbd2 (
+  fixed regression in C++ types accepted by g_str_equal() )
+
 * Mon Nov 28 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.2-alt1.1
 - try to fix https://gitlab.gnome.org/GNOME/glib/-/issues/2820
 
