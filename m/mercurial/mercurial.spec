@@ -2,7 +2,7 @@
 %def_without check
 
 Name: mercurial
-Version: 6.2
+Version: 6.3.1
 Release: alt1
 
 Summary: Mercurial source code management system
@@ -11,7 +11,7 @@ Group: Development/Other
 License: GPLv2+
 Url: https://mercurial-scm.org
 
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 Packager: Yury Yurevich <anarresti@altlinux.org>
 
@@ -126,8 +126,13 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %exclude %python3_sitelibdir/hgext/*
 
 %files -n bash-completion-%name
+%dir %_sysconfdir/bash_completion.d
 %_sysconfdir/bash_completion.d/%name
+%dir %_datadir/bash-completion
+%dir %_datadir/bash-completion/completions
 %_datadir/bash-completion/completions/hg
+%dir %_datadir/zsh
+%dir %_datadir/zsh/site-functions
 %_datadir/zsh/site-functions/_hg
 
 %files -n %name-hgext
@@ -136,6 +141,9 @@ mkdir -p %buildroot%_sysconfdir/%name/hgrc.d
 %python3_sitelibdir/hgext3rd
 
 %changelog
+* Tue Nov 29 2022 Grigory Ustinov <grenka@altlinux.org> 6.3.1-alt1
+- 6.3.1.
+
 * Mon Jul 25 2022 Grigory Ustinov <grenka@altlinux.org> 6.2-alt1
 - 6.2.
 

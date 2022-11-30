@@ -1,7 +1,7 @@
 %def_without nautilus
 
 Name: tortoisehg
-Version: 6.2
+Version: 6.3.1
 Release: alt1
 
 Summary: Mercurial GUI command line tool thg
@@ -83,10 +83,10 @@ rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %doc doc/build/html/ COPYING.txt
 %config(noreplace) %_sysconfdir/mercurial/hgrc.d/thgmergetools.rc
 %_bindir/thg
-%python3_sitelibdir/hgext3rd/*
-%python3_sitelibdir/tortoisehg/
+%python3_sitelibdir/hgext3rd
+%python3_sitelibdir/tortoisehg
 %python3_sitelibdir/tortoisehg-*.egg-info
-%_datadir/pixmaps/tortoisehg/
+%_datadir/pixmaps/tortoisehg
 %_datadir/pixmaps/thg_logo.svg
 %_datadir/applications/thg.desktop
 
@@ -96,6 +96,9 @@ rm -rf %buildroot%_datadir/nautilus-python/extensions/nautilus-thg.py*
 %endif
 
 %changelog
+* Tue Nov 29 2022 Grigory Ustinov <grenka@altlinux.org> 6.3.1-alt1
+- Build new version.
+
 * Mon Jul 25 2022 Grigory Ustinov <grenka@altlinux.org> 6.2-alt1
 - Build new version.
 
