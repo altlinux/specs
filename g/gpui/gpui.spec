@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt8
+Release: alt9
 
 Summary: Group policy editor
 License: GPLv2+
@@ -110,6 +110,12 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Wed Nov 30 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt9
+- 0.2.17-alt9
+- Fixes:
+  + Fix null pointer in ldap library.
+  + Fix invalid drive name.
+
 * Tue Nov 29 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt8
 - 0.2.17-alt8
 - Fixes:
