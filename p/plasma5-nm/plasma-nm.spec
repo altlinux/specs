@@ -2,7 +2,7 @@
 %def_disable libreswan
 
 Name: plasma5-nm
-Version: 5.26.3
+Version: 5.26.4
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -260,6 +260,9 @@ install -m0644 -p -D %SOURCE10 %buildroot/%_K5data/plasma/updates/01-plasma-nm.j
 %_K5plug/plasma/network/vpn/plasmanetworkmanagement_sshui.so
 
 %changelog
+* Tue Nov 29 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt1
+- new version
+
 * Tue Nov 08 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.3-alt1
 - new version
 
