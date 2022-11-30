@@ -1,10 +1,10 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _libexecdir %_prefix/libexec
 
 Name: xdg-desktop-portal-gtk
-Version: 1.14.0
-Release: alt2
+Version: 1.14.1
+Release: alt1
 
 Summary: Backend implementation for xdg-desktop-portal using GTK+
 Group: Graphical desktop/GNOME
@@ -53,6 +53,9 @@ org.gnome.SessionManager D-Bus interfaces.
 
 
 %changelog
+* Wed Nov 30 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
+- 1.14.1
+
 * Thu Sep 08 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt2
 - updated to 1.14.0-14-g30ef5f8
 
