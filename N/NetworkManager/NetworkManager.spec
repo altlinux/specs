@@ -58,7 +58,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.40.4
+Version: 1.40.6
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -639,6 +639,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Nov 30 2022 Mikhail Efremov <sem@altlinux.org> 1.40.6-alt1
+- Updated to 1.40.6.
+
 * Mon Nov 21 2022 Mikhail Efremov <sem@altlinux.org> 1.40.4-alt1
 - daemon: Don't try to restart systemd-only services with SysVinit.
 - Updated to 1.40.4.
