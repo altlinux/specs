@@ -4,7 +4,7 @@
 
 Name: %rname
 Version: 3.0.3
-Release: alt1
+Release: alt2
 Group: Video
 Summary: Copy, split and shrink DVDs
 Summary(ru_RU.UTF8): Копирование, разделение и уменьшение DVD-дисков
@@ -89,6 +89,9 @@ rm -f %buildroot%_datadir/locale/sr@Latn/LC_MESSAGES/%{rname}.mo
 %_K5data/solid/actions/%{rname}_*.desktop
 
 %changelog
+* Wed Nov 30 2022 Sergey V Turchin <zerg@altlinux.org> 3.0.3-alt2
+- fix compile with KF5-5.100
+
 * Thu Apr 29 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.3-alt1
 - Updated to k9copy-reloaded version 3.0.3.
 - Rebuilt with qt5.
