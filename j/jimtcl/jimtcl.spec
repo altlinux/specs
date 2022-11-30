@@ -1,6 +1,6 @@
 Name: jimtcl
 Version: 0.81
-Release: alt1
+Release: alt2
 
 Summary: A small embeddable Tcl interpreter
 License: BSD
@@ -70,6 +70,9 @@ popd
 %_pkgconfigdir/jimtcl.pc
 
 %changelog
+* Wed Nov 30 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.81-alt2
+- filter out outdated test
+
 * Mon Jun 20 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.81-alt1
 - 0.81 released
 
