@@ -1,6 +1,6 @@
 Name: quick-usb-formatter
 Version: 0.6
-Release: alt21
+Release: alt22
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -76,6 +76,9 @@ install -m 0644 %SOURCE10 translations/
 
 
 %changelog
+* Wed Nov 30 2022 Sergey V Turchin <zerg@altlinux.org> 0.6-alt22
+- cleanup last patch
+
 * Wed Nov 30 2022 Sergey V Turchin <zerg@altlinux.org> 0.6-alt21
 - fix to build with KF-5.100
 
