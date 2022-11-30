@@ -1,7 +1,7 @@
 %define  modulename trivup
 
 Name:    python3-module-%modulename
-Version: 0.10.0
+Version: 0.12.1
 Release: alt1
 
 Summary: Trivially Up a cluster of applications (such as a Kafka cluster!)
@@ -39,5 +39,8 @@ Source:  %name-%version.tar
 %doc LICENSE *.md
 
 %changelog
+* Wed Nov 30 2022 Grigory Ustinov <grenka@altlinux.org> 0.12.1-alt1
+- Automatically updated to 0.12.1.
+
 * Thu May 26 2022 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
 - Initial build for Sisyphus.
