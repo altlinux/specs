@@ -40,7 +40,7 @@ BuildRequires: gcc-c++
 
 Name:           GMT
 Version:        6.1.1
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
@@ -210,7 +210,7 @@ for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -ty
 	chrpath -d $i ||:
 done
 
-
+mv %buildroot%_bindir/{,GMT-}batch
 
 
 
@@ -248,6 +248,9 @@ done
 
 
 %changelog
+* Wed Nov 30 2022 Igor Vlasenko <viy@altlinux.org> 6.1.1-alt2_1
+- renamed batch -> GMT-batch (closes: #44270)
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 6.1.1-alt1_1
 - update to new release by fcimport
 
