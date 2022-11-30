@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: opensc
-Version: 0.22.0
-Release: alt2
+Version: 0.23.0
+Release: alt1
 
 Group: System/Configuration/Hardware
 Summary: OpenSC library - for accessing SmartCard devices using PC/SC Lite
@@ -15,8 +15,20 @@ Source: %name-%version.tar
 
 Patch: opensc-gcc11.patch
 
-BuildRequires: db2latex-xsl docbook-dtds docbook-style-xsl libXt-devel libassuan-devel
-BuildRequires: libltdl7-devel libpcsclite-devel libreadline-devel libssl-devel xsltproc zlib-devel
+BuildRequires: db2latex-xsl
+BuildRequires: docbook-dtds
+BuildRequires: docbook-style-xsl
+BuildRequires: glib2-devel
+BuildRequires: libXt-devel
+BuildRequires: libassuan-devel
+BuildRequires: libeac-devel
+BuildRequires: libgio-devel
+BuildRequires: libltdl7-devel
+BuildRequires: libpcsclite-devel
+BuildRequires: libreadline-devel
+BuildRequires: libssl-devel
+BuildRequires: xsltproc
+BuildRequires: zlib-devel
 
 %package -n lib%name
 Group: System/Libraries
@@ -71,7 +83,7 @@ OpenSC module for PAM.
 
 %build
 %autoreconf
-%add_optflags %optflags_shared
+%add_optflags %optflags_shared -I%_includedir/PCSC -Wno-error=strict-aliasing
 
 %ifarch %e2k
 # card-openpgp.c::pgp_get_card_features():
@@ -102,6 +114,7 @@ rm -f %buildroot%_datadir/doc/opensc/opensc.conf
 %exclude %_datadir/doc/%name/NEWS
 %_desktopdir/*.desktop
 %_sysconfdir/xdg/autostart/pkcs11-register.desktop
+%_sysconfdir/eac/cvc/*
 %config %_sysconfdir/bash_completion.d/*
 %_bindir/*
 %doc %_mandir/*/*
@@ -127,6 +140,10 @@ rm -f %buildroot%_datadir/doc/opensc/opensc.conf
 %endif
 
 %changelog
+* Wed Nov 30 2022 Andrey Cherepanov <cas@altlinux.org> 0.23.0-alt1
+- New version.
+- Built with libeac and pcsc-lite.
+
 * Wed Oct 06 2021 Grigory Ustinov <grenka@altlinux.org> 0.22.0-alt2
 - Fixed build with gcc11.
 
