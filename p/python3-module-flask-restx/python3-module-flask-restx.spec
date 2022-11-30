@@ -4,8 +4,8 @@
 %def_enable check
 
 Name: python3-module-flask-restx
-Version: 0.5.1
-Release: alt4
+Version: 1.0.3
+Release: alt1
 
 Summary: Flask-RESTX is a community driven fork of Flask-RESTPlus
 License: BSD-3-Clause
@@ -19,22 +19,16 @@ BuildRequires: python3-module-jsonschema
 BuildRequires: python3-module-flask
 BuildRequires: python3-module-werkzeug
 BuildRequires: python3-module-pytz
-BuildRequires: python3-module-six
 BuildRequires: python3-module-aniso8601
 
 %if_enabled check
 BuildRequires: /dev/pts
 BuildRequires: python3-module-tox
-BuildRequires: python3-module-tox-console-scripts
-BuildRequires: python3-module-tox-no-deps
 BuildRequires: python3-module-faker
-BuildRequires: python3-module-invoke
 BuildRequires: python3-module-blinker
 BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
 BuildRequires: python3-module-pytest-mock
 BuildRequires: python3-module-pytest-flask
-BuildRequires: python3-module-pytest-benchmark
 %endif
 
 BuildArch: noarch
@@ -42,7 +36,6 @@ BuildArch: noarch
 Source0: %name-%version.tar
 Source1: node_modules.tar.gz
 Patch0: %name-%version-%release.patch
-Patch1: alt-reset-version-from-dev.patch
 
 %description
 Flask-RESTX is an extension for Flask that adds support for quickly building 
@@ -69,18 +62,16 @@ cp -R node_modules/typeface-droid-sans/files flask_restx/static/
 %pyproject_install
 
 %check
+# override upstream tox.ini
 cat > tox.ini <<'EOF'
 [testenv]
 usedevelop=True
 commands =
     {envbindir}/pytest {posargs}
 EOF
-# excluded: legacy API redirect test
-# excluded: logging level override test
+
 # excluded: DNS resolution related tests
 EXCLUDE_TESTS_CONDITION="not (\
-  (APITest and test_redirect) or \
-  (LoggingTest and test_override_app_level) or \
   (URLTest and test_check) or \
   (EmailTest and test_valid_value_check)\
 )"
@@ -93,6 +84,11 @@ EXCLUDE_TESTS_CONDITION="not (\
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Wed Nov 30 2022 Danil Shein <dshein@altlinux.org> 1.0.3-alt1
+- new version 1.0.3
+  + update SwaggerUI
+  + clean-up spec
+
 * Tue Sep 20 2022 Danil Shein <dshein@altlinux.org> 0.5.1-alt4
 - fix Werkzeug 2.2.x compatibility
   + merge upstream dev branch (git a017c3c) 
