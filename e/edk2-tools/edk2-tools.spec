@@ -1,9 +1,9 @@
 %define TOOL_CHAIN_TAG GCC5
-%define openssl_ver 1.1.1q
+%define openssl_ver 1.1.1s
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-tools
-Version: 20220526
+Version: 20221117
 Release: alt1
 Summary: EFI Development Kit II Tools
 
@@ -195,6 +195,9 @@ popd
 %doc BaseTools/UserManuals/*.rtf
 
 %changelog
+* Wed Nov 30 2022 Alexey Shabalin <shaba@altlinux.org> 20221117-alt1
+- edk2-stable202211 (Fixes: CVE-2021-38578)
+
 * Thu Aug 11 2022 Alexey Shabalin <shaba@altlinux.org> 20220526-alt1
 - edk2-stable202205
 - update BaseALT logo

@@ -1,10 +1,11 @@
-%define TOOL_CHAIN_TAG GCC5
-%define openssl_ver 1.1.1q
+%global optflags_lto %nil
+%define tool_chain_tag GCC5
+%define openssl_ver 1.1.1s
 %def_disable skip_enroll
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2
-Version: 20220526
+Version: 20221117
 Release: alt1
 Summary: EFI Development Kit II
 
@@ -124,31 +125,31 @@ export PATH=/sbin:$PATH
 source ./edksetup.sh
 
 # compiler
-CC_FLAGS="-t %TOOL_CHAIN_TAG"
+CC_FLAGS="-t %tool_chain_tag"
 
 # common features
 #CC_FLAGS="${CC_FLAGS} --cmd-len=65536 -b DEBUG --hash"
 #CC_FLAGS="${CC_FLAGS} -b RELEASE"
 CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
 CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
-CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D TPM2_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D TPM1_ENABLE"
+CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D TPM2_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D TPM1_ENABLE=TRUE"
 
 # ovmf features
-OVMF_FLAGS="${CC_FLAGS}"
-OVMF_FLAGS="${OVMF_FLAGS} -D FD_SIZE_2MB"
+OVMF_2M_FLAGS="${CC_FLAGS} -D FD_SIZE_2MB=TRUE"
+OVMF_4M_FLAGS="${CC_FLAGS} -D FD_SIZE_4MB=TRUE"
 
-# ovmf + secure boot features
-OVMF_SB_FLAGS="${OVMF_FLAGS}"
-OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SECURE_BOOT_ENABLE"
-OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SMM_REQUIRE"
-OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD"
+# secure boot features
+OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SECURE_BOOT_ENABLE=TRUE"
+OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SMM_REQUIRE=TRUE"
+OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD=TRUE -D BUILD_SHELL=FALSE"
+#OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD=TRUE"
 
 # arm firmware features
-#ARM_FLAGS="-t %%TOOL_CHAIN_TAG -b DEBUG --cmd-len=65536"
+#ARM_FLAGS="-t %%tool_chain_tag -b DEBUG --cmd-len=65536"
 ARM_FLAGS="${CC_FLAGS}"
 
 unset MAKEFLAGS
@@ -170,10 +171,10 @@ build_iso() {
   ISO_IMAGE=${dir}/UefiShell.iso
  
   UEFI_SHELL_BINARY_BNAME=$(basename -- "$UEFI_SHELL_BINARY")
-  UEFI_SHELL_SIZE=$(stat --format=%s -- "$UEFI_SHELL_BINARY")
-  ENROLLER_SIZE=$(stat --format=%s -- "$ENROLLER_BINARY")
+  UEFI_SHELL_SIZE=$(stat --format=%%s -- "$UEFI_SHELL_BINARY")
+  ENROLLER_SIZE=$(stat --format=%%s -- "$ENROLLER_BINARY")
  
-  # add 1MB then 10% for metadata
+  # add 1MB then 10 percent for metadata
   UEFI_SHELL_IMAGE_KB=$((
     (UEFI_SHELL_SIZE + ENROLLER_SIZE + 1 * 1024 * 1024) * 11 / 10 / 1024
   ))
@@ -198,25 +199,34 @@ build_iso() {
 
 # Build with neither SB nor SMM; include UEFI shell.
 mkdir -p OVMF
-build ${OVMF_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
-cp Build/OvmfX64/*/FV/OVMF_*.fd OVMF
+build ${OVMF_2M_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
+cp -p Build/OvmfX64/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE.fd
+cp -p Build/OvmfX64/*/FV/OVMF_VARS.fd OVMF/OVMF_VARS.fd
+# Build 4MB with neither SB nor SMM; include UEFI shell.
+build ${OVMF_4M_FLAGS} -a X64 -p OvmfPkg/OvmfPkgX64.dsc
+cp -p Build/OvmfX64/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE_4M.fd
+cp -p Build/OvmfX64/*/FV/OVMF_VARS.fd OVMF/OVMF_VARS_4M.fd
 rm -rf Build/OvmfX64
 # Build with SB and SMM; exclude UEFI shell.
-build ${OVMF_SB_FLAGS} -a IA32 -a X64 -p OvmfPkg/OvmfPkgIa32X64.dsc
-cp Build/Ovmf3264/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE.secboot.fd
+build ${OVMF_2M_FLAGS} ${OVMF_SB_FLAGS} -a IA32 -a X64 -p OvmfPkg/OvmfPkgIa32X64.dsc
+cp -p Build/Ovmf3264/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE.secboot.fd
+# Build 4MB with SB and SMM; exclude UEFI shell.
+build ${OVMF_4M_FLAGS} ${OVMF_SB_FLAGS} -a IA32 -a X64 -p OvmfPkg/OvmfPkgIa32X64.dsc
+cp -p Build/Ovmf3264/*/FV/OVMF_CODE.fd OVMF/OVMF_CODE_4M.secboot.fd
 # Build AmdSev and IntelTdx variants
 touch OvmfPkg/AmdSev/Grub/grub.efi   # dummy
-build ${OVMF_FLAGS} -a X64 -p OvmfPkg/AmdSev/AmdSevX64.dsc
-cp Build/AmdSev/*/FV/OVMF.fd OVMF/OVMF.amdsev.fd
-build ${OVMF_FLAGS} -a X64 -p OvmfPkg/IntelTdx/IntelTdxX64.dsc
-cp Build/IntelTdx/*/FV/OVMF.fd OVMF/OVMF.inteltdx.fd
+build ${OVMF_2M_FLAGS} -a X64 -p OvmfPkg/AmdSev/AmdSevX64.dsc
+cp -p Build/AmdSev/*/FV/OVMF.fd OVMF/OVMF.amdsev.fd
+build ${OVMF_2M_FLAGS} -a X64 -p OvmfPkg/IntelTdx/IntelTdxX64.dsc
+cp -p Build/IntelTdx/*/FV/OVMF.fd OVMF/OVMF.inteltdx.fd
 
 # build shell
-build ${OVMF_FLAGS} -a X64 -p ShellPkg/ShellPkg.dsc
+build ${OVMF_2M_FLAGS} -a X64 -p ShellPkg/ShellPkg.dsc
 
 # build ovmf (x64) shell iso with EnrollDefaultKeys
-cp Build/Ovmf3264/*/X64/Shell.efi OVMF/
-cp Build/Ovmf3264/*/X64/EnrollDefaultKeys.efi OVMF/
+#cp Build/Ovmf3264/*/X64/Shell.efi OVMF/
+cp -p Build/Shell/*/X64/ShellPkg/Application/Shell/Shell/OUTPUT/Shell.efi OVMF/
+cp -p Build/Ovmf3264/*/X64/EnrollDefaultKeys.efi OVMF/
 build_iso OVMF
 
 %if_disabled skip_enroll
@@ -224,29 +234,45 @@ virt-fw-vars --input OVMF/OVMF_VARS.fd \
              --output OVMF/OVMF_VARS.secboot.fd \
              --distro-keys alt --secure-boot
 
+virt-fw-vars --input OVMF/OVMF_VARS.fd \
+             --output OVMF/OVMF_VARS.ms.fd \
+             --distro-keys windows --secure-boot
+
+virt-fw-vars --input OVMF/OVMF_VARS_4M.fd \
+             --output OVMF/OVMF_VARS_4M.secboot.fd \
+             --distro-keys alt --secure-boot
+
+virt-fw-vars --input OVMF/OVMF_VARS_4M.fd \
+             --output OVMF/OVMF_VARS_4M.ms.fd \
+             --distro-keys windows --secure-boot
+
 %else
 # This isn't going to actually give secureboot, but makes json files happy
 # if we need to test disabling ovmf-vars-generator
-cp OVMF/OVMF_VARS.fd OVMF/OVMF_VARS.secboot.fd
+cp -p OVMF/OVMF_VARS.fd OVMF/OVMF_VARS.secboot.fd
+cp -p OVMF/OVMF_VARS.fd OVMF/OVMF_VARS.ms.fd
+cp -p OVMF/OVMF_VARS_4M.fd OVMF/OVMF_VARS_4M.secboot.fd
+cp -p OVMF/OVMF_VARS_4M.fd OVMF/OVMF_VARS_4M.ms.fd
 %endif
 
 # build microvm
-build ${OVMF_FLAGS} -a X64 -p OvmfPkg/Microvm/MicrovmX64.dsc
-cp Build/MicrovmX64/*/FV/MICROVM.fd OVMF
+build ${OVMF_2M_FLAGS} -a X64 -p OvmfPkg/Microvm/MicrovmX64.dsc
+cp -p Build/MicrovmX64/*/FV/MICROVM.fd OVMF
 
 # build ovmf-ia32
 mkdir -p ovmf-ia32
-build ${OVMF_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
-cp Build/OvmfIa32/*/FV/OVMF_CODE.fd ovmf-ia32/
+build ${OVMF_2M_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
+cp -p Build/OvmfIa32/*/FV/OVMF_CODE.fd ovmf-ia32/
 rm -rf Build/OvmfIa32
 # build ovmf-ia32 with secure boot
-build ${OVMF_SB_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
-cp Build/OvmfIa32/*/FV/OVMF_CODE.fd ovmf-ia32/OVMF_CODE.secboot.fd
+build ${OVMF_2M_FLAGS} ${OVMF_SB_FLAGS} -a IA32 -p OvmfPkg/OvmfPkgIa32.dsc
+cp -p Build/OvmfIa32/*/FV/OVMF_CODE.fd ovmf-ia32/OVMF_CODE.secboot.fd
 # cp VARS files from from ovmf/, which are all we need
-cp OVMF/OVMF_VARS*.fd ovmf-ia32/
+cp -p OVMF/OVMF_VARS*.fd ovmf-ia32/
 # build ovmf-ia32 shell iso with EnrollDefaultKeys
-cp Build/OvmfIa32/*/IA32/Shell.efi ovmf-ia32/Shell.efi
-cp Build/OvmfIa32/*/IA32/EnrollDefaultKeys.efi ovmf-ia32/EnrollDefaultKeys.efi
+build ${OVMF_2M_FLAGS} -a IA32 -p ShellPkg/ShellPkg.dsc
+cp -p Build/Shell/*/IA32/ShellPkg/Application/Shell/Shell/OUTPUT/Shell.efi ovmf-ia32/Shell.efi
+cp -p Build/OvmfIa32/*/IA32/EnrollDefaultKeys.efi ovmf-ia32/EnrollDefaultKeys.efi
 build_iso ovmf-ia32
 
 %install
@@ -258,7 +284,7 @@ mkdir -p %buildroot%_datadir/qemu/firmware
 
 # shell
 mkdir -p %buildroot%_prefix/lib64/efi
-cp Build/Shell/*/X64/ShellPkg/Application/Shell/Shell/OUTPUT/Shell.efi \
+cp -p Build/Shell/*/X64/ShellPkg/Application/Shell/Shell/OUTPUT/Shell.efi \
         %buildroot%_prefix/lib64/efi/shell.efi
 
 #install OVMF
@@ -294,6 +320,10 @@ virt-fw-vars --input OVMF/OVMF_VARS.secboot.fd \
 %_prefix/lib64/efi/shell.efi
 
 %changelog
+* Wed Nov 30 2022 Alexey Shabalin <shaba@altlinux.org> 20221117-alt1
+- edk2-stable202211 (Fixes: CVE-2021-38578)
+- add 4M builds
+
 * Wed Aug 10 2022 Alexey Shabalin <shaba@altlinux.org> 20220526-alt1
 - edk2-stable202205
 - build with openssl-1.1.1q

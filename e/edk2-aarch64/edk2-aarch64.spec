@@ -1,9 +1,10 @@
-%define TOOL_CHAIN_TAG GCC5
-%define openssl_ver 1.1.1q
+%global optflags_lto %nil
+%define tool_chain_tag GCC5
+%define openssl_ver 1.1.1s
 
 # More subpackages to come once licensing issues are fixed
 Name: edk2-aarch64
-Version: 20220526
+Version: 20221117
 Release: alt1
 Summary: AARCH64 Virtual Machine Firmware
 
@@ -82,31 +83,30 @@ tar -xf %SOURCE3 --strip-components 1 --directory ArmPkg/Library/ArmSoftFloatLib
 source ./edksetup.sh
 
 # compiler
-CC_FLAGS="-t %TOOL_CHAIN_TAG"
+CC_FLAGS="-t %tool_chain_tag"
 
 # common features
 #CC_FLAGS="${CC_FLAGS} --cmd-len=65536 -b DEBUG --hash"
 #CC_FLAGS="${CC_FLAGS} -b RELEASE"
 CC_FLAGS="${CC_FLAGS} -b DEBUG --hash"
 CC_FLAGS="${CC_FLAGS} --cmd-len=65536"
-CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D TPM2_ENABLE"
-CC_FLAGS="${CC_FLAGS} -D TPM1_ENABLE"
+CC_FLAGS="${CC_FLAGS} -D NETWORK_IP6_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D NETWORK_TLS_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D NETWORK_HTTP_BOOT_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D TPM2_ENABLE=TRUE"
+CC_FLAGS="${CC_FLAGS} -D TPM1_ENABLE=TRUE"
 
 # ovmf features
-OVMF_FLAGS="${CC_FLAGS}"
-OVMF_FLAGS="${OVMF_FLAGS} -D FD_SIZE_2MB"
+OVMF_2M_FLAGS="${CC_FLAGS} -D FD_SIZE_2MB=TRUE"
 
 # ovmf + secure boot features
-OVMF_SB_FLAGS="${OVMF_FLAGS}"
-OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SECURE_BOOT_ENABLE"
-OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SMM_REQUIRE"
-OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD"
+OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SECURE_BOOT_ENABLE=TRUE"
+OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D SMM_REQUIRE=TRUE"
+OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD=TRUE -D BUILD_SHELL=FALSE"
+#OVMF_SB_FLAGS="${OVMF_SB_FLAGS} -D EXCLUDE_SHELL_FROM_FD=TRUE"
 
 # arm firmware features
-#ARM_FLAGS="-t %TOOL_CHAIN_TAG -b DEBUG --cmd-len=65536"
+#ARM_FLAGS="-t %%tool_chain_tag -b DEBUG --cmd-len=65536"
 ARM_FLAGS="${CC_FLAGS}"
 
 
@@ -174,6 +174,9 @@ ln -r -s %buildroot%_datadir/AAVMF/AAVMF_VARS.fd %buildroot%_datadir/edk2/aarch6
 %_datadir/qemu/firmware/*edk2-aarch64*.json
 
 %changelog
+* Wed Nov 30 2022 Alexey Shabalin <shaba@altlinux.org> 20221117-alt1
+- edk2-stable202211 (Fixes: CVE-2021-38578)
+
 * Thu Aug 11 2022 Alexey Shabalin <shaba@altlinux.org> 20220526-alt1
 - edk2-stable202205
 - update BaseALT logo

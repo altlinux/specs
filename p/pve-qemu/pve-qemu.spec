@@ -9,7 +9,7 @@
 
 Name: pve-%rname
 Version: 7.1.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -74,7 +74,7 @@ Summary: QEMU CPU Emulator - common files
 Group: Emulators
 Requires(pre): control >= 0.7.2
 Requires(pre): shadow-utils sysvinit-utils
-Requires: seavgabios seabios edk2-ovmf edk2-aarch64 qboot
+Requires: seavgabios seabios edk2-ovmf >= 20221117-alt1 edk2-aarch64 qboot
 Requires: ipxe-roms-qemu >= 1.0.0-alt4.git93acb5d
 Requires: %name-img = %EVR
 Conflicts: %rname-common
@@ -247,6 +247,11 @@ ln -r -s %buildroot%_datadir/qboot/bios.bin %buildroot%_datadir/%rname/qboot.rom
 mkdir -p %buildroot%_datadir/pve-edk2-firmware
 ln -sf ../OVMF/OVMF_CODE.fd %buildroot%_datadir/pve-edk2-firmware/OVMF_CODE.fd
 ln -sf ../OVMF/OVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/OVMF_VARS.fd
+ln -sf ../OVMF/OVMF_CODE_4M.fd %buildroot%_datadir/pve-edk2-firmware/OVMF_CODE_4M.fd
+ln -sf ../OVMF/OVMF_VARS_4M.fd %buildroot%_datadir/pve-edk2-firmware/OVMF_VARS_4M.fd
+ln -sf ../OVMF/OVMF_CODE_4M.secboot.fd %buildroot%_datadir/pve-edk2-firmware/OVMF_CODE_4M.secboot.fd
+ln -sf ../OVMF/OVMF_VARS_4M.secboot.fd %buildroot%_datadir/pve-edk2-firmware/OVMF_VARS_4M.secboot.fd
+ln -sf ../OVMF/OVMF_VARS_4M.ms.fd %buildroot%_datadir/pve-edk2-firmware/OVMF_VARS_4M.ms.fd
 ln -sf ../AAVMF/AAVMF_CODE.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_CODE.fd
 ln -sf ../AAVMF/AAVMF_VARS.fd %buildroot%_datadir/pve-edk2-firmware/AAVMF_VARS.fd
 
@@ -323,6 +328,10 @@ fi
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Wed Nov 30 2022 Alexey Shabalin <shaba@altlinux.org> 1:7.1.0-alt2
+- 7.1.0-4
+- add symlinks to 4MB edk2 firmwares
+
 * Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 1:7.1.0-alt1
 - 7.1.0-3 (Fixes: CVE-2020-14394, CVE-2022-0216, CVE-2021-3507
    CVE-2021-4206, CVE-2021-4207, CVE-2021-3611, CVE-2022-26353
