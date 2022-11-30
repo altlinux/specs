@@ -1,6 +1,6 @@
 Name: pve-docs
 Summary: PVE Documentation
-Version: 7.2.2
+Version: 7.2.5
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -43,6 +43,9 @@ install -m644 images/screenshot/*.png %buildroot%_datadir/%name/images/screensho
 %_datadir/%name
 
 %changelog
+* Wed Nov 23 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.5-alt1
+- 7.2-5
+
 * Thu May 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.2-alt1
 - 7.2-2
 

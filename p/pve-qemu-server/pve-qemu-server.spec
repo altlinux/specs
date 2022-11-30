@@ -3,7 +3,7 @@
 
 Name: pve-qemu-server
 Summary: PVE Qemu Server Tools
-Version: 7.2.7
+Version: 7.2.12
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -19,7 +19,7 @@ Provides: qemu-server = %EVR
 Obsoletes: qemu-server < %EVR
 
 Requires: socat genisoimage pve-qemu-system >= 4.1.1-alt1 swtpm swtpm-tools
-BuildRequires: glib2-devel libjson-c-devel pve-common pve-guest-common pve-firewall pve-ha-manager pve-doc-generator
+BuildRequires: glib2-devel libjson-c-devel pve-common pve-guest-common >= 4.2.3 pve-firewall pve-ha-manager pve-doc-generator
 BuildRequires: perl(Term/ReadLine.pm) perl(IO/Multiplex.pm) perl(JSON.pm) perl(Time/HiRes.pm) perl(UUID.pm)
 BuildRequires: perl(Crypt/OpenSSL/Random.pm) perl(XML/LibXML.pm) perl(Digest/SHA.pm) perl(URI/Escape.pm)
 
@@ -67,6 +67,12 @@ ln -s bootsplash.jpg %buildroot%_datadir/qemu-server/bootsplash-virtio.jpg
 %perl_vendor_privlib/PVE/*.pm
 
 %changelog
+* Wed Nov 23 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.12-alt1
+- 7.2-12
+
+* Fri Nov 18 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.7-alt2
+- fix "Operation not supported" for ISO on OCFS2
+
 * Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.7-alt1
 - 7.2-7
 

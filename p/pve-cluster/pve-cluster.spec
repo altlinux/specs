@@ -2,7 +2,7 @@
 
 Name: pve-cluster
 Summary: Cluster Infrastructure for PVE
-Version: 7.2.2
+Version: 7.2.3
 Release: alt1
 License: AGPL-3.0+
 Group: System/Servers
@@ -128,6 +128,9 @@ fi
 %perl_vendor_privlib/PVE/Cluster/Setup.pm
 
 %changelog
+* Wed Nov 23 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.3-alt1
+- 7.2-3
+
 * Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.2-alt1
 - 7.2-2
 

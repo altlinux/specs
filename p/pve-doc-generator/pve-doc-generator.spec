@@ -3,7 +3,7 @@
 
 Name: pve-doc-generator
 Summary: Proxmox VE Documentation helpers
-Version: 7.2.2
+Version: 7.2.5
 Release: alt1
 License: GPLv3
 Group: Documentation
@@ -16,7 +16,7 @@ ExclusiveArch: x86_64 aarch64
 Requires: asciidoc-a2x source-highlight xmlto
 
 BuildRequires: perl(JSON.pm)
-BuildRequires: pve-common
+BuildRequires: pve-common pve-manager libpve-cluster-perl pve-firewall pve-ha-manager pve-container pve-qemu-server pve-guest-common
 
 %description
 Tool to auto-generate various Proxmox VE Documentation files
@@ -30,7 +30,7 @@ grep 'proxmox.com' * -rl | while read f; do
 done
 sed -i 's|{python}|python3|' asciidoc/*.conf
 
-rm -f getting-help.adoc howto-improve-pve-docs.adoc pve-package-repos.adoc pve-faq.adoc pve-installation.adoc pve-system-requirements.adoc translation.adoc pve-installation-media.adoc system-booting.adoc cpu-models.conf.adoc
+# rm -f getting-help.adoc howto-improve-pve-docs.adoc pve-package-repos.adoc pve-faq.adoc pve-installation.adoc pve-system-requirements.adoc translation.adoc pve-installation-media.adoc system-booting.adoc cpu-models.conf.adoc
 
 %build
 %make DOCRELEASE=%version asciidoc-pve
@@ -47,6 +47,11 @@ install -pD -m755 asciidoc-pve %buildroot%_bindir/asciidoc-pve
 %_datadir/pve-doc-generator
 
 %changelog
+* Wed Nov 23 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.5-alt1
+- 7.2-5
+- fix tests
+- do not remove adoc files to build pve-qemu-server docs
+
 * Thu May 05 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.2-alt1
 - 7.2-2
 

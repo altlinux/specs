@@ -5,7 +5,7 @@
 
 Name: pve-access-control
 Summary: PVE access control library
-Version: 7.2.4
+Version: 7.2.5
 Release: alt1
 License: AGPL-3.0+
 Group: Development/Perl
@@ -70,6 +70,9 @@ control function used by Proxmox VE.
 %_datadir/zsh/vendor-completions/_pveum
 
 %changelog
+* Tue Nov 29 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.5-alt1
+- 7.2-5
+
 * Mon Oct 03 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.4-alt1
 - 7.2-4
 
