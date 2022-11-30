@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Test/Warn.pm)
+BuildRequires: perl(Test/Warn.pm) perl(Graphics/Toolkit/Color.pm)
 # END SourceDeps(oneline)
 %define dist Chart
 Name: perl-%dist
-Version: 2.403.7
+Version: 2.403.8
 Release: alt1
 
 Summary: A series of charting modules
@@ -38,11 +38,13 @@ all of its graphics primitives calls.
 %dir %perl_vendor_privlib/Chart
 %perl_vendor_privlib/Chart.pm
 %perl_vendor_privlib/Chart/*.pm
-%perl_vendor_privlib/Chart/Color
 %perl_vendor_privlib/Chart/Manual*
 %perl_vendor_privlib/Chart/Property
 
 %changelog
+* Mon Nov 28 2022 Igor Vlasenko <viy@altlinux.org> 2.403.8-alt1
+- automated CPAN update
+
 * Mon Aug 01 2022 Igor Vlasenko <viy@altlinux.org> 2.403.7-alt1
 - automated CPAN update
 
