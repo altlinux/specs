@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20220510
+%define orig_timestamp 20221108
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 18
+Version: 19
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,41 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Thu Dec 01 2022 L.A. Kostis <lakostis@altlinux.ru> 2:19-alt1.20221108
+- Updated to upstream microcode datafile 20221108:
+  + Fixes several errata (functional issues) on Xeon D-2700, 8th, 9th, 10th,
+    11th and 12th generations Core processors.
+  + Added new microcode for Xeon D-17xx, D-27xx and Core Gen13 processors.
+  + New Microcodes:
+    sig 0x000606c1, pf_mask 0x10, 2022-08-07, rev 0x1000201, size 286720
+    sig 0x000b0671, pf_mask 0x32, 2022-09-07, rev 0x010e, size 204800
+  + Updated Microcodes:
+    sig 0x00050653, pf_mask 0x97, 2022-03-14, rev 0x100015e, size 34816
+    sig 0x00050654, pf_mask 0xb7, 2022-03-08, rev 0x2006e05, size 44032
+    sig 0x000606a6, pf_mask 0x87, 2022-04-07, rev 0xd000375, size 293888
+    sig 0x000706a1, pf_mask 0x01, 2022-03-23, rev 0x003c, size 75776
+    sig 0x000706a8, pf_mask 0x01, 2022-03-23, rev 0x0020, size 75776
+    sig 0x000706e5, pf_mask 0x80, 2022-08-02, rev 0x00b6, size 113664
+    sig 0x000806a1, pf_mask 0x10, 2022-03-26, rev 0x0031, size 34816
+    sig 0x000806c1, pf_mask 0x80, 2022-06-28, rev 0x00a6, size 110592
+    sig 0x000806c2, pf_mask 0xc2, 2022-03-19, rev 0x0028, size 97280
+    sig 0x000806d1, pf_mask 0xc2, 2022-06-28, rev 0x0042, size 102400
+    sig 0x000806ec, pf_mask 0x94, 2022-07-31, rev 0x00f4, size 105472
+    sig 0x00090661, pf_mask 0x01, 2022-07-15, rev 0x0017, size 20480
+    sig 0x00090672, pf_mask 0x07, 2022-09-19, rev 0x0026, size 218112
+    sig 0x00090675, pf_mask 0x07, 2022-09-19, rev 0x0026, size 218112
+    sig 0x000b06f2, pf_mask 0x07, 2022-09-19, rev 0x0026, size 218112
+    sig 0x000b06f5, pf_mask 0x07, 2022-09-19, rev 0x0026, size 218112
+    sig 0x000906a3, pf_mask 0x80, 2022-09-19, rev 0x0424, size 217088
+    sig 0x000906a4, pf_mask 0x80, 2022-09-19, rev 0x0424, size 217088
+    sig 0x000906ed, pf_mask 0x22, 2022-07-31, rev 0x00f4, size 104448
+    sig 0x000a0652, pf_mask 0x20, 2022-07-31, rev 0x00f4, size 96256
+    sig 0x000a0653, pf_mask 0x22, 2022-07-31, rev 0x00f4, size 97280
+    sig 0x000a0655, pf_mask 0x22, 2022-07-31, rev 0x00f4, size 96256
+    sig 0x000a0660, pf_mask 0x80, 2022-07-31, rev 0x00f4, size 97280
+    sig 0x000a0661, pf_mask 0x80, 2022-07-31, rev 0x00f4, size 96256
+    sig 0x000a0671, pf_mask 0x02, 2022-08-02, rev 0x0056, size 103424
+
 * Mon May 16 2022 L.A. Kostis <lakostis@altlinux.ru> 2:18-alt1.20220510
 - Sync with Debian 3.20220510.1:
   + New upstream microcode datafile 20220510
