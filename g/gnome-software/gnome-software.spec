@@ -25,11 +25,6 @@
 %def_disable rpm_ostree
 %def_disable external_appstream
 %def_enable malcontent
-%ifarch %valgrind_arches
-%def_enable valgrind
-%else
-%def_disable valgrind
-%endif
 %ifarch %e2k
 %def_disable sysprof
 %else
@@ -40,7 +35,7 @@
 
 Name: gnome-software
 Version: %ver_major.1
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -72,7 +67,7 @@ Source: %name-%version%beta.tar
 %{?_enable_packagekit:Requires: appstream-data}
 %{?_enable_malcontent:Requires: malcontent} >= %malcontent_ver
 
-BuildRequires(pre): rpm-macros-meson rpm-build-xdg rpm-macros-valgrind
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg
 BuildRequires: meson libgio-devel >= %glib_ver
 BuildRequires: libgtk4-devel >= %gtk4_ver pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: pkgconfig(appstream) >= %appstream_ver
@@ -94,7 +89,6 @@ BuildRequires: libglib-testing-devel
 %{?_enable_fwupd:BuildRequires: fwupd-devel >= %fwupd_ver}
 %{?_enable_flatpak:BuildRequires: libflatpak-devel >= %flatpak_ver}
 %{?_enable_packagekit:BuildRequires: libpackagekit-glib-devel >= %packagekit_ver}
-%{?_enable_valgrind:BuildRequires: valgrind-tool-devel}
 %{?_enable_rpm_ostree:BuildRequires: libostree-devel >= %ostree_ver}
 %{?_enable_rpm:BuildRequires: librpm-devel}
 %{?_enable_malcontent:BuildRequires: pkgconfig(malcontent-0) >= %malcontent_ver}
@@ -137,7 +131,6 @@ GNOME Software.
 	%{?_enable_ostree:-Dostree=true} \
 	%{?_enable_rpm_ostree:-Drpm_ostree=true} \
 	%{?_disable_packagekit:-Dpackagekit=false} \
-	%{?_disable_valgrind:-Dvalgrind=false} \
 	%{?_disable_tests:-Dtests=false} \
 	%{?_disable_external_appstream:-Dexternal_appstream=false} \
 	%{?_disable_sysprof:-Dsysprof=disabled} \
@@ -194,6 +187,10 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Thu Dec 01 2022 Ivan A. Melnikov <iv@altlinux.org> 43.1-alt2
+- Drop valgrind option and dependency, just like
+  upstream did (see upstream commit 788e37f0).
+
 * Fri Oct 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 
