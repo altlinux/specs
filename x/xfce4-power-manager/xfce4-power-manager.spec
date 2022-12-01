@@ -1,5 +1,5 @@
 Name: xfce4-power-manager
-Version: 4.17.0
+Version: 4.17.1
 Release: alt1
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
@@ -73,6 +73,9 @@ scaling.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Dec 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
+- Updated to 4.17.1.
+
 * Tue Nov 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.0-alt1
 - Updated to 4.17.0.
 
