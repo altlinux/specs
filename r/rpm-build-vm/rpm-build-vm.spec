@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.41
+Version: 1.42
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -218,6 +218,13 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Tue Nov 29 2022 Vitaly Chikunov <vt@altlinux.org> 1.42-alt1
+- Mount /tmp with size=100%.
+- Add --swap option to add SwapFree to the available memory.
+- vm-create-image: List content of the image with --ls, and copy
+  files out of image with --cp (to get artifacts).
+- vm-create-image: Enforce minimal image size.
+
 * Sat Nov 26 2022 Vitaly Chikunov <vt@altlinux.org> 1.41-alt1
 - Set up console earlier (fixes --hvc mode).
 
