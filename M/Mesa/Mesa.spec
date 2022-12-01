@@ -17,12 +17,10 @@
 %define armsoc_arches %arm aarch64
 %define svga_arches %ix86 x86_64
 
-%define gallium_opencl_arches %ix86 x86_64 aarch64 mipsel ppc64le
+%define gallium_opencl_arches %ix86 x86_64 aarch64 ppc64le mipsel
 
 #VDPAU state tracker requires at least one of the following gallium drivers: r300, r600, radeonsi, nouveau
-%define vdpau_arches %radeon_arches %nouveau_arches
-#XVMC state tracker requires at least one of the following gallium drivers: r600, nouveau
-%define xvmc_arches %radeon_arches %nouveau_arches
+%define vdpau_arches %radeon_arches %nouveau_arches %virgl_arches
 # Mesa builds radeon and nouveau support as megadrivers
 %define dri_megadriver_arches %radeon_arches %nouveau_arches
 %define gallium_megadriver_arches %radeon_arches %nouveau_arches
@@ -81,8 +79,8 @@
 %vulkan_drivers_add swrast
 %gallium_drivers_add zink
 
-%define ver_major 22.2
-%define ver_minor 4
+%define ver_major 22.3
+%define ver_minor 0
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -102,7 +100,7 @@ BuildPreReq: /proc
 BuildRequires(pre): meson
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
 BuildRequires: libdrm-devel libexpat-devel libselinux-devel libxcb-devel libSM-devel libtinfo-devel libudev-devel libvulkan-devel
-BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel libXvMC-devel xorg-proto-devel libxshmfence-devel
+BuildRequires: libXdmcp-devel libffi-devel libelf-devel libva-devel libvdpau-devel xorg-proto-devel libxshmfence-devel
 BuildRequires: libXrandr-devel libnettle-devel libelf-devel zlib-devel libwayland-client-devel libwayland-server-devel
 BuildRequires: libwayland-egl-devel python3-module-mako wayland-protocols libsensors-devel libzstd-devel libunwind-devel
 BuildRequires: libglvnd-devel >= 1.2.0 llvm-devel >= 11.0.0
@@ -321,9 +319,6 @@ Mesa-based DRI drivers
 %ifarch %vdpau_arches
 	-Dgallium-vdpau=enabled \
 %endif
-%ifarch %xvmc_arches
-	-Dgallium-xvmc=enabled \
-%endif
 	-Ddri3=enabled \
 %ifarch %radeon_arches
 	-Dllvm=enabled \
@@ -362,13 +357,14 @@ Mesa-based DRI drivers
 
 %meson_build -v
 
-if [ -x %_bindir/rst2html ]; then
-	RST2HTML=rst2html
-else
+RST2HTML=rst2html
+if [ ! -x %_bindir/$RST2HTML ]; then
 	RST2HTML=rst2html.py
 fi
 for i in $(seq 0 %ver_minor); do
-	$RST2HTML %_builddir/%name-%version/docs/relnotes/%ver_major.$i.rst %_builddir/%name-%version/%ver_major.$i.html
+	if [ -f %_builddir/%name-%version/docs/relnotes/%ver_major.$i.rst ]; then
+		$RST2HTML %_builddir/%name-%version/docs/relnotes/%ver_major.$i.rst %_builddir/%name-%version/%ver_major.$i.html
+	fi
 done
 
 %install
@@ -402,17 +398,6 @@ d=%buildroot%_libdir/vdpau
                 [ -f "$t" ] || mv "$f" "$t"
                 ln -v -snf "${t##*/}" "$f"
         done
-d=%buildroot%_libdir
-	for f in $d/libXvMC*.so.1.0.0; do
-                [ ! -L "$f" ] || continue
-                n="${f##*/}"
-                s="$(objdump -p "$f" | awk '/SONAME/ {print $2}')"
-                [ -n "$s" ]
-                [ "$n" != "$s" ] || continue
-                t="$d/$s"
-                [ -f "$t" ] || mv "$f" "$t"
-                ln -v -snf "${t##*/}" "$f"
-        done
 
 %ifarch %armsoc_arches
 find %buildroot%_libdir/X11/modules/dri/ -type l | sed -ne "s|^%buildroot||p" > xorg-dri-armsoc.list
@@ -431,7 +416,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 #define _unpackaged_files_terminate_build 1
 
 %files -n libGLX-mesa
-%doc %ver_major.*.html
+#%doc %ver_major.*.html
 %_libdir/libGLX_mesa.so.*
 %_libdir/libglapi.so.*
 
@@ -447,7 +432,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_datadir/glvnd/egl_vendor.d/50_mesa.json
 
 %files -n libEGL-devel
-%_includedir/EGL/eglextchromium.h
+%_includedir/EGL/eglext_angle.h
 %_includedir/EGL/eglmesaext.h
 %_libdir/libEGL_mesa.so
 %endif
@@ -507,7 +492,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/gallium-pipe/pipe_swrast.so
 %endif
 %ifarch %gallium_megadriver_arches
-%_libdir/libXvMCgallium.so.1
 %_libdir/dri/libgallium_drv_video.so
 %endif
 %ifarch %vdpau_arches
@@ -522,6 +506,8 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %ifarch %virgl_arches
 %files -n xorg-dri-virtio
 %_libdir/X11/modules/dri/virtio_gpu_dri.so
+%_libdir/dri/virtio_gpu_drv_video.so
+%_libdir/vdpau/libvdpau_virtio_gpu.so*
 %ifarch %vulkan_virtio_arches
 %_libdir/libvulkan_virtio.so
 %_datadir/vulkan/icd.d/virtio_icd*.json
@@ -549,7 +535,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/nouveau_*dri.so
 %_libdir/dri/nouveau_drv_video.so
 %_libdir/vdpau/libvdpau_nouveau.so*
-%_libdir/libXvMCnouveau.so.*
 %ifarch %gallium_opencl_arches
 %_libdir/gallium-pipe/pipe_nouveau.so
 %endif
@@ -561,7 +546,6 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %_libdir/X11/modules/dri/r?00_dri.so
 %_libdir/vdpau/libvdpau_r*.so*
 %_libdir/dri/r*_drv_video.so
-%_libdir/libXvMCr*.so.*
 %ifarch %gallium_opencl_arches
 %_libdir/gallium-pipe/pipe_r*.so
 %endif
@@ -593,6 +577,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Dec 01 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.3.0-alt1
+- 22.3.0
+
 * Thu Nov 17 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.2.4-alt1
 - 22.2.4
 
