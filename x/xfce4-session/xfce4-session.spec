@@ -1,12 +1,12 @@
 Name: xfce4-session
-Version: 4.17.1
+Version: 4.17.2
 Release: alt1
 
 Summary: Session manager for Xfce desktop environment
 Summary (ru): Менеджер сессий для окружения рабочего стола Xfce
 License: GPLv2+
 Group: Graphical desktop/XFce
-Url: https://www.xfce.org/
+Url: https://docs.xfce.org/xfce/xfce4-session/start
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
 Vcs: https://gitlab.xfce.org/xfce/xfce4-session.git
@@ -77,6 +77,10 @@ install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Thu Dec 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
+- Updated Url tag.
+- Updated to 4.17.2.
+
 * Tue Nov 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
 - Updated to 4.17.1.
 
