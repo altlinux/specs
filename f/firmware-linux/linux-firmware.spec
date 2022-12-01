@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20221123
+Version: 20221129
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,13 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Dec 01 2022 Cronbuild Service <cronbuild@altlinux.org> 20221129-alt1
+- upstream changes (GIT 80ed874a):
+  + amdgpu: update sdma_5.2.7 firmware (thx Alex Deucher)
+  + QCA: Add Bluetooth firmware for WCN785x This commit will add
+    required Bluetooth firmware files for QCA WCN785x. The image
+    version is 2.0.0-00515. (thx Rocky Liao)
+
 * Wed Nov 23 2022 Cronbuild Service <cronbuild@altlinux.org> 20221123-alt1
 - upstream changes (GIT cdf9499c):
   + update firmware for MT7916 (thx Shayne Chen)
