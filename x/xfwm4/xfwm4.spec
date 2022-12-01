@@ -1,5 +1,5 @@
 Name: xfwm4
-Version: 4.17.1
+Version: 4.17.2
 Release: alt1
 
 %def_enable epoxy
@@ -20,7 +20,7 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4ui-gtk3-devel libxfconf-devel
 
 BuildRequires: gnome-doc-utils xml-utils xsltproc
-BuildRequires: intltool libSM-devel libXcomposite-devel libXdamage-devel libXext-devel libXrandr-devel libglade-devel
+BuildRequires: intltool libXcomposite-devel libXdamage-devel libXext-devel libXrandr-devel libglade-devel
 BuildRequires: libstartup-notification-devel libwnck3-devel xorg-cf-files
 BuildRequires: libXinerama-devel libXpresent-devel libXres-devel
 # For svg support in the glib-compile-resources
@@ -80,6 +80,9 @@ Xfce.
 %_libdir/xfce4/*
 
 %changelog
+* Thu Dec 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
+- Updated to 4.17.2.
+
 * Tue Nov 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
 - Updated Url tag.
 - Dropped ALT Russian translation.
