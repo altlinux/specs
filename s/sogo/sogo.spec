@@ -3,8 +3,8 @@
 
 Summary: SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:    sogo
-Version: 5.7.1
-Release: alt3
+Version: 5.8.0
+Release: alt1
 
 License: GPL-2.0+ and LGPL-2.1+
 URL:     https://sogo.nu/
@@ -28,7 +28,6 @@ Patch2: sogo-alt-fixes.patch
 Patch4: sogo-alt-fix-timeZoneWithAbbreviation.patch
 Patch5: sogo-alt-libzip-includes.patch
 Patch6: sogo-alt-libytnef-includes.patch
-Patch7: sogo-fix-5416.patch
 
 Requires: stmpclean
 Requires: tzdata
@@ -261,7 +260,6 @@ tar xf %SOURCE2
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 
 # Set correct python3 executable in shebang
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
@@ -441,6 +439,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Thu Dec 01 2022 Andrey Cherepanov <cas@altlinux.org> 5.8.0-alt1
+- New version.
+
 * Thu Nov 24 2022 Andrey Cherepanov <cas@altlinux.org> 5.7.1-alt3
 - Fixed empty patch to fix https://bugs.sogo.nu/view.php?id=5416 (ALT #44407).
 
