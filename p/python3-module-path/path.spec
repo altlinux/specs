@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 16.5.0
+Version: 16.6.0
 Release: alt1
 
 Summary: A module wrapper for os.path
@@ -68,6 +68,9 @@ git tag '%version'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Dec 01 2022 Stanislav Levin <slev@altlinux.org> 16.6.0-alt1
+- 16.5.0 -> 16.6.0.
+
 * Mon Oct 24 2022 Stanislav Levin <slev@altlinux.org> 16.5.0-alt1
 - 16.4.0 -> 16.5.0.
 
