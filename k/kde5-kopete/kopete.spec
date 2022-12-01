@@ -31,7 +31,7 @@
 
 Name: kde5-kopete
 Version: 22.08.3
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Networking/Instant messaging
@@ -232,6 +232,12 @@ done
 %install
 %K5install
 %K5install_move data kconf_update kopete kopete_history locale sounds
+
+if [ -n "`ls -1d %buildroot/%_datadir/qlogging-categories5/*.*categories`" ] ; then
+    mkdir -p %buildroot/%_K5xdgconf/
+    mv %buildroot/%_datadir/qlogging-categories5/*.*categories %buildroot/%_K5xdgconf/
+fi
+
 %find_lang --all-name --with-kde %rname
 
 %files common -f %rname.lang
@@ -239,7 +245,7 @@ done
 %dir %_K5srv/kconfiguredialog/
 %_K5icon/*/*/*/*.*
 %config(noreplace) %_K5xdgconf/*rc
-%_datadir/qlogging-categories5/*.*categories
+%config(noreplace) %_K5xdgconf/*.*categories
 
 %files
 %if_enabled mediastreamer
@@ -323,6 +329,9 @@ done
 %_K5dbus_iface/*
 
 %changelog
+* Wed Nov 30 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt2
+- fix to build with KF-5.100
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
