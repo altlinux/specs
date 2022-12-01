@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: capnproto
-Version: 0.10.2
+Version: 0.10.3
 Release: alt1
 Summary: A data interchange format and capability-based RPC system
 Group: Development/C
@@ -103,6 +103,9 @@ subst '/TEST(AsyncIo, AncillaryMessageHandler)/,/^}/s/^/\/\//' src/kj/async-io-t
 %_libdir/lib*.so
 
 %changelog
+* Thu Dec 01 2022 Vitaly Chikunov <vt@altlinux.org> 0.10.3-alt1
+- Update to v0.10.3 (2022-11-29).
+
 * Wed Aug 31 2022 Vitaly Chikunov <vt@altlinux.org> 0.10.2-alt1
 - Update to v0.10.2 (2022-06-29).
 
