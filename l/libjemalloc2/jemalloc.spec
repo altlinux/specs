@@ -5,7 +5,7 @@
 
 Name: libjemalloc2
 Version: 5.3.0
-Release: alt1
+Release: alt1.1
 Summary: A general-purpose scalable concurrent malloc(3) implementation
 Group: System/Libraries
 License: BSD
@@ -69,6 +69,10 @@ Development files of %title
 %configure \
     --with-version='%version-0-g0' \
     --with-xslroot=/usr/share/xml/docbook/xsl-stylesheets \
+%ifarch %e2k
+    --with-lg-quantum=4 \
+%endif
+    %nil
 
 %make_build
 %make doc
@@ -105,6 +109,9 @@ rm -r %buildroot%_libdir/*.a
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Dec 01 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.3.0-alt1.1
+- Fixed build for Elbrus
+
 * Wed Oct 12 2022 Stanislav Levin <slev@altlinux.org> 5.3.0-alt1
 - 5.2.1 -> 5.3.0.
 
