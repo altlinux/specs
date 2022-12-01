@@ -17,7 +17,7 @@
 
 Name: kde5-%rname
 Version: 22.08.3
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Office
@@ -142,13 +142,19 @@ rm -f "$tmp_file"
 %if_disabled obsolete_kde4
 %K5install_move data okular kpackage kconf_update
 %endif
+
+if [ -n "`ls -1d %buildroot/%_datadir/qlogging-categories5/*.*categories`" ] ; then
+    mkdir -p %buildroot/%_K5xdgconf/
+    mv %buildroot/%_datadir/qlogging-categories5/*.*categories %buildroot/%_K5xdgconf/
+fi
+
 %find_lang %name --with-kde --all-name
 
 %files common -f %name.lang
 %doc LICENSES/*
 %_K5srvtyp/*.desktop
 %_K5icon/hicolor/*/apps/okular.*
-%_datadir/qlogging-categories5/*.*categories
+%config(noreplace) %_K5xdgconf/*.*categories
 
 %files
 %_K5bin/okular
@@ -208,6 +214,9 @@ rm -f "$tmp_file"
 %_K5lib/libOkular5Core.so.*
 
 %changelog
+* Wed Nov 30 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt2
+- fix to build with KF-5.100
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
