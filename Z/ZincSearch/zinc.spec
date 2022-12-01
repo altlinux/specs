@@ -5,8 +5,8 @@
 %define oname zinc
 
 Name: ZincSearch
-Version: 0.2.5
-Release: alt2
+Version: 0.3.5
+Release: alt1
 Summary: Zinc Search engine
 
 License: Apache-2.0
@@ -126,6 +126,9 @@ useradd -r -g %oname -c 'Zinc Search engine' \
 %dir %attr(0750, %oname, %oname) %_sharedstatedir/%oname
 
 %changelog
+* Thu Dec 01 2022 Alexey Shabalin <shaba@altlinux.org> 0.3.5-alt1
+- new version 0.3.5
+
 * Sat Jul 02 2022 Alexey Shabalin <shaba@altlinux.org> 0.2.5-alt2
 - update systemd unit
 
