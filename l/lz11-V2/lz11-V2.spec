@@ -2,7 +2,7 @@ Summary: Printer Drivers for the Lexmark Z11 and Compaq IJ300 printer
 
 Name: lz11-V2
 Version: 1.2
-Release: alt1.qa1
+Release: alt1.qa2
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -11,6 +11,8 @@ Group: Publishing
 
 URL: http://sourceforge.net/projects/lz11/
 Source:	http://easynews.dl.sourceforge.net/sourceforge/lz11/lz11-V2-%{version}.tar
+
+%filter_from_requires /^sudo$/d
 
 %description
 A Linux printer driver/filter for the Lexmark Z11 and the Compaq IJ300 printer,
@@ -48,6 +50,9 @@ rm -f %buildroot/%_bindir/lz11.{stop,install}
 %_datadir/cups/model/*.ppd*
 
 %changelog
+* Thu Dec 01 2022 Ivan A. Melnikov <iv@altlinux.org> 1.2-alt1.qa2
+- NMU: get rid of sudo dependency
+
 * Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.2-alt1.qa1
 - NMU: rebuilt for debuginfo.
 
