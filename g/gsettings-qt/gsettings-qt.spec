@@ -1,18 +1,25 @@
 #%%global _qt5_qmldir %%{_qt5_archdatadir}/qml
 %global __provides_exclude ^libGSettingsQmlPlugin\\.so.*$
 
+%def_disable clang
+
 Name: gsettings-qt
 Version: 0.2
-Release: alt1
+Release: alt2.gitd5e002d
 Summary: Qt/QML bindings for GSettings
 License: LGPL-3.0-or-later
 Group: Graphical desktop/Other
-Url: https://github.com/linuxdeepin/gsettings-qt
+Url: https://gitlab.com/ubports/development/core/gsettings-qt
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %name-%version.tar.gz
 
-BuildRequires: gcc-c++ libgio-devel qt5-declarative-devel
+%if_enabled clang
+BuildRequires: clang-devel
+%else
+BuildRequires: gcc-c++
+%endif
+BuildRequires: libgio-devel qt5-declarative-devel
 
 %description
 Qt/QML bindings for GSettings.
@@ -36,7 +43,21 @@ Header files and libraries for %name.
 #__subst 's|<QObject>|<QtCore/QObject>|; s|<QStringList>|<QtCore/QStringList>|' src/qgsettings.h
 
 %build
-%qmake_qt5 CONFIG+=nostrip
+export PATH=%_qt5_bindir:$PATH
+%if_enabled clang
+export CC="clang"
+export CXX="clang++"
+export AR="llvm-ar"
+export NM="llvm-nm"
+export READELF="llvm-readelf"
+%endif
+
+%qmake_qt5 \
+  CONFIG+=nostrip \
+%if_enabled clang
+  QMAKE_STRIP= -spec linux-clang \
+%endif
+%nil
 # Parallel build not supported. It causes error when linking
 %make
 
@@ -64,5 +85,9 @@ find %buildroot -iname cpptest* -exec rm -f {} \;
 %_libdir/lib%name.so
 
 %changelog
+* Thu Dec 01 2022 Leontiy Volodin <lvol@altlinux.org> 0.2-alt2.gitd5e002d
+- Built from commit d5e002d7e0bce46c315bcc99a44a8bd51f49f488.
+- Updated url tag.
+
 * Fri Aug 09 2019 Leontiy Volodin <lvol@altlinux.org> 0.2-alt1
 - Initial build for ALT Sisyphus (thanks fedora for spec).
