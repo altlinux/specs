@@ -1,5 +1,5 @@
 Name: libglvnd
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 Epoch: 7
 Group: System/Libraries
@@ -13,7 +13,7 @@ Obsoletes: libGLdispatch < %epoch:%version-%release
 Source: %name-%version.tar
 Patch: %name-%version.patch
 
-BuildRequires: libXext-devel python-modules-compiler python-modules-distutils python-modules-xml xorg-glproto-devel
+BuildRequires: meson libXext-devel python-modules-compiler python-modules-distutils python-modules-xml xorg-glproto-devel
 
 %description
 libglvnd is an implementation of the vendor-neutral dispatch layer for
@@ -74,13 +74,12 @@ libGL are the common dispatch interface for the GLX API
 %patch -p1
 
 %build
-%autoreconf
-%configure \
-	--disable-gles1
-%make_build
+%meson \
+	-Dgles1=false
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 mkdir -p %buildroot{%_sysconfdir,%_datadir}/glvnd/egl_vendor.d
 mkdir -p %buildroot{%_sysconfdir,%_datadir}/egl/egl_external_platform.d
@@ -121,6 +120,9 @@ rm -f %buildroot%_pkgconfigdir/glesv1*.pc
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Dec 01 2022 Valery Inozemtsev <shrek@altlinux.ru> 7:1.6.0-alt1
+- 1.6.0
+
 * Fri Sep 23 2022 Valery Inozemtsev <shrek@altlinux.ru> 7:1.5.0-alt1
 - 1.5.0
 
