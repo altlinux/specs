@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.6.0
+Version: 1.6.1
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -61,6 +61,10 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Thu Dec 01 2022 Dmitry V. Levin <ldv@altlinux.org> 1.6.1-alt1
+- hsh: reintroduced --no-query-repackage option that was accidentally lost
+  in 1.4.5 (closes: #44511).
+
 * Tue Nov 08 2022 Dmitry V. Levin <ldv@altlinux.org> 1.6.0-alt1
 - Fixed regression introduced in the previous release
   in handling of optional parameters to CLI options (by Arseny Maslennikov).
