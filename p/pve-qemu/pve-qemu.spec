@@ -9,7 +9,7 @@
 
 Name: pve-%rname
 Version: 7.1.0
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -33,7 +33,7 @@ Patch100: cpu-add-Kunpeng-920-cpu-support.patch
 %set_verify_elf_method fhs=relaxed
 %add_verify_elf_skiplist %_datadir/%rname/*
 %add_findreq_skiplist %_datadir/%rname/*
-%add_findreq_skiplist %_datadir/pve-edk2-firmware
+%add_findreq_skiplist %_datadir/pve-edk2-firmware/*
 
 ExclusiveArch: x86_64 aarch64
 
@@ -328,6 +328,9 @@ fi
 %_man8dir/qemu-nbd.8*
 
 %changelog
+* Thu Dec 01 2022 Alexey Shabalin <shaba@altlinux.org> 1:7.1.0-alt4
+- skip requires on files in /usr/share/OVMF and /usr/share/AAVMF
+
 * Thu Dec 01 2022 Alexey Shabalin <shaba@altlinux.org> 1:7.1.0-alt3
 - delete version from requires for edk2-ovmf
 
