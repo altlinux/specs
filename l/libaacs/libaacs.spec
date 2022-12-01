@@ -1,6 +1,6 @@
 Name: libaacs
-Version: 0.11.0
-Release: alt1.1
+Version: 0.11.1
+Release: alt1
 
 Summary: BD AACS library
 License: LGPL-2.1
@@ -52,6 +52,9 @@ rm -v %buildroot%_libdir/libaacs.a
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Dec 01 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.11.1-alt1
+- 0.11.1 released
+
 * Wed Jan 12 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.11.0-alt1.1
 - fixed build for Elbrus
 
