@@ -1,6 +1,6 @@
 Name: vzdump
 Version: 1.2.6
-Release: alt1
+Release: alt2
 
 Summary: OpenVZ backup scripts
 # http://deb.debian.org/debian/pool/main/v/vzdump/vzdump_1.2.6.orig.tar.gz
@@ -13,6 +13,7 @@ BuildRequires(Pre): perl
 BuildRequires: perl-podlators
 BuildRequires: perl(LockFile/Simple.pm)
 Requires: vzctl rsync cstream
+Conflicts: pve-manager
 
 %description
 This package contains the vzdump and vzrestore scripts to backup and restore OpenVZ images.
@@ -32,6 +33,10 @@ This package contains the vzdump and vzrestore scripts to backup and restore Ope
 %doc ChangeLog copyright hook-script.pl
 
 %changelog
+* Thu Dec 01 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.2.6-alt2
+- fix from wiki.openvz.org
+- set conflict with pve-manager (ALT #44504)
+
 * Wed Nov 17 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.2.6-alt1
 - new version 1.2.6
 - adoptation for ALT OpenVZ, remove qemu support
