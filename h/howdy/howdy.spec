@@ -1,6 +1,6 @@
 Name: howdy
 Version: 3.0.0
-Release: alt0.beta1.git943f1e1
+Release: alt1.beta1.git943f1e1
 Summary: Windows Hello style authentication
 
 License: MIT
@@ -80,7 +80,8 @@ cp -a howdy/src/autocomplete/howdy %buildroot%_datadir/bash-completion/completio
 mkdir -p %buildroot%_man1dir
 cp -a howdy/debian/howdy.1 %buildroot%_man1dir/
 # already built
-rm -rf %buildroot/%_lib/security/howdy/{dlib-data,pam}
+rm -rf %buildroot/%_lib/security/howdy/pam
+rm -rf %buildroot/%_lib/security/howdy/dlib-data/{Readme.md,install.sh,.gitignore}
 
 %files
 %doc LICENSE README.md
@@ -98,5 +99,8 @@ rm -rf %buildroot/%_lib/security/howdy/{dlib-data,pam}
 /usr/libexec/howdy-gtk/
 
 %changelog
+* Thu Dec 01 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt1.beta1.git943f1e1
+- Packed source files.
+
 * Wed Nov 30 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt0.beta1.git943f1e1
 - Initial build for ALT Sisyphus (thanks archlinux for the spec) (ALT #44491).
