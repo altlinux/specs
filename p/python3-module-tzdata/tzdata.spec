@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 2022.6
+Version: 2022.7
 Release: alt1
 
 Summary: Python package wrapping the IANA time zone database
@@ -51,5 +51,8 @@ standard location), as a part of PEP 615
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Dec 01 2022 Grigory Ustinov <grenka@altlinux.org> 2022.7-alt1
+- Automatically updated to 2022.7.
+
 * Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 2022.6-alt1
 - Initial build for Sisyphus.
