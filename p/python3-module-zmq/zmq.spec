@@ -6,7 +6,7 @@
 
 Name: python3-module-%oname
 Version: 24.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Software library for fast, message-based applications
 
@@ -21,6 +21,7 @@ BuildRequires: libzeromq-devel
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 BuildRequires: python3-module-Cython
+BuildRequires: python3-module-packaging
 %if_without bootstrap
 BuildRequires: python3-module-cffi
 BuildRequires: python3-module-numpy
@@ -109,6 +110,9 @@ py.test3 --pyargs zmq -v -k "not test_cython"
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Wed Nov 30 2022 Michael Shigorin <mike@altlinux.org> 24.0.1-alt1.1
+- fixed BR:
+
 * Thu Nov 24 2022 Grigory Ustinov <grenka@altlinux.org> 24.0.1-alt1
 - Automatically updated to 24.0.1.
 - Bootstrap for python3.11.
