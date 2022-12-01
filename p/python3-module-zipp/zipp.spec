@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.10.0
+Version: 3.11.0
 Release: alt1
 
 Summary: A pathlib-compatible Zipfile object wrapper
@@ -12,10 +12,10 @@ Summary: A pathlib-compatible Zipfile object wrapper
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/zipp/
+VCS: https://github.com/jaraco/zipp.git
 
 BuildArch: noarch
 
-# Source-url: https://github.com/jaraco/zipp.git
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -60,11 +60,14 @@ fi
 %tox_check_pyproject
 
 %files
-%doc LICENSE README.rst
+%doc README.rst
 %python3_sitelibdir/zipp/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Nov 30 2022 Stanislav Levin <slev@altlinux.org> 3.11.0-alt1
+- 3.10.0 -> 3.11.0.
+
 * Mon Oct 24 2022 Stanislav Levin <slev@altlinux.org> 3.10.0-alt1
 - 3.9.1 -> 3.10.0.
 

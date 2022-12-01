@@ -9,7 +9,7 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 65.5.1
+Version: 65.6.3
 Release: alt1
 
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
@@ -171,13 +171,12 @@ export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION NO_INTERNET'
 %tox_check_pyproject -- -vra
 
 %files
-%doc LICENSE *.rst
+%doc *.rst
 %python3_sitelibdir/_distutils_hack/
 %python3_sitelibdir/distutils-precedence.pth
 %python3_sitelibdir/setuptools
 
 %files -n python3-module-pkg_resources
-%doc LICENSE
 %python3_sitelibdir/pkg_resources
 # People write "setuptools" in *.egg-info/requires.txt (or in setup.py's requires)
 # even if they use only the pkg_resources part;
@@ -193,6 +192,12 @@ export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION NO_INTERNET'
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Fri Nov 25 2022 Stanislav Levin <slev@altlinux.org> 1:65.6.3-alt1
+- 65.6.0 -> 65.6.3.
+
+* Mon Nov 21 2022 Stanislav Levin <slev@altlinux.org> 1:65.6.0-alt1
+- 65.5.1 -> 65.6.0.
+
 * Fri Nov 11 2022 Stanislav Levin <slev@altlinux.org> 1:65.5.1-alt1
 - 65.5.0 -> 65.5.1.
 
