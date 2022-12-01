@@ -1,5 +1,5 @@
 Name:     kiwix-desktop
-Version:  2.3.0
+Version:  2.3.1
 Release:  alt1
 
 # no qtwebengine
@@ -50,6 +50,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Thu Dec 01 2022 Andrey Cherepanov <cas@altlinux.org> 2.3.1-alt1
+- New version.
+
 * Fri Sep 09 2022 Andrey Cherepanov <cas@altlinux.org> 2.3.0-alt1
 - New version.
 

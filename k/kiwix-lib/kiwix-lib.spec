@@ -1,5 +1,5 @@
 Name:     kiwix-lib
-Version:  11.0.0
+Version:  12.0.0
 Release:  alt1
 
 Summary:  Common code base for all Kiwix ports
@@ -67,6 +67,9 @@ sed -i "s/compiler.get_id()/'gcc'/" meson.build
 %_man1dir/*.1*
 
 %changelog
+* Thu Dec 01 2022 Andrey Cherepanov <cas@altlinux.org> 12.0.0-alt1
+- New version.
+
 * Fri Jun 24 2022 Andrey Cherepanov <cas@altlinux.org> 11.0.0-alt1
 - New version.
 
