@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2022d
+Version: 2022g
 Release: alt1
 
 Summary: Timezone data
@@ -100,6 +100,15 @@ diff -u expected output || {
 %srcdir/
 
 %changelog
+* Tue Nov 29 2022 Dmitry V. Levin <ldv@altlinux.org> 2022g-alt1
+- 2022f -> 2022g.
+
+* Sat Oct 29 2022 Dmitry V. Levin <ldv@altlinux.org> 2022f-alt1
+- 2022e -> 2022f.
+
+* Tue Oct 11 2022 Dmitry V. Levin <ldv@altlinux.org> 2022e-alt1
+- 2022d -> 2022e.
+
 * Fri Sep 23 2022 Dmitry V. Levin <ldv@altlinux.org> 2022d-alt1
 - 2022b -> 2022d.
 
