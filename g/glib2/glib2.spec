@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_enable static
 %{?_enable_static:%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}}
 
@@ -29,8 +29,8 @@
 %def_disable check
 
 Name: glib2
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -433,6 +433,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %endif
 
 %changelog
+* Thu Dec 01 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.3-alt1
+- 2.74.3
+
 * Wed Nov 30 2022 Yuri N. Sedunov <aris@altlinux.org> 2.74.2-alt2
 - updated to 2.74.2-2-g60d1ebbd2 (
   fixed regression in C++ types accepted by g_str_equal() )
