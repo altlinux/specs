@@ -16,8 +16,8 @@
 %def_enable libnl
 
 Name: keepalived
-Version: 2.2.4
-Release: alt2
+Version: 2.2.7
+Release: alt1
 
 Summary: HA monitor built upon LVS, VRRP and services poller
 License: GPLv2
@@ -29,12 +29,14 @@ Source1: %name.init
 Patch0: 0002-update-systemd-unit-file.patch
 
 BuildRequires: libpopt-devel libssl-devel
+BuildRequires: pkgconfig(libkmod)
 %{?_enable_libiptc:BuildRequires: pkgconfig(libiptc)}
 %{?_enable_libipset:BuildRequires: pkgconfig(libipset)}
 %{?_enable_nftables:BuildRequires: pkgconfig(libnftnl) pkgconfig(libmnl)}
 %{?_enable_libnl:BuildRequires: pkgconfig(libnl-genl-3.0) pkgconfig(libnl-route-3.0)}
 %{?_enable_snmp:BuildRequires: libnet-snmp-devel}
 %{?_enable_regex:BuildRequires: pkgconfig(libpcre2-8)}
+BuildRequires: libmagic-devel
 BuildRequires: systemd-devel
 
 %description
@@ -85,6 +87,8 @@ sed -i 's,"O0",0,' lib/utils.c
 install -pD -m755 %SOURCE1 %buildroot%_initdir/%name
 rm -rf %buildroot%_sysconfdir/%name/samples
 rm -rf %buildroot%_defaultdocdir/%name
+mv %buildroot%_sysconfdir/%name/keepalived.conf.sample \
+   %buildroot%_sysconfdir/%name/keepalived.conf
 
 mkdir -p %buildroot%_datadir/mibs/%name
 for f in %buildroot%_datadir/snmp/mibs/*.txt; do
@@ -118,6 +122,9 @@ done
 %doc doc/samples
 
 %changelog
+* Fri Dec 02 2022 Alexey Shabalin <shaba@altlinux.org> 2.2.7-alt1
+- 2.2.7
+
 * Wed Dec 08 2021 Michael Shigorin <mike@altlinux.org> 2.2.4-alt2
 - e2k: removed extra patch to check if NFT_SET_CONCAT is declared
   (merged upstream)
