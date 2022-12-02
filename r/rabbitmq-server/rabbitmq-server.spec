@@ -4,7 +4,7 @@
 %add_findreq_skiplist */ocf/resource.d/rabbitmq/*
 
 Name: rabbitmq-server
-Version: 3.11.3
+Version: 3.11.4
 Release: alt1
 Summary: The RabbitMQ server
 License: MPL-1.1
@@ -154,6 +154,9 @@ rm -rf %buildroot/usr/lib/erlang/autocomplete
 %_datadir/zsh/site-functions/_%name
 
 %changelog
+* Wed Nov 30 2022 Egor Ignatov <egori@altlinux.org> 3.11.4-alt1
+- 3.11.4
+
 * Fri Nov 18 2022 Egor Ignatov <egori@altlinux.org> 3.11.3-alt1
 - 3.11.3
 
