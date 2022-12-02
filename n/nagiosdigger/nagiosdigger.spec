@@ -4,10 +4,11 @@
 %define nagios_plugindir %_libexecdir/nagios/plugins
 
 Name: nagiosdigger
-Version: 0.9
-Release: alt7
+Version: 0.9.1
+Release: alt1
 
-Url: https://www.vanheusden.com/nagiosdigger/
+#Url: https://www.vanheusden.com/nagiosdigger/
+Url: https://exchange.nagios.org/directory/Addons/Log-File-Management/nagiosdigger/details
 Packager: Paul Wolneykien <manowar@altlinux.org>
 
 Source:%name-%version.tar
@@ -102,6 +103,10 @@ a2enextra httpd-addon.d
 %files pgsql
 
 %changelog
+* Fri Dec 02 2022 Paul Wolneykien <manowar@altlinux.org> 0.9.1-alt1
+- Fixed divide by zero in "Predict problems" (closes: 44502).
+- Fixed date/time functions for PostgreSQL (closes: 44501).
+
 * Mon Nov 14 2022 Paul Wolneykien <manowar@altlinux.org> 0.9-alt7
 - Switch to build with a major PHP version whatever it is by using
   %%php_name (closes: 44192).
