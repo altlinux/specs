@@ -6,7 +6,7 @@
 
 Name: pg_rman%pg_ver
 Version: 1.3.14
-Release: alt2
+Release: alt3
 Summary: pg_rman is an online backup and restore tool for PostgreSQL
 License: BSD-3-Clause
 Group: Databases
@@ -22,7 +22,7 @@ BuildRequires: postgresql%pg_ver-server-devel
 BuildRequires: libkrb5-devel
 
 Requires: postgresql%pg_ver-server
-
+Conflicts: pg_rman
 Conflicts: pg_rman10
 Conflicts: pg_rman11
 Conflicts: pg_rman12
@@ -53,6 +53,9 @@ cp -r sql examples/
 %_bindir/*
 
 %changelog
+* Fri Dec 02 2022 Alexei Takaseev <taf@altlinux.org> 1.3.14-alt3
+- Add conflict to old package
+
 * Tue Nov 22 2022 Alexei Takaseev <taf@altlinux.org> 1.3.14-alt2
 - Use server depended pg_server_config for build
 
