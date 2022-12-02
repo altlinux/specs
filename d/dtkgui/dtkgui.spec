@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.6.0.2
+Version: 5.6.2.2
 Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0
@@ -10,7 +10,6 @@ Url: https://github.com/linuxdeepin/dtkgui
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: dtkgui-5.5.17.1-alt-fix-build-ppc64le.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -38,16 +37,7 @@ Header files and libraries for %name.
 
 %prep
 %setup
-# %%ifarch ppc64le
-# %%patch -p1
-# %%endif
 sed -i '/*build-*/d' .gitignore
-%if_disabled clang
-# fix: XdgIcon crashed in release mode
-# 0abaada3ce3a17ccd8f4417321cabe300eed9e37
-sed -i 's|XdgIconLoader::instance()->followColorScheme();|return XdgIconLoader::instance()->followColorScheme();|' \
-  src/util/private/xdgiconproxyengine.cpp
-%endif
 
 %build
 %if_enabled clang
@@ -85,10 +75,14 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_archdatadir/mkspecs/modules/qt_lib_dtkgui.pri
 %dir %_libdir/cmake/DtkGui/
 %_libdir/cmake/DtkGui/DtkGuiConfig.cmake
+%_libdir/cmake/DtkGui/DtkGuiConfigVersion.cmake
 %_pkgconfigdir/dtkgui.pc
 %_libdir/libdtkgui.so
 
 %changelog
+* Fri Dec 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.2.2-alt1
+- New version.
+
 * Mon Oct 17 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.0.2-alt1
 - New version.
 - Upstream:

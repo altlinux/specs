@@ -1,6 +1,6 @@
 Name: deepin
-Version: 5
-Release: alt17
+Version: 5.0.1
+Release: alt1
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
 Group: Graphical desktop/Other
@@ -73,7 +73,7 @@ Requires: deepin-terminal
 Requires: deepin-calendar
 Requires: deepin-anything
 Requires: deepin-wallpapers
-# Requires: deepin-turbo
+Requires: deepin-turbo
 Requires: deepin-system-monitor
 Requires: deepin-editor
 Requires: deepin-sound-theme
@@ -99,6 +99,7 @@ Requires: deepin-shortcut-viewer
 Requires: deepin-picker
 Requires: deepin-network-core
 Requires: kde5-profile
+Requires: deepin-log-viewer
 
 %description default
 %name-default is a virtual package to provide default installation
@@ -112,9 +113,10 @@ Group: Graphical desktop/Other
 ExcludeArch: ppc64le armh
 Requires: %name-default = %version-%release
 Requires: deepin-account-faces
-Requires: deepin-topbar
+#Requires: deepin-topbar
 Requires: deepin-device-formatter
-Requires: redshift
+Requires: deepin-tweak
+# Requires: redshift
 
 %description full
 %name-full is a virtual package to provide full installation
@@ -136,6 +138,13 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Fri Dec 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.1-alt1
+- Added deepin-tweak in deepin-full.
+- Added deepin-log-viewer in deepin-default.
+- Restored deepin-turbo for performance in deepin-default.
+- Removed redshift from deepin-full.
+- Removed deepin-topbar from deepin-full.
+
 * Fri Aug 26 2022 Leontiy Volodin <lvol@altlinux.org> 5-alt17
 - Added deepin-network-core for network management.
 
