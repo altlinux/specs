@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 200
+%define centos_release 205
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,73 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Dec 02 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.205-alt1.el9
+- Updated to kernel-5.14.0-205.el9:
+  + Add rtla subpackage for kernel-tools
+  + arm64: dts: freescale: Add i.MX93 SoC-level information support
+  + ata: libata-core: Print timeout value when internal command times
+  + Backport fbcon to fix race condition in fbcon
+  + build: Fix generating BTF with pahole >=1.24
+  + clk: imx: add i.MX93 clk
+  + CNB: ethtool: add header/data split indication
+  + CNB: ipv6: Use ipv6_only_sock() helper in condition
+  + CNB: net: remove noblock parameter from skb_recv_datagram()
+  + CNB: net: wrap the wireless pointers in struct net_device in an ifdef
+  + CNB: PM: core: Remove static qualifier in DEFINE_SIMPLE_DEV_PM_OPS macro
+  + CNB: slab: Introduce kmalloc_size_roundup()
+  + CNB:  usb: remove third argument of usb_maxpacket()
+  + CXL update from 5.18
+  + drm: Move nomodeset kernel parameter to the DRM subsystem
+  + dt-bindings: mailbox: imx-mu: Add bindings for i.MX93
+  + dt-bindings: mmc: imx-esdhc: Updates
+  + e1000e: Driver update for RHEL-9.2.0
+  + ext4: Use folio_invalidate()
+  + gpio: vf610: remove the SOC_VF610 dependency for GPIO_VF610
+  + iavf: Add waiting for response from PF in set mac
+  + ice: Driver Update to 5.19
+  + intel_idle: Add AlderLake-N support
+  + locking: rwsem & other locking code updates
+  + Merge commit '6e39eb8ca7100c27aa42409b0491592be0d67a0d'
+  + Merge commit 'aa830fac8952cf6440f19c00317847b311f00214'
+  + Merge remote-tracking branch 'centos-stream-9/merge-requests/1372' into therm-v0
+  + nfp: driver update to kernel version 5.19
+  + NFS / NFSD fixes rollup for 9.2
+  + percpu_ref_init(): clean ->percpu_count_ref on failure
+  + perf: internal-testsuite instruction-decoder-new-instructions failed
+  + pinctrl: imx93: updates for pinctrl driver support
+  + platform/x86/intel/pmt: Sapphire Rapids PMT errata fix
+  + powerpc/64/kdump: Limit kdump base to 512MB
+  + powerpc: Don't select HAVE_IRQ_EXIT_ON_IRQ_STACK
+  + Rebase rhel9 kernel kexec/kdump code to upstream kernel 6.0
+  + Revert "powerpc/rtas: Implement reentrant rtas call"
+  + s390/block: fix add disk warning
+  + [s390]: RHEL9 - boot: Add secure boot trailer
+  + [s390]: RHEL9 - kernel: missing exception table entries
+  + smartpqi updates
+  + sunrpc: Set sk_allocation to GFP_NOFS to avoid using current->task_frag.
+  + udp: backports from upstream
+  + Update drivers/thermal in order to support Arm SystemReady IR
+  + Update kernel's PCI subsystem to v6.1
+  + Update mlxsw driver to upstream v5.19
+  + update powerpc/fadump
+  + x86/ftrace: remove return_to_handler SYM_FUNC_END macro
+  + Various changes and improvements that are poorly described in merge.
+
+* Wed Nov 23 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.201-alt1.el9
+- Updated to kernel-5.14.0-201.el9:
+  + CNB: Update TC subsystem to upstream v6.0
+  + CNB: vdpa: Add support for querying vendor statistics
+  + fix compile_comands.json generation
+  + fuse: fix readdir cache race
+  + Merge commit '27dadcb8127ff8b29517cedc0388c4e718e37c66'
+  + perf: Sync with upstream v6.0
+  + rpminspect: disable kmidiff and abidiff
+  + sctp: backports from upstream
+  + Updates for  automotive_full pipeline
+  + vdpa_sim_blk: backport latests features [rhel-9.2.0]
+  + XFS update to v5.16
+  + Various changes and improvements that are poorly described in merge.
+
 * Tue Nov 22 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.200-alt1.el9
 - Updated to kernel-5.14.0-200.el9:
   + arm64: kdump: Reimplement crashkernel=X fixup
