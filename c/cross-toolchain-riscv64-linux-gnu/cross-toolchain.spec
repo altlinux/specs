@@ -41,26 +41,19 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20220112
-Release: alt2
+Version: 20221125
+Release: alt1
 Summary: GCC cross-toolchain for %target
 License: LGPL-2.1-or-later and LGPL-3.0-or-later and GPL-2.0-or-later and GPL-3.0-or-later and GPL-3.0-or-later with GCC-exception-3.1
 Group: Development/C
 
 ExclusiveArch: x86_64
 
-# gcc patches
-Patch5: gcc-alt-riscv64-not-use-lp64d.patch
-
-# glibc:
-Patch6: glibc-ustream-fix-make-4.4.patch
-
-%define gcc_version 10.3.1
+%define gcc_version 12.1.1
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
-%define binutils_version 2.37
-%define glibc_version 2.34.0.39.024a7
-%define kernel_version 5.10
-
+%define binutils_version 2.38
+%define glibc_version 2.35.0.6.491f2e
+%define kernel_version 6.0
 
 BuildPreReq: gcc-c++
 BuildPreReq: libmpc-devel libmpfr-devel libgmp-devel zlib-devel
@@ -71,9 +64,9 @@ BuildPreReq: kernel-source-%kernel_version
 BuildRequires: /usr/bin/qemu-%target_qemu_arch-static
 BuildRequires: python3
 
-Source0: gcc-10.3.1-20210703.tar
-Source1: binutils-2.37-alt3.rv64.1.tar
-Source2: glibc-2.34.0.39.024a7-alt1.rv64.tar
+Source0: gcc-12.1.1-20220518-alt0.0.2.rv64.tar
+Source1: binutils-2.38-alt0.1.rv64.tar
+Source2: glibc-2.35.0.6.491f2e-alt0.2.rv64.tar
 
 %description
 GCC cross-toolchain for %target
@@ -138,24 +131,18 @@ find /usr/src/kernel/sources -type f -name 'kernel-source-*.tar' | xargs -I {} -
 
 rm -rf stage
 
-%if "%target_arch" == "riscv64"
-pushd gcc
-%patch5 -p1
-popd
-
-pushd glibc
-%patch6 -p1
-popd
-%endif
-
 %build
 mkdir -p obj_binutils
 mkdir -p obj_gcc
+mkdir -p obj_gcc_bootstrap
 mkdir -p obj_kheaders
 mkdir -p obj_glibc
 mkdir -p -m755 stage%prefix/bin
-export PATH=`pwd`/stage%prefix/bin:$PATH
+mkdir -p -m755 stage1%prefix/bin
+save_PATH="$PATH"
+export PATH=`pwd`/stage1%prefix/bin:$PATH
 stagedir=`pwd`/stage
+stage1dir=`pwd`/stage1
 
 # kernel headers
 %_make_bin -j%__nprocs \
@@ -193,8 +180,95 @@ cd obj_binutils
 %make_build
 # XXX: avoid makeinstall for it puts $target libraries into /usr/lib64
 %make_install install DESTDIR=${stagedir}
+# for bootstrap toolchain (to compile target glibc)
+%make_install install DESTDIR=${stage1dir}
 
-# N.B.: this builds GCC in a single stage (but not all target at once)
+# bootstrap gcc (for compiling target glibc)
+cd ../obj_gcc_bootstrap
+../gcc/configure \
+	--target=%target \
+	--host=%{_configure_platform} \
+	--build=%{_configure_platform} \
+	--prefix=%prefix \
+	--disable-bootstrap \
+	--disable-multiarch \
+	--disable-multilib \
+	--disable-werror \
+	--with-sysroot=%sysroot \
+	--with-build-sysroot=${stagedir}%sysroot \
+	--enable-languages=c \
+	--with-newlib \
+	--without-headers \
+	--disable-nls \
+	--disable-shared \
+	--disable-threads \
+	--disable-libsanitizer \
+	--disable-libgomp \
+	--disable-libitm \
+	--disable-libquadmath \
+	--disable-libsanitizer \
+	--disable-libssp \
+	--disable-libvtv \
+	--disable-libatomic \
+	--disable-libcilkrts \
+	--enable-version-specific-runtime-libs \
+	--with-gcc-major-version-only \
+	--with-system-zlib \
+%if "%target_arch" == "mipsel"
+	--with-arch-32=mips32r2 \
+	--with-fp-32=xx \
+	--with-lxc1-sxc1=no \
+	--with-madd4=no \
+%endif
+%if "%target_arch" == "mips64el"
+	--with-arch-64=mips64r2 \
+	--with-abi=64 \
+	--with-lxc1-sxc1=no \
+	--with-madd4=no \
+	--with-fix-loongson3-llsc=yes \
+%endif
+%if "%target_arch" == "riscv64"
+	--with-arch=rv64gc \
+	--with-abi=lp64d \
+%endif
+	--enable-default-pie \
+	--enable-linker-build-id \
+	%nil
+
+%make_build all-gcc all-target-libgcc
+# XXX: avoid makeinstall for it puts $target libraries into /usr/lib64
+%make_install install-gcc install-target-libgcc DESTDIR=${stage1dir}
+
+# glibc
+cd ../obj_glibc
+# XXX: avoid %%configure since it puts target libraries/binaries into /usr/lib64
+# Note: glibc's is a library, so $host must be the same as $target
+../glibc/configure \
+	--host=%target \
+	--target=%target \
+	--build=%{_configure_platform} \
+	--prefix=%prefix \
+	--with-sysroot=%sysroot \
+	--with-build-sysroot=${stagedir}%sysroot \
+	--with-headers=${stagedir}%sysroot/usr/include \
+	--with-lib=${stagedir}%sysroot/usr/lib \
+	--disable-multilib \
+	--disable-crypt \
+	libc_cv_forced_unwind=yes \
+	%nil
+
+%make_build
+# XXX: avoid makeinstall since it puts target libs into /usr/lib64
+# Note: target glibc **must** be installed into sysroot to prevent
+# native compilers from using it by default
+%make_install install DESTDIR=${stagedir}%sysroot
+# XXX: gcc needs this to locate crt{1,i}.o
+mkdir -p -m755 ${stagedir}%sysroot/usr/lib
+
+# Don't use bootstrap toolchain any more
+export PATH="${stagedir}%prefix/bin:${save_PATH}"
+
+# gcc
 cd ../obj_gcc
 # XXX: avoid %%configure puts $target libraries in /usr/lib64
 ../gcc/configure \
@@ -221,11 +295,11 @@ cd ../obj_gcc
 	--with-madd4=no \
 %endif
 %if "%target_arch" == "mips64el"
-	--with-arch-64=mips64r2 \
-	--with-abi=64 \
-	--with-lxc1-sxc1=no \
-	--with-madd4=no \
-	--with-fix-loongson3-llsc=yes \
+        --with-arch-64=mips64r2 \
+        --with-abi=64 \
+        --with-lxc1-sxc1=no \
+        --with-madd4=no \
+        --with-fix-loongson3-llsc=yes \
 %endif
 %if "%target_arch" == "riscv64"
 	--with-arch=rv64gc \
@@ -235,53 +309,8 @@ cd ../obj_gcc
 	--enable-linker-build-id \
 	%nil
 
-%make_build all-gcc
+%make_build
 # XXX: avoid makeinstall for it puts $target libraries into /usr/lib64
-%make_install install-gcc DESTDIR=${stagedir}
-
-cd ../obj_glibc
-# XXX: avoid %%configure since it puts target libraries/binaries into /usr/lib64
-# Note: glibc's is a library, so $host must be the same as $target
-../glibc/configure \
-	--host=%target \
-	--target=%target \
-	--build=%{_configure_platform} \
-	--prefix=%prefix \
-	--with-sysroot=%sysroot \
-	--with-build-sysroot=${stagedir}%sysroot \
-	--with-headers=${stagedir}%sysroot/usr/include \
-	--with-lib=${stagedir}%sysroot/usr/lib \
-	--disable-multilib \
-	--disable-crypt \
-	libc_cv_forced_unwind=yes
-
-# glibc: headers, C runtime
-%_make_bin -j%__nprocs install-bootstrap-headers=yes install-headers DESTDIR=${stagedir}%sysroot
-%_make_bin -j%__nprocs csu/subdir_lib
-install -d -m755 ${stagedir}%sysroot/usr/%target_libdir
-install csu/crt1.o csu/crti.o csu/crtn.o ${stagedir}%sysroot/usr/%target_libdir
-%target-gcc -nostdlib -nostartfiles -shared -x c /dev/null -o "${stagedir}%sysroot/usr/%target_libdir/libc.so"
-touch ${stagedir}/%sysroot/usr/include/gnu/stubs.h
-touch ${stagedir}/%sysroot/usr/include/bits/stdio_lim.h
-
-# libgcc
-cd ../obj_gcc
-%make_build all-target-libgcc
-# XXX: avoid makeinstall since it puts target libs into /usr/lib64
-%make_install install-target-libgcc DESTDIR=${stagedir}
-
-# finish off glibc
-cd ../obj_glibc
-%make_build
-# XXX: avoid makeinstall since it puts target libs into /usr/lib64
-# Note: target glibc **must** be installed into sysroot to prevent
-# native compilers from using it by default
-%make_install install DESTDIR=${stagedir}%sysroot
-
-# finish off gcc (g++, libstdc++, libssp, whatever)
-cd ../obj_gcc
-%make_build
-# XXX: avoid makeinstall since it puts target libs into /usr/lib64
 %make_install install DESTDIR=${stagedir}
 
 %install
@@ -350,6 +379,7 @@ install -d -m 755 %buildroot%sysroot/lib
 ln -s ../lib64/`basename %target_ld_linux` %buildroot%sysroot/lib/`basename %target_ld_linux`
 %endif
 
+# remove runtime bits, not necessary for a cross-toolchain
 rm -rf %buildroot%sysroot/etc
 rm -rf %buildroot%sysroot/var
 rm -rf %buildroot%sysroot/sbin
@@ -377,6 +407,9 @@ find %buildroot%prefix/lib/gcc/%target/%gcc_branch -type f -name 'lib*-gdb.py' -
 
 # XXX: gcc needs this to locate crt1.o
 install -d -m 755 %buildroot%sysroot/usr/lib
+
+# remove bootstrap toolchain
+rm -rf %buildroot/stage1
 
 # Leave alone $target libraries
 %add_verify_elf_skiplist %sysroot/* %prefix/lib/gcc/%target/%gcc_branch/*
@@ -575,6 +608,13 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Fri Nov 25 2022 Ivan A. Melnikov <iv@altlinux.org> 20221125-alt1
+- Sync sources with sisyphus_riscv64:
+  + binutils 2.38-alt0.1.rv64
+  + gcc 12.1.1-20220518-alt0.0.2.rv64
+  + glibc 2.35.0.6.491f2e-alt0.2.rv64
+- Switch to two-stage bootstrap for gcc (asheplyakov@).
+
 * Fri Nov 11 2022 Ivan A. Melnikov <iv@altlinux.org> 20220112-alt2
 - Fix build with make 4.4.
 
