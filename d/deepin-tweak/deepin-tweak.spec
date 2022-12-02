@@ -2,7 +2,7 @@
 
 Name: deepin-tweak
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Summary: Setting tool built on dtkdeclarative
 Summary(ru): Инструмент настройки, созданный на dtkdeclarative
 License: LGPL-3.0+
@@ -24,6 +24,7 @@ BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake
 BuildRequires: qt5-base-devel qt5-tools qt5-quickcontrols2-devel
 BuildRequires: dtk5-common dtk5-core-devel dtk5-gui-devel dtk5-declarative-devel gsettings-qt-devel
+Requires: dtk5-declarative
 
 %description
 Deepin Tweak is an advanced setting tool built on dtkdeclarative. Deepin Tweak only provides limited built-in functions, most of which need to be provided by other developers in the community according to the requirements of plug-in development.
@@ -76,5 +77,8 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/dtkdeclarative/qml-app/*.so
 
 %changelog
+* Fri Dec 02 2022 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt1.1
+- Fixed startup.
+
 * Tue Nov 29 2022 Leontiy Volodin <lvol@altlinux.org> 1.1.0-alt1
 - Initial build for ALT Sisyphus.
