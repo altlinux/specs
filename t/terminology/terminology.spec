@@ -1,10 +1,10 @@
 %def_disable snapshot
-%define ver_major 1.12
+%define ver_major 1.13
 
 %def_enable check
 
 Name: terminology
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: EFL terminal emulator
@@ -14,9 +14,8 @@ Url: http://www.enlightenment.org/p.php?p=about/terminology
 
 %if_disabled snapshot
 Source: https://download.enlightenment.org/rel/apps/%name/%name-%version.tar.xz
-#Source: https://fau.re/terminology/%name-%version.tar.xz
 %else
-#VCS: https://git.enlightenment.org/apps/terminology.git
+Vcs: https://git.enlightenment.org/apps/terminology.git
 Source: %name-%version.tar
 %endif
 Patch: %name-1.0.0-alt-default_font.patch
@@ -54,7 +53,7 @@ EOF
 %find_lang %name
 
 %check
-%meson_test
+%__meson_test
 
 %files -f %name.lang
 %_bindir/*
@@ -63,9 +62,12 @@ EOF
 %_altdir/%name
 %_iconsdir/hicolor/*/*/%name.png
 %_man1dir/*
-%doc AUTHORS ChangeLog COPYING README.md
+%doc AUTHORS ChangeLog* COPYING README.md
 
 %changelog
+* Fri Dec 02 2022 Yuri N. Sedunov <aris@altlinux.org> 1.13.0-alt1
+- 1.13.0
+
 * Tue Jan 04 2022 Yuri N. Sedunov <aris@altlinux.org> 1.12.1-alt1
 - 1.12.1
 
