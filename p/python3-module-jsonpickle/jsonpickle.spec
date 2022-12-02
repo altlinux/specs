@@ -1,34 +1,36 @@
 %define _unpackaged_files_terminate_build 1
-
-%define oname jsonpickle
+%define pypi_name jsonpickle
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.1.0
+Name: python3-module-%pypi_name
+Version: 3.0.0
 Release: alt1
 Summary: Python library for serializing any arbitrary object graph into JSON
 License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.org/project/jsonpickle/
+VCS: https://github.com/jsonpickle/jsonpickle.git
 
 BuildArch: noarch
 
-# git://github.com/jsonpickle/jsonpickle.git
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(numpy)
 BuildRequires: python3(numpy.testing)
 BuildRequires: python3(pandas)
 BuildRequires: python3(pytz)
+BuildRequires: python3(gmpy2)
 %endif
 
 %description
@@ -38,34 +40,36 @@ jsonpickle converts complex Python objects to and from JSON.
 %setup
 %autopatch -p1
 
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%tox_create_default_config
+%tox_check_pyproject -- -vra
 
 %files
-%doc LICENSE
-%doc *.rst contrib
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%doc CHANGES.rst README.rst
+%python3_sitelibdir/jsonpickle/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Dec 02 2022 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
+- 2.1.0 -> 3.0.0.
+
 * Mon Feb 07 2022 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
 - 2.0.0 -> 2.1.0.
 
