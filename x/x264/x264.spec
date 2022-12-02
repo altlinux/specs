@@ -1,7 +1,6 @@
-%define optflags_lto %nil
 Name: x264
-Version: 148
-Release: alt6
+Version: 164
+Release: alt1
 
 Summary: CLI H.264 encoder
 License: GPLv2
@@ -10,66 +9,46 @@ Url: http://www.videolan.org/x264.html
 
 Source: %name-%version-%release.tar
 
+BuildRequires: nasm
 BuildRequires: libSDL-devel libx264-devel
 BuildRequires: libavformat-devel libavcodec-devel libavdevice-devel libavutil-devel libswscale-devel
-
-%description
-%name is a free library for encoding H264/AVC video streams. The code is
-written from scratch.
-Encoder features:
-- CAVLC/CABAC
-- Multi-references
-- Intra: all macroblock types (16x16, 8x8, and 4x4 with all
-  predictions)
-- Inter P: all partitions (from 16x16 down to 4x4)
-- Inter B: partitions from 16x16 down to 8x8 (including skip/direct)
-- Ratecontrol: constant quantizer, single or multipass ABR, optional
-  VBV
-- Scene cut detection
-- Adaptive B-frame placement
-- B-frames as references / arbitrary frame order
-- 8x8 and 4x4 adaptive spatial transform
-- Lossless mode
-- Custom quantization matrices
-- Parallel encoding of multiple slices.
-
-This package includes CLI based H.264 encoder.
 
 %package utils
 Group: Video
 Summary: H.264 encoder utils
 
-%description utils
-%name is a free library for encoding H264/AVC video streams. The code is
-written from scratch.
-Encoder features:
-- CAVLC/CABAC
-- Multi-references
-- Intra: all macroblock types (16x16, 8x8, and 4x4 with all
-  predictions)
-- Inter P: all partitions (from 16x16 down to 4x4)
-- Inter B: partitions from 16x16 down to 8x8 (including skip/direct)
-- Ratecontrol: constant quantizer, single or multipass ABR, optional
-  VBV
-- Scene cut detection
-- Adaptive B-frame placement
-- B-frames as references / arbitrary frame order
-- 8x8 and 4x4 adaptive spatial transform
-- Lossless mode
-- Custom quantization matrices
+%define desc \
+libx264 is a free library for encoding H264/AVC video streams. The code \
+is written from scratch.\
+Encoder features: \
+- CAVLC/CABAC \
+- Multi-references \
+- Intra: all macroblock types (16x16, 8x8, and 4x4 with all predictions) \
+- Inter P: all partitions (from 16x16 down to 4x4) \
+- Inter B: partitions from 16x16 down to 8x8 (including skip/direct) \
+- Ratecontrol: constant quantizer, single or multipass ABR, optional VBV \
+- Scene cut detection \
+- Adaptive B-frame placement \
+- B-frames as references / arbitrary frame order \
+- 8x8 and 4x4 adaptive spatial transform \
+- Lossless mode \
+- Custom quantization matrices \
 - Parallel encoding of multiple slices.
 
+%description %desc
+This package includes CLI based H.264 encoder.
+
+%description utils %desc
 This package includes %name encoder utils.
 
 %prep
 %setup
 
 %build
-%configure \
-	--enable-debug \
-	--disable-asm \
-	--system-libx264
-
+%ifarch %ix86
+export ASFLAGS=' '
+%endif
+%configure --system-libx264
 %make_build %name
 
 %install
@@ -84,6 +63,9 @@ install -pm0755 tools/countquant_x264.pl %buildroot%_bindir
 %_bindir/countquant_x264.pl
 
 %changelog
+* Fri Dec 02 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 164-alt1
+- API 164
+
 * Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 148-alt6
 - FTBFS: disable LTO
 

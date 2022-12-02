@@ -31,7 +31,7 @@
 
 Name: transcode
 Version: 1.1.7
-Release: alt14
+Release: alt15
 
 Summary: A linux video stream processing utility
 
@@ -165,6 +165,7 @@ install -m644 %SOURCE2 filter/
 %build
 sed -i 's,strtof ,,' configure.in
 %autoreconf
+%define optflags_lto %nil
 %add_optflags -fcommon -fpie -D_LARGEFILE_SOURCE -D__USE_LARGEFILE -D_FILE_OFFSET_BITS=64
 export LDFLAGS=-pie
 %configure \
@@ -270,6 +271,9 @@ export RPM_FILES_TO_LD_PRELOAD_transcode="$(find %buildroot/%_libdir/%name -type
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Fri Dec 02 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.7-alt15
+- rebuilt without LTO
+
 * Tue Jan 19 2021 Sergey V Turchin <zerg@altlinux.org> 1.1.7-alt14
 - fixed build
 

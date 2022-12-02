@@ -1,6 +1,6 @@
 Name: libx264
-Version: 148
-Release: alt4
+Version: 164
+Release: alt1
 
 Summary: H.264 codec shared library
 License: GPLv2
@@ -8,93 +8,60 @@ Group: System/Libraries
 Url: http://www.videolan.org/x264.html
 
 Source: %name-%version-%release.tar
-Patch2000: %name-e2k-simd.patch
 
-BuildRequires: yasm libX11-devel
-
-%description
-libx264 is a free library for encoding H264/AVC video streams. The code
-is written from scratch.
-Encoder features:
-- CAVLC/CABAC
-- Multi-references
-- Intra: all macroblock types (16x16, 8x8, and 4x4 with all
-  predictions)
-- Inter P: all partitions (from 16x16 down to 4x4)
-- Inter B: partitions from 16x16 down to 8x8 (including skip/direct)
-- Ratecontrol: constant quantizer, single or multipass ABR, optional
-  VBV
-- Scene cut detection
-- Adaptive B-frame placement
-- B-frames as references / arbitrary frame order
-- 8x8 and 4x4 adaptive spatial transform
-- Lossless mode
-- Custom quantization matrices
-- Parallel encoding of multiple slices.
-
-This package includes the shared library needed to run x264-based
-software.
+BuildRequires: nasm
 
 %package devel
 Summary: Development files of H.264 codec library
 Group: Development/C
 Requires: %name = %version-%release
 
-%description devel
-%name is a free library for encoding H264/AVC video streams. The code is
-written from scratch.
-Encoder features:
-- CAVLC/CABAC
-- Multi-references
-- Intra: all macroblock types (16x16, 8x8, and 4x4 with all
-  predictions)
-- Inter P: all partitions (from 16x16 down to 4x4)
-- Inter B: partitions from 16x16 down to 8x8 (including skip/direct)
-- Ratecontrol: constant quantizer, single or multipass ABR, optional
-  VBV
-- Scene cut detection
-- Adaptive B-frame placement
-- B-frames as references / arbitrary frame order
-- 8x8 and 4x4 adaptive spatial transform
-- Lossless mode
-- Custom quantization matrices
+%define desc \
+libx264 is a free library for encoding H264/AVC video streams. The code \
+is written from scratch.\
+Encoder features: \
+- CAVLC/CABAC \
+- Multi-references \
+- Intra: all macroblock types (16x16, 8x8, and 4x4 with all predictions) \
+- Inter P: all partitions (from 16x16 down to 4x4) \
+- Inter B: partitions from 16x16 down to 8x8 (including skip/direct) \
+- Ratecontrol: constant quantizer, single or multipass ABR, optional VBV \
+- Scene cut detection \
+- Adaptive B-frame placement \
+- B-frames as references / arbitrary frame order \
+- 8x8 and 4x4 adaptive spatial transform \
+- Lossless mode \
+- Custom quantization matrices \
 - Parallel encoding of multiple slices.
 
+%description %desc
+This package includes the shared library needed to run x264-based
+software.
+
+%description devel %desc
 This package includes the header files needed to develop lib%name-based
 software.
 
 %prep
 %setup
-%ifarch %e2k
-%patch2000 -p1
-%endif
 
 %build
-%define _optlevel 3
-%define optflags_lto %nil
 %ifarch %ix86
-# prevent use of -mfoo part of CFLAGS on x86 with YASM
+# prevent use of -mfoo part of CFLAGS on x86 with NASM
 export ASFLAGS=' '
 %endif
-
-%configure \
-	--disable-cli \
-	--enable-debug \
-	--enable-pic \
-	--enable-shared \
-	--bit-depth=8
-
+%configure --disable-cli --enable-lto --enable-pic --enable-shared
 %make_build all checkasm
 
 %install
 %make_install DESTDIR=%buildroot install
 
-%ifnarch x86_64
+%ifarch armh i586
 %set_verify_elf_method textrel=relaxed
 %endif
 
 %check
-./checkasm
+./checkasm8 && ./checkasm10
 
 %files
 %doc doc/*.txt AUTHORS
@@ -107,6 +74,9 @@ export ASFLAGS=' '
 %_libdir/libx264.so
 
 %changelog
+* Thu Dec 01 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 164-alt1
+- API 164
+
 * Mon Aug 30 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 148-alt4
 - rebuilt with lto disabled
 
