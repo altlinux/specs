@@ -94,7 +94,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.8
-Release: alt1
+Release: alt2
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -1277,7 +1277,9 @@ fi
 if [ -f /etc/nsswitch.conf ] ; then
             grep -E -q '^(passwd|group):.* systemd' /etc/nsswitch.conf ||
             sed -i.rpmorig -r -e '
-                s/^(passwd|group):(.*)/\1:\2 systemd/
+                s/^(\s*passwd\s*):(.*)/\1:\2 systemd/
+                /^\s*group\s*:.*\s+role\s*$/ s/^(\s*group\s*):(.*)(\s+role)\s*$/\1:\2 systemd\3/
+                /^\s*group\s*:.*\s+role\s*$/! s/^(\s*group\s*):(.*)/\1:\2 systemd/
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
 fi
 update_chrooted all
@@ -1285,9 +1287,9 @@ update_chrooted all
 %postun -n libnss-systemd
 if [ "$1" = "0" ]; then
         if [ -f /etc/nsswitch.conf ] ; then
-                sed -i.rpmorig -e '
+                sed -i.rpmorig -r -e '
                         /^(passwd|group):/ !b
-                        s/[[:blank:]]\+systemd\>//
+                        s/[[:blank:]]+systemd\>//
                         ' /etc/nsswitch.conf >/dev/null 2>&1 || :
         fi
 fi
@@ -1353,9 +1355,9 @@ if [ -f /etc/nsswitch.conf ] ; then
 
 # Cleanup. sinse v246 nss-mymachines: drop support for UID/GID resolving
         grep -v -E -q '^(passwd|group):.* mymachines' /etc/nsswitch.conf ||
-        sed -i.rpmorig -e '
+        sed -i.rpmorig -r -e '
                 /^(passwd|group):/ !b
-                s/[[:blank:]]\+mymachines\>//
+                s/[[:blank:]]+mymachines\>//
                 ' /etc/nsswitch.conf >/dev/null 2>&1 || :
 fi
 update_chrooted all
@@ -2310,6 +2312,11 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Fri Dec 02 2022 Evgeny Sinelnikov <sin@altlinux.org> 1:251.8-alt2
+- Fix libnss-systemd postinstall scriptlet for compatibility with libnss-role
+  conflict in order of modules in group NSS database (closes: #44505).
+- Fix postuninstall scriptlets for cleanup systemd and mymachines NSS modules.
+
 * Tue Nov 08 2022 Alexey Shabalin <shaba@altlinux.org> 1:251.8-alt1
 - 251.8
 
