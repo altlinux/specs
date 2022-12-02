@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.34
+Version: 1.4.35
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,15 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Dec 02 2022 Anton Midyukov <antohami@altlinux.org> 1.4.35-alt1
+- alt-workstation-cloud: Use NetworkManager (from obirvalger@)
+- install2: Don't cleanup /lib/modules/*/kernel/arch (from jqt4@)
+- alt-server: add commits from jqt4@
+- kworkstation: add commitd from zerg@
+- grub: drop kazakh language support
+- efi: add workaround for p10 branch to fix booting from a flash drive
+- grub: do not copy locale, if not used gfxterm
+
 * Mon Oct 10 2022 Anton Midyukov <antohami@altlinux.org> 1.4.34-alt1
 - regular.mk: add to jeos 'xdriver=vesa' for Legacy, 'xdriver=fbdev' for EFI
 - live: add use/live/runapp; live.mk: initial distro/live-blender with runapp
