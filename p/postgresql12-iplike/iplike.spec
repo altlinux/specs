@@ -3,7 +3,7 @@
 
 Name: postgresql%pg_ver-%prog_name
 Version: 2.3.0
-Release: alt1
+Release: alt2
 License: GPL
 Group: Databases
 Summary: PostgreSQL complex IP Address text field query
@@ -15,6 +15,8 @@ URL: http://www.opennms.org
 BuildRequires: postgresql%pg_ver-server-devel
 
 Requires: postgresql%pg_ver-server
+Conflicts: iplike
+Conflicts: libiplike
 
 %description
 PostgreSQL function for doing complex IP address queries
@@ -38,6 +40,9 @@ echo "CREATE OR REPLACE FUNCTION iplike(i_ipaddress text,i_rule text) RETURNS bo
 %_libdir/pgsql/*.so
 
 %changelog
+* Fri Dec 02 2022 Alexei Takaseev <taf@altlinux.org> 2.3.0-alt2
+- Add Conflicts: iplike and libiplike
+
 * Wed Nov 23 2022 Alexei Takaseev <taf@altlinux.org> 2.3.0-alt1
 - Version 2.3.0
 - Use server depended pg_server_config for build
