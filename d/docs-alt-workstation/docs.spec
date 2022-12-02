@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt5
+Release: alt6
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Dec 02 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt6
+- update documentation
+
 * Fri Oct 28 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt5
 - update to ALT Workstation 10.1
 
