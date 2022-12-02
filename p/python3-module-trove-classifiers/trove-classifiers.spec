@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2022.10.19
+Version: 2022.12.1
 Release: alt1
 
 Summary: Canonical source for classifiers on PyPI
 License: Apache-2.0
 Group: Development/Python3
-# Source-git: https://github.com/pypa/trove-classifiers.git
 Url: https://pypi.org/project/trove-classifiers
+VCS: https://github.com/pypa/trove-classifiers.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -67,6 +67,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Dec 02 2022 Stanislav Levin <slev@altlinux.org> 2022.12.1-alt1
+- 2022.10.19 -> 2022.12.1.
+
 * Wed Oct 19 2022 Stanislav Levin <slev@altlinux.org> 2022.10.19-alt1
 - 2022.9.26 -> 2022.10.19.
 
