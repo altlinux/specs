@@ -4,7 +4,7 @@
 
 Name: sysstat
 Version: 12.7.1
-Release: alt2
+Release: alt3
 
 Summary: Performance monitoring tools for Linux
 License: GPL-2.0-or-later
@@ -182,6 +182,9 @@ fi
 %_desktopdir/isag.desktop
 
 %changelog
+* Fri Dec 02 2022 Vitaly Chikunov <vt@altlinux.org> 12.7.1-alt3
+- isag: Remove Memory Statistics menu entry (ALT#44518).
+
 * Sat Nov 19 2022 Vitaly Chikunov <vt@altlinux.org> 12.7.1-alt2
 - Fix 'scriptlet failed' during update.
 
