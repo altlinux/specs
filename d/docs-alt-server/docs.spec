@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt6
+Release: alt7
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Dec 2 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt7
+- update documentation
+
 * Tue Nov 15 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt6
 - update to ALT Server 10.1
 - fix OpenUDS HA (closes: #43979, #43977)
