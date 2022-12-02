@@ -2,7 +2,7 @@
 %define oname ujson
 
 Name: python3-module-%oname
-Version: 5.5.0
+Version: 5.6.0
 Release: alt1
 
 Summary: Ultra fast JSON encoder and decoder for Python
@@ -52,6 +52,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Dec 02 2022 Grigory Ustinov <grenka@altlinux.org> 5.6.0-alt1
+- Automatically updated to 5.6.0.
+
 * Mon Oct 03 2022 Grigory Ustinov <grenka@altlinux.org> 5.5.0-alt1
 - Build new version (Closes: #43920).
 - Build with check.
