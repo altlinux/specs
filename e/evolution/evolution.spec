@@ -21,7 +21,7 @@
 %define plugins all
 
 Name: evolution
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -280,6 +280,9 @@ find %buildroot -type f -name "*.la" -print0 | xargs -r0 rm --
 
 
 %changelog
+* Fri Dec 02 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.2-alt1
+- 3.46.2
+
 * Fri Oct 21 2022 Yuri N. Sedunov <aris@altlinux.org> 3.46.1-alt1
 - 3.46.1
 
