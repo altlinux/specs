@@ -5,7 +5,7 @@
 %define xdg_name org.gnome.Maps
 
 Name: gnome-maps
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Maps is a map application for GNOME
@@ -17,6 +17,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 
 %set_typelibdir %_libdir/%name/girepository-1.0
 
+%define meson_ver 0.61
 %define glib_ver 2.66
 %define gjs_ver 1.69.2
 %define gtk_api_ver 4.0
@@ -24,10 +25,10 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version%be
 %define geocode_api_ver 2.0
 %define geocode_ver 3.26.0
 %define geoclue_ver 2.4.0
-%define shumate_ver 1.0.2
+%define shumate_ver 1.0.3
 %define gweather_api_ver 4.0
 %define soup_api_ver 3.0
-%define webkit_api_ver 4.1
+%define webkit_api_ver 5.0
 %define rest_api_ver 1.0
 
 Requires: geoclue2 >= %geoclue_ver
@@ -57,7 +58,7 @@ Requires: typelib(Soup) = %soup_api_ver
 Requires: typelib(WebKit2) = %webkit_api_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson yelp-tools %_bindir/appstream-util desktop-file-utils
+BuildRequires: meson >= %meson_ver yelp-tools %_bindir/appstream-util desktop-file-utils
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
 BuildRequires: libgjs-devel >= %gjs_ver gobject-introspection-devel
@@ -98,6 +99,9 @@ sed -i 's/\(1.0.0\).beta/\1/' meson.build
 %exclude %_datadir/%name/gir-1.0/GnomeMaps-%api_ver.gir
 
 %changelog
+* Fri Dec 02 2022 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
+- 43.2
+
 * Sat Oct 22 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 
