@@ -5,7 +5,7 @@
 Summary: TDS Foreign data wrapper
 Name: postgresql%pg_ver-%prog_name
 Version: 2.0.3
-Release: alt2
+Release: alt3
 License: PostgreSQL
 Group: Databases
 Url: https://github.com/tds-fdw/tds_fdw
@@ -16,6 +16,7 @@ BuildRequires: libfreetds-devel
 BuildRequires: postgresql%pg_ver-server-devel
 
 Requires: postgresql%pg_ver-server
+Conflicts: postgresql-tds_fdw
 
 %description
 This is a PostgreSQL foreign data wrapper that can connect to databases that use the Tabular Data Stream (TDS) protocol, such as Sybase databases and Microsoft SQL server.
@@ -48,6 +49,9 @@ This is a PostgreSQL foreign data wrapper that can connect to databases that use
 %_datadir/pgsql/extension/*
 
 %changelog
+* Fri Dec 02 2022 Alexei Takaseev <taf@altlinux.org> 2.0.3-alt3
+- Add conflits to old postgresql-tds_fdw
+
 * Wed Nov 23 2022 Alexei Takaseev <taf@altlinux.org> 2.0.3-alt2
 - Use server depended pg_server_config for build
 
