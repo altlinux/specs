@@ -1,6 +1,6 @@
 ## SPEC file for Perl module B::Keywords
 
-%define version    1.23
+%define version    1.24
 %define release    alt1
 %define _unpackaged_files_terminate_build 1
 
@@ -50,6 +50,9 @@ non-function keywords (like __DATA__, NULL) to the @Functions array.
 %perl_vendor_privlib/B/Keywords*
 
 %changelog
+* Sat Dec 03 2022 Nikolay A. Fetisov <naf@altlinux.org> 1.24-alt1
+- New version
+
 * Sat Nov 06 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.23-alt1
 - New version
 
