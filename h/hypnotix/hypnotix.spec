@@ -1,5 +1,5 @@
 Name: hypnotix
-Version: 1.4
+Version: 3.1
 Release: alt1
 Summary: An M3U IPTV Player
 License: GPL-2.0-or-later
@@ -42,6 +42,8 @@ cp -r usr %buildroot
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Sat Dec 03 2022 Artyom Bystrov <arbars@altlinux.org> 3.1-alt1
+- update to new version
+
 * Fri Nov 25 2022 Artyom Bystrov <arbars@altlinux.org> 1.4-alt1
 - initial build for ALT Sisyphus
-
