@@ -2,7 +2,7 @@
 #
 
 Name: innernet
-Version: 1.5.1
+Version: 1.5.5
 Release: alt1
 
 Summary: a private network system that uses WireGuard under the hood
@@ -164,6 +164,9 @@ install -m 0700 -d %buildroot/var/lib/%{name}-server
 
 
 %changelog
+* Sat Dec 03 2022 Nikolay A. Fetisov <naf@altlinux.org> 1.5.5-alt1
+- New version
+
 * Fri Nov 19 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.5.1-alt1
 - New version
 
