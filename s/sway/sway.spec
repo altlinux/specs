@@ -1,6 +1,6 @@
 Name: sway
 Version: 1.8.0
-Release: alt1.rc1
+Release: alt1.rc2
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
 License: MIT
@@ -108,6 +108,9 @@ install -p -m0644 -D %SOURCE2 %buildroot/%_datadir/backgrounds/%name/
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Sat Dec 03 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.8.0-alt1.rc2
+- New version (1.8-rc2)
+
 * Sun Nov 27 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.8.0-alt1.rc1
 - New version (1.8-rc1)
 
