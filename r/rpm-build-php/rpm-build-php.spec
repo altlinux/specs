@@ -1,5 +1,5 @@
 Name:		rpm-build-php
-Version:	8.1
+Version:	8.2
 Release:	alt1
 Summary:	RPM helper macros to rebuild PHP packages
 Group:		Development/Other
@@ -19,6 +19,12 @@ cp %SOURCE0 %buildroot/%_sysconfdir/rpm/macros.d/php
 %_sysconfdir/rpm/macros.d/php
 
 %changelog
+* Sat Dec 03 2022 Anton Farygin <rider@altlinux.ru> 8.2-alt1
+- add 8.2 to supported php suffix
+
+* Fri Apr 22 2022 Anton Farygin <rider@altlinux.ru> 8.1-alt2
+- add 8.1 to supported php suffix
+
 * Sat Jul 10 2021 Anton Farygin <rider@altlinux.ru> 8.1-alt1
 - this thanges follow the removal of minor version from _php_major macros in
   php8.0-8.0.8 and php7-7.4.21
