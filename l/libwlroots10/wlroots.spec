@@ -1,21 +1,24 @@
-Name: wlroots
+%define soversion 10
+
+Name: libwlroots%soversion
 Version: 0.15.1
-Release: alt1
+Release: alt2
 
 Summary: Modular Wayland compositor library
 License: MIT
 Group: System/Libraries
 Url: https://gitlab.freedesktop.org/wlroots/wlroots
 
-Source: %name.tar
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
 
-%define soversion 10
-%define soname %name%soversion
+Source: wlroots.tar
 
 BuildRequires(pre): meson
 BuildRequires: cmake
 BuildRequires: ctags
 BuildRequires: glslang
+BuildRequires: hwdatabase
 
 BuildRequires: pkgconfig(egl)
 BuildRequires: pkgconfig(freerdp2)
@@ -51,24 +54,17 @@ BuildRequires: pkgconfig(xwayland)
 %description
 %summary
 
-%package -n lib%soname
-Summary: Modular Wayland compositor library
-Group: System/Libraries
-Provides: lib%name = %version-%release
-
-%description -n lib%soname
-This package provides shared %name library.
-
-%package -n lib%name-devel
-Summary: Development files for %name
+%package -n libwlroots-devel
+Summary: Development files for libwlroots
 Group: Development/C
-Requires: lib%soname = %version-%release
+Requires: %name = %version-%release
 
-%description -n lib%name-devel
-This package provides development files for %name library.
+%description -n libwlroots-devel
+This package provides development files for libwlroots library.
 
 %prep
-%setup -n %name
+%setup -n wlroots
+%autopatch -p1
 
 if ! grep -qs '^soversion[[:space:]]*=[[:space:]]*%soversion[[:space:]]*$' meson.build; then
 	echo >&2 "Outdated %%soversion value in spec"
@@ -86,16 +82,20 @@ fi
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
 
-%files -n lib%soname
-%_libdir/lib%name.so.*
+%files
+%_libdir/libwlroots.so.*
 %doc README.md LICENSE
 
-%files -n lib%name-devel
-%_includedir/wlr/
-%_libdir/lib%name.so
-%_pkgconfigdir/%name.pc
+%files -n libwlroots-devel
+%_includedir/wlr
+%_libdir/libwlroots.so
+%_pkgconfigdir/wlroots.pc
 
 %changelog
+* Sat Dec 03 2022 Alexey Gladkov <legion@altlinux.ru> 0.15.1-alt2
+- Renamed the source package to allow multiple versions of the library in the
+  repository.
+
 * Tue Feb 08 2022 Alexey Gladkov <legion@altlinux.ru> 0.15.1-alt1
 - New version (0.15.1)
 
