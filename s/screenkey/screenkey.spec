@@ -1,5 +1,5 @@
 Name: screenkey
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: A screen-cast tool to show your keys and based on key-mon project
@@ -15,7 +15,7 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3 python3-module-babel python3-module-distutils-extra intltool 
+BuildRequires: python3 python3-module-babel python3-module-distutils-extra intltool
 Requires: slop
 %description
 A screen-cast tool to show your keys inspired by Screenflick and based on
@@ -42,8 +42,10 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/screenkey-stop.desktop
 %python3_sitelibdir/Screenkey
 %exclude %python3_sitelibdir/*.egg-info
 
-
 %changelog
+* Sat Dec 03 2022 Artyom Bystrov <arbars@altlinux.org> 1.5-alt1
+- screenkey 1.5
+
 * Sat Jul 24 2021 arbars-alt <arbars@altlinux.org> 1.4-alt1
 - screenkey 1.4
 
