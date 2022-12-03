@@ -1,6 +1,6 @@
 
 Name: mame
-Version: 0.248
+Version: 0.250
 Release: alt1
 Group: Games/Arcade
 Summary: Multiple Arcade Machine Emulator
@@ -19,16 +19,16 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: system_lua.patch
-BuildRequires: libexpat-devel rapidjson libsqlite3-devel libutf8proc-devel zlib-devel libjpeg-devel liblinenoise-devel 
-BuildRequires: libflac-devel libglm-devel libportaudio2-devel libportmidi-devel fontconfig-devel 
-BuildRequires: git-core libxcb libSDL2_ttf-devel libXi-devel libXinerama-devel libalsa-devel python-modules-compiler 
+BuildRequires: libexpat-devel rapidjson libsqlite3-devel libutf8proc-devel zlib-devel libjpeg-devel liblinenoise-devel
+BuildRequires: libflac-devel libglm-devel libportaudio2-devel libportmidi-devel fontconfig-devel
+BuildRequires: git-core libxcb libSDL2_ttf-devel libXi-devel libXinerama-devel libalsa-devel python-modules-compiler
 BuildRequires: python-modules-encodings python-modules-logging python-modules-xml qt5-base-devel libpulseaudio-devel
 BuildRequires: libuv-devel asio-devel gettext-tools
 
-Provides:       bundled(lua) = 5.3.4
-Provides:       bundled(luafilesystem)
-Provides:       bundled(lua-linenoise)
-Provides:       bundled(lua-zlib)
+Provides: bundled(lua) = 5.3.4
+Provides: bundled(luafilesystem)
+Provides: bundled(lua-linenoise)
+Provides: bundled(lua-zlib)
 
 ExclusiveArch: x86_64
 
@@ -67,7 +67,6 @@ MAME создавался как эмулятор множества аркад�
 MAME и других людей, вносящих вклад.  возможность запука игры - лишь приятный
 побочный эффект, что происходит не часто.  MAME старается добиться максимально
 точной эмуляции.
-
 
 %package tools
 Group: Games/Arcade
@@ -179,7 +178,7 @@ make -j8 OPTIMISE="%optflags" \
     USE_SYSTEM_LIB_RAPIDJSON=1 \
     USE_SYSTEM_LIB_SQLITE3=1 \
     USE_SYSTEM_LIB_UTF8PROC=1 \
-    USE_SYSTEM_LIB_ZLIB=1 
+    USE_SYSTEM_LIB_ZLIB=1
 
 #pushd docs
 #    %%make_build html
@@ -207,7 +206,7 @@ install -pm 644 %name.ini %buildroot%_sysconfdir/%name
 install -pm 755 %{name}d %buildroot%_bindir/%{name}d || \
 install -pm 755 %{name}64d %buildroot%_bindir/%{name}d
 %else
-install -pm 755 %{name} %buildroot%_bindir/%name || \
+install -pm 755 %name %buildroot%_bindir/%name || \
 install -pm 755 %{name}64 %buildroot%_bindir/%name
 %endif
 install -pm 755 castool chdman floptool imgtool jedutil ldresample ldverify \
@@ -292,6 +291,9 @@ find %buildroot%_datadir/%name -name LICENSE -exec rm {} \;
 %_datadir/%name/hash/*
 
 %changelog
+* Sat Dec 03 2022 Artyom Bystrov <arbars@altlinux.org> 0.250-alt1
+- Update to new version
+
 * Mon Oct 18 2022 Artyom Bystrov <arbars@altlinux.org> 0.248-alt1
 - Update to new version
 
