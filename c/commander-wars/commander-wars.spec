@@ -1,29 +1,29 @@
 Name: commander-wars
-Summary: The aim of this project is to create an Advance Wars Clone. 
+Summary: The aim of this project is to create an Advance Wars Clone
 License: LGPLv3
-Version: 0.22.5.2
+Version: 0.25.5
 Release: alt1
 
 Group: Games/Strategy
-Url: https://opensurge2d.org
+Url: https://github.com/Robosturm/Commander_Wars/
 Packager: Artyom Bystrov <arbars@altlinux.org>
 Source: %name-%version.tar
-Patch0: Fix_path.patch
+Patch: Fix_path.patch
 
 BuildRequires: qt6-base-devel libqt6-qml libqt6-qmlcore qt6-declarative-devel qt6-tools-devel qt6-multimedia-devel
 BuildRequires: rpm-macros-cmake
 BuildRequires: cmake
 BuildRequires: gcc
 BuildRequires: gcc-c++
-BuildRequires: libappstream-glib
-BuildRequires: fontconfig doxygen
+BuildRequires: libappstream-glib libssl-devel zlib-devel
+BuildRequires: libfontconfig doxygen
 BuildRequires: ImageMagick-tools
 Requires: %name-data = %version-%release
 
 ExcludeArch: armh
 
 %description
-The aim of this project is to create an Advance Wars Clone. 
+The aim of this project is to create an Advance Wars Clone.
 
 %package data
 Summary: Data files for Commander Wars
@@ -35,9 +35,9 @@ Data files (graphics, music, sounds) required by Commander Wars.
 
 %prep
 %setup
-%patch0 -p1
+#%%patch0 -p1
 
-sed -i '/RPATH/d' CMakeLists.txt #remove insecure RPATH '/../'
+%__subst '/RPATH/d' CMakeLists.txt #remove insecure RPATH '/../'
 
 %build
 mkdir build
@@ -45,7 +45,8 @@ cd build
 cmake .. \
 	-DCMAKE_BUILD_TYPE=Release \
 	-DCMAKE_INSTALL_PREFIX=/usr \
-	-DUSEAPPCONFIGPATH=ON
+	-DUSEAPPCONFIGPATH=ON \
+	-DOPENSSL_USE_STATIC_LIBS=OFF
 %make_build
 
 #%%cmake -DCMAKE_BUILD_TYPE=Release \
@@ -90,6 +91,9 @@ done
 %_datadir/%name/
 
 %changelog
+* Sat Dec 03 2022 Artyom Bystrov <arbars@altlinux.org> 0.25.5-alt1
+- update to new version
+
 * Thu Sep 24 2022 Artyom Bystrov <arbars@altlinux.org> 0.22.5.2-alt1
 - initial build for ALT Sisyphus
 
