@@ -1,6 +1,6 @@
 Name: sway
-Version: 1.7.0
-Release: alt2
+Version: 1.8.0
+Release: alt1.rc1
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
 License: MIT
@@ -31,14 +31,15 @@ BuildRequires: pkgconfig(libcap)
 BuildRequires: pkgconfig(libdrm)
 BuildRequires: pkgconfig(libevdev)
 BuildRequires: pkgconfig(libinput)
-BuildRequires: pkgconfig(libpcre)
+BuildRequires: pkgconfig(libpcre2-8)
 BuildRequires: pkgconfig(pango)
 BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-protocols)
 BuildRequires: pkgconfig(wayland-server)
-BuildRequires: pkgconfig(wlroots)
+BuildRequires: pkgconfig(wlroots) >= 0.16.0
+BuildRequires: pkgconfig(xcb-icccm)
 BuildRequires: pkgconfig(xkbcommon)
 BuildRequires: scdoc
 BuildRequires: time
@@ -107,6 +108,9 @@ install -p -m0644 -D %SOURCE2 %buildroot/%_datadir/backgrounds/%name/
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Sun Nov 27 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.8.0-alt1.rc1
+- New version (1.8-rc1)
+
 * Sun Jan 23 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.7.0-alt2
 - New version (1.7.0)
 

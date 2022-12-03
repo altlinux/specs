@@ -1,8 +1,8 @@
-%define soversion 10
+%define soversion 11
 
 Name: libwlroots%soversion
-Version: 0.15.1
-Release: alt3
+Version: 0.16.0
+Release: alt1
 
 Summary: Modular Wayland compositor library
 License: MIT
@@ -12,9 +12,9 @@ Url: https://gitlab.freedesktop.org/wlroots/wlroots
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%def_without devel
-
 Source: wlroots.tar
+
+Patch0001: 0001-Avoid-duplicate-case-values.patch
 
 BuildRequires(pre): meson
 BuildRequires: cmake
@@ -56,7 +56,6 @@ BuildRequires: pkgconfig(xwayland)
 %description
 %summary
 
-%if_with devel
 %package -n libwlroots-devel
 Summary: Development files for libwlroots
 Group: Development/C
@@ -64,7 +63,6 @@ Requires: %name = %version-%release
 
 %description -n libwlroots-devel
 This package provides development files for libwlroots library.
-%endif
 
 %prep
 %setup -n wlroots
@@ -82,12 +80,6 @@ fi
 %install
 %meson_install
 
-%if_without devel
-rm -rf -- %buildroot%_includedir/wlr
-rm -f  -- %buildroot%_libdir/libwlroots.so
-rm -f  -- %buildroot%_pkgconfigdir/wlroots.pc
-%endif
-
 %check
 export LD_LIBRARY_PATH=%buildroot%_libdir
 %meson_test
@@ -96,16 +88,15 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/libwlroots.so.*
 %doc README.md LICENSE
 
-%if_with devel
 %files -n libwlroots-devel
 %_includedir/wlr
 %_libdir/libwlroots.so
 %_pkgconfigdir/wlroots.pc
-%endif
 
 %changelog
-* Sat Dec 03 2022 Alexey Gladkov <legion@altlinux.ru> 0.15.1-alt3
-- Drop devel package.
+* Sat Dec 03 2022 Alexey Gladkov <legion@altlinux.ru> 0.16.0-alt1
+- New version (0.16.0)
+- Soversion change.
 
 * Sat Dec 03 2022 Alexey Gladkov <legion@altlinux.ru> 0.15.1-alt2
 - Renamed the source package to allow multiple versions of the library in the
