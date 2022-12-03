@@ -34,8 +34,8 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.1
-Release: alt2%beta
+Version: %ver_major.2
+Release: alt1%beta
 
 Summary: Software manager for GNOME
 License: GPLv2+
@@ -187,6 +187,9 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat Dec 03 2022 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
+- 43.2
+
 * Thu Dec 01 2022 Ivan A. Melnikov <iv@altlinux.org> 43.1-alt2
 - Drop valgrind option and dependency, just like
   upstream did (see upstream commit 788e37f0).
