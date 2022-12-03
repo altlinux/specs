@@ -1,3 +1,5 @@
+%define _unpackaged_files_terminate_build 1
+
 Group: System/Libraries
 
 BuildRequires(pre): rpm-macros-cmake
@@ -7,7 +9,7 @@ BuildRequires(pre): rpm-macros-cmake
 %define _localstatedir %{_var}
 
 Name:           libmimalloc
-Version:        2.0.6
+Version:        2.0.7
 Release:        alt1
 Summary:        A general purpose allocator with excellent performance
 
@@ -78,9 +80,13 @@ cd %_cmake__builddir; ctest -V; cd -
 %_libdir/libmimalloc.so
 %_libdir/cmake/%oldname
 %_includedir/*
+%_pkgconfigdir/*
 
 
 %changelog
+* Sun Dec 04 2022 Arseny Maslennikov <arseny@altlinux.org> 2.0.7-alt1
+- 2.0.6 -> 2.0.7.
+
 * Mon Oct 31 2022 Arseny Maslennikov <arseny@altlinux.org> 2.0.6-alt1
 - 2.0.3 -> 2.0.6.
 
