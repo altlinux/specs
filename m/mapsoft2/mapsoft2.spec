@@ -1,5 +1,5 @@
 Name:         mapsoft2
-Version:      1.8
+Version:      2.0
 Release:      alt1
 
 Summary:      mapsoft2 - programs for working with maps and geodata
@@ -15,9 +15,20 @@ BuildRequires: libjansson-devel libxml2-devel libzip-devel zlib-devel libproj-de
 BuildRequires: libjpeg-devel libgif-devel libtiff-devel libpng-devel libdb4.7-devel
 BuildRequires: librsvg-devel libcurl-devel
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html /usr/bin/unzip
+BuildRequires: transfig ImageMagick-tools
 
 %description
 mapsoft2 - programs for working with maps and geodata
+
+%package vmap-data
+Summary: mapsoft-vmap-data - example of data and scripts for vector map handling
+Group: Sciences/Geosciences
+Requires: %name = %version-%release
+BuildArch: noarch
+
+%description vmap-data
+Example of data, scripts, xfig libraries for vector map handling.
+
 
 %prep
 %setup -q
@@ -35,9 +46,30 @@ export SKIP_IMG_DIFFS=1
 %_mandir/man1/ms2*
 %_mandir/man5/mapsoft2*
 %dir %_datadir/mapsoft2
-%_datadir/mapsoft2/*
+%_datadir/mapsoft2/mapsoft2.css
+%_datadir/mapsoft2/maps_menu.json
+
+%files vmap-data
+%_datadir/mapsoft2/render.cfg
+%_datadir/mapsoft2/types.cfg
+%_datadir/mapsoft2/pics
+%_datadir/xfig/Libraries/*
 
 %changelog
+* Sat Dec 03 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.0-alt1
+This is a major update with many incompatable and not very
+well tested changes, mostly in vector map system.
+- New vector map system: vmap2 and vmap2db formats,
+  mapdb database is obsoleted.
+- New programs ms2vmap and ms2vmapdb instead of ms2mapdb.
+- Install all default data and scripts for map rendering.
+- New ms2render program for rendering geodata, DEM, vector
+  and raster maps; remove this code from ms2conv.
+- New syntax of define command in vmap render configuration
+  (everything else should work as before).
+- ms2geofig: new actions: make_ref, get.
+- Update documentation, examples and man pages.
+
 * Sun Oct 23 2022 Vladislav Zavjalov <slazav@altlinux.org> 1.8-alt1
 - switch to new libproj API;
 - ms2conv: modify --join option
