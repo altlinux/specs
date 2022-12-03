@@ -11,7 +11,7 @@
 %define gst_api_ver 1.0
 
 Name: shotwell
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: digital photo organizer designed for the GNOME desktop environment
@@ -48,6 +48,7 @@ BuildRequires: libsqlite3-devel libstdc++-devel pkgconfig(webkit2gtk-%webkit_api
 BuildRequires: libgee0.8-devel gcr-libs-devel gcr-libs-vala
 BuildRequires: libgdata-devel libchamplain-gtk3-devel
 BuildRequires: libsecret-devel
+BuildRequires: libportal-devel libportal-gtk3-devel
 %{?_enable_face_detection:BuildRequires: gcc-c++ libopencv-devel}
 %{?_enable_check:BuildRequires: python3 dbus}
 
@@ -108,6 +109,9 @@ mode, and export them to share with others.
 
 
 %changelog
+* Sat Dec 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.31.6-alt1
+- 0.31.6
+
 * Tue Jul 19 2022 Yuri N. Sedunov <aris@altlinux.org> 0.31.5-alt1
 - 0.31.5 (ported to libsoup-3.0/webkit2gtk-4.1)
 
