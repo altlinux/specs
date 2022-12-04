@@ -5,7 +5,7 @@
 
 Name: stalld
 Version: 1.17.1
-Release: alt1
+Release: alt1.1
 Summary: Daemon that finds starving tasks and gives them a temporary boost
 
 License: GPL-2.0-only
@@ -27,6 +27,10 @@ for 1 second of clock time.
 
 %prep
 %setup
+%ifarch %e2k
+# What is the reason for using hardcoded syscall numbers?
+sed -i "1i #include <sys/syscall.h>" src/stalld.h
+%endif
 sed -i s/-lpthread/-pthread/ Makefile
 sed -i /README.md/d Makefile
 sed -i '1s!/usr/bin/bash!/bin/bash!' scripts/throttlectl.sh
@@ -55,6 +59,9 @@ rm %buildroot/usr/share/licenses/stalld/gpl-2.0.txt
 %_man8dir/stalld.8*
 
 %changelog
+* Sun Dec 04 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.17.1-alt1.1
+- Fixed build for Elbrus.
+
 * Wed Oct 19 2022 Vitaly Chikunov <vt@altlinux.org> 1.17.1-alt1
 - Update to v1.17.1 (2022-10-14).
 
