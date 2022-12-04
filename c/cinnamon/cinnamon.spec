@@ -1,7 +1,7 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 5.4.12
+Version: 5.6.4
 Release: alt1
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
@@ -193,6 +193,12 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Fri Dec 2 2022 Vladimir Didenko <cow@altlinux.org> 5.6.4-alt1
+- 5.6.4
+
+* Fri Nov 18 2022 Vladimir Didenko <cow@altlinux.org> 5.6.1-alt1
+- 5.6.1
+
 * Mon Sep 5 2022 Vladimir Didenko <cow@altlinux.org> 5.4.12-alt1
 - 5.4.12
 
