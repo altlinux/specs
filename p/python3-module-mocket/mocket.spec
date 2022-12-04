@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 3.10.8
+Version: 3.10.9
 Release: alt1
 
 Summary: Python socket mock framework
@@ -67,6 +67,9 @@ py.test-3 -k "not test_file_object and \
 %doc LICENSE *.rst
 
 %changelog
+* Sun Dec 04 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.9-alt1
+- Automatically updated to 3.10.9.
+
 * Mon Sep 12 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.8-alt1
 - Automatically updated to 3.10.8.
 
