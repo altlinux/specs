@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: swayidle
-Version: 1.7.1
+Version: 1.8.0
 Release: alt1
 Summary: Idle management daemon for Wayland
 License: MIT
@@ -50,6 +50,9 @@ rm -rf -- \
 %_man1dir/*
 
 %changelog
+* Sun Dec 04 2022 Alexey Gladkov <legion@altlinux.ru> 1.8.0-alt1
+- New version (1.8.0)
+
 * Sat Jan 15 2022 Alexey Gladkov <legion@altlinux.ru> 1.7.1-alt1
 - New version (1.7.1)
 
