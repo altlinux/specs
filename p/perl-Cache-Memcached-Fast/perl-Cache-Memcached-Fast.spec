@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Cache::Memcached::Fast
 
 Name: perl-Cache-Memcached-Fast
-Version: 0.27
+Version: 0.28
 Release: alt1
 
 Summary: Perl client for memcached
@@ -18,9 +18,9 @@ Source: %real_name-%version.tar
 
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Sep 14 2014
-# optimized out: libcloog-isl4 perl-Compress-Raw-Zlib perl-Devel-Symdump perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
-BuildRequires: perl-IO-Compress perl-Test-Pod perl-Test-Pod-Coverage
+# Automatically added by buildreq on Sat Dec 03 2022
+# optimized out: glibc-kernheaders-generic glibc-kernheaders-x86 libcrypt-devel libgpg-error perl perl-CPAN-Meta-Requirements perl-Compress-Raw-Zlib perl-Encode perl-Importer perl-JSON-PP perl-MIME-Charset perl-Parse-CPAN-Meta perl-Sub-Info perl-Term-Size-Any perl-Term-Size-Perl perl-Term-Table perl-TermReadKey perl-Unicode-LineBreak perl-devel perl-parent python-modules python2-base python3-base sh4
+BuildRequires: lua5.3 perl-CPAN-Meta perl-IO-Compress perl-Test2-Suite python-modules-encodings python3
 
 %description
 Cache::Memcahced::Fast is a Perl client for memcached, a memory cache
@@ -46,12 +46,15 @@ export NPROCS=1
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %exclude /.perl.req
 %perl_vendor_autolib/Cache
 %perl_vendor_archlib/Cache
 
 %changelog
+* Sat Dec 03 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.28-alt1
+- New version
+
 * Tue Jun 15 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.27-alt1
 - New version
 
