@@ -3,7 +3,7 @@
 %define real_name File-ShareDir-Install
 
 Name: perl-File-ShareDir-Install
-Version: 0.13
+Version: 0.14
 Release: alt1
 
 Summary: Perl extension for installing shared files
@@ -46,6 +46,9 @@ files after installation.
 %perl_vendor_privlib/File/ShareDir/Install*
 
 %changelog
+* Sun Dec 04 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.14-alt1
+- New version
+
 * Thu May 03 2018 Nikolay A. Fetisov <naf@altlinux.org> 0.13-alt1
 - New version
 
