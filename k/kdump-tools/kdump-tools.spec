@@ -6,10 +6,12 @@
 Name: kdump-tools
 Summary: Scripts and configuration files to use kdump
 Version: 1.8
-Release: alt2
+Release: alt3
 Group: System/Kernel and hardware
 License: GPL-2.0-or-later
 Vcs: https://salsa.debian.org/debian/kdump-tools.git
+
+%define testable_arches x86_64 aarch64 ppc64le
 
 Requires: /sbin/kexec
 Requires: file
@@ -50,44 +52,21 @@ Requires: systemd-sysvinit
 %install
 %makeinstall_std
 %define _customdocdir %_docdir/%name
+%ifnarch %testable_arches
+# Avoid 'Installed (but unpackaged) file(s) found'.
+rm %buildroot%_libexecdir/%name/kdump-checkinstall.sh
+%endif
 
 %check
 # Shall not appear accidentally.
 ! grep -r '/etc/default' --exclude='.*' %buildroot
 make shellcheck
 
-%post checkinstall
-set -exo pipefail
-cd /tmp
-sed -i	-e '/#KDUMP_CMDLINE_REMOVE/s/#//' \
-	-e '/^KDUMP_CMDLINE_REMOVE/s/"$/ quiet"/'\
-		/etc/sysconfig/kdump-tools
-vm-create-image --size=3G i
-timeout 300 \
-vm-run --rootfs=i --kvm=cond --append='crashkernel=256M' \
-'
-	set -xe
-	df -h
-	make-initrd
-	kdump-config show
-	kdump-config load
-	kdump-config test
-	sleep 1
-	echo 1 >/proc/sys/kernel/sysrq
-	echo c >/proc/sysrq-trigger
-' || echo 'Failure is expected because of crash.'
-vm-run --rootfs=i --kvm=cond '
-	set -xeo pipefail
-	df -h
-	ls -l /var/crash/*/dmesg.*
-	ls -l /var/crash/*/dump.*
-	cat /var/crash/*/dump.* | makedumpfile -R /tmp/a
-	file /tmp/a
-	file /tmp/a | grep "Kdump compressed dump"
-'
+%post checkinstall -p %_libexecdir/%name/kdump-checkinstall.sh
 
-%ifnarch %ix86 armh
+%ifarch %testable_arches
 %files checkinstall
+%_libexecdir/%name/kdump-checkinstall.sh
 %endif
 
 %post
@@ -109,6 +88,13 @@ install -d -m755 /var/crash
 # NB: We don't install /var/lib/kdump
 
 %changelog
+* Sun Dec 04 2022 Vitaly Chikunov <vt@altlinux.org> 1.8-alt3
+- Secure permissions for dumps.
+- Remove timestamp out of dump/dmesg file extensions, and rename 'dump'
+  to 'kdump' and 'dmesg' to 'dmesg.txt'.
+- Local Kdumps are not flattened anymore.
+- spec: Refactor checkinstall.
+
 * Fri Nov 25 2022 Vitaly Chikunov <vt@altlinux.org> 1.8-alt2
 - Add kdumpctl tool to view or debug kdumps.
 
