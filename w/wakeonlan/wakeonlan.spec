@@ -1,5 +1,5 @@
 Name:		wakeonlan
-Version:	0.41.0.19.git41b636c
+Version:	0.42
 Release:	alt1
 
 Summary:	A Perl script to wake up computers through Magic Packets
@@ -51,5 +51,8 @@ make test
 
 
 %changelog
+* Sun Dec 04 2022 Arseny Maslennikov <arseny@altlinux.org> 0.42-alt1
+- 0.41.0.19.git41b636c-alt1 -> 0.42.
+
 * Thu Aug 31 2017 Arseny Maslennikov <arseny@altlinux.org> 0.41.0.19.git41b636c-alt1
 - Initial build for ALT Sisyphus
