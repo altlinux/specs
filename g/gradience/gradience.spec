@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 # /usr/share/locale/zh_Hans/LC_MESSAGES/gradience.mo
 #%%define _unpackaged_files_terminate_build 1
 
@@ -8,7 +8,7 @@
 %define rdn_name com.github.GradienceTeam.Gradience
 
 Name: gradience
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: GNOME ecosystem customizer
@@ -24,6 +24,8 @@ Source: %_name-%version.tar
 %endif
 
 BuildArch: noarch
+
+%add_python3_path %_datadir/%name
 
 %define gtk4_ver 4.5.0
 %define adwaita_ver 1.2
@@ -72,6 +74,9 @@ more things.
 %doc README*
 
 %changelog
+* Sun Dec 04 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
+- 0.3.3
+
 * Mon Nov 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
 - 0.3.2-8-g1b7c089
 

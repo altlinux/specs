@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: A phone dialer and call handler
@@ -21,6 +21,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 %define glib_ver 2.62
 %define handy_ver 1.4.0
 %define mm_ver 1.12.0
+%define feedback_ver 0.0.1
 %define phosh_ver 0.16
 
 Requires: ModemManager >= %mm_ver
@@ -38,7 +39,7 @@ BuildRequires: pkgconfig(mm-glib) >= %mm_ver
 BuildRequires: pkgconfig(libebook-contacts-1.2)
 BuildRequires: pkgconfig(folks)
 BuildRequires: pkgconfig(libcallaudio-0.1)
-BuildRequires: pkgconfig(libfeedback-0.0)
+BuildRequires: pkgconfig(libfeedback-0.0) >= %feedback_ver
 BuildRequires: pkgconfig(sofia-sip-ua-glib)
 BuildRequires: pkgconfig(gstreamer-1.0)
 BuildRequires: pkgconfig(gstreamer-audio-1.0)
@@ -86,6 +87,9 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Sun Dec 04 2022 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
+- 43.2
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 

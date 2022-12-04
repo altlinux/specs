@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define _name gtk+
 %define ver_major 3.24
@@ -22,7 +22,7 @@
 %def_disable debug
 
 Name: libgtk+3
-Version: %ver_major.34
+Version: %ver_major.35
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -52,8 +52,8 @@ Patch1: gtk+-3.24.9-alt-build.patch
 %define gtk_doc_ver 1.20
 %define colord_ver 0.1.9
 %define cups_ver 1.7
-%define wayland_ver 1.10.0
-%define wayland_protocols_ver 1.14
+%define wayland_ver 1.15
+%define wayland_protocols_ver 1.17
 %define epoxy_ver 1.4
 %define cloudproviders_ver 0.2.5
 %define fribidi_ver 0.19.7
@@ -242,7 +242,7 @@ the functionality of the installed GTK+3 packages.
 # fix wrong GLIB define names
 sed -i.glib -e "s|GLIB_MIN_REQUIRED_VERSION|GLIB_VERSION_MIN_REQUIRED|" \
      -e "s|GLIB_MAX_ALLOWED_VERSION|GLIB_VERSION_MAX_ALLOWED|" \
-     meson.build configure{,.ac}
+     meson.build configure*
 
 %{?_enable_snapshot:touch README INSTALL}
 
@@ -451,6 +451,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Sun Dec 04 2022 Yuri N. Sedunov <aris@altlinux.org> 3.24.35-alt1
+- updated to 3.24.35-20-ge95f0aa73b
+
 * Wed May 18 2022 Yuri N. Sedunov <aris@altlinux.org> 3.24.34-alt1
 - 3.24.34
 
