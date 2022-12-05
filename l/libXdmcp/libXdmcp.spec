@@ -1,5 +1,5 @@
 Name: libXdmcp
-Version: 1.1.3
+Version: 1.1.4
 Release: alt1
 Summary: Xdmcp Library
 License: MIT/X11
@@ -48,6 +48,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 05 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.1.4-alt1
+- 1.1.4
+
 * Mon Mar 18 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.1.3-alt1
 - 1.1.3
 

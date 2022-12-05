@@ -1,5 +1,5 @@
 Name: libXScrnSaver
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 
 Summary: X11 Screen Saver extension client library
@@ -48,6 +48,9 @@ needed to develop programs which make use of %name.
 %_man3dir/*
 
 %changelog
+* Mon Dec 05 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.2.4-alt1
+- 1.2.4
+
 * Wed Feb 27 2019 Valery Inozemtsev <shrek@altlinux.ru> 1.2.3-alt1
 - 1.2.3
 
