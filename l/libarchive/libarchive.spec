@@ -5,7 +5,7 @@
 
 Name: libarchive
 Version: 3.6.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: A library for handling streaming archive formats
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 # SuSE
 # ALT
 Patch100: alt-disable-lzma-mt.patch
-
+Patch101: CVE-2022-36227-handle-a-calloc-returning-NULL.patch
 
 
 BuildRequires: bzlib-devel glibc-devel libacl-devel libattr-devel libe2fs-devel liblzma-devel liblzo2-devel libssl-devel libxml2-devel zlib-devel
@@ -73,6 +73,7 @@ developing applications that use %name.
 %prep
 %setup
 %patch100 -p1
+%patch101 -p1
 
 %build
 %autoreconf
@@ -115,6 +116,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 05 2022 Alexander Danilov <admsasha@altlinux.org> 3.6.1-alt2
+- security (fixes: CVE-2022-36227)
+
 * Thu Oct 27 2022 Sergey V Turchin <zerg@altlinux.org> 3.6.1-alt1
 - new version
 
