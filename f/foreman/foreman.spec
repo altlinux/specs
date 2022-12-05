@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.0.0
-Release:       alt1.2
+Release:       alt1.3
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -90,7 +90,7 @@ BuildRequires: gem(fog-ovirt) >= 2.0.1 gem(fog-ovirt) < 3
 BuildRequires: gem(fog-libvirt) >= 0.9.0
 BuildRequires: gem(ruby-libvirt) >= 0.8
 BuildRequires: gem(fog-vsphere) >= 3.5.0 gem(fog-vsphere) < 4.0
-BuildRequires: gem(rbvmomi) >= 2.0 gem(rbvmomi) < 3
+BuildRequires: gem(rbvmomi) >= 2.0 gem(rbvmomi) < 4
 BuildRequires: gem(logging-journald) >= 2.0 gem(logging-journald) < 3
 BuildRequires: gem(puma) >= 5.1 gem(puma) < 6
 BuildRequires: gem(pg) >= 0.18 gem(pg) < 2.0
@@ -183,6 +183,7 @@ BuildRequires: gem(webmock) >= 0 gem(webmock) < 4
 %ruby_use_gem_dependency show_me_the_cookies >= 6.0.0,show_me_the_cookies < 7
 %ruby_use_gem_dependency rabl >= 0.15,rabl < 1
 %ruby_use_gem_dependency sidekiq >= 6.0.0,sidekiq < 7
+%ruby_use_gem_dependency rbvmomi >= 3.0,rbvmomi < 4
 Requires:      gem(rails) >= 6.0.3.1 gem(rails) < 7
 Requires:      gem(rest-client) >= 2.0.0 gem(rest-client) < 3
 Requires:      gem(audited) >= 4.9.0 gem(audited) < 6
@@ -233,7 +234,7 @@ Requires:      gem(fog-ovirt) >= 2.0.1 gem(fog-ovirt) < 3
 Requires:      gem(fog-libvirt) >= 0.9.0
 Requires:      gem(ruby-libvirt) >= 0.8
 Requires:      gem(fog-vsphere) >= 3.5.0 gem(fog-vsphere) < 4.0
-Requires:      gem(rbvmomi) >= 2.0 gem(rbvmomi) < 3
+Requires:      gem(rbvmomi) >= 2.0 gem(rbvmomi) < 4
 Requires:      gem(logging-journald) >= 2.0 gem(logging-journald) < 3
 Requires:      gem(puma) >= 5.1 gem(puma) < 6
 Requires:      gem(pg) >= 0.18 gem(pg) < 2.0
@@ -462,6 +463,9 @@ railsctl cleanup %name
 
 
 %changelog
+* Tue Dec 06 2022 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1.3
+- !fix deps to rbvmomi gem
+
 * Tue Oct 18 2022 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1.2
 - !fix deps to novel gems
 

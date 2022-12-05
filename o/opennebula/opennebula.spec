@@ -11,7 +11,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.2.0.1
-Release: alt1
+Release: alt1.1
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -33,11 +33,6 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libnsl2-devel
 BuildRequires: openssh
-BuildRequires: gem(aws-sdk) gem(bundler)
-BuildRequires: gem(ipaddress)
-BuildRequires: gem(builder)
-BuildRequires: gem(xmlrpc)
-BuildRequires: gem(nokogiri)
 BuildRequires: scons
 BuildRequires: python3-module-setuptools /usr/bin/pathfix.py
 BuildRequires: java-openjdk-devel ws-commons-util xmlrpc-common xmlrpc-client
@@ -46,12 +41,17 @@ BuildRequires: node node-bower node-gyp npm node-devel node-sass libsass libzero
 BuildRequires: ronn
 BuildRequires: groff-base
 
-%ruby_use_gem_dependency faraday_middleware >= 0,faraday_middleware < 2
-%ruby_use_gem_dependency faraday >= 0,faraday < 2
-%ruby_use_gem_dependency rbvmomi >= 2,rbvmomi < 3
-%ruby_use_gem_dependency highline >= 2.0,highline < 3
-%ruby_use_gem_dependency i18n >= 1.0,i18n < 2
-%ruby_use_gem_dependency activesupport >= 6.0,activesupport < 7
+%ruby_use_gem_dependency highline >= 2.0.3,highline < 3
+%ruby_use_gem_dependency webmock >= 3.13.0,webmock < 4
+%ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
+%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
+%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency activesupport >= 6.1.3.2,activesupport < 7
+%ruby_use_gem_dependency faraday >= 2.6.0,faraday < 3
+%ruby_use_gem_dependency faraday_middleware >= 1.2.6,faraday_middleware < 2
+%ruby_use_gem_dependency i18n >= 1.10.0,i18n < 2
+%add_findprov_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %_libexecdir/one/sunstone/public/bower_components/**/*
 %add_findreq_skiplist /var/lib/one/*
@@ -95,6 +95,54 @@ OpenNebula Server and Scheduler daemons.
 Summary: Common OpenNebula package shared by various components
 Group: System/Servers
 BuildArch: noarch
+
+Requires: gem(xmlrpc) >= 0
+Requires: gem(rexml) >= 0
+Requires: gem(ffi-rzmq) >= 2.0.7 gem(ffi-rzmq) < 2.1
+Requires: gem(net-ldap) >= 0
+Requires: gem(nokogiri) >= 0
+Requires: gem(public_suffix) >= 0
+Requires: gem(gnuplot) >= 0
+Requires: gem(highline) >= 1.7 gem(highline) < 3
+Requires: gem(mysql2) >= 0
+Requires: gem(pg) >= 0
+Requires: gem(sqlite3) >= 0
+Requires: gem(sequel) >= 0
+Requires: gem(augeas) >= 0.6 gem(augeas) < 1
+Requires: gem(json) >= 2.0
+Requires: gem(git) >= 1.5 gem(git) < 2
+Requires: gem(aws-sdk-ec2) >= 1.151
+Requires: gem(aws-sdk-s3) >= 0
+Requires: gem(aws-sdk-cloudwatch) >= 0
+Requires: gem(azure_mgmt_compute) >= 0
+Requires: gem(azure_mgmt_monitor) >= 0
+Requires: gem(azure_mgmt_network) >= 0
+Requires: gem(azure_mgmt_resources) >= 0
+Requires: gem(azure_mgmt_storage) >= 0
+Requires: gem(configparser) >= 0
+Requires: gem(minitest) >= 0
+Requires: gem(faraday_middleware) >= 1.2.0 gem(faraday_middleware) < 1.3
+Requires: gem(activesupport) >= 4.2 gem(activesupport) < 7
+Requires: gem(i18n) >= 0.9 gem(i18n) < 2
+Requires: gem(rack) >= 0
+Requires: gem(sinatra) >= 0
+Requires: gem(thin) >= 0
+Requires: gem(uuidtools) >= 0
+Requires: gem(curb) >= 0
+Requires: gem(ipaddress) >= 0.8.3 gem(ipaddress) < 0.9
+Requires: gem(treetop) >= 1.6.3
+Requires: gem(parse-cron) >= 0
+Requires: gem(webauthn) >= 0
+Requires: gem(zendesk_api) >= 0
+Requires: gem(rqrcode) >= 0
+Requires: gem(memcache-client) >= 0
+Requires: gem(dalli) >= 0
+Requires: gem(rotp) >= 0
+Requires: gem(ox) >= 0
+Requires: gem(addressable) >= 0
+Requires: gem(vsphere-automation-cis) >= 0.4.6 gem(vsphere-automation-cis) < 0.5
+Requires: gem(vsphere-automation-vcenter) >= 0.4.6 gem(vsphere-automation-vcenter) < 0.5
+Requires: gem(rbvmomi) >= 3.0.0 gem(rbvmomi) < 3.1
 
 %description common
 Common package shared by various OpenNebula components.
@@ -186,6 +234,11 @@ BuildArch: noarch
 Requires: %name-common = %EVR
 Requires: gem-%name = %EVR
 Requires: %name-sunstone = %EVR
+Requires: gem(sinatra) >= 0
+Requires: gem(json) >= 0
+Requires: gem(xml-simple) >= 0
+Requires: gem(treetop) >= 0
+Requires: gem(parse-cron) >= 0
 
 %description flow
 Server for multi-VM orchestration.
@@ -974,6 +1027,9 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Mon Dec 05 2022 Pavel Skrylev <majioa@altlinux.org> 6.2.0.1-alt1.1
+- !FTBFS: to correct gem deps
+
 * Wed Sep 28 2022 Alexey Shabalin <shaba@altlinux.org> 6.2.0.1-alt1
 - 6.2.0.1
 

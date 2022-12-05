@@ -2,7 +2,7 @@
 
 Name:          gem-fog-vsphere
 Version:       3.5.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Fog for vSphere
 License:       MIT
 Group:         Development/Ruby
@@ -15,7 +15,7 @@ Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 %if_with check
 BuildRequires: gem(fog-core) >= 0
-BuildRequires: gem(rbvmomi) >= 1.9 gem(rbvmomi) < 3
+BuildRequires: gem(rbvmomi) >= 1.9 gem(rbvmomi) < 4
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(pry) >= 0.10 gem(pry) < 1
 BuildRequires: gem(rake) >= 12.3.3
@@ -29,10 +29,11 @@ BuildRequires: gem(vcr) >= 4.0 gem(vcr) < 7
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
+%ruby_use_gem_dependency rbvmomi >= 3.0,rbvmomi < 4
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency vcr >= 6.0.0,vcr < 7
 Requires:      gem(fog-core) >= 0
-Requires:      gem(rbvmomi) >= 1.9 gem(rbvmomi) < 3
+Requires:      gem(rbvmomi) >= 1.9 gem(rbvmomi) < 4
 Obsoletes:     ruby-fog-vsphere < %EVR
 Provides:      ruby-fog-vsphere = %EVR
 Provides:      gem(fog-vsphere) = 3.5.2
@@ -45,7 +46,7 @@ services library to communicate with vSphere.
 
 %package       -n gem-fog-vsphere-doc
 Version:       3.5.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Fog for vSphere documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fog-vsphere
 Group:         Development/Documentation
@@ -65,7 +66,7 @@ services library to communicate with vSphere.
 
 %package       -n gem-fog-vsphere-devel
 Version:       3.5.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Fog for vSphere development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета fog-vsphere
 Group:         Development/Ruby
@@ -118,6 +119,9 @@ services library to communicate with vSphere.
 
 
 %changelog
+* Tue Dec 06 2022 Pavel Skrylev <majioa@altlinux.org> 3.5.2-alt1.1
+- !fix dep to rbvmomi gem
+
 * Fri Oct 07 2022 Pavel Skrylev <majioa@altlinux.org> 3.5.2-alt1
 - ^ 3.5.0 -> 3.5.2
 
