@@ -3,7 +3,7 @@
 %define real_name Software-License
 
 Name: perl-Software-License
-Version: 0.104001
+Version: 0.104002
 Release: alt1
 
 Summary: Perl module that provide templated software licenses
@@ -41,6 +41,9 @@ Perl module Software::License provides templated software licenses.
 %perl_vendor_privlib/Software/License*
 
 %changelog
+* Mon Dec 05 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.104002-alt1
+- New version
+
 * Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.104001-alt1
 - New version
 - Update URL
