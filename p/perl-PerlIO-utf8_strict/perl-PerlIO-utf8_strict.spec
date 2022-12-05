@@ -1,7 +1,7 @@
 ## SPEC file for Perl module PerlIO::utf8_strict
 
 Name: perl-PerlIO-utf8_strict
-Version: 0.009
+Version: 0.010
 Release: alt1
 
 Summary: fast and correct UTF-8 IO module
@@ -44,6 +44,9 @@ input for correctness.
 %perl_vendor_autolib/PerlIO*
 
 %changelog
+* Mon Dec 05 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.010-alt1
+- New version
+
 * Thu Feb 10 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.009-alt1
 - New version
 
