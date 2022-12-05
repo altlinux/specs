@@ -1,14 +1,14 @@
 Name: c2man
 #catalog:version:2.0 patchlevel 40
 Version: 2.0.40
-Release: alt1
+Release: alt1.1
 
 Summary: C Source Manual Page Extraction Tool
 Group: Development/Other
 License: GPL
 Url: https://github.com/fribidi/c2man
 
-#VCS: https://github.com/fribidi/c2man.git
+Vcs: https://github.com/fribidi/c2man.git
 Source: %name-%version.tar
 Patch: c2man-lex.patch
 
@@ -29,6 +29,11 @@ generated from existing code with no modifications.
 %patch
 
 %build
+%ifarch %e2k
+# crazy "mkdep" hacks in Configure don't work well for LCC
+# make: No rule to make target '-', needed by 'c2man.o'.
+touch "./-"
+%endif
 ./Configure -d -e -s \
     -Dcc=gcc \
     -Doptimize="$RPM_OPT_FLAGS" \
@@ -49,6 +54,9 @@ install -m644 %name.1 %buildroot%_man1dir/
 
 
 %changelog
+* Mon Dec 05 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0.40-alt1.1
+- fixed build for Elbrus by ilyakurdyukov@
+
 * Thu Apr 05 2018 Yuri N. Sedunov <aris@altlinux.org> 2.0.40-alt1
 - first build for Sisyphus
 
