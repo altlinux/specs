@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.32.1
+Version: 2.33.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -68,6 +68,7 @@ Source0: %name-%version.tar
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
 
+
 %package devmapper
 Summary: device-mapper module for %name
 Group: System/Base
@@ -78,6 +79,7 @@ AutoReq: noshell, noshebang
 
 %description devmapper
 device-mapper module for %name
+
 
 %package lvm
 Summary: LVM module for %name
@@ -91,6 +93,7 @@ AutoReq: noshell, noshebang
 %description lvm
 LVM module for %name
 
+
 %package luks
 Summary: LUKS module for %name
 Group: System/Base
@@ -103,6 +106,7 @@ AutoReq: noshell, noshebang
 %description luks
 LUKS module for %name
 
+
 %package nfs
 Summary: NFS module for %name
 Group: System/Base
@@ -111,6 +115,7 @@ AutoReq: noshell, noshebang
 
 %description nfs
 NFS module for %name
+
 
 %package multipath
 Summary: multipath module for %name
@@ -123,6 +128,7 @@ AutoReq: noshell, noshebang
 
 %description multipath
 Multipath module for %name
+
 
 %package plymouth
 Summary: plymouth module for %name
@@ -138,6 +144,7 @@ AutoReq: noshell, noshebang
 %description plymouth
 plymouth module for %name
 
+
 %package mdadm
 Summary: mdadm module for %name
 Group: System/Base
@@ -149,6 +156,7 @@ AutoReq: noshell, noshebang
 %description mdadm
 Mdadm module for %name
 
+
 %package ucode
 Summary: CPU microcode module for %name
 Group: System/Base
@@ -159,6 +167,7 @@ AutoReq: noshell, noshebang
 
 %description ucode
 CPU microcode autoloading module for %name
+
 
 %if_with iscsi
 %package iscsi
@@ -173,6 +182,7 @@ AutoReq: noshell, noshebang
 iSCSI module for %name
 %endif
 
+
 %package kickstart
 Summary: kickstart module for %name
 Group: System/Base
@@ -183,6 +193,7 @@ AutoReq: noshell, noshebang
 
 %description kickstart
 Kickstart module for %name
+
 
 %package sshfs
 Summary: sshfs module for %name
@@ -195,6 +206,7 @@ AutoReq: noshell, noshebang
 Feature adds the ability to mount the root using SSH (more precisely, the SFTP
 subsystem). Most SSH servers support and enable this SFTP access by default, so
 SSHFS is very simple to use.
+
 
 %package smartcard
 Summary: smart-card module for %name
@@ -209,6 +221,7 @@ AutoReq: noshell, noshebang
 %description smartcard
 Feature adds smart card daemon and smart card utilities.
 
+
 %package bootconfig
 Summary: Extra Boot Config (XBC) support for %name
 Group: System/Base
@@ -219,6 +232,7 @@ AutoReq: noshell, noshebang
 %description bootconfig
 Extra Boot Config (XBC) support for %name.
 
+
 %package boot
 Summary: Bootloader feature for %name
 Group: System/Base
@@ -228,6 +242,19 @@ AutoReq: noshell, noshebang
 
 %description boot
 Make-initrd bootloader feature.
+
+
+%package zfs
+Summary: Bootloader feature for %name
+Group: System/Base
+Requires: %name = %version-%release
+Requires: zfs-utils
+AutoReq: noshell, noshebang
+
+%description zfs
+Make-initrd OpenZFS feature.
+
+
 
 %define _libexecdir %_prefix/libexec
 
@@ -293,6 +320,7 @@ fi
 %exclude %_datadir/%name/features/smart-card
 %exclude %_datadir/%name/features/bootloader
 %exclude %_datadir/%name/features/bootconfig
+%exclude %_datadir/%name/features/zfs
 %doc Documentation/*.md
 
 %files devmapper
@@ -345,7 +373,13 @@ fi
 %_libexecdir/%name/features/bootloader
 %_datadir/%name/features/bootloader
 
+%files zfs
+%_datadir/%name/features/zfs
+
 %changelog
+* Mon Dec 05 2022 Alexey Gladkov <legion@altlinux.ru> 2.33.0-alt1
+- New version (2.33.0).
+
 * Tue Nov 08 2022 Alexey Gladkov <legion@altlinux.ru> 2.32.1-alt1
 - New version (2.32.1).
 - mk: do not expand functions out of '$(call ...)' context (ALT#44226).
