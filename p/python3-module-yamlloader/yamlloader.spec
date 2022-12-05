@@ -1,22 +1,26 @@
 %define _unpackaged_files_terminate_build 1
-%define oname yamlloader
+%define pypi_name yamlloader
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 1.1.0
+Name: python3-module-%pypi_name
+Version: 1.2.2
 Release: alt1
 
 Summary: Ordered YAML loader and dumper for PyYAML
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/Phynix/yamlloader.git
 Url: https://pypi.org/project/yamlloader
+VCS: https://github.com/Phynix/yamlloader.git
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires:
@@ -24,8 +28,6 @@ BuildRequires: python3(yaml)
 
 BuildRequires: python3(pytest)
 BuildRequires: python3(hypothesis)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -42,28 +44,23 @@ preservation of insertion order is a language feature of regular dicts.).
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-commands =
-    pytest -vra
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc README.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/yamlloader/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 05 2022 Stanislav Levin <slev@altlinux.org> 1.2.2-alt1
+- 1.1.0 -> 1.2.2.
+
 * Fri Jul 23 2021 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus.
