@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.26.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -85,7 +85,7 @@ Patch113: alt-breeze-autoupdate-username.patch
 Patch114: alt-menu-search-results-add-genericname.patch
 Patch115: alt-dbus-sessionchange.patch
 #Patch116: alt-refresh-menu.patch
-#
+Patch117: alt-klipper-help-url.patch
 Patch118: alt-session-exclude.patch
 Patch119: alt-freespace-thread-timer.patch
 Patch120: alt-desktop-plasmashell.patch
@@ -286,7 +286,7 @@ popd
 %patch114 -p1
 %patch115 -p1
 #%patch116 -p1
-#
+%patch117 -p1
 %patch118 -p1
 %patch119 -p2
 %patch120 -p1
@@ -521,6 +521,9 @@ done
 
 
 %changelog
+* Mon Dec 05 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt2
+- set klipper settings help url (closes: 44538)
+
 * Tue Nov 29 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt1
 - new version
 
