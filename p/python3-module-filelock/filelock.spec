@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.8.0
+Version: 3.8.1
 Release: alt1
 
 Summary: A platform independent file lock for Python
 License: Unlicense
 Group: Development/Python3
-# Source-git: https://github.com/tox-dev/py-filelock
 Url: https://pypi.org/project/filelock/
+VCS: https://github.com/tox-dev/py-filelock
 
 Source: %name-%version.tar
 
@@ -64,6 +64,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 05 2022 Stanislav Levin <slev@altlinux.org> 3.8.1-alt1
+- 3.8.0 -> 3.8.1.
+
 * Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 3.8.0-alt1
 - 3.6.0 -> 3.8.0.
 
