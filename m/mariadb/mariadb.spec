@@ -50,7 +50,7 @@
 %def_with jemalloc
 
 Name: mariadb
-Version: 10.6.10
+Version: 10.6.11
 Release: alt1
 
 Summary: A very fast and reliable SQL database engine
@@ -1036,6 +1036,9 @@ fi
 %endif
 
 %changelog
+* Fri Dec 02 2022 Alexey Shabalin <shaba@altlinux.org> 10.6.11-alt1
+- 10.6.11
+
 * Mon Oct 31 2022 Alexey Shabalin <shaba@altlinux.org> 10.6.10-alt1
 - 10.6.10
 
