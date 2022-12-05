@@ -1,7 +1,7 @@
 %define rname kalk
 
 Name: kde5-%rname
-Version: 22.09
+Version: 22.11
 Release: alt1
 %K5init
 
@@ -55,8 +55,7 @@ Requires: %name-common
 %setup -n %rname-%version
 
 %build
-%K5cmake
-#K5build
+%K5build
 
 %install
 %K5install
@@ -66,7 +65,7 @@ Requires: %name-common
 %doc LICENSES/*
 %_K5bin/kalk
 %_K5xdgapp/*kalk*desktop
-%_K5icon/*/*/apps/kalk.*
+%_K5icon/*/*/apps/*kalk*
 
 #%files devel
 #%_K5inc/kalk_version.h
@@ -79,6 +78,9 @@ Requires: %name-common
 #%_K5lib/libkalk.so.*
 
 %changelog
+* Mon Dec 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.11-alt1
+- new version
+
 * Wed Oct 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt1
 - new version
 

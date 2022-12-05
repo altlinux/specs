@@ -1,8 +1,8 @@
 %define rname krecorder
 
 Name: kde5-%rname
-Version: 22.09
-Release: alt2
+Version: 22.11
+Release: alt1
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
@@ -10,7 +10,7 @@ Summary: Audio recording
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Requires: qml(org.kde.kirigamiaddons.labs.mobileform)
+Requires: kf5-kirigami-addons
 
 Source: %rname-%version.tar
 
@@ -20,7 +20,9 @@ Source: %rname-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: qt5-multimedia-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel
+BuildRequires: kf5-kirigami-addons-devel
 BuildRequires: kf5-kconfig-devel kf5-ki18n-devel kf5-kirigami-devel kf5-kcoreaddons-devel
+BuildRequires: kf5-kwindowsystem-devel
 
 %description
 A convergent audio recording application for Plasma.
@@ -75,6 +77,9 @@ Requires: %name-common
 #%_K5lib/libkrecorder.so.*
 
 %changelog
+* Mon Dec 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.11-alt1
+- new version
+
 * Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt2
 - fix requires
 

@@ -1,7 +1,7 @@
 %define rname alligator
 
 Name: kde5-%rname
-Version: 22.09
+Version: 22.11
 Release: alt1
 %K5init no_appdata
 
@@ -9,6 +9,8 @@ Group: Graphical desktop/KDE
 Summary: RSS/Atom feed reader
 Url: http://www.kde.org
 License: GPL-2.0-or-later
+
+Requires: kf5-kirigami-addons
 
 Source: %rname-%version.tar
 
@@ -19,6 +21,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel
 BuildRequires: kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-syndication-devel
+BuildRequires: kf5-kirigami-addons-devel
 
 %description
 Alligator is a convergent RSS/Atom feed reader.
@@ -74,6 +77,9 @@ Requires: %name-common
 #%_K5lib/liballigator.so.*
 
 %changelog
+* Mon Dec 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.11-alt1
+- new version
+
 * Wed Oct 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt1
 - new version
 

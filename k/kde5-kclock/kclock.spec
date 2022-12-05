@@ -1,7 +1,7 @@
 %define rname kclock
 
 Name: kde5-%rname
-Version: 22.09
+Version: 22.11
 Release: alt1
 %K5init altplace no_appdata
 
@@ -10,7 +10,7 @@ Summary: Clock
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Requires: kf5-kirigami-addons-dateandtime
+Requires: kf5-kirigami-addons
 Requires: %name-common
 
 Source: %rname-%version.tar
@@ -24,6 +24,7 @@ BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: qt5-multimedia-devel qt5-quickcontrols2-devel qt5-svg-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-ki18n-devel kf5-kirigami-devel kf5-knotifications-devel
 BuildRequires: kf5-kpackage-devel kf5-kservice-devel kf5-plasma-framework-devel
+BuildRequires: kf5-kirigami-addons-devel
 
 %description
 A convergent clock application for Plasma.
@@ -90,6 +91,9 @@ Requires: %name-common
 #%_K5lib/libkclock.so.*
 
 %changelog
+* Mon Dec 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.11-alt1
+- new version
+
 * Wed Oct 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt1
 - new version
 

@@ -1,8 +1,8 @@
 %define rname plasma-settings
 
 Name: kde5-%rname
-Version: 22.09
-Release: alt2
+Version: 22.11
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -10,6 +10,7 @@ Summary: Settings application for Plasma Mobile
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
+Requires: kf5-kirigami-addons
 Requires: %name-core
 Requires: %name-virtualkeyboard
 
@@ -22,6 +23,7 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel
 BuildRequires: qt5-svg-devel qt5-wayland-devel
 BuildRequires: ModemManager-devel kf5-modemmanager-qt-devel kf5-networkmanager-qt-devel
+BuildRequires: kf5-kirigami-addons-devel
 BuildRequires: kf5-kdbusaddons-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kio-devel
 BuildRequires: kf5-kpackage-devel kf5-plasma-framework-devel
 BuildRequires: pkgconfig(gobject-2.0) pkgconfig(gio-2.0)
@@ -111,6 +113,9 @@ Requires: %name-common
 #%_K5lib/libplasma-settings.so.*
 
 %changelog
+* Mon Dec 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.11-alt1
+- new version
+
 * Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt2
 - fix requires
 

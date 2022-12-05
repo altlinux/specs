@@ -1,8 +1,8 @@
 %define rname qmlkonsole
 
 Name: kde5-%rname
-Version: 22.09
-Release: alt2
+Version: 22.11
+Release: alt1
 %K5init
 
 Group: Graphical desktop/KDE
@@ -13,6 +13,7 @@ License: GPL-2.0-or-later
 Requires: qt5-qmltermwidget
 Requires: qml(org.kde.kirigamiaddons.labs.mobileform)
 Conflicts: cool-retro-term <= 1.0.1-alt1
+Requires: kf5-kirigami-addons
 
 Source: %rname-%version.tar
 
@@ -21,7 +22,9 @@ Source: %rname-%version.tar
 #BuildRequires: appstream extra-cmake-modules kf5-kconfig-devel kf5-ki18n-devel kf5-kirigami-devel python3-dev python3-module-mpl_toolkits qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-quickcontrols2-devel qt5-svg-devel qt5-wayland-devel
+BuildRequires: kf5-kirigami-addons-devel
 BuildRequires: kf5-kconfig-devel kf5-ki18n-devel kf5-kirigami-devel kf5-kcoreaddons-devel
+BuildRequires: kf5-kwindowsystem-devel
 
 %description
 Terminal application offering additional keyboard buttons useful on touch devices.
@@ -64,6 +67,7 @@ Requires: %name-common
 %_K5bin/qmlkonsole
 %_K5xdgapp/*qmlkonsole*.desktop
 %_K5cfg/*terminalsettings*
+%_K5icon/*/*/apps/*qmlkonsole*
 
 #%files devel
 #%_K5inc/qmlkonsole_version.h
@@ -76,6 +80,9 @@ Requires: %name-common
 #%_K5lib/libqmlkonsole.so.*
 
 %changelog
+* Mon Dec 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.11-alt1
+- new version
+
 * Tue Oct 18 2022 Sergey V Turchin <zerg@altlinux.org> 22.09-alt2
 - fix requires
 
