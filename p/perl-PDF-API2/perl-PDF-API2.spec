@@ -3,7 +3,7 @@
 %define real_name PDF-API2
 
 Name: perl-PDF-API2
-Version: 2.043
+Version: 2.044
 Release: alt1
 
 Summary: Perl module for creation and modification PDF files
@@ -79,6 +79,9 @@ ln -s -- $(relative %_licensedir/LGPL %_docdir/%name/LICENSE) LICENSE
 %exclude /.perl.req
 
 %changelog
+* Sun Dec 04 2022 Nikolay A. Fetisov <naf@altlinux.org> 2.044-alt1
+- New version
+
 * Thu Feb 10 2022 Nikolay A. Fetisov <naf@altlinux.org> 2.043-alt1
 - New version
 
