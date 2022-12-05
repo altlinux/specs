@@ -1,7 +1,7 @@
 %define ver_major 1.0
 
 Name: mm-common
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Common build files of the C++ bindings
@@ -13,7 +13,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-macros-meson >= 0.54 rpm-build-python3
+BuildRequires(pre): rpm-macros-meson >= 0.55 rpm-build-python3
 BuildRequires: meson
 %add_python3_path %_datadir/%name/build
 
@@ -43,6 +43,9 @@ which could be used as a base for new mm module.
 %install
 %meson_install
 
+%check
+%__meson_test
+
 %files
 %_bindir/*
 %_datadir/%name/
@@ -57,6 +60,9 @@ which could be used as a base for new mm module.
 %_docdir/%name/*
 
 %changelog
+* Fri Dec 02 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.4-alt1
 - 1.0.4
 
