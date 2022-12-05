@@ -1,17 +1,19 @@
 %def_disable static
 
 Name: libicns
-Version: 0.7.1
-Release: alt1.2
+Version: 0.8.1
+Release: alt1
 
 Summary: Library for manipulation of the Mac OS icns resource format
 License: %lgpl21plus/%gpl2plus
 Group: System/Libraries
-URL: http://sf.net/projects/icns
+Url: http://sf.net/projects/icns
 
 BuildRequires(pre): rpm-build-licenses
 
 # http://downloads.sourceforge.net/icns/libicns-0.7.1.tar.gz
+Packager: Artyom Bystrov <arbars@altlinux.org>
+
 Source: %name-%version.tar
 Patch: libicns-0.7.1-alt-libpng15.patch
 
@@ -48,7 +50,7 @@ Tools to cope with ICNS (Mac OS icns resource format) files:
 
 %prep
 %setup
-%patch -p2
+#%%patch -p2
 
 %build
 %configure %{subst_enable static}
@@ -66,13 +68,17 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %doc src/apidocs.{txt,html}
 %_includedir/*.h
 %_libdir/*.so
-%_libdir/pkgconfig/*.pc
+%_pkgconfigdir/*.pc
 
 %files utils
 %_bindir/*
 %_man1dir/*
 
 %changelog
+* Mon Dec 05 2022 Artyom Bystrov <arbars@altlinux.org> 0.8.1-alt1
+- update to new version
+- disable patch by real@ - changes already added in upstream
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1.2
 - Rebuilt with libpng15
 
