@@ -3,7 +3,7 @@
 %define real_name Mozilla-CA
 
 Name: perl-Mozilla-CA
-Version: 20211001
+Version: 20221114
 Release: alt1
 
 Summary: Perl module provides CA cert bundle
@@ -11,6 +11,7 @@ Summary: Perl module provides CA cert bundle
 License: %mpl
 Group: Development/Perl
 URL: https://metacpan.org/dist/Mozilla-CA/
+#URL: https://github.com/libwww-perl/Mozilla-CA
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 BuildArch: noarch
@@ -52,9 +53,11 @@ ca-certificates .
 %perl_vendor_privlib/Mozilla/CA.pm
 
 %exclude %perl_vendor_privlib/Mozilla/CA/*
-%exclude %perl_vendor_privlib/Mozilla/mk-ca-bundle.pl
 
 %changelog
+* Mon Dec 05 2022 Nikolay A. Fetisov <naf@altlinux.org> 20221114-alt1
+- New version
+
 * Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 20211001-alt1
 - New version
 - Update URL
