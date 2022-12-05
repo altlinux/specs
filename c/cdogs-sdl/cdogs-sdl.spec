@@ -8,8 +8,8 @@ BuildRequires: /usr/bin/desktop-file-validate gcc-c++ libGLU-devel libSDL2-devel
 #global extra_version -2
 
 Name:           cdogs-sdl
-Version:        0.7.3
-Release:        alt1_5
+Version:        1.4.0
+Release:        alt1
 Summary:        C-Dogs is an arcade shoot-em-up
 # The game-engine is GPLv2+
 # The game art is CC
@@ -18,6 +18,7 @@ URL:            http://cxong.github.io/cdogs-sdl/
 Source0:        https://github.com/cxong/cdogs-sdl/archive/%{version}%{?extra_version}.tar.gz#/%{name}-%{version}%{?extra_version}.tar.gz
 Patch0:         cdogs-sdl-0.5.8-cmake.patch
 Patch1:         cdogs-sdl-0.7.3-fcommon-fix.patch
+Patch2:			fix-build.patch
 BuildRequires:  gcc
 BuildRequires:  ctest cmake libSDL2_mixer-devel libSDL2_image-devel libGL-devel
 BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel libphysfs-devel libenet-devel
@@ -41,6 +42,7 @@ like to thank Ronny for releasing the C-Dogs sources to the public.
 %setup -q -n %{name}-%{version}%{?extra_version}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # We use the system enet
 rm -r src/cdogs/enet
@@ -56,14 +58,18 @@ sed -i 's,-freg-struct-return,,' CMakeLists.txt
 
 
 %build
-%{fedora_v2_cmake} -DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/ -DUSE_SHARED_ENET=1
+%{fedora_v2_cmake} \
+					-DCDOGS_DATA_DIR=/usr/share/cdogs-sdl/\
+					-DUSE_SHARED_ENET=ON
+
 %fedora_v2_cmake_build
 
 
 %install
 %fedora_v2_cmake_install
 
-
+install -D -m 0644 build/linux/io.github.cxong.cdogs-sdl.appdata.xml %buildroot%{_datadir}/appdata/io.github.cxong.%{name}.appdata.xml
+mkdir -p %buildroot%_datadir/%name/
 %check
 desktop-file-validate \
   $RPM_BUILD_ROOT%{_datadir}/applications/io.github.cxong.%{name}.desktop
@@ -82,6 +88,10 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Mon Dec 05 2022 Artyom Bystrov <arbars@altlinux.org> 1.4.0-alt1
+- update to new version;
+- add patch for fix data path (thanks survolog@ from rosalab)
+
 * Wed Aug 18 2021 Igor Vlasenko <viy@altlinux.org> 0.7.3-alt1_5
 - e2k support
 
