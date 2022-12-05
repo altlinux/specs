@@ -8,7 +8,7 @@
 %endif
 
 Name: nfdump
-Version: 1.6.23
+Version: 1.6.25
 Release: alt1
 Summary: collect and process netflow data
 Group: Monitoring
@@ -91,6 +91,15 @@ nfdump development files
 
 %prep
 %setup -q
+
+# nfcapd 1.6.23 contains
+#
+#   case 'w':
+#       // allow for compatibility - always sync timeslot
+#       break;
+#
+# this synchronizes the behavior of sfcapd with nfcapd
+sed "s|if ( synctime )|// if ( synctime )|" -i bin/sfcapd.c
 
 %build
 %autoreconf
@@ -183,6 +192,11 @@ rm -f %buildroot%_libdir/libnfdump.a
 %endif
 
 %changelog
+* Mon Dec 05 2022 Sergey Y. Afonin <asy@altlinux.org> 1.6.25-alt1
+- 1.6.25
+- removed -w option from default configuration (behaviour will be changed in 1.7)
+- -w option is not used by nfcapd, this behavior has been migrated to sfcapd
+
 * Wed Jun 23 2021 Sergey Y. Afonin <asy@altlinux.org> 1.6.23-alt1
 - 1.6.23
 
