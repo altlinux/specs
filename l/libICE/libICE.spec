@@ -1,6 +1,6 @@
 Name: libICE
 Version: 1.1.0
-Release: alt1
+Release: alt2
 Summary: X Inter Client Exchange Library
 License: MIT/X11
 Group: System/Libraries
@@ -49,6 +49,9 @@ develop programs which make use of %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 05 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.1.0-alt2
+- added check __cplusplus for static_assert macros (closes: #44548)
+
 * Mon Dec 05 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.1.0-alt1
 - 1.1.0
 
