@@ -1,9 +1,9 @@
 %def_with libidn2
 
 Name: dnsmasq
-Version: 2.87
+Version: 2.88
 
-Release: alt2.1
+Release: alt1
 Summary: A lightweight caching nameserver
 License: GPLv2+
 Group: System/Servers
@@ -142,6 +142,9 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Mon Dec 05 2022 Mikhail Efremov <sem@altlinux.org> 2.88-alt1
+- Updated to 2.88.
+
 * Thu Sep 29 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.87-alt2.1
 - Disabled -Werror for Elbrus build.
 
