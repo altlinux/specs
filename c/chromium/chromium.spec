@@ -10,7 +10,7 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-%global llvm_version 14.0
+%global llvm_version 15.0
 %global gcc_version %nil
 #set_gcc_version %gcc_version
 
@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        107.0.5304.110
+Version:        108.0.5359.71
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -75,7 +75,7 @@ Patch010: 0010-Move-offending-function-to-chromeos-only.patch
 Patch011: 0011-FEDORA-bootstrap-with-python3.patch
 Patch012: 0012-sql-make-VirtualCursor-standard-layout-type.patch
 Patch013: 0013-GENTOO-Fix-instantiating-fold-expression-error.patch
-Patch014: 0014-ALT-Do-not-mix-internal-and-system-wayland.patch
+#Patch014: 0014-ALT-Do-not-mix-internal-and-system-wayland.patch
 Patch015: 0015-IWYU-add-cmath-for-std-isnan-and-std-isinf.patch
 Patch016: 0016-ALT-use-system-zlib.patch
 Patch017: 0017-ALT-use-system-libdrm-library.patch
@@ -86,8 +86,7 @@ Patch021: 0021-DEBIAN-use-system-opus-library-instead-of-embedded.patch
 Patch022: 0022-DEBIAN-build-using-system-openjpeg.patch
 Patch023: 0023-DEBIAN-use-system-jpeg-library.patch
 Patch024: 0024-DEBIAN-use-system-libevent-library.patch
-#Patch025: 0025-SUSE-Do-not-try-to-build-a-private-copy.patch
-Patch026: 0026-ALT-Use-system-libusb-libsecret-flatbuffers.patch
+Patch025: 0025-ALT-Use-system-libusb-libsecret-flatbuffers.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -120,6 +119,7 @@ BuildRequires:  lld%{llvm_version}-devel
 %else
 BuildRequires:  gcc%gcc_version-c++
 %endif
+BuildRequires:  pkgconfig(absl_utility)
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(atk)
 BuildRequires:  pkgconfig(atk-bridge-2.0)
@@ -233,9 +233,9 @@ rm -f -- third_party/depot_tools/ninja
 ln -s %_bindir/ninja third_party/depot_tools/ninja
 ln -s %_bindir/python3 third_party/depot_tools/python
 
-rm -rf -- \
-	third_party/wayland/src \
-	third_party/wayland/include
+#rm -rf -- \
+#	third_party/wayland/src \
+#	third_party/wayland/include
 
 %build
 %if_enabled clang
@@ -290,8 +290,6 @@ gn_arg+=( use_system_minigbm=true )
 gn_arg+=( use_system_zlib=true )
 gn_arg+=( use_system_libwayland=true )
 gn_arg+=( use_system_wayland_scanner=true )
-gn_arg+=( use_system_libwayland_server=true )
-gn_arg+=( use_system_libwayland_client=true )
 gn_arg+=( use_bundled_weston=false )
 gn_arg+=( use_xkbcommon=true )
 gn_arg+=( use_icf=false )
@@ -341,8 +339,10 @@ gn_arg+=( clang_use_chrome_plugins=false )
 gn_arg+=( use_lld=true )
 if [ "$bits" = 64 ]; then
     gn_arg+=( use_thin_lto=true )
+    gn_arg+=( thin_lto_enable_optimizations=true )
 else
     gn_arg+=( use_thin_lto=false )
+    gn_arg+=( thin_lto_enable_optimizations=false )
 fi
 gn_arg+=( is_cfi=false )
 gn_arg+=( use_cfi_icall=false )
@@ -511,6 +511,33 @@ EOF
 %_altdir/%name
 
 %changelog
+* Fri Dec 02 2022 Alexey Gladkov <legion@altlinux.ru> 108.0.5359.71-alt1
+- New version (108.0.5359.71).
+- Use LLVM 15.
+- Security fixes:
+  - CVE-2022-4174: Type Confusion in V8.
+  - CVE-2022-4175: Use after free in Camera Capture.
+  - CVE-2022-4176: Out of bounds write in Lacros Graphics.
+  - CVE-2022-4177: Use after free in Extensions.
+  - CVE-2022-4178: Use after free in Mojo.
+  - CVE-2022-4179: Use after free in Audio.
+  - CVE-2022-4180: Use after free in Mojo.
+  - CVE-2022-4181: Use after free in Forms.
+  - CVE-2022-4182: Inappropriate implementation in Fenced Frames.
+  - CVE-2022-4183: Insufficient policy enforcement in Popup Blocker.
+  - CVE-2022-4184: Insufficient policy enforcement in Autofill.
+  - CVE-2022-4185: Inappropriate implementation in Navigation.
+  - CVE-2022-4186: Insufficient validation of untrusted input in Downloads.
+  - CVE-2022-4187: Insufficient policy enforcement in DevTools.
+  - CVE-2022-4188: Insufficient validation of untrusted input in CORS.
+  - CVE-2022-4189: Insufficient policy enforcement in DevTools.
+  - CVE-2022-4190: Insufficient data validation in Directory.
+  - CVE-2022-4191: Use after free in Sign-In.
+  - CVE-2022-4192: Use after free in Live Caption.
+  - CVE-2022-4193: Insufficient policy enforcement in File System API.
+  - CVE-2022-4194: Use after free in Accessibility.
+  - CVE-2022-4195: Insufficient policy enforcement in Safe Browsing.
+
 * Fri Nov 18 2022 Alexey Gladkov <legion@altlinux.ru> 107.0.5304.110-alt1
 - New version (107.0.5304.110).
 - Security fixes:
