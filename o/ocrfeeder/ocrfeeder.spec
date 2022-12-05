@@ -4,7 +4,7 @@
 
 Name: ocrfeeder
 Version: %ver_major.5
-Release: alt1
+Release: alt2
 
 Summary: OCRFeeder is a document layout analysis and optical character recognition system
 Group: Graphics
@@ -47,6 +47,7 @@ Summary: Supplemental module for OCRFeeder
 Group: Development/Python3
 BuildArch: noarch
 Requires: typelib(Gtk) = 3.0
+Requires: typelib(GooCanvas) = 2.0
 
 %description -n python3-module-%name
 %summary
@@ -82,6 +83,10 @@ export PYTHON=%__python3
 %python3_sitelibdir/ocrfeeder
 
 %changelog
+* Mon Dec 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.5-alt2
+- python3-module-%%name: explicitly required typelib(GooCanvas) = 2.0
+  (ALT #40987)
+
 * Tue Mar 15 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.5-alt1
 - 0.8.5
 

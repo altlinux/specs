@@ -7,7 +7,7 @@
 %def_without included_libunistring
 
 Name: gnome-characters
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Character map application for GNOME
@@ -45,7 +45,7 @@ Requires: typelib(Pango)
 Requires: typelib(PangoCairo)
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
-BuildRequires: meson libappstream-glib-devel
+BuildRequires: meson /usr/bin/appstream-util
 BuildRequires: libgtk4-devel libgjs-devel >= %gjs_ver libdbus-devel
 BuildRequires: gobject-introspection-devel libgtk4-gir-devel
 BuildRequires: pkgconfig(libadwaita-1) >= %adwaita_ver
@@ -80,6 +80,9 @@ characters.
 %doc NEWS COPYING README*
 
 %changelog
+* Mon Dec 05 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
+- 43.1
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 
