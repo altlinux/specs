@@ -1,3 +1,5 @@
+%def_enable snapshot
+
 %define ver_major 1.14
 %def_with exiv2
 %def_with chm
@@ -7,9 +9,11 @@
 %def_with samba
 %def_with unique
 
+%def_enable check
+
 Name: gnome-commander
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 %define xdg_name org.gnome.%name
 
@@ -18,22 +22,30 @@ License: GPL-2.0
 Group: File tools
 Url: https://gcmd.github.io
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Vcs: https://gitlab.gnome.org/GNOME/gnome-commander.git
+Source: %name-%version.tar
+%endif
 
 %define gtk_ver 2.24
 
 Requires: dconf xdg-utils
-Requires: %_bindir/gio gvfs
+Requires: %_bindir/gio gvfs-backends
+Requires: file-roller
 
 BuildRequires: flex gcc-c++
-BuildRequires: yelp-tools libappstream-glib-devel
-BuildRequires: libgtk+2-devel >= %gtk_ver libgnome-keyring-devel gnome-vfs-devel
+BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
+BuildRequires: libgtk+2-devel >= %gtk_ver libgnome-keyring-devel
+%{?_enable_snapshot:BuildRequires: autoconf-archive}
 %{?_with_exiv2:BuildRequires: libexiv2-devel}
 %{?_with_libchm:BuildRequires: libchm-devel}
 %{?_with_taglib:BuildRequires: libtag-devel}
 %{?_with_poppler:BuildRequires: libpoppler-glib-devel}
 %{?_with_libgsf:BuildRequires: libgsf-devel}
 %{?_with_unique:BuildRequires: libunique-devel}
+%{?_enable_check:BuildRequires: libgtest-devel}
 
 %description
 Gnome Commander is a file manager that just like the classical Norton
@@ -48,7 +60,11 @@ sed -i.e2k "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g
 %endif
 
 %build
+%if_enabled snapshot
+NOCONFIGURE=1 ./autogen.sh
+%else
 %autoreconf
+%endif
 %configure --disable-static \
 	--disable-schemas-compile \
 	%{subst_with exiv2} \
@@ -62,8 +78,10 @@ sed -i.e2k "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g
 
 %install
 %makeinstall_std
-
 %find_lang --with-gnome %name
+
+%check
+%make -k check VERBOSE=1
 
 %files -f %name.lang
 %_bindir/*
@@ -75,13 +93,19 @@ sed -i.e2k "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g
 %_datadir/pixmaps/%name/
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/*
-%doc AUTHORS ChangeLog NEWS README TODO doc/*.txt
+%doc AUTHORS NEWS README TODO doc/*.txt
+# generated from git log
+%{?_disable_snapshot:%doc ChangeLog}
 
 %exclude %_libdir/%name/*.la
 %exclude %_libdir/%name/plugins/*.la
 
 
 %changelog
+* Tue Dec 06 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt2
+- 1.14.3-11-g3169f4d5 (updated translations,
+  fixed calculation of total bytes to be transfered)
+
 * Sat Jun 18 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt1
 - 1.14.3
 
