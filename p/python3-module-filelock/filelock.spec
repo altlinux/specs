@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.8.1
+Version: 3.8.2
 Release: alt1
 
 Summary: A platform independent file lock for Python
@@ -59,11 +59,14 @@ fi
 %tox_check_pyproject -- -vra tests
 
 %files
-%doc LICENSE README.md
+%doc README.md
 %python3_sitelibdir/filelock/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 06 2022 Stanislav Levin <slev@altlinux.org> 3.8.2-alt1
+- 3.8.1 -> 3.8.2.
+
 * Mon Dec 05 2022 Stanislav Levin <slev@altlinux.org> 3.8.1-alt1
 - 3.8.0 -> 3.8.1.
 
