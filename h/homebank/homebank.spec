@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: homebank
-Version: 5.5.8
+Version: 5.6
 Release: alt1
 
 # Note: _unstable suffix sometimes appears in some versions of the tarball.
@@ -94,6 +94,9 @@ read and rather useful for a first time user.
 
 
 %changelog
+* Tue Dec 06 2022 Yuri N. Sedunov <aris@altlinux.org> 5.6-alt1
+- 5.6
+
 * Sat Oct 15 2022 Yuri N. Sedunov <aris@altlinux.org> 5.5.8-alt1
 - 5.5.8
 
