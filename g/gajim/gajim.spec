@@ -4,7 +4,7 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 
 Summary: a Jabber client written in PyGTK
@@ -74,6 +74,9 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Tue Dec 06 2022 Ilya Mashkin <oddity@altlinux.ru> 1.5.4-alt1
+- 1.5.4
+
 * Tue Nov 01 2022 Ilya Mashkin <oddity@altlinux.ru> 1.5.3-alt1
 - 1.5.3
 
