@@ -34,7 +34,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice5
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt1
+Release: alt2
 
 Summary: LibreOffice Productivity Suite (Still version)
 License: LGPL-3.0+ and MPL-2.0
@@ -325,10 +325,11 @@ with new functions.
 
 # TODO redefine %%lang adding corr langpack
 # define macro for quick langpack description
-%define langpack(l:n:mh) \
+%define langpack(l:n:s:mh) \
 %define lang %{-l:%{-l*}}%{!-l:%{error:Language code not defined}} \
 %define pkgname langpack-%{lang} \
 %define langname %{-n:%{-n*}}%{!-n:%{error:Language name not defined}} \
+%define spellname %{-s:%{-s*}}%{!-s:%{error:Spell dictionary is not defined}} \
 \
 %package %{pkgname} \
 Summary: %{langname} language pack for %name \
@@ -336,6 +337,7 @@ Group:  Office \
 Requires: %uname = %EVR \
 %{-m:Requires: mythes-%lang} \
 %{-h:Requires: hyphen-%lang} \
+%{-s:Requires: hunspell-%spellname} \
 Obsoletes: LibreOffice4-%{pkgname} \
 %description %{pkgname} \
 Provides additional %{langname} translations and resources for %name. \
@@ -694,16 +696,16 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_datadir/mime/packages/libreoffice%hversion.xml
 %_datadir/mimelnk/application/*
 
-%langpack -m -h -l ru -n Russian
-%langpack    -h -l be -n Belorussian
-%langpack -m -h -l de -n German
-%langpack -m -h -l fr -n French
-%langpack -m -h -l uk -n Ukrainian
-%langpack       -l pt-BR -n Brazilian Portuguese
-%langpack -m -h -l es -n Espanian
-%langpack       -l kk -n Kazakh
-%langpack    -h -l tt -n Tatar
-%langpack -m -h -l el -n Greek
+%langpack -m -h -l ru -s ru-lebedev -n Russian
+%langpack    -h -l be -s be -n Belorussian
+%langpack -m -h -l de -s de -n German
+%langpack -m -h -l fr -s fr -n French
+%langpack -m -h -l uk -s uk -n Ukrainian
+%langpack       -l pt-BR -s pt -n Brazilian Portuguese
+%langpack -m -h -l es -s es -n Espanian
+%langpack       -l kk -s kk -n Kazakh
+%langpack    -h -l tt -s tt -n Tatar
+%langpack -m -h -l el -s el -n Greek
 
 %files -n libreofficekit-still
 #_typelibdir/LOKDocView-*.typelib
@@ -714,6 +716,9 @@ tar xf %SOURCE401 -C %buildroot%_iconsdir/hicolor/symbolic/apps
 %_includedir/LibreOfficeKit
 
 %changelog
+* Tue Dec 06 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.7.2-alt2
+- Required spell dictionary for langpack (ALT #42242).
+
 * Sat Nov 05 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.7.2-alt1
 - New version.
 
