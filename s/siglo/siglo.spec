@@ -1,7 +1,7 @@
 # SPEC file for Siglo utility
 
 Name:     siglo
-Version:  0.9.6
+Version:  0.9.9
 Release:  alt1
 
 Summary:  GTK companion application for InfiniTime watch
@@ -14,14 +14,15 @@ Packager: Nikolay Fetisov <naf@altlinux.org>
 
 BuildArch: noarch
 
-Source0:   %name-%version.tar
+Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
+Patch1:  %name-alt-0.9.9-desktop.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-python3
-# Automatically added by buildreq on Fri Jul 16 2021
-# optimized out: glib2-devel libgdk-pixbuf-devel libjson-glib ninja-build pkg-config python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs sh4 shared-mime-info xml-utils xz
-BuildRequires: appstream desktop-file-utils libappstream-glib libgtk+3-devel meson
+# Automatically added by buildreq on Tue Dec 06 2022
+# optimized out: desktop-file-utils fontconfig glib2-devel gobject-introspection libcairo-gobject libgdk-pixbuf-devel libgpg-error libjson-glib ninja-build pkg-config python-modules python2-base python3 python3-base python3-module-pygobject3 sh4 shared-mime-info xml-utils xz
+BuildRequires: appstream desktop-file-utils libappstream-glib libgtk+3-devel meson python-modules-encodings python3-module-dbus python3-module-gatt
 
 BuildRequires: cmake meson
 BuildRequires: ninja-build
@@ -40,6 +41,9 @@ etc.
 
 %prep
 %setup
+%patch0 -p1
+
+%patch1
 
 mv -f -- LICENSE LICENSE.MPL-2.0.orig
 ln -s -- $(relative %_licensedir/MPL-2.0 %_docdir/%name/LICENSE) LICENSE
@@ -66,10 +70,13 @@ mv  %buildroot%_sysconfdir/systemd/user/siglo.service %buildroot%_prefix/lib/sys
 %_datadir/metainfo/*
 
 %_desktopdir/*
-%_iconsdir/*
+%_iconsdir/hicolor/*
 %_datadir/glib-2.0/schemas/*
 
 %changelog
+* Tue Dec 06 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.9.9-alt1
+- New version
+
 * Sun Nov 21 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.9.6-alt1
 - New version
 
