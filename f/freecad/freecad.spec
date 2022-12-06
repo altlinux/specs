@@ -9,13 +9,12 @@
 %ifndef build_parallel_jobs
 %define build_parallel_jobs 7
 %endif
-
-# Last number in version is computed by command:
-# git rev-list --count remotes/upstream/releases/FreeCAD-0-17
+%define git_rev aaee1b5e39
+%define git_date 05.12.2022
 
 Name:    freecad
-Version: 0.20.1
-Release: alt2
+Version: 0.20.2
+Release: alt1
 Epoch:   1
 Summary: OpenSource 3D CAD modeller
 License: LGPL-2.0+
@@ -30,9 +29,8 @@ Source1: freecad.1
 %if_without bundled_libs
 Patch1: %name-remove-3rdParty.patch
 %endif
-Patch4: freecad-0.19.2-alt-boost-link.patch
-Patch5: freecad-alt-fix-icon-name-in-menu.patch
-Patch6: freecad-version.patch
+Patch2: freecad-0.19.2-alt-boost-link.patch
+Patch3: freecad-alt-fix-icon-name-in-menu.patch
 
 Provides:  free-cad = %version-%release
 Obsoletes: free-cad < %version-%release
@@ -88,7 +86,7 @@ BuildRequires: libmed-devel libspnav-devel
 BuildRequires: python3-module-matplotlib-qt5
 BuildRequires: libkdtree++-devel
 %if_without bundled_libs
-BuildRequires: libsmesh-devel libnetgen-devel netgen
+BuildRequires: libsmesh-devel libnetgen-devel netgen openmpi-devel
 %endif
 %if_with glvnd
 BuildRequires: libglvnd-devel
@@ -96,6 +94,7 @@ BuildRequires: libglvnd-devel
 Requires: libEGL-devel libGLU-devel
 %endif
 #BuildRequires: texlive-extra-utils
+BuildRequires: python3-module-pivy
 
 %py3_requires pivy matplotlib.backends.backend_qt5
 #py3_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
@@ -148,9 +147,8 @@ This package contains documentation for FreeCAD.
 %patch1 -p1
 rm -rf src/3rdParty
 %endif
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
+%patch2 -p1
+%patch3 -p1
 %ifarch %e2k
 sed -i "/-fext-numeric-literals/d" src/Mod/Path/App/CMakeLists.txt
 # because "error: cpio archive too big"
@@ -185,6 +183,9 @@ export PATH=$PATH:%_qt5_bindir
 	-DOpenGL_GL_PREFERENCE=GLVND \
 %endif
 	-DFREECAD_USE_EXTERNAL_PIVY=ON \
+	-DPACKAGE_WCREF="%git_rev" \
+	-DPACKAGE_WCDATE="%git_date" \
+	-DPACKAGE_WCURL="https://github.com/FreeCAD/FreeCAD" \
 	-Wno-dev
 export NPROCS=%build_parallel_jobs
 %make_build
@@ -246,6 +247,9 @@ rm -f %buildroot%_includedir/E57Format/*.h
 %ldir/doc
 
 %changelog
+* Mon Dec 05 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.20.2-alt1
+- New version.
+
 * Sun Aug 28 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.20.1-alt2
 - Fixed application version (ALT #43585).
 
