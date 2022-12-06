@@ -86,8 +86,8 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 %endif
 
 Name: python3
-Version: %{pybasever}.7
-Release: alt2
+Version: %{pybasever}.8
+Release: alt1
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -689,7 +689,7 @@ install -D -m 0644 Lib/idlelib/Icons/idle_32.png %buildroot%_datadir/icons/hicol
 install -D -m 0644 Lib/idlelib/Icons/idle_48.png %buildroot%_datadir/icons/hicolor/48x48/apps/idle3.png
 desktop-file-install --dir=%buildroot%_datadir/applications %SOURCE10
 
-#h We want to have clean bindir
+# We want to have clean bindir
 rm -rf %buildroot%_bindir/__pycache__
 
 # Force remove nis on e2k
@@ -1034,12 +1034,16 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Tue Dec 06 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.8-alt1
+- Updated to upstream version 3.10.8.
+
 * Thu Nov 10 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.10.7-alt2
-- Moved Tools to /usr/share/%pybasever
+- Moved Tools to /usr/share/%%pybasever
 - Removed pynche (its pypi version is newer)
 - Moved libpython.py to the separate package
-- Used %add_python3_import_path to exclude self-provides from %name-test dependencies
-- Added shebang to some files from %name-tools and %name-module-gdb_libpython,
+- Used %%add_python3_import_path to exclude self-provides from %%name-test
+  dependencies
+- Added shebang to some files from %%name-tools and %%name-module-gdb_libpython,
   made them executable to discard rpm-build-python
 - Added patch to replace absolute import with relative ones.
 
