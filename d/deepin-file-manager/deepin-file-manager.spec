@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-file-manager
-Version: 5.8.0
+Version: 5.8.1
 Release: alt1
 Summary: Deepin File Manager
 License: GPL-3.0+
@@ -311,6 +311,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Tue Dec 06 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.1-alt1
+- New version (5.8.1).
+
 * Wed Nov 09 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.0-alt1
 - New version (5.8.0).
 
