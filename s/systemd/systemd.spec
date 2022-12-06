@@ -94,7 +94,7 @@
 Name: systemd
 Epoch: 1
 Version: %ver_major.8
-Release: alt2
+Release: alt3
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -2312,6 +2312,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Tue Dec 06 2022 Slava Aseev <ptrnine@altlinux.org> 1:251.8-alt3
+- Provide necessary environment variables to user-managed generators.
+
 * Fri Dec 02 2022 Evgeny Sinelnikov <sin@altlinux.org> 1:251.8-alt2
 - Fix libnss-systemd postinstall scriptlet for compatibility with libnss-role
   conflict in order of modules in group NSS database (closes: #44505).
