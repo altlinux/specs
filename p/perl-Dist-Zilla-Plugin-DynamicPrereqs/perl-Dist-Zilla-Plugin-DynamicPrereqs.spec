@@ -5,8 +5,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: perl-Dist-Zilla-Plugin-DynamicPrereqs
-Version: 0.039
-Release: alt3
+Version: 0.040
+Release: alt1
 
 Summary: Dist::Zilla plugin to specify dynamic prerequisites for distribution
 
@@ -49,6 +49,9 @@ Makefile.PL to indicate dynamic (installer-side) prerequisites.
 %perl_vendor_privlib/auto/*
 
 %changelog
+* Tue Dec 06 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.040-alt1
+- New version
+
 * Mon Sep 20 2021 Vitaly Lipatov <lav@altlinux.ru> 0.039-alt3
 - update BuildRequires with buildreq
 
