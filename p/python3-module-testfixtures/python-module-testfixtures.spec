@@ -1,20 +1,24 @@
 %define _unpackaged_files_terminate_build 1
-%define  modulename testfixtures
+%define  pypi_name testfixtures
 %def_with check
 
-Name:    python3-module-%modulename
-Version: 6.18.5
+Name: python3-module-%pypi_name
+Version: 7.0.4
 Release: alt1
 
 Summary: A collection of helpers and mock objects for unit tests and doc tests
 License: MIT
 Group:   Development/Python3
-URL:     http://www.simplistix.co.uk/software/python/testfixtures
+URL: https://pypi.org/project/testfixtures
+VCS: https://github.com/Simplistix/testfixtures
 
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(sybil)
@@ -25,44 +29,44 @@ BuildRequires: python3(twisted.trial)
 
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_django)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
-Source:  %modulename-%version.tar
-#VCS:    https://github.com/Simplistix/testfixtures
+Source: %name-%version.tar
 
 %description
 TestFixtures is a collection of helpers and mock objects that are useful
 when writing unit tests or doc tests.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
+%pyproject_install
+
+# don't ship tests
+rm -r %buildroot%python3_sitelibdir/testfixtures/tests/
 
 %check
+# tox_create_default_config don't work due to flat layout
 cat > tox.ini <<'EOF'
 [testenv]
 commands =
-    {envbindir}/pytest -vra {posargs:testfixtures/tests}
+    python -m pytest -vra {posargs:testfixtures/tests}
 EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr --develop
+%tox_check_pyproject
 
 %files
 %doc README.rst
-%python3_sitelibdir/%modulename/
-%python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/testfixtures/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 06 2022 Stanislav Levin <slev@altlinux.org> 7.0.4-alt1
+- 6.18.5 -> 7.0.4.
+
 * Fri Mar 11 2022 Stanislav Levin <slev@altlinux.org> 6.18.5-alt1
 - 6.14.1 -> 6.18.5.
 
