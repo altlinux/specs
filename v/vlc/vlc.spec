@@ -1,23 +1,17 @@
- %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %def_disable freerdp
-%def_disable goom
 %def_enable firewire
 %def_enable visualization
-%def_enable wayland
 
 Name: vlc
-Version: 3.0.16
-Release: alt3
+Version: 3.0.18
+Release: alt1
 
 Summary: VLC media player
 License: GPLv2
 Group: Video
-
 Url: http://www.videolan.org
+
 Source: vlc-%version.tar
-Patch: vlc-3.0.6-alt-e2k-lcc123.patch
-Patch1: 0001-configure-fix-linking-on-RISC-V-ISA.patch
-Patch2: 0001-Get-addr-by-ref.-from-getConnectionEndpointAddress.patch
 
 BuildRequires: gcc-c++
 BuildRequires: freetype2-devel glib2-devel flex
@@ -51,14 +45,13 @@ BuildRequires: qt5-x11extras-devel libsecret-devel libgtk+2-devel libsoxr-devel 
 BuildRequires: libnfs-devel libdca-devel libarchive-devel libprotobuf-lite-devel protobuf-compiler 
 BuildRequires: libaom-devel libsamplerate-devel libsidplay2-devel
 BuildRequires: libdav1d-devel libSDL_image-devel libsystemd-devel
+BuildRequires: libwayland-egl-devel wayland-protocols
 %{?_enable_freerdp:BuildRequires: libfreerdp-devel}
-%{?_enable_goom:BuildRequires: libgoom-devel}
 %{?_enable_firewire:BuildRequires: libdc1394-devel libraw1394-devel libavc1394-devel}
 %{?_enable_visualization:BuildRequires: libprojectM-devel}
-%{?_enable_wayland:BuildRequires: libwayland-egl-devel wayland-protocols}
 BuildRequires: fortune-mod >= 1.0-ipl33mdk
 
-%define allplugins aa ass audiocd bluray chromaprint dbus %{?_enable_firewire:dv} dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml %{?_enable_goom:goom} %{?_enable_visualization:projectm}
+%define allplugins aa ass audiocd bluray chromaprint dbus %{?_enable_firewire:dv} dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls h264 h265 jack linsys live555 matroska modplug mpeg2 mtp musepack notify ogg opus png podcast pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd vpx xcb xml %{?_enable_visualization:projectm}
 %define baseplugins ass bluray dbus dvdnav dvdread ffmpeg freetype globalhotkeys live555 matroska mpeg2 ogg pulseaudio taglib v4l xcb xml
 %define restplugins %(echo %allplugins %baseplugins |tr '[[:space:]]' '\\n'|sort |uniq -u|tr '\\n' ' ')
 %define mergedplugins alsa dvb ts
@@ -213,11 +206,6 @@ Requires: lib%name = %EVR
 
 %package plugin-gnutls
 Summary: GNU TLS plugin for VLC media player
-Group: Video
-Requires: lib%name = %EVR
-
-%package plugin-goom
-Summary: GOOM plugin for VLC media player
 Group: Video
 Requires: lib%name = %EVR
 
@@ -510,9 +498,6 @@ This package contains Global Hotkeys control plugin for VLC media player.
 %description plugin-gnutls
 This package contains GNU TLS plugin for VLC media player.
 
-%description plugin-goom
-This package contains GOOM visualization plugin for VLC media player.
-
 %description plugin-h264
 This package contains h264 coder/packetizer plugin for VLC media player.
 
@@ -636,20 +621,7 @@ This package contains fortunes from VLC media player.
 %setup
 echo %version-%release > src/revision.txt
 
-%ifarch %e2k
-# lcc 1.23 isn't quite gcc5 regarding builtins as well
-%patch -p1
-# EDG frontend bug
-sed -i 's,const ATTR_USED,const,' modules/video_filter/deinterlace/yadif.h
-# modules/demux/adaptive/PlaylistManager.cpp:638: undefined reference to `__pthread_register_cancel' ...
-%add_optflags -pthread
-%endif
-
-%patch1 -p1
-%patch2 -p1
-
 %build
-%add_optflags -I%_includedir/samba-4.0
 export BUILDCC=gcc
 
 ./bootstrap
@@ -667,14 +639,11 @@ export BUILDCC=gcc
 	--enable-dvbpsi \
 	--enable-dvdnav \
 	--enable-dvdread \
-	--enable-egl \
 	--enable-flac \
 	--enable-freetype \
 	--enable-fribidi \
 	--enable-gles2 \
 	--enable-gnutls \
-	%{subst_enable goom} \
-	--enable-httpd \
 	--enable-jack \
 	--enable-kate \
 	--enable-libass \
@@ -684,7 +653,6 @@ export BUILDCC=gcc
 	--enable-lirc \
 	--enable-live555 \
 	--enable-mad \
-	--enable-mkv \
 	--enable-mod \
 	--enable-mpc \
 	--enable-ncurses \
@@ -709,7 +677,6 @@ export BUILDCC=gcc
 	--enable-twolame \
 	--enable-upnp \
 	--enable-vcd \
-	--enable-vcdx \
 	--enable-vlm \
 	--enable-vorbis \
 	--enable-x264 \
@@ -724,12 +691,10 @@ export BUILDCC=gcc
 	--enable-projectm \
 %endif
 	--disable-oss \
-	--disable-quicktime \
-	--disable-sdl \
 	--with-kde-solid=%_datadir/kf5/solid/actions \
 	--without-contrib \
-        --with-default-font=/usr/share/fonts/ttf/dejavu/DejaVuSerif-Bold.ttf \
-        --with-default-monospace-font=/usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf \
+	--with-default-font=/usr/share/fonts/ttf/dejavu/DejaVuSerif-Bold.ttf \
+	--with-default-monospace-font=/usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf \
 	--with-default-font-family="Sans Serif" \
 	--with-default-monospace-font-family="Monospace" \
 	#
@@ -749,6 +714,7 @@ install -pm644 share/vlc.desktop %buildroot%_datadir/applications/vlc.desktop
 
 # remove non-packaged files
 rm -rf %buildroot%_docdir/%name
+rm -vf %buildroot%_libdir/vlc/libcompat.a
 find %buildroot -type f -name "*.la" -print -delete
 
 # vim stuff
@@ -1188,10 +1154,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/access/liblinsys_sdi_plugin.so
 %vlc_plugindir/access/liblinsys_hdsdi_plugin.so
 
-%if_enabled goom
-%files plugin-goom
-%vlc_plugindir/visualization/libgoom_plugin.so
-%endif
 
 %files plugin-v4l
 %vlc_plugindir/access/libv4l2_plugin.so
@@ -1387,7 +1349,6 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files -n lib%name-devel
 %_pkgconfigdir/*.pc
 %_includedir/*
-%_libdir/vlc/libcompat.a
 %_libdir/libvlccore.so
 %_libdir/libvlc.so
 %_libdir/vlc/libvlc_pulse.so
@@ -1408,6 +1369,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Mon Dec 05 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.18-alt1
+- 3.0.18 released
+
 * Tue Nov 02 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.16-alt3
 - rebuilt with recent live555
 
