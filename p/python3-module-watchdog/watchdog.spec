@@ -4,17 +4,17 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.1.9
+Version: 2.2.0
 Release: alt1
 
 Summary: Filesystem events monitoring
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/watchdog/
+VCS: https://github.com/gorakhargosh/watchdog.git
 
 BuildArch: noarch
 
-# https://github.com/gorakhargosh/watchdog.git
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -59,6 +59,9 @@ export TOX_TESTENV_PASSENV="NO_SUDO"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Dec 06 2022 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
+- 2.1.9 -> 2.2.0.
+
 * Fri Sep 23 2022 Stanislav Levin <slev@altlinux.org> 2.1.9-alt1
 - 2.1.3 -> 2.1.9.
 
