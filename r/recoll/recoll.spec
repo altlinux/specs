@@ -7,9 +7,10 @@
 
 Name: recoll
 Version: 1.33.3
-Release: alt1
+Release: alt2
 
 Summary: A personal full text search package
+Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
 License: %gpl2plus
 Group: File tools
 
@@ -59,6 +60,17 @@ See also recoll-extras package for somewhat more exotic stuff.
 Note that this package has been built without its usual GUI.
 %endif
 
+%description -l ru_RU.UTF-8
+Recoll - это персональный пакет полнотекстового поиска, основанный на очень мощном бэкенде (Xapian),
+для которого он предоставляет простой в использовании, многофункциональный, простой интерфейс
+администрирования.
+
+Смотрите также пакет recoll-extras для более сложных вещей.
+%if_disabled qtgui
+
+Обратите внимание, что этот пакет был собран без его привычного графического интерфейса.
+%endif
+
 %package extras
 Summary: More helper scripts for Recoll
 Group: File tools
@@ -68,6 +80,10 @@ BuildArch: noarch
 %description extras
 This package contains additional helper scripts for recoll which might
 need bulky additional required packages, manual setup, or both.
+
+%description -l ru_RU.UTF-8 extras
+Этот пакет содержит дополнительные вспомогательные скрипты для recoll, которые
+могут потребовать громоздких дополнительных пакетов, ручной установки или и того и другого.
 
 %package full
 Summary: All the recommended stuff for Recoll
@@ -79,10 +95,15 @@ Requires: antiword unrtf wv
 Requires: python3-module-pychm python3-module-lxml
 Requires: aspell aspell-ru-rk
 Requires: xpdf-utils ghostscript-utils
+Requires: mutagen
 
 %description full
 This package contains just the requirements for additional packages
 that might be of use with Recoll.
+
+%description -l ru_RU.UTF-8 full
+Этот пакет содержит в себе все требуемые элементы для дополнительных пакетов
+которые могут быть полезны при работе с Recoll.
 
 %package -n python3-module-%name
 Summary: Python bindings for Recoll
@@ -91,6 +112,9 @@ Obsoletes: python-module-%name
 
 %description -n python3-module-%name
 This package contains Python bindings for Recoll.
+
+%description -l ru_RU.UTF-8 -n python3-module-%name
+Этот пакет содержит привязки языка Python для Recoll
 
 %prep
 %setup -n %name-%version%pre
@@ -160,6 +184,11 @@ sed -i "s|#!/usr/bin/env python3|#!%__python3|" \
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Tue Dec 06 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.33.3-alt2
+- NMU:
+      + Recoll can use mutagen to process audio files, pull it from the big metapackage
+      + Added Russian translation of Summary and Description fields of spec
+
 * Sat Dec 03 2022 Michael Shigorin <mike@altlinux.org> 1.33.3-alt1
 - new version (watch file uupdate)
 
