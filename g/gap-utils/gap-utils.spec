@@ -1,7 +1,7 @@
 %define repo utils
 
 Name: gap-utils
-Version: 0.78
+Version: 0.81
 Release: alt1
 Summary: GAP: Utility functions in GAP
 License: GPL-2.0+
@@ -33,6 +33,9 @@ from many packages.
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Tue Dec 06 2022 Leontiy Volodin <lvol@altlinux.org> 0.81-alt1
+- New version.
+
 * Mon Nov 21 2022 Leontiy Volodin <lvol@altlinux.org> 0.78-alt1
 - New version.
 
