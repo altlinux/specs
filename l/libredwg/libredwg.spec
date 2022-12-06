@@ -5,7 +5,7 @@
 
 Name:     libredwg
 Version:  0.12.5
-Release:  alt1
+Release:  alt2
 
 Summary:  GNU LibreDWG is a free C library to handle DWG files
 License:  GPL-3.0
@@ -26,6 +26,8 @@ BuildRequires: python3-dev
 %if_with python
 BuildRequires: swig
 %endif
+
+Conflicts: libdxfrw
 
 %description
 GNU LibreDWG is a free C library to handle DWG files. It aims to be a free
@@ -80,5 +82,8 @@ rm -f %buildroot%_datadir/*.{example,py}
 %_man5dir/*.5*
 
 %changelog
+* Tue Dec 06 2022 Andrey Cherepanov <cas@altlinux.org> 0.12.5-alt2
+- Conflicted with libdxfrw.
+
 * Thu Aug 18 2022 Andrey Cherepanov <cas@altlinux.org> 0.12.5-alt1
 - Initial build for Sisyphus.
