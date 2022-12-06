@@ -5,8 +5,8 @@
 %define _cmake__builddir BUILD
 
 Name: libzip
-Version: 1.7.3
-Release: alt2
+Version: 1.9.2
+Release: alt1
 
 Group: System/Libraries
 Summary: C library for reading, creating, and modifying zip archives
@@ -85,6 +85,9 @@ make -C BUILD install DESTDIR=%buildroot
 %_man3dir/*ZIP*
 
 %changelog
+* Tue Dec 06 2022 Sergey V Turchin <zerg@altlinux.org> 1.9.2-alt1
+- new version (closes: 42839)
+
 * Tue Jun 15 2021 Sergey V Turchin <zerg@altlinux.org> 1.7.3-alt2
 - compatable with p9
 
