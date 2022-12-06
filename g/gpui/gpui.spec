@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt9
+Release: alt10
 
 Summary: Group policy editor
 License: GPLv2+
@@ -110,6 +110,17 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Tue Dec 06 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt10
+- 0.2.17-alt10
+- Fixes:
+  + #89553 Switch search to be case insensitive.
+  + #89558 Fix translations of shortcuts widget.
+  + #89561 Fix russian translations in properties widget.
+  + #89621 Fix ini file's widget translations.
+  + #89692 Fix translation of shortcuts widget.
+  + #89648 Fix russian translation of shares widget.
+  + #89648 Fix russian translation of common widget.
+
 * Wed Nov 30 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt9
 - 0.2.17-alt9
 - Fixes:
