@@ -1,8 +1,9 @@
 %global import_path github.com/prometheus/prometheus
 %global _unpackaged_files_terminate_build 1
+%def_enable prebuilded_frontend
 
 Name: prometheus
-Version: 2.28.0
+Version: 2.40.5
 Release: alt1
 Summary: Prometheus monitoring system and time series database
 
@@ -18,7 +19,10 @@ Source5: %name.tmpfiles
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
-BuildRequires: promu yarn
+#BuildRequires: promu
+%if_disabled prebuilded_frontend
+BuildRequires: npm
+%endif
 BuildRequires: /proc
 
 Requires: %name-common = %EVR
@@ -49,8 +53,8 @@ This package contains the common files and settings for Prometheus.
 
 %prep
 # Build the Front-end Assets
-# $ cd web/ui/react-app
-# $ yarn --frozen-lockfile
+# $ cd web/ui
+# $ npm install
 # $ git add -f node_modules
 # $ git commit -n --no-post-rewrite -m "add node js modules"
 %setup -q
@@ -60,34 +64,59 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
-%golang_prepare
+export TAGS="netgo,builtinassets"
+export LDFLAGS="-X github.com/prometheus/common/version.Version=%version  \
+         -X github.com/prometheus/common/version.Revision=%release \
+         -X github.com/prometheus/common/version.Branch=tarball      \
+         -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
 
+%golang_prepare
+%if_disabled prebuilded_frontend
 #building React app
-./scripts/build_react_app.sh
+pushd web/ui
+npm run build
+popd
+%endif
 
 #writing assets
 pushd web/ui
 go generate -x -v
 popd
 gofmt -w web/ui
+scripts/compress_assets.sh
 
-promu build
+#promu build
+%golang_build cmd/*
 
 %install
-#export BUILDDIR="$PWD/.gopath"
+export BUILDDIR="$PWD/.gopath"
 #export GOPATH="%go_path"
-#%golang_install
-#rm -rf -- %buildroot%_datadir
 mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_tmpfilesdir,%_sysconfdir/sysconfig,{%_sysconfdir,%_datadir,%_localstatedir}/%name}
 
-install -m0755 prometheus %buildroot%_bindir/%name
-install -m0755 promtool %buildroot%_bindir/promtool
+pushd $BUILDDIR/src/%import_path
+%golang_install
+popd
+rm -rf -- %buildroot%go_root
+
+#install -m0755 prometheus %buildroot%_bindir/%name
+#install -m0755 promtool %buildroot%_bindir/promtool
 cp -frv console_libraries consoles %buildroot%_datadir/%name/
 install -m0644 documentation/examples/prometheus.yml %buildroot%_sysconfdir/%name/%name.yml
 install -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -m0755 %SOURCE3 %buildroot%_initdir/%name
 install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
+
+# Build man pages.
+mkdir -p %buildroot%_man1dir
+%buildroot%_bindir/prometheus --help-man > \
+    %buildroot%_man1dir/prometheus.1
+%buildroot%_bindir/promtool --help-man > \
+    %buildroot%_man1dir/promtool.1
+sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\nprometheus \\- The Prometheus monitoring server' \
+    %buildroot%_man1dir/prometheus.1
+sed -i '/^  /d; /^.SH "NAME"/,+1c.SH "NAME"\npromtool \\- Tooling for the Prometheus monitoring system' \
+    %buildroot%_man1dir/promtool.1
 
 %pre common
 %_sbindir/groupadd -r -f %name > /dev/null 2>&1 ||:
@@ -109,6 +138,7 @@ install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 %config(noreplace) %_sysconfdir/%name/*
 %dir %_datadir/%name
 %_datadir/%name/*
+%_man1dir/*
 
 %files common
 %dir %_sysconfdir/%name
@@ -116,6 +146,9 @@ install -m0644 %SOURCE5 %buildroot%_tmpfilesdir/%name.conf
 %dir %attr(775, root, %name) %_localstatedir/%name
 
 %changelog
+* Tue Dec 06 2022 Alexey Shabalin <shaba@altlinux.org> 2.40.5-alt1
+- 2.40.5
+
 * Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 2.28.0-alt1
 - 2.28.0 (Fixes: CVE-2021-29622)
 
