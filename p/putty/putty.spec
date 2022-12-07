@@ -1,5 +1,5 @@
 Name: putty
-Version: 0.76
+Version: 0.78
 Release: alt1
 
 Summary: Free SSH, Telnet and Rlogin client
@@ -7,14 +7,14 @@ License: MIT
 Group: Networking/Remote access
 
 Url: http://www.chiark.greenend.org.uk/~sgtatham/putty/
-Source0: http://the.earth.li/~sgtatham/putty/latest/%name-%version.tar.gz
+Source0: %name-%version.tar.gz
 Source1: %name-icons.tar.bz2
-Source2: http://the.earth.li/~sgtatham/putty/latest/%name-%version.tar.gz.gpg
+Source2: %name-%version.tar.gz.gpg
 Source3: putty.desktop
 Source4: %name.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: libgtk+3-devel
+BuildRequires: libgtk+3-devel rpm-macros-cmake cmake ImageMagick-tools
 
 %description
 This is the Unix port of the popular Windows ssh client, PuTTY. It
@@ -25,8 +25,8 @@ other interesting things not provided by ssh in an xterm.
 %prep
 %setup
 %setup -T -D -a1 -n %name-%version
-sed -i 's|g_strncasecmp|g_ascii_strncasecmp|g' unix/gtkfont.c
-sed -i 's|g_strcasecmp|g_ascii_strcasecmp|g' unix/gtkfont.c
+
+sed -i 's/G_APPLICATION_FLAGS_NONE/G_APPLICATION_DEFAULT_FLAGS/' unix/main-gtk-application.c
 
 %build
 %add_optflags -Wall -Werror -Wstrict-aliasing -Wno-unused
@@ -37,23 +37,32 @@ sed -i 's|g_strcasecmp|g_ascii_strcasecmp|g' unix/gtkfont.c
 # glib2 deprecation warnings
 %add_optflags -Wno-error=deprecated-declarations
 %endif
+export CFLAGS=" -DNOT_X_WINDOWS -Wno-error=unused-function"
+mkdir %{_cmake__builddir}
 
-cd unix
-# no $DISPLAY at buildtime. Define RELEASE/SNAPSHOT/SVN_REV here.
-%configure \
-	--disable-gtktest \
-	CFLAGS="%optflags -DRELEASE=%version" \
-	LIBS="-lm"
+cd %{_cmake__builddir}
 
-%make_build
+cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+
+make
+
+make -C ../icons putty-48.png
+
+make -C doc
 
 mkdir -p %buildroot{%_bindir,%_man1dir}
 %makeinstall_std prefix=%prefix mandir=%_mandir
 
+%install
+	
+%cmake_install
+install -d html
+install -pm 0644 doc/html/*.html html
+
 # icon
-install -pDm644 ../putty48.png %buildroot%_liconsdir/%name.png
-install -pDm644 ../putty32.png %buildroot%_niconsdir/%name.png
-install -pDm644 ../putty16.png %buildroot%_miconsdir/%name.png
+install -pDm644 putty48.png %buildroot%_liconsdir/%name.png
+install -pDm644 putty32.png %buildroot%_niconsdir/%name.png
+install -pDm644 putty16.png %buildroot%_miconsdir/%name.png
 
 install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 
@@ -67,6 +76,9 @@ install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Wed Dec 07 2022 Artyom Bystrov <arbars@altlinux.org> 0.78-alt1
+- new version 0.78
+
 * Sun Jul 18 2021 Michael Shigorin <mike@altlinux.org> 0.76-alt1
 - new version (watch file uupdate)
 
