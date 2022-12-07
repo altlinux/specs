@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: forkstat
-Version: 0.02.17
+Version: 0.03.00
 Release: alt1
 Summary: Process fork/exec/exit monitoring tool
 License: GPL-2.0-or-later
@@ -41,5 +41,8 @@ export CFLAGS='%{optflags}'
 %_datadir/bash-completion/completions/forkstat
 
 %changelog
+* Wed Dec 07 2022 Vitaly Chikunov <vt@altlinux.org> 0.03.00-alt1
+- Update to V0.03.00 (2022-12-06).
+
 * Wed May 18 2022 Vitaly Chikunov <vt@altlinux.org> 0.02.17-alt1
 - First import V0.02.17 (2021-11-15).
