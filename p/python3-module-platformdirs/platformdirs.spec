@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.5.4
+Version: 2.6.0
 Release: alt1
 
 Summary: Determining appropriate platform-specific dirs
@@ -68,6 +68,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 07 2022 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
+- 2.5.4 -> 2.6.0.
+
 * Mon Nov 14 2022 Stanislav Levin <slev@altlinux.org> 2.5.4-alt1
 - 2.5.2 -> 2.5.4.
 
