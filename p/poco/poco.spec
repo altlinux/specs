@@ -1,6 +1,6 @@
 Name: poco
 Version: 1.12.4
-Release: alt1.1
+Release: alt2
 Summary: POrtable COmponents C++ Libraries
 License: BSL-1.0
 Group: Development/C++
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 Patch2000: %name-e2k.patch
 
 BuildPreReq: gcc-c++ cmake libsqlite3-devel zlib-devel libpcre-devel
-BuildPreReq: libexpat-devel libssl-devel libmariadb-devel
+BuildPreReq: libexpat-devel libssl-devel libmariadb-devel libpq-devel
 BuildPreReq: libunixODBC-devel libiodbc-devel libpcre2-devel
 
 %description
@@ -73,6 +73,14 @@ Requires: lib%name-data = %EVR
 
 %description -n lib%name-mysql
 POrtable COmponents C++ Libraries: Poco mysql library
+
+%package -n lib%name-postgresql
+Summary: POrtable COmponents C++ Libraries (postgresql)
+Group: Development/C++
+Requires: lib%name-data = %EVR
+
+%description -n lib%name-postgresql
+POrtable COmponents C++ Libraries: Poco postgresql library
 
 %package -n lib%name-sqlite
 Summary: POrtable COmponents C++ Libraries (sqlite)
@@ -246,6 +254,7 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 %exclude %_libdir/libPocoDataMySQL.so.*
 %exclude %_libdir/libPocoDataSQLite.so.*
 %exclude %_libdir/libPocoDataODBC.so.*
+%exclude %_libdir/libPocoDataPostgreSQL*.so.*
 
 %files -n lib%name-net
 %_libdir/libPocoNet*.so.*
@@ -259,6 +268,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 
 %files -n lib%name-mysql
 %_libdir/libPocoDataMySQL*.so.*
+
+%files -n lib%name-postgresql
+%_libdir/libPocoDataPostgreSQL*.so.*
 
 %files -n lib%name-sqlite
 %_libdir/libPocoDataSQLite*.so.*
@@ -291,6 +303,9 @@ cp -P usr/%_lib/libPocoCppParser.so* %buildroot%_libdir/
 %_libdir/cmake/*
 
 %changelog
+* Wed Dec 07 2022 Alexei Takaseev <taf@altlinux.org> 1.12.4-alt2
+- Add subpackage postgresql
+
 * Mon Dec 05 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.12.4-alt1.1
 - fixed e2k patch
 
