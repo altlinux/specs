@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.10.0
+Version: 5.10.1
 Release: alt1
 
 Summary: Read resources from Python packages
 License: Apache-2.0
 Group: Development/Python3
-# Source-git: https://github.com/python/importlib_resources.git
 Url: https://pypi.org/project/importlib-resources
+VCS: https://github.com/python/importlib_resources.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -75,6 +75,9 @@ rm -r %buildroot%python3_sitelibdir/importlib_resources/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Dec 07 2022 Stanislav Levin <slev@altlinux.org> 5.10.1-alt1
+- 5.10.0 -> 5.10.1.
+
 * Mon Oct 10 2022 Stanislav Levin <slev@altlinux.org> 5.10.0-alt1
 - 5.9.0 -> 5.10.0.
 
