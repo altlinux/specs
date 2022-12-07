@@ -2,7 +2,7 @@
 %define rel alt1
 
 Name: qbittorrent
-Version: 4.4.5
+Version: 4.5.0
 Epoch: 1
 Release: %rel
 
@@ -112,7 +112,7 @@ make clean
 %_man1dir/%name-nox.*
 
 %files
-%doc AUTHORS COPYING INSTALL NEWS README.* TODO Changelog
+%doc AUTHORS COPYING INSTALL README.* Changelog
 %_bindir/%name
 %_desktopdir/*
 %_man1dir/%name.*
@@ -120,6 +120,9 @@ make clean
 %_datadir/metainfo/*.xml
 
 %changelog
+* Tue Dec 06 2022 Ilya Mashkin <oddity@altlinux.ru> 1:4.5.0-alt1
+- 4.5.0
+
 * Wed Aug 31 2022 Ilya Mashkin <oddity@altlinux.ru> 1:4.4.5-alt1
 - 4.4.5
 
