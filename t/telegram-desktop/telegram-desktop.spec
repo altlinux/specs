@@ -18,7 +18,7 @@
 %def_without jemalloc
 
 Name: telegram-desktop
-Version: 4.2.4
+Version: 4.3.1
 Release: alt1
 
 Summary: Telegram Desktop messaging app
@@ -113,7 +113,7 @@ BuildRequires: pkgconfig(xcb-screensaver)
 
 %if_with gtk3
 # GTK 3.0 integration
-BuildRequires: libgtk+3-devel libappindicator-gtk3-devel libglibmm-devel
+BuildRequires: libgtk+3-devel libappindicator-gtk3-devel libglibmm2.68-devel
 %endif
 
 BuildRequires: libopus-devel
@@ -243,6 +243,11 @@ done
 export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %endif
 
+%if_with clang
+%remove_optflags -frecord-gcc-switches
+export CC=clang
+%endif
+
 # due precompiled headers
 export CCACHE_SLOPPINESS=pch_defines,time_macros
 
@@ -313,6 +318,10 @@ ln -s %name %buildroot%_bindir/telegramdesktop
 %doc README.md
 
 %changelog
+* Wed Nov 23 2022 Vitaly Lipatov <lav@altlinux.ru> 4.3.1-alt1
+- new version 4.3.1 (with rpmrb script)
+- switched to glibmm-2.68
+
 * Fri Sep 30 2022 Vitaly Lipatov <lav@altlinux.ru> 4.2.4-alt1
 - new version 4.2.4 (with rpmrb script)
 
