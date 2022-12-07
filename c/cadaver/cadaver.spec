@@ -1,15 +1,15 @@
 # SPEC file for cadaver package
 
 Name:    cadaver
-Version: 0.23.3
-Release: alt6.git.4cbea82
+Version: 0.24
+Release: alt1
 
 Summary: a command-line WebDAV client
 Summary(ru_RU.UTF-8): консольный клиент WebDAV
 
 License: %gpl2plus
 Group:   Networking/File transfer
-URL:     http://www.webdav.org/cadaver/
+URL:     https://notroj.github.io/cadaver/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
@@ -55,13 +55,16 @@ autoconf -f
 %find_lang %name
 
 %files  -f %name.lang
-%doc FAQ README THANKS TODO BUGS INTEROP
+%doc FAQ README.md THANKS TODO BUGS INTEROP
 %doc --no-dereference COPYING
 
 %_bindir/%name
 %_man1dir/%{name}*
 
 %changelog
+* Wed Dec 07 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.24-alt1
+- New version
+
 * Tue Jul 13 2021 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.23.3-alt6.git.4cbea82
 - Fixed use of glibc secure_getenv.
 
