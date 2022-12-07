@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.0
-Release: alt2
+Version: 0.2.1
+Release: alt1
 
 Summary: Hatch plugin for versioning with your preferred VCS
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/ofek/hatch-vcs.git
 Url: https://pypi.org/project/hatch-vcs
+VCS: https://github.com/ofek/hatch-vcs.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -61,6 +61,9 @@ system (like Git) to determine project versions.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 07 2022 Stanislav Levin <slev@altlinux.org> 0.2.1-alt1
+- 0.2.0 -> 0.2.1.
+
 * Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 0.2.0-alt2
 - Fixed FTBFS (setuptools_scm 7).
 
