@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20221129
+Version: 20221202
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,10 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Dec 07 2022 Cronbuild Service <cronbuild@altlinux.org> 20221202-alt1
+- upstream changes (GIT 16c9630e):
+  + rtl_bt: Update RTL8821C BT(USB I/F) FW to 0x75b8_f098 (thx Max Chou)
+
 * Thu Dec 01 2022 Cronbuild Service <cronbuild@altlinux.org> 20221129-alt1
 - upstream changes (GIT 80ed874a):
   + amdgpu: update sdma_5.2.7 firmware (thx Alex Deucher)
