@@ -1,16 +1,19 @@
 Summary: multitail lets you view one or multiple files like the original tail program.
 Summary(ru_RU.KOI8-R): multitail позволяет просматривать один или несколько файлов
 Name: multitail
-Version: 6.5.2
+Version: 7.0.0
 Release: alt1
-License: GPLv2
+License: Apache-2.0
 Group: Monitoring
 Source: %name-%version.tar.gz
+Patch1:		https://sources.debian.org/data/main/m/multitail/6.5.0-5/debian/patches/fix-format-strings.diff
+Patch2:		https://github.com/folkertvanheusden/multitail/commit/608bad75a9acf51e2283768996721bd549149991.patch
+
 URL: http://www.vanheusden.com/multitail/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
-
+BuildRequires(pre): rpm-macros-cmake
 # Automatically added by buildreq on Fri May 18 2007
-BuildRequires: libncurses-devel libtinfo-devel libncursesw-devel
+BuildRequires: libncurses-devel libtinfo-devel libncursesw-devel cmake
 
 %description
 multitail lets you view one or multiple files like the original tail program.
@@ -30,31 +33,44 @@ multitail позволяет просматривать один или несколько файлов подобно оригинальной
 
 %prep
 %setup -q -n %name-%version
-
-#%build
-#make_build
+%patch1 -p1
+%patch2 -p1
+# Fix correct version
+sed -i 's/6.4.3/7.0.0/' CMakeLists.txt
+# Let rpm handle the config file
+sed -i '/multitail.conf.new/d' CMakeLists.txt
+# Install conversion-scripts manually
+sed -i '/conversion-scripts/d' CMakeLists.txt
+# Only build cmake version
+rm GNUmakefile
 
 %build
-%make_build CFLAGS="%{optflags}" CONFIG_FILE=%{_sysconfdir}/%{name}.conf
+%cmake
+%cmake_build
 
 %install
+%cmake_install
+
 # Create necessary directories
 mkdir -p %{buildroot}%{_sysconfdir}
-%make_install PREFIX=%{_prefix} CONFIG_FILE=%{buildroot}%{_sysconfdir}/%{name}.conf
 
-install -D -m 755 $RPM_BUILD_DIR/%name-%version/%name $RPM_BUILD_ROOT/%_bindir/%name
-install -D -m 644 $RPM_BUILD_DIR/%name-%version/%name.1 $RPM_BUILD_ROOT/%_man1dir/%name.1
-install -D -m 644 $RPM_BUILD_DIR/%name-%version/%name.conf $RPM_BUILD_ROOT/%_sysconfdir/%name.conf 
+install -D -m 644 $RPM_BUILD_DIR/%name-%version/%name.conf $RPM_BUILD_ROOT/%_sysconfdir/%name.conf.new
 bzip2 -9 $RPM_BUILD_ROOT/%_man1dir/multitail.1
-
+rm -f $RPM_BUILD_ROOT/%_datadir/doc/%name-VERSION=7.0.0/*
+rmdir $RPM_BUILD_ROOT/%_datadir/doc/%name-VERSION=7.0.0/
 
 %files
 %_bindir/%name
 %_man1dir/%name.1.*
-%config(noreplace) %_sysconfdir/%name.conf
+%config(noreplace) %_sysconfdir/%name.conf.new
 %doc INSTALL README.md LICENSE manual.html %name.conf
 
 %changelog
+* Wed Dec 07 2022 Ilya Mashkin <oddity@altlinux.ru> 7.0.0-alt1
+- 7.0.0
+- Change License from GPL2 to Apache2
+- Build with cmake only
+
 * Wed Jun 08 2022 Ilya Mashkin <oddity@altlinux.ru> 6.5.2-alt1
 - 6.5.2
 
