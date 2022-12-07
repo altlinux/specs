@@ -5,7 +5,7 @@
 %def_enable prebuilded_frontend
 
 Name:		grafana
-Version:	8.5.0
+Version:	9.3.1
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -201,6 +201,17 @@ fi
 %_datadir/%name
 
 %changelog
+* Wed Dec 07 2022 Alexey Shabalin <shaba@altlinux.org> 9.3.1-alt1
+- 9.3.1
+- Fixes:
+  + CVE-2022-32149
+  + CVE-2022-27664
+  + CVE-2022-35957
+  + CVE-2022-36062
+  + CVE-2022-31107
+  + CVE-2022-31097
+  + CVE-2022-29170
+
 * Tue Apr 26 2022 Alexey Shabalin <shaba@altlinux.org> 8.5.0-alt1
 - 8.5.0
 - Use pre-builded frontend
