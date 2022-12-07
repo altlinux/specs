@@ -13,7 +13,7 @@
 %def_with jemalloc
 
 Name: blender
-Version: 3.3.1
+Version: 3.4.0
 Release: alt1
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL-3.0-or-later
@@ -80,6 +80,7 @@ BuildRequires: libpotrace-devel
 BuildRequires: openshadinglanguage-devel
 BuildRequires: opensubdiv-devel
 BuildRequires: libzstd-devel
+BuildRequires: libepoxy-devel
 
 %if_with embree
 BuildRequires: embree-devel
@@ -287,6 +288,9 @@ install -m644 release/freedesktop/*.appdata.xml %buildroot%_datadir/metainfo/
 %endif
 
 %changelog
+* Wed Dec 07 2022 Egor Ignatov <egori@altlinux.org> 3.4.0-alt1
+- Update to 3.4.0
+
 * Fri Oct 07 2022 Egor Ignatov <egori@altlinux.org> 3.3.1-alt1
 - Update to 3.3.1
 
