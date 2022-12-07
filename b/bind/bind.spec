@@ -26,7 +26,7 @@
 Name: bind
 Version: 9.16.35
 %define src_version 9.16.35
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: MPL-2.0
@@ -76,6 +76,8 @@ BuildRequires: python3(sphinx_rtd_theme)
 %endif
 
 %if_with check
+# for backtraces
+BuildRequires: gdb
 %if_with system_tests
 BuildRequires: python3(dns)
 BuildRequires: python3(hypothesis)
@@ -365,6 +367,9 @@ export ALT_NAMED_OPTIONS=' -t / '
 pushd bin/tests/system
 source ./conf.sh
 for testdir in $SUBDIRS; do
+    # skip due to https://gitlab.isc.org/isc-projects/bind9/-/issues/3665
+    [ "$testdir" = "dupsigs" ] && continue
+
     subns=$(find "$testdir" -maxdepth 1 -type d -name "ns[0-9]" | wc -l)
     if [ $subns -lt 2 ]; then
         runuser -u "$runas" -- sh run.sh "$testdir"
@@ -541,6 +546,9 @@ fi
 %endif
 
 %changelog
+* Tue Dec 06 2022 Stanislav Levin <slev@altlinux.org> 9.16.35-alt2
+- Skip flaky dupsigs test (GL #3665).
+
 * Wed Nov 16 2022 Stanislav Levin <slev@altlinux.org> 9.16.35-alt1
 - 9.16.34 -> 9.16.35.
 
