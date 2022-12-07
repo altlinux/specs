@@ -1,33 +1,28 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name installer
-%define wheel_dir %_builddir/dist
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.1
+Version: 0.6.0
 Release: alt1
 
 Summary: A library for installing Python wheels
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/pypa/installer.git
 Url: https://pypi.org/project/installer
+VCS: https://github.com/pypa/installer.git
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
-# build frontend
-BuildRequires: python3(build)
 # build backend
 BuildRequires: python3(flit_core)
 
 %if_with check
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -50,30 +45,23 @@ handling wheels and installing packages from wheels.
 find -type f -name '*.exe' -delete
 
 %build
-%__python3 -m build --no-isolation --outdir %wheel_dir .
+%pyproject_build
 
 %install
-# install installer using installer
-PYTHONPATH=src %__python3 -m installer \
-    --destdir %buildroot \
-    %wheel_dir/%pypi_name-%version-*.whl
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    {envbindir}/pytest -vra {posargs:tests}
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr \
-    --installpkg %wheel_dir/%pypi_name-%version-*.whl
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc README.md
-%python3_sitelibdir/%pypi_name/
-%python3_sitelibdir/%pypi_name-%version.dist-info/
+%python3_sitelibdir/installer/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Dec 07 2022 Stanislav Levin <slev@altlinux.org> 0.6.0-alt1
+- 0.5.1 -> 0.6.0.
+
 * Mon Apr 04 2022 Stanislav Levin <slev@altlinux.org> 0.5.1-alt1
 - Initial build for Sisyphus.
