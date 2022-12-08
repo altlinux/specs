@@ -2,7 +2,7 @@
 %define xdg_name org.kde.partitionmanager
 
 Name: partitionmanager
-Version: 22.08.3
+Version: 22.12.0
 Release: alt1
 
 Summary: KDE Partition Manager
@@ -20,7 +20,7 @@ Source: %name-%version.tar
 
 %K5init no_altplace appdata
 
-%define qt_ver 5.7.0
+%define qt_ver 5.15.2
 %define kpmcore_ver %version
 
 Requires: libkpmcore >= %kpmcore_ver
@@ -66,6 +66,9 @@ file systems.
 %doc README*
 
 %changelog
+* Thu Dec 08 2022 Yuri N. Sedunov <aris@altlinux.org> 22.12.0-alt1
+- 22.12.0
+
 * Fri Nov 11 2022 Yuri N. Sedunov <aris@altlinux.org> 22.08.3-alt1
 - 22.08.3
 
