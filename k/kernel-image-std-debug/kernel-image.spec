@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel	.81
+%define kernel_sublevel	.82
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -615,6 +615,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Dec 08 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.82-alt1
+- v5.15.82 (2022-12-08).
+
 * Sat Dec 03 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.81-alt1
 - v5.15.81 (2022-12-02).
 - config: Enable pvpanic modules.
