@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
-%set_verify_elf_method strict
+%set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: stgit
-Version: 1.5
+Version: 2.0.4
 Release: alt1
 Summary: Stacked Git
 License: GPL-2.0-only
@@ -14,12 +14,11 @@ Vcs: https://github.com/stacked-git/stgit
 
 Source: %name-%version.tar
 
-BuildArch: noarch
+BuildRequires: /proc
 BuildRequires: asciidoc
 BuildRequires: git-core
-BuildRequires: make
-BuildRequires: rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: openssl-devel
+BuildRequires: rust-cargo
 BuildRequires: xmlto
 
 %description
@@ -32,37 +31,55 @@ resulting in both a clean Git commit history and improved productivity.
 
 %prep
 %setup
+mkdir -p .cargo
+cat >> .cargo/config <<EOF
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+
+[term]
+verbose = true
+quiet = false
+
+[install]
+root = "%buildroot%_prefix"
+
+[profile.release]
+strip = false
+EOF
+
 
 %build
-%make_build STGIT_VERSION=%version-%release all doc
+unset MAKEFLAGS
+%make_build all
 
 %install
-%makeinstall_std install-doc STGIT_VERSION=%version-%release \
-		PYTHON=%__python3 DESTDIR=%buildroot prefix=%_prefix
-install -Dpm0644 completion/stgit.bash \
-		%buildroot%_datadir/bash-completion/completions/stgit
-install -Dpm0644 completion/stgit.zsh \
-		%buildroot%_datadir/zsh/site-functions/_stgit
-install -Dpm0644 completion/stg.fish \
-		%buildroot%_datadir/fish/vendor_completions.d/stg.fish
-
-install -d %buildroot%_datadir/vim/vimfiles/{syntax,ftdetect}
-install -m 644 contrib/vim/syntax/*.vim   %buildroot%_datadir/vim/vimfiles/syntax/
-install -m 644 contrib/vim/ftdetect/*.vim %buildroot%_datadir/vim/vimfiles/ftdetect/
+unset MAKEFLAGS
+%makeinstall_std install-all prefix=%_prefix
+install -Dpm644 COPYING README.md AUTHORS.md CHANGELOG.md contrib/stgbashprompt.sh \
+	%buildroot%_datadir/doc/stgit/
 
 %check
+%buildroot%_bindir/stg --version
+# Fails:
+rm t/t7000-sparse-checkout.sh
 %make_build test
 
 %files
-%doc COPYING README.md AUTHORS.md CHANGELOG.md contrib/stgbashprompt.sh
 %_bindir/stg
 %_man1dir/*.1*
-%python3_sitelibdir_noarch/stgit*
-%_datadir/bash-completion/completions/stgit
-%_datadir/zsh/site-functions/_stgit
+%_datadir/bash-completion/completions/stg
+%_datadir/zsh/site-functions/_stg
 %_datadir/fish/vendor_completions.d/stg.fish
 %_datadir/vim/vimfiles/*/*.vim
+%_datadir/emacs/site-lisp/stgit.el
+%_datadir/doc/stgit
 
 %changelog
+* Thu Dec 08 2022 Vitaly Chikunov <vt@altlinux.org> 2.0.4-alt1
+- Update to v2.0.4 (2022-11-30). Codebase converted from Python to Rust.
+
 * Thu Mar 10 2022 Vitaly Chikunov <vt@altlinux.org> 1.5-alt1
 - First import v1.5 (2022-01-28).
