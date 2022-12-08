@@ -18,7 +18,7 @@
 %def_enable wayland_eglstream
 
 Name: mutter
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 Epoch: 1
 
@@ -54,8 +54,8 @@ Patch: mutter-40.0-alt-gsettings_desktop_schemas_dep.patch
 %define pango_ver 1.46.0
 %define cairo_ver 1.10.0
 %define Xi_ver 1.7.4
-%define wayland_ver 1.18
-%define wayland_protocols_ver 1.21
+%define wayland_ver 1.21
+%define wayland_protocols_ver 1.26
 %define upower_ver 0.99.0
 %define libinput_ver 1.18
 %define gsds_ver 40
@@ -65,6 +65,8 @@ Patch: mutter-40.0-alt-gsettings_desktop_schemas_dep.patch
 %define json_glib_ver 0.12.0
 %define graphene_ver 1.10.2
 %define wacom_ver 0.13
+%define lcms_ver 2.6
+%define colord_ver 1.4.5
 
 Requires: lib%name = %EVR
 %{?_enable_remote_desktop:Requires: pipewire >= %pipewire_ver}
@@ -94,7 +96,7 @@ BuildRequires: libwacom-devel >= %wacom_ver
 BuildRequires: gnome-settings-daemon-devel
 BuildRequires: pkgconfig(sysprof-capture-4)
 BuildRequires: libgraphene-gir-devel >= %graphene_ver
-BuildRequires: libcolord-devel liblcms2-devel
+BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel >= %lcms_ver
 %{?_enable_remote_desktop:BuildRequires: pipewire-libs-devel >= %pipewire_ver}
 # for mutter native backend
 BuildRequires: libdrm-devel libsystemd-devel libgudev-devel >= %gudev_ver
@@ -255,6 +257,9 @@ ln -sf %name-%api_ver/lib%name-cogl-%api_ver.so.%sover \
 %endif
 
 %changelog
+* Thu Dec 08 2022 Yuri N. Sedunov <aris@altlinux.org> 1:43.2-alt1
+- 43.2
+
 * Thu Nov 10 2022 Yuri N. Sedunov <aris@altlinux.org> 1:43.1-alt1
 - 43.1
 
