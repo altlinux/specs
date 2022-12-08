@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.26.4
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -246,6 +246,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Thu Dec 08 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.4-alt2
+- don't show tooltips when hovering task buttons by default
+
 * Tue Nov 29 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.4-alt1
 - new version
 
