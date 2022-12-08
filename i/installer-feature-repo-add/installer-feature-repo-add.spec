@@ -1,6 +1,6 @@
 Name: installer-feature-repo-add
 Version: 0.3
-Release: alt2
+Release: alt3
 
 Summary: Add the installation media to APT configuration
 License: GPL
@@ -29,6 +29,9 @@ Conflicts: alterator-pkg < 2.6.18-alt1
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Thu Dec 08 2022 Dmitry Terekhin <jqt4@altlinux.org> 0.3-alt3
+- use PARTUUID to identify ISO9660 partition
+
 * Tue Mar 04 2014 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt2
 - flash repo under UEFI fixed
 
