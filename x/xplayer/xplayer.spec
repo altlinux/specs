@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xplayer
-Version: 2.4.0
+Version: 2.4.4
 Release: alt1
 Summary: Xplayer is a generic media player.
 Group: Video
@@ -403,6 +403,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_man1dir/%name-video-thumbnailer.1.*
 
 %changelog
+* Thu Dec 08 2022 Valery Inozemtsev <shrek@altlinux.ru> 2.4.4-alt1
+- 2.4.4
+
 * Sun May 30 2021 Valery Inozemtsev <shrek@altlinux.ru> 2.4.0-alt1
 - 2.4.0 (closes: #40103)
 

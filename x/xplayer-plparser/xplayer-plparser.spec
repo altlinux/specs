@@ -1,8 +1,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: xplayer-plparser
-Version: 1.0.2
-Release: alt3
+Version: 1.0.3
+Release: alt1
 
 Summary: Shared libraries of the Xplayer media player play list parser
 Group: System/Libraries
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Patch: %name-%version.patch
 
 BuildRequires: gnome-common gobject-introspection-devel gtk-doc intltool libarchive-devel
-BuildRequires: libgcrypt-devel libgmime-devel libsoup-devel libxml2-devel
+BuildRequires: libgcrypt-devel libgmime3.0-devel libsoup-devel libxml2-devel meson
 
 %description
 Shared libraries that come with the Xplayer media player.
@@ -63,17 +63,14 @@ GObject introspection devel data for the Xplayer playlist parser library
 [ ! -d m4 ] && mkdir m4
 
 %build
-%autoreconf
-%configure \
-	--disable-static \
-	--disable-quvi \
-	--enable-gtk-doc \
-	--enable-introspection
+%meson \
+	-Denable-quvi=no \
+	-Denable-gtk-doc=true
 
-%make_build
+%meson_build
 
 %install
-%make DESTDIR=%buildroot install
+%meson_install
 
 %find_lang --with-gnome --output=%name.lang xplayer-pl-parser
 
@@ -96,6 +93,9 @@ GObject introspection devel data for the Xplayer playlist parser library
 %_datadir/gir-1.0/*
 
 %changelog
+* Thu Dec 08 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.0.3-alt1
+- 1.0.3
+
 * Mon Jan 24 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.0.2-alt3
 - disabled quvi
 
