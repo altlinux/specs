@@ -12,7 +12,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.20
+%define major 7.21
 %define rel %nil
 %define conflictbase wine
 
@@ -532,6 +532,12 @@ cp -v %buildroot%libwinedir/%winesodir/win32u.so %buildroot%libdir
 
 mkdir -p %buildroot%_bindir/
 
+# return wine64 and wine64-preloader (half revert of upstream 5884e98fbec966b0ad9f3babcbec7d8fe25dbc1d)
+%ifarch aarch64
+mv -v %buildroot%winebindir/wine %buildroot%winebindir/wine64
+mv -v %buildroot%winebindir/wine-preloader %buildroot%winebindir/wine64-preloader
+%endif
+
 # hack: move all programs back to _bindir
 find %buildroot%winebindir -mindepth 0 -maxdepth 1 -not -type d | \
     egrep -v '/wine$|/wine-preloader$|/wineserver$|/wine64$|/wine64-preloader$|/wineserver64|/winegcc|/wineg++|/winecpp|/winebuild$' | \
@@ -539,7 +545,7 @@ find %buildroot%winebindir -mindepth 0 -maxdepth 1 -not -type d | \
 [ -s %buildroot%_bindir/wineg++ ] || ln -sv --relative %buildroot%winebindir/wineg++ %buildroot%_bindir/
 [ -s %buildroot%_bindir/winecpp ] || ln -sv --relative %buildroot%winebindir/winecpp %buildroot%_bindir/
 
-# wine64 and wine64-preloader are already built as wine64*
+# wine64 and wine64-preloader are already built as wine64* on x86_64 only
 mv -v %buildroot%winebindir/wineserver %buildroot%winebindir/%wineserver
 %if_with build64
 [ -s %buildroot%_bindir/wine64 ] || ln -sv --relative %buildroot%winebindir/wine64 %buildroot%_bindir/
@@ -663,6 +669,7 @@ fi
 %libwinedir/%winesodir/winepulse.so
 %libwinedir/%winesodir/winealsa.so
 %libwinedir/%winesodir/winevulkan.so
+%libwinedir/%winesodir/opengl32.so
 %if_with pcap
 %libwinedir/%winesodir/wpcap.so
 %endif
@@ -680,6 +687,7 @@ fi
 %libwinedir/%winesodir/*.drv.so
 %libwinedir/%winesodir/*.ds.so
 %libwinedir/%winesodir/*.sys.so
+%libwinedir/%winesodir/*.dll.so
 %endif
 
 %if_without build64
@@ -698,8 +706,6 @@ fi
 %libwinedir/%winesodir/*.vxd.so
 %endif
 
-# some dll still compiled as not PE in any way
-%libwinedir/%winesodir/*.dll.so
 
 %libwinedir/%winepedir/*.com
 %libwinedir/%winepedir/*.cpl
@@ -835,6 +841,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Tue Dec 06 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.21-alt1
+- new version 7.21 (with rpmrb script)
+
 * Sun Nov 06 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.20-alt1
 - new version 7.20 (with rpmrb script)
 - set strict require wine-mono 7.4.0
