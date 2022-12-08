@@ -1,6 +1,6 @@
 Name: vulkan
 Version: 1.3.231
-Release: alt1.1
+Release: alt2
 Summary: Khronos group Vulkan API SDK
 
 Group: System/Libraries
@@ -104,12 +104,6 @@ pushd ../vulkan-layers
 # sigh inttypes
 sed -i 's/inttypes.h/cinttypes/' layers/*.{cpp,h}
 popd
-%ifarch %e2k
-# -Werror=unknown-pragmas vs loader/dev_ext_trampoline.c:24 @ lcc 1.25.23
-# was the last drop, let's tear all of 'em off
-sed -i "s/-Werror/-Wno-error/g" \
-	%_builddir/vulkan-{layers,loader,tools}/CMakeLists.txt
-%endif
 
 %build
 # vulkan-headers first
@@ -123,8 +117,9 @@ popd
 for dir in loader layers; do
 pushd %_builddir/vulkan-"$dir"
 %cmake \
-           -DSPIRV_TOOLS_SEARCH_PATH=%_libdir \
-           -DSPIRV_TOOLS_OPT_SEARCH_PATH=%_libdir \
+	   -DBUILD_WERROR=OFF \
+	   -DSPIRV_TOOLS_SEARCH_PATH=%_libdir \
+	   -DSPIRV_TOOLS_OPT_SEARCH_PATH=%_libdir \
 	   -DVULKAN_HEADERS_INSTALL_DIR=%buildroot \
 	   -DGLSLANG_INSTALL_DIR=%_prefix \
 	   -DSPIRV_HEADERS_INSTALL_DIR=%_prefix \
@@ -193,6 +188,9 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Thu Dec 08 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.231-alt2
+- Disable Werror (as upstream did in 91b97cf42b44a0f01545f719c2c015b00a34e5b2).
+
 * Sun Oct 16 2022 Michael Shigorin <mike@altlinux.org> 1.3.231-alt1.1
 - E2K: ftbfs workaround (ilyakurdyukov@; -Wno-error).
 
