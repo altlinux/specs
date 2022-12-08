@@ -1,6 +1,6 @@
 Name: howdy
 Version: 3.0.0
-Release: alt2.beta1.git943f1e1
+Release: alt3.beta1.git943f1e1
 Summary: Windows Hello style authentication
 
 License: MIT
@@ -15,7 +15,7 @@ Source3: https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_f
 
 BuildRequires: gcc-c++ rpm-build-python3 meson rpm-build-ninja cmake gettext-tools
 BuildRequires: libinih-devel libevdev-devel libpam0-devel
-Requires: python3-module-opencv python3-module-h5py python3-module-PAM python3-module-numpy python3-module-elevate
+Requires: python3-module-opencv python3-module-h5py python3-module-PAM python3-module-numpy python3-module-elevate python3-base python3-module-pygobject3
 %ifnarch ppc64le
 Requires: python3-module-dlib
 %endif
@@ -108,6 +108,9 @@ rm -rf %buildroot/%_lib/security/howdy/dlib-data/{Readme.md,install.sh,.gitignor
 /usr/libexec/howdy-gtk/
 
 %changelog
+* Thu Dec 08 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt3.beta1.git943f1e1
+- Fixed howdy-gtk startup.
+
 * Thu Dec 08 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt2.beta1.git943f1e1
 - Fixed howdy startup (ALT #44558).
 
