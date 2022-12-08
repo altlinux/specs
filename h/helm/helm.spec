@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %global import_path k8s.io/helm
 Name:     helm
-Version:  3.4.1
+Version:  3.10.2
 Release:  alt1
 
 Summary:  The Kubernetes Package Manager
@@ -59,6 +59,10 @@ install -Dm 644 helm-bash-completion %buildroot/%_sysconfdir/bash_completion.d/%
 %_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Sat Dec 03 2022 Mikhail Gordeev <obirvalger@altlinux.org> 3.10.2-alt1
+- new version 3.10.2
+- (Fixes: CVE-2022-36055 CVE-2022-36049 CVE-2021-32690 CVE-2021-21303)
+
 * Mon Nov 23 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 3.4.1-alt1
 - Updated to upstream version 3.4.1 (Fixes: CVE-2020-4053, CVE-2020-11013,
   CVE-2020-15184, CVE-2020-15185, CVE-2020-15186, CVE-2020-15187).
