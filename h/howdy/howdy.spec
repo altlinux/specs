@@ -1,6 +1,6 @@
 Name: howdy
 Version: 3.0.0
-Release: alt1.beta1.git943f1e1
+Release: alt2.beta1.git943f1e1
 Summary: Windows Hello style authentication
 
 License: MIT
@@ -15,7 +15,10 @@ Source3: https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_f
 
 BuildRequires: gcc-c++ rpm-build-python3 meson rpm-build-ninja cmake gettext-tools
 BuildRequires: libinih-devel libevdev-devel libpam0-devel
-Requires: python3-module-opencv python3-module-h5py python3-module-PAM
+Requires: python3-module-opencv python3-module-h5py python3-module-PAM python3-module-numpy python3-module-elevate
+%ifnarch ppc64le
+Requires: python3-module-dlib
+%endif
 
 %add_python3_req_skip i18n
 
@@ -52,6 +55,12 @@ sed -i 's|/lib/security|/%_lib/security|' \
 sed -i 's|/usr/bin/env python3|%__python3|' \
   howdy-gtk/src/init.py \
   howdy/src/cli.py
+sed -i 's|/bin/nano|%_bindir/nano|' \
+  howdy/src/cli/config.py
+sed -i 's|/lib/security/howdy/config.ini|/%_lib/security/howdy/config.ini|' \
+  howdy/src/autocomplete/howdy
+sed -i 's|/usr/lib/howdy-gtk/logo.png|/usr/libexec/howdy-gtk/logo.png|' \
+  howdy-gtk/src/authsticky.py
 
 %build
 pushd howdy/src/pam
@@ -99,6 +108,9 @@ rm -rf %buildroot/%_lib/security/howdy/dlib-data/{Readme.md,install.sh,.gitignor
 /usr/libexec/howdy-gtk/
 
 %changelog
+* Thu Dec 08 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt2.beta1.git943f1e1
+- Fixed howdy startup (ALT #44558).
+
 * Thu Dec 01 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt1.beta1.git943f1e1
 - Packed source files.
 
