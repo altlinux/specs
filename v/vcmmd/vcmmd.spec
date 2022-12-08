@@ -1,20 +1,18 @@
 %def_with check
 
 Name:    vcmmd
-Version: 8.0.68
+Version: 8.0.71
 Release: alt1
 
 Summary: Virtuozzo containers memory management daemon
-License: LGPL-2.1
+License: GPL-2.0-or-later
 Group:   System/Configuration/Other
 
 URL:     https://src.openvz.org/
 Vcs:     https://src.openvz.org/scm/ovz/vcmmd.git
 
-Packager: Andrew A. Vasilyev <andy@altlinux.org>
-
 Source:  %name-%version.tar
-Patch: %name-%version.patch
+Patch:   %name-%version.patch
 
 ExclusiveArch: x86_64
 
@@ -65,6 +63,10 @@ popd
 %config %_tmpfilesdir/vcmmd-tmpfiles.conf
 
 %changelog
+* Thu Dec 08 2022 Andrew A. Vasilyev <andy@altlinux.org> 8.0.71-alt1
+- 8.0.71
+- change license
+
 * Wed Oct 26 2022 Andrew A. Vasilyev <andy@altlinux.org> 8.0.68-alt1
 - 8.0.68
 
