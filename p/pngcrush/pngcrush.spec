@@ -1,6 +1,6 @@
 Name: pngcrush
 Version: 1.8.13
-Release: alt1
+Release: alt2
 
 Summary: Optimizer for PNG (Portable Network Graphics) files
 License: zlib
@@ -8,9 +8,10 @@ Group: Graphics
 Url: https://pmt.sourceforge.net/pngcrush/
 
 # http://download.sourceforge.net/pmt/%name-%version.tar.xz
+
 Source: %name-%version.tar
 
-BuildPreReq: libpng-devel
+BuildPreReq: libpng-devel libcrc32c-devel
 
 %description
 Pngcrush is a commandline optimizer for PNG (Portable Network Graphics)
@@ -23,8 +24,8 @@ certain chunks including gAMA, tRNS, and textual chunks.
 %setup
 
 %build
-%__cc %optflags pngcrush.c -o pngcrush \
-	$(pkg-config --cflags --libs libpng)
+make
+
 sed '1,/^<pre>$/d;/<\/pre>/,$d' < ChangeLog.html > ChangeLog
 zstd ChangeLog
 
@@ -36,6 +37,9 @@ install -Dpm755 pngcrush %buildroot%_bindir/pngcrush
 %doc ChangeLog.zst LICENSE
 
 %changelog
+* Wed Dec 07 2022 Artyom Bystrov <arbars@altlinux.org> 1.8.13-alt2
+- Fix FTBFS https://git.altlinux.org/beehive/logs/Sisyphus-x86_64/latest/error/pngcrush-1.8.13-alt1
+
 * Fri Nov 30 2018 Dmitry V. Levin <ldv@altlinux.org> 1.8.13-alt1
 - 1.7.35 -> 1.8.13.
 
