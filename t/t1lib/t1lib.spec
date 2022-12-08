@@ -1,6 +1,6 @@
 Name: t1lib
 Version: 5.1.2
-Release: alt6
+Release: alt7
 
 Summary: Type 1 font rasterizer
 License: LGPL
@@ -88,7 +88,7 @@ It also contains the "t1libconfig" script used to configure %name.
 autoconf
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' configure
 %configure %{subst_enable static}
-%make_build without_doc
+make without_doc
 
 pushd doc
 	make clean
@@ -138,6 +138,9 @@ install -pm644 Changes README.t* doc/t1lib_doc.pdf.bz2 %buildroot%docdir/
 # - merge type1afm.1 manpage from debian patch
 
 %changelog
+* Thu Dec 08 2022 Artyom Bystrov <arbars@altlinux.org> 5.1.2-alt7
+- Switch to single-thread build
+
 * Wed Oct 21 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.2-alt6
 - Applied security fixes from Gentoo (Fixes: CVE-2010-2642, CVE-2011-0433,
   CVE-2011-0764, CVE-2011-1552, CVE-2011-1553, CVE-2011-1554, CVE-2011-5244).
