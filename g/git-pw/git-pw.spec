@@ -3,7 +3,7 @@
 
 Name: git-pw
 Summary: Git-Patchwork integration tool
-Version: 2.2.3
+Version: 2.4.0
 Release: alt1
 License: MIT
 Group: Development/Tools
@@ -49,5 +49,8 @@ PYTHONPATH=%buildroot%python3_sitelibdir_noarch py.test3
 %_man1dir/git-pw*.1*
 
 %changelog
+* Thu Dec 08 2022 Vitaly Chikunov <vt@altlinux.org> 2.4.0-alt1
+- Update to 2.4.0 (2022-12-06).
+
 * Tue Feb 01 2022 Vitaly Chikunov <vt@altlinux.org> 2.2.3-alt1
 - First import of 2.2.3 (2021-11-29).
