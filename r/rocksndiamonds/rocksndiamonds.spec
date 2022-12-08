@@ -1,6 +1,6 @@
 Name: rocksndiamonds
 Version: 4.3.2.1
-Release: alt1
+Release: alt2
 
 Summary: A boulderdash like game
 License: GPL-2.0
@@ -53,8 +53,11 @@ This package contains levels for Rocks'N'Diamonds
 %setup
 
 %build
+## 8.12.2022 - switch to single-core build. Reason: 
+## https://git.altlinux.org/beehive/logs/Sisyphus-x86_64/latest/error/rocksndiamonds-4.3.2.1-alt1
+
 %define _pkgdatadir %_gamesdatadir/%name
-%make_build OPTIONS="%optflags" X11_PATH="%_x11dir" RO_GAME_DIR="%_pkgdatadir"
+make OPTIONS="%optflags" X11_PATH="%_x11dir" RO_GAME_DIR="%_pkgdatadir"
 
 %install
 install -pD -m755 %name %buildroot%_gamesbindir/%name
@@ -81,6 +84,9 @@ install -m644 %SOURCE12 -D %buildroot/%_liconsdir/%name.png
 %_pkgdatadir
 
 %changelog
+* Thu Dec 08 2022 Artyom Bystrov <arbars@altlinux.org> 4.3.2.1-alt2
+- Fix build FTBFS (https://git.altlinux.org/beehive/logs/Sisyphus-x86_64/latest/error/rocksndiamonds-4.3.2.1-alt1)
+
 * Mon May 16 2022 Grigory Ustinov <grenka@altlinux.org> 4.3.2.1-alt1
 - Automatically updated to 4.3.2.1.
 
