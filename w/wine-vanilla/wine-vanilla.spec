@@ -12,7 +12,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.21
+%define major 7.22
 %define rel %nil
 %define conflictbase wine
 
@@ -194,7 +194,7 @@ BuildRequires: libalsa-devel jackit-devel libpulseaudio-devel
 BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libusb-devel libieee1284-devel
-BuildRequires: libgcrypt-devel libgnutls-devel libsasl2-devel libkrb5-devel libldap-devel
+BuildRequires: libgcrypt-devel libgnutls-devel libsasl2-devel libkrb5-devel
 BuildRequires: libunixODBC-devel
 %if_with pcap
 BuildRequires: libpcap-devel
@@ -265,7 +265,6 @@ Requires: libcups
 Requires: libXrender libXi libXext libX11 libICE libXcomposite libXcursor libXinerama libXrandr
 Requires: libssl libgnutls30
 Requires: libXpm libalsa libcups libopenal1 libpulseaudio libudev1 libusb libkrb5
-#libldap
 
 %if_with gtk3
 Requires: libcairo libgtk+3
@@ -654,7 +653,6 @@ fi
 %libwinedir/%winesodir/mountmgr.so
 %libwinedir/%winesodir/netapi32.so
 %libwinedir/%winesodir/nsiproxy.so
-%libwinedir/%winesodir/wldap32.so
 %libwinedir/%winesodir/winspool.so
 %libwinedir/%winesodir/msv1_0.so
 %libwinedir/%winesodir/win32u.so
@@ -841,6 +839,10 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Wed Dec 07 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.22-alt1
+- new version 7.22 (with rpmrb script)
+- drop libldap-devel from build requires (bundled now)
+
 * Tue Dec 06 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.21-alt1
 - new version 7.21 (with rpmrb script)
 
