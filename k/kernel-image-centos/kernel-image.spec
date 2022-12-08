@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 205
+%define centos_release 207
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,27 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Dec 06 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.207-alt1.el9
+- Updated to kernel-5.14.0-207.el9:
+  + [9.2] DRM backport part 2: main backport
+  + block: fix direct io device mapper errors
+  + CNB: ptp: introduce helpers to adjust by scaled parts per million
+  + dt-bindings: gpio: gpio-vf610: Updates
+  + dt-bindings: serial: fsl-lpuart: Updates
+  + fs: allow cross-vfsmount reflink/dedupe
+  + fuse: add file_modified() to fallocate
+  + ice: Driver Update to 6.0
+  + ISH updates and bug fixes
+  + Merge commit '4fc3237d0cf85530cfd3c73be94441ea20ab2df3'
+  + mm: migrate: fix THP's mapcount on isolation
+  + ping: convert to RCU lookups, get rid of rwlock
+  + Rebase selftests/rseq to v6.0
+  + redhat/configs: Change the amd-pstate driver from builtin to loadable
+  + skx_common: use driver decoder when possible
+  + spec: Update bpftool versioning scheme
+  + x86/sgx: update sgx subsystem upto v6.0
+  + Various changes and improvements that are poorly described in merge.
+
 * Fri Dec 02 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.205-alt1.el9
 - Updated to kernel-5.14.0-205.el9:
   + Add rtla subpackage for kernel-tools
