@@ -16,7 +16,7 @@
 
 Name: grilo-plugins
 Version: %ver_major.15
-Release: alt2
+Release: alt2.1
 
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -36,7 +36,7 @@ Requires: grilo-tools >= %version
 %{?_enable_tracker3:Requires: tracker-miners3 >= %tracker3_ver}
 # chromaprint plugin required
 Requires: gst-plugins-bad1.0 >= 1.20.3-alt2
-%{?_enable_lua:Requires: lua%lua_api_ver lua-module-luajson}
+%{?_enable_lua:Requires: lua%lua_api_ver}
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gperf
@@ -69,7 +69,7 @@ BuildRequires: libmediaart2.0-devel
 BuildRequires: librest-devel
 BuildRequires: libarchive-devel
 %{?_enable_lua_factory:BuildRequires: liblua%lua_api_ver-devel >= 5.3.0}
-%{?_enable_check:BuildRequires: xvfb-run lua%lua_api_ver lua-module-luajson
+%{?_enable_check:BuildRequires: xvfb-run lua%lua_api_ver
 BuildRequires: grilo-tools tracker-miners3 gst-plugins-bad1.0}
 
 %description
@@ -158,6 +158,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Dec 08 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt2.1
+- removed useless luajson dependency
+
 * Tue Sep 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.15-alt2
 - updated to 0.3.15-5-g233ed982 (flickr: remove GOA support)
 
