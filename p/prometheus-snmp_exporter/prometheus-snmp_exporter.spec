@@ -5,7 +5,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 0.20.0
+Version: 0.21.0
 Release: alt1
 Summary: Prometheus snmp exporter
 
@@ -20,7 +20,7 @@ Source4: %name.service
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
-BuildRequires: promu
+#BuildRequires: promu
 BuildRequires: /proc
 # for build generator
 BuildRequires: libnet-snmp-devel snmp-mibs-std
@@ -40,26 +40,35 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
 %golang_prepare
-promu build
+#promu build
+export BUILDTAGS="netgo"
+export LDFLAGS="-X github.com/prometheus/common/version.Version=%version \
+         -X github.com/prometheus/common/version.Revision=%release \
+         -X github.com/prometheus/common/version.Branch=tarball \
+         -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
 
-cd .gopath/src/%import_path/generator
+%golang_build .
+pushd $BUILDDIR/src/$IMPORT_PATH/generator
 %gobuild
+popd
 
 %install
-#export BUILDDIR="$PWD/.gopath"
+export BUILDDIR="$PWD/.gopath"
 #export GOPATH="%go_path"
-#%golang_install
-#rm -rf -- %buildroot%_datadir
+mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_sysconfdir/{sysconfig,prometheus}}
+# generator
+install -m0755 $BUILDDIR/src/%import_path/generator/generator %buildroot%_bindir/%oname-generator
+
+%golang_install
+rm -rf -- %buildroot%_datadir
+rm -rf -- %buildroot%go_root
 mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_sysconfdir/{sysconfig,prometheus}}
 
-install -m0755 %oname %buildroot%_bindir/%oname
+#install -m0755 %oname %buildroot%_bindir/%oname
 install -m0644 snmp.yml %buildroot%_sysconfdir/prometheus/snmp.yml
 install -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -m0755 %SOURCE3 %buildroot%_initdir/%name
 install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
-
-# generator
-install -m0755 .gopath/src/%import_path/generator/generator %buildroot%_bindir/%oname-generator
 
 %post
 %post_service %name
@@ -69,8 +78,8 @@ install -m0755 .gopath/src/%import_path/generator/generator %buildroot%_bindir/%
 
 %files
 %doc LICENSE README.md snmp.yml
-%doc .gopath/src/%import_path/generator/generator.yml
-%doc .gopath/src/%import_path/generator/FORMAT.md
+%doc generator/generator.yml
+%doc generator/FORMAT.md
 %_bindir/*
 %_unitdir/%name.service
 %_initdir/%name
@@ -78,6 +87,9 @@ install -m0755 .gopath/src/%import_path/generator/generator %buildroot%_bindir/%
 %config(noreplace) %_sysconfdir/prometheus/snmp.yml
 
 %changelog
+* Fri Dec 09 2022 Alexey Shabalin <shaba@altlinux.org> 0.21.0-alt1
+- 0.21.0
+
 * Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 0.20.0-alt1
 - 0.20.0
 
@@ -99,8 +111,8 @@ install -m0755 .gopath/src/%import_path/generator/generator %buildroot%_bindir/%
 * Fri Jan 18 2019 Alexey Shabalin <shaba@altlinux.org> 0.14.0-alt1
 - 0.14.0
 
-* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt2%ubt
+* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt2
 - fix typo in option
 
-* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1%ubt
+* Thu May 10 2018 Alexey Shabalin <shaba@altlinux.ru> 0.10.0-alt1
 - Initial build for ALT.
