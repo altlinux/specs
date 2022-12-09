@@ -5,7 +5,7 @@
 
 %global provider_prefix %provider/%project/%repo
 %global import_path %provider_prefix
-%global commit d93b2dfb8d0f2ad0f8b9061d941e3b216baa5814
+%global commit 0e724229f2a81e08a5e05cef0b125ee0dadda08e
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 %global _unpackaged_files_terminate_build 1
@@ -13,8 +13,8 @@
 %define _libexecdir /usr/libexec
 
 Name: cri-o
-Version: 1.22.3
-Release: alt2
+Version: 1.24.3
+Release: alt1
 Summary: Kubernetes Container Runtime Interface for OCI-based containers
 Group: Development/Other
 License: Apache-2.0
@@ -120,6 +120,10 @@ install -p -m 644 contrib/cni/99-loopback.conf %buildroot%_sysconfdir/cni/net.d/
 %_datadir/zsh/site-functions/*
 
 %changelog
+* Thu Nov 24 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.24.3-alt1
+- 1.24.3
+- Fixes: CVE-2022-1708
+
 * Mon Mar 21 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.3-alt2
 - Add cve fix to changelog
 - Fixes: CVE-2022-0811

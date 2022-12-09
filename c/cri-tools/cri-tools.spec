@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name:     cri-tools
-Version:  1.22.0
+Version:  1.24.2
 Release:  alt1
 
 Summary:  CLI and validation tools for Kubelet Container Runtime Interface (CRI)
@@ -68,6 +68,9 @@ install -Dpm 644 crictl-fish-completion -T %buildroot%_datadir/fish/vendor_compl
 %doc docs
 
 %changelog
+* Sat Jun 04 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.24.2-alt1
+- new version 1.24.2
+
 * Thu Dec 02 2021 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.0-alt1
 - new version 1.22.0
 - add zsh and fish completions

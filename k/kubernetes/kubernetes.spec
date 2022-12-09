@@ -6,7 +6,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: kubernetes
-Version: 1.22.8
+Version: 1.24.8
 Release: alt1
 Summary: Container cluster management
 
@@ -337,6 +337,9 @@ fi
 %_sysctldir/99-kubernetes-cri.conf
 
 %changelog
+* Mon Nov 21 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.24.8-alt1
+- 1.24.8
+
 * Tue Mar 22 2022 Mikhail Gordeev <obirvalger@altlinux.org> 1.22.8-alt1
 - 1.22.8
 
