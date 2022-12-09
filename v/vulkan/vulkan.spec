@@ -1,6 +1,6 @@
 Name: vulkan
 Version: 1.3.231
-Release: alt2
+Release: alt2.1
 Summary: Khronos group Vulkan API SDK
 
 Group: System/Libraries
@@ -117,7 +117,7 @@ popd
 for dir in loader layers; do
 pushd %_builddir/vulkan-"$dir"
 %cmake \
-	   -DBUILD_WERROR=OFF \
+	   -DBUILD_WERROR=OFF \
 	   -DSPIRV_TOOLS_SEARCH_PATH=%_libdir \
 	   -DSPIRV_TOOLS_OPT_SEARCH_PATH=%_libdir \
 	   -DVULKAN_HEADERS_INSTALL_DIR=%buildroot \
@@ -188,6 +188,9 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Fri Dec 09 2022 Ivan A. Melnikov <iv@altlinux.org> 1.3.231-alt2.1
+- NMU: spec: Fix nbsp in previous release to really disable Werror.
+
 * Thu Dec 08 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.231-alt2
 - Disable Werror (as upstream did in 91b97cf42b44a0f01545f719c2c015b00a34e5b2).
 
