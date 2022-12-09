@@ -2,29 +2,32 @@
 
 %define confextensiondir %_sysconfdir/php/%php_extension
 %define extensiondir %php_moddir/%php_extension
-%define docdir %_docdir/%name-%version
+%define docdir %_docdir/%name-%version-%release
+%if "%_php_suffix" == "8.1"
+%def_with pack_extension
+%endif
 
 Name: php%_php_suffix-%php_extension
 Version: 4.4.1
-Release: alt%php_version.%php_release
+Release: alt%php_version.%php_release.1
 
 Summary: 2D graph plotting library for PHP
 License: %qpl1
 Group: System/Servers
-
 Url: http://jpgraph.net
 BuildArch: noarch
 
-#see http://jpgraph.net/download/download.php?p=1
+%if_with pack_extension
 Source: php-%php_extension-%version.tar
 Source10: README.ALT
 Patch: php-%php_extension-%version-alt-config.patch
+%endif
 
 Provides: %extensiondir
 
-Requires: php%_php_suffix >= 7.0
+Requires: php%_php_suffix
 Requires: php%_php_suffix-gd2
-Requires: %docdir
+Requires: php-%php_extension = %version
 
 BuildRequires: php-devel = %php_version
 
@@ -41,14 +44,29 @@ a large WEB development undertaking. In addition the library allows
 images to be created using the command line version of PHP
 (the cli version).
 
-%package doc
+%if_with pack_extension
+%package -n php-%php_extension-doc
 Summary: JpGraph documentation
 Group: Books/Other
 AutoReq: no
 
-%description doc
+%description -n php-%php_extension-doc
 This package contains the JpGraph library documentation in HTML format.
 
+%package -n php-%php_extension
+Summary: %summary
+Group: System/Servers
+
+%description -n php-%php_extension
+The JpGraph library is a 2D graph plotting library for PHP. It is meant
+to significantly simplify the creation of dynamic graphs using PHP
+scripting. The libray can be used on its own or as an embedded part of
+a large WEB development undertaking. In addition the library allows
+images to be created using the command line version of PHP
+(the cli version).
+%endif
+
+%if_with pack_extension
 %prep
 %setup -n php-%php_extension-%version
 %patch0 -p1
@@ -72,20 +90,28 @@ mkdir -p %buildroot%docdir
 install -m 644 src/README VERSION  %buildroot%docdir/
 install -m 644 %SOURCE10 %buildroot%docdir/
 cp -a docs %buildroot%docdir/html/
+%endif
 
-%files
+%if_with pack_extension
+%files -n php-%php_extension
 %doc %docdir/
 %exclude %docdir/html/
 %extensiondir/
 %exclude %extensiondir/Examples
 %config(noreplace) %confextensiondir/
 
-%files doc
+%files -n php-%php_extension-doc
 %doc %docdir/html/
+%endif
+
+%files
 
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Thu Dec 08 2022 Anton Farygin <rider@altlinux.ru> 4.4.1-alt%php_version.%php_release
+- separated the package to extension and package of dependencies for each supported version of PHP
 
 * Wed Nov 09 2022 Anton Farygin <rider@altlinux.ru> 4.4.1-alt1
 - 4.4.1
