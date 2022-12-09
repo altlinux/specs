@@ -1,24 +1,31 @@
-%define oname cachetools
+%define _unpackaged_files_terminate_build 1
+%define pypi_name cachetools
 
-Name:       python3-module-%oname
-Version:    3.1.1
-Release:    alt2
+%def_with check
 
-Summary:    Extensible memoizing collections and decorators
-License:    MIT
-Group:      Development/Python3
-Url:        https://pypi.python.org/pypi/cachetools/
+Name: python3-module-%pypi_name
+Version: 5.2.0
+Release: alt1
 
-BuildArch:  noarch
+Summary: Extensible memoizing collections and decorators
+License: MIT
+Group: Development/Python3
+Url: https://pypi.org/project/cachetools
+VCS: https://github.com/tkem/cachetools
 
-#           https://github.com/tkem/cachetools.git
-Source:     %name-%version.tar
+BuildArch: noarch
+
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose
 
-%py3_provides %oname
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
+%if_with check
+BuildRequires: python3(pytest)
+%endif
 
 %description
 This module provides various memoizing collections and decorators,
@@ -29,20 +36,25 @@ decorator.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
+# override upstream's config (too much to patch)
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc *.rst docs/*.rst
-%python3_sitelibdir/*
-
+%python3_sitelibdir/cachetools/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Dec 09 2022 Stanislav Levin <slev@altlinux.org> 5.2.0-alt1
+- 3.1.1 -> 5.2.0.
+
 * Thu Feb 06 2020 Andrey Bychkov <mrdrew@altlinux.org> 3.1.1-alt2
 - Build for python2 disabled.
 
