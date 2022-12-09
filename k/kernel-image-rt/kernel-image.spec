@@ -5,8 +5,8 @@
 %define kflavour		rt
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
-%define kernel_sublevel	.153
-%define kernel_rt_release	rt76
+%define kernel_sublevel	.158
+%define kernel_rt_release	rt77
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -425,6 +425,9 @@ check-pesign-helper /boot/vmlinuz-%kversion-%flavour-%krelease
 %files checkinstall
 
 %changelog
+* Fri Dec 09 2022 Kernel Bot <kernelbot@altlinux.org> 5.10.158-alt1.rt77
+- v5.10.158-rt77 (2022-12-08).
+
 * Sat Nov 05 2022 Kernel Bot <kernelbot@altlinux.org> 5.10.153-alt1.rt76
 - v5.10.153-rt76 (2022-11-04).
 
