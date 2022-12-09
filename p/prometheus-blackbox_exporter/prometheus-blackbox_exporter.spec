@@ -5,7 +5,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 0.19.0
+Version: 0.23.0
 Release: alt1
 Summary: Prometheus blackbox prober exporter
 
@@ -20,7 +20,7 @@ Source4: %name.service
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
-BuildRequires: promu
+#BuildRequires: promu
 BuildRequires: /proc
 
 Requires(pre): prometheus-common
@@ -37,16 +37,24 @@ export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
 %golang_prepare
-promu build
+#promu build
+export BUILDTAGS="netgo"
+export LDFLAGS="-X github.com/prometheus/common/version.Version=%version \
+         -X github.com/prometheus/common/version.Revision=%release \
+         -X github.com/prometheus/common/version.Branch=tarball \
+         -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
+
+%golang_build .
 
 %install
-#export BUILDDIR="$PWD/.gopath"
+export BUILDDIR="$PWD/.gopath"
 #export GOPATH="%go_path"
-#%golang_install
-#rm -rf -- %buildroot%_datadir
+%golang_install
+rm -rf -- %buildroot%_datadir
+rm -rf -- %buildroot%go_root
 mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_sysconfdir/{sysconfig,prometheus}}
 
-install -m0755 %oname %buildroot%_bindir/%oname
+#install -m0755 %oname %buildroot%_bindir/%oname
 install -m0644 blackbox.yml %buildroot%_sysconfdir/prometheus/blackbox.yml
 install -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -m0755 %SOURCE3 %buildroot%_initdir/%name
@@ -67,6 +75,9 @@ install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
 %config(noreplace) %_sysconfdir/prometheus/blackbox.yml
 
 %changelog
+* Fri Dec 09 2022 Alexey Shabalin <shaba@altlinux.org> 0.23.0-alt1
+- 0.23.0
+
 * Fri Jul 30 2021 Alexey Shabalin <shaba@altlinux.org> 0.19.0-alt1
 - 0.19.0
 
