@@ -8,7 +8,7 @@
 
 Name: lib%oname
 Version: 2.1.0
-Release: alt15
+Release: alt15.1
 
 Summary: Awesome music visualizer
 License: LGPLv2.1
@@ -105,6 +105,12 @@ Static projectM library.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p2
+%ifarch %e2k
+# This line from "libvisual.h" is poisonous to some system headers:
+# "#define inline  inline __attribute__ ((always_inline))"
+sed -i '/<libvisual\/libvisual\.h>/i #include <sstream>' \
+	src/projectM-libvisual/actor_projectM.cpp
+%endif
 
 %build
 %add_optflags -std=gnu++11
@@ -171,6 +177,9 @@ ln -s /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf %buildroot/%_datadir/%oname
 # - consider https://src.fedoraproject.org/rpms/libprojectM/raw/master/f/libprojectM-c++14.patch
 
 %changelog
+* Fri Dec 09 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.1.0-alt15.1
+- Fixed build for Elbrus.
+
 * Fri Nov 12 2021 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt15
 - build wihtout Qt4
 
