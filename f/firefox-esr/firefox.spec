@@ -9,14 +9,14 @@
 %define nss_version   3.72
 %define rust_version  1.60.0
 %define cargo_version 1.60.0
-%define llvm_version  13.0
+%define llvm_version  12.0
 
 Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR version)
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
 Version: 102.5.0
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -508,6 +508,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri Dec 09 2022 Pavel Vasenkov <pav@altlinux.org> 102.5.0-alt2
+- Build with llvm-version 12 instead llvm-version 13 (Closes: #44436)
+
 * Wed Nov 16 2022 Pavel Vasenkov <pav@altlinux.org> 102.5.0-alt1
 - New ESR version.
 - Security fixes:
