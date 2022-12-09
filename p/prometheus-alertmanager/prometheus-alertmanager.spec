@@ -1,12 +1,11 @@
 
 %define oname alertmanager
 %global import_path github.com/prometheus/alertmanager
-%global commit 4c6c03ebfe21009c546e4d1e9b92c371d67c021d
 %global _unpackaged_files_terminate_build 1
 
 Name: prometheus-%oname
-Version: 0.21.0
-Release: alt2
+Version: 0.24.0
+Release: alt1
 Summary: Prometheus Alertmanager
 
 Group: Development/Other
@@ -17,11 +16,10 @@ Source: %name-%version.tar
 Source2: %name.sysconfig
 Source3: %name.init
 Source4: %name.service
-Source5: %name.yml
 
 ExclusiveArch:  %go_arches
 BuildRequires(pre): rpm-build-golang
-BuildRequires: promu
+#BuildRequires: promu
 BuildRequires: /proc
 
 Requires(pre): prometheus-common
@@ -40,23 +38,29 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
-promu build
+#promu build
+export LDFLAGS="-X github.com/prometheus/common/version.Version=%version  \
+         -X github.com/prometheus/common/version.Revision=%release \
+         -X github.com/prometheus/common/version.Branch=tarball      \
+         -X github.com/prometheus/common/version.BuildDate=$(date -u +%%Y%%m%%d)"
+%golang_build cmd/*
 
 %install
-#export BUILDDIR="$PWD/.gopath"
-#export GOPATH="%go_path"
-#%golang_install
-#rm -rf -- %buildroot%_datadir
+export BUILDDIR="$PWD/.gopath"
+%golang_install
+rm -rf -- %buildroot%_datadir
+rm -rf -- %buildroot%go_root
+
 mkdir -p %buildroot{%_bindir,%_initdir,%_unitdir,%_sysconfdir/{sysconfig,prometheus},%_localstatedir/prometheus/%oname}
 mkdir -p %buildroot%_sysconfdir/prometheus/alertmanager/templates
 
-install -m0755 %oname %buildroot%_bindir/%oname
-install -m0755 amtool %buildroot%_bindir/amtool
-install -m0644 %SOURCE5 %buildroot%_sysconfdir/prometheus/%oname.yml
+#install -m0755 %oname %buildroot%_bindir/%oname
+#install -m0755 amtool %buildroot%_bindir/amtool
+install -m0644 doc/examples/simple.yml %buildroot%_sysconfdir/prometheus/%oname.yml
 install -m0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 install -m0755 %SOURCE3 %buildroot%_initdir/%name
 install -m0644 %SOURCE4 %buildroot%_unitdir/%name.service
-install -m0644 template/default.tmpl %buildroot%_sysconfdir/prometheus/alertmanager/templates/default.tmpl
+install -m0644 template/*.tmpl %buildroot%_sysconfdir/prometheus/alertmanager/templates/
 
 %post
 %post_service %name
@@ -71,12 +75,13 @@ install -m0644 template/default.tmpl %buildroot%_sysconfdir/prometheus/alertmana
 %_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_sysconfdir/prometheus/%oname.yml
-%dir %_sysconfdir/prometheus/alertmanager
-%dir %_sysconfdir/prometheus/alertmanager/templates
-%config(noreplace) %_sysconfdir/prometheus/alertmanager/templates/*.tmpl
+%_sysconfdir/prometheus/alertmanager
 %dir %attr(775, root, prometheus) %_localstatedir/prometheus/%oname
 
 %changelog
+* Fri Dec 09 2022 Alexey Shabalin <shaba@altlinux.org> 0.24.0-alt1
+- 0.24.0
+
 * Mon Feb 07 2022 Alexey Shabalin <shaba@altlinux.org> 0.21.0-alt2
 - Fix config example.
 
