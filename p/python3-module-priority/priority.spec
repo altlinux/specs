@@ -1,9 +1,10 @@
-%def_without check
+%def_with check
 
-%define modulename priority
-Name: python3-module-priority
-Version: 1.3.0
-Release: alt2
+%define oname priority
+
+Name: python3-module-%oname
+Version: 2.0.0
+Release: alt1
 
 Summary: A pure-Python implementation of the HTTP/2 priority tree
 
@@ -11,15 +12,19 @@ Url: http://python-hyper.org/priority/
 License: MIT
 Group: Development/Python3
 
-
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://pypi.io/packages/source/p/%modulename/%modulename-%version.tar.gz
+# https://github.com/python-hyper/priority
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+
+%if_with check
+BuildRequires: python3-module-pytest-cov
+BuildRequires: python3-module-hypothesis
+%endif
 
 %description
 Priority is a pure-Python implementation of the priority logic for HTTP/2, set
@@ -49,10 +54,17 @@ requests of their clients.
 %install
 %python3_install
 
+%check
+%tox_check
+
 %files
 %python3_sitelibdir/*
 
 %changelog
+* Thu Dec 08 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Build new version.
+- Build with check.
+
 * Thu Aug 05 2021 Grigory Ustinov <grenka@altlinux.org> 1.3.0-alt2
 - Drop python2 support.
 
