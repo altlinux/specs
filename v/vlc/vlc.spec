@@ -4,7 +4,7 @@
 
 Name: vlc
 Version: 3.0.18
-Release: alt1
+Release: alt2
 
 Summary: VLC media player
 License: GPLv2
@@ -619,6 +619,11 @@ This package contains fortunes from VLC media player.
 
 %prep
 %setup
+%ifarch %e2k
+# as of lcc 1.25.23 / 1.26.16 (mcst#7693)
+sed -i "s/#include <stdalign.h>/#define alignas(n) __attribute__((aligned(n)))/" \
+	modules/video_filter/deinterlace/yadif.h
+%endif
 echo %version-%release > src/revision.txt
 
 %build
@@ -1369,6 +1374,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Fri Dec 09 2022 Michael Shigorin <mike@altlinux.org> 3.0.18-alt2
+- E2K: ftbfs workaround by ilyakurdyukov@ (mcst#7693)
+
 * Mon Dec 05 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0.18-alt1
 - 3.0.18 released
 
