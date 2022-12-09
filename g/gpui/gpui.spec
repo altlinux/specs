@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt10
+Release: alt11
 
 Summary: Group policy editor
 License: GPLv2+
@@ -110,6 +110,17 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Fri Dec 09 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt11
+- 0.2.17-alt11
+- Fixes:
+  + #89597 Fix message box.
+  + #88897 Ask to save changes.
+  + #75885 Add sort to drop down list elements.
+  +        Fix set correct resource for non existent registry.pol files.
+  +        Fix copy policy to copied item.
+  + #76835 Fix policy names.
+  + #88907 Fix google chrome policies handling.
+
 * Tue Dec 06 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt10
 - 0.2.17-alt10
 - Fixes:
