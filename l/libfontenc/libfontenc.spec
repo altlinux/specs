@@ -1,5 +1,5 @@
 Name: libfontenc
-Version: 1.1.6
+Version: 1.1.7
 Release: alt1
 Summary: The fontenc Library
 License: MIT/X11
@@ -48,6 +48,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Dec 09 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.1.7-alt1
+- 1.1.7
+
 * Wed Oct 19 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.1.6-alt1
 - 1.1.6
 
