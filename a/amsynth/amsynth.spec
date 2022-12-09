@@ -1,8 +1,8 @@
 %define gcc_version 5.0
 
 Name: amsynth
-Version: 1.6.4
-Release: alt1.1
+Version: 1.13.0
+Release: alt1
 Summary: A classic synthesizer with dual oscillators
 
 License: GPLv2+
@@ -10,17 +10,18 @@ Group: Sound
 Url: https://github.com/amsynth/amsynth
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
-Source: release-%version/%name-%version.tar.gz
+Source: release-%version/%name-%version.tar
 Source1: %name.appdata.xml
 Source2: lv2-%name-plugin.metainfo.xml
 Source3: dssi-%name-plugin.metainfo.xml
 Source4: vst-%name-plugin.metainfo.xml
 
-# Automatically added by buildreq on Mon Nov 23 2015
-# optimized out: fontconfig fontconfig-devel glib2-devel ladspa_sdk libX11-devel libalsa-devel libatk-devel libatkmm-devel libcairo-devel libcairomm-devel libdbus-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgtk+2-devel libjack-devel libpango-devel libpangomm-devel libsigc++2-devel libstdc++-devel libuuid-devel libxml2-devel pkg-config xorg-xproto-devel
-BuildRequires: dssi-devel gcc-c++ glibc-devel-static libxcb libgtkmm2-devel liblash-devel liblo-devel libsndfile-devel
+# Automatically added by buildreq on Fri Dec 09 2022
+# optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 ladspa_sdk libX11-devel libalsa-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libjack-devel libpango-devel libstdc++-devel libuuid-devel perl perl-Encode perl-XML-Parser perl-parent pkg-config python3 python3-base sh4 xorg-proto-devel
+BuildRequires: dssi-devel gcc-c++ glibc-devel-static intltool libgtk+2-devel liblash-devel liblo-devel lv2-devel pandoc
 
 BuildRequires: liblo-devel libsndfile-devel
+BuildRequires:  autoconf-archive
 
 BuildRequires:  appliance-base-glibc glibc-utils
 BuildRequires:  libgtk2-devel libgtkmm3-devel
@@ -29,7 +30,6 @@ BuildRequires:  libGL-devel libEGL-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 Requires:       jack-audio-connection-kit libsndfile-utils lash
-
 
 
 %description
@@ -83,19 +83,29 @@ Amsynth plugin for the vst protocl
 %prep
 %setup
 
-%autoreconf
-
 #./autogen.sh
 
-%add_optflags -std=c++11
+%add_optflags -std=gnu++11
+
+%autoreconf
+
+%__aclocal
+%__automake -a
+
+
 
 %configure \
+--with-gnu-ld \
 --with-jack \
+--with-gui \
 --with-alsa \
 --with-jack \
 --with-sndfile \
 --with-lash \
+--with-lv2 \
+--with-pandoc \
 --with-dssi
+
 
 %build
 # Build in C++11 mode as glibmm headers use C++11 features. This can be dropped
@@ -105,7 +115,7 @@ Amsynth plugin for the vst protocl
 %make_build
 
 %install
-DESTDIR=%buildroot %makeinstall
+DESTDIR=%buildroot %makeinstall_std
 
 # Install appdata files
 install -d -m 755  %buildroot%_datadir/appdata/
@@ -117,11 +127,16 @@ install -pDm644 %SOURCE4 %buildroot%_datadir/appdata/
 # desktop-file-validate %buildroot%_desktopdir/%name.desktop
 # appstream-util validate-relax --nonet %buildroot%_datadir/appdata/*%name.*.xml
 
-%files
+%find_lang --with-man --with-qt %name
+
+%files -f %name.lang
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_liconsdir/%name.png
+%_iconsdir/hicolor/scalable/apps/amsynth.svg
 %_datadir/appdata/%name.appdata.xml
+%_man1dir/*
+
 
 %files data
 %doc README AUTHORS
@@ -142,6 +157,9 @@ install -pDm644 %SOURCE4 %buildroot%_datadir/appdata/
 %_datadir/appdata/vst-%name-plugin.metainfo.xml
 
 %changelog
+* Fri Dec 09 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.13.0-alt1
+- Version 1.13.0 (closes: #40317)
+
 * Wed Oct 11 2017 Igor Vlasenko <viy@altlinux.ru> 1.6.4-alt1.1
 - NMU: rebuild with new lv2
 
