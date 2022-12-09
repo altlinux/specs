@@ -1,5 +1,5 @@
 Name: installer-distro-alt-workstation
-Version: 10.1.0
+Version: 10.2.0
 Release: alt1
 
 Summary: Installer configuration (ALT Workstation)
@@ -45,7 +45,7 @@ Group: System/Configuration/Other
 %ifarch  %ix86 x86_64 aarch64 ppc64le
 Requires: alterator-grub
 %endif
-Requires: alterator-users
+Requires: alterator-users >= 10.14-alt1
 Requires: alterator-root
 Requires: alterator-luks
 Requires: alterator-net-eth
@@ -73,6 +73,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Thu Dec 08 2022 Mikhail Efremov <sem@altlinux.org> 10.2.0-alt1
+- stage2: Rewrite 80-setup-user-groups.
+
 * Wed Aug 24 2022 Mikhail Efremov <sem@altlinux.org> 10.1.0-alt1
 - stage2: Replace vm step with vm-ortodox.
 - stage2: Include user to fuse group.

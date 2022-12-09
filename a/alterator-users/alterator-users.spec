@@ -1,5 +1,5 @@
 Name: alterator-users
-Version: 10.13
+Version: 10.14
 Release: alt1
 
 Summary: alterator module for system users administration
@@ -45,6 +45,11 @@ alterator module for system users administration
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Dec 08 2022 Mikhail Efremov <sem@altlinux.org> 10.14-alt1
+- backend: Add group 'users' to default groups list.
+- backend: Use installer default groups with libnss-role.
+- backend: Add support for default-groups.d in the installer.
+
 * Tue Aug 10 2021 Ivan Savin <svn17@altlinux.org> 10.13-alt1
 - Add display of groups to which the user belongs
 - Add the ability to assign system roles to a user

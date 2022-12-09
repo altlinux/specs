@@ -1,5 +1,5 @@
 Name: installer-feature-samba-usershares
-Version: 0.4.1
+Version: 1.0.0
 Release: alt1
 
 Summary: Installer hooks for Samba usershares
@@ -16,7 +16,6 @@ enabling Samba usershares.
 %package stage2
 Summary: Installer stage2 hook for Samba usershares
 Group: System/Configuration/Other
-Requires: samba
 
 %description stage2
 This package contains installer stage2 hook for
@@ -34,6 +33,12 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Dec 08 2022 Mikhail Efremov <sem@altlinux.org> 1.0.0-alt1
+- Don't require samba.
+- Use control role-usershares if libnss-role enabled.
+- Use drop-in file for alterator-users with usershare group.
+- Use samba-usershares package.
+
 * Tue Apr 12 2016 Michael Shigorin <mike@altlinux.org> 0.4.1-alt1
 - Don't do anything if samba is unavailable.
 
