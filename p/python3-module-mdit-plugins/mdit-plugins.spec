@@ -4,7 +4,7 @@
 %define mname mdit_py_plugins
 
 Name: python3-module-%oname
-Version: 0.3.1
+Version: 0.3.3
 Release: alt1
 Summary: Collection of core plugins for markdown-it-py 
 License: MIT
@@ -56,6 +56,9 @@ py.test3 -vv \
 %python3_sitelibdir/%mname-%version.dist-info
 
 %changelog
+* Fri Dec 09 2022 Grigory Ustinov <grenka@altlinux.org> 0.3.3-alt1
+- Automatically updated to 0.3.3.
+
 * Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 0.3.1-alt1
 - Automatically updated to 0.3.1.
 
