@@ -1,80 +1,57 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytz
+%define pypi_name pytz
 
-Name: python-module-%oname
+Name: python3-module-%pypi_name
 Epoch: 1
-Version: 2021.1
-Release: alt2
-
-%setup_python_module %oname
+Version: 2022.6
+Release: alt1
 
 Summary: World timezone definitions, modern and historical
-Source0: https://files.pythonhosted.org/packages/70/44/404ec10dca553032900a65bcded8b8280cf7c64cc3b723324e2181bf93c9/pytz-%{version}.tar.gz
+Source0: %pypi_name-%version.tar
 License: MIT
 Group: Development/Python
 BuildArch: noarch
-Url: http://pytz.sourceforge.net
+Url: https://pypi.org/project/pytz
+VCS: https://github.com/stub42/pytz
+
+BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
-pytz brings the Olson tz database into Python. This library allows
-accurate and cross platform timezone calculations using Python 2.3
-or higher. It also solves the issue of ambiguous times at the end
-of daylight savings, which you can read more about in the Python
-Library Reference (datetime.tzinfo).
-
-%package tests
-Summary: Tests for pytz
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-pytz brings the Olson tz database into Python. This library allows
-accurate and cross platform timezone calculations using Python 2.3
-or higher. It also solves the issue of ambiguous times at the end
-of daylight savings, which you can read more about in the Python
-Library Reference (datetime.tzinfo).
-
-This package contains tests for pytz.
-
-%package -n %oname-zoneinfo
-Summary: Archive with zoneinfo
-Group: Development/Python
-
-%description -n %oname-zoneinfo
-Archive with zoneinfo.
+pytz brings the Olson tz database into Python. This library allows accurate and
+cross platform timezone calculations using Python 2.4 or higher. It also solves
+the issue of ambiguous times at the end of daylight saving time, which you can
+read more about in the Python Library Reference (datetime.tzinfo).
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %pypi_name-%version
 
 %build
-%python_build
+%pyproject_build
 
 %install
-%python_install --optimize=2 --record=INSTALLED_FILES
-install -d %buildroot%python_sitelibdir/%modulename/tests
-install -p -m644 %modulename/tests/* \
-	%buildroot%python_sitelibdir/%modulename/tests
-touch %buildroot%python_sitelibdir/%modulename/tests/__init__.py
+%pyproject_install
 
-install -d %buildroot%_datadir/%modulename
-pushd %buildroot%python_sitelibdir/%modulename/zoneinfo
-tar -czf %buildroot%_datadir/%modulename/zoneinfo.tar.gz *
-popd
+%check
+# sync to .github/workflows/main.yml
+cat > tox.ini <<'EOF'
+[testenv]
+commands =
+    python pytz/tests/test_lazy.py -vv
+    python pytz/tests/test_tzinfo.py -vv
+EOF
+%tox_check_pyproject
 
-%files -f INSTALLED_FILES
-%python_sitelibdir/%modulename
-%exclude %python_sitelibdir/%modulename/tests
-%doc *.txt
-
-%files tests
-%python_sitelibdir/%modulename/tests
-
-%files -n %oname-zoneinfo
-%_datadir/%modulename
+%files
+%python3_sitelibdir/pytz/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
-* Thu Dec 08 2022 Stanislav Levin <slev@altlinux.org> 1:2021.1-alt2
-- Built Python3 package from its own src.
+* Thu Dec 08 2022 Stanislav Levin <slev@altlinux.org> 1:2022.6-alt1
+- 2021.1 -> 2022.6.
 
 * Tue Mar 16 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2021.1-alt1
 - 2021.1 released
@@ -103,7 +80,7 @@ popd
 - Version 2015.4
 
 * Thu Dec 04 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2014.10-alt2
-- Added %oname-zoneinfo
+- Added %%oname-zoneinfo
 
 * Thu Nov 27 2014 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2014.10-alt1
 - Version 2014.10
