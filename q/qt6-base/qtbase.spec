@@ -10,7 +10,6 @@
 %define IF_ver_not_eq() %if "%(rpmvercmp '%1' '%2')" != "0"
 %define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 
-%def_disable bootstrap
 %def_enable sql_pgsql
 %def_enable sql_odbc
 %def_enable sql_ibase
@@ -34,7 +33,12 @@
 Name: qt6-base
 %define major  6
 Version: 6.2.4
-Release: alt3
+Release: alt4
+%if "%version" == "%{get_version qt6-tools-common}"
+%def_disable bootstrap
+%else
+%def_enable bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt%major - QtBase components
@@ -64,8 +68,9 @@ Patch1005: e2k-qt-6.patch
 # Automatically added by buildreq on Fri Nov 26 2021 (-bi)
 # optimized out: at-spi2-atk bash4 bashrc cmake cmake-modules debugedit elfutils fontconfig fontconfig-devel gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 icu-utils libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXmu-devel libXrender-devel libXt-devel libalsa-devel libassuan-devel libat-spi2-core libatk-devel libatomic_ops-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcanberra-devel libcom_err-devel libcrypt-devel libctf-nobfd0 libdbus-devel libdouble-conversion3 libffi-devel libfreetype-devel libgdbm-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglvnd-devel libgmp-devel libgpg-error libgpg-error-devel libharfbuzz-devel libicu-devel libjpeg-devel libkrb5-devel libmpfr-devel libncurses-devel libp11-kit libpango-devel libpng-devel libpopt-devel libsasl2-3 libsndfile-devel libssl-devel libstdc++-devel libtinfo-devel libudev-devel libunixODBC-devel-compat libverto-devel libvulkan-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server libxcb-devel libxcb-render-util libxcbutil-icccm libxcbutil-image libxcbutil-keysyms libxkbcommon-devel libxkbcommon-x11 perl pkg-config postgresql-devel python-modules python2-base python3 python3-base python3-module-paste rpm-build-file rpm-build-python3 rpm-macros-python sh4 tcl-devel tzdata wayland-devel xorg-proto-devel xorg-xf86miscproto-devel xxd zlib-devel zlib-devel-static
 #BuildRequires: aalib-devel asio-devel binutils-devel bzlib-devel catch-devel ccmake cmark-devel drumstick-devel ebook-tools-devel eglexternalplatform-devel firebird-devel flex flite-devel frei0r-devel gambit glslang id3lib-devel ilbc-devel imlib2-devel ktoblzcheck-devel ladspa_sdk libGLU-devel libGeoIP-devel libXScrnSaver-devel libXaw-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libaio-devel libarchive-devel libargon2-devel libat-spi2-core-devel libaudiofile-devel libaudit-devel libbrotli-devel libcanberra-gtk-common-devel libcap-ng-devel libcares-devel libcdaudio-devel libcdparanoia-devel libcheck-devel libchm-devel libchromaprint-devel libcmocka-devel libcrossguid-devel libcryptsetup-devel libcups-devel libdb4-devel libdca-devel libddcutil-devel libdevmapper-devel libdiscount-devel libdmtx-devel libdouble-conversion-devel libdrm-devel libedit-devel libelf-devel libenca-devel libevent-devel libexpat-devel libf2c-ng-devel libfaad-devel libfaudio-devel libfftw3-devel libfluidsynth-devel libfreetds-devel libfuse-devel libgadu-devel libgamin-devel libgbm-devel libgc-devel libgcrypt-devel libgd3-devel libgit2-devel libgmpxx-devel libgpgme-devel libgps-devel libgsm-devel libgsoap-devel libgtk+3-devel libgts-devel libhdf5-devel libid3tag-devel libidn-devel libinput-devel libkmod-devel libksba-devel liblasi-devel liblcms-devel liblcms2-devel libldap-devel liblirc-devel liblksctp-devel liblmdb-devel liblmdbxx-devel liblrdf-devel libltdl7-devel liblz4-devel liblzma-devel libmad-devel libmd-devel libmicrohttpd-devel libmng-devel libmpg123-devel libmsgpack-devel libmtdev-devel libmtp-devel libmtxclient-devel libmuparser-devel libmysqlclient21-devel libnewt-devel libnpth-devel libopenconnect-devel libopenslp-devel libpcap-devel libpciaccess-devel libpcre2-devel libportaudio2-devel libproj-devel libproxy-devel libpth-devel libpwquality-devel libqrencode4-devel libredland-devel libsamplerate-devel libscotch-devel libseccomp-devel libshape-devel libsnappy-devel libsodium-devel libsox-devel libsoxr-devel libspnav-devel libsqlite3-devel libssh2-devel libsuitesparse-devel libsystemd-devel libtar-devel libtasn1-devel libtidy-devel libtiff-devel libtimidity-devel libts-devel libturbojpeg-devel libtwolame-devel libunixODBC-devel libusb-compat-devel libusbmuxd-devel libutempter-devel libuv-devel libv4l-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel libwildmidi-devel libwlocate-devel libx264-devel libx265-devel libxapian-devel libxcb-render-util-devel libxcbutil-cursor-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-keysyms-devel libxine2-devel libxkbcommon-x11-devel libxkbfile-devel libxosd-devel libxvid-devel libyasm-devel libzbar-devel libzip-devel libzstd-devel libzvbi-devel lua-devel lv2-devel mpir-devel ninja-build postgresql-devel-static python-modules-compiler python3-dev swig tbb-devel tinyxml-devel tk-devel
+BuildRequires(pre): qt6-tools-common
 BuildRequires: cmake gcc-c++ ninja-build
-BuildRequires: binutils-devel bzlib-devel libb2-devel libssl-devel libdbus-devel
+BuildRequires: binutils-devel bzlib-devel libb2-devel libssl-devel libdbus-devel libkrb5-devel
 BuildRequires: eglexternalplatform-devel flex libGLU-devel
 BuildRequires: libXScrnSaver-devel libXaw-devel libXcomposite-devel libXcursor-devel libXdamage-devel
 BuildRequires: libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel libXres-devel libXtst-devel
@@ -382,6 +387,7 @@ popd
 sed -i '/^qt_internal_add_example.*htmlinfo.*/d' examples/xml/CMakeLists.txt
 
 %build
+%define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 unset QTDIR QTLIB QTINC
 export QT_DIR="$PWD"
 export PATH=$QT_DIR/bin:$PATH
@@ -465,16 +471,14 @@ cmake .. \
 #    -DINPUT_opengl=%opengl_type \
 popd
 cmake --build BUILD %_smp_mflags --verbose
-%if_disabled bootstrap
+%if %qdoc_found
 cmake --build BUILD --target docs
 %endif
 
 %install
 cmake --install BUILD --prefix %buildroot/%prefix
-%if_disabled bootstrap
 %if %qdoc_found
 DESTDIR=%buildroot cmake --build BUILD --target install_docs
-%endif
 %endif
 
 # install private qtxcb headers
@@ -627,7 +631,7 @@ ln -s `relative %buildroot/%_qt6_headerdir %buildroot/%_qt6_prefix/include` %bui
 %_qt6_datadir/qtlogging.ini
 
 %files doc
-%if_disabled bootstrap
+%if %qdoc_found
 %doc %_qt6_docdir/*
 %exclude %_qt6_docdir/config/
 %exclude %_qt6_docdir/global/
@@ -791,6 +795,9 @@ ln -s `relative %buildroot/%_qt6_headerdir %buildroot/%_qt6_prefix/include` %bui
 %_qt6_libdir/libQt%{major}OpenGLWidgets.so.*
 
 %changelog
+* Fri Dec 09 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt4
+- automate bootstrap mode
+
 * Wed Jun 15 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt3
 - move some altlinux fixes from Qt5
 - build docs
