@@ -1,43 +1,58 @@
-%define pkgname	chardet
+%define _unpackaged_files_terminate_build 1
+%define pypi_name chardet
 
-Name: python3-module-chardet
-Version: 3.0.4
-Release: alt3
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 5.1.0
+Release: alt1
 Epoch: 1
 
 Summary: Character encoding auto-detection in Python
-
 License: LGPL-2.1
-Url: https://pypi.python.org/pypi/%pkgname
 Group: Development/Python3
 
-Packager: Evgenii Terechkov <evg@altlinux.ru>
-
-Source: https://pypi.python.org/packages/source/c/chardet/%pkgname-%version.tar
+Url: https://pypi.org/project/chardet/
+VCS: https://github.com/chardet/chardet
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%if_with check
+BuildRequires: python3(pytest)
+%endif
+
 %description
 Character encoding auto-detection in Python.
 
 %prep
-%setup -n %pkgname-%version
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-rm -rf %buildroot%_bindir/
+%check
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
-%python3_sitelibdir/%pkgname/
-%python3_sitelibdir/*.egg-info/
+%_bindir/chardetect
+%python3_sitelibdir/chardet/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Dec 09 2022 Stanislav Levin <slev@altlinux.org> 1:5.1.0-alt1
+- 3.0.4 -> 5.1.0.
+
 * Wed Sep 08 2021 Grigory Ustinov <grenka@altlinux.org> 1:3.0.4-alt3
 - Build without python2 support.
 
