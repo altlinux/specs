@@ -2,7 +2,7 @@
 
 Name: alterator-ports-access
 Version: 0.5.3
-Release: alt1
+Release: alt1.1
 BuildArch: noarch
 Source:%name-%version.tar
 Summary: alterator module to control ports access
@@ -58,6 +58,10 @@ touch %buildroot%_sysconfdir/udev/rules.d/99-alterator-ports-access-usbdevs.rule
 %ghost %_sysconfdir/udev/rules.d/99-alterator-ports-access-usbdevs.rules
 
 %changelog
+* Fri Dec 09 2022 Paul Wolneykien <manowar@altlinux.org> 0.5.3-alt1.1
+- Fixes:
+  + OVE-20221208-0002 Applying port access changes needs system restart.
+
 * Thu Mar 17 2022 Paul Wolneykien <manowar@altlinux.org> 0.5.3-alt1
 - Added -v option to turn on verbose mode.
 - Fixed help info output (closes: 42142).
