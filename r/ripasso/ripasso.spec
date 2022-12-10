@@ -7,7 +7,7 @@
 %def_without  qml
 
 Name: ripasso
-Version: 0.5.2
+Version: 0.6.0
 Release: alt1
 
 Summary: a simple password manager written in Rust
@@ -29,9 +29,9 @@ Source2: config.toml
 Source10: ripasso.sh
 
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Sat Jul 03 2021
-# optimized out: at-spi2-atk ca-trust fontconfig glib2-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libharfbuzz-devel libpango-devel libsasl2-3 libwayland-client libwayland-cursor libwayland-egl libxcb-devel llvm11.0-libs pkg-config python-modules python2-base python3 python3-base python3-module-paste ruby ruby-stdlibs rust sh4 zlib-devel
-BuildRequires: libgpgme-devel libssl-devel libxcb-devel zlib-devel
+# Automatically added by buildreq on Sat Dec 10 2022
+# optimized out: ca-trust clang13.0 clang13.0-devel clang13.0-libs clang13.0-libs-support glibc-kernheaders-generic glibc-kernheaders-x86 libassuan-devel libgmp-devel libgpg-error libgpg-error-devel libsasl2-3 llvm-common llvm13.0-libs llvm15.0-libs pkg-config python-modules python2-base python3 python3-base rust sh4
+BuildRequires: bzlib-devel clang libgpgme-devel libnettle-devel libssl-devel libxcb-devel
 
 BuildRequires: rust-cargo
 BuildRequires: /proc
@@ -99,6 +99,9 @@ cp -a -- target/translations/*  %buildroot%_datadir/%name/
 
 
 %changelog
+* Sat Dec 10 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.6.0-alt1
+- New version
+
 * Thu Feb 10 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.5.2-alt1
 - New version
 
