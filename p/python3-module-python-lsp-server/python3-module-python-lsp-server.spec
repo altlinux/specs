@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.5.0
+Version: 1.6.0
 Release: alt1
 
 Summary: Fork of the python-language-server project, maintained by the Spyder IDE team and the community
@@ -42,6 +42,7 @@ BuildRequires: python3(PyQt5)
 BuildRequires: python3(numpy)
 BuildRequires: python3(matplotlib)
 BuildRequires: python3(pandas)
+BuildRequires: python3(docstring_to_markdown)
 %endif
 
 BuildArch: noarch
@@ -71,6 +72,8 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sat Dec 10 2022 Ivan A. Melnikov <iv@altlinux.org> 1.6.0-alt1
+- 1.6.0
+
 * Thu Oct 06 2022 Anton Zhukharev <ancieg@altlinux.org> 1.5.0-alt1
 - initial build for Sisyphus
-
