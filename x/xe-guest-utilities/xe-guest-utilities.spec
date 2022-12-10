@@ -2,7 +2,7 @@
 #
 
 Name: xe-guest-utilities
-Version: 7.30.0
+Version: 7.31.0
 Release: alt1
 
 Summary: Xen Virtual Machine Monitoring Scripts
@@ -20,6 +20,7 @@ Patch0:  %name-%version-%release.patch
 Source2: xe-daemon.service
 Patch1:  xe-guest-utilities-1.30.0-alt-lsb.patch
 Patch2:  xe-guest-utilities-1.30.0-alt-altlinux.patch
+Patch3:  xe-guest-utilities-1.31.0-alt-Makefile.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-golang
@@ -50,6 +51,7 @@ a Xen virtual machine.
 tar xf %SOURCE1
 %patch1
 %patch2
+%patch3
 
 %build
 export GO111MODULE=auto
@@ -102,6 +104,9 @@ mv build/stage/etc/udev/rules.d/z10_xen-vcpu-hotplug.rules %buildroot%_udevrules
 
 
 %changelog
+* Sat Dec 10 2022 Nikolay A. Fetisov <naf@altlinux.org> 7.31.0-alt1
+- New version
+
 * Thu Feb 17 2022 Nikolay A. Fetisov <naf@altlinux.org> 7.30.0-alt1
 - Initial build for ALT Linux Sisyphus
 
