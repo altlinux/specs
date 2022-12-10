@@ -1,7 +1,7 @@
 %define abiversion 22
 Name: libdc1394
 Version: 2.2.5
-Release: alt1
+Release: alt1.1
 
 Summary: Library for 1394 Digital Camera Specification
 
@@ -15,6 +15,7 @@ Source: http://prdownloads.sf.net/%name/%name-%version.tar.bz2
 
 Patch1: libdc1394-13b85d2d23548682b617ddc1196f5560a27998bd.patch
 Patch2: libdc1394-2.1.3-alt-v4l.patch
+Patch2000: libdc1394-e2k.patch
 
 %define libraw1394_ver 2.0.4
 Requires: libraw1394 >= %libraw1394_ver
@@ -66,6 +67,11 @@ isochronous channel packets and test %name basic functionality.
 
 %prep
 %setup
+%ifarch %e2k
+%patch2000 -p1
+sed -E -i 's/u\.(reset|response|resource)/u->\1/g' dc1394/juju/control.c
+sed -i 's/iso\.i/iso->i/g' dc1394/juju/capture.c
+%endif
 
 #patch1 -p2
 #patch2 -p2
@@ -94,6 +100,9 @@ isochronous channel packets and test %name basic functionality.
 %_man1dir/*
 
 %changelog
+* Sat Dec 10 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.2.5-alt1.1
+- Added patch for Elbrus
+
 * Mon Jun 04 2018 Anton Farygin <rider@altlinux.ru> 2.2.5-alt1
 - 2.2.5
 
