@@ -3,7 +3,7 @@ Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
 Version: 107.0.1
-Release: alt1
+Release: alt2
 License: MPL-2.0
 Group: Networking/WWW
 URL: https://www.mozilla.org/firefox/
@@ -23,6 +23,7 @@ Patch009: 0009-bmo-1559213-Support-system-av1.patch
 Patch010: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch011: 0011-ALT-fix-double_t-redefinition.patch
 Patch012: 0012-build-Disable-Werror.patch
+Patch013: 0013-glxtest-delay-terminating-the-EGLDisplay.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -408,6 +409,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Sat Dec 10 2022 Alexey Gladkov <legion@altlinux.ru> 107.0.1-alt2
+- glxtest: Add patch to delay terminating the EGLDisplay.
+
 * Fri Dec 02 2022 Alexey Gladkov <legion@altlinux.ru> 107.0.1-alt1
 - New release (107.0.1).
 
