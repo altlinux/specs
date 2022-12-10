@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: woeusb
-Version: 5.1.2
+Version: 5.2.4
 Release: alt1
 Summary: Windows USB installation media creator
 Summary(ru_RU.UTF-8): Утилита для создания установочного USB накопителя с Windows
@@ -59,6 +59,9 @@ install -m 444 ./share/man/man1/woeusb.1 %buildroot%_man1dir/woeusb.1
 %_man1dir/woeusb.1.xz
 
 %changelog
+* Wed Dec 10 2022 Artyom Bystrov <arbars@altlinux.org> 5.2.4-alt1
+- Update to new version (ALT#43791)
+
 * Sun Sep 26 2021 Artyom Bystrov <arbars@altlinux.org> 5.1.2-alt1
 - Update to new version after rework of project
 
