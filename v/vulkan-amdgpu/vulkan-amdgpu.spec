@@ -21,8 +21,8 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2022.Q4.2
-Release: alt5
+Version: 2022.Q4.3
+Release: alt1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -114,6 +114,15 @@ install -p -m644 %SOURCE8 %buildroot%_vkldir/
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Sat Dec 10 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q4.3-alt1
+- 2022-12-9 update:
+  + icd: bump vulkan version
+  + llvm-project: Updated to 42a4d92d3c68
+  + gpurt: Updated to 385af58e0f1b
+  + llpc: Updated to 6c817737b654
+  + pal: Updated to 4a23f7ca61e2
+  + xgl: Updated to b358df546081
+
 * Wed Nov 23 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q4.2-alt5
 - Add implicit switchable_graphics layers, apparently, libvulkan doesn't read
   it from ICD json.
