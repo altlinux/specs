@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Log::Dispatchouli
 
 Name: perl-Log-Dispatchouli
-Version: 3.001
+Version: 3.002
 Release: alt1
 
 Summary: a simple wrapper around Log::Dispatch
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Fri Sep 17 2021
-# optimized out: perl perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Class-Data-Inheritable perl-Cpanel-JSON-XS perl-Data-OptList perl-Devel-StackTrace perl-Encode perl-Eval-Closure perl-Exception-Class perl-JSON-MaybeXS perl-JSON-PP perl-Log-Dispatch perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Role-Tiny perl-Specio perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python3 python3-base python3-module-paste python3-module-repoze sh4 sssd-client tzdata
-BuildRequires: perl-CPAN-Meta perl-Class-XSAccessor perl-Log-Dispatch-Array perl-Ref-Util perl-Ref-Util-XS perl-String-Flogger perl-Sub-Exporter-GlobExporter perl-Test-Deep perl-Test-Fatal
+# Automatically added by buildreq on Sat Dec 10 2022
+# optimized out: libgpg-error perl perl-B-Hooks-EndOfScope perl-CPAN-Meta-Requirements perl-Class-Data-Inheritable perl-Cpanel-JSON-XS perl-Data-OptList perl-Devel-StackTrace perl-Encode perl-Eval-Closure perl-Exception-Class perl-JSON-MaybeXS perl-JSON-PP perl-Log-Dispatch perl-MRO-Compat perl-Module-Implementation perl-Module-Runtime perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-ValidationCompiler perl-Parse-CPAN-Meta perl-Role-Tiny perl-Specio perl-Sub-Exporter perl-Sub-Exporter-Progressive perl-Sub-Identify perl-Sub-Install perl-Test-Fatal perl-Try-Tiny perl-Variable-Magic perl-devel perl-namespace-autoclean perl-namespace-clean perl-parent python-modules python2-base python3-base sh4
+BuildRequires: perl-CPAN-Meta perl-Class-XSAccessor perl-Log-Dispatch-Array perl-Ref-Util perl-Ref-Util-XS perl-String-Flogger perl-Sub-Exporter-GlobExporter perl-Test-Deep perl-experimental
 
 %description
 Perl module Log::Dispatchouli is a thin layer above Log::Dispatch
@@ -51,6 +51,9 @@ memory. That last one is mostly useful for testing.
 %perl_vendor_privlib/Log/Fmt.pm
 
 %changelog
+* Sat Dec 10 2022 Nikolay A. Fetisov <naf@altlinux.org> 3.002-alt1
+- New version
+
 * Mon Dec 05 2022 Nikolay A. Fetisov <naf@altlinux.org> 3.001-alt1
 - New version
 
