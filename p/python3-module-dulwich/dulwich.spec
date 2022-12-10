@@ -1,20 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-%define oname dulwich
-Name: python3-module-%oname
-Version: 0.19.11
-Release: alt1
-Summary: Python Git Library
-License: GPLv2+
-Group: Development/Python3
-Url: https://github.com/eberle1080/dulwich-py3k
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+%define pypi_name dulwich
 
-Source0: https://pypi.python.org/packages/9e/d7/8fb5b952ad14f27f7ab1bbe17db7860fe99c3c3e5d08de0bea3a161389a0/%{oname}-%{version}.tar.gz
+%def_enable check
+
+Name: python3-module-%pypi_name
+Version: 0.20.50
+Release: alt1
+
+Summary: Python Git Library
+License: Apache-2.0 or GPL-2.0-or-later
+Group: Development/Python3
+Url: https://www.dulwich.io
+
+Vcs: https://github.com/dulwich/dulwich.git
+Source: https://pypi.io/packages/source/d/%pypi_name/%pypi_name-%version.tar.gz
+
+%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-
-%py3_provides %oname
+BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
+%{?_enable_check:BuildRequires: python3(tox)
+BuildRequires: python3(urllib3)
+BuildRequires: python3(fastimport)}
+#gpg.errors.GPGMEError: GPGME: Invalid crypto engine
+#BuildRequires: python3(gpg) /usr/bin/gpg
 
 %description
 Simple Python implementation of the Git file formats and protocols.
@@ -27,7 +36,7 @@ extensions are also available for better performance.
 %package tests
 Summary: Tests for dulwich
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 Simple Python implementation of the Git file formats and protocols.
@@ -40,13 +49,13 @@ extensions are also available for better performance.
 This package contains tests for dulwich.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 pushd %buildroot%_bindir
 for i in $(ls); do
@@ -54,18 +63,28 @@ for i in $(ls); do
 done
 popd
 
+%check
+%tox_check
+
 %files
-%doc AUTHORS COPYING NEWS docs/*.txt docs/tutorial PKG-INFO README* examples
 %_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/*/tests
 %exclude %python3_sitelibdir/*/contrib
+%doc AUTHORS COPYING NEWS docs/*.txt
+%doc docs/tutorial PKG-INFO README* examples
 
 %files tests
 %python3_sitelibdir/*/tests
 %python3_sitelibdir/*/contrib
 
 %changelog
+* Sat Dec 10 2022 Yuri N. Sedunov <aris@altlinux.org> 0.20.50-alt1
+- 0.20.50
+- fixed Url, Vcs, Source and License tags
+- ported to %%pyproject* macros
+- enabled %%check
+
 * Mon Aug 12 2019 Anatoly Kitaikin <cetus@altlinux.org> 0.19.11-alt1
 - Release 0.19.11
 
