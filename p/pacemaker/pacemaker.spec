@@ -12,8 +12,8 @@
 
 Name:    pacemaker
 Summary: Scalable High-Availability cluster resource manager
-Version: 2.1.4
-Release: alt2
+Version: 2.1.5
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Url:     http://www.clusterlabs.org
 # VCS:   https://github.com/ClusterLabs/pacemaker.git
@@ -264,8 +264,6 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_libexecdir/pacemaker/*
 %_sbindir/fence_legacy
 %_sbindir/fence_watchdog
-%_sbindir/notifyServicelogEvent
-%_sbindir/ipmiservicelogd
 %_man7dir/*.7*
 %_man8dir/pacemakerd.*
 %dir %attr (750, %uname, %gname) %_var/lib/pacemaker/cib
@@ -351,6 +349,9 @@ getent passwd %uname >/dev/null || useradd -r -g %gname -s /sbin/nologin -c "clu
 %_datadir/pacemaker/base
 
 %changelog
+* Fri Dec 09 2022 Andrey Cherepanov <cas@altlinux.org> 2.1.5-alt1
+- New version.
+
 * Tue Jul 12 2022 Andrey Cherepanov <cas@altlinux.org> 2.1.4-alt2
 - Removed extra requirements to pdsh and putty (ALT #43211).
 
