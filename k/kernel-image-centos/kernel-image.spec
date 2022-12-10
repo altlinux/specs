@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 207
+%define centos_release 210
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,22 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Dec 10 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.210-alt1.el9
+- Updated to kernel-5.14.0-210.el9:
+  + ALSA: backport for RHEL 9.2
+  + bonding: fix ICMPv6 header handling when receiving IPv6 messages
+  + EDAC/ghes: Set the DIMM label unconditionally
+  + fs: dlm: fix race in lowcomms
+  + mmc: sdhci-tegra: Updates
+  + [RHEL-9] NFSD: Mark exports of NFS as unsupported
+  + rv: Add Runtime Verification (RV) interface
+
+* Thu Dec 08 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.208-alt1.el9
+- Updated to kernel-5.14.0-208.el9:
+  + crypto: Provide support for RFC 7919 FFDHE group parameters (CRYPTO_DH_RFC7919_GROUPS)
+  + livepatch: rebase to linux v5.19
+  + scsi: hyper-v: storvsc: driver update for RHEL-9.2
+
 * Tue Dec 06 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.207-alt1.el9
 - Updated to kernel-5.14.0-207.el9:
   + [9.2] DRM backport part 2: main backport
