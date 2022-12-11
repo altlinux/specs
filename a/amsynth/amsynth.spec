@@ -1,8 +1,8 @@
-%define gcc_version 5.0
+#define gcc_version 5.0
 
 Name: amsynth
 Version: 1.13.0
-Release: alt1
+Release: alt1.1
 Summary: A classic synthesizer with dual oscillators
 
 License: GPLv2+
@@ -15,13 +15,14 @@ Source1: %name.appdata.xml
 Source2: lv2-%name-plugin.metainfo.xml
 Source3: dssi-%name-plugin.metainfo.xml
 Source4: vst-%name-plugin.metainfo.xml
+Source5: amsynth_ru.po
 
-# Automatically added by buildreq on Fri Dec 09 2022
+# Automatically added by buildreq on Sat Dec 10 2022
 # optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 ladspa_sdk libX11-devel libalsa-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libjack-devel libpango-devel libstdc++-devel libuuid-devel perl perl-Encode perl-XML-Parser perl-parent pkg-config python3 python3-base sh4 xorg-proto-devel
 BuildRequires: dssi-devel gcc-c++ glibc-devel-static intltool libgtk+2-devel liblash-devel liblo-devel lv2-devel pandoc
 
 BuildRequires: liblo-devel libsndfile-devel
-BuildRequires:  autoconf-archive
+BuildRequires:  autoconf-archive libX11-devel
 
 BuildRequires:  appliance-base-glibc glibc-utils
 BuildRequires:  libgtk2-devel libgtkmm3-devel
@@ -29,7 +30,7 @@ BuildRequires:  libjack-devel liblash-devel libsndfile-devel libsndfile-utils
 BuildRequires:  libGL-devel libEGL-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
-Requires:       jack-audio-connection-kit libsndfile-utils lash
+Requires:       jack-audio-connection-kit libsndfile-utils lash 
 
 
 %description
@@ -43,17 +44,20 @@ classic subtractive synthesizer topology, with:
 - Distortion
 - Reverb
 
+Requires:       %name-data
+
 %package data
 BuildArch: noarch
 Summary: Data files for amsynth
 Group: Sound
+
 %description data
 Sound banks and skins used in amsynth
 
 %package -n lv2-amsynth-plugin
 Summary: Amsynth lv2 plugin
 Requires: lv2
-Requires: %name-data = %version-%release
+Requires: %name
 Group: Sound
 Obsoletes: lv2-amsynth-plugins
 
@@ -65,7 +69,7 @@ Summary: Amsynth dssi plugin
 BuildRequires: dssi-devel liblo liblo-devel
 Requires: dssi
 Group: Sound
-Requires: %name-data = %version-%release
+Requires: %name
 Obsoletes: dssi-amsynth-plugins
 
 %description -n dssi-amsynth-plugin
@@ -73,7 +77,7 @@ Amsynth plugin for the dssi audio API
 
 %package -n vst-amsynth-plugin
 Summary: Amsynth lv2 plugin
-Requires: %name-data = %version-%release
+Requires: %name
 Group: Sound
 Obsoletes: vst-amsynth-plugins
 
@@ -82,16 +86,20 @@ Amsynth plugin for the vst protocl
 
 %prep
 %setup
+install -m644 %SOURCE5 po/ru.po 
+echo ru >> po/LINGUAS
+
+
+%build
+%add_optflags -std=gnu++11
+%autoreconf
+
+intltoolize --force
 
 #./autogen.sh
 
-%add_optflags -std=gnu++11
-
-%autoreconf
-
-%__aclocal
-%__automake -a
-
+#%__aclocal
+#%__automake -a
 
 
 %configure \
@@ -107,7 +115,6 @@ Amsynth plugin for the vst protocl
 --with-dssi
 
 
-%build
 # Build in C++11 mode as glibmm headers use C++11 features. This can be dropped
 # when GCC in Fedora switches to C++11 by default (with GCC 6, most likely).
 %make
@@ -115,7 +122,9 @@ Amsynth plugin for the vst protocl
 %make_build
 
 %install
-DESTDIR=%buildroot %makeinstall_std
+%makeinstall_std
+
+DESTDIR=%buildroot %makeinstall
 
 # Install appdata files
 install -d -m 755  %buildroot%_datadir/appdata/
@@ -130,33 +139,43 @@ install -pDm644 %SOURCE4 %buildroot%_datadir/appdata/
 %find_lang --with-man --with-qt %name
 
 %files -f %name.lang
+%doc README AUTHORS
+%doc COPYING
 %_bindir/%name
+%_man1dir/*
+%_datadir/appdata/%name.appdata.xml
 %_desktopdir/%name.desktop
 %_liconsdir/%name.png
 %_iconsdir/hicolor/scalable/apps/amsynth.svg
-%_datadir/appdata/%name.appdata.xml
-%_man1dir/*
-
+%dir %_datadir/%name
+%_datadir/%name/rc
 
 %files data
-%doc README AUTHORS
-%doc COPYING
-%_datadir/%name
+%dir %_datadir/%name/skins
+%_datadir/%name/skins/*
+%dir %_datadir/%name/banks
+%_datadir/%name/banks/*
+
 
 %files -n lv2-amsynth-plugin
-%_libdir/lv2/%name.lv2/
+%_libdir/lv2/%name.lv2/*
 %_datadir/appdata/lv2-%name-plugin.metainfo.xml
 
 %files -n dssi-amsynth-plugin
 %_libdir/dssi/%{name}_dssi.so
-%_libdir/dssi/%{name}_dssi/
+%_libdir/dssi/%{name}_dssi/*
 %_datadir/appdata/dssi-%name-plugin.metainfo.xml
 
 %files -n vst-amsynth-plugin
 %_libdir/vst/%{name}_vst.so
+%_libdir/vst/*
 %_datadir/appdata/vst-%name-plugin.metainfo.xml
 
 %changelog
+* Sat Dec 10 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.13.0-alt1.1
+- Fix install sections
+- Add ru.po
+
 * Fri Dec 09 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.13.0-alt1
 - Version 1.13.0 (closes: #40317)
 
@@ -210,3 +229,4 @@ install -pDm644 %SOURCE4 %buildroot%_datadir/appdata/
 
 * Sat May 30 2015 Alexandre Moine <nobrakal@gmail.com> 1.5.1-1
 - Initial spec
+
