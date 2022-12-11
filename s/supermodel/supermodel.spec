@@ -1,6 +1,6 @@
 Name: supermodel
 Version: 0.2a
-Release: alt3
+Release: alt4
 Summary: A cross-platform Sega Model 3 arcade machine emulator
 Summary(ru_RU.UTF-8): Кросплатформенный эмулятор аркадного автомата Sega Model 3
 Group: Emulators
@@ -12,6 +12,8 @@ Source1: %name.6
 Source2: run_supermodel
 
 Patch0: Supermodel-predictable-paths.patch
+Patch1: Fix-texture2DLod-missing-error-on-Linux_MESA.patch
+
 BuildRequires: gcc-c++ libxcb libSDL2-devel libSDL2_net-devel zlib-devel libGLU-devel
 
 %description
@@ -32,7 +34,7 @@ Supermodel эмулирует аркадную платформу Sega Model 3, 
 %setup -n %name-%version
 
 %patch0 -p1
-
+%patch1 -p1
 # Initial Elbrus support (thanks to ilyakurdyukov@)
 %ifarch %e2k
 sed -i 's/k_framePeriod/(int)&/g' Src/Model3/DSB.cpp
@@ -40,7 +42,7 @@ sed -i 's/k_framePeriod/(int)&/g' Src/Model3/DSB.cpp
 
 %build
 #%%make_build
-%make -f Makefiles/Makefile.UNIX VERBOSE=1
+%make -f Makefiles/Makefile.UNIX VERBOSE=1 NET_BOARD=1
 
 %install
 # %makeinstall_std
@@ -59,6 +61,11 @@ install -D -m 755 %SOURCE2  %buildroot%_bindir/supermodel
 %_man6dir/*
 
 %changelog
+* Sat Dec 10 2022 Artyom Bystrov <arbars@altlinux.org> 0.2a-alt4
+- Add patch for fix "no function with name 'texture2DLod' " error
+- enable network card support
+
+
 * Sat Dec 10 2022 Artyom Bystrov <arbars@altlinux.org> 0.2a-alt3
 - Change run script
 - disable network card support
