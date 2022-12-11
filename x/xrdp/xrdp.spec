@@ -1,6 +1,6 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
-Version: 0.9.20
+Version: 0.9.21
 Release: alt1
 
 Summary: An open source remote desktop protocol (RDP) server
@@ -65,6 +65,7 @@ BuildRequires: libepoxy-devel
 BuildRequires: libdrm-devel
 
 Requires: xorg-drv-xrdp = %EVR
+Requires: xinitrc
 
 Provides: librfxcodec = %EVR
 Obsoletes: librfxcodec < %EVR
@@ -274,6 +275,12 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Sun Dec 11 2022 Andrey Cherepanov <cas@altlinux.org> 0.9.21-alt1
+- New version.
+- Security fixes: CVE-2022-23468, CVE-2022-23477, CVE-2022-23478,
+  CVE-2022-23479, CVE-2022-23480, CVE-2022-23481, CVE-2022-23483,
+  CVE-2022-23482, CVE-2022-23484, CVE-2022-23493
+
 * Sun Sep 18 2022 Andrey Cherepanov <cas@altlinux.org> 0.9.20-alt1
 - New version.
 
