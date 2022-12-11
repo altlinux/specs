@@ -1,7 +1,37 @@
 %define _unpackaged_files_terminate_build 1
+#add_python3_self_prov_path %buildroot%python3_sitelibdir/gpoa
+
+%add_python3_req_skip backend
+%add_python3_req_skip frontend.frontend_manager
+%add_python3_req_skip gpt.envvars
+%add_python3_req_skip gpt.folders
+%add_python3_req_skip gpt.gpt
+%add_python3_req_skip gpt.printers
+%add_python3_req_skip gpt.shortcuts
+%add_python3_req_skip messages
+%add_python3_req_skip storage
+%add_python3_req_skip storage.fs_file_cache
+%add_python3_req_skip util
+%add_python3_req_skip util.arguments
+%add_python3_req_skip util.config
+%add_python3_req_skip util.dbus
+%add_python3_req_skip util.exceptions
+%add_python3_req_skip util.kerberos
+%add_python3_req_skip util.logging
+%add_python3_req_skip util.paths
+%add_python3_req_skip util.preg
+%add_python3_req_skip util.roles
+%add_python3_req_skip util.rpm
+%add_python3_req_skip util.sid
+%add_python3_req_skip util.signals
+%add_python3_req_skip util.system
+%add_python3_req_skip util.users
+%add_python3_req_skip util.util
+%add_python3_req_skip util.windows
+%add_python3_req_skip util.xml
 
 Name: gpupdate
-Version: 0.9.11.2
+Version: 0.9.12
 Release: alt1
 
 Summary: GPT applier
@@ -108,7 +138,7 @@ fi
 # Remove storage in case we've lost compatibility between versions.
 # The storage will be regenerated on GPOA start.
 %define active_policy %_sysconfdir/local-policy/active
-%triggerpostun -- %name < 0.9.10
+%triggerpostun -- %name < 0.9.12
 rm -f %_cachedir/%name/registry.sqlite
 if test -L %active_policy; then
 	sed -i "s|^\s*local-policy\s*=.*|local-policy = $(readlink -f %active_policy)|" \
@@ -151,6 +181,22 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Sun Dec 11 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.12-alt1
+- Fixed mapped drive maps for user and add support for machine
+ + Added label option support
+ + Fixed letters collisions and assigning as Windows
+- Replaced cifs applier mountpoints into shown gvfs directories:
+ + /media/gpupdate/Drive - for system shares
+ + /media/gpupdate/.Drive - for system hidden shares
+ + /run/media/USERNAME/DriveUser - for user shares
+ + /run/media/USERNAME/.DriveUser - for user hidden shares
+- Added network shares support for user
+- Fixed bug (closes: 44026) for chromium applier
+- Added keylist handling when generating firefox settings (closes: 44209)
+- Added a check of the need to scroll DC (scrolling DCs disabled by default!)
+- Added the ability to generate rules for all polkit actions
+- Added applier for Yandex.Browser
+
 * Fri Sep 30 2022 Valery Sinelnikov <greh@altlinux.org> 0.9.11.2-alt1
 - Fixed formation of the correct path for creating a user directory
 
