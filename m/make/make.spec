@@ -1,6 +1,6 @@
 Name: make
 Version: 4.4.0
-Release: alt1
+Release: alt2
 Epoch: 2
 
 Summary: A GNU tool which simplifies the build process for users
@@ -15,6 +15,7 @@ Patch02: 0002-ALT-job_slots.patch
 Patch03: 0003-REDHAT-newlines.patch
 Patch04: 0004-REDHAT-weird-shell.patch
 Patch05: 0005-ALT-disable-test.patch
+Patch06: 0006-src-main.c-main-SV-63307-Handle-SIGPIPE-as-a-fatal-s.patch
 
 BuildRequires: /proc
 BuildRequires: makeinfo
@@ -58,6 +59,10 @@ ln -sf make %buildroot%_bindir/gmake
 %doc AUTHORS NEWS README
 
 %changelog
+* Sun Dec 11 2022 Alexey Gladkov <legion@altlinux.ru> 2:4.4.0-alt2
+- Backported upstream fix:
+  + Handle SIGPIPE as a fatal signal.
+
 * Sat Nov 05 2022 Alexey Gladkov <legion@altlinux.ru> 2:4.4.0-alt1
 - New version (4.4).
 
