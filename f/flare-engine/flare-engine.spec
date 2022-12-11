@@ -1,14 +1,14 @@
 %define _name flare
 
 Name: %_name-engine
-Version: 1.13.04
+Version: 1.14
 Release: alt1
 
 Summary: A simple game engine for single-player 2D action RPGs
 License: GPLv3+
 Group: Games/Adventure
 
-URL: http://flarerpg.org/
+URL: https://flarerpg.org/
 Vcs: https://github.com/flareteam/flare-engine.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -46,6 +46,10 @@ the common, reusable code.
 %_man6dir/*
 
 %changelog
+* Sun Dec 11 2022 Mikhail Efremov <sem@altlinux.org> 1.14-alt1
+- Updated Url tag.
+- Updated to 1.14.
+
 * Tue Feb 15 2022 Mikhail Efremov <sem@altlinux.org> 1.13.04-alt1
 - Updated to 1.13.04.
 

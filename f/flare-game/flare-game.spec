@@ -1,7 +1,7 @@
 %define _name flare
 
 Name: %_name-game
-Version: 1.13.04
+Version: 1.14
 Release: alt1
 
 Summary: Fantasy action RPG using the FLARE engine
@@ -12,7 +12,7 @@ Summary: Fantasy action RPG using the FLARE engine
 License: CC-BY-SA-3.0 and OFL-1.1
 Group: Games/Adventure
 
-URL: http://flarerpg.org/
+URL: https://flarerpg.org/
 Vcs: https://github.com/flareteam/flare-game.git
 Source: %name-%version.tar
 #Patch: %name-%version-%release.patch
@@ -52,6 +52,10 @@ It is built on the FLARE engine (Free/Libre Action Roleplaying Engine).
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sun Dec 11 2022 Mikhail Efremov <sem@altlinux.org> 1.14-alt1
+- Updated Url tag.
+- Updated to 1.14.
+
 * Tue Feb 15 2022 Mikhail Efremov <sem@altlinux.org> 1.13.04-alt1
 - Updated to 1.13.04.
 
