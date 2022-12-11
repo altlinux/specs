@@ -1,5 +1,5 @@
 Name:     kubernetes-pause
-Version:  3.5
+Version:  3.7
 Release:  alt1
 
 Summary:  This executable can be used as a minimal init process inside a container
@@ -29,5 +29,8 @@ install -m0755 -D pause %buildroot/%_bindir/kubernetes-pause
 %_bindir/*
 
 %changelog
+* Mon Dec 12 2022 Mikhail Gordeev <obirvalger@altlinux.org> 3.7-alt1
+- Just update version to the appropriate for kubernetes 1.24.8
+
 * Wed Nov 16 2022 Mikhail Gordeev <obirvalger@altlinux.org> 3.5-alt1
 Initial build for Sisyphus
