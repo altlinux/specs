@@ -1,6 +1,6 @@
 Name: supermodel
 Version: 0.2a
-Release: alt1
+Release: alt2
 Summary: A cross-platform Sega Model 3 arcade machine emulator
 Summary(ru_RU.UTF-8): Кросплатформенный эмулятор аркадного автомата Sega Model 3
 Group: Emulators
@@ -30,9 +30,14 @@ Supermodel эмулирует аркадную платформу Sega Model 3, 
 %prep
 %setup -n %name-%version
 
+# Initial Elbrus support (thanks to ilyakurdyukov@)
+%ifarch %e2k
+sed -i 's/k_framePeriod/(int)&/g' Src/Model3/DSB.cpp
+%endif 
+
 %build
 #%%make_build
-%make -f Makefiles/Makefile.UNIX NET_BOARD=1
+%make -f Makefiles/Makefile.UNIX NET_BOARD=1 VERBOSE=1
 
 %install
 # %makeinstall_std
@@ -51,5 +56,8 @@ install -D -m 755 %SOURCE2  %buildroot%_bindir/supermodel
 %_man6dir/*
 
 %changelog
+* Sat Dec 10 2022 Artyom Bystrov <arbars@altlinux.org> 0.2a-alt2
+- Initial Elbrus support (thanks to ilyakurdyukov@)
+
 * Sat Dec 10 2022 Artyom Bystrov <arbars@altlinux.org> 0.2a-alt1
 - Initial build for Sisyphus
