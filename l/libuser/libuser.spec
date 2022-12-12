@@ -1,6 +1,6 @@
 Name: libuser
 Version: 0.63
-Release: alt2
+Release: alt3
 
 Summary: A user and group account administration library
 License: LGPLv2+
@@ -12,7 +12,7 @@ Source0: %name-%version.tar
 Source1: import.info
 Patch0: %name-0.63-PR49_add_yescrypt.patch
 Patch1: %name-0.63-downstream_test_xcrypt.patch
-Patch2: %name-0.57.2-alt-modularized_ldap.patch
+Patch2: %name-0.63-fix_ldap_test.patch 
 
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python3
@@ -76,7 +76,7 @@ administering user and group accounts.
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p0
+%patch2 -p2
 
 %build
 ./autogen.sh
@@ -120,6 +120,9 @@ make
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Dec 12 2022 Nikolay Burykin <bne@altlinux.org> 0.63-alt3
+- fix ldap test
+
 * Mon Jan 24 2022 Nikolay Burykin <bne@altlinux.org> 0.63-alt2
 - update Release to avoid conflicts with Autoimports
 
