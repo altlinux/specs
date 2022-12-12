@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Summary: Hatch plugin for versioning with your preferred VCS
@@ -61,6 +61,9 @@ system (like Git) to determine project versions.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 12 2022 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
+- 0.2.1 -> 0.3.0.
+
 * Wed Dec 07 2022 Stanislav Levin <slev@altlinux.org> 0.2.1-alt1
 - 0.2.0 -> 0.2.1.
 

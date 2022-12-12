@@ -9,13 +9,15 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 22.10.0
-Release: alt1.1
+Version: 22.12.0
+Release: alt1
 
 Summary: The Uncompromising Code Formatter
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/black/
+VCS: https://github.com/psf/black
+
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -108,6 +110,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 12 2022 Stanislav Levin <slev@altlinux.org> 22.12.0-alt1
+- 22.10.0 -> 22.12.0.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 22.10.0-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
