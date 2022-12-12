@@ -1,5 +1,5 @@
 Name: strace
-Version: 6.0
+Version: 6.1
 Release: alt1
 
 Summary: Tracks and displays system calls associated with a running process
@@ -21,7 +21,7 @@ BuildRequires: libdw-devel binutils-devel
 BuildRequires: libselinux-devel
 
 # for test suite
-%{?!_without_check:%{?!_disable_check:BuildRequires: /proc /dev/kvm}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc /dev/pts /dev/kvm}}
 
 # The default is --enable-mpers=yes, but
 # some architectures may need --enable-mpers=check instead.
@@ -90,6 +90,9 @@ echo 'END OF TEST SUITE INFORMATION'
 %doc COPYING CREDITS NEWS README doc/README-linux-ptrace
 
 %changelog
+* Mon Dec 12 2022 Dmitry V. Levin <ldv@altlinux.org> 6.1-alt1
+- v6.0 -> v6.1.
+
 * Mon Oct 17 2022 Dmitry V. Levin <ldv@altlinux.org> 6.0-alt1
 - v5.19 -> v6.0.
 
