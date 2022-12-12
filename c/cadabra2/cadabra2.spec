@@ -1,5 +1,5 @@
 Name: cadabra2
-Version: 2.4.0.2
+Version: 2.4.2.4
 Release: alt1
 
 %def_with gui
@@ -102,6 +102,9 @@ kernel for Jupyter
 %endif
 
 %changelog
+* Mon Dec 12 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.4.2.4-alt1
+- v.2.4.2.4
+
 * Fri Oct 07 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.4.0.2-alt1
 - v.2.4.0.2
 
