@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 %define ver_major 1.26
 
 %def_enable x11_backend
@@ -18,7 +18,7 @@
 
 Name: clutter
 Version: %ver_major.4
-Release: alt1
+Release: alt2
 
 Summary: Clutter Core Library
 License: LGPLv2+
@@ -189,6 +189,9 @@ gtkdocize
 
 
 %changelog
+* Thu Apr 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1.26.4-alt2
+- updated to 1.26.4-36-g5b477d43a
+
 * Mon Mar 09 2020 Yuri N. Sedunov <aris@altlinux.org> 1.26.4-alt1
 - 1.26.4
 

@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 43
-%define beta .alpha
+%define beta %nil
 %define api_ver 3.0
 %define xdg_name org.gnome.Cheese
 %define gst_api_ver 1.0
@@ -14,8 +14,8 @@
 %def_disable check
 
 Name: cheese
-Version: %ver_major
-Release: alt0.1%beta
+Version: %ver_major.0
+Release: alt1%beta
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
 License: GPL-2.0
@@ -136,8 +136,7 @@ GObject introspection devel data for the Cheese library.
 %find_lang --with-gnome %name
 
 %check
-LD_LIBRARY_PATH=%buildroot%_libdir
-xvfb-run %meson_test
+xvfb-run %__meson_test
 
 %files -f %name.lang
 %_bindir/%name
@@ -171,6 +170,9 @@ xvfb-run %meson_test
 %endif
 
 %changelog
+* Tue Dec 13 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
+- 43.0
+
 * Thu Sep 08 2022 Yuri N. Sedunov <aris@altlinux.org> 43-alt0.1.alpha
 - 43.alpha
 
