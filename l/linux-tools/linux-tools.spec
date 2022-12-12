@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.0
+%define kernel_base_version 6.1
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
@@ -13,7 +13,7 @@
 
 Name: linux-tools
 Version: %kernel_base_version
-Release: alt2
+Release: alt1
 
 Summary: Tools from Linux Kernel tree
 License: GPL-2.0-only
@@ -79,7 +79,6 @@ Source23: hypervfcopyd.service
 Source31: hypervkvpd.rules
 Source32: hypervvssd.rules
 Source33: hypervfcopyd.rules
-Patch1: 0001-libperf-Remove-reference-to-non-uapi-header.patch
 
 %description
 Various tools from the Linux Kernel source tree.
@@ -715,6 +714,9 @@ fi
 %_libexecdir/bootconfig
 
 %changelog
+* Mon Dec 12 2022 Vitaly Chikunov <vt@altlinux.org> 6.1-alt1
+- Update to v6.1 (2022-12-11).
+
 * Wed Nov 23 2022 Vitaly Chikunov <vt@altlinux.org> 6.0-alt2
 - Split bootconfig into a package.
 
