@@ -1,6 +1,6 @@
 Name: putty
 Version: 0.78
-Release: alt1
+Release: alt2
 
 Summary: Free SSH, Telnet and Rlogin client
 License: MIT
@@ -25,8 +25,15 @@ other interesting things not provided by ssh in an xterm.
 %prep
 %setup
 %setup -T -D -a1 -n %name-%version
+%ifarch %e2k
+sed -i 's/mmintrin\.h/no_&/' crypto/CMakeLists.txt
+%endif
 
-sed -i 's/G_APPLICATION_FLAGS_NONE/G_APPLICATION_DEFAULT_FLAGS/' unix/main-gtk-application.c
+%ifnarch %e2k
+# that gtk update is not there yet
+sed -i 's/G_APPLICATION_FLAGS_NONE/G_APPLICATION_DEFAULT_FLAGS/' \
+	unix/main-gtk-application.c
+%endif
 
 %build
 %add_optflags -Wall -Werror -Wstrict-aliasing -Wno-unused
@@ -76,6 +83,9 @@ install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 %_liconsdir/*.png
 
 %changelog
+* Mon Dec 12 2022 Michael Shigorin <mike@altlinux.org> 0.78-alt2
+- E2K: build fixes (clmul, gtk issues) by ilyakurdyukov@
+
 * Wed Dec 07 2022 Artyom Bystrov <arbars@altlinux.org> 0.78-alt1
 - new version 0.78
 
@@ -196,7 +206,7 @@ install -pDm644 %SOURCE3 %buildroot%_desktopdir/%name.desktop
 * Tue Feb 22 2005 Götz Waschk <waschk@linux-mandrake.com> 0.57-1mdk
 - New release 0.57
 
-* Wed Oct 27 2004 G�tz Waschk <waschk@linux-mandrake.com> 0.56-1mdk
+* Wed Oct 27 2004 Götz Waschk <waschk@linux-mandrake.com> 0.56-1mdk
 - don't bzip2 source for sig checks
 - add signature
 - New release 0.56
