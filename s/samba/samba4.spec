@@ -76,7 +76,7 @@
 
 Name:    samba
 Version: 4.16.7
-Release: alt2
+Release: alt5
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -102,6 +102,11 @@ Source23: usershares.conf
 Source24: smb-conf-usershares.control
 Source25: role-usershares.control
 Source26: samba-usershares.role
+Source27: role-sambashare.control
+Source28: smb-conf-usershare-allow-list.control
+Source29: smb-conf-usershare-deny-list.control
+Source30: smb-conf-usershare-owner-only.control
+Source31: smb-conf-usershare-allow-guests.control
 
 Source200: README.dc
 Source201: README.downgrade
@@ -998,7 +1003,12 @@ mkdir -p %buildroot%_sysconfdir/openldap/schema
 install -m644 examples/LDAP/samba.schema %buildroot%_sysconfdir/openldap/schema/samba.schema
 install -m755 packaging/printing/smbprint %buildroot%_bindir/smbprint
 install -Dm755 %SOURCE24 %buildroot%_controldir/smb-conf-usershares
+install -Dm755 %SOURCE28 %buildroot%_controldir/smb-conf-usershare-allow-list
+install -Dm755 %SOURCE29 %buildroot%_controldir/smb-conf-usershare-deny-list
+install -Dm755 %SOURCE30 %buildroot%_controldir/smb-conf-usershare-owner-only
+install -Dm755 %SOURCE31 %buildroot%_controldir/smb-conf-usershare-allow-guests
 install -Dm755 %SOURCE25 %buildroot%_controldir/role-usershares
+install -Dm755 %SOURCE27 %buildroot%_controldir/role-sambashare
 install -Dm644 %SOURCE26 %buildroot%_sysconfdir/role.d/samba-usershares.role
 
 cp packaging/systemd/samba.sysconfig packaging/systemd/samba.sysconfig.alt
@@ -1159,6 +1169,11 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %pre usershares
 %_sbindir/groupadd -f -r usershares >/dev/null 2>&1 || :
 
+# Enable sambashare group as role with usershares priviledge for compatility
+# during upgrade from previous manual managed installations.
+%triggerin -n %name-usershares -- %name < 4.16.7-alt4
+control role-sambashare enabled
+
 %files
 %doc COPYING README.md WHATSNEW.txt
 %doc examples/autofs examples/LDAP examples/misc
@@ -1190,6 +1205,10 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_unitdir/nmb.service
 %_unitdir/smb.service
 
+%_samba_mod_libdir/libREG-FULL-samba4.so
+%_samba_mod_libdir/libRPC-SERVER-LOOP-samba4.so
+%_samba_mod_libdir/libRPC-WORKER-samba4.so
+
 %dir %_samba_mod_libdir/vfs
 %_samba_mod_libdir/vfs/*.so
 
@@ -1216,8 +1235,6 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_datadir/PolicyDefinitions/*/*.adml
 
 %files dc-common
-%attr(755,root,root) %_initdir/samba
-%_unitdir/samba.service
 %dir /var/lib/samba/sysvol
 %dir %_datadir/samba/setup
 %_datadir/samba/setup
@@ -1226,6 +1243,8 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %endif #doc
 
 %files dc
+%attr(755,root,root) %_initdir/samba
+%_unitdir/samba.service
 %if_without separate_heimdal_server
 %_sbindir/samba
 %_sbindir/samba_kcc
@@ -1234,6 +1253,9 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_sbindir/samba_upgradedns
 %_sbindir/samba_downgrade_db
 %else #!separate_heimdal_server
+%_unitdir/winbind.service
+%attr(755,root,root) %_initrddir/winbind
+%_sysconfdir/NetworkManager/dispatcher.d/30-winbind
 %doc COPYING README.md WHATSNEW.txt
 %doc examples/autofs examples/LDAP examples/misc
 %doc examples/printer-accounting examples/printing
@@ -1254,6 +1276,8 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %files -n task-samba-dc-mitkrb5
 
 %files dc-mitkrb5
+%attr(755,root,root) %_initdir/samba
+%_unitdir/samba.service
 %_altdir/samba-mit-dc
 %_samba_mod_libdir/sbin/samba
 %_samba_mod_libdir/sbin/samba_kcc
@@ -1549,9 +1573,6 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_samba_mod_libdir/libutil-setid-samba4.so
 %_samba_mod_libdir/libutil-tdb-samba4.so
 %_samba_mod_libdir/libxattr-tdb-samba4.so
-%_samba_mod_libdir/libREG-FULL-samba4.so
-%_samba_mod_libdir/libRPC-SERVER-LOOP-samba4.so
-%_samba_mod_libdir/libRPC-WORKER-samba4.so
 
 %files libs
 %dir %_samba_mod_libdir/pdb
@@ -1846,20 +1867,25 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %attr(1770,root,usershares) %dir /var/lib/samba/usershares
 %_controldir/smb-conf-usershares
 %_controldir/role-usershares
+%_controldir/role-sambashare
+%_controldir/smb-conf-usershare-allow-list
+%_controldir/smb-conf-usershare-deny-list
+%_controldir/smb-conf-usershare-owner-only
+%_controldir/smb-conf-usershare-allow-guests
 
 %if_with winbind
 %files winbind-common
 %attr(750,root,wbpriv) %dir /var/lib/samba/winbindd_privileged
-%_unitdir/winbind.service
-%attr(755,root,root) %_initrddir/winbind
 %dir %_samba_piddir/winbindd
-%_sysconfdir/NetworkManager/dispatcher.d/30-winbind
 %if_with doc
 %_man8dir/winbindd.8*
 %_man8dir/idmap_*.8*
 %endif
 
 %files winbind -f pam_winbind.lang
+%_unitdir/winbind.service
+%attr(755,root,root) %_initrddir/winbind
+%_sysconfdir/NetworkManager/dispatcher.d/30-winbind
 %_samba_mod_libdir/idmap
 %_samba_mod_libdir/nss_info
 %_samba_mod_libdir/libnss-info-samba4.so
@@ -1985,6 +2011,26 @@ TDB_NO_FSYNC=1 %make_build test V=2 -Onone
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Dec 12 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.7-alt5
+- Update text of summary for role-usershares and smb-conf-usershares.
+- Update default usershare prefix allow and deny lists:
+  + usershare prefix deny list = /etc /dev /sys /proc
+  + usershare prefix allow list = /home /srv /mnt /media /var
+- Add new controls for samba-usershares:
+  + smb-conf-usershare-allow-list
+  + smb-conf-usershare-deny-list
+  + smb-conf-usershare-owner-only
+  + smb-conf-usershare-allow-guests
+
+* Thu Dec 08 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.7-alt4
+- Add role-sambashare control for compatibility during upgrade from previous
+  manual managed settings of usershares.
+- Trigger sambashare as role with privilege usershares (Closes: #44379).
+
+* Sat Dec 03 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.7-alt3
+- Avoid cycle dependencies on common service files.
+- Fix cycle dependencies on libRPC and libREG samba4 libraries.
+
 * Tue Nov 29 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.7-alt2
 - Add role-usershares control allow or disallow for group users using of
   samba usershares as privilege.
