@@ -1,6 +1,6 @@
 Name: libmateweather
 Version: 1.26.0
-Release: alt3
+Release: alt4
 Epoch: 1
 Summary: Libraries to allow MATE Desktop to display weather information
 License: GPLv2+ and LGPLv2+
@@ -67,6 +67,9 @@ Development files for libmateweather
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 12 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt4
+- rebuild
+
 * Wed Oct 26 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.0-alt3
 - merged p10 branch
 
