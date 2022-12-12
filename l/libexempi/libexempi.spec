@@ -7,7 +7,7 @@
 %define _name exempi
 
 Name: lib%_name
-Version: 2.6.2
+Version: 2.6.3
 Release: alt1
 
 Summary: Library for easy parsing of XMP metadata
@@ -16,13 +16,11 @@ License: BSD-3-Clause
 Url: https://libopenraw.freedesktop.org/exempi/
 
 %if_disabled snapshot
-Source: http://libopenraw.freedesktop.org/download/%_name-%version.tar.bz2
+Source: http://libopenraw.freedesktop.org/download/%_name-%version.tar.xz
 %else
 Vcs: https://gitlab.freedesktop.org/libopenraw/exempi.git
 Source: %_name-%version.tar
 %endif
-#https://gitlab.freedesktop.org/libopenraw/exempi/-/issues/28
-Patch: exempi-fc-e23c213-typeinfos.patch
 
 %define boost_ver 1.60
 BuildRequires: boost-test-devel >= %boost_ver gcc-c++ libexpat-devel zlib-devel
@@ -54,7 +52,6 @@ This package contains the static library needed for developing with
 
 %prep
 %setup -n %_name-%version
-%patch -p1
 # fix boost.m4 for gcc < 5, lcc < 1.23
 sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
@@ -89,6 +86,9 @@ sed -i~ 's|\^\(boost-lib-version\)|\1|' m4/boost.m4
 
 
 %changelog
+* Sun Dec 11 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.3-alt1
+- 2.6.3
+
 * Mon Jun 27 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
 - 2.6.2
 
