@@ -3,7 +3,7 @@
 
 Name: dlib
 Version: 19.24
-Release: alt1
+Release: alt2
 Summary: C++ toolkit containing machine learning algorithms and tools
 License: BSL-1.0
 Group: Engineering
@@ -11,6 +11,7 @@ Url: http://dlib.net
 
 Source: https://github.com/davisking/%repo/archive/%version/%repo-%version.tar.gz
 Patch: 0001-Fix-build-on-ppc64mips64-2689.patch
+Patch1: 0001-Fix-build-with-pybind11.patch
 # Built from VCS.
 # git merge -s ours tag --allow-unrelated-histories
 
@@ -47,6 +48,10 @@ This package provides python module for %name.
 %prep
 %setup -n %repo-%version
 %patch -p1
+%patch1 -p1
+rm -rf dlib/external
+sed -i 's|add_subdirectory(../../dlib/external/pybind11 pybind11_build)|find_package(pybind11 CONFIG)|' \
+  tools/python/CMakeLists.txt
 
 %build
 %cmake \
@@ -81,6 +86,9 @@ This package provides python module for %name.
 %endif
 
 %changelog
+* Mon Dec 12 2022 Leontiy Volodin <lvol@altlinux.org> 19.24-alt2
+- Built with system pybind11 instead built-in.
+
 * Thu Dec 08 2022 Leontiy Volodin <lvol@altlinux.org> 19.24-alt1
 - Initial build for ALT Sisyphus.
 - Built as require for howdy.
