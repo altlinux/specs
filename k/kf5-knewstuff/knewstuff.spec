@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.100.0
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Libraries
@@ -13,6 +13,7 @@ License: GPLv2+ / LGPLv2+
 Requires: kf5-kirigami
 
 Source: %rname-%version.tar
+Patch1: alt-check-ghns-auth.patch
 
 # Automatically added by buildreq on Tue Feb 17 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs
@@ -71,6 +72,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 # clean kmoretools menu
 for app in \
@@ -117,6 +119,9 @@ done
 
 
 %changelog
+* Mon Dec 12 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt3
+- hide stuff when ghns not authorized
+
 * Fri Nov 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt2
 - update russian translation
 
