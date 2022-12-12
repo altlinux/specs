@@ -32,7 +32,7 @@
 
 Name: gpupdate
 Version: 0.9.12
-Release: alt1
+Release: alt2
 
 Summary: GPT applier
 License: GPLv3+
@@ -181,6 +181,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Mon Dec 12 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.12-alt2
+- Update release with forgotten changes
+
 * Sun Dec 11 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.12-alt1
 - Fixed mapped drive maps for user and add support for machine
  + Added label option support
