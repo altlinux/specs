@@ -2,7 +2,7 @@
 
 Name: os-autoinst
 Version: 4.6
-Release: alt8
+Release: alt9
 Summary: OS-level test automation
 License: GPLv2+
 Group: Development/Tools
@@ -60,11 +60,11 @@ BuildRequires: /usr/bin/qemu-system-i386
 #BuildRequires: /usr/bin/qemu-img
 BuildRequires: qemu-img qemu-aux git-core xterm xterm-console tigervnc-server icewm
 BuildRequires: perl(Mojo/File.pm)
-BuildRequires: perl(Carp/Always.pm) perl(Data/Dump.pm) perl(Crypt/DES.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(autodie.pm) perl(Class/Accessor/Fast.pm) perl(Exception/Class.pm) perl(File/Which.pm) perl(IPC/Run/Debug.pm) perl(Net/DBus.pm) perl(Net/SNMP.pm) perl(Net/IP.pm) perl(IPC/System/Simple.pm) perl(Net/SSH2.pm) perl(XML/LibXML.pm) perl(YAML/PP.pm) yamllint perl(Inline/Python.pm) perl(File/chdir.pm) perl(Test/MockRandom.pm) perl(Test/Code/TidyAll.pm)
+BuildRequires: perl(Carp/Always.pm) perl(Data/Dump.pm) perl(Crypt/DES.pm) perl(JSON.pm) perl(JSON/XS.pm) perl(autodie.pm) perl(Class/Accessor/Fast.pm) perl(Exception/Class.pm) perl(File/Which.pm) perl(IPC/Run/Debug.pm) perl(Net/DBus.pm) perl(Net/SNMP.pm) perl(Net/IP.pm) perl(IPC/System/Simple.pm) perl(Net/SSH2.pm) perl(XML/LibXML.pm) perl(YAML/PP.pm) yamllint perl(Inline/Python.pm) perl(File/chdir.pm) perl(Test/MockRandom.pm) perl(Test/Code/TidyAll.pm) perl(JSON/Validator.pm) perl(Net/Domain.pm)
 BuildRequires: perl(Mojolicious.pm) python3-module-setuptools perl(Time/Moment.pm)
 BuildPreReq: cmake rpm-macros-cmake ninja-build rpm-macros-ninja-build ctest
 Requires: qemu-kvm
-Requires: tesseract
+Requires: tesseract expect
 Requires: withlock
 Requires: perl(Carp/Always.pm) perl(Data/Dump.pm) perl(Net/SNMP.pm) perl(Net/IP.pm)
 Requires: /usr/bin/qemu-img
@@ -106,7 +106,7 @@ sed -e 's,/bin/env python,/bin/python3,' -i crop.py
 # and exclude known flaky tests in OBS check
 # https://progress.opensuse.org/issues/52652
 # 07-commands: https://progress.opensuse.org/issues/60755
-for i in 10-terminal 10-virtio_terminal 14-isotovideo 18-qemu 18-qemu-options 28-signalblocker 33-vagrant 99-full-stack; do
+for i in 10-terminal 10-virtio_terminal 14-isotovideo 18-qemu 18-qemu-options 18-backend-qemu 27-consoles-vmware 29-backend-generalhw 28-signalblocker 33-vagrant 99-full-stack ; do
     rm -f t/$i.t
 done
 # exclude unnecessary author tests
@@ -142,6 +142,9 @@ export OPENQA_TEST_TIMEOUT_SCALE_CI=10
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.opensuse.os_autoinst.switch.conf
 
 %changelog
+* Wed Dec 07 2022 Alexandr Antonov <aas@altlinux.org> 4.6-alt9
+- update to current version
+
 * Tue Jun 21 2022 Alexandr Antonov <aas@altlinux.org> 4.6-alt8
 - update to current version
 

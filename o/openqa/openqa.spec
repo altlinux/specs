@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt8
+Release: alt9
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -255,6 +255,7 @@ export OPENQA_TEST_TIMEOUT_SCALE_CI=10
 # docker-compose. Also, these tests are less relevant (or not relevant) for
 # packaging
 export CONTAINER_TEST=0
+export HELM_TEST=0
 make test-with-database OGIT_CEILING_DIRECTORIES="/" BS_RUN=1 PROVE_ARGS='-r' CHECKSTYLE=0 TEST_PG_PATH=%buildroot/DB
 rm -rf %buildroot/DB
 
@@ -452,6 +453,9 @@ fi
 %files single-instance
 
 %changelog
+* Wed Dec 07 2022 Alexandr Antonov <aas@altlinux.org> 4.6-alt9
+- update to current version
+
 * Tue Jun 21 2022 Alexandr Antonov <aas@altlinux.org> 4.6-alt8
 - update to current version
 
