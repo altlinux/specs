@@ -1,7 +1,7 @@
 Name: fvwm
-Version: 2.6.9
+Version: 2.7.0
 #define cvsdate 20031019
-Release: alt3
+Release: alt1
 
 %def_with fribidi
 %def_with libstroke
@@ -318,7 +318,6 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %exclude %_bindir/fvwm-menu-xlock
 %exclude %_bindir/fvwm-perllib
 %_libexecdir/fvwm
-%exclude %_libexecdir/fvwm/%version/FvwmCommand.pm
 %exclude %_libexecdir/fvwm/%version/FvwmConsoleC.pl
 %exclude %_libexecdir/fvwm/%version/FvwmPerl
 %_datadir/fvwm/
@@ -351,7 +350,6 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %_bindir/fvwm-menu-headlines
 %_bindir/fvwm-menu-xlock
 %_bindir/fvwm-perllib
-%_libexecdir/fvwm/%version/FvwmCommand.pm
 %_libexecdir/fvwm/%version/FvwmConsoleC.pl
 %_libexecdir/fvwm/%version/FvwmPerl
 %_datadir/fvwm/perllib/
@@ -369,6 +367,9 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %exclude %_iconsdir/hicolor/64x64/apps/%name.xpm
 
 %changelog
+* Mon Dec 12 2022 Vladislav Zavjalov <slazav@altlinux.org> 2.7.0-alt1
+- upstream version 2.7.0
+
 * Tue Nov 02 2021 Vladislav Zavjalov <slazav@altlinux.org> 2.6.9-alt3
 - follow Altlinux WM policy (closes #41275):
   - move /usr/share/icons/Fvwm.xpm to /usr/share/icons/hicolor/64x64/apps/fvwm.xpm
