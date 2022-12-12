@@ -1,10 +1,10 @@
-%define modname pymeeus
+%define pypi_name pymeeus
 %define _name PyMeeus
 %def_enable check
 
-Name: python3-module-%modname
-Version: 0.5.11
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 0.5.12
+Release: alt1
 
 Summary: Library of astronomical algorithms in Python
 Group: Development/Python3
@@ -16,8 +16,9 @@ Source: https://pypi.io/packages/source/P/%_name/%_name-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute
-%{?_enable_check:BuildRequires: python3-module-pytest}
+BuildRequires: python3-devel python3-module-distribute python3(wheel)
+%{?_enable_check:BuildRequires: python3-module-pytest python3-module-pytest-cov
+BuildRequires: python3-module-mccabe}
 
 %description
 PyMeeus is a Python 3 implementation of the astronomical algorithms
@@ -28,21 +29,25 @@ Willmann-Bell Inc. (1998)" by Jean Meeus.
 %setup -n %_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 export PYTHONPATH=%buildroot/%python3_sitelibdir_noarch
 py.test3 tests
 
 %files
-%python3_sitelibdir_noarch/%modname/
-%python3_sitelibdir_noarch/*.egg-info
-%doc *.rst
+%python3_sitelibdir_noarch/%pypi_name/
+%python3_sitelibdir_noarch/%_name-%version.dist-info
+%doc *.rst *.md
 
 %changelog
+* Sun Dec 11 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.12-alt1
+- 0.5.12
+- ported to %%pyproject* macros
+
 * Sat Jul 24 2021 Yuri N. Sedunov <aris@altlinux.org> 0.5.11-alt2
 - python3-only build
 
