@@ -8,7 +8,7 @@
 
 Name: deepin-api
 Version: 5.5.32
-Release: alt1
+Release: alt2
 Summary: Golang bingding for dde-daemon
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -97,6 +97,9 @@ cp -a vendor/src/* %buildroot%go_path/src/%goipath/vendor/src/
 %go_path/src/%goipath
 
 %changelog
+* Tue Dec 13 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.32-alt2
+- Updated golang modules.
+
 * Thu Nov 03 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.32-alt1
 - New version (5.5.32).
 - Upstream:

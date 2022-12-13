@@ -1,5 +1,5 @@
 Name: deepin
-Version: 5.0.1
+Version: 5.0.2
 Release: alt1
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
@@ -100,6 +100,7 @@ Requires: deepin-picker
 Requires: deepin-network-core
 Requires: kde5-profile
 Requires: deepin-log-viewer
+Requires: deepin-app-services
 
 %description default
 %name-default is a virtual package to provide default installation
@@ -138,6 +139,9 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Tue Dec 13 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.2-alt1
+- Added deepin-app-services in deepin-default.
+
 * Fri Dec 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.1-alt1
 - Added deepin-tweak in deepin-full.
 - Added deepin-log-viewer in deepin-default.

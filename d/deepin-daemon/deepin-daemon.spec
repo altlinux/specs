@@ -1,11 +1,9 @@
-# https://github.com/linuxdeepin/dde-daemon/issues/63
-%global _smp_mflags -j1
-%global repo dde-daemon
+%define repo dde-daemon
 
 Name: deepin-daemon
-Version: 6.0.0
-Release: alt2
-Epoch: 1
+Version: 5.15.1
+Release: alt1
+Epoch: 2
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -13,26 +11,22 @@ Url: https://github.com/linuxdeepin/dde-daemon
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Source2: %name.sysusers
 Source3: deepin-auth
-# archlinux patches
-Patch: deepin-daemon-fix-vanilla-libinput.patch
+Patch: deepin-daemon-5.14.109-fix-backlight-outside-debian.patch
 
 BuildRequires(pre): rpm-build-golang
-BuildRequires: glib2-devel libgio-devel libgtk+3-devel libsystemd-devel libudev-devel fontconfig-devel libbamf3-devel libpam0-devel libnl-devel librsvg-devel libfprint2-devel libalsa-devel libpulseaudio-devel libXcursor-devel libXfixes-devel libpulseaudio-devel libXi-devel libgudev-devel libinput-devel libddcutil-devel librsvg-utils deepin-gettext-tools deepin-clipboard libgdk-pixbuf-xlib-devel
+BuildRequires: gcc-c++ glib2-devel libgio-devel libgtk+3-devel libsystemd-devel libudev-devel fontconfig-devel libpam0-devel libnl-devel librsvg-devel libfprint2-devel libalsa-devel libpulseaudio-devel libXcursor-devel libXfixes-devel libpulseaudio-devel libXi-devel libgudev-devel libinput-devel libddcutil-devel librsvg-utils deepin-gettext-tools deepin-clipboard libgdk-pixbuf-xlib-devel
 # nm module
 #BuildRequires: libnm-gir-devel
 #BuildRequires: python3-module-pygobject3
 #BuildRequires: golang-gopkg-yaml-2-devel
 BuildRequires: golang-deepin-api-devel
-# Requires: bamfdaemon libbluez deepin-desktop-base deepin-desktop-schemas deepin-session-ui deepin-polkit-agent
+# Requires: bamfdaemon libbluez deepin-desktop-base deepin-desktop-schemas deepin-session-ui
 %ifnarch s390 s390x %arm ppc64le
 Requires: rfkill
 %endif
-# Requires: upower udisks2 systemd pulseaudio libnm polkit-gnome gnome-keyring deepin-session-ui xorg-drv-wacom libinput xdotool fontconfig pam libnl3 libfprint2 dnsmasq
 # Manually founded requires in the code.
 #Requires: glibc-utils deepin-launcher deepin-kwin setxkbmap systemd-services dbus-tools qt5-dbus libgio deepin-system-monitor coreutils util-linux xinitrc lightdm gdm-data sddm lxde-lxdm python3 zsh xterm xauth setup xorg-server sysvinit
-Requires: bamfdaemon
 %ifnarch armh i586
 Requires: lshw
 %endif
@@ -42,9 +36,16 @@ Daemon handling the DDE session settings
 
 %prep
 %setup -n %repo-%version
-patch langselector/locale.go < rpm/locale.go.patch
-# %%patch -p1
+patch -p1 < rpm/locale.go.patch
+patch -p1 < rpm/passwd.go.patch
+%patch -p1
+patch -p1 < archlinux/dde-daemon.patch
+# patch -p1 < archlinux/remove-tc.patch
+
 # install -m 644 %%SOURCE3 misc/etc/pam.d/deepin-auth
+# sed -i 's|/usr/libexec|/usr/lib|' keybinding/shortcuts/system_shortcut.go
+sed -i '/GOPATH_DIR/s|gopath|.build|' Makefile
+# sed -i 's|${PREFIX}/libexec/|${PREFIX}/lib/|' Makefile
 
 # Fix autologin
 sed -i 's|/usr/libexec/lxdm-greeter-gtk|%_libexecdir/lxdm-greeter-gtk|' \
@@ -63,9 +64,8 @@ sed -i 's/google-chrome/chromium-browser/g' \
 
 # /etc
 sed -i 's|/etc/gdm/custom.conf|/etc/X11/gdm/custom.conf|' \
-    accounts/handle_event.go
-sed -i 's|/etc/lightdm/deepin/qt-theme.ini|/etc/skel/.config/deepin/qt-theme.ini|' \
-    bin/dde-greeter-setter/manager.go
+    accounts/handle_event.go \
+    accounts/users/display_manager.go
 sed -i 's|/etc/gdm3/custom.conf|/etc/X11/gdm/custom.conf|' \
     accounts/users/display_manager.org
 sed -i 's|/etc/sddm.conf|/etc/X11/sddm/sddm.conf|' \
@@ -97,14 +97,11 @@ sed -i 's|/usr/lib/fprintd/fprintd|%_libexecdir/fprintd|' \
 # sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
 #     accounts/users/testdata/autologin/{lxdm,lxdm_autologin}.conf
 
-# Remove unneeded service
-sed -i '/github.com\/linuxdeepin\/dde-daemon\/system\/uadp/'d \
-    bin/dde-system-daemon/main.go
-
 # Switch deepin lockscreen to lightdm
-sed -i 's|dbus-send --print-reply --dest=com.deepin.dde.lockFront /com/deepin/dde/lockFront com.deepin.dde.lockFront.Show|dde-switchtogreeter|' \
+sed -i 's|/usr/bin/setxkbmap -option grab:break_actions&&/usr/bin/xdotool key XF86Ungrab&&dbus-send --print-reply --dest=com.deepin.dde.lockFront /com/deepin/dde/lockFront com.deepin.dde.lockFront.Show&&/usr/bin/setxkbmap -option|dde-switchtogreeter|' \
     keybinding/shortcuts/system_shortcut.go \
-    misc/dde-daemon/keybinding/system_actions.json
+    misc/dde-daemon/keybinding/system_actions.json \
+    keybinding/special_keycode.go
 
 # Fix activate services failed (Permission denied)
 # dbus service
@@ -130,18 +127,12 @@ ExecStart=%_libexecdir/%name/dde-lockservice
 WantedBy=graphical.target
 EOF
 
-%build
-export BUILDDIR="$PWD/.build"
-export GOPATH="$(pwd)/.build:%go_path:$(pwd)/vendor"
-# export GOFLAGS="-buildmode=pie -trimpath -mod=readonly -modcacherw"
-export LIBS+="-L/%_lib -lpam -lsystemd"
-export GO111MODULE="off"
-#make -C network/nm_generator gen-nm-code
-%make_build
-
 %install
 export BUILDDIR="$PWD/.build"
-export GOPATH="%go_path:$(pwd)/vendor"
+export GOPATH="%go_path/src/github.com/linuxdeepin/dde-api/vendor:%go_path"
+export GOFLAGS="-mod=vendor"
+export LIBS+="-L/%_lib -lpam -lsystemd"
+#make -C network/nm_generator gen-nm-code
 
 %makeinstall_std PAM_MODULE_DIR=/%_lib/security
 chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
@@ -150,7 +141,6 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %files -f %repo.lang
 %doc README.md LICENSE CHANGELOG.md
 %_sysconfdir/default/grub.d/10_deepin.cfg
-%_sysconfdir/grub.d/35_deepin_gfxmode
 %_sysconfdir/deepin/grub2_edit_auth.conf
 %_sysconfdir/pam.d/deepin-auth-keyboard
 %_sysconfdir/lightdm/deepin/xsettingsd.conf
@@ -161,7 +151,11 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %_datadir/dbus-1/system.d/*.conf
 %_iconsdir/hicolor/*/status/*
 %_datadir/%repo/
-%_datadir/dde/
+%dir %_datadir/dde/
+%_datadir/dde/*
+%dir %_datadir/deepin/
+%dir %_datadir/deepin/scheduler/
+%_datadir/deepin/scheduler/config.json
 %_datadir/polkit-1/actions/*.policy
 %_var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.daemon.Accounts.pkla
 %_var/lib/polkit-1/localauthority/10-vendor.d/com.deepin.daemon.Grub2.pkla
@@ -174,9 +168,13 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %_unitdir/deepin-accounts-daemon.service
 %_unitdir/dbus-com.deepin.dde.lockservice.service
 %_datadir/locale/es_419/LC_MESSAGES/dde-daemon.mo
-%_datadir/dsg/apps/dde-session-daemon/configs/gesture.json
+%dir %_datadir/dsg/configs/org.deepin.dde.daemon/
+%_datadir/dsg/configs/org.deepin.dde.daemon/*.json
 
 %changelog
+* Tue Dec 13 2022 Leontiy Volodin <lvol@altlinux.org> 2:5.15.1-alt1
+- New version (5.15.1).
+
 * Fri Feb 11 2022 Leontiy Volodin <lvol@altlinux.org> 1:6.0.0-alt2
 - Fixed deepin-accounts-daemon.service.
 
