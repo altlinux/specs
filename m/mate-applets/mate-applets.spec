@@ -2,7 +2,7 @@
 
 Name: mate-applets
 Version: 1.26.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: MATE Desktop panel applets
 License: GPLv2+ and LGPLv2+
@@ -62,6 +62,9 @@ rm -fr %buildroot%_datadir/help/*/mate-stickynotes-applet
 %_man1dir/*.1*
 
 %changelog
+* Tue Dec 13 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt2
+- updated ru translate
+
 * Tue Nov 22 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.26.1-alt1
 - 1.26.1
 
