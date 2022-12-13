@@ -1,22 +1,31 @@
-Name: pdb-clone
-Version: 1.10.1
-Release: alt2
-License: GPL
+%define _unpackaged_files_terminate_build 1
+%define pypi_name pdb-clone
+
+Name: %pypi_name
+Version: 1.10.2
+Release: alt1
+License: GPL-2.0
 Summary: A clone of pdb, fast and with the remote debugging and attach features
-Source: %name-%version.zip
 Group: Development/Python
-Url: https://pypi.python.org/pypi/pdb-clone
-%setup_python_module %name
+Url: https://pypi.org/project/pdb-clone/
+VCS: https://github.com/corpusops/pdbclone
+
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-# XXX Modern gdb supports python3 only
-# There's no gdb module
-%add_python3_req_skip gdb
-%add_python_req_skip gdb
 
-# Automatically added by buildreq on Wed Apr 22 2015
-# optimized out: libcloog-isl4 python-base python-modules python-modules-compiler python-modules-email python3 python3-base
-BuildRequires: python-devel python-modules-unittest python-test python3-dev python3-test unzip
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+# gdb provides python(gdb) on %_datadir/gdb/python, but it's for internal usage
+# only, for example:
+# (gdb) python import gdb; print (gdb.__file__)
+# /usr/share/gdb/python/gdb/__init__.py
+#
+# pdb-clone provides module for gdb, that is called from gdb
+# (gdb) python import pdb_clone.bootstrappdb_gdb
+%add_python3_req_skip gdb
 
 %description
 Implement the most recent Python 3 features of pdb, as defined in the
@@ -38,48 +47,39 @@ News.
 Add a bdb comprehensive test suite (more than 70 tests) and run both pdb
 and bdb test suites.
 
-%package -n %packagename
-Summary: Module for %name, %summary
-Group: Development/Python
-%description -n %packagename
-%summary
-
-%package -n python3-module-%name
+%package -n python3-module-%pypi_name
 Summary: Module for %name
 Group: Development/Python
-%description -n python3-module-%name
+# wellknown PyPI name
+%py3_provides %pypi_name
+Provides: python3-module-pdb_clone = %EVR
+
+%description -n python3-module-%pypi_name
 %summary
 
 %prep
 %setup
-# Hack in coding
-sed -i '/#!/i# coding: latin1' lib/pdb_clone/pdb.py
 
 %build
-%python_build
-python3 setup.py clean
-%python3_build
-
-%ifarch %ix86
-ln -s lib.linux-i686-%_python_version build/lib.linux-%_arch-%_python_version
-ln -s lib.linux-i686-%_python3_version build/lib.linux-%_arch-%_python3_version
-%endif
+%pyproject_build
 
 %install
-%python_install
-%python3_install
+%pyproject_install
 
 %files
 %doc pdb-clone.wiki/*
-%_bindir/*
+%_bindir/pdb-attach
+%_bindir/pdb-clone
 
-%files -n %packagename
-%python_sitelibdir/*
-
-%files -n python3-module-%name
-%python3_sitelibdir/*
+%files -n python3-module-%pypi_name
+%python3_sitelibdir/pdb_clone/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 12 2022 Stanislav Levin <slev@altlinux.org> 1.10.2-alt1
+- 1.10.1 -> 1.10.2.
+- Stopped build Python2 package.
+
 * Thu Oct 04 2018 Fr. Br. George <george@altlinux.ru> 1.10.1-alt2
 - Remove python*(gdb) dependency
 
