@@ -3,7 +3,7 @@
 
 Name: linstor-client
 Summary: Linstor Client
-Version: 1.15.1
+Version: 1.16.0
 Release: alt1
 Group: Development/Python3
 License: GPLv3
@@ -44,6 +44,9 @@ python3 setup.py build_man
 %endif
 
 %changelog
+* Tue Dec 13 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.16.0-alt1
+- 1.16.0
+
 * Mon Oct 31 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.15.1-alt1
 - 1.15.1
 
