@@ -1,13 +1,12 @@
 %def_without x
 %def_enable gpt
-%def_disable ha
 %def_disable ogfs
 %def_disable ocfs2
 %def_disable static
 
 Name: evms
 Version: 2.5.5
-Release: alt60
+Release: alt61
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -23,10 +22,6 @@ BuildRequires: libbtrfs-devel
 
 %if_with x
 BuildRequires: gtk+-devel
-%endif
-
-%if_enabled ha
-BuildRequires: libdevmapper-devel heartbeat
 %endif
 
 %package -n lib%name
@@ -116,7 +111,6 @@ sed -i /SEGV/d engine/faulthdlr.c
     %{subst_enable gpt} \
     %{subst_enable ocfs2} \
     %{subst_enable ogfs} \
-    %{subst_enable ha} \
     %{!?_with_x: --disable-gui --disable-gtktest} \
     %{subst_enable static} \
     #
@@ -167,9 +161,6 @@ EOF
 
 %files -n %name-cli
 /sbin/%name
-%if_enabled ha
-/sbin/%{name}d*
-%endif
 %_man8dir/%name.*
 
 %files -n %name-ncurses
@@ -184,6 +175,10 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Tue Dec 13 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt61
+- Remove all clustering functionality
+- Don't create /dev/evms/ directory
+
 * Fri Oct 07 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt60
 - fix crash when mkfs'ing btrfs with subvolumes
 
