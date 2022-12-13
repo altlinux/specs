@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt2
+Release: alt3
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -46,8 +46,13 @@ Group: Graphics
 Summary: System/Base
 License: GPLv2+
 
-%define distro_name ALT Workstation %version%status_en
-%define distro_name_ru Альт Рабочая станция %version%status
+%define distro_version 10.0.920
+
+%define distro_base_name ALT Workstation
+%define distro_base_name_ru Альт Рабочая станция
+
+%define distro_name %distro_base_name %distro_version%status_en
+%define distro_name_ru %distro_base_name_ru %distro_version%status
 
 %description
 Distro-specific packages with design and texts for %distro_name.
@@ -249,7 +254,7 @@ Requires(post): indexhtml-common
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' GTK_THEME='%gtk_theme' ICON_THEME='%icon_theme' ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ARTWORKS_WEIGHT='%artworks_weight' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%distro_version PRODUCT_BASE_NAME_RU='%distro_base_name_ru' PRODUCT_BASE_NAME='%distro_base_name' PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' GTK_THEME='%gtk_theme' ICON_THEME='%icon_theme' ALTERATOR_BROWSER_WEIGHT=%alterator_browser_weight ARTWORKS_WEIGHT='%artworks_weight' ./configure
 make
 
 %install
@@ -357,6 +362,12 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Dec 13 2022 Mikhail Efremov <sem@altlinux.org> 10.1-alt3
+- all: Set distro version to 10.0.920.
+- indexhtml: Substitute product base name.
+- indexhtml: Update index.html page.
+- Drop fake changelog entry.
+
 * Thu Oct 06 2022 Mikhail Efremov <sem@altlinux.org> 10.1-alt2
 - Add fake changelog entry and bump release.
 - alterator: Add logo_48.png to browser-qt rcc.
@@ -379,9 +390,6 @@ fi
 - Fix: Don't specify extra horizontal margins for inputs in
   alterator-listbox tables (by Paul Wolneykien).
 - Fix: Don't restrict the width of the top panel buttons (by Paul Wolneykien).
-
-* Tue Apr 19 2022 Paul Wolneykien <manowar@altlinux.org> 10.1-alt1
-- sem@: Fake changelog entry.
 
 * Mon Dec 06 2021 Mikhail Efremov <sem@altlinux.org> 10.0-alt2
 - bootloader: Fix grub colors.
