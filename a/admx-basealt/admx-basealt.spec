@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.11.2
+Version: 0.1.12
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,10 @@ done
 %_destdir
 
 %changelog
+* Tue Dec 13 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.1.12-alt1
+- Add control for Yandex Browser group policies mechanism.
+- Improve group policies mechanisms display names and help descriptions.
+
 * Mon Oct 24 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.1.11.2-alt1
 - Fix en_US adml for script execution module for users policy.
 
