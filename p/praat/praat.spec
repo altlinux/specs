@@ -1,5 +1,5 @@
 Name: praat
-Version: 6.2.22
+Version: 6.3.02
 Release: alt1
 
 Summary: A program for speech analysis and synthesis
@@ -11,19 +11,20 @@ Url: http://www.praat.org
 # https://github.com/praat/praat.git
 Source: %name-%version.tar.gz
 Patch0: %name-6.0.46-gcc8-fix.patch
+
 # PATCH-FIX-OPENSUSE praat-use_system_libs.patch -- replace some embedded libs with system ones
 Patch1:         praat-use_system_libs.patch
 # PATCH-FIX-OPENSUSE praat-no-return-in-nonvoid.patch -- make the compiler happy
 Patch2:         praat-no-return-in-nonvoid.patch
-# PATCH-FIX-UPSTREAM praat-gcc11.patch
-Patch3:         praat-gcc11.patch
+# PATCH-FEATURE-OPENSUSE praat-allow-system-flags.patch badshah400@gmail.com -- Allow compilation and linker flags to incorporate appropriate env flags
+Patch3:         praat-allow-system-flags.patch
 
 
 Requires: fonts-bitmap-75dpi
 
 # Automatically added by buildreq on Mon Aug 24 2020
 # optimized out: fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel pkg-config python2-base sh4 xorg-proto-devel
-BuildRequires: gcc-c++ libalsa-devel libgtk+2-devel libjack-devel libpulseaudio-devel libstdc++-devel-static libglpk-devel
+BuildRequires: gcc-c++ libalsa-devel libgtk+2-devel libjack-devel libpulseaudio-devel libstdc++-devel-static libglpk-devel libopus-devel libopusfile-devel  libopusurl-devel
 
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(gsl)
@@ -56,9 +57,9 @@ Recommends: fonts-bitmap-100dpi fonts-bitmap-75dpi
 %prep
 %setup
 #patch0 -p2
-#patch1 -p1
+%patch1 -p1
 %patch2 -p1
-#patch3 -p1
+%patch3 -p1
 #patch5 -p1
 
 %build
@@ -92,6 +93,9 @@ install -pDm755 %name %buildroot%_bindir/%name
 #  http://www.fon.hum.uva.nl/praat/download_sources.html praat(\d)(\d)(\d+)_sources.tar.gz debian
 
 %changelog
+* Tue Dec 13 2022 Ilya Mashkin <oddity@altlinux.ru> 6.3.02-alt1
+- 6.3.02
+
 * Wed Sep 07 2022 Ilya Mashkin <oddity@altlinux.ru> 6.2.22-alt1
 - 6.2.22 (6.2.18 released as 6.2.22)
 
