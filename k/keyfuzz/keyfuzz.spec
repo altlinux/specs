@@ -1,6 +1,8 @@
 Name: keyfuzz
-Version: 4.4
+Version: 0.2
 Release: alt1
+
+Epoch: 1
 
 Summary: A Utility for manipulating the scancode/keycode translation tables of keyboard drivers
 Summary(ru_RU.utf8): Утилита для работы с таблицами перевода скан-кодов/кодов клавиш драйверовспециальныз клавиатур.
@@ -49,6 +51,7 @@ keyfuzz не взаимодействует напрямую с XFree86.
 
 %prep
 %setup
+%__subst 's/vebose/verbose/' man/keyfuzz.8.xml.in
 
 %build
 %autoreconf
@@ -67,11 +70,15 @@ rm -rf %buildroot%_sysconfdir/init.d
 %files
 %_sbindir/*
 %_man8dir/*
-%doc *.md
+%doc README
 
 %_sysconfdir/%name
 %_initdir/*
 
 %changelog
+* Tue Dec 13 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.2-alt1
+- Fix Alt Bugs (ALT #44610, #44611, #44612)
+
 * Wed Nov 16 2022 Hihin Ruslan <ruslandh@altlinux.ru> 4.4-alt1
 - Initial build for Sisyphus
+
