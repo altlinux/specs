@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 210
+%define centos_release 211
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,18 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Dec 13 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.211-alt1.el9
+- Updated to kernel-5.14.0-211.el9:
+  + Add fixes to drivers/clksrc for NVIDIA Orin
+  + Backport Aspeed conversion to shmem
+  + Backport DFS related fixes from upstream.
+  + clocksource: hyper-v: Updates for RHEL 9.2
+  + misc: rtsx: Rework runtime power management flow
+  + net: hyper-v: netvsc driver updates for RHEL-9.2
+  + net: mana: Microsoft Azure Network Adapter (MANA) driver updates
+  + RDMA: Bug fixes from v6.1
+  + vgacon: Propagate console boot parameters before calling `vc_resize'
+
 * Sat Dec 10 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.210-alt1.el9
 - Updated to kernel-5.14.0-210.el9:
   + ALSA: backport for RHEL 9.2
