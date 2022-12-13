@@ -2,7 +2,7 @@ Group: Development/Tools
 Summary: Macros for aclocal to install configuration files
 Summary(pl):	Makra dla aclocal do instalacji plików konfiguracyjnych
 Name: sysconftool
-Version: 0.19
+Version: 0.21
 Release: alt1
 License: GPLv3 with exceptions
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -54,6 +54,9 @@ make check
 %_datadir/aclocal/sysconftool.m4
 
 %changelog
+* Tue Dec 13 2022 Ilya Mashkin <oddity@altlinux.ru> 0.21-alt1
+- 0.21
+
 * Wed Aug 03 2022 Ilya Mashkin <oddity@altlinux.ru> 0.19-alt1
 - 0.19
 
