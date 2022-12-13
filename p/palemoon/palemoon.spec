@@ -3,7 +3,7 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version:  31.4.0
+Version:  31.4.1.1
 
 Release: alt1
 
@@ -499,6 +499,9 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %exclude %_includedir/*
 
 %changelog
+* Sun Dec 11 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.4.1.1-alt1
+- Version 31.4.1.1
+
 * Mon Nov 28 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.4.0-alt1
 - Version 31.4.0
 
