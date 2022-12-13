@@ -1,7 +1,7 @@
 %define ver_major 43
 
 Name: gnome3
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME 3 Desktop installers
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-licenses
 
 ## Applications
 %define nautilus_ver %ver_major
-%define seahorse_ver 42.0
+%define seahorse_ver %ver_major
 %define utils_ver 3.20
 %define monitor_ver 42
 %define games_ver 42
@@ -46,7 +46,7 @@ BuildRequires(pre): rpm-build-licenses
 %define gdu_ver %ver_major
 %define evo_ver 3.46
 %define emp_ver 3.12.11
-%define polari_ver 42.1
+%define polari_ver %ver_major
 %define brasero_ver 3.12.3
 %define accerciser_ver 3.40
 %define recorder_ver 42.0
@@ -77,7 +77,7 @@ Provides: gnome-minimal = %version-%release
 
 # GNOME Desktop Core
 Requires: gnome-session >= %session_ver
-Requires: pulseaudio-daemon
+Requires: pipewire wireplumber
 Requires: gnome-control-center >= %ver_major
 Requires: xorg-drv-libinput
 Requires: gnome-shell >= %ver_major
@@ -107,6 +107,7 @@ Requires: gnome-characters >= %characters_ver
 # Applications
 ## Default file manager
 Requires: nautilus >= %nautilus_ver
+Requires: nautilus-share samba-usershares
 ## Default terminal emulator
 Requires: gnome-terminal >= %terminal_ver
 ## Default archiving tool
@@ -144,13 +145,13 @@ Provides: gnome-default = %version-%release
 Requires: %name-minimal = %version-%release
 
 # initial setup
-#Requires: gnome-initial-setup
+Requires: gnome-initial-setup
 
 ## Canberra modules for both GTK+
 Requires: libcanberra-gtk2
 Requires: libcanberra-gtk3
 ## Color manager
-Requires: gnome-color-manager
+#Requires: gnome-color-manager
 ## Password keeper
 Requires: gnome-keyring >= %keyring_ver
 Requires: gnome-keyring-ssh >= %keyring_ver
@@ -238,10 +239,9 @@ Requires: gnome-maps >= %ver_major
 Requires: gnome-power-manager >= %pm_ver
 Requires: NetworkManager-gnome >= %network_manager_ver
 ## Bluetooth pairing and control program
-Requires: gnome-bluetooth
+Requires: gnome-bluetooth3.0
 Requires: gnome-remote-desktop
 Requires: gnome-nettool >= %nettool_ver
-Requires: gnome-user-share
 Requires: rygel
 Requires: rygel-tracker
 Requires: gnome-usage
@@ -356,7 +356,6 @@ Requires: gimp
 #Requires: stardict-gnome
 # Some StarDict dictionaries
 #Requires: stardict-engcom
-
 ## Presentation tool ???
 
 %description office-light
@@ -389,6 +388,7 @@ Group: Graphical desktop/GNOME
 Requires: %name-default = %version-%release
 Requires: %name-office-light = %version-%release
 Requires: %name-a11y = %version-%release
+Requires: %name-mobile = %version-%release
 # And
 ## CD-ripper
 Requires: goobox
@@ -410,7 +410,11 @@ Requires: liferea
 Requires: gnome-battery-bench
 Requires: gnome-multi-writer
 Requires: gnome-calls
+# sould required by gnome-calls
+Requires: callaudiod feedbackd
 Requires: gnome-connections
+Requires: gnome-user-share
+Requires: gradience
 
 # Additional LibreOffice packages
 # (sushi requires LibreOffice-integrated, gnome-documents requires libreofficekit)
@@ -422,6 +426,17 @@ Requires: LibreOffice-langpack-ru
 This virtual package includes default GNOME 3 Desktop components and
 some other useful GNOME and GTK applications.
 
+%package mobile
+Summary: Virtual package for use with regular(TM) GNOME 3 distro
+Group: Graphical desktop/GNOME
+Requires: %name-default = %version-%release
+Requires: phosh
+
+%description mobile
+This virtual package includes GNOME 3 Desktop components and some other
+useful GNOME and GTK applications for mobile devices.
+
+
 %files minimal
 %files default
 #%files default-ru
@@ -430,9 +445,21 @@ some other useful GNOME and GTK applications.
 #%files office-ru
 %files office-light
 %files a11y
+%files mobile
 %files regular
 
 %changelog
+* Fri Dec 09 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
+- default: restored gnome-initial-setup
+           replaced pulseaudio-daemon by pipewire + wireplumber
+           gnome-bluetooth -> gnome-bluetooth3.0
+           removed obsolete gnome-color-manager
+           added nautilus-share + samba-usershares
+- new -mobile subpackage with Phosh shell
+- regular: added gradience
+           gnome-user-share moved from default to regular (ALT #44072)
+           required -mobile
+
 * Sat Sep 24 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - minimal: added gnome-browser-connector
            removed gnome-todo, gnome-getting-started-docs
