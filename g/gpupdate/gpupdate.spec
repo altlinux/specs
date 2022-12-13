@@ -31,8 +31,8 @@
 %add_python3_req_skip util.xml
 
 Name: gpupdate
-Version: 0.9.12
-Release: alt2
+Version: 0.9.12.1
+Release: alt1
 
 Summary: GPT applier
 License: GPLv3+
@@ -181,6 +181,10 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Tue Dec 13 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.12.1-alt1
+- Update file copy applier with substitution support
+- Update translations for several logs
+
 * Mon Dec 12 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.12-alt2
 - Update release with forgotten changes
 
