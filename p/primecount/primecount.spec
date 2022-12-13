@@ -2,7 +2,7 @@
 
 Name: primecount
 Version: 7.6
-Release: alt1
+Release: alt1.1
 Summary: Count the number of primes
 License: BSD-2-Clause
 Group: Sciences/Mathematics
@@ -39,6 +39,10 @@ files for developing applications that use the primecount library.
 %build
 %cmake \
     -GNinja \
+%ifarch %e2k
+    -DCMAKE_SHARED_LINKER_FLAGS="-fopenmp" \
+    -DCMAKE_EXE_LINKER_FLAGS="-fopenmp" \
+%endif
     -DBUILD_LIBPRIMESIEVE=OFF \
     -DBUILD_SHARED_LIBS=ON \
     -DBUILD_STATIC_LIBS=OFF \
@@ -72,6 +76,9 @@ ctest
 %_pkgconfigdir/primecount.pc
 
 %changelog
+* Tue Dec 13 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 7.6-alt1.1
+- Fixed build for Elbrus.
+
 * Fri Dec 09 2022 Leontiy Volodin <lvol@altlinux.org> 7.6-alt1
 - New version (7.6).
 
