@@ -1,11 +1,11 @@
 %define sover 0
-%define git %nil
+%define git 40f5bf59c
 
 %define optflags_lto %nil
 
 Name: spirv-tools
-Version: 2022.4
-Release: alt2
+Version: 2022.5
+Release: alt0.1.g%{git}
 Epoch: 1
 
 Summary: API and commands for processing SPIR-V modules
@@ -23,7 +23,7 @@ BuildRequires(pre): cmake ninja-build
 BuildRequires: gcc-c++
 BuildRequires: python3-devel
 # due sdk requires
-BuildRequires: spirv-headers >= 2:1.5.5-alt4.g85a1ed2
+BuildRequires: spirv-headers >= 2:1.5.5-alt5.g1d31a10
 
 %description
 The package includes an assembler, binary module parser,
@@ -95,6 +95,9 @@ ninja \
 %_datadir/cmake/SPIRV-Tools*
 
 %changelog
+* Tue Dec 13 2022 L.A. Kostis <lakostis@altlinux.ru> 1:2022.5-alt0.1.g40f5bf59c
+- Updated to GIT 40f5bf59c (for sdk-1.3.236).
+
 * Wed Nov 23 2022 L.A. Kostis <lakostis@altlinux.ru> 1:2022.4-alt2
 - Disable LTO on (cause issues on ix86).
 

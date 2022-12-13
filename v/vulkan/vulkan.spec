@@ -1,6 +1,6 @@
 Name: vulkan
-Version: 1.3.231
-Release: alt2.1
+Version: 1.3.236
+Release: alt1
 Summary: Khronos group Vulkan API SDK
 
 Group: System/Libraries
@@ -22,9 +22,9 @@ BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
 BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 # strict requires due internal dependency
-BuildRequires: glslang-devel = 11.12.0
-BuildRequires: libspirv-tools-devel = 2022.4
-BuildRequires: spirv-headers >= 2:1.5.5-alt4
+BuildRequires: glslang-devel = 11.13.0
+BuildRequires: libspirv-tools-devel = 2022.5-alt0.1.g40f5bf59c
+BuildRequires: spirv-headers >= 2:1.5.5-alt5
 # -layers need it
 BuildRequires: librobin-hood-hashing-devel
 # - tolls need it
@@ -117,14 +117,14 @@ popd
 for dir in loader layers; do
 pushd %_builddir/vulkan-"$dir"
 %cmake \
-	   -DBUILD_WERROR=OFF \
+	   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	   -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	   -DSPIRV_TOOLS_SEARCH_PATH=%_libdir \
 	   -DSPIRV_TOOLS_OPT_SEARCH_PATH=%_libdir \
 	   -DVULKAN_HEADERS_INSTALL_DIR=%buildroot \
 	   -DGLSLANG_INSTALL_DIR=%_prefix \
 	   -DSPIRV_HEADERS_INSTALL_DIR=%_prefix \
-	   -DVulkanHeaders_INCLUDE_DIR=%buildroot%_includedir \
-	   -DVulkanRegistry_DIR=%buildroot%_datadir/vulkan/registry \
+	   -DCMAKE_PREFIX_PATH=%buildroot%_datadir/cmake \
 	   -DROBIN_HOOD_HASHING_INCLUDE_DIR=%_includedir
 %cmake_build
 %cmakeinstall_std
@@ -172,6 +172,7 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %_libdir/libvulkan.so
 %_pkgconfigdir/vulkan.pc
 %_datadir/vulkan/registry
+%_datadir/cmake/VulkanHeaders/*.cmake
 # requires vulkan-docs tools
 %exclude %_datadir/vulkan/registry/genvk.py
 
@@ -188,6 +189,15 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Tue Dec 13 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.236-alt1
+- Bump BR.
+- .spec: remove WERROR flag (it's disabled by default now).
+- Updated to sdk-1.3.236:
+  + vulkan-tools: Updated to ce45337c5.
+  + vulkan-loader: Updated to ba92c4cd8.
+  + vulkan-layers: Updated to 4f5ce69d1.
+  + vulkan-headers: Updated to b75e5a02b.
+
 * Fri Dec 09 2022 Ivan A. Melnikov <iv@altlinux.org> 1.3.231-alt2.1
 - NMU: spec: Fix nbsp in previous release to really disable Werror.
 

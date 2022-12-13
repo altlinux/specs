@@ -3,8 +3,8 @@
 %define optflags_lto %nil
 
 Name: glslang
-Version: 11.12.0
-Release: alt2
+Version: 11.13.0
+Release: alt1
 Epoch: 1
 
 Summary: OpenGL and OpenGL ES shader front end and validator
@@ -20,7 +20,7 @@ Patch1: %{name}-alt-shared-opt.patch
 
 BuildRequires(pre): cmake
 BuildRequires: gcc-c++
-BuildRequires: python3-devel libspirv-tools-devel >= 2022.4
+BuildRequires: python3-devel libspirv-tools-devel >= 2022.5-alt0.1.g40f5bf59c
 
 %description
 glslang is the official reference compiler front end for the OpenGL
@@ -82,6 +82,9 @@ popd
 %_includedir/SPIRV
 
 %changelog
+* Tue Dec 13 2022 L.A. Kostis <lakostis@altlinux.ru> 1:11.13.0-alt1
+- Updated to 11.13.0 (branch sdk-1.3.236).
+
 * Wed Nov 23 2022 L.A. Kostis <lakostis@altlinux.ru> 1:11.12.0-alt2
 - Disable LTO (cause problems on ix86).
 
