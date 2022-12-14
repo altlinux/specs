@@ -1,5 +1,5 @@
 Name: libsolv
-Version: 0.7.22
+Version: 0.7.23
 Release: alt1
 
 Summary: Library for solving packages and reading repositories
@@ -76,5 +76,8 @@ Group: System/Configuration/Packaging
 %_man1dir/*.1*
 
 %changelog
+* Wed Dec 14 2022 Andrey Cherepanov <cas@altlinux.org> 0.7.23-alt1
+- New version.
+
 * Sun Oct 30 2022 Andrey Cherepanov <cas@altlinux.org> 0.7.22-alt1
 - Initial build for Sisyphus
