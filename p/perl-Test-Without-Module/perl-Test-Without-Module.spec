@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,13 +7,13 @@ BuildRequires: perl(Pod/Markdown.pm) perl(Pod/Readme.pm) perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Test-Without-Module
-Version:        0.20
-Release:        alt1_10
+Version:        0.21
+Release:        alt1
 Summary:        Test fallback behavior in absence of modules
 License:        GPL+ or Artistic
 
 URL:            https://metacpan.org/release/Test-Without-Module
-Source0:        https://cpan.metacpan.org/modules/by-module/Test/Test-Without-Module-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/C/CO/CORION/Test-Without-Module-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  findutils
 BuildRequires:  rpm-build-perl
@@ -54,10 +55,13 @@ make pure_install DESTDIR=$RPM_BUILD_ROOT
 make test
 
 %files
-%doc Changes README
+%doc Changes README README.mkdn
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 0.21-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_10
 - update to new release by fcimport
 
