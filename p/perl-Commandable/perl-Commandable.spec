@@ -1,20 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Commandable
 %set_perl_req_method relaxed
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Attribute/Storage.pm) perl(Convert/Color.pm) perl(Module/Build.pm) perl(Module/Pluggable/Object.pm) perl(String/Tagged.pm) perl(String/Tagged/Terminal.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Warnings.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.08
-Release: alt1.1
+Version: 0.09
+Release: alt1
 Summary: utilities for commandline-based programs
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -38,10 +38,13 @@ program.
 %perl_vendor_install
 
 %files
-%doc Changes LICENSE README
+%doc Changes README
 %perl_vendor_privlib/C*
 
 %changelog
+* Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 0.09-alt1
+- automated CPAN update
+
 * Wed Nov 30 2022 Igor Vlasenko <viy@altlinux.org> 0.08-alt1.1
 - to Sisyphus as perl-Sub-HandlesVia dep
 
