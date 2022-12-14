@@ -4,10 +4,10 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.5.157
+Version: 5.6.1
 Release: alt1
 Summary: New control center for Linux Deepin
-License: GPL-3.0+
+License: LGPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-control-center
 Packager: Leontiy Volodin <lvol@altlinux.org>
@@ -16,13 +16,8 @@ Source: %url/archive/%version/%repo-%version.tar.gz
 # archlinux patches
 Patch: deepin-control-center-no-user-experience.patch
 # alt patches
-Patch1: deepin-control-center-fix-build-deepinid-syncdaemon.patch
-Patch2: deepin-control-center-fix-build-gcc10.patch
-Patch4: deepin-control-center-lightdm-lockscreen.patch
-Patch5: deepin-control-center-hide-lockscreen-slide-widget.patch
-Patch6: deepin-control-center-remove-pw-check-support.patch
-# upstream patches
-Patch10: deepin-control-center-pull407-disable-biometric-auth.patch
+Patch1: deepin-control-center-lightdm-lockscreen.patch
+Patch2: deepin-control-center-hide-lockscreen-slide-widget.patch
 
 BuildRequires(pre): rpm-build-ninja desktop-file-utils rpm-build-kf5
 %if_enabled clang
@@ -31,7 +26,6 @@ BuildRequires(pre): clang-devel
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires: cmake
-BuildRequires: deepin-dock-devel
 BuildRequires: deepin-network-utils-devel
 BuildRequires: dtk5-widget-devel
 BuildRequires: deepin-qt-dbus-factory-devel
@@ -81,15 +75,9 @@ Group: Development/Other
 %prep
 %setup -n %repo-%version
 %patch -p2
-#patch1 -p1
-#patch2 -p1
-%patch4 -p1
-%patch5 -p1
-#patch6 -p1
-#patch10 -p1
+%patch1 -p1
+%patch2 -p1
 
-# remove after they obey -DDISABLE_SYS_UPDATE properly
-sed -i '/new UpdateModule/d' src/frame/window/mainwindow.cpp
 # remove General Settings
 sed -i '/new CommonInfoModule/d' src/frame/window/mainwindow.cpp
 # remove Accounts module
@@ -97,31 +85,35 @@ sed -i '/new AccountsModule/d' src/frame/window/mainwindow.cpp
 # remove Deepin ID Sync module
 sed -i '/new SyncModule/d' src/frame/window/mainwindow.cpp
 # disable non-working modules that switch to the lock screen
-# sed -i '/Wakeup Settings/d' \
-#     src/frame/window/modules/power/generalwidget.cpp \
-#     src/frame/window/search/searchwidget.cpp
+#sed -i '/Wakeup Settings/d' \
+#  src/frame/window/modules/power/generalwidget.cpp \
+#  src/frame/window/search/searchwidget.cpp
+#sed -i '/dcc::widgets::SwitchWidget *m_wake/d' \
+#  src/frame/window/modules/power/generalwidget.h
 
-sed -i '/m_wakeComputerNeedPassword/d' src/frame/window/modules/power/generalwidget.{cpp,h}
-sed -i '/(GSettingWatcher::instance()->getStatus("systemSuspend") != "Hidden"));/d' src/frame/window/modules/power/generalwidget.cpp
-sed -i '/m_wakeDisplayNeedPassword/d' src/frame/window/modules/power/generalwidget.{cpp,h}
-sed -i '/m_monitorSleepOnPower/d' src/frame/window/modules/power/generalwidget.h
-# sed -i '/void CommonInfoWork::setUeProgram/s|enabled|disabled|' src/frame/window/modules/commoninfo/commoninfowork.cpp
+sed -i '/m_wake/d' src/frame/window/modules/power/generalwidget.{cpp,h}
+sed -i '/GSettingWatcher::instance()->getStatus(gsetting_systemSuspend) != "Hidden"/d' \
+  src/frame/window/modules/power/generalwidget.cpp
+#sed -i '/m_monitorSleepOnPower/d' \
+#  src/frame/window/modules/power/{usebatterywidget.cpp,useelectricwidget.cpp}
+# sed -i '/void CommonInfoWork::setUeProgram/s|enabled)|disabled)|' \
+#   src/frame/window/modules/commoninfo/commoninfowork.cpp
 
 sed -i 's|/lib/|/%_lib/|' \
     com.deepin.controlcenter.develop.policy \
     src/frame/window/mainwindow.cpp \
     src/frame/window/insertplugin.cpp
 
-sed -i 's|/etc/deepin/dde-session-ui.conf|/usr/share/dde-session-ui/dde-session-ui.conf|' \
-	src/frame/modules/accounts/accountsworker.cpp
+# sed -i 's|/etc/deepin/dde-session-ui.conf|/usr/share/dde-session-ui/dde-session-ui.conf|' \
+# 	src/frame/modules/accounts/accountsworker.cpp
 
-sed -i '/dde-grand-search-daemon/s|lib/|%_lib/|' CMakeLists.txt
+sed -i '/dde-grand-search-daemon/s|lib/${CMAKE_LIBRARY_ARCHITECTURE}|%_lib/|' \
+  CMakeLists.txt
 
 %build
 export PATH=%_qt5_bindir:$PATH
 export CPLUS_INCLUDE_PATH=%_qt5_headerdir/QtXkbCommonSupport/%{_qt5_version}:$CPLUS_INCLUDE_PATH
 export SYSTYPE=Desktop
-# export SYSTYPE=$(cat /etc/deepin-version | grep Type= | awk -F'=' '{print $$2}')
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -143,9 +135,11 @@ export READELF="llvm-readelf"
     -DDISABLE_CLOUD_SYNC=YES \
     -DDISABLE_AUTHENTICATION=YES \
     -DDISABLE_ACCOUNT=YES \
+    -DDISABLE_SYS_UPDATE=YES \
     -DDISABLE_SYS_UPDATE_SOURCE_CHECK=YES \
     -DDISABLE_SYS_UPDATE_MIRRORS=YES \
     -DDCC_DISABLE_FEEDBACK=YES \
+    -DDCC_DISABLE_POWERSAVE=YES \
 %nil
 cmake --build "%_cmake__builddir" -j%__nprocs
 
@@ -154,7 +148,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 # place holder plugins dir
 mkdir -p %buildroot%_libdir/%repo/plugins
 
-%ifarch aarch64 ppc64le x86_64
+%ifnarch armh i586
 mv %buildroot/usr/lib/libdccwidgets.so %buildroot%_libdir/
 %endif
 
@@ -196,6 +190,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Wed Dec 14 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.1-alt1
+- New version (5.6.1).
+
 * Mon Oct 17 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.157-alt1
 - New version (5.5.157).
 

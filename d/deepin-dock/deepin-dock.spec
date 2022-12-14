@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-dock
-Version: 5.5.73
+Version: 5.6.2
 Release: alt1
 Epoch: 1
 Summary: Deepin desktop-environment - Dock module
@@ -113,6 +113,9 @@ mv -f %buildroot/usr/etc/dde-dock/indicator/keybord_layout.json %buildroot%_sysc
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Wed Dec 14 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.6.2-alt1
+- 5.6.2.
+
 * Tue Nov 15 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.5.73-alt1
 - 5.5.73.
 - Fixed deepin-network-core.
