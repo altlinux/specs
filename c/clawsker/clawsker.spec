@@ -1,6 +1,6 @@
 Name: clawsker
 Version: 1.3.7
-Release: alt1
+Release: alt2
 
 Summary: Clawsker is an applet to edit Claws Mail's hidden preferences
 License: GPLv3+
@@ -10,6 +10,7 @@ BuildArch: noarch
 
 Vcs: https://git.claws-mail.org/readonly/clawsker.git
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: perl-podlators perl-Locale-gettext perl-Gtk3 perl-File-Which
 BuildRequires: desktop-file-utils
@@ -28,6 +29,7 @@ preventing users from raw editing of configuration files.
 
 %prep
 %setup
+%patch -p1
 
 %build
 sed -i -e 's|^all: build|all: build/clawsker|' \
@@ -53,6 +55,9 @@ make test
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Wed Dec 14 2022 Mikhail Efremov <sem@altlinux.org> 1.3.7-alt2
+- Added Russian translation.
+
 * Wed Nov 09 2022 Mikhail Efremov <sem@altlinux.org> 1.3.7-alt1
 - Dropped obsoleted patch.
 - Updated to 1.3.7.
