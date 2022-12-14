@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist libintl-perl
 Name: perl-libintl
-Version: 1.32
+Version: 1.33
 Release: alt1
 
 Summary: High-Level Interface to Uniforum Message Translation
@@ -45,6 +45,9 @@ sed -i- '/LIBS/d' gettext_xs/Makefile.PL
 	%perl_vendor_autolib/Locale
 
 %changelog
+* Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 1.33-alt1
+- automated CPAN update
+
 * Sun Nov 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.32-alt1
 - automated CPAN update
 
