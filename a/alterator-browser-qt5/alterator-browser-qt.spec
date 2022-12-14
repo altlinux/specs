@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.8
+Version: 3.4.9
 Release: alt1
 
 Source:%name-%version.tar
@@ -83,6 +83,10 @@ __EOF__
 
 
 %changelog
+* Wed Dec 14 2022 Sergey V Turchin <zerg at altlinux dot org> 3.4.9-alt1
+- don't hide help browser window menu by default
+- remove some deprecated code warnings
+
 * Wed Apr 27 2022 Sergey V Turchin <zerg at altlinux dot org> 3.4.8-alt1
 - fix russian translation
 
