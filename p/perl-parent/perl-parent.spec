@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-parent
-Version: 0.238
+Version: 0.239
 Release: alt1
 
 Summary: Establish an ISA relationship with base classes at compile time
@@ -63,6 +63,9 @@ mostly is similar in effect to
 %doc Changes
 
 %changelog
+* Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 0.239-alt1
+- automated CPAN update
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.238-alt1
 - automated CPAN update
 
