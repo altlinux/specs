@@ -1,5 +1,5 @@
 Name: libspnav
-Version: 1.0
+Version: 1.1
 Release: alt1
 Summary: Open source alternative to 3DConnextion drivers
 
@@ -56,6 +56,9 @@ rm -f %buildroot%_libdir/%name.a
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Wed Dec 14 2022 Andrey Cherepanov <cas@altlinux.org> 1.1-alt1
+- New version.
+
 * Tue Apr 05 2022 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
 - New version.
 
