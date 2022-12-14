@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: victoriametrics
-Version: 1.76.1
+Version: 1.85.0
 Release: alt1
 Summary: The best long-term remote storage for Prometheus
 
@@ -44,16 +44,15 @@ Utils for VictoriaMetrics:
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
-
-%golang_prepare
-
-cd .gopath/src/%import_path
-
 export VERSION=%version
 export COMMIT=%commit
 export BRANCH=altlinux
 export BUILDINFO_TAG=v%version
 
+
+%golang_prepare
+
+pushd $BUILDDIR/src/%import_path
 %make \
 	victoria-metrics \
 	vmagent \
@@ -62,11 +61,13 @@ export BUILDINFO_TAG=v%version
 	vmbackup \
 	vmrestore \
 	vmctl
+popd
 
 %install
+export BUILDDIR="$PWD/.gopath"
 install -m 0755 -d %buildroot%_bindir
 #cp victoria-metrics-prod %buildroot%_bindir/victoria-metrics-prod
-cd .gopath/src/%import_path
+pushd $BUILDDIR/src/%import_path
 install -m 0755 bin/victoria-metrics %buildroot%_bindir/victoria-metrics
 install -m 0755 bin/vmagent %buildroot%_bindir/vmagent
 install -m 0755 bin/vmalert %buildroot%_bindir/vmalert
@@ -74,7 +75,7 @@ install -m 0755 bin/vmauth %buildroot%_bindir/vmauth
 install -m 0755 bin/vmbackup %buildroot%_bindir/vmbackup
 install -m 0755 bin/vmrestore %buildroot%_bindir/vmrestore
 install -m 0755 bin/vmctl %buildroot%_bindir/vmctl
-
+popd
 install -m 0755 -d %buildroot%_sharedstatedir/victoria-metrics-data
 
 mkdir -p %buildroot%_unitdir
@@ -101,6 +102,9 @@ install -m644 %SOURCE2 \
 %_bindir/vm*
 
 %changelog
+* Wed Dec 14 2022 Alexey Shabalin <shaba@altlinux.org> 1.85.0-alt1
+- new version 1.85.0
+
 * Mon Apr 25 2022 Alexey Shabalin <shaba@altlinux.org> 1.76.1-alt1
 - new version 1.76.1
 
