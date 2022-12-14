@@ -15,8 +15,8 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 102.5.0
-Release: alt2
+Version: 102.6.0
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: http://www.mozilla.org/projects/firefox/
@@ -51,13 +51,6 @@ Patch010: 0009-bmo-1559213-Support-system-av1.patch
 Patch011: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch012: 0011-ALT-fix-double_t-redefinition.patch
 Patch013: 0012-build-Disable-Werror.patch
-Patch014: 0014-Bug-1735929-Linux-Add-support-of-EGL_MESA_image_dma_.patch
-Patch015: 0015-Bug-1735929-Linux-Import-DMABufSurfaceRGBA-from-exis.patch
-Patch016: 0016-Bug-1735929-Linux-Use-EGL_MESA_image_dma_buf_export-.patch
-Patch017: 0017-Bug-1773968-Linux-Release-EGLImages-in-DMABufSurface.patch
-Patch018: 0018-Bug-1776724-fix-wayland-only.patch
-Patch019: 0019-Bug-1778855-gfxEnv_MOZ_GL_DEBUG.patch
-Patch020: 0021-Set-offline-build.patch
 ### End Patches
 
 # Hang up on build browser/components/about
@@ -508,6 +501,17 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Dec 14 2022 Pavel Vasenkov <pav@altlinux.org> 102.6.0-alt1
+- New ESR version.
+- Security fixes
+  + CVE-2022-46880 Use-after-free in WebGL
+  + CVE-2022-46872 Arbitrary file read from a compromised content process
+  + CVE-2022-46881 Memory corruption in WebGL
+  + CVE-2022-46874 Drag and Dropped Filenames could have been truncated to malicious extensions
+  + CVE-2022-46875 Download Protections were bypassed by .atloc and .ftploc files on Mac OS
+  + CVE-2022-46882 Use-after-free in WebGL
+  + CVE-2022-46878 Memory safety bugs fixed in Firefox 108 and Firefox ESR 102.6
+
 * Fri Dec 09 2022 Pavel Vasenkov <pav@altlinux.org> 102.5.0-alt2
 - Build with llvm-version 12 instead llvm-version 13 (Closes: #44436)
 
