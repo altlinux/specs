@@ -4,7 +4,7 @@
 
 Name:    %oname-ovz
 Version: 0.1.95
-Release: alt1
+Release: alt2
 
 Summary: Process HAULer -- a tool to live-migrate containers and processes
 License: LGPL-2.1
@@ -16,7 +16,7 @@ Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
-Requires: crtools-ovz >= 3.15.4.7
+Requires: crtools-ovz >= 3.15.4.16
 Conflicts: %oname
 
 ExclusiveArch: x86_64
@@ -24,7 +24,9 @@ ExclusiveArch: x86_64
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-%add_python3_self_prov_path %buildroot%python3_sitelibdir_noarch/%oname
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/%oname
+%add_python3_req_skip pycriu
+%add_python3_req_skip pycriu.rpc_pb2
 
 %description
 Process HAULer -- a tool to live-migrate containers and processes.
@@ -43,14 +45,17 @@ find . -name '*.py' -o -name p.haul-wrap | xargs sed -i \
 %install
 %__python3 setup.py install --skip-build --root %buildroot --install-scripts %_libexecdir/%oname
 # Remove egg-info, module is necessary for phaul only:
-rm -rf %buildroot%python3_sitelibdir_noarch/*.egg-info
+# rm -rf %buildroot%python3_sitelibdir_noarch/*.egg-info
 install -d %buildroot%_sbindir
 install -pD -m755 p.haul-ssh p.haul-wrap %buildroot%_sbindir
+ln -s %_libexecdir/%oname/p.haul %buildroot%_sbindir/p.haul
+ln -s %_libexecdir/%oname/p.haul-service %buildroot%_sbindir/p.haul-service
 chmod a+rx %buildroot%python3_sitelibdir_noarch/%oname/shell/{phaul_client,phaul_service}.py
+mv %buildroot%_usr/{lib,%_lib}
 
 %if_with check
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+export PYTHONPATH=%buildroot%python3_sitelibdir
 pushd test
 popd
 %endif
@@ -59,9 +64,12 @@ popd
 %doc COPYING README.md
 %_libexecdir/%oname
 %_sbindir/*
-%python3_sitelibdir_noarch/*
+%python3_sitelibdir/*
 
 %changelog
+* Sun Dec 11 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.1.95-alt2
+- use pycriu module from crtools-ovz
+
 * Sat Nov 19 2022 Andrew A. Vasilyev <andy@altlinux.org> 0.1.95-alt1
 - 0.1.95
 

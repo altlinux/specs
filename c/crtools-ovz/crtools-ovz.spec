@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 Name: crtools-ovz
-Version: 3.15.4.14
+Version: 3.15.4.16
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
@@ -17,6 +17,7 @@ Source: criu-%version.tar
 
 Provides: criu-ovz = %EVR
 Conflicts: crtools
+Conflicts: python3-module-criu
 ExclusiveArch: x86_64
 
 BuildRequires: libnet2-devel
@@ -29,6 +30,7 @@ BuildRequires: glibc-devel
 BuildRequires: libnl-devel
 BuildRequires: libcap-devel
 BuildRequires: python3-base
+# BuildRequires: python3-devel
 # BuildRequires: libselinux-devel
 BuildRequires(pre): rpm-build-python3
 
@@ -42,6 +44,16 @@ BuildRequires: iproute2 iptables iputils openvswitch
 %endif
 
 Requires: nftables util-linux ipset
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/pycriu
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/pycriu/images
+%add_findprov_skiplist %python3_sitelibdir/pycriu/*
+%add_findprov_skiplist %python3_sitelibdir/pycriu/*/*
+%add_python3_req_skip core_aarch64_pb2 core_arm_pb2 core_mips_pb2 core_pb2 core_ppc64_pb2 core_s390_pb2 core_x86_pb2
+%add_python3_req_skip creds_pb2 eventfd_pb2 eventpoll_pb2 ext_file_pb2 fh_pb2 fifo_pb2 fown_pb2 fsnotify_pb2 ipc_desc_pb2
+%add_python3_req_skip macvlan_pb2 memfd_pb2 ns_pb2 openvswitch_pb2 opts_pb2 packet_sock_pb2 pipe_pb2 regfile_pb2 rlimit_pb2
+%add_python3_req_skip sa_pb2 siginfo_pb2 signalfd_pb2 sit_pb2 sk_inet_pb2 sk_netlink_pb2 sk_opts_pb2 sk_unix_pb2 sysctl_pb2
+%add_python3_req_skip time_pb2 timerfd_pb2 timer_pb2 tty_pb2 tun_pb2 vma_pb2 vxlan_pb2 bpfmap_file_pb2
 
 %description
 An utility to checkpoint/restore tasks for OpenVZ containers.
@@ -71,7 +83,11 @@ ln -s criu.8 %buildroot%_man8dir/crtools.8
 find %buildroot -name 'lib*.a' -delete
 
 rm -f %buildroot%_bindir/crit
-rm -rf %buildroot%python3_sitelibdir_noarch
+# rm -rf %%buildroot%%python3_sitelibdir_noarch
+mkdir -p %buildroot%_libdir/python3/
+mv %buildroot{%python3_sitelibdir_noarch,%_libdir/python3}
+rmdir %buildroot%_usr/lib/python3 ||:
+
 rm -f %buildroot%_man1dir/crit.1*
 rm -f %buildroot%_libdir/libcriu.so.2*
 rm -f %buildroot%_libdir/libcompel.so.1*
@@ -94,8 +110,14 @@ vm-run --kvm=cond --sbin --udevd make test || :
 %_man1dir/compel.1*
 %_man8dir/criu.8*
 %_man8dir/crtools.8*
+%python3_sitelibdir/pycriu
+%python3_sitelibdir/crit-*.egg-info
 
 %changelog
+* Sun Dec 11 2022 Andrew A. Vasilyev <andy@altlinux.org> 3.15.4.16-alt1
+- 3.15.4.16
+- add python libs for p.haul-ovz (instead of python3-module-criu)
+
 * Mon Nov 14 2022 Andrew A. Vasilyev <andy@altlinux.org> 3.15.4.14-alt1
 - 3.15.4.14
 - build without stack protection
