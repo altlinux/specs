@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -427,10 +427,13 @@ This virtual package includes default GNOME 3 Desktop components and
 some other useful GNOME and GTK applications.
 
 %package mobile
-Summary: Virtual package for use with regular(TM) GNOME 3 distro
+Summary: GNOME 3 distro installer for mobile devices
 Group: Graphical desktop/GNOME
 Requires: %name-default = %version-%release
 Requires: phosh
+Requires: geary
+Requires: gnome-console
+Requires: gnome-text-editor
 
 %description mobile
 This virtual package includes GNOME 3 Desktop components and some other
@@ -449,6 +452,9 @@ useful GNOME and GTK applications for mobile devices.
 %files regular
 
 %changelog
+* Wed Dec 14 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt2
+- mobile: added geary, gnome-console, gnome-text-editor
+
 * Fri Dec 09 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - default: restored gnome-initial-setup
            replaced pulseaudio-daemon by pipewire + wireplumber
