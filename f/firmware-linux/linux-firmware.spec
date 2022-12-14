@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20221202
+Version: 20221213
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,38 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Dec 14 2022 Cronbuild Service <cronbuild@altlinux.org> 20221213-alt1
+- upstream changes (GIT f3c283e1):
+  + amdgpu: updated navi10 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated yellow carp firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated raven2 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated raven firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated PSP 13.0.8 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated GC 10.3.7 RLC firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated vega20 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated PSP 13.0.5 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: add VCN 4.0.0 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: add SMU 13.0.0 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: Add SDMA 6.0.0 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: add PSP 13.0.0 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: add GC 11.0.0 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: add DCN 3.2.0 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated vega10 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated beige goby firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated dimgrey cavefish firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated vangogh firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated picasso firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated navy flounder firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated green sardine firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated sienna cichlid firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated arcture firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated navi14 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated renoir firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated navi12 firmware for amd-5.4 (thx Alex Deucher)
+  + amdgpu: updated aldebaran firmware for amd-5.4 (thx Alex Deucher)
+  + sr150 : Add NXP SR150 UWB firmware (thx Manjunatha Venkatesh)
+  + brcm: add/update firmware files for brcmfmac driver (thx Arend van Spriel)
+
 * Wed Dec 07 2022 Cronbuild Service <cronbuild@altlinux.org> 20221202-alt1
 - upstream changes (GIT 16c9630e):
   + rtl_bt: Update RTL8821C BT(USB I/F) FW to 0x75b8_f098 (thx Max Chou)
