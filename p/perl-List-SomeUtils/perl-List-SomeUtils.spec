@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(Exporter.pm) perl(Exporter/Tiny.pm) perl(ExtUt
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.58
+Version: 0.59
 Release: alt1
 Summary: Provide the stuff missing in List::Util
 Group: Development/Perl
@@ -33,6 +33,9 @@ From summary: %summary
 %perl_vendor_privlib/L*
 
 %changelog
+* Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 0.59-alt1
+- automated CPAN update
+
 * Mon Oct 28 2019 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1
 - automated CPAN update
 
