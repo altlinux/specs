@@ -1,9 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Syntax-Keyword-Try
 #BuildRequires: perl(Future/AsyncAwait.pm) perl(Syntax/Keyword/Defer.pm)
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Test/More.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm) perl(threads.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 # bootstrap loop with Syntax/Keyword* and Future-AsyncAwait
@@ -11,14 +11,14 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 #BuildRequires: perl(Future/AsyncAwait.pm)
 
 Name: perl-%module_name
-Version: 0.27
-Release: alt1.1
+Version: 0.28
+Release: alt1
 Summary: a C<try/catch/finally> syntax for perl
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 
 %description
 This module provides a syntax plugin that implements exception-handling
@@ -40,11 +40,14 @@ code.
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes
+%doc README Changes
 %perl_vendor_archlib/S*
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 0.28-alt1
+- automated CPAN update
+
 * Fri Dec 02 2022 Igor Vlasenko <viy@altlinux.org> 0.27-alt1.1
 - to Sisyphus as perl-Sub-HandlesVia dep
 
