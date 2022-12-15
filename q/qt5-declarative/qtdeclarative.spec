@@ -6,7 +6,7 @@
 
 Name: qt5-declarative
 Version: 5.15.7
-Release: alt3
+Release: alt4
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -293,6 +293,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Thu Dec 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt4
+- optimize provides generator (thanks iv@alt) (closes: 44642)
+
 * Thu Dec 01 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt3
 - revert KDE 7f067fa8a52
 
