@@ -75,8 +75,8 @@
 %endif
 
 Name:    samba
-Version: 4.16.7
-Release: alt5
+Version: 4.16.8
+Release: alt1
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -2011,6 +2011,32 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Dec 15 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.8-alt1
+- Update to maintenance release of Samba 4.16 with fixes of the Samba CVE for
+  the Windows Kerberos Elevation of Privilege Vulnerability disclosed by
+  Microsoft on Nov 8 2022 (CVE-2022-37967, CVE-2022-37966).
+- Security fixes:
+  + CVE-2022-37966: A Samba Active Directory DC will issue weak rc4-hmac
+                    session keys for use between modern clients and servers
+                    despite all modern Kerberos implementations supporting
+                    the aes256-cts-hmac-sha1-96 cipher.
+                    On Samba Active Directory DCs and members
+                    'kerberos encryption types = legacy' would force
+                    rc4-hmac as a client even if the server supports
+                    aes128-cts-hmac-sha1-96 and/or aes256-cts-hmac-sha1-96
+                    (Samba#13135, Samba#15219, Samba#15237).
+                     https://www.samba.org/samba/security/CVE-2022-37966.html
+
+  + CVE-2022-37967: A service account with the special constrained
+                    delegation permission could forge a more powerful
+                    ticket than the one it was presented with (Samba#15231).
+                     https://www.samba.org/samba/security/CVE-2022-37967.html
+
+  + CVE-2022-38023: The "RC4" protection of the NetLogon Secure channel uses the
+                    same algorithms as rc4-hmac cryptography in Kerberos,
+                    and so must also be assumed to be weak (Samba#15240).
+                     https://www.samba.org/samba/security/CVE-2022-38023.html
+
 * Mon Dec 12 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.7-alt5
 - Update text of summary for role-usershares and smb-conf-usershares.
 - Update default usershare prefix allow and deny lists:
