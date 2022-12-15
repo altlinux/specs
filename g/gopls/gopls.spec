@@ -3,7 +3,7 @@
 %global import_path golang.org/x/tools/gopls
 
 Name: gopls
-Version: 0.10.1
+Version: 0.11.0
 Release: alt1
 
 Summary: The Go language server
@@ -48,6 +48,9 @@ export IGNORE_SOURCES=1
 %_bindir/*
 
 %changelog
+* Thu Dec 15 2022 Anton Zhukharev <ancieg@altlinux.org> 0.11.0-alt1
+- update to 0.11.0
+
 * Sun Nov 06 2022 Anton Zhukharev <ancieg@altlinux.org> 0.10.1-alt1
 - update to 0.10.1
 
