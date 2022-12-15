@@ -1,6 +1,6 @@
 Name: alterator-vm
-Version: 0.4.29
-Release: alt3
+Version: 0.4.30
+Release: alt1
 
 Summary: Alterator module for volume management
 License: GPL
@@ -29,7 +29,6 @@ make
 install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 
 %files
-%_alterator_datadir/applications/vm.desktop
 %_alterator_datadir/steps/vm.desktop
 %_alterator_datadir/images/vm
 %_alterator_datadir/ui/vm
@@ -38,6 +37,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Thu Dec 15 2022 Oleg Solovyov <mcpain@altlinux.org> 0.4.30-alt1
+- remove vm.desktop from alterator modules
+
 * Thu Jul 28 2022 Oleg Solovyov <mcpain@altlinux.org> 0.4.29-alt3
 - fix regression of subvol autocreation
 
