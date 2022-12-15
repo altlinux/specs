@@ -1,6 +1,7 @@
 Name: kooha
-Version: 2.2.2
-Release: alt1
+Version: 2.1.1
+Release: alt1.1.git3a27e73
+Epoch: 1
 
 Summary: Simple screen recorder with a minimal interface
 
@@ -67,5 +68,8 @@ EOF
 %_datadir/locale/zh_Hant/LC_MESSAGES/%name.mo
 
 %changelog
+* Thu Dec 15 2022 Leontiy Volodin <lvol@altlinux.org> 1:2.1.1-alt1.1.git3a27e73
+- Revert version 2.1.1.
+
 * Fri Dec 09 2022 Leontiy Volodin <lvol@altlinux.org> 2.2.2-alt1
 - Initial build for ALT Sisyphus.
