@@ -1,12 +1,11 @@
 %def_without x
 %def_enable gpt
-%def_disable ogfs
 %def_disable ocfs2
 %def_disable static
 
 Name: evms
 Version: 2.5.5
-Release: alt61
+Release: alt62
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -110,7 +109,6 @@ sed -i /SEGV/d engine/faulthdlr.c
     --disable-s390 \
     %{subst_enable gpt} \
     %{subst_enable ocfs2} \
-    %{subst_enable ogfs} \
     %{!?_with_x: --disable-gui --disable-gtktest} \
     %{subst_enable static} \
     #
@@ -175,6 +173,10 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Wed Dec 14 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt62
+- Remove unneeded plugins
+- fix regression: detect file systems on volumes
+
 * Tue Dec 13 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt61
 - Remove all clustering functionality
 - Don't create /dev/evms/ directory
