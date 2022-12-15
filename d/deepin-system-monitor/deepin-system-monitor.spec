@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 5.9.4
+Version: 5.9.32
 Release: alt1
 Summary: A more user-friendly system monitor
 License: GPL-3.0+
@@ -15,7 +15,7 @@ Patch: deepin-system-monitor-5.9.4-alt-aarch64-armh.patch
 %endif
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires(pre): clang-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
@@ -57,7 +57,7 @@ BuildRequires: libgtest-devel
 %ifarch aarch64 armh
 %patch -p1
 %endif
-sed -i 's|/usr/lib/dde-dock/plugins|%_libdir/dde-dock/plugins|' \
+sed -i 's|lib/dde-dock/plugins|%_lib/dde-dock/plugins|' \
     deepin-system-monitor-plugin/CMakeLists.txt
 
 %build
@@ -68,8 +68,10 @@ export AR="llvm-ar"
 %endif
 %cmake \
     -GNinja \
-    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DLIB_INSTALL_DIR=%_libdir \
+    -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
+    -DUSE_DEEPIN_WAYLAND=OFF \
     -DAPP_VERSION=%version \
     -DVERSION=%version
 cmake --build "%_cmake__builddir" -j%__nprocs
@@ -90,7 +92,6 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/polkit-1/actions/com.deepin.pkexec.deepin-system-monitor.policy
 %_desktopdir/%name.desktop
 %_xdgconfigdir/autostart/deepin-system-monitor-daemon.desktop
-%_xdgconfigdir/autostart/deepin-system-monitor-plugin-popup.desktop
 %_libdir/dde-dock/plugins/libdeepin-system-monitor-plugin.so
 %_datadir/dbus-1/services/com.deepin.SystemMonitor.Daemon.service
 %_datadir/dbus-1/services/com.deepin.SystemMonitorPluginPopup.service
@@ -103,6 +104,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/system-monitor/
 
 %changelog
+* Thu Dec 15 2022 Leontiy Volodin <lvol@altlinux.org> 5.9.32-alt1
+- New version (5.9.32).
+
 * Thu Feb 10 2022 Leontiy Volodin <lvol@altlinux.org> 5.9.4-alt1
 - New version (5.9.4).
 
