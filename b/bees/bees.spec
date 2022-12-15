@@ -1,5 +1,5 @@
 Name: bees
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Best-Effort Extent-Same, a btrfs deduplication agent
@@ -63,6 +63,9 @@ EOF
 %config(noreplace) %_sysconfdir/bees/beesd.conf.sample
 
 %changelog
+* Fri Dec 16 2022 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
+- new version 0.8 (with rpmrb script)
+
 * Sun Jan 23 2022 Vitaly Lipatov <lav@altlinux.ru> 0.7-alt1
 - new version 0.7 (with rpmrb script)
 
