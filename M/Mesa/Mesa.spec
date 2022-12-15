@@ -62,6 +62,10 @@
 %ifarch %svga_arches
 %gallium_drivers_add svga
 %endif
+%ifarch aarch64
+%gallium_drivers_add asahi
+%endif
+%gallium_drivers_add zink
 %ifarch %vulkan_intel_arches
 %vulkan_drivers_add intel
 %endif
@@ -77,10 +81,9 @@
 %vulkan_drivers_add panfrost
 %endif
 %vulkan_drivers_add swrast
-%gallium_drivers_add zink
 
 %define ver_major 22.3
-%define ver_minor 0
+%define ver_minor 1
 
 Name: Mesa
 Version: %ver_major.%ver_minor
@@ -416,7 +419,7 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 #define _unpackaged_files_terminate_build 1
 
 %files -n libGLX-mesa
-#%doc %ver_major.*.html
+%doc %ver_major.*.html
 %_libdir/libGLX_mesa.so.*
 %_libdir/libglapi.so.*
 
@@ -577,6 +580,9 @@ sed -i '/.*zink.*/d' xorg-dri-armsoc.list
 %files -n mesa-dri-drivers
 
 %changelog
+* Thu Dec 15 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.3.1-alt1
+- 22.3.1
+
 * Thu Dec 01 2022 Valery Inozemtsev <shrek@altlinux.ru> 4:22.3.0-alt1
 - 22.3.0
 
