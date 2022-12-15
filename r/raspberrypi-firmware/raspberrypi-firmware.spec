@@ -2,8 +2,8 @@
 
 Summary: bootloader and GPU firmware for Raspberry Pi
 Name: raspberrypi-firmware
-Version: 20210216
-Release: alt1
+Version: 20221214
+Release: alt2
 Url: https://github.com/raspberrypi/firmware
 License: distributable
 Group: System/Kernel and hardware
@@ -21,60 +21,19 @@ Requires: u-boot-rpi3
 mkdir -p %buildroot%_datadir
 tar -xf %SOURCE0 -C %buildroot%_datadir
 
-%ifarch %arm
-%define target_rpi3 %_datadir/u-boot/rpi_3_32b
-%define target_rpi4 %_datadir/u-boot/rpi_4_32b
-%endif
-
-%ifarch aarch64
-%define target_rpi3 %_datadir/u-boot/rpi_3
-%define target_rpi4 %_datadir/u-boot/rpi_4
-%endif
-
-mkdir -p %buildroot/%target_rpi3
-pushd %buildroot/%_datadir/%name
-ln bootcode.bin %buildroot/%target_rpi3
-ln fixup.dat %buildroot/%target_rpi3
-ln fixup_cd.dat %buildroot/%target_rpi3
-ln fixup_db.dat %buildroot/%target_rpi3
-ln fixup_x.dat %buildroot/%target_rpi3
-ln start.elf %buildroot/%target_rpi3
-ln start_cd.elf %buildroot/%target_rpi3
-ln start_db.elf %buildroot/%target_rpi3
-ln start_x.elf %buildroot/%target_rpi3
-ln bcm2710-rpi-3-b.dtb %buildroot/%target_rpi3
-ln bcm2710-rpi-3-b-plus.dtb %buildroot/%target_rpi3
-
-mkdir -p %buildroot/%target_rpi4
-ln fixup4.dat %buildroot/%target_rpi4
-ln fixup4cd.dat %buildroot/%target_rpi4
-ln fixup4db.dat %buildroot/%target_rpi4
-ln fixup4x.dat %buildroot/%target_rpi4
-ln start4.elf %buildroot/%target_rpi4
-ln start4cd.elf %buildroot/%target_rpi4
-ln start4db.elf %buildroot/%target_rpi4
-ln start4x.elf %buildroot/%target_rpi4
-ln bcm2711-rpi-4-b.dtb %buildroot/%target_rpi4
-
-%ifarch aarch64
-tee %buildroot/%target_rpi3/config.txt %buildroot/%target_rpi4/config.txt<<EOF
-arm_64bit=1
-EOF
-%endif
-
-tee --append %buildroot/%target_rpi3/config.txt %buildroot/%target_rpi4/config.txt<<EOF
-enable_uart=1
-disable_overscan=1
-dtparam=audio=on
-hdmi_ignore_edid_audio=1
-EOF
-
 %files
 %_datadir/%name
-%target_rpi3/*
-%target_rpi4/*
 
 %changelog
+* Thu Dec 15 2022 Anton Midyukov <antohami@altlinux.org> 20221214-alt2
+- do'nt create hardlinks in u-boot directories
+
+* Thu Dec 15 2022 Anton Midyukov <antohami@altlinux.org> 20221214-alt1
+- New snapshot (Closes: 44641)
+
+* Sun Apr 25 2021 Anton Midyukov <antohami@altlinux.org> 20210421-alt1
+- New snapshot
+
 * Mon Feb 22 2021 Anton Midyukov <antohami@altlinux.org> 20210216-alt1
 - New snapshot
 - Add new dtb:
