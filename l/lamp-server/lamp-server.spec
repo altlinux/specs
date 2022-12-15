@@ -1,5 +1,5 @@
 Name: 	 lamp-server
-Version: 1.2
+Version: 1.3
 Release: alt1
 
 Summary: Metapackage to install LAMP server (Linux+Apache+MariaDB+PHP)
@@ -14,9 +14,9 @@ Source: %name-%version.tar
 
 Requires: apache2-base 
 Requires: mariadb-server
-Requires: apache2-mod_php7
-Requires: php7-mysqlnd 
-Requires: php7-mysqlnd-mysqli
+Requires: apache2-mod_php8.0
+Requires: php8.0-mysqlnd 
+Requires: php8.0-mysqlnd-mysqli
 
 %description
 This is to help people setup and install a LAMP
@@ -30,6 +30,9 @@ MariaDB.
 %doc README
 
 %changelog
+* Thu Dec 15 2022 Anton Farygin <rider@altlinux.ru> 1.3-alt1
+- switch to php8.0
+
 * Wed Mar 06 2019 Anton Farygin <rider@altlinux.ru> 1.2-alt1
 - switch to php7
 
