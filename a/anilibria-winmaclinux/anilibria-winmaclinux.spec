@@ -1,6 +1,6 @@
 Name: anilibria-winmaclinux
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Summary: AniLibria online video player for desktop platforms
 Summary(ru_RU.UTF-8): Онлайн-видеоплеер AniLibria для настольных платформ
@@ -14,6 +14,7 @@ Requires: qt5-graphicaleffects
 Requires: libqt5-multimedia
 Requires: qt5-quickcontrols2
 Requires: qt5-quickcontrols
+Requires: libqt5-quickparticles
 Requires: libqt5-svg
 
 # Source-url: https://github.com/anilibria/anilibria-winmaclinux/archive/refs/tags/%version.tar.gz
@@ -65,6 +66,11 @@ popd
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Thu Dec 15 2022 Evgeny Chuck <koi@altlinux.org> 1.2.2-alt2
+- Fixed a crash when clicking on the random release button (Closes: 44597)
+- Fixed bug in index values on page Theme Editor
+- Added QuickParticles to support the snow effect in the application window
+
 * Sun Nov 27 2022 Evgeny Chuck <koi@altlinux.org> 1.2.2-alt1
 - new version (1.2.2) with rpmgs script
 
