@@ -1,11 +1,11 @@
 %define __nprocs 1
-%define so_tls_version 18
-%define so_crypto_version 12
+%define so_tls_version 19
+%define so_crypto_version 13
 %define so_x509_version 4
 %def_disable static
 
 Name: mbedtls
-Version: 3.2.1
+Version: 3.3.0
 Release: alt1
 
 Summary: Transport Layer Security protocol suite
@@ -19,9 +19,10 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 Source: %name-%version.tar
 
 BuildRequires: cmake
-BuildRequires: libpkcs11-helper-devel
+BuildRequires: libssl-devel
 BuildRequires: python3-dev
-BuildRequires: zlib-devel
+BuildRequires: python3-module-jsonschema
+BuildRequires: python3-module-mpl_toolkits
 
 %description
 mbed TLS is a light-weight open source cryptographic and SSL/TLS
@@ -146,6 +147,9 @@ rm -rf %buildroot%_prefix/cmake
 %_libexecdir/%name/*
 
 %changelog
+* Thu Dec 15 2022 Nazarov Denis <nenderus@altlinux.org> 3.3.0-alt1
+- Version 3.3.0
+
 * Wed Jul 13 2022 Nazarov Denis <nenderus@altlinux.org> 3.2.1-alt1
 - Version 3.2.1
 
