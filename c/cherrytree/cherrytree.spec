@@ -1,6 +1,6 @@
 Name: cherrytree
-Version: 0.99.40
-Release: alt1.1
+Version: 0.99.53
+Release: alt1
 
 Summary: Hierarchical note taking application
 Summary(ru_RU.UTF-8): Записная книжка иерархической структуры для заметок
@@ -29,6 +29,8 @@ BuildRequires: libspdlog-devel
 BuildRequires: gnome-icon-theme
 BuildRequires: libuchardet-devel
 BuildRequires: libcurl-devel
+BuildRequires: libfribidi-devel
+BuildRequires: libvte3-devel
 
 Requires: %_bindir/7z
 
@@ -65,7 +67,7 @@ sed -i "s|filename(pOutStr|filename((gchar*)pOutStr|" src/ct/ct_filesystem.cc
 %files -f %name.lang
 %doc changelog.txt license.txt
 %_bindir/%name
-%_datadir/metainfo/com.giuspen.%name.metainfo.xml
+#_datadir/metainfo/com.giuspen.%name.metainfo.xml
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_datadir/mime-info/*
@@ -75,6 +77,10 @@ sed -i "s|filename(pOutStr|filename((gchar*)pOutStr|" src/ct/ct_filesystem.cc
 
 
 %changelog
+* Thu Dec 15 2022 Vitaly Lipatov <lav@altlinux.ru> 0.99.53-alt1
+- NMU: new version 0.99.53 (with rpmrb script)
+- NMU: add BR: libfribidi-devel, libvte3-devel
+
 * Tue Jan 18 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 0.99.40-alt1.1
 - g_autofree workaround for the E2K compiler
 
