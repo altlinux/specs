@@ -4,7 +4,7 @@
 
 Name: ferrisloki
 Version: 3.0.13
-Release: alt4
+Release: alt4.1
 Summary: Loki C++ library from Modern C++ Design
 License: GPL
 Group: System/Libraries
@@ -51,6 +51,12 @@ This package includes development files.
 
 %prep
 %setup
+%ifarch %e2k
+# workaround for this compiler crash:
+# ecf_opt64 terminated by signal "Illegal instruction" (4)
+sed -i 's/throw ( std::bad_alloc )//' \
+	include/FerrisLoki/loki/SmallObj.h
+%endif
 
 find -name '*.h' -exec sed -i '/sigc++\/object.h/d' {} + || die
 find -name '*.hh' -exec sed -i '/sigc++\/object.h/d' {} + || die
@@ -75,6 +81,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Thu Dec 15 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.0.13-alt4.1
+- Fixed build for Elbrus.
+
 * Wed Sep 22 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.0.13-alt4
 - Fixed build with gcc-11.
 
