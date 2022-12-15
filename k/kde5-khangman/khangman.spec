@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 22.08.3
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Games/Educational
@@ -37,12 +37,12 @@ is displayed.
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-mkdir -p po/ru/data/khangman/
-cat <<__EOF__ >po/ru/data/khangman/CMakeLists.txt
+mkdir -p languages/ru/
+cat <<__EOF__ >languages/ru/CMakeLists.txt
 install( FILES ru.txt  DESTINATION \${DATA_INSTALL_DIR}/khangman )
 __EOF__
-install -m 0644 %SOURCE10 po/ru/data/khangman/
-echo 'add_subdirectory(ru/data/khangman)' >> po/CMakeLists.txt
+install -m 0644 %SOURCE10 languages/ru/
+echo 'add_subdirectory(ru)' >> languages/CMakeLists.txt
 
 %build
 %K5build
@@ -62,6 +62,9 @@ echo 'add_subdirectory(ru/data/khangman)' >> po/CMakeLists.txt
 %_K5icon/*/*/apps/khangman*.*
 
 %changelog
+* Thu Dec 15 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt2
+- fix russian keyboard (closes: 44644)
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
