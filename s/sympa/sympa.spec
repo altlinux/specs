@@ -1,5 +1,5 @@
 Name: sympa
-Version: 6.2.68
+Version: 6.2.70
 Release: alt0.1
 
 %def_without authorcheck
@@ -100,12 +100,12 @@ Source201: apache2.sites-start
 Source202: apache2.ports-start
 
 
-# Add path to MHonArc::UTF8 so that sympa_wizard won't miss it
-Patch5: sympa-6.2.36-wizard-mhonarc.patch
+# Add path to MHonArc::UTF8 so that sympa setup won't miss it
+Patch5: sympa-2.6.70-sympa-mhonarc.patch
 # RPM specific customization of site defaults
 Patch13: sympa-6.2.57b.1-confdef.patch
 # ALT fhs specifics
-Patch20: sympa-6.2.66-conf-alt-fhs.patch
+Patch20: sympa-6.2.70-conf-alt-fhs.patch
 
 # install & check
 BuildRequires: perl-devel perl-ldap
@@ -235,6 +235,15 @@ Provides: ww%name = %EVR
 
 %description web
 WWW and SOAP Sympa services.
+
+%package web-multiwatch
+Group: System/Servers
+Summary: WWW and SOAP Sympa services (multiwatch-version)
+Requires: %name-web = %EVR, multiwatch
+BuildArch: noarch
+
+%description web-multiwatch
+WWW and SOAP Sympa services (multiwatch version).
 
 %package apache2
 Group: System/Servers
@@ -380,7 +389,7 @@ Sympa static web content.
 
 %prep
 %setup -q -n %name-%version
-%patch5 -p0 -b .mhonarc
+%patch5 -p1 -b .mhonarc
 %patch13 -p0 -b .confdef
 %patch20 -p1 -b .alt-fhs
 
@@ -517,16 +526,26 @@ sed -e 's|@CODEDIR@|%_exec_prefix|g;s|@STATIC_CONTENT@|%static_content|g;s|@DATA
 	%SOURCE103 > %buildroot%ngxconfdir/%name.conf
 
 # Copy init scripts or unit files for nginx/spawn-fcgi etc.
-install -m 0644 src/etc/script/wwsympa.service \
+install -m 0644 service/wwsympa-spawn-fcgi.service \
     %buildroot%_unitdir/wwsympa.service
-install -m 0644 src/etc/script/sympasoap.service \
+install -m 0644 service/sympasoap-spawn-fcgi.service \
     %buildroot%_unitdir/sympasoap.service
 mkdir -p %buildroot%_tmpfilesdir
-install -m 0644 src/etc/script/sympa-tmpfiles.conf \
+install -m 0644 service/sympa-tmpfiles.conf \
     %buildroot%_tmpfilesdir/%name.conf
 mkdir -p %buildroot%_sysconfdir/systemd/system/sympa.service.d
 install -m 0644 %SOURCE129 \
     %buildroot%_sysconfdir/systemd/system/sympa.service.d/dependencies.conf
+
+# multiwatch variant
+install -m 0644 service/wwsympa-multiwatch.service \
+    %buildroot%_unitdir/
+install -m 0644 service/wwsympa-multiwatch.socket \
+    %buildroot%_unitdir/wwsympa.socket
+install -m 0644 service/sympasoap-multiwatch.service \
+    %buildroot%_unitdir/
+install -m 0644 service/sympasoap-multiwatch.socket \
+    %buildroot%_unitdir/sympasoap.socket
 
 # Copy system config file.
 mkdir -p %buildroot%_sysconfdir/sysconfig
@@ -538,7 +557,6 @@ cp -p AUTHORS.md CONTRIBUTING.md NEWS.md README.md __doc/
 cp -p %SOURCE113 __doc/README.RPM.md
 ln -s %_sysconfdir/%name/README \
     %buildroot/%_datadir/%name/default/README
-mv %buildroot%_sysconfdir/%name/%name.conf-dist __doc/
 
 # Copy robot aliases.
 install -m 0644 %SOURCE114 %SOURCE115 %buildroot%_sysconfdir/%name/
@@ -733,6 +751,12 @@ fi
 %_unitdir/wwsympa.service
 %_unitdir/sympasoap.service
 
+%files web-multiwatch
+%_unitdir/wwsympa-multiwatch.service
+%_unitdir/sympasoap-multiwatch.service
+%_unitdir/wwsympa.socket
+%_unitdir/sympasoap.socket
+
 %files apache2
 %config(noreplace) %apache2_mods_start/%name.conf
 %config(noreplace) %apache2_sites_available/%name.conf
@@ -752,6 +776,11 @@ fi
 %static_content
 
 %changelog
+* Thu Dec 15 2022 L.A. Kostis <lakostis@altlinux.ru> 6.2.70-alt0.1
+- Updated to 6.2.70.
+- Update patches.
+- Added systemd socket activation services with multiwatch.
+
 * Mon Jan 31 2022 L.A. Kostis <lakostis@altlinux.ru> 6.2.68-alt0.1
 - Updated to 6.2.68.
 
