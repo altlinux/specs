@@ -1,10 +1,11 @@
 %def_disable snapshot
-%add_typelib_req_skiplist typelib(Gnome)
 %define ver_major 2.1
+
+%def_enable check
 
 Name: terminator
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Store and run multiple GNOME terminals in one window
 Group: Terminals
@@ -18,8 +19,9 @@ Vcs: https://github.com/gnome-terminator/terminator.git
 Source: %name-%version.tar
 %endif
 
-# fc patches
-Patch: terminator-1.91-fc-fix-desktop-file.patch
+# fc
+Patch: %name-1.91-fc-fix-desktop-file.patch
+Patch1: %name-2.1.2-alt-no-pytest-runner.patch
 
 BuildArch: noarch
 
@@ -30,8 +32,11 @@ Requires: typelib(Gtk) = 3.0
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 
 BuildRequires: python3-module-wheel python3-module-setuptools
-BuildRequires: python3-module-pytest-runner
 BuildRequires: intltool
+%{?_enable_check:BuildRequires: /proc xvfb-run python3(pytest)
+BuildRequires: python3(gi) python3(cairo) python3(configobj)
+BuildRequires: python3(dbus) python3(psutil)
+BuildRequires: typelib(Vte) = 2.91 typelib(Notify) typelib(Keybinder)}
 
 %description
 Multiple GNOME terminals in one window. This is a project to produce an
@@ -44,6 +49,7 @@ different tasks.
 %setup
 sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %patch
+%patch1 -b .no-pytest-runner
 
 %build
 %pyproject_build
@@ -51,6 +57,10 @@ sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %install
 %pyproject_install
 %find_lang %name
+
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
+xvfb-run py.test-3
 
 %files -f %name.lang
 %_bindir/%name
@@ -68,6 +78,10 @@ sed -i '/#! \?\/usr.*/d' terminatorlib/*.py
 %doc README* CHANGELOG*
 
 %changelog
+* Thu Dec 15 2022 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt2
+- removed useless pytest-runner build dependency (ALT #44632)
+- enabled %%check
+
 * Wed Oct 19 2022 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt1
 - 2.1.2
 - ported to %%pyproject* macros
