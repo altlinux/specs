@@ -1,17 +1,19 @@
-
-%define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %global qt_module qttools
-%def_enable bootstrap
 #define optflags_lto %nil
 
 %define kf6_bindir %prefix/lib/kf6/bin
 
 Name: qt6-tools
 Version: 6.2.4
-Release: alt3
+Release: alt4
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
+%if "%version" == "%{get_version qt6-tools-common}"
+%def_disable bootstrap
+%else
+%def_enable bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt6 - QtTool components
@@ -28,7 +30,7 @@ Source21: designer.desktop
 Source22: linguist.desktop
 Source23: qdbusviewer.desktop
 
-BuildRequires(pre): rpm-macros-qt6
+BuildRequires(pre): rpm-macros-qt6 qt6-tools-common
 #ifnarch %e2k
 BuildRequires: clang-devel-static llvm-devel-static
 BuildRequires: clang-devel llvm-devel
@@ -149,6 +151,7 @@ Requires: libqt6-core = %_qt6_version
 #%patch1 -p1
 
 %build
+%define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 # needed for documentation generation
 # when some Qt header include paths
 # are specified using '-isystem $path' arguments
@@ -312,6 +315,9 @@ fi
 %_qt6_libdir/libQt6UiTools.so.*
 
 %changelog
+* Thu Dec 15 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt4
+- automate bootstrap mode
+
 * Fri Jun 10 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt3
 - fix run lupdate
 
