@@ -3,7 +3,7 @@
 %define repo dde-session-ui
 
 Name: deepin-session-ui
-Version: 5.5.37
+Version: 5.6.1
 Release: alt1
 Summary: Deepin desktop-environment - Session UI module
 License: GPL-3.0+
@@ -114,6 +114,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_libdir/dde-dock/plugins/libnotifications.so
 
 %changelog
+* Fri Dec 16 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.1-alt1
+- New version.
+
 * Mon Oct 31 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.37-alt1
 - New version.
 - Upstream:

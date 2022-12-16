@@ -2,7 +2,7 @@
 
 Name: deepin-daemon
 Version: 5.15.1
-Release: alt1
+Release: alt1.1
 Epoch: 2
 Summary: Daemon handling the DDE session settings
 License: GPL-3.0+
@@ -21,7 +21,7 @@ BuildRequires: gcc-c++ glib2-devel libgio-devel libgtk+3-devel libsystemd-devel 
 #BuildRequires: python3-module-pygobject3
 #BuildRequires: golang-gopkg-yaml-2-devel
 BuildRequires: golang-deepin-api-devel
-# Requires: bamfdaemon libbluez deepin-desktop-base deepin-desktop-schemas deepin-session-ui
+Requires: bamfdaemon at-spi2-core
 %ifnarch s390 s390x %arm ppc64le
 Requires: rfkill
 %endif
@@ -172,6 +172,9 @@ chmod +x %buildroot%_datadir/%repo/audio/echoCancelEnable.sh
 %_datadir/dsg/configs/org.deepin.dde.daemon/*.json
 
 %changelog
+* Thu Dec 15 2022 Leontiy Volodin <lvol@altlinux.org> 2:5.15.1-alt1.1
+- Added requires.
+
 * Tue Dec 13 2022 Leontiy Volodin <lvol@altlinux.org> 2:5.15.1-alt1
 - New version (5.15.1).
 

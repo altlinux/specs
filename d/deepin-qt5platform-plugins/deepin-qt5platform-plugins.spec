@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.0.71
+Version: 5.6.3
 Release: alt1
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 License: GPL-2.0+ and LGPL-3.0 and MIT
@@ -12,7 +12,6 @@ Url: https://github.com/linuxdeepin/qt5platform-plugins
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: 0001-feat-Add-support-for-5157.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -45,7 +44,6 @@ BuildRequires: qt5-base-devel-static
 
 %prep
 %setup -n %repo-%version
-%patch -p1
 # Disable wayland for now: https://github.com/linuxdeepin/qt5platform-plugins/issues/47
 sed -i '/wayland/d' qt5platform-plugins.pro
 rm -r xcb/libqt5xcbqpa-dev wayland/qtwayland-dev
@@ -71,6 +69,9 @@ export PATH=%_qt5_bindir:$PATH
 %_qt5_plugindir/platforms/libdxcb.so
 
 %changelog
+* Fri Dec 16 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.3-alt1
+- New version.
+
 * Fri Dec 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.71-alt1
 - New version.
 
