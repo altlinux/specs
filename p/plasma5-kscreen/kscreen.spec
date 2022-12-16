@@ -6,7 +6,7 @@
 
 Name: plasma5-%rname
 Version: 5.26.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -21,6 +21,8 @@ Provides: kf5-kscreen = %EVR
 Obsoletes: kf5-kscreen < %EVR
 
 Source: %rname-%version.tar
+Source10: kcm_kscreen-ru-add.po
+Source11: kscreen-ru-add.po
 Patch1: alt-enable-per-screen-scaling.patch
 
 # Automatically added by buildreq on Mon Mar 02 2015 (-bi)
@@ -66,6 +68,13 @@ developing applications that use %name.
 
 sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 
+msgcat --use-first po/ru/kcm_kscreen.po %SOURCE10 > po/ru/kcm_kscreen.po.tmp
+cat po/ru/kcm_kscreen.po.tmp > po/ru/kcm_kscreen.po
+rm -f po/ru/kcm_kscreen.po.tmp
+msgcat --use-first po/ru/kscreen.po %SOURCE11 > po/ru/kscreen.po.tmp
+cat po/ru/kscreen.po.tmp > po/ru/kscreen.po
+rm -f po/ru/kscreen.po.tmp
+
 %build
 %K5build
 
@@ -97,6 +106,9 @@ sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 #%_K5archdata/mkspecs/modules/qt_KScreen.pri
 
 %changelog
+* Fri Dec 16 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt2
+- update russian translation
+
 * Tue Nov 29 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt1
 - new version
 
