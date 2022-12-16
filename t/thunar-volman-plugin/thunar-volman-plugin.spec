@@ -1,6 +1,6 @@
 %define base thunar-volman
 Name: %base-plugin
-Version: 4.17.1
+Version: 4.18.0
 Release: alt1
 
 Summary: Thunar volume manager plugin
@@ -29,21 +29,12 @@ thunar-volman is installed and configured properly, and you plug in your
 digitcal camera, it will automatically spawn your preferred photo
 application and import the new pictures from your camera.
 
-It was designed to look and behave similar to gnome-volume-manager to
-get consistent removable drive and media management in Xfce and GNOME.
-This is to help GNOME refugees and people using both Xfce and GNOME
-(i.e. having to use GNOME at the office).
-
 %description -l ru
 Данный пакет содержит в себе дополнение для файлового менеджера Thunar
 позволяющее управлять подключенными к системе съемными устройствами.
 Например, если данное дополнение установлено и настроено и вы подключите
 цифровую камеру, автоматически запустится указанное вами приложение для
 получения фотографий с камеры и работы с ними.
-
-Данное дополнение специально разработано похожим на
-gnome-volume-manager - менеджер управления томами для GNOME. Это
-позволит людям использовавшим ранее GNOME легко ориентироваться в нем.
 
 %prep
 %setup -n %base-%version
@@ -61,12 +52,17 @@ gnome-volume-manager - менеджер управления томами для
 %find_lang %base
 
 %files -f %base.lang
-%doc README.md AUTHORS
+%doc README.md AUTHORS NEWS
 %_bindir/*
 %_iconsdir/hicolor/*/*/*
 %_desktopdir/*.desktop
 
 %changelog
+* Fri Dec 16 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Packaged NEWS file.
+- Updated description.
+- Updated to 4.18.0.
+
 * Thu Dec 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
 - Updated to 4.17.1.
 

@@ -1,5 +1,5 @@
 Name: xfdesktop
-Version: 4.17.2
+Version: 4.18.0
 Release: alt1
 
 Summary: Desktop manager for the Xfce Desktop Environment
@@ -15,8 +15,8 @@ Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libthunar-devel libgarcon-devel libgarcon-gtk3-devel libxfce4panel-gtk3-devel libxfconf-devel libexo-gtk3-devel libxfce4ui-gtk3-devel
-BuildRequires: intltool libSM-devel libwnck3-devel time xorg-cf-files
-BuildRequires: libICE-devel libnotify-devel
+BuildRequires: intltool libwnck3-devel time xorg-cf-files
+BuildRequires: libnotify-devel
 
 Requires: exo-utils
 
@@ -60,6 +60,10 @@ Requires: exo-utils
 %_datadir/backgrounds/xfce
 
 %changelog
+* Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Cleanup BR.
+- Updated to 4.18.0.
+
 * Thu Dec 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
 - Updated to 4.17.2.
 

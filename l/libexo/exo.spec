@@ -1,7 +1,7 @@
 %define _name exo
 
 Name: lib%_name
-Version: 4.17.4
+Version: 4.18.0
 Release: alt1
 
 Summary: Extension library to Xfce
@@ -27,9 +27,10 @@ Conflicts: python-module-exo < 0.7.0
 %define _unpackaged_files_terminate_build 1
 
 %description
-Libexo is an extension library to Xfce, developed by os-cillation.
-While Xfce comes with a quite few libraries that are targeted at desktop
-development, libexo is targeted at application development.
+Libexo is an Xfce library targeted at application development. It contains
+various custom widgets and APIs extending the functionality of GLib and
+GTK. It also ships utilities for defining preferred applications,
+mounting storage devices and more.
 
 %description -l ru_RU.UTF-8
 Libexo - библиотека расширений Xfce предназначенная для использования в
@@ -49,7 +50,8 @@ Summary: Utility files for %name
 Group: Graphical desktop/XFce
 
 %description -n %_name-utils
-This package conteins utility files for %name.
+This package conteins Xfce utilities for defining preferred applications,
+mounting storage devices and more.
 
 %package gtk3
 Summary: Extension library to Xfce (GTK+3 version)
@@ -57,9 +59,8 @@ Group: System/Libraries
 Requires: %name-common = %version-%release
 
 %description gtk3
-Libexo is an extension library to Xfce, developed by os-cillation.
-While Xfce comes with a quite few libraries that are targeted at desktop
-development, libexo is targeted at application development.
+Libexo is an Xfce library targeted at application development. It contains
+various custom widgets and APIs extending the functionality of GLib and GTK.
 This is a GTK+3 version.
 
 %package gtk3-devel
@@ -128,6 +129,10 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Updated descriptions.
+- Updated to 4.18.0.
+
 * Thu Dec 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.4-alt1
 - Updated to 4.17.4.
 

@@ -2,10 +2,13 @@
 
 %def_enable introspection
 %def_enable vala
+# GSettings backend allows to use xfconfd to store
+# gsettings (instead of dconf). I don't think we need it
+# (at least for now).
 %def_disable gsettings
 
 Name: lib%_name
-Version: 4.17.2
+Version: 4.18.0
 Release: alt1
 
 Summary: Hierarchical configuration system for Xfce
@@ -108,7 +111,7 @@ Vala bindings for %name.
 	--enable-maintainer-mode \
 	%{subst_enable introspection} \
 	%{subst_enable vala} \
-%if_enabled gsetings
+%if_enabled gsettings
 	--enable-gsettings-backend \
 %else
 	--disable-gsettings-backend \
@@ -130,7 +133,7 @@ xvfb-run make -k check
 %doc AUTHORS NEWS
 %_sysconfdir/xdg/xfce4/xfconf
 %_libdir/*.so.*
-%if_enabled gsetings
+%if_enabled gsettings
 %_libdir/gio/modules/*.so
 
 %exclude %_libdir/gio/modules/*.la
@@ -162,6 +165,10 @@ xvfb-run make -k check
 %endif
 
 %changelog
+* Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Fixed gsettings knob.
+- Updated to 4.18.0.
+
 * Wed Nov 30 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
 - Updated to 4.17.2.
 

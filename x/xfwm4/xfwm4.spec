@@ -1,5 +1,5 @@
 Name: xfwm4
-Version: 4.17.2
+Version: 4.18.0
 Release: alt1
 
 %def_enable epoxy
@@ -69,7 +69,7 @@ Xfce.
 %find_lang %name
 
 %files -f %name.lang
-%doc README.md TODO AUTHORS
+%doc README.md AUTHORS NEWS
 %_bindir/*
 %_datadir/%name
 %_desktopdir/*
@@ -80,6 +80,11 @@ Xfce.
 %_libdir/xfce4/*
 
 %changelog
+* Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Package NEWS file.
+- Don't package TODO file.
+- Updated to 4.18.0.
+
 * Thu Dec 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
 - Updated to 4.17.2.
 

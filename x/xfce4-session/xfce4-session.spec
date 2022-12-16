@@ -1,5 +1,5 @@
 Name: xfce4-session
-Version: 4.17.2
+Version: 4.18.0
 Release: alt1
 
 Summary: Session manager for Xfce desktop environment
@@ -21,7 +21,7 @@ BuildRequires: libxfconf-devel libxfce4ui-gtk3-devel
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: libpolkit-devel
 BuildRequires: libdbus-glib-devel
-BuildRequires: iceauth intltool libSM-devel libglade-devel libwnck3-devel xorg-cf-files
+BuildRequires: iceauth intltool libSM-devel libwnck3-devel xorg-cf-files
 
 Requires: wm-common-freedesktop
 Requires: xfce4-about
@@ -77,6 +77,10 @@ install -Dm0644 %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/10Xfce4
 %_datadir/polkit-1/actions/*.policy
 
 %changelog
+* Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Dropped libglade-devel from BR.
+- Updated to 4.18.0.
+
 * Thu Dec 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
 - Updated Url tag.
 - Updated to 4.17.2.

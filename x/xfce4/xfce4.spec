@@ -1,7 +1,7 @@
 %def_disable bootstrap
 
 Name: xfce4
-Version: 4.17
+Version: 4.18
 Release: alt1
 Summary: Set of Xfce4 Desktop installers.
 License: GPLv2+
@@ -73,6 +73,7 @@ of Xfce4 Desktop.
 %define commonreqs \
 Requires: xfwm4-themes \
 Requires: xfce4-dict \
+Requires: orage \
 Requires: xfce4-screenshooter \
 Requires: xarchiver \
 Requires: ristretto \
@@ -85,7 +86,6 @@ Requires: xfce4-battery-plugin \
 Requires: xfce4-calculator-plugin \
 Requires: xfce4-cpufreq-plugin \
 Requires: xfce4-cpugraph-plugin \
-Requires: xfce4-datetime-plugin \
 Requires: xfce4-diskperf-plugin \
 Requires: xfce4-eyes-plugin \
 Requires: xfce4-fsguard-plugin \
@@ -104,6 +104,7 @@ Requires: xfce4-timer-plugin \
 Requires: xfce4-verve-plugin \
 Requires: xfce4-weather-plugin \
 Requires: xfce4-whiskermenu-plugin \
+Requires: xfce4-windowck-plugin \
 Requires: xfce4-xkb-plugin
 
 %package full
@@ -162,6 +163,11 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %endif
 
 %changelog
+* Fri Dec 16 2022 Mikhail Efremov <sem@altlinux.org> 4.18-alt1
+- full,regular: Drop xfce4-datetime-plugin.
+- full,regular: Add xfce4-windowck-plugin.
+- full,regular: Add orage again.
+
 * Thu Feb 10 2022 Mikhail Efremov <sem@altlinux.org> 4.17-alt1
 - Fix bogus date in changelog.
 - full: Drop xfce4-screensaver.

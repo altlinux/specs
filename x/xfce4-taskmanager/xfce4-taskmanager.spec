@@ -1,5 +1,5 @@
 Name: xfce4-taskmanager
-Version: 1.5.4
+Version: 1.5.5
 Release: alt1
 
 Summary: Taskmanager for Xfce Desktop
@@ -49,6 +49,9 @@ mkdir m4/
 %_iconsdir/hicolor/*/*/*.*
 
 %changelog
+* Fri Dec 16 2022 Mikhail Efremov <sem@altlinux.org> 1.5.5-alt1
+- Updated to 1.5.5.
+
 * Tue May 31 2022 Mikhail Efremov <sem@altlinux.org> 1.5.4-alt1
 - Dropped obsoleted patch.
 - Updated to 1.5.4.

@@ -1,11 +1,11 @@
 Name: xfce4-appfinder
-Version: 4.17.2
+Version: 4.18.0
 Release: alt1
 
 Summary: Application finder for the Xfce4 Desktop Environment
 Summary (ru_RU.UTF-8): Утилита поиска приложений для Xfce
 License: GPLv2+
-Url: https://www.xfce.org/
+Url: https://docs.xfce.org/xfce/xfce4-appfinder/start
 Group: Graphical desktop/XFce
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
@@ -23,8 +23,9 @@ Conflicts: xfce-utils < 4.8.3-alt3
 %define _unpackaged_files_terminate_build 1
 
 %description
-%name permits to find every application in the system supporting
-Desktop entry format.
+The Xfce application finder is a program that searches your file system
+for .desktop files, and displays a categorized list of all the GUI
+applications on your system.
 
 %description -l ru_RU.UTF-8
 Данный пакет содержит в себе утилиту поиска приложений для окружения
@@ -49,13 +50,19 @@ Desktop entry format.
 %find_lang %name
 
 %files -f %name.lang
-%doc README.md AUTHORS
+%doc README.md AUTHORS NEWS
 %_bindir/*
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*
 %_datadir/metainfo/*.xml
 
 %changelog
+* Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Updated description.
+- Packaged NEWS file.
+- Updated Url tag.
+- Updated to 4.18.0.
+
 * Tue Nov 29 2022 Mikhail Efremov <sem@altlinux.org> 4.17.2-alt1
 - Updated BR.
 - Updated to 4.17.2.

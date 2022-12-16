@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: 4.17.3
+Version: 4.18.0
 Release: alt1
 
 Summary: Implementation of the freedesktop.org menu specification
@@ -213,6 +213,9 @@ rm -rf %buildroot%_datadir/locale/uz@Latn/
 
 
 %changelog
+* Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Updated to 4.18.0.
+
 * Wed Nov 30 2022 Mikhail Efremov <sem@altlinux.org> 4.17.3-alt1
 - Updated to 4.17.3.
 

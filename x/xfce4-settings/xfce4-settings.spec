@@ -1,6 +1,6 @@
 Name: xfce4-settings
-Version: 4.17.3
-Release: alt1
+Version: 4.18.0
+Release: alt2
 Summary: Settings Manager for Xfce
 Summary (ru_RU.UTF-8): Менеджер настроек Xfce
 
@@ -18,7 +18,7 @@ Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools > 4.5
 BuildRequires: libxfce4ui-gtk3-devel libexo-gtk3-devel libxfconf-devel libgarcon-devel >= 0.1.10
-BuildRequires: intltool libICE-devel libXcursor-devel libXi-devel libXrandr-devel libglade-devel libnotify-devel libxklavier-devel
+BuildRequires: libXcursor-devel libXi-devel libXrandr-devel libnotify-devel libxklavier-devel
 %{?_enable_upower:BuildRequires: libupower-devel >= 0.99.4-alt2}
 BuildRequires: libcolord-devel
 BuildRequires: xorg-drv-libinput-devel
@@ -88,6 +88,14 @@ install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
 %_iconsdir/*/*/*/*.*
 
 %changelog
+* Fri Dec 16 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt2
+- Fixed Russian "Mail Reader" translation.
+- Fixed Russian "File Manager" translation.
+
+* Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Cleanup BR.
+- Updated to 4.18.0.
+
 * Thu Dec 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.3-alt1
 - Updated to 4.17.3.
 

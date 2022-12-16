@@ -4,8 +4,8 @@
 %define git_hash %nil
 
 Name: xfce4-panel
-Version: 4.17.5
-Release: alt1%git_hash
+Version: 4.18.0
+Release: alt2%git_hash
 
 Summary: Panel for Xfce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
@@ -21,7 +21,7 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 BuildRequires: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
 BuildRequires: libxfce4util-devel >= 4.17.2-alt1
 BuildRequires: libxfce4ui-gtk3-devel >= 4.17.1-alt1 libexo-gtk3-devel >= 0.11.2 libgarcon-gtk3-devel >= 4.17.0
-BuildRequires: gtk-doc libwnck3-devel libICE-devel libXext-devel libSM-devel
+BuildRequires: gtk-doc libwnck3-devel libXext-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libdbusmenu-gtk3-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libxfce4util-gir-devel >= 4.15.6-alt1}
@@ -162,6 +162,12 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Fri Dec 16 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt2
+- Fixed Russian "File Manager" translation.
+
+* Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Updated to 4.18.0.
+
 * Wed Nov 30 2022 Mikhail Efremov <sem@altlinux.org> 4.17.5-alt1
 - Updated to 4.17.5.
 

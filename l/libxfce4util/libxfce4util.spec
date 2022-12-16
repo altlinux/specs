@@ -2,14 +2,14 @@
 %def_enable vala
 
 Name: libxfce4util
-Version: 4.17.4
+Version: 4.18.0
 Release: alt1
 
 Summary: Utility library for the Xfce desktop environment
 Summary(ru_RU.UTF-8): Библиотека утилит для рабочего стола Xfce
 License: LGPLv2+
 Group: Graphical desktop/XFce
-Url: https://www.xfce.org/
+Url: https://docs.xfce.org/xfce/libxfce4util/start
 
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
@@ -25,7 +25,8 @@ BuildRequires: glib2-devel gtk-doc intltool
 %define _unpackaged_files_terminate_build 1
 
 %description
-Basic utility non-GUI functions for Xfce.
+Libxfce4util is used to share commonly used non-GTK utilities among the
+Xfce applications.
 
 %description -l ru_RU.UTF-8
 Основные (не графические) утилиты Xfce.
@@ -88,7 +89,7 @@ Vala bindings for %name.
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS README.md README.Kiosk NEWS TODO
+%doc AUTHORS README.md NEWS
 %_libdir/*.so.*
 %_sbindir/*
 
@@ -113,6 +114,12 @@ Vala bindings for %name.
 %endif
 
 %changelog
+* Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Updated description.
+- Updated Url tag.
+- Dropped useless files.
+- Updated to 4.18.0.
+
 * Wed Nov 30 2022 Mikhail Efremov <sem@altlinux.org> 4.17.4-alt1
 - Updated to 4.17.4.
 

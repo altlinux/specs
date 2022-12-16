@@ -1,5 +1,5 @@
 Name: xfce4-power-manager
-Version: 4.17.1
+Version: 4.18.0
 Release: alt1
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
@@ -14,13 +14,12 @@ Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfconf-devel libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
+BuildPreReq: libxfce4util libxfconf-devel libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel
 BuildRequires: libXext-devel
 BuildRequires: libXrandr-devel
 BuildRequires: libnotify-devel >= 0.4.1
-BuildRequires: libglade-devel > 2.0.0
 BuildRequires: libupower-devel
-BuildRequires: gettext intltool desktop-file-utils
+BuildRequires: gettext
 
 Requires: polkit
 Requires: upower
@@ -30,10 +29,14 @@ Conflicts: xfce4-screensaver < 0.1.10-alt1
 %define _unpackaged_files_terminate_build 1
 
 %description
-xfce4-power-manager is a tool for the Xfce desktop environment for
-managing profiles of policies which affect power consumption, such as
-the display brightness level, display sleep times, or CPU frequency
-scaling.
+This software is a power manager for the Xfce desktop, Xfce power
+manager manages the power sources on the computer and the devices that
+can be controlled to reduce their power consumption (such as LCD
+brightness level, monitor sleep). In addition, xfce4-power-manager
+provides a set of freedesktop-compliant DBus interfaces to inform other
+applications about current power level so that they can adjust their
+power consumption, and it provides the inhibit interface which allows
+applications to prevent automatic sleep actions via the power manager.
 
 %prep
 %setup
@@ -46,7 +49,6 @@ scaling.
 %configure \
 	--enable-maintainer-mode \
 	--enable-polkit \
-	--enable-dpms \
 	--enable-network-manager \
 	--with-backend=linux \
 	--enable-debug=minimum
@@ -73,6 +75,11 @@ scaling.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Updated BR.
+- Updated decription.
+- Updated to 4.18.0.
+
 * Thu Dec 01 2022 Mikhail Efremov <sem@altlinux.org> 4.17.1-alt1
 - Updated to 4.17.1.
 

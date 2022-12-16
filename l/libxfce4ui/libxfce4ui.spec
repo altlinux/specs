@@ -11,14 +11,14 @@
 %endif
 
 Name: libxfce4ui
-Version: 4.17.9
+Version: 4.18.0
 Release: alt1
 
 Summary: Various GTK widgets for Xfce
 Summary (ru_RU.UTF-8): Набор виджетов GTK для Xfce
 License: LGPLv2+
 Group: Graphical desktop/XFce
-Url: https://www.xfce.org/
+Url: https://docs.xfce.org/xfce/libxfce4ui/start
 
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
@@ -194,6 +194,10 @@ make check
 %_desktopdir/xfce4-about.desktop
 
 %changelog
+* Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Updated Url tag.
+- Updated to 4.18.0.
+
 * Wed Nov 30 2022 Mikhail Efremov <sem@altlinux.org> 4.17.9-alt1
 - Updated to 4.17.9.
 
