@@ -1,5 +1,5 @@
 Name:           xfce4-notifyd
-Version:        0.6.4
+Version:        0.6.5
 Release:        alt1
 Summary:        Simple notification daemon for Xfce
 Summary(ru_RU.UTF-8): Менеджер уведомлений для Xfce
@@ -17,9 +17,6 @@ BuildRequires: libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
 BuildRequires: libxfce4panel-gtk3-devel
 BuildRequires: libgio-devel libX11-devel
 BuildRequires: libnotify-devel
-
-# Automatically added by buildreq on Mon Sep 21 2009
-BuildRequires: intltool libglade-devel
 
 Requires:       xfce4-common
 Requires:       dbus icon-theme-hicolor
@@ -95,6 +92,10 @@ Notification plugin for the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Dec 16 2022 Mikhail Efremov <sem@altlinux.org> 0.6.5-alt1
+- Cleanup BR.
+- Updated to 0.6.5.
+
 * Fri Sep 02 2022 Mikhail Efremov <sem@altlinux.org> 0.6.4-alt1
 - Updated to 0.6.4.
 
