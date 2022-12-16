@@ -1,6 +1,6 @@
 Summary:	Netscape Network Security Services(NSS)
 Name:		nss
-Version:	3.85
+Version:	3.86
 Release:	alt1
 License:	MPL-2.0
 Group:		System/Libraries
@@ -262,6 +262,15 @@ popd
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Releases
 # https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_{version}_release_notes
 %changelog
+* Wed Dec 14 2022 Alexey Gladkov <legion@altlinux.ru> 3.86-alt1
+- New version (3.86).
+- Set nssckbi version number to 2.60.
+- Certificate Authority Changes:
+  + Remove CN=EC-ACC
+  + Remove CN=Network Solutions Certificate Authority
+  + Remove CN=Staat der Nederlanden EV Root CA
+  + Remove CN=SwissSign Platinum CA - G2
+
 * Thu Nov 24 2022 Alexey Gladkov <legion@altlinux.ru> 3.85-alt1
 - New version (3.85).
 

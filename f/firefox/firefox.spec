@@ -2,8 +2,8 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 107.0.1
-Release: alt2
+Version: 108.0
+Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
 URL: https://www.mozilla.org/firefox/
@@ -34,11 +34,11 @@ Patch013: 0013-glxtest-delay-terminating-the-EGLDisplay.patch
 %endif
 
 %define gst_version   1.0
-%define nspr_version  4.34.1
-%define nss_version   3.82
-%define rust_version  1.64.0
-%define cargo_version 1.64.0
-%define llvm_version  14.0
+%define nspr_version  4.35
+%define nss_version   3.86
+%define rust_version  1.65.0
+%define cargo_version 1.65.0
+%define llvm_version  15.0
 
 ExcludeArch: ppc64le
 
@@ -111,6 +111,7 @@ BuildRequires: pkgconfig(zlib)
 BuildRequires: /dev/shm
 
 BuildRequires: python3-base
+BuildRequires: python3(curses)
 BuildRequires: python3(hamcrest)
 BuildRequires: python3(pip)
 BuildRequires: python3(setuptools)
@@ -182,16 +183,16 @@ ac_add_options --enable-linker=lld
 ac_add_options --enable-lto=thin
 %endif
 %endif
-%ifarch armh ppc64le %{ix86}
+%ifarch %{ix86} armh ppc64le
 ac_add_options --disable-webrtc
 %endif
-%ifarch armh %{ix86} x86_64
+%ifarch %{ix86} armh x86_64
 ac_add_options --disable-elf-hack
 %endif
+%ifarch %{ix86} armh
 %ifarch %{ix86}
 ac_add_options --disable-av1
 %endif
-%ifarch armh %{ix86}
 ac_add_options --enable-strip
 ac_add_options --enable-install-strip
 ac_add_options --disable-rust-debug
@@ -206,6 +207,15 @@ EOF
 find third_party \
 	-type f \( -name '*.so' -o -name '*.o' -o -name '*.a' \) \
 	-delete
+
+# Error: relocation R_386_GOTOFF against undefined hidden symbol
+# `tabs_4d51_TabsBridgedEngine_reset' can not be used when making a shared
+# object
+# https://bugzilla.mozilla.org/show_bug.cgi?id=1805809
+%ifarch armh %{ix86}
+find toolkit/components/uniffi-js -type f |
+	xargs sed -ri.poff 's,_4d51_,_1c79_,g'
+%endif
 
 rm -rf -- obj-x86_64-pc-linux-gnu
 rm -rf -- third_party/python/setuptools/setuptools*
@@ -279,7 +289,7 @@ fi
 
 export srcdir="$PWD"
 export MOZBUILD_STATE_PATH="$srcdir/mozbuild"
-export MACH_USE_SYSTEM_PYTHON=1
+export MACH_BUILD_PYTHON_NATIVE_PACKAGE_SOURCE=system
 
 python3 ./mach build
 
@@ -409,6 +419,18 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Dec 14 2022 Alexey Gladkov <legion@altlinux.ru> 108.0-alt1
+- New release (108.0).
+- Security fixes:
+  + CVE-2022-46871: libusrsctp library out of date
+  + CVE-2022-46872: Arbitrary file read from a compromised content process
+  + CVE-2022-46873: Firefox did not implement the CSP directive unsafe-hashes
+  + CVE-2022-46874: Drag and Dropped Filenames could have been truncated to malicious extensions
+  + CVE-2022-46875: Download Protections were bypassed by .atloc and .ftploc files on Mac OS
+  + CVE-2022-46877: Fullscreen notification bypass
+  + CVE-2022-46878: Memory safety bugs fixed in Firefox 108 and Firefox ESR 102.6
+  + CVE-2022-46879: Memory safety bugs fixed in Firefox 108
+
 * Sat Dec 10 2022 Alexey Gladkov <legion@altlinux.ru> 107.0.1-alt2
 - glxtest: Add patch to delay terminating the EGLDisplay.
 
