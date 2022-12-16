@@ -1,14 +1,9 @@
 %define module_name lkrg
-%define module_version 0.9.5.0.7.gitf32f627
-
-# remove me in the next release
-%ifarch aarch64
-%def_without check
-%endif
+%define module_version 0.9.6
 
 Name: kernel-source-lkrg
 Version: %module_version
-Release: alt2
+Release: alt1
 
 Summary:  Linux Kernel Runtime Guard module sources
 
@@ -19,7 +14,6 @@ Url:  https://lkrg.org/
 VCS: https://github.com/lkrg-org/lkrg.git
 Source: %module_name-%version.tar
 Source1: %module_name.init
-Patch: %name-%version-%release.patch
 
 ExclusiveArch: aarch64 armh %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
@@ -61,9 +55,6 @@ This package contains common files fo Linux Kernel Runtime Guard.
 
 %prep
 %setup -q -c
-pushd %module_name-%version
-%patch -p1
-popd
 cp -a %SOURCE1 .
 
 %install
@@ -130,6 +121,9 @@ fi
 %_presetdir/30-lkrg.preset
 
 %changelog
+* Fri Dec 16 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.6-alt1
+- Updated to v0.9.6.
+
 * Thu Oct 27 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.5.0.7.gitf32f627-alt2
 - Fixed build for centos kernel.
 

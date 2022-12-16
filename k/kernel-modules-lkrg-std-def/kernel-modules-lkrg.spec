@@ -1,5 +1,5 @@
 %define module_name	lkrg
-%define module_version	0.9.5.0.7.gitf32f627
+%define module_version	0.9.6
 %define module_release	alt1
 
 %define flavour		std-def
@@ -211,6 +211,11 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kepoch%kversion-%krelease.
+
+* Fri Dec 16 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.6-alt1
+- Updated to v0.9.6.
+- un-def: built for aarch64 again.
+- std-debug: restored build.
 
 * Mon Oct 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.9.5.0.7.gitf32f627-alt1
 - Updated to v0.9.5-7-gf32f627.

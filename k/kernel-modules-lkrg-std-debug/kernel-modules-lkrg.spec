@@ -2,10 +2,10 @@
 %define module_version	0.9.6
 %define module_release	alt1
 
-%define flavour		ovz-el7
-%define karch		x86_64
+%define flavour		std-debug
+%define karch		aarch64 %arm %ix86 x86_64
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-ovz-el7
+BuildRequires(pre): kernel-headers-modules-std-debug
 %setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
