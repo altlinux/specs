@@ -1,5 +1,5 @@
 Name: libX11
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 Epoch: 3
 Summary: X11 Library
@@ -85,6 +85,9 @@ rm -f %buildroot%_libdir/X11/locale/common/*.la
 %_datadir/X11/locale
 
 %changelog
+* Fri Dec 16 2022 Valery Inozemtsev <shrek@altlinux.ru> 3:1.8.3-alt1
+- 1.8.3
+
 * Fri Nov 11 2022 Valery Inozemtsev <shrek@altlinux.ru> 3:1.8.2-alt1
 - 1.8.2
 
