@@ -1,5 +1,5 @@
 Name: xviewer
-Version: 3.2.10
+Version: 3.2.11
 Release: alt1
 
 Summary: Fast and functional image viewer.
@@ -8,6 +8,7 @@ Group: Graphics
 Url: https://github.com/linuxmint/xviewer
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 
@@ -63,6 +64,7 @@ the functionality of the Xviewer GUI.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %meson
@@ -96,6 +98,9 @@ the functionality of the Xviewer GUI.
 %_libdir/%name/girepository-1.0/*.typelib
 
 %changelog
+* Tue Nov 22 2022 Vladimir Didenko <cow@altlinux.org> 3.2.11-alt1
+- New version
+
 * Tue Aug 2 2022 Vladimir Didenko <cow@altlinux.org> 3.2.10-alt1
 - New version
 
