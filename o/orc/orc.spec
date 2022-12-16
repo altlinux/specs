@@ -2,8 +2,10 @@
 %define ver_major 0.4
 %def_enable gtk_doc
 
-%ifarch armh
+%ifarch armh aarch64
 %def_disable check
+%else
+%def_enable check
 %endif
 
 %ifarch %valgrind_arches
@@ -11,8 +13,8 @@
 %endif
 
 Name: orc
-Version: %ver_major.32
-Release: alt1.1
+Version: %ver_major.33
+Release: alt1
 
 Summary: The Oil Runtime Compiler
 Group: Development/Other
@@ -22,13 +24,12 @@ Url: http://code.entropywave.com/projects/orc
 %if_disabled snapshot
 Source: https://github.com/GStreamer/orc/archive/%version/%name-%version.tar.gz
 %else
-Vcs: https://anongit.freedesktop.org/gstreamer/orc
+Vcs: https://anongit.freedesktop.org/gstreamer/orc.git
 Source: %name-%version.tar
 %endif
-Patch: orc-0.4.32-alt-disable_orc-test_static_library.patch
 
-BuildRequires(pre): meson >= 0.54 rpm-macros-valgrind
-BuildRequires: glib2-devel >= 2.10.0 gtk-doc
+BuildRequires(pre): rpm-macros-meson rpm-macros-valgrind
+BuildRequires: meson >= 0.54 glib2-devel >= 2.10.0 gtk-doc
 %{?_enable_valgrind:BuildRequires: valgrind-devel}
 
 %description
@@ -109,7 +110,6 @@ This package contains documentation for Orc.
 
 %prep
 %setup
-%patch -p1 -b .static
 
 %build
 %meson \
@@ -119,10 +119,10 @@ This package contains documentation for Orc.
 
 %install
 %meson_install
+rm -f %buildroot/%_libdir/lib%name-test-%ver_major.a
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%meson_test
+%__meson_test
 
 %files
 %_bindir/%name-bugreport
@@ -150,6 +150,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sun Nov 13 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.33-alt1
+- 0.4.33-6-g7841e2f
+
 * Sat Aug 28 2021 Yuri N. Sedunov <aris@altlinux.org> 0.4.32-alt1.1
 - orc-test/meson.build: don't build static orc-test library by default
 
