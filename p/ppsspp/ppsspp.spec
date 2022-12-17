@@ -1,12 +1,13 @@
-%define armips_commit 7885552b208493a6a0f21663770c446c3ba65576
+%define armips_commit 6719edebaae03330ee5441d9b28280672edf00d5
 %define discord_rpc_commit 963aa9f3e5ce81a4682c6ca3d136cddda614db33
 %define glslang_commit dc11adde23c455a24e13dd54de9b4ede8bdd7db8
 %define miniupnp_commit 3a87be33e797ba947b2b2a5f8d087f6c3ff4d93e
 %define spirv_cross_commit 9acb9ec31f5a8ef80ea6b994bb77be787b08d3d1
-%define zstd_version 1.5.0
+%define zstd_commit 096dccbc2d89a560db0b9892c53ea0c77eff20a1
+%define filesystem_commit 3f1c185ab414e764c694b8171d1c4d8c5c437517
 
 Name: ppsspp
-Version: 1.13.1
+Version: 1.14
 Release: alt1
 
 Summary: PlayStation Portable Emulator
@@ -30,10 +31,12 @@ Source3: glslang-%glslang_commit.tar
 Source4: miniupnp-%miniupnp_commit.tar
 # https://github.com/KhronosGroup/SPIRV-Cross/archive/%spirv_cross_commit/SPIRV-Cross-%spirv_cross_commit.tar.gz
 Source5: SPIRV-Cross-%spirv_cross_commit.tar
-# https://github.com/facebook/zstd/archive/v%zstd_version/zstd-%zstd_version.tar.gz
-Source6: zstd-%zstd_version.tar
-Source7: %name.desktop
-Source8: %name-qt.desktop
+# https://github.com/facebook/zstd/archive/%zstd_commit/zstd-%zstd_commit.tar.gz
+Source6: zstd-%zstd_commit.tar
+# https://github.com/Kingcom/filesystem/archive/%filesystem_commit/filesystem-%filesystem_commit.tar.gz
+Source7: filesystem-%filesystem_commit.tar
+Source8: %name.desktop
+Source9: %name-qt.desktop
 
 Patch0: %name-alt-ffmpeg.patch
 Patch1: %name-alt-git.patch
@@ -84,14 +87,15 @@ PPSSPP is a PSP emulator written in C++, and translates PSP CPU instructions dir
 This build using the Qt frontend.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7
 
 %__mv -Tf ../armips-%armips_commit ext/armips
 %__mv -Tf ../discord-rpc-%discord_rpc_commit ext/discord-rpc
 %__mv -Tf ../glslang-%glslang_commit ext/glslang
 %__mv -Tf ../miniupnp-%miniupnp_commit ext/miniupnp
 %__mv -Tf ../SPIRV-Cross-%spirv_cross_commit ext/SPIRV-Cross
-%__mv -Tf ../zstd-%zstd_version ext/zstd
+%__mv -Tf ../zstd-%zstd_commit ext/zstd
+%__mv -Tf ../filesystem-%filesystem_commit ext/armips/ext/filesystem
 
 %patch0 -p1
 %patch1 -p1
@@ -177,8 +181,8 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 
 %__install -Dp -m0644 icons/icon-512.svg %buildroot%_pixmapsdir/%name.svg
 
-%__install -Dp -m0644 %SOURCE7 %buildroot%_desktopdir/
 %__install -Dp -m0644 %SOURCE8 %buildroot%_desktopdir/
+%__install -Dp -m0644 %SOURCE9 %buildroot%_desktopdir/
 
 %files
 %_bindir/PPSSPPSDL
@@ -198,6 +202,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Sat Dec 17 2022 Nazarov Denis <nenderus@altlinux.org> 1.14-alt1
+- Version 1.14
+
 * Thu Jul 28 2022 Nazarov Denis <nenderus@altlinux.org> 1.13.1-alt1
 - Version 1.13.1
 
