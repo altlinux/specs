@@ -1,61 +1,62 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
 %define libname libcpufreq
 
 Name: cpufrequtils
 Version: 008
-Release: alt3
-
+Release: alt4
 Summary: Tools to determine and set CPUfreq settings
 License: GPLv2
-Group: System/Base
+Group: System/Legacy libraries
+Url: https://git.kernel.org/pub/scm/linux/kernel/git/brodo/cpufrequtils.git/about/
+Vcs: git://git.kernel.org/pub/scm/utils/kernel/cpufreq/cpufrequtils.git
+Requires: %libname = %EVR
 
-Url: http://www.kernel.org/pub/linux/utils/kernel/cpufreq/cpufrequtils.html
-Source: http://www.kernel.org/pub/linux/utils/kernel/cpufreq/cpufrequtils-%version.tar.bz2
-Patch0: 0001-Only-x86-has-cpuid-instruction.patch
-Patch1: 0001-Only-x86-has-cpuid-h.patch
-
-Requires: %libname = %version-%release
+Source: %name-%version.tar
 
 %description
-To make access to the Linux kernel cpufreq subsystem easier for users
-and cpufreq userspace tools, the cpufrequtils package was created. It
-contains a library used by other programs (libcpufreq), command line
-tools to determine current CPUfreq settings and to modify them
-(cpufreq-info and cpufreq-set), and debug tools.
+Command line tools to determine current CPUfreq settings and to modify
+them (cpufreq-info and cpufreq-set), and debug tools.
+
+These tools are obsoleted use cpupower instead.
 
 %package -n %libname
 Summary: Library for %name
-License: GPLv2
-Group: Development/C
+Group: System/Legacy libraries
 
 %description -n %libname
-This packages contains some library needed by %name.
+Library which offers a unified access method for userspace tools and
+programs to the cpufreq core and drivers in the Linux kernel
+
+Please consider switch to libcpupower.
 
 %package -n %libname-devel
-Summary: Headers for developing programs that will use %libname
-License: GPLv2
+Summary: Headers for developing files for %libname
 Group: Development/C
-Requires: %libname = %version-%release
+Requires: %libname = %EVR
 Obsoletes: %name-devel
-Provides: %name-devel
+Conflicts: libcpupower-devel
 
 %description -n %libname-devel
-This package contains the headers that programmers will need to develop
-applications which will use %libname.
+%summary.
+
+This library is obsoleted, please use libcpupower-devel.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-sed -i 's/--mode=/--tag=CC --mode=/' Makefile
 
 %build
-%make_build CFLAGS="%optflags" V=true
+%add_optflags %(getconf LFS_CFLAGS)
+%make_build CFLAGS="%optflags" V=1 STRIP=:
 
 %install
 %makeinstall_std mandir=%_mandir libdir=%_libdir V=true
 %find_lang cpufrequtils
 
 %files -f cpufrequtils.lang
+%doc AUTHORS COPYING README
 %_bindir/*
 %_man1dir/*
 
@@ -67,6 +68,13 @@ sed -i 's/--mode=/--tag=CC --mode=/' Makefile
 %_libdir/libcpufreq.so
 
 %changelog
+* Sat Dec 17 2022 Vitaly Chikunov <vt@altlinux.org> 008-alt4
+- Update to the latest upstream version from git commit a2f0c39 (2011-08-13).
+- Fixed lfs=strict build on 32-bit systems.
+- Fixed build of debuginfo package.
+- Added conflict with libcpupower-devel (ALT#41107), users should switch to
+  it instead.
+
 * Sun Apr 19 2020 Michael Shigorin <mike@altlinux.org> 008-alt3
 - further fixed build on non-x86 architectures, notably E2K
 - minor spec cleanup
