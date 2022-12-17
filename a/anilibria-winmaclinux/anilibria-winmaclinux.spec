@@ -1,6 +1,6 @@
 Name: anilibria-winmaclinux
-Version: 1.2.2
-Release: alt2
+Version: 1.2.3
+Release: alt1
 
 Summary: AniLibria online video player for desktop platforms
 Summary(ru_RU.UTF-8): Онлайн-видеоплеер AniLibria для настольных платформ
@@ -66,6 +66,9 @@ popd
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Fri Dec 16 2022 Evgeny Chuck <koi@altlinux.org> 1.2.3-alt1
+- new version (1.2.3) with rpmgs script
+
 * Thu Dec 15 2022 Evgeny Chuck <koi@altlinux.org> 1.2.2-alt2
 - Fixed a crash when clicking on the random release button (Closes: 44597)
 - Fixed bug in index values on page Theme Editor
