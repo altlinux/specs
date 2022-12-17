@@ -11,8 +11,8 @@
 %def_disable devel
 
 Name: unit
-Version: 1.28.0
-Release: alt2
+Version: 1.29.0
+Release: alt1
 
 Summary: NGINX Unit - Web Application Server
 License: Apache-2.0
@@ -71,6 +71,17 @@ Requires: unit = %EVR
 %description ruby
 Ruby module for NGINX Unit
 
+%package checkinstall
+Summary: Checkinstall test for %name
+Group: Development/Other
+Requires: %name = %EVR
+Requires: logrotate
+Requires: man-db
+Requires: systemd-analyze
+
+%description checkinstall
+%summary.
+
 %prep
 %setup
 
@@ -80,6 +91,7 @@ sed -i -e 's/NXT_HAVE_MEMFD_CREATE/NO_&/' auto/shmem
 sed -i 's!/var/run/!/run/!' pkg/rpm/rpmbuild/SOURCES/unit.logrotate
 
 %build
+%add_optflags $(getconf LFS_CFLAGS)
 # Test compilation passes with the following options:
 #   %%define optflags_lto %nil
 #   %%add_optflags -fanalyzer -Wno-analyzer-null-argument -Wno-analyzer-null-dereference -Wno-analyzer-malloc-leak -Wno-analyzer-use-of-uninitialized-value
@@ -139,6 +151,7 @@ CFLAGS="%optflags" \
   %makeinstall_std ruby-install
 %endif
 
+install -pD tools/unitc %buildroot%_bindir/unitc
 install -pD -m644 pkg/rpm/rpmbuild/SOURCES/unit.logrotate %buildroot%_sysconfdir/logrotate.d/unit
 install -pD -m644 .gear/unit.service %buildroot%systemd_unitdir/unit.service
 install -pD -m755 .gear/unit.init    %buildroot%_initdir/unit
@@ -156,7 +169,17 @@ ln pkg/rpm/rpmbuild/SOURCES/unit.example-php-app     php-app.ru
 ln pkg/rpm/rpmbuild/SOURCES/unit.example-php-config  php-unit.config
 
 %check
+# unitc does not pass shellcheck
+bash -n %buildroot%_bindir/unitc
+bash -n %buildroot%_initdir/unit
 build/tests
+
+%pre checkinstall
+set -ex
+# systemd-analyze better works in non-'/'.
+cd
+systemd-analyze verify unit.service
+logrotate %_sysconfdir/logrotate.d/unit
 
 %pre
 /usr/sbin/groupadd -r -f _unit
@@ -169,9 +192,10 @@ build/tests
 %preun_service unit
 
 %files
-%doc CHANGES LICENSE README.md COPYRIGHT
+%doc CHANGES LICENSE README.md COPYRIGHT SECURITY.txt
 %_man8dir/*.8*
 %_sbindir/unitd
+%_bindir/unitc
 %_initdir/unit
 %systemd_unitdir/unit.service
 %config(noreplace) %_sysconfdir/logrotate.d/unit
@@ -211,7 +235,12 @@ build/tests
 %_libdir/unit/modules/ruby.unit.so
 %endif
 
+%files checkinstall
+
 %changelog
+* Sat Dec 17 2022 Vitaly Chikunov <vt@altlinux.org> 1.29.0-alt1
+- Update to 1.29.0 (2022-12-15), enable cgroup2 support, install unitc.
+
 * Tue Oct 04 2022 Andrew A. Vasilyev <andy@altlinux.org> 1.28.0-alt2
 - Switch to PHP 8.1
 
