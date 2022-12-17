@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 211
+%define centos_release 217
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,41 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Dec 17 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.217-alt1.el9
+- Updated to kernel-5.14.0-217.el9 (fixes: CVE-2022-2959, CVE-2022-43945):
+  + arm64: dts: imx93-pinfunc: drop execution permission
+  + Drivers: hv: vmbus: Updates for 9.2
+  + drm/vc4: update to 5.18
+  + dt-bindings: soc: adds for i.MX93 SRC, mediamix blk ctrl, i2c-imx-lpi2c
+  + Enable the GNSS subsystem
+  + Fix a problem with the time handling of nested KVM guests
+  + hwmon: Handle failure to register sensor with thermal zone correctly
+  + i40e: driver update
+  + igc: Driver Update
+  + NFSD/SUNRPC - fix send buffer overflow
+  + ovs: backports P1 for 9.2
+  + PCI: hv: Updates for RHEL 9.2
+  + pinctrl: amd: Don't save/restore interrupt status and wake status bits
+  + pipe: Fix missing lock in pipe_resize_ring()
+  + redhat: configs: disable vDPA on all archs except x86_64
+  + redhat/Makefile: Drop message about BUILDID deprecation
+  + scsi: qla2xxx: Fix crash when I/O abort times out
+  + scsi: storvsc: Fix handling of srb_status and capacity change events
+  + sfc: driver update to v6.0
+  + tcp: Add listening address to SYN flood message
+  + UFS backport fixups
+  + Update amd-pstate cpufrequency driver
+  + Update drivers/mailbox for Arm SystemReady IR platforms
+  + Update DTS bindings for Tegra234 (NVIDIA Orin)
+  + Volume Management Device (VMD) driver fixes
+  + x86: hyperv: Updates for RHEL 9.2
+
+* Wed Dec 14 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.212-alt1.el9
+- Updated to kernel-5.14.0-212.el9:
+  + ceph: backport mainline changes up to v6.0 for RHEL 9.2
+  + powercap: intel_rapl: support new layout of Psys PowerLimit Register
+  + udp: some performance optimizations
+
 * Tue Dec 13 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.211-alt1.el9
 - Updated to kernel-5.14.0-211.el9:
   + Add fixes to drivers/clksrc for NVIDIA Orin
