@@ -11,7 +11,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -133,6 +133,9 @@ sed -i '/\--nowrite/d' doc/meson.build
 
 
 %changelog
+* Sat Dec 17 2022 Yuri N. Sedunov <aris@altlinux.org> 1.6.3-alt1
+- 1.6.3
+
 * Mon Nov 21 2022 Yuri N. Sedunov <aris@altlinux.org> 1.6.2-alt1
 - 1.6.2
 
