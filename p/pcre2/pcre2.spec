@@ -3,16 +3,16 @@
 %def_enable check
 
 Name: pcre2
-Version: 10.40
-Release: alt2
+Version: 10.42
+Release: alt1
 
 Summary: Perl-compatible regular expression library
 Group: System/Libraries
 License: BSD-style
 Url: http://www.pcre.org/
 
-Vcs: https://github.com/PhilipHazel/pcre2.git
-Source: https://github.com/PhilipHazel/%name/releases/download/%name-%version/%name-%version.tar.gz
+Vcs: https://github.com/PCRE2Project/pcre2.git
+Source: https://github.com/PCRE2Project/%name/releases/download/%name-%version/%name-%version.tar.gz
 #Source: https://ftp.pcre.org/pub/pcre/%name-%version.tar.gz
 
 BuildRequires: libreadline-devel zlib-devel bzlib-devel
@@ -139,6 +139,10 @@ mv %buildroot%_libdir/lib%name-{8,16,32,posix}.so.* %buildroot/%_lib/
 %exclude %_docdir/%name
 
 %changelog
+* Sat Dec 17 2022 Yuri N. Sedunov <aris@altlinux.org> 10.42-alt1
+- 10.42
+- updated Vcs, Source tags
+
 * Sat Nov 05 2022 Ivan A. Melnikov <iv@altlinux.org> 10.40-alt2
 - enable static libraries (altbug #44217);
 - don't force-enable jit on riscv64 to fix build there.
