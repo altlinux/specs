@@ -1,15 +1,13 @@
 Name: fd
-Version: 8.4.0
+Version: 8.6.0
 Release: alt1
 Summary: A simple, fast and user-friendly alternative to 'find'
 License: MIT and Apache-2.0
 Group: File tools
 Url: https://github.com/sharkdp/fd
 Source: %name-%version.tar
-Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildRequires: rust-cargo
-BuildRequires: /proc
 
 %description
 fd is an alternative to GNU find. It features:
@@ -34,22 +32,30 @@ EOF
 
 %build
 cargo build --offline --release
+target/release/%name --gen-completions bash > %name.bash
+target/release/%name --gen-completions fish > %name.fish
 
 %install
-mkdir -p %buildroot%_bindir
-mkdir -p %buildroot%_man1dir
-mkdir -p %buildroot%_datadir/bash-completion/completions
-install -m 0755 target/release/%name %buildroot%_bindir
-install -m 0644 doc/%name.1 %buildroot%_man1dir
-install -m 0644 target/release/build/%name-find-*/out/%name.bash %buildroot%_datadir/bash-completion/completions
+install -Dm 0755 target/release/%name %buildroot%_bindir/%name
+install -Dm 0644 doc/%name.1 %buildroot%_man1dir/%name.1
+install -Dm 0644 %name.bash %buildroot%_datadir/bash-completion/completions/%name
+install -Dm 0644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.fish
+install -Dm 0644 contrib/completion/_%name %buildroot%_datadir/zsh/site-functions/_%name
+
+%check
+cargo test
 
 %files
 %_bindir/%name
 %_man1dir/%name.1.xz
-%_datadir/bash-completion/completions/%name.bash
-%doc LICENSE-MIT LICENSE-APACHE
+%_datadir/zsh/site-functions/_%name
+%_datadir/bash-completion/completions/%name
+%_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Sat Dec 17 2022 Alexander Makeenkov <amakeenk@altlinux.org> 8.6.0-alt1
+- Updated to version 8.6.0
+
 * Mon May 30 2022 Alexander Makeenkov <amakeenk@altlinux.org> 8.4.0-alt1
 - Updated to version 8.4.0
 

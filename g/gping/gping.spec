@@ -1,5 +1,7 @@
+%def_with check
+
 Name: gping
-Version: 1.4.0
+Version: 1.6.1
 Release: alt1
 Summary: Ping, but with a graph
 License: MIT
@@ -8,6 +10,10 @@ Url: https://github.com/orf/gping
 Source: %name-%version.tar
 
 BuildRequires: rust-cargo
+
+%if_with check
+BuildRequires: iputils
+%endif
 
 %description
 %summary.
@@ -27,14 +33,18 @@ EOF
 cargo build --offline --release
 
 %install
-mkdir -p %buildroot%_bindir
-install -m 0755 target/release/%name %buildroot%_bindir
+install -Dm 0755 target/release/%name %buildroot%_bindir/%name
+
+%check
+cargo test
 
 %files
 %_bindir/%name
-%doc readme.md LICENSE
 
 %changelog
+* Sat Dec 17 2022 Alexander Makeenkov <amakeenk@altlinux.org> 1.6.1-alt1
+- Updated to version 1.6.1
+
 * Fri Oct 07 2022 Alexander Makeenkov <amakeenk@altlinux.org> 1.4.0-alt1
 - Updated to version 1.4.0
 

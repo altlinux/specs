@@ -1,5 +1,5 @@
 Name: broot
-Version: 1.16.2
+Version: 1.17.1
 Release: alt1
 Summary: A new way to see and navigate directory trees
 License: MIT
@@ -28,12 +28,19 @@ cargo build --offline --release
 
 %install
 cargo install --path . --root %buildroot/%_usr
+install -Dm 0644 man/page %buildroot%_man1dir/%name.1
+
+%check
+cargo test
 
 %files
 %_bindir/%name
-%doc LICENSE
+%_man1dir/%name.1.xz
 
 %changelog
+* Sat Dec 17 2022 Alexander Makeenkov <amakeenk@altlinux.org> 1.17.1-alt1
+- Updated to version 1.17.1
+
 * Sat Nov 19 2022 Alexander Makeenkov <amakeenk@altlinux.org> 1.16.2-alt1
 - Updated to version 1.16.2
 
