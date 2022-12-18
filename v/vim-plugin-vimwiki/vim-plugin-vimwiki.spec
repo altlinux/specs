@@ -1,7 +1,7 @@
 %define oname vimwiki
 
 Name: vim-plugin-vimwiki
-Version: 2.5.0.1.git63af6e7
+Version: 2022.12.02
 Release: alt1
 
 Summary: A personal wiki for Vim
@@ -49,9 +49,12 @@ mkdir -p %buildroot%vim_runtime_dir/doc
 cp -a doc/*.txt %buildroot%vim_runtime_dir/doc
 
 %files
-%doc CONTRIBUTING.md DesignNotes.md LICENSE.md
+%doc CONTRIBUTING.md doc/design_notes.md LICENSE.md
 %vim_runtime_dir/*/*
 
 %changelog
+* Sun Dec 18 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2022.12.02-alt1
+- Updated to v2022.12.02.
+
 * Thu Apr 21 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.5.0.1.git63af6e7-alt1
 - Initial build for ALT Sisyphus.
