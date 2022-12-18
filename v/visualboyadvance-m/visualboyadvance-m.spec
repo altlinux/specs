@@ -1,8 +1,8 @@
 %global shortname vbam
 
 Name: visualboyadvance-m
-Version: 2.1.4
-Release: alt2
+Version: 2.1.5
+Release: alt3
 
 Summary: Game Boy Advance Emulator
 License: GPLv2
@@ -13,7 +13,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # https://github.com/visualboyadvance-m/visualboyadvance-m.git v%version
 Source: %name-%version.tar
-
+Source2: vba-translations.zip
 Patch1: %name-2.0.1-alt-segmentation-fault-fix.patch
 
 
@@ -29,7 +29,7 @@ Patch4:         0001-SDL-Fix-build-with-SDL-2.0.14-after-KMOD_GUI-change-.patch
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: make
 BuildRequires: cmake
-BuildRequires: gcc8-c++
+BuildRequires: gcc-c++
 BuildRequires: zlib-devel
 BuildRequires: libGL-devel libGLU-devel 
 BuildRequires: gettext
@@ -38,7 +38,7 @@ BuildRequires: libpng-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libSFML-devel
 BuildRequires: libopenal-devel
-BuildRequires: libwxGTK3.0-devel libgomp8-devel libwxGTK3.0 libwxGTK3.0-gl 
+BuildRequires: libwxGTK3.2-devel libgomp-devel libwxGTK3.2 libwxGTK3.2-gl 
 BuildRequires: libgtk+3-devel
 # Optional, for 32 bit builds:
 BuildRequires: nasm
@@ -47,11 +47,7 @@ BuildRequires: libavcodec-devel libavformat-devel libswscale-devel libavutil-dev
 # Not stated on developers site:
 BuildRequires: zip bzip2
 
-# build consistently segfaults on armh
-# let's disable just for one release
-%if "%version" == "2.1.4" && "%release" == "alt2"
-ExcludeArch: armh
-%endif
+ExcludeArch: armh i586
 
 %description
 VisualBoyAdvance-M, or simply VBA-M, is an improved fork from the inactive
@@ -61,15 +57,14 @@ an up-to-date codebase.
 %prep
 %setup
 #patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+#patch2 -p1
+#patch3 -p1
+#patch4 -p1
 sed -i 's/ -mtune=generic//g' CMakeLists.txt
 #Some odd permission issues:
 chmod -x src/wx/rpi.h
 
-%set_gcc_version 8
-
+#set_gcc_version 8
 
 %build
 #mkdir build
@@ -87,9 +82,6 @@ chmod -x src/wx/rpi.h
     -DENABLE_FFMPEG=OFF \
     -DENABLE_LINK=ON
 
-
-
-
 export NPROCS=1
 %cmake_build
 
@@ -97,24 +89,23 @@ export NPROCS=1
 %cmakeinstall_std
 %find_lang wx%{shortname}
 
-
 %files -f wx%{shortname}.lang
 %_bindir/%name
-%_datadir/appdata/wxvbam.appdata.xml
-%_datadir/applications/wxvbam.desktop
-%_datadir/icons/hicolor/128x128/apps/vbam.png
-%_datadir/icons/hicolor/16x16/apps/vbam.png
-%_datadir/icons/hicolor/22x22/apps/vbam.png
-%_datadir/icons/hicolor/24x24/apps/vbam.png
-%_datadir/icons/hicolor/256x256/apps/vbam.png
-%_datadir/icons/hicolor/32x32/apps/vbam.png
-%_datadir/icons/hicolor/48x48/apps/vbam.png
-%_datadir/icons/hicolor/64x64/apps/vbam.png
-%_datadir/icons/hicolor/96x96/apps/vbam.png
-%_datadir/icons/hicolor/scalable/apps/vbam.svg
+%_datadir/appdata/%name.appdata.xml
+%_datadir/applications/%name.desktop
+%_datadir/icons/hicolor/128x128/apps/%name.png
+%_datadir/icons/hicolor/16x16/apps/%name.png
+%_datadir/icons/hicolor/22x22/apps/%name.png
+%_datadir/icons/hicolor/24x24/apps/%name.png
+%_datadir/icons/hicolor/256x256/apps/%name.png
+%_datadir/icons/hicolor/32x32/apps/%name.png
+%_datadir/icons/hicolor/48x48/apps/%name.png
+%_datadir/icons/hicolor/64x64/apps/%name.png
+%_datadir/icons/hicolor/96x96/apps/%name.png
+%_datadir/icons/hicolor/scalable/apps/%name.svg
 %_datadir/locale/cs/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/de/LC_MESSAGES/wxvbam.mo
-%_datadir/locale/en/LC_MESSAGES/wxvbam.mo
+#_datadir/locale/en/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/es/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/fr/LC_MESSAGES/wxvbam.mo
 %_datadir/locale/gl/LC_MESSAGES/wxvbam.mo
@@ -133,6 +124,15 @@ export NPROCS=1
 
 
 %changelog
+* Sun Dec 18 2022 Ilya Mashkin <oddity@altlinux.ru> 2.1.5-alt3
+- ExcludeArch: armh i586
+
+* Sun Dec 18 2022 Ilya Mashkin <oddity@altlinux.ru> 2.1.5-alt2
+- add translations
+
+* Sun Dec 18 2022 Ilya Mashkin <oddity@altlinux.ru> 2.1.5-alt1
+- 2.1.5
+
 * Sun Oct 10 2021 Igor Vlasenko <viy@altlinux.org> 2.1.4-alt2
 - NMU: excluded armh build for 2.1.4-alt2 only,
   as it consistently segfaults and prevents wxGTK3.0 rebuild
