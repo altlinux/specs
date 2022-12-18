@@ -1,8 +1,9 @@
 %define webappdir %webserver_webappsdir/mediawiki
-%define major 1.37
+%define major 1.39
+%def_with php7
 
 Name: mediawiki
-Version: %major.2
+Version: %major.0
 Release: alt1
 
 Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
@@ -25,7 +26,7 @@ Source6: AdminSettings.sample
 Source7: 99-read-user-configs.php
 
 Patch: %name-1.31-alt.patch
-Patch1: %name-1.35-config-path.patch
+Patch1: %name-1.39-config-path.patch
 
 BuildRequires(pre): rpm-macros-apache2
 BuildRequires(pre): rpm-build-licenses
@@ -36,7 +37,8 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: apache2-devel
 
 Requires: %name-common = %version-%release
-Requires: %name-apache2 %name-mysql
+Requires: %name-apache2
+Requires: php8.0-mysqlnd-mysqli
 
 %description
 MediaWiki is the software used for Wikipedia and the other Wikimedia
@@ -50,26 +52,71 @@ configuration.
 
 This is a typical %name installation (with Apache2 and MySQL support).
 
+Also you can install %name-php8.0 (%name-php8.1, %name-php7)
+package to get all needed php requires.
+
 If you wish pure %name, install only %name-common package.
+
+%package -n %name-php7
+Summary: Common files for %name
+Group: Networking/WWW
+Requires: webserver-common
+# https://www.mediawiki.org/wiki/Compatibility
+Requires: php7-libs >= 7.4.3
+# inside php7-libs
+# Requires: php7-ctype php7-iconv php7-json php7-xml
+Requires: php7-dom php7-fileinfo php7-intl php7-mbstring
+Requires: php7-mcrypt php7-xmlreader php7-gd
+Requires: php7-opcache php7-apcu
+Requires: php7-openssl
+
+Requires: %name-common = %EVR
+
+
+%package -n %name-php8.0
+Summary: Common files for %name
+Group: Networking/WWW
+Requires: webserver-common
+# https://www.mediawiki.org/wiki/Compatibility
+Requires: php8.0-libs >= 8.0.0
+# inside php8.0-libs
+# Requires: php8.0-ctype php8.0-iconv php8.0-json php8.0-xml
+Requires: php8.0-dom php8.0-fileinfo php8.0-intl php8.0-mbstring
+Requires: php8.0-mcrypt php8.0-xmlreader php8.0-gd
+Requires: php8.0-opcache php8.0-apcu
+Requires: php8.0-openssl
+
+Requires: %name-common = %EVR
+
+%package -n %name-php8.1
+Summary: Common files for %name
+Group: Networking/WWW
+Requires: webserver-common
+# https://www.mediawiki.org/wiki/Compatibility
+Requires: php8.1-libs >= 8.1.0
+# inside php8.1-libs
+# Requires: php8.1-ctype php8.1-iconv php8.1-json php8.1-xml
+Requires: php8.1-dom php8.1-fileinfo php8.1-intl php8.1-mbstring
+Requires: php8.1-mcrypt php8.1-xmlreader php8.1-gd
+Requires: php8.1-opcache php8.1-apcu
+Requires: php8.1-openssl
+
+Requires: %name-common = %EVR
 
 
 %package -n %name-common
 Summary: Common files for %name
 Group: Networking/WWW
 Requires: webserver-common
-Requires: php7-libs >= 7.3.19
-Requires: php7-dom php7-fileinfo php7-mbstring php7-mcrypt php7-xmlreader php7-gd
+
 Requires: diffutils
-Requires: php7-opcache php7-apcu php7-intl
 Requires: pear-Mail >= 1.4.1
 
 AutoProv:no
-AutoReq:yes,nomingw32,nomingw64,noerlang,noruby
+AutoReq:yes,nomingw32,nomingw64,noerlang,noruby,nonodejs
 
 # due shebang with node
-%add_findreq_skiplist %_mediawikidir/extensions/VisualEditor/lib/ve/rebaser/src/server.js
-%add_findreq_skiplist %_mediawikidir/extensions/VisualEditor/lib/ve/rebaser/src/tools/dump-mongo.js
-
+%filter_from_requires /^node$/d
 
 # since 1.20
 Provides: mediawiki-extensions-ParserFunctions
@@ -150,39 +197,69 @@ Provides: mediawiki-extensions-Parsoid
 Obsoletes: mediawiki-extensions-Parsoid
 
 %description -n %name-common
-%summary
+MediaWiki is the software used for Wikipedia and the other Wikimedia
+Foundation websites. Compared to other wikis, it has an excellent
+range of features and support for high-traffic websites using multiple
+servers.
+
+%name-common have no php requires.
+
+%description -n %name-php7
+MediaWiki is the software used for Wikipedia and the other Wikimedia
+Foundation websites. Compared to other wikis, it has an excellent
+range of features and support for high-traffic websites using multiple
+servers.
+
+This package contains all needed php7 requires.
+
+%description -n %name-php8.0
+MediaWiki is the software used for Wikipedia and the other Wikimedia
+Foundation websites. Compared to other wikis, it has an excellent
+range of features and support for high-traffic websites using multiple
+servers.
+
+This package contains all needed php8.0 requires.
+
+%description -n %name-php8.1
+MediaWiki is the software used for Wikipedia and the other Wikimedia
+Foundation websites. Compared to other wikis, it has an excellent
+range of features and support for high-traffic websites using multiple
+servers.
+
+This package contains all needed php8.1 requires.
 
 %package -n %name-apache2
 Summary: Apache2's requires and config files for %name
 Group: Networking/WWW
-Requires: %name-common = %version-%release
+Requires: %name-common = %EVR
+Requires: %name-php8.0 = %EVR
 Requires: apache2-common >= 2.2.0
 Requires: %_initdir/%apache2_dname
 Requires: apache2-httpd-prefork
-Requires: apache2-mod_php7 >= 7.0.0
+Requires: apache2-mod_php8.0 >= 8.0.0
 
 %description -n %name-apache2
-Install this package, if you wish to run %name under apache2 webserver
+Install this package, if you wish to run %name under apache2 webserver.
 
 
 %package -n %name-mysql
 Summary: Virtual package for mysql requires for %name
 Group: Networking/WWW
 Requires: %name-common = %version-%release
-Requires: php7-mysqlnd-mysqli
+Requires: php8.0-mysqlnd-mysqli
 
 %description -n %name-mysql
-Install this package, if you wish to run %name with MySQL database
+Install this package, if you wish to run %name with MySQL database.
 
 
 %package -n %name-postgresql
 Summary: Virtual package for postgresql requires for %name
 Group: Networking/WWW
 Requires: %name-common = %version-%release
-Requires: php7-pgsql
+Requires: php8.0-pgsql
 
 %description -n %name-postgresql
-Install this package, if you wish to run %name with PostgreSQL database
+Install this package, if you wish to run %name with PostgreSQL database.
 
 %package -n %name-hiphop
 Summary: Package with hihop support for %name
@@ -235,7 +312,7 @@ Conflicts: %name-common < 1.37.1-alt1
 Requires: /usr/bin/lua5.1
 # we miss module versions
 #Requires: php7-pcre >= 8.33
-Requires: php7-mbstring
+#Requires: php7-mbstring
 
 %description extensions-Scribunto
 The Scribunto (Latin: "they shall write") extension allows for embedding scripting languages in MediaWiki.
@@ -275,14 +352,11 @@ rm -rv %buildroot%_mediawikidir/extensions/Scribunto/includes/engines/LuaStandal
 
 # devel tools, reqs node
 rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/tools/test.selser.sh
-rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/debug_selser.sh
-rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/*.js
-rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/toolcheck.js.sh
-rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/start-rt-test.sh
+rm -rfv %buildroot%_mediawikidir/vendor/wikimedia/parsoid/bin/
 rm -rv %buildroot%_mediawikidir/extensions/VisualEditor/lib/ve/bin/
 rm -rv %buildroot%_mediawikidir/extensions/VisualEditor/bin/
 rm -rv %buildroot%_mediawikidir/vendor/wikimedia/wikipeg/tools/impact
-
+rm -rfv  %buildroot%_mediawikidir/skins/MinervaNeue/dev-scripts
 
 
 find %buildroot%_mediawikidir/ \
@@ -399,6 +473,14 @@ fi
 
 %files
 
+%if_with php7
+%files -n %name-php7
+%endif
+
+%files -n %name-php8.0
+
+%files -n %name-php8.1
+
 %files -n %name-common
 %add_findreq_skiplist %_datadir/%name/config/LocalSettings.php
 %_mediawikidir/
@@ -428,8 +510,10 @@ fi
 %config %apache2_extra_start/*.conf
 %config(noreplace) %apache2_sites_available/*.conf
 
+# deprecated
 %files -n %name-mysql
 
+# deprecated
 %files -n %name-postgresql
 
 #%files -n %name-hiphop
@@ -449,6 +533,14 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Sun Dec 18 2022 Vitaly Lipatov <lav@altlinux.ru> 1.39.0-alt1
+- new version 1.39.0 (with rpmrb script)
+- (T316304, CVE-2022-41767) (T309894, CVE-2022-41765)
+- (T307278, CVE-2022-41766) (T311384, CVE-2022-27776)
+- add mediawiki-php7, mediawiki-php8.0, mediawiki-php8.1 subpackages
+- deprecate mediawiki-mysql and mediawiki-postgresql
+  (install mediawiki-apache2 or php8.0-mysqlnd-mysqli)
+
 * Fri Jun 24 2022 Vitaly Lipatov <lav@altlinux.ru> 1.37.2-alt1
 - new version 1.37.2 (with rpmrb script)
 - (T297571, CVE-2022-28201) (T297731, CVE-2022-28203)
