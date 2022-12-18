@@ -1,6 +1,6 @@
 Name: libtiff
 Version: 4.4.0
-Release: alt1
+Release: alt2
 
 Summary: Library of functions for manipulating TIFF format image files
 License: BSD-style
@@ -105,6 +105,7 @@ TIFFFlushData1
 _TIFFGetFields
 _TIFFMergeFields
 _TIFFSeekOK
+_TIFFClampDoubleToUInt32
 display_sRGB
 EOF
 sed -n 's/^extern[^)]\+[[:space:]]\*\?\([^[:space:]*()]\+\)[[:space:]]*(.*/\1/p' \
@@ -173,6 +174,12 @@ xz -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Sun Dec 18 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.4.0-alt2
+- Applied SUSE patches (fixed tiff-CVE-2022-2056, CVE-2022-2057, CVE-2022-2058,
+  CVE-2022-2519, CVE-2022-2520, CVE-2022-2521, CVE-2022-3597, CVE-2022-3598,
+  CVE-2022-3599, CVE-2022-3626, CVE-2022-3627, CVE-2022-3970 and
+  CVE-2022-34526) (closes #44499).
+
 * Tue May 31 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.4.0-alt1
 - Updated to v4.4.0.
 - Dropped removed symbols from libtiff.sym.
