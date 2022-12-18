@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt6
+Release: alt7
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Sun Dec 18 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt7
+- fix some typos (ALT #44664, #44665)
+
 * Fri Dec 02 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt6
 - update documentation
 
