@@ -2,11 +2,12 @@
 %define _userunitdir %(pkg-config systemd --variable systemduserunitdir)
 %define _libexecdir %_prefix/libexec
 %def_disable docs
-#ERROR: test-portals - Bail out! xdg-desktop-portal:ERROR:tests/camera.c:74:camera_cb: 'ret' should be FALSE
+# test-portals-openuri -- timeout
 %def_disable check
+%def_enable installed_tests
 
 Name: xdg-desktop-portal
-Version: 1.15.0
+Version: 1.16.0
 Release: alt1
 
 Summary: Portal frontend service to Flatpak
@@ -20,6 +21,9 @@ Source: %url/releases/download/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 %endif
 
+%{?_enable_installed_tests:%add_python3_path %_libexecdir/installed-tests/%name}
+
+%define meson_ver 0.56.2
 %define glib_ver 2.60
 %define geoclue_ver 2.5.2
 %define portal_ver 0.2.90
@@ -31,8 +35,9 @@ Requires: /usr/bin/fusermount
 Requires: pipewire
 Requires: geoclue2 >= %geoclue_ver
 
-BuildRequires(pre): rpm-build-systemd
-BuildRequires: pkgconfig(flatpak)
+BuildRequires(pre): rpm-macros-meson rpm-build-systemd %{?_enable_installed_tests:rpm-build-python3}
+BuildRequires: meson >= %meson_ver
+BuildRequires: pkgconfig(flatpak) flatpak
 BuildRequires: pkgconfig(fuse3) >= %fuse3_ver
 BuildRequires: pkgconfig(gio-unix-2.0) >= %glib_ver
 BuildRequires: pkgconfig(gdk-pixbuf-2.0)
@@ -43,7 +48,9 @@ BuildRequires: pkgconfig(json-glib-1.0)
 # since 1.5
 BuildRequires: pkgconfig(libportal) >= %portal_ver
 %{?_enable_docs:BuildRequires: xmlto docbook-dtds docbook-style-xsl}
-%{?_enable_check:BuildRequires: /proc python3-module-pygobject3 fuse3 libportal-devel}
+%{?_enable_installed_tests:BuildRequires: /proc fuse3 pipewire
+BuildRequires: python3-module-pytest python3-module-pygobject3
+BuildRequires: python3-module-dbus python3-module-dbusmock}
 
 %description
 xdg-desktop-portal works by exposing a series of D-Bus interfaces known as
@@ -55,27 +62,39 @@ file access, opening URIs, printing and others.
 Summary: Development files for %name
 Group: Development/C
 BuildArch: noarch
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The pkg-config file for %name.
 
+%package tests
+Summary: Tests for the %name
+Group: Development/Other
+Requires: %name = %EVR
+
+%description tests
+This package provides tests programs that can be used to verify
+the functionality of the installed %name.
+
 %prep
 %setup
+sed -i 's/pytest-3/py.test-3/' tests/meson.build
 
 %build
-%autoreconf
-%configure %{?_disable_docs:--disable-docbook-docs}
-%make_build
+%meson \
+    %{?_disable_docs:-Ddocbook-docs=disabled} \
+    %{?_enable_installed_tests:-Dinstalled-tests=true}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 # directory for portals such as xdg-desktop-portal-gtk
 install -d -m755 %buildroot/%_datadir/%name/portals
 %find_lang %name
 
 %check
-%make -k check VERBOSE=1
+%__meson_test -t 4
 
 %files -f %name.lang
 %_libexecdir/%name
@@ -99,8 +118,17 @@ install -d -m755 %buildroot/%_datadir/%name/portals
 %files devel
 %_datadir/pkgconfig/%name.pc
 
+%if_enabled installed_tests
+%files tests
+%_libexecdir/installed-tests/%name/
+%_datadir/installed-tests/%name/
+%endif
 
 %changelog
+* Tue Dec 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0 (ported to Meson build system)
+- new -tests subpackage
+
 * Sun Sep 04 2022 Yuri N. Sedunov <aris@altlinux.org> 1.15.0-alt1
 - 1.15.0
 
