@@ -8,16 +8,18 @@
 %define api_ver 4.0
 %define xdg_name org.gnome.GWeather%api_ver_major
 
+%def_enable new_russia
+
 %def_disable soup2
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
-# fails offline
-%def_disable check
+# libgweather test suite fails offline, required https://www.aviationweather.gov
+%def_enable check
 
 Name: %_name%api_ver
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt2%beta
 
 Summary: A library for weather information
 Group: System/Libraries
@@ -29,6 +31,10 @@ Source: %gnome_ftp/%_name/%ver_major/%_name-%version%beta.tar.xz
 %else
 Source: %_name-%version%beta.tar
 %endif
+%{?_enable_new_russia:
+Patch10: %_name-4.2.0-alt-Simferopol.patch
+Patch11: %_name-4.2.0-alt-Donetsk.patch
+Patch12: %_name-4.2.0-alt-Donetsk-po-locations.patch}
 
 %define glib_ver 2.68
 %define soup2_ver 2.44
@@ -115,6 +121,10 @@ This package provides Vala language bindings for the %name library.
 
 %prep
 %setup -n %_name-%version%beta
+%{?_enable_new_russia:
+%patch10 -b .Simferopol
+%patch11 -b .Donetsk
+%patch12 -b .Donetsk}
 
 sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 
@@ -126,6 +136,7 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
     %{?_disable_vala:-Denable_vala=false} \
     %{?_enable_soup2:-Dsoup2=true}
 %nil
+%{?_enable_new_russia:%meson_build %_name-%api_ver-locations-pot %_name-%api_ver-update-po}
 %meson_build
 
 %install
@@ -133,7 +144,7 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 %find_lang --output=%name.lang %_name-%api_ver %_name-%api_ver-locations
 
 %check
-%__meson_test
+%__meson_test -v --print-errorlogs --suite lint
 
 %files -f %name.lang
 %dir %_libdir/%_name-%api_ver_major
@@ -174,6 +185,9 @@ sed -i "s|'\(pylint\)'|'\1.py3'|" meson.build
 
 
 %changelog
+* Sun Dec 18 2022 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt2
+- fixed Simferopol and Donetsk locations
+
 * Tue Sep 20 2022 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
 - 4.2.0
 
