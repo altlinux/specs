@@ -1,5 +1,5 @@
 Name:     kdiskmark
-Version:  2.3.0
+Version:  3.1.2
 Release:  alt1
 
 Summary:  A simple open-source disk benchmark tool for Linux distros
@@ -12,7 +12,8 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 Source:   %name-%version.tar
 
-BuildRequires: cmake gcc-c++ qt5-base-devel qt5-tools-devel extra-cmake-modules kf5-kauth-devel kf5-kcoreaddons-devel
+BuildRequires: cmake gcc-c++ qt5-base-devel qt5-tools-devel extra-cmake-modules
+BuildRequires: kf5-kauth-devel kf5-kcoreaddons-devel libpolkitqt5-qt5-devel
 Requires: libkf5auth fio
 
 %description
@@ -38,11 +39,28 @@ comprehensive benchmark result.
 %_datadir/applications/*.desktop
 %_datadir/dbus-1/system-services/*.service
 %_datadir/dbus-1/system.d/*.conf
-%_datadir/icons/hicolor/*/*/*.png
+%_iconsdir/hicolor/*/*/*.png
 %_datadir/polkit-1/actions/*.policy
-%_usr/libexec/kauth/kdiskmark_helper
+%_usr/libexec/kdiskmark_helper
+# Fix post-install unowned files
+%dir %_datadir/dbus-1/system-services
+%dir %_datadir/polkit-1
+%dir %_datadir/polkit-1/actions
+%dir %_iconsdir/hicolor/128x128
+%dir %_iconsdir/hicolor/128x128/apps
+%dir %_iconsdir/hicolor/24x24
+%dir %_iconsdir/hicolor/24x24/apps
+%dir %_iconsdir/hicolor/256x256
+%dir %_iconsdir/hicolor/256x256/apps
+%dir %_iconsdir/hicolor/512x512
+%dir %_iconsdir/hicolor/512x512/apps
+%dir %_iconsdir/hicolor/64x64
+%dir %_iconsdir/hicolor/64x64/apps
 
 %changelog
+* Sat Dec 17 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.2-alt1
+- Build new version.
+
 * Sun Nov 07 2021 Grigory Ustinov <grenka@altlinux.org> 2.3.0-alt1
 - Automatically updated to 2.3.0.
 
