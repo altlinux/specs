@@ -9,7 +9,7 @@
 
 Name:		bpftrace
 Version:	0.16.0
-Release:	alt1
+Release:	alt2
 Summary:	High-level tracing language for Linux eBPF
 Group:		Development/Debuggers
 License:	Apache-2.0
@@ -118,6 +118,7 @@ if [ -w /dev/kvm ]; then
 	.gear/delete-blocks python	tests/runtime/json-output
 %endif
 	export BPFTRACE_RUNTIME_TEST_EXECUTABLE=$PWD/%_cmake__builddir/src/
+	sed -i 's/xattr.h/user.h/' tests/runtime/basic
 	vm-run --kvm=cond --sbin tests/runtime-tests.sh
 fi
 
@@ -129,6 +130,9 @@ fi
 %_man8dir/*
 
 %changelog
+* Mon Dec 19 2022 Vitaly Chikunov <vt@altlinux.org> 0.16.0-alt2
+- Fix SIGSEGV when vmlinux is not available and loading BTF data failed.
+
 * Sun Oct 09 2022 Vitaly Chikunov <vt@altlinux.org> 0.16.0-alt1
 - Update to v0.16.0 (2022-08-30).
 
