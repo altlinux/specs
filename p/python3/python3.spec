@@ -87,7 +87,7 @@ sed -E -e 's/^e2k[^-]{,3}-linux-gnu$/e2k-linux-gnu/')}
 
 Name: python3
 Version: %{pybasever}.8
-Release: alt1
+Release: alt1.1
 
 Summary: Version 3 of the Python programming language aka Python 3000
 
@@ -409,6 +409,9 @@ cp -rl * ../build-shared/
 # ======================================================
 %build
 build() {
+# Improves libpython performance, no effect on static build.
+export CFLAGS_NODIST="-fno-semantic-interposition"
+export LDFLAGS_NODIST="-fno-semantic-interposition"
 # Note: "computed-gotos" are automatically detected by the configure script,
 # must be turned off on e2k due to slow implementation.
 %configure \
@@ -1034,6 +1037,9 @@ $(pwd)/python -m test.regrtest \
 %endif
 
 %changelog
+* Sat Dec 17 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.10.8-alt1.1
+- Using "-fno-semantic-interposition" to speed up libpython.
+
 * Tue Dec 06 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.8-alt1
 - Updated to upstream version 3.10.8.
 
