@@ -1,9 +1,9 @@
-%define origver 2020.3.8
+%define origver 2020.3.17
 %def_enable openmp
 
 Name: SimGear
 Version: %origver
-Release: alt2
+Release: alt1
 
 Summary: Simulator Construction Tools
 License: GPLv2+
@@ -19,7 +19,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sat Mar 03 2012
 # optimized out: cmake-modules libGL-devel libICE-devel libOpenThreads-devel libSM-devel libX11-devel libXau-devel libXext-devel libopenal-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
-BuildRequires: boost-devel-headers cmake gcc-c++ libGLU-devel libOpenSceneGraph-devel libXi-devel libXt-devel libalut-devel libapr1-devel zlib-devel libcurl-devel
+BuildRequires: boost-devel-headers cmake gcc-c++ libGLU-devel libOpenSceneGraph-devel libXi-devel libXt-devel libalut-devel libapr1-devel zlib-devel libcurl-devel libstdc++-devel
 
 BuildRequires: cmake libapr1-devel
 BuildRequires: libexpat-devel
@@ -114,6 +114,9 @@ mv version simgear_version
 %_libdir/cmake/%name/
 
 %changelog
+* Sun Dec 18 2022 Artyom Bystrov <arbars@altlinux.org> 2020.3.17-alt1
+- 2020.3.17
+
 * Sat Nov 27 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2020.3.8-alt2
 - enabled SIMD and OpenMP
 - fixed passing optlevel to cmake

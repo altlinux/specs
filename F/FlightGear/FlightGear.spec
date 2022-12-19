@@ -1,5 +1,5 @@
 %def_without dbus
-%define origver 2020.3.8
+%define origver 2020.3.17
 
 Name: FlightGear
 Version: %origver
@@ -123,6 +123,9 @@ rm -rf %buildroot%_datadir/bash-completion/ %buildroot%_datadir/zsh/
 %_datadir/metainfo/*.xml
 
 %changelog
+* Sun Dec 18 2022 Artyom Bystrov <arbars@altlinux.org> 2020.3.17-alt1
+- 2020.3.17
+
 * Wed Mar 31 2021 Michael Shigorin <mike@altlinux.org> 2020.3.8-alt1
 - 2020.3.8
 - drop patch7 (fixed upstream)

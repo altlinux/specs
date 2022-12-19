@@ -1,5 +1,5 @@
 Name: FlightGear-data
-Version: 2020.3.8
+Version: 2020.3.17
 Release: alt1
 
 Summary: Data pack for FlightGear open-source flight simulator
@@ -19,7 +19,6 @@ Provides: fgfs-data = %version-%release
 # to avoid data lurking w/o binaries
 # NB: release intentionally left out
 Requires: FlightGear = %version
-
 
 # it's more than two gigs of data
 %brp_strip_none
@@ -60,9 +59,9 @@ mv Docs %buildroot%_docdir/FlightGear-%version
 mv AUTHORS ChangeLog NEWS README %buildroot%_docdir/FlightGear-%version/
 mv * %buildroot%_datadir/flightgear/
 
-# It is the file in the package named Thumbs.db or Thumbs.db.gz, 
-# which is normally a Windows image thumbnail database. 
-# Such databases are generally useless in packages and were usually 
+# It is the file in the package named Thumbs.db or Thumbs.db.gz,
+# which is normally a Windows image thumbnail database.
+# Such databases are generally useless in packages and were usually
 # accidentally included by copying complete directories from the source tarball.
 find %buildroot -name 'Thumbs.db*' -print -delete
 
@@ -73,6 +72,9 @@ find %buildroot -name 'Thumbs.db*' -print -delete
 %_docdir/FlightGear-%version
 
 %changelog
+* Sun Dec 18 2022 Artyom Bystrov <arbars@altlinux.org> 2020.3.17-alt1
+- 2020.3.17
+
 * Wed Mar 31 2021 Michael Shigorin <mike@altlinux.org> 2020.3.8-alt1
 - 2020.3.8
 
