@@ -13,7 +13,7 @@
 
 Name: pcsx2
 Version: 1.7.3332
-Release: alt1
+Release: alt1.1
 
 Summary: Playstation 2 console emulator
 License: GPLv3 and LGPLv3
@@ -37,7 +37,7 @@ BuildRequires(pre): libffi-devel
 BuildRequires(pre): libfribidi-devel
 BuildRequires(pre): libjpeg-devel
 BuildRequires(pre): libmount-devel
-BuildRequires(pre): libpcre-devel
+BuildRequires(pre): libpcre2-devel
 BuildRequires(pre): libpixman-devel
 BuildRequires(pre): libselinux-devel
 BuildRequires(pre): libthai-devel
@@ -90,9 +90,10 @@ BuildRequires: libsamplerate-devel
 BuildRequires: libsoundtouch-devel
 BuildRequires: libssl-devel
 BuildRequires: libudev-devel
-BuildRequires: libwxGTK3.2-devel
+BuildRequires: libwxBase3.2-devel
 BuildRequires: libxkbcommon-devel
 BuildRequires: libzip-devel
+BuildRequires: libzip-utils
 BuildRequires: ninja-build
 
 %description
@@ -145,6 +146,9 @@ echo "#define SVN_REV $(echo %svn_rev)ll
 %_defaultdocdir/Pcsx2/*.pdf
 
 %changelog
+* Mon Dec 19 2022 Nazarov Denis <nenderus@altlinux.org> 1.7.3332-alt1.1
+- Fix build
+
 * Sat Sep 24 2022 Nazarov Denis <nenderus@altlinux.org> 1.7.3332-alt1
 - Version 1.7.3332
 
