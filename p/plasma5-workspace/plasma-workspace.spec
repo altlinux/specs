@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.26.4
-Release: alt3
+Release: alt4
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -65,9 +65,12 @@ Requires: plasma5-kpipewire
 
 Source: %rname-%version.tar
 Source1: freememorynotifier.po
-Source11: freememorynotifier.tar
 Source2: libkicker-ru-add.po
 Source3: plasma_lookandfeel_org.kde.lookandfeel-ru-add.po
+Source11: freememorynotifier.tar
+Source40: ssh-agent.conf
+Source41: spice-vdagent.conf
+
 Patch100: alt-startkde.patch
 Patch101: alt-menu-add-tooltip.patch
 Patch102: alt-def-wallpaper-image.patch
@@ -397,6 +400,11 @@ for n in gnome-mplayer mplayer gmplayer ; do
     echo -e "[Desktop Entry]\nHidden=true" > %buildroot/%_kf5_xdgapp/$n.desktop
 done
 
+# systemd user service deps
+mkdir -p %buildroot/%_unitdir_user/plasma-core.target.d/
+mkdir -p %buildroot/%_unitdir_user/plasma-workspace@.target.d/
+install -m0644 -p -D %SOURCE40 %buildroot/%_unitdir_user/plasma-core.target.d/ssh-agent.conf
+install -m0644 -p -D %SOURCE41 %buildroot/%_unitdir_user/plasma-core.target.d/spice-vdagent.conf
 
 %find_lang %name --with-kde --all-name
 
@@ -470,6 +478,9 @@ done
 %endif
 %_K5srv/ServiceMenus/*.desktop
 %_K5xmlgui/*/
+%dir %_unitdir_user/plasma-core.target.d/
+%_unitdir_user/plasma-core.target.d/*.conf
+%dir %_unitdir_user/plasma-workspace@.target.d/
 %_unitdir_user/*.service
 %_unitdir_user/*.target
 
@@ -523,6 +534,9 @@ done
 
 
 %changelog
+* Mon Dec 19 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt4
+- autostart ssh-agent and spice-vdagent on wayland
+
 * Tue Dec 06 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt3
 - hide digital clock applet timzones config
 
