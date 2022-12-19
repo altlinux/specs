@@ -1,5 +1,5 @@
 Name: gap
-Version: 4.12.1
+Version: 4.12.2
 Release: alt1
 Summary: System for Computational Discrete Algebra
 License: Zlib and LGPL-3.0+ and GPL-2.0+ and GPL-3.0+
@@ -155,6 +155,12 @@ sed -i 's|ext in css html js txt pdf six lab|xml|' \
 %build
 %autoreconf
 %configure
+
+# Get rid of undesirable hardcoded rpaths.
+sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
+    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
+    -i libtool
+
 %make_build V=1
 
 %install
@@ -207,6 +213,9 @@ rm -rf %buildroot%_datadir/gap/{CITATION,CONTRIBUTING.md,COPYRIGHT,INSTALL.md,LI
 %files full
 
 %changelog
+* Mon Dec 19 2022 Leontiy Volodin <lvol@altlinux.org> 4.12.2-alt1
+- New version (4.12.2).
+
 * Fri Oct 21 2022 Leontiy Volodin <lvol@altlinux.org> 4.12.1-alt1
 - New version (4.12.1).
 
