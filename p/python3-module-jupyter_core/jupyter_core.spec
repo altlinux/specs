@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 4.7.1
+Version: 5.1.0
 Release: alt1
 Summary: Jupyter core package
 License: BSD-3-Clause
@@ -17,9 +17,10 @@ Url: https://pypi.org/project/jupyter-core
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires(pre): rpm-build-python3
+BuildRequires: rpm-build-python3 python3-module-hatchling
 BuildRequires: python3-module-zope python3-module-pytest python3(traitlets.config) python3(mock)
 BuildRequires: python3(ipython_genutils.testing)
+BuildRequires: python3-module-platformdirs
 BuildRequires: python3(sphinxcontrib_github_alt)
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
@@ -43,31 +44,40 @@ This package contains tests for %oname.
 ln -s ../objects.inv docs/
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%make -C docs html
+%pyproject_install
 
 %check
 rm -fR build
-LC_ALL=en_US.UTF-8 PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv -k 'not test_not_on_path and not test_path_priority and not test_jupyter_path_prefer_env'
+export LC_ALL=en_US.UTF-8
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test3 -vv \
+    --deselect "jupyter_core/tests/test_command.py::test_not_on_path" \
+    --deselect "jupyter_core/tests/test_command.py::test_path_priority" \
+    --deselect "jupyter_core/tests/test_command.py::test_argv0" \
+    --deselect "jupyter_core/tests/test_paths.py::test_jupyter_path_prefer_env" \
+    --deselect "jupyter_core/tests/test_paths.py::test_jupyter_path_user_site" \
+    --deselect "jupyter_core/tests/test_paths.py::test_jupyter_path_no_user_site" \
+;
 
 %files
-%doc *.md docs/_build/html
+%doc *.md
 %_bindir/*
 %python3_sitelibdir/jupyter.py
 %python3_sitelibdir/__pycache__/jupyter.*
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/%oname/tests
 
 %files tests
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Dec 05 2022 Anton Farygin <rider@altlinux.ru> 5.1.0-alt1
+- 4.7.1 -> 5.1.0
+
 * Thu Aug 19 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.1-alt1
 - Updated to upstream version 4.7.1.
 

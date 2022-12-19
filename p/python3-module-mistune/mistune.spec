@@ -1,8 +1,9 @@
 %define oname mistune
 
 Name: python3-module-%oname
-Version: 0.8.3
-Release: alt2
+BuildArch: noarch
+Version: 2.0.4
+Release: alt1
 Summary: The fastest markdown parser in pure Python
 License: BSD
 Group: Development/Python3
@@ -11,10 +12,10 @@ Url: https://pypi.python.org/pypi/mistune/
 # https://github.com/lepture/mistune.git
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-module-wheel
-BuildPreReq: python3-module-nose
-BuildPreReq: python3-module-Cython
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
+BuildRequires: /usr/bin/py.test3
 
 %py3_provides %oname
 
@@ -32,23 +33,22 @@ Features:
 %setup
 
 %build
-%add_optflags -fno-strict-aliasing
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-rm -fR %buildroot%python3_sitelibdir/*.py \
-	%buildroot%python3_sitelibdir/__pycache__
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-nosetests3 -v
+py.test3
 
 %files
 %doc *.rst docs/*.rst
 %python3_sitelibdir/*
 
 %changelog
+* Sun Dec 04 2022 Anton Farygin <rider@altlinux.ru> 2.0.4-alt1
+- 0.8.3 -> 2.0.4
+
 * Thu Apr 01 2021 Grigory Ustinov <grenka@altlinux.org> 0.8.3-alt2
 - Drop python2 support.
 

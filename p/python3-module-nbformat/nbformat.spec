@@ -3,7 +3,7 @@
 %define oname nbformat
 
 Name: python3-module-%oname
-Version: 5.1.3
+Version: 5.7.0
 Release: alt1
 Summary: The Jupyter Notebook format
 License: BSD-3-Clause
@@ -12,18 +12,20 @@ Url: https://github.com/jupyter/nbformat
 
 BuildArch: noarch
 
-# https://github.com/jupyter/nbformat.git
 Source: %name-%version.tar
+Patch0: nbformat-build-test.patch
 
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: rpm-build-python3
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-dev
 BuildRequires: python3-module-pytest python3(testpath)
 BuildRequires: python3-module-jsonschema python3-module-jupyter_core
 BuildRequires: python3-module-nose python3-modules-sqlite3
 BuildRequires: python3(fastjsonschema)
 BuildRequires: python3-module-sphinx-devel
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-pep440
 
 %py3_provides %oname
 %py3_requires ipython_genutils traitlets jsonschema jupyter_core sqlite3
@@ -32,64 +34,40 @@ BuildRequires: python3-module-sphinx-sphinx-build-symlink
 This package contains the base implementation of the Jupyter Notebook
 format, and Python APIs for working with notebooks.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python
-Requires: %name = %EVR
-
-%description tests
-This package contains the base implementation of the Jupyter Notebook
-format, and Python APIs for working with notebooks.
-
-This package contains tests for %oname.
-
-%package pickles
-Summary: Pickles for %oname
-Group: Development/Python3
-
-%description pickles
-This package contains the base implementation of the Jupyter Notebook
-format, and Python APIs for working with notebooks.
-
-This package contains pickles for %oname.
-
 %prep
 %setup
+%patch0 -p1
 
 %prepare_sphinx3 .
 ln -s ../objects.inv docs/
 
+# Remove useless test dependencies
+sed -i '/"pre-commit",/d' pyproject.toml
+sed -i '/"check-manifest",/d' pyproject.toml
+
+# Set version statically
+# {VERSION} is a part of Patch0
+sed -i "s/{VERSION}/%{version}/" pyproject.toml
+
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-
-export PYTHONPATH=$PWD
-%make -C docs pickle
-%make -C docs html
-cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+%pyproject_install
 
 %check
-py.test3 -vv
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
-%doc *.md docs/_build/html
+%doc *.md
 %_bindir/*
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
-%exclude %python3_sitelibdir/%oname/pickle
-%exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/*/tests
-
-%files tests
-%python3_sitelibdir/%oname/tests
-%python3_sitelibdir/%oname/*/tests
-
-%files pickles
-%python3_sitelibdir/%oname/pickle
+%python3_sitelibdir/*
 
 %changelog
+* Sun Dec 04 2022 Anton Farygin <rider@altlinux.ru> 5.7.0-alt1
+- 5.1.3 -> 5.7.0
+
 * Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.1.3-alt1
 - Updated to upstream version 5.1.3.
 
