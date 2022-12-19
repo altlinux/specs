@@ -1,6 +1,6 @@
 Name: sway
 Version: 1.8.0
-Release: alt1.rc2
+Release: alt1.rc4
 Epoch:   1
 Summary: i3wm drop-in replacement for Wayland
 License: MIT
@@ -50,6 +50,7 @@ Requires: swaybg
 # swayidle, a new idle management daemon, is available separately (sway 1.0)
 Requires: swayidle
 
+Requires: foot
 Requires: dmenu-wl
 Requires: %name-data
 
@@ -108,6 +109,9 @@ install -p -m0644 -D %SOURCE2 %buildroot/%_datadir/backgrounds/%name/
 %_datadir/backgrounds/%name/*
 
 %changelog
+* Mon Dec 19 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.8.0-alt1.rc4
+- New version (1.8-rc4)
+
 * Sat Dec 03 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.8.0-alt1.rc2
 - New version (1.8-rc2)
 
