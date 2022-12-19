@@ -1,5 +1,5 @@
 Name: gtk2-theme-arc
-Version: 20220405
+Version: 20221218
 Release: alt1
 
 Summary: Arc GTK theme
@@ -75,6 +75,9 @@ Requires: libgtk-engine-murrine
 %_datadir/themes/Arc-Darker/*
 
 %changelog
+* Mon Dec 19 2022 Grigory Ustinov <grenka@altlinux.org> 20221218-alt1
+- Automatically updated to 20221218.
+
 * Fri Jul 22 2022 Grigory Ustinov <grenka@altlinux.org> 20220405-alt1
 - Built new version (Closes: #43040).
 - Built from new upstream.
