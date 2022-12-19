@@ -1,6 +1,6 @@
 Summary:	Hash calculator
 Name:		qcalcfilehash
-Version:	1.0.8
+Version:	1.1.0
 Release:	alt1
 License:	GPLv3+
 Group:		File tools
@@ -34,6 +34,10 @@ Hash calculator (SHA1, SHA-224, SHA-256, SHA-384, SHA-512, MD5, CRC32, CRC8).
 %{_iconsdir}/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Dec 19 2022 Alexander Danilov  <admsasha@altlinux.org> 1.1.0-alt1
+- release 1.1.0.
+- added GOST algorithms.
+
 * Wed Dec 14 2022 Alexander Danilov  <admsasha@altlinux.org> 1.0.8-alt1
 - release 1.0.8
 - fixed reading a large file (ALT #44614)
