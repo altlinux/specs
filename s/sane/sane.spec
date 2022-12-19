@@ -1,8 +1,8 @@
 %define oname %name-backends
 
 Name: sane
-Version: 1.0.32
-Release: alt4
+Version: 1.1.1
+Release: alt1
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -289,6 +289,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_pkgconfigdir/%oname.pc
 
 %changelog
+* Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 1.1.1-alt1
+- new version 1.1.1 (with rpmrb script) (closes: #42408)
+
 * Mon Jun 27 2022 Nikolai Kostrigin <nickel@altlinux.org> 1.0.32-alt4
 - add avision-add-AD345F-support-as-basic patch
 
