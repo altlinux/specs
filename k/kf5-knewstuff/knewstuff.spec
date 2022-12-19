@@ -1,8 +1,8 @@
 %define rname knewstuff
 
 Name: kf5-%rname
-Version: 5.100.0
-Release: alt3
+Version: 5.101.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -119,6 +119,9 @@ done
 
 
 %changelog
+* Fri Dec 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt1
+- new version
+
 * Mon Dec 12 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt3
 - hide stuff when ghns not authorized
 

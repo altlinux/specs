@@ -1,7 +1,7 @@
 %define rname kidletime
 
 Name: kf5-%rname
-Version: 5.100.0
+Version: 5.101.0
 Release: alt1
 %K5init altplace
 
@@ -17,7 +17,7 @@ Source: %rname-%version.tar
 #BuildRequires: extra-cmake-modules gcc-c++ libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel python-module-google qt5-x11extras-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules qt5-x11extras-devel
-BuildRequires: qt5-wayland-devel kde5-plasma-wayland-protocols
+BuildRequires: qt5-wayland-devel kde5-plasma-wayland-protocols wayland-protocols
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel
 BuildRequires: libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel
 BuildRequires: libXxf86vm-devel libxkbfile-devel
@@ -77,6 +77,9 @@ KF5 library
 %_K5plug/kf5/org.kde.kidletime.platforms/
 
 %changelog
+* Fri Dec 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt1
+- new version
+
 * Mon Nov 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt1
 - new version
 

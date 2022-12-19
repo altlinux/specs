@@ -1,8 +1,8 @@
 %define rname kunitconversion
 
 Name: kf5-%rname
-Version: 5.100.0
-Release: alt2
+Version: 5.101.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -73,6 +73,9 @@ KF5 library
 %_K5lib/libKF5UnitConversion.so.*
 
 %changelog
+* Fri Dec 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt1
+- new version
+
 * Fri Nov 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt2
 - update russian translation
 

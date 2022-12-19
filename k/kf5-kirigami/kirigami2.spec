@@ -1,21 +1,22 @@
 %define rname kirigami2
 
 Name: kf5-kirigami
-Version: 5.100.0
-Release: alt2
+Version: 5.101.0
+Release: alt1
 %K5init
 
 Group: System/Libraries
 Summary: A QtQuick based components set
 Url: https://techbase.kde.org/Kirigami
-License: LGPLv2
+License: LGPL-2.1-or-later
 
-Requires: %name-common = %version-%release
+Requires: %name-common
 Requires: qt5-quickcontrols2 qt5-graphicaleffects
 
 Source0: %rname-%version.tar
 
-BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
+BuildRequires(pre): rpm-build-kf5
+BuildRequires: libgomp-devel
 BuildRequires: extra-cmake-modules qt5-quickcontrols2-devel
 BuildRequires: qt5-svg-devel qt5-tools-devel
 BuildRequires: kf5-kpackage-devel kf5-kservice-devel kf5-kwindowsystem-devel
@@ -46,7 +47,7 @@ Requires: kf5-filesystem
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description devel
 The %name-devel package contains libraries and header files for developing
 applications that use %name
@@ -54,7 +55,7 @@ applications that use %name
 %package -n libkf5kirigami2
 Group: System/Libraries
 Summary: KF5 library
-Requires: %name-common = %version-%release
+Requires: %name-common
 %description -n libkf5kirigami2
 KF5 library
 
@@ -71,7 +72,6 @@ KF5 library
 %K5find_qtlang %name --all-name
 
 %files common -f %name.lang
-
 %files
 %_K5qml/org/kde/kirigami.2/
 
@@ -86,6 +86,9 @@ KF5 library
 %_K5lib/libKF5Kirigami2.so.*
 
 %changelog
+* Fri Dec 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt1
+- new version
+
 * Fri Nov 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.100.0-alt2
 - update russian translation
 
@@ -248,51 +251,51 @@ KF5 library
 * Wed Oct 17 2018 Sergey V Turchin <zerg@altlinux.org> 5.51.0-alt1
 - new version
 
-* Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1%ubt
+* Mon Sep 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.50.0-alt1
 - new version
 
-* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1%ubt
+* Tue Aug 21 2018 Sergey V Turchin <zerg@altlinux.org> 5.49.0-alt1
 - new version
 
-* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1%ubt
+* Thu Jul 19 2018 Sergey V Turchin <zerg@altlinux.org> 5.48.0-alt1
 - new version
 
-* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1%ubt
+* Fri Jun 15 2018 Sergey V Turchin <zerg@altlinux.org> 5.47.0-alt1
 - new version
 
-* Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1%ubt
+* Mon May 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.46.0-alt1
 - new version
 
-* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1%ubt
+* Fri May 04 2018 Sergey V Turchin <zerg@altlinux.org> 5.45.0-alt1
 - new version
 
-* Tue Apr 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt2%ubt
+* Tue Apr 24 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt2
 - update from 5.45
 
-* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1%ubt
+* Tue Mar 20 2018 Sergey V Turchin <zerg@altlinux.org> 5.44.0-alt1
 - new version
 
-* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1%ubt
+* Thu Jan 18 2018 Sergey V Turchin <zerg@altlinux.org> 5.42.0-alt1
 - new version
 
-* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1%ubt
+* Tue Dec 12 2017 Sergey V Turchin <zerg@altlinux.org> 5.41.0-alt1
 - new version
 
-* Tue Nov 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.40.0-alt1%ubt
+* Tue Nov 21 2017 Sergey V Turchin <zerg@altlinux.org> 5.40.0-alt1
 - new version
 
-* Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.39.0-alt1%ubt
+* Tue Oct 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.39.0-alt1
 - new version
 
-* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1%ubt
+* Tue Sep 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.38.0-alt1
 - new version
 
-* Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt2%ubt
+* Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.37.0-alt2
 - cleanup specfile
 
-* Wed Aug 16 2017 Stanislav Levin <slev@altlinux.org> 5.37.0-alt1%ubt
+* Wed Aug 16 2017 Stanislav Levin <slev@altlinux.org> 5.37.0-alt1
 - Updated to newest upstream version
 
-* Thu Aug 03 2017 Levin Stanislav  <slev@altlinux.org> 2.2.0-alt1%ubt
+* Thu Aug 03 2017 Levin Stanislav  <slev@altlinux.org> 2.2.0-alt1
 - Initial build
 
