@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%oname
-Version: 0.31.1
+Version: 0.31.2
 Release: alt1
 
 Summary: A pure python module (thread safe) to access memcached via it's binary protocol with SASL auth support.
@@ -59,5 +59,8 @@ sed -i 's/m2r/m2r2/' setup.py
 %python3_sitelibdir/python_binary_memcached-%version.dist-info
 
 %changelog
+* Mon Dec 19 2022 Grigory Ustinov <grenka@altlinux.org> 0.31.2-alt1
+- Automatically updated to 0.31.2.
+
 * Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 0.31.1-alt1
 - Initial build for Sisyphus.
