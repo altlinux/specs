@@ -7,7 +7,7 @@
 
 Name: qt6-declarative
 Version: 6.2.4
-Release: alt4
+Release: alt5
 
 Group: System/Libraries
 Summary: Qt6 - QtDeclarative component
@@ -426,6 +426,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Thu Dec 15 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt5
+- optimize provides generator (thanks iv@alt)
+
 * Thu Oct 13 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt4
 - fix package depends generator
 
