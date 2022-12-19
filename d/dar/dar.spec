@@ -1,5 +1,5 @@
 Name: dar
-Version: 2.7.7
+Version: 2.7.8
 Release: alt1
 
 Summary: Disk ARchive tool
@@ -96,6 +96,9 @@ export LD_LIBRARY_PATH+=`pwd`/src/libdar/.libs
 %_docdir/%name-%version/
 
 %changelog
+* Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 2.7.8-alt1
+- new version 2.7.8 (with rpmrb script)
+
 * Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 2.7.7-alt1
 - new version 2.7.7 (with rpmrb script)
 
