@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.15.00
+Version: 0.15.01
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -97,6 +97,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Mon Dec 19 2022 Vitaly Chikunov <vt@altlinux.org> 0.15.01-alt1
+- Update to V0.15.01 (2022-12-13).
+
 * Sat Nov 19 2022 Vitaly Chikunov <vt@altlinux.org> 0.15.00-alt1
 - Update to V0.15.00 (2022-11-18).
 
