@@ -1,16 +1,16 @@
 Name: ghostwriter
-Version: 2.1.4
+Version: 2.1.6
 Release: alt1
 
 Summary: Cross-platform, aesthetic, distraction-free Markdown editor
 
 License: GPLv3+ and CC-BY and CC-BY-SA and MPLv1.1 and BSD and LGPLv3 and MIT and ISC
 Group: Graphics
-Url: https://github.com/wereturtle/ghostwriter
+Url: https://github.com/KDE/ghostwriter
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/wereturtle/ghostwriter/archive/refs/tags/%version.tar.gz
+# Source-url: https://github.com/KDE/ghostwriter/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
 Patch: ghostwriter-qt5.15-fix.patch
@@ -77,6 +77,10 @@ sed -i 's@appdata/@metainfo/@g' %name.pro
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1.6-alt1
+- new version
+- update URL and Source URL
+
 * Sat Sep 10 2022 Vitaly Lipatov <lav@altlinux.ru> 2.1.4-alt1
 - new version 2.1.4 (with rpmrb script)
 
