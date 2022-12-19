@@ -1,7 +1,7 @@
 %define libname libwim
 
 Name: wimlib
-Version: 1.13.5
+Version: 1.13.6
 Release: alt1
 
 Summary: Library to extract, create, modify, and mount WIM files
@@ -91,6 +91,9 @@ make check
 %_pkgconfigdir/wimlib.pc
 
 %changelog
+* Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 1.13.6-alt1
+- new version 1.13.6 (with rpmrb script)
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 1.13.5-alt1
 - new version 1.13.5 (with rpmrb script)
 - drop mt-st from BR
