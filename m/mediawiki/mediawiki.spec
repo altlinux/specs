@@ -1,12 +1,27 @@
 %define webappdir %webserver_webappsdir/mediawiki
 %define major 1.39
+
+%if_feature php7 7.4.3
 %def_with php7
+%define defphp php7
+%endif
+
+%if_feature php81 8.1.0
+%def_with php81
+%define defphp php8.1
+%endif
+
+%if_feature php80 8.0.0
+%def_with php80
+%define defphp php8.0
+%endif
+
 
 Name: mediawiki
 Version: %major.0
-Release: alt1
+Release: alt2
 
-Summary: A wiki engine, typical installation (with Apache2 and MySQL support)
+Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
 
 License: %gpl2plus
 Group: Networking/WWW
@@ -33,12 +48,13 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-mediawiki >= 0.5
 BuildRequires(pre): rpm-build-webserver-common
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-macros-features >= 0.8
 
 BuildRequires: apache2-devel
 
 Requires: %name-common = %version-%release
 Requires: %name-apache2
-Requires: php8.0-mysqlnd-mysqli
+Requires: %defphp-mysqlnd-mysqli
 
 %description
 MediaWiki is the software used for Wikipedia and the other Wikimedia
@@ -55,7 +71,7 @@ This is a typical %name installation (with Apache2 and MySQL support).
 Also you can install %name-php8.0 (%name-php8.1, %name-php7)
 package to get all needed php requires.
 
-If you wish pure %name, install only %name-common package.
+If you wish %name without any php dependencies, install only %name-common package.
 
 %package -n %name-php7
 Summary: Common files for %name
@@ -232,11 +248,11 @@ This package contains all needed php8.1 requires.
 Summary: Apache2's requires and config files for %name
 Group: Networking/WWW
 Requires: %name-common = %EVR
-Requires: %name-php8.0 = %EVR
+Requires: %name-%defphp = %EVR
 Requires: apache2-common >= 2.2.0
 Requires: %_initdir/%apache2_dname
 Requires: apache2-httpd-prefork
-Requires: apache2-mod_php8.0 >= 8.0.0
+Requires: apache2-mod_%defphp >= 8.0.0
 
 %description -n %name-apache2
 Install this package, if you wish to run %name under apache2 webserver.
@@ -246,7 +262,7 @@ Install this package, if you wish to run %name under apache2 webserver.
 Summary: Virtual package for mysql requires for %name
 Group: Networking/WWW
 Requires: %name-common = %version-%release
-Requires: php8.0-mysqlnd-mysqli
+Requires: %defphp-mysqlnd-mysqli
 
 %description -n %name-mysql
 Install this package, if you wish to run %name with MySQL database.
@@ -256,7 +272,7 @@ Install this package, if you wish to run %name with MySQL database.
 Summary: Virtual package for postgresql requires for %name
 Group: Networking/WWW
 Requires: %name-common = %version-%release
-Requires: php8.0-pgsql
+Requires: %defphp-pgsql
 
 %description -n %name-postgresql
 Install this package, if you wish to run %name with PostgreSQL database.
@@ -477,9 +493,13 @@ fi
 %files -n %name-php7
 %endif
 
+%if_with php80
 %files -n %name-php8.0
+%endif
 
+%if_with php81
 %files -n %name-php8.1
+%endif
 
 %files -n %name-common
 %add_findreq_skiplist %_datadir/%name/config/LocalSettings.php
@@ -533,6 +553,9 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 1.39.0-alt2
+- use rpm-macros-features for build with supported php only
+
 * Sun Dec 18 2022 Vitaly Lipatov <lav@altlinux.ru> 1.39.0-alt1
 - new version 1.39.0 (with rpmrb script)
 - (T316304, CVE-2022-41767) (T309894, CVE-2022-41765)
