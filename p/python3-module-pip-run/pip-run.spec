@@ -4,14 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 8.8.2
+Version: 9.2.0
 Release: alt1
 
 Summary: Install packages and run Python with them
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/jaraco/pip-run.git
 Url: https://pypi.org/project/pip-run
+VCS: https://github.com/jaraco/pip-run.git
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -29,10 +29,14 @@ BuildRequires: python3(pip)
 BuildRequires: python3(autocommand)
 BuildRequires: python3(path)
 BuildRequires: python3(packaging)
+BuildRequires: python3(more_itertools)
+BuildRequires: python3(jaraco.context)
+BuildRequires: python3(jaraco.text)
 
 BuildRequires: python3(pytest)
 BuildRequires: python3(nbformat)
 BuildRequires: python3(pygments)
+BuildRequires: python3(jaraco.path)
 %endif
 
 BuildArch: noarch
@@ -68,8 +72,6 @@ fi
 %install
 %pyproject_install
 
-rm -r %buildroot%python3_sitelibdir/pip_run/tests/
-
 %check
 %tox_check_pyproject
 
@@ -82,6 +84,9 @@ rm -r %buildroot%python3_sitelibdir/pip_run/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Dec 12 2022 Stanislav Levin <slev@altlinux.org> 9.2.0-alt1
+- 8.8.2 -> 9.2.0.
+
 * Mon Nov 21 2022 Stanislav Levin <slev@altlinux.org> 8.8.2-alt1
 - 8.8.1 -> 8.8.2.
 

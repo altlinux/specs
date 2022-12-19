@@ -1,21 +1,40 @@
-%define  modulename jaraco.text
-%def_disable check
+%define _unpackaged_files_terminate_build 1
+%define pypi_name jaraco.text
 
-Name:    python3-module-%modulename
-Version: 3.2.0
-Release: alt2
+%def_with check
+
+Name: python3-module-%pypi_name
+Version: 3.11.0
+Release: alt1
 
 Summary: Module for text manipulation
 License: MIT
 Group:   Development/Python3
-URL:     https://github.com/jaraco/jaraco.text
+URL: https://pypi.org/project/jaraco.text/
+VCS: https://github.com/jaraco/jaraco.text
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools_scm
-BuildRequires: python3-module-tox
-BuildArch: noarch
 Source:  %name-%version.tar
 Patch0: %name-%version-%release.patch
+
+BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(setuptools_scm)
+
+%if_with check
+# deps
+BuildRequires: python3(jaraco.functools)
+BuildRequires: python3(jaraco.context)
+BuildRequires: python3(autocommand)
+BuildRequires: python3(inflect)
+BuildRequires: python3(more_itertools)
+
+BuildRequires: python3(pytest)
+%endif
+
+BuildArch: noarch
 
 %description
 %summary
@@ -24,28 +43,32 @@ Patch0: %name-%version-%release.patch
 %setup
 %patch0 -p1
 
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
-install -pm0644 jaraco/text/Lorem\ ipsum.txt %buildroot%python3_sitelibdir/jaraco/text/
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -v
+%tox_check_pyproject -- -vra
 
 %files
 %python3_sitelibdir/jaraco/*
-%python3_sitelibdir/*.egg-info
-%exclude %python3_sitelibdir/jaraco/__init__*
-%exclude %python3_sitelibdir/jaraco/__pycache__/__init__*
+%python3_sitelibdir/jaraco.text-%version.dist-info/
 
 %changelog
+* Mon Dec 12 2022 Stanislav Levin <slev@altlinux.org> 3.11.0-alt1
+- 3.2.0 -> 3.11.0.
+
 * Tue Dec 03 2019 Anton Farygin <rider@altlinux.ru> 3.2.0-alt2
 - install missing in previous build Lorem\ ipsum.txt
 
