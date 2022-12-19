@@ -7,7 +7,7 @@
 %def_disable lapack
 
 Name: hugin
-Version: 2021.0.0
+Version: 2022.0.0
 Release: alt1
 
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
@@ -30,7 +30,7 @@ Requires: autopano-sift-C perl-Image-ExifTool make
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ gcc-fortran libgomp-devel
-BuildRequires: libpano13-devel >= %pano_ver libwxGTK3.0-devel >= %wx_ver
+BuildRequires: libpano13-devel >= %pano_ver libwxGTK3.2-devel >= %wx_ver
 BuildRequires: boost-devel >= %boost_ver boost-thread-devel boost-devel boost-thread-devel
 BuildRequires: boost-datetime-devel boost-regex-devel boost-filesystem-devel boost-iostreams-devel
 BuildRequires: boost-system-devel boost-signals-devel
@@ -57,6 +57,7 @@ panorama, stitch any series of overlapping pictures and much more.
 %patch1 -p2
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 # reenable RPTHs because libraries in private subdirectory
 %cmake -DINSTALL_XRC_DIR="/usr/share/hugin/xrc" \
 	-DCMAKE_SKIP_RPATH:BOOL=OFF \
@@ -97,6 +98,10 @@ done
 %_datadir/metainfo/%name.appdata.xml
 
 %changelog
+* Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 2022.0.0-alt1
+- 2022.0.0
+- built with wxGTK-3.2
+
 * Fri Dec 31 2021 Yuri N. Sedunov <aris@altlinux.org> 2021.0.0-alt1
 - 2021.0.0
 
