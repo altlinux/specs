@@ -1,7 +1,8 @@
 %define oname chameleon
+%def_with check
 
 Name: python3-module-%oname.core
-Version: 3.10.1
+Version: 3.10.2
 Release: alt1
 
 Summary: Chameleon Template Compiler
@@ -19,6 +20,10 @@ BuildRequires(pre): rpm-build-python3
 BuildPreReq: python3-module-setuptools
 BuildPreReq: python3-module-sphinx
 BuildPreReq: python3-module-sphinx_rtd_theme
+
+%if_with check
+BuildRequires: python3-module-zope.testrunner
+%endif
 
 %description
 Attribute language template compiler.
@@ -66,7 +71,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 cp -fR _build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %check
-python3 setup.py test
+%tox_check
 
 %files
 %doc *.txt *.rst
@@ -84,6 +89,10 @@ python3 setup.py test
 %doc _build/html/*
 
 %changelog
+* Mon Dec 19 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.2-alt1
+- Automatically updated to 3.10.2.
+- Build with check.
+
 * Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 3.10.1-alt1
 - Build new version.
 
