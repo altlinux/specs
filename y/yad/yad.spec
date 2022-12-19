@@ -1,5 +1,5 @@
 Name: yad
-Version: 12.1
+Version: 12.3
 Release: alt1
 Summary: Display graphical dialogs from shell scripts or command line
 
@@ -58,6 +58,10 @@ desktop-file-install --remove-key Encoding     \
 %_datadir/glib-2.0/schemas/yad.gschema.xml
 
 %changelog
+* Mon Dec 19 2022 Fr. Br. George <george@altlinux.org> 12.3-alt1
+- Autobuild version bump to 12.3
+- Fix translation
+
 * Wed Dec 14 2022 Fr. Br. George <george@altlinux.org> 12.1-alt1
 - Autobuild version bump to 12.1
 - Fix translation
