@@ -5,11 +5,11 @@
 %def_without pmemcheck
 
 Name: pmdk
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 Summary: Persistent Memory Development Kit (formerly NVML)
 Group: System/Base
-License: BSD
+License: BSD-3-Clause
 Url: http://pmem.io/pmdk
 
 Source: %name-%version.tar
@@ -449,6 +449,9 @@ make check
 %endif
 
 %changelog
+* Fri Dec 16 2022 Alexey Shabalin <shaba@altlinux.org> 1.12.1-alt1
+- new version 1.12.1
+
 * Sun Jun 12 2022 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt1
 - new version 1.12.0
 
