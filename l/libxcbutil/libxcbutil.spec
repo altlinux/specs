@@ -1,5 +1,5 @@
 Name: libxcbutil
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 Epoch: 1
 Summary: XCB util modules
@@ -44,6 +44,7 @@ Header files for XCB util libraries
 %make DESTDIR=%buildroot install
 
 %files
+%doc NEWS COPYING README.md
 %_libdir/*.so.*
 
 %files devel
@@ -52,6 +53,9 @@ Header files for XCB util libraries
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Dec 20 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:0.4.1-alt1
+- 0.4.1
+
 * Wed Oct 15 2014 Valery Inozemtsev <shrek@altlinux.ru> 1:0.4.0-alt1
 - 0.4.0
 
