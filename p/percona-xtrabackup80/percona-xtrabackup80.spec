@@ -3,9 +3,9 @@
 %define optflags_lto %nil
 
 Summary: Online backup for InnoDB/XtraDB in MySQL, Percona Server and MariaDB
-Name: percona-xtrabackup
+Name: percona-xtrabackup%pxbu_major_minor
 Version: 8.0.30
-Release: alt2
+Release: alt3
 License: GPLv2 and LGPLv2
 Url: http://www.percona.com/software/percona-xtrabackup/
 Group: Databases
@@ -15,8 +15,9 @@ Source2: libkmip.tar
 Patch0: percona-xtrabackup-8.0.28-missing-memory-header.patch
 Patch2000: percona-xtrabackup-e2k.patch
 
-Provides: %name-%pxbu_major_minor
 Obsoletes: xtrabackup < 2.0.0
+Obsoletes: percona-xtrabackup < 8.0.30-alt3
+Conflicts: percona-xtrabackup24
 # Automatically added by buildreq on Mon Jul 25 2022
 # optimized out: alt-os-release cmake-modules glibc-kernheaders-generic glibc-kernheaders-x86 libgpg-error libgpg-error-devel libncurses-devel libprotobuf-devel libprotobuf27-lite libsasl2-3 libstdc++-devel libtinfo-devel mpdecimal pkg-config python3 python3-base python3-module-Pygments python3-module-alabaster python3-module-babel python3-module-charset-normalizer python3-module-docutils python3-module-idna python3-module-imagesize python3-module-jinja2 python3-module-markupsafe python3-module-packaging python3-module-pytz python3-module-requests python3-module-sphinx python3-module-urllib3 sh4 xz
 BuildRequires: cmake gcc-c++ libaio-devel libcurl-devel libev-devel libgcrypt-devel libicu-devel
@@ -86,6 +87,9 @@ rm -rf %buildroot%_libdir/debug/usr/lib64/xtrabackup/plugin
 %_libdir/xtrabackup
 
 %changelog
+* Tue Dec 20 2022 Alexei Takaseev <taf@altlinux.org> 8.0.30-alt3
+- Rename to percona-xtrabackup80
+
 * Sun Nov 20 2022 Alexei Takaseev <taf@altlinux.org> 8.0.30-alt2
 - Do not pack .gear/ to SRPM tar
 - Add e2k patch
