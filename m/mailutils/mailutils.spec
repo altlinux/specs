@@ -18,7 +18,7 @@
 
 Name: mailutils
 
-%define baseversion 3.12
+%define baseversion 3.15
 
 %if %snapshot
 %define snapshotdate 20200913
@@ -27,7 +27,7 @@ Release: alt0.%snapshotdate.1
 %define srcdir %name-%snapshotdate
 %else
 Version: %baseversion
-Release: alt2
+Release: alt1
 %define srcdir %name-%version
 %endif
 
@@ -262,10 +262,6 @@ python-module-mailutils.
 # errata patches
 #patch10 -p1
 
-if [ %version = 3.12 ]; then
-    echo "#endif" >> include/mailutils/sys/streamtrans.h
-fi
-
 gzip ChangeLog
 
 %build
@@ -473,6 +469,9 @@ done
 %endif
 
 %changelog
+* Tue Dec 20 2022 Sergey Y. Afonin <asy@altlinux.org> 3.15-alt1
+- New version (git 20220816)
+
 * Fri Oct 15 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.12-alt2
 - Fixed build with LTO
 

@@ -7,7 +7,7 @@
 
 Name: mailfromd
 
-%define baseversion 8.11
+%define baseversion 8.15
 
 %if %snapshot
 %define snapshotdate 20210215
@@ -67,6 +67,9 @@ BuildRequires: mailutils
 BuildRequires: makeinfo
 BuildRequires: libadns-devel >= 1.5
 
+# DKIM
+BuildRequires: libnettle-devel
+
 # geoip2
 BuildRequires: libmaxminddb-devel
 
@@ -82,6 +85,15 @@ It provide many verifications at different stages of reception of the
 messages, including smtp callback checking, gray listing, regexp checking,
 ClamAV and SpamAssassin lookup and other. Nominally it is replacement for
 verify_sender, milter-regex, clamav-milter, milter-greylist ang other.
+
+%package mfmod-devel
+Summary: Development essentials for create dynamically loaded modules
+License: GPL-3.0-or-later
+Requires: %name = %version-%release
+Group: Development/Other
+
+%description mfmod-devel
+Pack for creates and bootstraps a new dynamically loaded module for mailfromd
 
 %package cfg_full
 Summary: Full featured configuration of mailfromd.
@@ -119,7 +131,7 @@ Documentation for mailfromd.
 Summary: GNU Emacs MFL extension for mailfromd.
 License: GPL-3.0-or-later
 Requires: emacs-base
-Group: System/Servers
+Group: Editors
 BuildArch: noarch
 
 %description mfl
@@ -192,6 +204,7 @@ chmod 744 $RPM_BUILD_ROOT%_sysconfdir/cron.daily/mailfromd
 
 cp -f %SOURCE12 $RPM_BUILD_ROOT%_sysconfdir/mailfromd/Makefile
 
+rm -f           $RPM_BUILD_ROOT%_sysconfdir/mailfromd/mailfromd.mfl
 cp -f %SOURCE20 $RPM_BUILD_ROOT%_sysconfdir/mailfromd/mailfromd.mf
 cp -f %SOURCE21 $RPM_BUILD_ROOT%_sysconfdir/mailfromd/localconf.mf
 cp -f %SOURCE22 $RPM_BUILD_ROOT%_sysconfdir/mailfromd/userfunctions.mf
@@ -281,11 +294,22 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 
 %dir %_datadir/mailfromd
 %dir %_datadir/mailfromd/%baseversion
-%dir %_datadir/mailfromd/%baseversion/include
-%_datadir/mailfromd/%baseversion/include/*
+%_datadir/mailfromd/%baseversion/*
 %_datadir/mailfromd/postfix-macros.sed
 
 %attr(3775,root,mail) %dir %_localstatedir/mailfromd
+
+%files mfmod-devel
+%_bindir/mfmodnew
+%_datadir/aclocal/mfmod.m4
+%dir %_includedir/mailfromd
+%_includedir/mailfromd/exceptions.h
+%_includedir/mailfromd/mfmod.h
+%dir %_datadir/mailfromd/mfmod
+%_datadir/mailfromd/mfmod/template.ac
+%_datadir/mailfromd/mfmod/template.am
+%_datadir/mailfromd/mfmod/template.c
+%_datadir/mailfromd/mfmod/template.mfl
 
 %files cfg_full
 %attr(0755,root,root) %_initdir/mailfromd
@@ -317,6 +341,15 @@ rm -f %_localstatedir/mailfromd-clamav/*.db &>/dev/null ||:
 %files locales -f mailfromd.lang
 
 %changelog
+* Tue Dec 20 2022 Sergey Y. Afonin <asy@altlinux.org> 8.15-alt1
+- new version
+- built with libnettle-devel (DKIM)
+- changes in mailfromd.mf:
+  + removed #include_once <status.mfh>
+  + explain_msg renamed to explain_msg_massallocated
+- changes in mailfromd.conf
+  + removed lock-retry-count option
+
 * Mon Jun 07 2021 Sergey Y. Afonin <asy@altlinux.org> 8.11-alt1
 - new version
 - built with libmaxminddb-devel (GeoIP2)
