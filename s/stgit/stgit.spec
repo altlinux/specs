@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: stgit
-Version: 2.0.4
+Version: 2.1.0
 Release: alt1
 Summary: Stacked Git
 License: GPL-2.0-only
@@ -78,6 +78,9 @@ rm t/t7000-sparse-checkout.sh
 %_datadir/doc/stgit
 
 %changelog
+* Mon Dec 19 2022 Vitaly Chikunov <vt@altlinux.org> 2.1.0-alt1
+- Update to v2.1.0 (2022-12-12).
+
 * Thu Dec 08 2022 Vitaly Chikunov <vt@altlinux.org> 2.0.4-alt1
 - Update to v2.0.4 (2022-11-30). Codebase converted from Python to Rust.
 
