@@ -5,27 +5,26 @@
 %def_disable bootstrap
 
 Name: python3-module-%oname
-Version: 7.2.1
-Release: alt5
+Version: 7.4.2
+Release: alt1
 Summary: A set of user interface tools designed to complement Traits
 Group: Development/Python3
 License: EPL-1.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause
 URL: https://docs.enthought.com/traitsui
 
-BuildArch: noarch
-
 # https://github.com/enthought/traitsui.git
 Source: %oname-%version.tar
 
-Patch1: %oname-alt-docs.patch
-Patch2: %oname-mayavi-altbug-40382-hack.patch
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
 
 %if_disabled bootstrap
 BuildRequires(pre): python3-module-sphinx-devel
 BuildRequires: python3-module-traits
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-sphinx-copybutton
 %endif
 
 # skip wx requirements
@@ -104,16 +103,9 @@ This package contains pickles for TraitsUI.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-
-%if_disabled bootstrap
-%prepare_sphinx3 docs
-ln -s ../objects.inv docs/source/
-%endif
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %if_disabled bootstrap
 %make -C docs html
@@ -121,7 +113,7 @@ ln -s ../objects.inv docs/source/
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_disabled bootstrap
 # pickles
@@ -129,11 +121,9 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %files
-%doc image_LICENSE*.txt LICENSE.txt
-%doc README.rst
-%doc CHANGES.txt
+%doc image_LICENSE*.txt LICENSE.txt README.rst CHANGES.txt
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/%oname/examples
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/*/tests
@@ -160,6 +150,9 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Dec 19 2022 Anton Vyatkin <toni@altlinux.org> 7.4.2-alt1
+- new version 7.4.2
+
 * Sat Feb 05 2022 Grigory Ustinov <grenka@altlinux.org> 7.2.1-alt5
 - Disable bootstrap.
 

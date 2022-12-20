@@ -1,28 +1,27 @@
-%define _unpackaged_files_terminate_build 1
-
-%define oname traits
+%define  oname traits
 %def_with doc
 
-Name: python3-module-%oname
-Version: 6.2.0
-Release: alt4
-Summary: Explicitly typed attributes for Python 3
+Name:    python3-module-%oname
+Version: 6.4.1
+Release: alt1
+
+Summary: Observable typed attributes for Python classes
+
 License: BSD-3-Clause and CC-BY-3.0
-Group: Development/Python3
-Url: https://docs.enthought.com/traits/
+Group:   Development/Python3
+URL:     https://pypi.org/project/traits/
 
 # https://github.com/enthought/traits.git
-Source: %name-%version.tar
-Patch: %oname-alt-docs.patch
+Source:  %name-%version.tar
 
 BuildRequires(pre): python3-module-sphinx-devel
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
-BuildRequires: libnumpy-py3-devel
-BuildRequires: python3-module-Pygments
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-pygments
 %if_with doc
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 BuildRequires: python3-module-sphinx-pickles
+BuildRequires: python3-module-sphinx-copybutton
 %endif
 
 %description
@@ -69,18 +68,16 @@ definition called a trait. This package contains pickles for it.
 
 %prep
 %setup
-%patch -p1
 
 %if_with doc
 %prepare_sphinx3 docs
 %endif
 
 %build
-%add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with doc
 # pickles
@@ -92,10 +89,9 @@ cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %files
-%doc image_LICENSE*.txt LICENSE.txt LICENSE-CC-BY-3.0.txt
-%doc README.rst CHANGES.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %oname}
+%doc README.rst LICENSE.txt LICENSE-CC-BY-3.0.txt
 %exclude %python3_sitelibdir/%oname/tests
 %exclude %python3_sitelibdir/%oname/*/tests
 %exclude %python3_sitelibdir/%oname/testing
@@ -119,6 +115,9 @@ cp -fR pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Dec 19 2022 Anton Vyatkin <toni@altlinux.org> 6.4.1-alt1
+- new version 6.4.1
+
 * Wed Feb 02 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 6.2.0-alt4
 - Updated build dependencies.
 
