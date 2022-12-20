@@ -1,25 +1,28 @@
 Name: libetpan
 Version: 1.9.4
-Release: alt2
+Release: alt3
 
 Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access
-License: %bsdstyle
+License: BSD-3-Clause
 Group: Development/C
 
 Url: https://www.etpan.org/libetpan.html
 
-# git://github.com/dinhviethoa/libetpan.git
+Vcs: https://github.com/dinhviethoa/libetpan.git
 Source: %name-%version.tar
+# For cairo-dock-plugins only
 Source1: libetpan-config
 Patch: %name-%version-%release.patch
+
+# Patches from upstream git. Drop them when
+# new version will be released.
 Patch2: CVE-2020-15953.patch
+Patch3: CVE-2022-4121.patch
 
 %def_with gnutls
 %def_without openssl
 
 %define _unpackaged_files_terminate_build 1
-
-BuildRequires(pre): rpm-build-licenses
 
 # FIXME: Is it really needed g++?
 BuildRequires: gcc-c++
@@ -35,7 +38,7 @@ Summary: Development environment for %name library.
 Group: Development/C
 Requires: %name = %version-%release
 %{?_with_gnutls:Requires: libgnutls-devel libgcrypt-devel libgpg-error-devel zlib-devel}
-%{?_with_gnutls:Requires: libssl-devel}
+%{?_with_openssl:Requires: libssl-devel}
 Requires: libsasl2-devel
 Requires: liblmdb-devel
 Requires: liblockfile-devel
@@ -54,6 +57,7 @@ program which use lib%name.
 %setup
 %patch -p1
 %patch2 -p1
+%patch3 -p1
 ln -s README.md README
 
 %build
@@ -85,6 +89,13 @@ install -Dm0755 %SOURCE1 %buildroot%_bindir/%name-config
 %_libdir/%name.so
 
 %changelog
+* Tue Dec 20 2022 Mikhail Efremov <sem@altlinux.org> 1.9.4-alt3
+- Fixed libssl knob.
+- Fixed License tag.
+- Added Vcs tag.
+- Patch from upstream:
+  + Fixed crash when st_info_list is NULL (fixes: CVE-2022-4121).
+
 * Thu Oct 01 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.9.4-alt2
 - Applied security fixes from upstream (Fixes: CVE-2020-15953).
 
