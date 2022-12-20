@@ -63,7 +63,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -84,6 +84,8 @@ Source6: %name-%version-bin-scripts.tar
 
 # local patches
 #Source10: %name-patches-%version.tar
+
+Patch1: 0011-build-fake-binary-makes-autoreq-happy.patch
 
 AutoReq: yes, noperl, nomingw32
 
@@ -246,7 +248,7 @@ BuildRequires: desktop-file-utils
 # Use it instead proprietary MS Core Fonts
 # Requires: fonts-ttf-liberation
 
-# Actually for x86_32
+# FIXME: Actually for x86_32
 Requires: glibc-pthread glibc-nss
 
 Requires: wine-gecko = %gecko_version
@@ -259,31 +261,6 @@ Requires: %name-common = %EVR
 
 Conflicts: %conflictbase
 
-# FIXME:
-# Runtime linked
-Requires: libcups
-Requires: libXrender libXi libXext libX11 libICE libXcomposite libXcursor libXinerama libXrandr
-Requires: libssl libgnutls30
-Requires: libXpm libalsa libcups libopenal1 libpulseaudio libudev1 libusb libkrb5
-
-%if_with gtk3
-Requires: libcairo libgtk+3
-%endif
-
-%if_with vulkan
-Requires: libvulkan1
-%endif
-
-# Many programs depends on unixODBC
-# Requires: libunixODBC2
-
-%if_with pcap
-# Recommended
-# Requires: libpcap0.8
-%endif
-
-Requires: fontconfig libfreetype
-
 # old gl part
 Provides: %winepkgname-gl = %EVR
 Obsoletes: %winepkgname-gl < %EVR
@@ -292,15 +269,6 @@ Conflicts: libwine-vanilla-gl libwine-gl
 Conflicts: wine-vanilla-gl wine-gl
 Obsoletes: lib%name-gl
 
-# Runtime linked (via dl_open)
-Requires: libGL
-
-%if_without vanilla
-Requires: libva
-Requires: libtxc_dxtn
-%endif
-
-
 # old twain part
 Provides: %winepkgname-twain = %EVR
 Obsoletes: %winepkgname-twain < %EVR
@@ -308,10 +276,6 @@ Obsoletes: %winepkgname-twain < %EVR
 Conflicts: libwine-vanilla-twain libwine-twain
 Conflicts: wine-vanilla-twain wine-twain
 Obsoletes: lib%name-twain
-
-# Runtime linked (via dl_open)
-Requires: libsane
-
 
 # Provides/Obsoletes Fedora packages
 %define common_provobs wine-filesystem wine-desktop wine-systemd wine-sysvinit
@@ -476,7 +440,7 @@ develop programs using %name.
 
 %prep
 %setup
-
+%patch1 -p1
 # Apply local patches
 #name-patches/patchapply.sh
 
@@ -499,6 +463,8 @@ export CROSSCC=clang
 	--without-oss --with-alsa --with-pulse \
 	--with-cups \
 	--without-capi \
+	%{subst_with opencl} \
+	%{subst_with pcap} \
 	%{subst_with unwind} \
 	%{subst_with mingw} \
 	%{subst_with vulkan} \
@@ -535,6 +501,7 @@ mkdir -p %buildroot%_bindir/
 %ifarch aarch64
 mv -v %buildroot%winebindir/wine %buildroot%winebindir/wine64
 mv -v %buildroot%winebindir/wine-preloader %buildroot%winebindir/wine64-preloader
+mv -v %buildroot%winebindir/wine_make_autoreq_happy %buildroot%_bindir/wine64_make_autoreq_happy
 %endif
 
 # hack: move all programs back to _bindir
@@ -630,6 +597,12 @@ fi
 %winebindir/%wineserver
 %winebindir/%winepreloader
 
+# eterbug #14676
+%if_with build64
+%_bindir/wine64_make_autoreq_happy
+%else
+%_bindir/wine_make_autoreq_happy
+%endif
 
 %dir %libwinedir/
 %dir %libwinedir/%winesodir/
@@ -839,6 +812,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Tue Dec 20 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.22-alt2
+- drop manual requires in favour of real autoreqs
+
 * Wed Dec 07 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.22-alt1
 - new version 7.22 (with rpmrb script)
 - drop libldap-devel from build requires (bundled now)
