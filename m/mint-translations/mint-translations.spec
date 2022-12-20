@@ -1,5 +1,5 @@
 Name:    mint-translations
-Version: 2022.12.02
+Version: 2022.12.16
 Release: alt1
 
 License: GPL-2.0+ and MIT
@@ -33,6 +33,9 @@ cp -a usr/share/linuxmint/locale %buildroot%_datadir
 %_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Tue Dec 20 2022 Kirill Izmestev <felixz@altlinux.org> 2022.12.16-alt1
+- New version.
+
 * Sat Dec 03 2022 Andrey Cherepanov <cas@altlinux.org> 2022.12.02-alt1
 - New version.
 
