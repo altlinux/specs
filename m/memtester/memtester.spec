@@ -1,5 +1,5 @@
 Name: memtester
-Version: 4.5.1
+Version: 4.6.0
 Release: alt1
 
 Summary: Userspace utility for testing the memory subsystem for faults
@@ -37,6 +37,9 @@ install -pD -m644 memtester.8 %buildroot%_man8dir/memtester.8
 %_man8dir/*
 
 %changelog
+* Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 4.6.0-alt1
+- 4.6.0
+
 * Tue Jun 01 2021 Yuri N. Sedunov <aris@altlinux.org> 4.5.1-alt1
 - 4.5.1
 
