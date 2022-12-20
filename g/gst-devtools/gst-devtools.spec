@@ -8,7 +8,7 @@
 %def_disable doc
 
 Name: gst-devtools
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GStreamer development and validation tools
@@ -146,6 +146,9 @@ GObject introspection devel data for the Gst Validate library.
 %endif
 
 %changelog
+* Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1
+- 1.20.5
+
 * Thu Oct 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.4-alt1
 - 1.20.4
 

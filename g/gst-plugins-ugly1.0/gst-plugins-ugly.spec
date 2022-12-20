@@ -14,8 +14,8 @@
 %def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.4
-Release: alt2
+Version: %ver_major.5
+Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
 Group: System/Libraries
@@ -98,6 +98,9 @@ collection.
 %endif
 
 %changelog
+* Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1
+- 1.20.5
+
 * Sun Oct 23 2022 Yuri N. Sedunov <aris@altlinux.org>  1.20.4-alt2
 - built explicitly required by proprietary OnlyOffice GPL-licensed plugins:
   libgstcdio.so

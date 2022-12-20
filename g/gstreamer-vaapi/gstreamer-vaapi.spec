@@ -6,9 +6,10 @@
 
 %def_enable wayland
 %def_disable doc
+%def_disable check
 
 Name: gstreamer-vaapi
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: GStreamer plugins to use VA-API video acceleration
@@ -69,6 +70,9 @@ GStreamer applications.
 %install
 %meson_install
 
+%check
+%__meson_test -v
+
 %files
 %_libdir/gstreamer-%gst_api_ver/*.so
 %doc AUTHORS NEWS README*
@@ -79,6 +83,9 @@ GStreamer applications.
 %endif
 
 %changelog
+* Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1
+- 1.20.5
+
 * Thu Oct 13 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.4-alt1
 - 1.20.4
 
