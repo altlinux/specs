@@ -6,7 +6,7 @@
 
 Name: plasma5-%rname
 Version: 5.26.4
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -106,6 +106,9 @@ rm -f po/ru/kscreen.po.tmp
 #%_K5archdata/mkspecs/modules/qt_KScreen.pri
 
 %changelog
+* Tue Dec 20 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt3
+- update russian translation
+
 * Fri Dec 16 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt2
 - update russian translation
 
