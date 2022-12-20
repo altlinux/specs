@@ -25,7 +25,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt3
+Release: alt4
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -46,7 +46,7 @@ Group: Graphics
 Summary: System/Base
 License: GPLv2+
 
-%define distro_version 10.0.920
+%define distro_version %version
 
 %define distro_base_name ALT Workstation
 %define distro_base_name_ru Альт Рабочая станция
@@ -362,6 +362,9 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Dec 20 2022 Mikhail Efremov <sem@altlinux.org> 10.1-alt4
+- all: Bump distro version to 10.1
+
 * Tue Dec 13 2022 Mikhail Efremov <sem@altlinux.org> 10.1-alt3
 - all: Set distro version to 10.0.920.
 - indexhtml: Substitute product base name.
