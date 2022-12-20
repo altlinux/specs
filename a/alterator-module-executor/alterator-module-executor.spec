@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.0.2
+Version: 0.0.3
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -32,6 +32,9 @@ mkdir -p %buildroot%_datadir/alterator/modules/executor
 /usr/libexec/alterator/*
 
 %changelog
+* Tue Dec 20 2022 Ivan Savin <svn17@altlinux.org> 0.0.3-alt1
+- Add child process's stdout and stderr through signals.
+
 * Sat Oct 22 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.0.2-alt1
 - Second work version.
 
