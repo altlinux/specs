@@ -6,7 +6,7 @@
 
 Name: guacamole-server
 Version: 1.4.0
-Release: alt2
+Release: alt3
 Summary: Server-side native components that form the Guacamole proxy
 License: Apache-2.0
 Url: http://guac-dev.org/
@@ -169,7 +169,7 @@ cp -fr doc/doxygen-output/html .
 
 mkdir -p %buildroot%_sysconfdir/sysconfig
 install -p -m 644 -D %SOURCE1 %buildroot%_sysconfdir/sysconfig/guacd
-mkdir -p %buildroot%_sharedstatedir/guacd
+mkdir -p %buildroot%_sharedstatedir/guacd/share
 
 # Systemd unit files
 mkdir -p %buildroot%_unitdir
@@ -244,8 +244,12 @@ useradd -r -g %username -c 'Guacamole proxy daemon' \
 %_sbindir/guacd
 %_unitdir/guacd.service
 %attr(750,%username,%username) %_sharedstatedir/guacd
+%attr(750,%username,%username) %_sharedstatedir/guacd/share
 
 %changelog
+* Tue Dec 20 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt3
+- package /var/lib/guacd/share for file sharing
+
 * Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt2
 - Add requires on freerdp-plugins-standard for libguac-client-rdp package.
 
