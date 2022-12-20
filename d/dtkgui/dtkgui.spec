@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.6.2.2
+Version: 5.6.3
 Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0
@@ -10,12 +10,15 @@ Url: https://github.com/linuxdeepin/dtkgui
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: dtkgui-alt-fix-gcc-build.patch
 
-%if_enabled clang
-BuildRequires(pre): clang-devel
-%endif
 BuildRequires(pre): rpm-build-ninja
-BuildRequires: cmake dtk5-core-devel dtk5-common librsvg-devel libgtest-devel libgmock-devel libqtxdg-devel
+%if_enabled clang
+BuildRequires: clang-devel
+%else
+BuildRequires: gcc-c++ libgomp-devel
+%endif
+BuildRequires: cmake dtk5-core-devel dtk5-common librsvg-devel libgtest-devel libgmock-devel libqtxdg-devel libfreeimage-devel
 
 %description
 Deepin Toolkit, gui module for DDE look and feel.
@@ -37,9 +40,11 @@ Header files and libraries for %name.
 
 %prep
 %setup
+%patch -p1
 sed -i '/*build-*/d' .gitignore
 
 %build
+%add_optflags -I/usr/lib/gcc/%{_target_alias}/%{get_version libgomp-devel}/include
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -57,6 +62,9 @@ export PATH=%_qt5_bindir:$PATH
   -DVERSION=%version \
   -DLIB_INSTALL_DIR=%_libdir \
   -DBUILD_DOCS=OFF \
+  %if_enabled clang
+  -DLLVM_USE_LINKER=lld \
+  %endif
 #
 cmake --build %_cmake__builddir -j%__nprocs
 
@@ -80,6 +88,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/libdtkgui.so
 
 %changelog
+* Mon Dec 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.3-alt1
+- New version.
+- Built using clang instead gcc.
+
 * Fri Dec 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.2.2-alt1
 - New version.
 

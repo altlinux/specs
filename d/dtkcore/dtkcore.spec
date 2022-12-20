@@ -1,7 +1,8 @@
 %def_disable clang
+%def_disable docs
 
 Name: dtkcore
-Version: 5.6.2.2
+Version: 5.6.3
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -22,11 +23,11 @@ BuildRequires: rpm-build-python3
 BuildRequires: git-core
 BuildRequires: glibc-core
 BuildRequires: fdupes
-BuildRequires: qt5-base-devel qt5-tools
+BuildRequires: qt5-base-devel
 BuildRequires: gsettings-qt-devel
 BuildRequires: libgtest-devel
 BuildRequires: dtk5-common
-BuildRequires: doxygen
+BuildRequires: doxygen qt5-tools
 
 %description
 Deepin tool kit core modules.
@@ -56,6 +57,7 @@ Requires: qt5-base-devel
 %description -n dtk5-core-devel
 Header files and libraries for %name.
 
+%if_enabled docs
 %package -n dtk5-core-doc
 Summary: %name documantation
 Group: Documentation
@@ -63,12 +65,14 @@ BuildArch: noarch
 
 %description -n dtk5-core-doc
 This package provides %name documantation.
+%endif
 
 %prep
 %setup
-# Don't exist.
-# sed -i '/\/docs\/html\/dtkcore.qch/d' \
-#   docs/CMakeLists.txt
+%if_disabled docs
+sed -i '/\/docs\/html\/dtkcore.qch/d' \
+  docs/CMakeLists.txt
+%endif
 
 %build
 %if_enabled clang
@@ -112,10 +116,16 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/cmake/DtkTools/
 %_pkgconfigdir/dtkcore.pc
 
+%if_enabled docs
 %files -n dtk5-core-doc
 %_qt5_datadir/doc/dtkcore.qch
+%endif
 
 %changelog
+* Mon Dec 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.3-alt1
+- New version.
+- Disabled doc subpackage.
+
 * Fri Dec 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.2.2-alt1
 - New version.
 
