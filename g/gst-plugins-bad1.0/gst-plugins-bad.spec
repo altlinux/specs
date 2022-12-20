@@ -1,5 +1,6 @@
 %def_disable snapshot
 
+%def_enable aom
 %def_enable ladspa
 %def_enable libdc1394
 %def_enable libkate
@@ -35,7 +36,7 @@
 
 Name: %_name-bad%api_ver
 Version: %ver_major.5
-Release: alt1
+Release: alt1.1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -87,6 +88,7 @@ BuildRequires: liborc-test-devel
 %{?_enable_faad:BuildRequires: libfaad-devel}
 %{?_enable_openh264:BuildRequires: libopenh264-devel >= 1.3.0}
 %{?_enable_opencv:BuildRequires: libopencv-devel}
+%{?_enable_aom:BuildRequires: libaom-devel}
 %{?_enable_ladspa:BuildRequires: ladspa_sdk liblrdf-devel libfluidsynth-devel}
 %{?_enable_vulkan:BuildRequires: vulkan-devel}
 %{?_enable_rtmp:BuildRequires: librtmp-devel}
@@ -195,6 +197,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1.1
+- enabled AOM plugin
+
 * Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1
 - 1.20.5
 
