@@ -4,7 +4,7 @@
 %set_verify_elf_method strict,lint=relaxed,lfs=relaxed
 
 Name: git-delta
-Version: 0.14.0
+Version: 0.15.1
 Release: alt1
 Summary: A syntax-highlighting pager for git, diff, and grep output
 Group: Development/Other
@@ -67,6 +67,9 @@ cargo test %_smp_mflags --release --no-fail-fast
 %_datadir/zsh/site-functions/_delta
 
 %changelog
+* Mon Dec 19 2022 Vitaly Chikunov <vt@altlinux.org> 0.15.1-alt1
+- Update to 0.15.1 (2022-12-03).
+
 * Sun Sep 25 2022 Vitaly Chikunov <vt@altlinux.org> 0.14.0-alt1
 - Updated to 0.14.0 (2022-08-31).
 
