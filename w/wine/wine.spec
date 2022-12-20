@@ -12,7 +12,7 @@
 %define winetricks_version 20220617
 
 %define basemajor 7.x
-%define major 7.20
+%define major 7.22
 %define rel %nil
 %define stagingrel %nil
 # the packages will conflict with that
@@ -210,7 +210,7 @@ BuildRequires: libalsa-devel jackit-devel libpulseaudio-devel
 BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libusb-devel libieee1284-devel
-BuildRequires: libgcrypt-devel libgnutls-devel libsasl2-devel libkrb5-devel libldap-devel
+BuildRequires: libgcrypt-devel libgnutls-devel libsasl2-devel libkrb5-devel
 BuildRequires: libunixODBC-devel
 %if_with pcap
 BuildRequires: libpcap-devel
@@ -262,7 +262,7 @@ BuildRequires: desktop-file-utils
 # Use it instead proprietary MS Core Fonts
 # Requires: fonts-ttf-liberation
 
-# Actually for x86_32
+# FIXME: Actually for x86_32
 Requires: glibc-pthread glibc-nss
 
 Requires: wine-gecko = %gecko_version
@@ -275,32 +275,6 @@ Requires: %name-common = %EVR
 
 Conflicts: %conflictbase
 
-# FIXME:
-# Runtime linked
-Requires: libcups
-Requires: libXrender libXi libXext libX11 libICE libXcomposite libXcursor libXinerama libXrandr
-Requires: libssl libgnutls30
-Requires: libXpm libalsa libcups libopenal1 libpulseaudio libudev1 libusb libkrb5
-#libldap
-
-%if_with gtk3
-Requires: libcairo libgtk+3
-%endif
-
-%if_with vulkan
-Requires: libvulkan1
-%endif
-
-# Many programs depends on unixODBC
-# Requires: libunixODBC2
-
-%if_with pcap
-# Recommended
-# Requires: libpcap0.8
-%endif
-
-Requires: fontconfig libfreetype
-
 # old gl part
 Provides: %winepkgname-gl = %EVR
 Obsoletes: %winepkgname-gl < %EVR
@@ -309,15 +283,6 @@ Conflicts: libwine-vanilla-gl libwine-gl
 Conflicts: wine-vanilla-gl wine-gl
 Obsoletes: lib%name-gl
 
-# Runtime linked (via dl_open)
-Requires: libGL
-
-%if_without vanilla
-Requires: libva
-Requires: libtxc_dxtn
-%endif
-
-
 # old twain part
 Provides: %winepkgname-twain = %EVR
 Obsoletes: %winepkgname-twain < %EVR
@@ -325,10 +290,6 @@ Obsoletes: %winepkgname-twain < %EVR
 Conflicts: libwine-vanilla-twain libwine-twain
 Conflicts: wine-vanilla-twain wine-twain
 Obsoletes: lib%name-twain
-
-# Runtime linked (via dl_open)
-Requires: libsane
-
 
 # Provides/Obsoletes Fedora packages
 %define common_provobs wine-filesystem wine-desktop wine-systemd wine-sysvinit
@@ -535,6 +496,7 @@ export CROSSCC=clang
 	--without-oss --with-alsa --with-pulse \
 	--with-cups \
 	--without-capi \
+	%{subst_with opencl} \
 	%{subst_with pcap} \
 	%{subst_with unwind} \
 	%{subst_with mingw} \
@@ -569,6 +531,13 @@ cp -v %buildroot%libwinedir/%winesodir/win32u.so %buildroot%libdir
 
 mkdir -p %buildroot%_bindir/
 
+# return wine64 and wine64-preloader (half revert of upstream 5884e98fbec966b0ad9f3babcbec7d8fe25dbc1d)
+%ifarch aarch64
+mv -v %buildroot%winebindir/wine %buildroot%winebindir/wine64
+mv -v %buildroot%winebindir/wine-preloader %buildroot%winebindir/wine64-preloader
+mv -v %buildroot%winebindir/wine_make_autoreq_happy %buildroot%_bindir/wine64_make_autoreq_happy
+%endif
+
 # hack: move all programs back to _bindir
 find %buildroot%winebindir -mindepth 0 -maxdepth 1 -not -type d | \
     egrep -v '/wine$|/wine-preloader$|/wineserver$|/wine64$|/wine64-preloader$|/wineserver64|/winegcc|/wineg++|/winecpp|/winebuild$' | \
@@ -576,7 +545,7 @@ find %buildroot%winebindir -mindepth 0 -maxdepth 1 -not -type d | \
 [ -s %buildroot%_bindir/wineg++ ] || ln -sv --relative %buildroot%winebindir/wineg++ %buildroot%_bindir/
 [ -s %buildroot%_bindir/winecpp ] || ln -sv --relative %buildroot%winebindir/winecpp %buildroot%_bindir/
 
-# wine64 and wine64-preloader are already built as wine64*
+# wine64 and wine64-preloader are already built as wine64* on x86_64 only
 mv -v %buildroot%winebindir/wineserver %buildroot%winebindir/%wineserver
 %if_with build64
 [ -s %buildroot%_bindir/wine64 ] || ln -sv --relative %buildroot%winebindir/wine64 %buildroot%_bindir/
@@ -662,6 +631,12 @@ fi
 %winebindir/%wineserver
 %winebindir/%winepreloader
 
+# eterbug #14676
+%if_with build64
+%_bindir/wine64_make_autoreq_happy
+%else
+%_bindir/wine_make_autoreq_happy
+%endif
 
 %dir %libwinedir/
 %dir %libwinedir/%winesodir/
@@ -685,7 +660,6 @@ fi
 %libwinedir/%winesodir/mountmgr.so
 %libwinedir/%winesodir/netapi32.so
 %libwinedir/%winesodir/nsiproxy.so
-%libwinedir/%winesodir/wldap32.so
 %libwinedir/%winesodir/winspool.so
 %libwinedir/%winesodir/msv1_0.so
 %libwinedir/%winesodir/win32u.so
@@ -700,6 +674,7 @@ fi
 %libwinedir/%winesodir/winepulse.so
 %libwinedir/%winesodir/winealsa.so
 %libwinedir/%winesodir/winevulkan.so
+%libwinedir/%winesodir/opengl32.so
 %if_with pcap
 %libwinedir/%winesodir/wpcap.so
 %endif
@@ -717,6 +692,7 @@ fi
 %libwinedir/%winesodir/*.drv.so
 %libwinedir/%winesodir/*.ds.so
 %libwinedir/%winesodir/*.sys.so
+%libwinedir/%winesodir/*.dll.so
 %endif
 
 %if_without build64
@@ -735,8 +711,6 @@ fi
 %libwinedir/%winesodir/*.vxd.so
 %endif
 
-# some dll still compiled as not PE in any way
-%libwinedir/%winesodir/*.dll.so
 
 %libwinedir/%winepedir/*.com
 %libwinedir/%winepedir/*.cpl
@@ -879,6 +853,13 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Tue Dec 20 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.22.1-alt1
+- new version 7.22.1 (with rpmrb script)
+- update patches to staging wine-7.22
+ - msv1_0: disable annoying message about missed ntlm_auth
+ + build fake binary makes autoreq happy
+- drop manual requires in favour of real autoreqs
+
 * Sun Nov 06 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.20.1-alt1
 - new version 7.20.1 (with rpmrb script)
 - set strict require wine-mono 7.4.0
