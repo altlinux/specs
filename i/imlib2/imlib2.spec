@@ -1,11 +1,11 @@
 Name: imlib2
-Version: 1.9.1
+Version: 1.10.0
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
 License: Imlib2
 Group: System/Libraries
-Url: http://docs.enlightenment.org/api/imlib2/html/
+Url: https://git.enlightenment.org/old/legacy-imlib2
 # Source-url: https://sourceforge.net/projects/enlightenment/files/imlib2-src/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 
@@ -59,6 +59,8 @@ distribution.
 %prep
 %setup
 #sed -i 's/echo \$libdirs -lImlib2 @my_libs@/echo -lImlib2/' imlib2-config.in
+sed -i '1a#include <stdbool.h>' \
+  src/modules/loaders/loader_gif.c
 
 %build
 export LIBS+="-L/%_lib -lm"
@@ -106,6 +108,10 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %endif
 
 %changelog
+* Tue Dec 20 2022 Leontiy Volodin <lvol@altlinux.org> 1.10.0-alt1
+- New version (1.10.0).
+- Updated url tag.
+
 * Wed Sep 07 2022 Leontiy Volodin <lvol@altlinux.org> 1.9.1-alt1
 - New version (1.9.1).
 
