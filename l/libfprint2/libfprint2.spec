@@ -1,24 +1,36 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libfprint2
-Version: 1.94.4
+Version: 1.94.5
 Release: alt1
 
 Summary: Tool kit for fingerprint scanner
 License: LGPLv2+
 Group: System/Libraries
 
-Url: http://www.freedesktop.org/wiki/Software/fprint/libfprint
+Url: https://fprint.freedesktop.org/
 VCS: https://gitlab.freedesktop.org/libfprint/libfprint
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): meson
-BuildRequires: libusb-devel libnss-devel glib2-devel libImageMagick-devel libXv-devel libpixman-devel
-BuildRequires: gcc-c++ doxygen 
-BuildRequires: libgio-devel libgusb-devel libudev-devel gtk-doc libcairo-devel cmake
-BuildRequires: /proc python3-module-pygobject3
-BuildRequires: gobject-introspection-devel libgusb-gir-devel libgudev-devel
+BuildRequires: gcc-c++ cmake doxygen gtk-doc
+BuildRequires: glib2-devel
+BuildRequires: libXv-devel
+BuildRequires: libcairo-devel
+BuildRequires: libgio-devel
+BuildRequires: libgusb-devel
+BuildRequires: libnss-devel
+BuildRequires: libpixman-devel
+BuildRequires: libudev-devel
+BuildRequires: libumockdev
+BuildRequires: libusb-devel
+BuildRequires: gobject-introspection-devel
+BuildRequires: libgusb-gir-devel
+BuildRequires: libgudev-devel
+BuildRequires: python3-module-pycairo
+BuildRequires: python3-module-pygobject3
+BuildRequires: /proc /dev/pts
 
 %description
 The fprint project aims to support for consumer fingerprint reader
@@ -62,7 +74,6 @@ GObject introspection devel data for %name
        -Dudev_rules_dir=%_sysconfdir/udev/rules.d/ \
        -Dgtk-examples=false \
        -Ddoc=true
-export LD_LIBRARY_PATH="libfprint"
 %meson_build
 
 %install
@@ -90,6 +101,9 @@ export LD_LIBRARY_PATH="libfprint"
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Tue Dec 06 2022 Egor Ignatov <egori@altlinux.org> 1.94.5-alt1
+- new version 1.94.5
+
 * Tue Jun 21 2022 Egor Ignatov <egori@altlinux.org> 1.94.4-alt1
 - new version 1.94.4
 
