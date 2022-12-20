@@ -3,7 +3,7 @@
 
 Name: openuds-tunnel
 Version: 3.5.0
-Release: alt2
+Release: alt3
 Summary: Clientless remote desktop gateway
 License: Apache-2.0
 Group: Networking/Remote access
@@ -117,6 +117,9 @@ fi
 %_datadir/guacamole/extensions/guacamole-auth-uds-2.5.0.jar
 
 %changelog
+* Tue Dec 20 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt3
+- Changed path /share -> /var/lib/guacd/share for drive-path and recording-path (ALT #43543)
+
 * Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt2
 - Moved config files to /etc/openuds-tunnel dir.
 - Generate ssl cert and key to /etc/openuds-tunnel/ssl dir.
