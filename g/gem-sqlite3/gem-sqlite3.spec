@@ -1,35 +1,37 @@
 %define        gemname sqlite3
 
 Name:          gem-sqlite3
-Version:       1.4.2.1
+Version:       1.5.4
 Release:       alt1
 Summary:       A Ruby interface for the SQLite database engine
-License:       BSD-3
+License:       BSD-3-Clause
 Group:         Development/Ruby
 Url:           https://github.com/sparklemotion/sqlite3-ruby
 Vcs:           https://github.com/sparklemotion/sqlite3-ruby.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source:        %name-%version.tar
-Patch:         patch.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libsqlite3-devel
-BuildRequires: gem(minitest) >= 5.11 gem(minitest) < 6
-BuildRequires: gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
-BuildRequires: gem(rake-compiler-dock) >= 0.6.0 gem(rake-compiler-dock) < 2
 BuildRequires: gem(mini_portile2) >= 2.8.0 gem(mini_portile2) < 2.9
-BuildRequires: gem(hoe-bundler) >= 1.0 gem(hoe-bundler) < 2
-BuildRequires: gem(hoe-gemspec) >= 1.0 gem(hoe-gemspec) < 2
+%if_with check
+BuildRequires: gem(minitest) >= 5.15 gem(minitest) < 6
+BuildRequires: gem(rake-compiler) >= 1.1.2 gem(rake-compiler) < 2
+BuildRequires: gem(rake-compiler-dock) >= 0.7.2 gem(rake-compiler-dock) < 1.3
 BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
-BuildRequires: gem(hoe) >= 3.17 gem(hoe) < 4
+BuildRequires: gem(minitest) >= 5.15 gem(minitest) < 6
+BuildRequires: gem(rake-compiler) >= 1.2.0 gem(rake-compiler) < 2
+BuildRequires: gem(rake-compiler-dock) >= 1.2.1 gem(rake-compiler-dock) < 1.3
+BuildRequires: gem(rdoc) >= 4.0 gem(rdoc) < 7
+BuildRequires: gem(mini_portile2) >= 2.8.0 gem(mini_portile2) < 2.9
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
-%ruby_use_gem_dependency rake-compiler-dock >= 1.1.0,rake-compiler-dock < 2
+Requires:      gem(mini_portile2) >= 2.8.0 gem(mini_portile2) < 2.9
 Obsoletes:     sqlite3-ruby < %EVR
 Provides:      sqlite3-ruby = %EVR
-Provides:      gem(sqlite3) = 1.4.2.1
+Provides:      gem(sqlite3) = 1.5.4
 
 
 %description
@@ -37,14 +39,14 @@ A Ruby interface for the SQLite database engine.
 
 
 %package       -n gem-sqlite3-doc
-Version:       1.4.2.1
+Version:       1.5.4
 Release:       alt1
 Summary:       A Ruby interface for the SQLite database engine documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sqlite3
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(sqlite3) = 1.4.2.1
+Requires:      gem(sqlite3) = 1.5.4
 
 %description   -n gem-sqlite3-doc
 A Ruby interface for the SQLite database engine documentation files.
@@ -54,22 +56,18 @@ A Ruby interface for the SQLite database engine documentation files.
 
 
 %package       -n gem-sqlite3-devel
-Version:       1.4.2.1
+Version:       1.5.4
 Release:       alt1
 Summary:       A Ruby interface for the SQLite database engine development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета sqlite3
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(sqlite3) = 1.4.2.1
-Requires:      gem(minitest) >= 5.11 gem(minitest) < 6
-Requires:      gem(rake-compiler) >= 1.0 gem(rake-compiler) < 2
-Requires:      gem(rake-compiler-dock) >= 0.6.0 gem(rake-compiler-dock) < 2
-Requires:      gem(mini_portile2) >= 2.8.0 gem(mini_portile2) < 2.9
-Requires:      gem(hoe-bundler) >= 1.0 gem(hoe-bundler) < 2
-Requires:      gem(hoe-gemspec) >= 1.0 gem(hoe-gemspec) < 2
+Requires:      gem(sqlite3) = 1.5.4
+Requires:      gem(minitest) >= 5.15 gem(minitest) < 6
+Requires:      gem(rake-compiler) >= 1.2.0 gem(rake-compiler) < 2
+Requires:      gem(rake-compiler-dock) >= 1.2.1 gem(rake-compiler-dock) < 1.3
 Requires:      gem(rdoc) >= 4.0 gem(rdoc) < 7
-Requires:      gem(hoe) >= 3.17 gem(hoe) < 4
 Requires:      libsqlite3-devel
 
 %description   -n gem-sqlite3-devel
@@ -81,7 +79,6 @@ A Ruby interface for the SQLite database engine development package.
 
 %prep
 %setup
-%autopatch
 
 %build
 %ruby_build
@@ -93,21 +90,24 @@ A Ruby interface for the SQLite database engine development package.
 %ruby_test
 
 %files
-%doc README.rdoc
+%doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
 %ruby_gemextdir
 
 %files         -n gem-sqlite3-doc
-%doc README.rdoc
+%doc README.md
 %ruby_gemdocdir
 
 %files         -n gem-sqlite3-devel
-%doc README.rdoc
+%doc README.md
 %ruby_includedir/*
 
 
 %changelog
+* Mon Dec 19 2022 Pavel Skrylev <majioa@altlinux.org> 1.5.4-alt1
+- ^ 1.4.2.1 -> 1.5.4
+
 * Wed May 18 2022 Pavel Skrylev <majioa@altlinux.org> 1.4.2.1-alt1
 - ^ 1.4.2 -> 1.4.2.1
 

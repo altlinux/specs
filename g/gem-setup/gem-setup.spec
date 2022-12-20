@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt5
+Release:       alt6
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,9 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Tue Dec 20 2022 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt6
+- + some new options to mkmf when compilation is enabled
+
 * Thu Nov 24 2022 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt5
 - ! ridir to docdir with ri arg, to support old rubies
 
