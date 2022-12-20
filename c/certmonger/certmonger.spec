@@ -5,17 +5,18 @@
 %def_with check
 
 Name: certmonger
-Version: 0.79.16
+Version: 0.79.17
 Release: alt1
 Summary: Certificate status monitor and PKI enrollment client
 
 Group: System/Base
-License: %gpl3plus
+License: GPL-3.0-or-later
 Url: https://pagure.io/certmonger
+VCS: https://pagure.io/certmonger
+
 Source0: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: libcurl-devel
 BuildRequires: libdbus-devel
 BuildRequires: libidn2-devel
@@ -124,7 +125,7 @@ done
 getcert refresh-ca -a >/dev/null 2>&1 || help
 
 %files -f %name.lang
-%doc README.md LICENSE STATUS doc/*.txt
+%doc README.md STATUS doc/*.txt
 %config(noreplace) %_sysconfdir/dbus-1/system.d/certmonger.conf
 %config(noreplace) %_sysconfdir/certmonger/certmonger.conf
 %attr(0644,root,root) %config(noreplace) %_tmpfilesdir/certmonger.conf
@@ -158,6 +159,9 @@ getcert refresh-ca -a >/dev/null 2>&1 || help
 %_man8dir/certmonger.8.*
 
 %changelog
+* Thu Dec 01 2022 Stanislav Levin <slev@altlinux.org> 0.79.17-alt1
+- 0.79.16 -> 0.79.17.
+
 * Tue Sep 20 2022 Stanislav Levin <slev@altlinux.org> 0.79.16-alt1
 - 0.79.15 -> 0.79.16.
 
