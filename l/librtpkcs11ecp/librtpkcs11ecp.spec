@@ -4,7 +4,7 @@
 %brp_strip_none
 
 Name: librtpkcs11ecp
-Version: 2.6.1.0
+Version: 2.7.1.0
 Release: alt1
 
 Summary: Rutoken PKCS#11 Library
@@ -13,7 +13,7 @@ Group: System/Configuration/Hardware
 
 Url: https://www.rutoken.ru/support/download/pkcs/
 Source: %name-%version.tar
-ExclusiveArch: i586 x86_64 armh aarch64 mipsel mips64el e2k e2kv4 e2kv5 e2kv6 ppc64le
+ExclusiveArch: i586 x86_64 armh aarch64 mipsel mips64el e2k e2kv4 e2kv5 e2kv6
 
 BuildRequires: libpcsclite-devel
 
@@ -51,12 +51,17 @@ install -pDm644 rutokenecp.module \
         %buildroot%_sysconfdir/pkcs11/modules/rutokenecp.module
 
 %files
-%doc license.ru.html
+%doc LICENSE NOTICE.txt
 %_libdir/*.so
 %_libdir/pkcs11/*.so
 %config(noreplace) %_sysconfdir/pkcs11/modules/rutokenecp.module
 
 %changelog
+* Sun Dec 18 2022 Andrey Cherepanov <cas@altlinux.org> 2.7.1.0-alt1
+- New version.
+- Drop support of ppc64le by upstream.
+- Use license files from upstream packages.
+
 * Sun Oct 09 2022 Andrey Cherepanov <cas@altlinux.org> 2.6.1.0-alt1
 - New version.
 

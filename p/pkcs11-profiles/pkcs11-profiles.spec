@@ -1,4 +1,4 @@
-%ifarch %ix86 x86_64 armh aarch64 mipsel mips64el ppc64le %e2k
+%ifarch %ix86 x86_64 armh aarch64 mipsel mips64el %e2k
 %def_enable rutokenecp
 %else
 %def_disable rutokenecp
@@ -18,7 +18,7 @@
 
 Name: pkcs11-profiles
 Version: 0.1.13
-Release: alt1
+Release: alt2
 
 Summary: Set of scripts and profiles for PAM PKCS11 configuration
 License: GPLv3+
@@ -169,6 +169,9 @@ Contains prompts and other messages of "Zastava" PAM PKCS#11 set
 %config(noreplace) %confdir/message.profiles/zastava
 
 %changelog
+* Tue Dec 20 2022 Andrey Cherepanov <cas@altlinux.org> 0.1.13-alt2
+- Disable ppc64le support for librtpkcs11ecp-2.7.1.0.
+
 * Thu Apr 07 2022 Paul Wolneykien <manowar@altlinux.org> 0.1.13-alt1
 - Remove slot_description = "none" from the default module profiles
   (closes: 42339, 42341).
