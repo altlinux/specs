@@ -14,7 +14,7 @@
 %define _cmake__builddir BUILD
 
 Name: lib%oname
-Version: 3.3.0
+Version: 3.5.0
 Release: alt1
 Summary: AV1 Codec Library
 Group: System/Libraries
@@ -142,6 +142,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$(pwd)/%_cmake__builddir/third_party/g
 %doc %_cmake__builddir/docs/html
 
 %changelog
+* Tue Dec 20 2022 Valery Inozemtsev <shrek@altlinux.ru> 3.5.0-alt1
+- Updated to upstream version 3.5.0.
+
 * Mon Feb 28 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.0-alt1
 - Updated to upstream version 3.3.0.
 
