@@ -6,7 +6,7 @@
 
 Name: plasma5-%rname
 Version: 5.26.4
-Release: alt3
+Release: alt4
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -24,6 +24,7 @@ Source: %rname-%version.tar
 Source10: kcm_kscreen-ru-add.po
 Source11: kscreen-ru-add.po
 Patch1: alt-enable-per-screen-scaling.patch
+Patch2: alt-improve-output-names.patch
 
 # Automatically added by buildreq on Mon Mar 02 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-quickwidgets libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base qt5-base-devel ruby ruby-stdlibs
@@ -65,6 +66,7 @@ developing applications that use %name.
 %prep
 %setup -n %rname-%version
 #%patch1 -p1
+%patch2 -p1
 
 sed -i 's|^\(add_subdirectory.*tests.*\)|#\1|' CMakeLists.txt
 
@@ -106,6 +108,10 @@ rm -f po/ru/kscreen.po.tmp
 #%_K5archdata/mkspecs/modules/qt_KScreen.pri
 
 %changelog
+* Tue Dec 20 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt4
+- improve output names
+- update russian translation
+
 * Tue Dec 20 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt3
 - update russian translation
 
