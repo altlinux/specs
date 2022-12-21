@@ -1,6 +1,6 @@
 Name:    task-edu
 Version: 1.5.9
-Release: alt5
+Release: alt6
 License: GPL-3.0+
 URL:     https://www.altlinux.org/Education
 Group:   Education
@@ -257,7 +257,7 @@ Requires: synfigstudio
 %endif
 Requires: dia
 Requires: trikStudio
-Requires: kde5-marble
+#Requires: kde5-marble
 %ifnarch ppc64le
 Requires: wxMaxima
 %endif
@@ -356,9 +356,9 @@ Requires: qcad
 %endif
 %ifnarch %e2k armh
 Requires: freecad
-Requires: qgis3
-Requires: qgis3-grass
-Requires: qgis3-python
+#Requires: qgis3
+#Requires: qgis3-grass
+#Requires: qgis3-python
 %endif
 Requires: projectlibre
 Requires: openmpi
@@ -380,7 +380,26 @@ Requires: kf5-plasma-workspace
 Requires: kde5-network-manager-nm
 Requires: libqimageblitz5
 Requires: kde5-krfb
-Requires: kde5-edu
+%ifnarch ppc64le
+Requires: kde5-parley
+%endif
+Requires: kde5-kanagram
+Requires: kde5-khangman
+Requires: kde5-kwordquiz
+Requires: kde5-kturtle
+#Requires: kde5-marble
+Requires: kde5-step
+#Requires: kde5-kstars
+Requires: kde5-kig
+Requires: kde5-kmplot
+Requires: kde5-kalgebra
+Requires: kde5-cantor
+Requires: kde5-rocs
+Requires: kde5-kbruch
+#Requires: kde5-kgeography
+Requires: kde5-ktouch
+Requires: kde5-minuet
+Requires: kde5-runtime
 Requires: kde5-printing
 Requires: kde5-scanning
 Requires: kde5-connect
@@ -539,6 +558,9 @@ Requires: task-edu-teacher
 %files school
 
 %changelog
+* Wed Dec 21 2022 Andrey Cherepanov <cas@altlinux.org> 1.5.9-alt6
+- Exclude applications with old map of Russia.
+
 * Wed Oct 05 2022 Anton Midyukov <antohami@altlinux.org> 1.5.9-alt5
 - Make the task-edu-lite subpackage the base for task-edu
 - Fix description of lite subpackage
