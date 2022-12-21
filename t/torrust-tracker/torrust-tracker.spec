@@ -1,5 +1,5 @@
 Name: torrust-tracker
-Version: 2.3.0
+Version: 2.3.1
 Release: alt1
 
 Summary: Lightweight BitTorrent tracker
@@ -51,6 +51,9 @@ cd %buildroot%_localstatedir/torrust && ../../../usr/sbin/torrust-tracker ||:
 %ghost %attr(0660,_torrust,_torrust) %_localstatedir/torrust/data.db
 
 %changelog
+* Wed Dec 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.3.1-alt1
+- 2.3.1 released
+
 * Thu May 12 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.3.0-alt1
 - 2.3.0 released
 
