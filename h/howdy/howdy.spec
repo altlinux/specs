@@ -1,6 +1,6 @@
 Name: howdy
 Version: 3.0.0
-Release: alt3.beta1.git943f1e1
+Release: alt4.beta1.git943f1e1
 Summary: Windows Hello style authentication
 
 License: MIT
@@ -51,14 +51,17 @@ The package provides gtk interface for %name.
 cp -a %SOURCE1 %SOURCE2 %SOURCE3 .
 bzip2 -dv *.bz2
 sed -i 's|/lib/security|/%_lib/security|' \
-  howdy/src/pam/meson.build
+  howdy/src/pam/meson.build \
+  howdy/src/autocomplete/howdy \
+  howdy/src/pam/main.cc \
+  howdy-gtk/src/tab_video.py \
+  howdy-gtk/src/window.py \
+  howdy/src/pam-config/howdy
 sed -i 's|/usr/bin/env python3|%__python3|' \
   howdy-gtk/src/init.py \
   howdy/src/cli.py
 sed -i 's|/bin/nano|%_bindir/nano|' \
   howdy/src/cli/config.py
-sed -i 's|/lib/security/howdy/config.ini|/%_lib/security/howdy/config.ini|' \
-  howdy/src/autocomplete/howdy
 sed -i 's|/usr/lib/howdy-gtk/logo.png|/usr/libexec/howdy-gtk/logo.png|' \
   howdy-gtk/src/authsticky.py
 
@@ -108,6 +111,9 @@ rm -rf %buildroot/%_lib/security/howdy/dlib-data/{Readme.md,install.sh,.gitignor
 /usr/libexec/howdy-gtk/
 
 %changelog
+* Wed Dec 21 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt4.beta1.git943f1e1
+- Fixed configuration file detection (ALT #44607).
+
 * Thu Dec 08 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt3.beta1.git943f1e1
 - Fixed howdy-gtk startup.
 
