@@ -7,7 +7,7 @@
 %define filesystem_commit 3f1c185ab414e764c694b8171d1c4d8c5c437517
 
 Name: ppsspp
-Version: 1.14
+Version: 1.14.1
 Release: alt1
 
 Summary: PlayStation Portable Emulator
@@ -202,6 +202,9 @@ CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
 %_desktopdir/%name-qt.desktop
 
 %changelog
+* Wed Dec 21 2022 Nazarov Denis <nenderus@altlinux.org> 1.14.1-alt1
+- Version 1.14.1
+
 * Sat Dec 17 2022 Nazarov Denis <nenderus@altlinux.org> 1.14-alt1
 - Version 1.14
 
