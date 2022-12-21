@@ -1,5 +1,5 @@
 Name: kraft
-Version: 0.98
+Version: 1.0
 Release: alt1
 
 Summary: Kraft - Software for small business
@@ -24,6 +24,7 @@ BuildRequires: kf5-kcoreaddons-devel
 BuildRequires: kf5-kcodecs-devel
 BuildRequires: libctemplate-devel
 BuildRequires: grantlee5-devel
+BuildRequires: qt5-svg-devel
 
 %py3_requires reportlab
 
@@ -49,12 +50,15 @@ subst 's|LIBRARY DESTINATION lib/kraft|LIBRARY DESTINATION ${LIB_INSTALL_DIR}|' 
 %_datadir/%name
 %_K5cfg/*
 %_K5xdgapp/*.desktop
-%_iconsdir/*/*/*/*.png
+%_iconsdir/*/*/*/*.svg
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_K5xmlgui/%name
 %_datadir/metainfo/*.appdata.xml
 
 %changelog 
+* Sun Dec 18 2022 Andrey Cherepanov <cas@altlinux.org> 1.0-alt1
+- New version.
+
 * Sun Sep 04 2022 Andrey Cherepanov <cas@altlinux.org> 0.98-alt1
 - New version.
 
