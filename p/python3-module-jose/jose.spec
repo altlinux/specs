@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.3.0
-Release: alt1
+Release: alt2
 Summary: JOSE implementation in Python
 Group: Development/Python3
 License: MIT
@@ -20,7 +20,7 @@ Source: %name-%version.tar
 Patch1: %oname-fedora-disable-test_key_too_short.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-wheel
 BuildRequires: python3(setuptools)
 BuildRequires: python3(six)
 # Backends
@@ -32,7 +32,6 @@ BuildRequires: python3(pyasn1)
 # Run tests
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_cov)
-BuildRequires: python3-module-pytest-runner
 
 %description
 A JOSE implementation in Python
@@ -51,37 +50,24 @@ Documentation: https://python-jose.readthedocs.org/en/latest/
 %patch1 -p0
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-# Test base
-python3 -m pytest \
-    -m "not (cryptography or pycryptodome or pycrypto or backend_compatibility)" \
-    tests
-
-# Test the pyca/cryptography backend
-python3 -m pytest \
-    -m "not (pycryptodome or pycrypto or backend_compatibility)" \
-    tests
-
-# Test the pycryptodome backend
-python3 -m pytest \
-    -m "not (cryptography or pycrypto or backend_compatibility)" \
-    tests
-
-# Test cross-backend compatibility and coexistence
-python3 -m pytest tests
+%tox_check_pyproject -e compatibility
 
 %files
 %doc LICENSE
 %doc README.rst
 %python3_sitelibdir/jose
-%python3_sitelibdir/python_jose-%version-py*.egg-info
+%python3_sitelibdir/python_jose-%version.dist-info
 
 %changelog
+* Wed Dec 21 2022 Anton Farygin <rider@altlinux.ru> 3.3.0-alt2
+- built without python3-module-pytest-runner (closes: #44634)
+
 * Tue Aug 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 3.3.0-alt1
 - Updated to upstream version 3.3.0.
 
