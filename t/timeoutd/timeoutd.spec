@@ -1,16 +1,13 @@
-Summary: timeoutd enforces the time restrictions specified for each or all users.
+Summary: Automatically logout users by idle timeouts
 Name: timeoutd
-Version: 1.5
-Release: alt2.1
+Version: 1.5.1
+Release: alt1
 License: GPL
 Group: System/Base
-Packager: Boris Savelev <boris@altlinux.org>
-Source: %name-%version.tar.bz2
-Source1: %name.init
-Patch: %name-%version-full.patch
+Packager: Paul Wolneykien <manowar@altlinux.org>
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Sat Mar 14 2009
-BuildRequires: libX11-devel libXScrnSaver-devel libXext-devel
+BuildRequires: libX11-devel libXScrnSaver-devel libXext-devel libsystemd-devel
 
 %description
 timeoutd scans /var/run/utmp every minute and checks /etc/timeouts for an entry which matches a restricted user, based on:
@@ -23,22 +20,13 @@ timeoutd is also able to restrict users running X.
 
 %prep
 %setup
-%patch0 -p1
 
 %build
-%make_build CFLAGS="$RPM_OPT_FLAGS"
+%make_build CFLAGS="$RPM_OPT_FLAGS -DWITH_SYSTEMD"
 
 %install
-mkdir -p %buildroot%_sbindir
-mkdir -p %buildroot%_initdir
-mkdir -p %buildroot%_man5dir
-mkdir -p %buildroot%_man8dir
-mkdir -p %buildroot%_sysconfdir/%name/messages/
-install -m755 %name %buildroot%_sbindir/%name
-install -m755 %SOURCE1 %buildroot%_initdir/%name
-install -m644 timeouts %buildroot%_sysconfdir/%name
-install -m644 timeouts.5 %buildroot%_man5dir
-install -m644 %name.8 %buildroot%_man8dir
+%makeinstall_std
+mkdir -p %buildroot%_sysconfdir/%name/messages
 
 %files
 %doc README
@@ -49,8 +37,20 @@ install -m644 %name.8 %buildroot%_man8dir
 %_initdir/%name
 %_man5dir/*
 %_man8dir/*
+%_unitdir/%name.*
 
 %changelog
+* Wed Dec 21 2022 Paul Wolneykien <manowar@altlinux.org> 1.5.1-alt1
+- Fix: Exit with 100 on SIGSEGV.
+- Added the unit file.
+- Updated the package summary.
+- Fixed/improved handling of error cases.
+- Fixed and enabled all debug/info messages.
+- Build with libsystemd.
+- Implemented systemd log levels for messages.
+- Implemented command-line option processing.
+- The localtime function takes a time_t* argument. (thx Steve Powers).
+
 * Wed Jun 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt2.1
 - Fixed build
 
