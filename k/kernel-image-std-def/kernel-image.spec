@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel	.84
+%define kernel_sublevel	.85
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -615,6 +615,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Dec 22 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.85-alt1
+- v5.15.85 (2022-12-21).
+- Backport improved ES8336 codec driver from 6.0 to 5.15.
+
 * Mon Dec 19 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.84-alt1
 - v5.15.84 (2022-12-19).
 
