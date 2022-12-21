@@ -13,7 +13,7 @@
 %global provider_prefix %provider.%provider_tld/%project/%repo
 %global import_path     %provider_prefix
 
-%global snappy_svcs      snapd.service snapd.socket snapd.autoimport.service snapd.seeded.service
+%global snappy_svcs      snapd.service snapd.socket snapd.autoimport.service snapd.seeded.service snapd.mounts.target snapd.mounts-pre.target
 %global snappy_user_svcs snapd.session-agent.service snapd.session-agent.socket
 
 # Until we have a way to add more extldflags to gobuild macro...
@@ -25,11 +25,11 @@
 %{!?_environmentdir: %global _environmentdir /lib/environment.d}
 %{!?_systemdgeneratordir: %global _systemdgeneratordir /lib/systemd/system-generators}
 %{!?_systemd_system_env_generator_dir: %global _systemd_system_env_generator_dir /lib/systemd/system-environment-generators}
-
+%{!?_tmpfilesdir: %global _tmpfilesdir /lib/tmpfiles.d}
 #%%define _libexecdir %%_prefix/libexec
 
 Name: snapd
-Version: 2.56
+Version: 2.58
 Release: alt1
 Summary: A transactional software package manager
 License: GPLv3
@@ -139,6 +139,9 @@ BUILDTAGS="${BUILDTAGS} nomanagers"
 %gobuild_static -o bin/snap-update-ns $GOFLAGS %import_path/cmd/snap-update-ns
 %gobuild_static -o bin/snapctl $GOFLAGS %import_path/cmd/snapctl
 
+%ifarch %ix86
+export CGO_CFLAGS="$CGO_CFLAGS -fno-stack-protector"
+%endif
 %gobuild -o bin/snap-seccomp $GOFLAGS %import_path/cmd/snap-seccomp
 
 %if_with selinux
@@ -184,6 +187,7 @@ install -d -p %buildroot%_man8dir
 install -d -p %buildroot%_environmentdir
 install -d -p %buildroot%_systemdgeneratordir
 install -d -p %buildroot%_systemd_system_env_generator_dir
+install -d -p %buildroot%_tmpfilesdir
 install -d -p %buildroot%_unitdir
 install -d -p %buildroot%_userunitdir
 install -d -p %buildroot%_sysconfdir/profile.d
@@ -259,7 +263,8 @@ pushd data
 %makeinstall_std BINDIR="%_bindir" LIBEXECDIR="%_libexecdir" DATADIR="%_datadir" \
               SYSTEMDSYSTEMUNITDIR="%_unitdir" SYSTEMDUSERUNITDIR="%_userunitdir" \
               SNAP_MOUNT_DIR="%_sharedstatedir/snapd/snap" \
-              SNAPD_ENVIRONMENT_FILE="%_sysconfdir/sysconfig/snapd"
+              SNAPD_ENVIRONMENT_FILE="%_sysconfdir/sysconfig/snapd" \
+              TMPFILESDIR="%_tmpfilesdir"
 popd
 
 # Remove snappy core specific units
@@ -275,6 +280,11 @@ rm -f %buildroot%_libexecdir/snapd/system-shutdown
 # Remove snapd apparmor service
 rm -f %buildroot%_unitdir/snapd.apparmor.service
 rm -f %buildroot%_libexecdir/snapd/snapd-apparmor
+
+# Remove prompt services
+rm %buildroot%_unitdir/snapd.aa-prompt-listener.service
+rm %buildroot%_userunitdir/snapd.aa-prompt-ui.service
+rm %buildroot%_datadir/dbus-1/services/io.snapcraft.Prompt.service
 
 # Install Polkit configuration
 install -m 644 -D data/polkit/io.snapcraft.snapd.policy %buildroot%_datadir/polkit-1/actions
@@ -374,12 +384,15 @@ fi
 %attr(0755,root,root) %_sysconfdir/profile.d/snapd.sh
 %_mandir/man8/snapd-env-generator.8*
 %_systemd_system_env_generator_dir/snapd-env-generator
+%_tmpfilesdir/snapd.conf
 %_datadir/fish/vendor_conf.d/snapd.fish
 %_unitdir/snapd.socket
 %_unitdir/snapd.service
 %_unitdir/snapd.autoimport.service
 %_unitdir/snapd.failure.service
 %_unitdir/snapd.seeded.service
+%_unitdir/snapd.mounts.target
+%_unitdir/snapd.mounts-pre.target
 %_userunitdir/snapd.session-agent.service
 %_userunitdir/snapd.session-agent.socket
 %_datadir/dbus-1/services/io.snapcraft.Launcher.service
@@ -446,6 +459,9 @@ fi
 %endif
 
 %changelog
+* Wed Dec 21 2022 Alexey Shabalin <shaba@altlinux.org> 2.58-alt1
+- 2.58 (Fixes: CVE 2022-3328)
+
 * Mon Jun 06 2022 Alexey Shabalin <shaba@altlinux.org> 2.56-alt1
 - 2.56
 
