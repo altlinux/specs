@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 Name: 	 xrdp
 Version: 0.9.21.1
-Release: alt1
+Release: alt2
 
 Summary: An open source remote desktop protocol (RDP) server
 
@@ -74,6 +74,8 @@ Obsoletes: librfxcodec-devel < %EVR
 
 %filter_from_requires \,^/etc/X11/xinit/Xsession,d
 %filter_from_requires \,^/usr/etc/X11/xdm/Xsession,d
+%filter_from_requires \,^/etc/X11/xdm/Xsession,d
+%filter_from_requires \,^/etc/X11/xinit/xinitrc,d
 
 %description
 xrdp offers a graphical login to a remote client using
@@ -275,6 +277,9 @@ fi
 %_x11modulesdir/input/*.so
 
 %changelog
+* Tue Dec 20 2022 Alexander Danilov <admsasha@altlinux.org> 0.9.21.1-alt2
+- added filter_from_requires.
+
 * Wed Dec 14 2022 Andrey Cherepanov <cas@altlinux.org> 0.9.21.1-alt1
 - New version.
 
