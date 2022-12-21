@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt9
+Release: alt10
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Wed Dec 21 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt10
+- update to latest public distr of ALT Server 10.1
+
 * Tue Dec 13 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt9
 - update Samba DC
 - fix gpoup policy (closes: #44651, #44650)
