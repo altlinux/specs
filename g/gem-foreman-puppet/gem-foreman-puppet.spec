@@ -2,7 +2,7 @@
 
 Name:          gem-foreman-puppet
 Version:       4.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Add Puppet features to Foreman
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -28,7 +28,7 @@ Allow assigning Puppet environments and classes to the Foreman Hosts.
 
 %package       -n gem-foreman-puppet-doc
 Version:       4.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Add Puppet features to Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_puppet
 Group:         Development/Documentation
@@ -47,7 +47,7 @@ Allow assigning Puppet environments and classes to the Foreman Hosts.
 
 %package       -n gem-foreman-puppet-devel
 Version:       4.0.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Add Puppet features to Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_puppet
 Group:         Development/Ruby
@@ -73,8 +73,8 @@ Allow assigning Puppet environments and classes to the Foreman Hosts.
 
 %install
 %ruby_install
-install -d %buildroot%_libexecdir/foreman
-cp -rp public %buildroot%_libexecdir/foreman
+install -d %buildroot%_datadir/foreman
+cp -rp public %buildroot%_datadir/foreman
 
 %check
 %ruby_test
@@ -83,7 +83,7 @@ cp -rp public %buildroot%_libexecdir/foreman
 %doc README.md webpack/__mocks__/foremanReact/readme.md
 %ruby_gemspec
 %ruby_gemlibdir
-%_libexecdir/foreman/public
+%_datadir/foreman/public
 
 %files         -n gem-foreman-puppet-doc
 %doc README.md webpack/__mocks__/foremanReact/readme.md
@@ -94,6 +94,9 @@ cp -rp public %buildroot%_libexecdir/foreman
 
 
 %changelog
+* Fri Nov 11 2022 Pavel Skrylev <majioa@altlinux.org> 4.0.3-alt1.1
+- ! fixed www data paths to store
+
 * Fri Sep 23 2022 Pavel Skrylev <majioa@altlinux.org> 4.0.3-alt1
 - ^ 2.0.0 -> 4.0.3
 

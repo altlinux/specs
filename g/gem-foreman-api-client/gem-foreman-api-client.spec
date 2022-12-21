@@ -2,7 +2,7 @@
 
 Name:          gem-foreman-api-client
 Version:       1.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Foreman apipie-bindings wrapper
 License:       Apache-2.0
 Group:         Development/Ruby
@@ -13,6 +13,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%if_with check
 BuildRequires: gem(apipie-bindings) >= 0.4.0,gem(apipie-bindings) < 1
 BuildRequires: gem(rest-client) >= 2.0 gem(rest-client) < 3
 BuildRequires: gem(manageiq-style) >= 0
@@ -21,6 +22,7 @@ BuildRequires: gem(rspec) >= 0
 BuildRequires: gem(simplecov) >= 0.17
 BuildRequires: gem(vcr) >= 3.0.2 gem(vcr) < 7
 BuildRequires: gem(webmock) >= 2.3.1 gem(webmock) < 4
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -40,7 +42,7 @@ Foreman apipie-bindings wrapper
 
 %package       -n gem-foreman-api-client-doc
 Version:       1.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Foreman apipie-bindings wrapper documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_api_client
 Group:         Development/Documentation
@@ -57,7 +59,7 @@ Foreman apipie-bindings wrapper documentation files.
 
 %package       -n gem-foreman-api-client-devel
 Version:       1.0.2
-Release:       alt1
+Release:       alt1.1
 Summary:       Foreman apipie-bindings wrapper development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_api_client
 Group:         Development/Ruby
@@ -104,5 +106,8 @@ Foreman apipie-bindings wrapper development package.
 
 
 %changelog
+* Fri Dec 16 2022 Pavel Skrylev <majioa@altlinux.org> 1.0.2-alt1.1
+- ! closes build requires under the check condition
+
 * Fri Sep 23 2022 Pavel Skrylev <majioa@altlinux.org> 1.0.2-alt1
 - + packaged gem with Ruby Policy 2.0

@@ -2,7 +2,7 @@
 
 Name:          gem-sassc
 Version:       2.4.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Use libsass with Ruby!
 License:       MIT
 Group:         Development/Ruby
@@ -12,10 +12,10 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
-Patch:         patch-2.2.1.patch
-Patch1:        use-system-libsass.patch
+Patch:         use-system-libsass.patch
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libstdc++-devel
+BuildRequires: libsass-devel
 %if_with check
 BuildRequires: gem(minitest) >= 5.5.1 gem(minitest) < 6
 BuildRequires: gem(minitest-around) >= 0
@@ -46,7 +46,7 @@ of use of the original Ruby Sass library.
 
 %package       -n gem-sassc-doc
 Version:       2.4.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Use libsass with Ruby! documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sassc
 Group:         Development/Documentation
@@ -66,7 +66,7 @@ of use of the original Ruby Sass library.
 
 %package       -n gem-sassc-devel
 Version:       2.4.0.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Use libsass with Ruby! development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета sassc
 Group:         Development/Ruby
@@ -95,7 +95,7 @@ of use of the original Ruby Sass library.
 
 %prep
 %setup
-%autopatch -p1
+%autopatch
 
 %build
 %ruby_build
@@ -120,6 +120,9 @@ of use of the original Ruby Sass library.
 
 
 %changelog
+* Wed Dec 21 2022 Pavel Skrylev <majioa@altlinux.org> 2.4.0.1-alt1.1
+- - extension for gemspec
+
 * Tue Oct 11 2022 Pavel Skrylev <majioa@altlinux.org> 2.4.0.1-alt1
 - ^ 2.4.0 -> 2.4.0.1
 

@@ -2,7 +2,7 @@
 
 Name:          gem-scoped-search
 Version:       4.1.10
-Release:       alt1
+Release:       alt1.1
 Summary:       Easily search you ActiveRecord models with a simple query language that converts to SQL
 License:       MIT
 Group:         Development/Ruby
@@ -13,9 +13,11 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
+%if_with check
 BuildRequires: gem(activerecord) >= 4.2.0
 BuildRequires: gem(rspec) >= 3.0 gem(rspec) < 4
 BuildRequires: gem(rake) >= 0
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -41,7 +43,7 @@ sorting and an ajax auto-completer.
 
 %package       -n gem-scoped-search-doc
 Version:       4.1.10
-Release:       alt1
+Release:       alt1.1
 Summary:       Easily search you ActiveRecord models with a simple query language that converts to SQL documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета scoped_search
 Group:         Development/Documentation
@@ -70,7 +72,7 @@ sorting and an ajax auto-completer.
 
 %package       -n gem-scoped-search-devel
 Version:       4.1.10
-Release:       alt1
+Release:       alt1.1
 Summary:       Easily search you ActiveRecord models with a simple query language that converts to SQL development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета scoped_search
 Group:         Development/Ruby
@@ -125,6 +127,9 @@ sorting and an ajax auto-completer.
 
 
 %changelog
+* Thu Dec 15 2022 Pavel Skrylev <majioa@altlinux.org> 4.1.10-alt1.1
+- !closes build requires under check condition
+
 * Thu Sep 29 2022 Pavel Skrylev <majioa@altlinux.org> 4.1.10-alt1
 - ^ 4.1.9 -> 4.1.10
 

@@ -2,7 +2,7 @@
 
 Name:          gem-foreman-webhooks
 Version:       3.0.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Configure webhooks for Foreman
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -26,7 +26,7 @@ Plugin for Foreman that allows to configure Webhooks.
 
 %package       -n gem-foreman-webhooks-doc
 Version:       3.0.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Configure webhooks for Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_webhooks
 Group:         Development/Documentation
@@ -45,7 +45,7 @@ Plugin for Foreman that allows to configure Webhooks.
 
 %package       -n gem-foreman-webhooks-devel
 Version:       3.0.5
-Release:       alt1
+Release:       alt1.1
 Summary:       Configure webhooks for Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_webhooks
 Group:         Development/Ruby
@@ -71,8 +71,8 @@ Plugin for Foreman that allows to configure Webhooks.
 
 %install
 %ruby_install
-install -d %buildroot%_libexecdir/foreman
-cp -rp public %buildroot%_libexecdir/foreman
+install -d %buildroot%_datadir/foreman
+cp -rp public %buildroot%_datadir/foreman
 
 %check
 %ruby_test
@@ -81,7 +81,7 @@ cp -rp public %buildroot%_libexecdir/foreman
 %doc README.md
 %ruby_gemspec
 %ruby_gemlibdir
-%_libexecdir/foreman/public
+%_datadir/foreman/public
 
 %files         -n gem-foreman-webhooks-doc
 %doc README.md
@@ -92,5 +92,8 @@ cp -rp public %buildroot%_libexecdir/foreman
 
 
 %changelog
+* Fri Nov 11 2022 Pavel Skrylev <majioa@altlinux.org> 3.0.5-alt1.1
+- ! fixed www data paths to store js/css in
+
 * Fri Sep 23 2022 Pavel Skrylev <majioa@altlinux.org> 3.0.5-alt1
 - + packaged gem with Ruby Policy 2.0
