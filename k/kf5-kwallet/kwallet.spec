@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.101.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -18,6 +18,7 @@ Source1: kwalletd5.po
 Patch2: alt-def-blowfish.patch
 Patch3: alt-create-wallet.patch
 Patch4: alt-fix-wallet-format.patch
+Patch5: alt-org-freedesktop-secrets-service.patch
 
 # Automatically added by buildreq on Fri Feb 13 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libgpg-error libgpg-error-devel libqt5-core libqt5-dbus libqt5-gui libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base ruby ruby-stdlibs
@@ -73,6 +74,7 @@ KF5 library
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 msgcat --use-first po/ru/kwalletd5.po %SOURCE1 > po/ru/kwalletd5.po.tmp
 cat po/ru/kwalletd5.po.tmp >po/ru/kwalletd5.po
@@ -102,7 +104,7 @@ LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 %_K5notif/*.notifyrc
 %_K5srv/*.desktop
 %_datadir/dbus-1/services/*.service
-#%_K5dbus_srv/*.service
+%_K5dbus_srv/*.service
 
 %files devel
 #%_K5inc/kwallet_version.h
@@ -118,6 +120,9 @@ LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Tue Dec 20 2022 Slava Aseev <ptrnine@altlinux.org> 5.101.0-alt2
+- add org.freedesktop.secrets.service file
+
 * Fri Dec 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt1
 - new version
 
