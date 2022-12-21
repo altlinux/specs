@@ -1,8 +1,8 @@
 %define srcName leptonlib
 
 Name: libleptonica
-Version: 1.82.0
-Release: alt2
+Version: 1.83.0
+Release: alt1
 
 Summary: A library for manipulating images
 Summary(ru_RU.UTF-8): Библиотека для операций над изображениями
@@ -116,7 +116,6 @@ rm -f %buildroot%_libdir/*.la
 
 %files devel
 %_includedir/leptonica
-%_libdir/liblept.so
 %_libdir/libleptonica.so
 %_pkgconfigdir/lept.pc
 %_libdir/cmake/LeptonicaConfig-version.cmake
@@ -129,6 +128,9 @@ rm -f %buildroot%_libdir/*.la
 %doc doc/html/*
 
 %changelog
+* Wed Dec 21 2022 Evgeny Chuck <koi@altlinux.org> 1.83.0-alt1
+- new version (1.83.0) with rpmgs script
+
 * Sun Feb 13 2022 Evgeny Chuck <koi@altlinux.org> 1.82.0-alt2
 - Restoring deleted patches:
   + libleptonica-alt-makefile.patch
