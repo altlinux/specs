@@ -5,10 +5,11 @@
 %def_enable introspection
 %def_enable vala
 # gusb-self-test failed in hasher
+# libgusb:ERROR:../gusb/gusb-self-test.c:83:gusb_context_func: assertion failed (array->len > 0): (0 > 0)
 %def_disable check
 
 Name: libgusb
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Summary: GLib wrapper around libusb1
@@ -17,7 +18,10 @@ License: LGPL-2.1+
 Url: https://gitorious.org/gusb/
 
 Vcs: https://github.com/hughsie/libgusb.git
-Source: http://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
+#Source: https://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
+Source: https://github.com/hughsie/libgusb/archive/%version/%name-%version.tar.gz
+
+Requires: usbids
 
 BuildRequires(pre): rpm-macros-meson %{?_enable_introspection:rpm-build-gir}
 BuildRequires: meson libgio-devel >= 2.44 libusb-devel >= 1.0.22
@@ -27,7 +31,7 @@ BuildRequires: libjson-glib-devel
 %{?_enable_vala:
 BuildRequires(pre): rpm-build-vala
 BuildRequires: vala-tools}
-%{?_enable_tests:BuildRequires: libumockdev-devel}
+%{?_enable_tests:BuildRequires: libumockdev-devel usbids}
 
 %description
 GUsb is a GObject wrapper for libusb that makes it easy to do
@@ -87,7 +91,7 @@ applications that use GUsb library.
 %meson_install
 
 %check
-%__meson_test
+%__meson_test -v --print-errorlogs
 
 %files
 %_libdir/%name.so.*
@@ -114,6 +118,9 @@ applications that use GUsb library.
 %endif
 
 %changelog
+* Wed Dec 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
+- 0.4.3
+
 * Wed Oct 19 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.2-alt1
 - 0.4.2
 
