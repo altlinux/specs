@@ -3,7 +3,7 @@ Summary: The New Moon browser, an unofficial branding of the Pale Moon project b
 Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофициальная сборка браузера Pale Moon
 
 Name: palemoon
-Version:  31.4.1.1
+Version: 31.4.2
 
 Release: alt1
 
@@ -13,14 +13,12 @@ Group: Networking/WWW
 Url: https://github.com/MoonchildProductions/Pale-Moon
 Epoch: 2
 
-
 ExcludeArch: %ix86 %arm
 
 %define sname palemoon
 %define bname newmoon
 
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
-
 
 %define palemoon_cid                    \{8de7fcbb-c55c-4fbe-bfc5-fc555c87dbc4\}
 
@@ -29,7 +27,6 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 %define newmoon_bindir                  %_libdir/%bname
 %define palemoon_arch_extensionsdir     %_newmoon_datadir/extensions
 #define palemoon_noarch_extensionsdir   %%newmoon_datadir/extensions
-
 
 Source: %sname-source-%version-%release.tar
 
@@ -75,17 +72,16 @@ Patch114: nemoon_branding-31.0.0.patch
 #set_gcc_version 10
 %set_autoconf_version 2.13
 
-BuildpreReq: libXcomposite-devel libXdamage-devel
+BuildPreReq: libXcomposite-devel libXdamage-devel
 
 # Automatically added by buildreq on Wed Jul 13 2022
 # optimized out: alt-os-release alternatives fontconfig fontconfig-devel glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libICE-devel libSM-devel libX11-devel libXext-devel libXrender-devel libatk-devel libcairo-devel libctf-nobfd0 libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libstdc++-devel libxcb-devel perl pkg-config python-modules python-modules-compiler python-modules-ctypes python-modules-curses python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-xml python2-base python3 python3-base sh4 xorg-proto-devel zlib-devel
 BuildRequires: doxygen gcc-c++ libGConf-devel libXt-devel libalsa-devel
-BuildRequires: libdbus-glib-devel libgtk+2-devel libhunspell-devel 
+BuildRequires: libdbus-glib-devel libgtk+2-devel libhunspell-devel
 BuildRequires: libpulseaudio-devel libsocket python-modules-distutils
 BuildRequires: python-modules-json python-modules-wsgiref unzip yasm zip
 
-BuildRequires: /usr/bin/python2.7 python2-base
-
+BuildRequires: %_bindir/python2.7 python2-base
 
 # BEGIN SourceDeps(oneline):
 BuildRequires: bzlib-devel gobject-introspection-devel libgtest-devel libpng-devel libssl-devel swig texinfo zlib-devel
@@ -120,8 +116,8 @@ Summary(ru_RU.UTF-8): Интернет-браузер New Moon - неофици�
 Group: Networking/WWW
 
 #Obsoletes: palemoon  < 29.4.6
-Provides:  palemoon = %EVR
-Provides:  webclient
+Provides: palemoon = %EVR
+Provides: webclient
 
 Conflicts: newmoon < 31.0.0
 #Obsoletes: newmoon < 29.4.6
@@ -143,7 +139,6 @@ cross-platform.
 Интернет-браузер %sname - кроссплатформенная модификация браузера Mozilla Firefox ,
 созданная с использованием языка XUL для описания интерфейса пользователя.
 
-
 %package -n rpm-build-palemoon
 Summary: RPM helper macros to rebuild %name packages
 Group: Development/Other
@@ -162,12 +157,10 @@ These helper macros provide possibility to rebuild
 #cd UXP-PM%{version}_Release
 # patch to move files directly to /usr/lib No more symlinks
 
-
 pushd palemoon/platform
 sed -e 's;$(libdir)/$(MOZ_APP_NAME)-$(MOZ_APP_VERSION);$(libdir)/$(MOZ_APP_NAME);g' -i config/baseconfig.mk
 sed -e 's;$(libdir)/$(MOZ_APP_NAME)-devel-$(MOZ_APP_VERSION);$(libdir)/$(MOZ_APP_NAME)-devel;g' -i config/baseconfig.mk
 popd
-
 
 %setup -T -D -a 2
 %setup -T -D -a 11
@@ -177,18 +170,15 @@ popd
 
 #patch21 -p1
 
-
 %patch16 -p1
 
 %patch18 -p1
 
 %patch22 -p1
 
-
 cd %sname
 tar -xf %SOURCE1
 cd ..
-
 
 %patch23 -p1
 
@@ -223,16 +213,13 @@ EOF
 
 echo %version > config/version.txt
 
-
 rpath="/$(printf %%s '%newmoon_bindir' |tr '[:print:]' '_')"
 export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
 
 # for  palemoon_rpath-27.0.2.patch
 export RPATH_PATH="$rpath"
 
-
 # %__subst s~'$(MOZ_APP_NAME)-$(MOZ_APP_VERSION)'~'$(MOZ_APP_NAME)$(MOZ_APP_VERSION)'~g  ./platform/config/baseconfig.mk
-
 
 %__subst s~'"Moonchild Productions"'~'"Moonchild_Productions"'~g  ./platform/build/application.ini
 %__subst s~'"Pale Moon"'~'"Pale_Moon"'~g  ./platform/build/application.ini
@@ -244,12 +231,10 @@ echo "mk_add_options MOZ_OBJDIR=obj-%_arch" >> .mozconfig
 echo "mk_add_options MOZ_MAKE_FLAGS=-j${NPROCS:-4}" >> .mozconfig
 # echo "ac_add_options --enable-rpath"  >> .mozconfig
 
-
 ## echo "ac_add_options --disable-static" >> .mozconfig
 echo "ac_add_options --disable-elf-hack" >> .mozconfig
 echo "ac_add_options --enable-alsa --enable-pulseaudio" >> .mozconfig
 echo "ac_add_options --enable-raw --enable-ffmpeg" >> .mozconfig
-
 
 echo "ac_add_options --enable-system-hunspell" >> .mozconfig
 
@@ -267,7 +252,6 @@ echo "ac_add_options --with-nss-prefix=%_libdir/nss" >> .mozconfig
  echo "ac_add_options --with-arch=x86-64" >> .mozconfig
  echo 'ac_add_options --enable-optimize=" -march=x86-64 -msse2 -mfpmath=sse"' >> .mozconfig
 %endif
-
 
 %build
 cd %sname
@@ -288,7 +272,6 @@ MOZ_OPT_FLAGS=$(echo $RPM_OPT_FLAGS | \
 export CFLAGS="$MOZ_OPT_FLAGS"
 export CXXFLAGS="$MOZ_OPT_FLAGS -Wno-error=format-overflow -Wmaybe-uninitialized -Wreorder -D_GNUC_"
 
-
 # Add fake RPATH
 rpath="/$(printf %%s '%newmoon_bindir' |tr '[:print:]' '_')"
 export LDFLAGS="$LDFLAGS -Wl,-rpath,$rpath"
@@ -299,7 +282,6 @@ export RPATH_PATH="$rpath"
 echo '%newmoon_bindir'
 echo "$rpath"
 
-
 export PREFIX="%prefix"
 export LIBDIR="%_libdir"
 export LIBIDL_CONFIG=%_bindir/libIDL-config-2
@@ -307,7 +289,6 @@ export srcdir="$PWD"
 export SHELL=/bin/sh
 
 %__autoconf
-
 
 MOZ_SMP_FLAGS=-j1
 %ifarch %ix86
@@ -317,10 +298,8 @@ MOZ_SMP_FLAGS=-j1
     MOZ_SMP_FLAGS=-j${NPROCS:-4}
 %endif
 
-
 TOPSRCDIR=$pwd
 
- 
 %make -f client.mk \
  	MAKENSISU= \
  	STRIP="/bin/true" \
@@ -343,15 +322,13 @@ gcc %optflags \
 	-DMOZ_PROGRAM=\"%newmoon_bindir/%bname-bin\" \
 	%SOURCE7 -o %bname
 
-
 %install
-## ? install -D -m644 %SOURCE12 obj-%_arch/dist/bin/browser/defaults/profile/xulstore.json 
+## ? install -D -m644 %SOURCE12 obj-%_arch/dist/bin/browser/defaults/profile/xulstore.json
 
 # нужен только с патчами KDE
 # install -D -m644 %SOURCE13 obj-%_arch/dist/bin/defaults/pref/kde.js
 
 cd palemoon
-
 
 cd obj-%_arch
 %makeinstall MOZ_APP_VERSION=%version SHELL=/bin/sh
@@ -374,12 +351,9 @@ for s in 16 32 48; do
 		%buildroot/%_iconsdir/hicolor/${s}x${s}/apps/%bname.png
 done
 
-
 if [ -f %buildroot/%_bindir/%sname ];then
     rm  -f %buildroot/%_bindir/%sname
 fi
-
-
 
 install  %bname  %buildroot/%_bindir/%bname
 
@@ -401,8 +375,6 @@ rm -rf -- \
  	%buildroot%_libdir/newmoon-devel \
  	%buildroot%_datadir/idl/%bname-%version
 
-
-
 # install menu file
 install -D -m 644 %SOURCE6 ./%_desktopdir/%bname.desktop
 install -d -m 755 %buildroot/%newmoon_bindir/browser/defaults/preferences/
@@ -412,7 +384,6 @@ install -d -m 755 %buildroot/%newmoon_bindir/browser/defaults/preferences/
 #pref("general.useragent.locale",	"chrome://global/locale/intl.properties");
 #pref("extensions.getAddons.cache.enabled", false);
 #EOF
-
 
 cat << EOF >> %buildroot%newmoon_bindir/defaults/pref/prefs.js
 user_pref("browser.EULA.override", true);
@@ -438,17 +409,14 @@ install -m 644 %_builddir/palemoon-%version/defaults-newmoon/default48.png %buil
 
 set -x
 
-
 # Add alternatives
 mkdir -p ./%_altdir
 printf '%_bindir/xbrowser\t%_bindir/%bname\t99\n' >./%_altdir/%bname
 
-
-
 # Add real RPATH
 (set -x
  	rpath="/$(printf %%s '%newmoon_bindir' |tr '[:print:]' '_')"
- 
+
  	find \
  		%buildroot/%newmoon_bindir \
  	-type f |
@@ -476,8 +444,6 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/AUTHORS %_builddir/%snam
 install -D -m 644 %_builddir/palemoon-%version/palemoon/LICENSE %_builddir/%sname-%version
 install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sname-%version
 
-
-
 %files -n %bname
 %dir %newmoon_bindir
 %newmoon_bindir/
@@ -499,6 +465,9 @@ install -D -m 644 %_builddir/palemoon-%version/palemoon/README.md %_builddir/%sn
 %exclude %_includedir/*
 
 %changelog
+* Wed Dec 21 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.4.2-alt1
+- Version 31.4.2
+
 * Sun Dec 11 2022 Hihin Ruslan <ruslandh@altlinux.ru> 2:31.4.1.1-alt1
 - Version 31.4.1.1
 
