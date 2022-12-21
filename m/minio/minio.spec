@@ -1,8 +1,8 @@
 %global import_path github.com/minio/minio
-%global commit 067d21d0f23254ea9ced107ef1a408fed83964a5
+%global commit 04ae9058ed5b135c27a3662b1153e129e5cf1483
 %global shortcommit %(c=%{commit}; echo ${c:0:12})
-%global tag RELEASE.2022-02-01T18-00-14Z
-%define version 2022.02.01
+%global tag RELEASE.2022-12-07T00-56-37Z
+%define version 2022.12.07
 
 %global _unpackaged_files_terminate_build 1
 
@@ -21,7 +21,7 @@ Source4: %name.service
 
 Patch: %name-%version.patch
 
-ExclusiveArch:  %go_arches
+ExclusiveArch: %go_arches
 BuildRequires(pre): rpm-build-golang
 
 %description
@@ -45,18 +45,20 @@ export TAG=%tag
 export VERSION=${TAG#RELEASE.}
 export COMMIT=%commit
 export SCOMMIT=%shortcommit
+export YEAR=2022
 export prefix=%import_path/cmd
 
 # setup flags like 'go run buildscripts/gen-ldflags.go' would do
-export LDFLAGS="-X $prefix.Version=$VERSION -X $prefix.ReleaseTag=$TAG -X $prefix.CommitID=$COMMIT -X $prefix.ShortCommitID=$SCOMMIT"
+export LDFLAGS="-X $prefix.Version=$VERSION -X $prefix.ReleaseTag=$TAG -X $prefix.CommitID=$COMMIT -X $prefix.ShortCommitID=$SCOMMIT  -X github.com/minio/minio/cmd.CopyrightYear=$YEAR"
 export TAGS="kqueue"
 
 sed -e "s|DEVELOPMENT.GOGET|$VERSION|g" -i cmd/build-constants.go
 
 %golang_prepare
-cd .gopath/src/%import_path
+pushd $BUILDDIR/src/%import_path
 CGO_ENABLED=0 %gobuild -tags kqueue -trimpath -o %name .
 #CGO_ENABLED=0 %golang_build .
+popd
 
 %install
 export BUILDDIR="$PWD/.gopath"
@@ -94,6 +96,9 @@ useradd -r -g _%name -c "Minio" -d %_sharedstatedir/%name -s /dev/null -n _%name
 %_unitdir/%name.service
 
 %changelog
+* Wed Dec 21 2022 Alexey Shabalin <shaba@altlinux.org> 2022.12.07-alt1
+- Update to RELEASE.2022-12-07T00-56-37Z
+
 * Thu Feb 03 2022 Alexey Shabalin <shaba@altlinux.org> 2022.02.01-alt1
 - Update to RELEASE.2022-02-01T18-00-14Z
 
