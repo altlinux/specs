@@ -24,7 +24,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.8.7
+Version: 1.8.8
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -134,6 +134,14 @@ might have mobile broadband hardware. It is probably not required on servers.
 %setup
 %patch0 -p1
 
+# 1.8.8: 'lenovo-thinklmi-self-test' fails on aarch64 with:
+# "Failed to load SMBIOS: neither SMBIOS or DT found"
+# due to missing /sys/class/dmi/id in qemu-system-aarch64
+%ifarch aarch64
+sed -i -e "/get_option('tests')/ s/$/ and false/" \
+    plugins/lenovo-thinklmi/meson.build
+%endif
+
 %build
 %meson \
     -Ddocs=enabled \
@@ -204,9 +212,11 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 
 %if_enabled tests
 %check
-%ifarch x86_64 %ix86
+%if_enabled uefi
 vm-run --sbin --udevd --kvm=cond --overlay=ext4:/usr/src \
        %__meson_test
+%else
+%__meson_test
 %endif
 %endif
 
@@ -336,6 +346,12 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4:/usr/src \
 %endif
 
 %changelog
+* Fri Dec 16 2022 Egor Ignatov <egori@altlinux.org> 1.8.8-alt1
+- 1.8.7 -> 1.8.8
+- enable tests for all architectures
+- start tests with vm-run only if uefi enabled
+- aarch64: disable 'lenovo-thinklmi-self-test'
+
 * Wed Nov 23 2022 Egor Ignatov <egori@altlinux.org> 1.8.7-alt1
 - 1.8.5 -> 1.8.7
 - run tests in qemu (vm-run)
