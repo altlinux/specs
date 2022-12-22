@@ -7,7 +7,7 @@
 %define prog_name            postgresql
 %define postgresql_major     10
 %define postgresql_minor     23
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -186,8 +186,12 @@ Provides: postgresql-server-devel = %EVR
 Obsoletes: %prog_name-server-devel < %EVR
 %endif
 %filter_from_requires /^\/usr\/include\/pgsql\/libpq-fe\.h/d
-# 1C
+Conflicts: %{prog_name}11-server-devel
+Conflicts: %{prog_name}12-server-devel
+Conflicts: %{prog_name}13-server-devel
+Conflicts: %{prog_name}14-server-devel
 Conflicts: %{prog_name}14-1C-server-devel
+Conflicts: %{prog_name}15-server-devel
 
 %description server-devel
 The %name-server-devel package contains the header files and configuration
@@ -509,6 +513,11 @@ if [ "$2" -eq 0 ]; then
 fi
 
 %triggerpostun -- %{prog_name}14-1C-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}15-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -865,6 +874,10 @@ fi
 %endif
 
 %changelog
+* Thu Dec 22 2022 Alexei Takaseev <taf@altlinux.org> 10.23-alt2
+- Add conflicts for server-devel subpackages
+- Add triggerpostun for PG 15
+
 * Wed Nov 09 2022 Alexei Takaseev <taf@altlinux.org> 10.23-alt1
 - 10.23
 - Add patch for E2K

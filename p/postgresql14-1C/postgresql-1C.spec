@@ -10,7 +10,7 @@
 %define prog_name            postgresql
 %define postgresql_major     14
 %define postgresql_minor     6
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -63,7 +63,7 @@ BuildRequires: postgresql-devel
 BuildRequires: libicu-devel
 %endif
 %if_with jit
-BuildRequires: llvm12.0-devel clang12.0-devel gcc-c++
+BuildRequires: llvm13.0-devel clang13.0-devel gcc-c++
 %endif
 
 %description
@@ -193,13 +193,19 @@ Group: Development/Databases
 Requires: %libpq_name-devel
 Requires: %libecpg_name-devel
 %if_with jit
-Requires: llvm12.0-devel clang12.0-devel gcc-c++
+Requires: llvm13.0-devel clang13.0-devel gcc-c++
 %endif
 %if_with devel
 Provides: %prog_name-server-devel = %EVR
 Obsoletes: %prog_name-server-devel < %EVR
 %endif
 %filter_from_requires /^\/usr\/include\/pgsql\/libpq-fe\.h/d
+Conflicts: %{prog_name}10-server-devel
+Conflicts: %{prog_name}11-server-devel
+Conflicts: %{prog_name}12-server-devel
+Conflicts: %{prog_name}13-server-devel
+Conflicts: %{prog_name}14-server-devel
+Conflicts: %{prog_name}15-server-devel
 
 %description server-devel
 The %name-server-devel package contains the header files and configuration
@@ -286,7 +292,7 @@ database.
 Summary: Just-in-time compilation support for PostgreSQL
 Group: Databases
 Requires: %name-server = %EVR
-Requires: llvm12.0
+Requires: llvm13.0
 Provides: %prog_name-llvmjit = %EVR
 
 %description llvmjit
@@ -309,8 +315,8 @@ goal of accelerating analytics queries.
 
 %build
 %if_with jit
-export LLVM_CONFIG=/usr/bin/llvm-config-12
-export CLANG=/usr/bin/clang-12
+export LLVM_CONFIG=/usr/bin/llvm-config-13
+export CLANG=/usr/bin/clang-13
 %endif
 
 %ifnarch armh
@@ -542,6 +548,11 @@ if [ "$2" -eq 0 ]; then
 fi
 
 %triggerpostun -- %{prog_name}14-1C-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}15-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -931,6 +942,11 @@ fi
 %endif
 
 %changelog
+* Thu Dec 22 2022 Alexei Takaseev <taf@altlinux.org> 14.6-alt2
+- Add conflicts for server-devel subpackages
+- Add triggerpostun for PG 15
+- Change BR llvn 12.0 -> llvm13.0
+
 * Wed Nov 09 2022 Alexei Takaseev <taf@altlinux.org> 14.6-alt1
 - 14.6
 - Add patch for E2K
