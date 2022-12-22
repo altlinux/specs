@@ -1,7 +1,7 @@
 Summary: Automatically logout users by idle timeouts
 Name: timeoutd
 Version: 1.5.1
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Base
 Packager: Paul Wolneykien <manowar@altlinux.org>
@@ -32,7 +32,7 @@ mkdir -p %buildroot%_sysconfdir/%name/messages
 %doc README
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/messages
-%config %_sysconfdir/%name/timeouts
+%config(noreplace) %_sysconfdir/%name/timeouts
 %_sbindir/%name
 %_initdir/%name
 %_man5dir/*
@@ -40,6 +40,9 @@ mkdir -p %buildroot%_sysconfdir/%name/messages
 %_unitdir/%name.*
 
 %changelog
+* Thu Dec 22 2022 Paul Wolneykien <manowar@altlinux.org> 1.5.1-alt2
+- Fix: Use %config(noreplace) for timeouts.
+
 * Wed Dec 21 2022 Paul Wolneykien <manowar@altlinux.org> 1.5.1-alt1
 - Fix: Exit with 100 on SIGSEGV.
 - Added the unit file.
