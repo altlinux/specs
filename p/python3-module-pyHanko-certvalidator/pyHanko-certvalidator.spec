@@ -4,7 +4,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.19.6
+Version: 0.19.8
 Release: alt1
 
 Summary: Python library for validating X.509 certificates and paths
@@ -48,8 +48,12 @@ whitelisting and revocation checks.
 
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 --ignore tests/test_crl_client.py --ignore tests/test_ocsp_client.py \
-'-k not test_revocation_mode_hard and not test_revocation_mode_hard_aiohttp_autofetch and not test_revocation_mode_hard_async and not test_revocation_mode_hard_requests_autofetch'
+py.test-3 --ignore tests/test_crl_client.py --ignore tests/test_ocsp_client.py -k"
+not test_revocation_mode_hard and \
+not test_revocation_mode_hard_aiohttp_autofetch and \
+not test_revocation_mode_hard_async and \
+not test_revocation_mode_hard_requests_autofetch and \
+not test_basic_certificate_validator_tls_aia"
 
 %files
 %doc *.md
@@ -57,6 +61,9 @@ py.test-3 --ignore tests/test_crl_client.py --ignore tests/test_ocsp_client.py \
 %python3_sitelibdir/%mname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Dec 22 2022 Grigory Ustinov <grenka@altlinux.org> 0.19.8-alt1
+- Automatically updated to 0.19.8.
+
 * Sun Oct 30 2022 Grigory Ustinov <grenka@altlinux.org> 0.19.6-alt1
 - Automatically updated to 0.19.6.
 
