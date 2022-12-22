@@ -1,7 +1,7 @@
 %define oname pyface
 
 Name: python3-module-%oname
-Version: 7.4.3
+Version: 7.4.4
 Release: alt1
 
 Summary: Traits-capable windowing framework
@@ -66,6 +66,9 @@ rm -f \
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Dec 22 2022 Grigory Ustinov <grenka@altlinux.org> 7.4.4-alt1
+- Automatically updated to 7.4.4.
+
 * Tue Nov 15 2022 Grigory Ustinov <grenka@altlinux.org> 7.4.3-alt1
 - Automatically updated to 7.4.3.
 
