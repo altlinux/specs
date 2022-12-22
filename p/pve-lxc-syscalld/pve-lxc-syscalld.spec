@@ -4,7 +4,7 @@
 Name: pve-lxc-syscalld
 Summary: PVE LXC syscall daemon
 Version: 1.2.2.1
-Release: alt1
+Release: alt2
 License: AGPL-3.0+
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 Patch: pve-lxc-syscalld-aarch64-u8.patch
 
 ExclusiveArch: x86_64 aarch64
-BuildRequires(pre): rpm-macros-rust
+BuildRequires(pre): rpm-macros-rust rpm-macros-systemd
 BuildRequires: rpm-build-rust libsystemd-devel
 BuildRequires: /proc
 
@@ -28,7 +28,6 @@ containers.
 %ifarch aarch64
 %patch -p0 -b .u8
 %endif
-sed -i 's|roxmox ||' etc/pve-lxc-syscalld.service.in
 
 %build
 export BUILD_MODE=release
@@ -36,14 +35,30 @@ export BUILD_MODE=release
 
 %install
 %makeinstall_std
-install -dm755 %buildroot%_unitdir
+install -dm755 %buildroot{%_unitdir,%_tmpfilesdir}
 install -m644 etc/%name.service %buildroot%_unitdir/
+
+cat << __EOF__ > %buildroot%_tmpfilesdir/%name.conf
+d /run/pve 0755 root root
+__EOF__
+
+%post
+%tmpfiles_create %_tmpfilesdir/%name.conf
+%post_service %name
+
+%preun
+%preun_service %name
 
 %files
 %_unitdir/%name.service
+%_tmpfilesdir/%name.conf
 %_libexecdir/%name/%name
 
 %changelog
+* Thu Dec 22 2022 Alexey Shabalin <shaba@altlinux.org> 1.2.2.1-alt2
+- Add tmpfiles config for create /run/pve.
+- Delete RuntimeDirectory from service unit.
+
 * Tue Oct 04 2022 Alexey Shabalin <shaba@altlinux.org> 1.2.2.1-alt1
 - 1.2.2-1
 
