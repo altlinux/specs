@@ -1,5 +1,5 @@
 Name: ustreamer
-Version: 5.34
+Version: 5.35
 Release: alt1
 
 Summary: Lightweight MJPEG stream server
@@ -9,7 +9,7 @@ Url: https://github.com/pikvm/ustreamer
 
 Source0: %name-%version-%release.tar
 
-%package -n janus-plugin-ustreamer
+%package plugin-janus
 Summary: Ustreamer plugin for Janus
 Group: Networking/Other
 
@@ -39,7 +39,7 @@ as well as most video players such as mplayer, VLC etc.
 %description
 %desc
 
-%description -n janus-plugin-ustreamer
+%description plugin-janus
 %desc
 This package contains plugin for Janus WebRTC Server
 
@@ -51,9 +51,7 @@ This package contains Python bindings.
 
 %prep
 %setup
-sed -ri -e '/^_CFLAGS/ s,$, -I/usr/include/janus,' \
-        -e 's,/lib/ustreamer/janus,/%_lib/janus/plugins,' \
-        janus/Makefile
+sed -ri -e '/^_CFLAGS/ s,$, -I/usr/include/janus,' janus/Makefile
 
 %build
 make %defs
@@ -67,16 +65,20 @@ make install %defs DESTDIR=%buildroot PREFIX=%prefix
 %doc README*
 %_bindir/ustreamer
 %_bindir/ustreamer-dump
+%dir %_libexecdir/ustreamer
 %_man1dir/ustreamer.1*
 %_man1dir/ustreamer-dump.1*
 
-%files -n janus-plugin-ustreamer
-%_libdir/janus/plugins/libjanus_ustreamer.so*
+%files plugin-janus
+%_libexecdir/ustreamer/janus
 
 %files -n python3-module-ustreamer
 %python3_sitelibdir/ustreamer-%version.dist-info
 %python3_sitelibdir/ustreamer.*.so
 
 %changelog
+* Thu Dec 22 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.35-alt1
+- 5.35 released
+
 * Wed Dec  7 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.34-alt1
 - 5.34 released
