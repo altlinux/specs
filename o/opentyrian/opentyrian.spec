@@ -1,5 +1,5 @@
 Name: opentyrian
-Version: 2.1.20220318
+Version: 2.1.20221123
 Release: alt1
 Summary: OpenTyrian is a port of the DOS shoot-em-up Tyrian
 License: GPLv2
@@ -56,6 +56,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Dec 22 2022 L.A. Kostis <lakostis@altlinux.ru> 2.1.20221123-alt1
+- Updated to v2.1.20221123.
+
 * Fri Mar 25 2022 L.A. Kostis <lakostis@altlinux.ru> 2.1.20220318-alt1
 - Updated to v2.1.20220318.
 - SDL->SDL2.
