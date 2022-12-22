@@ -1,7 +1,7 @@
 %define oname numpy-stl
 
 Name: python3-module-%oname
-Version: 2.17.1
+Version: 3.0.0
 Release: alt1
 
 Summary: Library to make reading, writing and modifying both binary and ascii STL files easy
@@ -57,6 +57,9 @@ py.test-3 -v
 %python3_sitelibdir/*.dist-info
 
 %changelog
+* Thu Dec 22 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Sun Oct 16 2022 Grigory Ustinov <grenka@altlinux.org> 2.17.1-alt1
 - Automatically updated to 2.17.1.
 
