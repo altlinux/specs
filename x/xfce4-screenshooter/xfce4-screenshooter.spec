@@ -2,7 +2,7 @@
 %define git_date %nil
 
 Name: xfce4-screenshooter
-Version: 1.10.0
+Version: 1.10.1
 Release: alt1%git_date
 
 Summary: Screenshot Xfce4 panel plugin
@@ -20,7 +20,8 @@ BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4panel-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel libexo-gtk3-devel libxfconf-devel
 BuildPreReq: libxml2-devel libXi-devel
 BuildRequires: libpango-devel >= 1.44.0
-BuildRequires: intltool libsoup-devel libXext-devel libXfixes-devel
+BuildRequires: intltool libsoup3.0-devel libXext-devel libXfixes-devel
+
 BuildRequires: help2man
 
 Provides:  xfce4-screenshooter-plugin = %version-%release
@@ -75,6 +76,9 @@ mkdir m4/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Thu Dec 22 2022 Mikhail Efremov <sem@altlinux.org> 1.10.1-alt1
+- Updated to 1.10.1.
+
 * Wed Nov 16 2022 Mikhail Efremov <sem@altlinux.org> 1.10.0-alt1
 - Don't require X display for printing version.
 - Updated BR.
