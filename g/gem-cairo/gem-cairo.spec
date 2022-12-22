@@ -2,7 +2,7 @@
 
 Name:          gem-cairo
 Version:       1.17.8
-Release:       alt1
+Release:       alt1.1
 Summary:       ruby bindings for cairo
 License:       Ruby or GPL-2.0-or-later
 Group:         Development/Ruby
@@ -39,7 +39,7 @@ BuildRequires: gem(red-colors) >= 0
 BuildRequires: gem(bundler) >= 0
 BuildRequires: gem(test-unit) >= 0
 BuildRequires: gem(packnga) >= 0
-BuildRequires: gem(poppler) >= 3.1.1
+#BuildRequires: gem(poppler) >= 3.1.1
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -148,6 +148,9 @@ Ruby bindings for cairo // cairo extension for Ruby.
 
 
 %changelog
+* Thu Dec 22 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.17.8-alt1.1
+- rebuild without gem(poppler)
+
 * Mon Sep 26 2022 Pavel Skrylev <majioa@altlinux.org> 1.17.8-alt1
 - ^ 1.17.5 -> 1.17.8
 

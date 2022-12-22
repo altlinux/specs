@@ -2,7 +2,7 @@
 
 Name: libcairo
 Version: 1.16.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Multi-platform 2D graphics library
 License: LGPL
@@ -60,30 +60,17 @@ This package contains tools for working with the cairo graphics library.
 %setup -q -n cairo-%version
 %patch -p1
 
-> boilerplate/Makefile.am.features
-> src/Makefile.am.features
-> ChangeLog
-
 %build
 %autoreconf
 %configure \
 	--enable-xlib \
-	--disable-xlib-xcb \
 	--enable-xcb \
-%ifarch %arm
-	--disable-gl \
-	--enable-glesv2 \
-%else
-	--enable-gl \
-	--disable-glesv2 \
-%endif
-	--enable-egl \
-	--disable-drm \
 	--enable-ps \
 	--enable-pdf \
 	--enable-svg \
 	--enable-tee \
 	--disable-xml \
+	--disable-silent-rules \
 %if_with docs
 	--enable-gtk-doc \
 %endif
@@ -130,6 +117,9 @@ This package contains tools for working with the cairo graphics library.
 %_libdir/cairo
 
 %changelog
+* Thu Dec 22 2022 Valery Inozemtsev <shrek@altlinux.ru> 1:1.16.0-alt2
+- cherry pick upstream fixes for CVE-2018-19876, CVE-2020-35492
+
 * Thu Oct 25 2018 Valery Inozemtsev <shrek@altlinux.ru> 1:1.16.0-alt1
 - 1.16.0 (closes: #34613)
 
