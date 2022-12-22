@@ -1,5 +1,5 @@
 Name:    pascalabcnet
-Version: 3.8.3.3211
+Version: 3.8.3.3214
 Release: alt1
 
 Summary: PascalABC.NET programming language  
@@ -44,6 +44,7 @@ rm -rf bin/PT4
 find . -name \*.exe -delete
 # TODO remove bundled libraries
 #find . -name \*.dll -delete
+rm -f bin/*.dll
 tar xf %SOURCE2
 
 %build
@@ -129,6 +130,9 @@ install -Dpm 0644 %SOURCE3 %buildroot%_datadir/metainfo/PascalABCNETLinux.appdat
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Wed Dec 21 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3214-alt1
+- New version.
+
 * Tue Dec 06 2022 Andrey Cherepanov <cas@altlinux.org> 3.8.3.3211-alt1
 - New version.
 - Fixed force popup menu by tooltip (ALT #43948).
