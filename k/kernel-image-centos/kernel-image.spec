@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 217
+%define centos_release 219
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,22 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Dec 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.219-alt1.el9
+- Updated to kernel-5.14.0-219.el9 (fixes: CVE-2022-2873):
+  + Add fixes to drivers/misc/sram to support NVIDIA Orin
+  + Bring MD code the latest upstream
+  + CNB: fortify: Provide a memcpy trap door for sharp corners
+  + CNB: tracing/events: Add __vstring() and __assign_vstr() helper macros
+  + crypto: backport wireguard s390 fix
+  + hyper-v: Video and HID driver updates for RHEL-9.2
+  + i2c: ismt: Fix an out-of-bounds bug in ismt_access()
+  + kernfs: switch global kernfs_rwsem lock to per-fs lock
+  + powerpc/rtas: Allow ibm,platform-dump RTAS call with null buffer address
+  + redhat/configs: Enable CONFIG_CRYPTO_CURVE25519
+  + Redo missing uapi/linux/stddef.h: Add include guards
+  + vmxnet3: driver update to v6.0
+  + x86/fpu: Drop fpregs lock before inheriting FPU permissions
+
 * Sat Dec 17 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.217-alt1.el9
 - Updated to kernel-5.14.0-217.el9 (fixes: CVE-2022-2959, CVE-2022-43945):
   + arm64: dts: imx93-pinfunc: drop execution permission
