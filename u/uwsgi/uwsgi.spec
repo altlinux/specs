@@ -3,7 +3,7 @@
 %define _pseudouser_home     /var/empty
 
 Name: uwsgi
-Version: 2.0.20
+Version: 2.0.21
 Release: alt1
 
 Summary: fast (pure C), self-healing, developer-friendly WSGI server
@@ -70,6 +70,9 @@ install -pDm0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/%name
 %doc README contrib
 
 %changelog
+* Thu Dec 22 2022 Oleg Solovyov <mcpain@altlinux.org> 2.0.21-alt1
+- update to 2.0.21
+
 * Tue Dec 07 2021 Oleg Solovyov <mcpain@altlinux.org> 2.0.20-alt1
 - update to 2.0.20
 
