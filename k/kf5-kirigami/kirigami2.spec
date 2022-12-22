@@ -2,7 +2,7 @@
 
 Name: kf5-kirigami
 Version: 5.101.0
-Release: alt1
+Release: alt1.1
 %K5init
 
 Group: System/Libraries
@@ -61,6 +61,10 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%ifarch %e2k
+# same problem as with MSVC
+sed -i "s/_MSC_VER/__e2k__/" src/imagecolors.cpp
+%endif
 
 %build
 %K5build
@@ -86,6 +90,9 @@ KF5 library
 %_K5lib/libKF5Kirigami2.so.*
 
 %changelog
+* Thu Dec 22 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 5.101.0-alt1.1
+- fixed build for Elbrus
+
 * Fri Dec 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt1
 - new version
 
