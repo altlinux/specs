@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20221213
+Version: 20221216
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,11 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Dec 22 2022 Cronbuild Service <cronbuild@altlinux.org> 20221216-alt1
+- upstream changes (GIT 52261d03):
+  + rtw89: 8852c: update fw to v0.27.56.9 (thx Chin-Yen Lee)
+  + rtw89: 8852c: update fw to v0.27.56.8 (thx Ping-Ke Shih)
+
 * Wed Dec 14 2022 Cronbuild Service <cronbuild@altlinux.org> 20221213-alt1
 - upstream changes (GIT f3c283e1):
   + amdgpu: updated navi10 firmware for amd-5.4 (thx Alex Deucher)
