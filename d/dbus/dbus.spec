@@ -9,7 +9,7 @@
 
 Name: dbus
 Version: 1.14.4
-Release: alt1
+Release: alt2
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -20,6 +20,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 PreReq: shadow-utils
 Requires: lib%name = %version-%release
+Requires: /sbin/systemd-tmpfiles
 
 BuildRequires: autoconf-archive doxygen gcc-c++ libexpat-devel libSM-devel libX11-devel xmlto libselinux-devel libaudit-devel libcap-ng-devel
 BuildRequires: libsystemd-daemon-devel libsystemd-login-devel libsystemd-journal-devel
@@ -225,6 +226,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Thu Dec 22 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.14.4-alt2
+- fixed run dbus-daemon in hasher
+
 * Wed Dec 21 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.14.4-alt1
 - 1.14.4
 
