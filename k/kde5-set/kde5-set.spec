@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-set
-Version: 22.08.1
+Version: 22.08.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -39,7 +39,11 @@ Summary: %summary
 Group: Graphical desktop/KDE
 Requires: kde5-mini
 Requires: kde5-volume-control
+%ifarch ppc64le
+Requires: webclient
+%else
 Requires: /usr/bin/x-www-browser
+%endif
 #
 Requires: icon-theme-breeze
 Requires: kf5-kwallet kf5-kconfig kf5-kglobalaccel kf5-kimageformats kde5-svgpart
@@ -114,7 +118,7 @@ Requires: kde5-scanning
 #
 Requires: plasma5-discover-maxi
 Requires: plasma5-desktop-maxi
-Requires: kde5-konqueror kde5-keditbookmarks
+Requires: kde5-keditbookmarks
 Requires: kde5-kfloppy kde5-ktimer
 Requires: kde5-dragon
 Requires: kde5-kmousetool kde5-kmag
@@ -224,6 +228,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Thu Dec 22 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
+- exclude kde5-konqueror
+
 * Wed Nov 16 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.1-alt1
 - exclude kde5-kstars for armh
 
