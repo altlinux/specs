@@ -1,7 +1,7 @@
 Summary: Automatically logout users by idle timeouts
 Name: timeoutd
-Version: 1.5.1
-Release: alt2
+Version: 1.5.2
+Release: alt1
 License: GPL
 Group: System/Base
 Packager: Paul Wolneykien <manowar@altlinux.org>
@@ -40,6 +40,10 @@ mkdir -p %buildroot%_sysconfdir/%name/messages
 %_unitdir/%name.*
 
 %changelog
+* Thu Dec 22 2022 Paul Wolneykien <manowar@altlinux.org> 1.5.2-alt1
+- Do not intercept SIGSEGV.
+- Quit on SIGINT and SIGQUIT in foreground mode.
+
 * Thu Dec 22 2022 Paul Wolneykien <manowar@altlinux.org> 1.5.1-alt2
 - Fix: Use %config(noreplace) for timeouts.
 
