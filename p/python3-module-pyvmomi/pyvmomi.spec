@@ -1,7 +1,7 @@
 %define  modulename pyvmomi
 
 Name:    python3-module-%modulename
-Version: 8.0.0.1
+Version: 8.0.0.1.1
 Release: alt1
 
 Summary: VMware vSphere API Python Bindings
@@ -38,6 +38,9 @@ manage ESX, ESXi, and vCenter.
 %python3_sitelibdir/*.egg-*
 
 %changelog
+* Thu Dec 22 2022 Grigory Ustinov <grenka@altlinux.org> 8.0.0.1.1-alt1
+- Automatically updated to 8.0.0.1.1.
+
 * Tue Nov 29 2022 Grigory Ustinov <grenka@altlinux.org> 8.0.0.1-alt1
 - Automatically updated to 8.0.0.1.
 
