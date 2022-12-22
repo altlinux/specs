@@ -6,8 +6,8 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.33.3
-Release: alt2
+Version: 1.33.4
+Release: alt1
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -184,10 +184,15 @@ sed -i "s|#!/usr/bin/env python3|#!%__python3|" \
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Thu Dec 22 2022 Michael Shigorin <mike@altlinux.org> 1.33.4-alt1
+- new version (watch file uupdate)
+- fixed up the previous changelog record
+
 * Tue Dec 06 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.33.3-alt2
 - NMU:
-      + Recoll can use mutagen to process audio files, pull it from the big metapackage
-      + Added Russian translation of Summary and Description fields of spec
+  + Recoll can use mutagen to process audio files,
+    pull it from the big metapackage
+  + Added Russian translation of Summary and Description fields of spec
 
 * Sat Dec 03 2022 Michael Shigorin <mike@altlinux.org> 1.33.3-alt1
 - new version (watch file uupdate)
