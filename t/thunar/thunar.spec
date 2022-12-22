@@ -1,5 +1,5 @@
 Name: thunar
-Version: 4.18.0
+Version: 4.18.1
 Release: alt1
 
 Summary: Thunar File Manager for the Xfce Desktop Environment
@@ -80,7 +80,9 @@ This package contains development documentation for lib%name.
 
 mkdir -p m4/
 
-cp -a %SOURCE1 po/ru.po
+# Merge our own and upstream Russian translations
+msgcat --use-first -o merged_ru.po %SOURCE1 po/ru.po
+mv -f merged_ru.po po/ru.po
 
 %build
 %xfce4reconf
@@ -141,6 +143,10 @@ make check
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Thu Dec 22 2022 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
+- Used our own Russian translation (merged with upstream translation).
+- Updated to 4.18.1.
+
 * Thu Dec 15 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
 - thunar-thumbnailer: Check that pointer is not NULL.
 - Updated to 4.18.0.
