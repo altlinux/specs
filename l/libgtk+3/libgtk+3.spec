@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gtk+
 %define ver_major 3.24
@@ -8,7 +8,7 @@
 
 %def_enable xkb
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 %def_enable man
 %def_enable introspection
 %def_enable colord
@@ -20,9 +20,10 @@
 %def_disable tracker3
 %def_enable installed_tests
 %def_disable debug
+%def_disable check
 
 Name: libgtk+3
-Version: %ver_major.35
+Version: %ver_major.36
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -36,11 +37,9 @@ Source: %_name-%version.tar
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 %endif
 Source5: gtk-icon-cache.filetrigger
-
 Patch: gtk+-2.16.5-alt-stop-spam.patch
-# move cloudproviders flags from gdk to gtk
-Patch1: gtk+-3.24.9-alt-build.patch
 
+%define meson_ver 0.64.0
 %define glib_ver 2.58
 %define gi_ver 1.41.0
 %define cairo_ver 1.14.0
@@ -70,8 +69,8 @@ Requires: icon-theme-adwaita
 Requires: gtk+3-themes-incompatible
 %{?_enable_colord:Requires: colord}
 
-BuildRequires(pre): rpm-build-licenses rpm-build-gnome rpm-build-gir
-BuildRequires: glib2-devel >= %glib_ver libgio-devel
+BuildRequires(pre): rpm-macros-meson rpm-build-licenses rpm-build-gnome rpm-build-gir
+BuildRequires: meson >= %meson_ver glib2-devel >= %glib_ver libgio-devel
 BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libcairo-gobject-devel >= %cairo_ver
 BuildRequires: libpango-devel >= %pango_ver
@@ -88,15 +87,16 @@ BuildRequires: libXdamage-devel libXcomposite-devel libX11-devel libXcursor-deve
 BuildRequires: libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel
 BuildRequires: libXrender-devel libXt-devel
 BuildRequires: libfribidi-devel >= %fribidi_ver
+BuildRequires: libharfbuzz-devel libxkbcommon-devel iso-codes-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
-%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel wayland-protocols >= %wayland_protocols_ver}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel >= %wayland_ver libwayland-cursor-devel libEGL-devel libwayland-egl-devel  wayland-protocols >= %wayland_protocols_ver}
 %{?_enable_cloudproviders:BuildRequires: libcloudproviders-devel >= %cloudproviders_ver}
 %{?_enable_tracker3:BuildRequires: pkgconfig(tracker-sparql-3.0)}
 # for examples
-BuildRequires: libcanberra-gtk3-devel libharfbuzz-devel
-# for check
-BuildRequires: /proc dbus-tools-gui xvfb-run icon-theme-hicolor gnome-icon-theme-symbolic
+BuildRequires: libcanberra-gtk3-devel 
+%{?_enable_check:
+BuildRequires: /proc dbus-tools-gui xvfb-run icon-theme-hicolor gnome-icon-theme-symbolic}
 
 %description
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
@@ -238,41 +238,28 @@ the functionality of the installed GTK+3 packages.
 %prep
 %setup -n %_name-%version
 %patch -p1
-#%%patch1 -b .cloudprov
 # fix wrong GLIB define names
 sed -i.glib -e "s|GLIB_MIN_REQUIRED_VERSION|GLIB_VERSION_MIN_REQUIRED|" \
      -e "s|GLIB_MAX_ALLOWED_VERSION|GLIB_VERSION_MAX_ALLOWED|" \
-     meson.build configure*
+     meson.build
 
 %{?_enable_snapshot:touch README INSTALL}
 
 %build
-%{?_disable_static:export lt_cv_prog_cc_static_works=no}
-%{?_enable_static:export lt_cv_prog_cc_static_works=yes}
-%add_optflags %(getconf LFS_CFLAGS)
-%autoreconf
-%configure \
-    %{subst_enable static} \
-    %{subst_enable man} \
-    --enable-x11-backend \
-    %{subst_enable xkb} \
-    --disable-schemas-compile \
-    %{?_enable_gtk_doc:--enable-gtk-doc} \
-    %{?_enable_snapshot:--enable-gtk-doc} \
-    %{subst_enable colord} \
-    %{?_enable_wayland:--enable-wayland-backend} \
-    %{?_enable_broadway:--enable-broadway-backend} \
-    %{?_enable_installed_tests:--enable-installed-tests} \
-    %{?_enable_tracker3:--enable-tracker3=yes} \
-    %{?_enable_debug:--enable-debug=yes}
-%make_build
-
-# bad logic in configure.ac, fix it later
-#    %{?_disable_cloudproviders:--enable-cloudproviders=no} \
-#    %{subst_enable cloudproviders} \
+%meson \
+    %{?_enable_static:--default-library=both} \
+    %{?_enable_man:-Dman=true} \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
+    %{?_enable_broadway:-Dbroadway_backend=true} \
+    %{?_enable_tracker3:-Dtracker3=true} \
+    %{?_enable_cloudproviders:-Dcloudproviders=true} \
+    %{?_enable_installed_tests:-Dinstalled_tests=true} \
+    %{?_enable_debug:--buildtype=debug}
+%nil
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 install -d %buildroot{%_sysconfdir/gtk-%api_ver,%_libdir/gtk-%api_ver/%binary_ver/engines}
 
 touch %buildroot%_libdir/gtk-%api_ver/%binary_ver/immodules.cache
@@ -305,10 +292,10 @@ mkdir %buildroot%_libdir/gtk-%api_ver/modules
 
 # examples
 mkdir -p %buildroot/%_docdir/%name-devel-%version/examples
-cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/examples/
+cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 %check
-#xvfb-run %make check
+xvfb-run %__meson_test -v --print-errorlogs
 
 %files -f gtk30.lang
 %{?_enable_broadway:%_bindir/broadwayd}
@@ -338,6 +325,8 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %{?_enable_broadway:%fulllibpath/immodules/im-broadway.so}
 %dir %fulllibpath/printbackends
 %fulllibpath/printbackends/libprintbackend-*.so
+%dir %_datadir/gtk-%api_ver
+%_datadir/gtk-%api_ver/emoji/
 %dir %_datadir/themes/*/gtk-%{api_ver}*
 %_datadir/themes/*/gtk-%{api_ver}/*.css
 %dir %_sysconfdir/gtk-%api_ver
@@ -351,7 +340,7 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %_man1dir/gtk-encode-symbolic-svg.1.*
 %_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
 %doc --no-dereference COPYING
-%doc AUTHORS NEWS.bz2 README
+%doc NEWS* README*
 
 %files schemas
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
@@ -369,7 +358,6 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %_pkgconfigdir/gdk-%api_ver.pc
 %_pkgconfigdir/gdk-x11-%api_ver.pc
 %_pkgconfigdir/gtk+-unix-print-%api_ver.pc
-%dir %_datadir/gtk-%api_ver
 %_datadir/gtk-%api_ver/gtkbuilder.rng
 %_datadir/aclocal/gtk-%api_ver.m4
 %_datadir/gettext/its/gtkbuilder.its
@@ -446,11 +434,13 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %_datadir/installed-tests/gtk+/
 %endif
 
-%exclude %fulllibpath/*/*.la
 %exclude %_bindir/gtk-update-icon-cache
 %exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Fri Dec 23 2022 Yuri N. Sedunov <aris@altlinux.org> 3.24.36-alt1
+- 3.24.36 (ported to Meson build system)
+
 * Sun Dec 04 2022 Yuri N. Sedunov <aris@altlinux.org> 3.24.35-alt1
 - updated to 3.24.35-20-ge95f0aa73b
 
