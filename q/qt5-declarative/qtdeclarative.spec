@@ -1,12 +1,11 @@
 
 %global qt_module qtdeclarative
-%def_enable bootstrap
 
 %define optflags_lto %nil
 
 Name: qt5-declarative
 Version: 5.15.7
-Release: alt4
+Release: alt5
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -25,7 +24,7 @@ Source2: qml.env
 Source3: find-provides.sh
 Source4: find-requires.sh
 Patch1: kde-5.15.patch
-Patch2: kde-5.15-rev-7f067fa8a52.patch
+#
 Patch10: Link-with-libatomic-on-riscv32-64.patch
 Patch11: alt-remove-createSize.patch
 Patch12: alt-multiscreen-applet-sigsegv-fix.patch
@@ -160,7 +159,7 @@ mv rpm-build-qml src/
 mkdir bin_add
 ln -s %__python3 bin_add/python
 %patch1 -p1
-%patch2 -p1
+#
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -293,6 +292,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Fri Dec 23 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt5
+- update kde/qt-5.15 changes
+
 * Thu Dec 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt4
 - optimize provides generator (thanks iv@alt) (closes: 44642)
 
