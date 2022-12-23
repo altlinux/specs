@@ -1,5 +1,5 @@
 Name: libmediainfo
-Version: 22.09
+Version: 22.12
 Release: alt1
 
 Group: System/Libraries
@@ -17,7 +17,7 @@ BuildRequires: id3lib-devel
 BuildRequires: libflac-devel
 BuildRequires: libmatroska-devel
 BuildRequires: libfaad-devel
-BuildRequires: libzen-devel >= 0.4.39
+BuildRequires: libzen-devel >= 0.4.40
 BuildRequires: libcurl-devel
 BuildRequires: libmms-devel
 BuildRequires: libtinyxml2-devel
@@ -75,8 +75,8 @@ pushd Project/GNU/Library
 popd
 
 %files
-%doc ReadMe.txt
 %_libdir/%name.so.*
+%doc ReadMe.txt README* Changes.txt History_DLL.txt
 
 %files devel
 %_includedir/MediaInfo/
@@ -85,6 +85,9 @@ popd
 %_libdir/%name.so
 
 %changelog
+* Fri Dec 23 2022 Yuri N. Sedunov <aris@altlinux.org> 22.12-alt1
+- 22.12
+
 * Wed Oct 05 2022 Yuri N. Sedunov <aris@altlinux.org> 22.09-alt1
 - 22.09
 
