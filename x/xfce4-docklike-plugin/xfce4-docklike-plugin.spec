@@ -1,6 +1,6 @@
 Name:     xfce4-docklike-plugin
-Version:  0.1
-Release:  alt1.gitfe9c96c
+Version:  0.4.0
+Release:  alt1
 
 Summary:  A Dock-like Taskbar Plugin for XFCE
 License:  GPL-3.0
@@ -40,5 +40,8 @@ rm -f %buildroot%_libdir/xfce4/panel/plugins/libdocklike.la
 %_datadir/xfce4/panel/plugins/docklike.desktop
 
 %changelog
+* Fri Dec 23 2022 Andrey Cherepanov <cas@altlinux.org> 0.4.0-alt1
+- New version (ALT #44172).
+
 * Mon Jan 24 2022 Andrey Cherepanov <cas@altlinux.org> 0.1-alt1.gitfe9c96c
 - Initial build for Sisyphus (ALT #39470).
