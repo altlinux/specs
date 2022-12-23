@@ -2,8 +2,8 @@
 %def_without docs
 
 Name:    appstream
-Version: 0.15.5
-Release: alt2
+Version: 0.15.6
+Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
 # lib LGPLv2+, tools GPLv2+
@@ -167,6 +167,9 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 %_datadir/gtk-doc/html/appstream
 
 %changelog
+* Fri Dec 23 2022 Andrey Cherepanov <cas@altlinux.org> 0.15.6-alt1
+- New version.
+
 * Thu Nov 24 2022 Sergey V Turchin <zerg@altlinux.org> 0.15.5-alt2
 - allow to build with meson-0.59
 
