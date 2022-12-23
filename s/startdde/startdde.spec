@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: startdde
-Version: 5.9.51
+Version: 5.10.1
 Release: alt1
 Epoch: 1
 Summary: Starter of deepin desktop environment
@@ -11,6 +11,7 @@ Url: https://github.com/linuxdeepin/startdde
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: startdde-5.10.1-upstream-dconf.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -25,6 +26,7 @@ Startdde is used for launching DDE components and invoking user's custom applica
 
 %prep
 %setup
+%patch -p1
 sed -i 's/sbin/bin/' Makefile
 sed -i 's|/etc/X11/Xsession.d/|/etc/X11/xinit/xinitrc.d/|' Makefile
 sed -i 's|/etc/X11/Xresources|/etc/X11|' \
@@ -71,8 +73,16 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %dir %_datadir/dsg/configs/
 %dir %_datadir/dsg/configs/org.deepin.startdde/
 %_datadir/dsg/configs/org.deepin.startdde/org.deepin.startdde.StartManager.json
+%_datadir/dsg/configs/org.deepin.startdde/org.deepin.Display.json
 
 %changelog
+* Fri Dec 23 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.10.1-alt1
+- New version (5.10.1).
+- spec:
+  + Included org.deepin.Display.json.
+- Upstream:
+  + Fixed the brightness and broken org.desktopspec.ConfigManager.
+
 * Thu Sep 01 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.9.51-alt1
 - New version (5.9.51).
 - Fixed UIAppSched detection.

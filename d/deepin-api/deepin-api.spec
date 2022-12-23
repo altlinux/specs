@@ -8,7 +8,7 @@
 
 Name: deepin-api
 Version: 5.5.32
-Release: alt2
+Release: alt3
 Summary: Golang bingding for dde-daemon
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -73,7 +73,8 @@ export GOPATH="%go_path"
 %makeinstall_std SYSTEMD_SERVICE_DIR="%_unitdir" -i
 
 # HOME directory for user deepin-sound-player
-mkdir -p %buildroot%_sharedstatedir/deepin-sound-player
+mkdir -p %buildroot%_sharedstatedir/deepin-sound-player/.cache/dconf/
+touch %buildroot%_sharedstatedir/deepin-sound-player/.cache/dconf/user
 install -Dm644 archlinux/deepin-api.sysusers %buildroot/lib/sysusers.d/deepin-api.conf
 # Pack golang modules.
 mkdir -p %buildroot%go_path/src/%goipath/vendor/src/
@@ -92,11 +93,19 @@ cp -a vendor/src/* %buildroot%go_path/src/%goipath/vendor/src/
 %_var/lib/polkit-1/*
 %_datadir/dde-api/data/*
 /lib/sysusers.d/deepin-api.conf
+%dir %_sharedstatedir/deepin-sound-player/
+%dir %_sharedstatedir/deepin-sound-player/.cache/
+%dir %_sharedstatedir/deepin-sound-player/.cache/dconf/
+%_sharedstatedir/deepin-sound-player/.cache/dconf/user
 
 %files -n golang-%name-devel
 %go_path/src/%goipath
 
 %changelog
+* Fri Dec 23 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.32-alt3
+- Packed github.com/jouyouyun/hardware for startdde.
+- Fixed some permission problems for sound effects.
+
 * Tue Dec 13 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.32-alt2
 - Updated golang modules.
 
