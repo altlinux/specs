@@ -1,7 +1,7 @@
 #set_verify_elf_method none
 
 Name: tesseract
-Version: 5.2.0
+Version: 5.3.0
 Release: alt1
 
 Summary: Tesseract Open Source OCR Engine
@@ -118,6 +118,9 @@ rm -I %buildroot%_libdir/*.la
 %doc doc/html/*
 
 %changelog
+* Fri Dec 23 2022 Evgeny Chuck <koi@altlinux.org> 5.3.0-alt1
+- new version (5.3.0) with rpmgs script
+
 * Sun Jul 10 2022 Evgeny Chuck <koi@altlinux.org> 5.2.0-alt1
 - Build new version (Closes: 43192)
 - new version (5.2.0) with rpmgs script
