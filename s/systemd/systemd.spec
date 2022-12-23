@@ -93,8 +93,8 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.8
-Release: alt3
+Version: %ver_major.10
+Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
 Group: System/Configuration/Boot and Init
@@ -2312,6 +2312,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Thu Dec 22 2022 Alexey Shabalin <shaba@altlinux.org> 1:251.10-alt1
+- 251.10 (Fixes: CVE-2022-4415)
+
 * Tue Dec 06 2022 Slava Aseev <ptrnine@altlinux.org> 1:251.8-alt3
 - Provide necessary environment variables to user-managed generators.
 
