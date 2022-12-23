@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: libphonenumber
-Version: 8.13.2
+Version: 8.13.3
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -69,6 +69,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/%name.so
 
 %changelog
+* Fri Dec 23 2022 Yuri N. Sedunov <aris@altlinux.org> 8.13.3-alt1
+- 8.13.3
+
 * Thu Dec 08 2022 Yuri N. Sedunov <aris@altlinux.org> 8.13.2-alt1
 - 8.13.2
 
