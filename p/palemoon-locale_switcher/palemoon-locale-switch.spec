@@ -1,14 +1,11 @@
 %define cid            pm-localeswitch@palemoon.org
 %define cid_dir        %palemoon_noarch_extensionsdir/%cid
 
-#%define sids_dir       %sm_prefixr/%cid
-#%define cidf_dir       %firefox_noarch_extensionsdir/%cid
-
 %define pname pm_locale_switch
 
 Name:    palemoon-locale_switcher
 Version: 3.1.0
-Release: alt1
+Release: alt2
 
 Summary: The Palemoon locale switcher
 
@@ -24,7 +21,7 @@ ExcludeArch: %ix86 armh
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %pname-%version.xpi
-Patch: pm_locale_switch-3.1.0-locale.patch
+#Patch: pm_locale_switch-3.1.0-locale.patch
 
 BuildRequires(pre):	rpm-build-palemoon
 #BuildRequires(pre):	rpm-build-firefox
@@ -33,8 +30,6 @@ BuildRequires(pre):	rpm-build-palemoon
 # Automatically added by buildreq on Thu Jul 16 2015
 BuildRequires: libdb4-devel unzip
 Requires: palemoon
-Provides: palemoon-zing_locale_switcher
-Conflicts: palemoon-zing_locale_switcher < 3.0.0-alt2
 
 %description
 This is an extension that allows quick and easy changing
@@ -49,13 +44,11 @@ and is distributed under the GNU General Public License, V3.
 
 %prep
 %setup -c -n %pname-%version/%cid
-%patch -p2
+#patch -p2
 
 %install
 mkdir -p %buildroot/%cid_dir
-cp -r * %buildroot/%cid_dir
-
-mkdir -p %buildroot/%cidf_dir
+cp -r pm_locale_switch/. %buildroot/%cid_dir
 
 %postun
 if [ "$1" = 0 ]; then
@@ -66,6 +59,10 @@ fi
 %cid_dir
 
 %changelog
+* Fri Dec 23 2022 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt2
+- Fix build
+- Remove patch
+
 * Wed Jul 20 2022 Hihin Ruslan <ruslandh@altlinux.ru> 3.1.0-alt1
 - New Version
 
