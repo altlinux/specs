@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 219
+%define centos_release 226
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,35 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Dec 23 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.226-alt1.el9
+- Updated to kernel-5.14.0-226.el9 (fixes: CVE-2022-21505, CVE-2022-3628, CVE-2022-42896):
+  + Backport Aspeed conversion to shmem
+  + block: Do not reread partition table on exclusively open device
+  + Bluetooth: L2CAP: Fix accepting connection request for invalid SPSM
+  + bonding: driver update to v6.1
+  + CNB: ipsec: be explicit with XFRM offload direction
+  + hwmon: (pwm-fan) Refactor fan power on/off
+  + iavf driver update
+  + igbvf: Driver Update
+  + lib/irq_poll: Prevent softirq pending leak in irq_poll_cpu_dead()
+  + lockdown: Fix kexec lockdown bypass with ima policy
+  + macsec: backports from upstream
+  + net: tls: rebase to 6.0+
+  + net/tunnel: wait until all sk_user_data reader finish before releasing the sock
+  + [s390]: RHEL9 - KVM: s390: pv: don't allow userspace to set the clock under PV
+  + tipc: re-fetch skb cb after tipc_msg_validate
+  + v5.18 backports for s390 expolines
+  + wifi: brcmfmac: Fix potential buffer overflow in brcmf_fweh_event_worker()
+  + wireless: update to v6.0
+  + wireless update to v6.0: base with all dependencies
+  + x86/bugs: Add late bug fixes to x86 speculation bugs
+
+* Thu Dec 22 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.222-alt1.el9
+- Updated to kernel-5.14.0-222.el9:
+  + bpf, xdp: update to 5.19
+  + Update drivers/base to match Linux v6.0
+  + Update net/bluetooth and drivers/bluetooth to upstream v6.0
+
 * Wed Dec 21 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.219-alt1.el9
 - Updated to kernel-5.14.0-219.el9 (fixes: CVE-2022-2873):
   + Add fixes to drivers/misc/sram to support NVIDIA Orin
