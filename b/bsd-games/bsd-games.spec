@@ -1,5 +1,5 @@
 Group: Games/Other
-%define fedora 32
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 # Ick!  This is only a temporary hack until I have more time
@@ -10,7 +10,7 @@ Group: Games/Other
 Summary: Collection of text-based games
 Name: bsd-games
 Version: 2.17
-Release: alt2_65
+Release: alt2_69
 License: BSD and BSD with advertising
 URL: ftp://metalab.unc.edu/pub/Linux/games/
 Source0: ftp://metalab.unc.edu/pub/Linux/games/bsd-games-%{version}.tar.gz
@@ -44,6 +44,7 @@ Patch20: bsd-games-2.17-backgammonrecursion.patch
 Patch21: bsd-games-2.17-huntversion.patch
 Patch22: bsd-games-2.17-getrandom.patch
 Patch23: bsd-games-2.17-printf.patch
+Patch24: bsd-games-2.17-printw.patch
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
@@ -93,6 +94,7 @@ popd
 %patch21 -p1 -b .huntversion
 %patch22 -p1 -b .getrandom
 %patch23 -p1 -b .printf
+%patch24 -p1 -b .printw
 
 %build
 # We include a templatized configuration settings file to set
@@ -219,6 +221,9 @@ exit 0
 %doc AUTHORS COPYING ChangeLog ChangeLog.0 THANKS YEAR2000 README.hunt trek/USD.doc/trek.me
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.17-alt2_69
+- update to new release by fcimport
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 2.17-alt2_65
 - update to new release by fcimport
 
