@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Amazon-S3
-Version: 0.55
+Version: 0.58
 Release: alt1
 
 Summary: A portable client library for working with and
@@ -27,7 +27,7 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BI/BIGFOOT/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 04 2010
 BuildRequires: perl-Class-Accessor perl-Digest-HMAC perl-Digest-MD5-File perl-LWP-UserAgent-Determined perl-XML-Simple perl-devel perl(File/ShareDir/Install.pm) perl(Test/Output.pm) perl(Readonly.pm) perl(IO/Scalar.pm) perl(Net/Amazon/Signature/V4.pm)
@@ -71,7 +71,7 @@ Amazon::S3 is intended to be a drop-in replacement for
 portability.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -84,6 +84,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Amazon/*
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.58-alt1
+- automated CPAN update
+
 * Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 0.55-alt1
 - new version
 
