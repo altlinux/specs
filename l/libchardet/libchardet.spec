@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl
-# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define _name     chardet
@@ -10,7 +7,7 @@ BuildRequires: /usr/bin/perl
 %define develname lib%{_name}-devel
 
 Name:           libchardet
-Version:        1.0.5
+Version:        1.0.6
 Release:        alt1_1
 Summary:        Mozilla Universal Chardet library
 License:        MPL
@@ -78,6 +75,9 @@ find %{buildroot} -name '*.la' -delete
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.0.6-alt1_1
+- update by mgaimport
+
 * Sun Mar 18 2018 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1
 - new version
 
