@@ -1,16 +1,21 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libxnm
 Version:        0.1.3
-Release:        alt3_18
+Release:        alt3_29
 Summary:        A library for parsing the XNM format
 
 License:        GPLv2+
 URL:            http://xnm.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/xnm/%{name}-%{version}.tar.gz
+Patch0:         libxnm-c99.patch
 
+BuildRequires:  gcc
 BuildRequires:  glib2-devel libgio libgio-devel
 Source44: import.info
     
@@ -22,7 +27,7 @@ and communicating of complex data structures
 Group: Development/C
 Summary:        Development files for %{name}
 Requires:       %{name} = %{version}-%{release}
-Requires:       pkg-config
+Requires:       pkgconfig
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -30,6 +35,8 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
+
 
 %build
 %configure --enable-static=no
@@ -39,6 +46,8 @@ developing applications that use %{name}.
 make install DESTDIR=%{buildroot} INSTALL="install -p"
 rm -rf %{buildroot}/usr/doc/libxnm/
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
+
+
 
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README TODO
@@ -51,6 +60,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.1.3-alt3_29
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt3_18
 - update to new release by fcimport
 
