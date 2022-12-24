@@ -2,7 +2,7 @@
 %define dist IO-Socket-SSL
 Name: perl-%dist
 Version: 2.078
-Release: alt1
+Release: alt1.1
 
 Summary: SSL socket interface class
 License: GPL or Artistic
@@ -43,6 +43,9 @@ rm t/[d-z]*t
 %perl_vendor_privlib/IO
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.078-alt1.1
+- automated CPAN update
+
 * Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 2.078-alt1
 - automated CPAN update
 
