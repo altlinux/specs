@@ -8,7 +8,7 @@ BuildRequires: perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-experimental
 Version:        0.030
-Release:        alt1
+Release:        alt1.1
 Summary:        Experimental features made easy
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/experimental
@@ -53,6 +53,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.030-alt1.1
+- automated CPAN update
+
 * Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 0.030-alt1
 - automated CPAN update
 
