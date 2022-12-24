@@ -8,7 +8,7 @@ BuildRequires: perl(Pod/Markdown.pm) perl(Pod/Readme.pm) perl-podlators
 %define _localstatedir %{_var}
 Name:           perl-Test-Without-Module
 Version:        0.21
-Release:        alt1
+Release:        alt1.1
 Summary:        Test fallback behavior in absence of modules
 License:        GPL+ or Artistic
 
@@ -59,6 +59,9 @@ make test
 %{perl_vendor_privlib}/Test*
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.21-alt1.1
+- automated CPAN update
+
 * Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 0.21-alt1
 - automated CPAN update
 
