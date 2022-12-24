@@ -10,7 +10,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ imake libSDL-devel libX11-d
 
 Name:           xpilot-ng
 Version:        4.7.3
-Release:        alt4_23
+Release:        alt4_27
 Summary:        Space arcade game for multiple players
 
 License:        GPLv2+
@@ -30,9 +30,11 @@ Source14:       xpilot-ng-server.metainfo.xml
 Patch0:         xpilot-ng-4.7.2-scoreassert.patch
 Patch1:         xpilot-ng-4.7.2-rhbz830640.patch
 Patch2:         xpilot-ng-4.7.3-fix-alut-detect.patch
+Patch3:         xpilot-ng-c99.patch
+Patch4:         xpilot-ng-SDL_window.patch
 
 BuildRequires:  gcc
-BuildRequires:  desktop-file-utils libappstream-glib
+BuildRequires:  desktop-file-utils libappstream-glib libappstream-glib-gir
 BuildRequires:  libexpat-devel libSDL_ttf-devel libSDL_image-devel zlib-devel
 BuildRequires:  libXt-devel libGLU-devel
 BuildRequires:  libopenal-devel libalut-devel automake
@@ -73,7 +75,7 @@ Summary:        Server for hosting xpilot games
 Requires:       %{name}-data = %{version}-%{release}
 Requires:       logrotate
 Requires(pre):  shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
-BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-coredump systemd-homed systemd-networkd systemd-portable systemd-services systemd-stateless systemd-sysvinit systemd-utils
+BuildRequires:  libsystemd-devel libudev-devel systemd systemd-analyze systemd-homed systemd-networkd systemd-portable systemd-sysvinit
 Provides:       %{name}-engine = %{version}-%{release}
 # Make sure the old no longer supported selinux policy from 4.7.2 gets removed
 Obsoletes:      %{name}-selinux < %{version}-%{release}
@@ -89,7 +91,7 @@ public xpilot games hosted on the internet.
 %package logwatch
 Group: Games/Arcade
 Summary:        Logwatch scripts for the xpilot game server
-Requires:       xpilot-ng = %{version}-%{release} logwatch
+Requires:       %{name}-server = %{version}-%{release} logwatch
 
 %description logwatch
 logwatch scripts for the Xpilot game server
@@ -100,6 +102,8 @@ logwatch scripts for the Xpilot game server
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 # regenerate autofoo files for patch2
 autoreconf -ivf
@@ -223,6 +227,9 @@ exit 0
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 4.7.3-alt4_27
+- update to new release by fcimport
+
 * Wed May 19 2021 Igor Vlasenko <viy@altlinux.org> 4.7.3-alt4_23
 - fixed build - replaced by import
 
