@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define bname Data-Validate-IP
 Name: perl-%bname
-Version: 0.30
+Version: 0.31
 Release: alt1
 Summary: Perl IP address validation routines
 Group: Development/Perl
@@ -35,6 +35,9 @@ and untainting easier and more readable.
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.31-alt1
+- new version
+
 * Wed Mar 31 2021 Igor Vlasenko <viy@altlinux.org> 0.30-alt1
 - new version
 
