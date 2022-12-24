@@ -5,13 +5,13 @@
 %define devname libspiro-devel
 
 Name:           libspiro
-Version:        20200505
+Version:        20221101
 Release:        alt1_1
 Summary:        Library to simplify the drawing of beautiful curves
 
 Group:          System/Libraries
 License:        GPLv2+
-URL:            http://libspiro.sourceforge.net/
+URL:            https://libspiro.sourceforge.net/
 # Let's use libspiro-dist tarball from upstream as it does not require autoreconf
 Source0:        https://github.com/fontforge/libspiro/releases/download/%{version}/libspiro-dist-%{version}.tar.gz
 BuildRequires:  automake
@@ -73,6 +73,9 @@ make check
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 20221101-alt1_1
+- update by mgaimport
+
 * Fri Nov 05 2021 Igor Vlasenko <viy@altlinux.org> 20200505-alt1_1
 - new version (closes: 41201)
 
