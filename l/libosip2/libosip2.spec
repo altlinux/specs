@@ -1,25 +1,27 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: libdict-devel
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define major 12
+%define major 15
 %define libname libosip2_%{major}
 %define libname_devel libosip2-devel
 
-Summary:	Impleimentation of SIP - rfc3261
+Summary:	Implementation of SIP - rfc3261
 Name:		libosip2
-Version: 	5.0.0
-Release: 	alt1_3
+Version: 	5.3.1
+Release: 	alt1_1
 License: 	LGPLv2+
 Group:		System/Libraries
-URL: 		http://savannah.gnu.org/projects/osip/
-Source0:	http://ftp.gnu.org/gnu/osip/%{name}-%{version}.tar.gz
-Patch0:		1ae06daf3b2375c34af23083394a6f010be24a45.patch
+URL: 		https://savannah.gnu.org/projects/osip/
+Source0:	https://ftp.gnu.org/gnu/osip/%{name}-%{version}.tar.gz
 Source44: import.info
 
 %description
 This is the oSIP library. It has been designed to provide the
 Internet Community a simple way to support the Session Initiation
 Protocol. SIP is described in the RFC3261 which is available at
-http://www.ietf.org/rfc/rfc3261.txt.
+https://www.ietf.org/rfc/rfc3261.txt
 
 %package -n	%{libname}
 Summary:	Implementation of SIP - rfc2543
@@ -32,7 +34,7 @@ Conflicts:	libosip2_7 < %version
 This is the oSIP library. It has been designed to provide the
 Internet Community a simple way to support the Session Initiation
 Protocol. SIP is described in the RFC3261 which is available at
-http://www.ietf.org/rfc/rfc3261.txt.
+https://www.ietf.org/rfc/rfc3261.txt
 
 %package -n	%{libname_devel}
 Summary:	Header file required to build programs using liboSIP
@@ -46,7 +48,7 @@ apps such as linphone and siproxd.
 
 %prep
 %setup -q
-%patch0 -p1
+
 
 %build
 autoreconf -fi -Iscripts
@@ -75,6 +77,9 @@ rm -f %{buildroot}%{_libdir}/*.la
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 5.3.1-alt1_1
+- update by mgaimport
+
 * Tue Mar 05 2019 Igor Vlasenko <viy@altlinux.ru> 5.0.0-alt1_3
 - new version
 

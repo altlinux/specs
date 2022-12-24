@@ -1,7 +1,7 @@
-BuildRequires: chrpath
 # BEGIN SourceDeps(oneline):
 BuildRequires: libcares-devel
 # END SourceDeps(oneline)
+BuildRequires: chrpath
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %define major		12
@@ -10,20 +10,19 @@ BuildRequires: libcares-devel
 
 Summary: 	Extended osip library
 Name: 	 	exosip
-Version:	5.0.0
-Release: 	alt1_4
+Version:	5.1.0
+Release: 	alt1_1
 License:	GPLv2+
 Group:		System/Libraries
-URL:		http://savannah.nongnu.org/projects/exosip/
-Source0:	http://download.savannah.gnu.org/releases/exosip/libexosip2-%{version}.tar.gz
-Patch0:		libexosip2-5.0.0-openssl_110.patch
+URL:		https://savannah.nongnu.org/projects/exosip/
+Source0:	https://download.savannah.gnu.org/releases/exosip/libexosip2-%{version}.tar.gz
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(libosip2) >= 3.5
 Source44: import.info
 
 %description
 Exosip is a library that hides the complexity of using the SIP protocol for
-mutlimedia session establishement. This protocol is mainly to be used by VoIP
+multimedia session establishment. This protocol is mainly to be used by VoIP
 telephony applications (endpoints or conference server) but might be also
 useful for any application that wish to establish sessions like multiplayer
 games.
@@ -48,7 +47,6 @@ Libraries and includes files for developing programs based on %name.
 
 %prep
 %setup -q -n libexosip2-%{version}
-%patch0 -p1
 
 
 %build
@@ -61,7 +59,7 @@ Libraries and includes files for developing programs based on %name.
 # don't ship .a, .la
 find %{buildroot} -name '*.la' -delete
 # kill rpath
-for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin,/usr/games} -type f -perm -111 ! -name '*.la' `; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
 
@@ -80,6 +78,9 @@ done
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 5.1.0-alt1_1
+- new version
+
 * Tue Oct 12 2021 Igor Vlasenko <viy@altlinux.org> 5.0.0-alt1_4
 - update by mgaimport
 
