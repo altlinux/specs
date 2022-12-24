@@ -4,10 +4,10 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:      libmythes
 Summary:   A thesaurus library
-Version:   1.2.4
-Release:   alt1_15
-Source:    http://downloads.sourceforge.net/hunspell/%{oldname}-%{version}.tar.gz
-URL:       http://hunspell.sourceforge.net/
+Version:   1.2.5
+Release:   alt1_1
+Source:    https://github.com/hunspell/%{oldname}/releases/download/v%{version}/%{oldname}-%{version}.tar.xz
+URL:       https://github.com/hunspell/mythes
 License:   BSD and MIT
 BuildRequires: hunspell-utils libhunspell-devel, gcc-c++
 Source44: import.info
@@ -33,6 +33,7 @@ Includes and definitions for developing with mythes
 %make_build
 
 %check
+make check
 ./example th_en_US_new.idx th_en_US_new.dat checkme.lst
 ./example morph.idx morph.dat morph.lst morph.aff morph.dic
 
@@ -57,6 +58,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_bindir}/th_gen_idx.pl
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.2.5-alt1_1
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt1_15
 - update to new release by fcimport
 
