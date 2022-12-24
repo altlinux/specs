@@ -1,19 +1,20 @@
 Name: trinity
 Version: 1.9
-Release: alt3
+Release: alt4
 Summary: System call fuzz tester
 
 License: GPL-2.0
 Group: Development/Other
-Url: http://codemonkey.org.uk/projects/%name/
+Url: https://github.com/kernelslacker/%name
 
 Packager: Pavel Vasenkov <pav@altlinux.org>
 
-Source0: http://codemonkey.org.uk/projects/%name/%name-%version.tar.xz
+Source0:  https://github.com/kernelslacker/%name/%name-%version.tar.xz
 # Fix crash due to walking off the end of the net_protocols array
 Patch0: %name-net-protocols.patch
 Patch1: %name-rm-definition.patch
 Patch2: %name-1.9-alt3.patch
+Patch3: %name-1.9-alt4.patch
 
 BuildRequires: libpam-devel libpcap-devel libssl-devel libudev-devel
 %{?_with_systemd:BuildRequires: libsystemd-devel}
@@ -48,9 +49,7 @@ and fed to subsequent syscalls, sometimes with hilarious results.
 
 %prep
 %setup
-%patch0 -p0
-%patch1 -p2
-%patch2 -p2
+%patch3 -p2
 
 %build
 %configure
@@ -69,6 +68,11 @@ install -Dm0755 scripts/* -t %buildroot%_libexecdir/%name
 %_libexecdir/%name/
 
 %changelog
+* Sat Dec 24 2022 Pavel Vasenkov <pav@altlinux.org> 1.9-alt4
+- Update from upstream
+- Fix missed header file
+- Update source url(Closes: #40516)
+
 * Sun Jul 11 2021 Pavel Vasenkov <pav@altlinux.org> 1.9-alt3
 - Change headers order
 - Fix checking headers
