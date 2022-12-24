@@ -10,13 +10,13 @@ BuildRequires(pre): rpm-macros-generic-compat rpm-macros-mageia-compat
 %define develname lib%{name}-devel
 
 Name:           alglib
-Version:        3.19.0
+Version:        3.20.0
 Release:        alt1_1
 Summary:        A numerical analysis and data processing library
 Group:          System/Libraries
 License:        GPLv2+
-URL:            http://www.alglib.net/
-Source0:        http://www.alglib.net/translator/re/%{name}-%{version}.cpp.gpl.tgz
+URL:            https://www.alglib.net/
+Source0:        https://www.alglib.net/translator/re/%{name}-%{version}.cpp.gpl.tgz
 Source1:        ALGLIBConfig.cmake
 # Extracted from manual.cpp.html
 Source2:        bsd.txt
@@ -137,6 +137,9 @@ popd
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 3.20.0-alt1_1
+- update by mgaimport
+
 * Fri Sep 02 2022 Igor Vlasenko <viy@altlinux.org> 3.19.0-alt1_1
 - update by mgaimport
 
