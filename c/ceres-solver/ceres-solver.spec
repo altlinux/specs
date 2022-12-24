@@ -3,7 +3,7 @@ Group: Development/Other
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 BuildRequires: python3-devel rpm-build-python3
 # END SourceDeps(oneline)
-%define fedora 34
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           ceres-solver
@@ -11,7 +11,7 @@ Version:        2.1.0
 # Release candidate versions are messy. Give them a release of
 # e.g. "0.1.0%%{?dist}" for RC1 (and remember to adjust the Source0
 # URL). Non-RC releases go back to incrementing integers starting at 1.
-Release:        alt1_1
+Release:        alt1_4
 Summary:        A non-linear least squares minimizer
 
 License:        BSD
@@ -32,6 +32,13 @@ Source0:        http://%{name}.org/%{name}-%{version}.tar.gz
 # Exclude ppc64 because suitesparse is not available on ppc64
 # https://lists.fedoraproject.org/pipermail/epel-devel/2015-May/011193.html
 ExcludeArch: ppc64
+%endif
+
+%if 0%{?rhel} == 9
+# Workaround a build error with eigen3 on rhel 9
+%ifarch ppc64le
+%undefine _lto_cflags
+%endif
 %endif
 
 %if (0%{?rhel} && 0%{?rhel} <= 7)
@@ -146,6 +153,9 @@ developing applications that use %{name}.
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.1.0-alt1_4
+- update to new release by fcimport
+
 * Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 2.1.0-alt1_1
 - update to new release by fcimport
 
