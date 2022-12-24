@@ -3,13 +3,13 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define major     2
+%define major     4
 %define libname   libopenlibm%{major}
 %define develname libopenlibm-devel
 
 Summary:        High quality system independent, open source libm
 Name:           openlibm
-Version:        0.6.0
+Version:        0.8.1
 Release:        alt1_1
 License:        BSD and MIT and ISC and Public Domain
 Group:          System/Libraries
@@ -86,6 +86,9 @@ rm %{buildroot}%{_libdir}/libopenlibm.a
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.8.1-alt1_1
+- update by mgaimport
+
 * Thu Apr 25 2019 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_1
 - update by mgaimport
 
