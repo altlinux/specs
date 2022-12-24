@@ -1,11 +1,11 @@
+Group: Games/Other
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           pmars
 Version:        0.9.2
-Release:        alt2_17
+Release:        alt2_27
 Summary:        Portable corewar system with ICWS'94 extensions
 
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://www.koth.org/pmars/
 Source0:        http://downloads.sourceforge.net/corewar/%{name}-%{version}.tar.gz
@@ -14,6 +14,7 @@ Patch0:         pmars-0.9.2-nostrip.patch
 #Show compiler commands
 Patch1:         pmars-0.9.2-CCat.patch
 Patch2:         pmars-sfprintf-format.patch
+BuildRequires:  gcc
 BuildRequires:  libX11-devel
 Requires:       fonts-bitmap-75dpi
 Source44: import.info
@@ -45,7 +46,7 @@ rm doc_install/doc/pmars.6
 
 
 %build
-make -C src CFLAGS="%{optflags} -DEXT94 -DXWINGRAPHX -DPERMUTATE"
+make -C src CFLAGS="%{optflags} -DEXT94 -DXWINGRAPHX -DPERMUTATE -std=gnu89"
 
 
 %install
@@ -53,12 +54,16 @@ install -D -p -m 755 src/pmars %{buildroot}%{_bindir}/pmars
 install -D -p -m 644 doc/pmars.6 %{buildroot}%{_mandir}/man6/pmars.6
 
 
+
 %files
 %doc AUTHORS ChangeLog CONTRIB COPYING README config/ doc_install/doc/ warriors/
 %{_bindir}/pmars
-%{_mandir}/man6/pmars.6.*
+%{_mandir}/man6/pmars.6*
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.9.2-alt2_27
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt2_17
 - update to new release by fcimport
 
