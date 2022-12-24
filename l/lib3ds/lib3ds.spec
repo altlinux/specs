@@ -8,11 +8,11 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           lib3ds
 Version:        1.3.0
-Release:        alt2_36
+Release:        alt2_39
 
 Summary:        3D Studio file format library
 
-License:        LGPLv2+
+License:        LGPL-2.1-or-later
 URL:            http://lib3ds.sourceforge.net
 Source:         http://downloads.sourceforge.net/lib3ds/lib3ds-%{version}.zip
 # Extracted from Debian's lib3ds_1.3.0-1.diff.gz
@@ -73,7 +73,7 @@ autoreconf -fi
 %build
 %configure  --disable-static
 
-%make_build
+%{make_build}
 
 sed -e 's,@prefix@,%{_prefix},' \
   -e 's,@exec_prefix@,%{_exec_prefix},' \
@@ -83,7 +83,7 @@ sed -e 's,@prefix@,%{_prefix},' \
   lib3ds.pc.in > lib3ds.pc
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%{makeinstall_std}
 
 install -d ${RPM_BUILD_ROOT}%{_libdir}/pkgconfig
 install lib3ds.pc -m 0644 ${RPM_BUILD_ROOT}%{_libdir}/pkgconfig
@@ -113,6 +113,9 @@ done
 %{_datadir}/aclocal/*
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt2_39
+- update to new release by fcimport
+
 * Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 1.3.0-alt2_36
 - update to new release by fcimport
 
