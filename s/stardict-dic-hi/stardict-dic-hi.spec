@@ -3,10 +3,10 @@ Group: Text tools
 %define _localstatedir %{_var}
 Name:           stardict-dic-hi
 Version:        3.0.1
-Release:        alt2_17
+Release:        alt2_28
 Summary:        Hindi dictionary for stardict
 
-License:        GPL+
+License:        GPL-1.0-or-later
 URL:            http://stardict.sourceforge.net/
 # URL http://ltrc.iiit.net/downloads/shabdanjali-stardict/shabdanjali-fedora.tgz
 # usage: source generate-tarball.sh <version> <org-source-tarball> <initial-name-of-new-tarball>
@@ -38,6 +38,9 @@ chmod 644 README
 %{_datadir}/stardict/dic/*
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 3.0.1-alt2_28
+- update to new release by fcimport
+
 * Fri Oct 20 2017 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt2_17
 - update to new release by fcimport
 
