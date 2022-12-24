@@ -1,14 +1,14 @@
-%define _without_test 1
+#define _without_test 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(DateTime.pm) perl(DateTime/Format/ISO8601.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(Geo/Calc.pm) perl(Geo/FIT.pm) perl(Geo/Gpx.pm) perl(IPC/System/Simple.pm) perl(Module/Build.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
 %define module_name Geo-TCX
-#define _unpackaged_files_terminate_build 1
+%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 1.06
-Release: alt0.1
+Release: alt1
 Summary: Parse and edit and TCX activity and course files from GPS training devices
 Group: Development/Perl
 License: perl
@@ -45,11 +45,14 @@ scripts for %module_name
 %doc LICENSE README.md Changes
 %perl_vendor_privlib/G*
 
-#%files scripts
-#%_bindir/*
-#%_man1dir/*
+%files scripts
+%_bindir/*
+%_man1dir/*
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.06-alt1
+- enabled tests
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.06-alt0.1
 - bootstrap w/o tests; wait for Geo-Gpx > 0.08
 
