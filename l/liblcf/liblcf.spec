@@ -10,15 +10,17 @@ BuildRequires: /usr/bin/update-mime-database gcc-c++
 %define devname lib%{shortname}-devel
 
 Name:           liblcf
-Version:        0.6.2
-Release:        alt1_3
+Version:        0.7.0
+Release:        alt1_2
 Summary:        Library to handle RPG Maker 2000/2003 and EasyRPG projects
 Group:          System/Libraries
 License:        MIT
 URL:            https://easyrpg.org
 Source0:        https://easyrpg.org/downloads/player/%{version}/%{name}-%{version}.tar.xz
+# liblcf is not detected without this patch https://github.com/EasyRPG/Editor/issues/214
+Patch0:         liblcf-0.7.0-fix-cmake-detection.patch
 
-BuildRequires:  cmake
+BuildRequires:  ccmake cmake ctest
 BuildRequires:  libicu-devel
 BuildRequires:  libtool
 BuildRequires:  pkgconfig(expat)
@@ -32,11 +34,16 @@ can be regenerated from templates and CSV files using a Python script.
 liblcf is part of the EasyRPG Project. More information is available
 at the project website: easy-rpg.org
 
+%files
+%{_bindir}/lcf2xml
+%{_bindir}/lcfstrings
+
 #----------------------------------------------------------------------
 
 %package -n     %{libname}
 Summary:        Library to handle RPG Maker 2000/2003 and EasyRPG projects
 Group:          System/Libraries
+Requires:	%name = %version-%release
 
 %description -n %{libname}
 liblcf is a library to handle RPG Maker 2000 and 2003 game data.
@@ -48,7 +55,7 @@ at the project website: easy-rpg.org
 
 %files -n       %{libname}
 %doc AUTHORS.md COPYING README.md
-%{_datadir}/mime/packages/%{name}.xml
+%{_datadir}/mime/*
 %{_libdir}/%{name}.so.%{major}
 %{_libdir}/%{name}.so.%{version}
 
@@ -64,7 +71,7 @@ This package contains development headers and library for %{name},
 a library which handles RPG Maker 2000/2003 and EasyRPG projects.
 
 %files -n       %{devname}
-%{_includedir}/%{name}/
+%{_includedir}/lcf/
 %{_libdir}/%{name}.so
 %{_libdir}/cmake/liblcf/
 %{_libdir}/pkgconfig/%{name}.pc
@@ -73,6 +80,7 @@ a library which handles RPG Maker 2000/2003 and EasyRPG projects.
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 %build
@@ -89,6 +97,9 @@ ln -s %{name}.so.%{major} %{name}.so.%{version}
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.7.0-alt1_2
+- update by mgaimport
+
 * Tue Sep 21 2021 Igor Vlasenko <viy@altlinux.org> 0.6.2-alt1_3
 - update by mgaimport
 
