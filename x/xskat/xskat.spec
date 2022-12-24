@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -10,15 +11,16 @@ Name:             xskat
 # Upstream License requires to alter the version number
 # for re-distribution
 Version:          %{upstream_version}.0
-Release:          alt2_20
+Release:          alt2_30
 # https://fedoraproject.org/wiki/Licensing/XSkat_License
 License:          XSkat
-Group:            Games/Other
 Source0:          http://www.xskat.de/xskat-%{upstream_version}.tar.gz
 Source1:          xskat.desktop
+Patch0:           xskat-c99.patch
 URL:              http://www.xskat.de/xskat.html
 # xskat requires an 10x20 font
 Requires:         fonts-bitmap-misc
+BuildRequires:  gcc
 BuildRequires:    xorg-cf-files gccmakedep imake
 BuildRequires:    libX11-devel
 BuildRequires:    desktop-file-utils
@@ -42,6 +44,8 @@ Features:
 
 %prep
 %setup -q -n %{name}-%{upstream_version}
+%patch0 -p1
+
 
 # fix encoding
 iconv -f iso8859-1 -t utf-8 CHANGES-de > CHANGES-de.conv && \
@@ -116,6 +120,9 @@ EOF
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 4.0.0-alt2_30
+- update to new release by fcimport
+
 * Mon May 07 2018 Igor Vlasenko <viy@altlinux.ru> 4.0.0-alt2_20
 - update to new release by fcimport
 
