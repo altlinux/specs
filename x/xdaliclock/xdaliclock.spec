@@ -1,17 +1,18 @@
 Group: Graphics
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install perl(diagnostics.pm) perl(open.pm)
+BuildRequires: /usr/bin/desktop-file-install perl(diagnostics.pm)
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary: A clock for the X Window System
 Name: xdaliclock
 Version: 2.43
-Release: alt2_9
+Release: alt2_16
 License: BSD
 URL: http://www.jwz.org/xdaliclock/
 Source0: http://www.jwz.org/xdaliclock/xdaliclock-%{version}.tar.gz
 Source1: xdaliclock.desktop
+Patch0: xdaliclock-configure-c99.patch
 BuildRequires:  gcc
 BuildRequires: desktop-file-utils
 BuildRequires: libICE-devel, libXmu-devel, libSM-devel, xorg-proto-devel
@@ -26,7 +27,9 @@ button down over it. It also can be configured to do colormap cycling, and
 for window transparency.
 
 %prep
-%setup
+%setup -q
+%patch0 -p1
+
 
 %build
 cp -at . -- /usr/share/gnu-config/config.{guess,sub}
@@ -64,6 +67,9 @@ desktop-file-install  \
 %{_datadir}/applications/*
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.43-alt2_16
+- update to new release by fcimport
+
 * Sat Dec 07 2019 Igor Vlasenko <viy@altlinux.ru> 2.43-alt2_9
 - merged e2k patch
 
