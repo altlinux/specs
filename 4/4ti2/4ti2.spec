@@ -7,12 +7,17 @@ BuildRequires(pre): rpm-macros-environment-modules
 %define _localstatedir %{_var}
 Name:           4ti2
 Version:        1.6.9
-Release:        alt1_7
+Release:        alt1_12
 Summary:        Algebraic, geometric and combinatorial problems on linear spaces
 
 %global relver %(tr . _ <<< %{version})
 
-License:        GPLv2+
+# The content is GPL-2.0-or-later.  The remaining licenses cover the various
+# fonts embedded in the PDF manual.
+# AMS: OFL-1.1-RFN
+# CM: Knuth-CTAN AND LicenseRef-Fedora-Public-Domain
+# CM-Super: GPL-1.0-or-later
+License:        GPL-2.0-or-later AND OFL-1.1-RFN AND Knuth-CTAN AND LicenseRef-Fedora-Public-Domain AND GPL-1.0-or-later
 URL:            https://4ti2.github.io/
 Source0:        https://github.com/4ti2/4ti2/releases/download/Release_%{relver}/%{name}-%{version}.tar.gz
 Source1:        4ti2.module.in
@@ -60,7 +65,7 @@ spaces.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0
 
 
 # Add a missing executable bit
@@ -73,6 +78,13 @@ mv -f NEWS.utf8 NEWS
 
 # Update the C++ standard
 sed -i 's/c++0x/c++11/g' configure
+
+# Silence "egrep is obsolescent" warnings
+for f in $(grep -Frl egrep src/groebner test); do
+  sed -i.orig 's/egrep/grep -E/g' $f
+  touch -r $f.orig $f
+  rm $f.orig
+done
 
 %build
 %configure --enable-shared --disable-static
@@ -91,8 +103,8 @@ export LD_LIBRARY_PATH=$PWD/src/4ti2/.libs:$PWD/src/fiber/.libs:$PWD/src/groebne
 pushd doc
 make update-manual
 bibtex 4ti2_manual
-pdflatex 4ti2_manual
-pdflatex 4ti2_manual
+pdflatex -interaction=batchmode 4ti2_manual
+pdflatex -interaction=batchmode 4ti2_manual
 popd
 
 %install
@@ -140,6 +152,9 @@ make check
 %{_libdir}/libzsolve*.so.0*
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.6.9-alt1_12
+- update to new release by fcimport
+
 * Fri Sep 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt1_7
 - fixed build
 
