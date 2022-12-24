@@ -3,10 +3,10 @@ Group: Other
 %define _localstatedir %{_var}
 Name:           voikko-fi
 Version:        2.5
-Release:        alt1_1
+Release:        alt1_3
 Summary:        A description of Finnish morphology written for libvoikko
 
-License:        GPLv2+
+License:        GPL-2.0-or-later
 URL:            https://voikko.puimula.org/
 
 # See https://voikko.puimula.org/sources.html for the key fingerprint.
@@ -61,6 +61,9 @@ make vvfst-install DESTDIR=$RPM_BUILD_ROOT%{_prefix}/lib/voikko
 %{_prefix}/lib/voikko/5
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.5-alt1_3
+- update to new release by fcimport
+
 * Wed Feb 09 2022 Igor Vlasenko <viy@altlinux.org> 2.5-alt1_1
 - update to new release by fcimport
 
