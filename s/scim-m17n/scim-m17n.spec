@@ -3,10 +3,10 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           scim-m17n
 Version:        0.2.3
-Release:        alt3_27
+Release:        alt3_31
 Summary:        SCIM IMEngine for m17n-lib
 
-License:        GPLv2+
+License:        GPL-2.0-or-later
 URL:            https://github.com/scim-im/scim-m17n
 Source0:        %{name}-%{version}.tar.gz
 
@@ -18,6 +18,7 @@ Requires:       scim >= 1.4.4
 
 Patch0:         %{name}-no-M17N-prefix.patch
 Patch1:         %{name}-aarch64.patch
+Patch2: scim-m17n-configure-c99.patch
 Source44: import.info
 
 %description
@@ -29,6 +30,7 @@ input of many languages using the input table maps from m17n-db.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 
 %build
@@ -51,6 +53,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/scim-1.0/*/IMEngine/m17n.la
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.2.3-alt3_31
+- update to new release by fcimport
+
 * Mon Dec 06 2021 Igor Vlasenko <viy@altlinux.org> 0.2.3-alt3_27
 - fixed build
 
