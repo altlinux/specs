@@ -16,7 +16,7 @@
 
 Name: perl-parent
 Version: 0.239
-Release: alt1
+Release: alt1.1
 
 Summary: Establish an ISA relationship with base classes at compile time
 
@@ -63,6 +63,9 @@ mostly is similar in effect to
 %doc Changes
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.239-alt1.1
+- automated CPAN update
+
 * Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 0.239-alt1
 - automated CPAN update
 
