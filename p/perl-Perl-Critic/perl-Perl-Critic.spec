@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(List/SomeUtils.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define m_distro Perl-Critic
 Name: perl-Perl-Critic
-Version: 1.140
-Release: alt3
+Version: 1.146
+Release: alt1
 
 Summary: Critique Perl source code for best-practices.  
 
@@ -59,6 +62,9 @@ code analysis.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.146-alt1
+- automated CPAN update
+
 * Wed Sep 28 2022 Igor Vlasenko <viy@altlinux.org> 1.140-alt3
 - fixed build
 
