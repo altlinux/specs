@@ -1,25 +1,23 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname rtaudio
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-Summary:        Real-time Audio I/O Library
 Name:           librtaudio
-Version:        5.0.0
-Release:        alt2_2
+Version:        5.2.0
+Release:        alt1_1
+Summary:        Real-time Audio I/O Library
+
 License:        MIT
-Group:          System/Libraries
 URL:            http://www.music.mcgill.ca/~gary/rtaudio/
-Source0:        https://github.com/thestk/rtaudio/archive/v%{version}/rtaudio-%{version}.tar.gz
+Source0:        https://www.music.mcgill.ca/~gary/%{oldname}/release/%{oldname}-%{version}.tar.gz
+
 BuildRequires:  libalsa-devel
-BuildRequires:  libjack-devel
-BuildRequires:  libpulseaudio-devel
-BuildRequires:  autoconf
-BuildRequires:  automake
-BuildRequires:  libtool
 BuildRequires:  doxygen
+BuildRequires:  gcc-c++
+BuildRequires:  libjack-devel
+BuildRequires:  libtool
+BuildRequires:  libpulseaudio-devel
 Source44: import.info
 Provides: rtaudio = %{version}-%{release}
 
@@ -41,8 +39,8 @@ designed with the following objectives:
 
 
 %package devel
+Group: System/Libraries
 Summary:        Real-time Audio I/O Library
-Group:          System/Libraries
 Requires:       %{name} = %{version}-%{release}
 Provides: rtaudio-devel = %{version}-%{release}
 
@@ -61,8 +59,10 @@ designed with the following objectives:
   * automatic internal conversion for data format, channel number compensation,
     (de)interleaving, and byte-swapping
 
+
 %prep
 %setup -n %{oldname}-%{version} -q
+
 # Fix encoding issues
 for file in tests/teststops.cpp; do
    sed 's|\r||' $file > $file.tmp
@@ -70,24 +70,23 @@ for file in tests/teststops.cpp; do
    touch -r $file $file.tmp2
    mv -f $file.tmp2 $file
 done
-%ifarch %e2k
-# strip UTF-8 BOM for lcc < 1.24
-find -type f -print0 -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
-	xargs -r0 sed -ri 's,^\xEF\xBB\xBF,,'
-%endif
+
 
 %build
-autoreconf -fiv
 export CFLAGS="%optflags -fPIC"
 %configure --with-jack --with-alsa --with-pulse --enable-shared --disable-static --verbose
-%make_build V=1
+%make_build
+
 
 %install
-make install DESTDIR=%{buildroot}
+%makeinstall_std
+
+
+
 
 %files
 %doc --no-dereference doc/doxygen/license.txt
-%doc readme doc/release.txt
+%doc README.md doc/release.txt
 %{_libdir}/lib%{oldname}.so.*
 
 %files devel
@@ -96,7 +95,11 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/lib%{oldname}.so
 %{_libdir}/pkgconfig/%{oldname}.pc
 
+
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 5.2.0-alt1_1
+- update to new release by fcimport
+
 * Sat Oct 12 2019 Michael Shigorin <mike@altlinux.org> 5.0.0-alt2_2
 - E2K: strip UTF-8 BOM for lcc < 1.24
 
