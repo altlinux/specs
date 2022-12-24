@@ -9,9 +9,9 @@ Group: Development/C
 %define autorelease 1
 
 Name:       libime  
-Version:    1.0.14
+Version:    1.0.15
 License:    LGPLv2+ and MIT and BSD
-Release:    alt1_%autorelease
+Release:    alt1_1
 Summary:    This is a library to support generic input method implementation
 URL:        https://github.com/fcitx/libime
 Source:     https://download.fcitx-im.org/fcitx5/%{name}/%{name}-%{version}_dict.tar.xz
@@ -107,6 +107,9 @@ Development files for %{name}
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.0.15-alt1_1
+- update to new release by fcimport
+
 * Tue Sep 20 2022 Igor Vlasenko <viy@altlinux.org> 1.0.14-alt1_1
 - new version
 
