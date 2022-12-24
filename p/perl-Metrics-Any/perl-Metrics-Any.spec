@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
 Version: 0.09
-Release: alt1
+Release: alt1.1
 Summary: abstract collection of monitoring metrics
 Group: Development/Perl
 License: perl
@@ -52,6 +52,9 @@ required to perform that reporting).
 %perl_vendor_privlib/M*
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.09-alt1.1
+- automated CPAN update
+
 * Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 0.09-alt1
 - automated CPAN update
 
