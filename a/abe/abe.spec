@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install imake libXt-devel xorg-cf-files
 %define _localstatedir %{_var}
 Name:           abe
 Version:        1.1
-Release:        alt5_40
+Release:        alt5_45
 
 Summary:        Scrolling, platform-jumping, ancient pyramid exploring game
 License:        GPL+
@@ -28,6 +28,7 @@ Patch2:         %{name}-1.1-format.patch
 Patch3:         %{name}-1.1-aarch64.patch
 # Fix build failure with -Werror=format-security
 Patch4:         %{name}-1.1-format-security.patch
+Patch5:         %{name}-1.1-configure-c99.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gcc-c++
@@ -50,6 +51,7 @@ vaguely in the style of similar games for the Commodore+4.
 %patch2
 %patch3
 %patch4
+%patch5
 
 # Fix the FSF's address
 sed 's/59 Temple Place, Suite 330, Boston, MA  02111-1307/51 Franklin Street, Suite 500, Boston, MA  02110-1335/' COPYING > COPYING.new
@@ -96,6 +98,9 @@ desktop-file-install --dir $RPM_BUILD_ROOT/%{_datadir}/applications/ %{name}.des
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.1-alt5_45
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_40
 - update to new release by fcimport
 
