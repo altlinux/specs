@@ -5,11 +5,11 @@ Group: Development/C
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 5
+%define autorelease 1
 
 Name:       xcb-imdkit
-Version:    1.0.3
-Release:    alt1_%autorelease
+Version:    1.0.4
+Release:    alt1_1
 Summary:    Input method development support for xcb
 # source files in src/xlibi18n use the "old style" MIT license known as NTP.
 License:    LGPLv2 and MIT
@@ -83,6 +83,9 @@ Devel files for xcb-imdkit
 %{_libdir}/pkgconfig/xcb-imdkit.pc
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.0.4-alt1_1
+- update to new release by fcimport
+
 * Fri Sep 16 2022 Igor Vlasenko <viy@altlinux.org> 1.0.3-alt1_5
 - new version
 
