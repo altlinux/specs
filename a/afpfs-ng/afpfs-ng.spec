@@ -12,7 +12,7 @@ BuildRequires: gcc-c++ libncurses-devel
 %define _localstatedir %{_var}
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt3_37
+Release:        alt3_41
 Summary:        Apple Filing Protocol client
 
 
@@ -29,6 +29,7 @@ Patch1:         afpfs-ng-0.8.1-pointer.patch
 # Sent by e-mail to Alex deVries <alexthepuffin@gmail.com>
 Patch2:         afpfs-ng-0.8.1-formatsec.patch
 Patch3:         afpfs-ng-0.8.1-longoptions.patch
+Patch4: afpfs-ng-c99.patch
 
 %{?with_fuse:BuildRequires: libfuse-devel}
 BuildRequires: gcc
@@ -70,6 +71,7 @@ Library for dynamic linking and header files of afpfs-ng.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 libtoolize
 autoreconf
@@ -87,10 +89,11 @@ export CFLAGS="${RPM_OPT_FLAGS} -fcommon"
 
 
 %install
-make install DESTDIR=%{buildroot}
+%makeinstall_std
 install -d %{buildroot}%{_includedir}/afpfs-ng
 cp -p include/* %{buildroot}%{_includedir}/afpfs-ng
-
+# libtool .la file works different in different versions of libtool, should not be packaged
+[ -f %{buildroot}%{_libdir}/libafpclient.la ] && rm -f %{buildroot}%{_libdir}/libafpclient.la
 
 %if ( 0%{?rhel} && 0%{?rhel} <= 7 )
 
@@ -125,8 +128,10 @@ cp -p include/* %{buildroot}%{_includedir}/afpfs-ng
 %{_includedir}/afpfs-ng
 %{_libdir}/*.so
 
-
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.8.1-alt3_41
+- update to new release by fcimport
+
 * Tue Nov 30 2021 Igor Vlasenko <viy@altlinux.org> 0.8.1-alt3_37
 - update to new release by fcimport
 
