@@ -2,12 +2,12 @@ Group: Networking/WWW
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/glib-gettextize
 # END SourceDeps(oneline)
-%define fedora 32
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		gtorrentviewer
 Version:	0.2b
-Release:	alt4_45
+Release:	alt4_49
 Summary:	A GTK2-based viewer and editor for BitTorrent meta files
 License:	GPL+
 URL:		http://gtorrentviewer.sourceforge.net/
@@ -19,6 +19,7 @@ Patch3:		gtorrentviewer-0.2b-trackerdetails.patch
 Patch4:		GTorrentViewer-0.2b-curl-types.patch
 Patch5:		GTorrentViewer-0.2b-format.patch
 Patch6:		GTorrentViewer-0.2b-missing-tracker.patch
+Patch7:		gtorrentviewer-configure-c99.patch
 BuildRequires:	coreutils
 BuildRequires:	gcc
 BuildRequires:	gtk-builder-convert gtk-demo libgail-devel libgtk+2-devel
@@ -66,6 +67,9 @@ download.
 # Avoid segfault when dealing with torrent that has no tracker (#1178062)
 %patch6
 
+# C99 compatibility issues.
+%patch7 -p1
+
 # curl/types.h are no more; was true for  0.2b-22.
 sed -i 's,#include <curl/types.h>,,' src/main.c
 
@@ -104,6 +108,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %{_mandir}/man1/gtorrentviewer.1*
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.2b-alt4_49
+- update to new release by fcimport
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 0.2b-alt4_45
 - update to new release by fcimport
 
