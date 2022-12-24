@@ -1,9 +1,12 @@
 Group: Development/Tools
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+# END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xa
-Version:        2.3.11
-Release:        alt1_4
+Version:        2.3.13
+Release:        alt1_1
 Summary:        6502/65816 cross-assembler
 
 License:        GPLv2+
@@ -49,7 +52,7 @@ done
 
 
 %build
-%make_build CFLAGS="$RPM_OPT_FLAGS"
+%make_build CFLAGS="%{optflags}" LDFLAGS="%{build_ldflags}"
 
 
 %check
@@ -67,6 +70,9 @@ make test
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.3.13-alt1_1
+- update to new release by fcimport
+
 * Wed Nov 18 2020 Igor Vlasenko <viy@altlinux.ru> 2.3.11-alt1_4
 - update to new release by fcimport
 
