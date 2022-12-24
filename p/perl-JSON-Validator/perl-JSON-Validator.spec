@@ -2,7 +2,7 @@
 
 Name: perl-JSON-Validator
 Version: 5.13
-Release: alt1
+Release: alt1.1
 Summary: Validate data against a JSON schema
 License: Artistic 2.0
 Group: Development/Perl
@@ -65,6 +65,9 @@ rm -f t/invalid-ref.t
 %doc Changes
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 5.13-alt1.1
+- automated CPAN update
+
 * Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 5.13-alt1
 - automated CPAN update
 
