@@ -1,7 +1,7 @@
 Group: Development/C++
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: /usr/bin/clang-tidy boost-devel rpm-build-python3
+BuildRequires: boost-devel rpm-build-python3
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -11,11 +11,11 @@ BuildRequires: /usr/bin/clang-tidy boost-devel rpm-build-python3
 %global _docdir_fmt %{name}-devel
 
 Name:           cli11
-Version:        2.2.0
+Version:        2.3.1
 Release:        alt1_1
 Summary:        Command line parser for C++11
 
-License:        BSD
+License:        BSD-3-Clause
 URL:            https://github.com/CLIUtils/CLI11
 Source0:        https://github.com/CLIUtils/CLI11/archive/v%{version}/%{name}-%{version}.tar.gz
 
@@ -43,6 +43,13 @@ rich feature set with a simple and intuitive interface.
 
 %package        docs
 Group: Development/C++
+# Doxygen adds files with licenses other than BSD-3-Clause.
+# GPL-1.0-or-later: bc_s*.png, bdwn.png, closed.png, doc.png, doxygen.css,
+#     doxygen.svg, folderclosed.png, folderopen.png, nav_*.png, open.png,
+#     search/close.svg, search/mag*.svg, search/search.css, splitbar*.png,
+#     sync_off.png, sync_on.png, tab_*.png, tabs.css
+# MIT: dynsections.js, jquery.js, menu.js, menudata.js, search/search.js
+License:        BSD-3-Clause AND GPL-1.0-or-later AND MIT
 Summary:        Documentation for CLI11
 BuildArch: noarch
 
@@ -87,6 +94,9 @@ CXXFLAGS='%{build_cxxflags} -DCLI11_OPTIONAL -DCLI11_STD_OPTIONAL=1'
 %doc docs/CLI11.svg docs/CLI11_100.png
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.3.1-alt1_1
+- update to new release by fcimport
+
 * Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 2.2.0-alt1_1
 - update to new release by fcimport
 
