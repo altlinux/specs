@@ -1,11 +1,11 @@
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libst2205
 Version:        1.4.3
-Release:        alt3_14
+Release:        alt3_25
 Summary:        Library for accessing the display of hacked st2205 photo frames
-Group:          System/Libraries
 License:        GPLv3+
 URL:            http://picframe.spritesserver.nl/wiki/index.php
 # Note the st2205tool includes tools to actually hack the pictureframe, this is
@@ -15,7 +15,9 @@ URL:            http://picframe.spritesserver.nl/wiki/index.php
 Source0:        http://www.neophob.com/files/st2205tool-1.4.3.tar.gz
 Patch0:         st2205tool-1.4.3-no-exit.patch
 Patch1:         st2205tool-1.4.3-width-height-swap.patch
-BuildRequires:  libgd2-devel
+Patch2:         libst2205-c99.patch
+BuildRequires:  gcc
+BuildRequires:  libgd3-devel
 Source44: import.info
 
 %description
@@ -26,8 +28,8 @@ the display from the PC, for st2205 frames with the hacked firmware.
 
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
@@ -36,8 +38,8 @@ developing applications that use %{name}.
 
 
 %package tools
+Group: Development/Other
 Summary:        Tools for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description tools
@@ -49,10 +51,12 @@ display a (properly sized) PNG file on a supported picture frames display.
 %setup -q -n st2205tool
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 
 %build
-%make_build CFLAGS="$RPM_OPT_FLAGS -fPIC" -C libst2205
+# -D_GNU_SOURCE to define the O_DIRECT macro.
+%make_build CFLAGS="$RPM_OPT_FLAGS -fPIC -D_GNU_SOURCE" -C libst2205
 %make_build CFLAGS="$RPM_OPT_FLAGS -I../libst2205" -C setpic
 
 
@@ -65,6 +69,10 @@ install -m 755 setpic/setpic $RPM_BUILD_ROOT%{_bindir}/st2205-setpic
 install -m 755 libst2205/libst2205.so $RPM_BUILD_ROOT%{_libdir}/libst2205.so.1
 ln -s libst2205.so.1 $RPM_BUILD_ROOT%{_libdir}/libst2205.so
 install -p -m 644 libst2205/st2205.h $RPM_BUILD_ROOT%{_includedir}
+
+
+
+
 
 
 %files
@@ -81,6 +89,9 @@ install -p -m 644 libst2205/st2205.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.4.3-alt3_25
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt3_14
 - update to new release by fcimport
 
