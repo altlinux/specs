@@ -9,7 +9,7 @@ Group: Development/C
 %add_optflags -fcommon
 Name:           libtpcmisc
 Version:        1.4.8
-Release:        alt2_26
+Release:        alt2_29
 Summary:        Miscellaneous PET functions
 
 License:        LGPLv2+
@@ -56,8 +56,7 @@ iconv -f ISO_8859-1 -t utf8 -o History.new History && mv -f History.new History
 
 
 %build
-# c99 standard since they use declarations in the for loops
-export CFLAGS="%{optflags} -std=c99 -fPIC -DPIC -D_POSIX_C_SOURCE=200112L"
+export CFLAGS="%{optflags} -fPIC -DPIC"
 export CXXFLAGS="%{optflags} -fPIC -DPIC"
 %make_build
 
@@ -97,6 +96,9 @@ popd
 %{_libdir}/%{name}.a
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.4.8-alt2_29
+- update to new release by fcimport
+
 * Sat Aug 28 2021 Igor Vlasenko <viy@altlinux.org> 1.4.8-alt2_26
 - fixed build with LTO
 
