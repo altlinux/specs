@@ -2,7 +2,7 @@
 %define dist Module-Build
 Name: perl-%dist
 Version: 0.4232
-Release: alt1
+Release: alt1.1
 
 Summary: Build and install Perl modules
 License: GPL or Artistic
@@ -61,6 +61,9 @@ bzip2 -k Changes
 %exclude %perl_vendor_privlib/Module/Build/Platform/os2.pm
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.4232-alt1.1
+- automated CPAN update
+
 * Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 0.4232-alt1
 - automated CPAN update
 
