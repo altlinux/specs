@@ -3,8 +3,8 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libuninameslist
-Version:        20220701
-Release:        alt1_2
+Version:        20221022
+Release:        alt1_1
 
 Summary:        A library providing Unicode character names and annotations
 
@@ -56,6 +56,9 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libuninameslist.pc
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 20221022-alt1_1
+- update to new release by fcimport
+
 * Tue Aug 02 2022 Igor Vlasenko <viy@altlinux.org> 20220701-alt1_2
 - update to new release by fcimport
 
