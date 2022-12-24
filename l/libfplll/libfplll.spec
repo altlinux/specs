@@ -6,22 +6,19 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 1
+%define autorelease 3
 
 Name:           libfplll
 Version:        5.4.2
 %global so_version 7
-Release:        alt1_1
+Release:        alt1_%autorelease
 Summary:        Lattice algorithms using floating-point arithmetic
 
-# The entire source is LGPLv2+, except:
+# The entire source is LGPL-2.1-or-later, except:
 #
 #   - The contents of fplll/enum-parallel/ are MIT
 #   - fplll/io/thread_pool.hpp is MIT
 #   - fplll/io/json.hpp is MIT, but is unbundled
-#
-# Since all of the MIT-licensed sources are linked into a single shared library
-# with the LGPLv2+ sources, the overall a.'effective licensea.' remains LGPLv2+.
 #
 # Additionally, a number of autoconf build system sources, which do not
 # contribute to the binary RPM license because they are neither installed nor
@@ -30,7 +27,7 @@ Summary:        Lattice algorithms using floating-point arithmetic
 #   - INSTALL, {,fplll/,tests/}Makefile.in, aclocal.m4, compile, config.guess,
 #     config.sub, configure, depcomp, install-sh, ltmain.sh, missing,
 #     test-driver, */Makefile.in, m4/*.m4
-License:        LGPLv2+
+License:        LGPL-2.1-or-later AND MIT
 URL:            https://fplll.github.io/fplll/
 Source0:        https://github.com/fplll/fplll/releases/download/%{version}/fplll-%{version}.tar.gz
 
@@ -199,6 +196,9 @@ LD_LIBRARY_PATH="${PWD}/src/.libs" %make_build check
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 5.4.2-alt1_3
+- update to new release by fcimport
+
 * Tue Jul 05 2022 Igor Vlasenko <viy@altlinux.org> 5.4.2-alt1_1
 - update to new release by fcimport
 
