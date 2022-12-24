@@ -7,17 +7,20 @@ BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
 %define _localstatedir %{_var}
 Name:		coan
 Version:	6.0.1
-Release:	alt2_25
+Release:	alt2_29
 Summary:	A command line tool for simplifying the pre-processor conditionals in source code
 License:	BSD
 URL:		http://coan2.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/coan2/%{name}-%{version}.tar.gz
 # https://sourceforge.net/p/coan2/bugs/92/
 Patch0:         expression_parser.patch
+# https://sourceforge.net/p/coan2/bugs/95/
+Patch1:         coan-autoconf-c99.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  perl-podlators
 BuildRequires:  perl-devel
+BuildRequires:  autoconf automake
 
 # removed python2 dependencies and asked upstream to port tests to python3
 # https://sourceforge.net/p/coan2/bugs/93/
@@ -48,7 +51,8 @@ redundant #if-logic from the code.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0
+%patch1
 
 
 for i in AUTHORS LICENSE.BSD README ChangeLog ; do
@@ -57,6 +61,7 @@ done
 
 %build
 export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
+autoreconf -vi
 %configure
 %make_build
 
@@ -83,6 +88,9 @@ export CXXFLAGS="-std=c++14 $RPM_OPT_FLAGS"
 %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 6.0.1-alt2_29
+- update to new release by fcimport
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 6.0.1-alt2_25
 - update to new release by fcimport
 
