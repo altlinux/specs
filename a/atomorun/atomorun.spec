@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/desktop-file-install libGLU-devel libSDL-devel libglvnd-
 
 Name:           atomorun
 Version:        1.1
-Release:        alt5_0.32.%{prever}
+Release:        alt5_0.38.%{prever}
 Summary:        Jump & Run game where you have to flee an exploding nuclear bomb
 License:        GPL+
 URL:            http://atomorun.whosme.de/index.php
@@ -20,9 +20,10 @@ Source3:        %{name}.appdata.xml
 Patch0:         atomorun-1.1-missing-protos.patch
 Patch1:         atomorun-1.1-fcommon-fix.patch
 Patch2:         atomorun-1.1-warnings-fix.patch
+Patch3:         atomorun-1.1-configure-c99.patch
 BuildRequires:  gcc
 BuildRequires:  libSDL_mixer-devel libSDL_image-devel libtiff-devel libtiffxx-devel libvorbis-devel
-BuildRequires:  libalsa-devel desktop-file-utils libappstream-glib
+BuildRequires:  libalsa-devel desktop-file-utils libappstream-glib libappstream-glib-gir
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -36,6 +37,7 @@ nuclear bomb.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 
 
@@ -74,6 +76,9 @@ appstream-util validate-relax --nonet \
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.1-alt5_0.38.pre2
+- update to new release by fcimport
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.32.pre2
 - update to new release by fcimport
 
