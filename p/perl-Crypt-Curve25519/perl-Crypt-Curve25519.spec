@@ -2,15 +2,15 @@
 %define dist Crypt-Curve25519
 
 Name: perl-%dist
-Version: 0.06
-Release: alt4
+Version: 0.07
+Release: alt1
 
 Summary: Generate shared secret using elliptic-curve Diffie-Hellman function
 License: %perl_license
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/A/AJ/AJGB/%{dist}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/K/KA/KARASIK/%{dist}-%{version}.tar.gz
 
 BuildRequires: rpm-build-licenses
 
@@ -22,7 +22,7 @@ BuildRequires: perl-Encode perl-devel
 Generate shared secret using elliptic-curve Diffie-Hellman function
 
 %prep
-%setup -n %{dist}-%{version}
+%setup -q -n %{dist}-%{version}
 %ifarch %e2k
 # see mcst#1802; check with lcc >= 1.24; s/uint128_t/uintmax_t/g fails tests
 cc --version | grep -q '^lcc:1.24' || sed -i 's,=\$x64,=0,;' Makefile.PL
@@ -37,11 +37,14 @@ grep -rl "fmul" ./ | xargs sed -i 's/fmul/fixedvar/g'
 %perl_vendor_install
 
 %files
-%doc Changes README curve25519-donna-license.md
+%doc Changes curve25519-donna-license.md README.md
 %perl_vendor_archlib/Crypt
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.07-alt1
+- automated CPAN update
+
 * Thu Dec 05 2019 Igor Vlasenko <viy@altlinux.ru> 0.06-alt4
 - fixed build
 
