@@ -12,11 +12,12 @@ BuildRequires: pkgconfig(libusb-1.0)
 
 Name:           libmirisdr
 Version:        0.0.20130608
-Release:        alt1_7
+Release:        alt1_9
 Summary:        Support programs for MRi2500
 License:        GPLv2
 Group:          Communications
 URL:            http://cgit.osmocom.org/libmirisdr/
+##TODO Try a more recent fork e.g. https://github.com/ericek111/libmirisdr-5
 Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  ccmake cmake ctest
@@ -80,7 +81,11 @@ sed -i -e 's,\(^set(libdir \\${exec_prefix}/lib\),\1${LIB_SUFFIX},' CMakeLists.t
 cp Doxyfile.in Doxyfile
 sed -i "s\@VERSION@\%{version}\1" Doxyfile
 doxygen
-make pdf -C doc/latex
+cd doc/latex
+  make refman.dvi
+  dvips -o refman.ps refman.dvi
+  ps2pdf refman.ps refman.pdf
+cd -
 %endif
 
 %install
@@ -128,6 +133,9 @@ cp -r doc/latex/*.pdf %{buildroot}%{_docdir}/%{name}/pdf
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.0.20130608-alt1_9
+- update by mgaimport
+
 * Tue Feb 25 2020 Igor Vlasenko <viy@altlinux.ru> 0.0.20130608-alt1_7
 - fixed build
 
