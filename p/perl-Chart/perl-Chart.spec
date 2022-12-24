@@ -5,7 +5,7 @@ BuildRequires: perl(Test/Warn.pm) perl(Graphics/Toolkit/Color.pm)
 %define dist Chart
 Name: perl-%dist
 Version: 2.403.9
-Release: alt1
+Release: alt1.1
 
 Summary: A series of charting modules
 License: GPL or Artistic
@@ -42,6 +42,9 @@ all of its graphics primitives calls.
 %perl_vendor_privlib/Chart/Property
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.403.9-alt1.1
+- automated CPAN update
+
 * Wed Dec 14 2022 Igor Vlasenko <viy@altlinux.org> 2.403.9-alt1
 - automated CPAN update
 
