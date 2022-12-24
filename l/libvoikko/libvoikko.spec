@@ -10,10 +10,10 @@ Group: System/Libraries
 
 Name:           libvoikko
 Version:        4.3.1
-Release:        alt1_2
+Release:        alt1_6
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
-License:        GPLv2+
+License:        GPL-2.0-or-later
 URL:            https://voikko.puimula.org
 # The usual format of stable release URLs
 Source0:        https://www.puimula.org/voikko-sources/%{name}/%{name}-%{version}.tar.gz
@@ -135,6 +135,9 @@ mkdir -p %{buildroot}%{_prefix}/lib/voikko
 %{python3_sitelibdir_noarch}/__pycache__/%{name}.cpython-3*.opt-?.pyc
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 4.3.1-alt1_6
+- update to new release by fcimport
+
 * Fri Dec 17 2021 Igor Vlasenko <viy@altlinux.org> 4.3.1-alt1_2
 - update to new release by fcimport
 
