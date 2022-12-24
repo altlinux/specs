@@ -1,5 +1,5 @@
 Name: goverlay
-Version: 0.9
+Version: 0.9.1
 Release: alt1
 
 Summary: Graphical UI to help manage Linux overlays
@@ -14,7 +14,7 @@ Patch: goverlay-enable-debuginfo-generation.patch
 ExcludeArch: ppc64le armh
 BuildRequires: lazarus rpm-build-fpc fpc libappstream-glib-devel qt5pas-devel
 
-Requires: mangohud
+Requires: mangohud vulkan-tools vkBasalt
 Requires: qt5pas
 
 
@@ -51,6 +51,10 @@ help manage Linux overlays. Currently supported:
 /usr/libexec/goverlay
 
 %changelog
+* Sat Dec 24 2022 Ilya Mashkin <oddity@altlinux.ru> 0.9.1-alt1
+- 0.9.1
+- Add Requires: vulkan-tools vkBasalt (Closes: #43372)
+
 * Fri Jul 22 2022 Ilya Mashkin <oddity@altlinux.ru> 0.9-alt1
 - 0.9
 
