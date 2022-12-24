@@ -2,7 +2,7 @@ Group: System/Fonts/True type
 %define oldname baekmuk-bdf-fonts
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-BuildRequires: fontpackages-devel
+BuildRequires: rpm-build-fedora-compat-fonts
 %global fontname   baekmuk-bdf
 
 %global fontdir      %_bitmapfontsdir/%{fontname}
@@ -10,7 +10,7 @@ BuildRequires: fontpackages-devel
 
 Name:           fonts-bitmap-baekmuk
 Version:        2.2
-Release:        alt3_29
+Release:        alt3_33
 Summary:        Korean bitmap fonts
 
 License:        Baekmuk
@@ -61,6 +61,9 @@ iconv -f EUC-KR -t UTF-8 COPYRIGHT.ks > COPYRIGHT.ko
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.2-alt3_33
+- update to new release by fcimport
+
 * Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 2.2-alt3_29
 - update to new release by fcimport
 
