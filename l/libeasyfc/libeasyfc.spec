@@ -7,16 +7,16 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:		libeasyfc
 Version:	0.14.0
-Release:	alt1_6
+Release:	alt1_13
 Summary:	Easy configuration generator interface for fontconfig
 
-License:	LGPLv3+
+License:	LGPL-3.0-or-later
 URL:		http://tagoh.bitbucket.org/libeasyfc/
 Source0:	https://bitbucket.org/tagoh/libeasyfc/downloads/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-freetype.patch
 Patch1:		%{name}-fix-config.patch
 
-BuildRequires:	glib2-devel libgio libgio-devel gobject-introspection-devel libxml2-devel fontconfig-devel >= 2.12.93 libharfbuzz-devel libharfbuzz-utils
+BuildRequires:	glib2-devel libgio libgio-devel gobject-introspection-devel libxml2-devel fontconfig-devel >= 2.12.93 libharfbuzz-devel libharfbuzz-gir-devel libharfbuzz-utils
 BuildRequires:	gettext gettext-tools
 Requires:	fontconfig >= 2.12.93
 Source44: import.info
@@ -107,6 +107,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/gir-*/Easyfc-*.gir
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.14.0-alt1_13
+- update to new release by fcimport
+
 * Wed Sep 18 2019 Igor Vlasenko <viy@altlinux.ru> 0.14.0-alt1_6
 - update to new release by fcimport
 
