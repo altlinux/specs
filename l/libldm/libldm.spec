@@ -9,8 +9,8 @@ BuildRequires: /usr/bin/xsltproc perl(JSON/PP.pm) pkgconfig(gio-unix-2.0)
 %define devname libldm%{api}-devel
 
 Name:           libldm
-Version:        0.2.4
-Release:        alt1_2
+Version:        0.2.5
+Release:        alt1_1
 Summary:        A tool to manage Windows dynamic disks
 Group:		System/Libraries
 License:        LGPLv3+ and GPLv3+
@@ -68,7 +68,7 @@ autoreconf -i
 autoreconf -vfi
 
 %configure --disable-static --enable-gtk-doc
-%make_build V=1
+%make_build
 
 %install
 %makeinstall_std
@@ -95,6 +95,9 @@ find %{buildroot} -name "*.la" -delete
 
 
 %changelog
+* Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.2.5-alt1_1
+- update by mgaimport
+
 * Mon Feb 17 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1_2
 - update by mgaimport
 
