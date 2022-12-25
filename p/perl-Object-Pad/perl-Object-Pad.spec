@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %set_perl_req_method relaxed
 %define module_name Object-Pad
 # bootstrap 
@@ -5,18 +6,17 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Data/Dump.pm) perl(ExtUtils/CBuilder.pm) perl(Module/Build.pm) perl(Moo.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Test/Fatal.pm) perl(Test/More.pm) perl(Test/Refcount.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.71
-Release: alt1.1
+Version: 0.77
+Release: alt1
 Summary: a simple syntax for lexical slot-based objects
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 
 %description
 WARNING This is a highly experimental proof-of-concept. Please don't
@@ -38,11 +38,14 @@ rm -f "t/81async-method+dynamically.t"
 %perl_vendor_install
 
 %files
-%doc README LICENSE Changes
+%doc README Changes
 %perl_vendor_archlib/O*
 %perl_vendor_autolib/*
 
 %changelog
+* Sun Dec 25 2022 Igor Vlasenko <viy@altlinux.org> 0.77-alt1
+- automated CPAN update
+
 * Wed Nov 30 2022 Igor Vlasenko <viy@altlinux.org> 0.71-alt1.1
 - to Sisyphus as perl-Sub-HandlesVia dep
 
