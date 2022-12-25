@@ -10,7 +10,7 @@ Group: Games/Other
 Summary: Collection of text-based games
 Name: bsd-games
 Version: 2.17
-Release: alt2_69
+Release: alt3_69
 License: BSD and BSD with advertising
 URL: ftp://metalab.unc.edu/pub/Linux/games/
 Source0: ftp://metalab.unc.edu/pub/Linux/games/bsd-games-%{version}.tar.gz
@@ -57,6 +57,7 @@ BuildRequires: flex
 %endif
 BuildRequires: bison
 Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
+Patch33: bsd-games-2.17-alt-elbrus.patch
 Source44: import.info
 
 %description
@@ -95,6 +96,7 @@ popd
 %patch22 -p1 -b .getrandom
 %patch23 -p1 -b .printf
 %patch24 -p1 -b .printw
+%patch33 -p1
 
 %build
 # We include a templatized configuration settings file to set
@@ -221,6 +223,9 @@ exit 0
 %doc AUTHORS COPYING ChangeLog ChangeLog.0 THANKS YEAR2000 README.hunt trek/USD.doc/trek.me
 
 %changelog
+* Sun Dec 25 2022 Igor Vlasenko <viy@altlinux.org> 2.17-alt3_69
+- Elbrus support (bsd-games-2.17-alt-elbrus.patch)
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.17-alt2_69
 - update to new release by fcimport
 
