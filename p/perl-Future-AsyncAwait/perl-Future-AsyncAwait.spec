@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Future-AsyncAwait
 #BuildRequires: perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm)
 # BEGIN SourceDeps(oneline):
@@ -5,7 +6,6 @@ BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Future.pm) perl(IO/Async/Loop.pm)
 # END SourceDeps(oneline)
 # exclude for bootstrap:
 # perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm) perl(Object/Pad.pm) perl(Syntax/Keyword/Defer.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Syntax/Keyword/Try.pm) 
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 # bootstrap loop with Syntax/Keyword* and Future-AsyncAwait
@@ -13,14 +13,14 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 #BuildRequires: perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Syntax/Keyword/Try.pm) perl(Object/Pad.pm)
 
 Name: perl-%module_name
-Version: 0.59
-Release: alt1.1
+Version: 0.62
+Release: alt1
 Summary: deferred subroutine syntax for futures
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 
 %description
 use Future::AsyncAwait;
@@ -81,12 +81,15 @@ with futures.
 %perl_vendor_install
 
 %files
-%doc Changes LICENSE README
+%doc Changes README
 %perl_vendor_archlib/F*
 %perl_vendor_archlib/Test/Future/AsyncAwait/Awaitable.pm
 %perl_vendor_autolib/*
 
 %changelog
+* Sun Dec 25 2022 Igor Vlasenko <viy@altlinux.org> 0.62-alt1
+- automated CPAN update
+
 * Fri Dec 02 2022 Igor Vlasenko <viy@altlinux.org> 0.59-alt1.1
 - bootstrap build (w/o Devel/MAT)
 - to Sisyphus as perl-Sub-HandlesVia dep
