@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl-podlators perl(Future/AsyncAwait/ExtensionBuilder.pm)
 # END SourceDeps(oneline)
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -17,12 +18,12 @@ BuildRequires: perl-podlators
 %bcond_with perl_Syntax_Keyword_Dynamically_enables_optional_test
 
 Name:           perl-Syntax-Keyword-Dynamically
-Version:        0.10
-Release:        alt2_5
+Version:        0.11
+Release:        alt1
 Summary:        Dynamically change the value of a variable
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Syntax-Keyword-Dynamically
-Source0:        https://cpan.metacpan.org/authors/id/P/PE/PEVANS/Syntax-Keyword-Dynamically-%{version}.tar.gz
+Source0:        http://www.cpan.org/authors/id/P/PE/PEVANS/Syntax-Keyword-Dynamically-%{version}.tar.gz
 BuildRequires:  coreutils
 BuildRequires:  perl-devel
 BuildRequires:  rpm-build-perl
@@ -134,7 +135,6 @@ export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print
 ./Build test
 
 %files
-%doc --no-dereference LICENSE
 %doc Changes README
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/Syntax*
@@ -143,6 +143,9 @@ export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print
 %{_libexecdir}/%{name}
 
 %changelog
+* Sun Dec 25 2022 Igor Vlasenko <viy@altlinux.org> 0.11-alt1
+- automated CPAN update
+
 * Fri Dec 02 2022 Igor Vlasenko <viy@altlinux.org> 0.10-alt2_5
 - to Sisyphus as perl-Sub-HandlesVia dep
 
