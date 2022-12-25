@@ -2,7 +2,7 @@
 
 Name:     imagescan
 Version:  3.65.0
-Release:  alt2
+Release:  alt3
 
 Summary:  EPSON Image Scan v3 front-end for scanners and all-in-ones
 License:  GPL-3.0+
@@ -19,6 +19,7 @@ Source2:  %name.watch
 Patch1:   %name-alt-fix-name-in-version-file.patch
 Patch2:   imagescan-alt-config-cleanup.patch
 Patch3:   %name-alt-boost-1.73.0-compat.patch
+Patch4:   %name-alt-check-sane-compatibility.patch
 
 BuildRequires: gcc-c++
 BuildRequires: ImageMagick-tools
@@ -68,6 +69,7 @@ line option.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 %ifarch %e2k
 sed -ie "s|v = \\(utsushi::value (.*)\\);|v = sane::value (\\1);|" sane/handle.cpp
 %endif
@@ -138,6 +140,9 @@ chmod +x %buildroot%_bindir/imagescan
 %_datadir/utsushi/drivers
 
 %changelog
+* Sun Dec 25 2022 Andrey Cherepanov <cas@altlinux.org> 3.65.0-alt3
+- FTBFS: fixed build with new version of sane package.
+
 * Sat Jan 16 2021 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 3.65.0-alt2
 - Added fix for Elbrus build.
 
