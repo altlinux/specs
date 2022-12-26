@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:    yakuake
-Version: 22.08.3
+Version: 22.12.0
 Release: alt1
 
 Summary: Very powerful Quake style Konsole for KF5
@@ -48,6 +48,7 @@ BuildRequires: kf5-kparts-devel
 BuildRequires: kf5-ktextwidgets-devel
 BuildRequires: kf5-kwindowsystem-devel
 BuildRequires: kf5-sonnet-devel
+BuildRequires: kf5-kwayland-devel
 BuildRequires: qt5-x11extras-devel
 BuildRequires: qt5-svg-devel
 
@@ -84,6 +85,9 @@ This version is built with KF5.
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Sat Dec 10 2022 Andrey Cherepanov <cas@altlinux.org> 22.12.0-alt1
+- New version.
+
 * Sun Nov 06 2022 Andrey Cherepanov <cas@altlinux.org> 22.08.3-alt1
 - New version.
 
