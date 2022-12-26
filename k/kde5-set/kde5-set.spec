@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-set
-Version: 22.08.2
+Version: 22.08.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -92,7 +92,6 @@ Requires: kde5-messenger-client
 #
 Requires: plasma5-oxygen
 Requires: icon-theme-oxygen
-Requires: plasma5-xdg-desktop-portal-kde
 Requires: plasma5-workspace-wallpapers
 Requires: plasma5-oxygen-sounds
 Requires: plasma5-kwrited
@@ -228,6 +227,9 @@ Requires: kde5-kaddressbook
 %files -n kde5-pim
 
 %changelog
+* Mon Dec 26 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
+- clean requires
+
 * Thu Dec 22 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.2-alt1
 - exclude kde5-konqueror
 
