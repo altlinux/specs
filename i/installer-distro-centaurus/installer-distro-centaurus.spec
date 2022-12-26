@@ -1,10 +1,10 @@
 %define distro centaurus
 Name: installer-distro-%distro
-Version: 9.1
+Version: 10.0
 Release: alt1
 
 Summary: Installer files for Centaurus distro
-License: GPL
+License: GPL-2.0-only
 Group: System/Configuration/Other
 
 Source: %name-%version.tar
@@ -14,14 +14,13 @@ Installer files for Centaurus distro.
 
 %package stage2
 Summary: Installer stage2
-License: GPL
 Group: System/Configuration/Other
 Provides: installer-%distro-stage2 = %version
 Requires: installer-stage2
 #modules
 Requires: alterator-sysconfig
 Requires: alterator-datetime
-Requires: alterator-pkg
+Requires: installer-alterator-pkg
 Requires: alterator-vm
 Requires: alterator-notes
 Requires: x-cursor-theme-jimmac
@@ -31,18 +30,17 @@ Centaurus Installer stage2.
 
 %package stage3
 Summary: Installer stage3
-License: GPL
 Group: System/Configuration/Other
 Provides: installer-%distro-stage3 = %version
 Requires: installer-stage3
 #modules
-Requires: alterator-users
+Requires: alterator-users >= 10.14-alt1
 Requires: alterator-root
-Requires: alterator-net-eth dhcpcd
+Requires: alterator-net-eth
 Requires: alterator-net-general
 Requires: alterator-net-bond alterator-net-bridge
 Requires: installer-feature-nfs-server-stage3
-%ifnarch %e2k %arm
+%ifarch %ix86 x86_64 aarch64 ppc64le
 Requires: installer-feature-powerbutton-stage3
 Requires: alterator-grub
 %endif
@@ -65,10 +63,12 @@ cp -a * %buildroot%install2dir/
 %install2dir/services-*
 %install2dir/systemd-*
 %install2dir/*.d/*
-
 %files stage3
-
 %changelog
+* Mon Dec 26 2022 Sergey V Turchin <zerg@altlinux.org> 10.0-alt1
+- stage2: backport of workstation rewrite 80-setup-user-groups
+- update requires
+
 * Mon Mar 14 2022 Sergey V Turchin <zerg@altlinux.org> 9.1-alt1
 - mark x11 module for expert
 - don't require alterator-grub on armh
@@ -243,16 +243,16 @@ cp -a * %buildroot%install2dir/
 - add postinstall.d script for alteratord
 
 * Tue Feb 24 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt3
-- root and ldap steps moved to firsttime 
+- root and ldap steps moved to firsttime
 
 * Mon Feb 09 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt2
-- root and net steps changed to office-server 
+- root and net steps changed to office-server
 
 * Wed Feb 04 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.0-alt1
-- joined tzone and datetime 
+- joined tzone and datetime
 
 * Fri Jan 23 2009 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
-- updated for sisyphus installer state 
+- updated for sisyphus installer state
 
 * Wed Nov 05 2008 Alexandra Panyukova <mex3@altlinux.ru> 0.2-alt5.M41
 - Version for M41
