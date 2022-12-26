@@ -1,6 +1,6 @@
 Name: kodi
-Version: 19.4
-Release: alt3
+Version: 19.5
+Release: alt1
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -192,6 +192,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Mon Dec 26 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.5-alt1
+- 19.5 Matrix released
+
 * Tue Dec 06 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.4-alt3
 - fixed build with recent mesa
 
