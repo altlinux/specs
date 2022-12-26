@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt13
+Release: alt14
 
 Summary: Group policy editor
 License: GPLv2+
@@ -110,6 +110,15 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Mon Dec 26 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt14
+- 0.2.17-alt14
+- Fixes:
+  + #91097 Fix names of hidden and archive fields in folder widget.
+  + #91237 Remove sorting in table header.
+  + #90987 Fix status bar message.
+  + #91312 Add translation to '-n' command line option.
+  + #91047 Fix segmentation fault in the absence of kerberos tickets.
+
 * Thu Dec 15 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt13
 - 0.2.17-alt13
 - Fixes:
