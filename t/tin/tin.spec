@@ -1,5 +1,5 @@
 Name: tin
-Version: 2.6.1
+Version: 2.6.2
 Release: alt1
 
 Summary: A basic Internet news reader
@@ -73,6 +73,9 @@ install -pD -m644 %_sourcedir/tin.attributes %buildroot%_sysconfdir/tin/attribut
 # TODO: consider some more unpackaged scripts
 
 %changelog
+* Sun Dec 25 2022 Michael Shigorin <mike@altlinux.org> 2.6.2-alt1
+- new version (watch file uupdate)
+
 * Mon Dec 27 2021 Michael Shigorin <mike@altlinux.org> 2.6.1-alt1
 - new version (watch file uupdate)
 
