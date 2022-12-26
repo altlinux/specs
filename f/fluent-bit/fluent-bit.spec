@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: fluent-bit
-Version: 2.0.7
+Version: 2.0.8
 Release: alt1
 Summary: Fast data collector for Linux
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
@@ -16,6 +16,8 @@ Patch: 0001-mbedtls-disable-Werror-in-prod-build.patch
 Patch1: 0002-CMake-fix-up-install-paths.patch
 # Add -fPIC to jemalloc build. Not upstream
 Patch2: 0003-jemalloc-add-fPIC-to-CFLAGS.patch
+# Fix build with enabled FLB_IN_KAFKA
+Patch3: 0004-Revert-input_thread-remove-old-threading-interface.patch
 
 %if_enabled check
 BuildRequires: ctest
@@ -53,6 +55,7 @@ data manipulation and analytics using SQL queries.
 #patch -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 sed -i 's|c-ares|cares|' \
     src/CMakeLists.txt
 sed -i '/FLB_PATH_LIB_CARES/d' \
@@ -72,7 +75,7 @@ sed -i '/include(ExternalProject)/i include(CheckIncludeFiles)' \
     -DFLB_OUT_ES=On \
     -DFLB_OUT_PGSQL=On \
     -DFLB_OUT_KAFKA=On \
-    -DFLB_IN_KAFKA=Off \
+    -DFLB_IN_KAFKA=On \
     -DFLB_SHARED_LIB=Off \
     -DFLB_TESTS_RUNTIME=On \
     -DFLB_TESTS_INTERNAL=Off \
@@ -111,6 +114,10 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Mon Dec 26 2022 Leontiy Volodin <lvol@altlinux.org> 2.0.8-alt1
+- New version.
+- Enabled in_kafka module.
+
 * Wed Dec 21 2022 Leontiy Volodin <lvol@altlinux.org> 2.0.7-alt1
 - New version.
 
