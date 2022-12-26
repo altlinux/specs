@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt3
+Release: alt4
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Dec 26 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt4
+- update to ALT Server V 10.1
+- update documentation PVE (ALT 44318)
+- fix opennebula (ALT 44264, 44282, 44283, 44319, 44320)
+
 * Mon Oct 24 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt3
 - update documentation
 
