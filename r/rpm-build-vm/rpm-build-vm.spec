@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.42
+Version: 1.43
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -23,7 +23,11 @@ BuildRequires: libblkid-devel-static
 # This should run even if check is disabled.
 BuildRequires: /dev/kvm
 # shellchek is used in %%build as pre-install syntax check.
+%ifarch %ix86 x86_64
+# There is no shellcheck on other arches in p9. 'make shellcheck' below can
+# handle absence of shellcheck binary using only 'bash -n'.
 BuildRequires: shellcheck
+%endif
 
 # Try to load un-def kernel this way to avoid "forbidden dependencies"
 # from sisyphus_check.
@@ -123,7 +127,7 @@ CFLAGS="%optflags" make
 
 # This is pre-install syntax check for bash scripts. This does not
 # run any functional tests.
-make check
+make shellcheck
 %else
 # Still useful to verify stub script even in absence of shellcheck.
 bash -n vm-run
@@ -218,8 +222,15 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Wed Dec 21 2022 Vitaly Chikunov <vt@altlinux.org> 1.43-alt1
+- More image creation options.
+- Fix build with old shellcheck (for p9).
+
+* Tue Dec 06 2022 Vitaly Chikunov <vt@altlinux.org> 1.42-alt2
+- Fix build on gcc-8.
+
 * Tue Nov 29 2022 Vitaly Chikunov <vt@altlinux.org> 1.42-alt1
-- Mount /tmp with size=100%.
+- Mount /tmp with size=100%%.
 - Add --swap option to add SwapFree to the available memory.
 - vm-create-image: List content of the image with --ls, and copy
   files out of image with --cp (to get artifacts).
