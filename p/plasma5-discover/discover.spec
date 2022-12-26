@@ -20,7 +20,7 @@
 
 Name: plasma5-%rname
 Version: 5.26.4
-Release: alt2
+Release: alt3
 %K5init no_altplace appdata
 
 Group: System/Configuration/Packaging
@@ -127,7 +127,7 @@ Integrates  KDE New Stuff into Discover.
 Summary: Plasma Discover flatpak support
 Group: System/Configuration/Packaging
 Requires: %name-core
-Requires: flatpak
+Requires: flatpak plasma5-xdg-desktop-portal-kde
 %description flatpak
 Integrates Flatpak applications into Discover.
 
@@ -292,6 +292,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Mon Dec 26 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.4-alt3
+- update requires
+
 * Wed Nov 30 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.4-alt2
 - authorize GHNS
 
