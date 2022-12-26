@@ -1,7 +1,7 @@
 %define origname Cheetah
 
 Name: python3-module-%origname
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 
 Summary: Template engine and code-generator
@@ -47,6 +47,9 @@ This package contains tests for Cheetah.
 %install
 %pyproject_install
 
+%check
+%tox_check_pyproject
+
 %files
 %doc *.rst
 %_bindir/*
@@ -58,6 +61,10 @@ This package contains tests for Cheetah.
 %exclude %python3_sitelibdir/Cheetah/Tests/Performance.py*
 
 %changelog
+* Mon Dec 26 2022 Grigory Ustinov <grenka@altlinux.org> 3.3.1-alt1
+- Automatically updated to 3.3.1.
+- Build with check.
+
 * Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
 - Automatically updated to 3.3.0.
 
