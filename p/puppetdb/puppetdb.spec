@@ -2,26 +2,26 @@
 
 %def_enable initd
 
-Name:     puppetdb
-Version:  6.13.0
-Release:  alt2.1
+Name:    puppetdb
+Version: 7.12.0
+Release: alt1
 
-Summary:  Centralized Puppet Storage
-License:  Apache-2.0
-Group:    Other
-Url:      https://github.com/puppetlabs/puppetdb
+Summary: Centralized Puppet Storage
+License: Apache-2.0
+Group:   Other
+Url:     https://github.com/puppetlabs/puppetdb
 
 # https://downloads.puppetlabs.com/puppetdb/puppetdb-%version.tar.gz
-Source:   %name-%version.tar
-
+Source: %name-%version.tar
 Source1: %name.init
+Source2: %name.watch
 
-Patch1: %name-%version-alt.patch
+Patch1: %name-alt-fix.patch
 
-BuildArch:      noarch
+BuildArch: noarch
 
-BuildPreReq: /proc rpm-build-java
-BuildRequires: rpm-macros-ruby /usr/bin/ruby
+BuildRequires(pre): /proc rpm-build-java
+BuildRequires(pre): rpm-macros-ruby /usr/bin/ruby
 
 Requires: puppet
 Requires: postgresql
@@ -57,7 +57,7 @@ mkdir -p %buildroot%_runtimedir/%name
 mkdir -p %buildroot%_sysconfdir/logrotate.d
 cp ext/puppetdb.logrotate.conf %buildroot%_sysconfdir/logrotate.d/puppetdb
 
-install -D ext/default %buildroot%_sysconfdir/default/%name
+install -D ext/default %buildroot%_sysconfdir/sysconfig/%name
 
 install -Dm 0755 ext/bin/%name %buildroot%_bindir/%name
 
@@ -68,6 +68,7 @@ install -d -m 0755 %buildroot%_logdir/%name
 install -d -m 0755 %buildroot%_localstatedir/%name
 
 install ext/config/request-logging.xml %buildroot%_sysconfdir/%name/request-logging.xml
+install ext/config/conf.d/auth.conf %buildroot%_sysconfdir/%name/conf.d/auth.conf
 install ext/config/conf.d/jetty.ini %buildroot%_sysconfdir/%name/conf.d/jetty.ini
 install ext/config/conf.d/config.ini %buildroot%_sysconfdir/%name/conf.d/config.ini
 install ext/config/conf.d/repl.ini %buildroot%_sysconfdir/%name/conf.d/repl.ini
@@ -109,6 +110,12 @@ getent group _puppetdb > /dev/null || groupadd -r _puppetdb || :
 useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin) \
     --comment "puppetdb daemon"  _puppetdb || :
 
+%post
+%post_service %name
+
+%preun
+%preun_service %name
+
 %files
 %_javadir/%name/*
 %_unitdir/%name.service
@@ -128,8 +135,9 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 %_javadir/%name/cli/apps/*
 %_bindir/*
 
-%config(noreplace) %attr(0660,_puppetdb,_puppetdb) %_sysconfdir/default/%name
+%config(noreplace) %attr(0660,_puppetdb,_puppetdb) %_sysconfdir/sysconfig/%name
 %config(noreplace) %attr(0660,_puppetdb,_puppetdb) %_sysconfdir/%name/request-logging.xml
+%config(noreplace) %attr(0660,_puppetdb,_puppetdb) %_sysconfdir/%name/conf.d/auth.conf
 %config(noreplace) %attr(0660,_puppetdb,_puppetdb) %_sysconfdir/%name/conf.d/jetty.ini
 %config(noreplace) %attr(0660,_puppetdb,_puppetdb) %_sysconfdir/%name/conf.d/config.ini
 %config(noreplace) %attr(0660,_puppetdb,_puppetdb) %_sysconfdir/%name/conf.d/repl.ini
@@ -140,8 +148,11 @@ useradd -r --gid _puppetdb --home %_localstatedir/%name --shell $(which nologin)
 %files terminus
 %ruby_vendorlibdir/*
 
-
 %changelog
+* Mon Dec 26 2022 Andrey Cherepanov <cas@altlinux.org> 7.12.0-alt1
+- New version 7.12.0.
+- Add %%post_service and %%preun_service call.
+
 * Thu Nov 24 2022 Pavel Skrylev <majioa@altlinux.org> 6.13.0-alt2.1
 - ! ruby script folder to proper ones from site to vendor
 
