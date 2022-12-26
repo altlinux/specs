@@ -3,7 +3,7 @@
 
 Name: qt5-wayland
 Version: 5.15.7
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - Wayland platform support and QtCompositor module
@@ -11,6 +11,7 @@ Url: http://qt.io/
 License: LGPLv2 / GPLv3
 
 Source: %qt_module-everywhere-src-%version.tar
+Patch1: kde-5.15.patch
 
 # Automatically added by buildreq on Thu Jul 17 2014 (-bi)
 # optimized out: elfutils fontconfig glibc-devel-static libGL-devel libX11-devel libXfixes-devel libcloog-isl4 libfreetype-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libstdc++-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-egl libwayland-server pkg-config python-base qt5-base-devel qt5-declarative-devel qt5-script-devel ruby ruby-stdlibs wayland-devel xorg-compositeproto-devel xorg-fixesproto-devel xorg-xproto-devel
@@ -83,6 +84,7 @@ Requires: libqt5-core = %_qt5_version
 
 %prep
 %setup -qn %qt_module-everywhere-src-%version
+%patch1 -p1
 syncqt.pl-qt5 -version %version
 #for d in gl nogl; do
 #mkdir $d
@@ -144,6 +146,9 @@ export QT_HASH_SEED=0
 %endif
 
 %changelog
+* Fri Dec 23 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt2
+- add kde/5.15 changes
+
 * Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
 - new version
 
