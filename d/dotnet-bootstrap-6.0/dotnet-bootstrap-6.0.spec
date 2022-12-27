@@ -1,22 +1,22 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.7
+%define _dotnet_corerelease 6.0.12
 %define _dotnet_sdkmanifestsrelease 6.0.100
-%define _dotnet_sdkrelease 6.0.107
-%define _dotnet_aspnetcorerelease 6.0.7
-%define _dotnet_templatesrelease 6.0.7
-%define _dotnet_coreapprefrelease 6.0.7
-%define _dotnet_aspnetcoreapprefrelease 6.0.7
+%define _dotnet_sdkrelease 6.0.112
+%define _dotnet_aspnetcorerelease 6.0.12
+%define _dotnet_templatesrelease 6.0.12
+%define _dotnet_coreapprefrelease 6.0.12
+%define _dotnet_aspnetcoreapprefrelease 6.0.12
 %define _dotnet_netstandartrelease 2.1.0
 %define preview %nil
-%define _dotnet_coreshortrelease 6.0.7%preview
-%define _dotnet_sdkshortrelease 6.0.107%preview
+%define _dotnet_coreshortrelease 6.0.12%preview
+%define _dotnet_sdkshortrelease 6.0.112%preview
 
 %define _dotnetdir %_libdir/%name
 
 Name: dotnet-bootstrap-%_dotnet_major
-Version: 6.0.7%preview
+Version: 6.0.12%preview
 Release: alt1
 
 Summary: .NET Core SDK binaries
@@ -29,11 +29,11 @@ Group: Development/Other
 # from https://github.com/dotnet/core/tree/master/release-notes/6.0
 
 # x86_64
-# Source-url: https://download.visualstudio.microsoft.com/download/pr/1cf99a7b-0eb2-42b1-8902-7ba3bbc825c2/05c48fc1df50db04762a852b321779ce/dotnet-sdk-6.0.107-linux-x64.tar.gz
+# Source-url: https://download.visualstudio.microsoft.com/download/pr/8c8d9afd-6933-47eb-80ac-8703c5cf4b3d/9778f70e08b21c732b035bf98dff85d7/dotnet-sdk-6.0.112-linux-x64.tar.gz
 Source: %name-%version.tar
 
 # aarch64
-# Source2-url: https://download.visualstudio.microsoft.com/download/pr/dd4f49ba-39b0-4358-bd82-18cb5b1350d1/ec891910fd6f13c22448a8162fe1f017/dotnet-sdk-6.0.107-linux-arm64.tar.gz
+# Source2-url: https://download.visualstudio.microsoft.com/download/pr/6bd958b2-a3ad-4bbb-ac3f-5a52f3550363/0c3bf2ea12dce4a08bc2ccaee6e60c07/dotnet-sdk-6.0.112-linux-arm64.tar.gz
 Source2: %name-aarch64-%version.tar
 
 ExclusiveArch: x86_64 aarch64
@@ -134,6 +134,12 @@ strip \
 %_dotnetdir/ThirdPartyNotices.txt
 
 %changelog
+* Tue Dec 27 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.12-alt1
+- The .NET 6.0.12 and .NET SDK 6.0.112 releases
+- CVE-2022-41032: .NET Elevation of Privilege Vulnerability
+- CVE-2022-38013: .NET Denial of Service Vulnerability
+- CVE-2022-34716: .NET Information Disclosure Vulnerability
+
 * Fri Aug 05 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.7-alt1
 - The .NET 6.0.7 and .NET SDK 6.0.107 releases
 - CVE-2022-30184: .NET Information Disclosure Vulnerability

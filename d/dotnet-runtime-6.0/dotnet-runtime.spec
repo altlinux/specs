@@ -2,11 +2,11 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.7
+%define _dotnet_corerelease 6.0.12
 # used for build
-%define _dotnet_sdkrelease 6.0.107
+%define _dotnet_sdkrelease 6.0.112
 %define preview %nil
-%define _dotnet_sdkshortrelease 6.0.107%preview
+%define _dotnet_sdkshortrelease 6.0.112%preview
 
 %define commithash %version-%release
 
@@ -20,7 +20,7 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 6.0.7%preview
+Version: 6.0.12
 Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
@@ -375,6 +375,12 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Tue Dec 27 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.12-alt1
+- new version 6.0.12 (with rpmrb script)
+- CVE-2022-41032: .NET Elevation of Privilege Vulnerability
+- CVE-2022-38013: .NET Denial of Service Vulnerability
+- CVE-2022-34716: .NET Information Disclosure Vulnerability
+
 * Fri Aug 05 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.7-alt1
 - .NET 6.0.7
 - CVE-2022-30184: .NET Information Disclosure Vulnerability

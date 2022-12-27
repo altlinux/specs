@@ -4,20 +4,20 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.7
+%define _dotnet_corerelease 6.0.12
 %define _dotnet_sdkmanifestsrelease 6.0.100
-%define _dotnet_sdkrelease 6.0.107
-%define _dotnet_templatesrelease 6.0.7
-%define _dotnet_coreapprefrelease 6.0.7
+%define _dotnet_sdkrelease 6.0.112
+%define _dotnet_templatesrelease 6.0.12
+%define _dotnet_coreapprefrelease 6.0.12
 %define _dotnet_netstandartrelease 2.1.0
 %define preview %nil
-%define _dotnet_coreshortrelease 6.0.7%preview
-%define _dotnet_sdkshortrelease 6.0.107%preview
+%define _dotnet_coreshortrelease 6.0.12%preview
+%define _dotnet_sdkshortrelease 6.0.112%preview
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 6.0.107%preview
+Version: 6.0.112%preview
 Release: alt1
 
 Summary: SDK for the .NET
@@ -117,6 +117,9 @@ cp -a %bootstrapdir/packs/NETStandard.Library.Ref/ %buildroot%_dotnetdir/packs/
 mkdir -p %buildroot%_dotnetdir/templates/%_dotnet_templatesrelease/
 cp -a %bootstrapdir/templates/%_dotnet_templatesrelease/* %buildroot%_dotnetdir/templates/%_dotnet_templatesrelease/
 
+mkdir -p %buildroot%_dotnetdir/sdk-manifests/%_dotnet_sdkmanifestsrelease/
+cp -a %bootstrapdir/sdk-manifests/%_dotnet_sdkmanifestsrelease/* %buildroot%_dotnetdir/sdk-manifests/%_dotnet_sdkmanifestsrelease/
+
 # apphost used as executable, f.i. dotnet tool install --global paket will install it in $HOME/.dotnet/tools as paket
 # rewrite one with our binary
 rm -f %buildroot%_dotnet_sdk/AppHostTemplate/apphost
@@ -131,6 +134,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %dir %_dotnetdir/templates/%_dotnet_templatesrelease/
 %_dotnetdir/templates/%_dotnet_templatesrelease/*.nupkg
 
+%dir %_dotnetdir/sdk-manifests/
+%_dotnet_sdkmanifests/
+
 %files -n dotnet-targeting-pack-%_dotnet_major
 %_dotnetdir/packs/Microsoft.NETCore.App.Ref/
 
@@ -143,6 +149,10 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Tue Dec 27 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.112-alt1
+- .NET SDK 6.0.112
+- pack missed sdk-manifests
+
 * Fri Aug 05 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.107-alt1
 - .NET SDK 6.0.107
 - provide dotnet package (as recommended dotnet package)
