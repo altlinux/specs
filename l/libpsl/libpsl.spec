@@ -2,8 +2,8 @@
 %def_disable builtin
 
 Name: libpsl
-Version: 0.21.1
-Release: alt3
+Version: 0.21.2
+Release: alt1
 
 Summary: C library for the Public Suffix List
 License: MIT
@@ -12,14 +12,6 @@ URL: https://github.com/rockdaboot/libpsl
 Vcs: https://github.com/rockdaboot/libpsl.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-
-# Patches from upstream git, must be dropped when
-# new version will be released.
-Patch1: Increase-label-size-from-48-128.patch
-Patch2: Fix-write-buffer-overflow-by-1-in-domain_to_punycode.patch
-Patch3: Fix-stack-buffer-overflow-WRITE-1-in-domain_to_punyc.patch
-Patch4: Avoid-8bit-overflow-in-is_public_suffix.patch
-Patch5: Avoid-NULL-1-as-it-is-UB.patch
 
 BuildRequires: rpm-build-python3
 %if_disabled bootstrap
@@ -101,12 +93,6 @@ from a plain text Public Suffix List.
 %setup
 %patch -p1
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-
 %if_disabled bootstrap
 %build
 %autoreconf
@@ -167,6 +153,10 @@ make check
 %_man1dir/psl-make-dafsa.1*
 
 %changelog
+* Tue Dec 27 2022 Mikhail Efremov <sem@altlinux.org> 0.21.2-alt1
+- Dropped obsoleted patches.
+- Updated to 0.21.2.
+
 * Tue Dec 06 2022 Mikhail Efremov <sem@altlinux.org> 0.21.1-alt3
 - Patches from upstream git:
   + Increase label size from 48 -> 128;
