@@ -1,11 +1,14 @@
+%def_enable snapshot
+
 %define _libexecdir %_prefix/libexec
 %define libname libfeedback
-%define ver_major 0.0.1
+%define ver_major 0.0.2
 %define api_ver 0.0
 
 %def_enable introspection
 %def_enable vala
 %def_enable man
+%def_disable gtk_doc
 %def_enable check
 
 Name: feedbackd
@@ -17,8 +20,12 @@ Group: System/Servers
 License: GPL-3.0-or-later and LGPL-2.1-or-later
 Url: https://source.puri.sm/Librem5/feedbackd
 
-Vcs: https://source.puri.sm/Librem5/feedbackd.git
+%if_disabled snapshot
 Source: https://source.puri.sm/Librem5/%name/-/archive/v%version/%name-v%version.tar.gz
+%else
+Vcs: https://source.puri.sm/Librem5/feedbackd.git
+Source: %name-%version.tar
+%endif
 
 Requires: %libname = %EVR
 
@@ -34,7 +41,8 @@ BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(systemd)
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
-%{?_enable_man:BuildRequires: xsltproc docbook-style-xsl}
+%{?_enable_man:BuildRequires: /usr/bin/rst2man}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_check:BuildRequires: dbus-tools-gui}
 
 %description
@@ -79,12 +87,13 @@ Requires: %libname-devel = %EVR
 GObject introspection devel data for %libname
 
 %prep
-%setup -n %name-v%version
+%setup -n %name-%{?_disable_snapshot:v}%version
 
 %build
 %meson \
     %{?_disable_introspection:-Dintrospection=disabled} \
     %{?_disable_vala:-Dvapi=false} \
+    %{?_enable_gtk_doc:-Dgtk_doc=true} \
     %{?_enable_man:-Dman=true}
 %nil
 %meson_build
@@ -98,6 +107,7 @@ install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 
 %files
 %_bindir/fbcli
+%_bindir/fbd-theme-validate
 %_libexecdir/%name
 %_libexecdir/fbd-ledctrl
 %_udevrulesdir/90-%name.rules
@@ -106,7 +116,8 @@ install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 %_datadir/%name/
 %_datadir/glib-2.0/schemas/org.sigxcpu.feedbackd.gschema.xml
 %{?_enable_man:%_man1dir/fbcli.1.*
-%_man1dir/%name.1.*}
+%_man1dir/fbd-theme-validate.1.*
+%_man8dir/%name.8.*}
 
 %files -n %libname
 %_libdir/%libname-%api_ver.so.*
@@ -126,6 +137,9 @@ install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 %endif
 
 %changelog
+* Tue Dec 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.0.2-alt1
+- v0.0.2-2-gaa5e5e4
+
 * Tue Nov 15 2022 Yuri N. Sedunov <aris@altlinux.org> 0.0.1-alt1
 - 0.0.1
 
