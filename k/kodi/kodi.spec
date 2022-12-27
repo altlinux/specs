@@ -1,6 +1,6 @@
 Name: kodi
 Version: 19.5
-Release: alt1
+Release: alt2
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
@@ -186,12 +186,16 @@ mkdir %buildroot%_libdir/kodi/addons
 %files devel
 %_includedir/kodi
 %_datadir/kodi/cmake
+%_libdir/kodi/cmake
 
 %files x11
 %config(noreplace) %_sysconfdir/X11/wmsession.d/20KODI
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Tue Dec 27 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.5-alt2
+- readd lost cmake bits
+
 * Mon Dec 26 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.5-alt1
 - 19.5 Matrix released
 
