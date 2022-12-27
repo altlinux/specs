@@ -50,7 +50,7 @@
 %define Name GraphicsMagick
 Name: %Name
 %define lname lib%name
-Version: 1.3.38
+Version: 1.3.39
 Release: alt1
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
@@ -512,6 +512,9 @@ __MENU__
 %endif
 
 %changelog
+* Tue Dec 27 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.39-alt1
+- 1.3.39 released
+
 * Mon Apr 25 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.38-alt1
 - 1.3.38 released
 
