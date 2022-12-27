@@ -67,6 +67,7 @@
 %def_disable xen
 %def_enable mpath
 %def_disable libpmem
+%def_disable blkio
 %def_enable libudev
 %def_enable libdaxctl
 %def_enable fuse
@@ -127,7 +128,7 @@
 # }}}
 
 Name: qemu
-Version: 7.1.0
+Version: 7.2.0
 Release: alt1
 
 Summary: QEMU CPU Emulator
@@ -161,7 +162,7 @@ Requires: %name-system = %EVR
 Requires: %name-user = %EVR
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: meson >= 0.59.3
+BuildRequires: meson >= 0.61.3
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static libpcre2-devel-static libattr-devel-static
 BuildRequires: glib2-devel >= 2.56 libgio-devel
 BuildRequires: makeinfo perl-devel python3-module-sphinx python3-module-sphinx_rtd_theme
@@ -220,6 +221,7 @@ BuildRequires: libslirp-devel >= 4.1.0
 %{?_enable_lzfse:BuildRequires: liblzfse-devel}
 %{?_enable_xen:BuildRequires: libxen-devel}
 %{?_enable_mpath:BuildRequires: libudev-devel libmultipath-devel}
+%{?_enable_blkio:BuildRequires: libblkio-devel}
 %{?_enable_libpmem:BuildRequires: libpmem-devel}
 %{?_enable_libudev:BuildRequires: libudev-devel}
 %{?_enable_libdaxctl:BuildRequires: libdaxctl-devel}
@@ -740,7 +742,7 @@ cp -f %SOURCE2 qemu-kvm.control.in
 %build
 run_configure() {
 # non-GNU configure
-    ../configure \
+../configure \
 	--with-git-submodules=ignore \
 	--prefix=%prefix \
 	--sysconfdir=%_sysconfdir \
@@ -820,6 +822,7 @@ run_configure \
 	--disable-libiscsi \
 	--disable-libnfs \
 	--disable-libpmem \
+	--disable-blkio \
 	--disable-libssh \
 	--disable-libudev \
 	--disable-libusb \
@@ -947,7 +950,7 @@ run_configure \
 	%{subst_enable xen} \
 	%{?_enable_vhost_crypto:--enable-vhost-crypto} \
 	%{?_enable_vhost_net:--enable-vhost-net} \
-	--enable-slirp=system \
+	--enable-slirp \
 	%{subst_enable smartcard} \
 	%{subst_enable libusb} \
 	%{?_enable_usb_redir:--enable-usb-redir} \
@@ -975,6 +978,7 @@ run_configure \
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	%{subst_enable tools} \
 	%{subst_enable libpmem} \
+	%{subst_enable blkio} \
 	%{subst_enable libdaxctl} \
 	%{subst_enable fuse} \
 	--enable-xkbcommon \
@@ -1333,6 +1337,10 @@ fi
 %exclude %docdir/LICENSE
 
 %changelog
+* Fri Dec 16 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.0-alt1
+- 7.2.0 (Fixes: CVE-2022-4144, CVE-2022-3165, CVE-2021-3638).
+- Revert "Add the Kunpeng-920 CPU model."
+
 * Mon Nov 14 2022 Alexey Shabalin <shaba@altlinux.org> 7.1.0-alt1
 - 7.1.0 (Fixes: CVE-2020-14394, CVE-2022-0216).
 
