@@ -1,5 +1,5 @@
 Name: rav1e
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: The fastest and safest AV1 encoder
@@ -33,7 +33,7 @@ though in its current form it is most suitable for cases where libaom \
 this package contains shared libraries of rav1e
 
 %description -n librav1e-devel
-i%desc
+%desc
 this package contains development part of rav1e
 
 %prep
@@ -67,6 +67,9 @@ cargo cinstall --destdir=%buildroot --includedir=%_includedir \
 %_pkgconfigdir/*pc
 
 %changelog
+* Tue Dec 27 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.2-alt1
+- 0.6.2 released
+
 * Thu Dec 01 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.1-alt1
 - 0.6.1 released
 
