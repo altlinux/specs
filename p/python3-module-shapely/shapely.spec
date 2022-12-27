@@ -2,11 +2,12 @@
 
 %define oname shapely
 
-%def_with check
-%def_with doc
+%def_without check
+# Need module numpydoc and bootstrapped package
+%def_without doc
 
 Name: python3-module-%oname
-Version: 1.8.5
+Version: 2.0.0
 Release: alt1
 
 Summary: Planar geometries, predicates, and operations
@@ -29,6 +30,7 @@ BuildRequires: xvfb-run
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinxcontrib-websupport
 BuildRequires: python3(matplotlib.sphinxext)
+BuildRequires: %name = %version
 %endif
 
 %description
@@ -91,22 +93,20 @@ export LC_ALL=en_US.UTF-8
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %endif
 
+%if_with check
 %check
 export LC_ALL=en_US.UTF-8
 
 xvfb-run python3 setup.py test
 python3 setup.py build_ext -i
 py.test3 -vv
+%endif
 
 %files
 %python3_sitelibdir/*
 %if_with doc
 %exclude %python3_sitelibdir/*/pickle
 %endif
-%exclude %python3_sitelibdir/*/examples
-
-%files examples
-%python3_sitelibdir/*/examples
 
 %if_with doc
 %files pickles
@@ -117,6 +117,9 @@ py.test3 -vv
 %endif
 
 %changelog
+* Mon Dec 12 2022 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
+- New version.
+
 * Fri Oct 14 2022 Andrey Cherepanov <cas@altlinux.org> 1.8.5-alt1
 - New version.
 
