@@ -1,12 +1,10 @@
 %define subst_buildoption() %{expand:-DBUILD_%(echo %{1} |sed 's/./\\U&/g')=%%{?_enable_%{1}:ON}%%{?_disable_%{1}:OFF}}
 
-%def_enable alsa
 %def_enable argb
 %def_disable audacious
 %def_enable cmus
 %def_enable curl
 %def_enable docs
-%def_enable eve
 %def_enable hddtemp
 %def_enable http
 %def_enable ibm
@@ -27,11 +25,9 @@
 %def_enable ncurses
 %def_enable nvidia
 %def_enable old_config
-%def_enable port_monitor
 %def_enable pulseaudio
 %def_enable rss
-%def_enable weather_metar
-%def_enable weather_xoap
+%def_disable wayland
 %def_enable wlan
 %def_enable xdamage
 %def_enable xdbe
@@ -41,7 +37,7 @@
 %def_enable xshape
 
 Name: conky
-Version: 1.13.1.0.7.git54672876
+Version: 1.16.1
 Release: alt1
 
 Summary: lightweight graphical system monitor
@@ -51,7 +47,7 @@ Group: Monitoring
 Url: http://conky.sourceforge.net/
 
 VCS: git://github.com/brndnmtthws/conky.git
-Source: %name-v1.13.1-7-g54672876.tar
+Source: %name-%version.tar
 Source1: conky-dotfiles.tar.bz2
 Source99: conky.watch
 
@@ -59,17 +55,15 @@ Source99: conky.watch
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): cmake gcc-c++ rpm-build-vim
+BuildRequires: glibc-devel lua5.3-devel python3-module-yaml libpcre2-devel python3-module-jinja2
 
-%{?_enable_alsa:BuildRequires: libalsa-devel}
 %{?_enable_audacious:BuildRequires: libaudacious-devel}
 %{?_enable_curl:BuildRequires: libcurl-devel}
-%{?_enable_docs:BuildRequires: docbook2X docbook-to-man docbook-tldp-xsl man-db}
-%{?_enable_eve:BuildRequires: libcurl-devel}
+%{?_enable_docs:BuildRequires: man-db pandoc}
 %{?_enable_ical:BuildRequires: libical-devel}
 %{?_enable_imlib2:BuildRequires: imlib2-devel}
 %{?_enable_irc:BuildRequires: libircclient-devel}
 %{?_enable_http:BuildRequires: libmicrohttpd-devel}
-%{?_enable_lua:BuildRequires:lua5.3-devel}
 %{?_enable_lua_cairo:BuildRequires: lua5.3-devel tolua++-devel libcairo-devel}
 %{?_enable_lua_imlib2:BuildRequires: lua5.3-devel tolua++-devel imlib2-devel}
 %{?_enable_lua_rsvg:BuildRequires: lua5.3-devel tolua++-devel librsvg-devel}
@@ -77,8 +71,7 @@ BuildRequires(pre): cmake gcc-c++ rpm-build-vim
 %{?_enable_nvidia:BuildRequires: nvidia-settings-devel}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
 %{?_enable_rss:BuildRequires: libcurl-devel libxml2-devel}
-%{?_enable_weather_metar:BuildRequires: libcurl-devel libxml2-devel}
-%{?_enable_weather_xoap:BuildRequires: libcurl-devel libxml2-devel}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel libwayland-server-devel wayland-protocols}
 %{?_enable_wlan:BuildRequires: libwireless-devel}
 %{?_enable_xdamage:BuildRequires: libXdamage-devel}
 %{?_enable_xft:BuildRequires: libXft-devel}
@@ -106,20 +99,18 @@ mpd, и т.д.) в окне графической системы X11.
 VIm syntax plugin for conky config file.
 
 %prep
-%setup -n %name-v1.13.1-7-g54672876
+%setup
 %autopatch -p1
 
 %build
 %cmake \
 	-DRELEASE=True \
 	-DBUILD_SHARED_LIBS=OFF \
-	%{subst_buildoption alsa} \
 	%{subst_buildoption argb} \
 	%{subst_buildoption audacious} \
 	%{subst_buildoption cmus} \
 	%{subst_buildoption curl} \
 	%{subst_buildoption docs} \
-	%{subst_buildoption eve} \
 	%{subst_buildoption hddtemp} \
 	%{subst_buildoption http} \
 	%{subst_buildoption ibm } \
@@ -129,7 +120,6 @@ VIm syntax plugin for conky config file.
 	%{subst_buildoption iostats} \
 	%{subst_buildoption ipv6} \
 	%{subst_buildoption irc} \
-	%{subst_buildoption lua} \
 	%{subst_buildoption lua_cairo} \
 	%{subst_buildoption lua_imlib2} \
 	%{subst_buildoption lua_rsvg} \
@@ -140,11 +130,9 @@ VIm syntax plugin for conky config file.
 	%{subst_buildoption ncurses} \
 	%{subst_buildoption nvidia} \
 	%{subst_buildoption old_config} \
-	%{subst_buildoption port_monitor} \
 	%{subst_buildoption pulseaudio} \
 	%{subst_buildoption rss} \
-	%{subst_buildoption weather_metar} \
-	%{subst_buildoption weather_xoap} \
+	%{subst_buildoption wayland} \
 	%{subst_buildoption wlan} \
 	%{subst_buildoption xdbe } \
 	%{subst_buildoption xft} \
@@ -170,6 +158,7 @@ install -m755 -p extras/convert.lua %buildroot/usr/libexec/conky
 mkdir -p %buildroot%vim_runtime_dir
 cp -a extras/vim/ftdetect %buildroot%vim_runtime_dir
 cp -a extras/vim/syntax %buildroot%vim_runtime_dir
+mv %buildroot%vim_runtime_dir/syntax/conkyrc.vim{.j2,}
 
 # remove static libs
 rm %buildroot%_libdir/libtcp-portmon.a
@@ -197,6 +186,9 @@ rm %buildroot%_libdir/libtcp-portmon.a
 %vim_runtime_dir/syntax/conkyrc.vim
 
 %changelog
+* Tue Dec 27 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.16.1-alt1
+- Updated to 1.16.1.
+
 * Sat Sep 24 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.13.1.0.7.git54672876-alt1
 - Updated to v1.13.1-7-g54672876.
 
