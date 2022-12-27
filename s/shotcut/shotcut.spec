@@ -4,7 +4,7 @@
 %define _vstring %(echo %{version} |tr -d ".")
 
 Name: shotcut
-Version: 22.11.25
+Version: 22.12.21
 Release: alt1
 Summary: A free, open source, cross-platform video editor
 Summary(ru_RU.UTF-8): Свободный кросс-платформенный видеоредактор
@@ -106,19 +106,13 @@ These are all currently implemented features:
 
 %prep
 %setup
-# Create version.json from current version
-echo "{" > version.json
-echo " \"version_number\": %{_vstring}02," >> version.json
-echo " \"version_string\": \"%{version}.02\"," >> version.json
-echo " \"url\": \"https://shotcut.org/blog/new-release-%{_vstring}/\"" >> version.json
-echo "}" >> version.json
-echo "" >> version.json
 
 # Postmortem debugging tools for MinGW.
 rm -rf drmingw
 
 %build
-%cmake -DCMAKE_INSTALL_LIBDIR=%_lib
+%cmake -DCMAKE_INSTALL_LIBDIR=%_lib \
+       -DSHOTCUT_VERSION="%version"
 %cmake_build
 
 %install
@@ -143,6 +137,12 @@ done
 %_man1dir/*
 
 %changelog
+* Tue Dec 27 2022 Andrey Cherepanov <cas@altlinux.org> 22.12.21-alt1
+- New version.
+
+* Thu Dec 01 2022 Andrey Cherepanov <cas@altlinux.org> 22.11.25-alt2
+- Used real Shotcut version from tag (ALT #44180).
+
 * Mon Nov 28 2022 Andrey Cherepanov <cas@altlinux.org> 22.11.25-alt1
 - New version.
 
