@@ -1,22 +1,23 @@
 Name: tsugaru
 Version: 20220702
-Release: alt2
+Release: alt3
 Summary: It is an emulator of legendary Fujitsu FM TOWNS computer including Marty
 Group: Emulators
 License: BSD3
 Url: https://github.com/captainys/TOWNSEMU
 
 Source: %name-%version.tar
+Source1: marty.png
 Patch0: fix_build_wav2snd.patch
 Patch1: fix_build_gui.patch
 
 BuildRequires: gcc-c++
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel ImageMagick-tools
 BuildRequires: libstdc++-devel-static
 BuildRequires: libopenal-devel
 BuildRequires: libGLU-devel
 BuildRequires: libwxGTK3.2-devel
-BuildRequires: libalsa-devel
+BuildRequires: libalsa-devel 
 BuildRequires: cmake rpm-macros-cmake
 
 %description
@@ -86,11 +87,33 @@ cp -R townsapp  %buildroot/%_datadir/%name
 cp -R testdata  %buildroot/%_datadir/%name
 cp -R symtables  %buildroot/%_datadir/%name
 
+# install menu entry
+mkdir -p %buildroot%_desktopdir
+cat > %buildroot%_desktopdir/%name.desktop << EOF
+[Desktop Entry]
+Name=Tsugaru
+Comment=FM Towns emulator
+Exec=%name
+Icon=%name
+Terminal=false
+Type=Application
+Categories=Game;Emulator;
+EOF
+
+# install menu icons
+for N in 16 32 48 64 128;
+do
+convert %SOURCE1 -scale ${N}x${N} $N.png;
+install -D -m 0644 $N.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
+done
+
 %files
 %doc readme.md LICENSE
 %dir %_datadir/%name
 %_bindir/%name
 %_bindir/Tsugaru_CUI
+%_iconsdir/hicolor/*/apps/%name.png
+%_desktopdir/%name.desktop
 
 %files utils
 %_bindir/chopbincue
@@ -119,6 +142,9 @@ cp -R symtables  %buildroot/%_datadir/%name
 %_datadir/%name
 
 %changelog
+* Thu Dec 29 2022 Artyom Bystrov <arbars@altlinux.org> 20220702-alt3
+ - Add logo and desktop files
+
 * Thu Sep 22 2022 Artyom Bystrov <arbars@altlinux.org> 20220702-alt2
  - change libwxGTK3.1-devel to libwxGTK3.2-devel
 
