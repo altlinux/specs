@@ -1,13 +1,15 @@
-%define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
-
 %global qt_module qtdeclarative
-%def_enable bootstrap
 
 %define optflags_lto %nil
 
 Name: qt6-declarative
 Version: 6.2.4
-Release: alt5
+Release: alt6
+%if "%version" == "%{get_version qt6-tools-common}"
+%def_disable bootstrap
+%else
+%def_enable bootstrap
+%endif
 
 Group: System/Libraries
 Summary: Qt6 - QtDeclarative component
@@ -22,7 +24,7 @@ Source3: find-provides.sh
 Source4: find-requires.sh
 
 %include %SOURCE1
-%qml6_req_skipall 0
+%qml6_req_skipall 1
 %qml6_add_req_nover Qt.test.qtestroot
 %define __find_provides %SOURCE3
 %define __find_requires %SOURCE4
@@ -30,7 +32,7 @@ Source4: find-requires.sh
 # Automatically added by buildreq on Wed Dec 01 2021 (-bi)
 # optimized out: cmake cmake-modules debugedit elfutils fontconfig gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libctf-nobfd0 libdouble-conversion3 libglvnd-devel libgpg-error libqt6-concurrent libqt6-core libqt6-dbus libqt6-gui libqt6-network libqt6-opengl libqt6-openglwidgets libqt6-shadertools libqt6-sql libqt6-test libqt6-widgets libsasl2-3 libssl-devel libstdc++-devel libvulkan-devel perl pkg-config python-modules python2-base python3 python3-base python3-module-paste qt6-base-common qt6-base-devel rpm-build-file rpm-build-gir rpm-build-python3 rpm-macros-python sh4 tzdata
 #BuildRequires: ccmake glslang libGLU-devel libxkbcommon-devel python-modules-compiler python3-dev qt6-shadertools-devel rpm-build-qml tbb-devel
-BuildRequires(pre): rpm-macros-qt6
+BuildRequires(pre): rpm-macros-qt6 qt6-tools-common
 BuildRequires: rpm-build-python3
 BuildRequires: gcc-c++ glibc-devel qt6-base-devel qt6-shadertools-devel
 BuildRequires: cmake glslang libGLU-devel libxkbcommon-devel
@@ -287,6 +289,7 @@ mkdir bin_add
 ln -s %__python3 bin_add/python
 
 %build
+%define qdoc_found %{expand:%%(if [ -e %_qt6_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 export PATH=$PWD/bin_add:$PATH
 %Q6build
 %if_disabled bootstrap
@@ -426,6 +429,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml6.env
 %_bindir/rpmbqml6-qmlinfo
 
 %changelog
+* Mon Dec 19 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt6
+- automate bootstrap mode
+
 * Thu Dec 15 2022 Sergey V Turchin <zerg@altlinux.org> 6.2.4-alt5
 - optimize provides generator (thanks iv@alt)
 
