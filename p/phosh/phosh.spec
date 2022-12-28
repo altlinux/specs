@@ -1,11 +1,12 @@
-%def_enable snapshot
+%def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.22
+%define ver_major 0.23
 %define beta %nil
 %define rdn_name sm.puri.Phosh
 %define dev_uid 500
 
-%def_enable tools
+# not installed
+%def_disable tools
 %def_disable check
 
 Name: phosh
@@ -51,6 +52,7 @@ BuildRequires: pkgconfig(gtk+-wayland-3.0) >= 3.22
 BuildRequires: pkgconfig(gudev-1.0)
 BuildRequires: pkgconfig(libfeedback-0.0)
 BuildRequires: pkgconfig(libhandy-1) >= 1.1.90
+BuildRequires: pkgconfig(libadwaita-1)
 BuildRequires: pkgconfig(libnm) >= 1.14
 BuildRequires: pkgconfig(libpulse) >= 2.0
 BuildRequires: pkgconfig(libpulse-mainloop-glib)
@@ -77,6 +79,14 @@ protocol. It currently supports
 * a homebutton that toggles a simple favorites menu
 * status icons for battery, wwan and wifi
 
+%package devel
+Summary: Development files for Phosh
+Group: Development/C
+Requires: %name = %EVR
+
+%description devel
+This package provides files needed to develop Phosh plugins.
+
 %prep
 %setup -n %name-%version%beta
 sed -i 's|\(User=\)1000|\1%dev_uid|' data/%name.service
@@ -98,6 +108,7 @@ install -d %buildroot%_datadir/applications
 desktop-file-install --dir %buildroot%_datadir/applications %SOURCE2
 
 %find_lang %name
+
 %check
 xvfb-run %__meson_test
 
@@ -107,12 +118,17 @@ xvfb-run %__meson_test
 %_libexecdir/%name-calendar-server
 %dir %_libdir/%name
 %dir %_libdir/%name/plugins
+%dir %_libdir/%name/plugins/prefs
 %_libdir/%name/plugins/lib%name-plugin-calendar.so
 %_libdir/%name/plugins/calendar.plugin
 %_libdir/%name/plugins/lib%name-plugin-ticket-box.so
 %_libdir/%name/plugins/ticket-box.plugin
 %_libdir/%name/plugins/lib%name-plugin-upcoming-events.so
 %_libdir/%name/plugins/upcoming-events.plugin
+%_libdir/%name/plugins/emergency-info.plugin
+%_libdir/%name/plugins/lib%name-plugin-emergency-info.so
+%_libdir/%name/plugins/prefs/lib%name-plugin-prefs-ticket-box.so
+
 %_desktopdir/%rdn_name.desktop
 %_desktopdir/sm.puri.OSK0.desktop
 %_datadir/glib-2.0/schemas/sm.puri.phosh.gschema.xml
@@ -132,7 +148,16 @@ xvfb-run %__meson_test
 %_iconsdir/hicolor/symbolic/apps/%rdn_name-symbolic.svg
 %doc NEWS README.md
 
+%files devel
+%_includedir/%name/
+%_pkgconfigdir/%name-plugins.pc
+
+
 %changelog
+* Wed Dec 28 2022 Yuri N. Sedunov <aris@altlinux.org> 0.23.0-alt1
+- 0.23.0
+- new -devel subpackage
+
 * Wed Dec 7 2022 Yuri N. Sedunov <aris@altlinux.org> 0.22.0-alt1
 - v0.22.0-13-g3c3ce51a
 
