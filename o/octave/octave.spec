@@ -5,7 +5,7 @@
 
 Name: octave
 Version: 7.3.0
-Release: alt1
+Release: alt2
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -69,6 +69,7 @@ BuildRequires: texinfo
 Provides:  qtoctave = %EVR
 Obsoletes: qtoctave < %EVR
 Requires: gnuplot
+Requires: makeinfo
 
 %package devel
 Summary: GNU Octave -- development part
@@ -237,6 +238,9 @@ mv %buildroot%_datadir/metainfo/*.xml %buildroot%_datadir/appdata
 %doc doc/refcard/refcard*.pdf
 
 %changelog
+* Wed Dec 28 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.0-alt2
+- Required makeinfo for help generation (ALT #43252).
+
 * Sun Nov 06 2022 Andrey Cherepanov <cas@altlinux.org> 7.3.0-alt1
 - New version.
 
