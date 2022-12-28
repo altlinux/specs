@@ -1,14 +1,15 @@
 %define rname kimageformats
+%def_enable heif
 
 Name: kf5-%rname
 Version: 5.101.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
 Summary: KDE Frameworks 5 plugins to allow QImage to support extra file formats
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: LGPL-2.1-or-later
 
 Requires: kf5-filesystem
 
@@ -21,7 +22,9 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: extra-cmake-modules openexr-devel qt5-base-devel
 BuildRequires: libavif-devel
 BuildRequires: libraw-devel
-#BuildRequires: libheif-devel
+%if_enabled heif
+BuildRequires: libheif-devel
+%endif
 #BuildRequires: libjxl-devel
 BuildRequires: kf5-karchive-devel
 
@@ -44,7 +47,11 @@ Requires: kf5-filesystem
 %setup -n %rname-%version
 
 %build
-%K5build
+%K5build \
+%if_enabled heif
+    -DKIMAGEFORMATS_HEIF=ON \
+%endif
+    #
 
 %install
 %K5install
@@ -58,6 +65,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Wed Dec 28 2022 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt2
+- build with HEIF support (closes: 44749)
+
 * Fri Dec 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt1
 - new version
 
