@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt14
+Release: alt15
 
 Summary: Group policy editor
 License: GPLv2+
@@ -110,6 +110,15 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Wed Dec 28 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt15
+- 0.2.17-alt15
+- Fixes:
+  + #91635 Fix e2k preferences build.
+  + #91629 Fix translations on e2kv4.
+  + #75874 Change spinbox behaviour to mimic windows behaviour.
+  + #89621 Fix typo in ini widget.
+  + #91060 Fix OK and Cancel buttons to work in a message box.
+
 * Mon Dec 26 2022 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt14
 - 0.2.17-alt14
 - Fixes:
