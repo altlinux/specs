@@ -6,7 +6,7 @@
 
 Name: gnustep-base
 Version: 1.28.0
-Release: alt2
+Release: alt3.git47b6e9d05
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -154,7 +154,7 @@ fi
 %files
 %_initdir/gdomap
 %doc ANNOUNCE COPYING COPYING.LIB ChangeLog*
-%doc NEWS README
+%doc NEWS README.md
 %_bindir/*
 %_libdir/GNUstep/*
 %_man1dir/*
@@ -176,6 +176,9 @@ fi
 %endif
  
 %changelog
+* Tue Dec 27 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.28.0-alt3.git47b6e9d05
+- New upstream snapshot.
+
 * Fri Jun 11 2021 Andrey Cherepanov <cas@altlinux.org> 1:1.28.0-alt2
 - Use sources from base-1_28_0.
 
