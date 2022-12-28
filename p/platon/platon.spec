@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: platon
-Version: 20220902
+Version: 20221205
 Release: alt1
 
 Summary: PLATON is a versatile SHELX compatible multipurpose crystallographic tool
@@ -155,6 +155,9 @@ install -pm644 doc/pl000314_files/* %buildroot%_defaultdocdir/%name/pl000314_fil
 %_defaultdocdir/%name
 
 %changelog
+* Wed Dec 28 2022 Denis G. Samsonenko <ogion@altlinux.org> 20221205-alt1
+- new version
+
 * Sat Sep 03 2022 Denis G. Samsonenko <ogion@altlinux.org> 20220902-alt1
 - new version
 
