@@ -4,7 +4,7 @@
 
 Name: deepin-launcher
 Version: 5.6.1
-Release: alt1
+Release: alt2
 Summary: Deepin desktop-environment - Launcher module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -12,6 +12,7 @@ Url: https://github.com/linuxdeepin/dde-launcher
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: 0001-fix-window-mode-show-slowly.patch
 
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
@@ -41,6 +42,7 @@ BuildRequires: dtk5-common
 
 %prep
 %setup -n %repo-%version
+%patch -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -76,6 +78,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/org.deepin.dde.launcher/org.deepin.dde.launcher.json
 
 %changelog
+* Wed Dec 28 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.1-alt2
+- Fixed window mode show slowly.
+
 * Thu Dec 15 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.1-alt1
 - New version (5.6.1).
 
