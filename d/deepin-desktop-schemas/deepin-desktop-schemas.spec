@@ -1,5 +1,5 @@
 Name: deepin-desktop-schemas
-Version: 5.10.11
+Version: 5.11.1
 Release: alt1
 Summary: GSettings deepin desktop-wide schemas
 License: GPL-3.0
@@ -88,6 +88,9 @@ dconf update
 %_sysconfdir/dconf/db/local.d/01-deepin-disable-timeout-lockscreen
 
 %changelog
+* Wed Dec 28 2022 Leontiy Volodin <lvol@altlinux.org> 5.11.1-alt1
+- New version (5.11.1).
+
 * Mon Sep 05 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.11-alt1
 - New version (5.10.11).
 
