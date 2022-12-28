@@ -3,7 +3,7 @@
 
 Name: OpenBoard
 Version: 1.6.4
-Release: alt2
+Release: alt3
 Summary: Interactive whiteboard for schools and universities
 Summary(ru_RU.UTF-8): Интерактивная доска для школ и университетов
 License: GPL-3.0+
@@ -15,23 +15,36 @@ Source: %name-%version.tar
 
 Source1: %name.svg
 
+# GeoInfo widget with a version with modified borders of Ukraine and Russia from ThomasLucky13
+Source2: GeoInfo.wgt.tar.gz
+
+# https://github.com/OpenBoard-org/OpenBoard/pull/648
 Patch1: 0001-OpenBoard-1.6.3-update-russian-translations.patch
 
 Patch2: 0002-dark-background-color-set-ability-feature.patch
 
+# https://github.com/OpenBoard-org/OpenBoard/pull/635
 Patch3: 0003-new-icon-images.patch
 
+# https://github.com/OpenBoard-org/OpenBoard/pull/714
 Patch4: 0004-toolbar_elements_changed.patch
 
+# https://notes.sagredo.eu/files/hacks//openboard//run-in-a-window.patch
 Patch5: 0005-run-in-a-window.patch
 
+# https://github.com/OpenBoard-org/OpenBoard/pull/714
 Patch6: 0006-polygon_line_styles.patch
 
+# https://github.com/OpenBoard-org/OpenBoard/pull/712
 Patch8: 0008-background-grid-size-save.patch
 
+# https://github.com/OpenBoard-org/OpenBoard/pull/714
 Patch9: 0009-vector_tool.patch
 
+# https://github.com/OpenBoard-org/OpenBoard/pull/714
 Patch10: 0010-ru_tr_lineStyles_vectors.patch
+
+Patch11: 0011-fix-videoSize-saving.patch
 
 BuildRequires: gcc-c++ libgomp-devel
 BuildRequires: desktop-file-utils
@@ -77,7 +90,7 @@ Interactive whiteboard for schools and universities.
 Интерактивная доска для школ и университетов
 
 %prep
-%setup
+%setup -a2
 # update russian translations
 %patch1 -p1
 %patch2 -p1
@@ -88,6 +101,7 @@ Interactive whiteboard for schools and universities.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
+%patch11 -p1
 
 # remove unwanted and nonfree libraries
 sed -i -e 's|-lfdk-aac ||' src/podcast/podcast.pri
@@ -98,8 +112,13 @@ sed -i -e '/LIBS += -lquazip5/d' \
 	-e '/INCLUDEPATH += "\/usr\/include\/quazip5"/d' \
 	OpenBoard.pro
 
-# Removed widget GeoInfo because of incorrect display of borders of Ukraine and Russia
+# Removed some map widgets because of incorrect display of borders of Ukraine and Russia
+rm -fvr resources/library/applications/GoogleMap.wgt
+rm -fvr resources/library/applications/OpenStreetMap.wgt
+
+# Replacement of the GeoInfo widget with a version with modified borders of Ukraine and Russia
 rm -fvr resources/library/applications/GeoInfo.wgt
+mv GeoInfo.wgt resources/library/applications/GeoInfo.wgt
 
 rm -fv resources/etc/OpenBoard.css
 
@@ -191,6 +210,13 @@ cp -R resources/customizations %buildroot%_libdir/%name/
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Dec 26 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.4-alt3
+- Added the patch for restore video size when it loading from a document:
+  (https://github.com/OpenBoard-org/OpenBoard/issues/715)
+- Removed some map widgets because of incorrect display of borders of Ukraine and Russia.
+  Will return after fixing the inaccuracy.
+- Added GeoInfo widget with the correct borders of Ukraine and Russia (thanx for ThomasLucky13)
+
 * Tue Nov 29 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.6.4-alt2
 - Several patches replaced and one removed
 - css file removed
