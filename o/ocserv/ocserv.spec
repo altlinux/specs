@@ -2,10 +2,11 @@
 %define _localstatedir /var
 %def_with maxmind
 %def_enable man
+%def_disable check
 
 Name: ocserv
 Version: 1.1.6
-Release: alt1
+Release: alt2
 
 Summary: OpenConnect SSL VPN server
 License: GPLv2+
@@ -78,10 +79,10 @@ sed -i 's/either version 3 of the License/either version 2 of the License/g' bui
 %autoreconf
 
 %configure \
-	--enable-systemd \
-	--without-libwrap \
-	--without-root-tests \
-	%{subst_with maxmind} 
+    --enable-systemd \
+    --without-libwrap \
+    --without-root-tests \
+    %{subst_with maxmind}
 
 %make_build
 
@@ -130,12 +131,15 @@ export PATH=/sbin:/usr/sbin:$PATH
 %_bindir/%name-script
 %_sbindir/%name
 %_sbindir/%name-worker
-#%_sbindir/%name-genkey
 %_localstatedir/lib/ocserv/profile.xml
 %_unitdir/%name.service
 %_initdir/%name
 
 %changelog
+* Tue Dec 27 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.6-alt2
+- Backported upstream patches
+- Disable check (new hasher or make?)
+
 * Wed Mar 02 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.6-alt1
 - new version 1.1.6
 
