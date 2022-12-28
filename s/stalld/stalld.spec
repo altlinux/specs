@@ -4,14 +4,13 @@
 %set_verify_elf_method strict
 
 Name: stalld
-Version: 1.17.1
-Release: alt1.1
+Version: 1.17.2
+Release: alt1
 Summary: Daemon that finds starving tasks and gives them a temporary boost
 
 License: GPL-2.0-only
 Group: System/Kernel and hardware
-Url: https://github.com/bristot/stalld
-Vcs: https://github.com/bristot/stalld.git
+Url: https://gitlab.com/rt-linux-tools/stalld
 # Presentation: https://linuxplumbersconf.org/event/7/contributions/769/
 # Video: https://youtu.be/JHE_3iU9nTs?t=10608
 # Slides: https://linuxplumbersconf.org/event/7/contributions/769/attachments/572/1010/OSnoise-RT.pdf
@@ -59,6 +58,9 @@ rm %buildroot/usr/share/licenses/stalld/gpl-2.0.txt
 %_man8dir/stalld.8*
 
 %changelog
+* Wed Dec 28 2022 Vitaly Chikunov <vt@altlinux.org> 1.17.2-alt1
+- Update to v1.17.2 (2022-12-21).
+
 * Sun Dec 04 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.17.1-alt1.1
 - Fixed build for Elbrus.
 
