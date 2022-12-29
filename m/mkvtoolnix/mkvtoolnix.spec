@@ -15,8 +15,8 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 65.0.0
-Release: alt2
+Version: 72.0.0
+Release: alt1
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL-2
 Group: Video
@@ -32,7 +32,7 @@ BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-de
 BuildRequires: libgmp-devel
 BuildRequires: libvorbis-devel libogg-devel
 BuildRequires: ruby ruby-stdlibs ruby-tools
-BuildRequires: libebml-devel >= 1.4.0 libmatroska-devel >= 1.6.0 libfmt-devel >= 6.1.0
+BuildRequires: libebml-devel >= 1.4.4 libmatroska-devel >= 1.7.1 libfmt-devel >= 6.1.0
 BuildRequires: docbook-style-xsl xsltproc
 BuildRequires: libpugixml-devel
 BuildRequires: po4a
@@ -41,7 +41,7 @@ BuildRequires: libpcre2-devel
 BuildRequires: libutfcpp-devel
 BuildRequires: nlohmann-json-devel
 
-%{?_enable_qt:BuildRequires: qt5-base-devel qt5-tools qt5-multimedia-devel cmark-devel}
+%{?_enable_qt:BuildRequires: qt5-base-devel qt5-tools qt5-multimedia-devel qt5-svg-devel cmark-devel}
 %{?_with_flac:BuildRequires: libflac-devel}
 %{?_with_dvdread:BuildRequires: libdvdread-devel}
 
@@ -97,6 +97,7 @@ sed -i 's,aarch64,&|riscv64|e2k,' ac/ax_boost_base.m4
 ./autogen.sh
 %configure \
     --disable-update-check \
+    --disable-optimization \
     %{subst_enable debug} \
     %{subst_enable profiling} \
     %{subst_enable qt} \
@@ -155,11 +156,20 @@ rake V=1 tests:run_unit
 %_iconsdir/hicolor/*/apps/%name-gui.*
 %_desktopdir/org.bunkus.%name-gui.desktop
 %_xdgmimedir/packages/org.bunkus.%name-gui.xml
-%_datadir/mkvtoolnix/sounds/*.ogg
+%_datadir/mkvtoolnix/sounds/*.webm
 %_datadir/metainfo/org.bunkus.%name-gui.appdata.xml
 %endif
 
 %changelog
+* Thu Dec 29 2022 L.A. Kostis <lakostis@altlinux.ru> 72.0.0-alt1
+- NMU update:
+  + 71.0.0 -> 72.0.0.
+  + disable optimization (use RPM cflags instead).
+
+* Sun Nov 13 2022 L.A. Kostis <lakostis@altlinux.ru> 71.0.0-alt1
+- NMU update:
+  + 65.0.0 -> 71.0.0 (fixes FTBFS).
+
 * Wed Feb 16 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 65.0.0-alt2
 - Updated interpackage dependencies (Closes: #41966).
 
