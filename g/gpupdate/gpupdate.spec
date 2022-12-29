@@ -31,7 +31,7 @@
 %add_python3_req_skip util.xml
 
 Name: gpupdate
-Version: 0.9.12.1
+Version: 0.9.12.2
 Release: alt1
 
 Summary: GPT applier
@@ -181,6 +181,11 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Thu Dec 29 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.12.2-alt1
+- Add support of create and delete symlinks in user home directory for mapped
+  network drives in cifs applier
+- Fix file copy applier support of delete files with substitution
+
 * Tue Dec 13 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.12.1-alt1
 - Update file copy applier with substitution support
 - Update translations for several logs

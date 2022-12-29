@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.12
+Version: 0.1.12.1
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,12 @@ done
 %_destdir
 
 %changelog
+* Thu Dec 29 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.1.12.1-alt1
+- Add user policies for drive maps symlinks in home directory.
+- Add warning when disabling network manager.
+- Fix correction of option name open ldap tls connections in russian.
+- Fix typo in cups.service
+
 * Tue Dec 13 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.1.12-alt1
 - Add control for Yandex Browser group policies mechanism.
 - Improve group policies mechanisms display names and help descriptions.
