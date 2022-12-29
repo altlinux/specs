@@ -9,7 +9,7 @@ BuildRequires: perl(YAML/XS.pm) perl(autodie.pm) perl(base.pm) perl(charnames.pm
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 10.000000
+Version: 12.000000
 Release: alt1
 Summary: Release 2 of Marpa
 Group: Development/Perl
@@ -43,6 +43,9 @@ cd engine/read_only
 %_bindir/*
 
 %changelog
+* Thu Dec 29 2022 Igor Vlasenko <viy@altlinux.org> 12.000000-alt1
+- automated CPAN update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 10.000000-alt1
 - automated CPAN update
 
