@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 22.08.3
-Release: alt2
+Release: alt3
 %K5init altplace
 
 Group: System/Configuration/Printing
@@ -23,6 +23,7 @@ Source10: add-ppdtranslations-ru.po
 Patch1: alt-lib-sover.patch
 Patch2: alt-queue-window.patch
 Patch3: alt-remove-help-button.patch
+Patch4: alt-print-opts-i18n.patch
 
 # Automatically added by buildreq on Mon Aug 24 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs
@@ -67,6 +68,7 @@ KF5 library
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 tmp_file=`mktemp`
 msgcat --use-first po/ru/print-manager.po %SOURCE10 >"$tmp_file"
@@ -101,6 +103,9 @@ rm -f "$tmp_file"
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Thu Dec 29 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt3
+- fix to translate printer options
+
 * Thu Nov 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt2
 - update requires
 
