@@ -3,8 +3,8 @@
 %global import_path filippo.io/age
 
 Name: age
-Version: 1.0.0
-Release: alt3
+Version: 1.1.1
+Release: alt1
 
 Summary: simple, modern and secure file encryption tool
 License: BSD-3-Clause
@@ -49,6 +49,9 @@ install -pD -m0644 doc/age-keygen.1 %buildroot%_man1dir/age-keygen.1
 %_man1dir/*
 
 %changelog
+* Thu Dec 29 2022 Anton Zhukharev <ancieg@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Tue Jul 26 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt3
 - add go vendor modules into source tree instead of using patch
 
