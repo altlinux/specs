@@ -32,7 +32,7 @@
 
 Name: gpupdate
 Version: 0.9.12.2
-Release: alt1
+Release: alt2
 
 Summary: GPT applier
 License: GPLv3+
@@ -181,6 +181,9 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Thu Dec 29 2022 Valery Sinelnikov <greh@altlinux.org> 0.9.12.2-alt2
+- Fixed a typo in cifs_applier.py
+
 * Thu Dec 29 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.9.12.2-alt1
 - Add support of create and delete symlinks in user home directory for mapped
   network drives in cifs applier
