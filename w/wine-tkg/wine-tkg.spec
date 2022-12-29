@@ -6,6 +6,7 @@
 %global __find_debuginfo_files %nil
 %endif
 
+%def_without devel
 %def_without vanilla
 %define gecko_version 2.47.3
 %define mono_version 7.4.0
@@ -63,7 +64,7 @@
 
 Name: wine-tkg
 Version: %major
-Release: alt1.rc1
+Release: alt1.rc2
 Epoch: 1
 
 Summary: Wine TKG - environment for running Windows applications
@@ -398,7 +399,7 @@ Requires: %name-devel = %EVR
 Conflicts: %conflictbase-devel-tools
 Conflicts: lib%conflictbase-devel
 Conflicts: lib%name-devel < %version
-%if_without vanilla
+%if_without devel
 Provides: libwine-devel = %EVR
 %endif
 # we don't need provide anything
@@ -647,6 +648,7 @@ fi
 %endif
 %libwinedir/%winesodir/winebus.so
 %libwinedir/%winesodir/wineusb.so
+%libwinedir/%winesodir/localspl.so
 
 %if_without mingw
 %{?_without_vanilla:%libwinedir/%winesodir/windows.networking.connectivity.so}
@@ -813,5 +815,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 1:8.0-alt1.rc2
+- new version (8.0-rc2) with rpmgs script
+- don't provide libwine-devel
+
 * Wed Dec 21 2022 Vitaly Lipatov <lav@altlinux.ru> 1:8.0-alt1.rc1
 - initial build based on wine-vanilla spec
