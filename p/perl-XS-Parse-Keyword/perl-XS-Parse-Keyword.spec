@@ -7,8 +7,8 @@ BuildRequires: perl(ExtUtils/CBuilder.pm) perl(ExtUtils/CChecker.pm) perl(ExtUti
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.30
-Release: alt1.1
+Version: 0.31
+Release: alt1
 Summary: XS functions to assist in parsing keyword syntax
 Group: Development/Perl
 License: perl
@@ -43,6 +43,9 @@ changes or at least a rebuild of any module that depends on it.
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Dec 29 2022 Igor Vlasenko <viy@altlinux.org> 0.31-alt1
+- automated CPAN update
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.30-alt1.1
 - automated CPAN update
 
