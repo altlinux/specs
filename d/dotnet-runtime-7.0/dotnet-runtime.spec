@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable dotnet_host
+%def_enable dotnet_host
 
-%define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.12
+%define _dotnet_major 7.0
+%define _dotnet_corerelease 7.0.1
 # used for build
-%define _dotnet_sdkrelease 6.0.112
+%define _dotnet_sdkrelease 7.0.101
 %define preview %nil
-%define _dotnet_sdkshortrelease 6.0.112%preview
+%define _dotnet_sdkshortrelease 7.0.101%preview
 
 %define commithash %version-%release
 
@@ -20,8 +20,8 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 6.0.12
-Release: alt2
+Version: 7.0.1
+Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
 
@@ -210,7 +210,7 @@ bash -x ./build-runtime.sh -release -verbose -skipmanaged -ignorewarnings -skipr
 cd -
 
 # build Native libraries
-cd src/libraries/Native/
+cd src/native/libs/
 bash -x ./build-native.sh -release -skipgenerateversion
 cd -
 
@@ -255,7 +255,9 @@ cp -a artifacts/bin/coreclr/Linux.%_dotnet_arch.Release/{lib*.so,createdump} %bu
 cp -a artifacts/bin/native/Linux-%_dotnet_arch-Release/{libSystem.*Native*.so,libSystem.*Native*.a} %buildroot%_dotnet_shared/
 
 mkdir -p %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
-cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/{apphost,coreclr_delegates.h,hostfxr.h,libnethost.so,libnethost.a,nethost.h,singlefilehost} %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
+cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/{coreclr_delegates.h,hostfxr.h,libnethost.so,libnethost.a,nethost.h} %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
+cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/apphost %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
+#cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/singlefilehost %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
 cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/{nethost.h,libhostpolicy.so,libnethost.a,coreclr_delegates.h,hostfxr.h} %buildroot%_dotnet_shared/
 mkdir -p %buildroot%_dotnet_hostfxr/
 cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/libhostfxr.so %buildroot%_dotnet_hostfxr/
@@ -323,7 +325,7 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 
 # not in bootstrap
 %_dotnet_shared/libclrgc.so
-%_dotnet_shared/libdbgshim.so
+#_dotnet_shared/libdbgshim.so
 %_dotnet_shared/libjitinterface*.so
 
 %_dotnet_shared/libclrjit*.so
@@ -372,11 +374,12 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/libnethost.a
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/libnethost.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/nethost.h
-%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
+#_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
-* Tue Dec 27 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.12-alt2
-- disable build dotnet-host here
+* Tue Dec 27 2022 Vitaly Lipatov <lav@altlinux.ru> 7.0.1-alt1
+- .NET 7.0.1
+- disable pack singlefilehost (TODO: search a way to build again)
 
 * Tue Dec 27 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.12-alt1
 - new version 6.0.12 (with rpmrb script)
