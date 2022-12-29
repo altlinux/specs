@@ -17,7 +17,7 @@
 
 Name: zabbix
 Version: 6.0.12
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -541,6 +541,26 @@ bzip2 ChangeLog
 /usr/sbin/useradd -g %zabbix_group -G proc -c 'Zabbix' \
 	-d %zabbix_home -s /dev/null -r %zabbix_user >/dev/null 2>&1 ||:
 
+%pre server-mysql
+echo "########################################################################"
+echo "              Attention! Zabbix upgrade to %version"
+echo "########################################################################"
+echo " Notice:"
+echo " On MySQL and MariaDB, this requires GLOBAL"
+echo " log_bin_trust_function_creators = 1 to be set if binary logging is"
+echo " enabled and there is no superuser privileges and"
+echo " log_bin_trust_function_creators = 1 is not set in MySQL configuration"
+echo " file. To set the variable using MySQL console, run:"
+echo ""
+echo " mysql> SET GLOBAL log_bin_trust_function_creators = 1;"
+echo ""
+echo " Once the upgrade has been successfully completed,"
+echo " log_bin_trust_function_creators can be disabled:"
+echo ""
+echo " mysql> SET GLOBAL log_bin_trust_function_creators = 0;"
+echo ""
+echo "########################################################################"
+
 %post server-mysql
 %post_service zabbix_mysql
 
@@ -630,11 +650,11 @@ fi
 %doc database/sqlite3/schema.sql database/sqlite3/data.sql database/sqlite3/images.sql
 
 %files common-database-mysql
-%doc database/mysql/schema.sql database/mysql/data.sql database/mysql/images.sql database/mysql/double.sql
+%doc database/mysql/schema.sql database/mysql/data.sql database/mysql/images.sql database/mysql/double.sql database/mysql/history_pk_prepare.sql
 
 %if_with pgsql
 %files common-database-pgsql
-%doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql database/postgresql/double.sql database/postgresql/timescaledb.sql
+%doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql database/postgresql/double.sql database/postgresql/timescaledb.sql database/postgresql/history_pk_prepare.sql
 %endif
 
 %files server-common
@@ -736,6 +756,11 @@ fi
 %_includedir/%name
 
 %changelog
+* Wed Dec 28 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.12-alt2
+- Add notice fo use MySQL 8.0.x
+- Pack history_pk_prepare.sql (ALT #44523)
+- Fix build with curl 7.87.0
+
 * Wed Dec 07 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.12-alt1
 - 6.0.12
 
