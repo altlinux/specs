@@ -5,8 +5,8 @@
 %def_with doc
 
 Name: gnustep-base
-Version: 1.28.0
-Release: alt3.git47b6e9d05
+Version: 1.28.1
+Release: alt1
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -176,6 +176,9 @@ fi
 %endif
  
 %changelog
+* Thu Dec 29 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.28.1-alt1
+- New version.
+
 * Tue Dec 27 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.28.0-alt3.git47b6e9d05
 - New upstream snapshot.
 
