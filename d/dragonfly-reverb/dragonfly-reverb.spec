@@ -5,7 +5,7 @@
 %define _optlevel 3
 
 Name:     dragonfly-reverb
-Version:  3.2.7
+Version:  3.2.8
 Release:  alt1
 
 Summary:  A set of free reverb effects
@@ -15,12 +15,11 @@ Group:    Sound
 URL:      https://michaelwillis.github.io/dragonfly-reverb/
 
 Source:   %name-%version.tar
+Source1:  sub-merge.sources.txt
+Source2:  sub-merge.unpack.sh
 
-
-# https://github.com/DISTRHO/DPF.git
-Source1000: DPF-93ce2476d997f524cd2c2e749f7e672905d126b6.tar
-# https://github.com/DISTRHO/pugl.git
-Source1001: pugl-48032d1c3cb59e13deb2c3ec66afcf3ed65d97f4.tar
+# import sub-merge sources here
+%(cat %SOURCE1)
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(cairo)
@@ -69,8 +68,8 @@ BuildArch: noarch
 
 %prep
 %setup
-tar -xf %SOURCE1000 -C 'dpf' --strip-components 1
-tar -xf %SOURCE1001 -C 'dpf/dgl/src/pugl-upstream' --strip-components 1
+
+sh '%SOURCE2'
 
 # don't build VST targets, we don't ship them
 sed -i '/^TARGETS / s/vst.\|clap//g ' plugins/*/Makefile
@@ -105,6 +104,9 @@ find %buildroot%_libdir/lv2 -type f -exec chmod 644 '{}' ';'
 
 
 %changelog
+* Thu Dec 29 2022 Ivan A. Melnikov <iv@altlinux.org> 3.2.8-alt1
+- 3.2.8
+
 * Tue Sep 27 2022 Ivan A. Melnikov <iv@altlinux.org> 3.2.7-alt1
 - 3.2.7
 
