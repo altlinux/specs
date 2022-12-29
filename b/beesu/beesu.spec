@@ -1,3 +1,4 @@
+Group: System/Base
 BuildRequires: gcc-c++
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
@@ -5,18 +6,17 @@ Name: beesu
 Version: 2.7
 # Don't ever decrease this version (unless beesu update) or the subpackages will go backwards.
 # It is easier to do this than to track a separate release field.
-Release: alt2_34
+Release: alt2_42
 Summary: Graphical wrapper for su
 URL: http://www.honeybeenet.altervista.org
-Group: System/Base
 License: GPLv2+
 Source0: http://honeybeenet.altervista.org/beesu/files/beesu-sources/%{name}-%{version}.tar.bz2
 
 BuildRequires: gcc-c++
 
-Requires: libpam0 pam pam0_timestamp
+Requires: pam pam0_timestamp
 Requires: consolehelper
-Requires: userpasswd
+#Requires: userpasswd
 
 Obsoletes: nautilus-beesu-manager
 Obsoletes: caja-beesu-manager
@@ -69,6 +69,9 @@ EOF
 
 
 %changelog
+* Thu Dec 29 2022 Igor Vlasenko <viy@altlinux.org> 2.7-alt2_42
+- dropped requires on userpasswd (closes: #44764)
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 2.7-alt2_34
 - update to new release by fcimport
 
