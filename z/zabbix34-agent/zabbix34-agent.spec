@@ -13,15 +13,9 @@
 
 Name: zabbix34-agent
 Version: 3.4.15
-Release: alt2
-
-Packager: Alexei Takaseev <taf@altlinux.ru>
-
+Release: alt3
 License: GPLv2
-Group: Monitoring
-
 Url: http://www.zabbix.com
-
 Summary: %name
 Group: Monitoring
 Requires: %name-common
@@ -178,6 +172,9 @@ fi
 %config(noreplace) %attr(0400,root,root) %_sysconfdir/sudoers.d/zabbix
 
 %changelog
+* Fri Dec 30 2022 Alexei Takaseev <taf@altlinux.org> 3.4.15-alt3
+- Fix build with curl 7.87.0
+
 * Thu Sep 26 2019 Alexei Takaseev <taf@altlinux.org> 3.4.15-alt2
 - Add BR /proc (ALT #37264)
 
