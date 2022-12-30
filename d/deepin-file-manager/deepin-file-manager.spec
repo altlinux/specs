@@ -4,7 +4,7 @@
 
 Name: deepin-file-manager
 Version: 5.8.3
-Release: alt1
+Release: alt1.1
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: File tools
@@ -64,7 +64,7 @@ BuildRequires: libmediainfo-devel
 BuildRequires: libpcre-devel
 BuildRequires: libffmpegthumbnailer-devel
 BuildRequires: libdmr-devel
-BuildRequires: deepin-anything-devel
+BuildRequires: deepin-anything-devel deepin-anything
 BuildRequires: liblucene++-devel
 BuildRequires: libxml2-devel
 BuildRequires: libhtmlcxx-devel
@@ -311,6 +311,9 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Fri Dec 30 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.3-alt1.1
+- Fixed build with deepin-anything 6.0.3.
+
 * Wed Dec 28 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.3-alt1
 - New version (5.8.3).
 
