@@ -1,10 +1,6 @@
 %define rname libksysguard
 
-%ifarch %e2k ppc64le
 %def_disable qtwebengine
-%else
-%def_enable qtwebengine
-%endif
 
 %define sover 9
 %define libksgrd libksgrd%sover
@@ -20,7 +16,7 @@
 
 Name: plasma5-%rname
 Version: 5.26.4
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace
 
@@ -226,6 +222,9 @@ Requires: %name-common >= %EVR
 %_K5lib/libKSysGuardSystemStats.so.*
 
 %changelog
+* Fri Dec 30 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt2
+- build without qtwebengine
+
 * Tue Nov 29 2022 Sergey V Turchin <zerg@altlinux.org> 1:5.26.4-alt1
 - new version
 
