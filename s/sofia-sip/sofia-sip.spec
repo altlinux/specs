@@ -4,7 +4,7 @@
 %define major 1.13
 
 Name: sofia-sip
-Version: 1.13.9
+Version: 1.13.11
 Release: alt1
 BuildRequires:  gcc-c++
 BuildRequires:  openssl-devel >= 0.9.7
@@ -148,6 +148,9 @@ install -pm0644 man/man1/* %buildroot/%_man1dir/
 %_man1dir/*
 
 %changelog
+* Fri Dec 30 2022 Anton Farygin <rider@altlinux.ru> 1.13.11-alt1
+- 1.13.11
+
 * Thu Oct 06 2022 Anton Farygin <rider@altlinux.ru> 1.13.9-alt1
 - 1.13.9
 
