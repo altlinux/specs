@@ -3,7 +3,7 @@
 %def_with bootstrap
 
 Name: python3-module-incremental
-Version: 21.3.0
+Version: 22.10.0
 Release: alt1
 
 Summary: Incremental is a small library that versions your Python project
@@ -46,6 +46,9 @@ Incremental is a small library that versions your Python projects.
 
 
 %changelog
+* Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 22.10.0-alt1
+- new version 22.10.0 (with rpmrb script)
+
 * Tue Jul 06 2021 Vitaly Lipatov <lav@altlinux.ru> 21.3.0-alt1
 - new version 21.3.0 (with rpmrb script)
 
