@@ -1,7 +1,7 @@
 %define oname Beaker
 
 Name: python3-module-beaker
-Version: 1.11.0
+Version: 1.12.0
 Release: alt1
 
 Summary: A Session and Caching library with WSGI Middleware
@@ -49,6 +49,9 @@ from MyghtyUtils, then refactored and extended with database support.
 %python3_sitelibdir/Beaker-*.egg-info
 
 %changelog
+* Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 1.12.0-alt1
+- new version 1.12.0 (with rpmrb script)
+
 * Tue Nov 03 2020 Vitaly Lipatov <lav@altlinux.ru> 1.11.0-alt1
 - new version 1.11.0 (with rpmrb script)
 
