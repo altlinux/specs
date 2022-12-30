@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: python3-module-%oname
-Version: 5.9.1
+Version: 5.9.4
 Release: alt1
 
 Summary: A process utilities module for Python
@@ -55,6 +55,9 @@ py.test-3 -vv
 %python3_sitelibdir/*
 
 %changelog
+* Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 5.9.4-alt1
+- new version 5.9.4 (with rpmrb script)
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 5.9.1-alt1
 - new version 5.9.1 (with rpmrb script)
 
