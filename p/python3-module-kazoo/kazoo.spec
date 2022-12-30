@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-kazoo
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 
 Summary: Higher Level Zookeeper Client
@@ -96,6 +96,9 @@ python3 setup.py test
 %doc docs/_build/html/*
 
 %changelog
+* Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 2.9.0-alt1
+- new version 2.9.0 (with rpmrb script)
+
 * Tue Nov 10 2020 Vitaly Lipatov <lav@altlinux.ru> 2.8.0-alt1
 - new version 2.8.0 (with rpmrb script)
 - disable tests packing
