@@ -1,11 +1,11 @@
 %define oname ConfirmAccount
-%define mwversion 1.34
-%define revision fa306e94
+%define mwversion 1.39
+%define revision 596e436
 %setup_mediawiki_ext %mwversion %oname
 
 Name: mediawiki-extensions-ConfirmAccount
-Version: 1.34
-Release: alt2.%revision
+Version: 1.39
+Release: alt1.%revision
 
 Summary: This extension disables direct account creation and requires submission and approval.
 
@@ -19,7 +19,8 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-mediawiki >= 0.6
 
-# Source-url: https://github.com/wikimedia/mediawiki-extensions-ConfirmAccount/archive/refs/heads/master.zip
+#Source-url: https://github.com/wikimedia/mediawiki-extensions-ConfirmAccount/archive/refs/heads/master.zip
+# Source-url: https://extdist.wmflabs.org/dist/extensions/ConfirmAccount-%MWREL-%revision.tar.gz
 Source: %name-%version.tar
 
 %description
@@ -37,6 +38,9 @@ such as if you wanted Sysops/Bureaucrats to be able to directly make them.
 %files -f %oname.files
 
 %changelog
+* Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 1.39-alt1.596e436
+- new version (1.39) with rpmgs script
+
 * Sat Jun 12 2021 Vitaly Lipatov <lav@altlinux.ru> 1.34-alt2.fa306e94
 - new version (1.34) with rpmgs script
 
