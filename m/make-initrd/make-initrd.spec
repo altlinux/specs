@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 2.33.0
+Version: 2.34.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -254,6 +254,20 @@ AutoReq: noshell, noshebang
 %description zfs
 Make-initrd OpenZFS feature.
 
+%package guestfs
+Summary: guestfs feature for %name
+BuildArch: noarch
+Group: System/Base
+Requires: %name = %version-%release
+Requires: cpio file mount rsync
+Requires: fdisk sfdisk gdisk parted zerofree
+Requires: binutils gzip-utils nfs-utils mdadm-tool
+Requires: e2fsprogs guestfsd xfsprogs reiserfsprogs
+Requires: btrfs-progs dosfstools jfsutils fuse ntfs-3g
+AutoReq: noshell, noshebang
+
+%description guestfs
+Make-initrd guestfs feature.
 
 
 %define _libexecdir %_prefix/libexec
@@ -298,6 +312,7 @@ fi
 %files
 %dir %_sysconfdir/initrd.mk.d
 %config(noreplace) %_sysconfdir/initrd.mk.d/*.mk.example
+%exclude %_sysconfdir/initrd.mk.d/guestfs.mk.example
 %config(noreplace) %_sysconfdir/initrd.mk
 %_bindir/*
 %_sbindir/*
@@ -321,6 +336,7 @@ fi
 %exclude %_datadir/%name/features/bootloader
 %exclude %_datadir/%name/features/bootconfig
 %exclude %_datadir/%name/features/zfs
+%exclude %_datadir/%name/features/guestfs
 %doc Documentation/*.md
 
 %files devmapper
@@ -376,7 +392,24 @@ fi
 %files zfs
 %_datadir/%name/features/zfs
 
+%files guestfs
+%_datadir/%name/features/guestfs
+%config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
+
 %changelog
+* Thu Dec 29 2022 Alexey Gladkov <legion@altlinux.ru> 2.34.0-alt1
+- New version (2.34.0).
+- Feature guestfs:
+  + Add programs used by libguestfs (thx Egor Ignatov).
+  + Add raid modules and udev rules (thx Egor Ignatov).
+  + Config guestfs.mk.example: remove features already required by guestfs (thx Egor Ignatov).
+  + Feature moved into subpackage because it has many external dependencies.
+- Feature kickstart:
+  + Do not show rsync progress on serial console.
+  + Ask mdadm to create device nodes in /dev.
+- Misc:
+  + Update busybox 1.35.0.
+
 * Mon Dec 05 2022 Alexey Gladkov <legion@altlinux.ru> 2.33.0-alt1
 - New version (2.33.0).
 
