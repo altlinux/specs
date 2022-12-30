@@ -1,7 +1,7 @@
 %define  modulename httpcore
 
 Name:    python3-module-%modulename
-Version: 0.15.0
+Version: 0.16.3
 Release: alt1
 
 Summary: A minimal HTTP client
@@ -58,6 +58,9 @@ sed -ri '/h11/ s/,<[^,"]+//p' setup.py
 %python3_sitelibdir/*.egg-info/
 
 %changelog
+* Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 0.16.3-alt1
+- new version 0.16.3 (with rpmrb script)
+
 * Tue May 17 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.15.0-alt1
 - 0.15.0
 
