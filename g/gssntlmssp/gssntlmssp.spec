@@ -1,16 +1,15 @@
 %def_with wbclient
 
 Name: gssntlmssp
-Version: 0.8.0
+Version: 1.1.0
 Release: alt1
 Summary: GSSAPI NTLMSSP Mechanism
 
 Group: System/Libraries
 License: LGPLv3+
-Url: https://pagure.io/gssntlmssp
-# Git-VCS: https://pagure.io/gssntlmssp.git
+Url: https://github.com/gssapi/gss-ntlmssp
+VCS: https://github.com/gssapi/gss-ntlmssp
 Source: %name-%version.tar
-Patch: %name-%version.patch
 
 Requires: libkrb5 >= 1.13
 Requires: libwbclient
@@ -39,7 +38,6 @@ Adds a header file with definition for custom GSSAPI extensions for NTLMSSP
 
 %prep
 %setup
-%patch -p1
 
 %build
 mkdir -p m4
@@ -63,15 +61,19 @@ rm -rf %buildroot%_docdir/%name
 make test_gssntlmssp
 
 %files -f %name.lang
+%doc README.md COPYING doc/*
 %config(noreplace) %_sysconfdir/gss/mech.d/ntlmssp.conf
 %_libdir/gssntlmssp
 %_man8dir/gssntlmssp.8*
-%doc README.md COPYING doc/*
 
 %files devel
 %_includedir/gssapi/*
 
 %changelog
+* Fri Dec 30 2022 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
+- New version.
+- Update project URL and repository.
+
 * Thu Jul 04 2019 Evgeny Sinelnikov <sin@altlinux.org> 0.8.0-alt1
 - update to new release
 
