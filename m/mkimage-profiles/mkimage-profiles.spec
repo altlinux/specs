@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.4.35
+Version: 1.5.0
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,30 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Fri Dec 30 2022 Anton Midyukov <antohami@altlinux.org> 1.5.0-alt1
+- Updating lists for riscv64 (thanks iv@)
+- check conditions of make for equality of variables with an empty value
+- Set variable BRANCH, if not defined or empty; show $BRANCH
+- Add STDOUT option to output log to stdout
+- reports.mk: archive report with REPORT=2
+- profile.mk: do not cleanup BUILDDIR, which is a symlink
+- use/dev: Fix: Enable hasher-privd by default (thanks manowar@)
+- regular.mk: set KFLAVOUR un-def for jeos in Sisyphus
+- regular.mk: add drm kernel moules + firmware to initrd for all
+- regular.mk: net-install is available for alles BRANCH
+- grub: drop $linux_suffix in *.cfg
+- grub: add ip=dhcp to bootargs in 88netinstall.cfg
+- sound: use wireplumber instead pipewire-media-session for pipewire in
+  Sisyphus (request by aris@)
+- uboot: add u-boot-rpi3 to list
+- image.in/functions.mk: protect the code from spontaneous execution
+  (Closes: 44561)
+- regular.mk: add use/efi/dtb
+- education: add latest commits (from cas@)
+- workstation: add latest commits (from sem@)
+- alt-server: add latest commits (from jqt4)
+- slinux: Add pam_gnome-keyring (from jqt4)
+
 * Fri Dec 02 2022 Anton Midyukov <antohami@altlinux.org> 1.4.35-alt1
 - alt-workstation-cloud: Use NetworkManager (from obirvalger@)
 - install2: Don't cleanup /lib/modules/*/kernel/arch (from jqt4@)
