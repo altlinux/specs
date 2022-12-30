@@ -19,7 +19,7 @@
 
 Name: mediawiki
 Version: %major.0
-Release: alt2
+Release: alt3
 
 Summary: A wiki engine, typical installation (%defphp with Apache2 and MySQL support)
 
@@ -212,6 +212,10 @@ Obsoletes: mediawiki-extensions-VisualEditor
 Provides: mediawiki-extensions-Parsoid
 Obsoletes: mediawiki-extensions-Parsoid
 
+# since 1.39
+# we pack separate subpackage since 1.39
+#Provides: mediawiki-extensions-Math
+
 %description -n %name-common
 MediaWiki is the software used for Wikipedia and the other Wikimedia
 Foundation websites. Compared to other wikis, it has an excellent
@@ -252,7 +256,7 @@ Requires: %name-%defphp = %EVR
 Requires: apache2-common >= 2.2.0
 Requires: %_initdir/%apache2_dname
 Requires: apache2-httpd-prefork
-Requires: apache2-mod_%defphp >= 8.0.0
+Requires: apache2-mod_%defphp
 
 %description -n %name-apache2
 Install this package, if you wish to run %name under apache2 webserver.
@@ -456,6 +460,9 @@ cat > %buildroot%_mediawiki_settings_dir/50-SyntaxHighlight_GeSHi.php << EOF
 wfLoadExtension('SyntaxHighlight_GeSHi');
 EOF
 
+# pack separately
+rm -rv %buildroot%_mediawikidir/extensions/Math/
+
 %pre -n %name-common
 if [ -L %_mediawikidir/config ]; then
 	rm -f %_mediawikidir/config
@@ -553,6 +560,9 @@ fi
 %_mediawiki_settings_dir/50-Scribunto.php
 
 %changelog
+* Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 1.39.0-alt3
+- remove embedded extension-Math (ALT bug 44708)
+
 * Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 1.39.0-alt2
 - use rpm-macros-features for build with supported php only
 

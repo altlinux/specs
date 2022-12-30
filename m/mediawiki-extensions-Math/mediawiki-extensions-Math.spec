@@ -1,8 +1,7 @@
 %define ShortName Math
-%define mwversion 1.31
+%define mwversion 1.39
 %setup_mediawiki_ext %mwversion %ShortName
-# can we exclude it?
-%define commit a1263db
+%define commit 1e7a549
 
 Name: mediawiki-extensions-%ShortName
 Version: 3.0.0.%mwversion
@@ -16,7 +15,6 @@ Url: http://www.mediawiki.org/wiki/Extension:Math
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-#Source-git: https://gerrit.wikimedia.org/r/p/mediawiki/extensions/Math.git
 # Source-url: https://extdist.wmflabs.org/dist/extensions/Math-%MWREL-%commit.tar.gz
 Source: %name-%version.tar
 
@@ -29,8 +27,7 @@ Requires: php7-curl
 
 %description
 Math extension provides support for rendering mathematical formulas
-on-wiki via texvc. It was a part of the core MediaWiki software until
-MediaWiki 1.18, r85706.
+on-wiki via texvc.
 
 %prep
 %setup
@@ -39,16 +36,18 @@ MediaWiki 1.18, r85706.
 
 %install
 # remove build files
-rm -f $(cat .gitignore | grep -v "^#.*")
-%__subst "s|^\$wgTexvc =.*|\$wgTexvc = '%_bindir/texvc';|g" Math.php
+#rm -v $(cat .gitignore | grep -v "^#.*")
 
 %mediawiki_ext_install 50 %ShortName
 
-rm -rfv %buildroot%mediawiki_ext_dir/{texvccheck,math,tests,mathoid,modules/ve-math/tools}
+rm -rv %buildroot%mediawiki_ext_dir/{tests,mathoid,modules/ve-math/tools}
 
 %files -f %ShortName.files
 
 %changelog
+* Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 3.0.0.1.39-alt1.1e7a549
+- new version (3.0.0.1.39) with rpmgs script
+
 * Tue Jul 31 2018 Vitaly Lipatov <lav@altlinux.ru> 3.0.0.1.31-alt1.a1263db
 - build new version
 - set noarch, drop texvc subpackage (ALT bug #34734)
