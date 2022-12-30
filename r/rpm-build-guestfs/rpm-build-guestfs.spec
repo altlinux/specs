@@ -1,6 +1,6 @@
 Name: rpm-build-guestfs
 Version: 0.8
-Release: alt2
+Release: alt3
 
 Summary: RPM helper post script for build guestfs appliance
 License: GPL
@@ -10,7 +10,7 @@ Requires(pre):  make-initrd >= 2.2.6
 Requires(pre):  kernel >= 5.4
 Requires: /proc
 
-Requires(pre): make-initrd-mdadm make-initrd-devmapper make-initrd-lvm make-initrd-luks
+Requires(pre): make-initrd-mdadm make-initrd-devmapper make-initrd-lvm make-initrd-luks make-initrd-guestfs
 
 Requires(pre): /usr/sbin/guestfsd
 Requires(pre): /usr/sbin/parted
@@ -64,6 +64,9 @@ mv %_libdir/guestfs/initramfs.armv8l.img %_libdir/guestfs/initramfs.armh.img
 %dir %_libdir/guestfs
 
 %changelog
+* Fri Dec 30 2022 Alexey Gladkov <legion@altlinux.ru> 0.8-alt3
+- Requires: make-initrd-guestfs
+
 * Fri Sep 16 2022 Egor Ignatov <egori@altlinux.org> 0.8-alt2
 - fix initramfs arch name on i586 and armh
 
