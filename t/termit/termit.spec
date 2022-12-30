@@ -2,7 +2,7 @@
 
 Name:          termit
 Version:       3.1
-Release:       alt1.2
+Release:       alt2
 Summary:       Minimalistic terminal emulator with tabs and encoding support
 Url:           https://github.com/nonstop/termit/wiki
 Vcs:           https://github.com/nonstop/termit.git
@@ -73,6 +73,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_metainfodir/%name.metainfo.xml
 
 %changelog
+* Fri Dec 30 2022 Pavel Skrylev <majioa@altlinux.org> 3.1-alt2
+- ! termit init lua-script
+
 * Thu Nov 26 2020 Pavel Skrylev <majioa@altlinux.org> 3.1-alt1.2
 - ! alternatives files for termit to proper format
 
