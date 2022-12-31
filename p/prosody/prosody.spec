@@ -5,8 +5,8 @@
 %filter_from_requires /^lua%current_lua_version(util.*/d
 
 Name: prosody
-Version: 0.12.1
-Release: alt2
+Version: 0.12.2
+Release: alt1
 
 Summary: Modern XMPP communication server
 
@@ -78,6 +78,9 @@ install -Dpm644 %SOURCE4 %buildroot/%_tmpfilesdir/prosody.conf
 %_man1dir/*
 
 %changelog
+* Sat Dec 31 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12.2-alt1
+- Updated to 0.12.2.
+
 * Wed Jun 29 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.12.1-alt2
 - Rebuilt against Lua 5.4.
 - Filtered inner lua modules from requires.
