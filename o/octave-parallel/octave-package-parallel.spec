@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/octave-config makeinfo texinfo
 %define octpkg parallel
 Name: octave-%octpkg
 Version: 4.0.1
-Release: alt1
+Release: alt2
 Summary: Parallel Computing.
 
 Group: Sciences/Mathematics
@@ -14,6 +14,7 @@ Url: http://octave.sourceforge.net/
 
 Source0: https://downloads.sourceforge.net/project/octave/Octave%%20Forge%%20Packages/Individual%%20Package%%20Releases/%{octpkg}-%{version}.tar.gz
 Patch: parallel-3.1.3-octave5.patch
+Patch1: octave-parallel-alt-num-processors.patch
 
 BuildRequires(pre): rpm-build-octave
 BuildRequires: octave-devel
@@ -36,6 +37,7 @@ Parallel execution package. See also package mpi, maintained
 %prep
 %setup -q -n %{octpkg}-%{version}
 %patch -p1
+%patch1 -p2
 
 %build
 %octave_build
@@ -54,6 +56,9 @@ mv %buildroot%_datadir/octave/packages/parallel-%version/bin/octave-pserver %bui
 %endif
 
 %changelog
+* Fri Dec 30 2022 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt2
+- Fixed build with octave-7.3.0.
+
 * Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 4.0.1-alt1
 - new version
 
