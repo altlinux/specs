@@ -3,7 +3,7 @@
 
 %define oname uriparser
 Name: liburiparser
-Version: 0.9.6
+Version: 0.9.7
 Release: alt1
 
 Summary: A strictly RFC 3986 compliant URI parsing library
@@ -77,6 +77,9 @@ touch doc/html/FIXME.map
 %_libdir/cmake/*
 
 %changelog
+* Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.7-alt1
+- new version 0.9.7 (with rpmrb script)
+
 * Mon Jan 24 2022 Vitaly Lipatov <lav@altlinux.ru> 0.9.6-alt1
 - new version 0.9.6 (with rpmrb script)
 
