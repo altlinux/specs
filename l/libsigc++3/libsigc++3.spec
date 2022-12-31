@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name libsigc++
-%define ver_major 3.2
+%define ver_major 3.4
 %define api_ver 3.0
 %def_enable docs
 %def_enable check
@@ -89,6 +89,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sat Dec 31 2022 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
