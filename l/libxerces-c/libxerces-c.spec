@@ -11,7 +11,7 @@
 %define threads pthreads
 
 Name: libxerces-c
-Version: 3.2.3
+Version: 3.2.4
 Release: alt1
 
 Summary: Xerces-C++ validating XML parser
@@ -129,6 +129,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %_bindir/*
 
 %changelog
+* Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 3.2.4-alt1
+- new version 3.2.4 (with rpmrb script)
+
 * Wed Sep 02 2020 Vitaly Lipatov <lav@altlinux.ru> 3.2.3-alt1
 - new version 3.2.3 (with rpmrb script)
 
