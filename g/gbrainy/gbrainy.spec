@@ -1,5 +1,5 @@
 Name: gbrainy
-Version: 2.4.5
+Version: 2.4.6
 Release: alt1
 
 Summary: Brain training puzzle game
@@ -14,9 +14,6 @@ ExcludeArch: ppc64le
 
 # Source-url: https://gitlab.gnome.org/GNOME/gbrainy/-/archive/%version/gbrainy-%version.tar.gz
 Source: %name-%version.tar
-
-Patch: %name-2.4.5-alt-makefile.patch
-Patch1: %name-2.4.5-alt-pkgfile.patch
 
 BuildRequires: intltool
 BuildRequires: librsvg-devel
@@ -44,21 +41,8 @@ Gbrainy также может быть легко дополнен новыми 
 сторонами.
 Gbrainy разработан для GNOME и работает на GNU/Linux и различных версиях Unix.
 
-%package devel
-Summary: Development files for gbrainy
-Summary(ru_RU.UTF-8): Файлы разработки для gbrainy
-Group: Development/Other
-Requires: %name = %EVR
-%description devel
-Development files for the puzzle game gbrainy. Used to create modules.
-
-%description devel -l ru_RU.UTF-8
-Файлы разработки для игры-головоломки gbrainy. Используется для создания
-модулей.
-
 %prep
 %setup
-%autopatch -p2
 
 %build
 %autoreconf
@@ -85,10 +69,11 @@ rm -f %buildroot%_pixmapsdir/*
 %_man6dir/gbrainy.6.*
 %_gamesdatadir/%name
 
-%files devel
-%_datadir/pkgconfig/%name.pc
-
 %changelog
+* Sun Jan 01 2023 Evgeny Chuck <koi@altlinux.org> 2.4.6-alt1
+- new version (2.4.6) with rpmgs script
+- gbrainy.pc.in removed as extensions are no longer supported by the developer
+
 * Fri Sep 02 2022 Evgeny Chuck <koi@altlinux.org> 2.4.5-alt1
 - new version (2.4.5) with rpmgs script
 - mono libraries packaged as per policy
