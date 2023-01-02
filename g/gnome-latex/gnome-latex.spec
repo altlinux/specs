@@ -1,5 +1,5 @@
 %def_disable snapshot
-%define ver_major 3.42
+%define ver_major 3.44
 %define xdg_name org.gnome.gnome-latex
 
 %def_enable gtk_doc
@@ -26,7 +26,7 @@ Requires: %_bindir/latexmk dconf
 
 %define gtk_ver 3.24
 %define gtksource_ver 4.8.4
-%define tepl_ver 6.2.0
+%define tepl_ver 6.4.0
 %define amtk_ver 5.4.1
 %define vala_ver 0.46.5
 
@@ -98,6 +98,9 @@ This package contains documentation for %name.
 %endif
 
 %changelog
+* Mon Jan 02 2023 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
+- 3.44.0
+
 * Thu Nov 10 2022 Yuri N. Sedunov <aris@altlinux.org> 3.42.0-alt1
 - 3.42.0
 

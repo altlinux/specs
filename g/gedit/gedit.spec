@@ -3,9 +3,9 @@
 %define xdg_name org.gnome.gedit
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
-%define lib_ver 43
+%define lib_ver 44
 %define api_ver 3.0
 %def_enable plugins
 %def_enable introspection
@@ -13,7 +13,7 @@
 %def_enable gtk_doc
 
 Name: gedit
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -38,7 +38,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version%beta.tar.xz
 
 %define glib_ver 2.44.0
 %define gtk_ver 3.24.0
-%define tepl_ver 6.2.0
+%define tepl_ver 6.4.0
 %define gtksourceview_ver 4.8.4
 %define peas_ver 1.14.1
 %define gspell_ver 1.0.0
@@ -217,6 +217,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Mon Jan 02 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Fri Nov 18 2022 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
 - 43.2
 

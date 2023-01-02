@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 43
+%define ver_major 44
 %define beta %nil
 %def_enable python
 # removed since 3.36
@@ -9,7 +9,7 @@
 %add_python3_path %gedit_pluginsdir
 
 Name: gedit-plugins
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Plugins for GEdit
@@ -26,7 +26,7 @@ Source: %name-%version.tar
 %define glib_ver 2.40.0
 %define gtk_ver 3.24
 %define gtksourceview_ver 4.8.4
-%define gedit_ver 43.1
+%define gedit_ver 44.0
 %define peas_ver 1.14.1
 %define git2_ver 0.0.12
 %define vte_ver 0.38
@@ -35,9 +35,6 @@ Requires: gedit >= %ver_major
 Requires: libpeas-python3-loader
 Requires: libvte3-gir >= %vte_ver
 %{?_enable_zeitgeist:Requires: zeitgeist}
-
-AutoReqProv: nopython
-%define __python %nil
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-gnome
 BuildRequires: meson gnome-common libappstream-glib-devel
@@ -91,6 +88,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 
 
 %changelog
+* Mon Jan 02 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Thu Nov 10 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 

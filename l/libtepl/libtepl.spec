@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 %define _name tepl
-%define ver_major 6.2
+%define ver_major 6.4
 %define api_ver 6
 
 %def_enable gtk_doc
@@ -27,6 +27,7 @@ Vcs: https://gitlab.gnome.org/swilmet/tepl.git
 Source: %_name-%version.tar
 %endif
 
+%define meson_ver 0.64
 %define glib_ver 2.64
 %define gtk_doc_ver 1.0
 %define gtk_ver 3.22
@@ -34,7 +35,7 @@ Source: %_name-%version.tar
 %define amtk_ver 5.0
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gnome rpm-build-gir
-BuildRequires: meson glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgtksourceview4-devel >= %gtksource_ver
+BuildRequires: meson >= %meson_ver glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgtksourceview4-devel >= %gtksource_ver
 BuildRequires: libxml2-devel libuchardet-devel gtk-doc >= %gtk_doc_ver
 BuildRequires: pkgconfig(amtk-5) >= %amtk_ver
 BuildRequires: pkgconfig(gsettings-desktop-schemas)
@@ -144,6 +145,9 @@ the functionality of the installed Tepl library.
 
 
 %changelog
+* Mon Jan 02 2023 Yuri N. Sedunov <aris@altlinux.org> 6.4.0-alt1
+- 6.4.0
+
 * Thu Nov 10 2022 Yuri N. Sedunov <aris@altlinux.org> 6.2.0-alt1
 - 6.2.0
 
