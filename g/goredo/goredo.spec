@@ -1,7 +1,7 @@
 %define gobuild go build
 
 Name: goredo
-Version: 1.0.0
+Version: 1.28.0
 Release: alt1
 
 Summary: Go implementation of djb's redo, Makefile replacement that sucks less
@@ -49,5 +49,8 @@ cp -a src/goredo src/redo* %buildroot%_bindir/
 #%_infodir/*
 
 %changelog
+* Mon Jan 02 2023 Vitaly Lipatov <lav@altlinux.ru> 1.28.0-alt1
+- new version
+
 * Sat Jan 23 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Sisyphus
