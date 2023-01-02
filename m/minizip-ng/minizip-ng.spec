@@ -4,8 +4,8 @@
 %filter_from_provides /^pkgconfig(%rname)/d
 
 Name: %rname-ng
-Version: %sover.0.7
-Release: alt2
+Version: %sover.0.8
+Release: alt1
 
 Summary: Fork of the popular zip manipulation library found in the zlib distribution
 License: Zlib
@@ -119,6 +119,9 @@ developing applications that use %name.
 %_libdir/lib%rname.so
 
 %changelog
+* Mon Jan 02 2023 Nazarov Denis <nenderus@altlinux.org> 3.0.8-alt1
+- Version 3.0.8
+
 * Sun Oct 16 2022 Nazarov Denis <nenderus@altlinux.org> 3.0.7-alt2
 - Improved version 3.0.7
 
