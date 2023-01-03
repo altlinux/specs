@@ -7,7 +7,7 @@
 %define filesystem_commit 3f1c185ab414e764c694b8171d1c4d8c5c437517
 
 Name: ppsspp
-Version: 1.14.3
+Version: 1.14.4
 Release: alt1
 
 Summary: PlayStation Portable Emulator
@@ -35,8 +35,6 @@ Source5: SPIRV-Cross-%spirv_cross_commit.tar
 Source6: zstd-%zstd_commit.tar
 # https://github.com/Kingcom/filesystem/archive/%filesystem_commit/filesystem-%filesystem_commit.tar.gz
 Source7: filesystem-%filesystem_commit.tar
-Source8: %name.desktop
-Source9: %name-qt.desktop
 
 Patch0: %name-alt-ffmpeg.patch
 Patch1: %name-alt-git.patch
@@ -100,108 +98,83 @@ This build using the Qt frontend.
 %patch0 -p1
 %patch1 -p1
 
-echo "// This is a generated file.
-
-const char *PPSSPP_GIT_VERSION = \"%version\";
-
-// If you don't want this file to update/recompile, change to 1.
-#define PPSSPP_GIT_VERSION_NO_UPDATE 1
-" > git-version.cpp
+# Fix version string
+sed s,"unknown","%{version}",g -i git-version.cmake
 
 %build
 
+export CPLUS_INCLUDE_PATH=%_includedir/libzip
+
 # Build SDL and headless versions
 
-%__mkdir_p %_target_platform
-pushd %_target_platform
+%define _cmake__builddir %_target_platform
 
-cmake .. \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
+%cmake \
 	-DCMAKE_BUILD_TYPE:STRING=Release \
-	-DCMAKE_SKIP_RPATH:BOOL=TRUE \
 	-DUSE_SYSTEM_SNAPPY:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBZIP:BOOL=TRUE \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DHEADLESS:BOOL=TRUE \
 	-DLIBZIP_INCLUDE_DIR=%_includedir \
-	-DPNG_LIBRARY=%_libdir/libpng.so \
-	-DPNG_PNG_INCLUDE_DIR=%_includedir \
 %ifarch %arm
 	-DUSING_GLES2:BOOL=TRUE \
 %else
 	-DOpenGL_GL_PREFERENCE:STRING=GLVND \
 %endif
 	-Wno-dev
-popd
 
-CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform
+%cmake_build
 
 # Build Qt version
 
-%__mkdir_p %_target_platform-qt
-pushd %_target_platform-qt
+%define _cmake__builddir %_target_platform-qt
 
-cmake .. \
-	-DCMAKE_C_FLAGS:STRING='%optflags' \
-	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
+%cmake \
 	-DCMAKE_BUILD_TYPE:STRING=Release \
-	-DCMAKE_SKIP_RPATH:BOOL=TRUE \
 	-DUSE_SYSTEM_SNAPPY:BOOL=TRUE \
 	-DUSE_SYSTEM_LIBZIP:BOOL=TRUE \
 	-DUSE_SYSTEM_FFMPEG:BOOL=TRUE \
 	-DUSING_QT_UI:BOOL=TRUE \
 	-DLIBZIP_INCLUDE_DIR=%_includedir \
-	-DPNG_LIBRARY=%_libdir/libpng.so \
-	-DPNG_PNG_INCLUDE_DIR=%_includedir \
 %ifarch %arm
 	-DUSING_GLES2:BOOL=TRUE \
 %else
 	-DOpenGL_GL_PREFERENCE:STRING=GLVND \
 %endif
 	-Wno-dev
-popd
 
-CPLUS_INCLUDE_PATH=%_includedir/libzip %make_build -C %_target_platform-qt
+%cmake_build
 
 %install
-%__mkdir_p %buildroot%_bindir
-%__mkdir_p %buildroot%_datadir/%name
-%__mkdir_p %buildroot%_pixmapsdir
-%__mkdir_p %buildroot%_iconsdir
-%__mkdir_p %buildroot%_desktopdir
-
-%__install -Dp -m0755 %_target_platform/PPSSPPSDL %buildroot%_bindir/
+%define _cmake__builddir %_target_platform
+%cmake_install
 %__install -Dp -m0755 %_target_platform/PPSSPPHeadless %buildroot%_bindir/
-%__install -Dp -m0755 %_target_platform-qt/PPSSPPQt %buildroot%_bindir/
 
-%__cp -r assets %buildroot%_datadir/%name/
-
-%__cp -r icons/hicolor %buildroot%_iconsdir/
-
-%__install -Dp -m0644 icons/icon-512.svg %buildroot%_pixmapsdir/%name.svg
-
-%__install -Dp -m0644 %SOURCE8 %buildroot%_desktopdir/
-%__install -Dp -m0644 %SOURCE9 %buildroot%_desktopdir/
+%define _cmake__builddir %_target_platform-qt
+%cmake_install
 
 %files
 %_bindir/PPSSPPSDL
-%_desktopdir/%name.desktop
+%_desktopdir/PPSSPPSDL.desktop
 
 %files common
 %doc LICENSE.TXT README.md
 %_datadir/%name
-%_pixmapsdir/%name.svg
+%_datadir/mime/packages/%name.xml
 %_iconsdir/hicolor/*/apps/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
 
 %files headless
 %_bindir/PPSSPPHeadless
 
 %files qt
 %_bindir/PPSSPPQt
-%_desktopdir/%name-qt.desktop
+%_desktopdir/PPSSPPQt.desktop
 
 %changelog
+* Tue Jan 03 2023 Nazarov Denis <nenderus@altlinux.org> 1.14.4-alt1
+- Version 1.14.4
+
 * Mon Jan 02 2023 Nazarov Denis <nenderus@altlinux.org> 1.14.3-alt1
 - Version 1.14.3
 
