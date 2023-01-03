@@ -1,13 +1,13 @@
 %set_python3_req_method strict
 %define _unpackaged_files_terminate_build 1
-%define oname proxmoxer
+%define pypi_name proxmoxer
 
-Name: python3-module-%oname
-Version: 1.1.1
-Release: alt4
+Name: python3-module-%pypi_name
+Version: 2.0.1
+Release: alt1
 
 Summary: Wrapper around Proxmox REST API v2
-License: %mit
+License: MIT
 Group: Development/Python3
 Url: https://github.com/proxmoxer/proxmoxer
 BuildArch: noarch
@@ -15,10 +15,13 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-licenses rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(requests)
+BuildRequires: python3(paramiko)
 
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-paramiko
+%py3_provides %pypi_name
 
 %add_python3_req_skip httplib # python3(http) is used instead this
 %add_python3_req_skip urlparse # python3(urllib) is used instead this
@@ -30,18 +33,22 @@ Pythonic API for a Proxmox cluster manipulation.
 %setup -q -n %name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
-%exclude %python3_sitelibdir/tests
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%pypi_name-%version.dist-info
 %doc README.rst LICENSE.txt
 
 %changelog
+* Tue Jan 03 2023 Alexander Makeenkov <amakeenk@altlinux.org> 2.0.1-alt1
+- Updated to version 2.0.1
+- Use pyproject macroses for build
+- Added py3_provides
+
 * Thu Jul 23 2020 Alexander Makeenkov <amakeenk@altlinux.org> 1.1.1-alt4
 - Used the strict dependency search method (closes: #38751)
 - Fixed %%files section
