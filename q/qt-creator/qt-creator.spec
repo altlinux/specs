@@ -2,9 +2,9 @@
 
 %def_with ClangCodeModel
 %define llvm_version 13.0
-%define qt_version 5.15.2
+%define qt_version 6.2.0
 
-%ifarch %not_qt5_qtwebengine_arches
+%ifarch %not_qt6_qtwebengine_arches
 %def_disable qtwebengine
 %else
 %def_enable qtwebengine
@@ -14,8 +14,8 @@
 %add_findprov_skiplist %_datadir/qtcreator/*
 
 Name:    qt-creator
-Version: 8.0.2
-Release: alt2
+Version: 9.0.1
+Release: alt1
 
 Summary: Cross-platform IDE for Qt
 License: GPL-3.0 with Qt-GPL-exception-1.0 and MIT and LGPL-2.0 and LGPL-2.1 and LGPL-3.0 and BSD-3-Clause and BSL-1.0 and ALT-Public-Domain
@@ -36,22 +36,21 @@ Provides: qtcreator-clangcodemodel = %EVR
 
 BuildRequires(pre): cmake
 BuildRequires(pre): rpm-build-ninja
-BuildRequires(pre): qt5-base-devel >= %qt_version
+BuildRequires(pre): qt6-base-devel >= %qt_version
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-qt5-webengine
+BuildRequires(pre): rpm-macros-qt6-webengine
 BuildRequires: gcc-c++
-BuildRequires: qt5-designer >= %qt_version
-BuildRequires: qt5-script-devel >= %qt_version
-BuildRequires: qt5-declarative-devel >= %qt_version
-BuildRequires: qt5-x11extras-devel >= %qt_version
-BuildRequires: qt5-xmlpatterns-devel >= %qt_version
-BuildRequires: qt5-tools-devel >= %qt_version
-BuildRequires: qt5-serialport-devel
+BuildRequires: qt6-designer >= %qt_version
+BuildRequires: qt6-declarative-devel >= %qt_version
+BuildRequires: qt6-tools-devel >= %qt_version
+BuildRequires: qt6-serialport-devel
 %if_enabled qtwebengine
-BuildRequires: qt5-webengine-devel >= %qt_version
+BuildRequires: qt6-webengine-devel >= %qt_version
 %endif
-BuildRequires: qt5-svg-devel >= %qt_version
-BuildRequires: qt5-quickcontrols2-devel
+BuildRequires: qt6-svg-devel >= %qt_version
+BuildRequires: qt6-5compat-devel >= %qt_version
+BuildRequires: qt6-shadertools-devel >= %qt_version
+BuildRequires: qt6-quicktimeline-devel >= %qt_version
 BuildRequires: kf5-syntax-highlighting-devel
 %if_with ClangCodeModel
 BuildRequires: clang%llvm_version
@@ -66,6 +65,7 @@ BuildRequires: libsystemd-devel
 BuildRequires: elfutils-devel
 BuildRequires: libzstd-devel
 BuildRequires: zlib-devel
+BuildRequires: libxml2-devel
 # Qbs documentation
 #BuildRequires: python3-module-lxml
 #BuildRequires: python3-module-bs4
@@ -74,13 +74,15 @@ BuildRequires: zlib-devel
 
 Requires: %name-core = %EVR
 # Add Qt5 build environment to build Qt project
-Requires: qt5-base-devel
-Requires: qt5-tools
+Requires: qt6-base-devel
+Requires: qt6-tools
 
 %ifarch %e2k
 # error: cpio archive too big - 4446M
 %global __find_debuginfo_files %nil
 %endif
+
+%add_python3_req_skip dmgbuild
 
 %description
 Qt Creator (previously known as Project Greenhouse) is a new, lightweight,
@@ -95,8 +97,7 @@ Group:   Development/Tools
 Requires: %name-data = %EVR
 Provides: qbs = 1.14.0
 Obsoletes: qbs < 1.14.0
-Requires: qt5-quickcontrols
-Requires: qt5-translations
+Requires: qt6-translations
 
 %description core
 Qt Creator (previously known as Project Greenhouse) is a new, lightweight,
@@ -111,8 +112,8 @@ Group: Documentation
 %if_enabled qtwebengine
 Requires: %name
 %endif
-Requires: qt5-base-doc
-Requires: qt5-tools
+Requires: qt6-base-doc
+Requires: qt6-tools
 
 %description doc
 Documentation for %name
@@ -146,8 +147,8 @@ subst 's@#!.*python[23]\?@#!%__python3@' `find . -name \*.py` \
 
 %build
 %global optflags_lto %optflags_lto -ffat-lto-objects
-export QTDIR=%_qt5_prefix
-export PATH="%{_qt5_bindir}:$PATH"
+export QTDIR=%_qt6_prefix
+export PATH="%{_qt6_bindir}:$PATH"
 export ALTWRAP_LLVM_VERSION="%llvm_version"
 %ifarch %e2k
 # fool sqlite into building with lcc
@@ -161,6 +162,7 @@ export LLVM_INSTALL_DIR="%_prefix"
 %cmake -GNinja \
     -Wno-dev \
     -DWITH_DOCS=ON \
+    -DBUILD_QBS=ON \
     -Djournald=ON \
     -DBUILD_DEVELOPER_DOCS=OFF \
     -DCMAKE_INSTALL_LIBDIR=%_lib \
@@ -198,6 +200,12 @@ rm -f %buildroot%_datadir/qtcreator/debugger/cdbbridge.py
 %_datadir/qtcreator/*
 
 %changelog
+* Mon Dec 26 2022 Andrey Cherepanov <cas@altlinux.org> 9.0.1-alt1
+- New version.
+
+* Mon Nov 28 2022 Andrey Cherepanov <cas@altlinux.org> 9.0.0-alt1
+- New version.
+
 * Thu Nov 24 2022 Sergey V Turchin <zerg@altlinux.org> 8.0.2-alt2
 - allow to build without QtWebEngine
 
