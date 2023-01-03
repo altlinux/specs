@@ -1,7 +1,7 @@
 Name: pari
 %define sover 8
 %define lname libpari-gmp-tls%sover
-Version: 2.15.1
+Version: 2.15.2
 Release: alt1
 Summary: Computer Algebra System for computations in Number Theory
 License: GPL-2.0-only
@@ -11,7 +11,6 @@ Url: https://pari.math.u-bordeaux.fr/
 #Git-Web:	https://pari.math.u-bordeaux.fr/cgi-bin/gitweb.cgi
 
 Source: https://pari.math.u-bordeaux.fr/pub/pari/unix/pari-%version.tar.gz
-Patch1: pari-nodate.diff
 BuildRequires: libfltk-devel
 BuildRequires: libgmp-devel
 BuildRequires: libX11-devel
@@ -103,6 +102,9 @@ sed -i "s|runpathprefix='.*'|runpathprefix=''|" \
 %_libdir/libpari.so
 
 %changelog
+* Tue Jan 03 2023 Leontiy Volodin <lvol@altlinux.org> 2.15.2-alt1
+- New version (2.15.2).
+
 * Mon Nov 07 2022 Leontiy Volodin <lvol@altlinux.org> 2.15.1-alt1
 - New version (2.15.1).
 
