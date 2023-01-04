@@ -1,7 +1,7 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
-Version: 1.10.7
-Release: alt1.3
+Version: 1.10.8
+Release: alt1
 Epoch: 1
 ExcludeArch: %arm %ix86
 
@@ -346,7 +346,6 @@ fi
 %_libdir/%name/mod_dialplan_asterisk.so
 %_libdir/%name/mod_dialplan_directory.so
 %_libdir/%name/mod_dialplan_xml.so
-%_libdir/%name/mod_dingaling.so
 %_libdir/%name/mod_directory.so
 %_libdir/%name/mod_distributor.so
 %_libdir/%name/mod_dptools.so
@@ -410,7 +409,6 @@ fi
 %_libdir/%name/mod_tone_stream.so
 %_libdir/%name/mod_translate.so
 %_libdir/%name/mod_tts_commandline.so
-%_libdir/%name/mod_unimrcp.so
 %_libdir/%name/mod_valet_parking.so
 %_libdir/%name/mod_verto.so
 %_libdir/%name/mod_vmd.so
@@ -544,6 +542,10 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Fri Dec 30 2022 Anton Farygin <rider@altlinux.ru> 1:1.10.8-alt1
+- 1.10.7 -> 1.10.8
+- fix for build with recent curl
+
 * Mon Sep 26 2022 L.A. Kostis <lakostis@altlinux.ru> 1:1.10.7-alt1.3
 - BR: remove openr2 (since freedtm moved out-of-tree).
 
