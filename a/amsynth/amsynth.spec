@@ -2,7 +2,7 @@
 
 Name: amsynth
 Version: 1.13.0
-Release: alt1.1
+Release: alt1.2
 Summary: A classic synthesizer with dual oscillators
 
 License: GPLv2+
@@ -31,6 +31,7 @@ BuildRequires:  libGL-devel libEGL-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  libappstream-glib
 Requires:       jack-audio-connection-kit libsndfile-utils lash 
+Requires:       %name-data = %EVR
 
 
 %description
@@ -44,7 +45,6 @@ classic subtractive synthesizer topology, with:
 - Distortion
 - Reverb
 
-Requires:       %name-data
 
 %package data
 BuildArch: noarch
@@ -66,7 +66,6 @@ Amsynth plugin for the lv2 audio standard
 
 %package -n dssi-amsynth-plugin
 Summary: Amsynth dssi plugin
-BuildRequires: dssi-devel liblo liblo-devel
 Requires: dssi
 Group: Sound
 Requires: %name
@@ -172,6 +171,10 @@ install -pDm644 %SOURCE4 %buildroot%_datadir/appdata/
 %_datadir/appdata/vst-%name-plugin.metainfo.xml
 
 %changelog
+* Wed Jan 04 2023 Ivan A. Melnikov <iv@altlinux.org> 1.13.0-alt1.2
+- NMU: main package should require data subpackage
+  (closes: #44800).
+
 * Sat Dec 10 2022 Hihin Ruslan <ruslandh@altlinux.ru> 1.13.0-alt1.1
 - Fix install sections
 - Add ru.po
