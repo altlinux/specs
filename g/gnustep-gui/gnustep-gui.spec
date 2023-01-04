@@ -2,8 +2,8 @@
 %def_without objc2
 
 Name: gnustep-gui
-Version: 0.29.0
-Release: alt2
+Version: 0.30.0
+Release: alt1
 Summary: The GNUstep GUI library
 License: LGPL-2.1+ and GPL-3.0+
 Group: Development/Tools
@@ -13,6 +13,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 # https://github.com/gnustep/gnustep-gui.git
 Source: libs-gui-%version.tar
+Patch: gnustep-gui-alt-remove-missing-headers.patch
 
 BuildRequires: gnustep-make-devel gnustep-base-devel
 %if_with objc2
@@ -93,6 +94,7 @@ This package contains the documentation for %name.
 
 %prep
 %setup -n libs-gui-%version
+%patch -p1
 
 %build
 . %_datadir/GNUstep/Makefiles/GNUstep.sh
@@ -109,7 +111,7 @@ This package contains the documentation for %name.
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS='-I%_includedir/dispatch'
- 
+
 %make_build -C Documentation \
 	messages=yes
 
@@ -145,6 +147,9 @@ rm -fR %buildroot%_infodir
 %_docdir/GNUstep
 
 %changelog
+* Thu Dec 29 2022 Andrey Cherepanov <cas@altlinux.org> 0.30.0-alt1
+- New version.
+
 * Fri Jun 11 2021 Andrey Cherepanov <cas@altlinux.org> 0.29.0-alt2
 - Use sources from gui-0_29_0.
 
