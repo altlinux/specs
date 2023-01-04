@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 226
+%define centos_release 228
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,19 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Jan 04 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.228-alt1.el9
+- Updated to kernel-5.14.0-228.el9:
+  + Bluetooth misc fixes
+  + cpufreq: ACPI: Defer setting boost MSRs
+  + crypto: pcrypt - Delay write to padata->info
+  + EDAC/mc_sysfs: Increase legacy channel support to 12
+  + kernel/rh_messages.c: gcc12 warning on redundant NULL test
+  + netfs: Fix missing xas_retry() calls in xarray iteration
+  + NFS: Allow setting rsize / wsize to a multiple of PAGE_SIZE and fix
+  + perf/x86/amd/uncore: Fix memory leak for events array
+  + SUNRPC: Don't disable preemption while calling svc_pool_for_cpu()
+  + virtio_console: Introduce an ID allocator for virtual console numbers
+
 * Fri Dec 23 2022 Alexey Gladkov <legion@altlinux.ru> 5.14.0.226-alt1.el9
 - Updated to kernel-5.14.0-226.el9 (fixes: CVE-2022-21505, CVE-2022-3628, CVE-2022-42896):
   + Backport Aspeed conversion to shmem
