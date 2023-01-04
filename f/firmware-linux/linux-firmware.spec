@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20221216
+Version: 20230104
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,15 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Jan 04 2023 Cronbuild Service <cronbuild@altlinux.org> 20230104-alt1
+- upstream changes (GIT 4ee20147):
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+  + update firmware for MT7922 WiFi device (thx Deren Wu)
+  + update firmware for mediatek bluetooth chip (MT7921) (thx Chris.Lu)
+  + update firmware for mediatek bluetooth chip (MT7922) (thx Chris.Lu)
+  + cxgb4: Update firmware to revision 1.27.1.0 (thx Rahul Lakkireddy)
+  + qca: Update firmware files for BT chip WCN6750 (thx sampnimm)
+
 * Thu Dec 22 2022 Cronbuild Service <cronbuild@altlinux.org> 20221216-alt1
 - upstream changes (GIT 52261d03):
   + rtw89: 8852c: update fw to v0.27.56.9 (thx Chin-Yen Lee)
