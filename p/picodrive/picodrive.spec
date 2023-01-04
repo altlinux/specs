@@ -3,7 +3,7 @@
 Name: picodrive
 Summary: Megadrive / Genesis / Sega CD / Mega CD / 32X / SMS emulator
 Version: 1.99
-Release: alt1
+Release: alt2
 License: ALT-Public-Domain
 Group: Emulators
 Source0: %{name}-%{version}.tar.xz
@@ -80,7 +80,7 @@ Type=Application
 Name=PicoDrive
 GenericName=picodrive
 Comment=%{summary}
-Exec=PicoDrive
+Exec=picodrive
 Icon=%{name}.png
 Categories=Game;X-MandrivaLinux-MoreApplications-Emulators;
 EOF
@@ -95,6 +95,9 @@ EOF
 %_datadir/skin/*
 
 %changelog
+* Fri Mar 25 2022  Artyom Bystrov <arbars@altlinux.org> 1.99-alt2
+- Fix name of exec in desktop file
+
 * Fri Mar 25 2022  Artyom Bystrov <arbars@altlinux.org> 1.99-alt1
 - imported from PCLinuxOS srpm.
 - Add initial window scaling support (https://github.com/irixxxx/picodrive/issues/70)
