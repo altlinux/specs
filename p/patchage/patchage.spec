@@ -1,18 +1,15 @@
 Name: patchage
-Version: 1.0.4
+Version: 1.0.10
 Release: alt1
 
 Summary: A modular patch bay for JACK and LASH audio systems
-License: %gpl2plus
+License: GPL-2.0+
 Group: Sound
 Url: https://drobilla.net/software/patchage
 
 Source0: %name-%version.tar
-Source1: waf.tar
-Patch1: patchage-1.0.4-fix-compilation.patch
 
-BuildRequires(pre): rpm-build-licenses
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): meson ninja-build
 BuildRequires: doxygen graphviz libganv-devel
 BuildRequires: gcc-c++ libflowcanvas-devel boost-devel
 BuildRequires: libglademm-devel libalsa-devel libjack-devel
@@ -24,23 +21,13 @@ Jack, Lash, and Alsa.
 
 %prep
 %setup
-%patch1 -p1
-tar xf %SOURCE1
-# Set correct python3 executable in shebang
-subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 
 %build
-./waf configure \
-	--prefix=%prefix \
-	--configdir=%_sysconfdir \
-	--libdir=%_libdir \
-	--jack-dbus \
-	--docs \
-	--debug
-./waf build -j %__nprocs
+%meson
+%meson_build
 
 %install
-./waf install --destdir=%buildroot
+%meson_install
 
 %find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -52,14 +39,18 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS NEWS README.md
 %_bindir/*
 %_desktopdir/*
-%_liconsdir/*
-%_niconsdir/*
-%_miconsdir/*
-%_iconsdir/hicolor/*/apps/*.*
+%_iconsdir/hicolor/*/apps/*.png
+%_iconsdir/hicolor/*/apps/*.svg
 %_datadir/%name/*
 %_man1dir/%name.1*
 
 %changelog
+* Wed Jan 04 2023 Andrey Cherepanov <cas@altlinux.org> 1.0.10-alt1
+- New version.
+
+* Fri May 27 2022 Andrey Cherepanov <cas@altlinux.org> 1.0.6-alt1
+- New version.
+
 * Fri Jan 08 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.4-alt1
 - New version.
 
