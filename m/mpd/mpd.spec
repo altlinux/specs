@@ -67,8 +67,8 @@
 %define  Name MPD
 
 Name:    mpd
-Version: 0.23.8
-Release: alt3
+Version: 0.23.11
+Release: alt1
 
 Summary: Music Player Daemon (%Name) allows remote access for playing music and managing playlists
 License: %gpl2plus
@@ -83,7 +83,7 @@ Source3: %name.init.in
 Source4: %name.logrotate
 Source5: %name.tmpfile
 
-Patch: %name-%version-alt-fluidsynth-fix-sound-font-location.patch
+Patch: %name-0.23.8-alt-fluidsynth-fix-sound-font-location.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-macros-meson
@@ -276,6 +276,9 @@ install -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/%name
 %endif
 
 %changelog
+* Thu Jan 05 2023 L.A. Kostis <lakostis@altlinux.ru> 0.23.11-alt1
+- 0.23.11.
+
 * Wed Jul 20 2022 L.A. Kostis <lakostis@altlinux.ru> 0.23.8-alt3
 - fluidsynth: fix sound font path.
 
