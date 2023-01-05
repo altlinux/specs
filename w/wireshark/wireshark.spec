@@ -6,10 +6,10 @@
 # as they are loaded into wireshark/tshark processes which guarantee that linkage
 %set_verify_elf_method unresolved=relaxed
 
-%define _pluginsdir %_libdir/%name/plugins/3.6
+%define _pluginsdir %_libdir/%name/plugins/4.0
 
 Name: wireshark
-Version: 3.6.8
+Version: 4.0.2
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -21,9 +21,8 @@ Source: http://www.wireshark.org/download/src/%name-%version.tar
 Source2: %name.control
 Source3: %name.watch
 
-# Automatically added by buildreq on Sun Dec 23 2007
 BuildRequires: control doxygen flex gcc-c++ libadns-devel libcap-devel libcom_err-devel libgnutls-openssl-devel libgcrypt-devel zlib-devel
-BuildRequires: libkrb5-devel libpcap-devel libpcre-devel libportaudio2-devel libssl-devel python3 unzip xml-utils xsltproc perl-Pod-Parser perl-devel
+BuildRequires: libkrb5-devel libpcap-devel libportaudio2-devel libssl-devel python3 unzip xml-utils xsltproc perl-Pod-Parser perl-devel
 BuildRequires: liblua5.1-compat-devel
 BuildRequires: libssh-devel
 BuildRequires: libnl-devel
@@ -50,6 +49,7 @@ BuildRequires: libminizip-devel
 BuildRequires: libzstd-devel
 BuildRequires: libspeexdsp-devel
 BuildRequires: libbrotli-devel
+BuildRequires: libpcre2-devel
 BuildRequires: git
 BuildRequires(pre):rpm-build-xdg
 
@@ -125,10 +125,11 @@ cc --version | grep -q '^lcc:1.21' && export LIBS+=" -lcxa"
 %cmakeinstall_std
 rm -f %buildroot%_libdir/%name/plugins/%version/*.la
 
-mkdir -p %buildroot{%_controldir,%_menudir,%_datadir/applications,%_niconsdir,%_liconsdir,%_miconsdir}
-cp -p image/wsicon16.png %buildroot%_miconsdir/wireshark.png
-cp -p image/wsicon32.png %buildroot%_niconsdir/wireshark.png
-cp -p image/wsicon48.png %buildroot%_liconsdir/wireshark.png
+mkdir -p %buildroot{%_controldir,%_menudir,%_datadir/applications,%_niconsdir,%_liconsdir,%_miconsdir,%_iconsdir/hicolor/scalable/apps}
+cp -p resources/icons/wsicon16.png %buildroot%_miconsdir/wireshark.png
+cp -p resources/icons/wsicon32.png %buildroot%_niconsdir/wireshark.png
+cp -p resources/icons/wsicon48.png %buildroot%_liconsdir/wireshark.png
+cp -p resources/icons/wsicon.svg %buildroot%_iconsdir/hicolor/scalable/apps/wireshark.svg
 
 mkdir -p %buildroot%_includedir/wiretap
 install -p -m644 wiretap/wtap.h %buildroot%_includedir/wiretap/wtap.h
@@ -182,6 +183,7 @@ _EOF_
 %_man1dir/rawshark.*
 %_man1dir/text2pcap.*
 %_man1dir/reordercap.*
+%_man1dir/wifidump.*
 %_man4dir/wireshark-filter.*
 %_man4dir/extcap.*
 %_datadir/%name
@@ -224,6 +226,15 @@ _EOF_
 %_libdir/%name/cmake
 
 %changelog
+* Thu Jan 05 2023 Anton Farygin <rider@altlinux.ru> 4.0.2-alt1
+- 4.0.1 > 4.0.2
+- Fixes:
+    * wnpa-sec-2022-09 Multiple dissector infinite loops.
+    * wnpa-sec-2022-10 Kafka dissector memory exhaustion.
+
+* Mon Nov 28 2022 Anton Farygin <rider@altlinux.ru> 4.0.1-alt1
+- 3.6.8 -> 4.0.1
+
 * Thu Oct 06 2022 Anton Farygin <rider@altlinux.ru> 3.6.8-alt1
 - 3.6.5 -> 3.6.8 (Fixes: CVE-2022-3190)
 
