@@ -2,9 +2,11 @@
 
 Name: proftpd
 Version: %ver
-Release: alt0.1.d
+Release: alt0.1.f
 
 %define _libexecdir %{expand:%_libdir}
+# TODO
+# still fails and take ~30min to run
 %def_disable tests
 
 %define def_shared() %{expand:%{?1:%%global mod_shared_list %{?mod_shared_list:%mod_shared_list:}%*}}%{expand:%%global _shared_%1 1}%{expand:%%global _with_%1 1}
@@ -97,6 +99,7 @@ BuildRequires: libsodium-devel
 %{?_with_mod_facl:BuildRequires: libacl-devel}
 %{?_with_mod_sql_sqlite:BuildRequires: libsqlite3-devel}
 %{?_with_mod_facl:BuildRequires: libacl-devel}
+%{?_enable_tests:BuildRequires: libcheck-devel perl-devel perl-Test-Unit perl-Net-FTPSSL perl-Sys-HostAddr}
 
 %description
 ProFTPd is an enhanced FTP server with a focus toward simplicity, security,
@@ -392,7 +395,7 @@ subst 's,^#include\ <\(pcre.*\),#include <pcre/\1,' src/regexp.c
 %__autoconf
 %configure \
         %{?_enable_debug:--enable-devel} \
-        %{?_enable_tests:--enable-tests} \
+        %{?_enable_tests:--enable-tests=nonetwork} \
         --libexecdir=%_libexecdir/%name \
         --with-pkgconfig=%_pkgconfigdir \
         --localstatedir=/var/lib/proftpd \
@@ -462,7 +465,16 @@ END
 
 mkdir -p -m0750 %buildroot/run/proftpd
 
+# copy -devel
+install -m 0644 Make.rules %buildroot%_includedir/%name/
+install -m 0755 libtool %buildroot%_includedir/%name/
+
 %find_lang %name
+
+%if_enabled tests
+%check
+%make check
+%endif
 
 %pre
 if [ -e "%_controldir/%name" ]; then
@@ -679,6 +691,13 @@ fi
 %_controldir/%name
 
 %changelog
+* Thu Jan 05 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt0.1.f
+- 1.3.7f release.
+
+* Thu Sep 15 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt0.1.e
+- 1.3.7e release.
+- refresh tests knob.
+
 * Thu May 19 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.7-alt0.1.d
 - 1.3.7d release.
 
