@@ -2,7 +2,7 @@
 BuildRequires: hasher
 # END SourceDeps(oneline)
 Name: hsh-clone-workdir
-Version: 0.003
+Version: 0.004
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -18,7 +18,7 @@ Requires: hasher
 %description
 %summary
 
-hsh-initroot fork is rebased against hasher 1.4.8
+hsh-initroot fork is rebased against hasher 1.6.1
 
 %prep
 %setup
@@ -33,6 +33,9 @@ install -m 755 bin/hsh-* $RPM_BUILD_ROOT%_bindir/
 %_bindir/hsh*
 
 %changelog
+* Thu Jan 05 2023 Igor Vlasenko <viy@altlinux.org> 0.004-alt1
+- hsh-initroot fork rebased against hasher 1.6.1
+
 * Fri Jul 08 2022 Igor Vlasenko <viy@altlinux.org> 0.003-alt1
 - Sisyphus release
 
