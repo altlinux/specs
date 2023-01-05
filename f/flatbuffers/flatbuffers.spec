@@ -1,11 +1,11 @@
-%define sover 22
+%define sover 23
 %define desc FlatBuffers is a cross platform serialization library architected \
 for maximum memory efficiency. It allows you to directly access serialized data \
 without parsing/unpacking it first, while still having great forwards/backwards \
 compatibility.
 
 Name: flatbuffers
-Version: 22.12.06
+Version: 23.1.4
 Release: alt1
 
 Summary: Memory Efficient Serialization Library
@@ -98,6 +98,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jan 05 2023 Nazarov Denis <nenderus@altlinux.org> 23.1.4-alt1
+- 23.1.4 released
+
 * Wed Dec 07 2022 Nazarov Denis <nenderus@altlinux.org> 22.12.06-alt1
 - 22.12.06 released
 
