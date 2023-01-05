@@ -1,25 +1,21 @@
-%define ver_major 0.3
+%define ver_major 0.4
 
 Name: nautilus-image-converter
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: An extension for Nautilus to rotate and resize images
 Group: Graphical desktop/GNOME
-License: %gpl2plus
-Url: http://www.bitron.ch/software/%name.php
-
+License: GPLv2+
+Url: https://gitlab.gnome.org/coreyberla/nautilus-image-converter
 Source: %name-%version.tar
 
 Requires: /usr/bin/convert
 
-BuildPreReq: rpm-build-licenses rpm-build-gnome gnome-common
-
-# From configure.ac
-BuildRequires: intltool >= 0.35.0
-BuildRequires: libnautilus-devel >= 3.0.0
-BuildRequires: libgio-devel >= 2.28.0
-BuildRequires: libgtk+3-devel >= 3.0.0
+BuildRequires(pre): meson
+BuildRequires: pkgconfig(glib-2.0) >= 2.28.0
+BuildRequires: pkgconfig(gtk4) >= 4.6.0
+BuildRequires: pkgconfig(libnautilus-extension-4)
 
 %description
 This package contains a Nautilus extension makes it easy to open terminal
@@ -29,24 +25,24 @@ in current location.
 %setup -q
 
 %build
-NOCONFIGURE=1 ./autogen.sh
-%configure --disable-static
-%make_build
+%meson
+%meson_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%meson_install
 
-%find_lang %name
-
-%files -f %name.lang
-%doc AUTHORS README NEWS
-%nautilus_extdir/lib%name.so
-%dir %_datadir/%name
-%_datadir/%name/*.ui
-
-%exclude %nautilus_extdir/*.la
+%files
+%doc AUTHORS ChangeLog NEWS COPYING
+%_libdir/nautilus/extensions-4/libnautilus-image-converter.so
+%dir %_datadir/nautilus-image-converter
+%_datadir/nautilus-image-converter/nautilus-image-resize.ui
+%_datadir/nautilus-image-converter/nautilus-image-rotate.ui
 
 %changelog
+* Thu Jan 05 2023 Roman Alifanov <ximper@altlinux.org> 0.4.0-alt1
+- changed upstream
+- updated to 0.4.0
+
 * Tue Jun 14 2011 Alexey Shabalin <shaba@altlinux.ru> 0.3.1-alt1
 - upstream snapshot
 
