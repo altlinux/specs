@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,15 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Thu Jan 05 2023 Anton Midyukov <antohami@altlinux.org> 1.5.1-alt1
+- efi: fix condition for use/efi/dtb
+- mixin.mk: exclude gnome3-regular metapackage from regular-gnome3 target
+- syslinux: try SYSLINUX_UI to none
+- initrd-bootchain: use method disk for local boot
+- net-ssh: Use two-pass method to install an authorized key for root (thanks
+  manowar@)
+- net: Allow to configure hostname via TARGET_HOSTNAME (thanks manowar@)
+
 * Fri Dec 30 2022 Anton Midyukov <antohami@altlinux.org> 1.5.0-alt1
 - Updating lists for riscv64 (thanks iv@)
 - check conditions of make for equality of variables with an empty value
