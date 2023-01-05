@@ -8,7 +8,7 @@
 
 %global v_major 15
 %global v_majmin %v_major.0
-%global v_full %v_majmin.0
+%global v_full %v_majmin.6
 %global rcsuffix %nil
 %global llvm_name llvm%v_majmin
 %global clang_name clang%v_majmin
@@ -78,7 +78,7 @@ AutoProv: nopython
 
 Name: %llvm_name
 Version: %v_full
-Release: alt1
+Release: alt1.1
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -103,7 +103,8 @@ Patch13: llvm-12-debian-mips-force-nomadd4.patch
 Patch14: llvm-10-alt-riscv64-config-guess.patch
 Patch17: llvm-cmake-pass-ffat-lto-objects-if-using-the-GNU-toolcha.patch
 Patch18: lld-compact-unwind-encoding.h.patch
-
+# ROCm needs this
+Patch19: llvm-D132140.patch
 Patch101: clang-ALT-bug-40628-grecord-command-line.patch
 
 %if_with clang
@@ -617,6 +618,7 @@ sed -i 's)"%%llvm_bindir")"%llvm_bindir")' llvm/lib/Support/Unix/Path.inc
 #patch15 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
 
 %patch101 -p1
 
@@ -1184,6 +1186,13 @@ ninja -C %builddir check-all || :
 %doc %llvm_docdir/LLVM/polly
 
 %changelog
+* Tue Jan 03 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.6-alt1.1
+- llvm/AMDGPU: Added __builtin_amdgcn_s_sendmsg_rtn (D132140).
+
+* Tue Jan 03 2023 L.A. Kostis <lakostis@altlinux.ru> 15.0.6-alt1
+- NMU:
+  + Updated to 15.0.6.
+
 * Mon Sep 12 2022 Arseny Maslennikov <arseny@altlinux.org> 15.0.0-alt1
 - 15.0.0.
 
