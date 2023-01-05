@@ -53,7 +53,7 @@
 
 Name: %llvm_name
 Version: %v_full
-Release: alt5
+Release: alt6
 Summary: The LLVM Compiler Infrastructure
 
 Group: Development/C
@@ -520,7 +520,8 @@ done
 
 # Symlink sonamed shared libraries in %llvm_prefix/%_libdir to %_libdir.
 mkdir -p %buildroot%_libdir
-find %buildroot%llvm_libdir/*.so* -type f | grep -E '^%buildroot%llvm_libdir/.*(%v_major)' | sort | tee %_tmppath/shared-objects \
+find %buildroot%llvm_libdir/*.so* -type f,l \
+	| grep -E '^%buildroot%llvm_libdir/.*(%v_major)' | sort | tee %_tmppath/shared-objects \
 	| sed 's)%llvm_libdir)%_libdir)' > %_tmppath/shared-object-links
 paste %_tmppath/shared-objects %_tmppath/shared-object-links | while read object link; do
 	ln -srv "$object" "$link"
@@ -827,6 +828,9 @@ ninja -C BUILD check-all || :
 %doc %llvm_docdir/lldb
 
 %changelog
+* Thu Jan 05 2023 L.A. Kostis <lakostis@altlinux.ru> 11.0.1-alt6
+- .spec: fix lldb symlinks.
+
 * Sun Nov 21 2021 Arseny Maslennikov <arseny@altlinux.org> 11.0.1-alt5
 - Stopped packaging opt-viewer-11 since it depends on python2(yaml).
   Users are advised to use more recent opt-viewer.
