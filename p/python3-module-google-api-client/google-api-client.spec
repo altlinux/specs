@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python3-module-%oname
-Version: 2.70.0
+Version: 2.71.0
 Release: alt1
 Summary: Google API Client Library for Python
 License: Apache-2.0
@@ -23,6 +23,7 @@ BuildRequires: python3-module-six >= 1.6.1
 BuildRequires: python3-module-uritemplate >= 0.6
 
 %add_python3_req_skip google.appengine.api
+%py3_requires google_auth_httplib2
 
 %description
 The Google API Client for Python is a client library for accessing the
@@ -57,6 +58,10 @@ rm -f docs/build
 %doc docs/*
 
 %changelog
+* Thu Jan 05 2023 Andrey Cherepanov <cas@altlinux.org> 2.71.0-alt1
+- New version.
+- Required google_auth_httplib2 (ALT #44381).
+
 * Wed Dec 14 2022 Andrey Cherepanov <cas@altlinux.org> 2.70.0-alt1
 - New version.
 
