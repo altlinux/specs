@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 228
+%define centos_release 229
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,15 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Jan 06 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.229-alt1.el9
+- Updated to kernel-5.14.0-229.el9 (fixes: CVE-2022-4129):
+  + eBPF enhancements in kernel for Power
+  + hwmon: (coretemp) Check for null before removing sysfs attrs
+  + l2tp: Serialize access to sk_user_data with sk_callback_lock
+  + RHEL: ALSA: add kunit module soc-utils-test to mod-internal.list
+  + [s390]: RHEL9 - zfcp: fix double free of FSF request when qdio send fails
+  + scsi: target: iscsi: Fix a race condition between login_work and the login thread
+
 * Wed Jan 04 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.228-alt1.el9
 - Updated to kernel-5.14.0-228.el9:
   + Bluetooth misc fixes
