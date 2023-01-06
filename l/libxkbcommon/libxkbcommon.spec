@@ -9,7 +9,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: X.Org X11 XKB parsing library
@@ -25,8 +25,8 @@ Vcs: https://github.com/xkbcommon/libxkbcommon.git
 Source: %name-%version.tar
 %endif
 
-BuildRequires(pre): meson
-BuildRequires: bison flex
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson >= 0.51 bison flex
 BuildRequires: xkeyboard-config-devel >= 2.29
 # since 7.0 for wayland utilities
 BuildRequires: wayland-devel >= 1.14 libwayland-client-devel wayland-protocols >= 1.10
@@ -66,7 +66,7 @@ Requires: %name-devel = %EVR
 X.Org X11 XKB keymap creation library development package
 
 %package devel-doc
-Summary: Development documentation for Pango
+Summary: Development documentation for %name
 Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name < %version
@@ -99,8 +99,7 @@ This package provides xkbcli -- tool to interact with XKB keymaps.
 %meson_install
 
 %check
-export LD_LIBRARY_PATH=%buildroot%_libdir
-%{?_enable_x11:xvfb-run} %meson_test
+%{?_enable_x11:xvfb-run} %__meson_test
 
 %files
 %doc LICENSE NEWS README*
@@ -142,6 +141,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Jan 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Sun May 22 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1
 
