@@ -2,8 +2,8 @@
 %define git_date %nil
 
 Name: thunar-shares-plugin
-Version: 0.3.1
-Release: alt3%git_date
+Version: 0.3.2
+Release: alt1%git_date
 Epoch: 1
 Summary: Thunar file manager extension to share files using Samba
 Summary(ru_RU.UTF8): Расширение файлового менеджера Thunar для предоставления доступа к папкам по сети.
@@ -51,11 +51,14 @@ is based on nautilus-share.
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS README
+%doc AUTHORS README.md NEWS
 %_libdir/thunarx-*/%name.so
 %exclude %_libdir/thunarx-*/*.la
 
 %changelog
+* Fri Jan 06 2023 Mikhail Efremov <sem@altlinux.org> 1:0.3.2-alt1
+- Updated to 0.3.2.
+
 * Thu Nov 10 2022 Mikhail Efremov <sem@altlinux.org> 1:0.3.1-alt3
 - Fixed Russian description.
 - Fixed work with samba > 4.14.
