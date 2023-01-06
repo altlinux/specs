@@ -1,7 +1,7 @@
 %def_without test
 
 Name: conan
-Version: 1.46.0
+Version: 1.56.0
 Release: alt1
 
 Summary: Conan - The open-source C/C++ package manager
@@ -94,6 +94,9 @@ rm -rfv %buildroot%python_sitelibdir/conans/test_integration/
 %doc README.rst LICENSE.md
 
 %changelog
+* Fri Jan 06 2023 Pavel Vainerman <pv@altlinux.ru> 1.56.0-alt1
+- new version (1.56.0) with rpmgs script
+
 * Sun Mar 13 2022 Vitaly Lipatov <lav@altlinux.ru> 1.46.0-alt1
 - new version 1.46.0 (with rpmrb script)
 - update buildreqs
