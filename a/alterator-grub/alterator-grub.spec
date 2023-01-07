@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -53,6 +53,12 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Sat Jan 07 2023 Anton Midyukov <antohami@altlinux.org> 0.18-alt1
+- backend3/grub: don't show other variants of bootloader list, if EFI boot mode
+- grub-disk: hide partition dm-*, md* from list bootloader places
+- grub-disk: don't show drives that can't install grub-pc
+- grub-disk: remove duplicate item "Skip bootloader install" for ppc
+
 * Fri Jul 22 2022 Anton Midyukov <antohami@altlinux.org> 0.17-alt1
 - grub-disk: show all devices with detect mdraid
 - grub-raid-boot: select first /boot on RAID
