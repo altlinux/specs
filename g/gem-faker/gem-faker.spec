@@ -1,7 +1,7 @@
 %define        gemname faker
 
 Name:          gem-faker
-Version:       2.21.0
+Version:       2.23.0
 Release:       alt1
 Summary:       Easily generate fake data
 License:       MIT
@@ -13,15 +13,26 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(i18n) >= 1.8.11 gem(i18n) < 2
-BuildRequires: gem(minitest) >= 5.15.0 gem(minitest) < 6
+%if_with check
+BuildRequires: gem(minitest) >= 5.16.3 gem(minitest) < 6
 BuildRequires: gem(pry) >= 0.13.1 gem(pry) < 1
 BuildRequires: gem(rake) >= 13.0.1 gem(rake) < 14
 BuildRequires: gem(rubocop) >= 1.15.0 gem(rubocop) < 2
 BuildRequires: gem(simplecov) < 1
 BuildRequires: gem(test-unit) >= 3.3.5 gem(test-unit) < 4
-BuildRequires: gem(timecop) >= 0.9.5
-BuildRequires: gem(yard) >= 0.9.27
+BuildRequires: gem(timecop) = 0.9.5
+BuildRequires: gem(yard) = 0.9.27
+BuildRequires: gem(i18n) >= 1.8.11 gem(i18n) < 2
+BuildRequires: gem(minitest) >= 5.16.3 gem(minitest) < 6
+BuildRequires: gem(pry) >= 0.13.1 gem(pry) < 1
+BuildRequires: gem(rake) >= 13.0.1 gem(rake) < 14
+BuildRequires: gem(rubocop) >= 1.15.0 gem(rubocop) < 2
+BuildRequires: gem(simplecov) < 1
+BuildRequires: gem(test-unit) >= 3.3.5 gem(test-unit) < 4
+BuildRequires: gem(timecop) = 0.9.5
+BuildRequires: gem(yard) = 0.9.27
+BuildRequires: gem(i18n) >= 1.8.11 gem(i18n) < 2
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -31,10 +42,8 @@ BuildRequires: gem(yard) >= 0.9.27
 %ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
 %ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
 %ruby_use_gem_dependency pry >= 0.13.1,pry < 1
-%ruby_use_gem_dependency timecop >= 0.9.5,timecop < 1
-%ruby_use_gem_dependency yard >= 0.9.27,yard < 1
 Requires:      gem(i18n) >= 1.8.11 gem(i18n) < 2
-Provides:      gem(faker) = 2.21.0
+Provides:      gem(faker) = 2.23.0
 
 
 %description
@@ -43,14 +52,15 @@ names, addresses, phone numbers, etc.
 
 
 %package       -n faker
-Version:       2.21.0
+Version:       2.23.0
 Release:       alt1
 Summary:       Easily generate fake data executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета faker
 Group:         Other
 BuildArch:     noarch
 
-Requires:      gem(faker) = 2.21.0
+Requires:      gem(faker) = 2.23.0
+Conflicts:     python3-module-faker
 
 %description   -n faker
 Easily generate fake data executable(s).
@@ -63,14 +73,14 @@ names, addresses, phone numbers, etc.
 
 
 %package       -n gem-faker-doc
-Version:       2.21.0
+Version:       2.23.0
 Release:       alt1
 Summary:       Easily generate fake data documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета faker
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(faker) = 2.21.0
+Requires:      gem(faker) = 2.23.0
 
 %description   -n gem-faker-doc
 Easily generate fake data documentation files.
@@ -83,15 +93,15 @@ names, addresses, phone numbers, etc.
 
 
 %package       -n gem-faker-devel
-Version:       2.21.0
+Version:       2.23.0
 Release:       alt1
 Summary:       Easily generate fake data development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета faker
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(faker) = 2.21.0
-Requires:      gem(minitest) >= 5.15.0 gem(minitest) < 6
+Requires:      gem(faker) = 2.23.0
+Requires:      gem(minitest) >= 5.16.3 gem(minitest) < 6
 Requires:      gem(pry) >= 0.13.1 gem(pry) < 1
 Requires:      gem(rake) >= 13.0.1 gem(rake) < 14
 Requires:      gem(rubocop) >= 1.15.0 gem(rubocop) < 2
@@ -140,5 +150,8 @@ names, addresses, phone numbers, etc.
 
 
 %changelog
+* Sat Jan 07 2023 Pavel Skrylev <majioa@altlinux.org> 2.23.0-alt1
+- ^ 2.21.0 -> 2.23.0
+
 * Wed May 18 2022 Pavel Skrylev <majioa@altlinux.org> 2.21.0-alt1
 - + packaged gem with Ruby Policy 2.0
