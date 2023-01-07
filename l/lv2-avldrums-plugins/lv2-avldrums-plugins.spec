@@ -3,7 +3,7 @@
 %define oname avldrums
 
 Name:    lv2-%oname-plugins
-Version: 0.4.2
+Version: 0.5.2
 Release: alt1
 Summary: A simple drum sample player plugin
 
@@ -12,7 +12,10 @@ Group:   Sound
 Url:     http://x42-plugins.com/x42/x42-avldrums
 
 Source:  %oname-%version.tar
-Source1: robtk-0.7.5.tar
+Source1: sub-merge.sources.txt
+Source2: sub-merge.unpack.sh
+
+%(cat %SOURCE1)
 
 BuildRequires: gcc-c++
 BuildRequires: pkgconfig(cairo)
@@ -55,7 +58,7 @@ BuildArch: noarch
 
 %prep
 %setup -n %oname-%version
-tar -xf %SOURCE1 -C 'robtk' --strip-components 1
+sh %SOURCE2
 
 %build
 # Upstream adds x86-specific optimization flags by default.
@@ -98,5 +101,8 @@ done
 %_datadir/%oname
 
 %changelog
+* Fri Jan 06 2023 Ivan A. Melnikov <iv@altlinux.org> 0.5.2-alt1
+- 0.5.2
+
 * Thu Jun 03 2021 Ivan A. Melnikov <iv@altlinux.org> 0.4.2-alt1
 - initial build for Sisyphus
