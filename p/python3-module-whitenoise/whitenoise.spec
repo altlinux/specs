@@ -1,7 +1,9 @@
 %define oname whitenoise
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 6.2.0
+Version: 6.3.0
 Release: alt1
 
 Summary: Radically simplified static file serving for Python web apps
@@ -16,8 +18,15 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-sphinx_rtd_theme
+
+%if_with check
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-django
+BuildRequires: python3-module-brotlipy
+%endif
 
 %description
 With a couple of lines of config WhiteNoise allows your web app to serve
@@ -41,13 +50,16 @@ This package contains documentation for %name
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 export PYTHONPATH=$PWD
 %make SPHINXBUILD="sphinx-build-3" -C docs man
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
 %doc LICENSE *.rst
@@ -57,6 +69,10 @@ export PYTHONPATH=$PWD
 %doc docs/*
 
 %changelog
+* Sat Jan 07 2023 Grigory Ustinov <grenka@altlinux.org> 6.3.0-alt1
+- Automatically updated to 6.3.0.
+- Build with check.
+
 * Mon Jun 06 2022 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1
 - Automatically updated to 6.2.0.
 
