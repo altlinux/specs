@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: rpm-macros-racket
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: RPM macros for the Racket programming language
@@ -23,6 +23,11 @@ install -p -m0644 %SOURCE0 %buildroot%_rpmmacrosdir/racket
 %_rpmmacrosdir/racket
 
 %changelog
+* Sun Oct 23 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.1-alt1
+- update arches list
+- add %%racket_sharedir macro
+- remove %%racket_compiled macro
+
 * Sun Oct 16 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0.0-alt1
 - initial build for Sisyphus
 

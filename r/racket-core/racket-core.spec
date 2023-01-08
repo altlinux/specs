@@ -15,7 +15,7 @@
 
 Name: racket-core
 Version: 8.6
-Release: alt3
+Release: alt4
 
 Summary: Racket, the programming language (base package)
 License: Apache-2.0 or MIT
@@ -26,7 +26,9 @@ Vcs: https://github.com/racket/racket
 # racket: https://github.com/racket/racket/archive/refs/tags/v8.6.zip
 # pb:     https://github.com/racket/pb/archive/refs/heads/v8.6.zip
 
-Source: %name-%version.tar
+Source0: %name-%version.tar
+Source1: update-launchers.rkt
+Source2: update-mans.rkt
 
 BuildRequires(pre): rpm-macros-racket
 BuildRequires: /proc
@@ -91,6 +93,34 @@ mkdir -p %buildroot%_datadir/doc/%name-%version
 mv %buildroot%_datadir/racket/LICENSE* %buildroot%_datadir/doc/%name-%version
 rm %buildroot%_datadir/doc/%name-%version/LICENSE-{GPL,LGPL,libscheme}.txt
 
+mkdir -p %buildroot%racket_libdir/launchers.d
+mkdir -p %buildroot%racket_libdir/mans.d
+
+mv %buildroot%racket_libdir/launchers.{rktd,d/%name.rktd}
+mv %buildroot%racket_libdir/mans.{rktd,d/%name.rktd}
+
+mkdir -p %buildroot%racket_sharedir
+install -pD -m0644 %SOURCE1 %buildroot%racket_sharedir/update-launchers.rkt
+install -pD -m0644 %SOURCE2 %buildroot%racket_sharedir/update-mans.rkt
+
+mkdir -p %buildroot%_rpmlibdir
+
+cat << EOF >> %buildroot%_rpmlibdir/racket-update-launchers.filetrigger
+#!/bin/sh -e
+if grep -qs -E '%racket_libdir/launchers.d'; then
+    %_bindir/racket -f %racket_sharedir/update-launchers.rkt ||:
+fi
+EOF
+chmod 0755 %buildroot/%_rpmlibdir/racket-update-launchers.filetrigger
+
+cat << EOF >> %buildroot%_rpmlibdir/racket-update-mans.filetrigger
+#!/bin/sh -e
+if grep -qs -E '%racket_libdir/mans.d'; then
+    %_bindir/racket -f %racket_sharedir/update-mans.rkt ||:
+fi
+EOF
+chmod 0755 %buildroot%_rpmlibdir/racket-update-mans.filetrigger
+
 %files
 %doc LICENSE*
 %_man1dir/*
@@ -98,8 +128,11 @@ rm %buildroot%_datadir/doc/%name-%version/LICENSE-{GPL,LGPL,libscheme}.txt
 %_bindir/*
 %racket_collectsdir/*
 %racket_libdir/*.rktd
+%racket_libdir/*.d
 %racket_libdir/gracket
 %racket_libdir/starter*
+%racket_sharedir/*.rkt
+%_rpmlibdir/*.filetrigger
 
 %if_disabled libs
 # Do we really need C-headers without C-libraries? We don't, I think.
@@ -107,6 +140,9 @@ rm %buildroot%_datadir/doc/%name-%version/LICENSE-{GPL,LGPL,libscheme}.txt
 %endif
 
 %changelog
+* Sun Jan 08 2023 Anton Zhukharev <ancieg@altlinux.org> 8.6-alt4
+- add launchers.d and mans.d and filetriggers for them
+
 * Mon Oct 24 2022 Anton Zhukharev <ancieg@altlinux.org> 8.6-alt3
 - rename from racket-base to racket-core
 
