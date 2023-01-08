@@ -1,12 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 %def_disable snapshot
 %define modname gidocgen
-%define ver_major 2022
+%define ver_major 2023
 
 %def_enable check
 
 Name: gi-docgen
-Version: %ver_major.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: Documentation tool for GObject-based libraries
@@ -82,6 +82,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %_datadir/%modname/templates/
 
 %changelog
+* Sat Jan 07 2023 Yuri N. Sedunov <aris@altlinux.org> 2023.1-alt1
+- 2023.1
+
 * Fri Nov 11 2022 Yuri N. Sedunov <aris@altlinux.org> 2022.2-alt1
 - 2022.2
 
