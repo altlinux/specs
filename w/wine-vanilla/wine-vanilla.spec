@@ -6,14 +6,15 @@
 %global __find_debuginfo_files %nil
 %endif
 
+%def_without devel
 %def_with vanilla
 %define gecko_version 2.47.3
 %define mono_version 7.4.0
 %define winetricks_version 20220617
 
-%define basemajor 7.x
-%define major 7.22
-%define rel %nil
+%define basemajor 8.0
+%define major 8.0
+%define rel -rc3
 %define conflictbase wine
 
 # build ping subpackage
@@ -63,7 +64,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt2
+Release: alt1.rc3
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -193,7 +194,7 @@ BuildRequires: libattr-devel
 BuildRequires: libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libv4l-devel
 BuildRequires: libalsa-devel jackit-devel libpulseaudio-devel
-BuildRequires: libopenal-devel libGLU-devel
+BuildRequires: libGLU-devel
 BuildRequires: libSDL2-devel
 BuildRequires: libusb-devel libieee1284-devel
 BuildRequires: libgcrypt-devel libgnutls-devel libsasl2-devel libkrb5-devel
@@ -279,7 +280,7 @@ Obsoletes: lib%name-twain
 
 # Provides/Obsoletes Fedora packages
 %define common_provobs wine-filesystem wine-desktop wine-systemd wine-sysvinit
-%define base_provobs wine-alsa wine-capi wine-cms wine-ldap wine-openal wine-pulseaudio wine-wow wine-alsa wine-capi wine-cms wine-ldap wine-openal wine-opencl wine-pulseaudio
+%define base_provobs wine-alsa wine-capi wine-cms wine-ldap wine-openal wine-pulseaudio wine-wow wine-alsa wine-capi wine-cms wine-ldap wine-opencl wine-pulseaudio
 %define fonts_provobs wine-fonts wine-arial-fonts wine-courier-fonts wine-fixedsys-fonts wine-marlett-fonts wine-ms-sans-serif-fonts wine-small-fonts wine-symbol-fonts wine-system-fonts wine-tahoma-fonts wine-times-new-roman-fonts wine-wingdings-fonts
 #Provides: %common_provobs %base_provobs %fonts_provobs
 Obsoletes: %common_provobs %base_provobs %fonts_provobs
@@ -397,7 +398,7 @@ Requires: %name-devel = %EVR
 Conflicts: %conflictbase-devel-tools
 Conflicts: lib%conflictbase-devel
 Conflicts: lib%name-devel < %version
-%if_without vanilla
+%if_with devel
 Provides: libwine-devel = %EVR
 %endif
 # we don't need provide anything
@@ -646,6 +647,7 @@ fi
 %endif
 %libwinedir/%winesodir/winebus.so
 %libwinedir/%winesodir/wineusb.so
+%libwinedir/%winesodir/localspl.so
 
 %if_without mingw
 %{?_without_vanilla:%libwinedir/%winesodir/windows.networking.connectivity.so}
@@ -812,6 +814,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sun Jan 08 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.0-alt1.rc3
+- new version (8.0-rc3) with rpmgs script
+
 * Tue Dec 20 2022 Vitaly Lipatov <lav@altlinux.ru> 1:7.22-alt2
 - drop manual requires in favour of real autoreqs
 
