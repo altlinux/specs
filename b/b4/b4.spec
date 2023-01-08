@@ -1,6 +1,6 @@
 Summary: A tool to work with public-inbox and patch archives
 Name: b4
-Version: 0.10.1
+Version: 0.11.1
 Release: alt1
 
 Group: Development/Python
@@ -36,6 +36,9 @@ the Linux kernel development.
 %python3_sitelibdir_noarch/b4*.egg-info
 
 %changelog
+* Sun Jan 08 2023 Alexey Gladkov <legion@altlinux.ru> 0.11.1-alt1
+- New release (0.11.1).
+
 * Sun Oct 16 2022 Alexey Gladkov <legion@altlinux.ru> 0.10.1-alt1
 - New release (0.10.1).
 
