@@ -17,7 +17,7 @@
 %def_disable check
 
 Name: nautilus
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Nautilus is a network user environment
@@ -206,6 +206,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Sun Jan 08 2023 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
+- 43.2
+
 * Sat Dec 03 2022 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
 - 43.1
 
