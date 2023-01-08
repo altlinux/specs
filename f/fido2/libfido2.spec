@@ -1,7 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
+
+%add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
 Name: fido2
-Version: 1.10.0
+Version: 1.12.0
 Release: alt1
 
 Summary: Command-line tools to communicate with a FIDO device over USB.
@@ -66,14 +70,20 @@ Provides development header files for lib%name.
 
 %files -n lib%name
 %doc LICENSE NEWS
-%_libdir/libfido2*
+%_libdir/lib%name.so.*
 
 %files -n lib%name-devel
 %doc LICENSE NEWS
 %_includedir/*
+%_libdir/lib%name.so
 %_libdir/pkgconfig/lib%name.pc
 %_man3dir/*
 
 %changelog
+* Sun Jan 08 2023 Anton Zhukharev <ancieg@altlinux.org> 1.12.0-alt1
+- 1.12.0
+- follow sharedlib policy
+- add strict ELF verification
+
 * Sat Jul 23 2022 Anton Zhukharev <ancieg@altlinux.org> 1.10.0-alt1
 - initial build for Sisyphus
