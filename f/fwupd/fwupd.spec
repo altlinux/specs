@@ -24,7 +24,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.8.8
+Version: 1.8.9
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -212,12 +212,8 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 
 %if_enabled tests
 %check
-%if_enabled uefi
 vm-run --sbin --udevd --kvm=cond --overlay=ext4:/usr/src \
        %__meson_test
-%else
-%__meson_test
-%endif
 %endif
 
 %files -f %name.lang
@@ -337,6 +333,7 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4:/usr/src \
 %_datadir/installed-tests/fwupd/tests/*
 %_datadir/installed-tests/fwupd/fwupd-tests.xml
 %_datadir/installed-tests/fwupd/*.test
+%_datadir/installed-tests/fwupd/*.zip
 %_datadir/installed-tests/fwupd/*.cab
 %_datadir/installed-tests/fwupd/*.sh
 %_datadir/fwupd/device-tests/*.json
@@ -346,6 +343,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4:/usr/src \
 %endif
 
 %changelog
+* Tue Jan 03 2023 Egor Ignatov <egori@altlinux.org> 1.8.9-alt1
+- 1.8.8 -> 1.8.9
+
 * Fri Dec 16 2022 Egor Ignatov <egori@altlinux.org> 1.8.8-alt1
 - 1.8.7 -> 1.8.8
 - enable tests for all architectures
