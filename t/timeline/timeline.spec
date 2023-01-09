@@ -1,5 +1,5 @@
 Name: timeline
-Version: 2.7.0
+Version: 2.8.0
 Release: alt1
 Group: Office
 Summary: Displaying and navigating events on a timeline
@@ -98,6 +98,9 @@ rm -rf %buildroot%_datadir/timeline/dependencies
 %python3_sitelibdir/timelinelib*
 
 %changelog
+* Mon Jan 02 2023 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt1
+- New version.
+
 * Thu Aug 11 2022 Andrey Cherepanov <cas@altlinux.org> 2.7.0-alt1
 - New version.
 - Complete Russian translation (thanks Olesya Gerasimenko).
