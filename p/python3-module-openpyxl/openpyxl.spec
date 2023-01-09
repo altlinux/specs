@@ -2,15 +2,15 @@
 %define oname openpyxl
 
 Name:    python3-module-%oname
-Version: 2.6.2
-Release: alt3
+Version: 3.0.10
+Release: alt1
 Summary: A Python library to read/write Excel 2007 xlsx/xlsm files
 License: MIT/Expat
 Group:   Development/Python3
 Url:     http://openpyxl.readthedocs.io
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-#https://bitbucket.org/openpyxl/openpyxl/get/2.6.1.tar.gz
+# https://foss.heptapod.net/openpyxl/openpyxl
 Source0: %oname-%version.tar.gz
 
 BuildArch: noarch
@@ -19,9 +19,9 @@ BuildArch: noarch
 %py3_provides %oname
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-wheel
 BuildRequires: python3-devel python3-test
 BuildRequires: python3-module-jdcal
-BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-memory_profiler
 BuildRequires: python3-module-et_xmlfile
 BuildRequires: python3-module-numpy
@@ -38,19 +38,22 @@ Python the Office Open XML format.
 %setup -n %{oname}-%{version}
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-py.test3
+%tox_check_pyproject
 
 %files
-%doc *.rst
+%doc LICENCE.rst README.rst
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jan 09 2023 Anton Vyatkin <toni@altlinux.org> 3.0.10-alt1
+- new version 3.0.10
+
 * Tue Nov 10 2020 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt3
 - Fixed FTBFS.
 
