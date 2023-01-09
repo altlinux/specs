@@ -10,7 +10,7 @@
 
 Name: squid
 Version: 5.7
-Release: alt1
+Release: alt2
 %define langpack_ver 20220905
 Summary: The Squid proxy caching server
 License: GPLv2
@@ -298,6 +298,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 %changelog
+* Mon Jan 09 2023 Alexey Shabalin <shaba@altlinux.org> 5.7-alt2
+- Fixed FTBFS: fix deprecation htmlDefaultSAXHandlerInit() -> xmlInitParser()
+
 * Sun Sep 18 2022 Alexey Shabalin <shaba@altlinux.org> 5.7-alt1
 - 5.7.
 - Build with TrivialDB instead of outdated BerkleyDB.
