@@ -20,7 +20,7 @@
 
 Name: racket-main
 Version: 8.6
-Release: alt1
+Release: alt2
 
 Summary: Racket, the programming language (main-distribution packages)
 License: GPL-3.0 or LGPL-3.0 or Apache-2.0 or MIT
@@ -61,6 +61,7 @@ Obsoletes: plt < %EVR
 Provides:  racket = %EVR
 Obsoletes: racket < %EVR
 
+Requires: racket-core
 # some games from `plt-games' requires libGLU
 Requires: libGLU
 
@@ -128,6 +129,9 @@ mv %fakechroot_dir %buildroot
 %racket_libdir/*.d/
 
 %changelog
+* Mon Jan 09 2023 Anton Zhukharev <ancieg@altlinux.org> 8.6-alt2
+- set dependency on racket-core package
+
 * Sun Jan 08 2023 Anton Zhukharev <ancieg@altlinux.org> 8.6-alt1
 - main distribution packages for Racket
 
