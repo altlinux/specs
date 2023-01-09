@@ -1,6 +1,6 @@
 Name: x11vnc
 Version: 0.9.16
-Release: alt4
+Release: alt4.1
 
 %def_with avahi
 
@@ -83,6 +83,9 @@ install tkx11vnc %buildroot%_bindir/
 %exclude  %_bindir/Xdummy
 
 %changelog
+* Mon Jan 09 2023 Anton Midyukov <antohami@altlinux.org> 0.9.16-alt4.1
+- Revert "x11vnc.desktop: fix run command"
+
 * Tue Nov 08 2022 Anton Midyukov <antohami@altlinux.org> 0.9.16-alt4
 - x11vnc.desktop: fix run command (Closes: 40374)
 
