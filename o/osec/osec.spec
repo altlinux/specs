@@ -2,7 +2,7 @@
 
 Name: osec
 Version: 1.3.1
-Release: alt2
+Release: alt3
 
 Summary: Lightweight file permission checker
 License: GPL3
@@ -118,6 +118,9 @@ rm -f %osec_statedir/osec.db.*
 %_bindir/osec_rpm_reporter
 
 %changelog
+* Mon Jan 09 2023 Alexey Gladkov <legion@altlinux.ru> 1.3.1-alt3
+- osec.timer: Randomize startup time (ALT#44842).
+
 * Wed Sep 30 2020 Alexey Gladkov <legion@altlinux.ru> 1.3.1-alt2
 - Add systemd-specific files (ALT#38902).
 
