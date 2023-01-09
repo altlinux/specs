@@ -1,6 +1,6 @@
 Name: rpm-build-guestfs
 Version: 0.8
-Release: alt3
+Release: alt4
 
 Summary: RPM helper post script for build guestfs appliance
 License: GPL
@@ -10,29 +10,11 @@ Requires(pre):  make-initrd >= 2.2.6
 Requires(pre):  kernel >= 5.4
 Requires: /proc
 
-Requires(pre): make-initrd-mdadm make-initrd-devmapper make-initrd-lvm make-initrd-luks make-initrd-guestfs
-
-Requires(pre): /usr/sbin/guestfsd
-Requires(pre): /usr/sbin/parted
-Requires(pre): /sbin/mdadm
-Requires(pre): /sbin/wipefs
-Requires(pre): /usr/sbin/zerofree
-Requires(pre): /usr/sbin/sparsify
-Requires(pre): /usr/bin/rsync
-Requires(pre): /sbin/ip
-Requires(pre): /bin/grep
-Requires(pre): /bin/uname
-Requires(pre): /bin/date
-Requires(pre): /sbin/ip
-Requires(pre): /sbin/findfs
-Requires(pre): /usr/bin/file
-Requires(pre): fuse ntfs-3g nfs-utils mount
-Requires(pre): util-linux btrfs-progs e2fsprogs jfsutils dosfstools reiserfsprogs xfsprogs
-Requires(pre): fdisk sfdisk gdisk
-Requires(pre): hivex
-Requires(pre): libaugeas
-Requires(pre): glibc-gconv-modules
-Requires(pre): mdadm
+Requires(pre): make-initrd-guestfs
+Requires(pre): make-initrd-mdadm
+Requires(pre): make-initrd-devmapper
+Requires(pre): make-initrd-lvm
+Requires(pre): make-initrd-luks
 
 %description
 RPM helper post script for build guestfs appliance
@@ -48,22 +30,17 @@ KVER="${VMLINUZ##*/vmlinuz-}"
 echo "VMLINUZ = $VMLINUZ"
 echo "KVER = $KVER"
 cp $VMLINUZ %_libdir/guestfs/vmlinuz.%_arch
-make-initrd --verbose --no-checks --config=/etc/initrd.mk.d/guestfs.mk.example --kernel=$KVER
+ARCH="%_arch" make-initrd --verbose --no-checks \
+    --config=/etc/initrd.mk.d/guestfs.mk.example --kernel=$KVER
 chmod 644 %_libdir/guestfs/*
-
-# fix initramfs arch name on i586 and armh
-%ifarch i586
-mv %_libdir/guestfs/initramfs.i686.img %_libdir/guestfs/initramfs.i586.img
-%endif
-
-%ifarch armh
-mv %_libdir/guestfs/initramfs.armv8l.img %_libdir/guestfs/initramfs.armh.img
-%endif
 
 %files
 %dir %_libdir/guestfs
 
 %changelog
+* Sat Dec 31 2022 Egor Ignatov <egori@altlinux.org> 0.8-alt4
+- Clean up spec; Requires moved to make-initrd-guestfs
+
 * Fri Dec 30 2022 Alexey Gladkov <legion@altlinux.ru> 0.8-alt3
 - Requires: make-initrd-guestfs
 

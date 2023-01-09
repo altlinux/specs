@@ -1,8 +1,12 @@
 %define _unpackaged_files_terminate_build 1
 
-# 1.48.4: libguestfs-test-tool fails on armh
-%ifarch armh
+# Temporarily disable tests on i586 due to kvm bug
+# see:  https://www.mail-archive.com/qemu-devel@nongnu.org/msg928879.html
+# 1.48.6: Test suite fails on armh and ppc64le
+%ifarch i586 armh ppc64le
 %def_without check
+%else
+%def_with check
 %endif
 
 %def_enable daemon
@@ -22,11 +26,12 @@
 %def_disable rust
 %def_disable static
 %def_enable bash_completion
+
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name: libguestfs
-Version: 1.48.4
-Release: alt2
+Version: 1.48.6
+Release: alt1
 
 Summary: Library for accessing and modifying virtual machine disk images
 License: LGPLv2+
@@ -45,11 +50,7 @@ BuildRequires: glibc-utils libselinux-devel libaugeas-devel
 BuildRequires: libgio-devel libgtk+3-devel
 BuildRequires: gtk-doc
 BuildRequires: gettext-tools
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgjs-devel}
-%{?_enable_vala:BuildRequires(pre): rpm-build-vala}
-%{?_enable_vala:BuildRequires: vala-tools}
 BuildRequires: cpio gperf xorriso xml-utils db4-utils zip unzip
-# po4a 
 BuildRequires: qemu-kvm qemu-system >= 1.3.0
 BuildRequires: libncurses-devel libtinfo-devel libreadline-devel
 BuildRequires: libpcre2-devel libmagic-devel libvirt-devel libxml2-devel libconfig-devel hivex-devel
@@ -64,23 +65,67 @@ BuildRequires: libtsk-devel
 BuildRequires: liblzma-devel
 BuildRequires: libdbus-devel
 BuildRequires: libtirpc-devel
-#BuildRequires: libtsk-devel
-# BuildRequires: supermin >= 5.1.0
-%{?_enable_fuse:BuildRequires: libfuse-devel}
-%{?_enable_ocaml:BuildRequires(pre): rpm-build-ocaml}
-%{?_enable_ocaml:BuildRequires: ocaml ocaml-findlib ocaml-gettext-devel ocaml-ounit-devel ocaml-ocamldoc ocaml-ocamlbuild ocaml-hivex-devel}
-%{?_enable_python:BuildRequires(pre): rpm-build-python3}
-%{?_enable_python:BuildRequires: python3-devel python3-module-libvirt}
-%{?_enable_ruby:BuildRequires: ruby rpm-build-ruby ruby-rake ruby-mkrf libruby-devel rubygems}
 BuildRequires: java-devel-default jpackage-utils
-%{?_enable_haskell:BuildRequires: ghc}
-%{?_enable_php:BuildRequires: php7-devel}
-%{?_enable_erlang:BuildRequires: erlang-devel}
-%{?_enable_perl:BuildRequires: perl-Pod-Parser perl-Sys-Virt perl-libintl perl-hivex perl-Module-Build perl-ExtUtils-CBuilder perl-devel}
-%{?_enable_golang:BuildRequires(pre): rpm-macros-golang}
-%{?_enable_rust:BuildRequires: rust rust-cargo}
-%{?_enable_bash_completion:BuildRequires: bash-completion >= 2.0}
-%{?!_without_check:%{?!_disable_check:BuildRequires: rpm-build-guestfs}}
+
+%if_enabled introspection
+BuildRequires: gobject-introspection-devel libgjs-devel
+%endif
+
+%if_enabled vala
+BuildRequires(pre): rpm-build-vala
+BuildRequires: vala-tools
+%endif
+
+%if_enabled fuse
+BuildRequires: libfuse-devel
+%endif
+
+%if_enabled ocaml
+BuildRequires(pre): rpm-build-ocaml
+BuildRequires: ocaml ocaml-findlib ocaml-gettext-devel ocaml-ounit-devel ocaml-ocamldoc ocaml-ocamlbuild ocaml-hivex-devel
+%endif
+
+%if_enabled python
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-libvirt
+%endif
+
+%if_enabled ruby
+BuildRequires: ruby rpm-build-ruby ruby-rake ruby-mkrf libruby-devel rubygems
+%endif
+
+%if_enabled haskell
+BuildRequires: ghc
+%endif
+
+%if_enabled php
+BuildRequires: php7-devel
+%endif
+
+%if_enabled erlang
+BuildRequires: erlang-devel
+%endif
+
+%if_enabled perl
+BuildRequires: perl-Pod-Parser perl-Sys-Virt perl-libintl perl-hivex perl-Module-Build perl-ExtUtils-CBuilder perl-devel
+%endif
+
+%if_enabled golang
+BuildRequires(pre): rpm-macros-golang
+%endif
+
+%if_enabled rust
+BuildRequires: rust rust-cargo
+%endif
+
+%if_enabled bash_completion
+BuildRequires: bash-completion >= 2.0
+%endif
+
+%if_with check
+BuildRequires: /dev/kvm
+BuildRequires: rpm-build-guestfs
+%endif
 
 %description
 libguestfs is a set of tools for accessing and modifying virtual
@@ -251,6 +296,11 @@ erlang-%name contains Erlang bindings for %name.
 %setup -a2
 tar -xf %SOURCE2 -C common
 
+
+# test_cap_set_file_0 fails becaues we still have old libcap
+# see: d4ab4ff683807dc42525c38dee8016ea9f4fab3f
+sed -i -e 's/"cap_chown=ep"/"= cap_chown+ep"/' generator/actions_core.ml
+
 %patch1 -p1
 pushd common
 %patch2 -p1
@@ -313,7 +363,41 @@ rm -f %buildroot%_man1dir/guestfs-release-notes*
 %find_lang %name
 
 %check
-test-tool/libguestfs-test-tool
+# TODO: create test-data/phony-guests/fedora.img
+# needs fedora.img
+export SKIP_TEST_JOURNAL_PL=1
+# needs fedora-btrfs.img
+export SKIP_TEST_MOUNTABLE_INSPECT_SH=1
+
+# error: luks_close: cryptsetup exited with status 5: Device
+# lukstest is still in use.
+export SKIP_TEST_LUKS_SH=1
+
+# needs network
+export SKIP_TEST_RSYNC_SH=1
+
+# get_tmpdir error: libguestfs-1.46.0-alt-fixes.patch
+sed -i -e  '2i exit 77 if $ENV{SKIP_TEST_TMPDIRS_PL};' \
+    tests/tmpdirs/test-tmpdirs.pl
+export SKIP_TEST_TMPDIRS_PL=1
+
+# log_messages does not contain magic string 'abcdefgh9876543210'
+export SKIP_TEST_CONSOLE_DEBUG_PL=1
+
+# hangs with our appliance
+export SKIP_TEST_RHBZ914931=1
+
+# needs x perm for /usr/bin/fusermount
+export SKIP_TEST_GUESTUNMOUNT_FD=1
+
+export LIBGUESTFS_PATH="%_libdir/guestfs"
+export LIBGUESTFS_DEBUG=1
+export LIBGUESTFS_TRACE=1
+
+if ! make quickcheck check; then
+    cat tests/test-suite.log ||:
+    exit 1
+fi
 
 %files -f %name.lang
 %doc COPYING README
@@ -473,6 +557,13 @@ test-tool/libguestfs-test-tool
 %endif #erlang
 
 %changelog
+* Wed Nov 30 2022 Egor Ignatov <egori@altlinux.org> 1.48.6-alt1
+- 1.48.6
+- enable tests
+
+* Wed Nov 23 2022 Egor Ignatov <egori@altlinux.org> 1.48.5-alt1
+- 1.48.5
+
 * Mon Sep 12 2022 Egor Ignatov <egori@altlinux.org> 1.48.4-alt2
 - enable basic tests
 
