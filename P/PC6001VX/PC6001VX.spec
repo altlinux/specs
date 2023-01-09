@@ -1,5 +1,5 @@
 Name:     PC6001VX
-Version:  4.1.1
+Version:  4.1.2
 Release:  alt1
 
 Summary:  Cross platform version of NEC PC-6001 emulator based on PC6001V
@@ -41,12 +41,12 @@ and program will start.
 %build
 
 qmake6 PC6001VX.pro
-%make
+%make_build
 
 %install
 install -d %buildroot%_bindir
 install -d %buildroot%_datadir/%name/compatible_rom/basic60-v075
-install -d %buildroot%_datadir/%name/compatible_rom/basic66-v041
+install -d %buildroot%_datadir/%name/compatible_rom/basic66-v042
 install -d %buildroot%_man6dir/ru/man6
 
 install -pDm755 %name %buildroot%_bindir
@@ -68,7 +68,8 @@ do
 install -D -m 0644 data/PC-6001_${N}.png %buildroot%_iconsdir/hicolor/${N}x${N}/apps/%name.png
 done
 
-cp -r compatible_rom/basic66-v041/BASIC* %buildroot%_datadir/%name/compatible_rom/basic66-v041
+cp -r compatible_rom/basic66-v042/BASIC* %buildroot%_datadir/%name/compatible_rom/basic66-v042
+cp -r compatible_rom/basic66-v042/VOICEROM* %buildroot%_datadir/%name/compatible_rom/basic66-v042
 cp -r compatible_rom/basic60-v075/BASIC* %buildroot%_datadir/%name/compatible_rom/basic60-v075
 cp -r fonts %buildroot%_datadir/%name/
 
@@ -84,5 +85,8 @@ install -D -m 0644 %SOURCE2 %buildroot%_man6dir/ru/man6/%name.6
 %doc LICENSE README.adoc
 
 %changelog
+* Mon Jan 09 2023 Artyom Bystrov <arbars@altlinux.org> 4.1.2-alt1
+- new version 4.1.2
+
 * Sun Jan 08 2023 Artyom Bystrov <arbars@altlinux.org> 4.1.1-alt1
 - Initial build for Sisyphus
