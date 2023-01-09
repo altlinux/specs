@@ -2,7 +2,7 @@
 %define oname releases
 
 Name: python3-module-%oname
-Version: 1.6.3
+Version: 2.0.0
 Release: alt1
 
 Summary: A Sphinx extension for changelog manipulation
@@ -38,6 +38,9 @@ human readable HTML output.
 %python3_sitelibdir/%oname-%version-py*.egg-info
 
 %changelog
+* Mon Jan 09 2023 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt1
+- Automatically updated to 2.0.0.
+
 * Wed Jun 08 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.3-alt1
 - Automatically updated to 1.6.3.
 
