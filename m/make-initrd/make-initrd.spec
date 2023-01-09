@@ -1,6 +1,6 @@
 Name: make-initrd
 Version: 2.34.0
-Release: alt1
+Release: alt2
 
 Summary: Creates an initramfs image
 License: GPL-3.0
@@ -64,6 +64,7 @@ Requires: util-linux >= 2.17.2-alt1
 AutoReq: noshell, noshebang
 
 Source0: %name-%version.tar
+Patch0001: 0001-guess-Do-not-fail-if-device-filesystem-type-is-swap.patch
 
 %description
 make-initrd is a new, uevent-driven initramfs infrastructure based around udev.
@@ -397,6 +398,9 @@ fi
 %config(noreplace) %_sysconfdir/initrd.mk.d/guestfs.mk.example
 
 %changelog
+* Mon Jan 09 2023 Alexey Gladkov <legion@altlinux.ru> 2.34.0-alt2
+- guess: Do not fail if device filesystem type is swap (ALT#44828).
+
 * Thu Dec 29 2022 Alexey Gladkov <legion@altlinux.ru> 2.34.0-alt1
 - New version (2.34.0).
 - Feature guestfs:
