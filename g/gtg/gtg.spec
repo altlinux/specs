@@ -2,7 +2,7 @@
 
 Name: gtg
 Version: 0.6
-Release: alt2
+Release: alt3
 
 Summary: A personal tasks and TODO list items organizer.
 License: GPL-3.0-or-later
@@ -58,12 +58,17 @@ need to do and need to know, from small tasks to large projects.
 %_bindir/*
 %_desktopdir/*
 %python3_sitelibdir/GTG
+# We don't have Hamster in our repos yet
+%exclude %python3_sitelibdir/GTG/plugins/hamster*
 %_man1dir/*
 %_datadir/metainfo/*
 %_datadir/dbus-1/services/org.gnome.GTG.service
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Mon Jan 9 2023 Vladimir Didenko <cow@altlinux.org> 0.6-alt3
+- Don't pack Hamster plugin (closes: #44809)
+
 * Mon Mar 28 2022 Vladimir Didenko <cow@altlinux.org> 0.6-alt2
 - Fix build requirements
 
