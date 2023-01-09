@@ -2,7 +2,7 @@
 
 Name: kf5-oxygen-icons
 Version: 5.101.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -78,11 +78,28 @@ if [ -z "`find %buildroot/%_iconsdir -name package-installed-updated.\*`" ] ; th
     done
 fi
 
+# create custom icons
+for e in \
+    "inode-directory application-x-smb-share" \
+    #
+do
+    icon_from=`echo "$e"| cut -d\  -f1`
+    icon_to=`echo "$e"| cut -d\  -f2`
+    find %buildroot/%_iconsdir/ -type f -name ${icon_from}.png | \
+    while read p; do
+	icon_dir=`dirname $p`
+	ln -s ${icon_from}.png $icon_dir/${icon_to}.png ||:
+    done
+done
+
 %files -n icon-theme-oxygen
 %doc COPYING*
 %_iconsdir/oxygen*/
 
 %changelog
+* Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt2
+- add application-x-smb-share icon
+
 * Fri Dec 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt1
 - new version
 
