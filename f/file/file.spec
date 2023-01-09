@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: file
-Version: 5.43
-Release: alt2
+Version: 5.44
+Release: alt1
 
 Summary: File type guesser
 License: BSD-2-Clause
@@ -88,9 +88,9 @@ strace_file() {
 	# Check capabilities are dropping.
 	grep -q 'capset(.*{effective=0, permitted=0, inheritable=0}.* = 0' strace.log
 	# Print output to stderr for debugging.
-	cat < stdout.log >&2
+	cat stdout.log >&2
 	# Finally, print to stdout for grep.
-	cat < stdout.log
+	cat stdout.log
 	return $ret
 }
 strace_file -m /dev/null	  ChangeLog.xz | grep ': data'
@@ -132,6 +132,9 @@ make check
 %_man3dir/libmagic.3*
 
 %changelog
+* Mon Jan 09 2023 Vitaly Chikunov <vt@altlinux.org> 5.44-alt1
+- Update to FILE5_44-13-g1dd21dd3 (2023-01-08).
+
 * Tue Oct 25 2022 Michael Shigorin <mike@altlinux.org> 5.43-alt2
 - Fix build --without check.
 
