@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.44
+Version: 1.45
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -147,6 +147,7 @@ install -D -p -m 0755 createimage %buildroot%_rpmlibdir/z-vm-createimage.filetri
 install -Dp bash_completion %buildroot%_sysconfdir/bashrc.d/vm_completion.sh
 install -D -p -m 0755 vm-resize   %buildroot%_bindir/vm-resize
 %endif
+install -D -p -m 0755 kvm-ok      %buildroot%_bindir/kvm-ok
 
 %pre run
 # Only allow to install inside of hasher.
@@ -166,6 +167,7 @@ install -D -p -m 0755 vm-resize   %buildroot%_bindir/vm-resize
 
 %files run
 %_bindir/vm-run
+%_bindir/kvm-ok
 
 %ifarch %supported_arches
 %_bindir/vm-resize
@@ -209,6 +211,7 @@ set | grep ^LD_
 find /boot > /tmp/filelist
 %_rpmlibdir/posttrans-filetriggers /tmp/filelist
 
+kvm-ok || :
 timeout 300 vm-run --verbose uname -a
 timeout 300 vm-run --verbose --overlay=ext4 uname -a
 ! timeout --preserve-status 300 vm-run --verbose exit 1
@@ -222,6 +225,10 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Sun Jan 08 2023 Vitaly Chikunov <vt@altlinux.org> 1.45-alt1
+- Add kvm-ok tool.
+- Minor fixes to experimental (EFI) boot options.
+
 * Tue Dec 27 2022 Vitaly Chikunov <vt@altlinux.org> 1.44-alt1
 - Make pass-through options similar to qemu's (backward incompatible change).
 - Fix vm-create-image bash completion.
