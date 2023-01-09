@@ -1,7 +1,7 @@
 %define _localstatedir %_var
 
 Name:     sbd
-Version:  1.5.1
+Version:  1.5.2
 Release:  alt1
 
 Summary:  Storage-based death
@@ -105,6 +105,9 @@ find %buildroot -name '*.la' -type f -print0 | xargs -0 rm -f
 %_libdir/libsbdtestbed.so
 
 %changelog
+* Mon Jan 09 2023 Andrew A. Vasilyev <andy@altlinux.org> 1.5.2-alt1
+- 1.5.2
+
 * Tue Nov 16 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.5.1-alt1
 - 1.5.1
 
