@@ -1,5 +1,5 @@
-%define kernel_base_version	6.0
-%define kernel_sublevel        .16
+%define kernel_base_version	6.1
+%define kernel_sublevel        .4
 %define kernel_extra_version	%nil
 
 Name: kernel-image-mp
@@ -258,6 +258,12 @@ touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 %modules_dir/build
 
 %changelog
+* Mon Jan 09 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.4-alt1
+- 6.1.4
+
+* Mon Jan 09 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.1.0-alt1
+- 6.1
+
 * Fri Jan 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 6.0.16-alt1
 - 6.0.16
 
