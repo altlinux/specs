@@ -1,6 +1,6 @@
 Name: howdy
 Version: 3.0.0
-Release: alt5.beta1.git943f1e1
+Release: alt6.beta1.git943f1e1
 Summary: Windows Hello style authentication
 
 License: MIT
@@ -13,7 +13,7 @@ Source1: https://github.com/davisking/dlib-models/raw/master/dlib_face_recogniti
 Source2: https://github.com/davisking/dlib-models/raw/master/mmod_human_face_detector.dat.bz2
 Source3: https://github.com/davisking/dlib-models/raw/master/shape_predictor_5_face_landmarks.dat.bz2
 Patch: howdy-3.0.0-alt-fix-the-dublicates-in-the-man.patch
-Patch1: howdy-3.0.0-alt-fix-gtk-startup.patch
+Patch1: howdy-3.0.0-alt-fix-howdy-gtk-startup.patch
 Patch2: howdy-pull-673.patch
 Patch3: howdy-pull-692-1.patch
 Patch4: howdy-pull-692-2.patch
@@ -69,10 +69,24 @@ sed -i 's|/lib/security|/%_lib/security|' \
   howdy/src/autocomplete/howdy \
   howdy/src/pam/main.cc \
   howdy-gtk/src/tab_video.py \
+  howdy-gtk/src/window.py \
   howdy/src/pam-config/howdy
+sed -i 's|./main.glade|/usr/libexec/howdy-gtk/main.glade|' \
+  howdy-gtk/src/window.py
+sed -i 's|./onboarding.glade|/usr/libexec/howdy-gtk/onboarding.glade|' \
+  howdy-gtk/src/onboarding.py
+sed -i 's|../howdy-gtk/src/init.py|/usr/libexec/howdy-gtk/src/init.py|' \
+  howdy/src/compare.py
+#sed -i 's|/../config.ini|/%_lib/security/howdy/config.ini|' \
+#  howdy/src/cli/*.py
+#sed -i 's|/../dlib-data/|/%_lib/security/howdy/dlib-data/|' \
+#  howdy/src/cli/add.py \
+#  howdy/src/cli/test.py
+#sed -i 's|/../|/%_lib/security/howdy/|' \
+#  howdy/src/cli/*.py
 sed -i 's|/usr/bin/env python3|%__python3|' \
-  howdy/src/cli.py \
-  howdy-gtk/src/authsticky.py
+  howdy-gtk/src/init.py \
+  howdy/src/cli.py
 sed -i 's|/bin/nano|%_bindir/nano|' \
   howdy/src/cli/config.py
 sed -i 's|/usr/lib/howdy-gtk/logo.png|/usr/libexec/howdy-gtk/logo.png|' \
@@ -98,7 +112,7 @@ cp -a mmod_human_face_detector.dat %buildroot/%_lib/security/howdy/dlib-data/
 cp -a shape_predictor_5_face_landmarks.dat %buildroot/%_lib/security/howdy/dlib-data/
 mkdir -p %buildroot/usr/bin
 ln -s /%_lib/security/howdy/cli.py %buildroot%_bindir/howdy
-ln -s /usr/libexec/howdy-gtk/authsticky.py %buildroot%_bindir/howdy-gtk-auth
+ln -s /usr/libexec/howdy-gtk/init.py %buildroot%_bindir/howdy-gtk
 chmod +x %buildroot/%_lib/security/howdy/cli.py
 mkdir -p %buildroot%_datadir/bash-completion/completions
 cp -a howdy/src/autocomplete/howdy %buildroot%_datadir/bash-completion/completions/howdy
@@ -120,10 +134,13 @@ rm -rf %buildroot/%_lib/security/howdy/dlib-data/{Readme.md,install.sh,.gitignor
 /%_lib/security/pam_howdy.so
 
 %files gtk
-%_bindir/howdy-gtk-auth
+%_bindir/howdy-gtk
 /usr/libexec/howdy-gtk/
 
 %changelog
+* Mon Jan 09 2023 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt6.beta1.git943f1e1
+- Fixed howdy-gtk startup again instead howdy-gtk-auth (ALT #44775).
+
 * Thu Dec 22 2022 Leontiy Volodin <lvol@altlinux.org> 3.0.0-alt5.beta1.git943f1e1
 - Fixed the dublicates in the man file (ALT #44609).
 - Applied some improvements by community.
