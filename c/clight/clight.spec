@@ -1,6 +1,6 @@
 Name: clight
 Version: 4.9
-Release: alt1
+Release: alt2
 
 Summary: Monitor brightness control daemon
 Summary(ru_RU.UTF-8): Демон управления яркостью монитора
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 
 Patch1: %name-4.9-alt-desktop.patch
 Patch2: %name-4.9-alt-desktop_translation.patch
+Patch3: %name-4.9-alt-desktop_fix_gamma_adjustment_command.patch
 
 BuildRequires: cmake
 BuildRequires: libpopt-devel
@@ -94,6 +95,9 @@ killall clight >/dev/null 2>&1 ||:
 %_includedir/%name/*.h
 
 %changelog
+* Mon Jan 09 2023 Evgeny Chuck <koi@altlinux.org> 4.9-alt2
+- Fixed gamma setting command in clightc.desktop
+
 * Fri Nov 18 2022 Evgeny Chuck <koi@altlinux.org> 4.9-alt1
 - new version (4.9) with rpmgs script
 - Fixed patches of the old version v4.8 under the new v4.9
