@@ -1,6 +1,6 @@
 Name: nautilus-dropbox
-Version: 2020.03.04
-Release: alt2
+Version: 2022.12.05
+Release: alt1
 
 Summary: Dropbox integration for Nautilus
 Summary(ru_RU.UTF-8): Интеграция Dropbox с Nautilus
@@ -10,12 +10,6 @@ Group: Graphical desktop/GNOME
 Url: http://www.dropbox.com/
 
 Source: https://www.dropbox.com/download?dl=packages/%name-%version.tar
-# Patches for GTK4 support from upstream git (https://github.com/dropbox/nautilus-dropbox)
-Patch1: gtk4-libnautilus-extension-4.patch
-Patch2: gtk4-remove-deprecated.patch
-Patch3: gtk4-include-directly.patch
-Patch4: gtk4-remove-old-fix.patch
-Patch5: gtk4-update-code.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: glib2-devel >= 2.14.0
@@ -54,11 +48,6 @@ The *dropbox* command provides a command line interface to the Dropbox.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 %autoreconf
@@ -85,6 +74,10 @@ The *dropbox* command provides a command line interface to the Dropbox.
 %_man1dir/*.1*
 
 %changelog
+* Mon Jan 09 2023 Mikhail Efremov <sem@altlinux.org> 2022.12.05-alt1
+- Dropped obsoleted patches.
+- Updated to 2022.12.05.
+
 * Tue Dec 06 2022 Mikhail Efremov <sem@altlinux.org> 2020.03.04-alt2
 - Fixed license tag.
 - Fixed build with nautilus-43.x.
