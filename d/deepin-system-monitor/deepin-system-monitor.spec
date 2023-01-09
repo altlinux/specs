@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 5.9.32
+Version: 6.0.3
 Release: alt1
 Summary: A more user-friendly system monitor
 License: GPL-3.0+
@@ -13,6 +13,8 @@ Source: %url/archive/%version/%name-%version.tar.gz
 %ifarch aarch64 armh
 Patch: deepin-system-monitor-5.9.4-alt-aarch64-armh.patch
 %endif
+Patch1: deepin-system-monitor-6.0.3-alt-revert-service-start-method-cannot-be-modified.patch
+Patch2: deepin-system-monitor-6.0.3-alt-fix-build-without-dwayland.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -57,6 +59,8 @@ BuildRequires: libgtest-devel
 %ifarch aarch64 armh
 %patch -p1
 %endif
+%patch1 -p1
+%patch2 -p1
 sed -i 's|lib/dde-dock/plugins|%_lib/dde-dock/plugins|' \
     deepin-system-monitor-plugin/CMakeLists.txt
 
@@ -104,6 +108,14 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/system-monitor/
 
 %changelog
+* Mon Jan 09 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.3-alt1
+- New version (6.0.3).
+- Upstream:
+  + feat: The insertion in the task column does not show by default.
+- Patches:
+  + revert: The service start method cannot be modified.
+  + revert: Fix build without dwayland.
+
 * Thu Dec 15 2022 Leontiy Volodin <lvol@altlinux.org> 5.9.32-alt1
 - New version (5.9.32).
 
