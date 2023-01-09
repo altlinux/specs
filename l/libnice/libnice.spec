@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: libnice
-Version: %ver_major.19
+Version: %ver_major.21
 Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
@@ -23,8 +23,8 @@ Source: http://nice.freedesktop.org/releases/%name-%version.tar.gz
 %define gi_ver 1.30
 %define tls_ver 2.12.0
 
-BuildRequires(pre): meson
-BuildRequires: glib2-devel >= %glib_ver
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson glib2-devel >= %glib_ver
 %{?_enable_gtk_doc:BuildRequires: gtk-doc %_bindir/dot}
 %{?_enable_gupnp:BuildRequires: libgupnp-igd-devel}
 %{?_with_gstreamer:BuildRequires: gst-plugins%gst_api_ver-devel}
@@ -38,7 +38,7 @@ Establishment standard (ICE). It provides GLib-based library, libnice.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Nice is an implementation of the IETF's draft Interactice Connectivity
@@ -61,7 +61,7 @@ This package contains development documentation for %name.
 %package gir
 Summary: GObject introspection data for the Nice library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description gir
 GObject introspection data for the Nice library.
@@ -70,8 +70,8 @@ GObject introspection data for the Nice library.
 Summary: GObject introspection devel data for the Nice library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the Nice library.
@@ -79,7 +79,7 @@ GObject introspection devel data for the Nice library.
 %package devel-static
 Summary: Static library for %name
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 Nice is an implementation of the IETF's draft Interactice Connectivity
@@ -90,7 +90,7 @@ This package contains a statically-linked variant of %name
 %package -n gst-plugins-nice
 Summary: UDP connectivity establishment plugin for Gstreamer based on libnice
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n gst-plugins-nice
 Nice is an implementation of the IETF's draft Interactice Connectivity
@@ -102,7 +102,7 @@ for Gstreamer
 %package -n gst-plugins-nice%gst_api_ver
 Summary: UDP connectivity establishment plugin for Gstreamer (1.0) based on libnice
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n gst-plugins-nice%gst_api_ver
 Nice is an implementation of the IETF's draft Interactice Connectivity
@@ -163,6 +163,9 @@ for Gstreamer (1.0 API version)
 
 
 %changelog
+* Mon Jan 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.21-alt1
+- 0.1.21
+
 * Wed May 04 2022 Yuri N. Sedunov <aris@altlinux.org> 0.1.19-alt1
 - 0.1.19
 
