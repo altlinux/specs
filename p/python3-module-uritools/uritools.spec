@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 4.0.0
+Version: 4.0.1
 Release: alt1
 
 Summary: URI parsing, classification and composition
@@ -46,5 +46,8 @@ py.test-3 -v
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Jan 09 2023 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
+- Automatically updated to 4.0.1.
+
 * Tue Jun 28 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - Initial build for Sisyphus.
