@@ -129,7 +129,7 @@
 
 Name: qemu
 Version: 7.2.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -1337,6 +1337,10 @@ fi
 %exclude %docdir/LICENSE
 
 %changelog
+* Sun Jan 08 2023 Vitaly Chikunov <vt@altlinux.org> 7.2.0-alt2
+- Temporary workaround 'Could not install MSR_CORE_THREAD_COUNT handler'
+  kernel bug when KVM is used on i586.
+
 * Fri Dec 16 2022 Alexey Shabalin <shaba@altlinux.org> 7.2.0-alt1
 - 7.2.0 (Fixes: CVE-2022-4144, CVE-2022-3165, CVE-2021-3638).
 - Revert "Add the Kunpeng-920 CPU model."
