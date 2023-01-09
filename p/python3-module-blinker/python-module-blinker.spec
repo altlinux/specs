@@ -1,19 +1,21 @@
 %define module_name blinker
 
 Name: python3-module-%module_name
-Version: 1.4
+Version: 1.5
 Release: alt1
+
 Group: Development/Python3
 License: MIT License
 Summary: Fast, simple object-to-object and broadcast signaling
-URL: http://discorporate.us/projects/Blinker/
-# https://github.com/jek/blinker.git
-Source: %module_name-%version.tar.gz
+URL: https://pypi.org/project/blinker/
+
+# https://github.com/pallets-eco/blinker
+Source: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx
+BuildRequires: python3(wheel)
 
 %description
 Blinker provides a fast dispatching system that allows any number of
@@ -23,25 +25,25 @@ Signal receivers can subscribe to specific senders or receive signals
 sent by any sender.
 
 %prep
-%setup -n %module_name-%version
-
-%prepare_sphinx3 docs
-ln -s ../objects.inv docs/source/
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
-export PYTHONPATH=%buildroot%python_sitelibdir
-%make SPHINXBUILD="sphinx-build-3" -C docs/source html
+%check
+%tox_check_pyproject
 
 %files
-%doc AUTHORS CHANGES LICENSE README.md docs/html
+%doc docs/ CHANGES.rst LICENSE.rst README.rst MANIFEST.in
 %python3_sitelibdir/%{module_name}*
 
 %changelog
+* Tue Jan 03 2023 Anton Vyatkin <toni@altlinux.org> 1.5-alt1
+- new version 1.5
+
 * Tue Jun 29 2021 Grigory Ustinov <grenka@altlinux.org> 1.4-alt1
 - Build new version.
 
