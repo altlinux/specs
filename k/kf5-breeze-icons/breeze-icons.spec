@@ -2,7 +2,7 @@
 
 Name: kf5-%rname
 Version: 5.101.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -100,11 +100,28 @@ while read l ; do
     [ -e $l ] || rm -f $l
 done
 
+# create custom icons
+for e in \
+    "inode-directory application-x-smb-share" \
+    #
+do
+    icon_from=`echo "$e"| cut -d\  -f1`
+    icon_to=`echo "$e"| cut -d\  -f2`
+    find %buildroot/%_iconsdir/ -name ${icon_from}.svg | \
+    while read p; do
+	icon_dir=`dirname $p`
+	ln -s ${icon_from}.svg $icon_dir/${icon_to}.svg ||:
+    done
+done
+
 %files -n icon-theme-breeze
 %doc COPYING*
 %_iconsdir/breeze*/
 
 %changelog
+* Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt2
+- add application-x-smb-share icon
+
 * Fri Dec 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt1
 - new version
 
