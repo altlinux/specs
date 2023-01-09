@@ -1,24 +1,26 @@
-Name: unpaper
-Version: 6.1
-Release: alt3
+%def_enable    man
+%def_enable    check
 
-Summary: unpaper is a post-processing tool for scanned sheets of paper
+Name:          unpaper
+Version:       7.0.0
+Release:       alt1
+Summary:       unpaper is a post-processing tool for scanned sheets of paper
 Summary(ru_RU.UTF-8): программа для обработки страниц после сканирования
+License:       GPL-2.0-only and 0BSD and Apache-2.0 and MIT
+Group:         Publishing
+Url:           http://www.flameeyes.eu/projects/unpaper
+Vcs:           git@github.com:unpaper/unpaper.git
+Packager:      Vitaly Lipatov <lav@altlinux.ru>
 
-License: GPLv2
-Group: Publishing
-Url: http://www.flameeyes.eu/projects/unpaper
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-# Source-url: https://github.com/Flameeyes/unpaper/archive/unpaper-%version.tar.gz
-Source: http://www.flameeyes.eu/files/%name-%version.tar
-
-BuildPreReq: docbook-style-xsl
-# manually removed: python3 python3-module-zope ruby ruby-stdlibs 
-# Automatically added by buildreq on Sat Aug 22 2015
-# optimized out: libavcodec-devel libavutil-devel libopencore-amrnb0 libopencore-amrwb0 libp11-kit pkg-config python3-base
-BuildRequires: libavformat-devel xsltproc
+Source:        %name-%version.tar
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson
+BuildRequires: libavformat-devel
+%{?_enable_man:BuildRequires: python3-module-sphinx}
+%{?_enable_man:BuildRequires: python3-module-sphinx-sphinx-build-symlink}
+%{?_enable_check:BuildRequires: pytest3}
+%{?_enable_check:BuildRequires: python3-module-pytest}
+%{?_enable_check:BuildRequires: python3-module-Pillow}
 
 %description
 unpaper is a post-processing tool for scanned sheets of paper,
@@ -43,21 +45,32 @@ unpaper — это программа для обработки страниц �
 
 %prep
 %setup
+%ifarch %e2k
+sed -i "/-Werror=return-type/d" meson.build
+%endif
 
 %build
-%configure
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
 
+%check
+export LC_CTYPE=en_US.UTF-8
+meson test -C %_target_platform \
+   unpaper_tests.py
+   
 %files
-%_bindir/*
-%_man1dir/*
-%doc %_docdir/%name/
+%_bindir/%name
+%_man1dir/%name.1.xz
 %doc AUTHORS NEWS README.md
 
+
 %changelog
+* Tue Jan 03 2023 Pavel Skrylev <majioa@altlinux.org> 7.0.0-alt1
+- ^ 6.1 -> 7.0.0
+
 * Sat Jun 30 2018 Vitaly Lipatov <lav@altlinux.ru> 6.1-alt3
 - rebuild with ffmpeg 4.0
 
