@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.0
-%define kernel_sublevel	.17
+%define kernel_sublevel	.18
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -613,6 +613,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Jan 10 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.0.18-alt1
+- v6.0.18 (2023-01-07).
+- config-armh: Enable ROCKCHIP_IODOMAIN=m, CROS_EC_SPI=m (ALT#44813).
+
 * Wed Jan 04 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.0.17-alt1
 - v6.0.17 (2023-01-04).
 
