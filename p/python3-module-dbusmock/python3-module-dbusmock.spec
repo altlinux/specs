@@ -3,8 +3,8 @@
 %def_enable check
 
 Name: python3-module-dbusmock
-Version: 0.28.6
-Release: alt2
+Version: 0.28.7
+Release: alt1
 
 Summary: mock D-Bus objects for tests
 License: LGPL-3.0-or-later
@@ -56,6 +56,9 @@ python3 -m unittest
 %doc NEWS PKG-INFO README*
 
 %changelog
+* Wed Jan 11 2023 Yuri N. Sedunov <aris@altlinux.org> 0.28.7-alt1
+- 0.28.7
+
 * Tue Nov 15 2022 Michael Shigorin <mike@altlinux.org> 0.28.6-alt2
 - fix build --without check (explicit BR: python3-module-dbus)
 - minor spec cleanup
