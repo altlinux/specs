@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.11.1
+Version: 0.11.2
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,9 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Tue Jan 10 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.11.2-alt1
+- Fix race condition problems with AdInterface.
+
 * Tue Jan 10 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.11.1-alt1
 - Fix property tabs size policy to looks more pretty.
 - Enable both user and machine attributes during GPO creating.
