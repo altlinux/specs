@@ -26,7 +26,7 @@
 %def_enable libzstd
 
 Name: rsyslog
-Version: 8.2210.0
+Version: 8.2212.0
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -685,6 +685,9 @@ install -m644 rsyslog.classic.conf.d %buildroot%_unitdir/rsyslog.service.d/class
 %mod_dir/fmhttp.so
 
 %changelog
+* Tue Jan 10 2023 Alexey Shabalin <shaba@altlinux.org> 8.2212.0-alt1
+- new version 8.2212.0
+
 * Tue Oct 25 2022 Alexey Shabalin <shaba@altlinux.org> 8.2210.0-alt1
 - new version 8.2210.0
 
