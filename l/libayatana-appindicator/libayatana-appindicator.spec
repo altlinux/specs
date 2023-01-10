@@ -1,6 +1,6 @@
 %define sover 1
 
-%ifarch ppc64le
+%ifarch ppc64le riscv64 %mips32
 %def_without mono
 %else
 %def_with mono
@@ -8,7 +8,7 @@
 
 Name: libayatana-appindicator
 Version: 0.5.91
-Release: alt1
+Release: alt1.1
 
 Summary: Ayatana application indicators library
 License: LGPLv2.1 AND LGPLv3
@@ -174,6 +174,9 @@ This package provides Vala language bindings for %{name}3.
 %_vapidir/ayatana-appindicator3-0.1.deps
 
 %changelog
+* Tue Jan 10 2023 Ivan A. Melnikov <iv@altlinux.org> 0.5.91-alt1.1
+- NMU: Build w/o mono on riscv64 and mipsel
+
 * Tue May 03 2022 Nazarov Denis <nenderus@altlinux.org> 0.5.91-alt1
 - Version 0.5.91
 
