@@ -6,7 +6,7 @@
 
 Name: kf5-%rname
 Version: 5.101.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -15,6 +15,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
+Patch1: alt-actionmenu-btn.patch
 
 # Automatically added by buildreq on Fri Dec 26 2014 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libcloog-isl4 libqt5-core libqt5-gui libqt5-test libqt5-widgets libqt5-xml libstdc++-devel python-base qt5-base-devel qt5-tools qt5-tools-devel ruby ruby-stdlibs
@@ -74,6 +75,7 @@ Sip files for python3-module-%rname
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -109,6 +111,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Tue Jan 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt2
+- change KActionMenu popup button default behavior to menu button
+
 * Fri Dec 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt1
 - new version
 
