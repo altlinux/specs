@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: iverilog
-Version: 11.0
-Release: alt3
+Version: 12.0
+Release: alt1
 Summary: Verilog simulation and synthesis tool
 
 Group: Engineering
@@ -10,7 +10,6 @@ License: GPLv2
 Url: http://iverilog.icarus.com
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: /proc
 BuildRequires: bzip2-devel
 BuildRequires: zlib-devel
@@ -29,10 +28,6 @@ an intermediate form called vvp assembly. This intermediate form is
 executed by the ``vvp'' command. For synthesis, the compiler generates
 netlists in the desired format. It supports the 1995, 2001 and 2005
 versions of the standard, portions of SystemVerilog, and some extensions.
-
-# Some binaries are in fact loadable code generators
-# See developer-quick-start.txt
-%set_verify_elf_method unresolved=relaxed
 
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
@@ -64,6 +59,9 @@ install -m644 examples/* %buildroot%_docdir/%name-%version/examples/
 %exclude %_docdir/%name-%version/mingw.txt
 
 %changelog
+* Tue Jan 10 2023 Egor Ignatov <egori@altlinux.org> 12.0-alt1
+- 12.0
+
 * Wed Aug 25 2021 Egor Ignatov <egori@altlinux.org> 11.0-alt3
 - add -ffat-lto-objects to build static libs with -flto enabled
 
