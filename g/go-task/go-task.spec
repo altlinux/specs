@@ -1,6 +1,6 @@
 %global import_path github.com/go-task/task
 Name:     go-task
-Version:  2.4.0
+Version:  3.19.1
 Release:  alt1
 
 Summary:  A task runner / simpler Make alternative written in Go
@@ -10,7 +10,8 @@ Url:      https://github.com/go-task/task
 
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
-Source:   %name-%version.tar
+Source0:   %name-%version.tar
+Source1:   vendor.tar
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang
@@ -20,7 +21,7 @@ Task is a task runner / build tool that aims to be simpler and easier to use
 than, for example, GNU Make.
 
 %prep
-%setup
+%setup -a1
 
 %build
 export BUILDDIR="$PWD/.build"
@@ -47,5 +48,8 @@ install -Dm 644 completion/zsh/_task %buildroot/%_datadir/zsh/site-functions/_ta
 %_datadir/zsh/site-functions/_task
 
 %changelog
+* Tue Jan 10 2023 Anton Zhukharev <ancieg@altlinux.org> 3.19.1-alt1
+- 3.19.1 (closes: #44593)
+
 * Sat Mar 16 2019 Mikhail Gordeev <obirvalger@altlinux.org> 2.4.0-alt1
 - Initial build for Sisyphus
