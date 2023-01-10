@@ -1,5 +1,5 @@
 Name:     genspec
-Version:  1.4.0
+Version:  1.4.1
 Release:  alt1
 
 Summary:  Script for generation RPM spec file from template
@@ -34,6 +34,10 @@ cp -av spectemplates/* %buildroot%_datadir/spectemplates/
 %_man1dir/*
 
 %changelog
+* Tue Jan 10 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.4.1-alt1
+- Use pyproject in python3 templates
+- Remove pyproject template in favour of python3
+
 * Mon Jan 09 2023 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1
 - Add templates for cmake, meson and pyproject
 - Remove extra spaces and put %%doc below %%files
