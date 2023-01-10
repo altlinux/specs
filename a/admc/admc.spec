@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: admc
-Version: 0.11.0
+Version: 0.11.1
 Release: alt1
 
 Summary: Active Directory Management Center
@@ -110,6 +110,14 @@ Tests for ADMC
 %_bindir/admc_test_find_policy_dialog
 
 %changelog
+* Tue Jan 10 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.11.1-alt1
+- Fix property tabs size policy to looks more pretty.
+- Enable both user and machine attributes during GPO creating.
+- Fix availability of the Ok button when:
+ + a policy name is missing in the policy create dialog;
+ + group name is missing in the renaming ou dialog;
+ + user name is missing in rename user dialog.
+
 * Tue Dec 13 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.11.0-alt1
 - Action menu: Block inheritance feature is added to organizational
   unit context menu. Also limited group policy tab is returned.
