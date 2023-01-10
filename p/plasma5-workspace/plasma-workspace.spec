@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.26.4
-Release: alt5
+Version: 5.26.5
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -534,6 +534,9 @@ install -m0644 -p -D %SOURCE41 %buildroot/%_unitdir_user/plasma-core.target.d/sp
 
 
 %changelog
+* Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt1
+- new version
+
 * Thu Dec 22 2022 Slava Aseev <ptrnine@altlinux.org> 1:5.26.4-alt5
 - restart dbus-daemon after systemd reload
 

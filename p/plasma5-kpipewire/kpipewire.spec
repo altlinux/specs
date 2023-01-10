@@ -9,7 +9,7 @@
 
 %define rname kpipewire
 Name: plasma5-%rname
-Version: 5.26.4
+Version: 5.26.5
 Release: alt1
 %K5init altplace
 
@@ -70,6 +70,7 @@ KF5 library
 %build
 %K5build \
     -DKDE_INSTALL_INCLUDEDIR=%_K5inc \
+    -DBUILD_TESTING:BOOL=ON \
     #
 
 %install
@@ -101,6 +102,9 @@ KF5 library
 %_K5lib/libKPipeWireRecord.so.*
 
 %changelog
+* Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt1
+- new version
+
 * Tue Nov 29 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.4-alt1
 - new version
 

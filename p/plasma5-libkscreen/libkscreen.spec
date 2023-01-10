@@ -4,7 +4,7 @@
 
 %define rname libkscreen
 Name: plasma5-%rname
-Version: 5.26.4
+Version: 5.26.5
 Release: alt1
 %K5init altplace
 
@@ -105,6 +105,9 @@ export PATH=%_qt5_bindir:$PATH
 %_unitdir_user/*.service
 
 %changelog
+* Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt1
+- new version
+
 * Tue Nov 29 2022 Sergey V Turchin <zerg@altlinux.org> 5.26.4-alt1
 - new version
 
