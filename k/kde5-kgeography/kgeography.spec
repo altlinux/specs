@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 22.08.3
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Education
@@ -12,7 +12,7 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Source2: data.tar
-Patch: alt-fix-crimea.patch
+Patch: alt-fix-borders.patch
 
 # Automatically added by buildreq on Fri Apr 01 2016 (-bi)
 # optimized out: cmake cmake-modules docbook-dtds docbook-style-xsl elfutils gcc-c++ gtk-update-icon-cache kf5-kdoctools kf5-kdoctools-devel libEGL-devel libGL-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms python-base python-modules python3 rpm-build-python3 xml-common xml-utils
@@ -29,9 +29,14 @@ BuildRequires: kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5
 %prep
 %setup -n %rname-%version
 tar -xvf %SOURCE2 data/
-%patch -p1
+%patch -p2
 
 mv data/flags/{ukraine/Crimea,russia/crimea}.png
+mv data/flags/{ukraine/Donetsk,russia/donetsk}.png
+mv data/flags/{ukraine/Lugansk,russia/lugansk}.png
+mv data/flags/{ukraine/Zaporizhya,russia/zaporozhye}.png
+mv data/flags/{ukraine/Kherson,russia/kherson}.png
+mv data/flags/{ukraine/Sevastopol-city,russia/sevastopol}.png
 
 %build
 %K5build
@@ -53,6 +58,9 @@ mv data/flags/{ukraine/Crimea,russia/crimea}.png
 
 
 %changelog
+* Tue Jan 10 2023 Oleg Solovyov <mcpain@altlinux.org> 22.08.3-alt2
+- update country borders
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
