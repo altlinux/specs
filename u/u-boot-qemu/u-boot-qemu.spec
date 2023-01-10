@@ -1,7 +1,7 @@
 %define allowed_arch armh aarch64 %ix86 x86_64 mips mipsel mips64 mips64el riscv32 riscv64 ppc64
 
 Name: u-boot-qemu
-Version: 2022.10
+Version: 2023.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -12,7 +12,9 @@ ExclusiveArch: %allowed_arch
 
 Source: %name-%version-%release.tar
 
-BuildRequires: dtc >= 1.4 flex libssl-devel python3-dev python3(pkg_resources) swig
+BuildRequires: dtc >= 1.4 flex libssl-devel
+BuildRequires: python3(setuptools)
+BuildRequires: python3(libfdt)
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
@@ -61,6 +63,7 @@ This package contains U-Boot image for QEMU virt machine.
 %setup
 
 %build
+export DTC=%_bindir/dtc
 %make_build %{qemu}_defconfig all
 
 %install
@@ -71,6 +74,9 @@ install -pm0644 -D u-boot.bin %buildroot%_datadir/u-boot/%qemu/u-boot.bin
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jan 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.01-alt1
+- 2023.01 released
+
 * Tue Oct 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.10-alt1
 - 2022.10 released
 
