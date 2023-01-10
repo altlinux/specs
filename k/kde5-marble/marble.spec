@@ -12,7 +12,7 @@
 
 Name: kde5-%rname
 Version: 22.08.3
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Education
@@ -77,7 +77,7 @@ pushd data/
 tar -xvf %SOURCE2 naturalearth/
 popd
 %patch1 -p1
-#%patch2 -p1
+%patch2 -p1
 sed -i '/add_subdirectory(marble-qt)/d' src/apps/CMakeLists.txt
 
 # disable krunners by default
@@ -150,6 +150,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Mon Jan 09 2023 Oleg Solovyov <mcpain@altlinux.org> 22.08.3-alt2
+- remove political map and country boundaries
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
