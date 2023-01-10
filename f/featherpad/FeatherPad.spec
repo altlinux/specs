@@ -1,5 +1,5 @@
 Name: featherpad
-Version: 1.3.4
+Version: 1.3.5
 Release: alt1
 
 Summary: A lightweight Qt5 plain-text editor for Linux
@@ -63,6 +63,9 @@ done
 %_datadir/metainfo/featherpad.metainfo.xml
 
 %changelog
+* Tue Jan 10 2023 Leontiy Volodin <lvol@altlinux.org> 1.3.5-alt1
+- new version 1.3.5
+
 * Wed Nov 30 2022 Leontiy Volodin <lvol@altlinux.org> 1.3.4-alt1
 - new version 1.3.4
 
