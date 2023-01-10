@@ -1,7 +1,7 @@
 %define oname jsonschema
 
 Name:		python3-module-%oname
-Version:	4.17.1
+Version:	4.17.3
 Release:	alt1
 
 Summary:	An implementation of JSON Schema validation for Python
@@ -54,6 +54,9 @@ rm -rfv %buildroot%python3_sitelibdir/%oname/benchmarks/
 %python3_sitelibdir/*
 
 %changelog
+* Tue Jan 10 2023 Vladimir Didenko <cow@altlinux.org> 4.17.3-alt1
+- New version
+
 * Tue Nov 29 2022 Vladimir Didenko <cow@altlinux.org> 4.17.1-alt1
 - New version
 
