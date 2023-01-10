@@ -5,8 +5,8 @@
 %def_with gtk4
 
 Name: libnma
-Version: 1.10.4
-Release: alt2
+Version: 1.10.6
+Release: alt1
 License: GPLv2+ and LGPLv2.1+
 Group: Graphical desktop/GNOME
 Summary: NetworkManager GUI library
@@ -193,6 +193,10 @@ This package contains development documentation for libnma-devel-doc.
 %doc %_datadir/gtk-doc/html/libnma
 
 %changelog
+* Tue Jan 10 2023 Mikhail Efremov <sem@altlinux.org> 1.10.6-alt1
+- Dropped obsoleted patch.
+- Updated to 1.10.6.
+
 * Fri Nov 11 2022 Mikhail Efremov <sem@altlinux.org> 1.10.4-alt2
 - Move gschema to common subpackage.
 - Drop path from eap schema (closes: #44273).
