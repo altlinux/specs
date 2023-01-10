@@ -1,5 +1,5 @@
 Name: u-boot-rockchip
-Version: 2022.10
+Version: 2023.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -11,16 +11,16 @@ ExclusiveArch: aarch64
 Source: %name-%version-%release.tar
 
 BuildRequires: atf-rockchip >= 2.6
-BuildRequires: bc ccache dtc >= 1.4 flex libssl-devel
-BuildRequires: python3-dev swig
-BuildRequires: python3(pkg_resources)
+BuildRequires: bc ccache dtc >= 1.4 flex libssl-devel libuuid-devel libgnutls-devel
+BuildRequires: python3(libfdt)
+BuildRequires: python3(setuptools)
 BuildRequires: python3(elftools.elf.elffile)
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
 other processors, which can be installed in a boot ROM and used to
 initialize and test the hardware or to download and run application code.
-This package supports various Rockchip RK3399 based boards.
+This package supports various Rockchip based boards.
 
 %prep
 %setup
@@ -29,14 +29,14 @@ egrep -lr 'CONFIG_ROCKCHIP_(PX30|RK3328|RK3399)' configs |xargs sed -i \
 
 %build
 export PYTHON=python3
+export DTC=%_bindir/dtc
 
 buildit()
 {
-  mkdir build
+  O=build/${board}
   BL31=%_datadir/atf/$1/bl31.elf \
-  %make_build HOSTCC='ccache gcc' CC='ccache gcc' O=build ${board}_defconfig all
-  install -pm0644 -D build/u-boot-rockchip.bin out/${board}/u-boot-rockchip.bin
-  rm -rf build
+  %make_build HOSTCC='ccache gcc' CC='ccache gcc' O=${O} ${board}_defconfig all
+  install -pm0644 -D ${O}/u-boot-rockchip.bin out/${board}/u-boot-rockchip.bin
 }
 
 for soc in PX30 RK3328 RK3399; do
@@ -54,6 +54,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jan 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.01-alt1
+- 2023.01 released
+
 * Tue Oct 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.10-alt1
 - 2022.10 released
 
