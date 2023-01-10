@@ -1,5 +1,5 @@
 Name: u-boot-tools
-Version: 2022.10
+Version: 2023.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -13,8 +13,9 @@ Obsoletes: uboot-tools
 
 Source: %name-%version-%release.tar
 
-BuildRequires: flex libgnutls-devel libssl-devel libtinfo-devel libuuid-devel
-BuildRequires: python3-dev swig
+BuildRequires: dtc flex libgnutls-devel libssl-devel libtinfo-devel libuuid-devel
+BuildRequires: python3(setuptools)
+BuildRequires: python3(libfdt)
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
@@ -26,7 +27,7 @@ This package contains U-Boot tools.
 %setup
 
 %build
-%make_build NO_SDL=1 tools-only_defconfig tools-all
+%make_build DTC=%_bindir/dtc NO_SDL=1 tools-only_defconfig tools-all
 
 %install
 mkdir -p %buildroot%_bindir
@@ -39,6 +40,9 @@ ln -s fw_printenv %buildroot%_bindir/fw_setenv
 %_bindir/*
 
 %changelog
+* Tue Jan 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.01-alt1
+- 2023.01 released
+
 * Tue Oct 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.10-alt1
 - 2022.10 released
 
