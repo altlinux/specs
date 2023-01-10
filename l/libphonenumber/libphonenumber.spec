@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: libphonenumber
-Version: 8.13.3
+Version: 8.13.4
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -13,7 +13,7 @@ Url: https://github.com/google/libphonenumber
 Vcs: https://github.com/google/libphonenumber.git
 Source: %url/archive/v%version/%name-%version.tar.gz
 # link libgeocoding against libphonenumber
-Patch1: %name-8.12.51-alt-link.patch
+Patch1: %name-8.13.4-alt-link.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++
@@ -41,13 +41,14 @@ developing applications that use %name.
 
 %prep
 %setup -n %name-%version/cpp
-%patch1
+%patch1 -b .link
 
 %build
 # libabseil compiled with -std=gnu++17
 %cmake \
     -DCMAKE_CXX_STANDARD=17 \
     %{?_disable_check:-DBUILD_TESTING=OFF} \
+    -DBUILD_SHARED_LIBS=ON
 %nil
 %cmake_build
 
@@ -67,8 +68,12 @@ rm -f %buildroot%_libdir/*.a
 %_includedir/phonenumbers/
 %_libdir/libgeocoding.so
 %_libdir/%name.so
+%_libdir/cmake/%name/
 
 %changelog
+* Mon Jan 09 2023 Yuri N. Sedunov <aris@altlinux.org> 8.13.4-alt1
+- 8.13.4
+
 * Fri Dec 23 2022 Yuri N. Sedunov <aris@altlinux.org> 8.13.3-alt1
 - 8.13.3
 
