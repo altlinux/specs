@@ -1,5 +1,5 @@
 Name: u-boot-sunxi
-Version: 2022.10
+Version: 2023.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -21,8 +21,8 @@ Obsoletes: u-boot-sunxi64
 %endif
 
 BuildRequires: %ATF bc ccache dtc >= 1.4 flex libssl-devel
-BuildRequires: python3-dev swig
-BuildRequires: python3(pkg_resources)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(libfdt)
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
@@ -36,23 +36,25 @@ See http://linux-sunxi.org/Bootable_SD_card#Bootloader for details.
 %setup
 
 %build
+export SCP=/dev/null
+export DTC=%_bindir/dtc
+
 %ifarch aarch64
 boards=$(grep -lr MACH_SUN50I configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 %else
 boards=$(grep -lr 'MACH_SUN[4-9]I' configs |sed 's,^configs/\(.\+\)_defconfig,\1,')
 %endif
 for board in $boards; do
-	mkdir build
+	O=build/${board}
 %ifarch aarch64
 	export BL31=%_datadir/atf/sun50i_a64/bl31.bin
-	fgrep -q SUN50I_H6= configs/${board}_defconfig && \
+	grep -qF SUN50I_H6= configs/${board}_defconfig && \
 		export BL31=%_datadir/atf/sun50i_h6/bl31.bin
-	fgrep -q SUN50I_H616= configs/${board}_defconfig && \
+	grep -qF SUN50I_H616= configs/${board}_defconfig && \
 		export BL31=%_datadir/atf/sun50i_h616/bl31.bin
 %endif
-	%make_build HOSTCC='ccache gcc' CC='ccache gcc' O=build ${board}_defconfig all
-	install -pm0644 -D build/u-boot-sunxi-with-spl.bin out/${board}/u-boot-sunxi-with-spl.bin
-	rm -rf build
+	%make_build HOSTCC='ccache gcc' CC='ccache gcc' O=${O} ${board}_defconfig all
+	install -pm0644 -D ${O}/u-boot-sunxi-with-spl.bin out/${board}/u-boot-sunxi-with-spl.bin
 done
 
 %install
@@ -65,6 +67,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jan 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.01-alt1
+- 2023.01 released
+
 * Tue Oct 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.10-alt1
 - 2022.10 released
 
