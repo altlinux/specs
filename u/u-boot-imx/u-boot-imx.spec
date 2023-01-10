@@ -1,5 +1,5 @@
 Name: u-boot-imx
-Version: 2022.10
+Version: 2023.01
 Release: alt1
 
 Summary: Das U-Boot
@@ -17,8 +17,8 @@ Source: %name-%version-%release.tar
 %endif
 
 BuildRequires: %ATF bc ccache dtc >= 1.4 flex libssl-devel lzop zip
-BuildRequires: python3-dev swig
-BuildRequires: python3(pkg_resources)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(libfdt)
 
 %description
 boot loader for embedded boards based on PowerPC, ARM, MIPS and several
@@ -30,30 +30,29 @@ This package supports some of iMX6|iMX8 family boards.
 %setup
 
 %build
+export DTC=%_bindir/dtc
 %ifarch aarch64
-export BL31=%_datadir/atf/imx8mq/bl31.bin
 boards='pico-imx8mq imx8mq_evk imx8mq_phanbell'
 %else
-rm configs/imx6q_bosch_acc_defconfig configs/display5_defconfig
-boards=$(grep -lr ARCH_MX6 configs|xargs grep -l ^CONFIG_SPL=y|sed 's,^configs/\(.\+\)_defconfig,\1,'|sort)
+boards='mx6cuboxi'
 %endif
 for board in $boards; do
-	mkdir build
+	O=build/${board}
 %ifarch aarch64
-	cp -pv %_datadir/firmware-imx-*/firmware/ddr/synopsys/lpddr4_pmu_train_* build/
-	cp -pv %_datadir/firmware-imx-*/firmware/hdmi/cadence/signed_hdmi_imx8m.bin  build/
+	install -pD %_datadir/atf/imx8mq/bl31.bin ${O}/bl31.bin
+	install -p  %_datadir/firmware-imx-*/firmware/hdmi/cadence/signed_hdmi_imx8m.bin  ${O}/
+	install -p  %_datadir/firmware-imx-*/firmware/ddr/synopsys/lpddr4_pmu_train_* ${O}/
 %endif
-	make HOSTCC='ccache gcc' CC='ccache gcc' O=build ${board}_defconfig
-	%make_build V=1 HOSTCC='ccache gcc' CC='ccache gcc' O=build \
+	make HOSTCC='ccache gcc' CC='ccache gcc' O=${O} ${board}_defconfig
+	%make_build HOSTCC='ccache gcc' CC='ccache gcc' O=${O} \
 %ifarch aarch64
 	flash.bin
-	install -pm0644 -D build/flash.bin out/${board}/flash.bin
+	install -pm0644 -D ${O}/flash.bin out/${board}/flash.bin
 %else
 	all
-	install -pm0644 -D build/SPL out/${board}/SPL
-	install -pm0644 build/u-boot.img out/${board}/
+	install -pm0644 -D ${O}/SPL out/${board}/SPL
+	install -pm0644 ${O}/u-boot.img out/${board}/
 %endif
-	rm -rf build
 done
 
 %install
@@ -66,6 +65,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Tue Jan 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.01-alt1
+- 2023.01 released
+
 * Tue Oct 04 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2022.10-alt1
 - 2022.10 released
 
