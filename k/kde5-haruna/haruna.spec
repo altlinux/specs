@@ -4,7 +4,7 @@
 %define libharuna libharuna%sover
 
 Name: kde5-%rname
-Version: 0.9.3
+Version: 0.10.2
 Release: alt1
 %K5init altplace
 
@@ -16,8 +16,6 @@ License: GPL-3.0-or-later
 Requires: %name-youtube-player
 
 Source: %rname-%version.tar
-#Patch1: alt-dont-save-pos.patch
-Patch2: alt-dont-switch-empty-list.patch
 
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: cmake extra-cmake-modules
@@ -76,7 +74,6 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
-%patch2 -p1
 
 %build
 %K5build \
@@ -106,6 +103,9 @@ KF5 library
 #%_K5lib/libharuna.so.*
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 0.10.2-alt1
+- new version
+
 * Wed Nov 09 2022 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt1
 - new version
 
