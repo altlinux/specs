@@ -2,7 +2,7 @@
 
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 3.2.0
+Version: 3.2.1
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
@@ -468,6 +468,8 @@ fi
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/ippool-dhcp
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/main
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/sql/moonshot-targeted-ids
+%dir %attr(750,root,radiusd) %_sysconfdir/raddb/mods-config/realm
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-config/realm/*
 
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/always
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/mods-enabled/attr_filter
@@ -699,6 +701,9 @@ fi
 #%_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Fri Aug 26 2022 Alexey Shabalin <shaba@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
