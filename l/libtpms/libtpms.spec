@@ -10,7 +10,7 @@
 
 Summary: Library providing Trusted Platform Module (TPM) functionality
 Name: libtpms
-Version: 0.9.3
+Version: 0.9.5
 Release: alt1
 License: BSD
 Group: System/Libraries
@@ -74,6 +74,9 @@ Libtpms header files and documentation.
 %_man3dir/*
 
 %changelog
+* Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.5-alt1
+- new version 0.9.5
+
 * Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.3-alt1
 - new version 0.9.3
 
