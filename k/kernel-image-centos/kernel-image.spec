@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 229
+%define centos_release 232
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,25 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Jan 11 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.232-alt1.el9
+- Updated to kernel-5.14.0-232.el9:
+  + arm64: kdump: Support crashkernel=X fall back to reserve region above DMA zones
+  + cifs: fix NULL ptr dereference in refresh_mounts()
+  + ice: Add devlink port split support
+  + perf: Please add new perf-stat metricgroup "pipeline" for the AMD CPUs
+  + s390: fix double free of GS and RI CBs on fork() failure
+  + Use MFST GUID instead of AMD GUID
+
+* Mon Jan 09 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.231-alt1.el9
+- Updated to kernel-5.14.0-231.el9:
+  + net: Backport data race annotations in the networking stack (part 1).
+
+* Sun Jan 08 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.230-alt1.el9
+- Updated to kernel-5.14.0-230.el9:
+  + aarch64: support HP watchdog
+  + ip_gre: do not report erspan version on GRE interface
+  + x86/cpu: Add several Intel server CPU model numbers
+
 * Fri Jan 06 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.229-alt1.el9
 - Updated to kernel-5.14.0-229.el9 (fixes: CVE-2022-4129):
   + eBPF enhancements in kernel for Power
