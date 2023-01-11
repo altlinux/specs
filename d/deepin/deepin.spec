@@ -1,5 +1,5 @@
 Name: deepin
-Version: 5.0.2
+Version: 5.0.3
 Release: alt1
 Summary: Set of Deepin Desktop installers
 License: GPL-2.0+
@@ -48,6 +48,7 @@ Requires: gnome-keyring
 Requires: startdde
 Requires: deepin-kwin
 Requires: deepin-desktop-schemas
+Requires: dtk5-common-schemas
 Requires: gtk-theme-deepin
 Requires: plasma5-kwin
 Requires: cgroup
@@ -101,6 +102,7 @@ Requires: deepin-network-core
 Requires: kde5-profile
 Requires: deepin-log-viewer
 Requires: deepin-app-services
+Requires: deepin-grand-search
 
 %description default
 %name-default is a virtual package to provide default installation
@@ -139,6 +141,10 @@ Requires: %name-default = %version-%release
 %files regular
 
 %changelog
+* Wed Jan 11 2023 Leontiy Volodin <lvol@altlinux.org> 5.0.3-alt1
+- Added dtk5-common-schemas in deepin-minimal.
+- Added deepin-grand-search in deepin-default.
+
 * Tue Dec 13 2022 Leontiy Volodin <lvol@altlinux.org> 5.0.2-alt1
 - Added deepin-app-services in deepin-default.
 
