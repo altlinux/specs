@@ -1,12 +1,12 @@
 %define _localstatedir %{_var}
 Name:		kapow
-Version:	1.6.0
+Version:	1.6.1
 Release:	alt1
 Summary:	Punch clock
 Group:		Office
 License:	GPLv3+
 URL:		https://gottcode.org/%{name}/
-Source:		https://gottcode.org/%{name}/%{name}-%{version}-src.tar.bz2
+Source:		https://gottcode.org/%{name}/%{name}-%{version}.tar.bz2
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source44: import.info
 BuildRequires(pre): rpm-macros-cmake
@@ -46,6 +46,9 @@ after the last billed session.
 
 
 %changelog
+* Thu Jan 12 2023 Ilya Mashkin <oddity@altlinux.ru> 1.6.1-alt1
+- 1.6.1
+
 * Wed Jul 13 2022 Ilya Mashkin <oddity@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 - Build with qt6/cmake
