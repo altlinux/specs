@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: zoxide
-Version: 0.8.3
+Version: 0.9.0
 Release: alt1
 
 Summary:  A smarter cd command. Supports all major shells.
@@ -13,7 +13,6 @@ Group: System/Libraries
 
 Url: https://github.com/ajeetdsouza/zoxide
 Source: %name-%version.tar
-Source1: vendor-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires: /proc
@@ -29,7 +28,7 @@ shells.
 
 
 %prep
-%setup -a1
+%setup
 %patch0 -p1
 
 mkdir -p .cargo
@@ -41,8 +40,8 @@ replace-with = "vendored-sources"
 directory = "vendor"
 EOF
 
-sed -i 's/^strip = true/strip = false/' Cargo.toml
-sed -i 's/^debug = 0/debug = true/' Cargo.toml
+sed -i -e '/^strip/ s/true/false/' Cargo.toml
+sed -i -e '/^debug/ s/0/true/' Cargo.toml
 
 %build
 export CARGO_HOME=${PWD}/cargo
@@ -52,16 +51,17 @@ cargo build --release
 export CARGO_HOME=${PWD}/cargo
 cargo install --force --root %buildroot/%_prefix --path ./ --no-track
 
-install -Dm 0644 man/man1/*  -t %buildroot%_man1dir
-
-install -Dm 0644 contrib/completions/zoxide.bash  -t %buildroot%_datadir/bash-completion/completions/
-install -Dm 0644 contrib/completions/_zoxide  -t %buildroot%_datadir/zsh/site-functions/
-install -Dm 0644 contrib/completions/zoxide.fish  -t %buildroot%_datadir/fish/vendor_completions.d/
+install -Dm 0644 man/man1/* -t %buildroot%_man1dir
+install -Dm 0644 contrib/completions/zoxide.bash \
+	-t %buildroot%_datadir/bash-completion/completions/
+install -Dm 0644 contrib/completions/_zoxide \
+	-t %buildroot%_datadir/zsh/site-functions/
+install -Dm 0644 contrib/completions/zoxide.fish \
+	-t %buildroot%_datadir/fish/vendor_completions.d/
 
 %check
 export CARGO_HOME=${PWD}/cargo
 cargo test --release
-
 
 %files
 %doc LICENSE README.md
@@ -72,6 +72,9 @@ cargo test --release
 %_datadir/fish/vendor_completions.d/zoxide.fish
 
 %changelog
+* Tue Jan 10 2023 Egor Ignatov <egori@altlinux.org> 0.9.0-alt1
+- 0.9.0
+
 * Sat Sep 03 2022 Egor Ignatov <egori@altlinux.org> 0.8.3-alt1
 - new version 0.8.3
 
