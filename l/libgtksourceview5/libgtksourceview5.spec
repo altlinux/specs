@@ -20,7 +20,7 @@
 %endif
 
 Name: lib%{_name}%api_ver
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: GtkSourceView text widget library
@@ -51,7 +51,7 @@ BuildRequires: libfribidi-devel >= %fribidi_ver
 BuildRequires: perl-XML-Parser zlib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk4-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools libvala-devel}
-%{?_enable_check:BuildRequires: xvfb-run %{?_enable_valgrind:valgrind}
+%{?_enable_check:BuildRequires: dbus xvfb-run %{?_enable_valgrind:valgrind}
 BuildRequires: fonts-ttf-roboto}
 
 %description
@@ -129,7 +129,8 @@ the functionality of the installed GtkSourceView library.
 %find_lang %_name-%api_ver
 
 %check
-xvfb-run %__meson_test
+export GTK_A11Y=none
+dbus-run-session xvfb-run %__meson_test
 
 %files -f %_name-%api_ver.lang
 %_libdir/lib%_name-%api_ver.so.*
@@ -169,6 +170,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Wed Jan 11 2023 Yuri N. Sedunov <aris@altlinux.org> 5.6.2-alt1
+- 5.6.2
+
 * Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 5.6.1-alt1
 - 5.6.1
 
