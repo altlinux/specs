@@ -1,5 +1,5 @@
 Name:     libxc
-Version:  6.0.0
+Version:  6.1.0
 Release:  alt1
 
 Summary:  Library of exchange-correlation functionals for density-functional theory
@@ -50,6 +50,9 @@ Group: Development/C
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jan 11 2023 Andrey Cherepanov <cas@altlinux.org> 6.1.0-alt1
+- New version.
+
 * Mon Oct 17 2022 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt1
 - New version.
 
