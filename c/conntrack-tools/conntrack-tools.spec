@@ -1,6 +1,6 @@
 Name: conntrack-tools
-Version: 1.4.6
-Release: alt5
+Version: 1.4.7
+Release: alt1
 Summary: Tool to manipulate netfilter connection tracking table
 Group: System/Kernel and hardware
 License: GPLv2
@@ -13,7 +13,7 @@ Source13: conntrackd.init
 Source14: conntrackd.service
 Source15: conntrackd.logrotate
 
-BuildRequires: flex libnetfilter_conntrack-devel libmnl-devel
+BuildRequires: flex libnetfilter_conntrack-devel >= 1.0.9 libmnl-devel
 BuildRequires: libnetfilter_cttimeout-devel libnetfilter_cthelper-devel libnetfilter_queue-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libtirpc-devel
@@ -68,6 +68,9 @@ install -pm0644 %SOURCE15 %buildroot%_logrotatedir/conntrackd
 %_man5dir/*
 
 %changelog
+* Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.7-alt1
+- 1.4.7
+
 * Sat Dec 04 2021 Alexey Shabalin <shaba@altlinux.org> 1.4.6-alt5
 - update systemd unit for start conntrackd before keepalived
 
