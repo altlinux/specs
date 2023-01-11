@@ -1,5 +1,5 @@
 Name:           rpi-imager
-Version:        1.7.1
+Version:        1.7.3
 Release:        alt1
 Summary:        Raspberry Pi Imaging Utility
 Group:          System/Configuration/Other
@@ -27,7 +27,7 @@ operating systems to an SD card ready to use with your Raspberry Pi.
 %patch -p1
 
 %build
-%cmake
+%cmake ./src
 %cmake_build
 
 %install
@@ -41,6 +41,9 @@ operating systems to an SD card ready to use with your Raspberry Pi.
 
 
 %changelog
+* Wed Jan 11 2023 Dmitry Terekhin <jqt4@altlinux.org> 1.7.3-alt1
+- Update to new release 1.7.3
+
 * Mon Mar 21 2022 Dmitry Terekhin <jqt4@altlinux.org> 1.7.1-alt1
 - Update to new release 1.7.1
 
