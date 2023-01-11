@@ -3,7 +3,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: cert-manager
-Version: 1.9.1
+Version: 1.11.0
 Release: alt1
 Summary: Automatically provision and manage TLS certificates in Kubernetes
 License: Apache-2.0
@@ -70,6 +70,9 @@ rm -rf -- %buildroot%_datadir
 %_bindir/*
 
 %changelog
+* Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.11.0-alt1
+- new version 1.11.0
+
 * Wed Sep 28 2022 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt1
 - Initial build for Sisyphus
 
