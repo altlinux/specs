@@ -1,6 +1,9 @@
+%filter_from_requires /^\/usr\/bin\/view/d
+%filter_from_requires /^\/usr\/bin\/scan/d
+
 # TODO: use special user
 Name: maldetect
-Version: 1.5
+Version: 1.6.4
 Release: alt1
 
 Summary: Linux Malware Detect (LMD) is a malware scanner for Linux
@@ -20,13 +23,14 @@ Source: %name-%version.tar
 %define maldetdir /var/lib/%name
 
 Provides: maldet = %version-%release
+Obsoletes: maldet < %EVR
 
-# manually removed: rpm-build-python3 ruby ruby-stdlibs
 # Automatically added by buildreq on Sun Sep 22 2013 (-bi)
 # optimized out: ed python-base python3 python3-base
 BuildRequires: mailx rpm-build-intro
 
-Requires: wget
+AutoReq: no
+Requires: stmpclean crontabs bash coreutils grep gzip sed util-linux
 
 %description
 Linux Malware Detect (LMD) is a malware scanner for Linux released under the GNU GPLv2 license,
@@ -43,7 +47,7 @@ See also http://habrahabr.ru/post/194346/
 
 %prep
 %setup
-%__subst "s|/usr/local/maldetect|%maldetdir|g" files/{maldet,ignore_paths,internals/tlog,conf.maldet,internals/*.pl,service/maldet.sysconfig}
+%__subst "s|/usr/local/maldetect|%maldetdir|g" files/{maldet,hookscan.sh,ignore_paths,internals/tlog,conf.maldet,internals/*.pl,internals/*.conf,service/maldet.sysconfig}
 %__subst "s|/usr/local/maldetect/maldet|maldet|g" files/modsec.sh
 %__subst "s|/usr/local/sbin/maldet|%_sbindir/maldet|g" files/internals/scan.etpl files/ignore_paths
 %__subst "s|/usr/local/lmd_update|/tmp/lmd_update|g" files/maldet
@@ -52,9 +56,11 @@ See also http://habrahabr.ru/post/194346/
 
 %install
 mkdir -p %buildroot%_sbindir/
+mkdir -p %buildroot%_man1dir/
 mkdir -p %buildroot%maldetdir/
 cp -pR files/* %buildroot%maldetdir/
 mv %buildroot%maldetdir/maldet %buildroot%_sbindir/
+mv %buildroot%maldetdir/maldet.1 %buildroot%_man1dir/
 ln -s maldet %buildroot%_sbindir/lmd
 rm -f %buildroot%maldetdir/uninstall.sh
 
@@ -88,17 +94,25 @@ MALDIR=%maldetdir
 # note! use ? instead *
 #%_sbindir/maldet -r /home/?/www 2 >> /dev/null 2>&1
 EOF
+chmod 0755 %buildroot/etc/cron.daily/maldet
 
 %files
 %doc CHANGELOG README
+%dir %_sysconfdir/%name/
 %config(noreplace) %_sysconfdir/%name/conf.maldet
 %config(noreplace) %_sysconfdir/cron.daily/maldet
 %config(noreplace) %_sysconfigdir/maldet
 %_sbindir/maldet
 %_sbindir/lmd
+%_man1dir/*
 %maldetdir/
 
 %changelog
+* Thu Aug 11 2022 Vitaly Lipatov <lav@altlinux.ru> 1.6.4-alt1
+- new version 1.6.4 (with rpmrb script)
+- update spec
+- disable autoreq due many extra requires
+
 * Thu Dec 10 2015 Vitaly Lipatov <lav@altlinux.ru> 1.5-alt1
 - new version 1.5 (with rpmrb script)
 
