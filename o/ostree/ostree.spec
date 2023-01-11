@@ -5,7 +5,7 @@
 %def_with ed25519
 
 Name: ostree
-Version: 2022.5
+Version: 2022.7
 Release: alt1
 
 Summary: Linux-based operating system develop/build/deploy tool
@@ -196,6 +196,9 @@ NOCONFIGURE=1 sh -x ./autogen.sh
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 2022.7-alt1
+- 2022.7
+
 * Sat Jul 30 2022 Alexey Shabalin <shaba@altlinux.org> 2022.5-alt1
 - 2022.5
 
