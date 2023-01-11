@@ -19,6 +19,7 @@
 %def_enable pulseaudio
 %def_enable oss
 %def_disable jack
+%def_disable sndio
 %def_enable aio
 %def_enable io_uring
 %def_enable blobs
@@ -43,6 +44,7 @@
 %def_enable seccomp
 %def_enable glusterfs
 %def_enable gtk
+%def_enable gtk_clipboard
 %def_enable gnutls
 %def_disable nettle
 %def_disable gcrypt
@@ -51,6 +53,7 @@
 %def_enable tpm
 %def_enable libssh
 %def_enable live_block_migration
+%def_enable replication
 %ifnarch armh
 %def_enable numa
 %else
@@ -111,7 +114,7 @@
 
 %def_enable have_kvm
 
-%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa} %{?_enable_jack:jack} dbus
+%define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_pulseaudio:pa} %{?_enable_jack:jack} %{?_enable_sndio:sndio} dbus
 %define block_drv_list curl dmg %{?_enable_glusterfs:gluster} %{?_enable_libiscsi:iscsi} %{?_enable_libnfs:nfs} %{?_enable_rbd:rbd} %{?_enable_libssh:ssh}
 %define ui_list %{?_enable_gtk:gtk} %{?_enable_curses:curses} %{?_enable_sdl:sdl} %{?_enable_opengl:opengl} dbus
 %define ui_spice_list %{?_enable_spice:app core}
@@ -129,7 +132,7 @@
 
 Name: qemu
 Version: 7.2.0
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: BSD-2-Clause AND BSD-3-Clause AND GPL-2.0-only AND GPL-2.0-or-later AND LGPL-2.1-or-later AND MIT
@@ -180,6 +183,7 @@ BuildRequires: libatomic-devel-static
 %{?_enable_alsa:BuildRequires: libalsa-devel}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
 %{?_enable_jack:BuildRequires: libjack-devel jack-audio-connection-kit}
+%{?_enable_sndio:BuildRequires: libsndio-devel}
 %{?_enable_vnc_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vnc_jpeg:BuildRequires: libjpeg-devel}
 %{?_enable_png:BuildRequires: libpng-devel >= 1.6.34}
@@ -241,6 +245,7 @@ Requires: %name-block-dmg  \
 %{?_enable_oss:Requires: %name-audio-oss}        \
 %{?_enable_pulseaudio:Requires: %name-audio-pa}  \
 %{?_enable_jack:Requires: %name-audio-jack}      \
+%{?_enable_sndio:Requires: %name-audio-sndio}    \
 %{?_enable_sdl:Requires: %name-audio-sdl}        \
 %{?_enable_spice:Requires: %name-audio-spice}    \
 %{?_enable_curses:Requires: %name-ui-curses}     \
@@ -809,12 +814,14 @@ run_configure \
 	--disable-glusterfs \
 	--disable-gnutls \
 	--disable-gtk \
+	--disable-gtk-clipboard \
 	--disable-guest-agent \
 	--disable-guest-agent-msi \
 	--disable-hax \
 	--disable-hvf \
 	--disable-iconv \
 	--disable-jack \
+	--disable-sndio \
 	--disable-keyring \
 	--disable-kvm \
 	--disable-l2tpv3 \
@@ -829,6 +836,7 @@ run_configure \
 	--disable-linux-aio \
 	--disable-linux-io-uring \
 	--disable-live-block-migration \
+	--disable-replication \
 	--disable-lzfse \
 	--disable-lzo \
 	--disable-membarrier \
@@ -931,6 +939,7 @@ run_configure \
 	--enable-dbus-display \
 	%{subst_enable vnc} \
 	%{?_enable_gtk:--enable-gtk --enable-vte} \
+	%{?_enable_gtk_clipboard:--enable-gtk-clipboard} \
 	%{?_disable_vnc_tls:--disable-vnc-tls} \
 	%{?_disable_vnc_sasl:--disable-vnc-sasl} \
 	%{?_disable_vnc_jpeg:--disable-vnc-jpeg} \
@@ -963,6 +972,7 @@ run_configure \
 	%{subst_enable glusterfs} \
 	%{subst_enable libssh} \
 	%{?_enable_live_block_migration:--enable-live-block-migration} \
+	%{subst_enable replication} \
 	%{subst_enable rdma} \
 	%{subst_enable gnutls} \
 	%{subst_enable nettle} \
@@ -1179,21 +1189,17 @@ echo "%_binfmtdir/qemu-i486-static.conf" >> user-static-binfmt-x86.list
 %endif
 
 %check
-# Disabled on aarch64 where it fails with several errors.  Will
-# investigate and fix when we have access to real hardware
 
-%define archs_skip_tests aarch64
-%def_enable archs_ignore_test_failures
+%define archs_skip_tests ppc64le
+#%%define archs_skip_tests ""
 
-%ifnarch %archs_skip_tests
+%ifarch %archs_skip_tests
+exit 0
+%endif
 
-%if_enabled archs_ignore_test_failures
-%make_build V=1 check ||:
-%else
+pushd build-dynamic
 %make_build V=1 check
-%endif # archs_ignore_test_failures
-
-%endif # archs_skip_tests
+popd
 
 %pre common
 %_sbindir/groupadd -r -f %_group
@@ -1337,6 +1343,12 @@ fi
 %exclude %docdir/LICENSE
 
 %changelog
+* Tue Jan 10 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.0-alt3
+- Build with enable-replication.
+- Allow build with sndio.
+- Build with enable-gtk-clipboard.
+- Fixed run make check. Disable check for ppc64le.
+
 * Sun Jan 08 2023 Vitaly Chikunov <vt@altlinux.org> 7.2.0-alt2
 - Temporary workaround 'Could not install MSR_CORE_THREAD_COUNT handler'
   kernel bug when KVM is used on i586.
