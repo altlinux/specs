@@ -4,7 +4,7 @@
 %define repo dde-control-center
 
 Name: deepin-control-center
-Version: 5.6.1
+Version: 5.6.3
 Release: alt1
 Summary: New control center for Linux Deepin
 License: LGPL-3.0+
@@ -46,7 +46,8 @@ BuildRequires: libgmock-devel
 BuildRequires: libpolkitqt5-qt5-devel
 BuildRequires: libdeepin-pw-check-devel
 BuildRequires: deepin-desktop-base
-BuildRequires: dtk5-common
+BuildRequires: dtk5-common-devel
+BuildRequires: dtk5-core-devel
 BuildRequires: qt5-wayland-devel kf5-kwayland-devel
 # libQt5XkbCommonSupport.a
 BuildRequires: qt5-base-devel-static
@@ -84,28 +85,15 @@ sed -i '/new CommonInfoModule/d' src/frame/window/mainwindow.cpp
 sed -i '/new AccountsModule/d' src/frame/window/mainwindow.cpp
 # remove Deepin ID Sync module
 sed -i '/new SyncModule/d' src/frame/window/mainwindow.cpp
-# disable non-working modules that switch to the lock screen
-#sed -i '/Wakeup Settings/d' \
-#  src/frame/window/modules/power/generalwidget.cpp \
-#  src/frame/window/search/searchwidget.cpp
-#sed -i '/dcc::widgets::SwitchWidget *m_wake/d' \
-#  src/frame/window/modules/power/generalwidget.h
 
 sed -i '/m_wake/d' src/frame/window/modules/power/generalwidget.{cpp,h}
 sed -i '/GSettingWatcher::instance()->getStatus(gsetting_systemSuspend) != "Hidden"/d' \
   src/frame/window/modules/power/generalwidget.cpp
-#sed -i '/m_monitorSleepOnPower/d' \
-#  src/frame/window/modules/power/{usebatterywidget.cpp,useelectricwidget.cpp}
-# sed -i '/void CommonInfoWork::setUeProgram/s|enabled)|disabled)|' \
-#   src/frame/window/modules/commoninfo/commoninfowork.cpp
 
 sed -i 's|/lib/|/%_lib/|' \
     com.deepin.controlcenter.develop.policy \
     src/frame/window/mainwindow.cpp \
     src/frame/window/insertplugin.cpp
-
-# sed -i 's|/etc/deepin/dde-session-ui.conf|/usr/share/dde-session-ui/dde-session-ui.conf|' \
-# 	src/frame/modules/accounts/accountsworker.cpp
 
 sed -i '/dde-grand-search-daemon/s|lib/${CMAKE_LIBRARY_ARCHITECTURE}|%_lib/|' \
   CMakeLists.txt
@@ -126,7 +114,6 @@ export READELF="llvm-readelf"
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DDCC_DISABLE_GRUB=YES \
-    -DDISABLE_SYS_UPDATE=YES \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DDISABLE_RECOVERY=YES \
     -DCVERSION=%version \
@@ -163,7 +150,6 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %doc LICENSE README.md
 %_bindir/%repo
 %_bindir/%repo-wapper
-# %%_bindir/abrecovery
 %_desktopdir/%repo.desktop
 %_datadir/dbus-1/services/*.service
 %_datadir/polkit-1/actions/*.policy
@@ -172,9 +158,7 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %dir %_datadir/dman/
 %dir %_datadir/dman/dde-control-center/
 %_datadir/dman/dde-control-center/internaltest.md
-# %%_sysconfdir/xdg/autostart/deepin-ab-recovery.desktop
 %_datadir/glib-2.0/schemas/com.deepin.dde.control-center.gschema.xml
-# %%_libdir/%%repo/
 %dir %_libdir/dde-grand-search-daemon/
 %dir %_libdir/dde-grand-search-daemon/plugins/
 %dir %_libdir/dde-grand-search-daemon/plugins/searcher/
@@ -190,6 +174,10 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop ||:
 %_includedir/%repo/
 
 %changelog
+* Wed Jan 11 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.3-alt1
+- New version (5.6.3).
+- Cleanup spec.
+
 * Wed Dec 14 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.1-alt1
 - New version (5.6.1).
 
