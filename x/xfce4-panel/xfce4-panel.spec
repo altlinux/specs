@@ -4,8 +4,8 @@
 %define git_hash %nil
 
 Name: xfce4-panel
-Version: 4.18.0
-Release: alt2%git_hash
+Version: 4.18.1
+Release: alt1%git_hash
 
 Summary: Panel for Xfce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
@@ -162,6 +162,9 @@ Vala bindings for libxfce4panel-gtk3.
 %endif
 
 %changelog
+* Wed Jan 11 2023 Mikhail Efremov <sem@altlinux.org> 4.18.1-alt1
+- Updated to 4.18.1.
+
 * Fri Dec 16 2022 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt2
 - Fixed Russian "File Manager" translation.
 
