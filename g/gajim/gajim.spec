@@ -5,7 +5,7 @@
 
 Name: gajim
 Version: 1.6.0
-Release: alt1
+Release: alt2
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -16,13 +16,13 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source: https://gajim.org/downloads/1.3/gajim-%version.tar.gz
 Patch1: gajim-1.2.2-alt-fix-egg-requires.patch
 
-# minimal python version for gajim >= 1.2.2
-Requires: python3 >= 3.7
+# https://gajim.org/post/2023-01-07-gajim-1.6.0-released/
+Requires: python3 >= 3.10
 
 # typelib(Avahi)
 %filter_from_requires /^typelib(Avahi)/d
 
-Requires: libgtk+3-gir libsoup-gir libgtksourceview4-gir
+Requires: libgtk+3-gir libgtksourceview4-gir
 %py3_requires cssutils
 %py3_requires keyring
 %py3_requires precis_i18n
@@ -74,6 +74,10 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Wed Jan 11 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.6.0-alt2
+- Fixed minimal python3 version
+- Removed needless dependency.
+
 * Tue Jan 10 2023 Ilya Mashkin <oddity@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 
