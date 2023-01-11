@@ -1,8 +1,9 @@
+%define _unpackaged_files_terminate_build 1
 %def_enable embedded_cryptopp
 
 Name: urbackup-client
-Version: 2.4.11
-Release: alt3
+Version: 2.5.22
+Release: alt1
 Summary: Efficient Client-Server backup system for Linux and Windows
 Group: Archiving/Backup
 License: AGPL-3.0+
@@ -10,13 +11,14 @@ Url: http://www.urbackup.org/
 Source: %name-%version.tar.gz
 Source2: %name-snapshot.cfg
 Patch1: urbackup-client-fix-link-sqlite3.patch
-Patch2: urbackup-client-scripts.patch
 
 BuildRequires: gcc-c++
 BuildRequires: zlib-devel
 BuildRequires: libzstd-devel
 %{?_disable_embedded_cryptopp:BuildRequires: libcryptopp-devel}
 BuildRequires: libsqlite3-devel
+BuildRequires: libssl-devel
+BuildRequires: libdevmapper-devel
 
 Requires: urbackup-common
 
@@ -30,10 +32,10 @@ on either Windows or Linux servers.
 %prep
 %setup -n %name-%version.0
 %patch1 -p1
-%patch2 -p1
 
 sed -i "s@/usr/local/sbin/urbackupclientbackend@%_sbindir/urbackupclientbackend@g" urbackupclientbackend-redhat.service
 sed -i 's,armhf,armh,' cryptoplugin/src/configure.ac
+sed -i 's,gnueabihf,gnueabi,' cryptoplugin/src/configure.ac
 
 %build
 export SUID_CFLAGS=-fPIE
@@ -44,6 +46,13 @@ export SUID_LDFLAGS=-fpie
 %ifarch %e2k
 %add_optflags -mno-sse4.2 -mno-avx
 %endif
+
+%ifnarch x86_64
+# Does not build with PIC by default on x86, see
+# http://groups.google.com/group/cryptopp-users/browse_thread/thread/d639907b0b1816b9
+%__subst '1 i #define CRYPTOPP_DISABLE_SSE2' cryptoplugin/src/config.h
+%endif
+
 %autoreconf
 %configure \
     %{?_enable_embedded_cryptopp:--enable-embedded-cryptopp} \
@@ -84,6 +93,7 @@ touch %buildroot%_logdir/urbackupclient.log
 %_bindir/urbackupclientctl
 %_bindir/blockalign
 %_sbindir/urbackupclientbackend
+%_sbindir/urbackupclient_dmsnaptool
 %_unitdir/%name.service
 %_man1dir/*
 %dir %attr(0755,urbackup,urbackup) %_datadir/urbackup
@@ -93,6 +103,9 @@ touch %buildroot%_logdir/urbackupclient.log
 %ghost %_logdir/urbackupclient.log
 
 %changelog
+* Tue Jan 10 2023 Alexey Shabalin <shaba@altlinux.org> 2.5.22-alt1
+- 2.5.22
+
 * Fri Nov 12 2021 Alexey Shabalin <shaba@altlinux.org> 2.4.11-alt3
 - build with embedded cryptopp
 
