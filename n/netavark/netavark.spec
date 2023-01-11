@@ -2,7 +2,7 @@
 %define _libexecdir /usr/libexec
 
 Name: netavark
-Version: 1.2.0
+Version: 1.4.0
 Release: alt1
 License: Apache-2.0
 Summary: OCI network stack
@@ -67,6 +67,9 @@ go-md2man -in %name.1.md -out %name.1
 %_man1dir/%name.1*
 
 %changelog
+* Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
+- new version 1.4.0
+
 * Thu Sep 29 2022 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 
