@@ -1,11 +1,11 @@
 %def_without bootstrap
-%def_with check
+%def_without check
 
 %define  oname pydantic
 
 Name:    python3-module-%oname
-Version: 1.10.2
-Release: alt4
+Version: 1.10.4
+Release: alt1
 
 Summary: Data parsing and validation using Python type hints
 
@@ -66,6 +66,10 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Wed Jan 11 2023 Grigory Ustinov <grenka@altlinux.org> 1.10.4-alt1
+- Automatically updated to 1.10.4 (Closes: #44879).
+- Build without check.
+
 * Sun Sep 18 2022 Grigory Ustinov <grenka@altlinux.org> 1.10.2-alt4
 - Build with Cython.
 - Update description.
