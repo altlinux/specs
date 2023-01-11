@@ -1,13 +1,13 @@
 %def_enable translation
 
 Name: nvidia-settings
-Version: 515.86.01
+Version: 525.78.01
 Release: alt1
 
 Group: System/Configuration/Hardware
 Summary: Tool for configuring the NVIDIA driver
 Url: ftp://download1.nvidia.com/XFree86/nvidia-settings/
-License: GPL
+License: GPL-2.0-only
 
 Source: %name-%version.tar.gz
 Source1: %name-16.png
@@ -32,7 +32,7 @@ BuildRequires(pre): rpm-build-ubt
 BuildRequires: libXrandr-devel libXv-devel libXxf86vm-devel libGL-devel libvdpau-devel
 BuildRequires: libwayland-client-devel
 BuildRequires: libdbus-devel
-BuildRequires: libgtk+2-devel libgtk+3-devel
+BuildRequires: libgtk+3-devel
 
 %description
 The `nvidia-settings` utility is a tool for configuring the NVIDIA
@@ -131,6 +131,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 525.78.01-alt1
+- new version
+
 * Fri Nov 25 2022 Sergey V Turchin <zerg@altlinux.org> 515.86.01-alt1
 - new version
 
