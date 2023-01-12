@@ -11,7 +11,7 @@
 
 Name: openuds-server
 Version: 3.5.0
-Release: alt3
+Release: alt4
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -154,6 +154,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Thu Jan 12 2023 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt4
+- Drop download link on legacy python2 windows client
+
 * Wed Dec 21 2022 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt3
 - Merge with upstream/v3.5 branch
 - Changed path in HTML5RDP /share -> /var/lib/guacd/share for drive-path and recording-path (ALT #43543)
