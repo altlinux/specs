@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.0.2
+Version: 1.1.0
 Release: alt1
 
 Summary: HTTP traffic mocking and testing made easy in Python
@@ -54,5 +54,8 @@ py.test-3 -v -k 'not test_engines'
 %doc LICENSE *.rst
 
 %changelog
+* Thu Jan 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
+- Automatically updated to 1.1.0.
+
 * Fri Jun 24 2022 Grigory Ustinov <grenka@altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus.
