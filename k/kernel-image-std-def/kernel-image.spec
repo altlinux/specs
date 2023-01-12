@@ -2,7 +2,7 @@ Name: kernel-image-std-def
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel	.86
+%define kernel_sublevel	.87
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -615,6 +615,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Jan 13 2023 Kernel Bot <kernelbot@altlinux.org> 2:5.15.87-alt1
+- v5.15.87 (2023-01-12).
+- config-armh: Enable ROCKCHIP_IODOMAIN=m, CROS_EC_SPI=m (ALT#44813).
+
 * Sat Dec 31 2022 Kernel Bot <kernelbot@altlinux.org> 2:5.15.86-alt1
 - v5.15.86 (2022-12-31).
 
