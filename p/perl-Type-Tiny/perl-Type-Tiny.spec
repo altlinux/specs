@@ -6,7 +6,7 @@ BuildRequires: perl(Module/Build.pm) perl(Path/Tiny.pm) perl(Perl/Tidy.pm) perl(
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 2.000001
+Version: 2.002000
 Release: alt1
 Summary: tiny, yet Moo(se)-compatible type constraint
 Group: Development/Perl
@@ -41,6 +41,9 @@ Obsoletes: perl-Type-Tie < 0.016
 %perl_vendor_privlib/E*
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 2.002000-alt1
+- automated CPAN update
+
 * Fri Sep 30 2022 Igor Vlasenko <viy@altlinux.org> 2.000001-alt1
 - automated CPAN update
 
