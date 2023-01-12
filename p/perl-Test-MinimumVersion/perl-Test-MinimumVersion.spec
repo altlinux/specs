@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -6,12 +7,12 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:		perl-Test-MinimumVersion
-Version:	0.101082
-Release:	alt1_13
+Version:	0.101083
+Release:	alt1
 Summary:	Check whether your code requires a newer perl
 License:	GPL+ or Artistic
 URL:		https://metacpan.org/release/Test-MinimumVersion
-Source0:	https://cpan.metacpan.org/authors/id/R/RJ/RJBS/Test-MinimumVersion-%{version}.tar.gz
+Source0:	http://www.cpan.org/authors/id/R/RJ/RJBS/Test-MinimumVersion-%{version}.tar.gz
 
 BuildArch:	noarch
 
@@ -51,11 +52,13 @@ chmod -R u+w $RPM_BUILD_ROOT/*
 make test
 
 %files
-%doc Changes
-%doc --no-dereference LICENSE
+%doc Changes README
 %{perl_vendor_privlib}/Test
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 0.101083-alt1
+- automated CPAN update
+
 * Wed Nov 20 2019 Igor Vlasenko <viy@altlinux.ru> 0.101082-alt1_13
 - update to new release by fcimport
 
