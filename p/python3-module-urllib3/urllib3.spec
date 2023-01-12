@@ -3,8 +3,8 @@
 %def_without docs
 
 Name: python3-module-%oname
-Version: 1.26.6
-Release: alt3
+Version: 1.26.14
+Release: alt1
 
 Epoch: 2
 
@@ -115,6 +115,9 @@ py.test-3
 %endif
 
 %changelog
+* Thu Jan 12 2023 Vladimir Didenko <cow@altlinux.org> 2:1.26.14-alt1
+- 1.26.6 -> 1.26.14 (fixes compatibility with cryptography >= 39)
+
 * Tue Aug 17 2021 Vitaly Lipatov <lav@altlinux.ru> 2:1.26.6-alt3
 - drop deprecated ntlm support
 
