@@ -2,7 +2,7 @@
 
 Name:    cloud-init
 Version: 22.3.4
-Release: alt2
+Release: alt3
 
 Summary: Cloud instance init scripts
 Group:   System/Configuration/Boot and Init
@@ -205,6 +205,9 @@ make unittest
 %dir %_sharedstatedir/cloud
 
 %changelog
+* Thu Jan 12 2023 Mikhail Gordeev <obirvalger@altlinux.org> 22.3.4-alt3
+- Fix package installation error
+
 * Fri Nov 18 2022 Michael Shigorin <mike@altlinux.org> 22.3.4-alt2
 - Fix BR: for --disable check case
 
