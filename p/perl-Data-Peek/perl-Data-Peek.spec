@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
@@ -15,12 +16,12 @@ BuildRequires: perl-podlators
 %{bcond_without perl_Data_Peek_enables_option_test}
 
 Name:           perl-Data-Peek
-Version:        0.51
-Release:        alt2_2
+Version:        0.52
+Release:        alt1
 Summary:        Collection of low-level debug facilities
 License:        GPL+ or Artistic
 URL:            https://metacpan.org/release/Data-Peek
-Source0:        https://cpan.metacpan.org/authors/id/H/HM/HMBRAND/Data-Peek-%{version}.tgz
+Source0:        http://www.cpan.org/authors/id/H/HM/HMBRAND/Data-Peek-%{version}.tgz
 BuildRequires:  coreutils
 BuildRequires:  findutils
 BuildRequires:  gcc
@@ -72,12 +73,15 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -delete
 make test
 
 %files
-%doc ChangeLog README CONTRIBUTING.md
+%doc ChangeLog README CONTRIBUTING.md examples
 %{perl_vendor_archlib}/auto/*
 %{perl_vendor_archlib}/Data*
 %{perl_vendor_archlib}/DP.pm
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 0.52-alt1
+- automated CPAN update
+
 * Thu Apr 07 2022 Igor Vlasenko <viy@altlinux.org> 0.51-alt2_2
 - to Sisyphus as IO-Compress dep
 
