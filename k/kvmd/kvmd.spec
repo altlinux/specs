@@ -1,14 +1,15 @@
 Name: kvmd
 Version: 3.191
-Release: alt1
+Release: alt2
 
 Summary: The PiKVM daemon
 License: GPLv3
 Group: System/Servers
 Url: https://pikvm.org/
 
-Requires: janus
-Requires: ustreamer ustreamer-plugin-janus
+Requires: kvmd-janus
+Requires: ustreamer
+Requires: ustreamer-plugin-janus
 Requires: nginx
 Requires: openssl
 Requires: ipmitool
@@ -82,6 +83,9 @@ rm -v %buildroot%_unitdir/kvmd-certbot.service
 %python3_sitelibdir/kvmd-%version.dist-info
 
 %changelog
+* Thu Jan 12 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.191-alt2
+- use kvmd-janus fork
+
 * Thu Dec 22 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.191-alt1
 - 3.191 released
 

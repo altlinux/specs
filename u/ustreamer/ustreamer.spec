@@ -1,5 +1,5 @@
 Name: ustreamer
-Version: 5.35
+Version: 5.36
 Release: alt1
 
 Summary: Lightweight MJPEG stream server
@@ -17,7 +17,7 @@ Group: Networking/Other
 Summary: Python bindings for ustreamer
 Group: Development/Python
 
-BuildRequires: janus-devel
+BuildRequires: kvmd-janus-devel
 BuildRequires: libalsa-devel
 BuildRequires: libbsd-devel
 BuildRequires: libevent-devel
@@ -51,7 +51,10 @@ This package contains Python bindings.
 
 %prep
 %setup
-sed -ri -e '/^_CFLAGS/ s,$, -I/usr/include/janus,' janus/Makefile
+grep -Elr '^#include\s+<janus' janus/ |xargs sed -i 's,<janus/,<kvmd-janus/,'
+sed -ri -e '/^_CFLAGS/ s,$, -I/usr/include/kvmd-janus,' \
+        -e 's,/lib/ustreamer/janus,/%_lib/kvmd-janus/plugins,' \
+janus/Makefile
 
 %build
 make %defs
@@ -65,18 +68,20 @@ make install %defs DESTDIR=%buildroot PREFIX=%prefix
 %doc README*
 %_bindir/ustreamer
 %_bindir/ustreamer-dump
-%dir %_libexecdir/ustreamer
 %_man1dir/ustreamer.1*
 %_man1dir/ustreamer-dump.1*
 
 %files plugin-janus
-%_libexecdir/ustreamer/janus
+%_libdir/kvmd-janus/plugins/*.so
 
 %files -n python3-module-ustreamer
 %python3_sitelibdir/ustreamer-%version.dist-info
 %python3_sitelibdir/ustreamer.*.so
 
 %changelog
+* Thu Jan 12 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.36-alt1
+- 5.36 released
+
 * Thu Dec 22 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.35-alt1
 - 5.35 released
 
