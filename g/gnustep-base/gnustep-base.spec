@@ -1,11 +1,11 @@
 %set_verify_elf_method unresolved=strict
-%define gnustep_ver 1.28
+%define gnustep_ver 1.29
 %def_without build_debug
 %def_without objc2
 %def_with doc
 
 Name: gnustep-base
-Version: 1.28.1
+Version: 1.29.0
 Release: alt1
 Epoch: 1
 
@@ -176,6 +176,9 @@ fi
 %endif
  
 %changelog
+* Tue Jan 10 2023 Andrey Cherepanov <cas@altlinux.org> 1:1.29.0-alt1
+- New version.
+
 * Thu Dec 29 2022 Andrey Cherepanov <cas@altlinux.org> 1:1.28.1-alt1
 - New version.
 
