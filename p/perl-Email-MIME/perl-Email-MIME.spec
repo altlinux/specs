@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Email-MIME
 Name: perl-%dist
-Version: 1.952
+Version: 1.953
 Release: alt1
 
 Summary: Easy MIME message parsing
@@ -39,6 +39,9 @@ the message. Headers are decoded from MIME encoding.
 %perl_vendor_privlib/Email*
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 1.953-alt1
+- automated CPAN update
+
 * Wed Dec 15 2021 Igor Vlasenko <viy@altlinux.org> 1.952-alt1
 - automated CPAN update
 
