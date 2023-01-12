@@ -3,16 +3,14 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.3.2.1
-Release: alt8
+Version: 0.4.1
+Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
 License: GPL-3.0+
 Url: http://git.altlinux.org/gears/l/lightdm-kde-greeter.git
 
 Source: %name-%version.tar
-
-Patch1: %name-%version-alt.patch
 
 %K5init altplace
 
@@ -41,7 +39,6 @@ This is a fork of KDE4-based LightDM greeter engine for KDE5.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %K5build
@@ -73,6 +70,13 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Wed Jan 11 2023 Anton Golubev <golubevan@altlinux.org> 0.4.1-alt1
+- improve behavior for multiple screens
+
+* Mon Dec 12 2022 Anton Golubev <golubevan@altlinux.org> 0.4.0-alt1
+- improve layout of the main theme 'userbar'
+- simplify gear rules
+
 * Wed Nov 30 2022 Sergey V Turchin <zerg@altlinux.org> 0.3.2.1-alt8
 - fix to build with KF-5.100
 
