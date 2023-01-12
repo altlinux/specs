@@ -6,7 +6,7 @@ BuildRequires: perl(Carp.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.709
+Version: 1.710
 Release: alt1
 Summary: tolerance ranges for inexact numbers
 Group: Development/Perl
@@ -34,6 +34,9 @@ BuildArch: noarch
 %perl_vendor_privlib/N*
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 1.710-alt1
+- automated CPAN update
+
 * Mon May 30 2022 Igor Vlasenko <viy@altlinux.org> 1.709-alt1
 - automated CPAN update
 
