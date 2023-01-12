@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.45
+Version: 1.46
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -217,6 +217,7 @@ timeout 300 vm-run --verbose --overlay=ext4 uname -a
 ! timeout --preserve-status 300 vm-run --verbose exit 1
 timeout 300 vm-run --rootfs --verbose df
 timeout 300 vm-run --hvc --no-quiet 'dmesg -r | grep Unknown'
+timeout 300 vm-run --tcg --cpu=1 cat /proc/cpuinfo
 
 %ifarch %supported_arches
 %check
@@ -225,6 +226,10 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Tue Jan 10 2023 Vitaly Chikunov <vt@altlinux.org> 1.46-alt1
+- ppc: Fix TCG run on qemu since 6.0.
+- Add TCG mode test in checkinstall.
+
 * Sun Jan 08 2023 Vitaly Chikunov <vt@altlinux.org> 1.45-alt1
 - Add kvm-ok tool.
 - Minor fixes to experimental (EFI) boot options.
