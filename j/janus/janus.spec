@@ -4,7 +4,7 @@
 %def_without aes_gcm
 
 Name: janus
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Janus WebRTC Server
@@ -25,7 +25,7 @@ Patch1: janus-0.10.0-debian-2004_avoid_stun_privacy_breach.patch
 Patch2: janus-0.10.0-debian-2005_avoid_npm.patch
 Patch3: janus-0.10.0-debian-2006_avoid_doc_privacy_breach.patch
 Patch4: janus-0.10.0-debian-2002_force_tolerate_recent_doxygen.patch
-
+Patch5: janus-1.1.1-upstream-curl_parentheses.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -100,6 +100,7 @@ development.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 
 mv -f COPYING COPYING.GPL.orig
@@ -194,6 +195,10 @@ mkdir -p -- %buildroot%_localstatedir/%name/recordings
 
 
 %changelog
+* Thu Jan 12 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.1.1-alt1
+- New version
+- Fix build with libcurl-7.87.0
+
 * Tue Dec 06 2022 Nikolay A. Fetisov <naf@altlinux.org> 1.1.0-alt1
 - New version
 
