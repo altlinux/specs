@@ -15,7 +15,7 @@
 %define _disable_test 1
 
 Name: perl-CPAN-Meta-Check
-Version: 0.014
+Version: 0.017
 Release: alt1
 
 Summary: Verify requirements in a CPAN::Meta object
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/CPAN/authors/id/L/LE/LEONT/CPAN-Meta-Check-0.004.tar
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/L/LE/LEONT/CPAN-Meta-Check-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/L/LE/LEONT/%{module}-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-devel perl(CPAN/Meta.pm) perl(CPAN/Meta/Requirements.pm) perl(Module/Metadata.pm) perl(Test/Differences.pm)
@@ -36,7 +36,7 @@ BuildRequires: perl-devel perl(CPAN/Meta.pm) perl(CPAN/Meta/Requirements.pm) per
 None.
 
 %prep
-%setup -n %m_distro-%version
+%setup -q -n %{module}-%{version}
 %build
 %perl_vendor_build
 
@@ -44,9 +44,13 @@ None.
 %perl_vendor_install
 
 %files
+%doc Changes LICENSE README
 %perl_vendor_privlib/CPAN/*
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 0.017-alt1
+- automated CPAN update
+
 * Wed Nov 30 2016 Igor Vlasenko <viy@altlinux.ru> 0.014-alt1
 - automated CPAN update
 
