@@ -2,7 +2,7 @@
 %filter_from_requires /^perl.MRO.Compat.pm./d
 
 Name: perl-Moo
-Version: 2.005004
+Version: 2.005005
 Release: alt1
 
 Summary: Moo - Minimalist Object Orientation (with Moose compatiblity)
@@ -11,6 +11,7 @@ License: Perl
 
 # Cloned from git://git.shadowcat.co.uk/gitmo/Moo.git
 Url: %CPAN Moo
+VCS: git+https://github.com/moose/Moo.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -39,6 +40,9 @@ BuildArch: noarch
 %doc Changes
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 2.005005-alt1
+- new version 2.005005
+
 * Wed Mar 31 2021 Igor Vlasenko <viy@altlinux.org> 2.005004-alt1
 - new version
 
