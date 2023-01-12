@@ -2,7 +2,7 @@
 
 Name:      appstream-data
 Summary:   ALT Linux AppStream metadata
-Version:   20221221
+Version:   20230111
 Release:   alt1
 Group:     System/Configuration/Packaging
 BuildArch: noarch
@@ -32,6 +32,9 @@ cp -r xmls/* %buildroot%_datadir/app-info/xmls/
 %_datadir/app-info/icons/altlinux
 
 %changelog
+* Wed Jan 11 2023 Kirill Izmestev <felixz@altlinux.org> 20230111-alt1
+- Updated database.
+
 * Wed Dec 21 2022 Kirill Izmestev <felixz@altlinux.org> 20221221-alt1
 - Updated database.
 
