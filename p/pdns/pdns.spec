@@ -4,14 +4,13 @@
 %define _pkgdocdir %_docdir/%name
 
 Name: pdns
-Version: 4.6.3
-Release: alt2
+Version: 4.7.3
+Release: alt1
 Summary: A modern, advanced and high performance authoritative-only nameserver
 Group: System/Servers
 License: GPLv2
 Url: http://powerdns.com
 Source0: %name-%version.tar
-Patch0: pdns-disable-secpoll.patch
 Patch1: %name-4.2.2-alt-boost-1.73.0-compat.patch
 Patch4: %name-4.2.2-alt-fix-missing-include.patch
 ExcludeArch: %ix86 %arm %mips32 ppc
@@ -142,7 +141,6 @@ This package contains the ixfrdist program.
 
 %prep
 %setup
-%patch0 -p1 -b .disable-secpoll
 %patch1 -p2
 %patch4 -p1
 %ifarch %e2k
@@ -190,6 +188,7 @@ sed -i \
     -e 's/# setuid=/setuid=pdns/' \
     -e 's/# setgid=/setgid=pdns/' \
     -e 's/# launch=/launch=bind/' \
+    -e 's/# security-poll-suffix=secpoll\.powerdns\.com\./security-poll-suffix=/' \
     %buildroot%_sysconfdir/%name/pdns.conf
 
 rm %buildroot%_bindir/stubquery
@@ -279,6 +278,7 @@ fi
 %_pkgdocdir/3.4.0_to_4.1.0_schema.mysql.sql
 %_pkgdocdir/4.1.0_to_4.2.0_schema.mysql.sql
 %_pkgdocdir/4.2.0_to_4.3.0_schema.mysql.sql
+%_pkgdocdir/4.3.0_to_4.7.0_schema.mysql.sql
 %_pkgdocdir/enable-foreign-keys.mysql.sql
 %_libdir/%name/libgmysqlbackend.so
 
@@ -289,6 +289,7 @@ fi
 %_pkgdocdir/3.4.0_to_4.1.0_schema.pgsql.sql
 %_pkgdocdir/4.1.0_to_4.2.0_schema.pgsql.sql
 %_pkgdocdir/4.2.0_to_4.3.0_schema.pgsql.sql
+%_pkgdocdir/4.3.0_to_4.7.0_schema.pgsql.sql
 %_libdir/%name/libgpgsqlbackend.so
 
 %files backend-pipe
@@ -313,6 +314,7 @@ fi
 %_pkgdocdir/4.0.0_to_4.2.0_schema.sqlite3.sql
 %_pkgdocdir/4.2.0_to_4.3.0_schema.sqlite3.sql
 %_pkgdocdir/4.3.0_to_4.3.1_schema.sqlite3.sql
+%_pkgdocdir/4.3.1_to_4.7.0_schema.sqlite3.sql
 %_pkgdocdir/bind-dnssec.4.2.0_to_4.3.0_schema.sqlite3.sql
 %_pkgdocdir/bind-dnssec.schema.sqlite3.sql
 %_libdir/%name/libgsqlite3backend.so
@@ -332,6 +334,9 @@ fi
 %_unitdir/ixfrdist@.service
 
 %changelog
+* Thu Jan 12 2023 Alexey Shabalin <shaba@altlinux.org> 4.7.3-alt1
+- 4.7.3
+
 * Fri Nov 11 2022 Alexey Shabalin <shaba@altlinux.org> 4.6.3-alt2
 - Fixed permissions for pdns.conf config.
 
