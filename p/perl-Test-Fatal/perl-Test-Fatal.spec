@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Test-Fatal
 Name: perl-%dist
-Version: 0.016
+Version: 0.017
 Release: alt1
 
 Summary: Simple helpers for testing code with exceptions
@@ -35,6 +35,9 @@ with about the same amount of typing.
 %perl_vendor_privlib/Test*
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 0.017-alt1
+- automated CPAN update
+
 * Tue Sep 01 2020 Igor Vlasenko <viy@altlinux.ru> 0.016-alt1
 - automated CPAN update
 
