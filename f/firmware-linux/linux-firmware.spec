@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230104
+Version: 20230110
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,27 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Jan 12 2023 Cronbuild Service <cronbuild@altlinux.org> 20230110-alt1
+- upstream changes (GIT a1ad1d5b):
+  + amdgpu: add VCN4.0.4 firmware from amd-5.4 (thx Alex Deucher)
+  + amdgpu: add SMU13.0.7 firmware from amd-5.4 (thx Alex Deucher)
+  + amdgpu: add SDMA6.0.2 firmware from amd-5.4 (thx Alex Deucher)
+  + amdgpu: add PSP13.0.7 firmware from amd-5.4 (thx Alex Deucher)
+  + amdgpu: add GC11.0.2 firmware from amd-5.4 (thx Alex Deucher)
+  + amdgpu: add DCN3.2.1 firmware from amd-5.4 (thx Alex Deucher)
+  + amdgpu: update VCN4.0.0 firmware from amd-5.4 (thx Alex Deucher)
+  + amdgpu: update SMU13.0.0 firmware from amd-5.4 (thx Alex Deucher)
+  + amdgpu: update SDMA6.0.0 firmware from amd-5.4 (thx Alex Deucher)
+  + amdgpu: update PSP13.0.0 firmware from amd-5.4 (thx Alex Deucher)
+  + amdgpu: update GC11.0.0 firmware from amd-5.4 (thx Alex Deucher)
+  + iwlwifi: add new FWs from core76-35 release (thx Gregory Greenman)
+  + iwlwifi: update cc/Qu/QuZ firmwares for core76-35 release (thx Gregory Greenman)
+  + iwlwifi: add new FWs from core75-47 release (thx Gregory Greenman)
+  + iwlwifi: update 9000-family firmwares to core75-47 (thx Gregory Greenman)
+  + amdgpu: update renoir DMCUB firmware (thx Alex Deucher)
+  + amdgpu: Update renoir PSP firmware (thx Alex Deucher)
+  + amdgpu: update copyright date for LICENSE.amdgpu (thx Alex Deucher)
+
 * Wed Jan 04 2023 Cronbuild Service <cronbuild@altlinux.org> 20230104-alt1
 - upstream changes (GIT 4ee20147):
   + update firmware for MT7921 WiFi device (thx Deren Wu)
