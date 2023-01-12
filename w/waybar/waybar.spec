@@ -1,5 +1,5 @@
 Name: waybar
-Version: 0.9.16
+Version: 0.9.17
 Release: alt1
 License: MIT
 Summary: Highly customizable Wayland bar for Sway and Wlroots based compositors
@@ -84,6 +84,9 @@ BuildRequires: pkgconfig(libmpdclient)
 %_man5dir/*
 
 %changelog
+* Thu Jan 12 2023 Alexey Gladkov <legion@altlinux.ru> 0.9.17-alt1
+- New version (0.9.17).
+
 * Thu Nov 24 2022 Alexey Gladkov <legion@altlinux.ru> 0.9.16-alt1
 - New version (0.9.16).
 
