@@ -1,8 +1,8 @@
 ## SPEC file for Perl module Config::MVP::Reader::INI
 
 Name: perl-Config-MVP-Reader-INI
-Version: 2.101464
-Release: alt2
+Version: 2.101465
+Release: alt1
 
 Summary: an MVP config reader for .ini files
 
@@ -42,6 +42,9 @@ MVP-style configuration.
 %perl_vendor_privlib/Config/MVP/Reader/INI*
 
 %changelog
+* Thu Jan 12 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.101465-alt1
+- New version
+
 * Sun Jul 11 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.101464-alt2
 - New version
 
