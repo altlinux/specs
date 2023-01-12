@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%modulename
-Version: 2.1.4
+Version: 3.0.0
 Release: alt1
 
 Summary: Python module for formatting Arabic sentences
@@ -48,6 +48,9 @@ applications that do not support Arabic.
 %python3_sitelibdir/arabic_reshaper-%version.dist-info
 
 %changelog
+* Thu Jan 12 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Thu Sep 22 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.4-alt1
 - Automatically updated to 2.1.4.
 - Build with check.
