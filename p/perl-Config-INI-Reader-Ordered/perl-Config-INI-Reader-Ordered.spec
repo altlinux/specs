@@ -6,7 +6,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Config/INI/Reader.pm) perl(Cwd
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.021
+Version: 0.022
 Release: alt1
 Summary: - .ini-file parser that returns sections in order
 Group: Development/Perl
@@ -36,6 +36,9 @@ only difference is as presented in the the SYNOPSIS entry elsewhere in this docu
 %perl_vendor_privlib/C*
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 0.022-alt1
+- automated CPAN update
+
 * Thu Jul 01 2021 Igor Vlasenko <viy@altlinux.org> 0.021-alt1
 - automated CPAN update
 
