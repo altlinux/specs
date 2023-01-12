@@ -11,7 +11,7 @@
 
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.11.0
+Version: 4.12.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
@@ -23,7 +23,7 @@ Source11: fence_virtd.init
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: autoconf-archive
-BuildRequires: python3-module-pexpect python3-module-pycurl python3-module-requests python3-module-suds
+BuildRequires: python3-module-httplib2 python3-module-pexpect python3-module-pycurl python3-module-requests python3-module-suds
 BuildRequires: python3-module-boto3
 BuildRequires: sudo xml-utils xsltproc
 
@@ -32,7 +32,7 @@ BuildRequires: libxml2-devel nss-devel nspr-devel
 BuildRequires: flex libuuid-devel
 
 # skipped: pve, raritan, rcd-serial, virsh
-%global allfenceagents fence-agents-aliyun fence-agents-alom fence-agents-amt fence-agents-apc fence-agents-apc-snmp fence-agents-aws fence-agents-azure-arm fence-agents-bladecenter fence-agents-brocade fence-agents-cdu fence-agents-cisco-mds fence-agents-cisco-ucs fence-agents-crosslink fence-agents-docker fence-agents-drac fence-agents-drac5 fence-agents-eaton-snmp fence-agents-emerson fence-agents-eps fence-agents-hds-cb fence-agents-heuristics-ping fence-agents-hpblade fence-agents-ibmblade fence-agents-ibmz fence-agents-ifmib fence-agents-ilo2 fence-agents-ilo-moonshot fence-agents-ilo-mp fence-agents-ilo-ssh fence-agents-intelmodular fence-agents-ipdu fence-agents-ipmilan fence-agents-kdump fence-agents-kubevirt fence-agents-ldom fence-agents-lindypdu fence-agents-lpar fence-agents-mpath fence-agents-netio fence-agents-ovh fence-agents-powerman fence-agents-redfish fence-agents-rhevm fence-agents-rsa fence-agents-rsb fence-agents-sanbox2 fence-agents-sbd fence-agents-scsi fence-agents-skalar fence-agents-vbox fence-agents-vmware fence-agents-vmware-rest fence-agents-vmware-soap fence-agents-vmware-vcloud fence-agents-wti fence-agents-xenapi fence-agents-zvm fence-virt fence-virtd fence-virtd-multicast fence-virtd-serial fence-virtd-tcp fence-virtd-vsock fence-virtd-libvirt fence-virtd-cpg fence-agents-compute fence-agents-ironic fence-agents-openstack
+%global allfenceagents fence-agents-aliyun fence-agents-alom fence-agents-amt fence-agents-apc fence-agents-apc-snmp fence-agents-aws fence-agents-azure-arm fence-agents-bladecenter fence-agents-brocade fence-agents-cdu fence-agents-cisco-mds fence-agents-cisco-ucs fence-agents-crosslink fence-agents-cyberpower-ssh fence-agents-docker fence-agents-drac fence-agents-drac5 fence-agents-eaton-snmp fence-agents-ecloud fence-agents-emerson fence-agents-eps fence-agents-gce fence-agents-hds-cb fence-agents-heuristics-ping fence-agents-hpblade fence-agents-ibmblade fence-agents-ibmz fence-agents-ibm-powervs fence-agents-ibm-vpc fence-agents-ifmib fence-agents-ilo2 fence-agents-ilo-moonshot fence-agents-ilo-mp fence-agents-ilo-ssh fence-agents-intelmodular fence-agents-ipdu fence-agents-ipmilan fence-agents-kdump fence-agents-kubevirt fence-agents-ldom fence-agents-lindypdu fence-agents-lpar fence-agents-mpath fence-agents-netio fence-agents-ovh fence-agents-powerman fence-agents-redfish fence-agents-rhevm fence-agents-rsa fence-agents-rsb fence-agents-sanbox2 fence-agents-sbd fence-agents-scsi fence-agents-skalar fence-agents-vbox fence-agents-vmware fence-agents-vmware-rest fence-agents-vmware-soap fence-agents-vmware-vcloud fence-agents-wti fence-agents-xenapi fence-agents-zvm fence-virt fence-virtd fence-virtd-multicast fence-virtd-serial fence-virtd-tcp fence-virtd-vsock fence-virtd-libvirt fence-virtd-cpg fence-agents-compute fence-agents-ironic fence-agents-openstack
 
 %description
 Fence Agents is a collection of scripts to handle remote
@@ -80,7 +80,7 @@ Requires: telnet openssh-clients
 Requires: fence-agents-common = %version-%release
 
 %description alom
-The fence-agents-apc package contains a fence agent for SUN ALOM
+The fence-agents-alom package contains a fence agent for SUN ALOM
 
 %package apc
 BuildArch: noarch
@@ -202,6 +202,16 @@ Requires: fence-agents-common = %version-%release
 %description crosslink
 Two node cross-link fence agent.
 
+%package cyberpower-ssh
+BuildArch: noarch
+Group: System/Base
+Summary: Fence agent for CyberPower network PDUs
+Requires: openssh-clients
+Requires: fence-agents-common = %version-%release
+
+%description cyberpower-ssh
+Fence agent for CyberPower network PDUs.
+
 %package docker
 BuildArch: noarch
 Group: System/Base
@@ -241,6 +251,17 @@ Requires: fence-agents-common = %version-%release
 %description eaton-snmp
 The fence-agents-eaton-snmp package contains a fence agent for Eaton network power switches that are accessed via the SNMP protocol.
 
+%package ecloud
+BuildArch: noarch
+Group: System/Base
+License: GPLv2+ and LGPLv2+
+Summary: Fence agent for eCloud and eCloud VPC
+Requires: python3-module-requests
+Requires: fence-agents-common = %version-%release
+
+%description ecloud
+Fence agent for eCloud and eCloud VPC from ANS Group Limited
+
 %package emerson
 BuildArch: noarch
 Group: System/Base
@@ -258,6 +279,17 @@ Requires: fence-agents-common = %version-%release
 
 %description eps
 The fence-agents-eps package contains a fence agent for ePowerSwitch 8M+ power switches that are accessed via the HTTP(s) protocol.
+
+%package gce
+BuildArch: noarch
+Group: System/Base
+Summary: Fence agent for GCE (Google Cloud Engine)
+Requires: fence-agents-common = %version-%release
+Requires: python3-module-google-api-client
+Obsoletes: fence-agents < 3.1.13
+
+%description gce
+Fence agent for GCE (Google Cloud Engine) instances.
 
 %package heuristics-ping
 License: GPLv2+ and LGPLv2+
@@ -311,6 +343,24 @@ Requires: fence-agents-common = %version-%release
 %description ibmz
 Fence agent for IBM z LPARs that are accessed via the HMC
 Web Services REST API.
+
+%package ibm-powervs
+BuildArch: noarch
+Group: System/Base
+Summary: Fence agent for IBM PowerVS
+Requires: fence-agents-common = %version-%release
+
+%description ibm-powervs
+Fence agent for IBM PowerVS that are accessed via REST API.
+
+%package ibm-vpc
+BuildArch: noarch
+Group: System/Base
+Summary: Fence agent for IBM Cloud VPC
+Requires: fence-agents-common = %version-%release
+
+%description ibm-vpc
+Fence agent for IBM Cloud VPC that are accessed via REST API.
 
 %package ifmib
 BuildArch: noarch
@@ -430,7 +480,7 @@ Requires: telnet openssh-clients
 Requires: fence-agents-common = %version-%release
 
 %description ldom
-The fence-agents-ldom package contains a fence agent for APC devices that are accessed via telnet or SSH.
+The fence-agents-ldom package contains an I/O Fencing agent which can be used with LDoms virtual machines.
 
 %package lindypdu
 BuildArch: noarch
@@ -491,12 +541,12 @@ Summary: Fence agent for OVH provider
 Requires: fence-agents-common = %version-%release
 
 %description ovh
-The fence-agents-apc package contains a fence agent for OVH hosting provider.
+The fence-agents-ovh package contains a fence agent for OVH hosting provider.
 
 %package powerman
 BuildArch: noarch
 Group: System/Base
-Summary: Fence agent for APC devices
+Summary: Fence agent for Powerman devices
 Requires: telnet openssh-clients
 Requires: fence-agents-common = %version-%release
 
@@ -510,7 +560,7 @@ Summary: Fence agent for PVE
 Requires: fence-agents-common = %version-%release
 
 %description pve
-The fence-agents-apc package contains a fence agent for PVE.
+The fence-agents-pve package contains a fence agent for PVE.
 
 %package raritan
 BuildArch: noarch
@@ -519,7 +569,7 @@ Summary: Fence agent for Raritan Dominion PX
 Requires: fence-agents-common = %version-%release
 
 %description raritan
-The fence-agents-apc package contains a fence agent for Raritan Dominion PX.
+The fence-agents-raritan package contains a fence agent for Raritan Dominion PX.
 
 %package rcd-serial
 BuildArch: noarch
@@ -528,7 +578,7 @@ Summary: Fence agent for RCD serial
 Requires: fence-agents-common = %version-%release
 
 %description rcd-serial
-The fence-agents-apc package contains a fence agent for RCD serial.
+The fence-agents-rcd-serial package contains a fence agent for RCD serial.
 
 %package redfish
 BuildArch: noarch
@@ -780,7 +830,11 @@ sed -i '/^.*pywsman.*/d' configure.ac
 %autoreconf
 export PYTHON="/usr/bin/python3"
 export SBD_PATH="/usr/sbin/sbd"
-%configure --localstatedir=%_var %{subst_enable_dash cpg_plugin}
+%configure --localstatedir=%_var \
+        SYSTEMD_TMPFILES_DIR=%_tmpfilesdir \
+        --with-fencetmpdir=/run/fence-agents \
+        %{subst_enable_dash cpg_plugin}
+
 %make_build
 
 %install
@@ -792,10 +846,14 @@ ln -sf ../../sbin/fence_scsi %buildroot%_datadir/cluster/fence_scsi_check_hardre
 rm -f %buildroot%_libdir/fence-virt/*.a
 rm -f %buildroot%_libdir/fence-virt/*.la
 
+rm -f %buildroot%_sbindir/fence_raritan_px3
+rm -f %buildroot%_man8dir/fence_raritan_px3.8*
+
 # Systemd unit file
-mkdir -p %buildroot{%_unitdir,%_initdir}
+mkdir -p %buildroot{%_unitdir,%_initdir,%_tmpfilesdir}
 install -m 0644 agents/virt/fence_virtd.service %buildroot%_unitdir/
 install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
+install -m 0644 systemd/fence-agents.conf %buildroot%_tmpfilesdir/%name.conf
 
 %post
 %post_service fence_virtd
@@ -820,8 +878,7 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %exclude %_man8dir/fence_ack_manual.8*
 %exclude %_sbindir/fence_dummy
 %exclude %_man8dir/fence_dummy.8*
-%exclude %_sbindir/fence_zvm
-%exclude %_man8dir/fence_zvm.8*
+%_tmpfilesdir/%name.conf
 
 %files aliyun
 %_sbindir/fence_aliyun
@@ -884,6 +941,10 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %_sbindir/fence_crosslink
 %_man8dir/fence_crosslink.8*
 
+%files cyberpower-ssh
+%_sbindir/fence_cyberpower_ssh
+%_man8dir/fence_cyberpower_ssh.8*
+
 %files docker
 %_sbindir/fence_docker
 %_man8dir/fence_docker.8*
@@ -900,6 +961,10 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %_sbindir/fence_eaton_snmp
 %_man8dir/fence_eaton_snmp.8*
 
+%files ecloud
+%_sbindir/fence_ecloud
+%_man8dir/fence_ecloud.8*
+
 %files emerson
 %_sbindir/fence_emerson
 %_man8dir/fence_emerson.8*
@@ -907,6 +972,10 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %files eps
 %_sbindir/fence_eps
 %_man8dir/fence_eps.8*
+
+%files gce
+%_sbindir/fence_gce
+%_man8dir/fence_gce.8*
 
 %files heuristics-ping
 %_sbindir/fence_heuristics_ping
@@ -927,6 +996,14 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %files ibmz
 %_sbindir/fence_ibmz
 %_man8dir/fence_ibmz.8*
+
+%files ibm-powervs
+%_sbindir/fence_ibm_powervs
+%_man8dir/fence_ibm_powervs.8*
+
+%files ibm-vpc
+%_sbindir/fence_ibm_vpc
+%_man8dir/fence_ibm_vpc.8*
 
 %files ifmib
 %_sbindir/fence_ifmib
@@ -1145,6 +1222,9 @@ install -m 0755 %SOURCE11 %buildroot%_initdir/fence_virtd
 %endif
 
 %changelog
+* Wed Jan 11 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.12.0-alt1
+- 4.12.0
+
 * Mon Nov 29 2021 Andrew A. Vasilyev <andy@altlinux.org> 4.11.0-alt1
 - 4.11.0
 
