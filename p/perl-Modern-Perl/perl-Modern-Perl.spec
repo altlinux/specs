@@ -1,3 +1,4 @@
+%define _unpackaged_files_terminate_build 1
 Epoch: 1
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
@@ -7,7 +8,7 @@ BuildRequires: perl-podlators
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-Modern-Perl
-Version:        1.20220515
+Version:        1.20230106
 Release:        alt1
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
@@ -61,6 +62,9 @@ make test
 %{perl_vendor_privlib}/odern/
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 1:1.20230106-alt1
+- automated CPAN update
+
 * Mon May 16 2022 Igor Vlasenko <viy@altlinux.org> 1:1.20220515-alt1
 - automated CPAN update
 
