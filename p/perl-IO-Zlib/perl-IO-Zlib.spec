@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist IO-Zlib
 Name: perl-%dist
-Version: 1.11
+Version: 1.14
 Release: alt1
 
 Summary: IO:: style interface to Compress::Zlib
@@ -35,6 +36,9 @@ code that doesn't know which sort of file it is using.
 %perl_vendor_privlib/IO
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 1.14-alt1
+- automated CPAN update
+
 * Thu Oct 01 2020 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
 - automated CPAN update
 
