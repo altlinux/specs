@@ -41,7 +41,7 @@
 %ifarch %e2k
 %define more_warnings no
 %else
-%define more_warnings error
+%define more_warnings yes
 %endif
 
 %if_with iwd
@@ -58,7 +58,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.40.8
+Version: 1.40.10
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -639,6 +639,12 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Jan 12 2023 Mikhail Efremov <sem@altlinux.org> 1.40.10-alt1
+- Disabled tests that require D-Bus.
+- Updated "Don't use dns plugins" patch.
+- Don't treat warnings as error.
+- Updated to 1.40.10.
+
 * Mon Dec 19 2022 Mikhail Efremov <sem@altlinux.org> 1.40.8-alt1
 - Updated to 1.40.8.
 
