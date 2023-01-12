@@ -1,9 +1,9 @@
 %define rname plasma-desktop
-
+%def_disable scim
 
 Name: plasma5-desktop
 Version: 5.26.5
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -50,7 +50,10 @@ BuildRequires(pre): rpm-build-kf5
 BuildRequires: rpm-build-python3
 BuildRequires: boost-devel extra-cmake-modules gcc-c++
 BuildRequires: qt5-declarative-devel qt5-phonon-devel qt5-svg-devel qt5-x11extras-devel
-BuildRequires: scim-devel libibus-devel libgio-devel glib2-devel
+%if_enabled scim
+BuildRequires: scim-devel
+%endif
+BuildRequires: libibus-devel libgio-devel glib2-devel
 BuildRequires: packagekit-qt-devel
 BuildRequires: libudev-devel
 BuildRequires: libGLU-devel libcanberra-devel libpulseaudio-devel libusb-compat-devel libxapian-devel
@@ -169,7 +172,7 @@ done
 %build
 %K5cmake \
     -DLIBEXEC_INSTALL_DIR=%_K5exec \
-    -DCMAKE_BUILD_TYPE=Debug \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     #
 %K5make
 
@@ -246,6 +249,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt2
+- build without scim
+
 * Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt1
 - new version
 
