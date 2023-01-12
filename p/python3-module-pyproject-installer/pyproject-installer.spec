@@ -5,14 +5,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Builder and installer of Python project
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/stanislavlevin/pyproject_installer
 Url: https://pypi.org/project/pyproject-installer
+VCS: https://github.com/stanislavlevin/pyproject_installer
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -22,8 +22,6 @@ BuildRequires(pre): rpm-build-python3
 %if_with check
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_mock)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
@@ -52,10 +50,8 @@ export PYTHONPATH=$(pwd)/src
 %__python3 -m %pep503_name -v install --destdir=%buildroot
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+export PYTHONPATH=$(pwd)/src
+%__python3 -m %pep503_name -v run -- pytest -vra tests/unit
 
 %files
 %doc README.md
@@ -63,5 +59,8 @@ tox.py3 --sitepackages --console-scripts -vvr -s false
 %python3_sitelibdir/%pep503_name-%version.dist-info/
 
 %changelog
+* Wed Jan 11 2023 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
+- 0.3.0 -> 0.4.0.
+
 * Thu Jun 16 2022 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
 - Initial build for Sisyphus.
