@@ -2,7 +2,7 @@
 
 Name: gpui
 Version: 0.2.17
-Release: alt16
+Release: alt17
 
 Summary: Group policy editor
 License: GPLv2+
@@ -110,6 +110,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Thu Jan 12 2023 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt17
+- 0.2.17-alt17
+- Fixes:
+  + #91098 Fix translations for shortcuts widget on KDE systems.
+
 * Tue Jan 10 2023 Vladimir Rubanov <august@altlinux.org> 0.2.17-alt16
 - 0.2.17-alt16
 - Fixes:
