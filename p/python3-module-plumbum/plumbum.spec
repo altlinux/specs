@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 
 Summary: Plumbum: shell combinators library
@@ -18,6 +18,8 @@ Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-hatchling
+BuildRequires: python3-module-hatch-vcs
 
 %if_with docs
 BuildRequires: python3-module-sphinx
@@ -94,7 +96,7 @@ This package contains documentation for %oname.
 
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH=$PWD
@@ -106,19 +108,18 @@ rm -rf html/.{doctrees,buildinfo}
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 touch experiments/__init__.py
 cp -fR experiments %buildroot%python3_sitelibdir/%oname/
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PYTHONPATH=%buildroot%python3_sitelibdir
-%__python3 -m pytest --ignore tests/test_remote.py
+%tox_create_default_config
+%tox_check_pyproject -- -k 'not test_home'
 
 %files
 %doc examples *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/*/*/test*
 
 %files tests
@@ -130,6 +131,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Thu Jan 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.8.1-alt1
+- Automatically updated to 1.8.1.
+
 * Thu Oct 06 2022 Grigory Ustinov <grenka@altlinux.org> 1.8.0-alt1
 - Automatically updated to 1.8.0.
 
