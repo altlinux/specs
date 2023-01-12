@@ -1,26 +1,35 @@
-%define oname jq
+%define _unpackaged_files_terminate_build 1
+%define pypi_name jq
 
-Name: python3-module-%oname
-Version: 0.1.6
-Release: alt2
+%def_with check
 
-Summary: Lightweight and flexible JSON processor
-License: BSD
+Name: python3-module-%pypi_name
+Version: 1.4.0
+Release: alt1
+
+Summary: Python bindings for jq
+License: BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/jq/
+Url: https://pypi.org/project/jq/
+Vcs: https://github.com/mwilliamson/jq.py.git
 
-# https://github.com/mwilliamson/jq.py.git
-Source: %name-%version.tar
-Patch1: %oname-%version-alt-build.patch
+Source0: %name-%version.tar
+Source1: setup.py
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-Cython python3-module-nose
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-html5lib python3-module-notebook
+
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(Cython)
+
 BuildRequires: libjq-devel
+BuildRequires: liboniguruma-devel
 
-%py3_provides %oname
+%if_with check
+BuildRequires: python3(pytest)
+%endif
 
+%py3_provides %pypi_name
 
 %description
 jq is a lightweight and flexible JSON processor.
@@ -29,29 +38,34 @@ This project contains Python bindings for jq.
 
 %prep
 %setup
-%patch1 -p1
 
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+# remove vendored libraries
+rm -fvr deps
+
+# provide self-written building instructions
+cp -fv %SOURCE1 .
+rm -fv pyproject.toml
 
 %build
-cython3 jq.pyx
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py test
-%__python3 setup.py build_ext -i
-nosetests3 tests -v
+%tox_check_pyproject
 
 %files
 %doc *.rst
 %python3_sitelibdir/*
 
-
 %changelog
+* Thu Jan 12 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
+- 1.4.0
+- update whole package building
+- use modern pyproject macros
+- actualize Summary, License and Url tags
+
 * Fri Dec 13 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.1.6-alt2
 - build for python2 disabled
 
