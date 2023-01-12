@@ -15,7 +15,7 @@
 
 Name: plasma5-addons
 Version: 5.26.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -29,6 +29,7 @@ Requires: %name-common = %version-%release
 Requires: kf5-purpose
 # plasma.diskquota
 Requires: quota
+#
 Provides: kf5-kdeplasma-addons = %EVR
 Obsoletes: kf5-kdeplasma-addons < %EVR
 
@@ -47,7 +48,6 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-declarative-devel qt5-x11extras-d
 BuildRequires: qt5-webengine-devel
 %endif
 BuildRequires: libxcbutil-image-devel libxcb-devel
-BuildRequires: libibus-devel scim-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
 BuildRequires: kf5-kdelibs4support kf5-kdelibs4support-devel
@@ -163,6 +163,9 @@ touch touch-%_arch
 %_K5lib/libplasmapotdprovidercore.so.%plasmapotdprovidercore_sover
 
 %changelog
+* Thu Jan 12 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt2
+- fix build requires
+
 * Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt1
 - new version
 
