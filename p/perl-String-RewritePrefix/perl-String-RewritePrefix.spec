@@ -1,6 +1,7 @@
+%define _unpackaged_files_terminate_build 1
 %define dist String-RewritePrefix
 Name: perl-%dist
-Version: 0.008
+Version: 0.009
 Release: alt1
 
 Summary: Rewrite strings based on a set of known prefixes
@@ -32,6 +33,9 @@ BuildRequires: perl-Sub-Exporter perl-devel
 %perl_vendor_privlib/String*
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 0.009-alt1
+- automated CPAN update
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
 - automated CPAN update
 
