@@ -1,6 +1,6 @@
 Name: kvmd
 Version: 3.191
-Release: alt2
+Release: alt3
 
 Summary: The PiKVM daemon
 License: GPLv3
@@ -83,6 +83,9 @@ rm -v %buildroot%_unitdir/kvmd-certbot.service
 %python3_sitelibdir/kvmd-%version.dist-info
 
 %changelog
+* Fri Jan 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.191-alt3
+- fixed janus js location
+
 * Thu Jan 12 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.191-alt2
 - use kvmd-janus fork
 
