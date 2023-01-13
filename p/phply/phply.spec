@@ -1,6 +1,6 @@
 Name: phply
-Version: 1.2.5
-Release: alt3
+Version: 1.2.6
+Release: alt1
 
 Summary: Lexer and parser for PHP source implemented using PLY
 
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools python3-module-ply
+BuildRequires: python3-module-wheel python3-module-ply
 
 Requires: python3-module-%name = %version-%release
 
@@ -34,10 +34,10 @@ Python 3 module for phply. phply is a parser for the PHP programming language wr
 %setup -n %name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.md
@@ -48,9 +48,12 @@ Python 3 module for phply. phply is a parser for the PHP programming language wr
 %exclude %python3_sitelibdir/tests
 %python3_sitelibdir/*-nspkg.pth
 %python3_sitelibdir/%name/
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/%name-%version.dist-info
 
 %changelog
+* Fri Jan 13 2023 Vladimir Didenko <cow@altlinux.ru> 1.2.6-alt1
+- new version
+
 * Fri May 7 2021 Vladimir Didenko <cow@altlinux.ru> 1.2.5-alt3
 - don't build python2 module
 
