@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: HTTP traffic mocking and testing made easy in Python
@@ -54,6 +54,9 @@ py.test-3 -v -k 'not test_engines'
 %doc LICENSE *.rst
 
 %changelog
+* Fri Jan 13 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt1
+- Automatically updated to 1.1.1.
+
 * Thu Jan 12 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.0-alt1
 - Automatically updated to 1.1.0.
 
