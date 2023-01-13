@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.80.1.vz7.191.3
-%define orelease 1160.80.1.vz7.191.3
+#     rh7-3.10.0-1160.80.1.vz7.192.2
+%define orelease 1160.80.1.vz7.192.2
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -26,7 +26,7 @@ Epoch: 1
 # You can change compiler version by editing this line:
 #%%define kgcc_version %__gcc_version_base
 %define kgcc_version 10
-%define __nprocs 4
+#%%define __nprocs 4
 
 %def_disable verbose
 %def_without src
@@ -324,6 +324,7 @@ echo "Building kernel %kversion-%flavour-%krelease"
 
 . ./gcc_version.inc
 export CC=gcc-$GCC_VERSION
+export HOSTCC=gcc-$GCC_VERSION
 %make_build olddefconfig
 %make_build kernelversion
 %make_build kernelrelease
@@ -331,9 +332,9 @@ export KCFLAGS="-Wno-missing-attributes -Wno-error" # Avoid flood of gcc9 warnin
 export HOST_EXTRACFLAGS="-fcommon"
 # Race while building objtool:
 %if_with objtool
-make -j1 %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION tools/objtool
+# make -j1 %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION tools/objtool tools/build
 %endif
-%make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION bzImage
+make -j3 %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION bzImage
 %make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION modules
 
 %{?_with_perf:%make_build -C tools/perf %{?_enable_verbose:V=1} %perf_make_opts all man}
@@ -600,6 +601,10 @@ grep beancounter boot.log
 
 
 %changelog
+* Fri Jan 13 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.80.1.vz7.192.2
+- Build rh7-3.10.0-1160.80.1.vz7.192.2
+- use $(CC), not gcc for HOSTCC/CC
+
 * Fri Dec 30 2022 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.80.1.vz7.191.3
 - Build rh7-3.10.0-1160.80.1.vz7.191.3
 
