@@ -2,7 +2,7 @@
 %define git_date %nil
 
 Name: xfce4-screenshooter
-Version: 1.10.2
+Version: 1.10.3
 Release: alt1%git_date
 
 Summary: Screenshot Xfce4 panel plugin
@@ -76,6 +76,9 @@ mkdir m4/
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Jan 13 2023 Mikhail Efremov <sem@altlinux.org> 1.10.3-alt1
+- Updated to 1.10.3.
+
 * Fri Jan 06 2023 Mikhail Efremov <sem@altlinux.org> 1.10.2-alt1
 - Updated to 1.10.2.
 
