@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::File
 
 Name: perl-Test-File
-Version: 1.992
+Version: 1.993
 Release: alt1
 
 Summary: Perl module to test file attributes
@@ -50,6 +50,9 @@ rm -f -- t/win32.t t/normalize.t
 
 
 %changelog
+* Fri Jan 13 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.993-alt1
+- New version
+
 * Mon Dec 05 2022 Nikolay A. Fetisov <naf@altlinux.org> 1.992-alt1
 - New version
 
