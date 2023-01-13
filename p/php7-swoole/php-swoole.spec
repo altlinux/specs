@@ -1,6 +1,6 @@
 %define		php_extension	swoole
 %define 	real_name	swoole
-%define		real_version	4.8.6
+%define		real_version	4.8.12
 
 Name:	 	php%_php_suffix-%php_extension
 Version:	%real_version
@@ -104,6 +104,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php_extconf/%php_extension/params
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Rebuild with php-devel = %php_version-%version-%release
+
+* Tue Jan 12 2023 Nikolay A. Fetisov <naf@altlinux.org> 4.8.12-alt1
+- New version
 
 * Fri Jan 21 2022 Nikolay A. Fetisov <naf@altlinux.org> 4.8.6-alt1
 - Initial build for ALT Linux Sisyphus
