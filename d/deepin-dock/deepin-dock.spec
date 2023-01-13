@@ -4,7 +4,7 @@
 
 Name: deepin-dock
 Version: 5.6.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Deepin desktop-environment - Dock module
 License: GPL-3.0+
@@ -13,6 +13,16 @@ Url: https://github.com/linuxdeepin/dde-dock
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: 0001-fix-blur-icon-729.patch
+Patch1: 0001-fix-remove-the-permission-of-x-in-source.patch
+Patch2: 0001-chore-cleanup-code.patch
+Patch3: 0001-fix-bluetooth-switch-button-735.patch
+Patch4: 0001-fix-magic-lamp-under-wayland.patch
+Patch5: 0001-fix-DBus-can-not-be-notified.patch
+Patch6: 0001-fix-inserting-flash-drive.patch
+Patch7: 0001-chore-repair-the-failure-of-compilation.patch
+Patch8: 0001-fix-left-key-to-pop-the-menu-and-get-stuck.patch
+Patch9: deepin-dock-5.6.2-alt-fix-undefined-elfs.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -40,7 +50,7 @@ BuildRequires: libxcbutil-icccm-devel
 BuildRequires: libxcbutil-image-devel
 BuildRequires: libgtest-devel
 BuildRequires: libgmock-devel
-BuildRequires: dtk5-common
+BuildRequires: dtk5-common-devel
 # Requires: libdbusmenu-qt52 libddenetworkutils libdframeworkdbus2 libxcb libxcbutil-icccm libxcbutil-image
 
 %description
@@ -55,6 +65,16 @@ Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
+%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
 sed -i '/TARGETS/s|lib/|%_lib/|' plugins/*/CMakeLists.txt
 sed -i 's|/usr/lib|%_libdir|' \
     frame/controller/dockpluginscontroller.cpp \
@@ -113,6 +133,11 @@ mv -f %buildroot/usr/etc/dde-dock/indicator/keybord_layout.json %buildroot%_sysc
 %_libdir/cmake/DdeDock/DdeDockConfig.cmake
 
 %changelog
+* Fri Jan 13 2023 Leontiy Volodin <lvol@altlinux.org> 1:5.6.2-alt2
+- Applied patches by upstream.
+- Fixed build with dtk5-common.
+- Fixed undefined elfs.
+
 * Wed Dec 14 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.6.2-alt1
 - 5.6.2.
 
