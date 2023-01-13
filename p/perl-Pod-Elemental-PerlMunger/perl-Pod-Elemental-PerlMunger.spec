@@ -3,8 +3,8 @@
 %define real_name Pod-Elemental-PerlMunger
 
 Name: perl-Pod-Elemental-PerlMunger
-Version: 0.200006
-Release: alt2
+Version: 0.200007
+Release: alt1
 
 Summary: Perl module that takes a string of Perl and rewrites its documentation
 
@@ -46,5 +46,8 @@ munging it, and replacing it into the Perl.
 %perl_vendor_privlib/Pod/Elemental/PerlMunger*
 
 %changelog
+* Fri Jan 13 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.200007-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.ru> 0.200006-alt2
 - Initial build for ALT Linux Sisyphus
