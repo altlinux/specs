@@ -5,7 +5,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: Python bindings for jq
 License: BSD-2-Clause
@@ -23,7 +23,6 @@ BuildRequires: python3(wheel)
 BuildRequires: python3(Cython)
 
 BuildRequires: libjq-devel
-BuildRequires: liboniguruma-devel
 
 %if_with check
 BuildRequires: python3(pytest)
@@ -60,6 +59,9 @@ rm -fv pyproject.toml
 %python3_sitelibdir/*
 
 %changelog
+* Thu Jan 12 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt2
+- remove unused liboniguruma-devel build requirement
+
 * Thu Jan 12 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt1
 - 1.4.0
 - update whole package building
