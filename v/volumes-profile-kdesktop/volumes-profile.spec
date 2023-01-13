@@ -1,5 +1,5 @@
 Name: volumes-profile-kdesktop
-Version: 0.10.0
+Version: 0.11.0
 Release: alt1
 
 Summary: Volumes description for Desktop KDE distribution
@@ -29,6 +29,9 @@ install -pm755 10-*.sh %buildroot%hook1dir/
 #%hook2dir/*
 
 %changelog
+* Fri Jan 13 2023 Sergey V Turchin <zerg@altlinux.org> 0.11.0-alt1
+- prefer timeshift BtrFS profile
+
 * Tue Jul 26 2022 Oleg Solovyov <mcpain@altlinux.org> 0.10.0-alt1
 - add timeshift BtrFS profile
 
