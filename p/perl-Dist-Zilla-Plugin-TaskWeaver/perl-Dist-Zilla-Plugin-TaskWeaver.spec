@@ -3,8 +3,8 @@
 %define real_name Dist-Zilla-Plugin-TaskWeaver
 
 Name: perl-Dist-Zilla-Plugin-TaskWeaver
-Version: 0.101628
-Release: alt2
+Version: 0.101629
+Release: alt1
 
 Summary: a PodWeaver plugin used to build Task distributions
 
@@ -46,5 +46,8 @@ prerequisites and grouping for building a Task distribution.
 %perl_vendor_privlib/Pod*
 
 %changelog
+* Fri Jan 13 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.101629-alt1
+- New version
+
 * Mon Jan 23 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.101628-alt2
 - Initial build for ALT Linux Sisyphus
