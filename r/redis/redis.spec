@@ -1,5 +1,5 @@
 Name: redis
-Version: 6.2.6
+Version: 6.2.8
 Release: alt1
 
 Summary: Redis is an advanced key-value store
@@ -171,6 +171,12 @@ echo 'd /var/run/%name 0775 root %redis_group' >> %buildroot%_tmpfilesdir/%name.
 
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 6.2.8-alt1
+- New version
+- Security fixes:
+  + CVE-2022-24736: server crash by a specially crafted Lua script
+  + CVE-2022-24735: overcome ACL rules via Lua scripts manipulation
+
 * Sat Nov 20 2021 Nikolay A. Fetisov <naf@altlinux.org> 6.2.6-alt1
 - New version
 - Security fixes:
