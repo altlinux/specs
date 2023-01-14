@@ -3,7 +3,7 @@
 %define real_name Mixin-Linewise
 
 Name: perl-Mixin-Linewise
-Version: 0.110
+Version: 0.111
 Release: alt1
 
 Summary: Perl module to work with handle-like string objects
@@ -48,6 +48,9 @@ handling strings and filenames are added for you.
 %perl_vendor_privlib/Mixin/Linewise*
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.111-alt1
+- New version
+
 * Sun Jun 27 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.110-alt1
 - New version
 
