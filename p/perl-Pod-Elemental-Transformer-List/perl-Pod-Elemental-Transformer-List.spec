@@ -3,8 +3,8 @@
 %define real_name Pod-Elemental-Transformer-List
 
 Name: perl-Pod-Elemental-Transformer-List
-Version: 0.102000
-Release: alt3
+Version: 0.102001
+Release: alt1
 
 Summary: Perl module to transform :list regions in POD
 
@@ -43,5 +43,8 @@ regions into =over/=back to save typing.
 %perl_vendor_privlib/Pod/Elemental/Transformer/List*
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.102001-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.org> 0.102000-alt3
 - Initial build for ALT Linux Sisyphus
