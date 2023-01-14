@@ -2,7 +2,7 @@
 %define modulename apycula
 
 Name:    python3-module-%modulename
-Version: 0.4
+Version: 0.6.1
 Release: alt1
 
 Summary: Documentation and open source tools for the Gowin FPGA bitstream format
@@ -21,6 +21,7 @@ BuildRequires: rpm-build-python3
 BuildRequires: python3-dev
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3(wheel)
 
 %description
 %summary.
@@ -29,18 +30,21 @@ BuildRequires: python3-module-setuptools_scm
 %setup -n %srcname-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %_bindir/*
 %python3_sitelibdir/%modulename
-%python3_sitelibdir/%srcname-%version-py3.*.egg-info
+%python3_sitelibdir/%srcname-%version.dist-info
 %doc *.md doc/*
 
 %changelog
+* Sat Jan 14 2023 Anton Midyukov <antohami@altlinux.org> 0.6.1-alt1
+- new version (0.6.1) with rpmgs script
+
 * Sun Jun 19 2022 Anton Midyukov <antohami@altlinux.org> 0.4-alt1
 - new version (0.4) with rpmgs script
 
