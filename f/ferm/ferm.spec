@@ -2,8 +2,8 @@
 #
 
 Name: ferm
-Version: 2.6
-Release: alt2
+Version: 2.7
+Release: alt1
 
 Summary: iptables frontend For Easy Rule Making
 
@@ -107,6 +107,11 @@ install -pD -m0640 -- %SOURCE4  %buildroot%_sysconfdir/sysconfig/%name
 
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.7-alt1
+- New version:
+  * support for the nfacct netfilter module
+  * support "--random-fully" for the MASQUERADE netfilter module
+
 * Wed Jul 14 2021 Nikolay A. Fetisov <naf@altlinux.org> 2.6-alt2
 - Skip rpmnew/rpmsave files in the @include directive
 
