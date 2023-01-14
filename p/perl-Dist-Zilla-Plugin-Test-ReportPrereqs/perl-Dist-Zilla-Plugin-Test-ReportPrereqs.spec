@@ -3,7 +3,7 @@
 %define real_name Dist-Zilla-Plugin-Test-ReportPrereqs
 
 Name: perl-Dist-Zilla-Plugin-Test-ReportPrereqs
-Version: 0.028
+Version: 0.029
 Release: alt1
 
 Summary: Report on prerequisite versions during automated testing
@@ -49,6 +49,9 @@ rm -f -- t/report.t
 %perl_vendor_privlib/Dist/Zilla/Plugin/Test/ReportPrereqs*
 
 %changelog
+* Fri Jan 13 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.029-alt1
+- New version
+
 * Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 0.028-alt1
 - New version
 
