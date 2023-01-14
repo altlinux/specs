@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Perl-PrereqScanner
 
 Name: perl-Perl-PrereqScanner
-Version: 1.024
+Version: 1.025
 Release: alt1
 
 Summary: a tool to scan Perl code for its prerequisites
@@ -51,6 +51,9 @@ The extraction may not be perfect but tries to do its best.
 %_man1dir/scan*
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.025-alt1
+- New version
+
 * Sun Jul 11 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.024-alt1
 - New version
 
