@@ -3,8 +3,8 @@
 %define real_name String-Truncate
 
 Name: perl-String-Truncate
-Version: 1.100602
-Release: alt3
+Version: 1.100603
+Release: alt1
 
 Summary: Perl module for when strings are too long to be displayed in ...
 
@@ -43,5 +43,8 @@ problem of long strings and finite terminal width.
 %perl_vendor_privlib/String/Truncate*
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.100603-alt1
+- New version
+
 * Sun Jan 22 2017 Nikolay A. Fetisov <naf@altlinux.ru> 1.100602-alt3
 - Initial build for ALT Linux Sisyphus
