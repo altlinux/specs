@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        108.0.5359.71
+Version:        109.0.5414.74
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -511,6 +511,24 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Jan 12 2023 Alexey Gladkov <legion@altlinux.ru> 109.0.5414.74-alt1
+- New version (109.0.5414.74).
+- Security fixes:
+  - CVE-2023-0128: Use after free in Overview Mode.
+  - CVE-2023-0129: Heap buffer overflow in Network Service.
+  - CVE-2023-0130: Inappropriate implementation in Fullscreen API.
+  - CVE-2023-0131: Inappropriate implementation in iframe Sandbox.
+  - CVE-2023-0132: Inappropriate implementation in Permission prompts.
+  - CVE-2023-0133: Inappropriate implementation in Permission prompts.
+  - CVE-2023-0134: Use after free in Cart.
+  - CVE-2023-0135: Use after free in Cart.
+  - CVE-2023-0136: Inappropriate implementation in Fullscreen API.
+  - CVE-2023-0137: Heap buffer overflow in Platform Apps.
+  - CVE-2023-0138: Heap buffer overflow in libphonenumber.
+  - CVE-2023-0139: Insufficient validation of untrusted input in Downloads.
+  - CVE-2023-0140: Inappropriate implementation in File System API.
+  - CVE-2023-0141: Insufficient policy enforcement in CORS.
+
 * Fri Dec 02 2022 Alexey Gladkov <legion@altlinux.ru> 108.0.5359.71-alt1
 - New version (108.0.5359.71).
 - Use LLVM 15.
