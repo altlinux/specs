@@ -1,5 +1,5 @@
 Name:    rsnapshot
-Version: 1.4.4
+Version: 1.4.5
 Release: alt1
 
 Summary: local and remote filesystem snapshot utility
@@ -16,7 +16,7 @@ Source1: %name.logrotate
 Source2: %name.cron
 
 Patch0:  %name-%version-%release.patch
-Patch1:  %name-1.3.1-alt-conf_file.patch
+Patch1:  %name-1.4.5-alt-conf_file.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -151,6 +151,10 @@ exit 0
 %_man1dir/rsnapshot*
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.4.5-alt1
+- New version
+  * documentation updates and fixes
+
 * Sun Jun 27 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.4.4-alt1
 - New version
 
