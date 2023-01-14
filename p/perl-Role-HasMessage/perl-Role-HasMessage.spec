@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Role-HasMessage
 
 Name: perl-Role-HasMessage
-Version: 0.006
+Version: 0.007
 Release: alt1
 
 Summary: Perl module to provide a thing with an message method
@@ -46,6 +46,9 @@ It does not provide any actual behavior.
 %perl_vendor_privlib/Role/HasMessage*
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.007-alt1
+- New version
+
 * Sun Dec 01 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.006-alt1
 - New version
 
