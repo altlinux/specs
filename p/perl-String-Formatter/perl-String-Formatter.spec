@@ -3,7 +3,7 @@
 %define real_name String-Formatter
 
 Name: perl-String-Formatter
-Version: 1.234
+Version: 1.235
 Release: alt1
 
 Summary: Perl module to build sprintf-like functions of your own
@@ -49,6 +49,9 @@ options built into String::Formatter.
 %perl_vendor_privlib/String/Formatter*
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 1.235-alt1
+- New version
+
 * Sun Nov 07 2021 Nikolay A. Fetisov <naf@altlinux.org> 1.234-alt1
 - New version
 - Update URL
