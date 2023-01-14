@@ -1,5 +1,5 @@
 Name: xsnow
-Version: 3.5.2
+Version: 3.6.0
 Release: alt1
 
 Summary: An X Window System based dose of Christmas cheer
@@ -15,7 +15,7 @@ Summary(ru_RU.UTF8):  Немножко новогоднего настроени
 # Automatically added by buildreq on Wed Jan 01 2020
 # optimized out: at-spi2-atk fontconfig glib2-devel glibc-kernheaders-generic libX11-devel libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libharfbuzz-devel libpango-devel libwayland-client libwayland-cursor libwayland-egl pkg-config python-modules python2-base python3 python3-base python3-dev sh4 xorg-proto-devel
 ###BuildRequires: i586-libxcb libXpm-devel libXt-devel libdb4-devel libdbus-devel libgtk+3-devel libxml2-devel python3-module-mpl_toolkits python3-module-yieldfrom selinux-policy
-BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel libdbus-devel gcc-c++ ImageMagick-tools desktop-file-utils libgsl-devel
+BuildRequires: libXpm-devel libXt-devel libgtk+3-devel libxml2-devel libdbus-devel gcc-c++ ImageMagick-tools desktop-file-utils libgsl-devel libgsl-devel libXinerama-devel libxkbcommon-devel libXtst-devel
 
 ###BuildRequires: gccmakedep imake libXext-devel libXpm-devel libXt-devel xorg-cf-files
 
@@ -65,6 +65,9 @@ desktop-file-install --dir %buildroot/%_desktopdir \
 %_datadir/pixmaps/xsnow.svg
 
 %changelog
+* Sat Jan 14 2023 Alexei Mezin <alexvm@altlinux.org> 3.6.0-alt1
+- New version
+
 * Wed Sep 14 2022 Ilya Mashkin <oddity@altlinux.ru> 3.5.2-alt1
 - 3.5.2
 
