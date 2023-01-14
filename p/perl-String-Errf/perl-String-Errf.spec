@@ -1,7 +1,7 @@
 ## SPEC file for Perl module String-Errf
 
 Name: perl-String-Errf
-Version: 0.008
+Version: 0.009
 Release: alt1
 
 Summary: Perl module to provide a simple sprintf-like dialect
@@ -45,6 +45,9 @@ may be useful in understanding or extending String::Errf.
 %perl_vendor_privlib/String/Errf*
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.009-alt1
+- New version
+
 * Thu Jul 21 2016 Nikolay A. Fetisov <naf@altlinux.ru> 0.008-alt1
 - New version
 
