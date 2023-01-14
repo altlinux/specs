@@ -3,7 +3,7 @@
 %define real_name Dist-Zilla-PluginBundle-RJBS
 
 Name: perl-Dist-Zilla-PluginBundle-RJBS
-Version: 5.020
+Version: 5.022
 Release: alt1
 
 Summary: BeLike::RJBS when you build your dists
@@ -41,9 +41,13 @@ to bundle settings that RJBS uses.
 %files
 %doc README Changes
 %perl_vendor_privlib/Dist/Zilla/PluginBundle/RJBS*
+%exclude %perl_vendor_privlib/Dist/Zilla/App/Command/*
 %perl_vendor_privlib/Pod*
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 5.022-alt1
+- New version
+
 * Sun Jul 11 2021 Nikolay A. Fetisov <naf@altlinux.org> 5.020-alt1
 - New version
 
