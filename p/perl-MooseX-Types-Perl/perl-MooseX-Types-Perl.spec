@@ -3,7 +3,7 @@
 %define real_name MooseX-Types-Perl
 
 Name: perl-MooseX-Types-Perl
-Version: 0.101343
+Version: 0.101344
 Release: alt1
 
 Summary: Moose types that check against Perl syntax
@@ -45,6 +45,9 @@ subset of, Perl syntax.
 %perl_vendor_privlib/MooseX/Types/Perl*
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.101344-alt1
+- New version
+
 * Sun Aug 31 2014 Nikolay A. Fetisov <naf@altlinux.ru> 0.101343-alt1
 - New version
 
