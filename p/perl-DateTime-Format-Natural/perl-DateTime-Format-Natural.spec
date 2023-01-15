@@ -2,12 +2,12 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DateTime/Locale.pm) perl(Term/ReadLine.pm) perl-podlators
+BuildRequires: perl(DateTime/HiRes.pm) perl(DateTime/Locale.pm) perl(Term/ReadLine.pm) perl(Test/MockTime/HiRes.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-DateTime-Format-Natural
-Version:        1.13
+Version:        1.14
 Release:        alt1
 Summary:        Create machine readable date/time with natural parsing logic
 License:        GPL+ or Artistic
@@ -88,6 +88,9 @@ perl Build.PL installdirs=vendor
 
 
 %changelog
+* Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 1.14-alt1
+- automated CPAN update
+
 * Thu Jan 27 2022 Igor Vlasenko <viy@altlinux.org> 1.13-alt1
 - automated CPAN update
 
