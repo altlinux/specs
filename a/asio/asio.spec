@@ -8,7 +8,7 @@ BuildRequires: gcc-c++ perl(Date/Format.pm)
 %global shortcommit %(c=%commit; echo ${c:0:7})
 
 Name: asio
-Version: 1.24.0
+Version: 1.26.0
 Release: alt1
 
 Summary: A cross-platform C++ library for network programming
@@ -21,8 +21,8 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 BuildRequires: autoconf
 BuildRequires: automake
-BuildRequires: libssl-devel
-BuildRequires: boost-devel boost-devel-headers boost-python-headers
+BuildRequires: libssl-devel gcc gcc-c++
+BuildRequires: boost-devel boost-devel-headers boost-python-headers boost-coroutine-devel
 Source44: import.info
 
 %description
@@ -67,6 +67,9 @@ echo "int main() {}" > src/examples/cpp14/executors/pipeline.cpp
 %_libdir/pkgconfig/asio.pc
 
 %changelog
+* Mon Jan 16 2023 Ilya Mashkin <oddity@altlinux.ru> 1.26.0-alt1
+- 1.26.0
+
 * Sun Aug 14 2022 Ilya Mashkin <oddity@altlinux.ru> 1.24.0-alt1
 - 1.24.0
 
