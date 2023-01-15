@@ -1,7 +1,7 @@
 # SPEC file for kpcli package
 
 Name: kpcli
-Version: 3.6
+Version: 3.8.1
 Release: alt1
 
 Summary: command line interface to work with KeePass database files
@@ -17,9 +17,9 @@ Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Sun Sep 18 2016
-# optimized out: perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators python-base python-modules python3
-BuildRequires: perl-Pod-Usage perl-podlators
+# Automatically added by buildreq on Sun Jan 15 2023
+# optimized out: libgpg-error perl perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-parent perl-podlators python-modules python2-base python3-base sh4
+BuildRequires: perl-Pod-Usage perl-podlators perl-devel
 
 BuildRequires: perl-Crypt-Rijndael perl-Sort-Naturally perl-Term-ReadKey
 BuildRequires: perl-File-KeePass perl-Term-ShellUI perl-Clone perl-Time-Piece
@@ -45,12 +45,15 @@ mkdir -p -- %buildroot/%_man1dir
 install -m 0644 -- %name.1 %buildroot/%_man1dir/
 
 %files
-%doc README
+%doc README.md
 
 %_bindir/%name
 %_man1dir/%{name}*
 
 %changelog
+* Sun Jan 15 2023 Nikolay A. Fetisov <naf@altlinux.org> 3.8.1-alt1
+- New version
+
 * Tue Mar 09 2021 Nikolay A. Fetisov <naf@altlinux.org> 3.6-alt1
 - New version
 
