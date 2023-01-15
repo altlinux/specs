@@ -11,7 +11,7 @@
 %define soversion 7
 
 Name: libwebp
-Version: 1.2.4
+Version: 1.3.0
 Release: alt1
 
 Summary: Library and tools for the WebP graphics format
@@ -98,6 +98,7 @@ export CFLAGS="%optflags -DEMSCRIPTEN"
 
 %files -n %name%soversion
 %_libdir/%name.so.*
+%_libdir/libsharpyuv.so.*
 %{?_enable_libwebpmux:%_libdir/%{name}mux.so.*}
 %{?_enable_libwebpdemux:%_libdir/%{name}demux.so.*}
 %{?_enable_libwebpdecoder:%_libdir/%{name}decoder.so.*}
@@ -107,16 +108,19 @@ export CFLAGS="%optflags -DEMSCRIPTEN"
 %_includedir/webp/decode.h
 %_includedir/webp/encode.h
 %_includedir/webp/types.h
+%_includedir/webp/sharpyuv/
 %if_enabled libwebpmux
 %_includedir/webp/mux.h
 %_includedir/webp/mux_types.h
 %endif
 %{?_enable_libwebpdemux:%_includedir/webp/demux.h}
 %_libdir/%name.so
+%_libdir/libsharpyuv.so
 %{?_enable_libwebpmux:%_libdir/%{name}mux.so}
 %{?_enable_libwebpdemux:%_libdir/%{name}demux.so}
 %{?_enable_libwebpdecoder:%_libdir/%{name}decoder.so}
 %_pkgconfigdir/%name.pc
+%_pkgconfigdir/libsharpyuv.pc
 %{?_enable_libwebpmux:%_pkgconfigdir/%{name}mux.pc}
 %{?_enable_libwebpdemux:%_pkgconfigdir/%{name}demux.pc}
 %{?_enable_libwebpdecoder:%_pkgconfigdir/%{name}decoder.pc}
@@ -141,6 +145,9 @@ export CFLAGS="%optflags -DEMSCRIPTEN"
 %{?_enable_libwebpdemux:%_man1dir/vwebp.1.*}
 
 %changelog
+* Sun Jan 15 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
+- 1.3.0
+
 * Sat Aug 06 2022 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
