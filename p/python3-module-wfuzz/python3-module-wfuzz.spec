@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.1.0
-Release: alt1
+Release: alt2
 
 Summary: Web application fuzzer
 License: GPL-2.0
@@ -15,6 +15,7 @@ Url: https://pypi.org/project/wfuzz
 Vcs: https://github.com/xmendez/wfuzz.git
 
 Source: %name-%version.tar
+Patch0: python3-module-wfuzz-3.1.0-alt-fix-relative-imports--bz44825.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -28,6 +29,8 @@ BuildRequires: python3(chardet)
 BuildRequires: /proc /dev/kvm
 BuildRequires: rpm-build-vm
 %endif
+
+%py3_requires pyparsing
 
 BuildArch: noarch
 
@@ -66,6 +69,7 @@ it's a tool by pentesters for pentesters ;)
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %pyproject_build
@@ -85,6 +89,10 @@ vm-run "%tox_check_pyproject"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Sun Jan 15 2023 Anton Zhukharev <ancieg@altlinux.org> 3.1.0-alt2
+- fix wrong relative imports in ui/gui/controller.py (closes: #44825)
+- add explicit dependency on python3-module-pyparsing
+
 * Mon Dec 12 2022 Anton Zhukharev <ancieg@altlinux.org> 3.1.0-alt1
 - initial build for Sisyphus
 
