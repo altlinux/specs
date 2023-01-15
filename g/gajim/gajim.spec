@@ -4,8 +4,8 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.6.0
-Release: alt2
+Version: 1.6.1
+Release: alt1
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -33,7 +33,7 @@ Requires: libgtk+3-gir libgtksourceview4-gir
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools libsoup-gir-devel libgtksourceview4-gir-devel
-BuildRequires: python3-module-nbxmpp >= 4.0.0
+BuildRequires: python3-module-nbxmpp >= 4.0.1
 BuildArch: noarch
 
 %description
@@ -74,6 +74,9 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Mon Jan 16 2023 Ilya Mashkin <oddity@altlinux.ru> 1.6.1-alt1
+- 1.6.1
+
 * Wed Jan 11 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.6.0-alt2
 - Fixed minimal python3 version
 - Removed needless dependency.
