@@ -3,8 +3,8 @@
 %def_disable check
 
 Name: ndctl
-Version: 74
-Release: alt1.1
+Version: 75
+Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
 License: LGPL-2.1
@@ -196,6 +196,9 @@ sed -i 's|/usr\(/bin/systemd-escape\)|\1|' daxctl/90-daxctl-device.rules
 %_man3dir/*cxl*
 
 %changelog
+* Sun Jan 15 2023 Yuri N. Sedunov <aris@altlinux.org> 75-alt1
+- 75
+
 * Sat Oct 08 2022 Yuri N. Sedunov <aris@altlinux.org> 74-alt1.1
 - daxctl/90-daxctl-device.rules: /usr/bin/systemd-escape -> /bin/systemd-escape
 
