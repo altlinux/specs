@@ -2,8 +2,8 @@
 #
 
 Name: dehydrated
-Version: 0.7.0
-Release: alt2
+Version: 0.7.1
+Release: alt1
 
 Summary: ACME client for signing certificates implemented in Bash
 
@@ -59,6 +59,7 @@ mv -- docs/examples .
 install -D -m 0755 -- %name %buildroot/%_bindir/%name
 
 mkdir -p %buildroot%_sysconfdir/%name/conf.d/
+mkdir -p %buildroot%_sysconfdir/%name/domains.txt.d/
 install -m 0644 -- %SOURCE1           %buildroot%_sysconfdir/%name/config
 install -m 0755 -- examples/hook.sh   %buildroot%_sysconfdir/%name/hook.sh
 
@@ -88,6 +89,7 @@ touch -- %buildroot%_sysconfdir/%name/conf.d/local.sh
 %config(noreplace)  %_sysconfdir/%name/hook.sh
 %ghost              %_sysconfdir/%name/domains.txt
 %dir                %_sysconfdir/%name/conf.d
+%dir                %_sysconfdir/%name/domains.txt.d
 %ghost              %_sysconfdir/%name/conf.d/local.sh
 
 %attr(0755,root,root)   %dir %_localstatedir/%name
@@ -100,6 +102,9 @@ touch -- %buildroot%_sysconfdir/%name/conf.d/local.sh
 
 
 %changelog
+* Sat Jan 14 2023 Nikolay A. Fetisov <naf@altlinux.org> 0.7.1-alt1
+- New version
+
 * Tue Jan 11 2022 Nikolay A. Fetisov <naf@altlinux.org> 0.7.0-alt2
 - Add missed requires on openssl binary
 
