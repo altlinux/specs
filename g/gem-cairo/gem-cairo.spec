@@ -2,7 +2,7 @@
 
 Name:          gem-cairo
 Version:       1.17.8
-Release:       alt1.3
+Release:       alt1.4
 Summary:       ruby bindings for cairo
 License:       Ruby or GPL-2.0-or-later
 Group:         Development/Ruby
@@ -59,7 +59,7 @@ Ruby bindings for cairo // cairo extension for Ruby.
 
 %package       -n gem-cairo-doc
 Version:       1.17.8
-Release:       alt1
+Release:       alt1.4
 Summary:       ruby bindings for cairo documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета cairo
 Group:         Development/Documentation
@@ -78,7 +78,7 @@ Ruby bindings for cairo // cairo extension for Ruby.
 
 %package       -n gem-cairo-devel
 Version:       1.17.8
-Release:       alt1
+Release:       alt1.4
 Summary:       ruby bindings for cairo development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета cairo
 Group:         Development/Ruby
@@ -150,6 +150,9 @@ Ruby bindings for cairo // cairo extension for Ruby.
 
 
 %changelog
+* Sun Jan 15 2023 Pavel Skrylev <majioa@altlinux.org> 1.17.8-alt1.4
+- ! verstion of subpackages.
+
 * Sun Jan 08 2023 Pavel Skrylev <majioa@altlinux.org> 1.17.8-alt1.3
 - ! closes test gems under check condition
 
