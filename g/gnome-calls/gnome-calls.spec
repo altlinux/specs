@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: gnome-%_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1%beta
 
 Summary: A phone dialer and call handler
@@ -26,6 +26,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version%
 
 Requires: ModemManager >= %mm_ver
 Requires: gst-plugins-base1.0
+Requires: feedbackd callaudiod
 #Requires: phosh >= %phosh_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
@@ -87,6 +88,9 @@ xvfb-run %__meson_test
 %doc NEWS README.md
 
 %changelog
+* Sun Jan 15 2023 Yuri N. Sedunov <aris@altlinux.org> 43.3-alt1
+- 43.3
+
 * Sun Dec 04 2022 Yuri N. Sedunov <aris@altlinux.org> 43.2-alt1
 - 43.2
 
