@@ -5,7 +5,7 @@
 
 Name: kicad
 Version: 6.0.7
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
@@ -15,6 +15,7 @@ Group: Engineering
 
 Url: https://gitlab.com/kicad/code/kicad.git
 Source: %name-%version.tar
+Patch: require-libngspice.so.0.patch
 Patch2000: kicad-e2k.patch
 Packager: Anton Midyukov <antohami@altlinux.org>
 
@@ -27,7 +28,7 @@ BuildRequires: python3-dev
 BuildRequires: python3-module-wx
 BuildRequires: boost-devel boost-asio-devel boost-asio-devel boost-context-devel boost-filesystem-devel boost-geometry-devel boost-interprocess-devel boost-locale-devel boost-program_options-devel
 BuildRequires: ccmake gcc-c++
-BuildRequires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libGLEW-devel libcairo-devel libssl-devel swig pkgconfig(gobject-2.0) libpcre-devel libpixman-devel pkgconfig(harfbuzz) pkgconfig(expat) pkgconfig(libdrm) pkgconfig(xdmcp) pkgconfig(xdamage) pkgconfig(xxf86vm) libcurl-devel
 BuildRequires: doxygen
@@ -47,6 +48,7 @@ Requires: kicad-footprints >= %majver
 Requires: kicad-templates >= %majver
 Requires: %name-doc >= %epoch:%majver
 Requires: %name-common >= %EVR
+Requires: libngspice
 
 %add_python3_path %_datadir/%name
 
@@ -101,6 +103,7 @@ Common package for kicad.
 %patch2000 -p1
 sed -i "s/-Wreturn-type/-Wbuggy-edg/" CMakeModules/Warnings.cmake
 %endif
+%patch -p1
 
 %build
 %ifarch %e2k
@@ -119,6 +122,7 @@ sed -i "s/-Wreturn-type/-Wbuggy-edg/" CMakeModules/Warnings.cmake
     -DKICAD_SCRIPTING_WXPYTHON_PHOENIX=ON \
     -DKICAD_SCRIPTING_ACTION_MENU=ON \
     -DKICAD_SPICE=ON \
+    -DKICAD_USE_EGL=ON \
     -DKICAD_BUILD_I18N=ON \
     -DKICAD_I18N_UNIX_STRICT_PATH=ON \
     -DKICAD_VERSION_EXTRA=%release \
@@ -166,6 +170,11 @@ rm -r %buildroot/%_datadir/locale/pt_br
 %dir %_datadir/kicad/template
 
 %changelog
+* Sun Jan 15 2023 Anton Midyukov <antohami@altlinux.org> 1:6.0.7-alt2
+- Build with wxGTK3.2
+- Fix required soname by libngspice
+- Requires libngspice (Closes: 44791)
+
 * Sat Sep 10 2022 Anton Midyukov <antohami@altlinux.org> 1:6.0.7-alt1
 - new version 6.0.7
 
