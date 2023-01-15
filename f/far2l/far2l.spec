@@ -1,6 +1,6 @@
 Name: far2l
-Version: 2.4.0
-Release: alt3
+Version: 2.5.0
+Release: alt1
 
 Summary: Linux port of FAR v2
 
@@ -11,11 +11,8 @@ Url: https://github.com/elfmz/far2l
 # Source-url: https://github.com/elfmz/far2l/archive/refs/tags/v_%version.tar.gz
 Source: %name-%version.tar
 
-# Upstream patch for build on e2k
-Patch: 0001-remove-stuff-that-breaks-lcc-compilation-cosmetic.patch
-
 BuildRequires: cmake gcc-c++ glib2-devel
-BuildRequires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: libuchardet-devel
 BuildRequires: libspdlog-devel
 BuildRequires: libarchive-devel
@@ -80,8 +77,15 @@ Used code from projects:
 %_desktopdir/far2l.desktop
 %_iconsdir/hicolor/*/apps/*.svg
 %_iconsdir/far2l.svg
+%_mandir/ru/man1/far2l.*
+%_man1dir/far2l.*
 
 %changelog
+* Sun Jan 15 2023 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- new version (2.5.0) with rpmgs script
+- build with wxGTK3.2
+- add man1 pages
+
 * Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 2.4.0-alt3
 - skip optional requires from /usr/share/far2l scripts
 
