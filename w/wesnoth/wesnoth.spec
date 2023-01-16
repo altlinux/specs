@@ -1,5 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 #----------------------------------------------------------------------
+# remove after fix
+%add_findreq_skiplist /usr/share/wesnoth/data/tools/wmlunits
 
 %define wessuffix %nil
 #define wessuffix 16
@@ -20,7 +22,7 @@
 %define _wesnothd_home     %_runtimedir/wesnothd%wessuffix
 
 Name: wesnoth%wessuffix
-Version: 1.16.6
+Version: 1.16.7
 Release: alt1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
@@ -30,7 +32,6 @@ Url: http://www.wesnoth.org
 VCS: git+https://github.com/wesnoth/wesnoth.git
 Source0: wesnoth-%version.tar
 Patch1: wesnoth-1.13.8-sdl2.02-alt-hack.patch
-Patch2: wesnoth-1.16.3-explicit-include.patch
 
 Requires: %name-data = %EVR
 
@@ -124,6 +125,7 @@ This package contains manual to Battle for Wesnoth.
 %package tools
 Group: Games/Strategy
 Summary: Battle for Wesnoth tools
+BuildArch: noarch
 Requires: python3-module-%name = %EVR
 # for utils/woptipng.py
 Requires: optipng
@@ -174,7 +176,6 @@ This package contains python3 interface to Battle for Wesnoth.
 %prep
 %setup -n wesnoth-%version
 %patch1 -p1
-%patch2 -p1
 
 %build
 %define _optlevel 3
@@ -236,7 +237,7 @@ for s in 16 32 48 64 128 256; do
     %buildroot%_iconsdir/hicolor/${s}x$s/apps/%{name}-icon.png
 done
 
-sed -i 's/wesnoth-icon/wesnoth%{name}-icon/' %buildroot%_desktopdir/org.wesnoth.Wesnoth%wessuffix.desktop
+sed -i 's/wesnoth-icon/%{name}-icon/' %buildroot%_desktopdir/org.wesnoth.Wesnoth%wessuffix.desktop
 
 mkdir -p %buildroot%_sysconfdir/sysconfig/
 cat > %buildroot%_sysconfdir/sysconfig/wesnoth%wessuffix <<'EOF'
@@ -410,6 +411,9 @@ mv %buildroot%_datadir/%name/data/tools/wesnoth %buildroot%_datadir/%name/data/t
 %endif
 
 %changelog
+* Mon Jan 16 2023 Igor Vlasenko <viy@altlinux.org> 1.16.7-alt1
+- new version
+
 * Thu Sep 29 2022 Igor Vlasenko <viy@altlinux.org> 1.16.6-alt1
 - new version
 
