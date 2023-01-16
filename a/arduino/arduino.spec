@@ -37,7 +37,7 @@ BuildRequires: jpackage-11-compat
 Name:           arduino
 Epoch:          1
 Version:        1.8.13
-Release:        alt2_5jpp11
+Release:        alt3_5jpp11
 Summary:        An IDE for Arduino-compatible electronics prototyping platforms
 
 License:        GPLv2+ and LGPLv2+ and CC-BY-SA
@@ -327,7 +327,8 @@ else
 fi
 sed -i 1s,/usr/bin/bash,/bin/bash, %buildroot{%_bindir/%name,%_libexecdir/arduino-add-groups}
 
-
+# Create empty directory to prevent compiler error (ALT #42586).
+mkdir -p %buildroot%_datadir/arduino/tools-builder
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
@@ -351,6 +352,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 %config(noreplace) %{_sysconfdir}/%{name}/*
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/lib/
+%dir %{_datadir}/arduino/tools-builder
 
 %files doc
 %{_datadir}/%{name}/examples/
@@ -368,8 +370,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 %{_datadir}/polkit-1/actions/cc.arduino.add-groups.policy
 
 
-
 %changelog
+* Mon Jan 16 2023 Andrey Cherepanov <cas@altlinux.org> 1:1.8.13-alt3_5jpp11
+- created empty directory to prevent compiler error (ALT #42586).
+
 * Fri May 27 2022 Igor Vlasenko <viy@altlinux.org> 1:1.8.13-alt2_5jpp11
 - fixed dependency on objectweb-asm 9
 
