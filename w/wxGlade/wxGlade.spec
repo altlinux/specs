@@ -2,8 +2,8 @@
 
 Name: wxGlade
 Summary: A GUI builder for wxWindows/wxPython
-Version: 1.0.2
-Release: alt1.1
+Version: 1.0.4
+Release: alt1
 License: MIT
 Group: Development/Other
 Url: http://wxglade.sourceforge.net/
@@ -89,6 +89,9 @@ rm %buildroot/%python3_sitelibdir/wxglade/msw.py
 %_datadir/wxglade
 
 %changelog
+* Mon Jan 16 2023 Anton Midyukov <antohami@altlinux.org> 1.0.4-alt1
+- new version (1.0.4) with rpmgs script
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.0.2-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
