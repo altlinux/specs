@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Test/Needs.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %def_without bootstrap
 %define dist Moose
 Name: perl-%dist
-Version: 2.2201
+Version: 2.2202
 Release: alt1
 
 Summary: A postmodern object system for Perl 5
@@ -64,6 +67,9 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_archlib/oose.pm
 
 %changelog
+* Mon Jan 16 2023 Igor Vlasenko <viy@altlinux.org> 2.2202-alt1
+- automated CPAN update
+
 * Thu Nov 11 2021 Igor Vlasenko <viy@altlinux.org> 2.2201-alt1
 - automated CPAN update
 
