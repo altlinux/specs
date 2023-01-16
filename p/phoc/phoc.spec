@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.21
+%define ver_major 0.23
 %define beta %nil
 
 %define dev_uid 500
@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: phoc
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1%beta
 
 Summary: Display compositor designed for mobile devices
@@ -61,6 +61,7 @@ like the English word fog.
 %meson %{?_disable_embed-wlroots:-Dembed-wlroots=disabled} \
     %{?_enable_embed_wlroots:--default-library=static} \
     -Ddev-uid=%dev_uid
+%nil
 %meson_build
 
 %install
@@ -75,6 +76,9 @@ xvfb-run %__meson_test
 %doc README.md
 
 %changelog
+* Mon Jan 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.23.0-alt1
+- 0.23.0
+
 * Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.21.1-alt1
 - v0.21.1-1-gc25d237
 
