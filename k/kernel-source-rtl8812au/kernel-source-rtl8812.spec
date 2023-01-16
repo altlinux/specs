@@ -1,12 +1,12 @@
 # -*- rpm-spec -*-
 %define module_name rl8812au
 %define module_version 5.6.4.2
-%define module_release 20220827.gite7a4a39
+%define module_release gitee29979
 
 #### MODULE SOURCES ####
 Name: kernel-source-rtl8812au
 Version: %module_version
-Release: alt1.%module_release
+Release: alt2.%module_release
 Epoch: 1
 Provides: kernel-source-%module_name-%module_version
 Summary: Linux %module_name Realtek 8812 WiFi chipset series module sources
@@ -39,6 +39,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Mon Jan 16 2023 Andrey Cherepanov <cas@altlinux.org> 1:5.6.4.2-alt2.gitee29979
+- Supported kernel 6.1.
+
 * Mon Aug 29 2022 Andrey Cherepanov <cas@altlinux.org> 1:5.6.4.2-alt1.20220827.gite7a4a39
 - New version from https://github.com/aircrack-ng/rtl8812au.
 
