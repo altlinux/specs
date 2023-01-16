@@ -3,7 +3,7 @@
 %def_disable python
 
 Name: brial
-Version: 1.2.11
+Version: 1.2.12
 Release: alt1
 Summary: Framework for Boolean Rings
 # The entire source code is GPLv2+ except the Cudd directory that is BSD
@@ -23,7 +23,7 @@ BuildRequires: boost-program_options-devel
 BuildRequires: libgd3-devel
 BuildRequires: libm4ri-devel
 %if_enabled python
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-setuptools python3-module-wheel
 %endif
 
 %description
@@ -87,7 +87,7 @@ export CPPFLAGS="-DPBORI_NDEBUG"
 %if_enabled python
 # Make the python interfaces
 pushd sage-brial
-%python3_build
+%pyproject_build
 popd
 %endif
 
@@ -98,7 +98,7 @@ rm %buildroot%_libdir/*.la
 %if_enabled python
 # Install the python interfaces
 pushd sage-brial
-%python3_install
+%pyproject_install
 popd
 %endif
 
@@ -123,6 +123,9 @@ make check
 %endif
 
 %changelog
+* Mon Jan 16 2023 Leontiy Volodin <lvol@altlinux.org> 1.2.12-alt1
+- New version.
+
 * Fri Jul 29 2022 Leontiy Volodin <lvol@altlinux.org> 1.2.11-alt1
 - New version.
 
