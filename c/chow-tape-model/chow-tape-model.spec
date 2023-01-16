@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     chow-tape-model
-Version:  2.8.0
-Release:  alt1
+Version:  2.11.1
+Release:  alt2
 
 ExclusiveArch: x86_64
 
@@ -18,17 +18,12 @@ Source:   AnalogTapeModel-%version.tar
 
 # Submodules are dealt with via sub-merge
 # http://git.altlinux.org/people/iv/public/sub-merge.git
+Source1:  sub-merge.sources.txt
+Source2:  sub-merge.unpack.sh
+%(cat %SOURCE1)
 
-# https://github.com/Chowdhury-DSP/DISTRHO-JUCE.git
-Source10: DISTRHO-JUCE-5d503f334ddb849b3e13f5d7d28e553686f44f9e.tar
-# https://github.com/jatinchowdhury18/foleys_gui_magic.git
-Source11: foleys_gui_magic-5d0e230d052c66cc96e7ac5e609b37ab7b4acb08.tar
-# https://github.com/Chowdhury-DSP/chowdsp_utils
-Source12: chowdsp_utils-52361ab411b23d19d45ded1184bb3802c1a4e2ce.tar
-# https://github.com/jatinchowdhury18/RTNeural
-Source13: RTNeural-fcd9b66b6a6dd85a014cca1f52c87d2424fdf0f2.tar
-# https://github.com/xtensor-stack/xsimd
-Source14: xsimd-aaba949c4b57d234fa2356fcf13368a74cac99ec.tar
+Patch1:   juice-alt-fix-build.patch
+Patch2:   chow-tape-model-2.11.1-alt-restrict-to-stereo.patch
 
 
 BuildRequires: cmake gcc-c++
@@ -73,16 +68,17 @@ This package contains Chow Tape Model built as LV2 plugin.
 
 %prep
 %setup -n AnalogTapeModel-%version
+. %SOURCE2
 
-tar -xf %SOURCE10 -C 'Plugin/modules/DISTRHO-JUCE' --strip-components 1
-tar -xf %SOURCE11 -C 'Plugin/modules/foleys_gui_magic' --strip-components 1
-tar -xf %SOURCE12 -C 'Plugin/modules/chowdsp_utils' --strip-components 1
-tar -xf %SOURCE13 -C 'Plugin/modules/RTNeural' --strip-components 1
-tar -xf %SOURCE14 -C 'Plugin/modules/RTNeural/modules/xsimd' --strip-components 1
+%autopatch -p1
 
 %build
+# for nested cmake:
+export CMAKE_BUILD_PARALLEL_LEVEL=%_smp_build_ncpus
+
 pushd Plugin
-%cmake
+%cmake \
+  -DCHOWTAPE_BUILD_CLAP=OFF
 %cmake_build -t CHOWTapeModel_LV2
 popd
 
@@ -97,5 +93,12 @@ install -m644  -t "$dst_path" "$src_path/"*.ttl
 %doc Manual/ChowTapeManual.pdf
 
 %changelog
+* Mon Jan 16 2023 Ivan A. Melnikov <iv@altlinux.org> 2.11.1-alt2
+- Build stereo-only version of LV2 plugin to avoid
+  crashes in Ardour.
+
+* Sat Jan 14 2023 Ivan A. Melnikov <iv@altlinux.org> 2.11.1-alt1
+- 2.11.1
+
 * Wed Jul 14 2021 Ivan A. Melnikov <iv@altlinux.org> 2.8.0-alt1
 - Initial build for Sisyphus
