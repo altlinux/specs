@@ -20,7 +20,7 @@
 Summary: The PHP scripting language
 Name:	 php%_php_suffix
 Version: %_php_major.%_php_minor.%_php_release_version
-Release: alt1
+Release: alt1.1
 
 License: PHP-3.01
 Group:	 Development/Other
@@ -187,6 +187,8 @@ in use by other PHP-related packages.
 
 %ifarch %e2k
 %patch2000 -p1
+# not really supported
+sed -i 's/__has_feature(c_atomic)/0/' Zend/zend_atomic.h
 %endif
 
 
@@ -467,6 +469,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Mon Jan 16 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.2.1-alt1.1
+- Fixed build for Elbrus
+
 * Mon Jan 09 2023 Anton Farygin <rider@altlinux.ru> 8.2.1-alt1
 - 8.2.1
 
