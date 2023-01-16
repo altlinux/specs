@@ -1,5 +1,5 @@
 Name: deploy
-Version: 0.3.8
+Version: 0.3.9
 Release: alt1
 
 Summary: Script and set of ansible roles to deploy system services
@@ -31,6 +31,9 @@ system services like PostgreSQL or Moodle.
 %_datadir/%name
 
 %changelog
+* Mon Jan 16 2023 Andrey Cherepanov <cas@altlinux.org> 0.3.9-alt1
+- postgresql: use any available postgresql-server without version.
+
 * Wed Aug 31 2022 Andrey Cherepanov <cas@altlinux.org> 0.3.8-alt1
 - apache: disable module mod_php7.
 
