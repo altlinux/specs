@@ -1,8 +1,8 @@
 %define gcc_branch 11
 
 Name: gcc%gcc_branch
-Version: 11.2.1
-Release: alt4
+Version: 11.3.1
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libgomp, libstdc++ and crtstuff have
@@ -17,7 +17,7 @@ Url: https://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define snapshot 20211202
+%define snapshot 20230112
 
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
@@ -2216,6 +2216,15 @@ cp %SOURCE0 %buildroot%gcc_sourcedir/
 %endif #with_pdf
 
 %changelog
+* Mon Jan 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.3.1-alt1
+- Updated to 11.3.1.
+- Updated to merged branches from git://gcc.gnu.org/git/gcc.git:
+  + vendors/redhat/heads/gcc-11-branch
+  commit 643e61c61b308f9c572da4ccd5f730fb8ae7de1d;
+  + releases/gcc-11 (snapshot 20230112)
+  commit 95e674c324fb2e127b2c8741e0df14f2aa3e6171
+  (fixes FTBFS with make 4.4).
+
 * Wed May 18 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 11.2.1-alt4
 - Rebuilt in gcc12 compatibility mode.
 
