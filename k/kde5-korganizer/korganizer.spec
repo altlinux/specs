@@ -6,7 +6,7 @@
 %define libkorganizerprivate libkorganizerprivate%pim_sover
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -90,8 +90,6 @@ Requires: %name-common
 
 %files common -f %name.lang
 %doc LICENSES/*
-%_K5srvtyp/*.desktop
-#%_K5icon/*/*/actions/*
 %_datadir/qlogging-categories5/*.*categories
 
 %files
@@ -124,6 +122,9 @@ Requires: %name-common
 %_K5lib/libkorganizerprivate.so.*
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 

@@ -3,7 +3,7 @@
 %define libkaccounts libkaccounts%sover
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init altplace
 
@@ -90,14 +90,16 @@ mkdir -p %buildroot/%_K5plug/kaccounts/{ui,daemonplugins}
 %files -n %libkaccounts
 %_K5lib/libkaccounts.so.%sover
 %_K5lib/libkaccounts.so.*
-%_K5plug/kcms/*accounts.so
+%_K5plug/plasma/kcms/systemsettings/*kaccounts*.so
 %_K5plug/kf5/kded/kded_accounts.so
 %_K5plug/kaccounts/daemonplugins/*kaccounts*.so
 %_K5qml/org/kde/kaccounts/
-%_K5srv/*_kaccounts.desktop
 %_K5data/kpackage/kcms/kcm_kaccounts/
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 

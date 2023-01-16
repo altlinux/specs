@@ -19,7 +19,7 @@
 %define libakonadidatasetools libakonadidatasetools%sover
 
 Name: kde5-pim-addons
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init
 
@@ -250,7 +250,7 @@ Requires: %name-common
 %files kmail
 %_K5bin/kmail_*.sh
 %_K5plug/pim5/kmail/
-%_K5plug/kf5/mailtransport/
+%_K5plug/pim5/mailtransport/
 
 %files korganizer
 %_K5plug/pim5/korganizer/
@@ -323,6 +323,9 @@ Requires: %name-common
 
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 

@@ -12,7 +12,7 @@
 %define libkf5ksieve libkf5ksieve%sover
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init
 
@@ -113,7 +113,6 @@ done
 %_datadir/qlogging-categories5/*.*categories
 
 %files devel
-#%_K5inc/libksieve_version.h
 %_K5inc/K*Sieve*/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5LibKSieve*/
@@ -133,11 +132,13 @@ done
 %files -n %libkf5ksieve
 %_K5lib/libKF5KSieve.so.%sover
 %_K5lib/libKF5KSieve.so.*
-%_K5plug/kf5/kio/sieve.so
-#%_K5srv/sieve*.protocol
+#%_K5plug/kf5/kio/sieve.so
 
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 

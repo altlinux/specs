@@ -4,8 +4,8 @@
 %define libkpimitinerary libkpimitinerary%sover
 
 Name: kde5-%rname
-Version: 22.08.3
-Release: alt2
+Version: 22.12.1
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -21,7 +21,7 @@ BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 # optimized out: cmake cmake-modules elfutils fontconfig gcc-c++ gem-power-assert glibc-kernheaders-generic glibc-kernheaders-x86 libGL-devel libglvnd-devel libgpg-error libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-test libqt5-xml libsasl2-3 libstdc++-devel pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel rpm-build-python3 rpm-build-ruby ruby ruby-bundler ruby-rake ruby-rdoc ruby-stdlibs sh4 xml-utils zlib-devel
 BuildRequires: extra-cmake-modules qt5-base-devel qt5-declarative-devel
 BuildRequires: libpoppler-devel libxml2-devel xsltproc zlib-devel
-#BuildRequires: libzxing-cpp-devel
+BuildRequires: libzxing-cpp-devel
 BuildRequires: kde5-kcontacts-devel kde5-kmime-devel kde5-kpkpass-devel
 BuildRequires: kf5-karchive-devel kf5-kcodecs-devel kf5-kconfig-devel kf5-kcoreaddons-devel kf5-ki18n-devel
 BuildRequires: kf5-kcalcore-devel
@@ -87,6 +87,9 @@ Obsoletes: libkpimitinerary < %EVR
 %_K5lib/libKPimItinerary.so.*
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Tue Nov 29 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt2
 - fix zonetab path
 

@@ -3,16 +3,17 @@
 %define sover 5
 %define libkf5pimcommon libkf5pimcommon%sover
 %define libkf5pimcommonakonadi libkf5pimcommonakonadi%sover
+%define libkf5pimcommonautocorrection libkf5pimcommonautocorrection%sover
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init
 
 Group: System/Libraries
 Summary: PIM common library
 Url: http://www.kde.org
-License: GPLv2+ / LGPLv2+
+License: GPL-2.0-only AND LGPL-2.1-or-later
 
 Source: %rname-%version.tar
 
@@ -65,6 +66,13 @@ Requires: %name-common = %version-%release
 %description -n %libkf5pimcommonakonadi
 KF5 library
 
+%package -n %libkf5pimcommonautocorrection
+Group: System/Libraries
+Summary: KF5 library
+Requires: %name-common = %version-%release
+%description -n %libkf5pimcommonautocorrection
+KF5 library
+
 
 %prep
 %setup -n %rname-%version
@@ -90,12 +98,17 @@ KF5 library
 %files -n %libkf5pimcommon
 %_K5lib/libKF5PimCommon.so.%sover
 %_K5lib/libKF5PimCommon.so.*
-
 %files -n %libkf5pimcommonakonadi
 %_K5lib/libKF5PimCommonAkonadi.so.%sover
 %_K5lib/libKF5PimCommonAkonadi.so.*
+%files -n %libkf5pimcommonautocorrection
+%_K5lib/libKF5PimCommonAutoCorrection.so.%sover
+%_K5lib/libKF5PimCommonAutoCorrection.so.*
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 

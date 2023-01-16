@@ -1,7 +1,7 @@
 %define rname kontactinterface
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init altplace
 
@@ -63,10 +63,8 @@ KF5 library
 %files common -f %name.lang
 %doc LICENSES/*
 %_datadir/qlogging-categories5/*.*categories
-%_K5srvtyp/kontactplugin.desktop
 
 %files devel
-#%_K5inc/kontactinterface_version.h
 %_K5inc/KontactInterface/
 %_K5link/lib*.so
 %_K5lib/cmake/KF5KontactInterface
@@ -76,6 +74,9 @@ KF5 library
 %_K5lib/libKF5KontactInterface.so.*
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 

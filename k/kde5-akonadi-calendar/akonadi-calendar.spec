@@ -1,7 +1,7 @@
 %define rname akonadi-calendar
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init altplace
 
@@ -89,6 +89,9 @@ KF5 library
 %_K5lib/libKF5AkonadiCalendar.so.*
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
