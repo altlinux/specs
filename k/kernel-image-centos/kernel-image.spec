@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 232
+%define centos_release 236
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,36 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Jan 17 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.236-alt1.el9
+- Updated to kernel-5.14.0-236.el9 (fixes: CVE-2022-2964, CVE-2022-4139):
+  + [9.2] MEI Backport for Intel DG2 support
+  + Add support for second RPL-S CPUID
+  + ADL-N: Fix multiple packages shown on a single-package system
+  + bpf, xdp: update to 6.0
+  + cpu/hotplug: Fix some cpuhp->target issues
+  + crypto: xts - drop xts_check_key()
+  + drm/i915: fix TLB invalidation for Gen12 video and compute engines
+  + During DLPAR operations in shared mode and dedicated mode with smt loop, device tree entries are not getting populated
+  + fs: add mode_strip_sgid() helper
+  + KVM: nVMX: Inject #GP, not #UD, if "generic" VMXON CR0/CR4 check fails
+  + mmc: bcm2835: stop setting chan_config->slave_id
+  + net: skb free reason sync part 2
+  + net: usb: ax88179_178a: Fix out-of-bounds accesses in RX fixup
+  + net: vrf: determine the dst using the original ifindex for multicast
+  + pNFS/filelayout: Fix coalescing test for single DS
+  + Revert "nvme: warn about shared namespaces without CONFIG_NVME_MULTIPATH"
+  + sched/core: Fix bugs in user_cpus_ptr handling
+  + scsi: target: core: Fix hard lockup when executing a compare-and-write command
+  + [SPR] CPU: AMX: Improve the init_fpstate setup code
+  + tracing: Add linear buckets to histogram logic
+  + vmxnet3: correctly report csum_level for encapsulated packet
+  + vxlan: Backport vxlan file split
+  + x86: remove vendor checks from prefer_mwait_c1_over_halt
+
+* Thu Jan 12 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.233-alt1.el9
+- Updated to kernel-5.14.0-233.el9:
+  + TDX core kernel enabling (support running Linux as guest)
+
 * Wed Jan 11 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.232-alt1.el9
 - Updated to kernel-5.14.0-232.el9:
   + arm64: kdump: Support crashkernel=X fall back to reserve region above DMA zones
