@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1
-%define kernel_base_version	6.0
-%define kernel_sublevel	.19
+%define kernel_base_version	6.1
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -613,6 +613,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Jan 17 2023 Vitaly Chikunov <vt@altlinux.org> 1:6.1.6-alt1
+- v6.1.6 (2023-01-14).
+
 * Thu Jan 12 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.0.19-alt1
 - v6.0.19 (2023-01-12).
 - config: Enable CONFIG_TXGBE=m (ALT#44895).
