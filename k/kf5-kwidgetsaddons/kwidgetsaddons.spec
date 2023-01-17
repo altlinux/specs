@@ -5,8 +5,8 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.101.0
-Release: alt2
+Version: 5.102.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -111,6 +111,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon Jan 16 2023 Sergey V Turchin <zerg@altlinux.org> 5.102.0-alt1
+- new version
+
 * Tue Jan 10 2023 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt2
 - change KActionMenu popup button default behavior to menu button
 

@@ -1,8 +1,8 @@
 %define rname oxygen-icons5
 
 Name: kf5-oxygen-icons
-Version: 5.101.0
-Release: alt2
+Version: 5.102.0
+Release: alt1
 %K5init no_altplace
 
 Group: Graphical desktop/KDE
@@ -97,6 +97,9 @@ done
 %_iconsdir/oxygen*/
 
 %changelog
+* Mon Jan 16 2023 Sergey V Turchin <zerg@altlinux.org> 5.102.0-alt1
+- new version
+
 * Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt2
 - add application-x-smb-share icon
 

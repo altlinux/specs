@@ -1,8 +1,8 @@
 %define rname kwallet
 
 Name: kf5-%rname
-Version: 5.101.0
-Release: alt2
+Version: 5.102.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -120,6 +120,9 @@ LD_LIBRARY_PATH=BUILD/bin BUILD/bin/fdo_secrets_test
 %_K5lib/libkwalletbackend5.so.*
 
 %changelog
+* Mon Jan 16 2023 Sergey V Turchin <zerg@altlinux.org> 5.102.0-alt1
+- new version
+
 * Tue Dec 20 2022 Slava Aseev <ptrnine@altlinux.org> 5.101.0-alt2
 - add org.freedesktop.secrets.service file
 

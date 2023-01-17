@@ -2,8 +2,8 @@
 %def_enable heif
 
 Name: kf5-%rname
-Version: 5.101.0
-Release: alt2
+Version: 5.102.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -65,6 +65,9 @@ Requires: kf5-filesystem
 
 
 %changelog
+* Mon Jan 16 2023 Sergey V Turchin <zerg@altlinux.org> 5.102.0-alt1
+- new version
+
 * Wed Dec 28 2022 Sergey V Turchin <zerg@altlinux.org> 5.101.0-alt2
 - build with HEIF support (closes: 44749)
 
