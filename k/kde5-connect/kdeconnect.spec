@@ -7,8 +7,8 @@
 %define libkdeconnectsmshelper libkdeconnectsmshelper%sover
 
 Name: kde5-connect
-Version: 22.08.3
-Release: alt2
+Version: 22.12.1
+Release: alt1
 %K5init
 
 Group: Communications
@@ -153,6 +153,9 @@ done
 #%_K5lib/libkdeconnectsmshelper.so.*
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Thu Nov 10 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt2
 - build with pulseaudio-qt5
 

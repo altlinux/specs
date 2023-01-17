@@ -1,8 +1,8 @@
 %define rname kgpg
 
 Name: kde5-%rname
-Version: 22.08.3
-Release: alt2
+Version: 22.12.1
+Release: alt1
 %K5init
 
 Group: File tools
@@ -44,7 +44,7 @@ Graphical GPG frontend.
 
 %install
 %K5install
-%K5install_move data kgpg
+%K5install_move data kgpg kio
 %find_lang %name --with-kde --all-name
 
 %files -f %name.lang
@@ -52,7 +52,7 @@ Graphical GPG frontend.
 %_K5bin/kgpg
 %_K5xdgapp/org.kde.kgpg.desktop
 %_K5data/kgpg/
-%_K5srv/ServiceMenus/*crypt*.desktop
+%_K5data/kio/servicemenus/*kgpg*.desktop
 %_K5start/org.kde.kgpg.desktop
 %_K5cfg/kgpg.kcfg
 %_K5xmlgui/kgpg/
@@ -62,6 +62,9 @@ Graphical GPG frontend.
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Fri Dec 09 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt2
 - fixes the display of the trust indicator(thanks sirius@alt) (closed: 44348)
 

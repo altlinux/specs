@@ -22,8 +22,8 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 22.08.3
-Release: alt2
+Version: 22.12.1
+Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
 Group: Archiving/Cd burning
@@ -183,6 +183,9 @@ fi
 %_K5inc/k3b*.h
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Wed Nov 30 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt2
 - fix to build with KF-5.100
 

@@ -4,7 +4,7 @@
 %define libkateprivate libkateprivate%sover
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init altplace no_appdata
 
@@ -24,7 +24,7 @@ Patch1: alt-soname.patch
 # optimized out: cmake cmake-modules desktop-file-utils docbook-dtds docbook-style-xsl elfutils kf5-attica-devel kf5-kdoctools-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sql libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python3 python3-base qt5-base-devel ruby ruby-stdlibs xml-common xml-utils
 #BuildRequires: extra-cmake-modules gcc-c++ kf5-kactivities-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel kf5-kdelibs4support kf5-kdoctools kf5-kdoctools-devel kf5-kguiaddons-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-kinit-devel kf5-kio-devel kf5-kitemmodels-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-knewstuff-devel kf5-knotifications-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwallet-devel kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-devel kf5-solid-devel kf5-sonnet-devel kf5-threadweaver-devel libgit2-devel python-module-google qt5-script-devel rpm-build-python3 rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
-BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel qt5-script-devel
+BuildRequires: extra-cmake-modules qt5-base-devel qt5-script-devel
 BuildRequires: libgit2-devel
 BuildRequires: kf5-kactivities-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel
 BuildRequires: kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdbusaddons-devel
@@ -85,7 +85,7 @@ Requires: %name-common
 
 %install
 %K5install
-%K5install_move data kateproject katexmltools
+%K5install_move data kateproject katexmltools kconf_update
 %find_lang %name --with-kde --all-name
 
 kde5_add_text_mimes() {
@@ -129,34 +129,21 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 %files common -f %name.lang
 %doc LICENSES/*
 %_K5icon/hicolor/*/apps/kate.*
-#%_K5icon/hicolor/*/actions/*.*
 
 #%files core
 
 %files
-#%config(noreplace) %_K5xdgconf/katerc
-#%config(noreplace) %_K5xdgconf/ktexteditor*
 %_K5bin/kate
-#%_K5lib/libkdeinit5_kate.so
 %_K5plug/ktexteditor/
-%_K5plug/plasma/dataengine/*_kate*.so
 %_K5xdgapp/org.kde.kate.desktop
-%_K5data/plasma/plasmoids/org.kde.plasma.katesessions/
-%_K5data/plasma/services/org.kde.plasma.katesessions.*
-%_K5srv/plasma-*katesessions.desktop
-#%_K5srv/kate*.desktop
 %_K5data/kateproject/
 %_K5data/katexmltools/
-#%_K5xmlgui/*
-#%_K5doc/en/kate/
+%_K5conf_up/*kate*
 
 %files -n kde5-kwrite
 %_K5bin/kwrite
-#%_K5lib/libkdeinit5_kwrite.so
 %_K5xdgapp/org.kde.kwrite.desktop
 %_K5icon/hicolor/*/apps/kwrite.*
-#%_K5data/kwrite/
-#%_K5doc/en/kwrite/
 
 %files -n %libkateprivate
 %_K5lib/libkateprivate.so.%sover
@@ -168,6 +155,9 @@ kde5_add_text_mimes %buildroot/%_K5xdgapp/org.kde.kwrite.desktop
 #%_K5link/lib*.so
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 

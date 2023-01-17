@@ -10,7 +10,7 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init
 
@@ -118,8 +118,7 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5xdgapp/*dolphin*.desktop
 %_K5cfg/dolphin*
 %_K5conf_up/*dolphin*
-%_K5srv/*.desktop
-%_K5srvtyp/*.desktop
+%_K5data/dolphin/
 %_K5data/kglobalaccel/*dolphin*
 %_K5data/knsrcfiles/*
 %_K5dbus_srv/org.kde.dolphin.FileManager1.service
@@ -139,6 +138,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 

@@ -6,7 +6,7 @@
 %def_disable libzip
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init altplace
 
@@ -74,6 +74,7 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 
 %install
 %K5install
+%K5install_move data kconf_update
 #mv %buildroot/%_K5xdgmime/kerfuffle{,5}.xml
 %find_lang %name --with-kde --all-name
 
@@ -83,17 +84,16 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_datadir/qlogging-categories5/*.*categories
 
 %files
+%config(noreplace) %_K5xdgconf/*ark*
 %_K5bin/ark
 %_K5plug/kf5/parts/arkpart.so
 %_K5plug/kf5/kio_dnd/extracthere.so
 %_K5plug/kf5/kfileitemaction/*.so
 %_K5xdgapp/*ark*.desktop
-%_K5srv/ark*.desktop
 %_K5cfg/*ark*.kcfg
 %_K5icon/hicolor/*/apps/ark.*
-#
 %_K5plug/kerfuffle/
-%_K5srvtyp/kerfuffle*.desktop
+%_K5conf_up/*ark*
 
 #%files devel
 #%_K5inc/ark_version.h
@@ -107,6 +107,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
