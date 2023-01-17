@@ -2,14 +2,17 @@
 
 %global import_path github.com/yggdrasil-network/yggdrasil-go
 
+%define _libexecdir /usr/libexec
+
 Name: yggdrasil
 Version: 0.4.7
-Release: alt1
+Release: alt2
 
 Summary: End-to-end encrypted IPv6 networking
 License: LGPLv3
 Group: Security/Networking
 Url: https://yggdrasil-network.github.io
+Vcs: https://github.com/yggdrasil-network/yggdrasil-go.git
 
 Source: %name-%version.tar
 
@@ -33,20 +36,18 @@ over either IPv4 or IPv6.
 %prep
 %setup
 
+# fix 'chmod' path
+sed -i contrib/systemd/yggdrasil-default-config.service -e '/chmod/ s|/usr||'
+
 %build
 export GO111MODULE=off
 export BUILDDIR="$PWD/.build"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 
-cp -r LICENSE README.md CHANGELOG.md contrib/systemd/* %_builddir/
 %golang_prepare
 
 cd .build/src/%import_path
-
-# remove genkeys util
-rm -rf cmd/genkeys
-
 export PKGSRC="%import_path/src/version"
 export PKGNAME="%name"
 export PKGVER="%version-%release"
@@ -60,21 +61,30 @@ export IGNORE_SOURCES=1
 
 %golang_install
 
-pushd %_builddir
-    sed -i yggdrasil-default-config.service -e '/chmod/ s|/usr||'
-    install -pD yggdrasil.service %buildroot%_unitdir/yggdrasil.service
-    install -pD yggdrasil-default-config.service %buildroot%_unitdir/yggdrasil-default-config.service
-popd
+install -pD -m0644 contrib/systemd/yggdrasil.service \
+                   %buildroot%_unitdir/yggdrasil.service
+install -pD -m0644 contrib/systemd/yggdrasil-default-config.service \
+                   %buildroot%_unitdir/yggdrasil-default-config.service
+
+# move 'genkeys' to %%_libexecdir
+mkdir -p %buildroot%_libexecdir/yggdrasil
+mv %buildroot{%_bindir,%_libexecdir/yggdrasil}/genkeys
 
 %files
 %doc LICENSE README.md CHANGELOG.md
-%attr(0755,root,root) %_bindir/*
-%attr(0644,root,root) %_unitdir/*
+%_bindir/*
+%_libexecdir/*
+%_unitdir/*
 
 %pre
 /usr/sbin/groupadd -r -f yggdrasil
 
 %changelog
+* Tue Jan 17 2023 Anton Zhukharev <ancieg@altlinux.org> 0.4.7-alt2
+- package 'genkeys' util
+- clean up spec
+- add Vcs tag
+
 * Tue Nov 22 2022 Anton Zhukharev <ancieg@altlinux.org> 0.4.7-alt1
 - update to 0.4.7
 
