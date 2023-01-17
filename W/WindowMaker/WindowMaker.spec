@@ -12,13 +12,13 @@
 
 Name: WindowMaker
 Version: 0.95.9
-Release: alt2
+Release: alt3
 Packager: %packager
 
 Summary: A window manager for the X Window System
 Group: Graphical desktop/Window Maker
 License: GPL
-URL: http://www.windowmaker.info/
+URL: http://windowmaker.org
 
 Source0: %name-%version.tar
 Source1: altlinux.tar
@@ -311,6 +311,9 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Tue Jan 17 2023 Michael Shigorin <mike@altlinux.org> 0.95.9-alt3
+- Url: changed back to canonical one (thx @lolgentoo)
+
 * Mon Nov 01 2021 Igor Vlasenko <viy@altlinux.org> 0.95.9-alt2
 - NMU: WM packaging policy 2.0: added xsessions desktop
 
