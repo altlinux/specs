@@ -24,9 +24,9 @@
 %endif
 
 Name: bind
-Version: 9.16.35
-%define src_version 9.16.35
-Release: alt2
+Version: 9.16.36
+%define src_version 9.16.36
+Release: alt1
 
 Summary: ISC BIND - DNS server
 License: MPL-2.0
@@ -69,6 +69,7 @@ Patch0005: 0005-ALT-tests-Unchroot-named-for-tests.patch
 Patch0006: 0006-ALT-tests-Add-tests-for-signing-with-custom-OpenSSL.patch
 Patch0007: 0007-ALT-tests-Raise-expected-delta-time-for-cds.patch
 Patch0008: 0008-ALT-tests-Wait-up-to-30sec-for-the-server-start.patch
+Patch0009: 0009-Fix-feature-detection-for-pytest-markers-in-tests.patch
 
 %if_with docs
 BuildRequires: python3(sphinx)
@@ -546,6 +547,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 13 2023 Stanislav Levin <slev@altlinux.org> 9.16.36-alt1
+- 9.16.35 -> 9.16.36.
+
 * Tue Dec 06 2022 Stanislav Levin <slev@altlinux.org> 9.16.35-alt2
 - Skip flaky dupsigs test (GL #3665).
 
