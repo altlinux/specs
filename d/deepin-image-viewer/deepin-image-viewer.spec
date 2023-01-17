@@ -2,7 +2,7 @@
 %def_enable cmake
 
 Name: deepin-image-viewer
-Version: 5.9.2
+Version: 5.9.9
 Release: alt1
 Summary: Image viewer for Deepin
 License: GPL-3.0+
@@ -89,7 +89,7 @@ cmake --build "%_cmake__builddir" -j1
 %find_lang %name
 
 %files -f %name.lang
-%doc LICENSE README.md
+%doc LICENSE.txt README.md
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_datadir/%name/
@@ -106,6 +106,9 @@ cmake --build "%_cmake__builddir" -j1
 %_qt5_plugindir/imageformats/libxraw.so
 
 %changelog
+* Tue Jan 17 2023 Leontiy Volodin <lvol@altlinux.org> 5.9.9-alt1
+- New version (5.9.9).
+
 * Thu Jul 21 2022 Leontiy Volodin <lvol@altlinux.org> 5.9.2-alt1
 - New version (5.9.2).
 
