@@ -6,7 +6,7 @@
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: A python refactoring library
@@ -53,6 +53,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 17 2023 Anton Zhukharev <ancieg@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Sun Jan 15 2023 Anton Zhukharev <ancieg@altlinux.org> 1.6.0-alt1
 - 1.6.0
 
