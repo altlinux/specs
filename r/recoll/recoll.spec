@@ -7,7 +7,7 @@
 
 Name: recoll
 Version: 1.34.0
-Release: alt1
+Release: alt2
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -122,7 +122,7 @@ This package contains Python bindings for Recoll.
 sed -i 's/openoffice/loffice/' sampleconf/mimeview
 sed -i '/^Categories=/s/=/=Qt;/' desktop/*.desktop
 # updated translations: ru
-#cp -a %SOURCE1 %SOURCE2 qtgui/i18n/
+cp -a %SOURCE1 %SOURCE2 qtgui/i18n/
 cp -a %SOURCE5 desktop/
 
 %build
@@ -184,6 +184,9 @@ sed -i "s|#!/usr/bin/env python3|#!%__python3|" \
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Tue Jan 17 2023 Michael Shigorin <mike@altlinux.org> 1.34.0-alt2
+- updated Russian translation (thx arbars@)
+
 * Fri Dec 30 2022 Michael Shigorin <mike@altlinux.org> 1.34.0-alt1
 - new version (watch file uupdate)
 
