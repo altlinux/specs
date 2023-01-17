@@ -1,29 +1,30 @@
-%define oname   pymarkups
+%define oname pymarkups
 %def_without tests
 
-Name:           python3-module-markups
-Version:        3.1.3
-Release:        alt1
-License:        MIT
-Summary:        Wrapper around various text markups
-Group:          Development/Python3
-URL: 		https://github.com/retext-project/pymarkups
+Name:    python3-module-markups
+Version: 4.0.0
+Release: alt1
+Summary: Wrapper around various text markups
+License: MIT
+Group:   Development/Python3
+URL:     https://github.com/retext-project/pymarkups
 
-Source0:        %oname-%version.tar
+Source0: %oname-%version.tar
 
-BuildArch:      noarch
+BuildArch: noarch
 
-BuildPreReq:	rpm-build-python3
-BuildPreReq: 	python3-devel python3-module-setuptools /dev/pts
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-wheel
 
 %if_with tests
-BuildRequires:  python3-module-docutils
-BuildRequires:  python3-module-markdown
-BuildRequires:  python3-module-markdown-math
-BuildRequires:  python3-module-textile
+BuildRequires: python3-module-docutils
+BuildRequires: python3-module-markdown
+BuildRequires: python3-module-markdown-math
+BuildRequires: python3-module-textile
 %endif
 
-BuildArch:      noarch
+BuildArch: noarch
 
 %description
 This module provides a wrapper around various text markup languages.
@@ -32,25 +33,28 @@ Available by default are Markdown, reStructuredText and Textile, but you
 can easily add your own markups.
 
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 %if_with tests
-python3 setup.py test
+%tox_check_pyproject
 %endif
 
 %files
 %doc README.rst
 %python3_sitelibdir/markups
-%python3_sitelibdir/*egg-info
+%python3_sitelibdir/Markups-%version.dist-info
 
 %changelog
+* Tue Jan 17 2023 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt1
+- New version.
+
 * Mon Nov 22 2021 Andrey Cherepanov <cas@altlinux.org> 3.1.3-alt1
 - New version.
 
