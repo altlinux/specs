@@ -8,7 +8,7 @@
 %def_enable cmake
 
 Name: deepin-image-editor
-Version: 1.0.18
+Version: 1.0.24
 Release: alt1
 Summary: Image editor libraries for Deepin
 License: GPL-3.0+
@@ -29,7 +29,7 @@ BuildRequires(pre): gcc-c++
 %if_enabled cmake
 BuildRequires(pre): cmake rpm-build-ninja
 %endif
-BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel dtk5-widget-devel libopencv-devel libfreeimage-devel glib2-devel libmediainfo-devel
+BuildRequires: qt5-base-devel qt5-svg-devel qt5-tools-devel dtk5-widget-devel libopencv-devel libfreeimage-devel glib2-devel libmediainfo-devel libtiff-devel libffmpegthumbnailer-devel
 
 %description
 Image editor is a public library for deepin-image-viewer
@@ -88,8 +88,12 @@ sed -i 's|/usr/lib/|%_libdir/|' \
     libimageviewer/CMakeLists.txt \
     libimageviewer/libimageviewer.pro \
     libimagevisualresult/CMakeLists.txt
-sed -i 's|QtSvg|Qt5Svg|; s| Qt5LinguistTools||; s| freeimage||' \
-    libimageviewer/libimageviewer.pc.in
+#sed -i 's|QtSvg|Qt5Svg|; s| Qt5LinguistTools||; s| freeimage||' \
+#    libimageviewer/libimageviewer.pc.in
+sed -i 's|3rdparty/tiff-tools/converttiff.h|../../3rdparty/tiff-tools/converttiff.h|' \
+    libimageviewer/unionimage/unionimage.cpp
+sed -i 's|libimageviewer|libimagevisualresult|' \
+    libimagevisualresult/libimagevisualresult.pc.in
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -102,12 +106,13 @@ export NM="llvm-nm"
 export READELF="llvm-readelf"
 %endif
 %cmake \
-	-GNinja \
-	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
-	-DAPP_VERSION=%version \
-	-DVERSION=%version \
-	-DLIB_INSTALL_DIR=%_libdir \
-	%nil
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DAPP_VERSION=%version \
+    -DVERSION=%version \
+    -DLIB_INSTALL_DIR=%_libdir \
+    -DCMAKE_INSTALL_LIBDIR=%_lib \
+    %nil
 cmake --build "%_cmake__builddir"
 %else
 %qmake_qt5 \
@@ -131,7 +136,7 @@ cmake --build "%_cmake__builddir"
 %endif
 
 %files -n lib%repoiv-data
-%doc LICENSE README.md
+%doc LICENSE.txt README.md
 %dir %_datadir/lib%repoiv/
 %_datadir/lib%repoiv/*
 
@@ -156,6 +161,9 @@ cmake --build "%_cmake__builddir"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Tue Jan 17 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.24-alt1
+- New version.
+
 * Thu Jul 21 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.18-alt1
 - New version.
 
