@@ -1,5 +1,5 @@
 Name:       rivalcfg
-Version:    4.7.0
+Version:    4.8.0
 Release:    alt1
 
 Summary:    Configure SteelSeries Rival gaming mice
@@ -53,6 +53,9 @@ EOF
 
 
 %changelog
+* Wed Jan 18 2023 L.A. Kostis <lakostis@altlinux.ru> 4.8.0-alt1
+- 4.8.0.
+
 * Fri Sep 23 2022 L.A. Kostis <lakostis@altlinux.ru> 4.7.0-alt1
 - 4.7.0.
 
