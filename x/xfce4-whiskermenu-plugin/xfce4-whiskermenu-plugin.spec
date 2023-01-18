@@ -2,8 +2,8 @@
 %define git_date %nil
 
 Name: xfce4-whiskermenu-plugin
-Version: 2.7.1
-Release: alt2%git_date
+Version: 2.7.2
+Release: alt1%git_date
 
 Summary: Alternate Xfce menu
 License: GPLv2+
@@ -51,6 +51,9 @@ keeps a list of the last ten applications that you've launched from it.
 %_man1dir/*.1.*
 
 %changelog
+* Wed Jan 18 2023 Mikhail Efremov <sem@altlinux.org> 2.7.2-alt1
+- Updated to 2.7.2.
+
 * Tue May 17 2022 Mikhail Efremov <sem@altlinux.org> 2.7.1-alt2
 - Patch from upstream git:
   + Replace dm-tool with xfce4-session-logout (Issue #73).
