@@ -1,7 +1,7 @@
 
 Name: kf5-rpm-build
-Version: 5.12.0
-Release: alt2
+Version: 5.14.0
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Development utils for KDE
@@ -36,6 +36,9 @@ install -D -m 0755 %SOURCE2 %buildroot/%_bindir/rpm-build-kf5-find-qtlang
 %_bindir/rpm-build-kf5-*
 
 %changelog
+* Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.14.0-alt1
+- fix removing metainfo
+
 * Tue Apr 09 2019 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt2
 - fix requires, description
 - drop %%ubt macro
