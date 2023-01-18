@@ -65,7 +65,7 @@
 
 
 Name: virtualbox
-Version: 7.0.4
+Version: 7.0.6
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -953,6 +953,9 @@ mountpoint -q /dev || {
 %endif
 
 %changelog
+* Wed Jan 18 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.6-alt1
+- Update to newest version 7.0.6
+
 * Fri Nov 18 2022 Valery Sinelnikov <greh@altlinux.org> 7.0.4-alt1
 - Update to newest version 7.0.4
 

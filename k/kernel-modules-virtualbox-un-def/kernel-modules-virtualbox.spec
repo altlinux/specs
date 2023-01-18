@@ -1,5 +1,5 @@
 %define module_name	virtualbox
-%define module_version	7.0.4
+%define module_version	7.0.6
 
 %define module_release	alt1
 
@@ -118,6 +118,9 @@ install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnet
 %changelog
 * %(LC_TIME=C date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+* Wed Jan 18 2023 Valery Sinelnikov <greh@altlinux.org> 7.0.6-alt1
+- Updated template for virtualbox 7.0.6
+
 * Fri Nov 18 2022 Valery Sinelnikov <greh@altlinux.org> 7.0.4-alt1
 - Updated template for virtualbox 7.0.4
 
