@@ -26,7 +26,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt7
+Release: alt8
 
 %ifarch %ix86 x86_64
 BuildRequires: gfxboot >= 4
@@ -308,7 +308,7 @@ Some system settings for %distro_name.
 
 %prep
 %setup -n branding
-%ifarch %e2k
+%ifarch %e2k %ix86
 # 2021: no chromium port available
 grep -rl chromium xfce-settings/etcskel/.config/xfce4/panel |
 	xargs -r -- sed -i 's,chromium,firefox,g;s,Chromium,Firefox,g'
@@ -478,6 +478,9 @@ grep -q '^gtk-theme-name' /etc/gtk-2.0/gtkrc || cat /etc/skel/.gtkrc-2.0 >> /etc
 #config %_localstatedir/ldm/.pam_environment
 
 %changelog
+* Wed Jan 18 2023 Andrey Cherepanov <cas@altlinux.org> 10.1-alt8
+- Fixed missing chromium for panel icon (ALT #44938).
+
 * Mon Nov 07 2022 Andrey Cherepanov <cas@altlinux.org> 10.1-alt7
 - indexhtml: rewrite indexhtml pages.
 
