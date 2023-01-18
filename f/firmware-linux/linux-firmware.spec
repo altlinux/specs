@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230110
+Version: 20230117
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,20 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Jan 18 2023 Cronbuild Service <cronbuild@altlinux.org> 20230117-alt1
+- upstream changes (GIT 7e4f0eda):
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX211 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX210 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX200 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9560 (thx Kiran K)
+  + Update firmware file for Intel Bluetooth 9260 (thx Kiran K)
+  + brcm: add configuration files for CyberTan WC121 (thx Andreas Kemnade)
+  + qcom: add firmware files for Adreno A200 (thx Dmitry Baryshkov)
+  + rtw89: 8852c: update fw to v0.27.56.10 (thx Ping-Ke Shih)
+  +  QCA: Add Bluetooth firmware for QCA2066 (thx Tim Jiang)
+
 * Thu Jan 12 2023 Cronbuild Service <cronbuild@altlinux.org> 20230110-alt1
 - upstream changes (GIT a1ad1d5b):
   + amdgpu: add VCN4.0.4 firmware from amd-5.4 (thx Alex Deucher)
