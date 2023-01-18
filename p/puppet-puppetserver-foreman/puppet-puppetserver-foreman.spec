@@ -2,7 +2,7 @@
 %define        pkgname puppetserver-foreman
 
 Name:          puppet-%pkgname
-Version:       2.0.0
+Version:       2.2.0
 Release:       alt1
 Summary:       Puppet module for managing Foreman integration in Puppetserver
 License:       GPLv3
@@ -13,6 +13,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         exceptions.patch
 BuildRequires(pre): rpm-build-ruby
 
 Requires:      puppet
@@ -29,6 +30,7 @@ Historically this integration was part of theforeman-foreman module.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %ruby_build --use=%name --srclibdirs=
@@ -48,5 +50,9 @@ mv %buildroot%_libexecdir/%name %buildroot%_libexecdir/puppet-modules/%pkgname
 
 
 %changelog
+* Wed Jan 18 2023 Pavel Skrylev <majioa@altlinux.org> 2.2.0-alt1
+- ^ 2.0.0 -> 2.2.0
+- ! exceptions for timeout
+
 * Mon Jan 31 2022 Pavel Skrylev <majioa@altlinux.org> 2.0.0-alt1
 - + packaged puppet module with usage Ruby Policy 2.0
