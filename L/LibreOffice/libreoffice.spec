@@ -28,7 +28,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt2
+Release: alt3
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -253,7 +253,7 @@ Summary: PostgrSQL connector for LibreOffice
 
 # TODO redefine %%lang adding corr langpack
 # define macro for quick langpack description
-%define langpack(l:n:mhs:) \
+%define langpack(l:n:mhs:o:) \
 %define lang %{-l:%{-l*}}%{!-l:%{error:Language code not defined}} \
 %define lng %{-s:%{-s*}}%{!-s:%{lang}} \
 %define pkgname langpack-%{lang} \
@@ -265,6 +265,8 @@ Group:  Office \
 Requires: %uname = %EVR \
 %{-m:Requires: mythes-%lng} \
 %{-h:Requires: hyphen-%lng} \
+%{-o:Obsoletes: %{name}-langpack-%{1} < %{2}} \
+%{-o:Conflicts: %{name}-langpack-%{1} < %{2}} \
 %description %{pkgname} \
 Provides additional %{langname} translations and resources for %name. \
 \
@@ -573,7 +575,7 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %langpack -m -h -l de          -n German
 %langpack -m -h -l fr          -n French
 %langpack -m -h -l uk          -n Ukrainian
-%langpack -m -h -l pt_BR -s pt -n Brazilian Portuguese
+%langpack -m -h -l pt_BR -s pt -n Brazilian Portuguese -o pt-BR 7.4.2.1-alt1
 %langpack -m -h -l es          -n Espanian
 %langpack       -l kk          -n Kazakh
 %langpack    -h -l tt          -n Tatar
@@ -589,6 +591,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Mon Jan 16 2023 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.4.2.3-alt3
+- Fixed pt-BR langpack update conflict
+
 * Mon Nov 21 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.4.2.3-alt2
 - NMU: Update russian translation for 7.4.2.3
 
