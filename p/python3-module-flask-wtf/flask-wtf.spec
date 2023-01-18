@@ -1,10 +1,9 @@
 %define oname flask-wtf
 
-# https://github.com/wtforms/flask-wtf/issues/531
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 
 Summary: Simple integration of Flask and WTForms
@@ -87,6 +86,10 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc docs/_build/html examples
 
 %changelog
+* Wed Jan 18 2023 Grigory Ustinov <grenka@altlinux.org> 1.1.1-alt1
+- Automatically updated to 1.1.1.
+- Build with check.
+
 * Mon Jan 16 2023 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version.
 

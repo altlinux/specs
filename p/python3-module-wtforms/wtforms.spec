@@ -1,8 +1,10 @@
 %define oname wtforms
 
+%def_with check
+
 Name: python3-module-%oname
 Version: 3.0.1
-Release: alt1
+Release: alt2
 
 Summary: A flexible forms validation and rendering library for python web development
 
@@ -16,10 +18,17 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-pallets-sphinx-themes
 BuildRequires: python3-module-sphinx-issues
 BuildRequires: python3-module-sphinxcontrib-log-cabinet
+
+%if_with check
+BuildRequires: python3-module-email_validator
+%endif
 
 %description
 WTForms is a flexible forms validation and rendering library for python
@@ -54,14 +63,17 @@ This package contains documentation for %oname.
 sed -i 's|sphinx-build|&-3|' docs/Makefile
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs pickle html
 cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
+
+%check
+%tox_check_pyproject
 
 %files
 %doc README.rst
@@ -75,6 +87,10 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%oname/
 %doc docs/_build/html/*
 
 %changelog
+* Wed Jan 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
+- Built with pyproject macros.
+- Built with check.
+
 * Sat May 28 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Automatically updated to 3.0.1.
 
