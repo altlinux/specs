@@ -5,7 +5,7 @@
 
 Summary: Universal SSL tunnel
 Name: stunnel4
-Version: 5.60
+Version: 5.67
 Release: alt1
 License: GPLv2+
 Group: Networking/Other
@@ -17,7 +17,7 @@ Source1: stunnel.init
 Source3: stunnel.inetd
 
 Patch1: stunnel-config.patch
-Patch2: stunnel-5.40-authpriv.patch
+Patch2: stunnel-5.67-authpriv.patch
 Patch3: stunnel-5.53-systemd-service.patch
 
 Url: http://www.stunnel.org/
@@ -43,6 +43,9 @@ BuildRequires: nmap
 BuildRequires: iproute2
 BuildRequires: lsof
 %endif
+
+# bash completion
+BuildRequires: bash-completion
 
 %description
 The stunnel program is designed to work as SSL encryption wrapper
@@ -71,10 +74,20 @@ BuildArch: noarch
 %description inetd
 stunnel acts as inetd service.
 
+%package -n bash-completion-%name
+Summary: Bash completion for %name
+Group: Shells
+BuildArch: noarch
+Requires: bash-completion
+Requires: %name = %version-%release
+
+%description -n bash-completion-%name
+Bash completion for %name.
+
 %prep
 %setup -q
 %patch1 -p1 -b .fix
-%patch2 -p1
+%patch2 -p2
 %patch3 -p2
 
 %build
@@ -83,7 +96,8 @@ stunnel acts as inetd service.
 %configure \
 	--with-ssl=%_prefix \
 	--enable-shared \
-	--disable-libwrap
+	--disable-libwrap \
+	--with-bashcompdir=%_datadir/bash-completion/completions
 
 %make_build
 
@@ -151,7 +165,14 @@ make check
 %files inetd
 %config(noreplace) %verify(not md5 mtime size) /etc/xinetd.d/stunnel
 
+%files -n bash-completion-%name
+%_datadir/bash-completion/completions/*
+
 %changelog
+* Wed Jan 18 2023 L.A. Kostis <lakostis@altlinux.ru> 5.67-alt1
+- New version (5.67).
+- Added bash-completion package.
+
 * Sun Nov 07 2021 Vladislav Zavjalov <slazav@altlinux.org> 5.60-alt1
 - New version (5.60).
 
