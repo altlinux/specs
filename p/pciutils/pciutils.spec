@@ -1,7 +1,7 @@
 %define libname libpci
 
 Name: pciutils
-Version: 3.8.0
+Version: 3.9.0
 Release: alt1
 
 Summary: Linux PCI utilities
@@ -93,6 +93,9 @@ This package contains PCI library headers.
 %_man7dir/pcilib*
 
 %changelog
+* Wed Jan 18 2023 Anton Farygin <rider@altlinux.ru> 3.9.0-alt1
+- 3.9.0
+
 * Mon Oct 17 2022 Anton Farygin <rider@altlinux.ru> 3.8.0-alt1
 - 3.8.0
 
