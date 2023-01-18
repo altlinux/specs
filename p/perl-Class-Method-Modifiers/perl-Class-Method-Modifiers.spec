@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Class-Method-Modifiers
 Name: perl-Class-Method-Modifiers
-Version: 2.13
+Version: 2.14
 Release: alt1
 
 Summary: provides Moose-like method modifiers
@@ -56,10 +56,13 @@ distribution.
 %perl_vendor_install
 
 %files
-%doc README Changes LICENSE CONTRIBUTING
+%doc README Changes CONTRIBUTING
 %perl_vendor_privlib/Class/Method/Modifiers.pm
 
 %changelog
+* Thu Jan 19 2023 Igor Vlasenko <viy@altlinux.org> 2.14-alt1
+- automated CPAN update
+
 * Thu Aug 15 2019 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1
 - automated CPAN update
 
