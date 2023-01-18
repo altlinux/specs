@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkcommon
-Version: 5.6.3
+Version: 5.6.4
 Release: alt1
 
 Summary: Deepin desktop schemas
@@ -76,11 +76,15 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %files -n dtk5-common-devel
 %_libdir/cmake/Dtk/DtkConfig.cmake
-%_libdir/cmake/Dtk/DtkInstallDConfigConfig.cmake
 %_qt5_archdatadir/mkspecs/features/*.prf
 %_qt5_archdatadir/mkspecs/modules/qt_lib_dtkcommon.pri
 
 %changelog
+* Wed Jan 18 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt1
+- New version (5.6.4).
+- Upstream:
+  + Removed dconfig prf and cmake module.
+
 * Wed Jan 11 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.3-alt1
 - New version (5.6.3).
 - Updated license tag.

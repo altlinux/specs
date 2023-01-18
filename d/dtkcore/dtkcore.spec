@@ -2,7 +2,7 @@
 %def_disable docs
 
 Name: dtkcore
-Version: 5.6.3
+Version: 5.6.4
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -26,8 +26,12 @@ BuildRequires: fdupes
 BuildRequires: qt5-base-devel
 BuildRequires: gsettings-qt-devel
 BuildRequires: libgtest-devel
-BuildRequires: dtk5-common
+BuildRequires: dtk5-common-devel
 BuildRequires: doxygen qt5-tools
+%if_enabled docs
+BuildRequires: qt5-base-doc
+%endif
+BuildRequires: libuchardet-devel
 
 %description
 Deepin tool kit core modules.
@@ -69,10 +73,6 @@ This package provides %name documantation.
 
 %prep
 %setup
-%if_disabled docs
-sed -i '/\/docs\/html\/dtkcore.qch/d' \
-  docs/CMakeLists.txt
-%endif
 
 %build
 %if_enabled clang
@@ -91,7 +91,10 @@ export PATH=%_qt5_bindir:$PATH
   -DDTK_VERSION=%version \
   -DVERSION=%version \
   -DLIB_INSTALL_DIR=%_libdir \
-#
+%if_disabled docs
+  -DBUILD_DOCS=OFF \
+%endif
+  #
 cmake --build %_cmake__builddir -j%__nprocs
 
 %install
@@ -103,17 +106,20 @@ cmake --build %_cmake__builddir -j%__nprocs
 
 %files -n libdtk5-core
 %_libdir/lib%name.so.5*
-%dir %_libdir/libdtk-5*/
-%_libdir/libdtk-5*/DCore/
+%dir %_libdir/dtk5/
+%_libdir/dtk5/DCore/
 
 %files -n dtk5-core-devel
 %doc docs/Specification.md
 %_libdir/lib%name.so
-%_includedir/libdtk-*/
+%dir %_includedir/dtk5/
+%_includedir/dtk5/DCore/
 %_qt5_archdatadir/mkspecs/modules/*.pri
+%_qt5_archdatadir/mkspecs/features/dtk_install_dconfig.prf
 %_libdir/cmake/DtkCore/
 %_libdir/cmake/DtkCMake/
 %_libdir/cmake/DtkTools/
+%_libdir/cmake/DtkDConfig/DtkDConfigConfig.cmake
 %_pkgconfigdir/dtkcore.pc
 
 %if_enabled docs
@@ -122,6 +128,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %endif
 
 %changelog
+* Wed Jan 18 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt1
+- New version.
+
 * Mon Dec 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.3-alt1
 - New version.
 - Disabled doc subpackage.

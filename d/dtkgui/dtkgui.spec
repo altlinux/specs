@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.6.3
+Version: 5.6.4
 Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0
@@ -75,19 +75,25 @@ cmake --build %_cmake__builddir -j%__nprocs
 %doc README.md
 %doc LICENSE
 %_libdir/libdtkgui.so.5*
-%dir %_libdir/libdtk-5*/
-%_libdir/libdtk-5*/DGui/
+%dir %_libdir/dtk5/
+%_libdir/dtk5/DGui/
 
 %files -n dtk5-gui-devel
-%_includedir/libdtk-5*/
+%dir %_includedir/dtk5/
+%_includedir/dtk5/DGui/
 %_qt5_archdatadir/mkspecs/modules/qt_lib_dtkgui.pri
 %dir %_libdir/cmake/DtkGui/
 %_libdir/cmake/DtkGui/DtkGuiConfig.cmake
 %_libdir/cmake/DtkGui/DtkGuiConfigVersion.cmake
+%_libdir/cmake/DtkGui/DtkGuiTargets*.cmake
 %_pkgconfigdir/dtkgui.pc
 %_libdir/libdtkgui.so
 
 %changelog
+* Wed Jan 18 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt1
+- New version.
+- Built using gcc again.
+
 * Mon Dec 19 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.3-alt1
 - New version.
 - Built using clang instead gcc.
