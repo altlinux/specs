@@ -1,5 +1,5 @@
 Name: libXpm
-Version: 3.5.14
+Version: 3.5.15
 Release: alt1
 Summary: X Pixmap Library
 License: MIT/X11
@@ -13,7 +13,7 @@ Patch: %name-%version-%release.patch
 Provides: xpm = %version-%release
 Obsoletes: xpm < %version-%release
 
-BuildRequires: libSM-devel libXext-devel libXt-devel xmlto xorg-util-macros xorg-sgml-doctools
+BuildRequires: libSM-devel libXext-devel libXt-devel xmlto xorg-util-macros xorg-sgml-doctools ncompress
 
 %description
 This package contains the XPM pixmap library for the X Window System.
@@ -57,6 +57,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Wed Jan 18 2023 Valery Inozemtsev <shrek@altlinux.ru> 3.5.15-alt1
+- 3.5.15 (fixes: CVE-2022-46285, CVE-2022-44617, CVE-2022-4883)
+
 * Mon Dec 05 2022 Valery Inozemtsev <shrek@altlinux.ru> 3.5.14-alt1
 - 3.5.14
 
