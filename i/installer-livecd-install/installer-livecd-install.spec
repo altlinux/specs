@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: installer-livecd-install
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: Special step livecd-install for installers
@@ -16,7 +16,6 @@ Requires: libshell
 Requires: alterator-l10n >= 2.5-alt1
 Requires: alterator-browser-qt >= 2.17.0
 Requires: alterator-lookout => 2.4-alt1
-Requires: losetup
 Requires: util-linux
 BuildRequires: rpm-macros-alterator
 BuildRequires: alterator >= 4.10-alt6
@@ -38,6 +37,9 @@ BuildArch: noarch
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Jan 18 2023 Anton Midyukov <antohami@altlinux.org> 0.9.2-alt1
+- Unpacking loop device directly instead squash file
+
 * Fri Oct 14 2022 Anton Midyukov <antohami@altlinux.org> 0.9.1-alt1
 - Change the installed system to look like the one installed by alterator-pkg
 
