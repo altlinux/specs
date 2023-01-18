@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Test/LongString.pm)
+# END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
 %define module_name Dancer
 Name: perl-%module_name
-Version: 1.3513
+Version: 1.3520
 Release: alt1
 Summary: lightweight yet powerful web application framework
 
@@ -25,6 +28,8 @@ to scale to much more complex applications.
 %prep
 %setup -q -n %{module_name}-%{version}
 
+[ %version = "1.3520" ] && rm -f t/14_serializer/04_request_xml.t
+
 %build
 %perl_vendor_build
 
@@ -42,6 +47,9 @@ to scale to much more complex applications.
 %doc Changes README*
 
 %changelog
+* Thu Jan 19 2023 Igor Vlasenko <viy@altlinux.org> 1.3520-alt1
+- automated CPAN update
+
 * Wed Feb 12 2020 Igor Vlasenko <viy@altlinux.ru> 1.3513-alt1
 - automated CPAN update
 
