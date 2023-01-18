@@ -1,5 +1,5 @@
 Name: libva-utils
-Version: 2.16.0
+Version: 2.17.1
 Release: alt1
 Summary: Tools for VAAPI (including vainfo)
 License: MIT and BSD
@@ -46,6 +46,7 @@ autoreconf -fisv
 %files
 %doc CONTRIBUTING.md README.md COPYING
 %_bindir/vainfo
+%_bindir/av1encode
 %_bindir/avcstreamoutdemo
 %_bindir/vp8enc
 %_bindir/vpphdr_tm
@@ -72,6 +73,9 @@ autoreconf -fisv
 
 
 %changelog
+* Wed Jan 18 2023 Anton Farygin <rider@altlinux.ru> 2.17.1-alt1
+- 2.17.1
+
 * Mon Oct 17 2022 Anton Farygin <rider@altlinux.ru> 2.16.0-alt1
 - 2.16.0
 

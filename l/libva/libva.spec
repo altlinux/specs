@@ -3,7 +3,7 @@
 %def_enable x11
 
 Name: libva
-Version: 2.16.0
+Version: 2.17.0
 Release: alt1
 
 Summary: Video Acceleration (VA) API for Linux
@@ -69,6 +69,9 @@ This package provides the development environment for libva
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jan 17 2023 Anton Farygin <rider@altlinux.ru> 2.17.0-alt1
+- 2.17.0
+
 * Wed Oct 05 2022 Anton Farygin <rider@altlinux.ru> 2.16.0-alt1
 - 2.16.0
 
