@@ -1,28 +1,29 @@
-%{!?python_sitelib: %define python_sitelib %(%__python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-
 %define _localedir %_datadir/locale
 
 Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
-Version: 3.5
-Release: alt9.2
+Version: 4.4
+Release: alt1
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %name-%version.tar
-License: GPLv2+
+License: GPL-2.0+
 Group: System/Configuration/Other
 
 BuildArch: noarch
 Url: http://github.com/sosreport/sos
-BuildPreReq: python-devel
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 Requires: libxml2-python
 Provides: sysreport = 1.3.15-8
 
-#BuildRequires(pre): rpm-build-ubt
-
 Patch: %name-%version-alt.patch
-Source1: sos.conf
+
+%filter_from_requires /setuptools._vendor.packaging/d
+%py3_requires setuptools
 
 %description
 Sos is a set of tools that gathers information about system
@@ -35,25 +36,37 @@ support technicians and developers.
 %patch -p1
 
 %build
-%make_build
+%pyproject_build
 
 %install
-%makeinstall_std PYTHON=%__python
-cp -f %SOURCE1 %buildroot%_sysconfdir/
-rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
+%pyproject_install
+mkdir -p %buildroot%_sysconfdir/sos/{cleaner,presets.d,extras.d,groups.d}
+mkdir -p %buildroot%_sbindir
+mv %buildroot%_bindir/* %buildroot%_sbindir
+mv %buildroot%_prefix/config/sos.conf %buildroot%_sysconfdir/sos/sos.conf
+rm -f %buildroot%_defaultdocdir/%name/{AUTHORS,README.md}
+rm -f %buildroot%_datadir/licenses/sos/LICENSE
 %find_lang %name
 
 %files -f %name.lang
-%config(noreplace) %_sysconfdir/sos.conf
+%doc AUTHORS README.md docs/*
+%config(noreplace) %_sysconfdir/sos/sos.conf
+%_sbindir/sos
 %_sbindir/sosreport
-%python_sitelibdir/sos/
+%_sbindir/sos-collector
+%dir %_sysconfdir/sos/cleaner
+%dir %_sysconfdir/sos/presets.d
+%dir %_sysconfdir/sos/extras.d
+%dir %_sysconfdir/sos/groups.d
+%python3_sitelibdir/sos
+%python3_sitelibdir/%{pyproject_distinfo sos}
 %_man1dir/sos*.1*
 %_man5dir/sos.conf.5*
-%_localedir/*/LC_MESSAGES/sos.mo
-%doc AUTHORS README.md LICENSE
-%doc %_defaultdocdir/sos/html
 
 %changelog
+* Wed Jan 18 2023 Andrey Cherepanov <cas@altlinux.org> 4.4-alt1
+- New version (ALT #40681).
+
 * Thu Aug 05 2021 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt9.2
 - use python3 sphinx
 
@@ -120,13 +133,13 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 - Resolves: bz251927 SOS errata needs to be respin to match 4.6 code base
 - added extras/rh-upload-core script from David Mair <dmair@redhat.com>
 
-* Mon Aug  9 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.7-6
+* Thu Aug  9 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.7-6
 - more language fixes
 - added arabic, italian and french
 - package prepared for release
 - included sysreport as sysreport.legacy
 
-* Mon Aug  9 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.7-5
+* Thu Aug  9 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.7-5
 - package obsoletes sysreport and creates a link pointing to sosreport
 - added some commands in cluster and process plugins
 - fixed html output (wrong links to cmds, thanks streeter)
@@ -137,12 +150,12 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 - Resolves: bz248252 sos to support language localization
 - Resolves: bz241282 Make SOS for RHEL 4
 
-* Mon Aug  1 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.7-4
+* Wed Aug  1 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.7-4
 - catch KeyboardInterrupt when entering sosreport name
 - added color output for increased readability
 - list was sorted twice, removing latter .sort()
 
-* Mon Jul 31 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.7-3
+* Tue Jul 31 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.7-3
 - added preliminary problem diagnosis support
 - better i18n initialization
 - better user messages
@@ -151,7 +164,7 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 - use python native commands to create symlinks
 - limit concurrent running threads
 
-* Mon Jul 28 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.7-2
+* Sat Jul 28 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.7-2
 - initial language localization support
 - added italian translation
 
@@ -166,7 +179,7 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 - rpm -Va in plugins/rpm.py sets eta_weight to 200 (plugin 200 longer than other plugins, for ETA calculation)
 - beautified command output filenames in makeCommandFilename()
 
-* Mon Jul 12 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.7-0
+* Thu Jul 12 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.7-0
 - curses menu disabled by default (enable with -c)
 - sosreport output friendlier to the user (and similar to sysreport)
 - smarter plugin listing which also shows options and disable/enabled plugins
@@ -180,10 +193,10 @@ rm -f %buildroot%_datadir/%name/{AUTHORS,README.md}
 - added plugin get_description() that returns a short decription for the plugin
 - guess sosreport name from system's name
 
-* Mon Jul  5 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.6-5
+* Thu Jul  5 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.6-5
 - Yet more fixes to make package Fedora compliant.
 
-* Mon Jul  5 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.6-4
+* Thu Jul  5 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.6-4
 - More fixes to make package Fedora compliant.
 
 * Mon Jul  2 2007 Navid Sheikhol-Eslami <navid at redhat dot com> - 1.6-3
