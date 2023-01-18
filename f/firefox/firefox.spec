@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 108.0.1
+Version: 109.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -419,6 +419,20 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Jan 18 2023 Alexey Gladkov <legion@altlinux.ru> 109.0-alt1
+- New release (109.0).
+- Security fixes:
+  + CVE-2023-23597: Logic bug in process allocation allowed to read arbitrary files
+  + CVE-2023-23598: Arbitrary file read from GTK drag and drop on Linux
+  + CVE-2023-23599: Malicious command could be hidden in devtools output on Windows
+  + CVE-2023-23600: Notification permissions persisted between Normal and Private Browsing on Android
+  + CVE-2023-23601: URL being dragged from cross-origin iframe into same tab triggers navigation
+  + CVE-2023-23602: Content Security Policy wasn't being correctly applied to WebSockets in WebWorkers
+  + CVE-2023-23603: Calls to <code>console.log</code> allowed bypasing Content Security Policy via format directive
+  + CVE-2023-23604: Creation of duplicate <code>SystemPrincipal</code> from less secure contexts
+  + CVE-2023-23605: Memory safety bugs fixed in Firefox 109 and Firefox ESR 102.7
+  + CVE-2023-23606: Memory safety bugs fixed in Firefox 109
+
 * Mon Dec 19 2022 Alexey Gladkov <legion@altlinux.ru> 108.0.1-alt1
 - New release (108.0.1).
 
