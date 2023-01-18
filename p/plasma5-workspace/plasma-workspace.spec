@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.26.5
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -534,6 +534,9 @@ install -m0644 -p -D %SOURCE41 %buildroot/%_unitdir_user/plasma-core.target.d/sp
 
 
 %changelog
+* Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt2
+- fix session startup
+
 * Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt1
 - new version
 
@@ -944,150 +947,150 @@ install -m0644 -p -D %SOURCE41 %buildroot/%_unitdir_user/plasma-core.target.d/sp
 * Thu Sep 27 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.7-alt1
 - new version
 
-* Wed Aug 22 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt5%ubt
+* Wed Aug 22 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt5
 - plasmashell: use KFreeSpaceJob
 - notify user when filesystem freezes
 - set timeout to 125 seconds
 
-* Thu Aug 16 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt4%ubt
+* Thu Aug 16 2018 Oleg Solovyov <mcpain@altlinux.org> 1:5.12.6-alt4
 - fix plasmashell freeze after losing connection to mounted remote fs
 
-* Wed Aug 15 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.6-alt3%ubt
+* Wed Aug 15 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.6-alt3
 - fix requires
 
-* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.6-alt2%ubt
+* Wed Jul 04 2018 Sergey V Turchin <zerg@altlinux.org> 1:5.12.6-alt2
 - fix version
 
-* Tue Jul 03 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2%ubt
+* Tue Jul 03 2018 Sergey V Turchin <zerg@altlinux.org> 18.04.1-alt2
 - update russian translation
 
-* Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1%ubt
+* Wed Jun 27 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.6-alt1
 - new version
 
-* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt1%ubt
+* Thu May 03 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.5-alt1
 - new version
 
-* Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1%ubt
+* Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.4-alt1
 - new version
 
-* Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt2%ubt
+* Wed Mar 28 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt2
 - exclude krb5-ticket-watcher from saved session by default
 
-* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1%ubt
+* Wed Mar 14 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.3-alt1
 - new version
 
-* Thu Mar 01 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1%ubt
+* Thu Mar 01 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.2-alt1
 - new version
 
-* Mon Feb 19 2018 Maxim Voronov <mvoronov@altlinux.org> 5.12.0-alt2%ubt
+* Mon Feb 19 2018 Maxim Voronov <mvoronov@altlinux.org> 5.12.0-alt2
 - renamed kf5-plasma-workspace -> plasma5-workspace
 
-* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1%ubt
+* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.12.0-alt1
 - new version
 
-* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.5-alt2%ubt
+* Mon Feb 12 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.5-alt2
 - security fix: CVE-2018-6791
 
-* Wed Jan 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.5-alt1%ubt
+* Wed Jan 10 2018 Sergey V Turchin <zerg@altlinux.org> 5.11.5-alt1
 - new version
 
-* Mon Dec 11 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.4-alt1%ubt
+* Mon Dec 11 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.4-alt1
 - new version
 
-* Mon Dec 11 2017 Oleg Solovyov <mcpain@altlinux.org> 5.11.3-alt3%ubt
+* Mon Dec 11 2017 Oleg Solovyov <mcpain@altlinux.org> 5.11.3-alt3
 - fix theme
 
-* Mon Dec 04 2017 Oleg Solovyov <mcpain@altlinux.org> 5.11.3-alt2%ubt
+* Mon Dec 04 2017 Oleg Solovyov <mcpain@altlinux.org> 5.11.3-alt2
 - remove redundnant Password*.qml
 
-* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1%ubt
+* Thu Nov 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.3-alt1
 - new version
 
-* Tue Nov 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1%ubt
+* Tue Nov 07 2017 Sergey V Turchin <zerg@altlinux.org> 5.11.2-alt1
 - new version
 
-* Wed Oct 04 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt2%ubt
+* Wed Oct 04 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt2
 - clear Ctrl+Alt+R binding
 
-* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1%ubt
+* Mon Sep 25 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.5-alt1
 - new version
 
-* Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt6%ubt
+* Thu Aug 17 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt6
 - fix system tray icon context menu (ALT#33763) (thanks darktemplar@alt)
 
-* Tue Aug 08 2017 Oleg Solovyov <mcpain@altlinux.org> 5.10.4-alt5%ubt
+* Tue Aug 08 2017 Oleg Solovyov <mcpain@altlinux.org> 5.10.4-alt5
 - support for changing sessions from D-Bus
 
-* Wed Aug 02 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt4%ubt
+* Wed Aug 02 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt4
 - require qt5-virtualkeyboard
 
-* Wed Jul 26 2017 Oleg Solovyov <mcpain@altlinux.org> 5.10.4-alt3%ubt
+* Wed Jul 26 2017 Oleg Solovyov <mcpain@altlinux.org> 5.10.4-alt3
 - fix focus behavior on login screen
 
-* Mon Jul 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt2%ubt
+* Mon Jul 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt2
 - fix dbus service
 
-* Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1%ubt
+* Wed Jul 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.4-alt1
 - new version
 
-* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.3-alt1%ubt
+* Fri Jul 14 2017 Sergey V Turchin <zerg@altlinux.org> 5.10.3-alt1
 - new version
 
-* Tue Jun 27 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt8%ubt
+* Tue Jun 27 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt8
 - fix package release
 
-* Mon Jun 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt7%ubt
+* Mon Jun 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt7
 - update from 5.9 branch
 
-* Fri Jun 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt6%ubt
+* Fri Jun 16 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt6
 - apply fix against KDE bugs 348390, 251222
 - create ~/.local/share/kf5
 
-* Tue Jun 13 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.5-alt5%ubt
+* Tue Jun 13 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.5-alt5
 - fix: unable to handle auth request
 
-* Tue Jun 13 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.5-alt4%ubt
+* Tue Jun 13 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.5-alt4
 - fix autoupdate username
 
-* Wed Jun 07 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.5-alt3%ubt
+* Wed Jun 07 2017 Oleg Solovyov <mcpain@altlinux.org> 5.9.5-alt3
 - new look for breeze theme
 
-* Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt2%ubt
+* Fri May 19 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt2
 - feel last user name in sddm
 
-* Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1%ubt
+* Wed Apr 26 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.5-alt1
 - new version
 
-* Mon Apr 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1%ubt
+* Mon Apr 10 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.4-alt1
 - new version
 
-* Mon Apr 03 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt5%ubt
+* Mon Apr 03 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt5
 - fix password renew with breeze sddm theme
 
-* Fri Mar 31 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt4%ubt
+* Fri Mar 31 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt4
 - fix start sddm with breeze theme
 
-* Fri Mar 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt3%ubt
+* Fri Mar 24 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt3
 - add password renew support for sddm theme
 
-* Mon Mar 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt2%ubt
+* Mon Mar 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt2
 - clean build requires
 - build with prison
 - update from 5.9 branch
 
-* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1%ubt
+* Thu Mar 09 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.3-alt1
 - new version
 
-* Tue Feb 28 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2%ubt
+* Tue Feb 28 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt2
 - fix login background
 
-* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1%ubt
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.2-alt1
 - new version
 
-* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.1-alt1%ubt
+* Mon Feb 20 2017 Sergey V Turchin <zerg@altlinux.org> 5.9.1-alt1
 - new version
 
-* Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1%ubt
+* Fri Dec 09 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.4-alt1
 - new version
 
 * Wed Nov 16 2016 Sergey V Turchin <zerg@altlinux.org> 5.8.3-alt0.M80P.1
