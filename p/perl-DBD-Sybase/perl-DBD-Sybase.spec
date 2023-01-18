@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist DBD-Sybase
 Name: perl-%dist
-Version: 1.20
+Version: 1.21
 Release: alt1
 
 Summary: Sybase database driver (TDS protocol) for the DBI module
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source0: http://www.cpan.org/authors/id/M/ME/MEWP/%{dist}-%{version}.tgz
+Source0: http://www.cpan.org/authors/id/M/ME/MEWP/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: libfreetds-devel perl-DBI-devel perl-devel
@@ -37,6 +37,9 @@ export SYBASE=/usr
 %perl_vendor_autolib/DBD
 
 %changelog
+* Thu Jan 19 2023 Igor Vlasenko <viy@altlinux.org> 1.21-alt1
+- automated CPAN update
+
 * Thu Jun 02 2022 Igor Vlasenko <viy@altlinux.org> 1.20-alt1
 - automated CPAN update
 
