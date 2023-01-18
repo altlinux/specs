@@ -1,6 +1,6 @@
 Name: rust
 Epoch: 1
-Version: 1.66.0
+Version: 1.66.1
 Release: alt1
 Summary: The Rust Programming Language
 
@@ -465,6 +465,11 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Wed Jan 18 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.66.1-alt1
+- New version (1.66.1).
+- Security fixes:
+  + CVE-2022-46176: Cargo did not verify SSH host keys.
+
 * Fri Dec 16 2022 Alexey Gladkov <legion@altlinux.ru> 1:1.66.0-alt1
 - New version (1.66.0).
 
