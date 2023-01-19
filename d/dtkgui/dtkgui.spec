@@ -2,7 +2,7 @@
 
 Name: dtkgui
 Version: 5.6.4
-Release: alt1
+Release: alt2
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0
 Group: Graphical desktop/Other
@@ -42,6 +42,11 @@ Header files and libraries for %name.
 %setup
 %patch -p1
 sed -i '/*build-*/d' .gitignore
+# Fix broken configs.
+sed -i '/libdir=/s/${prefix}//' \
+  misc/dtkgui.pc.in
+sed -i -e '/.tools/s/@CMAKE_INSTALL_PREFIX@//; /.libs/s/@CMAKE_INSTALL_PREFIX@//;' \
+  misc/qt_lib_dtkgui.pri.in
 
 %build
 %add_optflags -I/usr/lib/gcc/%{_target_alias}/%{get_version libgomp-devel}/include
@@ -90,6 +95,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/libdtkgui.so
 
 %changelog
+* Thu Jan 19 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt2
+- Fixed broken configs.
+
 * Wed Jan 18 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt1
 - New version.
 - Built using gcc again.
