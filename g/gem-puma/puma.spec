@@ -1,7 +1,7 @@
 %define        gemname puma
 
 Name:          gem-puma
-Version:       5.6.2
+Version:       5.6.5
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency
 License:       BSD-3-Clause
@@ -13,14 +13,28 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
 BuildRequires: libssl-devel
-BuildRequires: gem(nio4r) >= 2.0 gem(nio4r) < 3
+%if_with check
+BuildRequires: gem(rdoc) >= 0
+BuildRequires: gem(rake-compiler) >= 1.1.1 gem(rake-compiler) < 2
+BuildRequires: gem(json) >= 2.3 gem(json) < 3
+BuildRequires: gem(nio4r) >= 2 gem(nio4r) < 3
+BuildRequires: gem(rack) >= 1.6.13
+BuildRequires: gem(minitest) >= 5.11 gem(minitest) < 6
+BuildRequires: gem(minitest-retry) >= 0
+BuildRequires: gem(minitest-proveit) >= 0
+BuildRequires: gem(minitest-stub-const) >= 0
+BuildRequires: gem(sd_notify) >= 0
+BuildRequires: gem(rubocop) >= 0.64.0 gem(rubocop) < 2
+BuildRequires: gem(m) >= 0
+BuildRequires: gem(localhost) >= 0
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
-Requires:      gem(nio4r) >= 2.0 gem(nio4r) < 3
-Provides:      gem(puma) = 5.6.2
+%ruby_use_gem_dependency rake-compiler >= 1.1.2,rake-compiler < 2
+Requires:      gem(nio4r) >= 2 gem(nio4r) < 3
+Provides:      gem(puma) = 5.6.5
 
 
 %description
@@ -29,14 +43,14 @@ Ruby/Rack applications in development and production.
 
 
 %package       -n puma
-Version:       5.6.2
+Version:       5.6.5
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета puma
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puma) >= 5.2.2 gem(puma) < 6
+Requires:      gem(puma) = 5.6.5
 
 %description   -n puma
 A Ruby/Rack web server built for concurrency executable(s).
@@ -49,14 +63,14 @@ Ruby/Rack applications in development and production.
 
 
 %package       -n gem-puma-doc
-Version:       5.6.2
+Version:       5.6.5
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета puma
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(puma) >= 5.2.2 gem(puma) < 6
+Requires:      gem(puma) = 5.6.5
 Obsoletes:     puma-doc
 Provides:      puma-doc
 
@@ -71,14 +85,26 @@ Ruby/Rack applications in development and production.
 
 
 %package       -n gem-puma-devel
-Version:       5.6.2
+Version:       5.6.5
 Release:       alt1
 Summary:       A Ruby/Rack web server built for concurrency development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета puma
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(puma) >= 5.2.2 gem(puma) < 6
+Requires:      gem(puma) = 5.6.5
+Requires:      gem(rdoc) >= 0
+Requires:      gem(rake-compiler) >= 1.1.1 gem(rake-compiler) < 2
+Requires:      gem(json) >= 2.3.0 gem(json) < 3
+Requires:      gem(rack) >= 1.6.13
+Requires:      gem(minitest) >= 5.11 gem(minitest) < 6
+Requires:      gem(minitest-retry) >= 0
+Requires:      gem(minitest-proveit) >= 0
+Requires:      gem(minitest-stub-const) >= 0
+Requires:      gem(sd_notify) >= 0
+Requires:      gem(rubocop) >= 0.64.0 gem(rubocop) < 2
+Requires:      gem(m) >= 0
+Requires:      gem(localhost) >= 0
 Requires:      libssl-devel
 Obsoletes:     puma-devel
 Provides:      puma-devel
@@ -126,6 +152,9 @@ Ruby/Rack applications in development and production.
 
 
 %changelog
+* Wed Jan 18 2023 Pavel Skrylev <majioa@altlinux.org> 5.6.5-alt1
+- ^ 5.6.2 -> 5.6.5
+
 * Thu Mar 17 2022 Pavel Skrylev <majioa@altlinux.org> 5.6.2-alt1
 - ^ 5.3.2 -> 5.6.2
 
