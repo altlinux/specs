@@ -2,7 +2,7 @@
 %define Brand ALT
 %define theme server
 %define Theme Server
-%define codename FalcoRusticolus
+%define codename Mendelevium
 %define status %nil
 %define status_en %nil
 %define flavour %brand-%theme
@@ -18,7 +18,7 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt4
+Release: alt5
 Url: https://basealt.ru
 
 %ifarch %ix86 x86_64
@@ -338,6 +338,10 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Thu Jan 19 2023 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt5
+- update year for copyright to 2023
+- set codename to Mendelevium
+
 * Tue Nov 08 2022 Dmitry Terekhin <jqt4@altlinux.org> 10.1-alt4
 - import contents of indexhtml from Alexey Osotov
 
