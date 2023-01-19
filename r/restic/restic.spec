@@ -1,6 +1,6 @@
 %global import_path github.com/restic/restic
 Name:     restic
-Version:  0.14.0
+Version:  0.15.0
 Release:  alt1
 
 Summary:  Fast, secure, efficient backup program
@@ -71,6 +71,9 @@ diff -qr %name-%version x
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Thu Jan 19 2023 Mikhail Gordeev <obirvalger@altlinux.org> 0.15.0-alt1
+- new version 0.15.0
+
 * Fri Aug 26 2022 Mikhail Gordeev <obirvalger@altlinux.org> 0.14.0-alt1
 - new version 0.14.0
 
