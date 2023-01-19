@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.4.0
+Version:  1.4.1
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -35,6 +35,10 @@ install -Dpm 644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
 %_man8dir/%name.8*
 
 %changelog
+* Thu Jan 19 2023 Andrey Cherepanov <cas@altlinux.org> 1.4.1-alt1
+- Added altlinuxclub.p10 repository (ALT #44065).
+- Removed obsoleted egrep.
+
 * Sun Jan 02 2022 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1
 - Add command upgrade with optional including tasks.
 
