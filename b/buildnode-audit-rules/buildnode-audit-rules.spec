@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 	  buildnode-audit-rules
-Version:  0.1.0
+Version:  0.1.1
 Release:  alt1
 
 Summary:  Manage audit rules for logging package build processes
@@ -31,6 +31,7 @@ auditctl(8). The resulting configuration is then verified.
 %makeinstall_std sbindir=%_sbindir \
 		 sysconfdir=%_sysconfdir \
 		 unitdir=%_unitdir \
+		 initdir=%_initdir \
 		 man1dir=%_man1dir
 
 %check
@@ -40,8 +41,14 @@ auditctl(8). The resulting configuration is then verified.
 %config(noreplace) %_sysconfdir/audit/%name.conf
 %_sbindir/%name
 %_unitdir/%name.service
+%_initdir/%name
 %_man1dir/%name.1.*
 
 %changelog
+* Thu Jan 19 2023 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt1
+- Fixed error in case when the audit rule list is empty.
+- Strongly require auditd.service.
+- Added SysV-init script.
+
 * Wed Jan 18 2023 Paul Wolneykien <manowar@altlinux.org> 0.1.0-alt1
 - Initial build for Sisyphus.
