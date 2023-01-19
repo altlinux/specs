@@ -4,7 +4,7 @@
 %define _cmake__builddir BUILD
 
 Name: deepin-network-core
-Version: 1.0.71
+Version: 1.1.9
 Release: alt1
 Summary: Deepin desktop-environment - network core files
 License: GPL-3.0+
@@ -57,10 +57,8 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 mv -f %buildroot/usr/lib/{dde-control-center,dde-dock,dde-session-shell} %buildroot%_libdir
 %endif
 mkdir -p %buildroot%_bindir
-mv -f %buildroot%_K5bin/dde-network-dialog %buildroot%_bindir
 
 %files
-%_bindir/dde-network-dialog
 %dir %_libdir/dde-control-center/
 %dir %_libdir/dde-control-center/modules/
 %_libdir/dde-control-center/modules/libdcc-network-plugin.so
@@ -78,7 +76,6 @@ mv -f %buildroot%_K5bin/dde-network-dialog %buildroot%_bindir
 /var/lib/polkit-1/localauthority/10-vendor.d/10-network-manager.pkla
 %_libdir/libdde-network-core.so
 %_datadir/dcc-network-plugin/
-%_datadir/dde-network-dialog/
 %_datadir/dock-network-plugin/
 %_datadir/dss-network-plugin/
 
@@ -88,6 +85,9 @@ mv -f %buildroot%_K5bin/dde-network-dialog %buildroot%_bindir
 %_pkgconfigdir/dde-network-core.pc
 
 %changelog
+* Thu Jan 19 2023 Leontiy Volodin <lvol@altlinux.org> 1.1.9-alt1
+- New version.
+
 * Tue Nov 15 2022 Leontiy Volodin <lvol@altlinux.org> 1.0.71-alt1
 - New version.
 - Fixed FTBFS.
