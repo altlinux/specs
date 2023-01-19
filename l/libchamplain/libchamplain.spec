@@ -11,7 +11,7 @@
 %def_enable check
 
 Name: lib%_name
-Version: %ver_major.20
+Version: %ver_major.21
 Release: alt1
 
 Summary: Map view library for Clutter
@@ -203,6 +203,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Thu Jan 19 2023 Yuri N. Sedunov <aris@altlinux.org> 0.12.21-alt1
+- 0.12.21
+
 * Tue Oct 29 2019 Yuri N. Sedunov <aris@altlinux.org> 0.12.20-alt1
 - 0.12.20
 
