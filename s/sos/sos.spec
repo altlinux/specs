@@ -3,7 +3,7 @@
 Summary: A set of tools to gather troubleshooting information from a system
 Name: sos
 Version: 4.4
-Release: alt1
+Release: alt2
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Source: %name-%version.tar
@@ -15,8 +15,9 @@ Url: http://github.com/sosreport/sos
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel
-BuildRequires: python3-module-wheel
+BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
+BuildRequires: python3-module-wheel
 Requires: libxml2-python
 Provides: sysreport = 1.3.15-8
 
@@ -64,6 +65,9 @@ rm -f %buildroot%_datadir/licenses/sos/LICENSE
 %_man5dir/sos.conf.5*
 
 %changelog
+* Thu Jan 19 2023 Andrey Cherepanov <cas@altlinux.org> 4.4-alt2
+- Added python3-module-setuptools to requirements.
+
 * Wed Jan 18 2023 Andrey Cherepanov <cas@altlinux.org> 4.4-alt1
 - New version (ALT #40681).
 
