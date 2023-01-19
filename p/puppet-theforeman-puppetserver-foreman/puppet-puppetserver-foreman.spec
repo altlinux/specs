@@ -1,14 +1,14 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-%define        pkgname puppetserver-foreman
+%define        pkgname theforeman-puppetserver-foreman
 
 Name:          puppet-%pkgname
 Version:       2.2.0
-Release:       alt1
+Release:       alt2
 Summary:       Puppet module for managing Foreman integration in Puppetserver
 License:       GPLv3
 Group:         Development/Ruby
-Url:           https://github.com/theforeman/puppet-foreman
-Vcs:           https://github.com/theforeman/puppet-foreman.git
+Url:           https://github.com/theforeman/puppet-puppetserver_foreman
+Vcs:           git@github.com:theforeman/puppet-puppetserver_foreman.git
 Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
@@ -18,6 +18,8 @@ BuildRequires(pre): rpm-build-ruby
 
 Requires:      puppet
 Requires:      puppetserver
+Obsoletes:     puppet-puppetserver-foreman < %EVR
+Provides:      puppet-puppetserver-foreman = %EVR
 
 %description
 Puppet module for managing Foreman integration in Puppetserver.
@@ -33,7 +35,7 @@ Historically this integration was part of theforeman-foreman module.
 %autopatch -p1
 
 %build
-%ruby_build --use=%name --srclibdirs=
+%ruby_build
 
 %install
 %ruby_install
@@ -50,6 +52,10 @@ mv %buildroot%_libexecdir/%name %buildroot%_libexecdir/puppet-modules/%pkgname
 
 
 %changelog
+* Wed Jan 18 2023 Pavel Skrylev <majioa@altlinux.org> 2.2.0-alt2
+- * rename package
+- ! fix excessive exception matcher
+
 * Wed Jan 18 2023 Pavel Skrylev <majioa@altlinux.org> 2.2.0-alt1
 - ^ 2.0.0 -> 2.2.0
 - ! exceptions for timeout
