@@ -1,6 +1,6 @@
 Name: kodi-addon-pvr-iptvsimple
-Version: 19.0
-Release: alt6
+Version: 20.6.1
+Release: alt1
 
 Summary: IPTVSimple addon for Kodi
 License: GPLv2
@@ -8,8 +8,6 @@ Group: Video
 Url: https://github.com/kodi-pvr/pvr.iptvsimple/
 
 Source: %name-%version.tar
-
-ExclusiveArch: armh aarch64 %ix86 x86_64 %e2k
 
 BuildRequires: cmake gcc-c++ kodi-devel
 BuildRequires: libkodiplatform-devel libpugixml-devel liblzma-devel zlib-devel
@@ -32,6 +30,12 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_INSTALL_LIBDIR=%_libdir/kodi
 %_datadir/kodi/addons/pvr.iptvsimple
 
 %changelog
+* Mon Jan 16 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.6.1-alt1
+- 20.6.1 released
+
+* Tue Nov 15 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.6.0-alt1
+- 20.6.0 released
+
 * Tue Jan 11 2022 Michael Shigorin <mike@altlinux.org> 19.0-alt6
 - build on Elbrus as well
 

@@ -1,18 +1,16 @@
 Name: kodi-addon-inputstream-adaptive
-Version: 19.0
-Release: alt5
+Version: 20.3.2
+Release: alt1
 
 Summary: Adaptive stream addon for Kodi
 License: GPLv2
 Group: Video
 Url: https://github.com/peak3d/inputstream.adaptive/
 
-ExclusiveArch: armh aarch64 %ix86 x86_64 %e2k
-
 Source: %name-%version.tar
 
 BuildRequires: cmake gcc-c++ kodi-devel libkodiplatform-devel >= 18.0
-BuildRequires: libexpat-devel libgtest-devel
+BuildRequires: libexpat-devel libgtest-devel libap4-devel-static
 
 %description
 %summary
@@ -33,6 +31,12 @@ cmake . -DCMAKE_CXX_FLAGS='%optflags -Wno-error=return-type' \
 %_datadir/kodi/addons/*
 
 %changelog
+* Mon Jan 16 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.3.2-alt1
+- 20.3.2 released
+
+* Tue Nov 15 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.3.1-alt1
+- 20.3.1 released
+
 * Tue Jan 11 2022 Michael Shigorin <mike@altlinux.org> 19.0-alt5
 - build on Elbrus as well (with a trivial patch)
 

@@ -1,13 +1,11 @@
 Name: kodi
-Version: 19.5
-Release: alt2
+Version: 20.0
+Release: alt1
 
 Summary: Kodi Media Center
 License: GPL-2.0-or-later
 Group: Video
 Url: https://kodi.tv/
-
-ExclusiveArch: armh aarch64 %ix86 x86_64 %e2k
 
 Requires: kodi-bin = %version-%release
 Requires: kodi-data = %version-%release
@@ -21,7 +19,6 @@ BuildRequires: libunistring-devel libidn2-devel libEGL-devel
 BuildRequires: java-devel /proc swig
 BuildRequires: pkgconfig(RapidJSON)
 BuildRequires: pkgconfig(alsa)
-BuildRequires: pkgconfig(avahi-client)
 BuildRequires: pkgconfig(bluez)
 BuildRequires: pkgconfig(dbus-1)
 BuildRequires: pkgconfig(dvdnav)
@@ -61,6 +58,7 @@ BuildRequires: pkgconfig(libmicrohttpd)
 BuildRequires: pkgconfig(libnfs)
 BuildRequires: pkgconfig(libpcre)
 BuildRequires: pkgconfig(libpcrecpp)
+BuildRequires: pkgconfig(libpipewire-0.3)
 BuildRequires: pkgconfig(libpng)
 BuildRequires: pkgconfig(libpostproc)
 BuildRequires: pkgconfig(libpulse-simple)
@@ -164,6 +162,7 @@ mkdir %buildroot%_libdir/kodi/addons
 %docdir
 %_desktopdir/kodi.desktop
 %_iconsdir/hicolor/*/apps/kodi.png
+%_datadir/metainfo/*.xml
 
 %files bin
 %_bindir/kodi
@@ -193,6 +192,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Mon Jan 16 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.0-alt1
+- 20.0 Nexus released
+
 * Tue Dec 27 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 19.5-alt2
 - readd lost cmake bits
 
