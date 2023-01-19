@@ -1,5 +1,5 @@
 Name:    gcompris-qt
-Version: 2.4
+Version: 3.0
 Release: alt1
 Summary: Educational suite for kids 2-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 2 до 10 лет
@@ -9,9 +9,7 @@ Group:   Games/Educational
 URL:     http://www.gcompris.net
 
 Source:  %name-%version.tar
-Source1: qml-box2d.tar
-# Get from http://gcompris.net/download/qt/src/gcompris-qt-%version.tar.xz
-Source2: po-%version.tar
+Source1: submodules.tar
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -28,11 +26,13 @@ BuildRequires: qt5-xmlpatterns-devel
 BuildRequires: libssl-devel
 BuildRequires: kf5-kdoctools-devel
 BuildRequires: kf5-kdoctools-devel-static
+BuildRequires: qt5-quickcontrols2-devel
+BuildRequires: qt5-charts-devel
 
 Requires: libqt5-multimedia
 Requires: libqt5-svg
 Requires: qt5-graphicaleffects
-Requires: qt5-quickcontrols
+Requires: qt5-quickcontrols2
 Requires: libqt5-quickcontrols2
 Requires: libqt5-quickparticles
 Requires: chess sqlite3 gnucap tuxpaint
@@ -67,9 +67,8 @@ GCompris - набор образовательных игр и программ 
 * И многое другое...
 
 %prep
-%setup -q
+%setup
 tar xf %SOURCE1
-tar xf %SOURCE2
 
 %build
 %cmake \
@@ -90,10 +89,12 @@ tar xf %SOURCE2
 %_datadir/%name/rcc
 %_desktopdir/*.desktop
 %_datadir/metainfo/*.appdata.xml
-%_defaultdocdir/HTML/en/%name
 %_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Thu Jan 19 2023 Andrey Cherepanov <cas@altlinux.org> 3.0-alt1
+- New version.
+
 * Thu Apr 14 2022 Andrey Cherepanov <cas@altlinux.org> 2.4-alt1
 - New version.
 
