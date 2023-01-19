@@ -3,7 +3,7 @@
 
 Name: dtkcore
 Version: 5.6.4
-Release: alt1
+Release: alt2
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
 Group: Graphical desktop/Other
@@ -73,6 +73,11 @@ This package provides %name documantation.
 
 %prep
 %setup
+# Fix broken configs.
+sed -i '/libdir=/s/${prefix}//' \
+  misc/dtkcore.pc.in
+sed -i -e '/.tools/s/@CMAKE_INSTALL_PREFIX@//; /.libs/s/@CMAKE_INSTALL_PREFIX@//;' \
+  misc/qt_lib_dtkcore.pri.in
 
 %build
 %if_enabled clang
@@ -128,6 +133,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %endif
 
 %changelog
+* Thu Jan 19 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt2
+- Fixed broken configs.
+
 * Wed Jan 18 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt1
 - New version.
 
