@@ -1,6 +1,6 @@
 %global import_path github.com/rootless-containers/rootlesskit
 Name:     rootlesskit
-Version:  0.14.6
+Version:  1.1.0
 Release:  alt1
 
 Summary:  Linux-native "fake root" for implementing rootless containers
@@ -59,5 +59,8 @@ control newuidmap public 2>/dev/null ||:
 %doc *.md
 
 %changelog
+* Thu Jan 19 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+
 * Tue Feb 01 2022 Mikhail Gordeev <obirvalger@altlinux.org> 0.14.6-alt1
 - Initial build for Sisyphus
