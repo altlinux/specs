@@ -4,7 +4,7 @@
 
 Name: deepin-session-shell
 Version: 5.5.68
-Release: alt1
+Release: alt2
 Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -82,6 +82,7 @@ sed -i 's|/usr/bin|%_K5bin|' \
 #  src/dde-lock/lockworker.cpp
 
 %build
+%add_optflags -I%_includedir/dtk5/DCore
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -140,6 +141,9 @@ install -m 0644 %SOURCE1 %buildroot%_sysconfdir/pam.d/deepin-screenlocker
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Thu Jan 19 2023 Leontiy Volodin <lvol@altlinux.org> 5.5.68-alt2
+- Fixed build with dtkcore 5.6.4.
+
 * Thu Aug 25 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.68-alt1
 - New version (5.5.68).
 
