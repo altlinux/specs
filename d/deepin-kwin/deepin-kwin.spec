@@ -11,7 +11,7 @@
 
 Name: deepin-kwin
 Version: 5.5.11
-Release: alt2.1
+Release: alt3
 
 Summary: KWin configuration for Deepin Desktop Environment
 License: GPL-3.0+ and MIT
@@ -81,6 +81,7 @@ sed -i 's|kwin_x11 -platform|%_K5bin/kwin_x11 -platform|' \
     configures/kwin_no_scale.in
 
 %build
+%add_optflags -I%_includedir/dtk5/DCore
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -155,6 +156,9 @@ chmod +x %buildroot%_bindir/kwin_no_scale
 %endif
 
 %changelog
+* Thu Jan 19 2023 Leontiy Volodin <lvol@altlinux.org> 5.5.11-alt3
+- Fix build with dtkcore 5.6.4.
+
 * Thu Nov 24 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.11-alt2.1
 - Removed hard mention of the cmake build version.
 
