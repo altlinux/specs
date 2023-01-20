@@ -6,8 +6,8 @@
 %def_disable static
 
 Name: hivex
-Version: 1.3.21
-Release: alt2
+Version: 1.3.23
+Release: alt1
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -15,7 +15,6 @@ License: LGPLv2
 Url: http://libguestfs.org/
 
 Source: %name-%version.tar
-Source1: gnulib-%name-%version.tar
 Patch1: %name-%version-alt.patch
 
 BuildRequires: perl-Test-Pod
@@ -123,15 +122,11 @@ Requires: %name = %version-%release
 ruby-%name contains Ruby bindings for %name.
 
 %prep
-%setup -a1
+%setup
 %patch1 -p1
-# git and rsync aren't needed for build.
-sed -i '/^\(git\|rsync\)[[:space:]]/d' bootstrap
-rmdir .gnulib
-ln -s gnulib-%name-%version .gnulib
 
 %build
-./bootstrap
+%autoreconf
 ./generator/generator.ml
 %configure PYTHON=%__python3 \
 	%{subst_enable static} \
@@ -171,7 +166,7 @@ rm -f %buildroot%python3_sitelibdir/libhivexmod.la
 %find_lang %name
 
 %files -f %name.lang
-%doc README LICENSE
+%doc README.md LICENSE
 %_bindir/hivexget
 %_bindir/hivexml
 %_bindir/hivexsh
@@ -196,7 +191,7 @@ rm -f %buildroot%python3_sitelibdir/libhivexmod.la
 
 %if_enabled ocaml
 %files -n ocaml-%name
-%doc README
+%doc README.md
 %_libdir/ocaml/hivex
 %exclude %_libdir/ocaml/hivex/*.a
 %exclude %_libdir/ocaml/hivex/*.cmxa
@@ -231,6 +226,9 @@ rm -f %buildroot%python3_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Fri Jan 20 2023 Anton Farygin <rider@altlinux.ru> 1.3.23-alt1
+- 1.3.23
+
 * Sun Oct 03 2021 Anton Farygin <rider@altlinux.ru> 1.3.21-alt2
 - fixed build with LTO
 
