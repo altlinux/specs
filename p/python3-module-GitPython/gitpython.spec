@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.1.29
+Version: 3.1.30
 Release: alt1
 
 Summary: GitPython is a python library used to interact with Git repositories
@@ -12,6 +12,7 @@ Summary: GitPython is a python library used to interact with Git repositories
 License: BSD
 Group: Development/Python3
 Url: https://pypi.org/project/GitPython/
+VCS: https://github.com/gitpython-developers/GitPython
 
 Source: %name-%version.tar
 Source1: git-history-tests.tar
@@ -45,8 +46,17 @@ Provides: python3-module-gitpython = %EVR
 %py3_provides gitpython
 
 %description
-A simple, flexible, easy-to-use configfile and command-line parsing library
-built on top of the standard library optparse module.
+%pypi_name is a python library used to interact with git repositories,
+high-level like git-porcelain, or low-level like git-plumbing.
+
+It provides abstractions of git objects for easy access of repository data, and
+additionally allows you to access the git repository more directly using either
+a pure python implementation, or the faster, but more resource intensive git
+command implementation.
+
+The object database implementation is optimized for handling large quantities of
+objects and large datasets, which is achieved by using low-level structures and
+data streaming.
 
 %prep
 %setup -a 1
@@ -82,9 +92,7 @@ export GIT_PYTHON_TEST_GIT_REPO_BASE="$TEST_REPO"
 # /usr/sbin/git-daemon
 export PATH=$PATH:%_sbindir
 export NO_SUBMODULES=YES
-export TOX_TESTENV_PASSENV='PATH GIT_PYTHON_TEST_GIT_REPO_BASE NO_SUBMODULES NO_INTERNET GIT_CONFIG_GLOBAL'
-%tox_create_default_config
-%tox_check_pyproject -- \
+%pyproject_run_pytest \
     -vra \
     --ignore test/test_installation.py \
     --ignore test/test_submodule.py
@@ -94,6 +102,9 @@ export TOX_TESTENV_PASSENV='PATH GIT_PYTHON_TEST_GIT_REPO_BASE NO_SUBMODULES NO_
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Fri Jan 20 2023 Stanislav Levin <slev@altlinux.org> 3.1.30-alt1
+- 3.1.29 -> 3.1.30.
+
 * Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 3.1.29-alt1
 - 3.1.28 -> 3.1.29.
 
