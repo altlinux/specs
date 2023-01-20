@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 2022.13
-Release: alt1
+Release: alt2
 
 Summary: Community maintained hooks for PyInstaller
 License: Apache-2.0 and GPL-2.0
@@ -17,6 +17,8 @@ BuildRequires: python3-dev python3-module-setuptools
 BuildArch: noarch
 
 Source:  %modulename-%version.tar
+
+%filter_from_requires /python3(nltk)/d
 
 %description
 The PyInstaller community hooks repository. This repository is a collection of
@@ -40,6 +42,9 @@ rm -rf %buildroot%python3_sitelibdir/_pyinstaller_hooks_contrib/tests
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Jan 20 2023 Andrey Cherepanov <cas@altlinux.org> 2022.13-alt2
+- Removed autorequires nltk module.
+
 * Wed Nov 09 2022 Andrey Cherepanov <cas@altlinux.org> 2022.13-alt1
 - New version.
 
