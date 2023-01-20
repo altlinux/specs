@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.20
+Version: 0.1.21
 Release: alt1
 
 Summary: RPM helper macros to rebuild python3 packages
@@ -139,6 +139,9 @@ popd
 %_rpmlibdir/py3-check-importable
 
 %changelog
+* Thu Jan 12 2023 Stanislav Levin <slev@altlinux.org> 0.1.21-alt1
+- Added support for run command (closes: #44884).
+
 * Fri Nov 11 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.1.20-alt1
 - Added macros %%_python3_self_prov_path, %%add_python3_self_prov_path.
 - python3.req.py:
