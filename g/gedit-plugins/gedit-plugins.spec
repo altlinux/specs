@@ -9,7 +9,7 @@
 %add_python3_path %gedit_pluginsdir
 
 Name: gedit-plugins
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Plugins for GEdit
@@ -88,6 +88,9 @@ This package contains various plugins for gEdit, including Charmap, Terminal, an
 
 
 %changelog
+* Fri Jan 20 2023 Yuri N. Sedunov <aris@altlinux.org> 44.1-alt1
+- 44.1
+
 * Mon Jan 02 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
 - 44.0
 
