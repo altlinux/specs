@@ -1,8 +1,8 @@
 %define rname kgeography
 
 Name: kde5-%rname
-Version: 22.08.3
-Release: alt2
+Version: 22.12.1
+Release: alt1
 %K5init no_appdata
 
 Group: Education
@@ -58,6 +58,9 @@ mv data/flags/{ukraine/Sevastopol-city,russia/sevastopol}.png
 
 
 %changelog
+* Thu Jan 19 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Tue Jan 10 2023 Oleg Solovyov <mcpain@altlinux.org> 22.08.3-alt2
 - update country borders
 

@@ -1,7 +1,7 @@
 %define rname step
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -50,7 +50,7 @@ you can not only learn but feel how physics works!
 %find_lang %name --with-kde --all-name --append
 
 %files -f %name.lang
-%doc COPYING*
+%doc LICENSES*
 %_datadir/locale/*/LC_SCRIPTS/step/
 %_K5bin/step
 %_K5data/step/
@@ -60,10 +60,12 @@ you can not only learn but feel how physics works!
 %_K5icon/*/*/apps/step.*
 %_K5icon/*/*/actions/step_*.*
 %_K5icon/*/*/actions/pointer.*
-%_K5xmlgui/step/
 %_K5xdgmime/*step*.xml
 
 %changelog
+* Thu Jan 19 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 

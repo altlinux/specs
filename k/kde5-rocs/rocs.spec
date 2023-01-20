@@ -4,7 +4,7 @@
 %define librocsgraphtheory librocsgraphtheory%rocsgraphtheory_sover
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -20,7 +20,7 @@ Source: %rname-%version.tar
 #BuildRequires: boost-devel-headers extra-cmake-modules grantlee5-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdeclarative-devel kf5-kdelibs4support kf5-kdoctools-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kpackage-devel kf5-kparts-devel kf5-kservice-devel kf5-ktexteditor-devel kf5-ktextwidgets-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel python-module-google python3-base qt5-script-devel qt5-svg-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-ruby
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 BuildRequires: boost-devel extra-cmake-modules grantlee5-devel
-BuildRequires: qt5-script-devel qt5-svg-devel qt5-webkit-devel qt5-xmlpatterns-devel
+BuildRequires: qt5-script-devel qt5-svg-devel qt5-declarative-devel qt5-xmlpatterns-devel
 BuildRequires: kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kcrash-devel kf5-kdeclarative-devel kf5-kdelibs4support
 BuildRequires: kf5-kdoctools-devel kf5-ki18n-devel kf5-kio-devel kf5-kitemviews-devel kf5-kjobwidgets-devel
@@ -92,6 +92,9 @@ KF5 library
 %_K5lib/librocsgraphtheory.so.*
 
 %changelog
+* Thu Jan 19 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
