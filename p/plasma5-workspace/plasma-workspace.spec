@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.26.5
-Release: alt2
+Release: alt3
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -70,6 +70,7 @@ Source3: plasma_lookandfeel_org.kde.lookandfeel-ru-add.po
 Source11: freememorynotifier.tar
 Source40: ssh-agent.conf
 Source41: spice-vdagent.conf
+Source50: dbus-restart-kde5.sh
 
 Patch100: alt-startkde.patch
 Patch101: alt-menu-add-tooltip.patch
@@ -365,6 +366,7 @@ mkdir -p %buildroot/%_K5xdgconf/plasma-workspace/env/
 mkdir -p %buildroot/%_bindir
 ln -s `relative %_kf5_bin/startplasma-x11 %_bindir/startkde5` %buildroot/%_bindir/startkde5
 ln -s startplasma-x11 %buildroot/%_kf5_bin/startkde5
+install -m0755 %SOURCE50 %buildroot/%_bindir/dbus-restart-kde5
 
 # Add chksession support
 mkdir -p %buildroot/%x11confdir/wmsession.d/
@@ -534,6 +536,9 @@ install -m0644 -p -D %SOURCE41 %buildroot/%_unitdir_user/plasma-core.target.d/sp
 
 
 %changelog
+* Fri Jan 20 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt3
+- restart dbus-daemon early
+
 * Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt2
 - fix session startup
 
