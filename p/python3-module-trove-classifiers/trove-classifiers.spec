@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2022.12.1
+Version: 2023.1.20
 Release: alt1
 
 Summary: Canonical source for classifiers on PyPI
@@ -52,14 +52,8 @@ echo '%version' > ./calver_version
 %pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    # keep a synced steps to Makefile:test
-    pytest
-    python -m tests.lib
-EOF
-%tox_check_pyproject
+%pyproject_run_pytest
+%pyproject_run -- python -m tests.lib
 
 %files
 %doc README.md
@@ -67,6 +61,9 @@ EOF
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 20 2023 Stanislav Levin <slev@altlinux.org> 2023.1.20-alt1
+- 2022.12.1 -> 2023.1.20.
+
 * Fri Dec 02 2022 Stanislav Levin <slev@altlinux.org> 2022.12.1-alt1
 - 2022.10.19 -> 2022.12.1.
 
