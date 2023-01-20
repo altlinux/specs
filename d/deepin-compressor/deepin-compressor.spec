@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-compressor
-Version: 5.12.10
+Version: 6.0.0
 Release: alt1
 Summary: Archive Manager for Deepin Desktop Environment
 License: GPL-3.0+ and (GPL-2.0+ and LGPL-2.1+ and MPL-1.1) and BSD-2-Clause and Apache-2.0
@@ -15,7 +15,6 @@ Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: deepin-compressor-5.12.5-alt-aarch64-armh.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -50,13 +49,19 @@ BuildRequires: libgmock-devel
 
 %prep
 %setup
-%patch -p1
 sed -i 's|/usr/bin/cp|/bin/cp|' \
     tests/FuzzyTest/libfuzzer/CMakeLists.txt
 sed -i 's|/usr/lib|%_libdir|' \
     src/source/common/pluginmanager.cpp
 sed -i 's|#include <zip.h>|#include <libzip/zip.h>|' \
     3rdparty/libzipplugin/libzipplugin.h
+%ifnarch armh i586
+sed -i 's|${CMAKE_BINARY_DIR}/lib|${CMAKE_BINARY_DIR}/%_lib|;' \
+    CMakeLists.txt
+sed -i 's|/lib/deepin-compressor/plugins|/%_lib/deepin-compressor/plugins|' \
+    CMakeLists.txt
+sed -i 's|-rpath=../lib:|-rpath=../%_lib:|' CMakeLists.txt
+%endif
 
 %build
 %if_enabled clang
@@ -70,9 +75,9 @@ export PATH=%_qt5_bindir:$PATH
 %K5cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-    -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DAPP_VERSION=%version \
     -DVERSION=%version \
+    -DCMAKE_INSTALL_LIBDIR=%_libdir \
     -DLIB_INSTALL_DIR=%_libdir \
     -DCOMPRESSOR_PLUGIN_PATH=%_libdir/%name/plugins \
     %nil
@@ -80,10 +85,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
 %cmake_install
-
-# Fix path.
-mkdir -p %buildroot%_bindir
-mv -f %buildroot%_K5bin/%name %buildroot%_bindir/%name
+%ifnarch armh i586
+mkdir -p %buildroot%_libdir/%name/plugins
+mv -f %buildroot/usr/lib/%name/plugins %buildroot%_libdir/%name
+%endif
 
 %check
 desktop-file-validate %buildroot%_desktopdir/%name.desktop
@@ -108,6 +113,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 %_datadir/deepin-manual/manual-assets/application/%name/archive-manager/
 
 %changelog
+* Fri Jan 20 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt1
+- New version (6.0.0).
+
 * Wed Nov 02 2022 Leontiy Volodin <lvol@altlinux.org> 5.12.10-alt1
 - New version (5.12.10).
 
