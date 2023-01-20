@@ -9,11 +9,11 @@
 %def_without pyod
 
 # Please, update here commit id for release, from $ git log v1.5.0 -n 1 --format="%H"
-%define release_commit 22cdd71590f7214a6432b6aa89be9dd07abdbb7f
+%define release_commit 562101d64137a4c6b3310d4a2fed4a1da1bfce8d
 
 %define netdatauser netdata
 Name: netdata
-Version: 1.33.0
+Version: 1.37.1
 Release: alt1
 
 Summary: Real-time performance monitoring, done right!
@@ -59,6 +59,8 @@ BuildRequires: libnetfilter_acct-devel
 BuildRequires: libwebsockets-devel >= 3.2.2
 BuildRequires: libmosquitto-devel >= 1.6.8
 %endif
+
+BuildRequires: gcc-c++
 
 Requires: %name-web = %EVR
 
@@ -166,7 +168,8 @@ done
 	--enable-jsonc \
 	%{subst_enable cloud} \
 	%{?with_nfacct:--enable-plugin-nfacct} \
-	--with-user=netdata
+	--with-user=netdata \
+	--disable-dependency-tracking
 
 # TODO
 #%ifarch i586 x86_64
@@ -214,6 +217,9 @@ install -m 755 -d %buildroot/var/lib/%name/registry/
 
 install -d %buildroot%_unitdir/
 install -m 644 -p system/netdata.service %buildroot%_unitdir/netdata.service
+
+rm -v %buildroot/usr/lib/netdata/install-service.sh
+rm -rv %buildroot%_libdir/netdata/system/
 
 # /run vs /var/run workaround
 #__subst "s|/run/netdata/netdata.pid|%_runtimedir/netdata/netdata.pid|" %buildroot%_unitdir/netdata.service
@@ -263,14 +269,14 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %_unitdir/netdata.service
 %dir %_libexecdir/%name/
 %_libexecdir/%name/charts.d/
-%_libexecdir/%name/node.d/
+#_libexecdir/%name/node.d/
 %_libexecdir/%name/plugins.d/
 %_libexecdir/%name/python.d/
 %dir %_datadir/%name
 %dir %_libdir/%name/
 %_libdir/%name/conf.d/
 
-%exclude %_libexecdir/%name/python.d/postgres.chart.py
+#exclude %_libexecdir/%name/python.d/postgres.chart.py
 %exclude %_libexecdir/%name/plugins.d/cups.plugin
 %exclude %_libexecdir/%name/python.d/anomalies.chart.py
 %exclude %_libexecdir/%name/python.d/__pycache__/anomalies.*
@@ -280,8 +286,8 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 %defattr(644,root,%netdatauser,755)
 %_datadir/%name/web/
 
-%files postgres
-%attr(0750,root,%netdatauser) %_libexecdir/%name/python.d/postgres.chart.py
+#files postgres
+#attr(0750,root,%netdatauser) %_libexecdir/%name/python.d/postgres.chart.py
 
 %if_with pyod
 %files plugin-anomalies
@@ -294,6 +300,9 @@ getent passwd %netdatauser >/dev/null || useradd -r -g %netdatauser -c "%netdata
 
 
 %changelog
+* Fri Jan 20 2023 Vitaly Lipatov <lav@altlinux.ru> 1.37.1-alt1
+- new version 1.37.1 (with rpmrb script)
+
 * Sun Feb 13 2022 Vitaly Lipatov <lav@altlinux.ru> 1.33.0-alt1
 - new version 1.33.0 (with rpmrb script)
 
