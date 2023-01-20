@@ -1,8 +1,8 @@
 %define fw_subpkg firmware-bootloader-rpi4
 
 Name: rpi-eeprom
-Version: 2021.04.29
-Release: alt2
+Version: 2023.01.11
+Release: alt1
 Summary: Update Raspberry Pi 4 bootloader and VLI USB controller EEPROMs.
 License: BSD-3-Clause
 Group: System/Configuration/Other
@@ -41,9 +41,9 @@ VLI USB controller EEPROMs.
 cp -a firmware/* %buildroot%eep_rpi4
 %__install -d %buildroot%bkp_rpi4
 %__install -d %buildroot%_bindir
-subst 's|#!.*python$|#!/usr/bin/env python3|' rpi-eeprom-config
 %__install -m755 rpi-eeprom-config %buildroot%_bindir
 %__install -m755 rpi-eeprom-update %buildroot%_bindir
+%__install -m755 rpi-eeprom-digest %buildroot%_bindir
 %__install -d %buildroot%_sysconfdir/default
 cat rpi-eeprom-update-default | sed 's/^BOOTFS=\/boot$/BOOTFS=\/boot\/efi/' > %buildroot%_sysconfdir/default/rpi-eeprom-update
 
@@ -51,6 +51,7 @@ cat rpi-eeprom-update-default | sed 's/^BOOTFS=\/boot$/BOOTFS=\/boot\/efi/' > %b
 %bkp_rpi4
 %_bindir/rpi-eeprom-config
 %_bindir/rpi-eeprom-update
+%_bindir/rpi-eeprom-digest
 %doc README.md LICENSE releases.md firmware/release-notes.md
 %_sysconfdir/default/rpi-eeprom-update
 
@@ -59,6 +60,9 @@ cat rpi-eeprom-update-default | sed 's/^BOOTFS=\/boot$/BOOTFS=\/boot\/efi/' > %b
 %doc README.md LICENSE releases.md firmware/release-notes.md
 
 %changelog
+* Fri Jan 20 2023 Dmitry Terekhin <jqt4@altlinux.org> 2023.01.11-alt1
+- Updated
+
 * Fri Oct 29 2021 Anton Midyukov <antohami@altlinux.org> 2021.04.29-alt2
 - fix the packaging of the documentation
 - fix License tag

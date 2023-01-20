@@ -1,5 +1,5 @@
 Name: rpi-userland
-Version: 20210527
+Version: 20220615
 Release: alt1
 
 Summary: ARM side libraries and programs used on Raspberry Pi.
@@ -56,5 +56,8 @@ install -D build/lib/libvcos.so %buildroot%_libdir/libvcos.so
 %_libdir/libvcos.so
 
 %changelog
+* Thu Jan 19 2023 Dmitry Terekhin <jqt4@altlinux.org> 20220615-alt1
+- Updated
+
 * Thu May 27 2021 Dmitry Terekhin <jqt4@altlinux.org> 20210527-alt1
 - Initial build
