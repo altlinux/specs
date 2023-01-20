@@ -2,11 +2,11 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name cleo
 
-%def_disable check
+%def_enable check
 
 Name: python3-module-%pypi_name
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Command-line interfaces Python library
 License: MIT
@@ -48,14 +48,18 @@ Cleo allows you to create beautiful and testable command-line interfaces.
 %pyproject_install
 
 %check
-%tox_check
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %python3_sitelibdir/%pypi_name/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
-%doc README.md CHANGELOG.md 
+%doc README.md CHANGELOG.md
 
 %changelog
+* Fri Jan 20 2023 Grigory Ustinov <grenka@altlinux.org> 2.0.1-alt2
+- Build with check.
+
 * Wed Nov 23 2022 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - 2.0.1
 
