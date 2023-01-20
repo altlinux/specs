@@ -2,7 +2,7 @@
 %define _name blackbox
 
 Name: blackbox-terminal
-Version: 0.12.2
+Version: 0.13.1
 Release: alt1
 
 Summary: A beautiful GTK 4 terminal.
@@ -34,6 +34,7 @@ BuildRequires: libpcre2-devel libxml2-devel
 BuildRequires: librsvg-devel
 BuildRequires: libjson-glib-devel
 BuildRequires: libgraphene-devel
+BuildRequires: libgee0.8-devel
 
 %description
 A beautiful GTK 4 terminal.
@@ -61,6 +62,9 @@ A beautiful GTK 4 terminal.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Thu Jan 19 2023 Vladimir Didenko <cow@altlinux.org> 0.13.1-alt1
+- New version
+
 * Tue Dec 6 2022 Vladimir Didenko <cow@altlinux.org> 0.12.2-alt1
 - New version
 
