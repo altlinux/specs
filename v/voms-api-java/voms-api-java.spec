@@ -9,7 +9,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:		voms-api-java
 Version:	3.3.2
-Release:	alt1_6jpp11
+Release:	alt2_6jpp11
 Summary:	Virtual Organization Membership Service Java API
 
 License:	ASL 2.0
@@ -75,7 +75,7 @@ rm src/test/java/org/italiangrid/voms/test/ac/TestACGeneration.java
 rm src/test/java/org/italiangrid/voms/test/ac/TestFakeVOMSACService.java
 
 %build
-%mvn_build -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
+%mvn_build -f -- -Dmaven.compiler.source=1.8 -Dmaven.compiler.target=1.8 -Dmaven.javadoc.source=1.8 -Dmaven.compiler.release=8
 
 %install
 %mvn_install
@@ -89,6 +89,9 @@ rm src/test/java/org/italiangrid/voms/test/ac/TestFakeVOMSACService.java
 %doc --no-dereference LICENSE
 
 %changelog
+* Fri Jan 20 2023 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt2_6jpp11
+- fixed build
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.3.2-alt1_6jpp11
 - update
 
