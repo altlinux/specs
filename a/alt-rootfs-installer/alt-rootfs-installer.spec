@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.5.5
+Version: 0.5.6
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -41,6 +41,12 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Fri Jan 20 2023 Anton Midyukov <antohami@altlinux.org> 0.5.6-alt1
+- add nvme support (Closes: 44408)
+- socs-utils: fix clear_riscv64_bootloader_partition for /dev/mmcblkXpN
+- socs-utils: use oflag=direct for dd when write image
+- Update list of supported boards for u-boot 2023.01
+
 * Sun Mar 13 2022 Anton Midyukov <antohami@altlinux.org> 0.5.5-alt1
 - jetson_nano-aarch64.sh: extract archive to /root
 - fix include logging function for portable version
