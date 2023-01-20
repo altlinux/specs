@@ -1,7 +1,9 @@
+%define _unpackaged_files_terminate_build 1
+
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 3004.2
-Release: alt2
+Version: 3005.1
+Release: alt1
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -20,8 +22,7 @@ Source5: salt-minion.init
 Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
-Patch2: salt-python3.10.patch
-Patch3: salt-alt-disable-internal-contextvars.patch
+Patch2: salt-fix-importlib-metadata-5.0.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
@@ -29,7 +30,7 @@ BuildRequires: python3-module-nose libzeromq-devel
 BuildRequires: python3-module-msgpack python3-module-yaml
 BuildRequires: python3-module-distro
 
-%add_python3_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils ntsecuritycon win32con win32process win32security
+%add_python3_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils ntsecuritycon win32con win32process win32security vsanmgmtObjects
 
 # pyrax.exceptions is a not a real dependency: pyrax
 # presence is gated at salt/utils/openstack/pyrax/__init__.py
@@ -57,7 +58,6 @@ Summary: Management component for salt, a parallel remote execution system
 Group: Development/Python
 Obsoletes: python-module-salt 
 %py3_requires yaml msgpack pycryptodomex contextvars
-%add_python3_req_skip vsanmgmtObjects
 
 %description  -n python3-module-salt
 Salt is a distributed remote execution system used to execute commands
@@ -99,7 +99,6 @@ with XMLRPC or even a Websocket API.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 # Remove local copy documentation mention
 subst 's| file:///usr/share/doc/salt/html/contents.html||' pkg/*.service
 
@@ -209,7 +208,6 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_bindir/salt-run
 %_bindir/salt-ssh
 %_bindir/spm
-%_bindir/salt-unity
 %_man1dir/salt.1.*
 %_man1dir/salt-master.1.*
 %_man1dir/salt-cp.1.*
@@ -219,7 +217,6 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-syndic.1.*
 %_man1dir/salt-ssh.1.*
 %_man1dir/spm.1.*
-%_man1dir/salt-unity.1.*
 
 %files api
 %config(noreplace) %_sysconfdir/sysconfig/salt-api
@@ -247,6 +244,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Thu Jan 19 2023 Andrey Cherepanov <cas@altlinux.org> 3005.1-alt1
+- New version.
+
 * Wed Nov 23 2022 Andrey Cherepanov <cas@altlinux.org> 3004.2-alt2
 - Removed internal contextvars from runtime requirements.
 
