@@ -1,6 +1,6 @@
 Name: textext
 Version: 0.4.4
-Release: alt2
+Release: alt3
 
 Summary: Editable LaTeX objects for Inkscape
 License: BSD
@@ -35,7 +35,7 @@ creation.
 %patch34 -p1
 sed -i 1s,python,python3, textext.py
 
-$(find /usr/lib*/python%_python3_version/Tools/scripts/reindent.py) textext.py
+$(find /usr/*/python%_python3_version/Tools/scripts/reindent.py) textext.py
 
 %install
 rm -rf %buildroot
@@ -48,6 +48,9 @@ install -m 755 textext.py %buildroot%_datadir/inkscape/extensions/
 %_datadir/inkscape/extensions/textext.*
 
 %changelog
+* Fri Jan 20 2023 Igor Vlasenko <viy@altlinux.org> 0.4.4-alt3
+- fixed build
+
 * Wed Mar 25 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4.4-alt2
 - Porting to python3.
 
