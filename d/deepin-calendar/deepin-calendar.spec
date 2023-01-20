@@ -1,7 +1,7 @@
 %global repo dde-calendar
 
 Name: deepin-calendar
-Version: 5.8.30
+Version: 5.9.1
 Release: alt1
 Summary: Calendar for Deepin Desktop Environment
 License: GPL-3.0+
@@ -20,7 +20,7 @@ BuildRequires: cmake
 BuildRequires: deepin-gettext-tools
 BuildRequires: qt5-linguist
 BuildRequires: dtk5-widget-devel
-BuildRequires: dtk5-common
+BuildRequires: dtk5-common-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: deepin-qt-dbus-factory-devel
@@ -78,6 +78,9 @@ desktop-file-validate %buildroot%_desktopdir/%repo.desktop
 %_userunitdir/com.dde.calendarserver.calendar.timer
 
 %changelog
+* Fri Jan 20 2023 Leontiy Volodin <lvol@altlinux.org> 5.9.1-alt1
+- New version (5.9.1).
+
 * Tue Jun 14 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.30-alt1
 - New version (5.8.30).
 - Upstream:
