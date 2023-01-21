@@ -1,5 +1,5 @@
 Name: hwloc
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 Summary: Portable Hardware Locality (hwloc)
 License: BSD
@@ -123,6 +123,9 @@ This package contains documentation for hwloc.
 %doc doc/doxygen-doc/html
 
 %changelog
+* Sat Jan 21 2023 Andrey Cherepanov <cas@altlinux.org> 2.9.0-alt1
+- New version.
+
 * Sat Jul 30 2022 Andrey Cherepanov <cas@altlinux.org> 2.8.0-alt1
 - New version.
 
