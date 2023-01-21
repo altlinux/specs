@@ -14,7 +14,7 @@
 
 %define basemajor 8.0
 %define major 8.0
-%define rel -rc3
+%define rel -rc4
 %define stagingrel %rel
 # the packages will conflict with that
 %define conflictbase wine-vanilla
@@ -75,8 +75,8 @@
 %endif
 
 Name: wine
-Version: %major.1
-Release: alt1.rc3
+Version: %major.2
+Release: alt1.rc4
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -853,6 +853,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Sat Jan 21 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.0.2-alt1.rc4
+- new version (8.0-rc4) with rpmgs script
+
 * Sun Jan 08 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.0.1-alt1.rc3
 - new version (8.0-rc3) with rpmgs script
 
