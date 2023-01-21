@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gns3-gui
-Version: 2.2.33.1
+Version: 2.2.35.1
 Release: alt1
 
 Summary: GNS3 Graphical User Interface
@@ -76,6 +76,9 @@ install -Dp -m0644 %SOURCE5 %buildroot%_desktopdir/gns3.desktop
 %files -n gns3
 
 %changelog
+* Tue Jan 03 2023 Anton Midyukov <antohami@altlinux.org> 2.2.35.1-alt1
+- new version 2.2.35.1
+
 * Thu Jun 23 2022 Anton Midyukov <antohami@altlinux.org> 2.2.33.1-alt1
 - new version 2.2.33.1
 - cleanup spec

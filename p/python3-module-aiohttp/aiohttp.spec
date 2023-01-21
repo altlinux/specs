@@ -6,8 +6,8 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 3.8.1
-Release: alt2
+Version: 3.8.3
+Release: alt1
 Summary: http client/server for asyncio
 License: Apache-2.0
 Group: Development/Python3
@@ -17,11 +17,11 @@ Source: %name-%version.tar
 Source1: llhttp.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(wheel)
 BuildRequires: python3-devel python3-module-setuptools python3-module-Cython
 BuildRequires: python3-module-multidict
 %if_with check
 BuildRequires: python3-module-yarl python3-module-async-timeout python3-module-pytest-mock
-BuildRequires: python3-module-pytest-runner
 %endif
 %if_with docs
 BuildRequires(pre): python3-module-sphinx-devel
@@ -68,14 +68,14 @@ ln -s ../objects.inv docs/
 
 %build
 make cythonize
-%python3_build build_ext
+%pyproject_build
 
 %if_with docs
 %make_build -C docs html SPHINXBUILD=py3_sphinx-build
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with check
 %check
@@ -89,15 +89,19 @@ python3 setup.py test
 
 %files -n python3-module-%oname
 %doc *.txt *.rst examples
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/*test*
-%exclude %python3_sitelibdir/*/*/*test*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
+%exclude %python3_sitelibdir/%oname/*test*
+%exclude %python3_sitelibdir/%oname/*/*test*
 
 %files -n python3-module-%oname-tests
-%python3_sitelibdir/*/*test*
-%python3_sitelibdir/*/*/*test*
+%python3_sitelibdir/%oname/*test*
+%python3_sitelibdir/%oname/*/*test*
 
 %changelog
+* Mon Jan 02 2023 Anton Midyukov <antohami@altlinux.org> 3.8.3-alt1
+- new version 3.8.3
+
 * Fri Feb 11 2022 Stanislav Levin <slev@altlinux.org> 3.8.1-alt2
 - Added missing mandatory runtime dependency on charset_normalizer.
 

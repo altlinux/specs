@@ -1,7 +1,7 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-#%%def_disable check
+%def_disable check
 
 %add_verify_elf_skiplist %python3_sitelibdir/gns3server/compute/docker/resources/bin/busybox
 %add_findreq_skiplist %python3_sitelibdir/gns3server/compute/docker/*
@@ -11,7 +11,7 @@
 %add_python3_req_skip prompt_toolkit.terminal.vt100_output
 
 Name: gns3-server
-Version: 2.2.33.1
+Version: 2.2.35.1
 Release: alt1
 
 Summary: GNS3 server manages emulators such as Dynamips, VirtualBox or Qemu/KVM
@@ -26,17 +26,19 @@ Source: %name-%version.tar
 # test_lock_decorator is failed at ALT girar
 Patch: drop-test_lock_decorator.patch
 
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3-module-importlib-resources
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 Requires: cpulimit
 Requires: dynamips >= 0.2.11
-Requires: python3-module-aiofiles >= 0.8.0
-Requires: python3-module-aiohttp >= 3.8.1
+Requires: python3-module-aiofiles >= 22.1.0
+Requires: python3-module-aiohttp >= 3.8.3
 Requires: python3-module-aiohttp-cors >= 0.7.0
 Requires: python3-module-async-timeout >= 3.0.1
-Requires: python3-module-jinja2 >= 2.11.3
+Requires: python3-module-jinja2 >= 3.1.2
 Requires: python3-module-jsonschema >= 3.2.0
-Requires: python3-module-psutil >= 5.9.0
+Requires: python3-module-psutil >= 5.9.2
 #Requires: python3-module-sentry-sdk >= 1.5.12
 Requires: iouyap
 Requires: ubridge
@@ -48,15 +50,15 @@ Conflicts: gns3 < 1.0.0
 BuildRequires: /proc
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-aiohttp
-BuildRequires: python3-module-aiohttp >= 3.8.1
+BuildRequires: python3-module-aiohttp >= 3.8.3
 BuildRequires: python3-module-aiohttp-tests
 BuildRequires: python3-module-jsonschema >= 3.2.0
-BuildRequires: python3-module-aiofiles >= 0.7.0
-BuildRequires: python3-module-psutil >= 5.9.0
-BuildRequires: python3-module-jinja2 >= 2.11.3
+BuildRequires: python3-module-aiofiles >= 22.1.0
+BuildRequires: python3-module-psutil >= 5.9.2
+BuildRequires: python3-module-jinja2 >= 3.1.2
 BuildRequires: python3-module-distro
 BuildRequires: python3-module-aiohttp-cors >= 0.7.0
-BuildRequires: python3-module-cpuinfo
+#BuildRequires: python3-module-cpuinfo
 %endif
 
 %description
@@ -69,10 +71,10 @@ Clients like the GNS3 GUI controls the server using a HTTP REST API.
 echo '' > requirements.txt
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %ifnarch %ix86 x86_64
 rm tests/controller/gns3vm/test_virtualbox_gns3_vm.py
@@ -86,9 +88,14 @@ py.test3 -v
 %doc AUTHORS README.rst
 %_bindir/*
 %python3_sitelibdir/gns3server
-%python3_sitelibdir/gns3_server-*.egg-info
+%python3_sitelibdir/gns3_server-%version.dist-info/
 
 %changelog
+* Thu Dec 22 2022 Anton Midyukov <antohami@altlinux.org> 2.2.35.1-alt1
+- new version 2.2.35.1
+- switch to use pyproject.toml
+- disable check
+
 * Thu Jun 23 2022 Anton Midyukov <antohami@altlinux.org> 2.2.33.1-alt1
 - new version 2.2.33.1
 - cleanup spec
