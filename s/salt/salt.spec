@@ -3,7 +3,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 3005.1
-Release: alt1
+Release: alt2
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -23,12 +23,15 @@ Source6: salt-syndic.init
 
 Patch1: salt-alt-supported-names.patch
 Patch2: salt-fix-importlib-metadata-5.0.patch
+Patch3: salt-3005.1-version.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools perl-podlators
 BuildRequires: python3-module-nose libzeromq-devel
 BuildRequires: python3-module-msgpack python3-module-yaml
 BuildRequires: python3-module-distro
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-importlib-metadata
 
 %add_python3_req_skip win32api win32event win32service win32serviceutil winerror pythoncom distutils ntsecuritycon win32con win32process win32security vsanmgmtObjects
 
@@ -98,15 +101,18 @@ with XMLRPC or even a Websocket API.
 %prep
 %setup
 %patch1 -p1
+%if "%(rpmvercmp '%{get_version python3-module-importlib-metadata}' '5.0.0')" > "0"
 %patch2 -p1
+%patch3 -p1
+%endif
 # Remove local copy documentation mention
 subst 's| file:///usr/share/doc/salt/html/contents.html||' pkg/*.service
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_build_install --prefix=/usr
+%pyproject_install
 
 # Add some directories
 install -d -m 0755 %buildroot%_var/log/salt
@@ -169,6 +175,12 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 
 %preun minion
 %preun_service salt-minion
+
+%post api
+%post_service salt-api
+
+%preun api
+%preun_service salt-api
 
 %files -n python3-module-salt
 %doc AUTHORS README*
@@ -244,6 +256,11 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Sat Jan 21 2023 Andrey Cherepanov <cas@altlinux.org> 3005.1-alt2
+- Used %%pyproject_build andf %%pyproject_install.
+- Fixed version in metadata.
+- Applied patch only for python3-module-importlib-metadata 5.0.0+
+
 * Thu Jan 19 2023 Andrey Cherepanov <cas@altlinux.org> 3005.1-alt1
 - New version.
 
