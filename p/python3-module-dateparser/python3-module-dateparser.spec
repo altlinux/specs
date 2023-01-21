@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.1.5
+Version: 1.1.6
 Release: alt1
 
 Summary: Python parser for human readable dates 
@@ -87,6 +87,9 @@ cp -fR docs/_build/pickle %buildroot%python3_sitelibdir/%pypi_name/
 
 
 %changelog
+* Sat Jan 21 2023 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt1
+- 1.1.6
+
 * Thu Dec 29 2022 Yuri N. Sedunov <aris@altlinux.org> 1.1.5-alt1
 - 1.1.5
 
