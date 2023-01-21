@@ -15,7 +15,7 @@
 %def_with gtk
 %def_with gtk3
 %def_with qt
-%def_with qt4
+%def_without qt4
 %def_with qt5
 %def_with x
 %def_with xft
@@ -36,8 +36,8 @@
 %def_disable sqlite3
 
 Name: uim
-Version: 1.8.8.0.50.d1ac9d931
-Release: alt2
+Version: 1.8.9
+Release: alt1
 
 Summary: useful input method
 
@@ -56,6 +56,10 @@ Patch1: 0001-uim.desktop.in.in-use-generic-uim-pref.patch
 Patch2: 0002-pixmaps-uim-m17nlib-relink-icons.in-fix-m17n-db-icon.patch
 Patch3: 0003-uim-uim-module-manager.c-fix-installed-modules-locat.patch
 Patch4: 0004-ALT-fix-build-qt5.patch
+Patch5: 0001-Bump-version.patch
+Patch6: 0001-Fix-version.patch
+Patch7: 0001-skk-Fix-numeric-converted-string-not-null-terminated.patch
+Patch8: 0001-configure-Fix-snprintf-check-for-strict-er-C99-compi.patch
 
 BuildRequires(pre): alternatives
 BuildRequires: asciidoc intltool ruby ruby-stdlibs libgcroots-devel librsvg-utils
@@ -125,6 +129,7 @@ Group: Text tools
 Requires: uim-data
 Requires: uim-plugins
 Requires: uim-utils
+%{?_without_qt4:Obsoletes: uim-qt4 < %version}
 
 %description -n libuim8
 %common_descr
@@ -350,6 +355,7 @@ XIM module for universal input method.
 %autopatch -p1
 
 %build
+%define _optlevel 1
 %autoreconf
 %configure \
 	--disable-rpath \
@@ -626,6 +632,10 @@ fi
 %endif
 
 %changelog
+* Sun Aug 21 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.9-alt1
+- Updated UIM to 1.8.9.
+- Built without Qt4 support.
+
 * Thu Dec 16 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.8.8.0.50.d1ac9d931-alt2
 - Fixed FTBFS.
 
