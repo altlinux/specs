@@ -1,5 +1,5 @@
 Name:           xfce4-notifyd
-Version:        0.6.5
+Version:        0.7.1
 Release:        alt1
 Summary:        Simple notification daemon for Xfce
 Summary(ru_RU.UTF-8): Менеджер уведомлений для Xfce
@@ -12,11 +12,15 @@ Source0:        %name-%version.tar
 Patch:          %name-%version-%release.patch
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
+%def_disable wayland
+
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: libxfce4ui-gtk3-devel libxfconf-devel libxfce4util-devel
 BuildRequires: libxfce4panel-gtk3-devel
 BuildRequires: libgio-devel libX11-devel
 BuildRequires: libnotify-devel
+BuildRequires: libcanberra-gtk3-devel
+%{?_enable_wayland:BuildRequires: libgtk-layer-shell-devel}
 
 Requires:       xfce4-common
 Requires:       dbus icon-theme-hicolor
@@ -63,6 +67,15 @@ Notification plugin for the Xfce panel.
 %configure \
 	--enable-maintainer-mode \
 	--enable-dbus-start-daemon \
+	--enable-gdk-x11 \
+%if_enabled wayland
+	--enable-gdk-wayland \
+	--enable-gtk-layer-shell \
+%else
+	--disable-gdk-wayland \
+	--disable-gtk-layer-shell \
+%endif
+	--enable-sound \
 	--enable-debug=minimum
 %make_build
 
@@ -92,6 +105,10 @@ Notification plugin for the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Sat Jan 21 2023 Mikhail Efremov <sem@altlinux.org> 0.7.1-alt1
+- Enabled sounds support.
+- Updated to 0.7.1.
+
 * Fri Dec 16 2022 Mikhail Efremov <sem@altlinux.org> 0.6.5-alt1
 - Cleanup BR.
 - Updated to 0.6.5.
