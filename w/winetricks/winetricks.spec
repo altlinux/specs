@@ -1,5 +1,5 @@
 Name: winetricks
-Version: 20220617
+Version: 20230120
 Release: alt1
 
 Summary: Work around common problems in Wine
@@ -14,7 +14,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 #Source-url: %url/archive/%version/%name-%version.tar.gz
 Source: %name-%version.tar
 
-Patch1: 0001-fix-detection-for-gui-without-args.patch
 Patch2: 0001-winetricks-try-use-xvt-as-terminal.patch
 
 BuildArch: noarch
@@ -42,7 +41,6 @@ or tweak various Wine settings individually.
  
 %prep
 %setup
-%patch1 -p1
 %patch2 -p1
 
 # fix req. Disable autoreq at all?
@@ -51,8 +49,7 @@ or tweak various Wine settings individually.
 sed -i -e "s:steam::" -e "s:flash::" tests/*
 
 %build
-# not needed
-#subst 's|WINETRICKS_VERSION=.*|WINETRICKS_VERSION=%version|' src/winetricks
+subst 's|WINETRICKS_VERSION=.*|WINETRICKS_VERSION=%version-%release|' src/winetricks
 # disable version checking
 subst 's|winetricks_latest_version_check$||' src/winetricks
 
@@ -78,6 +75,9 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop
 #exclude %_datadir/appdata/%name.appdata.xml
 
 %changelog
+* Sat Jan 21 2023 Vitaly Lipatov <lav@altlinux.ru> 20230120-alt1
+- new version (20230120) with rpmgs script
+
 * Sat Jun 18 2022 Vitaly Lipatov <lav@altlinux.ru> 20220617-alt1
 - new version (20220617) with rpmgs script
 - try use xvt as terminal (ALT bug 43003)
