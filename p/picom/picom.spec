@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: picom
-Version: 9.1
-Release: alt2
+Version: 10.2
+Release: alt1
 Summary: A lightweight compositor for X11
 License: MPL-2.0 or MIT
 Group: System/X11
@@ -60,10 +60,16 @@ sed -i "/#warning Use of -ffast-math/s/#warning/#error/" src/utils.h
 %files -f %name.lang
 %doc CONTRIBUTORS LICENSE.* README* dbus-examples man/%{name}* picom.sample.conf
 %_bindir/*
-%_datadir/applications/*.desktop
+%_sysconfdir/xdg/autostart/picom.desktop
+%exclude %_datadir/applications/*.desktop
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Sat Jan 21 2023 Anton Midyukov <antohami@altlinux.org> 10.2-alt1
+- new version 10.2
+- add %_sysconfdir/xdg/autostart/picom.desktop
+- exclude %_datadir/applications/*.desktop
+
 * Wed Mar 23 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 9.1-alt2
 - fixed build for Elbrus
 
