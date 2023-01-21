@@ -4,7 +4,7 @@
 %set_verify_elf_method rpath=relaxed
 
 Name: zig
-Version: 0.10.0
+Version: 0.10.1
 Release: alt1
 Summary: General-purpose programming language and toolchain for maintaining robust, optimal, and reusable software
 # TODO: Zig lib is bundled with a lot of third party with other licenses.
@@ -14,12 +14,12 @@ Url: https://ziglang.org/
 Vcs: https://github.com/ziglang/zig/
 
 # https://ziglang.org/download/0.10.0/release-notes.html#Support-Table
-# aarch64: ld.lld: error: undefined symbol: __aarch64_ldadd4_acq_rel
+# aarch64: OK   53:00
 #    armh: allocation failed
 #    i586: allocation failed
-# ppc64le: OK 1:02:43
-#  x86-64: OK   20:32
-ExcludeArch: %ix86 armh ppc64le aarch64
+# ppc64le: OK 1:02:52
+#  x86-64: OK   24:26
+ExcludeArch: %ix86 armh
 
 Source: %name-%version.tar
 
@@ -65,6 +65,9 @@ chrpath -d %buildroot%_bindir/zig
 %_prefix/lib/zig
 
 %changelog
+* Fri Jan 20 2023 Vitaly Chikunov <vt@altlinux.org> 0.10.1-alt1
+- Update to 0.10.1 (2023-01-17).
+
 * Wed Nov 02 2022 Vitaly Chikunov <vt@altlinux.org> 0.10.0-alt1
 - Update to 0.10.0 (2022-10-31).
 
