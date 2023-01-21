@@ -3,7 +3,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
 Version: 3005.1
-Release: alt2
+Release: alt3
 Url: http://saltstack.org
 #VCS: https://github.com/saltstack/salt
 License: Apache-2.0
@@ -103,8 +103,8 @@ with XMLRPC or even a Websocket API.
 %patch1 -p1
 %if "%(rpmvercmp '%{get_version python3-module-importlib-metadata}' '5.0.0')" > "0"
 %patch2 -p1
-%patch3 -p1
 %endif
+%patch3 -p1
 # Remove local copy documentation mention
 subst 's| file:///usr/share/doc/salt/html/contents.html||' pkg/*.service
 
@@ -256,6 +256,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_sysconfdir/logrotate.d/salt-minion
 %_man1dir/salt-proxy.1.*
 
 %changelog
+* Sat Jan 21 2023 Andrey Cherepanov <cas@altlinux.org> 3005.1-alt3
+- Fixed salt-3005.1-version.patch applying.
+
 * Sat Jan 21 2023 Andrey Cherepanov <cas@altlinux.org> 3005.1-alt2
 - Used %%pyproject_build andf %%pyproject_install.
 - Fixed version in metadata.
