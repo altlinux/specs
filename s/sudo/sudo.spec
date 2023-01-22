@@ -2,7 +2,7 @@
 %def_enable python
 
 Name: sudo
-Version: 1.9.12p1
+Version: 1.9.12p2
 Release: alt1
 Epoch: 1
 
@@ -256,6 +256,18 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Sun Jan 22 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.12p2-alt1
+- Update to latest stable bugfix and security release (closes: 44965).
+- Fixed a compilation error on Linux/aarch64 (GitHub#197).
+- Fixed a potential crash introduced in the fix for (GitHub#134):
+ + If a user's sudoers entry did not have any RunAs user's set, running
+   "sudo -U otheruser -l" would dereference a NULL pointer.
+- Fixed a bug introduced in sudo 1.9.12 that could prevent sudo from creating
+  a I/O files when the "iolog_file" sudoers setting contains six or more Xs.
+- Fixed security issue (fixes: CVE-2023-22809), a flaw in sudo's -e option (aka
+  sudoedit) that could allow a malicious user with sudoedit privileges to edit
+  arbitrary files.
+
 * Mon Nov 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.12p1-alt1
 - Update to latest stable bugfix and security release (fixes: CVE-2022-43995).
 - Major improvements from latest Sisyphus release:
