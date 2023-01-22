@@ -9,8 +9,8 @@
 %endif
 
 Name: pkgconf
-Version: 1.9.3
-Release: alt1.1
+Version: 1.9.4
+Release: alt1
 
 Summary: Package compiler and linker metadata toolkit
 Group: Development/Other
@@ -56,7 +56,7 @@ This package provides development files for lib%name.
 %setup
 
 %build
-%meson %{?_disable_check:-Dtests=false}
+%meson %{?_disable_check:-Dtests=disabled}
 %nil
 %meson_build
 
@@ -90,6 +90,9 @@ mkdir -p %buildroot%_datadir/pkgconfig/personality.d
 
 
 %changelog
+* Sun Jan 22 2023 Yuri N. Sedunov <aris@altlinux.org> 1.9.4-alt1
+- 1.9.4
+
 * Fri Oct 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1.9.3-alt1.1
 - enabled %%check
 
