@@ -1,6 +1,6 @@
 
 Name: virt-firmware
-Version: 1.6
+Version: 1.8
 Release: alt1
 Summary: Tools for virtual machine firmware volumes
 Group: Emulators
@@ -86,6 +86,9 @@ cp -ar tests %buildroot%_datadir/%name
 %_datadir/%name/tests
 
 %changelog
+* Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 1.8-alt1
+- new version 1.8
+
 * Wed Nov 30 2022 Alexey Shabalin <shaba@altlinux.org> 1.6-alt1
 - new version 1.6
 
