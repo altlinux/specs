@@ -1,5 +1,5 @@
 Name: libutfcpp
-Version: 3.2.2
+Version: 3.2.3
 Release: alt1
 
 Summary: A library for handling UTF-8 encoded strings
@@ -56,6 +56,9 @@ A library for handling UTF-8 encoded strings.
 %_includedir/utf8.h
 
 %changelog
+* Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.3-alt1
+- new version 3.2.3 (with rpmrb script)
+
 * Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 3.2.2-alt1
 - new version 3.2.2 (with rpmrb script)
 
