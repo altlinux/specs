@@ -1,13 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
-%define lvm2version 2.03.16
-%define dmversion 1.02.185
+%define lvm2version 2.03.18
+%define dmversion 1.02.189
 
 %define _sbindir /sbin
 %define usrsbindir %_prefix/sbin
 %define _runtimedir /run
 %define _lockdir /run/lock
+%define _libexecdir %_prefix/libexec
 %def_enable static
 
 %def_enable selinux
@@ -379,6 +380,7 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %doc README WHATS_NEW udev/12-dm-permissions.rules
 %doc doc/*.txt
 %_sbindir/*
+%_libexecdir/*
 %exclude %_sbindir/dmsetup
 %exclude %_sbindir/dmstats
 %exclude %_sbindir/blkdeactivate
@@ -493,6 +495,9 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 2.03.18-alt1
+- 2.03.18
+
 * Wed Aug 24 2022 Alexey Shabalin <shaba@altlinux.org> 2.03.16-alt1
 - 2.03.16
 
