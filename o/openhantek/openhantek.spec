@@ -1,5 +1,5 @@
 Name: openhantek
-Version: 3.3.1
+Version: 3.3.2
 Release: alt1
 Epoch: 1
 
@@ -11,6 +11,8 @@ Url: http://openhantek.org/
 
 # Source-url: https://github.com/OpenHantek/OpenHantek6022/archive/%version.tar.gz
 Source: %name-%version.tar
+
+Patch1: openhantek-set-version.patch
 
 # Automatically added by buildreq on Thu Dec 28 2017
 # optimized out: cmake cmake-modules gcc-c++ glibc-kernheaders-generic glibc-kernheaders-x86 libEGL-devel libGL-devel libqt5-core libqt5-gui libqt5-opengl libqt5-printsupport libqt5-widgets libstdc++-devel lsb-release python-base python-modules python3 python3-base qt5-base-devel qt5-tools sssd-client
@@ -30,8 +32,10 @@ Supported devices: DSO2xxx Series, DSO52xx Series, 6022BE/BL
 
 %prep
 %setup
+%patch1 -p1
 
 %build
+export VERSION=%version
 %cmake_insource
 %make_build
 
@@ -50,6 +54,9 @@ ln -s OpenHantek %buildroot%_bindir/%name
 %_iconsdir/hicolor/scalable/apps/*.svg
 
 %changelog
+* Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 1:3.3.2-alt1
+- new version 3.3.2 (with rpmrb script)
+
 * Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 1:3.3.1-alt1
 - new version 3.3.1 (with rpmrb script)
 
