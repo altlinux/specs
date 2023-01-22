@@ -1,5 +1,5 @@
 Name: arandr
-Version: 0.1.10
+Version: 0.1.11
 Release: alt1
 
 Summary: Screen layout editor for xrandr 1.4 (Another XRandR gui)
@@ -55,6 +55,7 @@ Features
 %install
 %python3_install
 %find_lang %name
+rm -rv %buildroot/usr/share/locale/zh_Hant/
 
 %files -f %name.lang
 %doc NEWS README TODO
@@ -66,6 +67,9 @@ Features
 %_man1dir/*
 
 %changelog
+* Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 0.1.11-alt1
+- new version 0.1.11 (with rpmrb script)
+
 * Tue May 14 2019 Vitaly Lipatov <lav@altlinux.ru> 0.1.10-alt1
 - new version 0.1.10 (with rpmrb script)
 - switch to python3
