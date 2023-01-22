@@ -2,7 +2,7 @@
 
 Name: xfce4
 Version: 4.18
-Release: alt1
+Release: alt2
 Summary: Set of Xfce4 Desktop installers.
 License: GPLv2+
 Group: Graphical desktop/XFce
@@ -87,6 +87,7 @@ Requires: xfce4-calculator-plugin \
 Requires: xfce4-cpufreq-plugin \
 Requires: xfce4-cpugraph-plugin \
 Requires: xfce4-diskperf-plugin \
+Requires: xfce4-docklike-plugin \
 Requires: xfce4-eyes-plugin \
 Requires: xfce4-fsguard-plugin \
 Requires: xfce4-genmon-plugin \
@@ -94,6 +95,7 @@ Requires: xfce4-mailwatch-plugin \
 Requires: xfce4-mount-plugin \
 Requires: xfce4-netload-plugin \
 Requires: xfce4-notes-plugin \
+Requires: xfce4-notification-plugin \
 Requires: xfce4-places-plugin \
 Requires: xfce4-sensors-plugin \
 Requires: xfce4-smartbookmark-plugin \
@@ -163,6 +165,10 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %endif
 
 %changelog
+* Sun Jan 22 2023 Mikhail Efremov <sem@altlinux.org> 4.18-alt2
+- full,regular: Add xfce4-notification-plugin.
+- full,regular: Add xfce4-docklike-plugin.
+
 * Fri Dec 16 2022 Mikhail Efremov <sem@altlinux.org> 4.18-alt1
 - full,regular: Drop xfce4-datetime-plugin.
 - full,regular: Add xfce4-windowck-plugin.
