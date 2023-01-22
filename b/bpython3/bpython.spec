@@ -7,7 +7,7 @@
 %def_with urwid
 
 Name: bpython3
-Version: 0.23
+Version: 0.24
 Release: alt1
 
 Summary: Fancy curses interface to the Python 3 interactive interpreter
@@ -144,8 +144,11 @@ python3 setup.py test
 %endif
 
 %changelog
+* Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 0.24-alt1
+- new version 0.24 (with rpmrb script)
+
 * Fri Sep 09 2022 Danil Shein <dshein@altlinux.org> 0.23-alt1
- - NMU:  new version 0.23
+- NMU: new version 0.23
 
 * Mon Apr 18 2022 Danil Shein <dshein@altlinux.org> 0.22.1-alt1
 - NMU: new version 0.22.1
