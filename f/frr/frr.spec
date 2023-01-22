@@ -33,9 +33,10 @@
 %def_disable rpki
 %def_disable scripting
 %def_disable backtrace
+%def_disable dp_dpdk
 
 Name: frr
-Version: 8.3.1
+Version: 8.4.2
 Release: alt1
 Summary: FRRouting Routing daemon
 License: GPL-2.0-or-later AND LGPL-2.1-or-later
@@ -46,7 +47,6 @@ Source0: %name-%version.tar
 Source1: %name-tmpfiles.conf
 #Patch: %%name-%%version.patch
 Patch0001: 0001-update-init-script.patch
-Patch0002: 0002-ospfd-Adding-SUPPORT_OSPF_API-define-in-ospf_spf.c.patch
 
 BuildRequires(pre): rpm-macros-systemd
 BuildRequires: gcc-c++
@@ -72,6 +72,7 @@ BuildRequires: makeinfo
 %{?_enable_rpki:BuildRequires: pkgconfig(rtrlib) >= 0.8.0}
 %{?_enable_backtrace:BuildRequires: pkgconfig(libunwind)}
 %{?_enable_protobuf:BuildRequires: /usr/bin/protoc /usr/bin/protoc-c pkgconfig(libprotobuf-c) >= 0.14}
+%{?_enable_dp_dpdk:BuildRequires: pkgconfig(libdpdk)}
 
 Requires: /usr/bin/less
 Conflicts: quagga
@@ -91,7 +92,6 @@ FRRouting is a fork of Quagga.
 %setup
 #%%patch -p1
 %patch0001 -p1
-%patch0002 -p1
 
 %build
 %autoreconf
@@ -131,6 +131,7 @@ FRRouting is a fork of Quagga.
     %{subst_enable rpki} \
     %{subst_enable scripting} \
     %{subst_enable backtrace} \
+    %{?_enable_dp_dpdk:--enable-dp-dpdk} \
     --with-crypto=openssl
 
 %make_build MAKEINFO="makeinfo --no-split" PYTHON=%__python3
@@ -235,6 +236,9 @@ fi
 %_tmpfilesdir/%name.conf
 
 %changelog
+* Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 8.4.2-alt1
+- 8.4.2
+
 * Mon Oct 10 2022 Alexey Shabalin <shaba@altlinux.org> 8.3.1-alt1
 - 8.3.1
 
