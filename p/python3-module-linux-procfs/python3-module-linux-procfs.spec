@@ -1,5 +1,5 @@
 Name: python3-module-linux-procfs
-Version: 0.7.0
+Version: 0.7.1
 Release: alt1
 
 Summary: Linux /proc abstraction classes
@@ -35,6 +35,9 @@ Abstractions to extract information from the Linux kernel /proc files.
 %python3_sitelibdir/python_linux_procfs*.egg-info
 
 %changelog
+* Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 0.7.1-alt1
+- new version 0.7.1 (with rpmrb script)
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 0.7.0-alt1
 - new version 0.7.0 (with rpmrb script)
 
