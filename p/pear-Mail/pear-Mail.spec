@@ -1,6 +1,6 @@
 %define pear_name Mail
 Name: pear-%pear_name
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: Class that provides multiple interfaces for sending emails
@@ -48,8 +48,12 @@ provides a RFC822 email address list validation utility class.
 %pear_dir/Mail.php
 %pear_dir/tests/
 %pear_dir/.pkgxml/Mail.xml
+%pear_dir/docs/Mail/
 
 %changelog
+* Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 1.5.0-alt1
+- new version 1.5.0 (with rpmrb script)
+
 * Tue Jan 28 2020 Vitaly Lipatov <lav@altlinux.ru> 1.4.1-alt1
 - new version 1.4.1 (with rpmrb script)
 - add requires to pear-Net_SMTP
