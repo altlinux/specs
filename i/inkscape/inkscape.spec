@@ -1,4 +1,4 @@
-%define major 1.1
+%define major 1.2
 
 # pack shared libinkscape library
 %def_with shared
@@ -37,7 +37,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake gcc-c++ intltool
 BuildRequires: boost-devel-headers boost-filesystem-devel
 BuildRequires: libgc-devel libgsl-devel libpopt-devel libxslt-devel zlib-devel libsoup-devel libaspell-devel libdbus-devel libgspell-devel libreadline-devel
-BuildRequires: lib2geom-devel >= 1.1
+BuildRequires: lib2geom-devel >= 1.2.2
 
 # Checking for modules 'gtkmm-3.0>=3.24;gdkmm-3.0>=3.24;gtk+-3.0>=3.24;gdk-3.0>=3.24'
 BuildRequires: pkgconfig(gtkmm-3.0) >= 3.24
@@ -147,7 +147,7 @@ Run checkinstall tests for %name.
 
 %prep
 %setup
-%patch -p1
+#patch -p1
 
 %ifarch %e2k
 # missing typeinfo fix
@@ -160,7 +160,7 @@ EOF
 # LCC cannot work with expressions inside openmp pragmas
 sed -i "s|limit > OPENMP_THRESHOLD|limit_gt_thr|;s|limit = w \\* h|&, limit_gt_thr = limit > OPENMP_THRESHOLD|" src/display/{cairo-templates.h,nr-filter-morphology.cpp}
 %endif
-rm -rfv src/3rdparty/2geom/
+rm -rv src/3rdparty/2geom/
 
 %build
 %cmake_insource \
@@ -193,10 +193,14 @@ rm -rv %buildroot%_mandir/??/
 rm -rv %buildroot%_mandir/??_??/
 
 subst "s|/usr/bin/env python$|%__python3|" %buildroot%_datadir/%name/extensions/*.py
+subst "s|/usr/bin/env python$|%__python3|" %buildroot%_datadir/%name/extensions/*/*.py
+subst "s|/usr/bin/env python$|%__python3|" %buildroot%_datadir/%name/extensions/*/*/*.py
+subst "s|/usr/bin/env python$|%__python3|" %buildroot%_datadir/%name/extensions/*/*/*/*.py
+
+
 
 # remove tests
 rm -rv %buildroot%_datadir/%name/extensions/inkex/tester/
-rm -rv %buildroot%_datadir/%name/extensions/{setup.py,setup.cfg}
 
 %find_lang %name
 
@@ -240,6 +244,10 @@ true
 %files checkinstall
 
 %changelog
+* Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
+- new version 1.2.2 (with rpmrb script)
+- set BR: lib2geom-devel >= 1.2.2
+
 * Mon Apr 25 2022 Evgeniy Kukhtinov <neurofreak@altlinux.org> 1.1.2-alt1
 - NMU:
     + new version (1.1.2) with rpmgs script
