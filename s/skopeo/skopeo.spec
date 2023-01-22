@@ -1,12 +1,11 @@
 %global import_path github.com/containers/skopeo
-%global commit 2eac0f463a6d2d9d8312c4a52c1e30e8bb8bf7f8
 
 %global _unpackaged_files_terminate_build 1
 %def_without check
 
 Name: skopeo
-Version: 1.9.1
-Release: alt3
+Version: 1.10.0
+Release: alt1
 
 Summary: skopeo is a command line utility that performs various operations on container images and image repositories
 License: Apache-2.0
@@ -50,7 +49,7 @@ export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
 export GOPATH="$BUILDDIR:%go_path"
 export GOFLAGS="-mod=vendor"
-export GIT_COMMIT=%commit
+export GIT_COMMIT=%release
 
 %golang_prepare
 
@@ -83,6 +82,9 @@ make check
 %_man1dir/%{name}*
 
 %changelog
+* Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 1.10.0-alt1
+- new version 1.10.0
+
 * Sun Jul 31 2022 Alexey Shabalin <shaba@altlinux.org> 1.9.1-alt3
 - drop containers-common package
 
