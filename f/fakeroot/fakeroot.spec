@@ -1,5 +1,5 @@
 Name: fakeroot
-Version: 1.28
+Version: 1.29
 Release: alt1
 
 Summary: Run a command in an environment faking root privileges for file manipulation
@@ -51,6 +51,10 @@ find %buildroot%_libdir -type f -name \*.la -delete
 %doc doc/README* DEBUG
 
 %changelog
+* Sat Jan 21 2023 Dmitry V. Levin <ldv@altlinux.org> 1.29-alt1
+- 1.28 -> 1.29.
+- Wrap syscall function.
+
 * Thu Apr 28 2022 Dmitry V. Levin <ldv@altlinux.org> 1.28-alt1
 - 1.25.3 -> 1.28.
 - Added support for stat-related *_time64 functions.
