@@ -1,7 +1,7 @@
 %define modulename pyrsistent
 
 Name: python3-module-pyrsistent
-Version: 0.19.2
+Version: 0.19.3
 Release: alt1
 
 Summary: Persistent/Functional/Immutable data structures
@@ -39,6 +39,9 @@ rm -rf %buildroot%python3_sitelibdir/integration/
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 0.19.3-alt1
+- new version 0.19.3 (with rpmrb script)
+
 * Fri Dec 30 2022 Vitaly Lipatov <lav@altlinux.ru> 0.19.2-alt1
 - new version 0.19.2 (with rpmrb script)
 
