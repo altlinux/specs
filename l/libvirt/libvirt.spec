@@ -182,7 +182,7 @@
 %def_without modular_daemons
 
 Name: libvirt
-Version: 8.9.0
+Version: 9.0.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -986,7 +986,9 @@ fi
 %if_with qemu
 %files client-qemu
 %_man1dir/virt-qemu-qmp-proxy.*
+%_man1dir/virt-qemu-sev-validate.1*
 %_bindir/virt-qemu-qmp-proxy
+%_bindir/virt-qemu-sev-validate
 %endif
 
 %files libs -f %name.lang
@@ -1107,6 +1109,10 @@ fi
 %_man8dir/virtnetworkd.*
 %if_with firewalld_zone
 %_prefix/lib/firewalld/zones/libvirt.xml
+%_prefix/lib/firewalld/zones/libvirt-routed.xml
+%_prefix/lib/firewalld/policies/libvirt-routed-in.xml
+%_prefix/lib/firewalld/policies/libvirt-routed-out.xml
+%_prefix/lib/firewalld/policies/libvirt-to-host.xml
 %endif
 %endif
 
@@ -1389,6 +1395,9 @@ fi
 %_datadir/libvirt/api
 
 %changelog
+* Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 9.0.0-alt1
+- 9.0.0
+
 * Tue Nov 15 2022 Alexey Shabalin <shaba@altlinux.org> 8.9.0-alt1
 - 8.9.0
 
