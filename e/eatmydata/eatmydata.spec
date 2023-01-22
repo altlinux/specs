@@ -1,14 +1,18 @@
 %define oname libeatmydata
 %set_automake_version 1.11
 
-Summary: A small wrapper to disable fsync and related functions
 Name: eatmydata
-Version: 105
+Version: 131
 Release: alt1
+
+Summary: A small wrapper to disable fsync and related functions
+
 Group: File tools
 License: GPLv3
-Url: https://launchpad.net/libeatmydata
-Source: https://launchpad.net/libeatmydata/trunk/release-%version/+download/libeatmydata-%version.tar.gz
+Url: https://github.com/stewartsmith/libeatmydata
+
+# Source-url: https://github.com/stewartsmith/libeatmydata/archive/refs/tags/v%version.tar.gz
+Source: %name-%version.tar
 
 Source3: eatmydata.1
 
@@ -31,12 +35,12 @@ is to use in testing to get faster test runs where real durability is
 not required.
 
 %prep
-%setup -n %oname-%version
+%setup
 %patch0 -p2
 
 %build
 %autoreconf
-%configure
+%configure --disable-static
 %make
 
 %install
@@ -53,7 +57,7 @@ cp %SOURCE3 %buildroot%_man1dir/
 make check
 
 %files
-%doc AUTHORS README COPYING ChangeLog
+%doc AUTHORS README.md COPYING
 %_bindir/eatmydata
 %dir %_datadir/%oname
 %_datadir/%oname/eatmydata.sh
@@ -61,6 +65,13 @@ make check
 %_libdir/*.so*
 
 %changelog
+* Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 131-alt1
+- new version (131) with rpmgs script
+
+* Sun Jan 22 2023 Vitaly Lipatov <lav@altlinux.ru> 130-alt1
+- new version (130) with rpmgs script
+- change upstream URL, Source URL
+
 * Sat Feb 24 2018 Vitaly Lipatov <lav@altlinux.ru> 105-alt1
 - new version 105 (with rpmrb script)
 
