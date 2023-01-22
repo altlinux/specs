@@ -4,7 +4,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: cni
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Summary: Container Network Interface - networking for Linux containers
 Group: Development/Other
@@ -65,6 +65,9 @@ rm -f %buildroot%_bindir/{noop,sleep}
 %_bindir/*
 
 %changelog
+* Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 1.1.2-alt1
+- 1.1.2
+
 * Fri Jun 03 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
@@ -77,8 +80,8 @@ rm -f %buildroot%_bindir/{noop,sleep}
 * Sat Feb 23 2019 Alexey Shabalin <shaba@altlinux.org> 0.6.0-alt3
 - delete ubt macros from release
 
-* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt2%ubt
+* Wed Jun 13 2018 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt2
 - rebuild for aarch64
 
-* Sat May 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt1%ubt
+* Sat May 12 2018 Alexey Shabalin <shaba@altlinux.ru> 0.6.0-alt1
 - Initial package
