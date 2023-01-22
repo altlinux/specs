@@ -6,8 +6,8 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.34.0
-Release: alt2
+Version: 1.34.1
+Release: alt1
 
 Summary: A personal full text search package
 Summary(ru_RU.UTF-8): Программа для полнотекстового поиска по файлам с различными форматами.
@@ -184,6 +184,9 @@ sed -i "s|#!/usr/bin/env python3|#!%__python3|" \
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Mon Jan 23 2023 Michael Shigorin <mike@altlinux.org> 1.34.1-alt1
+- new version (watch file uupdate)
+
 * Tue Jan 17 2023 Michael Shigorin <mike@altlinux.org> 1.34.0-alt2
 - updated Russian translation (thx arbars@)
 
