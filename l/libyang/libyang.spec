@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: libyang
-Version: 2.0.231
+Version: 2.1.30
 Release: alt1
 Summary: YANG data modeling language library
 Url: https://github.com/CESNET/libyang
@@ -59,6 +59,9 @@ mkdir -p %buildroot%_datadir/yang
 %_includedir/%name
 
 %changelog
+* Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 2.1.30-alt1
+- new version 2.1.30
+
 * Mon Oct 10 2022 Alexey Shabalin <shaba@altlinux.org> 2.0.231-alt1
 - new version 2.0.231
 
