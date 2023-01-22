@@ -6,8 +6,8 @@
 %define cni_etc_dir %_sysconfdir/cni
 
 Name: cni-plugins
-Version: 1.1.1
-Release: alt2
+Version: 1.2.0
+Release: alt1
 Summary: Container Network Interface plugins
 Group: Development/Other
 License: Apache-2.0
@@ -66,6 +66,9 @@ install -p -m0644 %SOURCE2 %buildroot%_tmpfilesdir/%name.conf
 %_tmpfilesdir/*
 
 %changelog
+* Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 1.2.0-alt1
+- new version 1.2.0
+
 * Sun Jul 31 2022 Alexey Shabalin <shaba@altlinux.org> 1.1.1-alt2
 - add Provides: container-network-stack
 
