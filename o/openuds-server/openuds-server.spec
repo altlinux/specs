@@ -11,7 +11,7 @@
 
 Name: openuds-server
 Version: 3.5.0
-Release: alt4
+Release: alt5
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -19,6 +19,7 @@ URL: https://github.com/dkmstr/openuds
 AutoReqProv: yes, nopython
 Source0: %name-%version.tar
 
+Source2: openuds_tunnel_register.py
 Source10: openuds-httpd.conf
 Source11: openuds-httpd-ssl.conf
 Source12: openuds.logrotate
@@ -97,6 +98,8 @@ mkdir -p %buildroot%_datadir/openuds/uds/osmanagers/WindowsOsManager/files
 mv %buildroot%_datadir/openuds/server/settings.py.sample %buildroot%_sysconfdir/openuds/settings.py
 ln -r -s %buildroot%_logdir/openuds %buildroot%_datadir/openuds/log
 ln -r -s %buildroot%_sysconfdir/openuds/settings.py %buildroot%_datadir/openuds/server/settings.py
+# Script for register openuds tunnel
+install -p -D -m 755 %SOURCE2 %buildroot%_bindir/openuds_tunnel_register.py
 # drop httpd-conf snippet
 install -p -D -m 644 %SOURCE10 %buildroot%apache2_sites_available/openuds.conf
 install -p -D -m 644 %SOURCE11 %buildroot%apache2_sites_available/openuds-ssl.conf
@@ -142,6 +145,7 @@ cert-sh generate nginx-openuds ||:
 %dir %attr(0770, root, openuds) %_logdir/openuds
 %config(noreplace) %_logrotatedir/openuds-server
 %_unitdir/openuds-taskmanager.service
+%_bindir/openuds_tunnel_register.py
 
 %files apache2
 %config(noreplace) %apache2_sites_available/*.conf
@@ -154,6 +158,10 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Mon Jan 23 2023 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt5
+- Add openuds_tunnel_register.py to package for easy generate
+  and register tunnel token
+
 * Thu Jan 12 2023 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt4
 - Drop download link on legacy python2 windows client
 
