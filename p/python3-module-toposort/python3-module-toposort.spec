@@ -2,7 +2,7 @@
 %def_enable check
 
 Name: python3-module-%modname
-Version: 1.7
+Version: 1.9
 Release: alt1
 
 Summary: %modname implements a topological sort algorithm
@@ -10,7 +10,7 @@ Group: Development/Python3
 License: Apache-2.0
 Url: https://pypi.org/project/%modname
 
-#VCS: https://bitbucket.org/ericvsmith/toposort.git
+Vcs: https://bitbucket.org/ericvsmith/toposort.git
 Source: https://pypi.io/packages/source/t/%modname/%modname-%version.tar.gz
 
 BuildArch: noarch
@@ -39,6 +39,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGES* NOTICE
 
 %changelog
+* Mon Jan 23 2023 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1
+- 1.9
+
 * Mon Jun 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7-alt1
 - 1.7 (deleted setup.py)
 

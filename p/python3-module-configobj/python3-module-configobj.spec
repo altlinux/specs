@@ -1,10 +1,10 @@
 %def_disable snapshot
-%define modname configobj
+%define pypi_name configobj
 %def_disable check
 
-Name: python3-module-%modname
-Version: 5.0.6
-Release: alt2
+Name: python3-module-%pypi_name
+Version: 5.0.8
+Release: alt1
 
 Summary: a Python module for easy reading and writing of config files
 License: BSD-3-Clause
@@ -12,18 +12,16 @@ Group: Development/Python3
 Url: http://configobj.readthedocs.org/
 
 %if_disabled snapshot
-Source: https://pypi.python.org/packages/source/c/%modname/%modname-%version.tar.gz
+Source: https://pypi.python.org/packages/source/c/%pypi_name/%pypi_name-%version.tar.gz
 %else
 Vcs: https://github.com/DiffSK/configobj
-Source: %modname-%version.tar
+Source: %pypi_name-%version.tar
 %endif
-# fc
-Patch: configobj-5.0.5-fc-import-all-fix.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python3-module-wheel
 %{?_enable_check:BuildRequires: python3-module-tox python3-module-flake8 python3-module-pep8}
 
 %description
@@ -31,26 +29,26 @@ ConfigObj - a Python module for easy reading and writing of config
 files.
 
 %prep
-%setup -n %modname-%version
-%patch -p1
+%setup -n %pypi_name-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 tox.py3 -e py%(echo %__python3_version | tr -d .) --sitepackages -o -v
 
 %files
-%python3_sitelibdir/_version.py
-%python3_sitelibdir/validate.py
-%python3_sitelibdir/__pycache__/
-%python3_sitelibdir/%modname.py
-%python3_sitelibdir/%modname-*.egg-info
+%python3_sitelibdir/validate/
+%python3_sitelibdir/%pypi_name
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jan 23 2023 Yuri N. Sedunov <aris@altlinux.org> 5.0.8-alt1
+- 5.0.8
+
 * Thu Aug 05 2021 Yuri N. Sedunov <aris@altlinux.org> 5.0.6-alt2
 - python3-only build
 
