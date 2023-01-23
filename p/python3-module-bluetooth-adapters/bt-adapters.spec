@@ -1,5 +1,5 @@
 Name: python3-module-bluetooth-adapters
-Version: 0.6.0
+Version: 0.15.2
 Release: alt1
 
 Summary: Tools to enumerate and find Bluetooth Adapters
@@ -30,6 +30,9 @@ BuildRequires: python3(poetry-core)
 %python3_sitelibdir/bluetooth_adapters-%version.dist-info
 
 %changelog
+* Mon Jan 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.15.2-alt1
+- 0.15.2 released
+
 * Mon Nov 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt1
 - 0.6.0 released
 
