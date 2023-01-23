@@ -2,7 +2,7 @@
 
 Name: local-policy
 Version: 0.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: ALT Local Policies Default templates
 License: GPLv2+
@@ -15,6 +15,9 @@ Requires: control
 Requires: control-sshd-permit-root-login
 
 Source0: %name-%version.tar
+
+# https://bugzilla.altlinux.org/45002 :
+%filter_from_requires /xmlbeans-scripts/d
 
 %description
 Local policies for ALT solutions based on Sisyphus
@@ -78,6 +81,10 @@ fi
 %_datadir/%name/*
 
 %changelog
+* Mon Jan 23 2023 Ivan A. Melnikov <iv@altlinux.org> 0.6.0-alt1.1
+- NMU: ensure this package doesn't require
+  xmlbeans-scripts (ALT#45002).
+
 * Fri Aug 26 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.6.0-alt1
 - New directory /etc/local-policy-system with Local Group Policy Template (GPT)
 - Add control local-policy-system-access
