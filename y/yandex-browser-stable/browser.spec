@@ -9,7 +9,7 @@ Summary: Yandex Browser
 License: ALT-YANDEX-BROWSER
 Name: yandex-browser-stable
 Version: 22.11.0.2485
-Release: alt1
+Release: alt1.1
 Group: Networking/WWW
 Vendor: YANDEX LLC
 Url: http://browser.yandex.ru/
@@ -17,11 +17,13 @@ Url: http://browser.yandex.ru/
 ExclusiveArch: x86_64
 Source0: x86_64-linux.tar.gz
 Source1: common.tar.gz
+Patch0: yandex-browser-stable-proxy-from-environment.patch
 Provides: yandex-browser = %{version}
 Buildrequires: at-spi2-atk, libalsa, libat-spi2-core, libatk, libcairo, libcups
 Buildrequires: libdbus, libdrm, libexpat, libgbm, libgio, libnspr, libnss
 Buildrequires: libpango, libX11, libXcomposite, libXdamage, libXext, libXfixes
 Buildrequires: libXrandr, libxcb, libxkbcommon
+Buildrequires: libwayland-client
 Requires: ca-certificates,ffmpeg-plugin-browser, xdg-utils, fonts-ttf-google-noto-emoji-color
 Requires(post): %{_sbindir}/update-alternatives
 Requires(preun): %{_sbindir}/update-alternatives
@@ -46,6 +48,7 @@ Yandex Browser is a browser that combines a minimal design with sophisticated te
 %prep
 %setup -c
 %setup -T -D -a 1
+%patch0 -p0
 
 #------------------------------------------------------------------------------
 #   Build rule - How to make the package
@@ -158,6 +161,10 @@ exit 0
 # =============== END preun ===============
 
 %changelog
+* Mon Jan 23 2023 Andrey Cherepanov <cas@altlinux.org> 22.11.0.2485-alt1.1
+- NMU: supported proxy settings from environment variables (ALT #44983) 
+- NMU: FTBFS fix: required libwayland-client
+
 * Wed Nov 23 2022 Vasiliy Tsukanov <palar@altlinux.org> 22.11.0.2485-alt1
 - browser updated to 22.11.0
 
