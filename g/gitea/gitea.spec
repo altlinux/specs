@@ -4,7 +4,7 @@
 %def_enable tarball
 
 Name:    gitea
-Version: 1.17.3
+Version: 1.18.2
 Release: alt1
 
 Summary: Git with a cup of tea, painless self-hosted git service
@@ -110,8 +110,11 @@ useradd -r -g %name -c 'Gitea daemon' \
 %doc *.md
 
 %changelog
+* Mon Jan 23 2023 Alexey Shabalin <shaba@altlinux.org> 1.18.2-alt1
+- 1.18.2
+
 * Wed Oct 19 2022 Alexey Shabalin <shaba@altlinux.org> 1.17.3-alt1
-- Build new version.
+- Build new version (Fixes: CVE-2022-42968).
 
 * Mon Sep 26 2022 Alexey Shabalin <shaba@altlinux.org> 1.17.2-alt1
 - Build new version.
@@ -120,13 +123,13 @@ useradd -r -g %name -c 'Gitea daemon' \
 - Build new version.
 
 * Thu Jul 28 2022 Alexey Shabalin <shaba@altlinux.org> 1.16.9-alt1
-- Build new version.
+- Build new version (Fixes: CVE-2022-38183, CVE-2022-1928).
 
 * Mon May 02 2022 Alexey Shabalin <shaba@altlinux.org> 1.16.7-alt1
-- Build new version.
+- Build new version (Fixes: CVE-2022-30781).
 
 * Sat Apr 23 2022 Alexey Shabalin <shaba@altlinux.org> 1.16.6-alt1
-- Build new version.
+- Build new version (Fixes: CVE-2022-30781, CVE-2022-1058, CVE-2022-0905).
 - Build from src tarball.
 - Add man page.
 
@@ -137,7 +140,7 @@ useradd -r -g %name -c 'Gitea daemon' \
 - Build new version.
 
 * Tue Dec 14 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.7-alt1
-- 1.15.7
+- 1.15.7 (Fixes: CVE-2021-45330)
 
 * Sun Oct 31 2021 Alexey Shabalin <shaba@altlinux.org> 1.15.6-alt1
 - Build new version.
@@ -152,13 +155,13 @@ useradd -r -g %name -c 'Gitea daemon' \
 - Build new version.
 
 * Wed Apr 07 2021 Alexey Shabalin <shaba@altlinux.org> 1.13.7-alt1
-- Build new version.
+- Build new version (Fixes: CVE-2021-3382, CVE-2021-29134).
 
 * Fri Dec 11 2020 Alexey Shabalin <shaba@altlinux.org> 1.12.6-alt1
-- Build new version.
+- Build new version (Fixes: CVE-2021-28378, CVE-2020-28991).
 
 * Thu Oct 29 2020 Alexey Shabalin <shaba@altlinux.org> 1.12.5-alt1
-- Build new version.
+- Build new version (Fixes: CVE-2020-14144).
 
 * Fri Sep 25 2020 Alexey Shabalin <shaba@altlinux.org> 1.12.4-alt1
 - Build new version.
@@ -170,13 +173,13 @@ useradd -r -g %name -c 'Gitea daemon' \
 - Build new version.
 
 * Fri May 29 2020 Alexey Shabalin <shaba@altlinux.org> 1.11.5-alt1
-- Build new version.
+- Build new version (Fixes: CVE-2020-13246).
 
 * Mon Apr 27 2020 Alexey Shabalin <shaba@altlinux.org> 1.11.4-alt2
 - update nodejs modules
 
 * Thu Apr 02 2020 Alexey Shabalin <shaba@altlinux.org> 1.11.4-alt1
-- Build new version.
+- Build new version (Fixes: CVE-2021-45327).
 
 * Wed Feb 19 2020 Alexey Shabalin <shaba@altlinux.org> 1.11.1-alt1
 - Build new version.
