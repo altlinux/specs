@@ -4,7 +4,7 @@
 %define libpala libpala%pala_sover
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -63,7 +63,7 @@ Requires: %name-common = %version-%release
 
 %install
 %K5install
-%K5install_move data palapeli
+%K5install_move data palapeli kio
 mv %buildroot/%_K5xdgmime/palapeli-mimetypes.xml \
     %buildroot/%_K5xdgmime/palapeli5-mimetypes.xml
 %find_lang %name --with-kde --all-name
@@ -71,19 +71,18 @@ mv %buildroot/%_K5xdgmime/palapeli-mimetypes.xml \
 %files common -f %name.lang
 %doc LICENSES/*
 %config(noreplace) %_K5xdgconf/*rc
-%_K5icon/*/*/mimetypes/*palapeli*.*
+%_K5icon/*/*/mimetypes/*palapeli*
 %_K5xdgmime/*palapeli*.xml
 %_datadir/qlogging-categories5/*.*categories
 
 %files
 %_K5bin/palapeli
-%_K5plug/*pala*.so
+%_K5plug/kf5/thumbcreator/*pala*.so
 %_K5plug/palapelislicers/palapeli_*.so
 %_K5xdgapp/*pala*.desktop
+%_K5icon/*/*/apps/*palapeli*
 %_K5data/palapeli/
-%_K5srv/ServiceMenus/palapeli*.desktop
-%_K5srv/*pala*.desktop
-%_K5icon/*/*/apps/palapeli.*
+%_K5data/kio/servicemenus/*pala*.desktop
 %_K5notif/*pala*.notifyrc
 
 %files devel
@@ -96,6 +95,9 @@ mv %buildroot/%_K5xdgmime/palapeli-mimetypes.xml \
 %_K5lib/libpala.so.*
 
 %changelog
+* Fri Jan 20 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 

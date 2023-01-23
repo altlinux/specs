@@ -1,7 +1,7 @@
 %define rname granatier
 
 Name: kde5-%rname
-Version: 22.08.3
+Version: 22.12.1
 Release: alt1
 %K5init no_appdata
 
@@ -80,6 +80,9 @@ Requires: %name-common = %version-%release
 #%_K5lib/libgranatier.so.*
 
 %changelog
+* Fri Jan 20 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
+- new version
+
 * Mon Nov 07 2022 Sergey V Turchin <zerg@altlinux.org> 22.08.3-alt1
 - new version
 
