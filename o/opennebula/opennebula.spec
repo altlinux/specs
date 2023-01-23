@@ -2,6 +2,7 @@
 %define oneadmin_home /var/lib/one
 %define oneadmin_uid 9869
 %define oneadmin_gid 9869
+%define optflags_lto %nil
 
 # from firecracker.spec
 %ifarch x86_64 aarch64
@@ -11,7 +12,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.2.0.1
-Release: alt1.1
+Release: alt2
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -153,6 +154,12 @@ Group: Development/Ruby
 BuildArch: noarch
 Provides: %name-ruby = %EVR ruby-%name = %EVR
 Obsoletes: %name-ruby < %EVR ruby-%name < %EVR
+Requires: libzeromq-devel
+Requires: gem(activesupport) >= 0
+Requires: gem(ffi-rzmq) >= 0
+Requires: gem(rack-protection) >= 0
+Requires: gem(rr) >= 0
+Requires: gem(rspec) >= 0
 
 %description -n gem-%name
 OpenNebula Ruby libraries.
@@ -211,6 +218,7 @@ BuildArch: noarch
 
 Requires: %name-common = %EVR
 Requires: %name-provision-data = %EVR
+Requires: guacamole-server
 
 %description fireedge
 Browser based UI for OpenNebula application management.
@@ -409,7 +417,7 @@ popd
 export PATH="$PATH_DEFAULT"
 
 # Compile OpenNebula
-scons -j2 \
+scons -j %__nprocs \
     mysql=yes \
     postgresql=yes \
     new_xmlrpc=yes \
@@ -1027,6 +1035,11 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Thu Jan 12 2023 Andrew A. Vasilyev <andy@altlinux.org> 6.2.0.1-alt2
+- get fix from upstream
+- remove support tabs
+- add missed Requires
+
 * Mon Dec 05 2022 Pavel Skrylev <majioa@altlinux.org> 6.2.0.1-alt1.1
 - !FTBFS: to correct gem deps
 
