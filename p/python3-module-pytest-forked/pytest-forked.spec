@@ -1,36 +1,38 @@
 %define _unpackaged_files_terminate_build 1
-%define oname pytest-forked
+%define pypi_name pytest-forked
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%pypi_name
 Version: 1.4.0
-Release: alt1
+Release: alt2
 
 Summary: pytest plugin for running tests in isolated forked subprocesses
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/pytest-dev/pytest-forked.git
+
 Url: https://pypi.org/project/pytest-forked/
+VCS: https://github.com/pytest-dev/pytest-forked
 
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(setuptools_scm)
 
 %if_with check
 # install_requires=
 BuildRequires: python3(py)
 BuildRequires: python3(pytest)
-
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 BuildArch: noarch
 
-%py3_provides %oname
+%py3_provides %pypi_name
 
 %description
 %summary.
@@ -40,38 +42,33 @@ BuildArch: noarch
 %autopatch -p1
 
 %build
-# SETUPTOOLS_SCM_PRETEND_VERSION: when defined and not empty,
-# its used as the primary source for the version number in which
-# case it will be a unparsed string
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python3_build
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export TOXENV=py3
-
-tox.py3 --sitepackages --console-scripts -vvr
+%pyproject_run_pytest -vra
 
 %files
-%doc LICENSE CHANGELOG.rst README.rst
+%doc CHANGELOG.rst README.rst
 %python3_sitelibdir/pytest_forked/
-%python3_sitelibdir/pytest_forked-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Jan 23 2023 Stanislav Levin <slev@altlinux.org> 1.4.0-alt2
+- Fixed FTBFS (pytest 7.2.0).
+
 * Mon Feb 28 2022 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.3.0 -> 1.4.0.
 
