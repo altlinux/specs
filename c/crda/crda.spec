@@ -1,12 +1,12 @@
 %define crda_lib /lib/crda
 %define sbindir /sbin
 %define _db wireless-regdb
-%define _db_date 2021.04.21
+%define _db_date 2022.08.12
 
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
-Version: 4.14
-Release: alt6
+Version: 4.15
+Release: alt1
 License: copyleft-next-0.3.0
 Group: Networking/Other
 
@@ -37,13 +37,16 @@ BuildRequires: kernel-headers >= 2.6.27
 BuildRequires: libnl-devel >= 1.1
 
 %description
+CRDA is no longer needed as of kernel v4.15 since commit 007f6c5e6eb45
+("cfg80211: support loading regulatory database as firmware file") added
+support to use the kernel's firmware request API which looks for the
+firmware on /lib/firmware. Because of this CRDA is legacy software for
+older kernels. It will continue to be maintained.
+
 CRDA acts as the udev helper for communication between the kernel
 and userspace for regulatory compliance. It relies on nl80211
 for communication. CRDA is intended to be run only through udev
 communication from the kernel.
-
-For more information see:
-http://wireless.kernel.org/en/developers/Regulatory/
 
 %package devel
 Summary: Header files for use with libreg
@@ -71,7 +74,7 @@ subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
 
 cd %name-%version
 %patch -p1 -b .setregdomain
-%patch1 -p1 -b .ldconfig-remove
+%patch1 -p2 -b .ldconfig-remove
 %patch2 -p2 -b .ldflags
 %patch5 -p1
 cd ../%_db
@@ -125,6 +128,11 @@ ln -s regulatory.bin.5 %buildroot%_man5dir/regulatory.db.5
 %_includedir/reglib
 
 %changelog
+* Mon Jan 23 2023 L.A. Kostis <lakostis@altlinux.ru> 4.15-alt1
+- regdb: updated to 20220812.
+- crda: updated to 4.15.
+- added crda deprecation notice.
+
 * Thu Aug 05 2021 Grigory Ustinov <grenka@altlinux.org> 4.14-alt6
 - Transfer on python3.
 
