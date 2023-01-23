@@ -1,6 +1,6 @@
 Name: tsugaru
-Version: 20220702
-Release: alt3
+Version: 20230113
+Release: alt1
 Summary: It is an emulator of legendary Fujitsu FM TOWNS computer including Marty
 Group: Emulators
 License: BSD3
@@ -42,7 +42,7 @@ Set of test data and programs for Tsugaru Emulator
 
 %prep
 %setup -n %name-%version
-%patch0 -p1
+#%%patch0 -p1
 %patch1 -p1
 
 %build
@@ -142,6 +142,9 @@ done
 %_datadir/%name
 
 %changelog
+* Mon Jan 23 2023 Artyom Bystrov <arbars@altlinux.org> 20230113-alt1
+ - Update to new version
+
 * Thu Dec 29 2022 Artyom Bystrov <arbars@altlinux.org> 20220702-alt3
  - Add logo and desktop files
 
