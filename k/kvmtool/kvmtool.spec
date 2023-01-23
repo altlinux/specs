@@ -1,7 +1,7 @@
 
 Name: kvmtool
 Version: 3.18.0
-Release: alt4.git.117d6495
+Release: alt5.git.e17d182a
 Summary: Linux Native KVM Tool
 License: GPLv2+
 Group: Emulators
@@ -10,8 +10,6 @@ Source: %name-%version.tar
 
 # suse patches
 Patch11: nonexec-stack.patch
-Patch12: kvmtool.sysmacros.patch
-Patch13: kvmtool.patch
 
 # rkt patches
 Patch21: do_synchronous_writes.patch
@@ -34,8 +32,6 @@ running 32-bit guests on those 64-bit architectures that allow this.
 %prep
 %setup
 %patch11 -p1
-%patch12 -p1
-#%patch13 -p1
 %patch21 -p1
 %patch22 -p1
 #patch23 -p1
@@ -52,6 +48,9 @@ running 32-bit guests on those 64-bit architectures that allow this.
 %doc README COPYING
 
 %changelog
+* Mon Jan 23 2023 Alexey Shabalin <shaba@altlinux.org> 3.18.0-alt5.git.e17d182a
+- update to upstream master (e17d182ad3f797f01947fc234d95c96c050c534b)
+
 * Mon Mar 29 2021 Alexey Shabalin <shaba@altlinux.org> 3.18.0-alt4.git.117d6495
 - update to upstream master (117d64953228afa90b52f6e1b4873770643ffdc9)
 
