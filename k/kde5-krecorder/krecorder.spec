@@ -2,7 +2,7 @@
 
 Name: kde5-%rname
 Version: 22.11
-Release: alt1
+Release: alt2
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
@@ -77,6 +77,9 @@ Requires: %name-common
 #%_K5lib/libkrecorder.so.*
 
 %changelog
+* Mon Jan 23 2023 Sergey V Turchin <zerg@altlinux.org> 22.11-alt2
+- update russian translation
+
 * Mon Dec 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.11-alt1
 - new version
 
