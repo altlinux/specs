@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.6.4
-Release: alt2
+Release: alt3
 
 Summary: Guile bindings for EVMS
 License: GPLv2
@@ -33,6 +33,10 @@ make install DESTDIR=%buildroot
 %guile_godir/evms.go
 
 %changelog
+* Thu Jan 19 2023 Oleg Solovyov <mcpain@altlinux.org> 0.6.4-alt3
+- move rereading ptables to evms
+- Fix "Unable to reread partition table" error message
+
 * Tue Dec 13 2022 Oleg Solovyov <mcpain@altlinux.org> 0.6.4-alt2
 - restore debug level
 

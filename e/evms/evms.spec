@@ -5,7 +5,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt62
+Release: alt63
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -173,6 +173,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Thu Jan 19 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt63
+- Reread partition tables before activating volumes
+
 * Wed Dec 14 2022 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt62
 - Remove unneeded plugins
 - fix regression: detect file systems on volumes
