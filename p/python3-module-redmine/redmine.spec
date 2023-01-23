@@ -1,9 +1,10 @@
 %define _unpackaged_files_terminate_build 1
+%define modname redmine
+%define pypi_name python-redmine
+%def_without check
 
-%define oname redmine
-
-Name: python3-module-%oname
-Version: 2.3.0
+Name: python3-module-%modname
+Version: 2.4.0
 Release: alt1
 Summary: Library for communicating with a Redmine project management application.
 License: Apache-2.0
@@ -16,12 +17,17 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-# tests
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%if_with check
 BuildRequires: python3(coverage)
 BuildRequires: python3(nose)
 BuildRequires: python3(mock)
 BuildRequires: python3(requests)
+%endif
+
+%py3_provides %pypi_name
 
 %description
 Python-Redmine is a library for communicating with a Redmine project management
@@ -32,20 +38,27 @@ provides a simple but powerful Pythonic API inspired by a well-known Django ORM.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-nosetests3 --with-coverage --cover-erase --cover-package=redminelib
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc README.* LICENSE docs/
-%python3_sitelibdir/python_redmine-%version-py*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 %python3_sitelibdir/redminelib
 
 %changelog
+* Mon Jan 23 2023 Alexander Makeenkov <amakeenk@altlinux.org> 2.4.0-alt1
+- Updated to version 2.4.0
+- Use pyproject macroses for build
+- Added py3_provides
+- Temporarily disabled tests due to unmet dependencies
+
 * Wed Aug 11 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.3.0-alt1
 - Updated to upstream version 2.3.0.
 
