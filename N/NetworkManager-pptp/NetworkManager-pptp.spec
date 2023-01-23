@@ -15,7 +15,7 @@
 
 Name: NetworkManager-pptp
 Version: 1.2.10
-Release: alt1%git_date
+Release: alt2%git_date
 License: GPLv2+
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for pptp
@@ -28,7 +28,7 @@ BuildRequires: ppp-devel
 BuildRequires: libnm-devel >= %nm_version
 BuildRequires: libnma-devel
 BuildRequires: libgtk+3-devel
-%{?_with_gtk4:BuildRequires: libgtk4-devel libnma-gtk4-devel xvfb-run}
+%{?_with_gtk4:BuildRequires: libgtk4-devel >= 4.6.3 libnma-gtk4-devel}
 BuildRequires: libsecret-devel
 BuildRequires: intltool gettext
 
@@ -90,11 +90,7 @@ This package contains files for GTK4 applications to use %name.
 	--without-libnm-glib \
 	%{subst_with gtk4} \
 	--enable-more-warnings=%more_warnings
-%if_with gtk4
-xvfb-run %make_build
-%else
 %make_build
-%endif
 
 %install
 %makeinstall_std
@@ -124,6 +120,10 @@ xvfb-run %make_build
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Jan 23 2023 Mikhail Efremov <sem@altlinux.org> 1.2.10-alt2
+- Use secret agent to store password by default (closes: #44958).
+- Drop workaround with xvfb-run.
+
 * Thu Mar 17 2022 Mikhail Efremov <sem@altlinux.org> 1.2.10-alt1
 - Updated 'Fix password handling' patch.
 - Used xvfb-run.
