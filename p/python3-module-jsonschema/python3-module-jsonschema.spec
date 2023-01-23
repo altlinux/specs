@@ -2,7 +2,7 @@
 
 Name:		python3-module-%oname
 Version:	4.17.3
-Release:	alt1
+Release:	alt2
 
 Summary:	An implementation of JSON Schema validation for Python
 
@@ -25,6 +25,10 @@ BuildRequires: python3-module-hatchling python3-module-hatch-fancy-pypi-readme p
 
 # https://bugzilla.altlinux.org/38673
 Conflicts: python-module-jsonschema < 2.6.0-alt3
+
+# jsonschema/schemas/vocabularies/draft*/core files are removed in auto mode
+# see, bao#45008
+%set_cleanup_method skip
 
 %description
 jsonschema is JSON Schema validator currently based on
@@ -54,6 +58,9 @@ rm -rfv %buildroot%python3_sitelibdir/%oname/benchmarks/
 %python3_sitelibdir/*
 
 %changelog
+* Mon Jan 23 2023 Stanislav Levin <slev@altlinux.org> 4.17.3-alt2
+- Shipped required core files (closes: #45008).
+
 * Tue Jan 10 2023 Vladimir Didenko <cow@altlinux.org> 4.17.3-alt1
 - New version
 
