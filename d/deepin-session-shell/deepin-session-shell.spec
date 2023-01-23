@@ -4,7 +4,7 @@
 
 Name: deepin-session-shell
 Version: 5.5.68
-Release: alt2
+Release: alt3
 Summary: Deepin desktop-environment - Session shell module
 License: GPL-3.0+
 Group: Graphical desktop/Other
@@ -55,16 +55,21 @@ Group: Development/Other
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-sed -i 's|/usr/lib/x86_64-linux-gnu/|%_libdir/|' \
-    files/wayland/lightdm-deepin-greeter-wayland \
-    files/wayland/deepin-greeter-wayland
-sed -i 's|lib/|%_lib/|' \
-    plugins/one-key-login/CMakeLists.txt
-sed -i 's|/usr/lib/|%_libdir/|' \
-    src/global_util/modules_loader.cpp
 sed -i 's|/usr/bin|%_K5bin|' \
     files/wayland/kwin_wayland_helper-wayland \
     files/wayland/deepin-greeter-wayland
+sed -i 's|/usr/lib/x86_64-linux-gnu/|%_libdir/|' \
+    files/wayland/lightdm-deepin-greeter-wayland \
+    files/wayland/deepin-greeter-wayland
+sed -i 's|/usr/lib/|%_libdir/|' \
+    src/global_util/modules_loader.cpp
+sed -i 's|lib/|%_lib/|' \
+    plugins/one-key-login/CMakeLists.txt
+# Fix undefined symbols.
+sed -i '/link_libraries(/a Dtk::Core' \
+    plugins/one-key-login/CMakeLists.txt
+sed -i '/link_libraries(/a Dtk::Widget' \
+    plugins/one-key-login/CMakeLists.txt
 #sed -i 's|/usr/share/backgrounds/default_background.jpg|/usr/share/design-current/backgrounds/default.png|' \
 #    src/widgets/fullscreenbackground.cpp \
 #    src/session-widgets/userinfo.h
@@ -82,7 +87,7 @@ sed -i 's|/usr/bin|%_K5bin|' \
 #  src/dde-lock/lockworker.cpp
 
 %build
-%add_optflags -I%_includedir/dtk5/DCore
+%add_optflags -I%_includedir/dtk5/DCore -I%_includedir/dtk5/DWidget
 %if_enabled clang
 export CC="clang"
 export CXX="clang++"
@@ -141,6 +146,10 @@ install -m 0644 %SOURCE1 %buildroot%_sysconfdir/pam.d/deepin-screenlocker
 %_libdir/cmake/DdeSessionShell/DdeSessionShellConfig.cmake
 
 %changelog
+* Mon Jan 23 2023 Leontiy Volodin <lvol@altlinux.org> 5.5.68-alt3
+- Fixed build with dtkwidget 5.6.4.
+- Updated deepin-screenlocker.
+
 * Thu Jan 19 2023 Leontiy Volodin <lvol@altlinux.org> 5.5.68-alt2
 - Fixed build with dtkcore 5.6.4.
 
