@@ -2,10 +2,10 @@
 %define module_version	6.30.223.271
 %define module_release alt12
 
-%define flavour		std-def
+%define flavour		centos
 %define karch x86_64
 BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-def
+BuildRequires(pre): kernel-headers-modules-centos
 
 %setup_kernel_module %flavour
 
