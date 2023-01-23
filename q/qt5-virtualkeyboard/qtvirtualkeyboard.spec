@@ -2,7 +2,7 @@
 %global qt_module qtvirtualkeyboard
 
 Name: qt5-virtualkeyboard
-Version: 5.15.7
+Version: 5.15.8
 Release: alt1
 
 Group: System/Libraries
@@ -81,7 +81,7 @@ rm -rf src/virtualkeyboard/3rdparty/hunspell
 
 
 %build
-%qmake_qt5 "CONFIG+=lang-en_GB lang-ru_RU"
+%qmake_qt5 "CONFIG+=lang-en_US lang-ru_RU"
 %make_build
 %if %qdoc_found
 export QT_HASH_SEED=0
@@ -125,6 +125,9 @@ export QT_HASH_SEED=0
 %_qt5_libdir/libQt?HunspellInputMethod.so.*
 
 %changelog
+* Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
+- new version
+
 * Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
 - new version
 

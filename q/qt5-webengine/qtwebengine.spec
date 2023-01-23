@@ -29,7 +29,7 @@
 %endif
 
 Name: qt5-webengine
-Version: 5.15.11
+Version: 5.15.12
 Release: alt1
 
 Group: System/Libraries
@@ -57,8 +57,10 @@ Patch32: disable-gpu-when-using-nouveau-boo-1005323.diff
 # Debian
 Patch41: verbose-gn-bootstrap.patch
 Patch42: sandbox-time64-syscalls.patch
-Patch43: python2.patch
-Patch44: remove-benchmark-from-inputs.patch
+Patch43: disable-catapult.patch
+Patch44: python3.patch
+Patch45: chromium-python3.patch
+Patch46: python3.11.patch
 # ALT
 Patch101: alt-pepflashplayer.patch
 Patch102: alt-fix-shrank-by-one-character.patch
@@ -200,6 +202,8 @@ ln -s /usr/include/nspr src/3rdparty/chromium/nspr4
 %patch42 -p1
 %patch43 -p1
 %patch44 -p1
+%patch45 -p1
+%patch46 -p1
 #
 %patch101 -p1
 %patch102 -p1
@@ -422,6 +426,9 @@ done
 %_qt5_archdatadir/mkspecs/modules/qt_*.pri
 
 %changelog
+* Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.12-alt1
+- new version
+
 * Mon Oct 10 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.11-alt1
 - new version
 

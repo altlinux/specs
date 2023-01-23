@@ -4,7 +4,7 @@
 %def_disable bootstrap
 
 Name: qt5-sensors
-Version: 5.15.7
+Version: 5.15.8
 Release: alt1
 
 Group: System/Libraries
@@ -115,6 +115,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
+- new version
+
 * Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
 - new version
 

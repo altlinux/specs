@@ -4,7 +4,7 @@
 Name:    qt5-remoteobjects
 Summary: Qt5 - Qt Remote Objects
 Group: System/Libraries
-Version: 5.15.7
+Version: 5.15.8
 Release: alt1
 
 # See LGPL_EXCEPTIONS.txt, LICENSE.GPL3, respectively, for exception details
@@ -107,6 +107,9 @@ rm -fr %buildroot%_qt5_libdir/*.la
 %_qt5_examplesdir/*
 
 %changelog
+* Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
+- new version
+
 * Tue Nov 15 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt1
 - new version
 

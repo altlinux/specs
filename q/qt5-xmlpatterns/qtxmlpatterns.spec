@@ -1,8 +1,8 @@
 %global qt_module qtxmlpatterns
 
 Name: qt5-xmlpatterns
-Version: 5.15.7
-Release: alt2
+Version: 5.15.8
+Release: alt1
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -110,6 +110,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
+- new version
+
 * Wed Nov 16 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt2
 - automate bootstrap mode
 

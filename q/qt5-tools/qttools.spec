@@ -6,8 +6,8 @@
 %define kf5_bindir %prefix/lib/kf5/bin
 
 Name: qt5-tools
-Version: 5.15.7
-Release: alt2
+Version: 5.15.8
+Release: alt1
 %define major %{expand:%(X='%version'; echo ${X%%%%.*})}
 %define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
 %define bugfix %{expand:%(X='%version'; echo ${X##*.})}
@@ -364,6 +364,9 @@ fi
 %_qt5_libdir/libQt5Help.so.*
 
 %changelog
+* Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
+- new version
+
 * Thu Nov 17 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt2
 - automate bootstrap mode
 

@@ -36,8 +36,8 @@
 %define gname  qt5
 Name: qt5-base
 %define major  5
-Version: 5.15.7
-Release: alt3
+Version: 5.15.8
+Release: alt1
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -56,8 +56,7 @@ Source1: rpm-macros
 Source2: rpm-macros-addon
 # KDE
 Patch1: kde-5.15.patch
-Patch2: kde-5.15-rev-ver.patch
-Patch3: kde-5.15-rev-f8ad329f7ee.patch
+Patch2: kde-5.15-rev-f8ad329f7ee.patch
 # 
 Patch20: QTBUG-94557.patch
 # FC
@@ -392,7 +391,6 @@ EGL integration library for the Qt%major toolkit
 %setup -n %qt_module-everywhere-src-%version
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 #
 %patch20 -p1
 #
@@ -860,6 +858,9 @@ make check -k ||:
 
 
 %changelog
+* Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
+- new version
+
 * Fri Nov 18 2022 Sergey V Turchin <zerg@altlinux.org> 5.15.7-alt3
 - automate bootstrap mode
 
