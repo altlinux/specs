@@ -1,8 +1,7 @@
-%def_enable snapshot
+%def_disable snapshot
 
-%define ver_major 1.14
+%define ver_major 1.16
 %def_with exiv2
-%def_with chm
 %def_with taglib
 %def_with poppler
 %def_with libgsf
@@ -12,8 +11,8 @@
 %def_enable check
 
 Name: gnome-commander
-Version: %ver_major.3
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 %define xdg_name org.gnome.%name
 
@@ -35,15 +34,15 @@ Requires: dconf xdg-utils
 Requires: %_bindir/gio gvfs-backends
 Requires: file-roller
 
-BuildRequires: flex gcc-c++
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson flex gcc-c++
 BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
 BuildRequires: libgtk+2-devel >= %gtk_ver libgnome-keyring-devel
-%{?_enable_snapshot:BuildRequires: autoconf-archive}
 %{?_with_exiv2:BuildRequires: libexiv2-devel}
-%{?_with_libchm:BuildRequires: libchm-devel}
 %{?_with_taglib:BuildRequires: libtag-devel}
 %{?_with_poppler:BuildRequires: libpoppler-glib-devel}
 %{?_with_libgsf:BuildRequires: libgsf-devel}
+%{?_with_samba:BuildRequires: libsmbclient-devel}
 %{?_with_unique:BuildRequires: libunique-devel}
 %{?_enable_check:BuildRequires: libgtest-devel}
 
@@ -60,28 +59,17 @@ sed -i.e2k "/g_autofree gchar/{s|g_autofree gchar|g_autofree_edg(gchar)|;s|\*||g
 %endif
 
 %build
-%if_enabled snapshot
-NOCONFIGURE=1 ./autogen.sh
-%else
-%autoreconf
-%endif
-%configure --disable-static \
-	--disable-schemas-compile \
-	%{subst_with exiv2} \
-	%{subst_with libchm} \
-	%{subst_with taglib} \
-	%{subst_with poppler} \
-	%{subst_with libgsf} \
-	%{subst_with samba} \
-	%{subst_with unique}
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
+%meson_install
+rm -f %buildroot%_libdir/libgcmd.a
+
 %find_lang --with-gnome %name
 
 %check
-%make -k check VERBOSE=1
+%__meson_test
 
 %files -f %name.lang
 %_bindir/*
@@ -89,19 +77,21 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/applications/%xdg_name.desktop
 %_datadir/glib-2.0/schemas/%xdg_name.enums.xml
 %_datadir/glib-2.0/schemas/%xdg_name.gschema.xml
-%_datadir/pixmaps/%name.svg
+%_iconsdir/hicolor/*/apps/*.svg
 %_datadir/pixmaps/%name/
 %_datadir/metainfo/%xdg_name.appdata.xml
 %_man1dir/*
-%doc AUTHORS NEWS README TODO doc/*.txt
-# generated from git log
-%{?_disable_snapshot:%doc ChangeLog}
+%doc AUTHORS NEWS README* TODO doc/*.txt
 
-%exclude %_libdir/%name/*.la
-%exclude %_libdir/%name/plugins/*.la
+%exclude %_includedir/%name/
+%exclude %_datadir/%name/internal_viewer_hacking.txt
+%exclude %_datadir/%name/keys.txt
 
 
 %changelog
+* Mon Jan 23 2023 Yuri N. Sedunov <aris@altlinux.org> 1.16.0-alt1
+- 1.16.0 (ported to Meson build system)
+
 * Tue Dec 06 2022 Yuri N. Sedunov <aris@altlinux.org> 1.14.3-alt2
 - 1.14.3-11-g3169f4d5 (updated translations,
   fixed calculation of total bytes to be transfered)
