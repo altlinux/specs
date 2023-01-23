@@ -1,16 +1,16 @@
 %def_disable static
-%define git d0f5e95
+%define git ad106d5
 
 Name: libbacktrace
 Version: 1.0
-Release: alt0.1.g%{git}
+Release: alt0.2.g%{git}
 Summary: Library of Direct Hardware Access
 License: BSD
 Group: Development/C
 URL: https://github.com/ianlancetaylor/libbacktrace
 Source: %name.tar
 
-BuildRequires: gcc zlib-devel liblzma-devel
+BuildRequires: gcc zlib-devel liblzma-devel libzstd-devel
 
 %description
 %name - A C library that may be linked into a C/C++ program to produce symbolic
@@ -73,5 +73,9 @@ install -p -m644 .libs/*.a %buildroot%_libdir/
 %endif
 
 %changelog
+* Mon Jan 23 2023 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt0.2.gad106d5
+- Updated to GIT ad106d5.
+- Enable zstd support.
+
 * Tue Jun 08 2021 L.A. Kostis <lakostis@altlinux.ru> 1.0-alt0.1.gd0f5e95
 - Initial build for ALTLinux.
