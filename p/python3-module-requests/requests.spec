@@ -3,26 +3,20 @@
 
 %def_with check
 
-Name:           python3-module-%pkgname
-Version:        2.28.1
-Release:        alt1
-Summary:        HTTP library, written in Python, for human beings
-Group:          Development/Python3
+Name: python3-module-%pkgname
+Version: 2.28.2
+Release: alt1
 
-License:        Apache-2.0
-URL:            https://pypi.io/project/requests
-Source0:        %pkgname-%version.tar
-# Explicitly use the system certificates in ca-certificates.
-# https://bugzilla.redhat.com/show_bug.cgi?id=904614
-Patch0:         patch-requests-certs.py-to-use-the-system-CA-bundle.patch
-Patch1: requests-2.28.1-tests-Skip-tests-requiring-configured-network.patch
+Summary: HTTP library, written in Python, for human beings
+License: Apache-2.0
+Group: Development/Python3
 
-# https://github.com/eventlet/eventlet/issues/616
-Patch2: requests-2.28.1-tests-Xfail-pysocks-tests-conflicting-with-eventle.patch
+Url: https://pypi.org/project/requests/
+VCS: https://github.com/psf/requests
+BuildArch: noarch
 
-Patch3: requests-2.28.1-tests-Fix-mocking-of-environment.patch
-
-BuildArch:      noarch
+Source0: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -49,14 +43,12 @@ BuildRequires: python3(pytest-httpbin)
 %py3_requires charset_normalizer
 
 %description
-Most existing Python modules for sending HTTP requests are extremely verbose and
-cumbersome. Python's built-in urllib2 module provides most of the HTTP
-capabilities you should need, but the API is thoroughly broken. This library is
-designed to make HTTP requests easy for developers.
+Requests allows you to send HTTP/1.1 requests extremely easily. There's no need
+to manually add query strings to your URLs, or to form-encode your POST data.
+Keep-alive and HTTP connection pooling are 100%% automatic, thanks to urllib3.
 
 %prep
-%setup -n %pkgname-%version
-
+%setup
 %autopatch -p1
 
 # Unbundle the certificate bundle from mozilla.
@@ -69,7 +61,7 @@ rm -rf requests/cacert.pem
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -vra tests
 
 %files
 %doc AUTHORS.rst HISTORY.md README.md
@@ -77,6 +69,9 @@ rm -rf requests/cacert.pem
 %python3_sitelibdir/%{pyproject_distinfo %pkgname}/
 
 %changelog
+* Mon Jan 23 2023 Stanislav Levin <slev@altlinux.org> 2.28.2-alt1
+- 2.28.1 -> 2.28.2.
+
 * Mon Jul 25 2022 Stanislav Levin <slev@altlinux.org> 2.28.1-alt1
 - 2.28.1
 
