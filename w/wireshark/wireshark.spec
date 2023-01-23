@@ -9,7 +9,7 @@
 %define _pluginsdir %_libdir/%name/plugins/4.0
 
 Name: wireshark
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -226,6 +226,17 @@ _EOF_
 %_libdir/%name/cmake
 
 %changelog
+* Mon Jan 23 2023 Anton Farygin <rider@altlinux.ru> 4.0.3-alt1
+- 4.0.2 -> 4.0.3
+- Fixes:
+    * wnpa-sec-2023-07. TIPC dissector crash.
+    * wnpa-sec-2023-06. Multiple dissector excessive loops.
+    * wnpa-sec-2023-05. iSCSI dissector crash.
+    * wnpa-sec-2023-04. GNW dissector crash.
+    * wnpa-sec-2023-03. Dissection engine crash.
+    * wnpa-sec-2023-02. NFS dissector memory leak.
+    * wnpa-sec-2023-01. EAP dissector crash.
+
 * Thu Jan 05 2023 Anton Farygin <rider@altlinux.ru> 4.0.2-alt1
 - 4.0.1 > 4.0.2
 - Fixes:
