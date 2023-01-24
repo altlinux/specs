@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define modname redmine
 %define pypi_name python-redmine
-%def_without check
+%def_with check
 
 Name: python3-module-%modname
 Version: 2.4.0
-Release: alt1
+Release: alt2
 Summary: Library for communicating with a Redmine project management application.
 License: Apache-2.0
 Group: Development/Python3
@@ -15,15 +15,13 @@ BuildArch: noarch
 
 # https://github.com/maxtepkeev/python-redmine/
 Source: %name-%version.tar
+Patch1: disable-tests-coverage.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
 %if_with check
-BuildRequires: python3(coverage)
-BuildRequires: python3(nose)
-BuildRequires: python3(mock)
 BuildRequires: python3(requests)
 %endif
 
@@ -36,6 +34,7 @@ provides a simple but powerful Pythonic API inspired by a well-known Django ORM.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %pyproject_build
@@ -53,6 +52,9 @@ provides a simple but powerful Pythonic API inspired by a well-known Django ORM.
 %python3_sitelibdir/redminelib
 
 %changelog
+* Tue Jan 24 2023 Alexander Makeenkov <amakeenk@altlinux.org> 2.4.0-alt2
+- Enabled tests (with disabled coverage)
+
 * Mon Jan 23 2023 Alexander Makeenkov <amakeenk@altlinux.org> 2.4.0-alt1
 - Updated to version 2.4.0
 - Use pyproject macroses for build
