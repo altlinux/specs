@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.8
+Version: %ver_major.9
 Release: alt1
 
 Summary: Gnome version of Yahtzee Dice Game
@@ -55,6 +55,9 @@ include any or all of your dice.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Tue Jan 24 2023 Yuri N. Sedunov <aris@altlinux.org> 40.9-alt1
+- 40.9
+
 * Sat Aug 06 2022 Yuri N. Sedunov <aris@altlinux.org> 40.8-alt1
 - 40.8
 
