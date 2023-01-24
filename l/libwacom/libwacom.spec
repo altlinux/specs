@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.5
+%define ver_major 2.6
 %define sover 9
 %def_disable docs
 
@@ -14,7 +14,7 @@
 
 Name: libwacom
 Version: %ver_major.0
-Release: alt2
+Release: alt1
 
 Summary: A Wacom tablets library
 Group: System/Libraries
@@ -124,6 +124,9 @@ mkdir -p %buildroot%_sysconfdir/%name
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Jan 24 2023 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Tue Oct 18 2022 Yuri N. Sedunov <aris@altlinux.org> 2.5.0-alt2
 - explicitly required python3{libev,pyu}dev for libwacom-show-stylus
 
