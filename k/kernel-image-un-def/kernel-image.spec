@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1
 %define kernel_base_version	6.1
-%define kernel_sublevel	.7
+%define kernel_sublevel	.8
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -613,6 +613,13 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Tue Jan 24 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.1.8-alt1
+- v6.1.8 (2023-01-24).
+- config-aarch64: enable camera interface on Raspberry Pi.
+- config-aarch64: fix for enable CONFIG_VIDEO_HANTRO=m.
+- config-aarch64: update config for Rockchip rk3566|rk3568 SoC support.
+- config-aarch64: fix outdated configs with new ones.
+
 * Wed Jan 18 2023 Kernel Bot <kernelbot@altlinux.org> 1:6.1.7-alt1
 - v6.1.7 (2023-01-18).
 
