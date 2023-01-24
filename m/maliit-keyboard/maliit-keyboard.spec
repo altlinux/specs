@@ -1,7 +1,7 @@
 
 Name: maliit-keyboard
 Version: 2.1.0
-Release: alt1
+Release: alt2
 %K5init no_altplace
 
 Group: System/Libraries
@@ -9,8 +9,9 @@ Summary: Virtual Keyboard
 License: LGPL-3.0-only and BSD
 Url: http://www.maliit.org
 
+Provides: maliit-plugins = %version
+Obsoletes: maliit-plugins < %version
 #Requires: maliit-inputcontext-qt5
-#Requires: maliit-plugins
 Requires: maliit-framework
 
 Source: %name-%version.tar
@@ -21,7 +22,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: maliit-framework-devel
 #BuildRequires: libpinyin-devel
-BuildRequires: qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
+BuildRequires: qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel qt5-feedback-devel
 BuildRequires: cmake libhunspell-devel doxygen
 
 %description
@@ -61,6 +62,10 @@ rm -rf %buildroot/%_defaultdocdir/maliit-plugins/html
 %_datadir/glib-2.0/schemas/org.maliit.keyboard.maliit.gschema.xml
 
 %changelog
+* Tue Jan 24 2023 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
+- obsolete maliit-plugins
+- fix build requires
+
 * Wed Jan 12 2022 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt1
 - new version
 
