@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: libkdumpfile
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 Summary: Kernel coredump file access
 License: GPL-2.0-or-later or LGPL-3.0-or-later
@@ -73,5 +73,8 @@ Requires: %name = %EVR
 %_pkgconfigdir/libkdumpfile.pc
 
 %changelog
+* Tue Jan 24 2023 Vitaly Chikunov <vt@altlinux.org> 0.5.1-alt1
+- Update to v0.5.1 (2023-01-21).
+
 * Mon Nov 21 2022 Vitaly Chikunov <vt@altlinux.org> 0.5.0-alt1
 - First import v0.5.0 (2022-08-12).
