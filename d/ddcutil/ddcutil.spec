@@ -18,7 +18,7 @@
 %define soname 4
 
 Name: ddcutil
-Version: 1.3.0
+Version: 1.4.1
 Release: alt1
 
 Summary: Utility to query and update monitor settings
@@ -82,13 +82,14 @@ NOCONFIGURE=1 ./autogen.sh
 %make_build
 
 %install
-%makeinstall_std
+%makeinstall_std rulesdir=%_udevrulesdir
 
 %check
 %make check
 
 %files
 %_bindir/%name
+%_udevrulesdir/60-%name.rules
 %dir %_datadir/%name
 %dir %_datadir/%name/data
 %_datadir/%name/data/*rules
@@ -112,6 +113,9 @@ NOCONFIGURE=1 ./autogen.sh
 # TODO: python subpackage?
 
 %changelog
+* Tue Jan 24 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
+- 1.4.1
+
 * Mon Jul 25 2022 Yuri N. Sedunov <aris@altlinux.org> 1.3.0-alt1
 - 1.3.0
 
