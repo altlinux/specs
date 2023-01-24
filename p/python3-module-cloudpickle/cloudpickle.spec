@@ -1,26 +1,36 @@
-%define oname cloudpickle
+%define _unpackaged_files_terminate_build 1
+%define pypi_name cloudpickle
 
-Name:           python3-module-%oname
-Version:        2.0.0
-Release:        alt2
-Summary:        Extended pickling support for Python objects
-Group:          Development/Python
-License:        BSD
-URL:            https://github.com/cloudpipe/cloudpickle
-BuildArch:      noarch
+%def_with check
 
-# https://github.com/cloudpipe/cloudpickle.git
+Name: python3-module-%pypi_name
+Version: 2.2.1
+Release: alt1
+Summary: Extended pickling support for Python objects
+Group: Development/Python
+License: BSD
+
+Url: https://pypi.org/project/cloudpickle
+VCS: https://github.com/cloudpipe/cloudpickle
+
+BuildArch: noarch
+
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3(mock) python3(pytest) python3(tornado) python3(curses)
-BuildRequires: python3(psutil) python3(typing_extensions) python3(numpy)
-BuildRequires: python3(numpy.testing)
-BuildRequires: pytest3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%if_with check
+# synced to dev-requirements.txt
+BuildRequires: python3(pytest)
+BuildRequires: python3(psutil)
+# for psutil
 BuildRequires: /proc
-# https://github.com/cloudpipe/cloudpickle/issues/487
-BuildRequires: python3(py)
+BuildRequires: python3(tornado)
+%endif
 
 %description
 cloudpickle makes it possible to serialize Python constructs
@@ -35,23 +45,28 @@ interactively in the __main__ module.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
+# _cloudpickle_testpkg should be actually built and installed
+export PYTHONPATH=tests/cloudpickle_testpkg
+
 # file_handles tests fail, TypeError: cannot pickle '_io.FileIO' object
 # GH issue: https://github.com/cloudpipe/cloudpickle/issues/114
-export PYTHONPATH=tests/cloudpickle_testpkg
-pytest3 -v -k "not file_handles"
+%pyproject_run_pytest -vra -k "not file_handles"
 
 %files
-%doc LICENSE README.md
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%doc README.md
+%python3_sitelibdir/cloudpickle/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 24 2023 Stanislav Levin <slev@altlinux.org> 2.2.1-alt1
+- 2.0.0 -> 2.2.1.
+
 * Mon Nov 14 2022 Stanislav Levin <slev@altlinux.org> 2.0.0-alt2
 - Fixed FTBFS (pytest 7.2).
 
