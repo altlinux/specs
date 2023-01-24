@@ -1,6 +1,6 @@
 Name: frescobaldi
-Version: 3.1.3
-Release: alt5.1
+Version: 3.2
+Release: alt1
 
 Summary: LilyPond music score editor
 License: %gpl2plus
@@ -79,6 +79,9 @@ rsvg-convert -w 48 -h 48  \
 %_man1dir/*
 
 %changelog
+* Wed Jan 25 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2-alt1
+- new version 3.2 (with rpmrb script)
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 3.1.3-alt5.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
