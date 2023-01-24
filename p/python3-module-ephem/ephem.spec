@@ -1,5 +1,5 @@
 Name: python3-module-ephem
-Version: 4.1.3
+Version: 4.1.4
 Release: alt1
 
 Summary: Compute positions of the planets and stars
@@ -32,13 +32,16 @@ position of a planet, asteroid, or comet for a series of dates.
 %pyproject_install
 
 %files
-%doc *.rst ephem/doc/*.rst TODO issues
+%doc *.rst ephem/doc/*.rst issues
 %python3_sitelibdir/ephem
 %python3_sitelibdir/ephem-%version.dist-info
 %exclude %python3_sitelibdir/ephem/doc
 %exclude %python3_sitelibdir/ephem/tests
 
 %changelog
+* Tue Jan 24 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.1.4-alt1
+- 4.1.4 released
+
 * Thu Jul 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.1.3-alt1
 - 4.1.3 released
 
