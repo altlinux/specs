@@ -14,7 +14,7 @@
 
 %define basemajor 8.0
 %define major 8.0
-%define rel -rc5
+%define rel %nil
 %define conflictbase wine
 
 # build ping subpackage
@@ -64,7 +64,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt1.rc5
+Release: alt2
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -814,6 +814,10 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Wed Jan 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.0-alt2
+- 8.0 release
+- .desktop files: update descriptions (see altbug #39800)
+
 * Sat Jan 21 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.0-alt1.rc5
 - new version (8.0-rc5) with rpmgs script
 
