@@ -13,7 +13,7 @@
 %define llvm_version  12.0
 
 Name: 	 thunderbird
-Version: 102.6.1
+Version: 102.7.0
 Release: alt1
 
 Summary: Thunderbird is Mozilla's e-mail client
@@ -579,6 +579,18 @@ chmod +x %buildroot%_bindir/thunderbird-wayland
 %_rpmmacrosdir/%r_name
 
 %changelog
+* Tue Jan 24 2023 Pavel Vasenkov <pav@altlinux.org> 102.7.0-alt1
+- New version.
+- Security fixes:
+  + CVE-2022-46871 libusrsctp library out of date
+  + CVE-2023-23598 Arbitrary file read from GTK drag and drop on Linux
+  + CVE-2023-23599 Malicious command could be hidden in devtools output on Windows
+  + CVE-2023-23601 URL being dragged from cross-origin iframe into same tab triggers navigation
+  + CVE-2023-23602 Content Security Policy wasn't being correctly applied to WebSockets in WebWorkers
+  + CVE-2022-46877 Fullscreen notification bypass
+  + CVE-2023-23603 Calls to <code>console.log</code> allowed bypasing Content Security Policy via format directive
+  + CVE-2023-23605 Memory safety bugs fixed in Thunderbird 102.7
+
 * Fri Dec 23 2022 Pavel Vasenkov <pav@altlinux.org> 102.6.1-alt1
 - New version.
 - Security fixes:
