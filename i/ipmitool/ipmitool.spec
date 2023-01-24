@@ -1,14 +1,16 @@
 Name: ipmitool
 Summary: ipmitool - Utility for IPMI control
-Version: 1.8.18
-Release: alt4
+Version: 1.8.19
+Release: alt1
 License: BSD
 URL: http://ipmitool.sourceforge.net/
 Group: System/Kernel and hardware
 Source: %name-%version.tar
+# http://www.iana.org/assignments/enterprise-numbers.txt
+Source1: enterprise-numbers
 Patch0: %name-%version-alt.patch
 
-BuildRequires: libssl-devel readline-devel ncurses-devel libfreeipmi-devel
+BuildRequires: libssl-devel libreadline-devel libncurses-devel wget
 
 %description
 This package contains a utility for interfacing with devices that support
@@ -28,6 +30,7 @@ setting LAN configuration, and chassis power control.
 %prep
 %setup
 %patch0 -p1
+cp -f %SOURCE1 ./
 
 %build
 touch NEWS
@@ -35,7 +38,7 @@ touch NEWS
 %autoreconf
 # --disable-dependency-tracking speeds up the build
 # --enable-file-security adds some security checks
-%configure --disable-dependency-tracking --enable-file-security
+%configure --disable-dependency-tracking --enable-file-security --disable-intf-free
 
 %make_build
 
@@ -50,8 +53,12 @@ install -pD -m755 contrib/bmclanconf %buildroot%_sbindir/
 %doc %_mandir/man8/*
 %doc %_datadir/doc/ipmitool/*
 %_datadir/%name
+%_datadir/misc/enterprise-numbers
 
 %changelog
+* Tue Jan 24 2023 Anton Farygin <rider@altlinux.ru> 1.8.19-alt1
+- 1.8.19
+
 * Sat Feb 27 2021 Anton Farygin <rider@altlinux.org> 1.8.18-alt4
 - applied patches from upstream git to fix security issue (Fixes: CVE-2020-5208)
   see https://github.com/ipmitool/ipmitool/security/advisories/GHSA-g659-9qxw-p7cp
