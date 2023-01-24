@@ -1,6 +1,6 @@
 
 Name: maliit-framework
-Version: 2.1.1
+Version: 2.3.0
 Release: alt1
 %define sover 2
 %define libmaliit libmaliit%sover
@@ -10,7 +10,7 @@ Release: alt1
 Group: System/Libraries
 Summary: Maliit Input Method Framework
 Url: http://www.maliit.org
-License: LGPLv2
+License: LGPL-2.1-only
 %K5init no_altplace
 
 Source0: %name-%version.tar
@@ -20,9 +20,10 @@ Source1: maliit.conf
 # optimized out: cmake-modules debugedit elfutils fontconfig gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 libatk-devel libcairo-devel libcairo-gobject-devel libctf-nobfd0 libgdk-pixbuf-devel libgio-devel libglvnd-devel libgpg-error libharfbuzz-devel libpango-devel libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-qmlmodels libqt5-quick libqt5-waylandclient libsasl2-3 libssl-devel libstdc++-devel libudev-devel libwayland-client libwayland-client-devel libwayland-cursor libwayland-server-devel libxcb-devel libxkbcommon-devel pkg-config python-modules python2-base python3 python3-base python3-module-paste qt5-base-common qt5-base-devel qt5-declarative-devel rpm-build-python3 sh4 wayland-devel xz
 #BuildRequires: cmake doxygen fonts-ttf-dejavu fonts-ttf-gnu-freefont-mono fonts-ttf-google-droid-sans graphviz libXfixes-devel libgtk+3-devel libwayland-cursor-devel libwayland-egl-devel python-modules-encodings python3-dev python3-module-mpl_toolkits qt5-base-devel-static qt5-svg-devel qt5-wayland-devel qt5-webengine-devel wayland-protocols
 BuildRequires(pre): rpm-build-kf5
-BuildRequires: cmake doxygen graphviz libXfixes-devel libgtk+3-devel
+BuildRequires: cmake doxygen graphviz libgtk+3-devel
+BuildRequires: pkgconfig(xkbcommon) pkgconfig(xfixes)
 BuildRequires: wayland-protocols libwayland-cursor-devel libwayland-egl-devel
-BuildRequires: qt5-base-devel-static qt5-svg-devel qt5-wayland-devel qt5-webengine-devel
+BuildRequires: qt5-base-devel-static qt5-svg-devel qt5-wayland-devel
 
 %description
 Core server and libraries for the Maliit Input Methods Framework
@@ -168,7 +169,7 @@ rm -rf %buildroot/%_docdir/maliit-framework-doc
 %_bindir/maliit-server
 %_qt5_plugindir/platforminputcontexts/libmaliitplatforminputcontextplugin.so
 %_qt5_plugindir/wayland-shell-integration/libinputpanel-shell.so
-%_libdir/gtk-3.0/3.0.0/immodules/libim-wayland.so
+#%_libdir/gtk-3.0/3.0.0/immodules/libim-wayland.so
 #%config %xinputconfdir/*
 %_datadir/dbus-1/services/org.maliit.server.service
 
@@ -218,6 +219,9 @@ rm -rf %buildroot/%_docdir/maliit-framework-doc
 #%_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Tue Jan 24 2023 Sergey V Turchin <zerg@altlinux.org> 2.3.0-alt1
+- new version
+
 * Wed Jan 12 2022 Sergey V Turchin <zerg@altlinux.org> 2.1.1-alt1
 - new version
 

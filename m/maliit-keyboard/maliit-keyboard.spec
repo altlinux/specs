@@ -1,7 +1,7 @@
 
 Name: maliit-keyboard
-Version: 2.1.0
-Release: alt2
+Version: 2.3.1
+Release: alt1
 %K5init no_altplace
 
 Group: System/Libraries
@@ -22,7 +22,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-kf5
 BuildRequires: maliit-framework-devel
 #BuildRequires: libpinyin-devel
-BuildRequires: qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel qt5-feedback-devel
+BuildRequires: qt5-multimedia-devel qt5-svg-devel qt5-wayland-devel qt5-quickcontrols2-devel qt5-feedback-devel
 BuildRequires: cmake libhunspell-devel doxygen
 
 %description
@@ -49,8 +49,9 @@ mkdir -p %buildroot%_datadir/maliit/plugins/org/
 # clean docs
 rm -rf %buildroot/%_defaultdocdir/maliit-plugins/html
 
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc COPYING*
 %_libdir/maliit/plugins/*
 %_libdir/maliit/keyboard2/
@@ -62,6 +63,9 @@ rm -rf %buildroot/%_defaultdocdir/maliit-plugins/html
 %_datadir/glib-2.0/schemas/org.maliit.keyboard.maliit.gschema.xml
 
 %changelog
+* Tue Jan 24 2023 Sergey V Turchin <zerg@altlinux.org> 2.3.1-alt1
+- new version
+
 * Tue Jan 24 2023 Sergey V Turchin <zerg@altlinux.org> 2.1.0-alt2
 - obsolete maliit-plugins
 - fix build requires
