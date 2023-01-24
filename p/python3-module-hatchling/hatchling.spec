@@ -4,17 +4,23 @@
 %define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 Name: python3-module-%pypi_name
-Version: 1.11.1
+Version: 1.12.2
 Release: alt1
-
 Summary: Modern, extensible Python build backend
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/ofek/hatch.git
 Url: https://pypi.org/project/hatchling
-
+VCS: https://github.com/pypa/hatch
+BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+
+# try-except import
+%py3_requires editables
+%if %tomli
+# rebuild against Python 3.11 is required to get rid of old dependency
+%py3_requires tomli
+%endif
 
 BuildRequires(pre): rpm-build-python3
 
@@ -26,15 +32,6 @@ BuildRequires: python3(pathspec)
 BuildRequires: python3(pluggy)
 %if %tomli
 BuildRequires: python3(tomli)
-%endif
-
-BuildArch: noarch
-
-# try-except import
-%py3_requires editables
-%if %tomli
-# rebuild against Python 3.11 is required to get rid of old dependency
-%py3_requires tomli
 %endif
 
 %description
@@ -60,6 +57,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 24 2023 Stanislav Levin <slev@altlinux.org> 1.12.2-alt1
+- 1.11.1 -> 1.12.2.
+
 * Wed Oct 19 2022 Stanislav Levin <slev@altlinux.org> 1.11.1-alt1
 - 1.11.0 -> 1.11.1.
 
