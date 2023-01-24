@@ -5,7 +5,7 @@
 
 Name: libgphoto2
 Version: 2.5.30
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Library to access to digital cameras
@@ -23,6 +23,7 @@ BuildRequires: liblockdev-devel libltdl7-devel libusb-devel libxml2-devel
 
 # Url for source code downloads now http://sourceforge.net/project/showfiles.php?group_id=8874
 Source0: %name-%version.tar
+Patch0: %name-2.5.30-alt-translation.patch
 
 %description
 This library contains all the functionality to access to modern digital
@@ -122,6 +123,7 @@ against %name library.
 
 %prep
 %setup -n %name-%version
+%patch0 -p1
 
 %build
 sed -i '/driverdir/d' libgphoto2_port/libgphoto2_port.pc.in
@@ -226,6 +228,9 @@ export utilsdir=%_libexecdir/%name
 %endif
 
 %changelog
+* Mon Jan 23 2023 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.30-alt2
+- updated russian translation, thanks to Maria Shikunova (translation-team at basealt.ru)
+
 * Fri Aug 19 2022 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.30-alt1
 - 2.5.30
 

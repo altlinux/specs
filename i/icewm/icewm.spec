@@ -4,7 +4,7 @@
 %def_with markdown
 
 Name: %realname
-Version: 3.3.0
+Version: 3.3.1
 Release: alt1
 Epoch:3
 
@@ -153,6 +153,10 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Tue Jan 24 2023 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.3.1-alt1
+- 3.3.1
+- added translation of icewm-preferences(5)
+
 * Sun Dec 25 2022 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.3.0-alt1
 - 3.3.0
 
