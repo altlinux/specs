@@ -1,7 +1,7 @@
 %define rname alt-customize-branding
 
 Name: %rname
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 %K5init altplace
 
@@ -70,7 +70,8 @@ mkdir -p %buildroot%_datadir/plymouth/themes/%rname
 %find_lang --with-qt --all-name %rname
 
 %postun backend
-if [ $1 -eq 0 ] ; then
+currentBranding=`basename $(readlink -nf /usr/share/design/current)`
+if [ $1 -eq 0 ] && [ "$currentBranding" = "%rname"]; then
     %define configFile alt-customize-branding-settings.ini
     %define configDir /var/lib
     if [ -f %configDir/%rname/%configFile ] ; then
@@ -80,7 +81,6 @@ if [ $1 -eq 0 ] ; then
         . shell-config
         shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/$previousThemeName/theme.txt
         shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND /boot/grub/themes/$previousThemeName/grub.png
-        shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER /boot/grub/themes/$previousThemeName/grub.png
 # generate file "/boot/grub/grub.cfg"
         /usr/sbin/grub-mkconfig -o /boot/grub/grub.cfg
 # Change theme name in file 'plymouthd.conf':
@@ -126,6 +126,11 @@ fi
 #%%doc README
 
 %changelog
+* Thu Jan 19 2023 Dmitrii Fomchenkov <sirius@altlinux.org>  1.1.1-alt1
+- rename button '...' to 'Choose'
+- update translation
+- fix branding save paths
+
 * Thu Jul 16 2020 Pavel Moseev <mars@altlinux.org>  1.1.0-alt1
 - cleanup and optimize code
 
