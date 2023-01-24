@@ -5,7 +5,7 @@
 
 Name: kde5-%rname
 Version: 22.12.1
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -15,6 +15,7 @@ License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
 Patch1: alt-zonetab.patch
+Patch2: alt-old-poppler.patch
 
 BuildRequires(pre): rpm-build-kf5 rpm-build-ubt
 # Automatically added by buildreq on Mon Feb 04 2019 (-bi)
@@ -57,6 +58,7 @@ Obsoletes: libkpimitinerary < %EVR
 %prep
 %setup -n %rname-%version
 %patch1 -p1
+%patch2 -p1
 
 %build
 %K5build \
@@ -87,6 +89,9 @@ Obsoletes: libkpimitinerary < %EVR
 %_K5lib/libKPimItinerary.so.*
 
 %changelog
+* Tue Jan 24 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt2
+- fix compile with old poppler
+
 * Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 
