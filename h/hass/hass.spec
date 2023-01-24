@@ -1,6 +1,6 @@
 Name: hass
-Version: 2022.11.2
-Release: alt1.1
+Version: 2023.1.7
+Release: alt1
 
 Summary: Home automation platform
 License: APL
@@ -26,14 +26,12 @@ Requires: python3-module-text-unidecode >= 1.3
 Requires: python3-module-voluptuous >= 0.13.1
 Requires: python3-module-websocket-client >= 0.56.0
 Requires: python3-module-yaml >= 6.0
-Requires: python3-module-hass-frontend >= 20221108.0
+Requires: python3-module-hass-frontend >= 20230110.0
 
 %package -n python3-module-hass
 Summary: Home automation platform
 Group: System/Servers
 AutoReq: no
-
-%add_python3_req_skip debugpy
 
 %define desc Home Assistant is a home automation platform running on Python 3.\
 It is able to track and control all devices at home and offer a platform \
@@ -92,6 +90,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Mon Jan 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.1.7-alt1
+- 2023.1.7 released
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2022.11.2-alt1.1
 - NMU: used %%add_python3_req_skip because Sisyphus does not provide debugpy.
 
