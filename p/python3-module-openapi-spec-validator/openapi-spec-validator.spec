@@ -4,14 +4,15 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.5.1
+Version: 0.5.2
 Release: alt1
 
 Summary: OpenAPI 2.0 (aka Swagger) and OpenAPI 3.0 spec validator
 License: Apache-2.0
 Group: Development/Python3
-# Source-git: https://github.com/p1c2u/openapi-spec-validator.git
+
 Url: https://pypi.org/project/openapi-spec-validator
+VCS: https://github.com/p1c2u/openapi-spec-validator
 
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
@@ -25,7 +26,6 @@ BuildRequires: python3(poetry-core)
 # direct runtime dependencies
 BuildRequires: python3(jsonschema)
 BuildRequires: python3(openapi-schema-validator)
-BuildRequires: python3(yaml)
 BuildRequires: python3(importlib-resources)
 BuildRequires: python3(jsonschema-spec)
 BuildRequires: python3(lazy-object-proxy)
@@ -55,8 +55,7 @@ to check for full compliance with the Specification.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject -- -vra -m 'not network'
+%pyproject_run_pytest -vra -m 'not network'
 
 %files
 %doc README.rst
@@ -65,6 +64,9 @@ to check for full compliance with the Specification.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Mon Jan 23 2023 Stanislav Levin <slev@altlinux.org> 0.5.2-alt1
+- 0.5.1 -> 0.5.2.
+
 * Fri Sep 30 2022 Stanislav Levin <slev@altlinux.org> 0.5.1-alt1
 - 0.4.0 -> 0.5.1.
 
