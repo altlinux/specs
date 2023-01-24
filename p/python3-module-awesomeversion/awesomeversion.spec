@@ -1,5 +1,5 @@
 Name: python3-module-awesomeversion
-Version: 22.6.0
+Version: 22.9.0
 Release: alt1
 
 Summary: Python version manipulations
@@ -10,7 +10,8 @@ Url: https://pypi.org/project/awesomeversion/
 Source0: %name-%version-%release.tar
 
 BuildArch: noarch
-BuildRequires: rpm-build-python3 python3-module-setuptools
+BuildRequires: rpm-build-python3
+BuildRequires: python3(poetry-core)
 
 %description
 %summary
@@ -19,16 +20,19 @@ BuildRequires: rpm-build-python3 python3-module-setuptools
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %python3_sitelibdir/awesomeversion
-%python3_sitelibdir/awesomeversion-%version-*-info
+%python3_sitelibdir/awesomeversion-%version.dist-info
 
 %changelog
+* Tue Jan 24 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 22.9.0-alt1
+- 22.9.0 released
+
 * Thu Jul 14 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 22.6.0-alt1
 - 22.6.0 released
 
