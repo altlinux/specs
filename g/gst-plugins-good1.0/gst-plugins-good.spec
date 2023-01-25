@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.20
+%define ver_major 1.22
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -19,7 +19,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -44,6 +44,7 @@ BuildRequires: libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel
 BuildRequires: libmpg123-devel liblame-devel libtwolame-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: liborc-test-devel
+BuildRequires: pkgconfig(libxml-2.0)
 %{?_enable_valgrind:BuildRequires: valgrind-tool-devel}
 %{?_enable_jack:BuildRequires: libjack-devel}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
@@ -111,6 +112,9 @@ This package contains development documentation for GStreamer Good Plugins
 %endif
 
 %changelog
+* Wed Jan 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1
 - 1.20.5
 

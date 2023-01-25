@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gst-python
-%define ver_major 1.20
+%define ver_major 1.22
 %define gst_api_ver 1.0
 %define _gst_libdir %_libdir/gstreamer-%gst_api_ver
 
@@ -12,7 +12,7 @@
 %endif
 
 Name: python3-module-gst%gst_api_ver
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer overrides for PyGobject3
@@ -61,6 +61,9 @@ This package provides GStreamer overrides for PyGobject3.
 %doc AUTHORS RELEASE NEWS
 
 %changelog
+* Wed Jan 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1
 - 1.20.5
 

@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 1.20
+%define ver_major 1.22
 %define api_ver 1.6
 %define gst_api_ver 1.0
 
@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: gstreamer-vaapi
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer plugins to use VA-API video acceleration
@@ -63,7 +63,7 @@ GStreamer applications.
 %build
 %meson \
 	%{?_disable_doc:-Ddoc=disabled} \
-	%{?_enable_wayland:-Dwith_wayland=yes}
+	%{?_disable_wayland:-Dwayland=disabled}
 %nil
 %meson_build
 
@@ -82,7 +82,12 @@ GStreamer applications.
 %_datadir/gtk-doc/html/%name-plugins-%gst_api_ver/
 %endif
 
+%exclude %_libdir/gstreamer-%gst_api_ver/pkgconfig/gstvaapi.pc
+
 %changelog
+* Wed Jan 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1
 - 1.20.5
 

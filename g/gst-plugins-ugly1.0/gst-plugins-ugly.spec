@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 1.20
+%define ver_major 1.22
 %define api_ver 1.0
 
 %define _gst_datadir %_datadir/gstreamer-%api_ver
@@ -14,7 +14,7 @@
 %def_disable check
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -88,7 +88,6 @@ collection.
 %_gst_libdir/libgstdvdlpcmdec.so
 %_gst_libdir/libgstdvdsub.so
 %_gst_libdir/libgstrealmedia.so
-%_gst_libdir/libgstxingmux.so
 %_datadir/gstreamer-%api_ver/*
 %doc AUTHORS NEWS README* RELEASE
 
@@ -98,6 +97,9 @@ collection.
 %endif
 
 %changelog
+* Wed Jan 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1
 - 1.20.5
 

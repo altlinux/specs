@@ -15,6 +15,7 @@
 %def_disable rtmp
 %def_enable openh264
 %def_enable chromaprint
+%def_enable gpl
 
 %ifnarch %e2k
 %def_enable liblilv
@@ -28,15 +29,15 @@
 
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 1.20
+%define ver_major 1.22
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 
 %def_disable doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.5
-Release: alt1.1
+Version: %ver_major.0
+Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
 Group: System/Libraries
@@ -138,6 +139,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 
 %build
 %meson \
+	%{?_enable_gpl:-Dgpl=enabled} \
 	-Dexamples=disabled \
 	%{?_enable_check:-Dtests=enabled} \
 	%{?_disable_doc:-Ddoc=disabled} \
@@ -162,6 +164,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_typelibdir/GstPlay-%api_ver.typelib
 %_typelibdir/GstTranscoder-%api_ver.typelib
 %_typelibdir/GstWebRTC-%api_ver.typelib
+%_typelibdir/GstCuda-%api_ver.typelib
+%_typelibdir/CudaGst-%api_ver.typelib
+%_typelibdir/GstVa-%api_ver.typelib
 %_datadir/gstreamer-%api_ver/presets/GstVoAmrwbEnc.prs
 %_datadir/gstreamer-%api_ver/presets/GstFreeverb.prs
 %_datadir/gstreamer-%api_ver/encoding-profiles/device/dvd.gep
@@ -189,6 +194,10 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %_girdir/GstCodecs-%api_ver.gir
 %_girdir/GstTranscoder-%api_ver.gir
 %_girdir/GstPlay-%api_ver.gir
+%_girdir/CudaGst-%api_ver.gir
+%_girdir/GstCuda-%api_ver.gir
+%_girdir/GstVa-%api_ver.gir
+
 
 %if_enabled doc
 %files doc
@@ -197,6 +206,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Wed Jan 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1.1
 - enabled AOM plugin
 

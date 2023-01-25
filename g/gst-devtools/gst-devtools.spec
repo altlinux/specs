@@ -1,14 +1,14 @@
 %def_disable snapshot
 
 %define _name gstvalidate
-%define ver_major 1.20
+%define ver_major 1.22
 %define gst_api_ver 1.0
 %define api_ver 1.0
 
 %def_disable doc
 
 Name: gst-devtools
-Version: %ver_major.5
+Version: %ver_major.0
 Release: alt1
 
 Summary: GStreamer development and validation tools
@@ -131,7 +131,7 @@ GObject introspection devel data for the Gst Validate library.
 %_includedir/gstreamer-%gst_api_ver/gst/validate/
 %_libdir/lib%_name-%api_ver.so
 %_libdir/lib%_name-default-overrides-%api_ver.so
-%_pkgconfigdir/gst-validate-%api_ver.pc
+%_pkgconfigdir/gstreamer-validate-%api_ver.pc
 
 %files -n lib%name-gir
 %_typelibdir/GstValidate-%api_ver.typelib
@@ -146,6 +146,9 @@ GObject introspection devel data for the Gst Validate library.
 %endif
 
 %changelog
+* Wed Jan 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
+- 1.22.0
+
 * Tue Dec 20 2022 Yuri N. Sedunov <aris@altlinux.org> 1.20.5-alt1
 - 1.20.5
 
