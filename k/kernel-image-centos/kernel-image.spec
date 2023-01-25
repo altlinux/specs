@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 236
+%define centos_release 243
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,37 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Wed Jan 25 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.243-alt1.el9
+- Updated to kernel-5.14.0-243.el9:
+  + aquantia: Do not purge addresses when setting the number of rings
+  + arm64: Update drivers/soc/tegra to v6.0
+  + blk-cgroup: Fix potential lockup in blkcg_rstat_flush()
+  + DG2 DRM Backport
+  + drm/amd: Delay removal of the firmware framebuffer
+  + Fix call trace from create_trace_option_files in kernel/trace/trace.c
+  + Fix for CSB.V bit never becomes valid for NX Gzip job during LPAR migration
+  + Follow-up fixes for nfsd for 9.2
+  + fs/exec: switch timens when a task gets a new mm
+  + ixgbe: Driver update for RHEL9.2
+  + mailbox: qcom-ipcc: update qcom-ipcc
+  + net: Backport data race annotations in the networking stack (part 2)
+  + perf test: Fix "all PMU test" to skip parametrized events
+  + perf tools: Fix empty version number when building outside of a git repo
+  + powerpc/kprobes: Fix null pointer reference in arch_prepare_kprobe()
+  + redhat: ignore rpminspect runpath report on urandom_read selftest binaries
+  + rtla: Add License to spec file and sync summary text with upstream
+  + [s390]: RHEL9 - dasd: fix no record found for raw_track_access
+  + [s390]: RHEL9 - s390/cio: add dev_busid sysfs entry for each subchannel
+  + selftests/bpf: test_stacktrace_build_id: use kprobe/urandom_read
+  + Update intel_idle to upstream 6.0
+  + vsock: backport latest commits for RHEL-9-2
+  + xfrm: Fix oops in __xfrm_state_delete()
+
+* Wed Jan 18 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.238-alt1.el9
+- Updated to kernel-5.14.0-238.el9:
+  + MLX5 driver upgrade - kernel 5.19
+  + [RHEL 9.2] Update stmicro ethernet driver
+
 * Tue Jan 17 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.236-alt1.el9
 - Updated to kernel-5.14.0-236.el9 (fixes: CVE-2022-2964, CVE-2022-4139):
   + [9.2] MEI Backport for Intel DG2 support
