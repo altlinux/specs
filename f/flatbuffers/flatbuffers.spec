@@ -1,11 +1,10 @@
-%define sover 23
 %define desc FlatBuffers is a cross platform serialization library architected \
 for maximum memory efficiency. It allows you to directly access serialized data \
 without parsing/unpacking it first, while still having great forwards/backwards \
 compatibility.
 
 Name: flatbuffers
-Version: 23.1.4
+Version: 23.1.21
 Release: alt1
 
 Summary: Memory Efficient Serialization Library
@@ -24,11 +23,11 @@ BuildRequires: cmake ctest gcc-c++
 %description
 %desc
 
-%package -n lib%name%sover
+%package -n lib%name
 Summary: Memory Efficient Serialization Library
 Group: System/Libraries
 
-%description -n lib%name%sover
+%description -n lib%name
 %desc
 
 %package  -n lib%name-devel
@@ -42,7 +41,7 @@ This package contains development part of FlatBuffers.
 %package -n python3-module-%name
 Summary: Python3 files for %name
 Group: Development/Python3
-Requires: lib%name%sover = %EVR
+Requires: lib%name = %EVR
 
 %description -n python3-module-%name
 This package contains python files for %name.
@@ -84,7 +83,7 @@ popd
     mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir
   )
 
-%files -n lib%name%sover
+%files -n lib%name
 %_libdir/lib%name.so.*
 
 %files -n lib%name-devel
@@ -98,6 +97,9 @@ popd
 %python3_sitelibdir/*
 
 %changelog
+* Sun Jan 22 2023 Nazarov Denis <nenderus@altlinux.org> 23.1.21-alt1
+- 23.1.21 released
+
 * Thu Jan 05 2023 Nazarov Denis <nenderus@altlinux.org> 23.1.4-alt1
 - 23.1.4 released
 
