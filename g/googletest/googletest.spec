@@ -1,6 +1,6 @@
 Name: googletest
-Version: 1.12.1
-Release: alt1.1
+Version: 1.13.0
+Release: alt1
 
 Summary: Google's framework for writing C++ tests
 License: BSD-3-Clause
@@ -8,8 +8,8 @@ Group: Development/C++
 
 Url: https://github.com/google/%name
 
-# https://github.com/google/%name/archive/release-%version/%name-release-%version.tar.gz
-Source: %name-release-%version.tar
+# https://github.com/google/%name/archive/v%version/%name-%version.tar.gz
+Source: %name-%version.tar
 
 BuildRequires: cmake
 BuildRequires: ctest
@@ -66,7 +66,7 @@ Group: Development/C++
 Development environment for gmock
 
 %prep
-%setup -n %name-release-%version
+%setup
 
 %build
 %ifarch %e2k
@@ -80,7 +80,7 @@ sed -i 's/__attribute__((optimize("no-optimize-sibling-calls")))//' \
 %cmake_build
 
 %install
-%cmakeinstall_std
+%cmake_install
 
 %check
 %make -C %_cmake__builddir test
@@ -111,6 +111,9 @@ sed -i 's/__attribute__((optimize("no-optimize-sibling-calls")))//' \
 %_includedir/gmock
 
 %changelog
+* Wed Jan 25 2023 Nazarov Denis <nenderus@altlinux.org> 1.13.0-alt1
+- Version 1.13.0
+
 * Sat Sep 10 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.12.1-alt1.1
 - Fixed build for Elbrus
 

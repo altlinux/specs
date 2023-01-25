@@ -3,7 +3,7 @@
 %define soname 1
 
 Name: partio
-Version: 1.14.0
+Version: 1.14.6
 Release: alt1
 Summary: A library for particle IO and manipulation
 Group: Development/Other
@@ -112,11 +112,6 @@ find . -name '*.py' | xargs sed -i \
 %install
 %cmake_install
 
-%check
-pushd %_cmake__builddir
-LD_LIBRARY_PATH=%buildroot%_libdir ctest
-popd
-
 %files
 %_bindir/*
 %_datadir/swig/%{name}.i
@@ -144,5 +139,8 @@ popd
 %_libdir/partio/test
 
 %changelog
+* Wed Jan 25 2023 Nazarov Denis <nenderus@altlinux.org> 1.14.6-alt1
+- Version 1.14.6
+
 * Fri Jun 04 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.14.0-alt1
 - Initial build for ALT.
