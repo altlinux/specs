@@ -3,7 +3,7 @@
 
 Name: dtkwidget
 Version: 5.6.4
-Release: alt1.gitd2cb0fb
+Release: alt2.gitd2cb0fb
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+ and GPL-3.0+
 Group: Graphical desktop/Other
@@ -12,6 +12,7 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: dtkwidget-5.6.3-alt-fix-gcc-build.patch
+Patch1: dtkwidget-5.6.2-alt-fix-missing-icon-on-titlebar-button.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -91,6 +92,7 @@ This package provides %name documantation.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 sed -i "s|'/lib'|'/%_lib'|" conanfile.py
 sed -i 's|CMAKE_INSTALLL_PREFIX|CMAKE_INSTALL_PREFIX|' \
   docs/CMakeLists.txt
@@ -166,6 +168,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_docdir/dtkwidget.qch
 
 %changelog
+* Wed Jan 25 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt2.gitd2cb0fb
+- Fixed missing icon on titlebar button.
+
 * Fri Jan 20 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt1.gitd2cb0fb
 - New version.
 - Spec:
