@@ -1,7 +1,7 @@
 %def_disable clang
 
 Name: startdde
-Version: 5.10.1
+Version: 5.10.2
 Release: alt1
 Epoch: 1
 Summary: Starter of deepin desktop environment
@@ -11,7 +11,8 @@ Url: https://github.com/linuxdeepin/startdde
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: startdde-5.10.1-upstream-dconf.patch
+Patch: 0001-feat-dde-dconfig-daemon-configure-path.patch
+Patch1: 0001-feat-personalize-interface-mode-settings.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -27,6 +28,7 @@ Startdde is used for launching DDE components and invoking user's custom applica
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 sed -i 's/sbin/bin/' Makefile
 sed -i 's|/etc/X11/Xsession.d/|/etc/X11/xinit/xinitrc.d/|' Makefile
 sed -i 's|/etc/X11/Xresources|/etc/X11|' \
@@ -76,6 +78,9 @@ rm -rf %buildroot%_datadir/lightdm/lightdm.conf.d/60-deepin.conf
 %_datadir/dsg/configs/org.deepin.startdde/org.deepin.Display.json
 
 %changelog
+* Wed Jan 25 2023 Leontiy Volodin <lvol@altlinux.org> 1:5.10.2-alt1
+- New version (5.10.2).
+
 * Fri Dec 23 2022 Leontiy Volodin <lvol@altlinux.org> 1:5.10.1-alt1
 - New version (5.10.1).
 - spec:
