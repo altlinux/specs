@@ -1,4 +1,4 @@
-%define ver_major 3.43
+%define ver_major 3.44
 %define beta %nil
 %def_enable libnotify
 %def_enable webkitgtk
@@ -58,6 +58,9 @@ a cooler name.
 %doc AUTHORS NEWS README* THANKS TODO
 
 %changelog
+* Wed Jan 25 2023 Yuri N. Sedunov <aris@altlinux.org> 3.44.0-alt1
+- 3.44.0
+
 * Thu Sep 22 2022 Yuri N. Sedunov <aris@altlinux.org> 3.43.0-alt1
 - 3.43.0
 
