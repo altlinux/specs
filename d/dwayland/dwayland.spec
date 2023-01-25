@@ -3,7 +3,7 @@
 
 Name: dwayland
 Version: 5.24.3.1.4
-Release: alt1
+Release: alt2
 
 Summary: Qt-style API to interact with the DDE wayland-client and wayland-server
 
@@ -71,7 +71,7 @@ The package provides the documentation for %name.
 
 %package devel
 Summary: Development package for %name
-Group: Graphical desktop/Other
+Group: Development/C++
 
 %description devel
 Header files and libraries for %name.
@@ -99,6 +99,8 @@ cmake --build BUILD -j%__nprocs
 
 %install
 DESTDIR=%buildroot cmake --install BUILD
+sed -i 's|includes =  .*|includes = %_includedir/DWayland/Client|' \
+    %buildroot%_libdir/qt5/mkspecs/modules/qt_DWaylandClient.pri
 
 %files common
 %doc README.md
@@ -124,5 +126,8 @@ DESTDIR=%buildroot cmake --install BUILD
 %_libdir/libDWaylandServer.so
 
 %changelog
+* Wed Jan 25 2023 Leontiy Volodin <lvol@altlinux.org> 5.24.3.1.4-alt2
+- Fixed DWayland Client detection.
+
 * Thu Jan 12 2023 Leontiy Volodin <lvol@altlinux.org> 5.24.3.1.4-alt1
 - Initial build for ALT Sisyphus.
