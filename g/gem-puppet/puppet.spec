@@ -3,7 +3,7 @@
 %define        confdir ext/redhat
 
 Name:          gem-puppet
-Version:       7.21.0
+Version:       7.22.0
 Release:       alt1
 Summary:       A network tool for managing many disparate systems
 License:       Apache-2.0
@@ -261,6 +261,9 @@ sed -e "s,sample.server.name,$(hostname)," \
 
 
 %changelog
+* Wed Jan 25 2023 Andrey Cherepanov <cas@altlinux.org> 7.22.0-alt1
+- New version.
+
 * Fri Dec 09 2022 Andrey Cherepanov <cas@altlinux.org> 7.21.0-alt1
 - New version.
 
