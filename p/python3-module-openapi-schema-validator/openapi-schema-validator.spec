@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: OpenAPI schema validation
@@ -64,6 +64,9 @@ Openapi-schema-validator is a Python library that validates schema against:
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Wed Jan 25 2023 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
+- 0.4.0 -> 0.4.1.
+
 * Mon Jan 23 2023 Stanislav Levin <slev@altlinux.org> 0.4.0-alt1
 - 0.3.4 -> 0.4.0.
 
