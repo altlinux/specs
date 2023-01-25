@@ -1,7 +1,7 @@
 %define luaver 5.1
 Name: wxlua
-Version: 3.1.0.0
-Release: alt2.20220630
+Version: 3.2.0.2
+Release: alt1
 Summary: Lua IDE with a GUI debugger and binding generator
 License: wxWidgets License
 Group: Development/Other
@@ -15,7 +15,7 @@ BuildRequires: lua%luaver lua%luaver-devel
 #BuildRequires: doxygen graphviz
 # Automatically added by buildreq on Thu Oct 05 2017 (-bi)
 # optimized out: at-spi2-atk cmake-modules elfutils fontconfig glibc-kernheaders-x86 libX11-devel libat-spi2-core libcairo-gobject libgdk-pixbuf libgpg-error libgst-plugins1.0 libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server lua5.3 perl python-base python-module-mpl_toolkits python-modules xorg-xproto-devel
-BuildRequires: cmake desktop-file-utils gcc-c++ glibc-kernheaders-generic libGL-devel libwxGTK3.2-devel libwxstedit-devel
+BuildRequires: cmake desktop-file-utils gcc-c++ glibc-kernheaders-generic libGL-devel libwxGTK3.2-devel
 
 Provides: lib%name = %version
 Obsoletes: lib%name < 3
@@ -79,11 +79,6 @@ rm -rf modules/{lua-*,wxstedit}/*
 sed -r -i 's|LIBRARY DESTINATION .*$|LIBRARY DESTINATION %_lib|' \
 	CMakeLists.txt
 
-# prepare external wxstedit
-mkdir -p modules/wxstedit
-ln -s /usr/include modules/wxstedit/
-echo "project( wxStEdit )" > modules/wxstedit/CMakeLists.txt
-
 %build
 make -C bindings \
 	clean all \
@@ -96,7 +91,6 @@ make -C bindings \
 %add_optflags -DwxLUA_USE_wxTranslations=0
 %cmake \
 	-DwxLua_LUA_LIBRARY_USE_BUILTIN=FALSE \
-	-DwxStEdit_ROOT_DIR=$PWD/modules/wxstedit \
 	-DwxWidgets_COMPONENTS="xrc;xml;stc;gl;html;aui;adv;core;net;base" \
 	-DwxLuaBind_COMPONENTS="xrc;xml;stc;gl;html;aui;adv;core;net;base" \
 
@@ -146,6 +140,10 @@ mv %buildroot%_datadir/%name/samples docs2distribute-apps/
 %endif
 
 %changelog
+* Wed Jan 25 2023 Ildar Mulyukov <ildar@altlinux.ru> 3.2.0.2-alt1
+- new version
+- get rid of wxSTEdit
+
 * Mon Sep 19 2022 Anton Midyukov <antohami@altlinux.org> 3.1.0.0-alt2.20220630
 - new snapshot
 - build with wxGTK3.2
