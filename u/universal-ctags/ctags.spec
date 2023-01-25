@@ -3,7 +3,7 @@
 %define _stripped_files_terminate_build 1
 
 Name:    universal-ctags
-Version: 5.9.20211017.0
+Version: 6.0.0
 Release: alt1
 Epoch:   1
 
@@ -54,21 +54,27 @@ sed -i '/check:/s/check-genfile//' makefiles/testing.mak
 %install
 %makeinstall
 
+%define _customdocdir %_docdir/%name
+
 %check
+./ctags --version
 %make_build check
 
 %files
-%doc COPYING README.md docs/developers.rst docs/news.rst docs/reporting.rst
-%doc docs/interactive-mode.rst docs/parser* docs/output*
+%doc COPYING README.md docs/*.rst docs/*.svg
 %_bindir/ctags
 %_bindir/readtags
 %_bindir/optscript
 %_man1dir/ctags.1*
 %_man1dir/readtags.1*
 %_man5dir/tags.5*
+%_man5dir/ctags-json-output.5*
 %_man7dir/ctags-*.7*
 
 %changelog
+* Thu Jan 26 2023 Vitaly Chikunov <vt@altlinux.org> 1:6.0.0-alt1
+- Update to v6.0.0 (2022-12-16).
+
 * Thu Oct 21 2021 Vitaly Chikunov <vt@altlinux.org> 1:5.9.20211017.0-alt1
 - Update to p5.9.20211017.0.
 
