@@ -1,5 +1,5 @@
 Name: python3-module-uvicorn
-Version: 0.19.0
+Version: 0.20.0
 Release: alt1
 
 %def_with check
@@ -64,6 +64,9 @@ Uvicorn supports HTTP/1.1 and WebSockets.
 %python3_sitelibdir/uvicorn-%version.dist-info
 
 %changelog
+* Wed Jan 25 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.20.0-alt1
+- 0.20.0 released
+
 * Wed Nov 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.19.0-alt1
 - 0.19.0 released
 
