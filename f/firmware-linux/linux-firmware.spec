@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230117
+Version: 20230124
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,22 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Jan 25 2023 Cronbuild Service <cronbuild@altlinux.org> 20230124-alt1
+- upstream changes (GIT 5c11a374):
+  + amdgpu: Add VCN 4.0.2 firmware (thx Mario Limonciello)
+  + amdgpu: Add PSP 13.0.4 firmware (thx Mario Limonciello)
+  + amdgpu: Add SDMA 6.0.1 fimware (thx Mario Limonciello)
+  + amdgpu: Add GC 11.0.1 firmware (thx Mario Limonciello)
+  + amdgpu: Add DCN 3.1.4 firmware (thx Mario Limonciello)
+  + iwlwifi: remove old intermediate 5.15+ firmwares (thx Peter Robinson)
+  + iwlwifi: remove 5.10 and 5.15 intermediate old firmwares (thx Peter Robinson)
+  + iwlwifi: remove 5.4 and 5.10 intermediate old firmwares (thx Peter Robinson)
+  + iwlwifi: remove 4.19 and 5.4 intermediate old firmwares (thx Peter Robinson)
+  + iwlwifi: remove old unsupported older than 4.14 LTS (thx Peter Robinson)
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+  + update firmware for mediatek bluetooth chip (MT7921) (thx Chris.Lu)
+  + amdgpu: update vangogh firmware (thx Alex Deucher)
+
 * Wed Jan 18 2023 Cronbuild Service <cronbuild@altlinux.org> 20230117-alt1
 - upstream changes (GIT 7e4f0eda):
   + Update firmware file for Intel Bluetooth AX201 (thx Kiran K)
