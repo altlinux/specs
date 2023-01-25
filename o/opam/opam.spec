@@ -1,5 +1,5 @@
 Name: opam
-Version: 2.1.3
+Version: 2.1.4
 Release: alt1
 Summary: A source-based package manager for OCaml
 License: LGPLv3
@@ -7,7 +7,6 @@ Group: Development/ML
 Url: https://github.com/ocaml/opam
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
-Patch1: opam-port-to-dose3-6.0.1.patch
 BuildRequires: ocaml
 BuildRequires: libacl-devel
 BuildRequires: ocaml-opam-file-format-devel
@@ -62,7 +61,6 @@ The %name-doc package contains documentation for using %name.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %configure
@@ -88,6 +86,9 @@ rm -rf %buildroot%prefix/doc
 %doc shell/
 
 %changelog
+* Wed Jan 25 2023 Anton Farygin <rider@altlinux.ru> 2.1.4-alt1
+- 2.1.4
+
 * Fri Oct 07 2022 Anton Farygin <rider@altlinux.ru> 2.1.3-alt1
 - 2.1.3
 
