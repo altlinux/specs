@@ -1,19 +1,25 @@
 %define _unpackaged_files_terminate_build 1
-%define oname vlc
+%define modname vlc
+%define pypi_name python-vlc
 
-Name: python3-module-%oname
-Version: 3.0.10114
+Name: python3-module-%modname
+Version: 3.0.16120
 Release: alt1
 Summary: Binding for the native libvlc API
-License: LGPLv2.1+
+License: LGPL-2.1+
 Group: Development/Python3
 Url: https://github.com/oaubert/python-vlc
 Source: %name-%version.tar
 
 BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 Requires: libvlc-devel
+
+%py3_provides %pypi_name
 
 %description
 This module provides ctypes-based bindings for the native libvlc API of the VLC
@@ -23,16 +29,22 @@ video player. Note that it relies on an already present install of VLC.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc COPYING MANIFEST.in README.module examples/
-%python3_sitelibdir/*
+%python3_sitelibdir/%modname.py
+%python3_sitelibdir/*/*.pyc
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%doc examples
 
 %changelog
+* Wed Jan 25 2023 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.16120-alt1
+- Updated to version 3.0.16120
+- Use pyproject macroses for build
+
 * Tue Jun 23 2020 Alexander Makeenkov <amakeenk@altlinux.org> 3.0.10114-alt1
 - Updated to version 3.0.10114
 
