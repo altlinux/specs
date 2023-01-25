@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.3
+Version: 0.11.0
 Release: alt1
 Summary: Utility library for gitignore style pattern matching of file paths
 License: MPL-2.0-no-copyleft-exception
@@ -19,8 +19,7 @@ Source: %name-%version.tar
 BuildRequires: rpm-build-python3
 
 # build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
+BuildRequires: python3(flit_core)
 
 %description
 %pypi_name is a utility library for pattern matching of file paths. So
@@ -38,7 +37,7 @@ gitignore files.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_unittest -v
 
 %files
 %doc *.rst
@@ -46,6 +45,9 @@ gitignore files.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jan 25 2023 Stanislav Levin <slev@altlinux.org> 0.11.0-alt1
+- 0.10.3 -> 0.11.0.
+
 * Mon Dec 12 2022 Stanislav Levin <slev@altlinux.org> 0.10.3-alt1
 - 0.10.2 -> 0.10.3.
 
