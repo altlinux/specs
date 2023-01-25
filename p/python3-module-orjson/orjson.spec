@@ -1,5 +1,5 @@
 Name: python3-module-orjson
-Version: 3.8.1
+Version: 3.8.5
 Release: alt1
 
 Summary: Fast, correct JSON library for Python
@@ -40,6 +40,9 @@ export CARGO_HOME=${PWD}/cargo
 %python3_sitelibdir/orjson-%version.dist-info
 
 %changelog
+* Wed Jan 25 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.8.5-alt1
+- 3.8.5 released
+
 * Wed Nov 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.8.1-alt1
 - 3.8.1 released
 
