@@ -4,7 +4,7 @@
 
 Name: resource-agents
 Summary: Open Source HA Reusable Cluster Resource Scripts
-Version: 4.11.0
+Version: 4.12.0
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Url: https://github.com/ClusterLabs/resource-agents
@@ -21,7 +21,6 @@ BuildRequires: python3-devel xsltproc libxslt-devel glib2-devel which docbook-st
 BuildRequires: perl-podlators perl-Socket6 perl-libwww perl-IO-Socket-INET6 perl-Net-Ping perl-MailTools
 BuildRequires: systemd-devel
 BuildRequires: python3-module-jsonlib
-BuildRequires: python3-module-google-api-client
 
 Requires: linux-ha-common
 
@@ -173,6 +172,7 @@ sed -i '1 i #!%__python3' heartbeat/ocf.py
 
 %build
 export PYTHON=%__python3
+%add_optflags -Wno-error=format
 %autoreconf
 %configure	\
 		--with-version=%version \
@@ -354,6 +354,9 @@ rm -f %buildroot%_datadir/cluster/drbd.*
 %_mandir/man8/ldirectord.8*
 
 %changelog
+* Wed Jan 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.12.0-alt1
+- 4.12.0
+
 * Wed Apr 06 2022 Andrew A. Vasilyev <andy@altlinux.org> 4.11.0-alt1
 - 4.11.0
 
