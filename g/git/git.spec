@@ -1,6 +1,6 @@
 Name: git
 Version: 2.33.6
-Release: alt1
+Release: alt2
 
 Summary: Git core and tools
 License: GPLv2
@@ -19,6 +19,7 @@ Source: %name-%version-%release.tar
 %def_with expat
 %def_with gitweb
 %def_with gui
+%def_with pcre
 %def_without python
 %def_with svn
 %def_with tk
@@ -38,6 +39,7 @@ Source: %name-%version-%release.tar
 Requires: %name-core = %EVR, perl-Git = %EVR
 
 BuildRequires: hardlink, libssl-devel, perl-devel, perl-podlators, perl(Error.pm), zlib-devel >= 0:1.2
+%{!?_without_pcre:BuildRequires: libpcre2-devel}
 %{!?_without_python:BuildRequires: python-modules-encodings >= 0:2.4}
 %{!?_without_cvs:BuildRequires: cvs perl(DBI.pm)}
 %{!?_without_curl:BuildRequires: libcurl-devel}
@@ -299,6 +301,7 @@ NO_PERL_CPAN_FALLBACKS = 1
 %{?_without_expat:NO_EXPAT = 1}
 %{?_without_python:NO_PYTHON = 1}
 %{?_without_python:SCRIPT_PYTHON_INS = }
+%{!?_without_pcre:USE_LIBPCRE = 1}
 EOF
 
 %build
@@ -534,6 +537,9 @@ popd
 %endif #doc
 
 %changelog
+* Wed Jan 25 2023 Vitaly Chikunov <vt@altlinux.org> 2.33.6-alt2
+- spec: Enable '--perl-regexp' support for 'grep' and 'log'.
+
 * Tue Dec 13 2022 Dmitry V. Levin <ldv@altlinux.org> 2.33.6-alt1
 - 2.33.5 -> 2.33.6 (fixes: CVE-2022-41903, CVE-2022-23521).
 
