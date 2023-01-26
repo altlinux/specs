@@ -1,20 +1,23 @@
 %define _unpackaged_files_terminate_build 1
 %define pypi_name validate-pyproject
+%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.10.1
+Version: 0.12
 Release: alt1
-
 Summary: Validation pyproject.toml files using JSON Schema
 License: MPL-2.0 and MIT and BSD-3-Clause
 Group: Development/Python3
-# Source-git: https://github.com/abravalheri/validate-pyproject.git
 Url: https://pypi.org/project/validate-pyproject
-
+VCS: https://github.com/abravalheri/validate-pyproject.git
+BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+
+# PEP503 name
+%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-python3
 
@@ -24,18 +27,19 @@ BuildRequires: python3(wheel)
 BuildRequires: python3(setuptools_scm)
 
 %if_with check
-BuildRequires: python3(trove-classifiers)
+# deps
+BuildRequires: python3(fastjsonschema)
 
+# extra: all
+BuildRequires: python3(trove-classifiers)
+BuildRequires: python3(packaging)
+%if %tomli
+BuildRequires: python3(tomli)
+%endif
+# extra: testing
+BuildRequires: python3(setuptools)
 BuildRequires: python3(pytest)
 %endif
-
-BuildArch: noarch
-
-# PEP503 name
-%py3_provides %pypi_name
-
-# hide vendored packages
-%add_findprov_skiplist %python3_sitelibdir/validate_pyproject/_vendor/*
 
 %description
 Validation library and CLI tool for checking on 'pyproject.toml' files using
@@ -62,7 +66,7 @@ git tag '%version'
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
 %doc README.rst
@@ -71,6 +75,9 @@ git tag '%version'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Jan 26 2023 Stanislav Levin <slev@altlinux.org> 0.12-alt1
+- 0.10.1 -> 0.12.
+
 * Thu Sep 15 2022 Stanislav Levin <slev@altlinux.org> 0.10.1-alt1
 - 0.9 -> 0.10.1.
 

@@ -1,55 +1,58 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name fastjsonschema
 
-%define oname fastjsonschema
+%def_with check
 
-Name: python3-module-%oname
-Version: 2.15.1
+Name: python3-module-%pypi_name
+Version: 2.16.2
 Release: alt1
 Summary: Fast JSON schema validator for Python
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/horejsek/python-fastjsonschema
+Url: https://pypi.org/project/fastjsonschema/
+VCS: https://github.com/horejsek/python-fastjsonschema
 
 BuildArch: noarch
 
-# https://github.com/horejsek/python-fastjsonschema.git
 Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 # submodules
 Source1: %name-%version-JSON-Schema-Test-Suite.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-pytest
-BuildRequires: python3-module-pytest-cov
-BuildRequires: python3-module-pytest-benchmark
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%if_with check
+BuildRequires: python3(pytest)
+%endif
 
 %description
 Fast JSON schema validator for Python
 
 %prep
 %setup -a1
+%autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-# following tests don't work without network and there's no obvious way to disable them
-rm -f tests/json_schema/test_draft04.py
-rm -f tests/json_schema/test_draft06.py
-rm -f tests/json_schema/test_draft07.py
-
-PYTHONPATH=$(pwd) py.test3 -vv
+%pyproject_run_pytest -m "not benchmark" -vra
 
 %files
-%doc LICENSE
 %doc README.rst AUTHORS CHANGELOG.txt
-%python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py*.egg-info
+%python3_sitelibdir/fastjsonschema/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Jan 25 2023 Stanislav Levin <slev@altlinux.org> 2.16.2-alt1
+- 2.15.1 -> 2.16.2.
+
 * Mon Aug 09 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.15.1-alt1
 - Initial build for ALT.
