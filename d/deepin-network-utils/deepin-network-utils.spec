@@ -1,8 +1,11 @@
-%global repo dde-network-utils
+%def_disable clang
+
+%define repo dde-network-utils
+%define llvm_ver 15
 
 Name: deepin-network-utils
 Version: 5.4.13
-Release: alt1
+Release: alt2
 Summary: Deepin desktop-environment - network utils
 License: GPL-3.0-or-later
 Group: Graphical desktop/Other
@@ -10,8 +13,16 @@ Url: https://github.com/linuxdeepin/dde-network-utils
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
+Patch: deepin-network-utils-5.4.13-alt-fix-gtest-1.13.patch
 
+%if_enabled clang
+#BuildRequires(pre): rpm-macros-llvm-common
+BuildRequires: clang%llvm_ver.0-devel
+BuildRequires: lld%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver.0-devel
+%else
 BuildRequires: gcc-c++
+%endif
 BuildRequires: deepin-qt-dbus-factory-devel
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-linguist
@@ -30,20 +41,32 @@ Group: Graphical desktop/Other
 Deepin desktop-environment - network utils.
 Library for %name
 
-%package devel
+%package -n libddenetworkutils-devel
 Summary: Development package for %name
-Group: Graphical desktop/Other
+Group: Development/C++
+Provides: deepin-network-utils-devel = %version-%release
+Obsoletes: deepin-network-utils-devel < %version-%release
 
-%description devel
+%description -n libddenetworkutils-devel
 Header files and libraries for %name.
 
 %prep
 %setup -n %repo-%version
-sed -i '/target.path/s|\$\$PREFIX/lib|%_libdir|' dde-network-utils/dde-network-utils.pro
+%patch -p1
+sed -i '/target.path/s|\$\$PREFIX/lib|%_libdir|' \
+    dde-network-utils/dde-network-utils.pro
 
 %build
 export PATH=%_qt5_bindir:$PATH
+%if_enabled clang
+export CC=clang-%llvm_ver
+export CXX=clang++-%llvm_ver
+export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+%endif
 %qmake_qt5 \
+%if_enabled clang
+    QMAKE_STRIP= -spec linux-clang \
+%endif
     CONFIG+=nostrip \
     PREFIX=%prefix
 %make_build
@@ -56,12 +79,16 @@ export PATH=%_qt5_bindir:$PATH
 %_libdir/lib%{repo}.so.1*
 %_datadir/%repo/
 
-%files devel
+%files -n libddenetworkutils-devel
 %_includedir/libddenetworkutils/
 %_pkgconfigdir/%repo.pc
 %_libdir/lib%{repo}.so
 
 %changelog
+* Thu Jan 26 2023 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt2
+- Fix build with googletest 1.13.0.
+- Renamed devel subpackage to libddenetworkutils-devel.
+
 * Fri Feb 04 2022 Leontiy Volodin <lvol@altlinux.org> 5.4.13-alt1
 - New version (5.4.13).
 
