@@ -5,7 +5,7 @@
 %endif
 
 Name: kde5-virtual
-Version: 5.24.0
+Version: 5.25.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -106,24 +106,42 @@ Requires: kf5-filesystem
 %description -n kde5-volume-control-0-dummy
 %summary
 
-%package -n kde5-volume-control-2-kmix
+%package -n kde5-volume-control-2-alsa
 Group: Graphical desktop/KDE
 Summary: KMix volume control
 Provides: kde5-volume-control = %EVR
 Provides: kde5-volume-control-kmix = %EVR
 Requires: kf5-filesystem
 Requires: kde5-kmix
-%description -n kde5-volume-control-2-kmix
+#
+Provides: kde5-volume-control-2-kmix = %EVR
+Obsoletes: kde5-volume-control-2-kmix < %EVR
+%description -n kde5-volume-control-2-alsa
 %summary
 
-%package -n kde5-volume-control-4-plasmapulse
+%package -n kde5-volume-control-4-pipewire
+Group: Graphical desktop/KDE
+Summary: Plasma PulseAudio volume control
+Provides: kde5-volume-control = %EVR
+Provides: kde5-volume-control-pipewire = %EVR
+Requires: kf5-filesystem
+Requires: plasma5-pa
+Requires: pipewire
+%description -n kde5-volume-control-4-pipewire
+%summary
+
+%package -n kde5-volume-control-6-pulseaudio
 Group: Graphical desktop/KDE
 Summary: Plasma PulseAudio volume control
 Provides: kde5-volume-control = %EVR
 Provides: kde5-volume-control-plasmapulse = %EVR
 Requires: kf5-filesystem
 Requires: plasma5-pa
-%description -n kde5-volume-control-4-plasmapulse
+Requires: pulseaudio-daemon
+#
+Provides: kde5-volume-control-4-plasmapulse = %EVR
+Obsoletes: kde5-volume-control-4-plasmapulse < %EVR
+%description -n kde5-volume-control-6-pulseaudio
 %summary
 
 %package -n kde5-email-client-0-dummy
@@ -276,8 +294,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm dm-tool
 %files -n kde5-video-player-5-haruna
 
 %files -n kde5-volume-control-0-dummy
-%files -n kde5-volume-control-2-kmix
-%files -n kde5-volume-control-4-plasmapulse
+%files -n kde5-volume-control-2-alsa
+%files -n kde5-volume-control-4-pipewire
+%files -n kde5-volume-control-6-pulseaudio
 
 %files -n kde5-email-client-0-dummy
 %if_enabled qtwebengine
@@ -301,6 +320,9 @@ Requires: sddm sddm-theme-breeze plasma5-sddm-kcm dm-tool
 %files -n kde5-display-manager-5-sddm
 
 %changelog
+* Thu Jan 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.25.0-alt1
+- add kde5-volume-control-pipewire
+
 * Thu Jul 14 2022 Sergey V Turchin <zerg@altlinux.org> 5.24.0-alt1
 - require dm-tool for display-manager
 

@@ -5,7 +5,7 @@
 
 Name: plasma5-pa
 Version: 5.26.5
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -13,7 +13,7 @@ Summary: Audio Volume Plasma Applet
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
-Requires: pulseaudio-daemon
+# requires to pipewire/pulseaudio-daemon moved to kde5-volume-control
 
 Provides: kf5-plasma-pa = %EVR
 Obsoletes: kf5-plasma-pa < %EVR
@@ -99,6 +99,9 @@ rm -rf %buildroot/%_datadir/kde4/ ||:
 #%_K5lib/libQPulseAudioPrivate.so.*
 
 %changelog
+* Thu Jan 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt2
+- clean requires
+
 * Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt1
 - new version
 
