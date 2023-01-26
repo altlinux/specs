@@ -1,5 +1,5 @@
 Name: xfsdump
-Version: 3.1.11
+Version: 3.1.12
 Release: alt1
 
 Summary: Administrative utilities for the XFS filesystem
@@ -56,6 +56,9 @@ rm -rf %buildroot%_datadir/doc/%name
 %_mandir/*/*
 
 %changelog
+* Thu Jan 26 2023 L.A. Kostis <lakostis@altlinux.ru> 3.1.12-alt1
+- 3.1.12
+
 * Sun Nov 13 2022 L.A. Kostis <lakostis@altlinux.ru> 3.1.11-alt1
 - NMU update:
   + 3.1.9 -> 3.1.11 (fixed FTBFS).
