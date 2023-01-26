@@ -1,10 +1,12 @@
 %define _libexecdir %_usr/libexec
 %define _unpackaged_files_terminate_build 1
 %def_with check
+# don't remove: it's used on local build
+%def_without pylint
 
 Name: freeipa-healthcheck
-Version: 0.11
-Release: alt2
+Version: 0.12
+Release: alt1
 
 Summary: Check the health of a FreeIPA installation
 License: GPLv3
@@ -29,8 +31,12 @@ BuildRequires: python3(wheel)
 %if_with check
 BuildRequires: python3-module-ipaserver
 BuildRequires: python3(pytest)
-BuildRequires: python3(pylint)
 BuildRequires: /proc
+
+%if_with pylint
+BuildRequires: python3(pylint)
+%endif
+
 %endif
 
 %description
@@ -98,8 +104,14 @@ mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %preun_service ipa-healthcheck
 
 %check
-export TOXENV=py3,lint
-%tox_check_pyproject
+%pyproject_run_pytest -vra
+
+%if_with pylint
+# it's needed for pylint's plugin
+export PYTHONPATH="$(pwd)"
+%pyproject_run -- python -m pylint \
+    --rcfile=pylintrc --load-plugins=pylint_plugins src tests
+%endif
 
 %files
 %doc README.md COPYING
@@ -125,6 +137,9 @@ export TOXENV=py3,lint
 %python3_sitelibdir/ipahealthcheck/core/
 
 %changelog
+* Mon Jan 23 2023 Stanislav Levin <slev@altlinux.org> 0.12-alt1
+- 0.11 -> 0.12.
+
 * Tue Aug 23 2022 Stanislav Levin <slev@altlinux.org> 0.11-alt2
 - Skipped build on armh (Java 17).
 
