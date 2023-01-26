@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt4
+Release: alt5
 
 Summary: %Variant documentation
 License: %fdl
@@ -46,6 +46,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Thu Jan 26 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt5
+- update documentation PVE
+- fixed PVE (ALT 45021, 45023, 45024, 45025, 45027, 45028)
+- fix some typos (ALT 45045, 45034, 45022, 45020, 45026)
+
 * Mon Dec 26 2022 Elena Mishina <lepata@altlinux.org> 10.1-alt4
 - update to ALT Server V 10.1
 - update documentation PVE (ALT 44318)
