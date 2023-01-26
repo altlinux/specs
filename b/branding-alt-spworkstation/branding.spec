@@ -3,6 +3,8 @@
 %define theme spworkstation
 %define Theme SP Workstation
 %define codename cliff
+%define LKNV 11100-01
+%define BRANCH $(rpm --eval %_priority_distbranch)
 %define status %nil
 %define status_en %nil
 %define flavour %brand-%theme
@@ -23,14 +25,8 @@
 
 Name: branding-%flavour
 Version: 10.1
-Release: alt1
+Release: alt2
 Url: https://altsp.su
-
-%ifarch %ix86 x86_64
-BuildRequires: gfxboot >= 4
-BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-google-droid-sans
-BuildRequires: design-bootloader-source >= 5.0-alt2 fribidi
-%endif
 
 BuildRequires(pre): rpm-macros-branding
 BuildRequires: libalternatives-devel
@@ -55,8 +51,9 @@ Distro-specific packages with design and texts for %distro_name.
 
 %package bootloader
 Group:   System/Configuration/Boot and Init
-Summary: Graphical boot logo for grub2, lilo and syslinux
-Summary(ru_RU.UTF-8): Тема для экрана выбора вариантов загрузки (lilo и syslinux) 
+Summary: Graphical boot logo for grub2
+Summary(ru_RU.UTF-8): Тема для экрана выбора вариантов загрузки (grub2)
+BuildArch: noarch
 License: GPLv2+
 
 Requires(pre):    coreutils
@@ -69,10 +66,10 @@ Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme desig
 
 %description bootloader
 Here you find the graphical boot logo for %distro_name.
-Suitable for both lilo and syslinux.
+Suitable for both grub2.
 
 %description bootloader -l ru_RU.UTF-8
-В данном пакете находится тема для экрана выбора вариантов загрузки (lilo и syslinux) 
+В данном пакете находится тема для экрана выбора вариантов загрузки (grub2)
 для дистрибутива %distro_name_ru.
 
 %package bootsplash
@@ -229,7 +226,7 @@ Requires: shared-desktop-icons
 
 %build
 autoconf
-THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' X86='%x86' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' WINDOW_THEME='%window_theme' ./configure
+THEME=%theme NAME='%Brand %Theme' BRAND_FNAME='%brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%distro_name_ru' PRODUCT_NAME='%distro_name' CODENAME='%codename' LKNV='%LKNV' BRANCH=%BRANCH X86='%x86' GTK_THEME='%gtk_theme' KDE_THEME='%kde_theme' ICON_THEME='%icon_theme' WINDOW_THEME='%window_theme' ./configure
 make
 
 %install
@@ -245,22 +242,8 @@ popd
 
 
 #bootloader
-%ifarch %ix86 x86_64
-%pre bootloader
-[ -s /usr/share/gfxboot/%theme ] && rm -fr  /usr/share/gfxboot/%theme ||:
-[ -s /boot/splash/%theme ] && rm -fr  /boot/splash/%theme ||:
-%endif
-
 %post bootloader
 [ "$1" -eq 1 ] || exit 0
-%ifarch %ix86 x86_64
-ln -snf %theme/message /boot/splash/message
-. /etc/sysconfig/i18n
-lang=$(echo $LANG | cut -d. -f 1)
-cd boot/splash/%theme/
-echo $lang > lang
-[ "$lang" = "C" ] || echo lang | cpio -o --append -F message
-%endif
 . shell-config
 shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme/theme.txt
 #shell_config_set /etc/sysconfig/grub2 GRUB_THEME /boot/grub/themes/%theme
@@ -270,21 +253,10 @@ shell_config_set /etc/sysconfig/grub2 GRUB_BACKGROUND ''
 # deprecated
 shell_config_set /etc/sysconfig/grub2 GRUB_WALLPAPER ''
 
-%ifarch %ix86 x86_64
-%preun bootloader
-[ "$1" -eq 0 ] || exit 0
-[ "`readlink /boot/splash/message`" != "%theme/message" ] ||
-    rm -f /boot/splash/message
-%endif
-
 %post indexhtml
 %_sbindir/indexhtml-update
 
 %files bootloader
-%ifarch %ix86 x86_64
-%_datadir/gfxboot/%theme
-/boot/splash/%theme
-%endif
 /boot/grub/themes/%theme
 
 #bootsplash
@@ -331,9 +303,9 @@ subst 's/#theme-name=/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.c
 %files mate-settings
 %_datadir/glib-2.0/schemas/*.gschema.override
 
-%files slideshow
-/etc/alterator/slideshow.conf
-/usr/share/install2/slideshow
+#%%files slideshow
+#/etc/alterator/slideshow.conf
+#/usr/share/install2/slideshow
 
 %define indexhtmldir %_defaultdocdir/indexhtml
 
@@ -346,6 +318,14 @@ subst 's/#theme-name=/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.c
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Jan 24 2023 Anton Midyukov <antohami@altlinux.org> 10.1-alt2
+- disable gfxboot for syslinux and slideshow for installer
+- bootloader subpackage noarch again
+- cleanup unused images
+- update images
+- add LKNV to os-release
+- define BRANCH from %%_priority_distbranch
+
 * Fri Nov 11 2022 Anton Midyukov <antohami@altlinux.org> 10.1-alt1
 - version bump
 - replace distro_name 'ALT 8 SP Workstation' with 'ALT SP Workstation'
