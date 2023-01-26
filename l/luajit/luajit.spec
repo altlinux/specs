@@ -2,7 +2,7 @@
 
 Name: luajit
 Version: 2.1
-Release: alt11.git3f9389ed
+Release: alt12.gitd0e88930
 
 Summary: a Just-In-Time Compiler for Lua
 License: MIT
@@ -91,6 +91,9 @@ mv %buildroot%_bindir/luajit-2.1.0-beta3 %buildroot%_bindir/luajit
 %_libdir/*.a
 
 %changelog
+* Thu Jan 26 2023 Vladimir Didenko <cow@altlinux.org> 2.1-alt12.gitd0e88930
+- sync with the latest version of 2.1 branch
+
 * Wed Jun 23 2021 Vladimir Didenko <cow@altlinux.org> 2.1-alt11.git3f9389ed
 - sync with the latest version of 2.1 branch (closes: #40084)
 - build ppc64le version using a separate fork package
