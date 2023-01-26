@@ -2,7 +2,7 @@
 %define optflags_lto %nil
 
 Name: crtools-ovz
-Version: 3.15.4.16
+Version: 3.15.5.3
 Release: alt1
 
 Summary: Utility to checkpoint/restore tasks for OpenVZ containers
@@ -114,6 +114,9 @@ vm-run --kvm=cond --sbin --udevd make test || :
 %python3_sitelibdir/crit-*.egg-info
 
 %changelog
+* Wed Jan 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.15.5.3-alt1
+- 3.15.5.3
+
 * Sun Dec 11 2022 Andrew A. Vasilyev <andy@altlinux.org> 3.15.4.16-alt1
 - 3.15.4.16
 - add python libs for p.haul-ovz (instead of python3-module-criu)
