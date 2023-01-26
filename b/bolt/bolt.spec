@@ -3,7 +3,7 @@
 %def_enable test
 
 Name: bolt
-Version: 0.9.3
+Version: 0.9.5
 Release: alt1
 Summary: Thunderbolt device manager
 Group: System/Libraries
@@ -74,6 +74,12 @@ mentioned tasks.
 %ghost %dir %_localstatedir/boltd
 
 %changelog
+* Thu Jan 26 2023 L.A. Kostis <lakostis@altlinux.ru> 0.9.5-alt1
+- 0.9.5.
+
+* Mon Dec 05 2022 L.A. Kostis <lakostis@altlinux.ru> 0.9.4-alt1
+- 0.9.4.
+
 * Mon Sep 26 2022 L.A. Kostis <lakostis@altlinux.ru> 0.9.3-alt1
 - 0.9.3.
 
