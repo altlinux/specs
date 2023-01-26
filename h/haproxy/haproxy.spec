@@ -7,7 +7,7 @@
 %def_enable lua
 
 Name: haproxy
-Version: 2.6.6
+Version: 2.6.8
 Release: alt1
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
@@ -20,6 +20,7 @@ Source1: %name.cfg
 Source2: %name.init
 Source3: %name.logrotate
 Source4: %name.service
+Source5: %name.sysconfig
 
 BuildRequires: libpcre2-devel zlib-devel libssl-devel libsystemd-devel
 %{?_enable_lua:BuildRequires: liblua5-devel >= 5.3}
@@ -44,40 +45,33 @@ risking the system's stability.
 %setup
 
 %build
-# Recommended optimization option for x86 builds
-%ifarch %ix86 x86_64
-regparm_opts="USE_REGPARM=1"
-%endif
-
+%make_build V=1 IGNOREGIT=1 CPU="generic" TARGET="linux-glibc" USE_OPENSSL=1 USE_PCRE2=1 USE_SLZ=1 %{?_enable_lua:USE_LUA=1} \
 %ifarch mipsel
-addlib_opts=ADDLIB=-latomic
+    USE_LIBATOMIC=1 \
 %endif
+    USE_SYSTEMD=1 USE_PROMEX=1 PREFIX="%_prefix" DEFINE=-DMAX_SESS_STKCTR=12 ADDINC="%optflags"
 
-%make_build CPU="generic" TARGET="linux-glibc" USE_OPENSSL=1 USE_PCRE2=1 USE_ZLIB=1 USE_SYSTEMD=1 USE_PROMEX=1 %{?_enable_lua:USE_LUA=1} \
-	${regparm_opts:-} ${addlib_opts:-} PREFIX="%_prefix" ADDINC="$(pcre2-config --cflags)" CFLAGS="%optflags"
-
-#pushd admin/halog
-#%make halog OPTIMIZE="%optflags"
-#popd
-%make admin/halog/halog OPTIMIZE="%optflags"
-
-#pushd contrib/iprange
-#%make iprange OPTIMIZE="%optflags"
-#popd
+%make admin/halog/halog ADDINC="%optflags"
+pushd admin/iprange
+%make OPTIMIZE="%optflags"
+popd
 
 %install
 %make_install install-bin DESTDIR=%buildroot PREFIX="%_prefix" TARGET="linux-glibc"
 %make_install install-man DESTDIR=%buildroot PREFIX="%_prefix"
 
 install -p -D -m 0644 %SOURCE1 %buildroot%haproxy_confdir/%name.cfg
+install -d -m 0755 %buildroot%haproxy_confdir/conf.d
 install -D -m 0755 %SOURCE2 %buildroot%_initrddir/haproxy
+install -p -D -m 0644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name
 install -p -D -m 0644 %SOURCE4 %buildroot%_unitdir/%name.service
 install -p -D -m 0644 %SOURCE3 %buildroot%_logrotatedir/%name
 install -d -m 0755 %buildroot%haproxy_home
 install -d -m 0755 %buildroot%haproxy_datadir
 install -d -m 0755 %buildroot%_bindir
 install -p -m 0755 admin/halog/halog %buildroot%_bindir/halog
-#install -p -m 0755 contrib/iprange/iprange %buildroot%_bindir/iprange
+install -p -m 0755 admin/iprange/iprange %buildroot%_bindir/iprange
+install -p -m 0755 admin/iprange/iprange %buildroot%_bindir/ip6range
 cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 
 
@@ -95,10 +89,11 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %files
 %doc CHANGELOG LICENSE README doc/architecture.txt doc/configuration.txt doc/intro.txt doc/management.txt doc/proxy-protocol.txt examples/*.cfg
 %dir %haproxy_confdir
+%dir %haproxy_confdir/conf.d
 %config(noreplace) %haproxy_confdir/%name.cfg
-%dir %haproxy_datadir
-%haproxy_datadir/*
-%_logrotatedir/%name
+%config(noreplace) %_sysconfdir/sysconfig/%name
+%config(noreplace) %_logrotatedir/%name
+%haproxy_datadir
 %_initrddir/%name
 %_unitdir/%name.service
 %_sbindir/*
@@ -107,6 +102,12 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Thu Jan 26 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.8-alt1
+- 2.6.8
+- build iprange utils
+- add support configs dir /etc/haproxy/conf.d
+- fixed CFLAGS (ALT #45005)
+
 * Sat Nov 05 2022 Petr Usoltsev <prohorp@altlinux.org> 2.6.6-alt1
 - 2.6.6
 
