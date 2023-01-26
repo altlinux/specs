@@ -4,17 +4,18 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.4
+Version: 1.1.0
 Release: alt1
-
 Summary: Backport of PEP 654 (exception groups)
 License: MIT
 Group: Development/Python3
 VCS: https://github.com/agronholm/exceptiongroup
 Url: https://pypi.org/project/exceptiongroup
-
+BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+
+%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-python3
 
@@ -24,10 +25,6 @@ BuildRequires: python3(flit_scm)
 %if_with check
 BuildRequires: python3(pytest)
 %endif
-
-BuildArch: noarch
-
-%py3_provides %pypi_name
 
 %description
 Backport of PEP 654 (exception groups)
@@ -54,7 +51,7 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -vra
 
 %files
 %doc README.rst
@@ -62,6 +59,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Jan 24 2023 Stanislav Levin <slev@altlinux.org> 1.1.0-alt1
+- 1.0.4 -> 1.1.0.
+
 * Wed Nov 16 2022 Stanislav Levin <slev@altlinux.org> 1.0.4-alt1
 - 1.0.1 -> 1.0.4.
 

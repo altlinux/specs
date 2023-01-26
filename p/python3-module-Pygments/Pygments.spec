@@ -4,12 +4,12 @@
 %def_with check
 
 Name: python3-module-Pygments
-Version: 2.13.0
+Version: 2.14.0
 Release: alt1
 
 Summary: Pygments is a syntax highlighting package written in Python
 
-License: BSD
+License: BSD-2-Clause
 Group: Development/Python3
 Url: https://pygments.org/
 VCS: https://github.com/pygments/pygments.git
@@ -27,7 +27,6 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
 %if_with check
-BuildRequires: python3(lxml)
 BuildRequires: python3(pytest)
 %endif
 
@@ -62,16 +61,18 @@ ln -s pygmentize3 %buildroot%_bindir/pygmentize.py3
 rm -fv %buildroot%python3_sitelibdir/pygments/sphinxext.py
 
 %check
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -vra
 
 %files
-%doc LICENSE
 %_bindir/pygmentize3
 %_bindir/pygmentize.py3
 %python3_sitelibdir/pygments/
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Tue Jan 24 2023 Stanislav Levin <slev@altlinux.org> 2.14.0-alt1
+- 2.13.0 -> 2.14.0.
+
 * Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 2.13.0-alt1
 - 2.12.0 -> 2.13.0.
 
@@ -141,7 +142,7 @@ rm -fv %buildroot%python3_sitelibdir/pygments/sphinxext.py
 - VErsion 1.6
 
 * Tue Apr 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt2
-- Moved %_bindir/pygmentize for Python 3 into python3-module-%oname
+- Moved %%_bindir/pygmentize for Python 3 into python3-module-%%oname
 
 * Mon Apr 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1
 - Version 1.5

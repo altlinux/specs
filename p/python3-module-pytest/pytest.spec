@@ -7,17 +7,24 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 7.2.0
+Version: 7.2.1
 Release: alt1
-
 Summary: Python test framework
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pytest/
 VCS: https://github.com/pytest-dev/pytest.git
-
+BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+
+%py3_requires packaging
+%if %tomli
+%py3_requires tomli
+%endif
+%if %exceptiongroup
+%py3_requires exceptiongroup
+%endif
 
 BuildRequires(pre): rpm-build-python3
 
@@ -45,7 +52,7 @@ BuildRequires: python3(hypothesis)
 BuildRequires: python3(mock)
 BuildRequires: python3(requests)
 BuildRequires: python3(xmlschema)
-BuildRequires: python3-module-Pygments > 2.4.2
+BuildRequires: python3-module-Pygments >= 2.14.0
 
 BuildRequires: /dev/pts
 BuildRequires: /dev/shm
@@ -55,16 +62,6 @@ BuildRequires: python3(decorator)
 BuildRequires: python3(jinja2)
 BuildRequires: python3(numpy)
 BuildRequires: python3(pexpect)
-%endif
-
-BuildArch: noarch
-
-%py3_requires packaging
-%if %tomli
-%py3_requires tomli
-%endif
-%if %exceptiongroup
-%py3_requires exceptiongroup
 %endif
 
 # don't provide limited compat shim for python3(py) from python3-module-py
@@ -112,7 +109,7 @@ ln -s pytest3 %buildroot%_bindir/pytest-3
 %check
 # add workaround for https://github.com/pytest-dev/pytest/issues/6297
 export TERM=xterm
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -vra
 
 %files
 %doc CHANGELOG.rst README.rst
@@ -129,6 +126,9 @@ export TERM=xterm
 %_bindir/pytest-3
 
 %changelog
+* Tue Jan 24 2023 Stanislav Levin <slev@altlinux.org> 7.2.1-alt1
+- 7.2.0 -> 7.2.1.
+
 * Fri Nov 11 2022 Stanislav Levin <slev@altlinux.org> 7.2.0-alt1
 - 7.1.3 -> 7.2.0.
 

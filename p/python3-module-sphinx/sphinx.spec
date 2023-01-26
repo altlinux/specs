@@ -1,33 +1,43 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name Sphinx
+%define oname sphinx
 
 %def_enable docs
 %def_enable check
 
-%define oname sphinx
 %define sphinx3_dir %python3_sitelibdir_noarch/%oname
+
+# should be synced to Requires-Dist
+%define dependencies \\\
+python3(sphinxcontrib.applehelp) \\\
+python3(sphinxcontrib.devhelp) \\\
+python3(sphinxcontrib.jsmath) \\\
+python3(sphinxcontrib.htmlhelp) \\\
+python3(sphinxcontrib.serializinghtml) \\\
+python3(sphinxcontrib.qthelp) \\\
+python3(jinja2) \\\
+python3(Pygments) \\\
+python3(docutils) \\\
+python3(snowballstemmer) \\\
+python3(babel) \\\
+python3(alabaster) \\\
+python3(imagesize) \\\
+python3(requests) \\\
+python3(packaging) \\\
+%nil
 
 Name: python3-module-%oname
 Epoch: 1
 Version: 5.0.1
-Release: alt1
+Release: alt2
 
 Summary: Tool for producing documentation for Python projects
 License: BSD
 Group: Development/Python3
 Url: http://sphinx-doc.org
+VCS: https://github.com/sphinx-doc/sphinx
 
 BuildArch: noarch
-
-%py3_requires sphinxcontrib.applehelp
-%py3_requires sphinxcontrib.devhelp
-%py3_requires sphinxcontrib.htmlhelp
-%py3_requires sphinxcontrib.jsmath
-%py3_requires sphinxcontrib.qthelp
-%py3_requires alabaster
-%py3_requires requests
-
-Provides: python3-module-objects.inv
-Obsoletes: python3-module-objects.inv
 
 # Source0-url: https://github.com/sphinx-doc/sphinx/archive/refs/tags/v%version.tar.gz
 Source0: sphinx-%version.tar.gz
@@ -36,41 +46,35 @@ Source2: macro3
 Source3: refcounting.py
 
 Patch1: %oname-alt-tests-offline.patch
+Patch2: Fix-tests-for-Pygments-2.14.patch
+
+Requires: %(echo "%dependencies")
+Provides: python3-module-objects.inv
+Obsoletes: python3-module-objects.inv
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python-sphinx-objects.inv
 BuildRequires: /usr/bin/convert
 
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 %if_enabled docs
-BuildRequires: python3(docutils)
+# synced to .[docs]
+BuildRequires: %(echo "%dependencies")
+BuildRequires: python3(sphinxcontrib.websupport)
 %endif
 
 %if_enabled check
-BuildRequires: python3(_testcapi)
+# synced to .[test]
+BuildRequires: %(echo "%dependencies")
 BuildRequires: python3(pytest)
-BuildRequires: python3-module-html5lib
-BuildRequires: python3-module-nose
-BuildRequires: python3(typing)
-BuildRequires: python3(sphinxcontrib.websupport)
-BuildRequires: python3(sphinxcontrib.serializinghtml)
-BuildRequires: python3(sphinxcontrib.applehelp)
-BuildRequires: python3(sphinxcontrib.devhelp)
-BuildRequires: python3(sphinxcontrib.htmlhelp)
-BuildRequires: python3(sphinxcontrib.qthelp)
-BuildRequires: python3(sphinxcontrib.jsmath)
-# For running the new sphinx itself (and generating the docs):
-BuildRequires: python3(imagesize)
-BuildRequires: python3(mock)
-BuildRequires: python3(docutils)
-BuildRequires: python3(jinja2)
-BuildRequires: python3(pygments)
-BuildRequires: python3-module-SQLAlchemy >= 1.0.8-alt2
-# These 2 must be recent to pass the tests:
-BuildRequires: python3-module-Pygments >= 2.1.3
-BuildRequires: python3-module-alabaster >= 0.7.6-alt2.git20150703
-# Tox test suite
-BuildRequires: python3-module-Cython python3-module-pytest-cov python3-module-tox
+BuildRequires: python3(html5lib)
+BuildRequires: python3(cython)
 %endif
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/sphinx/tests/roots/
 
 %description
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -94,7 +98,6 @@ This package destinated for development of Python modules.
 Summary: Tests for Sphinx
 Group: Development/Python3
 Requires: python3-module-%oname = %EVR
-%py3_requires nose
 %add_python3_req_skip compiler
 %add_python3_req_skip missing_module missing_package1 missing_package2
 %add_python3_req_skip missing_package3
@@ -151,7 +154,7 @@ This packages contains RPM macros for build with Sphinx.
 
 %prep
 %setup -n sphinx-%version
-%patch1 -p1
+%autopatch -p1
 
 # ship the stable releases
 sed -i '/^tag_build =.*/d;/^tag_date =.*/d' setup.cfg
@@ -166,7 +169,7 @@ cp %SOURCE3 sphinx/ext/
 install -pm644 %SOURCE2 .
 
 %build
-%python3_build
+%pyproject_build
 
 %if_enabled docs
 # docs
@@ -177,7 +180,7 @@ export PYTHONPATH=`pwd`/build/lib
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 cp -R tests %buildroot%sphinx3_dir/
 for i in $(find %buildroot%sphinx3_dir/tests -type d)
@@ -228,19 +231,7 @@ cat <<\EOF >%buildroot%_rpmlibdir/python3-module-%oname-files.req.list
 EOF
 
 %check
-# Tried to export NOSE_PROCESSES=%%__nprocs, but it makes a lot tests fail.
-export LC_ALL=en_US.utf8 # some tests fail otherwise, because they use paths with Unicode
-export TESTS_NO_NETWORK=1
-
-# disable remote tests
-rm -f tests/test_build_linkcheck.py
-export TESTS_NO_NETWORK=yes
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOX_TESTENV_PASSENV="PIP_NO_BUILD_ISOLATION TESTS_NO_NETWORK PYTHONPATH"
-export TOXENV=py3
-export PYTHONPATH=`pwd`/build/lib
-tox.py3 --sitepackages -vvr -s false -- -vra
+%pyproject_run_pytest --ignore tests/test_build_linkcheck.py
 
 %files
 %_bindir/*
@@ -251,7 +242,7 @@ tox.py3 --sitepackages -vvr -s false -- -vra
 %exclude %sphinx3_dir/pickle
 %exclude %sphinx3_dir/doctrees
 %endif
-%python3_sitelibdir/Sphinx-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %files devel
 %files tests
@@ -272,6 +263,9 @@ tox.py3 --sitepackages -vvr -s false -- -vra
 %_rpmlibdir/python3-module-%oname-files.req.list
 
 %changelog
+* Wed Jan 25 2023 Stanislav Levin <slev@altlinux.org> 1:5.0.1-alt2
+- Fixed FTBFS (Pygments 2.14.0).
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 1:5.0.1-alt1
 - Autobuild version bump to 5.0.1
 
