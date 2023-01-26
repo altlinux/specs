@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: 	  buildnode-audit-rules
-Version:  0.1.1
+Version:  0.1.2
 Release:  alt1
 
 Summary:  Manage audit rules for logging package build processes
@@ -45,6 +45,10 @@ auditctl(8). The resulting configuration is then verified.
 %_man1dir/%name.1.*
 
 %changelog
+* Thu Jan 26 2023 Paul Wolneykien <manowar@altlinux.org> 0.1.2-alt1
+- Fixed reading the list of hashmen: make it ready for numeric
+  user IDs.
+
 * Thu Jan 19 2023 Paul Wolneykien <manowar@altlinux.org> 0.1.1-alt1
 - Fixed error in case when the audit rule list is empty.
 - Strongly require auditd.service.
