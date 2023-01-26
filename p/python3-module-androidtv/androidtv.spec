@@ -1,5 +1,5 @@
 Name: python3-module-androidtv
-Version: 0.0.68
+Version: 0.0.70
 Release: alt1
 
 Summary: State information and control of Android TV  devices via ADB
@@ -31,6 +31,9 @@ BuildRequires: python3(wheel)
 %python3_sitelibdir/androidtv-%version.dist-info
 
 %changelog
+* Thu Jan 26 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.70-alt1
+- 0.0.70 released
+
 * Fri Jul 29 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.0.68-alt1
 - 0.0.68 released
 
