@@ -5,7 +5,7 @@
 
 Name: liburing
 Version: 2.3
-Release: alt1
+Release: alt2
 
 Summary: The io_uring library
 License: (GPL-2.0-only AND LGPL-2.1-or-later) OR MIT
@@ -28,6 +28,7 @@ and also a simplified interface for applications that don't need
 %package devel
 Summary: Development files for Linux-native io_uring I/O access library
 Group: Development/C
+Requires: %name = %EVR
 
 %description devel
 This package provides header files to include and libraries to link with
@@ -50,6 +51,10 @@ for the Linux-native io_uring.
 %install
 %makeinstall_std V=1
 rm %buildroot%_libdir/liburing.a
+# Reuse probe test as a tool to test that io_uring is available.
+install -Dp test/probe.t %buildroot%_bindir/io_uring_ok
+
+%define _customdocdir %_docdir/%name
 
 %check
 # List of available probes
@@ -82,11 +87,13 @@ TEST_EXCLUDE="
 %endif
 
 %files
+%_bindir/io_uring_ok
 %_libdir/liburing.so.*
 %doc COPYING
 
 %files devel
 %doc README LICENSE COPYING.GPL SECURITY.md CHANGELOG examples/*.c
+%exclude %_docdir/%name/COPYING
 %_includedir/*
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
@@ -95,6 +102,9 @@ TEST_EXCLUDE="
 %_man7dir/*
 
 %changelog
+* Thu Jan 26 2023 Vitaly Chikunov <vt@altlinux.org> 2.3-alt2
+- Add 'io_uring_ok' tool.
+
 * Thu Nov 03 2022 Vitaly Chikunov <vt@altlinux.org> 2.3-alt1
 - Update to liburing-2.3 (2022-10-26).
 - spec: Better strace run in %%check.
