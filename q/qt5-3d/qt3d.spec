@@ -1,9 +1,10 @@
 %define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
 %global qt_module qt3d
+%define optflags_lto %nil
 
 Name: qt5-3d
 Version: 5.15.8
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - Qt3D QML bindings and C++ APIs
@@ -16,7 +17,7 @@ Source: %qt_module-everywhere-src-%version.tar
 
 BuildRequires(pre): rpm-build-ubt rpm-macros-qt5 qt5-tools
 BuildRequires: qt5-base-devel-static
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel libassimp-devel
 BuildRequires: pkgconfig(Qt5Quick) pkgconfig(Qt5XmlPatterns) pkgconfig(Qt5Qml) pkgconfig(Qt5Network) pkgconfig(Qt5Core) pkgconfig(Qt5OpenGL)
 BuildRequires: pkgconfig(assimp)
 
@@ -225,6 +226,9 @@ export QT_HASH_SEED=0
 %_qt5_examplesdir/*
 
 %changelog
+* Thu Jan 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt2
+- disable LTO
+
 * Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
 - new version
 
