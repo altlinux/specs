@@ -1,6 +1,6 @@
 Name:     PC6001VX
 Version:  4.1.2
-Release:  alt1
+Release:  alt2
 
 Summary:  Cross platform version of NEC PC-6001 emulator based on PC6001V
 License:  LGPL-2.1
@@ -12,6 +12,10 @@ Packager: Artyom Bystrov <arbars@altlinux.org>
 Source:   %name-%version.tar
 Source1: PC6001VX.eng.6
 Source2: PC6001VX.rus.6
+Source3: PC6001VX_ru.ts
+Source4: PC6001VX_ru.qm
+Patch1: 0001-Add-russian-localization.patch
+Patch2: 0002-Fix-locale-choosing.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libSDL2_mixer-devel libSDL2-devel libpng-devel zlib-devel ninja-build qt6-base-devel qt6-websockets-devel qt6-shadertools-devel qt6-5compat-devel qt6-multimedia-devel
@@ -37,6 +41,10 @@ and program will start.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
+
+cp %SOURCE3 %SOURCE4 src/Qt/translation/
 
 %build
 
@@ -58,6 +66,7 @@ Type=Application
 Name= PC6001VX
 GenericName=PC6001VX
 Comment=%{summary}
+Comment[ru]=Эмулятор компьютера NEC PC-6001
 Exec=%name
 Icon=%{name}.png
 Categories=Game;X-MandrivaLinux-MoreApplications-Emulators;
@@ -85,6 +94,8 @@ install -D -m 0644 %SOURCE2 %buildroot%_man6dir/ru/man6/%name.6
 %doc LICENSE README.adoc
 
 %changelog
+* Wed Jan 25 2023 Artyom Bystrov <arbars@altlinux.org> 4.1.2-alt2
+- Add experimental support of russian locale
 * Mon Jan 09 2023 Artyom Bystrov <arbars@altlinux.org> 4.1.2-alt1
 - new version 4.1.2
 
