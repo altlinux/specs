@@ -5,7 +5,7 @@
 %def_enable prebuilded_frontend
 
 Name:		grafana
-Version:	9.3.1
+Version:	9.3.4
 Release:	alt1
 Summary:	Metrics dashboard and graph editor
 
@@ -201,6 +201,9 @@ fi
 %_datadir/%name
 
 %changelog
+* Wed Jan 25 2023 Alexey Shabalin <shaba@altlinux.org> 9.3.4-alt1
+- 9.3.4
+
 * Wed Dec 07 2022 Alexey Shabalin <shaba@altlinux.org> 9.3.1-alt1
 - 9.3.1
 - Fixes:
