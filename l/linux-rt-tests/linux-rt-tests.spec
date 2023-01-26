@@ -4,23 +4,25 @@
 %set_verify_elf_method strict
 
 # rt-tests is taken by perl tests for RT
-Name:     linux-rt-tests
-Version:  2.4
-Release:  alt1
-
-Summary:  Programs that test various rt-linux features
-License:  GPL-2.0-or-later
-Group:    System/Kernel and hardware
-Url:      https://wiki.linuxfoundation.org/realtime/documentation/howto/tools/rt-tests
-Vcs:      git://git.kernel.org/pub/scm/utils/rt-tests/rt-tests.git
+Name:    linux-rt-tests
+Version: 2.5
+Release: alt1
+Summary: Programs that test various rt-linux features
+License: GPL-2.0-or-later
+Group:   System/Kernel and hardware
+Url:     https://wiki.linuxfoundation.org/realtime/documentation/howto/tools/rt-tests
+Vcs:     git://git.kernel.org/pub/scm/utils/rt-tests/rt-tests.git
 
 Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnuma-devel
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: rpm-build-vm
+}}
 
 %description
 rt-tests is a test suite, that contains programs (such as cyclictest,
-hwlatdetect, hackbench) to test various Real Time Linux features.
+hwlatdetect, hackbench) that test various rt-linux features.
 
 %prep
 %setup
@@ -32,6 +34,9 @@ hwlatdetect, hackbench) to test various Real Time Linux features.
 %install
 %makeinstall_std prefix=/usr
 
+%check
+vm-run --kvm=cond %buildroot%_bindir/cyclictest -m -Sp99 -t  -D60 -q
+
 %files
 %doc COPYING MAINTAINERS README.markdown src/hwlatdetect/hwlat.txt
 %_bindir/*
@@ -39,6 +44,9 @@ hwlatdetect, hackbench) to test various Real Time Linux features.
 %_man8dir/*.8*
 
 %changelog
+* Thu Jan 26 2023 Vitaly Chikunov <vt@altlinux.org> 2.5-alt1
+- Update to v2.5 (2023-01-20).
+
 * Sun Jul 10 2022 Vitaly Chikunov <vt@altlinux.org> 2.4-alt1
 - Updated to v2.4 (2022-07-08).
 
