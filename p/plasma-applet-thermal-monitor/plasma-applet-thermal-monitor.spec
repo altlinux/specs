@@ -1,12 +1,12 @@
 Name: plasma-applet-thermal-monitor
-Version: 1.2.9
-Release: alt3
+Version: 1.3.0
+Release: alt1
 %K5init altplace
 
-Group: Graphical desktop/KDE
 Summary: Plasma 5 applet for monitoring CPU, GPU and other available temperature sensors
-Url: https://github.com/kotelnik/plasma-applet-thermal-monitor
 License: GPL-2.0
+Group: Graphical desktop/KDE
+Url: https://gitlab.com/agurenko/plasma-applet-thermal-monitor/
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -37,6 +37,10 @@ sensors.
 %_datadir/metainfo/org.kde.thermalMonitor.appdata.xml
 
 %changelog
+* Thu Jan 26 2023 Andrey Cherepanov <cas@altlinux.org> 1.3.0-alt1
+- New version.
+- New upstream.
+
 * Fri Jul 16 2021 Andrey Cherepanov <cas@altlinux.org> 1.2.9-alt3
 - FTBFS: do not package service file.
 
