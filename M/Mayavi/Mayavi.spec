@@ -8,7 +8,7 @@
 %define oname mayavi
 
 Name:           Mayavi
-Version:        4.7.4
+Version:        4.8.1
 Release:        alt1
 Summary:        Scientific data 3-dimensional visualizer
 
@@ -16,17 +16,16 @@ Group:          Graphics
 License:        BSD and BSD-3-Clause and BSD-style and EPL-1.0 and LGPL and LGPLv2+ and LGPLv3+
 URL:            http://code.enthought.com/projects/mayavi/
 
-# https://github.com/enthought/mayavi.git
+VCS:            https://github.com/enthought/mayavi.git
 Source:         %name-%version.tar
 Source1:        Mayavi.desktop
 Source2:        tvtk_doc.desktop
 
-Patch1: %name-alt-reqs.patch
-Patch2: %name-alt-test-dependencies.patch
-Patch3: %name-alt-no-docs.patch
+Patch1: %name-alt-test-dependencies.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: python3-module-vtk /proc
 BuildRequires: desktop-file-utils
@@ -67,11 +66,6 @@ Group: Development/Python3
 Conflicts: %name < %EVR
 %add_python3_req_skip wx wxversion
 %add_python3_req_skip ipywidgets ipyevents
-%add_python3_req_skip enthought.mayavi.core.ui.mayavi_scene
-%add_python3_req_skip enthought.mayavi.tools.mlab_scene_model
-%add_python3_req_skip enthought.traits.api
-%add_python3_req_skip enthought.traits.ui.api
-%add_python3_req_skip enthought.tvtk.pyface.scene_editor
 Requires: python3-module-tvtk = %EVR
 
 %description -n python3-module-%oname
@@ -137,24 +131,20 @@ This package contains documentation for Mayavi, scientific data
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%if_disabled docs
-%patch3 -p1
-%endif
 
 %build
 %if_enabled docs
 export PYTHONPATH=$PWD
 xvfb-run \
 %endif
-python3 setup.py build
+%pyproject_build
 
 %install
 %if_enabled docs
 export PYTHONPATH=$PWD
 xvfb-run \
 %endif
-python3 setup.py install --skip-build --root=%buildroot
+%pyproject_install
 
 install -d %buildroot%_man1dir
 install -p -m644 docs/mayavi2.man %buildroot%_man1dir/mayavi2.1
@@ -210,6 +200,9 @@ find %buildroot%python3_sitelibdir -type f -name '*py' -exec \
 %endif
 
 %changelog
+* Mon Jan 23 2023 Anton Vyatkin <toni@altlinux.org> 4.8.1-alt1
+- new version 4.8.1
+
 * Tue Dec 14 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4.7.4-alt1
 - Updated to upstream version 4.7.4.
 
