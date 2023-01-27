@@ -4,17 +4,19 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.10.1
+Version: 5.10.2
 Release: alt1
-
 Summary: Read resources from Python packages
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/importlib-resources
 VCS: https://github.com/python/importlib_resources.git
-
+BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+
+%py3_provides %pypi_name
+Provides: python3-module-importlib_resources = %EVR
 
 BuildRequires(pre): rpm-build-python3
 
@@ -27,11 +29,6 @@ BuildRequires: python3(setuptools-scm)
 BuildRequires: python3(test)
 BuildRequires: python3(pytest)
 %endif
-
-BuildArch: noarch
-
-%py3_provides %pypi_name
-Provides: python3-module-importlib_resources = %EVR
 
 %description
 %pypi_name is a backport of Python standard library importlib.resources
@@ -67,7 +64,7 @@ fi
 rm -r %buildroot%python3_sitelibdir/importlib_resources/tests/
 
 %check
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -vra
 
 %files
 %doc README.rst
@@ -75,6 +72,9 @@ rm -r %buildroot%python3_sitelibdir/importlib_resources/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Jan 27 2023 Stanislav Levin <slev@altlinux.org> 5.10.2-alt1
+- 5.10.1 -> 5.10.2.
+
 * Wed Dec 07 2022 Stanislav Levin <slev@altlinux.org> 5.10.1-alt1
 - 5.10.0 -> 5.10.1.
 
