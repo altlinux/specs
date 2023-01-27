@@ -1,7 +1,7 @@
 
 Name: vzctl
 Version: 7.0.254
-Release: alt1
+Release: alt2
 
 Summary: OpenVZ Virtual Environments control utility
 License: GPLv2
@@ -23,7 +23,8 @@ Requires: libvzctl >= 7.0.714
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: glibc-devel libuuid-devel
-BuildRequires: systemd-devel libudev-devel
+BuildRequires: libudev-devel
+# BuildRequires: systemd-devel libudev-devel
 BuildRequires: libvzctl-devel >= 7.0.639
 BuildRequires: libploop-devel >= 7.0.199
 BuildRequires: kernel-headers-ovz-el7 >= 3.10.0
@@ -70,7 +71,8 @@ make install \
 	VZCTLLOCKDIR=%vzctl_lockdir \
 	VZSPOOLDIR=%spooldir \
 	BASHCOMPLDIR=%bashcompldir \
-	LOGRDIR=%_logrotatedir
+	LOGRDIR=%_logrotatedir \
+	MODULESLOADDDIR=/lib/modules-load.d
 
 ln -s -r %buildroot%_unitdir/vzevent.service %buildroot%_unitdir/vzeventd.service
 
@@ -121,9 +123,12 @@ exit 0
 %config(noreplace) %vzdir/vz.conf
 %config(noreplace) %_sysconfdir/modprobe.d/*.conf
 %config %_sysconfdir/sysctl.d/*.conf
-%config %_sysconfdir/modules-load.d/*.conf
+%config /lib/modules-load.d/*.conf
 
 %changelog
+* Fri Jan 27 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.0.254-alt2
+- change modules-load.d directory path to /lib
+
 * Tue Jun 28 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.0.254-alt1
 - 7.0.254
 
