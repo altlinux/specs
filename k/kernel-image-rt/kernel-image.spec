@@ -6,7 +6,7 @@
 Name: kernel-image-%kflavour
 %define kernel_base_version	5.10
 %define kernel_sublevel	.162
-%define kernel_rt_release	rt78
+%define kernel_rt_release	rt79
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 Release: alt1.%kernel_rt_release
@@ -425,6 +425,10 @@ check-pesign-helper /boot/vmlinuz-%kversion-%flavour-%krelease
 %files checkinstall
 
 %changelog
+* Thu Jan 26 2023 Kernel Bot <kernelbot@altlinux.org> 5.10.162-alt1.rt79
+- v5.10.162-rt79 (2023-01-26).
+- Enable xtables modules (ALT#44829).
+
 * Mon Jan 16 2023 Kernel Bot <kernelbot@altlinux.org> 5.10.162-alt1.rt78
 - v5.10.162-rt78 (2023-01-04).
 
