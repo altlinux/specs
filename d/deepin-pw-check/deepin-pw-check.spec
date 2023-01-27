@@ -1,7 +1,10 @@
 %define soname 1
+%define llvm_ver 15
+
+%def_disable clang
 
 Name: deepin-pw-check
-Version: 5.1.17
+Version: 5.1.18
 Release: alt1
 Summary: Verify the validity of the password for DDE
 License: GPL-3.0+
@@ -12,7 +15,14 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: deepin-pw-check-5.1.8-alt-exclude-cracklib.patch
 
+%if_enabled clang
+#BuildRequires(pre): rpm-macros-llvm-common
+BuildRequires: clang%llvm_ver.0-devel
+BuildRequires: lld%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver.0-devel
+%else
 BuildRequires: gcc-c++
+%endif
 BuildRequires: rpm-build-golang
 BuildRequires: deepin-gettext-tools
 BuildRequires: libpam0-devel
@@ -61,6 +71,11 @@ sed -i 's|/usr/lib|%_libdir|' \
   misc/pkgconfig/libdeepin_pw_check.pc
 
 %build
+%if_enabled clang
+export CC=clang-%llvm_ver
+export CXX=clang++-%llvm_ver
+export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+%endif
 export GOPATH="%go_path/src/github.com/linuxdeepin/dde-api/vendor"
 export PAM_MODULE_DIR=/%_lib/security
 export PKG_FILE_DIR=%_libdir/pkgconfig
@@ -99,6 +114,9 @@ export GO111MODULE=off
 %_libdir/libdeepin_pw_check.a
 
 %changelog
+* Fri Jan 27 2023 Leontiy Volodin <lvol@altlinux.org> 5.1.18-alt1
+- New version (5.1.18).
+
 * Tue Nov 29 2022 Leontiy Volodin <lvol@altlinux.org> 5.1.17-alt1
 - New version (5.1.17).
 
