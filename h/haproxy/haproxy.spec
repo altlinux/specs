@@ -8,7 +8,7 @@
 
 Name: haproxy
 Version: 2.6.8
-Release: alt1
+Release: alt2
 
 Summary: HA-Proxy is a TCP/HTTP reverse proxy for high availability environments
 License: GPLv2+
@@ -52,9 +52,6 @@ risking the system's stability.
     USE_SYSTEMD=1 USE_PROMEX=1 PREFIX="%_prefix" DEFINE=-DMAX_SESS_STKCTR=12 ADDINC="%optflags"
 
 %make admin/halog/halog ADDINC="%optflags"
-pushd admin/iprange
-%make OPTIMIZE="%optflags"
-popd
 
 %install
 %make_install install-bin DESTDIR=%buildroot PREFIX="%_prefix" TARGET="linux-glibc"
@@ -70,8 +67,6 @@ install -d -m 0755 %buildroot%haproxy_home
 install -d -m 0755 %buildroot%haproxy_datadir
 install -d -m 0755 %buildroot%_bindir
 install -p -m 0755 admin/halog/halog %buildroot%_bindir/halog
-install -p -m 0755 admin/iprange/iprange %buildroot%_bindir/iprange
-install -p -m 0755 admin/iprange/iprange %buildroot%_bindir/ip6range
 cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 
 
@@ -102,6 +97,9 @@ cp -p examples/errorfiles/* %buildroot%haproxy_datadir/
 %attr(-,%haproxy_user,%haproxy_group) %dir %haproxy_home
 
 %changelog
+* Fri Jan 27 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.8-alt2
+- revert: build iprange utils
+
 * Thu Jan 26 2023 Alexey Shabalin <shaba@altlinux.org> 2.6.8-alt1
 - 2.6.8
 - build iprange utils
