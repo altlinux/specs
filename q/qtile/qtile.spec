@@ -5,7 +5,7 @@
 
 Name: qtile
 Version: 0.22.1
-Release: alt1
+Release: alt2
 
 Summary: A full-featured, hackable tiling window manager written and configured in Python
 License: MIT
@@ -16,7 +16,9 @@ Url: http://www.qtile.org/
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-cairocffi
 BuildRequires: python3-module-cffi
 BuildRequires: python3-module-dbus-next
@@ -24,6 +26,7 @@ BuildRequires: python3-module-pywlroots
 BuildRequires: python3-module-setuptools_scm
 BuildRequires: python3-module-xcffib
 BuildRequires: python3-module-xkbcommon
+BuildRequires: libxcbutil-icccm-devel
 BuildRequires: libwlroots-devel
 BuildRequires: libcairo-devel
 BuildRequires: libpulseaudio-devel
@@ -71,10 +74,16 @@ BuildRequires: python3-module-numpydoc
 
 sed -i -e 's/pytest/pytest3/' docs/Makefile
 
+# NOTE(egori): remove this sed before building with wlroots 0.16.0
+# see: https://github.com/qtile/qtile/pull/3985
+sed -i -e 's/"wlroots"/":libwlroots.so.10"/' \
+    libqtile/backend/wayland/libinput_ffi_build.py
+
 %build
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-./scripts/ffibuild
-%python3_build
+export CFFI_TMPDIR=$(mktemp -d -t cffi_tempidr.XXXXXXXXX)
+./scripts/ffibuild -v
+%pyproject_build
 
 %if_with docs
 pushd docs
@@ -84,7 +93,7 @@ popd
 
 %install
 export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 # A workaround to run qtile from SDDM
 cat > %buildroot%_bindir/qtile-start <<EOF
@@ -102,7 +111,7 @@ install -Dm 644 resources/qtile-wayland.desktop -t %buildroot%_datadir/wayland-s
 find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 
 %check
-%__python3 -m pytest test
+%tox_check_pyproject
 
 %files
 %if_with docs
@@ -112,11 +121,15 @@ find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 %_bindir/qtile
 %_bindir/qtile-start
 %python3_sitelibdir/libqtile
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo qtile}
 %_datadir/xsessions/qtile.desktop
 %_datadir/wayland-sessions/qtile-wayland.desktop
 
 %changelog
+* Sat Jan 14 2023 Egor Ignatov <egori@altlinux.org> 0.22.1-alt2
+- fix FTBFS: build _libinput.so with old libwlroots 0.15.1
+- migrate to new python macros
+
 * Thu Sep 22 2022 Egor Ignatov <egori@altlinux.org> 0.22.1-alt1
 - new version 0.22.1
 

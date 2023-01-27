@@ -4,7 +4,7 @@
 
 Name: python3-module-pywlroots
 Version: 0.15.24
-Release: alt1
+Release: alt2
 
 Summary: Python binding to the wlroots library using cffi
 License: NCSA
@@ -14,14 +14,17 @@ Url: https://github.com/flacjacket/pywlroots
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires: rpm-macros-python3
-BuildRequires: rpm-build-python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-xkbcommon
+BuildRequires: python3-module-pywayland
 BuildRequires: libxkbcommon-devel
+BuildRequires: libwlroots10
 BuildRequires: libwlroots-devel
 BuildRequires: libinput-devel
 BuildRequires: libxcb-devel
-BuildRequires: python3-module-xkbcommon
-BuildRequires: python3-module-pywayland
+BuildRequires: libxcbutil-icccm-devel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -37,24 +40,30 @@ provide wlroots keyboard functionality.
 %patch0 -p1
 
 %build
+# NOTE(egori): revert '2ef42bb6a2a30f6595b29619cd712d1f38d86724' before building
+# with wlroots 0.16.0 see: https://github.com/flacjacket/pywlroots/pull/109
 %__python3 ./wlroots/ffi_build.py
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # hack to drop .abi3 from binaries
 find %buildroot -name '*.abi3*' -exec rename '.abi3' '' {} \;
 
 %check
-%__python3 -m pytest tests
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc LICENSE README.rst
 %python3_sitelibdir/wlroots
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo pywlroots}
 
 %changelog
+* Sun Jan 15 2023 Egor Ignatov <egori@altlinux.org> 0.15.24-alt2
+- fix FTBFS: build with old libwlroots 0.15.1
+
 * Sun Oct 30 2022 Egor Ignatov <egori@altlinux.org> 0.15.24-alt1
 - new version 0.15.24
 
