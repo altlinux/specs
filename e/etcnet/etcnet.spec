@@ -1,5 +1,5 @@
 Name:		etcnet
-Version:	0.9.26
+Version:	0.9.27
 Release:	alt1
 
 Summary:	/etc/net network configuration system
@@ -84,7 +84,7 @@ if [ $1 -eq 1 ]; then
 fi
 if [ $1 -eq 2 ]; then
 # Update.
-        grep -qs OVS_REMOVE %_sysconfdir/net/ifaces/default/options \
+	grep -qs OVS_REMOVE %_sysconfdir/net/ifaces/default/options \
 	|| echo 'OVS_REMOVE=yes' >> %_sysconfdir/net/ifaces/default/options
 fi
 
@@ -146,6 +146,9 @@ fi
 %files full
 
 %changelog
+* Fri Jan 27 2023 Alexey Shabalin <shaba@altlinux.org> 0.9.27-alt1
+- openvswitch: separate operations for remove and create port
+
 * Thu Jul 28 2022 Alexey Shabalin <shaba@altlinux.org> 0.9.26-alt1
 - vlan: set default reorder_hdr=on (Closes: #43330).
 
