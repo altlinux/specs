@@ -4,7 +4,7 @@
 
 Name: xmlrpc-c
 Version: 1.54.06
-Release: alt1
+Release: alt2
 
 Summary: XML-RPC C library - an implementation of the xmlrpc protocol
 License: BSD-3-Clause AND MIT
@@ -22,6 +22,9 @@ Patch2: 0001-cleanup-and-fix-libxml2-backend.patch
 Patch101: 0001-xmlrpc_server_abyss-use-va_args-properly.patch
 Patch102: 0002-Use-proper-datatypes-for-long-long.patch
 Patch103: 0003-allow-30x-redirections.patch
+
+# Patches from OpenNebula
+Patch201: xml_parse_huge.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libcurl-devel
@@ -111,6 +114,7 @@ The header file for developing applications that use
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
+%patch201 -p1
 
 %build
 autoconf
@@ -160,6 +164,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Fri Jan 27 2023 Alexey Shabalin <shaba@altlinux.org> 1.54.06-alt2
+- apply xml_parse_huge.patch for OpenNebula
+
 * Thu Sep 29 2022 Alexey Shabalin <shaba@altlinux.org> 1.54.06-alt1
 - 1.54.06
 
