@@ -5,16 +5,21 @@
 
 Name: python3-module-%pypi_name
 Version: 0.3.0
-Release: alt1
-
+Release: alt2
 Summary: Hatch plugin for versioning with your preferred VCS
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/hatch-vcs
 VCS: https://github.com/ofek/hatch-vcs.git
-
+BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+
+# lazy import
+%py3_requires setuptools_scm
+
+# PEP503 name
+%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-python3
 
@@ -28,14 +33,6 @@ BuildRequires: python3(hatchling)
 
 BuildRequires: python3(pytest)
 %endif
-
-BuildArch: noarch
-
-# PEP503 name
-%py3_provides %pypi_name
-
-# lazy import
-%py3_requires setuptools_scm
 
 %description
 %pypi_name provides a plugin for Hatch that uses your preferred version control
@@ -52,8 +49,7 @@ system (like Git) to determine project versions.
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject -- -vra tests
+%pyproject_run_pytest -vra tests
 
 %files
 %doc README.md
@@ -61,6 +57,9 @@ system (like Git) to determine project versions.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 27 2023 Stanislav Levin <slev@altlinux.org> 0.3.0-alt2
+- Fixed FTBFS (setuptools-scm 7.1.0).
+
 * Mon Dec 12 2022 Stanislav Levin <slev@altlinux.org> 0.3.0-alt1
 - 0.2.1 -> 0.3.0.
 

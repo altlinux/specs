@@ -1,20 +1,31 @@
 %define _unpackaged_files_terminate_build 1
+%define mod_name setuptools_scm
+%define pypi_name setuptools-scm
+%define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
-%define pypi_name setuptools_scm
 %def_with check
 
-Name: python3-module-%pypi_name
-Version: 7.0.5
-Release: alt2
+Name: python3-module-%mod_name
+Version: 7.1.0
+Release: alt1
 Summary: The blessed package to manage your versions by scm tags
 License: MIT
 Group: Development/Python3
-BuildArch: noarch
 Url: https://pypi.org/project/setuptools-scm/
-
-# https://github.com/pypa/setuptools_scm.git
+VCS: https://github.com/pypa/setuptools_scm/
+BuildArch: noarch
 Source: %name-%version.tar
 Patch1: %name-%version-alt.patch
+
+Requires: git-core mercurial
+%py3_requires packaging
+%py3_requires setuptools
+%if %tomli
+%py3_requires tomli
+%endif
+
+%py3_provides %pypi_name
+Provides: python3-module-%pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-python3
 
@@ -30,17 +41,14 @@ BuildRequires: git-core
 # install_requires
 BuildRequires: python3(packaging)
 BuildRequires: python3(setuptools)
+%if %tomli
 BuildRequires: python3(tomli)
+%endif
 
 BuildRequires: mercurial
 BuildRequires: python3(pytest)
+BuildRequires: python3(virtualenv)
 %endif
-
-%py3_provides setuptools-scm
-Requires: git-core mercurial
-%py3_requires packaging
-%py3_requires setuptools
-%py3_requires tomli
 
 %description
 setuptools_scm is a simple utility for the setup_requires feature of
@@ -73,8 +81,7 @@ git tag '%version'
 %pyproject_install
 
 %check
-export TOXENV=py%{python_version_nodots python3}-test
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
 %doc *.rst
@@ -82,6 +89,9 @@ export TOXENV=py%{python_version_nodots python3}-test
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 27 2023 Stanislav Levin <slev@altlinux.org> 7.1.0-alt1
+- 7.0.5 -> 7.1.0.
+
 * Tue Nov 01 2022 Michael Shigorin <mike@altlinux.org> 7.0.5-alt2
 - fixed build --without check
 
