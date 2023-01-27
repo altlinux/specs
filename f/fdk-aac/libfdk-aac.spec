@@ -1,9 +1,9 @@
-%define git %nil
+%define git 3f864cc
 %define soname 2
 
 Name: fdk-aac
-Version: 2.0.1
-Release: alt0.1
+Version: 2.0.2
+Release: alt0.2.g%{git}
 Summary: Fraunhofer FDK AAC Codec Library for Android
 License: Permissive
 Group: System/Libraries
@@ -12,6 +12,7 @@ Packager: L.A. Kostis <lakostis@altlinux.ru>
 
 Source: %name-%version.tar
 
+BuildRequires(pre): cmake
 BuildRequires: gcc-c++
 
 %description
@@ -41,15 +42,13 @@ develop programs which make use of %name
 
 %prep
 %setup -q
- 
+
 %build
-%autoreconf
-%configure \
-	--disable-static
-%make_build
+%cmake
+%cmake_build
 
 %install
-%make DESTDIR=%buildroot install
+%cmakeinstall_std
 
 %files -n lib%{name}%{soname}
 %_libdir/*.so.*
@@ -59,8 +58,16 @@ develop programs which make use of %name
 %_includedir/%name/*.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_libdir/cmake/*
 
 %changelog
+* Fri Jan 27 2023 L.A. Kostis <lakostis@altlinux.ru> 2.0.2-alt0.2.g3f864cc
+- GIT 3f864cc.
+
+* Mon Jun 14 2021 L.A. Kostis <lakostis@altlinux.ru> 2.0.2-alt0.1
+- 2.0.2.
+- switch to cmake.
+
 * Sat Mar 21 2020 L.A. Kostis <lakostis@altlinux.ru> 2.0.1-alt0.1
 - 2.0.1.
 
