@@ -1,13 +1,13 @@
 Name: manatee-open
-Version: 2.167.10
-Release: alt6
+Version: 2.214.1
+Release: alt1
 
 Summary: Manatee is a corpus management tool
 License: LGPLv2+
 Group: System/Libraries
-Url: http://nlp.fi.muni.cz/trac/noske/wiki/Downloads
+Url: https://nlp.fi.muni.cz/trac/noske
 Packager: Kirill Maslinsky <kirill@altlinux.org>
-BuildRequires: gcc-c++ libpcre-devel perl-devel python3-module-setuptools libicu-devel libltdl7-devel swig
+BuildRequires: gcc-c++ libpcre-devel perl-devel python3-module-setuptools libicu-devel libltdl7-devel swig autoconf-archive
 Conflicts: finlib
 Obsoletes: finlib finlib-devel
 
@@ -26,6 +26,7 @@ indexing library called Finlib.
 
 %build
 #export MANATEE_REGISTRY=%_localstatedir/manatee
+autoreconf -iv
 %configure PYTHON=python3 --with-icu --disable-static
 %make_build
 
@@ -40,6 +41,12 @@ indexing library called Finlib.
 %doc doc/*
 
 %changelog
+* Wed Jan 04 2023 Kirill Maslinsky <kirill@altlinux.org> 2.214.1-alt1
+- version 2.214.1
+
+* Mon Aug 29 2022 Kirill Maslinsky <kirill@altlinux.org> 2.208-alt1
+- update to version 2.208 (upstream moved to python3)
+
 * Wed Dec 15 2021 Grigory Ustinov <grenka@altlinux.org> 2.167.10-alt6
 - fixed build with python3.10.
 

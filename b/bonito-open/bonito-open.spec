@@ -1,8 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 %define mname bonito
+%define _jobrunner_group corpadm
 
 Name: bonito-open
-Version: 4.24.6
-Release: alt3
+Version: 5.58.1
+Release: alt1
 
 Summary: Bonito is an API interface for the Manatee corpus management system. 
 License: GPLv2+
@@ -19,12 +21,17 @@ Source: %name-%version.tar
 Source100: bonito.conf
 Patch: %name-%version-%release.patch
 
+%py3_provides %mname
+
 %description
 Bonito is a python API to corpora mantained by Manatee.
 
 %prep
 %setup
 %patch -p1
+
+%pre
+/usr/sbin/groupadd -r -f %_jobrunner_group ||:
 
 %build
 #export 
@@ -39,6 +46,7 @@ mkdir -p %buildroot/%_sysconfdir/httpd2/conf/sites-available
 install %SOURCE100 %buildroot/%_sysconfdir/httpd2/conf/sites-available/bonito.conf
 mkdir -p %buildroot/%_var/www/%mname
 mkdir -p %buildroot/%_localstatedir/%mname
+mkdir -p %buildroot/%_localstatedir/ske/jobs
 sed -e "s,@MANATEE_REGISTRY\@,%_localstatedir/manatee,g" \
         -e "s,@datapath\@,%_localstatedir/bonito,g" run.cgi > %buildroot/%_var/www/%mname/run.cgi
 chmod a+x %buildroot/%python3_sitelibdir/%mname/jobrunner.py
@@ -72,10 +80,17 @@ chmod a+x %buildroot/%{_bindir}/bonito_clear_cache
 %_sysconfdir/skejobserver
 %systemd_unitdir/skejobserver.service
 %dir %attr(0775,root,%apache2_user) %_localstatedir/bonito
+%dir %attr(0770,root,%_jobrunner_group) %_localstatedir/ske
+%dir %attr(0770,%apache2_user,%_jobrunner_group) %_localstatedir/ske/jobs
 %_var/www/bonito
+%doc README.md
 
 
 %changelog
+* Wed Jan 04 2023 Kirill Maslinsky <kirill@altlinux.org> 5.58.1-alt1
+- 5.58.1
+- add corpadm group for jobrunner.py
+
 * Wed Dec 29 2021 Kirill Maslinsky <kirill@altlinux.org> 4.24.6-alt3
 - remove dependency on python3-module-signalfd
 

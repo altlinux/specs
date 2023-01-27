@@ -1,7 +1,7 @@
 %define mname gdex
 
 Name: python3-module-%mname
-Version: 3.12
+Version: 4.12
 Release: alt1
 Summary: GDEX (Good Dictionary Examples) is a Bonito module for sorting concordances according to their suitability as dictionary examples. 
 License: GPLv3
@@ -13,7 +13,10 @@ Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%py3_provides %mname
 
 %description
 GDEX (Good Dictionary Examples) is a Bonito module for sorting concordances
@@ -24,17 +27,22 @@ according to their suitability as dictionary examples.
 %patch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+mkdir -p %buldroot/%_bindir
+cp add_gdex %buildroot/%_bindir
 
 %files
 %python3_sitelibdir/%mname
-%python3_sitelibdir/%mname-%version-py%_python3_version.egg-info
 %_bindir/add_gdex
 
 %changelog
+* Fri Jan 06 2023 Kirill Maslinsky <kirill@altlinux.org> 4.12-alt1
+- 4.12
+
 * Sun Mar 15 2020 Kirill Maslinsky <kirill@altlinux.org> 3.12-alt1
 - initial build as a separate package
 
