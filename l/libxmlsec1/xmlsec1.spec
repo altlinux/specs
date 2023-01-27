@@ -1,7 +1,7 @@
 %global _unpackaged_files_terminate_build 1
 
 Name: libxmlsec1
-Version: 1.2.34
+Version: 1.2.37
 Release: alt1
 License: MIT
 Summary: Library providing support for "XML Signature" and "XML Encryption" standards
@@ -12,7 +12,7 @@ Url: https://www.aleksey.com/xmlsec/
 BuildRequires: help2man libltdl7-devel man
 BuildRequires: libxml2-devel >= 2.8.0 libxslt-devel >= 1.0.20
 BuildRequires: libssl-devel >= 1.0.0
-BuildRequires: libnss-devel >= 3.11.1 libnspr-devel >= 4.4.1
+BuildRequires: libnss-devel >= 3.50.1 libnspr-devel >= 4.25.1
 BuildRequires: libgcrypt-devel >= 1.4.0
 BuildRequires: libgnutls-devel >= 2.8.0
 
@@ -124,7 +124,7 @@ rm -f %buildroot%_libdir/*.la
 true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 
 %files
-%doc AUTHORS ChangeLog NEWS README Copyright
+%doc AUTHORS ChangeLog NEWS README.md
 %doc %_mandir/man1/xmlsec1.1*
 %_libdir/libxmlsec1.so.*
 %_bindir/xmlsec1
@@ -138,7 +138,6 @@ true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 %_libdir/libxmlsec1.so
 %_libdir/pkgconfig/xmlsec1.pc
 %_libdir/xmlsec1Conf.sh
-%doc AUTHORS HACKING ChangeLog NEWS README Copyright
 %_datadir/aclocal/xmlsec1.m4
 %_man1dir/xmlsec1-config.*
 
@@ -175,6 +174,9 @@ true || LD_LIBRARY_PATH=%buildroot%_libdir make check
 %_libdir/pkgconfig/xmlsec1-nss.pc
 
 %changelog
+* Fri Jan 27 2023 Alexey Shabalin <shaba@altlinux.org> 1.2.37-alt1
+- new version 1.2.37
+
 * Fri Jun 03 2022 Alexey Shabalin <shaba@altlinux.org> 1.2.34-alt1
 - new version 1.2.34
 
