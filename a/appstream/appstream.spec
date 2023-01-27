@@ -2,7 +2,7 @@
 %def_without docs
 
 Name:    appstream
-Version: 0.15.6
+Version: 0.16.0
 Release: alt1
 Summary: Utilities to generate, maintain and access the AppStream Xapian database 
 
@@ -42,6 +42,7 @@ BuildRequires: libsoup-devel
 BuildRequires: /proc
 BuildRequires: libxmlb-devel
 BuildRequires: qt5-tools
+BuildRequires: libsystemd-devel
 
 #Requires: appstream-data
 
@@ -167,6 +168,9 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 %_datadir/gtk-doc/html/appstream
 
 %changelog
+* Fri Jan 27 2023 Andrey Cherepanov <cas@altlinux.org> 0.16.0-alt1
+- New version.
+
 * Fri Dec 23 2022 Andrey Cherepanov <cas@altlinux.org> 0.15.6-alt1
 - New version.
 
