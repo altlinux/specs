@@ -5,7 +5,7 @@
 %define oname zinc
 
 Name: ZincSearch
-Version: 0.3.5
+Version: 0.3.6
 Release: alt1
 Summary: Zinc Search engine
 
@@ -126,6 +126,9 @@ useradd -r -g %oname -c 'Zinc Search engine' \
 %dir %attr(0750, %oname, %oname) %_sharedstatedir/%oname
 
 %changelog
+* Fri Jan 27 2023 Alexey Shabalin <shaba@altlinux.org> 0.3.6-alt1
+- new version 0.3.6
+
 * Thu Dec 01 2022 Alexey Shabalin <shaba@altlinux.org> 0.3.5-alt1
 - new version 0.3.5
 
