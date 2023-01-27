@@ -2,10 +2,10 @@
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%define soname 1.11
+%define soname 1.12
 
 Name: openshadinglanguage
-Version: 1.11.17.0
+Version: 1.12.8.0
 Release: alt1
 Summary: Advanced shading language for production GI renderers
 Group: Development/Other
@@ -19,8 +19,6 @@ ExcludeArch: %ix86 %arm
 Source: %name-%version.tar
 
 Source2: %name.watch
-
-Patch1: openshadinglanguage-alt-python3-compat.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): libopenimageio-devel
@@ -67,7 +65,6 @@ Summary: Advanced shading language for production GI renderers
 Group: Development/C++
 Requires: %name = %EVR
 Requires: lib%name%soname = %EVR
-Requires: %name-MaterialX-shaders-source = %EVR
 Requires: %name-example-shaders-source = %EVR
 Requires: %name-common-headers = %EVR
 Requires: python3-module-%name = %EVR
@@ -90,18 +87,6 @@ for programmable shading in advanced renderers and other applications,
 ideal for describing materials, lights, displacement, and pattern generation.
 
 This package contains documentation for Open Shading Language.
-
-%package MaterialX-shaders-source
-Summary: MaterialX shader nodes
-Group: Development/Other
-Requires: %name-common-headers = %EVR
-
-%description MaterialX-shaders-source
-Open Shading Language (OSL) is a small but rich language
-for programmable shading in advanced renderers and other applications,
-ideal for describing materials, lights, displacement, and pattern generation.
-
-This package contains the code for the MaterialX shader nodes.
 
 %package example-shaders-source
 Summary: OSL shader examples
@@ -136,7 +121,6 @@ Open Shading Language (OSL) python3 module.
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %cmake \
@@ -176,9 +160,6 @@ mv %buildroot%_libdir/osl.imageio.so %buildroot%_libdir/OpenImageIO-%{oiio_major
 %files doc
 %doc %_defaultdocdir/OSL/
 
-%files MaterialX-shaders-source
-%_datadir/%name/shaders/MaterialX
-
 %files example-shaders-source
 %_datadir/%name/shaders/*.osl
 %_datadir/%name/shaders/*.oso
@@ -192,6 +173,9 @@ mv %buildroot%_libdir/osl.imageio.so %buildroot%_libdir/OpenImageIO-%{oiio_major
 %python3_sitelibdir/*.so
 
 %changelog
+* Wed Jan 18 2023 Alexander Burmatov <thatman@altlinux.org> 1.12.8.0-alt1
+- Updated to upstream version 1.12.8.0.
+
 * Mon Jan 17 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1.11.17.0-alt1
 - Updated to upstream version 1.11.17.0.
 
