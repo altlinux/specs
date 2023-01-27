@@ -1,7 +1,7 @@
 %define  modulename flake8-docstrings
 
 Name:    python3-module-%modulename
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: Integration of pydocstyle and flake8 for combined linting and reporting
@@ -37,5 +37,8 @@ Source:  %name-%version.tar
 %doc *.rst
 
 %changelog
+* Fri Jan 27 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt1
+- Automatically updated to 1.7.0.
+
 * Thu Apr 28 2022 Grigory Ustinov <grenka@altlinux.org> 1.6.0-alt1
 - Initial build for Sisyphus.
