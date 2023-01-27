@@ -1,7 +1,7 @@
 %define oname Chaco
 
 Name: python3-module-%oname
-Version: 5.1.0
+Version: 5.1.1
 Release: alt1
 
 Summary: Interactive 2-Dimensional Plotting
@@ -97,6 +97,9 @@ xvfb-run sphinx-build-3 -E -a -b html -c docs/source -d doctrees docs/source htm
 
 
 %changelog
+* Fri Jan 27 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt1
+- Automatically updated to 5.1.1.
+
 * Thu Nov 03 2022 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
 - Automatically updated to 5.1.0.
 
