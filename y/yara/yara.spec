@@ -5,7 +5,7 @@
 
 Name: yara
 Version: 4.2.3
-Release: alt1
+Release: alt2
 License: BSD-3-Clause and Apache-2.0
 Group: Development/Tools
 Summary: The pattern matching swiss knife for malware researchers (and everyone else)
@@ -67,7 +67,7 @@ rm -f %buildroot%_libdir/libyara.a
 %check
 # Parallel make -j check does not work anymore:
 # https://github.com/VirusTotal/yara/issues/1667
-%make check
+%make check VERBOSE=1
 export LD_LIBRARY_PATH=%buildroot%_libdir PATH=%buildroot%_bindir:$PATH
 yara --version
 cat > main.rule <<'EOF'
@@ -93,6 +93,9 @@ yara main.rule -r . | grep MAIN.*yara.spec
 %_pkgconfigdir/yara.pc
 
 %changelog
+* Sat Jan 28 2023 Vitaly Chikunov <vt@altlinux.org> 4.2.3-alt2
+- Fix ALT beekeeper rebuild by updating test-magic for libmagic 5.44.
+
 * Wed Aug 10 2022 Vitaly Chikunov <vt@altlinux.org> 4.2.3-alt1
 - Update to v4.2.3 (2022-08-08).
 
