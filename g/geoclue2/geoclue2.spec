@@ -2,7 +2,7 @@
 
 %define _name geoclue
 %define xdg_name org.freedesktop.GeoClue2
-%define ver_major 2.6
+%define ver_major 2.7
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 
@@ -25,17 +25,17 @@ Url: http://geoclue.freedesktop.org/
 %if_disabled snapshot
 Source: https://gitlab.freedesktop.org/%_name/%_name/-/archive/%version/%_name-%version.tar.gz
 %else
-#VCS: https://gitlab.freedesktop.org/geoclue/geoclue.git
+Vcs: https://gitlab.freedesktop.org/geoclue/geoclue.git
 Source: %_name-%version.tar
 %endif
 
 %define glib_ver 2.44
 %define mm_ver 1.6
-%define soup_ver 2.42
+%define soup3_ver 3.0
 
-BuildRequires(pre): meson rpm-build-xdg
-BuildRequires: yelp-tools gtk-doc libgio-devel >= %glib_ver
-BuildRequires: libjson-glib-devel libsoup-devel >= %soup_ver
+BuildRequires(pre): rpm-macros-meson rpm-build-xdg
+BuildRequires: meson yelp-tools gtk-doc libgio-devel >= %glib_ver
+BuildRequires: libjson-glib-devel libsoup3.0-devel >= %soup3_ver
 BuildRequires: libdbus-devel libnotify-devel systemd-devel
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -51,7 +51,7 @@ possible.
 %package devel
 Summary: Development package for GeoClue
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 Files for development with GeoClue.
@@ -67,7 +67,7 @@ Geoclue very easy.
 %package -n lib%name-devel
 Summary: Header files for GeoClue library
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-devel
 This package provides development files for GeoClue library.
@@ -75,7 +75,7 @@ This package provides development files for GeoClue library.
 %package -n lib%name-gir
 Summary: GObject introspection data for the GeoClue library
 Group: System/Libraries
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
 %description -n lib%name-gir
 GObject introspection data for the GeoClue library.
@@ -84,8 +84,8 @@ GObject introspection data for the GeoClue library.
 Summary: GObject introspection devel data for the GeoClue library
 Group: Development/Other
 BuildArch: noarch
-Requires: lib%name-gir = %version-%release
-Requires: lib%name-devel = %version-%release
+Requires: lib%name-gir = %EVR
+Requires: lib%name-devel = %EVR
 
 %description -n lib%name-gir-devel
 GObject introspection devel data for the GeoClue library.
@@ -111,8 +111,8 @@ Developer documentation for GeoClue library.
 %package demo
 Summary: Demo programs for GeoClue
 Group: Development/C
-Requires: %name = %version-%release
-Requires: lib%name = %version-%release
+Requires: %name = %EVR
+Requires: lib%name = %EVR
 
 %description demo
 This package contains demo programs for GeoClue.
@@ -135,6 +135,7 @@ rm -f demo/*.desktop.in
 %install
 %meson_install
 mkdir -p %buildroot%_localstatedir/%_name
+mkdir -p %buildroot%_sysconfdir/%_name/conf.d
 
 echo 'd %_localstatedir/%_name 0755 %_name %_name' | \
 install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
@@ -149,6 +150,7 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 
 %files
 %_libexecdir/%_name
+%dir %_sysconfdir/%_name/conf.d
 %_sysconfdir/dbus-1/system.d/%xdg_name.conf
 %_sysconfdir/dbus-1/system.d/%xdg_name.Agent.conf
 %_datadir/dbus-1/interfaces/%xdg_name.Agent.xml
@@ -200,6 +202,9 @@ install -D -m644 /dev/stdin %buildroot%_tmpfilesdir/%_name.conf
 %_xdgconfigdir/autostart/%_name-demo-agent.desktop
 
 %changelog
+* Sat Jan 28 2023 Yuri N. Sedunov <aris@altlinux.org> 2.7.0-alt1
+- 2.7.0
+
 * Mon Feb 28 2022 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
 - 2.6.0
 
