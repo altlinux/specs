@@ -5,11 +5,9 @@
 %define set_enable() %{expand:%%force_enable %{1}} %{expand:%%undefine _disable_%{1}}
 %define subst_enable_with() %{expand:%%{?_enable_%{1}:--enable-%{2}} } %{expand:%%{?_disable_%{1}:--disable-%{2}} }
 %if "%(rpmvercmp '%{get_version glibc-kernheaders}' '6.0')" <= "0"
-%def_enable v4l2_m2m
-%def_enable v4l2_request 
-%else
-%def_disable v4l2_m2m
 %def_disable v4l2_request
+%else
+%def_enable v4l2_request
 %endif
 
 # License
@@ -123,6 +121,7 @@
 %def_disable opencl
 %def_disable pocketsphinx
 %def_disable vapoursynth
+%def_enable v4l2_m2m
 
 # need libcelt >= 0.11.0
 %def_disable libcelt
@@ -164,7 +163,7 @@
 Name:		ffmpeg
 Epoch:		2
 Version:	4.4.3
-Release:	alt1
+Release:	alt2
 
 Summary:	A command line toolbox to manipulate, convert and stream multimedia content
 License:	GPLv3
@@ -598,7 +597,6 @@ xz Changelog
 	--docdir=%_docdir/%name-%version \
 	--disable-rpath \
 %ifarch armh aarch64
-	%{subst_enable v4l2_m2m} \
 	%{subst_enable_with v4l2_request v4l2-request} \
 %endif
 %ifarch mips mipsel mips64 mips64el
@@ -702,6 +700,7 @@ xz Changelog
 	%{subst_enable opengl} \
 	%{subst_enable pocketsphinx} \
 	%{subst_enable sdl2} \
+	%{subst_enable v4l2_m2m} \
 	%{subst_enable vaapi} \
 	%{subst_enable vapoursynth} \
 	%{subst_enable vdpau} \
@@ -897,6 +896,9 @@ tests/checkasm/checkasm
 %endif
 
 %changelog
+* Sat Jan 28 2023 Anton Farygin <rider@altlinux.ru> 2:4.4.3-alt2
+- fixed build on arm/aarch64 and glibc-kernheaders < 6.0 (thx for sbolshakov)
+
 * Sat Oct 22 2022 Anton Farygin <rider@altlinux.ru> 2:4.4.3-alt1
 - 4.4.2 -> 4.4.3
 - rebased to kernel-6.0 request-api
