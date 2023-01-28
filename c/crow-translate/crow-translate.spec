@@ -1,13 +1,13 @@
 %define version_SingleApplication v3.3.4
 %define version_QTaskbarControl 2.0.2
-%define version_QOnlineTranslator 1.6.0
+%define version_QOnlineTranslator 1.6.1
 %define version_QHotkey 1.4.2
-%define version_circle_flags v2.5.2
-%define version_Fluent 2022-02-28
+%define version_circle_flags v2.6.1
+%define version_Fluent 2022-11-30
 
 Name: crow-translate
-Version: 2.10.1
-Release: alt1.1
+Version: 2.10.3
+Release: alt1
 
 Summary: A Qt GUI for Google, Yandex and Bing translators
 Summary(ru_RU.UTF-8): GUI интерфейс Qt для переводчиков Google, Yandex и Bing
@@ -114,6 +114,12 @@ tar -xf %SOURCE6 -C src/Fluent-icon-theme/ --strip-components=1
 %_iconsdir/hicolor/*/*/crow-translate*
 
 %changelog
+* Sat Jan 28 2023 Evgeny Chuck <koi@altlinux.org> 2.10.3-alt1
+- new version (2.10.3) with rpmgs script
+- updated library (1.6.1) QOnlineTranslator
+- updated icons in flag circles (2.6.1)
+- updated icons from Fluent-icon-theme (2022-11-30)
+
 * Thu Nov 03 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.10.1-alt1.1
 - Fixed build for Elbrus
 
