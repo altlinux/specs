@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 243
+%define centos_release 247
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,23 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Jan 28 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.247-alt1.el9
+- Updated to kernel-5.14.0-247.el9:
+  + ALSA: add AMD Pink Sardine DMIC driver
+  + bnxt_re: Driver update to v6.0
+  + CNB: genirq/msi: Use a named struct for PCI/MSI attributes and other PCI/MSI cleanups
+  + CNB: rebase/update devlink for RHEL 9.2
+  + config: Enable Security Path
+  + gitlab-ci: use CI templates from production branch
+  + nvme: fix SRCU protection of nvme_ns_head list
+  + perf hv_gpci events fails with not supported error
+  + powerpc/perf: Fix branch_filter support for multiple filters
+  + [redhat] Enable CONFIG_GPIO_CDEV_V1
+  + [s390]: RHEL9 -  s390/kexec: fix ipl report address for kdump
+  + Support for decoding CPER CXL protocol error sections
+  + update Chrome and Mellanox platform drivers to v6.0
+  + Update cpuidle to match Linux v6.0
+
 * Wed Jan 25 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.243-alt1.el9
 - Updated to kernel-5.14.0-243.el9:
   + aquantia: Do not purge addresses when setting the number of rings
