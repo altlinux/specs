@@ -11,7 +11,7 @@
 
 Name: fence-agents
 Summary: Fence Agents
-Version: 4.12.0
+Version: 4.12.1
 Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Base
@@ -1222,6 +1222,9 @@ install -m 0644 systemd/fence-agents.conf %buildroot%_tmpfilesdir/%name.conf
 %endif
 
 %changelog
+* Sat Jan 28 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.12.1-alt1
+- 4.12.1
+
 * Wed Jan 11 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.12.0-alt1
 - 4.12.0
 
