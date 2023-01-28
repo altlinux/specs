@@ -1,6 +1,6 @@
 Name: xsane
 Version: 0.999
-Release: alt6
+Release: alt6.1
 
 Summary: XSane is a graphical frontend for scanners. It uses the library SANE
 Summary(ru_RU.UTF-8): Xsane -- это графическая программа для сканирования, использующая библиотеку SANE
@@ -14,11 +14,13 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://www.xsane.org/download/%name-%version.tar
 Source1: %name-16x16.xpm
 Source3: %name-%version.ru.po
-Patch: %name-0.99-debian.patch
 Patch1: %name-0.996-ubuntu.patch
 Patch2: %name-0.998-alt-libpng15.patch
 Patch3: xsane-0.999-lcms2.patch
 Patch4: xsane-0.999-alt-fix-broken-icon.patch
+# Debian
+Patch10: 0105-deb_gimp_acquire_menu.patch
+Patch11: 0125-desktop_file.patch
 
 BuildPreReq: libjpeg-devel libusb-devel libpng-devel
 
@@ -80,11 +82,12 @@ Documentation for XSANE
 
 %prep
 %setup
-%patch -p1
 #%patch1 -p1
 %patch2 -p2
 %patch3 -p1
 %patch4 -p2
+%patch10 -p1
+%patch11 -p1
 cp -f %SOURCE3 po/ru.po
 #__subst "s|\"/usr/local/share/sane/|\"%_docdir/sane/|" doc/sane-backends-doc.html
 
@@ -105,7 +108,7 @@ install -p -m644 -D %SOURCE1 %buildroot%_miconsdir/%name.xpm
 install -p -m644 -D src/%name-32x32.xpm %buildroot%_niconsdir/%name.xpm
 install -p -m644 -D src/%name-48x48.xpm %buildroot%_liconsdir/%name.xpm
 
-install -p -m644 -D %name.desktop %buildroot%_desktopdir/%name.desktop
+install -p -m644 -D src/%name.desktop %buildroot%_desktopdir/%name.desktop
 
 # use modern backends list from SANE project
 rm -f %buildroot/%_docdir/%name/sane-backends-doc.html
@@ -133,6 +136,9 @@ ln -s %_docdir/sane-backends/sane-backends.html %buildroot/%_docdir/%name/sane-b
 %_libdir/gimp/2.0/plug-ins/%name
 
 %changelog
+* Thu Jan 26 2023 Sergey V Turchin <zerg@altlinux.org> 0.999-alt6.1
+- NMU: fix main menu entry (closes: 45037)
+
 * Thu Sep 03 2020 Vitaly Lipatov <lav@altlinux.ru> 0.999-alt6
 - fix xsane documentation dir
 - add updated ru.po (RM 14250)
