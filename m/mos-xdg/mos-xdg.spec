@@ -5,7 +5,7 @@ Summary: XDG desktop settings for M OS distros
 Summary(ru): Настройки рабочего окружения дистрибутивов М ОС
 License: GPL-3.0
 Group: Graphical desktop/Other
-Version: 2.3
+Version: 2.4
 Release: alt1
 Source0: %name-%version.tar
 Source1: COPYING
@@ -109,6 +109,10 @@ cd scripts
 ./test.sh
 
 %changelog
+* Thu Jan 26 2023 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.4-alt1
+- Return the preview to the Dolphin panel (by tema@)
+  After updating KDE, the button preview disappeared in the Dolphin
+
 * Mon Nov 21 2022 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.3-alt1
 - remove setAsWallpaper.desktop, it now exists in plasma5-workspace
   $ rpm -qf /usr/share/kservices5/ServiceMenus/setaswallpaper.desktop
