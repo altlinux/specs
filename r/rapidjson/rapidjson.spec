@@ -6,7 +6,7 @@
 
 Name: rapidjson
 Version: 1.1.0
-Release: alt2
+Release: alt3
 
 Summary: Fast JSON parser and generator for C++
 
@@ -18,6 +18,7 @@ Url: http://rapidjson.org/
 Source: %name-%version.tar
 # Downstream-patch for gtest.
 Patch: rapidjson-1.1.0-do_not_include_gtest_src_dir.patch
+
 Packager: Anton Midyukov <antohami@altlinux.org>
 
 BuildArch: noarch
@@ -68,7 +69,7 @@ This package contains the documentation-files for %name.
 
 %prep
 %setup
-%patch -p1 -b .gtest
+%autopatch -p1
 
 # Fix 'W: wrong-file-end-of-line-encoding'.
 find example -type f -name '*.c*' -print0 |
@@ -80,6 +81,9 @@ cp -a example examples
 # Disable -Werror.
 find . -type f -name 'CMakeLists.txt' -print0 |
 	xargs -r0 sed -i -e's![ \t]*-march=native!!g' -e's![ \t]*-Werror!!g'
+
+# c++11 does not work with gtest 1.13+
+sed -i 's/ -std=c++11//' CMakeLists.txt
 
 %build
 %cmake \
@@ -119,6 +123,9 @@ find %buildroot -type f -name 'CMake*.txt' -print0 |
 %endif # docs
 
 %changelog
+* Sat Jan 28 2023 Anton Midyukov <antohami@altlinux.org> 1.1.0-alt3
+- Don't force C++11 to fix FTBFS with gtest 1.13+
+
 * Tue Jul 13 2021 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt2
 - fix BR
 
