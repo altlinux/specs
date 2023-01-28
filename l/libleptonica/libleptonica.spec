@@ -1,7 +1,7 @@
 %define srcName leptonlib
 
 Name: libleptonica
-Version: 1.83.0
+Version: 1.83.1
 Release: alt1
 
 Summary: A library for manipulating images
@@ -128,6 +128,9 @@ rm -f %buildroot%_libdir/*.la
 %doc doc/html/*
 
 %changelog
+* Sat Jan 28 2023 Evgeny Chuck <koi@altlinux.org> 1.83.1-alt1
+- new version (1.83.1) with rpmgs script
+
 * Wed Dec 21 2022 Evgeny Chuck <koi@altlinux.org> 1.83.0-alt1
 - new version (1.83.0) with rpmgs script
 
