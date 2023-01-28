@@ -3,7 +3,7 @@
 
 Name: lib3mf
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Summary: lib3mf is an implementation of the 3D Manufacturing Format file standard
 License: BSD-2-Clause
@@ -52,6 +52,9 @@ sed -i 's/INSTANTIATE_TEST_SUITE_P/INSTANTIATE_TEST_CASE_P/' Tests/CPP_Bindings/
 rm AutomaticComponentToolkit/bin/act.linux
 ln -s %_bindir/act AutomaticComponentToolkit/bin/act.linux
 
+# c++11 does not work with gtest 1.13+
+sed -i 's/ -std=c++11//' CMakeLists.txt
+
 %build
 %cmake \
 	-DLIB3MF_TESTS=ON \
@@ -99,6 +102,9 @@ ln -s lib3mf.pc %buildroot%_libdir/pkgconfig/lib3MF.pc
 %_pkgconfigdir/lib3mf.pc
 
 %changelog
+* Sat Jan 28 2023 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt2
+- Don't force C++11 to fix FTBFS with gtest 1.13+
+
 * Sat May 21 2022 Anton Midyukov <antohami@altlinux.org> 2.2.0-alt1
 - new version (2.2.0) with rpmgs script
 - enable check
