@@ -9,7 +9,7 @@
 
 Name:     trace-cmd
 Version:  3.1.2
-Release:  alt1
+Release:  alt2
 
 Summary:  A front-end for Ftrace Linux kernel internal tracer
 License:  GPL-2.0 and LGPL-2.1
@@ -80,6 +80,9 @@ Obsoletes: trace-cmd-python3 < 2.9.6-alt1
 sed -i s/not-a-git-repo/%version-%release/ scripts/utils.mk
 sed -i 's!\(BASH_COMPLETE_DIR\) .*!\1 = %_datadir/bash-completion/completions/!' Makefile
 
+# XXX: Temporary fix Makefiles for make 4.4 or they will infinite loop.
+sed -i '/ = .*shell/s/=/:=/' Makefile
+
 %build
 %define optflags_lto %nil
 %add_optflags -Wno-unused-result %(getconf LFS_CFLAGS)
@@ -149,6 +152,9 @@ vm-run --cpu=2 '
 %endif
 
 %changelog
+* Sun Jan 29 2023 Vitaly Chikunov <vt@altlinux.org> 3.1.2-alt2
+- spec: Fix ALT beekeeper rebuild under make 4.4.
+
 * Tue Aug 30 2022 Vitaly Chikunov <vt@altlinux.org> 3.1.2-alt1
 - Updated to trace-cmd-v3.1.2 (2022-07-14).
 
