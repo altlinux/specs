@@ -22,8 +22,8 @@
 
 Name: uhd
 Url: https://github.com/EttusResearch/uhd
-Version: 4.1.0.3
-Release: alt1.1
+Version: 4.3.0.0
+Release: alt1
 License: GPLv3+
 Group: Engineering
 Summary: Universal Hardware Driver for Ettus Research products
@@ -33,12 +33,13 @@ Source: %name-%version.tar
 Source1: %name-limits.conf
 # Download command firmware:
 # uhd_images_downloader --types "(fpga|fw)_default" -i images
+# Source-url2: https://github.com/EttusResearch/uhd/releases/download/v%version/uhd-images_%version.tar.xz
 Source2: images.tar
 
 # Tests fail on i586, armh
 ExcludeArch: %ix86 %arm
 
-Patch: uhd-0.14.1.1-python3-fix.patch
+Patch: uhd-4.3.0.0-python3-fix.patch
 Patch1: disable-uhd_image_downloader_test.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
@@ -126,11 +127,16 @@ Python 3 module for usrp (part %name)
 %setup
 sed -i 's|/usr/bin/env python|%__python3|' host/python/setup.py.in
 
-%patch -p1
-%patch1 -p1
+%autopatch -p1
 
 # fix python shebangs
 find . -type f -name "*.py" -exec sed -i '/^#!/ s|.*|#!%__python3|' {} \;
+
+# Disable -march=native on ppc64le
+%ifarch ppc64le
+find . -type f -name 'CMakeLists.txt' -print0 |
+	xargs -r0 sed -i -e's![ \t]*-march=native!!g'
+%endif
 
 %build
 pushd host
@@ -200,10 +206,10 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %exclude %_datadir/uhd/images
 %doc _tmpdoc/*
 %_bindir/*
-%exclude %_bindir/aurora_bist_test.py
+#exclude %_bindir/aurora_bist_test.py
 %exclude %_bindir/chdr_log
-%exclude %_bindir/e320_bist
-%exclude %_bindir/usrp_update_fs
+#exclude %_bindir/e320_bist
+#exclude %_bindir/usrp_update_fs
 %exclude %_bindir/usrp_x3xx_fpga_jtag_programmer.sh
 %_udevrulesdir/10-usrp-uhd.rules
 %config(noreplace) %_sysconfdir/security/limits.d/*.conf
@@ -229,10 +235,10 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 
 %files tools
 %doc tools/README.md
-%_bindir/aurora_bist_test.py
+#_bindir/aurora_bist_test.py
 %_bindir/chdr_log
-%_bindir/e320_bist
-%_bindir/usrp_update_fs
+#_bindir/e320_bist
+#_bindir/usrp_update_fs
 %_bindir/usrp_x3xx_fpga_jtag_programmer.sh
 
 %files -n python3-module-%name
@@ -242,6 +248,10 @@ install -Dpm 0755 tools/uhd_dump/chdr_log %buildroot%_bindir/chdr_log
 %python3_sitelibdir/usrp_mpm/
 
 %changelog
+* Sat Jan 28 2023 Anton Midyukov <antohami@altlinux.org> 4.3.0.0-alt1
+- new version 4.3.0.0
+- disable -march=native on ppc64le to fix build
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 4.1.0.3-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
