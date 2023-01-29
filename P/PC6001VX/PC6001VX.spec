@@ -1,6 +1,6 @@
 Name:     PC6001VX
-Version:  4.1.2
-Release:  alt2
+Version:  4.1.3
+Release:  alt1
 
 Summary:  Cross platform version of NEC PC-6001 emulator based on PC6001V
 License:  LGPL-2.1
@@ -14,8 +14,8 @@ Source1: PC6001VX.eng.6
 Source2: PC6001VX.rus.6
 Source3: PC6001VX_ru.ts
 Source4: PC6001VX_ru.qm
-Patch1: 0001-Add-russian-localization.patch
-Patch2: 0002-Fix-locale-choosing.patch
+#Patch1: 0001-Add-russian-localization.patch
+#Patch2: 0002-Fix-locale-choosing.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ libSDL2_mixer-devel libSDL2-devel libpng-devel zlib-devel ninja-build qt6-base-devel qt6-websockets-devel qt6-shadertools-devel qt6-5compat-devel qt6-multimedia-devel
@@ -41,8 +41,8 @@ and program will start.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+#%%patch1 -p1
+#%%patch2 -p1
 
 cp %SOURCE3 %SOURCE4 src/Qt/translation/
 
@@ -53,7 +53,7 @@ qmake6 PC6001VX.pro
 
 %install
 install -d %buildroot%_bindir
-install -d %buildroot%_datadir/%name/compatible_rom/basic60-v075
+install -d %buildroot%_datadir/%name/compatible_rom/basic60-v076
 install -d %buildroot%_datadir/%name/compatible_rom/basic66-v042
 install -d %buildroot%_man6dir/ru/man6
 
@@ -79,7 +79,7 @@ done
 
 cp -r compatible_rom/basic66-v042/BASIC* %buildroot%_datadir/%name/compatible_rom/basic66-v042
 cp -r compatible_rom/basic66-v042/VOICEROM* %buildroot%_datadir/%name/compatible_rom/basic66-v042
-cp -r compatible_rom/basic60-v075/BASIC* %buildroot%_datadir/%name/compatible_rom/basic60-v075
+cp -r compatible_rom/basic60-v076/BASIC* %buildroot%_datadir/%name/compatible_rom/basic60-v076
 cp -r fonts %buildroot%_datadir/%name/
 
 install -D -m 0644 %SOURCE1 %buildroot%_man6dir/%name.6
@@ -94,8 +94,13 @@ install -D -m 0644 %SOURCE2 %buildroot%_man6dir/ru/man6/%name.6
 %doc LICENSE README.adoc
 
 %changelog
+* Sun Jan 29 2023 Artyom Bystrov <arbars@altlinux.org> 4.1.3-alt1
+- new version 4.1.3
+- russian locale added to upstream
+
 * Wed Jan 25 2023 Artyom Bystrov <arbars@altlinux.org> 4.1.2-alt2
 - Add experimental support of russian locale
+
 * Mon Jan 09 2023 Artyom Bystrov <arbars@altlinux.org> 4.1.2-alt1
 - new version 4.1.2
 
