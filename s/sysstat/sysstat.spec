@@ -3,8 +3,8 @@
 %set_verify_elf_method strict
 
 Name: sysstat
-Version: 12.7.1
-Release: alt3
+Version: 12.7.2
+Release: alt1
 
 Summary: Performance monitoring tools for Linux
 License: GPL-2.0-or-later
@@ -182,6 +182,9 @@ fi
 %_desktopdir/isag.desktop
 
 %changelog
+* Sun Jan 29 2023 Vitaly Chikunov <vt@altlinux.org> 12.7.2-alt1
+- Update to v12.7.2 (2023-01-29).
+
 * Fri Dec 02 2022 Vitaly Chikunov <vt@altlinux.org> 12.7.1-alt3
 - isag: Remove Memory Statistics menu entry (ALT#44518).
 
