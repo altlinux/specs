@@ -1,12 +1,7 @@
-%ifarch armh
-#97% tests passed, 5 tests failed out of 179
-%def_disable check
-%else
 %def_enable check
-%endif
 
 Name: highway
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Efficient and performance-portable SIMD wrapper libraries
@@ -90,6 +85,10 @@ Documentation for Highway libraries.
 %doc g3doc hwy/examples
 
 %changelog
+* Sun Jan 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+- enabled %%check for all arches
+
 * Tue Dec 27 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - first build for Sisyphus
 
