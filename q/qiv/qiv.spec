@@ -1,5 +1,5 @@
 Name: qiv
-Version: 2.3.2
+Version: 2.3.3
 Release: alt1
 Epoch: 1
 
@@ -48,6 +48,9 @@ xz Changelog
 %_man1dir/*
 
 %changelog
+* Sun Jan 29 2023 Michael Shigorin <mike@altlinux.org> 1:2.3.3-alt1
+- new version (watch file uupdate)
+
 * Mon Jul 06 2020 Michael Shigorin <mike@altlinux.org> 1:2.3.2-alt1
 - new version (watch file uupdate)
 - dropped patch (merged upstream)
