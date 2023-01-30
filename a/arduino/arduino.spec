@@ -1,16 +1,6 @@
-Group: Development/Java
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate gcc-c++ unzip
-# END SourceDeps(oneline)
-BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 %global antflags -Dno_arduino_builder=true -Dsystem_avr=true -Dlight_bundle=true
-
 %global appstream_id cc.arduino.arduinoide
-
-%global avr_version 1.8.2
+%global avr_version 1.8.3
 %global ethernet_version 2.0.0
 %global gsm_version 1.0.6
 %global stepper_version 1.1.3
@@ -27,79 +17,85 @@ BuildRequires: jpackage-11-compat
 %global mouse_version 1.0.1
 %global keyboard_version 1.0.2
 %global sd_version 1.2.4
-%global servo_version 1.1.6
+%global servo_version 1.1.8
 %global liquidcrystal_version 1.0.7
-%global adafruit_version 1.10.4
-
+%global adafruit_version 1.11.3
+%global examples_version 1.9.1
 %global reference_version 1.6.6-3
-%global wifi_firmware_updater_version 0.10.10
+%global wifi_firmware_updater_version 0.12.0
 
-Name:           arduino
-Epoch:          1
-Version:        1.8.13
-Release:        alt3_5jpp11
-Summary:        An IDE for Arduino-compatible electronics prototyping platforms
+Name:    arduino
+Epoch:   1
+Version: 1.8.19
+Release: alt1_1jpp11
+Summary: An IDE for Arduino-compatible electronics prototyping platforms
 
-License:        GPLv2+ and LGPLv2+ and CC-BY-SA
-URL:            https://www.arduino.cc/
-Source0:        https://github.com/arduino/Arduino/archive/%{version}/%{name}-%{version}.tar.gz
+License: GPL-2.0+ and LGPL-2.1+ and CC-BY-SA-3.0
+Group:   Development/Java
+URL:     https://www.arduino.cc/
+Source0: https://github.com/arduino/Arduino/archive/%{version}/%{name}-%{version}.tar.xz
 
-Source10:       https://downloads.arduino.cc/cores/avr-%{avr_version}.tar.bz2
-Source11:       https://github.com/arduino-libraries/Ethernet/archive/%{ethernet_version}/Ethernet-%{ethernet_version}.zip
-Source12:       https://github.com/arduino-libraries/GSM/archive/%{gsm_version}/GSM-%{gsm_version}.zip
-Source13:       https://github.com/arduino-libraries/Stepper/archive/%{stepper_version}/Stepper-%{stepper_version}.zip
-Source14:       https://github.com/arduino-libraries/TFT/archive/%{tft_version}/TFT-%{tft_version}.zip
-Source15:       https://github.com/arduino-libraries/WiFi/archive/%{wifi_version}/WiFi-%{wifi_version}.zip
-Source16:       https://github.com/firmata/arduino/archive/%{firmata_version}/Firmata-%{firmata_version}.zip
-Source17:       https://github.com/arduino-libraries/Bridge/archive/%{bridge_version}/Bridge-%{bridge_version}.zip
-Source18:       https://github.com/arduino-libraries/Robot_Control/archive/%{robot_control_version}/Robot_Control-%{robot_control_version}.zip
-Source19:       https://github.com/arduino-libraries/Robot_Motor/archive/%{robot_motor_version}/Robot_Motor-%{robot_motor_version}.zip
-Source20:       https://github.com/arduino-libraries/RobotIRremote/archive/%{robotirremote_version}/RobotIRremote-%{robotirremote_version}.zip
-Source21:       https://github.com/arduino-libraries/SpacebrewYun/archive/%{spacebrewyun_version}/SpacebrewYun-%{spacebrewyun_version}.zip
-Source22:       https://github.com/arduino-libraries/Temboo/archive/%{temboo_version}/Temboo-%{temboo_version}.zip
-Source23:       https://github.com/arduino-libraries/Esplora/archive/%{esplora_version}/Esplora-%{esplora_version}.zip
-Source24:       https://github.com/arduino-libraries/Mouse/archive/%{mouse_version}/Mouse-%{mouse_version}.zip
-Source25:       https://github.com/arduino-libraries/Keyboard/archive/%{keyboard_version}/Keyboard-%{keyboard_version}.zip
-Source26:       https://github.com/arduino-libraries/SD/archive/%{sd_version}/SD-%{sd_version}.zip
-Source27:       https://github.com/arduino-libraries/Servo/archive/%{servo_version}/Servo-%{servo_version}.zip
-Source28:       https://github.com/arduino-libraries/LiquidCrystal/archive/%{liquidcrystal_version}/LiquidCrystal-%{liquidcrystal_version}.zip
-Source29:       https://github.com/Adafruit/Adafruit_CircuitPlayground/archive/%{adafruit_version}/Adafruit_Circuit_Playground-%{adafruit_version}.zip
+Source10: https://downloads.arduino.cc/cores/avr-%{avr_version}.tar.bz2
+Source11: https://github.com/arduino-libraries/Ethernet/archive/%{ethernet_version}/Ethernet-%{ethernet_version}.zip
+Source12: https://github.com/arduino-libraries/GSM/archive/%{gsm_version}/GSM-%{gsm_version}.zip
+Source13: https://github.com/arduino-libraries/Stepper/archive/%{stepper_version}/Stepper-%{stepper_version}.zip
+Source14: https://github.com/arduino-libraries/TFT/archive/%{tft_version}/TFT-%{tft_version}.zip
+Source15: https://github.com/arduino-libraries/WiFi/archive/%{wifi_version}/WiFi-%{wifi_version}.zip
+Source16: https://github.com/firmata/arduino/archive/%{firmata_version}/Firmata-%{firmata_version}.zip
+Source17: https://github.com/arduino-libraries/Bridge/archive/%{bridge_version}/Bridge-%{bridge_version}.zip
+Source18: https://github.com/arduino-libraries/Robot_Control/archive/%{robot_control_version}/Robot_Control-%{robot_control_version}.zip
+Source19: https://github.com/arduino-libraries/Robot_Motor/archive/%{robot_motor_version}/Robot_Motor-%{robot_motor_version}.zip
+Source20: https://github.com/arduino-libraries/RobotIRremote/archive/%{robotirremote_version}/RobotIRremote-%{robotirremote_version}.zip
+Source21: https://github.com/arduino-libraries/SpacebrewYun/archive/%{spacebrewyun_version}/SpacebrewYun-%{spacebrewyun_version}.zip
+Source22: https://github.com/arduino-libraries/Temboo/archive/%{temboo_version}/Temboo-%{temboo_version}.zip
+Source23: https://github.com/arduino-libraries/Esplora/archive/%{esplora_version}/Esplora-%{esplora_version}.zip
+Source24: https://github.com/arduino-libraries/Mouse/archive/%{mouse_version}/Mouse-%{mouse_version}.zip
+Source25: https://github.com/arduino-libraries/Keyboard/archive/%{keyboard_version}/Keyboard-%{keyboard_version}.zip
+Source26: https://github.com/arduino-libraries/SD/archive/%{sd_version}/SD-%{sd_version}.zip
+Source27: https://github.com/arduino-libraries/Servo/archive/%{servo_version}/Servo-%{servo_version}.zip
+Source28: https://github.com/arduino-libraries/LiquidCrystal/archive/%{liquidcrystal_version}/LiquidCrystal-%{liquidcrystal_version}.zip
+Source29: https://github.com/Adafruit/Adafruit_CircuitPlayground/archive/%{adafruit_version}/Adafruit_Circuit_Playground-%{adafruit_version}.zip
+Source30: https://github.com/arduino/arduino-examples/archive/refs/tags/arduino-examples-%{examples_version}.zip
+Source50: https://downloads.arduino.cc/reference-%{reference_version}.zip
+Source51: https://github.com/arduino-libraries/WiFi101-FirmwareUpdater-Plugin/releases/download/v%{wifi_firmware_updater_version}/WiFi101-Updater-ArduinoIDE-Plugin-%{wifi_firmware_updater_version}.zip
 
-Source50:       https://downloads.arduino.cc/reference-%{reference_version}.zip
-Source51:       https://github.com/arduino-libraries/WiFi101-FirmwareUpdater-Plugin/releases/download/v%{wifi_firmware_updater_version}/WiFi101-Updater-ArduinoIDE-Plugin-%{wifi_firmware_updater_version}.zip
+Patch0: arduino-use-system-avrdude.patch
+Patch1: arduino-use-system-astyle.patch
+Patch2: arduino-use-system-libserialport.patch
+Patch3: arduino-drop-macosx.patch
+Patch4: arduino-wrapper.patch
+Patch5: arduino-add-to-groups.patch
+Patch6: arduino-fix-path-to-builder.patch
+Patch7: arduino-fix-fresh-rsyntaxtextarea.patch
+Patch8: arduino-add-libraries.patch
 
-Patch0:         arduino-use-system-avrdude.patch
-Patch1:         arduino-use-system-astyle.patch
-Patch2:         arduino-use-system-libserialport.patch
-Patch3:         arduino-drop-macosx.patch
-Patch4:         arduino-wrapper.patch
-Patch5:         arduino-add-to-groups.patch
-Patch6:         arduino-fix-path-to-builder.patch
-Patch7:         arduino-fix-fresh-rsyntaxtextarea.patch
+BuildRequires: ant
+BuildRequires: desktop-file-utils
+BuildRequires: libappstream-glib
+BuildRequires: javapackages-tools
+BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate gcc-c++ unzip
+BuildRequires: /proc rpm-build-java
+BuildRequires: jpackage-11-compat
+BuildRequires: arduino-builder
 
-BuildRequires:  ant
-BuildRequires:  desktop-file-utils
-BuildRequires:  libappstream-glib
-BuildRequires:  javapackages-tools
-
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-annotations)
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-core)
-BuildRequires:  mvn(com.fasterxml.jackson.core:jackson-databind)
-BuildRequires:  mvn(com.fifesoft:rsyntaxtextarea)
-BuildRequires:  mvn(com.github.zafarkhaja:java-semver)
-BuildRequires:  mvn(com.jcraft:jsch)
-BuildRequires:  mvn(commons-codec:commons-codec)
-BuildRequires:  mvn(commons-io:commons-io)
-BuildRequires:  mvn(org.apache.commons:commons-compress)
-BuildRequires:  mvn(org.apache.commons:commons-exec)
-BuildRequires:  mvn(org.apache.commons:commons-lang3)
-BuildRequires:  mvn(org.apache.commons:commons-logging)
-BuildRequires:  mvn(org.apache.commons:commons-net)
-BuildRequires:  mvn(org.apache.logging.log4j:log4j-api)
-BuildRequires:  mvn(org.apache.xmlgraphics:batik-all)
-BuildRequires:  mvn(org.bouncycastle:bcpg-jdk15)
-BuildRequires:  mvn(org.jmdns:jmdns)
-BuildRequires:  mvn(org.scream3r:jssc)
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-annotations)
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-core)
+BuildRequires: mvn(com.fasterxml.jackson.core:jackson-databind)
+BuildRequires: mvn(com.fifesoft:rsyntaxtextarea)
+BuildRequires: mvn(com.github.zafarkhaja:java-semver)
+BuildRequires: mvn(com.jcraft:jsch)
+BuildRequires: mvn(commons-codec:commons-codec)
+BuildRequires: mvn(commons-io:commons-io)
+BuildRequires: mvn(org.apache.commons:commons-compress)
+BuildRequires: mvn(org.apache.commons:commons-exec)
+BuildRequires: mvn(org.apache.commons:commons-lang3)
+BuildRequires: mvn(org.apache.commons:commons-logging)
+BuildRequires: mvn(org.apache.commons:commons-net)
+BuildRequires: mvn(org.apache.logging.log4j:log4j-api)
+BuildRequires: mvn(org.apache.xmlgraphics:batik-all)
+BuildRequires: mvn(org.bouncycastle:bcpg-jdk15)
+BuildRequires: mvn(org.jmdns:jmdns)
+BuildRequires: mvn(org.scream3r:jssc)
 
 Requires:       %{name}-core = %{epoch}:%{version}-%{release}
 Requires:       javapackages-tools
@@ -110,7 +106,6 @@ Requires:       %{name}-builder >= 1.3.25
 
 BuildArch:      noarch
 ExcludeArch:    ppc64le s390x
-Source44: import.info
 Patch33: arduino-1.8.5-use-system-listSerialsj.patch
 
 %description
@@ -192,8 +187,7 @@ Devel package for %{name}.
 
 
 %prep
-%setup -q -n Arduino-%{version}
-
+%setup
 
 tar -xvf %{SOURCE10} -C hardware
 
@@ -207,8 +201,9 @@ tar -xvf %{SOURCE10} -C hardware
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
-cp %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE17} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} build/
+cp %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} %{SOURCE14} %{SOURCE15} %{SOURCE16} %{SOURCE17} %{SOURCE18} %{SOURCE19} %{SOURCE20} %{SOURCE21} %{SOURCE22} %{SOURCE23} %{SOURCE24} %{SOURCE25} %{SOURCE26} %{SOURCE27} %{SOURCE28} %{SOURCE29} %{SOURCE30} build/
 cp %{SOURCE50} %{SOURCE51} build/shared/
 
 # Remove Windows and OSX specific code
@@ -269,7 +264,6 @@ mkdir -p linux/work/hardware/arduino/
 mv ../hardware/*/ linux/work/hardware/arduino/
 popd
 
-
 %install
 pushd build
 
@@ -295,10 +289,9 @@ for dir in shared/icons/*; do
     fi
 done
 
-
 # Install libs, examples, etc
 mkdir -p                                    %{buildroot}%{_datadir}/%{name}
-cp -ap linux/work/{examples,hardware,lib}   %{buildroot}%{_datadir}/%{name}/
+cp -ap linux/work/{examples,hardware,lib,libraries}   %{buildroot}%{_datadir}/%{name}/
 
 rm -rf \
     %{buildroot}%{_datadir}/%{name}/lib/*.jar \
@@ -352,6 +345,7 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 %config(noreplace) %{_sysconfdir}/%{name}/*
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/lib/
+%{_datadir}/%{name}/libraries/
 %dir %{_datadir}/arduino/tools-builder
 
 %files doc
@@ -371,6 +365,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/metainfo/*.appdata
 
 
 %changelog
+* Sat Jan 28 2023 Andrey Cherepanov <cas@altlinux.org> 1:1.8.19-alt1_1jpp11
+- New version (ALT #38099).
+- Packaged bundled libraries.
+
 * Mon Jan 16 2023 Andrey Cherepanov <cas@altlinux.org> 1:1.8.13-alt3_5jpp11
 - created empty directory to prevent compiler error (ALT #42586).
 
