@@ -9,7 +9,7 @@
 
 Name: sssd
 Version: 2.8.1
-Release: alt1
+Release: alt2
 Group: System/Servers
 Summary: System Security Services Daemon
 License: GPLv3+
@@ -879,6 +879,9 @@ chown root:root %_sysconfdir/sssd/sssd.conf
 %python3_sitelibdir_noarch/sssd/modules/__pycache__/*.py*
 
 %changelog
+* Fri Jan 27 2023 Stanislav Levin <slev@altlinux.org> 2.8.1-alt2
+- Backported fix for sssd#6505.
+
 * Mon Nov 07 2022 Evgeny Sinelnikov <sin@altlinux.org> 2.8.1-alt1
 - Update to latest 2.8 major release.
 - Important fixes:
