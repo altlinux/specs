@@ -4,7 +4,7 @@
 %define majver 6.0
 
 Name: kicad
-Version: 6.0.10
+Version: 6.0.11
 Release: alt1
 Epoch: 1
 
@@ -170,6 +170,9 @@ rm -r %buildroot/%_datadir/locale/pt_br
 %dir %_datadir/kicad/template
 
 %changelog
+* Mon Jan 30 2023 Anton Midyukov <antohami@altlinux.org> 1:6.0.11-alt1
+- new version 6.0.11
+
 * Sun Jan 15 2023 Anton Midyukov <antohami@altlinux.org> 1:6.0.10-alt1
 - new version 6.0.10
 
