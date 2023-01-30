@@ -29,7 +29,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        109.0.5414.74
+Version:        109.0.5414.119
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -511,6 +511,15 @@ EOF
 %_altdir/%name
 
 %changelog
+* Mon Jan 30 2023 Alexey Gladkov <legion@altlinux.ru> 109.0.5414.119-alt1
+- New version (109.0.5414.119).
+- Add a workaround to make the https_proxy environment variable work (ALT#44986).
+- Security fixes:
+  - CVE-2023-0471: Use after free in WebTransport.
+  - CVE-2023-0472: Use after free in WebRTC.
+  - CVE-2023-0473: Type Confusion in ServiceWorker API.
+  - CVE-2023-0474: Use after free in GuestView.
+
 * Thu Jan 12 2023 Alexey Gladkov <legion@altlinux.ru> 109.0.5414.74-alt1
 - New version (109.0.5414.74).
 - Security fixes:
