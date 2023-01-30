@@ -5,12 +5,13 @@
 
 %def_enable tools
 %def_enable man
+%def_enable plugins
 %def_disable tests
 %def_disable check
 
 Name: lib%_name
-Version: 0.7.0
-Release: alt0.5
+Version: 0.8.0
+Release: alt1
 
 Summary: JPEG XL image format reference implementation
 License: BSD-3-Clause
@@ -27,15 +28,18 @@ Source: %name-%version.tar
 %endif
 
 %define gif_ver 5.1
+%define hwy_ver 1.0.3
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: cmake gcc-c++ ninja-build
 #BuildRequires: libgif-devel >= %gif_ver
-BuildRequires: highway-devel
+BuildRequires: highway-devel >= %hwy_ver
 BuildRequires: libjpeg-devel openexr-devel libpng-devel libwebp-devel
 BuildRequires: libavif-devel libbrotli-devel liblcms2-devel zlib-devel
+%{?_enable_plugins:BuildRequires: libgdk-pixbuf-devel}
 %{?_enable_man:BuildRequires: asciidoc-a2x}
 %{?_enable_tests:BuildRequires: libgtest-devel}
+%{?_enable_check:BuildRequires: ctest}
 
 %description
 JPEG XL image format reference implementation Library.
@@ -69,6 +73,7 @@ This package provides JPEG XL tools.
     -DJPEGXL_FORCE_SYSTEM_LCMS2=ON \
     %{?_enable_tools:-DJPEGXL_ENABLE_TOOLS=ON} \
     -DJPEGXL_ENABLE_MANPAGES=ON \
+    %{?_enable_plugins:-DJPEGXL_ENABLE_PLUGINS=ON} \
     %{?_disable_tests:-DBUILD_TESTING=OFF} \
 %nil
 %cmake_build
@@ -76,14 +81,16 @@ This package provides JPEG XL tools.
 %install
 %cmake_install
 rm -f %buildroot%_libdir/*.a
-rm -rf %buildroot%_includedir/hwy/
-rm -f %buildroot%_pkgconfigdir/libhwy*.pc
 
 %check
-%cmake_build -d test
+%cmake_build -t test
 
 %files
 %_libdir/%{name}*.so.*
+%{?_enable_plugins:
+%_libdir/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-jxl.so
+%_datadir/mime/packages/image-jxl.xml
+%_datadir/thumbnailers/jxl.thumbnailer}
 %doc AUTHORS README* PATENTS
 
 %files devel
@@ -103,6 +110,9 @@ rm -f %buildroot%_pkgconfigdir/libhwy*.pc
 %endif
 
 %changelog
+* Sun Jan 29 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Tue Dec 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt0.5
 - first preview for Sisyphus
 - built with bundled 'sjpeg' and 'skcms' libraries
