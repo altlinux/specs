@@ -1,5 +1,5 @@
 Name: ouch
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 Summary: Painless compression and decompression for your terminal
 License: MIT
@@ -38,6 +38,9 @@ cargo install --path . --root %buildroot/%_usr
 %doc README.md
 
 %changelog
+* Mon Jan 30 2023 Alexander Makeenkov <amakeenk@altlinux.org> 0.4.1-alt1
+- Updated to version 0.4.1
+
 * Sat Dec 17 2022 Alexander Makeenkov <amakeenk@altlinux.org> 0.4.0-alt1
 - Updated to version 0.4.0
 
