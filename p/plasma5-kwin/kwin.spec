@@ -17,7 +17,7 @@
 
 Name: plasma5-%rname
 Version: 5.26.5
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -54,6 +54,7 @@ BuildRequires: libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel li
 BuildRequires: libxkbcommon-devel libgbm-devel libdrm-devel libEGL-devel libxcvt-devel
 BuildRequires: fontconfig-devel libfreetype-devel liblcms2-devel
 BuildRequires: libepoxy-devel libinput-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
+BuildRequires: pipewire-libs-devel
 BuildRequires: qt5-wayland-devel kde5-plasma-wayland-protocols wayland-protocols
 BuildRequires: qt5-multimedia-devel qt5-script-devel qt5-tools-devel-static qt5-x11extras-devel qt5-sensors-devel
 BuildRequires: kf5-kactivities-devel kf5-karchive-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcodecs-devel
@@ -208,6 +209,9 @@ done
 
 
 %changelog
+* Mon Jan 30 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt2
+- build with pipewire to enable screencasting on wayland
+
 * Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt1
 - new version
 
