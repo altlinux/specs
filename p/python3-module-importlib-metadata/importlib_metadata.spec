@@ -4,17 +4,21 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.1.0
+Version: 6.0.0
 Release: alt1
 Summary: Library to access the metadata for a Python package
 License: Apache-2.0
 Group: Development/Python3
-BuildArch: noarch
 Url: https://pypi.org/project/importlib-metadata/
 VCS: https://github.com/python/importlib_metadata.git
-
+BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+
+# PyPI name(dash, underscore)
+%py3_provides %pypi_name
+Provides: python3-module-importlib_metadata = %EVR
+Obsoletes: python3-module-importlib_metadata <= 1.5.0-alt1
 
 BuildRequires(pre): rpm-build-python3
 
@@ -27,14 +31,11 @@ BuildRequires: python3(setuptools_scm)
 # install_requires:
 BuildRequires: python3(zipp)
 
+BuildRequires: python3(packaging)
 BuildRequires: python3(pyfakefs)
+BuildRequires: python3(pytest)
 BuildRequires: python3(test)
 %endif
-
-# PyPI name(dash, underscore)
-%py3_provides %pypi_name
-Provides: python3-module-importlib_metadata = %EVR
-Obsoletes: python3-module-importlib_metadata <= 1.5.0-alt1
 
 %description
 Library to access the metadata for a Python package.
@@ -66,8 +67,7 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject -- \
-    --ignore exercises.py
+%pyproject_run_pytest -vra --ignore exercises.py
 
 %files
 %doc README.rst
@@ -75,6 +75,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Jan 27 2023 Stanislav Levin <slev@altlinux.org> 6.0.0-alt1
+- 5.1.0 -> 6.0.0.
+
 * Fri Nov 25 2022 Stanislav Levin <slev@altlinux.org> 5.1.0-alt1
 - 5.0.0 -> 5.1.0.
 
