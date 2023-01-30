@@ -1,5 +1,5 @@
 Name: barman
-Version: 3.3.0
+Version: 3.4.0
 Release: alt1
 Summary: Backup and Recovery Manager for PostgreSQL
 
@@ -10,6 +10,8 @@ Url: http://www.pgbarman.org/
 Source: https://sourceforge.net/projects/pgbarman/files/%version/%name-%version.tar.gz
 Source1: barman.cron
 Source2: barman.logrotate
+Patch: 0001-Remove-google-snapshots-deps-from-toxini.patch
+Patch1: 0001-Fix-date-and-version-for-barman-cloud-backup-show-docs.patch
 
 BuildArch: noarch
 
@@ -68,6 +70,7 @@ by 2ndQuadrant.
 
 %prep
 %setup
+%autopatch -p1
 
 # Change shebang in all relevant executable files in this directory and all subdirectories
 find -type f -executable -exec sed -i '1s=^#!%_bindir/\(python\|env python\)[23]\?=#!%__python3=' {} +
@@ -115,6 +118,7 @@ touch %buildroot/var/log/barman/barman.log
 %_bindir/barman-cloud-backup-list
 %_bindir/barman-cloud-backup-delete
 %_bindir/barman-cloud-backup-keep
+%_bindir/barman-cloud-backup-show
 %_bindir/barman-cloud-wal-archive
 %_bindir/barman-cloud-check-wal-archive
 %_bindir/barman-cloud-wal-restore
@@ -142,6 +146,10 @@ getent passwd barman >/dev/null || \
 exit 0
 
 %changelog
+* Mon Jan 30 2023 Leontiy Volodin <lvol@altlinux.org> 3.4.0-alt1
+- New version (3.4.0).
+- Applied patches from master branch.
+
 * Mon Dec 19 2022 Leontiy Volodin <lvol@altlinux.org> 3.3.0-alt1
 - New version (3.3.0).
 
