@@ -1,11 +1,11 @@
 Name: blackmagic
-Version: 1.8.2
+Version: 1.9.0
 Release: alt1
 
 Summary: In-application debugging tool for embedded microprocessors
 License: GPLv3
 Group: Development/Other
-Url: https://github.com/blacksphere/blackmagic/wiki
+Url: https://black-magic.org/
 
 Source0: %name-%version-%release.tar
 
@@ -23,12 +23,13 @@ software, GDB.
 
 %prep
 %setup
+echo '#define FIRMWARE_VERSION "%version-%release"' > src/include/version.h
 
 %build
 CFLAGS='%optflags' \
-make PROBE_HOST=hosted
+make PROBE_HOST=hosted ENABLE_RTT=1
 gcc %optflags -I/usr/include/libusb-1.0 scripts/swolisten.c -o swolisten -lusb-1.0
-cp -pv src/platforms/hosted/Readme.md README.hosted.md
+cp -pv src/platforms/hosted/README.md README.hosted.md
 
 %install
 install -pm0755 -D src/blackmagic %buildroot%_bindir/blackmagic
@@ -36,12 +37,15 @@ install -pm0755    swolisten %buildroot%_bindir/swolisten
 install -pm0644 -D driver/99-blackmagic.rules %buildroot%_udevrulesdir/60-blackmagic.rules
 
 %files
-%doc COPYING README*.md UsingSWO
+%doc COPYING README* UsingSWO* UsingRTT*
 %_udevrulesdir/60-blackmagic.rules
 %_bindir/blackmagic
 %_bindir/swolisten
 
 %changelog
+* Mon Jan 30 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.9.0-alt1
+- 1.9.0 released
+
 * Thu Jul 28 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.2-alt1
 - 1.8.2 released
 
