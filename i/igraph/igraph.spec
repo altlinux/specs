@@ -1,7 +1,11 @@
+%define llvm_ver 15
+%define gcc_ver 12
 %define soname 3
 
+%def_disable clang
+
 Name: igraph
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 Summary: Library for creating and manipulating graphs
 
@@ -11,7 +15,16 @@ Url: https://igraph.org/
 
 Source: https://github.com/igraph/igraph/releases/download/%version/igraph-%version.tar.gz
 
-BuildRequires: gcc-c++
+%if_enabled clang
+#BuildRequires(pre): rpm-macros-llvm-common
+BuildRequires: clang%llvm_ver.0-devel
+BuildRequires: lld%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: libstdc++%gcc_ver-devel
+%else
+BuildRequires: gcc%gcc_ver-c++
+BuildRequires: libgomp%gcc_ver-devel
+%endif
 BuildRequires: cmake rpm-build-ninja
 BuildRequires: libxml2-devel
 BuildRequires: libgmp-devel
@@ -71,6 +84,14 @@ sed -i 's|set(PACKAGE_VERSION "NOTFOUND")|set(PACKAGE_VERSION "%version")|' \
     etc/cmake/version.cmake
 
 %build
+%if_enabled clang
+export CC=clang-%llvm_ver
+export CXX=clang++-%llvm_ver
+export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+%else
+export CC=gcc-%gcc_ver
+export CXX=g++-%gcc_ver
+%endif
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
@@ -110,6 +131,9 @@ find . -name '.arch-ids' | xargs rm -rf
 %_man3dir/igraph.3*
 
 %changelog
+* Mon Jan 30 2023 Leontiy Volodin <lvol@altlinux.org> 0.10.4-alt1
+- New version (0.10.4).
+
 * Fri Jan 06 2023 Leontiy Volodin <lvol@altlinux.org> 0.10.3-alt1
 - New version (0.10.3).
 
