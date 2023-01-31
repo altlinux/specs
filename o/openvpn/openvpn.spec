@@ -16,7 +16,7 @@
 %def_with x509_alt_username
 
 Name: openvpn
-Version: 2.5.6
+Version: 2.5.8
 Release: alt1
 
 Summary: a full-featured SSL VPN solution
@@ -342,6 +342,9 @@ ln -s -- %openvpn_root/dev/log %buildroot%_sysconfdir/syslog.d/%name
 %endif
 
 %changelog
+* Sun Jan 15 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.5.8-alt1
+- New version
+
 * Mon May 16 2022 Nikolay A. Fetisov <naf@altlinux.org> 2.5.6-alt1
 - New version (Closes: 42217)
 - Security fixes:
