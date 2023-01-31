@@ -1,6 +1,6 @@
 Name: hypnotix
-Version: 3.1
-Release: alt2.1
+Version: 3.2
+Release: alt1
 Summary: An M3U IPTV Player
 License: GPL-2.0-or-later
 Group: Video
@@ -8,8 +8,6 @@ Url: https://github.com/linuxmint/hypnotix
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
 Source: %name-%version.tar
-# https://github.com/linuxmint/hypnotix/issues/254
-Patch: mpv-remove-deprecated-detach-destroy.patch
 BuildRequires: glib2-devel python3-dev
 Requires: libmpv2
 Requires: python3-module-cinemagoer
@@ -25,7 +23,6 @@ Hypnotix is an IPTV streaming application with support for live TV, movies and s
 
 %prep
 %setup
-%autopatch -p2
 
 %build
 %make_build
@@ -47,6 +44,9 @@ cp -r usr %buildroot
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Tue Jan 31 2023 Artyom Bystrov <arbars@altlinux.org> 3.2-alt1
+- update to new version (ALT#43208)
+
 * Fri Dec 09 2022 L.A. Kostis <lakostis@altlinux.ru> 3.1-alt2.1
 - NMU:
   + update libmpv req.
