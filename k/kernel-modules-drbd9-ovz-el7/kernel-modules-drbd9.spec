@@ -1,5 +1,5 @@
 %define module_name     drbd9
-%define module_version  9.2.1
+%define module_version  9.2.2
 %define module_release  alt1
 %define flavour         ovz-el7
 %define karch x86_64
