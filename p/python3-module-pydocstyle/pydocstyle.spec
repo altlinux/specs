@@ -3,7 +3,7 @@
 %define oname pydocstyle
 
 Name: python3-module-%oname
-Version: 6.1.1
+Version: 6.2.3
 Release: alt1
 Summary: Python docstring style checker
 License: MIT
@@ -13,9 +13,10 @@ Url: https://pypi.python.org/pypi/pydocstyle
 
 # https://github.com/PyCQA/pydocstyle.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-docs.patch
+Patch1: %oname-6.1.1-alt-docs.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry
 BuildRequires: python3-module-html5lib python3-module-mock python3-module-pytest
 BuildRequires: python3(configparser) python3(snowballstemmer) python3(six)
 # Documentation
@@ -67,10 +68,10 @@ This package contains documentation for %oname.
 ln -s ../objects.inv docs/
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %make -C docs pickle
 %make -C docs html
@@ -98,8 +99,12 @@ PYTHONPATH=%buildroot%python3_sitelibdir py.test3 -vv
 %doc docs/_build/html/*
 
 %changelog
+* Tue Jan 31 2023 Ivan A. Melnikov <iv@altlinux.org> 6.2.3-alt1
+- Updated to upstream version 6.2.3.
+- Switch to %%pyproject_* macros.
+
 * Thu Jun 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 6.1.1-alt1
-- Updated to upstream verion 6.1.1.
+- Updated to upstream version 6.1.1.
 - Rebuilt without python-2.
 
 * Fri Aug 31 2018 Stanislav Levin <slev@altlinux.org> 2.1.1-alt4

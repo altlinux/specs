@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: Fork of the python-language-server project, maintained by the Spyder IDE team and the community
@@ -72,6 +72,9 @@ export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 31 2023 Ivan A. Melnikov <iv@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Thu Jan 05 2023 Ivan A. Melnikov <iv@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
