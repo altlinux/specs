@@ -1,8 +1,8 @@
 %def_disable gtk_doc
 
 Name: cinnamon
-Version: 5.6.5
-Release: alt1
+Version: 5.6.7
+Release: alt2
 
 Summary: A Linux desktop which provides advanced innovative features and a traditional user experience.
 License: GPLv2+
@@ -32,17 +32,13 @@ Requires: dconf
 Requires: upower
 Requires: polkit >= %polkit_ver
 Requires: polkit-gnome
-# needed for session files
-Requires: cinnamon-session >= 2.6.2
 # needed for on-screen keyboard
 Requires: caribou
-Requires: cinnamon-freedesktop-menu
 Requires: %name-data = %version-%release
 Requires: muffin >= %muffin_ver
 Requires: muffin-cinnamon >= %muffin_ver
 Requires: libmuffin-gir >= %muffin_ver
 Requires: %name-translations
-Requires: mintlocale
 Requires: gst-plugins-base1.0
 
 Requires: libsoup-gir
@@ -78,6 +74,22 @@ BuildRequires: gtk-doc gnome-common intltool
 BuildRequires: at-spi2-atk-devel
 BuildRequires: rpm-build-xdg
 BuildRequires: libxapps-devel libxapps-gir-devel
+
+# @cow: In https://bugzilla.altlinux.org/42722 we decided to move cinnamon-minimal
+# deps to cinnamon package because there are cases reported when users tried to
+# install cinnamon DE not using the meta package but cinnamon package instead.
+Provides: cinnamon-minimal = %version-%release
+Obsoletes: cinnamon-minimal < 5.6
+Requires: cinnamon-session
+Requires: nemo
+Requires: cinnamon-screensaver
+Requires: cinnamon-control-center
+Requires: mintlocale
+Requires: cinnamon-freedesktop-menu
+#Gvfs
+Requires: gvfs gvfs-backends gvfs-utils
+# Char map - required by cinnamon keyboard applet
+Requires: gucharmap
 
 %description
 Cinnamon is a Linux desktop which provides advanced innovative features
@@ -193,6 +205,13 @@ install -D -p -m 0644 %SOURCE1 %buildroot/%_datadir/applications/
 %endif
 
 %changelog
+* Mon Jan 30 2023 Vladimir Didenko <cow@altlinux.org> 5.6.7-alt2
+- obsolete cinnamon-minimal meta package
+
+* Mon Jan 30 2023 Vladimir Didenko <cow@altlinux.org> 5.6.7-alt1
+- 5.6.7
+- provide cinnamon-minimal meta package (closes: #42722)
+
 * Tue Jan 10 2023 Vladimir Didenko <cow@altlinux.org> 5.6.5-alt1
 - 5.6.5-15-ga11a26614
 

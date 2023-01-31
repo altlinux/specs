@@ -1,4 +1,4 @@
-%define ver_major 5.2
+%define ver_major 5.6
 
 Name: cinnamon-meta
 Version: %ver_major.0
@@ -18,42 +18,16 @@ BuildPreReq: rpm-build-licenses
 %description
 A set of virtual packages for Cinnamon Desktop installation.
 
-
-%package -n cinnamon-minimal
-Summary: A minimal Cinnamon desktop meta package
-Group: Graphical desktop/GNOME
-
-# Cinnamon Desktop Core
-Requires: cinnamon >= %ver_major
-Requires: cinnamon-session
-# Window manager
-Requires: muffin >= %ver_major
-
-# Nemo and cinnamon-screensaver are required components in cinnamon.session
-# files.
-Requires: nemo
-Requires: cinnamon-screensaver
-
-%description -n cinnamon-minimal
-This package provides minimal set of components to run
-Cinnamon desktop.
-
 %package -n cinnamon-default
 Summary: A default Cinnamon desktop meta package
 Group: Graphical desktop/GNOME
 
-Requires: cinnamon-minimal = %version-%release
+# cow@: cinnamon-minimal is now moved to cinnamon package.
+# See https://bugzilla.altlinux.org/42722 for details
+Requires: cinnamon-minimal >= %ver_major
 Provides: cinnamon-full = %version-%release
-# Control Center
-Requires: cinnamon-control-center
 # Default terminal
 Requires: gnome-terminal
-# Screensaver
-Requires: cinnamon-screensaver
-#Gvfs
-Requires: gvfs gvfs-backends gvfs-utils
-# Char map - required by cinnamon keyboard applet
-Requires: gucharmap
 
 # Look and Feel
 Requires: gnome-icon-theme
@@ -122,11 +96,14 @@ of default applications.
 
 %prep
 
-%files -n cinnamon-minimal
 %files -n cinnamon-default
 %files -n cinnamon-regular
 
 %changelog
+* Mon Jan 30 2023 Vladimir Didenko <cow@altlinux.org> 5.6.0-alt1
+- version bump
+- cinnamon-minimal moved to cinnamon-package
+
 * Wed Mar 17 2022 Vladimir Didenko <cow@altlinux.org> 5.2.0-alt1
 - version bump
 - replace blueberry by blueman
