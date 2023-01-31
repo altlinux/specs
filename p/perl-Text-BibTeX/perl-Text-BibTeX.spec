@@ -1,9 +1,9 @@
-%define __spec_autodep_custom_pre export LD_LIBRARY_PATH=%buildroot%_libdir
 %define _unpackaged_files_terminate_build 1
+%define __spec_autodep_custom_pre export LD_LIBRARY_PATH=%buildroot%_libdir
 %define dist Text-BibTeX
 Name: perl-%dist
-Version: 0.88
-Release: alt3
+Version: 0.89
+Release: alt1
 
 Summary: Interface to read and parse BibTeX files
 License: GPL or Artistic
@@ -40,7 +40,7 @@ mkdir -p %buildroot%_man1dir
 install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 
 %files
-%doc Changes README THANKS examples README.OLD
+%doc Changes README examples README.OLD
 %_bindir/*
 %_man1dir/*
 %_libdir/libbtparse.so
@@ -49,6 +49,9 @@ install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 %exclude %_includedir/btparse.h
 
 %changelog
+* Tue Jan 31 2023 Igor Vlasenko <viy@altlinux.org> 0.89-alt1
+- automated CPAN update
+
 * Fri Apr 08 2022 Igor Vlasenko <viy@altlinux.org> 0.88-alt3
 - fix build
 
