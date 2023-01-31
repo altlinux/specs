@@ -6,7 +6,7 @@ BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(IPC/Open3.pm) perl(Test/More.pm)
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.002009
+Version: 0.002010
 Release: alt1
 Summary: Skip tests when modules not available
 Group: Development/Perl
@@ -52,6 +52,9 @@ running after that point.
 %perl_vendor_privlib/T*
 
 %changelog
+* Tue Jan 31 2023 Igor Vlasenko <viy@altlinux.org> 0.002010-alt1
+- automated CPAN update
+
 * Thu May 27 2021 Igor Vlasenko <viy@altlinux.org> 0.002009-alt1
 - automated CPAN update
 
