@@ -1,10 +1,12 @@
 %define repo dde-file-manager
+%define llvm_ver 15
+%define gcc_ver 12
 
 %def_disable clang
 
 Name: deepin-file-manager
 Version: 5.8.3
-Release: alt1.1
+Release: alt2
 Summary: Deepin File Manager
 License: GPL-3.0+
 Group: File tools
@@ -18,17 +20,18 @@ Patch4: deepin-file-manager-5.5.1-hide-lockscreen-checkbox.patch
 Patch5: deepin-file-manager-5.5.1-gcc11-fix-segfault.patch
 Patch6: deepin-file-manager-5.5.1-alt-aarch64.patch
 
-ExcludeArch: armh ppc64le
-
 Requires: libdde-file-manager5 libdfm-extension5
 
-%if_enabled clang
-BuildRequires(pre): clang-devel
-%else
-BuildRequires(pre): gcc-c++
-%endif
-
 BuildRequires(pre): rpm-build-kf5
+%if_enabled clang
+#BuildRequires(pre): rpm-macros-llvm-common
+BuildRequires: clang%llvm_ver.0-devel
+BuildRequires: lld%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: libstdc++%gcc_ver-devel
+%else
+BuildRequires: gcc%gcc_ver-c++
+%endif
 BuildRequires: git-core
 BuildRequires: desktop-file-utils
 BuildRequires: deepin-gettext-tools
@@ -129,7 +132,9 @@ Deepin desktop environment - desktop module.
 # %%patch1 -p1
 # %%patch3 -p1
 %patch4 -p1
+%if_disabled clang
 %patch5 -p1
+%endif
 # %%patch6 -p1
 
 # sed -i 's|"groups":|"groups"\ :|' dde-file-manager-lib/configure/global-setting-template*.js
@@ -177,20 +182,17 @@ sed -i 's/| isEqual(ARCH, aarch64)//' \
 
 %build
 %if_enabled clang
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export READELF="llvm-readelf"
+export CC=clang-%llvm_ver
+export CXX=clang++-%llvm_ver
+export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
 %define optflags_lto %nil
+%else
+export CC=gcc-%gcc_ver
+export CXX=g++-%gcc_ver
 %endif
-
 export PATH=%_qt5_bindir:$PATH
 %qmake_qt5 \
            CONFIG+=nostrip \
-%ifarch aarch64
-           CONFIG+=DISABLE_ANYTHING \
-%endif
            DEFINES+="VERSION=%version" \
            unix:LIBS+="-L%_libdir -lgio-2.0 -licui18n -lX11" \
            unix:LIBS+="-L%_K5link -lKF5Codecs" \
@@ -246,12 +248,12 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/polkit-1/actions/com.deepin.pkexec.dde-file-manager.policy
 %_datadir/applications/context-menus/.readme
 %_datadir/dsg/configs/org.deepin.dde.file-manager/org.deepin.dde.file-manager.json
-# %%ifnarch aarch64
+%ifnarch armh ppc64le
 %dir %_libdir/deepin-anything-server-lib/
 %dir %_libdir/deepin-anything-server-lib/plugins/
 %dir %_libdir/deepin-anything-server-lib/plugins/handlers/
 %_libdir/deepin-anything-server-lib/plugins/handlers/libdde-anythingmonitor.so
-# %%endif
+%endif
 %dir %_libdir/dde-dock/
 %dir %_libdir/dde-dock/plugins/
 %dir %_libdir/dde-dock/plugins/system-trays/
@@ -311,6 +313,10 @@ export PATH=%_qt5_bindir:$PATH
 %_datadir/dbus-1/services/com.deepin.dde.desktop.service
 
 %changelog
+* Tue Jan 31 2023 Leontiy Volodin <lvol@altlinux.org> 5.8.3-alt2
+- Enabled deepin-anything on aarch64.
+- Enabled build on armh and ppc64le.
+
 * Fri Dec 30 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.3-alt1.1
 - Fixed build with deepin-anything 6.0.3.
 

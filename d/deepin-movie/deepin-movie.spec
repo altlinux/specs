@@ -1,11 +1,10 @@
-%def_disable clang
+%define llvm_ver 15
+%define gcc_ver 12
 
-%if_enabled clang
-%define optflags_lto -flto=thin
-%endif
+%def_enable clang
 
 Name: deepin-movie
-Version: 5.10.15
+Version: 6.0.1
 Release: alt1
 Summary: Deepin movie is Deepin Desktop Environment Movie Player
 License: GPL-3.0+ and CC0-1.0 and CC-BY-4.0
@@ -18,12 +17,14 @@ Patch0: %name-5.10.15-alt-cxx-flags.patch
 Patch1: %name-5.10.15-alt-libmpv.patch
 Patch2: %name-5.10.15-alt-underlinked-libraries.patch
 
-ExcludeArch: armh
-
 %if_enabled clang
-BuildRequires(pre): clang-devel
+#BuildRequires(pre): rpm-macros-llvm-common
+BuildRequires: clang%llvm_ver.0-devel
+BuildRequires: lld%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: libstdc++%gcc_ver-devel
 %else
-BuildRequires(pre): gcc-c++
+BuildRequires: gcc%gcc_ver-c++
 %endif
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake
@@ -84,9 +85,13 @@ This package provides development files for libdmr.
 
 %build
 %if_enabled clang
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
+%define optflags_lto -flto=thin
+export CC=clang-%llvm_ver
+export CXX=clang++-%llvm_ver
+export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+%else
+export CC=gcc-%gcc_ver
+export CXX=g++-%gcc_ver
 %endif
 %cmake \
     -GNinja \
@@ -106,6 +111,7 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_bindir/%name
 %_datadir/%name/
 %_desktopdir/%name.desktop
+%_datadir/dbus-1/services/com.deepin.movie.service
 %_datadir/glib-2.0/schemas/com.deepin.deepin-movie.gschema.xml
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %dir %_datadir/deepin-manual/
@@ -124,6 +130,11 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_pkgconfigdir/libdmr.pc
 
 %changelog
+* Tue Jan 31 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.1-alt1
+- New version (6.0.1).
+- Updated libmpv patch.
+- Enabled build on armh.
+
 * Fri Nov 18 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.15-alt1
 - NMU:
   + 5.9.14 -> 5.10.15 (fix FTBFS).
