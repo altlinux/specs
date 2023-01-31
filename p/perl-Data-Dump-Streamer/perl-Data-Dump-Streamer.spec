@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Data-Dump-Streamer
 Name: perl-%dist
-Version: 2.40
-Release: alt1.2
+Version: 2.41
+Release: alt1
 
 Summary: Accurately serialize a data structure as Perl code
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/Y/YV/YVES/Data-Dump-Streamer-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/Y/YV/YVES/%{dist}-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: perl-Algorithm-Diff perl-B-Utils perl-IO-Compress perl-Module-Build perl-PadWalker perl-Text-Balanced
@@ -22,7 +22,7 @@ usually only one.  Self-referential structures, closures, and objects are
 output correctly.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -36,6 +36,9 @@ output correctly.
 %perl_vendor_autolib/Data
 
 %changelog
+* Tue Jan 31 2023 Igor Vlasenko <viy@altlinux.org> 2.41-alt1
+- automated CPAN update
+
 * Thu Jan 24 2019 Igor Vlasenko <viy@altlinux.ru> 2.40-alt1.2
 - rebuild with new perl 5.28.1
 
