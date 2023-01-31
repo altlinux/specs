@@ -1,6 +1,6 @@
 Name:           mpdecimal
 Version:        2.5.1
-Release:        alt1
+Release:        alt2
 
 Summary:        Library for general decimal arithmetic
 License:        BSD
@@ -12,25 +12,42 @@ Source1:        http://speleotrove.com/decimal/dectest.zip
 
 BuildRequires:  make gcc-c++ unzip
 
+Requires:       libmpdec3 libmpdecxx3
+
 %description
 The package contains a library limpdec implementing General Decimal Arithmetic
 Specification. The specification, written by Mike Cowlishaw from IBM, defines
 a general purpose arbitrary precision data type together with rigorously
 specified functions and rounding behavior.
 
-%package        devel
+%package        -n libmpdec3
+Summary:        Library for general decimal arithmetic
+Group:          System/Libraries
+%description    -n libmpdec3
+The package contains mpdecimal %version libs.
+
+%package        -n libmpdecxx3
+Summary:        Library for general decimal arithmetic
+Group:          System/Libraries
+%description    -n libmpdecxx3
+The package contains mpdecimal %version libs.
+
+%package        -n libmpdec-devel
 Summary:        Development headers for mpdecimal library
 Group:          System/Libraries
-Requires:       %name = %EVR
+Requires:       libmpdec3 = %EVR
+Requires:       libmpdecxx3 = %EVR
+Provides:       mpdecimal-devel
 
-%description devel
+%description    -n libmpdec-devel
 The package contains development headers for the mpdecimal library.
 
-%package        doc
+%package        -n libmpdec-doc
 Summary:        Documentation for mpdecimal library
 Group:          Documentation
+BuildArch:      noarch
 
-%description doc
+%description    -n libmpdec-doc
 The package contains documentation for the mpdecimal library.
 
 %prep
@@ -53,24 +70,33 @@ rm -v %buildroot%_libdir/*.a
 %check
 make check
 
+# for dummy package
 %files
-%doc LICENSE.txt
-%_libdir/libmpdec.so.%version
-%_libdir/libmpdec.so.3
-%_libdir/libmpdec++.so.%version
-%_libdir/libmpdec++.so.3
 
-%files devel
+%files -n libmpdec3
+%doc LICENSE.txt
+%_libdir/libmpdec.so.3
+%_libdir/libmpdec.so.%version
+
+%files -n libmpdecxx3
+%doc LICENSE.txt
+%_libdir/libmpdec++.so.3
+%_libdir/libmpdec++.so.%version
+
+%files -n libmpdec-devel
 %doc LICENSE.txt
 %_libdir/libmpdec.so
 %_libdir/libmpdec++.so
 %_includedir/mpdecimal.h
 %_includedir/decimal.hh
 
-%files doc
+%files -n libmpdec-doc
 %doc LICENSE.txt
 %_docdir/%name
 
 %changelog
+* Tue Jan 31 2023 Anton Vyatkin <toni@altlinux.org> 2.5.1-alt2
+- NMU: (ALT 42388) Split into libmpdec3 and libmpdecxx3 packages.
+
 * Fri Dec 03 2021 Grigory Ustinov <grenka@altlinux.org> 2.5.1-alt1
 - Initial build for Sisyphus.
