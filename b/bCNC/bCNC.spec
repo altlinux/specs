@@ -3,7 +3,7 @@
 
 Name:    bCNC
 Version: 0.9.14.318
-Release: alt2
+Release: alt3
 
 Summary: GRBL CNC command sender, autoleveler and g-code editor
 License: GPL-2.0
@@ -15,7 +15,7 @@ BuildRequires: python3-dev
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 BuildRequires: ImageMagick-tools
-%py3_requires tkinter
+%py3_requires tkinter serial
 
 BuildArch: noarch
 
@@ -65,6 +65,9 @@ done
 %_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Tue Jan 31 2023 Anton Midyukov <antohami@altlinux.org> 0.9.14.318-alt3
+- add %%py3_requires serial (Closes:45081)
+
 * Tue Jan 31 2023 Anton Midyukov <antohami@altlinux.org> 0.9.14.318-alt2
 - add %%py3_requires tkinter (Closes:45080)
 
