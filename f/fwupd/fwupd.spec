@@ -24,7 +24,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.8.9
+Version: 1.8.10
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -336,6 +336,8 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4:/usr/src \
 %_datadir/installed-tests/fwupd/*.zip
 %_datadir/installed-tests/fwupd/*.cab
 %_datadir/installed-tests/fwupd/*.sh
+%_datadir/installed-tests/fwupd/chassis_type
+%_datadir/installed-tests/fwupd/sys_vendor
 %_datadir/fwupd/device-tests/*.json
 %_libexecdir/installed-tests/fwupd
 %dir %_sysconfdir/fwupd/remotes.d
@@ -343,6 +345,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4:/usr/src \
 %endif
 
 %changelog
+* Tue Jan 31 2023 Egor Ignatov <egori@altlinux.org> 1.8.10-alt1
+- 1.8.9 -> 1.8.10
+
 * Tue Jan 03 2023 Egor Ignatov <egori@altlinux.org> 1.8.9-alt1
 - 1.8.8 -> 1.8.9
 
