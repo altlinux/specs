@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -22,6 +22,7 @@ BuildRequires: lightdm-devel
 BuildRequires: qt5-base-devel qt5-x11extras-devel qt5-declarative-devel qt5-tools-devel qt5-tools-devel-static
 BuildRequires: extra-cmake-modules
 BuildRequires: kf5-kdeclarative-devel kf5-kiconthemes-devel kf5-plasma-framework-devel kf5-kconfig-devel kf5-ki18n-devel kf5-kauth-devel kf5-kconfigwidgets-devel
+BuildRequires: kf5-kcmutils-devel
 # deps of used stuff
 BuildRequires: kf5-kcoreaddons-devel kf5-kpackage-devel kf5-kservice-devel
 
@@ -31,6 +32,7 @@ Provides: lightdm-greeter
 %qml_req_skipall 0
 # QtQuick is not provided yet
 %qml_add_req_skip QtQuick
+%qml_add_req_skip org.kde.kquickcontrolsaddons
 
 %description
 This package provides a KDE-based LightDM greeter engine.
@@ -45,12 +47,12 @@ This is a fork of KDE4-based LightDM greeter engine for KDE5.
 
 %install
 %K5install
+%K5install_move data kcm_lightdm kpackage
 
 %find_lang --with-kde %name
 %find_lang --with-kde --append --output=%name.lang kcm_lightdm
 %find_lang --with-kde --append --output=%name.lang lightdm_theme_classic
 %find_lang --with-kde --append --output=%name.lang lightdm_theme_userbar
-%find_lang --with-kde --append --output=%name.lang desktop_playground-base_lightdm
 
 # Add alternatives for xgreeters
 mkdir -p %buildroot%_altdir
@@ -61,15 +63,20 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_sbindir/lightdm-kde-greeter
 %_datadir/xgreeters/lightdm-kde-greeter.desktop
 %_datadir/dbus-1/system.d/org.kde.kcontrol.kcmlightdm.conf
-%_K5plug/kcm_lightdm.so
 %_K5libexecdir/kauth/kcmlightdmhelper
 %_K5libexecdir/lightdm-kde-greeter-rootimage
 %_K5dbus_sys_srv/org.kde.kcontrol.kcmlightdm.service
 %_datadir/lightdm-kde-greeter/
-%_K5srv/kcm_lightdm.desktop
+%_K5xdgapp/kcm_lightdm.desktop
+%_K5plug/plasma/kcms/systemsettings/kcm_lightdm.so
+%_K5data/kpackage/kcms/kcm_lightdm/
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
+
 %changelog
+* Thu Jan 26 2023 Anton Golubev <golubevan@altlinux.org> 0.4.3-alt1
+- Rewrite configuration module to QML
+
 * Tue Jan 17 2023 Anton Golubev <golubevan@altlinux.org> 0.4.2-alt1
 - fix some minor bugs in 'userbar' theme
 
