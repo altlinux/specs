@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 %define dist GDGraph
 Name: perl-GD-Graph
-Version: 1.54
-Release: alt2
+Version: 1.56
+Release: alt1
 Epoch: 1
 
 Summary: Create charts using GD
@@ -10,7 +10,7 @@ Group: Development/Perl
 License: GPL or Artistic
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RU/RUZ/GDGraph-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/B/BP/BPS/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ This is GDGraph, a package to generate charts, using Lincoln Stein's
 GD.pm. See the documentation for some history and more information.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 #libgd3 disabled gd2, so some tests fail; see perl-GD
 %if "%version" == "1.54"
@@ -40,6 +40,9 @@ GD.pm. See the documentation for some history and more information.
 %perl_vendor_privlib/GD
 
 %changelog
+* Tue Jan 31 2023 Igor Vlasenko <viy@altlinux.org> 1:1.56-alt1
+- automated CPAN update
+
 * Sun Dec 05 2021 Igor Vlasenko <viy@altlinux.org> 1:1.54-alt2
 - fixed build
 
