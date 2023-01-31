@@ -1,7 +1,7 @@
 %define optflags_lto %nil
 
 Name: gzdoom
-Version: 4.9.0
+Version: 4.10.0
 Release: alt1
 
 Summary: Enhanced Doom engine
@@ -11,7 +11,7 @@ Group: Games/Arcade
 
 Url: http://zdoom.org
 
-ExclusiveArch: x86_64 e2k
+ExclusiveArch: x86_64 %e2k
 
 Packager: Artyom Bystrov <arbars@altlinux.org>
 
@@ -106,6 +106,9 @@ done
 %_datadir/%name/soundfonts/%name.sf2
 
 %changelog
+* Tue Jan 31 2023 Artyom Bystrov <arbars@altlinux.org> 4.10.0-alt1
+- Update to new version
+
 * Mon Nov 28 2022 Artyom Bystrov <arbars@altlinux.org> 4.9.0-alt1
 - Update to new version
 
