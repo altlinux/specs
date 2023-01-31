@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Net-Pcap
 Name: perl-%dist
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: Interface to pcap(3) LBL packet capture library
@@ -40,6 +40,9 @@ security monitoring, network debugging, etc."
 %perl_vendor_autolib/Net
 
 %changelog
+* Tue Jan 31 2023 Igor Vlasenko <viy@altlinux.org> 0.21-alt1
+- automated CPAN update
+
 * Tue Dec 21 2021 Igor Vlasenko <viy@altlinux.org> 0.20-alt1
 - automated CPAN update
 
