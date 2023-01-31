@@ -1,6 +1,6 @@
 Name: engineering-meta
 Version: p10
-Release: alt5
+Release: alt6
 Summary: Metapackage for install Engineering Applications
 Summary(ru_RU.UTF-8): Метапакет для установки инженерных приложений
 Group: Engineering
@@ -143,6 +143,7 @@ Group: Engineering
 
 Requires: linuxcnc
 Requires: mesaflash
+Requires: bCNC
 
 %description -n engineering-CNC
 Metapackage for install CNC (Computer Numerical Control)
@@ -163,6 +164,7 @@ Requires: kicad
 Requires: ktechlab
 #Requires: qucs
 Requires: qucs-s
+Requires: simulide
 
 %description -n engineering-EDA
 Metapackage for install EDA (Electronic Design Automation)
@@ -199,6 +201,10 @@ Engineering applications not included in any category.
 %files -n engineering-misc
 
 %changelog
+* Tue Jan 31 2023 Anton Midyukov <antohami@altlinux.org> p10-alt6
+- CNC: add bCNC
+- EDA: add simulide
+
 * Sun Jul 24 2022 Anton Midyukov <antohami@altlinux.org> p10-alt5
 - engineering-{3D-CAD,CNC}: do not build for %%arm ppc64le
 - engineering-3D-CAD: do not require povray
