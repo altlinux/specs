@@ -3,7 +3,7 @@
 %define real_name tree
 
 Name:    dirtree
-Version: 1.8.0
+Version: 2.1.0
 Release: alt1
 
 Summary: a recursive directory listing command
@@ -12,13 +12,14 @@ Summary(ru_RU.UTF-8): консольная утилита для рекурси�
 License: %gpl2only
 Group:   File tools
 
-# Note: access to the project home page may be blocked from Russia,
-# try to use any of foreign proxies if needed.
-URL:     http://mama.indstate.edu/users/ice/tree/
+URL:      http://oldmanprogrammer.net/code.php?src=tree
+#URL:     https://gitlab.com/OldManProgrammer/unix-tree
+#URL:     http://mama.indstate.edu/users/ice/tree/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.org>
 
 Source0: %real_name-%version.tar
+Patch0:  %real_name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -42,6 +43,7 @@ Tree - команда для рекурсивного отображения с�
 
 %prep
 %setup -q -n %real_name-%version
+%patch0 -p1
 
 mv -f -- LICENSE LICENSE.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/LICENSE) LICENSE
@@ -62,6 +64,9 @@ install -D -m 644 doc/%{real_name}.1  %buildroot%_man1dir/%{name}.1
 %_man1dir/%{name}.*
 
 %changelog
+* Sun Jan 15 2023 Nikolay A. Fetisov <naf@altlinux.org> 2.1.0-alt1
+- New version
+
 * Sat Jun 27 2020 Nikolay A. Fetisov <naf@altlinux.org> 1.8.0-alt1
 - New version
 
