@@ -9,7 +9,7 @@
 %def_disable check
 
 Name: libgusb
-Version: 0.4.3
+Version: 0.4.4
 Release: alt1
 
 Summary: GLib wrapper around libusb1
@@ -118,6 +118,9 @@ applications that use GUsb library.
 %endif
 
 %changelog
+* Tue Jan 31 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
+- 0.4.4
+
 * Wed Dec 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.4.3-alt1
 - 0.4.3
 
