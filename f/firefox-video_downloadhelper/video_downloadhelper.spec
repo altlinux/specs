@@ -4,7 +4,7 @@
 %define cid	\{b9db16a4-6edc-47ec-a1f4-b86292ed211d\}
 
 Name:		%firefox_name-%rname
-Version:	7.6.0
+Version:	7.6.6
 Release:	alt1
 
 Summary:	Video DownloadHelper plugin for Firefox
@@ -42,6 +42,9 @@ install -pD -m 644 %SOURCE0 %buildroot%firefox_noarch_extensionsdir/%{cid}.xpi
 %firefox_noarch_extensionsdir/%{cid}.xpi
 
 %changelog
+* Sun Jan 15 2023 Nikolay A. Fetisov <naf@altlinux.org> 7.6.6-alt1
+- New version
+
 * Tue Jul 13 2021 Nikolay A. Fetisov <naf@altlinux.org> 7.6.0-alt1
 - New version
 
