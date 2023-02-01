@@ -1,10 +1,11 @@
+%set_verify_elf_method strict
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define _unpackaged_files_terminate_build 1
 %def_enable static
 
 Name: slang2
-Version: 2.3.2
-Release: alt5
+Version: 2.3.3
+Release: alt1
 
 Summary: The shared library for the S-Lang extension language
 License: GPL-2.0-or-later
@@ -14,17 +15,18 @@ Url: http://www.jedsoft.org/slang/
 # https://www.jedsoft.org/releases/slang/slang-2.3.2.tar.bz2
 Source: slang-%version.tar
 
-Patch1: slang-2.3.2-alt-makefile.patch
-Patch2: slang-2.2.4-owl-alt-fixes.patch
+Patch2: slang-2.3.3-owl-alt-fixes.patch
 Patch3: slang-2.2.4-alt-doc.patch
 
 Patch11: slang-2.2.4-deb-demos-make.patch
 Patch12: slang-2.2.4-deb-hostent-haddr.patch
-Patch13: slang-2.3.2-slarray-ub.patch
 
 # Automatically added by buildreq on Tue Sep 25 2012
 # optimized out: gnu-config pkg-config xorg-xproto-devel zlib-devel
 BuildRequires: libICE-devel libX11-devel libncurses-devel libpcre-devel libpng-devel
+
+# for src/test/posixio.sl
+BuildRequires: /dev/pts
 
 %package slsh
 Summary: S-Lang shell
@@ -91,18 +93,13 @@ applications.
 
 %prep
 %setup -n slang-%version
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
 
 %build
-#https://bugzilla.altlinux.org/36424#c17
-%add_optflags -fno-strict-overflow
-
 %add_optflags %(getconf LFS_CFLAGS)
 
 export ac_cv_func_snprintf=yes ac_cv_func_vsnprintf=yes
@@ -124,13 +121,10 @@ mv %buildroot%_docdir/slang/v2 %buildroot%docdir
 rmdir %buildroot%_docdir/slang
 mv %buildroot%_docdir/slsh/html %buildroot%docdir/slsh
 rmdir %buildroot%_docdir/slsh
-%set_verify_elf_method strict
 
 %check
-#export LD_LIBRARY_PATH=%buildroot%_libdir
-#make_build -k -C src/test CFLAGS='%optflags' OTHERLIBS=-lm SLANGLIB=%buildroot%_libdir
-
-export TERM="xterm"
+# for test_slsmg.sl
+export TERM=xterm
 %make check
 
 %files slsh
@@ -158,6 +152,11 @@ export TERM="xterm"
 %endif
 
 %changelog
+* Wed Feb 01 2023 Anton Farygin <rider@altlinux.ru> 2.3.3-alt1
+- 2.3.3
+- removed -fno-strict-overflow from %%optflags and slang-2.3.2-slarray-ub.patch
+  (not need anymore)
+
 * Sat Oct 16 2021 Anton Farygin <rider@altlinux.ru> 2.3.2-alt5
 - fixed build with LTO
 
