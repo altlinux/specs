@@ -5,8 +5,8 @@
 %define _prefix /
 %define soname 13
 Name: ipset
-Version: 7.15
-Release: alt3
+Version: 7.17
+Release: alt1
 
 Summary: Tools for managing sets of IP or ports with iptables
 License: GPLv2
@@ -106,6 +106,9 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 %attr(0644,root,root) %kernel_src/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Wed Feb 01 2023 Anton Farygin <rider@altlinux.ru> 7.17-alt1
+- 7.15 -> 7.17
+
 * Tue Oct 05 2021 Ivan A. Melnikov <iv@altlinux.org> 7.15-alt3
 - fix build on riscv64
 
