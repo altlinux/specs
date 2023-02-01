@@ -1,6 +1,6 @@
 Name: lightdm-webkit2-greeter
 Version: 3.5.2
-Release: alt1
+Release: alt1.1
 
 Summary: A modern, visually appealing greeter for LightDM
 License: GPL-3.0
@@ -105,6 +105,9 @@ install -m 644 %SOURCE1 %buildroot%_sysconfdir/lightdm/
 %doc *.md
 
 %changelog
+* Wed Feb 01 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.2-alt1.1
+- Close Bags (ALT #44832, #44833)
+
 * Sun Jan 29 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.2-alt1
 - New Version
 
