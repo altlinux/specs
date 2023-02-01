@@ -12,8 +12,8 @@
 %define macrosname %name-build
 
 Name:    apache2
-Version: 2.4.54
-Release: alt3
+Version: 2.4.55
+Release: alt1
 Epoch: 1
 
 License: %asl
@@ -1539,6 +1539,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Wed Feb 01 2023 Anton Farygin <rider@altlinux.ru> 1:2.4.55-alt1
+
+- 2.4.55 (Fixes: CVE-2022-37436, CVE-2006-20001, CVE-2022-36760)
 * Mon Nov 14 2022 Egor Ignatov <egori@altlinux.org> 1:2.4.54-alt3
 - a2enmod: enable mod also in mods-start.d (closes: #44044)
 
