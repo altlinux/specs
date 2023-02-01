@@ -4,13 +4,13 @@
 %define cid_dict       pt-BR@dictionaries.addons.mozilla.org
 %define cid_dict_dir   %palemoon_noarch_extensionsdir/%cid_dict
 
-%define min_version	31.3.0
-%define max_version	31.4.*
+%define min_version	32.0.0
+%define max_version	33.0.*
 
 
 Name: palemoon-pt_br
 
-Version: 31.4.0
+Version: 32.0.0
 Release: alt1
 
 Summary: Portuguese (Brazilian) Language Pack for Pale Moon
@@ -72,6 +72,9 @@ ln -s %_datadir/myspell/pt_BR.dic %buildroot/%cid_dict_dir/dictionaries/pt_BR.di
 
 
 %changelog
+* Tue Jan 31 2023 Hihin Ruslan <ruslandh@altlinux.ru> 32.0.0-alt1
+- Version 32.0.0
+
 * Tue Nov 29 2022 Hihin Ruslan <ruslandh@altlinux.ru> 31.4.0-alt1
 - Build Version 31.4.0
 
