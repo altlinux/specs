@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-bind
-Version: 0.9.5
-Release: alt1.1.1
+Version: 0.9.6
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -55,6 +55,9 @@ alterator module to create and manage dynamic dns
 %_libexecdir/alterator/hooks/dhcp.d/*
 
 %changelog
+* Tue Jan 31 2023 Dmitry Terekhin <jqt4@altlinux.org> 0.9.6-alt1
+- ddns-sh-functions: Use tsig-keygen instead of dnssec-keygen (closes: #45063).
+
 * Fri Apr 13 2018 Grigory Ustinov <grenka@altlinux.org> 0.9.5-alt1.1.1
 - NMU: Replace BuildRequires for guile on e2k arch.
 
