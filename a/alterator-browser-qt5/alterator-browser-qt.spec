@@ -10,7 +10,7 @@
 %define raw_name alterator-browser-qt
 
 Name: %bin_name
-Version: 3.4.10
+Version: 3.4.11
 Release: alt1
 
 Source:%name-%version.tar
@@ -83,6 +83,9 @@ __EOF__
 
 
 %changelog
+* Wed Feb 01 2023 Sergey V Turchin <zerg at altlinux dot org> 3.4.11-alt1
+- allow SVG images for slideshow
+
 * Mon Jan 16 2023 Sergey V Turchin <zerg at altlinux dot org> 3.4.10-alt1
 - optimize string conversions
 
