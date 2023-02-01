@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.26.5
-Release: alt3
+Release: alt4
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -75,7 +75,7 @@ Source50: dbus-restart-kde5.sh
 Patch100: alt-startkde.patch
 Patch101: alt-menu-add-tooltip.patch
 Patch102: alt-def-wallpaper-image.patch
-#
+Patch103: alt-wait-drkonqi.patch
 Patch104: alt-def-digital-clock.patch
 Patch105: alt-lock-widgets.patch
 Patch106: alt-digital-clock-date.patch
@@ -275,7 +275,7 @@ Requires: %name-common
 %patch100 -p1 -b .startkde
 %patch101 -p1
 %patch102 -p1
-#
+%patch103 -p1
 %patch104 -p1
 ###%patch105 -p1
 %patch106 -p1
@@ -536,6 +536,9 @@ install -m0644 -p -D %SOURCE41 %buildroot/%_unitdir_user/plasma-core.target.d/sp
 
 
 %changelog
+* Wed Feb 01 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt4
+- don't wait for drkonqi on logout by default
+
 * Fri Jan 20 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt3
 - restart dbus-daemon early
 
