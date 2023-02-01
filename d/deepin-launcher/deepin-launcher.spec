@@ -1,14 +1,19 @@
 %def_disable clang
 
 %define repo dde-launcher
+%define llvm_ver 15
+%define gcc_ver 12
 
 Name: deepin-launcher
 Version: 5.6.1
-Release: alt2
+Release: alt3
+
 Summary: Deepin desktop-environment - Launcher module
+
 License: GPL-3.0+
 Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/dde-launcher
+
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
@@ -18,9 +23,12 @@ Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 
 %if_enabled clang
-BuildRequires(pre): clang-devel
+#BuildRequires(pre): rpm-macros-llvm-common
+BuildRequires: clang%llvm_ver.0-devel
+BuildRequires: lld%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver.0-devel
 %else
-BuildRequires(pre): gcc-c++
+BuildRequires: gcc%gcc_ver-c++
 %endif
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake
@@ -43,15 +51,19 @@ BuildRequires: dtk5-common
 %prep
 %setup -n %repo-%version
 %patch -p1
+sed -i 's|DRegionMonitor|Dtk::Gui::DRegionMonitor|' \
+    src/launchersys.cpp
 
 %build
 export PATH=%_qt5_bindir:$PATH
 %if_enabled clang
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export READELF="llvm-readelf"
+%define optflags_lto -flto=thin
+export CC=clang-%llvm_ver
+export CXX=clang++-%llvm_ver
+export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+%else
+export CC=gcc-%gcc_ver
+export CXX=g++-%gcc_ver
 %endif
 %cmake \
     -GNinja \
@@ -78,6 +90,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/dsg/configs/org.deepin.dde.launcher/org.deepin.dde.launcher.json
 
 %changelog
+* Wed Feb 01 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.1-alt3
+- Fixed build with dtkgui 5.6.4.
+
 * Wed Dec 28 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.1-alt2
 - Fixed window mode show slowly.
 
