@@ -1,6 +1,6 @@
 Name: libsigrok
 Version: 0.6.0
-Release: alt0.20220423
+Release: alt0.20230127
 
 Summary: sigrok -- signal analysis software suite
 License: GPLv3
@@ -12,6 +12,7 @@ Source: %name-%version-%release.tar
 BuildRequires: gcc-c++ doxygen
 BuildRequires: glib2-devel libzip-devel libserialport-devel
 BuildRequires: libftdi1-devel libusb-devel libieee1284-devel
+BuildRequires: libhidapi-devel libbluez-devel
 BuildRequires: libcheck-devel libglibmm-devel python3-dev swig
 BuildRequires: rpm-build-python3 python3-module-setuptools
 BuildRequires: libnumpy-py3-devel pkgconfig(pygobject-3.0)
@@ -114,6 +115,9 @@ install -pm0644 contrib/61-libsigrok-uaccess.rules %buildroot%_udevrulesdir/
 %python3_sitelibdir/libsigrok-%version-*-info
 
 %changelog
+* Wed Feb 01 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt0.20230127
+- git snapshot libsigrok-unreleased-1543-ge7c7aa11
+
 * Mon Jun 06 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.6.0-alt0.20220423
 - git snapshot libsigrok-unreleased-1460-ge3847923
 
