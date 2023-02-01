@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 0.8
+Version: 0.9
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -46,6 +46,9 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Sun Jan 29 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
+- add php8.2 feature
+
 * Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 0.8-alt1
 - add php presence flags
 
