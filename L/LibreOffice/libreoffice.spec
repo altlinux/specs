@@ -28,7 +28,7 @@ Version: %hversion.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt3
+Release: alt4
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -253,7 +253,7 @@ Summary: PostgrSQL connector for LibreOffice
 
 # TODO redefine %%lang adding corr langpack
 # define macro for quick langpack description
-%define langpack(l:n:mhs:o:) \
+%define langpack(l:n:mhs:o:v:) \
 %define lang %{-l:%{-l*}}%{!-l:%{error:Language code not defined}} \
 %define lng %{-s:%{-s*}}%{!-s:%{lang}} \
 %define pkgname langpack-%{lang} \
@@ -265,8 +265,8 @@ Group:  Office \
 Requires: %uname = %EVR \
 %{-m:Requires: mythes-%lng} \
 %{-h:Requires: hyphen-%lng} \
-%{-o:Obsoletes: %{name}-langpack-%{1} < %{2}} \
-%{-o:Conflicts: %{name}-langpack-%{1} < %{2}} \
+%{-o:Obsoletes: %{name}-langpack-%{-o*} < %{-v*}} \
+%{-o:Conflicts: %{name}-langpack-%{-o*} < %{-v*}} \
 %description %{pkgname} \
 Provides additional %{langname} translations and resources for %name. \
 \
@@ -335,6 +335,7 @@ grep -Fq "application/vnd.ms-visio.drawing.main+xml" sysui/desktop/menus/draw.de
 sed -i 's/libodbc.so.1/libodbc.so.2/g' connectivity/source/drivers/odbc/OFunctions.cxx
 
 # Hack in relative ln -s
+
 sed -i '/program.soffice/s/ln -sf \("*\$\)/ln --relative -sf $DESTDIR\1/' sysui/desktop/share/create_tree.sh
 sed -i '/share.xdg/s/ln -sf \("*\$\)/cp -va $DESTDIR\1/' sysui/desktop/share/create_tree.sh
 sed -i 's/ln -sf \("*\$\)/ln --relative -sf $DESTDIR\1/' bin/distro-install-sdk
@@ -463,6 +464,17 @@ unset RPM_PYTHON
 %make DESTDIR=%buildroot INSTALLDIR=%lodir distro-pack-install
 rm -f %buildroot%lodir/sdk/config.*
 
+# Drop compatibility symlinks
+# https://bugzilla.altlinux.org/34619
+rm -f %buildroot%lodir/sdk/classes
+sed -i '/^\/usr\/%{_lib}\/LibreOffice\/sdk\/classes$/d' file-lists/sdk_list.txt
+rm -f %buildroot%lodir/sdk/idl
+sed -i '/^\/usr\/%{_lib}\/LibreOffice\/sdk\/idl$/d' file-lists/sdk_list.txt
+rm -f %buildroot%lodir/sdk/docs
+sed -i '/^\/usr\/%{_lib}\/LibreOffice\/sdk\/docs$/d' file-lists/sdk_doc_list.txt
+rm -f %buildroot%lodir/sdk/include
+sed -i '/^\/usr\/%{_lib}\/LibreOffice\/sdk\/include$/d' file-lists/sdk_list.txt
+
 # XXX create versioned links (mentioned in desktop files)
 ln -sr %buildroot%lodir/program/soffice %buildroot%_bindir/%uname%hversion
 for F in `find %buildroot%_iconsdir/*/*/apps -type f -name "%name-*.*"`; do
@@ -575,7 +587,7 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %langpack -m -h -l de          -n German
 %langpack -m -h -l fr          -n French
 %langpack -m -h -l uk          -n Ukrainian
-%langpack -m -h -l pt_BR -s pt -n Brazilian Portuguese -o pt-BR 7.4.2.1-alt1
+%langpack -m -h -l pt_BR -s pt -n Brazilian Portuguese -o pt-BR -v 7.4.2.1-alt1
 %langpack -m -h -l es          -n Espanian
 %langpack       -l kk          -n Kazakh
 %langpack    -h -l tt          -n Tatar
@@ -591,6 +603,10 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Wed Feb 01 2023 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.4.2.3-alt4
+- Fixed last fix of pt-BR langpack update conflict
+- Solved conflict with old rpm-packet with sdk (drop compatibility symlinks)
+
 * Mon Jan 16 2023 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.4.2.3-alt3
 - Fixed pt-BR langpack update conflict
 
