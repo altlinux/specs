@@ -1,7 +1,10 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+%set_verify_elf_method strict
 
 Name: libseccomp
 Version: 2.5.4
-Release: alt1
+Release: alt2
 Summary: High level interface to the Linux Kernel's seccomp filter
 License: LGPLv2.1+
 Group: System/Libraries
@@ -12,6 +15,7 @@ Source: %name-%version.tar
 Patch1: %name-%version.patch
 
 BuildRequires: gperf
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
 
 %description
 The libseccomp library provides and easy to use, platform independent,
@@ -43,10 +47,10 @@ This package contains development files of %name.
 %build
 %autoreconf
 %configure --disable-static --enable-silent-rules
-%make_build
+%make_build V=1
 
 %install
-%makeinstall_std
+%makeinstall_std V=1
 
 # Relocate shared library from %_libdir/ to /%_lib/.
 mkdir -p %buildroot/%_lib
@@ -55,6 +59,13 @@ for f in %buildroot%_libdir/*.so; do
         ln -rsnf %buildroot/%_lib/"$t" "$f"
 done
 mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+
+%check
+unset MAKEFLAGS
+export  LIBSECCOMP_TSTCFG_JOBS=0 \
+	LIBSECCOMP_TSTCFG_TYPE=live \
+	LIBSECCOMP_TSTCFG_MODE_LIST=c
+%make_build check V=1
 
 %files
 %doc CHANGELOG CREDITS README.md
@@ -69,6 +80,9 @@ mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
 %_man3dir/*
 
 %changelog
+* Wed Feb 01 2023 Vitaly Chikunov <vt@altlinux.org> 2.5.4-alt2
+- spec: Verbose build and add %%check section.
+
 * Fri Jun 03 2022 Alexey Shabalin <shaba@altlinux.org> 2.5.4-alt1
 - new version 2.5.4
 
