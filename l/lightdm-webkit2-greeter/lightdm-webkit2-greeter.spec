@@ -1,6 +1,6 @@
 Name: lightdm-webkit2-greeter
 Version: 3.5.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: A modern, visually appealing greeter for LightDM
 License: GPL-3.0
@@ -31,19 +31,27 @@ Patch3: lightdm-webkit2-greeter-3.5.1-dia.patch
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
 BuildRequires(pre): rpm-build-intro >= 1.9.18
 BuildRequires(pre): rpm-macros-nodejs >= 0.20.5
+BuildRequires(pre): rpm-build-nodejs
 
-BuildRequires: rpm-build-nodejs
+BuildpreReq: bash-completion zsh-completions
+BuildpreReq: %_bindir/python3
 
-# Automatically added by buildreq on Mon May 16 2022
-# optimized out: libgpg-error libqt5-core libqt5-xml libxcb-devel pkg-config python3 python3-base python3-module-PyQt5 python3-module-PyQt5-sip sh4 xorg-proto-devel
-BuildRequires: libX11-devel python3-module-PyQt5-devel rsync zsh
+# Automatically added by buildreq on Thu Feb 02 2023
+# optimized out: alt-os-release libgpg-error libqt5-core libqt5-xml libxcb-devel node pkg-config python-modules python2-base python3 python3-base python3-module-PyQt5 python3-module-PyQt5-sip sh4 xorg-proto-devel
+BuildRequires: libX11-devel node-typescript python-modules-encodings
+BuildRequires: python3-module-PyQt5-devel rsync zsh
 
-BuildRequires: python3-module-pygobject3-devel python3-module-PyQtWebEngine python3-module-ruamel-yaml npm
-BuildRequires: python3-module-pyinotify qt5-webengine-devel gem-gobject-introspection-devel libxcb-devel
-BuildRequires: liblightdm-gobject lightdm-gir-devel lightdm-devel node-typescript
-BuildRequires: bash-completion zsh-completions
+#BuildpreReq: python3-module-pygobject3-devel python3-module-PyQtWebEngine 
+#BuildpreReq: python3-module-ruamel-yaml python3-module-pyinotify qt5-webengine-devel
+#BuildpreReq: python3-module-pyinotifygem-gobject-introspection-devel
+#BuildpreReq: libxcb-devel qt5-webengine-devel npm 
+#BuildpreReq: liblightdm-gobject lightdm-gir-devel lightdm-devel
 
-BuildRequires: %_bindir/python3
+
+
+
+
+
 
 %description
 A modern, visually appealing greeter for LightDM, that allows to create web based themes with HTML, CSS and JavaScript.
@@ -105,8 +113,11 @@ install -m 644 %SOURCE1 %buildroot%_sysconfdir/lightdm/
 %doc *.md
 
 %changelog
+* Thu Feb 02 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.2-alt1.2
+- Fix spec
+
 * Wed Feb 01 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.2-alt1.1
-- Close Bags (ALT #44832, #44833)
+- Close Bugs (ALT #44832, #44833)
 
 * Sun Jan 29 2023 Hihin Ruslan <ruslandh@altlinux.ru> 3.5.2-alt1
 - New Version
