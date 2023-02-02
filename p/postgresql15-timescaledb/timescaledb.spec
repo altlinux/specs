@@ -1,4 +1,4 @@
-%define pg_ver 13
+%define pg_ver 15
 
 
 Name: postgresql%pg_ver-timescaledb

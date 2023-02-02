@@ -2,8 +2,8 @@
 
 
 Name: postgresql%pg_ver-timescaledb
-Version: 2.8.1
-Release: alt2
+Version: 2.9.2
+Release: alt1
 Summary: Open-source time-series database powered by PostgreSQL
 Group: Databases
 License: Apache-2.0 and Timescale License
@@ -48,6 +48,9 @@ echo "ALTER EXTENSION timescaledb UPDATE;                                       
 %_datadir/pgsql/extension/*
 
 %changelog
+* Thu Feb 02 2023 Alexei Takaseev <taf@altlinux.org> 2.9.2-alt1
+- 2.9.2
+
 * Sat Nov 12 2022 Alexei Takaseev <taf@altlinux.org> 2.8.1-alt2
 - Use server depended pg_server_config for build
 
