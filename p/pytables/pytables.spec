@@ -14,14 +14,16 @@ relational or object oriented databases.
 
 %define oname tables
 
-# Temporary disable check for python3.10
+# Tests fail on armh
+%ifarch armh
 %def_disable check
+%endif
 
 #TODO: fix docs and bench
 
 Name: py%oname
-Version: 3.6.1
-Release: alt7
+Version: 3.8.0
+Release: alt1
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -30,19 +32,13 @@ License: MIT
 Group: Development/Python3
 Url: http://www.pytables.org/
 
-# https://github.com/PyTables/PyTables.git
+VCS: https://github.com/PyTables/PyTables.git
 Source: %name-%version.tar
 
-# Patches from Debian
+# Patch from Debian
 Patch1: 0004-remove-gtags.patch
-Patch2: 0005-Skip-index-backcompat-tests-on-bingendian.patch
-Patch3: 0006-Fix-pttree.patch
-Patch4: 0007-Fix-syntax-warnings.patch
-Patch5: 0008-Fix-the-interpreter-name-in-examples.patch
 
-# Patches from upstream
-Patch100: upstream-pull-862.patch
-Patch101: upstream-pull-866.patch
+Patch2: pytables-3.8.0-alt-fix-blosc2-get-directories.patch
 
 Requires: python3-module-%oname = %EVR
 
@@ -50,6 +46,7 @@ BuildRequires: libhdf5-devel liblzo2-devel bzlib-devel
 BuildRequires: xsltproc inkscape fop
 BuildRequires: java-devel-default docbook-tldp-xsl docbook-dtds
 BuildRequires: libblosc-devel
+BuildRequires: libblosc2-devel
 
 %add_findreq_skiplist %python3_sitelibdir/%oname/contrib/nctoh5.py
 %add_findreq_skiplist %python3_sitelibdir/%oname/contrib/make_hdf.py
@@ -61,6 +58,9 @@ BuildRequires: python3-module-distribute python3-module-Cython
 BuildRequires: python3-module-numexpr
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-cpuinfo
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %description
 %descr
@@ -68,7 +68,6 @@ BuildRequires: python3-module-numpy-testing
 %package -n python3-module-%oname
 Summary: Managing hierarchical datasets (Python 3)
 Group: Development/Python3
-%add_python3_req_skip numarray Scientific
 
 %description -n python3-module-%oname
 %descr
@@ -78,7 +77,8 @@ This package contains python module of PyTables.
 %package -n python3-module-%oname-tests
 Summary: Tests and examples for PyTables (Python 3)
 Group: Development/Python3
-%add_python3_req_skip numarray
+Requires: python3-module-pkg_resources
+Requires: python3-module-numpy-testing
 Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
@@ -89,7 +89,6 @@ This package contains tests and examples for PyTables.
 %package -n python3-module-%oname-bench
 Summary: Benchmarks for PyTables (Python 3)
 Group: Development/Python3
-%add_python3_req_skip numarray chararray recarray recarray2 Numeric psyco
 Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-bench
@@ -111,24 +110,14 @@ This package contains documentation for PyTables.
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch100 -p1
-%patch101 -p1
-
-find . -type f -name '*.py' -exec \
-    sed -i 's|#!/usr/bin/env python$|#!/usr/bin/env python3|' '{}' +
-find . -type f -name '*.py' -exec \
-    sed -i 's|#!/usr/bin/python$|#!/usr/bin/python3|' '{}' +
 
 %build
 %add_optflags -fno-strict-aliasing
 export NPY_NUM_BUILD_JOBS=%__nprocs
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install --root=%buildroot
+%pyproject_install
 
 %if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
@@ -142,12 +131,12 @@ cp -fR bench contrib %buildroot%_docdir/%name/
 %endif
 
 install -d %buildroot%_docdir/%name/pdf
-install -p -m644 LICENSE.txt README.rst RELEASE_NOTES.txt THANKS \
+install -p -m644 LICENSE.txt README.rst RELEASE_NOTES.rst THANKS \
     %buildroot%_docdir/%name
 cp -fR LICENSES %buildroot%_docdir/%name
 
 %check
-%make check PYTHON=python3
+cd build/lib.* && env PYTHONPATH=. python3 tables/tests/test_all.py
 
 %files
 %_bindir/*
@@ -163,6 +152,9 @@ cp -fR LICENSES %buildroot%_docdir/%name
 %python3_sitelibdir/%oname/tests/
 
 %changelog
+* Mon Jan 16 2023 Anton Vyatkin <toni@altlinux.org> 1:3.8.0-alt1
+- new version 3.8.0
+
 * Tue Jan 11 2022 Grigory Ustinov <grenka@altlinux.org> 1:3.6.1-alt7
 - Disable check for python3.10.
 
