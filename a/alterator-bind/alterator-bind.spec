@@ -2,7 +2,7 @@
 
 Name: alterator-bind
 Version: 0.9.6
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -55,6 +55,9 @@ alterator module to create and manage dynamic dns
 %_libexecdir/alterator/hooks/dhcp.d/*
 
 %changelog
+* Thu Feb 02 2023 Dmitry Terekhin <jqt4@altlinux.org> 0.9.6-alt2
+- ddns-sh-functions: Change name of key file for nsupdate
+
 * Tue Jan 31 2023 Dmitry Terekhin <jqt4@altlinux.org> 0.9.6-alt1
 - ddns-sh-functions: Use tsig-keygen instead of dnssec-keygen (closes: #45063).
 
