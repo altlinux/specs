@@ -7,6 +7,8 @@
 %define llvm_ver 13.0
 %define gcc_ver 9
 
+%define _vk_api_version 1.3.238
+
 %def_with clang
 %def_with wayland
 %def_with shader_cache
@@ -21,8 +23,8 @@
 %endif
 
 Name: vulkan-amdgpu
-Version: 2022.Q4.4
-Release: alt1
+Version: 2023.Q1.1
+Release: alt1.1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -54,6 +56,7 @@ Source5: metrohash.tar
 Source6: amd_icd.json
 Source7: cwpack.tar
 Source8: VK_LAYER_AMD_switchable_graphics.json
+Source9: llvm-dialects.tar
 
 %description
 The AMD Open Source Driver for Vulkan(r) is an open-source Vulkan driver for
@@ -65,10 +68,12 @@ platforms, including support for recently released GPUs and compatibility with
 AMD developer tools.
 
 %prep
-%setup -n xgl -b0 -b1 -b2 -b3 -b4 -b5 -b7
+%setup -n xgl -b0 -b1 -b2 -b3 -b4 -b5 -b7 -b9
 mkdir -p %_builddir/llvm-project
 mv %_builddir/llvm/llvm %_builddir/llvm-project
 cp -ar %_builddir/llvm/{cmake,third-party} %_builddir/llvm-project/
+# llvm-dialects hack
+rm -rf %_builddir/llpc/imported/llvm-dialects && ln -s %_builddir/llvm-dialects %_builddir/llpc/imported/llvm-dialects
 
 %build
 # build amdvlk.so
@@ -103,8 +108,9 @@ mkdir -p %buildroot{%_vkdir,%_vkldir,%_libdir,%_sysconfdir/amd}
 touch %buildroot%_sysconfdir/amd/amdVulkanSettings.cfg
 
 install -p -m644 %_builddir/xgl/%_cmake__builddir/icd/%_vklib%bits.so %buildroot%_libdir/%_vklib.so
-install -p -m644 %SOURCE6 %buildroot%_vkdir/
-install -p -m644 %SOURCE8 %buildroot%_vkldir/
+for f in %buildroot%_vkdir/$(basename %SOURCE6) %buildroot%_vkldir/$(basename %SOURCE8); do install -pD -m644 /dev/null "$f"; done
+sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE6 %buildroot%_vkdir/$(basename %SOURCE6)
+sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 %buildroot%_vkldir/$(basename %SOURCE8)
 
 %files
 %_libdir/*.so
@@ -114,6 +120,18 @@ install -p -m644 %SOURCE8 %buildroot%_vkldir/
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Wed Feb 01 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q1.1-alt1.1
+- Added llvm-dialects repo.
+
+* Wed Feb 01 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q1.1-alt1
+- 2023-1-31 update:
+  + icd: bump vulkan version
+  + llvm-project: Updated to 916f05c15939
+  + gpurt: Updated to e19c8ceca056
+  + llpc: Updated to ffc49b2a07de
+  + pal: Updated to 042362399cda
+  + xgl: Updated to 67cd9d1d3016
+
 * Thu Dec 15 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.Q4.4-alt1
 - 2022-12-15 update:
   + gpurt: Updated to 1f0c4f7e9cea
