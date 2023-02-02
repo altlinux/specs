@@ -6,7 +6,7 @@
 #   section [18] '.debug_gdb_scripts' has wrong flags: expected none, is ALLOC|MERGE|STRINGS
 
 Name: sequoia-sop
-Version: 0.27.1
+Version: 0.27.3
 Release: alt1
 Summary: An implementation of the Stateless OpenPGP Interface using Sequoia
 License: GPL-2.0-or-later
@@ -74,12 +74,13 @@ cargo test %_smp_mflags --release --no-fail-fast --all-features
 
 # A small functional test from README.md to be sure.
 PATH=$PATH:%buildroot%_bindir
-sqop generate-key julia@example.org > julia.secret.pgp
-sqop extract-cert < julia.secret.pgp > julia.public.pgp
+sqop version --extended
+sqop generate-key julia@example.org | tee julia.secret.pgp
+sqop extract-cert < julia.secret.pgp | tee julia.public.pgp
 echo 'a message' > message
-sqop encrypt julia.public.pgp > message.pgp < message
+sqop encrypt julia.public.pgp < message | tee message.pgp
 sqop decrypt julia.secret.pgp < message.pgp | diff message -
-sqop sign julia.secret.pgp > message.asc < message
+sqop sign julia.secret.pgp < message | tee message.asc
 sqop verify message.asc julia.public.pgp < message
 ! sqop verify message.asc julia.public.pgp <<<"wrong message"
 
@@ -91,5 +92,8 @@ sqop verify message.asc julia.public.pgp < message
 %_datadir/bash-completion/completions/*.bash
 
 %changelog
+* Thu Feb 02 2023 Vitaly Chikunov <vt@altlinux.org> 0.27.3-alt1
+- Update to v0.27.3 (2023-01-18).
+
 * Mon Oct 24 2022 Vitaly Chikunov <vt@altlinux.org> 0.27.1-alt1
 - First import v0.27.1 (2022-07-20).
