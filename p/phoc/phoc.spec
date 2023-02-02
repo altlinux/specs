@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.23
+%define ver_major 0.24
 %define beta %nil
 
 %define dev_uid 500
@@ -76,6 +76,9 @@ xvfb-run %__meson_test
 %doc README.md
 
 %changelog
+* Thu Feb 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
+- 0.24.0
+
 * Mon Jan 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.23.0-alt1
 - 0.23.0
 

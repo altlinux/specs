@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define libname libfeedback
-%define ver_major 0.0.2
+%define ver_major 0.0.3
 %define api_ver 0.0
 
 %def_enable introspection
@@ -137,6 +137,9 @@ install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 %endif
 
 %changelog
+* Thu Feb 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt1
+- 0.0.3
+
 * Tue Dec 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.0.2-alt1
 - v0.0.2-2-gaa5e5e4
 

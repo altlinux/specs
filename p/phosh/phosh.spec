@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.23
+%define ver_major 0.24
 %define beta %nil
 %define rdn_name sm.puri.Phosh
 %define dev_uid 500
@@ -27,7 +27,7 @@ Source: %name-%version%beta.tar
 Source1: %name.pam
 Source2: sm.puri.OSK0.desktop
 
-Requires: phoc >= 0.21
+Requires: phoc >= 0.24
 Requires: gnome-session
 Requires: iio-sensor-proxy
 Requires: fonts-ttf-google-lato
@@ -113,7 +113,7 @@ desktop-file-install --dir %buildroot%_datadir/applications %SOURCE2
 xvfb-run %__meson_test
 
 %files -f %name.lang
-%_bindir/%name
+%_bindir/%name-session
 %_libexecdir/%name
 %_libexecdir/%name-calendar-server
 %dir %_libdir/%name
@@ -154,6 +154,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Thu Feb 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
+- 0.24.0
+
 * Wed Dec 28 2022 Yuri N. Sedunov <aris@altlinux.org> 0.23.0-alt1
 - 0.23.0
 - new -devel subpackage
