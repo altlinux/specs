@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.26.5
-Release: alt4
+Release: alt5
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -70,6 +70,7 @@ Source3: plasma_lookandfeel_org.kde.lookandfeel-ru-add.po
 Source11: freememorynotifier.tar
 Source40: ssh-agent.conf
 Source41: spice-vdagent.conf
+Source42: obex.conf
 Source50: dbus-restart-kde5.sh
 
 Patch100: alt-startkde.patch
@@ -407,6 +408,7 @@ mkdir -p %buildroot/%_unitdir_user/plasma-core.target.d/
 mkdir -p %buildroot/%_unitdir_user/plasma-workspace@.target.d/
 install -m0644 -p -D %SOURCE40 %buildroot/%_unitdir_user/plasma-core.target.d/ssh-agent.conf
 install -m0644 -p -D %SOURCE41 %buildroot/%_unitdir_user/plasma-core.target.d/spice-vdagent.conf
+install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/obex.conf
 
 %find_lang %name --with-kde --all-name
 
@@ -536,6 +538,9 @@ install -m0644 -p -D %SOURCE41 %buildroot/%_unitdir_user/plasma-core.target.d/sp
 
 
 %changelog
+* Thu Feb 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt5
+- autostart obex.service from systemd user session
+
 * Wed Feb 01 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt4
 - don't wait for drkonqi on logout by default
 
