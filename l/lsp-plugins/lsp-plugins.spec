@@ -3,7 +3,7 @@
 
 Name: lsp-plugins
 Version: 1.2.5
-Release: alt1
+Release: alt1.1
 
 Summary: Linux Studio Plugins
 Group: Sound
@@ -74,7 +74,7 @@ This package provides headers for LSP-developers.
 %setup -n %name
 %ifarch %e2k
 sed -i "s|VSTCALLBACK __cdecl|VSTCALLBACK|" \
-	modules/lsp-3rd-party/include/lsp-plug.in/3rdparty/steinberg/vst2.h
+	modules/lsp-3rd-party/include/steinberg/vst2.h
 %endif
 
 %build
@@ -124,6 +124,9 @@ rm -f %buildroot%_libdir/*.a
 %_defaultdocdir/%name/
 
 %changelog
+* Thu Feb 02 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1.1
+- fixed build for %e2k (mike@)
+
 * Sun Jan 29 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1
 - 1.2.5
 
