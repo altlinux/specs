@@ -1,5 +1,5 @@
 Name: phpMyAdmin
-Version: 5.1.3
+Version: 5.2.0
 Release: alt1
 
 Summary: phpMyAdmin - web-based MySQL administration
@@ -25,12 +25,35 @@ BuildArch: noarch
 Requires: pwgen webserver-common control
 Requires: apache2-base >= 2.4
 
-BuildPreReq: rpm-build-apache2 rpm-macros-webserver-common
+BuildRequires(pre): rpm-build-apache2 rpm-macros-webserver-common
+BuildRequires(pre): rpm-macros-features >= 0.3
 
 BuildRequires: apache2-base >= 2.4
 BuildRequires: control
 
 AutoReq:yes,noshell,nomingw32,nopython
+
+%if_feature php7 7.4.3
+%def_with php7
+%define defphp php7
+%endif
+
+%if_feature php82 8.2.0
+%def_with php82
+%define defphp php8.2
+%endif
+
+%if_feature php81 8.1.0
+%def_with php81
+%define defphp php8.1
+%endif
+
+%if_feature php80 8.0.0
+%def_with php80
+%define defphp php8.0
+%endif
+
+
 
 %description
 phpMyAdmin can administer a whole MySQL-server (needs a super-user)
@@ -49,44 +72,11 @@ manual. Currently phpMyAdmin can:
   - administer multiple servers and single databases
   - communicate in more than 20 different languages
 
-%if_with php5
-%package apache2
-Summary: phpMyAdmin - web-based MySQL administration (for apache 2.x and php5)
-Group: System/Servers
-Requires: %name = %version-%release
-Requires: apache2-mod_php5 >= 5.2.0
-Requires: apache2-base
-Requires: php5-mysqli
-Requires: php5-mcrypt
-Requires: php5-mbstring
-Requires: php5-gd2
-Conflicts: %name-apache2-php7
-
-%description apache2
-phpMyAdmin can administer a whole MySQL-server (needs a super-user)
-but also a single database. To accomplish the latter you'll need a
-properly set up MySQL-user who can read/write only the desired
-database. It's up to you to look up the appropiate part in the MySQL
-manual. Currently phpMyAdmin can:
-  - create and drop databases
-  - create, copy, drop and alter tables
-  - delete, edit and add fields
-  - execute any SQL-statement, even batch-queries
-  - manage keys on fields
-  - load text files into tables
-  - create (*) and read dumps of tables
-  - export (*) and import data to CSV values
-  - administer multiple servers and single databases
-  - communicate in more than 20 different languages
-
-Install this package if you need phpMyAdmin for apache 2.x and php5.
-
-%endif
 
 %package apache2-php7
 Summary: phpMyAdmin - web-based MySQL administration (for apache 2.4 and php7)
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: apache2-mod_php7 >= 7.1.3
 Requires: apache2-base
 
@@ -123,10 +113,53 @@ manual. Currently phpMyAdmin can:
 
 Install this package if you need phpMyAdmin for apache 2.4 and php7.
 
+
+%package apache2-php8.0
+Summary: phpMyAdmin - web-based MySQL administration (for apache 2.4 and php8.0)
+Group: System/Servers
+Requires: %name = %EVR
+Requires: apache2-mod_php8.0
+Requires: apache2-base
+
+# from composer.json
+Requires: php8.0-mysqlnd-mysqli
+Requires: php8.0-openssl
+Requires: php8.0-curl
+Requires: php8.0-opcache
+#Requires: php7-zlib
+Requires: php8.0-bz2
+Requires: php8.0-zip
+Requires: php8.0-gd2
+Requires: php8.0-mbstring
+Requires: php8.0-mcrypt
+
+Conflicts: %name-apache2
+Conflicts: %name-apache2-php7
+
+%description apache2-php8.0
+phpMyAdmin can administer a whole MySQL-server (needs a super-user)
+but also a single database. To accomplish the latter you'll need a
+properly set up MySQL-user who can read/write only the desired
+database. It's up to you to look up the appropiate part in the MySQL
+manual. Currently phpMyAdmin can:
+  - create and drop databases
+  - create, copy, drop and alter tables
+  - delete, edit and add fields
+  - execute any SQL-statement, even batch-queries
+  - manage keys on fields
+  - load text files into tables
+  - create (*) and read dumps of tables
+  - export (*) and import data to CSV values
+  - administer multiple servers and single databases
+  - communicate in more than 20 different languages
+
+Install this package if you need phpMyAdmin for apache 2.4 and php8.0.
+
+
 %package apache2-php8.1
 Summary: phpMyAdmin - web-based MySQL administration (for apache 2.4 and php8.1)
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: apache2-mod_php8.1
 Requires: apache2-base
 
@@ -163,6 +196,49 @@ manual. Currently phpMyAdmin can:
   - communicate in more than 20 different languages
 
 Install this package if you need phpMyAdmin for apache 2.4 and php8.1.
+
+
+
+%package apache2-php8.2
+Summary: phpMyAdmin - web-based MySQL administration (for apache 2.4 and php8.2)
+Group: System/Servers
+Requires: %name = %EVR
+Requires: apache2-mod_php8.2
+Requires: apache2-base
+
+# from composer.json
+Requires: php8.2-mysqlnd-mysqli
+Requires: php8.2-openssl
+Requires: php8.2-curl
+Requires: php8.2-opcache
+#Requires: php7-zlib
+Requires: php8.2-bz2
+Requires: php8.2-zip
+Requires: php8.2-gd2
+Requires: php8.2-mbstring
+Requires: php8.2-mcrypt
+
+Conflicts: %name-apache2
+Conflicts: %name-apache2-php7
+
+%description apache2-php8.2
+phpMyAdmin can administer a whole MySQL-server (needs a super-user)
+but also a single database. To accomplish the latter you'll need a
+properly set up MySQL-user who can read/write only the desired
+database. It's up to you to look up the appropiate part in the MySQL
+manual. Currently phpMyAdmin can:
+  - create and drop databases
+  - create, copy, drop and alter tables
+  - delete, edit and add fields
+  - execute any SQL-statement, even batch-queries
+  - manage keys on fields
+  - load text files into tables
+  - create (*) and read dumps of tables
+  - export (*) and import data to CSV values
+  - administer multiple servers and single databases
+  - communicate in more than 20 different languages
+
+Install this package if you need phpMyAdmin for apache 2.4 and php8.2.
 
 %prep
 %setup
@@ -208,29 +284,45 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 %doc phpMyAdmin-README.ALT README* ChangeLog
 %dir %webserver_webappsdir/%name/
 %webserver_webappsdir/%name/*
+%webserver_webappsdir/%name/.rtlcssrc.json
 %config(noreplace) %webserver_webappsdir/%name/.htaccess
 # yes, will notify about duplicate file
 %attr(640,root,%webserver_group) %config(noreplace) %webserver_webappsdir/%name/config.inc.php
 %exclude %webserver_webappsdir/%name/setup
 
-%if_with php5
-%files apache2
+%if_with php7
+%files apache2-php7
 %config(noreplace) %apache2_extra_available/%name.conf
 %apache2_extra_enabled/%name.conf
 #attr(755,root,root) %_controldir/%name-apache2
 %endif
 
-%files apache2-php7
+%if_with php80
+%files apache2-php8.0
 %config(noreplace) %apache2_extra_available/%name.conf
 %apache2_extra_enabled/%name.conf
 #attr(755,root,root) %_controldir/%name-apache2
+%endif
 
+%if_with php81
 %files apache2-php8.1
 %config(noreplace) %apache2_extra_available/%name.conf
 %apache2_extra_enabled/%name.conf
 #attr(755,root,root) %_controldir/%name-apache2
+%endif
+
+%if_with php82
+%files apache2-php8.2
+%config(noreplace) %apache2_extra_available/%name.conf
+%apache2_extra_enabled/%name.conf
+#attr(755,root,root) %_controldir/%name-apache2
+%endif
 
 %changelog
+* Sat Jan 28 2023 Vitaly Lipatov <lav@altlinux.ru> 5.2.0-alt1
+- new version 5.2.0 (with rpmrb script)
+- add support packing for php8.2
+
 * Tue Apr 26 2022 Vitaly Lipatov <lav@altlinux.ru> 5.1.3-alt1
 - new version 5.1.3 (with rpmrb script)
  + PMASA-2022-1: a user could manipulate their account to bypass two factor authentication
