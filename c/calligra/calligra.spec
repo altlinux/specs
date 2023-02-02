@@ -8,7 +8,7 @@
 
 Name: calligra
 Version: 3.2.1
-Release: alt4
+Release: alt5
 Epoch: 0
 %K5init no_altplace
 %define libname lib%name
@@ -49,7 +49,8 @@ Patch12: 0053-Partial-update-of-Commit-62f51070-to-make-it-compile.patch
 Patch30: calligra-c++17.patch
 Patch31: calligra-gcc11.patch
 # SuSE
-Patch50: poppler-22.03.0.patch
+Patch50: poppler-22.04_1.patch
+Patch51: poppler-22.04_2.patch
 # ALT
 Patch103: alt-disable-products.patch
 
@@ -216,6 +217,7 @@ Requires: %name-common = %EVR
 %patch31 -p1
 #
 %patch50 -p1
+%patch51 -p1
 #
 %patch103 -p1
 
@@ -451,6 +453,9 @@ done
 %exclude %_K5lib/libkookularGenerator_odt.so*
 
 %changelog
+* Thu Feb 02 2023 Sergey V Turchin <zerg@altlinux.org> 0:3.2.1-alt5
+- add fix for new poppler
+
 * Fri Apr 01 2022 Sergey V Turchin <zerg@altlinux.org> 0:3.2.1-alt4
 - fix to build with new poppler
 - add upstream fixes
