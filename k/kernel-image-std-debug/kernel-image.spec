@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel	.90
+%define kernel_sublevel	.91
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -125,7 +125,10 @@ Requires: bootloader-utils >= 0.4.24-alt1
 Requires: module-init-tools >= 3.1
 Requires: mkinitrd >= 1:2.9.9-alt1
 
+%if "%sub_flavour" != "debug"
+# Hopefully only production & official kernels should provide this.
 Provides: kernel = %kversion
+%endif
 
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
@@ -237,8 +240,9 @@ Summary: Header files for the Linux kernel
 Group: Development/Kernel
 AutoReqProv: nocpp
 Requires: kernel-headers-common >= 1.1.5
+%if "%sub_flavour" != "debug"
 Provides: kernel-headers = %version
-#Provides: kernel-headers-%base_flavour = %version-%release
+%endif
 
 %description -n kernel-headers-%flavour
 This package makes Linux kernel headers corresponding to the Linux
@@ -615,6 +619,10 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Thu Feb 02 2023 Kernel Bot <kernelbot@altlinux.org> 2:5.15.91-alt1
+- v5.15.91 (2023-02-01).
+- Add kernel.unprivileged_io_uring_disabled sysctl.
+
 * Tue Jan 24 2023 Kernel Bot <kernelbot@altlinux.org> 2:5.15.90-alt1
 - v5.15.90 (2023-01-24).
 
