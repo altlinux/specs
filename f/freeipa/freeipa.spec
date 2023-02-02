@@ -10,9 +10,9 @@
 %def_without docs
 
 %if_without only_client
-%def_with fastlint
 %def_with fasttest
-%def_with lint
+# don't remove: it's used on local build
+%def_without lint
 %endif
 
 %if_with lint
@@ -51,8 +51,8 @@
 
 Name: freeipa
 # don't forget to update .gear/rules
-Version: 4.9.10
-Release: alt4
+Version: 4.9.11
+Release: alt1
 
 Summary: The Identity, Policy and Audit system
 License: GPLv3+
@@ -106,12 +106,6 @@ BuildRequires: python3-module-pyasn1-modules
 BuildRequires: python3-module-six
 BuildRequires: python3-module-sss_nss_idmap
 
-%if_with fasttest
-BuildRequires: chrony
-BuildRequires: keyutils
-BuildRequires: systemd
-%endif
-
 #
 # Build dependencies for wheel packaging and PyPI upload
 #
@@ -127,53 +121,58 @@ BuildRequires: plantuml
 BuildRequires: fonts-ttf-google-noto-sans-vf
 %endif
 
-#
-# Build dependencies for lint and fastcheck
-#
-%if_with lint
-BuildRequires: git-core
+%if 0%{?_with_fasttest:1}%{?_with_lint:1}
+BuildRequires: python3(cryptography)
+BuildRequires: python3(dbus)
+BuildRequires: python3(gssapi)
+BuildRequires: python3(pysss_murmur)
+BuildRequires: python3(lxml)
+BuildRequires: python3-module-pki-base >= %pki_version
+BuildRequires: python3-module-ldap >= %python_ldap_version
+BuildRequires: python3(polib)
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytest-multihost)
+BuildRequires: python3-module-sssdconfig >= %sssd_version
+BuildRequires: python3(netifaces)
+BuildRequires: python3(jwcrypto)
+BuildRequires: python3(augeas)
+BuildRequires: python3(sqlite3)
+BuildRequires: python3(pexpect)
+BuildRequires: python3(psutil)
+BuildRequires: python3(netaddr)
+BuildRequires: python3(jinja2)
+BuildRequires: python3(pyasn1)
+BuildRequires: python3(pyasn1_modules)
+BuildRequires: python3(pysss_nss_idmap)
+BuildRequires: python3(yubico)
+BuildRequires: python3(requests)
+BuildRequires: python3(dateutil)
+BuildRequires: python3(dns)
+BuildRequires: python3(pyhbac)
+BuildRequires: python3(yaml)
+BuildRequires: python3(systemd)
+BuildRequires: python3(pysss)
+BuildRequires: python3(pytest_sourceorder)
+BuildRequires: python3-module-lib389 >= %ds_version
+BuildRequires: python3(qrcode)
+# python3(samba) has multiple providers
+BuildRequires: python3-module-samba
+%endif
+
+%if_with fasttest
+BuildRequires: chrony
+BuildRequires: keyutils
+BuildRequires: systemd
 BuildRequires: softhsm
 BuildRequires: nss-utils
+%endif
 
-BuildRequires: python3-modules-sqlite3
-
-BuildRequires: python3-module-augeas
-BuildRequires: python3-module-cryptography
-BuildRequires: python3-module-dateutil
-BuildRequires: python3-module-dbus
-BuildRequires: python3-module-dns
-BuildRequires: python3-module-docker
-BuildRequires: python3-module-gssapi
-BuildRequires: python3-module-ipa_hbac
-BuildRequires: python3-module-jinja2
-BuildRequires: python3-module-jwcrypto
-BuildRequires: python3-module-ldap >= %python_ldap_version
-BuildRequires: python3-module-lib389 >= %ds_version
-BuildRequires: python3-module-lxml
-BuildRequires: python3-module-netaddr
-BuildRequires: python3-module-netifaces
-BuildRequires: python3-module-paste
-BuildRequires: python3-module-pexpect
-BuildRequires: python3-module-pki-base >= %pki_version
-BuildRequires: python3-module-polib
-BuildRequires: python3-module-psutil
-BuildRequires: python3-module-pyasn1
-BuildRequires: python3-module-pyasn1-modules
-BuildRequires: python3-module-pycodestyle
-BuildRequires: python3-module-pylint
-BuildRequires: python3-module-pytest-multihost
-BuildRequires: python3-module-pytest_sourceorder
-BuildRequires: python3-module-qrcode
-BuildRequires: python3-module-samba
+%if_with lint
+BuildRequires: git-core
+BuildRequires: python3(pylint)
+BuildRequires: python3(pycodestyle)
+BuildRequires: python3(docker)
 BuildRequires: python3(sphinx)
-BuildRequires: python3-module-sss
-BuildRequires: python3-module-sss_nss_idmap
-BuildRequires: python3-module-sss-murmur
-BuildRequires: python3-module-sssdconfig >= %sssd_version
-BuildRequires: python3-module-systemd
-BuildRequires: python3-module-yaml
-BuildRequires: python3-module-yubico
-
 %endif
 
 %description
@@ -515,7 +514,6 @@ This package contains tests that verify IPA functionality under Python 3.
 %setup -n %name-%version
 %if_with lint
 # we need it to generate cumulative patch without context
-# this patch includes changes made by sed too
 git init
 git config user.email "you@example.com"
 git config user.name "Your Name"
@@ -525,14 +523,19 @@ git checkout -b "patch"
 %endif # lint
 
 %patch -p1
-# change port from 8080 to 8090
-# Port 8080 is used by alterator-ahttpd-server
-grep -rl 8080 | xargs sed -i 's/\(\W\|^\)8080\(\W\|$\)/\18090\2/g'
 
 %if_with lint
 git add .
 git commit -am 'with our changes'
 %endif
+
+# Port 8080 is used by alterator-ahttpd-server
+if grep -rE --exclude-dir=.gear '(\W|^)8080(\W|$)' ; then
+    printf '%%s\n' 'Please change port 8080 to 8090 and commit'
+    exit 1
+else
+    [ "$?" -ne 1 ] && exit 1
+fi
 
 %build
 
@@ -658,7 +661,7 @@ mkdir -p %buildroot%_sharedstatedir/ipa-client/sysrestore
 
 %check
 # run tests in upstream PR manner
-%{?_with_fastlint:make "GIT_BRANCH=master" fastlint}
+%{?_with_lint:make "GIT_BRANCH=master" fastlint}
 %{?_with_fasttest:make fasttest}
 %{?_with_lint:make lint}
 %make check VERBOSE=yes LIBDIR=%_libdir
@@ -1089,6 +1092,9 @@ fi
 %python3_sitelibdir/ipaplatform-*.egg-info/
 
 %changelog
+* Mon Jan 23 2023 Stanislav Levin <slev@altlinux.org> 4.9.11-alt1
+- 4.9.10 -> 4.9.11.
+
 * Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 4.9.10-alt4
 - Fixed FTBFS (openldap 2.6).
 
