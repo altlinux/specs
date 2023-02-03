@@ -30,7 +30,7 @@ presented using a dictionary metaphor, indexed by name.
 
 Name:       h5py
 Version:    3.2.1
-Release:    alt2
+Release:    alt3
 
 Summary:    Python interface to the Hierarchical Data Format library, version 5
 License:    MIT
@@ -45,6 +45,7 @@ Patch2:     %name-alt-build.patch
 
 BuildRequires: libhdf5-devel
 BuildRequires: libsz2-devel
+BuildRequires: libblosc2-devel
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: libnumpy-py3-devel
@@ -162,6 +163,9 @@ touch %buildroot%python3_sitelibdir/%name/examples/__init__.py
 %python3_sitelibdir/%name/examples
 
 %changelog
+* Fri Feb 03 2023 Anton Vyatkin <toni@altlinux.org> 3.2.1-alt3
+- Fixed BuildRequires.
+
 * Mon May 30 2022 Grigory Ustinov <grenka@altlinux.org> 3.2.1-alt2
 - Fixed BuildRequires.
 

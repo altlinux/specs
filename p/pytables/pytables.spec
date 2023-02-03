@@ -23,7 +23,7 @@ relational or object oriented databases.
 
 Name: py%oname
 Version: 3.8.0
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Managing hierarchical datasets
@@ -152,6 +152,9 @@ cd build/lib.* && env PYTHONPATH=. python3 tables/tests/test_all.py
 %python3_sitelibdir/%oname/tests/
 
 %changelog
+* Fri Feb 03 2023 Anton Vyatkin <toni@altlinux.org> 1:3.8.0-alt2
+- update pytables-3.8.0-alt-fix-blosc2-get-directories.patch
+
 * Mon Jan 16 2023 Anton Vyatkin <toni@altlinux.org> 1:3.8.0-alt1
 - new version 3.8.0
 
