@@ -5,7 +5,7 @@
 
 Summary: MooseFS - distributed, fault tolerant file system
 Name: moosefs
-Version: 3.0.116
+Version: 3.0.117
 Release: alt1
 License: GPLv2
 Group: System/Servers
@@ -74,6 +74,7 @@ MooseFS data server.
 %package client
 Summary: MooseFS client
 Group: File tools
+Requires: %name-common = %EVR
 
 %description client
 MooseFS client: mfsmount and mfstools.
@@ -307,6 +308,9 @@ popd
 %_man8dir/mfsnetdump.8*
 
 %changelog
+* Fri Feb 03 2023 Andrew A. Vasilyev <andy@altlinux.org> 3.0.117-alt1
+- 3.0.117
+
 * Thu Aug 12 2021 Andrew A. Vasilyev <andy@altlinux.org> 3.0.116-alt1
 - 3.0.116
 
