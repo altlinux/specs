@@ -1,7 +1,7 @@
 %define rname kalk
 
 Name: kde5-%rname
-Version: 22.11
+Version: 23.01.0
 Release: alt1
 %K5init
 
@@ -78,6 +78,9 @@ Requires: %name-common
 #%_K5lib/libkalk.so.*
 
 %changelog
+* Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 23.01.0-alt1
+- new version
+
 * Mon Dec 05 2022 Sergey V Turchin <zerg@altlinux.org> 22.11-alt1
 - new version
 

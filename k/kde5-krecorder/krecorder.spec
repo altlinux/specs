@@ -1,12 +1,12 @@
 %define rname krecorder
 
 Name: kde5-%rname
-Version: 22.11
-Release: alt2
+Version: 23.01.0
+Release: alt1
 %K5init no_appdata
 
 Group: Graphical desktop/KDE
-Summary: Audio recording
+Summary: Audio Recorder
 Url: http://www.kde.org
 License: GPL-2.0-or-later
 
@@ -26,6 +26,11 @@ BuildRequires: kf5-kwindowsystem-devel
 
 %description
 A convergent audio recording application for Plasma.
+Features:
+* Record audio with a visualizer, and pausing functionality
+* Ability to select audio sources
+* Ability to select encoding and container formats
+* Audio playback with a visualizer
 
 %package common
 Summary: %name common package
@@ -77,6 +82,9 @@ Requires: %name-common
 #%_K5lib/libkrecorder.so.*
 
 %changelog
+* Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 23.01.0-alt1
+- new version
+
 * Mon Jan 23 2023 Sergey V Turchin <zerg@altlinux.org> 22.11-alt2
 - update russian translation
 
