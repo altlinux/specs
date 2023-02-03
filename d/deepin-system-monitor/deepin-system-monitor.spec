@@ -1,7 +1,9 @@
+%define llvm_ver 15
+
 %def_disable clang
 
 Name: deepin-system-monitor
-Version: 6.0.3
+Version: 6.0.4
 Release: alt1
 Summary: A more user-friendly system monitor
 License: GPL-3.0+
@@ -13,13 +15,15 @@ Source: %url/archive/%version/%name-%version.tar.gz
 %ifarch aarch64 armh
 Patch: deepin-system-monitor-5.9.4-alt-aarch64-armh.patch
 %endif
-Patch1: deepin-system-monitor-6.0.3-alt-revert-service-start-method-cannot-be-modified.patch
-Patch2: deepin-system-monitor-6.0.3-alt-fix-build-without-dwayland.patch
+Patch1: deepin-system-monitor-6.0.4-fix-unknown-DockPart.patch
 
 %if_enabled clang
-BuildRequires(pre): clang-devel
+#BuildRequires(pre): rpm-macros-llvm-common
+BuildRequires: clang%llvm_ver.0-devel
+BuildRequires: lld%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver.0-devel
 %else
-BuildRequires(pre): gcc-c++
+BuildRequires: gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja rpm-build-xdg
 BuildRequires(pre): desktop-file-utils
@@ -49,6 +53,7 @@ BuildRequires: dtk5-common
 BuildRequires: libnl-devel
 BuildRequires: kf5-kwayland-devel
 BuildRequires: libgtest-devel
+BuildRequires: dwayland-devel libwayland-client-devel
 #Recommends:     deepin-manual
 
 %description
@@ -60,22 +65,28 @@ BuildRequires: libgtest-devel
 %patch -p1
 %endif
 %patch1 -p1
-%patch2 -p1
 sed -i 's|lib/dde-dock/plugins|%_lib/dde-dock/plugins|' \
     deepin-system-monitor-plugin/CMakeLists.txt
+sed -i '/include_directories(${DtkCore_INCLUDE_DIRS})/a include_directories(${DtkWidget_INCLUDE_DIRS})' \
+    deepin-system-monitor-plugin-popup/CMakeLists.txt \
+    deepin-system-monitor-main/CMakeLists.txt \
+    deepin-system-monitor-plugin/CMakeLists.txt
+sed -i 's|DGuiApplicationHelper::|Dtk::Gui::DGuiApplicationHelper::|g' \
+    deepin-system-monitor-plugin/gui/monitor_plugin.h
 
 %build
 %if_enabled clang
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
+%define optflags_lto -flto=thin
+export CC=clang-%llvm_ver
+export CXX=clang++-%llvm_ver
+export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
 %endif
 %cmake \
     -GNinja \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DLIB_INSTALL_DIR=%_libdir \
     -DCMAKE_INSTALL_SYSCONFDIR=%_sysconfdir \
-    -DUSE_DEEPIN_WAYLAND=OFF \
+    -DUSE_DEEPIN_WAYLAND=ON \
     -DAPP_VERSION=%version \
     -DVERSION=%version
 cmake --build "%_cmake__builddir" -j%__nprocs
@@ -108,6 +119,12 @@ desktop-file-validate %buildroot%_desktopdir/%name.desktop ||:
 %_datadir/deepin-manual/manual-assets/application/%name/system-monitor/
 
 %changelog
+* Fri Feb 04 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.4-alt1
+- New version (6.0.4).
+- Removed old patches.
+- Fixed build with dtkcore and dtkgui 5.6.4.
+- Enabled dwayland support.
+
 * Mon Jan 09 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.3-alt1
 - New version (6.0.3).
 - Upstream:
