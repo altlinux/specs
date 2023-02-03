@@ -4,7 +4,7 @@
 %define libkiten libkiten%soname
 
 Name: kde5-%rname
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init no_appdata
 
@@ -101,6 +101,9 @@ rm -rf %buildroot/%_datadir/fonts/ ||:
 %_K5lib/libkiten.so.*
 
 %changelog
+* Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Thu Jan 19 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 

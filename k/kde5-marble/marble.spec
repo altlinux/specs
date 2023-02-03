@@ -11,8 +11,8 @@
 %endif
 
 Name: kde5-%rname
-Version: 22.12.1
-Release: alt2
+Version: 22.12.2
+Release: alt1
 %K5init no_appdata
 
 Group: Education
@@ -152,6 +152,9 @@ rm -rf %buildroot/%_K5i18n/*/LC_MESSAGES/*_qt.qm
 %_K5lib/libmarblewidget-qt5.so.*
 
 %changelog
+* Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Mon Jan 23 2023 Oleg Solovyov <mcpain@altlinux.org> 22.12.1-alt2
 - remove country info from:
   + search results
