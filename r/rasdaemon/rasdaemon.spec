@@ -3,8 +3,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:			rasdaemon
-Version:		0.6.8
-Release:		alt2
+Version:		0.7.0
+Release:		alt1
 Summary:		Utility to receive RAS error tracings
 Group:			System/Kernel and hardware
 License:		GPL-2.0-only
@@ -94,6 +94,9 @@ rm INSTALL %{buildroot}/usr/include/*.h
 %config(noreplace) %_sysconfdir/sysconfig/%name.env
 
 %changelog
+* Fri Feb 03 2023 Sergey Y. Afonin <asy@altlinux.org> 0.7.0-alt1
+- new version
+
 * Sun Oct 30 2022 Sergey Y. Afonin <asy@altlinux.org> 0.6.8-alt2
 - moved to Sisyphus from Autoimports (ALT #43074)
 - added init script for sysvinit
