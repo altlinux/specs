@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.4.1
+Version:  2.4.2
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -28,7 +28,6 @@ Requires: tigervnc
 Requires: xdg-utils
 Requires: xfreerdp
 Requires: zenity
-Requires: /usr/bin/xvt
 
 Provides:  connector = %EVR
 Obsoletes: connector
@@ -46,6 +45,7 @@ Group:   Networking/Remote access
 
 Requires: myconnector = %EVR
 Requires: xinitrc
+Requires: xterm
 
 Provides:  connector-kiosk = %EVR
 Obsoletes: connector-kiosk
@@ -138,8 +138,14 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Fri Feb 03 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4.2-alt1
+- [kiosk] Fixed bugs (ALT #44386, #44815, #44818)
+- Added password removing from keyring if server or username been change
+- Fixed search/filter by IP address
+- xterm return for myconnector-kiosk
+
 * Fri Nov 25 2022 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4.1-alt1
-- xterm replaced with xvt(ALT #44441)
+- xterm replaced with xvt (ALT #44441)
 - The default text editor is not specified now (ALT #43114)
 - Updated myconnector.conf
 - [FS] Fixed if no program is specified
