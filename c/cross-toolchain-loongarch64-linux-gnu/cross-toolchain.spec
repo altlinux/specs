@@ -62,7 +62,7 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20230130
+Version: 20230202
 Release: alt1
 Packager: Alexey Sheplyakov <asheplyakov@altlinux.org>
 Summary: GCC cross-toolchain for %target
@@ -109,19 +109,30 @@ Version: %gcc_version
 Summary: %target_arch-targeted GCC cross-compiler
 Group: Development/C
 Requires: gcc-%target-static = %gcc_version
+Requires: cross-gcc-libs-%target = %gcc_version
 Requires: binutils-%target = %binutils_version
 Requires: cross-glibc-%target_arch = %glibc_version
 
 %description -n gcc-%target
 %target_arch-targeted GCC cross-compiler
 
+%package -n cross-gcc-libs-%target
+Version: %gcc_version
+Summary: %target_arch-targeted GCC cross-compiler, target libraries
+Group: Development/C
+BuildArch: noarch
+
+%description -n cross-gcc-libs-%target
+%target_arch-targeted GCC cross-compiler, shared libraries for target
+
 %package -n gcc-%target-static
 Version: %gcc_version
 Summary: %target_arch-targeted GCC cross-compiler, static libraries
 Group: Development/C
+BuildArch: noarch
 
 %description -n gcc-%target-static
-%target_arch-targeted GCC cross-compiler, static libraries
+%target_arch-targeted GCC cross-compiler, static libraries for target
 
 %package -n binutils-%target
 Version: %binutils_version
@@ -616,12 +627,28 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 %prefix/libexec/gcc/%target/*
 # avoid 'static library packaging violation' "error"
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libatomic.a
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libgcc.a
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libgcc_eh.a
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libgcov.a
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libgomp.a
 %if 0%{?target_has_itm}
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libitm.a
 %endif
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libssp.a
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libssp_nonshared.a
 %exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++.a
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++fs.a
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libsupc++.a
+# avoid 'NEW bad_elf_symbols detected' "error"
+%exclude %prefix/lib/gcc/%target/%gcc_branch/crt*.o
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libatomic.so*
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libgcc_s.so*
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libgomp.so*
+%if 0%{?target_has_itm}
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libitm.so*
+%endif
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libssp.so*
+%exclude %prefix/lib/gcc/%target/%gcc_branch/libstdc++.so*
 # binunitls
 %exclude %prefix/libexec/gcc/%target/bin/*
 %exclude %prefix/libexec/gcc/%target/lib/*
@@ -633,12 +660,29 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 %files -n gcc-%target-static
 %prefix/lib/gcc/%target/%gcc_branch/libatomic.a
+%prefix/lib/gcc/%target/%gcc_branch/libgcc.a
+%prefix/lib/gcc/%target/%gcc_branch/libgcc_eh.a
+%prefix/lib/gcc/%target/%gcc_branch/libgcov.a
 %prefix/lib/gcc/%target/%gcc_branch/libgomp.a
 %if 0%{?target_has_itm}
 %prefix/lib/gcc/%target/%gcc_branch/libitm.a
 %endif
 %prefix/lib/gcc/%target/%gcc_branch/libssp.a
+%prefix/lib/gcc/%target/%gcc_branch/libssp_nonshared.a
 %prefix/lib/gcc/%target/%gcc_branch/libstdc++.a
+%prefix/lib/gcc/%target/%gcc_branch/libstdc++fs.a
+%prefix/lib/gcc/%target/%gcc_branch/libsupc++.a
+
+%files -n cross-gcc-libs-%target
+%prefix/lib/gcc/%target/%gcc_branch/crt*.o
+%prefix/lib/gcc/%target/%gcc_branch/libatomic.so*
+%prefix/lib/gcc/%target/%gcc_branch/libgcc_s.so*
+%prefix/lib/gcc/%target/%gcc_branch/libgomp.so*
+%if 0%{?target_has_itm}
+%prefix/lib/gcc/%target/%gcc_branch/libitm.so*
+%endif
+%prefix/lib/gcc/%target/%gcc_branch/libssp.so*
+%prefix/lib/gcc/%target/%gcc_branch/libstdc++.so*
 
 %files -n cross-glibc-%target_arch
 %sysroot/usr/include/*
@@ -721,6 +765,10 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Thu Feb 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230202-alt1
+- Moved GCC target libraries to a noarch subpackage to avoid spurious
+  'bad ELF symbols' errors.
+
 * Mon Jan 30 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230130-alt1
 - Added loongarch64 cross-toolchain
 
