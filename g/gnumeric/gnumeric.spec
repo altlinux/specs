@@ -1,3 +1,4 @@
+%def_enable snapshot
 %define _unpackaged_files_terminate_build 1
 
 %define ver_major 1.12
@@ -11,7 +12,7 @@
 %def_disable check
 
 Name: gnumeric
-Version: %ver_major.54
+Version: %ver_major.55
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -19,16 +20,20 @@ License: GPL-2.0 or GPL-3.0
 Group: Office
 Url: http://www.gnumeric.org/
 
+%if_disabled snapshot
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+%else
+Source: %name-%version.tar
+%endif
 Patch: gnumeric-desktop-alt.patch
 
 Obsoletes: %name-light
 Provides: %name-light = %version-%release
 
-%define gsf_ver 1.14.48
+%define gsf_ver 1.14.50
 %define gda_ver 5.2
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.10.54
+%define goffice_ver 0.10.55
 
 %{?_with_python:
 %add_python3_path %_libdir/%name/%version/plugins
@@ -125,7 +130,11 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
+%if_enabled snapshot
+NOCONFIGURE=1 ./autogen.sh
+%else
 %autoreconf
+%endif
 %configure \
 	--disable-schemas-compile \
 	%{subst_with gnome} \
@@ -141,7 +150,7 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %find_lang --with-gnome --output=%name.lang %name %name-%version %name-%version-functions
 
 %check
-%{?_enable_check:xvfb-run %make check}
+%{?_enable_check:xvfb-run %make -k check VERBOSE=1}
 
 %files
 %_bindir/*
@@ -184,6 +193,9 @@ subst 's@zz-application\/zz-winassoc-xls;@@' %name.desktop.in
 %_pkgconfigdir/*
 
 %changelog
+* Fri Feb 03 2023 Yuri N. Sedunov <aris@altlinux.org> 1.12.55-alt1
+- 1.12.55
+
 * Sun Jan 22 2023 Yuri N. Sedunov <aris@altlinux.org> 1.12.54-alt1
 - 1.12.54
 
