@@ -2,7 +2,7 @@
 %define major 1
 
 Name: vkd3d
-Version: 1.5
+Version: 1.6
 Release: alt1
 Summary: The vkd3d 3D Graphics Library
 
@@ -100,6 +100,9 @@ done
 %endif
 
 %changelog
+* Thu Feb 02 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6-alt1
+- 1.6.
+
 * Tue Oct 04 2022 L.A. Kostis <lakostis@altlinux.ru> 1.5-alt1
 - 1.5.
 
