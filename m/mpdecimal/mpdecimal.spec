@@ -1,6 +1,8 @@
+%define abiversion 3
+
 Name:           mpdecimal
 Version:        2.5.1
-Release:        alt2
+Release:        alt3
 
 Summary:        Library for general decimal arithmetic
 License:        BSD
@@ -12,7 +14,7 @@ Source1:        http://speleotrove.com/decimal/dectest.zip
 
 BuildRequires:  make gcc-c++ unzip
 
-Requires:       libmpdec3 libmpdecxx3
+Requires:       libmpdec%abiversion libmpdecxx%abiversion
 
 %description
 The package contains a library limpdec implementing General Decimal Arithmetic
@@ -20,24 +22,30 @@ Specification. The specification, written by Mike Cowlishaw from IBM, defines
 a general purpose arbitrary precision data type together with rigorously
 specified functions and rounding behavior.
 
-%package        -n libmpdec3
+%package        -n libmpdec%abiversion
 Summary:        Library for general decimal arithmetic
 Group:          System/Libraries
-%description    -n libmpdec3
-The package contains mpdecimal %version libs.
+%description    -n libmpdec%abiversion
+The package contains a library limpdec implementing General Decimal Arithmetic
+Specification. The specification, written by Mike Cowlishaw from IBM, defines
+a general purpose arbitrary precision data type together with rigorously
+specified functions and rounding behavior.
 
-%package        -n libmpdecxx3
+%package        -n libmpdecxx%abiversion
 Summary:        Library for general decimal arithmetic
 Group:          System/Libraries
-%description    -n libmpdecxx3
-The package contains mpdecimal %version libs.
+%description    -n libmpdecxx%abiversion
+The package contains libmpdec++ is a complete implementation of the General
+Decimal Arithmetic Specification. libmpdec++ is mostly a header library
+around libmpdec C functions.
 
 %package        -n libmpdec-devel
 Summary:        Development headers for mpdecimal library
 Group:          System/Libraries
-Requires:       libmpdec3 = %EVR
-Requires:       libmpdecxx3 = %EVR
-Provides:       mpdecimal-devel
+Requires:       libmpdec%abiversion = %EVR
+Requires:       libmpdecxx%abiversion = %EVR
+Provides:       mpdecimal-devel = %EVR
+Obsoletes:      mpdecimal-devel < %EVR
 
 %description    -n libmpdec-devel
 The package contains development headers for the mpdecimal library.
@@ -73,14 +81,14 @@ make check
 # for dummy package
 %files
 
-%files -n libmpdec3
+%files -n libmpdec%abiversion
 %doc LICENSE.txt
-%_libdir/libmpdec.so.3
+%_libdir/libmpdec.so.%abiversion
 %_libdir/libmpdec.so.%version
 
-%files -n libmpdecxx3
+%files -n libmpdecxx%abiversion
 %doc LICENSE.txt
-%_libdir/libmpdec++.so.3
+%_libdir/libmpdec++.so.%abiversion
 %_libdir/libmpdec++.so.%version
 
 %files -n libmpdec-devel
@@ -95,6 +103,9 @@ make check
 %_docdir/%name
 
 %changelog
+* Wed Feb 01 2023 Anton Vyatkin <toni@altlinux.org> 2.5.1-alt3
+- NMU: Spec refactoring.
+
 * Tue Jan 31 2023 Anton Vyatkin <toni@altlinux.org> 2.5.1-alt2
 - NMU: (ALT 42388) Split into libmpdec3 and libmpdecxx3 packages.
 
