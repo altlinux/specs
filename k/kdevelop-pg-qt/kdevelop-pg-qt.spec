@@ -1,5 +1,5 @@
 Name: kdevelop-pg-qt
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 Obsoletes: kdevelop-unstable-pg-qt
 
@@ -8,7 +8,7 @@ Summary: KDevelop parser generator
 Url: http://techbase.kde.org/Development/KDevelop-PG-Qt_Introduction
 License: GPLv2+
 
-Source: v%version.tar.gz
+Source: v%version.tar
 Provides: kdevelop-pg-qt-devel = %EVR
 Obsoletes: kdevelop-unstable-pg-qt-devel < %version
 
@@ -39,6 +39,9 @@ is ideal to be used in Qt-/KDE-based applications like KDevelop.
 %_libdir/cmake/*
 
 %changelog
+* Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 2.2.2-alt1
+- New version
+
 * Thu Sep 03 2020 Sergey V Turchin <zerg@altlinux.org> 2.2.1-alt1
 - New version
 
