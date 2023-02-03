@@ -3,13 +3,14 @@
 %define repoivr imagevisualresult
 %define sonameiv 0
 %define sonameivr 0
+%define llvm_ver 15
 
-%def_enable clang
+%def_disable clang
 %def_enable cmake
 
 Name: deepin-image-editor
 Version: 1.0.24
-Release: alt1
+Release: alt2
 Summary: Image editor libraries for Deepin
 License: GPL-3.0+
 Group: System/Libraries
@@ -22,9 +23,12 @@ ExcludeArch: armh
 %endif
 
 %if_enabled clang
-BuildRequires(pre): clang-devel
+#BuildRequires(pre): rpm-macros-llvm-common
+BuildRequires: clang%llvm_ver.0-devel
+BuildRequires: lld%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver.0-devel
 %else
-BuildRequires(pre): gcc-c++
+BuildRequires: gcc-c++
 %endif
 %if_enabled cmake
 BuildRequires(pre): cmake rpm-build-ninja
@@ -88,8 +92,6 @@ sed -i 's|/usr/lib/|%_libdir/|' \
     libimageviewer/CMakeLists.txt \
     libimageviewer/libimageviewer.pro \
     libimagevisualresult/CMakeLists.txt
-#sed -i 's|QtSvg|Qt5Svg|; s| Qt5LinguistTools||; s| freeimage||' \
-#    libimageviewer/libimageviewer.pc.in
 sed -i 's|3rdparty/tiff-tools/converttiff.h|../../3rdparty/tiff-tools/converttiff.h|' \
     libimageviewer/unionimage/unionimage.cpp
 sed -i 's|libimageviewer|libimagevisualresult|' \
@@ -99,11 +101,12 @@ sed -i 's|libimageviewer|libimagevisualresult|' \
 export PATH=%_qt5_bindir:$PATH
 %if_enabled cmake
 %if_enabled clang
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export READELF="llvm-readelf"
+%define optflags_lto -flto=thin
+export CC=clang-%llvm_ver
+export CXX=clang++-%llvm_ver
+export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+%else
+%define optflags_lto %nil
 %endif
 %cmake \
     -GNinja \
@@ -161,6 +164,9 @@ cmake --build "%_cmake__builddir"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Fri Feb 03 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.24-alt2
+- Enabled build on armh.
+
 * Tue Jan 17 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.24-alt1
 - New version.
 
