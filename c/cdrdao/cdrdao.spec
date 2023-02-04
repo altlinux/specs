@@ -1,8 +1,8 @@
 %def_without scglib
-%def_disable gcdmaster
+%def_enable gcdmaster
 
 Name: cdrdao
-Version: 1.2.4
+Version: 1.2.5
 Release: alt1
 
 Summary: Cdrdao - Write audio CD-Rs in disk-at-once mode
@@ -12,14 +12,14 @@ Url: http://cdrdao.sourceforge.net
 
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
 Source1: %name.control
-PreReq: control
+Requires(pre,postun): control
 
 %define lame_ver 3.100
 
 BuildRequires: gcc-c++ libacl-devel libao-devel liblame-devel >= %lame_ver
 BuildRequires: libmad-devel libvorbis-devel
 BuildRequires: libGConf-devel
-%{?_enable_gcdmaster:BuildRequires: libgnomeuimm-devel}
+%{?_enable_gcdmaster:BuildRequires: libgtkmm3-devel}
 
 %description
 Writes audio CD-Rs in disc-at-once (DAO) mode allowing
@@ -31,7 +31,7 @@ Audio data may be in WAVE or raw format.
 %package -n gcdmaster
 Summary: Graphical front end to cdrdao for composing audio CDs
 Group: Archiving/Cd burning
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n gcdmaster
 gcdmaster allows the creation of toc-files for cdrdao and
@@ -42,17 +42,18 @@ ISRC codes/CD-TEXT and non destructive cut of the audio data.
 
 %prep
 %setup
-#subst 's,<linux/../scsi/scsi.h>,<scsi/scsi.h>,' dao/sg_err.h
+# AC_CHECK_INCLUDES_DEFAULT available in 2.70 as compatibility macro
+sed -i 's|\(AC_\)CHECK_\(INCLUDES_DEFAULT\)|\1\2|' configure.ac
 
 %build
-%add_optflags -D_FILE_OFFSET_BITS=64
+%add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure \
 	--with-mp3-support \
 	--with-ogg-support \
 	%{?_disable_gcdmaster:--without-gcdmaster} \
 	%{subst_with scglib}
-
+%nil
 %make_build
 
 %install
@@ -69,21 +70,35 @@ chmod 700 %buildroot%_bindir/%name
 %post_control %name
 
 %files
-%_bindir/*
+%_bindir/%name
+%_bindir/cue2toc
+%_bindir/toc2cddb
+%_bindir/toc2cue
+%_bindir/toc2mp3
 %_datadir/%name
 %_man1dir/*
+%{?_enable_gcdmaster:%exclude %_man1dir/gcdmaster*}
 %config /etc/control.d/facilities/%name
 %doc README CREDITS ChangeLog
 
 %if_enabled gcdmaster
 %files -n gcdmaster
 %_bindir/gcdmaster
-%_desktopdir/*
-%_datadir/pixmaps/*
+%_desktopdir/gcdmaster.desktop
+%_datadir/glib-2.0/schemas/org.gnome.gcdmaster.gschema.xml
+%_datadir/pixmaps/gcdmaster*.png
 %_man1dir/gcdmaster*
+%_datadir/application-registry/gcdmaster.applications
+%_datadir/mime-info/gcdmaster.*
+%_datadir/mime/packages/gcdmaster.xml
+%_datadir/gcdmaster/glade/Preferences.glade
+%_datadir/gcdmaster/glade/ProjectChooser.glade
 %endif
 
 %changelog
+* Sat Feb 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.2.5-alt1
+- 1.2.5 (GCDMaster ported to GTKMM 3)
+
 * Tue May 22 2018 Yuri N. Sedunov <aris@altlinux.org> 1.2.4-alt1
 - 1.2.4
 
