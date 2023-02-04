@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%oname
-Version: 5.1.0
+Version: 5.2.0
 Release: alt1
 Summary: Jupyter core package
 License: BSD-3-Clause
@@ -75,6 +75,9 @@ py.test3 -vv \
 %python3_sitelibdir/%oname/tests
 
 %changelog
+* Sat Feb 04 2023 Anton Farygin <rider@altlinux.ru> 5.2.0-alt1
+- 5.1.0 -> 5.2.0
+
 * Mon Dec 05 2022 Anton Farygin <rider@altlinux.ru> 5.1.0-alt1
 - 4.7.1 -> 5.1.0
 
