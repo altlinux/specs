@@ -3,7 +3,7 @@
 %define oname nbformat
 
 Name: python3-module-%oname
-Version: 5.7.0
+Version: 5.7.3
 Release: alt1
 Summary: The Jupyter Notebook format
 License: BSD-3-Clause
@@ -65,6 +65,9 @@ sed -i "s/{VERSION}/%{version}/" pyproject.toml
 %python3_sitelibdir/*
 
 %changelog
+* Sat Feb 04 2023 Anton Farygin <rider@altlinux.ru> 5.7.3-alt1
+- 5.7.0 -> 5.7.3
+
 * Sun Dec 04 2022 Anton Farygin <rider@altlinux.ru> 5.7.0-alt1
 - 5.1.3 -> 5.7.0
 
