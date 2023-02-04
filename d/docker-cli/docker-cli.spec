@@ -6,12 +6,12 @@
 %global repo            cli
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      715524332ff91d0f9ec5ab2ec95f051456ed1dba
+%global commit      e92dd87c3209361f29b692ab4b8f0f9248779297
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    20.10.23
-Release: alt1
+Version:    23.0.0
+Release: alt3
 Summary: Docker CLI
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -21,12 +21,14 @@ ExclusiveArch: %go_arches
 Conflicts: docker
 
 Source0: %name-%version.tar
-Patch1: docker-cli-20.10.5-alt-fix-man-page-gen.patch
+Patch1: docker-cli-23.0.0-alt-fix-man-page-gen.patch
 
 BuildRequires(pre): rpm-build-golang
 BuildRequires: golang >= 1.3 libseccomp-devel gcc glibc-devel
 BuildRequires: go-md2man
 Conflicts: docker-ce < 20.10.0-alt1.rc2
+# Since docker 23.0.0 buildx is a default buildkit
+Requires: docker-buildx
 
 # do not extract debuginfo
 %define __find_debuginfo_files %nil
@@ -96,6 +98,15 @@ install -d %{buildroot}%{_libexecdir}/docker/cli-plugins
 %dir %{_libexecdir}/docker/cli-plugins
 
 %changelog
+* Fri Feb 3 2023 Vladimir Didenko <cow@altlinux.org> 23.0.0-alt3
+- new release
+
+* Sat Jan 21 2023 Vladimir Didenko <cow@altlinux.org> 23.0.0-alt2.rc3
+- new release
+
+* Sat Jan 21 2023 Vladimir Didenko <cow@altlinux.org> 23.0.0-alt1.rc2
+- new release
+
 * Fri Jan 20 2023 Vladimir Didenko <cow@altlinux.org> 20.10.23-alt1
 - new release
 

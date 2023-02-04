@@ -1,6 +1,8 @@
-%global import_path github.com/docker/docker-buildx
+%global pkg_name github.com/docker/docker-buildx
+%global commit   00ed17df6d20f3ca4553d45789264cdb78506e5f
+
 Name:     docker-buildx
-Version:  0.8.2
+Version:  0.10.2
 Release:  alt1
 
 Summary:  Docker CLI plugin for extended build capabilities with BuildKit
@@ -31,22 +33,27 @@ Key features:
 %setup
 
 %build
-export BUILDDIR="$PWD/.build"
-export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
+export VERSION=%version
+export REVISION=%commit
+export PKG_NAME=%pkg_name
 
-%golang_prepare
-
-cd .build/src/%import_path
-%golang_build cmd/buildx
+mkdir -p .build
+go build -ldflags "-s -w \
+    -X ${PKG_NAME}/version.Version=${VERSION} \
+    -X ${PKG_NAME}/version.Revision=${VERSION}" \
+    -mod=vendor -o .build/%name cmd/buildx/main.go
 
 %install
-install -D -m 0755 .build/bin/buildx %buildroot/usr/lib/docker/cli-plugins/%name
+install -D -m 0755 .build/%name %buildroot%{_libexecdir}/docker/cli-plugins/%name
 
 %files
 %doc *.md
-/usr/lib/docker/cli-plugins/%name
+%{_libexecdir}/docker/cli-plugins/%name
 
 %changelog
+* Thu Feb 2 2023 Vladimir Didenko <cow@altlinux.org> 0.10.2-alt1
+- New version
+- Switch to Go modules build type
+
 * Mon Aug 15 2022 Mikhail Gordeev <obirvalger@altlinux.org> 0.8.2-alt1
 - Initial build for Sisyphus

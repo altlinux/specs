@@ -7,12 +7,12 @@
 %global servicename     docker
 
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
-%global commit      6051f142912a5c06064e96b92de5e4e8f052131b
+%global commit      d7573ab8672555762688f4c7ab8cc69ae8ec1a47
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:    docker-engine
-Version: 20.10.23
-Release: alt1
+Version: 23.0.0
+Release: alt3
 Summary: The open-source application container engine
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -62,6 +62,13 @@ Requires: rootlesskit %name slirp4netns
 %description rootless
 %summary
 
+%package -n docker-proxy
+Summary: docker-proxy util
+Group: Development/Other
+
+%description -n docker-proxy
+This package provides docker-proxy util.
+
 %prep
 %setup
 
@@ -84,6 +91,7 @@ hack/make.sh dynbinary
 # install binary
 install -d %{buildroot}%{_bindir}
 install -p -m 755 bundles/dynbinary-daemon/dockerd %{buildroot}%{_bindir}/dockerd
+install -p -m 755 bundles/dynbinary-daemon/docker-proxy %{buildroot}%{_bindir}/docker-proxy
 
 # install udev rules
 install -d %{buildroot}%{_sysconfdir}/udev/rules.d
@@ -122,10 +130,13 @@ exit 0
 %_bindir/dockerd-rootless-setuptool.sh
 %_bindir/dockerd-rootless.sh
 
+%files -n docker-proxy
+%_bindir/docker-proxy
+
 %files
 %doc AUTHORS LICENSE
 %doc MAINTAINERS NOTICE
-%doc CHANGELOG.md CONTRIBUTING.md README.md
+%doc CONTRIBUTING.md README.md
 %config(noreplace) %{_sysconfdir}/sysconfig/docker
 %config(noreplace) %{_sysconfdir}/sysconfig/docker-storage
 %config(noreplace) %{_sysconfdir}/docker/daemon.json
@@ -137,6 +148,15 @@ exit 0
 %{_sysconfdir}/udev/rules.d/80-docker.rules
 
 %changelog
+* Thu Feb 2 2023 Vladimir Didenko <cow@altlinux.org> 23.0.0-alt3
+- 23.0.0 release
+
+* Sat Jan 21 2023 Vladimir Didenko <cow@altlinux.org> 23.0.0-alt2.rc3
+- 23.0.0-rc3
+
+* Fri Jan 20 2023 Vladimir Didenko <cow@altlinux.org> 23.0.0-alt1.rc2
+- 23.0.0-rc2
+
 * Fri Jan 20 2023 Vladimir Didenko <cow@altlinux.org> 20.10.23-alt1
 - 20.10.23
 
