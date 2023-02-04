@@ -1,13 +1,13 @@
 Name:    pcsc-tools
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 Summary: Tools to be used with smart cards and PC/SC
 
 Group:   System/Configuration/Hardware
 License: GPLv2+
-URL:     http://ludovic.rousseau.free.fr/softwares/pcsc-tools/
-Source0: http://ludovic.rousseau.free.fr/softwares/pcsc-tools/%{name}-%{version}.tar.gz
-Source1:	%name.watch
+URL:     https://pcsc-tools.apdu.fr/
+Source0: %{name}-%{version}.tar.gz
+Source1: %name.watch
 
 BuildRequires: libpcsclite-devel >= 1.2.9
 BuildRequires: perl-pcsc
@@ -62,6 +62,9 @@ desktop-file-install --mode=644 \
 %doc %_man1dir/gscriptor.*
 
 %changelog
+* Sat Feb 04 2023 Andrey Cherepanov <cas@altlinux.org> 1.6.2-alt1
+- New version.
+
 * Fri Dec 30 2022 Andrey Cherepanov <cas@altlinux.org> 1.6.1-alt1
 - New version.
 
