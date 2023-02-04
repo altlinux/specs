@@ -8,11 +8,12 @@
 %ifarch x86_64 aarch64
 %def_with firecracker
 %endif
+%def_enable prebuilded_sunstone
 
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.2.0.1
-Release: alt2
+Release: alt3
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -154,7 +155,6 @@ Group: Development/Ruby
 BuildArch: noarch
 Provides: %name-ruby = %EVR ruby-%name = %EVR
 Obsoletes: %name-ruby < %EVR ruby-%name < %EVR
-Requires: libzeromq-devel
 Requires: gem(activesupport) >= 0
 Requires: gem(ffi-rzmq) >= 0
 Requires: gem(rack-protection) >= 0
@@ -214,7 +214,10 @@ Browser based UI for OpenNebula cloud management and usage.
 %package fireedge
 Summary: OpenNebula web interface FireEdge
 Group: System/Servers
-BuildArch: noarch
+#TODO: build node-zeromq as external package
+#BuildArch: noarch
+
+AutoReq: yes,noperl,nonodejs,noshell
 
 Requires: %name-common = %EVR
 Requires: %name-provision-data = %EVR
@@ -396,6 +399,7 @@ export PATH_DEFAULT="$PATH"
 npm config set offline true
 npm config set zmq_external true
 
+%if_disabled prebuilded_sunstone
 pushd src/sunstone/public
 export PATH="$PATH_DEFAULT:$PWD/node_modules/.bin"
 npm rebuild
@@ -406,6 +410,7 @@ grunt --gruntfile ./Gruntfile.js sass
 grunt --gruntfile ./Gruntfile.js requirejs
 mv -f dist/main.js dist/main-dist.js
 popd
+%endif
 
 pushd src/fireedge
 export PATH="$PATH_DEFAULT:$PWD/node_modules/.bin"
@@ -543,7 +548,9 @@ rm -f %buildroot%_sbindir/install-firecracker
 
 rm -rf %buildroot%_libexecdir/one/sunstone/public/{node_modules,patches}
 rm -f %buildroot%_libexecdir/one/sunstone/public/{SConstruct,build.sh}
-rm -rf %buildroot%_libexecdir/one/fireedge/node_modules
+#rm -rf %buildroot%_libexecdir/one/fireedge/node_modules
+#rm -rf %buildroot%_libexecdir/one/fireedge/src
+#rm -f %buildroot%_libexecdir/one/fireedge/package.json
 
 # fix placement
 mv %buildroot%_libexecdir/flow %buildroot%_datadir/flow
@@ -1035,6 +1042,10 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Mon Jan 30 2023 Alexey Shabalin <shaba@altlinux.org> 6.2.0.1-alt3
+- fix run fireedge server
+- fix show novnc console
+
 * Thu Jan 12 2023 Andrew A. Vasilyev <andy@altlinux.org> 6.2.0.1-alt2
 - get fix from upstream
 - remove support tabs
