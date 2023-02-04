@@ -7,7 +7,7 @@ BuildRequires: perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(Sereal/Decoder
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 5.001
+Version: 5.002
 Release: alt1
 Summary: Fast, compact, powerful binary (de-)serialization
 Group: Development/Perl
@@ -55,6 +55,9 @@ https://github.com/Sereal/Sereal/wiki/Sereal-Comparison-Graphs.
 %perl_vendor_privlib/S*
 
 %changelog
+* Sat Feb 04 2023 Igor Vlasenko <viy@altlinux.org> 1:5.002-alt1
+- automated CPAN update
+
 * Sat Sep 03 2022 Igor Vlasenko <viy@altlinux.org> 1:5.001-alt1
 - automated CPAN update
 
