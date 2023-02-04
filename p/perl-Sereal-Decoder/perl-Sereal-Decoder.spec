@@ -7,7 +7,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators /proc
 BuildRequires: libzstd-devel
 
 Name: perl-%module_name
-Version: 5.001
+Version: 5.002
 Release: alt1
 Summary: Fast, compact, powerful binary deserialization
 Group: Development/Perl
@@ -55,6 +55,9 @@ export NPROCS=1
 %perl_vendor_autolib/*
 
 %changelog
+* Sat Feb 04 2023 Igor Vlasenko <viy@altlinux.org> 5.002-alt1
+- automated CPAN update
+
 * Sat Sep 03 2022 Igor Vlasenko <viy@altlinux.org> 5.001-alt1
 - automated CPAN update
 
