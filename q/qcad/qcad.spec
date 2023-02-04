@@ -1,7 +1,7 @@
 %def_with debug
 
 Name: 	 qcad
-Version: 3.27.1.0
+Version: 3.27.9.0
 Release: alt1
 Summary: A professional CAD system
 Summary(ru_RU.UTF-8): Профессиональная система CAD
@@ -20,7 +20,6 @@ Source2: qcadentity_ru.ts
 Source3: scripts_ru.ts
 
 Patch:   %name-%version-%release.patch
-Patch1:  qcad-qt5-unbundle_libraries.patch
 Patch2:  qcad-alt-use-system-zlib.patch
 Patch3:  qcad-alt-check-translation-file.patch
 Patch4:  qcad-disable-macos.patch
@@ -38,12 +37,13 @@ BuildRequires: qt5-script-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-tools-devel-static
+%ifnarch ppc64le
 BuildRequires: qt5-webengine-devel
+%endif
 BuildRequires: qt5-webkit-devel
 BuildRequires: qt5-xmlpatterns-devel
 BuildRequires: zlib-devel
 BuildRequires: libquazip-qt5-devel
-BuildRequires: spatialindex-devel
 
 Requires: qt5-translations qt5-imageformats
 
@@ -62,7 +62,6 @@ QCad это профессиональная CAD система. С QCad вы м
 %prep
 %setup -q
 %patch -p1
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
@@ -89,6 +88,7 @@ fi
 
 %build
 # Regenerate all translations
+lupdate-qt5 ts/scripts.pro
 for pro in ts/scripts.pro src/gui/gui.pro src/entity/entity.pro src/core/core.pro; do lrelease-qt5 ${pro};done
 #export NPROCS=1
 %make_build
@@ -145,6 +145,43 @@ done
 %_iconsdir/hicolor/*/apps/%name.png
 
 %changelog
+* Fri Feb 03 2023 Andrey Cherepanov <cas@altlinux.org> 3.27.9.0-alt1
+- New version.
+- Built with bundled spatialindex.
+
+* Mon Oct 03 2022 Andrey Cherepanov <cas@altlinux.org> 3.27.7.0-alt1
+- New version.
+
+* Sun Oct 02 2022 Andrey Cherepanov <cas@altlinux.org> 3.27.6.11-alt1
+- New version.
+
+* Sun May 08 2022 Andrey Cherepanov <cas@altlinux.org> 3.27.5.0-alt1
+- New version.
+
+* Wed May 04 2022 Andrey Cherepanov <cas@altlinux.org> 3.27.4.0-alt1
+- New version.
+
+* Fri Apr 29 2022 Andrey Cherepanov <cas@altlinux.org> 3.27.3.0-alt1
+- New version.
+
+* Wed Apr 27 2022 Andrey Cherepanov <cas@altlinux.org> 3.27.2.0-alt1
+- New version.
+
+* Fri Apr 08 2022 Andrey Cherepanov <cas@altlinux.org> 3.27.1.8-alt1
+- New version.
+
+* Thu Jan 27 2022 Andrey Cherepanov <cas@altlinux.org> 3.27.1.6-alt1
+- New version.
+
+* Wed Jan 26 2022 Andrey Cherepanov <cas@altlinux.org> 3.27.1.5-alt1
+- New version.
+
+* Tue Jan 25 2022 Andrey Cherepanov <cas@altlinux.org> 3.27.1.4-alt1
+- New version.
+
+* Tue Jan 18 2022 Andrey Cherepanov <cas@altlinux.org> 3.27.1.3-alt1
+- New version.
+
 * Sat Dec 11 2021 Andrey Cherepanov <cas@altlinux.org> 3.27.1.0-alt1
 - New version.
 
