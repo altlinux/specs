@@ -1,23 +1,17 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
-# see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
-%define _localstatedir %{_var}
 %define major 1
 %define libname libg15_%{major}
 %define libname_devel libg15-devel
 %define libname_static_devel libg15-devel-static
 
 Name:           libg15
-Version:        1.2.7
-Release:        alt1_11
+Version:        1.3.1
+Release:        alt1
 Summary:        Library to control logitech G15 keyboards
-License:        GPLv2+
+License:        GPL-2.0+
 Group:          System/Libraries
-URL:            http://g15tools.sourceforge.net/
-Source:         http://downloads.sourceforge.net/g15tools/libg15-%{version}.tar.bz2
+URL:            https://github.com/vividnightmare/libg15
+Source:         libg15-%{version}.tar.gz
 BuildRequires:  pkgconfig(libusb)
-Source44: import.info
 
 %description
 Controls the G15 keyboard, providing applications access
@@ -46,18 +40,18 @@ to the keyboard's LCD display, and the additional keys available
 on this keyboard.
 
 %prep
-%setup -q
+%setup
+mv configure.{in,ac}
 
 %build
 # fix build on aarch64
 autoreconf -vfi
-
+chmod +x configure
 %configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
-
 rm -f %{buildroot}%{_libdir}/*.la
 
 %files -n %{libname}
@@ -69,8 +63,10 @@ rm -f %{buildroot}%{_libdir}/*.la
 %{_includedir}/*
 %{_libdir}/libg15.so
 
-
 %changelog
+* Mon Jan 30 2023 Andrey Cherepanov <cas@altlinux.org> 1.3.1-alt1
+- New version.
+
 * Sun Sep 29 2019 Igor Vlasenko <viy@altlinux.ru> 1.2.7-alt1_11
 - new version
 
