@@ -10,7 +10,7 @@
 %endif
 
 Name: python3-module-%oname
-Version: 7.2.6
+Version: 7.2.9
 Release: alt1
 
 Summary: Converting Jupyter Notebooks
@@ -69,7 +69,7 @@ BuildRequires: python3(nest_asyncio)
 %py3_use jupyterlab_pygments
 %py3_use traitlets >= 5.0
 %py3_use jupyter_core
-%py3_use nbformat >= 4.4
+%py3_use nbformat >= 5.7.3
 %py3_use entrypoints >= 0.2.2
 %py3_use bleach
 %py3_use pandocfilters >= 1.4.1
@@ -192,6 +192,9 @@ __EOF__
 %endif
 
 %changelog
+* Sat Feb 04 2023 Anton Farygin <rider@altlinux.ru> 7.2.9-alt1
+- 7.2.6 -> 7.2.9
+
 * Mon Dec 19 2022 Anton Farygin <rider@altlinux.ru> 7.2.6-alt1
 - 6.1.0 -> 7.2.6
 - enabled tests
