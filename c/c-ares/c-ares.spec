@@ -1,5 +1,5 @@
 Name: c-ares
-Version: 1.18.1
+Version: 1.19.0
 Release: alt1
 
 Summary: A library that performs asynchronous DNS operations
@@ -74,6 +74,9 @@ popd
 %_man3dir/*
 
 %changelog
+* Sat Feb 04 2023 Anton Farygin <rider@altlinux.ru> 1.19.0-alt1
+- 1.19.0
+
 * Thu Nov 25 2021 Anton Farygin <rider@altlinux.ru> 1.18.1-alt1
 - 1.18.1
 - enabled tests
