@@ -4,7 +4,7 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.6.1
+Version: 1.7.0
 Release: alt1
 
 Summary: a Jabber client written in PyGTK
@@ -32,8 +32,10 @@ Requires: libgtk+3-gir libgtksourceview4-gir
 %py3_requires cairo
 
 BuildRequires(pre): rpm-build-python3 rpm-build-gir
-BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools libsoup-gir-devel libgtksourceview4-gir-devel
-BuildRequires: python3-module-nbxmpp >= 4.0.1
+BuildRequires: libgtk+3-devel python3-devel python3-module-setuptools libsoup-gir-devel libgtksourceview4-gir-devel pyproject-build rpm-macros-python3 python3-module-build
+BuildRequires: python3-module-nbxmpp >= 4.1.0
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildArch: noarch
 
 %description
@@ -47,10 +49,25 @@ it nicely.
 #patch1 -p1
 
 %build
-%python3_build
+%pyproject_build 
+#python3_build
+./pep517build/build_metadata.py -o dist/metadata
 
 %install
-%python3_install
+%pyproject_install
+#python3_install
+./pep517build/install_metadata.py dist/metadata --prefix=%{buildroot}%{_prefix}
+
+mkdir -p %{buildroot}%{_datadir}/
+mv %{buildroot}{%{python3_sitelibdir}/%{name}/data,%{_datadir}/%{name}}/
+ln -s %{_datadir}/%{name} %{buildroot}%{python3_sitelibdir}/%{name}/data
+
+# Move locales to the system path.
+mv %{buildroot}%{_datadir}/{%{name}/locale,locale}/
+ln -s %{_datadir}/locale %{buildroot}%{_datadir}/%{name}/locale
+# The plugins subdirectory must be owned by the package.
+mkdir %{buildroot}%{_datadir}/%{name}/plugins/
+
 
 %find_lang %name
 
@@ -65,7 +82,12 @@ it nicely.
 %_datadir/icons/hicolor/scalable/apps/%appid.svg
 %_datadir/icons/hicolor/scalable/apps/%appid-symbolic.svg
 %python3_sitelibdir/%name
-%python3_sitelibdir/%name-%{version}*.egg-info
+%python3_sitelibdir/%name-%{version}*.dist-info
+%_datadir/%name/sounds/*
+%_datadir/%name/style/*
+%_datadir/%name/icons/hicolor/*/*/*
+%_datadir/%name/other/*
+%_datadir/%name/gui/*
 
 #_desktopdir/%name.desktop
 #_desktopdir/%name-remote.desktop
@@ -74,6 +96,9 @@ it nicely.
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Sun Feb 05 2023 Ilya Mashkin <oddity@altlinux.ru> 1.7.0-alt1
+- 1.7.0
+
 * Mon Jan 16 2023 Ilya Mashkin <oddity@altlinux.ru> 1.6.1-alt1
 - 1.6.1
 
