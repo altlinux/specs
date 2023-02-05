@@ -1,6 +1,6 @@
 Name: orbuculum
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: Cortex-M code instrumentation for the masses
 License: BSD-3-Clause
@@ -17,7 +17,9 @@ from the Debug pins of a CORTEX-M CPU.
 
 %prep
 %setup
-sed -ri '/^CFLAGS=/ s,$,%optflags,' Makefile
+sed -ri '/TRANSFER_SIZE/ s,65536,4096,' Inc/nw.h
+sed -ri '/FN_SLEEPING_STR/ s,Sleeping,sleeping,' Inc/symbols.h
+sed -ri '/^CFLAGS.+VERSION/ s,^.+$,CFLAGS = %optflags,' Makefile
 
 %build
 make VERBOSE=1 VERSION=%version-%release
@@ -31,6 +33,9 @@ make VERBOSE=1 VERSION=%version-%release
 %_datadir/orbcode
 
 %changelog
+* Sun Feb 05 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.0-alt2
+- avoid bursty output by reducing transfer sizes
+
 * Fri Aug 19 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.0-alt1
 - 2.0.0 released
 
