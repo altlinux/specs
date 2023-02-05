@@ -4,8 +4,8 @@
 %def_disable check
 
 Name: %_name-qt5
-Version: 1.4.0
-Release: alt1.1
+Version: 1.5.1
+Release: alt1
 
 Summary: Qt XMPP library
 License: LGPL-2.1-or-later
@@ -131,6 +131,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_defaultdocdir/%_name/README.md
 
 %changelog
+* Sun Feb 05 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Tue May 11 2021 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1.1
 - rebuild with new cmake macros
 
