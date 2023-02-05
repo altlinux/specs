@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-only
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
+%set_verify_elf_method strict,lint=relaxed
 
 %global import_path github.com/ncw/rclone
 Name:     rclone
-Version:  1.53.4
+Version:  1.61.1
 Release:  alt1
-
 Summary:  rsync for cloud storage
 License:  MIT
 Group:    Networking/File transfer
@@ -15,35 +15,33 @@ Url:      https://rclone.org/
 
 Source:   %name-%version.tar
 
-BuildRequires(pre): rpm-build-golang
 BuildRequires(pre): banner
 BuildRequires: golang
 
 %description
-Rclone ("rsync for cloud storage") is a command line program to sync files and
-directories to and from different cloud storage providers.
+Rclone ("rsync for cloud storage") is a command-line program to sync
+files and directories to and from different cloud storage providers.
 
-Google Drive, Amazon Drive, S3, Dropbox, Backblaze B2, One Drive, Swift, Hubic,
-Cloudfiles, Google Cloud Storage, Yandex Files.
+Google Drive, S3, Dropbox, Backblaze B2, One Drive, Swift, Hubic, Wasabi,
+Google Cloud Storage, Yandex Files
 
 %prep
 %setup
 
 %build
-export BUILDDIR="$PWD/.build"
-export IMPORT_PATH="%import_path"
-export GOPATH="$BUILDDIR:%go_path"
-
-%golang_prepare
-
-cd .build/src/%import_path
-%golang_build .
+go build -v -buildmode=pie -ldflags=-X=github.com/rclone/rclone/fs.Version=%version
+./%name completion bash > %name.bash
+./%name completion fish > %name.fish
+./%name completion zsh  > %name.zsh
 
 %install
-export BUILDDIR="$PWD/.build"
-export IGNORE_SOURCES=1
+install -Dp %name -t %buildroot%_bindir
+install -Dpm644 %name.bash %buildroot%_datadir/bash-completion/completions/%name
+install -Dpm644 %name.fish %buildroot%_datadir/fish/vendor_completions.d/%name.fish
+install -Dpm644 %name.zsh  %buildroot%_datadir/zsh/site-functions/_%name
+install -Dpm644 %name.1 -t %buildroot%_man1dir
 
-%golang_install
+%define _customdocdir %_docdir/%name
 
 %check
 banner tests
@@ -73,10 +71,17 @@ rclone rc core/quit
 trap - EXIT
 
 %files
-%_bindir/*
 %doc *.md
+%_bindir/%name
+%_man1dir/%name.1*
+%_datadir/bash-completion/completions/%name
+%_datadir/fish/vendor_completions.d/%name.fish
+%_datadir/zsh/site-functions/_%name
 
 %changelog
+* Sun Feb 05 2023 Vitaly Chikunov <vt@altlinux.org> 1.61.1-alt1
+- Update to v1.61.1 (2022-12-23) (ALT#45130).
+
 * Thu Jan 21 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 1.53.4-alt1
 - New version 1.53.4 (Fixes: CVE-2020-28924).
 
