@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: xapian-core
-Version: 1.4.21
+Version: 1.4.22
 Release: alt1
 %define sover 30
 
@@ -151,6 +151,9 @@ time %make_build check
 #   I use watch file and it's more convenient to do that with srpms
 
 %changelog
+* Sun Feb 05 2023 Vitaly Chikunov <vt@altlinux.org> 1.4.22-alt1
+- Update to 1.4.22 (2023-02-02).
+
 * Sun Oct 23 2022 Vitaly Chikunov <vt@altlinux.org> 1.4.21-alt1
 - Update to 1.4.21 (2022-09-22).
 - spec: Update Summary, License, and %%description (it's not "Probabilistic"

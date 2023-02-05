@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: xapian-omega
-Version: 1.4.21
+Version: 1.4.22
 Release: alt1
 
 Summary: A CGI search frontend and indexers built on Xapian
@@ -66,10 +66,7 @@ rm -rf %buildroot%_docdir/%name/
 %_bindir/scriptindex
 %_bindir/htdig2omega
 %_bindir/mbox2omega
-%_libdir/%name/bin/outlookmsg2html
-%_libdir/%name/bin/mhtml2html
-%_libdir/%name/bin/rfc822tohtml
-%_libdir/%name/bin/vcard2text
+%_libdir/%name
 
 %dir %_datadir/omega
 %_datadir/omega/*.script
@@ -87,6 +84,9 @@ rm -rf %buildroot%_docdir/%name/
 %_man1dir/scriptindex.1*
 
 %changelog
+* Sun Feb 05 2023 Vitaly Chikunov <vt@altlinux.org> 1.4.22-alt1
+- Update to 1.4.22 (2023-02-02).
+
 * Sun Oct 23 2022 Vitaly Chikunov <vt@altlinux.org> 1.4.21-alt1
 - Update to 1.4.21 (2022-09-22).
 
