@@ -2,9 +2,10 @@
 %define _unpackaged_files_terminate_build 1
 
 %define _pkgdocdir %_docdir/%name-%version
+%define majver 39
 
 Name: ngspice
-Version: 38
+Version: %majver.3
 Release: alt1
 Summary: A mixed level/signal circuit simulator
 
@@ -13,7 +14,7 @@ Group: Engineering
 Url: http://ngspice.sourceforge.net
 
 Source: %name-%version.tar
-Source1: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/%version/ngspice-%version-manual.pdf
+Source1: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/%majver/ngspice-%majver-manual.pdf
 
 # Link libspice.so with -lBLT or -lBLIlite, depending on whether in tk mode or
 # not (bug 1047056, debian bug 737279)
@@ -180,6 +181,9 @@ cp -a \
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Feb 05 2023 Anton Midyukov <antohami@altlinux.org> 39.3-alt1
+- new version  39.3
+
 * Mon Oct 31 2022 Anton Midyukov <antohami@altlinux.org> 38-alt1
 - new version 38
 
