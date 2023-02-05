@@ -1,8 +1,8 @@
 %define uname xf86-video-vmware
 
 Name: xorg-drv-vmware
-Version: 13.3.0
-Release: alt3
+Version: 13.4.0
+Release: alt1
 Epoch: 1
 
 Summary: VMware SVGA Device video driver
@@ -44,6 +44,9 @@ BuildRequires: libXext-devel xorg-proto-devel libxatracker-devel libudev-devel
 %_man4dir/*
 
 %changelog
+* Sun Feb 05 2023 Anton Midyukov <antohami@altlinux.org> 1:13.4.0-alt1
+- 13.4.0
+
 * Mon Sep 12 2022 Anton Midyukov <antohami@altlinux.org> 1:13.3.0-alt3
 - new snapshot
 
