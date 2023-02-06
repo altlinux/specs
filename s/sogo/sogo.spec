@@ -4,7 +4,7 @@
 Summary: SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:    sogo
 Version: 5.8.0
-Release: alt1
+Release: alt2
 
 License: GPL-2.0+ and LGPL-2.1+
 URL:     https://sogo.nu/
@@ -29,6 +29,7 @@ Patch4: sogo-alt-fix-timeZoneWithAbbreviation.patch
 Patch5: sogo-alt-libzip-includes.patch
 Patch6: sogo-alt-libytnef-includes.patch
 
+Requires: gnustep-base >= 1.28.1
 Requires: stmpclean
 Requires: tzdata
 Conflicts: sogo2
@@ -439,6 +440,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Mon Feb 06 2023 Andrey Cherepanov <cas@altlinux.org> 5.8.0-alt2
+- Required gnustep-base (ALT #45055).
+
 * Thu Dec 01 2022 Andrey Cherepanov <cas@altlinux.org> 5.8.0-alt1
 - New version.
 
