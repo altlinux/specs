@@ -1,5 +1,5 @@
 %define module_name	xtables-addons
-%define module_version	3.22
+%define module_version	3.23
 %define module_release	alt1
 
 %define flavour		std-def
@@ -73,6 +73,9 @@ rm -f %buildroot/%module_dir/xt_TEE.ko
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Feb 06 2023 Anton Farygin <rider@altlinux.ru> 3.23-alt1
+- 3.22 -> 3.23
 
 * Wed Nov 09 2022 Anton Farygin <rider@altlinux.ru> 3.22-alt1
 - 3.21 -> 3.22
