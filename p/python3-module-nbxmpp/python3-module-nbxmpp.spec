@@ -1,6 +1,6 @@
 %global modname nbxmpp
 Name: python3-module-%modname
-Version: 4.1.0
+Version: 4.2.0
 Release: alt1
 Summary: Python library for non-blocking use of Jabber/XMPP
 License: GPLv3+
@@ -12,7 +12,10 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: https://dev.gajim.org/gajim/python-nbxmpp/-/archive/nbxmpp-%version/python-nbxmpp-%version.tar.bz2
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools pyproject-build rpm-macros-python3 python3-module-build
+BuildRequires: python3-devel pyproject-build rpm-macros-python3 python3-module-build
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
 
 # python-nbxmpp 4.0.0 has been ported to libsoup3
 Requires: libsoup3.0-gir
@@ -37,22 +40,22 @@ Features:
 
 %prep
 %setup -n python-%modname-%version
-# https://bugzilla.altlinux.org/show_bug.cgi?id=39907
-[ -e setup.py ] && rm -f ./setup.py
-echo 'import setuptools; setuptools.setup()' > setup.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.md ChangeLog
 %python3_sitelibdir/%modname
-%python3_sitelibdir/%modname-%version-*.egg-info
+%python3_sitelibdir/%modname-%version.dist-info
 
 %changelog
+* Mon Feb 06 2023 Ilya Mashkin <oddity@altlinux.ru> 4.2.0-alt1
+- 4.2.0
+
 * Sun Feb 05 2023 Ilya Mashkin <oddity@altlinux.ru> 4.1.0-alt1
 - 4.1.0
 
