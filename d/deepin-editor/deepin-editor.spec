@@ -1,7 +1,9 @@
+%define llvm_ver 15
+
 %def_disable clang
 
 Name: deepin-editor
-Version: 5.10.40
+Version: 6.0.0
 Release: alt1
 Summary: Simple editor for Linux Deepin
 License: GPL-3.0+
@@ -10,11 +12,20 @@ Url: https://github.com/linuxdeepin/deepin-editor
 
 Source: %url/archive/%version/%name-%version.tar.gz
 Patch: deepin-editor-5.10.21-alt-aarch64-armh.patch
+Patch1: 0001-feat-adapt-V23-DDE-DBus.patch
+Patch2: 0001-fix-UTF-16LE-210.patch
+Patch3: 0001-fix-crashes-when-reading-large-files.patch
+Patch4: 0001-chore-correct-some-typos-and-improve-log.patch
+Patch5: 0001-fix-version-error-in-about-dialog.patch
 
 %if_enabled clang
-BuildRequires(pre): clang-devel
+#BuildRequires(pre): rpm-macros-llvm-common
+BuildRequires: clang%llvm_ver.0-devel
+BuildRequires: lld%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver.0-devel
+BuildRequires: libstdc++%gcc_ver-devel
 %else
-BuildRequires(pre): gcc-c++
+BuildRequires: gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake
@@ -46,17 +57,15 @@ BuildRequires: libchardet-devel
 
 %prep
 %setup
-%patch -p1
+%autopatch -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
 %if_enabled clang
 %define optflags_lto -flto=thin
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export READELF="llvm-readelf"
+export CC=clang-%llvm_ver
+export CXX=clang++-%llvm_ver
+export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
 %endif
 %cmake \
     -GNinja \
@@ -65,13 +74,6 @@ export READELF="llvm-readelf"
     -DAPP_VERSION=%version \
     -DVERSION=%version \
     -DCMAKE_INSTALL_LIBDIR=%_libdir \
-%if_enabled clang
-    -DLLVM_PARALLEL_LINK_JOBS=1 \
-    -DLLVM_TARGETS_TO_BUILD="all" \
-    -DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD='AVR' \
-    -DLLVM_ENABLE_LIBCXX:BOOL=OFF \
-    -DLLVM_ENABLE_ZLIB:BOOL=ON \
-%endif
 #
 cmake --build "%_cmake__builddir" -j%__nprocs
 
@@ -92,6 +94,10 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_datadir/deepin-manual/manual-assets/application/%name/editor/
 
 %changelog
+* Mon Feb 06 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt1
+- New version (6.0.0).
+- Applied fixes from master branch.
+
 * Tue Nov 22 2022 Leontiy Volodin <lvol@altlinux.org> 5.10.40-alt1
 - New version (5.10.40).
 
