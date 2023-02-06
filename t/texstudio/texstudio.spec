@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install gcc-c++ libX11-devel libqt4-devel p
 %define _localstatedir %{_var}
 %define fontpkgname texstudio
 Name:           texstudio
-Version:        4.4.1
+Version:        4.5.1
 Release:        alt1
 
 Summary:        A feature-rich editor for LaTeX documents
@@ -22,17 +22,17 @@ Patch2:         texstudio-disable-update-check.patch
 # don't muck with default build flags
 Patch3:         texstudio-wtf_flags.patch
 
-BuildRequires:  qt5-base-devel
+BuildRequires:  qt5-base-devel qt5-qtbase-gui
 BuildRequires:  qt5-tools qt5-tools-devel
 BuildRequires:  qt5-tools-devel qt5-tools-devel-static
 BuildRequires:  qt5-svg-devel
-BuildRequires:  qt5-script-devel
+BuildRequires:  qt5-script-devel 
 BuildRequires:  hunspell-utils libhunspell-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext gettext-tools
 BuildRequires:  libpoppler-qt5-devel
 BuildRequires:  libqtsingleapplication-qt5-devel
-BuildRequires:  libqtermwidget-devel
+BuildRequires:  libqtermwidget-devel libterminalwidget5-devel qt5-multimedia-devel
 BuildRequires:  quazip-qt5-devel
 BuildRequires:  zlib-devel libpoppler-cpp-devel qt5-declarative-devel
 
@@ -134,6 +134,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications %{SOURCE1}
 %doc utilities/AUTHORS utilities/COPYING utilities/manual/CHANGELOG.txt
 
 %changelog
+* Mon Feb 06 2023 Ilya Mashkin <oddity@altlinux.ru> 4.5.1-alt1
+- 4.5.1
+
 * Tue Nov 29 2022 Ilya Mashkin <oddity@altlinux.ru> 4.4.1-alt1
 - 4.4.1
 
