@@ -8,7 +8,7 @@
 #    fields are added, removed or their types are changed.
 
 Name:    auditd-plugin-clickhouse
-Version: 20221102.1.1
+Version: 20230206.1.1
 Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
@@ -22,6 +22,7 @@ BuildRequires: boost-complete
 BuildRequires: libclickhouse-cpp-devel
 BuildRequires: libaudit-devel
 BuildRequires: /usr/bin/ctest libgtest-devel
+BuildRequires: bats /proc
 
 # audit 3.0 moved to new config location
 Requires: audit >= 3.0-alt1
@@ -33,6 +34,7 @@ Plugin for Auditd daemon for sending data into Clickhouse database
 %setup
 
 %build
+%add_optflags -Werror
 %cmake
 %cmake_build
 
@@ -43,8 +45,12 @@ mkdir -pv %buildroot%_localstatedir/auditd-plugin-clickhouse
 
 %check
 pushd %_cmake__builddir
-ctest
+ctest --output-on-failure
 popd
+
+# A pre-check for bats:
+[ -d /dev/fd ] || exit 1
+BUILD=%_cmake__builddir bats test-suite.bats
 
 %files
 %config(noreplace) %_datadir/%name/auditd-clickhouse-datatypes.json
@@ -55,6 +61,22 @@ popd
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Mon Feb 06 2023 Paul Wolneykien <manowar@altlinux.org> 20230206.1.1-alt1
+- Flush the records from auparse buffer when the half of WriteTimeout
+  is passed.
+- Fixed compilation warnings (actually, size/sign errors that lead
+  to misbehaving on some arches).
+
+* Fri Feb 03 2023 Paul Wolneykien <manowar@altlinux.org> 20230203.1.1-alt1
+- Fix: Do not wait for data or timeout if there's enough records
+  to insert.
+- Fix: Exit the writer thread only after all records have been
+  inserted.
+- Fix: Flush the auparse buffer and stop the writer thread on exit.
+- Added more tets using Bats and a test client with a DB stub.
+- New feature: Adjust block size on error and repeat.
+- Fix: Use "Wrote all saved data to DB" message for sync write only.
+
 * Wed Nov 02 2022 Paul Wolneykien <manowar@altlinux.org> 20221102.1.1-alt1
 - Improve: Use AUPARSE_ESC_SHELL for unambiguous string decoding.
 - Log the record line number on exception.
