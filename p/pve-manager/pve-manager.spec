@@ -6,7 +6,7 @@
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
 Version: %ver_major.15
-Release: alt2
+Release: alt3
 License: AGPL-3.0+ AND GPLv3 AND MIT
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -55,6 +55,9 @@ done
 install -m0644 %SOURCE6 %buildroot%_datadir/%name/images/basealt_logo.png
 install -m0644 %SOURCE8 %buildroot%_datadir/%name/images/favicon.ico
 install -m0644 %SOURCE9 %buildroot%_datadir/%name/images/logo-128.png
+
+# fix config backup job retention
+mkdir -p %buildroot%_localstatedir/%name/jobs
 
 mkdir -p %buildroot%_tmpfilesdir
 cat << __EOF__ > %buildroot%_tmpfilesdir/%name.conf
@@ -120,6 +123,9 @@ rm -f  %buildroot%_man1dir/pveupgrade.1*
 %_man8dir/*
 
 %changelog
+* Sat Feb 04 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.15-alt3
+- package /var/lib/pve-manage/jobs for fix config backup jobs
+
 * Thu Jan 12 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.15-alt2
 - fix show version
 
