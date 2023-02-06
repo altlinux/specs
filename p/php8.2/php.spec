@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  2
-%define _php_release_version 1
+%define _php_release_version 2
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -20,7 +20,7 @@
 Summary: The PHP scripting language
 Name:	 php%_php_suffix
 Version: %_php_major.%_php_minor.%_php_release_version
-Release: alt1.1
+Release: alt1
 
 License: PHP-3.01
 Group:	 Development/Other
@@ -469,6 +469,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Mon Feb 06 2023 Anton Farygin <rider@altlinux.ru> 8.2.2-alt1
+- 8.2.1 -> 8.2.2
+
 * Mon Jan 16 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 8.2.1-alt1.1
 - Fixed build for Elbrus
 
