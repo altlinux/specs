@@ -4,8 +4,8 @@
 %define libkpimitinerary libkpimitinerary%sover
 
 Name: kde5-%rname
-Version: 22.12.1
-Release: alt2
+Version: 22.12.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -89,6 +89,9 @@ Obsoletes: libkpimitinerary < %EVR
 %_K5lib/libKPimItinerary.so.*
 
 %changelog
+* Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Tue Jan 24 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt2
 - fix compile with old poppler
 

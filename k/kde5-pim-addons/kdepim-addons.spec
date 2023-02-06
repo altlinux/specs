@@ -19,7 +19,7 @@
 %define libakonadidatasetools libakonadidatasetools%sover
 
 Name: kde5-pim-addons
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init
 
@@ -323,6 +323,9 @@ Requires: %name-common
 
 
 %changelog
+* Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 
