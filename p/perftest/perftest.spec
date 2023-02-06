@@ -2,8 +2,8 @@
 
 Name: perftest
 Summary: IB Performance tests
-Version: 4.4.0.32
-Release: alt1.1
+Version: 4.5.0.20
+Release: alt1
 License: %gpl2only
 Group: Monitoring
 Url: https://github.com/linux-rdma/perftest
@@ -14,6 +14,7 @@ Patch2000: %name-e2k.patch
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: librdmacm-devel
 BuildRequires: libibumad-devel
+BuildRequires: libpci-devel
 
 %description
 gen2 uverbs microbenchmarks.
@@ -39,6 +40,9 @@ install -m 0755 raw_ethernet_{bw,lat} %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Mon Feb 06 2023 Anton Farygin <rider@altlinux.ru> 4.5.0.20-alt1
+- 4.4.0.32 -> 4.5.0.20
+
 * Sat Jan 28 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 4.4.0.32-alt1.1
 - Patch with get_cycles() for e2k
 
