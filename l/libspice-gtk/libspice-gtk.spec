@@ -9,11 +9,11 @@
 %def_enable webdav
 %def_enable lz4
 %def_enable gtk_doc
-%def_enable epoxy
 %def_enable libva
+%def_enable egl
 
 Name: libspice-gtk
-Version: 0.41
+Version: 0.42
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -32,7 +32,7 @@ Source4: spice-common-recorder.tar
 
 Requires: libspice-glib = %version-%release
 
-BuildRequires(pre): meson >= 0.53
+BuildRequires(pre): meson >= 0.56
 BuildRequires: gcc-c++ gtk-doc intltool
 BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
 BuildRequires: spice-protocol >= 0.14.3
@@ -50,7 +50,7 @@ BuildRequires: libpolkit-devel >= 0.101 libacl-devel libcap-ng-devel
 BuildRequires: libgtk+3-devel >= 3.22
 BuildRequires: wayland-protocols >= 1.17 wayland-devel libwayland-server-devel libwayland-cursor-devel libwayland-client-devel
 %{?_enable_libva:BuildRequires: libva-devel}
-%{?_enable_epoxy:BuildRequires: libepoxy-devel libdrm-devel}
+%{?_enable_egl:BuildRequires: libepoxy-devel}
 BuildRequires: gstreamer1.0-devel gst-plugins1.0-devel gstreamer1.0-utils gst-plugins-base1.0 gst-plugins-good1.0
 BuildRequires: gst-plugins-bad1.0 gst-libav
 BuildRequires: perl-Text-CSV perl-Text-CSV_XS python3-module-pyparsing python3-module-six
@@ -171,13 +171,14 @@ echo "%version" > .tarball-version
         %{?_enable_introspection:-Dintrospection=enabled} \
         %{?_enable_vala:-Dvapi=enabled} \
         %{?_enable_lz4:-Dlz4=enabled} \
+        %{?_enable_egl:-Degl=enabled} \
         %{?_with_sasl:-Dsasl=enabled} \
         %{?_enable_smartcard:-Dsmartcard=enabled -Dspice-common:smartcard=enabled} \
         %{?_disable_gtk_doc:-Dgtk_doc=disabled} \
         -Dgtk=enabled \
-	-Dwayland-protocols=enabled \
+        -Dwayland-protocols=enabled \
         -Dpolkit=enabled \
-	-Dlibcap-ng=enabled \
+        -Dlibcap-ng=enabled \
         -Dusb-acl-helper-dir=%_libexecdir/spice-gtk \
         -Dusb-ids-path=%_datadir/misc \
         -Dpie=true
@@ -236,6 +237,9 @@ echo "%version" > .tarball-version
 %endif
 
 %changelog
+* Fri Jan 27 2023 Alexey Shabalin <shaba@altlinux.org> 0.42-alt1
+- 0.42
+
 * Sun Aug 28 2022 Alexey Shabalin <shaba@altlinux.org> 0.41-alt1
 - 0.41
 
