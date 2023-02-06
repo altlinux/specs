@@ -1,6 +1,6 @@
 Name: libX11
-Version: 1.8.3
-Release: alt2
+Version: 1.8.4
+Release: alt1
 Epoch: 3
 Summary: X11 Library
 License: MIT/X11
@@ -85,6 +85,9 @@ rm -f %buildroot%_libdir/X11/locale/common/*.la
 %_datadir/X11/locale
 
 %changelog
+* Mon Feb 06 2023 Valery Inozemtsev <shrek@altlinux.ru> 3:1.8.4-alt1
+- 1.8.4
+
 * Thu Jan 12 2023 Valery Inozemtsev <shrek@altlinux.ru> 3:1.8.3-alt2
 - revert d6d6cba9
 
