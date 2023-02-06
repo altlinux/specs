@@ -119,7 +119,7 @@ mkdir -p %buildroot%_rpmlibdir
 cat > %buildroot%_rpmlibdir/91-php-%name.filetrigger << EOF
 #!/bin/sh
 LC_ALL=C sed 's|^%php_sysconfdir/%php_sapi/control.d||' |
-        egrep -qs '^%php_sysconfdir/%php_sapi|^%php_extdir' || exit 0
+        grep -Eqs '^%php_sysconfdir/%php_sapi|^%php_extdir' || exit 0
 /sbin/service php%_php_suffix-fpm condrestart||:
 EOF
 chmod 0755 %buildroot%_rpmlibdir/91-php-%name.filetrigger
