@@ -3,7 +3,7 @@
 Name: bash-completion
 Epoch: 1
 Version: 2.11
-Release: alt2.git.157.g59d2322e
+Release: alt3.git.157.g59d2322e
 
 Summary: bash-completion offers programmable completion for bash
 License: GPL2
@@ -44,16 +44,16 @@ of the programmable completion feature of bash 2.04 and later.
 %configure
 %make
 
-%check
-# Currently fails
-#= 20 failed, 1222 passed, 423 skipped, 16 xfailed, 4 xpassed in 941.69s (0:15:41) =
-make -C test check ||:
-
 %install
 %makeinstall_std
 mv %buildroot%_sysconfdir/{profile.d,bashrc.d}
 mkdir -p %buildroot%_sysconfdir/bash_completion.d %buildroot%_rpmlibdir
 install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
+
+%check
+# Currently fails
+#= 20 failed, 1222 passed, 423 skipped, 16 xfailed, 4 xpassed in 941.69s (0:15:41) =
+make -C test check ||:
 
 %files
 %doc AUTHORS CHANGES README.md doc/*.txt
@@ -64,6 +64,10 @@ install -p -m755 %SOURCE1 %buildroot%_rpmlibdir/
 %_datadir/pkgconfig/bash-completion.pc
 
 %changelog
+* Mon Feb 06 2023 Alexey Shabalin <shaba@altlinux.org> 1:2.11-alt3.git.157.g59d2322e
+- added use of bash-completion scripts extensions (liannnix@)
+- disable show error for root sh (ALT #36760)
+
 * Sat Jul 30 2022 Alexey Shabalin <shaba@altlinux.org> 1:2.11-alt2.git.157.g59d2322e
 - fix completion for apt-get autoremove
 
