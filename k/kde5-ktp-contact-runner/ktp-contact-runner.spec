@@ -1,7 +1,7 @@
 %define rname ktp-contact-runner
 
 Name: kde5-%rname
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init altplace
 
@@ -74,6 +74,9 @@ KF5 library
 #%_K5lib/libktp-contact-runner.so.*
 
 %changelog
+* Mon Feb 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 
