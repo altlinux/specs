@@ -10,8 +10,8 @@
 %define libdolphinvcs libdolphinvcs%sover
 
 Name: kde5-%rname
-Version: 22.12.1
-Release: alt2
+Version: 22.12.2
+Release: alt1
 %K5init
 
 Group: File tools
@@ -140,6 +140,9 @@ desktop-file-install --mode=0755 --dir %buildroot/%_K5xdgapp \
 %_K5lib/libdolphinvcs.so.%sover
 
 %changelog
+* Mon Feb 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt2
 - fix crash (closes: 44956)
 

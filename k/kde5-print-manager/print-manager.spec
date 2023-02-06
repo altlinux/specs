@@ -4,7 +4,7 @@
 %define libkcupslib libkcupslib%sover
 
 Name: kde5-%rname
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init altplace
 
@@ -103,6 +103,9 @@ rm -f "$tmp_file"
 %_K5lib/libkcupslib.so.*
 
 %changelog
+* Mon Feb 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 

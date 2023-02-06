@@ -8,7 +8,7 @@
 %def_enable exiv2
 
 Name: kde5-%rname
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init altplace
 
@@ -146,6 +146,9 @@ rm -rf %buildroot/%_K5doc/*/kioslave5/man
 %_K5lib/libkioarchive.so.%kioarchive_sover
 
 %changelog
+* Mon Feb 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 

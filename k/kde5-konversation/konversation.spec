@@ -2,7 +2,7 @@
 
 %define rname konversation
 Name: kde5-%rname
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %define beta %nil
 %K5init no_altplace
@@ -80,6 +80,9 @@ sed -i \
 %_K5dbus_srv/*.service
 
 %changelog
+* Mon Feb 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 

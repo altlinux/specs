@@ -6,7 +6,7 @@
 %def_disable libzip
 
 Name: kde5-%rname
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init altplace
 
@@ -107,6 +107,9 @@ sed -i '/^find_package.*LibZip/s|LibZip|LibZip_DISABLED|' CMakeLists.txt
 %_K5lib/libkerfuffle.so.*
 
 %changelog
+* Mon Feb 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 

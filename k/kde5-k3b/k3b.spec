@@ -22,7 +22,7 @@
 
 %define rname k3b
 Name: kde5-%rname
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init %{?_enable_obsolete_kde4:no_altplace}
 
@@ -165,8 +165,8 @@ fi
 %_K5plug/kf5/kio/videodvd.so
 %_K5data/konqsidebartng/virtual_folders/services/videodvd.desktop
 # permhelper
-#%_K5libexecdir/kauth/k3bhelper
 #%_K5dbus_sys_srv/org.kde.k3b.service
+#%_K5libexecdir/kauth/k3bhelper
 #%_K5dbus/system.d/org.kde.k3b.conf
 #%_datadir/polkit-1/actions/org.kde.k3b.policy
 
@@ -183,6 +183,9 @@ fi
 %_K5inc/k3b*.h
 
 %changelog
+* Mon Feb 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 

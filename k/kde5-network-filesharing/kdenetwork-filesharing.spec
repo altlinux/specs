@@ -2,7 +2,7 @@
 %define req_samba_pkgs samba,samba-common-tools,samba-client
 
 Name: kde5-network-filesharing
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init
 
@@ -70,6 +70,9 @@ rm -f po/ru/kfileshare.po.old
 %_datadir/polkit-1/actions/org.kde.filesharing.samba.policy
 
 %changelog
+* Mon Feb 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 

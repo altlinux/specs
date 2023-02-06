@@ -4,7 +4,7 @@
 %define libkrdccore libkrdccore%sover
 
 Name: kde5-%rname
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init no_appdata
 
@@ -26,7 +26,7 @@ BuildRequires: libvncserver-devel xfreerdp libssh-devel
 BuildRequires: kf5-kbookmarks-devel kf5-kcmutils-devel kf5-kcompletion-devel kf5-kdelibs4support kf5-kdnssd-devel
 BuildRequires: kf5-kdoctools-devel kf5-ki18n-devel kf5-kiconthemes-devel kf5-knotifications-devel kf5-knotifyconfig-devel
 BuildRequires: kf5-kservice-devel kf5-kwallet-devel kf5-kxmlgui-devel
-BuildRequires: kf5-kwindowsystem-devel
+BuildRequires: kf5-kwindowsystem-devel kf5-kactivities-devel
 
 %description
 Remote Desktop Client.
@@ -91,6 +91,9 @@ KF5 library
 %_K5lib/libkrdccore.so.*
 
 %changelog
+* Mon Feb 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 
