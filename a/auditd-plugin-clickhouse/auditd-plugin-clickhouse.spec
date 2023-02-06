@@ -8,7 +8,7 @@
 #    fields are added, removed or their types are changed.
 
 Name:    auditd-plugin-clickhouse
-Version: 20230206.1.1
+Version: 20230206.1.2
 Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
@@ -61,6 +61,9 @@ BUILD=%_cmake__builddir bats test-suite.bats
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Mon Feb 06 2023 Paul Wolneykien <manowar@altlinux.org> 20230206.1.2-alt1
+- Set WriteCountLimit=100000, WriteCountLimitMin=1000 by default.
+
 * Mon Feb 06 2023 Paul Wolneykien <manowar@altlinux.org> 20230206.1.1-alt1
 - Flush the records from auparse buffer when the half of WriteTimeout
   is passed.
