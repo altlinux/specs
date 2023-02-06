@@ -1,5 +1,5 @@
 Name: xsimd
-Version: 9.0.1
+Version: 10.0.0
 Release: alt1
 Summary: C++ wrappers for SIMD intrinsics
 Group: Development/C++
@@ -12,6 +12,7 @@ Patch1: %name-%version-%release.patch
 BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: libgtest-devel
+BuildRequires: doctest-devel
 
 %ifarch %arm
 # Only used for testing, as it's a header-only package.
@@ -63,5 +64,8 @@ Provides: %name-static = %version-%release
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Sat Feb 04 2023 Anton Farygin <rider@altlinux.ru> 10.0.0-alt1
+- 9.0.1 -> 10.0.0
+
 * Sat Dec 03 2022 Anton Farygin <rider@altlinux.ru> 9.0.1-alt1
 - first build for ALT, based on specfile from Fedora
