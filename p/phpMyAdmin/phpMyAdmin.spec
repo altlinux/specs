@@ -1,6 +1,6 @@
 Name: phpMyAdmin
 Version: 5.2.0
-Release: alt1
+Release: alt2
 
 Summary: phpMyAdmin - web-based MySQL administration
 
@@ -12,7 +12,6 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 #Source: http://prdownloads.sourceforge.net/phpmyadmin/%name-%version-all-languages.tar
 Source: https://files.phpmyadmin.net/phpMyAdmin/%version/phpMyAdmin-%version-all-languages.tar
-Source2: %name-README.ALT
 Source3: %name.htaccess
 Source6: %name.A.conf
 Source8: %name-apache2.control
@@ -26,7 +25,7 @@ Requires: pwgen webserver-common control
 Requires: apache2-base >= 2.4
 
 BuildRequires(pre): rpm-build-apache2 rpm-macros-webserver-common
-BuildRequires(pre): rpm-macros-features >= 0.3
+BuildRequires(pre): rpm-macros-features >= 0.8
 
 BuildRequires: apache2-base >= 2.4
 BuildRequires: control
@@ -258,7 +257,6 @@ rm -rf %buildroot%webserver_webappsdir/%name/doc/{_ext,doctrees,Makefile,make.ba
 rm -f %buildroot%webserver_webappsdir/%name/{.coveralls.yml,.editorconfig,.eslintignore,.eslintrc.json}
 
 cp -a %SOURCE3 %buildroot%webserver_webappsdir/%name/.htaccess
-cp %SOURCE2 .
 
 %__mkdir_p %buildroot%apache2_extra_available
 %__mkdir_p %buildroot%apache2_extra_enabled
@@ -272,8 +270,10 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #__subst 's|--dir--|%apache2_extra_available|g' %buildroot%_controldir/%name-apache2
 
 %post
-%__subst "s|\(blowfish_secret'\] = \)''|\1'$(pwgen -0s1 32)'|" %webserver_webappsdir/%name/config.inc.php
-
+if grep -q "blowfish_secret'\] = ''" %webserver_webappsdir/%name/config.inc.php ; then
+    echo "Generating new blowfish secret to %webserver_webappsdir/%name/config.inc.php"
+    %__subst "s|\(blowfish_secret'\] = \)''|\1'$(pwgen -0s1 32)'|" %webserver_webappsdir/%name/config.inc.php
+fi
 #pre apache2
 #pre_control %name-apache2
 
@@ -281,7 +281,7 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 #post_control -s restricted %name-apache2
 
 %files
-%doc phpMyAdmin-README.ALT README* ChangeLog
+%doc README* ChangeLog
 %dir %webserver_webappsdir/%name/
 %webserver_webappsdir/%name/*
 %webserver_webappsdir/%name/.rtlcssrc.json
@@ -319,6 +319,10 @@ ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name
 %endif
 
 %changelog
+* Thu Feb 02 2023 Vitaly Lipatov <lav@altlinux.ru> 5.2.0-alt2
+- remove obsoleted ALT README
+- BR: rpm-macros-features >= 0.8 (where if_feature php* introduced)
+
 * Sat Jan 28 2023 Vitaly Lipatov <lav@altlinux.ru> 5.2.0-alt1
 - new version 5.2.0 (with rpmrb script)
 - add support packing for php8.2
