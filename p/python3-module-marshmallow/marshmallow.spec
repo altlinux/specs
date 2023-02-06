@@ -1,5 +1,5 @@
 Name: python3-module-marshmallow
-Version: 3.17.0
+Version: 3.19.0
 Release: alt1
 
 Summary: Simplified object serialization
@@ -37,6 +37,9 @@ BuildRequires: python3(pytz)
 %python3_sitelibdir/marshmallow-%version.dist-info
 
 %changelog
+* Mon Feb 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.19.0-alt1
+- 3.19.0 released
+
 * Thu Jul 21 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.17.0-alt1
 - 3.17.0 released
 
