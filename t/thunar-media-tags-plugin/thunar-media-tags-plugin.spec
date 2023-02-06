@@ -1,26 +1,34 @@
 Name: thunar-media-tags-plugin
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
-Summary: Thunar media tag plugin
-License: GPL
+Summary: Thunar media tags plugin
+License: GPLv2+
 Group: Graphical desktop/XFce
-Url: https://goodies.xfce.org/projects/thunar-plugins/thunar-media-tags-plugin
+Url: https://docs.xfce.org/xfce/thunar/media-tags
 Packager: Xfce Team <xfce@packages.altlinux.org>
 
+Vcs: https://gitlab.xfce.org/thunar-plugins/thunar-media-tags-plugin.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildRequires: libthunar-devel libexo-gtk3-devel libxfce4util-devel
+BuildRequires: libthunar-devel libxfce4util-devel
 BuildRequires: libgtk+3-devel libtag-devel
-BuildRequires: perl-XML-Parser intltool
 
 %define _unpackaged_files_terminate_build 1
 
 %description
-The thunar-media-tags-plugin is a plugin for the Thunar File Manager,
-which adds ID3/OGG tag support to the bulk rename dialog.
+The Thunar Media Tags Plugin (thunar-media-tags-plugin) adds special features
+for media files to the Thunar File Manager.
+
+Currently, these are:
+
+* A bulk renamer option, which allows users to rename multiple audio files at
+  once, based on their tags (e.g. ID3 or OGG/Vorbis),
+* An audio tag editor which is reachable from the file properties page,
+* A special media file page for the file properties dialog, which displays
+  detailed information about quality, length, etc.
 
 %prep
 %setup
@@ -37,7 +45,7 @@ which adds ID3/OGG tag support to the bulk rename dialog.
 %find_lang %name
 
 %files -f %name.lang
-%doc README AUTHORS
+%doc README.md AUTHORS NEWS
 %exclude %_libdir/thunarx-*/*.la
 %_libdir/thunarx-*/*.so
 
@@ -45,6 +53,14 @@ which adds ID3/OGG tag support to the bulk rename dialog.
 %exclude %_datadir/locale/uz@Latn/LC_MESSAGES/thunar-media-tags-plugin.mo
 
 %changelog
+* Mon Feb 06 2023 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
+- Fixed Summary.
+- Updated Description.
+- Added Vcs tag.
+- Fixed License tag.
+- Updated Url tag.
+- Updated to 0.4.0.
+
 * Tue Aug 21 2018 Mikhail Efremov <sem@altlinux.org> 0.3.0-alt1
 - Don't package uz@Latn translation.
 - Update url.
