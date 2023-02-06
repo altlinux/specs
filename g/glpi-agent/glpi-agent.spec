@@ -1,6 +1,6 @@
 Name:    glpi-agent
 Version: 1.4
-Release: alt1
+Release: alt2
 
 Summary: GLPI Agent
 License: GPL-2.0
@@ -16,6 +16,7 @@ BuildArch: noarch
 %add_perl_lib_path %buildroot%_datadir/%name/lib
 %set_findreq_skiplist %_bindir/%name
 %filter_from_provides /perl(setup.pm)/d
+%filter_from_requires /perl(setup.pm)/d
 
 BuildRequires: perl-Cpanel-JSON-XS
 BuildRequires: perl-Data-UUID
@@ -132,5 +133,8 @@ find %buildroot -name .packlist -delete
 %dir %_localstatedir/%name
 
 %changelog
+* Mon Feb 06 2023 Andrey Cherepanov <cas@altlinux.org> 1.4-alt2
+- Removed autorequirements of perl(setup.pm).
+
 * Thu Jan 19 2023 Andrey Cherepanov <cas@altlinux.org> 1.4-alt1
 - Initial build for Sisyphus.
