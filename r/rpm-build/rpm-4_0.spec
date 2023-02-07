@@ -1,7 +1,7 @@
 %define oname rpm
 
 Name: rpm-build
-Version: 4.0.4.185
+Version: 4.0.4.186
 Release: alt1
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
@@ -384,6 +384,9 @@ mv -T %buildroot%_rpmlibdir/{,build}macros
 %files checkinstall
 
 %changelog
+* Wed Jan 25 2023 Alexey Shabalin <shaba@altlinux.org> 4.0.4.186-alt1
+- systemd-services.req.in: fixed autoreq for systemd units.
+
 * Tue Oct 11 2022 Vitaly Chikunov <vt@altlinux.org> 4.0.4.185-alt1
 - Backport packaging '%pretrans' Lua scriptlets (ALT#36628).
 
