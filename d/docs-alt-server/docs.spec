@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt11
+Release: alt12
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Tue Feb 07 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt12
+- update FreeIPA
+
 * Sat Jan 21 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt11
 - update OpenUDS, PBS, group policy
 
