@@ -2,7 +2,7 @@
 %def_disable check
 
 Name: fluent-bit
-Version: 2.0.8
+Version: 2.0.9
 Release: alt1
 Summary: Fast data collector for Linux
 License: Apache-2.0 and BSD-2-Clause and BSD-3-Clause and MIT
@@ -36,6 +36,7 @@ BuildRequires: libsasl2-devel
 BuildRequires: libyaml-devel
 BuildRequires: libsystemd-devel
 BuildRequires: libcares-devel
+BuildRequires: libedit-devel
 # temporarily in-source (by upstream)
 # BuildRequires: libsqlite3-devel
 
@@ -68,6 +69,7 @@ sed -i '/include(ExternalProject)/i include(CheckIncludeFiles)' \
 %build
 %cmake \
     -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DPACKAGE_VERSION=%version \
     -DFLB_EXAMPLES=Off \
     -DFLB_OUT_SLACK=Off \
     -DFLB_IN_SYSTEMD=On \
@@ -114,6 +116,9 @@ ctest
 %_unitdir/%name.service
 
 %changelog
+* Tue Feb 07 2023 Leontiy Volodin <lvol@altlinux.org> 2.0.9-alt1
+- New version.
+
 * Mon Dec 26 2022 Leontiy Volodin <lvol@altlinux.org> 2.0.8-alt1
 - New version.
 - Enabled in_kafka module.
