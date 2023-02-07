@@ -1,5 +1,5 @@
 %define _name elementaryicons
-%define ver_major 7.1
+%define ver_major 7.2
 %define rdn_name io.elementary.icons
 %def_disable palettes
 
@@ -7,7 +7,7 @@ Name: elementary-icon-theme
 Version: %ver_major.0
 Release: alt1
 
-Summary: simple and appealing Tango-styled icon theme
+Summary: Named, vector icons for elementary OS
 Group: Graphical desktop/Other
 License: GPL-3.0
 Url: https://github.com/elementary/icons
@@ -25,10 +25,8 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson inkscape xcursorgen /usr/bin/rsvg-convert
 
 %description
-The official elementary icons are designed to be simple and appealing.
-
-These icons are the inspiration behind Ubuntu's default Humanity icon
-theme.
+An original set of vector icons designed specifically for elementary OS
+and its desktop environment: Pantheon.
 
 %prep
 %setup -n icons-%version
@@ -52,6 +50,9 @@ theme.
 %doc README*
 
 %changelog
+* Tue Feb 07 2023 Yuri N. Sedunov <aris@altlinux.org> 7.2.0-alt1
+- 7.2.0
+
 * Tue Oct 11 2022 Yuri N. Sedunov <aris@altlinux.org> 7.1.0-alt1
 - 7.1.0
 
