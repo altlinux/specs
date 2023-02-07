@@ -1,9 +1,9 @@
 Name: mathopd
-Version: 1.5p6
-Release: alt1.qa1
+Version: 1.6b15
+Release: alt1
 
 Summary: Fast, lightweight, non-forking HTTP server for UN*X systems.
-License: GPL
+License: BSD-3-Clause
 Group: System/Servers
 
 Url: http://www.%name.org/
@@ -19,18 +19,19 @@ Source7: %name.cron
 Source9: TODO
 Source10: %name.sysconfig
 
-Patch: %name-1.5p5-alt-pidfile.patch
+Patch0: %name-1.5p5-alt-pidfile.patch
 Patch1: %name-alt-dircgi.patch
-Patch2: %name.getline.patch
+Patch2: %name-alt-largefile.patch
+Patch3: %name-alt-make.patch
 
-#equires: logrotate
 Requires: crontabs, gzip, findutils
+Provides: webserver
 
 %define mylogdir	%_logdir/%name
 %define logrotate_dir	%_sysconfdir/logrotate.d
 %define crondaily_dir   %_sysconfdir/cron.daily
 
-Summary(ru_RU.KOI8-R): ëÏÍÐÁËÔÎÙÊ ÂÙÓÔÒÙÊ HTTP-ÓÅÒ×ÅÒ ÄÌÑ àÎÉËÓ-ÓÉÓÔÅÍ
+Summary(ru_RU.UTF-8): ÐšÐ¾Ð¼Ð¿Ð°ÐºÑ‚Ð½Ñ‹Ð¹ Ð±Ñ‹ÑÑ‚Ñ€Ñ‹Ð¹ HTTP-ÑÐµÑ€Ð²ÐµÑ€ Ð´Ð»Ñ Ð®Ð½Ð¸ÐºÑ-ÑÐ¸ÑÑ‚ÐµÐ¼
 
 %description
 Mathopd is a very small, yet very fast HTTP server for UN*X systems.
@@ -46,47 +47,50 @@ this is something that other HTTP servers were not very good at.
 For preventing conflicts with another HTTP-services Mathopd in ALTLinux
 listens on port 8000 instead of standard port 80.
 
-%description -l ru_RU.KOI8-R
-Mathopd - ÜÔÏ ÏÞÅÎØ ËÏÍÐÁËÔÎÙÊ É ÂÙÓÔÒÙÊ ÓÅÒ×ÅÒ HTTP ÄÌÑ àÎÉËÓ-ÓÉÓÔÅÍ.
+%description -l ru_RU.UTF-8
+Mathopd - ÑÑ‚Ð¾ Ð¾Ñ‡ÐµÐ½ÑŒ ÐºÐ¾Ð¼Ð¿Ð°ÐºÑ‚Ð½Ñ‹Ð¹ Ð¸ Ð±Ñ‹ÑÑ‚Ñ€Ñ‹Ð¹ ÑÐµÑ€Ð²ÐµÑ€ HTTP Ð´Ð»Ñ Ð®Ð½Ð¸ÐºÑ-ÑÐ¸ÑÑ‚ÐµÐ¼.
 
-Mathopd ÐÏÄÄÅÒÖÉ×ÁÅÔ ÍÎÏÇÉÅ ×ÏÚÍÏÖÎÏÓÔÉ ÐÒÏÔÏËÏÌÁ HTTP/1.1,
-ÔÁËÉÅ ËÁË ÐÏÓÔÏÑÎÎÙÅ (persistent) ÓÏÅÄÉÎÅÎÉÑ ÄÌÑ ÓÅÒÉÊ ÚÁÐÒÏÓÏ×, ËÏÎ×ÅÊÅÒ
-(ÐÒÉ£Í ÎÏ×ÙÈ ÚÁÐÒÏÓÏ× ÞÅÒÅÚ ÐÏÓÔÏÑÎÎÏÅ ÓÏÅÄÉÎÅÎÉÅ ÄÏ ÔÏÇÏ, ËÁË ÂÕÄÕÔ ÇÏÔÏ×Ù
-ÏÔ×ÅÔÙ ÎÁ ÐÒÅÄÙÄÕÝÉÅ), ÏÔÐÒÁ×ËÁ ÄÁÎÎÙÈ ÐÏ ÞÁÓÔÑÍ (partial responses)
-É, ÎÁÞÉÎÁÑ Ó ×ÅÒÓÉÉ 1.5 - ÚÁÐÕÓË ×ÎÅÛÎÉÈ ÐÒÉÌÏÖÅÎÉÊ ÐÏ ÐÒÏÔÏËÏÌÕ CGI/1.1.
+Mathopd Ð¿Ð¾Ð´Ð´ÐµÑ€Ð¶Ð¸Ð²Ð°ÐµÑ‚ Ð¼Ð½Ð¾Ð³Ð¸Ðµ Ð²Ð¾Ð·Ð¼Ð¾Ð¶Ð½Ð¾ÑÑ‚Ð¸ Ð¿Ñ€Ð¾Ñ‚Ð¾ÐºÐ¾Ð»Ð° HTTP/1.1,
+Ñ‚Ð°ÐºÐ¸Ðµ ÐºÐ°Ðº Ð¿Ð¾ÑÑ‚Ð¾ÑÐ½Ð½Ñ‹Ðµ (persistent) ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ Ð´Ð»Ñ ÑÐµÑ€Ð¸Ð¹ Ð·Ð°Ð¿Ñ€Ð¾ÑÐ¾Ð², ÐºÐ¾Ð½Ð²ÐµÐ¹ÐµÑ€
+(Ð¿Ñ€Ð¸Ñ‘Ð¼ Ð½Ð¾Ð²Ñ‹Ñ… Ð·Ð°Ð¿Ñ€Ð¾ÑÐ¾Ð² Ñ‡ÐµÑ€ÐµÐ· Ð¿Ð¾ÑÑ‚Ð¾ÑÐ½Ð½Ð¾Ðµ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ Ð´Ð¾ Ñ‚Ð¾Ð³Ð¾, ÐºÐ°Ðº Ð±ÑƒÐ´ÑƒÑ‚ Ð³Ð¾Ñ‚Ð¾Ð²Ñ‹
+Ð¾Ñ‚Ð²ÐµÑ‚Ñ‹ Ð½Ð° Ð¿Ñ€ÐµÐ´Ñ‹Ð´ÑƒÑ‰Ð¸Ðµ), Ð¾Ñ‚Ð¿Ñ€Ð°Ð²ÐºÐ° Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ð¾ Ñ‡Ð°ÑÑ‚ÑÐ¼ (partial responses)
+Ð¸, Ð½Ð°Ñ‡Ð¸Ð½Ð°Ñ Ñ Ð²ÐµÑ€ÑÐ¸Ð¸ 1.5 - Ð·Ð°Ð¿ÑƒÑÐº Ð²Ð½ÐµÑˆÐ½Ð¸Ñ… Ð¿Ñ€Ð¸Ð»Ð¾Ð¶ÐµÐ½Ð¸Ð¹ Ð¿Ð¾ Ð¿Ñ€Ð¾Ñ‚Ð¾ÐºÐ¾Ð»Ñƒ CGI/1.1.
 
-Mathopd ×ÙÐÏÌÎÑÅÔÓÑ ËÁË ÏÄÉÎ-ÅÄÉÎÓÔ×ÅÎÎÙÊ ÐÒÏÃÅÓÓ É ÎÉËÏÇÄÁ ÎÅ ÚÁÐÒÁÛÉ×ÁÅÔ
-ÄÌÑ ÒÁÂÏÔÙ ÄÏÐÏÌÎÉÔÅÌØÎÏÊ ÐÁÍÑÔÉ. éÓÐÏÌØÚÕÊÔÅ ÅÇÏ ÄÌÑ ÐÒÏÓÔÙÈ ÚÁÄÁÞ
-(ÓÔÁÔÉÞÅÓËÉÅ ÓÔÒÁÎÉÃÙ Ó ÄÏËÕÍÅÎÔÁÃÉÅÊ, ÆÁÊÌÏÐÏÍÏÊËÁ Ó ÄÏÓÔÕÐÏÍ ÐÏ HTTP É Ô.Ä.),
-ÄÌÑ ËÏÔÏÒÙÈ ÆÕÎËÃÉÏÎÁÌØÎÏÓÔØ ÷ÅÂ-ÓÅÒ×ÅÒÁ Apache ÉÚÂÙÔÏÞÎÁ.
+Mathopd Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÑÐµÑ‚ÑÑ ÐºÐ°Ðº Ð¾Ð´Ð¸Ð½-ÐµÐ´Ð¸Ð½ÑÑ‚Ð²ÐµÐ½Ð½Ñ‹Ð¹ Ð¿Ñ€Ð¾Ñ†ÐµÑÑ Ð¸ Ð½Ð¸ÐºÐ¾Ð³Ð´Ð° Ð½Ðµ Ð·Ð°Ð¿Ñ€Ð°ÑˆÐ¸Ð²Ð°ÐµÑ‚
+Ð´Ð»Ñ Ñ€Ð°Ð±Ð¾Ñ‚Ñ‹ Ð´Ð¾Ð¿Ð¾Ð»Ð½Ð¸Ñ‚ÐµÐ»ÑŒÐ½Ð¾Ð¹ Ð¿Ð°Ð¼ÑÑ‚Ð¸. Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÐ¹Ñ‚Ðµ ÐµÐ³Ð¾ Ð´Ð»Ñ Ð¿Ñ€Ð¾ÑÑ‚Ñ‹Ñ… Ð·Ð°Ð´Ð°Ñ‡
+(ÑÑ‚Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸Ðµ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñ‹ Ñ Ð´Ð¾ÐºÑƒÐ¼ÐµÐ½Ñ‚Ð°Ñ†Ð¸ÐµÐ¹, Ñ„Ð°Ð¹Ð»Ð¾Ð¿Ð¾Ð¼Ð¾Ð¹ÐºÐ° Ñ Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð¾Ð¼ Ð¿Ð¾ HTTP Ð¸ Ñ‚.Ð´.),
+Ð´Ð»Ñ ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ñ… Ñ„ÑƒÐ½ÐºÑ†Ð¸Ð¾Ð½Ð°Ð»ÑŒÐ½Ð¾ÑÑ‚ÑŒ Ð’ÐµÐ±-ÑÐµÑ€Ð²ÐµÑ€Ð° Apache Ð¸Ð·Ð±Ñ‹Ñ‚Ð¾Ñ‡Ð½Ð°.
 
-þÔÏÂÙ ÎÅ ËÏÎÆÌÉËÔÏ×ÁÔØ Ó ÄÒÕÇÉÍÉ HTTP-ÓÅÒ×ÅÒÁÍÉ, ÐÏ ÕÍÏÌÞÁÎÉÀ Mathopd
-× ALTLinux ÏÖÉÄÁÅÔ ÐÏÄËÌÀÞÅÎÉÊ ÞÅÒÅÚ ÐÏÒÔ 8000 ×ÍÅÓÔÏ ÓÔÁÎÄÁÒÔÎÏÇÏ 80.
+Ð§Ñ‚Ð¾Ð±Ñ‹ Ð½Ðµ ÐºÐ¾Ð½Ñ„Ð»Ð¸ÐºÑ‚Ð¾Ð²Ð°Ñ‚ÑŒ Ñ Ð´Ñ€ÑƒÐ³Ð¸Ð¼Ð¸ HTTP-ÑÐµÑ€Ð²ÐµÑ€Ð°Ð¼Ð¸, Ð¿Ð¾ ÑƒÐ¼Ð¾Ð»Ñ‡Ð°Ð½Ð¸ÑŽ Mathopd
+Ð² ALTLinux Ð¾Ð¶Ð¸Ð´Ð°ÐµÑ‚ Ð¿Ð¾Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð¸Ð¹ Ñ‡ÐµÑ€ÐµÐ· Ð¿Ð¾Ñ€Ñ‚ 8000 Ð²Ð¼ÐµÑÑ‚Ð¾ ÑÑ‚Ð°Ð½Ð´Ð°Ñ€Ñ‚Ð½Ð¾Ð³Ð¾ 80.
 
 %prep
 %setup -q
 %patch0 -p1
-%__cp -a %SOURCE6 ./dir_cgi.c
-%patch1
+cp -a %SOURCE6 ./dir_cgi.c
+%patch1 -p1
+%ifarch %ix86
 %patch2 -p2
+%endif
+%patch3 -p2
 
 %build
-%__cc -O3 -DFORMAT_V2=1 -o dir_cgi dir_cgi.c
+gcc %optflags -DFORMAT_V2=1 -o dir_cgi dir_cgi.c
 cd src
-%make_build
+%make_build CFLAGS="%optflags"
 
 %install
-%__mkdir -p %buildroot{%_bindir,%_sbindir,%_initdir,%_man5dir,%_man8dir,%mylogdir,%logrotate_dir,%crondaily_dir}
+mkdir -p %buildroot{%_bindir,%_sbindir,%_initdir,%_man5dir,%_man8dir,%mylogdir,%logrotate_dir,%crondaily_dir}
 
 %makeinstall -C src SBINDIR=%buildroot%_sbindir PREFIX=%buildroot install
-%__cp -a   %SOURCE1 %buildroot%_man8dir/
-%__cp -a   %SOURCE2 %buildroot%_man5dir/
-%__install %SOURCE3 %buildroot%_initdir/%name
-%__cp -a   %SOURCE4 %buildroot%_sysconfdir/
-%__cp -a   %SOURCE5 %buildroot%logrotate_dir/%name
-%__install -p  %SOURCE7  %buildroot%crondaily_dir/%name
-%__install -pD -m600 %SOURCE10 %buildroot%_sysconfdir/sysconfig/%name
-%__install -p  dir_cgi   %buildroot%_bindir/
+cp -a %SOURCE1 %buildroot%_man8dir/
+cp -a %SOURCE2 %buildroot%_man5dir/
+install %SOURCE3 %buildroot%_initdir/%name
+cp -a %SOURCE4 %buildroot%_sysconfdir/
+cp -a %SOURCE5 %buildroot%logrotate_dir/%name
+install -p %SOURCE7  %buildroot%crondaily_dir/%name
+install -pD -m600 %SOURCE10 %buildroot%_sysconfdir/sysconfig/%name
+install -p dir_cgi %buildroot%_bindir/
 /bin/touch %buildroot%mylogdir/{errorlog,childlog}
 
 %files
@@ -115,13 +119,25 @@ id -un %name >/dev/null 2>&1 || /usr/sbin/useradd -s /dev/null -d %mylogdir -r %
 echo "NOTE: %name account still exist, remove it manually if you need"
 
 %changelog
-* Mon Apr 15 2013 Dmitry V. Levin (QA) <qa_ldv@altlinux.org> 1.5p6-alt1.qa1
-- NMU: rebuilt for debuginfo.
+* Tue Feb 07 2023 L.A. Kostis <lakostis@altlinux.ru> 1.6b15-alt1
+- Version 1.6p15.
+- Fix License.
+- Fix cgidir patch.
+- Update .conf for 1.6 syntax.
 
-* Wed Jul 01 2009 Denis Smirnov <mithraen@altlinux.ru> 1.5p6-alt1
-- update to 1.5p6
-- Mathopd can now (optionally) allow //, /./ and /../ in URL paths. Thanks for
-  Peter Pentchev for suggesting this and providing initial patches.
+* Sun Feb 21 2016 L.A. Kostis <lakostis@altlinux.ru> 1.5p8-alt1
+- Version 1.5p8.
+- Security fixes:
+  + CVE-2012-1050: Directory traversal vulnerability.
+
+* Tue Sep 13 2011 L.A. Kostis <lakostis@altlinux.ru> 1.5p6-alt2
+- fix getline issue.
+
+* Sun Jan 13 2008 L.A. Kostis <lakostis@altlinux.ru> 1.5p6-alt1
+- NMU.
+- 1.5p6.
+- enable all whistles: largefile, sendfile, -lcrypt.
+- add webserver to Provides (#13989).
 
 * Tue Oct 31 2006 Ilya Evseev <evseev@altlinux.ru> 1.5p5-alt3
 - improvements for dir_cgi: display dates and sizes
