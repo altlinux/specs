@@ -1,7 +1,7 @@
 %def_with libidn2
 
 Name: dnsmasq
-Version: 2.88
+Version: 2.89
 
 Release: alt1
 Summary: A lightweight caching nameserver
@@ -142,6 +142,9 @@ useradd -r -g _dnsmasq -d /dev/null -s /dev/null -N _dnsmasq >/dev/null 2>&1 ||:
 %_man1dir/dhcp_*
 
 %changelog
+* Tue Feb 07 2023 Mikhail Efremov <sem@altlinux.org> 2.89-alt1
+- Updated to 2.89.
+
 * Mon Dec 05 2022 Mikhail Efremov <sem@altlinux.org> 2.88-alt1
 - Updated to 2.88.
 
