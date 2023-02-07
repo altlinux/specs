@@ -1,9 +1,9 @@
-%define  modulename weasyprint
+%define modulename weasyprint
 
-%def_disable check
+%def_with check
 
 Name:    python3-module-%modulename
-Version: 47
+Version: 57.2
 Release: alt1
 
 Summary: WeasyPrint converts web documents to PDF
@@ -11,40 +11,48 @@ License: BSD-3-Clause
 Group:   Development/Python3
 URL:     https://github.com/Kozea/WeasyPrint
 
-Packager: Mikhail Gordeev <obirvalger@altlinux.org>
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3-module-pytest-runner
-%if_enabled check
-BuildRequires: python3-module-pytest-runner python3-module-pyphen python3-module-tinycss2
+BuildRequires: python3-module-flit
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-Pillow
+BuildRequires: python3-module-cssselect2
+BuildRequires: libpango
+BuildRequires: python3-module-pyphen
+BuildRequires: python3-module-fonttools
+BuildRequires: python3-module-pydyf
+BuildRequires: fonts-ttf-dejavu
+BuildRequires: ghostscript
 %endif
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source:  %name-%version.tar
 
 %description
 %summary.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-python3 setup.py test
+%pyproject_run_pytest -vra
 
 %files
 %python3_sitelibdir/%modulename
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo %modulename}
 %_bindir/%modulename
-%doc *.rst
+%doc README.rst LICENSE
 
 %changelog
+* Tue Feb 07 2023 Anton Vyatkin <toni@altlinux.org> 57.2-alt1
+- new version 57.2
+
 * Sat Jun 29 2019 Mikhail Gordeev <obirvalger@altlinux.org> 47-alt1
 - Initial build for Sisyphus
