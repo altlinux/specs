@@ -1,5 +1,5 @@
 Name: fotoxx
-Version: 22.50
+Version: 23.1
 Release: alt1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
@@ -15,21 +15,16 @@ Source3: fotoxx32.png
 
 Requires: %name-data = %version-%release
 
-# fotoxx uses exiv2 executable to read EXIF data:
-Requires: exiv2
 # fotoxx uses xdg-open executable to launch HTML docs viewer:
 Requires: xdg-utils
-
+Requires: dcraw /usr/bin/exiftool
 Requires: libwebp-tools openjpeg-tools2.0
-
-# needed to write images to CD/DVD
-Requires: brasero
 
 Provides: fotox
 Obsoletes: fotox
 
 BuildRequires: gcc-c++ libgtk+3-devel libtiff-devel libjpeg-devel
-BuildRequires: liblcms2-devel libraw-devel perl-Image-ExifTool xdg-utils
+BuildRequires: liblcms2-devel perl-Image-ExifTool xdg-utils
 BuildRequires: libchamplain-gtk3-devel libclutter-gtk3-devel libappstream-glib-devel
 
 %description
@@ -77,11 +72,14 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %_datadir/%name/
 %_man1dir/*
 %_datadir/metainfo/kornelix.fotoxx.metainfo.xml
-%doc doc/README* doc/changelog doc/copyright
+%doc doc/Changelog doc/Copyright
 
 %exclude %_datadir/doc/%name
 
 %changelog
+* Tue Feb 07 2023 Yuri N. Sedunov <aris@altlinux.org> 23.1-alt1
+- 23.1
+
 * Sun Nov 27 2022 Yuri N. Sedunov <aris@altlinux.org> 22.50-alt1
 - 22.50
 
