@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 109.0
+Version: 109.0.1
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -23,7 +23,7 @@ Patch009: 0009-bmo-1559213-Support-system-av1.patch
 Patch010: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch011: 0011-ALT-fix-double_t-redefinition.patch
 Patch012: 0012-build-Disable-Werror.patch
-Patch013: 0013-glxtest-delay-terminating-the-EGLDisplay.patch
+Patch013: 0013-WAYLAND-call-wl_display_roundtrip-early.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -419,6 +419,9 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Feb 01 2023 Alexey Gladkov <legion@altlinux.ru> 109.0.1-alt1
+- New release (109.0.1).
+
 * Wed Jan 18 2023 Alexey Gladkov <legion@altlinux.ru> 109.0-alt1
 - New release (109.0).
 - Security fixes:
