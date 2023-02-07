@@ -1,5 +1,5 @@
 Name: neovim
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: heavily refactored vim fork
@@ -77,6 +77,9 @@ install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
 %doc LICENSE.txt
 %_bindir/nvim
 %_man1dir/nvim*
+%exclude %_datadir/locale/cs.cp1250
+%exclude %_datadir/locale/ja.euc-jp
+%exclude %_datadir/locale/sk.cp1250
 
 %_desktopdir/nvim.desktop
 %_pixmapsdir/nvim.png
@@ -89,6 +92,9 @@ install -pm0644 %SOURCE2 %buildroot%_datadir/nvim
 %_datadir/nvim/sysinit.vim
 
 %changelog
+* Mon Feb 6 2023 Vladimir Didenko <cow@altlinux.org> 0.8.3-alt1
+- New version
+
 * Mon Jan 9 2023 Vladimir Didenko <cow@altlinux.org> 0.8.2-alt1
 - New version
 
