@@ -25,8 +25,8 @@
 %def_enable systemd
 
 Name: xorg-server
-Version: 21.1.6
-Release: alt2
+Version: 21.1.7
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -266,6 +266,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Tue Feb 07 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.7-alt1
+- 21.1.7
+
 * Fri Jan 20 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:21.1.6-alt2
 - glamor: Don't initialize on softpipe (closes: #44985)
 
