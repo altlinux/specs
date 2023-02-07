@@ -2,7 +2,7 @@
 %def_with check
 
 Name: kitty
-Version: 0.26.5
+Version: 0.27.0
 Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
@@ -21,6 +21,9 @@ Patch1: alt-sphinx-use-classic-theme.patch
 # 0.25.0: shebang.req failed
 %add_findreq_skiplist %_libexecdir/%name/shell-integration/ssh/askpass.py
 
+# 0.27.0: unmet /usr/pkg/bin/tic
+%add_findreq_skiplist %_libexecdir/%name/shell-integration/ssh/bootstrap-utils.sh
+
 # play sound
 Requires: libcanberra
 # panel kitten
@@ -29,6 +32,7 @@ Requires: libstartup-notification
 Requires: ImageMagick-tools
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-golang
 
 BuildRequires: libXi-devel
 BuildRequires: libXrandr-devel
@@ -166,7 +170,8 @@ rm kitty_tests/crypto.py
 python3 setup.py test --prefix=%buildroot%_prefix
 
 %files
-%_bindir/%name
+%_bindir/kitty
+%_bindir/kitten
 %_datadir/doc/%name/
 %_libexecdir/%name/
 %exclude %_libexecdir/%name/shell-integration
@@ -186,6 +191,9 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_libexecdir/%name/shell-integration
 
 %changelog
+* Tue Jan 31 2023 Egor Ignatov <egori@altlinux.org> 0.27.0-alt1
+- new version 0.27.0
+
 * Mon Nov 07 2022 Egor Ignatov <egori@altlinux.org> 0.26.5-alt1
 - new version 0.26.5
 
