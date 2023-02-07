@@ -2,8 +2,8 @@
 %define _deffontdir catalogue:%_sysconfdir/X11/fontpath.d
 
 Name: xorg-xwayland
-Version: 22.1.7
-Release: alt2
+Version: 22.1.8
+Release: alt1
 Epoch: 2
 License: MIT
 Summary: Wayland X server
@@ -59,6 +59,9 @@ necessary for developing Wayland compositors using Xwayland
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Feb 07 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:22.1.8-alt1
+- 22.1.8
+
 * Fri Jan 20 2023 Valery Inozemtsev <shrek@altlinux.ru> 2:22.1.7-alt2
 - glamor: Don't initialize on softpipe (closes: #44985)
 
