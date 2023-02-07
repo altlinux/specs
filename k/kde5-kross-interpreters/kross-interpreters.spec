@@ -1,7 +1,7 @@
 %define rname kross-interpreters
 
 Name: kde5-%rname
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -62,6 +62,9 @@ Python plugin for the Kross archtecture in KDE.
 %_K5plug/krosspython.so
 
 %changelog
+* Tue Feb 07 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Tue Jan 17 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 

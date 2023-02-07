@@ -1,7 +1,7 @@
 %define rname kdegraphics-thumbnailers
 
 Name: kde5-graphics-thumbnailers
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init no_appdata
 
@@ -46,6 +46,9 @@ BuildRequires: kf5-karchive-devel kf5-kio-devel
 #%_K5cfg/*.kcfg
 
 %changelog
+* Tue Feb 07 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Tue Jan 17 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 

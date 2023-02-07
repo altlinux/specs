@@ -6,7 +6,7 @@
 %filter_from_requires /^cvs$/d
 
 Name: kde5-dev-scripts
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -66,6 +66,9 @@ done
 %_K5data/*/
 
 %changelog
+* Tue Feb 07 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Tue Jan 17 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 

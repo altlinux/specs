@@ -30,7 +30,7 @@
 %define libqgroupwise libqgroupwise%sover
 
 Name: kde5-kopete
-Version: 22.12.1
+Version: 22.12.2
 Release: alt1
 %K5init no_appdata
 
@@ -329,6 +329,9 @@ fi
 %_K5dbus_iface/*
 
 %changelog
+* Tue Feb 07 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
+- new version
+
 * Tue Jan 17 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.1-alt1
 - new version
 
