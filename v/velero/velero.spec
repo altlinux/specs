@@ -1,7 +1,7 @@
 %global import_path github.com/vmware-tanzu/velero
 
 Name:     velero
-Version:  1.9.2
+Version:  1.10.1
 Release:  alt1
 
 Summary:  Backup and migrate Kubernetes applications and their persistent volumes
@@ -31,8 +31,8 @@ export GOPATH="$BUILDDIR:%go_path"
 %golang_prepare
 
 pushd $BUILDDIR/src/%import_path
-%golang_build ./cmd/velero
-%golang_build ./cmd/velero-restic-restore-helper
+%golang_build ./cmd/%name
+%golang_build ./cmd/%name-restore-helper
 popd
 
 %install
@@ -46,5 +46,8 @@ export IGNORE_SOURCES=1
 %doc *.md
 
 %changelog
+* Mon Feb 06 2023 Nikolay Burykin <bne@altlinux.org> 1.10.1-alt1
+- 1.10.1
+
 * Fri Oct 07 2022 Nikolay Burykin <bne@altlinux.org> 1.9.2-alt1
 - Initial build for Sisyphus
