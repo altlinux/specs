@@ -4,7 +4,7 @@
 
 Name: kf5-%rname
 Version: 5.102.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -13,7 +13,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-Source10: ru-kio5.po
+Source10: add-ru.po
 Patch1: alt-def-trash.patch
 Patch2: alt-kio-help-fallback-kde4.patch
 Patch10: alt-streebog-support.patch
@@ -103,9 +103,9 @@ KF5 library
 %patch10 -p2 -b .streebog
 %endif
 
-#msgcat --use-first po/ru/kio5.po %SOURCE10 > po/ru/kio5.po.tmp
-#cat po/ru/kio5.po.tmp >po/ru/kio5.po
-#rm -f po/ru/kio5.po.tmp
+msgcat --use-first %SOURCE10 po/ru/kio5.po > po/ru/kio5.po.tmp
+cat po/ru/kio5.po.tmp >po/ru/kio5.po
+rm -f po/ru/kio5.po.tmp
 
 # don't install kcm desktops
 sed -i '/install.*desktop.*DESTINATION.*KDE_INSTALL_KSERVICESDIR/d' src/kcms/*/CMakeLists.txt
@@ -123,9 +123,12 @@ sed -i '/install.*desktop.*DESTINATION.*KDE_INSTALL_KSERVICESDIR/d' src/kcms/*/C
 %K5install_move data doc kconf_update kdevappwizard kdevfiletemplates
 %find_lang %name --with-kde --all-name
 %K5find_qtlang %name --all-name
+mkdir -p %buildroot/%_K5data/kio/servicemenus/
 
 %files common -f %name.lang
 %doc LICENSES/* README.md
+%dir %_K5data/kio/
+%dir %_K5data/kio/servicemenus/
 %_K5srvtyp/*
 %_datadir/qlogging-categories5/*.*categories
 
@@ -173,6 +176,9 @@ sed -i '/install.*desktop.*DESTINATION.*KDE_INSTALL_KSERVICESDIR/d' src/kcms/*/C
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Wed Feb 08 2023 Sergey V Turchin <zerg@altlinux.org> 5.102.0-alt2
+- fix russian translation
+
 * Mon Jan 16 2023 Sergey V Turchin <zerg@altlinux.org> 5.102.0-alt1
 - new version
 
