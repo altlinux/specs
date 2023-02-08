@@ -1,5 +1,5 @@
 Name: anilibria-winmaclinux
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 
 Summary: AniLibria online video player for desktop platforms
@@ -20,8 +20,9 @@ Requires: libqt5-svg
 # Source-url: https://github.com/anilibria/anilibria-winmaclinux/archive/refs/tags/%version.tar.gz
 Source: %name-%version.tar
 
-Patch: %name-1.1.9-alt-config.patch
+Patch: %name-1.2.4-alt-config.patch
 Patch1: %name-1.2.1-alt-window_alignment.patch
+Patch2: %name-1.2.4-alt-fix_prefix.patch
 
 BuildRequires: qt5-base-devel
 BuildRequires: qt5-multimedia-devel
@@ -60,12 +61,15 @@ INSTALL_ROOT=%buildroot %makeinstall_std
 popd
 
 %files
-%doc README.md cinemahall.md remoteprotocol.md
+%doc *.md
 %_bindir/AniLibria
 %_desktopdir/anilibria.desktop
 %_iconsdir/hicolor/*/apps/anilibria.png
 
 %changelog
+* Wed Feb 08 2023 Evgeny Chuck <koi@altlinux.org> 1.2.4-alt1
+- new version (1.2.4) with rpmgs script
+
 * Fri Dec 16 2022 Evgeny Chuck <koi@altlinux.org> 1.2.3-alt1
 - new version (1.2.3) with rpmgs script
 
