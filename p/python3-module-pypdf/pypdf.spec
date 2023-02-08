@@ -1,19 +1,26 @@
 %define modulename pypdf
 
+# Relies on a lot of network
+%def_without check
+
 Name: python3-module-%modulename
-Version: 1.12
-Release: alt1.2
+Version: 3.4.0
+Release: alt1
+
 Summary: A Pure-Python library built as a PDF toolkit
 
 Group: Development/Python3
-License: modified BSD
-Url: http://pybrary.net/pyPdf/
+License: BSD-3-Clause
+Url: https://pypi.org/project/pypdf
 
 BuildArch: noarch
 Source: %name-%version.tar
+Vcs: https://github.com/py-pdf/pypdf
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel
+BuildRequires: python3-module-flit
 
 %description
 A Pure-Python library built as a PDF toolkit.  It is capable of:
@@ -31,21 +38,24 @@ objects rather than file streams, allowing for PDF manipulation in memory.
 It is therefore a useful tool for websites that manage or manipulate PDFs.
 
 %prep
-%setup 
+%setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 
 %files
-%python3_sitelibdir/pyPdf/
-%python3_sitelibdir/*.egg-info
-
+%doc LICENSE *.md
+%python3_sitelibdir/%modulename
+%python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Wed Feb 08 2023 Grigory Ustinov <grenka@altlinux.org> 3.4.0-alt1
+- Build new version.
+
 * Wed May 16 2018 Andrey Bychkov <mrdrew@altlinux.org> 1.12-alt1.2
 - (NMU) rebuild with python3.6
 

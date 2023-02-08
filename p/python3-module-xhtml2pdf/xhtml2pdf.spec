@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.2.8
+Version: 0.2.9
 Release: alt1
 
 Summary: HTML/CSS to PDF converter based on Python
@@ -25,7 +25,7 @@ Buildrequires: python3-module-Reportlab
 Buildrequires: python3-module-asn1crypto
 BuildRequires: python3-module-arabic-reshaper
 BuildRequires: python3-module-bidi
-BuildRequires: python3-module-PyPDF3
+BuildRequires: python3-module-pypdf
 BuildRequires: python3-module-pyHanko
 BuildRequires: python3-module-Pillow
 %endif
@@ -79,6 +79,9 @@ py.test-3 -v
 %doc demo/*
 
 %changelog
+* Tue Jan 31 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.9-alt1
+- Automatically updated to 0.2.9.
+
 * Mon Jun 27 2022 Grigory Ustinov <grenka@altlinux.org> 0.2.8-alt1
 - Build new version.
 
