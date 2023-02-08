@@ -31,7 +31,7 @@
 Summary: Userland logical volume management tools
 Name: lvm2
 Version: %lvm2version
-Release: alt1
+Release: alt2
 License: GPLv2+ AND LGPL-2.1+
 
 Group: System/Base
@@ -495,6 +495,11 @@ install -m 0755 %SOURCE6 %buildroot%_initdir/lvm2-lvmpolld
 %endif
 
 %changelog
+* Wed Feb 08 2023 Alexey Shabalin <shaba@altlinux.org> 2.03.18-alt2
+- backport from main branch:
+  + lvresize: fix cryptsetup resize in helper
+  + udev: remove rule for explicit creation of /dev/mapper/control
+
 * Sun Jan 22 2023 Alexey Shabalin <shaba@altlinux.org> 2.03.18-alt1
 - 2.03.18
 
