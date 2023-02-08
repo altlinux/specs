@@ -15,6 +15,9 @@
 %def_disable static_libudev
 %def_enable elfutils
 %def_enable libcryptsetup
+%ifnarch ppc64le
+%def_enable tpm2
+%endif
 %def_enable logind
 %def_enable vconsole
 %def_enable initrd
@@ -89,11 +92,11 @@
 %define mmap_min_addr 32768
 %endif
 
-%define ver_major 251
+%define ver_major 252
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.10
+Version: %ver_major.5
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -116,6 +119,7 @@ Source19: udevd.init
 Source22: scsi_id.config
 Source23: var-lock.mount
 Source24: var-run.mount
+Source25: 98-default-mac-none.link
 Source27: altlinux-first_time.service
 Source30: 49-coredump-disable.conf
 Source31: 60-raw.rules
@@ -127,8 +131,7 @@ Source37: 85-networkd.preset
 Source38: 85-timesyncd.preset
 
 Source44: 10-oomd-defaults.conf
-Source45: 10-oomd-root-slice-defaults.conf
-Source46: 10-oomd-user-service-defaults.conf
+Source45: 10-oomd-per-slice-defaults.conf
 
 # simpleresolv
 Source68: altlinux-simpleresolv.path
@@ -194,6 +197,7 @@ BuildRequires: libkeyutils-devel
 BuildRequires: pkgconfig(fdisk) >= 2.32
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel >= 2.0.1}
+%{?_enable_tpm2:BuildRequires: libtpm2-tss-devel libssl-devel >= 1.1.0}
 %{?_enable_gcrypt:BuildRequires: libgcrypt-devel >= 1.4.5 libgpg-error-devel >= 1.12}
 %{?_enable_openssl:BuildRequires: pkgconfig(openssl) >= 1.1.0}
 %{?_enable_p11kit:BuildRequires: pkgconfig(p11-kit-1) >= 0.23.3}
@@ -609,6 +613,7 @@ Static library for libudev.
 %package tests
 Summary: Internal unit tests for systemd
 Requires: %name = %EVR
+Requires: %name-utils = %EVR
 Group: Development/Other
 License: LGPLv2+
 
@@ -691,6 +696,8 @@ Conflicts: startup < 0.9.9.14
         -Dlink-systemctl-shared=false \
         -Dlink-networkd-shared=false \
         -Dlink-timesyncd-shared=false \
+        -Dlink-journalctl-shared=false \
+        -Dlink-boot-shared=false \
         %{?_enable_static_libsystemd:-Dstatic-libsystemd=pic} \
         %{?_enable_static_libudev:-Dstatic-libudev=pic} \
         %{?_enable_standalone_binaries:-Dstandalone-binaries=true} \
@@ -742,6 +749,7 @@ Conflicts: startup < 0.9.9.14
         %{?_enable_lz4:-Dlz4=true} \
         %{?_enable_zstd:-Dzstd=true} \
         %{?_enable_libcryptsetup:-Dlibcryptsetup=true} \
+        %{?_enable_tpm2:-Dtpm2=true} \
         %{?_enable_logind:-Dlogind=true} \
         %{?_enable_vconsole:-Dvconsole=true} \
         %{?_enable_initrd:-Dinitrd=true} \
@@ -777,7 +785,7 @@ Conflicts: startup < 0.9.9.14
         -Dntp-servers="" \
         %{?_enable_sysusers:-Dsysusers=true} \
         %{?_enable_ldconfig:-Dldconfig=true} \
-	-Dfirstboot=%{?_enable_firstboot:true}%{!?_enable_firstboot:false} \
+        -Dfirstboot=%{?_enable_firstboot:true}%{!?_enable_firstboot:false} \
         %{?_enable_gnu_efi:-Dgnu-efi=true} \
         %{?_enable_seccomp:-Dseccomp=true} \
         %{?_enable_ima:-Dima=true} \
@@ -786,7 +794,8 @@ Conflicts: startup < 0.9.9.14
         %{?_enable_utmp:-Dutmp=true} \
         %{?_disable_kill_user_processes:-Ddefault-kill-user-processes=false} \
         -Doomd=true \
-	-Dsysupdate=false \
+        -Dsysupdate=false \
+        -Dstatus-unit-format-default=combined \
         -Dfallback-hostname=localhost \
         -Ddefault-dnssec=no \
         -Ddefault-mdns=no \
@@ -799,6 +808,7 @@ Conflicts: startup < 0.9.9.14
 %endif
         -Db_pie=true \
         -Dman=true \
+        -Dcreate-log-dirs=false \
         -Durlify=false \
         -Dtests=unsafe \
         -Dinstall-tests=true \
@@ -915,14 +925,18 @@ mkdir -p %buildroot%_localstatedir%_systemd_dir/rfkill
 mkdir -p %buildroot%_localstatedir%_systemd_dir/linger
 mkdir -p %buildroot%_localstatedir%_systemd_dir/journal-upload
 mkdir -p %buildroot%_localstatedir/lib/private/systemd/journal-upload
-mkdir -p %buildroot%_logdir/private
 mkdir -p %buildroot%_cachedir/private
 mkdir -p %buildroot%_localstatedir%_systemd_dir/timesync
-mkdir -p %buildroot%_logdir/journal
 touch %buildroot%_localstatedir%_systemd_dir/catalog/database
 touch %buildroot%_sysconfdir/udev/hwdb.bin
 touch %buildroot%_localstatedir%_systemd_dir/random-seed
 touch %buildroot%_localstatedir%_systemd_dir/timesync/clock
+mkdir -p %buildroot%_logdir/journal
+mkdir -p %buildroot%_logdir/private
+%if_enabled microhttpd
+mkdir -p %buildroot%_logdir/journal/remote
+%endif
+install -Dm0644 docs/var-log/README.logs %buildroot%_logdir/
 
 # Create new-style configuration files so that we can ghost-own them
 touch %buildroot%_sysconfdir/hostname
@@ -955,8 +969,11 @@ install -m 0644 %SOURCE38 %buildroot%_presetdir/
 
 # systemd-oomd default configuration
 install -D -m 0644 -t %buildroot%_systemd_dir/oomd.conf.d/ %SOURCE44
-install -D -m 0644 -t %buildroot%_unitdir/-.slice.d/ %SOURCE45
-install -D -m 0644 -t %buildroot%_unitdir/user@.service.d/ %SOURCE46
+install -D -m 0644 -t %buildroot%_unitdir/user-.slice.d/ %SOURCE45
+install -D -m 0644 -t %buildroot%_unitdir/system.slice.d/ %SOURCE45
+install -D -m 0644 -t %buildroot%_user_unitdir/slice.d/ %SOURCE45
+
+install -Dm0664 -t %buildroot%_systemd_dir/network/ %SOURCE25
 
 sed -i 's|#!/usr/bin/env python3|#!%__python3|' %buildroot%_prefix%_systemd_dir/tests/run-unit-tests.py
 
@@ -1472,6 +1489,7 @@ fi
 %_tmpfilesdir/systemd-nologin.conf
 %_tmpfilesdir/systemd.conf
 %_tmpfilesdir/journal-nocow.conf
+%_tmpfilesdir/provision.conf
 
 %_xdgconfigdir/%name
 %_x11sysconfdir/xinit.d/50-systemd-user.sh
@@ -1484,10 +1502,11 @@ fi
 %_rpmlibdir/systemd.filetrigger
 %_rpmlibdir/systemd-user.filetrigger
 
+%dir /%_lib/systemd
+/%_lib/systemd/libsystemd-core-%ver_major.so
+/%_lib/systemd/libsystemd-shared-%ver_major.so
+ 
 %dir %_systemd_dir
-%_systemd_dir/libsystemd-core-%ver_major.so
-%_systemd_dir/libsystemd-shared-%ver_major.so
-
 %_modprobedir/README
 %_sysctldir/README
 %_sysusersdir/README
@@ -1590,7 +1609,7 @@ fi
 /bin/systemd-run
 /bin/loginctl
 %_systemd_dir/systemd-logind
-/bin/userdbctl
+%_bindir/userdbctl
 %_systemd_dir/systemd-userdbd
 %_systemd_dir/systemd-userwork
 %_bindir/hostnamectl
@@ -1644,9 +1663,19 @@ fi
 %_systemd_dir/systemd-user-sessions
 %_systemd_dir/systemd-vconsole-setup
 %_systemd_dir/systemd-volatile-root
+%_systemd_dir/systemd-sysroot-fstab-check
 %_systemd_dir/systemd-sysv-install
 %_systemd_dir/systemd-sulogin-shell
 %_systemd_dir/systemd-xdg-autostart-condition
+
+%if_enabled tpm2
+%_systemd_dir/systemd-measure
+%_systemd_dir/systemd-pcrphase
+%dir /%_lib/cryptsetup
+/%_lib/cryptsetup/libcryptsetup-token-systemd-tpm2.so
+%_man1dir/systemd-measure*
+%_man8dir/systemd-pcrphase*
+%endif
 
 %dir %_env_dir
 %_env_dir/99-environment.conf
@@ -1657,8 +1686,9 @@ fi
 %dir %_unitdir
 %_unitdir/*
 
-%exclude %_unitdir/-.slice.d/10-oomd-root-slice-defaults.conf
-%exclude %_unitdir/user@.service.d/10-oomd-user-service-defaults.conf
+%exclude %_unitdir/user-.slice.d/10-oomd-per-slice-defaults.conf
+%exclude %_unitdir/system.slice.d/10-oomd-per-slice-defaults.conf
+%exclude %_user_unitdir/slice.d/10-oomd-per-slice-defaults.conf
 
 %if_enabled networkd
 %exclude %_unitdir/*networkd*
@@ -1880,6 +1910,7 @@ fi
 %ghost %attr(0700,root,root) %dir %_logdir/private
 %ghost %attr(0700,root,root) %dir %_localstatedir/cache/private
 %ghost %attr(0700,root,root) %dir %_localstatedir/lib/private
+%_logdir/README.logs
 %dir %_localstatedir%_systemd_dir
 %dir %_localstatedir%_systemd_dir/catalog
 %ghost %dir %_localstatedir/lib/private/systemd
@@ -1953,7 +1984,7 @@ fi
 
 %files homed
 %config(noreplace) %_sysconfdir/systemd/homed.conf
-/bin/homectl
+%_bindir/homectl
 %_systemd_dir/systemd-homed
 %_systemd_dir/systemd-homework
 %_unitdir/systemd-homed*
@@ -2066,8 +2097,9 @@ fi
 
 %files oomd-defaults
 %_systemd_dir/oomd.conf.d/10-oomd-defaults.conf
-%_unitdir/-.slice.d/10-oomd-root-slice-defaults.conf
-%_unitdir/user@.service.d/10-oomd-user-service-defaults.conf
+%_unitdir/user-.slice.d/10-oomd-per-slice-defaults.conf
+%_unitdir/system.slice.d/10-oomd-per-slice-defaults.conf
+%_user_unitdir/slice.d/10-oomd-per-slice-defaults.conf
 
 %files container
 %_datadir/dbus-1/system.d/org.freedesktop.machine1.conf
@@ -2312,6 +2344,19 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Tue Feb 07 2023 Alexey Shabalin <shaba@altlinux.org> 1:252.5-alt1
+- 252.5
+- Set default status format to combined.
+- Added "98-default-mac-none.link" to keep default MAC address of bridge/bond/team
+- Set create-log-dirs to false and mkdir for journal in spec (fixed ALT#44399)
+
+* Mon Jan 09 2023 Alexey Shabalin <shaba@altlinux.org> 1:252.4-alt1
+- 252.4.
+- Don't read locale settings from /etc/sysconfig/i18n.
+- Update systemd-oomd defaults to friendlier values.
+- Moved core and shared libs to /%%lib/systemd for multiarch.
+- Moved homectl and userdbctl to %%_bindir
+
 * Thu Dec 22 2022 Alexey Shabalin <shaba@altlinux.org> 1:251.10-alt1
 - 251.10 (Fixes: CVE-2022-4415)
 
