@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: tig
-Version: 2.5.7
+Version: 2.5.8
 Release: alt1
 
 Summary: Text-mode interface for git
@@ -19,8 +19,14 @@ Requires: git-core
 BuildRequires: asciidoc
 BuildRequires: hardlink
 BuildRequires: libncursesw-devel
+BuildRequires: libpcre-devel
 BuildRequires: libreadline-devel
 BuildRequires: xmlto
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: /dev/pts
+BuildRequires: git-core
+BuildRequires: util-linux
+}}
 
 %description
 Tig is an ncurses-based text-mode interface for git. It functions mainly
@@ -32,10 +38,11 @@ Git commands.
 %setup
 
 %build
+export C_INCLUDE_PATH=/usr/include/pcre
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure
-make V=1 src/tig doc-man
+%make_build V=1 src/tig doc-man
 
 %install
 install -pD -m755 src/tig %buildroot%_bindir/tig
@@ -52,6 +59,8 @@ hardlink -v %buildroot%_datadir
 
 %check
 src/tig -v
+export C_INCLUDE_PATH=/usr/include/pcre
+script -e -c 'make test' /dev/null
 
 %files
 %doc COPYING NEWS.adoc README.adoc doc/manual.adoc
@@ -66,6 +75,9 @@ src/tig -v
 %_datadir/zsh/site-functions/tig-completion.bash
 
 %changelog
+* Wed Feb 08 2023 Vitaly Chikunov <vt@altlinux.org> 2.5.8-alt1
+- Update to tig-2.5.8 (2023-02-04).
+
 * Fri Aug 26 2022 Vitaly Chikunov <vt@altlinux.org> 2.5.7-alt1
 - Update to tig-2.5.7 (2022-08-25).
 
