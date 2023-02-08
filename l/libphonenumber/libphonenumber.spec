@@ -1,8 +1,10 @@
 %define sover 8
 %def_enable check
 
+%define stdxx 17
+
 Name: libphonenumber
-Version: 8.13.4
+Version: 8.13.6
 Release: alt1
 
 Summary: Library to handle international phone numbers
@@ -43,10 +45,13 @@ developing applications that use %name.
 %setup -n %name-%version/cpp
 %patch1 -b .link
 
+# gtest > 1.13 requires >= C++14
+sed -i 's|\(CMAKE_CXX_STANDARD \)11|\1%stdxx|' ../tools/cpp/CMakeLists.txt
+
 %build
 # libabseil compiled with -std=gnu++17
 %cmake \
-    -DCMAKE_CXX_STANDARD=17 \
+    -DCMAKE_CXX_STANDARD=%stdxx \
     %{?_disable_check:-DBUILD_TESTING=OFF} \
     -DBUILD_SHARED_LIBS=ON
 %nil
@@ -71,6 +76,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/cmake/%name/
 
 %changelog
+* Wed Feb 08 2023 Yuri N. Sedunov <aris@altlinux.org> 8.13.6-alt1
+- 8.13.6
+
 * Mon Jan 09 2023 Yuri N. Sedunov <aris@altlinux.org> 8.13.4-alt1
 - 8.13.4
 
