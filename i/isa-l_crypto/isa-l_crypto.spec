@@ -4,7 +4,7 @@
 
 Name: isa-l_crypto
 Version: 2.24.0
-Release: alt1
+Release: alt1.1
 
 Summary: Intelligent Storage Acceleration Library with crypto
 
@@ -34,7 +34,7 @@ Group: System/Libraries
 Summary: Development package for %name
 Group: Development/C
 
-%%description -n libisal_crypto-devel
+%description -n libisal_crypto-devel
 The package provides development files for %name.
 
 %prep
@@ -43,9 +43,7 @@ The package provides development files for %name.
 
 %build
 %autoreconf
-%configure \
-  --disable-static \
-#
+%configure --disable-static
 %make
 
 %install
@@ -69,6 +67,9 @@ The package provides development files for %name.
 %_libdir/libisal_crypto.so
 
 %changelog
+* Wed Feb 08 2023 Leontiy Volodin <lvol@altlinux.org> 2.24.0-alt1.1
+- Cleanup spec.
+
 * Wed Feb 08 2023 Leontiy Volodin <lvol@altlinux.org> 2.24.0-alt1
 - Initial build for ALT Sisyphus (thanks alpinelinux for the spec).
 - Needed for spdk.
