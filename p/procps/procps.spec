@@ -1,6 +1,6 @@
 Name: procps
 Version: 3.3.17
-Release: alt5.g37f1060
+Release: alt6.g37f1060
 
 Summary: System and process monitoring utilities
 License: GPLv2+ and LGPLv2+
@@ -109,7 +109,16 @@ make check
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
+
 %changelog
+* Wed Feb 08 2023 Mikhail Efremov <sem@altlinux.org> 3.3.17-alt6.g37f1060
+- sysctl: Fixed maybe-uninitialized warning.
+- sysctl: Dropped unused variables and functions.
+- sysctl: Fixed misleading-indentation warning.
+- Patches from upstream:
+  + sysctl: Support systemd glob patterns (closes: #45106).
+  + sysctl: print dotted keys again.
+
 * Wed Sep 22 2021 Mikhail Efremov <sem@altlinux.org> 3.3.17-alt5.g37f1060
 - Fixed build with gcc11.
 
