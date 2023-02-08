@@ -6,7 +6,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.22.0
-Release: alt1
+Release: alt2
 
 Summary: Trio - Pythonic async I/O for humans and snake people
 
@@ -85,12 +85,19 @@ and not test_locals_destroyed_promptly_on_cancel"
 %python3_sitelibdir/%modulename
 %python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
 %exclude %python3_sitelibdir/%modulename/tests
+%exclude %python3_sitelibdir/%modulename/testing
+%exclude %python3_sitelibdir/%modulename/_core/tests
 
 %files tests
 %python3_sitelibdir/%modulename/tests
+%python3_sitelibdir/%modulename/testing
+%python3_sitelibdir/%modulename/_core/tests
 %doc *.md *.rst
 
 %changelog
+* Wed Feb 08 2023 Grigory Ustinov <grenka@altlinux.org> 0.22.0-alt2
+- Fixed packaging tests.
+
 * Wed Feb 08 2023 Grigory Ustinov <grenka@altlinux.org> 0.22.0-alt1
 - Automatically updated to 0.22.0.
 - Bring tests back as separate subpackage.
