@@ -1,90 +1,63 @@
 %define oname pyee
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 6.0.0
+Version: 9.0.4
 Release: alt1
 
 Summary: A port of node.js's EventEmitter to python
+
 License: MIT
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/pyee/
-BuildArch: noarch
+Url: https://pypi.python.org/pypi/pyee
 
 # https://github.com/jesusabdullah/pyee.git
 Source: %name-%version.tar
-Patch0: fix-version-detecting.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest-asyncio python3-module-pytest-runner
-BuildRequires: python3-module-sphinx
+
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
+%if_with check
+BuildRequires: python3-module-typing_extensions
+BuildRequires: python3-module-flake8
+BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-mock
+BuildRequires: python3-module-twisted-core
+BuildRequires: python3-module-pytest-trio
+%endif
 
 %py3_provides %oname
 
+BuildArch: noarch
 
 %description
 pyee supplies an event_emitter object that acts similar to the
 EventEmitter that comes with node.js.
 
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: python3-module-%oname = %EVR
-
-%description tests
-pyee supplies an event_emitter object that acts similar to the
-EventEmitter that comes with node.js.
-
-This package contains tests for %oname.
-
-%package docs
-Summary: Documentation for %oname
-Group: Development/Documentation
-
-%description docs
-pyee supplies an event_emitter object that acts similar to the
-EventEmitter that comes with node.js.
-
-This package contains documentation for %oname
-
 %prep
 %setup
-%patch -p1
-
-sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
-
-touch version.txt
-echo '%version' > version.txt
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-
-pushd docs/
-%make man
-install -d %buildroot%_mandir/man1
-mv _build/man/* %buildroot%_mandir/man1/
-popd
-
-cp -fR tests/ %buildroot%python3_sitelibdir/%oname/
+%pyproject_install
 
 %check
-%make tests
+%tox_check_pyproject
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/tests/
-
-%files tests
-%python3_sitelibdir/%oname/tests/
-
-%files docs
-%_mandir/man1/*
-
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Sep 19 2022 Grigory Ustinov <grenka@altlinux.org> 9.0.4-alt1
+- Automatically updated to 9.0.4 (Closes: #44638).
+
 * Tue Jan 14 2020 Andrey Bychkov <mrdrew@altlinux.org> 6.0.0-alt1
 - Version updated to 6.0.0
 - porting on python3
