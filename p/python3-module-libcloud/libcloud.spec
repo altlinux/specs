@@ -1,7 +1,7 @@
 %define oname libcloud
 
 Name: python3-module-%oname
-Version: 3.6.1
+Version: 3.7.0
 Release: alt1
 
 Summary: Library for interacting with popular cloud service
@@ -81,6 +81,9 @@ export PYTHONPATH=$PWD
 
 
 %changelog
+* Wed Feb 08 2023 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
+- Automatically updated to 3.7.0.
+
 * Wed Oct 12 2022 Grigory Ustinov <grenka@altlinux.org> 3.6.1-alt1
 - Automatically updated to 3.6.1.
 
