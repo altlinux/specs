@@ -11,7 +11,7 @@
 
 Name: openuds-server
 Version: 3.5.0
-Release: alt5
+Release: alt6
 Summary: Universal Desktop Services (UDS) Broker
 License: BSD-3-Clause and MIT and Apache-2.0
 Group: Networking/Remote access
@@ -158,6 +158,9 @@ cert-sh generate nginx-openuds ||:
 %_unitdir/openuds-web.socket
 
 %changelog
+* Wed Feb 08 2023 Alexander Burmatov <thatman@altlinux.org> 3.5.0-alt6
+- Add checkbox to enable SSL connection for SPICE (ALT #43646)
+
 * Mon Jan 23 2023 Alexey Shabalin <shaba@altlinux.org> 3.5.0-alt5
 - Add openuds_tunnel_register.py to package for easy generate
   and register tunnel token
