@@ -1,14 +1,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: papirus-folders
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 Summary: Allows to change the color of folders
 License: MIT
 Group: Other
 Url: https://github.com/PapirusDevelopmentTeam/papirus-folders
 Source: %name-%version.tar
-Packager: Alexander Makeenkov <amakeenk@altlinux.org>
 
 BuildArch: noarch
 Requires: bash >= 4.0
@@ -31,6 +30,9 @@ version 20171007 and newer).
 %doc LICENSE README.md
 
 %changelog
+* Wed Feb 08 2023 Alexander Makeenkov <amakeenk@altlinux.org> 1.12.1-alt1
+- Updated to version 1.12.1
+
 * Sat May 14 2022 Alexander Makeenkov <amakeenk@altlinux.org> 1.12.0-alt1
 - Updated to version 1.12.0
 
