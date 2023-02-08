@@ -1,10 +1,10 @@
 Name: orage
-Version: 4.16.0
+Version: 4.18.0
 Release: alt1
 
 Summary: Time-managing application for the Xfce desktop environment
 Summary (ru_RU.UTF-8): Календарь для окружения рабочего стола Xfce
-License: GPLv2
+License: GPLv2+
 Group: Graphical desktop/XFce
 Url: https://docs.xfce.org/apps/orage/start
 Vcs: https://gitlab.xfce.org/apps/orage.git
@@ -14,8 +14,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfce4panel-gtk3-devel libxfce4util-devel libxfce4ui-gtk3-devel
-BuildRequires: intltool libnotify-devel libical-devel libpopt-devel libdbus-glib-devel
+BuildPreReq: libxfce4util-devel libxfce4ui-gtk3-devel
+BuildRequires: libnotify-devel libical-devel
 
 Requires: xfce4-common
 
@@ -38,11 +38,10 @@ Xfce.
 %build
 %xfce4reconf
 %configure \
-	--enable-dbus \
-	--enable-libical \
 	--enable-libnotify \
 	--enable-archive \
-	--enable-libxfce4panel \
+	--enable-libxfce4ui \
+	--enable-x11-tray-icon \
 	--enable-debug=minimum
 %make_build
 
@@ -57,14 +56,16 @@ Xfce.
 %_datadir/orage/
 %_liconsdir/*
 %_iconsdir/hicolor/*/apps/*
-%_libdir/xfce4/panel/plugins/*.so
-%_datadir/xfce4/panel/plugins/*.desktop
 %_datadir/dbus-1/services/*.service
 %_datadir/metainfo/org.xfce.orage.appdata.xml
 
-%exclude %_libdir/xfce4/panel/plugins/*.la
-
 %changelog
+* Wed Feb 08 2023 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Fixed License tag.
+- Dropped panel plugin.
+- Dropped globaltime.
+- Updated to 4.18.0.
+
 * Thu Mar 17 2022 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
 - Added Vcs tag.
 - Updated Url.
