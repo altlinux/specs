@@ -1,4 +1,4 @@
-%def_disable snapshot
+%def_enable snapshot
 
 %define ver_major 43
 %define beta %nil
@@ -8,7 +8,7 @@
 %def_without cheese
 
 Name: gnome-contacts
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1%beta
 
 Summary: Contacts manager for GNOME
@@ -73,6 +73,9 @@ BuildRequires: libportal-gtk4-devel >= %portal_ver
 %doc NEWS README*
 
 %changelog
+* Wed Feb 08 2023 Yuri N. Sedunov <aris@altlinux.org> 43.1-alt1
+- 43.1
+
 * Fri Sep 23 2022 Yuri N. Sedunov <aris@altlinux.org> 43.0-alt1
 - 43.0
 

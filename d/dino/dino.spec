@@ -3,7 +3,7 @@
 %define rdn_name im.dino.Dino
 
 Name: dino
-Version: 0.3.1
+Version: 0.4.0
 Release: alt1
 
 Summary: Modern Jabber/XMPP client
@@ -26,8 +26,9 @@ Requires: lib%name = %EVR
 Requires: gst-plugins-good%gst_api_ver
 
 BuildRequires(pre): rpm-macros-cmake
-BuildRequires: cmake gcc-c++ vala-tools libgtk+3-devel libgee0.8-devel
-BuildRequires: libsoup3.0-devel libidn2-devel
+BuildRequires: cmake gcc-c++ vala-tools libgtk4-devel
+BuildRequires: libgtk4-devel pkgconfig(libadwaita-1)
+BuildRequires: libgee0.8-devel libsoup3.0-devel libidn2-devel
 BuildRequires: libicu-devel pkgconfig(libqrencode) >= %qrencode_ver 
 BuildRequires: gst-plugins%gst_api_ver-devel libnice-devel
 BuildRequires: pkgconfig(webrtc-audio-processing) >= %webrtc_ver
@@ -107,6 +108,9 @@ This package provides libraries and headers needed to develop Dino plugins.
 #%_datadir/vala/vapi/xmpp-vala.vapi
 
 %changelog
+* Wed Feb 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
+- 0.4.0 (ported to GTK4/libadwaita)
+
 * Fri Nov 11 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.1-alt1
 - 0.3.1
 
