@@ -2,7 +2,7 @@
 %define real_name Compress-Raw-Lzma
 
 Name: perl-%real_name
-Version: 2.201
+Version: 2.204
 Release: alt1
 Summary: Low-level interface to lzma compression library
 License: %perl_license
@@ -42,6 +42,9 @@ perl -i -ne 'print $_ unless m{^t/Test/}' MANIFEST
 %perl_vendor_archlib/Compress/
 
 %changelog
+* Thu Feb 09 2023 Igor Vlasenko <viy@altlinux.org> 2.204-alt1
+- new version
+
 * Mon Jun 27 2022 Igor Vlasenko <viy@altlinux.org> 2.201-alt1
 - new version
 
