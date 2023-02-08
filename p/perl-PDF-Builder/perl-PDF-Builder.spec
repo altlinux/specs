@@ -3,7 +3,7 @@
 %define module_name PDF-Builder
 
 Name: perl-PDF-Builder
-Version: 3.024
+Version: 3.025
 Release: alt1
 
 Summary: Facilitates the creation and modification of PDF files
@@ -76,13 +76,16 @@ Examples for %module_name.
 %perl_vendor_install
 
 %files
-%doc CONTRIBUTING Changes docs README.md examples
+%doc Changes docs README.md examples CONTRIBUTING.md
 %perl_vendor_privlib/P*
 
 %files examples
 %doc examples
 
 %changelog
+* Thu Feb 09 2023 Igor Vlasenko <viy@altlinux.org> 3.025-alt1
+- new version
+
 * Tue Sep 13 2022 Igor Vlasenko <viy@altlinux.org> 3.024-alt1
 - new version
 
