@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.4.5
+Version: 0.5.0
 Release: alt1
 
 Summary: A tool for testing Jupyter kernels
@@ -52,6 +52,9 @@ successful code execution and conformance with the Jupyter Messaging Protocol.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Wed Feb 08 2023 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt1
+- Automatically updated to 0.5.0.
+
 * Mon Sep 12 2022 Grigory Ustinov <grenka@altlinux.org> 0.4.5-alt1
 - Automatically updated to 0.4.5.
 
