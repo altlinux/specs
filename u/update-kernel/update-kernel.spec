@@ -1,14 +1,18 @@
-Name: update-kernel
-Version: 1.4
-Release: alt3
+%define _unpackaged_files_terminate_build 1
 
+Name: update-kernel
+Version: 1.5
+Release: alt1
 Summary: Update kernel and modules
-License: GPL-2.0+
+License: GPL-2.0-or-later
 Group: System/Kernel and hardware
+Url: https://www.altlinux.org/update-kernel
 
 Source: %name-%version.tar
 BuildArch: noarch
+%{?!_without_check:%{?!_disable_check:
 BuildRequires: shellcheck
+}}
 
 Requires: apt
 Requires: /usr/bin/rpmevrcmp
@@ -18,18 +22,16 @@ Requires: /usr/bin/rpmevrcmp
 Requires: RPMQ(EPOCH)
 
 %description
-This package contains a script to conveniently update
-kernel and modules.
+This package contains a script to conveniently update kernel and
+modules.
 
-It works by installing a new package set along with existing kernel
-so that you don't end up without a kernel guaranteed to boot (your
-good old one); by default, it will look for the most recent package
-of the same flavour (e.g. "std-def") and try to install all the same
-modules as already installed for that.
+It operates by installing a new package set in conjunction with your
+existing kernel, ensuring that you do not lose the ability to boot your
+reliable old kernel. By default, it searches for the most recent package
+of the same flavor (e.g. "std-def") and aims to install all the same
+modules that are already installed for that flavor.
 
-See also:
-http://lists.altlinux.org/pipermail/community/2005-November/366618.html
-http://lists.altlinux.org/pipermail/sisyphus/2006-November/192226.html
+This is recommended way of upgrading kernel for ALT Linux.
 
 %prep
 %setup
@@ -56,6 +58,9 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Thu Feb 09 2023 Vitaly Chikunov <vt@altlinux.org> 1.5-alt1
+- Rephrase some messages. Small speedup improvement. Add Url.
+
 * Wed Oct 05 2022 Vitaly Chikunov <vt@altlinux.org> 1.4-alt3
 - Add simple bash_completion support.
 
