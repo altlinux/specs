@@ -3,7 +3,7 @@
 %endif
 
 Name: mpv
-Version: 0.35.0
+Version: 0.35.1
 Release: alt1
 
 Summary: mpv is a free and open-source general-purpose video player based on MPlayer and mplayer2.
@@ -144,6 +144,9 @@ rm -rfv %buildroot%_iconsdir/hicolor/symbolic/
 %_libdir/libmpv.so.*
 
 %changelog
+* Thu Feb 09 2023 L.A. Kostis <lakostis@altlinux.ru> 0.35.1-alt1
+- 0.35.1.
+
 * Sat Nov 12 2022 L.A. Kostis <lakostis@altlinux.ru> 0.35.0-alt1
 - 0.35.0.
 - enable pipewire support.
