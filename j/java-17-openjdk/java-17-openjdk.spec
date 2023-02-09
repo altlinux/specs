@@ -272,7 +272,7 @@
 %global interimver 0
 %global updatever 6
 %global patchver 0
-%global buildver 1
+%global buildver 10
 
 # buildjdkver is usually same as %%{featurever},
 # but in time of bootstrap of next jdk, it is featurever-1,
@@ -300,7 +300,7 @@
 # This means 11.0.9.0+11 would have had a priority of 11000911 as before
 # A 11.0.9.1+1 would have had a priority of 11000921 (20 * 1 + 1), thus ensuring it is bigger than 11.0.9.0+11
 # TODO hardcoded
-%global priority 17000601
+%global priority 17000610
 %global newjavaver %{featurever}.%{interimver}.%{updatever}.%{patchver}
 %global javaver %{featurever}
 
@@ -316,7 +316,7 @@
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga 0
+%global is_ga 1
 %if %{is_ga}
 %global build_type GA
 %global ea_designator ""
@@ -2018,6 +2018,12 @@ fi
 %endif
 
 %changelog
+* Wed Feb 08 2023 Andrey Cherepanov <cas@altlinux.org> 0:17.0.6.0.10-alt1
+- New version.
+- Security fixes:
+  + CVE-2023-21835
+  + CVE-2023-21843
+
 * Fri Nov 25 2022 Andrey Cherepanov <cas@altlinux.org> 0:17.0.6.0.1-alt0.1.ea
 - New version.
 
