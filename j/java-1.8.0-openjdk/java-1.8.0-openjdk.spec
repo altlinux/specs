@@ -27,7 +27,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.8.0-openjdk
-%define version 1.8.0.352.b08
+%define version 1.8.0.362.b09
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -295,7 +295,7 @@ BuildRequires: /proc rpm-build-java
 # note, following three variables are sedded from update_sources if used correctly. Hardcode them rather there.
 %global shenandoah_project openjdk
 %global shenandoah_repo shenandoah-jdk8u
-%global shenandoah_revision shenandoah-jdk8u352-b08
+%global shenandoah_revision shenandoah-jdk8u362-b09
 # Define old aarch64/jdk8u tree variables for compatibility
 %global project         %{shenandoah_project}
 %global repo            %{shenandoah_repo}
@@ -477,8 +477,6 @@ Patch534: rh1648246-always_instruct_vm_to_assume_multiple_processors_are_availab
 #############################################
 # PR2737: Allow multiple initialization of PKCS11 libraries
 Patch5: pr2737-allow_multiple_pkcs11_library_initialisation_to_be_a_non_critical_error.patch
-# PR2095, RH1163501: 2048-bit DH upper bound too small for Fedora infrastructure (sync with IcedTea 2.x)
-Patch504: rh1163501-increase_2048_bit_dh_upper_bound_fedora_infrastructure_in_dhparametergenerator.patch
 # Turn off strict overflow on IndicRearrangementProcessor{,2}.cpp following 8140543: Arrange font actions
 Patch512: rh1649664-awt2dlibraries_compiled_with_no_strict_overflow.patch
 # RH1337583, PR2974: PKCS#10 certificate requests now use CRLF line endings rather than system line endings
@@ -1086,7 +1084,6 @@ sh %{SOURCE12}
 
 # Upstreamable fixes
 %patch502
-%patch504
 %patch512
 %patch523
 %patch528
@@ -2149,6 +2146,12 @@ fi
 %endif
 
 %changelog
+* Wed Feb 08 2023 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.362.b09-alt0_1jpp8
+- New version.
+- Seciruty fixes:
+  + CVE-2023-21830
+  + CVE-2023-21843
+
 * Sun Oct 30 2022 Andrey Cherepanov <cas@altlinux.org> 0:1.8.0.352.b08-alt0_1jpp8
 - New version.
 - Seciruty fixes:
