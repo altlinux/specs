@@ -4,7 +4,7 @@
 
 Name: python3-module-%pypi_name
 Version: 1.7.0
-Release: alt1
+Release: alt1.1
 
 Summary: XML/HTML parsing library
 Group: Development/Python3
@@ -20,7 +20,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-wheel python3-module-setuptools
 %{?_enable_check:BuildRequires: python3-module-pytest python3-module-w3lib
 BuildRequires: python3-module-pytest-cov python3-module-sybil
-BuildRequires: python3-module-six python3-module-lxml
+BuildRequires: python3-module-six python3-module-lxml python3(cssselect)
 BuildRequires: python3-module-psutil /proc}
 
 %description
@@ -47,6 +47,9 @@ py.test3
 %doc README*
 
 %changelog
+* Thu Feb 09 2023 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1.1
+- fixed %%check
+
 * Sat Nov 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
