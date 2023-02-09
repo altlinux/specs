@@ -2,7 +2,7 @@
 %define xdgdir  %_xdgconfigdir/autostart
 
 Name:     myconnector
-Version:  2.4.2
+Version:  2.4.3
 Release:  alt1
 
 Summary:  MyConnector - remote desktop client
@@ -138,6 +138,11 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 %doc docs/*
 
 %changelog
+* Wed Feb 09 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4.3-alt1
+- FreeRDP:
+ + Floatbar in fullscreen show always
+ + Fixed the use of the entered password when password storage is disabled
+
 * Fri Feb 03 2023 Evgeniy Korneechev <ekorneechev@altlinux.org> 2.4.2-alt1
 - [kiosk] Fixed bugs (ALT #44386, #44815, #44818)
 - Added password removing from keyring if server or username been change
@@ -177,8 +182,8 @@ msgfmt ru.po -o %buildroot%_datadir/locale/ru/LC_MESSAGES/%name.mo
 - Saving a password is a configurable option now
 - Added inversion of the keyboard layout for filtering
 - FreeRDP auth window:
--- Replace domain in command
--- Added saving username/domain
+ + Replace domain in command
+ + Added saving username/domain
 - Added recent files and connections menus
 - Pop-up menu:added connection renaming
 - Minor changes and bugfixes
