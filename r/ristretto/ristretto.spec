@@ -1,6 +1,6 @@
 Summary: Ristretto is an image-viewer for the Xfce Desktop Environment
 Name: ristretto
-Version: 0.12.4
+Version: 0.13.0
 Release: alt1
 License: GPLv2+
 Url: https://docs.xfce.org/apps/ristretto/start
@@ -51,6 +51,9 @@ esac
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Thu Feb 09 2023 Mikhail Efremov <sem@altlinux.org> 0.13.0-alt1
+- Updated to 0.13.0.
+
 * Fri Dec 16 2022 Mikhail Efremov <sem@altlinux.org> 0.12.4-alt1
 - Updated to 0.12.4.
 
