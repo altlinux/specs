@@ -40,7 +40,7 @@ BuildRequires: /proc rpm-build-java
 %define _localstatedir %{_var}
 # %%name and %%version and %%release is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-11-openjdk
-%define version 11.0.17.0.1
+%define version 11.0.18.0.10
 %define release 0
 # RPM conditionals so as to be able to dynamically produce
 # slowdebug/release builds. See:
@@ -277,7 +277,6 @@ BuildRequires: /proc rpm-build-java
 # Used via new version scheme. JDK 11 was
 # GA'ed in September 2018 => 18.9
 %global vendor_version_string 18.9
-%global securityver 17
 # buildjdkver is usually same as %%{majorver},
 # but in time of bootstrap of next jdk, it is majorver-1, 
 # and this it is better to change it here, on single place
@@ -298,9 +297,10 @@ BuildRequires: /proc rpm-build-java
 %global origin          openjdk
 %global origin_nice     OpenJDK
 %global top_level_dir_name   %{origin}
-%global minorver        0
-%global buildver        1
-%global rpmrelease      1
+%global securityver 18
+%global minorver    0
+%global buildver    10
+%global rpmrelease  1
 %global dist		jpp11
 #%%global tagsuffix      ""
 # priority must be 8 digits in total; untill openjdk 1.8 we were using 18..... so when moving to 11 we had to add another digit
@@ -318,7 +318,7 @@ BuildRequires: /proc rpm-build-java
 # Release will be (where N is usually a number starting at 1):
 # - 0.N%%{?extraver}%%{?dist} for EA releases,
 # - N%%{?extraver}{?dist} for GA releases
-%global is_ga           0
+%global is_ga           1
 %if %{is_ga}
 %global ea_designator ""
 %global ea_designator_zip ""
@@ -1778,6 +1778,18 @@ fi
 %endif
 
 %changelog
+* Wed Feb 08 2023 Andrey Cherepanov <cas@altlinux.org> 0:11.0.18.0.10-alt1_1jpp11
+- New version.
+- Security fixes
+  + CVE-2023-21835
+  + CVE-2023-21843
+  + JDK-8286077, CVE-2022-21618: Wider MultiByte conversions
+  + JDK-8286526, CVE-2022-21619: Improve NTLM support
+  + JDK-8286533, CVE-2022-21626: Key X509 usages
+  + JDK-8286910, CVE-2022-21624: Improve JNDI lookups
+  + JDK-8286918, CVE-2022-21628: Better HttpServer service
+  + JDK-8289366, CVE-2022-39399: Improve HTTP/2 client usage
+
 * Tue Oct 04 2022 Andrey Cherepanov <cas@altlinux.org> 0:11.0.17.0.1-alt1_0.1.eajpp11
 - New version.
 
