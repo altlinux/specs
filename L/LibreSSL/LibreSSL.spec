@@ -11,7 +11,7 @@
 %filter_from_requires /^pkgconfig(libssl)/d
 
 Name: LibreSSL
-Version: 3.6.1
+Version: 3.6.2
 Release: alt1
 
 Summary: OpenBSD fork of OpenSSL library
@@ -281,6 +281,9 @@ xz %buildroot%docdir/ChangeLog
 %_man1dir/netcat.1*
 
 %changelog
+* Thu Feb 09 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.6.2-alt1
+- Updated to 3.6.2 (fixes CVE-2023-0286).
+
 * Sat Nov 05 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.6.1-alt1
 - Updated to 3.6.1.
 - libtls26: requires /etc/libressl.
