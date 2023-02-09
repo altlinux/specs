@@ -1,20 +1,20 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name String-Tagged
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Module/Build.pm) perl(Test/Identity.pm) perl(Test/More.pm)
+BuildRequires: perl(Module/Build.pm) perl(Test/Identity.pm) perl(Test/More.pm) perl(Test2/V0.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 BuildRequires: perl(experimental.pm)
 
 Name: perl-%module_name
-Version: 0.18
-Release: alt1.1
+Version: 0.19
+Release: alt1
 Summary: string buffers with value tags on extents
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 # was due to experimental.pm not installed
@@ -34,10 +34,13 @@ Patch: String-Tagged-0.17-alt-perl534.patch
 %perl_vendor_install
 
 %files
-%doc Changes LICENSE README examples
+%doc Changes README examples
 %perl_vendor_privlib/S*
 
 %changelog
+* Thu Feb 09 2023 Igor Vlasenko <viy@altlinux.org> 0.19-alt1
+- automated CPAN update
+
 * Thu Dec 01 2022 Igor Vlasenko <viy@altlinux.org> 0.18-alt1.1
 - to Sisyphus as perl-Sub-HandlesVia dep
 
