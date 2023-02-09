@@ -9,8 +9,8 @@
 
 %define prog_name            postgresql
 %define postgresql_major     15
-%define postgresql_minor     1
-%define postgresql_altrel    2
+%define postgresql_minor     2
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -47,7 +47,7 @@ Provides: %prog_name = %EVR
 Conflicts: %prog_name < %EVR
 Conflicts: %prog_name > %EVR
 # 1C
-Conflicts: %{prog_name}14-1C
+Conflicts: %{prog_name}15-1C
 
 BuildRequires: OpenSP docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel postgresql-common python3-dev setproctitle-devel tcl-devel xsltproc zlib-devel
 BuildRequires: libselinux-devel libkrb5-devel
@@ -201,7 +201,7 @@ Conflicts: %{prog_name}11-server-devel
 Conflicts: %{prog_name}12-server-devel
 Conflicts: %{prog_name}13-server-devel
 Conflicts: %{prog_name}14-server-devel
-Conflicts: %{prog_name}14-1C-server-devel
+Conflicts: %{prog_name}15-1C-server-devel
 
 %description server-devel
 The %name-server-devel package contains the header files and configuration
@@ -212,7 +212,7 @@ Summary: Extra documentation for PostgreSQL
 Group: Databases
 BuildArch: noarch
 # 1C
-Conflicts: %{prog_name}14-1C-docs
+Conflicts: %{prog_name}15-1C-docs
 
 %description docs
 The postgresql-docs package includes the SGML source for the documentation
@@ -226,7 +226,7 @@ Group: Databases
 Requires: %name-server = %EVR
 Provides: %prog_name-contrib = %EVR
 # 1C
-Conflicts: %{prog_name}14-1C-contrib
+Conflicts: %{prog_name}15-1C-contrib
 
 %description contrib
 The postgresql-contrib package includes the contrib tree distributed with
@@ -241,7 +241,7 @@ Requires: %name = %EVR
 Requires: glibc-locales
 Provides: %prog_name-server = %EVR
 # 1C
-Conflicts: %{prog_name}14-1C-server
+Conflicts: %{prog_name}15-1C-server
 
 %description server
 The postgresql-server package includes the programs needed to create
@@ -261,7 +261,7 @@ Group: Databases
 Requires: %name-server = %EVR
 Provides: %prog_name-tcl = %EVR
 # 1C
-Conflicts: %{prog_name}14-1C-tcl
+Conflicts: %{prog_name}15-1C-tcl
 
 %description tcl
 PostgreSQL is an advanced Object-Relational database management
@@ -274,7 +274,7 @@ Group: Databases
 Requires: %name-server = %EVR
 Provides: %prog_name-perl = %EVR
 # 1C
-Conflicts: %{prog_name}14-1C-perl
+Conflicts: %{prog_name}15-1C-perl
 
 %description perl
 PostgreSQL is an advanced Object-Relational database management
@@ -287,7 +287,7 @@ Group: Databases
 Requires: %name-server = %EVR
 Provides: %prog_name-python = %EVR
 # 1C
-Conflicts: %{prog_name}14-1C-python
+Conflicts: %{prog_name}15-1C-python
 
 %description python
 PostgreSQL is an advanced Object-Relational database management
@@ -522,11 +522,6 @@ chown postgres:postgres ~postgres/.bash_profile
 
 # $2, holds the number of instances of the target package that will remain
 # after the operation if $2 is 0, the target package will be removed
-%triggerpostun -- %{prog_name}9.6-server
-if [ "$2" -eq 0 ]; then
-       %post_service %prog_name
-fi
-
 %triggerpostun -- %{prog_name}10-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
@@ -558,6 +553,11 @@ if [ "$2" -eq 0 ]; then
 fi
 
 %triggerpostun -- %{prog_name}15-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}15-1C-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -941,6 +941,10 @@ fi
 %endif
 
 %changelog
+* Wed Feb 08 2023 Alexei Takaseev <taf@altlinux.org> 15.2-alt1
+- 15.2 (Fixes CVE-2022-41862)
+- Conflicts: 14-1C -> 15-1C
+
 * Thu Dec 22 2022 Alexei Takaseev <taf@altlinux.org> 15.1-alt2
 - Add conflicts for server-devel subpackages
 - Change BR llvn 12.0 -> llvm13.0

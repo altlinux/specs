@@ -19,7 +19,7 @@
 
 Name: openqa
 Version: 4.6
-Release: alt9
+Release: alt9.1
 Summary: OS-level automated testing framework
 License: GPLv2+
 Group: Development/Tools
@@ -38,7 +38,7 @@ Patch1: rmsysusers.patch
 #BuildArch: noarch
 
 BuildRequires: %t_requires
-BuildRequires: spectool postgresql10-server systemd ruby-rb-inotify sass ruby-sass-listen os-autoinst osc
+BuildRequires: spectool postgresql15-server systemd ruby-rb-inotify sass ruby-sass-listen os-autoinst osc
 BuildRequires: python3-devel
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-requests
@@ -141,7 +141,7 @@ Additional scripts for the use of openQA in the python programming language.
 %package local-db
 Summary: Helper package to ease setup of postgresql DB
 Group: Development/Tools
-Requires: postgresql10-server
+Requires: postgresql15-server
 
 %description local-db
 You only need this package if you have a local postgresql server
@@ -453,6 +453,10 @@ fi
 %files single-instance
 
 %changelog
+* Thu Feb 09 2023 Alexei Takaseev <taf@altlinux.org> 4.6-alt9.1
+- Change BR: postgresql10-server -> postgresql15-server
+- Change Requires: postgresql10-server -> postgresql15-server
+
 * Wed Dec 07 2022 Alexandr Antonov <aas@altlinux.org> 4.6-alt9
 - update to current version
 

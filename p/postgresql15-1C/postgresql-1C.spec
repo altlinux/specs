@@ -8,9 +8,9 @@
 %def_with jit
 
 %define prog_name            postgresql
-%define postgresql_major     14
-%define postgresql_minor     6
-%define postgresql_altrel    2
+%define postgresql_major     15
+%define postgresql_minor     2
+%define postgresql_altrel    1
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -517,11 +517,6 @@ chown postgres:postgres ~postgres/.bash_profile
 
 # $2, holds the number of instances of the target package that will remain
 # after the operation if $2 is 0, the target package will be removed
-%triggerpostun -- %{prog_name}9.6-server
-if [ "$2" -eq 0 ]; then
-       %post_service %prog_name
-fi
-
 %triggerpostun -- %{prog_name}10-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
@@ -553,6 +548,11 @@ if [ "$2" -eq 0 ]; then
 fi
 
 %triggerpostun -- %{prog_name}15-server
+if [ "$2" -eq 0 ]; then
+       %post_service %prog_name
+fi
+
+%triggerpostun -- %{prog_name}15-1C-server
 if [ "$2" -eq 0 ]; then
        %post_service %prog_name
 fi
@@ -748,6 +748,9 @@ fi
 %_libdir/%PGSQL/pg_visibility.so
 %_datadir/%PGSQL/extension/pg_visibility-*.sql
 %_datadir/%PGSQL/extension/pg_visibility.control
+%_libdir/%PGSQL/pg_walinspect.so
+%_datadir/%PGSQL/extension/pg_walinspect-*.sql
+%_datadir/%PGSQL/extension/pg_walinspect.control
 %_libdir/%PGSQL/pgcrypto.so
 %_datadir/%PGSQL/extension/pgcrypto-*.sql
 %_datadir/%PGSQL/extension/pgcrypto.control
@@ -942,6 +945,13 @@ fi
 %endif
 
 %changelog
+* Wed Feb 08 2023 Alexei Takaseev <taf@altlinux.org> 15.2-alt1
+- 15.2 (Fixes CVE-2022-41862)
+
+* Thu Jan 19 2023 Alexei Takaseev <taf@altlinux.org> 15.1-alt1
+- 15.1
+- Update 1C patch
+
 * Thu Dec 22 2022 Alexei Takaseev <taf@altlinux.org> 14.6-alt2
 - Add conflicts for server-devel subpackages
 - Add triggerpostun for PG 15
