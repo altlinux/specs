@@ -5,7 +5,7 @@
 
 Summary: Universal SSL tunnel
 Name: stunnel4
-Version: 5.67
+Version: 5.68
 Release: alt1
 License: GPLv2+
 Group: Networking/Other
@@ -169,6 +169,9 @@ make check
 %_datadir/bash-completion/completions/*
 
 %changelog
+* Thu Feb 09 2023 L.A. Kostis <lakostis@altlinux.ru> 5.68-alt1
+- New version (5.68).
+
 * Wed Jan 18 2023 L.A. Kostis <lakostis@altlinux.ru> 5.67-alt1
 - New version (5.67).
 - Added bash-completion package.
