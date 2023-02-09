@@ -1,5 +1,5 @@
 Name: startup-rescue
-Version: 0.44
+Version: 0.45
 Release: alt1
 
 Summary: The system startup scripts for rescue disk
@@ -65,6 +65,9 @@ install -pm755 rescue-remote.init %buildroot%_initdir/rescue-remote
 %_initdir/rescue-remote
 
 %changelog
+* Thu Feb 09 2023 Anton Midyukov <antohami@altlinux.org> 0.45-alt1
+- rc.sysinit.rescue: Add main repo, if available
+
 * Thu Feb 09 2023 Anton Midyukov <antohami@altlinux.org> 0.44-alt1
 - rc.sysinit.rescue: redirect output of systemd-tmpfiles to /tmp/tmpfiles.log
 - rc.sysinit.rescue: redirect stderr of udevd to /tmp/udevd.log
