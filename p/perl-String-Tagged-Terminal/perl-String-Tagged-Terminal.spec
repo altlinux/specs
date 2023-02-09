@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name String-Tagged-Terminal
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Convert/Color.pm) perl(Convert/Color/XTerm.pm) perl(Module/Build.pm) perl(String/Tagged.pm) perl(Test/More.pm) perl(constant.pm) perl(experimental.pm)
+BuildRequires: perl(Convert/Color.pm) perl(Convert/Color/XTerm.pm) perl(Module/Build.pm) perl(String/Tagged.pm) perl(Test/More.pm) perl(Test2/V0.pm) perl(constant.pm) perl(experimental.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.05
-Release: alt1.1
+Version: 0.06
+Release: alt1
 Summary: format terminal output using String::Tagged
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -30,10 +30,13 @@ sequences, to render the the output in the appropriate style.
 %perl_vendor_install
 
 %files
-%doc Changes README LICENSE examples
+%doc Changes README examples
 %perl_vendor_privlib/S*
 
 %changelog
+* Thu Feb 09 2023 Igor Vlasenko <viy@altlinux.org> 0.06-alt1
+- automated CPAN update
+
 * Thu Dec 01 2022 Igor Vlasenko <viy@altlinux.org> 0.05-alt1.1
 - to Sisyphus as perl-Sub-HandlesVia dep
 
