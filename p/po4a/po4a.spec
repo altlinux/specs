@@ -8,7 +8,7 @@
 
 Name: po4a
 Version: 0.65
-Release: alt1
+Release: alt2
 
 Summary: Tools for helping translation of documentation
 
@@ -38,6 +38,8 @@ BuildRequires:  perl-Pod-Parser
 # for Unicode::GCString
 BuildRequires:  perl-Unicode-LineBreak 
 BuildRequires:  perl-YAML-Tiny
+
+Requires: gettext-tools
 
 %description
 The po4a (po for anything) project goal is to ease translations (and
@@ -82,6 +84,9 @@ rm -rf %buildroot%_datadir/locale/??_???? # TBD: why is this not packaged?
 %_man7dir/*
 
 %changelog
+* Thu Feb 09 2023 Anton Midyukov <antohami@altlinux.org> 0.65-alt2
+- Requires: gettext-tools (Closes: 43546)
+
 * Thu Dec  9 2021 Aleksey Cheusov <cheusov@altlinux.org> 0.65-alt1
 - 0.65
 
