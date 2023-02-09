@@ -1,6 +1,6 @@
 Name: sympa
 Version: 6.2.71
-Release: alt0.1.b1
+Release: alt0.2.b1
 
 %def_without authorcheck
 %define ngxconfdir %_sysconfdir/nginx/sites-available.d
@@ -630,7 +630,7 @@ function create_cookie {
 function create_config {
     ## create site configurations
     if [ '!' -e %_sysconfdir/%name/data_structure.version ]; then
-        echo %_sysconfdir/%name/data_structure.current_version > \
+        cat %_sysconfdir/%name/data_structure.current_version > \
             %_sysconfdir/%name/data_structure.version
     fi
 }
@@ -776,6 +776,10 @@ fi
 %static_content
 
 %changelog
+* Thu Feb 09 2023 L.A. Kostis <lakostis@altlinux.ru> 6.2.71-alt0.2.b1
+- nginx: added param for vhosts setup.
+- .spec: fix typo in data_structure init.
+
 * Thu Jan 26 2023 L.A. Kostis <lakostis@altlinux.ru> 6.2.71-alt0.1.b1
 - Updated to 6.2.71b.1.
 
