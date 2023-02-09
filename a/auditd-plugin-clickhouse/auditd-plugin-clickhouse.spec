@@ -8,7 +8,7 @@
 #    fields are added, removed or their types are changed.
 
 Name:    auditd-plugin-clickhouse
-Version: 20230206.1.3
+Version: 20230208.1.1
 Release: alt1
 Summary: Plugin for Auditd daemon for sending data into Clickhouse database
 Group:   Monitoring
@@ -61,6 +61,17 @@ BUILD=%_cmake__builddir bats test-suite.bats
 %attr(700,root,root) %_localstatedir/auditd-plugin-clickhouse
 
 %changelog
+* Wed Feb 08 2023 Paul Wolneykien <manowar@altlinux.org> 20230208.1.1-alt1
+- Set SendRetries=5 by default.
+- Reduce the min success sequence each time the batch is increased.
+- Write to log about batch size and min success sequence changes.
+- Reduce the batch only on the following server errors:
+  CANNOT_ALLOCATE_MEMORY (173), MEMORY_LIMIT_EXCEEDED (241) and
+  LIMIT_EXCEEDED (290).
+- Display the error type and code. Don't reduce the batch size on
+  other than server errors.
+- Fix: If WriteCountLimitMin=0 use 1.
+
 * Mon Feb 06 2023 Paul Wolneykien <manowar@altlinux.org> 20230206.1.3-alt1
 - Set SendRetries=100, RetryTimeout=5 by default.
 
