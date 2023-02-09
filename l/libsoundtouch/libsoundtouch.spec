@@ -4,20 +4,21 @@
 %def_enable check
 
 Name: libsoundtouch
-Version: 2.3.1
-Release: alt2
+Version: 2.3.2
+Release: alt1
 
 Summary: SoundTouch audio processing library
 Group: System/Libraries
 License: LGPLv2.1
-
 Url: http://www.surina.net/soundtouch/
+
 %if_disabled snapshot
-Source: https://gitlab.com/%_name/%_name/-/archive/%version/%_name-%version.tar.gz
+Source: %url/%_name-%version.tar.gz
 %else
-Vcs: https://gitlab.com/soundtouch/soundtouch
+Vcs: https://codeberg.org/soundtouch/soundtouch.git
 Source: %_name-%version.tar
 %endif
+Patch: %_name-2.3.2-suse-disable-ffast-math.patch
 
 BuildRequires: gcc-c++ libstdc++-devel
 %{?_enable_openmp:BuildRequires: libgomp-devel}
@@ -39,7 +40,8 @@ Requires: %name = %version-%release
 Libraries/include files for development with %name.
 
 %prep
-%setup -n %_name-%version
+%setup -n %_name%{?_enable_snapshot:-%version}
+%patch -p1
 %if_enabled openmp
 %ifarch %e2k
 # for unknown reason, libtool uses the -nostdlib option when linking,
@@ -66,15 +68,23 @@ rm -rf %buildroot/%_prefix/doc
 %files
 %_bindir/soundstretch
 %_libdir/libSoundTouch.so.*
-%doc README.html
+%_libdir/libSoundTouchDll.so.*
+%doc README.*
 
 %files devel
 %_includedir/%_name/
+%_includedir/SoundTouchDLL.h
 %_libdir/libSoundTouch.so
+%_libdir/libSoundTouchDll.so
 %_aclocaldir/%_name.m4
 %_pkgconfigdir/%_name.pc
 
+
 %changelog
+* Sun Jan 29 2023 Yuri N. Sedunov <aris@altlinux.org> 2.3.2-alt1
+- 2.3.2
+- disabled -ffast-math (Suse)
+
 * Thu Mar 10 2022 Michael Shigorin <mike@altlinux.org> 2.3.1-alt2
 - E2K: openmp build fix by ilyakurdyukov@
 
