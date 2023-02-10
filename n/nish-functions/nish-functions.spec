@@ -1,9 +1,9 @@
 Name: nish-functions
-Version: 2.04
+Version: 2.05
 Release: alt1
 
 Summary: Shell functions collection featuring isolated namespace
-License: Public domain
+License: BSD
 Group: Development/Other
 BuildArch: noarch
 
@@ -31,6 +31,11 @@ No bash/zsh/whatever extension used. Runs on Linux and (losely) FreeBSD.
 %_libexecdir/nish/*
 
 %changelog
+* Fri Feb 10 2023 Fr. Br. George <george@altlinux.ru> 2.05-alt1
+- Add xterm DA diagnostic sequence
+- Some fixes
+- Change license to BSD
+
 * Tue Dec 10 2019 Fr. Br. George <george@altlinux.ru> 2.04-alt1
 - Support new unscan messages format
 - Improve date arithmetic
