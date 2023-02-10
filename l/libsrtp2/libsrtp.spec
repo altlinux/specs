@@ -1,5 +1,5 @@
 Name: libsrtp2
-Version: 2.4.2
+Version: 2.5.0
 Release: alt1
 
 Summary: Secure RTP library
@@ -50,6 +50,9 @@ This package contains the headers and libraries for libsrtp development.
 %_pkgconfigdir/libsrtp2.pc
 
 %changelog
+* Fri Feb 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.0-alt1
+- 2.5.0 released
+
 * Tue Jun 07 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.2-alt1
 - 2.4.2 released
 
