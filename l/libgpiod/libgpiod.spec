@@ -1,5 +1,5 @@
 Name: libgpiod
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 
 Summary: Linux GPIO interacting library
@@ -81,6 +81,7 @@ This package contains Python bindings for libgpiod.
 
 %files devel
 %_includedir/gpiod.h
+%_includedir/gpiod.hpp
 %_libdir/libgpiod.so
 %_libdir/libgpiodcxx.so
 %_pkgconfigdir/libgpiod.pc
@@ -95,6 +96,9 @@ This package contains Python bindings for libgpiod.
 %python3_sitelibdir/gpiod.so
 
 %changelog
+* Fri Feb 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.4-alt1
+- 1.6.4 released
+
 * Fri Mar 26 2021 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.3-alt1
 - 1.6.3 reelased
 
