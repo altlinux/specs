@@ -5,7 +5,7 @@
 
 Name: gajim
 Version: 1.7.0
-Release: alt1
+Release: alt2
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -71,6 +71,24 @@ mkdir %{buildroot}%{_datadir}/%{name}/plugins/
 
 %find_lang %name
 
+%pretrans -p <lua>
+-- see http://git.altlinux.org/gears/e/example-pretrans-dir-to-symlink.git
+-- Define the path to directory being replaced below.
+-- DO NOT add a trailing slash at the end.
+path = "%python3_sitelibdir/%name/data"
+st = posix.stat(path)
+if st and st.type == "directory" then
+  status = os.rename(path, path .. ".rpmmoved")
+  if not status then
+    suffix = 0
+    while not status do
+      suffix = suffix + 1
+      status = os.rename(path .. ".rpmmoved", path .. ".rpmmoved." .. suffix)
+    end
+    os.rename(path, path .. ".rpmmoved")
+  end
+end
+
 %files -f %name.lang
 #doc AUTHORS ChangeLog README THANKS
 %_bindir/%name
@@ -96,6 +114,9 @@ mkdir %{buildroot}%{_datadir}/%{name}/plugins/
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Fri Feb 10 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.0-alt2
+- Add %%pretrans to resolve conflict during upgrade (Closes: #45158)
+
 * Sun Feb 05 2023 Ilya Mashkin <oddity@altlinux.ru> 1.7.0-alt1
 - 1.7.0
 
