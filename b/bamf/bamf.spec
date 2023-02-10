@@ -1,11 +1,12 @@
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.5
 %def_enable gtk_doc
+%def_disable headless_tests
 %def_enable check
 
 Name: bamf
 Version: %ver_major.6
-Release: alt1
+Release: alt1.1
 
 Summary: BAMF Application Matching Framework
 License: GPL-3.0 and LGPL-3.0
@@ -14,12 +15,14 @@ Url: https://launchpad.net/bamf
 
 Source: %url/%ver_major/%version/+download/%name-%version.tar.gz
 
-BuildRequires: libgtk+3-devel gtk-doc gnome-common
+BuildRequires(pre): rpm-build-gir rpm-build-systemd
+BuildRequires: vala-tools
+BuildRequires: libgtk+3-devel gtk-doc
 BuildRequires: libdbus-glib-devel libwnck3-devel libgtop-devel
-BuildRequires: gobject-introspection-devel vala-tools
+BuildRequires: gobject-introspection-devel
+BuildRequires: libstartup-notification-devel
 BuildRequires: python3-module-lxml
-BuildRequires: xvfb-run dbus-tools-gui
-BuildRequires: libstartup-notification-devel systemd-devel
+%{?_enable_headless_tests: BuildRequires: xvfb-run /bin/dbus-launch}
 
 %description
 BAMF Application Matching Framework.
@@ -106,14 +109,15 @@ export PYTHON=%__python3
 %autoreconf
 %configure \
   %{?_enable_gtk_doc:--enable-gtk-doc} \
-  --enable-headless-tests
+  %{subst_enable headless-tests}
+%nil
 %make_build V=1
 
 %install
 %makeinstall_std
 
 %check
-%make check
+%make -k check VERBOSE=1
 
 %files -n bamfdaemon
 %_libexecdir/bamf/bamfdaemon
@@ -145,6 +149,9 @@ export PYTHON=%__python3
 %_datadir/gir-1.0/Bamf-3.gir
 
 %changelog
+* Fri Feb 10 2023 Yuri N. Sedunov <aris@altlinux.org> 0.5.6-alt1.1
+- disabled headless test mode failed with dbus >= 1.14.4
+
 * Thu Mar 03 2022 Yuri N. Sedunov <aris@altlinux.org> 0.5.6-alt1
 - 0.5.6
 
