@@ -48,7 +48,7 @@
 
 Name: vim
 %define branch 9.0
-Version: %branch.1290
+Version: %branch.1294
 Release: alt1
 Epoch: 4
 
@@ -1053,6 +1053,10 @@ fi
 
 # {{{ changelog
 %changelog
+* Fri Feb 10 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 4:9.0.1294-alt1
+- Updated to v9.0.1294.
+- Fixed shell syntax highlight regression (ALT#45246).
+
 * Tue Feb  7 2023 Alexander Danilov <admsasha@altlinux.org> 4:9.0.1290-alt1
 - Updated to v9.0.1290 (fixes CVE-2023-0512).
 
