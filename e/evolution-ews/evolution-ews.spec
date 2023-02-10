@@ -3,7 +3,7 @@
 %define xdg_name org.gnome.Evolution
 
 Name: evolution-ews
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Evolution extension for Exchange Web Services
@@ -77,6 +77,9 @@ rm -f %buildroot%_libdir/evolution-data-server/*.so
 %_datadir/metainfo/%xdg_name-ews.metainfo.xml
 
 %changelog
+* Fri Feb 10 2023 Yuri N. Sedunov <aris@altlinux.org> 3.46.4-alt1
+- 3.46.4
+
 * Sun Jan 08 2023 Yuri N. Sedunov <aris@altlinux.org> 3.46.3-alt1
 - 3.46.3
 
