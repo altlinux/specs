@@ -3,7 +3,7 @@
 
 Name: cinnamon-screensaver
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon Screensaver
 License: GPLv2+
@@ -31,6 +31,8 @@ BuildRequires: xdotool-devel
 BuildRequires: libXrandr-devel
 Requires: %name-translations
 Requires: typelib(CDesktopEnums)
+
+%add_python3_self_prov_path %buildroot%_datadir/%name
 
 %description
 cinnamon-screensaver is a screen saver and locker that aims to have
@@ -121,6 +123,9 @@ install -pm640 %SOURCE1 %buildroot/%_sysconfdir/pam.d/%name
 %_datadir/gir-1.0/*
 
 %changelog
+* Fri Feb 10 2023 Stanislav Levin <slev@altlinux.org> 5.6.3-alt2
+- Filtered Python's self-provides (related #45231).
+
 * Tue Jan 10 2023 Vladimir Didenko <cow@altlinux.org> 5.6.3-alt1
 - 5.6.3
 
