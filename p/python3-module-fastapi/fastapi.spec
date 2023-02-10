@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.87.0
+Version: 0.90.1
 Release: alt1
 
 Summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
@@ -82,6 +82,9 @@ for APIs: OpenAPI (previously known as Swagger) and JSON Schema.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Feb 10 2023 Anton Zhukharev <ancieg@altlinux.org> 0.90.1-alt1
+- 0.87.0 -> 0.90.1
+
 * Tue Nov 15 2022 Anton Zhukharev <ancieg@altlinux.org> 0.87.0-alt1
 - 0.85.0 -> 0.87.0
 
