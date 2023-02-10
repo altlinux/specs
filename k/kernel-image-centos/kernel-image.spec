@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 247
+%define centos_release 259
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,51 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Feb 06 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.259-alt1.el9
+- Updated to kernel-5.14.0-259.el9 (fixes: CVE-2021-33655, CVE-2023-0266, CVE-2023-0394):
+  + ALSA: backport upstream fixes for 9.2
+  + arm64: Update core arch code to v5.19
+  + cifs: fix use-after-free caused by invalid pointer `hostname`
+  + crypto: testmgr - disallow certain DRBG hash functions in FIPS mode
+  + dmaengine: Fix double increment of client_count in dma_chan_get()
+  + ext4, jbd2: Stable update and fixes for RHEL 9.2
+  + Fix: kernel: sending malicious data to kernel by ioctl FBIOPUT_VSCREENINFO may cause out of bounds write memory
+  + Fix obscure ACPI crash on debug kernels
+  + fs: replace ll_rw_block()
+  + ice: Add missing commits
+  + ice: Enable GNSS write capability
+  + Input and HID backport to 6.0.x
+  + ip tunnels: Fix erroneous calls to RT_TOS().
+  + ipv4: Secound round of upstream fixes for RHEL 9.2.
+  + ipv6: raw: Deduct extension header length in rawv6_push_pending_frames
+  + ipvlan/macvlan: phase-2 backports for RHEL-9.2
+  + iwlwifi: fix AC9560 firmware crash and remove previous workaround
+  + KVM: aarch64: Rebase to v6.0
+  + KVM: SVM: Only dump VMSA to klog at KERN_DEBUG level
+  + l2tp: Fix race conditions at tunnel creation time.
+  + mailbox: qcom-ipcc: flag IRQ NO_THREAD
+  + Merge commit 'refs/merge-requests/1690/head' of https://gitlab.com/redhat/centos-stream/src/kernel/centos-stream-9 into 6.0_patches_with_devlink
+  + MLX5 driver upgrade - kernel 6.0
+  + mptcp: phase-2 backports for RHEL-9.2
+  + netfilter: conntrack: ignore overly delayed tcp packets
+  + net: Fix return value of qdisc ingress handling on success
+  + net: mana: Fix race on per-CQ variable napi work_done
+  + net/sched: phase-2 backports for RHEL-9.2
+  + nfsd: don't free files unconditionally in __nfsd_file_cache_purge
+  + RDMA/siw: Always consume all skbuf data in sk_data_ready() upcall.
+  + [RHEL for Edge] NVIDIA Orin support, Tegra DRM and host1x
+  + rtla: Fix exit status when returning from calls to usage()
+  + scsi: storvsc: Fix swiotlb bounce buffer leak in confidential VM
+  + statx: add direct I/O alignment information
+  + sync vdpa with upstream
+  + tcp: stable backports for 9.2 phase 2
+  + tdx: add the attestation driver
+  + tipc: backports from upstream, 2nd phase
+  + update cpufreq to v6.0
+  + Update thermal/drivers/qcom for Qdrive3
+  + Upgrade drivers/net/can in order to support Arm SystemReady IR
+  + vfio: Fix sr-iov mdev regression, PCI reset regression, complete baseline migration support
+
 * Sat Jan 28 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.247-alt1.el9
 - Updated to kernel-5.14.0-247.el9:
   + ALSA: add AMD Pink Sardine DMIC driver
