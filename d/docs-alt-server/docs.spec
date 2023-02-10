@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt12
+Release: alt13
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,9 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Fri Feb 10 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt13
+- update to latest public distr of ALT Server 10.1
+
 * Tue Feb 07 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt12
 - update FreeIPA
 
