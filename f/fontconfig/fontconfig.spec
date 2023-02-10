@@ -2,12 +2,15 @@
 %define xmlcatalog %_sysconfdir/xml/catalog
 %endif
 %define xmlcatalog_bin %_bindir/xmlcatalog
+%define docdir %_docdir/%name
+%define sover 1
+%define libfontconfig libfontconfig%sover
 
 Name: fontconfig
-Version: 2.13.1
-Release: alt5
+Version: 2.14.2
+Release: alt1
 
-Summary: Font configuration and customization library and utilities
+Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
 License: MIT
 Url: http://fontconfig.org/
@@ -18,6 +21,7 @@ Source1: fontconfig-firsttime
 Source2: fontconfig.filetrigger
 # FC
 Patch1: fontconfig-sleep-less.patch
+Patch2: fontconfig-drop-lang-from-pkgkit-format.patch
 # ALT
 Patch11: alt-symbols-map.patch
 Patch12: alt-config.patch
@@ -33,6 +37,13 @@ BuildRequires: docbook-utils elinks gperf libexpat-devel libfreetype-devel libuu
 Fontconfig is designed to locate fonts within the system and
 select them according to requirements specified by applications.
 
+%package -n %libfontconfig
+Summary: Library for Font Configuration
+Group: System/Libraries
+Conflicts: fontconfig < 2.14.2
+%description -n %libfontconfig
+%name library.
+
 %package devel
 Summary: Development files for font configuration and customization library
 Group: Development/C
@@ -42,11 +53,10 @@ Requires: %name = %version-%release
 This package includes the fontconfig header files and developer
 documentation required for development of fontconfig-based software.
 
-%define docdir %_docdir/%name
-
 %prep
-%setup -q
+%setup
 %patch1 -p1
+%patch2 -p1
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
@@ -61,6 +71,7 @@ documentation required for development of fontconfig-based software.
 	--with-cache-dir=%_var/cache/%name \
 	--docdir=%docdir \
 	--with-default-hinting=full \
+	--with-default-sub-pixel-rendering=rgb \
 	#
 
 %make PDF_FILES=
@@ -80,19 +91,21 @@ done
 # add compatibility symlinks
 find %buildroot/%_datadir/%name/conf.avail/ -type f -name \*.conf | sed -e 's|^.*/||' | \
 while read CONF ; do
-    ln -s `relative %_datadir/%name/conf.avail/$CONF %_sysconfdir/fonts/conf.avail/$CONF` %buildroot/%_sysconfdir/fonts/conf.avail/$CONF
+    ln -sr %buildroot/%_datadir/%name/conf.avail/$CONF %buildroot/%_sysconfdir/fonts/conf.avail/$CONF
 done
 find %buildroot/%_sysconfdir/fonts/conf.avail/ -type f -name \*.conf | sed -e 's|^.*/||' | \
 while read CONF ; do
-    ln -s `relative %_sysconfdir/fonts/conf.avail/$CONF %_datadir/%name/conf.avail/$CONF` %buildroot/%_datadir/%name/conf.avail/$CONF
+    ln -sr %buildroot/%_sysconfdir/fonts/conf.avail/$CONF %buildroot/%_datadir/%name/conf.avail/$CONF
 done
+
+%find_lang --output=%name.lang --append fontconfig fontconfig-conf
 
 %post
 XMLCATALOG_BIN=%xmlcatalog_bin
 if [ -e %xmlcatalog -a -x $XMLCATALOG_BIN ]; then
   %xmlcatalog_bin --noout --add system \
     "urn:fontconfig:fonts.dtd" \
-    "file://%{_datadir}/xml/fontconfig/fonts.dtd" \
+    "file://%_datadir/xml/fontconfig/fonts.dtd" \
     %xmlcatalog ||:
 fi
 [ -n "$DURING_INSTALL" ] || %_sysconfdir/firsttime.d/%name ||:
@@ -102,12 +115,11 @@ XMLCATALOG_BIN=%xmlcatalog_bin
 if [ -e %xmlcatalog -a -x $XMLCATALOG_BIN ]; then
   %xmlcatalog_bin --noout --del system \
     "urn:fontconfig:fonts.dtd" \
-    "file://%{_datadir}/xml/fontconfig/fonts.dtd" \
+    "file://%_datadir/xml/fontconfig/fonts.dtd" \
     %xmlcatalog ||:
 fi
 
-
-%files
+%files -f %name.lang
 %_sysconfdir/firsttime.d/%name
 %dir %_sysconfdir/fonts
 %dir %_sysconfdir/fonts/conf.d
@@ -116,18 +128,18 @@ fi
 %config(noreplace) %_sysconfdir/fonts/conf.avail/*.conf
 %_sysconfdir/fonts/conf.d/README
 %_sysconfdir/fonts/conf.d/[2-9]*.conf
-%config(noreplace) %_sysconfdir/fonts/conf.d/10-antialias.conf
+%config(noreplace) %_sysconfdir/fonts/conf.d/10-yes-antialias.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-hinting-full.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/10-sub-pixel-rgb.conf
 %config(noreplace) %_sysconfdir/fonts/conf.d/11-lcdfilter-default.conf
 %ghost %_sysconfdir/fonts/conf.d/10-autohint.conf
 %ghost %_sysconfdir/fonts/conf.d/10-no-antialias.conf
-%ghost %_sysconfdir/fonts/conf.d/10-no-sub-pixel.conf
 %ghost %_sysconfdir/fonts/conf.d/10-scale-bitmap-fonts.conf
 %ghost %_sysconfdir/fonts/conf.d/10-hinting-slight.conf
 %ghost %_sysconfdir/fonts/conf.d/10-hinting-medium.conf
 %ghost %_sysconfdir/fonts/conf.d/10-hinting-none.conf
+%ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-none.conf
 %ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-bgr.conf
 %ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-vbgr.conf
 %ghost %_sysconfdir/fonts/conf.d/10-sub-pixel-vrgb.conf
@@ -137,7 +149,6 @@ fi
 %ghost %_sysconfdir/fonts/conf.d/11-lcdfilter-none.conf
 %ghost %config(missingok,noreplace) %_sysconfdir/fonts/local.conf
 %_bindir/fc-*
-%_libdir/*.so.*
 %_rpmlibdir/%name.filetrigger
 %_datadir/%name
 %_datadir/xml/%name
@@ -147,6 +158,10 @@ fi
 %docdir
 %exclude %docdir/%name-devel*
 
+%files -n %libfontconfig
+%_libdir/libfontconfig.so.%sover
+%_libdir/libfontconfig.so.*
+
 %files devel
 %_libdir/*.so
 %_pkgconfigdir/*.pc
@@ -154,8 +169,13 @@ fi
 %_man3dir/*
 %dir %docdir
 %docdir/%name-devel*
+%_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Tue Feb 07 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt1
+- new version
+- split library into separate package
+
 * Tue Feb 07 2023 Sergey V Turchin <zerg@altlinux.org> 2.13.1-alt5
 - prefer Droid fonts
 
@@ -379,7 +399,7 @@ fi
 - Automated rebuild.
 
 * Mon May 15 2006 Sergey V Turchin <zerg at altlinux dot org> 2.3.2-alt8
-- add patch to don't use freetype internals 
+- add patch to don't use freetype internals
 
 * Mon Mar 20 2006 Sergey V Turchin <zerg at altlinux dot org> 2.3.2-alt7
 - add entire %%_datadir/fonts/bitmap
