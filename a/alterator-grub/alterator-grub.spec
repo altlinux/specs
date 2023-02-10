@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -53,6 +53,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Fri Feb 10 2023 Anton Midyukov <antohami@altlinux.org> 0.19-alt1
+- Show disk with mountpoint '/boot' or '/' is first place (Legacy BIOS)
+
 * Sat Jan 07 2023 Anton Midyukov <antohami@altlinux.org> 0.18-alt1
 - backend3/grub: don't show other variants of bootloader list, if EFI boot mode
 - grub-disk: hide partition dm-*, md* from list bootloader places
