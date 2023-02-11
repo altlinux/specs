@@ -1,6 +1,6 @@
 Name: squidmill
 Version: 2.6
-Release: alt3
+Release: alt3.1
 
 Source: %name-%version.tar
 
@@ -14,7 +14,7 @@ BuildRequires: gambit-devel
 BuildRequires: gambit-sqlite3-devel >= 1.2-alt7
 BuildRequires: gambit-signal-devel >= 1.1-alt1
 BuildRequires: gambit-dsock-devel >= 1.1-alt1
-BuildRequires: rpm-macros-fillup sqlite3 /usr/bin/dc gawk
+BuildRequires: rpm-macros-fillup sqlite3 %_bindir/dc gawk
 
 Requires: gambit-sqlite3 >= 1.2-alt7
 Requires: gambit-signal >= 1.1-alt1
@@ -29,26 +29,35 @@ save space and reporting time.
 %setup
 
 %build
-%make includedir=%{_includedir} libdir=%{_libdir}
+%make includedir=%_includedir libdir=%_libdir
 
 %install
-%makeinstall initdir=%buildroot%{_initdir} unitdir=%buildroot%_unitdir
+%makeinstall initdir=%buildroot%_initdir unitdir=%buildroot%_unitdir
+
 mkdir -p %buildroot%_var/run/squidmill
+
+install -d  %buildroot/%_tmpfilesdir
+echo "d /run/squidmill squid squid 775" >   %buildroot/%_tmpfilesdir/squidmill.conf
 
 %check
 %make check
 
 %preun
 %preun_service squidmill
-
 %files
 %_sbindir/squidmill
 %_initdir/squidmill
 %_unitdir/squidmill.service
+%_tmpfilesdir/squidmill.conf 
+
 %_sysconfdir/sysconfig/squidmill
-%attr(0755, squid, squid) %dir %_var/run/squidmill
+%attr(0775, squid, squid) %dir %_var/run/squidmill
 
 %changelog
+* Sat Feb 11 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2.6-alt3.1
+- Add dynamic creation of the /run/squidmill  directory
+- Close bug (Closes: 35197)
+
 * Mon Feb 11 2019 Paul Wolneykien <manowar@altlinux.org> 2.6-alt3
 - Rebuild with a new version of Gambit
 
