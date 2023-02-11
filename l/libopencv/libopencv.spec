@@ -45,7 +45,7 @@
 Name: lib%bname
 Epoch: 1
 Version: 4.5.5
-Release: alt1
+Release: alt2
 Summary: Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -65,6 +65,8 @@ Source3: %bname-xfeatures2d-vgg-%version.tar
 Patch1: %name-%version-alt-python-paths.patch
 Patch2: %name-%version-alt-linking.patch
 Patch3: %name-%version-alt-build.patch
+Patch4: https://github.com/opencv/opencv/commit/8d88bb06b230b5c4b5bca78d84102f5d1adf48cf.patch
+
 Patch2000: %name-e2k-simd.patch
 
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
@@ -251,6 +253,7 @@ pushd ../%bname-contrib-%version >/dev/null
 %patch2 -p1
 popd >/dev/null
 %patch3 -p1
+%patch4 -p1
 %ifarch %e2k
 %patch2000 -p1
 %endif
@@ -346,6 +349,10 @@ cp %_builddir/%bname-xfeatures2d-vgg-%version/* %_cmake__builddir/downloads/xfea
 %_datadir/%Name/quality
 
 %changelog
+* Tue Jan 10 2023 Alexey Shabalin <shaba@altlinux.org> 1:4.5.5-alt2
+- The upstream fix https://github.com/opencv/opencv/pull/21614
+  for build on power8
+
 * Tue Jan 18 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 1:4.5.5-alt1
 - Updated to upstream version 4.5.5.
 

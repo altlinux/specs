@@ -1,11 +1,11 @@
 %define oname protobuf
-%define soversion 27
+%define soversion 32
 
 # set 'enable' to build legacy package
 %def_disable legacy
 
 %if_disabled legacy
-%define _unpackaged_files_terminate_build 0
+%define _unpackaged_files_terminate_build 1
 
 # Tests on e2k takes 3-4 days (!)
 %ifarch %e2k
@@ -14,12 +14,10 @@
 
 # normal package may include python3 or java support
 %def_with python3
-%def_without python
 %def_with java
 %else
 # for legacy package python3 and java should always be disabled since it's not packed anyway
 %def_without python3
-%def_without python
 %def_without java
 %endif
 
@@ -28,8 +26,8 @@ Name: %oname
 %else
 Name: %oname%soversion
 %endif
-Version: 3.16.0
-Release: alt6.2
+Version: 3.21.12
+Release: alt1
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -49,12 +47,6 @@ Obsoletes: libprotobuf <= 2.0.0-alt1
 # Automatically added by buildreq on Wed Nov 19 2008
 BuildRequires: gcc-c++ libnumpy-devel zlib-devel
 
-%if_with python
-BuildRequires: python-module-setuptools
-BuildRequires: python-module-google-apputils
-BuildRequires: python-module-mox python-module-dateutil
-BuildRequires: python-module-pytz python-module-gflags
-%endif
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel
@@ -62,13 +54,11 @@ BuildRequires: python3-module-setuptools python-tools-2to3
 BuildRequires: python3-module-dateutil
 %endif
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(rake-compiler-dock) >= 1.1.0 gem(rake-compiler-dock) < 2.0
+BuildRequires: gem(rake-compiler-dock) >= 1.1.0 gem(rake-compiler-dock) < 2
 BuildRequires: gem(rake-compiler) >= 1.1.0 gem(rake-compiler) < 2
 BuildRequires: gem(test-unit) >= 3.0 gem(test-unit) < 4
-BuildRequires: gem(rubygems-tasks) >= 0.2.4 gem(rubygems-tasks) < 0.3
-BuildRequires: gem(rspec) >= 3.0.0 gem(rspec) < 4.0.0
 
-%ruby_use_gem_dependency rake-compiler >= 1.2.0,rake-compiler < 2
+%ruby_use_gem_dependency rake-compiler >= 1.1.0,rake-compiler < 2
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 
@@ -139,17 +129,6 @@ The "optimize_for = LITE_RUNTIME" option causes the compiler to generate code
 which only depends libprotobuf-lite, which is much smaller than libprotobuf but
 lacks descriptors, reflection, and some other features.
 
-%package -n python-module-%oname
-Summary: Python module files for %oname
-Group: Development/Python
-Requires: lib%oname%soversion = %EVR
-%py_requires google.apputils
-Conflicts: %name-compiler > %version
-Conflicts: %name-compiler < %version
-
-%description -n python-module-%oname
-Python bindings for protocol buffers
-
 %package -n python3-module-%oname
 Summary: Python module files for %oname
 Group: Development/Python3
@@ -165,17 +144,20 @@ Python bindings for protocol buffers
 Summary: Java Protocol Buffers runtime library
 Group: Development/Java
 BuildArch:      noarch
+BuildRequires:  /proc
+BuildRequires:  jpackage-default
 BuildRequires:  maven-local
 BuildRequires:  mvn(com.google.code.gson:gson)
 BuildRequires:  mvn(com.google.guava:guava)
+BuildRequires:  mvn(com.google.guava:guava-testlib)
+BuildRequires:  mvn(com.google.truth:truth)
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-antrun-plugin)
 BuildRequires:  mvn(org.apache.maven.plugins:maven-source-plugin)
 BuildRequires:  mvn(org.codehaus.mojo:build-helper-maven-plugin)
-BuildRequires:  mvn(org.easymock:easymock)
+BuildRequires:  mvn(org.mockito:mockito-core)
 BuildRequires(pre):  rpm-build-java
-BuildRequires:  java-devel
 BuildRequires:  libgmock-devel libgtest-devel
 Conflicts: %name-compiler > %version
 Conflicts: %name-compiler < %version
@@ -194,14 +176,14 @@ BuildArch: noarch
 %description javalite
 This package contains Java Protocol Buffers lite runtime library.
 
-#%package javadoc
-#Summary: Javadocs for %oname-java
-#Group: Development/Documentation
-#BuildArch: noarch
-#Requires: %name-java = %EVR
-#
-#%description javadoc
-#This package contains the API documentation for %oname-java.
+%package javadoc
+Summary: Javadocs for %oname-java
+Group: Development/Documentation
+BuildArch: noarch
+Requires: %name-java = %EVR
+
+%description javadoc
+This package contains the API documentation for %oname-java.
 
 %package java-util
 Summary: Utilities for Protocol Buffers
@@ -234,7 +216,7 @@ Protocol Buffer BOM POM.
 Summary: Protocol Buffers
 Group: Development/Ruby
 
-Provides: gem(google-protobuf) = %version
+Provides: gem(google-protobuf) = %EVR
 
 %description -n gem-google-protobuf
 Protocol Buffers are Google's data interchange format.
@@ -245,7 +227,7 @@ Summary(ru_RU.UTF-8): Файлы сведений для самоцвета goog
 Group: Development/Documentation
 BuildArch: noarch
 
-Requires: gem(google-protobuf)
+Requires: gem(google-protobuf) = %EVR
 
 %description -n gem-google-protobuf-doc
 Protocol Buffers documentation files.
@@ -261,12 +243,10 @@ Summary(ru_RU.UTF-8): Файлы для разработки самоцвета 
 Group: Development/Ruby
 BuildArch: noarch
 
-Requires: gem(google-protobuf)
-Requires: gem(rake-compiler-dock) >= 1.1.0 gem(rake-compiler-dock) < 2.0
+Requires: gem(google-protobuf) = %EVR
+Requires: gem(rake-compiler-dock) >= 1.1.0 gem(rake-compiler-dock) < 2
 Requires: gem(rake-compiler) >= 1.1.0 gem(rake-compiler) < 2
 Requires: gem(test-unit) >= 3.0 gem(test-unit) < 4
-Requires: gem(rubygems-tasks) >= 0.2.4 gem(rubygems-tasks) < 0.3
-Requires: gem(rspec) >= 3.0.0 gem(rspec) < 4.0.0
 
 %description -n gem-google-protobuf-devel
 Protocol Buffers development package.
@@ -278,24 +258,23 @@ Protocol Buffers are Google's data interchange format.
 
 %prep
 %setup -n %oname-%version
-
 %patch -p1
 
-find -name \*.cc -o -name \*.h | xargs chmod -x
-chmod 644 examples/*
-
-# remove test with broken dependencies
-rm -f python/google/protobuf/internal/json_format_test.py
-
-%if_with python3
-cp -fR python python3
-%endif
-
 %if_with java
-%pom_remove_dep org.easymock:easymockclassextension java/pom.xml java/core/pom.xml java/lite/pom.xml java/util/pom.xml
-%pom_remove_dep com.google.truth:truth java/pom.xml java/core/pom.xml java/lite/pom.xml java/util/pom.xml
+%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin java/util/pom.xml java/pom.xml
 %pom_remove_dep com.google.errorprone:error_prone_annotations java/util/pom.xml
-%pom_remove_dep com.google.guava:guava-testlib java/pom.xml java/util/pom.xml
+%pom_remove_dep com.google.j2objc:j2objc-annotations java/util/pom.xml
+
+# Remove annotation libraries we don't have
+annotations=$(
+    find -name '*.java' |
+      xargs grep -h -e '^import com\.google\.errorprone\.annotation' \
+                    -e '^import com\.google\.j2objc\.annotations' |
+      sort -u | sed 's/.*\.\([^.]*\);/\1/' | paste -sd\|
+)
+find -name '*.java' | xargs sed -ri \
+    "s/^import .*\.($annotations);//;s/@($annotations)"'\>\s*(\((("[^"]*")|([^)]*))\))?//g'
+
 # These use easymockclassextension
 rm java/core/src/test/java/com/google/protobuf/ServiceTest.java
 # These use truth or error_prone_annotations or guava-testlib
@@ -320,6 +299,13 @@ mv java/core/src/test/java/com/google/protobuf/IsValidUtf8Test.java \
    java/core/src/test/java/com/google/protobuf/IsValidUtf8Test.java.slow
 mv java/core/src/test/java/com/google/protobuf/DecodeUtf8Test.java \
    java/core/src/test/java/com/google/protobuf/DecodeUtf8Test.java.slow
+
+mv java/core/src/test/java/com/google/protobuf/CheckUtf8Test.java \
+   java/core/src/test/java/com/google/protobuf/CheckUtf8Test.java.slow
+mv java/core/src/test/java/com/google/protobuf/Proto3SchemaTest.java \
+   java/core/src/test/java/com/google/protobuf/Proto3SchemaTest.java.slow
+mv java/core/src/test/java/com/google/protobuf/Proto3LiteSchemaTest.java \
+   java/core/src/test/java/com/google/protobuf/Proto3LiteSchemaTest.java.slow
 %endif
 %endif
 
@@ -342,19 +328,20 @@ export PTHREAD_LIBS="-lpthread"
 	--localstatedir=%_var \
 
 %make_build
-%if_with python
-pushd python
-%python_build --cpp_implementation
-popd
-%endif
+%make_build CXXFLAGS="-Wno-error=type-limits"
 
 %if_with python3
-pushd python3
+pushd python
 %python3_build --cpp_implementation
 popd
 %endif
 
 %if_with java
+%ifarch %ix86 s390x %arm
+export MAVEN_OPTS=-Xmx1024m
+%endif
+%pom_disable_module kotlin java/pom.xml
+%pom_disable_module kotlin-lite java/pom.xml
 %mvn_build -s -- -f java/pom.xml
 %endif
 
@@ -364,14 +351,8 @@ popd
 %makeinstall_std
 %ruby_install
 
-%if_with python
-pushd python
-%python_install --cpp_implementation
-popd
-%endif
-
 %if_with python3
-pushd python3
+pushd python
 %python3_install --cpp_implementation
 popd
 %endif
@@ -407,11 +388,6 @@ popd
 %_libdir/libprotobuf-lite.so
 %_pkgconfigdir/protobuf-lite.pc
 
-%if_with python
-%files -n python-module-%oname
-%python_sitelibdir/*
-%endif
-
 %if_with python3
 %files -n python3-module-%oname
 %python3_sitelibdir/*
@@ -425,8 +401,8 @@ popd
 
 %files java-util -f .mfiles-protobuf-java-util
 
-# %files javadoc -f .mfiles-javadoc
-# %doc LICENSE
+%files javadoc -f .mfiles-javadoc
+%doc LICENSE
 
 %files parent -f .mfiles-protobuf-parent
 %doc LICENSE
@@ -439,21 +415,27 @@ popd
 %endif
 %endif
 
-%files         -n gem-google-protobuf
-%ruby_gemspecdir/google-protobuf-3.16.0.gemspec
-%ruby_gemslibdir/google-protobuf-3.16.0
-%ruby_gemsextdir/google-protobuf-3.16.0
+%files -n gem-google-protobuf
+%ruby_gemspecdir/google-protobuf-*.gemspec
+%ruby_gemslibdir/google-protobuf-*
+%ruby_gemsextdir/google-protobuf-*
 
-%files         -n gem-google-protobuf-doc
-%ruby_gemsdocdir/google-protobuf-3.16.0
+%files -n gem-google-protobuf-doc
+%ruby_gemsdocdir/google-protobuf-*
 
-%files         -n gem-google-protobuf-devel
+%files -n gem-google-protobuf-devel
 %_includedir/google/protobuf_c/
 
 
 %changelog
-* Fri Aug 26 2022 Pavel Skrylev <majioa@altlinux.org> 3.16.0-alt6.2
-- - disable java documentation package
+* Fri Dec 23 2022 Alexey Shabalin <shaba@altlinux.org> 3.21.12-alt1
+- 3.21.12
+
+* Wed Oct 19 2022 Alexey Shabalin <shaba@altlinux.org> 3.20.3-alt1
+- 3.20.3
+
+* Thu Aug 04 2022 Alexey Shabalin <shaba@altlinux.org> 3.20.1-alt1
+- 3.20.1
 
 * Thu Jun 02 2022 Pavel Skrylev <majioa@altlinux.org> 3.16.0-alt6.1
 - !fix deps to rack-compiler gem

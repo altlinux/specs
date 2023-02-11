@@ -3,7 +3,7 @@
 
 Name: libArcus
 Version: 4.13.0
-Release: alt1
+Release: alt2
 
 Summary: Communication library between internal components for Ultimaker software
 License: LGPLv3+
@@ -15,7 +15,7 @@ Packager: Anton Midyukov <antohami@altlinux.org>
 Source: %name-%version.tar
 # Source-url: https://github.com/Ultimaker/%name/archive/refs/tags/%version.tar.gz
 Patch: fix_find_sip.patch
-
+Patch2: libarcus_protobuf.patch
 BuildRequires(pre): rpm-build-python3 rpm-macros-cmake
 BuildRequires: python3-dev cmake gcc-c++ pkgconfig(protobuf) python3-module-sip-devel protobuf-compiler
 
@@ -43,6 +43,7 @@ Communication library between internal components for Ultimaker software
 %prep
 %setup
 %patch -p1
+%patch2 -p1
 
 # https://github.com/Ultimaker/libArcus/pull/94#issuecomment-505376760
 sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
@@ -68,6 +69,9 @@ sed -i 's/Python3_SITELIB/Python3_SITEARCH/' cmake/SIPMacros.cmake
 %python3_sitelibdir/*
 
 %changelog
+* Thu Dec 29 2022 Alexey Shabalin <shaba@altlinux.org> 4.13.0-alt2
+- fixed build with new protobuf
+
 * Wed Jan 26 2022 Anton Midyukov <antohami@altlinux.org> 4.13.0-alt1
 - new version (4.13.0) with rpmgs script
 

@@ -1,4 +1,4 @@
-%def_with system_celt
+%define _unpackaged_files_terminate_build 1
 
 %define _pseudouser_user     _mumble
 %define _pseudouser_group    _mumble
@@ -6,7 +6,8 @@
 %define _pidfile_dir         /run/
 
 Name: mumble
-Version: 1.3.2
+%define build_number 287
+Version: 1.4.287
 Release: alt1
 
 Summary: Low latency encrypted VoIP client
@@ -14,39 +15,38 @@ Summary: Low latency encrypted VoIP client
 Group: Networking/Chat
 License: BSD
 Url: http://mumble.info/
-Packager: Arseny Maslennikov <arseny@altlinux.org>
 
 # VCS0: git://github.com/mumble-voip/mumble.git
 Source0: %name-%version.tar
-# VCS1: git://github.com/mumble-voip/celt-0.7.0.git
-#Source1: celt-0.7.0-src.tar
+# The altlinux directory from head.
+Source1: altlinux.tar
 # VCS2: git://github.com/mumble-voip/celt-0.11.0.git
 #Source2: celt-0.11.0-src.tar
 # VCS3: git://github.com/mumble-voip/rnnoise.git
-Source3: rnnoise-src.tar
-# VCS4: git://github.com/mumble-voip/mumble-theme.git
-Source4: mumble-theme-src.tar
+#Source3: rnnoise-src.tar
+# VCS4: git://github.com/mumble-voip/mumble.git, copied from current master.
+Source4: themes.tar.xz
 
-Patch: %name-%version-%release.patch
-Patch1: link-mumble-with-lGL.patch
-Patch2: link-overlay-with-lGL.patch
+#Patch: %name-%version-%release.patch
+Patch2: upstream-0002-CHANGE-client-Drop-support-for-all-legacy-codecs.patch
+#Patch1: link-mumble-with-lGL.patch
+#Patch2: link-overlay-with-lGL.patch
+Patch3: replace-submodule-to-find-python.patch
+Patch4: gtav-exclusive-x86_64.patch
 
-%if_with system_celt
-%define celtopts celt no-bundled-celt
-%else
-%define celtopts celt bundled-celt
-%endif
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake >= 3.15
 
-# Automatically added by buildreq on Sat Apr 25 2020
-BuildRequires: boost-devel-headers libalsa-devel libavahi-devel libcap-devel libprotobuf-devel libpulseaudio-devel libqtav-devel libsndfile-devel libspeechd-devel libssl-devel protobuf-compiler python-modules-xml qt5-3d-devel qt5-charts-devel qt5-connectivity-devel qt5-datavis3d-devel qt5-enginio-devel qt5-gamepad-devel qt5-multimedia-devel qt5-networkauth-devel qt5-quickcontrols2-devel qt5-remoteobjects-devel qt5-script-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-virtualkeyboard-devel qt5-wayland-devel qt5-webengine-devel qt5-webkit-devel qt5-websockets-devel qt5-webview-devel qt5-x11extras-devel qt5-xmlpatterns-devel
-
+BuildRequires: boost-devel-headers libalsa-devel libavahi-devel libcap-devel libprotobuf-devel libpulseaudio-devel libqtav-devel libsndfile-devel libspeechd-devel libssl-devel protobuf-compiler
+# BuildRequires: python3-modules-xml
+BuildRequires: qt5-3d-devel qt5-charts-devel qt5-connectivity-devel qt5-datavis3d-devel qt5-enginio-devel qt5-gamepad-devel qt5-multimedia-devel qt5-networkauth-devel qt5-quickcontrols2-devel qt5-remoteobjects-devel qt5-script-devel qt5-scxml-devel qt5-sensors-devel qt5-serialbus-devel qt5-serialport-devel qt5-speech-devel qt5-svg-devel qt5-tools-devel qt5-virtualkeyboard-devel qt5-wayland-devel qt5-x11extras-devel qt5-xmlpatterns-devel
+BuildRequires: libpoco-devel
+# Poco dependencies. Should libpoco-devel depend on them?
+BuildRequires: libpcre2-devel
+BuildRequires: libexpat-devel
 BuildRequires: libspeex-devel libspeexdsp-devel
 BuildRequires: libopus-devel
-
-%if_with system_celt
-BuildRequires: libcelt-devel
-Requires: libcelt >= 0:0.7.0-alt1
-%endif
+BuildRequires: librnnoise-devel
 
 Requires: qt5-sql-sqlite3
 
@@ -84,7 +84,6 @@ every chat participant sound as if their voice came from their character.
 %package overlay
 Summary: Start Mumble with overlay
 Group: Networking/Chat
-BuildArch: noarch
 Requires: %name = %version-%release
 
 %description overlay
@@ -93,92 +92,81 @@ primarily intended for gaming. Mumble's interactive overlay shows players
 in current channel and linked channels in-game so the player needs not quit
 the game to control Mumble.
 
-%package protocol
-Summary: Mumble protocol support for KIO
-Group: Networking/Chat
-BuildArch: noarch
-Requires: %name = %version-%release
+#package protocol
+#Summary: Mumble protocol support for KIO
+#Group: Networking/Chat
+#BuildArch: noarch
+#Requires: %name = %version-%release
 #Requires: kde-filesystem
 
-%description protocol
-This package is part of Mumble, a low-latency, high quality VoIP suite
-primarily intended for gaming. It provides a KIO protocol description.
+#description protocol
+#This package is part of Mumble, a low-latency, high quality VoIP suite
+#primarily intended for gaming. It provides a KIO protocol description.
 
 %prep
+%setup -a1 -a4
 #setup -a1 -a2
-%setup -a3 -a4
-%patch -p1
-%patch1 -p1
+#setup -a3 -a4
+#patch -p1
+#patch1 -p1
+#patch2 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
-%add_optflags -fpermissive
-qmake-qt5 -recursive \
-"CONFIG*=release" \
-"CONFIG*=packaged" \
-"CONFIG*=no-oss no-ice" \
-"CONFIG*=speex no-bundled-speex %celtopts opus no-bundled-opus" \
-"CONFIG*=no-g15 no-embed-qt-translation no-update c++11" \
-QMAKE_CFLAGS+='%optflags' \
-QMAKE_CXXFLAGS+='%optflags' \
-DEFINES+=PLUGIN_PATH=%_libdir/%name \
-DEFINES+=DEFAULT_SOUNDSYSTEM=PulseAudio main.pro
-%make_build
+%cmake \
+    -DCMAKE_BUILD_TYPE=Release \
+    -Dpackaging:BOOL=ON \
+    -DBUILD_NUMBER=%build_number \
+    -Dbundled-opus:BOOL=OFF \
+    -Dbundled-speex:BOOL=OFF \
+    -Dclient:BOOL=ON \
+    -Dice:BOOL=OFF \
+    -Doss:BOOL=OFF \
+    -Drnnoise:BOOL=ON \
+    -Dbundled-rnnoise:BOOL=OFF \
+    -Dserver:BOOL=ON \
+    -Dsymbols:BOOL=ON \
+    -Doverlay-xcompile=OFF \
+    #
+%cmake_build
 
 %install
-# binaries
-install -pD -m0755 release/%name %buildroot%_bindir/%name
-#install -pD -m0755 release/%{name}11x %buildroot%_bindir/%{name}11x
-install -pD -m0755 release/murmurd %buildroot%_sbindir/murmurd
+%cmake_install
 
-install -d %buildroot%_libdir/%name/
-cp -a release/libmumble.so* %buildroot%_libdir/
-%if_without system_celt
-cp -a release/libcelt*.so* %buildroot%_libdir/%name/
-%endif
-install -p release/plugins/*.so %buildroot%_libdir/%name/
+# Compatibility with pre-1.4.
+mkdir -p %buildroot%_sbindir
+mkdir -p %buildroot%_unitdir
+mkdir -p %buildroot%_initdir
+mkdir -p %buildroot%_man1dir
+mkdir -p %buildroot%_sysconfdir/logrotate.d
+mkdir -p %buildroot%_sysconfdir/dbus-1/system.d
+ln -sr %buildroot%_bindir/mumble-server %buildroot%_sbindir/murmurd
+ln -sr %buildroot%_unitdir/mumble-server.service %buildroot%_unitdir/murmur.service
+ln -sr %buildroot%_initdir/mumble-server %buildroot%_initdir/murmur
+ln -sr %buildroot%_man1dir/mumble-server.1 %buildroot%_man1dir/murmurd.1
 
 # murmur config
 mkdir -p %buildroot%_sysconfdir/murmur/
 install -pD altlinux/murmur.ini %buildroot%_sysconfdir/murmur/murmur.ini
 
 # murmur initscript
-install -pDm0755 altlinux/murmur.service %buildroot%_unitdir/murmur.service
-install -pDm0755 altlinux/murmur.init %buildroot%_initdir/murmur
+install -pDm0644 altlinux/murmur.service %buildroot%_unitdir/mumble-server.service
+install -pDm0755 altlinux/murmur.init %buildroot%_initdir/mumble-server
 install -pDm0644 altlinux/murmur.sysconfig %buildroot%_sysconfdir/sysconfig/murmur
 
 # murmur logrotate
 install -pDm0644 altlinux/murmur.logrotate %buildroot%_sysconfdir/logrotate.d/murmur
 
-# overlay script. untested
-mkdir -p %buildroot%_datadir/%name/
-install -pD scripts/%name-overlay %buildroot%_bindir/%name-overlay
-
-# man pages
-mkdir -p %buildroot%_man1dir/
-install -pD -m0644 man/murmurd.1 %buildroot%_man1dir/
-install -pD -m0644 man/mumble* %buildroot%_man1dir/
-
-#icons
-install -pD icons/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
-
-# desktop file
-install -pD altlinux/mumble.desktop %buildroot%_desktopdir/mumble.desktop
-
-# install the mumble protocol
-install -pD -m0644 scripts/%name.protocol %buildroot%_datadir/kde4/services/%name.protocol
-
 # dbus murmur.conf
 install -pD -m0644 altlinux/dbus-net.sourceforge.mumble.murmur.conf %buildroot%_sysconfdir/dbus-1/system.d/murmur.conf
 
 # dir for mumble-server.sqlite
-mkdir -p %buildroot%_pseudouser_home/
+mkdir -p %buildroot%_pseudouser_home
 
 # log dir
-mkdir -p %buildroot%_logdir/murmur/
-
-# pid dir
-#mkdir -p %buildroot%_pidfile_dir/murmur/
+mkdir -p %buildroot%_logdir/murmur
 
 %pre -n murmur
 /usr/sbin/groupadd -r -f %_pseudouser_group ||:
@@ -192,25 +180,23 @@ mkdir -p %buildroot%_logdir/murmur/
 %post_service murmur
 
 %files
-%doc README README.Linux LICENSE CHANGES
-%doc scripts/*.pl
-#%doc scripts/*php scripts/qt.conf
-%_libdir/libmumble.so*
-%if_without system_celt
-%_libdir/%name/libcelt*.so*
-%endif
+%define xdg_name info.mumble.Mumble
+%doc README.md LICENSE CHANGES docs
 %_bindir/%name
-#%_bindir/%{name}11x
-#%%attr(664,root,root) %_datadir/%name/*
 %_man1dir/%{name}*
 %_iconsdir/hicolor/scalable/apps/%name.svg
-%_desktopdir/%name.desktop
+%_iconsdir/hicolor/*/apps/%name.png
+%_desktopdir/%xdg_name.desktop
+%_datadir/metainfo/%xdg_name.appdata.xml
 
 %files -n murmur
-%doc README README.Linux CHANGES
+%doc README.md LICENSE CHANGES
 %doc altlinux/doc/murmur*
+%_bindir/mumble-server
 %_sbindir/murmurd
+%_unitdir/mumble-server.service
 %_unitdir/murmur.service
+%_initdir/mumble-server
 %_initdir/murmur
 %config(noreplace) %_sysconfdir/sysconfig/murmur
 %dir %attr(0770,root,%_pseudouser_group) %_sysconfdir/murmur/
@@ -223,19 +209,21 @@ mkdir -p %buildroot%_logdir/murmur/
 #ghost %attr(0775,root,%_pseudouser_group) %_pidfile_dir/murmur/
 
 %files plugins
-%_libdir/%name
-%if_without system_celt
-%exclude %_libdir/%name/libcelt*.so*
-%endif
+%_libdir/%name/plugins
 
 %files overlay
 %add_findreq_skiplist %_bindir/%name-overlay
+%_libdir/%name/libmumbleoverlay*.so*
 %_bindir/%name-overlay
 
-%files protocol
-%_datadir/kde4/services/mumble.protocol
-
 %changelog
+* Thu Jan 19 2023 Arseny Maslennikov <arseny@altlinux.org> 1.4.287-alt1
+- 1.3.2 -> 1.4.287.
+- Backported 4d05018c2e4f ("Drop support for all legacy codecs") from master.
+  This removes support of all codecs but Opus from the client. Opus support was
+  introduced in Mumble 1.2.4, released in 2013, so this is unlikely to be a
+  real problem. Upstream plans to remove it in 1.5.0.
+
 * Wed Jul 29 2020 Arseny Maslennikov <arseny@altlinux.org> 1.3.2-alt1
 - 1.3.1 -> 1.3.2.
 
