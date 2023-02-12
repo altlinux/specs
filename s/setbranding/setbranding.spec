@@ -1,5 +1,5 @@
 Name:     setbranding
-Version:  1.1.3
+Version:  1.1.4
 Release:  alt1
 
 Summary:  Script for manipulation ALT Linux branding packages
@@ -26,6 +26,9 @@ install -Dm755 %SOURCE0 %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sun Feb 12 2023 Andrey Cherepanov <cas@altlinux.org> 1.1.4-alt1
+- skips grub setup if can't access it with root (thanks onetowne@yandex.ru) (ALT #44280)
+
 * Wed Feb 27 2019 Anton Midyukov <antohami@altlinux.org> 1.1.3-alt1
 - fix build for non-x86 (closes: 36139)
 
