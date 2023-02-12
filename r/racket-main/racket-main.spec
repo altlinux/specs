@@ -20,7 +20,7 @@
 
 Name: racket-main
 Version: 8.6
-Release: alt2
+Release: alt3
 
 Summary: Racket, the programming language (main-distribution packages)
 License: GPL-3.0 or LGPL-3.0 or Apache-2.0 or MIT
@@ -99,8 +99,8 @@ rm %fakechroot_dir%racket_pkgsdir/pkgs.rktd
 %fakechroot_deinit
 
 # remove cache and garbage
-rm -r %fakechroot_dir%_datadir/fonts
-rm -r %fakechroot_dir%_cachedir/fontconfig
+rm -rfv %fakechroot_dir%_datadir/fonts
+rm -rfv %fakechroot_dir%_cachedir/fontconfig
 
 %install
 # racket(1) is provided by racket-base
@@ -129,6 +129,9 @@ mv %fakechroot_dir %buildroot
 %racket_libdir/*.d/
 
 %changelog
+* Sun Feb 12 2023 Anton Zhukharev <ancieg@altlinux.org> 8.6-alt3
+- fix removing fonts from fakechroot (force it)
+
 * Mon Jan 09 2023 Anton Zhukharev <ancieg@altlinux.org> 8.6-alt2
 - set dependency on racket-core package
 
