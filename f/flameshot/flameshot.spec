@@ -1,6 +1,8 @@
+%def_with wayland
+
 Name: flameshot
 Version: 12.1.0
-Release: alt1
+Release: alt2
 
 Summary: Powerful yet simple to use screenshot software
 
@@ -13,6 +15,9 @@ Source: %name-%version.tar
 Packager: Anton Shevtsov <x09@altlinux.org>
 
 BuildRequires: qt5-base-devel qt5-tools-devel qt5-svg-devel cmake
+%if_with wayland
+BuildRequires: kf5-kguiaddons-devel
+%endif
 
 %description
 Powerful and simple to use screenshot software with built-in
@@ -27,7 +32,11 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 
 %build
 %cmake \
+%if_with wayland
+    -DUSE_WAYLAND_CLIPBOARD:BOOL=ON \
+%endif
     -DCMAKE_BUILD_TYPE=Release
+
 %cmake_build
 
 %install
@@ -53,6 +62,9 @@ find -name '*.cpp' -o -name '*.h' | xargs sed -ri 's,^\xEF\xBB\xBF,,'
 %_man1dir/flameshot.1.xz
 
 %changelog
+* Sun Feb 12 2023 Grigory Ustinov <grenka@altlinux.org> 12.1.0-alt2
+- Added support of wayland clipboard.
+
 * Fri Jul 15 2022 Grigory Ustinov <grenka@altlinux.org> 12.1.0-alt1
 - Automatically updated to 12.1.0.
 
