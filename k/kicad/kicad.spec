@@ -1,10 +1,10 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
-%define majver 6.0
+%define majver 7.0
 
 Name: kicad
-Version: 6.0.11
+Version: 7.0.0
 Release: alt1
 Epoch: 1
 
@@ -31,7 +31,8 @@ BuildRequires: ccmake gcc-c++
 BuildRequires: libwxGTK3.2-devel
 BuildRequires: libgtk+3-devel
 BuildRequires: libGLEW-devel libcairo-devel libssl-devel swig pkgconfig(gobject-2.0) libpcre-devel libpixman-devel pkgconfig(harfbuzz) pkgconfig(expat) pkgconfig(libdrm) pkgconfig(xdmcp) pkgconfig(xdamage) pkgconfig(xxf86vm) libcurl-devel
-BuildRequires: doxygen
+BuildRequires: libunixODBC-devel
+BuildRequires: doxygen graphviz
 BuildRequires: dos2unix
 BuildRequires: python-devel
 BuildRequires: libglm-devel
@@ -158,7 +159,7 @@ rm -r %buildroot/%_datadir/locale/pt_br
 %python3_sitelibdir/_pcbnew.so
 %python3_sitelibdir/pcbnew.py
 %python3_sitelibdir/__pycache__/pcbnew*
-%doc %_docdir/%name
+#doc %_docdir/%name
 %_datadir/metainfo/*.metainfo.xml
 %_iconsdir/hicolor/*/mimetypes/application-x-*.*
 %_iconsdir/hicolor/*/apps/*.*
@@ -170,6 +171,9 @@ rm -r %buildroot/%_datadir/locale/pt_br
 %dir %_datadir/kicad/template
 
 %changelog
+* Sun Feb 12 2023 Anton Midyukov <antohami@altlinux.org> 1:7.0.0-alt1
+- new version 7.0.0
+
 * Mon Jan 30 2023 Anton Midyukov <antohami@altlinux.org> 1:6.0.11-alt1
 - new version 6.0.11
 

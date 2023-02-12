@@ -3,7 +3,7 @@
 
 Summary: Documentation and tutorials for kicad
 Name: kicad-doc
-Version: 6.0.7
+Version: 7.0.0
 Epoch: 1
 Release: alt1
 Group: Documentation
@@ -202,6 +202,9 @@ Chinese translation.
 %_datadir/doc/kicad/help/zh
 
 %changelog
+* Sun Feb 12 2023 Anton Midyukov <antohami@altlinux.org> 1:7.0.0-alt1
+- new version (7.0.0) with rpmgs script
+
 * Sat Sep 10 2022 Anton Midyukov <antohami@altlinux.org> 1:6.0.7-alt1
 - new version (6.0.7) with rpmgs script
 
