@@ -5,7 +5,7 @@ BuildRequires: perl(Data/Peek.pm)
 BuildRequires: perl-podlators
 %define dist IO-Compress
 Name: perl-%dist
-Version: 2.201
+Version: 2.204
 Release: alt1
 
 Summary: Read and write compressed data
@@ -69,6 +69,9 @@ export TEST_SKIP_VERSION_CHECK=1
 
 
 %changelog
+* Sun Feb 12 2023 Igor Vlasenko <viy@altlinux.org> 2.204-alt1
+- automated CPAN update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.201-alt1
 - automated CPAN update
 
