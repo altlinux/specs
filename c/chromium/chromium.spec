@@ -15,6 +15,7 @@
 #set_gcc_version %gcc_version
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
+%add_debuginfo_skiplist %_libdir/* %_bindir/*
 
 %define _unpackaged_files_terminate_build 1
 
@@ -29,7 +30,7 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium
-Version:        109.0.5414.119
+Version:        110.0.5481.77
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -75,18 +76,24 @@ Patch010: 0010-Move-offending-function-to-chromeos-only.patch
 Patch011: 0011-FEDORA-bootstrap-with-python3.patch
 Patch012: 0012-sql-make-VirtualCursor-standard-layout-type.patch
 Patch013: 0013-GENTOO-Fix-instantiating-fold-expression-error.patch
-#Patch014: 0014-ALT-Do-not-mix-internal-and-system-wayland.patch
-Patch015: 0015-IWYU-add-cmath-for-std-isnan-and-std-isinf.patch
-Patch016: 0016-ALT-use-system-zlib.patch
-Patch017: 0017-ALT-use-system-libdrm-library.patch
-Patch018: 0018-GENTOO-Fix-gtk4-build.patch
-Patch019: 0019-DEBIAN-allow-building-against-system-libraries-even-.patch
-Patch020: 0020-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
-Patch021: 0021-DEBIAN-use-system-opus-library-instead-of-embedded.patch
-Patch022: 0022-DEBIAN-build-using-system-openjpeg.patch
-Patch023: 0023-DEBIAN-use-system-jpeg-library.patch
-Patch024: 0024-DEBIAN-use-system-libevent-library.patch
-Patch025: 0025-ALT-Use-system-libusb-libsecret-flatbuffers.patch
+Patch014: 0014-IWYU-add-cmath-for-std-isnan-and-std-isinf.patch
+Patch015: 0015-ALT-use-system-zlib.patch
+Patch016: 0016-ALT-use-system-libdrm-library.patch
+Patch017: 0017-GENTOO-Fix-gtk4-build.patch
+Patch018: 0018-DEBIAN-allow-building-against-system-libraries-even-.patch
+Patch019: 0019-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
+Patch020: 0020-DEBIAN-use-system-opus-library-instead-of-embedded.patch
+Patch021: 0021-DEBIAN-build-using-system-openjpeg.patch
+Patch022: 0022-DEBIAN-use-system-jpeg-library.patch
+Patch023: 0023-DEBIAN-use-system-libevent-library.patch
+Patch024: 0024-ALT-Use-system-libusb-libsecret-flatbuffers.patch
+Patch025: 0025-Use-yandex-search-as-default.patch
+Patch026: 0026-GCC-use-fabsf-in-ui-NativeThemeBase-OutlineColor.patch
+Patch027: 0027-libstdc-Don-t-use-const-members-in-std-vector-in-pas.patch
+Patch028: 0028-libstdc-fix-narrowing-in-blink-DarkModeLABColorSpace.patch
+Patch029: 0029-GCC-fix-selection-of-IMMEDIATE_CRASH.patch
+Patch030: 0030-Ozone-Linux-Support-VA-API-on-Linux-Ozone-Wayland.patch
+Patch031: 0031-heap-Move-the-Stack-object-from-ThreadLocalTop-to-Is.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -166,11 +173,6 @@ BuildRequires:  pkgconfig(nss)
 BuildRequires:  pkgconfig(openh264)
 BuildRequires:  pkgconfig(re2)
 BuildRequires:  pkgconfig(snappy)
-BuildRequires:  pkgconfig(wayland-client)
-BuildRequires:  pkgconfig(wayland-cursor)
-BuildRequires:  pkgconfig(wayland-egl)
-BuildRequires:  pkgconfig(wayland-scanner)
-BuildRequires:  pkgconfig(wayland-server)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xcb-proto)
 BuildRequires:  pkgconfig(xcomposite)
@@ -233,9 +235,6 @@ rm -f -- third_party/depot_tools/ninja
 ln -s %_bindir/ninja third_party/depot_tools/ninja
 ln -s %_bindir/python3 third_party/depot_tools/python
 
-#rm -rf -- \
-#	third_party/wayland/src \
-#	third_party/wayland/include
 
 %build
 %if_enabled clang
@@ -282,18 +281,16 @@ gn_arg+=( use_vaapi=true )
 gn_arg+=( use_system_freetype=true )
 gn_arg+=( use_system_harfbuzz=true )
 gn_arg+=( use_system_lcms2=true )
+gn_arg+=( use_system_libffi=true )
 gn_arg+=( use_system_libdrm=true )
 gn_arg+=( use_system_libjpeg=true )
 gn_arg+=( use_system_libopenjpeg2=true )
 gn_arg+=( use_system_libpng=true )
 gn_arg+=( use_system_minigbm=true )
 gn_arg+=( use_system_zlib=true )
-gn_arg+=( use_system_libwayland=true )
-gn_arg+=( use_system_wayland_scanner=true )
 gn_arg+=( use_bundled_weston=false )
 gn_arg+=( use_xkbcommon=true )
 gn_arg+=( use_icf=false )
-gn_arg+=( use_allocator=\"none\" )
 gn_arg+=( enable_linux_installer=false )
 gn_arg+=( optimize_webui=false )
 gn_arg+=( link_pulseaudio=true )
@@ -482,7 +479,7 @@ EOF
 	while read f; do
 		t="$(readlink -ev "$f")"
 
-		file "$t" | fgrep -qs ELF || continue
+		file "$t" | grep -Fqs ELF || continue
 
 		# Strip Chromium executables to disable debuginfo generation (became too huge)
 		#strip -d "$t" ||:
@@ -511,6 +508,22 @@ EOF
 %_altdir/%name
 
 %changelog
+* Thu Feb 09 2023 Alexey Gladkov <legion@altlinux.ru> 110.0.5481.77-alt1
+- New version (110.0.5481.77).
+- Upstream disallow to chromium build with system libwayland (crbug.com/1385736).
+- Add more parameters to Yandex search url (ALT#45192).
+- Security fixes:
+  - CVE-2023-0696: Type Confusion in V8.
+  - CVE-2023-0697: Inappropriate implementation in Full screen mode.
+  - CVE-2023-0698: Out of bounds read in WebRTC.
+  - CVE-2023-0699: Use after free in GPU.
+  - CVE-2023-0700: Inappropriate implementation in Download.
+  - CVE-2023-0701: Heap buffer overflow in WebUI.
+  - CVE-2023-0702: Type Confusion in Data Transfer.
+  - CVE-2023-0703: Type Confusion in DevTools.
+  - CVE-2023-0704: Insufficient policy enforcement in DevTools.
+  - CVE-2023-0705: Integer overflow in Core.
+
 * Mon Jan 30 2023 Alexey Gladkov <legion@altlinux.ru> 109.0.5414.119-alt1
 - New version (109.0.5414.119).
 - Add a workaround to make the https_proxy environment variable work (ALT#44986).
