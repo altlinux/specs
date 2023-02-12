@@ -3,6 +3,7 @@
 %define _name champlain
 %define ver_major 0.12
 %define api_ver 0.12
+%def_disable libsoup3
 %def_enable introspection
 %def_enable vala
 %def_enable gtk_doc
@@ -12,7 +13,7 @@
 
 Name: lib%_name
 Version: %ver_major.21
-Release: alt1
+Release: alt2
 
 Summary: Map view library for Clutter
 License: LGPLv2+
@@ -30,19 +31,26 @@ Source: %name-%version.tar
 %define gtk_ver 3.0.1
 %define clutter_ver 1.24
 %define soup_ver 2.42
+%define soup3_ver 3.0
 %define gir_ver 0.10.3
 %define memphis_ver 0.2.1
 
-BuildRequires(pre): meson
+BuildRequires(pre): rpm-macros-meson rpm-build-gir
+BuildRequires: meson
 BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libcairo-devel >= %cairo_ver
 BuildRequires: libclutter-devel >= %clutter_ver
+%if_enabled libsoup3
+BuildRequires: libsoup3.0-devel >= %soup3_ver
+%else
 BuildRequires: libsoup-devel >= %soup_ver
-BuildRequires: libclutter-gtk3-devel libsoup-devel libsqlite3-devel gtk-doc
+%endif
+BuildRequires: libclutter-gtk3-devel libsqlite3-devel gtk-doc
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_memphis:BuildRequires: libmemphis-devel >= %memphis_ver}
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libclutter-gir-devel %{?_enable_memphis:libmemphis-gir-devel}}
+%{?_enable_introspection:
+BuildRequires: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libclutter-gir-devel %{?_enable_memphis:libmemphis-gir-devel}}
 
 %description
 Libchamplain is a C library aimed to provide a ClutterActor to display
@@ -139,6 +147,7 @@ GObject introspection devel data for the Libchamplain library
 
 %build
 %meson \
+	%{?_disable_libsoup3:-Dlibsoup3=false} \
 	%{?_enable_gtk_doc:-Dgtk_doc=true} \
 	%{?_disable_vala:-Dvapi=false} \
 	%{?_disable_introspection:-Dintrospection=false} \
@@ -203,6 +212,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Sat Feb 11 2023 Yuri N. Sedunov <aris@altlinux.org> 0.12.21-alt2
+- rebuilt against libsoup-2.4 instead of libsoup-3.0
+
 * Thu Jan 19 2023 Yuri N. Sedunov <aris@altlinux.org> 0.12.21-alt1
 - 0.12.21
 
