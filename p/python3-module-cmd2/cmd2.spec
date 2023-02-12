@@ -5,7 +5,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 2.4.2
+Version: 2.4.3
 Release: alt1
 
 Summary: A toolkit for simple interactive command-line applications
@@ -118,6 +118,9 @@ pytest3
 %endif
 
 %changelog
+* Sat Feb 11 2023 Grigory Ustinov <grenka@altlinux.org> 2.4.3-alt1
+- Automatically updated to 2.4.3.
+
 * Wed Aug 03 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.2-alt1
 - Automatically updated to 2.4.2.
 
