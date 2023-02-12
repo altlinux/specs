@@ -1,6 +1,6 @@
 Name:    libarpack-ng
-Version: 3.8.0
-Release: alt2
+Version: 3.9.0
+Release: alt1
 Summary: Fortran 77 subroutines for solving large scale eigenvalue problems
 
 License: BSD
@@ -15,6 +15,7 @@ BuildRequires: gcc-c++
 BuildRequires: gcc-fortran
 BuildRequires: libopenblas-devel
 BuildRequires: liblapack-devel
+BuildRequires: eigen3
 
 Provides:  arpack = %version-%release
 
@@ -91,6 +92,9 @@ rm -rf %buildroot%_libdir/*.la
 %_libdir/libarpack.a
 
 %changelog
+* Sat Feb 11 2023 Andrey Cherepanov <cas@altlinux.org> 3.9.0-alt1
+- New version.
+
 * Mon Sep 20 2021 Andrey Cherepanov <cas@altlinux.org> 3.8.0-alt2
 - FTBFS: fix build with LTO.
 
