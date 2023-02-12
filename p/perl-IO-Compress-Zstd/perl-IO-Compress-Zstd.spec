@@ -1,14 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 %define module_name IO-Compress-Zstd
 Name: perl-%module_name
-Version: 2.201
+Version: 2.204
 Release: alt1
 Summary: Write zstd files/buffers
 Group: Development/Perl
 License: %perl_license
 URL: https://github.com/pmqs/%module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PM/PMQS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PM/PMQS/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 BuildRequires: rpm-build-perl perl-devel perl-Test-NoWarnings perl-IO-Compress perl-Compress-Stream-Zstd
@@ -35,6 +35,9 @@ IO::Uncompress::UnZstd.
 %perl_vendor_privlib/I*
 
 %changelog
+* Sun Feb 12 2023 Igor Vlasenko <viy@altlinux.org> 2.204-alt1
+- automated CPAN update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 2.201-alt1
 - new version
 
