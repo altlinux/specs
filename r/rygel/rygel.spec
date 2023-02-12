@@ -22,7 +22,7 @@
 %endif
 
 Name: rygel
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A UPnP v2 Media Server
@@ -35,12 +35,13 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %else
 Source: %name-%version.tar
 %endif
-Patch: %name-0.42-alt-pkgconfig.patch
 
 %define libxml_ver 2.7
 %define vala_ver 0.36.0
 %define gi_ver 1.33.4
+%define gssdp_api_ver 1.6
 %define gssdp_ver 1.6.0
+%define gupnp_api_ver 1.6
 %define gupnp_ver 1.6.0
 %define gupnp_av_ver 0.12.8
 %define gupnp_dlna_ver 0.9.4
@@ -73,8 +74,8 @@ Requires: lsdvd
 BuildRequires(pre): rpm-macros-meson rpm-build-gir
 BuildRequires: meson
 BuildRequires: gobject-introspection-devel >= %gi_ver
-BuildRequires: pkgconfig(gssdp-1.6) >= %gssdp_ver
-BuildRequires: pkgconfig(gupnp-1.6) >= %gupnp_ver
+BuildRequires: pkgconfig(gssdp-%gssdp_api_ver) >= %gssdp_ver
+BuildRequires: pkgconfig(gupnp-%gupnp_api_ver) >= %gupnp_ver
 BuildRequires: pkgconfig(gupnp-av-1.0) >= %gupnp_av_ver
 BuildRequires: pkgconfig(gio-2.0) >= %gio_ver
 BuildRequires: pkgconfig(gmodule-2.0)
@@ -171,7 +172,6 @@ GObject introspection devel data for the %name
 
 %prep
 %setup
-%patch -p1
 
 %build
 %meson \
@@ -239,6 +239,9 @@ sed -E -i 's|(/>)(<)|\1\n\2|g' %buildroot%_girdir/*.gir
 %_girdir/*.gir
 
 %changelog
+* Sat Feb 11 2023 Yuri N. Sedunov <aris@altlinux.org> 0.42.1-alt1
+- 0.42.1
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 0.42.0-alt1
 - 0.42.0
 
