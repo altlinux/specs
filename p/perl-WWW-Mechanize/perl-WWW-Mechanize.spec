@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist WWW-Mechanize
 Name: perl-%dist
-Version: 2.15
+Version: 2.16
 Release: alt1
 
 Summary: Handy web browsing in a Perl object
@@ -45,6 +45,9 @@ which can be queried and revisited.
 %doc	%perl_vendor_privlib/WWW/Mechanize/*.pod
 
 %changelog
+* Sun Feb 12 2023 Igor Vlasenko <viy@altlinux.org> 2.16-alt1
+- automated CPAN update
+
 * Mon Aug 22 2022 Igor Vlasenko <viy@altlinux.org> 2.15-alt1
 - automated CPAN update
 
