@@ -1,11 +1,13 @@
 %define  modulename confluent-kafka
 
-# needs pyflakes.test
+# needs pyflakes.test, but it can be removed but also
+# ImportError: cannot import name 'builder' from 'google.protobuf.internal'
+# in 2 tests
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 1.9.2
-Release: alt1.1
+Version: 2.0.2
+Release: alt1
 
 Summary: Confluent's Kafka Python Client
 
@@ -17,6 +19,8 @@ Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: librdkafka-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -41,23 +45,26 @@ and the Confluent Platform.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # Remove license file installed in weird place
 rm -f  %buildroot/%_prefix/LICENSE.txt
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3 -v
+%tox_check_pyproject
 
 %files
+%doc *.md LICENSE.txt
 %python3_sitelibdir/confluent_kafka
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%{pyproject_distinfo confluent_kafka}
 
 %changelog
+* Sun Feb 12 2023 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
+- Automatically updated to 2.0.2.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.9.2-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 

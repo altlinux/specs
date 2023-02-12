@@ -1,7 +1,16 @@
 %def_with check
 
+# mklove configure script can't process it
+%define _configure_gettext %nil
+
+# lto breaks crc32 detection in configure script
+# See https://github.com/edenhill/librdkafka/issues/2426
+%ifnarch x86_64
+%define optflags_lto %nil
+%endif
+
 Name: librdkafka
-Version: 1.9.2
+Version: 2.0.2
 Release: alt1
 
 Summary: the Apache Kafka C/C++ client library
@@ -43,7 +52,7 @@ msgs/second for the producer and 3 million msgs/second for the consumer.
 %setup
 
 %build
-#%cmake_insource
+%configure
 %make_build
 
 %install
@@ -57,20 +66,23 @@ rm -f %buildroot%_libdir/*.a
 rm -f %buildroot%_datadir/licenses/librdkafka/LICENSES.txt
 
 %check
-ctest -VV -R RdKafkaTestBrokerLess
+%make_build check
 
 %files
 %doc LICENSE README.md
-%_libdir/*.so*
+%_docdir/%name
+%_libdir/*.so.*
 
 %files devel
+%_libdir/*.so
 %dir %_includedir/%name
 %_includedir/%name/*.h
-%dir %_libdir/cmake/RdKafka
-%_libdir/cmake/RdKafka/*.cmake
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Sun Feb 12 2023 Grigory Ustinov <grenka@altlinux.org> 2.0.2-alt1
+- Automatically updated to 2.0.2.
+
 * Thu Aug 18 2022 Grigory Ustinov <grenka@altlinux.org> 1.9.2-alt1
 - Automatically updated to 1.9.2.
 - Build with check.
