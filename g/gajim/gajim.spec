@@ -4,8 +4,8 @@
 %filter_from_requires /^python3(gajim.gui/d
 
 Name: gajim
-Version: 1.7.0
-Release: alt2
+Version: 1.7.1
+Release: alt1
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -114,6 +114,9 @@ end
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Sun Feb 12 2023 Ilya Mashkin <oddity@altlinux.ru> 1.7.1-alt1
+- 1.7.1
+
 * Fri Feb 10 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.7.0-alt2
 - Add %%pretrans to resolve conflict during upgrade (Closes: #45158)
 
