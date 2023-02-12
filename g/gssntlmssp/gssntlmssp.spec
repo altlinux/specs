@@ -1,7 +1,7 @@
 %def_with wbclient
 
 Name: gssntlmssp
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 Summary: GSSAPI NTLMSSP Mechanism
 
@@ -70,6 +70,9 @@ make test_gssntlmssp
 %_includedir/gssapi/*
 
 %changelog
+* Sun Feb 12 2023 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+- New version.
+
 * Fri Dec 30 2022 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - New version.
 - Update project URL and repository.
