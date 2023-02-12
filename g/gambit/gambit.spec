@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: gambit
-Version: 4.9.3
-Release: alt2
+Version: 4.9.4
+Release: alt1
 
 Summary: Gambit-C Scheme programming system
 License: Apache-2.0
@@ -11,7 +13,9 @@ Conflicts: ghostscript-minimal < 8.64-alt5
 Packager: Paul Wolneykien <manowar@altlinux.org>
 
 Source: %name-%version.tar
-Patch: gambit-4.9.1-alt-e2k-lcc123.patch
+
+Patch0: gambit-4.9.4-alt-e2k-lcc123.patch
+Patch1: gambit-4.9.4-fix-texi-utf-bytes.patch
 
 %ifarch %e2k
 %def_without emacs
@@ -24,6 +28,7 @@ BuildRequires: emacs-nox
 %endif
 BuildRequires: makeinfo
 BuildPreReq: alternatives
+BuildPreReq: /proc
 
 %description
 Gambit-C includes a Scheme interpreter and a Scheme compiler which can be used
@@ -115,13 +120,38 @@ Requires: /usr/bin/ruby
 %description devel-ruby
 Development files for Gambit Scheme (Ruby backend)
 
+%package devel-arm
+Summary: Development files for Gambit Scheme (ARM processor family)
+Group: Development/Other
+Requires: gambit = %version-%release
+
+%description devel-arm
+Development files for Gambit Scheme (ARM processor family)
+
+%package devel-riscv
+Summary: Development files for Gambit Scheme (RISC-V processor family)
+Group: Development/Other
+Requires: gambit = %version-%release
+
+%description devel-riscv
+Development files for Gambit Scheme (RISC-V processor family)
+
+%package devel-x86
+Summary: Development files for Gambit Scheme (x86 processor family)
+Group: Development/Other
+Requires: gambit = %version-%release
+
+%description devel-x86
+Development files for Gambit Scheme (x86 processor family)
+
 # See GAMBCDIR_LIB (doesn't work, TODO)
 #define _libdir %_prefix/%_lib/gambit
 %define pkgdocdir %_docdir/%name-%version
 
 %prep
 %setup
-%patch -p2
+%patch0 -p2
+%patch1 -p2
 
 %build
 %ifarch %e2k
@@ -159,7 +189,7 @@ cat > $RPM_BUILD_ROOT%_altdir/%name <<EOF
 EOF
 
 %check
-%make check
+%make check GAMBOPT=~~lib=../lib
 
 %files
 %_altdir/*
@@ -170,6 +200,7 @@ EOF
 %_includedir/*.h
 %_libdir/*.so*
 %_man1dir/*.1.*
+%_libdir/*.js
 
 %if_with emacs
 %files -n emacs-gambit
@@ -183,26 +214,67 @@ EOF
 %_infodir/*.info*
 
 %files devel
-%_bindir/gambcomp-C
-%_libdir/*.scm
-%_libdir/_*.c
+%_bindir/gambdoc
+%_bindir/gambuild-C
+%_bindir/gambvcs
+%_libdir/gambit
+%_libdir/scheme
+%_libdir/srfi
+%_libdir/termite
+%exclude %_libdir/_define-library
+%exclude %_libdir/_digest
+%exclude %_libdir/_geiser
+%exclude %_libdir/_git
+%exclude %_libdir/_hamt
+%exclude %_libdir/_http
+%exclude %_libdir/_match
+%exclude %_libdir/_pkg
+%exclude %_libdir/_six
+%exclude %_libdir/_tar
+%exclude %_libdir/_test
+%exclude %_libdir/_uri
+%exclude %_libdir/_zlib
+%exclude %_libdir/_*.scm
+%exclude %_libdir/_*.c
+%exclude %_libdir/gambit#.scm
+%exclude %_libdir/r4rs#.scm
+%exclude %_libdir/r5rs#.scm
+%exclude %_libdir/r7rs#.scm
+%exclude %_libdir/syntax-case.scm
 
 %files devel-java
-%_bindir/gambcomp-java
+%_bindir/gambuild-java
 
 %files devel-js
-%_bindir/gambcomp-js
+%_bindir/gambuild-js
 
 %files devel-php
-%_bindir/gambcomp-php
+%_bindir/gambuild-php
 
 %files devel-python
-%_bindir/gambcomp-python
+%_bindir/gambuild-python
 
 %files devel-ruby
-%_bindir/gambcomp-ruby
+%_bindir/gambuild-ruby
+
+%files devel-arm
+%_bindir/gambuild-arm
+
+%files devel-riscv
+%_bindir/gambuild-riscv-32
+%_bindir/gambuild-riscv-64
+
+%files devel-x86
+%_bindir/gambuild-x86
+%_bindir/gambuild-x86-64
 
 %changelog
+* Sat Feb 11 2023 Paul Wolneykien <manowar@altlinux.org> 4.9.4-alt1
+- New version 4.9.4.
+- Updated e2k-lcc123 patch.
+- Fixed illegal UTF-8 bytes in gambit.txi (patch).
+- New development packages (arm, riscv, x86).
+
 * Mon Nov 25 2019 Paul Wolneykien <manowar@altlinux.org> 4.9.3-alt2
 - Fixed the ambiguous Python requirement: Require Python v3.
 
