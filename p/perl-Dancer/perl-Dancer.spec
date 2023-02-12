@@ -1,10 +1,10 @@
+%define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Test/LongString.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 %define module_name Dancer
 Name: perl-%module_name
-Version: 1.3520
+Version: 1.3521
 Release: alt1
 Summary: lightweight yet powerful web application framework
 
@@ -14,7 +14,7 @@ Url: %CPAN Dancer
 
 BuildArch: noarch
 # Cloned from https://github.com/PerlDancer/Dancer.git
-Source0: http://www.cpan.org/authors/id/B/BI/BIGPRESH/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/Y/YA/YANICK/%{module_name}-%{version}.tar.gz
 
 BuildRequires: perl-devel perl-Encode perl-MIME-Types perl-HTTP-Body perl-URI perl-HTTP-Server-Simple-PSGI perl-Plack perl-YAML perl-Clone perl-podlators perl-Try-Tiny perl-Test-TCP perl-Template perl-Test-Output perl-JSON perl-Test-Pod perl(Hash/Merge/Simple.pm) perl(Test/NoWarnings.pm) perl(HTTP/CookieJar.pm)
 Requires: perl-Clone
@@ -47,6 +47,9 @@ to scale to much more complex applications.
 %doc Changes README*
 
 %changelog
+* Sun Feb 12 2023 Igor Vlasenko <viy@altlinux.org> 1.3521-alt1
+- automated CPAN update
+
 * Thu Jan 19 2023 Igor Vlasenko <viy@altlinux.org> 1.3520-alt1
 - automated CPAN update
 
