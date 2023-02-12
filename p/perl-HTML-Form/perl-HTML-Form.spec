@@ -2,12 +2,12 @@
 Group: Development/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators
+BuildRequires: perl(Test/Warnings.pm) perl-podlators
 # END SourceDeps(oneline)
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           perl-HTML-Form
-Version:        6.10
+Version:        6.11
 Release:        alt1
 Summary:        Class that represents an HTML form element
 License:        GPL+ or Artistic
@@ -65,6 +65,9 @@ passed to the request() method of LWP::UserAgent.
 %{perl_vendor_privlib}/*
 
 %changelog
+* Sun Feb 12 2023 Igor Vlasenko <viy@altlinux.org> 6.11-alt1
+- automated CPAN update
+
 * Fri Aug 26 2022 Igor Vlasenko <viy@altlinux.org> 6.10-alt1
 - automated CPAN update
 
