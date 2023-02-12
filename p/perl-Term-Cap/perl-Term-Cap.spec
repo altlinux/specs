@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Term-Cap
 Name: perl-%dist
-Version: 1.17
+Version: 1.18
 Release: alt1
 
 Summary: Perl termcap interface
@@ -9,7 +9,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/J/JS/JSTOWE/Term-Cap-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/J/JS/JSTOWE/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ These are low-level functions to extract and use capabilities from
 a terminal capability (termcap) database.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -34,6 +34,9 @@ a terminal capability (termcap) database.
 %perl_vendor_privlib/Term
 
 %changelog
+* Sun Feb 12 2023 Igor Vlasenko <viy@altlinux.org> 1.18-alt1
+- automated CPAN update
+
 * Fri Oct 16 2015 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
 - automated CPAN update
 
