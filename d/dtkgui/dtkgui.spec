@@ -1,8 +1,8 @@
 %def_disable clang
 
 Name: dtkgui
-Version: 5.6.4
-Release: alt2
+Version: 5.6.5
+Release: alt1
 Summary: Deepin Toolkit, gui module for DDE look and feel
 License: LGPL-3.0
 Group: Graphical desktop/Other
@@ -10,7 +10,6 @@ Url: https://github.com/linuxdeepin/dtkgui
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: dtkgui-alt-fix-gcc-build.patch
 
 BuildRequires(pre): rpm-build-ninja
 %if_enabled clang
@@ -40,7 +39,6 @@ Header files and libraries for %name.
 
 %prep
 %setup
-%patch -p1
 sed -i '/*build-*/d' .gitignore
 # Fix broken configs.
 sed -i '/libdir=/s/${prefix}//' \
@@ -95,6 +93,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_libdir/libdtkgui.so
 
 %changelog
+* Mon Feb 13 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.5-alt1
+- New version.
+- Removed gcc patch.
+
 * Thu Jan 19 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt2
 - Fixed broken configs.
 

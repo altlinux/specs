@@ -1,9 +1,11 @@
 %def_disable clang
 %def_disable docs
 
+%define llvm_ver 15
+
 Name: dtkcore
-Version: 5.6.4
-Release: alt2
+Version: 5.6.5
+Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
 Group: Graphical desktop/Other
@@ -11,22 +13,25 @@ Url: https://github.com/linuxdeepin/dtkcore
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: dtkcore-5.6.5-alt-fix-underlinked-libraries.patch
 
 %if_enabled clang
-BuildRequires(pre): clang-devel
+#BuildRequires(pre): rpm-macros-llvm-common
+BuildRequires: clang%llvm_ver.0-devel
+BuildRequires: lld%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver.0-devel
 %else
 BuildRequires(pre): gcc-c++
 %endif
 BuildRequires(pre): rpm-build-ninja
 BuildRequires: cmake
 BuildRequires: rpm-build-python3
-BuildRequires: git-core
 BuildRequires: glibc-core
-BuildRequires: fdupes
 BuildRequires: qt5-base-devel
 BuildRequires: gsettings-qt-devel
 BuildRequires: libgtest-devel
 BuildRequires: dtk5-common-devel
+BuildRequires: libsystemd-devel
 BuildRequires: doxygen qt5-tools
 %if_enabled docs
 BuildRequires: qt5-base-doc
@@ -73,6 +78,7 @@ This package provides %name documantation.
 
 %prep
 %setup
+%patch -p1
 # Fix broken configs.
 sed -i '/libdir=/s/${prefix}//' \
   misc/dtkcore.pc.in
@@ -81,11 +87,7 @@ sed -i -e '/.tools/s/@CMAKE_INSTALL_PREFIX@//; /.libs/s/@CMAKE_INSTALL_PREFIX@//
 
 %build
 %if_enabled clang
-export CC="clang"
-export CXX="clang++"
-export AR="llvm-ar"
-export NM="llvm-nm"
-export READELF="llvm-readelf"
+export CC=clang-%llvm_ver CXX=clang++-%llvm_ver LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
 %endif
 export PATH=%_qt5_bindir:$PATH
 %cmake \
@@ -133,6 +135,10 @@ cmake --build %_cmake__builddir -j%__nprocs
 %endif
 
 %changelog
+* Mon Feb 13 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.5-alt1
+- New version.
+- Fixed underlinked libraries.
+
 * Thu Jan 19 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt2
 - Fixed broken configs.
 
