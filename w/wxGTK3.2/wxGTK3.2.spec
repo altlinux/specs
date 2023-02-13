@@ -8,7 +8,7 @@
 
 Name: wxGTK3.2
 Version: 3.2.2
-Release: alt1
+Release: alt2
 
 Summary: The GTK+ port of the wxWidgets library
 License: wxWidgets
@@ -22,6 +22,8 @@ Source2: pcre.tar
 Source3: nanosvg.tar
 Source11: ld_shared_wrapper.pl
 Patch1: wxGTK3.0-disable-ABI-checking.patch
+# Upstream patch
+Patch2: 0001-Fix-drawing-of-icons-for-non-root-wxTreeCtrl-items.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libGL-devel libGLU-devel libSM-devel
@@ -187,7 +189,8 @@ wxGTK example programs.
 tar -xf %SOURCE1 -C 3rdparty/
 tar -xf %SOURCE2 -C 3rdparty/
 tar -xf %SOURCE3 -C 3rdparty/
-%patch1 -p1
+
+%autopatch -p1
 
 # patch some installed files to avoid conflicts with 2.8.*
 sed -i -e 's|bakefile/presets|bakefile/presets-\$(WX_RELEASE)|g' Makefile.in
@@ -319,6 +322,9 @@ cp -fR include/wx/unix/private %buildroot%_includedir/wx-%wxbranch/wx/unix/
 %_datadir/wx-%wxbranch/examples
 
 %changelog
+* Mon Feb 13 2023 Anton Midyukov <antohami@altlinux.org> 3.2.2-alt2
+- Add upstream commit: Fix drawing of icons for non-root wxTreeCtrl items
+
 * Fri Feb 10 2023 Anton Midyukov <antohami@altlinux.org> 3.2.2-alt1
 - new stable release 3.2.2
 
