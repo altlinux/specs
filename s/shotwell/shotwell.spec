@@ -1,5 +1,5 @@
 %set_verify_elf_method unresolved=relaxed
-%def_disable snapshot
+%def_enable snapshot
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shotwell
 
@@ -12,7 +12,7 @@
 
 Name: shotwell
 Version: %ver_major.7
-Release: alt1
+Release: alt2
 
 Summary: A digital photo organizer designed for the GNOME desktop environment
 Group: Graphics
@@ -109,6 +109,9 @@ mode, and export them to share with others.
 
 
 %changelog
+* Mon Feb 13 2023 Yuri N. Sedunov <aris@altlinux.org> 0.31.7-alt2
+- updated to shotwell-0.31.7-49-gad6b9931
+
 * Mon Dec 05 2022 Yuri N. Sedunov <aris@altlinux.org> 0.31.7-alt1
 - 0.31.7
 
