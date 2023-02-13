@@ -1,7 +1,7 @@
 %define  modulename bitarray
 
 Name:    python3-module-%modulename
-Version: 2.7.1
+Version: 2.7.2
 Release: alt1
 
 Summary: Efficient arrays of booleans for Python
@@ -13,7 +13,8 @@ Vcs:     https://github.com/ilanschnell/bitarray.git
 Packager: Andrew A. Vasilyev <andy@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 Source:  %modulename-%version.tar
 
@@ -33,10 +34,10 @@ this module useful.
 %setup -n %modulename-%version
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 make test PYTHON=%__python3
@@ -46,6 +47,10 @@ make test PYTHON=%__python3
 %doc LICENSE *.rst doc/*.rst
 
 %changelog
+* Mon Feb 13 2023 Andrew A. Vasilyev <andy@altlinux.org> 2.7.2-alt1
+- 2.7.2
+- migrate to pyproject
+
 * Sat Feb 11 2023 Andrew A. Vasilyev <andy@altlinux.org> 2.7.1-alt1
 - 2.7.1
 
