@@ -1,16 +1,14 @@
+%def_with docs
+%def_without check
 
 # TODO: enable system libtiff when it will support BigTiff (from 4.0?)
 %def_without libtiff
 %def_without geotiff
-%def_with perl
-%def_with mysql
-%def_with pg
-%def_with sqlite
 
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
-Version: 3.0.4
-Release: alt1.7
+Version: 3.6.2
+Release: alt1
 Group: Sciences/Geosciences
 
 License: MIT
@@ -19,27 +17,48 @@ Packager: ALT QA Team <qa@packages.altlinux.org>
 # ftp://ftp.remotesensing.org/%name/%version/%name-%version.tar.xz
 Source: %name-%version.tar
 
-Patch0: %name-1.7.1-alt-swig_python.patch
-Patch2: %name-alt-apps_install.patch
-Patch3: %name-1.7.1-alt-inst_docs.patch
-Patch5: %name-alt-libproj.so_name.patch
-Patch6: %name-alt-python3.patch
-Patch7: %name-2.2.3-alt-mysql8-transition.patch
-Patch8: %name-3.0.4-arch-jpeg2000-issue-vendor.patch
-Patch9: %name-3.0.4-alt-gcc11.patch
-Patch10: %name-alt-python-2to3.patch
+Patch: %name-2.2.3-alt-mysql8-transition.patch
 
 %define libname lib%name
 
-BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel libexpat-devel libgeos-devel libgif-devel libhdf5-devel libjasper-devel libjpeg-devel libpng-devel libsqlite3-devel libunixODBC-devel perl-devel postgresql-devel swig
+BuildRequires: doxygen gcc-c++ libMySQL-devel libcfitsio-devel libcurl-devel
+BuildRequires: libexpat-devel libgeos-devel libgif-devel libhdf5-devel
+BuildRequires: libjpeg-devel libpng-devel libsqlite3-devel
+BuildRequires: libunixODBC-devel postgresql-devel swig zlib-devel
 
 BuildRequires: chrpath libnetcdf-devel
 BuildRequires: libproj-devel
-BuildRequires: perl-Encode
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel libnumpy-py3-devel python3-module-genshi
-BuildRequires: python3-module-xlwt
 BuildRequires: libxerces-c-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+BuildRequires: python3-module-setuptools
+BuildRequires: libnumpy-py3-devel
+BuildRequires: libtiff-devel libgeotiff-devel libxml2-devel libzstd-devel
+BuildRequires: libqhull-devel libpcre2-devel libspatialite-devel
+BuildRequires: librasterlite2-devel libwebp-devel freexl-devel
+BuildRequires: libblas-devel liblapack-devel libhdf5-devel libkea-devel
+BuildRequires: pkgconfig(OpenCL) liblzma-devel libheif-devel
+BuildRequires: libopenjpeg2.0-devel libpoppler-devel
+%ifarch %ix86 x86_64
+BuildRequires: libarmadillo-devel
+%endif
+%if_with docs
+BuildRequires: python3-module-sphinx
+BuildRequires: python3-module-sphinx_rtd_theme
+BuildRequires: python3-module-breathe
+BuildRequires: python3-module-sphinx-bootstrap-theme
+BuildRequires: python3-module-sphinxcontrib-spelling
+BuildRequires: python3-module-recommonmark
+%endif
+%if_with check
+BuildRequires: ctest
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-numpy-testing
+BuildRequires: /proc
+%endif
 
 %description
 The Geospatial Data Abstraction Library (GDAL) is a unifying
@@ -50,6 +69,7 @@ efficient access, suitable for use in viewer applications,
 and also attempts to preserve coordinate systems and metadata.
 Python, C, and C++ interfaces are available.
 
+%if_with docs
 %package doc
 Summary: Documentation for GDAL/OGR
 Group: Documentation
@@ -58,10 +78,12 @@ BuildArch: noarch
 %description doc
 This package contains documentation for the GDAL/OGR library
 and utilities.
+%endif
 
 %package scripts
 Summary: Scripts for GDAL
 Group: Sciences/Geosciences
+BuildArch: noarch
 
 %description scripts
 This package contains various scripts for GDAL (written in python)
@@ -81,16 +103,6 @@ Requires: %libname = %version-%release
 %description -n lib%name-devel
 Development files for using the GDAL library
 
-%package -n python-module-%name
-Summary: The Python bindings for the GDAL library
-Group: Development/Python
-Requires: %libname = %version
-Requires: %name
-Provides: python-module-osgeo = %version
-
-%description -n python-module-%name
-Python module for %name.
-
 %package -n python3-module-%name
 Summary: The Python bindings for the GDAL library
 Group: Development/Python3
@@ -101,28 +113,9 @@ Provides: python3-module-osgeo = %version
 %description -n python3-module-%name
 Python module for %name.
 
-%if_with perl
-%package -n perl-Geo-GDAL
-Summary: Perl bindings for the GDAL library
-Group: Development/Perl
-Requires: %libname = %version
-Requires: %name
-
-%description -n perl-Geo-GDAL
-Perl modules for GDAL/OGR.
-%endif
-
 %prep
 %setup
-#patch0 -p1
-%patch2 -p2
-%patch3 -p2
-#patch5 -p2
-%patch6 -p2
-%patch7 -p0
-%patch8 -p2
-%patch9 -p2
-%patch10 -p2
+%patch -p0
 
 %build
 %add_optflags -fno-strict-aliasing -I%_includedir/netcdf
@@ -130,106 +123,89 @@ Perl modules for GDAL/OGR.
 # lcc 1.23 can't do those __builtin_functions (mcst#3588)
 %add_optflags -D__INTEL_COMPILER
 %endif
-%configure \
-        --enable-static=no \
-        --disable-rpath \
-	--datadir=%_datadir/%name \
-	--includedir=%_includedir/%name \
-	--with-libz \
-	--with-png \
-%if_with libtiff
-	--with-libtiff=yes \
-%else
-	--with-libtiff=internal \
-%endif
-%if_with geotiff
-	--with-geotiff=yes \
-%else
-	--with-geotiff=internal \
-%endif
-	--with-gif \
-	--with-jpeg \
-	--with-ogr \
-	--with-hdf5=%_libdir/hdf5-seq \
-	--with-geos \
-	--with-jasper\
-	--with-odbc \
-	--with-curl \
-	%{subst_with mysql} \
-	%{subst_with pg} \
-	%{subst_with sqlite} \
-	%{subst_with python} \
-	--with-pythonlib=%python_libdir \
-	%{subst_with perl} \
-	--without-php \
-	--without-ruby \
-	--with-xerces \
-	--with-xerces-inc=%_includedir/xercesc \
-	--with-xerces-lib=%_libdir\
-	--without-pcraster        \
-	--with-threads \
-	--without-netcdf \
-%ifnarch x86_64
-	--with-avx=no \
-	--with-sse=no \
-	--with-ssse3=no
-%endif
-#	--with-grass=%_libdir/grass62 \
+%cmake \
+    -DBUILD_SHARED_LIBS:BOOL=ON \
+    -DCMAKE_INSTALL_INCLUDEDIR:PATH=%_includedir/%name \
+    -DGDAL_USE_EXTERNAL_LIBS=ON \
+    -DGDAL_USE_CFITSIO=OFF \
+    -DGDAL_USE_CURL=ON \
+    -DGDAL_USE_EXPAT=ON \
+    -DGDAL_USE_FREEXL=ON \
+    -DGDAL_USE_GEOS=ON \
+    -DGDAL_USE_GIF=ON \
+    -DGDAL_USE_HDF5=ON \
+    -DGDAL_USE_HEIF=ON \
+    -DGDAL_USE_JPEG=ON \
+    -DGDAL_USE_JSONC_INTERNAL=ON \
+    -DGDAL_USE_LIBLZMA=ON \
+    -DGDAL_USE_LIBXML2=ON \
+    -DGDAL_USE_MYSQL=ON \
+    -DGDAL_USE_NETCDF=ON \
+    -DGDAL_USE_ODBC=ON \
+    -DGDAL_USE_OGDI=OFF \
+    -DGDAL_USE_OPENCL=ON \
+    -DGDAL_USE_OPENJPEG=ON \
+    -DGDAL_USE_PCRE=ON \
+    -DGDAL_USE_PCRE2=ON \
+    -DGDAL_USE_PNG=ON \
+    -DGDAL_USE_POPPLER=ON \
+    -DGDAL_USE_POSTGRESQL=ON \
+    -DGDAL_USE_QHULL=ON \
+    -DGDAL_USE_SHAPELIB=OFF \
+    -DGDAL_USE_SPATIALITE=ON \
+    -DGDAL_USE_TIFF=ON \
+    -DGDAL_USE_WEBP=ON \
+    -DGDAL_USE_XERCESC=ON \
+    -DGDAL_USE_ZLIB=ON \
+    -DGDAL_USE_ZSTD=ON \
+    -DOGR_BUILD_OPTIONAL_DRIVERS=ON
 
-%if_with perl
-# Hack around the issue: https://trac.osgeo.org/gdal/ticket/3084
-pushd swig/perl
-%make_build veryclean
-%make_build generate
-popd
+%cmake_build
+%if_with docs
+export LD_LIBRARY_PATH="$PWD/%_cmake__builddir"
+export PYTHONPATH="$PWD/%_cmake__builddir/swig/python"
+# latexmk isn't available to make gdal.pdf
+sed -i \
+    "s|ln -sf ../latex/gdal.pdf build/html|#ln -sf ../latex/gdal.pdf build/html|" \
+    doc/Makefile
+make SPHINXBUILD="sphinx-build-3" -C doc html
+make SPHINXBUILD="sphinx-build-3" -C doc man
 %endif
-
-%make_build LD_RUN_PATH= lib-target
-%make_build LD_RUN_PATH=
-make docs
-make -B man
-
-pushd swig/python
-%python3_build_debug
-popd
 
 %install
-mkdir -p %buildroot%python_sitelibdir
-%makeinstall_std PYTHONPATH=$PYTHONPATH:%buildroot%python_sitelibdir INSTALLDIRS=vendor
-make DESTDIR=%buildroot install-docs
-make DESTDIR=%buildroot install-man
-mv %buildroot/usr/man %buildroot/usr/share
-install -p -m644 NEWS %buildroot%_docdir/%name
-%if_with perl
-mkdir -p  %buildroot/%_libdir/perl5/
-mv %buildroot/usr/lib/perl5/*-linux-thread-multi*/* %buildroot/%_libdir/perl5/
+%cmake_install
+%if_with docs
+mkdir -p %buildroot%_man1dir
+install -m 644 doc/build/man/*.1 %buildroot%_man1dir
 %endif
 
-for i in %buildroot%_bindir/*
-do
-	chrpath -d $i ||:
-done
-
-pushd swig/python
-%python3_install
+%check
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:%buildroot%_libdir
+export GDAL_DATA=%buildroot%_datadir/%name
+export PYTHONPATH=%buildroot%python3_sitelibdir
+export GDAL_DOWNLOAD_TEST_DATA=0
+pushd %_cmake__builddir/autotest
+py.test-3 -v
 popd
-sed -i 's|__bool__ = __nonzero__||' \
-	%buildroot%python3_sitelibdir/osgeo/ogr.py
 
 %files
 %_datadir/%name
 %_bindir/ogr*
 %_bindir/gdal*
-%_bindir/testepsg
 %_bindir/nearblack
 %_bindir/gnmanalyse
 %_bindir/gnmmanage
 %exclude %_bindir/gdal-config
 %exclude %_bindir/*.py
+%_datadir/bash-completion/completions/gdal*
+%_datadir/bash-completion/completions/ogr*
+%_libdir/cmake/%name/*.cmake
+%if_with docs
 %_man1dir/*
 
 %files doc
-%_docdir/%name
+%doc *.md *.txt doc/build/html
+%endif
 
 %files scripts
 %_bindir/*.py
@@ -238,28 +214,19 @@ sed -i 's|__bool__ = __nonzero__||' \
 %_bindir/gdal-config
 %_libdir/*.so
 %_includedir/%name
-%_pkgconfigdir/*
+%_pkgconfigdir/gdal.pc
 
 %files -n %libname
 %_libdir/*.so.*
-
-%if_with python
-%files -n python-module-%name
-%python_sitelibdir/*
-%endif
+%_libdir/gdalplugins/drivers.ini
 
 %files -n python3-module-%name
 %python3_sitelibdir/*
 
-%if_with perl
-%files -n perl-Geo-GDAL
-%perl_vendor_archlib/Geo
-%perl_vendor_autolib/Geo
-#exclude %perl_vendor_archlib/Geo/*.dox
-#exclude %perl_vendor_archlib/Geo/GDAL/*.dox
-%endif
-
 %changelog
+* Sat Feb 11 2023 Alexander Stepchenko <geochip@altlinux.org> 3.6.2-alt1
+- Update to 3.6.2
+
 * Fri Oct 15 2021 Ivan A. Melnikov <iv@altlinux.org> 3.0.4-alt1.7
 - build with setuptools again to fix the package update
 
