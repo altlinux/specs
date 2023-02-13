@@ -1,18 +1,34 @@
 %define _unpackaged_files_terminate_build 1
 
+%define oname eyed3
+
+%def_with check
+
 Name: eyeD3
-Version: 0.8.11
+Version: 0.9.7
 Release: alt1
 
 Summary: Console tool that displays and manipulates id3-tags on mp3 files
-License: GPLv2+
+License: GPLv3.0
 Group: Sound
-URL: http://eyed3.nicfit.net
+URL: https://pypi.org/project/eyed3
+
+VCS: https://github.com/nicfit/eyeD3
+Source0: %name-%version.tar
+Source1: http://eyed3.nicfit.net/releases/eyeD3-test-data.tgz
+
+Patch: eyeD3-alt-fix-packaging.patch
+
 BuildArch: noarch
 
-Source0: %name-%version.tar.gz
-
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-poetry
+%if_with check
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-deprecation
+BuildRequires: python3-module-filetype
+BuildRequires: python3-module-factory_boy
+%endif
 Requires: python3-module-%name = %EVR
 
 
@@ -35,27 +51,33 @@ This module is built for python %_python_version
 
 %prep
 %setup
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%patch -p1
+tar xvf %SOURCE1 -C tests
+# If you know more beautiful way to do it, FIXME
+mv tests/eyeD3-test-data tests/data
 
 %build
-export CFLAGS="%optflags"
-%python3_build
+%pyproject_build
 
 %install
-export CFLAGS="%optflags"
-%python3_install
+%pyproject_install
+
+%check
+# Seems that it wants some color output in hasher, that we dont have
+%pyproject_run_pytest -k 'not test_init_color_enabled'
 
 %files
-%doc *.rst docs/ examples/
-%_bindir/*
+%doc LICENSE *.rst docs/ examples/
+%_bindir/%name
 
 %files -n python3-module-%name
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Mon Feb 13 2023 Anton Vyatkin <toni@altlinux.org> 0.9.7-alt1
+- new version 0.9.7
+
 * Mon Dec 09 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.8.11-alt1
 - Version updated to 0.8.11
 - python2 disabled
