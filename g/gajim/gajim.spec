@@ -5,7 +5,7 @@
 
 Name: gajim
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: a Jabber client written in PyGTK
 License: GPL-3.0-only
@@ -21,8 +21,11 @@ Requires: python3 >= 3.10
 
 # typelib(Avahi)
 %filter_from_requires /^typelib(Avahi)/d
+# typelib(AppIndicator3)
+%filter_from_requires /^typelib(AppIndicator3)/d
 
 Requires: libgtk+3-gir libgtksourceview4-gir
+Requires: typelib(AyatanaAppIndicator3)
 %py3_requires cssutils
 %py3_requires keyring
 %py3_requires precis_i18n
@@ -114,6 +117,9 @@ end
 #_iconsdir/hicolor/128x128/apps/%name.png
 
 %changelog
+* Mon Feb 13 2023 Anton Midyukov <antohami@altlinux.org> 1.7.1-alt2
+- require typelib(AyatanaAppIndicator3) instead typelib(AppIndicator3)
+
 * Sun Feb 12 2023 Ilya Mashkin <oddity@altlinux.ru> 1.7.1-alt1
 - 1.7.1
 
