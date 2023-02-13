@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.6.2
+Version: 0.6.3
 Release: alt1
 
 Summary: Utility that helps with local TCP ports managment
@@ -15,9 +15,11 @@ BuildArch: noarch
 
 # https://github.com/kmike/port-for.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-build.patch
+Patch1: %oname-0.6.2-alt-build.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %if_with check
 BuildRequires: python3-module-pytest
@@ -32,24 +34,27 @@ It can find an unused TCP localhost port and remember the association.
 
 %prep
 %setup
-%patch1 -p1
+%patch1 -p2
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-py.test-3
+%pyproject_run_pytest
 
 %files
-%doc *.rst
-%_bindir/*
-%python3_sitelibdir/*
+%doc LICENSE.txt *.rst
+%_bindir/%oname
+%python3_sitelibdir/port_for
+%python3_sitelibdir/%{pyproject_distinfo port_for}
 
 %changelog
+* Mon Feb 13 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.3-alt1
+- Automatically updated to 0.6.3.
+
 * Thu May 26 2022 Grigory Ustinov <grenka@altlinux.org> 0.6.2-alt1
 - Automatically updated to 0.6.2.
 
