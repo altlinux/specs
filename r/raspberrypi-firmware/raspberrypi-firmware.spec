@@ -3,16 +3,14 @@
 Summary: bootloader and GPU firmware for Raspberry Pi
 Name: raspberrypi-firmware
 Version: 20221214
-Release: alt2
+Release: alt3
 Url: https://github.com/raspberrypi/firmware
 License: distributable
 Group: System/Kernel and hardware
 
-ExclusiveArch: %arm aarch64
+BuildArch: noarch
 
 Source0: %name-%version.tar
-
-Requires: u-boot-rpi3
 
 %description
 %summary
@@ -25,6 +23,10 @@ tar -xf %SOURCE0 -C %buildroot%_datadir
 %_datadir/%name
 
 %changelog
+* Mon Feb 13 2023 Anton Midyukov <antohami@altlinux.org> 20221214-alt3
+- BuildArch: noarch (Closes: 44652)
+- do'nt require u-boot-rpi3
+
 * Thu Dec 15 2022 Anton Midyukov <antohami@altlinux.org> 20221214-alt2
 - do'nt create hardlinks in u-boot directories
 
