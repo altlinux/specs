@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 7.3.1
+Version: 7.4.2
 Release: alt1
 
 Summary: Python module to generate QR Codes
@@ -21,6 +21,8 @@ BuildRequires(pre): rpm-build-python3
 %if_with check
 Buildrequires: python3-module-pytest
 Buildrequires: python3-module-Pillow
+Buildrequires: python3-module-typing_extensions
+Buildrequires: python3-module-pypng
 %endif
 
 Conflicts: python-module-%oname
@@ -44,14 +46,17 @@ py.test3 -s qrcode
 
 %files
 %doc README.rst LICENSE CHANGES.rst
-%_bindir/*
+%_bindir/qr
 %_man1dir/*
-%python3_sitelibdir/%oname/
+%python3_sitelibdir/%oname
 # pure.py requires pymaging module that is not ready for release
 %exclude %python3_sitelibdir/%oname/image/pure.py
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Mon Feb 13 2023 Grigory Ustinov <grenka@altlinux.org> 7.4.2-alt1
+- Automatically updated to 7.4.2.
+
 * Wed Apr 27 2022 Grigory Ustinov <grenka@altlinux.org> 7.3.1-alt1
 - Build new version.
 
