@@ -1,6 +1,6 @@
 Name: zstd
 Version: 1.5.4
-Release: alt1
+Release: alt2
 Summary: Zstd compression library and tools
 License: BSD-3-Clause
 Group: Archiving/Compression
@@ -12,6 +12,9 @@ Requires: lib%name = %EVR
 %def_enable pzstd
 %{?!_disable_pzstd:BuildRequires: gcc-c++}
 %{?!_disable_pzstd:%{?!_without_check:%{?!_disable_check:BuildRequires: libgtest-devel}}}
+
+# needed for cli-tests
+%{?!_without_check:%{?!_disable_check:BuildRequires: python3 less}}
 
 %description
 Zstd, short for Zstandard, is a fast lossless compression algorithm,
@@ -61,18 +64,29 @@ using lib%name library.
 
 %prep
 %setup -n %name-%version-%release
+%ifarch %e2k
+# fine tuning for architecture and compiler
+%add_optflags -D__inline='__inline __attribute__((always_inline))'
+%add_optflags -DMEM_FORCE_MEMORY_ACCESS=2 -DXXH_FORCE_MEMORY_ACCESS=2 -DXXH_FORCE_ALIGN_CHECK=0
+%endif
 # reenable recipe echoing
 sed -i 's/^\([[:space:]]*\)@\$/\1\$/' Makefile */Makefile
-# new cli-tests don't pass, this needs investigation
-sed -i '/^test: / s/ test-cli-tests//' tests/Makefile
+# some cli-tests fail because HAVE_ZLIB=0
+rm tests/cli-tests/compression/{basic,gzip-compat}.sh
+%ifarch i586 armh
+# fail on 32-bit targets (not enough memory?)
+rm tests/cli-tests/compression/window-resize.sh*
+%endif
 %define make_params PREFIX=%prefix LIBDIR=%_libdir GZFILES= ZSTD_LEGACY_SUPPORT=0 HAVE_ZLIB=0
 
 %build
 export CFLAGS="%optflags $(getconf LFS_CFLAGS)"
 export CXXFLAGS="$CFLAGS"
-for dir in lib programs; do
-	%make_build -C $dir all %make_params
-done
+# profile-guided optimization (PGO) build
+# HASH_DIR is specified to use the same for tests
+%make_build HASH_DIR=zstd_build -C programs zstd-pgo %make_params
+# the rest is built without PGO
+%make_build -C lib all %make_params
 %{?!_disable_pzstd:%make_build -C contrib/pzstd %make_params}
 
 %install
@@ -101,7 +115,7 @@ fi
 %check
 export CFLAGS="%optflags $(getconf LFS_CFLAGS)"
 export CXXFLAGS="$CFLAGS"
-%make_build -k -C tests test %make_params
+%make_build HASH_DIR=zstd_build -k -C tests test %make_params
 %{?!_disable_pzstd:%make_build -k -C contrib/pzstd tests GTEST_INC= GTEST_LIB=}
 %{?!_disable_pzstd:LD_LIBRARY_PATH=%buildroot/%_lib make -C contrib/pzstd check}
 
@@ -124,6 +138,11 @@ export CXXFLAGS="$CFLAGS"
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Feb 13 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.5.4-alt2
+- Only a few cli-tests are excluded, instead of all.
+- Switched to PGO build.
+- Tweaks for Elbrus build.
+
 * Fri Feb 10 2023 Dmitry V. Levin <ldv@altlinux.org> 1.5.4-alt1
 - 1.5.2 -> 1.5.4.
 
