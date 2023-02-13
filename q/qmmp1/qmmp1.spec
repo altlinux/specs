@@ -1,13 +1,14 @@
 
+%define major 1
 %define sover 1
 %define libqmmp libqmmp%sover
 %define libqmmpui libqmmpui%sover
 
 %define rname qmmp
-Name: qmmp1
-Version: 1.5.2
+Name: qmmp%major
+Version: 1.6.2
 Release: alt1
-%K5init no_altplace
+%K5init no_altplace appdata
 
 Group: Sound
 Summary: Qmmp - Qt-based multimedia player
@@ -27,7 +28,6 @@ Patch2: alt-def-plugins.patch
 Patch3: alt-def-statusicon.patch
 Patch4: alt-hide-on-close.patch
 Patch5: alt-def-id3v1-encoding.patch
-Patch6: alt-fix-skins-dir.patch
 
 # Automatically added by buildreq on Tue Apr 26 2016 (-bi)
 # optimized out: cmake-modules elfutils gcc-c++ glib2-devel libEGL-devel libGL-devel libX11-devel libavcodec-devel libavutil-devel libcdio-devel libcdio-paranoia libgpg-error libjson-c libogg-devel libopencore-amrnb0 libopencore-amrwb0 libopus-devel libp11-kit libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-widgets libqt5-x11extras libqt5-xml libsndfile-devel libstdc++-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-tools rpm-build-python3 ruby ruby-stdlibs xorg-kbproto-devel xorg-xproto-devel
@@ -236,12 +236,11 @@ Group: System/Libraries
 Qmmp Shared library
 
 %prep
-%setup -qn %rname-%version
+%setup -n %rname-%version
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 %build
 %K5build \
@@ -254,33 +253,36 @@ cd doc && doxygen Doxyfile
 %K5install
 %K5install_move data solid
 
-mkdir -p %buildroot/%_datadir/%rname
-ln -s `relative %_wlskindir %_datadir/%rname/skins` %buildroot/%_datadir/%rname/skins
+mkdir -p %buildroot/%_datadir/%rname-%major
+ln -s `relative %_wlskindir %_datadir/%rname-%major/skins` %buildroot/%_datadir/%rname-%major/skins
 
 %files
 %doc AUTHORS ChangeLog* README* doc/html
-%_bindir/%{rname}*
-%_libdir/%{rname}-?.*/
-%_desktopdir/%{rname}*.desktop
-%_datadir/%rname/
-%_K5data/solid/actions/*qmmp*.desktop
-%_iconsdir/hicolor/*/apps/%{rname}*.*
-%_datadir/metainfo/*qmmp*.appdata.xml
+%_bindir/%rname-%major
+%_libdir/%rname-%major.*/
+%_desktopdir/%{rname}*%major.desktop
+%_datadir/%rname-%major/
+%_K5data/solid/actions/%{rname}*%major.desktop
+%_iconsdir/hicolor/*/apps/%{rname}*%major.*
+%_datadir/metainfo/qmmp-%major.appdata.xml
 
 %files -n %libqmmp
-%_libdir/libqmmp.so.%sover
-%_libdir/libqmmp.so.%sover.*
+%_libdir/libqmmp-%major.so.%sover
+%_libdir/libqmmp-%major.so.%sover.*
 
 %files -n %libqmmpui
-%_libdir/libqmmpui.so.%sover
-%_libdir/libqmmpui.so.%sover.*
+%_libdir/libqmmpui-%major.so.%sover
+%_libdir/libqmmpui-%major.so.%sover.*
 
 %files devel
-%_includedir/%{rname}*
-%_pkgconfigdir/%{rname}*.pc
+%_includedir/%rname-%{major}*
+%_pkgconfigdir/%{rname}*-%major.pc
 %_K5link/lib*.so
 
 %changelog
+* Mon Feb 13 2023 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt1
+- new version
+
 * Thu Dec 30 2021 Sergey V Turchin <zerg@altlinux.org> 1.5.2-alt1
 - new version
 
