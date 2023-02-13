@@ -6,7 +6,7 @@
 
 Name: remmina
 Version: 1.4.27
-Release: alt1
+Release: alt2
 Summary: Remote Desktop Client
 
 Group: Networking/Remote access
@@ -53,7 +53,7 @@ BuildRequires: pkgconfig(spice-client-gtk-3.0)
 BuildRequires: pkgconfig(json-glib-1.0)
 BuildRequires: pkgconfig(libsoup-3.0) pkgconfig(webkit2gtk-4.1)
 BuildRequires: pkgconfig(libsodium)
-BuildRequires: pkgconfig(appindicator3-0.1)
+BuildRequires: pkgconfig(ayatana-appindicator3-0.1)
 
 %add_findreq_skiplist %_datadir/%name/external_tools/*
 
@@ -357,6 +357,10 @@ subst "s|@VERSION@|%version|g" %buildroot%_pkgconfigdir/%name.pc
 %_pkgconfigdir/*
 
 %changelog
+* Mon Feb 13 2023 Anton Midyukov <antohami@altlinux.org> 1.4.27-alt2
+- NMU: build with pkgconfig(ayatana-appindicator3-0.1) instead
+  pkgconfig(appindicator3-0.1)
+
 * Thu Sep 08 2022 Alexey Shabalin <shaba@altlinux.org> 1.4.27-alt1
 - new version 1.4.27
 - build with libsoup-3.0 and webkit2gtk-4.1
