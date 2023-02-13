@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 259
+%define centos_release 265
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,46 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Feb 11 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.265-alt1.el9
+- Updated to kernel-5.14.0-265.el9 (fixes: CVE-2022-3522, CVE-2022-3619, CVE-2022-41674, CVE-2022-4269, CVE-2022-42720, CVE-2022-42721, CVE-2022-42722):
+  + aio: fix mremap after fork null-deref
+  + ALSA: Add Intel RaptorLake-P support
+  + arm64: Add kernel variant for 64K page-sized ARM64
+  + Bluetooth: L2CAP: Fix memory leak in vhci_write
+  + bnxt: Driver update for RHEL9.2
+  + clks: tegra: add fixes to drivers/clks for NVIDIA Orin Support
+  + CNB: net: add netdev_sw_irq_coalesce_default_on()
+  + crypto: ccp: update ccp driver upto v6.2-rc6
+  + ena: Driver Update
+  + Fix kselftests build after changes from bz2162116 (ipv4 backports)
+  + Fix outstanding device-mapper bugs from upstream 6.1 and 6.2 an dm-cache cleanup issue
+  + Fix the broken CPPC check for non-X86 systems
+  + ipv6: Document that max_size sysctl is deprecated
+  + ixgbevf: Driver update for RHEL9.2
+  + Merge commit 'refs/merge-requests/1690/head' of gitlab.com:redhat/centos-stream/src/kernel/centos-stream-9 into RHEL-9.2-bnxt.update.04.MR1690
+  + mm/hugetlb: address race condition in hugetlb_no_page()
+  + net: add helper support in tc act_ct for ovs offloading
+  + net: openvswitch: Add support to count upcall packets
+  + net/other: phase-2 backports for RHEL-9.2
+  + net: Return errno in sk->sk_prot->get_port().
+  + net/sched: use the backlog for nested mirred ingress
+  + nvme: backport fixes to RHEL9.2
+  + ovs: backorts P2 for 9.2
+  + panic, kexec: make __crash_kexec() NMI safe
+  + RDMA: Add support of RDMA dmabuf for mlx5 driver
+  + Recognize new Phoenix IDs for AMD-PMC driver
+  + Revert "mm/compaction: fix set skip in fast_find_migrateblock"
+  + [RHEL9.2 BZ2144376] IDXD driver fixes
+  + [RHEL for Edge] add fixes to drivers/net/ethernet to support NVIDIA Orin
+  + sched: Always inline is_percpu_thread()
+  + tegra: BPMP patchs to support NVIDIA Orin
+  + Update Marvell OcteonTX2 device drivers to v6.1-rc1
+  + vhost/net: Clear the pending messages when the backend is removed
+  + vlan: fix a netdev refcnt leak for QinQ
+  + Wireless core and drivers rebase to v6.1
+  + xfs: add selinux labels to whiteout inodes
+  + xfs: reserve quota for dir expansion when linking/unlinking files
+
 * Mon Feb 06 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.259-alt1.el9
 - Updated to kernel-5.14.0-259.el9 (fixes: CVE-2021-33655, CVE-2023-0266, CVE-2023-0394):
   + ALSA: backport upstream fixes for 9.2

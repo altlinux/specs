@@ -1,6 +1,6 @@
 %define module_name	bcmwl
 %define module_version	6.30.223.271
-%define module_release alt12
+%define module_release alt13
 
 %define flavour		centos
 %define karch x86_64
@@ -93,6 +93,9 @@ __EOF__
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Feb 13 2023 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt13
+- Update -centos patch.
 
 * Mon Jan 23 2023 L.A. Kostis <lakostis@altlinux.ru> 6.30.223.271-alt12
 - karch: drop %%ix86 arch.
