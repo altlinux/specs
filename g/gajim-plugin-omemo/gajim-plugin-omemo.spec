@@ -1,8 +1,8 @@
 %define oname omemo
 
 Name: gajim-plugin-omemo
-Version: 2.8.17
-Release: alt1.1
+Version: 2.9.0
+Release: alt1
 
 Summary: OMEMO Encryption (XEP-0384) for Gajim
 
@@ -25,7 +25,6 @@ BuildArch: noarch
 %summary.
 
 %package -n python3-module-gajim-omemo
-%filter_from_requires /python3(gajim.gui.*/d
 Summary: Python module for %name
 Group: Development/Python
 BuildArch: noarch
@@ -57,6 +56,9 @@ find . -mindepth 1 -maxdepth 1 \
 %python3_sitelibdir_noarch/gajim/data/plugins/%oname
 
 %changelog
+* Mon Feb 13 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.9.0-alt1
+- Updated to 2.9.0.
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 2.8.17-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
