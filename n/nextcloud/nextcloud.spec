@@ -3,7 +3,7 @@
 
 Name: nextcloud
 Version: 25.0.3
-Release: alt1
+Release: alt2
 Packager: Korneechev Evgeniy <ekorneechev@altlinux.org>
 
 %define installdir %webserver_webappsdir/%name
@@ -48,6 +48,8 @@ Patch2: nextcloud-fix-openssl-config.patch
 # Automatically added by buildreq on Mon Oct 03 2016
 # optimized out: python-base python-modules python3
 BuildRequires: python3-base
+
+%filter_from_requires /^composer$/d
 
 %description
 Nextcloud gives you easy and universal access to all of your files.
@@ -160,6 +162,9 @@ ssl_generate "nextcloud"
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/nginx/sites-available.d/%name.conf
 
 %changelog
+* Mon Feb 13 2023 Andrey Cherepanov <cas@altlinux.org> 25.0.3-alt2
+- Removed composer requirement (ALT #43336).
+
 * Mon Jan 23 2023 Andrey Cherepanov <cas@altlinux.org> 25.0.3-alt1
 - New version.
 
