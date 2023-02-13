@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.2.2
 Release: alt1
 
 Summary: A coverage plugin to provide sensible default settings
@@ -47,6 +47,9 @@ BuildArch: noarch
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 13 2023 Anton Zhukharev <ancieg@altlinux.org> 2.2.2-alt1
+- 2.2.0 -> 2.2.2
+
 * Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 2.2.0-alt1
 - initial build for Sisyphus
 

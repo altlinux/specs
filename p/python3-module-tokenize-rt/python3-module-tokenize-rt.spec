@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.2.1
+Version: 5.0.0
 Release: alt1
 
 Summary: A wrapper around the stdlib `tokenize` which roundtrips 
@@ -57,6 +57,9 @@ the python tokenization.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 13 2023 Anton Zhukharev <ancieg@altlinux.org> 5.0.0-alt1
+- 4.2.1 -> 5.5.0
+
 * Sat Oct 01 2022 Anton Zhukharev <ancieg@altlinux.org> 4.2.1-alt1
 - initial build for Sisyphus
 
