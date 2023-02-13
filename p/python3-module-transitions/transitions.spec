@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.8.11
+Version: 0.9.0
 Release: alt1
 
 Summary: A lightweight, object-oriented Python state machine implementation
@@ -17,6 +17,10 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires:
@@ -43,23 +47,28 @@ Python.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --no-deps --console-scripts -vvr -s false
+# Unfortunately, some environment doesn't pass into tox (and I can't
+# determinate which elements exactly). Outside tox it works correctly.
+%__python3 -m pytest
 
 %files
 %doc *.md
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %changelog
+* Mon Feb 13 2023 Anton Zhukharev <ancieg@altlinux.org> 0.9.0-alt1
+- 0.8.11 -> 0.9.0.
+- use %%pyproject macros
+- run tests outside tox (they don't work inside it: the issue is
+  related to fontconfig)
+
 * Fri Mar 11 2022 Stanislav Levin <slev@altlinux.org> 0.8.11-alt1
 - 0.8.8 -> 0.8.11.
 

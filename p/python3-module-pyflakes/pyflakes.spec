@@ -2,7 +2,7 @@
 %define pypi_name pyflakes
 
 Name: python3-module-%pypi_name
-Version: 2.5.0
+Version: 3.0.1
 Release: alt1
 
 Summary: A simple program which checks Python source files for errors
@@ -57,6 +57,9 @@ rm -r %buildroot%python3_sitelibdir/pyflakes/test
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 13 2023 Anton Zhukharev <ancieg@altlinux.org> 3.0.1-alt1
+- 2.5.0 -> 3.0.1.
+
 * Mon Aug 15 2022 Stanislav Levin <slev@altlinux.org> 2.5.0-alt1
 - 2.4.0 -> 2.5.0.
 

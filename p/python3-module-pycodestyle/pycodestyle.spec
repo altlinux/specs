@@ -2,8 +2,8 @@
 %define pypi_name pycodestyle
 
 Name: python3-module-%pypi_name
-Version: 2.9.1
-Release: alt2
+Version: 2.10.0
+Release: alt1
 
 Summary: Python style guide checker
 License: Expat
@@ -48,6 +48,9 @@ mv %buildroot%_bindir/pycodestyle{,.py3}
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 13 2023 Anton Zhukharev <ancieg@altlinux.org> 2.10.0-alt1
+- 2.9.1 -> 2.10.0.
+
 * Mon Oct 03 2022 Stanislav Levin <slev@altlinux.org> 2.9.1-alt2
 - Modernized packaging.
 
