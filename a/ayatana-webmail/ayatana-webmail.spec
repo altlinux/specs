@@ -2,7 +2,7 @@
 
 Name: ayatana-webmail
 Version: 22.6.28
-Release: alt1
+Release: alt2
 
 Summary: Webmail notifications and actions for any desktop
 License: GPLv3
@@ -25,7 +25,7 @@ BuildRequires: python3-module-polib
 BuildRequires: python3-module-psutil
 BuildRequires: python3-module-setuptools
 
-Requires: typelib(AyatanaAppIndicator3) typelib(AppIndicator3)
+Requires: typelib(AyatanaAppIndicator3)
 Requires: python3-module-polib
 Requires: python3-module-psutil
 
@@ -82,5 +82,8 @@ done
 %_desktopdir/ayatana-webmail.desktop
 
 %changelog
+* Mon Feb 13 2023 Nikolay Strelkov <snk@altlinux.org> 22.6.28-alt2
+- removed optional typelib(AppIndicator3) dependency
+
 * Mon Nov 07 2022 Nikolay Strelkov <snk@altlinux.org> 22.6.28-alt1
 - Initial build for Sisyphus
