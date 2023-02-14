@@ -11,11 +11,12 @@
 
 %define is_enabled() %{expand:%%{?_enable_%{1}:true}%%{!?_enable_%{1}:false}}
 
-%global llvm_version 14.0
+%global llvm_version 15.0
 %global gcc_version %nil
 #set_gcc_version %gcc_version
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
+%add_debuginfo_skiplist %_libdir/* %_bindir/*
 
 %define _unpackaged_files_terminate_build 1
 
@@ -29,8 +30,8 @@
 %define default_client_id     1018394967181.apps.googleusercontent.com
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
-Version:        107.0.5304.87
 Name:           chromium-gost
+Version:        110.0.5481.77
 Release:        alt1
 
 Summary:        An open source web browser developed by Google
@@ -80,21 +81,29 @@ Patch010: 0010-Move-offending-function-to-chromeos-only.patch
 Patch011: 0011-FEDORA-bootstrap-with-python3.patch
 Patch012: 0012-sql-make-VirtualCursor-standard-layout-type.patch
 Patch013: 0013-GENTOO-Fix-instantiating-fold-expression-error.patch
-Patch014: 0014-ALT-Do-not-mix-internal-and-system-wayland.patch
-Patch015: 0015-IWYU-add-cmath-for-std-isnan-and-std-isinf.patch
-Patch016: 0016-ALT-use-system-zlib.patch
-Patch017: 0017-ALT-use-system-libdrm-library.patch
-Patch018: 0018-GENTOO-Fix-gtk4-build.patch
-Patch019: 0019-DEBIAN-allow-building-against-system-libraries-even-.patch
-Patch020: 0020-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
-Patch021: 0021-DEBIAN-use-system-opus-library-instead-of-embedded.patch
-Patch022: 0022-DEBIAN-build-using-system-openjpeg.patch
-Patch023: 0023-DEBIAN-use-system-jpeg-library.patch
-Patch024: 0024-DEBIAN-use-system-libevent-library.patch
-#Patch025: 0025-SUSE-Do-not-try-to-build-a-private-copy.patch
-Patch026: 0026-ALT-Use-system-libusb-libsecret-flatbuffers.patch
-Patch666: 0666-no-customize_backgrounds.patch
+Patch014: 0014-IWYU-add-cmath-for-std-isnan-and-std-isinf.patch
+Patch015: 0015-ALT-use-system-zlib.patch
+Patch016: 0016-ALT-use-system-libdrm-library.patch
+Patch017: 0017-GENTOO-Fix-gtk4-build.patch
+Patch018: 0018-DEBIAN-allow-building-against-system-libraries-even-.patch
+Patch019: 0019-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
+Patch020: 0020-DEBIAN-use-system-opus-library-instead-of-embedded.patch
+Patch021: 0021-DEBIAN-build-using-system-openjpeg.patch
+Patch022: 0022-DEBIAN-use-system-jpeg-library.patch
+Patch023: 0023-DEBIAN-use-system-libevent-library.patch
+Patch024: 0024-ALT-Use-system-libusb-libsecret-flatbuffers.patch
+Patch025: 0025-Use-yandex-search-as-default.patch
+Patch026: 0026-GCC-use-fabsf-in-ui-NativeThemeBase-OutlineColor.patch
+Patch027: 0027-libstdc-Don-t-use-const-members-in-std-vector-in-pas.patch
+Patch028: 0028-libstdc-fix-narrowing-in-blink-DarkModeLABColorSpace.patch
+Patch029: 0029-GCC-fix-selection-of-IMMEDIATE_CRASH.patch
+Patch030: 0030-Ozone-Linux-Support-VA-API-on-Linux-Ozone-Wayland.patch
+Patch031: 0031-heap-Move-the-Stack-object-from-ThreadLocalTop-to-Is.patch
 ### End Patches
+
+# Specific C-G patch
+Patch666: 0666-no-customize_backgrounds.patch
+# end
 
 BuildRequires: /proc
 BuildRequires: /dev/shm
@@ -126,6 +135,7 @@ BuildRequires:  lld%{llvm_version}-devel
 %else
 BuildRequires:  gcc%gcc_version-c++
 %endif
+BuildRequires:  pkgconfig(absl_utility)
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(atk)
 BuildRequires:  pkgconfig(atk-bridge-2.0)
@@ -172,11 +182,6 @@ BuildRequires:  pkgconfig(nss)
 BuildRequires:  pkgconfig(openh264)
 BuildRequires:  pkgconfig(re2)
 BuildRequires:  pkgconfig(snappy)
-BuildRequires:  pkgconfig(wayland-client)
-BuildRequires:  pkgconfig(wayland-cursor)
-BuildRequires:  pkgconfig(wayland-egl)
-BuildRequires:  pkgconfig(wayland-scanner)
-BuildRequires:  pkgconfig(wayland-server)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xcb-proto)
 BuildRequires:  pkgconfig(xcomposite)
@@ -264,9 +269,6 @@ sed -i '1i#define PROCESSOR_TYPE -1\
 #define PROC_TYPE_I386 1' third_party/boringssl/src/include/WinCryptEx.h 
 %endif
 
-rm -rf -- \
-	third_party/wayland/src \
-	third_party/wayland/include
 
 %build
 %if_enabled clang
@@ -313,20 +315,16 @@ gn_arg+=( use_vaapi=true )
 gn_arg+=( use_system_freetype=true )
 gn_arg+=( use_system_harfbuzz=true )
 gn_arg+=( use_system_lcms2=true )
+gn_arg+=( use_system_libffi=true )
 gn_arg+=( use_system_libdrm=true )
 gn_arg+=( use_system_libjpeg=true )
 gn_arg+=( use_system_libopenjpeg2=true )
 gn_arg+=( use_system_libpng=true )
 gn_arg+=( use_system_minigbm=true )
 gn_arg+=( use_system_zlib=true )
-gn_arg+=( use_system_libwayland=true )
-gn_arg+=( use_system_wayland_scanner=true )
-gn_arg+=( use_system_libwayland_server=true )
-gn_arg+=( use_system_libwayland_client=true )
 gn_arg+=( use_bundled_weston=false )
 gn_arg+=( use_xkbcommon=true )
 gn_arg+=( use_icf=false )
-gn_arg+=( use_allocator=\"none\" )
 gn_arg+=( enable_linux_installer=false )
 gn_arg+=( optimize_webui=false )
 gn_arg+=( link_pulseaudio=true )
@@ -372,8 +370,10 @@ gn_arg+=( clang_use_chrome_plugins=false )
 gn_arg+=( use_lld=true )
 if [ "$bits" = 64 ]; then
     gn_arg+=( use_thin_lto=true )
+    gn_arg+=( thin_lto_enable_optimizations=true )
 else
     gn_arg+=( use_thin_lto=false )
+    gn_arg+=( thin_lto_enable_optimizations=false )
 fi
 gn_arg+=( is_cfi=false )
 gn_arg+=( use_cfi_icall=false )
@@ -522,7 +522,7 @@ EOF
 	while read f; do
 		t="$(readlink -ev "$f")"
 
-		file "$t" | fgrep -qs ELF || continue
+		file "$t" | grep -Fqs ELF || continue
 
 		# Strip Chromium executables to disable debuginfo generation (became too huge)
 		#strip -d "$t" ||:
@@ -551,6 +551,89 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Feb 14 2023 Fr. Br. George <george@altlinux.org> 110.0.5481.77-alt1
+- GOST version
+
+* Thu Feb 09 2023 Alexey Gladkov <legion@altlinux.ru> 110.0.5481.77-alt1
+- New version (110.0.5481.77).
+- Upstream disallow to chromium build with system libwayland (crbug.com/1385736).
+- Add more parameters to Yandex search url (ALT#45192).
+- Security fixes:
+  - CVE-2023-0696: Type Confusion in V8.
+  - CVE-2023-0697: Inappropriate implementation in Full screen mode.
+  - CVE-2023-0698: Out of bounds read in WebRTC.
+  - CVE-2023-0699: Use after free in GPU.
+  - CVE-2023-0700: Inappropriate implementation in Download.
+  - CVE-2023-0701: Heap buffer overflow in WebUI.
+  - CVE-2023-0702: Type Confusion in Data Transfer.
+  - CVE-2023-0703: Type Confusion in DevTools.
+  - CVE-2023-0704: Insufficient policy enforcement in DevTools.
+  - CVE-2023-0705: Integer overflow in Core.
+
+* Mon Jan 30 2023 Alexey Gladkov <legion@altlinux.ru> 109.0.5414.119-alt1
+- New version (109.0.5414.119).
+- Add a workaround to make the https_proxy environment variable work (ALT#44986).
+- Security fixes:
+  - CVE-2023-0471: Use after free in WebTransport.
+  - CVE-2023-0472: Use after free in WebRTC.
+  - CVE-2023-0473: Type Confusion in ServiceWorker API.
+  - CVE-2023-0474: Use after free in GuestView.
+
+* Thu Jan 12 2023 Alexey Gladkov <legion@altlinux.ru> 109.0.5414.74-alt1
+- New version (109.0.5414.74).
+- Security fixes:
+  - CVE-2023-0128: Use after free in Overview Mode.
+  - CVE-2023-0129: Heap buffer overflow in Network Service.
+  - CVE-2023-0130: Inappropriate implementation in Fullscreen API.
+  - CVE-2023-0131: Inappropriate implementation in iframe Sandbox.
+  - CVE-2023-0132: Inappropriate implementation in Permission prompts.
+  - CVE-2023-0133: Inappropriate implementation in Permission prompts.
+  - CVE-2023-0134: Use after free in Cart.
+  - CVE-2023-0135: Use after free in Cart.
+  - CVE-2023-0136: Inappropriate implementation in Fullscreen API.
+  - CVE-2023-0137: Heap buffer overflow in Platform Apps.
+  - CVE-2023-0138: Heap buffer overflow in libphonenumber.
+  - CVE-2023-0139: Insufficient validation of untrusted input in Downloads.
+  - CVE-2023-0140: Inappropriate implementation in File System API.
+  - CVE-2023-0141: Insufficient policy enforcement in CORS.
+
+* Fri Dec 02 2022 Alexey Gladkov <legion@altlinux.ru> 108.0.5359.71-alt1
+- New version (108.0.5359.71).
+- Use LLVM 15.
+- Security fixes:
+  - CVE-2022-4174: Type Confusion in V8.
+  - CVE-2022-4175: Use after free in Camera Capture.
+  - CVE-2022-4176: Out of bounds write in Lacros Graphics.
+  - CVE-2022-4177: Use after free in Extensions.
+  - CVE-2022-4178: Use after free in Mojo.
+  - CVE-2022-4179: Use after free in Audio.
+  - CVE-2022-4180: Use after free in Mojo.
+  - CVE-2022-4181: Use after free in Forms.
+  - CVE-2022-4182: Inappropriate implementation in Fenced Frames.
+  - CVE-2022-4183: Insufficient policy enforcement in Popup Blocker.
+  - CVE-2022-4184: Insufficient policy enforcement in Autofill.
+  - CVE-2022-4185: Inappropriate implementation in Navigation.
+  - CVE-2022-4186: Insufficient validation of untrusted input in Downloads.
+  - CVE-2022-4187: Insufficient policy enforcement in DevTools.
+  - CVE-2022-4188: Insufficient validation of untrusted input in CORS.
+  - CVE-2022-4189: Insufficient policy enforcement in DevTools.
+  - CVE-2022-4190: Insufficient data validation in Directory.
+  - CVE-2022-4191: Use after free in Sign-In.
+  - CVE-2022-4192: Use after free in Live Caption.
+  - CVE-2022-4193: Insufficient policy enforcement in File System API.
+  - CVE-2022-4194: Use after free in Accessibility.
+  - CVE-2022-4195: Insufficient policy enforcement in Safe Browsing.
+
+* Fri Nov 18 2022 Alexey Gladkov <legion@altlinux.ru> 107.0.5304.110-alt1
+- New version (107.0.5304.110).
+- Security fixes:
+  - CVE-2022-3885: Use after free in V8.
+  - CVE-2022-3886: Use after free in Speech Recognition.
+  - CVE-2022-3887: Use after free in Web Workers.
+  - CVE-2022-3888: Use after free in WebCodecs.
+  - CVE-2022-3889: Type Confusion in V8.
+  - CVE-2022-3890: Heap buffer overflow in Crashpad.
+
 * Fri Nov 11 2022 Fr. Br. George <george@altlinux.org> 107.0.5304.87-alt1
 - GOST version
 
