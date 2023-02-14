@@ -1,8 +1,8 @@
 %define oname algopy
 
 Name: python3-module-%oname
-Version: 0.5.3
-Release: alt3
+Version: 0.5.7
+Release: alt1
 
 Summary: ALGOPY: Taylor Arithmetic Computation and Algorithmic Differentiation
 License: BSD
@@ -16,7 +16,6 @@ Patch1: fix_test_import_of_deprecated_decorators_module.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-nose
 BuildRequires: python3-module-numpy-testing
 BuildRequires: python3-module-scipy
 BuildRequires: python3-module-sphinx
@@ -122,6 +121,9 @@ cp -fR documentation/sphinx/_build/pickle \
 %doc documentation/*.pdf
 
 %changelog
+* Tue Feb 14 2023 Grigory Ustinov <grenka@altlinux.org> 0.5.7-alt1
+- Build new version.
+
 * Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.5.3-alt3
 - Fixed build with new numpy.
 
