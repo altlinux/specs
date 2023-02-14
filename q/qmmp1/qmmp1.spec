@@ -7,7 +7,7 @@
 %define rname qmmp
 Name: qmmp%major
 Version: 1.6.2
-Release: alt1
+Release: alt2
 %K5init no_altplace appdata
 
 Group: Sound
@@ -253,14 +253,19 @@ cd doc && doxygen Doxyfile
 %K5install
 %K5install_move data solid
 
+# allow to find skins
 mkdir -p %buildroot/%_datadir/%rname-%major
 ln -s `relative %_wlskindir %_datadir/%rname-%major/skins` %buildroot/%_datadir/%rname-%major/skins
+# return desktop-files names
+for f in qmmp qmmp-dir qmmp-enqueue ; do
+    mv  %buildroot/%_desktopdir/${f}{-1,}.desktop
+done
 
 %files
 %doc AUTHORS ChangeLog* README* doc/html
 %_bindir/%rname-%major
 %_libdir/%rname-%major.*/
-%_desktopdir/%{rname}*%major.desktop
+%_desktopdir/%{rname}*.desktop
 %_datadir/%rname-%major/
 %_K5data/solid/actions/%{rname}*%major.desktop
 %_iconsdir/hicolor/*/apps/%{rname}*%major.*
@@ -280,6 +285,9 @@ ln -s `relative %_wlskindir %_datadir/%rname-%major/skins` %buildroot/%_datadir/
 %_K5link/lib*.so
 
 %changelog
+* Tue Feb 14 2023 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt2
+- return original desktop-file names
+
 * Mon Feb 13 2023 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt1
 - new version
 
