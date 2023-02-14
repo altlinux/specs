@@ -11,7 +11,7 @@
 %brp_strip_none %_bindir/*
 
 Name:		containerd
-Version:	1.6.16
+Version:	1.6.17
 Release:	alt1
 Summary:	A daemon to control runC
 
@@ -90,6 +90,9 @@ install -p -D -m 0644 %SOURCE4 %buildroot%_sysconfdir/%name/config.toml
 %_man8dir/*
 
 %changelog
+* Mon Feb 13 2023 Vladimir Didenko <cow@altlinux.org> 1.6.17-alt1
+- 1.6.17
+
 * Thu Feb 2 2023 Vladimir Didenko <cow@altlinux.org> 1.6.16-alt1
 - 1.6.16
 

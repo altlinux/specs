@@ -10,8 +10,8 @@
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:       docker-cli
-Version:    23.0.0
-Release: alt3
+Version:    23.0.1
+Release: alt1
 Summary: Docker CLI
 License: Apache-2.0
 Group: System/Configuration/Other
@@ -98,6 +98,9 @@ install -d %{buildroot}%{_libexecdir}/docker/cli-plugins
 %dir %{_libexecdir}/docker/cli-plugins
 
 %changelog
+* Mon Feb 13 2023 Vladimir Didenko <cow@altlinux.org> 23.0.1-alt1
+- new release
+
 * Fri Feb 3 2023 Vladimir Didenko <cow@altlinux.org> 23.0.0-alt3
 - new release
 
