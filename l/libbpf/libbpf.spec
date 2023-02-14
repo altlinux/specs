@@ -5,7 +5,7 @@
 
 Name: libbpf
 Version: 0.8.1
-Release: alt1
+Release: alt2
 Summary: Stand-alone build of libbpf from the Linux kernel
 Group: System/Libraries
 License: BSD-2-Clause or LGPL-2.1
@@ -50,6 +50,9 @@ cd src
 %_pkgconfigdir/libbpf.pc
 
 %changelog
+* Wed Feb 15 2023 Vitaly Chikunov <vt@altlinux.org> 0.8.1-alt2
+- (Fixes: CVE-2022-3534, CVE-2022-3606).
+
 * Wed Jul 27 2022 Vitaly Chikunov <vt@altlinux.org> 0.8.1-alt1
 - Update to v0.8.1 (2022-07-14).
 
