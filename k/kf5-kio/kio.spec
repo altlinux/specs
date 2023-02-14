@@ -3,8 +3,8 @@
 %def_enable streebog
 
 Name: kf5-%rname
-Version: 5.102.0
-Release: alt2
+Version: 5.103.0
+Release: alt1
 %K5init altplace
 
 Group: System/Libraries
@@ -176,6 +176,9 @@ mkdir -p %buildroot/%_K5data/kio/servicemenus/
 %_K5lib/libKF5KIONTLM.so.*
 
 %changelog
+* Mon Feb 13 2023 Sergey V Turchin <zerg@altlinux.org> 5.103.0-alt1
+- new version
+
 * Wed Feb 08 2023 Sergey V Turchin <zerg@altlinux.org> 5.102.0-alt2
 - fix russian translation
 

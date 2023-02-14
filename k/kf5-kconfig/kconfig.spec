@@ -6,7 +6,7 @@
 %endif
 
 Name: kf5-%rname
-Version: 5.102.0
+Version: 5.103.0
 Release: alt1
 %K5init altplace
 
@@ -16,7 +16,6 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Source: %rname-%version.tar
-Patch1: alt-update-scripts-path.patch
 Patch2: alt-kconfig-notify-via-dbus.patch
 Patch3: alt-small-not-authorize-donate.patch
 
@@ -90,7 +89,6 @@ Sip files for python3-module-%rname
 
 %prep
 %setup -n %rname-%version
-%patch1 -p1
 %if_enabled notify
 %patch2 -p2
 %endif
@@ -149,6 +147,9 @@ rm -rf %buildroot%_libdir/*/*/*/__*
 %endif
 
 %changelog
+* Mon Feb 13 2023 Sergey V Turchin <zerg@altlinux.org> 5.103.0-alt1
+- new version
+
 * Mon Jan 16 2023 Sergey V Turchin <zerg@altlinux.org> 5.102.0-alt1
 - new version
 

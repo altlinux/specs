@@ -3,8 +3,11 @@
 %add_findreq_skiplist %_K5data/plasma/plasma_scriptengine_ruby/*.rb
 
 Name: kf5-%rname
-Version: 5.102.0
+Version: 5.103.0
 Release: alt1
+%define major %{expand:%(X='%version'; echo ${X%%%%.*})}
+%define minor %{expand:%(X=%version; X=${X%%.*}; echo ${X#*.})}
+%define bugfix %{expand:%(X='%version'; echo ${X##*.})}
 %K5init altplace
 
 Group: System/Libraries
@@ -79,7 +82,14 @@ KF5 library
 #cat %SOURCE10 >po/ru/libplasma5.po
 
 %build
-%K5build
+# allow to disable old depreceted code
+#MIN_MINOR=$((%{minor}-15))
+#[ "$((${MIN_MINOR=}<0))" == 0 ] || MIN_MINOR=0
+#echo "MIN_MINOR=${MIN_MINOR}"
+#    -DEXCLUDE_DEPRECATED_BEFORE_AND_AT="%{major}.${MIN_MINOR}.0" \
+#    -DBUILD_TESTING=ON \
+%K5build \
+    #
 
 %install
 %K5install
@@ -131,6 +141,12 @@ KF5 library
 %_K5srvtyp/*.desktop
 
 %changelog
+* Mon Feb 13 2023 Sergey V Turchin <zerg@altlinux.org> 5.103.0-alt1
+- new version
+
+* Tue Feb 07 2023 Sergey V Turchin <zerg@altlinux.org> 5.102.0-alt2
+- test build
+
 * Mon Jan 16 2023 Sergey V Turchin <zerg@altlinux.org> 5.102.0-alt1
 - new version
 
