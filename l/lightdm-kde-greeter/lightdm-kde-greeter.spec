@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.4
+Version: 0.4.5
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -74,6 +74,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Mon Feb 13 2023 Anton Golubev <golubevan@altlinux.org> 0.4.5-alt1
+- minor tweaks
+
 * Mon Feb 06 2023 Anton Golubev <golubevan@altlinux.org> 0.4.4-alt1
 - some improvements in the configuration module
 
