@@ -5,11 +5,12 @@
 Name: nginx
 Summary: Fast HTTP server
 Version: 1.22.1
-Release: alt2
+Release: alt3
 License: BSD
 Group: System/Servers
 BuildRequires: libpcre-devel libssl-devel perl-devel zlib-devel libkrb5-devel
 BuildRequires: libGeoIP-devel
+BuildRequires: libmaxminddb-devel
 BuildRequires: libgd2-devel
 BuildRequires: libpam-devel
 BuildRequires: libxml2-devel libxslt-devel
@@ -41,6 +42,7 @@ Source11: mime.types
 Source12: nginx.filetrigger
 Source13: ngx_http_auth_pam_module.tar
 Source14: spnego-http-auth-nginx-module.tar
+Source15: nginx-geoip2-module.tar
 Source100: %name.watch
 Patch1: nginx-0.8-syslog.patch
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -63,6 +65,15 @@ Requires: %name = %EVR
 
 %description geoip
 GeoIP module for nginx
+
+%package geoip2
+Summary: maxmind geoip2 module for nginx
+Group: System/Servers
+%def_with geoip2
+Requires: %name = %EVR
+
+%description geoip2
+maxmind geoip2 module for nginx
 
 %if_with image_filter
 %package image_filter
@@ -116,7 +127,7 @@ Fast HTTP server, extremely useful as an Apache frontend
 
 
 %prep
-%setup -a 7 -a 10 -a 13 -a 14
+%setup -a 7 -a 10 -a 13 -a 14 -a 15
 %if_with syslog
 %patch1 -p2
 %endif
@@ -173,6 +184,9 @@ CFLAGS="%optflags $CPU" ./configure \
 %endif
 %if_with geoip
 	--with-http_geoip_module=dynamic \
+%endif
+%if_with geoip2 # stream module depends on stream parameter below
+	--add-dynamic-module=nginx-geoip2-module \
 %endif
 %if_with spnego
 	--add-dynamic-module=spnego-http-auth-nginx-module \
@@ -325,6 +339,12 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %config(noreplace) %nginx_etc/modules-available.d/http_geoip.conf
 %modpath/ngx_http_geoip_module.so
 
+%files geoip2
+%config(noreplace) %nginx_etc/modules-available.d/http_geoip2.conf
+%config(noreplace) %nginx_etc/modules-available.d/stream_geoip2.conf
+%modpath/ngx_http_geoip2_module.so
+%modpath/ngx_stream_geoip2_module.so
+
 %if_with image_filter
 %files image_filter
 %config(noreplace) %nginx_etc/modules-available.d/http_image_filter.conf
@@ -352,6 +372,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %modpath/ngx_http_xslt_filter_module.so
 
 %changelog
+* Mon Feb 13 2023 L.A. Kostis <lakostis@altlinux.ru> 1.22.1-alt3
+- added geoip2 module (updated to version 3.4).
+
 * Thu Nov 03 2022 Arseny Maslennikov <arseny@altlinux.org> 1.22.1-alt2
 - NMU: Merge mime.types with upstream. (Closes: 38603)
 
