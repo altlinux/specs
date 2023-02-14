@@ -2,7 +2,7 @@
 
 Name: gambit
 Version: 4.9.4
-Release: alt1
+Release: alt2
 
 Summary: Gambit-C Scheme programming system
 License: Apache-2.0
@@ -200,7 +200,6 @@ EOF
 %_includedir/*.h
 %_libdir/*.so*
 %_man1dir/*.1.*
-%_libdir/*.js
 
 %if_with emacs
 %files -n emacs-gambit
@@ -234,13 +233,13 @@ EOF
 %exclude %_libdir/_test
 %exclude %_libdir/_uri
 %exclude %_libdir/_zlib
+%_libdir/syntax-case.scm
+%_libdir/_gambit.js
+%_libdir/_gambit.c
+%_libdir/_gambitgsc.c
+%_libdir/_gambitgsi.c
+%exclude %_libdir/*#.scm
 %exclude %_libdir/_*.scm
-%exclude %_libdir/_*.c
-%exclude %_libdir/gambit#.scm
-%exclude %_libdir/r4rs#.scm
-%exclude %_libdir/r5rs#.scm
-%exclude %_libdir/r7rs#.scm
-%exclude %_libdir/syntax-case.scm
 
 %files devel-java
 %_bindir/gambuild-java
@@ -269,6 +268,9 @@ EOF
 %_bindir/gambuild-x86-64
 
 %changelog
+* Mon Feb 13 2023 Paul Wolneykien <manowar@altlinux.org> 4.9.4-alt2
+- Fixed file list for the %name-devel package.
+
 * Sat Feb 11 2023 Paul Wolneykien <manowar@altlinux.org> 4.9.4-alt1
 - New version 4.9.4.
 - Updated e2k-lcc123 patch.
