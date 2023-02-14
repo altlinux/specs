@@ -1,6 +1,6 @@
 Name: squidmill
-Version: 2.6
-Release: alt3.1
+Version: 2.6.1
+Release: alt1
 
 Source: %name-%version.tar
 
@@ -54,6 +54,11 @@ echo "d /run/squidmill squid squid 775" >   %buildroot/%_tmpfilesdir/squidmill.c
 %attr(0775, squid, squid) %dir %_var/run/squidmill
 
 %changelog
+* Tue Feb 14 2023 Paul Wolneykien <manowar@altlinux.org> 2.6.1-alt1
+- Bump version to 2.6.1.
+- Workaround define-structure issue.
+- Fixed wait_for_timestamp() test helper.
+
 * Sat Feb 11 2023 Hihin Ruslan <ruslandh@altlinux.ru> 2.6-alt3.1
 - Add dynamic creation of the /run/squidmill  directory
 - Close bug (Closes: 35197)

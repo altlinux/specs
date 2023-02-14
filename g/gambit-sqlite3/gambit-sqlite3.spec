@@ -1,6 +1,6 @@
 Name: gambit-sqlite3
-Version: 1.3
-Release: alt3
+Version: 1.3.1
+Release: alt1
 Summary: SQLite3 database library for Gambit-C Scheme programming system
 License: GPLv3+
 Group: Development/Scheme
@@ -46,6 +46,9 @@ This package contains the library link file
 %{_includedir}/gambit/*.c
 
 %changelog
+* Mon Feb 13 2023 Paul Wolneykien <manowar@altlinux.org> 1.3.1-alt1
+- Fix compilation with new Gambit: Replace [] with ().
+
 * Mon Feb 11 2019 Paul Wolneykien <manowar@altlinux.org> 1.3-alt3
 - Rebuild with a new version of Gambit
 
