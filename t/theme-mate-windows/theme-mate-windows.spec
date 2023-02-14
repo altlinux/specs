@@ -1,5 +1,5 @@
 Name:     theme-mate-windows
-Version:  2.3
+Version:  2.4
 Release:  alt1
 
 Summary:  Mate theme for Windows-like layout
@@ -44,6 +44,9 @@ install -pDm644 windows.layout \
 %_datadir/mate-panel/layouts/windows.layout
 
 %changelog
+* Tue Feb 14 2023 Andrey Cherepanov <cas@altlinux.org> 2.4-alt1
+- Decreased panel height from 30px to 28px.
+
 * Fri Dec 09 2022 Andrey Cherepanov <cas@altlinux.org> 2.3-alt1
 - Removed show-flags=false for xkb indicator (ALT #43635).
 
