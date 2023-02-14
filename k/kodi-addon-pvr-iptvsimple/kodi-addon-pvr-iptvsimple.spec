@@ -1,5 +1,5 @@
 Name: kodi-addon-pvr-iptvsimple
-Version: 20.7.0
+Version: 20.8.1
 Release: alt1
 
 Summary: IPTVSimple addon for Kodi
@@ -30,6 +30,9 @@ BuildRequires: libpugixml-devel liblzma-devel zlib-devel
 %_datadir/kodi/addons/pvr.iptvsimple
 
 %changelog
+* Tue Feb 14 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.8.1-alt1
+- 20.8.1 released
+
 * Tue Feb 07 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.7.0-alt1
 - 20.7.0 released
 
