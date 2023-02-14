@@ -7,7 +7,7 @@
 %def_disable bootstrap
 
 Name: libopenraw
-Version: 0.3.3
+Version: 0.3.4
 Release: alt1
 
 Summary: Decode camera RAW files
@@ -118,6 +118,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Wed Feb 15 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.4-alt1
+- 0.3.4
+
 * Fri Dec 30 2022 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
 - 0.3.3
 
