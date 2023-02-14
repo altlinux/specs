@@ -1,6 +1,6 @@
 Name: xsane
 Version: 0.999
-Release: alt6.1
+Release: alt6.2
 
 Summary: XSane is a graphical frontend for scanners. It uses the library SANE
 Summary(ru_RU.UTF-8): Xsane -- это графическая программа для сканирования, использующая библиотеку SANE
@@ -18,6 +18,7 @@ Patch1: %name-0.996-ubuntu.patch
 Patch2: %name-0.998-alt-libpng15.patch
 Patch3: xsane-0.999-lcms2.patch
 Patch4: xsane-0.999-alt-fix-broken-icon.patch
+Patch5: alt-gimp_acquire_menu-ru.patch
 # Debian
 Patch10: 0105-deb_gimp_acquire_menu.patch
 Patch11: 0125-desktop_file.patch
@@ -86,6 +87,7 @@ Documentation for XSANE
 %patch2 -p2
 %patch3 -p1
 %patch4 -p2
+%patch5 -p1
 %patch10 -p1
 %patch11 -p1
 cp -f %SOURCE3 po/ru.po
@@ -136,6 +138,10 @@ ln -s %_docdir/sane-backends/sane-backends.html %buildroot/%_docdir/%name/sane-b
 %_libdir/gimp/2.0/plug-ins/%name
 
 %changelog
+* Mon Feb 13 2023 Sergey V Turchin <zerg@altlinux.org> 0.999-alt6.2
+- NMU: fix GIMP menu entry
+- NMU: fix GIMP menu entry russian translation
+
 * Thu Jan 26 2023 Sergey V Turchin <zerg@altlinux.org> 0.999-alt6.1
 - NMU: fix main menu entry (closes: 45037)
 
