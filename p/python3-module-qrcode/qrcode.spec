@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 7.4.2
-Release: alt1
+Release: alt2
 
 Summary: Python module to generate QR Codes
 
@@ -49,11 +49,12 @@ py.test3 -s qrcode
 %_bindir/qr
 %_man1dir/*
 %python3_sitelibdir/%oname
-# pure.py requires pymaging module that is not ready for release
-%exclude %python3_sitelibdir/%oname/image/pure.py
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Feb 14 2023 Grigory Ustinov <grenka@altlinux.org> 7.4.2-alt2
+- Fixed qrcode.image.pure, pymaging problem was solved.
+
 * Mon Feb 13 2023 Grigory Ustinov <grenka@altlinux.org> 7.4.2-alt1
 - Automatically updated to 7.4.2.
 
