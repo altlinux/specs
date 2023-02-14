@@ -1,6 +1,6 @@
 Name: git
-Version: 2.33.6
-Release: alt2
+Version: 2.33.7
+Release: alt1
 
 Summary: Git core and tools
 License: GPLv2
@@ -537,6 +537,9 @@ popd
 %endif #doc
 
 %changelog
+* Mon Feb 06 2023 Dmitry V. Levin <ldv@altlinux.org> 2.33.7-alt1
+- 2.33.6 -> 2.33.7 (fixes: CVE-2023-22490, CVE-2023-23946).
+
 * Wed Jan 25 2023 Vitaly Chikunov <vt@altlinux.org> 2.33.6-alt2
 - spec: Enable '--perl-regexp' support for 'grep' and 'log'.
 
