@@ -6,7 +6,7 @@
 
 Name: kf5-%rname
 Version: 5.102.0
-Release: alt1
+Release: alt2
 %K5init altplace
 
 Group: System/Libraries
@@ -140,6 +140,9 @@ Sip files for python3-module-%rname
 %endif
 
 %changelog
+* Tue Feb 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.102.0-alt2
+- fix russian translation
+
 * Mon Jan 16 2023 Sergey V Turchin <zerg@altlinux.org> 5.102.0-alt1
 - new version
 
