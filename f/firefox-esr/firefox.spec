@@ -15,7 +15,7 @@ Summary: The Mozilla Firefox project is a redesign of Mozilla's browser (ESR ver
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox (версия ESR)
 
 Name: firefox-esr
-Version: 102.6.0
+Version: 102.7.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -51,6 +51,7 @@ Patch010: 0009-bmo-1559213-Support-system-av1.patch
 Patch011: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
 Patch012: 0011-ALT-fix-double_t-redefinition.patch
 Patch013: 0012-build-Disable-Werror.patch
+Patch014: 0013-ALT-fix-double-null.patch
 ### End Patches
 
 # Hang up on build browser/components/about
@@ -268,6 +269,11 @@ ac_add_options --disable-rust-debug
 ac_add_options --disable-debug-symbols
 %endif
 EOF
+
+# Begin change checksum for rust checksum file
+sed -i 's|73114a5c28472e77082ad259113ffafb418ed602c1741f26da3e10278b0bf93e|a1c64a4b7e6205c6275c3ee47dfb58494e76be7aff9684765ee17d3d469f1681|' ./third_party/rust/mp4parse/.cargo-checksum.json
+sed -i 's|75fe5467109242b2cc7991f8228e2e2ad1de5be2f29272a4a7f08c4e21ab5fa4|b6140aa2565ff0b0d1d4b44db97c5cd9a9ecebcc8606791311c770c5dd6fde0a|' ./third_party/rust/mp4parse/.cargo-checksum.json
+# Finish change checksum for rust checksum file
 
 find third_party \
 	-type f \( -name '*.so' -o -name '*.o' -o -name '*.a' \) \
@@ -501,6 +507,18 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Wed Jan 18 2023 Pavel Vasenkov <pav@altlinux.org> 102.7.0-alt1
+- New ESR version.
+- Security fixes
+  + CVE-2022-46871 libusrsctp library out of date
+  + CVE-2023-23598 Arbitrary file read from GTK drag and drop on Linux
+  + CVE-2023-23599 Malicious command could be hidden in devtools output on Windows
+  + CVE-2023-23601 URL being dragged from cross-origin iframe into same tab triggers navigation
+  + CVE-2023-23602 Content Security Policy wasn't being correctly applied to WebSockets in WebWorkers
+  + CVE-2022-46877 Fullscreen notification bypass
+  + CVE-2023-23603 Calls to <code>console.log</code> allowed bypasing Content Security Policy via format directive
+  + CVE-2023-23605 Memory safety bugs fixed in Firefox 109 and Firefox ESR 102.7
+
 * Wed Dec 14 2022 Pavel Vasenkov <pav@altlinux.org> 102.6.0-alt1
 - New ESR version.
 - Security fixes
