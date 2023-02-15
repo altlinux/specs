@@ -3,7 +3,7 @@
 %def_with check
 
 Name: curl
-Version: 7.87.0
+Version: 7.88.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -155,6 +155,13 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Wed Feb 15 2023 Anton Farygin <rider@altlinux.ru> 7.88.0-alt1
+- 7.87.0 -> 7.88.0 (Closes: #45281)
+- Fixes:
+  * CVE-2023-23914: HSTS ignored on multiple requests
+  * CVE-2023-23915: HSTS amnesia with --parallel
+  * CVE-2023-23916: HTTP multi-header compression denial of service
+
 * Wed Dec 21 2022 Anton Farygin <rider@altlinux.ru> 7.87.0-alt1
 - 7.86.0 -> 7.87.0
 - Fixes:
