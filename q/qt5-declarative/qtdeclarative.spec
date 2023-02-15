@@ -5,7 +5,7 @@
 
 Name: qt5-declarative
 Version: 5.15.8
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -19,11 +19,11 @@ License:  LGPL-2.1 with Qt-LGPL-exception-1.1 or LGPL-3.0-only
 
 Source: %qt_module-everywhere-src-%version.tar
 Source10: rpm-build-qml.tar
+Source20: kde-qt-5.15.tar
 Source1: qml
 Source2: qml.env
 Source3: find-provides.sh
 Source4: find-requires.sh
-Patch1: kde-5.15.patch
 #
 Patch10: Link-with-libatomic-on-riscv32-64.patch
 Patch11: alt-remove-createSize.patch
@@ -154,17 +154,21 @@ QML modules by some Alt Linux Team Policy compatible way.
 
 %prep
 %include %SOURCE2
-%setup -n %qt_module-everywhere-src-%version -a10
+%setup -n %qt_module-everywhere-src-%version -a10 -a20
 mv rpm-build-qml src/
-mkdir bin_add
-ln -s %__python3 bin_add/python
-%patch1 -p1
+ls -1d kde-qt-5.15/*.patch | sort | \
+while read p; do
+    echo $p
+    patch -p1 < $p
+done
 #
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
 sed -i -E 's|MODULE_VERSION[[:space:]]+.*$|MODULE_VERSION = %version|' .qmake.conf
 syncqt.pl-qt5 -version %version
+mkdir bin_add
+ln -s %__python3 bin_add/python
 
 %build
 %define qdoc_found %{expand:%%(if [ -e %_qt5_bindir/qdoc ]; then echo 1; else echo 0; fi)}
@@ -292,6 +296,9 @@ cat %SOURCE2 >> %buildroot%_rpmmacrosdir/qml.env
 %_bindir/rpmbqml-qmlinfo
 
 %changelog
+* Tue Feb 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt2
+- update fixes from kde/qt-5.15
+
 * Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
 - new version
 

@@ -37,7 +37,7 @@
 Name: qt5-base
 %define major  5
 Version: 5.15.8
-Release: alt1
+Release: alt2
 %if "%version" == "%{get_version qt5-tools-common}"
 %def_disable bootstrap
 %else
@@ -55,7 +55,8 @@ Source: %qt_module-everywhere-src-%version.tar
 Source1: rpm-macros
 Source2: rpm-macros-addon
 # KDE
-Patch1: kde-5.15.patch
+Source20: kde-qt-5.15.tar
+# KDE
 Patch2: kde-5.15-rev-f8ad329f7ee.patch
 # 
 Patch20: QTBUG-94557.patch
@@ -387,9 +388,12 @@ EGL integration library for the Qt%major toolkit
 %else
 %def_disable system_icu
 %endif
-
-%setup -n %qt_module-everywhere-src-%version
-%patch1 -p1
+%setup -n %qt_module-everywhere-src-%version -a 20
+ls -1d kde-qt-5.15/*.patch | sort | \
+while read p; do
+    echo $p
+    patch -p1 < $p
+done
 %patch2 -p1
 #
 %patch20 -p1
@@ -858,6 +862,9 @@ make check -k ||:
 
 
 %changelog
+* Tue Feb 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt2
+- update fixes from kde/qt-5.15
+
 * Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
 - new version
 
