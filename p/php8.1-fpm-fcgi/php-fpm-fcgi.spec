@@ -54,6 +54,8 @@ sed -i 's,@phpsuffix@,%_php_suffix,g' %_sourcedir/*.patch
 %patch1 -p1 -b .a
 %patch2 -p1
 %patch3 -p1
+# uncomment owner, group and mode for socket
+sed -Ei '/listen\.(owner|group|mode) =/s/^;//g' www.conf.in
 
 %build
 %add_optflags -DHAVE_CLEARENV
