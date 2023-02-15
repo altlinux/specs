@@ -103,7 +103,7 @@ EOF
 cat > %buildroot/%_rpmlibdir/90-php%{_php_suffix}-%name.filetrigger << EOF
 #!/bin/sh
 LC_ALL=C sed 's|^%php_sysconfdir/%php_sapi/control.d||' |
-        egrep -qs '^%php_sysconfdir/%php_sapi|^%php_extdir' || exit 0
+        grep -Eqs '^%php_sysconfdir/%php_sapi|^%php_extdir' || exit 0
 %post_apache2conf
 EOF
 chmod 755 %buildroot/%_rpmlibdir/90-php%{_php_suffix}-%name.filetrigger

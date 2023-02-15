@@ -54,6 +54,8 @@ sed -i 's,@phpsuffix@,%_php_suffix,g' %_sourcedir/*.patch
 %patch1 -p1 -b .a
 %patch2 -p1
 %patch3 -p1
+# uncomment owner, group and mode for socket
+sed -Ei '/listen\.(owner|group|mode) =/s/^;//g' www.conf.in
 
 %build
 %add_optflags -DHAVE_CLEARENV
@@ -119,7 +121,7 @@ mkdir -p %buildroot%_rpmlibdir
 cat > %buildroot%_rpmlibdir/91-php-%name.filetrigger << EOF
 #!/bin/sh
 LC_ALL=C sed 's|^%php_sysconfdir/%php_sapi/control.d||' |
-        egrep -qs '^%php_sysconfdir/%php_sapi|^%php_extdir' || exit 0
+        grep -Eqs '^%php_sysconfdir/%php_sapi|^%php_extdir' || exit 0
 /sbin/service php%_php_suffix-fpm condrestart||:
 EOF
 chmod 0755 %buildroot%_rpmlibdir/91-php-%name.filetrigger

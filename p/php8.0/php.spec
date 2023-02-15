@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  0
-%define _php_release_version 27
+%define _php_release_version 28
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -354,7 +354,7 @@ subst 's,sbin/lsattr,bin/lsattr,' %buildroot/%php_libdir/build/config.guess
 mkdir -p  %buildroot%_rpmlibdir
 cat > %buildroot%_rpmlibdir/89-%name.filetrigger << EOF
 #!/bin/sh
-LC_ALL=C egrep -qs '^%php_sysconfdir/.*/php.d|^%php_extdir' || exit 0
+LC_ALL=C grep -Eqs '^%php_sysconfdir/.*/php.d|^%php_extdir' || exit 0
 if [ -x %php_postin ]; then
     export php_servicedir=%php_servicedir
     export php_sysconfdir=%php_sysconfdir
@@ -457,6 +457,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Tue Feb 14 2023 Anton Farygin <rider@altlinux.ru> 8.0.28-alt1
+- 8.0.27 -> 8.0.28 (Fixes: CVE-2023-0567, CVE-2023-0568, CVE-2023-0662)
+
 * Mon Jan 09 2023 Anton Farygin <rider@altlinux.ru> 8.0.27-alt1
 - 8.0.26 -> 8.0.27 (Fixes: CVE-2022-31631)
 

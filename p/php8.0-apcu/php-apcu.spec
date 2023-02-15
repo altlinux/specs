@@ -2,7 +2,7 @@
 %define 	real_name	APCu
 
 Name:	 	php%_php_suffix-%php_extension
-Version:	5.1.21
+Version:	5.1.22
 Epoch:		1
 Release:	alt1.%_php_release_version
 
@@ -73,6 +73,9 @@ NO_INTERACTION=1 make test
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} 1:%version-%release
 - Rebuild with php-devel = %php_version-%php_release
+
+* Tue Jan 10 2023 Anton Farygin <rider@altlinux.ru> 1:5.1.22-alt1
+- updated to 5.1.22
 
 * Wed Jan 26 2022 Anton Farygin <rider@altlinux.ru> 1:5.1.21-alt1
 - updated to 5.1.21
