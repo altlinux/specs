@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230124
+Version: 20230215
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,33 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Feb 15 2023 Cronbuild Service <cronbuild@altlinux.org> 20230215-alt1
+- upstream changes (GIT 83f1d778):
+  + intel: avs: Add AudioDSP base firmware for CNL-based platforms (thx Cezary Rojewski)
+  + intel: avs: Add AudioDSP base firmware for APL-based platforms (thx Cezary Rojewski)
+  + intel: avs: Add AudioDSP base firmware for SKL-based platforms (thx Cezary Rojewski)
+  + ath11k: WCN6855 hw2.0: update to
+    WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.23 (thx Kalle Valo)
+  + ath11k: WCN6855 hw2.0: update board-2.bin (thx Kalle Valo)
+  + ath11k: WCN6750 hw1.0: update board-2.bin (thx Kalle Valo)
+  + ath11k: IPQ5018 hw1.0: add to
+    WLAN.HK.2.6.0.1-00861-QCAHKSWPL_SILICONZ-1 (thx Kalle Valo)
+  + ath11k: IPQ5018 hw1.0: add board-2.bin (thx Kalle Valo)
+  + ath10k: QCA6174 hw3.0: update firmware-sdio-6.bin to version
+    WLAN.RMH.4.4.1-00174 (thx Kalle Valo)
+  + ath10k: WCN3990 hw1.0: update board-2.bin (thx Kalle Valo)
+  + cnm: update chips&media wave521c firmware. (thx Nas Chung)
+  + amdgpu: Update GC 11.0.1 firmware (thx Mario Limonciello)
+  + intel: catpt: Add AudioDSP base firmware for BDW platforms (thx Cezary Rojewski)
+  + Update AMD cpu microcode (thx John Allen)
+  + brcm: revert firmware files for Cypress devices (thx Arend van Spriel)
+  + brcm: restore previous firmware file for BCM4329 device (thx Arend van Spriel)
+  + rtw88: 8822c: Update normal firmware to v9.9.14 (thx Chin-Yen Lee)
+  + i915: Add DMC v2.11 for MTL (thx Gustavo Sousa)
+  + Add firmware for Cirrus CS35L41 on UM3402 ASUS Laptop (thx Stefan Binding)
+  + Add missing tuning files for HP Laptops using Cirrus Amps (thx Stefan Binding)
+  + i915: Add DMC v2.18 for ADLP (thx Gustavo Sousa)
+
 * Wed Jan 25 2023 Cronbuild Service <cronbuild@altlinux.org> 20230124-alt1
 - upstream changes (GIT 5c11a374):
   + amdgpu: Add VCN 4.0.2 firmware (thx Mario Limonciello)
