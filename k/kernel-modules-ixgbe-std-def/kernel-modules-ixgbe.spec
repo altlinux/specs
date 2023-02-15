@@ -1,5 +1,5 @@
 %define module_name             ixgbe
-%define module_version          5.18.6
+%define module_version          5.18.11
 %define module_release          alt1
 
 %define flavour std-def
@@ -18,7 +18,7 @@ Version: %module_version
 Release: %module_release.%kcode.%kbuildrelease
 
 Summary: Intel(R) 10GbE PCI Express Linux Network Driver
-License: GPLv2
+License: GPL-2.0-only
 Group: System/Kernel and hardware
 Url: http://www.intel.com/network/connectivity/products/server_adapters.htm
 
@@ -79,6 +79,11 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Feb 15 2023 Alexei Takaseev <taf@altlinux.org> 5.18.11-alt1
+- 5.18.11
+- Change License: to GPL-2.0-only
+
 
 * Tue Dec 20 2022 Alexei Takaseev <taf@altlinux.org> 5.18.6-alt1
 - 5.18.6

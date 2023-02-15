@@ -1,5 +1,5 @@
 %define module_name ixgbe
-%define module_version 5.18.6
+%define module_version 5.18.11
 
 %define module_source %module_name.tar
 
@@ -9,7 +9,7 @@ Release: alt1
 
 Group: Development/Kernel
 Summary: Linux %module_name modules sources
-License: GPL-2
+License: GPL-2.0-only
 URL: http://www.intel.com/network/connectivity/products/server_adapters.htm
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
@@ -33,6 +33,10 @@ tar -cjf %kernel_srcdir/kernel-source-%module_name-%version.tar.bz2 %name-%versi
 %_usrsrc/*
 
 %changelog
+* Wed Feb 15 2023 Alexei Takaseev <taf@altlinux.org> 5.18.11-alt1
+- 5.18.11
+- Change License: to GPL-2.0-only
+
 * Tue Dec 20 2022 Alexei Takaseev <taf@altlinux.org> 5.18.6-alt1
 - 5.18.6
 
