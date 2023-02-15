@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.26.5
-Release: alt5
+Release: alt6
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -538,6 +538,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 
 
 %changelog
+* Wed Feb 15 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt6
+- turn on systemd boot of user session by default
+
 * Thu Feb 02 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt5
 - autostart obex.service from systemd user session
 
