@@ -13,7 +13,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 #BuildRequires: perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Syntax/Keyword/Try.pm) perl(Object/Pad.pm)
 
 Name: perl-%module_name
-Version: 0.63
+Version: 0.64
 Release: alt1
 Summary: deferred subroutine syntax for futures
 Group: Development/Perl
@@ -87,6 +87,9 @@ with futures.
 %perl_vendor_autolib/*
 
 %changelog
+* Wed Feb 15 2023 Igor Vlasenko <viy@altlinux.org> 0.64-alt1
+- automated CPAN update
+
 * Sun Feb 12 2023 Igor Vlasenko <viy@altlinux.org> 0.63-alt1
 - automated CPAN update
 
