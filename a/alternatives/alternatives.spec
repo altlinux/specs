@@ -1,6 +1,6 @@
 Name: alternatives
 Version: 0.5.2
-Release: alt1
+Release: alt2
 
 Summary: alternatives support
 License: GPLv2+
@@ -64,7 +64,7 @@ EOF
 
 install -pD -m755 alternatives.prov %buildroot%_rpmlibdir/alternatives.prov
 install -pD -m755 alternatives.prov.files %buildroot%_rpmlibdir/alternatives.prov.files
-install -pD -m755 alternatives.filetrigger %buildroot%_rpmlibdir/alternatives.filetrigger
+install -pD -m755 alternatives.filetrigger %buildroot%_rpmlibdir/20-alternatives.filetrigger
 
 # /usr/sbin/alternatives-update is still used by the following packages:
 # java-1.6.0-openjdk-headless-1.6.0.41-alt6
@@ -91,13 +91,16 @@ ln -s /bin/true %buildroot%_sbindir/update-alternatives
 %_man1dir/*
 %_rpmlibdir/alternatives.prov
 %_rpmlibdir/alternatives.prov.files
-%_rpmlibdir/alternatives.filetrigger
+%_rpmlibdir/20-alternatives.filetrigger
 %exclude %_rpmmacrosdir/*
 
 %files -n rpm-macros-%name
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Feb 15 2023 Anton Farygin <rider@altlinux.ru> 0.5.2-alt2
+- Set filetrigger priority to fix the launch order (closes: #44018)
+
 * Sat May 28 2022 Alexey Gladkov <legion@altlinux.ru> 0.5.2-alt1
 - Replaced "fgrep" with "grep -F".
 
