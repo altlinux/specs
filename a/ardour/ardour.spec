@@ -1,5 +1,5 @@
 Name: ardour
-Version: 7.2
+Version: 7.3
 Release: alt1
 
 Summary: Professional multi-track audio recording application
@@ -129,6 +129,9 @@ done
 %_man1dir/ardour.1*
 
 %changelog
+* Wed Feb 15 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.3-alt1
+- 7.3 released
+
 * Wed Dec 14 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 7.2-alt1
 - 7.2 released
 
