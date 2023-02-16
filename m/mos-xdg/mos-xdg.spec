@@ -5,7 +5,7 @@ Summary: XDG desktop settings for M OS distros
 Summary(ru): Настройки рабочего окружения дистрибутивов М ОС
 License: GPL-3.0
 Group: Graphical desktop/Other
-Version: 2.4
+Version: 2.5
 Release: alt1
 Source0: %name-%version.tar
 Source1: COPYING
@@ -109,6 +109,12 @@ cd scripts
 ./test.sh
 
 %changelog
+* Thu Feb 16 2023 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.5-alt1
+- Support different variants of names of LibreOffice desktop files:
+  + xxx.desktop
+  + LibreOffice-xxx.desktop
+  + libreoffice-xxx.desktop
+
 * Thu Jan 26 2023 Mikhail Novosyolov <mikhailnov@altlinux.org> 2.4-alt1
 - Return the preview to the Dolphin panel (by tema@)
   After updating KDE, the button preview disappeared in the Dolphin
