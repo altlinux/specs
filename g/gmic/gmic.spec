@@ -12,12 +12,12 @@
 # no tags
 %define zart_ver 34ebf6c
 # https://github.com/c-koi/gmic-qt
-%define gmic_qt_ver v.3.1.6
+%define gmic_qt_ver v.3.2.0-3-ga53e063
 # https://github.com/dtschump/gmic-community.git
-%define gmic_comm_ver GMIC-3.1.6-5-g74c8119
+%define gmic_comm_ver gmic-3.2.1_pre-17-g462722d
 
 Name: gmic
-Version: 3.1.6
+Version: 3.2.1
 Release: alt1
 
 Summary: GREYC's Magic Image Converter
@@ -119,6 +119,7 @@ sed -i "s|cimg_use_openmp||;s|-fopenmp||" gmic-qt/gmic_qt.pro zart/zart.pro
 dos2unix src/Makefile
 # fix libdir
 sed -i 's|\$(USR)/\$(LIB)/|$(USR)/%_lib/|' src/Makefile
+sed -i 's|\$(PREFIX)/\$(LIB)/|$(PREFIX)/%_lib/|' src/Makefile
 # fix libcgmic path
 subst 's| \.\.\/\(\.\.\/gmic-community/libcgmic\)| \1|' src/Makefile
 %ifnarch %ix86 x86_64
@@ -134,9 +135,10 @@ pushd src
 popd
 
 pushd %name-qt
-%qmake_qt5 CONFIG+=release GMIC_PATH=../src HOST=gimp gmic_qt.pro
+%define opt_qt CONFIG+=release GMIC_PATH=../src NOSTRIP=1
+%qmake_qt5 %opt_qt HOST=gimp gmic_qt.pro
 %make_build
-%qmake_qt5 CONFIG+=release GMIC_PATH=../src HOST=none gmic_qt.pro
+%qmake_qt5 %opt_qt HOST=none gmic_qt.pro
 %make_build
 popd
 
@@ -205,6 +207,9 @@ popd
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Thu Feb 16 2023 Yuri N. Sedunov <aris@altlinux.org> 3.2.1-alt1
+- 3.2.1
+
 * Thu Sep 01 2022 Yuri N. Sedunov <aris@altlinux.org> 3.1.6-alt1
 - 3.1.6
 
