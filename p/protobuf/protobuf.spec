@@ -27,7 +27,7 @@ Name: %oname
 Name: %oname%soversion
 %endif
 Version: 3.21.12
-Release: alt1
+Release: alt2
 Summary: Protocol Buffers - Google's data interchange format
 License: BSD-3-Clause
 %if_disabled legacy
@@ -428,6 +428,9 @@ popd
 
 
 %changelog
+* Thu Feb 16 2023 Alexey Shabalin <shaba@altlinux.org> 3.21.12-alt2
+- fixed build with python 3.11
+
 * Fri Dec 23 2022 Alexey Shabalin <shaba@altlinux.org> 3.21.12-alt1
 - 3.21.12
 
