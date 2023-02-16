@@ -3,7 +3,7 @@
 
 Name: git-retry
 Version: 0.0.20230216
-Release: alt1
+Release: alt2
 Summary: Bootstrap function to retry a git command
 License: BSD-3-Clause
 Group: Development/Tools
@@ -46,5 +46,8 @@ git retry init
 %_man1dir/*.1*
 
 %changelog
+* Fri Feb 17 2023 Vitaly Chikunov <vt@altlinux.org> 0.0.20230216-alt2
+- Update transient error messages list to handle ssh and contemporary curl.
+
 * Thu Feb 16 2023 Vitaly Chikunov <vt@altlinux.org> 0.0.20230216-alt1
 - First import 6b98cdcb (2023-02-16).
