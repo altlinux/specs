@@ -37,7 +37,7 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.65
+Version: %ver_major.66
 Release: alt1
 
 Summary: Media Sharing Server
@@ -71,6 +71,7 @@ BuildRequires: libjack-devel
 BuildRequires: libv4l-devel libsamplerate-devel libsndfile-devel
 BuildRequires: libavformat-devel libavcodec-devel libavfilter-devel
 BuildRequires: libbluez-devel
+BuildRequires: libmysofa-devel
 # BT codecs
 BuildRequires: libsbc-devel libfdk-aac-devel libldac-devel
 BuildRequires: libfreeaptx-devel libopus-devel
@@ -186,15 +187,18 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %files -f %name.lang
 %_bindir/%name
 %_bindir/pw-jack
+%_bindir/%name-aes67
 %_bindir/%name-avb
 %_bindir/%name-pulse
 %_bindir/%name-media-session
 %{?_enable_gstreamer:%_libdir/gstreamer-%gst_api_ver/libgst%name.so}
+%_sysconfdir/security/limits.d/25-pw-rlimits.conf
 %dir %_sysconfdir/%name/
 %dir %_sysconfdir/%name/media-session.d
 %dir %_sysconfdir/%name/filter-chain
 %dir %_datadir/%name
 %_datadir/%name/%name.conf
+%_datadir/%name/%name-aes67.conf
 %_datadir/%name/client.conf
 %_datadir/%name/client-rt.conf
 %_datadir/%name/jack.conf
@@ -307,6 +311,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Feb 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.66-alt1
+- 0.3.66
+
 * Thu Jan 26 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.65-alt1
 - updated to 0.3.65 + media-session-0.4.1-22-g8ca57ad13
 
