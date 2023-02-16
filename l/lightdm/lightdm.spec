@@ -2,12 +2,12 @@
 %define _localstatedir %_var
 %def_enable introspection
 %def_enable systemd
-%def_enable qt
+%def_disable qt
 %def_enable qt5
 
 Name: lightdm
 Version: 1.30.0
-Release: alt22
+Release: alt24
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -26,7 +26,7 @@ Patch8:  %name-1.30.0-alt-config.patch
 Patch9:  %name-1.30.0-alt-01-Xgreeter.patch
 Patch10: %name-1.30.0-alt-02-hide-users.patch
 Patch11: %name-1.30.0-alt-03-login-unknown.patch
-Patch12: %name-1.30.0-alt-pam.patch
+Patch12: %name-1.30.0-alt-pam-2.0.patch
 Patch13: %name-1.30.0-alt-polkit.patch
 Patch14: %name-1.30.0-alt-shells.patch
 Patch15: %name-1.30.0-alt-04-systemd.patch
@@ -170,6 +170,10 @@ manager via D-Bus.
 sed -i 's,-Werror=pointer-arith,,' configure.ac
 %endif
 
+# Fix tests with new D-Bus (see a70b042f in dbus package):
+sed -i -e "s,unix:tmpdir=/tmp,unix:tmpdir=$TMPDIR,g" \
+    tests/data/session.conf tests/data/system.conf
+
 %build
 %ifarch %e2k
 export CXXFLAGS="%optflags -std=gnu++11"
@@ -300,6 +304,13 @@ fi
 %_man1dir/dm-tool.*
 
 %changelog
+* Wed Feb 15 2023 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt24
+- Add support for kwallet (closes: 44689).
+- Fixed tests with new D-Bus.
+
+* Tue Oct 25 2022 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt23
+- Disable QT versions < 5 (closes: 43158).
+
 * Fri May 06 2022 Paul Wolneykien <manowar@altlinux.org> 1.30.0-alt22
 - Disable the following patches: chauthtok, default-username, switch.
 - Fix: Sending VT number on session stop (closes: 42637)
