@@ -3,7 +3,7 @@
 Name: pve-common
 Summary: PVE base library
 Version: 7.2.8
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Development/Perl
 Url: https://git.proxmox.com/
@@ -70,6 +70,12 @@ make -C test check
 %perl_vendor_privlib/PVE
 
 %changelog
+* Fri Feb 10 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.2.8-alt2
+- fix HOST for vlan device (ALT #44032)
+
+* Wed Jan 25 2023 Andrew A. Vasilyev <andy@altlinux.org> 7.2.3-alt2
+- fix HOST for vlan device (ALT #44032)
+
 * Wed Nov 23 2022 Andrew A. Vasilyev <andy@altlinux.org> 7.2.8-alt1
 - 7.2-8
 
