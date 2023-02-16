@@ -1,6 +1,6 @@
 Name:     sddm-sugar-light-theme
 Version:  1.0
-Release:  alt1
+Release:  alt1.1
 BuildArch: noarch
 
 %define sname sddm-sugar-light-theme
@@ -19,14 +19,12 @@ Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source:   %name-%version-%release.tar
 Source1:  %mname.conf
-Source2:  VirtualKeyboard.qml
 
 %description
 Sugar light login theme for SDDM
 
 %prep
 %setup -n %sname
-install -m 644  %SOURCE2 %_builddir/sddm-sugar-light-theme/Components/
 
 %install
 install -d %buildroot%_datadir/sddm/themes/%mname/
@@ -34,18 +32,14 @@ cp -ar .  %buildroot%_datadir/sddm/themes/%mname
 install -d  %buildroot%_sysconfdir/sddm.conf.d/
 install -D  %SOURCE1  %buildroot%_sysconfdir/sddm.conf.d/
 
-#%post
-#cp %sddm_conf %sddm_conf.save
-#subst s/\^Current/\#Current/ %sddm_conf
-
-#%postun
-#cp %sddm_conf %sddm_conf.save
-#subst s/\#Current/Current/ %sddm_conf
 
 %files
 %_datadir/sddm/themes/%mname/
 %attr(0640,root,%sddm_user) %_sysconfdir/sddm.conf.d/%mname.conf
 
 %changelog
+* Thu Feb 16 2023 Hihin Ruslan <ruslandh@altlinux.ru> 1.0-alt1.1
+- Fix bug (ALT #45177)
+
 * Thu Feb 02 2023 Hihin Ruslan <ruslandh@altlinux.ru> 1.0-alt1
 -  Init Build for Sisyphus
