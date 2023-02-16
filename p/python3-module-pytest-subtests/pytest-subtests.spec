@@ -3,7 +3,7 @@
 %def_with check
 
 Name:    python3-module-%oname
-Version: 0.9.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Support for unittest subTest() and subtests fixture
@@ -51,6 +51,9 @@ py.test-3
 %python3_sitelibdir/pytest_subtests-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Feb 16 2023 Grigory Ustinov <grenka@altlinux.org> 0.10.0-alt1
+- Automatically updated to 0.10.0.
+
 * Sun Oct 30 2022 Grigory Ustinov <grenka@altlinux.org> 0.9.0-alt1
 - Automatically updated to 0.9.0.
 
