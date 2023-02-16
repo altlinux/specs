@@ -4,7 +4,7 @@
 %define  oname pydantic
 
 Name:    python3-module-%oname
-Version: 1.10.4
+Version: 1.10.5
 Release: alt1
 
 Summary: Data parsing and validation using Python type hints
@@ -66,6 +66,9 @@ with pydantic.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Thu Feb 16 2023 Grigory Ustinov <grenka@altlinux.org> 1.10.5-alt1
+- Automatically updated to 1.10.5.
+
 * Wed Jan 11 2023 Grigory Ustinov <grenka@altlinux.org> 1.10.4-alt1
 - Automatically updated to 1.10.4 (Closes: #44879).
 - Build without check.
