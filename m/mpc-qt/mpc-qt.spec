@@ -1,5 +1,8 @@
+# Unpackaged files in buildroot should terminate build
+%define _unpackaged_files_terminate_build 1
+
 Name:     mpc-qt
-Version:  22.02
+Version:  23.02
 Release:  alt1
 
 Summary:  A clone of Media Player Classic reimplemented in Qt.
@@ -25,7 +28,7 @@ interface and functionality of mpc-h.
 rm -rf mpv-dev
 
 %build
-%qmake_qt5 PREFIX=%prefix
+%qmake_qt5 PREFIX=%prefix MPCQT_VERSION=%version
 %make_build
 
 %install
@@ -33,12 +36,16 @@ rm -rf mpv-dev
 
 %files
 %_bindir/%name
-%_desktopdir/%name.desktop
+%_desktopdir/io.github.mpc_qt.Mpc-Qt.desktop
 %_defaultdocdir/%name
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %_datadir/%name
+%_datadir/metainfo/io.github.mpc_qt.Mpc-Qt.appdata.xml
 
 %changelog
+* Thu Feb 16 2023 Anton Midyukov <antohami@altlinux.org> 23.02-alt1
+- - New version 23.02
+
 * Sat Feb 26 2022 Anton Midyukov <antohami@altlinux.org> 22.02-alt1
 - New version 22.02
 - Update url
