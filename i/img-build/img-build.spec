@@ -1,5 +1,5 @@
 Name: img-build
-Version: 0.1.0
+Version: 0.2.0
 Release: alt1
 License: GPL-2.0-or-later
 Group: Development/Other
@@ -23,5 +23,11 @@ cp img-build -t %buildroot%_bindir
 %_bindir/img-build
 
 %changelog
+* Thu Feb 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.2.0-alt1
+- Added support for:
+  + ExcludeArch and ExclusiveArch tags;
+  + License tag;
+  + --license mode to query License tag value.
+
 * Tue Nov 22 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.0-alt1
 - Initial build.
