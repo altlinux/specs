@@ -1,6 +1,6 @@
 Name: u-boot-rockchip
 Version: 2023.01
-Release: alt1
+Release: alt2
 
 Summary: Das U-Boot
 License: GPLv2+
@@ -54,6 +54,9 @@ find . -type f | cpio -pmd %buildroot%_datadir/u-boot
 %_datadir/u-boot/*
 
 %changelog
+* Thu Feb 16 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.01-alt2
+- add orange pi 4 board variants (closes: 45235)
+
 * Tue Jan 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.01-alt1
 - 2023.01 released
 
