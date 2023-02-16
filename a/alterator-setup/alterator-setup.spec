@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-setup
-Version: 0.3.14
+Version: 0.3.15
 Release: alt1
 
 Summary: Perform initial setup of an OEM installation (warning!)
@@ -100,6 +100,9 @@ if [ -x /sbin/sd_booted ]; then
 fi
 
 %changelog
+* Thu Feb 16 2023 Anton Midyukov <antohami@altlinux.org> 0.3.15-alt1
+- setup.service: wait for network-online.target to complete
+
 * Mon Nov 29 2021 Anton Midyukov <antohami@altlinux.org> 0.3.14-alt1
 - 93-enable-vnc-server-pkgs.sh: do not require systemctl (Closes: 41457)
 - installer-feature-%name-stage2, installer-feature-%name-x11vnc-stage2:
