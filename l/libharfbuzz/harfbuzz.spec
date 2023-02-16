@@ -1,9 +1,10 @@
 %def_enable snapshot
 
 %define _name harfbuzz
-%define ver_major 6.0
+%define ver_major 7.0
 %def_with graphite2
 %def_with icu
+%def_with cairo
 %def_with gobject
 %def_enable introspection
 %def_enable docs
@@ -44,31 +45,42 @@ This package provides shared HarfBuzz library.
 %package icu
 Summary: Shared HarfBuzz library with ICU support.
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description icu
 HarfBuzz is an implementation of the OpenType Layout engine.
 This package provides shared HarfBuzz library with ICU support.
 
+%package cairo
+Summary: Shared HarfBuzz library with Cairo support.
+Group: System/Libraries
+Requires: %name = %EVR
+
+%description cairo
+HarfBuzz is an implementation of the OpenType Layout engine.
+This package provides shared HarfBuzz library with Cairo support.
+
+%package gobject
+Summary: GObject bindings for %name
+Group: System/Libraries
+Requires: %name = %EVR
+
+%description gobject
+This package contains functionality to make HarfBuzz library
+integrate well with the GObject object system used by GNOME.
+
 %package devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: %name = %version-%release
-%{?_with_icu:Requires: %name-icu = %version-%release}
-%{?_with_gobject:Requires: %name-gobject = %version-%release}
+Requires: %name = %EVR
+%{?_with_icu:Requires: %name-icu = %EVR}
+%{?_with_cairo:Requires: %name-cairo = %EVR}
+%{?_with_gobject:Requires: %name-gobject = %EVR}
 
 %description devel
 The %name-devel package contains files for developing applications that
 use HarfBuzz library.
 
-%package gobject
-Summary: GObject bindings for %name
-Group: System/Libraries
-Requires: %name = %version-%release
-
-%description gobject
-This package contains functionality to make HarfBuzz library
-integrate well with the GObject object system used by GNOME.
 
 %package devel-doc
 Summary: Development documentation for Pango
@@ -83,7 +95,7 @@ This package contains development documentation for HarfBuzz.
 %package utils
 Summary: Utilities from HarfBuzz project
 Group: Development/Tools
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description utils
 The %name-utils package provides utilities from %name package.
@@ -91,7 +103,7 @@ The %name-utils package provides utilities from %name package.
 %package gir
 Summary: GObject introspection data for the HarfBuzz library
 Group: System/Libraries
-Requires: %name-gobject = %version-%release
+Requires: %name-gobject = %EVR
 
 %description gir
 GObject introspection data for the HarfBuzz library
@@ -100,8 +112,8 @@ GObject introspection data for the HarfBuzz library
 Summary: GObject introspection devel data for the HarfBuzz library
 Group: Development/Other
 BuildArch: noarch
-Requires: %name-gir = %version-%release
-Requires: %name-devel = %version-%release
+Requires: %name-gir = %EVR
+Requires: %name-devel = %EVR
 
 %description gir-devel
 GObject introspection devel data for the HarfBuzz library
@@ -113,8 +125,8 @@ GObject introspection devel data for the HarfBuzz library
 %meson \
 	-Dglib=enabled \
 	-Dfreetype=enabled \
-	-Dcairo=enabled \
-	%{?_with_icu:-Dicu=enabled} \
+	%{?_without_icu:-Dicu=disabled} \
+	%{?_without_cairo:-Dcairo=disabled} \
 	%{?_with_graphite2:-Dgraphite2=enabled} \
         %{?_enable_gobject:-Dgobject=enabled} \
         %{?_enable_introspection:-Dintrospection=enabled} \
@@ -133,16 +145,33 @@ GObject introspection devel data for the HarfBuzz library
 %_libdir/%name.so.*
 %_libdir/%name-subset.so.*
 
+%if_with icu
+%files icu
+%_libdir/%name-icu.so.*
+%endif
+
+%if_with cairo
+%files cairo
+%_libdir/%name-cairo.so.*
+%endif
+
+%if_with gobject
+%files gobject
+%_libdir/%name-gobject.so.*
+%endif
+
 %files devel
 %_includedir/%_name/
 %_libdir/%name.so
 %_libdir/%name-subset.so
-%if_with icu
-%_libdir/%name-icu.so
-%endif
 %_pkgconfigdir/%_name.pc
-%_pkgconfigdir/%_name-icu.pc
 %_pkgconfigdir/%_name-subset.pc
+%{?_with_icu:
+%_libdir/%name-icu.so
+%_pkgconfigdir/%_name-icu.pc}
+%{?_with_cairo:
+%_libdir/%name-cairo.so
+%_pkgconfigdir/%_name-cairo.pc}
 %_libdir/cmake/%_name/
 %doc NEWS AUTHORS COPYING README
 %if_with gobject
@@ -155,21 +184,12 @@ GObject introspection devel data for the HarfBuzz library
 %_datadir/gtk-doc/html/*
 %endif
 
-%if_with icu
-%files icu
-%_libdir/%name-icu.so.*
-%endif
-
 %files utils
+%_bindir/hb-info
 %_bindir/hb-view
 %_bindir/hb-ot-shape-closure
 %_bindir/hb-shape
 %_bindir/hb-subset
-
-%if_with gobject
-%files gobject
-%_libdir/%name-gobject.so.*
-%endif
 
 %if_enabled introspection
 %files gir
@@ -180,6 +200,10 @@ GObject introspection devel data for the HarfBuzz library
 %endif
 
 %changelog
+* Wed Feb 15 2023 Yuri N. Sedunov <aris@altlinux.org> 7.0.0-alt1
+- updated to 7.0.0-4-gb41efb6c4
+- new -cairo subpackage
+
 * Mon Dec 19 2022 Yuri N. Sedunov <aris@altlinux.org> 6.0.0-alt1
 - updated to 6.0.0-15-gc292e577f
 
