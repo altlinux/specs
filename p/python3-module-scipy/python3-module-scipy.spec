@@ -10,7 +10,7 @@
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt3
+Release: alt4
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
@@ -85,7 +85,7 @@ sed -i '/from scipy._lib._testutils import PytestTester/,/del PytestTester/ {s/^
 %endif
 
 mkdir -p ~/.matplotlib
-cp %python3_sitelibdir/matplotlib/mpl-data/matplotlibrc \
+cp %_datadir/matplotlib/mpl-data/matplotlibrc \
 	~/.matplotlib/
 sed -i 's|^\(backend\).*|\1 : Agg|' ~/.matplotlib/matplotlibrc
 
@@ -156,6 +156,9 @@ done
 %_includedir/%modname-py3
 
 %changelog
+* Tue Feb 14 2023 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt4
+- mpl-data moved to %%_datadir.
+
 * Mon Jan 24 2022 Stanislav Levin <slev@altlinux.org> 1.6.1-alt3
 - Fixed FTBFS (Numpy 1.22.1).
 

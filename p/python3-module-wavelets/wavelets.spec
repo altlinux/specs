@@ -3,7 +3,7 @@
 %define oname wavelets
 
 Name: python3-module-%oname
-Version: 1.1.1
+Version: 1.4.1
 Release: alt1
 Summary: Wavelet Transforms in Python
 License: MIT and BSD-3-Clause
@@ -16,7 +16,6 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
 BuildRequires: python3-module-Cython
-BuildRequires: python3-module-nose
 BuildRequires: python3-module-numpy-testing
 BuildRequires: libnumpy-py3-devel
 BuildRequires: pytest3
@@ -90,6 +89,9 @@ popd &>/dev/null
 %python3_sitelibdir/*/tests
 
 %changelog
+* Thu Feb 16 2023 Grigory Ustinov <grenka@altlinux.org> 1.4.1-alt1
+- Automatically updated to 1.4.1.
+
 * Tue Aug 11 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.1-alt1
 - Updated to upstream version 1.1.1.
 

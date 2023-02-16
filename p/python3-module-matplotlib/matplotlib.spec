@@ -1,17 +1,13 @@
 %define _unpackaged_files_terminate_build 1
-# TODO: fix dest on x86_64
-# TODO: Move mpl-data to share?
-# TODO: gtk3 knob too?
-%define oname matplotlib
-%define major 3.4
 
-%def_without qt4
+%define oname matplotlib
+
 %def_with qt5
 %def_with wx
 
 Name: python3-module-%oname
-Version: %major.2
-Release: alt5.1
+Version: 3.6.3
+Release: alt1
 
 Summary: Matlab(TM) style python plotting package
 
@@ -22,25 +18,27 @@ Url: http://matplotlib.sourceforge.net
 Packager: Python Development Team <python@packages.altlinux.org>
 
 Source: %oname-%version.tar
-Source1: setup.cfg
+Source1: mplsetup.cfg
 
-Patch1: matplotlib-Set-FreeType-version-to-2.10.2-and-update-tolerances.patch
-
-BuildRequires(pre): rpm-build-xdg
-BuildRequires(pre): rpm-build-gir
-BuildRequires: gcc-c++ tk-devel libgtk+3-gir-devel libpng-devel libfreetype-devel libqhull-devel
-BuildRequires: python3-module-wx
+Patch: matplotlibrc-path-search-fix.patch
+Patch1: matplotlib-Set-FreeType-version-to-2.12.1-and-update-tolerances.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools_scm
+
+BuildRequires: gcc-c++
+BuildRequires: tk-devel
+BuildRequires: libgtk+3-gir-devel
+BuildRequires: libpng-devel
+BuildRequires: libfreetype-devel
+BuildRequires: libqhull-devel
 BuildRequires: libnumpy-py3-devel
-BuildRequires: python3-module-numpy-testing python3-module-pycairo python3-module-pygobject3 python3-modules-tkinter python3-module-cycler python3-module-pyparsing python3-module-pytz python3-module-dateutil
-BuildRequires: python3-module-pip
-%{?_with_qt4:BuildRequires: python3-module-PyQt4}
+
 %{?_with_qt5:BuildRequires: python3-module-PyQt5}
 
 Requires: python3-module-%oname-gtk3
 Requires: python3-module-mpl_toolkits = %EVR
-%add_python3_req_skip AppKit Foundation PyObjCTools numarray paint _Py
+Requires: %name-data = %EVR
 %add_python3_req_skip _winreg builtins distutils
 
 %description
@@ -52,7 +50,6 @@ in python scripts, interactively from the python shell (ala matlab
 or mathematica), in web application servers generating dynamic
 charts, or embedded in GTK or WX applications; see backends.
 
-
 %package qt5
 Summary: qt5 backend for %oname
 Group: Development/Python3
@@ -61,18 +58,6 @@ Requires: %name = %EVR
 
 %description qt5
 qt5 backend for %oname.
-
-%package qt4
-Summary: qt4 backend for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires PyQt4
-#fix me!!!
-#matplotlib.backends.backend_qt4* needed matplotlib.backends.backend_qt5
-Requires: %name-qt5 = %EVR
-
-%description qt4
-qt4 backend for %oname.
 
 %package cairo
 Summary: Cairo backend for %oname
@@ -101,6 +86,23 @@ Requires: python3-module-pygobject3
 
 %description gtk3
 gtk3 backend for %oname.
+
+%package gtk4
+Summary: gtk4 backend for %oname
+Group: Development/Python3
+Requires: %name-cairo = %EVR
+Requires: typelib(Gtk) = 4.0
+
+%description gtk4
+gtk4 backend for %oname.
+
+%package web
+Summary: Web backend for %oname
+Group: Development/Python3
+Requires: python3-module-tornado
+
+%description web
+Web backend for %oname.
 
 %package wx
 Summary: wx backend for %oname
@@ -134,25 +136,31 @@ Group: Development/Python3
 %description -n python3-module-mpl_toolkits
 mpl_toolkits extension for %oname.
 
+%package data
+Summary: Data used by python-matplotlib
+Group: Development/Python3
+BuildArch: noarch
+
+%description data
+Data used by python-matplotlib
+
 %prep
 %setup
+%patch -p1
 %patch1 -p1
-
-# fix version info
-sed -i \
-	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
-	lib/%oname/_version.py
 
 install -p -m644 %SOURCE1 .
 
+# The setup procedure wants certifi to download packages over https
+sed -i '/"certifi>=.*"/ d' setup.py
+
 %build
 %add_optflags -fno-strict-aliasing
-%if_without wx
-sed -i 's|^\(wxagg\).*|\1 = False|' setup.cfg
-%endif
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_build_debug
 
 %install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
 %python3_install
 cp -fR lib/mpl_toolkits %buildroot%python3_sitelibdir/
 
@@ -170,11 +178,13 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 sed -i 's|^\(backend\).*|\1 : GTK3Cairo|' \
 	%buildroot%python3_sitelibdir/%oname/mpl-data/matplotlibrc
 
-# fonts
-
-%define reduce_fonts cmex10.ttf cmmi10.ttf cmr10.ttf cmsy10.ttf
+mkdir -p %buildroot%_datadir/matplotlib
+mv %buildroot%python3_sitelibdir/matplotlib/mpl-data \
+   %buildroot%_datadir/matplotlib
 
 %pre
+# fonts
+%define reduce_fonts cmex10.ttf cmmi10.ttf cmr10.ttf cmsy10.ttf
 rm -f %python3_sitelibdir/%oname/mpl-data/fonts/ttf/Vera*.ttf
 for i in %reduce_fonts
 do
@@ -184,87 +194,153 @@ done
 %files
 %doc README.rst
 %python3_sitelibdir/*.py*
-%python3_sitelibdir/__pycache__/*
-%python3_sitelibdir/*.egg-info
-%dir %python3_sitelibdir/matplotlib/
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%dir %python3_sitelibdir/matplotlib
 %python3_sitelibdir/matplotlib-*-nspkg.pth
 %python3_sitelibdir/matplotlib/*.py*
 %python3_sitelibdir/matplotlib/*.so
 %python3_sitelibdir/matplotlib/__pycache__
 %python3_sitelibdir/matplotlib/_api
-%python3_sitelibdir/mpl_toolkits/
-%python3_sitelibdir/matplotlib/projections/
-%python3_sitelibdir/matplotlib/mpl-data/
-%python3_sitelibdir/matplotlib/cbook/
-%python3_sitelibdir/matplotlib/backends/
-%exclude %python3_sitelibdir/matplotlib/backends/backend_gtk*
-%exclude %python3_sitelibdir/matplotlib/backends/backend_cairo*
-%exclude %python3_sitelibdir/matplotlib/backends/backend_wx*
-%exclude %python3_sitelibdir/matplotlib/backends/backend_tk*
-%exclude %python3_sitelibdir/matplotlib/backends/_tkagg*
-%exclude %python3_sitelibdir/matplotlib/backends/backend_qt?*
-%exclude %python3_sitelibdir/matplotlib/backends/qt*_compat.*
-%exclude %python3_sitelibdir/matplotlib/backends/backend_macosx.*
-%exclude %python3_sitelibdir/matplotlib/backends/backend_nbagg*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_cairo*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_wx*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_tk*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/qt*_compat.*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_macosx.*
-%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_nbagg*
-%exclude %python3_sitelibdir/matplotlib/backends/qt_editor
-%python3_sitelibdir/matplotlib/tri
-%python3_sitelibdir/matplotlib/compat
 %python3_sitelibdir/matplotlib/axes
+%python3_sitelibdir/matplotlib/backends
+%python3_sitelibdir/matplotlib/cbook
+%python3_sitelibdir/matplotlib/projections
 %python3_sitelibdir/matplotlib/style
+%python3_sitelibdir/matplotlib/tri
+%exclude %python3_sitelibdir/matplotlib/backends/_backend_tk.py
+%exclude %python3_sitelibdir/matplotlib/backends/_backend_gtk.py
+%exclude %python3_sitelibdir/matplotlib/backends/backend_cairo.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_nbagg.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_gtk3.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_gtk3agg.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_gtk3cairo.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_gtk4.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_gtk4agg.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_gtk4cairo.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_qt5.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_qt5agg.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_qt5cairo.py*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_tkagg.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_tkcairo.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_webagg.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_webagg_core.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_wx.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_wxagg.*
+%exclude %python3_sitelibdir/matplotlib/backends/backend_wxcairo.*
+%exclude %python3_sitelibdir/matplotlib/backends/qt_compat.*
+%exclude %python3_sitelibdir/matplotlib/backends/qt_editor
+%exclude %python3_sitelibdir/matplotlib/backends/web_backend
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/_backend_tk.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/_backend_gtk.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_cairo.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_nbagg.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk3.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk3agg.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk3cairo.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk4.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk4agg.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk4cairo.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5agg.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5cairo.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_tkagg.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_tkcairo.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_webagg.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_webagg_core.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_wx.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_wxagg.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/backend_wxcairo.*.py*
+%exclude %python3_sitelibdir/matplotlib/backends/__pycache__/qt_compat.*.py*
 %exclude %python3_sitelibdir/mpl_toolkits
 
 %files cairo
-%python3_sitelibdir/matplotlib/backends/backend_cairo*
-%python3_sitelibdir/matplotlib/backends/__pycache__/backend_cairo*
+%doc README.rst
+%python3_sitelibdir/matplotlib/backends/backend_cairo.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_cairo.*.py*
 
 %files nbagg
-%python3_sitelibdir/matplotlib/backends/backend_nbagg*
-%python3_sitelibdir/matplotlib/backends/__pycache__/backend_nbagg*
+%doc README.rst
+%python3_sitelibdir/matplotlib/backends/backend_nbagg.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_nbagg.*.py*
 
 %files gtk3
-%python3_sitelibdir/matplotlib/backends/backend_gtk3*
-%python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk3*
+%doc README.rst
+%python3_sitelibdir/matplotlib/backends/backend_gtk3.py*
+%python3_sitelibdir/matplotlib/backends/backend_gtk3agg.py*
+%python3_sitelibdir/matplotlib/backends/backend_gtk3cairo.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk3.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk3agg.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk3cairo.*.py*
+
+%files gtk4
+%doc README.rst
+%python3_sitelibdir/matplotlib/backends/backend_gtk4.py*
+%python3_sitelibdir/matplotlib/backends/backend_gtk4agg.py*
+%python3_sitelibdir/matplotlib/backends/backend_gtk4cairo.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk4.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk4agg.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk4cairo.*.py*
 
 %files tk
-%python3_sitelibdir/matplotlib/backends/backend_tk*
-%python3_sitelibdir/matplotlib/backends/__pycache__/backend_tk*
-%python3_sitelibdir/matplotlib/backends/_tkagg*
+%doc README.rst
+%python3_sitelibdir/matplotlib/backends/_backend_tk.py*
+%python3_sitelibdir/matplotlib/backends/backend_tkagg.py*
+%python3_sitelibdir/matplotlib/backends/backend_tkcairo.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/_backend_tk.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_tkagg.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_tkcairo.*.py*
+
+%files web
+%doc README.rst
+%python3_sitelibdir/matplotlib/backends/backend_webagg.py*
+%python3_sitelibdir/matplotlib/backends/backend_webagg_core.py*
+%python3_sitelibdir/matplotlib/backends/web_backend/
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_webagg.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_webagg_core.*.py*
 
 %if_with qt5
 %files qt5
-%python3_sitelibdir/matplotlib/backends/backend_qt5*
-%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5*
-%python3_sitelibdir/matplotlib/backends/qt*_compat.*
-%python3_sitelibdir/matplotlib/backends/__pycache__/qt*_compat.*
-%python3_sitelibdir/matplotlib/backends/qt_editor
-%endif
-
-%if_with qt4
-%files qt4
-%python3_sitelibdir/matplotlib/backends/backend_qt4*
-%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt4*
+%doc README.rst
+%python3_sitelibdir/matplotlib/backends/backend_qt5.py*
+%python3_sitelibdir/matplotlib/backends/backend_qt5agg.py*
+%python3_sitelibdir/matplotlib/backends/backend_qt5cairo.py*
+%python3_sitelibdir/matplotlib/backends/qt_compat.py*
+%python3_sitelibdir/matplotlib/backends/qt_editor/
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5agg.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5cairo.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/qt_compat.*.py*
 %endif
 
 %if_with wx
 %files wx
-%python3_sitelibdir/matplotlib/backends/backend_wx*
+%doc README.rst
+%python3_sitelibdir/matplotlib/backends/backend_wx.py*
+%python3_sitelibdir/matplotlib/backends/backend_wxagg.py*
+%python3_sitelibdir/matplotlib/backends/backend_wxcairo.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_wx.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_wxagg.*.py*
+%python3_sitelibdir/matplotlib/backends/__pycache__/backend_wxcairo.*.py*
 %endif
 
 %files sphinxext
+%doc README.rst
 %python3_sitelibdir/%oname/sphinxext
 
 %files -n python3-module-mpl_toolkits
+%doc README.rst
 %python3_sitelibdir/mpl_toolkits
 
+%files data
+%doc README.rst
+%_datadir/matplotlib/mpl-data
+
 %changelog
+* Thu Feb 16 2023 Grigory Ustinov <grenka@altlinux.org> 3.6.3-alt1
+- Updated to 3.6.3.
+- Moved mpl-data to _datadir.
+
 * Sun Feb 13 2022 Michael Shigorin <mike@altlinux.org> 3.4.2-alt5.1
 - E2K: setup.py => "No module named pip"
 
