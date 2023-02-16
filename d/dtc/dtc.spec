@@ -1,9 +1,11 @@
+%define _unpackaged_files_terminate_build 1
 %def_without docs
 %def_with python3
+%global optflags_lto %nil
 
 Name: dtc
-Version: 1.6.1
-Release: alt2
+Version: 1.7.0
+Release: alt1
 
 Summary: Device Tree Compiler for Flat Device Trees
 License: GPL-2.0-or-later
@@ -11,10 +13,11 @@ Group: Development/Tools
 
 Url: https://git.kernel.org/cgit/utils/dtc/dtc.git
 Source: %name-%version.tar
-Patch1: dtc-1.6.1-alt-fix-python-module-install.patch
+Patch: %name-%version-%release.patch
 
+BuildRequires: meson
 BuildRequires: flex bison
-%{?_with_python3:BuildRequires: swig python3-devel}
+%{?_with_python3:BuildRequires: swig python3-devel python3-module-setuptools_scm}
 %{?_with_docs:BuildRequires: texlive-base texlive-latex-extra}
 
 %description
@@ -70,7 +73,7 @@ This package provides python bindings for libfdt
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 %ifarch %e2k
 # lcc 1.23 doesn't do -MG and there's -Werror=pointer-arith there
 sed -i 's,-MG ,,;s,-Werror,,' Makefile
@@ -78,7 +81,9 @@ echo '#define DTC_VERSION "%version"' > version_gen.h
 %endif
 
 %build
-%make_build %{?_without_python:NO_PYTHON=1}
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%meson -Dstatic-build=false
+%meson_build
 %if_with docs
 pushd Documentation
 latex dtc-paper.tex
@@ -89,7 +94,8 @@ popd
 %endif
 
 %install
-%makeinstall_std PREFIX=%_usr LIBDIR=%_libdir SETUP_PREFIX=%buildroot%_usr %{?_without_python:NO_PYTHON=1}
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%meson_install
 rm -f %buildroot%_bindir/ftdump
 
 %files
@@ -100,13 +106,13 @@ rm -f %buildroot%_bindir/ftdump
 
 %files -n libfdt
 %doc README.license
-%_libdir/libfdt-*.so
 %_libdir/libfdt.so.*
 
 %files -n libfdt-devel
 %doc README.license
 %_libdir/libfdt.so
 %_includedir/*
+%_pkgconfigdir/libfdt.pc
 
 %files -n libfdt-devel-static
 %_libdir/libfdt.a
@@ -125,6 +131,10 @@ rm -f %buildroot%_bindir/ftdump
 %endif
 
 %changelog
+* Thu Feb 16 2023 Alexey Shabalin <shaba@altlinux.org> 1.7.0-alt1
+- 1.7.0
+- switch to meson build
+
 * Fri Nov 18 2022 Ivan A. Melnikov <iv@altlinux.org> 1.6.1-alt2
 - build python3 libfdt module
   + switch to python3
