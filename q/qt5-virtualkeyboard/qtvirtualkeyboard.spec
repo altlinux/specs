@@ -3,7 +3,7 @@
 
 Name: qt5-virtualkeyboard
 Version: 5.15.8
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Qt5 - QtQuick virtual keyboard component
@@ -14,6 +14,7 @@ Requires: %name-common
 Provides: qml(QtQuick.VirtualKeyboard)
 
 Source: %qt_module-everywhere-src-%version.tar
+Patch1: alt-hunspell-dicts-path.patch
 
 # Automatically added by buildreq on Tue Apr 18 2017 (-bi)
 # optimized out: elfutils fontconfig gcc-c++ kde5-kcalcore-devel kde5-kcontacts-devel kde5-kmime-devel kde5-libkleo-devel kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-ki18n-devel kf5-kitemviews-devel kf5-kjobwidgets-devel kf5-kjs-devel kf5-kservice-devel kf5-kwidgetsaddons-devel kf5-kxmlgui-devel kf5-solid-devel kf5-sonnet-devel libGL-devel libqt5-clucene libqt5-core libqt5-gui libqt5-help libqt5-network libqt5-qml libqt5-quick libqt5-sql libqt5-svg libqt5-widgets libstdc++-devel libxcb-devel perl pkg-config python-base python-modules python3 python3-base qt5-base-devel qt5-declarative-devel qt5-location-devel qt5-script-devel qt5-tools qt5-webchannel-devel qt5-webkit-devel qt5-xmlpatterns-devel rpm-build-python3 ruby ruby-stdlibs
@@ -76,6 +77,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup -n %qt_module-everywhere-src-%version
+%patch1 -p1
 syncqt.pl-qt5 -version %version
 rm -rf src/virtualkeyboard/3rdparty/hunspell
 
@@ -125,6 +127,9 @@ export QT_HASH_SEED=0
 %_qt5_libdir/libQt?HunspellInputMethod.so.*
 
 %changelog
+* Thu Feb 16 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt2
+- fix find unspell dicts
+
 * Wed Jan 18 2023 Sergey V Turchin <zerg@altlinux.org> 5.15.8-alt1
 - new version
 
