@@ -5,15 +5,14 @@ BuildRequires: /usr/bin/pdftotext
 
 Name: csync2
 Version: 2.0
-Release: alt1.2
+Release: alt2
 
 Summary: Csync2 is a cluster synchronization tool
 
-License: GPL
+License: GPLv2
 Group: File tools
 Url: http://oss.linbit.com/csync2/
-
-# https://github.com/LINBIT/csync2
+VCS: https://github.com/LINBIT/csync2
 Source: %name-%version.tar
 Source1: http://www.clifford.at/papers/2005/csync2/paper.pdf
 Source2: %name.init
@@ -36,7 +35,7 @@ multiple hosts in a cluster in sync. Csync2 can handle complex setups with
 much more than just 2 hosts, handle file deletions and can detect conflicts.
 
 %prep
-%setup -q
+%setup
 %ifarch %e2k
 # name collision with existing function from "string.h"
 sed -i "s/strlcpy/rsync_strlcpy/" rsync.c
@@ -45,7 +44,9 @@ sed -i "s/strlcpy/rsync_strlcpy/" rsync.c
 %build
 %autoreconf
 %configure --sysconfdir=%_sysconfdir/%name --enable-sqlite3
-sed -i 's,libmysqlclient.so,libmysqlclient.so.20,' db_mysql.c
+sed -i 's,libmysqlclient.so,libmysqlclient.so.21,' db_mysql.c
+sed -i 's,libsqlite.so,libsqlite.so.0,' db_sqlite.c
+sed -i 's,libpq.so,libpq.so.5,' db_postgres.c
 %make_build
 pdftotext %SOURCE1 paper.txt
 
@@ -82,6 +83,9 @@ touch %buildroot/etc/%name/csync2_ssl_key.pem
 %ghost /etc/%name/csync2_ssl_key.pem
 
 %changelog
+* Fri Feb 17 2023 Anton Farygin <rider@altlinux.ru> 2.0-alt2
+- Fixed so-names for libpq and libsqlite3 (closes: #42567)
+
 * Wed Feb 02 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0-alt1.2
 - Fixed build for Elbrus.
 
