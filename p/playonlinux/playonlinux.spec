@@ -2,7 +2,7 @@
 
 Name:    playonlinux
 Version: 4.4
-Release: alt1
+Release: alt2
 
 Summary: Play your Windows games on Linux
 License: GPLv3
@@ -65,7 +65,6 @@ cp etc/%name.png %buildroot%_pixmapsdir/%name.png
 cp etc/PlayOnLinux.directory %buildroot%_datadir/desktop-directories/%oname.directory
 rm -f %buildroot%_datadir/%name/bin/smile
 mkdir -p %buildroot%_libdir/%name
-ln -sf /lib/libldap-2.4.so.2 %buildroot%_libdir/%name/libldap-2.4.so.2
 ln -sf /usr/lib/alsa-lib/libasound_module_conf_pulse.so %buildroot%_libdir/%name/libasound_module_conf_pulse.so
 ln -sf /usr/lib/libpulse.so.0 %buildroot%_libdir/%name/libpulse.so.0
 ln -sf /lib/libnss_db.so.2 %buildroot%_libdir/%name/libnss_db.so.2
@@ -80,6 +79,9 @@ ln -sf /lib/libnss_db.so.2 %buildroot%_libdir/%name/libnss_db.so.2
 %_libdir/%name/*
 
 %changelog
+* Fri Feb 17 2023 Alexey Shabalin <shaba@altlinux.org> 4.4-alt2
+- Drop symlink to libldap-2.4.so.2
+
 * Sat Sep 25 2021 Anton Midyukov <antohami@altlinux.org> 4.4-alt1
 - new version (4.4) with rpmgs script
 - build with python3-module-wx
