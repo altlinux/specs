@@ -3,7 +3,7 @@
 
 Name: chirp
 Version: 20221229
-Release: alt1
+Release: alt2
 Summary: A tool for programming two-way radio equipment
 
 Group: Communications
@@ -47,9 +47,12 @@ the hood.
 %doc COPYING
 %_bindir/chirp
 %python3_sitelibdir/%name/
-%python3_sitelibdir/%{name}-py3dev.dist-info/
+%python3_sitelibdir/%{name}-0.dist-info/
 
 %changelog
+* Thu Feb 09 2023 Stanislav Levin <slev@altlinux.org> 20221229-alt2
+- Fixed FTBFS (setuptools 66).
+
 * Thu Dec 29 2022 Alexey Sheplyakov <asheplyakov@altlinux.org> 20221229-alt1
 - revived chirp (from upstream py3 branch snapshot)
 

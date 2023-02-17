@@ -5,13 +5,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 22.3.1
+Version: 23.0
 Release: alt1
 
 Summary: The PyPA recommended tool for installing Python packages
 License: MIT
 Group: Development/Python3
 Url: https://pip.pypa.io
+VCS: https://github.com/pypa/pip.git
 
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
@@ -28,13 +29,17 @@ BuildRequires: python3(system_seed_wheels)
 
 %if_with check
 BuildRequires: git-core
+# synced to tests/requirements.txt
 BuildRequires: python3(cryptography)
 BuildRequires: python3(freezegun)
 BuildRequires: python3(installer)
 BuildRequires: python3(pytest)
 BuildRequires: python3(scripttest)
+BuildRequires: python3(setuptools)
+BuildRequires: python3(virtualenv)
 BuildRequires: python3(werkzeug)
 BuildRequires: python3(tomli_w)
+BuildRequires: python3(wheel)
 %endif
 
 Obsoletes: python3-module-pip-pickles
@@ -101,10 +106,8 @@ mkdir -p "%buildroot%system_wheels_path"
 cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 
 %check
-%tox_create_default_config
 export NO_LATEST_WHEELS=YES
-export TOX_TESTENV_PASSENV='NO_LATEST_WHEELS'
-%tox_check_pyproject -- -vra -m 'not network and unit'
+%pyproject_run_pytest -vra -m 'not network and unit'
 
 %files -n pip
 %_bindir/pip
@@ -120,6 +123,9 @@ export TOX_TESTENV_PASSENV='NO_LATEST_WHEELS'
 %system_wheels_path/%{pep427_name %pypi_name}-%version-*.whl
 
 %changelog
+* Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 23.0-alt1
+- 22.3.1 -> 23.0.
+
 * Thu Nov 10 2022 Stanislav Levin <slev@altlinux.org> 22.3.1-alt1
 - 22.3 -> 22.3.1.
 

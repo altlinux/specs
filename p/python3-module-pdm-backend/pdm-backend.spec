@@ -1,30 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name pdm-pep517
+%define pypi_name pdm-backend
 %def_without vendored
 
 %define python_deps() %(for mod in %{*}; do echo -n "python3(${mod}) "; done; )
 
 %if_without vendored
 %define vendored_list \\\
-boolean \\\
-cerberus \\\
-license_expression \\\
 packaging \\\
 tomli \\\
 tomli_w \\\
+validate_pyproject \\\
+pyproject_metadata \\\
 %nil
 %endif
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.1.2
+Version: 2.0.2
 Release: alt1
-Summary: A PEP 517 backend for PDM that supports PEP 621 metadata
+Summary: The build backend used by PDM that supports latest packaging standards
 License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/pdm-pep517
-VCS: https://github.com/pdm-project/pdm-pep517.git
+Url: https://pypi.org/project/pdm-backend/
+VCS: https://github.com/pdm-project/pdm-backend
 BuildArch: noarch
 Source: %name-%version.tar
 %if_without vendored
@@ -35,23 +34,18 @@ Patch: %name-%version-alt.patch
 # namespace root
 %py3_requires pdm
 %if_without vendored
-# unvendored packages that are not found as deps automatically
-%py3_requires cerberus
-%py3_requires license-expression
-%py3_requires packaging
-%py3_requires tomli
-%py3_requires tomli_w
+%py3_requires %%vendored_list
 %endif
 
 %py3_provides %pypi_name
 
 # self-dependencies
-%filter_from_requires /python3(pdm\.pep517\._vendor\..*)/d
+%filter_from_requires /python3(pdm\.backend\._vendor\..*)/d
 
 %if_with vendored
 # self-contained deps
-%add_findreq_skiplist %python3_sitelibdir/pdm/pep517/_vendor/*
-%add_findprov_skiplist %python3_sitelibdir/pdm/pep517/_vendor/*
+%add_findreq_skiplist %python3_sitelibdir/pdm/backend/_vendor/*
+%add_findprov_skiplist %python3_sitelibdir/pdm/backend/_vendor/*
 %endif
 
 BuildRequires(pre): rpm-build-python3
@@ -63,13 +57,15 @@ BuildRequires: %python_deps %vendored_list
 %if_with check
 BuildRequires: python3(pytest)
 BuildRequires: python3(setuptools)
+BuildRequires: python3(editables)
 BuildRequires: python3-devel
 BuildRequires: /usr/bin/git
 %endif
 
 %description
-This is the backend for PDM projects, while you can also use it alone. It reads
-the metadata of PEP 621 format and coverts it to Core metadata.
+This is the backend for PDM projects that is fully-compatible with PEP 517 spec,
+but you can also use it alone. It reads the metadata of PEP 621 format and
+coverts it to Core metadata.
 
 %prep
 %setup
@@ -80,7 +76,7 @@ the metadata of PEP 621 format and coverts it to Core metadata.
 set -o pipefail
 PYTHONPATH="$(pwd)" %__python3 - <<-'EOF' | sort -u > actual.pkg.list
 import pkgutil
-for mod in pkgutil.iter_modules(["./pdm/pep517/_vendor"]):
+for mod in pkgutil.iter_modules(["./src/pdm/backend/_vendor"]):
     if not mod.name.startswith("_"):
         print(mod.name)
 EOF
@@ -89,16 +85,27 @@ echo "%vendored_list" | sed 's/[ ]*$//' | tr ' ' '\n' | sort -u > expected.pkg.l
 diff -y expected.pkg.list actual.pkg.list
 
 # unbundle packages
-VENDORED_PATH='pdm/pep517/_vendor'
+VENDORED_PATH='src/pdm/backend/_vendor'
 UNVENDORED_PATH="$VENDORED_PATH/__init__.py"
 rm -r "$VENDORED_PATH"
 mkdir "$VENDORED_PATH"
 cp "%SOURCE1" "$UNVENDORED_PATH"
 sed -i \
-    -e 's/@VENDORED_ROOT@/"pdm.pep517._vendor"/' \
+    -e 's/@VENDORED_ROOT@/"pdm.backend._vendor"/' \
     -e 's/@VENDORED_FAKE_PACKAGES@/None/' \
     "$UNVENDORED_PATH"
 %endif
+
+# for pdm scm version
+# https://pdm.fming.dev/latest/pyproject/build/#dynamic-version-from-scm
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
 
 %build
 %pyproject_build
@@ -111,10 +118,13 @@ sed -i \
 
 %files
 %doc README.md
-%python3_sitelibdir/pdm/pep517/
+%python3_sitelibdir/pdm/backend/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Fri Feb 10 2023 Stanislav Levin <slev@altlinux.org> 2.0.2-alt1
+- 1.1.2 -> 2.0.2.
+
 * Fri Feb 10 2023 Stanislav Levin <slev@altlinux.org> 1.1.2-alt1
 - 1.1.1 -> 1.1.2.
 

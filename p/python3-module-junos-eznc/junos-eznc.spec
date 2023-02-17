@@ -1,24 +1,32 @@
 %define _unpackaged_files_terminate_build 1
-%define oname junos-eznc
+%define pypi_name junos-eznc
+%define mod_name junos
 
 %def_without check
 
-Name: python3-module-%oname
-Version: 2.6.3
+Name: python3-module-%pypi_name
+Version: 2.6.6
 Release: alt1
-
 Summary: Junos 'EZ' automation for non-programmers
 License: Apache-2.0
 Group: Development/Python3
-
-Url: https://github.com/Juniper/py-junos-eznc
-
+Url: https://pypi.org/project/junos-eznc/
+VCS: https://github.com/Juniper/py-junos-eznc
+BuildArch: noarch
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildArch: noarch
+# for some reason not detected automatically
+%py3_requires scp
+
+# provide PyPI's name(dash and underscore)
+%py3_provides %pypi_name
+%py3_provides junos_eznc
 
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # install_requires:
@@ -40,13 +48,6 @@ BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
 %endif
 
-# provide PyPI's name(dash and underscore)
-%py3_provides %oname
-%py3_provides junos_eznc
-
-# for some reason not detected automatically
-%py3_requires scp
-
 %description
 Junos PyEZ is a Python library to remotely manage/automate Junos
 devices. The user is NOT required: (a) to be a "Software Programmer",
@@ -64,10 +65,10 @@ grep -qs '^[ ]*git_refnames[ ]*=[ ]*".*"[ ]*$' "$vers_f" || exit 1
 sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%version, upstream\/master)"/' "$vers_f"
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 cat > tox.ini <<EOF
@@ -83,10 +84,13 @@ tox.py3 --sitepackages --console-scripts -vvr -s false
 %files
 # jnpr is the namespace package, don't own that directory
 %python3_sitelibdir/junos_eznc-%version-py%_python3_version-nspkg.pth
-%python3_sitelibdir/jnpr/junos/
-%python3_sitelibdir/junos_eznc-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/jnpr/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 07 2023 Stanislav Levin <slev@altlinux.org> 2.6.6-alt1
+- 2.6.3 -> 2.6.6.
+
 * Mon Mar 21 2022 Stanislav Levin <slev@altlinux.org> 2.6.3-alt1
 - 2.6.2 -> 2.6.3.
 - Disabled testing (depends on unmaintained `nose`).

@@ -1,24 +1,27 @@
 %define _unpackaged_files_terminate_build 1
-%define oname aiohttp_jinja2
+%define pypi_name aiohttp-jinja2
+%define mod_name aiohttp_jinja2
 
 %def_with check
 
-Name: python3-module-%oname
+Name: python3-module-%mod_name
 Epoch: 1
-Version: 1.5
+Version: 1.5.1
 Release: alt1
 Summary: jinja2 template renderer for aiohttp.web
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/aiohttp-jinja2/
-
-# https://github.com/aio-libs/aiohttp_jinja2.git
+VCS: https://github.com/aio-libs/aiohttp_jinja2.git
 Source0: aiohttp-%version.tar
 Patch0: aiohttp_jinja2-1.5-tests-Drop-dependency-on-coverage.patch
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 # dependencies=
@@ -28,13 +31,12 @@ BuildRequires: python3(jinja2)
 BuildRequires: python3(aiohttp.test_utils)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_aiohttp)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3(yarl)
 %endif
 
-# PEP503 normalized name
-%py3_provides aiohttp-jinja2
-Provides: python3-module-aiohttp-jinja2 = %EVR
+# well-known PyPI name
+%py3_provides %pypi_name
+Provides: python3-module-%pypi_name = %EVR
 
 %description
 jinja2 template renderer for aiohttp.web.
@@ -44,28 +46,23 @@ jinja2 template renderer for aiohttp.web.
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    {envbindir}/pytest -vra {posargs:tests}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr --develop
+%pyproject_run_pytest -ra tests
 
 %files
 %doc *.rst docs/*.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 17 2023 Stanislav Levin <slev@altlinux.org> 1:1.5.1-alt1
+- 1.5 -> 1.5.1.
+
 * Thu Apr 07 2022 Stanislav Levin <slev@altlinux.org> 1:1.5-alt1
 - 0.13.0 -> 1.5.
 

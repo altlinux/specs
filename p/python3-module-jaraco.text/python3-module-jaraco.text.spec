@@ -4,15 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.11.0
+Version: 3.11.1
 Release: alt1
-
 Summary: Module for text manipulation
 License: MIT
 Group:   Development/Python3
 URL: https://pypi.org/project/jaraco.text/
 VCS: https://github.com/jaraco/jaraco.text
-
+BuildArch: noarch
 Source:  %name-%version.tar
 Patch0: %name-%version-%release.patch
 
@@ -33,8 +32,6 @@ BuildRequires: python3(more_itertools)
 
 BuildRequires: python3(pytest)
 %endif
-
-BuildArch: noarch
 
 %description
 %summary
@@ -59,13 +56,16 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -vra
 
 %files
 %python3_sitelibdir/jaraco/*
 %python3_sitelibdir/jaraco.text-%version.dist-info/
 
 %changelog
+* Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 3.11.1-alt1
+- 3.11.0 -> 3.11.1.
+
 * Mon Dec 12 2022 Stanislav Levin <slev@altlinux.org> 3.11.0-alt1
 - 3.2.0 -> 3.11.0.
 

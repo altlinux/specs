@@ -2,24 +2,39 @@
 
 %define oname unyt
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2.8.0
+Version: 2.9.4
 Release: alt1
 Summary: Handle, manipulate, and convert data with units in Python
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/yt-project/unyt
+Url: https://pypi.org/project/unyt/
+VCS: https://github.com/yt-project/unyt
 
 BuildArch: noarch
 
-# https://github.com/yt-project/unyt.git
 Source: %name-%version.tar
 
-Patch1: %oname-alt-test-import.patch
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3(numpy) python3(sympy)
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(setuptools_scm)
+
+%if_with check
+# dependencies
+BuildRequires: python3(numpy)
+BuildRequires: python3(sympy)
+
+# tests
+BuildRequires: python3(h5py)
+BuildRequires: python3(packaging)
+BuildRequires: python3(pytest)
+BuildRequires: python3(numpy.testing)
+BuildRequires: python3(matplotlib)
+%endif
 
 %description
 A package for handling numpy arrays with units.
@@ -46,32 +61,45 @@ This package contains tests.
 
 %prep
 %setup
-%patch1 -p1
 
 sed -i \
 	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
 	./%oname/_version.py
 
+# if build from git source tree
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
+
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest -ra unyt/tests/
 
 %files
-%doc LICENSE
-%doc AUTHORS.rst CONTRIBUTING.rst HISTORY.rst README.rst
+%doc HISTORY.rst README.rst
 %python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
+%python3_sitelibdir/%oname/testing.py
 %exclude %python3_sitelibdir/%oname/tests
-%exclude %python3_sitelibdir/%oname/testing.py
-%exclude %python3_sitelibdir/%oname/__pycache__/testing.*
-%python3_sitelibdir/%oname-%version-py*.egg-info
 
 %files tests
 %python3_sitelibdir/%oname/tests
-%python3_sitelibdir/%oname/testing.py
-%python3_sitelibdir/%oname/__pycache__/testing.*
 
 %changelog
+* Thu Feb 09 2023 Stanislav Levin <slev@altlinux.org> 2.9.4-alt1
+- 2.8.0 -> 2.9.4.
+
 * Tue Apr 20 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 2.8.0-alt1
 - Initial build for ALT.

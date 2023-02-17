@@ -4,12 +4,13 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.10.1
-Release: alt2
+Version: 5.12.0
+Release: alt1
 Summary: Python utility / library to sort Python imports
 Group: Development/Python3
 License: MIT
 Url: https://pypi.org/project/isort
+VCS: https://github.com/PyCQA/isort
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -61,17 +62,19 @@ rm -r isort/_vendored/*
 mv %buildroot%_bindir/isort{,.py3}
 
 %check
-%tox_create_default_config
-%tox_check_pyproject -- -vra tests/unit/
+%pyproject_run_pytest -vra tests/unit/
 
 %files
-%doc README.md LICENSE
+%doc README.md
 %_bindir/isort.py3
 %_bindir/isort-identify-imports
 %python3_sitelibdir/isort/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 10 2023 Stanislav Levin <slev@altlinux.org> 5.12.0-alt1
+- 5.10.1 -> 5.12.0.
+
 * Wed Sep 14 2022 Stanislav Levin <slev@altlinux.org> 5.10.1-alt2
 - Modernized packaging (fixes FTBFS due to poetry-core 1.1.0).
 

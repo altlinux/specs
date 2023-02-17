@@ -1,22 +1,32 @@
 %define _unpackaged_files_terminate_build 1
-%define oname nltk
+%define pypi_name nltk
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 3.6.1
+Name: python3-module-%pypi_name
+Version: 3.8.1
 Release: alt1
-
 Summary: Python modules for Natural Language Processing (NLP)
 License: Apache-2.0
 Group: Development/Python3
 Url: http://www.nltk.org
-
+VCS: https://github.com/nltk/nltk
+BuildArch: noarch
 Source: %name-%version.tar
 # apply only for tests on RPM build
 Patch0: skip_nltk_data_tests.patch
 
+# direct dep
+%py3_requires joblib
+
+# optional deps, not packaged yet
+%filter_from_requires /python3\(\.[[:digit:]]\)\?(twython\(\..*\)\?)/d
+
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(click)
@@ -27,18 +37,8 @@ BuildRequires: python3(regex)
 BuildRequires: python3(scipy)
 BuildRequires: python3(sklearn)
 BuildRequires: python3(sqlite3)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(tqdm)
 %endif
-
-BuildArch: noarch
-# direct dep
-%py3_requires joblib
-
-# optional deps, not packaged yet
-%filter_from_requires /python3\(\.[[:digit:]]\)\?(twython\(\..*\)\?)/d
 
 %description
 NLTK -- the Natural Language Toolkit -- is a suite of open source Python
@@ -48,34 +48,28 @@ Natural Language Processing.
 %prep
 %setup
 
-# upstream applied major.minor.patch only for pypi releases
-sed -i 's/^[0-9]\.[0-9]$/%version/' nltk/VERSION
-echo '%version' | diff nltk/VERSION -
-
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 # don't package tests
 rm -r %buildroot%python3_sitelibdir/*/test
 
 %check
 patch -p1 < %PATCH0
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-export NO_INTERNET=YES
-export MPLBACKEND=Agg
-tox.py3 --sitepackages --console-scripts --no-deps -vvr
+%pyproject_run_pytest -vra nltk --ignore nltk/test/unit/test_downloader.py
 
 %files
-%doc LICENSE.txt
 %_bindir/nltk
-%python3_sitelibdir/nltk/
-%python3_sitelibdir/nltk-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 07 2023 Stanislav Levin <slev@altlinux.org> 3.8.1-alt1
+- 3.6.1 -> 3.8.1.
+
 * Thu Apr 15 2021 Stanislav Levin <slev@altlinux.org> 3.6.1-alt1
 - 3.2.1 -> 3.6.1.
 

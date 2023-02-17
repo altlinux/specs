@@ -9,19 +9,25 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 22.12.0
+Version: 23.1.0
 Release: alt1
-
 Summary: The Uncompromising Code Formatter
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/black/
 VCS: https://github.com/psf/black
-
 BuildArch: noarch
-
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+
+%if %typing_extensions
+%py3_requires typing_extensions
+%endif
+%if %tomli
+%py3_requires tomli
+%endif
+
+%add_python3_self_prov_path %buildroot%python3_sitelibdir/blib2to3/pgen2
 
 BuildRequires(pre): rpm-build-python3
 
@@ -36,6 +42,7 @@ BuildRequires: python3(click)
 BuildRequires: python3(platformdirs)
 BuildRequires: python3(pathspec)
 BuildRequires: python3(mypy_extensions)
+BuildRequires: python3(packaging)
 %if %tomli
 BuildRequires: python3(tomli)
 %endif
@@ -50,16 +57,6 @@ BuildRequires: python3(click.testing)
 BuildRequires: python3(parameterized)
 BuildRequires: python3(pytest)
 %endif
-
-%if %typing_extensions
-%py3_requires typing_extensions
-%endif
-
-%if %tomli
-%py3_requires tomli
-%endif
-
-%add_python3_self_prov_path %buildroot%python3_sitelibdir/blib2to3/pgen2
 
 %description
 Black is the uncompromising Python code formatter. By using it, you agree to
@@ -95,11 +92,10 @@ fi
 %pyproject_install
 
 %check
-%tox_create_default_config
-%tox_check_pyproject
+%pyproject_run_pytest -vra tests
 
 %files
-%doc README.md LICENSE
+%doc README.md
 %_bindir/black
 %_bindir/blackd
 %python3_sitelibdir/__pycache__/_black_version.cpython*
@@ -110,6 +106,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Feb 02 2023 Stanislav Levin <slev@altlinux.org> 23.1.0-alt1
+- 22.12.0 -> 23.1.0.
+
 * Mon Dec 12 2022 Stanislav Levin <slev@altlinux.org> 22.12.0-alt1
 - 22.10.0 -> 22.12.0.
 

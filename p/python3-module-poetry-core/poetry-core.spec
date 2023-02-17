@@ -16,24 +16,40 @@ attrs \\\
 packaging \\\
 jsonschema \\\
 lark \\\
-pyparsing \\\
 pyrsistent \\\
 tomlkit \\\
 typing_extensions \\\
 %nil
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
-
 Summary: Poetry Core
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/poetry-core
 VCS: https://github.com/python-poetry/poetry-core.git
-
+BuildArch: noarch
 Source0: %name-%version.tar
 Patch0: %name-%version-alt.patch
+
+# namespace root
+%py3_requires poetry
+%if_without vendored
+# unvendored packages that are not found as deps automatically
+%py3_requires jsonschema
+%py3_requires lark
+%endif
+# PEP503 name
+%py3_provides %pypi_name
+
+%if_with vendored
+# drop deps on system packages which were bundled, poetry patches sys.path
+%filter_from_requires %build_filter_python_deps %vendored_list
+
+%add_findreq_skiplist %python3_sitelibdir/poetry/core/_vendor/*
+%add_findprov_skiplist %python3_sitelibdir/poetry/core/_vendor/*
+%endif
 
 BuildRequires(pre): rpm-build-python3
 
@@ -49,34 +65,14 @@ BuildRequires: %python_deps %vendored_list
 # required to build C extension, e.g. test_build_wheel_extended
 BuildRequires: gcc
 BuildRequires: python3-devel
+BuildRequires: /usr/bin/git
 
+# synced to poetry's dev group and tox' testenv deps
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_mock)
-
-BuildRequires: /usr/bin/git
 BuildRequires: python3(build)
-%endif
-
-BuildArch: noarch
-
-# PEP503 name
-%py3_provides %pypi_name
-
-# namespace root
-%py3_requires poetry
-
-%if_with vendored
-# drop deps on system packages which were bundled, poetry patches sys.path
-%filter_from_requires %build_filter_python_deps %vendored_list
-
-%add_findreq_skiplist %python3_sitelibdir/poetry/core/_vendor/*
-%add_findprov_skiplist %python3_sitelibdir/poetry/core/_vendor/*
-%endif
-
-%if_without vendored
-# unvendored packages that are not found as deps automatically
-%py3_requires jsonschema
-%py3_requires lark
+BuildRequires: python3(setuptools)
+BuildRequires: python3(virtualenv)
 %endif
 
 %description
@@ -112,9 +108,7 @@ rm -r ./src/poetry/core/_vendor/*
 %pyproject_install
 
 %check
-# override upstream's config (they use poetry for tox)
-%tox_create_default_config
-%tox_check_pyproject -- -vra tests/
+%pyproject_run_pytest -vra tests/
 
 %files
 %doc README.md
@@ -122,6 +116,9 @@ rm -r ./src/poetry/core/_vendor/*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Jan 31 2023 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1
+- 1.4.0 -> 1.5.0.
+
 * Wed Nov 23 2022 Stanislav Levin <slev@altlinux.org> 1.4.0-alt1
 - 1.3.2 -> 1.4.0.
 

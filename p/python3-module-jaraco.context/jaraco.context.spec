@@ -4,17 +4,18 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 4.2.0
+Version: 4.3.0
 Release: alt1
-
 Summary: Context managers by Jaraco
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/jaraco/jaraco.context.git
 Url: https://pypi.org/project/jaraco.context/
-
+VCS: https://github.com/jaraco/jaraco.context.git
+BuildArch: noarch
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
+
+%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-python3
 
@@ -26,10 +27,6 @@ BuildRequires: python3(setuptools_scm)
 %if_with check
 BuildRequires: python3(pytest)
 %endif
-
-BuildArch: noarch
-
-%py3_provides %pypi_name
 
 %description
 %pypi_name provides context managers by Jaraco.
@@ -55,7 +52,7 @@ git tag '%version'
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
 %doc README.rst
@@ -64,6 +61,9 @@ git tag '%version'
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 4.3.0-alt1
+- 4.2.0 -> 4.3.0.
+
 * Mon Nov 21 2022 Stanislav Levin <slev@altlinux.org> 4.2.0-alt1
 - 4.1.2 -> 4.2.0.
 

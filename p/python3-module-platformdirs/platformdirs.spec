@@ -4,15 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.6.0
+Version: 3.0.0
 Release: alt1
-
 Summary: Determining appropriate platform-specific dirs
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/platformdirs
 VCS: https://github.com/platformdirs/platformdirs.git
-
+BuildArch: noarch
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
@@ -27,8 +26,6 @@ BuildRequires: python3(appdirs)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_mock)
 %endif
-
-BuildArch: noarch
 
 %description
 A small Python module for determining appropriate platform-specific dirs, e.g.
@@ -60,7 +57,7 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject -- -vra tests
+%pyproject_run_pytest -vra tests
 
 %files
 %doc README.rst
@@ -68,6 +65,12 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 14 2023 Stanislav Levin <slev@altlinux.org> 3.0.0-alt1
+- 2.6.2 -> 3.0.0.
+
+* Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 2.6.2-alt1
+- 2.6.0 -> 2.6.2.
+
 * Wed Dec 07 2022 Stanislav Levin <slev@altlinux.org> 2.6.0-alt1
 - 2.5.4 -> 2.6.0.
 

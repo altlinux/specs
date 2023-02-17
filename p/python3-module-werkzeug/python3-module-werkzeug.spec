@@ -1,11 +1,12 @@
 %define _unpackaged_files_terminate_build 1
-%define oname werkzeug
+%define pypi_name Werkzeug
+%define mod_name werkzeug
 
 %def_enable check
 
-Name: python3-module-%oname
+Name: python3-module-%mod_name
 Version: 2.2.2
-Release: alt1
+Release: alt2
 
 Summary: Werkzeug is one of the most advanced WSGI utility modules
 
@@ -20,18 +21,22 @@ Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
 Patch1: alt_tests_conftest_py.patch
 
+# well-known PyPI name
+%py3_provides %pypi_name
+Provides: python3-module-%pypi_name = %EVR
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 %if_enabled check
+# dependencies
+BuildRequires: python3(markupsafe)
+
 BuildRequires: /proc
 BuildRequires: pytest3
 BuildRequires: python3-module-pytest
 BuildRequires: python3-module-pytest-xprocess
 BuildRequires: python3-module-pytest-timeout
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-tox-no-deps
-BuildRequires: python3-module-tox-console-scripts
 BuildRequires: python3-module-cryptography
 %endif
 
@@ -55,13 +60,17 @@ more structure and patterns for defining powerful applications.
 
 %check
 # skip: test_serving::test_reloader_sys_path (hangs up) and test_serving::test_exclude_patterns (always fails)
-%tox_check_pyproject -- -vra -k "not test_reloader_sys_path and not test_exclude_patterns"
+%pyproject_run_pytest -vra -k "not test_reloader_sys_path and not test_exclude_patterns"
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc CHANGES.rst README.rst
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Wed Feb 08 2023 Stanislav Levin <slev@altlinux.org> 2.2.2-alt2
+- Fixed FTBFS (packaging 22).
+
 * Fri Sep 16 2022 Danil Shein <dshein@altlinux.org> 2.2.2-alt1
 - new version 2.2.2
   + migrate to pyproject macroses

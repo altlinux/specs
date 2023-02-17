@@ -4,17 +4,21 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 9.2.0
+Version: 10.0.5
 Release: alt1
-
 Summary: Install packages and run Python with them
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pip-run
 VCS: https://github.com/jaraco/pip-run.git
-
+BuildArch: noarch
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
+
+# hidden with `sys.executable -m pip`
+%py3_requires pip
+# PEP503 name
+%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-python3
 
@@ -32,20 +36,15 @@ BuildRequires: python3(packaging)
 BuildRequires: python3(more_itertools)
 BuildRequires: python3(jaraco.context)
 BuildRequires: python3(jaraco.text)
+BuildRequires: python3(platformdirs)
+BuildRequires: python3(jaraco.functools)
 
 BuildRequires: python3(pytest)
 BuildRequires: python3(nbformat)
 BuildRequires: python3(pygments)
 BuildRequires: python3(jaraco.path)
+BuildRequires: python3(jaraco.test)
 %endif
-
-BuildArch: noarch
-
-# PEP503 name
-%py3_provides %pypi_name
-
-# hidden with `sys.executable -m pip`
-%py3_requires pip
 
 %description
 pip-run provides on-demand temporary package installation for a single
@@ -73,7 +72,7 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -vra
 
 %files
 %doc README.rst
@@ -84,6 +83,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 10.0.5-alt1
+- 9.2.0 -> 10.0.5.
+
 * Mon Dec 12 2022 Stanislav Levin <slev@altlinux.org> 9.2.0-alt1
 - 8.8.2 -> 9.2.0.
 

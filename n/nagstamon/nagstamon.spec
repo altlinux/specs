@@ -12,7 +12,7 @@ BuildRequires: /proc
 %define _localstatedir %_var
 Name:           nagstamon
 Version:        3.5.0
-Release:        alt2.rc1
+Release:        alt3.rc1
 Summary:        Nagios status monitor for the desktop
 License:        GPLv2
 Group:          Monitoring
@@ -25,6 +25,8 @@ Patch2:         nagstamon-3.0.1-alt-default-values-in-config.patch
 Patch3:         %name-%version-system-config.patch
 Patch4:         %name-%version-abstract-socket.patch
 Patch5:         %name-%version-startup-message.patch
+# https://github.com/HenriWahl/Nagstamon/issues/907
+Patch6:         nagstamon-3.5.0-version-without-OS.patch
 Source44:       import.info
 Source1:        all.ts
 Source2:        all.qm
@@ -43,6 +45,7 @@ servers.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 cp %SOURCE1 %SOURCE2 Nagstamon/QUI/
 
@@ -82,6 +85,9 @@ desktop-file-install \
 
 
 %changelog
+* Tue Feb 14 2023 Stanislav Levin <slev@altlinux.org> 3.5.0-alt3.rc1
+- Fixed FTBFS (setuptools 66).
+
 * Tue Mar 30 2021 Paul Wolneykien <manowar@altlinux.org> 3.5.0-alt2.rc1
 - Fix: Initialize 'message' to prevent check uninitialized error
   (patch).

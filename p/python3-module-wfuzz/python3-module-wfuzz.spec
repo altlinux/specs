@@ -6,7 +6,7 @@
 
 Name: python3-module-%pypi_name
 Version: 3.1.0
-Release: alt2
+Release: alt3
 
 Summary: Web application fuzzer
 License: GPL-2.0
@@ -16,6 +16,7 @@ Vcs: https://github.com/xmendez/wfuzz.git
 
 Source: %name-%version.tar
 Patch0: python3-module-wfuzz-3.1.0-alt-fix-relative-imports--bz44825.patch
+Patch1: wfuzz-3.1.0-Correct-dependency-specification-for-pyparsing.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -69,7 +70,7 @@ it's a tool by pentesters for pentesters ;)
 
 %prep
 %setup
-%patch0 -p1
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -89,6 +90,9 @@ vm-run "%tox_check_pyproject"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 14 2023 Stanislav Levin <slev@altlinux.org> 3.1.0-alt3
+- Fixed FTBFS (setuptools 66).
+
 * Sun Jan 15 2023 Anton Zhukharev <ancieg@altlinux.org> 3.1.0-alt2
 - fix wrong relative imports in ui/gui/controller.py (closes: #44825)
 - add explicit dependency on python3-module-pyparsing

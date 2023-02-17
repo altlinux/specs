@@ -2,36 +2,44 @@
 
 %define oname kombu
 
-# TODO: fix list issue
-%def_disable test
+%def_enable test
 # ModuleNotFoundError: No module named 'sphinx_celery'
 %def_without doc
 
 Name: python3-module-%oname
 Epoch: 1
 Version: 5.2.4
-Release: alt3
+Release: alt4
 
 Group: Development/Python3
-License: BSD License
+License: BSD-3-Clause
 Summary: Kombu is an AMQP messaging framework for Python
+URL: https://pypi.org/project/kombu/
+VCS: https://github.com/celery/kombu/
 
-URL: https://github.com/celery/kombu/
-
-# https://github.com/celery/kombu.git
-# Source-url: https://pypi.io/packages/source/k/%oname/%oname-%version.tar.gz
 Source: %name-%version.tar
 
+Patch0: kombu-5.2.4-tests-deps.patch
 # Patches from Debian
 Patch11: 0001-Remove-image-from-remote-donation-site-privacy-issue.patch
 
-BuildRequires(pre): rpm-build-python3
-#BuildRequires: python3-module-docutils python3(sphinx_celery)
+# librabbitmq is not packaged (yet?)
+%filter_from_requires /python3(librabbitmq\(\..*\)\?)/d
 
-BuildRequires: python3-module-amqp >= 1:1.4.9
-BuildRequires: python3(pytz) python3(mock) python3(pytest) python3(Pyro4) python3(serpent)
-BuildRequires: python3(pytest_cov) python3(redis) python3(msgpack) python3(boto3) python3(pycurl)
-BuildRequires: python3-module-tox
+BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+
+%if_enabled test
+# dependencies
+BuildRequires: python3(amqp)
+BuildRequires: python3(vine)
+
+BuildRequires: python3(pytest)
+BuildRequires: python3(pytz)
+BuildRequires: python3(Pyro4)
+%endif
 
 %if_with doc
 BuildRequires(pre): rpm-macros-sphinx3
@@ -69,16 +77,13 @@ This package contains documentation for %oname.
 
 %prep
 %setup
-%patch11 -p1
-
-# drop cosmetic only module
-subst "s|pytest-sugar||" requirements/test.txt 
+%autopatch -p1
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%_target_libdir_noarch" != "%_libdir"
 mv %buildroot%_target_libdir_noarch %buildroot%_libdir
@@ -88,14 +93,13 @@ mv %buildroot%_target_libdir_noarch %buildroot%_libdir
 %make -C docs html SPHINXBUILD=sphinx-build-3
 %endif
 
-%if_enabled test
 %check
-python3 setup.py test
-%endif
+%pyproject_run_pytest -ra
 
 %files
-%doc AUTHORS FAQ LICENSE README.rst THANKS TODO
-%python3_sitelibdir/kombu*
+%doc README.rst
+%python3_sitelibdir/kombu/
+%python3_sitelibdir/%{pyproject_distinfo %oname}/
 
 %if_with doc
 %files docs
@@ -103,6 +107,9 @@ python3 setup.py test
 %endif
 
 %changelog
+* Thu Feb 09 2023 Stanislav Levin <slev@altlinux.org> 1:5.2.4-alt4
+- Fixed FTBFS (setuptools 66).
+
 * Wed Jun 29 2022 Grigory Ustinov <grenka@altlinux.org> 1:5.2.4-alt3
 - Fixed BuildRequires.
 

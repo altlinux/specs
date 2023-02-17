@@ -1,18 +1,21 @@
 %define _unpackaged_files_terminate_build 1
+%define pypi_name hypothesis
+%define mod_name %pypi_name
 
-%define oname hypothesis
+%define exceptiongroup %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 6.36.0
-Release: alt2.1
+Name: python3-module-%pypi_name
+Version: 6.68.1
+Release: alt1
 
 Summary: A library for property based testing
 
 License: MPL-2.0-no-copyleft-exception
 Group: Development/Python3
 Url: https://pypi.org/project/hypothesis/
+VCS: https://github.com/HypothesisWorks/hypothesis
 
 BuildArch: noarch
 
@@ -20,7 +23,14 @@ Source: %name-%version.tar
 Source1: pytest.ini
 Patch0: %name-%version-alt.patch
 
+%if %exceptiongroup
+%py3_requires exceptiongroup
+%endif
+
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: /dev/pts
@@ -28,6 +38,9 @@ BuildRequires: /dev/pts
 # install_requires:
 BuildRequires: python3(attr)
 BuildRequires: python3(sortedcontainers)
+%if %exceptiongroup
+BuildRequires: python3(exceptiongroup)
+%endif
 
 # extras:
 BuildRequires: python3(lark)
@@ -42,8 +55,6 @@ BuildRequires: python3(redis)
 # tests
 BuildRequires: python3(fakeredis)
 BuildRequires: python3(numpy.testing)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_no_deps)
 BuildRequires: python3(pexpect)
 BuildRequires: python3(pytest_xdist)
 %endif
@@ -62,26 +73,28 @@ cp %SOURCE1 ./
 %autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}-custom
-tox.py3 --sitepackages -vvr --no-deps -- --numprocesses auto tests
+%pyproject_run_pytest -ra -nauto tests
 
 %files
 %doc LICENSE.txt README.rst
-%_bindir/%oname
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%_bindir/hypothesis
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 %python3_sitelibdir/__pycache__/_hypothesis_pytestplugin.*
 %python3_sitelibdir/_hypothesis_pytestplugin.py
+%python3_sitelibdir/__pycache__/_hypothesis_ftz_detector.*
+%python3_sitelibdir/_hypothesis_ftz_detector.py
 
 %changelog
+* Tue Feb 14 2023 Stanislav Levin <slev@altlinux.org> 6.68.1-alt1
+- 6.36.0 -> 6.68.1.
+
 * Sun Nov 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 6.36.0-alt2.1
 - NMU: used %%add_python3_req_skip because Sisyphus does not provide debugpy.
 

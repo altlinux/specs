@@ -17,13 +17,13 @@
 
 Name: 389-ds-base
 Version: 2.2.4
-Release: alt1
+Release: alt2
 
 Summary: 389 Directory Server (base)
 License: GPLv3+
 Group: System/Servers
-# Source-git: https://github.com/389ds/389-ds-base
-Url: http://port389.org
+Url: https://www.port389.org/
+VCS: https://github.com/389ds/389-ds-base
 
 Source0: %name-%version.tar
 %if_with cockpit
@@ -418,6 +418,9 @@ fi
 %endif
 
 %changelog
+* Tue Feb 14 2023 Stanislav Levin <slev@altlinux.org> 2.2.4-alt2
+- Fixed FTBFS (setuptools 67).
+
 * Mon Nov 21 2022 Stanislav Levin <slev@altlinux.org> 2.2.4-alt1
 - 2.2.3 -> 2.2.4.
 

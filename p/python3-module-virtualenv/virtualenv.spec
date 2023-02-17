@@ -5,32 +5,37 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 20.17.1
+Version: 20.19.0
 Release: alt1
-
 Summary: Virtual Python Environment builder
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/virtualenv/
 VCS: https://github.com/pypa/virtualenv
-
-Source: %name-%version.tar.gz
+BuildArch: noarch
+Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+
+# system seed wheels
+Requires: python3-module-system-seed-wheels-wheels
+
+# relax deps for windows support,
+# note: don't remove them since some external packages may rely on these modules
+%add_findreq_skiplist %python3_sitelibdir/virtualenv/discovery/windows/*
 
 BuildRequires(pre): rpm-build-python3
 
 # build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
+BuildRequires: python3(hatch-vcs)
+BuildRequires: python3(hatchling)
 
 %if_with check
 # install_requires
 BuildRequires: python3(platformdirs)
 BuildRequires: python3(distlib)
 BuildRequires: python3(filelock)
-BuildRequires: python3(six)
 
+BuildRequires: python3(pip)
 BuildRequires: python3(flaky)
 BuildRequires: python3(packaging)
 BuildRequires: python3(pytest_freezegun)
@@ -39,15 +44,6 @@ BuildRequires: python3(pytest_randomly)
 BuildRequires: python3(pytest_timeout)
 BuildRequires: python3-module-system-seed-wheels-wheels
 %endif
-
-BuildArch: noarch
-
-# system seed wheels
-Requires: python3-module-system-seed-wheels-wheels
-
-# relax deps for windows support,
-# note: don't remove them since some external packages may rely on these modules
-%add_findreq_skiplist %python3_sitelibdir/virtualenv/discovery/windows/*
 
 %description
 Tool to create isolated Python environments.
@@ -98,8 +94,7 @@ mv %buildroot%_bindir/{virtualenv,virtualenv3}
 
 %check
 export PIP_FIND_LINKS=%system_wheels_path
-export TOX_TESTENV_PASSENV='PIP_NO_INDEX PIP_FIND_LINKS NO_INTERNET'
-%tox_check_pyproject
+%pyproject_run_pytest -ra tests
 
 %files
 %doc README.md
@@ -108,6 +103,9 @@ export TOX_TESTENV_PASSENV='PIP_NO_INDEX PIP_FIND_LINKS NO_INTERNET'
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 17 2023 Stanislav Levin <slev@altlinux.org> 20.19.0-alt1
+- 20.17.1 -> 20.19.0.
+
 * Tue Dec 06 2022 Stanislav Levin <slev@altlinux.org> 20.17.1-alt1
 - 20.17.0 -> 20.17.1.
 

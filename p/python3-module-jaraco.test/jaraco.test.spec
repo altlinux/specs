@@ -1,47 +1,43 @@
 %define _unpackaged_files_terminate_build 1
-%define pypi_name license-expression
+%define pypi_name jaraco.test
 
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 30.1.0
+Version: 5.3.0
 Release: alt1
-Summary: Comprehensive utility library to parse, compare, simplify and normalize license expressions
-License: Apache-2.0
+Summary: Testing support by jaraco
+License: MIT
 Group: Development/Python3
-Url: https://pypi.org/project/license-expression
-VCS: https://github.com/nexB/license-expression.git
+Url: https://pypi.org/project/jaraco.test
+VCS: https://github.com/jaraco/jaraco.test.git
 BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
-
-%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-python3
 
 # build backend and its deps
 BuildRequires: python3(setuptools)
+BuildRequires: python3(setuptools_scm)
 BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools-scm)
 
 %if_with check
-# deps
-BuildRequires: python3(boolean.py)
+BuildRequires: python3(jaraco.functools)
+BuildRequires: python3(jaraco.context)
 
 BuildRequires: python3(pytest)
 %endif
 
 %description
-license-expression is a comprehensive utility library to parse, compare,
-simplify and normalize license expressions (such as SPDX license expressions)
-using boolean logic.
+%summary.
 
 %prep
 %setup
 %autopatch -p1
 
 # setuptools_scm implements a file_finders entry point which returns all files
-# tracked by SCM.
+# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
 if [ ! -d .git ]; then
     git init
     git config user.email author@example.com
@@ -62,12 +58,9 @@ fi
 
 %files
 %doc README.rst
-%python3_sitelibdir/license_expression/
-%python3_sitelibdir/%{pyproject_distinfo %pypi_name}
+%python3_sitelibdir/jaraco/test/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
-* Tue Feb 07 2023 Stanislav Levin <slev@altlinux.org> 30.1.0-alt1
-- 30.0.0 -> 30.1.0.
-
-* Wed Oct 05 2022 Stanislav Levin <slev@altlinux.org> 30.0.0-alt1
+* Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 5.3.0-alt1
 - Initial build for Sisyphus.

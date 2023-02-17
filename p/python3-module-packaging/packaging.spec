@@ -1,31 +1,30 @@
 %define _unpackaged_files_terminate_build 1
-%define oname packaging
+%define pypi_name packaging
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 21.3
+Name: python3-module-%pypi_name
+Version: 23.0
 Release: alt1
 
 Summary: Core utilities for Python packages
 
 License: Apache-2.0 or BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/packaging
+Url: https://pypi.org/project/packaging/
+VCS: https://github.com/pypa/packaging
 
-# Source-url: https://github.com/pypa/packaging.git
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3(flit_core)
 
 %if_with check
 BuildRequires: python3(pretend)
-BuildRequires: python3(pyparsing)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -35,29 +34,23 @@ Core utilities for Python packages.
 %setup
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-commands =
-    pytest {posargs:-vra}
-EOF
-tox.py3 --sitepackages --console-scripts -vvr
+%pyproject_run_pytest
 
 %files
-%doc *.rst LICENSE*
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%doc CHANGELOG.rst README.rst
+%python3_sitelibdir/packaging/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 23.0-alt1
+- 21.3 -> 23.0.
+
 * Tue Jan 11 2022 Stanislav Levin <slev@altlinux.org> 21.3-alt1
 - 21.2 -> 21.3.
 

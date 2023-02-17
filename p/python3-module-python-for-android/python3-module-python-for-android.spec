@@ -2,7 +2,7 @@
 
 Name: python3-module-python-for-android
 Version: 2020.6.2
-Release: alt2
+Release: alt3
 
 Summary: Turn your Python application into an Android APK
 
@@ -14,6 +14,7 @@ BuildArch: noarch
 
 # Source-url: %__pypi_url %oname
 Source: %name-%version.tar
+Patch0: pencil2-setup.py-Fix-dependency-syntax-2354.patch
 
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
@@ -25,6 +26,7 @@ python-for-android is an open source build tool to let you package Python code i
 
 %prep
 %setup
+%autopatch -p1
 subst "s|python|python3|" pythonforandroid/tools/*
 rm -v pythonforandroid/tools/liblink
 
@@ -45,6 +47,9 @@ rm -v pythonforandroid/tools/liblink
 %python3_sitelibdir/ci/
 
 %changelog
+* Tue Feb 07 2023 Stanislav Levin <slev@altlinux.org> 2020.6.2-alt3
+- Fixed FTBFS (setuptools 66).
+
 * Fri Apr 23 2021 Vitaly Lipatov <lav@altlinux.ru> 2020.6.2-alt2
 - initial build for ALT Sisyphus
 

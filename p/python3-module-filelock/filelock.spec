@@ -4,29 +4,25 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.8.2
+Version: 3.9.0
 Release: alt1
-
 Summary: A platform independent file lock for Python
 License: Unlicense
 Group: Development/Python3
 Url: https://pypi.org/project/filelock/
 VCS: https://github.com/tox-dev/py-filelock
-
+BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
 # build backend and its deps
-BuildRequires: python3(setuptools)
-BuildRequires: python3(wheel)
-BuildRequires: python3(setuptools_scm)
+BuildRequires: python3(hatchling)
+BuildRequires: python3(hatch-vcs)
 
 %if_with check
 BuildRequires: python3(pytest)
 %endif
-
-BuildArch: noarch
 
 %description
 This package contains a single module, which implements a platform independent
@@ -56,7 +52,7 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject -- -vra tests
+%pyproject_run_pytest -vra tests
 
 %files
 %doc README.md
@@ -64,6 +60,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 3.9.0-alt1
+- 3.8.2 -> 3.9.0.
+
 * Tue Dec 06 2022 Stanislav Levin <slev@altlinux.org> 3.8.2-alt1
 - 3.8.1 -> 3.8.2.
 

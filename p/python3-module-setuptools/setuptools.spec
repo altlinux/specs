@@ -9,17 +9,33 @@
 
 Name: python3-module-%pypi_name
 Epoch: 1
-Version: 65.6.3
+Version: 67.1.0
 Release: alt1
-
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/pypa/setuptools.git
 Url: https://pypi.org/project/setuptools/
-
+VCS: https://github.com/pypa/setuptools
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
+
+Requires: python3-module-pkg_resources = %EVR
+# setuptools has commands for doing binary builds; for them to work always:
+Requires: python3-dev
+Provides: python3-module-distribute = %EVR
+
+# skip requires of self
+%filter_from_requires /python3\(\.[[:digit:]]\)\?(pkg_resources\.extern\..*)/d
+%filter_from_requires /python3\(\.[[:digit:]]\)\?(setuptools\.extern\..*)/d
+# switch to 'local' copy of distutils
+%filter_from_requires /python3(distutils\(\..*\)\?)/d
+# don't allow vendored distributions have deps other than stdlib
+%add_findreq_skiplist %python3_sitelibdir/setuptools/_vendor/*
+# ms windows compilers (some packages want to import these modules)
+%add_findreq_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
+# hide bundled packages
+%add_findprov_skiplist %python3_sitelibdir/setuptools/_vendor/*
+%add_findprov_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
 
 BuildRequires(pre): rpm-build-python3
 
@@ -43,6 +59,7 @@ BuildRequires: python3(tomli)
 BuildRequires: python3(virtualenv)
 BuildRequires: python3(wheel)
 BuildRequires: python3-module-ini2toml-lite
+BuildRequires: python3(tomli-w)
 
 # For the tests of the setuptools commands to do binary builds:
 BuildPreReq: python3-dev
@@ -51,27 +68,6 @@ BuildPreReq: python3-dev
 # namespace package for system seed wheels which will be used within venv
 # created by virtualenv
 BuildRequires: python3(system_seed_wheels)
-
-Provides: python3-module-distribute = %EVR
-Requires: python3-module-pkg_resources = %EVR
-# setuptools has commands for doing binary builds; for them to work always:
-Requires: python3-dev
-# skip requires of self
-%filter_from_requires /python3\(\.[[:digit:]]\)\?(pkg_resources\.extern\..*)/d
-%filter_from_requires /python3\(\.[[:digit:]]\)\?(setuptools\.extern\..*)/d
-
-# switch to 'local' copy of distutils
-%filter_from_requires /python3(distutils\(\..*\)\?)/d
-
-# hide bundled packages
-%add_findprov_skiplist %python3_sitelibdir/setuptools/_vendor/*
-
-# don't allow vendored distributions have deps other than stdlib
-%add_findreq_skiplist %python3_sitelibdir/setuptools/_vendor/*
-
-# ms windows compilers (some packages want to import these modules)
-%add_findreq_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
-%add_findprov_skiplist %python3_sitelibdir/setuptools/_distutils/*msvc*compiler*.py*
 
 %package -n python3-module-pkg_resources
 Summary: Package Discovery and Resource Access for Python3 libraries
@@ -167,8 +163,7 @@ mkdir -p "%buildroot%system_wheels_path"
 cp -t "%buildroot%system_wheels_path/" "./dist/$built_wheel"
 
 %check
-export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION NO_INTERNET'
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -vra
 
 %files
 %doc *.rst
@@ -192,6 +187,9 @@ export TOX_TESTENV_PASSENV='PIP_NO_BUILD_ISOLATION NO_INTERNET'
 %system_wheels_path/setuptools-%version-*.whl
 
 %changelog
+* Thu Feb 02 2023 Stanislav Levin <slev@altlinux.org> 1:67.1.0-alt1
+- 65.6.3 -> 67.1.0.
+
 * Fri Nov 25 2022 Stanislav Levin <slev@altlinux.org> 1:65.6.3-alt1
 - 65.6.0 -> 65.6.3.
 

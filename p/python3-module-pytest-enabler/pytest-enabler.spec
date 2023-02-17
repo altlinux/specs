@@ -4,17 +4,18 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.0
+Version: 2.1.0
 Release: alt1
-
 Summary: Pytest plugin for configuration of another plugins
 License: MIT
 Group: Development/Python3
-VCS: https://github.com/jaraco/pytest-enabler.git
 Url: https://pypi.org/project/pytest-enabler/
-
+VCS: https://github.com/jaraco/pytest-enabler.git
+BuildArch: noarch
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
+
+%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-python3
 
@@ -31,10 +32,6 @@ BuildRequires: python3(jaraco.functools)
 
 BuildRequires: python3(pytest)
 %endif
-
-BuildArch: noarch
-
-%py3_provides %pypi_name
 
 %description
 %pypi_name plugin allows configuration of Pytest plugins if present, but omits
@@ -63,7 +60,7 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -vra
 
 %files
 %doc README.rst
@@ -71,6 +68,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 01 2023 Stanislav Levin <slev@altlinux.org> 2.1.0-alt1
+- 2.0.0 -> 2.1.0.
+
 * Fri Nov 25 2022 Stanislav Levin <slev@altlinux.org> 2.0.0-alt1
 - 1.3.0 -> 2.0.0.
 

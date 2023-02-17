@@ -4,7 +4,7 @@
 
 Name:    python3-module-%oname
 Version: 0.9.1
-Release: alt1
+Release: alt2
 
 Summary: PKI testing tool
 
@@ -20,22 +20,33 @@ BuildRequires: python3-module-setuptools
 BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-pytest
+# dependencies
+BuildRequires: python3-module-asn1crypto
+BuildRequires: python3-module-click
+BuildRequires: python3-module-oscrypto
 BuildRequires: python3-module-yaml
-BuildRequires: python3-module-pytz
-BuildRequires: python3-module-pyHanko-certvalidator
 BuildRequires: python3-module-dateutil
-BuildRequires: python3-module-freezegun
 BuildRequires: python3-module-tzlocal
+
+# synced to requirements.txt
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytz
 BuildRequires: python3-module-werkzeug
+BuildRequires: python3-module-jinja2
+BuildRequires: python3-module-cryptography
+BuildRequires: python3-module-freezegun
+BuildRequires: python3-module-pyHanko-certvalidator
+BuildRequires: python3-module-requests
 BuildRequires: python3-module-requests-mock
-BuildRequires: python3-module-tzdata
-BuildRequires: python3-module-pytest-asyncio
+BuildRequires: python3-module-pytest-aiohttp
+BuildRequires: python3-module-pkcs11
 %endif
 
 BuildArch: noarch
 
 Source:  %name-%version.tar
+# https://github.com/MatthiasValvekens/certomancer/issues/8
+Patch0: certomancer-0.9.1-Bump-pyhanko-certvalidator-test-dep.patch
 
 %description
 Quickly construct, mock & deploy PKI test configurations using
@@ -44,6 +55,7 @@ service provisioning.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
 %pyproject_build
@@ -62,6 +74,9 @@ service provisioning.
 %python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Thu Feb 09 2023 Stanislav Levin <slev@altlinux.org> 0.9.1-alt2
+- Fixed FTBFS (packaging 22 and pyhanko-certvalidator 0.20.0).
+
 * Mon Oct 31 2022 Grigory Ustinov <grenka@altlinux.org> 0.9.1-alt1
 - Automatically updated to 0.9.1.
 

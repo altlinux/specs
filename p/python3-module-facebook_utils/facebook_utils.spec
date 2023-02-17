@@ -1,20 +1,29 @@
-%define oname facebook_utils
+%define _unpackaged_files_terminate_build 1
+%define pypi_name facebook-utils
+%define mod_name facebook_utils
 
-Name: python3-module-%oname
+Name: python3-module-%mod_name
 Version: 0.50.5
-Release: alt1
+Release: alt2
 
 Summary: Simple utilites for facebook integration
 License: BSD
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/facebook_utils/
-# https://github.com/jvanasco/facebook_utils.git
+VCS: https://github.com/jvanasco/facebook_utils
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
+
+# well-known PyPI name
+%py3_provides %pypi_name
+Provides: python3-module-%pypi_name = %EVR
 
 BuildRequires(pre): rpm-build-python3
-
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 A collection of utilities for integrating user accounts with
@@ -24,19 +33,23 @@ Right now this handles oauth and graph operations.
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
-%doc *.txt *.md
-%python3_sitelibdir/*
-
+%doc CHANGES.txt README.md
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 10 2023 Stanislav Levin <slev@altlinux.org> 0.50.5-alt2
+- Fixed FTBFS (setuptools 67).
+
 * Mon Nov 25 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.50.5-alt1
 - version updated to 0.50.5
 - python2 disabled

@@ -6,7 +6,7 @@
 Name: libtorrent-rasterbar10
 Epoch: 4
 Version: 1.2.14
-Release: alt2
+Release: alt3
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 License: BSD-3-Clause and BSL-1.0
@@ -20,6 +20,7 @@ Source: %name-%version.tar
 Patch1: libtorrent-rasterbar-fix_library_version.patch
 
 Patch2: libtorrent-rasterbar-disable-pkgconfig.patch
+Patch3: libtorrent-rasterbar-don-t-append-python-bindings-src-path-to-module-vers.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: gcc-c++
@@ -80,8 +81,7 @@ python-3 bindings to libTorrent.
 
 %prep
 %setup
-%patch1 -p1
-%patch2 -p1
+%autopatch -p1
 
 %build
 %ifarch %mips32
@@ -121,6 +121,9 @@ export LIBS=-latomic
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Fri Feb 10 2023 Stanislav Levin <slev@altlinux.org> 4:1.2.14-alt3
+- Fixed FTBFS (setuptools 66).
+
 * Thu Jun 24 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 4:1.2.14-alt2
 - Reintroduced due to deluge not working with libtorrent-rasterbar >= 2.0.
 

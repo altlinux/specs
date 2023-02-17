@@ -1,22 +1,42 @@
-%define oname zope.testbrowser
+%define _unpackaged_files_terminate_build 1
+%define pypi_name zope.testbrowser
 
-%def_disable check
+%def_with check
 
-Name: python3-module-%oname
-Version: 5.0.0
-Release: alt3
+Name: python3-module-%pypi_name
+Version: 5.6.1
+Release: alt1
 
 Summary: Programmable browser for functional black-box tests
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.testbrowser/
-
-# https://github.com/zopefoundation/zope.testbrowser.git
+VCS: https://github.com/zopefoundation/zope.testbrowser.git
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
+%if_with check
+# dependencies
+BuildRequires: python3(zope.interface)
+BuildRequires: python3(zope.schema)
+BuildRequires: python3(zope.cachedescriptors)
+BuildRequires: python3(pytz)
+BuildRequires: python3(webtest)
+BuildRequires: python3(bs4)
+BuildRequires: python3(soupsieve)
+BuildRequires: python3(wsgiproxy)
+BuildRequires: python3(six)
+
+# tests
+BuildRequires: python3(zope.testing)
+BuildRequires: python3(mock)
+BuildRequires: python3(zope.testrunner)
+%endif
 
 %description
 zope.testbrowser provides an easy-to-use programmable web browser with
@@ -26,16 +46,13 @@ any web site.
 
 %prep
 %setup
-
-find -type f -name '*.py' -exec 2to3 -w -n '{}' + 
-
-ln -s README.rst README.txt
+%autopatch -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
 install -d %buildroot%python3_sitelibdir
@@ -43,16 +60,22 @@ mv %buildroot%python3_sitelibdir_noarch/* \
     %buildroot%python3_sitelibdir/
 %endif
 
+# don't ship tests
+rm -r %buildroot%python3_sitelibdir/zope/testbrowser/tests/
+
 %check
-%__python3 setup.py test
+%pyproject_run -- zope-testrunner --test-path=src -vc
 
 %files
-%doc *.rst
-%python3_sitelibdir/*
+%doc CHANGES.rst README.rst
+%python3_sitelibdir/zope/testbrowser/
+%python3_sitelibdir/%pypi_name-%version.dist-info/
 %exclude %python3_sitelibdir/*.pth
 
-
 %changelog
+* Mon Feb 06 2023 Stanislav Levin <slev@altlinux.org> 5.6.1-alt1
+- 5.0.0 -> 5.6.1.
+
 * Tue Feb 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 5.0.0-alt3
 - Build for python2 disabled.
 

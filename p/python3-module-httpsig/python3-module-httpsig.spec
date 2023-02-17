@@ -1,25 +1,32 @@
-%define  modulename httpsig
-%def_enable check
+%define _unpackaged_files_terminate_build 1
+%define pypi_name httpsig
+%define mod_name %pypi_name
 
-Name:    python3-module-%modulename
+%def_with check
+
+Name: python3-module-%pypi_name
 Version: 1.3.0
-Release: alt1
+Release: alt2
 
-Summary: Simple Python interface for Graphviz
+Summary: HTTP request signing using the HTTP Signature draft specification
 License: MIT
-Group:   Development/Python3
-URL:     https://github.com/xflr6/httpsig
+Group: Development/Python3
+Url: https://pypi.org/project/httpsig/
+VCS: https://github.com/ahknight/httpsig
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
-BuildRequires: python3-module-tox
-BuildRequires: python3-module-mock
-BuildRequires: python3-module-pytest-mock
-BuildRequires: python3-module-pytest-cov
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(setuptools_scm)
+
+%if_with check
 BuildRequires: python3-module-pycryptodome
+BuildRequires: python3(six)
+%endif
 
 BuildArch: noarch
-Source:  %name-%version.tar
+Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
 %description
@@ -32,26 +39,35 @@ Components for Joyent's HTTP Signature Scheme.
 
 %prep
 %setup
+# if build from git source tree
+# setuptools_scm implements a file_finders entry point which returns all files
+# tracked by SCM. These files will be packaged unless filtered by MANIFEST.in.
+if [ ! -d .git ]; then
+    git init
+    git config user.email author@example.com
+    git config user.name author
+    git add .
+    git commit -m 'release'
+    git tag '%version'
+fi
 
 %build
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
-export SETUPTOOLS_SCM_PRETEND_VERSION=%version
-export PIP_NO_INDEX=YES
-export TOXENV=py%{python_version_nodots python3}
-tox.py3 --sitepackages -v
+%pyproject_run_unittest httpsig.tests
 
 %files
-%python3_sitelibdir/%{modulename}*
-%python3_sitelibdir/*.egg-info
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 08 2023 Stanislav Levin <slev@altlinux.org> 1.3.0-alt2
+- Fixed FTBFS (setuptools 66).
+
 * Mon May 16 2022 Andrey Bergman <vkni@altlinux.org> 1.3.0-alt1
 - Initial release for Sisyphus.
 

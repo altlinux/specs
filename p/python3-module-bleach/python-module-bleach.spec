@@ -1,27 +1,36 @@
+# NOTE: THIS IS DEPRECATED PACKAGE
+# https://github.com/mozilla/bleach/issues/698
+
+%define _unpackaged_files_terminate_build 1
+%define pypi_name bleach
+%define mod_name %pypi_name
+
 %def_without check
 
-%define modulename bleach
 
-Name: python3-module-bleach
-Version: 5.0.0
+Name: python3-module-%pypi_name
+Version: 6.0.0
 Release: alt1
 
 Summary: An easy whitelist-based HTML-sanitizing tool
 
-Url: http://github.com/jsocol/bleach
-License: ASL 2.0
+Url: https://pypi.org/project/bleach/
+VCS: https://github.com/mozilla/bleach
+License: Apache-2.0
 Group: Development/Python3
 
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-# Source-url: https://github.com/mozilla/bleach/archive/v%version.tar.gz
 Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-#BuildPreReq: python3-devel python3-module-setuptools
+
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 Bleach is an HTML sanitizing library that escapes or strips markup and
@@ -32,17 +41,20 @@ attributes based on a white list.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %doc README.rst
-%python3_sitelibdir/*
-
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Fri Feb 10 2023 Stanislav Levin <slev@altlinux.org> 6.0.0-alt1
+- 5.0.0 -> 6.0.0.
+
 * Sun Jul 17 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.0-alt1
 - new version 5.0.0 (with rpmrb script)
 

@@ -4,13 +4,14 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.20.2
+Version: 0.20.3
 Release: alt1
 
 Summary: Pytest support for asyncio
 License: Apache-2.0
 Group: Development/Python3
-Url: https://github.com/pytest-dev/pytest-asyncio
+Url: https://pypi.org/project/pytest-asyncio/
+VCS: https://github.com/pytest-dev/pytest-asyncio
 BuildArch: noarch
 
 Source: %name-%version.tar
@@ -60,14 +61,17 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra tests
 
 %files
-%doc *.rst LICENSE
+%doc *.rst
 %python3_sitelibdir/pytest_asyncio/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Thu Feb 09 2023 Stanislav Levin <slev@altlinux.org> 0.20.3-alt1
+- 0.20.2 -> 0.20.3.
+
 * Mon Nov 14 2022 Stanislav Levin <slev@altlinux.org> 0.20.2-alt1
 - 0.20.1 -> 0.20.2.
 
