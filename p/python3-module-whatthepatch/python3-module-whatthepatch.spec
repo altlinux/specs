@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: What The Patch!? -- A Python patch parsing library  
@@ -13,6 +13,7 @@ Group: Development/Python3
 Url: https://pypi.org/project/whatthepatch/
 
 Source: %name-%version.tar
+Patch1: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -32,7 +33,7 @@ What The Patch!? is a library for both parsing and applying patch files.
 
 %prep
 %setup
-
+%patch1 -p1
 %build
 %pyproject_build
 
@@ -48,6 +49,10 @@ What The Patch!? is a library for both parsing and applying patch files.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Feb 15 2023 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 1.0.4-alt1
+- 1.0.4
+- Increase tests timeout
+
 * Thu Jan 19 2023 Anton Zhukharev <ancieg@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
