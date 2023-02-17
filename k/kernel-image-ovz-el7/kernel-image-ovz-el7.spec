@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.80.1.vz7.192.2
-%define orelease 1160.80.1.vz7.192.2
+#     rh7-3.10.0-1160.80.1.vz7.192.4
+%define orelease 1160.80.1.vz7.192.4
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -26,7 +26,7 @@ Epoch: 1
 # You can change compiler version by editing this line:
 #%%define kgcc_version %__gcc_version_base
 %define kgcc_version 10
-#%%define __nprocs 4
+%define __nprocs 4
 
 %def_disable verbose
 %def_without src
@@ -330,12 +330,8 @@ export HOSTCC=gcc-$GCC_VERSION
 %make_build kernelrelease
 export KCFLAGS="-Wno-missing-attributes -Wno-error" # Avoid flood of gcc9 warnings
 export HOST_EXTRACFLAGS="-fcommon"
-# Race while building objtool:
-%if_with objtool
-# make -j1 %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION tools/objtool tools/build
-%endif
-make -j3 %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION bzImage
-%make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION modules
+make -j3 %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION HOSTCC=gcc-$GCC_VERSION bzImage
+%make_build %{?_enable_verbose:V=1} CC=gcc-$GCC_VERSION HOSTCC=gcc-$GCC_VERSION modules
 
 %{?_with_perf:%make_build -C tools/perf %{?_enable_verbose:V=1} %perf_make_opts all man}
 
@@ -413,7 +409,6 @@ if grep -q CONFIG_STACK_VALIDATION=y .config; then
     [ -f tools/objtool/objtool ] && {
     mkdir -p %buildroot%kbuild_dir/tools/objtool
     cp -a tools/objtool/objtool %buildroot%kbuild_dir/tools/objtool
-    cp -a tools/objtool/fixdep %buildroot%kbuild_dir/tools/objtool
     # Copy .config to include/config/auto.conf so "make prepare" is unnecessary.
     cp %buildroot%kbuild_dir/.config %buildroot%kbuild_dir/include/config/auto.conf
     }
@@ -422,6 +417,7 @@ find %buildroot%kbuild_dir -type f -a \( -name .install -o -name ..install.cmd \
 find %buildroot%kbuild_dir -type f -name '*.cmd' -delete
 find %buildroot%kbuild_dir -type l -follow -delete
 find %buildroot%kbuild_dir/scripts -type f -name '*.o' -delete
+rm -f %buildroot%kbuild_dir/tools/objtool/Makefile
 # find %buildroot%kbuild_dir/scripts -type f -name '*.[cho]' -delete
 
 # Provide kbuild directory with old name (without %%krelease)
@@ -601,6 +597,11 @@ grep beancounter boot.log
 
 
 %changelog
+* Thu Feb 16 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.80.1.vz7.192.4
+- Build rh7-3.10.0-1160.80.1.vz7.192.4
+- Makefile: fix a race with fixdep build
+- spec: change HOSTCC, do not copy unnecessary files
+
 * Fri Jan 13 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.80.1.vz7.192.2
 - Build rh7-3.10.0-1160.80.1.vz7.192.2
 - use $(CC), not gcc for HOSTCC/CC
