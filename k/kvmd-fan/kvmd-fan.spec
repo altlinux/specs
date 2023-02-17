@@ -1,5 +1,5 @@
 Name: kvmd-fan
-Version: 0.24
+Version: 0.25
 Release: alt1
 
 Summary: Fan controller daemon
@@ -12,6 +12,7 @@ Source: %name-%version-%release.tar
 BuildRequires: libiniparser-devel
 BuildRequires: libmicrohttpd-devel
 BuildRequires: libgpiod-devel
+BuildRequires: libwiringpi-devel-static
 
 %description
 %summary
@@ -21,7 +22,7 @@ BuildRequires: libgpiod-devel
 sed -ri '/^_CFLAGS/ s,$, %optflags -I%_includedir/iniparser,' Makefile
 
 %build
-make WITH_WIRINGPI_STUB=yes
+make
 
 %install
 install -pm0755 -D kvmd-fan %buildroot%_bindir/kvmd-fan
@@ -35,5 +36,8 @@ install -pm0644 -D /dev/null %buildroot%_sysconfdir/kvmd/fan.ini
 %_bindir/kvmd-fan
 
 %changelog
+* Fri Feb 17 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.25-alt1
+- 0.25-alt1 released
+
 * Thu Dec 15 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.24-alt1
 - initial
