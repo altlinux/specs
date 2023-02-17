@@ -1,6 +1,6 @@
 Name:    mate-menu
 Version: 22.04.2
-Release: alt2
+Release: alt3
 
 Summary: An Advanced Menu for the MATE Desktop
 # MIT is needed for keybinding.py
@@ -30,7 +30,7 @@ Source:  %name-%version.tar
 Patch1: alt-applet-name-l10n.patch
 Patch2: alt-menubutton-label-l10n.patch
 Patch3: alt-use-themed-app-list.patch
-Patch4: alt-start-button-themed-icon.patch
+Patch4: alt-set-start-button-gsettings.patch
 Patch5: alt-desktop-place-fix.patch
 Patch6: fix-version.patch
 
@@ -62,6 +62,9 @@ Supports filtering, favorites, autosession, and many other features.
 %_man1dir/%name.1*
 
 %changelog
+* Fri Feb 17 2023 Leontiy Volodin <lvol@altlinux.org> 22.04.2-alt3
+- Set start button using gsettings (ALT #45135).
+
 * Thu Jan 12 2023 Andrey Cherepanov <cas@altlinux.org> 22.04.2-alt2
 - Fix application version (ALT #44896).
 
