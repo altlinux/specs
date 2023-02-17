@@ -2,49 +2,59 @@
 
 %define oname seaborn
 
+%def_with check
+
 Name: python3-module-seaborn
-Version: 0.10.1
+Version: 0.12.2
 Release: alt1
 Summary: Seaborn: statistical data visualization
 License: BSD-3-Clause
 Group: Sciences/Other
-URL: https://github.com/mwaskom/seaborn
+URL: https://pypi.org/project/seaborn/
+
+VCS: https://github.com/mwaskom/seaborn
+Source: %name-%version.tar
 
 BuildArch: noarch
 
-Source: %name-%version.tar
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-flake8 python3-module-pytest-runner
+BuildRequires: python3-module-flit-core
+%if_with check
+BuildRequires: python3-module-matplotlib
+BuildRequires: python3-module-pytest-xdist
+BuildRequires: python3-module-pandas
+BuildRequires: python3-module-pandas-tests
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-contourpy
+%endif
 
 %description
-Seaborn is a library for making attractive and informative statistical graphics in Python. It is built on top of matplotlib and tightly integrated with the PyData stack, including support for numpy and pandas data structures and statistical routines from scipy and statsmodels.
-
-Some of the features that seaborn offers are
-
-- Several built-in themes that improve on the default matplotlib aesthetics
-- Tools for choosing color palettes to make beautiful plots that reveal patterns in your data
-- Functions for visualizing univariate and bivariate distributions or for comparing them between subsets of data
-- Tools that fit and visualize linear regression models for different kinds of independent and dependent variables
-- Functions that visualize matrices of data and use clustering algorithms to discover structure in those matrices
-- A function to plot statistical timeseries data with flexible estimation and representation of uncertainty around the estimate
-- High-level abstractions for structuring grids of plots that let you easily build complex visualizations
+Seaborn is a library for making attractive and informative statistical graphics
+in Python. It is built on top of matplotlib and tightly integrated with the
+PyData stack, including support for numpy and pandas data structures and
+statistical routines from scipy and statsmodels.
 
 %prep
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%pyproject_run_pytest -k 'not test_log_scale and not test_subplot_kws' -n auto
 
 %files
-%python3_sitelibdir_noarch/%oname
-%python3_sitelibdir_noarch/%oname-%version-*.egg-info
-
+%doc LICENSE.md README.md
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Tue Feb 07 2023 Anton Vyatkin <toni@altlinux.org> 0.12.2-alt1
+- new version 0.12.2 (Closes: #44636).
+
 * Wed Aug 26 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 0.10.1-alt1
 - Updated to upstream version 0.10.1.
 
