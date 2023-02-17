@@ -1,9 +1,9 @@
 %define orig_name intel-microcode
-%define orig_timestamp 20221108
+%define orig_timestamp 20230214
 %define orig_rev %nil
 
 Name: firmware-intel-ucode
-Version: 19
+Version: 20
 Release: alt1.%{orig_timestamp}%{?orig_rev}
 Epoch: 2
 
@@ -50,6 +50,47 @@ mv ${UCODE}.bin %buildroot/lib/firmware/intel-ucode/%{orig_name}.bin
 /lib/firmware/intel-ucode/*
 
 %changelog
+* Fri Feb 17 2023 L.A. Kostis <lakostis@altlinux.ru> 2:20-alt1.20230214
+- Updated to upstream microcode datafile 20230214:
+  + Security updates for INTEL-SA-00767 INTEL-SA-00738 INTEL-SA-00700
+  + Added new microcode for Xeon Scalable Gen4, Xeon Max and Core Gen13
+    processors.
+  + Updated firmware for Xeon Scalable Gen1/Gen2/Gen3, Xeon D-17xx/D-27xx
+    Core Gen10 Mobile/Gen11/Gen12/Gen13/w/Hybrid Technology, Pentium
+    and Celeron processors.
+  + New Microcodes:
+    sig 0x000806f8, pf_mask 0x87, 2022-12-27, rev 0x2b000181, size 561152
+    sig 0x000806f7, pf_mask 0x87, 2022-12-27, rev 0x2b000181
+    sig 0x000806f6, pf_mask 0x87, 2022-12-27, rev 0x2b000181
+    sig 0x000806f5, pf_mask 0x87, 2022-12-27, rev 0x2b000181
+    sig 0x000806f4, pf_mask 0x87, 2022-12-27, rev 0x2b000181
+    sig 0x000806f8, pf_mask 0x10, 2022-12-19, rev 0x2c000170, size 600064
+    sig 0x000806f6, pf_mask 0x10, 2022-12-19, rev 0x2c000170
+    sig 0x000806f5, pf_mask 0x10, 2022-12-19, rev 0x2c000170
+    sig 0x000806f4, pf_mask 0x10, 2022-12-19, rev 0x2c000170
+    sig 0x000b06a2, pf_mask 0xc0, 2022-12-08, rev 0x410e, size 212992
+    sig 0x000b06a3, pf_mask 0xc0, 2022-12-08, rev 0x410e
+  + Updated Microcodes:
+    sig 0x00050653, pf_mask 0x97, 2022-08-30, rev 0x1000161, size 36864
+    sig 0x00050656, pf_mask 0xbf, 2022-08-26, rev 0x4003303, size 37888
+    sig 0x00050657, pf_mask 0xbf, 2022-08-26, rev 0x5003303, size 37888
+    sig 0x0005065b, pf_mask 0xbf, 2022-08-26, rev 0x7002503, size 29696
+    sig 0x000606a6, pf_mask 0x87, 2022-10-09, rev 0xd000389, size 296960
+    sig 0x000606c1, pf_mask 0x10, 2022-09-23, rev 0x1000211, size 289792
+    sig 0x000706a1, pf_mask 0x01, 2022-09-16, rev 0x003e, size 75776
+    sig 0x000706a8, pf_mask 0x01, 2022-09-20, rev 0x0022, size 76800
+    sig 0x000706e5, pf_mask 0x80, 2022-08-31, rev 0x00b8, size 113664
+    sig 0x000806a1, pf_mask 0x10, 2022-09-07, rev 0x0032, size 34816
+    sig 0x00090672, pf_mask 0x07, 2023-01-04, rev 0x002c, size 219136
+    sig 0x00090675, pf_mask 0x07, 2023-01-04, rev 0x002c
+    sig 0x000b06f2, pf_mask 0x07, 2023-01-04, rev 0x002c
+    sig 0x000b06f5, pf_mask 0x07, 2023-01-04, rev 0x002c
+    sig 0x000906a3, pf_mask 0x80, 2023-01-11, rev 0x0429, size 218112
+    sig 0x000906a4, pf_mask 0x80, 2023-01-11, rev 0x0429
+    sig 0x000906c0, pf_mask 0x01, 2022-09-02, rev 0x24000024, size 20480
+    sig 0x000a0671, pf_mask 0x02, 2022-08-31, rev 0x0057, size 103424
+    sig 0x000b0671, pf_mask 0x32, 2022-12-19, rev 0x0112, size 207872
+
 * Thu Dec 01 2022 L.A. Kostis <lakostis@altlinux.ru> 2:19-alt1.20221108
 - Updated to upstream microcode datafile 20221108:
   + Fixes several errata (functional issues) on Xeon D-2700, 8th, 9th, 10th,
