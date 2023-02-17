@@ -1,5 +1,5 @@
 Name:           xfce4-notifyd
-Version:        0.8.0
+Version:        0.8.1
 Release:        alt1
 Summary:        Simple notification daemon for Xfce
 Summary(ru_RU.UTF-8): Менеджер уведомлений для Xfce
@@ -83,7 +83,7 @@ Notification plugin for the Xfce panel.
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS NEWS README TODO
+%doc AUTHORS NEWS README.md
 %_bindir/xfce4-notifyd-config
 %_libdir/xfce4/notifyd/
 %_desktopdir/*.desktop
@@ -104,6 +104,10 @@ Notification plugin for the Xfce panel.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Feb 17 2023 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+- Dropped obsoleted patch.
+- Updated to 0.8.1.
+
 * Mon Feb 13 2023 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
 - Dropped %%xfce4_drop_gitvtag macro.
 - Updated to 0.8.0.
