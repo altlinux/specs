@@ -1,5 +1,5 @@
 Name: builder-useradd
-Version: 1.5
+Version: 1.6
 Release: alt1
 Summary: Add user and configure hasher and gear for him/her
 License: GPLv2+
@@ -35,6 +35,10 @@ install -m 644 %SOURCE2 ./
 %_sbindir/%name
 
 %changelog
+* Sun Dec 04 2022 Anton Midyukov <antohami@altlinux.org> 1.6-alt1
+- remove Yandex Mirror from generated apt source lists.
+  Yandex Mirror is broken.
+
 * Fri Oct 14 2022 Anton Midyukov <antohami@altlinux.org> 1.5-alt1
 - add settings for for comfortable work
 
