@@ -1,5 +1,5 @@
 Name:     kronos
-Version:  2.3.1
+Version:  2.5.0
 Release:  alt1
 
 Summary:  Sega Saturn Emulator
@@ -43,5 +43,8 @@ cd yabause
 %_pixmapsdir/%name.png
 
 %changelog
+* Fri Feb 17 2023 Artyom Bystrov <arbars@altlinux.org> 2.5.0-alt1
+- Update to new version
+
 * Thu Dec 08 2022 Artyom Bystrov <arbars@altlinux.org> 2.3.1-alt1
 - Initial build for Sisyphus
