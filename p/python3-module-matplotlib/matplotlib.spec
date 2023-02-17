@@ -6,7 +6,7 @@
 %def_with wx
 
 Name: python3-module-%oname
-Version: 3.6.3
+Version: 3.7.0
 Release: alt1
 
 Summary: Matlab(TM) style python plotting package
@@ -33,13 +33,14 @@ BuildRequires: libpng-devel
 BuildRequires: libfreetype-devel
 BuildRequires: libqhull-devel
 BuildRequires: libnumpy-py3-devel
+BuildRequires: python3-module-pybind11
 
 %{?_with_qt5:BuildRequires: python3-module-PyQt5}
 
 Requires: python3-module-%oname-gtk3
 Requires: python3-module-mpl_toolkits = %EVR
 Requires: %name-data = %EVR
-%add_python3_req_skip _winreg builtins distutils
+%add_python3_req_skip builtins
 
 %description
 matplotlib is a pure python 2D plotting library with a Matlab(TM)
@@ -63,7 +64,6 @@ qt5 backend for %oname.
 Summary: Cairo backend for %oname
 Group: Development/Python3
 Requires: %name = %EVR
-#py_provides backend_cairo
 %py3_requires cairo
 
 %description cairo
@@ -167,7 +167,7 @@ cp -fR lib/mpl_toolkits %buildroot%python3_sitelibdir/
 # don't package tests
 rm -r %buildroot%python3_sitelibdir/%oname/testing
 rm -r %buildroot%python3_sitelibdir/%oname/tests
-rm -r %buildroot%python3_sitelibdir/mpl_toolkits/tests
+rm -rv %buildroot%python3_sitelibdir/mpl_toolkits/*/tests
 
 # Use gtk by default
 subst "s|WXAgg|GTK3Cairo|g" \
@@ -192,7 +192,7 @@ do
 done
 
 %files
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/*.py*
 %python3_sitelibdir/__pycache__
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
@@ -255,17 +255,17 @@ done
 %exclude %python3_sitelibdir/mpl_toolkits
 
 %files cairo
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/matplotlib/backends/backend_cairo.py*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_cairo.*.py*
 
 %files nbagg
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/matplotlib/backends/backend_nbagg.py*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_nbagg.*.py*
 
 %files gtk3
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/matplotlib/backends/backend_gtk3.py*
 %python3_sitelibdir/matplotlib/backends/backend_gtk3agg.py*
 %python3_sitelibdir/matplotlib/backends/backend_gtk3cairo.py*
@@ -274,7 +274,7 @@ done
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk3cairo.*.py*
 
 %files gtk4
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/matplotlib/backends/backend_gtk4.py*
 %python3_sitelibdir/matplotlib/backends/backend_gtk4agg.py*
 %python3_sitelibdir/matplotlib/backends/backend_gtk4cairo.py*
@@ -283,7 +283,7 @@ done
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_gtk4cairo.*.py*
 
 %files tk
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/matplotlib/backends/_backend_tk.py*
 %python3_sitelibdir/matplotlib/backends/backend_tkagg.py*
 %python3_sitelibdir/matplotlib/backends/backend_tkcairo.py*
@@ -292,21 +292,21 @@ done
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_tkcairo.*.py*
 
 %files web
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/matplotlib/backends/backend_webagg.py*
 %python3_sitelibdir/matplotlib/backends/backend_webagg_core.py*
-%python3_sitelibdir/matplotlib/backends/web_backend/
+%python3_sitelibdir/matplotlib/backends/web_backend
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_webagg.*.py*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_webagg_core.*.py*
 
 %if_with qt5
 %files qt5
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/matplotlib/backends/backend_qt5.py*
 %python3_sitelibdir/matplotlib/backends/backend_qt5agg.py*
 %python3_sitelibdir/matplotlib/backends/backend_qt5cairo.py*
 %python3_sitelibdir/matplotlib/backends/qt_compat.py*
-%python3_sitelibdir/matplotlib/backends/qt_editor/
+%python3_sitelibdir/matplotlib/backends/qt_editor
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5.*.py*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5agg.*.py*
 %python3_sitelibdir/matplotlib/backends/__pycache__/backend_qt5cairo.*.py*
@@ -315,7 +315,7 @@ done
 
 %if_with wx
 %files wx
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/matplotlib/backends/backend_wx.py*
 %python3_sitelibdir/matplotlib/backends/backend_wxagg.py*
 %python3_sitelibdir/matplotlib/backends/backend_wxcairo.py*
@@ -325,18 +325,22 @@ done
 %endif
 
 %files sphinxext
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/%oname/sphinxext
 
 %files -n python3-module-mpl_toolkits
-%doc README.rst
+%doc README.md
 %python3_sitelibdir/mpl_toolkits
 
 %files data
-%doc README.rst
+%doc README.md
+%dir %_datadir/matplotlib
 %_datadir/matplotlib/mpl-data
 
 %changelog
+* Fri Feb 17 2023 Grigory Ustinov <grenka@altlinux.org> 3.7.0-alt1
+- Automatically updated to 3.7.0.
+
 * Thu Feb 16 2023 Grigory Ustinov <grenka@altlinux.org> 3.6.3-alt1
 - Updated to 3.6.3.
 - Moved mpl-data to _datadir.
