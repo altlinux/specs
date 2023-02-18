@@ -1,10 +1,10 @@
 %define oname osprofiler
-%def_without check
+%def_with check
 %def_with docs
 
 Name: python3-module-%oname
 Version: 3.4.3
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Profiler Library
 
@@ -40,6 +40,7 @@ BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-pymongo >= 3.0.2
 BuildRequires: python3-module-elasticsearch >= 2.0.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
+BuildRequires: python3-module-redis-py
 %endif
 
 %if_with docs
@@ -102,7 +103,8 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %check
-%__python3 -m stestr run
+# jaeger-client is deprecated
+%__python3 -m stestr run --exclude-regex '(^osprofiler.tests.unit.drivers.test_jaeger.JaegerTestCase.*$)'
 
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
@@ -121,6 +123,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.4.3-alt2
+- Fixed build with check.
+
 * Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 3.4.3-alt1
 - Automatically updated to 3.4.3.
 

@@ -1,9 +1,9 @@
 %define oname openstacksdk
-%def_without check
+%def_with check
 %def_with docs
 
 Name: python3-module-%oname
-Version: 0.101.0
+Version: 0.102.0
 Release: alt2
 
 Summary: An SDK for building applications to work with OpenStack
@@ -111,7 +111,12 @@ rm -rf html/.{doctrees,buildinfo}
 install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
+# Install missing files to proper location
+cp openstack/config/*.json %buildroot%python3_sitelibdir/openstack/config
+
 %check
+export OS_LOG_CAPTURE=true
+export OS_TEST_TIMEOUT=30
 %__python3 -m stestr run
 
 %files
@@ -132,6 +137,12 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.102.0-alt2
+- Fixed build with check.
+
+* Sat Oct 22 2022 Grigory Ustinov <grenka@altlinux.org> 0.102.0-alt1
+- Automatically updated to 0.102.0.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 0.101.0-alt2
 - Spec refactoring.
 

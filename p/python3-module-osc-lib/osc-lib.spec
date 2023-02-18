@@ -1,10 +1,10 @@
 %define oname osc-lib
-%def_without check
+%def_with check
 %def_with docs
 
 Name: python3-module-%oname
 Version: 2.6.2
-Release: alt2
+Release: alt3
 
 Summary: OpenStackClient Library
 
@@ -110,6 +110,9 @@ install -pDm 644 man/openstackclientclibase.1 %buildroot%_man1dir/openstackclien
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt3
+- Build with check.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 2.6.2-alt2
 - Spec refactoring.
 

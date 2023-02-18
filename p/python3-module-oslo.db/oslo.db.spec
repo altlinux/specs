@@ -1,9 +1,9 @@
 %define oname oslo.db
-%def_without check
+%def_with check
 %def_with docs
 
 Name: python3-module-%oname
-Version: 12.1.0
+Version: 12.2.0
 Release: alt1
 
 Summary: OpenStack Oslo Database library
@@ -122,6 +122,9 @@ install -pDm 644 man/oslodb.1 %buildroot%_man1dir/oslodb.1
 %endif
 
 %changelog
+* Sat Oct 22 2022 Grigory Ustinov <grenka@altlinux.org> 12.2.0-alt1
+- Automatically updated to 12.2.0.
+
 * Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 12.1.0-alt1
 - Automatically updated to 12.1.0.
 

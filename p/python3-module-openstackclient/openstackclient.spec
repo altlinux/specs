@@ -1,10 +1,10 @@
 %define oname openstackclient
-%def_without check
+%def_with check
 %def_with docs
 
 Name: python3-module-%oname
 Version: 6.0.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Command-line Client
 
@@ -127,6 +127,9 @@ install -pDm 644 man/openstack.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt2
+- Build with check.
+
 * Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 6.0.0-alt1
 - Automatically updated to 6.0.0.
 - Renamed spec file.

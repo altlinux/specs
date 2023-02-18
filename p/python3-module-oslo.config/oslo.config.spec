@@ -1,10 +1,10 @@
 %define oname oslo.config
-%def_without check
+%def_with check
 %def_with docs
 
 Name: python3-module-%oname
 Version: 9.0.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Oslo Configuration API
 
@@ -14,6 +14,8 @@ Url: https://pypi.org/project/oslo.config
 
 Source: %oname-%version.tar
 Source1: %oname.watch
+
+Patch: fix-oslo.config-test-under-bullseye.patch
 
 BuildArch: noarch
 
@@ -81,6 +83,7 @@ This package contains documentation for %oname.
 
 %prep
 %setup -n %oname-%version
+%patch -p1
 
 # Remove bundled egg-info
 rm -rfv *.egg-info
@@ -127,6 +130,9 @@ install -pDm 644 man/osloconfig.1 %buildroot%_man1dir/osloconfig.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 9.0.0-alt2
+- Fixed build with check.
+
 * Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 9.0.0-alt1
 - Automatically updated to 9.0.0.
 

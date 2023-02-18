@@ -1,10 +1,10 @@
 %define oname oslo.rootwrap
-%def_without check
+%def_with check
 %def_with docs
 
 Name: python3-module-%oname
 Version: 6.3.1
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Oslo Rootwrap
 
@@ -32,6 +32,8 @@ BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-eventlet >= 0.18.2
 BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
+BuildRequires: schedutils
+BuildRequires: iproute2
 BuildRequires: /proc
 %endif
 
@@ -112,6 +114,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 6.3.1-alt2
+- Fixed build with check.
+
 * Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 6.3.1-alt1
 - Automatically updated to 6.3.1.
 

@@ -1,21 +1,20 @@
 %define oname migrate
 
 Name: python3-module-%oname
-Version: 0.11.0
-Release: alt3
+Version: 0.13.0
+Release: alt1
 
 Summary: Schema migration tools for SQLAlchemy
+
 License: MIT
 Group: Development/Python3
 Url: https://github.com/openstack/sqlalchemy-migrate
 
-BuildArch: noarch
+Source: %oname-%version.tar
 
-Source0: %oname-%version.tar
-
-Patch2: fix-regex.patch
 # Local patch to rename /usr/bin/migrate to sqlalchemy-migrate
-Patch100: python-migrate-sqlalchemy-migrate.patch
+Patch1: migrate-sqlalchemy-migrate.patch
+Patch2: fix-regex.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr
@@ -23,11 +22,13 @@ BuildRequires: python3-module-pbr
 %add_python3_req_skip ibm_db_sa
 Provides: python3-module-sqlalchemy-migrate = %EVR
 
+BuildArch: noarch
+
 %description
 Schema migration tools for SQLAlchemy designed to support an agile
 approach to database design and make it easier to keep development and
 production databases in sync as schema changes are required. It allows
-you to manage atabase change sets and database repository versioning.
+you to manage database change sets and database repository versioning.
 
 %package tests
 Summary: Tests for Schema migration tools for SQLAlchemy
@@ -38,9 +39,12 @@ Requires: %name = %version-%release
 Tests for Schema migration tools for SQLAlchemy.
 
 %prep
-%setup -q -n %oname-%version
+%setup -n %oname-%version
 
-%patch100 -p1 -b .rename
+# suddenly 32bit arches cant process it
+sed -i '/pytz/d' test-requirements.txt
+
+%patch1 -p2
 %patch2 -p1
 
 %build
@@ -55,7 +59,7 @@ export PBR_VERSION=%version
 echo 'sqlite:///__tmp__' > test_db.cfg
 
 %files
-%doc README.rst TODO doc/
+%doc README.rst AUTHORS ChangeLog COPYING doc/
 %_bindir/*
 %python3_sitelibdir/*
 %exclude %python3_sitelibdir/migrate/tests
@@ -64,6 +68,9 @@ echo 'sqlite:///__tmp__' > test_db.cfg
 %python3_sitelibdir/*/tests
 
 %changelog
+* Sat Oct 22 2022 Grigory Ustinov <grenka@altlinux.org> 0.13.0-alt1
+- Build new version for oslo.db.
+
 * Fri Apr 03 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.11.0-alt3
 - Build for python2 disabled.
 

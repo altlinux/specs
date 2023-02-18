@@ -1,10 +1,10 @@
 %define oname senlinclient
-%def_without check
+%def_with check
 %def_with docs
 
 Name: python3-module-%oname
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Clustering API Client Library
 
@@ -120,6 +120,9 @@ install -pDm 644 man/senlin.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt2
+- Build with check.
+
 * Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt1
 - Automatically updated to 2.5.0.
 
