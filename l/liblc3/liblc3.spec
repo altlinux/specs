@@ -6,7 +6,7 @@
 %def_disable check
 
 Name: lib%_name
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Low Complexity Communication Codec (LC3)
@@ -16,7 +16,6 @@ Url: https://github.com/google/liblc3
 
 Vcs: https://github.com/google/liblc3.git
 Source: https://github.com/google/liblc3/archive/v%version/%name-%version.tar.gz
-Patch1: %name-1.0.1-alt-build_tools.patch
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libgomp-devel
@@ -44,7 +43,6 @@ This package provides LC3 tools.
 
 %prep
 %setup
-%patch1
 
 %build
 %meson \
@@ -59,11 +57,11 @@ This package provides LC3 tools.
 %meson_test
 
 %files
-%_libdir/%name.so
+%_libdir/%name.so.*
 %doc README*
 
 %files devel
-#%_libdir/%name.so
+%_libdir/%name.so
 %_includedir/%{_name}*.h
 %_pkgconfigdir/%_name.pc
 
@@ -74,6 +72,9 @@ This package provides LC3 tools.
 %endif
 
 %changelog
+* Sat Feb 18 2023 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Mon Oct 17 2022 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - first build for Sisyphus
 
