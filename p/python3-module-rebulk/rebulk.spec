@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 3.1.0
+Version: 3.2.0
 Release: alt1
 Summary: Rebulk - define simple search patterns in bulk to perform advanced matching on any string
 License: MIT
@@ -60,6 +60,9 @@ tox.py3 --sitepackages --console-scripts -vvr -s false
 %exclude %python3_sitelibdir/*/test
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.2.0-alt1
+- Automatically updated to 3.2.0.
+
 * Wed Feb 09 2022 Stanislav Levin <slev@altlinux.org> 3.1.0-alt1
 - 3.0.1 -> 3.1.0.
 
