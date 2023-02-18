@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.1.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Object Storage API Client Library
 
@@ -96,6 +96,7 @@ install -pDm 644 tools/swift.bash_completion \
 %_bindir/swift
 %python3_sitelibdir/%oname
 %python3_sitelibdir/python_swiftclient-%version-py%_python3_version.egg-info
+%dir %_sysconfdir/bash_completion.d
 %_sysconfdir/bash_completion.d/swift.bash_completion
 
 %if_with docs
@@ -106,6 +107,9 @@ install -pDm 644 tools/swift.bash_completion \
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt2
+- Fixed unowned dir.
+
 * Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
 - Automatically updated to 4.1.0.
 

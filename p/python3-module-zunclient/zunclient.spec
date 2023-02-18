@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.5.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Client Library for Zun
 
@@ -110,6 +110,7 @@ install -pDm 644 tools/zun.bash_completion \
 %_bindir/zun
 %python3_sitelibdir/%oname
 %python3_sitelibdir/python_zunclient-%version-py%_python3_version.egg-info
+%dir %_sysconfdir/bash_completion.d
 %_sysconfdir/bash_completion.d/zun.bash_completion
 %exclude %python3_sitelibdir/%oname/tests
 
@@ -123,6 +124,9 @@ install -pDm 644 tools/zun.bash_completion \
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt2
+- Fixed unowned dir.
+
 * Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
 - Automatically updated to 4.5.0.
 

@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 8.1.0
-Release: alt1
+Release: alt2
 
 Summary: CLI and Client Library for OpenStack Networking
 
@@ -117,6 +117,7 @@ rm -rf %buildroot%python3_sitelibdir/%oname/tests/functional/hooks
 %_bindir/neutron
 %python3_sitelibdir/%oname
 %python3_sitelibdir/python_neutronclient-%version-py%_python3_version.egg-info
+%dir %_sysconfdir/bash_completion.d
 %_sysconfdir/bash_completion.d/neutron.bash_completion
 %exclude %python3_sitelibdir/%oname/tests
 
@@ -130,6 +131,9 @@ rm -rf %buildroot%python3_sitelibdir/%oname/tests/functional/hooks
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 8.1.0-alt2
+- Fixed unowned dir.
+
 * Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 8.1.0-alt1
 - Automatically updated to 8.1.0.
 

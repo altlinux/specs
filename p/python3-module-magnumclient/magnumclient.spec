@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Client library for Magnum API
 
@@ -111,6 +111,7 @@ install -pDm 644 tools/magnum.bash_completion \
 %_bindir/magnum
 %python3_sitelibdir/%oname
 %python3_sitelibdir/python_magnumclient-%version-py%_python3_version.egg-info
+%dir %_sysconfdir/bash_completion.d
 %_sysconfdir/bash_completion.d/magnum.bash_completion
 %exclude %python3_sitelibdir/%oname/tests
 
@@ -124,6 +125,9 @@ install -pDm 644 tools/magnum.bash_completion \
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt2
+- Fixed unowned dir.
+
 * Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.0-alt1
 - Automatically updated to 4.0.0.
 

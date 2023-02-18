@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.5.0
-Release: alt1
+Release: alt2
 
 Summary: OpenStack Mistral Client Library
 
@@ -120,6 +120,7 @@ install -pDm 644 tools/mistral.bash_completion \
 %_bindir/mistral
 %python3_sitelibdir/%oname
 %python3_sitelibdir/python_mistralclient-%version-py%_python3_version.egg-info
+%dir %_sysconfdir/bash_completion.d
 %_sysconfdir/bash_completion.d/mistral.bash_completion
 %exclude %python3_sitelibdir/%oname/tests
 
@@ -133,6 +134,9 @@ install -pDm 644 tools/mistral.bash_completion \
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt2
+- Fixed unowned dir.
+
 * Thu Oct 20 2022 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt1
 - Automatically updated to 4.5.0.
 
