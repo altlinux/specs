@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: tpm2-tools
-Version: 5.2
+Version: 5.5
 Release: alt1
 Summary: A bunch of TPM testing toolS build upon tpm2-tss
 Group: System/Configuration/Other
@@ -16,11 +16,12 @@ BuildRequires: autoconf-archive
 BuildRequires: pandoc
 BuildRequires: pkgconfig(cmocka)
 BuildRequires: pkgconfig(libcurl)
-BuildRequires: pkgconfig(openssl) libssl-devel
+BuildRequires: pkgconfig(openssl) libssl-devel pkgconfig(libcrypto) >= 1.1.0
 BuildRequires: pkgconfig(tss2-mu) >= 3.1.0
 BuildRequires: pkgconfig(tss2-sys) >= 3.1.0
 BuildRequires: pkgconfig(tss2-esys) >= 3.1.0
 BuildRequires: pkgconfig(uuid)
+BuildRequires: pkgconfig(efivar)
 
 Requires: libtpm2-tss0 >= 3.1.0
 
@@ -42,13 +43,16 @@ echo %version > VERSION
 %makeinstall_std
 
 %files
-%doc doc/LICENSE
-%doc README.md doc/CHANGELOG.md
+%doc docs/LICENSE
+%doc README.md docs/CHANGELOG.md
 %_bindir/*
 %_datadir/bash-completion/completions/*
 %_man1dir/*
 
 %changelog
+* Sat Feb 18 2023 Alexey Shabalin <shaba@altlinux.org> 5.5-alt1
+- new version 5.5
+
 * Mon Nov 01 2021 Alexey Shabalin <shaba@altlinux.org> 5.2-alt1
 - new version 5.2
 
