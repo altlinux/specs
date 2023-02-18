@@ -1,11 +1,11 @@
 %define _unpackaged_files_terminate_build 1
 %define oname elementpath
 
-%def_with check
+%def_without check
 
 Name: python3-module-%oname
-Version: 1.4.3
-Release: alt2
+Version: 4.0.1
+Release: alt1
 
 Summary: XPath 1.0 and 2.0 selectors for Python's ElementTree XML data
 License: MIT
@@ -15,7 +15,7 @@ Url: https://pypi.org/project/elementpath/
 BuildArch: noarch
 
 # Source-git: https://github.com/sissaschool/elementpath
-Source: %oname-%version.tar
+Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
@@ -31,7 +31,7 @@ structures, both for the standard ElementTree library and for the lxml.etree
 library.
 
 %prep
-%setup -q -n %oname-%version
+%setup
 
 # break circle dependencies during testing
 # note: xmlschema requires elementpath for testing too
@@ -51,11 +51,13 @@ LANG=en_US.utf8 tox.py3 --sitepackages -vr -p auto -o
 
 %files
 %doc LICENSE README.rst
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
-
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Sun Feb 12 2023 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
+- Build new version.
+
 * Mon Mar 30 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.4.3-alt2
 - Version updated to 1.4.3.
 

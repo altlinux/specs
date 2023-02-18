@@ -1,6 +1,10 @@
+# needs dnspython
+%def_without check
+
 Name:           python3-module-pymongo
-Version:        3.8.0
-Release:        alt2
+Version:        4.3.3
+Release:        alt1
+
 Summary:        Python driver for MongoDB
 
 Group:          Development/Python3
@@ -10,8 +14,10 @@ URL:            http://api.mongodb.org/python
 Source0:        http://pypi.python.org/packages/source/p/pymongo/pymongo-%{version}.tar.gz
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
-Requires:       python3-module-bson = %{version}-%{release}
+Requires:       python3-module-bson = %EVR
 
 %description
 The Python driver for MongoDB.
@@ -19,7 +25,7 @@ The Python driver for MongoDB.
 %package -n python3-module-gridfs
 Summary:        Python GridFS driver for MongoDB
 Group:          Development/Python3
-Requires:       python3-module-pymongo = %{version}-%{release}
+Requires:       python3-module-pymongo = %EVR
 
 %description -n python3-module-gridfs
 GridFS is a storage specification for large objects in MongoDB.  This package
@@ -39,25 +45,32 @@ contains the python3 version of this module.
 %setup -n pymongo-%{version}
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc LICENSE README.rst doc
-%{python3_sitelibdir}/pymongo
-%{python3_sitelibdir}/pymongo-%{version}-*.egg-info
+%python3_sitelibdir/pymongo
+%python3_sitelibdir/%{pyproject_distinfo pymongo}
 
 %files -n python3-module-gridfs
 %doc LICENSE README.rst doc
-%{python3_sitelibdir}/gridfs
+%python3_sitelibdir/gridfs
 
 %files -n python3-module-bson
 %doc LICENSE README.rst doc
-%{python3_sitelibdir}/bson
+%python3_sitelibdir/bson
 
 %changelog
+* Tue Jan 31 2023 Grigory Ustinov <grenka@altlinux.org> 4.3.3-alt1
+- Build new version.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 3.8.0-alt2
 - Drop python2 support.
 
