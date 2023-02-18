@@ -2,7 +2,7 @@
 
 Name: mate-indicator-applet
 Version: 1.26.0
-Release: alt1
+Release: alt2
 
 Summary: MATE panel indicator applet
 License: GPLv3 AND LGPLv3
@@ -55,5 +55,8 @@ NOCONFIGURE=1 mate-autogen
 %_datadir/locale/*/LC_MESSAGES/*.mo
 
 %changelog
+* Fri Feb 17 2023 Nikolay Strelkov <snk@altlinux.org> 1.26.0-alt2
+- bump release to override autoimports package
+
 * Sun Nov 06 2022 Nikolay Strelkov <snk@altlinux.org> 1.26.0-alt1
 - Initial build for Sisyphus
