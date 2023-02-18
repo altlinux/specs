@@ -1,5 +1,5 @@
 Name: alt-rootfs-installer
-Version: 0.5.6
+Version: 0.5.7
 Release: alt1
 Summary: Installer rootfs archive to any specified block device
 License: GPL-2.0-or-later
@@ -41,6 +41,9 @@ install -pm 644 AUTHORS COPYING README SUPPORTED-BOARDS \
 %_datadir/%name/
 
 %changelog
+* Sat Feb 18 2023 Anton Midyukov <antohami@altlinux.org> 0.5.7-alt1
+- Add Orangepi 4 support (Closes: 45187)
+
 * Fri Jan 20 2023 Anton Midyukov <antohami@altlinux.org> 0.5.6-alt1
 - add nvme support (Closes: 44408)
 - socs-utils: fix clear_riscv64_bootloader_partition for /dev/mmcblkXpN
