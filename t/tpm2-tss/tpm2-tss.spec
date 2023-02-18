@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: tpm2-tss
-Version: 3.2.0
+Version: 4.0.1
 Release: alt1
 Summary: TPM2.0 Software Stack
 # The entire source code is under BSD except implementation.h and tpmb.h which
@@ -25,6 +25,7 @@ BuildRequires: libgcrypt-devel
 BuildRequires: openssl-devel
 BuildRequires: libjson-c-devel
 BuildRequires: libcurl-devel
+BuildRequires: libuuid-devel
 %if_enabled check
 BuildRequires: libuthash-devel
 BuildRequires: procps
@@ -65,6 +66,8 @@ use tpm2-tss.
 %prep
 %setup
 %patch -p1
+echo "%version" > VERSION
+
 %build
 ./bootstrap
 %autoreconf
@@ -119,11 +122,14 @@ useradd -g tss -c 'TPM2 Software Stack User' \
 %_man7dir/*
 
 %changelog
+* Sat Feb 18 2023 Alexey Shabalin <shaba@altlinux.org> 4.0.1-alt1
+- 4.0.1 (Fixes: CVE-2023-22745)
+
 * Thu Mar 24 2022 Alexey Shabalin <shaba@altlinux.org> 3.2.0-alt1
 - new version 3.2.0
 
 * Tue Jul 06 2021 Alexey Shabalin <shaba@altlinux.org> 3.1.0-alt1
-- new version 3.1.0
+- new version 3.1.0 (Fixes: CVE-2020-24455)
 - Revert "Added dependency from systemd-stateless"
 - Drop execute adduser, groupadd and other root utils in Makefile
 - Disable check (fail 1 from 41)
