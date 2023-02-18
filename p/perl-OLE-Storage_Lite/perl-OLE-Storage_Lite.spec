@@ -1,7 +1,8 @@
+%define _unpackaged_files_terminate_build 1
 %define module OLE-Storage_Lite
 
 Name: perl-%module
-Version: 0.20
+Version: 0.22
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -37,6 +38,9 @@ will work on the majority of Windows, UNIX and Macintosh platforms.
 %doc sample/*
 
 %changelog
+* Sat Feb 18 2023 Igor Vlasenko <viy@altlinux.org> 0.22-alt1
+- automated CPAN update
+
 * Wed Jan 08 2020 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
