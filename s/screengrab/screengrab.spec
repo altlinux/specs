@@ -4,7 +4,7 @@
 #set_verify_elf_method relaxed
 
 Name: screengrab
-Version: 2.3.0
+Version: 2.5.0
 Release: alt1
 
 Summary: ScreenGrab is a tool for geting screenshots
@@ -13,13 +13,10 @@ Group: Graphics
 
 Url: https://github.com/lxqt/screengrab
 Source: %name-%version.tar
-Patch0: screengrab-1.99-CMakeLists.patch
-Patch1: core-cli-upload-option.patch
-Patch2: disable-cli-upload-option.patch
+Patch0: screengrab-link.patch
 
 BuildRequires(pre): rpm-macros-cmake
 BuildRequires: /proc
-BuildRequires: /usr/bin/convert
 BuildRequires: cmake
 BuildRequires: pkgconfig(Qt5Core)
 BuildRequires: pkgconfig(Qt5Gui)
@@ -29,6 +26,7 @@ BuildRequires: pkgconfig(Qt5Widgets)
 BuildRequires: pkgconfig(Qt5X11Extras)
 BuildRequires: pkgconfig(Qt5Xdg)
 BuildRequires: kf5-kwindowsystem-devel
+BuildRequires: libqtxdg-devel
 # To generate screengrab.desktop
 BuildRequires: perl-YAML-LibYAML-API
 
@@ -45,9 +43,7 @@ Main features:
 
 %prep
 %setup
-%patch0 -p1
-#patch1 -p1
-#patch2 -p1
+%autopatch -p1
 
 find -type f -print0 | xargs -r0 chmod 644 --
 
@@ -59,33 +55,27 @@ sed -i 's|${CMAKE_INSTALL_FULL_DOCDIR}|${CMAKE_INSTALL_FULL_DOCDIR}-%version|g' 
 %endif
 
 %build
-%cmake -DCMAKE_SKIP_RPATH:BOOL=ON \
-       -DSG_GLOBALSHORTCUTS=OFF \
-       -DSG_DBUS_NOTIFY=ON \
-       -DSG_EXT_EDIT=OFF \
-       -DSG_EXT_UPLOADS=OFF \
-       -DUPDATE_TRANSLATIONS=OFF
-
+%cmake
 %cmake_build
 
 %install
-%cmakeinstall_std
-
-# Icons
-mkdir -p %buildroot/{%_miconsdir,%_liconsdir}
-convert -resize 48x48 img/%name.png %buildroot%_liconsdir/%name.png
-convert -resize 16x16 img/%name.png %buildroot%_miconsdir/%name.png
+%cmake_install
 
 %files
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_docdir/%name-%version/
 %_datadir/%name/
-%_miconsdir/%name.png
-%_niconsdir/%name.png
-%_liconsdir/%name.png
+%_iconsdir/hicolor/scalable/apps/screengrab.svg
+%_datadir/metainfo/screengrab.metainfo.xml
 
 %changelog
+* Sat Nov 05 2022 Anton Midyukov <antohami@altlinux.org> 2.5.0-alt1
+- new version 2.5.0
+
+* Mon Apr 18 2022 Anton Midyukov <antohami@altlinux.org> 2.4.0-alt1
+- new version 2.4.0
+
 * Sat Nov 06 2021 Anton Midyukov <antohami@altlinux.org> 2.3.0-alt1
 - new version 2.3.0
 
