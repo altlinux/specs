@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-flask-babel
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: Adds i18n/l10n support to Flask applications
@@ -48,6 +48,9 @@ library.
 %python3_sitelibdir/*
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Build new version.
+
 * Wed Jan 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Build new version.
 
