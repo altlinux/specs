@@ -1,15 +1,16 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 2.9.27
-Release: alt1
+Release: alt2
 
 Group:   System/Configuration/Other
 License: GPL-3.0
 Source0: %name-%version.tar
 Source1: hacking.tar
+Source2: apt_repo.py
+Source3: apt_rpm.py
 
 Patch0: %name-alt.patch
-Patch1: ansible-apt_rpm-list-of-packages-support.patch
 Patch2: ansible_native_concat-use-to_text-rather-than-jinja2.patch
 Patch3: ansible-prohibit-pkg5-usage.patch
 
@@ -62,9 +63,10 @@ are transferred to managed machines automatically.
 # Restore non-exported hacking subdirectory
 tar xf %SOURCE1
 %patch0 -p1
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
+cp -f %SOURCE2 lib/ansible/modules/packaging/os/apt_repo.py
+cp -f %SOURCE3 lib/ansible/modules/packaging/os/apt_rpm.py
 
 %build
 %python3_build
@@ -93,6 +95,9 @@ grep -Rl '^#!.*python$' %buildroot | xargs subst 's|^#!.*python$|#!%__python3|'
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Sun Feb 19 2023 Andrey Cherepanov <cas@altlinux.org> 2.9.27-alt2
+- Updated apt_repo and apt_rpm from upstream and PR #5867).
+
 * Fri Jan 14 2022 Andrey Cherepanov <cas@altlinux.org> 2.9.27-alt1
 - New version.
 
