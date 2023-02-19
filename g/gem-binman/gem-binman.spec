@@ -1,7 +1,7 @@
 %define        gemname binman
 
 Name:          gem-binman
-Version:       5.1.0.1
+Version:       5.1.0.3
 Release:       alt0.1
 Summary:       Creates manual pages from header comments
 License:       ISC
@@ -13,17 +13,23 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(md2man) >= 5.1 gem(md2man) < 6
-BuildRequires: gem(opener) >= 0.1.0 gem(opener) < 1
-BuildRequires: gem(rake) >= 10.1 gem(rake) < 14
+%if_with check
+BuildRequires: gem(md2man) >= 5.1
+BuildRequires: gem(rake) >= 10.1
+BuildRequires: gem(opener) >= 0.1.0
+BuildConflicts: gem(md2man) >= 6
+BuildConflicts: gem(rake) >= 14
+BuildConflicts: gem(opener) >= 1
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %ruby_use_gem_dependency rake >= 13.0.1,rake < 14
-%ruby_use_gem_version binman:5.1.0.1
-Requires:      gem(opener) >= 0.1.0 gem(opener) < 1
-Provides:      gem(binman) = 5.1.0.1
+Requires:      gem(opener) >= 0.1.0
+Conflicts:     gem(opener) >= 1
+Provides:      gem(binman) = 5.1.0.3
 
+%ruby_use_gem_version binman:5.1.0.3
 
 %description
 binman generates manual pages from header comments in your scripts so that you
@@ -32,14 +38,14 @@ easy maintenance. But keeping them apart, in separate files, is supported too.
 
 
 %package       -n binman
-Version:       5.1.0.1
+Version:       5.1.0.3
 Release:       alt0.1
 Summary:       Creates manual pages from header comments executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета binman
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(binman) = 5.1.0.1
+Requires:      gem(binman) = 5.1.0.3
 
 %description   -n binman
 Creates manual pages from header comments executable(s).
@@ -53,14 +59,14 @@ easy maintenance. But keeping them apart, in separate files, is supported too.
 
 
 %package       -n gem-binman-doc
-Version:       5.1.0.1
+Version:       5.1.0.3
 Release:       alt0.1
 Summary:       Creates manual pages from header comments documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета binman
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(binman) = 5.1.0.1
+Requires:      gem(binman) = 5.1.0.3
 
 %description   -n gem-binman-doc
 Creates manual pages from header comments documentation files.
@@ -74,16 +80,18 @@ easy maintenance. But keeping them apart, in separate files, is supported too.
 
 
 %package       -n gem-binman-devel
-Version:       5.1.0.1
+Version:       5.1.0.3
 Release:       alt0.1
 Summary:       Creates manual pages from header comments development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета binman
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(binman) = 5.1.0.1
-Requires:      gem(md2man) >= 5.1 gem(md2man) < 6
-Requires:      gem(rake) >= 10.1 gem(rake) < 14
+Requires:      gem(binman) = 5.1.0.3
+Requires:      gem(md2man) >= 5.1
+Requires:      gem(rake) >= 10.1
+Conflicts:     gem(md2man) >= 6
+Conflicts:     gem(rake) >= 14
 
 %description   -n gem-binman-devel
 Creates manual pages from header comments development package.
@@ -132,6 +140,9 @@ easy maintenance. But keeping them apart, in separate files, is supported too.
 
 
 %changelog
+* Sat Jan 28 2023 Pavel Skrylev <majioa@altlinux.org> 5.1.0.3-alt0.1
+- ^ 5.1.0[1] -> 5.1.0[3]
+
 * Fri Sep 03 2021 Pavel Skrylev <majioa@altlinux.org> 5.1.0.1-alt0.1
 - ^ 5.1.0 -> 5.1.0[.1]
 

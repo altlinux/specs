@@ -2,7 +2,7 @@
 
 Name:          gem-fog-cloudstack
 Version:       0.1.0.1
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Module for the 'fog' gem to support Cloudstack
 License:       MIT
 Group:         Development/Ruby
@@ -13,24 +13,34 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(bundler) >= 2.0 gem(bundler) < 3
-BuildRequires: gem(rake) >= 12.3.3 gem(rake) < 14
-BuildRequires: gem(rubyzip) >= 1.3.0 gem(rubyzip) < 3
-BuildRequires: gem(shindo) >= 0.3 gem(shindo) < 1
-BuildRequires: gem(fog-core) >= 2.1 gem(fog-core) < 3
-BuildRequires: gem(fog-json) >= 1.1 gem(fog-json) < 2
-BuildRequires: gem(fog-xml) >= 0.1 gem(fog-xml) < 1
+%if_with check
+BuildRequires: gem(bundler) >= 2.0
+BuildRequires: gem(rake) >= 12.3.3
+BuildRequires: gem(rubyzip) >= 1.3.0
+BuildRequires: gem(shindo) >= 0.3
+BuildRequires: gem(fog-core) >= 2.1
+BuildRequires: gem(fog-json) >= 1.1
+BuildRequires: gem(fog-xml) >= 0.1
+BuildConflicts: gem(bundler) >= 3
+BuildConflicts: gem(rubyzip) >= 3
+BuildConflicts: gem(shindo) >= 1
+BuildConflicts: gem(fog-core) >= 3
+BuildConflicts: gem(fog-json) >= 2
+BuildConflicts: gem(fog-xml) >= 1
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rake >= 13.0.1,rake < 14
 %ruby_use_gem_dependency rubyzip >= 2.3.0,rubyzip < 3
-%ruby_use_gem_version fog-cloudstack:0.1.0.1
-Requires:      gem(fog-core) >= 2.1 gem(fog-core) < 3
-Requires:      gem(fog-json) >= 1.1 gem(fog-json) < 2
-Requires:      gem(fog-xml) >= 0.1 gem(fog-xml) < 1
+Requires:      gem(fog-core) >= 2.1
+Requires:      gem(fog-json) >= 1.1
+Requires:      gem(fog-xml) >= 0.1
+Conflicts:     gem(fog-core) >= 3
+Conflicts:     gem(fog-json) >= 2
+Conflicts:     gem(fog-xml) >= 1
 Provides:      gem(fog-cloudstack) = 0.1.0.1
 
+%ruby_use_gem_version fog-cloudstack:0.1.0.1
 
 %description
 Module for the 'fog' gem to support Cloudstack.
@@ -38,7 +48,7 @@ Module for the 'fog' gem to support Cloudstack.
 
 %package       -n gem-fog-cloudstack-doc
 Version:       0.1.0.1
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Module for the 'fog' gem to support Cloudstack documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fog-cloudstack
 Group:         Development/Documentation
@@ -55,17 +65,20 @@ Module for the 'fog' gem to support Cloudstack documentation files.
 
 %package       -n gem-fog-cloudstack-devel
 Version:       0.1.0.1
-Release:       alt0.1
+Release:       alt0.2
 Summary:       Module for the 'fog' gem to support Cloudstack development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета fog-cloudstack
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(fog-cloudstack) = 0.1.0.1
-Requires:      gem(bundler) >= 2.0 gem(bundler) < 3
-Requires:      gem(rake) >= 12.3.3 gem(rake) < 14
-Requires:      gem(rubyzip) >= 1.3.0 gem(rubyzip) < 3
-Requires:      gem(shindo) >= 0.3 gem(shindo) < 1
+Requires:      gem(bundler) >= 2.0
+Requires:      gem(rake) >= 12.3.3
+Requires:      gem(rubyzip) >= 1.3.0
+Requires:      gem(shindo) >= 0.3
+Conflicts:     gem(bundler) >= 3
+Conflicts:     gem(rubyzip) >= 3
+Conflicts:     gem(shindo) >= 1
 
 %description   -n gem-fog-cloudstack-devel
 Module for the 'fog' gem to support Cloudstack development package.
@@ -100,6 +113,9 @@ Module for the 'fog' gem to support Cloudstack development package.
 
 
 %changelog
+* Sat Jan 28 2023 Pavel Skrylev <majioa@altlinux.org> 0.1.0.1-alt0.2
+- ! closes build deps under check condition
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 0.1.0.1-alt0.1
 - ^ 0.1.0 -> 0.1.0[.1]
 

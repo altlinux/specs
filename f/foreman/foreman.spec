@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.5.1
-Release:       alt1
+Release:       alt1.1
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -123,7 +123,7 @@ BuildRequires: gem(rack-openid) >= 1.3 gem(rack-openid) < 2
 BuildRequires: gem(fog-openstack) >= 1.0.8 gem(fog-openstack) < 2.0.0
 BuildRequires: gem(fog-ovirt) >= 2.0.1 gem(fog-ovirt) < 3
 BuildRequires: gem(pg) >= 0.18 gem(pg) < 2.0
-BuildRequires: gem(redis) >= 4.0 gem(redis) < 5
+BuildRequires: gem(redis) >= 4.0 gem(redis) < 6
 BuildRequires: gem(puma) >= 5.1 gem(puma) < 6
 BuildRequires: gem(prometheus-client) >= 1.0 gem(prometheus-client) < 5
 BuildRequires: gem(statsd-instrument) >= 2.0
@@ -173,6 +173,7 @@ Autoreq:       yes,nopython3,nopython,noshell
 %ruby_use_gem_dependency shoulda-matchers >= 4.5.1,shoulda-matchers < 5
 %ruby_use_gem_dependency shoulda-context >= 2.0.0,shoulda-context < 3
 %ruby_use_gem_dependency rbvmomi >= 3.0,rbvmomi < 4
+%ruby_use_gem_dependency redis >= 5.0,redis < 6
 Requires:      gem(rails) >= 6.1.3.2
 Requires:      gem(rest-client) >= 2.0.0 gem(rest-client) < 3
 Requires:      gem(audited) >= 4.9.0 gem(audited) < 6
@@ -262,7 +263,7 @@ Requires:      gem(rack-openid) >= 1.3 gem(rack-openid) < 2
 Requires:      gem(fog-openstack) >= 1.0.8 gem(fog-openstack) < 2.0.0
 Requires:      gem(fog-ovirt) >= 2.0.1 gem(fog-ovirt) < 3
 Requires:      gem(pg) >= 0.18 gem(pg) < 2.0
-Requires:      gem(redis) >= 4.0 gem(redis) < 5
+Requires:      gem(redis) >= 4.0 gem(redis) < 6
 Requires:      gem(puma) >= 5.1 gem(puma) < 6
 Requires:      gem(prometheus-client) >= 1.0 gem(prometheus-client) < 5
 Requires:      gem(statsd-instrument) >= 2.0
@@ -339,7 +340,7 @@ foundation.
 
 %package       -n foreman-doc
 Version:       3.5.1
-Release:       alt1
+Release:       alt1.1
 Summary:       An application that automates the lifecycle of servers documentation files
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -492,6 +493,9 @@ railsctl cleanup %name
 
 
 %changelog
+* Sat Feb 04 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt1.1
+- ! fixed dep to redis
+
 * Mon Dec 19 2022 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt1
 - ^ 3.0.0 -> 3.5.1
 

@@ -2,7 +2,7 @@
 
 Name:          gem-inifile
 Version:       3.0.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       This is a native Ruby package for reading and writing INI files
 License:       MIT
 Group:         Development/Ruby
@@ -13,8 +13,12 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(bones) >= 3.8 gem(bones) < 4
-# BuildRequires: gem(bones-git) >= 1.3 gem(bones-git) < 2
+%if_with check
+BuildRequires: gem(bones) >= 3.8
+BuildRequires: gem(bones-git) >= 1.3
+BuildConflicts: gem(bones) >= 4
+BuildConflicts: gem(bones-git) >= 2
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -32,7 +36,7 @@ More information about INI files can be found on the Wikipedia Page.
 
 %package       -n gem-inifile-doc
 Version:       3.0.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       This is a native Ruby package for reading and writing INI files documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета inifile
 Group:         Development/Documentation
@@ -57,15 +61,17 @@ More information about INI files can be found on the Wikipedia Page.
 
 %package       -n gem-inifile-devel
 Version:       3.0.0
-Release:       alt1.1
+Release:       alt1.2
 Summary:       This is a native Ruby package for reading and writing INI files development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета inifile
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(inifile) = 3.0.0
-Requires:      gem(bones) >= 3.8 gem(bones) < 4
-# Requires:      gem(bones-git) >= 1.3 gem(bones-git) < 2
+Requires:      gem(bones) >= 3.8
+Requires:      gem(bones-git) >= 1.3
+Conflicts:     gem(bones) >= 4
+Conflicts:     gem(bones-git) >= 2
 
 %description   -n gem-inifile-devel
 This is a native Ruby package for reading and writing INI files development
@@ -108,6 +114,9 @@ More information about INI files can be found on the Wikipedia Page.
 
 
 %changelog
+* Sat Jan 28 2023 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1.2
+- ! closes build deps under check condition
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 3.0.0-alt1.1
 - ! spec
 

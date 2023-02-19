@@ -13,7 +13,7 @@
 Name: opennebula
 Summary: Cloud computing solution for Data Center Virtualization
 Version: 6.2.0.1
-Release: alt3
+Release: alt3.1
 License: Apache-2.0
 Group: System/Servers
 Url: https://opennebula.io
@@ -42,21 +42,104 @@ BuildRequires: zlib-devel
 BuildRequires: node node-bower node-gyp npm node-devel node-sass libsass libzeromq-devel
 BuildRequires: ronn
 BuildRequires: groff-base
+%if_with check
+BuildRequires: gem(sinatra) >= 0
+BuildRequires: gem(json) >= 0
+BuildRequires: gem(xml-simple) >= 0
+BuildRequires: gem(treetop) >= 0
+BuildRequires: gem(parse-cron) >= 0
+BuildRequires: gem(xmlrpc) >= 0
+BuildRequires: gem(rexml) >= 0
+BuildRequires: gem(ffi-rzmq) >= 2.0.7
+BuildRequires: gem(net-ldap) >= 0
+BuildRequires: gem(nokogiri) >= 0
+BuildRequires: gem(public_suffix) >= 0
+BuildRequires: gem(gnuplot) >= 0
+BuildRequires: gem(highline) >= 1.7
+BuildRequires: gem(mysql2) >= 0
+BuildRequires: gem(pg) >= 0
+BuildRequires: gem(sqlite3) >= 0
+BuildRequires: gem(sequel) >= 0
+BuildRequires: gem(augeas) >= 0.6
+BuildRequires: gem(json) >= 2.0
+BuildRequires: gem(git) >= 1.5
+BuildRequires: gem(aws-sdk-ec2) >= 1.151
+BuildRequires: gem(aws-sdk-s3) >= 0
+BuildRequires: gem(aws-sdk-cloudwatch) >= 0
+BuildRequires: gem(azure_mgmt_compute) >= 0
+BuildRequires: gem(azure_mgmt_monitor) >= 0
+BuildRequires: gem(azure_mgmt_network) >= 0
+BuildRequires: gem(azure_mgmt_resources) >= 0
+BuildRequires: gem(azure_mgmt_storage) >= 0
+BuildRequires: gem(configparser) >= 0
+BuildRequires: gem(minitest) >= 0
+BuildRequires: gem(faraday_middleware) >= 1.2.0
+BuildRequires: gem(activesupport) >= 4.2
+BuildRequires: gem(i18n) >= 0.9
+BuildRequires: gem(rack) >= 0
+BuildRequires: gem(thin) >= 0
+BuildRequires: gem(uuidtools) >= 0
+BuildRequires: gem(curb) >= 0
+BuildRequires: gem(ipaddress) >= 0.8.3
+BuildRequires: gem(treetop) >= 1.6.3
+BuildRequires: gem(webauthn) >= 0
+BuildRequires: gem(zendesk_api) >= 0
+BuildRequires: gem(rqrcode) >= 0
+BuildRequires: gem(memcache-client) >= 0
+BuildRequires: gem(dalli) >= 0
+BuildRequires: gem(rotp) >= 0
+BuildRequires: gem(ox) >= 0
+BuildRequires: gem(addressable) >= 0
+BuildRequires: gem(vsphere-automation-cis) >= 0.4.6
+BuildRequires: gem(vsphere-automation-vcenter) >= 0.4.6
+BuildRequires: gem(rbvmomi) >= 3.0.0
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(rspec) >= 3
+BuildRequires: gem(webmock) >= 1.20
+BuildRequires: gem(rdoc) >= 4
+BuildRequires: gem(bundler) >= 1.0
+BuildRequires: gem(simplecov) >= 0
+BuildRequires: gem(rubocop) >= 0.43.0
+BuildRequires: gem(sinatra) >= 1.4
+BuildRequires: gem(pry) >= 0
+BuildRequires: gem(faraday) >= 1.9.3
+BuildConflicts: gem(ffi-rzmq) >= 2.1
+BuildConflicts: gem(highline) >= 3
+BuildConflicts: gem(augeas) >= 1
+BuildConflicts: gem(git) >= 2
+BuildConflicts: gem(faraday_middleware) >= 1.3
+BuildConflicts: gem(activesupport) >= 7
+BuildConflicts: gem(i18n) >= 2
+BuildConflicts: gem(ipaddress) >= 0.9
+BuildConflicts: gem(vsphere-automation-cis) >= 0.5
+BuildConflicts: gem(vsphere-automation-vcenter) >= 0.5
+BuildConflicts: gem(rbvmomi) >= 3.1
+BuildConflicts: gem(rake) >= 14
+BuildConflicts: gem(rspec) >= 4
+BuildConflicts: gem(webmock) >= 4
+BuildConflicts: gem(rdoc) >= 7
+BuildConflicts: gem(bundler) >= 3
+BuildConflicts: gem(simplecov) >= 1
+BuildConflicts: gem(rubocop) >= 2
+BuildConflicts: gem(sinatra) >= 2
+%endif
 
-%ruby_use_gem_dependency highline >= 2.0.3,highline < 3
+%ruby_use_gem_dependency i18n >= 1.0,i18n < 2
+%ruby_use_gem_dependency highline >= 2.0,highline < 3
 %ruby_use_gem_dependency webmock >= 3.13.0,webmock < 4
 %ruby_use_gem_dependency bundler >= 2.1.4,bundler < 3
 %ruby_use_gem_dependency rake >= 13.0.1,rake < 14
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 %ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
 %ruby_use_gem_dependency activesupport >= 6.1.3.2,activesupport < 7
-%ruby_use_gem_dependency faraday >= 2.6.0,faraday < 3
-%ruby_use_gem_dependency faraday_middleware >= 1.2.6,faraday_middleware < 2
-%ruby_use_gem_dependency i18n >= 1.10.0,i18n < 2
 %add_findprov_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findreq_skiplist %_libexecdir/one/sunstone/public/bower_components/**/*
 %add_findreq_skiplist /var/lib/one/*
+
+%ruby_alias_names opennebula-common,install_gems
+%ruby_alias_names opennebula-flow,flow
+%ruby_ignore_names packethost
 
 %description
 OpenNebula.org is an open-source project aimed at building the industry
@@ -100,19 +183,19 @@ BuildArch: noarch
 
 Requires: gem(xmlrpc) >= 0
 Requires: gem(rexml) >= 0
-Requires: gem(ffi-rzmq) >= 2.0.7 gem(ffi-rzmq) < 2.1
+Requires: gem(ffi-rzmq) >= 2.0.7
 Requires: gem(net-ldap) >= 0
 Requires: gem(nokogiri) >= 0
 Requires: gem(public_suffix) >= 0
 Requires: gem(gnuplot) >= 0
-Requires: gem(highline) >= 1.7 gem(highline) < 3
+Requires: gem(highline) >= 1.7
 Requires: gem(mysql2) >= 0
 Requires: gem(pg) >= 0
 Requires: gem(sqlite3) >= 0
 Requires: gem(sequel) >= 0
-Requires: gem(augeas) >= 0.6 gem(augeas) < 1
+Requires: gem(augeas) >= 0.6
 Requires: gem(json) >= 2.0
-Requires: gem(git) >= 1.5 gem(git) < 2
+Requires: gem(git) >= 1.5
 Requires: gem(aws-sdk-ec2) >= 1.151
 Requires: gem(aws-sdk-s3) >= 0
 Requires: gem(aws-sdk-cloudwatch) >= 0
@@ -123,15 +206,15 @@ Requires: gem(azure_mgmt_resources) >= 0
 Requires: gem(azure_mgmt_storage) >= 0
 Requires: gem(configparser) >= 0
 Requires: gem(minitest) >= 0
-Requires: gem(faraday_middleware) >= 1.2.0 gem(faraday_middleware) < 1.3
-Requires: gem(activesupport) >= 4.2 gem(activesupport) < 7
-Requires: gem(i18n) >= 0.9 gem(i18n) < 2
+Requires: gem(faraday_middleware) >= 1.2.0
+Requires: gem(activesupport) >= 4.2
+Requires: gem(i18n) >= 0.9
 Requires: gem(rack) >= 0
 Requires: gem(sinatra) >= 0
 Requires: gem(thin) >= 0
 Requires: gem(uuidtools) >= 0
 Requires: gem(curb) >= 0
-Requires: gem(ipaddress) >= 0.8.3 gem(ipaddress) < 0.9
+Requires: gem(ipaddress) >= 0.8.3
 Requires: gem(treetop) >= 1.6.3
 Requires: gem(parse-cron) >= 0
 Requires: gem(webauthn) >= 0
@@ -142,9 +225,20 @@ Requires: gem(dalli) >= 0
 Requires: gem(rotp) >= 0
 Requires: gem(ox) >= 0
 Requires: gem(addressable) >= 0
-Requires: gem(vsphere-automation-cis) >= 0.4.6 gem(vsphere-automation-cis) < 0.5
-Requires: gem(vsphere-automation-vcenter) >= 0.4.6 gem(vsphere-automation-vcenter) < 0.5
-Requires: gem(rbvmomi) >= 3.0.0 gem(rbvmomi) < 3.1
+Requires: gem(vsphere-automation-cis) >= 0.4.6
+Requires: gem(vsphere-automation-vcenter) >= 0.4.6
+Requires: gem(rbvmomi) >= 3.0.0
+Conflicts: gem(ffi-rzmq) >= 2.1
+Conflicts: gem(highline) >= 3
+Conflicts: gem(augeas) >= 1
+Conflicts: gem(git) >= 2
+Conflicts: gem(faraday_middleware) >= 1.3
+Conflicts: gem(activesupport) >= 7
+Conflicts: gem(i18n) >= 2
+Conflicts: gem(ipaddress) >= 0.9
+Conflicts: gem(vsphere-automation-cis) >= 0.5
+Conflicts: gem(vsphere-automation-vcenter) >= 0.5
+Conflicts: gem(rbvmomi) >= 3.1
 
 %description common
 Common package shared by various OpenNebula components.
@@ -434,11 +528,7 @@ scons -j %__nprocs \
     enterprise=no
 
 
-%ruby_build \
-    --ignore-names=packethost \
-    --use=install_gems --alias=opennebula-common --join=lib:bin \
-    --use=flow --alias=opennebula-flow --join=lib:bin \
-    --srclibdir= --srcconfdir= # --use=opennebula-cli --join=lib:bin
+%ruby_build
 
 # build man pages
 pushd share/man
@@ -1042,6 +1132,9 @@ fi
 %exclude %_man1dir/oneprovider.1*
 
 %changelog
+* Mon Feb 06 2023 Pavel Skrylev <majioa@altlinux.org> 6.2.0.1-alt3.1
+- ! fixed build and runtime deps
+
 * Mon Jan 30 2023 Alexey Shabalin <shaba@altlinux.org> 6.2.0.1-alt3
 - fix run fireedge server
 - fix show novnc console

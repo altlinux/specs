@@ -1,8 +1,8 @@
 %define        gemname bootstrap-sass
 
 Name:          gem-bootstrap-sass
-Version:       3.4.1
-Release:       alt1.1
+Version:       3.4.3
+Release:       alt1
 Summary:       Official Sass port of Bootstrap 2 and 3
 License:       MIT
 Group:         Development/Ruby
@@ -13,32 +13,35 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(sassc) >= 2.0.0
-BuildRequires: gem(autoprefixer-rails) >= 5.2.1
-BuildRequires: gem(minitest) >= 5.11 gem(minitest) < 6
-BuildRequires: gem(minitest-reporters) >= 1.3 gem(minitest-reporters) < 2
-BuildRequires: gem(capybara) >= 3.6 gem(capybara) < 4
+%if_with check
+BuildRequires: gem(minitest) >= 5.11
+BuildRequires: gem(minitest-reporters) >= 1.3
+BuildRequires: gem(capybara) >= 3.6
 BuildRequires: gem(poltergeist) >= 0
 BuildRequires: gem(sassc-rails) >= 2.0.0
 BuildRequires: gem(actionpack) >= 4.1.5
-BuildRequires: gem(activesupport) >= 4.1.5 gem(activesupport) < 7
-BuildRequires: gem(json) >= 1.8.1 gem(json) < 3
+BuildRequires: gem(activesupport) >= 4.1.5
+BuildRequires: gem(json) >= 1.8.1
 BuildRequires: gem(sprockets-rails) >= 2.1.3
 BuildRequires: gem(jquery-rails) >= 3.1.0
 BuildRequires: gem(slim-rails) >= 0
 BuildRequires: gem(uglifier) >= 0
 BuildRequires: gem(term-ansicolor) >= 0
+BuildRequires: gem(byebug) >= 0
+BuildRequires: gem(sassc) >= 2.0.0
+BuildRequires: gem(autoprefixer-rails) >= 5.2.1
+BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(minitest-reporters) >= 2
+BuildConflicts: gem(capybara) >= 4
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-%ruby_use_gem_dependency activesupport >= 6.1.3.2,activesupport < 7
-%ruby_use_gem_dependency json >= 2.3.0,json < 3
-%ruby_ignore_names dummy_sass_only,dummy_sass
 Requires:      gem(sassc) >= 2.0.0
 Requires:      gem(autoprefixer-rails) >= 5.2.1
-Provides:      gem(bootstrap-sass) = 3.4.1
+Provides:      gem(bootstrap-sass) = 3.4.3
 
+%ruby_use_gem_version bootstrap-sass:3.4.3
 
 %description
 bootstrap-sass is a Sass-powered version of Bootstrap 3, ready to drop right
@@ -49,14 +52,14 @@ and the main repo otherwise.
 
 
 %package       -n gem-bootstrap-sass-doc
-Version:       3.4.1
-Release:       alt1.1
+Version:       3.4.3
+Release:       alt1
 Summary:       Official Sass port of Bootstrap 2 and 3 documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета bootstrap-sass
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(bootstrap-sass) = 3.4.1
+Requires:      gem(bootstrap-sass) = 3.4.3
 
 %description   -n gem-bootstrap-sass-doc
 Official Sass port of Bootstrap 2 and 3 documentation files.
@@ -72,27 +75,31 @@ and the main repo otherwise.
 
 
 %package       -n gem-bootstrap-sass-devel
-Version:       3.4.1
-Release:       alt1.1
+Version:       3.4.3
+Release:       alt1
 Summary:       Official Sass port of Bootstrap 2 and 3 development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета bootstrap-sass
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(bootstrap-sass) = 3.4.1
-Requires:      gem(minitest) >= 5.11 gem(minitest) < 6
-Requires:      gem(minitest-reporters) >= 1.3 gem(minitest-reporters) < 2
-Requires:      gem(capybara) >= 3.6 gem(capybara) < 4
+Requires:      gem(bootstrap-sass) = 3.4.3
+Requires:      gem(minitest) >= 5.11
+Requires:      gem(minitest-reporters) >= 1.3
+Requires:      gem(capybara) >= 3.6
 Requires:      gem(poltergeist) >= 0
 Requires:      gem(sassc-rails) >= 2.0.0
 Requires:      gem(actionpack) >= 4.1.5
-Requires:      gem(activesupport) >= 4.1.5 gem(activesupport) < 7
-Requires:      gem(json) >= 1.8.1 gem(json) < 3
+Requires:      gem(activesupport) >= 4.1.5
+Requires:      gem(json) >= 1.8.1
 Requires:      gem(sprockets-rails) >= 2.1.3
 Requires:      gem(jquery-rails) >= 3.1.0
 Requires:      gem(slim-rails) >= 0
 Requires:      gem(uglifier) >= 0
 Requires:      gem(term-ansicolor) >= 0
+Requires:      gem(byebug) >= 0
+Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(minitest-reporters) >= 2
+Conflicts:     gem(capybara) >= 4
 
 %description   -n gem-bootstrap-sass-devel
 Official Sass port of Bootstrap 2 and 3 development package.
@@ -133,6 +140,9 @@ and the main repo otherwise.
 
 
 %changelog
+* Sat Jan 28 2023 Pavel Skrylev <majioa@altlinux.org> 3.4.3-alt1
+- ^ 3.4.1 -> 3.4.3
+
 * Fri Sep 03 2021 Pavel Skrylev <majioa@altlinux.org> 3.4.1-alt1.1
 - ! spec
 

@@ -2,7 +2,7 @@
 
 Name:          gem-gssapi
 Version:       1.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby FFI wrapper around GSSAPI
 License:       MIT
 Group:         Development/Ruby
@@ -13,8 +13,10 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(ffi) >= 1.0.1
+%if_with check
 BuildRequires: gem(pry-byebug) >= 0
+BuildRequires: gem(ffi) >= 1.0.1
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
@@ -40,7 +42,7 @@ examples.
 
 %package       -n gem-gssapi-doc
 Version:       1.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby FFI wrapper around GSSAPI documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета gssapi
 Group:         Development/Documentation
@@ -71,7 +73,7 @@ examples.
 
 %package       -n gem-gssapi-devel
 Version:       1.3.1
-Release:       alt1
+Release:       alt1.1
 Summary:       A Ruby FFI wrapper around GSSAPI development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета gssapi
 Group:         Development/Ruby
@@ -127,6 +129,9 @@ examples.
 
 
 %changelog
+* Sat Jan 28 2023 Pavel Skrylev <majioa@altlinux.org> 1.3.1-alt1.1
+- ! closes build deps under check condition
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 1.3.1-alt1
 - ^ 1.2.0 -> 1.3.1
 

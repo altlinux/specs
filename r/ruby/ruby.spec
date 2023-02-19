@@ -11,7 +11,7 @@
 
 Name:          ruby
 Version:       %_version
-Release:       alt1.1
+Release:       alt2
 Summary:       An Interpreted Object-Oriented Scripting Language
 License:       BSD-2-Clause or Ruby
 Group:         Development/Ruby
@@ -234,7 +234,7 @@ on different arches.
 %package       -n gem
 Epoch:         2
 Version:       3.3.7
-Release:       alt1.1
+Release:       alt2
 Summary:       Ruby gem executable and framefork
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -252,7 +252,7 @@ Ruby gem executable and framework.
 %package       -n rpm-macros-ruby
 Epoch:         1
 Version:       1.1.0
-Release:       alt1.1
+Release:       alt2
 Summary:       rpm macros for Ruby packages
 Group:         Development/Ruby
 
@@ -484,6 +484,9 @@ install -D -p -m 0644 %SOURCE4 %buildroot%_rpmmacrosdir/ruby.env
 
 
 %changelog
+* Fri Jan 20 2023 Pavel Skrylev <majioa@altlinux.org> 3.1.2-alt2
+- ! removed unnecessary alias from macros
+
 * Sun Oct 30 2022 Pavel Skrylev <majioa@altlinux.org> 3.1.2-alt1.1
 - ! fix arch for rpm-macros-ruby (thanx to vt@, closes #44173)
 

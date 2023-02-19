@@ -1,7 +1,7 @@
 %define        gemname resque
 
 Name:          gem-resque
-Version:       2.1.0
+Version:       2.4.0
 Release:       alt1
 Summary:       Resque is a Redis-backed Ruby library for creating background jobs, placing them on multiple queues, and processing them later
 License:       MIT
@@ -12,20 +12,43 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(redis-namespace) >= 1.6 gem(redis-namespace) < 2
-BuildRequires: gem(vegas) >= 0.1.2 gem(vegas) < 0.2
+%if_with check
+BuildRequires: gem(thin) >= 0
+BuildRequires: gem(webrick) >= 0
+BuildRequires: gem(redis) >= 5.0
+BuildRequires: gem(json) >= 0
+BuildRequires: gem(minitest) >= 5.11
+BuildRequires: gem(mocha) >= 1.11
+BuildRequires: gem(rack-test) >= 1.1.0
+BuildRequires: gem(rake) >= 0
+BuildRequires: gem(rubocop) >= 0.80
+BuildRequires: gem(pry) >= 0
+BuildRequires: gem(redis-namespace) >= 1.6
 BuildRequires: gem(sinatra) >= 0.9.2
-BuildRequires: gem(multi_json) >= 1.0 gem(multi_json) < 2
-BuildRequires: gem(mono_logger) >= 1.0 gem(mono_logger) < 2
+BuildRequires: gem(multi_json) >= 1.0
+BuildRequires: gem(mono_logger) >= 1.0
+BuildConflicts: gem(redis) >= 6
+BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(mocha) >= 2
+BuildConflicts: gem(rack-test) >= 3
+BuildConflicts: gem(rubocop) >= 2
+BuildConflicts: gem(redis-namespace) >= 2
+BuildConflicts: gem(multi_json) >= 2
+BuildConflicts: gem(mono_logger) >= 2
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(redis-namespace) >= 1.6 gem(redis-namespace) < 2
-Requires:      gem(vegas) >= 0.1.2 gem(vegas) < 0.2
+%ruby_use_gem_dependency rubocop >= 1.15.0,rubocop < 2
+%ruby_use_gem_dependency rack-test >= 1.1.0,rack-test < 2
+Requires:      gem(redis-namespace) >= 1.6
 Requires:      gem(sinatra) >= 0.9.2
-Requires:      gem(multi_json) >= 1.0 gem(multi_json) < 2
-Requires:      gem(mono_logger) >= 1.0 gem(mono_logger) < 2
-Provides:      gem(resque) = 2.1.0
+Requires:      gem(multi_json) >= 1.0
+Requires:      gem(mono_logger) >= 1.0
+Conflicts:     gem(redis-namespace) >= 2
+Conflicts:     gem(multi_json) >= 2
+Conflicts:     gem(mono_logger) >= 2
+Provides:      gem(resque) = 2.4.0
 
 
 %description
@@ -61,18 +84,21 @@ Resque now supports Ruby 2.3.0 and above. We will also only be supporting Redis
 
 
 %package       -n resque
-Version:       2.1.0
+Version:       2.4.0
 Release:       alt1
 Summary:       Resque is a Redis-backed Ruby library for creating background jobs, placing them on multiple queues, and processing them later executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета resque
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(resque) = 2.1.0
+Requires:      gem(resque) = 2.4.0
 
 %description   -n resque
 Resque is a Redis-backed Ruby library for creating background jobs, placing them
 on multiple queues, and processing them later executable(s).
+
+%description   -n resque -l ru_RU.UTF-8
+Исполнямка для самоцвета resque.
 
 Resque (pronounced like "rescue") is a Redis-backed library for creating
 background jobs, placing those jobs on multiple queues, and processing them
@@ -104,19 +130,16 @@ stats, and helps you track failures.
 Resque now supports Ruby 2.3.0 and above. We will also only be supporting Redis
 3.0 and above going forward.
 
-%description   -n resque -l ru_RU.UTF-8
-Исполнямка для самоцвета resque.
-
 
 %package       -n gem-resque-doc
-Version:       2.1.0
+Version:       2.4.0
 Release:       alt1
 Summary:       Resque is a Redis-backed Ruby library for creating background jobs, placing them on multiple queues, and processing them later documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета resque
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(resque) = 2.1.0
+Requires:      gem(resque) = 2.4.0
 
 %description   -n gem-resque-doc
 Resque is a Redis-backed Ruby library for creating background jobs, placing them
@@ -157,14 +180,29 @@ Resque now supports Ruby 2.3.0 and above. We will also only be supporting Redis
 
 
 %package       -n gem-resque-devel
-Version:       2.1.0
+Version:       2.4.0
 Release:       alt1
 Summary:       Resque is a Redis-backed Ruby library for creating background jobs, placing them on multiple queues, and processing them later development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета resque
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(resque) = 2.1.0
+Requires:      gem(resque) = 2.4.0
+Requires:      gem(thin) >= 0
+Requires:      gem(webrick) >= 0
+Requires:      gem(redis) >= 5.0
+Requires:      gem(json) >= 0
+Requires:      gem(minitest) >= 5.11
+Requires:      gem(mocha) >= 1.11
+Requires:      gem(rack-test) >= 1.1.0
+Requires:      gem(rake) >= 0
+Requires:      gem(rubocop) >= 0.80
+Requires:      gem(pry) >= 0
+Conflicts:     gem(redis) >= 6
+Conflicts:     gem(minitest) >= 6
+Conflicts:     gem(mocha) >= 2
+Conflicts:     gem(rack-test) >= 3
+Conflicts:     gem(rubocop) >= 2
 
 %description   -n gem-resque-devel
 Resque is a Redis-backed Ruby library for creating background jobs, placing them
@@ -235,6 +273,9 @@ Resque now supports Ruby 2.3.0 and above. We will also only be supporting Redis
 
 
 %changelog
+* Sat Jan 28 2023 Pavel Skrylev <majioa@altlinux.org> 2.4.0-alt1
+- ^ 2.1.0 -> 2.4.0
+
 * Thu Sep 02 2021 Pavel Skrylev <majioa@altlinux.org> 2.1.0-alt1
 - ^ 2.0.0 -> 2.1.0
 

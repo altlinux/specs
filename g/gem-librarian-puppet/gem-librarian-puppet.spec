@@ -1,8 +1,8 @@
 %define        gemname librarian-puppet
 
 Name:          gem-librarian-puppet
-Version:       3.0.1
-Release:       alt1
+Version:       3.0.1.1
+Release:       alt0.1
 Summary:       Simplify deployment of your Puppet infrastructure
 License:       MIT
 Group:         Development/Ruby
@@ -12,28 +12,32 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 BuildRequires(pre): rpm-build-ruby
-BuildRequires: gem(librarianp) >= 0.6.3
-BuildRequires: gem(rsync) >= 0
-BuildRequires: gem(puppet_forge) >= 2.1 gem(puppet_forge) < 4
+%if_with check
 BuildRequires: gem(rake) >= 0
 BuildRequires: gem(rspec) >= 0
-# BuildRequires: gem(cucumber) < 3.0.0
-# BuildRequires: gem(aruba) < 0.8.0
 BuildRequires: gem(puppet) >= 0
-BuildRequires: gem(minitest) >= 5 gem(minitest) < 6
+BuildRequires: gem(minitest) >= 5
 BuildRequires: gem(mocha) >= 0
-BuildRequires: gem(simplecov) >= 0.9.0 gem(simplecov) < 1
+BuildRequires: gem(simplecov) >= 0.9.0
+BuildRequires: gem(librarianp) >= 0.6.3
+BuildRequires: gem(rsync) >= 0
+BuildRequires: gem(puppet_forge) >= 2.1
+BuildConflicts: gem(cucumber) >= 3.0.0
+BuildConflicts: gem(aruba) >= 0.8.0
+BuildConflicts: gem(minitest) >= 6
+BuildConflicts: gem(puppet_forge) >= 4
+%endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency puppet_forge >= 3.0,puppet_forge < 4
-%ruby_use_gem_dependency minitest >= 5.17.0,minitest < 6
-%ruby_use_gem_dependency simplecov >= 0.17,simplecov < 1
+%ruby_use_gem_dependency puppet_forge >= 3.2.0,puppet_forge < 4
 Requires:      gem(librarianp) >= 0.6.3
 Requires:      gem(rsync) >= 0
-Requires:      gem(puppet_forge) >= 2.1 gem(puppet_forge) < 4
-Provides:      gem(librarian-puppet) = 3.0.1
+Requires:      gem(puppet_forge) >= 2.1
+Conflicts:     gem(puppet_forge) >= 4
+Provides:      gem(librarian-puppet) = 3.0.1.1
 
+%ruby_use_gem_version librarian-puppet:3.0.1.1
 
 %description
 Librarian-puppet is a bundler for your puppet infrastructure. You can use
@@ -66,14 +70,14 @@ resolve, fetch, install, and isolate a project's dependencies.
 
 
 %package       -n librarian-puppet
-Version:       3.0.1
-Release:       alt1
+Version:       3.0.1.1
+Release:       alt0.1
 Summary:       Simplify deployment of your Puppet infrastructure executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета librarian-puppet
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(librarian-puppet) = 3.0.1
+Requires:      gem(librarian-puppet) = 3.0.1.1
 
 %description   -n librarian-puppet
 Simplify deployment of your Puppet infrastructure
@@ -112,14 +116,14 @@ resolve, fetch, install, and isolate a project's dependencies.
 
 
 %package       -n gem-librarian-puppet-doc
-Version:       3.0.1
-Release:       alt1
+Version:       3.0.1.1
+Release:       alt0.1
 Summary:       Simplify deployment of your Puppet infrastructure documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета librarian-puppet
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(librarian-puppet) = 3.0.1
+Requires:      gem(librarian-puppet) = 3.0.1.1
 
 %description   -n gem-librarian-puppet-doc
 Simplify deployment of your Puppet infrastructure documentation
@@ -158,22 +162,21 @@ resolve, fetch, install, and isolate a project's dependencies.
 
 
 %package       -n gem-librarian-puppet-devel
-Version:       3.0.1
-Release:       alt1
+Version:       3.0.1.1
+Release:       alt0.1
 Summary:       Simplify deployment of your Puppet infrastructure development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета librarian-puppet
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(librarian-puppet) = 3.0.1
+Requires:      gem(librarian-puppet) = 3.0.1.1
 Requires:      gem(rake) >= 0
 Requires:      gem(rspec) >= 0
-# Requires:      gem(cucumber) < 3.0.0
-# Requires:      gem(aruba) < 0.8.0
 Requires:      gem(puppet) >= 0
-Requires:      gem(minitest) >= 5 gem(minitest) < 6
+Requires:      gem(minitest) >= 5
 Requires:      gem(mocha) >= 0
-Requires:      gem(simplecov) >= 0.9.0 gem(simplecov) < 1
+Requires:      gem(simplecov) >= 0.9.0
+Conflicts:     gem(minitest) >= 6
 
 %description   -n gem-librarian-puppet-devel
 Simplify deployment of your Puppet infrastructure development
@@ -241,6 +244,9 @@ resolve, fetch, install, and isolate a project's dependencies.
 
 
 %changelog
+* Fri Jan 27 2023 Pavel Skrylev <majioa@altlinux.org> 3.0.1.1-alt0.1
+- ^ 3.0.1 -> 3.0.1[1]
+
 * Thu Jul 15 2021 Pavel Skrylev <majioa@altlinux.org> 3.0.1-alt1
 - ^ 3.0.0 -> 3.0.1
 

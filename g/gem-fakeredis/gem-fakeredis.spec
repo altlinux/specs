@@ -2,7 +2,7 @@
 
 Name:          gem-fakeredis
 Version:       0.8.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Fake (In-memory) driver for redis-rb
 License:       MIT
 Group:         Development/Ruby
@@ -19,12 +19,13 @@ BuildRequires: gem(racc) >= 0
 BuildRequires: gem(rubysl) >= 2.0 gem(rubysl) < 3
 BuildRequires: gem(psych) >= 0
 BuildRequires: gem(rspec) >= 3.0 gem(rspec) < 4
-BuildRequires: gem(redis) >= 4.1 gem(redis) < 5
+BuildRequires: gem(redis) >= 4.1 gem(redis) < 6
 %endif
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-Requires:      gem(redis) >= 4.1 gem(redis) < 5
+%ruby_use_gem_dependency redis >= 5.0,redis < 6
+Requires:      gem(redis) >= 4.1 gem(redis) < 6
 Provides:      gem(fakeredis) = 0.8.0
 
 
@@ -35,7 +36,7 @@ machines without Redis.
 
 %package       -n gem-fakeredis-doc
 Version:       0.8.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Fake (In-memory) driver for redis-rb documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета fakeredis
 Group:         Development/Documentation
@@ -76,5 +77,8 @@ machines without Redis.
 
 
 %changelog
+* Sat Feb 04 2023 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1.1
+- ! fixed dep to redis
+
 * Sun Oct 16 2022 Pavel Skrylev <majioa@altlinux.org> 0.8.0-alt1
 - + packaged gem with Ruby Policy 2.0

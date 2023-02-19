@@ -2,7 +2,7 @@
 
 Name:          gem-%pkgname
 Version:       5.999.6
-Release:       alt6
+Release:       alt7
 Summary:       Ruby's Classic Site Installer
 Group:         Development/Ruby
 License:       BSD-2-Clause
@@ -89,6 +89,15 @@ export PATH=$PATH:$(pwd)/bin
 
 
 %changelog
+* Fri Jan 20 2023 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt7
+- * crop upper bound for requires
+- ! alias detection for sources with current source name autoaliased
+- ! version detection for Hoe module
+- ! use self spec array for a gem DSL, or DSL's gemspec array for Gemfile
+- - using ruby-gem and rubygem dep prefixes
+- ! bones gemspec parser
+- ! ruby version deps renderer
+
 * Tue Dec 20 2022 Pavel Skrylev <majioa@altlinux.org> 5.999.6-alt6
 - + some new options to mkmf when compilation is enabled
 
