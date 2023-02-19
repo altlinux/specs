@@ -1,6 +1,6 @@
 Name: parole
-Version: 4.16.0
-Release: alt2
+Version: 4.18.0
+Release: alt1
 
 %def_enable clutter
 
@@ -78,6 +78,9 @@ mkdir m4
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Sun Feb 19 2023 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Updated to 4.18.0.
+
 * Wed Jul 28 2021 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt2
 - Fixed build with xfce4-dev-tools >= 4.17.0.
 
