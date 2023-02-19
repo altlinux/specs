@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: %_name%api_ver
-Version: 2.3.3
+Version: 2.3.4
 Release: alt1
 
 Summary: An Enchanting Spell Checking Program
@@ -26,6 +26,7 @@ Source: %_name-%version.tar
 Requires:  lib%name = %version-%release
 
 BuildRequires: gcc-c++ glib2-devel libdbus-glib-devel libhunspell-devel
+BuildRequires: groff
 %{?_enable_aspell:BuildRequires: libaspell-devel}
 %{?_enable_voikko:BuildRequires: libvoikko-devel}
 %{?_enable_check:BuildRequires: libunittest-cpp-devel}
@@ -52,11 +53,14 @@ using libenchant.
 
 %prep
 %setup -n %_name-%version
+# relax autoconf version
+sed -i 's|\(AC_PREREQ(\[2.\)71|\169|' configure.ac
 
 %build
 %add_optflags %(getconf LFS_CFLAGS)
 %autoreconf
 %configure --disable-static \
+	--disable-gcc-warnings \
 	%{subst_enable relocatable} \
 	--with-hunspell-dir=%_datadir/myspell \
 	%{?_enable_aspell:--with-aspell-dir=%_libdir/aspell}
@@ -66,11 +70,14 @@ using libenchant.
 %makeinstall_std pkgdatadir=%_datadir/%_name-%api_ver
 
 %check
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %make -k check VERBOSE=1
 
 %files
 %_bindir/*
 %_man1dir/*
+%_man5dir/*
+%doc src/*.html
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -87,6 +94,9 @@ using libenchant.
 %_pkgconfigdir/%_name-%api_ver.pc
 
 %changelog
+* Mon Feb 20 2023 Yuri N. Sedunov <aris@altlinux.org> 2.3.4-alt1
+- 2.3.4
+
 * Sat Apr 16 2022 Yuri N. Sedunov <aris@altlinux.org> 2.3.3-alt1
 - 2.3.3
 
