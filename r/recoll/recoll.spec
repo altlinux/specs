@@ -6,7 +6,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.34.2
+Version: 1.34.3
 Release: alt1
 
 Summary: A personal full text search package
@@ -122,7 +122,7 @@ This package contains Python bindings for Recoll.
 sed -i 's/openoffice/loffice/' sampleconf/mimeview
 sed -i '/^Categories=/s/=/=Qt;/' desktop/*.desktop
 # updated translations: ru
-cp -a %SOURCE1 %SOURCE2 qtgui/i18n/
+#cp -a %SOURCE1 %SOURCE2 qtgui/i18n/
 cp -a %SOURCE5 desktop/
 
 %build
@@ -184,6 +184,9 @@ sed -i "s|#!/usr/bin/env python3|#!%__python3|" \
 %python3_sitelibdir/recollchm/
 
 %changelog
+* Sun Feb 19 2023 Michael Shigorin <mike@altlinux.org> 1.34.3-alt1
+- new version (watch file uupdate)
+
 * Mon Jan 23 2023 Michael Shigorin <mike@altlinux.org> 1.34.2-alt1
 - new version (watch file uupdate)
 
