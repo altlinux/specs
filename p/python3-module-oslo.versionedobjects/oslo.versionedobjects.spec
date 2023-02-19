@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Oslo Versioned Objects library
 
@@ -20,6 +20,8 @@ BuildArch: noarch
 Provides: python3-module-oslo-versionedobjects = %EVR
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.context >= 2.19.2
@@ -81,7 +83,7 @@ This package contains documentation for %oname.
 rm -rfv *.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -94,7 +96,7 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 # install man page
@@ -107,7 +109,7 @@ install -pDm 644 man/osloversionedobjects.1 %buildroot%_man1dir/osloversionedobj
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
 %python3_sitelibdir/oslo_versionedobjects
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/oslo_versionedobjects/tests
 %exclude %python3_sitelibdir/oslo_versionedobjects/test.py
 
@@ -122,6 +124,9 @@ install -pDm 644 man/osloversionedobjects.1 %buildroot%_man1dir/osloversionedobj
 %endif
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1.1
+- Moved on modern pyproject macros.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
 - Automatically updated to 3.1.0.
 

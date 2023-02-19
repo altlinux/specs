@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 6.3.1
-Release: alt2
+Release: alt2.1
 
 Summary: OpenStack Oslo Rootwrap
 
@@ -20,6 +20,8 @@ BuildArch: noarch
 Provides: python3-module-oslo-rootwrap = %EVR
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 
 %if_with check
@@ -72,7 +74,7 @@ This package contains documentation for %oname.
 rm -rfv *.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -85,7 +87,7 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 # install man page
@@ -101,7 +103,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %_bindir/oslo-rootwrap
 %_bindir/oslo-rootwrap-daemon
 %python3_sitelibdir/oslo_rootwrap
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/oslo_rootwrap/tests
 
 %files tests
@@ -114,6 +116,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 6.3.1-alt2.1
+- Moved on modern pyproject macros.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 6.3.1-alt2
 - Fixed build with check.
 

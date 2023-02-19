@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: An SDK for building applications to work with OpenStack
 
@@ -18,6 +18,8 @@ Source1: %oname.watch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-yaml >= 3.13
 BuildRequires: python3-module-appdirs >= 1.3.0
@@ -91,7 +93,7 @@ This package contains documentation for %oname.
 rm -rfv *.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -104,7 +106,7 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 # install man page
@@ -123,7 +125,7 @@ export OS_TEST_TIMEOUT=30
 %doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/openstack-inventory
 %python3_sitelibdir/openstack
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/openstack/tests
 
 %files tests
@@ -137,6 +139,9 @@ export OS_TEST_TIMEOUT=30
 %endif
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1.1
+- Moved on modern pyproject macros.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
 - Automatically updated to 1.0.1.
 

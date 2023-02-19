@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.0
-Release: alt1
+Release: alt1.1
 
 Summary: Python client library for OpenStack Aodh
 
@@ -18,6 +18,8 @@ Source1: %oname.watch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 1.4
 BuildRequires: python3-module-cliff >= 1.14.0
 BuildRequires: python3-module-osc-lib >= 1.0.1
@@ -68,7 +70,7 @@ This package contains documentation for %oname.
 rm -rfv *.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -81,7 +83,7 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 # install man page
@@ -95,7 +97,7 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/aodh
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/%oname/tests
 
 %files tests
@@ -108,6 +110,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1.1
+- Moved on modern pyproject macros.
+
 * Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 - Unified.

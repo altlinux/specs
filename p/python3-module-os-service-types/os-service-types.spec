@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 1.7.0
-Release: alt2
+Release: alt2.1
 
 Summary: Python library for consuming OpenStack sevice-types-authority data
 
@@ -18,6 +18,8 @@ Source1: %oname.watch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 
 %if_with check
@@ -72,7 +74,7 @@ This package contains documentation for %oname.
 rm -rfv *.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -85,7 +87,7 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 # install man page
@@ -101,7 +103,7 @@ cp os_service_types/data/service-types.json %buildroot%python3_sitelibdir/os_ser
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
 %python3_sitelibdir/os_service_types
-%python3_sitelibdir/os_service_types-%version-py%_python3_version.egg-info
+%python3_sitelibdir/os_service_types-%version.dist-info
 %exclude %python3_sitelibdir/os_service_types/tests
 
 %files tests
@@ -114,6 +116,9 @@ cp os_service_types/data/service-types.json %buildroot%python3_sitelibdir/os_ser
 %endif
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt2.1
+- Moved on modern pyproject macros.
+
 * Sat Oct 22 2022 Grigory Ustinov <grenka@altlinux.org> 1.7.0-alt2
 - Unified.
 

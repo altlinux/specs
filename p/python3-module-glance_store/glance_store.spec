@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Image Service Store Library
 
@@ -18,6 +18,8 @@ Source1: %oname.watch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 1.8
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
@@ -96,7 +98,7 @@ rm -rfv *.egg-info
 sed 's/requests.packages.urllib3.util/urllib3.util/' -i glance_store/_drivers/vmware_datastore.py
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -109,7 +111,7 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 # install man page
@@ -133,7 +135,7 @@ mv %buildroot/usr/etc/glance/rootwrap.d/glance_cinder_store.filters \
 %config(noreplace) %_sysconfdir/glance/rootwrap.conf
 %config(noreplace) %_sysconfdir/glance/rootwrap.d/glance_cinder_store.filters
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/%oname/tests
 
 %files tests
@@ -146,6 +148,9 @@ mv %buildroot/usr/etc/glance/rootwrap.d/glance_cinder_store.filters \
 %endif
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1.1
+- Moved on modern pyproject macros.
+
 * Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
 - Automatically updated to 4.1.0.
 - Renamed spec file.

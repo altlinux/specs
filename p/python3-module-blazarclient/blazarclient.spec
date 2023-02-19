@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Client for OpenStack Reservation Service
 
@@ -19,6 +19,8 @@ Source1: %oname.watch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-cliff >= 2.8.0
 BuildRequires: python3-module-prettytable
@@ -70,7 +72,7 @@ This package contains documentation for %oname.
 rm -rfv *.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -83,7 +85,7 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 # install man page
@@ -97,7 +99,7 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/blazar
 %python3_sitelibdir/%oname
-%python3_sitelibdir/python_blazarclient-%version-py%_python3_version.egg-info
+%python3_sitelibdir/python_blazarclient-%version.dist-info
 %exclude %python3_sitelibdir/%oname/tests
 
 %files tests
@@ -110,6 +112,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1.1
+- Moved on modern pyproject macros.
+
 * Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 3.5.0-alt1
 - Automatically updated to 3.5.0.
 

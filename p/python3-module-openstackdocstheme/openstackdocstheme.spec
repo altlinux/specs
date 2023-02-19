@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Docs Theme
 
@@ -19,6 +19,8 @@ Source1: %oname.watch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 
 %if_with docs
@@ -50,7 +52,7 @@ This package contains documentation for %oname.
 rm -rfv *.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -63,7 +65,7 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 # Move theme files to proper location
 # somehow they aren't installed automatically
@@ -79,8 +81,8 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %_bindir/docstheme-build-pdf
 %_bindir/docstheme-build-translated.sh
 %_bindir/docstheme-lang-display-name.py
-%python3_sitelibdir_noarch/%oname
-%python3_sitelibdir_noarch/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
 
 %if_with docs
 %files doc
@@ -89,6 +91,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1.1
+- Moved on modern pyproject macros.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
 - Automatically updated to 3.0.1.
 

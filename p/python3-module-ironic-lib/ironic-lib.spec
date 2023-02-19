@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 5.4.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Ironic common library
 
@@ -18,6 +18,8 @@ Source1: %oname.watch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
@@ -71,7 +73,7 @@ This package contains documentation for %oname.
 rm -rfv *.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -84,7 +86,7 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 # install man page
@@ -104,7 +106,7 @@ mv %buildroot/usr/etc/ironic/rootwrap.d/*.filters %buildroot%_sysconfdir/%oname/
 %dir %_sysconfdir/%oname/rootwrap.d
 %config(noreplace) %_sysconfdir/%oname/rootwrap.d/*
 %python3_sitelibdir/ironic_lib
-%python3_sitelibdir/ironic_lib-%version-py%_python3_version.egg-info
+%python3_sitelibdir/ironic_lib-%version.dist-info
 %exclude %python3_sitelibdir/ironic_lib/tests
 
 %files tests
@@ -117,6 +119,9 @@ mv %buildroot/usr/etc/ironic/rootwrap.d/*.filters %buildroot%_sysconfdir/%oname/
 %endif
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 5.4.0-alt1.1
+- Moved on modern pyproject macros.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 5.4.0-alt1
 - Automatically updated to 5.4.0.
 

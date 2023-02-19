@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 4.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: OpenStack Client Library for Zun
 
@@ -18,6 +18,8 @@ Source1: %oname.watch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-prettytable >= 0.7.1
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
@@ -77,7 +79,7 @@ This package contains documentation for %oname.
 rm -rfv *.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -90,7 +92,7 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 # install man page
@@ -108,7 +110,7 @@ install -pDm 644 tools/zun.bash_completion \
 %doc LICENSE AUTHORS ChangeLog *.rst
 %_bindir/zun
 %python3_sitelibdir/%oname
-%python3_sitelibdir/python_zunclient-%version-py%_python3_version.egg-info
+%python3_sitelibdir/python_zunclient-%version.dist-info
 %dir %_sysconfdir/bash_completion.d
 %_sysconfdir/bash_completion.d/zun.bash_completion
 %exclude %python3_sitelibdir/%oname/tests
@@ -123,6 +125,9 @@ install -pDm 644 tools/zun.bash_completion \
 %endif
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1.1
+- Moved on modern pyproject macros.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
 - Automatically updated to 4.6.0.
 

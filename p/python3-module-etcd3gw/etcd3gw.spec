@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 2.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: A python client for etcd3 grpc-gateway v3 API
 
@@ -18,6 +18,8 @@ Source1: %oname.watch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0
 BuildRequires: python3-module-requests >= 2.20.0
 BuildRequires: python3-module-futurist >= 0.16.0
@@ -66,7 +68,7 @@ This package contains documentation for %oname.
 rm -rfv *.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -79,7 +81,7 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 # install man page
@@ -92,7 +94,7 @@ install -pDm 644 man/etcd3-gateway.1 %buildroot%_man1dir/%oname.1
 %files
 %doc LICENSE AUTHORS ChangeLog *.rst
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 %exclude %python3_sitelibdir/%oname/tests
 
 %files tests
@@ -105,6 +107,9 @@ install -pDm 644 man/etcd3-gateway.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1.1
+- Moved on modern pyproject macros.
+
 * Fri Oct 21 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
 - Automatically updated to 2.1.0.
 

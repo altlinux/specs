@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 3.0.0
-Release: alt3
+Release: alt3.1
 
 Summary: A library for plugging and unplugging virtual interfaces in OpenStack
 
@@ -18,6 +18,8 @@ Source1: %oname.watch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-oslo.concurrency >= 3.20.0
@@ -75,7 +77,7 @@ This package contains documentation for %oname.
 rm -rfv *.egg-info
 
 %build
-%python3_build
+%pyproject_build
 
 %if_with docs
 export PYTHONPATH="$PWD"
@@ -88,7 +90,7 @@ rm -rf html/.{doctrees,buildinfo}
 %endif
 
 %install
-%python3_install
+%pyproject_install
 
 %if_with docs
 # install man page
@@ -105,7 +107,7 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %python3_sitelibdir/vif_plug_linux_bridge
 %python3_sitelibdir/vif_plug_noop
 %python3_sitelibdir/vif_plug_ovs
-%python3_sitelibdir/os_vif-%version-py%_python3_version.egg-info
+%python3_sitelibdir/os_vif-%version.dist-info
 %exclude %python3_sitelibdir/os_vif/tests
 %exclude %python3_sitelibdir/vif_plug_linux_bridge/tests
 %exclude %python3_sitelibdir/vif_plug_noop/tests
@@ -124,6 +126,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Sun Feb 19 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt3.1
+- Moved on modern pyproject macros.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt3
 - Spec refactoring.
 
