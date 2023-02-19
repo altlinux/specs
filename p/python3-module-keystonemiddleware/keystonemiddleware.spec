@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 10.1.0
-Release: alt2
+Version: 10.2.0
+Release: alt1
 
 Summary: Middleware for OpenStack Identity
 
@@ -125,6 +125,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 10.2.0-alt1
+- Automatically updated to 10.2.0.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 10.1.0-alt2
 - Spec refactoring.
 

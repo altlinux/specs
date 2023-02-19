@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: OpenStack Oslo Metrics API
@@ -109,6 +109,9 @@ install -pDm 644 man/oslometrics.1 %buildroot%_man1dir/oslometrics.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.6.0-alt1
+- Automatically updated to 0.6.0.
+
 * Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 0.5.0-alt1
 - Automatically updated to 0.5.0.
 

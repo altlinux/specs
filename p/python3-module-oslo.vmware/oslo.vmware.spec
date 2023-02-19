@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.0.1
-Release: alt2
+Version: 4.1.0
+Release: alt1
 
 Summary: OpenStack Oslo VMware library
 
@@ -31,7 +31,6 @@ BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-urllib3 >= 1.21.1
 BuildRequires: python3-module-oslo.concurrency >= 3.26.0
 BuildRequires: python3-module-oslo.context >= 2.19.2
-BuildRequires: python3-module-stevedore >= 1.20.0
 
 %if_with check
 BuildRequires: python3-module-hacking >= 3.0.1
@@ -41,6 +40,7 @@ BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-ddt >= 1.0.1
+BuildRequires: python3-module-stevedore >= 1.20.0
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
@@ -122,6 +122,9 @@ install -pDm 644 man/oslovmware.1 %buildroot%_man1dir/oslovmware.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.1.0-alt1
+- Automatically updated to 4.1.0.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt2
 - Spec refactoring.
 

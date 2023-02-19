@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.0.1
+Version: 5.0.0
 Release: alt1
 
 Summary: Manage dynamic plugins for Python applications
@@ -21,11 +21,11 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 2.0.0
 
 %if_with check
-BuildRequires: python3-module-coverage >= 4.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: python3-module-mock
 BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -114,6 +114,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
 - Automatically updated to 4.0.1.
 

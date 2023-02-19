@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.1.0
-Release: alt2
+Version: 6.2.0
+Release: alt1
 
 Summary: OpenStack Cinder brick library for managing local volume attaches
 
@@ -19,35 +19,35 @@ BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 5.8.0
-BuildRequires: python3-module-eventlet >= 0.30.1
-BuildRequires: python3-module-oslo.concurrency >= 4.5.0
-BuildRequires: python3-module-oslo.context >= 3.4.0
-BuildRequires: python3-module-oslo.config >= 8.1.0
-BuildRequires: python3-module-oslo.log >= 4.6.1
+BuildRequires: python3-module-oslo.concurrency >= 5.0.0
+BuildRequires: python3-module-oslo.context >= 4.1.0
+BuildRequires: python3-module-oslo.config >= 9.0.0
+BuildRequires: python3-module-oslo.log >= 4.8.0
 BuildRequires: python3-module-oslo.i18n >= 5.1.0
-BuildRequires: python3-module-oslo.privsep >= 2.6.2
+BuildRequires: python3-module-oslo.privsep >= 3.0.0
 BuildRequires: python3-module-oslo.service >= 2.8.0
-BuildRequires: python3-module-oslo.serialization >= 4.2.0
-BuildRequires: python3-module-oslo.utils >= 4.12.1
-BuildRequires: python3-module-os-win >= 5.5.0
+BuildRequires: python3-module-oslo.serialization >= 4.3.0
+BuildRequires: python3-module-oslo.utils >= 6.0.0
+BuildRequires: python3-module-os-win >= 5.7.0
 BuildRequires: python3-module-requests >= 2.25.1
 BuildRequires: python3-module-tenacity >= 6.3.1
 
 %if_with check
-BuildRequires: python3-module-hacking >= 4.0.0
+BuildRequires: python3-module-hacking >= 4.1.0
 BuildRequires: python3-module-coverage >= 5.5
 BuildRequires: python3-module-ddt >= 1.4.1
 BuildRequires: python3-module-testtools >= 2.4.0
 BuildRequires: python3-module-stestr >= 3.2.1
-BuildRequires: python3-module-oslo.vmware >= 3.10.0
+BuildRequires: python3-module-oslo.vmware >= 4.0.0
 BuildRequires: python3-module-castellan >= 3.10.0
 BuildRequires: python3-module-doc8 >= 0.8.1
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-bandit >= 1.6.0
-BuildRequires: python3-module-mypy >= 0.960
+BuildRequires: python3-module-bandit >= 1.7.0
+BuildRequires: python3-module-mypy >= 0.982
 BuildRequires: python3-module-castellan-tests
 BuildRequires: python3-module-oslotest >= 4.5.0
 BuildRequires: python3-module-testscenarios >= 0.5.0
+BuildRequires: python3-module-eventlet >= 0.30.1
 %endif
 
 %if_with docs
@@ -130,6 +130,9 @@ mv %buildroot/usr/etc/os-brick/rootwrap.d/*.filters %buildroot%_sysconfdir/%onam
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 6.2.0-alt1
+- Automatically updated to 6.2.0.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt2
 - Spec refactoring.
 

@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.1
-Release: alt2
+Version: 3.1.0
+Release: alt1
 
 Summary: OpenStack library for privilege separation
 
@@ -35,6 +35,7 @@ BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-bandit >= 1.6.0
+BuildRequires: python3-module-greenlet >= 0.4.14
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
@@ -116,6 +117,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
 - Spec refactoring.
 

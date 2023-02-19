@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 14.0.0
+Version: 14.2.0
 Release: alt1
 
 Summary: OpenStack Oslo Messaging API
@@ -22,7 +22,6 @@ Provides: python3-module-oslo-messaging = %EVR
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 2.0.0
-BuildRequires: python3-module-futurist >= 1.2.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.utils >= 3.37.0
@@ -39,8 +38,6 @@ BuildRequires: python3-module-amqp >= 2.5.2
 BuildRequires: python3-module-kombu >= 4.6.6
 
 %if_with check
-BuildRequires: python3-module-pre-commit >= 2.6.0
-BuildRequires: python3-module-greenlet >= 0.4.15
 BuildRequires: python3-module-kafka
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-hacking >= 3.0.1
@@ -53,6 +50,10 @@ BuildRequires: python3-module-confluent-kafka >= 1.3.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-eventlet >= 0.23.0
+BuildRequires: python3-module-futurist >= 1.2.0
+BuildRequires: python3-module-pre-commit >= 2.6.0
+BuildRequires: python3-module-pyngus >= 2.2.0
+BuildRequires: python3-module-greenlet >= 0.4.15
 %endif
 
 %if_with docs
@@ -135,6 +136,9 @@ install -pDm 644 man/oslomessaging.1 %buildroot%_man1dir/oslomessaging.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 1:14.2.0-alt1
+- Automatically updated to 14.2.0.
+
 * Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 1:14.0.0-alt1
 - Automatically updated to 14.0.0.
 

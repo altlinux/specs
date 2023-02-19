@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.0.0
-Release: alt3
+Version: 2.1.0
+Release: alt1
 
 Summary: OpenStack Common code for writing OpenStack upgrade checks
 
@@ -110,6 +110,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
+- Automatically updated to 2.1.0.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 2.0.0-alt3
 - Spec refactoring.
 

@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.4.0
+Version: 3.0.0
 Release: alt1
 
 Summary: OpenStack Oslo reports library
@@ -32,12 +32,12 @@ BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
-BuildRequires: python3-module-eventlet >= 0.18.2
 BuildRequires: python3-module-greenlet >= 0.4.15
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-bandit >= 1.6.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: /proc
+BuildRequires: python3-module-eventlet >= 0.18.2
+BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -45,7 +45,7 @@ BuildRequires: python3-module-sphinx
 BuildRequires: python3-module-openstackdocstheme >= 1.18.1
 BuildRequires: python3-module-reno >= 2.5.0
 BuildRequires: python3-module-sphinxcontrib-apidoc
-BuildRequires: python3-module-oslo.config
+BuildRequires: python3-module-oslo.config >= 5.2.0
 %endif
 
 %description
@@ -125,6 +125,9 @@ install -pDm 644 man/osloreports.1 %buildroot%_man1dir/osloreports.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 2.4.0-alt1
 - Automatically updated to 2.4.0.
 

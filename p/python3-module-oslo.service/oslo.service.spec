@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.0
-Release: alt2
+Version: 3.1.0
+Release: alt1
 
 Summary: OpenStack Oslo Service library
 
@@ -45,8 +45,8 @@ BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-doc8 >= 0.6.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-bandit >= 1.6.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: /proc
+BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -124,6 +124,9 @@ install -pDm 644 man/osloservice.1 %buildroot%_man1dir/osloservice.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt2
 - Spec refactoring.
 

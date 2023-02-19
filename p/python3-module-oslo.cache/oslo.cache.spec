@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.1.0
-Release: alt2.1
+Version: 3.3.0
+Release: alt1
 
 Summary: Cache storage for OpenStack projects
 
@@ -36,8 +36,8 @@ BuildRequires: python3-module-pifpaf >= 0.10.0
 BuildRequires: python3-module-bandit >= 1.6.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-pymemcache >= 3.5.0
-BuildRequires: python3-module-pre-commit >= 2.6.0
 BuildRequires: python3-module-binary-memcached
+BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %if_with docs
@@ -118,6 +118,9 @@ install -pDm 644 man/oslocache.1 %buildroot%_man1dir/oslocache.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.3.0-alt1
+- Automatically updated to 3.3.0.
+
 * Fri Oct 21 2022 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt2.1
 - Little spec fix.
 

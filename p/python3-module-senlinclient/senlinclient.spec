@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.5.0
-Release: alt2
+Version: 3.0.0
+Release: alt1
 
 Summary: OpenStack Clustering API Client Library
 
@@ -40,12 +40,12 @@ BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-tempest >= 17.1.0
 BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-osc-lib-tests
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-setuptools >= 21.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
-BuildRequires: python3-module-osc-lib-tests
 %endif
 
 %if_with docs
@@ -120,6 +120,9 @@ install -pDm 644 man/senlin.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
+- Automatically updated to 3.0.0.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 2.5.0-alt2
 - Build with check.
 

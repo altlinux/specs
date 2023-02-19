@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.5.0
-Release: alt2
+Version: 4.6.0
+Release: alt1
 
 Summary: OpenStack Client Library for Zun
 
@@ -20,29 +20,28 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-prettytable >= 0.7.1
-BuildRequires: python3-module-openstackclient >= 3.12.0
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
 BuildRequires: python3-module-osc-lib >= 1.8.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
 BuildRequires: python3-module-oslo.log >= 3.36.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-websocket-client >= 0.44.0
-BuildRequires: python3-module-docker >= 2.4.2
 BuildRequires: python3-module-yaml >= 3.12
 
 %if_with check
 BuildRequires: python3-module-bandit >= 1.1.0
 BuildRequires: python3-module-coverage >= 4.0
-BuildRequires: python3-module-doc8 >= 0.6.0
 BuildRequires: python3-module-ddt >= 1.0.1
 BuildRequires: python3-module-hacking >= 3.0.1
-BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-osprofiler >= 1.4.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-tempest >= 17.1.0
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-docker >= 2.4.2
+BuildRequires: python3-module-doc8 >= 0.6.0
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-osprofiler >= 1.4.0
 BuildRequires: python3-module-testresources >= 2.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
-BuildRequires: python3-module-testtools >= 2.2.0
 %endif
 
 %if_with docs
@@ -124,6 +123,9 @@ install -pDm 644 tools/zun.bash_completion \
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.6.0-alt1
+- Automatically updated to 4.6.0.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt2
 - Fixed unowned dir.
 

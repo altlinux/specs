@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.0.0
-Release: alt2.1
+Version: 5.1.2
+Release: alt1
 
 Summary: Authentication Library for OpenStack Identity
 
@@ -37,9 +37,10 @@ BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-betamax >= 0.7.0
 BuildRequires: python3-module-stestr >= 1.0.0
 BuildRequires: python3-module-testtools >= 2.2.0
-BuildRequires: python3-module-flake8-import-order >= 0.17.1
 BuildRequires: python3-module-pycodestyle >= 2.0.0
+BuildRequires: python3-module-flake8-import-order >= 0.17.1
 BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-reno >= 3.1.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-testresources >= 2.0.0
 BuildRequires: python3-module-requests-kerberos >= 0.8.0
@@ -121,6 +122,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.2-alt1
+- Automatically updated to 5.1.2.
+
 * Fri Oct 21 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt2.1
 - Little spec fix.
 

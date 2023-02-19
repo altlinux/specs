@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 8.1.0
-Release: alt2
+Version: 9.0.0
+Release: alt1
 
 Summary: CLI and Client Library for OpenStack Networking
 
@@ -21,7 +21,6 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-cliff >= 3.4.0
 BuildRequires: python3-module-debtcollector >= 1.2.0
-BuildRequires: python3-module-iso8601 >= 0.1.11
 BuildRequires: python3-module-netaddr >= 0.7.18
 BuildRequires: python3-module-osc-lib >= 1.12.0
 BuildRequires: python3-module-oslo.i18n >= 3.15.3
@@ -32,21 +31,22 @@ BuildRequires: python3-module-os-client-config >= 1.28.0
 BuildRequires: python3-module-keystoneauth1 >= 3.8.0
 BuildRequires: python3-module-keystoneclient >= 3.8.0
 BuildRequires: python3-module-requests >= 2.14.2
-BuildRequires: python3-module-simplejson >= 3.5.1
 
 %if_with check
-BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-bandit >= 1.1.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-fixtures >= 3.0.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-osprofiler >= 2.3.0
-BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-tempest >= 17.1.0
 BuildRequires: python3-module-osc-lib-tests
+BuildRequires: python3-module-iso8601 >= 0.1.11
+BuildRequires: python3-module-simplejson >= 3.5.1
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-requests-mock >= 1.2.0
 %endif
 
 %if_with docs
@@ -131,6 +131,9 @@ rm -rf %buildroot%python3_sitelibdir/%oname/tests/functional/hooks
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 9.0.0-alt1
+- Automatically updated to 9.0.0.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 8.1.0-alt2
 - Fixed unowned dir.
 

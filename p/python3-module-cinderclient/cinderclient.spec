@@ -4,8 +4,8 @@
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 9.1.0
-Release: alt2
+Version: 9.3.0
+Release: alt1
 
 Summary: OpenStack Block Storage API Client Library
 
@@ -21,23 +21,22 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 5.5.0
 BuildRequires: python3-module-prettytable >= 0.7.1
-BuildRequires: python3-module-keystoneauth1 >= 4.3.1
-BuildRequires: python3-module-simplejson >= 3.5.1
+BuildRequires: python3-module-keystoneauth1 >= 5.0.0
 BuildRequires: python3-module-oslo.i18n >= 5.0.1
 BuildRequires: python3-module-oslo.utils >= 4.8.0
 BuildRequires: python3-module-requests >= 2.25.1
 BuildRequires: python3-module-stevedore >= 3.3.0
 
 %if_with check
-BuildRequires: python3-module-hacking >= 4.0.0
 BuildRequires: python3-module-docutils >= 0.16
 BuildRequires: python3-module-coverage >= 5.5
 BuildRequires: python3-module-ddt >= 1.4.1
 BuildRequires: python3-module-fixtures >= 3.0.0
-BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-testtools >= 2.4.0
 BuildRequires: python3-module-stestr >= 3.1.0
 BuildRequires: python3-module-oslo.serialization >= 4.1.0
+BuildRequires: python3-module-hacking >= 4.0.0
+BuildRequires: python3-module-requests-mock >= 1.2.0
 %endif
 
 %if_with docs
@@ -121,6 +120,9 @@ install -pDm 644 tools/cinder.bash_completion \
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 1:9.3.0-alt1
+- Automatically updated to 9.3.0.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 1:9.1.0-alt2
 - Fixed unowned dir.
 

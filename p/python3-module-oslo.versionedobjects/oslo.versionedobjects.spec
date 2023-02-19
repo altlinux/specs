@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.1
-Release: alt2
+Version: 3.1.0
+Release: alt1
 
 Summary: OpenStack Oslo Versioned Objects library
 
@@ -122,6 +122,9 @@ install -pDm 644 man/osloversionedobjects.1 %buildroot%_man1dir/osloversionedobj
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
 - Spec refactoring.
 

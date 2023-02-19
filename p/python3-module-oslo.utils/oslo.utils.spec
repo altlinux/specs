@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 6.0.1
-Release: alt2
+Version: 6.1.0
+Release: alt1
 
 Summary: OpenStack Oslo Utility library
 
@@ -40,8 +40,8 @@ BuildRequires: python3-module-ddt >= 1.0.1
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-bandit >= 1.6.0
-BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-oslo.config >= 5.2.0
+BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
@@ -118,6 +118,9 @@ install -pDm 644 man/osloutils.1 %buildroot%_man1dir/osloutils.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 6.1.0-alt1
+- Automatically updated to 6.1.0.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 6.0.1-alt2
 - Spec refactoring.
 

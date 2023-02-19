@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.7.1
-Release: alt3
+Version: 5.9.0
+Release: alt1
 
 Summary: Windows Hyper-V library for OpenStack projects
 
@@ -110,6 +110,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 5.9.0-alt1
+- Automatically updated to 5.9.0.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 5.7.1-alt3
 - Spec refactoring.
 

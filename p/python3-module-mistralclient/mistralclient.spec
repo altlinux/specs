@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 4.5.0
-Release: alt2
+Version: 5.0.0
+Release: alt1
 
 Summary: OpenStack Mistral Client Library
 
@@ -34,11 +34,11 @@ BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-osprofiler >= 1.4.0
 BuildRequires: python3-module-tempest >= 17.1.0
 BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-os-client-config >= 1.28.0
 BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-requests-mock >= 1.2.0
-BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-docutils >= 0.11
-BuildRequires: python3-module-os-client-config >= 1.28.0
 %endif
 
 %if_with docs
@@ -134,6 +134,9 @@ install -pDm 644 tools/mistral.bash_completion \
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
+- Automatically updated to 5.0.0.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 4.5.0-alt2
 - Fixed unowned dir.
 

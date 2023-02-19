@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 0.102.0
-Release: alt2
+Version: 1.0.1
+Release: alt1
 
 Summary: An SDK for building applications to work with OpenStack
 
@@ -137,6 +137,9 @@ export OS_TEST_TIMEOUT=30
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.1-alt1
+- Automatically updated to 1.0.1.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 0.102.0-alt2
 - Fixed build with check.
 

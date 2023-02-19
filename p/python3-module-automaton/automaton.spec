@@ -3,8 +3,8 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.1
-Release: alt2
+Version: 3.1.0
+Release: alt1
 
 Summary: OpenStack Friendly state machines for python
 
@@ -25,6 +25,8 @@ BuildRequires: python3-module-prettytable >= 0.7.2
 BuildRequires: python3-module-testtools >= 2.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-coverage >= 4.0
+BuildRequires: python3-module-oslotest >= 3.2.0
+BuildRequires: python3-module-reno >= 3.1.0
 %endif
 
 %if_with docs
@@ -103,6 +105,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.1.0-alt1
+- Automatically updated to 3.1.0.
+
 * Sat Oct 15 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt2
 - Spec refactoring.
 

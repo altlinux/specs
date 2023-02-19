@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.0.0
+Version: 5.1.0
 Release: alt1
 
 Summary: OpenStack Oslo Middleware library
@@ -120,6 +120,9 @@ install -pDm 644 man/oslomiddleware.1 %buildroot%_man1dir/oslomiddleware.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.0-alt1
+- Automatically updated to 5.1.0.
+
 * Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
 - Automatically updated to 5.0.0.
 

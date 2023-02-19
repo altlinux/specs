@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 8.0.0
+Version: 8.1.0
 Release: alt1
 
 Summary: Client library for OpenStack DBaaS API
@@ -33,14 +33,14 @@ BuildRequires: python3-module-openstackclient >= 3.12.0
 %if_with check
 BuildRequires: python3-module-six >= 1.10.0
 BuildRequires: python3-module-httplib2 >= 0.9.1
-BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-fixtures >= 3.0.0
+BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-testtools >= 2.2.0
+BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-requests-mock >= 1.2.0
-BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-testscenarios >= 0.4
-BuildRequires: python3-module-testtools >= 2.2.0
 %endif
 
 %if_with docs
@@ -121,6 +121,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 8.1.0-alt1
+- Automatically updated to 8.1.0.
+
 * Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 8.0.0-alt1
 - Automatically updated to 8.0.0.
 

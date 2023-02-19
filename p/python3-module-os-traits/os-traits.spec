@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 2.9.0
+Version: 2.10.0
 Release: alt1
 
 Summary: OpenStack library containing standardized trait strings
@@ -21,10 +21,10 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 2.0.0
 
 %if_with check
-BuildRequires: python3-module-hacking >= 3.0.1
-BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslotest >= 3.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-testscenarios >= 0.4
 BuildRequires: python3-module-testtools >= 2.2.0
 %endif
@@ -104,6 +104,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 2.10.0-alt1
+- Automatically updated to 2.10.0.
+
 * Tue Oct 18 2022 Grigory Ustinov <grenka@altlinux.org> 2.9.0-alt1
 - Automatically updated to 2.9.0.
 

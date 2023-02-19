@@ -3,7 +3,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 5.0.0
+Version: 5.2.0
 Release: alt1
 
 Summary: OpenStack DNS-as-a-Service - Client
@@ -20,24 +20,24 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr >= 2.0.0
 BuildRequires: python3-module-cliff >= 2.8.0
-BuildRequires: python3-module-jsonschema >= 3.2.0
 BuildRequires: python3-module-osc-lib >= 1.8.0
 BuildRequires: python3-module-oslo.serialization >= 2.18.0
 BuildRequires: python3-module-oslo.utils >= 3.33.0
 BuildRequires: python3-module-keystoneauth1 >= 3.4.0
 BuildRequires: python3-module-requests >= 2.14.2
 BuildRequires: python3-module-stevedore >= 1.20.0
-BuildRequires: python3-module-debtcollector >= 1.2.0
 
 %if_with check
 BuildRequires: python3-module-hacking >= 3.0.1
 BuildRequires: python3-module-coverage >= 4.0
 BuildRequires: python3-module-oslo.config >= 5.2.0
 BuildRequires: python3-module-oslotest >= 3.2.0
-BuildRequires: python3-module-requests-mock >= 1.2.0
 BuildRequires: python3-module-stestr >= 2.0.0
 BuildRequires: python3-module-tempest >= 25.0.0
 BuildRequires: python3-module-osc-lib-tests
+BuildRequires: python3-module-jsonschema >= 3.2.0
+BuildRequires: python3-module-debtcollector >= 1.2.0
+BuildRequires: python3-module-requests-mock >= 1.2.0
 %endif
 
 %if_with docs
@@ -116,6 +116,9 @@ install -pDm 644 man/python-%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 5.2.0-alt1
+- Automatically updated to 5.2.0.
+
 * Mon Oct 10 2022 Grigory Ustinov <grenka@altlinux.org> 5.0.0-alt1
 - Automatically updated to 5.0.0.
 

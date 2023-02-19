@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 3.0.0
+Version: 3.0.1
 Release: alt1
 
 Summary: OpenStack Docs Theme
@@ -24,6 +24,8 @@ BuildRequires: python3-module-pbr >= 2.0.0
 %if_with docs
 BuildRequires: python3-module-sphinx >= 2.0.0
 BuildRequires: python3-module-dulwich >= 0.15.0
+BuildRequires: python3-module-hacking >= 3.0.1
+BuildRequires: python3-module-pre-commit >= 2.6.0
 %endif
 
 %description
@@ -87,6 +89,9 @@ install -pDm 644 man/%oname.1 %buildroot%_man1dir/%oname.1
 %endif
 
 %changelog
+* Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 3.0.1-alt1
+- Automatically updated to 3.0.1.
+
 * Wed Oct 19 2022 Grigory Ustinov <grenka@altlinux.org> 3.0.0-alt1
 - Automatically updated to 3.0.0.
 
