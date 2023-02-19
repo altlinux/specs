@@ -1,6 +1,6 @@
 Name:		cups-x2go
 Version:	3.0.1.4
-Release:	alt1
+Release:	alt1.1
 
 Summary:	CUPS backend for printing from X2Go
 License:	GPLv2+
@@ -10,6 +10,8 @@ BuildArch:	noarch
 
 # Upstream:	git://code.x2go.org/cups-x2go.git
 Source:		%name-%version.tar
+
+Patch1:		cups-x2go-setpdfwrite.patch
 
 Requires:	perl
 Requires:	x2goserver
@@ -31,6 +33,7 @@ CUPS backend for printing from X2Go.
 
 %prep
 %setup
+%patch1 -p1
 
 %install
 mkdir -p %buildroot%prefix/lib/cups/backend
@@ -56,6 +59,9 @@ cp -p VERSION.cups-x2go %buildroot%_datadir/x2go/versions/
 %doc README.txt
 
 %changelog
+* Sun Feb 19 2023 Elena Mishina <lepata@altlinux.org> 3.0.1.4-alt1.1
+- Fix GhostScript command line (closes: #45151).
+
 * Thu Nov 22 2018 Andrey Cherepanov <cas@altlinux.org> 3.0.1.4-alt1
 - New version.
 
