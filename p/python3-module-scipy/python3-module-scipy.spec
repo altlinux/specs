@@ -1,28 +1,39 @@
 %define _unpackaged_files_terminate_build 1
 
-%def_without tests
+%def_without check
+%ifarch x86_64 aarch64
+%def_with pythran
+%else
+%def_without pythran
+%endif
 
 %define modname scipy
-%define ver_major 1.6
-%define ver_minor 1
+%define ver_major 1.10
+%define ver_minor 0
 
 %define numpy_version 1.16.5
 
 Name: python3-module-%modname
 Version: %ver_major.%ver_minor
-Release: alt4
+Release: alt1
 
 Summary: SciPy is the library of scientific codes
 License: BSD-3-Clause
 Group: Development/Python3
 
 Url: https://www.scipy.org/
-#VCS git://github.com/scipy/scipy.git
+VCS: git://github.com/scipy/scipy.git
+Patch0: %name-%version-%release.patch
 Source0: %name-%version.tar
 Source1: site.cfg
+# submodules  by update-submodules.sh
+Source2: %name-%version-doc-source-_static-scipy-mathjax.tar
+Source3: %name-%version-scipy-_lib-boost.tar
+Source4: %name-%version-scipy-_lib-highs.tar
+Source5: %name-%version-scipy-_lib-unuran.tar
+Source6: %name-%version-scipy-sparse-linalg-_propack-PROPACK.tar
 
 # will be released with scipy 1.8.0
-Patch0: scipy-1.6.1-MAINT-use-PEP440-vs.-distutils.patch
 
 BuildRequires(pre): rpm-macros-make
 BuildRequires(pre): rpm-macros-sphinx3
@@ -34,6 +45,10 @@ BuildRequires: python3-module-Cython
 BuildRequires: python3-module-html5lib
 BuildRequires: python3-module-matplotlib
 BuildRequires: python3-module-pybind11
+%if_with pythran
+BuildRequires: python3-module-pythran
+%endif
+BuildRequires: libflexiblas-devel
 
 %ifarch %e2k
 BuildRequires: eml-devel-compat-lapack
@@ -47,7 +62,11 @@ Requires: python3-module-numpy >= %numpy_version
 %add_python3_req_skip _min_spanning_tree _shortest_path _tools
 %add_python3_req_skip _traversal sympy
 %add_python3_req_skip distutils
-%if_with tests
+%if_with check
+BuildRequires: /usr/bin/pytest3
+BuildRequires: python3-module-numpy-tests
+BuildRequires: /proc
+BuildRequires: python3-module-pooch
 %add_python3_req_skip scipy.fft.tests
 %else
 %add_python3_req_skip numpy.testing
@@ -69,14 +88,14 @@ SciPy is the library of scientific codes built on top of NumPy.
 This package contains development files of SciPy.
 
 %prep
-%setup
-%autopatch -p1
+%setup -a2 -a3 -a4 -a5 -a6
+%patch0 -p1
 install -p -m644 %SOURCE1 .
 sed -i 's|@LIBDIR@|%_libdir|g' site.cfg doc/Makefile
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 sed -i 's|@PYSUFF@|3|' site.cfg
 
-%if_without tests
+%if_without check
 # Find and comment out Pytest imports, since main package should
 # not require test deps
 grep -zPqsr '[ ]*from scipy._lib._testutils import PytestTester\n[ ]*test = PytestTester\(__name__\)\n[ ]*del PytestTester\n' || exit 1
@@ -96,11 +115,14 @@ sed -i 's|^\(backend\).*|\1 : Agg|' ~/.matplotlib/matplotlibrc
 # fixup "EML instead of OpenBLAS/LAPACK" setup
 sed -i -e 's/lapack, /clapack, eml_algebra_mt, /g' -e 's/openblas, /blas, /g' site.cfg
 %endif
+
+export SCIPY_USE_PYTHRAN=0%{?with_pythran}
 %add_optflags -I%_includedir/suitesparse -fno-strict-aliasing %optflags_shared
 %python3_build_debug build_ext build_py build_clib \
 	config_fc --fcompiler=gnu95
 
 %install
+export SCIPY_USE_PYTHRAN=0%{?with_pythran}
 %python3_install install_lib install_headers \
 	install_data config_fc
 find %buildroot%python3_sitelibdir -type f -exec \
@@ -127,8 +149,8 @@ for i in $(ls *.so); do
 done
 popd
 
-%if_without tests
-# don't package tests and tests' data
+%if_without check
+# don't package tests and tests'check
 for i in $(find %buildroot%python3_sitelibdir \
                -name tests -type d \
                -o -name 'conftest.*' -type f \
@@ -142,12 +164,11 @@ done
 
 %find_lang %name
 
-#check
-#pushd %buildroot%python_sitelibdir
-#python -c "import scipy ; scipy.test()"
-#popd
-#rm -f %buildroot%python_sitelibdir/*.so \
-#	%buildroot%python_sitelibdir/*.cpp
+%check
+pushd %{buildroot}/%{python3_sitelibdir}
+pytest3 scipy
+popd
+
 
 %files -f %name.lang
 %python3_sitelibdir/*
@@ -156,6 +177,9 @@ done
 %_includedir/%modname-py3
 
 %changelog
+* Fri Feb 17 2023 Anton Farygin <rider@altlinux.ru> 1.10.0-alt1
+- 1.6.1 -> 1.10.0
+
 * Tue Feb 14 2023 Grigory Ustinov <grenka@altlinux.org> 1.6.1-alt4
 - mpl-data moved to %%_datadir.
 
