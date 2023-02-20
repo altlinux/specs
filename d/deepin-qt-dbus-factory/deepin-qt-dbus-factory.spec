@@ -1,10 +1,11 @@
-%global soname dframeworkdbus
-%global repo   dde-qt-dbus-factory
+%define soname dframeworkdbus
+%define repo   dde-qt-dbus-factory
+%define llvm_ver 15
 
 %def_disable clang
 
 Name: deepin-qt-dbus-factory
-Version: 5.5.22
+Version: 6.0.0
 Release: alt1
 Summary: A repository stores auto-generated Qt5 dbus code
 # The entire source code is GPL-3.0+ except
@@ -17,7 +18,12 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 Source: %url/archive/%version/%repo-%version.tar.gz
 
 %if_enabled clang
-BuildRequires(pre): clang12.0-devel
+BuildRequires: clang%llvm_ver.0-devel
+BuildRequires: lld%llvm_ver.0-devel
+BuildRequires: llvm%llvm_ver.0-devel
+#BuildRequires: libstdc++%%gcc_ver-devel
+%else
+BuildRequires: gcc-c++
 %endif
 BuildRequires: python3 libglvnd-devel qt5-base-devel
 
@@ -43,6 +49,12 @@ Header files and libraries for %name.
 %setup -n %repo-%version
 
 %build
+%if_enabled clang
+%define optflags_lto %nil
+export CC=clang-%llvm_ver
+export CXX=clang++-%llvm_ver
+export LDFLAGS="-fuse-ld=lld-%llvm_ver $LDFLAGS"
+%endif
 %qmake_qt5 \
 %if_enabled clang
     QMAKE_STRIP= -spec linux-clang \
@@ -66,6 +78,9 @@ Header files and libraries for %name.
 %_libdir/lib%soname.so
 
 %changelog
+* Mon Feb 20 2023 Leontiy Volodin <lvol@altlinux.org> 6.0.0-alt1
+- New version (6.0.0).
+
 * Wed Mar 16 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.22-alt1
 - New version (5.5.22).
 
