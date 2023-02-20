@@ -1,10 +1,11 @@
 %define _unpackaged_files_terminate_build 1
+%def_disable check
 
 %define oname networkx
 
 Name:           python3-module-%oname
 Epoch:          2
-Version:        2.6.3
+Version:        2.8.8
 Release:        alt1
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python3
@@ -16,7 +17,7 @@ BuildArch:      noarch
 # https://github.com/networkx/networkx.git
 Source:         %name-%version.tar
 
-Patch1:         %oname-%version-alt.patch
+Patch1:         %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-setuptools
@@ -24,6 +25,11 @@ BuildRequires: python3-module-decorator >= 4.3.0
 BuildRequires: python3-module-yaml >= 5.3
 BuildRequires: python3-module-lxml >= 4.5
 BuildRequires: python3-module-gdal >= 1.10.0
+%if_enabled check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-pandas-tests
+%endif
 
 Requires: %name-drawing = %EVR
 
@@ -84,6 +90,9 @@ find -type f -name '*.py' -exec sed -i \
 
 rm -rf %buildroot%_defaultdocdir
 
+%check
+py.test3 --durations=10 --pyargs networkx
+
 %files
 
 %files core
@@ -116,6 +125,9 @@ rm -rf %buildroot%_defaultdocdir
 %python3_sitelibdir/%oname/*/*/tests
 
 %changelog
+* Sat Dec 03 2022 Anton Farygin <rider@altlinux.ru> 2:2.8.8-alt1
+- 2.6.3 -> 2.8.8
+
 * Tue Feb 15 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 2:2.6.3-alt1
 - Updated to upstream version 2.6.3.
 
