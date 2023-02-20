@@ -1,5 +1,5 @@
 Name: corectrl
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 Summary: Core control application
 Group: System/Configuration/Hardware
@@ -13,6 +13,7 @@ Source2: %name.control
 BuildRequires(pre): cmake
 # Automatically added by buildreq on Sun Oct 02 2022
 BuildRequires: libbotan-devel libdbus-devel libdrm-devel libpolkit-devel qt5-charts-devel qt5-svg-devel qt5-tools-devel quazip-qt5-devel
+BuildRequires: libfmt-devel >= 5.0, libpugixml-devel >= 1.11
 
 %description
 CoreCtrl is a Free and Open Source GNU/Linux application that allows you to
@@ -65,6 +66,10 @@ fi
 %_datadir/polkit-1/actions/org.%name.*.policy
 
 %changelog
+* Mon Feb 20 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.2-alt1
+- 1.3.2.
+- Use system fmt, pugixml.
+
 * Fri Oct 14 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.1-alt1
 - 1.3.1.
 
