@@ -3,10 +3,11 @@
 %add_findreq_skiplist %perl_vendor_privlib/PVE/Status/InfluxDB.pm
 
 %define ver_major 7.2
+%define ver_minor 15
 Name: pve-manager
 Summary: The Proxmox Virtual Environment
-Version: %ver_major.15
-Release: alt3
+Version: %ver_major.%ver_minor
+Release: alt4
 License: AGPL-3.0+ AND GPLv3 AND MIT
 Group: System/Servers
 Url: https://git.proxmox.com/
@@ -47,7 +48,7 @@ grep '/var/run' * -rl | while read f; do
 done
 
 %build
-%make PACKAGE="pve-manager" VERSION="%version" PVERELEASE="%ver_major" REPOID="%release"
+%make PACKAGE="pve-manager" VERSION="%ver_major-%ver_minor" PVERELEASE="%ver_major" REPOID="%release"
 
 %install
 %makeinstall_std
@@ -123,6 +124,9 @@ rm -f  %buildroot%_man1dir/pveupgrade.1*
 %_man8dir/*
 
 %changelog
+* Mon Feb 20 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.15-alt4
+- change delimiter between major and minor parts of the VERSION
+
 * Sat Feb 04 2023 Alexey Shabalin <shaba@altlinux.org> 7.2.15-alt3
 - package /var/lib/pve-manage/jobs for fix config backup jobs
 
