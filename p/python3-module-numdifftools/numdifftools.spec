@@ -1,69 +1,80 @@
 %define oname numdifftools
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.9.39
-Release: alt2
+Version: 0.9.41
+Release: alt1
 
 Summary: Solves automatic numerical differentiation problems in one or more variables
 
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: https://github.com/pbrod/numdifftools
+Url: https://pypi.org/project/numdifftools
 
-# Source-url: %__pypi_url %oname
+VCS: https://github.com/pbrod/numdifftools
 Source: %name-%version.tar
+Patch0: nd-0.9.41-alt-fix-pytest-runner.patch
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-scipy
-BuildPreReq: python3-module-numpy python3-module-matplotlib
-BuildPreReq: python3-module-coverage python3-module-setuptools
-BuildPreReq: python3-module-setuptools_scm python3-module-six
-BuildPreReq: python3-module-algopy
-BuildRequires: python3-module-pytest-runner
-%if_enabled check
-BuildPreReq: python3-module-nose xvfb-run
-BuildPreReq: python3-module-pytest-cov
+%if_with check
+BuildRequires: python3-module-algopy
+BuildRequires: python3-module-hypothesis
+BuildRequires: python3-module-matplotlib
+BuildRequires: python3-module-scikits.statsmodels
+BuildRequires: python3-module-pandas-tests
 %endif
-BuildPreReq: texlive-latex-recommended
-
-%py3_provides %oname
-%py3_requires numpy scipy algopy
 
 %description
 Numdifftools is a suite of tools to solve automatic numerical
 differentiation problems in one or more variables. All of these methods
 also produce error estimates on the result.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
+Requires: python3-module-algopy
+Requires: python3-module-scikits.statsmodels
+Requires: python3-module-pandas-tests
+
+%description tests
+Numdifftools is a suite of tools to solve automatic numerical
+differentiation problems in one or more variables. All of these methods
+also produce error estimates on the result.
+
+This package contains tests for %oname.
+
 %prep
 %setup
+%patch0
 
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
-%python3_prune
-
-%if "%_libexecdir" != "%_libdir"
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
 
 %check
-%if_enabled check
-export PYTHONPATH=%buildroot%python3_sitelibdir
-pushd ~
-xvfb-run python3 -c "import numdifftools as nd; nd.test(coverage=True)" || :
-popd
-xvfb-run py.test-%_python3_version -vv -rsxXf
-%endif
+cd src
+py.test-3 '--doctest-modules' '--disable-warnings'
 
 %files
-%python3_sitelibdir/*
+%doc LICENSE.txt *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%exclude %python3_sitelibdir/%oname/tests
+
+%files tests
+%python3_sitelibdir/%oname/tests
+%doc LICENSE.txt *.rst
 
 %changelog
+* Fri Feb 10 2023 Anton Vyatkin <toni@altlinux.org> 0.9.41-alt1
+- new version 0.9.41 (Closes: #44635).
+
 * Fri Jul 30 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 0.9.39-alt2
 - Updated build dependencies.
 
