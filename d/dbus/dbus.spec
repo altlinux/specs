@@ -8,8 +8,8 @@
 %define systemdsessionunitdir %_prefix/lib/systemd/user
 
 Name: dbus
-Version: 1.14.4
-Release: alt2
+Version: 1.14.6
+Release: alt1
 
 Summary: D-BUS is a simple IPC framework based on messages.
 License: AFL/GPL
@@ -226,6 +226,9 @@ fi
 %_man1dir/dbus-test-tool.1*
 
 %changelog
+* Mon Feb 20 2023 Valery Inozemtsev <shrek@altlinux.ru> 1.14.6-alt1
+- 1.14.6
+
 * Thu Dec 22 2022 Valery Inozemtsev <shrek@altlinux.ru> 1.14.4-alt2
 - fixed run dbus-daemon in hasher
 
