@@ -1,19 +1,23 @@
-%define repo Toric
+%define repo toric
 
 Name: gap-toric
-Summary: GAP: toric varieties and some combinatorial geometry computations
-Version: 1.9.4
+Version: 1.9.5
 Release: alt1
+
+Summary: GAP: toric varieties and some combinatorial geometry computations
+
 License: MIT
 Group: Sciences/Mathematics
-Url: http://www.opensourcemath.org/toric/
+Url: https://gap-packages.github.io/toric/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/Toric-%version.tar.bz2
+Source: https://github.com/gap-packages/toric/releases/download/v%version/%repo-%version.tar.gz
+
 BuildArch: noarch
+
+Requires: gap >= 4.5
 
 BuildPreReq: fdupes
 BuildPreReq: rpm-macros-gap
-Requires: gap >= 4.5
 
 %description
 "toric" is a package that implements some computations related to
@@ -23,7 +27,7 @@ them can be calculated. "toric" is written entirely in the GAP
 language by D. Joyner.
 
 %prep
-%setup -n Toric-%version
+%setup -n %repo-%version
 
 %build
 %install
@@ -35,5 +39,9 @@ fdupes %buildroot%_prefix
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Mon Feb 20 2023 Leontiy Volodin <lvol@altlinux.org> 1.9.5-alt1
+- New version (1.9.5).
+- Updated url and source tags.
+
 * Fri Jun 11 2021 Leontiy Volodin <lvol@altlinux.org> 1.9.4-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
