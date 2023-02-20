@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.43.15
+Version: 0.44.0
 Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
@@ -174,6 +174,16 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Mon Feb 20 2023 Andrey Cherepanov <cas@altlinux.org> 0.44.0-alt1
+- Many improvements by sin@ and kaa@:
+- Disable Username and Password edit boxes activity when kerberos ccache using.
+- Add support for switching between sssd and winbind during join to AD.
+- Avoid to use default credential cache with password authentication and place login/password credential pair as command line option to net utility.
+- Add support of using default kerberos credential cache during join to AD.
+- Don't show gpupdate checkbox for ipa join (ALT#45154).
+- Check Active Directory computer name condition by RFC952 and fix regression with not changing static hostname after reboot.
+- Computer name and static hostname restrictions when typing into a domain.
+
 * Wed Sep 28 2022 Andrey Cherepanov <cas@altlinux.org> 0.43.15-alt1
 - Support custom computer OU and Windows 2003 during join to Active Directory.
 
