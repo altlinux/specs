@@ -3,7 +3,7 @@
 
 Summary: CONE mail reader
 Name: cone
-Version: 1.7
+Version: 1.8
 Release: alt0.1
 Url: http://www.courier-mta.org/cone
 Source0: %name-%version.tar.bz2
@@ -19,7 +19,7 @@ Packager: L.A. Kostis <lakostis@altlinux.org>
 BuildRequires: libaspell-devel libxml2-devel
 BuildRequires: zlib-devel libgamin-devel perl libncursesw-devel
 BuildRequires: libstdc++-devel gcc-c++
-BuildRequires: openldap-devel libidn-devel courier-unicode-devel
+BuildRequires: openldap-devel libidn2-devel courier-unicode-devel
 BuildRequires: gnupg2 libpcre2-devel
 
 %if_enabled openssl
@@ -99,6 +99,10 @@ echo 'and earlier'
 %endif
 
 %changelog
+* Thu Feb 16 2023 L.A. Kostis <lakostis@altlinux.ru> 1.8-alt0.1
+- 1.8.
+- libidn -> libidn2.
+
 * Mon Nov 28 2022 L.A. Kostis <lakostis@altlinux.ru> 1.7-alt0.1
 - 1.7.
 

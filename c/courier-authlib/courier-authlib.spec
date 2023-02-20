@@ -8,7 +8,7 @@
 %define rev %nil
 
 Name: courier-authlib
-Version: 0.71.6
+Version: 0.72.0
 Release: alt1%rev
 Summary: Courier authentication library -- tool and utilities
 License: GPL-3
@@ -32,7 +32,7 @@ Patch3: %name-0.59.1-alt-addlock.patch
 # Automatically added by buildreq on Mon May 23 2005
 BuildRequires: gcc-c++ libMySQL-devel libssl-devel libdb4-devel libldap-devel libltdl-devel
 BuildRequires: libpam-devel libstdc++-devel libpq-devel zlib-devel expect
-BuildRequires: libsqlite3-devel courier-unicode-devel >= 2.2.3 libidn-devel
+BuildRequires: libsqlite3-devel courier-unicode-devel >= 2.2.3 libidn2-devel
 
 %add_findprov_lib_path %_libdir/%name
 
@@ -351,6 +351,10 @@ chown courier:courier %_sysconfdir/%name/authdaemon-sqlite.conf
 %_libdir/%name/libauthsqlite*.so.*
 
 %changelog
+* Mon Feb 20 2023 L.A. Kostis <lakostis@altlinux.ru> 0.72.0-alt1
+- 0.72.0.
+- BR: switch to libidn2.
+
 * Mon Nov 28 2022 L.A. Kostis <lakostis@altlinux.ru> 0.71.6-alt1
 - 0.71.6.
 - BR: Replace postgresql-devel -> libpq-devel.

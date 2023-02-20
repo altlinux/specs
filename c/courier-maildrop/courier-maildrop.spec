@@ -7,7 +7,7 @@
 %define origname maildrop
 
 Name: courier-maildrop
-Version: 3.0.9
+Version: 3.1.1
 Release: alt0.1
 
 Summary: maildrop mail filter/mail delivery agent
@@ -29,7 +29,7 @@ BuildPreReq: libcourier-authlib-devel >= 0.68.0
 
 # Automatically added by buildreq on Sun Nov 27 2005
 BuildRequires: gcc-c++ libdb4-devel libpcre2-devel libstdc++-devel
-BuildRequires: courier-unicode-devel libidn-devel
+BuildRequires: courier-unicode-devel libidn2-devel
 
 %description
 Maildrop - mail delivery agent with filtering capabilities and
@@ -135,6 +135,10 @@ install -m 0644 libs/maildrop/maildroptips.html %buildroot%_docdir/%name-%versio
 %_man8dir/deliverquota.8*
 
 %changelog
+* Mon Feb 20 2023 L.A. Kostis <lakostis@altlinux.ru> 3.1.1-alt0.1
+- 3.1.1.
+- BuildReq: libidn->libidn2.
+
 * Mon Nov 28 2022 L.A. Kostis <lakostis@altlinux.ru> 3.0.9-alt0.1
 - 3.0.9.
 
