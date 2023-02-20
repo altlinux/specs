@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -61,6 +61,11 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Thu Feb 16 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.1-alt1
+- hsh/hsh-rebuild: added --img-apt-config option to use a separate
+  apt configuration for image building.
+- hsh-rebuild: pass target architecture to img-build.
+
 * Mon Dec 26 2022 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.7.0-alt1
 - Added initial support for image building.
 - Fixed duplications in generated hsh.1 manpage (closes: #31820).
