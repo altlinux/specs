@@ -24,7 +24,7 @@
 
 Name: vulkan-amdgpu
 Version: 2023.Q1.2
-Release: alt1
+Release: alt1.1
 License: MIT
 Url: https://github.com/GPUOpen-Drivers/AMDVLK
 Summary: AMD Open Source Driver For Vulkan
@@ -109,8 +109,8 @@ touch %buildroot%_sysconfdir/amd/amdVulkanSettings.cfg
 
 install -p -m644 %_builddir/xgl/%_cmake__builddir/icd/%_vklib%bits.so %buildroot%_libdir/%_vklib.so
 for f in %buildroot%_vkdir/$(basename %SOURCE6) %buildroot%_vkldir/$(basename %SOURCE8); do install -pD -m644 /dev/null "$f"; done
-sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE6 %buildroot%_vkdir/$(basename %SOURCE6)
-sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 %buildroot%_vkldir/$(basename %SOURCE8)
+sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE6 > %buildroot%_vkdir/$(basename %SOURCE6)
+sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 > %buildroot%_vkldir/$(basename %SOURCE8)
 
 %files
 %_libdir/*.so
@@ -120,6 +120,9 @@ sed -e 's|@API_VERSION@|%_vk_api_version|g' %SOURCE8 %buildroot%_vkldir/$(basena
 %ghost %attr(644,root,root) %config(missingok) %_sysconfdir/amd/*.cfg
 
 %changelog
+* Mon Feb 20 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q1.2-alt1.1
+- Fix .icd files generation.
+
 * Mon Feb 20 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.Q1.2-alt1
 - 2023-2-17 update:
   + icd: bump vulkan version
