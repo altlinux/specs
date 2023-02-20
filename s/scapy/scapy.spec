@@ -1,8 +1,8 @@
-%define module_name scapy
+%define oname scapy
 
 Name: scapy
-Version: 2.4.5
-Release: alt2
+Version: 2.5.0
+Release: alt1
 
 Summary: Scapy is a powerful interactive packet manipulation program written in Python
 
@@ -10,9 +10,8 @@ Group: Networking/Other
 License: GPLv2
 Url: http://www.secdev.org/projects/scapy/
 
-# Source-url: https://github.com/secdev/scapy/archive/v%version.zip
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
+##Source-url: https://github.com/secdev/scapy/archive/v%version.zip
+# Source-url: %__pypi_url %oname
 Source: %name-%version.tar
 
 BuildArch: noarch
@@ -21,12 +20,13 @@ Requires: python3-module-scapy = %EVR
 
 Requires: tcpdump
 
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires(pre): rpm-build-python3
+BuildRequires(pre): rpm-build-python3 rpm-build-intro
+BuildRequires: python3-module-wheel
 
-%add_python3_req_skip scapy.modules.six.moves scapy.modules.six.moves.queue
+%add_python3_req_skip scapy.libs.six.moves scapy.libs.six.moves.queue
 
 # contrib
+%add_python3_req_skip can
 %add_python3_req_skip can.interface
 
 %description
@@ -49,11 +49,12 @@ Powerful interactive packet manipulation python module scapy.
 echo %version > scapy/VERSION
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-rm -rf %buildroot%python3_sitelibdir/%name/arch/windows
+%pyproject_install
+%python3_prune
+rm -rv %buildroot%python3_sitelibdir/%name/arch/windows
 
 %files
 %_bindir/*scapy
@@ -61,9 +62,14 @@ rm -rf %buildroot%python3_sitelibdir/%name/arch/windows
 
 %files -n python3-module-scapy
 %python3_sitelibdir/%name/
-%python3_sitelibdir/%name-*egg-info
+%python3_sitelibdir/%name-*dist-info/
 
 %changelog
+* Sun Feb 19 2023 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt1
+- new version 2.5.0 (with rpmrb script)
+- switch to pyproject
+- drop separated python3-module-scapy
+
 * Fri Jul 15 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.4.5-alt2
 - fix version in metadata (fixes: 39703)
 
