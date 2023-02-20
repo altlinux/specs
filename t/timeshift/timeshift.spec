@@ -3,11 +3,12 @@
 Name: timeshift
 Version: 22.11.1
 Summary: System restore tool for Linux
-Release: alt1
+Release: alt2
 License: GPLv3
 Group: Archiving/Backup
 URL: https://github.com/linuxmint/timeshift
 Source: %name-%version.tar
+Source1: firsttime-snapshot.sh
 
 BuildRequires: vala
 BuildRequires: libjson-glib-devel
@@ -30,6 +31,9 @@ running or from Live CD/USB.
 %install
 %makeinstall_std
 rm -f %buildroot%_bindir/%name-uninstall
+
+#firsttime script, start with zz, as it should be executed as late as possible
+install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snapshot.sh
 %find_lang %name
 
 %files -f %name.lang
@@ -43,10 +47,14 @@ rm -f %buildroot%_bindir/%name-uninstall
 %_datadir/metainfo/%name.appdata.xml
 %_pixmapsdir/%name.png
 %_datadir/polkit-1/actions/in.teejeetech.pkexec.timeshift.policy
+%_sysconfdir/firsttime.d/zz-firsttime-snapshot.sh
 %exclude %_man1dir/%name.1.gz.xz
 %doc README.md
 
 %changelog
+* Mon Feb 20 2023 Oleg Solovyov <mcpain@altlinux.org> 22.11.1-alt2
+- First boot: take BtrFS snapshot before logging in
+
 * Sun Nov 27 2022 Alexander Makeenkov <amakeenk@altlinux.org> 22.11.1-alt1
 - Updated to version 22.11.1
 - Switched to new upstream
