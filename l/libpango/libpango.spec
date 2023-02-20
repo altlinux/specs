@@ -15,10 +15,11 @@
 %def_enable cairo
 %def_enable libthai
 %def_disable sysprof
+#24/27 test-layout  ERROR  0.55s  exit status 1
 %def_disable check
 
 Name: lib%_name
-Version: %ver_major.12
+Version: %ver_major.13
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -47,12 +48,12 @@ Obsoletes: %_name < %version
 Obsoletes: gscript
 
 # from meson.build
-%define meson_ver 0.55.3
+%define meson_ver 0.60.0
 %define glib_ver 2.62
 %define cairo_ver 1.12.10
 %define gi_docgen_ver 2021.3
 %define xft_ver 2.0.0
-%define fontconfig_ver 2.11.91
+%define fontconfig_ver 2.13.0
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
 %define hb_ver 3.2.0
@@ -163,7 +164,7 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %meson_install
 
 %check
-%__meson_test
+%__meson_test -v --print-errorlogs
 
 %files
 %_bindir/%_name-list
@@ -218,6 +219,9 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 
 %changelog
+* Mon Feb 20 2023 Yuri N. Sedunov <aris@altlinux.org> 1.50.13-alt1
+- 1.50.13
+
 * Sat Nov 19 2022 Yuri N. Sedunov <aris@altlinux.org> 1.50.12-alt1
 - 1.50.12
 
