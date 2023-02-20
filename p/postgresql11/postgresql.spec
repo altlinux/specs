@@ -10,7 +10,7 @@
 %define prog_name            postgresql
 %define postgresql_major     11
 %define postgresql_minor     19
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -456,8 +456,7 @@ cat psql-%postgresql_major.lang \
     pgscripts-%postgresql_major.lang \
     pg_basebackup-%postgresql_major.lang \
     pg_test_fsync-%postgresql_major.lang \
-    pg_test_timing-%postgresql_major.lang \
-    pg_verify_checksums-%postgresql_major.lang > main.lang
+    pg_test_timing-%postgresql_major.lang  > main.lang
 
 cat postgres-%postgresql_major.lang \
     pg_controldata-%postgresql_major.lang \
@@ -467,6 +466,7 @@ cat postgres-%postgresql_major.lang \
     pg_rewind-%postgresql_major.lang \
     pg_upgrade-%postgresql_major.lang \
     pg_resetwal-%postgresql_major.lang \
+    pg_verify_checksums-%postgresql_major.lang \
     pg_waldump-%postgresql_major.lang > server.lang
 
 cat pg_config-%postgresql_major.lang > devel.lang
@@ -571,7 +571,6 @@ fi
 %_bindir/pg_basebackup
 %_bindir/pg_test_fsync
 %_bindir/pg_test_timing
-%_bindir/pg_verify_checksums
 %_bindir/pg_isready
 %_bindir/pg_recvlogical
 %_man1dir/clusterdb.1*
@@ -590,7 +589,6 @@ fi
 %_man1dir/pg_basebackup.1*
 %_man1dir/pg_isready.1*
 %_man1dir/pg_recvlogical.1*
-%_man1dir/pg_verify_checksums.1*
 %_man7dir/*
 %dir %docdir
 %docdir/KNOWN_BUGS
@@ -794,6 +792,7 @@ fi
 %_bindir/pg_rewind
 %_bindir/pg_receivewal
 %_bindir/pg_resetwal
+%_bindir/pg_verify_checksums
 %_bindir/pg_waldump
 
 %_man1dir/initdb.1*
@@ -805,6 +804,7 @@ fi
 %_man1dir/pg_rewind.1*
 %_man1dir/pg_receivewal.1*
 %_man1dir/pg_resetwal.1*
+%_man1dir/pg_verify_checksums.1*
 %_man1dir/pg_waldump.1*
 
 %dir %_libdir/%PGSQL
@@ -922,6 +922,9 @@ fi
 %endif
 
 %changelog
+* Mon Feb 20 2023 Alexei Takaseev <taf@altlinux.org> 11.19-alt2
+- Move pg_verify_checksums from -contrib to -server subpackage
+
 * Wed Feb 08 2023 Alexei Takaseev <taf@altlinux.org> 11.19-alt1
 - 11.19
 - Conflicts: 14-1C -> 15-1C
