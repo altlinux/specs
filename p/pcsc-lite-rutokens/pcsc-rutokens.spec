@@ -3,7 +3,7 @@
 %define libpcsclite_usbdropdir %(pkg-config libpcsclite --variable=usbdropdir)
 
 Name: pcsc-lite-rutokens
-Version: 1.0.7
+Version: 1.0.9
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -45,6 +45,9 @@ LDFLAGS=
 %libpcsclite_usbdropdir/ifd-rutokens.bundle
 
 %changelog
+* Mon Feb 20 2023 Andrey Cherepanov <cas@altlinux.org> 1.0.9-alt1
+- New version.
+
 * Mon Apr 05 2021 Andrey Cherepanov <cas@altlinux.org> 1.0.7-alt1
 - New version.
 
