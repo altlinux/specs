@@ -1,16 +1,16 @@
 Name: pcsc-lite-ccid
-Version: 1.4.36
+Version: 1.5.2
 Release: alt1
 
 Summary: USB CCID IFD Handler
 License: LGPL-2.1
 Group: System/Libraries
-URL: https://pcsclite.apdu.fr/
+URL: https://ccid.apdu.fr
 
 Requires: pcsc-lite
 
 Source: %name-%version.tar
-Source1: PCSC.tar
+Source1: submodules.tar
 Patch1: ccid-disable-examples-build.patch
 
 BuildRequires: flex libpcsclite-devel libusb-devel
@@ -18,6 +18,7 @@ BuildRequires: autoconf-archive
 
 Provides: ccid = %version-%release
 Obsoletes: ccid < %version-%release
+Conflicts: pcsc-lite-openct
 
 %define ifddir %(pkg-config libpcsclite --variable=usbdropdir)
 
@@ -30,7 +31,7 @@ Devices) driver for PC/SC Lite.
 # Do not build examples requires contrib from external repository
 %patch1 -p1
 cp README.md README
-# Copy pcsc-lite
+# Extract submodules
 tar xf %SOURCE1
 
 %build
@@ -45,13 +46,17 @@ cp -a src/92_pcscd_ccid.rules %buildroot/lib/udev/rules.d/
 
 %files
 %doc contrib/Kobil_mIDentity_switch/README_Kobil_mIDentity_switch.txt
-%doc AUTHORS README.md NEWS SCARDGETATTRIB.txt SCARDCONTOL.txt
+%doc AUTHORS README.md NEWS SCARDGETATTRIB.md SCARDCONTOL.md
 %config(noreplace) %_sysconfdir/reader.conf.d/libccidtwin
 %ifddir/ifd-ccid.bundle
 %_libdir/pcsc/drivers/serial/libccidtwin.so
 /lib/udev/rules.d/92_pcscd_ccid.rules
 
 %changelog
+* Mon Feb 20 2023 Andrey Cherepanov <cas@altlinux.org> 1.5.2-alt1
+- New version.
+- Conflicted with pcsc-lite-openct (ALT #45282).
+
 * Wed Jan 26 2022 Andrey Cherepanov <cas@altlinux.org> 1.4.36-alt1
 - New version.
 
