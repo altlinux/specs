@@ -1,5 +1,5 @@
 Name: upmpdcli
-Version: 1.6.2
+Version: 1.7.2
 Release: alt1
 
 Summary: UPnP front-end to the Music Player Daemon
@@ -86,6 +86,7 @@ rm -rf %buildroot%_datadir/%name/web
 %add_python3_req_skip ConfigParser
 %add_python3_req_skip Cookie
 %add_python3_req_skip StringIO
+%add_python3_req_skip UserDict
 %add_python3_req_skip cPickle
 %add_python3_req_skip httplib
 %add_python3_req_skip thread
@@ -93,6 +94,7 @@ rm -rf %buildroot%_datadir/%name/web
 # runtime alternatives:
 %add_python3_req_skip aiohttp.wsgi
 %add_python3_req_skip diesel.protocols.wsgi
+%add_python3_req_skip django.utils.simplejson
 %add_python3_req_skip fapws
 %add_python3_req_skip fapws._evwsgi
 %add_python3_req_skip google.appengine.ext.webapp
@@ -127,6 +129,9 @@ rm -rf %buildroot%_datadir/%name/web
 %_datadir/%name/src_scripts
 
 %changelog
+* Mon Feb 20 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.2-alt1
+- 1.7.2 released
+
 * Fri Dec 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.6.2-alt1
 - 1.6.2 released
 
