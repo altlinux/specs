@@ -8,7 +8,7 @@
 
 Name: docs-%variant
 Version: 10.1
-Release: alt14
+Release: alt15
 
 Summary: %Variant documentation
 License: %fdl
@@ -47,6 +47,11 @@ for file in %buildroot%_docsinstalldir/ru-RU/images/*.png; do cwebp $file -o %bu
 %_documentationdir
 
 %changelog
+* Mon Feb 20 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt15
+- update to latest public distr of ALT Server 10.1
+- add Nextcloud
+- add SPICE to OpenUDS
+
 * Mon Feb 13 2023 Elena Mishina <lepata@altlinux.org> 10.1-alt14
 - install-system: delete Nexcloud
 
