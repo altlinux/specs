@@ -58,7 +58,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.40.12
+Version: 1.40.14
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -639,6 +639,14 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Feb 21 2023 Mikhail Efremov <sem@altlinux.org> 1.40.14-alt1
+- Patches from upstream git:
+  + device: update address in nm_device_update_from_platform_link().
+  + device: preserve assume state if updating port fails.
+- etcnet-alt: Fix indentation.
+- etcnet-alt: Don't use g_return_if_fail() for valid checks.
+- Updated to 1.40.14.
+
 * Mon Jan 30 2023 Mikhail Efremov <sem@altlinux.org> 1.40.12-alt1
 - Treat warnings as error again.
 - Updated to 1.40.12.
