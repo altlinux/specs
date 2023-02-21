@@ -8,7 +8,7 @@
 %def_disable check
 
 Name: gparted
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 
 Summary: %Name Partition Editor
@@ -35,7 +35,7 @@ Requires: yelp
 Requires: polkit >= %polkit_ver
 %{?_enable_usermode:Requires: consolehelper}
 Requires: hdparm
-Requires: dosfstools >= 3.0.18 ntfs-3g btrfs-progs >= 4.1
+Requires: dosfstools >= 3.0.18 ntfs-3g btrfs-progs >= 4.5
 Requires: cryptsetup
 # for raid support
 Requires: mdadm dmraid dmsetup lvm2
@@ -49,8 +49,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: libparted-devel >= 3.2
 BuildRequires: libglibmm-devel >= 2.32 libgtkmm3-devel >= 3.4.0
 BuildRequires: gcc-c++ libprogsreiserfs-devel libuuid-devel
-BuildRequires: intltool yelp-tools
-BuildRequires: polkit >= %polkit_ver
+BuildRequires: yelp-tools
+BuildRequires: polkit >= %polkit_ver libpolkit-devel
 %{?_enable_check:BuildRequires: xvfb-run}
 
 %description
@@ -130,6 +130,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Wed Feb 22 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
+- 1.5.0
+
 * Tue Mar 29 2022 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
