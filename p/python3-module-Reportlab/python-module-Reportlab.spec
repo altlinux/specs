@@ -2,7 +2,7 @@
 %define oname Reportlab
 
 Name: python3-module-%oname
-Version: 3.6.7
+Version: 3.6.12
 Release: alt1
 
 Summary: The Reportlab Toolkit
@@ -19,6 +19,7 @@ BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires(pre): rpm-build-python3
 
 BuildRequires: python3-module-sphinx
+BuildRequires: libfreetype-devel
 
 %description
 The ReportLab Toolkit.
@@ -57,6 +58,9 @@ This package contains documentation for Reportlab Toolkit.
 %doc docs/build/html docs/userguide demos
 
 %changelog
+* Tue Feb 21 2023 Grigory Ustinov <grenka@altlinux.org> 3.6.12-alt1
+- Build new version (Closes: #44773).
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 3.6.7-alt1
 - new version 3.6.7 (with rpmrb script)
 
