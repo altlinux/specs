@@ -2,10 +2,10 @@
 %define dir		var/lib/clamav-db
 %define sys_clamav 	/var/lib/clamav
 %define sys_db		/var/lib/clamav-db
-%define checksum	0fdc6dc2135ebeb8289cca7bd6a69c43
+%define checksum	8192d77d0032163244c7323a80d5f228
 
 Name:    clamav-db-%dbname
-Version: 20191125
+Version: 20210715
 Release: alt1
 
 Summary: Antivirus database for ClamAV (%dbname)
@@ -18,6 +18,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 BuildArch: noarch
 
+# https://packages.microsoft.com/clamav/main.cvd
 Source: %dbname.cvd
 
 Requires:  clamav
@@ -58,6 +59,9 @@ test "$(md5sum "%buildroot%sys_db/%dbname.cvd" | cut -f1 -d' ')" = "%checksum"
 %attr(664,mail,root) %config(noreplace) /%dir/%dbname.cvd
 
 %changelog
+* Tue Feb 21 2023 Andrey Cherepanov <cas@altlinux.org> 20210715-alt1
+- Update database from https://packages.microsoft.com/clamav (ALT #31901, #45342).
+
 * Sat Apr 18 2020 Andrey Cherepanov <cas@altlinux.org> 20191125-alt1
 - Update database.
 
