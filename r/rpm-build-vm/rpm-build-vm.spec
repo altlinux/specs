@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.48
+Version: 1.49
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -112,6 +112,7 @@ Summary: Checkinstall for vm-run
 Group: Development/Other
 BuildArch: noarch
 Requires(pre): %name-createimage = %EVR
+Requires(pre): procps
 Requires(pre): time
 
 %description checkinstall
@@ -190,6 +191,7 @@ chmod a+twx /mnt
 chmod a+r /etc/login.defs
 
 %pre checkinstall
+PS4=$'\n+ '
 set -ex
 # qemu in tcg mode can hang un-def-5.10 kernel on ppc64 if smp>1 on "smp:
 # Bringing up secondary CPUs" message.
@@ -205,13 +207,15 @@ rm /tmp/filelist
 
 kvm-ok
 timeout 300 vm-run --verbose uname -a
+timeout 300 vm-run --mem=max free -g
+timeout 300 vm-run --mem=256 --cpu=max lscpu
 timeout 300 vm-run --verbose --overlay=ext4 uname -a
 rmdir /mnt/0
 rm /usr/src/ext4.0.img
 ! timeout --preserve-status 300 vm-run --verbose exit 1
 timeout 300 vm-run --rootfs --verbose df
 timeout 300 vm-run --hvc --no-quiet 'dmesg -r | grep Unknown'
-timeout 300 vm-run --tcg --cpu=1 cat /proc/cpuinfo
+timeout 300 vm-run --tcg --mem='' --cpu=1 cat /proc/cpuinfo
 # Clean up without '-f' ensures these files existed.
 rm /tmp/initramfs-*un-def-alt*.img
 # SCRIPT and exit code files form each vm-run invocation. Each SCRIPT file
@@ -224,6 +228,10 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Tue Feb 21 2023 Vitaly Chikunov <vt@altlinux.org> 1.49-alt1
+- Add --mem=max to lift soft memory restrictions om aarch64 and ppc64le.
+- Add --cpu=max to remove soft CPU count limit.
+
 * Fri Jan 13 2023 Vitaly Chikunov <vt@altlinux.org> 1.48-alt1
 - Fix TCG mode on non-x86 architectures.
 
