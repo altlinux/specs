@@ -1,6 +1,6 @@
 Name: nfs
 Version: 2.6.2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -273,6 +273,7 @@ touch /var/lock/subsys/rpc.svcgssd
 /sbin/blkmapd
 /sbin/nfsidmap
 %_sbindir/nfsconf
+%_sbindir/rpcctl
 
 %_man5dir/nfs.conf.*
 %_man7dir/nfs.systemd.*
@@ -281,6 +282,7 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/blkmapd.*
 %_man8dir/statd.*
 %_man8dir/rpc.statd.*
+%_man8dir/rpcctl.*
 %_man8dir/sm-notify.*
 %_man8dir/rpc.sm-notify.*
 %_man8dir/nfsidmap.*
@@ -295,13 +297,11 @@ touch /var/lock/subsys/rpc.svcgssd
 /sbin/mount.nfs4
 /sbin/umount.*
 %_bindir/showmount
-%_sbindir/rpcctl
 %_sbindir/rpcdebug
 %_prefix/libexec/nfsrahead
 %_man5dir/nfs.5*
 %_man5dir/nfsmount.conf.*
 %_man5dir/nfsrahead.*
-%_man8dir/rpcctl.*
 %_man8dir/rpcdebug.*
 %_man8dir/showmount.*
 %_man8dir/mount.nfs.*
@@ -316,6 +316,10 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Tue Feb 21 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:2.6.2-alt2
+- Moved %_sbindir/rpcctl from %name-utils to %name-clients subpackage
+  (ALT#45347).
+
 * Tue Aug 09 2022 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:2.6.2-alt1
 - 2.6.2 released
 
