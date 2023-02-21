@@ -13,14 +13,21 @@
 %def_with mypyc
 %endif
 
-Name:    python3-module-%pypi_name
-Version: 0.991
+Name: python3-module-%pypi_name
+Version: 1.0.1
 Release: alt1
-
 Summary: Optional static typing for Python 3 and 2 (PEP 484)
 License: MIT
-Group:   Development/Python3
-URL:     https://github.com/python/mypy
+Group: Development/Python3
+Url: https://pypi.org/project/mypy/
+VCS: https://github.com/python/mypy
+Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
+
+%if %tomli
+# rebuild against Python 3.11 is required to get rid of old dependency
+%py3_requires tomli
+%endif
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-dev
@@ -30,7 +37,7 @@ BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
 
 # Needed to generate the man pages
-BuildRequires:  help2man
+BuildRequires: help2man
 
 %if_with check
 # install_requires=
@@ -52,14 +59,6 @@ BuildRequires: python3(typing)
 BuildRequires: python3(six)
 BuildRequires: python3(attrs)
 BuildRequires: python3(filelock)
-%endif
-
-Source:  %name-%version.tar
-Patch0: %name-%version-alt.patch
-
-%if %tomli
-# rebuild against Python 3.11 is required to get rid of old dependency
-%py3_requires tomli
 %endif
 
 %description
@@ -127,11 +126,10 @@ rm -r %buildroot%python3_sitelibdir/mypyc/
 
 %check
 # https://github.com/mypyc/mypyc/issues/760
-TESTS="mypy/test"
-%ifnarch %ix86 armh
-TESTS="$TESTS mypyc/test"
+%ifarch %ix86 armh
+%define pytest_args --ignore mypyc/test
 %endif
-%tox_check_pyproject -- -vv $TESTS
+%pyproject_run_pytest -ra %{?pytest_args}
 
 %files
 %doc README.md
@@ -151,6 +149,9 @@ TESTS="$TESTS mypyc/test"
 %endif
 
 %changelog
+* Tue Feb 21 2023 Stanislav Levin <slev@altlinux.org> 1.0.1-alt1
+- 0.991 -> 1.0.1.
+
 * Tue Nov 15 2022 Stanislav Levin <slev@altlinux.org> 0.991-alt1
 - 0.990 -> 0.991.
 
