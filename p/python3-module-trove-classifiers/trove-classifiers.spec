@@ -4,17 +4,19 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2023.1.20
+Version: 2023.2.8
 Release: alt1
-
 Summary: Canonical source for classifiers on PyPI
 License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.org/project/trove-classifiers
 VCS: https://github.com/pypa/trove-classifiers.git
-
+BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+
+# PEP503 name
+%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-python3
 
@@ -25,11 +27,6 @@ BuildRequires: python3(wheel)
 %if_with check
 BuildRequires: python3(pytest)
 %endif
-
-BuildArch: noarch
-
-# PEP503 name
-%py3_provides %pypi_name
 
 %description
 Canonical source for classifiers on PyPI:
@@ -61,6 +58,9 @@ echo '%version' > ./calver_version
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 20 2023 Stanislav Levin <slev@altlinux.org> 2023.2.8-alt1
+- 2023.1.20 -> 2023.2.8.
+
 * Fri Jan 20 2023 Stanislav Levin <slev@altlinux.org> 2023.1.20-alt1
 - 2022.12.1 -> 2023.1.20.
 

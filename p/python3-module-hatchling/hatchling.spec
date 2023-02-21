@@ -4,7 +4,7 @@
 %define tomli %(%__python3 -c 'import sys;print(int(sys.version_info < (3, 11)))')
 
 Name: python3-module-%pypi_name
-Version: 1.12.2
+Version: 1.13.0
 Release: alt1
 Summary: Modern, extensible Python build backend
 License: MIT
@@ -57,6 +57,9 @@ BuildRequires: python3(tomli)
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 20 2023 Stanislav Levin <slev@altlinux.org> 1.13.0-alt1
+- 1.12.2 -> 1.13.0.
+
 * Tue Jan 24 2023 Stanislav Levin <slev@altlinux.org> 1.12.2-alt1
 - 1.11.1 -> 1.12.2.
 
