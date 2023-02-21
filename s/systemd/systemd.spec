@@ -96,7 +96,7 @@
 
 Name: systemd
 Epoch: 1
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 Summary: System and Session Manager
 Url: https://systemd.io/
@@ -2124,6 +2124,7 @@ fi
 %_systemd_dir/systemd-import-fs
 %_systemd_dir/systemd-importd
 %_systemd_dir/systemd-pull
+%_systemd_dir/network/80-container-vb.network
 %_systemd_dir/network/80-container-ve.network
 %_systemd_dir/network/80-container-vz.network
 %_systemd_dir/network/80-vm-vt.network
@@ -2344,6 +2345,9 @@ fi
 %exclude %_udev_rulesdir/99-systemd.rules
 
 %changelog
+* Sat Feb 18 2023 Alexey Shabalin <shaba@altlinux.org> 1:252.6-alt1
+- 252.6
+
 * Tue Feb 07 2023 Alexey Shabalin <shaba@altlinux.org> 1:252.5-alt1
 - 252.5
 - Set default status format to combined.
@@ -2351,7 +2355,7 @@ fi
 - Set create-log-dirs to false and mkdir for journal in spec (fixed ALT#44399)
 
 * Mon Jan 09 2023 Alexey Shabalin <shaba@altlinux.org> 1:252.4-alt1
-- 252.4.
+- 252.4 (Fixes: CVE-2022-45873)
 - Don't read locale settings from /etc/sysconfig/i18n.
 - Update systemd-oomd defaults to friendlier values.
 - Moved core and shared libs to /%%lib/systemd for multiarch.
@@ -2372,7 +2376,7 @@ fi
 - 251.8
 
 * Thu Nov 03 2022 Alexey Shabalin <shaba@altlinux.org> 1:251.7-alt1
-- 251.7
+- 251.7 (Fixes: CVE-2022-45873)
 
 * Thu Oct 06 2022 Alexey Shabalin <shaba@altlinux.org> 1:251.5-alt1
 - 251.5
