@@ -4,7 +4,7 @@
 %define llvm_ver 15
 
 Name: dtkcore
-Version: 5.6.5
+Version: 5.6.6
 Release: alt1
 Summary: Deepin tool kit core modules
 License: LGPL-2.1 and LGPL-3.0+ and GPL-3.0
@@ -98,6 +98,8 @@ export PATH=%_qt5_bindir:$PATH
   -DDTK_VERSION=%version \
   -DVERSION=%version \
   -DLIB_INSTALL_DIR=%_libdir \
+  -DD_DSG_APP_DATA_FALLBACK=/var/dsg/appdata \
+  -DBUILD_WITH_SYSTEMD=ON \
 %if_disabled docs
   -DBUILD_DOCS=OFF \
 %endif
@@ -135,6 +137,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %endif
 
 %changelog
+* Tue Feb 21 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.6-alt1
+- New version.
+
 * Mon Feb 13 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.5-alt1
 - New version.
 - Fixed underlinked libraries.

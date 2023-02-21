@@ -2,7 +2,7 @@
 %def_enable docs
 
 Name: dtkwidget
-Version: 5.6.5
+Version: 5.6.7
 Release: alt1
 Summary: Deepin tool kit widget modules
 License: LGPL-3.0+ and GPL-3.0+
@@ -11,11 +11,7 @@ Url: https://github.com/linuxdeepin/dtkwidget
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: dtkwidget-5.6.3-alt-fix-gcc-build.patch
 Patch1: dtkwidget-5.6.2-alt-fix-missing-icon-on-titlebar-button.patch
-Patch2: 0001-fix-correct-file-name.patch
-Patch3: 0001-fix-feature-display-dialog.patch
-Patch4: 0001-fix-the-entrance-of-feature-display.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -170,6 +166,9 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_docdir/dtkwidget.qch
 
 %changelog
+* Tue Feb 21 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.7-alt1
+- New version.
+
 * Mon Feb 13 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.5-alt1
 - Fixed version.
 - Applied fixed from master branch.
