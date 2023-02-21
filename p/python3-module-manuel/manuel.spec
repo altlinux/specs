@@ -1,51 +1,45 @@
+%define _unpackaged_files_terminate_build 1
+
 %define oname manuel
 
-Name: python3-module-%oname
-Version: 1.10.1
-Release: alt2
+%def_with check
 
-Summary: Manuel lets you build tested documentation
-License: ZPL
+Name: python3-module-%oname
+Version: 1.12.4
+Release: alt1
+
+Summary: Manuel lets you mix and match traditional doctests with custom test syntax
+License: Apache-2.0
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/manuel/
-BuildArch: noarch
 
+VCS: https://github.com/benji-york/manuel
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-six python3-module-zope.testing
-BuildRequires: python-tools-2to3
-
-%py3_requires six
-
+%if_with check
+BuildRequires: python3-module-six
+BuildRequires: python3-module-zope
+BuildRequires: python3-module-zope.testing
+%endif
 
 %description
-Manuel lets you build tested documentation.
+%summary.
 
 %package tests
-Summary: Tests for Manuel
+Summary: Tests for %oname
 Group: Development/Python3
-Requires: %name = %version-%release
-%py3_requires zope.testing
+Requires: %name = %EVR
 
 %description tests
-Manuel lets you build tested documentation.
+%summary.
 
 This package contains tests for Manuel.
 
-%package docs
-Summary: Documentation for Manuel
-Group: Development/Documentation
-
-%description docs
-Manuel lets you build tested documentation.
-
-This package contains documentation for Manuel.
-
 %prep
 %setup
-
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 %python3_build
@@ -54,18 +48,22 @@ find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_install
 
 %check
-%__python3 setup.py test -v
+python3 setup.py test
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 %exclude %python3_sitelibdir/%oname/test*
 
 %files tests
 %python3_sitelibdir/%oname/test*
-
+%doc *.rst
 
 %changelog
+* Mon Feb 20 2023 Anton Vyatkin <toni@altlinux.org> 1.12.4-alt1
+- new version 1.12.4
+
 * Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.10.1-alt2
 - Build for python2 disabled.
 
