@@ -1,5 +1,5 @@
 Name: distrodb-utils
-Version: 0.253
+Version: 0.254
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -35,18 +35,24 @@ install -m 755 projectdb-* \
 	distrodb-check-health-*.pl \
 	mkdistromap-*.pl \
 	%buildroot%_bindir/
-mkdir -p %buildroot%perl_vendor_privlib/DistroDB/CLI/
+mkdir -p %buildroot%perl_vendor_privlib/{DistroDB/CLI/,ProjectDB/Repo/,ProjectDB/Pkg/}
 install -m 644 *.pm %buildroot%perl_vendor_privlib/
 install -m 644 DistroDB/*.pm %buildroot%perl_vendor_privlib/DistroDB/
 install -m 644 DistroDB/CLI/*.pm %buildroot%perl_vendor_privlib/DistroDB/CLI/
+install -m 644 ProjectDB/Pkg/*.pm %buildroot%perl_vendor_privlib/ProjectDB/Pkg/
+install -m 644 ProjectDB/Repo/*.pm %buildroot%perl_vendor_privlib/ProjectDB/Repo/
 
 %files
 %doc README
 %_bindir/*
 %perl_vendor_privlib/*.pm
 %perl_vendor_privlib/DistroDB
+%perl_vendor_privlib/ProjectDB
 
 %changelog
+* Tue Feb 21 2023 Igor Vlasenko <viy@altlinux.org> 0.254-alt1
+- new version
+
 * Wed Dec 01 2021 Igor Vlasenko <viy@altlinux.org> 0.253-alt1
 - new version
 
