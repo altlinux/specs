@@ -3,7 +3,7 @@
 
 Name: plasma5-desktop
 Version: 5.26.5
-Release: alt2
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -249,6 +249,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Tue Feb 21 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt3
+- show tooltips when hovering task buttons by default
+
 * Wed Jan 11 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt2
 - build without scim
 
