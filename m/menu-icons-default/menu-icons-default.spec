@@ -1,5 +1,5 @@
 Name: menu-icons-default
-Version: 0.2.0.20
+Version: 0.2.0.21
 Release: alt1
 
 Group: Graphical desktop/Other
@@ -55,6 +55,9 @@ install -m644 64x64/apps/*.png %buildroot%_iconsdir/hicolor/64x64/apps/
 %_iconsdir/hicolor/scalable/apps/*
 
 %changelog
+* Tue Feb 21 2023 Sergey V Turchin <zerg@altlinux.org> 0.2.0.21-alt1
+- Update basealt icon
+
 * Tue Nov 15 2016 Michael Shigorin <mike@altlinux.org> 0.2.0.20-alt1
 - Update 16x16 basealt icon
 
