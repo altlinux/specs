@@ -22,7 +22,7 @@ typing_extensions \\\
 %nil
 
 Name: python3-module-%pypi_name
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 Summary: Poetry Core
 License: MIT
@@ -116,6 +116,9 @@ rm -r ./src/poetry/core/_vendor/*
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 21 2023 Stanislav Levin <slev@altlinux.org> 1.5.1-alt1
+- 1.5.0 -> 1.5.1.
+
 * Tue Jan 31 2023 Stanislav Levin <slev@altlinux.org> 1.5.0-alt1
 - 1.4.0 -> 1.5.0.
 
