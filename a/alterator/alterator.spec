@@ -1,6 +1,6 @@
 Name: alterator
-Version: 5.4.1
-Release: alt7
+Version: 5.4.2
+Release: alt1
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -19,7 +19,7 @@ Provides: %name-common = %version , %name-menu = %version, %name-help = %version
 Obsoletes: %name-common, %name-menu, %name-help, %name-sdk, %name-autoinstall
 
 Requires: rpm-macros-%name = %version-%release
-Requires: alterator-l10n >= 2.0-alt2
+Requires: alterator-l10n >= 2.9.123
 Requires: alterator-sh-functions
 
 ## Set up Guile version and continuations flavour:
@@ -183,6 +183,11 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Feb 22 2023 Paul Wolneykien <manowar@altlinux.org> 5.4.2-alt1
+- Require alterator-l10n >= 2.9.123.
+- Minor fix of error message for the 'system-computer-name' type.
+- Improved error message for the 'hostname' type (closes: 42744).
+
 * Thu Jun 30 2022 Anton Midyukov <antohami@altlinux.org> 5.4.1-alt7
 - NMU: replace fgrep with grep -F
 
