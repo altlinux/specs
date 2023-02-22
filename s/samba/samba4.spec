@@ -75,7 +75,7 @@
 %endif
 
 Name:    samba
-Version: 4.16.8
+Version: 4.16.9
 Release: alt1
 
 Group:   System/Servers
@@ -2011,6 +2011,25 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Mon Feb 20 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.16.9-alt1
+- Update to maintenance release of Samba 4.16
+- Security fixes:
+  + CVE-2022-38023: Samba should refuse RC4 (aka md5) based SChannel on
+    NETLOGON (Samba#15240).
+- Major fixes:
+  + smbc_getxattr() return value is incorrect (Samba#14808).
+  + samba-tool gpo listall fails IPv6 only - finddcs() fails to find DC when
+    there is only an AAAA record for the DC in DNS (Samba#15226).
+  + smbd crashes if an FSCTL request is done on a stream handle (Samba#15236).
+  + auth3_generate_session_info_pac leaks wbcAuthUserInfo (Samba#15286).
+  + Leak in wbcCtxPingDc2 (Samba#15164).
+  + irpc_destructor may crash during shutdown (Samba#15280).
+- Share enumeration (netshareenum) fixes:
+  + %U for include directive doesn't work for share listing (Samba#15243).
+  + Shares missing from netshareenum response in samba 4.17.4 (Samba#15266).
+  + Access based share enum does not work in Samba 4.16+ (Samba#15265).
+  + Crash during share enumeration (Samba#15267).
+
 * Mon Dec 15 2022 Evgeny Sinelnikov <sin@altlinux.org> 4.16.8-alt1
 - Update to maintenance release of Samba 4.16 with fixes of the Samba CVE for
   the Windows Kerberos Elevation of Privilege Vulnerability disclosed by
