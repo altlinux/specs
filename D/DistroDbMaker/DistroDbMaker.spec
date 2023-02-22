@@ -1,18 +1,18 @@
 %define oname DistroDbMaker
 
 Name: %oname
-Version: 0.033
+Version: 0.034
 Release: alt1
 Summary: DistroDb Maker tools
-License: LGPLv2+
+License: LGPLv2+ or ALT-Public-Domain
 Group: Development/Python
 Url: https://www.altlinux.org/Packaging_Automation/DistroDb
 
 Source: %name-%version.tar
 BuildArch: noarch
 
-BuildRequires(pre): rpm-build-python3 python3-module-setuptools
-BuildPreReq: python3-devel
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python3-module-setuptools
 Requires: python3-module-rpm
 
 Conflicts: distrodb-utils < 0.21
@@ -29,6 +29,9 @@ Group: Development/Python3
 
 %description -n python3-module-%oname
 %summary
+
+DistroDbMaker creates DistroDb metadata database for a pure rpm repository,
+or from the repository metadata such as mageia media_info or yum repodata.
 
 %prep
 %setup
@@ -49,6 +52,9 @@ sed -i 1s,/usr/bin/python,/usr/bin/python3, *.py
 %python3_sitelibdir/*
 
 %changelog
+* Wed Feb 22 2023 Igor Vlasenko <viy@altlinux.org> 0.034-alt1
+- new version
+
 * Tue Feb 21 2023 Igor Vlasenko <viy@altlinux.org> 0.033-alt1
 - new version
 
