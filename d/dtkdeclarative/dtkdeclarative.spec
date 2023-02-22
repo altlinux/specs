@@ -1,10 +1,9 @@
 %define soname 5
 
 %def_disable clang
-%def_disable cmake
 
 Name: dtkdeclarative
-Version: 5.6.0
+Version: 5.6.8
 Release: alt1
 Summary: Widget development toolkit for Deepin
 Summary(ru): Инструментарий по разработке виджетов для Deepin
@@ -13,23 +12,21 @@ Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dtkdeclarative
 
 Source: %url/archive/%version/%name-%version.tar.gz
+Patch: dtkdeclarative-5.6.8-alt-fix-underlinked-libraries.patch
 
 ExcludeArch: armh
 
+BuildRequires(pre): rpm-build-ninja
 %if_enabled clang
-BuildRequires(pre): clang-devel
+BuildRequires: clang-devel
 %else
-BuildRequires(pre): gcc-c++
+BuildRequires: gcc-c++
 %endif
-%if_enabled cmake
-BuildRequires(pre): cmake rpm-build-ninja
-%endif
-BuildRequires: qt5-base-devel qt5-tools qt5-quickcontrols2-devel
+BuildRequires: cmake
+BuildRequires: qt5-base-devel qt5-tools-devel qt5-tools qt5-quickcontrols2-devel
 BuildRequires: dtk5-core-devel dtk5-gui-devel dtk5-common
 BuildRequires: libgtest-devel
-%if_enabled cmake
-BuildRequires: doxygen
-%endif
+#BuildRequires: doxygen graphviz qt5-base-doc
 
 %description
 dtkdeclarative is a widget development toolkit based on QtQuick/QtQml, which is a brand new substitute for dtkwidget. dtkdeclarative is developed based on qtdeclarative. It covers all existing QML widgets and adds plenty of DTK friendly visual effects and color schemes. Compared to dtkwidget. It has:
@@ -107,6 +104,12 @@ QtCreator Data files for %name.
 
 %prep
 %setup
+%patch -p1
+# Fix broken configs.
+sed -i '/libdir=/s/${prefix}//; /includedir=/s/${prefix}//' \
+  misc/dtkdeclarative.pc.in
+sed -i -e '/.tools/s/@CMAKE_INSTALL_PREFIX@//; /.libs/s/@CMAKE_INSTALL_PREFIX@//; /.includes/s/@CMAKE_INSTALL_PREFIX@//;' \
+  misc/qt_lib_dtkdeclarative.pri.in
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -118,15 +121,15 @@ export CXX="clang++"
 export AR="llvm-ar"
 export NM="llvm-nm"
 export READELF="llvm-readelf"
+export LDFLAGS="-fuse-ld=lld $LDFLAGS"
 
 %endif
-
-%if_enabled cmake
 
 %cmake \
   -GNinja \
   -DCMAKE_BUILD_TYPE=RelWithDebInfo \
-  -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/ \
+  -DBUILD_DOCS=OFF \
+  -DMKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/modules/ \
   -DCMAKE_INSTALL_PREFIX=%_prefix \
   -DCMAKE_INSTALL_LIBDIR=%_libdir \
   -DDTK_VERSION=%version \
@@ -135,33 +138,8 @@ export READELF="llvm-readelf"
 #
 cmake --build %_cmake__builddir -j%__nprocs
 
-%else
-
-%qmake_qt5 \
-%if_enabled clang
-    QMAKE_STRIP= -spec linux-clang \
-%endif
-    CONFIG+=nostrip \
-    PREFIX=%prefix \
-    MKSPECS_INSTALL_DIR=%_qt5_archdatadir/mkspecs/ \
-    DTK_VERSION=%version \
-    VERSION=%version \
-    LIB_INSTALL_DIR=%_libdir \
-#
-%make_build
-
-%endif
-
 %install
-%if_enabled cmake
-
 %cmake_install
-
-%else
-
-%makeinstall INSTALL_ROOT=%buildroot
-
-%endif
 
 %files -n dtk5-declarative
 %doc LICENSE README.md
@@ -172,22 +150,27 @@ cmake --build %_cmake__builddir -j%__nprocs
 %_qt5_qmldir/org/deepin/dtk/libdtkdeclarativeplugin.so
 %_qt5_qmldir/org/deepin/dtk/qmldir
 %_desktopdir/dtk-exhibition.desktop
+%_datadir/dtk5/DDeclarative/
 
 %files -n libdtkdeclarative%{soname}
 %_libdir/libdtkdeclarative.so.%{soname}*
 
 %files -n dtk5-declarative-devel
-%dir %_includedir/libdtk-%version/
-%_includedir/libdtk-%version/DDeclarative/
+%_includedir/*
 %_libdir/libdtkdeclarative.so
 %_pkgconfigdir/dtkdeclarative.pc
 %dir %_libdir/cmake/DtkDeclarative/
-%_libdir/cmake/DtkDeclarative/DtkDeclarativeConfig.cmake
+%_libdir/cmake/DtkDeclarative/*.cmake
 %_qt5_archdatadir/mkspecs/modules/qt_lib_dtkdeclarative.pri
 
 %files -n qt-creator-data-dtkdeclarative
 %_datadir/qtcreator/templates/wizards/projects/qml-app-template/
 
 %changelog
+* Wed Feb 22 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.8-alt1
+- New version (5.6.8).
+- Built using cmake instead qmake (by upstream).
+- Fixed underlinked libraries.
+
 * Tue Nov 29 2022 Leontiy Volodin <lvol@altlinux.org> 5.6.0-alt1
 - Initial build for ALT Sisyphus.
