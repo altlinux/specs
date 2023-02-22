@@ -1,11 +1,20 @@
 %define _libexecdir %_prefix/libexec
 
-%define ver_major 4.0
+%define ver_major 4.2
 %define beta %nil
+%define rdn_name org.darktable.darktable
+
 %def_enable noise_tools
+# o.21 required
+%def_disable system_libraw
 %def_enable system_lua
 %def_enable libavif
-%def_disable libheif
+%def_enable libheif
+%def_enable jxl
+# lensfun a mandatory dependency
+#src/iop/lens.cc:
+#error lensfun 0.3.95 is not supported since its API is not backward compatible with lensfun stable release.
+%def_enable lensfun
 
 Name: darktable
 Version: %ver_major.1
@@ -20,7 +29,7 @@ Vcs: https://github.com/darktable-org/darktable.git
 Source: https://github.com/darktable-org/darktable/releases/download/release-%version/%name-%version.tar.xz
 # required for llvm-7.0
 Patch: darktable-3.0.0-is_supported_platform.patch
-#See https://bugzilla.altlinux.org/38215
+# See https://bugzilla.altlinux.org/38215
 # based on https://bugzilla.altlinux.org/attachment.cgi?id=8682&action=edit
 # by Pavel Nakonechnyi
 Patch1: darktable-4.0.0-alt-disable-use-of-gcc-graphite.patch
@@ -30,11 +39,14 @@ ExcludeArch: %ix86 armh
 %define cmake_ver 3.10
 %define openmp_ver 4.0
 %define glib_ver 2.40
-%define gtk_ver 3.22
+%define gtk_ver 3.24.15
 %define exiv2_ver 0.24
 %define iso_codes_ver 3.66
 %define pugixml_ver 1.8
-%define libavif_ver 0.8.2
+%define lensfun_api_ver 1
+%define lensfun_ver 0.3.3
+%define libraw_ver 0.21.0
+%define libavif_ver 0.9.1
 %define libheif_ver 1.12.0
 %define lua_ver_major 5.4
 
@@ -44,12 +56,13 @@ Requires: icon-theme-adwaita
 
 BuildRequires(pre):rpm-macros-cmake
 BuildRequires: /proc cmake >= %cmake_ver ninja-build gcc-c++ libgomp-devel
-BuildRequires: intltool desktop-file-utils libappstream-glib-devel po4a
+BuildRequires: intltool desktop-file-utils /usr/bin/appstream-util po4a
 BuildRequires: perl-Pod-Parser xsltproc exiftool
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libxml2-devel
 BuildRequires: libSDL2-devel libX11-devel libXrandr-devel libcurl-devel
 BuildRequires: libexiv2-devel >= %exiv2_ver libflickcurl-devel libsecret-devel
-BuildRequires: libgphoto2-devel libjpeg-devel liblcms2-devel liblensfun-devel
+BuildRequires: libgphoto2-devel libjpeg-devel liblcms2-devel
+BuildRequires: liblensfun%lensfun_api_ver-devel >= %lensfun_ver
 BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel
 BuildRequires: openexr-devel libxkbcommon-x11-devel lsb-release
 BuildRequires: libjson-glib-devel libsoup-devel libpixman-devel libexpat-devel
@@ -65,9 +78,10 @@ BuildRequires: libgmic-devel libjasper-devel
 %{?_enable_system_lua:BuildRequires(pre): rpm-build-lua
 BuildRequires: liblua%lua_ver_major-devel
 Provides: lua%lua_ver_major(darktable)}
-# since 3.2.0
+%{?_enable_system_libraw:BuildRequires: libraw-devel >= %libraw_ver}
 %{?_enable_libavif:BuildRequires: libavif-devel >= %libavif_ver}
 %{?_enable_libheif:BuildRequires: libheif-devel}
+%{?_enable_jxl:BuildRequires: libjxl-devel}
 # for not recommended build from git tree
 #BuildRequires: gnome-doc-utils fop saxon ...
 
@@ -91,10 +105,12 @@ light table. It also enables you to develop raw images and enhance them.
 -DCMAKE_BUILD_TYPE=Release \
 -DBINARY_PACKAGE_BUILD:BOOL=ON \
 -DRAWSPEED_ENABLE_LTO=ON \
+%{?_disable_lensfun:-DUSE_LENSFUN=OFF} \
 %{?_enable_noise_tools:-DBUILD_NOISE_TOOLS=ON} \
 %ifarch ppc64le
 -DUSE_OPENCL=OFF \
 %endif
+%{?_enable_system_libraw:-DDONT_USE_INTERNAL_LIBRAW=ON} \
 %{?_enable_system_lua:-DDONT_USE_INTERNAL_LUA=ON}
 %nil
 %cmake_build
@@ -115,10 +131,10 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %_datadir/%name/
 %_libdir/lib%name.so
 %_libdir/%name/
-%_desktopdir/*
+%_desktopdir/%rdn_name.desktop
 %_iconsdir/hicolor/*/apps/*
 %_man1dir/*
-%_datadir/metainfo/%name.appdata.xml
+%_datadir/metainfo/%rdn_name.appdata.xml
 %{?_enable_noise_tools:
 %_libexecdir/%name/tools/%name-gen-noiseprofile
 %_libexecdir/%name/tools/%name-noiseprofile
@@ -128,6 +144,12 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Wed Feb 22 2023 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
+- 4.2.1
+
+* Thu Dec 22 2022 Yuri N. Sedunov <aris@altlinux.org> 4.2.0-alt1
+- 4.2.0
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 4.0.1-alt1
 - 4.0.1
 
