@@ -1,23 +1,23 @@
-%define srcname PyWebDAV3
+%define oname pywebdav
 
-Name:       python3-module-pywebdav
-Version:    0.9.11
-Release:    alt2
+%def_without check
+
+Name:       python3-module-%oname
+Version:    0.10.0
+Release:    alt1
 Summary:    PyWebDAV is a standards compliant WebDAV server and library written in Python
 
 Group:      Development/Python3
-License:    LGPLv2+
+License:    LGPLv2
 URL:        https://github.com/andrewleech/PyWebDAV3
-Source0:    %srcname-%version.tar
+Source:     %name-%version.tar
 
 BuildArch:  noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3 python3-module-six
-
-Provides: pywebdav = %version-%release
-Provides: pywebdav3 = %version-%release
-
+BuildRequires: python3-module-pip
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-six
 
 %description
 WebDAV library for Python. WebDAV is an extension to the normal HTTP/1.1
@@ -25,32 +25,33 @@ protocol allowing the user to upload data, create collections of
 objects, store properties for objects, etc.
 
 %prep
-%setup -n %srcname-%version
-
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
+%setup
+# Upstream has problem with versioning
+sed -i "s/__version__ = '0.9.14'/__version__ = '%version'/" pywebdav/__init__.py
+# get rid of git-versioner
+sed -i '/setup_requires/d' setup.py
 
 %build
-export LC_ALL=en_US.UTF-8
-
 %python3_build
 
 %install
-export LC_ALL=en_US.UTF-8
-
 %python3_install
-rm -f %buildroot%_bindir/*
-rm -rf %buildroot%python3_sitelibdir/pywebdav/server
 
 %check
-%__python3 setup.py test
+export PYTHONPATH=$PWD
+python3 test/test_litmus.py
 
 %files
 %doc doc/*
-%python3_sitelibdir/pywebdav
-%python3_sitelibdir/%{srcname}*.egg-info
+%_bindir/davserver
+%python3_sitelibdir/%oname
+%python3_sitelibdir/PyWebDAV3-%version-py%_python3_version.egg-info
 
 
 %changelog
+* Tue Feb 21 2023 Anton Vyatkin <toni@altlinux.org> 0.10.0-alt1
+- new version 0.10.0.
+
 * Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.9.11-alt2
 - Build for python2 disabled.
 
