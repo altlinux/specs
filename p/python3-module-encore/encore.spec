@@ -1,22 +1,33 @@
 %define oname encore
 
+%def_without docs
+
+%def_with check
+
 Name: python3-module-%oname
-Version: 0.7.0
+Version: 0.8.0
 Release: alt1
 
 Summary: A Collection of core-level utility modules for Enthought projects
-License: BSD
+License: BSD-3-Clause and Apache-2.0
 Group: Development/Python3
-Url: https://github.com/enthought/encore
+Url: https://pypi.org/project/encore
+
+VCS: https://github.com/enthought/encore
+Source: %name-%version.tar
+
 BuildArch: noarch
 
-# https://github.com/enthought/encore.git
-Source: %oname-%version.tar
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-sphinx graphviz
-BuildRequires: python3-module-pydot python-tools-2to3
+BuildRequires: python3-module-wheel
+%if_with docs
+BuildRequires: python3-module-sphinx
+%endif
 
+%if_with check
+BuildRequires: python3-modules-sqlite3
+BuildRequires: python3-module-requests
+%endif
 
 %description
 This package consists of a collection of core utility packages useful for
@@ -36,18 +47,6 @@ aside from the Python Standard Library.
 
 This package contains documentation for encore.
 
-%package pickles
-Summary: Pickles for encore
-Group: Development/Python3
-
-%description pickles
-This package consists of a collection of core utility packages useful for
-building Python applications.  This package is intended to be at the
-bottom of the software stack and have zero required external dependencies
-aside from the Python Standard Library.
-
-This package contains pickles for encore.
-
 %package tests
 Summary: Tests for encore
 Group: Development/Python3
@@ -64,35 +63,37 @@ This package contains tests for encore.
 %prep
 %setup
 
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 sed -i 's|sphinx-build|sphinx-build-3|' docs/Makefile
 
 %build
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
+%if_with docs
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C docs html
-%make -C docs pickle
 
 cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
+%endif
+
+%check
+%tox_create_default_config
+%tox_check_pyproject
 
 %files
 %doc LICENSE.txt README.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/pickle
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/*/testing
 %exclude %python3_sitelibdir/*/*/tests
 %exclude %python3_sitelibdir/*/*/*/tests
 
+%if_with docs
 %files docs
 %doc docs/build/html/*
-
-%files pickles
-%python3_sitelibdir/%oname/pickle
+%endif
 
 %files tests
 %python3_sitelibdir/*/testing
@@ -101,6 +102,9 @@ cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 
 %changelog
+* Wed Feb 22 2023 Anton Vyatkin <toni@altlinux.org> 0.8.0-alt1
+- new version 0.8.0
+
 * Fri Jan 17 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.7.0-alt1
 - Version updated to 0.7.0
 - porting on python3.
