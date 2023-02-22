@@ -3,15 +3,14 @@
 %define repo dde-app-services
 
 Name: deepin-app-services
-Version: 0.0.20
-Release: alt2
+Version: 0.0.21
+Release: alt1
 Summary: Service collection of DDE applications
 License: LGPL-3.0+
 Group: System/Configuration/Other
 Url: https://github.com/linuxdeepin/dde-app-services
 
 Source: %url/archive/%version/%repo-%version.tar.gz
-Patch: 0001-fix-missing-Qt5Gui.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -26,7 +25,6 @@ BuildRequires: cmake dtk5-widget-devel dtk5-common-devel libgtest-devel
 
 %prep
 %setup -n %repo-%version
-%patch -p1
 
 %build
 export PATH=%_qt5_bindir:$PATH
@@ -69,6 +67,9 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %_datadir/dsg/configs/overrides/dconfig-example/example/a/dconf-example.override.a.json
 
 %changelog
+* Wed Feb 22 2023 Leontiy Volodin <lvol@altlinux.org> 0.0.21-alt1
+- New version.
+
 * Thu Jan 19 2023 Leontiy Volodin <lvol@altlinux.org> 0.0.20-alt2
 - Fixed build with dtkgui 5.6.4.
 
