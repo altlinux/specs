@@ -2,7 +2,7 @@
 
 Summary: A simple KDE front-end for CDemu
 Name: kde-cdemu-manager
-Version: 0.7.2
+Version: 0.8.0
 Release: alt1
 License: LGPLv2+
 Group: Graphical desktop/KDE
@@ -60,6 +60,11 @@ cp %buildroot%_K5srv/ServiceMenus/kde_cdemu_mount.desktop \
 %_datadir/kde4/services/ServiceMenus/kde_cdemu_mount.desktop
 
 %changelog
+* Wed Feb 22 2023 Artyom Bystrov <arbars@altlinux.org> 0.8.0-alt1
+- update to new version
+
+
+
 * Mon Jan 30 2023 Artyom Bystrov <arbars@altlinux.org> 0.7.2-alt1
 - initial build for ALT Sisyphus
 
