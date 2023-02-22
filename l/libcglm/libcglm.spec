@@ -1,7 +1,7 @@
 %define proj cglm
 
 Name: lib%proj
-Version: 0.8.7
+Version: 0.8.9
 Release: alt1
 
 Summary: CGLM is highly optimized graphics math (glm) for C
@@ -14,6 +14,9 @@ Source: %name-%version-%release.tar
 # sisyphus_check insists on @altlinux.*, let Packager: be a comment
 # Spec-Author: Igor Molchanov <akemi_homura@kurisa.ch>
 
+
+
+BuildRequires(Pre): rpm-macros-meson
 BuildRequires: meson
 
 %description
@@ -43,12 +46,14 @@ which will use the %name library.
 %_libdir/%name.so.*
 
 %files devel
+%_includedir/cglm
 %_includedir/%proj/*
 %_pkgconfigdir/%proj.pc
 %_libdir/%name.so
 
 %changelog
-
+* Wed Feb 22 2023 Artyom Bystrov <arbars@altlinux.org> 0.8.9-alt1
+- update to new version
 
 * Sat Jan 15 2022 Artyom Bystrov <arbars@altlinux.org> 0.8.7-alt1
 - update to new version
