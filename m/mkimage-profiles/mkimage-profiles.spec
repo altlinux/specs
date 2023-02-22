@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.1
+Version: 1.5.2
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -128,6 +128,28 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Wed Feb 22 2023 Anton Midyukov <antohami@altlinux.org> 1.5.2-alt1
+- wireless: removed crda, added firmware-wireless-regdb for all arch
+  (thanks iv@)
+- update package lists for riscv64 support (thanks iv@)
+- init: drop stage2/image-scripts.d/91-systemd
+- features.in: replace 50-bootargs script from bootloader to build-vm
+- plymouth: drop use/plymouth/vm, cleanup
+- stage2: drop 90-cleanup-drm script
+- stage2: drop 50-udev script
+- desktop+live: drop installer-feature-runlevel5-stage3
+- live: do'nt mkdir /live.hooks
+- x11-autologin: do nothing, if user altlinux does not exist
+- init: drop live/image-scripts.d/50-var-run-fix (fix clash with rootfs script)
+- init: not fix tmpfiles.d/*.conf
+- efi: don't add refind, $$(EFI_SHELL), $$(EFI_BOOTLOADER) to rescue
+- deflogin: create live user on first run
+- dev: do not configure altlinux user in live (51-hasher)
+- rescue: do'nt enable online repo
+- grub, l10n: available only languages from $LOCALES in grub and installer
+  (Closes: 45290)
+- workstation, server, server-v: add latest commits
+
 * Thu Jan 05 2023 Anton Midyukov <antohami@altlinux.org> 1.5.1-alt1
 - efi: fix condition for use/efi/dtb
 - mixin.mk: exclude gnome3-regular metapackage from regular-gnome3 target
