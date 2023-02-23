@@ -4,7 +4,7 @@
 # and gaiagraphics solved in the past. It is not a drop-in replacement for either.
 Name:          librasterlite2
 Version:       1.1.0
-Release:       alt1
+Release:       alt1.1
 Summary:       Stores and retrieves huge raster coverages using a SpatiaLite DBMS
 License:       MPLv1.1 or GPLv2+ or LGPLv2+
 Group: System/Libraries
@@ -27,7 +27,7 @@ BuildRequires: liblz4-devel
 BuildRequires: libminizip-devel
 BuildRequires: libopenjpeg2.0-devel
 BuildRequires: libproj-devel
-BuildRequires: libsqlite3-devel libpixman-devel libgaiagraphics-devel
+BuildRequires: libsqlite3-devel libpixman-devel
 #BuildRequires: libxz-devel
 BuildRequires: zlib-devel liblzma-devel xz
 BuildRequires: make
@@ -102,6 +102,9 @@ rm -f %{buildroot}/%{_libdir}/mod_rasterlite2.la
 
 
 %changelog
+* Thu Feb 23 2023 Ivan A. Melnikov <iv@altlinux.org> 1.1.0-alt1.1
+- NMU: drop libgaiagraphics from BR to fix FTBS
+
 * Thu Jan 06 2022 Ilya Mashkin <oddity@altlinux.ru> 1.1.0-alt1
 - Build for Sisyphus
 
