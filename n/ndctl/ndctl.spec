@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: ndctl
-Version: 75
+Version: 76
 Release: alt1
 
 Summary: Manage NVDIMM subsystem devices (Non-volatile Memory)
@@ -26,6 +26,8 @@ BuildRequires: pkgconfig(uuid)
 BuildRequires: pkgconfig(json-c)
 BuildRequires: pkgconfig(systemd)
 BuildRequires: pkgconfig(iniparser) >= 4.1
+BuildRequires: pkgconfig(libtraceevent)
+BuildRequires: pkgconfig(libtracefs)
 %{?_with_keyutils:BuildRequires: pkgconfig(libkeyutils)}
 %{?_with_bash:BuildRequires: bash-completion >= 2.0}
 BuildRequires: asciidoctor asciidoc xmlto
@@ -128,7 +130,8 @@ sed -i 's|/usr\(/bin/systemd-escape\)|\1|' daxctl/90-daxctl-device.rules
 %meson \
 	-Dversion-tag='%version' \
 	%{?_disable_keyutils:-Dkeyutils=false} \
-	-Dbashcompletiondir=%_datadir/bash-completion/completions
+	-Dbashcompletiondir=%_datadir/bash-completion/completions \
+	%{?_enable_check:-Dtest=enabled}
 %nil
 %meson_build
 
@@ -183,6 +186,7 @@ sed -i 's|/usr\(/bin/systemd-escape\)|\1|' daxctl/90-daxctl-device.rules
 
 %files -n cxl
 %_bindir/cxl
+%_unitdir/cxl-monitor.service
 %_man1dir/cxl*
 
 %files -n libcxl
@@ -196,6 +200,9 @@ sed -i 's|/usr\(/bin/systemd-escape\)|\1|' daxctl/90-daxctl-device.rules
 %_man3dir/*cxl*
 
 %changelog
+* Thu Feb 23 2023 Yuri N. Sedunov <aris@altlinux.org> 76-alt1
+- 76
+
 * Sun Jan 15 2023 Yuri N. Sedunov <aris@altlinux.org> 75-alt1
 - 75
 
