@@ -5,7 +5,7 @@
 
 Name: %realname
 Version: 3.3.1
-Release: alt1
+Release: alt2
 Epoch:3
 
 Summary: X11 Window Manager
@@ -147,12 +147,17 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_man5dir/*
 %_mandir/ru/*
 %_datadir/xsessions/*.desktop
+%dir %_icewmdocdir
 %_icewmdocdir/*
 
 %files themes
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Thu Feb 23 2023 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.3.1-alt2
+- added all remaining translations
+- fixed repocop warning what docdir is not owned
+
 * Tue Jan 24 2023 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.3.1-alt1
 - 3.3.1
 - added translation of icewm-preferences(5)
