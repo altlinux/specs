@@ -1,25 +1,25 @@
 %define oname usersettings
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0.7
-Release: alt3
+Version: 1.1.5
+Release: alt1
 
 Summary: Portable Local Settings Storage
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/usersettings/
-BuildArch: noarch
 
-# https://github.com/glvnst/usersettings.git
+VCS: https://github.com/glvnst/usersettings.git
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
+%if_with check
 BuildRequires: python3-module-appdirs
-BuildRequires: python-tools-2to3
-
-%py3_provides %oname
-%py3_requires appdirs
-
+%endif
 
 %description
 "usersettings" is a python module for easily managing persistent
@@ -29,27 +29,27 @@ location (windows/os x/linux are supported).
 %prep
 %setup
 
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 %build
-%python3_build_debug
+%python3_build
 
 %install
 %python3_install
 
 %check
-%if 0
-%__python3 setup.py test
-export PYTHONPATH=$PWD
-%__python3 examples/usersettings-example.py
-%endif
+%tox_create_default_config
+%tox_check
 
 %files
 %doc *.md docs/* examples
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname.py
+%python3_sitelibdir/__pycache__
+%python3_sitelibdir/%oname-*.egg-info
 
 
 %changelog
+* Fri Feb 24 2023 Anton Vyatkin <toni@altlinux.org> 1.1.5-alt1
+- new version 1.1.5
+
 * Mon Jan 13 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.0.7-alt3
 - porting on python3
 
