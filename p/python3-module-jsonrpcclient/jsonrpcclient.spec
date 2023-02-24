@@ -3,7 +3,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 4.0.2
+Version: 4.0.3
 Release: alt1
 
 Summary: Generate JSON-RPC requests and parse responses in Python
@@ -15,10 +15,8 @@ Url: https://pypi.python.org/pypi/jsonrpcclient/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-
-%if_with check
-BuildRequires: python3-module-pytest
-%endif
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 BuildArch: noarch
 
@@ -29,22 +27,23 @@ Generate JSON-RPC requests and parse responses in Python.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-%__python3 setup.py build_ext -i
-rm -fR build
-PYTHONPATH=%buildroot%python3_sitelibdir py.test3
+%tox_check_pyproject
 
 %files
 %doc *.md
 %python3_sitelibdir/%oname
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
+%python3_sitelibdir/%oname-%version.dist-info
 
 %changelog
+* Fri Feb 24 2023 Grigory Ustinov <grenka@altlinux.org> 4.0.3-alt1
+- Automatically updated to 4.0.3.
+
 * Thu Aug 04 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.2-alt1
 - Automatically updated to 4.0.2.
 
