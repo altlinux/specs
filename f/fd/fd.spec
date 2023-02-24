@@ -1,5 +1,5 @@
 Name: fd
-Version: 8.6.0
+Version: 8.7.0
 Release: alt1
 Summary: A simple, fast and user-friendly alternative to 'find'
 License: MIT and Apache-2.0
@@ -53,6 +53,9 @@ cargo test
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Fri Feb 24 2023 Alexander Makeenkov <amakeenk@altlinux.org> 8.7.0-alt1
+- Updated to version 8.7.0
+
 * Sat Dec 17 2022 Alexander Makeenkov <amakeenk@altlinux.org> 8.6.0-alt1
 - Updated to version 8.6.0
 
