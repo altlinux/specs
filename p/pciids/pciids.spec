@@ -1,5 +1,5 @@
 Name: pciids
-Version: 20230217
+Version: 20230224
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -34,6 +34,9 @@ install -pD -m644 pci.ids %buildroot%_datadir/misc/pci.ids
 %_datadir/misc/pci.ids
 
 %changelog
+* Fri Feb 24 2023 Cronbuild Service <cronbuild@altlinux.org> 20230224-alt1
+- repocop cronbuild 20230224. At your service.
+
 * Fri Feb 17 2023 Cronbuild Service <cronbuild@altlinux.org> 20230217-alt1
 - repocop cronbuild 20230217. At your service.
 
