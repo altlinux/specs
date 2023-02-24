@@ -2,7 +2,7 @@
 
 Name:          gem-rails
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 License:       MIT
 Group:         Development/Ruby
@@ -141,7 +141,7 @@ convention over configuration.
 
 %package       -n gem-railties
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -159,7 +159,7 @@ Rails internals: application bootup, plugins, generators, and rake tasks.
 
 %package       -n rails
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета railties
 Group:         Other
@@ -178,7 +178,7 @@ Rails internals: application bootup, plugins, generators, and rake tasks.
 
 %package       -n gem-railties-doc
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета railties
 Group:         Development/Documentation
@@ -197,7 +197,7 @@ Rails internals: application bootup, plugins, generators, and rake tasks.
 
 %package       -n gem-railties-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета railties
 Group:         Development/Ruby
@@ -217,7 +217,7 @@ Rails internals: application bootup, plugins, generators, and rake tasks.
 
 %package       -n gem-activejob
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -232,7 +232,7 @@ Declare job classes that can be run by a variety of queuing backends.
 
 %package       -n gem-activejob-doc
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activejob
 Group:         Development/Documentation
@@ -251,7 +251,7 @@ Declare job classes that can be run by a variety of queuing backends.
 
 %package       -n gem-activejob-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activejob
 Group:         Development/Ruby
@@ -270,7 +270,7 @@ Declare job classes that can be run by a variety of queuing backends.
 
 %package       -n gem-actionview
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -288,7 +288,7 @@ Simple, battle-tested conventions and helpers for building web pages.
 
 %package       -n gem-actionview-doc
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionview
 Group:         Development/Documentation
@@ -307,7 +307,7 @@ Simple, battle-tested conventions and helpers for building web pages.
 
 %package       -n gem-actionview-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actionview
 Group:         Development/Ruby
@@ -328,7 +328,7 @@ Simple, battle-tested conventions and helpers for building web pages.
 
 %package       -n gem-actiontext
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -346,7 +346,7 @@ Edit and display rich text in Rails applications.
 
 %package       -n gem-actiontext-doc
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actiontext
 Group:         Development/Documentation
@@ -365,7 +365,7 @@ Edit and display rich text in Rails applications.
 
 %package       -n gem-actiontext-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actiontext
 Group:         Development/Ruby
@@ -384,7 +384,7 @@ Edit and display rich text in Rails applications.
 
 %package       -n gem-actionpack
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -404,7 +404,7 @@ MVC web applications. Works with any Rack-compatible server.
 
 %package       -n gem-actionpack-doc
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionpack
 Group:         Development/Documentation
@@ -424,7 +424,7 @@ MVC web applications. Works with any Rack-compatible server.
 
 %package       -n gem-actionpack-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actionpack
 Group:         Development/Ruby
@@ -445,7 +445,7 @@ MVC web applications. Works with any Rack-compatible server.
 
 %package       -n gem-actioncable
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -463,7 +463,7 @@ WebSocket connection.
 
 %package       -n gem-actioncable-doc
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actioncable
 Group:         Development/Documentation
@@ -483,7 +483,7 @@ WebSocket connection.
 
 %package       -n gem-actioncable-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actioncable
 Group:         Development/Ruby
@@ -503,7 +503,7 @@ WebSocket connection.
 
 %package       -n gem-activemodel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -519,7 +519,7 @@ testing.
 
 %package       -n gem-activemodel-doc
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activemodel
 Group:         Development/Documentation
@@ -540,7 +540,7 @@ testing.
 
 %package       -n gem-activemodel-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activemodel
 Group:         Development/Ruby
@@ -561,7 +561,7 @@ testing.
 
 %package       -n gem-actionmailer
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -582,7 +582,7 @@ attachments.
 
 %package       -n gem-actionmailer-doc
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionmailer
 Group:         Development/Documentation
@@ -603,7 +603,7 @@ attachments.
 
 %package       -n gem-actionmailer-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actionmailer
 Group:         Development/Ruby
@@ -624,7 +624,7 @@ attachments.
 
 %package       -n gem-activerecord
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -641,7 +641,7 @@ migrations, and testing come baked-in.
 
 %package       -n gem-activerecord-doc
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activerecord
 Group:         Development/Documentation
@@ -662,7 +662,7 @@ migrations, and testing come baked-in.
 
 %package       -n gem-activerecord-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activerecord
 Group:         Development/Ruby
@@ -683,7 +683,7 @@ migrations, and testing come baked-in.
 
 %package       -n gem-actionmailbox
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -714,7 +714,7 @@ rest of your domain model.
 
 %package       -n gem-actionmailbox-doc
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета actionmailbox
 Group:         Development/Documentation
@@ -745,7 +745,7 @@ rest of your domain model.
 
 %package       -n gem-actionmailbox-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета actionmailbox
 Group:         Development/Ruby
@@ -776,7 +776,7 @@ rest of your domain model.
 
 %package       -n gem-activesupport
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -796,7 +796,7 @@ and testing.
 
 %package       -n gem-activesupport-doc
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activesupport
 Group:         Development/Documentation
@@ -817,7 +817,7 @@ and testing.
 
 %package       -n gem-activesupport-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activesupport
 Group:         Development/Ruby
@@ -838,7 +838,7 @@ and testing.
 
 %package       -n gem-activestorage
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails
 Group:         Development/Ruby
 BuildArch:     noarch
@@ -857,7 +857,7 @@ Attach cloud and local files in Rails applications.
 
 %package       -n gem-activestorage-doc
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета activestorage
 Group:         Development/Documentation
@@ -876,7 +876,7 @@ Attach cloud and local files in Rails applications.
 
 %package       -n gem-activestorage-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета activestorage
 Group:         Development/Ruby
@@ -895,7 +895,7 @@ Attach cloud and local files in Rails applications.
 
 %package       -n gem-rails-devel
 Version:       6.1.7.1
-Release:       alt1
+Release:       alt1.1
 Summary:       Ruby on Rails development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rails
 Group:         Development/Ruby
@@ -922,6 +922,7 @@ convention over configuration.
 
 %install
 %ruby_install
+install -D -m 755 %SOURCE1 %buildroot%_sbindir/railsctl
 
 %check
 %ruby_test
@@ -939,6 +940,7 @@ convention over configuration.
 %files         -n rails
 %doc README.md
 %_bindir/rails
+%_sbindir/railsctl
 
 %files         -n gem-railties-doc
 %doc README.md
@@ -1084,6 +1086,9 @@ convention over configuration.
 
 
 %changelog
+* Wed Feb 22 2023 Pavel Skrylev <majioa@altlinux.org> 6.1.7.1-alt1.1
+- ! rolled back lost railsctl
+
 * Fri Jan 20 2023 Pavel Skrylev <majioa@altlinux.org> 6.1.7.1-alt1
 - ^ 6.1.7 -> 6.1.7.1
 - ! CVEs
