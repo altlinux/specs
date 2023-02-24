@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 265
+%define centos_release 283
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,114 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Fri Feb 24 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.283-alt1.el9
+- Updated to kernel-5.14.0-283.el9 (fixes: CVE-2022-33743, CVE-2022-3564, CVE-2022-43750, CVE-2022-4378, CVE-2023-0179, CVE-2023-0590):
+  + [9.2] DRM backport part 3: stable backport
+  + Add Important AMD BZs to RHEL9.2
+  + Add taint flag for partner supported GPL modules
+  + [ADL-S] Enable Real-time TSN support on ADL-S platform
+  + ALSA: AMD - adjust the gain for PDM microphones
+  + arm64-64k: Increase max NR_IRQS from 64+8192 to 2^^19
+  + arm64: tegra: Add PWM fan for Jetson AGX Orin
+  + arm-smmu-qcom: update to 6.2-rc5
+  + atlantic: fix hibernation issues
+  + Attend warnings with gcc 11&12 when building kernel and modules
+  + Backport i2c-qcom-geni to 6.2
+  + backport QDrive3 device tree and drivers/phy/qualcomm (6.2-rc2)
+  + Backport QDrive 3 subsystem into CS9: pcie (6.2-rc2)
+  + Backport QDrive 3 subsystem into CS9: pinctrl (6.2-rc5)
+  + Backport QDrive 3 subsystem into CS9: serial
+  + be2net: Fix buffer overflow in be_get_module_eeprom
+  + blk-cgroup: don't update io stat for root cgroup
+  + Bluetooth: L2CAP: Fix use-after-free caused by l2cap_reassemble_sdu
+  + cifs: backport directory caching from upstream
+  + cifs: fix potential double free during failed mount
+  + cifs: serialize all mount attempts
+  + cpufreq: Enable CPUFREQ thermal cooling for NVIDIA Orin
+  + cpufreq: intel_pstate: Add Sapphire Rapids support in no-HWP mode
+  + crypto: jitter - consider 32 LSB for APT
+  + CVE-2022-43750 kernel: memory corruption in usbmon driver
+  + Disable CPPC+FIE on ARM64 machines with PCC trapping
+  + docs: networking: Fix bridge documentation URL
+  + drm/ast: Fix start address computation
+  + dt-bindings: arm: qcom: 6.1 updates for QDrive3
+  + EDAC/amd64: Handle three rank interleaving mode
+  + Enable kAFS and it's dependancies in RHEL
+  + etherdevice: Adjust ether_addr* prototypes to silence -Wstringop-overead
+  + Fix stack overflow in do_proc_dointvec and proc_skip_spaces
+  + futex: Resend potentially swallowed owner death notification
+  + iavf: Fix long delays when creating multiple VFs
+  + ice: fix handling of burst Tx timestamps
+  + icmp: Add counters for rate limits
+  + [Intel 9.2 FEAT] igb: Driver Update
+  + ipv6: remove max_size check inline with ipv4
+  + IPv6: RHEL9.2 P2 backports from upstream
+  + kernel.spec: allow to package some binaries as unstripped
+  + kernfs: fix use-after-free in __kernfs_remove
+  + Kself: RHEL9.2 P2 backports from upstream
+  + KVM: arm64: GICv4.1: Fix race with doorbell on VPE activation/deactivation
+  + KVM: x86: Backport SMM related fixes
+  + Merge remote-tracking branch 'centos-stream-9/merge-requests/1484' into orin/pwm-fan-v0
+  + missing tee/optee and lib/test_scanf commits for CS9
+  + MLX4 driver upgrade - kernel 6.0
+  + [mlx5] add support for offloading check_pkt_len
+  + mlx5 v6.2 fixes
+  + mmc: patches to support NVIDIA Orin
+  + mm/kmemleak: Fix a UAF problem in kmemleak
+  + netfilter: backports for 9.2 phase 2
+  + netfilter: conntrack: handle tcp challenge acks during connection reuse
+  + netfilter: flowtable_offload: fix using __this_cpu_add in preemptible
+  + netfilter: nf_tables: honor set timeout and garbage collection updates
+  + netfilter: nft_payload: incorrect arithmetics when fetching VLAN header bits
+  + net: gso: fix panic on frag_list with mixed head alloc types
+  + net: mana: Fix accessing freed irq affinity_hint
+  + net: sched: fix race condition in qdisc_graft()
+  + net-sysfs: add check for netdevice being present to speed_show
+  + nfsd: don't destroy global nfs4_file table in per-net shutdown
+  + octeontx2: add Admin/Physical/Virtual Function drivers
+  + pci: tegra: add fixes to sound/pci for NVIDIA Orin Support
+  + perf: arm_cspmu: Add support for ARM CoreSight PMU driver
+  + perf vendor events power10: Fix hv-24x7 metric events
+  + Provide support for SPI on Arm SystemReady IR devices (imx8 and nvidia orin)
+  + r8169: update the driver
+  + RDMA/irdma: Cap MSIX used to online CPUs + 1
+  + redhat: Add sub-RPM with a EFI unified kernel image for virtual machines
+  + redhat: add support for Jira issues in changelog
+  + redhat: fix duplicate jira issues in the resolves line
+  + redhat: Include Azure CVM specific udev rules into UKI's initramfs
+  + redhat/kernel.spec.template: Parallelize compression
+  + remoteproc: qcom: pas: bring 6.0 hw support and fixes
+  + Revert "block: freeze the queue earlier in del_gendisk"
+  + Revert "ethernet: Remove vf rate limit check for drivers"
+  + Revert "vdpa/mlx5: Add RX MAC VLAN filter support"
+  + [RHEL for Edge] add changes to enable USB support on NVIDIA Orin
+  + [RHEL for Edge] Add devicetree bindings for drivers/dma on NVIDIA Orin
+  + [RHEL for Edge] add fixes to drivers/tty/serial to support NVIDIA Orin
+  + rtc: efi: Enable SET/GET WAKEUP services as optional
+  + rtmutex: Add acquire semantics for rtmutex lock acquisition slow path
+  + sctp: backports from upstream, 2nd phase
+  + sctp: do not check hb_timer.expires when resetting hb_timer
+  + selftests/net: give more time to udpgro bg processes to complete startup
+  + selftests: net: update udpgso_bench test
+  + soc: qcom: bring up to 6.2rc1
+  + [SPR] perf: Workaround the UPI intel_uncore_has_discovery_tables issue on SPR MCC and LCC
+  + tegra: Upstream DLA commits to support NVIDIA Orin
+  + The Neoverse N2/A710 self hosted trace errata, and updated coresight and spe subsystem
+  + thunderbolt: Fix DP tunneling out of resource
+  + Update cpufreq/cpufreq-dt-platdev to 6.1
+  + update drivers/clk/qcom to 6.2-rc2
+  + Update drivers/power in order to support Arm SystemReady IR platforms
+  + update drivers/regulator/qcom to 6.2-rc2
+  + userfaultfd: add /dev/userfaultfd for fine grained access control
+  + vfio migration support
+  + virtio_console: break out of buf poll on remove
+  + virtio_net: notify MAC address change on device initialization
+  + x86/hyperv: Remove unregister syscore call from Hyper-V cleanup
+  + x86/module: Fix the paravirt vs alternative order
+  + xen-netfront: restore __skb_queue_tail() positioning in xennet_get_responses()
+  + xfs: estimate post-merge refcounts correctly
+  + xfs, iomap: fix data corrupton due to stale cached iomap
+
 * Sat Feb 11 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.265-alt1.el9
 - Updated to kernel-5.14.0-265.el9 (fixes: CVE-2022-3522, CVE-2022-3619, CVE-2022-41674, CVE-2022-4269, CVE-2022-42720, CVE-2022-42721, CVE-2022-42722):
   + aio: fix mremap after fork null-deref
