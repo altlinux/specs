@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate ImageMagick-tools gcc-c++
 # END SourceDeps(oneline)
@@ -5,13 +6,12 @@ BuildRequires: /usr/bin/desktop-file-install /usr/bin/desktop-file-validate Imag
 %define _localstatedir %{_var}
 Name:           slashem
 Version:        0.0.8
-Release:        alt2_0.23.E0F1
+Release:        alt2_0.36.E0F1
 Summary:        Super Lotsa Added Stuff Hack - Extended Magic
 
-Group:          Games/Other
 License:        NGPL
-URL:            http://slashem.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/se008e0f1.tar.gz
+URL:            https://slashem.sourceforge.net/
+Source0:        https://downloads.sourceforge.net/%{name}/se008e0f1.tar.gz
 Source1:        %{name}.desktop
 Source2:        %{name}.appdata.xml
 Patch0:         slashem-config.patch
@@ -19,17 +19,22 @@ Patch0:         slashem-config.patch
 Patch1:         slashem-libpng-1.5.patch
 # https://bugzilla.redhat.com/show_bug.cgi?id=1037330
 Patch2:         slashem-format-security.patch
+# https://sourceforge.net/p/slashem/bugs/963/
+Patch3:         slashem-add-FDECLs-c99.patch
+Patch4:         slashem-configure-c99.patch
+Patch5:         slashem-c99.patch
 
+BuildRequires:  gcc
 BuildRequires:  /usr/bin/appstream-util
 BuildRequires:  /usr/bin/convert
 BuildRequires:  libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
 BuildRequires:  bison, flex, desktop-file-utils
-BuildRequires:  bdftopcf fonttosfnt mkfontdir mkfontscale xorg-font-utils, libX11-devel, libXext-devel
+BuildRequires:  bdftopcf, libX11-devel, libXext-devel
 BuildRequires:  libXmu-devel libXpm libXpm-devel, libXt-devel
-BuildRequires:  libSDL-devel  libGL-devel libpng-devel zlib-devel
+BuildRequires:  libSDL-devel  libGL-devel libpng-devel libpng17-tools zlib-devel
 BuildRequires:  pkgconfig(xaw7)
 # to compress save files
-Requires:       bzip2 gzip-utils less
+Requires:       bzip2
 # For icon theme directories.
 Requires:       icon-theme-hicolor
 # for X11 core fonts
@@ -65,9 +70,13 @@ SLASH'EM is the (continuing) saga of one such variant...
 
 %prep
 %setup -q -n %{name}-%{version}E0F1
-%patch0 -p1 -b .config
-%patch1 -p1 -b .libpng
-%patch2 -p1 -b .format-security
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+
 
 sed -i \
     -e 's:^\(#define FILE_AREA_VAR\).*:\1 "%{fa_var}/":' \
@@ -131,6 +140,7 @@ sed -i \
 mv %{buildroot}%{fa_unshare}/recover %{buildroot}%{_bindir}/slashem-recover
 mv %{buildroot}%{_mandir}/man6/recover.6 %{buildroot}%{_mandir}/man6/slashem-recover.6
 rm %{buildroot}%{_mandir}/man6/[^s]*
+rm %{buildroot}%{_docdir}/%{name}/license
 
 sed -i -e 's:^!\(SlashEM.tile_file.*\):\1:' %{buildroot}%{fa_share}/SlashEM.ad
 
@@ -146,13 +156,14 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.ap
 
 
 %files
-%doc history.txt doc/*.txt README.34 readme.* slamfaq.txt dat/license dat/history
+%doc history.txt doc/*.txt README.34 readme.* slamfaq.txt dat/history
+%doc --no-dereference dat/license
 %{_bindir}/slashem
 %{_bindir}/slashem-recover
 %{fa_share}
 %dir %{fa_unshare}
 %{fa_unshare}/nhushare
-%{_mandir}/man6/*
+%{_mandir}/man6/*.6*
 %{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/slashem.desktop
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
@@ -166,6 +177,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_datadir}/appdata/%{name}.ap
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.0.8-alt2_0.36.E0F1
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt2_0.23.E0F1
 - update to new release by fcimport
 
