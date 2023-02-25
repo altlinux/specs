@@ -9,6 +9,7 @@ BuildRequires: rpm-build-python3
 %global forgeurl https://pagure.io/fonts-rpm-macros
 Epoch: 1
 Version: 2.0.5
+# FedoraForgeMeta2ALT: generated meta
 %global forgeurl https://pagure.io/fonts-rpm-macros
 %global forgesource https://pagure.io/fonts-rpm-macros/archive/2.0.5/fonts-rpm-macros-2.0.5.tar.gz
 %global archivename fonts-rpm-macros-2.0.5
@@ -27,6 +28,7 @@ Version: 2.0.5
 %global version 2.0.5
 #global date %nil
 #global distprefix %nil
+# FedoraForgeMeta2ALT: end generated meta
 
 #https://src.fedoraproject.org/rpms/redhat-rpm-config/pull-request/51
 %global _spectemplatedir %{_datadir}/rpmdevtools/fedora
@@ -42,12 +44,13 @@ Version: 2.0.5
 BuildArch: noarch
 
 Name:      rpm-build-fedora-compat-fonts
-Release:   alt2_7
+Release:   alt2_11
 Summary:   Build-stage rpm automation for fonts packages
 
-License:   GPLv3+
+License:   GPL-3.0-or-later
 URL:       https://docs.fedoraproject.org/en-US/packaging-guidelines/FontsPolicy/
 Source:    %{forgesource}
+Patch0:    %{oldname}-omit-foundry-in-family.patch
 
 
 #Provides:  fontpackages-devel = %{?epoch:%{epoch}:}%{version}-%{release}
@@ -55,7 +58,7 @@ Source:    %{forgesource}
 # Tooling dropped for now as no one was willing to maintain it
 #Obsoletes: fontpackages-tools < %{?epoch:%{epoch}:}%{version}-%{release}
 
-Requires:  fontconfig
+Requires:  fontconfig libfontconfig1
 Requires:  libappstream-glib libappstream-glib-gir
 Requires:  libuchardet uchardet
 
@@ -133,6 +136,7 @@ for template in templates/rpm/*\.spec ; do
   grep -v '^%%dnl' "${template}" > "${target}"
   touch -r "${template}" "${target}"
 done
+%patch0 -p1 -b .1-omit-foundry-in-family
 
 %install
 install -m 0755 -d    %{buildroot}%{_fontbasedir} \
@@ -173,6 +177,9 @@ install -D -m644 %SOURCE45 %buildroot%_rpmmacrosdir/fedora-compat-fonts
 %doc %{ftcgtemplatedir}/*txt
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1:2.0.5-alt2_11
+- update to new release by fcimport
+
 * Sun Feb 06 2022 Igor Vlasenko <viy@altlinux.org> 1:2.0.5-alt2_7
 - do not obsolete fontpackages
 
