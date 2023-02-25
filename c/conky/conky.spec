@@ -1,6 +1,6 @@
 %define subst_buildoption() %{expand:-DBUILD_%(echo %{1} |sed 's/./\\U&/g')=%%{?_enable_%{1}:ON}%%{?_disable_%{1}:OFF}}
 
-%define luaver 5.3
+%define luaver 5.4
 
 %def_enable argb
 %def_disable audacious
@@ -39,7 +39,7 @@
 %def_enable xshape
 
 Name: conky
-Version: 1.17.0
+Version: 1.18.1
 Release: alt1
 
 Summary: lightweight graphical system monitor
@@ -66,9 +66,9 @@ BuildRequires: glibc-devel lua%luaver-devel python3-module-yaml libpcre2-devel p
 %{?_enable_imlib2:BuildRequires: imlib2-devel}
 %{?_enable_irc:BuildRequires: libircclient-devel}
 %{?_enable_http:BuildRequires: libmicrohttpd-devel}
-%{?_enable_lua_cairo:BuildRequires: lua%luaver-devel tolua++-devel libcairo-devel}
-%{?_enable_lua_imlib2:BuildRequires: lua%luaver-devel tolua++-devel imlib2-devel}
-%{?_enable_lua_rsvg:BuildRequires: lua%luaver-devel tolua++-devel librsvg-devel}
+%{?_enable_lua_cairo:BuildRequires: lua%luaver-devel libcairo-devel}
+%{?_enable_lua_imlib2:BuildRequires: lua%luaver-devel imlib2-devel}
+%{?_enable_lua_rsvg:BuildRequires: lua%luaver-devel librsvg-devel}
 %{?_enable_ncurses:BuildRequires: ncurses-devel}
 %{?_enable_nvidia:BuildRequires: nvidia-settings-devel}
 %{?_enable_pulseaudio:BuildRequires: libpulseaudio-devel}
@@ -103,6 +103,7 @@ VIm syntax plugin for conky config file.
 %prep
 %setup
 %autopatch -p1
+sed -i 's,@LUA_VERSION@,%luaver,' extras/convert.lua
 
 %build
 %cmake \
@@ -136,8 +137,10 @@ VIm syntax plugin for conky config file.
 	%{subst_buildoption rss} \
 	%{subst_buildoption wayland} \
 	%{subst_buildoption wlan} \
+	%{subst_buildoption xdamage } \
 	%{subst_buildoption xdbe } \
 	%{subst_buildoption xft} \
+	%{subst_buildoption xinerama} \
 	%{subst_buildoption xmms2} \
 	%{subst_buildoption xshape} \
 	#
@@ -188,6 +191,9 @@ rm %buildroot%_libdir/libtcp-portmon.a
 %vim_runtime_dir/syntax/conkyrc.vim
 
 %changelog
+* Sat Feb 25 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.18.1-alt1
+- Updated to 1.18.1.
+
 * Mon Jan 02 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.17.0-alt1
 - Updated to 1.17.0.
 - Enabled Wayland support.
