@@ -6,15 +6,13 @@ Group: Development/C
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           librime
-Version:        1.7.3
+Version:        1.8.4
 Release:        alt1_2
 Summary:        Rime Input Method Engine Library
 
 License:        GPLv3
 URL:            https://rime.im/
 Source0:        https://github.com/rime/librime/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-# https://github.com/rime/librime/issues/462
-Patch0:         librime-boost176-exp.patch
 
 BuildRequires:  gcc-c++
 BuildRequires:  ctest cmake, opencc-devel
@@ -23,9 +21,9 @@ BuildRequires:  zlib-devel
 BuildRequires:  libglog-devel, libgtest-devel
 BuildRequires:  libyaml-cpp-devel
 BuildRequires:  libgflags-devel
-BuildRequires:  marisa-devel
+BuildRequires:  libmarisa-devel
 BuildRequires:  libleveldb-devel
-BuildRequires:  capnproto capnproto-devel capnproto-libs
+BuildRequires:  capnproto, capnproto-devel
 Source44: import.info
 
 %description
@@ -73,7 +71,6 @@ The %{name}-tools package contains tools for %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
 
 
 %build
@@ -110,6 +107,9 @@ The %{name}-tools package contains tools for %{name}.
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1.8.4-alt1_2
+- update to new release by fcimport
+
 * Wed Sep 28 2022 Igor Vlasenko <viy@altlinux.org> 1.7.3-alt1_2
 - new version
 
