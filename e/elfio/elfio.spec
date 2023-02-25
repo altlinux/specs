@@ -9,10 +9,11 @@ BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
 %global debug_package %{nil}
 
 Name:           elfio
-Version:        3.10
+Version:        3.11
 Release:        alt1_1
 Summary:        C++ library for reading and generating ELF files
 
+# This is the proper SPDX license
 License:        MIT
 URL:            http://elfio.sourceforge.net/
 Source0:        https://downloads.sf.net/elfio/elfio-%{version}.tar.gz
@@ -55,6 +56,7 @@ format is required. Such Information can easily be found on the Web.
 %setup -q
 
 
+
 %build
 %ifarch %e2k
 # -std=c++03 by default as of lcc 1.23.12
@@ -72,13 +74,16 @@ rm -r %{buildroot}%{_datadir}/docs
 %{_vpath_builddir}/examples/elfdump/elfdump %{_bindir}/cmake
 
 %files devel
-%doc --no-dereference COPYING
-%doc AUTHORS doc/elfio.pdf README.md
+%doc --no-dereference LICENSE.txt
+%doc doc/elfio.pdf README.md
 %{_includedir}/elfio/
 %{_datadir}/elfio/
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 3.11-alt1_1
+- update to new release by fcimport
+
 * Sat May 07 2022 Igor Vlasenko <viy@altlinux.org> 3.10-alt1_1
 - update to new release by fcimport
 
