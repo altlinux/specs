@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install imake libX11-devel libXext-devel perl(find.pl) xorg-cf-files
 # END SourceDeps(oneline)
@@ -5,9 +6,8 @@ BuildRequires: /usr/bin/desktop-file-install imake libX11-devel libXext-devel pe
 %define _localstatedir %{_var}
 Name:           xgalaxy
 Version:        2.0.34
-Release:        alt2_27
+Release:        alt2_40
 Summary:        Arcade game: shoot down the space ships attacking the planet
-Group:          Games/Other
 License:        GPL+
 URL:            http://sourceforge.net/projects/xgalaga/
 Source0:        http://downloads.sourceforge.net/xgalaga/xgalaga_%{version}.orig.tar.gz
@@ -20,8 +20,9 @@ Patch3:         %{name}-2.0.34-joy.patch
 Patch4:         %{name}-2.0.34-fullscreen-viewport.patch
 Patch5:         %{name}-2.0.34-alsa.patch
 Patch6:         %{name}-2.0.34-dga-compile-fix.patch
+Patch7:         xgalaxy-configure-c99.patch
 BuildRequires:  libXt-devel libXpm libXpm-devel libXmu-devel libXxf86vm-devel
-BuildRequires:  libalsa-devel desktop-file-utils ImageMagick-tools 
+BuildRequires:  libalsa-devel desktop-file-utils ImageMagick-tools gcc
 Requires:       icon-theme-hicolor
 Obsoletes:      xgalaga <= %{version}
 Provides:       xgalaga = %{version}-%{release}
@@ -42,6 +43,7 @@ ships attacking the planet.
 %patch4 -p1 -z .viewport
 %patch5 -p1 -z .alsa
 %patch6 -p1 -z .no-dga
+%patch7 -p1 -z .c99
 sed -e 's/Debian/Fedora/g' debian/README.Debian > README.fedora
 cat >> README.fedora << EOF
 
@@ -103,6 +105,9 @@ install -p -m 644 %{name}.png \
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.0.34-alt2_40
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_27
 - update to new release by fcimport
 
