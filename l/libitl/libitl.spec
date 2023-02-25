@@ -1,23 +1,25 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: swig
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           libitl
 Version:        0.7.0 
-Release:        alt3_14
+Release:        alt3_26
 Summary:        Libraries for The Islamic Tools and Libraries Project
 
-Group:          System/Libraries
 License:        LGPLv2+
 URL:            http://www.arabeyes.org/project.php?proj=ITL
 Source0:        http://switch.dl.sourceforge.net/sourceforge/arabeyes/%{name}-%{version}.tar.gz
 
 Patch0: %{name}-makefile-ld.patch
-Source44: import.info
+Patch1: %{name}-fedora-c99.patch
 #BuildRequires:  autoconf
 
+BuildRequires:  gcc
+Source44: import.info
 %description
 The Islamic Tools and Libraries (ITL) is a project 
 to provide a plethora of useful Islamic tools and 
@@ -28,8 +30,8 @@ includes Hijri date, Muslim prayer times, and Qibla.
 This package contains the libraries for applications using ITL
 
 %package        devel
+Group: Development/Other
 Summary:        Development files for %{name}
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
@@ -40,6 +42,7 @@ developing applications that use %{name}.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %configure --disable-static
@@ -56,6 +59,10 @@ cp prayertime/src/prayer.h hijri/src/hijri.h $RPM_BUILD_ROOT/%{_includedir}/itl/
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
+
+
+
+
 %files
 %doc AUTHORS COPYING README
 %{_libdir}/libitl.so.*
@@ -69,6 +76,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.7.0-alt3_26
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_14
 - update to new release by fcimport
 
