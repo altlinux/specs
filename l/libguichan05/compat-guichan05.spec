@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: libglvnd-devel
+# END SourceDeps(oneline)
 Group: Development/Other
 %add_optflags %optflags_shared
 %define oldname compat-guichan05
@@ -5,12 +8,13 @@ Group: Development/Other
 %define _localstatedir %{_var}
 Name:           libguichan05
 Version:        0.5.0
-Release:        alt1_26
+Release:        alt1_36
 Summary:        Compatibility libraries for older guichan versions
 
 License:        BSD
 URL:            http://guichan.sourceforge.net
 Source0:        http://downloads.sourceforge.net/guichan/guichan-%{version}-src.tar.gz
+Patch0:         compat-guichan05-configure-c99.patch
 Obsoletes:      guichan < 0.6.0
 
 BuildRequires:  liballegro-devel, libSDL-devel, libSDL_image-devel, libGL-devel
@@ -40,7 +44,9 @@ package is needed to build programs written using guichan.
 
 %prep
 %setup -q -n guichan-%{version}-src
+%patch0 -p1
 %patch33 -p1
+
 
 %build
 autoreconf -fisv
@@ -67,6 +73,8 @@ for lib in libguichan libguichan_allegro libguichan_glut libguichan_opengl libgu
 done
 
 
+
+
 %files
 %doc --no-dereference COPYING
 %doc AUTHORS ChangeLog NEWS README TODO
@@ -88,6 +96,9 @@ done
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.5.0-alt1_36
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_26
 - update to new release by fcimport
 
