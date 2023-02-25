@@ -1,15 +1,15 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Package-DeprecationManager
 Name: perl-%dist
-Version: 0.17
-Release: alt2
+Version: 0.18
+Release: alt1
 
 Summary: Manage deprecation warnings for your distribution
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Package-DeprecationManager-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/D/DR/DROLSKY/%{dist}-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -21,7 +21,7 @@ BuildRequires: perl(Params/Util.pm) perl(Sub/Install.pm)
 This module allows you to manage a set of deprecations for one or more modules.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n %{dist}-%{version}
 
 %build
 %perl_vendor_build
@@ -30,10 +30,13 @@ This module allows you to manage a set of deprecations for one or more modules.
 %perl_vendor_install
 
 %files
-%doc Changes README.md
+%doc Changes README.md CONTRIBUTING.md
 %perl_vendor_privlib/Package*
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.18-alt1
+- automated CPAN update
+
 * Thu Aug 17 2017 Aleksei Nikiforov <darktemplar@altlinux.org> 0.17-alt2
 - Updated build dependencies.
 
