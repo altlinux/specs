@@ -6,19 +6,21 @@ Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
-%define autorelease 3
+%define autorelease 2
 
 Name:           libfplll
-Version:        5.4.2
-%global so_version 7
-Release:        alt1_%autorelease
+Version:        5.4.4
+%global so_version 8
+Release:        alt1_2
 Summary:        Lattice algorithms using floating-point arithmetic
 
 # The entire source is LGPL-2.1-or-later, except:
 #
 #   - The contents of fplll/enum-parallel/ are MIT
 #   - fplll/io/thread_pool.hpp is MIT
-#   - fplll/io/json.hpp is MIT, but is unbundled
+#   - fplll/io/json.hpp is MIT AND CC0-1.0 (the latter because it includes
+#     Hedley); while it is unbundled, it is a header-only library, and so it
+#     still contributes to the license of the binary RPMs
 #
 # Additionally, a number of autoconf build system sources, which do not
 # contribute to the binary RPM license because they are neither installed nor
@@ -27,9 +29,13 @@ Summary:        Lattice algorithms using floating-point arithmetic
 #   - INSTALL, {,fplll/,tests/}Makefile.in, aclocal.m4, compile, config.guess,
 #     config.sub, configure, depcomp, install-sh, ltmain.sh, missing,
 #     test-driver, */Makefile.in, m4/*.m4
-License:        LGPL-2.1-or-later AND MIT
+License:        LGPL-2.1-or-later AND MIT AND CC0-1.0
 URL:            https://fplll.github.io/fplll/
 Source0:        https://github.com/fplll/fplll/releases/download/%{version}/fplll-%{version}.tar.gz
+# Man pages hand-written for Fedora in groff_man(7) format based on --help
+# output and README.md:
+Source1:        fplll.1
+Source2:        latticegen.1
 
 BuildRequires:  autoconf
 BuildRequires:  automake
@@ -42,8 +48,6 @@ BuildRequires:  pkgconfig(qd)
 # BR on *-static required for tracking header-only libraries
 BuildRequires:  pkgconfig(nlohmann_json)
 BuildRequires:  nlohmann-json-devel
-
-BuildRequires:  help2man
 
 # The contents of fplll/enum-parallel/ are based on, but heavily modified from,
 # https://github.com/cr-marcstevens/fplll-extenum. We do not treat this as a
@@ -149,20 +153,13 @@ sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
 
 %make_build
 
-# Build man pages with help2man. The result is not as good as hand-written, but
-# quite adequate.
-for cmd in fplll latticegen
-do
-  LD_LIBRARY_PATH="${PWD}/fplll/.libs" \
-      help2man --no-info --output="${cmd}.1" "./fplll/${cmd}"
-done
-
 
 %install
 %makeinstall_std
 find '%{buildroot}' -type f -name '*.la' -print -delete
 
-install -t '%{buildroot}%{_mandir}/man1' -D -m 0644 -p *.1
+install -t '%{buildroot}%{_mandir}/man1' -D -m 0644 -p \
+    '%{SOURCE1}' '%{SOURCE2}'
 
 
 %check
@@ -196,6 +193,9 @@ LD_LIBRARY_PATH="${PWD}/src/.libs" %make_build check
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 5.4.4-alt1_2
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 5.4.2-alt1_3
 - update to new release by fcimport
 
