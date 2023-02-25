@@ -7,7 +7,7 @@ BuildRequires(pre): rpm-macros-environment-modules
 %define _localstatedir %{_var}
 Name:           4ti2
 Version:        1.6.9
-Release:        alt1_12
+Release:        alt1_15
 Summary:        Algebraic, geometric and combinatorial problems on linear spaces
 
 %global relver %(tr . _ <<< %{version})
@@ -15,14 +15,19 @@ Summary:        Algebraic, geometric and combinatorial problems on linear spaces
 # The content is GPL-2.0-or-later.  The remaining licenses cover the various
 # fonts embedded in the PDF manual.
 # AMS: OFL-1.1-RFN
-# CM: Knuth-CTAN AND LicenseRef-Fedora-Public-Domain
+# CM: Knuth-CTAN
 # CM-Super: GPL-1.0-or-later
-License:        GPL-2.0-or-later AND OFL-1.1-RFN AND Knuth-CTAN AND LicenseRef-Fedora-Public-Domain AND GPL-1.0-or-later
+License:        GPL-2.0-or-later AND OFL-1.1-RFN AND Knuth-CTAN AND GPL-1.0-or-later
 URL:            https://4ti2.github.io/
 Source0:        https://github.com/4ti2/4ti2/releases/download/Release_%{relver}/%{name}-%{version}.tar.gz
 Source1:        4ti2.module.in
 # Deal with a boolean variable that can somehow hold the value 2
 Patch0:         %{name}-maxnorm.patch
+# Add missing #include for gcc 13
+Patch1:         %{name}-missing-include.patch
+# Fix a memory leak
+# See https://github.com/4ti2/4ti2/pull/36
+Patch2:         %{name}-memleak.patch
 
 BuildRequires:  environment(modules)
 BuildRequires:  gcc
@@ -66,6 +71,8 @@ spaces.
 %prep
 %setup -q
 %patch0
+%patch1
+%patch2
 
 
 # Add a missing executable bit
@@ -152,6 +159,9 @@ make check
 %{_libdir}/libzsolve*.so.0*
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1.6.9-alt1_15
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.6.9-alt1_12
 - update to new release by fcimport
 
