@@ -1,5 +1,5 @@
 Name: libmd
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Message Digest functions from BSD systems
@@ -47,5 +47,8 @@ Development files for the libbsd library.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Feb 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0.4-alt1
+- new version 1.0.4 (with rpmrb script)
+
 * Sat Sep 04 2021 Vitaly Lipatov <lav@altlinux.ru> 1.0.3-alt1
 - initial build for ALT Sisyphus
