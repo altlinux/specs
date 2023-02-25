@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install
 # END SourceDeps(oneline)
@@ -5,14 +6,15 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           pengupop
 Version:        2.2.2
-Release:        alt4_19
+Release:        alt4_31
 Summary:        Networked Game in the vein of Move/Puzzle Bobble
 
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://www.junoplay.com/pengupop
 Source0:        http://www.junoplay.com/files/%{name}-%{version}.tar.gz
+Patch0: pengupop-c99.patch
 
+BuildRequires:  gcc
 BuildRequires:  libSDL-devel, zlib-devel, desktop-file-utils
 Source44: import.info
 
@@ -26,6 +28,8 @@ remove all orbs. You lose if any orb attaches below the white line.
 
 %prep
 %setup -q
+%patch0 -p1
+
 
 
 %build
@@ -52,6 +56,9 @@ desktop-file-install \
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.2.2-alt4_31
+- update to new release by fcimport
+
 * Sat Feb 03 2018 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt4_19
 - update to new release by fcimport
 
