@@ -4,7 +4,7 @@
 %define _stripped_files_terminate_build 1
 
 Name: rpm-build-vm
-Version: 1.49
+Version: 1.50
 Release: alt1
 
 Summary: RPM helper to run tests in virtualised environment
@@ -209,6 +209,8 @@ kvm-ok
 timeout 300 vm-run --verbose uname -a
 timeout 300 vm-run --mem=max free -g
 timeout 300 vm-run --mem=256 --cpu=max lscpu
+df -h /tmp
+timeout 300 vm-run --tmp=max df -h /tmp
 timeout 300 vm-run --verbose --overlay=ext4 uname -a
 rmdir /mnt/0
 rm /usr/src/ext4.0.img
@@ -228,6 +230,11 @@ ls -l /dev/kvm && test -w /dev/kvm
 %endif
 
 %changelog
+* Sat Feb 25 2023 Vitaly Chikunov <vt@altlinux.org> 1.50-alt1
+- Add experimental --tmp=size option to pass swap device from the host and set
+  guest tmpfs:/tmp size from swap size.
+- Workaround boot failure on armh (appeared in v6.1.13).
+
 * Tue Feb 21 2023 Vitaly Chikunov <vt@altlinux.org> 1.49-alt1
 - Add --mem=max to lift soft memory restrictions om aarch64 and ppc64le.
 - Add --cpu=max to remove soft CPU count limit.
