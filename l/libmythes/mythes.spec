@@ -5,10 +5,10 @@ Group: System/Libraries
 Name:      libmythes
 Summary:   A thesaurus library
 Version:   1.2.5
-Release:   alt1_1
+Release:   alt1_3
 Source:    https://github.com/hunspell/%{oldname}/releases/download/v%{version}/%{oldname}-%{version}.tar.xz
 URL:       https://github.com/hunspell/mythes
-License:   BSD and MIT
+License:   BSD-3-Clause-Modification AND MIT
 BuildRequires: hunspell-utils libhunspell-devel, gcc-c++
 Source44: import.info
 
@@ -58,6 +58,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_bindir}/th_gen_idx.pl
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1.2.5-alt1_3
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.2.5-alt1_1
 - update to new release by fcimport
 
