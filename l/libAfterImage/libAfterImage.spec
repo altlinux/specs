@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl gcc-c++ imake libXpm-devel libXt-devel libglvnd-devel xorg-cf-files
+BuildRequires: gcc-c++ imake libXpm-devel libXt-devel libglvnd-devel xorg-cf-files
 # END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
@@ -7,7 +7,7 @@ Group: System/Libraries
 %define _localstatedir %{_var}
 Name:           libAfterImage
 Version:        1.20
-Release:        alt1_26
+Release:        alt1_31
 Summary:        A generic image manipulation library
 
 License:        LGPLv2+
@@ -22,12 +22,14 @@ Patch1:         %{name}-libpng15.patch
 Patch2:         %{name}-unbundle-libgif.patch
 #               Link the shared library with its dependencies
 Patch3:         %{name}-link.patch
+#               Patch configure script for C99 compatibility.
+Patch4:         %{name}-configure-c99.patch
 
 BuildRequires:  gcc
 BuildRequires:  libfreetype-devel
 BuildRequires:  zlib-devel
 BuildRequires:  libtiff-devel libtiffxx-devel
-BuildRequires:  libpng-devel
+BuildRequires:  libpng-devel libpng17-tools
 BuildRequires:  libgif-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  librsvg-devel librsvg-gir-devel
@@ -77,6 +79,7 @@ The %{name}-apps package contains sample programs using %{name}.
 %patch1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # Delete bundled sources
 rm libjpeg/*
@@ -118,6 +121,9 @@ cp %{SOURCE1} COPYING
 %{_bindir}/as*
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1.20-alt1_31
+- update to new release by fcimport
+
 * Thu Mar 25 2021 Igor Vlasenko <viy@altlinux.org> 1.20-alt1_26
 - update to new release by fcimport
 
