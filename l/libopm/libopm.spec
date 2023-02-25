@@ -1,23 +1,24 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(DynaLoader.pm) perl(Exporter.pm) perl(ExtUtils/MakeMaker.pm) perl(IO/Select.pm) perl(Test.pm) perl-devel
+BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(Test.pm) perl-devel
 # END SourceDeps(oneline)
+Group: System/Libraries
 %add_optflags %optflags_shared
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Summary:        Blitzed open proxy monitor library
 Name:           libopm
 Version:        0.1
-Release:        alt3_21.20050731cvs
+Release:        alt3_33.20050731cvs
 License:        GPLv2+
-Group:          System/Libraries
 URL:            http://wiki.blitzed.org/BOPM
 # cvs -z3 -d:pserver:anon@cvs.blitzed.org:/ co -D "20050731 23:59" libopm
 # find libopm -type f -name .cvsignore -exec rm -f {} ';'
 # find libopm -type d -name CVS -exec rm -rf {} 2>/dev/null ';'
 # mv -f libopm libopm-$(grep AC_INIT libopm/configure.in | sed -e 's/.*\[\(.*\)\].*/\1/')
 Source:         %{name}-%{version}.tar.gz
-Patch:          libopm-0.1-multilib.patch
-BuildRequires:  doxygen
+Patch1:         libopm-0.1-multilib.patch
+Patch2:         libopm-configure-c99.patch
+BuildRequires:  gcc
 Source44: import.info
 
 %description
@@ -27,39 +28,65 @@ running on clients connecting to various IRC servers, but it
 has evolved to become a generic open proxy detection library.
 
 %package devel
+Group: Development/Other
 Summary:        Headers and development libraries for libopm
-Group:          Development/Other
 Requires:       %{name} = %{version}-%{release}
 
 %description devel
 The libopm-devel package contains the header files and libraries
 necessary for developing applications which use libopm.
 
+%if 0%{!?_without_doc:1}
+%package doc
+Group: System/Libraries
+Summary:        Documentation files for libopm
+BuildArch:      noarch
+BuildRequires:  doxygen
+
+%description doc
+This package contains the API documentation for developing
+applications that use libopm, which is an open proxy detection
+library. 
+%endif
+
 %prep
 %setup -q
-%patch -p1 -b .multilib
+%patch1 -p1
+%patch2 -p1
+
 
 %build
 %configure --disable-static
 %make_build
-cd doc && doxygen && mv -f api html
+%{!?_without_doc:cd doc && doxygen && mv -f api html}
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT install
+%makeinstall_std
 
 # Don't install any libtool .la files
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
+
+
 %files
-%doc ChangeLog LICENSE
+%doc --no-dereference LICENSE
+%doc ChangeLog
 %{_libdir}/%{name}.so.*
 
 %files devel
-%doc doc/libopm-api.txt doc/html
+%doc doc/libopm-api.txt
 %{_includedir}/opm*
 %{_libdir}/%{name}.so
 
+%if 0%{!?_without_doc:1}
+%files doc
+%doc doc/html/
+%endif
+
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.1-alt3_33.20050731cvs
+- update to new release by fcimport
+
 * Wed Sep 27 2017 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_21.20050731cvs
 - update to new release by fcimport
 
