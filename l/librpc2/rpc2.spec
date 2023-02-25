@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: pkgconfig(lua)
+# END SourceDeps(oneline)
 Group: System/Libraries
 %add_optflags %optflags_shared
 %define oldname rpc2
@@ -7,7 +10,7 @@ Group: System/Libraries
 
 Name:           librpc2
 Version:        2.10
-Release:        alt1_25
+Release:        alt1_31
 Summary:        C library for remote procedure calls over UDP
 License:        LGPLv2
 URL:            http://www.coda.cs.cmu.edu/
@@ -17,6 +20,7 @@ Patch0:		rpc2-2.10-lua-5.2-fix.patch
 Patch1:		rpc2-2.10-format-security-fix.patch
 Patch2:		rpc2-2.10-lua-5.4.patch
 Patch3:		rpc2-2.10-rp2gen-cflags.patch
+Patch4:		rpc2-c99.patch
 BuildRequires:  gcc-c++
 BuildRequires:  liblwp-devel lua-devel flex bison
 Source44: import.info
@@ -43,6 +47,7 @@ developing applications that use %{oldname}.
 %patch1 -p1 -b .format-security
 %patch2 -p1 -b .lua54
 %patch3 -p1 -b .cflags
+%patch4 -p1 -b .c99
 
 %build
 %configure --disable-static --with-lua
@@ -69,6 +74,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{oldname}.pc
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.10-alt1_31
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_25
 - update to new release by fcimport
 
