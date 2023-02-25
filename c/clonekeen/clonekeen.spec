@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/desktop-file-install
 %define _localstatedir %{_var}
 Name:           clonekeen
 Version:        0.8.4
-Release:        alt1_19
+Release:        alt1_26
 Summary:        "Commander Keen: Invasion of the Vorticons" clone
 License:        GPLv3+
 URL:            http://clonekeen.sourceforge.net/
@@ -51,15 +51,16 @@ the shareware datafiles for you.
 %patch1 -p1
 
 find -name "*.o" -delete
-sed -i 's|gcc -O2|gcc %{optflags}|g' src/Makefile
+sed -i 's|gcc -O2|gcc %{optflags} -std=gnu89|g' src/Makefile
 cp -a %{SOURCE2} %{SOURCE3} .
 sed -i 's/\r//g' README src/changelog.txt
 
 
 %build
-%make_build -C src -f Makefile CFLAGS="$RPM_OPT_FLAGS"
-gcc -o %{name}-extract $RPM_OPT_FLAGS extract.c -ldynamite
-gcc -o %{name}-extract-sounds $RPM_OPT_FLAGS %{name}-extract-sounds.c
+CFLAGS="$CFLAGS -std=gnu89"
+%make_build -C src -f Makefile
+gcc -o %{name}-extract $CFLAGS extract.c -ldynamite
+gcc -o %{name}-extract-sounds $CFLAGS %{name}-extract-sounds.c
 
 
 %install
@@ -97,6 +98,9 @@ sed -i s,/usr/libexec,%{_libexecdir},g %buildroot%{_libexecdir}/%{name}* %buildr
 %{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.8.4-alt1_26
+- update to new release by fcimport
+
 * Tue Mar 24 2020 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_19
 - update to new release by fcimport
 
