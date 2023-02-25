@@ -3,30 +3,27 @@ Group: System/Libraries
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           rpm-build-gnat
-Version:        3.16
-Release:        alt1_1
+Version:        3.17
+Release:        alt1_2
 Summary:        Files shared by Ada libraries
 Summary(sv):    Gemensamma filer för adabibliotek
 
-License:        Copyright only
-URL:            https://src.fedoraproject.org/cgit/rpms/fedora-gnat-project-common.git
+License:        FSFAP
+URL:            https://src.fedoraproject.org/rpms/fedora-gnat-project-common
 Source1:        directories.gpr.in
 Source2:        macros.gnat.in
 Source3:        gnat-project.sh
 Source4:        gnat-project.csh
 Source5:        configure
-Source6:        LICENSE
 BuildArch:      noarch
 
 BuildRequires:  sed
-Requires:       setup
+Requires:       setup coreutils
 Source44: import.info
 Patch33: macros.gnat.in.patch
 Provides: fedora-gnat-project-common = %version
 Requires: rpm-macros-gnat = %{version}-%{release}
-# macros.gnat requires build_*flags:
-# macros.gnat uses _smp_build_ncpus (RPM 4.15),
-# and an RPM that knows about /usr/lib/rpm/macros.d (4.11) is required:
+# setup owns /etc/profile.d and coreutils contains uname.
 
 %description
 The fedora-gnat-project-common package contains files that are used by the GNAT
@@ -53,7 +50,7 @@ Install this package if you want to create RPM packages that use GNAT.
 
 %prep
 %setup -n %{oldname}-%{version} -c -T
-cp --preserve=timestamps %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6} .
+cp --preserve=timestamps %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} %{SOURCE5} .
 %patch33 -p0
 
 
@@ -69,7 +66,6 @@ cp -p macros.gnat %{buildroot}%{_rpmmacrosdir}/gnat
 
 
 %files
-%doc --no-dereference LICENSE
 %{_GNAT_project_dir}
 %config(noreplace) %{_sysconfdir}/profile.d/*
 
@@ -79,6 +75,9 @@ cp -p macros.gnat %{buildroot}%{_rpmmacrosdir}/gnat
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 3.17-alt1_2
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 3.16-alt1_1
 - update to new release by fcimport
 
