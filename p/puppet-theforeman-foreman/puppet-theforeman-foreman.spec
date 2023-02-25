@@ -2,7 +2,7 @@
 %define        pkgname theforeman-foreman
 
 Name:          puppet-%pkgname
-Version:       19.1.1
+Version:       22.1.2
 Release:       alt1
 Summary:       Foreman server configuration
 License:       GPLv3
@@ -14,6 +14,7 @@ BuildArch:     noarch
 
 Source:        %name-%version.tar
 Patch:         sssd.patch
+Patch1:        ruby.patch
 BuildRequires(pre): rpm-build-ruby
 
 Requires:      puppet
@@ -49,12 +50,14 @@ and related services.
 %autopatch
 
 %build
-%ruby_build --use=%name --srclibdirs=
+%ruby_build
 
 %install
 %ruby_install
 mkdir -p %buildroot%_libexecdir/puppet-modules/
 mv %buildroot%_libexecdir/%name %buildroot%_libexecdir/puppet-modules/%pkgname
+rm -f %buildroot%_libexecdir/puppet-modules/%pkgname/lib
+mv %buildroot%ruby_sitelibdir %buildroot%_libexecdir/puppet-modules/%pkgname/lib
 
 %check
 %ruby_test
@@ -65,6 +68,9 @@ mv %buildroot%_libexecdir/%name %buildroot%_libexecdir/puppet-modules/%pkgname
 
 
 %changelog
+* Thu Feb 09 2023 Pavel Skrylev <majioa@altlinux.org> 22.1.2-alt1
+- ^ 19.1.1 -> 22.1.2
+
 * Mon Jan 31 2022 Pavel Skrylev <majioa@altlinux.org> 19.1.1-alt1
 - ^ 16.0.0 -> 19.1.1
 - !fixed require sssd.rb in facter when it absents
