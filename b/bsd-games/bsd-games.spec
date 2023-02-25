@@ -10,7 +10,7 @@ Group: Games/Other
 Summary: Collection of text-based games
 Name: bsd-games
 Version: 2.17
-Release: alt3_69
+Release: alt3_71
 License: BSD and BSD with advertising
 URL: ftp://metalab.unc.edu/pub/Linux/games/
 Source0: ftp://metalab.unc.edu/pub/Linux/games/bsd-games-%{version}.tar.gz
@@ -45,6 +45,7 @@ Patch21: bsd-games-2.17-huntversion.patch
 Patch22: bsd-games-2.17-getrandom.patch
 Patch23: bsd-games-2.17-printf.patch
 Patch24: bsd-games-2.17-printw.patch
+Patch25: bsd-games-c99.patch
 BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: libncurses++-devel libncurses-devel libncursesw-devel libtic-devel libtinfo-devel
@@ -57,8 +58,8 @@ BuildRequires: flex
 %endif
 BuildRequires: bison
 Requires(pre): shadow-change shadow-check shadow-convert shadow-edit shadow-groups shadow-log shadow-submap shadow-utils
-Patch33: bsd-games-2.17-alt-elbrus.patch
 Source44: import.info
+Patch33: bsd-games-2.17-alt-elbrus.patch
 
 %description
 Bsd-games includes adventure, arithmetic, atc, backgammon, battlestar,
@@ -96,6 +97,7 @@ popd
 %patch22 -p1 -b .getrandom
 %patch23 -p1 -b .printf
 %patch24 -p1 -b .printw
+%patch25 -p1 -b .c99
 %patch33 -p1
 
 %build
@@ -223,6 +225,9 @@ exit 0
 %doc AUTHORS COPYING ChangeLog ChangeLog.0 THANKS YEAR2000 README.hunt trek/USD.doc/trek.me
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.17-alt3_71
+- update to new release by fcimport
+
 * Sun Dec 25 2022 Igor Vlasenko <viy@altlinux.org> 2.17-alt3_69
 - Elbrus support (bsd-games-2.17-alt-elbrus.patch)
 
