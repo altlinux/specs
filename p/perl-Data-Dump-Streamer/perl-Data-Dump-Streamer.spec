@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Data-Dump-Streamer
 Name: perl-%dist
-Version: 2.41
+Version: 2.42
 Release: alt1
 
 Summary: Accurately serialize a data structure as Perl code
@@ -36,6 +36,9 @@ output correctly.
 %perl_vendor_autolib/Data
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.42-alt1
+- automated CPAN update
+
 * Tue Jan 31 2023 Igor Vlasenko <viy@altlinux.org> 2.41-alt1
 - automated CPAN update
 
