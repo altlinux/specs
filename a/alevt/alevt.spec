@@ -1,3 +1,4 @@
+Group: Video
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install perl(Proc/Simple.pm) perl(Tk.pm)
 # END SourceDeps(oneline)
@@ -5,22 +6,21 @@ BuildRequires: /usr/bin/desktop-file-install perl(Proc/Simple.pm) perl(Tk.pm)
 %define _localstatedir %{_var}
 Name: alevt
 Version: 1.8.1
-Release: alt1
+Release: alt1_1
 Summary: Teletext decoder/browser
-Group: Video
-License: GPLv2+
+License: GPLv2
 URL: https://gitlab.com/alevt/alevt
-Source: %{name}-v%{version}.tar.bz2
+Source: https://gitlab.com/%{name}/%{name}/-/archive/v%{version}/alevt-v%{version}.tar.bz2
 Source1: alevt.desktop
 Patch0: alevt-1.6.2-pixmap.patch
 Patch1: alevt-1.6.2-manpath.patch
-Patch2: alevt-1.6.2-rus-greek.patch
-Patch3: alevt-1.6.2-doublefont.patch
-Patch4: alevt-1.6.2-zlib.patch
+Patch2: alevt-1.8.1-doublefont.patch
+Patch3: alevt-1.6.2-zlib.patch
+BuildRequires: gcc
 BuildRequires: libX11-devel
-BuildRequires: libpng-devel
+BuildRequires: libpng-devel libpng17-tools
 BuildRequires: desktop-file-utils
-BuildRequires: ImageMagick
+BuildRequires: ImageMagick-tools
 Source44: import.info
 
 %description
@@ -32,14 +32,14 @@ one to capture teletext pages from scripts.
 
 
 %prep
-%setup -q -n alevt-v%{version}
+%setup -q -n %{name}-v%{version}
 %patch0 -p1 -b .pixmap
 %patch1 -p1 -b .manpath
-#patch2 -p1 -b .rusgreek
-#patch3 -p1 -b .double
-%patch4 -p1 -b .zlib
+%patch2 -p1 -b .double
+%patch3 -p1 -b .zlib
 
 %build
+CC="$CC -DVERSION=\\\"%{version}\\\""
 # alevt does not have standard build system, so we populate OPT, 
 # which is internal build variable to accommodate Fedora opt flags
 # This will produce lot of garbage on output.
@@ -52,8 +52,7 @@ mkdir -p %{buildroot}%{_mandir}/man1
 
 make USR_X11R6=%{_prefix} MAN=%{_mandir} rpm-install
 desktop-file-install \
-	--dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
-
+        --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
 
 %files
 %{_bindir}/alevt
@@ -62,9 +61,12 @@ desktop-file-install \
 %{_datadir}/applications/%{name}.desktop
 %{_mandir}/man?/%{name}*
 %{_datadir}/pixmaps/mini-alevt.xpm
-%doc README* CHANGELOG COPYRIGHT
+%doc README.md CHANGELOG COPYRIGHT
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1.8.1-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 08 2022 Ilya Mashkin <oddity@altlinux.ru> 1.8.1-alt1
 - 1.8.1
 - Update URL and License tags
