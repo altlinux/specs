@@ -1,44 +1,41 @@
-# atlas is not built yet :(
-ExclusiveArch: %ix86 x86_64
 Group: Sciences/Mathematics
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat rpm-macros-generic-compat
 # END SourceDeps(oneline)
 %define _unpackaged_files_terminate_build 1
-%define fedora 32
+%define fedora 37
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           armadillo
-Version:        10.2.0
-Release:        alt1_2
+Version:        10.8.2
+Release:        alt1_3
 Summary:        Fast C++ matrix library with syntax similar to MATLAB and Octave
 
 License:        ASL 2.0
 URL:            http://arma.sourceforge.net/
 Source:         http://sourceforge.net/projects/arma/files/%{name}-%{version}.tar.xz
 
-%if (0%{?rhel} || (0%{?fedora} && 0%{?fedora} < 33))
-%undefine __cmake_in_source_build
-%endif
-
-%if 0%{?fedora} > 32
-%global extra_options -DALLOW_FLEXIBLAS_LINUX=ON
-BuildRequires:  flexiblas-devel
-%else
-%global extra_options %{nil}
-%endif
-
 BuildRequires:  gcc-c++
 BuildRequires:  ctest cmake
-BuildRequires:  liblapack-devel, libarpack-ng-devel
-BuildRequires:  libhdf5-devel
+BuildRequires:  libarpack-ng-devel
+BuildRequires:  hdf5-tools libhdf5-devel
+BuildRequires:  libsuperlu-devel
+
+# flexiblas is only available on Fedora, for EPEL replace it by atlas, lapack and openblas
+%if %{?fedora}
+%global extra_options -DALLOW_FLEXIBLAS_LINUX=ON
+BuildRequires:  libflexiblas-devel
+%else
+%undefine __cmake_in_source_build
+%global extra_options %{nil}
+BuildRequires:  atlas-devel
+BuildRequires:  liblapack-devel
 %{!?openblas_arches:%global openblas_arches x86_64 %{ix86} armv7hl %{power64} aarch64}
 %ifarch %{openblas_arches}
 BuildRequires:  libopenblas-devel
 %endif
-BuildRequires:  libsuperlu-devel libatlas-devel
+%endif
 Source44: import.info
-
 
 %description
 Armadillo is a C++ linear algebra library (matrix maths)
@@ -81,7 +78,12 @@ This package contains the shared library.
 Group: Sciences/Mathematics
 Summary:        Development headers and documentation for the Armadillo C++ library
 Requires:       libarmadillo10 = %EVR
+Requires:       hdf5-tools
+
+%if %{?fedora}
+%else
 %ifarch %{openblas_arches}
+%endif
 %endif
 Provides: %name-devel = %EVR
 
@@ -140,6 +142,9 @@ make -C "%{_vpath_builddir}"
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 10.8.2-alt1_3
+- update to new release by fcimport
+
 * Sat Feb 27 2021 Igor Vlasenko <viy@altlinux.org> 10.2.0-alt1_2
 - update to new release by fcimport
 
