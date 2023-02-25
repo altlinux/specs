@@ -1,3 +1,4 @@
+Group: Games/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/desktop-file-install libSDL-devel
 # END SourceDeps(oneline)
@@ -5,9 +6,8 @@ BuildRequires: /usr/bin/desktop-file-install libSDL-devel
 %define _localstatedir %{_var}
 Name:           dd2
 Version:        0.2.2
-Release:        alt2_22
+Release:        alt2_32
 Summary:        Dodgin' Diamond 2 - Shoot'em up arcade game
-Group:          Games/Other
 License:        GPLv2+
 URL:            http://www.usebox.net/jjm/dd2/
 Source0:        http://www.usebox.net/jjm/dd2/releases/dd2-%{version}.tar.gz
@@ -15,6 +15,7 @@ Source1:        %{name}.desktop
 Source2:        %{name}.png
 Patch0:         dd2-0.2.1-glob-highscore.patch
 Patch1:         dd2-0.2.1-640x480-fullscreen.patch
+Patch2:         dd2-0.2.2-configure-c99.patch
 BuildRequires:  gcc
 BuildRequires:  libSDL_mixer-devel desktop-file-utils
 Requires:       icon-theme-hicolor
@@ -31,6 +32,7 @@ power.
 %setup -q
 %patch0 -p1 -z .highscore
 %patch1 -p1 -z .fs
+%patch2 -p1 -z .configure-c99
 #stop autoxxx from rerunning
 touch src/data/Makefile.in
 
@@ -69,6 +71,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.2.2-alt2_32
+- update to new release by fcimport
+
 * Wed Oct 10 2018 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt2_22
 - update to new release by fcimport
 
