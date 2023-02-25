@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Tie-File
 Name: perl-%dist
-Version: 1.06
+Version: 1.07
 Release: alt1
 
 Summary: Access the lines of a disk file via a Perl array
@@ -34,6 +34,9 @@ Each element in the array corresponds to a record in the file.
 %perl_vendor_privlib/Tie*
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1.07-alt1
+- automated CPAN update
+
 * Tue Jan 31 2023 Igor Vlasenko <viy@altlinux.org> 1.06-alt1
 - automated CPAN update
 
