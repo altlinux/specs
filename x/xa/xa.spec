@@ -5,7 +5,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           xa
-Version:        2.3.13
+Version:        2.3.14
 Release:        alt1_1
 Summary:        6502/65816 cross-assembler
 
@@ -70,6 +70,9 @@ make test
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.3.14-alt1_1
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.3.13-alt1_1
 - update to new release by fcimport
 
