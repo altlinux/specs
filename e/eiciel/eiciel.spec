@@ -6,13 +6,13 @@ BuildRequires: /usr/bin/desktop-file-validate
 %define _localstatedir %{_var}
 Name: eiciel
 Version: 0.10.0
-%global tar_version %{version}-rc2
+%global tar_version %{version}
 
-Release: alt1_0.2.rc2
+Release: alt1_2
 Summary: Graphical editor for ACLs and xattr
 License: GPLv2+
 URL: http://rofi.roger-ferrer.org/eiciel
-Source0: http://rofi.roger-ferrer.org/eiciel/files/eiciel-%{tar_version}.tar.gz
+Source0: http://rofi.roger-ferrer.org/eiciel/files/eiciel-%{tar_version}.tar.xz
 
 BuildRequires: meson
 BuildRequires: gcc-c++
@@ -63,9 +63,13 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/*.desktop
 %{ext_dir}/lib%{name}*.so
 %{_datadir}/metainfo/*.appdata.xml
 %{_datadir}/icons/hicolor/*/apps/*%{name}.*
+%{_mandir}/man1/%{name}.*
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.10.0-alt1_2
+- update to new release by fcimport
+
 * Thu Sep 29 2022 Igor Vlasenko <viy@altlinux.org> 0.10.0-alt1_0.2.rc2
 - new version
 
