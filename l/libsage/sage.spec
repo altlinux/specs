@@ -8,13 +8,14 @@ Group: Development/Other
 %define _localstatedir %{_var}
 Name:           libsage
 Version:        0.2.0
-Release:        alt2_24
+Release:        alt2_29
 Summary:        OpenGL extensions library using SDL
 
 License:        LGPLv2+
 URL:            http://worldforge.org/dev/eng/libraries/sage
 Source0:        http://downloads.sourceforge.net/worldforge/%{oldname}-%{version}.tar.gz
 Patch0:         sage-0.1.2-noopt.patch
+Patch1: sage-configure-c99.patch
 
 BuildRequires:  gcc
 BuildRequires:  libSDL-devel
@@ -42,6 +43,7 @@ Libraries and header files for developing applications that use sage.
 %setup -n %{oldname}-%{version} -q
 touch -r configure.ac configure.ac.stamp
 %patch0 -p0
+%patch1 -p1
 touch -r configure.ac.stamp configure.ac
 rm -f sage/glxext_sage.h
 rm -f sage/wglext_sage.h
@@ -80,6 +82,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib%{oldname}.la
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 0.2.0-alt2_29
+- update to new release by fcimport
+
 * Sat Dec 26 2020 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_24
 - update to new release by fcimport
 
