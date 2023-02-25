@@ -11,8 +11,8 @@ BuildRequires: boost-devel rpm-build-python3
 %global _docdir_fmt %{name}-devel
 
 Name:           cli11
-Version:        2.3.1
-Release:        alt1_1
+Version:        2.3.2
+Release:        alt1_2
 Summary:        Command line parser for C++11
 
 License:        BSD-3-Clause
@@ -94,6 +94,9 @@ CXXFLAGS='%{build_cxxflags} -DCLI11_OPTIONAL -DCLI11_STD_OPTIONAL=1'
 %doc docs/CLI11.svg docs/CLI11_100.png
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.3.2-alt1_2
+- update to new release by fcimport
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.3.1-alt1_1
 - update to new release by fcimport
 
