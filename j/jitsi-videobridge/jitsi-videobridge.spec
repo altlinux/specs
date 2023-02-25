@@ -5,7 +5,7 @@
 
 Name:           jitsi-videobridge
 Version:        2.1
-Release:        alt0.7
+Release:        alt0.8
 
 Summary:        Jitsi Videobridge - WebRTC compatible Selective Forwarding Unit
 #Group:          Networking/Instant messaging
@@ -20,6 +20,7 @@ BuildArch:	noarch
 Source0:        %name-%version.tar
 Source1:        m2-%name-%version.tar
 Source2:        jitsi-videobridge-configure
+Patch:		jitsi-videobridge-java17.patch
 
 BuildRequires(pre): rpm-build-java
 BuildRequires:  java-1.8.0-devel
@@ -35,6 +36,7 @@ Jitsi Videobridge - WebRTC compatible Selective Forwarding Unit
 %prep
 tar -x -C ~ -f %SOURCE1
 %setup
+%patch -p1
 
 %build
 mvn -Dmaven.repo.local=${HOME}/.m2/repository -DskipTests -Dassembly.skipAssembly=true package
@@ -111,6 +113,9 @@ fi
 %dir %attr(0755,_jvb,_jvb) %_localstatedir/log/jitsi
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 2.1-alt0.8
+- java17 support (closes: #45385)
+
 * Mon Jan 24 2022 Igor Vlasenko <viy@altlinux.org> 2.1-alt0.7
 - fixed init script permissions (closes: #41778)
 
