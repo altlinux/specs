@@ -1,7 +1,7 @@
 Name: commander-wars
 Summary: The aim of this project is to create an Advance Wars Clone
 License: LGPLv3
-Version: 0.25.5
+Version: 0.29.3.1
 Release: alt1
 
 Group: Games/Strategy
@@ -35,7 +35,7 @@ Data files (graphics, music, sounds) required by Commander Wars.
 
 %prep
 %setup
-#%%patch0 -p1
+%patch0 -p1
 
 %__subst '/RPATH/d' CMakeLists.txt #remove insecure RPATH '/../'
 
@@ -91,6 +91,9 @@ done
 %_datadir/%name/
 
 %changelog
+* Sat Feb 25 2023 Artyom Bystrov <arbars@altlinux.org> 0.29.3.1-alt1
+- update to new version
+
 * Sat Dec 03 2022 Artyom Bystrov <arbars@altlinux.org> 0.25.5-alt1
 - update to new version
 
