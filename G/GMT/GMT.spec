@@ -1,12 +1,12 @@
 Group: Engineering
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-cmake rpm-macros-fedora-compat
-BuildRequires: /usr/bin/ffmpeg /usr/bin/git /usr/bin/gm /usr/bin/gs /usr/bin/pngquant /usr/bin/xz libcurl-devel openmpi-devel zlib-devel
+BuildRequires: /usr/bin/dvips /usr/bin/ffmpeg /usr/bin/git /usr/bin/gm /usr/bin/gs /usr/bin/latex /usr/bin/pngquant /usr/bin/xz libcurl-devel libpcre-devel openmpi-devel zlib-devel
 # END SourceDeps(oneline)
 %add_findreq_skiplist /usr/share/gmt/tools/gmt5syntax
 BuildRequires: chrpath
 BuildRequires: gcc-c++
-%define fedora 32
+%define fedora 37
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -39,35 +39,37 @@ BuildRequires: gcc-c++
 %endif
 
 Name:           GMT
-Version:        6.1.1
-Release:        alt2_1
+Version:        6.4.0
+Release:        alt1_5
 Summary:        Generic Mapping Tools
 
 License:        LGPLv3+
 URL:            https://www.generic-mapping-tools.org/
 Source0:        https://github.com/GenericMappingTools/gmt/releases/download/%{version}/gmt-%{version}-src.tar.xz
+# Add missing byteswap include
+Patch0:         https://patch-diff.githubusercontent.com/raw/GenericMappingTools/gmt/pull/6044.patch
 
 BuildRequires:  ctest cmake
 BuildRequires:  gcc
 BuildRequires:  bash-completion
 %if %{with flexiblas}
-BuildRequires:  flexiblas-devel
+BuildRequires:  libflexiblas-devel
 %else
 BuildRequires:  libopenblas-devel
 %endif
 BuildRequires:  libfftw3-devel
-BuildRequires:  gdal gdal-scripts
+BuildRequires:  gdal
 BuildRequires:  libgdal-devel
 BuildRequires:  libgeos-devel
 BuildRequires:  glib2-devel libgio libgio-devel
-BuildRequires:  libGraphicsMagick
+BuildRequires:  GraphicsMagick
 BuildRequires:  libXt-devel libXaw-devel libXmu-devel libXext-devel
 BuildRequires:  libnetcdf-devel
-BuildRequires:  libpcre-devel libpcrecpp-devel
+BuildRequires:  libpcre2-devel
 BuildRequires:  dcw-gmt
 BuildRequires:  gshhg-gmt-nc4
 %if %with octave
-BuildRequires:  octave-devel
+BuildRequires:  octave octave-devel
 %endif
 # less is detected by configure, and substituted in GMT.in
 BuildRequires:  less
@@ -75,8 +77,8 @@ BuildRequires:  xdg-utils
 # For docs
 BuildRequires:  /usr/bin/sphinx-build
 BuildRequires:  ghostscript-utils ghostscript
-Requires:       gdal gdal-scripts
-Requires:       libGraphicsMagick
+Requires:       gdal
+Requires:       GraphicsMagick
 Requires:       less
 Requires:       %{name}-common = %{version}-%{release}
 Requires:       dcw-gmt
@@ -162,12 +164,14 @@ applications that use %{name}.
 
 %prep
 %setup -q -n gmt-%{version}
+%patch0 -p1
 %patch33 -p2
 
 
 
 %build
 %{fedora_v2_cmake} \
+  -DCMAKE_INSTALL_LIBDIR=%{_lib} \
   -DGSHHG_ROOT=%{_datadir}/gshhg-gmt-nc4 \
   -DGMT_INSTALL_MODULE_LINKS=on \
   -DGMT_INSTALL_TRADITIONAL_FOLDERNAMES=off \
@@ -209,21 +213,22 @@ find $RPM_BUILD_ROOT -name \*.bat -delete
 for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111 ! -name '*.la' `; do
 	chrpath -d $i ||:
 done
-
 mv %buildroot%_bindir/{,GMT-}batch
+
+
 
 
 
 %files
 %doc --no-dereference COPYING.LESSERv3 COPYINGv3 LICENSE.TXT
-%doc AUTHORS.md CITATION.md CONTRIBUTING.md README.md
+%doc CITATION.cff CONTRIBUTING.md README.md
 %{_bindir}/*
 %{_libdir}/*.so.6*
 %{_libdir}/gmt/
 
 %files common
 %doc --no-dereference COPYING.LESSERv3 COPYINGv3 LICENSE.TXT
-%doc AUTHORS.md CITATION.md CONTRIBUTING.md README.md
+%doc CITATION.cff CONTRIBUTING.md README.md
 %dir %{gmtconf}
 %dir %{gmtconf}/mgg
 %dir %{gmtconf}/dbase
@@ -248,6 +253,9 @@ mv %buildroot%_bindir/{,GMT-}batch
 
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 6.4.0-alt1_5
+- update to new release by fcimport
+
 * Wed Nov 30 2022 Igor Vlasenko <viy@altlinux.org> 6.1.1-alt2_1
 - renamed batch -> GMT-batch (closes: #44270)
 
