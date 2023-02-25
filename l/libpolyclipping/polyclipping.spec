@@ -12,11 +12,15 @@ Group: System/Libraries
 
 Name:           libpolyclipping
 Version:        6.4.2
-Release:        alt1_13
+Release:        alt1_17
 %global so_version 22
 Summary:        Polygon clipping library
 
-License:        Boost
+# The entire source is BSL-1.0, except:
+# - The contents of Documentation/Scripts/SyntaxHighlighter/ are a.'Dual licensed
+#   under the MIT and GPL licensesa.'. These sources do not contribute to the
+#   binary RPMs and are removed in %%prep.
+License:        BSL-1.0
 URL:            https://sourceforge.net/projects/polyclipping
 Source0:        https://downloads.sourceforge.net/%{oldname}/clipper_ver%{version}.zip
 
@@ -52,6 +56,10 @@ developing applications that use %{oldname}.
 
 # Delete binaries
 find . \( -name "*.exe" -o -name "*.dll" \) -delete
+
+# Delete bundled(js-syntaxhighlighter),
+# https://github.com/syntaxhighlighter/syntaxhighlighter.
+rm -rvf Documentation/Scripts/SyntaxHighlighter
 
 # Correct line ends and encodings
 find . -type f -exec dos2unix -k {} \;
@@ -94,6 +102,9 @@ sed -i -e 's/^Version: $/Version: %version/' %buildroot%{_datadir}/pkgconfig/%{o
 %{_libdir}/lib%{oldname}.so
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 6.4.2-alt1_17
+- update to new release by fcimport
+
 * Fri Dec 17 2021 Igor Vlasenko <viy@altlinux.org> 6.4.2-alt1_13
 - update to new release by fcimport
 
