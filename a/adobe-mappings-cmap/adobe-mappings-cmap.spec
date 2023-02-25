@@ -4,8 +4,8 @@ Group: Other
 BuildRequires: /usr/bin/git
 Name:             adobe-mappings-cmap
 Summary:          CMap resources for Adobe's character collections
-Version:          20190730
-Release:          alt1_2
+Version:          20230118
+Release:          alt1_1
 License:          BSD
 
 URL:              https://www.adobe.com/
@@ -123,6 +123,9 @@ _EOF
 # =============================================================================
 
 %changelog
+* Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 20230118-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 25 2021 Igor Vlasenko <viy@altlinux.org> 20190730-alt1_2
 - update to new release by fcimport
 
