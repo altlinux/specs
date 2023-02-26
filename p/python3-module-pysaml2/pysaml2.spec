@@ -3,7 +3,7 @@
 %def_without check
 
 Name:    python3-module-%pypi_name
-Version: 7.4.0
+Version: 7.4.1
 Release: alt1
 
 Summary: Python implementation of SAML2
@@ -62,6 +62,9 @@ that allow you to use it with other frameworks.
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Sun Feb 26 2023 Grigory Ustinov <grenka@altlinux.org> 7.4.1-alt1
+- Automatically updated to 7.4.1.
+
 * Sat Feb 18 2023 Grigory Ustinov <grenka@altlinux.org> 7.4.0-alt1
 - Automatically updated to 7.4.0.
 
