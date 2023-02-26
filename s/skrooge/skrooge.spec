@@ -1,8 +1,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: skrooge
-Version: 2.28.0
-Release: alt2
+Version: 2.29.0
+Release: alt1
 Summary: Personal finances manager for KF5
 License: %gpl2plus
 Group: Office
@@ -11,6 +11,7 @@ Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source: %name-%version.tar.xz
 Source1:%name.po
+Patch0: skrooge-alt-remove-wrong-target.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires(pre): rpm-build-kf5
@@ -70,6 +71,7 @@ BuildRequires: qt5-script-devel
 BuildRequires: qt5-svg-devel
 BuildRequires: qt5-tools-devel
 BuildRequires: qt5-webkit-devel
+BuildRequires: qt5-xmlpatterns-devel
 
 Requires: libgrantlee_templates5
 Requires: kf5-kinit kf5-kio
@@ -82,11 +84,13 @@ and intuitive.
 
 %prep
 %setup
+%patch0 -p2
 cp -f %SOURCE1 po/ru/skrooge.po
 
 %build
 %K5init no_altplace
-%K5build -DSKG_CIPHER:BOOL=OFF
+%K5build -DSKG_CIPHER=OFF \
+         -DSKG_BUILD_TEST=OFF
 
 %install
 %K5install
@@ -101,7 +105,7 @@ cp -f %SOURCE1 po/ru/skrooge.po
 %_K5lib/libskg*
 %_qt5_plugindir/designer/libsk*.so*
 %_qt5_plugindir/sqldrivers/libsk*.so
-%_qt5_plugindir/sk*.so
+%_qt5_plugindir/sk*
 %_K5xdgmime/*
 %_K5xdgapp/*%name.desktop
 %_iconsdir/*/*/*/*
@@ -113,6 +117,9 @@ cp -f %SOURCE1 po/ru/skrooge.po
 %_datadir/metainfo/*.appdata.xml
 
 %changelog
+* Sat Feb 25 2023 Andrey Cherepanov <cas@altlinux.org> 2.29.0-alt1
+- new version 2.29.0
+
 * Tue Nov 22 2022 Andrey Cherepanov <cas@altlinux.org> 2.28.0-alt2
 - Set strict requirement of libqt5-core version (ALT #43522).
 
