@@ -1,4 +1,4 @@
-%define kernel_base_version 6.1
+%define kernel_base_version 6.2
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
@@ -9,12 +9,13 @@ Summary: Linux kernel C header files for use by glibc and other userspace softwa
 # git grep -Fh SPDX-License-Identifier: include/uapi arch/*/include/uapi |sort |uniq -c |sort -n
 #   1 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) AND MIT) */
 #   1 /* SPDX-License-Identifier: ((GPL-2.0+ WITH Linux-syscall-note) OR MIT) */
-#   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) */
 #   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause */
 #   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR Linux-OpenIB */
 #   1 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) or BSD-3-Clause */
 #   1 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note
+#   1 /* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note*/
 #   2 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR CDDL-1.0) */
+#   2 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) */
 #   3 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR MIT) */
 #   4 /* SPDX-License-Identifier: (GPL-2.0 WITH Linux-syscall-note) OR MIT */
 #   4 /* SPDX-License-Identifier: GPL-2.0-or-later WITH Linux-syscall-note */
@@ -31,8 +32,8 @@ Summary: Linux kernel C header files for use by glibc and other userspace softwa
 #  21 /* SPDX-License-Identifier: ((GPL-2.0 WITH Linux-syscall-note) OR BSD-3-Clause) */
 #  22 /* SPDX-License-Identifier: GPL-2.0-only WITH Linux-syscall-note */
 #  24 # SPDX-License-Identifier: GPL-2.0
-# 165 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
-# 989 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+# 166 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
+# 991 /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
 License: GPL-2.0-only with Linux-syscall-note
 Group: Development/Kernel
 Url: https://www.kernel.org/
@@ -297,6 +298,9 @@ cd - > /dev/null
 %hdr_dir/include/asm
 
 %changelog
+* Sun Feb 19 2023 Dmitry V. Levin <ldv@altlinux.org> 6.2-alt1
+- v6.1 -> v6.2.
+
 * Sun Dec 11 2022 Dmitry V. Levin <ldv@altlinux.org> 6.1-alt1
 - v6.0 -> v6.1.
 
