@@ -2,11 +2,10 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
-%set_verify_info_method relaxed
 
 Name: netperf
 Version: 2.7.0
-Release: alt1
+Release: alt2
 Summary: Network benchmarking tool
 License: MIT
 Group: Networking/Other
@@ -15,6 +14,8 @@ Vcs: https://github.com/HewlettPackard/netperf
 # Ref: https://cloud.google.com/blog/products/networking/using-netperf-and-ping-to-measure-network-latency
 
 Source: %name-%version.tar
+
+BuildRequires: makeinfo
 
 %description
 Netperf is a benchmark that can be used to measure the performance of many
@@ -37,10 +38,14 @@ throughput, and end-to-end latency.
 	--enable-omni \
 	--enable-unixdomain
 %make_build
+pushd doc
+makeinfo netperf.texi
+popd
 
 %install
 %makeinstall_std
 install -Dpm644 .gear/netserver.service -t %buildroot%_unitdir
+install -Dpm755 .gear/netserver.init       %buildroot%_initdir/netserver
 
 %post
 %post_service netserver
@@ -60,10 +65,15 @@ kill %%1
 %doc COPYING AUTHORS ChangeLog README doc/examples
 %_bindir/netperf
 %_bindir/netserver
+%_initdir/netserver
 %_unitdir/netserver.service
 %_infodir/netperf.*
 %_man1dir/*.1*
 
 %changelog
+* Fri Feb 24 2023 Vitaly Chikunov <vt@altlinux.org> 2.7.0-alt2
+- Fix install warning from netperf.info.
+- Install sysv init script.
+
 * Fri Feb 24 2023 Vitaly Chikunov <vt@altlinux.org> 2.7.0-alt1
 - First import 2.7.0 (with updates until 2021-01-21).
