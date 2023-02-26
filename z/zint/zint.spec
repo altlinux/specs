@@ -1,5 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+%define _stripped_files_terminate_build 1
+
 Name:      zint
-Version:   2.10.0
+Version:   2.12.0
 Release:   alt1
 Summary:   A barcode generator and library
 Summary(ru_RU.UTF-8): Генератор штрихкодов и библиотека
@@ -17,7 +20,8 @@ BuildRequires: libpng-devel
 BuildRequires: zlib-devel
 BuildRequires: qt5-base-devel qt5-tools-devel-static
 BuildRequires: desktop-file-utils
-BuildRequires: qt5-tools-devel
+BuildRequires: qt5-tools-devel qt5-svg-devel
+BuildRequires: libGL-devel qt5-base-devel-static
 
 %description
 Zint is a C library for encoding data in several barcode variants. The
@@ -116,9 +120,11 @@ install -D -p -m 644 %{name}_ru.qm %buildroot%_qt5_translationdir/%{name}_ru.qm
 desktop-file-install --dir %buildroot%_datadir/applications %name-qt.desktop
 
 %files
-%doc COPYING README
+%doc README
 %_bindir/%name
 %_libdir/libzint.so.*
+%_man1dir/zint.1.xz
+%_datadir/zint*
 
 %files -n %name-devel
 %_includedir/%name.h
@@ -138,6 +144,9 @@ desktop-file-install --dir %buildroot%_datadir/applications %name-qt.desktop
 
 
 %changelog
+* Fri Feb 24 2023 Konstantin Rybakov <kastet@altlinux.org> 2.12.0-alt1
+- Updated to upstream version 2.12.0
+
 * Fri Oct 08 2021 Konstantin Rybakov <kastet@altlinux.org> 2.10.0-alt1
 - Updated to upstream version 2.10.0
 
