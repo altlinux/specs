@@ -1,32 +1,32 @@
-%def_with check
 %define oname keyring
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 21.8.0
-Release: alt2
+Version: 23.14.0
+Release: alt1
 
 Summary: Keyring provides an easy way to access the system keyring service
+
 License: MIT
 Group: Development/Python3
-
 Url: https://pypi.python.org/pypi/keyring
-Source: %oname-%version.tar
-# Source-url: https://files.pythonhosted.org/packages/source/k/keyring/keyring-%version.tar.gz
+
+Vcs: https://github.com/jaraco/keyring
+Source: %name-%version.tar
 
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-setuptools_scm python3-module-toml
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-setuptools_scm
+BuildRequires: python3-module-wheel
 
 %if_with check
-BuildRequires: python3-module-pytest
 BuildRequires: python3-module-importlib-metadata
+BuildRequires: python3-module-secretstorage
+BuildRequires: python3-module-jaraco.classes
 %endif
-
-%py3_requires ctypes entrypoints json logging pluggy secretstorage
-
-Conflicts: python-module-%oname
-Obsoletes: python-module-%oname
 
 %description
 The Python keyring lib provides an easy way to access the system
@@ -34,31 +34,32 @@ keyring service from python. It can be used in any application
 that needs safe password storage.
 
 %prep
-%setup -n %oname-%version
+%setup
 
-rm -frv keyring.egg-info
-# Drop redundant shebangs.
+# Drop redundant shebang
 sed -i '1{\@^#!/usr/bin/env python@d}' keyring/cli.py
-# Drop slags from upstream of using his own versioning system.
-sed -i -e "\@use_vcs_version@s/^.*$/\tversion = \"%version\",/g" \
-       -e {/\'hgtools\'/d} setup.py
 
 %build
-%python3_build_debug
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_build
 
 %install
-%python3_install
+export SETUPTOOLS_SCM_PRETEND_VERSION=%version
+%pyproject_install
 
 %check
-export PYTHONPATH=%buildroot/%python3_sitelibdir/
-py.test3 -v
+%tox_check_pyproject
 
 %files
 %doc *.rst LICENSE
-%_bindir/*
-%python3_sitelibdir/*
+%_bindir/%oname
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Sun Feb 26 2023 Grigory Ustinov <grenka@altlinux.org> 23.14.0-alt1
+- Build new version (Closes: #45387).
+
 * Thu Sep 23 2021 Michael Shigorin <mike@altlinux.org> 21.8.0-alt2
 - fix build --without check (no pytest => no toml then)
 - minor spec cleanup
