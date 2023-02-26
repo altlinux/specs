@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 4.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: stestr is parallel Python test runner
 
@@ -35,6 +35,7 @@ BuildRequires: python3-module-voluptuous
 %if_with check
 BuildRequires: python3-module-future
 BuildRequires: python3-module-ddt
+BuildRequires: python3-module-yaml
 %endif
 
 %description
@@ -93,6 +94,7 @@ rm -rf html/.{doctrees,buildinfo}
 %check
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %buildroot%_bindir/%oname init
+# local tox.ini is too creepy
 %tox_create_default_config
 %tox_check_pyproject -- -k 'not test_history_list and not test_history_remove'
 
@@ -110,6 +112,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 %doc LICENSE html
 
 %changelog
+* Sun Feb 26 2023 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1.1
+- Fixed FTBFS.
+
 * Sat Oct 08 2022 Grigory Ustinov <grenka@altlinux.org> 4.0.1-alt1
 - Build new version.
 - Build with check.
