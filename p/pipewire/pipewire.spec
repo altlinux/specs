@@ -7,7 +7,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define ver_major 0.3
-%define ms_ver 0.4.1
+%define ms_ver 0.4.2
 %define api_ver 0.3
 %define spa_api_ver 0.2
 %define gst_api_ver 1.0
@@ -38,7 +38,7 @@
 
 Name: pipewire
 Version: %ver_major.66
-Release: alt1
+Release: alt2
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -311,6 +311,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Mon Feb 27 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.66-alt2
+- updated media-session to 0.4.2 (ALT #45411)
+
 * Thu Feb 16 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.66-alt1
 - 0.3.66
 
