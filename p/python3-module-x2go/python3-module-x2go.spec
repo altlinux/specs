@@ -2,7 +2,7 @@
 
 Name:    python3-module-%modulename
 Version: 0.6.1.3
-Release: alt2
+Release: alt3
 Summary: Python module providing X2Go client API
 Group:	 Communications 
 
@@ -16,7 +16,6 @@ BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
 BuildRequires:      python3-dev
 BuildRequires:      python3-module-setuptools
-BuildRequires:      /usr/bin/2to3
 BuildRequires:      python3-module-gevent
 BuildRequires:      python3-module-paramiko
 BuildRequires:      python3-module-requests
@@ -56,6 +55,9 @@ Python applications by providing a Python-based X2Go client API.
 %python3_sitelibdir/x2go*
 
 %changelog
+* Sun Feb 26 2023 Anton Vyatkin <toni@altlinux.org> 0.6.1.3-alt3
+- NMU: Fix BuildRequires.
+
 * Wed Jan 13 2021 Evgeniy Korneechev <ekorneechev@altlinux.org> 0.6.1.3-alt2
 - Fix sshbroker error
 
