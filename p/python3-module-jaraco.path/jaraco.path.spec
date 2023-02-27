@@ -4,17 +4,18 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 3.4.0
+Version: 3.4.1
 Release: alt1
-
 Summary: Cross platform hidden file detection
 License: MIT
 Group: Development/Python3
-# Source-git: https://github.com/jaraco/jaraco.path.git
 Url: https://pypi.org/project/jaraco.path/
-
+VCS: https://github.com/jaraco/jaraco.path
+BuildArch: noarch
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
+
+%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-python3
 
@@ -26,10 +27,6 @@ BuildRequires: python3(setuptools_scm)
 %if_with check
 BuildRequires: python3(pytest)
 %endif
-
-BuildArch: noarch
-
-%py3_provides %pypi_name
 
 %description
 %pypi_name provides cross platform hidden file detection.
@@ -56,7 +53,7 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
 %doc README.rst
@@ -65,6 +62,9 @@ fi
 %python3_sitelibdir/%pypi_name-%version.dist-info/
 
 %changelog
+* Tue Feb 21 2023 Stanislav Levin <slev@altlinux.org> 3.4.1-alt1
+- 3.4.0 -> 3.4.1.
+
 * Wed Aug 10 2022 Stanislav Levin <slev@altlinux.org> 3.4.0-alt1
 - 3.3.1 -> 3.4.0.
 

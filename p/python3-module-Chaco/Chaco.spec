@@ -1,26 +1,27 @@
-%define oname Chaco
+%define _unpackaged_files_terminate_build 1
+%define pypi_name chaco
+%define mod_name %pypi_name
 
-Name: python3-module-%oname
+Name: python3-module-Chaco
 Version: 5.1.1
-Release: alt1
+Release: alt2
 
 Summary: Interactive 2-Dimensional Plotting
 License: BSD and GPLv2
 Group: Development/Python3
-URL: http://code.enthought.com/projects/chaco/
-
-# https://github.com/enthought/chaco.git
+URL: http://docs.enthought.com/chaco/
+VCS: https://github.com/enthought/chaco
 Source: %name-%version.tar
 
-BuildRequires(pre): rpm-build-intro >= 2.2.5
-BuildRequires(pre): rpm-build-python3
-BuildRequires: libnumpy-py3-devel
-BuildRequires: python3-module-sphinx python3-module-Pygments
-BuildRequires: python3-module-traits
-BuildRequires: python3-module-Cython
-BuildRequires: python3-module-sphinx-copybutton
-BuildRequires: xvfb-run
+# well-known PyPI name
+Provides: python3-module-%pypi_name = %EVR
 
+BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
+BuildRequires: python3(cython)
+BuildRequires: libnumpy-py3-devel
 
 %description
 Chaco is a Python plotting application toolkit that facilitates writing
@@ -30,36 +31,6 @@ and a multitude of interactive tools. While Chaco generates attractive static
 plots for publication and presentation, it also works well for interactive data
 visualization and exploration.
 
-%package tests
-Summary: Tests for Chaco (Interactive 2-Dimensional Plotting)
-Group: Development/Python3
-Requires: %name = %EVR
-
-%description tests
-Chaco is a Python plotting application toolkit that facilitates writing
-plotting applications at all levels of complexity, from simple scripts with
-hard-coded data to large plotting programs with complex data interrelationships
-and a multitude of interactive tools. While Chaco generates attractive static
-plots for publication and presentation, it also works well for interactive data
-visualization and exploration.
-
-This package contains tests for Chaco.
-
-%package doc
-Summary: Documentation for Chaco (Interactive 2-Dimensional Plotting)
-Group: Development/Documentation
-BuildArch: noarch
-
-%description doc
-Chaco is a Python plotting application toolkit that facilitates writing
-plotting applications at all levels of complexity, from simple scripts with
-hard-coded data to large plotting programs with complex data interrelationships
-and a multitude of interactive tools. While Chaco generates attractive static
-plots for publication and presentation, it also works well for interactive data
-visualization and exploration.
-
-This package contains documentation for Chaco.
-
 %prep
 %setup
 
@@ -68,35 +39,24 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 
 %build
 %add_optflags -fno-strict-aliasing
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
-%python3_prune
-rm -rfv %buildroot%python3_sitelibdir/chaco/tests_with_backend/
-
-export PYTHONPATH=%buildroot%python3_sitelibdir:$PWD/docs/source/sphinxext
-xvfb-run sphinx-build-3 -E -a -b html -c docs/source -d doctrees docs/source html
+%pyproject_install
 
 %files
-%doc *.txt
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/example*
-%if 0
-%exclude %python3_sitelibdir/*/tests
-%exclude %python3_sitelibdir/*/*/tests
-
-%files tests
-%python3_sitelibdir/*/tests
-%python3_sitelibdir/*/*/tests
-%endif
-
-%files doc
-%doc docs/*.txt docs/*.pdf
-%doc examples html
-
+%doc CHANGES.txt
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
+%exclude %python3_sitelibdir/%mod_name/example*
+%exclude %python3_sitelibdir/%mod_name/tests/
+%exclude %python3_sitelibdir/%mod_name/*/tests/
+%exclude %python3_sitelibdir/%mod_name/*/*/tests/
 
 %changelog
+* Mon Feb 27 2023 Stanislav Levin <slev@altlinux.org> 5.1.1-alt2
+- Fixed FTBFS (setuptools 67.3.0).
+
 * Fri Jan 27 2023 Grigory Ustinov <grenka@altlinux.org> 5.1.1-alt1
 - Automatically updated to 5.1.1.
 

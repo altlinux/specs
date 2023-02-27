@@ -10,7 +10,7 @@
 
 Name: python3-module-%pypi_name
 Version: 23.1.0
-Release: alt1
+Release: alt2
 Summary: The Uncompromising Code Formatter
 License: MIT
 Group: Development/Python3
@@ -106,6 +106,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Mon Feb 27 2023 Stanislav Levin <slev@altlinux.org> 23.1.0-alt2
+- Fixed FTBFS (setuptools 67.3.0).
+
 * Thu Feb 02 2023 Stanislav Levin <slev@altlinux.org> 23.1.0-alt1
 - 22.12.0 -> 23.1.0.
 
