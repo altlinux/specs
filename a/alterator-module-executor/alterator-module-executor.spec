@@ -1,5 +1,5 @@
 Name: alterator-module-executor
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Summary: Alterator-manager module for running executable files and scripts
@@ -32,6 +32,9 @@ Alterator-manager module for running executable files and scripts.
 /usr/libexec/alterator/*
 
 %changelog
+* Mon Feb 27 2023 Ivan Savin <svn17@altlinux.org> 0.1.1-alt1
+- Fix child's stderr and stdout pipes not closing.
+
 * Thu Feb 16 2023 Ivan Savin <svn17@altlinux.org> 0.1.0-alt1
 - All backend files are now loaded in the manager, and modules receive a
   pointer to a table with data that contains information about D-Bus objects
