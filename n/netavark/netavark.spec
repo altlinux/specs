@@ -2,7 +2,7 @@
 %define _libexecdir /usr/libexec
 
 Name: netavark
-Version: 1.4.0
+Version: 1.5.0
 Release: alt1
 License: Apache-2.0
 Summary: OCI network stack
@@ -11,6 +11,7 @@ Url: https://github.com/containers/%name
 Vcs: https://github.com/containers/%name
 Source: %name-%version.tar
 Patch: %name-%version.patch
+ExcludeArch: %arm %ix86
 
 #Recommends: aardvark-dns >= 1.0.3
 Provides: container-network-stack = 2
@@ -18,6 +19,7 @@ Provides: container-network-stack = 2
 BuildRequires(pre): rpm-macros-rust
 BuildRequires: rpm-build-rust
 BuildRequires: go-md2man
+BuildRequires: /usr/bin/protoc
 BuildRequires: /proc
 
 %description
@@ -48,6 +50,10 @@ cat >.cargo/config.toml << EOF
 [source.crates-io]
 replace-with = "vendored-sources"
 
+[source."https://github.com/containers/netavark-dhcp-proxy"]
+git = "https://github.com/containers/netavark-dhcp-proxy"
+replace-with = "vendored-sources"
+
 [source.vendored-sources]
 directory = "vendor"
 EOF
@@ -67,6 +73,9 @@ go-md2man -in %name.1.md -out %name.1
 %_man1dir/%name.1*
 
 %changelog
+* Mon Feb 27 2023 Alexey Shabalin <shaba@altlinux.org> 1.5.0-alt1
+- new version 1.5.0
+
 * Wed Jan 11 2023 Alexey Shabalin <shaba@altlinux.org> 1.4.0-alt1
 - new version 1.4.0
 
