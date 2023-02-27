@@ -1,8 +1,8 @@
 %define  modulename mininet
 
 Name:    python3-module-%modulename
-Version: 2.3.0d6
-Release: alt1
+Version: 2.3.1
+Release: alt0.b1
 
 Summary: Emulator for rapid prototyping of Software Defined Networks
 
@@ -13,11 +13,10 @@ URL:     https://github.com/mininet/mininet
 Packager: Grigory Ustinov <grenka@altlinux.org>
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-dev python3-module-setuptools
 
 BuildArch: noarch
 
-Source:  %modulename-%version.tar
+Source:  %name-%version.tar
 
 %add_findreq_skiplist %python3_sitelibdir/%modulename/examples/*
 
@@ -29,7 +28,7 @@ prototyped in Mininet can usually be transferred to hardware with minimalchanges
 for full line-rate execution.
 
 %prep
-%setup -n %modulename-%version
+%setup
 
 %build
 %python3_build
@@ -44,5 +43,8 @@ for full line-rate execution.
 %doc *.md
 
 %changelog
+* Mon Feb 27 2023 Grigory Ustinov <grenka@altlinux.org> 2.3.1-alt0.b1
+- Build new version.
+
 * Mon Sep 30 2019 Grigory Ustinov <grenka@altlinux.org> 2.3.0d6-alt1
 - Initial build for Sisyphus.
