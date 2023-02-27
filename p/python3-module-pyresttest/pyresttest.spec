@@ -1,28 +1,31 @@
 %define oname pyresttest
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
 Version: 1.7.1
-Release: alt1
+Release: alt2
 
 Summary: Python RESTful API Testing & Microbenchmarking Tool
 License: ASLv2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/pyresttest/
-# https://github.com/svanoort/pyresttest.git
 
+VCS: https://github.com/svanoort/pyresttest.git
 Source: %name-%version.tar
 Source1: repocop-test-hint:binary:python-module-pyresttest:altlinux-python-test-is-packaged
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-yaml python3-module-pycurl
-BuildRequires: python3-module-django-tests python3-module-jsonschema
-BuildRequires: python-tools-2to3
+%if_with check
+BuildRequires: python3-module-pyaml
+BuildRequires: python3-module-pycurl
+BuildRequires: python3-module-future
+%endif
+
+Requires: python3-module-future
 
 %py3_provides %oname
-
 
 %description
 * A simple but powerful REST testing and benchmarking framework
@@ -34,10 +37,6 @@ BuildRequires: python-tools-2to3
 %prep
 %setup
 
-chmod +x run_tests.sh
-
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
 
@@ -48,9 +47,8 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %python3_install
 
 %check
-sed -i 's|^python|python3|' run_tests.sh
 export PYTHONPATH=$PWD
-./run_tests.sh
+python3 -m unittest discover
 
 %files
 %doc *.md
@@ -59,6 +57,9 @@ export PYTHONPATH=$PWD
 
 
 %changelog
+* Mon Feb 27 2023 Anton Vyatkin <toni@altlinux.org> 1.7.1-alt2
+- Fix BuildRequires.
+
 * Thu Nov 07 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.7.1-alt1
 - Version updated to 1.7.1
 - disable python2
