@@ -2,23 +2,21 @@
 %define oname pytest-regtest
 
 Name: python3-module-%oname
-Version: 0.15.0
-Release: alt2
+Version: 1.5.0
+Release: alt1
 
 Summary: py.test plugin for regression tests
-License: GPLv3
+License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/pytest-regtest/
-# http://sissource.ethz.ch/uweschmitt/pytest-regtest.git
+
+Source0: https://files.pythonhosted.org/packages/52/0f/790ba30a32b6f6ab9db946cf39dc72a4cb8ad6d275bc4c3de082e247721f/%oname-%version.tar.gz
+
 BuildArch: noarch
 
-Source0: https://pypi.python.org/packages/88/80/ea05c590891d7c107adfa5be2262dbfaaf628be4fc8b37852c6126fff244/%{oname}-%{version}.tar.gz
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-pytest python-tools-2to3
 
 %py3_provides pytest_regtest
-
 
 %description
 This pytest-plugin allows capturing of output of test functions which
@@ -29,8 +27,6 @@ ships without tests.
 %prep
 %setup -q -n %{oname}-%{version}
 
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 %build
 %python3_build_debug
 
@@ -38,7 +34,7 @@ find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_install
 
 %check
-%__python3 setup.py test
+%tox_check
 
 %files
 %doc PKG-INFO
@@ -46,6 +42,9 @@ find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 
 %changelog
+* Mon Feb 27 2023 Anton Vyatkin <toni@altlinux.org> 1.5.0-alt1
+- new version 1.5.0
+
 * Wed Nov 20 2019 Andrey Bychkov <mrdrew@altlinux.org> 0.15.0-alt2
 - python2 disabled
 
