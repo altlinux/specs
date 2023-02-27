@@ -1,8 +1,8 @@
 %def_without qt4
 
 Name: gimagereader
-Version: 3.4.0
-Release: alt3
+Version: 3.4.1
+Release: alt1
 
 Summary: A graphical GTK frontend to tesseract-ocr
 
@@ -17,10 +17,6 @@ Source: %name-%version.tar
 
 Source1: gimagereader-translations-ru.po
 Source2: manual-ru.html.in
-
-Patch1: gimagereader-cmake-3.17.patch
-Patch2: 6209e25dab20b233e399ff36fabe4252db0f9e44.patch
-Patch3: gimagereader-3.4.0-alt-Add-custom-scan-modes-seen-in-f-imaging-driver.patch
 
 BuildRequires(pre): rpm-macros-cmake rpm-build-python3
 
@@ -128,13 +124,14 @@ Common files for %name.
 
 %prep
 %setup
-#patch1 -p2
-#patch2 -p1
-%patch3 -p1
+
+%if 0
 # remove with new version
 # https://redmine.basealt.space/issues/2497
 cp -fv %SOURCE1 po/ru.po
 cp -fv %SOURCE2 data/
+%endif
+
 cat <<EOF >>data/gimagereader.desktop.in
 Comment=Scan pages and optical text recognize
 Comment[ru]=Сканирование страниц и распознавание текста
@@ -206,6 +203,11 @@ ln -s %name-gtk %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Sat Feb 25 2023 Vitaly Lipatov <lav@altlinux.ru> 3.4.1-alt1
+- new version 3.4.1 (with rpmrb script)
+- drop all patches (obsoleted or incorporated)
+- use upstreamed ru translation
+
 * Tue Aug 23 2022 Nikolai Kostrigin <nickel@altlinux.org> 3.4.0-alt3
 - add alt-Add-custom-scan-modes-seen-in-f-imaging-driver patch (closes: #43609)
 
