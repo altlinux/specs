@@ -1,9 +1,11 @@
+# library libjvm.so not found
+%set_findreq_skiplist %_libdir/swipl-*/lib/*/libjpl.so
 %def_with test
 
 Summary: Prolog interpreter and compiler
 Name: swi-prolog
 Version: 8.2.1
-Release: alt1.1
+Release: alt2
 License: LGPLv2+
 Group: Development/Other
 Requires: %name-nox
@@ -172,6 +174,9 @@ LC_ALL=ru_RU.UTF-8 LD_LIBRARY_PATH=`pwd`/src ctest -j`nproc`
 %exclude %_datadir/swipl-%version/doc/packages/odbc.html
 
 %changelog
+* Mon Feb 27 2023 Igor Vlasenko <viy@altlinux.org> 8.2.1-alt2
+- NMU: fixed build
+
 * Tue Jun 01 2021 Arseny Maslennikov <arseny@altlinux.org> 8.2.1-alt1.1
 - NMU: spec: adapted to new cmake macros.
 
