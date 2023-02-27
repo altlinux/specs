@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-polkit-agent
-Version: 5.5.21
+Version: 5.5.22
 Release: alt1
 Summary: Deepin Polkit Agent
 License: GPL-3.0+
@@ -66,6 +66,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %_includedir/dpa/agent-extension.h
 
 %changelog
+* Mon Feb 27 2023 Leontiy Volodin <lvol@altlinux.org> 5.5.22-alt1
+- New version (5.5.22).
+
 * Tue Nov 29 2022 Leontiy Volodin <lvol@altlinux.org> 5.5.21-alt1
 - New version (5.5.21).
 

@@ -1,7 +1,7 @@
 %global repo dpa-ext-gnomekeyring
 
 Name: deepin-polkit-agent-ext-gnomekeyring
-Version: 5.0.4
+Version: 5.0.11
 Release: alt1
 Summary: GNOME keyring extension for Deepin Polkit Agent
 License: GPL-3.0+
@@ -11,32 +11,38 @@ Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%repo-%version.tar.gz
 
-BuildRequires: gcc-c++ qt5-base-devel qt5-tools libgnome-keyring-devel deepin-polkit-agent-devel
+BuildPreReq: rpm-build-ninja
+BuildRequires: gcc-c++ cmake qt5-base-devel qt5-tools-devel libsecret-devel deepin-polkit-agent-devel
 
 %description
 %summary.
 
 %prep
 %setup -n %repo-%version
-sed -i 's|lrelease|lrelease-qt5|' translate_generation.sh
-sed -i 's|/usr/lib|/usr/libexec|' dpa-ext-gnomekeyring.pro
 
 %build
-%qmake_qt5 \
-    CONFIG+=nostrip \
-    PREFIX=%prefix
-%make_build
+export PATH=%_qt5_bindir:$PATH
+%cmake \
+  -G Ninja \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DAPP_VERSION=%version \
+  -DVERSION=%version \
+#
+cmake --build "%_cmake__builddir" -j%__nprocs
 
 %install
-%makeinstall INSTALL_ROOT=%buildroot
+%cmake_install
 %find_lang %repo
 
 %files -f %repo.lang
-%dir %_prefix/libexec/polkit-1-dde/
-%dir %_prefix/libexec/polkit-1-dde/plugins/
-%_prefix/libexec/polkit-1-dde/plugins/lib%repo.so
+%dir %_libexecdir/polkit-1-dde/
+%dir %_libexecdir/polkit-1-dde/plugins/
+%_libexecdir/polkit-1-dde/plugins/lib%repo.so
 %_datadir/%repo/
 
 %changelog
+* Mon Feb 27 2023 Leontiy Volodin <lvol@altlinux.org> 5.0.11-alt1
+- New version (5.0.11).
+
 * Thu Mar 25 2021 Leontiy Volodin <lvol@altlinux.org> 5.0.4-alt1
 - Initial build for ALT Sisyphus.
