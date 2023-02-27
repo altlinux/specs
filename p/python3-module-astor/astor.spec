@@ -4,7 +4,7 @@
 
 Name: python3-module-%oname
 Version: 0.8.1
-Release: alt1
+Release: alt1.1
 Summary: Python AST read/write
 License: BSD-3-Clause
 Group: Development/Python3
@@ -16,7 +16,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
+
 BuildRequires: python3-module-pytest
 
 %description
@@ -32,9 +32,11 @@ astor is designed to allow easy manipulation of Python source via the AST.
 %python3_install
 
 %check
+# https://github.com/berkerpeksag/astor/issues/212
 PYTHONPATH=$(pwd) py.test3 -vv \
-	--deselect=tests/test_rtrip.py::RtripTestCase::test_convert_stdlib \
-	%nil
+    --deselect=tests/test_rtrip.py::RtripTestCase::test_convert_stdlib \
+    --deselect=tests/test_code_gen.py::CodegenTestCase::test_huge_int \
+    %nil
 
 %files
 %doc LICENSE
@@ -43,5 +45,8 @@ PYTHONPATH=$(pwd) py.test3 -vv \
 %python3_sitelibdir/%oname
 
 %changelog
+* Mon Feb 27 2023 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt1.1
+- Fixed FTBFS.
+
 * Mon Feb 14 2022 Aleksei Nikiforov <darktemplar@altlinux.org> 0.8.1-alt1
 - Initial build for ALT.
