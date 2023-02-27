@@ -2,7 +2,7 @@
 %def_enable python
 
 Name: sudo
-Version: 1.9.12p2
+Version: 1.9.13p2
 Release: alt1
 Epoch: 1
 
@@ -256,6 +256,38 @@ fi
 %_man5dir/sudo_plugin.5*
 
 %changelog
+* Mon Feb 27 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.13p2-alt1
+- Update to latest stable release.
+- Fix run_time message validation in logsrvd.
+- Fixed a potential double-free bug when matching a sudoers rule
+  that contains a per-command chroot directive (CHROOT=dir).
+
+* Mon Feb 20 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.13p1-alt1
+- Update to latest stable release.
+- Fixed potential memory leaks in error paths (GitHub#199, GitHub#202).
+- Fixed potential NULL dereferences on memory allocation failure (GitHub#204,
+  GitHub#211).
+- A missing include file in sudoers is no longer a fatal error
+  unless the error_recovery plugin argument has been set to false.
+- Fixed a bug running relative commands via sudo when "log_subcmds"
+  is enabled (GitHub#194).
+- Fixed a signal handling bug when running sudo commands in a shell
+  script.  Signals were not being forwarded to the command when
+  the sudo process was not run in its own process group.
+- Added a reminder to the default lecture that the password will
+  not echo. This line is only displayed when the pwfeedback option
+  is disabled (GitHub#195).
+- Regular expressions in sudoers or logsrvd.conf may no longer contain
+  consecutive repetition operators.  This is implementation-specific behavior
+  according to POSIX, but some implementations will allocate excessive amounts
+  of memory. This mainly affects the fuzzers.
+- Sudo no longer checks the ownership and mode of the plugins that it loads.
+  Plugins are configured via either the sudo.conf or sudoers file which are
+  trusted configuration files.
+- Fixed a bug executing a command with a very long argument vector when
+  "log_subcmds" or "intercept" is enabled on a system where "intercept_type"
+  is set to "trace" (GitHub#194).
+
 * Sun Jan 22 2023 Evgeny Sinelnikov <sin@altlinux.org> 1:1.9.12p2-alt1
 - Update to latest stable bugfix and security release (closes: 44965).
 - Fixed a compilation error on Linux/aarch64 (GitHub#197).
