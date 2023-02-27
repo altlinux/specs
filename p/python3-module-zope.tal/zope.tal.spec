@@ -1,26 +1,27 @@
 %define oname zope.tal
 
-Name: python3-module-%oname
-Version: 4.2.0
-Release: alt3
+%def_with check
 
-Summary: Zope 3 Template Application Languate (TAL)
-License: ZPL
+Name: python3-module-%oname
+Version: 5.0.1
+Release: alt1
+
+Summary: Zope3 Template Attribute Languate
+License: ZPL-2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zope.tal/
 
-# https://github.com/zopefoundation/zope.tal.git
+VCS: https://github.com/zopefoundation/zope.tal.git
 Source: %name-%version.tar
-Patch1: %oname-%version-alt-fix-test-for-unicode-for-python3.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-zope.testing
-BuildRequires: python3-module-zope.testrunner
+%if_with check
 BuildRequires: python3-module-zope.i18nmessageid
-BuildRequires: python-tools-2to3
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-zope.testrunner
+%endif
 
-%py3_requires zope zope.i18nmessageid zope.interface
-
+%add_python3_req_skip cStringIO
 
 %description
 The Zope3 Template Attribute Languate (TAL) specifies the custom
@@ -32,10 +33,10 @@ The dynamic values themselves are specified using a companion language,
 TALES (see the 'zope.tales' package for more).
 
 %package tests
-Summary: Tests for Zope 3 Template Application Languate (TAL)
+Summary: Tests for Zope 3 Template Attribute Languate (TAL)
 Group: Development/Python3
-Requires: %name = %version-%release
-%py3_requires zope.testing
+Requires: %name = %EVR
+Requires: python3-module-zope.testing
 
 %description tests
 The Zope3 Template Attribute Languate (TAL) specifies the custom
@@ -46,21 +47,10 @@ Macro Expansion for TAL (METAL) macro language used in page assembly.
 The dynamic values themselves are specified using a companion language,
 TALES (see the 'zope.tales' package for more).
 
-This package contains tests for Zope 3 Template Application Languate.
+This package contains tests for Zope3 Template Attribute Languate.
 
 %prep
 %setup
-%patch1 -p1
-
-find -type f -name '*.py' -exec 2to3 -w '{}' +
-
-sed -i 's|#!.*/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
-
-sed -i 's|.*def setSourceFile\(.*\)|    def setSourceFile\1|' \
-    src/zope/tal/interfaces.py
-sed -i 's|.*def setGlobal\(.*\)|    def setGlobal\1|' \
-    src/zope/tal/interfaces.py
 
 %build
 %python3_build
@@ -75,11 +65,12 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-%__python3 setup.py test
+%tox_check
 
 %files
 %doc *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/zope/tal
+%python3_sitelibdir/%oname-%version-*.egg-info
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests
 %exclude %python3_sitelibdir/*/*/runtest.*
@@ -92,6 +83,9 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 
 
 %changelog
+* Wed Feb 22 2023 Anton Vyatkin <toni@altlinux.org> 5.0.1-alt1
+- new version 5.0.1
+
 * Wed Dec 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.2.0-alt3
 - python2 disabled
 
