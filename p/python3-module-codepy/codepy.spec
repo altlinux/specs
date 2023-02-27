@@ -1,23 +1,32 @@
 %define oname codepy
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 2013.1.2
-Release: alt2
+Version: 2019.1
+Release: alt1
 
 Summary: C metaprogramming toolkit for Python
 License: MIT
 Group: Development/Python3
-Url: http://documen.tician.de/codepy/
-# http://git.tiker.net/trees/codepy.git
+Url: https://documen.tician.de/codepy/
+
+VCS: https://github.com/inducer/codepy
+
+Source: %name-%version.tar
+
 BuildArch: noarch
 
-Source: %oname-%version.tar
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3 python3-module-sphinx
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-pytools
+BuildRequires: gcc-c++
+BuildRequires: python3-module-appdirs
+%endif
 
-%py3_requires decorator
-
+Requires: gcc-c++
+Requires: python3-module-appdirs
 
 %description
 CodePy is a C metaprogramming toolkit for Python. It handles two aspects
@@ -33,55 +42,32 @@ own. In particular, the code generation facilities work well in
 conjunction with PyCuda. Dynamic compilation and linking are so far only
 supported in Linux with the GNU toolchain.
 
-%package pickles
-Summary: Pickles for CodePy
-Group: Development/Python3
-
-%description pickles
-CodePy is a C metaprogramming toolkit for Python. It handles two aspects
-of metaprogramming:
-
-* Generating C source code.
-
-* Compiling this source code and dynamically loading it into the Python
-interpreter.
-
-This package contains pickles for CodePy.
-
 %prep
 %setup
 
-## py2 -> py3
-find -type f -name '*.py' -exec 2to3 -w '{}' +
-
-sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
-
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
-##
 
 %build
 %python3_build_debug
 
-%make -C doc html
-%make -C doc pickle
-
 %install
 %python3_install
 
-cp -fR doc/build/pickle \
-    %buildroot%python3_sitelibdir/%oname/
+%check
+export PYTHONPATH=$PWD
+py.test-3
 
 %files
-%doc *.rst doc/build/html
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/%oname/pickle
-
-%files pickles
-%python3_sitelibdir/%oname/pickle
+%doc *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 
 %changelog
+* Mon Feb 27 2023 Anton Vyatkin <toni@altlinux.org> 2019.1-alt1
+- new version 2019.1
+
 * Thu Nov 14 2019 Andrey Bychkov <mrdrew@altlinux.org> 2013.1.2-alt2
 - python2 disabled
 
