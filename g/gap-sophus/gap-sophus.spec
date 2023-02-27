@@ -1,7 +1,7 @@
 %define repo sophus
 
 Name: gap-sophus
-Version: 1.24
+Version: 1.27
 Release: alt1
 Summary: Computing in nilpotent Lie algebras
 
@@ -42,5 +42,8 @@ http://www.sztaki.hu/~schneider/Research/SmallLie.
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Mon Feb 27 2023 Leontiy Volodin <lvol@altlinux.org> 1.27-alt1
+- New version.
+
 * Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 1.24-alt1
 - Initial build for ALT Sisyphus (thanks fedora for the spec).
