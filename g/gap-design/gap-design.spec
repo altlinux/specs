@@ -2,7 +2,7 @@
 
 Name: gap-design
 Summary: GAP: The Design Package for GAP
-Version: 1.7
+Version: 1.8
 Release: alt1
 License: GPL-2.0+
 Group: Sciences/Mathematics
@@ -33,6 +33,9 @@ studying block designs.
 %gap_sitelib/%repo/*
 
 %changelog
+* Mon Feb 27 2023 Leontiy Volodin <lvol@altlinux.org> 1.8-alt1
+- 1.8.
+
 * Tue May 17 2022 Leontiy Volodin <lvol@altlinux.org> 1.7-alt1
 - 1.7.
 - Changed url tag.
