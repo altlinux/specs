@@ -38,7 +38,7 @@
 # NOTE: ONLY use sanitizers for debug purposes
 %def_disable sanitizers
 
-%ifarch %e2k
+%ifarch %e2k %arm
 %define more_warnings no
 %else
 %define more_warnings error
@@ -58,7 +58,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.40.14
+Version: 1.42.2
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -639,6 +639,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Mon Feb 27 2023 Mikhail Efremov <sem@altlinux.org> 1.42.2-alt1
+- arm: Disable more-warnings.
+- libnm-glib-aux: Fix maybe-uninitialized warning.
+- Updated to 1.42.2.
+
 * Tue Feb 21 2023 Mikhail Efremov <sem@altlinux.org> 1.40.14-alt1
 - Patches from upstream git:
   + device: update address in nm_device_update_from_platform_link().
