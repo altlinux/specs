@@ -4,7 +4,7 @@
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 
 Name:     podman
-Version:  4.3.1
+Version:  4.4.2
 Release:  alt1
 
 Summary:  Manage pods, containers, and container images
@@ -95,7 +95,6 @@ go build -o test/version/version ./test/version/
 %make docs docker-docs
 popd
 
-
 %install
 export BUILDDIR="$PWD/.gopath"
 export IMPORT_PATH="%import_path"
@@ -106,6 +105,7 @@ export GIT_COMMIT=%release
 
 pushd .gopath/src/%import_path
 %make DESTDIR=%buildroot PREFIX=%_prefix TMPFILESDIR=%_tmpfilesdir SYSTEMDDIR=%_unitdir MODULESLOADDIR=%_modulesloaddir \
+    SYSTEMDGENERATORSDIR=%_systemdgeneratordir USERSYSTEMDGENERATORSDIR=%_systemdusergeneratordir \
     install.bin \
     install.remote \
     install.modules-load \
@@ -127,14 +127,16 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/fish/vendor_completions.d/%name.fish
 %_unitdir/*
 %_userunitdir/*
+%_systemdgeneratordir/*
+%_systemdusergeneratordir/*
 %_modulesloaddir/*
 %_man1dir/*
+%_man5dir/*
 %exclude %_man1dir/%name-remote*
 %exclude %_man1dir/docker*
 %doc *.md
 %_tmpfilesdir/%name.conf
 %_libexecdir/%name
-
 %files remote
 %_bindir/%name-remote
 %_man1dir/%name-remote*
@@ -151,6 +153,9 @@ rm -f %buildroot%_man5dir/dockerfile*
 %_datadir/user-tmpfiles.d/%name-docker.conf
 
 %changelog
+* Mon Feb 27 2023 Alexey Shabalin <shaba@altlinux.org> 4.4.2-alt1
+- new version 4.4.2 (Fixes: CVE-2023-0778)
+
 * Fri Jan 27 2023 Alexey Shabalin <shaba@altlinux.org> 4.3.1-alt1
 - new version 4.3.1
 
