@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 
-%define kernel_base_version 6.1
+%define kernel_base_version 6.2
 %define kernel_source kernel-source-%kernel_base_version
 %add_verify_elf_skiplist %_libexecdir/kselftests/*
 %add_findreq_skiplist %_datadir/perf-core/tests/*.py
@@ -238,6 +238,7 @@ and booting a kernel.
 %package -n rtla
 Summary: An interface for osnoise/timerlat tracers
 Group: Development/Tools
+Url: https://docs.kernel.org/tools/rtla/
 
 %description -n rtla
 The rtla(1) is a meta-tool that includes a set of commands that
@@ -255,6 +256,15 @@ AutoReq: noshebang,noshell
 The boot configuration expands the current kernel command line to support
 additional key-value data when booting the kernel in an efficient way.
 This allows administrators to pass a structured-Key config file.
+
+%package -n rv
+Summary: Runtime verification (rv) tool
+Group: Development/Tools
+Url: https://docs.kernel.org/tools/rv/
+
+%description -n rv
+rv tool provides the interface for a collection of runtime verification
+monitors.
 
 %prep
 %setup -cT
@@ -379,6 +389,8 @@ make acpi
 	tmon \
 	tracing \
 	vm \
+
+%make_build -C verification/rv
 
 %install
 banner install
@@ -507,6 +519,7 @@ make %install_opts gpio_install
 make %install_opts iio_install
 make %install_opts vm_install
 make %install_opts tracing_install STRIP=true
+make -C verification/rv %install_opts install STRIP=true
 install -p -m755 cgroup/cgroup_event_listener	%buildroot%_bindir
 install -p -m755 firmware/ihex2fw		%buildroot%_bindir
 install -p -m755 kvm/kvm_stat/kvm_stat		%buildroot%_bindir
@@ -629,6 +642,7 @@ fi
 %files -n libperf-devel
 %doc kernel-source-%version/COPYING
 %_includedir/perf
+%_includedir/internal
 %_libdir/libperf.so
 %_pkgconfigdir/libperf.pc
 %_docdir/libperf
@@ -663,6 +677,7 @@ fi
 %files -n libcpupower-devel
 %_libdir/libcpupower.so
 %_includedir/cpu*.h
+%_includedir/powercap.h
 
 # files hyperv daemons
 %ifarch %ix86 x86_64
@@ -713,7 +728,16 @@ fi
 %_bindir/bootconfig
 %_libexecdir/bootconfig
 
+%files -n rv
+%_bindir/rv
+%_man1dir/rv.*
+%_man1dir/rv-*
+
 %changelog
+* Mon Feb 27 2023 Vitaly Chikunov <vt@altlinux.org> 6.2-alt1
+- Update to v6.2 (2023-02-19).
+- Add runtime verification (rv) tool package.
+
 * Mon Dec 12 2022 Vitaly Chikunov <vt@altlinux.org> 6.1-alt1
 - Update to v6.1 (2022-12-11).
 
