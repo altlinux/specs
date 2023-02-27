@@ -1,6 +1,6 @@
 Name: trinity
 Version: 1.9
-Release: alt4
+Release: alt5
 Summary: System call fuzz tester
 
 License: GPL-2.0
@@ -15,6 +15,7 @@ Patch0: %name-net-protocols.patch
 Patch1: %name-rm-definition.patch
 Patch2: %name-1.9-alt3.patch
 Patch3: %name-1.9-alt4.patch
+Patch4: %name-Fix_kvm.patch
 
 BuildRequires: libpam-devel libpcap-devel libssl-devel libudev-devel
 %{?_with_systemd:BuildRequires: libsystemd-devel}
@@ -50,6 +51,7 @@ and fed to subsequent syscalls, sometimes with hilarious results.
 %prep
 %setup
 %patch3 -p2
+%patch4 -p1
 
 %build
 %configure
@@ -68,6 +70,9 @@ install -Dm0755 scripts/* -t %buildroot%_libexecdir/%name
 %_libexecdir/%name/
 
 %changelog
+* Mon Feb 27 2023 Artyom Bystrov <arbars@altlinux.org> 1.9-alt5
+- Add patch to fix build
+
 * Sat Dec 24 2022 Pavel Vasenkov <pav@altlinux.org> 1.9-alt4
 - Update from upstream
 - Fix missed header file
