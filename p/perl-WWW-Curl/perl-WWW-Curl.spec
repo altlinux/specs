@@ -1,7 +1,7 @@
 %define dist WWW-Curl
 Name: perl-%dist
 Version: 4.17
-Release: alt6
+Release: alt7
 
 Summary: Perl extension interface for libcurl 
 License: MPL
@@ -11,9 +11,15 @@ URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/S/SZ/SZBALINT/WWW-Curl-%{version}.tar.gz
 Patch0: WWW-Curl-4.17-Skip-preprocessor-symbol-only-CURL_STRICTER.patch
 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=941915
-Patch1:         WWW-Curl-4.17-define-CURL-as-void.patch
-Patch3: WWW-Curl-4.17-alt-no-win32.patch
-Patch4: WWW-Curl-4.17-RT130591.patch
+Patch1: WWW-Curl-4.17-define-CURL-as-void.patch
+# Adapt to changes in cURL 7.69.0, bug #1812910, CPAN RT#132197
+Patch2: WWW-Curl-4.17-Adapt-to-changes-in-cURL-7.69.0.patch
+# Adapt to changes in cURL 7.87.0, bug #2160057, CPAN RT#145992
+Patch3: WWW-Curl-4.17-Adapt-to-curl-7.87.0.patch
+# Workound a bug in cURL 7.87.0, bug #2160057, CPAN RT#145992
+Patch4: WWW-Curl-4.17-Work-around-a-macro-bug-in-curl-7.87.0.patch
+Patch5: WWW-Curl-4.17-alt-no-win32.patch
+
 
 # Automatically added by buildreq on Wed Nov 16 2011
 BuildRequires: libcurl-devel perl-Test-Pod perl-Test-Pod-Coverage perl(inc/Module/Install.pm)
@@ -25,8 +31,10 @@ The perl module WWW::Curl provides an interface to the cURL library "libcurl".
 %setup -q -n %dist-%version
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 rm -rf inc && sed -i -e '/^inc\//d' MANIFEST
 
@@ -50,6 +58,9 @@ rm t/19multi.t
 %perl_vendor_autolib/WWW
 
 %changelog
+* Mon Feb 27 2023 Igor Vlasenko <viy@altlinux.org> 4.17-alt7
+- fixed build - Adapt to changes in cURL 7.69.0
+
 * Wed Sep 29 2021 Anton Farygin <rider@altlinux.ru> 4.17-alt6
 - added curl-7.66+ compatibility patch (closes: #41027)
 
