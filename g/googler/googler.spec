@@ -1,13 +1,13 @@
-%global _unpacked_files_terminate_build 1
+%global _unpackaged_files_terminate_build 1
 
 Name:    googler
-Version: 4.3.2
+Version: 4.3.13
 Release: alt1
 
 Summary: Google Search, Google Site Search, Google News from the terminal
 License: GPL-3.0
 Group:   Networking/Other
-URL:     https://github.com/jarun/googler
+URL:     https://github.com/oksiquatzel/googler
 
 Packager: Mikhail Gordeev <obirvalger@altlinux.org>
 
@@ -26,6 +26,7 @@ Source:  %name-%version.tar
 %install
 make disable-self-upgrade
 make install PREFIX=%buildroot%_prefix
+rm -rf %buildroot%_defaultdocdir/%name
 
 install -Dm 644 auto-completion/zsh/_googler %buildroot/%_datadir/zsh/site-functions/_%name
 install -Dm 644 auto-completion/bash/googler-completion.bash %buildroot/%_sysconfdir/bash_completion.d/%name
@@ -40,6 +41,9 @@ install -Dm 644 auto-completion/fish/googler.fish %buildroot%_datadir/fish/vendo
 %_datadir/fish/vendor_completions.d/%name.fish
 
 %changelog
+* Mon Feb 27 2023 Mikhail Gordeev <obirvalger@altlinux.org> 4.3.13-alt1
+- new version 4.3.13
+
 * Tue May 11 2021 Mikhail Gordeev <obirvalger@altlinux.org> 4.3.2-alt1
 - new version 4.3.2
 
