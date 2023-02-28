@@ -36,7 +36,7 @@
 
 Name: collectd
 Version: 5.12.0
-Release: alt2
+Release: alt3
 
 Summary: (Multi-)System statistics collection
 License: GPLv2 AND MIT
@@ -534,9 +534,9 @@ mkdir libltdl
 	%{subst_enable tokyotyrant} \
 	%{subst_enable xmms} \
 	%{subst_enable static} \
-    --localstatedir=%_var \
-    --disable-werror \
-    %nil
+	--localstatedir=%_var \
+	--disable-werror \
+	%nil
 
 # </configure>
 %make_build INSTALLMAN1DIR=%_man1dir
@@ -819,6 +819,13 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Wed Feb 22 2023 Alexey Shabalin <shaba@altlinux.org> 5.12.0-alt3
+- Backport from main:
+  + snmp plugin: Add support for SHA224, SHA256, SHA384 and SHA512
+  + snmp: Set the buffer size to the new maximum length for a digest
+  + Remove DES support in snmp plugin
+  + Fix compile issue if net-snmp has NETSNMP_DISABLE_MD5 set
+
 * Fri Sep 10 2021 Aleksei Nikiforov <darktemplar@altlinux.org> 5.12.0-alt2
 - Disabled Werror due to false positives and rebuilt with LTO.
 

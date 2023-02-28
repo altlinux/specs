@@ -1,4 +1,4 @@
-%define abiversion 35
+%define abiversion 40
 %define _name net-snmp
 %def_disable mibs
 %def_with mysql
@@ -7,8 +7,8 @@
 %def_without test
 
 Name: %_name%abiversion
-Version: 5.8
-Release: alt2
+Version: 5.9.3
+Release: alt1
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -21,16 +21,13 @@ Source1: %_name.init
 Source2: %_name.conf
 Source3: %_name.logrotate
 Source4: snmptrapd.init
-Source9: net-snmp-tmpfs.conf
-Source10: snmpd.service
-Source11: snmptrapd.service
+Source5: net-snmpd.sysconfig
+Source6: net-snmptrapd.sysconfig
+Source7: net-snmp-tmpfs.conf
+Source8: snmpd.service
+Source9: snmptrapd.service
 
 Patch: %name-%version-%release.patch
-Patch7: net-snmp-5.7.3-snmptrapd-gid.patch
-Patch8: net-snmp-5.7.3-alt-mysql8-transition.patch
-Patch10: net-snmp-5.8-libnetsnmptrapd-against-MYSQL_LIBS.patch
-Patch14: net-snmp-5.8-python-ld-flags.patch
-Patch102: net-snmp-5.8-python3.patch
 
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %_var
@@ -53,11 +50,6 @@ Requires: snmp-mibs-std
 %if_enabled mibs
 Requires: %_name-mibs = %version-%release
 %endif
-
-%package -n %_name-config
-Summary: net-snmp-config
-Group: System/Servers
-Requires: lib%_name = %version-%release %_name-common
 
 %package -n %_name
 Summary: Virtual package for install snmpd server and clients of the SNMP protocol
@@ -87,7 +79,7 @@ Summary: Network management utilities using SNMP, from the Net-SNMP project
 Group: Networking/Other
 BuildArch: noarch
 Requires: lib%_name = %version-%release %_name-common perl-SNMP
-Obsoletes: cmu-snmp-utils, ucd-snmp-utils
+Obsoletes: cmu-snmp-utils ucd-snmp-utils
 
 %package -n %_name-bridge-mib
 Summary: Provide Linux bridge information via SNMP
@@ -99,46 +91,33 @@ Requires: %_name-snmpd
 Summary: Creates, signs, installs and displays X.509 certificates used in the operation of Net-SNMP/(D)TLS
 Group: Networking/Other
 BuildArch: noarch
-Requires: %_name-common %_name-config
+Requires: %_name-common
 
 %package -n lib%name
 Summary: The shared libraries for the Net-SNMP project
 Group: System/Libraries
 Provides: lib%_name = %version-%release
 
-%package -n lib%name-snmptrapd
-Summary: The shared libraries for the Net-SNMP project
+%package -n lib%name-agent
+Summary: The shared agent libraries for the Net-SNMP project
 Group: System/Libraries
+Provides: lib%_name-agent = %version-%release
+Provides: lib%name-snmptrapd = %version-%release
 Provides: lib%_name-snmptrapd = %version-%release
+Obsoletes: lib%name-snmptrapd < %version-%release
+Obsoletes: lib%_name-snmptrapd < %version-%release
 
 %package -n lib%_name-devel
 Summary: The development environment for the Net-SNMP project
 Group: Development/C
-Requires: lib%_name = %version-%release lib%_name-snmptrapd = %version-%release %_name-common %_name-config
-Provides: lib%_name-devel = %version-%release lib%name-devel = %version-%release
+Requires: lib%_name = %version-%release lib%_name-agent = %version-%release %_name-common
+Provides: lib%name-devel = %version-%release
 Requires: libssl-devel libsensors3-devel libnl-devel
 
 %package -n lib%_name-devel-static
 Summary: static libraries for lib%_name
 Group: Development/C
 Requires: lib%_name-devel = %version-%release
-
-%package -n libucd-snmp%abiversion
-Summary: The shared libraries for the UCD-SNMP project
-Group: System/Libraries
-Provides: libucd-snmp = %version-%release
-
-%package -n libucd-snmp-devel
-Summary: The development environment for the UCD-SNMP project
-Group: Development/C
-Requires: libucd-snmp = %version-%release
-Provides: libucd-snmp-devel = %version
-Obsoletes: cmu-snmp-devel
-
-%package -n libucd-snmp-devel-static
-Summary: static libraries for the UCD-SNMP project
-Group: Development/C
-Requires: libucd-snmp-devel = %version-%release
 
 %if_enabled mibs
 %package -n %_name-mibs
@@ -179,17 +158,6 @@ Tk/Perl mib browser.  This package contains the snmpd and snmptrapd
 daemons, documentation, etc.
 
 %_name-common package contain common files and dirs
-
-%description -n %_name-config
-SNMP (Simple Network Management Protocol) is a protocol used for network
-management (hence the name).  The Net-SNMP project includes various SNMP
-tools; an extensible agent, an SNMP library, tools for requesting or
-setting information from SNMP agents, tools for generating and handling
-SNMP traps, a version of the netstat command which uses SNMP, and a
-Tk/Perl mib browser.  This package contains the snmpd and snmptrapd
-daemons, documentation, etc.
-
-%_name-common package contain net-snmp-config
 
 %description -n %_name
 SNMP (Simple Network Management Protocol) is a protocol used for network
@@ -249,8 +217,8 @@ certificates used in the operation of Net-SNMP/(D)TLS
 The lib%_name package contains the shared libraries required for
 Net-SNMP software.
 
-%description -n lib%name-snmptrapd
-The lib%name-snmptrapd package contains the shared libraries required for
+%description -n lib%name-agent
+The lib%name-agent package contains the shared agent libraries required for
 Net-SNMP software.
 
 %description -n lib%_name-devel
@@ -272,21 +240,6 @@ The %_name package contains various MIB files for use with the
 Net-SNMP network management project.
 %endif
 
-%description -n libucd-snmp%abiversion
-The libucd-snmp package contains the shared libraries required for
-UCD-SNMP software.
-
-%description -n libucd-snmp-devel
-This package contains include files required for development
-applications for use with the UCD-SNMP project's network management
-tools.
-
-%description -n libucd-snmp-devel-static
-This package contains static libraries required for development
-statically linked applications for use with the UCD-SNMP project's
-network management tools. You'll also need to have the libucd-snmp-devel
-package installed.
-
 %description -n perl-SNMP
 This is the Perl 'SNMP' extension module. The SNMP module provides
 a full featured, tri-lingual SNMP (SNMPv3, SNMPv2c, SNMPv1) API.
@@ -302,42 +255,53 @@ for run-time access to parsed MIB data.
 %prep
 %setup
 %patch -p1
-%patch7 -p1
-%patch8 -p0
-%patch10 -p1
-%patch14 -p1 -b .python-ld-flags
-%patch102 -p1
-
-sed -i "s|LIB_LD_LIBS)|LIB_LD_LIBS) \$\{ADD_HELPER\}|g" agent/Makefile.in
 
 %build
 %{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %autoreconf
 #export NETSNMP_DONT_CHECK_VERSION=1
-export LIBS='-lcrypto'
+#export LIBS='-lcrypto'
+
+MIBS="host agentx smux \
+     ucd-snmp/diskio tcp-mib udp-mib mibII/mta_sendmail \
+     ip-mib/ipv4InterfaceTable ip-mib/ipv6InterfaceTable \
+     ip-mib/ipAddressPrefixTable/ipAddressPrefixTable \
+     ip-mib/ipDefaultRouterTable/ipDefaultRouterTable \
+     ip-mib/ipv6ScopeZoneIndexTable ip-mib/ipIfStatsTable \
+     sctp-mib rmon-mib etherlike-mib"
+
+%ifnarch s390 s390x ppc64le
+# there are no lm_sensors on s390
+MIBS="$MIBS ucd-snmp/lmsensorsMib"
+%endif
+
 %configure %{subst_enable static} \
 	--with-defaults \
 	--enable-shared \
+	--enable-as-needed \
+	--enable-blumenthal-aes \
+	--enable-embedded-perl \
 	--enable-ipv6 \
-	--with-sys-location="Just west of Mars" \
+	--enable-local-smux \
+	--enable-mfd-rewrites \
+	--enable-ucd-snmp-compatibility \
+	--with-sys-location="Unknown" \
 	--with-sys-contact="root@localhost" \
 	--with-logfile="/var/log/snmpd.log" \
-	--with-mib-modules="mibII snmpv3mibs ucd_snmp agent_mibs notification target utilities disman/event disman/schedule host ucd-snmp/diskio ucd-snmp/lmsensorsMib tunnel misc/ipfwacc etherlike-mib mibII/ipv6 ip-mib/ipv4InterfaceTable ip-mib/ipv6InterfaceTable" \
+	--with-mib-modules="$MIBS" \
 	--with-mibdirs="%_datadir/snmp/mibs:%_datadir/mibs/net-snmp:%_datadir/mibs/iana:%_datadir/mibs/ietf:%_datadir/mibs/tubs:%_datadir/mibs/cisco:%_datadir/pibs/ietf:%_datadir/pibs/tubs:" \
 	--with-persistent-directory="%persistentdir" \
+	--with-temp-file-pattern=/run/net-snmp/snmp-tmp-XXXXXX \
 	--without-root-access \
 	--without-rpm \
-	--enable-ucd-snmp-compatibility \
-	--enable-mfd-rewrites \
-	--with-default-snmp-version="2" \
 	--with-openssl \
 	--with-zlib \
 	--with-nl \
-	--with-security-modules="usm tsm" --with-transports="DTLSUDP TLSTCP UDP TCP UDPIPv6 TCPIPv6 Unix Callback Alias" \
-	--enable-as-needed \
+	--with-security-modules=tsm \
+	--with-transports="TLSTCP DTLSUDP" \
 	--with-perl-modules="INSTALLDIRS=vendor" \
-	--enable-embedded-perl \
 	--with-python-modules \
+	--without-pcre \
 	%{subst_with mysql} \
 	%{subst_with systemd}
 
@@ -361,25 +325,18 @@ install -p -m755 -D %SOURCE1 %buildroot%_initdir/snmpd
 install -p -m640 -D %SOURCE2 %buildroot%_sysconfdir/snmp/snmpd.conf
 install -p -m644 -D %SOURCE3 %buildroot%_sysconfdir/logrotate.d/snmpd
 install -p -m755 -D %SOURCE4 %buildroot%_initdir/snmptrapd
+install -p -m644 -D %SOURCE5 %buildroot%_sysconfdir/sysconfig/snmpd
+install -p -m644 -D %SOURCE6 %buildroot%_sysconfdir/sysconfig/snmptrapd
+
 
 # systemd stuff
 install -m 755 -d %buildroot%_tmpfilesdir
-install -m 644 %SOURCE9 %buildroot%_tmpfilesdir/net-snmp.conf
+install -m 644 %SOURCE7 %buildroot%_tmpfilesdir/net-snmp.conf
 install -m 755 -d %buildroot%_unitdir
-install -m 644 %SOURCE10 %SOURCE11 %buildroot%_unitdir/
+install -m 644 %SOURCE8 %SOURCE9 %buildroot%_unitdir/
 
 # perl loadable objects contain $RPM_BUILD_DIR-dependent RPATH
 #hrpath -d `find %buildroot%perl_vendor_autolib -type f -name '*.so'`
-
-cat << EOF > %buildroot%_sysconfdir/sysconfig/snmpd
-#OPTIONS="-Ls DAEMON -Lf /dev/null -p /var/run/snmpd.pid -a -u snmp -g snmp"
-
-EOF
-
-cat << EOF > %buildroot%_sysconfdir/sysconfig/snmptrapd
-#OPTIONS="-Ls DAEMON -Lf /dev/null -p /var/run/snmptrapd.pid -a -u snmp -g snmp"
-
-EOF
 
 xz ChangeLog
 
@@ -398,9 +355,31 @@ rm -rf %buildroot%_datadir/snmp/mibs
 find %buildroot%perl_vendor_autolib/SNMP -type f -name *.so -print0 | xargs -r0 chrpath -d
 find %buildroot%perl_vendor_autolib/NetSNMP -type f -name *.so -print0 | xargs -r0 chrpath -d
 
+# remove things we don't want to distribute
+rm -f %buildroot%_bindir/snmpinform
+ln -s snmptrap %buildroot%_bindir/snmpinform
+rm -f %buildroot%_bindir/snmpcheck
+rm -f %buildroot%_bindir/fixproc
+rm -f %buildroot%_mandir/man1/fixproc*
+rm -f %buildroot%_bindir/ipf-mod.pl
+rm -f %buildroot%_libdir/*.la
+rm -f %buildroot%_libdir/libsnmp*
+
+# remove special perl files
+find %buildroot -name perllocal.pod \
+    -o -name .packlist \
+    -o -name "*.bs" \
+    -o -name Makefile.subs.pl \
+    | xargs -ri rm -f {}
+
 %check
+%ifarch ppc64le
+rm -vf testing/fulltests/default/T200snmpv2cwalkall_simple
+%endif
+chmod 755 local/passtest
+
 echo "===== start test ====="
-%make test
+LD_LIBRARY_PATH=%buildroot/%_libdir %make test
 
 %pre -n %_name-common
 %_sbindir/groupadd -r -f snmp &>/dev/null
@@ -424,14 +403,10 @@ echo "===== start test ====="
 
 %files -n %_name-common
 %doc AGENT.txt COPYING ChangeLog* EXAMPLE.conf FAQ NEWS PORTING README* TODO
+%doc local/passtest local/ipf-mod.pl
 %dir %_sysconfdir/snmp
 %dir %_datadir/snmp
 %attr(0770,snmp,root) %persistentdir
-
-%files -n %_name-config
-%_bindir/net-snmp-create-v3-user
-%_bindir/net-snmp-config
-%_man1dir/net-snmp-config.*
 
 %files -n %_name-snmpd
 %_tmpfilesdir/net-snmp.conf
@@ -441,6 +416,7 @@ echo "===== start test ====="
 %config(noreplace) %_sysconfdir/logrotate.d/snmpd
 %config(noreplace) %attr(0640,snmp,root) %_sysconfdir/snmp/snmpd.conf
 %_sbindir/snmpd
+%_bindir/net-snmp-create-v3-user
 %_bindir/encode_keychange
 %_man5dir/snmpd.conf.*
 %_man5dir/snmpd.examples.*
@@ -514,16 +490,12 @@ echo "===== start test ====="
 %_datadir/snmp/snmpconf-data
 
 %_bindir/checkbandwidth
-%_bindir/fixproc
-#%_bindir/ipf-mod.pl
 %_bindir/mib2c
 %_bindir/mib2c-update
-%_bindir/snmpcheck
 %_bindir/snmpconf
 %_bindir/tkmib
 %_bindir/traptoemail
 
-%_man1dir/fixproc.*
 %_man1dir/mib2c*
 %_man1dir/snmpconf.*
 %_man1dir/tkmib.*
@@ -539,24 +511,21 @@ echo "===== start test ====="
 
 %files -n lib%name
 %_libdir/libnetsnmp.so.*
+
+%files -n lib%name-agent
 %_libdir/libnetsnmpagent.so.*
 %_libdir/libnetsnmphelpers.so.*
 %_libdir/libnetsnmpmibs.so.*
-
-%files -n lib%name-snmptrapd
 %_libdir/libnetsnmptrapd.so.*
 
 %files -n lib%_name-devel
 %doc net-snmp-mibs.tar.bz2
-%_libdir/libnetsnmp.so
-%_libdir/libnetsnmpagent.so
-%_libdir/libnetsnmphelpers.so
-%_libdir/libnetsnmpmibs.so
-%_libdir/libnetsnmptrapd.so
-%_includedir/%_name
+%_libdir/*.so
+%_includedir/*
 %_man3dir/*
-%_pkgconfigdir/netsnmp-agent.pc
-%_pkgconfigdir/netsnmp.pc
+%_pkgconfigdir/*.pc
+%_bindir/net-snmp-config
+%_man1dir/net-snmp-config.*
 
 %if_enabled static
 %files -n lib%_name-devel-static
@@ -565,18 +534,6 @@ echo "===== start test ====="
 %_libdir/libnetsnmphelpers.a
 %_libdir/libnetsnmpmibs.a
 %_libdir/libnetsnmptrapd.a
-%endif
-
-%files -n libucd-snmp%abiversion
-%_libdir/libsnmp.so.*
-
-%files -n libucd-snmp-devel
-%_libdir/libsnmp.so
-%_includedir/ucd-snmp
-
-%if_enabled static
-%files -n libucd-snmp-devel-static
-%_libdir/libsnmp.a
 %endif
 
 %if_enabled mibs
@@ -599,12 +556,19 @@ echo "===== start test ====="
 %doc python/README
 
 %changelog
+* Tue Feb 21 2023 Alexey Shabalin <shaba@altlinux.org> 5.9.3-alt1
+- 5.9.3
+- Fixes: CVE-2022-44792, CVE-2022-44793
+- Add patches from fedora.
+- Drop libucd-snmp and libucd-snmp-devel packages.
+- Drop net-snmp-config package and move script net-snmp-config to devel.
+- Add libnet-snmp-agent package and move agent library.
+
 * Mon Oct 04 2021 Egor Ignatov <egori@altlinux.org> 5.8-alt2
 - Fix build with LTO
 
 * Wed Aug 28 2019 Alexey Shabalin <shaba@altlinux.org> 5.8-alt1
 - 5.8
-
 
 * Sun Apr 07 2019 L.A. Kostis <lakostis@altlinux.ru> 5.7.3-alt6.1
 - Rebuild w/ new lm_sensors.

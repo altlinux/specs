@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.12.0
-Release: alt4.1
+Release: alt5
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -105,6 +105,9 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Jun 15 2021 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt5
+- Fixed build with net-snmp-5.9.
+
 * Tue Apr 27 2021 Arseny Maslennikov <arseny@altlinux.org> 1.12.0-alt4.1
 - NMU: spec: adapted to new cmake macros.
 
