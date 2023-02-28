@@ -16,6 +16,7 @@
 %def_enable uresolver
 %def_enable uwebsocket
 %def_enable clickhouse
+%def_enable opcua
 
 %ifarch %ix86
 %def_enable com485f
@@ -26,7 +27,7 @@
 %define oname uniset2
 
 Name: libuniset2
-Version: 2.25.1
+Version: 2.26.1
 Release: alt1
 Summary: UniSet - library for building distributed industrial control systems
 
@@ -78,6 +79,11 @@ BuildRequires: librrd-devel
 %if_enabled mqtt
 BuildRequires: libmosquitto-devel
 %endif
+
+%if_enabled opcua
+BuildRequires: libopen62541-devel libopen62541pp-devel >= 0.0.1-alt2
+%endif
+
 
 %if_enabled netdata
 BuildRequires: netdata
@@ -389,12 +395,30 @@ Requires: %name-extension-common-devel = %version-%release
 Libraries needed to develop for uniset MQTT extension
 %endif
 
+%if_enabled opcua
+%package extension-opcua
+Group: Development/C++
+Summary: OPC UA support for %{name}
+Requires: %name-extension-common = %version-%release
+
+%description extension-opcua
+OPC UA support for %{name}
+
+%package extension-opcua-devel
+Group: Development/C++
+Summary: Libraries needed to develop for uniset OPC UA extension
+Requires: %name-extension-common-devel = %version-%release
+
+%description extension-opcua-devel
+Libraries needed to develop for uniset OPC UA extension
+%endif
+
 %prep
 %setup
 
 %build
 %autoreconf
-%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb} %{subst_enable com485f} %{subst_enable opentsdb} %{subst_enable uwebsocket} %{subst_enable clickhouse}
+%configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb} %{subst_enable com485f} %{subst_enable opentsdb} %{subst_enable uwebsocket} %{subst_enable clickhouse} %{subst_enable opcua}
 %make_build
 
 %install
@@ -587,6 +611,18 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 %_includedir/%oname/extensions/mqtt/
 %endif
 
+%if_enabled opcua
+%files extension-opcua
+%_bindir/%oname-opcua*
+%_libdir/libUniSet2OPCUA*.so.*
+
+
+%files extension-opcua-devel
+%_pkgconfigdir/libUniSet2OPCUA*.pc
+%_libdir/libUniSet2OPCUA*.so
+%_includedir/%oname/extensions/opcua/
+%endif
+
 %if_enabled api
 %if_enabled uresolver
 %files extension-uresolver
@@ -633,6 +669,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Tue Feb 28 2023 Pavel Vainerman <pv@altlinux.ru> 2.26.1-alt1
+- (opcua): supported server and exchnage by OPC UA
+
 * Sun Feb 12 2023 Pavel Vainerman <pv@altlinux.ru> 2.25.1-alt1
 - (clickhouse): supported ClickHouse
 
