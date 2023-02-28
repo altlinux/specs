@@ -1,17 +1,17 @@
-%define modname toposort
+%define pypi_name toposort
 %def_enable check
 
-Name: python3-module-%modname
-Version: 1.9
+Name: python3-module-%pypi_name
+Version: 1.10
 Release: alt1
 
-Summary: %modname implements a topological sort algorithm
+Summary: %pypi_name implements a topological sort algorithm
 Group: Development/Python3
 License: Apache-2.0
-Url: https://pypi.org/project/%modname
+Url: https://pypi.org/project/%pypi_name
 
 Vcs: https://bitbucket.org/ericvsmith/toposort.git
-Source: https://pypi.io/packages/source/t/%modname/%modname-%version.tar.gz
+Source: https://pypi.io/packages/source/t/%pypi_name/%pypi_name-%version.tar.gz
 
 BuildArch: noarch
 
@@ -22,7 +22,7 @@ BuildRequires: python3-module-setuptools >= 42 python3-module-wheel
 %summary
 
 %prep
-%setup -n %modname-%version
+%setup -n %pypi_name-%version
 
 %build
 %pyproject_build
@@ -39,6 +39,9 @@ export PYTHONPATH=%buildroot%python3_sitelibdir_noarch
 %doc README* CHANGES* NOTICE
 
 %changelog
+* Tue Feb 28 2023 Yuri N. Sedunov <aris@altlinux.org> 1.10-alt1
+- 1.10
+
 * Mon Jan 23 2023 Yuri N. Sedunov <aris@altlinux.org> 1.9-alt1
 - 1.9
 
