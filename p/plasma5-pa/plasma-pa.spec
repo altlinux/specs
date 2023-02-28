@@ -5,7 +5,7 @@
 
 Name: plasma5-pa
 Version: 5.26.5
-Release: alt2
+Release: alt3
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -21,6 +21,7 @@ Provides: kf5-plasma-pa-common = %EVR
 Obsoletes: kf5-plasma-pa-common < %EVR
 
 Source: %rname-%version.tar
+Patch1: alt-i18n.patch
 
 # Automatically added by buildreq on Mon Aug 24 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils glib2-devel libEGL-devel libGL-devel libgpg-error libjson-c libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-qml libqt5-quick libqt5-svg libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms pkg-config python-base python3 python3-base qt5-base-devel rpm-build-gir ruby ruby-stdlibs
@@ -66,6 +67,7 @@ KF5 library
 
 %prep
 %setup -n %rname-%version
+%patch1 -p1
 
 %build
 %K5build
@@ -99,6 +101,9 @@ rm -rf %buildroot/%_datadir/kde4/ ||:
 #%_K5lib/libQPulseAudioPrivate.so.*
 
 %changelog
+* Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt3
+- improve i18n
+
 * Thu Jan 26 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt2
 - clean requires
 
