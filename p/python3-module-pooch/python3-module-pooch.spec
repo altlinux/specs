@@ -3,7 +3,7 @@
 %def_disable check
 
 Name: python3-module-%modname
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: A Python library for fetch and check data files
@@ -44,6 +44,9 @@ py.test3 %modname/tests
 
 
 %changelog
+* Tue Feb 28 2023 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Sat Jun 25 2022 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - first build for Sisyphus
 
