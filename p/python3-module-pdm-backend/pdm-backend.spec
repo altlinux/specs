@@ -17,7 +17,7 @@ pyproject_metadata \\\
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.0.3
+Version: 2.0.5
 Release: alt1
 Summary: The build backend used by PDM that supports latest packaging standards
 License: MIT
@@ -122,6 +122,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}
 
 %changelog
+* Tue Feb 28 2023 Stanislav Levin <slev@altlinux.org> 2.0.5-alt1
+- 2.0.3 -> 2.0.5.
+
 * Mon Feb 27 2023 Stanislav Levin <slev@altlinux.org> 2.0.3-alt1
 - 2.0.2 -> 2.0.3.
 
