@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name:     Cardinal
-Version:  22.12
+Version:  23.02
 Release:  alt1
 
 Summary:  Virtual modular synthesizer plugin
@@ -161,6 +161,9 @@ install -m 644 docs/*.md docs/*.png %buildroot%_datadir/doc/cardinal/docs/
 %doc %_datadir/doc/cardinal
 
 %changelog
+* Tue Feb 28 2023 Ivan A. Melnikov <iv@altlinux.org> 23.02-alt1
+- 23.02
+
 * Thu Dec 29 2022 Ivan A. Melnikov <iv@altlinux.org> 22.12-alt1
 - 22.12
 - Link with system libfmt and libsamplerate.
