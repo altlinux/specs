@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.5.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -156,7 +156,7 @@ Autoreq:       yes,nopython3,nopython,noshell
 
 %add_findreq_skiplist %ruby_gemslibdir/**/*
 %add_findprov_skiplist %ruby_gemslibdir/**/*
-%ruby_use_gem_dependency rack-cors >= 1.1.1,rack-cors < 2
+%ruby_use_gem_dependency rack-cors >= 2.0,rack-cors < 3
 %ruby_use_gem_dependency sidekiq >= 6.1.1,sidekiq < 7
 %ruby_use_gem_dependency rdoc >= 6.1.1,rdoc < 7
 %ruby_use_gem_dependency jwt >= 2.2.1,jwt < 3
@@ -340,7 +340,7 @@ foundation.
 
 %package       -n foreman-doc
 Version:       3.5.1
-Release:       alt1.1
+Release:       alt1.2
 Summary:       An application that automates the lifecycle of servers documentation files
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -493,6 +493,9 @@ railsctl cleanup %name
 
 
 %changelog
+* Mon Feb 27 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt1.2
+- ! fixes dep to rack-cors
+
 * Sat Feb 04 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt1.1
 - ! fixed dep to redis
 

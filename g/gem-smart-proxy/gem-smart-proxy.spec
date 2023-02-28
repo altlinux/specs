@@ -2,7 +2,7 @@
 
 Name:          gem-smart-proxy
 Version:       3.5.1
-Release:       alt1
+Release:       alt2
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet
 License:       GPL-3.0
 Group:         Development/Ruby
@@ -96,7 +96,7 @@ booting
 
 %package       -n smart-proxy
 Version:       3.5.1
-Release:       alt1
+Release:       alt2
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet executable(s)
 Summary(ru_RU.UTF-8): Исполнямка для самоцвета smart_proxy
 Group:         Development/Ruby
@@ -157,7 +157,7 @@ booting
 
 %package       -n gem-smart-proxy-doc
 Version:       3.5.1
-Release:       alt1
+Release:       alt2
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета smart_proxy
 Group:         Development/Documentation
@@ -195,7 +195,7 @@ booting
 
 %package       -n gem-smart-proxy-devel
 Version:       3.5.1
-Release:       alt1
+Release:       alt2
 Summary:       RESTful proxies for DNS, DHCP, TFTP, BMC and Puppet development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета smart_proxy
 Group:         Development/Ruby
@@ -319,6 +319,11 @@ rm -rf %_localstatedir/smart-proxy/Gemfile.lock
 
 
 %changelog
+* Tue Feb 28 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt2
+- ! runtime deps to smart_proxy_remote_execution_ssh and smart_proxy_ansible
+- * since for now smart-proxy support not the daemonize with pid, change service
+  fork type to "exec"
+
 * Mon Dec 19 2022 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt1
 - ^ 3.4.0 -> 3.5.1
 - ! fixed default smart-proxy.service file

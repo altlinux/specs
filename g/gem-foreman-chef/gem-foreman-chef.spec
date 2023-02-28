@@ -2,7 +2,7 @@
 
 Name:          gem-foreman-chef
 Version:       0.10.0.1
-Release:       alt0.1
+Release:       alt0.1.1
 Summary:       Plugin for Chef integration with Foreman
 License:       GPL-3
 Group:         Development/Ruby
@@ -12,6 +12,7 @@ Packager:      Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch:     noarch
 
 Source:        %name-%version.tar
+Patch:         foreman-3.5.0.patch
 BuildRequires(pre): rpm-build-ruby
 %if_with check
 BuildRequires: gem(sqlite3) >= 0
@@ -35,7 +36,7 @@ Foreman extensions that are required for better Chef integration.
 
 %package       -n gem-foreman-chef-doc
 Version:       0.10.0.1
-Release:       alt0.1
+Release:       alt0.1.1
 Summary:       Plugin for Chef integration with Foreman documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета foreman_chef
 Group:         Development/Documentation
@@ -54,7 +55,7 @@ Foreman extensions that are required for better Chef integration.
 
 %package       -n gem-foreman-chef-devel
 Version:       0.10.0.1
-Release:       alt0.1
+Release:       alt0.1.1
 Summary:       Plugin for Chef integration with Foreman development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета foreman_chef
 Group:         Development/Ruby
@@ -75,6 +76,7 @@ Foreman extensions that are required for better Chef integration.
 
 %prep
 %setup
+%autopatch
 
 %build
 %ruby_build
@@ -99,6 +101,9 @@ Foreman extensions that are required for better Chef integration.
 
 
 %changelog
+* Mon Feb 27 2023 Pavel Skrylev <majioa@altlinux.org> 0.10.0.1-alt0.1.1
+- ! restore lost patch
+
 * Thu Jan 26 2023 Pavel Skrylev <majioa@altlinux.org> 0.10.0.1-alt0.1
 - ^ 0.10.0 -> 0.10.0[1]
 
