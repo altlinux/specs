@@ -9,7 +9,7 @@
 
 %define modname scipy
 %define ver_major 1.10
-%define ver_minor 0
+%define ver_minor 1
 
 %define numpy_version 1.16.5
 
@@ -177,6 +177,9 @@ popd
 %_includedir/%modname-py3
 
 %changelog
+* Mon Feb 27 2023 Anton Farygin <rider@altlinux.ru> 1.10.1-alt1
+- 1.10.0 -> 1.10.1
+
 * Fri Feb 17 2023 Anton Farygin <rider@altlinux.ru> 1.10.0-alt1
 - 1.6.1 -> 1.10.0
 
