@@ -1,7 +1,8 @@
 Name: hardinfo
 Version: 0.6
-Release: alt2.20220113
+Release: alt0_0_git_3c42646
 
+Epoch: 1
 Summary: A system profiler for Linux
 License: GPLv2+
 Group: System/Kernel and hardware
@@ -71,6 +72,9 @@ desktop-file-install --vendor="" \
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Feb 28 2023 Hihin Ruslan <ruslandh@altlinux.ru> 1:0.6-alt0_0_git_3c42646
+- Update from git commit 3c42646b196d4c5dc8466c4cdd1fb16538b7ff9a
+
 * Sat Jun 04 2022 Anton Midyukov <antohami@altlinux.org> 0.6-alt2.20220113
 - New snapshot
 - Fix locale path (Closes: 42936)
