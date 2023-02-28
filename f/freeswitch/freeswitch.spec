@@ -1,6 +1,6 @@
 %{?optflags_lto:%global optflags_lto %nil}
 Name: freeswitch
-Version: 1.10.8
+Version: 1.10.9
 Release: alt1
 Epoch: 1
 ExcludeArch: %arm %ix86
@@ -29,13 +29,13 @@ BuildRequires: libilbc1-devel >= 0.0.2-alt3 libjs-devel flite-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
 BuildRequires: libpcap-devel perl-devel
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
-BuildRequires: libspandsp3-devel libsofia-sip-devel
+BuildRequires: libspandsp3-devel libsofia-sip-devel >= 1.13.12
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
-BuildRequires: libuuid-devel postgresql-devel libsofia-sip-devel
+BuildRequires: libuuid-devel postgresql-devel 
 BuildRequires: java-common java-1.8.0-openjdk-devel /proc libavformat-devel libavutil-devel libavresample-devel libswscale-devel
 BuildRequires: libmemcached-devel libopus-devel libbroadvoice-devel libcodec2-devel libImageMagick-devel
 BuildRequires: flite-devel libyuv-devel libfreetype-devel libvpx-devel libg7221-devel libvlc-devel libavcodec-devel libx264-devel
-BuildRequires: libks-devel
+BuildRequires: libks-devel >= 1.8.2
 
 %ifarch %ix86 x86_64
 BuildRequires: yasm
@@ -542,6 +542,9 @@ fi
 %_datadir/%name/htdocs/portal
 
 %changelog
+* Tue Feb 28 2023 Anton Farygin <rider@altlinux.ru> 1:1.10.9-alt1
+- 1.10.8 -> 1.10.9
+
 * Fri Dec 30 2022 Anton Farygin <rider@altlinux.ru> 1:1.10.8-alt1
 - 1.10.7 -> 1.10.8
 - fix for build with recent curl
