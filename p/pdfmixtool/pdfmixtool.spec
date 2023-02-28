@@ -1,6 +1,6 @@
 Name: pdfmixtool
 Version: 1.1.1
-Release: alt1
+Release: alt2
 
 License: LGPL-3.0-only
 Group: Office
@@ -13,10 +13,17 @@ Patch: %name-1.1-alt-desktop.patch
 
 BuildRequires: cmake
 BuildRequires: libqpdf-devel
-BuildRequires: qt5-base-devel
+BuildRequires: qt6-base-devel
 
-BuildRequires: qt5-tools-devel
-BuildRequires: qt5-svg-devel
+BuildRequires: libnettle-devel
+BuildRequires: zlib-devel
+BuildRequires: libgnutls-devel
+BuildRequires: libtasn1-devel
+BuildRequires: libidn2-devel
+BuildRequires: libp11-kit-devel
+
+BuildRequires: qt6-tools-devel
+BuildRequires: qt6-svg-devel
 BuildRequires: libImageMagick-devel
 BuildRequires(pre): rpm-macros-cmake
 
@@ -46,7 +53,7 @@ PDF, извлекать страницы из файла PDF, редактиро
 %autopatch -p2
 
 %build
-%cmake
+%cmake -DQT_VERSION=6
 %cmake_build
 
 %install
@@ -60,6 +67,9 @@ PDF, извлекать страницы из файла PDF, редактиро
 %_datadir/metainfo/eu.scarpetta.PDFMixTool.appdata.xml
 
 %changelog
+* Tue Feb 28 2023 Evgeny Chuck <koi@altlinux.org> 1.1.1-alt2
+- rebuilted on qt6
+
 * Sat Sep 24 2022 Evgeny Chuck <koi@altlinux.org> 1.1.1-alt1
 - new version (1.1.1) with rpmgs script
 
