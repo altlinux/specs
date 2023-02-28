@@ -5,7 +5,7 @@
 %def_enable check
 
 Name: python3-module-%pypi_name
-Version: 1.5.0
+Version: 1.5.1
 Release: alt1
 
 Summary: Shellingham detects what shell the current Python executable is running in
@@ -55,6 +55,9 @@ py.test3
 %doc README* CHANGELOG*
 
 %changelog
+* Tue Feb 28 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.1-alt1
+- 1.5.1
+
 * Mon Sep 12 2022 Yuri N. Sedunov <aris@altlinux.org> 1.5.0-alt1
 - first build for Sisyphus
 
