@@ -1,8 +1,8 @@
-%def_disable snapshot
+%def_enable snapshot
 %define xdg_name com.github.wwmm.easyeffects
 
 Name: easyeffects
-Version: 6.3.0
+Version: 7.0.1
 Release: alt1
 
 Summary: Audio effects for Pipewire applications
@@ -39,8 +39,10 @@ BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson gcc-c++ pkgconfig(sigc++-3.0) >= %sigc_ver libfmt-devel
 BuildRequires: yelp-tools desktop-file-utils /usr/bin/appstream-util
 BuildRequires: libgtk4-devel >= %gtk_ver pkgconfig(libadwaita-1) >= %adwaita_ver
+BuildRequires: pkgconfig(libportal-gtk4)
 BuildRequires: pkgconfig(libpipewire-%pw_api_ver) >= %pw_ver
 BuildRequires: nlohmann-json-devel
+BuildRequires: pkgconfig(gsl)
 BuildRequires: lv2-devel >= %lv2_ver
 BuildRequires: libsndfile-devel libsamplerate-devel libfftw3-devel
 BuildRequires: libbs2b-devel
@@ -48,6 +50,7 @@ BuildRequires: liblilv-devel >= %lilv_ver
 BuildRequires: libebur128-devel
 BuildRequires: pkgconfig(speexdsp)
 BuildRequires: pkgconfig(rnnoise)
+BuildRequires: pkgconfig(speex)
 BuildRequires: pkgconfig(rubberband)
 BuildRequires: zita-convolver-devel
 BuildRequires: libdbus-devel
@@ -83,6 +86,9 @@ mkdir -p %buildroot%_sysconfdir/EasyEffects
 %doc README* CHANGELOG.*
 
 %changelog
+* Tue Feb 28 2023 Yuri N. Sedunov <aris@altlinux.org> 7.0.1-alt1
+- updated to v7.0.1-5-g224b641a
+
 * Sat Sep 03 2022 Yuri N. Sedunov <aris@altlinux.org> 6.3.0-alt1
 - 6.3.0
 
