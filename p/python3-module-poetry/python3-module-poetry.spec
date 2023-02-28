@@ -5,7 +5,7 @@
 %def_disable check
 
 Name: python3-module-%pypi_name
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 
 Summary: Poetry -- Python build system
@@ -22,7 +22,7 @@ Source: %pypi_name-%version.tar
 
 BuildArch: noarch
 
-%define core_ver 1.3.2
+%define core_ver 1.5.1
 
 Requires: python3-module-poetry-core >= %core_ver
 Provides: %pypi_name = %EVR
@@ -38,7 +38,7 @@ BuildRequires: python3(tox)
 BuildRequires: python3(tox_console_scripts)
 BuildRequires: python3(pep517)
 BuildRequires: python3(keyring)
-BuildRequires: python3(pkginfo) > 1.5
+BuildRequires: python3-module-pkginfo > 1.9.4
 BuildRequires: python3-module-poetry-core >= %core_ver
 BuildRequires: python3(%{pypi_name}_plugin_export)}
 
@@ -66,6 +66,9 @@ that: the new, standardized pyproject.toml.
 %doc README.md CHANGELOG.md 
 
 %changelog
+* Tue Feb 28 2023 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Mon Jan 30 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - 1.3.2
 
