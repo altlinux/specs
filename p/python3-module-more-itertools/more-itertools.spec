@@ -2,7 +2,7 @@
 %define pypi_name more-itertools
 
 Name: python3-module-%pypi_name
-Version: 9.0.0
+Version: 9.1.0
 Release: alt1
 
 Summary: More routines for operating on iterables, beyond itertools
@@ -40,13 +40,16 @@ routines for working with Python iterables.
 %pyproject_install
 
 %check
-%tox_check_pyproject
+%pyproject_run_unittest
 
 %files
 %python3_sitelibdir/more_itertools/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Tue Feb 28 2023 Stanislav Levin <slev@altlinux.org> 9.1.0-alt1
+- 9.0.0 -> 9.1.0.
+
 * Mon Dec 12 2022 Stanislav Levin <slev@altlinux.org> 9.0.0-alt1
 - 7.0.0 -> 9.0.0.
 
