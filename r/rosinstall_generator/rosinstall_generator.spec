@@ -1,5 +1,5 @@
 Name:    rosinstall_generator
-Version: 0.1.22
+Version: 0.1.23
 Release: alt1
 
 Summary: A tool for generating rosinstall files
@@ -35,5 +35,8 @@ Source:  %name-%version.tar
 %python3_sitelibdir/*.egg-info
 
 %changelog
+* Tue Feb 28 2023 Andrey Cherepanov <cas@altlinux.org> 0.1.23-alt1
+- New version.
+
 * Wed May 04 2022 Andrey Cherepanov <cas@altlinux.org> 0.1.22-alt1
 - Initial build for Sisyphus.
