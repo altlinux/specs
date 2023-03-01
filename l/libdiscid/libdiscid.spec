@@ -1,12 +1,13 @@
 %def_disable static
+%define _name discid
 
-Name: libdiscid
-Version: 0.6.2
+Name: lib%_name
+Version: 0.6.3
 Release: alt1
 
 Summary: A Library for creating MusicBrainz DiscIDs
 Group: System/Libraries
-License: LGPLv2+
+License: LGPL-2.1-or-later
 
 Url: http://musicbrainz.org/doc/%name
 Source: http://ftp.musicbrainz.org/pub/musicbrainz/%name/%name-%version.tar.gz
@@ -20,7 +21,7 @@ provides a submission URL for adding the DiscID to the database.
 %package devel
 Summary: Development files for %name
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description devel
 The %name-devel package contains libraries and header files for
@@ -29,7 +30,7 @@ developing applications that use %name.
 %package devel-static
 Summary: Static libraries for %name
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 
 %description devel-static
 Static libs for building statically linked software that uses %name.
@@ -46,13 +47,13 @@ Static libs for building statically linked software that uses %name.
 %makeinstall_std
 
 %files
-%_libdir/*.so.*
+%_libdir/%name.so.*
 %doc AUTHORS ChangeLog README
 
 %files devel
-%_includedir/discid/
-%_libdir/*.so
-%_pkgconfigdir/*.pc
+%_includedir/%_name/
+%_libdir/%name.so
+%_pkgconfigdir/%name.pc
 
 %if_enabled static
 %files -n %name-devel-static
@@ -61,6 +62,10 @@ Static libs for building statically linked software that uses %name.
 
 
 %changelog
+* Wed Mar 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.3-alt1
+- 0.6.3
+- fixed License tag
+
 * Mon Jan 30 2017 Yuri N. Sedunov <aris@altlinux.org> 0.6.2-alt1
 - 0.6.2
 
