@@ -4,8 +4,8 @@
 %def_disable vala
 
 Name: libdmapsharing
-Version: 2.9.39
-Release: alt2
+Version: 2.9.42
+Release: alt1
 
 Summary: A DMAP client and server library
 Group: System/Libraries
@@ -107,6 +107,9 @@ GObject introspection devel data for the %name.
 %_girdir/DMAP-%api_ver.gir
 
 %changelog
+* Wed Mar 01 2023 Yuri N. Sedunov <aris@altlinux.org> 2.9.42-alt1
+- 2.9.42
+
 * Mon Apr 08 2019 Yuri N. Sedunov <aris@altlinux.org> 2.9.39-alt2
 - disabled vapi rebuild
 
