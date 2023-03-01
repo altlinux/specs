@@ -6,7 +6,7 @@
 
 Name: python3-module-seaborn
 Version: 0.12.2
-Release: alt1
+Release: alt2
 Summary: Seaborn: statistical data visualization
 License: BSD-3-Clause
 Group: Sciences/Other
@@ -43,6 +43,9 @@ statistical routines from scipy and statsmodels.
 %install
 %pyproject_install
 
+# Remove testing file, that brings numpy.testing
+rm -fv %buildroot%python3_sitelibdir/%oname/_testing.py
+
 %check
 %pyproject_run_pytest -k 'not test_log_scale and not test_subplot_kws' -n auto
 
@@ -52,6 +55,9 @@ statistical routines from scipy and statsmodels.
 %python3_sitelibdir/%{pyproject_distinfo %oname}
 
 %changelog
+* Wed Mar 01 2023 Grigory Ustinov <grenka@altlinux.org> 0.12.2-alt2
+- Removed extra runtime dependency.
+
 * Tue Feb 07 2023 Anton Vyatkin <toni@altlinux.org> 0.12.2-alt1
 - new version 0.12.2 (Closes: #44636).
 
