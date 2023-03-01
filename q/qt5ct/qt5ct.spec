@@ -1,6 +1,6 @@
 Name: qt5ct
-Version: 1.5
-Release: alt3
+Version: 1.7
+Release: alt1
 
 Summary: Qt5 Configuration Tool
 Summary(ru_RU.UTF-8): Инструмент для настройки оформления приложений Qt5
@@ -55,7 +55,7 @@ echo "export QT_QPA_PLATFORMTHEME='%name'" > %name.sh
 echo "setenv QT_QPA_PLATFORMTHEME '%name'" > %name.csh
 
 %build
-%qmake_qt5
+%qmake_qt5 CONFIG+=debug
 %make_build
 
 %install
@@ -72,9 +72,17 @@ install -Dm 0755 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 %dir %_libdir/qt5/plugins/platformthemes/
 %_libdir/qt5/plugins/platformthemes/lib%name.so
 %_libdir/qt5/plugins/styles/libqt5ct-style.so
+%_libdir/lib%name-common.*
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Mar 01 2023 Evgeny Chuck <koi@altlinux.org> 1.7-alt1
+- new version (1.7) with rpmgs script
+- added debug package
+
+* Tue Feb 28 2023 Evgeny Chuck <koi@altlinux.org> 1.6-alt1
+- new version (1.6) with rpmgs script
+
 * Sun Sep 04 2022 Evgeny Chuck <koi@altlinux.org> 1.5-alt3
 - Fixed a bug in the description of the desktop file
 
