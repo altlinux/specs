@@ -2,8 +2,8 @@
 %define modulename PyBluez
 
 Name: python3-module-pybluez
-Version: 0.22
-Release: alt2
+Version: 0.23
+Release: alt1
 Summary: A Python module for the Bluez library
 Group: Development/Python3
 License: GPLv2+
@@ -13,9 +13,13 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Requires: libbluez >= 4.0
 
 Source: %url/files/%pyname-%version.tar.gz
+Patch: pybluez-py310.patch
 
 BuildRequires: libbluez-devel
 BuildRequires(pre): rpm-build-python3
+
+# needs only for macos
+%add_python3_req_skip lightblue
 
 %description
 PyBluez is an effort to create python wrappers around bluez to allow python
@@ -23,6 +27,8 @@ developers to use system bluetooth resources.
 
 %prep
 %setup -n %pyname-%version
+%patch -p0
+sed -i '/2to3/d' setup.py
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -32,13 +38,16 @@ developers to use system bluetooth resources.
 %python3_install
 
 %files
-%doc README CHANGELOG COPYING
+%doc README.md CHANGELOG COPYING
 %python3_sitelibdir/bluetooth
 %python3_sitelibdir/*.egg-info
 %exclude %python3_sitelibdir/bluetooth/msbt*
 %exclude %python3_sitelibdir/bluetooth/widcomm*
 
 %changelog
+* Sun Jan 15 2023 Grigory Ustinov <grenka@altlinux.org> 0.23-alt1
+- Build new version for python3.11.
+
 * Wed Jul 28 2021 Grigory Ustinov <grenka@altlinux.org> 0.22-alt2
 - Drop python2 support.
 
