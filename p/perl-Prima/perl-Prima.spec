@@ -61,7 +61,7 @@ BuildRequires: /usr/bin/xvfb-run libheif-devel perl(AnyEvent.pm) perl(AnyEvent/S
 %{bcond_without perl_Prima_enables_wepb}
 
 Name:           perl-Prima
-Version:        1.67001
+Version:        1.68001
 Release:        alt1
 Summary:        Perl graphic toolkit
 # Copying:              BSD text
@@ -310,6 +310,9 @@ unset DISPLAY XDG_SESSION_TYPE
 %{_libexecdir}/%{name}
 
 %changelog
+* Wed Mar 01 2023 Igor Vlasenko <viy@altlinux.org> 1.68001-alt1
+- automated CPAN update
+
 * Sun Feb 12 2023 Igor Vlasenko <viy@altlinux.org> 1.67001-alt1
 - automated CPAN update
 
