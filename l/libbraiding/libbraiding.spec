@@ -1,7 +1,7 @@
 %define lname libbraiding0
 
 Name: libbraiding
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Summary: Library for computations on braid groups
@@ -40,6 +40,7 @@ This subpackage provides the development headers for it.
 %setup
 
 %build
+%autoreconf
 %configure --disable-static
 %make_build
 
@@ -58,6 +59,9 @@ rm -f "%buildroot/%_libdir"/*.la
 %_includedir/*braid*.h
 
 %changelog
+* Wed Mar 01 2023 Leontiy Volodin <lvol@altlinux.org> 1.2-alt1
+- New version (1.2).
+
 * Thu Oct 28 2021 Leontiy Volodin <lvol@altlinux.org> 1.1-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
 - Built as require for sagemath.
