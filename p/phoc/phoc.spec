@@ -1,6 +1,6 @@
 %def_enable snapshot
 %define _libexecsir %_prefix/libexec
-%define ver_major 0.24
+%define ver_major 0.25
 %define beta %nil
 
 %define dev_uid 500
@@ -43,6 +43,8 @@ BuildRequires: pkgconfig(wayland-client)
 BuildRequires: pkgconfig(wayland-cursor)
 BuildRequires: pkgconfig(wayland-egl)
 BuildRequires: pkgconfig(wayland-protocols) >= 1.15
+BuildRequires: pkgconfig(json-glib-1.0)
+
 %{?_disable_embed_wlroots:BuildRequires: pkgconfig(wlroots) >= 0.15}
 %{?_enable_embed_wlroots:BuildRequires: libgbm-devel libseat1-devel
 BuildRequires: pkgconfig(xcb-renderutil) pkgconfig(xcb-icccm)
@@ -76,6 +78,9 @@ xvfb-run %__meson_test
 %doc README.md
 
 %changelog
+* Wed Mar 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.25.0-alt1
+- 0.25.0
+
 * Thu Feb 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
 - 0.24.0
 

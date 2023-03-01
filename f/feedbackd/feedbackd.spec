@@ -2,7 +2,7 @@
 
 %define _libexecdir %_prefix/libexec
 %define libname libfeedback
-%define ver_major 0.0.3
+%define ver_major 0.1
 %define api_ver 0.0
 
 %def_enable introspection
@@ -12,7 +12,7 @@
 %def_enable check
 
 Name: feedbackd
-Version: %ver_major
+Version: %ver_major.0
 Release: alt1
 
 Summary: Feedback library for GNOME
@@ -137,6 +137,9 @@ install -D -m644 debian/%name.udev %buildroot%_udevrulesdir/90-%name.rules
 %endif
 
 %changelog
+* Wed Mar 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.1.0-alt1
+- 0.1.0
+
 * Thu Feb 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.0.3-alt1
 - 0.0.3
 

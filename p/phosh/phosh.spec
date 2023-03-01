@@ -1,6 +1,6 @@
 %def_disable snapshot
 %define _libexecdir %prefix/libexec
-%define ver_major 0.24
+%define ver_major 0.25
 %define beta %nil
 %define rdn_name sm.puri.Phosh
 %define dev_uid 500
@@ -128,6 +128,7 @@ xvfb-run %__meson_test
 %_libdir/%name/plugins/emergency-info.plugin
 %_libdir/%name/plugins/lib%name-plugin-emergency-info.so
 %_libdir/%name/plugins/prefs/lib%name-plugin-prefs-ticket-box.so
+%_libdir/%name/plugins/prefs/lib%name-plugin-prefs-emergency-info.so
 
 %_desktopdir/%rdn_name.desktop
 %_desktopdir/sm.puri.OSK0.desktop
@@ -154,6 +155,9 @@ xvfb-run %__meson_test
 
 
 %changelog
+* Wed Mar 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.25.0-alt1
+- 0.25.0
+
 * Thu Feb 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.24.0-alt1
 - 0.24.0
 
