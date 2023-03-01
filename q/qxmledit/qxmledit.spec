@@ -1,6 +1,6 @@
 %define Name QXmlEdit
 Name: qxmledit
-Version: 0.9.17
+Version: 0.9.18
 Release: alt1
 
 Summary: Simple XML editor and XSD viewer
@@ -11,6 +11,8 @@ URL: https://github.com/lbellonda/%name
 
 # Source-url: https://github.com/lbellonda/qxmledit/archive/%version.tar.gz
 Source: %name-%version.tar
+Source10: QXmlEdit_ru.ts
+Patch1: alt-desktop-l10n.patch
 
 Provides: %Name = %version-%release
 
@@ -45,6 +47,9 @@ Main features:
 
 %prep
 %setup
+%patch1 -p1
+
+cat %SOURCE10 >src/languages_app/QXmlEdit_ru.ts
 
 %build
 lrelease-qt5 src/QXmlEdit.pro
@@ -91,6 +96,10 @@ install -D -m 0644 install_scripts/environment/desktop/QXmlEdit.desktop %buildro
 
 
 %changelog
+* Wed Mar 01 2023 Sergey V Turchin <zerg@altlinux.org> 0.9.18-alt1
+- new version
+- update russian translation
+
 * Mon Nov 14 2022 Sergey V Turchin <zerg@altlinux.org> 0.9.17-alt1
 - new version
 
