@@ -2,7 +2,7 @@
 %define module Digest-SHA
 
 Name: perl-%module
-Version: 6.03
+Version: 6.04
 Release: alt1
 
 Summary: Perl extension for SHA-1/224/256/384/512
@@ -39,6 +39,9 @@ module can handle all types of input, including partial-byte data.
 %_man1dir/*
 
 %changelog
+* Wed Mar 01 2023 Igor Vlasenko <viy@altlinux.org> 6.04-alt1
+- automated CPAN update
+
 * Thu Aug 11 2022 Igor Vlasenko <viy@altlinux.org> 6.03-alt1
 - automated CPAN update
 
