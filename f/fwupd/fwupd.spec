@@ -24,7 +24,7 @@
 
 Summary: Firmware update daemon
 Name: fwupd
-Version: 1.8.10
+Version: 1.8.12
 Release: alt1
 License: LGPL-2.1+
 Group: System/Configuration/Hardware
@@ -35,6 +35,7 @@ Source2: fwupd.watch
 Patch0: %name-%version-alt.patch
 
 BuildRequires: bash-completion
+BuildRequires: pandoc
 BuildRequires: cmake
 BuildRequires: gcab
 BuildRequires: rpm-build-python3
@@ -212,18 +213,15 @@ mv %buildroot%_docdir/libfw* %buildroot%_docdir/fwupd-devel-%version/
 
 %if_enabled tests
 %check
-vm-run --sbin --udevd --kvm=cond --overlay=ext4:/usr/src \
+vm-run --sbin --udevd --kvm=cond --overlay=ext4,30M:/usr/src \
        %__meson_test
 %endif
 
 %files -f %name.lang
 %doc README.md AUTHORS COPYING
 %_man1dir/fwupdtool.1*
-%_man1dir/fwupdagent.1*
 %_man1dir/fwupdmgr.1*
-%_man1dir/dfu-tool.1*
 %if_enabled uefi
-%_man1dir/fwupdate.1*
 %_man1dir/dbxtool.1*
 %endif
 %config(noreplace)%_sysconfdir/fwupd/daemon.conf
@@ -234,7 +232,6 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4:/usr/src \
 %dir %_iconsdir/hicolor/scalable/apps
 %_libexecdir/fwupd/fwupd
 %_bindir/fwupdtool
-%_bindir/fwupdagent
 %_libexecdir/fwupd/fwupdoffline
 %ifarch x86_64
 %_libexecdir/fwupd/fwupd-detect-cet
@@ -242,10 +239,6 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4:/usr/src \
 %_datadir/bash-completion/completions/*
 %_datadir/fish/vendor_completions.d/fwupdmgr.fish
 %_iconsdir/hicolor/scalable/apps/org.freedesktop.fwupd.svg
-%if_enabled uefi
-%_bindir/fwupdate
-%endif
-%_bindir/dfu-tool
 %if_enabled uefi
 %_bindir/dbxtool
 %endif
@@ -345,6 +338,9 @@ vm-run --sbin --udevd --kvm=cond --overlay=ext4:/usr/src \
 %endif
 
 %changelog
+* Mon Feb 27 2023 Egor Ignatov <egori@altlinux.org> 1.8.12-alt1
+- 1.8.10 -> 1.8.12
+
 * Tue Jan 31 2023 Egor Ignatov <egori@altlinux.org> 1.8.10-alt1
 - 1.8.9 -> 1.8.10
 
