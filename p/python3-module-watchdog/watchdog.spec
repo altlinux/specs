@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 2.2.0
+Version: 2.3.1
 Release: alt1
 
 Summary: Filesystem events monitoring
@@ -49,8 +49,7 @@ Python API and shell utilities to monitor file system events.
 
 %check
 export NO_SUDO=YES
-export TOX_TESTENV_PASSENV="NO_SUDO"
-%tox_check_pyproject -- -vra
+%pyproject_run_pytest -ra
 
 %files
 %doc AUTHORS *.rst
@@ -59,6 +58,9 @@ export TOX_TESTENV_PASSENV="NO_SUDO"
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 2.3.1-alt1
+- 2.2.0 -> 2.3.1.
+
 * Tue Dec 06 2022 Stanislav Levin <slev@altlinux.org> 2.2.0-alt1
 - 2.1.9 -> 2.2.0.
 
