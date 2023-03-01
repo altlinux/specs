@@ -4,8 +4,8 @@
 %define real_name Test-PerlTidy
 
 Name: perl-Test-PerlTidy
-Version: 20220902
-Release: alt2
+Version: 20230226
+Release: alt1
 
 Summary: Perl module to check that all project files are tidy
 
@@ -45,6 +45,9 @@ If you make any changes please remember to tidy them.
 %perl_vendor_privlib/Test/PerlTidy*
 
 %changelog
+* Wed Mar 01 2023 Igor Vlasenko <viy@altlinux.org> 20230226-alt1
+- new version
+
 * Wed Sep 28 2022 Igor Vlasenko <viy@altlinux.org> 20220902-alt2
 - fixed build - added BR: perl(Path/Tiny.pm)
 
