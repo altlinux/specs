@@ -4,14 +4,16 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 5.0.2
+Version: 5.2.1
 Release: alt1
-
 Summary: Objects and routines pertaining to date and time (tempora)
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/tempora/
 VCS: https://github.com/jaraco/tempora
+BuildArch: noarch
+Source: %name-%version.tar
+Patch: %name-%version-alt.patch
 
 BuildRequires(pre): rpm-build-python3
 
@@ -30,15 +32,12 @@ BuildRequires: python3(pytest)
 BuildRequires: python3(pytest_freezegun)
 %endif
 
-BuildArch: noarch
-
-Source: %name-%version.tar
-
 %description
 Objects and routines pertaining to date and time (tempora).
 
 %prep
 %setup
+%autopatch -p1
 
 # setuptools_scm implements a file_finders entry point which returns all files
 # tracked by SCM.
@@ -57,11 +56,8 @@ fi
 %install
 %pyproject_install
 
-# don't package tests
-rm -r %buildroot%python3_sitelibdir/tempora/tests/
-
 %check
-%tox_check_pyproject
+%pyproject_run_pytest -ra
 
 %files
 %_bindir/calc-prorate
@@ -69,6 +65,9 @@ rm -r %buildroot%python3_sitelibdir/tempora/tests/
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 5.2.1-alt1
+- 5.0.2 -> 5.2.1.
+
 * Tue Oct 11 2022 Stanislav Levin <slev@altlinux.org> 5.0.2-alt1
 - 4.1.1 -> 5.0.2.
 
