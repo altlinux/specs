@@ -3,7 +3,7 @@
 %set_verify_elf_method strict
 
 Name: lightdm-kde-greeter
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 Group: Graphical desktop/Other
 Summary: LightDM KDE5 Greeter
@@ -33,6 +33,7 @@ Provides: lightdm-greeter
 # QtQuick is not provided yet
 %qml_add_req_skip QtQuick
 %qml_add_req_skip org.kde.kquickcontrolsaddons
+%qml_add_req_skip org.kde.plasma.wallpapers.image
 
 %description
 This package provides a KDE-based LightDM greeter engine.
@@ -43,7 +44,7 @@ This is a fork of KDE4-based LightDM greeter engine for KDE5.
 %setup
 
 %build
-%K5build
+%K5build -DGREETER_IMAGES_DIR=%_var/lib/ldm/%name/images
 
 %install
 %K5install
@@ -74,6 +75,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 
 
 %changelog
+* Tue Feb 21 2023 Anton Golubev <golubevan@altlinux.org> 0.4.6-alt1
+- use Plasma's background selection dialog
+
 * Mon Feb 13 2023 Anton Golubev <golubevan@altlinux.org> 0.4.5-alt1
 - minor tweaks
 
