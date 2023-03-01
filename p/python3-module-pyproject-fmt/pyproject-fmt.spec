@@ -4,20 +4,20 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 0.4.1
+Version: 0.9.2
 Release: alt1
-
 Summary: Format pyproject.toml file
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/pyproject-fmt
 VCS: https://github.com/tox-dev/pyproject-fmt.git
-
+BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-alt.patch
+# PEP503 name
+%py3_provides %pypi_name
 
 BuildRequires(pre): rpm-build-python3
-
 # build backend and its deps
 BuildRequires: python3(hatchling)
 BuildRequires: python3(hatch-vcs)
@@ -30,11 +30,6 @@ BuildRequires: python3(tomlkit)
 BuildRequires: python3(pytest)
 BuildRequires: python3(pytest-mock)
 %endif
-
-BuildArch: noarch
-
-# PEP503 name
-%py3_provides %pypi_name
 
 %description
 %summary.
@@ -62,7 +57,7 @@ fi
 %pyproject_install
 
 %check
-%tox_check_pyproject -- -vra tests
+%pyproject_run_pytest -ra tests
 
 %files
 %doc README.md
@@ -71,6 +66,9 @@ fi
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 0.9.2-alt1
+- 0.4.1 -> 0.9.2.
+
 * Thu Nov 24 2022 Stanislav Levin <slev@altlinux.org> 0.4.1-alt1
 - 0.4.0 -> 0.4.1.
 
