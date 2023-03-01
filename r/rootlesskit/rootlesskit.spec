@@ -1,7 +1,7 @@
 %global import_path github.com/rootless-containers/rootlesskit
 Name:     rootlesskit
 Version:  1.1.0
-Release:  alt1
+Release:  alt2
 
 Summary:  Linux-native "fake root" for implementing rootless containers
 License:  Apache-2.0
@@ -49,9 +49,11 @@ cat > %buildroot%_sysctldir/80-rootlesskit.conf << EOF
 kernel.userns_restrict = 0
 EOF
 
+%pre
+%pre_control newgidmap newuidmap
+
 %post
-control newgidmap public 2>/dev/null ||:
-control newuidmap public 2>/dev/null ||:
+%post_control newgidmap newuidmap
 
 %files
 %_bindir/*
@@ -59,6 +61,9 @@ control newuidmap public 2>/dev/null ||:
 %doc *.md
 
 %changelog
+* Wed Mar 01 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.0-alt2
+- Use control macros
+
 * Thu Jan 19 2023 Mikhail Gordeev <obirvalger@altlinux.org> 1.1.0-alt1
 - new version 1.1.0
 
