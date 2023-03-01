@@ -4,7 +4,7 @@
 
 Name:    python3-module-%modulename
 Version: 1.0.7
-Release: alt1
+Release: alt2
 
 Summary: Python library for calculating contours in 2D quadrilateral grids
 
@@ -25,6 +25,8 @@ BuildRequires: gcc-c++
 
 %if_with check
 BuildRequires: python3-module-numpy-tests
+BuildRequires: python3-module-numpy-testing
+BuildRequires: python3-module-matplotlib
 %endif
 
 # Optional dependency, that not ready for sisyphus
@@ -58,5 +60,8 @@ contouring algorithms without having to include Matplotlib as a dependency.
 %python3_sitelibdir/%{pyproject_distinfo %modulename}
 
 %changelog
+* Wed Mar 01 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.7-alt2
+- Fixed build requires.
+
 * Mon Feb 13 2023 Grigory Ustinov <grenka@altlinux.org> 1.0.7-alt1
 - Initial build for Sisyphus.
