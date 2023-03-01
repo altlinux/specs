@@ -1,11 +1,8 @@
 Name: accel-ppp
 Version: 1.12.0
-Release: alt5
+Release: alt6
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
-
-Packager: Alexei Takaseev <taf@altlinux.ru>
-
 License: GPLv2
 Url: http://sourceforge.net/projects/accel-ppp/
 Source0: %name-%version.tar
@@ -74,6 +71,7 @@ install -d %buildroot%_sysconfdir/{rc.d/init.d,sysconfig,logrotate.d}
 install -pDm0644 alt-linux/%name.sysconfig	%buildroot%_sysconfdir/sysconfig/%name
 install -pDm0755 alt-linux/%name.init		%buildroot%_initdir/%name
 install -pDm0644 alt-linux/%name.logrotate	%buildroot%_sysconfdir/logrotate.d/%name
+install -pDm0644 contrib/accel-ppp.service	%buildroot%systemd_unitdir/%name.service
 mkdir -p %buildroot%_runtimedir/accel-ppp
 
 mkdir -p %kernel_srcdir
@@ -91,7 +89,8 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %config(noreplace) %_sysconfdir/sysconfig/*
 %config %_sysconfdir/logrotate.d/*
 %config(noreplace) %_tmpfilesdir/*
-%_sysconfdir/accel-ppp.conf.dist
+%config(noreplace) %_sysconfdir/accel-ppp.conf.dist
+%systemd_unitdir/%name.service
 %_bindir/accel-cmd
 %_sbindir/accel-pppd
 %_libdir/%name
@@ -105,6 +104,10 @@ install -pDm0644 ../%name-%version.tar.bz2 %kernel_srcdir/%name-%version.tar.bz2
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Wed Mar 01 2023 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt6
+- update upstream to git:cc8f2bada5635768d425e2fa2bafb095acda8ca9
+- Add native .service
+
 * Tue Jun 15 2021 Alexey Shabalin <shaba@altlinux.org> 1.12.0-alt5
 - Fixed build with net-snmp-5.9.
 

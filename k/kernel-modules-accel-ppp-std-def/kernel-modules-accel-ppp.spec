@@ -1,9 +1,9 @@
 %define module_name             accel-ppp
 %define module_version          1.12.0
-%define module_release          alt3
+%define module_release          alt6
 
 %define flavour		std-def
-%define karch	%ix86 x86_64 aarch64 ppc64le
+%define karch	%ix86 x86_64 aarch64 ppc64le armh
 
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-std-def
@@ -65,6 +65,10 @@ install -m644 -D BUILD/drivers/vlan_mon/driver/vlan_mon.ko %buildroot/%module_di
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Jan 30 2023 Alexei Takaseev <taf@altlinux.org> 1.12.0-alt6
+- update upstream to git:cc8f2bada5635768d425e2fa2bafb095acda8ca9
+- ipoe,vlan_mon: add support for kernels 6.1+
 
 * Mon May 31 2021 Andrew A. Vasilyev <andy@altlinux.org> 1.12.0-alt3
 - NMU: FTBFS: cmake
