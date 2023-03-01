@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230215
+Version: 20230227
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,14 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Mar 01 2023 Cronbuild Service <cronbuild@altlinux.org> 20230227-alt1
+- upstream changes (GIT 60971a64):
+  + rtl_bt: Update RTL8852C BT USB firmware to 0xD7B8_FABF (thx Hilda Wu)
+  + rtl_bt: Add firmware and config files for RTL8821CS (thx Max Chou)
+  + rtw89: 8852b: update fw to v0.29.29.0 (thx Ping-Ke Shih)
+  + rtw89: 8852b: update fw to v0.29.26.0 (thx Ping-Ke Shih)
+  + liquidio: remove lio_23xx_vsw.bin (thx Chickles, Derek)
+
 * Wed Feb 15 2023 Cronbuild Service <cronbuild@altlinux.org> 20230215-alt1
 - upstream changes (GIT 83f1d778):
   + intel: avs: Add AudioDSP base firmware for CNL-based platforms (thx Cezary Rojewski)
