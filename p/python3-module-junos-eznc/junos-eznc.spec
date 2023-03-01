@@ -2,10 +2,11 @@
 %define pypi_name junos-eznc
 %define mod_name junos
 
+# depends on deprecated nose
 %def_without check
 
 Name: python3-module-%pypi_name
-Version: 2.6.6
+Version: 2.6.7
 Release: alt1
 Summary: Junos 'EZ' automation for non-programmers
 License: Apache-2.0
@@ -27,26 +28,6 @@ BuildRequires(pre): rpm-build-python3
 # build backend and its deps
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
-
-%if_with check
-# install_requires:
-BuildRequires: python3(lxml)
-BuildRequires: python3(ncclient)
-BuildRequires: python3(paramiko)
-BuildRequires: python3(scp)
-BuildRequires: python3(jinja2)
-BuildRequires: python3(yaml)
-BuildRequires: python3(six)
-BuildRequires: python3(serial)
-BuildRequires: python3(yamlloader)
-BuildRequires: python3(pyparsing)
-BuildRequires: python3(transitions)
-
-BuildRequires: python3(mock)
-BuildRequires: python3(nose)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
-%endif
 
 %description
 Junos PyEZ is a Python library to remotely manage/automate Junos
@@ -71,15 +52,6 @@ sed -i 's/^\([ ]*\)git_refnames[ ]*=[ ]*".*"[ ]*$/\1git_refnames = " (tag: v%ver
 %pyproject_install
 
 %check
-cat > tox.ini <<EOF
-[testenv]
-usedevelop=True
-commands =
-    nosetests -v -a unit
-EOF
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
 
 %files
 # jnpr is the namespace package, don't own that directory
@@ -88,6 +60,9 @@ tox.py3 --sitepackages --console-scripts -vvr -s false
 %python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 2.6.7-alt1
+- 2.6.6 -> 2.6.7.
+
 * Tue Feb 07 2023 Stanislav Levin <slev@altlinux.org> 2.6.6-alt1
 - 2.6.3 -> 2.6.6.
 
