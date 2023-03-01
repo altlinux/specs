@@ -1,11 +1,11 @@
-%def_enable snapshot
+%def_disable snapshot
 %def_disable static
 %def_enable check
 
 %define rname lcms2
 
 Name: lib%rname
-Version: 2.14
+Version: 2.15
 Release: alt1
 
 Summary: Little cms color engine, version 2
@@ -26,19 +26,19 @@ BuildRequires: gcc-c++ libjpeg-devel libtiff-devel zlib-devel
 %package devel
 Summary: LCMS 2 development environment
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %if_enabled static
 %package devel-static
 Summary: Static LCMS 2 library
 Group: Development/C
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %EVR
 %endif
 
 %package -n lcms2-utils
 Summary: Various %name-based utilities
 Group: Graphics
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description
 This is a CMM engine to deal with color management stuff.
@@ -105,6 +105,9 @@ This package contains various %name-based utilities
 %endif
 
 %changelog
+* Wed Mar 01 2023 Yuri N. Sedunov <aris@altlinux.org> 2.15-alt1
+- 2.15
+
 * Thu Nov 10 2022 Yuri N. Sedunov <aris@altlinux.org> 2.14-alt1
 - updated to lcms2.14-2-gc26d3d2
 
