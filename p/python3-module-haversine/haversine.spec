@@ -1,28 +1,29 @@
 %define _unpackaged_files_terminate_build 1
-%define oname haversine
+%define pypi_name haversine
+%define mod_name %pypi_name
 
 %def_with check
 
-Name: python3-module-%oname
-Version: 2.5.1
+Name: python3-module-%pypi_name
+Version: 2.8.0
 Release: alt1
 
 Summary: Calculate the distance between 2 points on Earth
 License: MIT
 Group: Development/Python3
 Url: https://pypi.org/project/haversine/
-# https://github.com/mapado/haversine.git
-
+VCS: https://github.com/mapado/haversine.git
 Source0: %name-%version.tar
 
 BuildArch: noarch
 BuildRequires(pre): rpm-build-python3
+# build backend and its deps
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %if_with check
 BuildRequires: python3(numpy.testing)
 BuildRequires: python3(pytest)
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
 %endif
 
 %description
@@ -33,29 +34,23 @@ located by their latitude and longitude.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-usedevelop=True
-commands =
-    {envbindir}/pytest {posargs:-vra}
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr -s false
+%pyproject_run_pytest -ra
 
 %files
 %doc README.md
-%python3_sitelibdir/%oname/
-%python3_sitelibdir/%oname-%version-py%_python3_version.egg-info/
+%python3_sitelibdir/%mod_name/
+%python3_sitelibdir/%{pyproject_distinfo %pypi_name}/
 
 %changelog
+* Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 2.8.0-alt1
+- 2.5.1 -> 2.8.0.
+
 * Mon Jan 17 2022 Stanislav Levin <slev@altlinux.org> 2.5.1-alt1
 - 0.4.5 -> 2.5.1.
 
