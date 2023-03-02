@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.44.0
+Version: 0.44.1
 Release: alt1
 
 %filter_from_requires /^samba-common$/d;/systemd-services/d;/^gpupdate$/d;/gpupdate-setup/d
@@ -174,6 +174,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %files -n task-auth-freeipa
 
 %changelog
+* Wed Mar 01 2023 Andrey Cherepanov <cas@altlinux.org> 0.44.1-alt1
+- Fix auth in Active Directory with task-auth-ad-winbind without task-auth-ad-sssd.
+
 * Mon Feb 20 2023 Andrey Cherepanov <cas@altlinux.org> 0.44.0-alt1
 - Many improvements by sin@ and kaa@:
 - Disable Username and Password edit boxes activity when kerberos ccache using.
