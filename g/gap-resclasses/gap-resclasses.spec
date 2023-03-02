@@ -1,14 +1,14 @@
 %define repo resclasses
 
 Name: gap-resclasses
-Version: 4.7.1
+Version: 4.7.3
 Release: alt1
 Summary: GAP: Set-Theoretic Computations with Residue Classes
 License: GPL-2.0+
 Group: Sciences/Mathematics
-Url: https://www.gap-system.org/DevelopersPages/StefanKohl/resclasses.html
+Url: https://gap-packages.github.io/resclasses/
 
-Source: https://www.gap-system.org/pub/gap/gap4/tar.bz2/packages/resclasses-%version.tar.bz2
+Source: https://github.com/gap-packages/resclasses/releases/download/v%version/%repo-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires: rpm-macros-gap
@@ -39,5 +39,8 @@ permit this.
 %gap_sitelib/%repo-%version/*
 
 %changelog
+* Thu Mar 02 2023 Leontiy Volodin <lvol@altlinux.org> 4.7.3-alt1
+- New version (4.7.3).
+
 * Thu Jun 17 2021 Leontiy Volodin <lvol@altlinux.org> 4.7.1-alt1
 - Initial build for ALT Sisyphus (thanks opensuse for the spec).
