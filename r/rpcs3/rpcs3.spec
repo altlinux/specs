@@ -2,21 +2,22 @@
 
 %define llvm_version 13.0
 
-%define git_ver 14525
-%define git_commit df718bcb0f2b7be809bf48b6059be7322fc17202
+%define git_ver 14783
+%define git_commit 0178b20983aa6b9930d0b5fb69bd1837325ada02
 
 %define glslang_version sdk-1.3.224.1
 %define asmjit_commit 06d0badec53710a4f572cf5642881ce570c5d274
-%define hidapi_commit a3ce1299312ee48c2c0db58ffc059c1438436ad8
+%define hidapi_commit ecf1b62882c1b6ca1da445fa94ee8dae42cf5961
 %define yaml_cpp_commit 0b67821f307e8c6bf0eba9b6d3250e3cf1441450
 %define llvm_commit 9b52b6c39ae9f0759fbce7dd0db4b3290d6ebc56
 %define spirv_headers_version sdk-1.3.231.1
 %define spirv_tools_version 2022.4
-%define cubeb_commit dc511c6b3597b6384d28949285b9289e009830ea
+%define cubeb_commit 70b4e3db7822de4d534959885cda109d6edbee36
 %define soundtouch_commit 83cfba67b6af80bb9bfafc0b324718c4841f2991
+%define miniupnp_version miniupnpd_2_3_2
 
 Name: rpcs3
-Version: 0.0.26
+Version: 0.0.27
 Release: alt1
 
 Summary: PS3 emulator/debugger
@@ -48,6 +49,8 @@ Source7: SPIRV-Tools-%spirv_tools_version.tar
 Source8: cubeb-%cubeb_commit.tar
 # https://github.com/RPCS3/soundtouch/archive/%soundtouch_commit/soundtouch-%soundtouch_commit.tar.gz
 Source9: soundtouch-%soundtouch_commit.tar
+# https://github.com/miniupnp/miniupnp/archive/%miniupnp_version/miniupnp-%miniupnp_version.tar.gz
+Source10: miniupnp-%miniupnp_version.tar
 
 Patch0: %name-alt-git.patch
 Patch1: %name-alt-jit-events.patch
@@ -95,7 +98,7 @@ BuildPreReq: python3-module-Pygments
 The world's first free and open-source PlayStation 3 emulator/debugger, written in C++ for Windows and Linux.
 
 %prep
-%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9
+%setup -b 1 -b 2 -b 3 -b 4 -b 5 -b 6 -b 7 -b 8 -b 9 -b 10
 
 %patch0 -p1
 %patch1 -p1
@@ -109,6 +112,7 @@ The world's first free and open-source PlayStation 3 emulator/debugger, written 
 %__mv -Tf ../SPIRV-Tools-%spirv_tools_version 3rdparty/SPIRV/SPIRV-Tools
 %__mv -Tf ../cubeb-%cubeb_commit 3rdparty/cubeb/cubeb
 %__mv -Tf ../soundtouch-%soundtouch_commit 3rdparty/SoundTouch/soundtouch
+%__mv -Tf ../miniupnp-%miniupnp_version 3rdparty/miniupnp/miniupnp
 
 #Generate Version Strings
 GIT_VERSION=$(echo %git_ver)
@@ -166,6 +170,9 @@ export ALTWRAP_LLVM_VERSION=%llvm_version
 %_datadir/metainfo/%name.metainfo.xml
 
 %changelog
+* Thu Mar 02 2023 Nazarov Denis <nenderus@altlinux.org> 0.0.27-alt1
+- Version 0.0.27
+
 * Sun Jan 08 2023 Nazarov Denis <nenderus@altlinux.org> 0.0.26-alt1
 - Version 0.0.26
 
