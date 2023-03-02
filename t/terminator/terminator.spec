@@ -4,8 +4,8 @@
 %def_enable check
 
 Name: terminator
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Store and run multiple GNOME terminals in one window
 Group: Terminals
@@ -78,6 +78,9 @@ xvfb-run py.test-3
 %doc README* CHANGELOG*
 
 %changelog
+* Thu Mar 02 2023 Yuri N. Sedunov <aris@altlinux.org> 2.1.3-alt1
+- 2.1.3
+
 * Thu Dec 15 2022 Yuri N. Sedunov <aris@altlinux.org> 2.1.2-alt2
 - removed useless pytest-runner build dependency (ALT #44632)
 - enabled %%check
