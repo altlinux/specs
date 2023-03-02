@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-qt5platform-plugins
-Version: 5.6.4
+Version: 5.6.5
 Release: alt1
 Summary: Qt platform integration plugins for Deepin Desktop Environment
 License: GPL-2.0+ and LGPL-3.0 and MIT
@@ -12,7 +12,7 @@ Url: https://github.com/linuxdeepin/qt5platform-plugins
 Packager: Leontiy Volodin <lvol@altlinux.org>
 
 Source: %url/archive/%version/%name-%version.tar.gz
-Patch: 0001-feat-Support-multi-split-screen-151.patch
+Patch: 0001-chore-load-dxcb-if-XDG_CURRENT_DESKTOP-set-to-DDE.patch
 
 %if_enabled clang
 BuildRequires(pre): clang-devel
@@ -71,6 +71,10 @@ export PATH=%_qt5_bindir:$PATH
 %_qt5_plugindir/platforms/libdxcb.so
 
 %changelog
+* Thu Mar 02 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.5-alt1
+- New version.
+- Applied fixes from master branch.
+
 * Wed Feb 15 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.4-alt1
 - New version.
 - Applied fixes from master branch.
