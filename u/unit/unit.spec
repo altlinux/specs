@@ -11,7 +11,7 @@
 %def_disable devel
 
 Name: unit
-Version: 1.29.0
+Version: 1.29.1
 Release: alt1
 
 Summary: NGINX Unit - Web Application Server
@@ -238,6 +238,9 @@ logrotate %_sysconfdir/logrotate.d/unit
 %files checkinstall
 
 %changelog
+* Thu Mar 02 2023 Vitaly Chikunov <vt@altlinux.org> 1.29.1-alt1
+- Update to 1.29.1 (2023-02-28).
+
 * Sat Dec 17 2022 Vitaly Chikunov <vt@altlinux.org> 1.29.0-alt1
 - Update to 1.29.0 (2022-12-15), enable cgroup2 support, install unitc.
 
