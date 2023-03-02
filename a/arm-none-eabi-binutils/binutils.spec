@@ -1,11 +1,11 @@
 Name: arm-none-eabi-binutils
-Version: 2.39
+Version: 2.40
 Release: alt1
 
 Summary: GNU Binary Utility Development Utilities
 License: GPLv3+
 Group: Development/Other
-Url: https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads
+Url: http://sourceware.org/binutils/
 
 Source: %name-%version-%release.tar
 
@@ -40,7 +40,6 @@ Binutils is a collection of binary utilities, including:
             --disable-shared \
             --disable-threads \
             --with-gcc --with-gnu-as --with-gnu-ld \
-            --disable-gdb --without-gdb \
             --disable-sim --without-sim \
             --with-system-zlib \
             --prefix=%_libexecdir \
@@ -66,6 +65,9 @@ rm -r %buildroot%_infodir
 %_man1dir/%target-*.1.*
 
 %changelog
+* Thu Mar 02 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.40-alt1
+- 2.40 released
+
 * Wed Feb 01 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.39-alt1
 - 2.39
 
