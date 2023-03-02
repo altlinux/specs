@@ -2,8 +2,8 @@
 
 Name: ansible-core
 Summary: A radically simple IT automation system
-Version: 2.14.2
-Release: alt2
+Version: 2.14.3
+Release: alt1
 
 Group:   System/Configuration/Other
 License: GPL-3.0
@@ -70,7 +70,7 @@ cp -v docs/man/man1/*.1 %buildroot/%_man1dir/
 
 # Fix shebangs
 grep -Rl '^#!.*python$' %buildroot | xargs subst 's|^#!.*python$|#!%__python3|'
-rm -f %buildroot%bindir/ansible-test
+rm -f %buildroot%_bindir/ansible-test
 rm -rf %buildroot%python3_sitelibdir/ansible_test
 
 %files
@@ -82,6 +82,11 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Thu Mar 02 2023 Andrey Cherepanov <cas@altlinux.org> 2.14.3-alt1
+- New version.
+- Real removed ansible-test (ALT #45456).
+- Update apt_rpm from PR #5867.
+
 * Wed Feb 22 2023 Andrey Cherepanov <cas@altlinux.org> 2.14.2-alt2
 - Remove ansible-test executable.
 
