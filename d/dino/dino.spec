@@ -3,7 +3,7 @@
 %define rdn_name im.dino.Dino
 
 Name: dino
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Modern Jabber/XMPP client
@@ -108,6 +108,9 @@ This package provides libraries and headers needed to develop Dino plugins.
 #%_datadir/vala/vapi/xmpp-vala.vapi
 
 %changelog
+* Thu Mar 02 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+
 * Wed Feb 08 2023 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt1
 - 0.4.0 (ported to GTK4/libadwaita)
 
