@@ -1,26 +1,25 @@
 %define mname gocept
 %define oname %mname.testing
 
-%def_without check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.10.1
-Release: alt2
+Version: 3.0
+Release: alt1
 
 Summary: A collection of test helpers, additional assertions, and the like
-License: ZPL
+License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/gocept.testing/
+VCS: https://github.com/gocept/gocept.testing
 
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-mock python3-module-six
-BuildRequires: python3-module-pytest-cov
 
 %py3_provides %oname
-%py3_requires %mname mock six
-
 
 %description
 This package collects various helpers for writing tests.
@@ -34,21 +33,21 @@ This package collects various helpers for writing tests.
 %install
 %python3_install
 
-%if "%_libexecdir" != "%_libdir"
-mv %buildroot%_libexecdir %buildroot%_libdir
-%endif
-
 %check
-%__python3 setup.py test
-py.test3 -vv
+%tox_check
 
 %files
-%doc *.txt
-%python3_sitelibdir/%mname/*
-%python3_sitelibdir/*.egg-info
+%doc LICENSE.txt *.rst
+%python3_sitelibdir/%mname
+%python3_sitelibdir/%oname-%version-*.egg-info
+%exclude %python3_sitelibdir/*.pth
+%exclude %python3_sitelibdir/%mname/*/tests
 
 
 %changelog
+* Wed Mar 01 2023 Anton Vyatkin <toni@altlinux.org> 3.0-alt1
+- new version 3.0
+
 * Fri Feb 07 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.10.1-alt2
 - Porting on python3.
 
