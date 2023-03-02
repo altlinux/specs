@@ -28,7 +28,7 @@
 
 Name: libuniset2
 Version: 2.26.1
-Release: alt1
+Release: alt2
 Summary: UniSet - library for building distributed industrial control systems
 
 License: LGPL-2.1
@@ -418,6 +418,9 @@ Libraries needed to develop for uniset OPC UA extension
 
 %build
 %autoreconf
+%if "%__gcc_version_major" < "12"
+%add_optflags -std=c++17
+%endif
 %configure %{subst_enable docs} %{subst_enable mysql} %{subst_enable sqlite} %{subst_enable pgsql} %{subst_enable python} %{subst_enable rrd} %{subst_enable io} %{subst_enable logicproc} %{subst_enable tests} %{subst_enable mqtt} %{subst_enable api} %{subst_enable netdata} %{subst_enable logdb} %{subst_enable com485f} %{subst_enable opentsdb} %{subst_enable uwebsocket} %{subst_enable clickhouse} %{subst_enable opcua}
 %make_build
 
@@ -669,6 +672,9 @@ rm -f %buildroot%_docdir/%oname/html/*.md5
 # history of current unpublished changes
 
 %changelog
+* Thu Mar 02 2023 Pavel Vainerman <pv@altlinux.ru> 2.26.1-alt2
+- check gcc version
+
 * Tue Feb 28 2023 Pavel Vainerman <pv@altlinux.ru> 2.26.1-alt1
 - (opcua): supported server and exchnage by OPC UA
 
