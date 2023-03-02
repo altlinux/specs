@@ -1,18 +1,28 @@
 %define oname geventhttpclient
+
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.1.0
-Release: alt1.1.1
+Version: 2.0.8
+Release: alt1
+
 Summary: http client library for gevent
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/geventhttpclient/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildPreReq: python3-devel python3-module-setuptools
-BuildPreReq: python-tools-2to3
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-gevent
+BuildRequires: python3-module-six
+BuildRequires: python3-module-brotlipy
+BuildRequires: python3-module-dpkt
+BuildRequires: python3-module-urllib3
+BuildRequires: python3-module-certifi
+%endif
 
 %description
 A high performance, concurrent HTTP client library for python using
@@ -30,7 +40,6 @@ Safe SSL support is provided by default.
 
 %prep
 %setup
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 %python3_build_debug
@@ -38,11 +47,19 @@ find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %install
 %python3_install
 
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -m 'not online' -k 'not test_brotli_response'
+
 %files
 %doc PKG-INFO
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Wed Mar 01 2023 Anton Vyatkin <toni@altlinux.org> 2.0.8-alt1
+- new version 2.0.8
+
 * Thu Mar 22 2018 Aleksei Nikiforov <darktemplar@altlinux.org> 1.1.0-alt1.1.1
 - (NMU) Rebuilt with python-3.6.4.
 
