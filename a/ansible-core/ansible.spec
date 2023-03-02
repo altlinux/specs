@@ -3,13 +3,14 @@
 Name: ansible-core
 Summary: A radically simple IT automation system
 Version: 2.14.3
-Release: alt1
+Release: alt2
 
 Group:   System/Configuration/Other
 License: GPL-3.0
 Source0: %rname-%version.tar
 Source1: apt_rpm.py
 Source2: apt_repo.py
+Patch0: 0001-ansible-galaxy-support-resolvelib-0.5.3-0.10.0-79399.patch
 
 Url: http://www.ansible.com
 
@@ -53,6 +54,7 @@ are transferred to managed machines automatically.
 
 %prep
 %setup -n %rname-%version
+%patch0 -p1
 cp %SOURCE1 lib/ansible/modules/apt_rpm.py
 cp %SOURCE2 lib/ansible/modules/apt_repo.py
 
@@ -82,6 +84,9 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Thu Mar 02 2023 Andrey Cherepanov <cas@altlinux.org> 2.14.3-alt2
+- Added support for python3-module-resolvelib 0.9.0 (ALT #44728).
+
 * Thu Mar 02 2023 Andrey Cherepanov <cas@altlinux.org> 2.14.3-alt1
 - New version.
 - Real removed ansible-test (ALT #45456).
