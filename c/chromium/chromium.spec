@@ -35,7 +35,7 @@
 
 Name:           chromium
 Version:        110.0.5481.177
-Release:        alt1
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -94,10 +94,8 @@ Patch024: 0024-GCC-fix-selection-of-IMMEDIATE_CRASH.patch
 Patch025: 0025-Support-VA-API-on-Linux-Ozone-Wayland.patch
 Patch026: 0026-Move-the-Stack-object-from-ThreadLocalTop-to-Isolate.patch
 Patch027: 0027-Fix-construction-of-mesa-distribution.patch
-Patch028: 0028-Disable-various-compiler-configs.patch
-Patch029: 0029-GENTOO-InkDropHost-crash.patch
-Patch030: 0030-GENTOO-EnumTable-crash.patch
-Patch031: 0031-GENTOO-chromium-use-oauth2-client-switches-as-defaul.patch
+Patch028: 0028-GENTOO-InkDropHost-crash.patch
+Patch029: 0029-GENTOO-EnumTable-crash.patch
 ### End Patches
 
 BuildRequires: /proc
@@ -517,6 +515,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Mar 01 2023 Alexey Gladkov <legion@altlinux.ru> 110.0.5481.177-alt2
+- Bring back compiler optimizations (ALT#45454).
+
 * Thu Feb 23 2023 Alexey Gladkov <legion@altlinux.ru> 110.0.5481.177-alt1
 - New version (110.0.5481.177).
 - Fix crach in autofill (ALT#45269).
