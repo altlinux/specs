@@ -1,24 +1,27 @@
 %define _unpackaged_files_terminate_build 1
 %define oname avro
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.7.7
-Release: alt2
+Version: 1.11.1
+Release: alt1
 
 Summary: Avro is a serialization and RPC framework
-License: ASLv2.0
+License: Apache-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/avro/
-BuildArch: noarch
 
 Source: %name-%version.tar
 
+BuildArch: noarch
+
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-setuptools
-BuildRequires: python3-module-snappy python-tools-2to3
+%if_with check
+BuildRequires: python3-module-pytest
+%endif
 
 %py_provides %oname
-
 
 %description
 Apache Avro(tm) is a data serialization system.
@@ -34,14 +37,29 @@ Avro provides:
   protocols. Code generation as an optional optimization, only worth
   implementing for statically typed languages.
 
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
+
+%description tests
+Apache Avro(tm) is a data serialization system.
+
+Avro provides:
+
+* Rich data structures.
+* A compact, fast, binary data format.
+* A container file, to store persistent data.
+* Remote procedure call (RPC).
+* Simple integration with dynamic languages. Code generation is not
+  required to read or write data files nor to use or implement RPC
+  protocols. Code generation as an optional optimization, only worth
+  implementing for statically typed languages.
+
+This package contains tests for %oname.
+
 %prep
 %setup
-
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-2to3 -w -n ./scripts/%oname
-
-sed -i 's|#!.*/usr/bin/env python|#!/usr/bin/env python3|' \
-    ./scripts/%oname
 
 %build
 %python3_build_debug
@@ -50,18 +68,26 @@ sed -i 's|#!.*/usr/bin/env python|#!/usr/bin/env python3|' \
 %python3_install
 
 %check
-export PYTHONPATH=$PWD/src
-
-python3 setup.py test
-#py.test-%_python3_version -vv
+export PYTHONPATH=%buildroot%python3_sitelibdir
+# test_server_with_path: tries to connect to apache.org
+py.test-3 -k 'not test_server_with_path'
 
 %files
 %doc PKG-INFO
-%_bindir/*
-%python3_sitelibdir/*
+%_bindir/%oname
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
+%exclude %python3_sitelibdir/%oname/test
+
+%files tests
+%python3_sitelibdir/%oname/test
+%doc PKG-INFO
 
 
 %changelog
+* Wed Mar 01 2023 Anton Vyatkin <toni@altlinux.org> 1.11.1-alt1
+- new version 1.11.1
+
 * Mon Oct 28 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.7.7-alt2
 - python2 -> python3
 
