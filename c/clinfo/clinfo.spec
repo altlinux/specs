@@ -1,5 +1,5 @@
 Name: clinfo
-Version: 3.0.21.02.21
+Version: 3.0.23.01.25
 Release: alt1
 
 Summary: Enumerate OpenCL platforms and devices
@@ -42,6 +42,10 @@ install -Dpm0644 man1/%name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1*
 
 %changelog
+* Thu Mar 02 2023 L.A. Kostis <lakostis@altlinux.ru> 3.0.23.01.25-alt1
+- NMU:
+  + Updated to 3.0.23.01.25.
+
 * Tue May 04 2021 L.A. Kostis <lakostis@altlinux.ru> 3.0.21.02.21-alt1
 - NMU:
   + Updated to 3.0.21.02.21.
