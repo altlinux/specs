@@ -1,15 +1,13 @@
-%define git %nil
-
 Name: nvme
-Version: 1.15
+Version: 2.3
 Release: alt1
-Summary: Core nvme tools
-License: GPL-2
+Summary: NVM-Express user space tooling for Linux
+License: GPL-2.0+
 Group: System/Configuration/Hardware
 Url: https://github.com/linux-nvme/nvme-cli/
-Source: nvme-%version.tar
-Provides: nvme-cli
-BuildRequires: libuuid-devel libjson-c-devel
+Source: %name-%version.tar
+BuildRequires(pre): meson
+BuildRequires: libjson-c-devel libnvme-devel zlib-devel
 Requires(post): util-linux
 
 %description
@@ -39,16 +37,14 @@ Zsh completion for %name.
 %setup
 
 %build
-# subst 's,$(NVME_VERSION),%%version-g%%{git},' Makefile
-CFLAGS="%optflags" \
-%make_build
+%meson \
+   -D docs=man \
+   -D udevrulesdir=%_udevrulesdir \
+   -D systemddir=/lib/systemd/system
+%meson_build
 
 %install
-%make install \
-   DESTDIR=%buildroot \
-   UDEVRULESDIR=%_udevrulesdir \
-   SYSTEMDDIR=/lib/systemd \
-   PREFIX=/usr
+%meson_install
 touch %buildroot%_sysconfdir/%name/{hostnqn,hostid}
 
 %files
@@ -69,11 +65,18 @@ touch %buildroot%_sysconfdir/%name/{hostnqn,hostid}
 
 %post
 if [ $1 = 1 ]; then # 1 : This package is being installed for the first time
-                uuidgen > /etc/nvme/hostid
-		nvme gen-hostnqn > /etc/nvme/hostnqn
+	uuidgen > /etc/nvme/hostid
+	nvme gen-hostnqn > /etc/nvme/hostnqn
 fi
 
 %changelog
+* Thu Mar 02 2023 L.A. Kostis <lakostis@altlinux.ru> 2.3-alt1
+- First build of 2.x version for ALTLinux.
+
+* Sun Apr 17 2022 L.A. Kostis <lakostis@altlinux.ru> 1.16-alt1
+- 1.16.
+- last release for legacy branch.
+
 * Wed Nov 10 2021 L.A. Kostis <lakostis@altlinux.ru> 1.15-alt1
 - 1.15 (closes #41284).
 
