@@ -1,11 +1,11 @@
 Name: arm-none-eabi-gdb
-Version: 12.1
+Version: 13.1
 Release: alt1
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
 Group: Development/Debuggers
-Url: https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads
+Url: https://www.sourceware.org/gdb/
 
 Source: %name-%version-%release.tar
 
@@ -59,5 +59,8 @@ mkdir -p %buildroot%_libexecdir/%target/share/gdb/auto-load
 %_libexecdir/%target/share/gdb/auto-load
 
 %changelog
+* Thu Mar 02 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 13.1-alt1
+- 13.1 released
+
 * Fri Feb  3 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 12.1-alt1
 - initial
