@@ -2,8 +2,8 @@
 %define oname mozinfo
 
 Name: python3-module-%oname
-Version: 1.2.1
-Release: alt2
+Version: 1.2.2
+Release: alt1
 
 Summary: Library to get system information for use in Mozilla testing
 License: MPL
@@ -15,10 +15,10 @@ Source: %oname-%version.tar
 Patch0: fix-detect-dist.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-mozfile python-tools-2to3
+
+Requires: python3-module-six
 
 Conflicts: python-module-%oname
-
 
 %description
 Library to get system information for use in Mozilla testing.
@@ -27,24 +27,23 @@ Library to get system information for use in Mozilla testing.
 %setup -q -n %{oname}-%{version}
 %patch0 -p2
 
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 %build
 %python3_build_debug
 
 %install
 %python3_install
 
-%check
-# %%__python3 setup.py test
-
 %files
 %doc PKG-INFO
-%_bindir/*
-%python3_sitelibdir/*
+%_bindir/%oname
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 
 %changelog
+* Wed Mar 01 2023 Anton Vyatkin <toni@altlinux.org> 1.2.2-alt1
+- new version 1.2.2
+
 * Mon Mar 16 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.2.1-alt2
 - Detect dist fixed.
 
