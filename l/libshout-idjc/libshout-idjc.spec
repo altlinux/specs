@@ -6,12 +6,12 @@
 
 Name:		libshout-idjc
 Version:	2.4.3
-Release:	alt1_2
+Release:	alt1_3
 Summary:	Libshout with extensions for IDJC
 Group:          System/Libraries
 License:        LGPL-2.1+
 URL:            https://sourceforge.net/projects/libshoutidjc.idjc.p/
-Source0:	http://downloads.sf.net/libshoutidjc.idjc.p/libshout-idjc-%{version}.tar.gz
+Source0:	https://downloads.sf.net/libshoutidjc.idjc.p/libshout-idjc-%{version}.tar.gz
 BuildRequires:	pkgconfig(theora)
 BuildRequires:	pkgconfig(ogg)
 BuildRequires:	pkgconfig(vorbis)
@@ -33,8 +33,8 @@ This is a modified version of libshout, with extensions for IDJC.
 Summary:	Development files for libshout with extensions for IDJC
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}-devel = %{version}-%{release}
 Provides:	shout-idjc-devel = %{version}-%{release}
+Conflicts: libshout2-devel
 
 %description -n %{devname}
 Libshout-idjc is a modified version of libshout, with extensions for IDJC.
@@ -71,6 +71,9 @@ rm -rf %{buildroot}%{_libdir}/ckport/
 
 
 %changelog
+* Thu Mar 02 2023 Igor Vlasenko <viy@altlinux.org> 2.4.3-alt1_3
+- added conflict (closes: #45452)
+
 * Sun Jan 02 2022 Igor Vlasenko <viy@altlinux.org> 2.4.3-alt1_2
 - update by mgaimport
 
