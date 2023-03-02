@@ -6,7 +6,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 8.3.0
+Version: 8.3.1
 Release: alt1
 
 Summary: Sort lists naturally
@@ -111,6 +111,9 @@ tox.py3 --sitepackages -p auto -o -rv
 
 
 %changelog
+* Thu Mar 02 2023 Grigory Ustinov <grenka@altlinux.org> 8.3.1-alt1
+- Automatically updated to 8.3.1.
+
 * Tue Feb 28 2023 Grigory Ustinov <grenka@altlinux.org> 8.3.0-alt1
 - Automatically updated to 8.3.0.
 - Build withoutt docs.
