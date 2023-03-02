@@ -1,7 +1,7 @@
 %define  oname eradicate
 
 Name:    python3-module-%oname
-Version: 2.1.0
+Version: 2.2.0
 Release: alt1
 
 Summary: Removes commented-out code from Python files
@@ -18,7 +18,6 @@ Source:  %name-%version.tar
 BuildRequires(pre): rpm-build-python3
 
 Conflicts: python-module-%oname
-
 
 %description
 With modern revision control available, there is no reason to save
@@ -43,6 +42,9 @@ which is valid Python syntax, but is probably not code.)
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 02 2023 Grigory Ustinov <grenka@altlinux.org> 2.2.0-alt1
+- Automatically updated to 2.2.0.
+
 * Mon May 23 2022 Grigory Ustinov <grenka@altlinux.org> 2.1.0-alt1
 - Automatically updated to 2.1.0.
 
