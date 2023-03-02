@@ -2,7 +2,7 @@
 
 Name:           python3-module-%{modname}
 Version:        0.8.1
-Release:        alt3
+Release:        alt4
 Summary:        Simple generic functions (similar to Python's own len(), pickle.dump(), etc.)
 
 Group:          Development/Python3
@@ -13,7 +13,6 @@ Source0:        %{modname}-%{version}.zip
 BuildArch:      noarch
 BuildRequires:  unzip
 BuildRequires:  rpm-build-python3
-BuildRequires:  python-tools-2to3
 
 %description
 The simplegeneric module lets you define simple single-dispatch generic
@@ -25,7 +24,6 @@ and other generic functions found in the Python standard library.
 %prep
 %setup -n %{modname}-%{version}
 
-    2to3 --write --nobackups .
     sed -i "s/file(/open(/g" setup.py
 find . -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
 
@@ -45,6 +43,9 @@ PYTHONPATH=$(pwd) %{__python3} setup.py test
 %{python3_sitelibdir}/simplegeneric-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Mar 02 2023 Anton Vyatkin <toni@altlinux.org> 0.8.1-alt4
+- (NMU) Fix BuildRequires, drop 2to3
+
 * Thu Jun 16 2022 Grigory Ustinov <grenka@altlinux.org> 0.8.1-alt3
 - Fixed FTBFS.
 
