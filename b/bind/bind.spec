@@ -24,8 +24,8 @@
 %endif
 
 Name: bind
-Version: 9.16.37
-%define src_version 9.16.37
+Version: 9.16.38
+%define src_version 9.16.38
 Release: alt1
 
 Summary: ISC BIND - DNS server
@@ -69,7 +69,6 @@ Patch0005: 0005-ALT-tests-Unchroot-named-for-tests.patch
 Patch0006: 0006-ALT-tests-Add-tests-for-signing-with-custom-OpenSSL.patch
 Patch0007: 0007-ALT-tests-Raise-expected-delta-time-for-cds.patch
 Patch0008: 0008-ALT-tests-Wait-up-to-30sec-for-the-server-start.patch
-Patch0009: 0009-Fix-feature-detection-for-pytest-markers-in-tests.patch
 
 %if_with docs
 BuildRequires: python3(sphinx)
@@ -547,6 +546,9 @@ fi
 %endif
 
 %changelog
+* Wed Mar 01 2023 Stanislav Levin <slev@altlinux.org> 9.16.38-alt1
+- 9.16.37 -> 9.16.38.
+
 * Wed Jan 25 2023 Stanislav Levin <slev@altlinux.org> 9.16.37-alt1
 - 9.16.36 -> 9.16.37 (fixes: CVE-2022-3094, CVE-2022-3736, CVE-2022-3924).
 
