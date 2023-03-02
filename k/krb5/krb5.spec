@@ -8,7 +8,7 @@
 %def_enable check
 
 Name: krb5
-Version: 1.19.4
+Version: 1.20.1
 Release: alt1
 
 %if_without bootstrap
@@ -40,7 +40,6 @@ Patch129: krb5-1.11-fedora-run_user_0.patch
 
 # alt patches:
 Patch200: krb5-1.18-alt-default_keytab_group.patch
-Patch201: krb5-1.19.1-alt-fix-zero-backlog-listen.patch
 
 BuildRequires: /dev/pts /proc
 BuildRequires: flex libcom_err-devel libkeyutils-devel
@@ -204,7 +203,6 @@ MIT Kerberos.
 %patch129 -p1 -b .run_user_0
 
 %patch200 -p2 -b .default_keytab_group
-%patch201 -p1
 
 # Generate an FDS-compatible LDIF file.
 inldif=src/plugins/kdb/ldap/libkdb_ldap/kerberos.ldif
@@ -519,6 +517,9 @@ fi
 # {{{ changelog
 
 %changelog
+* Mon Nov 21 2022 Ivan A. Melnikov <iv@altlinux.org> 1.20.1-alt1
+- 1.20.1
+
 * Wed Nov 16 2022 Ivan A. Melnikov <iv@altlinux.org> 1.19.4-alt1
 - 1.19.4 (Fixes: CVE-2022-42898)
 

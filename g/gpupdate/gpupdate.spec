@@ -31,8 +31,8 @@
 %add_python3_req_skip util.xml
 
 Name: gpupdate
-Version: 0.9.12.2
-Release: alt2
+Version: 0.9.12.3
+Release: alt1
 
 Summary: GPT applier
 License: GPLv3+
@@ -46,6 +46,7 @@ BuildRequires: rpm-build-python3
 BuildRequires: gettext-tools
 Requires: python3-module-rpm
 Requires: python3-module-dbus
+Requires: python3-module-configobj
 Requires: oddjob-%name >= 0.2.0
 Requires: libnss-role >= 0.5.0
 Requires: local-policy >= 0.4.9
@@ -181,6 +182,11 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Tue Feb 28 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.9.12.3-alt1
+- Add support of set copyied files to be executed by paths and suffixes (extensions).
+- Add support of saving comments in ini files.
+- Add support samba-4.17 python interface for gp.gpclass instead of gpclass.
+
 * Thu Dec 29 2022 Valery Sinelnikov <greh@altlinux.org> 0.9.12.2-alt2
 - Fixed a typo in cifs_applier.py
 
