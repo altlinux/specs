@@ -1,6 +1,6 @@
 Name: alsa-ucm-conf
 Version: 1.2.8
-Release: alt4
+Release: alt5
 
 Summary: Advanced Linux Sound Architecture (ALSA) Use Case Manager data
 License: BSD-3-Clause
@@ -15,6 +15,7 @@ Patch10: 0010-rt5631-add-headset-support.patch
 Patch11: 0011-wm8903-replace-amic-control-element.patch
 Patch12: 0012-ucm2-sof-essx8336-HiFi_fix_disdevall_and_EN_headset.patch
 Patch13: 0013-ucm2-sof-essx8336-add-inv-headset-detect-near-DMic.patch
+Patch20: 0020-amd-acp3x-essx8336-add-support-for-a-new-driver.patch
 
 BuildArch: noarch
 
@@ -33,6 +34,7 @@ in a standalone repository.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch20 -p1
 
 %build
 
@@ -45,6 +47,9 @@ cp -at %buildroot%alsadata -- ucm*
 %doc LICENSE
 
 %changelog
+* Thu Mar 02 2023 Vasiliy Kovalev <kovalev@altlinux.org> 1.2.8-alt5
+- amd-acp3x-essx8336: add support for a new driver
+
 * Mon Dec 19 2022 Vasiliy Kovalev <kovalev@altlinux.org> 1.2.8-alt4
 - sof-essx8336: add inverse headset detection without DMic conflict
 
