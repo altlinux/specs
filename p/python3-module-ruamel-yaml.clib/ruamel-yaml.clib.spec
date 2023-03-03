@@ -1,5 +1,5 @@
 Name:     python3-module-ruamel-yaml.clib
-Version:  0.2.6
+Version:  0.2.7
 Release:  alt1
 
 Summary:  C version of reader, parser and emitter for ruamel.yaml derived from libyaml
@@ -36,5 +36,8 @@ a ruamel directory) and the Python code for ruamel.yaml under /usr/lib/pythonX.Y
 %python3_sitelibdir/ruamel.yaml.clib-%version-py%_python3_version.egg-info
 
 %changelog
+* Fri Mar 03 2023 Grigory Ustinov <grenka@altlinux.org> 0.2.7-alt1
+- Automatically updated to 0.2.7.
+
 * Fri Jul 29 2022 Grigory Ustinov <grenka@altlinux.org> 0.2.6-alt1
 - Initial build for Sisyphus.
