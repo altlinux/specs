@@ -1,22 +1,25 @@
 %define oname fanstatic
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 1.0
-Release: alt3
+Version: 1.3
+Release: alt1
 Summary: Flexible static resources for web applications
-License: BSD
+License: BSD-3-Clause
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/fanstatic/
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Url: https://pypi.org/project/fanstatic/
+VCS: https://github.com/fanstatic/fanstatic/
 
 Source: %name-%version.tar
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
-BuildRequires: python3-module-sphinx /usr/bin/2to3
-
-%py3_requires shutilwhich
+BuildRequires: python3-module-sphinx
+%if_with check
+BuildRequires: python3-module-webob
+%endif
 
 %description
 Fanstatic is a smart static resource publisher for Python. For more
@@ -52,15 +55,13 @@ This package contains pickles for fanstatic.
 ln -s ../objects.inv doc/
 
 %build
-export LC_ALL=en_US.UTF-8
-
-find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 
 %install
-export LC_ALL=en_US.UTF-8
-
 %python3_install
+
+%check
+%tox_check -- -k "not test_library_registry"
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make SPHINXBUILD=sphinx-build-3 -C doc html
@@ -69,18 +70,23 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/fanstatic/
 
 %files
-%doc *.txt
+%doc LICENSE.txt *.rst
 %_bindir/fanstatic-compile
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 %exclude %python3_sitelibdir/*/pickle
 
 %files docs
 %doc doc/_build/html/*
 
 %files pickles
+%dir %python3_sitelibdir/%oname
 %python3_sitelibdir/*/pickle
 
 %changelog
+* Fri Mar 03 2023 Anton Vyatkin <toni@altlinux.org> 1.3-alt1
+- new version 1.3
+
 * Mon Jun 07 2021 Grigory Ustinov <grenka@altlinux.org> 1.0-alt3
 - Drop python2 support.
 
