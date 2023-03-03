@@ -2,7 +2,7 @@
 %define _name discid
 
 Name: lib%_name
-Version: 0.6.3
+Version: 0.6.4
 Release: alt1
 
 Summary: A Library for creating MusicBrainz DiscIDs
@@ -40,6 +40,7 @@ Static libs for building statically linked software that uses %name.
 %setup
 
 %build
+%add_optflags %(getconf LFS_CFLAGS)
 %configure %{subst_enable static}
 %make_build
 
@@ -62,6 +63,9 @@ Static libs for building statically linked software that uses %name.
 
 
 %changelog
+* Fri Mar 03 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.4-alt1
+- 0.6.4
+
 * Wed Mar 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.3-alt1
 - 0.6.3
 - fixed License tag
