@@ -23,7 +23,7 @@
 %def_disable check
 
 Name: libgtk+3
-Version: %ver_major.36
+Version: %ver_major.37
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -320,7 +320,7 @@ xvfb-run %__meson_test -v --print-errorlogs
 %fulllibpath/immodules/im-viqr.so
 %fulllibpath/immodules/im-multipress.so
 %fulllibpath/immodules/im-wayland.so
-%fulllibpath/immodules/im-waylandgtk.so
+#%fulllibpath/immodules/im-waylandgtk.so
 %fulllibpath/immodules/im-xim.so
 %{?_enable_broadway:%fulllibpath/immodules/im-broadway.so}
 %dir %fulllibpath/printbackends
@@ -438,6 +438,9 @@ xvfb-run %__meson_test -v --print-errorlogs
 %exclude %_man1dir/gtk-update-icon-cache*
 
 %changelog
+* Fri Mar 03 2023 Yuri N. Sedunov <aris@altlinux.org> 3.24.37-alt1
+- 3.24.37
+
 * Fri Dec 23 2022 Yuri N. Sedunov <aris@altlinux.org> 3.24.36-alt1
 - 3.24.36 (ported to Meson build system)
 
