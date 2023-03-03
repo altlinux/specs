@@ -3,7 +3,7 @@
 Name: ansible-core
 Summary: A radically simple IT automation system
 Version: 2.14.3
-Release: alt2
+Release: alt3
 
 Group:   System/Configuration/Other
 License: GPL-3.0
@@ -32,6 +32,7 @@ BuildRequires: python3-module-resolvelib
 Requires: ca-certificates >= 2015.10.29
 %py3_requires yaml
 %py3_requires paramiko
+%py3_requires resolvelib
 
 # Skip findreq on all modules:
 %add_findreq_skiplist %python3_sitelibdir/%rname/modules/*
@@ -84,6 +85,9 @@ rm -rf %buildroot%python3_sitelibdir/ansible_test
 %python3_sitelibdir/%{rname}*
 
 %changelog
+* Fri Mar 03 2023 Andrey Cherepanov <cas@altlinux.org> 2.14.3-alt3
+- ansible-galaxy requires python3(resolvelib).
+
 * Thu Mar 02 2023 Andrey Cherepanov <cas@altlinux.org> 2.14.3-alt2
 - Added support for python3-module-resolvelib 0.9.0 (ALT #44728).
 
