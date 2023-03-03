@@ -1,5 +1,5 @@
 Name: corectrl
-Version: 1.3.2
+Version: 1.3.3
 Release: alt1
 Summary: Core control application
 Group: System/Configuration/Hardware
@@ -13,7 +13,7 @@ Source2: %name.control
 BuildRequires(pre): cmake
 # Automatically added by buildreq on Sun Oct 02 2022
 BuildRequires: libbotan-devel libdbus-devel libdrm-devel libpolkit-devel qt5-charts-devel qt5-svg-devel qt5-tools-devel quazip-qt5-devel
-BuildRequires: libfmt-devel >= 5.0, libpugixml-devel >= 1.11
+BuildRequires: libfmt-devel >= 5.0, libpugixml-devel >= 1.11 ctest
 
 %description
 CoreCtrl is a Free and Open Source GNU/Linux application that allows you to
@@ -28,8 +28,13 @@ find . -name CMakeLists.txt -exec sed -i -e 's/stdc++fs/stdc++/g' {} \;
 
 %build
 %cmake \
+  -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+  -DBUILD_TESTING=TRUE \
   -DWITH_PCI_IDS_PATH=%_datadir/hwdatabase/pci.ids
 %cmake_build
+
+%check
+make -C "%_cmake__builddir" test
 
 %install
 %cmake_install
@@ -66,6 +71,11 @@ fi
 %_datadir/polkit-1/actions/org.%name.*.policy
 
 %changelog
+* Fri Mar 03 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.3-alt1
+- 1.3.3.
+- Enable tests.
+- Disable debug flags for build.
+
 * Mon Feb 20 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.2-alt1
 - 1.3.2.
 - Use system fmt, pugixml.
