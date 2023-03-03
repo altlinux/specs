@@ -1,13 +1,15 @@
 %def_without java
-%def_with    php
+%def_with php
 %def_without perl
-%def_with    python
+%def_with python
 %def_without wsf
 %def_without tests
 
+%define soname 3
+
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
-Version: 2.7.0
+Version: 2.8.1
 Release: alt1
 License: GPLv2+
 Group:   System/Libraries
@@ -55,12 +57,13 @@ standards, including the SAML and SAML2 specifications. It allows to
 handle the whole life-cycle of SAML based Federations, and provides
 bindings for multiple languages.
 
-%package -n lib%name
+%package -n lib%name%soname
 Summary: Liberty Alliance Single Sign On
 Group:   System/Libraries
 Provides: %name = %version-%release
+Provides: lib%name = %version-%release
 
-%description -n lib%name
+%description -n lib%name%soname
 Lasso is a library that implements the Liberty Alliance Single Sign On
 standards, including the SAML and SAML2 specifications. It allows to
 handle the whole life-cycle of SAML based Federations, and provides
@@ -70,7 +73,7 @@ bindings for multiple languages.
 Summary: Lasso development headers and documentation
 Group:   Development/C
 Provides: %name-devel = %version-%release
-Requires: lib%name = %version-%release
+Requires: lib%name%soname = %version-%release
 
 %description -n lib%name-devel
 This package contains the header files, static libraries and development
@@ -81,7 +84,7 @@ documentation for Lasso.
 Summary: Liberty Alliance Single Sign On (lasso) Perl bindings
 Group:   Development/Perl
 Provides: %name-perl %version-%release
-Requires: lib%name = %version-%release
+Requires: lib%name%soname = %version-%release
 
 %description -n perl-%name
 Perl language bindings for the lasso (Liberty Alliance Single Sign On)
@@ -92,7 +95,7 @@ library.
 %package java
 Summary: Liberty Alliance Single Sign On (lasso) Java bindings
 Group:   Development/Java
-Requires: lib%name = %version-%release
+Requires: lib%name%soname = %version-%release
 
 %description java
 Java language bindings for the lasso (Liberty Alliance Single Sign On)
@@ -104,7 +107,7 @@ library.
 Summary: Liberty Alliance Single Sign On (lasso) PHP bindings
 Group:   System/Servers
 Provides: %name-php = %version-%release
-Requires: lib%name = %version-%release
+Requires: lib%name%soname = %version-%release
 
 %description -n php7-%name
 PHP language bindings for the lasso (Liberty Alliance Single Sign On)
@@ -116,7 +119,7 @@ library.
 Summary: Liberty Alliance Single Sign On (lasso) Python bindings
 Group:   Development/Python
 Provides: %name-python = %version-%release
-Requires: lib%name = %version-%release
+Requires: lib%name%soname = %version-%release
 
 %description -n python3-module-%name
 Python language bindings for the lasso (Liberty Alliance Single Sign On)
@@ -127,36 +130,36 @@ library.
 %setup -q -n %{name}-%{version}
 # %%patch1 -p2
 # %%patch2 -p1
+sed -i 's|echo $VERSION |echo %version |' configure.ac
+sed -i 's|@VERSION@|%version|' lasso.pc.in
 
 %build
-cp -at . -- /usr/share/gnu-config/config.{sub,guess}
 %add_optflags -fPIC
-# %%autoreconf
-./autogen.sh
+%autoreconf
 %configure \
-%if_without java
-           --disable-java \
+%if_with java
+  --enable-java \
 %endif
 %if_without python
-           --disable-python \
+  --disable-python \
 %endif
 %if_without perl
-           --disable-perl \
+  --disable-perl \
 %endif
 %if_with php
-           --enable-php7=yes \
-           --with-php7-config-dir=%php_sysconfdir \
+  --enable-php7=yes \
+  --with-php7-config-dir=%php_sysconfdir \
 %else
-           --enable-php7=no \
+  --enable-php7=no \
 %endif
 %if_with wsf
-           --enable-wsf \
-           --with-sasl2=%_prefix/sasl2 \
+  --enable-wsf \
+  --with-sasl2=%_prefix/sasl2 \
 %endif
 %if_with tests
-           --enable-tests
+  --enable-tests
 %endif
-#           --with-html-dir=%{_datadir}/gtk-doc/html
+# --with-html-dir=%{_datadir}/gtk-doc/html
 
 %make_build
 
@@ -165,6 +168,10 @@ cp -at . -- /usr/share/gnu-config/config.{sub,guess}
 
 find %buildroot -type f -name '*.la' -delete
 find %buildroot -type f -name '*.a' -delete
+
+# %%_includedir/lasso/keyprivate.h:
+# fatal error: xml/private.h: No such file or directory
+install -m 644 lasso/xml/private.h %buildroot%_includedir/%name/xml/
 
 # Perl subpackage
 %if_with perl
@@ -200,9 +207,9 @@ export LD_LIBRARY_PATH=%_builddir/%buildsubdir/lasso/.libs
 make check
 %endif
 
-%files -n lib%name
+%files -n lib%name%soname
 %doc AUTHORS COPYING NEWS README
-%_libdir/liblasso.so.*
+%_libdir/liblasso.so.%{soname}*
 
 %files -n lib%name-devel
 %_libdir/lib%name.so
@@ -235,6 +242,9 @@ make check
 %endif
 
 %changelog
+* Fri Mar 03 2023 Leontiy Volodin <lvol@altlinux.org> 2.8.1-alt1
+- New version.
+
 * Mon Jul 12 2021 Leontiy Volodin <lvol@altlinux.org> 2.7.0-alt1
 - New version.
 - Upstream:
