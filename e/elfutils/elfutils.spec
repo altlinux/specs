@@ -1,6 +1,6 @@
 Name: elfutils
-Version: 0.188
-Release: alt2
+Version: 0.189
+Release: alt1
 
 Summary: A collection of utilities and DSOs to handle ELF files and DWARF data
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -371,6 +371,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Mar 03 2023 Dmitry V. Levin <ldv@altlinux.org> 0.189-alt1
+- elfutils-0.188 -> elfutils-0.189.
+
 * Sat Feb 18 2023 Dmitry V. Levin <ldv@altlinux.org> 0.188-alt2
 - Backported upstream commits to fix FTBFS with new curl.
 
