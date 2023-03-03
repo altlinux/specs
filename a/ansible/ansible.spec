@@ -1,7 +1,7 @@
 Name: ansible
 Summary: SSH-based configuration management, deployment, and task execution system
 Version: 2.9.27
-Release: alt2
+Release: alt3
 
 Group:   System/Configuration/Other
 License: GPL-3.0
@@ -34,6 +34,7 @@ Requires: ca-certificates >= 2015.10.29
 
 %py3_requires yaml
 %py3_requires paramiko
+%py3_requires resolvelib
 
 # Skip findreq on all modules:
 %add_findreq_skiplist %python3_sitelibdir/%name/modules/*
@@ -95,6 +96,9 @@ grep -Rl '^#!.*python$' %buildroot | xargs subst 's|^#!.*python$|#!%__python3|'
 %doc README.rst changelogs/CHANGELOG-v*.rst CODING_GUIDELINES.md MODULE_GUIDELINES.md
 
 %changelog
+* Fri Mar 03 2023 Andrey Cherepanov <cas@altlinux.org> 2.9.27-alt3
+- ansible-galaxy requires python3(resolvelib).
+
 * Sun Feb 19 2023 Andrey Cherepanov <cas@altlinux.org> 2.9.27-alt2
 - Updated apt_repo and apt_rpm from upstream and PR #5867).
 
