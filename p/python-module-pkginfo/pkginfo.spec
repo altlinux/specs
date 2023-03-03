@@ -1,13 +1,13 @@
 %define oname pkginfo
 
 %def_with python3
-%def_disable check
+%def_with check
 
 Name: python-module-%oname
-Version: 1.2
-Release: alt3
+Version: 1.9.6
+Release: alt1
 Summary: Query metadatdata from sdists / bdists / installed packages
-License: Python
+License: MIT
 Group: Development/Python
 Url: https://pypi.python.org/pypi/pkginfo/
 
@@ -17,9 +17,12 @@ BuildArch: noarch
 BuildRequires: python-modules-wsgiref
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-coverage python3-module-nose python3-module-pytest
-BuildPreReq: python-tools-2to3
 %endif
+%if_with check
+BuildRequires: python3-module-pytest-cov
+%endif
+
+%add_python_req_skip configparser
 
 %description
 This package provides an API for querying the distutils metadata written
@@ -105,7 +108,6 @@ This package contains documentation for %oname.
 
 %if_with python3
 cp -fR . ../python3
-find ../python3 -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %endif
 
 %build
@@ -132,12 +134,7 @@ popd
 %python_install
 
 %check
-python setup.py test
-%if_with python3
-pushd ../python3
-python3 setup.py test
-popd
-%endif
+%tox_check
 
 %files
 %doc *.txt
@@ -163,6 +160,11 @@ popd
 %endif
 
 %changelog
+* Thu Mar 02 2023 Anton Vyatkin <toni@altlinux.org> 1.9.6-alt1
+- (NMU) New version 1.9.6
+- Fix BuildRequires
+- Enable check
+
 * Tue Aug 10 2021 Grigory Ustinov <grenka@altlinux.org> 1.2-alt3
 - Build without docs.
 
