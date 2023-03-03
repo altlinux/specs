@@ -1,6 +1,6 @@
 Name: qt5ct
 Version: 1.7
-Release: alt1
+Release: alt2
 
 Summary: Qt5 Configuration Tool
 Summary(ru_RU.UTF-8): Инструмент для настройки оформления приложений Qt5
@@ -39,6 +39,12 @@ BuildRequires: qt5-webengine-devel
 BuildRequires: qt5-websockets-devel
 BuildRequires: qt5-x11extras-devel
 
+%package -n lib%name-devel
+Summary: Development library for %name
+Summary(ru_RU.UTF-8): Библиотека разработки для %name
+Group: Development/C++
+Requires: %name = %version-%release
+
 %description
 This applications allows users to configure Qt5 settings (theme,
 font, icons, etc.) under DE/WM without Qt integration.
@@ -46,6 +52,12 @@ font, icons, etc.) under DE/WM without Qt integration.
 %description -l ru_RU.UTF-8
 Это приложение позволяет пользователям настраивать параметры Qt5 (тема,
 шрифт, значки и т. д.) в DE / WM без интеграции с Qt.
+
+%description -n lib%name-devel
+Development library %name.
+
+%description -n lib%name-devel -l ru_RU.UTF-8
+Библиотека разработки %name.
 
 %prep
 %setup
@@ -72,10 +84,16 @@ install -Dm 0755 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 %dir %_libdir/qt5/plugins/platformthemes/
 %_libdir/qt5/plugins/platformthemes/lib%name.so
 %_libdir/qt5/plugins/styles/libqt5ct-style.so
-%_libdir/lib%name-common.*
+%_libdir/lib%name-common.so.*
 %_desktopdir/%name.desktop
 
+%files -n lib%name-devel
+%_libdir/lib%name-common.so
+
 %changelog
+* Fri Mar 03 2023 Evgeny Chuck <koi@altlinux.org> 1.7-alt2
+- Fixed packaging in accordance with the Shared Library Policy
+
 * Wed Mar 01 2023 Evgeny Chuck <koi@altlinux.org> 1.7-alt1
 - new version (1.7) with rpmgs script
 - added debug package
