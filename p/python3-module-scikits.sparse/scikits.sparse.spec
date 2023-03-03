@@ -1,26 +1,32 @@
 %define mname sksparse
 %define oname scikits.sparse
 
-%def_disable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 0.4.4
+Version: 0.4.8
 Release: alt1
 
-Summary: Scikits sparse matrix package
-License: GPL
+Summary: Sparse matrix tools extending scipy.sparse, but with incompatible licenses
+License: BSD-2-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/scikits.sparse/
+Url: https://pypi.org/project/scikit-sparse/
+VCS: https://github.com/scikit-sparse/scikit-sparse.git
 
-# https://github.com/njsmith/scikits-sparse.git
 Source: %name-%version.tar
-Patch0: fix-compilation-crash.patch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libsuitesparse-devel gcc-c++
-BuildRequires: libnumpy-py3-devel python-tools-2to3
-BuildRequires: python3-module-Cython python3-module-sphinx
-
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+BuildRequires: python3-module-numpy
+BuildRequires: python3-module-Cython
+BuildRequires: libnumpy-py3-devel
+BuildRequires: libsuitesparse-devel
+BuildRequires: python3-module-sphinx
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-numpy-testing
+%endif
 
 %description
 This is a home for sparse matrix code in Python that plays well with
@@ -61,26 +67,14 @@ This package contains pickles for %oname.
 
 %prep
 %setup
-%patch0 -p1
 
 sed -i 's|sphinx-build|sphinx-build-3|' doc/Makefile
 
-# fix version info
-sed -i \
-	-e "s/git_refnames\s*=\s*\"[^\"]*\"/git_refnames = \" \(tag: v%version\)\"/" \
-	%mname/_version.py
-
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
-sed -i 's|np.get_include()|"./"|' setup.py
-
 %build
-ln -s $(%__python3 -c 'import numpy; print(numpy.get_include()+"/numpy-py3")') numpy
-
-%python3_build_debug
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 export PYTHONPATH=%buildroot%python3_sitelibdir
 %make -C doc pickle
@@ -89,25 +83,31 @@ export PYTHONPATH=%buildroot%python3_sitelibdir
 install -d %buildroot%python3_sitelibdir/%oname
 cp -fR doc/_build/pickle %buildroot%python3_sitelibdir/%oname/
 
+%ifnarch armh %ix86
 %check
-touch %buildroot%python3_sitelibdir/%mname/__init__.py
-%__python3 setup.py test
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3 -ra --pyargs sksparse
+%endif
 
 %files
-%doc README.md doc/_build/html
-%python3_sitelibdir/%mname/*
-%python3_sitelibdir/scikit_sparse-%version-py*.egg-info
-%exclude %python3_sitelibdir/*/pickle
-%exclude %python3_sitelibdir/*/test*
+%doc LICENSE.txt README.md doc/_build/html
+%python3_sitelibdir/%mname
+%python3_sitelibdir/%{pyproject_distinfo scikit_sparse}
+%exclude %python3_sitelibdir/%oname/pickle
+%exclude %python3_sitelibdir/%mname/test*
 
 %files tests
-%python3_sitelibdir/*/test*
+%python3_sitelibdir/%mname/test*
 
 %files pickles
-%python3_sitelibdir/*/pickle
+%dir %python3_sitelibdir/%oname
+%python3_sitelibdir/%oname/pickle
 
 
 %changelog
+* Fri Mar 03 2023 Anton Vyatkin <toni@altlinux.org> 0.4.8-alt1
+- new version 0.4.8
+
 * Thu Jun 11 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.4.4-alt1
 - Version updated to 0.4.4.
 
