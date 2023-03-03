@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: glances
-Version: 3.3.0.4
+Version: 3.3.1.1
 Release: alt1
 
 Summary: CLI curses based monitoring tool
@@ -13,19 +13,19 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
 
-BuildRequires(pre): rpm-build-python3
-
 Requires: python3-module-%name = %EVR
 
 #skip findreq for optional dependencies from exports
 %add_findreq_skiplist %python3_sitelibdir/%name/exports/*.py
 
-%if 0%{?!_without_check:1} && 0%{?!_disable_check:1}
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 BuildRequires: python3-module-defusedxml
 BuildRequires: python3-module-dateutil
+BuildRequires: python3-module-ujson
 BuildRequires: python3-module-psutil
 BuildRequires: /proc
-%endif
 
 
 %description
@@ -49,26 +49,28 @@ Glances uses the PsUtil library to get information from your system.
 %patch0 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %check
 %__python3 setup.py test
 
 %files
+%doc AUTHORS COPYING README.rst NEWS.rst
 %_bindir/glances
 %_man1dir/glances.1*
 %_docdir/glances/
 
 %files -n python3-module-%name
-%doc AUTHORS COPYING README.rst NEWS.rst
-%python3_sitelibdir/%name/
-%python3_sitelibdir/Glances-%version-py%_python3_version.egg-info/
-
+%python3_sitelibdir/glances
+%python3_sitelibdir/Glances-%version.dist-info
 
 %changelog
+* Fri Mar 03 2023 Egor Ignatov <egori@altlinux.org> 3.3.1.1-alt1
+- new version 3.3.1.1
+
 * Sun Nov 06 2022 Egor Ignatov <egori@altlinux.org> 3.3.0.4-alt1
 - new version 3.3.0.4
 
