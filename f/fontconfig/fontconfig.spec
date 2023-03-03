@@ -8,7 +8,7 @@
 
 Name: fontconfig
 Version: 2.14.2
-Release: alt1
+Release: alt2
 
 Summary: Font configuration and customization utilities and library
 Group: System/Configuration/Other
@@ -172,6 +172,9 @@ fi
 %_datadir/gettext/its/fontconfig.*
 
 %changelog
+* Fri Mar 03 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt2
+- prefer Noto fonts
+
 * Tue Feb 07 2023 Sergey V Turchin <zerg@altlinux.org> 2.14.2-alt1
 - new version
 - split library into separate package
