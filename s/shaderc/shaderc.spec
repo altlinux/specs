@@ -1,11 +1,11 @@
 %define sover 1
-%define glslang_ver 11.12.0
-%define spirv_tools_ver 2022.4
+%define glslang_ver 12.0.0
+%define spirv_tools_ver 2023.1
 %def_disable static
 %def_with doc
 
 Name: shaderc
-Version: 2022.3
+Version: 2023.2
 Release: alt0.1
 
 Summary: A collection of tools, libraries and tests for shader compilation 
@@ -89,6 +89,14 @@ echo '"glslang v%glslang_ver v%glslang_ver\\n"' >> %_target_platform/build-versi
 %_bindir/*
 
 %changelog
+* Fri Mar 03 2023 L.A. Kostis <lakostis@altlinux.ru> 2023.2-alt0.1
+- v2023.2.
+- Bump glslang and SPIRV-Tools deps.
+
+* Wed Dec 14 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.4-alt0.1
+- v2022.4.
+- Bump glslang and SPIRV-Tools deps.
+
 * Sat Oct 15 2022 L.A. Kostis <lakostis@altlinux.ru> 2022.3-alt0.1
 - v2022.3.
 

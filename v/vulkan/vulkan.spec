@@ -1,5 +1,5 @@
 Name: vulkan
-Version: 1.3.236
+Version: 1.3.239
 Release: alt1
 Summary: Khronos group Vulkan API SDK
 
@@ -22,9 +22,9 @@ BuildRequires: libImageMagick-devel libpciaccess-devel libsystemd-devel
 BuildRequires: python3-devel libxcb-devel libXau-devel libXdmcp-devel libX11-devel libXrandr-devel
 BuildRequires: wayland-devel libwayland-server-devel libwayland-client-devel libwayland-cursor-devel libwayland-egl-devel
 # strict requires due internal dependency
-BuildRequires: glslang-devel = 11.13.0
-BuildRequires: libspirv-tools-devel = 2022.5-alt0.1.g40f5bf59c
-BuildRequires: spirv-headers >= 2:1.5.5-alt5
+BuildRequires: glslang-devel = 12.0.0
+BuildRequires: libspirv-tools-devel >= 2023.1
+BuildRequires: spirv-headers >= 1.5.5-alt6
 # -layers need it
 BuildRequires: librobin-hood-hashing-devel
 # - tolls need it
@@ -189,6 +189,14 @@ rm -rf %buildroot%_libdir/libVkLayer*.a ||:
 %dir %_datadir/vulkan/implicit_layer.d
 
 %changelog
+* Fri Mar 03 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.239-alt1
+- Bump BR.
+- Updated to sdk-1.3.239:
+  + vulkan-layers: Updated to sdk-1.3.239.
+  + vulkan-headers: Updated to v1.3.239.
+  + vulkan-loader: Updated to v1.3.239.
+  + vulkan-tools: Updated to v1.3.239.
+
 * Tue Dec 13 2022 L.A. Kostis <lakostis@altlinux.ru> 1.3.236-alt1
 - Bump BR.
 - .spec: remove WERROR flag (it's disabled by default now).
