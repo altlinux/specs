@@ -34,7 +34,7 @@
 %def_disable check
 
 Name: gnome-software
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1%beta
 
 Summary: Software manager for GNOME
@@ -64,7 +64,7 @@ Source: %name-%version%beta.tar
 %define malcontent_ver 0.11
 
 %{?_enable_fwupd:Requires: fwupd >= %fwupd_ver}
-%{?_enable_packagekit:Requires: appstream-data}
+%{?_enable_packagekit:Requires: appstream-data gnome-packagekit}
 %{?_enable_malcontent:Requires: malcontent} >= %malcontent_ver
 
 BuildRequires(pre): rpm-macros-meson rpm-build-xdg
@@ -187,6 +187,9 @@ ln -sf %name/libgnomesoftware.so.%plugins_ver \
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Fri Mar 03 2023 Yuri N. Sedunov <aris@altlinux.org> 43.5-alt1
+- 43.5
+
 * Fri Feb 10 2023 Yuri N. Sedunov <aris@altlinux.org> 43.4-alt1
 - 43.4
 
