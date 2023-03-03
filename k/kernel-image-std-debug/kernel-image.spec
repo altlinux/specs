@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel	.96
+%define kernel_sublevel	.98
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -619,6 +619,11 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Fri Mar 03 2023 Kernel Bot <kernelbot@altlinux.org> 2:5.15.98-alt1
+- v5.15.98 (2023-03-03).
+- Fix sync issue for ATOL all-in-one PC in 5.15.
+- Add support for ES8336 codecs on Ryzen machines in 5.15.
+
 * Sat Feb 25 2023 Kernel Bot <kernelbot@altlinux.org> 2:5.15.96-alt1
 - v5.15.96 (2023-02-25).
 
