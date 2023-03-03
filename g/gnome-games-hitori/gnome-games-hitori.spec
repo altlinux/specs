@@ -3,11 +3,11 @@
 
 %define _name hitori
 %define xdg_name org.gnome.Hitori
-%define ver_major 3.38
+%define ver_major 44
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+ application to generate and let you play games of Hitori
@@ -24,11 +24,11 @@ Source: %_name-%version.tar
 Provides:  %_name = %version-%release
 
 %define glib_ver 2.32.0
-%define gtk_ver 3.16.0
+%define gtk_ver 3.22.0
 %define cairo_ver 1.4
 
-BuildRequires(pre): meson
-BuildRequires: yelp-tools desktop-file-utils libappstream-glib-devel
+BuildRequires(pre): rpm-macros-meson
+BuildRequires: meson yelp-tools desktop-file-utils /usr/bin/appstream-util
 BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
 BuildRequires: libcairo-devel >= %cairo_ver
 
@@ -67,6 +67,9 @@ multiple solutions to a Hitori puzzle board.
 %_datadir/metainfo/%xdg_name.appdata.xml
 
 %changelog
+* Fri Mar 03 2023 Yuri N. Sedunov <aris@altlinux.org> 44.0-alt1
+- 44.0
+
 * Mon Apr 04 2022 Yuri N. Sedunov <aris@altlinux.org> 3.38.4-alt1
 - 3.38.4
 
