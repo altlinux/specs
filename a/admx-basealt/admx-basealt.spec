@@ -1,7 +1,7 @@
 %define _destdir %_datadir/PolicyDefinitions
 
 Name: admx-basealt
-Version: 0.1.12.1
+Version: 0.1.12.2
 Release: alt1
 
 Summary: BaseALT-specific ADMX policy templates
@@ -36,6 +36,13 @@ done
 %_destdir
 
 %changelog
+* Fri Mar 03 2023 Valery Sinelnikov <greh@altlinux.org> 0.1.12.2-alt1
+- Added new admx for samba usershare controls
+- Added new group policies for PackageKit polkit actions
+- Added new group policies for Udisks2 polkit actions
+- Add machine policies for drive maps
+- Added file copy mechanism configuration policy
+
 * Thu Dec 29 2022 Evgeny Sinelnikov <sin@altlinux.org> 0.1.12.1-alt1
 - Add user policies for drive maps symlinks in home directory.
 - Add warning when disabling network manager.
