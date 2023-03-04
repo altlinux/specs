@@ -10,7 +10,7 @@
 %def_enable gtk_doc
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A templating library for GLib
@@ -112,6 +112,9 @@ This package contains development documentation for %name
 %endif
 
 %changelog
+* Sat Mar 04 2023 Yuri N. Sedunov <aris@altlinux.org> 3.36.1-alt1
+- 3.36.1
+
 * Wed Sep 21 2022 Yuri N. Sedunov <aris@altlinux.org> 3.36.0-alt1
 - 3.36.0
 
