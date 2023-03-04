@@ -1,14 +1,14 @@
 Name: xfburn
-Version: 0.6.2
+Version: 0.7.0
 Release: alt1
 
 Summary: CD-R/CD-RW disc writing application
-Url: https://docs.xfce.org/apps/xfburn
+Url: https://docs.xfce.org/apps/xfburn/start
 License: GPL-2.0+
 Packager: Xfce Team <xfce@packages.altlinux.org>
 Group: Archiving/Cd burning
 
-Vcs: git://git.xfce.org/apps/xfburn
+Vcs: https://gitlab.xfce.org/apps/xfburn.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -53,6 +53,11 @@ Xfburn is a simple CD burning tool based on libburn/libisofs.
 %_man1dir/*
 
 %changelog
+* Sat Mar 04 2023 Mikhail Efremov <sem@altlinux.org> 0.7.0-alt1
+- Updated Url tag.
+- Updated Vcs tag.
+- Updated to 0.7.0.
+
 * Tue Mar 10 2020 Mikhail Efremov <sem@altlinux.org> 0.6.2-alt1
 - Added Vcs tag.
 - Updated Url.
