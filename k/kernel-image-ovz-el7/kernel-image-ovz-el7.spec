@@ -5,8 +5,8 @@
 %define sub_flavour el7
 %define flavour %base_flavour-%sub_flavour
 
-#     rh7-3.10.0-1160.80.1.vz7.192.4
-%define orelease 1160.80.1.vz7.192.4
+#     rh7-3.10.0-1160.83.1.vz7.194.4
+%define orelease 1160.83.1.vz7.194.4
 
 Name: kernel-image-%flavour
 Version: 3.10.0
@@ -597,6 +597,9 @@ grep beancounter boot.log
 
 
 %changelog
+* Sat Mar 04 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.83.1.vz7.194.4
+- Build rh7-3.10.0-1160.83.1.vz7.194.4
+
 * Thu Feb 16 2023 Andrew A. Vasilyev <andy@altlinux.org> 1:3.10.0-alt4.1160.80.1.vz7.192.4
 - Build rh7-3.10.0-1160.80.1.vz7.192.4
 - Makefile: fix a race with fixdep build
