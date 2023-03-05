@@ -8,7 +8,7 @@
 %def_disable doc
 
 Name: gst-devtools
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GStreamer development and validation tools
@@ -34,7 +34,9 @@ Requires: gst-plugins-base%gst_api_ver
 %add_python3_path %_libdir/gst-validate-launcher/python
 
 BuildRequires(pre): rpm-macros-meson rpm-build-gir rpm-build-python3
-BuildRequires: meson gcc-c++ gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver libxml2-devel
+BuildRequires: meson gcc-c++ gst-plugins%gst_api_ver-devel >= %gst_ver gst-plugins-base%gst_api_ver
+BuildRequires: gst-plugins-bad%gst_api_ver-devel >= %gst_ver libgst-rtsp-server-devel >= %gst_ver
+BuildRequires: libxml2-devel
 BuildRequires: libcairo-devel gobject-introspection-devel gst-plugins%gst_api_ver-gir-devel
 BuildRequires: libjson-glib-devel python3-devel
 %{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
@@ -116,6 +118,8 @@ GObject introspection devel data for the Gst Validate library.
 %_bindir/gst-validate-%api_ver
 %_bindir/gst-validate-media-check-%api_ver
 %_bindir/gst-validate-images-check-%api_ver
+%_bindir/gst-validate-rtsp-server-%api_ver
+%_bindir/gst-validate-transcoding-%api_ver
 %_libdir/gst-validate-launcher/
 %_libdir/gstreamer-%gst_api_ver/lib%{_name}tracer.so
 %_datadir/gstreamer-%gst_api_ver/validate/
@@ -146,6 +150,9 @@ GObject introspection devel data for the Gst Validate library.
 %endif
 
 %changelog
+* Sat Mar 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.1-alt1
+- 1.22.1
+
 * Wed Jan 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
 - 1.22.0
 

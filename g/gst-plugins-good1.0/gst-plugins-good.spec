@@ -9,6 +9,7 @@
 %def_enable jack
 %def_enable pulse
 %def_enable qt5
+%def_enable qt6
 
 %def_disable doc
 %def_disable debug
@@ -19,7 +20,7 @@
 %def_disable check
 
 Name: %_name-good%api_ver
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of GStreamer plugins considered good
@@ -49,6 +50,7 @@ BuildRequires: pkgconfig(libxml-2.0)
 %{?_enable_jack:BuildRequires: libjack-devel}
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 %{?_enable_qt5:BuildRequires: qt5-base-devel qt5-tools qt5-declarative-devel qt5-x11extras-devel qt5-wayland-devel}
+%{?_enable_qt6:BuildRequires: qt6-base-devel qt6-tools-devel qt6-declarative-devel qt6-wayland-devel}
 %{?_enable_doc:BuildRequires: hotdoc gstreamer%api_ver-utils}
 %{?_enable_check:BuildRequires: /proc gstreamer%api_ver %_bindir/gst-tester-%api_ver}
 
@@ -65,6 +67,14 @@ Requires: gst-plugins-base%api_ver >= %version
 
 %description qt5
 This package contains Qt5 GL plugin for Gstreamer.
+
+%package qt6
+Summary: Qt6 plugin for GStreamer
+Group: System/Libraries
+Requires: gst-plugins-base%api_ver >= %version
+
+%description qt6
+This package contains Qt6 Qml plugin for Gstreamer.
 
 
 %package devel-doc
@@ -98,6 +108,7 @@ This package contains development documentation for GStreamer Good Plugins
 %files -f %_name-good-%api_ver.lang
 %_gst_libdir/*.so
 %{?_enable_qt5:%exclude %_gst_libdir/libgstqmlgl.so}
+%{?_enable_qt6:%exclude %_gst_libdir/libgstqml6.so}
 %_gst_datadir/*
 %doc AUTHORS NEWS README* RELEASE
 
@@ -106,12 +117,22 @@ This package contains development documentation for GStreamer Good Plugins
 %_gst_libdir/libgstqmlgl.so
 %endif
 
+%if_enabled qt6
+%files qt6
+%_gst_libdir/libgstqml6.so
+%endif
+
+
 %if_enabled doc
 %files devel-doc
 %_gtk_docdir/*
 %endif
 
 %changelog
+* Sat Mar 04 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.1-alt1
+- 1.22.1
+- new qt6 subpackage
+
 * Wed Jan 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.22.0-alt1
 - 1.22.0
 
