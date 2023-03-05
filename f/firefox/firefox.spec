@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 109.0.1
+Version: 110.0.1
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -12,18 +12,19 @@ Source0: firefox-source.tar
 
 ### Start Patches
 Patch001: 0001-FEDORA-build-arm-libopus.patch
-Patch002: 0002-FEDORA-build-arm.patch
-Patch003: 0003-ALT-Fix-aarch64-build.patch
-Patch004: 0004-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch005: 0005-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch006: 0006-use-floats-for-audio-on-arm-too.patch
-Patch007: 0007-bmo-847568-Support-system-harfbuzz.patch
-Patch008: 0008-bmo-847568-Support-system-graphite2.patch
-Patch009: 0009-bmo-1559213-Support-system-av1.patch
-Patch010: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch011: 0011-ALT-fix-double_t-redefinition.patch
-Patch012: 0012-build-Disable-Werror.patch
-Patch013: 0013-WAYLAND-call-wl_display_roundtrip-early.patch
+Patch002: 0001-Linux-Don-t-hang-Firefox-when-glxtest-process-hangs-.patch
+Patch003: 0002-FEDORA-build-arm.patch
+Patch004: 0003-ALT-Fix-aarch64-build.patch
+Patch005: 0004-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch006: 0005-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
+Patch007: 0006-use-floats-for-audio-on-arm-too.patch
+Patch008: 0007-bmo-847568-Support-system-harfbuzz.patch
+Patch009: 0008-bmo-847568-Support-system-graphite2.patch
+Patch010: 0009-bmo-1559213-Support-system-av1.patch
+Patch011: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch012: 0011-ALT-fix-double_t-redefinition.patch
+Patch013: 0012-build-Disable-Werror.patch
+Patch014: 0013-WAYLAND-call-wl_display_roundtrip-early.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -419,6 +420,32 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Fri Mar 03 2023 Alexey Gladkov <legion@altlinux.ru> 110.0.1-alt1
+- New release (110.0.1).
+
+* Fri Feb 17 2023 Alexey Gladkov <legion@altlinux.ru> 110.0-alt1
+- New release (110.0).
+- Security fixes:
+  + CVE-2023-25728: Content security policy leak in violation reports using iframes
+  + CVE-2023-25730: Screen hijack via browser fullscreen mode
+  + CVE-2023-25743: Fullscreen notification not shown in Firefox Focus
+  + CVE-2023-0767: Arbitrary memory write via PKCS 12 in NSS
+  + CVE-2023-25735: Potential use-after-free from compartment mismatch in SpiderMonkey
+  + CVE-2023-25737: Invalid downcast in SVGUtils::SetupStrokeGeometry
+  + CVE-2023-25738: Printing on Windows could potentially crash Firefox with some device drivers
+  + CVE-2023-25739: Use-after-free in mozilla::dom::ScriptLoadContext::~ScriptLoadContext
+  + CVE-2023-25729: Extensions could have opened external schemes without user knowledge
+  + CVE-2023-25732: Out of bounds memory write from EncodeInputStream
+  + CVE-2023-25734: Opening local .url files could cause unexpected network loads
+  + CVE-2023-25740: Opening local .scf files could cause unexpected network loads
+  + CVE-2023-25731: Prototype pollution when rendering URLPreview
+  + CVE-2023-25733: Possible null pointer dereference in TaskbarPreviewCallback
+  + CVE-2023-25736: Invalid downcast in GetTableSelectionMode
+  + CVE-2023-25741: Same-origin policy leak via image drag and drop
+  + CVE-2023-25742: Web Crypto ImportKey crashes tab
+  + CVE-2023-25744: Memory safety bugs fixed in Firefox 110 and Firefox ESR 102.8
+  + CVE-2023-25745: Memory safety bugs fixed in Firefox 110
+
 * Wed Feb 01 2023 Alexey Gladkov <legion@altlinux.ru> 109.0.1-alt1
 - New release (109.0.1).
 
