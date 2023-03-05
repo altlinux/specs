@@ -3,7 +3,7 @@
 
 Name: 	       pcs
 Epoch:         1
-Version:       0.11.4
+Version:       0.11.5
 Release:       alt1
 Summary:       Pacemaker/Corosync configuration system
 License:       GPL-2.0 and Apache-2.0 and MIT
@@ -62,11 +62,14 @@ BuildRequires: gem-tilt
 BuildRequires: gem-thin
 BuildRequires: gem-rexml
 BuildRequires: gem-webrick
+BuildRequires: gem-childprocess
+BuildRequires: gem-nio4r
+BuildRequires: gem-puma
 BuildRequires: libpacemaker-devel
 BuildRequires: libsystemd-devel
 BuildRequires: wget
 BuildRequires: service
-BuildRequires: gem-childprocess
+BuildRequires: nss-utils
 
 %description
 Pacemaker/Corosync configuration system with remote access
@@ -183,6 +186,9 @@ rm -f %buildroot%_defaultdocdir/pcs/*.md
 %_man8dir/pcs_snmp_agent.*
 
 %changelog
+* Fri Mar 03 2023 Andrey Cherepanov <cas@altlinux.org> 1:0.11.5-alt1
+- New version.
+
 * Thu Nov 24 2022 Andrey Cherepanov <cas@altlinux.org> 1:0.11.4-alt1
 - New version.
 
