@@ -1,7 +1,7 @@
 %define rname svgpart
 
 Name: kde5-%rname
-Version: 22.12.2
+Version: 22.12.3
 Release: alt1
 %K5init
 
@@ -39,6 +39,9 @@ KDE SVG Part.
 
 
 %changelog
+* Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
+- new version
+
 * Mon Feb 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
 - new version
 
