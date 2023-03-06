@@ -3,7 +3,7 @@
 %define module Gear-Rules
 
 Name: perl-%module
-Version: 0.200
+Version: 0.201
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -44,6 +44,9 @@ BuildRequires: perl-RPM-Source-Editor
 %endif
 
 %changelog
+* Mon Mar 06 2023 Igor Vlasenko <viy@altlinux.org> 0.201-alt1
+- basic support for sourceless specs (thanks to manowar@)
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0.200-alt1
 - VCS: support
 
