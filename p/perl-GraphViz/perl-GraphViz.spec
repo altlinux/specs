@@ -4,7 +4,7 @@ BuildRequires: fonts-ttf-liberation
 %define module GraphViz
 
 Name: perl-%module
-Version: 2.25
+Version: 2.26
 Release: alt1
 
 Summary: Interface to the GraphViz graphing tool
@@ -36,11 +36,14 @@ undirected graphs in a variety of formats (PostScript, PNG, etc.) using the
 %perl_vendor_install
 
 %files
-%doc Changes README LICENSE examples
+%doc Changes README examples
 %perl_vendor_privlib/GraphViz*
 %perl_vendor_privlib/Devel/GraphViz*
 
 %changelog
+* Mon Mar 06 2023 Igor Vlasenko <viy@altlinux.org> 2.26-alt1
+- automated CPAN update
+
 * Mon Aug 22 2022 Igor Vlasenko <viy@altlinux.org> 2.25-alt1
 - automated CPAN update
 
