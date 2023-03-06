@@ -1,7 +1,7 @@
 %define git %nil
 
 Name: openfortivpn
-Version: 1.15.0
+Version: 1.20.1
 Release: alt1
 
 Summary: Client for PPP+SSL VPN tunnel services
@@ -9,7 +9,7 @@ License: GPLv3+
 Group: System/Configuration/Networking
 
 Url: https://github.com/adrienverge/openfortivpn
-Source: https://github.com/adrienverge/openfortivpn/archive/v%version.tar.gz#/%name-%version.tar.gz
+Source: https://github.com/adrienverge/openfortivpn/archive/v%version.tar.gz#/%name-%version.tar
 
 BuildRequires: libssl-devel libsystemd-devel
 Requires: ppp opensc
@@ -40,6 +40,9 @@ It is compatible with Fortinet VPNs.
 %doc CHANGELOG.md README.md LICENSE
 
 %changelog
+* Mon Mar 06 2023 L.A. Kostis <lakostis@altlinux.ru> 1.20.1-alt1
+- 1.20.1.
+
 * Thu Jan 07 2021 L.A. Kostis <lakostis@altlinux.ru> 1.15.0-alt1
 - 1.15.0.
 - Add systemd support.
