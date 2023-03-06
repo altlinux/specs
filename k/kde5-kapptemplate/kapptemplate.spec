@@ -1,7 +1,7 @@
 %define rname kapptemplate
 
 Name: kde5-%rname
-Version: 22.12.2
+Version: 22.12.3
 Release: alt1
 %K5init altplace no_appdata
 
@@ -50,6 +50,9 @@ KAppTemplate provide a skeleton and example of what the code typically looks lik
 %_datadir/qlogging-categories5/*.*categories
 
 %changelog
+* Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
+- new version
+
 * Tue Feb 07 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
 - new version
 

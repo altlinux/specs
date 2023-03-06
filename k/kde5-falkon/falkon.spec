@@ -14,7 +14,7 @@
 %def_disable python_plugins
 
 Name: kde5-%rname
-Version: 22.12.2
+Version: 22.12.3
 Release: alt1
 %K5init no_altplace
 
@@ -138,6 +138,9 @@ __EOF__
 %_K5lib/libFalkonPrivate.so.*
 
 %changelog
+* Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
+- new version
+
 * Tue Feb 07 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
 - new version
 
