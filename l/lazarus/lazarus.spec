@@ -2,7 +2,7 @@
 %define cfg %_builddir/%name-%version/
 
 Name:    lazarus
-Version: 2.2.4
+Version: 2.2.6
 Release: alt1
 Epoch:   1
 
@@ -300,6 +300,9 @@ ln -s ../../bin/lazarus %buildroot$LAZARUSDIR/lazarus
 %_libdir/libQt5Pas.so
 
 %changelog
+* Sun Mar 05 2023 Andrey Cherepanov <cas@altlinux.org> 1:2.2.6-alt1
+- New version.
+
 * Mon Sep 26 2022 Andrey Cherepanov <cas@altlinux.org> 1:2.2.4-alt1
 - New version.
 
