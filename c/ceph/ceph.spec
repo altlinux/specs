@@ -47,12 +47,9 @@
 %define build_parallel_jobs 16
 %endif
 
-# Disable LTO
-%global optflags_lto %nil
-
 Name: ceph
-Version: 16.2.10
-Release: alt2
+Version: 16.2.11
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -1355,6 +1352,8 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %_bindir/rbd-replay-prep
 %endif
 %_bindir/ceph-post-file
+%dir %_libdir/ceph/denc
+%_libdir/ceph/denc/denc-mod-*.so
 %_tmpfilesdir/ceph-common.conf
 %_mandir/man8/ceph-authtool.8*
 %_mandir/man8/ceph-conf.8*
@@ -1761,8 +1760,12 @@ useradd -r -g cephadm -s /bin/bash "cephadm user for mgr/cephadm" -d %_localstat
 %endif
 
 %changelog
+* Fri Mar 03 2023 Alexey Shabalin <shaba@altlinux.org> 16.2.11-alt1
+- 16.2.11.
+- enable lto.
+
 * Tue Jul 26 2022 Alexey Shabalin <shaba@altlinux.org> 16.2.10-alt2
-- 16.2.10.
+- 16.2.10 (Fixes: CVE-2022-0670).
 - build with bundled fmtlib.
 
 * Sun Jul 03 2022 Alexey Shabalin <shaba@altlinux.org> 16.2.9-alt2
