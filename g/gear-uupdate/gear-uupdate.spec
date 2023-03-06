@@ -1,7 +1,7 @@
 %def_without bootstrap
 %define destname gear-uupdate
 Name: %destname
-Version: 0.28.2
+Version: 0.29.0
 Release: alt1
 
 Summary: Helper utility to be called by uscan for gear repository update
@@ -14,7 +14,7 @@ URL: http://www.altlinux.org/Gear/gear-uupdate
 BuildArch: noarch
 
 BuildRequires: perl-devel perl(Pod/Usage.pm) /usr/bin/pod2man perl-Gear-Rules perl-Source-Bundle perl-RPM-Source-Editor perl-String-ShellQuote
-Requires: gear /usr/bin/srpmnmu perl-Gear-Rules > 0.196 perl-RPM-Source-Editor > 0.9228
+Requires: gear /usr/bin/srpmnmu perl-Gear-Rules > 0.199 perl-RPM-Source-Editor > 0.9228
 # gpg1's usage of gpg-agent is broken in p10+, we use gpg2 with GPG_TTY fix
 Requires: gnupg2 > 2.2.32
 %if_without bootstrap
@@ -45,6 +45,9 @@ install -m 644 gear-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Mon Mar 06 2023 Igor Vlasenko <viy@altlinux.org> 0.29.0-alt1
+- sourceless kernel specs support thanks to manowar@
+
 * Sat Jan 08 2022 Igor Vlasenko <viy@altlinux.org> 0.28.2-alt1
 - use gpg2 in git tag by default
 
