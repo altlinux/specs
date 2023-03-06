@@ -2,7 +2,7 @@
 
 Name:           solaar
 Version:        1.1.8
-Release:        alt1
+Release:        alt2
 
 Group:          System/Configuration/Hardware
 Summary:        Device manager for Logitech Unifying Receiver
@@ -22,8 +22,8 @@ Requires:  	unifying-receiver-udev
 %add_python3_req_skip gi.repository.GObject gi.repository.Gdk
 %endif
 
-# typelib(AyatanaAppIndicator3) is not package in ALT Linux
-%add_typelib_req_skiplist typelib(AyatanaAppIndicator3)
+# require typelib(AyatanaAppIndicator3) instead typelib(AppIndicator3)
+%add_typelib_req_skiplist typelib(AppIndicator3)
 
 Source0: https://github.com/pwr/Solaar/archive/%{version}.tar.gz
 Patch1: solaar-paths.patch
@@ -74,6 +74,9 @@ tools/po-compile.sh
 %doc docs
 
 %changelog
+* Mon Mar 06 2023 Anton Midyukov <antohami@altlinux.org> 1.1.8-alt2
+- NMU: require typelib(AyatanaAppIndicator3) instead typelib(AppIndicator3)
+
 * Sun Dec 18 2022 Andrey Cherepanov <cas@altlinux.org> 1.1.8-alt1
 - New version.
 
