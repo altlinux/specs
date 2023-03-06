@@ -2,13 +2,15 @@
 
 Name: kde5-%rname
 Version: 1.10.0
-Release: alt1
+Release: alt2
 %K5init altplace no_appdata
 
 Group: Development/KDE and QT
 Summary: XML files of non-standard wayland protocols used in Plasma
 License: LGPL-2.0-or-later
 Url: https://invent.kde.org/libraries/plasma-wayland-protocols
+
+Requires: wayland-protocols
 
 Source: %rname-%version.tar
 
@@ -32,6 +34,9 @@ XML files of non-standard wayland protocols used in Plasma.
 %_datadir/plasma-wayland-protocols/
 
 %changelog
+* Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 1.10.0-alt2
+- fix requires
+
 * Mon Jan 23 2023 Sergey V Turchin <zerg@altlinux.org> 1.10.0-alt1
 - new version
 
