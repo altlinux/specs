@@ -2,7 +2,7 @@
 Group: Development/Perl
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl-podlators perl(Future/AsyncAwait/ExtensionBuilder.pm)
+BuildRequires: perl(Future/AsyncAwait/ExtensionBuilder.pm) perl(Test2/V0.pm) perl-podlators
 # END SourceDeps(oneline)
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -18,7 +18,7 @@ BuildRequires: perl-podlators perl(Future/AsyncAwait/ExtensionBuilder.pm)
 %bcond_with perl_Syntax_Keyword_Dynamically_enables_optional_test
 
 Name:           perl-Syntax-Keyword-Dynamically
-Version:        0.11
+Version:        0.12
 Release:        alt1
 Summary:        Dynamically change the value of a variable
 License:        GPL+ or Artistic
@@ -143,6 +143,9 @@ export HARNESS_OPTIONS=j$(perl -e 'if ($ARGV[0] =~ /.*-j([0-9][0-9]*).*/) {print
 %{_libexecdir}/%{name}
 
 %changelog
+* Mon Mar 06 2023 Igor Vlasenko <viy@altlinux.org> 0.12-alt1
+- automated CPAN update
+
 * Sun Dec 25 2022 Igor Vlasenko <viy@altlinux.org> 0.11-alt1
 - automated CPAN update
 
