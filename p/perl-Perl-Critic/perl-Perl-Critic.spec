@@ -1,10 +1,10 @@
 %define _unpackaged_files_terminate_build 1
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(List/SomeUtils.pm)
+BuildRequires: perl(List/SomeUtils.pm) perl(PPIx/Utils/Traversal.pm)
 # END SourceDeps(oneline)
 %define m_distro Perl-Critic
 Name: perl-Perl-Critic
-Version: 1.148
+Version: 1.150
 Release: alt1
 
 Summary: Critique Perl source code for best-practices.  
@@ -62,6 +62,9 @@ code analysis.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Mon Mar 06 2023 Igor Vlasenko <viy@altlinux.org> 1.150-alt1
+- automated CPAN update
+
 * Thu Jan 12 2023 Igor Vlasenko <viy@altlinux.org> 1.148-alt1
 - automated CPAN update
 
