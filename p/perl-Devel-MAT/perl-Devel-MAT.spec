@@ -1,21 +1,21 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Devel-MAT
 %set_perl_req_method relaxed
 %define _without_test 1
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Commandable/Invocation.pm) perl(Devel/MAT/Dumper.pm) perl(ExtUtils/CBuilder.pm) perl(Feature/Compat/Try.pm) perl(File/ShareDir.pm) perl(File/Spec.pm) perl(Heap.pm) perl(List/Util.pm) perl(List/UtilsBy.pm) perl(Module/Build.pm) perl(Module/Pluggable.pm) perl(String/Tagged.pm) perl(String/Tagged/Terminal.pm) perl(Struct/Dumb.pm) perl(Syntax/Keyword/Match.pm) perl(Term/ReadLine.pm) perl(Test/Identity.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 0.49
-Release: alt1.1
+Version: 0.50
+Release: alt1
 Summary: Perl Memory Analysis Tool
 Group: Development/Perl
 License: perl
 Url: %CPAN %module_name
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PE/PEVANS/%{module_name}-%{version}.tar.gz
 
 %description
 From summary: %summary
@@ -38,7 +38,7 @@ scripts for %module_name
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README doc
+%doc Changes README doc
 %perl_vendor_archlib/D*
 %perl_vendor_autolib/*
 
@@ -47,6 +47,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Mon Mar 06 2023 Igor Vlasenko <viy@altlinux.org> 0.50-alt1
+- automated CPAN update
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 0.49-alt1.1
 - to Sisyphus as perl-Sub-HandlesVia dep
 
