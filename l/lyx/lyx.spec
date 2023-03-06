@@ -1,5 +1,5 @@
 Name: lyx
-Version: 2.3.6.1
+Version: 2.3.7
 Release: alt1
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
@@ -18,8 +18,7 @@ Source5: lyxcat
 
 Patch0: lyx-2.1.2-xdg_open.patch
 Patch1: 0004-Use-python3-internally-in-the-C-code-as-well.patch
-Patch2: lyx-2.3.6.1-gcc12.patch
-Patch3: lyx-2.3.6.1-python.patch
+Patch2: lyx-2.3.6.1-python.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++ imake libaspell-devel libSM-devel python3-devel bc
@@ -138,6 +137,10 @@ python3 configure.py
 %files -n lyx-tex
 
 %changelog
+* Mon Mar 06 2023 L.A. Kostis <lakostis@altlinux.ru> 2:2.3.7-alt1
+- Updated to 2.3.7.
+- Cleanup patches (remove gcc12 as merged upstream).
+
 * Fri Sep 23 2022 L.A. Kostis <lakostis@altlinux.ru> 2:2.3.6.1-alt1
 - Updated to 2.3.6.1 (and fix FTBFS).
 - Added patches from gentoo to compile w/ gcc12
