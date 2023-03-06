@@ -1,8 +1,8 @@
 %define rname pyscard
 
 Name:       python3-module-%rname
-Version:    1.9.9
-Release:    alt2
+Version:    2.0.5
+Release:    alt1
 
 Summary:    A framework for building smart card aware applications in Python
 License:    LGPLv2+ and Python and CC-BY-SA
@@ -13,13 +13,15 @@ Packager:   Andrey Cherepanov <cas@altlinux.org>
 Source0:    %rname-%version.tar
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+
 BuildRequires:  python3-module-Pyro4
 BuildRequires:  libpcsclite-devel
 BuildRequires:  swig >= 1.3.31
 
 Requires:   pcsc-lite
 Provides:   pyscard = %version-%release
-
 
 %description
 The pyscard smartcard library is a framework for building smart card
@@ -39,10 +41,10 @@ sed -i 's|_bsddb|bsddb3._pybsddb|' smartcard/CardNames.py
 sed -i 's|from bsddb import|from bsddb3 import|' smartcard/CardNames.py
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 # chmod 755 %buildroot%python3_sitelibdir/smartcard/scard/_scard.so
 
 %files
@@ -53,6 +55,10 @@ sed -i 's|from bsddb import|from bsddb3 import|' smartcard/CardNames.py
 
 
 %changelog
+* Sat Feb 25 2023 Anton Zhukharev <ancieg@altlinux.org> 2.0.5-alt1
+- 1.9.9 -> 2.0.5 (closes: #44926).
+- Modernize building.
+
 * Wed Feb 19 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.9.9-alt2
 - Porting on python3 (without wx support).
 
