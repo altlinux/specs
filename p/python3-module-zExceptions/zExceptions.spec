@@ -1,46 +1,45 @@
 %define _unpackaged_files_terminate_build 1
 %define oname zExceptions
 
-Name: python3-module-%oname
-Version: 3.4
-Release: alt2
+%def_with check
 
-Summary: zExceptions contains common exceptions used in Zope2
+Name: python3-module-%oname
+Version: 4.3
+Release: alt1
+
+Summary: zExceptions contains common exceptions used in Zope
 License: ZPLv2.1
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/zExceptions/
-# https://github.com/zopefoundation/zExceptions.git
 
-Source0: https://pypi.python.org/packages/b2/19/20c6898e8a36bd76aa32c67671ed2c5f1c5d465c4290e7005844240c6b83/%{oname}-%{version}.tar.gz
+Source0: https://files.pythonhosted.org/packages/48/24/dcde412a61b9c30289a07a0357d5583074254f70aa7521c426e19be5579c/%oname-%version.tar.gz
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
+%if_with check
 BuildRequires: python3-module-zope.interface
 BuildRequires: python3-module-zope.publisher
-BuildRequires: python3-module-zope.security
-
-%py3_requires zope.interface zope.publisher zope.security
-
+BuildRequires: python3-module-zope.testrunner
+%endif
 
 %description
 zExceptions contains common exceptions and helper functions related to
-exceptions as used in Zope 2.
+exceptions as used in Zope.
 
 %package tests
 Summary: Tests for zExceptions
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 zExceptions contains common exceptions and helper functions related to
-exceptions as used in Zope 2.
+exceptions as used in Zope.
 
 This package contains tests for zExceptions.
 
 %prep
 %setup -q -n %{oname}-%{version}
-
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 %build
 %python3_build
@@ -48,25 +47,23 @@ find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %install
 %python3_install
 
-%if "%python3_sitelibdir_noarch" != "%python3_sitelibdir"
-install -d %buildroot%python3_sitelibdir
-mv %buildroot%python3_sitelibdir_noarch/* \
-	%buildroot%python3_sitelibdir/
-%endif
-
 %check
-%__python3 setup.py test
+%tox_check
 
 %files
-%doc *.txt
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%doc *.txt *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
 
 %changelog
+* Mon Mar 06 2023 Anton Vyatkin <toni@altlinux.org> 4.3-alt1
+- new version 4.3
+
 * Tue Nov 26 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.4-alt2
 - python2 disabled
 
