@@ -1,7 +1,7 @@
 %define rname akonadi-search
 
 Name: kde5-%rname
-Version: 22.12.2
+Version: 22.12.3
 Release: alt1
 %K5init altplace
 
@@ -117,6 +117,9 @@ sed -i '/EnabledByDefault/s|true|false|' runner/plasma-krunner-pimcontacts.json.
 %_K5lib/libKF5AkonadiSearchDebug.so.*
 
 %changelog
+* Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
+- new version
+
 * Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
 - new version
 

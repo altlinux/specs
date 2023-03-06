@@ -4,7 +4,7 @@
 %define libkf5libkleo libkf5libkleo%sover
 
 Name: kde5-%rname
-Version: 22.12.2
+Version: 22.12.3
 Release: alt1
 %K5init
 
@@ -79,6 +79,9 @@ KF5 library
 %_K5lib/libKF5Libkleo.so.*
 
 %changelog
+* Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
+- new version
+
 * Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
 - new version
 

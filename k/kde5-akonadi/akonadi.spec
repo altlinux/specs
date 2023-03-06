@@ -3,7 +3,7 @@
 %def_enable tools
 
 Name: kde5-%rname
-Version: 22.12.2
+Version: 22.12.3
 Release: alt1
 %K5init altplace
 
@@ -289,6 +289,9 @@ rm -f %buildroot/%_sysconfdir/apparmor.d/*akonadi*
 %endif
 
 %changelog
+* Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
+- new version
+
 * Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
 - new version
 
