@@ -1,7 +1,7 @@
 %def_disable snapshot
 
 %define _name gtk
-%define ver_major 4.8
+%define ver_major 4.10
 %define api_ver_major 4
 %define api_ver %api_ver_major.0
 %define binary_ver 4.0.0
@@ -10,8 +10,8 @@
 %def_enable x11
 %def_disable static
 %def_enable man
-%def_enable gtk_doc
 %def_enable introspection
+%def_enable gtk_doc
 %def_enable colord
 # wayland gdk backend
 %def_enable wayland
@@ -33,7 +33,7 @@
 %def_disable check
 
 Name: lib%_name%api_ver_major
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK)
@@ -51,8 +51,8 @@ Source5: gtk4-icon-cache.filetrigger
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
 %define meson_ver 0.60
-%define glib_ver 2.66
-%define gi_ver 1.41.0
+%define glib_ver 2.72
+%define gi_ver 1.72
 %define cairo_ver 1.14.0
 %define pango_ver 1.50.0
 %define atk_ver 2.15.1
@@ -65,7 +65,7 @@ Patch: gtk+-2.16.5-alt-stop-spam.patch
 %define wayland_protocols_ver 1.21
 %define xkbcommon_ver 0.2.0
 %define epoxy_ver 1.4
-%define graphene_ver 1.9.1
+%define graphene_ver 1.10
 %define cloudproviders_ver 0.2.5
 %define rsvg_ver 2.52.0
 
@@ -229,6 +229,7 @@ the functionality of the installed GTK+3 packages.
     %{?_enable_broadway:-Dbroadway-backend=true} \
     %{?_enable_cloudproviders:-Dcloudproviders=enabled} \
     %{?_enable_tracker:-Dtracker=enabled} \
+    %{?_enable_introspection:-Dintrospection=enabled} \
     %{?_enable_gtk_doc:-Dgtk_doc=true} \
     %{?_enable_man:-Dman-pages=true} \
     %{?_enable_colord:-Dcolord=enabled} \
@@ -398,6 +399,9 @@ cp -r examples/* %buildroot/%_docdir/%name-devel-%version/examples/
 
 
 %changelog
+* Sun Mar 05 2023 Yuri N. Sedunov <aris@altlinux.org> 4.10.0-alt1
+- 4.10.0
+
 * Fri Dec 23 2022 Yuri N. Sedunov <aris@altlinux.org> 4.8.3-alt1
 - 4.8.3
 
