@@ -1,5 +1,5 @@
 Name: libwebp-pixbuf-loader
-Version: 0.0.7
+Version: 0.2.1
 Release: alt1
 Summary: WebP image loader for GTK+ applications
 Group: System/Libraries
@@ -31,6 +31,9 @@ webp-pixbuf-loader contains a plugin to load WebP images in GTK+ applications
 %_datadir/thumbnailers/webp-pixbuf.thumbnailer
 
 %changelog
+* Mon Mar 06 2023 Valery Inozemtsev <shrek@altlinux.ru> 0.2.1-alt1
+- 0.2.1
+
 * Fri Nov 18 2022 Valery Inozemtsev <shrek@altlinux.ru> 0.0.7-alt1
 - initial release
 
