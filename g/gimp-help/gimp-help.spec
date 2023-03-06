@@ -1,7 +1,7 @@
 %define gimphelpdir %_datadir/gimp/2.0/help
 
 Name: gimp-help
-Version: 2.10.0
+Version: 2.10.34
 Release: alt1
 Summary: Help files for the GIMP
 License: GFDL
@@ -9,7 +9,6 @@ Group: Graphics
 
 Url: http://docs.gimp.org/
 Source0: https://download.gimp.org/mirror/pub/gimp/help/%name-%version.tar.bz2
-Patch0: gimp-help-2.10.0-python3.patch
 
 Requires: gimp >= 2.10
 BuildArch: noarch
@@ -55,7 +54,6 @@ Russian help files for the GIMP.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 export ALL_LINGUAS="de en fr ru"
@@ -82,6 +80,9 @@ export ALL_LINGUAS="de en fr ru"
 %gimphelpdir/ru
 
 %changelog
+* Mon Mar 06 2023 Valery Inozemtsev <shrek@altlinux.ru> 2.10.34-alt1
+- 2.10.34
+
 * Fri Oct 01 2021 Valery Inozemtsev <shrek@altlinux.ru> 2.10.0-alt1
 - 2.10.0
 
