@@ -1,5 +1,5 @@
 Name: python3-module-bleak
-Version: 0.19.2
+Version: 0.19.5
 Release: alt1
 
 Summary: Bluetooth Low Energy platform Agnostic Klient
@@ -43,6 +43,9 @@ cross-platform Python API to connect and communicate with e.g. sensors.
 %python3_sitelibdir/bleak-%version.dist-info
 
 %changelog
+* Mon Mar 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.19.5-alt1
+- 0.19.5 released
+
 * Mon Jan 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.19.2-alt1
 - 0.19.2 released
 
