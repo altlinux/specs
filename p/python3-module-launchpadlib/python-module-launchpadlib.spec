@@ -1,10 +1,14 @@
 %define _unpackaged_files_terminate_build 1
 
+%define oname launchpadlib
+
+%def_with check
+
 Name: python3-module-launchpadlib
-Version: 1.10.17
+Version: 1.11.0
 Release: alt1
 Summary: Script Launchpad through its web services interfaces.  Officially supported.
-License: gpl3
+License: LGPL-3
 Group: Development/Python3
 Url: https://launchpad.net/launchpadlib
 Packager: Anatoly Kitaikin <cetus@altlinux.org>
@@ -15,7 +19,15 @@ Source: %name-%version.tar
 BuildPreReq: rpm-build-licenses
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): /usr/bin/2to3
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-httplib2
+BuildRequires: python3-module-lazr.uri
+BuildRequires: python3-module-lazr.restfulclient
+BuildRequires: python3-module-distro
+BuildRequires: python3-module-coverage
+BuildRequires: python3-module-testresources
+%endif
 
 %py3_provides launchpadlib
 
@@ -30,7 +42,7 @@ This module is built for python %_python_version
 %package tests
 Summary: launchpadlib tests
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package contain tools and test suites for testing launchpadlib.
@@ -39,21 +51,27 @@ This package contain tools and test suites for testing launchpadlib.
 %setup
 
 %build
-find -type f -name '*.py' -exec 2to3 -w '{}' +
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+%tox_check_pyproject
 
 %files
 %doc CONTRIBUTING.rst README.rst NEWS.rst
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/launchpadlib/tests
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%{pyproject_distinfo %oname}
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/launchpadlib/tests
+%python3_sitelibdir/%oname/tests
 
 %changelog
+* Mon Mar 06 2023 Anton Vyatkin <toni@altlinux.org> 1.11.0-alt1
+- NMU: new version 1.11.0
+
 * Fri Oct 21 2022 Anatoly Kitaykin <cetus@altlinux.org> 1.10.17-alt1
 - Release 1.10.17
 
