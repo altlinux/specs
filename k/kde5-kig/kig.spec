@@ -4,7 +4,7 @@
 %define add_python3_requires() %(echo -n "Requires: "; for p in %*; do echo -n "python3($p) "; done; echo)
 
 Name: kde5-%rname
-Version: 22.12.2
+Version: 22.12.3
 Release: alt1
 %K5init no_appdata
 
@@ -71,6 +71,9 @@ PY3_VER_WO_DOTS=`echo "%_python3_abi_version"| sed 's|\.||g'`
 %_K5srv/kig_part.desktop
 
 %changelog
+* Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
+- new version
+
 * Fri Feb 03 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.2-alt1
 - new version
 
