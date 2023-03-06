@@ -1,6 +1,6 @@
 Name:    variety
 Version: 0.8.10
-Release: alt1
+Release: alt2
 
 Summary: Wallpaper downloader and manager for Linux systems
 License: GPL-3.0
@@ -24,7 +24,7 @@ BuildRequires: python3-module-pycairo-devel
 BuildRequires: libgtk+3-gir-devel
 BuildRequires: libgexiv2-gir-devel
 BuildRequires: libnotify-gir-devel
-BuildRequires: libappindicator-gtk3-gir-devel
+BuildRequires: libayatana-appindicator3-devel
 BuildRequires: intltool
 
 BuildArch: noarch
@@ -35,7 +35,7 @@ Source:  %name-%version.tar
 Requires: python3-module-gexiv2
 Requires: python3-module-pycurl
 
-%filter_from_requires /^typelib(AyatanaAppIndicator3)/d
+%filter_from_requires /^typelib(AppIndicator3)/d
 %add_findreq_skiplist %_datadir/%name/scripts/*
 
 %description
@@ -86,6 +86,9 @@ cp -av build/mo/* %buildroot%_datadir/locale
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Mon Mar 06 2023 Anton Midyukov <antohami@altlinux.org> 0.8.10-alt2
+- NMU: require typelib(AyatanaAppIndicator3) instead typelib(AppIndicator3)
+
 * Wed Feb 01 2023 Andrey Cherepanov <cas@altlinux.org> 0.8.10-alt1
 - New version.
 
