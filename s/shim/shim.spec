@@ -3,19 +3,19 @@
 %def_with check
 
 Name: shim
-Version: 15.5
-Release: alt1
+Version: 15.7
+Release: alt2
 
 Summary: First-stage UEFI bootloader
 License: BSD
 Group: System/Kernel and hardware
 
 Url: https://github.com/rhboot/shim
-#Git: https://github.com/rhboot/shim.git
 Source: %name-%version.tar
 Source1: altlinux-ca.cer
 Source2: %name-%version-gnu-efi.tar
-Source3: 0001-Make.defaults-skip-Werror-restrict-and-Werror-string.patch
+
+Patch0: shim-15.7-upstream-Enable-the-NX-compatibility-flag-by-default.patch
 
 BuildRequires(pre): rpm-macros-uefi
 BuildRequires: pesign >= 0.106
@@ -52,6 +52,7 @@ Includes both ia32 and x64 EFI binaries.
 
 %prep
 %setup -a 2
+%patch0 -p1
 
 echo "shim.altlinux,%alt_gen_number,ALT Linux,shim,%version-%release,http://git.altlinux.org/gears/s/shim.git" > data/sbat.altlinux.csv
 
@@ -88,7 +89,6 @@ install -m 0644 BOOTX64.CSV %buildroot%_datadir/shim/%version/%_efi_arch/BOOTX64
 popd
 
 %check
-patch -p1 < %SOURCE3
 %make_build test
 
 %files -n %name-unsigned
@@ -101,6 +101,13 @@ patch -p1 < %SOURCE3
 %_datadir/shim/%version/ia32/*
 
 %changelog
+* Tue Feb 28 2023 Egor Ignatov <egori@altlinux.org> 15.7-alt2
+- add shim-15.7-upstream-Enable-the-NX-compatibility-flag-by-default patch
+- remove obsolete Make.defaults-skip-Werror-restrict-and-Werror-string patch
+
+* Wed Nov 30 2022 Egor Ignatov <egori@altlinux.org> 15.7-alt1
+- new version
+
 * Mon Feb 21 2022 Nikolai Kostrigin <nickel@altlinux.org> 15.5-alt1
 - new version
 - remove all previously added upstream patches contained in this version
