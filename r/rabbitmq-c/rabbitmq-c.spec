@@ -3,8 +3,8 @@
 %global sover 4
 
 Name: rabbitmq-c
-Version: 0.11.0
-Release: alt5
+Version: 0.13.0
+Release: alt1
 
 Summary: RabbitMQ C client
 Group: System/Libraries
@@ -12,6 +12,7 @@ License: MIT
 URL: https://github.com/alanxz/rabbitmq-c
 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 Obsoletes: librabbitmq-c < %EVR
 
@@ -45,12 +46,14 @@ Requires: pkgconfig
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %cmake \
 	-DCMAKE_SKIP_RPATH:BOOL=NO \
 	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=YES \
 	-DBUILD_API_DOCS=ON \
+	-DBUILD_TOOLS:BOOL=ON \
 	-DBUILD_TOOLS_DOCS:BOOL=ON
 
 %cmake_build
@@ -65,7 +68,7 @@ pushd %_cmake__builddir
 popd
 
 %files
-%doc AUTHORS CONTRIBUTING.md ChangeLog.md LICENSE-MIT README.md THANKS TODO
+%doc AUTHORS CONTRIBUTING.md ChangeLog.md LICENSE README.md THANKS
 %_bindir/*
 %_man1dir/*
 %_man7dir/*
@@ -80,6 +83,9 @@ popd
 %_libdir/cmake
 
 %changelog
+* Tue Feb 07 2023 Egor Ignatov <egori@altlinux.org> 0.13.0-alt1
+- 0.13.0
+
 * Mon Apr 11 2022 Egor Ignatov <egori@altlinux.org> 0.11.0-alt5
 - 1f6ff5e tools/common.c: die on failed rpc in make_connection
 
