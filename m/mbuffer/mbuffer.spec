@@ -1,5 +1,5 @@
 Name: mbuffer
-Version: 20220418
+Version: 20230301
 Release: alt1
 Summary: Measuring Buffer is an enhanced version of buffer
 
@@ -8,7 +8,7 @@ License: GPLv3+
 Url: http://www.maier-komor.de/mbuffer.html
 Source0: http://www.maier-komor.de/software/mbuffer/mbuffer-%version.tar.gz
 
-BuildRequires: mt-st, libmhash-devel
+BuildRequires: mt-st, libssl-devel
 
 %description
 Measuring Buffer is an enhanced version of buffer. It features displayof
@@ -18,11 +18,6 @@ throughput, memory-mapped file I/O for huge buffers, and multithreading.
 %setup
 
 %build
-#autoconf
-# suppress detection of MD5_Init functions if openssl-devel
-# is available on build system, let only mhash_init be
-# detected if the md5 hash feature is enabled
-export ac_cv_search_MD5_Init=no
 %ifarch x86_64
 CFLAGS="%optflags -m64"; export CFLAGS
 %endif
@@ -39,6 +34,13 @@ make install DESTDIR=%buildroot INSTALL="install -p"
 %_bindir/%name
 
 %changelog
+* Mon Mar 06 2023 L.A. Kostis <lakostis@altlinux.ru> 20230301-alt1
+- Updated to 20230301.
+- Fix md5 detection when using openssl.
+
+* Thu Dec 15 2022 L.A. Kostis <lakostis@altlinux.ru> 20220418-alt2
+- Use libssl instead of mhash library.
+
 * Thu Dec 15 2022 L.A. Kostis <lakostis@altlinux.ru> 20220418-alt1
 - Updated to 20220418.
 
