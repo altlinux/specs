@@ -7,7 +7,7 @@
 Name: cura
 Epoch: 1
 Version: 4.13.0
-Release: alt2
+Release: alt3
 Summary: 3D printer control software
 License: LGPLv3+
 
@@ -44,6 +44,7 @@ BuildRequires: python3-module-savitar
 BuildRequires: python3-module-requests
 BuildRequires: python3-module-keyring >= 21
 BuildRequires: python3-module-dbus
+BuildRequires: python3(importlib_metadata)
 %endif
 
 %py3_requires serial zeroconf
@@ -133,6 +134,9 @@ desktop-file-validate %buildroot%_datadir/applications/com.ultimaker.cura.deskto
 %_libexecdir/%name
 
 %changelog
+* Mon Mar 06 2023 Anton Midyukov <antohami@altlinux.org> 1:4.13.0-alt3
+- add 'BuildRequires: python3(importlib_metadata)' for fix build with check
+
 * Sat Mar 05 2022 Anton Midyukov <antohami@altlinux.org> 1:4.13.0-alt2
 - add requires for plugins
 
