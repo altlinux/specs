@@ -3,7 +3,7 @@
 
 Name: kitty
 Version: 0.27.0
-Release: alt1
+Release: alt2
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -16,7 +16,6 @@ Requires: %name-shell-integration = %EVR
 # VCS: https://github.com/kovidgoyal/kitty
 Source: %name-%version.tar
 Patch0: %name-%version-alt.patch
-Patch1: alt-sphinx-use-classic-theme.patch
 
 # 0.25.0: shebang.req failed
 %add_findreq_skiplist %_libexecdir/%name/shell-integration/ssh/askpass.py
@@ -53,12 +52,13 @@ BuildRequires: liblcms2-devel
 BuildRequires: fontconfig-devel
 BuildRequires: libharfbuzz-devel
 
+BuildRequires: python3-dev
 BuildRequires: python3-module-sphinx-copybutton
 BuildRequires: python3-module-sphinx-inline-tabs
 BuildRequires: python3-module-sphinxext-opengraph
 BuildRequires: python3-module-sphinx-sphinx-build-symlink
 
-# For tic
+# tic for xterm-kitty terminfo
 BuildRequires: ncurses
 
 # + install -Dm644 /dev/stdin .../usr/share/bash-completion/completions/kitty
@@ -69,7 +69,7 @@ BuildRequires: /dev/pts
 BuildRequires: fonts-ttf-gnu-freefont-mono
 %endif
 
-%add_python3_path %_libexecdir/%name
+%add_python3_path %_libexecdir/kitty
 
 %description
 - Offloads rendering to the GPU for lower system load and buttery
@@ -127,7 +127,6 @@ Shell-integration files for kitty
 %prep
 %setup
 %patch0 -p1
-%patch1 -p1
 
 # Changing shebangs to python3
 find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%__python3|g'  \
@@ -135,20 +134,16 @@ find -type f -name "*.py" -exec sed -e 's|/usr/bin/env python3|%__python3|g'  \
                                     -i "{}" \;
 
 %build
-%python3_build_debug
-
-%install
 export CFLAGS="${CFLAGS:-%optflags}"
-export CXXFLAGS="${CXXFLAGS:-%optflags}"
-export FFLAGS="${FFLAGS:-%optflags}"
-
-mkdir -p %buildroot%_prefix
+export CGO_ENABLED=0
 python3 setup.py linux-package \
     --verbose \
-	--prefix=%buildroot%_prefix \
-	--update-check-interval=0 \
+    --update-check-interval=0 \
     %nil
 
+%install
+mkdir -pv %buildroot
+cp -r ./linux-package %buildroot%_prefix
 
 python3 __main__.py + complete setup bash | \
 	install -Dm644 /dev/stdin %buildroot%_datadir/bash-completion/completions/kitty
@@ -159,22 +154,22 @@ python3 __main__.py + complete setup zsh | \
 python3 __main__.py + complete setup fish | \
 	install -Dm644 /dev/stdin %buildroot%_datadir/fish/vendor_completions.d/kitty.fish
 
-%check
 
+%check
 %ifarch ppc64le
 # test_elliptic_curve_data_exchange fails on ppc64le due to 64k memlock limit in the
 # chroot environmet which is not enough for 64k pagesize system
 rm kitty_tests/crypto.py
 %endif
 
-python3 setup.py test --prefix=%buildroot%_prefix
+PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
+
 
 %files
 %_bindir/kitty
 %_bindir/kitten
-%_datadir/doc/%name/
-%_libexecdir/%name/
-%exclude %_libexecdir/%name/shell-integration
+%_libexecdir/kitty/
+%exclude %_libexecdir/kitty/shell-integration
 
 %_desktopdir/*.desktop
 %_iconsdir/hicolor/*/apps/*
@@ -188,9 +183,13 @@ python3 setup.py test --prefix=%buildroot%_prefix
 %_datadir/terminfo/*/*
 
 %files shell-integration
-%_libexecdir/%name/shell-integration
+%_libexecdir/kitty/shell-integration
 
 %changelog
+* Mon Mar 06 2023 Egor Ignatov <egori@altlinux.org> 0.27.0-alt2
+- fix FTBFS: build without docs
+- clean up spec
+
 * Tue Jan 31 2023 Egor Ignatov <egori@altlinux.org> 0.27.0-alt1
 - new version 0.27.0
 
