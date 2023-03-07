@@ -1,53 +1,64 @@
 %define oname SQLObject
 
-Name: python3-module-SQLObject
-Version: 3.7.3
+%def_with check
+
+Name: python3-module-%oname
+Version: 3.10.1
 Release: alt1
 
-Summary: Object-Relational Manager, aka database wrapper for Python
-License: LGPL
+Summary: SQLObject, an object-relational mapper for Python
+License: LGPL-2.1
 Group: Development/Python3
-Url: http://sqlobject.org
+Url: https://pypi.org/project/SQLObject/
+VCS: https://github.com/sqlobject/sqlobject.git
+
+Source: %name-%version.tar
+
 BuildArch: noarch
 
-Source: http://pypi.python.org/packages/source/S/%oname/%oname-%version.tar
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
-
+%if_with check
+BuildRequires: python3-module-pydispatcher
+BuildRequires: python3-module-FormEncode
+%endif
 
 %description
-SQLObject is a popular *Object Relational Manager* for providing an
-object interface to your database, with tables as classes, rows as
-instances, and columns as attributes.
+SQLObject is a popular Object Relational Manager for providing an object
+interface to your database, with tables as classes, rows as instances,
+and columns as attributes.
 
 SQLObject includes a Python-object-based query language that makes SQL
-more abstract, and provides substantial database independence for
-applications.
-
-Supports MySQL, PostgreSQL, SQLite, Firebird, Sybase, and MaxDB (SAPDB).
+more abstract, and provides substantial database independence for applications.
 
 %package doc
-Summary: This package contains documentation for SQLObject.
-Group: Development/Python
+Summary: This package contains documentation for SQLObject
+Group: Development/Documentation
 
 %description doc
-SQLObject is a popular *Object Relational Manager* for providing an
-object interface to your database, with tables as classes, rows as
-instances, and columns as attributes.
+SQLObject is a popular Object Relational Manager for providing an object
+interface to your database, with tables as classes, rows as instances,
+and columns as attributes.
 
 SQLObject includes a Python-object-based query language that makes SQL
-more abstract, and provides substantial database independence for
-applications.
+more abstract, and provides substantial database independence for applications.
 
-Supports MySQL, PostgreSQL, SQLite, Firebird, Sybase, and MaxDB (SAPDB).
+%package tests
+Summary: Tests for %oname
+Group: Development/Python3
+Requires: %name = %EVR
 
+%description tests
+SQLObject is a popular Object Relational Manager for providing an object
+interface to your database, with tables as classes, rows as instances,
+and columns as attributes.
+
+SQLObject includes a Python-object-based query language that makes SQL
+more abstract, and provides substantial database independence for applications.
+
+This package contains tests for %oname
 
 %prep
-%setup -n %oname-%version
-
-sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
-    $(find ./ -name '*.py')
+%setup
 
 %build
 %python3_build
@@ -55,16 +66,26 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %install
 %python3_install
 
+%check
+%tox_check
+
 %files
-%doc README.rst
+%doc LICENSE *.rst
 %_bindir/*
-%python3_sitelibdir/*
+%python3_sitelibdir/sqlobject
+%python3_sitelibdir/%oname-%version-*.egg-info
+%exclude %python3_sitelibdir/sqlobject/tests
+
+%files tests
+%python3_sitelibdir/sqlobject/tests
 
 %files doc
 %doc docs/*
 
-
 %changelog
+* Mon Mar 06 2023 Anton Vyatkin <toni@altlinux.org> 3.10.1-alt1
+- new version 3.10.1
+
 * Fri Dec 06 2019 Andrey Bychkov <mrdrew@altlinux.org> 3.7.3-alt1
 - Version updated to 3.7.3
 - build for python2 disabled
