@@ -1,7 +1,7 @@
 %define py_name yt_dlp
 
 Name: yt-dlp
-Version: 2023.02.17
+Version: 2023.03.04
 Release: alt1
 
 Summary: A tool for downloading from video services for offline watching
@@ -15,9 +15,9 @@ BuildArch: noarch
 
 Requires: python3-module-%py_name = %EVR
 
-# Automatically added by buildreq on Sun Jan 09 2022
-# optimized out: libgpg-error python3 python3-base python3-dev python3-module-pkg_resources sh4
-BuildRequires: python2-base python3-module-setuptools
+# Automatically added by buildreq on Tue Mar 07 2023
+# optimized out: libgpg-error python3 python3-base python3-dev python3-module-pkg_resources python3-module-setuptools sh4
+BuildRequires: python3-module-pyproject-installer python3-module-wheel
 
 BuildRequires(pre): rpm-build-python3
 
@@ -43,12 +43,13 @@ This package contains Python 3 module.
 %setup
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 rm %buildroot/usr/share/doc/yt_dlp/README.txt
+rm -r %buildroot%python3_sitelibdir/%py_name/__pyinstaller
 
 %define _unpackaged_files_terminate_build 1
 
@@ -63,9 +64,15 @@ rm %buildroot/usr/share/doc/yt_dlp/README.txt
 
 %files -n python3-module-%py_name
 %python3_sitelibdir/%py_name
-%python3_sitelibdir/%py_name-*.egg-info
+%python3_sitelibdir/%py_name-*.dist-info
 
 %changelog
+* Tue Mar 07 2023 Gleb F-Malinovskiy <glebfm@altlinux.org> 2023.03.04-alt1
+- Updated to 2023.03.04.
+- python3-module-%py_name: dropped __pyinstaller hook to get rid
+  of PyInstaller requirement.
+- spec: switched to modern %%pyproject_* macros.
+
 * Sat Feb 18 2023 Cronbuild Service <cronbuild@altlinux.org> 2023.02.17-alt1
 - Updated to 2023.02.17.
 
