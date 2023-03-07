@@ -1,5 +1,5 @@
 Name: rednotebook
-Version: 2.25
+Version: 2.29.3
 Release: alt1
 
 Summary: A desktop diary
@@ -10,17 +10,21 @@ Url: http://rednotebook.sourceforge.net
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%name/%name-%version.tar
+# Source-url: https://github.com/jendrikseipp/rednotebook/archive/v%version.tar.gz
+Source: %name-%version.tar
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Thu Jul 05 2018
-# optimized out: python-base python-modules python3 python3-base sssd-client
-BuildRequires: python3-dev python3-module-yieldfrom
+BuildRequires(pre): rpm-build-python3
+BuildRequires:  python3-module-yieldfrom
 
 Requires: python3-module-yaml
-# TODO:
-#Requires: python3-module-pywebkitgtk
+#Requires: typelib(Gtk)
+Requires: libgtk+3-gir
+# Requires: typelib(GtkSource)
+Requires: libgtksourceview3-gir
+# Requires: typelib(WebKit2)
+Requires: libwebkit2gtk-gir
 
 %description
 RedNotebook is a desktop diary that makes it very easy for you
@@ -49,6 +53,11 @@ and does so in style.
 %python3_sitelibdir/%{name}*.egg-info
 
 %changelog
+* Wed Mar 08 2023 Vitaly Lipatov <lav@altlinux.ru> 2.29.3-alt1
+- new version 2.29.3 (with rpmrb script)
+- add requires: libgtksourceview3-gir (ALT bug 45504)
+- add requires: libwebkit2gtk-gir
+
 * Sun Sep 11 2022 Vitaly Lipatov <lav@altlinux.ru> 2.25-alt1
 - new version 2.25 (with rpmrb script)
 
