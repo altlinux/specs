@@ -9,8 +9,8 @@
 %def_enable cmake
 
 Name: deepin-image-editor
-Version: 1.0.24
-Release: alt2
+Version: 1.0.25
+Release: alt1
 Summary: Image editor libraries for Deepin
 License: GPL-3.0+
 Group: System/Libraries
@@ -164,6 +164,9 @@ cmake --build "%_cmake__builddir"
 %_pkgconfigdir/lib%repoivr.pc
 
 %changelog
+* Tue Mar 07 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.25-alt1
+- New version.
+
 * Fri Feb 03 2023 Leontiy Volodin <lvol@altlinux.org> 1.0.24-alt2
 - Enabled build on armh.
 
