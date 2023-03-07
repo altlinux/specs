@@ -1,8 +1,8 @@
 %define oname pyenchant
 
 Name: python3-module-enchant
-Version: 3.2.1
-Release: alt2
+Version: 3.2.2
+Release: alt1
 
 Summary: PyEnchant is a spellchecking library for Python
 
@@ -59,6 +59,9 @@ sed -i '/use_setuptools/d' setup.py
 %endif
 
 %changelog
+* Wed Mar 08 2023 Vitaly Lipatov <lav@altlinux.ru> 3.2.2-alt1
+- new version 3.2.2 (with rpmrb script)
+
 * Fri Aug 13 2021 Vitaly Lipatov <lav@altlinux.ru> 3.2.1-alt2
 - NMU: restore missed libenchant
 
