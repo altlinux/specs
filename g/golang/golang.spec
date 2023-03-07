@@ -38,7 +38,7 @@
 %def_disable check
 
 Name:    golang
-Version: 1.19.6
+Version: 1.19.7
 Release: alt1
 Summary: The Go Programming Language
 Group:   Development/Other
@@ -177,7 +177,6 @@ cd ..
 GOROOT=$PWD PATH="$GOROOT/bin:$PATH" go install -v -buildmode=shared -v -x std
 %endif
 
-
 %check
 export GOROOT=$PWD
 export PATH="$GOROOT/bin:$PATH"
@@ -240,10 +239,10 @@ rm -rfv -- \
 %if_enabled shared
 mkdir -p %buildroot%golibdir
 for file in $(find %buildroot%go_root/pkg/linux_%{go_hostarch}_dynlink  -iname "*.so" ); do
-    mv  $file %buildroot%golibdir
-    pushd $(dirname $file)
-    ln -fs %golibdir/$(basename $file) $(basename $file)
-    popd
+	mv  $file %buildroot%golibdir
+	pushd $(dirname $file)
+	ln -fs %golibdir/$(basename $file) $(basename $file)
+	popd
 done
 %endif
 
@@ -275,8 +274,8 @@ done
 # restore the gdb debugging script, needed at runtime by gdb
 mkdir -p -- %buildroot%_datadir/%name/gdb
 sed \
-    -e 's,@GOROOT@,%go_root,g' \
-    %SOURCE1 > %buildroot%_datadir/%name/gdb/golang-gdbinit
+	-e 's,@GOROOT@,%go_root,g' \
+	%SOURCE1 > %buildroot%_datadir/%name/gdb/golang-gdbinit
 
 mkdir -p -- %buildroot%_datadir/%name/src
 for n in syscall regexp; do
@@ -316,11 +315,9 @@ mkdir -p -- \
 %golibdir/*.so
 %endif
 
-
 %files gdb
 %_datadir/%name/gdb
 %go_root/src/runtime/runtime-gdb.py
-
 
 %files docs
 %doc LICENSE PATENTS VERSION
@@ -339,6 +336,9 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Tue Mar 07 2023 Alexey Shabalin <shaba@altlinux.org> 1.19.7-alt1
+- New version (1.19.7) (Fixes: CVE-2023-24532).
+
 * Thu Feb 16 2023 Alexey Shabalin <shaba@altlinux.org> 1.19.6-alt1
 - New version (1.19.6) (Fixes: CVE-2022-41725, CVE-2022-41724, CVE-2022-41723, CVE-2022-41722).
 
