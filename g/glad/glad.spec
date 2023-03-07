@@ -1,7 +1,7 @@
 %global pypi_name glad
 
 Name: %pypi_name
-Version: 2.0.2
+Version: 2.0.4
 Release: alt0.1
 Summary: Vulkan/GL/GLES/EGL/GLX/WGL Loader-Generator
 Group: Development/Python
@@ -42,5 +42,8 @@ Multi-Language Vulkan/GL/GLES/EGL/GLX/WGL Loader-Generator based on the official
 %python3_sitelibdir/%{pypi_name}2-%version.dist-info/
 
 %changelog
+* Tue Mar 07 2023 L.A. Kostis <lakostis@altlinux.ru> 2.0.4-alt0.1
+- 2.0.4.
+
 * Fri Dec 09 2022 L.A. Kostis <lakostis@altlinux.ru> 2.0.2-alt0.1
 - Initial build for ALTLinux.
