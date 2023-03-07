@@ -3,7 +3,7 @@
 
 Name: lxqt-config
 Version: 1.2.0
-Release: alt1
+Release: alt2
 
 Summary: LXDE-Qt system configurations (control center)
 License: LGPL
@@ -11,6 +11,7 @@ Group: Graphical desktop/Other
 
 Url: https://lxqt.org
 Source: %name-%version.tar
+Patch: 0001-lxqt-config-monitor-add-more-header-file-inclusion-f.patch
 
 BuildRequires: gcc-c++ cmake rpm-macros-cmake
 BuildRequires: libXau-devel libXcursor-devel libXdmcp-devel libXfixes-devel
@@ -32,11 +33,16 @@ Obsoletes: lxqt-config-randr < 0.8.0
 
 %prep
 %setup
+%autopatch -p1
 
 %build
-# FIXME: 0.10.0 fiddling with liblxqt-config-cursor.so (thx palinek)
-%cmake -DCMAKE_SKIP_RPATH:BOOL=OFF \
-       -DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
+# https://github.com/lxqt/lxqt-config/issues/903
+# https://github.com/lxqt/lxqt-build-tools/pull/83
+# libkscreen-qt5 5.26.90 config.h now includes <optional>, which needs
+# at least -std=c++17
+%cmake  -DCMAKE_CXX_STANDARD=17 \
+	-DCMAKE_SKIP_RPATH:BOOL=OFF \
+	-DCMAKE_SKIP_INSTALL_RPATH:BOOL=OFF
 %cmake_build
 
 %install
@@ -54,6 +60,10 @@ Obsoletes: lxqt-config-randr < 0.8.0
 %doc AUTHORS CHANGELOG LICENSE README.md
 
 %changelog
+* Tue Mar 07 2023 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt2
+- add upstream patch and build option '-DCMAKE_CXX_STANDARD=17' for
+  fix build with libkscreen >= 5.26.90 (Closes: 45508)
+
 * Sat Nov 05 2022 Anton Midyukov <antohami@altlinux.org> 1.2.0-alt1
 - new version 1.2.0
 
