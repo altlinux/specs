@@ -2,22 +2,22 @@
 %define oname canto_next
 
 Name: canto-next
-Version: 0.9.7
-Release: alt1.1
+Version: 0.9.8
+Release: alt1
 
-Summary: The next generation Canto RSS daemon.
+Summary: The next generation Canto RSS daemon
 License: GPLv2
 Group: Networking/News
-Url: http://codezen.org/canto-ng/
-# https://github.com/themoken/canto-next.git
-BuildArch: noarch
+Url: https://pypi.org/project/Canto/
+VCS: https://github.com/themoken/canto-next.git
 
 Source: %name-%version.tar
+
+BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
 
 Requires: python3-module-%name
-
 
 %description
 This is the RSS backend for Canto clients.
@@ -100,21 +100,29 @@ mv tests/ %buildroot%python3_sitelibdir/%oname/
 %_bindir/canto-daemon
 %_bindir/canto-remote
 %_man1dir/canto-*
+%dir %_libexecdir/systemd
+%dir %_libexecdir/systemd/user
 %_libexecdir/systemd/user/canto-daemon.service
 
 %files -n python3-module-%name
+%dir %python3_sitelibdir/%oname
+%python3_sitelibdir/%oname
 %python3_sitelibdir/*.egg-info
-%python3_sitelibdir/%oname/*.py
-%python3_sitelibdir/%oname/__pycache__/
+%exclude %python3_sitelibdir/%oname/tests/
 
 %files -n python3-module-%name-tests
+%dir %python3_sitelibdir/%oname
 %python3_sitelibdir/%oname/tests/
 
 %files -n python3-module-%name-plugins
+%dir %_libexecdir/canto
 %_libexecdir/canto/plugins/
 
 
 %changelog
+* Fri Mar 03 2023 Anton Vyatkin <toni@altlinux.org> 0.9.8-alt1
+- new version 0.9.8
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 0.9.7-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
