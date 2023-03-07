@@ -7,7 +7,7 @@
 %def_enable openssl
 
 Name: mstflint
-Version: 4.21.0
+Version: 4.23.0
 Release: alt1
 
 Summary: Mellanox firmware burning application
@@ -17,7 +17,7 @@ Group: System/Base
 Url: http://openib.org/
 # VCS-git: https://github.com/Mellanox/mstflint.git
 Source: %name-%version.tar
-Patch: %name-%version.patch
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires: autoconf-archive
 BuildRequires: gcc-c++
@@ -41,7 +41,6 @@ Mellanox manufactured InfiniBand adapters.
 
 %prep
 %setup
-%patch -p1
 
 %ifarch %e2k
 sed -i "s/__x86_64__/__e2k__/" common/compatibility.h \
@@ -79,6 +78,9 @@ rm -f  %buildroot%_libdir/*.a
 %_man1dir/*
 
 %changelog
+* Tue Mar 07 2023 Andrew A. Vasilyev <andy@altlinux.org> 4.23.0-alt1
+- v4.23.0-1
+
 * Mon Aug 08 2022 Andrew A. Vasilyev <andy@altlinux.org> 4.21.0-alt1
 - v4.21.0-1
 

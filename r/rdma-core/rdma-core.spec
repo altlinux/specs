@@ -11,7 +11,7 @@
 
 
 Name: rdma-core
-Version: 41.0
+Version: 44.0
 Release: alt1
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
@@ -84,6 +84,8 @@ Obsoletes: libipathverbs < %EVR
 %if_enabled dma_coherent
 Provides: libmlx4 = %EVR
 Obsoletes: libmlx4 < %EVR
+Provides: libmana = %EVR
+Obsoletes: libmana < %EVR
 %ifnarch s390x
 Provides: libmlx5 = %EVR
 Obsoletes: libmlx5 < %EVR
@@ -291,6 +293,7 @@ install -D -m0644 ibacm_opts.cfg %buildroot%_sysconfdir/rdma/
 cp -r kernel-headers/rdma %buildroot%_includedir/
 
 rm -f %buildroot%_sbindir/srp_daemon.sh
+mv %buildroot%_docdir/%name-%version/70-persistent-ipoib.rules %buildroot%_sysconfdir/udev/rules.d/70-persistent-ipoib.rules
 
 %post -n ibacm
 %post_service ibacm
@@ -362,6 +365,8 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %_man3dir/efadv*
 %_man7dir/efadv*
 %_man3dir/mlx5dv*
+%_man3dir/manadv*
+%_man7dir/manadv*
 %_man7dir/mlx5dv*
 %_man3dir/mlx4dv*
 %_man7dir/mlx4dv*
@@ -372,8 +377,10 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %dir %_libdir/libibverbs
 %_libdir/libibverbs*.so.*
 %_libdir/libibverbs/*.so
+%_libdir/libibverbs/*.so
 %if_enabled dma_coherent
 %_libdir/libefa.so.*
+%_libdir/libmana.so.*
 %_libdir/libmlx5.so.*
 %_libdir/libmlx4.so.*
 %endif
@@ -557,6 +564,7 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %_man8dir/ibstatus*
 %_man8dir/infiniband-diags*
 %perl_vendor_privlib/IBswcountlimits.pm
+%dir %_sysconfdir/infiniband-diags
 %config(noreplace) %_sysconfdir/infiniband-diags/error_thresholds
 %config(noreplace) %_sysconfdir/infiniband-diags/ibdiag.conf
 
@@ -564,6 +572,7 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %files -n srp_daemon
 %config(noreplace) %_sysconfdir/srp_daemon.conf
 %config(noreplace) %_sysconfdir/rdma/modules/srp_daemon.conf
+%dir %_libexecdir/srp_daemon
 %_libexecdir/srp_daemon/start_on_all_ports
 %_unitdir/srp_daemon.service
 %_unitdir/srpd.service
@@ -580,6 +589,12 @@ rm -f %buildroot%_sbindir/srp_daemon.sh
 %docdir/ibsrpdm.md
 
 %changelog
+* Tue Mar 07 2023 Andrew A. Vasilyev <andy@altlinux.org> 44.0-alt1
+- new version 44.0
+
+* Tue Nov 15 2022 Andrew A. Vasilyev <andy@altlinux.org> 43.0-alt1
+- new version 43.0
+
 * Sun Jun 12 2022 Alexey Shabalin <shaba@altlinux.org> 41.0-alt1
 - new version 41.0
 
