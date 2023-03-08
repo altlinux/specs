@@ -4,7 +4,7 @@
 
 Name: zim-wiki
 Version: 0.75.1
-Release: alt1
+Release: alt2
 
 Summary: A desktop wiki and outliner
 Group: Editors
@@ -17,6 +17,8 @@ Source: https://zim-wiki.org/downloads/%real_name-%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 %endif
+
+Patch1: AyatanaAppindicator.patch
 
 BuildArch: noarch
 Requires: typelib(Gtk) = 3.0
@@ -46,6 +48,7 @@ control.
 %prep
 %setup
 %patch -p1
+%patch1 -p1
 
 %build
 %pyproject_build
@@ -68,6 +71,9 @@ control.
 %doc README.md CHANGELOG.md
 
 %changelog
+* Thu Mar 09 2023 Anton Midyukov <antohami@altlinux.org> 0.75.1-alt2
+- NMU: switch to use AyatanaAppindicator
+
 * Fri Nov 11 2022 Yuri N. Sedunov <aris@altlinux.org> 0.75.1-alt1
 - 0.75.1
 
