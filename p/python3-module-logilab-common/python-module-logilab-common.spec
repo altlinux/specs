@@ -1,25 +1,31 @@
 %define _unpackaged_files_terminate_build 1
 %define oname logilab-common
 
-%def_enable check
+%def_with check
 
 Name: python3-module-%oname
-Version: 1.5.2
+Version: 1.9.8
 Release: alt1
 
 Summary: Useful miscellaneous modules used by Logilab projects
 License: LGPLv2.1+
 Group: Development/Python3
-Url: http://www.logilab.org/project/logilab-common
+Url: https://pypi.org/project/logilab-common
 
 BuildArch: noarch
 
-# hg clone http://hg.logilab.org/review/logilab/common/
 Source: %oname-%version.tar
-Patch0: port-to-new-python.patch
+Patch0: alt-urllib2-fix.patch
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-mypy_extensions
+BuildRequires: python3-module-importlib-metadata
+BuildRequires: python3-module-typing_extensions
 BuildRequires: python3-module-pytz
+%endif
 
 %py3_provides logilab
 
@@ -39,39 +45,28 @@ designed to ease:
 
 %prep
 %setup -q -n %oname-%version
-%patch0 -p2
+%patch0 -p1
 
 %build
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
-
-# man file
-install -pD -m644 docs/logilab-pytest.1 -T \
-    %buildroot%_man1dir/logilab-pytest-3.1
-# rename binary
-mv %buildroot%_bindir/logilab-pytest -T \
-    %buildroot%_bindir/logilab-pytest-3
+%pyproject_install
 
 %check
-PYTHONPATH=%buildroot%python3_sitelibdir \
-    %buildroot%_bindir/logilab-pytest-3 \
-    -t test \
-    -s test_4
+%tox_check_pyproject -- -k 'not test_deprecation'
 
 %files
-%doc ChangeLog README COPYING
-%_man1dir/logilab-pytest-3.1*
-%_bindir/logilab-pytest-3
-%python3_sitelibdir/logilab/common/*.py
-%python3_sitelibdir/logilab/common/__pycache__/
-%python3_sitelibdir/logilab/common/ureports/*.py
-%python3_sitelibdir/logilab/common/ureports/__pycache__/
-%python3_sitelibdir/*.egg-info/
+%doc ChangeLog README.rst COPYING
+%_bindir/*
+%python3_sitelibdir/logilab
+%python3_sitelibdir/%{pyproject_distinfo %oname}
 %exclude %python3_sitelibdir/*-nspkg.pth
 
 %changelog
+* Wed Mar 08 2023 Anton Vyatkin <toni@altlinux.org> 1.9.8-alt1
+- new version 1.9.8
+
 * Wed Apr 01 2020 Andrey Bychkov <mrdrew@altlinux.org> 1.5.2-alt1
 - Version updated to 1.5.2
 - build for python2 disabled.
