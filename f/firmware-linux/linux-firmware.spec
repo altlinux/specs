@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230227
+Version: 20230301
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,19 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Wed Mar 08 2023 Cronbuild Service <cronbuild@altlinux.org> 20230301-alt1
+- upstream changes (GIT 5adebcfa):
+  + WHENCE: remove duplicate File entries (thx Emil Velikov)
+  + WHENCE: remove trailing white space (thx Emil Velikov)
+  + add fw for qat_4xxx (thx Adam Guerin)
+  + update firmware for mediatek bluetooth chip (MT7921) (thx Jing Cai)
+  + update firmware for MT7921 WiFi device (thx Deren Wu)
+  + iwlwifi: update core69 and core72 firmwares for Ty device (thx Gregory Greenman)
+  + rtlwifi: Add firmware v16.0 for RTL8710BU aka RTL8188GU (thx Bitterblue Smith)
+  + brcm: Add nvram for the Lenovo Yoga Book X90F / X90L convertible (thx Hans de Goede)
+  + brcm: Fix Xiaomi Inc Mipad2 nvram/.txt file macaddr (thx Hans de Goede)
+  + brcm: Add nvram for the Advantech MICA-071 tablet (thx Hans de Goede)
+
 * Wed Mar 01 2023 Cronbuild Service <cronbuild@altlinux.org> 20230227-alt1
 - upstream changes (GIT 60971a64):
   + rtl_bt: Update RTL8852C BT USB firmware to 0xD7B8_FABF (thx Hilda Wu)
