@@ -8,7 +8,7 @@
 
 Name: gnome-shell-extension-cpufreq
 Version: 52.0
-Release: alt1.g%{git}
+Release: alt2.g%{git}
 
 Summary: System Monitor and Power Manager for Gnome Shell
 Group: Graphical desktop/GNOME
@@ -56,6 +56,9 @@ CPU Monitor and Power Manager for GNOME Shell.
 %doc LICENSE README.md
 
 %changelog
+* Thu Mar 09 2023 Anton Midyukov <antohami@altlinux.org> 52.0-alt2.g59cebf0
+- NMU: switch to use AyatanaAppindicator3
+
 * Wed Sep 28 2022 L.A. Kostis <lakostis@altlinux.ru> 52.0-alt1.g59cebf0
 - GIT 59cebf0 with gnome 43 support.
 
