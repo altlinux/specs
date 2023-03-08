@@ -1,7 +1,7 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
 %define zabbix_home	/dev/null
-%define svnrev		fdfa8cef9ce
+%define svnrev		3f184b456c7
 
 %def_with pgsql
 %def_enable java
@@ -16,7 +16,7 @@
 %endif
 
 Name: zabbix
-Version: 6.0.13
+Version: 6.0.14
 Release: alt1
 Epoch: 1
 
@@ -756,13 +756,15 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Mar 09 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.14-alt1
+- 6.0.14
+
 * Thu Feb 02 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.13-alt1
 - 6.0.13
 
 * Wed Dec 28 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.12-alt2
 - Add notice fo use MySQL 8.0.x
 - Pack history_pk_prepare.sql (ALT #44523)
-- Fix build with curl 7.87.0
 
 * Wed Dec 07 2022 Alexei Takaseev <taf@altlinux.org> 1:6.0.12-alt1
 - 6.0.12
