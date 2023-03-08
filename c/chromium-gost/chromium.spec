@@ -3,6 +3,7 @@
 %def_enable  widevine
 %def_enable  ffmpeg
 %def_enable  google_api_keys
+%def_disable debug
 
 %define max_parallel_jobs 64
 %ifndef build_parallel_jobs
@@ -16,7 +17,10 @@
 #set_gcc_version %gcc_version
 
 %set_verify_elf_method rpath=relaxed textrel=relaxed lfs=relaxed lint=relaxed
+
+%if_disabled debug
 %add_debuginfo_skiplist %_libdir/* %_bindir/*
+%endif
 
 %define _unpackaged_files_terminate_build 1
 
@@ -31,8 +35,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        110.0.5481.77
-Release:        alt1
+Version:        110.0.5481.177
+Release:        alt2
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -73,32 +77,30 @@ Patch002: 0002-ALT-Set-appropriate-desktop-file-name-for-default-br.patch
 Patch003: 0003-DEBIAN-manpage-fixes.patch
 Patch004: 0004-DEBIAN-add-ps-printing-capability-gtk2.patch
 Patch005: 0005-ALT-Use-rpath-link-and-absolute-rpath.patch
-Patch006: 0006-ALT-openh264-always-pic-on-x86.patch
-Patch007: 0007-ALT-allow-to-override-clang-through-env-variables.patch
-Patch008: 0008-ALT-Hack-to-avoid-build-error-with-clang7.patch
-Patch009: 0009-ALT-disable-asm-on-x86-in-dav1d.patch
-Patch010: 0010-Move-offending-function-to-chromeos-only.patch
-Patch011: 0011-FEDORA-bootstrap-with-python3.patch
-Patch012: 0012-sql-make-VirtualCursor-standard-layout-type.patch
-Patch013: 0013-GENTOO-Fix-instantiating-fold-expression-error.patch
-Patch014: 0014-IWYU-add-cmath-for-std-isnan-and-std-isinf.patch
-Patch015: 0015-ALT-use-system-zlib.patch
-Patch016: 0016-ALT-use-system-libdrm-library.patch
-Patch017: 0017-GENTOO-Fix-gtk4-build.patch
-Patch018: 0018-DEBIAN-allow-building-against-system-libraries-even-.patch
-Patch019: 0019-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
-Patch020: 0020-DEBIAN-use-system-opus-library-instead-of-embedded.patch
-Patch021: 0021-DEBIAN-build-using-system-openjpeg.patch
-Patch022: 0022-DEBIAN-use-system-jpeg-library.patch
-Patch023: 0023-DEBIAN-use-system-libevent-library.patch
-Patch024: 0024-ALT-Use-system-libusb-libsecret-flatbuffers.patch
-Patch025: 0025-Use-yandex-search-as-default.patch
-Patch026: 0026-GCC-use-fabsf-in-ui-NativeThemeBase-OutlineColor.patch
-Patch027: 0027-libstdc-Don-t-use-const-members-in-std-vector-in-pas.patch
-Patch028: 0028-libstdc-fix-narrowing-in-blink-DarkModeLABColorSpace.patch
-Patch029: 0029-GCC-fix-selection-of-IMMEDIATE_CRASH.patch
-Patch030: 0030-Ozone-Linux-Support-VA-API-on-Linux-Ozone-Wayland.patch
-Patch031: 0031-heap-Move-the-Stack-object-from-ThreadLocalTop-to-Is.patch
+Patch006: 0006-ALT-allow-to-override-clang-through-env-variables.patch
+Patch007: 0007-ALT-Hack-to-avoid-build-error-with-clang7.patch
+Patch008: 0008-FEDORA-bootstrap-with-python3.patch
+Patch009: 0009-sql-make-VirtualCursor-standard-layout-type.patch
+Patch010: 0010-ALT-use-system-zlib.patch
+Patch011: 0011-ALT-use-system-libdrm-library.patch
+Patch012: 0012-GENTOO-Fix-gtk4-build.patch
+Patch013: 0013-DEBIAN-allow-building-against-system-libraries-even-.patch
+Patch014: 0014-DEBIAN-use-system-zlib-library-instead-of-embedded-l.patch
+Patch015: 0015-DEBIAN-use-system-opus-library-instead-of-embedded.patch
+Patch016: 0016-DEBIAN-build-using-system-openjpeg.patch
+Patch017: 0017-DEBIAN-use-system-jpeg-library.patch
+Patch018: 0018-DEBIAN-use-system-libevent-library.patch
+Patch019: 0019-ALT-Use-system-libusb-libsecret-flatbuffers.patch
+Patch020: 0020-Use-yandex-search-as-default.patch
+Patch021: 0021-GCC-use-fabsf-in-ui-NativeThemeBase-OutlineColor.patch
+Patch022: 0022-libstdc-Don-t-use-const-members-in-std-vector-in-pas.patch
+Patch023: 0023-libstdc-fix-narrowing-in-blink-DarkModeLABColorSpace.patch
+Patch024: 0024-GCC-fix-selection-of-IMMEDIATE_CRASH.patch
+Patch025: 0025-Support-VA-API-on-Linux-Ozone-Wayland.patch
+Patch026: 0026-Move-the-Stack-object-from-ThreadLocalTop-to-Isolate.patch
+Patch027: 0027-Fix-construction-of-mesa-distribution.patch
+Patch028: 0028-GENTOO-InkDropHost-crash.patch
+Patch029: 0029-GENTOO-EnumTable-crash.patch
 ### End Patches
 
 # Specific C-G patch
@@ -182,6 +184,7 @@ BuildRequires:  pkgconfig(nss)
 BuildRequires:  pkgconfig(openh264)
 BuildRequires:  pkgconfig(re2)
 BuildRequires:  pkgconfig(snappy)
+BuildRequires:  pkgconfig(uuid)
 BuildRequires:  pkgconfig(x11)
 BuildRequires:  pkgconfig(xcb-proto)
 BuildRequires:  pkgconfig(xcomposite)
@@ -292,7 +295,7 @@ export RANLIB="ranlib"
 export PATH="$PWD/third_party/depot_tools:$PATH"
 export CHROMIUM_RPATH="%_libdir/%name"
 
-FLAGS='-Wno-unknown-warning-option'
+FLAGS='-Wno-unknown-warning-option -Wno-deprecated-declarations'
 
 export CFLAGS="$FLAGS"
 export CXXFLAGS="$FLAGS"
@@ -307,7 +310,6 @@ gn_arg+=( use_gio=true )
 gn_arg+=( use_glib=true )
 gn_arg+=( use_libpci=true )
 gn_arg+=( use_pulseaudio=true )
-gn_arg+=( use_aura=true )
 gn_arg+=( use_cups=true )
 gn_arg+=( use_kerberos=true )
 gn_arg+=( use_gold=false )
@@ -353,7 +355,15 @@ gn_arg+=( proprietary_codecs=true )
 
 # Remove debug
 gn_arg+=( is_debug=false )
+%if_enabled debug
+gn_arg+=( symbol_level=2 )
+gn_arg+=( blink_symbol_level=2 )
+gn_arg+=( v8_symbol_level=2 )
+%else
 gn_arg+=( symbol_level=0 )
+gn_arg+=( blink_symbol_level=0 )
+gn_arg+=( v8_symbol_level=0 )
+%endif
 
 gn_arg+=( enable_nacl=false )
 gn_arg+=( is_component_ffmpeg=%{is_enabled shared_libraries} )
@@ -456,9 +466,6 @@ mkdir -p %buildroot%_sysconfdir/%name/policies/recommended
 .rpm/scripts/make-manpage.sh > %buildroot/%_man1dir/%name.1
 #ln -s %name.1  %buildroot/%_man1dir/chrome.1
 
-# x86_64 capable systems need this
-sed -i -e 's,/usr/lib/chromium,%_libdir/%name,g' %buildroot%_bindir/%name
-
 pushd %target
 cp -a chrome           %buildroot%_libdir/%name/%name
 cp -a chrome_sandbox   %buildroot%_libdir/%name/chrome-sandbox
@@ -473,7 +480,7 @@ strip %buildroot%_libdir/%name/chromedriver
 
 ln -s -- %_libdir/%name/chromedriver %buildroot/%_bindir/chromedriver-gost
 
-for f in *.bin *.so* *.pak swiftshader locales icudtl.dat MEIPreload; do
+for f in *.bin *.so* *.pak swiftshader locales icudtl.dat MEIPreload vk_swiftshader_icd.json; do
 	[ ! -e "$f" ] ||
 		cp -at %buildroot%_libdir/%name -- "$f"
 done
@@ -551,6 +558,25 @@ EOF
 %_altdir/%name
 
 %changelog
+* Tue Mar 07 2023 Fr. Br. George <george@altlinux.org> 110.0.5481.177-alt2
+- GOST version
+
+* Wed Mar 01 2023 Alexey Gladkov <legion@altlinux.ru> 110.0.5481.177-alt2
+- Bring back compiler optimizations (ALT#45454).
+
+* Thu Feb 23 2023 Alexey Gladkov <legion@altlinux.ru> 110.0.5481.177-alt1
+- New version (110.0.5481.177).
+- Fix crach in autofill (ALT#45269).
+- Security fixes:
+  - CVE-2023-0927: Use after free in Web Payments API.
+  - CVE-2023-0928: Use after free in SwiftShader.
+  - CVE-2023-0929: Use after free in Vulkan.
+  - CVE-2023-0930: Heap buffer overflow in Video.
+  - CVE-2023-0931: Use after free in Video.
+  - CVE-2023-0932: Use after free in WebRTC.
+  - CVE-2023-0933: Integer overflow in PDF.
+  - CVE-2023-0941: Use after free in Prompts.
+
 * Tue Feb 14 2023 Fr. Br. George <george@altlinux.org> 110.0.5481.77-alt1
 - GOST version
 
