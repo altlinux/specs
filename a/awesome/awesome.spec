@@ -1,8 +1,8 @@
 Name: awesome
 Version: 4.3
-Release: alt4
+Release: alt5
 Group: Graphical desktop/Other
-License: GPL2+
+License: %gpl2plus
 
 Url: https://awesomewm.org/
 Packager: Evgenii Terechkov <evg@altlinux.org>
@@ -21,8 +21,9 @@ BuildRequires: libXdmcp-devel libgdk-pixbuf-devel lgi
 BuildRequires: lua5.3 libpango-gir libgdk-pixbuf-gir libcairo-gobject
 BuildRequires: libpcre-devel libxkbcommon-devel libxkbcommon-x11-devel libxcbutil-xrm-devel
 
-BuildPreReq: libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8
-BuildPreReq: libxcbutil-icccm-devel >= 0.3.8 libxcbutil-cursor-devel
+BuildRequires(pre): libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8
+BuildRequires(pre): libxcbutil-icccm-devel >= 0.3.8 libxcbutil-cursor-devel
+BuildRequires(pre): rpm-build-licenses
 
 Requires: libstartup-notification >= 0.10-alt1
 Requires: lgi >= 0.9.1
@@ -61,6 +62,11 @@ cmake \
 popd
 
 %install
+
+%add_findreq_skiplist %_datadir/%name/*
+# ugly workaround :(
+%filter_from_requires /lua.*\(awful.*\|beautiful\|gears\|menubar\|naughty\|wibox\)/d
+
 pushd build
 # Fix manpages:
 for i in `find manpages -type f -iname '*.[0-9]'`; do
@@ -93,6 +99,12 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc LICENSE build/docs/*.md
 
 %changelog
+* Wed Mar 08 2023 L.A. Kostis <lakostis@altlinux.ru> 4.3-alt5
+- NMU update:
+  + cmake: use full lua binary path (and fix FTBFS).
+  + use rpm-build-licenses and fix License.
+  + filter out self provides for lua modules.
+
 * Fri Mar 12 2021 Slava Aseev <ptrnine@altlinux.org> 4.3-alt4
 - Fix build with gcc-10
 
