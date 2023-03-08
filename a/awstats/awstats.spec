@@ -4,12 +4,12 @@
 %define	docdir %_docdir/%name-%version
 
 Name: awstats
-Version: 7.7
-Release: alt0.6.20180105
+Version: 7.9
+Release: alt0.1
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.UTF8): Анализатор логов Web-сервера в режиме реального времени
-License: GPL3
+License: GPL-3
 Group: Monitoring
 
 Url: http://www.awstats.org
@@ -31,6 +31,7 @@ BuildRequires(pre): rpm-build-apache2
 
 # Automatically added by buildreq on Wed Jul 21 2010 (-bi)
 BuildRequires: apache2-common perl-libwww tzdata perl-Switch perl-CGI
+BuildRequires: perl-Data-Validate-IP
 
 %description
 AWStats is a short for Advanced Web Statistics. It's a free tool that generates
@@ -101,6 +102,9 @@ mv %buildroot%_datadir/%name/tools/{awstats_configure.pl,httpd_conf,webmin,xslt}
 mv %buildroot%_datadir/%name/wwwroot/cgi-bin/awredir.pl examples/
 mv %buildroot%_datadir/%name/plugins/example/example.pm examples/
 
+# fix plugins perms
+find %buildroot%_datadir/%name/plugins -name \*.pm -exec chmod 644 {} \;
+
 # fix permissions (again)
 find %buildroot%_datadir/%name -name \*.pl -exec chmod 0755 {} \;
 
@@ -123,8 +127,6 @@ install -p -m644 %SOURCE5 %buildroot%apache2_ports_start/%name.conf
 %exclude %_datadir/%name/wwwroot/cgi-bin/awstats.model.conf
 %exclude %_datadir/%name/wwwroot/classes/src
 %exclude %_datadir/%name/plugins/example
-# fix plugins perms
-%attr(0644,root,root) %_datadir/%name/plugins/*.pm
 %_sysconfdir/%name
 %dir %attr(1775,root,%_pseudouser_group) %_pseudouser_home
 %config(noreplace) %_sysconfdir/cron.d/%name
@@ -140,6 +142,10 @@ install -p -m644 %SOURCE5 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Tue Mar 07 2023 L.A. Kostis <lakostis@altlinux.ru> 7.9-alt0.1
+- 7.9.
+- re-apply all -alt patches.
+
 * Sat Jan 05 2019 L.A. Kostis <lakostis@altlinux.ru> 7.7-alt0.6.20180105
 - remove apache1 support.
 - .spec cleanup.
