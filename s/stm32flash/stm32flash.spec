@@ -1,5 +1,5 @@
 Name: stm32flash
-Version: 0.6
+Version: 0.7
 Release: alt1
 Summary: Flash Program for the STM32 Bootloader
 License: GPLv2+
@@ -46,6 +46,9 @@ Features:
 %_mandir/man?/*.*
 
 %changelog
+* Wed Mar 08 2023 Anton Midyukov <antohami@altlinux.org> 0.7-alt1
+- new version (0.7) with rpmgs script
+
 * Sun Jun 27 2021 Anton Midyukov <antohami@altlinux.org> 0.6-alt1
 - new version (0.6) with rpmgs script
 
