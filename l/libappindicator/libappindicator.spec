@@ -3,7 +3,7 @@
 
 Name: libappindicator
 Version: %ver_major.0
-Release: alt12
+Release: alt13
 Summary: Application indicators library
 
 Group: System/Libraries
@@ -16,14 +16,11 @@ Patch: 0001_Fix_mono_dir.patch
 Patch1: 0002_libappindicator-no-Werror.patch
 Patch2: libappindicator-12.10.0-alt-application-service-marshal.patch
 Patch3: nopython.patch
-BuildRequires(pre): gcc
-BuildRequires: vala-tools gtk-doc
 BuildRequires: libdbus-glib-devel
 BuildRequires: libdbusmenu-gtk3-devel
-BuildRequires: gobject-introspection-devel
-BuildRequires: libgtk+3-devel libgtk+3-gir-devel
+BuildRequires: libgtk+3-devel
+BuildRequires: gtk-doc
 BuildRequires: libindicator-gtk3-devel
-BuildRequires: rpm-build-gir
 
 %description
 A library to allow applications to export a menu into the Unity Menu bar. Based
@@ -49,23 +46,6 @@ Requires: %name-gtk3 = %EVR
 %description gtk3-devel
 This package contains the development files for the appindicator-gtk3 library.
 
-%package gtk3-gir
-Summary: GObject introspection data for the %name-gtk3
-Group: System/Libraries
-Requires: %name-gtk3 = %EVR
-
-%description gtk3-gir
-This package provides GObject introspection data for the %name-gtk3.
-
-%package gtk3-gir-devel
-Summary: GObject introspection devel data for the %name-gtk3
-Group: Development/Other
-BuildArch: noarch
-Requires: %name-gtk3-gir = %EVR
-
-%description gtk3-gir-devel
-This package provides GObject introspection devel data for the %name-gtk3
-
 %package devel-doc
 Summary: Documentation for %name
 Group: Documentation
@@ -84,11 +64,11 @@ This package contains the documentation for the appindicator libraries.
 sed -i "s#gmcs#mcs#g" configure.ac
 
 %build
-%define opts --disable-static --disable-gtk-doc --disable-dumper
+%define opts --disable-static --disable-gtk-doc --disable-dumper --enable-introspection=no --with-gtk=3 --disable-python
 %autoreconf
 
 export CFLAGS="%optflags $CFLAGS -Wno-deprecated-declarations"
-%configure %opts --with-gtk=3 --disable-python
+%configure %opts
 %make -j1
 
 %install
@@ -99,20 +79,12 @@ find %buildroot -type f -name '*.la' -delete
 %files gtk3
 %_libdir/libappindicator3.so.*
 
-%files gtk3-gir
-%_typelibdir/AppIndicator3-%api_ver.typelib
-
 %files gtk3-devel
 %dir %_includedir/libappindicator3-%api_ver/
 %dir %_includedir/libappindicator3-%api_ver/libappindicator/
 %_includedir/libappindicator3-%api_ver/libappindicator/*.h
 %_libdir/libappindicator3.so
 %_pkgconfigdir/appindicator3-%api_ver.pc
-%_vapidir/appindicator3-%api_ver.vapi
-%_vapidir/appindicator3-%api_ver.deps
-
-%files gtk3-gir-devel
-%_girdir/AppIndicator3-%api_ver.gir
 
 %files devel-doc
 %dir %_datadir/gtk-doc/
@@ -120,6 +92,10 @@ find %buildroot -type f -name '*.la' -delete
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Mar 06 2023 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt13
+- disable gir packages
+- disable vala api
+
 * Mon Nov 23 2020 Anton Midyukov <antohami@altlinux.org> 12.10.0-alt12
 - build without gtk2
 
