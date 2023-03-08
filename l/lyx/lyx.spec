@@ -1,10 +1,28 @@
+# Unbundling helper macro
+# 1st arg is the path to dir bundling files (from)
+# 2nd arg is the path to dir containing original files (with)
+%global unbundle_from_with() \
+  bundled_dir="%1" \
+  bundled_files="$(find "${bundled_dir}" -maxdepth 1 -type f -printf '%f\\n')" \
+  original_dir="%2" \
+  for file in ${bundled_files} \
+  do \
+    if [ -f "${original_dir}/${file}" ] \
+    then \
+      rm -f "${bundled_dir}/${file}" \
+      ln -s "${original_dir}/${file}" "${bundled_dir}/${file}" \
+    fi \
+  done
+
+%global unbundle_font_latex_xft       1
+
 Name: lyx
 Version: 2.3.7
-Release: alt1
+Release: alt1.1
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
 # LGPL-2.1+: src/support/gzstream.* src/support/weighted_btree.h
-License: GPL-2.0-or-later and LGPL-2.1-or-later
+License: %gpl2only and %lgpl21plus
 Group: Publishing
 Epoch: 2
 Url: http://www.lyx.org
@@ -20,6 +38,8 @@ Patch0: lyx-2.1.2-xdg_open.patch
 Patch1: 0004-Use-python3-internally-in-the-C-code-as-well.patch
 Patch2: lyx-2.3.6.1-python.patch
 
+BuildRequires(pre): rpm-build-licenses
+
 BuildRequires: desktop-file-utils
 BuildRequires: gcc-c++ imake libaspell-devel libSM-devel python3-devel bc
 BuildRequires: libaiksaurus-devel boost-signals-devel boost-devel boost-filesystem-devel
@@ -28,6 +48,12 @@ BuildRequires: zlib-devel libenchant-devel libhunspell-devel libmythes-devel
 
 Provides: lyx-common lyx-qt lyx-latex-beamer
 Obsoletes: lyx-common lyx-qt lyx-latex-beamer
+
+%if %unbundle_font_latex_xft
+BuildRequires: fonts-ttf-latex-xft
+Requires: fonts-ttf-latex-xft
+%filter_from_requires /\/usr\/share\/fonts\/ttf\/latex\-xft.*/d
+%endif
 
 %description
 LyX is a modern approach to writing documents which breaks with the
@@ -85,6 +111,12 @@ export PYTHON=python3
 %makeinstall_std
 %find_lang %name
 
+# Unbundle fonts from fonts/
+# latex-xft
+%if %unbundle_font_latex_xft
+%unbundle_from_with %buildroot%_datadir/%name/fonts %_datadir/fonts/ttf/latex-xft
+%endif
+
 # This one is optional and python2-only.
 rm %buildroot%_datadir/%name/lyx2lyx/profiling.py
 
@@ -116,6 +148,13 @@ desktop-file-install --dir %buildroot%_desktopdir \
 rm %buildroot%_datadir/icons/hicolor/scalable/apps/lyx.svg
 rm %buildroot%_datadir/%name/scripts/prefTest.pl.in
 
+# something what configure.py generates
+touch %buildroot%_datadir/%name/{bbx,bib,bst,cbx,cls,sty}Files.lst
+touch %buildroot%_datadir/%name/{lyxciteengines,lyxmodules,packages,textclass,xtemplates}.lst
+touch %buildroot%_datadir/%name/configure.log
+touch %buildroot%_datadir/%name/lyxrc.defaults
+mkdir %buildroot%_datadir/%name/clipart
+
 %define _unpackaged_files_terminate_build 1
 
 %post
@@ -133,10 +172,19 @@ python3 configure.py
 %_niconsdir/*
 %_liconsdir/*
 %_desktopdir/*.desktop
+%ghost %_datadir/%name/clipart
+%ghost %_datadir/%name/*.lst
+%ghost %_datadir/%name/configure.log
+%ghost %_datadir/%name/lyxrc.defaults
 
 %files -n lyx-tex
 
 %changelog
+* Mon Mar 06 2023 L.A. Kostis <lakostis@altlinux.ru> 2:2.3.7-alt1.1
+- Unbundle latex-xft fonts (closes #25332).
+- Use macros for License.
+- Fix unowned files.
+
 * Mon Mar 06 2023 L.A. Kostis <lakostis@altlinux.ru> 2:2.3.7-alt1
 - Updated to 2.3.7.
 - Cleanup patches (remove gcc12 as merged upstream).
