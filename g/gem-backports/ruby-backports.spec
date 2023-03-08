@@ -1,7 +1,7 @@
 %define  pkgname backports
  
 Name: 	 gem-%pkgname
-Version: 3.23.0
+Version: 3.24.0
 Release: alt1
  
 Summary: The latest features of Ruby backported to older versions
@@ -56,6 +56,9 @@ Documentation files for %{name}.
 %ruby_gemdocdir
  
 %changelog
+* Wed Mar 08 2023 Andrey Cherepanov <cas@altlinux.org> 3.24.0-alt1
+- New version.
+
 * Sat Jan 01 2022 Andrey Cherepanov <cas@altlinux.org> 3.23.0-alt1
 - New version.
 
