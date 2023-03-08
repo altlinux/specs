@@ -2,7 +2,7 @@
 
 Name: deluge
 Version: %major.1
-Release: alt1
+Release: alt2
 
 Summary: full-featured BitTorrent client
 License: GPL-3.0-or-later with OpenSSL exception
@@ -19,7 +19,7 @@ Patch2: deluge-2.0.5-alt-no-new-release-check.patch
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires(pre): libappindicator-gtk3-gir-devel librsvg-devel
+BuildRequires(pre): librsvg-devel
 # Automatically added by buildreq on Sun Mar 22 2020
 # optimized out: libboost_python3-1.72.0 libtorrent-rasterbar10 perl perl-Encode perl-XML-Parser perl-parent python2-base python3 python3-base python3-dev python3-module-pkg_resources sh4
 BuildRequires: intltool python3-module-chardet python3-module-libtorrent-rasterbar python3-module-setuptools
@@ -84,7 +84,7 @@ user-interfaces being able to connect remotely from any platform.
 
 %package gtk
 %filter_from_requires '/^python3\(gi\.repository/d'
-%filter_from_requires '/^typelib\(AyatanaAppIndicator3\)/d'
+%filter_from_requires '/^typelib\(AppIndicator3\)/d'
 Group: Networking/File transfer
 Summary: full-featured BitTorrent client (GTK UI)
 Requires: python3-module-deluge python3-module-twisted-core-gui python3-module-pygobject3-pygtkcompat
@@ -171,6 +171,9 @@ cp -a %name-web.service %buildroot%_unitdir
 %python3_sitelibdir/%name/ui/web
 
 %changelog
+* Thu Mar 09 2023 Anton Midyukov <antohami@altlinux.org> 2.1.1-alt2
+- NMU: switch to use AyatanaAppindicator
+
 * Mon Aug 08 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 2.1.1-alt1
 - Updated to 2.1.1.
 
