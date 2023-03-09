@@ -5,8 +5,8 @@
 %def_disable static
 
 Name: libfaudio
-Version: 22.09
-Release: alt1.1
+Version: 23.03
+Release: alt1
 Summary: Accuracy-focused XAudio reimplementation for open platforms
 
 License: Zlib
@@ -82,6 +82,9 @@ chrpath -d %buildroot%{_libdir}/*.so.*.*
 %endif
 
 %changelog
+* Thu Mar 09 2023 L.A. Kostis <lakostis@altlinux.ru> 23.03-alt1
+- 23.03.
+
 * Wed Sep 28 2022 L.A. Kostis <lakostis@altlinux.ru> 22.09-alt1.1
 - 22.09.01.
 
