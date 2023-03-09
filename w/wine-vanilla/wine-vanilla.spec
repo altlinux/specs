@@ -12,8 +12,8 @@
 %define mono_version 7.4.0
 %define winetricks_version 20220617
 
-%define basemajor 8.0
-%define major 8.0
+%define basemajor 8.x
+%define major 8.1
 %define rel %nil
 %define conflictbase wine
 
@@ -64,7 +64,7 @@
 
 Name: wine-vanilla
 Version: %major
-Release: alt2
+Release: alt1
 Epoch: 1
 
 Summary: Wine - environment for running Windows applications
@@ -814,6 +814,9 @@ fi
 %libwinedir/%winesodir/lib*.a
 
 %changelog
+* Thu Mar 09 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.1-alt1
+- new version 8.1 (with rpmrb script)
+
 * Wed Jan 25 2023 Vitaly Lipatov <lav@altlinux.ru> 1:8.0-alt2
 - 8.0 release
 - .desktop files: update descriptions (see altbug #39800)
