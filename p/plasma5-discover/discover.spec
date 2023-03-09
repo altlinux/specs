@@ -19,7 +19,7 @@
 %define libdiscovernotifiers libdiscovernotifiers%sover
 
 Name: plasma5-%rname
-Version: 5.26.5
+Version: 5.27.2
 Release: alt1
 %K5init no_altplace appdata
 
@@ -46,8 +46,7 @@ Patch9: alt-show-reboot-avail.patch
 Patch10: alt-keep-focus.patch
 Patch11: alt-hide-autoreboot.patch
 Patch12: alt-send-interactive.patch
-Patch13: alt-fix-notifications.patch
-Patch14: alt-ghns-auth.patch
+Patch13: alt-ghns-auth.patch
 
 # Automatically added by buildreq on Tue Aug 07 2018 (-bi)
 # optimized out: appstream appstream-qt cmake cmake-modules elfutils fontconfig gcc-c++ glib2-devel glibc-kernheaders-generic glibc-kernheaders-x86 gtk-update-icon-cache kf5-attica-devel kf5-kauth-devel kf5-kbookmarks-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel kf5-kconfigwidgets-devel kf5-kcoreaddons-common kf5-kcoreaddons-devel kf5-kitemviews-devel kf5-kjobwidgets-common kf5-kjobwidgets-devel kf5-kservice-devel kf5-kwidgetsaddons-common kf5-kwidgetsaddons-devel kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-solid-devel libEGL-devel libGL-devel libdbusmenu-qt52 libgio-devel libgpg-error libjson-glib libqt5-concurrent libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-printsupport libqt5-qml libqt5-quick libqt5-svg libqt5-test libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcbutil-keysyms perl pkg-config python-base python-modules python3 python3-base qt5-base-common qt5-base-devel rpm-build-python3 rpm-build-qml ruby ruby-stdlibs sh3
@@ -175,7 +174,7 @@ KF5 library
 %prep
 %setup -n %rname-%version
 %patch1 -p1
-%patch2 -p2
+%patch2 -p1
 #%patch3 -p2 -b .upd-appstream
 %patch4 -p1
 %patch5 -p1
@@ -187,7 +186,6 @@ KF5 library
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
-%patch14 -p1
 
 %build
 %if "%(%__kf5_if_have_opt altplace yes no)" == "no"
@@ -233,7 +231,7 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 %files core
 %_K5bin/*
 %_K5libexecdir/DiscoverNotifier
-%_K5exec/discover/runservice
+#%_K5exec/discover/runservice
 %_K5xdgapp/org.kde.discover.desktop
 %_K5xdgapp/org.kde.discover.urlhandler.desktop
 %_K5xdgapp/org.kde.discover.notifier.desktop
@@ -292,6 +290,9 @@ desktop-file-install --mode=0644 --dir %buildroot/%_K5start \
 
 
 %changelog
+* Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.2-alt1
+- new version
+
 * Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt1
 - new version
 

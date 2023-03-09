@@ -4,7 +4,7 @@
 %define libbreezecommon libbreezecommon%breezecommon_sover
 
 Name: plasma5-%rname
-Version: 5.26.5
+Version: 5.27.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -85,10 +85,11 @@ KF5 library
 %_bindir/*5
 %_K5bin/*
 %_K5cf_bin/*
-%_K5plug/*.so
+%_K5plug/plasma/kcms/breeze/*.so
+%_K5plug/plasma/kcms/systemsettings*/*breeze*.so
 %_K5plug/org.kde.kdecoration2/*.so
 %_K5plug/styles/*.so
-%_K5srv/*.desktop
+%_K5xdgapp/*breeze*.desktop
 %_K5data/QtCurve/
 %_K5data/kstyle/themes/*
 %_K5data/color-schemes/*
@@ -105,6 +106,9 @@ KF5 library
 %_K5lib/libbreezecommon5.so.*
 
 %changelog
+* Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.2-alt1
+- new version
+
 * Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt1
 - new version
 

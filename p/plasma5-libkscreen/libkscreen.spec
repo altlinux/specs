@@ -4,7 +4,7 @@
 
 %define rname libkscreen
 Name: plasma5-%rname
-Version: 5.26.5
+Version: 5.27.2
 Release: alt1
 %K5init altplace
 
@@ -53,11 +53,18 @@ developing applications that use %name.
 
 %package -n libkf5screen
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common = %version-%release
 Requires: hwdatabase
 %description -n libkf5screen
-KF5 library
+%name library
+
+%package -n libkf5screendpms
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common = %version-%release
+%description -n libkf5screendpms
+%name library
 
 %package utils
 Group: Graphical desktop/KDE
@@ -104,7 +111,13 @@ export PATH=%_qt5_bindir:$PATH
 %_K5dbus_srv/org.kde.kscreen.service
 %_unitdir_user/*.service
 
+%files -n libkf5screendpms
+%_K5lib/libKF5ScreenDpms.so.*
+
 %changelog
+* Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.2-alt1
+- new version
+
 * Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt1
 - new version
 

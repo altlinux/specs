@@ -4,7 +4,7 @@
 %def_disable xwiimote
 
 Name: plasma5-remotecontrollers
-Version: 5.26.5
+Version: 5.27.2
 Release: alt1
 %K5init altplace no_appdata
 
@@ -38,7 +38,7 @@ BuildRequires: kde5-plasma-wayland-protocols qt5-wayland-devel
 BuildRequires: kf5-kcmutils-devel kf5-kdeclarative-devel kf5-ki18n-devel kf5-kitemmodels-devel
 BuildRequires: kf5-knotifications-devel kf5-kpackage-devel
 BuildRequires: libxcbutil-devel libxcbutil-icccm-devel libxkbcommon-x11-devel libxkbfile-devel
-BuildRequires: plasma5-workspace-devel
+BuildRequires: plasma5-kscreenlocker-devel plasma5-workspace-devel
 
 %description
 This project translates events from various input devices to keypresses
@@ -107,6 +107,9 @@ mv %buildroot/%_libdir/udev/rules.d/40-uinput.rules %buildroot/%_udevrulesdir/40
 %_K5dbus_iface/*remotecontrollers*
 
 %changelog
+* Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.2-alt1
+- new version
+
 * Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt1
 - new version
 

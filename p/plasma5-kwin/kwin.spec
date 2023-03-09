@@ -16,8 +16,8 @@
 %define libkwinxrenderutils libkwinxrenderutils%kwinxrenderutils_sover
 
 Name: plasma5-%rname
-Version: 5.26.5
-Release: alt2
+Version: 5.27.2
+Release: alt1
 %K5init altplace
 
 Group: Graphical desktop/KDE
@@ -51,7 +51,7 @@ BuildRequires: extra-cmake-modules gcc-c++ qt5-base-devel-static qt5-declarative
 BuildRequires: libqaccessibilityclient-qt5-devel
 BuildRequires: libcap-utils libcap-devel zlib-devel
 BuildRequires: libxcbutil-devel libxcbutil-icccm-devel libxcbutil-image-devel libxcbutil-cursor-devel libxcbutil-keysyms-devel
-BuildRequires: libxkbcommon-devel libgbm-devel libdrm-devel libEGL-devel libxcvt-devel
+BuildRequires: libxkbcommon-devel libxkbcommon-x11-devel libgbm-devel libdrm-devel libEGL-devel libxcvt-devel
 BuildRequires: fontconfig-devel libfreetype-devel liblcms2-devel
 BuildRequires: libepoxy-devel libinput-devel libwayland-cursor-devel libwayland-egl-devel libwayland-server-devel
 BuildRequires: pipewire-libs-devel
@@ -133,7 +133,7 @@ KF5 library
 %patch4 -p1 -b .hwinfo
 %patch5 -p1 -b .xkb
 
-for f in src/kcmkwin/kwincompositing/kwincompositing.json ; do
+for f in src/kcms/compositing/kwincompositing.json ; do
     sed -i '/X-DocPath/d' $f
 done
 
@@ -162,13 +162,10 @@ done
 %_K5exec/*kwin*
 %_K5plug/kpackage/packagestructure/kwin_*.so
 %_K5plug/kwin/
-#%_K5plug/kcms/*.so
-#%_K5plug/*.so
 %_K5plug/plasma/kcms/systemsettings/*kwin*.so
 %_K5plug/plasma/kcms/systemsettings/*virtua*.so
 %_K5plug/plasma/kcms/systemsettings_qwidgets/*kwin*.so
 %_K5plug/org.kde.kdecoration2/
-#%_K5plug/org.kde.*kwin*/
 %_K5xdgapp/*kwin*.desktop
 %_K5xdgapp/*virtua*.desktop
 %_K5cf_bin/kwin*
@@ -179,8 +176,7 @@ done
 %_K5data/kwin/
 %_K5data/knsrcfiles/*.knsrc
 %_K5data/krunner/dbusplugins/*.desktop
-#%_K5srv/*.desktop
-%_K5srv/kwin/
+#%_K5srv/kwin/
 %_K5srvtyp/*.desktop
 %_K5notif/*.notifyrc
 %_unitdir_user/*.service
@@ -209,6 +205,9 @@ done
 
 
 %changelog
+* Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.2-alt1
+- new version
+
 * Mon Jan 30 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt2
 - build with pipewire to enable screencasting on wayland
 

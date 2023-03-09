@@ -15,8 +15,8 @@
 %define libksysguardsystemstats libksysguardsystemstats%sover2
 
 Name: plasma5-%rname
-Version: 5.26.5
-Release: alt2
+Version: 5.27.2
+Release: alt1
 Epoch: 1
 %K5init altplace
 
@@ -32,7 +32,6 @@ Requires(post): /sbin/setcap
 
 Source: %rname-%version.tar
 Patch: alt-killbtn.patch
-Patch2: alt-i18n.patch
 
 # Automatically added by buildreq on Wed Feb 25 2015 (-bi)
 # optimized out: cmake cmake-modules elfutils libEGL-devel libGL-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcloog-isl4 libgst-plugins1.0 libqt5-core libqt5-dbus libqt5-gui libqt5-network libqt5-opengl libqt5-positioning libqt5-printsupport libqt5-qml libqt5-quick libqt5-script libqt5-sensors libqt5-sql libqt5-webkit libqt5-webkitwidgets libqt5-widgets libqt5-x11extras libqt5-xml libstdc++-devel libxcb-devel libxcbutil-keysyms libxkbfile-devel python-base qt5-base-devel ruby ruby-stdlibs xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -43,7 +42,7 @@ BuildRequires: libsensors3-devel
 BuildRequires: zlib-devel libnl-devel libcap-devel libpcap-devel
 BuildRequires: qt5-script-devel qt5-x11extras-devel qt5-tools-devel
 %if_enabled qtwebengine
-BuildRequires: qt5-webengine-devel
+BuildRequires: qt5-webengine-devel qt5-webchannel-devel
 %endif
 BuildRequires: kf5-kauth-devel kf5-kcodecs-devel kf5-kcompletion-devel kf5-kconfig-devel
 BuildRequires: kf5-kconfigwidgets-devel kf5-kcoreaddons-devel kf5-kdbusaddons-devel kf5-kguiaddons-devel
@@ -150,7 +149,6 @@ Requires: %name-common >= %EVR
 %prep
 %setup -n %rname-%version
 #%patch -p2
-%patch2 -p1
 
 %build
 %K5build \
@@ -224,6 +222,9 @@ Requires: %name-common >= %EVR
 %_K5lib/libKSysGuardSystemStats.so.*
 
 %changelog
+* Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.2-alt1
+- new version
+
 * Wed Feb 22 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt2
 - fix i18n
 

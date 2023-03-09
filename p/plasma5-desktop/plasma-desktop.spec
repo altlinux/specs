@@ -2,8 +2,8 @@
 %def_disable scim
 
 Name: plasma5-desktop
-Version: 5.26.5
-Release: alt3
+Version: 5.27.2
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -182,7 +182,7 @@ done
 %K5install_move data color-schemes doc kcmmouse knsrcfiles kglobalaccel
 %K5install_move data kcm_componentchooser kcminput kcmkeyboard kcmkeys kcm_phonon kcmsolidactions
 %K5install_move data kcontrol ksmserver kconf_update solid kpackage
-%K5install_move data plasma/desktoptheme plasma/plasmoids/touchpad
+%K5install_move data plasma/desktoptheme plasma/plasmoids/touchpad plasma/emoji
 
 %find_lang %name --with-kde --all-name
 
@@ -223,6 +223,7 @@ done
 %_K5data/kcm*/
 %_K5data/kactivitymanagerd/
 %_K5data/kpackage/kcms/*
+%_K5data/plasma/emoji/
 %_K5data/plasma/plasmoids/*
 %_K5data/plasma/packages/*
 %_K5data/plasma/layout-templates/*
@@ -249,6 +250,9 @@ done
 %_K5dbus_iface/*.xml
 
 %changelog
+* Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.2-alt1
+- new version
+
 * Tue Feb 21 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt3
 - show tooltips when hovering task buttons by default
 

@@ -4,8 +4,8 @@
 %define libqpulseaudioprivate libqpulseaudioprivate%sover
 
 Name: plasma5-pa
-Version: 5.26.5
-Release: alt3
+Version: 5.27.2
+Release: alt1
 %K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
@@ -101,6 +101,9 @@ rm -rf %buildroot/%_datadir/kde4/ ||:
 #%_K5lib/libQPulseAudioPrivate.so.*
 
 %changelog
+* Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.2-alt1
+- new version
+
 * Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt3
 - improve i18n
 

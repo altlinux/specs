@@ -5,11 +5,12 @@
 %define sover 5
 %define libkpipewire libkpipewire%sover
 %define libkpipewirerecord libkpipewirerecord%sover
+%define libkpipewiredmabuf libkpipewiredmabuf%sover
 
 
 %define rname kpipewire
 Name: plasma5-%rname
-Version: 5.26.5
+Version: 5.27.2
 Release: alt1
 %K5init altplace
 
@@ -51,18 +52,24 @@ developing applications that use %name.
 
 %package -n %libkpipewirerecord
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libkpipewirerecord
-KF5 library
+%name library
 
 %package -n %libkpipewire
 Group: System/Libraries
-Summary: KF5 library
+Summary: %name library
 Requires: %name-common
 %description -n %libkpipewire
-KF5 library
+%name library
 
+%package -n %libkpipewiredmabuf
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common
+%description -n %libkpipewiredmabuf
+%name library
 
 %prep
 %setup -n %rname-%version
@@ -96,12 +103,17 @@ KF5 library
 %files -n %libkpipewire
 %_K5lib/libKPipeWire.so.%sover
 %_K5lib/libKPipeWire.so.*
-
 %files -n %libkpipewirerecord
 %_K5lib/libKPipeWireRecord.so.%sover
 %_K5lib/libKPipeWireRecord.so.*
+%files -n %libkpipewiredmabuf
+%_K5lib/libKPipeWireDmaBuf.so.%sover
+%_K5lib/libKPipeWireDmaBuf.so.*
 
 %changelog
+* Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.2-alt1
+- new version
+
 * Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 5.26.5-alt1
 - new version
 

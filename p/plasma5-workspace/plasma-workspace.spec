@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.26.5
-Release: alt8
+Version: 5.27.2
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -442,6 +442,7 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 %_K5exec/*
 %_K5libexecdir/kauth/*
 %_K5conf_bin/*
+%_K5plug/kf5/thumbcreator/
 %_K5plug/plasma/*/*.so
 %_K5plug/phonon_platform/*.so
 %_K5plug/*.so
@@ -542,6 +543,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 
 
 %changelog
+* Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.2-alt1
+- new version
+
 * Mon Feb 20 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt8
 - don't build locale generator (closes: 45319)
 

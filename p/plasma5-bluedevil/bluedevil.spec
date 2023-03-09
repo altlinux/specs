@@ -1,7 +1,7 @@
 %define rname bluedevil
 
 Name: plasma5-%rname
-Version: 5.26.5
+Version: 5.27.2
 Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
@@ -108,6 +108,9 @@ else
 fi
 
 %changelog
+* Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.2-alt1
+- new version
+
 * Mon Jan 09 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.26.5-alt1
 - new version
 
