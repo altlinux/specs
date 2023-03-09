@@ -3,7 +3,7 @@
 %define _libexecdir  /usr/libexec
 %define _localstatedir %_var
 
-%ifnarch %arm %mips riscv64
+%ifnarch %arm %mips
 %def_enable dma_coherent
 %else
 %def_disable dma_coherent
@@ -12,7 +12,7 @@
 
 Name: rdma-core
 Version: 44.0
-Release: alt1
+Release: alt2
 Summary: RDMA core userspace libraries and daemons
 Group: System/Base
 
@@ -589,6 +589,9 @@ mv %buildroot%_docdir/%name-%version/70-persistent-ipoib.rules %buildroot%_sysco
 %docdir/ibsrpdm.md
 
 %changelog
+* Thu Mar 09 2023 Ivan A. Melnikov <iv@altlinux.org> 44.0-alt2
+- enable dma_coherent on riscv64
+
 * Tue Mar 07 2023 Andrew A. Vasilyev <andy@altlinux.org> 44.0-alt1
 - new version 44.0
 
