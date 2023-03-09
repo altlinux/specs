@@ -4,7 +4,7 @@
 
 Name: deepin-kwin2
 Version: 5.24.3.1.9
-Release: alt1
+Release: alt2
 
 Summary: New KWin configuration for Deepin Desktop Environment
 
@@ -13,6 +13,8 @@ Group: Graphical desktop/Other
 Url: https://github.com/linuxdeepin/deepin-kwin
 
 Source: %url/archive/%version/deepin-kwin-%version.tar.gz
+Patch: 0001-chore-sync-upstream.patch
+Patch1: 0001-chore-compatible-with-older-versions.patch
 
 Requires: kf5-kglobalaccel
 
@@ -81,12 +83,14 @@ The package provides development files for deepin-kwin.
 %package doc
 Summary: Docs for deepin-kwin
 Group: Documentation
+BuildArch: noarch
 
 %description doc
 The package provides documentation for deepin-kwin.
 
 %prep
 %setup -n deepin-kwin-%version
+%autopatch -p1
 sed -i 's|Wayland::Server|wayland-server|' \
   src/CMakeLists.txt
 
@@ -205,5 +209,9 @@ ln -sf %_libdir/libdeepin-kwin.so.5 %buildroot%_libdir/libdeepin-kwin.so
 %_K5doc/*/dcontrol/*
 
 %changelog
+* Thu Mar 09 2023 Leontiy Volodin <lvol@altlinux.org> 5.24.3.1.9-alt2
+- Fixed build with plasma 5.27.
+- Fixed noarch warnings.
+
 * Sun Jan 22 2023 Leontiy Volodin <lvol@altlinux.org> 5.24.3.1.9-alt1
 - Initial build for ALT Sisyphus (Closes: #41379, #41154).
