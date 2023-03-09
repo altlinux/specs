@@ -58,7 +58,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: NetworkManager
-Version: 1.42.2
+Version: 1.42.4
 Release: alt1%git_hash
 License: GPLv2+ and LGPLv2.1+
 Group: System/Configuration/Networking
@@ -639,6 +639,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Mar 09 2023 Mikhail Efremov <sem@altlinux.org> 1.42.4-alt1
+- Updated to 1.42.4.
+
 * Mon Feb 27 2023 Mikhail Efremov <sem@altlinux.org> 1.42.2-alt1
 - arm: Disable more-warnings.
 - libnm-glib-aux: Fix maybe-uninitialized warning.
