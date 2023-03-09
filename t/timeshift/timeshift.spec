@@ -3,7 +3,7 @@
 Name: timeshift
 Version: 22.11.1
 Summary: System restore tool for Linux
-Release: alt2
+Release: alt3
 License: GPLv3
 Group: Archiving/Backup
 URL: https://github.com/linuxmint/timeshift
@@ -52,6 +52,10 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %doc README.md
 
 %changelog
+* Tue Mar 07 2023 Oleg Solovyov <mcpain@altlinux.org> 22.11.1-alt3
+- do not take first boot snapshot if there are any
+- use /etc/os-release info
+
 * Mon Feb 20 2023 Oleg Solovyov <mcpain@altlinux.org> 22.11.1-alt2
 - First boot: take BtrFS snapshot before logging in
 
