@@ -2,8 +2,8 @@
 %def_disable check
 
 Name: python3-module-flask-restful
-Version: 0.3.8
-Release: alt2
+Version: 0.3.9
+Release: alt1
 
 Summary: Simple framework for creating REST APIs
 
@@ -43,6 +43,9 @@ Flask-RESTful provides the building blocks for creating a great REST API.
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 09 2023 Grigory Ustinov <grenka@altlinux.org> 0.3.9-alt1
+- Build new version.
+
 * Thu Nov 05 2020 Vitaly Lipatov <lav@altlinux.ru> 0.3.8-alt2
 - NMU: cleanup spec, disable tests packing
 
