@@ -1,5 +1,5 @@
 Name:    blueman
-Version: 2.3.2
+Version: 2.3.5
 Release: alt1
 
 Summary: Blueman is a GTK+ Bluetooth Manager
@@ -21,6 +21,7 @@ BuildRequires: python3-module-Cython >= 0.21
 BuildRequires: python3-module-dbus
 
 Requires: bluez
+Requires: typelib(Gtk) = 3.0
 
 # Build with --disable-appindicator
 %add_typelib_req_skiplist typelib(AppIndicator3)
@@ -111,6 +112,10 @@ fi
 %_sysconfdir/xdg/autostart/%name.desktop
 
 %changelog
+* Thu Mar 09 2023 Anton Midyukov <antohami@altlinux.org> 2.3.5-alt1
+- new version 2.3.5
+- add 'Requires: typelib(Gtk) = 3.0'
+
 * Fri Sep 09 2022 Anton Midyukov <antohami@altlinux.org> 2.3.2-alt1
 - new version 2.3.2
 
