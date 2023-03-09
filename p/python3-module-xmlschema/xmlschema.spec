@@ -4,7 +4,7 @@
 %def_without check
 
 Name: python3-module-%oname
-Version: 2.2.1
+Version: 2.2.2
 Release: alt1
 
 Summary: XML Schema validator and data conversion library
@@ -52,6 +52,9 @@ export LANG=C.UTF-8
 %python3_sitelibdir/%oname-%version-py%_python3_version.egg-info
 
 %changelog
+* Tue Mar 07 2023 Grigory Ustinov <grenka@altlinux.org> 2.2.2-alt1
+- Automatically updated to 2.2.2.
+
 * Sun Feb 12 2023 Grigory Ustinov <grenka@altlinux.org> 2.2.1-alt1
 - Build new version.
 
