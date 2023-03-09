@@ -17,7 +17,7 @@
 
 Name: zabbix
 Version: 6.0.14
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: A network monitor
@@ -167,9 +167,15 @@ Requires: php8.0-gd php8.0-libs php8.0-mbstring php8.0-mysqli php8.0-openssl php
 BuildArch: noarch
 
 %package phpfrontend-php8.1
-Summary: zabbix web frontend, edition for php8.0
+Summary: zabbix web frontend, edition for php8.1
 Group: Monitoring
 Requires: php8.1-gd php8.1-libs php8.1-mbstring php8.1-mysqli php8.1-openssl php8.1-pgsql php8.1-sockets
+BuildArch: noarch
+
+%package phpfrontend-php8.2
+Summary: zabbix web frontend, edition for php8.2
+Group: Monitoring
+Requires: php8.2-gd php8.2-libs php8.2-mbstring php8.2-mysqli php8.2-openssl php8.2-pgsql php8.2-sockets
 BuildArch: noarch
 
 %package phpfrontend-apache2
@@ -200,6 +206,14 @@ Group: Monitoring
 Requires: %name-phpfrontend-apache2
 Requires: apache2-httpd-prefork-like
 Requires: apache2-mod_php8.1
+BuildArch: noarch
+
+%package phpfrontend-apache2-mod_php8.2
+Summary: Requirements for the use of apache2-mod_php8.2
+Group: Monitoring
+Requires: %name-phpfrontend-apache2
+Requires: apache2-httpd-prefork-like
+Requires: apache2-mod_php8.2
 BuildArch: noarch
 
 %package doc
@@ -318,6 +332,10 @@ in to zabbix phpfrontend
 Contains requirements for the use of apache2-mod_php8.1
 in to zabbix phpfrontend
 
+%description phpfrontend-apache2-mod_php8.2
+Contains requirements for the use of apache2-mod_php8.2
+in to zabbix phpfrontend
+
 %description phpfrontend-engine
 a php frontend for zabbix - core
 
@@ -329,6 +347,9 @@ zabbix web frontend, edition for php8.0
 
 %description phpfrontend-php8.1
 zabbix web frontend, edition for php8.1
+
+%description phpfrontend-php8.2
+zabbix web frontend, edition for php8.2
 
 %description doc
 %name network monitor (README, ChangeLog)
@@ -738,6 +759,7 @@ fi
 %files phpfrontend-php7
 %files phpfrontend-php8.0
 %files phpfrontend-php8.1
+%files phpfrontend-php8.2
 
 %files phpfrontend-apache2
 %config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
@@ -745,6 +767,7 @@ fi
 %files phpfrontend-apache2-mod_php7
 %files phpfrontend-apache2-mod_php8.0
 %files phpfrontend-apache2-mod_php8.1
+%files phpfrontend-apache2-mod_php8.2
 
 %files doc
 %doc AUTHORS NEWS README INSTALL ChangeLog.bz2
@@ -756,6 +779,10 @@ fi
 %_includedir/%name
 
 %changelog
+* Thu Mar 09 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.14-alt2
+- Add support php 8.2
+- Fix typo Summary for phpfrontend-php8.1
+
 * Thu Mar 09 2023 Alexei Takaseev <taf@altlinux.org> 1:6.0.14-alt1
 - 6.0.14
 
