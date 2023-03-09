@@ -1,5 +1,5 @@
 Name: gtk-theme-qogir
-Version: 2022.11.09
+Version: 2023.02.27
 Release: alt1
 Epoch: 1
 Summary: Qogir GTK theme
@@ -35,6 +35,16 @@ mkdir -p %buildroot%_datadir/themes/Qogir
 %_datadir/themes/Qogir*
 
 %changelog
+* Thu Mar 09 2023 Leontiy Volodin <lvol@altlinux.org> 1:2023.02.27-alt1
+- New version.
+- Upstream:
+  + Fix installation script for gdm.
+  + Fix looking glass buttons.
+  + Add missing focus outline.
+  + Fix square close button when maximized.
+  + Fix Budgie desktop issues.
+  + Fix very dark text in file location when Gedit opened.
+
 * Thu Nov 10 2022 Leontiy Volodin <lvol@altlinux.org> 1:2022.11.09-alt1
 - New version.
 - Upstream:
