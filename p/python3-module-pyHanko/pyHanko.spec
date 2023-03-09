@@ -4,7 +4,7 @@
 %def_without check
 
 Name:    python3-module-%modulename
-Version: 0.17.0
+Version: 0.17.1
 Release: alt1
 
 Summary: pyHanko: sign and stamp PDF files
@@ -68,6 +68,9 @@ py.test-3
 %python3_sitelibdir/%modulename-%version-py%_python3_version.egg-info
 
 %changelog
+* Thu Mar 09 2023 Grigory Ustinov <grenka@altlinux.org> 0.17.1-alt1
+- Automatically updated to 0.17.1.
+
 * Tue Feb 07 2023 Grigory Ustinov <grenka@altlinux.org> 0.17.0-alt1
 - Automatically updated to 0.17.0.
 
