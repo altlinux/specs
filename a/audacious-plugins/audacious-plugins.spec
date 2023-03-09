@@ -6,7 +6,7 @@
 %def_disable jack
 
 Name: audacious-plugins
-Version: 4.2
+Version: 4.3
 Release: alt1
 
 Summary: Plugins for Audacious
@@ -27,6 +27,8 @@ BuildRequires: qt5-base-devel
 
 BuildRequires: libglade-devel libprojectM-devel >= 1.1 libsidplayfp-devel libsoxr-devel libadplug-devel
 
+BuildRequires: libopus-devel libopusfile-devel
+
 %description
 Base plugins for Audacious.
 It includes some great other features like various output plugins,
@@ -40,6 +42,7 @@ This package contains the base I/O plugins:
   * FLAC support
   * ALAC support
   * WAVE support
+  * OPUS support
   * ALSA output
   * OSS output
   * Disk writer output
@@ -77,6 +80,9 @@ find -type f -name '*.cpp' -o -name '*.hpp' -o -name '*.cc' -o -name '*.h' |
 %_libdir/%oname/*
 
 %changelog
+* Wed Mar 08 2023 Vitaly Lipatov <lav@altlinux.ru> 4.3-alt1
+- new version 4.3 (with rpmrb script)
+
 * Mon Dec 19 2022 Vitaly Lipatov <lav@altlinux.ru> 4.2-alt1
 - new version 4.2 (with rpmrb script)
 
