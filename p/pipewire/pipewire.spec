@@ -37,8 +37,8 @@
 %def_enable check
 
 Name: pipewire
-Version: %ver_major.66
-Release: alt2
+Version: %ver_major.67
+Release: alt1
 
 Summary: Media Sharing Server
 Group: System/Servers
@@ -279,6 +279,7 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 %_bindir/pw-dot
 %_bindir/pw-dsdplay
 %_bindir/pw-dump
+%_bindir/pw-encplay
 %_bindir/pw-link
 %_bindir/pw-loopback
 %_bindir/pw-metadata
@@ -311,6 +312,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{media-session.d,filter-chain}
 
 
 %changelog
+* Thu Mar 09 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.67-alt1
+- 0.3.67
+
 * Mon Feb 27 2023 Yuri N. Sedunov <aris@altlinux.org> 0.3.66-alt2
 - updated media-session to 0.4.2 (ALT #45411)
 
