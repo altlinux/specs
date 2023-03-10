@@ -10,7 +10,7 @@
 %define krelease %release
 
 %define kernel_base_version     5.10
-%define kernel_sublevel .168
+%define kernel_sublevel .172
 %define kernel_extra_version    %nil
 
 %define kernel_extra_version_numeric 1.0.0
@@ -166,6 +166,9 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %modules_dir/*
 
 %changelog
+* Fri Mar 10 2023 Andrew A. Vasilyev <andy@altlinux.org> 5.10.172-alt1
+- 5.10.172
+
 * Fri Feb 17 2023 Andrew A. Vasilyev <andy@altlinux.org> 5.10.168-alt1
 - 5.10.168
 
