@@ -2,8 +2,8 @@
 %def_with check
 
 Name: kitty
-Version: 0.27.0
-Release: alt2
+Version: 0.27.1
+Release: alt1
 
 Summary: Cross-platform, fast, feature-rich, GPU based terminal
 License: GPL-3.0
@@ -145,13 +145,13 @@ python3 setup.py linux-package \
 mkdir -pv %buildroot
 cp -r ./linux-package %buildroot%_prefix
 
-python3 __main__.py + complete setup bash | \
+%buildroot%_bindir/kitten __complete__ setup bash | \
 	install -Dm644 /dev/stdin %buildroot%_datadir/bash-completion/completions/kitty
 
-python3 __main__.py + complete setup zsh | \
+%buildroot%_bindir/kitten __complete__ setup zsh | \
 	install -Dm644 /dev/stdin  %buildroot%_datadir/zsh/site-functions/_kitty
 
-python3 __main__.py + complete setup fish | \
+%buildroot%_bindir/kitten __complete__ setup fish | \
 	install -Dm644 /dev/stdin %buildroot%_datadir/fish/vendor_completions.d/kitty.fish
 
 
@@ -186,6 +186,9 @@ PYTHONPATH="$PWD" linux-package/bin/kitty +launch ./test.py
 %_libexecdir/kitty/shell-integration
 
 %changelog
+* Fri Mar 10 2023 Egor Ignatov <egori@altlinux.org> 0.27.1-alt1
+- new version 0.27.1
+
 * Mon Mar 06 2023 Egor Ignatov <egori@altlinux.org> 0.27.0-alt2
 - fix FTBFS: build without docs
 - clean up spec
