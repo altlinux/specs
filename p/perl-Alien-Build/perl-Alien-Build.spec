@@ -25,7 +25,7 @@ BuildRequires: gcc-c++ perl(AnyEvent.pm) perl(Inline.pm) perl(Module/Build.pm) p
 %{bcond_without perl_Alien_Build_enables_optional_test}
 
 Name:           perl-Alien-Build
-Version:        2.77
+Version:        2.78
 Release:        alt1
 Summary:        Build external dependencies for use in CPAN
 License:        GPL+ or Artistic
@@ -197,6 +197,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Mar 10 2023 Igor Vlasenko <viy@altlinux.org> 2.78-alt1
+- automated CPAN update
+
 * Tue Jan 31 2023 Igor Vlasenko <viy@altlinux.org> 2.77-alt1
 - automated CPAN update
 
