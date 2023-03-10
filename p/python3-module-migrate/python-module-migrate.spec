@@ -2,7 +2,7 @@
 
 Name: python3-module-%oname
 Version: 0.13.0
-Release: alt1
+Release: alt2
 
 Summary: Schema migration tools for SQLAlchemy
 
@@ -18,6 +18,8 @@ Patch2: fix-regex.patch
 
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-module-pbr
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
 
 %add_python3_req_skip ibm_db_sa
 Provides: python3-module-sqlalchemy-migrate = %EVR
@@ -43,17 +45,20 @@ Tests for Schema migration tools for SQLAlchemy.
 
 # suddenly 32bit arches cant process it
 sed -i '/pytz/d' test-requirements.txt
+# sqlalchemy.databases was long obsolete and now removed 
+sed -i 's,sqlalchemy\.databases,sqlalchemy.dialects,' \
+	migrate/changeset/databases/*.py
 
 %patch1 -p2
 %patch2 -p1
 
 %build
 export PBR_VERSION=%version
-%python3_build
+%pyproject_build
 
 %install
 export PBR_VERSION=%version
-%python3_install
+%pyproject_install
 
 %check
 echo 'sqlite:///__tmp__' > test_db.cfg
@@ -68,6 +73,9 @@ echo 'sqlite:///__tmp__' > test_db.cfg
 %python3_sitelibdir/*/tests
 
 %changelog
+* Fri Mar 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.13.0-alt2
+- drop obsolete sqlalchemy.databases req
+
 * Sat Oct 22 2022 Grigory Ustinov <grenka@altlinux.org> 0.13.0-alt1
 - Build new version for oslo.db.
 

@@ -1,10 +1,10 @@
 Name: python3-module-sqlalchemy
-Version: 1.4.44
+Version: 2.0.4
 Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
-Group: Development/Python3
+Group: Development/Python
 Url: http://www.sqlalchemy.org/
 
 Source: SQLAlchemy-%version.tar
@@ -14,9 +14,10 @@ Obsoletes: python3-module-SQLAlchemy
 
 %py3_provides SQLAlchemy
 
-BuildRequires: rpm-build-python3 python3-devel
+BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+BuildRequires: python3(cython)
 
 # Make sure that at least the Python built-in sqlite driver
 # is present (and can be used by SQLAlchemy--among other things--
@@ -64,6 +65,9 @@ This package contains tests for SQLAlchemy.
 %python3_sitelibdir/*/testing
 
 %changelog
+* Mon Mar 06 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.4-alt1
+- 2.0.4 released
+
 * Mon Jan 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.44-alt1
 - 1.4.44 released
 
