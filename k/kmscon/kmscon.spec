@@ -1,6 +1,8 @@
+%define _unpackaged_files_terminate_build 1
+
 Name: kmscon
-Version: 8
-Release: alt4.40.g01dd0a2
+Version: 9.0.0
+Release: alt1
 Summary: KMS/DRM based System Console
 Group: Terminals
 
@@ -9,7 +11,9 @@ Url: http://www.freedesktop.org/wiki/Software/kmscon/
 Source: %name-%version.tar
 Patch1: %name-%version.patch
 
+BuildRequires(pre): meson
 BuildRequires: pkgconfig(xkbcommon)
+BuildRequires: xkeyboard-config
 BuildRequires: pkgconfig(libtsm) >= 4.0.0
 BuildRequires: pkgconfig(libudev) >= 172
 BuildRequires: pkgconfig(libdrm)
@@ -31,28 +35,23 @@ console. See kmscon(1) man-page for usage information.
 %patch1 -p1
 
 %build
-mkdir -p m4
-%autoreconf
-%configure \
-	--disable-static \
-	--disable-silent-rules \
+# In the development branch upstream fixes this differently.
+sed -i '/^systemddir = .*$/'c"systemddir = '/lib/systemd'" meson.build
+# Patch out tests we have to skip.
+sed -i /"'"output"'"/c"# 'output' needs /dev/dri/card*" tests/meson.build
+sed -i /"'"vt"'"/c"# 'vt' hangs in hasher" tests/meson.build
 
-%make_build
+%meson
+%meson_build
 
 %install
-%makeinstall_std
-rm -f %buildroot%_libdir/%name/mod-*.la
-
-# Install systemd services
-mkdir -p %buildroot%_unitdir
-install -pm 0644 docs/kmscon.service %buildroot%_unitdir
-install -pm 0644 docs/kmsconvt@.service %buildroot%_unitdir
+%meson_install
 
 %check
-%make check
+%meson_test
 
 %files
-%doc COPYING NEWS README
+%doc COPYING NEWS README.md
 %_bindir/%name
 %_unitdir/*.service
 %dir %_libdir/%name
@@ -62,6 +61,9 @@ install -pm 0644 docs/kmsconvt@.service %buildroot%_unitdir
 %_man1dir/%name.1*
 
 %changelog
+* Fri Mar 10 2023 Arseny Maslennikov <arseny@altlinux.org> 9.0.0-alt1
+- 8.0.40.g01dd0a2 -> 9.0.0.
+
 * Thu Aug 15 2019 Alexey Shabalin <shaba@altlinux.org> 8-alt4.40.g01dd0a2
 - disable post/preun scripts
 
