@@ -1,10 +1,10 @@
 Name: rust
 Epoch: 1
-Version: 1.67.0
+Version: 1.68.0
 Release: alt1
 Summary: The Rust Programming Language
 
-%define r_ver 1.66.1
+%define r_ver 1.67.0
 
 Group: Development/Other
 License: Apache-2.0 and MIT
@@ -387,7 +387,7 @@ for i in \
 ; do
 	: "### rust_src_test: running $i"
 	status='done'
-	if ! python3 ./x.py test --no-doc --no-fail-fast "src/test/$i"; then
+	if ! python3 ./x.py test --no-doc --no-fail-fast "tests/$i"; then
 		status='failed'
 		failed="$failed $i"
 	fi
@@ -465,6 +465,9 @@ rm -rf %rustdir
 %rustlibdir/%rust_triple/analysis
 
 %changelog
+* Thu Mar 09 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.68.0-alt1
+- New version (1.68.0).
+
 * Thu Jan 26 2023 Alexey Gladkov <legion@altlinux.ru> 1:1.67.0-alt1
 - New version (1.67.0).
 
