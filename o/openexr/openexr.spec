@@ -1,112 +1,155 @@
-
 %define rname OpenEXR
-%define libsover 25
+%define libsover 30
 Name: openexr
-Version: 2.5.6
-Release: alt4
+Version: 3.1.5
+Release: alt1
 
 %define _cmake__builddir BUILD
 %define common %name%libsover-common
-%define libilmimf libilmimf%libsover
-%define libilmimfutil libilmimfutil%libsover
+%define libopenexr libopenexr%libsover
+%define libiex libiex%libsover
+%define libilmthread libilmthread%libsover
+%define libopenexrcore libopenexrcore%libsover
+%define libopenexrutil libopenexrutil%libsover
 
-Group: System/Libraries
 Summary: A high-dynamic-range image file library
 License: BSD-3-Clause
+Group: System/Libraries
 URL: http://www.openexr.org/
 
-Requires: %libilmimf = %version-%release
 Provides: %rname = %version-%release
 Obsoletes: %rname < %version-%release
 Provides: %name-utils = %version-%release
 Obsoletes: %name-utils < %version-%release
 
 Source: %name-%version.tar
-# upstream
-Patch1: oss-fuzz.patch
-Patch2000: %name-e2k-simd.patch
 
-BuildRequires: gcc-c++ glibc-devel ilmbase-devel zlib-devel
+BuildRequires: gcc-c++ glibc-devel zlib-devel
+BuildRequires: libimath29-devel
+BuildRequires: python3-module-imath
 BuildRequires: cmake
 
-%description
-OpenEXR is an image file format and library developed by Industrial Light
-& Magic, and later released to the public. It provides support for high
-dynamic range and a 16-bit floating point "half" data type which is
-compatible with the half data type in the Cg programming language.
+%define descr The OpenEXR project provides the specification and reference \
+implementation of the EXR file format, the professional-grade \
+image storage format of the motion picture industry. \
+\
+The purpose of EXR format is to accurately and efficiently represent \
+high-dynamic-range scene-linear image data and associated metadata, \
+with strong support for multi-part, multi-channel use cases. \
+\
+OpenEXR is widely used in host application software where accuracy is critical, \
+such as photorealistic rendering, texture access, image compositing, \
+deep compositing, and DI.
 
+%description
+%descr
 
 %package -n %common
 Group: System/Configuration/Other
 Summary: Common empty package for %name
+BuildArch: noarch
+
 %description -n %common
 Common empty package for %name
 
-%package -n %libilmimf
+%package -n %libopenexr
+Summary: %rname library
 Group: System/Libraries
-Summary: libIlmImf %rname library
-Requires: %common = %version-%release
-Conflicts: openexr <= 1.6.1-alt1
-%description -n %libilmimf
-libIlmImf %rname library
+Conflicts: openexr < %EVR
 
-%package -n %libilmimfutil
-Group: System/Libraries
-Summary: libIlmImfUtil %rname library
-Requires: %common = %version-%release
-Conflicts: openexr <= 1.6.1-alt1
-%description -n %libilmimfutil
-libIlmImfUtil %rname library
+%description -n %libopenexr
+%descr
 
 %package devel
-Summary: Headers for developing programs that will use %rname
+Summary: Headers for developing programs that will use OpenEXR
 Group: Development/Other
-Requires: %common = %version-%release
-Requires: ilmbase-devel
-#
+Conflicts: ilmbase-devel
+
 %description devel
+%descr
+
 This package contains the static libraries and header files needed for
-developing applications with %rname
+developing applications with OpenEXR
+
+%package -n %libiex
+Summary: libIex %rname library
+Group: System/Libraries
+Conflicts: openexr < %EVR
+
+%description -n %libiex
+%descr
+
+%package -n %libilmthread
+Summary: libIlmThread %rname library
+Group: System/Libraries
+Conflicts: openexr < %EVR
+
+%description -n %libilmthread
+%descr
+
+%package -n %libopenexrcore
+Summary: libOpenEXRCore %rname library
+Group: System/Libraries
+Conflicts: openexr < %EVR
+
+%description -n %libopenexrcore
+%descr
+
+%package -n %libopenexrutil
+Summary: libOpenEXRUtil %rname library
+Group: System/Libraries
+Conflicts: openexr < %EVR
+
+%description -n %libopenexrutil
+%descr
 
 %prep
-%setup -q -n %name-%version
-%patch1 -p1
-%ifarch %e2k
-%patch2000 -p2
-%endif
+%setup -n %name-%version
 
 %build
 %cmake
 %cmake_build
 
 %install
-make -C BUILD install DESTDIR=%buildroot
-
+make -C BUILD install DESTDIR=%buildroot CMAKE_MODULE_PATH=%_includedir/Imath
 
 %files -n %common
+%doc *.md
+%_docdir/%rname/examples
 
 %files
 %_bindir/*
 
-%files -n %libilmimf
-%doc PATENTS README*
-%_libdir/libIlmImf-*.so.%libsover
-%_libdir/libIlmImf-*.so.%libsover.*
-%files -n %libilmimfutil
-%doc PATENTS README*
-%_libdir/libIlmImfUtil-*.so.%libsover
-%_libdir/libIlmImfUtil-*.so.%libsover.*
+%files -n %libopenexr
+%_libdir/libOpenEXR-*.so.%libsover
+%_libdir/libOpenEXR-*.so.%libsover.*
 
 %files devel
-%doc doc/*.pdf
-%_includedir/%rname
 %_libdir/lib*.so
-%_libdir/pkgconfig/*
-%_libdir/cmake/OpenEXR/
-#%_datadir/aclocal/%name.m4
+%_includedir/OpenEXR/*
+%_pkgconfigdir/OpenEXR.pc
+%_libdir/cmake/OpenEXR/*.cmake
 
+%files -n %libiex
+%_libdir/libIex*.so.%libsover
+%_libdir/libIex*.so.%libsover.*
+
+%files -n %libilmthread
+%_libdir/libIlmThread*.so.%libsover
+%_libdir/libIlmThread*.so.%libsover.*
+
+%files -n %libopenexrcore
+%_libdir/libOpenEXRCore*.so.%libsover
+%_libdir/libOpenEXRCore*.so.%libsover.*
+
+%files -n %libopenexrutil
+%_libdir/libOpenEXRUtil*.so.%libsover
+%_libdir/libOpenEXRUtil*.so.%libsover.*
 
 %changelog
+* Fri Feb 03 2023 Alexander Burmatov <thatman@altlinux.org> 3.1.5-alt1
+- Updated to upstream version 3.1.5
+
 * Wed Nov 10 2021 Sergey V Turchin <zerg@altlinux.org> 2.5.6-alt4
 - add upstream fixes against oss-fuzz issues 28051,28055
 
@@ -188,4 +231,3 @@ make -C BUILD install DESTDIR=%buildroot
 
 * Mon Sep 27 2004 Sergey V Turchin <zerg at altlinux dot org> 1.2.1-alt1
 - initial spec
-

@@ -1,21 +1,20 @@
+%{?optflags_lto:%global optflags_lto %optflags_lto -ffat-lto-objects}
 %define _unpackaged_files_terminate_build 1
 %define _stripped_files_terminate_build 1
 %set_verify_elf_method strict
 
-%def_with openimageio
-
 # TODO: build docs
 
 %define oname opencolorio
-%define soname 2.0
+%define soname 2.2
 
 Name:           lib%oname%soname
-Version:        2.0.3
-Release:        alt2
+Version:        2.2.1
+Release:        alt1
 Summary:        Enables color transforms and image display across graphics apps
-Group:          System/Libraries
 
-License:        BSD
+License:        BSD-3-Clause
+Group:          System/Libraries
 URL:            https://opencolorio.org/
 
 # https://github.com/imageworks/OpenColorIO.git
@@ -23,20 +22,14 @@ Source:         %name-%version.tar
 
 Patch1: opencolorio-alt-install.patch
 Patch2: opencolorio-alt-armh-multiple-definition.patch
-Patch3: opencolorio-alt-openimageio-linking.patch
-Patch4: opencolorio-upstream-tests.patch
-Patch5: opencolorio-upstream-python-tests.patch
 
 # Utilities
-BuildRequires: cmake gcc10-c++
+BuildRequires: cmake gcc-c++
 BuildRequires: help2man
 
 # WARNING: OpenColorIO and OpenImageIO are cross dependent.
 # If an ABI incompatible update is done in one, the other also needs to be
 # rebuilt.
-%if_with openimageio
-BuildRequires: libopenimageio-devel
-%endif
 BuildRequires: openexr-devel
 
 # Libraries
@@ -48,12 +41,17 @@ BuildRequires: zlib-devel
 BuildRequires: libexpat-devel
 BuildRequires: pystring-devel
 BuildRequires: pybind11-devel
+BuildRequires: python3-devel
 BuildRequires: liblcms2-devel
 BuildRequires: libyaml-cpp-devel
 BuildRequires: boost-devel
+BuildRequires: libimath29-devel
+BuildRequires: python3-module-imath
+BuildRequires: libminizip-ng-devel
 
 # Test dependencies
 BuildRequires: ctest
+BuildRequires: python3-module-numpy
 
 %description
 OCIO enables color transforms and image display to be handled in a consistent
@@ -61,13 +59,34 @@ manner across multiple graphics applications. Unlike other color management
 solutions, OCIO is geared towards motion-picture post production, with an
 emphasis on visual effects and animation color pipelines.
 
+%package -n %oname%soname-tools
+Summary:        Command line tools for %oname
+Group:          Other
+Provides:       opencolorio-tools = %version
+Provides:       opencolorio2.0-tools = %EVR
+Obsoletes:      opencolorio2.0-tools < %EVR
+
+%description -n %oname%soname-tools
+Command line tools for %oname.
+
+%package devel
+Summary:        Development libraries and headers for %oname
+Group:          Development/Other
+
+%description devel
+Development libraries and headers for %oname.
+
+%package -n python3-module-%oname
+Summary:        %oname python3 module
+Group:          Development/Python3
+
+%description -n python3-module-%oname
+%oname python3 module.
+
 %prep
 %setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
 %ifarch %e2k
 # ld: multiple definition of LoadLutFile
 sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
@@ -75,7 +94,6 @@ sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
 %endif
 
 %build
-%set_gcc_version 10
 %add_optflags -D_FILE_OFFSET_BITS=64
 
 # disable debugging wrappers
@@ -83,7 +101,7 @@ sed -i "s/OCIO::LocalCachedFileRcPtr LoadLutFile/static &/" \
 
 %cmake \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
-	-DOCIO_BUILD_PYTHON:BOOL=OFF \
+	-DOCIO_BUILD_PYTHON:BOOL=ON \
 	-DOCIO_BUILD_STATIC=OFF \
 	-DOCIO_BUILD_DOCS=OFF \
 	-DOCIO_BUILD_TESTS=ON \
@@ -115,33 +133,50 @@ for i in %buildroot%_bindir/* ; do
 		$i
 	fi
 done
-rm -fr %buildroot%_includedir/OpenColorIO/
-rm -fr %buildroot%_libdir/cmake/OpenColorIO/OpenColorIO*.cmake
-rm -fr %buildroot%_libdir/libOpenColorIO.so
-rm -fr %buildroot%_libdir/pkgconfig/OpenColorIO.pc
-rm -fr %buildroot%_bindir/*
-rm -fr %buildroot%_man1dir/*
+rm -fr %buildroot%_libdir/libOpenColorIOimageioapphelpers.a
 
 %check
 pushd %_cmake__builddir
-# currently tests only pass on x86_64 and armh
+# currently tests only pass on x86_64
 # on other architectures there are precision issues
-%ifarch x86_64 %arm
+%ifarch x86_64
 ctest
 %else
 ctest ||:
 %endif
 popd
 
-%files
+%files -n lib%oname%soname
 %doc LICENSE THIRD-PARTY.md
 %doc CHANGELOG.md CONTRIBUTING.md COMMITTERS.md GOVERNANCE.md PROCESS.md README.md SECURITY.md
 %_libdir/*.so.%{soname}
 %_libdir/*.so.%{soname}.*
 
+%files -n %oname%soname-tools
+%_bindir/ocioarchive
+%_bindir/ociobakelut
+%_bindir/ociocheck
+%_bindir/ociochecklut
+%_bindir/ocioconvert
+%_bindir/ociodisplay
+%_bindir/ociolutimage
+%_bindir/ociomakeclf
+%_bindir/ocioperf
+%_bindir/ociowrite
+%_man1dir/*
+
+%files devel
+%_includedir/OpenColorIO/
+%_libdir/*.so
+%_pkgconfigdir/*.pc
+%_libdir/cmake/OpenColorIO/
+
+%files -n python3-module-%oname
+%python3_sitelibdir/*.so
+
 %changelog
-* Thu Feb 09 2023 Alexander Burmatov <thatman@altlinux.org> 2.0.3-alt2
-- Create compatibility package.
+* Mon Jan 16 2023 Alexander Burmatov <thatman@altlinux.org> 2.2.1-alt1
+- Updated to upstream version 2.2.1.
 
 * Thu Jan 20 2022 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2.0.3-alt1.1
 - Fixed build for Elbrus.
