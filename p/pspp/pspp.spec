@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: pspp
-Version: 1.4.1
+Version: 1.6.2
 Release: alt1
 
 Summary: A program for statistical analysis of sampled data.
@@ -22,12 +22,13 @@ BuildRequires: libcairo-devel
 BuildRequires: libpango-devel
 #to enable PSPPIRE
 BuildRequires: libgtk+3
-BuildRequires: libgtksourceview3-devel
+BuildRequires: libgtksourceview4-devel
 BuildRequires: libspread-sheet-widget-devel
 #Optional according to INSTALL file
 BuildRequires: libreadline-devel
 BuildRequires: texinfo
 BuildRequires: fonts-ttf-liberation
+BuildRequires: texlive-dist
 
 %description
 GNU PSPP is a program for statistical analysis of sampled data. It is a free as
@@ -38,11 +39,20 @@ similar to it with a few exceptions.
 %setup 
 
 %build
+%ifarch i586 armh
+%configure --disable-static --disable-rpath --disable-year2038
+%else
 %configure --disable-static --disable-rpath
+%endif
 %make_build
 
 %install
 %makeinstall_std
+%makeinstall_std install-html
+%makeinstall_std install-pdf
+
+rm -rf %buildroot%_infodir/screenshots
+rm -rf %buildroot%_infodir/pspp-figures
 
 %find_lang --output=%name.lang %name
 
@@ -58,17 +68,20 @@ similar to it with a few exceptions.
 %_bindir/pspp-output
 %_bindir/psppire
 %_libdir/%name/
-%_desktopdir/org.fsf.pspp.desktop
-%_datadir/metainfo/org.fsf.pspp.metainfo.xml
-%_datadir/mime/packages/%name.xml
-%_iconsdir/hicolor/*/apps/%name.png
-%_iconsdir/hicolor/*/mimetypes/application-x-spss*.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
+%exclude %_libdir/%name/*.la
+%_iconsdir/hicolor/*/mimetypes/application-x-spss-*.png
+%_iconsdir/hicolor/*/apps/org.gnu.pspp.*
+%_desktopdir/org.gnu.pspp.desktop
+%_datadir/metainfo/org.gnu.pspp.metainfo.xml
+%_datadir/mime/packages/org.gnu.pspp.xml
 %_infodir/pspp*
 %_man1dir/*
 %_datadir/%name/
 
 %changelog
+* Tue Feb 28 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1.6.2-alt1
+- Updated to 1.6.2
+
 * Wed Apr 13 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 1.4.1-alt1
 - Recovered package for sisyphus.
 - Updated to 1.4.1
