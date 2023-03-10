@@ -1,6 +1,6 @@
 %define module_name     rtw89
 %define module_version  0.0
-%define module_release  alt2.git.e834edf
+%define module_release  alt3.git.fce040c
 
 %define flavour         std-def
 %define karch %ix86 x86_64 aarch64 ppc64le armh
@@ -53,6 +53,9 @@ install rtw*.ko %buildroot%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Fri Mar 10 2023 Anton Farygin <rider@altlinux.ru> 0.0-alt3.git.fce040c
+- update to fce040c
 
 * Fri Dec 30 2022 Anton Farygin <rider@altlinux.ru> 0.0-alt2.git.e834edf
 - update to  e834edf
