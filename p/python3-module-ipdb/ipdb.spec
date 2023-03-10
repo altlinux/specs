@@ -4,7 +4,7 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 0.13.11
+Version: 0.13.13
 Release: alt1
 Summary: IPython-enabled pdb
 License: BSD 3-Clause
@@ -46,6 +46,9 @@ PYTHONPATH=%buildroot%python3_sitelibdir python3 setup.py test
 %python3_sitelibdir/*
 
 %changelog
+* Fri Mar 10 2023 Grigory Ustinov <grenka@altlinux.org> 0.13.13-alt1
+- Automatically updated to 0.13.13.
+
 * Mon Dec 19 2022 Grigory Ustinov <grenka@altlinux.org> 0.13.11-alt1
 - Automatically updated to 0.13.11.
 
