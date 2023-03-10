@@ -2,7 +2,7 @@
 %define _name blackbox
 
 Name: blackbox-terminal
-Version: 0.13.1
+Version: 0.13.2
 Release: alt1
 
 Summary: A beautiful GTK 4 terminal.
@@ -62,6 +62,9 @@ A beautiful GTK 4 terminal.
 %_iconsdir/hicolor/*/apps/*.svg
 
 %changelog
+* Thu Mar 9 2023 Vladimir Didenko <cow@altlinux.org> 0.13.2-alt1
+- New version
+
 * Thu Jan 19 2023 Vladimir Didenko <cow@altlinux.org> 0.13.1-alt1
 - New version
 
