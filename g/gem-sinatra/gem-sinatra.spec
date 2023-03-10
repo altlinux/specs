@@ -1,8 +1,9 @@
+%define        _unpackaged_files_terminate_build 1
 %define        gemname sinatra
 
 Name:          gem-sinatra
 Epoch:         1
-Version:       2.2.3
+Version:       2.2.4
 Release:       alt1
 Summary:       Classy web-development dressed in a DSL
 License:       MIT
@@ -82,7 +83,7 @@ BuildConflicts: gem(pandoc-ruby) >= 2.1
 BuildConflicts: gem(tilt) >= 3
 BuildConflicts: gem(mustermann) >= 4
 BuildConflicts: gem(rspec) >= 4
-BuildConflicts: gem(haml) >= 6
+BuildConflicts: gem(haml) >= 7
 BuildConflicts: gem(RedCloth) >= 4.3
 BuildConflicts: gem(rake) >= 14
 BuildConflicts: gem(liquid) > 2.6.0
@@ -94,15 +95,16 @@ BuildConflicts: gem(liquid) > 2.6.0
 %ruby_use_gem_dependency rake >= 13.0.1,rake < 14
 %ruby_use_gem_dependency activesupport >= 6.1.3.2,activesupport < 7
 %ruby_use_gem_dependency mustermann >= 3.0.0,mustermann < 4
+%ruby_use_gem_dependency haml >= 6.1.1,haml < 7
 Requires:      gem(rack) >= 2.2.2
 Requires:      gem(tilt) >= 2.0
-Requires:      gem(rack-protection) = 2.2.3
+Requires:      gem(rack-protection) = 2.2.4
 Requires:      gem(mustermann) >= 2.0
 Conflicts:     gem(tilt) >= 3
 Conflicts:     gem(mustermann) >= 4
 Obsoletes:     ruby-sinatra < %EVR
 Provides:      ruby-sinatra = %EVR
-Provides:      gem(sinatra) = 2.2.3
+Provides:      gem(sinatra) = 2.2.4
 
 
 %description
@@ -111,7 +113,7 @@ effort.
 
 
 %package       -n gem-rack-protection
-Version:       2.2.3
+Version:       2.2.4
 Release:       alt1
 Summary:       Classy web-development dressed in a DSL
 Group:         Development/Ruby
@@ -120,7 +122,7 @@ BuildArch:     noarch
 Requires:      gem(rack) >= 0
 Obsoletes:     ruby-rack-protection < %EVR
 Provides:      ruby-rack-protection = %EVR
-Provides:      gem(rack-protection) = 2.2.3
+Provides:      gem(rack-protection) = 2.2.4
 
 %description   -n gem-rack-protection
 This gem protects against typical web attacks. Should work for all Rack apps,
@@ -128,14 +130,14 @@ including Rails.
 
 
 %package       -n gem-rack-protection-doc
-Version:       2.2.3
+Version:       2.2.4
 Release:       alt1
 Summary:       Classy web-development dressed in a DSL documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета rack-protection
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(rack-protection) = 2.2.3
+Requires:      gem(rack-protection) = 2.2.4
 
 %description   -n gem-rack-protection-doc
 Classy web-development dressed in a DSL documentation files.
@@ -148,14 +150,14 @@ including Rails.
 
 
 %package       -n gem-rack-protection-devel
-Version:       2.2.3
+Version:       2.2.4
 Release:       alt1
 Summary:       Classy web-development dressed in a DSL development package
 Summary(ru_RU.UTF-8): Файлы для разработки самоцвета rack-protection
 Group:         Development/Ruby
 BuildArch:     noarch
 
-Requires:      gem(rack-protection) = 2.2.3
+Requires:      gem(rack-protection) = 2.2.4
 Requires:      gem(rake) >= 0
 Requires:      gem(rack-test) >= 0
 Requires:      gem(rspec) >= 3.6
@@ -172,20 +174,20 @@ including Rails.
 
 
 %package       -n gem-sinatra-contrib
-Version:       2.2.3
+Version:       2.2.4
 Release:       alt1
 Summary:       Classy web-development dressed in a DSL
 Group:         Development/Ruby
 BuildArch:     noarch
 
 Requires:      gem(multi_json) >= 0
-Requires:      gem(sinatra) = 2.2.3
+Requires:      gem(sinatra) = 2.2.4
 Requires:      gem(mustermann) >= 2.0
 Requires:      gem(tilt) >= 2.0
-Requires:      gem(rack-protection) = 2.2.3
+Requires:      gem(rack-protection) = 2.2.4
 Conflicts:     gem(mustermann) >= 4
 Conflicts:     gem(tilt) >= 3
-Provides:      gem(sinatra-contrib) = 2.2.3
+Provides:      gem(sinatra-contrib) = 2.2.4
 
 %description   -n gem-sinatra-contrib
 Collection of common Sinatra extensions, semi-officially supported:
@@ -211,14 +213,14 @@ Collection of common Sinatra extensions, semi-officially supported:
 
 
 %package       -n gem-sinatra-contrib-doc
-Version:       2.2.3
+Version:       2.2.4
 Release:       alt1
 Summary:       Classy web-development dressed in a DSL documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sinatra-contrib
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(sinatra-contrib) = 2.2.3
+Requires:      gem(sinatra-contrib) = 2.2.4
 
 %description   -n gem-sinatra-contrib-doc
 Classy web-development dressed in a DSL documentation files.
@@ -249,14 +251,14 @@ Collection of common Sinatra extensions, semi-officially supported:
 
 
 %package       -n gem-sinatra-doc
-Version:       2.2.3
+Version:       2.2.4
 Release:       alt1
 Summary:       Classy web-development dressed in a DSL documentation files
 Summary(ru_RU.UTF-8): Файлы сведений для самоцвета sinatra
 Group:         Development/Documentation
 BuildArch:     noarch
 
-Requires:      gem(sinatra) = 2.2.3
+Requires:      gem(sinatra) = 2.2.4
 
 %description   -n gem-sinatra-doc
 Classy web-development dressed in a DSL documentation files.
@@ -287,21 +289,24 @@ effort.
 
 %files         -n gem-rack-protection
 %doc README.md
-%ruby_gemspecdir/rack-protection-2.2.3.gemspec
-%ruby_gemslibdir/rack-protection-2.2.3
+%ruby_gemspecdir/rack-protection-2.2.4.gemspec
+%ruby_gemslibdir/rack-protection-2.2.4
 
 %files         -n gem-rack-protection-doc
 %doc README.md
-%ruby_gemsdocdir/rack-protection-2.2.3
+%ruby_gemsdocdir/rack-protection-2.2.4
+
+%files         -n gem-rack-protection-devel
+%doc README.md
 
 %files         -n gem-sinatra-contrib
 %doc README.md
-%ruby_gemspecdir/sinatra-contrib-2.2.3.gemspec
-%ruby_gemslibdir/sinatra-contrib-2.2.3
+%ruby_gemspecdir/sinatra-contrib-2.2.4.gemspec
+%ruby_gemslibdir/sinatra-contrib-2.2.4
 
 %files         -n gem-sinatra-contrib-doc
 %doc README.md
-%ruby_gemsdocdir/sinatra-contrib-2.2.3
+%ruby_gemsdocdir/sinatra-contrib-2.2.4
 
 %files         -n gem-sinatra-doc
 %doc README.de.md README.es.md README.fr.md README.hu.md README.ja.md README.ko.md README.malayalam.md README.md README.pt-br.md README.pt-pt.md README.ru.md README.zh.md
@@ -309,6 +314,9 @@ effort.
 
 
 %changelog
+* Fri Mar 10 2023 Pavel Skrylev <majioa@altlinux.org> 1:2.2.4-alt1
+- ^ 2.2.3 -> 2.2.4 (no devel)
+
 * Sat Jan 28 2023 Pavel Skrylev <majioa@altlinux.org> 1:2.2.3-alt1
 - ^ 2.1.0 -> 2.2.3 (no devel)
 
