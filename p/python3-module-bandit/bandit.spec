@@ -1,7 +1,7 @@
 %define  modulename bandit
 
 Name:    python3-module-%modulename
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary: Bandit is a tool designed to find common security issues in Python code.
@@ -50,6 +50,9 @@ export PBR_VERSION=%version
 %doc LICENSE *.rst *.md
 
 %changelog
+* Fri Mar 10 2023 Grigory Ustinov <grenka@altlinux.org> 1.7.5-alt1
+- Automatically updated to 1.7.5.
+
 * Thu Jun 02 2022 Grigory Ustinov <grenka@altlinux.org> 1.7.4-alt1
 - Build new version.
 
