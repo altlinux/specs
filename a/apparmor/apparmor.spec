@@ -7,8 +7,8 @@
 %def_with python
 
 Name: apparmor
-Version: 3.0.7
-Release: alt4
+Version: 3.0.9
+Release: alt1
 
 Summary: Name-based Mandatory Access Control
 
@@ -17,6 +17,7 @@ Group: System/Base
 Url: https://apparmor.net
 
 Source: %name-%version.tar
+Source1: README.ALT
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-python3
@@ -91,6 +92,7 @@ BuildRequires: libpam-devel
 %prep
 %setup
 %patch -p1
+cp -a %SOURCE1 .
 
 %build
 pushd libraries/libapparmor
@@ -118,9 +120,6 @@ make -C profiles
 %makeinstall_std -C profiles
 %{?_with_pam: %makeinstall_std -C changehat/pam_apparmor SECDIR=%buildroot%_pam_modules_dir}
 %makeinstall_std SBIN="%buildroot/sbin" APPARMOR_BIN_PREFIX="%buildroot/lib/apparmor" -C parser
-
-mkdir -p %buildroot/lib/systemd/system
-mv %buildroot/usr/lib/systemd/system/apparmor.service %buildroot/lib/systemd/system
 
 rm %buildroot%_libdir/libapparmor.a
 
@@ -157,6 +156,7 @@ if [ $1 = 0 ]; then
 fi
 
 %files -f apparmor.lang
+%doc README.ALT
 %config(noreplace) %_sysconfdir/apparmor
 %dir %_sysconfdir/apparmor.d
 %dir %_sysconfdir/apparmor.d/disable
@@ -168,7 +168,6 @@ fi
 /lib/apparmor
 
 /sbin/apparmor_parser
-/sbin/rcapparmor
 /usr/sbin/aa-audit
 /usr/sbin/aa-autodep
 /usr/sbin/aa-cleanprof
@@ -191,32 +190,32 @@ fi
 %_bindir/aa-features-abi
 
 %_datadir/apparmor
-%_man1dir/aa-enabled.1.xz
-%_man1dir/aa-exec.1.xz
-%_man1dir/aa-features-abi.1.xz
-%_man5dir/apparmor.d.5.xz
-%_man5dir/apparmor.vim.5.xz
-%_man5dir/logprof.conf.5.xz
-%_man7dir/apparmor.7.xz
-%_man7dir/apparmor_xattrs.7.xz
-%_man8dir/aa-audit.8.xz
-%_man8dir/aa-autodep.8.xz
-%_man8dir/aa-cleanprof.8.xz
-%_man8dir/aa-complain.8.xz
-%_man8dir/aa-decode.8.xz
-%_man8dir/aa-disable.8.xz
-%_man8dir/aa-easyprof.8.xz
-%_man8dir/aa-enforce.8.xz
-%_man8dir/aa-genprof.8.xz
-%_man8dir/aa-logprof.8.xz
-%_man8dir/aa-mergeprof.8.xz
-%_man8dir/aa-notify.8.xz
-%_man8dir/aa-remove-unknown.8.xz
-%_man8dir/aa-status.8.xz
-%_man8dir/aa-teardown.8.xz
-%_man8dir/aa-unconfined.8.xz
-%_man8dir/apparmor_parser.8.xz
-%_man8dir/apparmor_status.8.xz
+%_man1dir/aa-enabled.1*
+%_man1dir/aa-exec.1*
+%_man1dir/aa-features-abi.1*
+%_man5dir/apparmor.d.5*
+%_man5dir/apparmor.vim.5*
+%_man5dir/logprof.conf.5*
+%_man7dir/apparmor.7*
+%_man7dir/apparmor_xattrs.7*
+%_man8dir/aa-audit.8*
+%_man8dir/aa-autodep.8*
+%_man8dir/aa-cleanprof.8*
+%_man8dir/aa-complain.8*
+%_man8dir/aa-decode.8*
+%_man8dir/aa-disable.8*
+%_man8dir/aa-easyprof.8*
+%_man8dir/aa-enforce.8*
+%_man8dir/aa-genprof.8*
+%_man8dir/aa-logprof.8*
+%_man8dir/aa-mergeprof.8*
+%_man8dir/aa-notify.8*
+%_man8dir/aa-remove-unknown.8*
+%_man8dir/aa-status.8*
+%_man8dir/aa-teardown.8*
+%_man8dir/aa-unconfined.8*
+%_man8dir/apparmor_parser.8*
+%_man8dir/apparmor_status.8*
 
 %_initdir/apparmor
 %_unitdir/apparmor.service
@@ -226,6 +225,9 @@ fi
 /%_lib/libapparmor.so.%sover.*
 
 %files -n libapparmor-devel
+%dir %_includedir/aalogparse
+%dir %_includedir/sys
+
 %_includedir/aalogparse/aalogparse.h
 %_includedir/sys/apparmor.h
 %_includedir/sys/apparmor_private.h
@@ -233,16 +235,16 @@ fi
 %_libdir/libapparmor.so
 
 %files -n libapparmor-devel-doc
-%_man2dir/aa_change_hat.2.xz
-%_man2dir/aa_change_profile.2.xz
-%_man2dir/aa_find_mountpoint.2.xz
-%_man2dir/aa_getcon.2.xz
-%_man2dir/aa_query_label.2.xz
-%_man2dir/aa_stack_profile.2.xz
-%_man3dir/aa_features.3.xz
-%_man3dir/aa_kernel_interface.3.xz
-%_man3dir/aa_policy_cache.3.xz
-%_man3dir/aa_splitcon.3.xz
+%_man2dir/aa_change_hat.2*
+%_man2dir/aa_change_profile.2*
+%_man2dir/aa_find_mountpoint.2*
+%_man2dir/aa_getcon.2*
+%_man2dir/aa_query_label.2*
+%_man2dir/aa_stack_profile.2*
+%_man3dir/aa_features.3*
+%_man3dir/aa_kernel_interface.3*
+%_man3dir/aa_policy_cache.3*
+%_man3dir/aa_splitcon.3*
 
 %if_with python
 %files -n python3-module-apparmor
@@ -261,6 +263,9 @@ fi
 %endif
 
 %changelog
+* Thu Mar 09 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.9-alt1
+- Updated to v3.0.9.
+
 * Sun Oct 30 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 3.0.7-alt4
 - Built pam0_apparmor subpackage.
 - Partially enabled tests.
