@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 %define dist Test-Inter
 Name: perl-%dist
-Version: 1.09
+Version: 1.10
 Release: alt1
 
 Summary: Framework for more readable interactive test scripts
@@ -37,6 +37,9 @@ not a drop-in replacement.
 %doc	%perl_vendor_privlib/Test/Inter.pod
 
 %changelog
+* Fri Mar 10 2023 Igor Vlasenko <viy@altlinux.org> 1.10-alt1
+- automated CPAN update
+
 * Sun Mar 17 2019 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
 - automated CPAN update
 
