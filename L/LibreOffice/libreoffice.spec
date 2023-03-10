@@ -1,4 +1,4 @@
-# 7.4.2.3
+# 7.5.1.1
 %def_without python
 %def_with parallelism
 %def_without fetch
@@ -21,14 +21,14 @@
 %def_disable mergelibs
 
 Name: LibreOffice
-%define hversion 7.4
-%define urelease 2.3
+%define hversion 7.5
+%define urelease 1.1
 Version: %hversion.%urelease
 %define uversion %version.%urelease
 %define lodir %_libdir/%name
 %define uname libreoffice
 %define conffile %_sysconfdir/sysconfig/%uname
-Release: alt4
+Release: alt1
 Summary: LibreOffice Productivity Suite
 License: MPL-2.0
 Group: Office
@@ -60,11 +60,7 @@ Source200:      key.gpg
 Source300:      libreoffice.unused
 
 ## FC patches
-Patch1: FC-0001-don-t-suppress-crashes.patch
-Patch2: FC-0001-disble-tip-of-the-day-dialog-by-default.patch
-Patch3: FC-0001-Resolves-rhbz-1432468-disable-opencl-by-default.patch
-Patch4: FC-0001-Revert-tdf-101630-gdrive-support-w-oAuth-and-Drive-A.patch
-Patch5: FC-0001-disable-libe-book-support.patch
+Patch1: FC-0001-disable-libe-book-support.patch
 
 ## Long-term FC patches
 
@@ -110,6 +106,9 @@ BuildRequires: libcuckoo-devel libopenjpeg2.0-devel libabseil-cpp-devel
 
 # 7.4
 BuildRequires: libwebp-devel libtiff-devel
+
+# 7.5
+BuildRequires: libzxing-cpp-devel
 
 %if_with java
 BuildRequires: java-devel >= 9.0.0 junit ant bsh pentaho-reporting-flow-engine 
@@ -226,6 +225,9 @@ Additional extensions for %name.
 One can choose either to install this package at once,
 or to download and install (possibly newer) extensions manually.
 
+%add_python3_self_prov_path %buildroot%_libdir/LibreOffice/program/uno.py
+%add_python3_self_prov_path %buildroot%_libdir/LibreOffice/program/unohelper.py
+
 %package sdk
 Group: Development/Other
 Summary: Software Development Kit for LibreOffice
@@ -277,11 +279,7 @@ Provides additional %{langname} translations and resources for %name. \
 %setup -q -n libreoffice-%version -a10 -b1 -b2 -b3
 
 ## FC apply patches
-#patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-#patch5 -p1
+%patch1 -p1
 
 ## Long-term FC patches applying
 
@@ -289,13 +287,13 @@ Provides additional %{langname} translations and resources for %name. \
 %patch401 -p0
 %patch402 -p1
 %patch404 -p1
-%patch405 -p1
+##patch405 -p1
 ##patch406 -p1 # Doesn't compile
-%patch407 -p1
+##patch407 -p1
 
 %patch500 -p0
 # Patch with russian translation update
-%patch600 -p1
+#patch600 -p1
 
 # TODO move officebean to SDK or separate package
 # Hack in -Wl,-rpath=/usr/lib/jvm/jre-11-openjdk/lib
@@ -417,7 +415,7 @@ export ac_cv_prog_LO_CLANG_CC=""
         --enable-cipher-openssl-backend \
         --enable-eot \
         --enable-formula-logger \
-        --disable-zxing \
+        --enable-zxing \
   \
 %if_with parallelism
         --with-parallelism="$PARALLEL" \
@@ -439,7 +437,7 @@ export ac_cv_prog_LO_CLANG_CC=""
 
         ## --without-system-libtiff \
 
-# TODO  --enable-vlc --enable-zxing --with-system-dragonbox
+# TODO  --enable-vlc --with-system-dragonbox
 
 %make bootstrap
 
@@ -603,6 +601,9 @@ install -p include/LibreOfficeKit/* %{buildroot}%{_includedir}/LibreOfficeKit
 %_includedir/LibreOfficeKit
 
 %changelog
+* Fri Feb 17 2023 Fr. Br. George <george@altlinux.ru> 7.5.1.1-alt1
+- Update to 7.5.1.1
+
 * Wed Feb 01 2023 Evgeniy Kukhtinov <neurofreak@altlinux.org> 7.4.2.3-alt4
 - Fixed last fix of pt-BR langpack update conflict
 - Solved conflict with old rpm-packet with sdk (drop compatibility symlinks)
