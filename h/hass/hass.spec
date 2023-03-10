@@ -1,5 +1,5 @@
 Name: hass
-Version: 2023.1.7
+Version: 2023.3.3
 Release: alt1
 
 Summary: Home automation platform
@@ -13,6 +13,19 @@ BuildArch: noarch
 BuildRequires: rpm-build-python3
 BuildRequires: python3(setuptools)
 BuildRequires: python3(wheel)
+
+BuildRequires: python3(atomicwrites)
+BuildRequires: python3(awesomeversion)
+BuildRequires: python3(black)
+BuildRequires: python3(ciso8601)
+BuildRequires: python3(jinja2)
+BuildRequires: python3(orjson)
+BuildRequires: python3(slugify)
+BuildRequires: python3(tqdm)
+BuildRequires: python3(typing_extensions)
+BuildRequires: python3(voluptuous)
+BuildRequires: python3(voluptuous_serialize)
+BuildRequires: python3(yaml)
 
 %package core
 Summary: Home automation platform
@@ -50,6 +63,12 @@ This package contains most of Home Assistant modules.
 
 %prep
 %setup
+> .coveragerc
+find homeassistant/components -type f -name manifest.json |\
+	fgrep -vf precious |sed -r 's,[^/]+$,,' |xargs rm -rv
+python3 -m script.hassfest
+tar x --wildcards --strip-components=1 --file %SOURCE0 '*/homeassistant/components'
+python3 -m script.translations develop --all
 
 %build
 %pyproject_build
@@ -90,6 +109,9 @@ sed -re 's,%exclude ,,' < core.files > rest.files
 %files -n python3-module-hass -f rest.files
 
 %changelog
+* Fri Mar 10 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.3.3-alt1
+- 2023.3.3 released
+
 * Mon Jan 23 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 2023.1.7-alt1
 - 2023.1.7 released
 
