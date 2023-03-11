@@ -4,7 +4,7 @@
 %def_disable check
 
 Name: %_name-qt5
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 
 Summary: Qt XMPP library
@@ -131,6 +131,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_defaultdocdir/%_name/README.md
 
 %changelog
+* Sat Mar 11 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.3-alt1
+- 1.5.3
+
 * Sat Feb 25 2023 Yuri N. Sedunov <aris@altlinux.org> 1.5.2-alt1
 - 1.5.2
 
