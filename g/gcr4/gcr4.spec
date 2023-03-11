@@ -2,7 +2,7 @@
 
 %define _name gcr
 %define _libexecdir %_prefix/libexec
-%define ver_major 4.0
+%define ver_major 4.1
 %define gcr_api_ver 4
 %define gck_api_ver 2
 
@@ -177,6 +177,9 @@ xvfb-run %__meson_test -t 3
 %_vapidir/%_name-%gcr_api_ver.vapi
 
 %changelog
+* Wed Mar 08 2023 Yuri N. Sedunov <aris@altlinux.org> 4.1.0-alt1
+- 4.1.0
+
 * Wed Oct 12 2022 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
 - 4.0.0
 
