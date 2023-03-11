@@ -2,7 +2,7 @@ Name: kernel-image-std-debug
 Release: alt1
 epoch:2 
 %define kernel_base_version	5.15
-%define kernel_sublevel	.99
+%define kernel_sublevel	.100
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 
@@ -619,6 +619,9 @@ check-pesign-helper
 %files checkinstall
 
 %changelog
+* Sat Mar 11 2023 Kernel Bot <kernelbot@altlinux.org> 2:5.15.100-alt1
+- v5.15.100 (2023-03-11).
+
 * Fri Mar 10 2023 Kernel Bot <kernelbot@altlinux.org> 2:5.15.99-alt1
 - v5.15.99 (2023-03-10).
 - Fix pci-acp driver selection for AMD platforms in 5.15 kernels.
