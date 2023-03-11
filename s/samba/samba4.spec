@@ -98,7 +98,7 @@
 
 Name:    samba
 Version: 4.17.5
-Release: alt1
+Release: alt2
 
 Group:   System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
@@ -1271,7 +1271,9 @@ control role-sambashare enabled
 %_samba_libexecdir/rpcd_rpcecho
 %_samba_libexecdir/rpcd_spoolss
 %_samba_libexecdir/rpcd_winreg
+%if_with doc
 %_man8dir/samba-dcerpcd.8*
+%endif
 
 %if_with dc
 %files -n admx-samba
@@ -1335,7 +1337,9 @@ control role-sambashare enabled
 
 %files gpupdate
 %_sbindir/samba-gpupdate
+%if_with doc
 %_man8dir/samba-gpupdate.8*
+%endif
 
 %files dc-client
 %if_with separate_heimdal_server
@@ -1355,7 +1359,9 @@ control role-sambashare enabled
 %files krb5-printing
 %_altdir/samba-krb5-printing
 %attr(0700,root,root) %_samba_libexecdir/smbspool_krb5_wrapper
+%if_with doc
 %_man8dir/smbspool_krb5_wrapper.8*
+%endif
 
 %files client
 %_bindir/cifsdd
@@ -2080,6 +2086,9 @@ control role-sambashare enabled
 %_includedir/samba-4.0/private
 
 %changelog
+* Sat Mar 11 2023 Michael Shigorin <mike@altlinux.org> 4.17.5-alt2
+- Fix doc knob
+
 * Tue Feb 28 2023 Evgeny Sinelnikov <sin@altlinux.org> 4.17.5-alt1
 - Update to stable release of Samba 4.17 with latest bugfixes and new features:
   + Support Protected Users security group introduced in Windows Server 2012 R2.
