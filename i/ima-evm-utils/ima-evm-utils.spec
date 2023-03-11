@@ -4,7 +4,7 @@
 %set_verify_elf_method strict
 
 Name: ima-evm-utils
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: IMA/EVM support utilities
@@ -26,9 +26,14 @@ BuildRequires: libkeyutils-devel
 BuildRequires: libssl-devel
 BuildRequires: libtpm2-tss-devel
 BuildRequires: xsltproc
-
-# For tests
-%{?!_without_check:%{?!_disable_check:BuildRequires: openssl attr e2fsprogs xxd rpm-build-vm >= 1.22}}
+%{?!_without_check:%{?!_disable_check:
+BuildRequires: attr
+BuildRequires: e2fsprogs
+BuildRequires: fsverity-utils
+BuildRequires: openssl
+BuildRequires: rpm-build-vm >= 1.51
+BuildRequires: xxd
+}}
 
 Requires: libimaevm = %EVR
 
@@ -85,11 +90,8 @@ ima-evm-utils is used to prepare the file system for these extended attributes.
 %check
 LD_LIBRARY_PATH=%buildroot%_libdir %buildroot%_bindir/evmctl --version
 
-# armh does not support kvm properly, thus, if run w/o kvm:
-#   name           aarch64   armh  i586  ppc64le  x86_64
-#   ima-evm-utils     3:37  14:50  1:24     1:47    1:25
-# ext4 is required to run tests becasue of xattrs
-vm-run --kvm=cond --overlay=ext4 make check
+unset TMPDIR
+vm-run --kvm=cond --sbin --ext4=verity make check VERBOSE=1
 
 %files
 %doc NEWS README AUTHORS COPYING examples/*.sh
@@ -104,6 +106,9 @@ vm-run --kvm=cond --overlay=ext4 make check
 %_libdir/libimaevm.so
 
 %changelog
+* Sat Mar 11 2023 Vitaly Chikunov <vt@altlinux.org> 1.5-alt1
+- Update to v1.5 (2023-03-06).
+
 * Fri Nov 05 2021 Vitaly Chikunov <vt@altlinux.org> 1.4-alt1
 - Update to v1.4 (2021-10-22).
 - Enable LFS on 32-bit architectures.
