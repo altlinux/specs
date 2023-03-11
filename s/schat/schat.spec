@@ -3,7 +3,7 @@
 %define privpath  /var/empty
 
 Name: schat
-Version: 2.3.4
+Version: 2.4.0
 Release: alt1.cf35e54
 
 Summary: IMPOMEZIA Simple Chat
@@ -112,6 +112,9 @@ install -Dp -m 0644 %SOURCE4 %buildroot%_sysconfdir/schatd2/schat2.conf
 %attr(0750, schatd, schatd) %_logdir/schatd2
 
 %changelog
+* Sat Mar 11 2023 Vitaly Lipatov <lav@altlinux.ru> 1:2.4.0-alt1.cf35e54
+- fix version (ALT bug 45012)
+
 * Mon Jan 09 2023 Vitaly Lipatov <lav@altlinux.ru> 1:2.3.4-alt1.cf35e54
 - new version (2.3.4) with rpmgs script
 - switch to Qt5
