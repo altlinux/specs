@@ -5,7 +5,7 @@
 %def_with clang
 
 Name: tdlib
-Version: 1.7.0
+Version: 1.8.0
 Release: alt1
 
 Summary: Cross-platform library for building Telegram clients
@@ -123,6 +123,9 @@ rm -fv %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sat Mar 11 2023 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
+- new version 1.8.0 (with rpmrb script)
+
 * Sat Sep 11 2021 Vitaly Lipatov <lav@altlinux.ru> 1.7.0-alt1
 - new version 1.7.0 (with rpmrb script)
 - fix build, disable build for armh (due clang segfault)
