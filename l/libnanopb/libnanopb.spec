@@ -1,6 +1,6 @@
 %define oname nanopb
 Name: libnanopb
-Version: 0.4.1
+Version: 0.4.6
 Release: alt1
 
 Summary: Nanopb - Protocol Buffers for Embedded Systems
@@ -13,7 +13,10 @@ Url: https://jpa.kapsi.fi/nanopb/
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-macros-cmake
+BuildRequires(pre): rpm-build-python3
 BuildRequires: cmake python3
+
+BuildRequires: protobuf-compiler
 
 %description
 Nanopb is a small code-size Protocol Buffers implementation in ANSI C.
@@ -48,15 +51,22 @@ subst "s|PythonInterp 2.7|PythonInterp 3|" CMakeLists.txt
 #rm -rv %buildroot/usr/lib/python3/site-packages/
 
 %files
-%doc AUTHORS.txt CHANGELOG.txt LICENSE.txt README.md docs/{*.rst,*.css,logo}
+%doc AUTHORS.txt CHANGELOG.txt LICENSE.txt README.md
 %_libdir/libprotobuf-nanopb.so.0
 
 %files devel
+%doc docs/{*.md,*.css,logo}
+%_bindir/nanopb_generator.py
+%_bindir/protoc-gen-nanopb
 %_libdir/libprotobuf-nanopb.so
 %_includedir/pb*.h
 %_libdir/cmake/nanopb/
 
 %changelog
+* Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 0.4.6-alt1
+- new version 0.4.6 (with rpmrb script)
+- add BR: protobuf-compiler
+
 * Mon Jul 18 2022 Vitaly Lipatov <lav@altlinux.ru> 0.4.1-alt1
 - initial build for ALT Sisyphus
 
