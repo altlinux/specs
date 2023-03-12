@@ -1,5 +1,5 @@
 Name: sleuthkit
-Version: 4.11.1
+Version: 4.12.0
 Release: alt1
 
 Summary: The Sleuth Kit
@@ -150,6 +150,9 @@ install -m755 mac-robber %buildroot%_bindir/
 %_pkgconfigdir/tsk.pc
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 4.12.0-alt1
+- new version 4.12.0 (with rpmrb script)
+
 * Mon Jan 24 2022 Vitaly Lipatov <lav@altlinux.ru> 4.11.1-alt1
 - new version 4.11.1 (with rpmrb script)
 
