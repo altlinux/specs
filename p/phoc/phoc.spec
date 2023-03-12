@@ -10,7 +10,7 @@
 %def_disable check
 
 Name: phoc
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1%beta
 
 Summary: Display compositor designed for mobile devices
@@ -69,6 +69,11 @@ like the English word fog.
 %install
 %meson_install
 
+%{?_enable_embed_wlroots:
+rm -r %buildroot%_includedir/wlr
+rm %buildroot%_libdir/libwlroots.a
+rm %buildroot%_pkgconfigdir/wlroots.pc}
+
 %check
 xvfb-run %__meson_test
 
@@ -78,6 +83,9 @@ xvfb-run %__meson_test
 %doc README.md
 
 %changelog
+* Sun Mar 12 2023 Yuri N. Sedunov <aris@altlinux.org> 0.25.2-alt1
+- 0.25.2
+
 * Wed Mar 01 2023 Yuri N. Sedunov <aris@altlinux.org> 0.25.0-alt1
 - 0.25.0
 
