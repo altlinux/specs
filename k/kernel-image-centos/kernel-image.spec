@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 283
+%define centos_release 286
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,29 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Sat Mar 11 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.286-alt1.el9
+- Updated to kernel-5.14.0-286.el9 (fixes: CVE-2022-4379):
+  + clocksource: hyper-v: Updates for RHEL9.3
+  + Draft: Merge tag 'kernel-5.14.0-284.1.1.el9_2' from 9.2
+  + kernel.spec: make rhel depend on systemd-boot-unsigned
+  + l2tp: Avoid possible recursive deadlock in l2tp_tunnel_register()
+  + Merge documentation commit '7e13f7dd9689f6fa503c23e515edaa46e7d38ce5' into c9s
+  + Merge tag 'kernel-5.14.0-284.1.1.el9_2' from 9.2
+  + NFSD: fix use-after-free in __nfs42_ssc_open()
+  + NFS fixes rollup through kernel v6.2
+  + Pull OCP patches forward from 8.6
+  + redhat: Bump RHEL_MINOR for 9.3
+  + redhat: change default dist suffix for RHEL 9.2
+  + redhat: enable zstream release numbering for rhel 9.2
+  + [RHEL 9.3] Merge PREEMPT_RT and build kernel-rt as sub-package
+  + [s390]: RHEL9.0 - diag288_wdt: do not use stack buffers for hardware data
+  + x86/cpu: Add CPU model numbers for Meteor Lake
+  + Various changes and improvements that are poorly described in merge.
+
+* Tue Feb 28 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.284-alt1.el9
+- Updated to kernel-5.14.0-284.el9:
+  + kernel.spec: move modules.builtin to kernel-core
+
 * Fri Feb 24 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.283-alt1.el9
 - Updated to kernel-5.14.0-283.el9 (fixes: CVE-2022-33743, CVE-2022-3564, CVE-2022-43750, CVE-2022-4378, CVE-2023-0179, CVE-2023-0590):
   + [9.2] DRM backport part 3: stable backport
