@@ -1,7 +1,7 @@
 %define userrldp _rldp-http-proxy
 
 Name: ton
-Version: 2022.12
+Version: 2023.03
 Release: alt1
 
 Summary: TON - The Open Network tools
@@ -196,5 +196,8 @@ install -m0755 storage/storage-daemon/storage-daemon-cli %buildroot%_bindir/
 
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 2023.03-alt1
+- new version 2023.03 (with rpmrb script)
+
 * Tue Jan 24 2023 Vitaly Lipatov <lav@altlinux.ru> 2022.12-alt1
 - initial build for ALT Sisyphus
