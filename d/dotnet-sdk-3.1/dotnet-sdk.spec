@@ -2,16 +2,16 @@
 
 %define _dotnet_major 3.1
 # CHECKME
-%define _dotnet_templatesrelease 3.1.27
+%define _dotnet_templatesrelease 3.1.33
 %define _dotnet_apprefrelease 3.1.122
-%define _dotnet_corerelease 3.1.26
+%define _dotnet_corerelease 3.1.32
 %define _dotnet_sdkrelease %version
 #define _dotnet_netstandartrelease 2.1.0
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 3.1.420
+Version: 3.1.426
 Release: alt1
 
 Summary: SDK for the .NET Core 3.1
@@ -45,8 +45,6 @@ AutoProv: no
 
 # TODO: move to separate packages?
 Provides: dotnet-targeting-pack-%_dotnet_major = %_dotnet_apprefrelease
-
-Conflicts: dotnet-sdk
 
 %description
 SDK for the .NET Core 3.1.
@@ -94,6 +92,10 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %_dotnetdir/templates/%_dotnet_templatesrelease/*.nupkg
 
 %changelog
+* Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 3.1.426-alt1
+- .NET Core SDK 3.1.426
+- remove Conflicts: dotnet-sdk
+
 * Sun Oct 16 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.420-alt1
 - .NET Core SDK 3.1.420
 

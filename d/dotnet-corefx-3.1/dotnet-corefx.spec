@@ -9,7 +9,7 @@
 %define optflags_lto -flto=thin
 
 Name: dotnet-corefx-%_dotnet_major
-Version: 3.1.26
+Version: 3.1.32
 Release: alt1
 
 Summary: .NET Core foundational libraries, called CoreFX
@@ -144,6 +144,9 @@ chmod 0755 %buildroot%_rpmlibdir/%name.filetrigger
 %_dotnet_shared/System.Security.Cryptography.Native.OpenSsl.a
 
 %changelog
+* Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 3.1.32-alt1
+- .NET Core 3.1.32
+
 * Sun Oct 16 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.26-alt1
 - new version 3.1.26 (with rpmrb script)
 
