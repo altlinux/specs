@@ -18,7 +18,7 @@
 
 Name: darktable
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPL-3.0
@@ -64,7 +64,8 @@ BuildRequires: libexiv2-devel >= %exiv2_ver libflickcurl-devel libsecret-devel
 BuildRequires: libgphoto2-devel libjpeg-devel liblcms2-devel
 BuildRequires: liblensfun%lensfun_api_ver-devel >= %lensfun_ver
 BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel
-BuildRequires: openexr-devel libxkbcommon-x11-devel lsb-release
+BuildRequires: openexr-devel python3-module-imath
+BuildRequires: libxkbcommon-x11-devel lsb-release
 BuildRequires: libjson-glib-devel libsoup-devel libpixman-devel libexpat-devel
 BuildRequires: libcolord-gtk-devel libudev-devel
 BuildRequires: libGraphicsMagick-c++-devel libopenjpeg2.0-devel
@@ -144,6 +145,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %doc README* RELEASE_NOTES*
 
 %changelog
+* Sat Mar 11 2023 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1.1
+- rebuilt with openexr-3.1.5
+
 * Wed Feb 22 2023 Yuri N. Sedunov <aris@altlinux.org> 4.2.1-alt1
 - 4.2.1
 
