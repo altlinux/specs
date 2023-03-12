@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.18.0
-Release: alt7
+Release: alt8
 
 Summary: Multi-format image decoder library
 Group: System/Libraries
@@ -11,7 +11,7 @@ Url: http://freeimage.sourceforge.net/
 
 Source: http://downloads.sourceforge.net/freeimage/FreeImage%srcversion.zip
 # Unbundle bundled libraries (based on fc patch)
-Patch: FreeImage_unbundle.patch
+Patch: FreeImage-3.18.0-unbundle.patch
 # Fix incorrect path in doxyfile
 Patch1: FreeImage_doxygen.patch
 # Fix incorrect variable names in BIGENDIAN blocks
@@ -109,6 +109,9 @@ sh ./genfipsrclist.sh
 %_libdir/%nameplus.so
 
 %changelog
+* Sun Mar 12 2023 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt8
+- rebuilt with openexr-3.1.5
+
 * Tue Jun 07 2022 Yuri N. Sedunov <aris@altlinux.org> 3.18.0-alt7
 - rebuilt against new libtiff5 ABI
 
