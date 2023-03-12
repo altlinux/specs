@@ -1,7 +1,7 @@
 %def_without test
 
 Name: python3-module-spyder-kernels
-Version: 2.3.3
+Version: 2.4.2
 Release: alt1
 
 License: MIT
@@ -47,6 +47,9 @@ or file-based execution of Python code inside Spyder.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 2.4.2-alt1
+- new version 2.4.2 (with rpmrb script)
+
 * Sun Sep 11 2022 Vitaly Lipatov <lav@altlinux.ru> 2.3.3-alt1
 - new version 2.3.3 (with rpmrb script)
 
