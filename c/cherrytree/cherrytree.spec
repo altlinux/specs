@@ -1,5 +1,5 @@
 Name: cherrytree
-Version: 0.99.53
+Version: 0.99.55
 Release: alt1
 
 Summary: Hierarchical note taking application
@@ -71,12 +71,16 @@ sed -i "s|filename(pOutStr|filename((gchar*)pOutStr|" src/ct/ct_filesystem.cc
 %_datadir/%name/
 %_desktopdir/%name.desktop
 %_datadir/mime-info/*
+%_datadir/metainfo/*
 %_iconsdir/hicolor/scalable/apps/%%name.svg
 %_datadir/mime-info/%name.*
 %_man1dir/*.1*
 
 
 %changelog
+* Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 0.99.55-alt1
+- new version 0.99.55 (with rpmrb script)
+
 * Thu Dec 15 2022 Vitaly Lipatov <lav@altlinux.ru> 0.99.53-alt1
 - NMU: new version 0.99.53 (with rpmrb script)
 - NMU: add BR: libfribidi-devel, libvte3-devel
