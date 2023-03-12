@@ -1,7 +1,7 @@
 %define oname ffpyplayer
 
 Name: python3-module-ffpyplayer
-Version: 4.3.5
+Version: 4.4.0
 Release: alt1
 
 Summary: A cython implementation of an ffmpeg based player
@@ -41,6 +41,9 @@ FFPyPlayer is a python binding for the FFmpeg library for playing and writing me
 
 
 %changelog
+* Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 4.4.0-alt1
+- new version 4.4.0 (with rpmrb script)
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 4.3.5-alt1
 - new version 4.3.5 (with rpmrb script)
 
