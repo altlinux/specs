@@ -3,16 +3,16 @@
 
 %define _dotnet_major 5.0
 # CHECKME
-%define _dotnet_templatesrelease 5.0.15
+%define _dotnet_templatesrelease 5.0.17
 %define _dotnet_apprefrelease 5.0.0
-%define _dotnet_corerelease 5.0.15
-%define _dotnet_sdkrelease 5.0.406
+%define _dotnet_corerelease 5.0.17
+%define _dotnet_sdkrelease 5.0.408
 %define _dotnet_netstandartrelease 2.1.0
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 5.0.406
+Version: 5.0.408
 Release: alt1
 
 Summary: SDK for the .NET
@@ -126,6 +126,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %_dotnetdir/packs/NETStandard.Library.Ref/%_dotnet_netstandartrelease/
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 5.0.408-alt1
+- .NET SDK 5.0.408
+
 * Sat Apr 02 2022 Vitaly Lipatov <lav@altlinux.ru> 5.0.406-alt1
 - .NET SDK 5.0.406
 
