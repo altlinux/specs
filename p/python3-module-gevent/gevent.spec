@@ -3,8 +3,8 @@
 %def_disable embed
 
 Name: python3-module-%oname
-Version: 21.12.0
-Release: alt1.1
+Version: 22.10.1
+Release: alt1
 
 Summary: Coroutine-based network library
 
@@ -145,6 +145,9 @@ cp -fR src/greentest %buildroot%python3_sitelibdir/
 #doc examples
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 22.10.1-alt1
+- new version 22.10.1 (with rpmrb script)
+
 * Sat Nov 12 2022 Daniel Zagaynov <kotopesutility@altlinux.org> 21.12.0-alt1.1
 - NMU: used %%add_python3_self_prov_path macro to skip self-provides from dependencies.
 
