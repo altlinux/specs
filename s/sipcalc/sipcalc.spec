@@ -2,15 +2,13 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: sipcalc
-Version: 1.1.5
-Release: alt2
+Version: 1.1.6
+Release: alt1
 
 Summary: Advanced console-based ip subnet calculator
 License: BSD-3-Clause
 Group: Networking/Other
 Url: http://www.routemeister.net/projects/sipcalc/
-
-Packager: Artem Zolochevskiy <azol@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -29,7 +27,7 @@ of information about a given subnet.
 %make_build --silent
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %doc AUTHORS ChangeLog COPYING INSTALL NEWS README TODO
@@ -37,6 +35,9 @@ of information about a given subnet.
 %_man1dir/*
 
 %changelog
+* Sun Mar 12 2023 Arseny Maslennikov <arseny@altlinux.org> 1.1.6-alt1
+- 1.1.5 -> 1.1.6.
+
 * Thu Dec 12 2019 Grigory Ustinov <grenka@altlinux.org> 1.1.5-alt2
 - NMU: Fix license.
 
