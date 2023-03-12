@@ -1,5 +1,5 @@
 Name: udp2raw-tunnel
-Version: 20200818.0
+Version: 20230206.0
 Release: alt1
 
 Summary: UDP over TCP/ICMP/UDP tunnel
@@ -52,6 +52,9 @@ install -D -m 0644 example.conf %buildroot/%_sysconfdir/udp2raw/example.conf
 %_bindir/udp2raw
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 20230206.0-alt1
+- new version 20230206.0 (with rpmrb script)
+
 * Sat Sep 11 2021 Vitaly Lipatov <lav@altlinux.ru> 20200818.0-alt1
 - initial build for ALT Sisyphus
 
