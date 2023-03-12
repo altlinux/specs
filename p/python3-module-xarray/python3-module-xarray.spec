@@ -2,7 +2,7 @@
 %define oname xarray
 
 Name: python3-module-xarray
-Version: 2022.6.0
+Version: 2023.2.0
 Release: alt1
 
 License: MIT
@@ -55,6 +55,9 @@ or file-based execution of Python code inside Spyder.
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 2023.2.0-alt1
+- new version 2023.2.0 (with rpmrb script)
+
 * Sat Aug 27 2022 Vitaly Lipatov <lav@altlinux.ru> 2022.6.0-alt1
 - new version 2022.6.0 (with rpmrb script)
 
