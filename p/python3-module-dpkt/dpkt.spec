@@ -1,6 +1,6 @@
 %define oname dpkt
 Name: python3-module-dpkt
-Version: 1.9.7.2
+Version: 1.9.8
 Release: alt1
 
 Summary: Fast, simple packet creation and parsing
@@ -42,6 +42,9 @@ py.test3 -vv %oname || py.test3 -p no:warnings -vv %oname
 %python3_sitelibdir/*
 
 %changelog
+* Sun Mar 12 2023 Vitaly Lipatov <lav@altlinux.ru> 1.9.8-alt1
+- new version 1.9.8 (with rpmrb script)
+
 * Mon Apr 04 2022 Vitaly Lipatov <lav@altlinux.ru> 1.9.7.2-alt1
 - new version 1.9.7.2 (with rpmrb script)
 
