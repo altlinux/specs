@@ -1,5 +1,5 @@
 Name: imlib2
-Version: 1.10.0
+Version: 1.11.0
 Release: alt1
 
 Summary: Image loading, saving, rendering, and manipulation library
@@ -108,6 +108,9 @@ find %buildroot%_libdir/ -name '*.la' -delete
 %endif
 
 %changelog
+* Sun Mar 12 2023 Leontiy Volodin <lvol@altlinux.org> 1.11.0-alt1
+- New version (1.11.0).
+
 * Tue Dec 20 2022 Leontiy Volodin <lvol@altlinux.org> 1.10.0-alt1
 - New version (1.10.0).
 - Updated url tag.
