@@ -5,7 +5,7 @@
 
 Name: kicad
 Version: 7.0.0
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Summary: An open source software for the creation of electronic schematic diagrams
@@ -102,7 +102,9 @@ Common package for kicad.
 %setup
 %ifarch %e2k
 %patch2000 -p1
-sed -i "s/-Wreturn-type/-Wbuggy-edg/" CMakeModules/Warnings.cmake
+sed -i "s/-Wreturn-type/-Wbuggy-edg/" cmake/Warnings.cmake
+sed -i "s/';'/']'/" thirdparty/pegtl/pegtl/demangle.hpp
+sed -i "s/m_currentSymbol.GetSubLibraryName()/((wxString)&)/" eeschema/symbol_viewer_frame.cpp
 %endif
 %patch -p1
 
@@ -171,6 +173,9 @@ rm -r %buildroot/%_datadir/locale/pt_br
 %dir %_datadir/kicad/template
 
 %changelog
+* Mon Mar 13 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1:7.0.0-alt1.1
+- Fixed build for Elbrus.
+
 * Sun Feb 12 2023 Anton Midyukov <antohami@altlinux.org> 1:7.0.0-alt1
 - new version 7.0.0
 
