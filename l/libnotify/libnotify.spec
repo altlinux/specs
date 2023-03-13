@@ -9,7 +9,7 @@
 %def_enable man
 
 Name: libnotify
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Desktop notification library
@@ -26,7 +26,7 @@ Obsoletes: %{name}4
 
 BuildRequires(pre): rpm-macros-meson
 BuildRequires: meson libgio-devel
-%{?_enable_gtk_doc:BuildRequires: gtk-doc}
+%{?_enable_gtk_doc:BuildRequires: gi-docgen}
 %{?_enable_docbook_docs:BuildRequires: xmlto}
 %{?_enable_check:BuildRequires: libgtk+3-devel}
 %{?_enable_introspection:
@@ -127,7 +127,7 @@ the command line.
 
 %if_enabled gtk_doc
 %files devel-doc
-%_datadir/gtk-doc/html/%name
+%_datadir/doc/%name-0/
 %endif
 
 %if_enabled introspection
@@ -141,6 +141,9 @@ the command line.
 %{?_enable_docbook_docs:%exclude %_datadir/doc/%name/}
 
 %changelog
+* Sat Feb 18 2023 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
+- 0.8.2
+
 * Sun Jul 17 2022 Yuri N. Sedunov <aris@altlinux.org> 0.8.1-alt1
 - 0.8.1 (keep version of bindings at 0.7)
 
