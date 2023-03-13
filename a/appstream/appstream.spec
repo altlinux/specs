@@ -3,17 +3,17 @@
 
 Name:    appstream
 Version: 0.16.1
-Release: alt1
-Summary: Utilities to generate, maintain and access the AppStream Xapian database 
+Release: alt2
 
-# lib LGPLv2+, tools GPLv2+
+Summary: Utilities to generate, maintain and access the AppStream Xapian database
+# library; LGPLv2+, tools: GPLv2+
 License: GPL-2.0+ and LGPL-2.0+
 Group:   System/Configuration/Packaging
-URL:     http://www.freedesktop.org/wiki/Distributions/AppStream/
-Source0: appstream-%{version}.tar
+
+Url:     http://www.freedesktop.org/wiki/Distributions/AppStream/
 # VCS:   https://github.com/ximion/appstream
-#
-Patch1: appstream-0.15.5-meson-build.patch
+Source:  appstream-%version.tar
+Patch:   appstream-0.15.5-meson-build.patch
 
 BuildRequires(pre): meson
 BuildRequires: gcc-c++
@@ -58,8 +58,8 @@ Group: System/Libraries
 %summary.
 
 %package -n libappstream-devel
-Summary:  Development files for %{name}
-Group:	  Development/C
+Summary: Development files for %name
+Group: Development/C
 Requires: %name = %version-%release
 Provides: %name-devel = %EVR
 Obsoletes: %name-devel < %EVR
@@ -68,8 +68,8 @@ Obsoletes: %name-devel < %EVR
 %summary.
 
 %package -n libappstream-qt
-Summary: Qt bindings for %{name}
-Group:	  System/Libraries
+Summary: Qt bindings for %name
+Group: System/Libraries
 Requires: %name = %version-%release
 Provides: %name-qt = %EVR
 Obsoletes: %name-qt < %EVR
@@ -78,30 +78,31 @@ Obsoletes: %name-qt < %EVR
 %summary.
 
 %package -n libappstream-qt-devel
-Summary:  Development files for %{name}-qt bindings
-Group:	  Development/KDE and QT
+Summary: Development files for %name-qt bindings
+Group: Development/KDE and QT
 Requires: %name-qt = %version-%release
 Provides: %name-qt-devel = %EVR
 Obsoletes: %name-qt-devel < %EVR
 
 %description -n libappstream-qt-devel
-%{summary}.
+%summary.
 
 %package doc
-Summary:  Documenation for development using %{name}
-Group:	  Development/Documentation
+Summary: Documenation for development using %name
+Group: Development/Documentation
 BuildArch: noarch
 
 %description doc
-%{summary}.
+%summary.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 %ifarch %e2k
 # workaround for EDG frontend
 sed -i "s|g_autofree gchar \*\*|g_autofree_edg(gchar*)|" qt/pool.cpp
 sed -i "s|g_autofree gchar \*|g_autofree_edg(gchar)|" qt/spdx.cpp
+sed -i "s/-Werror=shadow/-Wno-error=shadow/" meson.build
 %endif
 
 %build
@@ -119,12 +120,12 @@ export LD_LIBRARY_PATH=$(pwd)/%__builddir/src
 
 %install
 %meson_install
-mkdir -p %{buildroot}%{_datadir}/app-info/{icons,xmls}
-mkdir -p %{buildroot}/var/cache/app-info/{icons,xapian,xmls}
-touch %{buildroot}/var/cache/app-info/cache.watch
+mkdir -p %buildroot%_datadir/app-info/{icons,xmls}
+mkdir -p %buildroot/var/cache/app-info/{icons,xapian,xmls}
+touch %buildroot/var/cache/app-info/cache.watch
 rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 
-%find_lang appstream
+%find_lang %name
 
 %check
 #%%meson_test
@@ -168,6 +169,10 @@ rm -f %buildroot%_datadir/installed-tests/appstream/metainfo-validate.test
 %_datadir/gtk-doc/html/appstream
 
 %changelog
+* Mon Mar 13 2023 Michael Shigorin <mike@altlinux.org> 0.16.1-alt2
+- E2K: workaround for an inadequate warning in tests (ilyakurdyukov@)
+- spec cleanup according to [[ALT Packaging HOWTO]]
+
 * Sat Feb 11 2023 Andrey Cherepanov <cas@altlinux.org> 0.16.1-alt1
 - New version.
 
