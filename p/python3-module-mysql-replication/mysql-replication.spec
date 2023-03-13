@@ -1,7 +1,7 @@
 %define oname mysql-replication
 
 Name: python3-module-%oname
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: Pure Python Implementation of MySQL replication protocol build on top of PyMYSQL
@@ -44,6 +44,9 @@ This allow you to receive event like insert, update, delete with their datas and
 %python3_sitelibdir/*
 
 %changelog
+* Mon Mar 13 2023 Grigory Ustinov <grenka@altlinux.org> 0.31-alt1
+- Automatically updated to 0.31.
+
 * Thu May 26 2022 Grigory Ustinov <grenka@altlinux.org> 0.30-alt1
 - Build new version.
 
