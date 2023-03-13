@@ -2,11 +2,11 @@
 %def_disable dotnet_host
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.12
+%define _dotnet_corerelease 6.0.14
 # used for build
-%define _dotnet_sdkrelease 6.0.112
+%define _dotnet_sdkrelease 6.0.114
 %define preview %nil
-%define _dotnet_sdkshortrelease 6.0.112%preview
+%define _dotnet_sdkshortrelease 6.0.114%preview
 
 %define commithash %version-%release
 
@@ -20,8 +20,8 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 6.0.12
-Release: alt2
+Version: 6.0.14
+Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
 
@@ -375,6 +375,11 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 6.0.14-alt1
+- .NET 6.0.14
+- CVE-2023-21808: .NET Remote Code Execution Vulnerability
+- CVE-2023-21538: .NET Denial of Service Vulnerability
+
 * Tue Dec 27 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.12-alt2
 - disable build dotnet-host here
 

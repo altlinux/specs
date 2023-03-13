@@ -4,20 +4,20 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 6.0
-%define _dotnet_corerelease 6.0.12
+%define _dotnet_corerelease 6.0.14
 %define _dotnet_sdkmanifestsrelease 6.0.100
-%define _dotnet_sdkrelease 6.0.112
-%define _dotnet_templatesrelease 6.0.12
-%define _dotnet_coreapprefrelease 6.0.12
+%define _dotnet_sdkrelease 6.0.114
+%define _dotnet_templatesrelease 6.0.14
+%define _dotnet_coreapprefrelease 6.0.14
 %define _dotnet_netstandartrelease 2.1.0
 %define preview %nil
-%define _dotnet_coreshortrelease 6.0.12%preview
-%define _dotnet_sdkshortrelease 6.0.112%preview
+%define _dotnet_coreshortrelease 6.0.14%preview
+%define _dotnet_sdkshortrelease 6.0.114%preview
 
 %define bootstrapdir %_libdir/dotnet-bootstrap-%_dotnet_major
 
 Name: dotnet-sdk-%_dotnet_major
-Version: 6.0.112%preview
+Version: 6.0.114%preview
 Release: alt1
 
 Summary: SDK for the .NET
@@ -149,6 +149,9 @@ cp %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/apphost %buildroot%_dotnet_s
 %endif
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 6.0.114-alt1
+- .NET SDK 6.0.114
+
 * Tue Dec 27 2022 Vitaly Lipatov <lav@altlinux.ru> 6.0.112-alt1
 - .NET SDK 6.0.112
 - pack missed sdk-manifests
