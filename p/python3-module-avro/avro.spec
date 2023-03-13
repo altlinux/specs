@@ -5,7 +5,7 @@
 
 Name: python3-module-%oname
 Version: 1.11.1
-Release: alt1
+Release: alt2
 
 Summary: Avro is a serialization and RPC framework
 License: Apache-2.0
@@ -85,6 +85,9 @@ py.test-3 -k 'not test_server_with_path'
 
 
 %changelog
+* Mon Mar 13 2023 Dmitriy Voropaev <voropaevdmtr@altlinux.org> 1.11.1-alt2
+- Increase tests timeout
+
 * Wed Mar 01 2023 Anton Vyatkin <toni@altlinux.org> 1.11.1-alt1
 - new version 1.11.1
 
