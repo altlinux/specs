@@ -1,4 +1,4 @@
-%ifarch %e2k ppc64le
+%ifarch %e2k ppc64le riscv64
 %def_disable qtwebengine
 %else
 %def_enable qtwebengine
@@ -6,7 +6,7 @@
 
 Name: deepin-manual
 Version: 5.8.15
-Release: alt1
+Release: alt2
 Summary: Help files for DDE
 License: GPL-3.0+ and CC0-1.0 and BSD-3-Clause
 # LICENSES/: CC0-1.0 and CC-BY-4.0 and MIT and BSD-3-Clause and LGPL-3.0 and GPL-3.0
@@ -79,6 +79,9 @@ cmake --build "%_cmake__builddir" -j%__nprocs
 %endif
 
 %changelog
+* Mon Mar 13 2023 Ivan A. Melnikov <iv@altlinux.org> 5.8.15-alt2
+- build on riscv64 w/o qt5-webengine
+
 * Fri Oct 28 2022 Leontiy Volodin <lvol@altlinux.org> 5.8.15-alt1
 - New version (5.8.15).
 - Updated license tag.
