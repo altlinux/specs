@@ -4,7 +4,7 @@
 Summary: SOGo is a very fast and scalable modern collaboration suite (groupware)
 Name:    sogo
 Version: 5.8.0
-Release: alt2
+Release: alt3
 
 License: GPL-2.0+ and LGPL-2.1+
 URL:     https://sogo.nu/
@@ -28,6 +28,7 @@ Patch2: sogo-alt-fixes.patch
 Patch4: sogo-alt-fix-timeZoneWithAbbreviation.patch
 Patch5: sogo-alt-libzip-includes.patch
 Patch6: sogo-alt-libytnef-includes.patch
+Patch7: sogo-fix3981.patch
 
 Requires: gnustep-base >= 1.28.1
 Requires: stmpclean
@@ -261,6 +262,7 @@ tar xf %SOURCE2
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 # Set correct python3 executable in shebang
 subst 's|#!.*python$|#!%__python3|' $(grep -Rl '#!.*python$' *)
@@ -440,6 +442,9 @@ fi
 %preun_service sogo
 
 %changelog
+* Mon Mar 13 2023 Andrey Cherepanov <cas@altlinux.org> 5.8.0-alt3
+- Fixed images not displayed when forward / reply to a mail (#3981).
+
 * Mon Feb 06 2023 Andrey Cherepanov <cas@altlinux.org> 5.8.0-alt2
 - Required gnustep-base (ALT #45055).
 
