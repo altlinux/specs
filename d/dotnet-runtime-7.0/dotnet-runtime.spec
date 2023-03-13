@@ -2,13 +2,18 @@
 %def_enable dotnet_host
 
 %define _dotnet_major 7.0
-%define _dotnet_corerelease 7.0.1
+%define _dotnet_corerelease 7.0.3
 # used for build
-%define _dotnet_sdkrelease 7.0.101
+%define _dotnet_sdkrelease 7.0.103
 %define preview %nil
-%define _dotnet_sdkshortrelease 7.0.101%preview
+%define _dotnet_sdkshortrelease 7.0.103%preview
 
 %define commithash %version-%release
+
+# Debug Release
+%define debrel Release
+# -debug -release
+%define debrelopt -release
 
 %def_with bootstrap
 # TODO:
@@ -20,7 +25,7 @@
 %endif
 
 Name: dotnet-runtime-%_dotnet_major
-Version: 7.0.1
+Version: 7.0.3
 Release: alt1
 
 Summary: Microsoft .NET Runtime and Microsoft.NETCore.App
@@ -198,7 +203,8 @@ EOF
 
 # build CLR
 cd src/coreclr/
-bash -x ./build-runtime.sh -release -verbose -skipmanaged -ignorewarnings -skiprestoreoptdata -nopgooptimize -portablebuild 0\
+bash -x ./build-runtime.sh \
+    %debrelopt -verbose -skipmanaged -ignorewarnings -skiprestoreoptdata -nopgooptimize -portablebuild 0\
     -cmakeargs -DENABLE_LLDBPLUGIN=0 \
 %if_without single_file_diagnostics
     -cmakeargs -DFEATURE_SINGLE_FILE_DIAGNOSTICS=0 \
@@ -211,22 +217,22 @@ cd -
 
 # build Native libraries
 cd src/native/libs/
-bash -x ./build-native.sh -release -skipgenerateversion
+bash -x ./build-native.sh %debrelopt -skipgenerateversion
 cd -
 
 # build host commands
 export artifacts=$(pwd)/artifacts
 cd src/native/corehost/
 sh -x ./build.sh \
-    -release \
+    %debrelopt \
     -hostver %_dotnet_corerelease \
     -apphostver %_dotnet_corerelease \
     -fxrver %_dotnet_corerelease \
     -policyver %_dotnet_corerelease \
     -skipgenerateversion \
     -portablebuild 0 \
-    -coreclrartifacts $artifacts/bin/coreclr/Linux.%_dotnet_arch.Release \
-    -nativelibsartifacts  $artifacts/bin/native/Linux-%_dotnet_arch-Release \
+    -coreclrartifacts $artifacts/bin/coreclr/Linux.%_dotnet_arch.%debrel \
+    -nativelibsartifacts  $artifacts/bin/native/Linux-%_dotnet_arch-%debrel \
     -commithash %commithash \
 %if_with libunwind
     -cmakeargs -DCLR_CMAKE_USE_SYSTEM_LIBUNWIND=1 \
@@ -251,20 +257,21 @@ cd -
 mkdir -p %buildroot%_dotnet_shared/
 # TODO: some publish use?
 # TODO: drop SOS_README.md?
-cp -a artifacts/bin/coreclr/Linux.%_dotnet_arch.Release/{lib*.so,createdump} %buildroot%_dotnet_shared/
-cp -a artifacts/bin/native/Linux-%_dotnet_arch-Release/{libSystem.*Native*.so,libSystem.*Native*.a} %buildroot%_dotnet_shared/
+cp -a artifacts/bin/coreclr/Linux.%_dotnet_arch.%debrel/{lib*.so,createdump} %buildroot%_dotnet_shared/
+cp -a artifacts/bin/native/Linux-%_dotnet_arch-%debrel/{libSystem.*Native*.so,libSystem.*Native*.a} %buildroot%_dotnet_shared/
 
 mkdir -p %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
-cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/{coreclr_delegates.h,hostfxr.h,libnethost.so,libnethost.a,nethost.h} %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
-cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/apphost %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
-#cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/singlefilehost %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
-cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/{nethost.h,libhostpolicy.so,libnethost.a,coreclr_delegates.h,hostfxr.h} %buildroot%_dotnet_shared/
+cp -a artifacts/bin/linux-%_dotnet_arch.%debrel/corehost/{coreclr_delegates.h,hostfxr.h,libnethost.so,libnethost.a,nethost.h} %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
+cp -a artifacts/bin/linux-%_dotnet_arch.%debrel/corehost/apphost %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
+#cp -a artifacts/bin/linux-%_dotnet_arch.%debrel/corehost/singlefilehost %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
+cp -a artifacts/bin/coreclr/Linux.%_dotnet_arch.%debrel/corehost/singlefilehost %buildroot%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/
+cp -a artifacts/bin/linux-%_dotnet_arch.%debrel/corehost/{nethost.h,libhostpolicy.so,libnethost.a,coreclr_delegates.h,hostfxr.h} %buildroot%_dotnet_shared/
 mkdir -p %buildroot%_dotnet_hostfxr/
-cp -a artifacts/bin/linux-%_dotnet_arch.Release/corehost/libhostfxr.so %buildroot%_dotnet_hostfxr/
+cp -a artifacts/bin/linux-%_dotnet_arch.%debrel/corehost/libhostfxr.so %buildroot%_dotnet_hostfxr/
 
 mkdir -p %buildroot%_dotnetdir/
 %if_enabled dotnet_host
-install -m755 artifacts/bin/linux-%_dotnet_arch.Release/corehost/dotnet %buildroot%_dotnetdir/
+install -m755 artifacts/bin/linux-%_dotnet_arch.%debrel/corehost/dotnet %buildroot%_dotnetdir/
 
 mkdir -p %buildroot%_bindir/
 ln -sr %buildroot%_dotnetdir/dotnet %buildroot%_bindir/dotnet
@@ -374,9 +381,14 @@ rm -fv %buildroot%_dotnet_shared/libprotononjit.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/libnethost.a
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/libnethost.so
 %_dotnet_apphostdir/runtimes/%_dotnet_rid/native/nethost.h
-#_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
+%_dotnet_apphostdir/runtimes/%_dotnet_rid/native/singlefilehost
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 7.0.3-alt1
+- .NET 7.0.1
+- CVE-2023-21808: .NET Remote Code Execution Vulnerability
+- restore build and pack singlefilehost
+
 * Tue Dec 27 2022 Vitaly Lipatov <lav@altlinux.ru> 7.0.1-alt1
 - .NET 7.0.1
 - disable pack singlefilehost (TODO: search a way to build again)
