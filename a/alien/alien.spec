@@ -1,6 +1,6 @@
 Name: alien
-Version: 8.95
-Release: alt9
+Version: 8.95.6
+Release: alt1
 
 Summary: Install Debian and Slackware Packages with RPM
 
@@ -12,8 +12,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-# Source-url: http://ftp.debian.org/debian/pool/main/a/alien/%{name}_%version.tar.bz2
+# Source-url: http://ftp.debian.org/debian/pool/main/a/alien/%{name}_%version.tar.xz
 Source: %name-%version.tar
+
 Patch: %name-Makefile.PL.patch
 Patch1: alien-dpkg-tar.xz.patch
 Patch2: alien-alt-plaintext-scripts.patch
@@ -36,8 +37,8 @@ It is recommended install dpkg package to full dpkg support.
 
 %prep
 %setup
-%patch -p2
-%patch1 -p2
+#patch -p2
+#%patch1 -p2
 %patch2 -p2
 %patch3 -p2
 
@@ -54,6 +55,10 @@ It is recommended install dpkg package to full dpkg support.
 %_man3dir/*
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 8.95.6-alt1
+- new version 8.95.6 (with rpmrb script)
+- build real 8.95.6 version (ALT bug 44936)
+
 * Tue Mar 09 2021 Andrey Cherepanov <cas@altlinux.org> 8.95-alt9
 - Fix missing spaces in control fields in deb packages.
 
