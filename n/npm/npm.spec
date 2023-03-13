@@ -1,6 +1,6 @@
 Name: npm
-Version: 8.19.2
-Release: alt2
+Version: 8.19.3
+Release: alt1
 
 Summary: A package manager for node
 
@@ -67,7 +67,7 @@ cp -a . %buildroot%nodejs_sitelib/%name/
 rm -rv %buildroot%nodejs_sitelib/%name/workspaces/*/test/
 
 # remove unused scripts
-rm -rv %buildroot%nodejs_sitelib/%name/{scripts,tap-snapshots,test,configure,Makefile}
+rm -rv %buildroot%nodejs_sitelib/%name/{scripts,tap-snapshots,test,configure}
 
 # remove all node-gyp deps
 rm -rv %buildroot%nodejs_sitelib/%name/node_modules/@npmcli/run-script/lib/node-gyp-bin
@@ -85,8 +85,11 @@ done
 %nodejs_sitelib/%name/
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 8.19.3-alt1
+- new version 8.19.3 (with rpmrb script)
+
 * Fri Oct 21 2022 Vitaly Lipatov <lav@altlinux.ru> 8.19.2-alt2
-- fix  npm config get user-agent output (ALT bug 43430)
+- fix npm config get user-agent output (ALT bug 43430)
 
 * Sun Oct 16 2022 Vitaly Lipatov <lav@altlinux.ru> 8.19.2-alt1
 - new version 8.19.2 (with rpmrb script)

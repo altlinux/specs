@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 # check deps/npm/package.json for it
-%define npmver 8.19.2
+%define npmver 8.19.3
 # separate build npm
 %def_without npm
 # in other case, note: we will npm-@npmver-@release package! fix release if npmver is unchanged
@@ -10,7 +10,7 @@
 %define corepackver 0.10.0
 %def_without corepack
 
-%define major 16.18
+%define major 16.19
 
 #we need ABI virtual provides where SONAMEs aren't enough/not present so deps
 #break when binary compatibility is broken
@@ -26,7 +26,7 @@
 %def_without systemv8
 
 
-%define openssl_version 1.1.1q
+%define openssl_version 1.1.1s
 %def_with systemssl
 
 %global libuv_abi 1.43.0-alt1
@@ -432,6 +432,16 @@ rm -rf %buildroot%_datadir/systemtap/tapset
 %endif
 
 %changelog
+* Mon Mar 13 2023 Vitaly Lipatov <lav@altlinux.ru> 16.19.1-alt1
+- new version 16.19.1 (with rpmrb script)
+- CVE-2023-23918: Node.js Permissions policies can be bypassed via process.mainModule (High)
+- CVE-2023-23919: Node.js OpenSSL error handling issues in nodejs crypto library (Medium)
+- CVE-2023-23920: Node.js insecure loading of ICU data through ICU\_DATA environment variable (Low)
+- CVE-2023-23936: Fetch API in Node.js did not protect against CRLF injection in host headers (Medium)
+- CVE-2023-24807: Regular Expression Denial of Service in Headers in Node.js fetch API (Low)
+- set openssl >= 1.1.1s
+- set npm >= 8.19.3
+
 * Wed Nov 23 2022 Vitaly Lipatov <lav@altlinux.ru> 16.18.1-alt1
 - new version 16.18.1 (with rpmrb script)
 - CVE-2022-43548: DNS rebinding in --inspect via invalid octal IP address (Medium)
