@@ -3,7 +3,7 @@
 %define repo dde-app-services
 
 Name: deepin-app-services
-Version: 0.0.21
+Version: 0.0.22
 Release: alt1
 Summary: Service collection of DDE applications
 License: LGPL-3.0+
@@ -67,6 +67,9 @@ chmod +x %buildroot%_datadir/bash-completion/completions/dde-dconfig
 %_datadir/dsg/configs/overrides/dconfig-example/example/a/dconf-example.override.a.json
 
 %changelog
+* Mon Mar 13 2023 Leontiy Volodin <lvol@altlinux.org> 0.0.22-alt1
+- New version.
+
 * Wed Feb 22 2023 Leontiy Volodin <lvol@altlinux.org> 0.0.21-alt1
 - New version.
 
