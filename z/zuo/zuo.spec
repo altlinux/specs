@@ -5,8 +5,8 @@
 %add_optflags -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
 
 Name: zuo
-Version: 1.0
-Release: alt2.gitd12bbec6
+Version: 1.0.racket8.8
+Release: alt1
 
 Summary: A tiny Racket for scripting
 License: Apache-2.0 MIT
@@ -44,12 +44,21 @@ the early layers implements macros.
 %install
 %makeinstall_std
 
+%check
+%buildroot%_bindir/%name -X %buildroot%_datadir/%name . check
+
 %files
 %doc LICENSE.txt
 %_datadir/%name
 %_bindir/%name
 
 %changelog
+* Sun Mar 12 2023 Anton Zhukharev <ancieg@altlinux.org> 1.0.racket8.8-alt1
+- Updated to Racket v8.8.
+
+* Fri Oct 07 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0-alt3.gitd12bbec6
+- enable check
+
 * Thu Oct 06 2022 Anton Zhukharev <ancieg@altlinux.org> 1.0-alt2.gitd12bbec6
 - add %%autoreconf
 

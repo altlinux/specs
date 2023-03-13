@@ -14,8 +14,8 @@
 %define zuo zuo -X /usr/share/zuo
 
 Name: racket-core
-Version: 8.6
-Release: alt4
+Version: 8.8
+Release: alt1
 
 Summary: Racket, the programming language (base package)
 License: Apache-2.0 or MIT
@@ -140,6 +140,9 @@ chmod 0755 %buildroot%_rpmlibdir/racket-update-mans.filetrigger
 %endif
 
 %changelog
+* Sun Mar 12 2023 Anton Zhukharev <ancieg@altlinux.org> 8.8-alt1
+- 8.6 -> 8.8.
+
 * Sun Jan 08 2023 Anton Zhukharev <ancieg@altlinux.org> 8.6-alt4
 - add launchers.d and mans.d and filetriggers for them
 

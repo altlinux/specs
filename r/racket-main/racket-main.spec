@@ -19,8 +19,8 @@
 %define fakechroot_raco_install() %fakechroot_bash_execute '%_raco_install %*'
 
 Name: racket-main
-Version: 8.6
-Release: alt3
+Version: 8.8
+Release: alt1
 
 Summary: Racket, the programming language (main-distribution packages)
 License: GPL-3.0 or LGPL-3.0 or Apache-2.0 or MIT
@@ -129,6 +129,9 @@ mv %fakechroot_dir %buildroot
 %racket_libdir/*.d/
 
 %changelog
+* Sun Mar 12 2023 Anton Zhukharev <ancieg@altlinux.org> 8.8-alt1
+- 8.6 -> 8.8.
+
 * Sun Feb 12 2023 Anton Zhukharev <ancieg@altlinux.org> 8.6-alt3
 - fix removing fonts from fakechroot (force it)
 
