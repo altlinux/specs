@@ -1,5 +1,5 @@
 Name: kodi
-Version: 20.0
+Version: 20.1
 Release: alt1
 
 Summary: Kodi Media Center
@@ -192,6 +192,9 @@ mkdir %buildroot%_libdir/kodi/addons
 %_datadir/xsessions/kodi.desktop
 
 %changelog
+* Mon Mar 13 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.1-alt1
+- 20.1 Nexus released
+
 * Mon Jan 16 2023 Sergey Bolshakov <sbolshakov@altlinux.ru> 20.0-alt1
 - 20.0 Nexus released
 
