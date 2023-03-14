@@ -4,7 +4,7 @@
 %def_enable check
 
 Name: python3-module-flask-restx
-Version: 1.0.3
+Version: 1.1.0
 Release: alt1
 
 Summary: Flask-RESTX is a community driven fork of Flask-RESTPlus
@@ -84,6 +84,10 @@ EXCLUDE_TESTS_CONDITION="not (\
 %python3_sitelibdir/%oname-%version.dist-info/
 
 %changelog
+* Mon Mar 13 2023 Danil Shein <dshein@altlinux.org> 1.1.0-alt1
+- new version 1.1.0
+  + update SwaggerUI
+
 * Wed Nov 30 2022 Danil Shein <dshein@altlinux.org> 1.0.3-alt1
 - new version 1.0.3
   + update SwaggerUI
