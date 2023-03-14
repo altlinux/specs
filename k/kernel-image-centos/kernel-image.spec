@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 286
+%define centos_release 287
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,14 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Tue Mar 14 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.287-alt1.el9
+- Updated to kernel-5.14.0-287.el9:
+  + arch/x86: Update to 5.15
+  + Merge documentation commit '0b4eefcb92b601122e3d51e77d2c968ba2d051e0'
+  + Updates for kexec file
+  + Updates for powerpc/pseries: hotplug cpu
+  + Various changes and improvements that are poorly described in merge.
+
 * Sat Mar 11 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.286-alt1.el9
 - Updated to kernel-5.14.0-286.el9 (fixes: CVE-2022-4379):
   + clocksource: hyper-v: Updates for RHEL9.3
