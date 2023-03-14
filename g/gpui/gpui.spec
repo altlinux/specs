@@ -1,7 +1,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: gpui
-Version: 0.2.19
+Version: 0.2.20
 Release: alt1
 
 Summary: Group policy editor
@@ -111,6 +111,11 @@ LD_PRELOAD=%buildroot%_libdir/gpui/plugins/libadministrative-templates-plugin.so
 %_mandir/ru/man1/gpui.*
 
 %changelog
+* Sun Mar 05 2023 Vladimir Rubanov <august@altlinux.org> 0.2.20-alt1
+- 0.2.20-alt1
+- Fixes:
+  + Fix policy's key search for lists in administrative templates.
+
 * Sun Mar 05 2023 Vladimir Rubanov <august@altlinux.org> 0.2.19-alt1
 - 0.2.18-alt1
 - Fixes:
