@@ -19,8 +19,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.1
-Release: alt2
+Version: 10.2
+Release: alt1
 Url: https://altsp.su
 
 BuildRequires(pre): rpm-macros-branding
@@ -282,6 +282,15 @@ fi
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Mar 14 2023 Anton Midyukov <antohami@altlinux.org> 10.2-alt1
+- notes: update license
+
+* Mon Feb 27 2023 Anton Midyukov <antohami@altlinux.org> 10.1-alt3
+- indexhtml: remove link to bugs.altlinux.org
+- os-release.in: remove link to bugs.altlinux.org
+- release-notes.all.html.in: update format from russian version
+- images: update wallpapers
+
 * Tue Jan 24 2023 Anton Midyukov <antohami@altlinux.org> 10.1-alt2
 - disable gfxboot for syslinux and slideshow for installer
 - bootloader subpackage noarch again

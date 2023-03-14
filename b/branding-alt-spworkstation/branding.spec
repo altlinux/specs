@@ -24,8 +24,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: branding-%flavour
-Version: 10.1
-Release: alt2
+Version: 10.2
+Release: alt1
 Url: https://altsp.su
 
 BuildRequires(pre): rpm-macros-branding
@@ -212,7 +212,7 @@ Obsoletes: indexhtml-desktop indexhtml-Desktop
 %branding_add_conflicts %flavour indexhtml
 
 Requires(post): indexhtml-common
-Requires: shared-desktop-icons
+#Requires: shared-desktop-icons
 
 %description indexhtml
 %distro_name welcome page.
@@ -318,6 +318,16 @@ subst 's/#theme-name=/theme-name=%gtk_theme/' /etc/lightdm/lightdm-gtk-greeter.c
 #_iconsdir/hicolor/*/apps/alt-%theme-desktop.png
 
 %changelog
+* Tue Mar 14 2023 Anton Midyukov <antohami@altlinux.org> 10.2-alt1
+- notes: update license
+
+* Mon Feb 27 2023 Anton Midyukov <antohami@altlinux.org> 10.1-alt3
+- branding.spec: indexhtml: do'nt require shared-desktop-icons
+- images: update wallpapers
+- release-notes.all.html.in: update format from russian version
+- indexhtml: remove link to bugs.altlinux.org
+- os-release.in: remove link to bugs.altlinux.org
+
 * Tue Jan 24 2023 Anton Midyukov <antohami@altlinux.org> 10.1-alt2
 - disable gfxboot for syslinux and slideshow for installer
 - bootloader subpackage noarch again
