@@ -10,7 +10,7 @@
 
 Name:           lib%oname%soname
 Version:        2.2.1
-Release:        alt1
+Release:        alt2
 Summary:        Enables color transforms and image display across graphics apps
 
 License:        BSD-3-Clause
@@ -72,6 +72,9 @@ Command line tools for %oname.
 %package devel
 Summary:        Development libraries and headers for %oname
 Group:          Development/Other
+Provides:       libopencolorio-devel = %version
+Provides:       libopencolorio2.0-devel = %EVR
+Obsoletes:      libopencolorio2.0-devel < %EVR
 
 %description devel
 Development libraries and headers for %oname.
@@ -175,6 +178,9 @@ popd
 %python3_sitelibdir/*.so
 
 %changelog
+* Tue Mar 14 2023 Sergey V Turchin <zerg@altlinux.org> 2.2.1-alt2
+- obsolete libopencolorio2.0-devel
+
 * Mon Jan 16 2023 Alexander Burmatov <thatman@altlinux.org> 2.2.1-alt1
 - Updated to upstream version 2.2.1.
 
