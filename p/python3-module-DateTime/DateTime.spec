@@ -1,27 +1,37 @@
 %define _unpackaged_files_terminate_build 1
-BuildRequires: unzip
+
 %define oname DateTime
+
+%def_with check
 
 Name: python3-module-%oname
 Epoch: 1
-Version: 4.1.1
-Release: alt2
-Summary: Encapsulation of date/time values
-License: ZPLv2.1
-Group: Development/Python3
-Url: http://pypi.python.org/pypi/DateTime/
+Version: 5.0
+Release: alt1
 
-# https://github.com/zopefoundation/DateTime.git
-Source0: https://pypi.python.org/packages/80/67/37467b2725462859366d35bfe30e1e217e6f49ca391ecbe54ae2f09da191/%{oname}-%{version}.zip
+Summary: This package provides a DateTime data type, as known from Zope
+License: ZPL-2.1
+Group: Development/Python3
+Url: https://pypi.org/project/DateTime/
+VCS: https://github.com/zopefoundation/DateTime.git
+
+Source0: %name-%version.tar
+
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: /usr/bin/2to3
+BuildRequires: python3-module-setuptools
+BuildRequires: python3-module-wheel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-pytz
+%endif
 
 %description
-This package provides a DateTime data type, as known from Zope 2. Unless
-you need to communicate with Zope 2 APIs, you're probably better off
-using Python's built-in datetime module.
+This package provides a DateTime data type, as known from Zope. Unless you need
+to communicate with Zope APIs, you're probably better off using Python's
+built-in datetime module.
 
 %package tests
 Summary: Tests for DateTime
@@ -29,31 +39,38 @@ Group: Development/Python3
 Requires: %name = %EVR
 
 %description tests
-This package provides a DateTime data type, as known from Zope 2. Unless
-you need to communicate with Zope 2 APIs, you're probably better off
-using Python's built-in datetime module.
+This package provides a DateTime data type, as known from Zope. Unless you need
+to communicate with Zope APIs, you're probably better off using Python's
+built-in datetime module.
 
 This package contains tests for DateTime.
 
 %prep
-%setup -n %{oname}-%{version}
+%setup
 
 %build
-find -type f -name '*.py' -exec 2to3 -w '{}' +
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
+
+%check
+export PYTHONPATH=%buildroot%python3_sitelibdir
+py.test-3
 
 %files
-%doc *.txt
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/tests
+%doc *.txt *.rst
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version.dist-info
+%exclude %python3_sitelibdir/%oname/tests
 
 %files tests
-%python3_sitelibdir/*/tests
+%python3_sitelibdir/%oname/tests
 
 %changelog
+* Tue Mar 14 2023 Anton Vyatkin <toni@altlinux.org> 1:5.0-alt1
+- New version 5.0.
+
 * Tue Jul 27 2021 Grigory Ustinov <grenka@altlinux.org> 1:4.1.1-alt2
 - Drop python2 support.
 
