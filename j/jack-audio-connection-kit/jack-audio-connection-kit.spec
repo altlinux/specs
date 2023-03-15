@@ -1,7 +1,7 @@
 %def_disable firewire
 
 Name: jack-audio-connection-kit
-Version: 1.9.21
+Version: 1.9.22
 Release: alt1
 Epoch: 1
 
@@ -21,13 +21,16 @@ Obsoletes: jackd < %epoch:%version
 
 BuildRequires: rpm-build-python3
 
-BuildRequires: doxygen gcc-c++ libalsa-devel libcelt-devel libdbus-devel libexpat-devel
-BuildRequires: libncurses-devel libreadline-devel libsamplerate-devel libsndfile-devel
-
+BuildRequires: doxygen
+BuildRequires: gcc-c++
+BuildRequires: libalsa-devel
+BuildRequires: libcelt-devel
+BuildRequires: libdbus-devel
+BuildRequires: libexpat-devel
+BuildRequires: libsystemd-devel
+BuildRequires: libsamplerate-devel
 BuildRequires: libopus-devel
 BuildRequires: eigen3
-BuildRequires: libportaudio2-devel
-BuildRequires: zita-resampler-devel
 %{?_enable_firewire:BuildRequires: libffado-devel}
 
 %description
@@ -60,16 +63,6 @@ Obsoletes: jackit-devel < %epoch:%version jackit-devel-doc < %epoch:%version
 This package includes the development libraries and header files
 necessary for developing programs which will use JACK
 
-%package utils
-Summary: Utilities for JACK
-Group: Sound
-Requires: %name = %EVR
-Provides: jackit-utils = %epoch:%version-%release
-Obsoletes: jackit-utils < %epoch:%version
-
-%description utils
-Utilities that control and interact with the JACK server-jackd
-
 %prep
 %setup -n jack2-%version
 %autopatch -p1
@@ -93,7 +86,6 @@ export PREFIX=%_prefix
 	--alsa \
 	--dbus \
 	--classic \
-	--example-tools=yes \
 	%{?_enable_firewire:--firewire --freebob}
 ./waf build -j${NPROCS:-%__nprocs} -v
 
@@ -113,22 +105,13 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_sysconfdir/pulse/%name.pa
 %_sysconfdir/security/limits.d/99-%name.conf
 %_bindir/jackd*
-%_bindir/jack_load
-%_bindir/jack_unload
-%_bindir/jack_connect
-%_bindir/jack_disconnect
-%_bindir/jack_lsp
+%_bindir/jack_control
 %_libdir/libjackserver.so.*
 %_libdir/libjacknet.so.*
 %dir %_libdir/jack
 %_libdir/jack/*.so
 %_datadir/dbus-1/services/org.jackaudio.service
 %_man1dir/jackd*.1*
-%_man1dir/jack_load.1*
-%_man1dir/jack_unload.1*
-%_man1dir/jack_connect.1*
-%_man1dir/jack_disconnect.1*
-%_man1dir/jack_lsp.1*
 
 %files -n libjack
 %_libdir/libjack.so.*
@@ -141,26 +124,11 @@ export RPM_FILES_TO_LD_PRELOAD_jack=%_libdir/jack/*.so
 %_pkgconfigdir/*.pc
 %_datadir/doc/%name
 
-%files utils
-%_bindir/alsa_in
-%_bindir/alsa_out
-%exclude %_bindir/jack_load
-%exclude %_bindir/jack_unload
-%exclude %_bindir/jack_connect
-%exclude %_bindir/jack_disconnect
-%exclude %_bindir/jack_lsp
-%_bindir/jack_*
-%exclude %_man1dir/jack_load.1*
-%exclude %_man1dir/jack_unload.1*
-%exclude %_man1dir/jack_connect.1*
-%exclude %_man1dir/jack_disconnect.1*
-%exclude %_man1dir/jack_lsp.1*
-%_man1dir/alsa_in.1*
-%_man1dir/alsa_out.1*
-%_man1dir/jack_*.1*
-%_man1dir/jackrec.1*
-
 %changelog
+* Fri Mar 10 2023 Anton Midyukov <antohami@altlinux.org> 1:1.9.22-alt1
+- 1.9.22
+- Removed subpackage jack-audio-connection-kit-utils
+
 * Tue Jun 14 2022 Anton Midyukov <antohami@altlinux.org> 1:1.9.21-alt1
 - 1.9.21 (Closes: 42971)
 
