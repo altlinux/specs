@@ -29,7 +29,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 375
+Version: 379
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -62,7 +62,7 @@ BuildRequires(pre): alternatives groff-base imake libXaw-devel libXft-devel libn
 # optimized out: alternatives fontconfig fontconfig-devel gnu-config libICE-devel libSM-devel libX11-devel libXmu-devel libXrender-devel libXt-devel libfreetype-devel libtinfo-devel pkg-config xorg-kbproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: ctags groff-base imake libXaw-devel libXext-devel libXft-devel libncurses-devel libneXtaw-devel libutempter-devel libxkbfile-devel xorg-cf-files
 
-Requires: /etc/X11/app-defaults
+Requires: /etc/X11/app-defaults, %name-resize = %EVR
 
 %description
 The XTerm program is the standard terminal emulator for the X Window System.
@@ -76,9 +76,18 @@ is resized.
 %package experimental
 Group: Terminals
 Summary: experimental version of xterm
+Requires: /etc/X11/app-defaults
 %description experimental
 XTerm build with some experimental/unsafe features:
 %xterm_expflags
+
+%package resize
+Group: Terminals
+Summary: Set environment and terminal settings to current xterm window size
+%description resize
+Resize prints a shell command for setting the appropriate environment
+variables to indicate the current size of xterm window from which the
+command is run.
 
 %prep
 %setup
@@ -87,7 +96,7 @@ install -pm755 %_sourcedir/uxterm .
 
 %patch0001 -p2
 %patch0002 -p2
-%patch0003 -p2
+#patch0003 -p2
 %patch0004 -p2
 %patch0005 -p2
 %patch0006 -p2
@@ -144,8 +153,6 @@ EOF
 %attr(2711,root,utempter) %_bindir/%name
 %_bindir/uxterm
 %_bindir/koi8rxterm
-%_bindir/resize
-%_man1dir/resize.1.*
 %_man1dir/%name.1.*
 %_man1dir/uxterm.1.*
 %_man1dir/koi8rxterm.1.*
@@ -155,10 +162,18 @@ EOF
 %_pixmapsdir/*.xpm
 %_iconsdir/hicolor/*/apps/xterm*
 
+%files resize
+%_bindir/resize
+%_man1dir/resize.1.*
+
 %files experimental
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Wed Mar 15 2023 Fr. Br. George <george@altlinux.org> 379-alt1
+- Autobuild version bump to 379
+- Separate resize package (Closes: #44291)
+
 * Sat Nov 12 2022 Fr. Br. George <george@altlinux.org> 375-alt1
 - Autobuild version bump to 375
 
