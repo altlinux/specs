@@ -2,7 +2,7 @@
 
 Name: kernel-source-rtw89
 Version: 0.0
-Release: alt3.git.fce040c
+Release: alt4.git.4f3464d
 
 Summary: Driver source code for Realtek 8852AE, an 802.11ax device.
 License: GPL-2.0
@@ -35,6 +35,9 @@ tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
 
 %changelog
+* Tue Mar 14 2023 Anton Farygin <rider@altlinux.ru> 0.0-alt4.git.4f3464d
+- update to 4f3464d
+
 * Fri Mar 10 2023 Anton Farygin <rider@altlinux.ru> 0.0-alt3.git.fce040c
 - update to fce040c
 
