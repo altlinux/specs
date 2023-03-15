@@ -1,26 +1,36 @@
 %define oname mdp
 
+# 16 tests (test_dtype_consistency) fail on armh
+%ifnarch armh
+%def_with check
+%else
+%def_without check
+%endif
+
 Name: python3-module-%oname
-Version: 3.5
-Release: alt2
+Version: 3.6
+Release: alt1
 
 Summary: Modular toolkit for Data Processing
 
 Group: Development/Python3
-License: LGPL v2
-URL: http://mdp-toolkit.sourceforge.net/
+License: BSD-3-Clause
+URL: https://pypi.org/project/MDP/
+VCS: https://github.com/mdp-toolkit/mdp-toolkit
 
-# git://github.com/mdp-toolkit/mdp-toolkit
-Source: %oname-%version.tar.gz
+Source: %name-%version.tar
 Source1: MDP-tutorial.pdf
 
 BuildArch: noarch
 
-%add_python3_req_skip test shogun UserDict
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-scipy libnumpy-py3-devel
+%if_with check
+BuildRequires: python3-module-pytest
+BuildRequires: python3-module-future
+BuildRequires: python3-module-numpy-testing
+%endif
 
+%add_python3_req_skip shogun UserDict pp libsvm.svmutil
 
 %description
 Modular toolkit for Data Processing (MDP) is a Python data processing
@@ -45,7 +55,7 @@ Restricted Boltzmann Machine, and Locally Linear Embedding.
 %package tests
 Summary: Tests for Modular toolkit for Data Processing
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 Modular toolkit for Data Processing (MDP) is a Python data processing
@@ -77,8 +87,15 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
 %install
 %python3_install
 
+%check
+%tox_create_default_config
+%tox_check -- mdp
+%tox_check -- bimdp
+
 %files
-%python3_sitelibdir/*
+%python3_sitelibdir/bimdp
+%python3_sitelibdir/%oname
+%python3_sitelibdir/MDP-%version-*.egg-info
 %exclude %python3_sitelibdir/%oname/test
 %exclude %python3_sitelibdir/bimdp/test
 
@@ -92,6 +109,9 @@ sed -i 's|#! /usr/bin/env python|#! /usr/bin/env python3|' \
 
 
 %changelog
+* Mon Mar 13 2023 Anton Vyatkin <toni@altlinux.org> 3.6-alt1
+- New version 3.6
+
 * Sun Nov 22 2020 Vitaly Lipatov <lav@altlinux.ru> 3.5-alt2
 - cleanup spec
 
