@@ -2,22 +2,19 @@
 %define oname gevent-websocket
 
 Name: python3-module-%oname
-Version: 0.9.5
-Release: alt2
+Version: 0.10.1
+Release: alt1
 Summary: Websocket handler for the gevent pywsgi server, a Python network library
 License: BSD
 Group: Development/Python3
 Url: http://pypi.python.org/pypi/gevent-websocket/
 
-# hg clone https://bitbucket.org/Jeffrey/gevent-websocket
-Source0: https://pypi.python.org/packages/de/93/6bc86ddd65435a56a2f2ea7cc908d92fea894fc08e364156656e71cc1435/%{oname}-%{version}.tar.gz
+Source0: https://files.pythonhosted.org/packages/98/d2/6fa19239ff1ab072af40ebf339acd91fb97f34617c2ee625b8e34bf42393/%oname-%version.tar.gz
 BuildArch: noarch
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: /usr/bin/2to3
 
 %py3_provides %oname
-%py3_requires gevent greenlet
 
 %description
 gevent-websocket is a websocket library for the gevent networking
@@ -27,7 +24,6 @@ library.
 %setup -n %{oname}-%{version}
 
 %build
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_build
 
 %install
@@ -38,6 +34,9 @@ find -type f -name '*.py' -exec 2to3 -w -n '{}' +
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 02 2023 Anton Vyatkin <toni@altlinux.org> 0.10.1-alt1
+- new version 0.10.1
+
 * Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 0.9.5-alt2
 - Drop python2 support.
 
