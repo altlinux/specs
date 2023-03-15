@@ -1,7 +1,7 @@
 Name: gr-osmosdr
 Url: http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
-Version: 0.2.3
-Release: alt2.20210129
+Version: 0.2.4
+Release: alt1
 License: GPL-3.0-or-later
 Group: Engineering
 Summary: Common software API for various radio hardware
@@ -115,6 +115,9 @@ EOF
 %doc %_docdir/%name/xml
 
 %changelog
+* Wed Mar 15 2023 Anton Midyukov <antohami@altlinux.org> 0.2.4-alt1
+- New version 0.2.4.
+
 * Fri Sep 24 2021 Anton Midyukov <antohami@altlinux.org> 0.2.3-alt2.20210129
 - ExcludeArch: %ix86 %arm
 

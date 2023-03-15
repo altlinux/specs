@@ -7,13 +7,12 @@
 %define _libexec %prefix/libexec
 
 Name: gnuradio
-Version: 3.9.5.0
+Version: 3.10.5.1
 Release: alt1
 Summary: Software defined radio framework
 License: GPLv2+
 Group: Engineering
 Url: http://www.gnuradio.org
-Packager: Anton Midyukov <antohami@altlinux.org>
 
 Source: %name-%version.tar
 Patch0: fix-gnuradio-qtgui.pc.patch
@@ -68,6 +67,9 @@ BuildRequires: mpir-devel
 BuildRequires: libgmp-devel
 BuildRequires: libnumpy-py3-devel
 BuildRequires: doxygen
+#BuildRequires: texlive
+BuildRequires: libspdlog-devel
+BuildRequires: SoapySDR-devel
 
 %if_enabled tests
 BuildRequires: pkgconfig(cppunit)
@@ -131,7 +133,6 @@ GNU Radio Headers.
 
 # Remove extraneous desktop/icon/mime files
 rm -r %buildroot%_datadir/%name/grc/freedesktop
-#rm -r %buildroot%_datadir/icons/gnome
 
 # remove verify_elf problem files
 rm %buildroot%_datadir/%name/examples/audio/dial_tone
@@ -179,6 +180,9 @@ find %buildroot%_datadir/%name -name '*.py' | xargs sed -i \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Feb 24 2023 Anton Midyukov <antohami@altlinux.org> 3.10.5.1-alt1
+- new version 3.10.5.1
+
 * Fri Jan 28 2022 Anton Midyukov <antohami@altlinux.org> 3.9.5.0-alt1
 - new version 3.9.5.0
 
