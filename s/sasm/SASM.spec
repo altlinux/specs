@@ -1,6 +1,6 @@
 Name: sasm
 Url: http://dman95.github.io/SASM/
-Version: 3.12.2
+Version: 3.14.0
 Release: alt1
 Summary: Simple crossplatform IDE for NASM, MASM, GAS, FASM assembly languages
 License: GPL-3.0+
@@ -36,6 +36,9 @@ qmake-qt5 SASM.pro PREFIX=%buildroot/usr
 %_desktopdir/*
 
 %changelog
+* Wed Mar 15 2023 Fr. Br. George <george@altlinux.org> 3.14.0-alt1
+- Autobuild version bump to 3.14.0
+
 * Wed Jun 15 2022 Fr. Br. George <george@altlinux.org> 3.12.2-alt1
 - Autobuild version bump to 3.12.2
 
