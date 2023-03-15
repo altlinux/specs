@@ -2,12 +2,12 @@
 
 Summary: Empty firefox dependency holder on platforms that don't have one
 Name: %realname-unmet-holder
-Version: 110.0.1
+Version: 111.0
 Release: alt1
 Group: Networking/WWW
 License: GPL-3.0
 Provides: %realname = %version-%release
-ExclusiveArch: ppc64le
+ExclusiveArch: %{ix86} ppc64le
 
 %description
 Empty firefox dependency holder on platforms that don't have one. Most likely,
@@ -17,6 +17,9 @@ firefox does not exist, something must provide such a dependency.
 %files
 
 %changelog
+* Tue Mar 14 2023 Alexey Gladkov <legion@altlinux.ru> 111.0-alt1
+- New release (111.0).
+
 * Fri Mar 03 2023 Alexey Gladkov <legion@altlinux.ru> 110.0.1-alt1
 - New release (110.0.1).
 

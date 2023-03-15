@@ -2,7 +2,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name: firefox
-Version: 110.0.1
+Version: 111.0
 Release: alt1
 License: MPL-2.0
 Group: Networking/WWW
@@ -12,19 +12,18 @@ Source0: firefox-source.tar
 
 ### Start Patches
 Patch001: 0001-FEDORA-build-arm-libopus.patch
-Patch002: 0001-Linux-Don-t-hang-Firefox-when-glxtest-process-hangs-.patch
-Patch003: 0002-FEDORA-build-arm.patch
-Patch004: 0003-ALT-Fix-aarch64-build.patch
-Patch005: 0004-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
-Patch006: 0005-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
-Patch007: 0006-use-floats-for-audio-on-arm-too.patch
-Patch008: 0007-bmo-847568-Support-system-harfbuzz.patch
-Patch009: 0008-bmo-847568-Support-system-graphite2.patch
-Patch010: 0009-bmo-1559213-Support-system-av1.patch
-Patch011: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
-Patch012: 0011-ALT-fix-double_t-redefinition.patch
-Patch013: 0012-build-Disable-Werror.patch
-Patch014: 0013-WAYLAND-call-wl_display_roundtrip-early.patch
+Patch002: 0002-FEDORA-build-arm.patch
+Patch003: 0003-ALT-Fix-aarch64-build.patch
+Patch004: 0004-MOZILLA-1196777-GTK3-keyboard-input-focus-sticks-on-.patch
+Patch005: 0005-MOZILLA-1170092-Search-for-default-preferences-in-et.patch
+Patch006: 0006-use-floats-for-audio-on-arm-too.patch
+Patch007: 0007-bmo-847568-Support-system-harfbuzz.patch
+Patch008: 0008-bmo-847568-Support-system-graphite2.patch
+Patch009: 0009-bmo-1559213-Support-system-av1.patch
+Patch010: 0010-Revert-Bug-1712947-Don-t-pass-neon-flags-to-rustc-wh.patch
+Patch011: 0011-ALT-fix-double_t-redefinition.patch
+Patch012: 0012-build-Disable-Werror.patch
+Patch013: 0013-WAYLAND-call-wl_display_roundtrip-early.patch
 ### End Patches
 
 %define _unpackaged_files_terminate_build 1
@@ -41,7 +40,7 @@ Patch014: 0013-WAYLAND-call-wl_display_roundtrip-early.patch
 %define cargo_version 1.65.0
 %define llvm_version  15.0
 
-ExcludeArch: ppc64le
+ExcludeArch: %{ix86} ppc64le
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-firefox
@@ -178,22 +177,17 @@ cp -f .rpm/firefox-mozconfig .mozconfig
 tee -a .mozconfig <<'EOF'
 ac_add_options --prefix="%_prefix"
 ac_add_options --libdir="%_libdir"
-%ifnarch %{ix86} ppc64le
 ac_add_options --enable-linker=lld
 %ifnarch armh
 ac_add_options --enable-lto=thin
 %endif
-%endif
-%ifarch %{ix86} armh ppc64le
+%ifarch armh
 ac_add_options --disable-webrtc
 %endif
-%ifarch %{ix86} armh x86_64
+%ifarch armh x86_64
 ac_add_options --disable-elf-hack
 %endif
-%ifarch %{ix86} armh
-%ifarch %{ix86}
-ac_add_options --disable-av1
-%endif
+%ifarch armh
 ac_add_options --enable-strip
 ac_add_options --enable-install-strip
 ac_add_options --disable-rust-debug
@@ -213,7 +207,7 @@ find third_party \
 # `tabs_4d51_TabsBridgedEngine_reset' can not be used when making a shared
 # object
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1805809
-%ifarch armh %{ix86}
+%ifarch armh
 find toolkit/components/uniffi-js -type f |
 	xargs sed -ri.poff 's,_4d51_,_1c79_,g'
 %endif
@@ -260,7 +254,7 @@ export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export SHELL=/bin/sh
 
 export RUST_BACKTRACE=1
-%ifarch armh %{ix86}
+%ifarch armh
 export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=0"
 %else
 export RUSTFLAGS="-Clink-args=-fPIC -Cdebuginfo=2"
@@ -420,6 +414,24 @@ rm -rf -- \
 %config(noreplace) %_sysconfdir/firefox/pref/all-privacy.js
 
 %changelog
+* Tue Mar 14 2023 Alexey Gladkov <legion@altlinux.ru> 111.0-alt1
+- New release (111.0).
+- Exclude arch i586.
+- Security fixes:
+  + CVE-2023-28159: Fullscreen Notification could have been hidden by download popups on Android
+  + CVE-2023-25748: Fullscreen Notification could have been hidden by window prompts on Android
+  + CVE-2023-25749: Firefox for Android may have opened third-party apps without a prompt
+  + CVE-2023-25750: Potential ServiceWorker cache leak during private browsing mode
+  + CVE-2023-25751: Incorrect code generation during JIT compilation
+  + CVE-2023-28160: Redirect to Web Extension files may have leaked local path
+  + CVE-2023-28164: URL being dragged from a removed cross-origin iframe into the same tab triggered navigation
+  + CVE-2023-28161: One-time permissions granted to a local file were extended to other local files loaded in the same tab
+  + CVE-2023-28162: Invalid downcast in Worklets
+  + CVE-2023-25752: Potential out-of-bounds when accessing throttled streams
+  + CVE-2023-28163: Windows Save As dialog resolved environment variables
+  + CVE-2023-28176: Memory safety bugs fixed in Firefox 111 and Firefox ESR 102.9
+  + CVE-2023-28177: Memory safety bugs fixed in Firefox 111
+
 * Fri Mar 03 2023 Alexey Gladkov <legion@altlinux.ru> 110.0.1-alt1
 - New release (110.0.1).
 
