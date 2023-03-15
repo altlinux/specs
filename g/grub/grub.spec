@@ -2,7 +2,7 @@
 
 # SBAT generation number for ALT
 # Refer to https://github.com/rhboot/shim/blob/main/SBAT.md
-%global alt_gen_number 1
+%global alt_gen_number 2
 
 # grub modules' architecture is heavily dependent on custom ELF sections.
 # LTO crashes that fragile house of cards, so should be disabled.
@@ -10,7 +10,7 @@
 
 Name: grub
 Version: 2.06
-Release: alt9
+Release: alt10
 
 Summary: GRand Unified Bootloader
 License: GPL-3
@@ -118,6 +118,8 @@ Patch223: grub-2.06-upstream-0052-fs-f2fs-Do-not-copy-file-names-that-are-too-lo
 Patch224: grub-2.06-upstream-0053-fs-btrfs-Fix-several-fuzz-issues-with-invalid-dir-it.patch
 Patch225: grub-2.06-upstream-0054-fs-btrfs-Fix-more-ASAN-and-SEGV-issues-found-with-fu.patch
 Patch226: grub-2.06-upstream-0055-fs-btrfs-Fix-more-fuzz-issues-related-to-chunks.patch
+
+Patch227: grub-2.06-upstream-0061-net-ip-Do-IP-fragment-maths-safely.patch
 
 # upstream security patch set 2022-11-15
 # see: https://lists.gnu.org/archive/html/grub-devel/2022-11/msg00059.html
@@ -348,6 +350,8 @@ when one can't disable it easily, doesn't want to, or needs not to.
 %patch224 -p1
 %patch225 -p1
 %patch226 -p1
+
+%patch227 -p1
 
 %patch230 -p1
 %patch231 -p1
@@ -622,6 +626,11 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Tue Mar 14 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt10
+- grub2-sysconfig: change default option to GRUB_VMLINUZ_SYMLINKS=yes (closes: #44406)
+- add upstream-0061-net-ip-Do-IP-fragment-maths-safely patch (fixes: CVE-2022-28733)
+- bump grub.altlinux SBAT level to 2 after closing CVE missed in the previous release
+
 * Sun Jan 22 2023 Egor Ignatov <egori@altlinux.org> 2.06-alt9
 - fix os-alt patch: replace obsolete variable gone long ago (nickel@) (closes: #44387)
 - remove translation for 'Change language (press F2)' (closes: #45437)
