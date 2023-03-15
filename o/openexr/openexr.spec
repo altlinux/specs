@@ -2,7 +2,7 @@
 %define libsover 30
 Name: openexr
 Version: 3.1.5
-Release: alt1
+Release: alt2
 
 %define _cmake__builddir BUILD
 %define common %name%libsover-common
@@ -25,7 +25,7 @@ Obsoletes: %name-utils < %version-%release
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ glibc-devel zlib-devel
-BuildRequires: libimath29-devel
+BuildRequires: imath-devel
 BuildRequires: python3-module-imath
 BuildRequires: cmake
 
@@ -55,7 +55,6 @@ Common empty package for %name
 %package -n %libopenexr
 Summary: %rname library
 Group: System/Libraries
-Conflicts: openexr < %EVR
 
 %description -n %libopenexr
 %descr
@@ -63,8 +62,9 @@ Conflicts: openexr < %EVR
 %package devel
 Summary: Headers for developing programs that will use OpenEXR
 Group: Development/Other
-Conflicts: ilmbase-devel
-
+Provides: ilmbase-devel = %version
+Obsoletes: ilmbase-devel < %version
+Requires: imath-devel
 %description devel
 %descr
 
@@ -74,7 +74,6 @@ developing applications with OpenEXR
 %package -n %libiex
 Summary: libIex %rname library
 Group: System/Libraries
-Conflicts: openexr < %EVR
 
 %description -n %libiex
 %descr
@@ -82,7 +81,6 @@ Conflicts: openexr < %EVR
 %package -n %libilmthread
 Summary: libIlmThread %rname library
 Group: System/Libraries
-Conflicts: openexr < %EVR
 
 %description -n %libilmthread
 %descr
@@ -90,7 +88,6 @@ Conflicts: openexr < %EVR
 %package -n %libopenexrcore
 Summary: libOpenEXRCore %rname library
 Group: System/Libraries
-Conflicts: openexr < %EVR
 
 %description -n %libopenexrcore
 %descr
@@ -98,7 +95,6 @@ Conflicts: openexr < %EVR
 %package -n %libopenexrutil
 Summary: libOpenEXRUtil %rname library
 Group: System/Libraries
-Conflicts: openexr < %EVR
 
 %description -n %libopenexrutil
 %descr
@@ -147,6 +143,9 @@ make -C BUILD install DESTDIR=%buildroot CMAKE_MODULE_PATH=%_includedir/Imath
 %_libdir/libOpenEXRUtil*.so.%libsover.*
 
 %changelog
+* Tue Mar 14 2023 Sergey V Turchin <zerg@altlinux.org> 3.1.5-alt2
+- fix conflicts
+
 * Fri Feb 03 2023 Alexander Burmatov <thatman@altlinux.org> 3.1.5-alt1
 - Updated to upstream version 3.1.5
 

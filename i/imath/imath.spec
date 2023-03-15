@@ -1,9 +1,9 @@
 %define lname imath
 %define libsover 29
 %define libimath lib%lname%libsover
-Name: %libimath
+Name: %lname
 Version: 3.1.6
-Release: alt1
+Release: alt3
 
 Summary: Imath is library of 2D and 3D vector, matrix, and math operations for graphics
 License: BSD-3-Clause
@@ -36,7 +36,8 @@ including optimized implementations of vector and matrix arrays.
 %package devel
 Summary: Imath is library of 2D and 3D vector, matrix, and math operations for graphics
 Group: Development/C++
-Conflicts: ilmbase-devel
+Provides: libimath29-devel = %EVR
+Obsoletes: libimath29-devel < %EVR
 
 %description devel
 Imath is a basic, light-weight, and efficient C++ representation of
@@ -51,6 +52,8 @@ including optimized implementations of vector and matrix arrays.
 Summary: Documentation for Imath
 Group: Documentation
 BuildArch: noarch
+Provides: libimath29-doc = %EVR
+Obsoletes: libimath29-doc < %EVR
 
 %description doc
 Imath is a basic, light-weight, and efficient C++ representation of
@@ -79,6 +82,13 @@ Group: Development/Python3
 Imath also includes optional python bindings for all types and functions,
 including optimized implementations of vector and matrix arrays
 
+%package -n %libimath
+Summary: %lname library
+Group: System/Libraries
+%description -n %libimath
+%lname library.
+
+
 %prep
 %setup
 
@@ -91,6 +101,11 @@ including optimized implementations of vector and matrix arrays
 
 %install
 %cmake_install
+
+# relax depends on binary files
+for f in %buildroot/%_libdir/cmake/Imath/*Targets.cmake ; do
+    sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
+done
 
 %files
 %_libdir/libImath*.so.%libsover
@@ -116,5 +131,11 @@ including optimized implementations of vector and matrix arrays
 %_includedir/Imath/Py*.h
 
 %changelog
+* Wed Mar 15 2023 Sergey V Turchin <zerg@altlinux.org> 3.1.6-alt3
+- relax depends on binary files
+
+* Tue Mar 14 2023 Sergey V Turchin <zerg@altlinux.org> 3.1.6-alt2
+- rename from libimath29
+
 * Mon Jan 23 2023 Alexander Burmatov <thatman@altlinux.org> 3.1.6-alt1
 - Initial build for Sisyphus.
