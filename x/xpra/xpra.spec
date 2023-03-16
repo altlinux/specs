@@ -1,8 +1,8 @@
 # TODO: python-uinput
 
 Name: xpra
-Version: 4.0.6
-Release: alt1.1
+Version: 4.4.4
+Release: alt1
 
 Summary: X Persistent Remote Applications
 License: GPLv2
@@ -13,12 +13,12 @@ Source: https://xpra.org/src/xpra-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: gcc-c++ libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libxkbfile-devel libpam0-devel libsystemd-devel
+BuildRequires: gcc-c++ libXcomposite-devel libXdamage-devel libXrandr-devel libXtst-devel libXres-devel libxkbfile-devel libpam0-devel libsystemd-devel
 
 BuildRequires: libgtk+3-devel python3-module-pygobject3-devel python3-module-pycairo-devel
 
 # Video
-BuildRequires: libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel
+BuildRequires: libvpx-devel libx264-devel libx265-devel libwebp-devel libjpeg-devel libpng-devel libyuv-devel liblz4-devel
 
 # p9+
 %def_without ffmpeg_static
@@ -49,6 +49,8 @@ BuildRequires: /usr/bin/uglifyjs
 
 BuildRequires: xorg-server brotli
 
+BuildRequires: pandoc
+
 # See https://bugzilla.altlinux.org/show_bug.cgi?id=28632
 BuildRequires: python3-module-Cython >= 0.20
 
@@ -57,7 +59,7 @@ AutoReq: yes, nomingw
 AutoProv: yes, nopython3
 
 # why they are required?
-%add_python3_req_skip xpra.codecs.argb.argb xpra.codecs.xor.cyxor
+%add_python3_req_skip xpra.codecs.argb.argb xpra.codecs.xor.cyxor xpra.codecs.evdi.capture
 %add_python3_req_skip xpra.rectangle xpra.server.cystats xpra.server.window.motion
 %add_python3_req_skip xpra.x11.bindings.core_bindings xpra.x11.bindings.display_source
 %add_python3_req_skip xpra.x11.bindings.keyboard_bindings xpra.x11.bindings.randr_bindings
@@ -120,24 +122,15 @@ If connecting from a remote machine, you would use something like (or you can al
 
 %prep
 %setup
-sed -i "s|-Werror|-Wall|g" setup.py
-find xpra -type f -name "*.py" | xargs sed -i "s|^#!/usr/bin/env python$|#!/usr/bin/python3|"
-sed -i "s|^#!/usr/bin/env python$|#!/usr/bin/python3|" scripts/* cups/*
-sed -i "s|^#!/usr/bin/.*sh$|^$#!/bin/sh|" scripts/*
-
-# fatal error: pygtk-2.0/pygtk/pygtk.h: No such file or directory
-#__subst "s|pygtk-2.0/||g" xpra/x11/gtk2/gdk_display_source.pyx xpra/gtk_common/gtk2/gdk_bindings.pyx
-
-# move systemd service to correct %_unitdir
-sed -i "s|/bin/systemctl|NONONO|g" setup.py
-sed -i "s|.*/etc/default/xpra.*||g" service/xpra
+# instal service file in anyway
+sed -i "s|/bin/systemctl|/bin/true|g" setup.py
 
 %build
 %if_with ffmpeg_static
 export PKG_CONFIG_PATH=%_libdir/ffmpeg-static/%_lib/pkgconfig/
 %endif
 
-%python3_build_debug %py_flags %_smp_mflags
+%python3_build_debug --without-strict %py_flags %_smp_mflags
 
 %install
 %python3_install %py_flags
@@ -145,13 +138,13 @@ mkdir -p %buildroot/%_tmpfilesdir/
 mv -f %buildroot/usr/lib/tmpfiles.d/xpra.conf %buildroot/%_tmpfilesdir/
 mkdir -p %buildroot%_udevrulesdir/
 mv -f %buildroot/usr/lib/udev/rules.d/71-xpra-virtual-pointer.rules %buildroot%_udevrulesdir/
-install -m644 -D service/xpra.service %buildroot%_unitdir/%name.service
+#install -m644 -D service/xpra.service %buildroot%_unitdir/%name.service
 
 # TODO
-rm -f %buildroot/usr/lib/sysusers.d/xpra.conf
+rm -v %buildroot/usr/lib/sysusers.d/xpra.conf
 
 # remove obsoleted (python2 only) examples
-rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
+rm -rv %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 
 %pre
 %_sbindir/groupadd -r -f xpra &>/dev/null ||:
@@ -161,15 +154,18 @@ rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 %config(noreplace) %_sysconfdir/%name/*
 %_bindir/xpra
 %_bindir/xpra_launcher
-%_bindir/xpra_signal_listener
-%_bindir/xpra_udev_product_version
-%_libexecdir/%name/
+%_bindir/run_scaled
+#_bindir/xpra_signal_listener
+#_bindir/xpra_udev_product_version
+#_libexecdir/%name/
 %python3_sitelibdir/*
 %_desktopdir/*
 %_iconsdir/*
 %_man1dir/*
+/usr/libexec/%name/
 #_datadir/parti/
 #_datadir/wimpiggy/
+%_docdir/%name/
 %_datadir/xpra/
 %_tmpfilesdir/xpra.conf
 %_datadir/metainfo/xpra.appdata.xml
@@ -177,7 +173,7 @@ rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 %_cupslibdir/backend/xpraforwarder
 %_sysconfigdir/%name
 %_sysconfdir/pam.d/%name
-%_sysconfdir/init.d/%name
+#_sysconfdir/init.d/%name
 %_unitdir/%name.service
 %_unitdir/%name.socket
 %_udevrulesdir/71-xpra-virtual-pointer.rules
@@ -185,6 +181,9 @@ rm -rf %buildroot/%python3_sitelibdir/xpra/client/gtk_base/example/
 %_sysconfdir/X11/xorg.conf.d/90-xpra-virtual.conf
 
 %changelog
+* Wed Mar 15 2023 Vitaly Lipatov <lav@altlinux.ru> 4.4.4-alt1
+- new version 4.4.4 (with rpmrb script)
+
 * Wed Jul 28 2021 Michael Shigorin <mike@altlinux.org> 4.0.6-alt1.1
 - drop ubt handling (was there for p8)
 - minor spec cleanup
