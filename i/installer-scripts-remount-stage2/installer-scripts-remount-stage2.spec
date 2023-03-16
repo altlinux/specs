@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.5.29
+Version: 0.5.30
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -48,6 +48,9 @@ __EOF__
 %attr(0755,root,root) %_datadir/install2/initinstall.d/85-start-multipath.sh
 
 %changelog
+* Thu Mar 16 2023 Slava Aseev <ptrnine@altlinux.org> 0.5.30-alt1
+- do not skip containers while generating /tmp/mdadm.conf
+
 * Mon Jan 23 2023 Anton Midyukov <antohami@altlinux.org> 0.5.29-alt1
 - update syntax of cryptsetup
 - recursive unmount destination directory
