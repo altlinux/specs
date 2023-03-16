@@ -1,25 +1,31 @@
-Name: qrencode
-Version: 4.0.2
+%define _name qrencode
+%define sover 4
+%define libname lib%_name%sover
+
+Name: %_name
+Version: 4.1.1
 Release: alt1
 
 Summary: Generate QR 2D barcodes
 License: LGPLv2+
 Group: File tools
+Url: https://fukuchi.org/works/qrencode/index.html.en
 
-URL: https://fukuchi.org/works/qrencode/index.html.en
+Vcs: https://github.com/fukuchi/libqrencode.git
 Source: %name-%version.tar
 #Source: https://fukuchi.org/works/qrencode/qrencode-%version.tar.gz
+Patch: %name-%version-%release.patch
 
-BuildRequires: glibc-devel libSDL-devel libpng-devel
+BuildRequires: glibc-devel libSDL2-devel libpng-devel
 
 %description
 Qrencode is a utility to encode string data in a QR Code and save as a PNG image.
 
-%package -n libqrencode4
+%package -n lib%_name%sover
 Summary: A C library for encoding data in a QR Code symbol
 Group: System/Libraries
 
-%description -n libqrencode4
+%description -n lib%_name%sover
 Libqrencode is a C library for encoding data in a QR Code symbol, a kind of 2D
 symbology that can be scanned by handy terminals such as a mobile phone with
 CCD. The capacity of QR Code is up to 7000 digits or 4000 characters, and is
@@ -28,17 +34,18 @@ highly robustness.
 Libqrencode supports QR Code model 2, described in JIS (Japanese Industrial
 Standards) X0510:2004 or ISO/IEC 18004.
 
-%package -n libqrencode4-devel
+%package -n lib%_name%sover-devel
 Summary: The development files for the qrencode library
 Group: Development/C
-Requires: libqrencode4 = %EVR
+Requires: lib%_name%sover = %EVR
 Provides: libqrencode-devel = %EVR
 
-%description -n libqrencode4-devel
+%description -n lib%_name%sover-devel
 This package contains the development files for the qrencode library.
 
 %prep
 %setup
+%patch -p1
 echo -e "#! /bin/sh\n\ntrue" > use/config.rpath
 mkdir m4
 
@@ -61,15 +68,20 @@ cd ./tests
 %_bindir/*
 %_man1dir/*
 
-%files -n libqrencode4
+%files -n lib%_name%sover
 %_libdir/libqrencode.so.*
 
-%files -n libqrencode4-devel
+%files -n lib%_name%sover-devel
 %_includedir/*
 %_libdir/*.so
-%_pkgconfigdir/*
+%_pkgconfigdir/lib%_name.pc
 
 %changelog
+* Thu Mar 16 2023 Yuri N. Sedunov <aris@altlinux.org> 4.1.1-alt1
+- 4.1.1
+- switched to upstream git, added Vcs tag
+- BR: (SDL -> SDL2)
+
 * Mon Sep 17 2018 Pavel Moseev <mars@altlinux.org> 4.0.2-alt1
 - Updated to upstream version 4.0.2
 
