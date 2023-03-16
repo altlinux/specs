@@ -3,8 +3,8 @@ BuildRequires: perl-podlators
 %define module  Net-Server
 
 Name: perl-%module
-Version: 2.013
-Release: alt1.1
+Version: 2.014
+Release: alt1
 
 Summary: Net::Server - Extensible, general Perl server engine
 License: Artistic
@@ -53,6 +53,9 @@ scripts for %name
 
 
 %changelog
+* Thu Mar 16 2023 Igor Vlasenko <viy@altlinux.org> 2.014-alt1
+- automated CPAN update
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 2.013-alt1.1
 - automated CPAN update
 
