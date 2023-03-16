@@ -4,20 +4,18 @@
 # run "buildreq-src --update --spec shutter.spec ." to update BuildRequires below
 # note: remove perl(Furl/HTTP.pm) as it is optional dependency from autoimports
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(Carp/Always.pm) perl(Encode.pm) perl(Encode/Locale.pm) perl(File/Copy/Recursive.pm) perl(File/Which.pm) perl(Glib.pm) perl(Glib/Object/Introspection.pm) perl(Glib/Object/Subclass.pm) perl(GooCanvas2.pm) perl(GooCanvas2/CairoTypes.pm) perl(Gtk3.pm) perl(Gtk3/ImageView.pm) perl(HTTP/Request.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(IO/Socket/SSL.pm) perl(Image/Magick.pm) perl(JSON/MaybeXS.pm) perl(LWP/UserAgent.pm) perl(Locale/gettext.pm) perl(Net/DBus.pm) perl(Net/DBus/Reactor.pm) perl(Net/FTP.pm) perl(Net/OAuth.pm) perl(Number/Bytes/Human.pm) perl(Pango.pm) perl(Path/Class.pm) perl(Pod/Usage.pm) perl(Proc/Killfam.pm) perl(Proc/Simple.pm) perl(Sort/Naturally.pm) perl(URI.pm) perl(URI/Escape.pm) perl(URI/Split.pm) perl(WWW/Mechanize.pm) perl(WebService/Gyazo/B.pm)
-BuildRequires: perl(X11/Protocol.pm) perl(XML/Simple.pm) perl(diagnostics.pm)
+BuildRequires: perl(Carp/Always.pm) perl(Encode.pm) perl(Encode/Locale.pm) perl(File/Copy/Recursive.pm) perl(File/Which.pm) perl(Glib.pm) perl(Glib/Object/Introspection.pm) perl(Glib/Object/Subclass.pm) perl(GooCanvas2.pm) perl(GooCanvas2/CairoTypes.pm) perl(Gtk3.pm) perl(Gtk3/ImageView.pm) perl(HTTP/Request/Common.pm) perl(HTTP/Status.pm) perl(Image/Magick.pm) perl(JSON/MaybeXS.pm) perl(LWP/UserAgent.pm) perl(Locale/gettext.pm) perl(Moo.pm) perl(Net/DBus.pm) perl(Net/DBus/Reactor.pm) perl(Net/FTP.pm) perl(Number/Bytes/Human.pm) perl(Pango.pm) perl(Path/Class.pm) perl(Pod/Usage.pm) perl(Proc/Killfam.pm) perl(Proc/Simple.pm) perl(Sort/Naturally.pm) perl(URI.pm) perl(URI/Split.pm) perl(WebService/Gyazo/B.pm) perl(X11/Protocol.pm) perl(XML/Simple.pm) perl(diagnostics.pm)
 # END SourceDeps(oneline)
 Name: shutter
-Version: 0.99.2
+Version: 0.99.4
 Release: alt1
 
 Summary: Shutter is a feature-rich screenshot program
 License: GPLv3+
 Group: Graphics
-
 Url: http://shutter-project.org/
+VCS: https://github.com/shutter-project/shutter.git
 
-# https://github.com/shutter-project/shutter.git
 Source: shutter-%version.tar
 
 BuildArch: noarch
@@ -39,6 +37,7 @@ Requires: perl-Carp-Always
 Requires: perl-GooCanvas2
 Requires: libgoocanvas2
 Requires: libgoocanvas2-gir
+Requires: perl-Moo
 
 %description
 Shutter is a feature-rich screenshot program. You can take a screenshot of a
@@ -67,7 +66,8 @@ cp -a share %buildroot/usr
 %doc COPYING README
 %_bindir/*
 %_datadir/shutter
-%_datadir/appdata/shutter.appdata.xml
+%dir %_datadir/metainfo
+%_datadir/metainfo/shutter.metainfo.xml
 %_man1dir/*
 %_desktopdir/*
 %_pixmapsdir/*
@@ -90,6 +90,9 @@ cp -a share %buildroot/usr
 %_iconsdir/HighContrast/scalable/apps/shutter*
 
 %changelog
+* Tue Mar 14 2023 Anton Vyatkin <toni@altlinux.org> 0.99.4-alt1
+- New version 0.99.4.
+
 * Mon Dec 26 2022 Anton Vyatkin <toni@altlinux.org> 0.99.2-alt1
 - new version 0.99.2
 
