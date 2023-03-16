@@ -7,14 +7,14 @@ BuildRequires: gnuplot
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.040
+Version: 1.041
 Release: alt1
 Summary: Find and verify functionality of the gnuplot executable.
 Group: Development/Perl
 License: perl
 URL: http://github.com/drzowie/Alien-Gnuplot
 
-Source0: http://www.cpan.org/authors/id/Z/ZM/ZMUGHAL/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/E/ET/ETJ/%{module_name}-%{version}.tar.gz
 #BuildArch: noarch
 
 # upstream overrides version
@@ -41,6 +41,9 @@ Source0: http://www.cpan.org/authors/id/Z/ZM/ZMUGHAL/%{module_name}-%{version}.t
 %perl_vendor_autolib/*
 
 %changelog
+* Thu Mar 16 2023 Igor Vlasenko <viy@altlinux.org> 1.041-alt1
+- automated CPAN update
+
 * Sat Feb 25 2023 Igor Vlasenko <viy@altlinux.org> 1.040-alt1
 - automated CPAN update
 
