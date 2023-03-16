@@ -1,6 +1,6 @@
 Name:          foreman
 Version:       3.5.1
-Release:       alt1.3
+Release:       alt2
 Summary:       An application that automates the lifecycle of servers
 License:       MIT
 Group:         System/Servers
@@ -303,6 +303,7 @@ Requires:      gem(foreman_hooks) >= 0.3.17
 Requires:      gem(foreman_api_client) >= 1.0.2
 Requires:      gem(foreman_monitoring) >= 2.1.0
 Requires:      gem(foreman_webhooks) >= 3.0.5
+Requires:      gem(foreman_cert_revoke_host) >= 0.1.2
 Requires:      gem(oauth) >= 0
 Requires:      gem(rss) >= 0
 Requires:      gem(gridster-rails) >= 0
@@ -319,31 +320,11 @@ Requires:      postgresql-server
 Requires:      dynflow
 Requires:      node
 Requires:      nginx
-Provides:      ruby-foreman
+Requires:      ruby >= 3.1.2
+Provides:      ruby-foreman = %EVR
 Obsoletes:     foreman-addons
 Conflicts:     foreman-addons
-# forced requires
-Requires:      gem-sinatra >= 2.2.4-alt1
-Requires:      gem-rack-protection >= 2.2.4-alt1
-Requires:      gem-rack >= 2.2.6.3-alt1
-Requires:      gem-addressable >= 2.8.1-alt1
-Requires:      gem-capybara >= 3.37.1-alt1.2
-Requires:      gem-deface >= 1.9.0-alt1.1
-Requires:      gem-rails >= 6.1.7.1-alt1.1
-Requires:      gem-actionpack >= 6.1.7.1-alt1.1
-Requires:      gem-webmock => 3.14.0-alt1
-Requires:      gem-fog-openstack >= 1.1.0-alt1
-Requires:      gem-ruby-libvirt >= 0.8.0-alt1.1
-Requires:      gem-fog-libvirt >= 0.9.0.1-alt0.1
-Requires:      gem-fog-google >= 1.19.0-alt1
-Requires:      gem-wirb >= 2.2.2-alt1
-Requires:      gem-get-process-mem >= 0.2.7-alt1
-Requires:      gem-sprockets-rails >= 3.4.2-alt1
-Requires:      gem-deep-cloneable >= 3.2.0-alt1
-Requires:      gem-ancestry >= 4.2.0-alt1
-Requires:      gem-sidekiq >= 6.4.1-alt1
-Requires:      gem-audited >= 5.2.0-alt1
-Requires:      ruby >= 3.1.2
+
 %ruby_on_build_rake_tasks build
 
 %description
@@ -362,7 +343,7 @@ foundation.
 
 %package       -n foreman-doc
 Version:       3.5.1
-Release:       alt1.3
+Release:       alt2
 Summary:       An application that automates the lifecycle of servers documentation files
 Group:         Development/Documentation
 BuildArch:     noarch
@@ -515,6 +496,11 @@ railsctl cleanup %name
 
 
 %changelog
+* Thu Mar 16 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt2
+- + dep to foreman_cert_revoke_host gem
+- ! default sysconfig
+- ! cleanup forced requires
+
 * Fri Mar 10 2023 Pavel Skrylev <majioa@altlinux.org> 3.5.1-alt1.3
 - ! replace conflict with obsolete foreman_addons
 - + forced some requires
