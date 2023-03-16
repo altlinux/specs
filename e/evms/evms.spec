@@ -5,7 +5,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt63
+Release: alt64
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -26,6 +26,7 @@ BuildRequires: gtk+-devel
 %package -n lib%name
 Summary: Enterprise Volume Management System libraries
 Group: System/Libraries
+Requires: mdadm-tool
 
 %package -n lib%name-devel
 Summary: Enterprise Volume Management System development part
@@ -173,6 +174,9 @@ EOF
 %_sbindir/evms-raid-test
 
 %changelog
+* Tue Mar 07 2023 Slava Aseev <ptrnine@altlinux.org> 2.5.5-alt64
+- Introduce IMSM support
+
 * Thu Jan 19 2023 Oleg Solovyov <mcpain@altlinux.org> 2.5.5-alt63
 - Reread partition tables before activating volumes
 

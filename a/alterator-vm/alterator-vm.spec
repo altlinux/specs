@@ -1,6 +1,6 @@
 Name: alterator-vm
-Version: 0.4.30
-Release: alt2
+Version: 0.4.31
+Release: alt1
 
 Summary: Alterator module for volume management
 License: GPL
@@ -37,6 +37,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Tue Mar 07 2023 Slava Aseev <ptrnine@altlinux.org> 0.4.31-alt1
+- introduce IMSM support
+
 * Thu Jan 19 2023 Oleg Solovyov <mcpain@altlinux.org> 0.4.30-alt2
 - new string from guile-evms
 
