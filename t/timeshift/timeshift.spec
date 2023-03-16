@@ -1,15 +1,26 @@
 %define _unpackaged_files_terminate_build 1
+%define IF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
+%{expand: %(sed 's,^%%,%%global ,' /usr/lib/rpm/macros.d/ubt)}
+%define ubt_id %__ubt_branch_id
+
+%IF_ver_gteq %ubt_id M110
+%def_disable use_xvt
+%else
+%def_enable use_xvt
+%endif
 
 Name: timeshift
 Version: 22.11.1
 Summary: System restore tool for Linux
-Release: alt3
+Release: alt4
 License: GPLv3
 Group: Archiving/Backup
 URL: https://github.com/linuxmint/timeshift
 Source: %name-%version.tar
 Source1: firsttime-snapshot.sh
+Patch1: alt-use-xvt.patch
 
+BuildRequires(pre): rpm-build-ubt
 BuildRequires: vala
 BuildRequires: libjson-glib-devel
 BuildRequires: libgee0.8-devel
@@ -24,6 +35,9 @@ running or from Live CD/USB.
 
 %prep
 %setup
+%if_enabled use_xvt
+%patch1 -p1
+%endif
 
 %build
 %make
@@ -52,6 +66,9 @@ install -m755 -pD %SOURCE1 %buildroot%_sysconfdir/firsttime.d/zz-firsttime-snaps
 %doc README.md
 
 %changelog
+* Thu Mar 16 2023 Alexander Makeenkov <amakeenk@altlinux.org> 22.11.1-alt4
+- Use xvt instead x-terminal-emulator (closes: #45553)
+
 * Tue Mar 07 2023 Oleg Solovyov <mcpain@altlinux.org> 22.11.1-alt3
 - do not take first boot snapshot if there are any
 - use /etc/os-release info
