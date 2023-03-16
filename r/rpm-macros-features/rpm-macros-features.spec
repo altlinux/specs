@@ -1,5 +1,5 @@
 Name: rpm-macros-features
-Version: 0.9
+Version: 1.0
 Release: alt1
 
 Summary: RPM macros to check if can build with a feature
@@ -39,6 +39,14 @@ dfile=macros.e2k
 dfile=macros.i586
 %endif
 
+%ifarch %mips32
+dfile=macros.mips32
+%endif
+
+%ifarch %arm
+dfile=macros.arm
+%endif
+
 install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 [ -n "$dfile" ] && [ -s "$dfile" ] && cat $dfile >> %buildroot/%_rpmmacrosdir/features
 
@@ -46,6 +54,12 @@ install -D -m644 macros %buildroot/%_rpmmacrosdir/features
 %_rpmmacrosdir/features
 
 %changelog
+* Thu Mar 16 2023 Vitaly Lipatov <lav@altlinux.ru> 1.0-alt1
+- sisyphus: step dotnet version to 7.0
+- add mono and gtk_sharp features
+- add arm, mips32 and i586 support
+- sisyphus: update versions for all features
+
 * Sun Jan 29 2023 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
 - add php8.2 feature
 
