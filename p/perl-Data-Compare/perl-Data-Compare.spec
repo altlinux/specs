@@ -15,7 +15,7 @@
 %define _enable_test 1
 
 Name: perl-Data-Compare
-Version: 1.27
+Version: 1.28
 Release: alt1
 
 Summary: compare perl data structures
@@ -54,6 +54,9 @@ A few data types are treated as special cases:
 %doc README CHANGELOG NOTES
 
 %changelog
+* Thu Mar 16 2023 Igor Vlasenko <viy@altlinux.org> 1.28-alt1
+- automated CPAN update
+
 * Thu Nov 07 2019 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
 - automated CPAN update
 
