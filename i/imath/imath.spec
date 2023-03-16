@@ -3,7 +3,7 @@
 %define libimath lib%lname%libsover
 Name: %lname
 Version: 3.1.6
-Release: alt3
+Release: alt4
 
 Summary: Imath is library of 2D and 3D vector, matrix, and math operations for graphics
 License: BSD-3-Clause
@@ -107,7 +107,7 @@ for f in %buildroot/%_libdir/cmake/Imath/*Targets.cmake ; do
     sed -i '/message.*FATAL_ERROR.*target.* references the file/s|FATAL_ERROR|WARNING|' $f
 done
 
-%files
+%files -n %libimath
 %_libdir/libImath*.so.%libsover
 %_libdir/libImath*.so.%libsover.*
 
@@ -131,6 +131,9 @@ done
 %_includedir/Imath/Py*.h
 
 %changelog
+* Thu Mar 16 2023 Sergey V Turchin <zerg@altlinux.org> 3.1.6-alt4
+- fix package library
+
 * Wed Mar 15 2023 Sergey V Turchin <zerg@altlinux.org> 3.1.6-alt3
 - relax depends on binary files
 
