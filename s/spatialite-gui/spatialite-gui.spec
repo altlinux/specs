@@ -1,7 +1,7 @@
 %global pre beta1
 Name: spatialite-gui
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Summary: GUI to manage Spatialite databases
 
 Group: Databases
@@ -15,13 +15,13 @@ Patch1: %name-alt-link-with-sqlite3.patch
 BuildRequires: desktop-file-utils
 BuildRequires: freexl-devel
 BuildRequires: libspatialite-devel
-BuildRequires: libgaiagraphics-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libgeos-devel
 BuildRequires: libproj-devel gcc-c++ gcc
 BuildRequires: libxml2-devel libCharLS-devel libcurl-devel libpq-devel liblzma-devel
 BuildRequires: librasterlite2-devel libxlsxwriter-devel virtualpg-devel
-BuildRequires: libwebp-devel liblz4-devel libzstd-devel libminizip-devel libopenjpeg2.0-devel libwxGTK3.0-sqlite3-devel libwxGTK3.0-devel
+BuildRequires: libwebp-devel liblz4-devel libzstd-devel libminizip-devel libopenjpeg2.0-devel
+BuildRequires: libwxGTK3.2-devel
 
 %description
 GUI to manage Spatialite databases.
@@ -63,6 +63,9 @@ install -pm 0644 gnome_resource/%name.png %buildroot%_datadir/pixmaps
 %_datadir/icons/hicolor/*/apps/%name.png
 
 %changelog
+* Thu Mar 16 2023 Anton Midyukov <antohami@altlinux.org> 2.1.0-alt2
+- rebuild with wxGTK3.2
+
 * Sat Jan 08 2022 Ilya Mashkin <oddity@altlinux.ru> 2.1.0-alt1
 - 2.1.0 beta1
 
