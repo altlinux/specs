@@ -1,5 +1,5 @@
 Name: firmware-linux
-Version: 20230301
+Version: 20230313
 Release: alt1
 
 Summary: Firmware files used by the Linux kernel
@@ -76,6 +76,13 @@ rm -rf %buildroot/lib/firmware{ess,korg,sb16,yamaha}
 /lib/firmware/liquidio
 
 %changelog
+* Thu Mar 16 2023 Cronbuild Service <cronbuild@altlinux.org> 20230313-alt1
+- upstream changes (GIT c761dbe8):
+  + iwlwifi: update core69 and core72 firmwares for So device (thx Gregory Greenman)
+  + qat: update licence text (thx Fiona Trahe)
+  + rtl_bt: Update RTL8822C BT USB firmware to 0x0CC6_D2E3 (thx Hilda Wu)
+  + rtl_bt: Update RTL8822C BT UART firmware to 0x05C6_D2E3 (thx Hilda Wu)
+
 * Wed Mar 08 2023 Cronbuild Service <cronbuild@altlinux.org> 20230301-alt1
 - upstream changes (GIT 5adebcfa):
   + WHENCE: remove duplicate File entries (thx Emil Velikov)
