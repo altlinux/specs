@@ -37,7 +37,7 @@
 
 Name: plasma5-workspace
 Version: 5.27.2
-Release: alt1
+Release: alt2
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -146,7 +146,8 @@ BuildRequires: kf5-kwindowsystem-devel kf5-kxmlgui-devel kf5-plasma-framework-de
 BuildRequires: kf5-solid-devel kf5-sonnet-devel kf5-kxmlrpcclient-devel kf5-prison-devel
 BuildRequires: kf5-networkmanager-qt-devel kf5-kpeople-devel kf5-kactivities-stats-devel
 BuildRequires: kf5-kded kf5-kded-devel
-BuildRequires: kde5-kholidays-devel kde5-plasma-wayland-protocols kde5-libkexiv2-devel
+BuildRequires: kde5-kholidays-devel kde5-libkexiv2-devel
+BuildRequires: wayland-protocols kde5-plasma-wayland-protocols
 BuildRequires: plasma5-kscreenlocker-devel plasma5-breeze-devel plasma5-layer-shell-qt-devel
 BuildRequires: plasma5-kpipewire-devel plasma5-kwin-devel plasma5-libkscreen-devel plasma5-libksysguard-devel
  
@@ -420,6 +421,7 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 
 %files common -f %name.lang
 %doc LICENSES/*
+%dir %_K5data/plasma/look-and-feel/
 %dir %_K5xdgconf/plasma-workspace/
 %dir %_K5xdgconf/plasma-workspace/env/
 %dir %_K5data/desktop-directories/
@@ -460,8 +462,8 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 %_K5qml/org/kde/notificationmanager/
 %_K5data/knsrcfiles/*.knsrc
 %_K5data/plasma/
-%dir %_K5data/plasma/look-and-feel/
 %exclude %_K5data/plasma/look-and-feel/*
+%exclude %_K5data/plasma/wallpapers/org.kde.image/
 %_K5data/kglobalaccel/*.desktop
 %_K5data/kio/servicemenus/*
 %_K5data/kio_desktop/
@@ -500,6 +502,7 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 %files -n %name-qml
 %_K5qml/org/kde/plasma/
 %_K5data/plasma/look-and-feel/*
+%_K5data/plasma/wallpapers/org.kde.image/
 
 %files -n sddm-theme-breeze
 %_datadir/sddm/themes/breeze/
@@ -543,6 +546,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 
 
 %changelog
+* Wed Mar 15 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.2-alt2
+- move wallpapers/org.kde.image component to qml subpackage
+
 * Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.2-alt1
 - new version
 
