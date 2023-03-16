@@ -1,57 +1,38 @@
 %define mname scikits
 %define oname %mname.bootstrap
 
-Name: python3-module-%oname
-Version: 1.0.1
-Release: alt2
+%def_with check
 
-Summary: Bootstrap confidence interval estimation routines for SciPy
+Name: python3-module-%oname
+Version: 1.1.0
+Release: alt1
+
+Summary: Bootstrap confidence interval estimation routines for Numpy/Scipy/Pandas
 License: BSD-3-Clause
 Group: Development/Python3
-Url: https://pypi.python.org/pypi/scikits.bootstrap/
+Url: https://pypi.org/project/scikits.bootstrap/
+VCS: https://github.com/cgevans/scikits-bootstrap.git
 
-# https://github.com/cgevans/scikits-bootstrap.git
 Source: %name-%version.tar
 
-Patch1: %oname-upstream-numpy-compat.patch
-
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-numpy python3-module-scipy
+%if_with check
 BuildRequires: python3-module-numpy-testing
-BuildRequires: python3-module-nose python3-module-pandas
-BuildRequires: python3(pyerf)
+BuildRequires: python3-module-erf
+BuildRequires: python3-module-pytest-cov
+%endif
 
 %py3_provides %oname
-%py3_requires %mname numpy scipy
-
 
 %description
-Scikits.bootstrap provides bootstrap confidence interval algorithms for
-scipy.
+Scikits.bootstrap provides bootstrap statistics confidence interval algorithms
+for Numpy/Scipy/Pandas. It originally required scipy, but no longer needs it.
 
-At present, it is rather feature-incomplete and in flux. However, the
-functions that have been written should be relatively stable as far as
-results.
-
-%package tests
-Summary: Tests for %oname
-Group: Development/Python3
-Requires: %name = %EVR
-%py3_requires pandas
-
-%description tests
-Scikits.bootstrap provides bootstrap confidence interval algorithms for
-scipy.
-
-At present, it is rather feature-incomplete and in flux. However, the
-functions that have been written should be relatively stable as far as
-results.
-
-This package contains tests for %oname.
+It also provides an algorithm which estimates the probability that the
+statistics lies satisfies some criteria, e.g., lies in some interval.
 
 %prep
 %setup
-%patch1 -p1
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -62,29 +43,27 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %install
 %python3_install
 
+%check
+%ifnarch %ix86
+%tox_check
+%else
+%tox_check -- -k 'not test_abc_simple'
+%endif
+
 %if "%python3_sitelibdir" != "%python3_sitelibdir_noarch"
 mkdir -p %buildroot%python3_sitelibdir
 mv %buildroot%python3_sitelibdir_noarch/* %buildroot%python3_sitelibdir/
 %endif
 
-%check
-%__python3 setup.py test
-
 %files
-%doc LICENSE
-%doc *.md
-%python3_sitelibdir/%mname/*
-%python3_sitelibdir/*.egg-info
-%python3_sitelibdir/*-nspkg.pth
-%exclude %python3_sitelibdir/%mname/*/test*
-%exclude %python3_sitelibdir/%mname/*/*/test*
-
-%files tests
-%python3_sitelibdir/%mname/*/test*
-%python3_sitelibdir/%mname/*/*/test*
-
+%doc LICENSE *.md
+%python3_sitelibdir/%mname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 %changelog
+* Tue Mar 14 2023 Anton Vyatkin <toni@altlinux.org> 1.1.0-alt1
+- New version 1.1.0.
+
 * Tue Aug 25 2020 Aleksei Nikiforov <darktemplar@altlinux.org> 1.0.1-alt2
 - Fixed build with new numpy.
 
