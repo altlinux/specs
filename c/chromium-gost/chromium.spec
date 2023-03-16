@@ -35,8 +35,8 @@
 %define default_client_secret h_PrTP1ymJu83YTLyz-E25nP
 
 Name:           chromium-gost
-Version:        110.0.5481.177
-Release:        alt2
+Version:        111.0.5563.64
+Release:        alt1
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -92,15 +92,8 @@ Patch017: 0017-DEBIAN-use-system-jpeg-library.patch
 Patch018: 0018-DEBIAN-use-system-libevent-library.patch
 Patch019: 0019-ALT-Use-system-libusb-libsecret-flatbuffers.patch
 Patch020: 0020-Use-yandex-search-as-default.patch
-Patch021: 0021-GCC-use-fabsf-in-ui-NativeThemeBase-OutlineColor.patch
-Patch022: 0022-libstdc-Don-t-use-const-members-in-std-vector-in-pas.patch
-Patch023: 0023-libstdc-fix-narrowing-in-blink-DarkModeLABColorSpace.patch
-Patch024: 0024-GCC-fix-selection-of-IMMEDIATE_CRASH.patch
-Patch025: 0025-Support-VA-API-on-Linux-Ozone-Wayland.patch
-Patch026: 0026-Move-the-Stack-object-from-ThreadLocalTop-to-Isolate.patch
-Patch027: 0027-Fix-construction-of-mesa-distribution.patch
-Patch028: 0028-GENTOO-InkDropHost-crash.patch
-Patch029: 0029-GENTOO-EnumTable-crash.patch
+Patch021: 0021-Support-VA-API-on-Linux-Ozone-Wayland.patch
+Patch022: 0022-GENTOO-EnumTable-crash.patch
 ### End Patches
 
 # Specific C-G patch
@@ -452,6 +445,7 @@ mkdir -p -- \
 	%buildroot/%_sysconfdir/%name \
 #
 install -m 755 %SOURCE100 %buildroot%_bindir/%name
+sed -i 's@/chromium@/%name@g;s@$APPNAME/default@%name/default@' %buildroot%_bindir/%name
 ln -s %name %buildroot%_libdir/%name/chromium
 install -m 644 %SOURCE200 %buildroot%_sysconfdir/%name/default
 
@@ -558,6 +552,38 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Mar 15 2023 Fr. Br. George <george@altlinux.org> 111.0.5563.64-alt1
+- GOST version
+- Fix startup script (Closes: #45538)
+
+* Wed Mar 08 2023 Alexey Gladkov <legion@altlinux.ru> 111.0.5563.64-alt1
+- New version (111.0.5563.64).
+- Security fixes:
+  - CVE-2023-1213: Use after free in Swiftshader.
+  - CVE-2023-1214: Type Confusion in V8.
+  - CVE-2023-1215: Type Confusion in CSS.
+  - CVE-2023-1216: Use after free in DevTools.
+  - CVE-2023-1217: Stack buffer overflow in Crash reporting.
+  - CVE-2023-1218: Use after free in WebRTC.
+  - CVE-2023-1219: Heap buffer overflow in Metrics.
+  - CVE-2023-1220: Heap buffer overflow in UMA.
+  - CVE-2023-1221: Insufficient policy enforcement in Extensions API.
+  - CVE-2023-1222: Heap buffer overflow in Web Audio API.
+  - CVE-2023-1223: Insufficient policy enforcement in Autofill.
+  - CVE-2023-1224: Insufficient policy enforcement in Web Payments API.
+  - CVE-2023-1225: Insufficient policy enforcement in Navigation.
+  - CVE-2023-1226: Insufficient policy enforcement in Web Payments API.
+  - CVE-2023-1227: Use after free in Core.
+  - CVE-2023-1228: Insufficient policy enforcement in Intents.
+  - CVE-2023-1229: Inappropriate implementation in Permission prompts.
+  - CVE-2023-1230: Inappropriate implementation in WebApp Installs.
+  - CVE-2023-1231: Inappropriate implementation in Autofill.
+  - CVE-2023-1232: Insufficient policy enforcement in Resource Timing.
+  - CVE-2023-1233: Insufficient policy enforcement in Resource Timing.
+  - CVE-2023-1234: Inappropriate implementation in Intents.
+  - CVE-2023-1235: Type Confusion in DevTools.
+  - CVE-2023-1236: Inappropriate implementation in Internals.
+
 * Tue Mar 07 2023 Fr. Br. George <george@altlinux.org> 110.0.5481.177-alt2
 - GOST version
 
