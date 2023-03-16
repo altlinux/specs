@@ -4,8 +4,8 @@
 %def_with check
 
 Name: python3-module-%pypi_name
-Version: 1.4.0
-Release: alt2
+Version: 1.4.1
+Release: alt1
 
 Summary: Python bindings for jq
 License: BSD-2-Clause
@@ -59,6 +59,9 @@ rm -fv pyproject.toml
 %python3_sitelibdir/*
 
 %changelog
+* Thu Mar 16 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.1-alt1
+- 1.4.0 -> 1.4.0.
+
 * Thu Jan 12 2023 Anton Zhukharev <ancieg@altlinux.org> 1.4.0-alt2
 - remove unused liboniguruma-devel build requirement
 
