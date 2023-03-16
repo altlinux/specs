@@ -1,6 +1,6 @@
 Name: moneymanagerex
-Version: 1.3.3
-Release: alt2.1
+Version: 1.6.3
+Release: alt2
 
 Summary: Simple to use financial management software
 License: GPLv2
@@ -13,18 +13,21 @@ URL: http://www.moneymanagerex.org/
 ## Source-url: https://github.com/moneymanagerex/moneymanagerex/archive/v%version.tar.gz
 # Source-git: https://github.com/moneymanagerex/moneymanagerex.git
 Source: %name-%version.tar
+Patch: fix_compile_flag.patch
 
-# build with system wxsqlite3
-Patch: moneymanagerex-wxsqlite3.patch
-Patch1: moneymanagerex-configure.patch
+ExcludeArch: %arm %ix86
 
 AutoReq:yes,nomingw32
 
-# manually removed: i586-libgst-plugins1.0 i586-libxcb  python3 ruby ruby-stdlibs
-# Automatically added by buildreq on Thu Aug 13 2015
-# optimized out: at-spi2-atk fontconfig gnu-config libat-spi2-core libcairo-gobject libgdk-pixbuf libgpg-error libgst-plugins1.0 libharfbuzz-icu libstdc++-devel libwayland-client libwayland-cursor libwayland-egl libwayland-server python3-base
-BuildRequires: gcc-c++ libdb4-devel libsqlite3-devel
-BuildRequires: libwxGTK3.0-devel libwxGTK3.0-sqlite3-devel
+BuildRequires(pre): rpm-macros-cmake
+BuildRequires: cmake
+BuildRequires: git-core
+BuildRequires: libcurl-devel
+BuildRequires: lsb-release
+BuildRequires: gcc-c++ libdb4-devel
+BuildRequires: libwxGTK3.2-devel
+BuildRequires: rapidjson
+BuildRequires: liblua5.4-devel
 
 %description
 Simple to use financial management software
@@ -37,23 +40,18 @@ would want to see in a personal finance application.
 The design goals are to concentrate on simplicity
 and user friendliness - something one can use everyday.
 
-TODO: build with external lua, ccpunit
-
 %prep
 %setup
-#patch -p2
-%patch1 -p2
+%ifnarch x86_64
+%patch -p1
+%endif
 
 %build
-%configure
-%make_build
+%cmake
+%cmake_build
 
 %install
-%makeinstall_std
-
-# fix place locale. needed normal fix
-mkdir -p %buildroot%_datadir/mmex/po/en
-mv %buildroot%_datadir/mmex/po/*.mo %buildroot%_datadir/mmex/po/en
+%cmake_install
 
 %find_lang %name
 
@@ -66,8 +64,19 @@ mv %buildroot%_datadir/mmex/po/*.mo %buildroot%_datadir/mmex/po/en
 %_docdir/mmex/
 %_datadir/mmex/
 
-
 %changelog
+* Thu Mar 16 2023 Anton Midyukov <antohami@altlinux.org> 1.6.3-alt2
+- update BuildRequires
+- unbuilt-in rapidjson, lua
+- Fix build on non-x86_64
+- ExcludeArch: %%arm %%ix86
+
+* Thu Mar 09 2023 Anton Midyukov <antohami@altlinux.org> 1.6.3-alt1
+- new version 1.6.3 (with rpmrb script)
+
+* Mon Mar 06 2023 Anton Midyukov <antohami@altlinux.org> 1.3.3-alt3
+- rebuilt with libwxGTK3.2
+
 * Sat Sep 15 2018 Anton Midyukov <antohami@altlinux.org> 1.3.3-alt2.1
 - rebuilt with libwxGTK3.0
 - fix place locale
