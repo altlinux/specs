@@ -15,7 +15,7 @@
 
 Name: kde5-%rname
 Version: 22.12.3
-Release: alt1
+Release: alt2
 %K5init %{?_enable_obsolete_kde4:no_altplace} %{?_enable_obsolete_kde4:appdata}%{!?_enable_obsolete_kde4:no_appdata}
 
 Group: Terminals
@@ -24,7 +24,7 @@ Url: http://www.kde.org
 License: GPLv2+ / LGPLv2+
 
 Requires(post,preun): alternatives >= 0.2
-Provides: xvt, %_x11bindir/xvt
+Provides: x-terminal-emulator xvt %_x11bindir/xvt
 #Requires: fonts-bitmap-misc
 %if_enabled obsolete_kde4
 Provides: kde4-konsole = %version-%release
@@ -178,6 +178,9 @@ __EOF__
 %_K5lib/libkonsoleapp.so.%sover
 
 %changelog
+* Thu Mar 16 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt2
+- provide x-terminal-emulator virtual package
+
 * Mon Mar 06 2023 Sergey V Turchin <zerg@altlinux.org> 22.12.3-alt1
 - new version
 
