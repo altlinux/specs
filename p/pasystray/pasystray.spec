@@ -1,5 +1,5 @@
 Name:		pasystray
-Version:	0.8.0
+Version:	0.8.2
 Release:	alt1
 
 Summary:	a replacement for the deprecated padevchooser
@@ -13,9 +13,8 @@ Source:		%name-%version.tar
 Patch1:		%name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-xdg
-# Automatically added by buildreq on Sun Mar 05 2017
-# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libavahi-devel libavahi-glib libcairo-devel libdbusmenu-devel libdbusmenu-gtk2 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+2-devel libpango-devel libwayland-client libwayland-server perl pkg-config python-base python-modules xorg-xproto-devel
-BuildRequires: libappindicator-gtk3-devel libavahi-glib-devel libnotify-devel libpulseaudio-devel
+BuildRequires: libavahi-glib-devel libnotify-devel libpulseaudio-devel
+BuildRequires: pkgconfig(ayatana-appindicator3-0.1)
 Requires: pulseaudio-daemon >= 1.0
 
 %description
@@ -58,6 +57,10 @@ applications.
 %_iconsdir/hicolor/scalable/*
 
 %changelog
+* Mon Feb 13 2023 Anton Midyukov <antohami@altlinux.org> 0.8.2-alt1
+- new version 0.8.2
+- build with pkgconfig(ayatana-appindicator3-0.1)
+
 * Sun May 08 2022 Anton Midyukov <antohami@altlinux.org> 0.8.0-alt1
 - new version 0.8.0
 
