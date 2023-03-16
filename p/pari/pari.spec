@@ -1,7 +1,7 @@
 Name: pari
 %define sover 8
 %define lname libpari-gmp-tls%sover
-Version: 2.15.2
+Version: 2.15.3
 Release: alt1
 Summary: Computer Algebra System for computations in Number Theory
 License: GPL-2.0-only
@@ -102,6 +102,9 @@ sed -i "s|runpathprefix='.*'|runpathprefix=''|" \
 %_libdir/libpari.so
 
 %changelog
+* Wed Mar 15 2023 Leontiy Volodin <lvol@altlinux.org> 2.15.3-alt1
+- New version (2.15.3).
+
 * Tue Jan 03 2023 Leontiy Volodin <lvol@altlinux.org> 2.15.2-alt1
 - New version (2.15.2).
 
