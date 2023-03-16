@@ -39,7 +39,7 @@
 
 Name:    golang
 Version: 1.20.2
-Release: alt1
+Release: alt2
 Summary: The Go Programming Language
 Group:   Development/Other
 License: BSD
@@ -139,6 +139,7 @@ Requires:  %name = %version-%release
 Summary:   Golang compiler source tree
 Group:     Development/Other
 BuildArch: noarch
+AutoReq: noshell, noshebang
 
 %description src
 %{summary}.
@@ -336,6 +337,9 @@ mkdir -p -- \
 %exclude %go_root/src/runtime/runtime-gdb.py
 
 %changelog
+* Thu Mar 16 2023 Alexey Shabalin <shaba@altlinux.org> 1.20.2-alt2
+- Disable shell autoreq for golang-src (ALT#45547).
+
 * Thu Mar 09 2023 Alexey Shabalin <shaba@altlinux.org> 1.20.2-alt1
 - New version (1.20.2).
 
