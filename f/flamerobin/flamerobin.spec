@@ -1,6 +1,6 @@
 Name: flamerobin
 Summary: Graphical client for Firebird
-Version: 0.9.3.9
+Version: 0.9.6
 Release: alt1
 License: MIT
 Group: Databases
@@ -14,7 +14,7 @@ BuildRequires: cmake
 BuildRequires: gcc-c++
 BuildRequires: boost-devel
 BuildRequires: firebird-devel
-BuildRequires: libwxGTK3.0-devel
+BuildRequires: libwxGTK3.2-devel
 BuildRequires: ImageMagick-tools
 
 %description
@@ -48,6 +48,10 @@ convert -size 48x48 ./res/fricon128.png %buildroot%_liconsdir/%name.png
 %_miconsdir/%name.png
 
 %changelog
+* Thu Mar 16 2023 Anton Midyukov <antohami@altlinux.org> 0.9.6-alt1
+- new version (0.9.6) with rpmgs script
+- build with libwxGTK3.2
+
 * Sun Sep 26 2021 Anton Midyukov <antohami@altlinux.org> 0.9.3.9-alt1
 - new version (0.9.3.9) with rpmgs script
 - build with libwxGTK3.0
