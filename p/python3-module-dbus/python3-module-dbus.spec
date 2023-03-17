@@ -8,7 +8,7 @@
 
 Name: python3-module-dbus
 Version: 1.3.2
-Release: alt1
+Release: alt1.1
 
 Summary: Python bindings for D-BUS library
 License: MIT
@@ -82,7 +82,7 @@ the functionality of the installed python-dbus package.
 %meson_install
 
 %check
-%__meson_test
+%__meson_test -t 2
 
 %files
 %python3_sitelibdir/*.so
@@ -113,6 +113,10 @@ the functionality of the installed python-dbus package.
 %endif
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1.1
+- increased tests timeout for some slower machines, e.g. most modern
+  riscv64 boards (voropaevdmtr@)
+
 * Wed Sep 07 2022 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - 1.3.2 (ported to Meson build system)
 

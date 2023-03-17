@@ -8,7 +8,7 @@
 
 Name: blueprint-compiler
 Version: %ver_major.0
-Release: alt1%beta
+Release: alt1.1%beta
 
 Summary: A markup language for GTK user interface files
 Group: Development/GNOME and GTK+
@@ -46,7 +46,7 @@ See also https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/
 %find_lang %name
 
 %check
-%__meson_test
+%__meson_test -t 2
 
 %files -f %name.lang
 %_bindir/%name
@@ -55,6 +55,10 @@ See also https://jwestman.pages.gitlab.gnome.org/blueprint-compiler/
 %doc NEWS* README*
 
 %changelog
+* Fri Mar 17 2023 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1.1
+- increased tests timeout for some slower machines, e.g. most modern
+  riscv64 boards (voropaevdmtr@)
+
 * Sun Nov 27 2022 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
