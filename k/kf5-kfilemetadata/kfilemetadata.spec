@@ -3,7 +3,7 @@
 %def_enable exiv2
 
 Name: kf5-%rname
-Version: 5.103.0
+Version: 5.104.0
 Release: alt1
 %K5init altplace
 
@@ -81,6 +81,9 @@ KF5 library
 %_K5plug/kf5/kfilemetadata/
 
 %changelog
+* Tue Mar 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.104.0-alt1
+- new version
+
 * Mon Feb 13 2023 Sergey V Turchin <zerg@altlinux.org> 5.103.0-alt1
 - new version
 

@@ -1,7 +1,7 @@
 %define rname knewstuff
 
 Name: kf5-%rname
-Version: 5.103.0
+Version: 5.104.0
 Release: alt1
 %K5init altplace
 
@@ -104,11 +104,12 @@ done
 %_K5xdgapp/*knewstuff-dialog*.desktop
 
 %files devel
+%_K5plug/designer/*newstuff*.so
 %_K5inc/KNewStuff3/
 %_K5inc/KMoreTools/
 %_K5link/lib*.so
-%_K5lib/cmake/KF5NewStuff*/
-%_K5archdata/mkspecs/modules/qt_KNewStuff*.pri
+%_K5lib/cmake/*NewStuff*/
+%_K5archdata/mkspecs/modules/qt_*NewStuff*.pri
 
 %files -n libkf5newstuff
 %_K5lib/libKF5NewStuff.so.*
@@ -122,6 +123,9 @@ done
 
 
 %changelog
+* Tue Mar 14 2023 Sergey V Turchin <zerg@altlinux.org> 5.104.0-alt1
+- new version
+
 * Mon Feb 13 2023 Sergey V Turchin <zerg@altlinux.org> 5.103.0-alt1
 - new version
 
