@@ -1,8 +1,8 @@
 %define oname netkit
 
 Name: python3-module-%oname
-Version: 0.2.116
-Release: alt2
+Version: 3.1.10
+Release: alt1
 
 Summary: Useful kit for network programming
 License: MIT
@@ -10,12 +10,9 @@ Group: Development/Python3
 Url: https://pypi.python.org/pypi/netkit/
 BuildArch: noarch
 
-# https://github.com/dantezhu/netkit.git
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python-tools-2to3
-
 
 %description
 Useful kit for network programming.
@@ -23,29 +20,22 @@ Useful kit for network programming.
 %prep
 %setup
 
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 %build
-pushd python/
 %python3_build_debug
-popd
 
 %install
-pushd python/
 %python3_install
-popd
-
-%check
-pushd python/
-%__python3 setup.py test
-popd
 
 %files
-%doc *.md tools/* python/examples
-%python3_sitelibdir/*
+%doc PKG-INFO
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 
 %changelog
+* Thu Mar 09 2023 Anton Vyatkin <toni@altlinux.org> 3.1.10-alt1
+- new version 3.1.10
+
 * Mon Feb 10 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.2.116-alt2
 - Build for python3 disabled.
 
