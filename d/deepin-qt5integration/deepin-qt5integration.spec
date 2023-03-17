@@ -3,7 +3,7 @@
 %def_disable clang
 
 Name: deepin-qt5integration
-Version: 5.6.5
+Version: 5.6.6
 Release: alt1
 Summary: Qt platform theme integration plugins for DDE
 License: LGPL-3.0+
@@ -79,6 +79,12 @@ make -j1
 %_datadir/mime/packages/image-dci.xml
 
 %changelog
+* Fri Mar 17 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.6-alt1
+- New version.
+- Upstream:
+  + fix: file-manager is crashed when loading xdgiconproxyengine.
+  + fix: Calculating size different for SpinBox up and down.
+
 * Wed Feb 15 2023 Leontiy Volodin <lvol@altlinux.org> 5.6.5-alt1
 - New version.
 
