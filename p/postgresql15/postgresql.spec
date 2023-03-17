@@ -10,7 +10,7 @@
 %define prog_name            postgresql
 %define postgresql_major     15
 %define postgresql_minor     2
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -40,6 +40,7 @@ Source0: %name-%version.tar
 Patch0: 0007-e2k.patch
 Patch2: 0002-Fix-search-for-setproctitle.patch
 Patch3: 0003-Use-terminfo-not-termcap.patch
+Patch4: 0004-Setup-logging.patch
 Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 
@@ -316,6 +317,7 @@ goal of accelerating analytics queries.
 %patch0 -p1
 %patch2 -p1
 %patch3 -p2
+%patch4 -p1
 %patch6 -p2
 %patch8 -p1
 
@@ -381,6 +383,7 @@ find doc/src/sgml/ -type f -name "stylesheet.*" -print0 | xargs -0 sed -i \
 pushd altlinux
 
 # The initscripts....
+install -p -m 644 -D %prog_name.sysconfig %buildroot%_sysconfdir/sysconfig/%prog_name
 install -p -m 755 -D %prog_name.init.in %buildroot%_initdir/%prog_name
 install -p -m 644 -D %prog_name.service %buildroot%_unitdir/%prog_name.service
 
@@ -786,6 +789,7 @@ fi
 
 %files -f server.lang server
 %config %_initdir/%prog_name
+%config(noreplace) %_sysconfdir/sysconfig/*
 %_bindir/initdb
 %_bindir/postgresql-check-db-dir
 %_bindir/pg_checksums
@@ -941,6 +945,14 @@ fi
 %endif
 
 %changelog
+* Fri Mar 03 2023 Alexei Takaseev <taf@altlinux.org> 15.2-alt2
+- Cleanup postgresql.service (ALT #44917)
+- Set database locale different from system (ALT #43207)
+- Add /etc/sysconfig/postgresql with staring and initializating environment
+- Initialization databases with secure connection methods
+- Mandatory set password for superuser postgres
+- Default enabled logging to file in $PGDATA/log
+
 * Wed Feb 08 2023 Alexei Takaseev <taf@altlinux.org> 15.2-alt1
 - 15.2 (Fixes CVE-2022-41862)
 - Conflicts: 14-1C -> 15-1C
