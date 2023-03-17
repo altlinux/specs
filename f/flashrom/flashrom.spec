@@ -1,7 +1,7 @@
 %define soname 1
 Name: flashrom
-Version: 1.3
-Release: alt2
+Version: 1.3.0
+Release: alt1
 
 Summary: Universal flash programming utility
 License: GPLv2
@@ -13,7 +13,7 @@ Url: http://flashrom.org/Flashrom
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
 
-BuildRequires: libftdi1-devel libpci-devel zlib-devel libusb-compat-devel
+BuildRequires: libftdi1-devel libpci-devel zlib-devel libusb-devel
 BuildRequires: libjaylink-devel libcmocka-devel
 BuildRequires: gcc meson
 
@@ -78,38 +78,17 @@ Files for development with %{name}.
 %build
 echo "VERSION = %version" >versioninfo.inc
 echo "MAN_DATE = `date '+%%Y-%%m-%%d'`">>versioninfo.inc
-sed -e 's/MODE="[0-9]*", GROUP="plugdev"/TAG+="uaccess"/g' util/z60_flashrom.rules -i
+sed -e 's/MODE="[0-9]*", GROUP="plugdev"/TAG+="uaccess"/g' util/flashrom_udev.rules -i
 %meson \
 %ifarch %{ix86} x86_64
-  -Dconfig_jlink_spi=true \
-  -Dconfig_internal=true
-%else
-  -Dconfig_atahpt=false \
-  -Dconfig_atapromise=false \
-  -Dconfig_atavia=false \
-  -Dconfig_drkaiser=false \
-  -Dconfig_ene_lpc=false \
-  -Dconfig_gfxnvidia=false \
-  -Dconfig_it8212=false \
-  -Dconfig_jlink_spi=false \
-  -Dconfig_mec1308=false \
-  -Dconfig_nic3com=false \
-  -Dconfig_nicintel_eeprom=false \
-  -Dconfig_nicintel=false \
-  -Dconfig_nicintel_spi=false \
-  -Dconfig_nicnatsemi=false \
-  -Dconfig_nicrealtek=false \
-  -Dconfig_ogp_spi=false \
-  -Dconfig_rayer_spi=false \
-  -Dconfig_satamv=false \
-  -Dconfig_satasii=false \
-  -Dconfig_internal=false
+  -Dprogrammer=[\'auto\',\'jlink_spi\']
 %endif
 %meson_build
 
 %install
 %meson_install
-install -D -p -m 0644 util/z60_flashrom.rules %buildroot/%_udevrulesdir/60_flashrom.rules
+install -D -p -m 0644 util/flashrom_udev.rules %buildroot/%_udevrulesdir/60_flashrom.rules
+rm -f %buildroot%_libdir/libflashrom.a
 
 %files
 %doc README
@@ -126,6 +105,9 @@ install -D -p -m 0644 util/z60_flashrom.rules %buildroot/%_udevrulesdir/60_flash
 %_pkgconfigdir/flashrom.pc
 
 %changelog
+* Fri Mar 17 2023 L.A. Kostis <lakostis@altlinux.ru> 1.3.0-alt1
+- 1.3.0.
+
 * Wed Nov 17 2021 Anton Farygin <rider@altlinux.ru> 1.3-alt2
 - added the shared library and its devel package
 - migrated to meson in build and install sections
