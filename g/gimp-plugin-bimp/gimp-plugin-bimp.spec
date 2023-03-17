@@ -2,7 +2,7 @@
 
 Name:          gimp-plugin-bimp
 Version:       2.6
-Release:       alt1
+Release:       alt2
 Summary:       BIMP - Batch Image Manipulation Plugin for GIMP
 License:       %gpl2plus
 Group:         Graphics
@@ -36,5 +36,8 @@ With BIMP you can apply a set of GIMP manipulations on groups of images.
 
 
 %changelog
+* Fri Mar 17 2023 Pavel Skrylev <majioa@altlinux.org> 2.6-alt2
+- fix installation of the plugin (closes #45572)
+
 * Mon Jan 02 2023 Pavel Skrylev <majioa@altlinux.org> 2.6-alt1
 - initial build for Sisyphus
