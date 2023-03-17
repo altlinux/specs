@@ -2,21 +2,19 @@
 %define oname mozprocess
 
 Name: python3-module-%oname
-Version: 0.8
+Version: 1.3.0
 Release: alt1
 
 Summary: Mozilla-authored process handling
-License: MPLv2.0
+License: MPL-2.0
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/mozprocess/
-BuildArch: noarch
 
 Source0: %name-%version.tar
 
-BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-mozinfo python-tools-2to3
-BuildRequires: python3-module-six
+BuildArch: noarch
 
+BuildRequires(pre): rpm-build-python3
 
 %description
 Mozilla-authored process handling.
@@ -24,27 +22,22 @@ Mozilla-authored process handling.
 %prep
 %setup
 
-sed -i 's|file(|open(|' setup.py
-
-find -type f -name '*.py' -exec 2to3 -w -n '{}' +
-
 %build
 %python3_build_debug
 
 %install
 %python3_install
 
-%check
-%if 0
-%__python3 setup.py test
-%endif
-
 %files
 %doc PKG-INFO
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 
 %changelog
+* Fri Mar 10 2023 Anton Vyatkin <toni@altlinux.org> 1.3.0-alt1
+- new version 1.3.0
+
 * Wed Jan 22 2020 Andrey Bychkov <mrdrew@altlinux.org> 0.8-alt1
 - Version updated to 0.8
 - porting on python3.
