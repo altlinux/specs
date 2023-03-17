@@ -30,7 +30,7 @@
 
 Name: xterm
 Version: 379
-Release: alt1
+Release: alt2
 
 Summary: A standard terminal emulator for the X Window System
 Summary(ru_RU.UTF8): Стандартный эмулятор терминала для X Window System
@@ -62,7 +62,7 @@ BuildRequires(pre): alternatives groff-base imake libXaw-devel libXft-devel libn
 # optimized out: alternatives fontconfig fontconfig-devel gnu-config libICE-devel libSM-devel libX11-devel libXmu-devel libXrender-devel libXt-devel libfreetype-devel libtinfo-devel pkg-config xorg-kbproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
 BuildRequires: ctags groff-base imake libXaw-devel libXext-devel libXft-devel libncurses-devel libneXtaw-devel libutempter-devel libxkbfile-devel xorg-cf-files
 
-Requires: /etc/X11/app-defaults, %name-resize = %EVR
+Requires: /etc/X11/app-defaults, resize = %EVR
 
 %description
 The XTerm program is the standard terminal emulator for the X Window System.
@@ -81,10 +81,12 @@ Requires: /etc/X11/app-defaults
 XTerm build with some experimental/unsafe features:
 %xterm_expflags
 
-%package resize
+%package -n resize
 Group: Terminals
 Summary: Set environment and terminal settings to current xterm window size
-%description resize
+Provides: %name-resize = %EVR
+Obsoletes: %name-resize < %EVR
+%description -n resize
 Resize prints a shell command for setting the appropriate environment
 variables to indicate the current size of xterm window from which the
 command is run.
@@ -162,7 +164,7 @@ EOF
 %_pixmapsdir/*.xpm
 %_iconsdir/hicolor/*/apps/xterm*
 
-%files resize
+%files -n resize
 %_bindir/resize
 %_man1dir/resize.1.*
 
@@ -170,6 +172,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Thu Mar 16 2023 Fr. Br. George <george@altlinux.org> 379-alt2
+- Rename xterm-resize package to resize, since not only xterm can do resizing
+
 * Wed Mar 15 2023 Fr. Br. George <george@altlinux.org> 379-alt1
 - Autobuild version bump to 379
 - Separate resize package (Closes: #44291)
