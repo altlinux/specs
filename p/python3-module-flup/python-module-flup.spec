@@ -1,27 +1,24 @@
 %define oname flup
-%define version 1.0.3
-%define release alt3
-%define subrel hg20120223
 
-Summary: Random assortment of WSGI servers, middleware
 Name: python3-module-%oname
-Version: %version
-Release: alt3.hg20120223.1.2
-# http://hg.saddi.com/flup-server
-Source0: %oname.tar.bz2
+Version: 1.0.3
+Release: alt4
+
+Summary: Random assortment of WSGI servers
 License: BSD
 Group: Development/Python3
-URL: http://www.saddi.com/software/flup/
+URL: https://pypi.org/project/flup
+
+Source0: %oname-%version.tar
 
 BuildArch: noarch
-#BuildPreReq: python-module-setuptools python-module-sphinx-devel
+
 BuildRequires(pre): rpm-build-python3
 BuildRequires(pre): rpm-macros-sphinx3
 BuildRequires: python3-module-sphinx
-BuildRequires: /usr/bin/2to3
 
 %description
-Random assortment of WSGI servers, middleware
+Random assortment of WSGI servers.
 
 %package docs
 Summary: Documentation for flup
@@ -29,7 +26,7 @@ Group: Development/Documentation
 BuildArch: noarch
 
 %description docs
-Random assortment of WSGI servers, middleware
+Random assortment of WSGI servers.
 
 This package contains documentation for flup.
 
@@ -39,17 +36,16 @@ Group: Development/Documentation
 BuildArch: noarch
 
 %description pickles
-Random assortment of WSGI servers, middleware
+Random assortment of WSGI servers.
 
 This package contains pickles for flup.
 
 %prep
-%setup
+%setup -n %oname-%version
 
 %prepare_sphinx3 docs/source
 
 %build
-find -type f -name '*.py' -exec 2to3 -w '{}' +
 %python3_build
 
 #docs
@@ -62,19 +58,25 @@ find -type f -name '*.py' -exec 2to3 -w '{}' +
 
 #docs
 
-cp -fR docs/build/pickle %buildroot%python3_sitelibdir_noarch/%oname/
+cp -fR docs/build/pickle %buildroot%python3_sitelibdir/%oname/
 
 %files docs
 %doc docs/build/html
 
 %files pickles
-%python3_sitelibdir_noarch/%oname/pickle
+%dir %python3_sitelibdir/%oname
+%python3_sitelibdir/%oname/pickle
 
 %files
-%python3_sitelibdir_noarch/*
-%exclude %python3_sitelibdir_noarch/%oname/pickle
+%doc PKG-INFO
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
+%exclude %python3_sitelibdir/%oname/pickle
 
 %changelog
+* Fri Mar 17 2023 Anton Vyatkin <toni@altlinux.org> 1.0.3-alt4
+- (NMU) Build from pypi.
+
 * Thu Jul 22 2021 Grigory Ustinov <grenka@altlinux.org> 1.0.3-alt3.hg20120223.1.2
 - Drop python2 support.
 
