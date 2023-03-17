@@ -4,7 +4,7 @@
 %global shortcommit %(c=%commit; echo ${c:0:7})
 
 Name: vkBasalt
-Version: 0.3.2.8
+Version: 0.3.2.9
 Release: alt1
 Summary: Vulkan post processing layer
 Packager: Ilya Mashkin <oddity@altlinux.ru>
@@ -69,6 +69,9 @@ install -Dpm 0644 config/%name.conf -t %buildroot%_sysconfdir/
 %config(noreplace) %_sysconfdir/%name.conf
 
 %changelog
+* Sat Mar 18 2023 Ilya Mashkin <oddity@altlinux.ru> 0.3.2.9-alt1
+- 0.3.2.9
+
 * Sat Dec 24 2022 Ilya Mashkin <oddity@altlinux.ru> 0.3.2.8-alt1
 - Build for Sisyphus
 
