@@ -62,7 +62,7 @@
 %brp_strip_none %sysroot/*  %prefix/lib/gcc/*.a %prefix/lib/gcc/*.o
 
 Name: cross-toolchain-%target
-Version: 20230202
+Version: 20230312
 Release: alt1
 Packager: Alexey Sheplyakov <asheplyakov@altlinux.org>
 Summary: GCC cross-toolchain for %target
@@ -71,26 +71,26 @@ Group: Development/C
 
 ExclusiveArch: x86_64
 
-%define gcc_version 13.0.0.20230128.gfe4608efc15
+%define gcc_version 13.0.0.20230312.gf23dc726875
 %define gcc_branch %(v=%gcc_version; v=${v%%%%.*}; echo $v)
 %define binutils_version 2.40
-%define glibc_version 2.36.20221009
+%define glibc_version 2.37
 %if "%target_arch" == "loongarch64"
 %define kernel_version 6.0
 %else
-%define kernel_version 5.10
+%define kernel_version 5.15
 %endif
 
-Source0: gcc-13.0.0-20230128-gfe4608efc15.tar
+Source0: gcc-13-20230312.tar
 Source1: binutils-2.40.tar
-Source2: glibc-2.36-20221009.tar
+Source2: glibc-2.37.tar
 Source3: kernel-source-6.1.0.tar
 Source4: gmp-6.2.1.tar
 Source5: isl-0.24.tar
 Source6: mpc-1.2.1.tar
 Source7: mpfr-4.1.0.tar
 
-Patch0: 0001_glibc_makeflags.patch
+Patch0: 0002_glibc_floatn_multiple_types_error.patch
 
 BuildPreReq: gcc-c++
 BuildPreReq: coreutils flex bison makeinfo perl-Pod-Parser findutils
@@ -176,7 +176,7 @@ tar -x --strip-components=1 -f %SOURCE5 -C gcc/isl
 tar -x --strip-components=1 -f %SOURCE6 -C gcc/mpc
 tar -x --strip-components=1 -f %SOURCE7 -C gcc/mpfr
 
-# glibc makeflags + make 4.4 hiccup
+# Tell glibc to NOT link C++ executables with a stage1 compiler
 patch -d glibc -p1 -i %PATCH0
 
 rm -rf stage
@@ -765,6 +765,10 @@ qemu-%target_qemu_arch-static ./bye_asm || exit 13
 
 
 %changelog
+* Fri Mar 17 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230312-alt1
+- glibc: updated to upstream release 2.37
+- GCC: updated to upstream snapshot 20230312
+
 * Thu Feb 02 2023 Alexey Sheplyakov <asheplyakov@altlinux.org> 20230202-alt1
 - Moved GCC target libraries to a noarch subpackage to avoid spurious
   'bad ELF symbols' errors.
