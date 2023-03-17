@@ -2,7 +2,7 @@
 
 Name: pspp
 Version: 1.6.2
-Release: alt1
+Release: alt1.1
 
 Summary: A program for statistical analysis of sampled data.
 License: GPLv3+
@@ -13,7 +13,7 @@ Url: http://www.gnu.org/software/pspp/
 Source: %name-%version.tar.zst
 
 BuildRequires: libgsl-devel
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl-Text-Diff
 BuildRequires: python3
 BuildRequires: iconv
 BuildRequires: zlib
@@ -79,6 +79,9 @@ rm -rf %buildroot%_infodir/pspp-figures
 %_datadir/%name/
 
 %changelog
+* Fri Mar 17 2023 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt1.1
+- NMU: update build requires
+
 * Tue Feb 28 2023 Daniel Zagaynov <kotopesutility@altlinux.org> 1.6.2-alt1
 - Updated to 1.6.2
 
