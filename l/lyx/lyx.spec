@@ -18,7 +18,7 @@
 
 Name: lyx
 Version: 2.3.7
-Release: alt1.1
+Release: alt1.2
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
 # LGPL-2.1+: src/support/gzstream.* src/support/weighted_btree.h
@@ -94,6 +94,11 @@ sed -i 's|#! */usr/bin/env python|#!/usr/bin/env python3|' \
 	lib/scripts/listerrors \
 	#
 %autopatch -p1
+%ifarch %e2k
+# because of the incorrect C++ code in this project and a missing optimization in the compiler for e2k
+# this helps the compiler to perform this optimization
+sed -E -i 's/zoom_m(in|ax)_/(int)&/g' src/frontends/qt4/GuiView.cpp
+%endif
 
 %build
 %autoreconf
@@ -180,6 +185,9 @@ python3 configure.py
 %files -n lyx-tex
 
 %changelog
+* Fri Mar 17 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 2:2.3.7-alt1.2
+- Fixed build for Elbrus.
+
 * Mon Mar 06 2023 L.A. Kostis <lakostis@altlinux.ru> 2:2.3.7-alt1.1
 - Unbundle latex-xft fonts (closes #25332).
 - Use macros for License.
