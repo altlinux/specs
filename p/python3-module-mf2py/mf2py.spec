@@ -1,26 +1,21 @@
 %define oname mf2py
 
 Name: python3-module-%oname
-Version: 1.0.5
-Release: alt2
+Version: 1.1.2
+Release: alt1
 
 Summary: Python Microformats2 parser
 License: MIT
 Group: Development/Python3
 Url: https://pypi.python.org/pypi/mf2py/
-# https://github.com/tommorris/mf2py.git
+VCS: https://github.com/microformats/mf2py
 BuildArch: noarch
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-module-requests
-BuildRequires: python3-module-BeautifulSoup4 python3-module-nose
-BuildRequires: python3-module-mock python-tools-2to3
 
 %py3_provides %oname
-%py3_requires html5lib requests bs4 flask gunicorn
-
 
 %description
 Python parser for microformats 2. Full-featured and mostly stable.
@@ -29,8 +24,6 @@ microformats1.
 
 %prep
 %setup
-
-find ./ -type f -name '*.py' -exec 2to3 -w -n '{}' +
 
 sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
     $(find ./ -name '*.py')
@@ -41,15 +34,16 @@ sed -i 's|#!/usr/bin/env python|#!/usr/bin/env python3|' \
 %install
 %python3_install
 
-%check
-python3 setup.py test
-
 %files
 %doc AUTHORS *.md doc/source/*.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/%oname
+%python3_sitelibdir/%oname-%version-*.egg-info
 
 
 %changelog
+* Thu Mar 09 2023 Anton Vyatkin <toni@altlinux.org> 1.1.2-alt1
+- new version 1.1.2
+
 * Tue Nov 12 2019 Andrey Bychkov <mrdrew@altlinux.org> 1.0.5-alt2
 - python2 disabled
 
