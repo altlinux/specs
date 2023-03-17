@@ -5,7 +5,7 @@
 
 Name: awstats
 Version: 7.9
-Release: alt0.1
+Release: alt0.2
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.UTF8): Анализатор логов Web-сервера в режиме реального времени
@@ -142,6 +142,9 @@ install -p -m644 %SOURCE5 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Thu Mar 16 2023 L.A. Kostis <lakostis@altlinux.ru> 7.9-alt0.2
+- Fix Edge detection.
+
 * Tue Mar 07 2023 L.A. Kostis <lakostis@altlinux.ru> 7.9-alt0.1
 - 7.9.
 - re-apply all -alt patches.
