@@ -1,8 +1,8 @@
-%define git %nil
+%define git 2f1b8e7
 
 Name: nvidia-vaapi-driver
-Version: 0.0.8
-Release: alt2
+Version: 0.0.9
+Release: alt1.g%{git}
 
 Summary: VA-API implementation that uses NVDEC as a backend
 License: MIT/X11
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-macros-meson
-BuildRequires: meson libva-devel gst-plugins-bad1.0-devel nv-codec-headers
+BuildRequires: meson libva-devel gst-plugins-bad1.0-devel nv-codec-headers libdrm-devel
 
 # minimal requires from README
 Requires: libnvcuvid >= 470.57.02-alt1
@@ -47,6 +47,10 @@ parameter nvidia-drm.modeset=1
 %_libdir/dri/nvidia_drv_video.so
 
 %changelog
+* Sun Mar 12 2023 L.A. Kostis <lakostis@altlinux.ru> 0.0.9-alt1.g2f1b8e7
+- v0.0.9-5-g2f1b8e7.
+- BR: added libdrm-devel.
+
 * Sun Jan 08 2023 L.A. Kostis <lakostis@altlinux.ru> 0.0.8-alt2
 - Added dependency to libnvcuvid (closes #44841).
 
