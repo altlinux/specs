@@ -8,7 +8,7 @@
 %def_with gpu
 
 Name: stress-ng
-Version: 0.15.05
+Version: 0.15.06
 Release: alt1
 Summary: Stress test a computer system in various selectable ways
 Group: System/Kernel and hardware
@@ -67,6 +67,13 @@ sed -ri 's,"-O([0123])",\1,' stress-ng.h
 %endif
 
 %build
+%ifarch ppc64le
+# Disable LTO as is does not build on ppc64:
+#   https://github.com/ColinIanKing/stress-ng/issues/273
+#   {standard input}: Assembler messages:
+#   {standard input}:20240: Error: unrecognized opcode: `darn'
+%define optflags_lto %nil
+%endif
 %make_build_ext --no-print-directory --output-sync=none VERBOSE=1
 
 %install
@@ -97,6 +104,9 @@ banner done
 %_mandir/man1/stress-ng.1*
 
 %changelog
+* Fri Mar 17 2023 Vitaly Chikunov <vt@altlinux.org> 0.15.06-alt1
+- Update to V0.15.06 (2023-03-16).
+
 * Sat Mar 11 2023 Vitaly Chikunov <vt@altlinux.org> 0.15.05-alt1
 - Update to V0.15.05 (2023-03-09).
 
