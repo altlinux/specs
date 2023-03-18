@@ -24,7 +24,7 @@
 Summary: The RPM package management system
 Name: rpm
 Version: 4.13.0.1
-Release: alt35
+Release: alt36
 Group: System/Configuration/Packaging
 Url: http://www.rpm.org/
 # http://git.altlinux.org/gears/r/rpm.git
@@ -576,6 +576,9 @@ touch /var/lib/rpm/delay-posttrans-filetriggers
 %_includedir/rpm
 
 %changelog
+* Mon Mar 13 2023 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt36
+- scripts/find-package: replaced "fgrep" with "grep -F".
+
 * Sat Nov 05 2022 Vitaly Chikunov <vt@altlinux.org> 4.13.0.1-alt35
 - Increase Signature Header allowed size.
 
