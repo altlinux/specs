@@ -1,15 +1,21 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%define rev 1320
+
 Name: simulide
 Summary: Simple real time electronic circuit simulator
 Summary(ru_RU.UTF-8): Симулятор электронных схем в реальном времени
 Version: 1.0.0
-Release: alt0.1.rev1178
+Release: alt1.rev%rev
 Group: Engineering
 License: GPL-3.0-or-later
-URL: https://bazaar.launchpad.net/~arcachofo/simulide
+URL: https://launchpad.net/simulide
 Source0: %name-%version.tar
+# patches from https://attachments.bugzilla.altlinux.org/attachment.cgi?id=12607
+Patch: lrelease-qt5.patch
+Patch1: fix_russian_translation.patch
+Patch2: fix_path_for_compile.patch
 BuildRequires: desktop-file-utils
 BuildRequires: ImageMagick-tools
 BuildRequires: libgpsim-devel
@@ -37,7 +43,11 @@ Simulide является симулятором электронных схем
 
 %prep
 %setup
+%autopatch -p1
 touch config.h
+
+# Fix revision information
+sed -i 's/REV_NO =.*/REV_NO = %rev/' SimulIDE.pro
 
 %build
 cd build_XX
@@ -79,5 +89,12 @@ END
 %_iconsdir/hicolor/*/apps/*.png
 
 %changelog
+* Sat Mar 18 2023 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt1.rev1320
+- Release 1.0.0
+- Fix revision information (thanks w00zy)
+- Fix russian translation (thanks w00zy)
+- Fix path for compile (thanks w00zy)
+- Fix Url
+
 * Mon Dec 19 2022 Anton Midyukov <antohami@altlinux.org> 1.0.0-alt0.1.rev1178
 - Initial build
