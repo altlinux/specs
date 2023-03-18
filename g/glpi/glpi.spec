@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: glpi
-Version: 10.0.5
+Version: 10.0.6
 Release: alt1
 
 Summary: IT and asset management software
@@ -70,6 +70,17 @@ Requires: php8.1-apcu, php8.1-bz2, php8.1-exif, php8.1-ldap, php8.1-opcache, php
 %description php8.1
 php8.1 dependencies for %name
 
+%package php8.2
+Summary: PHP8.2 dependencies for %name
+Group: Networking/Other
+Requires: %name = %version-%release
+Requires: php8.2
+Requires: php8.2-curl, php8.2-fileinfo, php8.2-gd2, php8.2-json, php8.2-mbstring, php8.2-mysqlnd-mysqli, php8.2-session, php8.2-zlib, php8.2-simplexml, php8.2-xml, php8.2-intl
+Requires: php8.2-apcu, php8.2-bz2, php8.2-exif, php8.2-ldap, php8.2-opcache, php8.2-openssl, php8.2-sodium, php8.2-zip
+
+%description php8.2
+php8.2 dependencies for %name
+
 
 %prep
 %setup
@@ -82,7 +93,7 @@ install -pD -m0644 %_sourcedir/apache2.conf %buildroot%_sysconfdir/httpd2/conf/s
 
 # install glpi
 mkdir -p %buildroot%installdir
-cp -rp * %buildroot%installdir/
+cp -rp . %buildroot%installdir
 
 #install README.ALT and UPGRADE.ALT
 install -pD -m0644 %_sourcedir/README.ALT README.ALT
@@ -92,9 +103,9 @@ install -pD -m0644 %_sourcedir/UPGRADE.ALT UPGRADE.ALT
 find %buildroot%installdir -name .htaccess -delete
 
 # remove files
-find %buildroot%installdir/files -type f -delete
 find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 find %buildroot%installdir -name *.py -delete
+find %buildroot%installdir -name remove.txt -delete
 rm -rf %buildroot%installdir/vendor/sabre/dav/bin
 
 %post
@@ -120,29 +131,40 @@ fi
 %dir %installdir
 %dir %attr(2770,root,%webserver_group) %installdir/config
 %dir %attr(2770,root,%webserver_group) %installdir/files
-%attr(0770,root,%webserver_group) %installdir/files/*
+%dir %attr(2770,root,%webserver_group) %installdir/files/_cache
+%dir %attr(2770,root,%webserver_group) %installdir/files/_cron
+%dir %attr(2770,root,%webserver_group) %installdir/files/_dumps
+%dir %attr(2770,root,%webserver_group) %installdir/files/_graphs
+%dir %attr(2770,root,%webserver_group) %installdir/files/_inventories
+%dir %attr(2770,root,%webserver_group) %installdir/files/_locales
+%dir %attr(2770,root,%webserver_group) %installdir/files/_lock
+%dir %attr(2770,root,%webserver_group) %installdir/files/_log
+%dir %attr(2770,root,%webserver_group) %installdir/files/_pictures
+%dir %attr(2770,root,%webserver_group) %installdir/files/_plugins
+%dir %attr(2770,root,%webserver_group) %installdir/files/_rss
+%dir %attr(2770,root,%webserver_group) %installdir/files/_sessions
+%dir %attr(2770,root,%webserver_group) %installdir/files/_tmp
+%dir %attr(2770,root,%webserver_group) %installdir/files/_uploads
 %dir %attr(2770,root,%webserver_group) %installdir/marketplace
 %installdir/ajax
 %installdir/bin
-%installdir/config
 %installdir/css
 %installdir/css_compiled
-%installdir/files
 %installdir/front
 %installdir/inc
 %installdir/install
 %installdir/js
 %installdir/lib
 %installdir/locales
-%installdir/marketplace
 %installdir/pics
 %installdir/plugins
 %installdir/public
+%installdir/resources
 %installdir/sound
 %installdir/src
 %installdir/templates
 %installdir/vendor
-%installdir/*.js
+%installdir/version
 %installdir/*.php
 %installdir/LICENSE
 %doc CHANGELOG.md
@@ -163,9 +185,23 @@ fi
 
 %files php8.1
 
+%files php8.2
+
 %changelog
+* Tue Jan 24 2023 Pavel Zilke <zidex@altlinux.org> 10.0.6-alt1
+- New version 10.0.6
+- This release fixes several security issues that has been recently discovered. Update is recommended!
+- Security fixes:
+ + CVE-2023-22500 : Unauthorized access to inventory files
+ + CVE-2023-22722 : XSS on browse views
+ + CVE-2023-22725 : XSS on external links
+ + CVE-2023-22724 : XSS in RSS Description Link
+ + CVE-2023-23610 : Unauthorized access to data export
+ + CVE-2022-41941 : Stored XSS inside Standard Interface Help Link href attribute
+- Added glpi-php8.2
+
 * Fri Nov 04 2022 Pavel Zilke <zidex@altlinux.org> 10.0.5-alt1
-- New version 10.0.4
+- New version 10.0.5
 - This release fixes several security issues that has been recently discovered. Update is recommended!
 - Security fixes:
  + CVE-2022-39276 : Blind SSRF in RSS feeds and planning
