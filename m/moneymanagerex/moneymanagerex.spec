@@ -1,6 +1,6 @@
 Name: moneymanagerex
 Version: 1.6.3
-Release: alt2
+Release: alt3
 
 Summary: Simple to use financial management software
 License: GPLv2
@@ -27,7 +27,7 @@ BuildRequires: lsb-release
 BuildRequires: gcc-c++ libdb4-devel
 BuildRequires: libwxGTK3.2-devel
 BuildRequires: rapidjson
-BuildRequires: liblua5.4-devel
+BuildRequires: liblua-devel
 
 %description
 Simple to use financial management software
@@ -65,6 +65,9 @@ and user friendliness - something one can use everyday.
 %_datadir/mmex/
 
 %changelog
+* Sat Mar 18 2023 Anton Midyukov <antohami@altlinux.org> 1.6.3-alt3
+- fix BuildRequires (liblua5.4-devel -> liblua-devel)
+
 * Thu Mar 16 2023 Anton Midyukov <antohami@altlinux.org> 1.6.3-alt2
 - update BuildRequires
 - unbuilt-in rapidjson, lua
