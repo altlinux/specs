@@ -1,6 +1,6 @@
 Name:     cryptopro-preinstall
 Version:  4.0.0
-Release:  alt9
+Release:  alt10
 
 Summary:  Environment for official CryptoPro CSP packages (with Rutoken S and ECP support)
 License:  GPL
@@ -78,6 +78,9 @@ install -pDm755 %SOURCE0 %buildroot%_sysconfdir/bashrc.d/cryptopro-paths.sh
 %_sysconfdir/bashrc.d/cryptopro-paths.sh
 
 %changelog
+* Sun Mar 19 2023 Andrey Cherepanov <cas@altlinux.org> 4.0.0-alt10
+- Put CryptoPro executables path to the end of $PATH.
+
 * Thu Nov 12 2020 Michael Shigorin <mike@altlinux.org> 4.0.0-alt9
 - E2K: drop librtmp (obsolete and deleted from repos)
 
