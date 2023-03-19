@@ -1,7 +1,7 @@
 %def_without bootstrap
 %define destname gear-uupdate
 Name: %destname
-Version: 0.29.0
+Version: 0.29.1
 Release: alt1
 
 Summary: Helper utility to be called by uscan for gear repository update
@@ -45,6 +45,9 @@ install -m 644 gear-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0.29.1-alt1
+- support for .gear/uupdate/update-version thanks to manowar@
+
 * Mon Mar 06 2023 Igor Vlasenko <viy@altlinux.org> 0.29.0-alt1
 - sourceless kernel specs support thanks to manowar@
 
