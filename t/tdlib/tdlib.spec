@@ -2,11 +2,15 @@
 
 %def_disable static
 # Enable or disable clang compiler...
+%ifarch %e2k
+%def_without clang
+%else
 %def_with clang
+%endif
 
 Name: tdlib
 Version: 1.8.0
-Release: alt1
+Release: alt1.1
 
 Summary: Cross-platform library for building Telegram clients
 
@@ -123,6 +127,9 @@ rm -fv %buildroot%_libdir/*.a
 %endif
 
 %changelog
+* Sun Mar 19 2023 Ilya Kurdyukov <ilyakurdyukov@altlinux.org> 1.8.0-alt1.1
+- e2k: build without clang
+
 * Sat Mar 11 2023 Vitaly Lipatov <lav@altlinux.ru> 1.8.0-alt1
 - new version 1.8.0 (with rpmrb script)
 
