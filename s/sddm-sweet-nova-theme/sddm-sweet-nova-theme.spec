@@ -2,7 +2,7 @@
 
 Name: sddm-sweet-nova-theme
 Version: 1.0.%vdata
-Release: alt1
+Release: alt1.1
 BuildArch: noarch
 
 %define sname Sweet-nova
@@ -27,7 +27,7 @@ Source1: sweet-nova-theme.conf
 
 %prep
 %setup -n %sname
-subst 's/Different User/List Uses/'  Main.qml
+subst 's/Different User/List Users/'  Main.qml
 
 %install
 install -d %buildroot%_datadir/sddm/themes/%mname/
@@ -40,6 +40,9 @@ install -D  %SOURCE1  %buildroot%_sysconfdir/sddm.conf.d/
 %attr(0640,root,%sddm_user) %_sysconfdir/sddm.conf.d/%mname.conf
 
 %changelog
+* Sun Mar 19 2023 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.20220914-alt1.1
+- Fix spec
+
 * Sat Mar 18 2023 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.20220914-alt1
 - initial build for ALT Sisyphus
 
