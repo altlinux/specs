@@ -1,5 +1,5 @@
 Name: giter
-Version: 1.16
+Version: 1.17
 Release: alt1
 
 Summary: Etersoft wrapper for git commands
@@ -40,6 +40,11 @@ RECOMMENDED packages: git-core gitum
 %_bindir/*
 
 %changelog
+* Fri Mar 17 2023 Vitaly Lipatov <lav@altlinux.ru> 1.17-alt1
+- egrep -> grep -E
+- giter: add list remote -v
+- git print repo name: fix detection by remotes
+
 * Sat Apr 09 2022 Vitaly Lipatov <lav@altlinux.ru> 1.16-alt1
 - gpull: fix pull from sisyphus branch
 - gpick: fix parse commit

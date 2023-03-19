@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 3.1.0
+Version: 3.1.1
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -69,6 +69,16 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Mar 17 2023 Vitaly Lipatov <lav@altlinux.ru> 3.1.1-alt1
+- rpmreqs: fix missed reqs
+- functions/common: improve git root detection
+- update srpms list
+- functions/common: add subst() if missed
+- rpmgs: update submodules recursive
+- etc/apt: add c9f2 configs
+- gitask: add build alias: gita add build <repo> <tag>
+- small fixes
+
 * Thu Aug 11 2022 Vitaly Lipatov <lav@altlinux.ru> 3.1.0-alt1
 - rpmreqs: fix work on x86_64
 - egrep -> grep -E
