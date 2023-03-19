@@ -4,8 +4,8 @@
 %define major 1.4
 
 Name: tcl-img
-Version: 1.4.13
-Release: alt2
+Version: 1.4.14
+Release: alt1
 
 Summary: Tcl Image Formats (Img)
 License: TCL
@@ -23,6 +23,7 @@ Patch1: 0001-ALT-TEA.patch
 Patch2: 0002-DEBIAN-libz.patch
 Patch3: 0003-DEBIAN-libjpeg.patch
 Patch4: 0004-DEBIAN-libpng.patch
+Patch5: 0005-DEBIAN-libtiff.patch
 Patch6: 0006-DEBIAN-pixmap.patch
 Patch7: 0007-DEBIAN-window.patch
 Patch8: 0008-ALT-tests-TCLLIBPATH.patch
@@ -86,16 +87,22 @@ make test 2>&1 |tee "$log"
 
 %files
 %doc ANNOUNCE ChangeLog* README doc/*.css doc/*.htm license.terms
+%dir %_tcllibdir/Img%version
 %_tcllibdir/Img%version/*.so
 %_tcllibdir/Img%version/pkgIndex.tcl
 %_mandir/mann/*
 
 %changelog
+* Sun Mar 19 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.14-alt1
+- Updated to 1.4.14.
+- Built against system libtiff again.
+- Packed extension dir itself as well.
+
 * Tue Aug 31 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.13-alt2
 - Fixed FTBFS: built fat LTO objects.
 
 * Mon Feb 15 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.13-alt1
-- Updated to 1.14.13.
+- Updated to 1.4.13.
 
 * Tue Jan 12 2021 Vladimir D. Seleznev <vseleznv@altlinux.org> 1.4.11-alt2
 - Built against internal libtiff (ALT#39407).

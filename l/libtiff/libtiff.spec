@@ -1,6 +1,6 @@
 Name: libtiff
 Version: 4.4.0
-Release: alt2
+Release: alt3
 
 Summary: Library of functions for manipulating TIFF format image files
 License: BSD-style
@@ -106,6 +106,8 @@ _TIFFGetFields
 _TIFFMergeFields
 _TIFFSeekOK
 _TIFFClampDoubleToUInt32
+TIFFSetCompressionScheme
+_TIFFgetMode
 display_sRGB
 EOF
 sed -n 's/^extern[^)]\+[[:space:]]\*\?\([^[:space:]*()]\+\)[[:space:]]*(.*/\1/p' \
@@ -174,6 +176,10 @@ xz -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Sun Mar 19 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.4.0-alt3
+- Built with exported TIFFSetCompressionScheme and _TIFFgetMode syms (are
+  needed for tcl-img-1.4.14).
+
 * Sun Dec 18 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 4.4.0-alt2
 - Applied SUSE patches (fixed tiff-CVE-2022-2056, CVE-2022-2057, CVE-2022-2058,
   CVE-2022-2519, CVE-2022-2520, CVE-2022-2521, CVE-2022-3597, CVE-2022-3598,
