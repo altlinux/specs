@@ -7,6 +7,7 @@
 %else
 %define apache_module_name php_module
 %endif
+%define mod_conflicts %(echo "%_supported_php_suffix"|sed 's/\\<%{_php_suffix}\\>//;s/ \\+/ /g;s/^[[:space:]]*//;s/[[:space:]]*$//;s/\\([[:graph:]]*\\)/apache2-mod_php\\1/g')
 
 Name: apache2-mod_php%_php_suffix
 Version: %php_version
@@ -35,7 +36,7 @@ Requires: apache2-httpd-prefork-like
 Requires(post): apache2-httpd-prefork-like
 Requires(post): apache2-base
 
-Conflicts: apache2-mod_php5
+Conflicts: apache2-mod_php5 %mod_conflicts
 Provides: apache2-mod_php = %php_version
 Provides: php-engine = %php_version-%php_release
 

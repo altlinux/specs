@@ -10,7 +10,7 @@
 %define _php_version  %version
 %define _php_major  8
 %define _php_minor  1
-%define _php_release_version 16
+%define _php_release_version 17
 %define _php_suffix %_php_major.%_php_minor
 %define php_release   %release
 %define rpm_build_version %_php_version
@@ -463,6 +463,9 @@ unset NO_INTERACTION REPORT_EXIT_STATUS
 %doc tests run-tests.php 
 
 %changelog
+* Thu Mar 16 2023 Anton Farygin <rider@altlinux.ru> 8.1.17-alt1
+- 8.1.16 -> 8.1.17
+
 * Wed Feb 15 2023 Anton Farygin <rider@altlinux.ru> 8.1.16-alt1
 - 8.1.15 -> 8.1.16 (Fixes: CVE-2023-0567, CVE-2023-0568, CVE-2023-0662)
 
