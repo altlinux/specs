@@ -1,5 +1,5 @@
 Name: rpm-build-lua
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: RPM helpers to build lua packages
@@ -31,5 +31,8 @@ install -p -m0755 -D lua.req.files %buildroot%_rpmlibdir/lua.req.files
 %_rpmlibdir/lua.*
 
 %changelog
+* Sun Mar 19 2023 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.2-alt1
+- Fixed autoreq.
+
 * Wed Jun 29 2022 Vladimir D. Seleznev <vseleznv@altlinux.org> 0.1-alt1
 - Initial build for ALT Sisyphus.
