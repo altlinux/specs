@@ -1,6 +1,6 @@
 Name: xfce4-screensaver
-Version: 4.16.0
-Release: alt2
+Version: 4.18.0
+Release: alt1
 
 Summary: Screen saver and locker for Xfce
 License: GPLv2+ and LGPLv2+
@@ -14,7 +14,7 @@ Packager: Xfce Team <xfce@packages.altlinux.org>
 
 BuildRequires(pre): rpm-build-xdg
 
-BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools
+BuildPreReq: rpm-build-xfce4 >= 0.1.0 xfce4-dev-tools >= 4.17.1
 BuildPreReq: libxfconf-devel libgarcon-gtk3-devel libxfce4ui-gtk3-devel libxfce4util-devel
 BuildRequires: glib2-devel libgtk+3-devel libgio-devel
 BuildRequires: libdbus-glib-devel libdbus-devel
@@ -75,6 +75,10 @@ and the Xfconf configuration backend.
 %_pixmapsdir/*.svg
 
 %changelog
+* Sat Mar 18 2023 Mikhail Efremov <sem@altlinux.org> 4.18.0-alt1
+- Fixed setresgid()/setresuid() implicit declaration warning.
+- 4.16.0 -> 4.18.0.
+
 * Tue May 11 2021 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt2
 - Fixed build: added rpm-build-python3 to BR.
 
