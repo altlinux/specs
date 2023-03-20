@@ -1,7 +1,7 @@
 %define oname dotenv
 
 Name: python3-module-%oname
-Version: 0.21.1
+Version: 1.0.0
 Release: alt1
 
 Summary: Reads the key-value pair from .env file and adds them to environment variable.
@@ -17,6 +17,8 @@ AutoReqProv: nopython
 %define __python %nil
 
 BuildRequires(pre): rpm-build-python3
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 
 %description
 Reads the key-value pair from .env file and adds them to environment
@@ -29,17 +31,20 @@ and in production using 12-factor principles.
 %build
 # We don't support IPython for now (requires additional dependencies)
 rm -f src/dotenv/ipython.py
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %files
 %_bindir/%oname
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/python_%oname-%version.dist-info/*
 
 %changelog
+* Mon Mar 20 2023 Vladimir Didenko <cow@altlinux.org> 1.0.0-alt1
+- new version
+
 * Tue Feb 14 2023 Vladimir Didenko <cow@altlinux.org> 0.21.1-alt1
 - new version
 
