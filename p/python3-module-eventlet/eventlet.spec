@@ -4,7 +4,7 @@
 %def_with docs
 
 Name: python3-module-%oname
-Version: 0.33.1
+Version: 0.33.3
 Release: alt1
 
 Summary: Highly concurrent networking library
@@ -93,7 +93,10 @@ This package contains documentation for Eventlet.
 %prep
 %setup
 # requires thrift, python 2.7 only
-rm -rf eventlet/zipkin
+rm -rv eventlet/zipkin
+
+# remove obsoleted tsafe (ALT bug 45443)
+rm -v eventlet/green/OpenSSL/tsafe.py
 
 %if_with docs
 %prepare_sphinx3 .
@@ -147,6 +150,10 @@ py.test3 -v -o norecursedirs="tests/*" -k "
 %endif
 
 %changelog
+* Fri Mar 17 2023 Vitaly Lipatov <lav@altlinux.ru> 0.33.3-alt1
+- new version 0.33.3 (with rpmrb script)
+- remove obsoleted OpenSSL.tsafe using (ALT bug 45443)
+
 * Sun Sep 11 2022 Vitaly Lipatov <lav@altlinux.ru> 0.33.1-alt1
 - new version 0.33.1 (with rpmrb script)
 
