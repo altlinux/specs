@@ -3,7 +3,7 @@
 %def_disable test
 
 Name: python3-module-%oname
-Version: 39.0.1
+Version: 39.0.2
 Release: alt1
 
 Summary: Cryptographic recipes and primitives to Python developers
@@ -23,7 +23,9 @@ Source1: %name-development-%version.tar
 BuildRequires(pre): rpm-build-intro >= 2.2.4
 BuildRequires(pre): rpm-build-python3
 
-BuildRequires: python3-devel python3-module-cffi python3-module-setuptools
+BuildRequires: python3-devel python3-module-cffi
+BuildRequires: python3(setuptools)
+BuildRequires: python3(wheel)
 BuildRequires: libssl-devel
 BuildRequires: /proc
 BuildRequires: rust rust-cargo python3-module-setuptools_rust
@@ -59,10 +61,10 @@ EOF
 
 %build
 export CARGO_NET_OFFLINE=true
-%python3_build
+%pyproject_build
 
 %install
-%python3_install
+%pyproject_install
 
 %filter_from_requires /python3[(]cryptography.hazmat.bindings._commoncrypto[)]/d
 %filter_from_requires /python3[(]cryptography.hazmat.bindings._constant_time[)]/d
@@ -78,9 +80,12 @@ py.test3
 
 %files
 %python3_sitelibdir/%oname/
-%python3_sitelibdir/*.egg-*
+%python3_sitelibdir/%oname-%version.dist-info/*
 
 %changelog
+* Mon Mar 20 2023 Vladimir Didenko <cow@altlinux.ru> 39.0.2-alt1
+- new version
+
 * Wed Feb 8 2023 Vladimir Didenko <cow@altlinux.ru> 39.0.1-alt1
 - new version (Fixes: CVE-2023-23931)
 
