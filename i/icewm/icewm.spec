@@ -4,8 +4,8 @@
 %def_with markdown
 
 Name: %realname
-Version: 3.3.1
-Release: alt2
+Version: 3.3.2
+Release: alt1
 Epoch:3
 
 Summary: X11 Window Manager
@@ -154,6 +154,9 @@ rm -f %buildroot/%_datadir/xsessions/%realname.desktop
 %_x11x11dir/%realname/themes/*
 
 %changelog
+* Mon Mar 20 2023 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.3.2-alt1
+- 3.3.2
+
 * Thu Feb 23 2023 Dmitriy Khanzhin <jinn@altlinux.org> 3:3.3.1-alt2
 - added all remaining translations
 - fixed repocop warning what docdir is not owned
