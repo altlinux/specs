@@ -4,31 +4,24 @@
 %def_with check
 
 Name: python3-module-%oname
-Version: 5.0.0
+Version: 6.0
 Release: alt1
 
 Summary: File-system Representation Interfaces
 License: ZPL-2.1
 Group: Development/Python3
 Url: https://pypi.org/project/zope.filerepresentation/
+VCS: https://github.com/zopefoundation/zope.filerepresentation
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 
 %if_with check
-# install_requires=
-BuildRequires: python3(pkg_resources)
-BuildRequires: python3(zope.interface)
-BuildRequires: python3(zope.schema)
-
-BuildRequires: python3(zope.testrunner)
-
-BuildRequires: python3(tox)
-BuildRequires: python3(tox_console_scripts)
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-zope.schema
+BuildRequires: python3-module-zope.testrunner
 %endif
-
-%py3_requires zope zope.schema
 
 %description
 File-system representation interfaces.
@@ -53,15 +46,7 @@ mv %buildroot%python3_sitelibdir_noarch/* \
 %endif
 
 %check
-cat > tox.ini <<'EOF'
-[testenv]
-commands =
-    zope-testrunner --test-path=src -vvc
-EOF
-export PIP_NO_BUILD_ISOLATION=no
-export PIP_NO_INDEX=YES
-export TOXENV=py3
-tox.py3 --sitepackages --console-scripts -vvr --develop
+%tox_check
 
 %files
 %doc *.txt *.rst
@@ -72,6 +57,9 @@ tox.py3 --sitepackages --console-scripts -vvr --develop
 %exclude %python3_sitelibdir/zope/filerepresentation/__pycache__/tests.*
 
 %changelog
+* Mon Mar 20 2023 Anton Vyatkin <toni@altlinux.org> 6.0-alt1
+- New version 6.0.
+
 * Wed Mar 30 2022 Stanislav Levin <slev@altlinux.org> 5.0.0-alt1
 - 4.2.0 -> 5.0.0.
 
