@@ -8,7 +8,7 @@ BuildRequires: jpackage-default
 %define _localstatedir %{_var}
 Name:           maven-invoker
 Version:        3.1.0
-Release:        alt1_1jpp11
+Release:        alt1_6jpp11
 Summary:        Fires a maven build in a clean environment
 License:        ASL 2.0
 URL:            https://maven.apache.org/shared/maven-invoker/
@@ -18,6 +18,10 @@ Source0:        https://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%
 
 # Patch rejected upstream
 Patch1:         %{name}-MSHARED-279.patch
+# Disable two tests that are affected by bug in maven-surefire version 3.0.0-M6
+# https://issues.apache.org/jira/browse/SUREFIRE-2056
+# The bug is fixed in maven-surefire 3.0.0-M7.
+Patch2:         0001-Disable-two-tests-in-DefaultInvokerTest.java.patch
 
 BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
@@ -53,7 +57,9 @@ API documentation for %{name}.
 %setup -q
 # Change line endings so patch can be applied
 sed -i 's/\r$//' src/main/java/org/apache/maven/shared/invoker/MavenCommandLineBuilder.java
+sed -i 's/\r$//' src/test/java/org/apache/maven/shared/invoker/DefaultInvokerTest.java
 %patch1 -p1
+%patch2 -p1
 %pom_change_dep javax.inject:javax.inject:1  org.eclipse.sisu:org.eclipse.sisu.inject
 
 %build
@@ -70,6 +76,9 @@ sed -i 's/\r$//' src/main/java/org/apache/maven/shared/invoker/MavenCommandLineB
 
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_6jpp11
+- update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 3.1.0-alt1_1jpp11
 - new version
 
