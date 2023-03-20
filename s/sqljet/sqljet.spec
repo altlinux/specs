@@ -4,12 +4,12 @@ Group: Development/Other
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 Name:           sqljet
 Version:        1.1.10
-Release:        alt3_18jpp11
+Release:        alt3_25jpp11
 Summary:        Pure Java SQLite
 
 License:        GPLv2
@@ -26,7 +26,7 @@ BuildRequires:  antlr32-tool
 BuildRequires:  easymock3
 BuildRequires:  junit
 BuildRequires:  stringtemplate
-BuildRequires:  hamcrest-core
+BuildRequires:  hamcrest
 BuildRequires:  javapackages-local
 BuildArch: noarch
 Source44: import.info
@@ -81,6 +81,9 @@ ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  jars osgi javadoc
 %doc --no-dereference LICENSE.txt
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:1.1.10-alt3_25jpp11
+- update
+
 * Tue Jun 01 2021 Igor Vlasenko <viy@altlinux.org> 0:1.1.10-alt3_18jpp11
 - update
 
