@@ -10,7 +10,7 @@ BuildRequires: jpackage-default
 Name:           regexp
 Epoch:          1
 Version:        1.5
-Release:        alt1_36jpp11
+Release:        alt1_40jpp11
 Summary:        Simple regular expressions API
 License:        ASL 2.0
 URL:            http://jakarta.apache.org/%{name}/
@@ -66,7 +66,7 @@ EOF
 
 %build
 mkdir lib
-%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Djakarta-site2.dir=. jar javadocs
+%ant -Dant.build.javac.source=1.8 -Dant.build.javac.target=1.8  -Djakarta-site2.dir=. -Dant.build.javac.source=1.7 -Dant.build.javac.target=1.7 jar javadocs
 
 %mvn_artifact pom.xml build/*.jar
 
@@ -83,6 +83,9 @@ mkdir lib
 %doc LICENSE
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1:1.5-alt1_40jpp11
+- update
+
 * Fri Jun 10 2022 Igor Vlasenko <viy@altlinux.org> 1:1.5-alt1_36jpp11
 - update
 
