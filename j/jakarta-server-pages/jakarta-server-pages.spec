@@ -1,13 +1,13 @@
 Group: Development/Java
 BuildRequires: /proc rpm-build-java
-BuildRequires: jpackage-11-compat
+BuildRequires: jpackage-default
 # see https://bugzilla.altlinux.org/show_bug.cgi?id=10382
 %define _localstatedir %{_var}
 %global srcname jsp-api
 
 Name:           jakarta-server-pages
 Version:        2.3.6
-Release:        alt1_3jpp11
+Release:        alt1_9jpp11
 Summary:        Jakarta Server Pages (JSP)
 # some files have Apache-2.0 license headers
 # https://github.com/eclipse-ee4j/jsp-api/issues/180
@@ -18,7 +18,7 @@ License:        (EPL-2.0 or GPLv2 with exceptions) and ASL 2.0
 %global upstream_version IMPL-%{version}-RELEASE
 
 URL:            https://github.com/eclipse-ee4j/jsp-api
-Source0:        %{url}/archive/%{upstream_version}/%{srcname}-%{upstream_version}.tar.gz
+Source0:        https://github.com/eclipse-ee4j/jsp-api/archive/%{upstream_version}/%{srcname}-%{upstream_version}.tar.gz
 
 # build with support for JDTJavaCompiler (for eclipse) and AntJavaCompiler
 Patch1:         0001-enable-support-for-JDTJavaCompiler-and-AntJavaCompil.patch
@@ -108,6 +108,7 @@ rm impl/src/main/java/org/apache/jasper/runtime/PerThreadTagHandlerPool.java
 
 %mvn_alias jakarta.servlet.jsp:jakarta.servlet.jsp-api \
     javax.servlet.jsp:javax.servlet.jsp-api \
+    javax.servlet.jsp:jsp-api \
     javax.servlet:jsp-api
 
 # add compat symlinks for the old classpaths
@@ -135,6 +136,9 @@ rm impl/src/main/java/org/apache/jasper/runtime/PerThreadTagHandlerPool.java
 
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 2.3.6-alt1_9jpp11
+- update
+
 * Sat Jun 05 2021 Igor Vlasenko <viy@altlinux.org> 2.3.6-alt1_3jpp11
 - new version
 
