@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _libexecdir %_prefix/libexec
 %define xdg_name org.gnome.Shell
@@ -12,7 +12,7 @@
 %def_disable browser_plugin
 
 Name: gnome-shell
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1%beta
 
 Summary: Window management and application launching for GNOME
@@ -64,7 +64,7 @@ Obsoletes: gnome-shell-extension-per-window-input-source
 Requires: %name-data = %version-%release
 Requires: mutter-gnome >= %mutter_ver libmutter-gir >= %mutter_ver
 Requires: gnome-session >= %session_ver
-Requires: dconf gnome-icon-theme gnome-icon-theme-symbolic
+Requires: dconf at-spi2-core gnome-icon-theme gnome-icon-theme-symbolic
 Requires: at-spi2-atk ca-certificates polkit
 # since 3.11.x requires org.gnome.login-screen schema
 Requires: gdm-data
@@ -287,6 +287,9 @@ sed -i 's|=\(gsettings\)|=%_bindir/\1|' data/%xdg_name-disable-extensions.servic
 %endif
 
 %changelog
+* Mon Mar 20 2023 Yuri N. Sedunov <aris@altlinux.org> 43.4-alt1
+- 43.4
+
 * Tue Feb 14 2023 Yuri N. Sedunov <aris@altlinux.org> 43.3-alt1
 - 43.3
 
