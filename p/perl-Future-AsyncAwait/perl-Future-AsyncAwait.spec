@@ -1,8 +1,9 @@
+%set_perl_req_method relaxed
 %define _unpackaged_files_terminate_build 1
 %define module_name Future-AsyncAwait
 #BuildRequires: perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm)
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Future.pm) perl(IO/Async/Loop.pm) perl(Module/Build.pm) perl(Object/Pad.pm) perl(Role/Tiny.pm) perl(Role/Tiny/With.pm) perl(Syntax/Keyword/Defer.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Syntax/Keyword/Match.pm) perl(Syntax/Keyword/MultiSub.pm) perl(Syntax/Keyword/Try.pm) perl(Test/Fatal.pm) perl(Test/Future/Deferred.pm) perl(Test/MemoryGrowth.pm) perl(Test/More.pm) perl(Test/Refcount.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
+BuildRequires: perl(ExtUtils/CBuilder.pm) perl(Future.pm) perl(IO/Async/Loop.pm) perl(Module/Build.pm) perl(Object/Pad.pm) perl(Role/Tiny.pm) perl(Role/Tiny/With.pm) perl(Syntax/Keyword/Defer.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Syntax/Keyword/Match.pm) perl(Syntax/Keyword/MultiSub.pm) perl(Syntax/Keyword/Try.pm) perl(Test/Fatal.pm) perl(Test/Future/Deferred.pm) perl(Test/MemoryGrowth.pm) perl(Test/More.pm) perl(Test/Refcount.pm) perl(Test2/V0.pm) perl(XS/Parse/Keyword.pm) perl(XS/Parse/Keyword/Builder.pm) perl(XS/Parse/Sublike.pm) perl(XS/Parse/Sublike/Builder.pm) perl(experimental.pm)
 # END SourceDeps(oneline)
 # exclude for bootstrap:
 # perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm) perl(Object/Pad.pm) perl(Syntax/Keyword/Defer.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Syntax/Keyword/Try.pm) 
@@ -13,7 +14,7 @@ BuildRequires: rpm-build-perl perl-devel perl-podlators
 #BuildRequires: perl(Devel/MAT.pm) perl(Devel/MAT/Dumper.pm) perl(Syntax/Keyword/Dynamically.pm) perl(Syntax/Keyword/Try.pm) perl(Object/Pad.pm)
 
 Name: perl-%module_name
-Version: 0.64
+Version: 0.65
 Release: alt1
 Summary: deferred subroutine syntax for futures
 Group: Development/Perl
@@ -87,6 +88,9 @@ with futures.
 %perl_vendor_autolib/*
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0.65-alt1
+- automated CPAN update
+
 * Wed Feb 15 2023 Igor Vlasenko <viy@altlinux.org> 0.64-alt1
 - automated CPAN update
 
