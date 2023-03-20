@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 1.5.2
+Version: 1.5.3
 Release: alt1
 
 Summary: ALT based distribution metaprofile
@@ -19,6 +19,7 @@ Requires: mkimage >= 0.2.5
 Requires: mkimage-preinstall
 
 # Recommends: graphviz qemu-img
+# Recommends: isomd5sum
 
 %define mpdir %_datadir/%name
 %add_findreq_skiplist %mpdir/*.in/*
@@ -128,6 +129,19 @@ mv %buildroot%mpdir/doc/mkimage-profiles.7 %buildroot%_man7dir/
 %endif
 
 %changelog
+* Mon Mar 20 2023 Anton Midyukov <antohami@altlinux.org> 1.5.3-alt1
+- services: fix DEFAULT_SYSTEMD_USER_SERVICES_{DISABLE,ENABLE} support
+- Initial feature live-install
+- regular.mk: installation from live image by classic installer
+- grub: add submenu for install live over network
+- stage2: add option '--no-hardliks' to mksquashfs (Closes: 45329)
+- initrd-{bootchain,propagator}: save initrd.mk, make-initrd to .disk/
+- stage2,initrd-*: fix adding udev rules for named network interfaces
+- mediacheck: check available implantisomd5 command
+- install2: add mdadm to altinst
+- features.in: drop armh-skit
+- Include README of features to documentation; fix syntax & links in them
+
 * Wed Feb 22 2023 Anton Midyukov <antohami@altlinux.org> 1.5.2-alt1
 - wireless: removed crda, added firmware-wireless-regdb for all arch
   (thanks iv@)
