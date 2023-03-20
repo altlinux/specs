@@ -36,8 +36,8 @@
 %endif
 
 Name: plasma5-workspace
-Version: 5.27.2
-Release: alt2
+Version: 5.27.3
+Release: alt1
 Epoch: 1
 %K5init altplace no_appdata
 
@@ -425,6 +425,7 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 %dir %_K5xdgconf/plasma-workspace/
 %dir %_K5xdgconf/plasma-workspace/env/
 %dir %_K5data/desktop-directories/
+%dir %_K5plug/kpackage/
 %dir %_K5qml/org/kde/plasma/workspace/
 %dir %_K5qml/org/kde/plasma/private/
 %dir %_K5qml/org/kde/plasma/wallpapers/
@@ -448,7 +449,8 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 %_K5plug/plasma/*/*.so
 %_K5plug/phonon_platform/*.so
 %_K5plug/*.so
-%_K5plug/kpackage/
+%_K5plug/kpackage/*
+%exclude %_K5plug/kpackage/packagestructure/plasma_wallpaper.so
 %_K5plug/kf5/kded/*.so
 %_K5plug/kf5/kio/*.so
 %_K5plug/kf5/krunner/
@@ -500,6 +502,7 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 %_datadir/polkit-1/actions/*fontinst*.policy
 
 %files -n %name-qml
+%_K5plug/kpackage/packagestructure/plasma_wallpaper.so
 %_K5qml/org/kde/plasma/
 %_K5data/plasma/look-and-feel/*
 %_K5data/plasma/wallpapers/org.kde.image/
@@ -546,6 +549,9 @@ install -m0644 -p -D %SOURCE42 %buildroot/%_unitdir_user/plasma-core.target.d/ob
 
 
 %changelog
+* Thu Mar 16 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.3-alt1
+- new version
+
 * Wed Mar 15 2023 Sergey V Turchin <zerg@altlinux.org> 1:5.27.2-alt2
 - move wallpapers/org.kde.image component to qml subpackage
 

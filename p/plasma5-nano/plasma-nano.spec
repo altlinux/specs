@@ -1,9 +1,9 @@
 %define rname plasma-nano
 
 Name: plasma5-nano
-Version: 5.27.2
+Version: 5.27.3
 Release: alt1
-%K5init altplace
+%K5init altplace no_appdata
 
 Group: Graphical desktop/KDE
 Summary: KDE Plasma 5 minimal shell
@@ -64,6 +64,9 @@ Requires: %name-common
 %_K5srv/*.desktop
 
 %changelog
+* Thu Mar 16 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.3-alt1
+- new version
+
 * Tue Feb 28 2023 Sergey V Turchin <zerg@altlinux.org> 5.27.2-alt1
 - new version
 
