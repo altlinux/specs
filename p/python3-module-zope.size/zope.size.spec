@@ -1,19 +1,27 @@
 %define oname zope.size
 
+%def_with check
+
 Name: python3-module-%oname
-Version: 4.1.0
-Release: alt2
+Version: 4.4
+Release: alt1
 
 Summary: Interfaces and simple adapter that give the size of an object
-License: ZPLv2.1
+License: ZPL-2.1
 Group: Development/Python3
-Url: http://pypi.python.org/pypi/zope.size/
+Url: https://pypi.org/project/zope.size
+VCS: https://github.com/zopefoundation/zope.size
 
 Source: %name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
-%py3_requires zope zope.interface zope.i18nmessageid
-
+%if_with check
+BuildRequires: python3-module-zope.interface
+BuildRequires: python3-module-zope.i18nmessageid
+BuildRequires: python3-module-zope.testrunner
+BuildRequires: python3-module-zope.component
+BuildRequires: python3-module-zope.security
+%endif
 
 %description
 This package provides a definition of simple interface that allows to
@@ -26,7 +34,7 @@ object doesn't have one and will show size as not available instead.
 %package tests
 Summary: Tests for zope.size
 Group: Development/Python3
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides a definition of simple interface that allows to
@@ -53,19 +61,24 @@ mv %buildroot%python3_sitelibdir_noarch/* \
     %buildroot%python3_sitelibdir/
 %endif
 
+%check
+%tox_check
+
 %files
 %doc *.txt *.rst
-%python3_sitelibdir/*
+%python3_sitelibdir/zope
+%python3_sitelibdir/%oname-%version-*.egg-info
 %exclude %python3_sitelibdir/*.pth
 %exclude %python3_sitelibdir/*/*/tests.*
-%exclude %python3_sitelibdir/*/*/*/tests.*
 
 %files tests
 %python3_sitelibdir/*/*/tests.*
-%python3_sitelibdir/*/*/*/tests.*
 
 
 %changelog
+* Mon Mar 20 2023 Anton Vyatkin <toni@altlinux.org> 4.4-alt1
+- New version 4.4.
+
 * Wed Dec 04 2019 Andrey Bychkov <mrdrew@altlinux.org> 4.1.0-alt2
 - python2 disabled
 
