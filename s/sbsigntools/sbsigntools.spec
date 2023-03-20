@@ -4,8 +4,8 @@
 %set_verify_elf_method strict
 
 Name: sbsigntools
-Version: 0.9.4
-Release: alt2
+Version: 0.9.5
+Release: alt1
 Summary: Signing utility for UEFI secure boot
 License: GPL-3.0-or-later
 Url: https://git.kernel.org/pub/scm/linux/kernel/git/jejb/sbsigntools.git
@@ -52,6 +52,9 @@ Tools to add signatures to EFI binaries and drivers.
 %_man1dir/*.1*
 
 %changelog
+* Tue Mar 21 2023 Vitaly Chikunov <vt@altlinux.org> 0.9.5-alt1
+- Update to v0.9.5 (2023-03-19).
+
 * Wed Oct 12 2022 Vitaly Chikunov <vt@altlinux.org> 0.9.4-alt2
 - Update to v0.9.4-3-g25af2eb5 (2021-06-04).
 
