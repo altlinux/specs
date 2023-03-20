@@ -1,6 +1,6 @@
 Name: kernel-image-centos
 
-%define centos_release 287
+%define centos_release 289
 
 Version: 5.14.0.%{centos_release}
 Release: alt1.el9
@@ -635,6 +635,40 @@ grep -qE '^(\[ *[0-9]+\.[0-9]+\] *)?reboot: Power down' boot.log || {
 %endif
 
 %changelog
+* Mon Mar 20 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.289-alt1.el9
+- Updated to kernel-5.14.0-289.el9:
+  + Backport latest fixes and memory reclaiming feature from upstream s390x KVM for the RHEL 9.3 kernel
+  + crypto: rng - Use a different crypto_rng for reseeding
+  + Enable the pinctrl driver for Meteor Lake
+  + Fix frequency issues related to hybrid cpus
+  + hyper-v: VMBus driver updates for RHEL9.3
+  + i2c: i801: Add support for Intel Meteor Lake-P
+  + ice: ptp fixes
+  + l2tp: Avoid possible recursive deadlock in l2tp_tunnel_register()
+  + Merge commit '583da4e8ca925647df26119a65075c5fb53d346f' into 9.2
+  + Merge tag 'kernel-5.14.0-284.2.1.el9_2' from 9.2
+  + mfd: intel-lpss: Add Intel Meteor Lake-P PCI IDs
+  + mlx5: Mgmt VF rep support in OVN-k
+  + net: hv_netvsc: Hyper-V NetVSC driver update for RHEL9.3
+  + net: introduce rps_default_mask
+  + net: mana: Fix IRQ name - add PCI and queue number
+  + net: mana: MANA driver updates for RHEL9.3
+  + net/mlx5e: Fix crash unsetting rx-vlan-filter in switchdev mode
+  + net/mlx5: Serialize module cleanup with reload and remove
+  + nouveau: Backport nouveau mmu fixes
+  + platform/x86: intel/pmc/core: Add Meteor Lake mobile support
+  + powercap: intel_rapl: add support for Meteor Lake
+  + redhat: Fix debug variants modsign
+  + redhat: update rpminspect config for patches and debuginfo
+  + [s390]: RHEL9.0 - s390/boot: simplify and fix kernel memory layout setup
+  + [s390]: RHEL9.0 - s390/dcssblk: fix deadlock when adding a DCSS
+  + [s390]: RHEL9.0 - s390/extmem: return correct segment type in __segment_load()
+  + srcu: Delegate work to the boot cpu if using SRCU_SIZE_SMALL
+  + tools/power turbostat: Add support for MeteorLake platforms
+  + Updates for powerpc selftests
+  + Update the MSI code in RHEL
+  + Various changes and improvements that are poorly described in merge.
+
 * Tue Mar 14 2023 Alexey Gladkov <legion@altlinux.ru> 5.14.0.287-alt1.el9
 - Updated to kernel-5.14.0-287.el9:
   + arch/x86: Update to 5.15
