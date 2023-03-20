@@ -10,7 +10,7 @@
 %define prog_name            postgresql
 %define postgresql_major     15
 %define postgresql_minor     2
-%define postgresql_altrel    2
+%define postgresql_altrel    3
 
 # Look at: src/interfaces/libpq/Makefile
 %define libpq_major          5
@@ -789,7 +789,7 @@ fi
 
 %files -f server.lang server
 %config %_initdir/%prog_name
-%config(noreplace) %_sysconfdir/sysconfig/*
+%config %_sysconfdir/sysconfig/*
 %_bindir/initdb
 %_bindir/postgresql-check-db-dir
 %_bindir/pg_checksums
@@ -945,6 +945,9 @@ fi
 %endif
 
 %changelog
+* Mon Mar 20 2023 Alexei Takaseev <taf@altlinux.org> 15.2-alt3
+- Delete noreplace for /etc/sysconfig/postgresql
+
 * Fri Mar 03 2023 Alexei Takaseev <taf@altlinux.org> 15.2-alt2
 - Cleanup postgresql.service (ALT #44917)
 - Set database locale different from system (ALT #43207)
