@@ -19,7 +19,7 @@ BuildRequires: jpackage-default
 
 Name:           log4j
 Version:        2.17.2
-Release:        alt1_1jpp11
+Release:        alt1_3jpp11
 Summary:        Java logging package
 BuildArch:      noarch
 License:        ASL 2.0
@@ -88,9 +88,6 @@ Requires:       javapackages-tools
 # - javax.jms
 # - io.fabric8.kubernetes-client
 %endif
-
-Obsoletes:      %{name}-osgi < 2.9.1-4
-Obsoletes:      %{name}-liquibase < 2.9.1-4
 Source44: import.info
 
 %description
@@ -161,7 +158,6 @@ Use NoSQL databases such as MongoDB and CouchDB to append log messages.
 %package        javadoc
 Group: Development/Java
 Summary:        API documentation for %{name}
-Obsoletes:      %{name}-manual < %{version}
 
 %description    javadoc
 %{summary}.
@@ -231,6 +227,9 @@ rm -r log4j-core/src/main/java/org/apache/logging/log4j/core/appender/mom/kafka
 # Remove deps on slf4j-ext, it is no longer available in Fedora 35
 %pom_remove_dep -r :slf4j-ext
 %pom_remove_parent
+
+# Make compiled code compatible with OpenJDK 8
+%pom_xpath_inject 'pom:plugin[pom:artifactId="maven-compiler-plugin"]/pom:configuration' "<release>8</release>"
 
 %if %{with jp_minimal}
 %pom_disable_module %{name}-taglib
@@ -319,6 +318,9 @@ touch $RPM_BUILD_ROOT/etc/chainsaw.conf
 
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.17.2-alt1_3jpp11
+- update
+
 * Fri Jul 01 2022 Igor Vlasenko <viy@altlinux.org> 0:2.17.2-alt1_1jpp11
 - new version
 
