@@ -1,6 +1,6 @@
 %define _unpackaged_files_terminate_build 1
 Name: perl-Future
-Version: 0.49
+Version: 0.50
 Release: alt1
 
 Summary: represent an operation awaiting completion
@@ -11,7 +11,7 @@ Url: %CPAN Future
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Test/Fatal.pm) perl(Test/Identity.pm)
+BuildRequires: perl-devel perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Test/Fatal.pm) perl(Test/Identity.pm) perl(Test2/V0.pm)
 
 %description
 %summary
@@ -32,6 +32,9 @@ BuildRequires: perl-devel perl(Module/Build.pm) perl(Test/Refcount.pm) perl(Test
 %doc Changes README
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0.50-alt1
+- new version
+
 * Sat Oct 22 2022 Igor Vlasenko <viy@altlinux.org> 0.49-alt1
 - new version
 
