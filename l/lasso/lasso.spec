@@ -9,7 +9,7 @@
 
 Summary: Liberty Alliance Single Sign On
 Name: 	 lasso
-Version: 2.8.1
+Version: 2.8.2
 Release: alt1
 License: GPLv2+
 Group:   System/Libraries
@@ -242,6 +242,9 @@ make check
 %endif
 
 %changelog
+* Mon Mar 20 2023 Leontiy Volodin <lvol@altlinux.org> 2.8.2-alt1
+- New version.
+
 * Fri Mar 03 2023 Leontiy Volodin <lvol@altlinux.org> 2.8.1-alt1
 - New version.
 
