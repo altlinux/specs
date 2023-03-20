@@ -14,7 +14,7 @@ BuildRequires: jpackage-default
 
 Name:           xmlunit
 Version:        2.8.2
-Release:        alt1_4jpp11
+Release:        alt1_8jpp11
 Summary:        Provides classes to do asserts on xml
 # The whole package is ASL 2.0 except for xmlunit-legacy which is BSD
 License:        ASL 2.0 and BSD
@@ -30,10 +30,10 @@ Patch1:         0001-Disable-tests-requiring-network-access.patch
 Patch2:         0002-Port-to-hamcrest-2.1.patch
 Patch3:         0003-Drop-support-for-JAXB.patch
 
-BuildRequires:  maven-local
 %if %{with bootstrap}
 BuildRequires:  javapackages-bootstrap
 %else
+BuildRequires:  maven-local
 BuildRequires:  mvn(junit:junit)
 BuildRequires:  mvn(net.bytebuddy:byte-buddy)
 BuildRequires:  mvn(org.apache.felix:maven-bundle-plugin)
@@ -136,6 +136,9 @@ rm -rf xmlunit-core/src/{main,test}/java/org/xmlunit/builder/{jaxb/,JaxbBuilder.
 %files placeholders -f .mfiles-xmlunit-placeholders
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 0:2.8.2-alt1_8jpp11
+- update
+
 * Thu Jun 09 2022 Igor Vlasenko <viy@altlinux.org> 0:2.8.2-alt1_4jpp11
 - new version
 
