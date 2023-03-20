@@ -3,7 +3,7 @@
 %def_with check
 
 Name: curl
-Version: 7.88.1
+Version: 8.0.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -155,6 +155,10 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Mon Mar 20 2023 Anton Farygin <rider@altlinux.ru> 8.0.0-alt1
+- 7.88.1 -> 8.0.0 (Fixes:  CVE-2023-27533, CVE-2023-27534, CVE-2023-27535, CVE-2023-27536,
+   CVE-2023-27537, CVE-2023-27538)
+
 * Mon Feb 20 2023 Anton Farygin <rider@altlinux.ru> 7.88.1-alt1
 - 7.88.0 -> 7.88.1
 
