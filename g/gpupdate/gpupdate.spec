@@ -31,7 +31,7 @@
 %add_python3_req_skip util.xml
 
 Name: gpupdate
-Version: 0.9.12.3
+Version: 0.9.12.4
 Release: alt1
 
 Summary: GPT applier
@@ -139,7 +139,7 @@ fi
 # Remove storage in case we've lost compatibility between versions.
 # The storage will be regenerated on GPOA start.
 %define active_policy %_sysconfdir/local-policy/active
-%triggerpostun -- %name < 0.9.12
+%triggerpostun -- %name < 0.9.12.4
 rm -f %_cachedir/%name/registry.sqlite
 if test -L %active_policy; then
 	sed -i "s|^\s*local-policy\s*=.*|local-policy = $(readlink -f %active_policy)|" \
@@ -182,6 +182,12 @@ fi
 %exclude %python3_sitelibdir/gpoa/test
 
 %changelog
+* Sun Mar 19 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.9.12.4-alt1
+- Fixed an implementation of replace action in folder applier
+- Improve file cache store() with copy in temporary file before saving
+- Added implementation of using executable bit in file copy applier
+- Fixed debug messages typos in file copy applier
+
 * Tue Feb 28 2023 Evgeny Sinelnikov <sin@altlinux.org> 0.9.12.3-alt1
 - Add support of set copyied files to be executed by paths and suffixes (extensions).
 - Add support of saving comments in ini files.
