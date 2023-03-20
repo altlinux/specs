@@ -1,19 +1,19 @@
+%define _unpackaged_files_terminate_build 1
 %define module_name Geo-FIT
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(ExtUtils/MakeMaker.pm) perl(File/Spec.pm) perl(HTML/Entities.pm) perl(IPC/System/Simple.pm) perl(Math/BigInt.pm) perl(Module/Build.pm) perl(Test/More.pm)
 # END SourceDeps(oneline)
-%define _unpackaged_files_terminate_build 1
 BuildRequires: rpm-build-perl perl-devel perl-podlators
 
 Name: perl-%module_name
-Version: 1.04
-Release: alt2
+Version: 1.05
+Release: alt1
 Summary: Decode Garmin FIT files
 Group: Development/Perl
 License: perl
 URL: https://github.com/patjoly/geo-fit
 
-Source0: http://mirror.yandex.ru/mirrors/cpan/authors/id/P/PA/PATJOL/%{module_name}-%{version}.tar.gz
+Source0: http://www.cpan.org/authors/id/P/PA/PATJOL/%{module_name}-%{version}.tar.gz
 BuildArch: noarch
 
 %description
@@ -39,7 +39,7 @@ scripts for %module_name
 %perl_vendor_install
 
 %files
-%doc LICENSE Changes README.md
+%doc Changes README.md
 %perl_vendor_privlib/G*
 
 %files scripts
@@ -47,6 +47,9 @@ scripts for %module_name
 %_bindir/*
 
 %changelog
+* Mon Mar 20 2023 Igor Vlasenko <viy@altlinux.org> 1.05-alt1
+- automated CPAN update
+
 * Sat Dec 24 2022 Igor Vlasenko <viy@altlinux.org> 1.04-alt2
 - to Sisyphus as Geo-GPX dependency
 
